@@ -106,10 +106,12 @@ linear listing is regenerable and git-ignored.
 
 ## Status
 
-100% byte-match achieved; boot header (0x0–0x80) hand-annotated; **444 functions
-named** from the firmware's reflection tables (reusing shared KN5000 knowledge).
-The instruction-level disassembly of the raw `.incbin` regions is the ongoing
-work, now with named entry points to anchor it. See
+100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`
+is now organised by the 443 recovered functions** — code region 1 is split into
+per-function `.incbin_range` blocks, each labelled with its name and CPU address,
+so the raw bytes can be converted to real MN10300 disassembly one function at a
+time. The **display palette** (256-entry `0x00RRGGBB` CLUT at `0x32573C`) is the
+first data structure lifted from raw `.incbin` into typed `.long` source. See
 [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory map,
 region map and other findings that guide the work.
 
