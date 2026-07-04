@@ -40,7 +40,7 @@ src/symbols.inc  444 recovered function names + memory map (see "Symbols").
 src/table.s     Resource archive: 85-entry offset directory + 84 asset segments.
 kn7000.sym      Portable "0xADDR  name" symbol table.
 tools/kn7asm.py Self-contained assembler/linker (see "Toolchain" below).
-tools/mn10300_asm.py      MN10300 instruction ENCODER (94.8% round-trip; see below).
+tools/mn10300_asm.py      MN10300 instruction ENCODER (99.9% round-trip; see below).
 tools/validate_asm.{py,sh} Round-trip the encoder against unidasm over the ROM.
 tools/gen_symbols.py      Recover function names from the firmware's own tables.
 tools/disasm_functions.py Named, function-by-function disassembly.
@@ -90,8 +90,8 @@ round-tripping every instruction of code region 1 against unidasm
 (`tools/validate_asm.sh`):
 
 ```
-exact byte match : 94.8%
-unsupported form :  5.1%   (indexed (dI,aM) addressing, bit ops, a few variants)
+exact byte match : 99.9%
+unsupported form :  0.1%   (udf* coprocessor ops + unidasm data-artifacts)
 byte mismatch    :  0.01%  (72 cases where the compiler used a non-minimal
                             encoding; ours is a valid shorter encoding)
 ```
@@ -99,7 +99,7 @@ byte mismatch    :  0.01%  (72 cases where the compiler used a non-minimal
 The encoding tables have **zero real errors**; the encoder chooses the smallest
 encoding that fits each operand. This is what will let the per-function
 `.incbin_range` blocks be converted, one function at a time, into real MN10300
-source that still rebuilds byte-for-byte (for the ~95% of instructions covered).
+source that still rebuilds byte-for-byte (for the ~99.9% of instructions covered).
 
 `make` regenerates the reference images by invoking the sibling extraction repo,
 so the whole chain — original `.SLD` floppies → LZSS decompress → reassemble →
