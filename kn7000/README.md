@@ -142,7 +142,7 @@ resolved to labels so the source reads normally, and `kn7asm.py` assembles it
 back to the exact ROM bytes. Growing the `CONVERT` set in
 `tools/gen_program_s.py` and running `make program-src` converts more; the
 remaining functions stay raw `.incbin_range` until then. The **display palette**
-(256-entry `0x00RRGGBB` CLUT at `0x32573C`) is lifted into typed `.long` source.
+(256-entry `0x00BBGGRR` CLUT at `0x32573C`) is lifted into typed `.long` source.
 See [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory
 map, region map and other findings that guide the work.
 

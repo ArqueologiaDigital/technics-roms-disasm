@@ -231,7 +231,7 @@ def main():
           '# ---- data / resources region ----',
           f'.incbin_range {ROMQ}, 0x186000, 0x32573C',
           '',
-          '# ---- display palette (256-entry 0x00RRGGBB CLUT + a themed sub-range) ----',
+          '# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----',
           'display_palette:']
     for i in range(0, 512, 8):
         row = ", ".join(f"0x{v:08X}" for v in pal[i:i + 8])

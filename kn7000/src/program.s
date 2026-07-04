@@ -12273,7 +12273,7 @@ _rom_marker:
 # ---- data / resources region ----
 .incbin_range "baserom/kn7000_program.rom", 0x186000, 0x32573C
 
-# ---- display palette (256-entry 0x00RRGGBB CLUT + a themed sub-range) ----
+# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----
 display_palette:
     .long 0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00808080   # idx   0
     .long 0x00303030, 0x000080FF, 0x000048FF, 0x00004080, 0x0038FF68, 0x00000000, 0x00C8C8C8, 0x00808080   # idx   8
