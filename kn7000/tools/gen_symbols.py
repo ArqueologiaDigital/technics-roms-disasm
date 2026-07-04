@@ -63,29 +63,100 @@ def read_name(data, ptr):
     return s.decode("latin1")
 
 
+def _is_code(v):
+    return CODE_LO <= v - PROGRAM_BASE < 0x186000 or 0x3B8000 <= v - PROGRAM_BASE < CODE_HI
+
+
+def _is_strptr(data, ident_offsets, v):
+    return (v - PROGRAM_BASE) in ident_offsets
+
+
+def _prologue(data, cpu):
+    o = cpu - PROGRAM_BASE
+    if not (0 <= o < len(data) - 1):
+        return False
+    b = data[o]
+    if b in (0xCF, 0xCE):                                  # movm  (save regs)
+        return True
+    if b in (0xF8, 0xFA, 0xFC) and data[o + 1] == 0xFE:    # add  imm,sp
+        return True
+    return False
+
+
+def _ident_offsets(data):
+    import re
+    return {m.start() for m in re.finditer(
+        rb"[A-Za-z_][A-Za-z0-9_]{2,31}\x00", data)}
+
+
+def find_tables(data, ident_offsets):
+    """Yield (code_array_off, name_array_off, n) for every MILK reflection table.
+
+    Each table is a run of code pointers, a NUL, then an index-parallel run of
+    name pointers (into identifier strings). Discovered generically so that all
+    ~100+ widget/handler tables are found, not just the main one. A prologue
+    check on the paired code targets rejects look-alike arrays that are really
+    event-id / widget-id / field-name pointer tables (their "code" side isn't
+    code at all).
+    """
+    n_words = len(data) // 4
+    i = 0
+    while i < n_words:
+        # locate the start of a name-pointer run
+        if not _is_strptr(data, ident_offsets, read_u32(data, 4 * i)):
+            i += 1
+            continue
+        name_off = 4 * i
+        j = i
+        while j < n_words and _is_strptr(data, ident_offsets, read_u32(data, 4 * j)):
+            j += 1
+        n_names = j - i
+        i = j
+        if n_names < 4:
+            continue
+        # the code array ends with a NUL immediately before the name array
+        p = name_off - 4
+        if read_u32(data, p) != 0:
+            continue
+        p -= 4
+        codes = []
+        while p >= 0 and _is_code(read_u32(data, p)):
+            codes.append(read_u32(data, p))
+            p -= 4
+        codes.reverse()
+        n = len(codes)
+        if n < 4 or n < n_names:              # need code[j]<->name[j-1]
+            continue
+        code_off = name_off - 4 - 4 * n
+        # validate: the paired code targets are overwhelmingly function prologues
+        paired = [read_u32(data, code_off + 4 * k) for k in range(1, min(n, n_names + 1))]
+        good = sum(_prologue(data, c) for c in paired)
+        if paired and good >= 0.8 * len(paired):
+            yield code_off, name_off, n
+
+
 def recover_symbols(data):
     """Returns a sorted list of (cpu_addr, file_offset, name)."""
-    # Length is set by the NUL terminator of the (cleanly terminated) code array.
-    n = 0
-    while read_u32(data, CODE_ARRAY + 4 * n) != 0:
-        n += 1
-
+    ident_offsets = _ident_offsets(data)
     out = {}          # file_offset -> name
     used = set()      # names already taken (keep them unique)
     # code[j] is named by name[j-1]; code[0] is the unpaired leading entry.
-    for j in range(1, n):
-        code = read_u32(data, CODE_ARRAY + 4 * j)
-        name = read_name(data, read_u32(data, NAME_ARRAY + 4 * (j - 1)))
-        coff = code - PROGRAM_BASE
-        if name is None or not (CODE_LO <= coff < CODE_HI) or coff in out:
-            continue
-        unique = name
-        k = 2
-        while unique in used:                 # disambiguate rare name clashes
-            unique = f"{name}_{k}"
-            k += 1
-        used.add(unique)
-        out[coff] = unique
+    for code_arr, name_arr, n in find_tables(data, ident_offsets):
+        for j in range(1, n):
+            code = read_u32(data, code_arr + 4 * j)
+            name = read_name(data, read_u32(data, name_arr + 4 * (j - 1)))
+            coff = code - PROGRAM_BASE
+            if name is None or not (CODE_LO <= coff < CODE_HI) or coff in out:
+                continue
+            if not (name[0].isalpha() or name[0] == "_"):
+                continue
+            unique = name
+            k = 2
+            while unique in used:                 # disambiguate rare name clashes
+                unique = f"{name}_{k}"
+                k += 1
+            used.add(unique)
+            out[coff] = unique
 
     return sorted((PROGRAM_BASE + off, off, name) for off, name in out.items())
 
