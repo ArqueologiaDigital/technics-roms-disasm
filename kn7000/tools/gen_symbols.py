@@ -114,25 +114,19 @@ def find_tables(data, ident_offsets):
         i = j
         if n_names < 4:
             continue
-        # the code array ends with a NUL immediately before the name array
-        p = name_off - 4
-        if read_u32(data, p) != 0:
+        # Layout: [code[0..n-1]] [NUL] [name[0..n-1]], aligned 1:1 (code[k] is the
+        # function that name[k] names -- proven by getter/setter behaviour: every
+        # Get* reads its variable and every Set* writes it only under this direct
+        # alignment). The code array (same length) sits just before the NUL.
+        if read_u32(data, name_off - 4) != 0:
             continue
-        p -= 4
-        codes = []
-        while p >= 0 and _is_code(read_u32(data, p)):
-            codes.append(read_u32(data, p))
-            p -= 4
-        codes.reverse()
-        n = len(codes)
-        if n < 4 or n < n_names:              # need code[j]<->name[j-1]
+        code_off = name_off - 4 - 4 * n_names
+        if code_off < 0:
             continue
-        code_off = name_off - 4 - 4 * n
-        # validate: the paired code targets are overwhelmingly function prologues
-        paired = [read_u32(data, code_off + 4 * k) for k in range(1, min(n, n_names + 1))]
-        good = sum(_prologue(data, c) for c in paired)
-        if paired and good >= 0.8 * len(paired):
-            yield code_off, name_off, n
+        codes = [read_u32(data, code_off + 4 * k) for k in range(n_names)]
+        good = sum(_is_code(c) for c in codes)
+        if good >= 0.9 * n_names:
+            yield code_off, name_off, n_names
 
 
 def recover_symbols(data):
@@ -140,21 +134,21 @@ def recover_symbols(data):
     ident_offsets = _ident_offsets(data)
     out = {}          # file_offset -> name
     used = set()      # names already taken (keep them unique)
-    # code[j] is named by name[j-1]; code[0] is the unpaired leading entry.
+    # Direct alignment: code[k] is named by name[k].
     for code_arr, name_arr, n in find_tables(data, ident_offsets):
-        for j in range(1, n):
-            code = read_u32(data, code_arr + 4 * j)
-            name = read_name(data, read_u32(data, name_arr + 4 * (j - 1)))
+        for k in range(n):
+            code = read_u32(data, code_arr + 4 * k)
+            name = read_name(data, read_u32(data, name_arr + 4 * k))
             coff = code - PROGRAM_BASE
             if name is None or not (CODE_LO <= coff < CODE_HI) or coff in out:
                 continue
             if not (name[0].isalpha() or name[0] == "_"):
                 continue
             unique = name
-            k = 2
+            k2 = 2
             while unique in used:                 # disambiguate rare name clashes
-                unique = f"{name}_{k}"
-                k += 1
+                unique = f"{name}_{k2}"
+                k2 += 1
             used.add(unique)
             out[coff] = unique
 
