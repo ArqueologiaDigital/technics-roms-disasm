@@ -35,6 +35,7 @@ class Mem:
         self.program = program
         self.table = table
         self.ram = bytearray(0x2000000)     # work RAM @0x50000000 (generous 32MB)
+        self.devram = bytearray(0x100000)   # scratch backing for the device windows
         self.io_log = []                    # (kind, addr, value)
 
     def _region(self, a):
@@ -44,6 +45,11 @@ class Mem:
             return ("rom", self.table, a - 0x48000000)
         if 0x50000000 <= a < 0x50000000 + len(self.ram):
             return ("ram", self.ram, a - 0x50000000)
+        # Device windows found by the boot trace (LCD V-RAM / video / wave-DMA):
+        # 0x8C000000 and 0x90000000. Back them with a small scratch buffer folded
+        # by mask so the boot's copies/writes succeed and we can trace onward.
+        if 0x8C000000 <= a < 0x8D000000 or 0x90000000 <= a < 0x98000000:
+            return ("ram", self.devram, a & 0xFFFFF)
         if valid_io(a):
             return ("io", None, a)
         # anything else = undumped resource (library ROM 0x4C, picture flash
@@ -82,6 +88,8 @@ class Sim:
         self.mdr = self.lir = self.lar = 0
         self.Z = self.N = self.C = self.V = 0
         self.steps = 0
+        self.hle = False          # HLE-stub calls into the undumped library ROM?
+        self.lib_calls = []       # (target, d0, d1, a0, a1, retpc) when hle
 
     # -- fetch helpers (little-endian) --
     def r8(self, a):  return self.m.r(a, 1)
@@ -118,6 +126,27 @@ class Sim:
         Z, N, C, V = self.Z, self.N, self.C, self.V
         return [N ^ V, not ((N ^ V) or Z), not (N ^ V), (N ^ V) or Z,
                 C, not (C or Z), not C, C or Z, Z, not Z][cc]
+
+    def _call(self, target, retpc, regs, adj):
+        # Calls into the undumped library ROM (0x4C000000) can optionally be
+        # HLE-stubbed: the C ABI makes the callee preserve `regs` and free its
+        # own `adj`-byte frame, so a call is net-zero on the caller's regs/sp --
+        # we just record it, set a return value, and fall through.
+        if self.hle and 0x4C000000 <= target < 0x4D000000:
+            self.lib_calls.append((target, self.d[0], self.d[1],
+                                   self.a[0], self.a[1], retpc))
+            self.d[0] = self._hle_lib(target)
+            self.pc = retpc
+            return
+        self.push(retpc)
+        self.store_regs(regs)
+        self.sp = (self.sp - adj) & M32
+        self.pc = target
+
+    def _hle_lib(self, target):
+        # Pure stub: no side effects, return 0. (Confidently-modelled functions
+        # like memcpy can be added here once the call sequence is understood.)
+        return 0
 
     def push(self, v):
         self.sp = (self.sp - 4) & M32
@@ -199,8 +228,7 @@ class Sim:
         elif op == 0xCC: self.pc = (pc + self.sx16(self.r16(self.pc))) & M32
         elif op == 0xCD:
             disp = self.sx16(self.r16(self.pc)); regs = self.r8(self.pc + 2); adj = self.r8(self.pc + 3)
-            self.push((pc + 4) & M32); self.store_regs(regs); self.sp = (self.sp - adj) & M32
-            self.pc = (pc + disp) & M32
+            self._call((pc + disp) & M32, (pc + 4) & M32, regs, adj)
         elif op == 0xCE: self.load_regs(self.r8(self.pc)); self.pc += 1
         elif op == 0xCF: self.store_regs(self.r8(self.pc)); self.pc += 1
         elif op == 0xDB: self.lar = self.pc; self.lir = self.r32(self.pc)
@@ -209,8 +237,7 @@ class Sim:
         elif op == 0xDC: self.pc = (pc + self.r32(self.pc)) & M32
         elif op == 0xDD:
             disp = self.r32(self.pc); regs = self.r8(self.pc + 4); adj = self.r8(self.pc + 5)
-            self.push((pc + 6) & M32); self.store_regs(regs); self.sp = (self.sp - adj) & M32
-            self.pc = (pc + disp) & M32
+            self._call((pc + disp) & M32, (pc + 6) & M32, regs, adj)
         elif op in (0xDE, 0xDF):
             regs = self.r8(self.pc); adj = self.r8(self.pc + 1)
             self.sp = (self.sp + adj) & M32; self.load_regs(regs); self.pc = self.pop()
@@ -455,10 +482,14 @@ def main():
     ap.add_argument("--program", default="baserom/kn7000_program.rom")
     ap.add_argument("--table", default="baserom/kn7000_table.rom")
     ap.add_argument("--steps", type=int, default=200000)
+    ap.add_argument("--hle-lib", action="store_true",
+                    help="stub calls into the undumped library ROM (0x4C...) and "
+                         "trace the call sequence instead of stopping at the first one")
     args = ap.parse_args()
 
     mem = Mem(open(args.program, "rb").read(), open(args.table, "rb").read())
     sim = Sim(mem)
+    sim.hle = args.hle_lib
     reason = "step cap"
     plo, phi = 0x48400080, 0x48400000 + len(mem.program)
     try:
@@ -499,6 +530,16 @@ def main():
     for k, a, v in ios:
         seen.setdefault(a, k)
     print(f"\ndistinct I/O addresses touched at runtime: {len(seen)}")
+
+    if sim.hle:
+        lc = sim.lib_calls
+        from collections import Counter
+        distinct = Counter(t for t, *_ in lc)
+        print(f"\n{len(lc)} library-ROM calls HLE-stubbed "
+              f"({len(distinct)} distinct entry points). First 30 in order:")
+        for t, d0, d1, a0, a1, ret in lc[:30]:
+            print(f"  0x{t:08X}  (d0=0x{d0:X} d1=0x{d1:X} a0=0x{a0:X} a1=0x{a1:X}) "
+                  f"from 0x{ret - 6:08X}")
 
 
 if __name__ == "__main__":
