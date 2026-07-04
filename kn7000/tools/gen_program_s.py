@@ -42,6 +42,15 @@ CONVERT = {
     "DrawDesignBox", "PsUsrBmpToggleProc", "MusicStylistJpgData",
     "SetNeedUpdate", "SetDialFocus", "GetFrameSPSize", "GetCharHeight",
     "GetBitmapSize", "GetCharDescent", "CheckColorLcd", "SetLcdMode",
+    # display / LCD / bitmap-resource accessor module
+    "Check2BitLcd", "GetColorMode", "GetSoundDev", "GetBitmapCount",
+    "GetIconCount", "GetFrameCount", "GetFontCount", "GetBitmapNameTable",
+    "GetIconNameTable", "GetFrameNameTable", "GetSw2Mode", "GetMode2Sw",
+    "GetModeNow", "GetTitleNow", "GetTitleOld", "GetViewInstance",
+    "SetCurrentTarget", "SetBox", "SetDialEnable", "SetDialUp",
+    "CheckProgDial", "SetProgDial", "GetColorMode", "SetHoldLed",
+    "SetOtherPartLed", "GetRootParam", "SetRootParam", "CheckNotDrawFlag",
+    "GetSw2Mode", "SetAutoIncDefault",
 }
 
 INSN = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")

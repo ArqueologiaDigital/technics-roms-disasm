@@ -26,7 +26,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 32 synthetic labels for internal helpers called by converted code
+# 50 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -37,23 +37,41 @@ _rom_marker:
 .equ func_48415AAB, 0x48415AAB
 .equ func_4841662A, 0x4841662A
 .equ func_484166DE, 0x484166DE
+.equ func_48417690, 0x48417690
+.equ func_48417740, 0x48417740
 .equ func_4841C37C, 0x4841C37C
 .equ func_484218FF, 0x484218FF
+.equ func_484219A4, 0x484219A4
 .equ func_48421A27, 0x48421A27
 .equ func_48421A5E, 0x48421A5E
 .equ func_48421AB1, 0x48421AB1
+.equ func_48421B09, 0x48421B09
+.equ func_48421B18, 0x48421B18
+.equ func_48421B5C, 0x48421B5C
+.equ func_48421B97, 0x48421B97
 .equ func_48428555, 0x48428555
 .equ func_484285E4, 0x484285E4
 .equ func_48428792, 0x48428792
 .equ func_484288B1, 0x484288B1
 .equ func_48428C43, 0x48428C43
+.equ func_4842938D, 0x4842938D
 .equ func_48429569, 0x48429569
+.equ func_4842960F, 0x4842960F
+.equ func_48429634, 0x48429634
+.equ func_48429659, 0x48429659
 .equ func_484298A0, 0x484298A0
 .equ func_48429906, 0x48429906
+.equ func_48429C9A, 0x48429C9A
 .equ func_4842B30C, 0x4842B30C
+.equ func_4842CA2C, 0x4842CA2C
+.equ func_4842CA8A, 0x4842CA8A
 .equ func_484483B7, 0x484483B7
 .equ func_48453170, 0x48453170
 .equ func_4849BC1A, 0x4849BC1A
+.equ func_484B1BCB, 0x484B1BCB
+.equ func_484B1CA1, 0x484B1CA1
+.equ func_484B1D67, 0x484B1D67
+.equ func_484B1DCE, 0x484B1DCE
 .equ func_4852FDCD, 0x4852FDCD
 .equ func_48530216, 0x48530216
 .equ func_48532395, 0x48532395
@@ -817,13 +835,40 @@ _rom_marker:
 # InterruptTitleEZ  (CPU 0x484164f4)
 .incbin_range "baserom/kn7000_program.rom", 0x0164f4, 0x016512
 # SetOtherPartLed  (CPU 0x48416512)
-.incbin_range "baserom/kn7000_program.rom", 0x016512, 0x016536
+    add     -0xc, sp
+    mov     d0, (0x50021ff8)
+    cmp     0, d0
+    beq     0x4841652a
+    mov     1, d0
+    call    func_484B1BCB, 0, 0xc
+    bra     0x48416533
+    mov     1, d0
+    call    func_484B1CA1, 0, 0xc
+    ret     0, 0xc
 # SetHoldLed  (CPU 0x48416536)
-.incbin_range "baserom/kn7000_program.rom", 0x016536, 0x01655a
+    add     -0xc, sp
+    mov     d0, (0x50021ffc)
+    cmp     0, d0
+    beq     0x4841654e
+    mov     0x42, d0
+    call    func_484B1D67, [d2], 4
+    bra     0x48416557
+    mov     0x42, d0
+    call    func_484B1DCE, [d2], 4
+    ret     0, 0xc
 # TitleFuncCall  (CPU 0x4841655a)
 .incbin_range "baserom/kn7000_program.rom", 0x01655a, 0x016563
 # GetMode2Sw  (CPU 0x48416563)
-.incbin_range "baserom/kn7000_program.rom", 0x016563, 0x016587
+    add     -0xc, sp
+    mov     d0, (0x50022000)
+    cmp     0, d0
+    beq     0x4841657b
+    mov     4, d0
+    call    func_484B1BCB, 0, 0xc
+    bra     0x48416584
+    mov     4, d0
+    call    func_484B1CA1, 0, 0xc
+    ret     0, 0xc
 # InitializeTaskTimer  (CPU 0x48416587)
 .incbin_range "baserom/kn7000_program.rom", 0x016587, 0x016590
 # SetDialLed  (CPU 0x48416590)
@@ -839,11 +884,19 @@ _rom_marker:
 # VwTextBoxProc  (CPU 0x48416986)
 .incbin_range "baserom/kn7000_program.rom", 0x016986, 0x016ae2
 # SetBox  (CPU 0x48416ae2)
-.incbin_range "baserom/kn7000_program.rom", 0x016ae2, 0x016af7
+    add     -0x14, sp
+    mov     a0, (0x10, sp)
+    mov     0x000600f0, d1
+    call    func_4842938D, [d2,d3], 0x24
+    ret     0, 0x14
 # GetClientBox  (CPU 0x48416af7)
 .incbin_range "baserom/kn7000_program.rom", 0x016af7, 0x016def
 # GetViewInstance  (CPU 0x48416def)
-.incbin_range "baserom/kn7000_program.rom", 0x016def, 0x016e04
+    add     -0x14, sp
+    mov     a0, (0x10, sp)
+    mov     0x000600ef, d1
+    call    func_4842938D, [d2,d3], 0x24
+    ret     0, 0x14
 # GetBox  (CPU 0x48416e04)
 .incbin_range "baserom/kn7000_program.rom", 0x016e04, 0x016e2e
 # DrawStringReverse  (CPU 0x48416e2e)
@@ -870,7 +923,8 @@ _rom_marker:
 # IvSpecWinProc  (CPU 0x48417600)
 .incbin_range "baserom/kn7000_program.rom", 0x017600, 0x017609
 # CheckProgDial  (CPU 0x48417609)
-.incbin_range "baserom/kn7000_program.rom", 0x017609, 0x017612
+    mov     d0, (0x50000710)
+    retf    0, 0
 # IvMainEditSwProc  (CPU 0x48417612)
 .incbin_range "baserom/kn7000_program.rom", 0x017612, 0x01768d
 # IvCatchEventProc  (CPU 0x4841768d)
@@ -879,13 +933,116 @@ _rom_marker:
     mov     (0x5000070c), d0
     retf    0, 0
 # SetDialEnable  (CPU 0x484176d5)
-.incbin_range "baserom/kn7000_program.rom", 0x0176d5, 0x0176f4
+    add     -0xc, sp
+    mov     d0, (0x500006f0)
+    mov     d1, (0x500006f8)
+    mov     (0x1c, sp), d1
+    mov     d1, (0x50000700)
+    call    func_48417690, 0, 0x14
+    ret     0, 0xc
 # SetDialUp  (CPU 0x484176f4)
-.incbin_range "baserom/kn7000_program.rom", 0x0176f4, 0x017713
+    add     -0xc, sp
+    mov     d0, (0x500006f4)
+    mov     d1, (0x500006fc)
+    mov     (0x1c, sp), d1
+    mov     d1, (0x50000704)
+    call    func_48417690, 0, 0x14
+    ret     0, 0xc
 # GetRootParam  (CPU 0x48417713)
-.incbin_range "baserom/kn7000_program.rom", 0x017713, 0x01773b
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+    call    func_4842960F, 0, 0x10
+    mov     d0, d3
+    call    func_48429634, 0, 0x10
+    mov     d0, d2
+    call    func_48429659, 0, 0x10
+    mov     d0, (0x10, sp)
+    mov     d2, d1
+    mov     d3, d0
+    call    func_48417740, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3], 0x1c
 # SetAutoIncDefault  (CPU 0x4841773b)
-.incbin_range "baserom/kn7000_program.rom", 0x01773b, 0x017810
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+    mov     d1, (0x38, sp)
+    mov     d0, (0x34, sp)
+    call    func_48429634, 0, 0x10
+    cmp     0x50006, d0
+    beq     0x4841776e
+    cmp     0x50005, d0
+    beq     0x4841776e
+    cmp     0x50007, d0
+    beq     0x4841776e
+    cmp     0x5001e, d0
+    beq     0x4841776e
+    ret     [d2,d3,a2,a3], 0x2c
+    call    func_48429659, 0, 0x10
+    mov     d0, a3
+    cmp     0xff, a3
+    bls     0x4841777e
+    ret     [d2,d3,a2,a3], 0x2c
+    mov     d0, d3
+    and     0x1f, d3
+    exthu   d3
+    lsr     7, d0
+    and     0x01, d0
+    exthu   d0
+    mov     d0, a2
+    mov     d3, d0
+    asl     5, d0
+    mov     a2, d1
+    asl     4, d1
+    mov     d1, a0
+    mov     0x500d3c7c, d2
+    add     d2, d0
+    add     d0, a0
+    mov     (0x34, sp), d0
+    mov     a2, d1
+    mov     d0, (4, a0)
+    mov     d3, d0
+    asl     5, d0
+    add     d2, d0
+    asl     4, d1
+    mov     d1, a0
+    add     d0, a0
+    mov     (0x38, sp), d0
+    mov     d3, d1
+    mov     d0, (8, a0)
+    mov     (0x3c, sp), a1
+    asl     5, d1
+    add     d2, d1
+    mov     a2, d0
+    asl     4, d0
+    add     d0, d1
+    mov     d1, a0
+    mov     a1, (0xc, a0)
+    mov     d3, d0
+    asl     5, d0
+    add     d2, d0
+    mov     a2, d1
+    asl     4, d1
+    mov     d1, a0
+    add     d0, a0
+    movbu   (1, a0), d0
+    cmp     0, d0
+    bne     0x4841780d
+    call    func_4842960F, 0, 0x10
+    mov     d0, d1
+    asl     5, d3
+    add     d2, d3
+    mov     a2, d2
+    asl     4, d2
+    add     d2, d3
+    mov     d3, a0
+    mov     1, d0
+    movbu   d0, (1, a0)
+    mov     d1, (0x10, sp)
+    mov     0x0005001e, d0
+    mov     d0, (0x14, sp)
+    mov     a3, (0x18, sp)
+    mov     0x10, d0
+    call    func_48429C9A, [d2,d3,a2,a3], 0x34
+    ret     [d2,d3,a2,a3], 0x2c
 # BoxRightCheck  (CPU 0x48417810)
 .incbin_range "baserom/kn7000_program.rom", 0x017810, 0x017b24
 # ScreenProc  (CPU 0x48417b24)
@@ -894,7 +1051,49 @@ _rom_marker:
     call    SetProgDial, 0, 0
     ret     0, 0x10
 # SetProgDial  (CPU 0x48417b30)
-.incbin_range "baserom/kn7000_program.rom", 0x017b30, 0x017b80
+    mov     a0, a1
+    mov     d0, d1
+    exthu   d1
+    mov     d1, d0
+    lsr     7, d0
+    and     0x01, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48417b5f
+    mov     0x1f, d0
+    and     d1, d0
+    exthu   d0
+    asl2    d0
+    mov     0x4859e404, a0
+    .byte 0xF4   # movhu (d0, a0), d0
+    mov     -8, d0
+    add     d0, d1
+    exthu   d3
+    movhu   d0, (a1)
+    mov     d1, d0
+    exthu   d0
+    asl2    d0
+    add     d0, a0
+    movhu   (2, a0), d0
+    movhu   d0, (2, a1)
+    bra     0x48417b7d
+    mov     0x1f, d0
+    and     d1, d0
+    exthu   d0
+    asl2    d0
+    mov     0x4859e384, a0
+    .byte 0xF4   # movhu (d0, a0), d0
+    mov     -8, d0
+    add     d0, d1
+    exthu   d3
+    movhu   d0, (a1)
+    mov     d1, d0
+    exthu   d0
+    asl2    d0
+    add     d0, a0
+    movhu   (2, a0), d0
+    movhu   d0, (2, a1)
+    retf    0, 0
 # VwUserBitmapProc  (CPU 0x48417b80)
 .incbin_range "baserom/kn7000_program.rom", 0x017b80, 0x017ba5
 # DrawDesignFrame  (CPU 0x48417ba5)
@@ -910,7 +1109,8 @@ _rom_marker:
 # GroupBoxProc  (CPU 0x484180a1)
 .incbin_range "baserom/kn7000_program.rom", 0x0180a1, 0x01846e
 # GetSoundDev  (CPU 0x4841846e)
-.incbin_range "baserom/kn7000_program.rom", 0x01846e, 0x018473
+    mov     8, d0
+    retf    0, 0
 # WindowProc  (CPU 0x48418473)
 .incbin_range "baserom/kn7000_program.rom", 0x018473, 0x0184cf
 # VwStrBoxProc  (CPU 0x484184cf)
@@ -1388,19 +1588,84 @@ _rom_marker:
     clr     d0
     ret     0, 0x10
 # SetRootParam  (CPU 0x48421bb7)
-.incbin_range "baserom/kn7000_program.rom", 0x021bb7, 0x021c59
+    movm    [d2,a2], (sp)
+    add     -0x1c, sp
+    mov     d0, d2
+    call    func_48421B97, 0, 0x10
+    cmp     0, d0
+    beq     0x48421bcd
+    mov     d2, a0
+    calls   (a0)
+    ret     [d2,a2], 0x24
+    movhu   (0x500d3c64), d0
+    mov     0x5000757c, a2
+    exth    d0
+    mov     0x38, d1
+    nop
+    nop
+    mul     d1, d0
+    add     a2, d0
+    mov     d0, a0
+    movhu   (8, a0), d0
+    mov     sp, a0
+    exth    d0
+    add     0x18, a0
+    mov     1, d1
+    mov     d1, (0x14, sp)
+    call    0x4c03c5af, 0, 0
+    call    func_48421B09, 0, 0
+    call    func_48421B18, 0, 0
+    cmp     0, a0
+    beq     0x48421c14
+    inc4    a0
+    mov     (a0), d0
+    cmp     d0, d2
+    bne     0x48421c0b
+    clr     d0
+    mov     d0, (a0)
+    call    func_48421B18, 0, 0
+    cmp     0, a0
+    bne     0x48421c04
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     d0, a2
+    movhu   (8, a2), d0
+    mov     1, d1
+    exth    d0
+    call    0x4c03cd7f, 0, 0
+    mov     8, d0
+    call    func_48421B5C, [d2], 4
+    mov     0x48421c49, d0
+    mov     d0, (a0)
+    mov     d2, (4, a0)
+    call    func_484219A4, [d2,a2,a3], 0x28
+    ret     [d2,a2], 0x24
+    add     -8, sp
+    inc4    a0
+    mov     (a0), d0
+    cmp     0, d0
+    beq     0x48421c56
+    mov     (a0), a0
+    calls   (a0)
+    ret     0, 8
 # ShiftSize  (CPU 0x48421c59)
 .incbin_range "baserom/kn7000_program.rom", 0x021c59, 0x021d4c
 # SetLcdMode  (CPU 0x48421d4c)
     movhu   (0x50007578), d0
     retf    0, 0
 # GetColorMode  (CPU 0x48421d55)
-.incbin_range "baserom/kn7000_program.rom", 0x021d55, 0x021d5e
+    movhu   d0, (0x50007578)
+    retf    0, 0
 # CheckColorLcd  (CPU 0x48421d5e)
     movhu   (0x5000757a), d0
     retf    0, 0
 # Check2BitLcd  (CPU 0x48421d67)
-.incbin_range "baserom/kn7000_program.rom", 0x021d67, 0x021d70
+    movhu   d0, (0x5000757a)
+    retf    0, 0
 # DrawBitmapSP2  (CPU 0x48421d70)
 .incbin_range "baserom/kn7000_program.rom", 0x021d70, 0x021d82
 # Draw2BpFile  (CPU 0x48421d82)
@@ -1837,7 +2102,11 @@ _rom_marker:
 # SetFocusEvent  (CPU 0x484297b2)
 .incbin_range "baserom/kn7000_program.rom", 0x0297b2, 0x0297da
 # SetCurrentTarget  (CPU 0x484297da)
-.incbin_range "baserom/kn7000_program.rom", 0x0297da, 0x0297ec
+    add     -0xc, sp
+    movhu   (0x500d3c60), d0
+    exth    d0
+    call    func_48428C43, [d2,d3,a2,a3], 0x44
+    ret     0, 0xc
 # MainDispatchEvent  (CPU 0x484297ec)
 .incbin_range "baserom/kn7000_program.rom", 0x0297ec, 0x029808
 # MainSendEvent  (CPU 0x48429808)
@@ -1934,7 +2203,16 @@ _rom_marker:
 # UnregisteredMode  (CPU 0x4842b309)
 .incbin_range "baserom/kn7000_program.rom", 0x02b309, 0x02b326
 # GetModeNow  (CPU 0x4842b326)
-.incbin_range "baserom/kn7000_program.rom", 0x02b326, 0x02b343
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    func_48414A4F, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x5000098c, a0
+    exth    d0
+    asl2    d0
+    mov     (d0, a0), d0
+    ret     0, 0x10
 # SwInEasySet  (CPU 0x4842b343)
 .incbin_range "baserom/kn7000_program.rom", 0x02b343, 0x02b371
 # ChangeMode  (CPU 0x4842b371)
@@ -1966,11 +2244,28 @@ _rom_marker:
 # UnregisteredTitle  (CPU 0x4842c982)
 .incbin_range "baserom/kn7000_program.rom", 0x02c982, 0x02c99f
 # GetTitleNow  (CPU 0x4842c99f)
-.incbin_range "baserom/kn7000_program.rom", 0x02c99f, 0x02c9bc
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    func_48414A4F, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x500009ac, a0
+    exth    d0
+    asl2    d0
+    mov     (d0, a0), d0
+    ret     0, 0x10
 # IntTimeIDProc  (CPU 0x4842c9bc)
 .incbin_range "baserom/kn7000_program.rom", 0x02c9bc, 0x02c9ce
 # CheckNotDrawFlag  (CPU 0x4842c9ce)
-.incbin_range "baserom/kn7000_program.rom", 0x02c9ce, 0x02c9e8
+    add     -0xc, sp
+    cmp     0, d0
+    beq     0x4842c9de
+    mov     8, d0
+    call    func_4842CA2C, [d2,d3,a2,a3], 0x28
+    bra     0x4842c9e5
+    mov     8, d0
+    call    func_4842CA8A, [d2,d3,a2], 0x28
+    ret     0, 0xc
 # GetInterruptTime  (CPU 0x4842c9e8)
 .incbin_range "baserom/kn7000_program.rom", 0x02c9e8, 0x02ca0d
 # ConvertStringsEx  (CPU 0x4842ca0d)
@@ -2086,23 +2381,30 @@ _rom_marker:
 # InitSptClassTable  (CPU 0x4842dedc)
 .incbin_range "baserom/kn7000_program.rom", 0x02dedc, 0x02dee5
 # GetBitmapCount  (CPU 0x4842dee5)
-.incbin_range "baserom/kn7000_program.rom", 0x02dee5, 0x02deee
+    mov     0x48727fe0, a0
+    retf    0, 0
 # GetFontNameTable  (CPU 0x4842deee)
 .incbin_range "baserom/kn7000_program.rom", 0x02deee, 0x02df0f
 # GetIconNameTable  (CPU 0x4842df0f)
-.incbin_range "baserom/kn7000_program.rom", 0x02df0f, 0x02df18
+    movhu   (0x487287e4), d0
+    retf    0, 0
 # GetFrameCount  (CPU 0x4842df18)
-.incbin_range "baserom/kn7000_program.rom", 0x02df18, 0x02df21
+    mov     0x487287e8, a0
+    retf    0, 0
 # ResNameProc  (CPU 0x4842df21)
 .incbin_range "baserom/kn7000_program.rom", 0x02df21, 0x02df3c
 # GetBitmapNameTable  (CPU 0x4842df3c)
-.incbin_range "baserom/kn7000_program.rom", 0x02df3c, 0x02df45
+    movhu   (0x48728fe8), d0
+    retf    0, 0
 # GetIconCount  (CPU 0x4842df45)
-.incbin_range "baserom/kn7000_program.rom", 0x02df45, 0x02df4e
+    mov     0x48728fec, a0
+    retf    0, 0
 # GetFrameNameTable  (CPU 0x4842df4e)
-.incbin_range "baserom/kn7000_program.rom", 0x02df4e, 0x02df57
+    movhu   (0x487287e0), d0
+    retf    0, 0
 # GetFontCount  (CPU 0x4842df57)
-.incbin_range "baserom/kn7000_program.rom", 0x02df57, 0x02df60
+    mov     0x5000765c, a0
+    retf    0, 0
 # GetFrameSPSize  (CPU 0x4842df60)
     mov     (0x50122db8), a0
     mov     0x14, d1
@@ -2262,11 +2564,25 @@ _rom_marker:
 # BlinkHoldLed  (CPU 0x48431676)
 .incbin_range "baserom/kn7000_program.rom", 0x031676, 0x031683
 # GetSw2Mode  (CPU 0x48431683)
-.incbin_range "baserom/kn7000_program.rom", 0x031683, 0x031690
+    exthu   d0
+    asl2    d0
+    mov     0x485b02d8, a0
+    mov     (d0, a0), d0
+    retf    0, 0
 # VwIconListProc  (CPU 0x48431690)
 .incbin_range "baserom/kn7000_program.rom", 0x031690, 0x0317d1
 # GetTitleOld  (CPU 0x484317d1)
-.incbin_range "baserom/kn7000_program.rom", 0x0317d1, 0x0317ec
+    movm    [a2], (sp)
+    mov     d0, d1
+    exthu   d1
+    mov     0x500318e4, a2
+    mov     d1, d0
+    asl     3, d0
+    mov     a0, (d0, a2)
+    asl     3, d1
+    add     d1, a2
+    mov     a1, (4, a2)
+    retf    [a2], 4
 # ModeProc  (CPU 0x484317ec)
 .incbin_range "baserom/kn7000_program.rom", 0x0317ec, 0x03180a
 # RegisterMode  (CPU 0x4843180a)
