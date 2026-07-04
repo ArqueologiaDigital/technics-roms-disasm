@@ -8,7 +8,12 @@
 # still pulled in verbatim as raw .incbin_range and awaits real disassembly.
 # Disassemble with:  make disasm   (writes disasm/program.asm via MAME unidasm)
 
-.equ PROGRAM_ROM_BASE, 0x48400000
+# 444 function names + the verified memory map, recovered from the firmware's
+# own MILK-toolkit reflection tables (tools/gen_symbols.py). These names are
+# shared with the KN5000 (same UI toolkit) -- see the kn5000-docs Shared
+# Codebase Map. As raw .incbin regions below are converted into real
+# disassembled code, calls/jumps can reference these symbols by name.
+.include "src/symbols.inc"
 
 # ============================================================================
 # Boot header (0x000000 .. 0x000080)

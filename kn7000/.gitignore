@@ -8,3 +8,4 @@ __pycache__/
 # The full linear disassembly is ~30 MB and fully regenerable with `make disasm`;
 # only the curated samples (program_entry.asm, table_directory.asm) are tracked.
 /disasm/program.asm
+/disasm/program_named.asm

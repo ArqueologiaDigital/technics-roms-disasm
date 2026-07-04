@@ -21,7 +21,7 @@ UNIDASM     ?= ../mame-sony-video/unidasm
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
 
-.PHONY: all verify disasm clean distclean baserom
+.PHONY: all verify disasm symbols clean distclean baserom
 
 # Default: build then verify byte-for-byte.
 all: verify
@@ -44,9 +44,15 @@ baserom/kn7000_program.rom baserom/kn7000_table.rom &:
 	@cp "$(EXTRACT_DIR)/output/kn7000_table.rom"   baserom/kn7000_table.rom
 
 # ---- build -----------------------------------------------------------------
-build/kn7000_program.rom: src/program.s tools/kn7asm.py baserom/kn7000_program.rom
+build/kn7000_program.rom: src/program.s src/symbols.inc tools/kn7asm.py baserom/kn7000_program.rom
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
+
+# ---- recover symbols from the firmware's MILK-toolkit reflection tables -----
+# Names 444 functions (shared with the KN5000). Regenerates kn7000.sym and the
+# src/symbols.inc that src/program.s includes.
+symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.rom
+	$(PYTHON) tools/gen_symbols.py baserom/kn7000_program.rom
 
 build/kn7000_table.rom: src/table.s tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
@@ -70,13 +76,21 @@ verify: $(TARGETS)
 	@echo; echo "All images reproduced byte-for-byte."
 
 # ---- (re)generate the reference disassembly listings -----------------------
-disasm: disasm/program.asm disasm/table_directory.asm
+disasm: disasm/program.asm disasm/program_named.asm disasm/table_directory.asm
 
 disasm/program.asm: baserom/kn7000_program.rom
 	@mkdir -p disasm
 	@echo "==> disassembling program code region 1 (0x80..0x186000) with unidasm"
 	@$(UNIDASM) $< -arch mn10300 -basepc 0x48400080 -skip 0x80 \
 	    -count $$((0x186000 - 0x80)) > $@
+	@echo "wrote $@"
+
+# Named, function-by-function disassembly using the recovered symbols.
+disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym tools/disasm_functions.py
+	@mkdir -p disasm
+	@echo "==> named function disassembly (444 functions) with unidasm"
+	@$(PYTHON) tools/disasm_functions.py --rom $< --sym kn7000.sym \
+	    --unidasm $(UNIDASM) > $@
 	@echo "wrote $@"
 
 # The table image is data, not code; provide its directory as a listing.
