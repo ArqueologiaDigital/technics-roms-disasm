@@ -21,7 +21,7 @@ UNIDASM     ?= ../mame-sony-video/unidasm
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
 
-.PHONY: all verify disasm symbols program-src clean distclean baserom
+.PHONY: all verify disasm symbols program-src constants clean distclean baserom
 
 # Default: build then verify byte-for-byte.
 all: verify
@@ -57,6 +57,11 @@ symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.
 # Regenerate src/program.s, converting the CONVERT function set (in
 # tools/gen_program_s.py) into real MN10300 assembly (needs unidasm). The
 # committed src/program.s is the byte-exact result; the build does not need this.
+# Recover the MILK framework's named-constant tables (colours, view flags, ...)
+# into a reference listing + an assembler include.
+constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
+	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
+
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
