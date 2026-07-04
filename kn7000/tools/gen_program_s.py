@@ -35,6 +35,13 @@ CONVERT = {
     "InitializeEventQueue", "DispatchEvent", "SendEvent", "PostEvent",
     "DeleteSpecificEvent", "GetEvent", "GetCurrentTarget", "GetRootEvent",
     "SetFocusParam", "SetAutoInc", "KillApTimer", "GetRootObject",
+    # object / view property accessors (these call the hot framework helper
+    # GetLinkView, so the converted code shows readable named calls)
+    "SetVisible", "SetMovable", "SetChange", "SetConst", "GetJpegSize",
+    "ConvPaletteMono4", "VwEditSwLabelProc", "ScreenProc", "CaptureLcd",
+    "DrawDesignBox", "PsUsrBmpToggleProc", "MusicStylistJpgData",
+    "SetNeedUpdate", "SetDialFocus", "GetFrameSPSize", "GetCharHeight",
+    "GetBitmapSize", "GetCharDescent", "CheckColorLcd", "SetLcdMode",
 }
 
 INSN = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")
@@ -79,7 +86,24 @@ def disasm_function(off, end):
     return insns if cur == end else None
 
 
-def emit_function(d, off, end, name):
+# control-transfer mnemonics whose first operand is an absolute CPU target we
+# can rewrite to a symbol name (only when it lands exactly on a named function).
+CALL_MNEMS = {"call", "calls", "jmp"}
+
+
+def name_target(ops, sym_by_addr):
+    """Rewrite `call 0x48429388, ...` -> `call DispatchEvent, ...` when the
+    target is a known function. Leaves intra-function branch targets alone."""
+    m = re.match(r"(0x[0-9a-fA-F]+)(.*)", ops)
+    if not m:
+        return ops
+    addr = int(m.group(1), 16)
+    if addr in sym_by_addr:
+        return sym_by_addr[addr] + m.group(2)
+    return ops
+
+
+def emit_function(d, off, end, name, sym_by_addr):
     """Returns asm source lines for a converted function (byte-exact)."""
     insns = disasm_function(off, end)
     if insns is None:
@@ -92,6 +116,8 @@ def emit_function(d, off, end, name):
         except ASM.EncError:
             enc = None
         if enc == b:
+            if mnem in CALL_MNEMS:
+                ops = name_target(ops, sym_by_addr)
             lines.append(f"    {mnem:8s}{ops}".rstrip())
         else:
             # keep the exact bytes; annotate with the disassembly for the reader
@@ -104,6 +130,7 @@ def main():
     d = open(ROM, "rb").read()
     syms = load_syms(d)
     r1 = [s for s in syms if 0x80 <= s[0] < 0x186000]
+    sym_by_addr = {BASE + off: nm for off, nm in syms}
     pal = [struct.unpack_from("<I", d, 0x32573C + 4 * i)[0] for i in range(512)]
 
     L = ['# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>',
@@ -143,7 +170,7 @@ def main():
     for i, (off, name) in enumerate(r1):
         end = r1[i + 1][0] if i + 1 < len(r1) else 0x186000
         L.append(f"# {name}  (CPU {BASE + off:#010x})")
-        block = emit_function(d, off, end, name) if name in CONVERT else None
+        block = emit_function(d, off, end, name, sym_by_addr) if name in CONVERT else None
         if block is not None:
             L.extend(block)
             converted += 1

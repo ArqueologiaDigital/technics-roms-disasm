@@ -60,6 +60,23 @@ class Assembler:
         self.cur_line = 0
         self.mn_base = 0   # CPU address that output offset 0 maps to (.mnbase)
 
+    # -- instruction operand symbol resolution --------------------------------
+
+    # Registers must never be treated as symbols even if something .equ's the name.
+    _REGS = frozenset(("d0", "d1", "d2", "d3", "a0", "a1", "a2", "a3",
+                       "sp", "pc", "mdr", "psw", "lir", "lar"))
+
+    def resolve_operands(self, operands):
+        """Substitute known symbol names in an instruction's operand string with
+        their numeric value, so `call DispatchEvent` assembles like `call 0x...`.
+        This keeps converted disassembly readable while staying byte-exact."""
+        def repl(m):
+            tok = m.group(0)
+            if tok not in self._REGS and tok in self.symbols:
+                return hex(self.symbols[tok])
+            return tok
+        return re.sub(r"[A-Za-z_][A-Za-z0-9_]*", repl, operands)
+
     # -- expression evaluation ------------------------------------------------
 
     def evaluate(self, expr):
@@ -208,7 +225,7 @@ class Assembler:
                     raise AsmError("MN10300 encoder (mn10300_asm.py) not available")
                 pc = self.mn_base + len(self.out)
                 try:
-                    self.out += mn10300_asm.encode(op, rest, pc)
+                    self.out += mn10300_asm.encode(op, self.resolve_operands(rest), pc)
                 except mn10300_asm.EncError as e:
                     raise AsmError(f"cannot encode '{op} {rest}': {e}")
             else:
