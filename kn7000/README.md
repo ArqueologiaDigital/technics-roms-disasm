@@ -36,7 +36,7 @@ byte-match invariant is held at 100% the whole way.
 ```
 src/program.s   MN10300 firmware image. Boot header is hand-disassembled;
                 the rest is raw .incbin_range awaiting disassembly.
-src/symbols.inc  1892 recovered function names + memory map (see "Symbols").
+src/symbols.inc  2302 recovered function names + memory map (see "Symbols").
 src/table.s     Resource archive: 85-entry offset directory + 84 asset segments.
 kn7000.sym      Portable "0xADDR  name" symbol table.
 tools/kn7asm.py Self-contained assembler/linker (see "Toolchain" below).
@@ -63,7 +63,7 @@ make distclean  # also remove regenerated baserom/ and listings
 
 ## Symbols — reusing KN5000 knowledge
 
-**1,892 functions are named for free**, recovered from the firmware's own runtime
+**2,302 functions are named for free**, recovered from the firmware's own runtime
 reflection tables by [`tools/gen_symbols.py`](tools/gen_symbols.py). The KN7000
 runs the same object-oriented "MILK" UI toolkit as the KN5000, and embeds **~114
 index-parallel tables** — each a run of code pointers, a NUL, then a run of name
@@ -71,11 +71,12 @@ pointers — that its `MT_GetProcedure`-style lookup uses at runtime. The tool
 discovers them all generically (a function-prologue check on the paired targets
 rejects look-alike event-id / widget-id tables), recovering names like
 `SleepMainTask`, `DispatchEvent`, and the whole `Ac*`/`Vw*`/`Ps*`/`Iv*`/`Tt*`
-widget window-procedure set (490 `*Proc` + 312 `*Func` handlers) — the **same
+widget window-procedure set (518 `*Proc` + 353 `*Func` handlers) — the **same
 names documented for the KN5000** (see the kn5000-docs *Shared Codebase Map*).
-Every recovered target was verified to begin with an MN10300 function prologue,
-and the alignment (`code[j] ↔ name[j-1]`) matches the earlier semantically
-verified pairing.
+The code/name arrays are aligned **directly** (`code[k] ↔ name[k]`) — verified
+behaviourally: under this pairing every `Get*` accessor reads its variable and
+every `Set*` writes it, with no exceptions (the shifted pairing produced
+impossible getters that write memory).
 
 The names land in two places: `kn7000.sym` (a portable `0xADDR name` table) and
 `src/symbols.inc` (`.equ` form, `.include`d by `src/program.s` so future
@@ -134,11 +135,12 @@ linear listing is regenerable and git-ignored.
 ## Status
 
 100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`
-is organised by the recovered functions**, and the **first 18 functions are
-now converted to real, re-assemblable MN10300 assembly** (the task-control and
-event-queue clusters — e.g. `DispatchEvent`, `SendEvent` — 519 instruction lines
-that `kn7asm.py` assembles back to the exact ROM bytes). Growing the `CONVERT`
-set in `tools/gen_program_s.py` and running `make program-src` converts more; the
+is organised by the recovered functions**, and **66 functions are now converted
+to real, re-assemblable MN10300 assembly** (the task/event and display/object
+framework clusters — e.g. `SetVisible`, `DispatchEvent`), with call targets
+resolved to labels so the source reads normally, and `kn7asm.py` assembles it
+back to the exact ROM bytes. Growing the `CONVERT` set in
+`tools/gen_program_s.py` and running `make program-src` converts more; the
 remaining functions stay raw `.incbin_range` until then. The **display palette**
 (256-entry `0x00RRGGBB` CLUT at `0x32573C`) is lifted into typed `.long` source.
 See [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory
