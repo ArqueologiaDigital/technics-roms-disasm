@@ -130,13 +130,15 @@ linear listing is regenerable and git-ignored.
 ## Status
 
 100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`
-is now organised by the 443 recovered functions** — code region 1 is split into
-per-function `.incbin_range` blocks, each labelled with its name and CPU address,
-so the raw bytes can be converted to real MN10300 disassembly one function at a
-time. The **display palette** (256-entry `0x00RRGGBB` CLUT at `0x32573C`) is the
-first data structure lifted from raw `.incbin` into typed `.long` source. See
-[`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory map,
-region map and other findings that guide the work.
+is organised by the 443 recovered functions**, and the **first 18 functions are
+now converted to real, re-assemblable MN10300 assembly** (the task-control and
+event-queue clusters — e.g. `DispatchEvent`, `SendEvent` — 519 instruction lines
+that `kn7asm.py` assembles back to the exact ROM bytes). Growing the `CONVERT`
+set in `tools/gen_program_s.py` and running `make program-src` converts more; the
+remaining functions stay raw `.incbin_range` until then. The **display palette**
+(256-entry `0x00RRGGBB` CLUT at `0x32573C`) is lifted into typed `.long` source.
+See [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory
+map, region map and other findings that guide the work.
 
 ## License
 
