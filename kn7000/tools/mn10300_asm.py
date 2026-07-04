@@ -86,7 +86,10 @@ def mem(tok):
         if re.fullmatch(r"a[0-3]", p):
             return {"kind": "areg", "a": int(p[1])}
         return {"kind": "abs", "disp": imm(p)}
-    disp = imm(parts[0]); base = parts[1]
+    first, base = parts[0], parts[1]
+    if re.fullmatch(r"d[0-3]", first) and re.fullmatch(r"a[0-3]", base):
+        return {"kind": "index", "d": int(first[1]), "a": int(base[1])}  # (dI, aM)
+    disp = imm(first)
     if base == "sp":
         return {"kind": "sp", "disp": disp}
     if re.fullmatch(r"a[0-3]", base):
@@ -127,10 +130,14 @@ def encode(mnem, ops_str, pc):
         op = 0xCA if mnem == "bra" else (0xC0 | CONDS[mnem[1:]])
         return u8(op) + u8(d)
     if mnem == "jmp":
+        if ops[0].startswith("("):                # jmp (aM) -> F0 F4-F7
+            return b"\xf0" + u8(0xF4 | mem(ops[0])["a"])
         target = imm(ops[0]); d = target - pc
         if fits_s16(d):
             return b"\xcc" + le16(d)
         return b"\xdc" + le32(d & 0xFFFFFFFF)
+    if mnem == "calls" and ops[0].startswith("("):  # calls (aM) -> F0 F0-F3
+        return b"\xf0" + u8(0xF0 | mem(ops[0])["a"])
     if mnem in ("call", "calls"):
         target = imm(ops[0]); d = (target - pc) & 0xFFFFFFFF
         if mnem == "calls":
@@ -149,28 +156,42 @@ def encode(mnem, ops_str, pc):
         if ops[0].startswith("["):
             return b"\xcf" + u8(encode_reglist(ops[0]))
         return b"\xce" + u8(encode_reglist(ops[1]))
+    if mnem == "rets":  return b"\xf0\xfc"       # return from subroutine
+    if mnem == "rti":   return b"\xf0\xfd"       # return from interrupt
+    if mnem == "trap":  return b"\xf0\xfe"
 
     # --- shifts (imm8 or reg count) -> F8 or F2 ---
     if mnem in ("asl", "lsr", "asr"):
         sh = {"asl": 0, "lsr": 1, "asr": 2}[mnem]
         _, di = reg(ops[1])
-        if re.match(r"-?(0x)?[0-9a-fA-F]+$", ops[0]):        # imm8 count -> F8 C0/C4/C8
+        if not is_reg_tok(ops[0]):                           # imm8 count -> F8 C0/C4/C8
             return b"\xf8" + u8(0xC0 | (sh << 2) | di) + u8(imm(ops[0]))
         _, si = reg(ops[0])                                   # reg count -> F2 9x/Ax/Bx
         return b"\xf2" + u8((0x90 + sh * 0x10) | (si << 2) | di)
 
-    # --- F2 reg-reg: not / mul / div ---
+    # --- F2 reg-reg: not / mul / div / ext ---
     if mnem == "not":
         _, di = reg(ops[0]); return b"\xf2" + u8(0x30 | di)
+    if mnem == "ext":
+        _, di = reg(ops[0]); return b"\xf2" + u8(0xD0 | di)
     if mnem in ("mul", "mulu", "div", "divu"):
         base = {"mul": 0x40, "mulu": 0x50, "div": 0x60, "divu": 0x70}[mnem]
         _, si = reg(ops[0]); _, di = reg(ops[1])
         return b"\xf2" + u8(base | (si << 2) | di)
 
+    # --- bit ops on an absolute address: bset/bclr/btst imm, (abs) ---
+    if mnem in ("bset", "bclr", "btst") and len(ops) == 2 and ops[1].startswith("("):
+        m = mem(ops[1]); mask = imm(ops[0]) & 0xFF
+        kind = {"bset": 0, "bclr": 1, "btst": 2}[mnem]
+        if m["kind"] == "abs" and fits_u16(m["disp"]):       # (abs16) -> 5 bytes
+            return b"\xfe" + u8(0x80 | kind) + le16(m["disp"]) + u8(mask)
+        if m["kind"] == "abs":                               # (abs32) -> 7 bytes
+            return b"\xfe" + u8(kind) + le32(m["disp"]) + u8(mask)
+
     # --- ALU/mov families dispatched by operand shapes ---
     if mnem in ("mov", "movbu", "movhu"):
         return enc_move(mnem, ops, pc)
-    if mnem in ("add", "sub", "cmp", "and", "or", "xor"):
+    if mnem in ("add", "sub", "cmp", "and", "or", "xor", "btst"):
         return enc_alu(mnem, ops)
 
     raise EncError(f"unsupported mnemonic: {mnem} {ops_str}")
@@ -208,6 +229,12 @@ def enc_move(mnem, ops, pc):
         return enc_ldst(mnem, mem(src), reg(dst), store=False)
     if dst.startswith("("):
         return enc_ldst(mnem, mem(dst), reg(src), store=True)
+
+    # special-register moves (mdr / psw)
+    if mnem == "mov" and src in ("mdr", "psw"):
+        _, di = reg(dst); return b"\xf2" + u8((0xE0 if src == "mdr" else 0xE4) | di)
+    if mnem == "mov" and dst in ("mdr", "psw"):
+        _, si = reg(src); return b"\xf2" + u8(0xF0 | (si << 2) | (2 if dst == "mdr" else 3))
 
     # reg <- reg (mov only)
     if mnem == "mov" and is_reg_tok(src) and is_reg_tok(dst):
@@ -266,8 +293,23 @@ def enc_ldst(mnem, m, r, store):
             return b"\xfa" + u8((typ << 5) | dirbit | (ri << 2) | m["a"]) + le16(disp)
         return b"\xfc" + u8((typ << 5) | dirbit | (ri << 2) | m["a"]) + le32(disp)
 
-    if m["kind"] == "areg" and size == 0 and rc == "d":
-        return u8((0x60 if store else 0x70) | (ri << 2) | m["a"])
+    if m["kind"] == "areg":
+        if rc == "a" and size == 0:          # mov (aM),aD / aS,(aM) -> F0 0x0/0x1
+            return b"\xf0" + u8((0x10 if store else 0x00) | (ri << 2) | m["a"])
+        if size == 0:                        # mov (aM),dD / dD,(aM) single-byte
+            return u8((0x60 if store else 0x70) | (ri << 2) | m["a"])
+        # movbu/movhu (aM) -> F0 prefix
+        base = {(2, False): 0x40, (3, False): 0x60,
+                (2, True): 0x50, (3, True): 0x70}[(size, store)]
+        return b"\xf0" + u8(base | (ri << 2) | m["a"])
+
+    if m["kind"] == "index":                 # (dI, aM) indexed
+        ea = (ri << 4) | (m["d"] << 2) | m["a"]
+        dirbit = 0x40 if store else 0
+        if size == 0:                        # F3, bit7 = a/d register select
+            return b"\xf3" + u8((0x80 if rc == "a" else 0) | dirbit | ea)
+        # F4 byte/half (d-regs only); bit7 = half
+        return b"\xf4" + u8((0x80 if size == 3 else 0) | dirbit | ea)
 
     if m["kind"] == "abs":                   # (abs16) short forms, else FC (abs32)
         a = m["disp"]
@@ -294,6 +336,10 @@ def enc_alu(mnem, ops):
         sc, si = reg(src)
         if mnem == "add" and dc == "d" and sc == "d":
             return u8(0xE0 | (si << 2) | di)               # add dS,dD
+        if mnem == "cmp" and dc == "d" and sc == "d":
+            return u8(0xA0 | (si << 2) | di)               # cmp dS,dD
+        if mnem == "cmp" and dc == "a" and sc == "a":
+            return u8(0xB0 | (si << 2) | di)               # cmp aS,aD
         # F2 reg-reg logicals (data regs only)
         if mnem in ("and", "or", "xor") and dc == "d" and sc == "d":
             return b"\xf2" + u8({"and": 0x00, "or": 0x10, "xor": 0x20}[mnem]
@@ -320,10 +366,11 @@ def enc_alu(mnem, ops):
     # per-op opcode nibbles for the FA (imm16) / FC (imm32) prefixed forms
     FA = {("add", "d"): 0xC0, ("add", "a"): 0xD0, ("cmp", "d"): 0xC8,
           ("cmp", "a"): 0xD8, ("and", "d"): 0xE0, ("or", "d"): 0xE4,
-          ("xor", "d"): 0xE8}
+          ("xor", "d"): 0xE8, ("btst", "d"): 0xEC}
     FC = {("add", "d"): 0xC0, ("add", "a"): 0xD0, ("sub", "d"): 0xC4,
           ("sub", "a"): 0xD4, ("cmp", "d"): 0xC8, ("cmp", "a"): 0xD8,
-          ("and", "d"): 0xE0, ("or", "d"): 0xE4, ("xor", "d"): 0xE8}
+          ("and", "d"): 0xE0, ("or", "d"): 0xE4, ("xor", "d"): 0xE8,
+          ("btst", "d"): 0xEC}
     key = (mnem, dc)
     signed = mnem in ("add", "sub") or (mnem == "cmp" and dc == "d")
     small = fits_s8(v) if signed else fits_u8(v)
@@ -335,8 +382,8 @@ def enc_alu(mnem, ops):
         if mnem == "add" and dc == "a":  return u8(0x20 | di) + u8(v)
         if mnem == "cmp" and dc == "d":  return u8(0xA0 | (di << 2) | di) + u8(v)
         if mnem == "cmp" and dc == "a":  return u8(0xB0 | (di << 2) | di) + u8(v)
-        if mnem in ("and", "or") and dc == "d":            # F8 E0/E4 (no xor imm8)
-            return b"\xf8" + u8({"and": 0xE0, "or": 0xE4}[mnem] | di) + u8(v)
+        if mnem in ("and", "or", "btst") and dc == "d":    # F8 E0/E4/EC (no xor imm8)
+            return b"\xf8" + u8({"and": 0xE0, "or": 0xE4, "btst": 0xEC}[mnem] | di) + u8(v)
     # imm16 forms (FA)
     if mid and key in FA:
         return b"\xfa" + u8(FA[key] | di) + le16(v)

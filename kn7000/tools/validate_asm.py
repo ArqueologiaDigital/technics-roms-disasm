@@ -20,6 +20,11 @@ LINE = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")
 
 def main():
     src = open(sys.argv[1]) if len(sys.argv) > 1 else sys.stdin
+    # Optional ROM: unidasm's F4 (movbu/movhu indexed) handler has a length bug --
+    # it prints only 1 of the instruction's 2 bytes -- so for F4 we compare against
+    # the real ROM bytes instead of the truncated listing.
+    rom = open(sys.argv[2], "rb").read() if len(sys.argv) > 2 else None
+    ROM_BASE = 0x48400000
     total = ok = unsupported = mismatch = 0
     unsup = Counter()
     mism_examples = {}
@@ -39,6 +44,9 @@ def main():
             unsupported += 1
             unsup[mnem] += 1
             continue
+        if rom is not None and enc[:1] == b"\xf4":       # trust the ROM over unidasm
+            off = pc - ROM_BASE
+            orig = rom[off:off + len(enc)]
         if enc == orig:
             ok += 1
         else:

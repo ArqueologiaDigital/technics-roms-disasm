@@ -17,4 +17,4 @@ tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
 BASEPC="$(printf '0x%x' $((BASE + START)))"    # unidasm needs hex -basepc
 "$UNIDASM" "$ROM" -arch mn10300 -basepc "$BASEPC" -skip $START \
     -count $((END - START)) > "$tmp"
-python3 validate_asm.py "$tmp"
+python3 validate_asm.py "$tmp" "$ROM"
