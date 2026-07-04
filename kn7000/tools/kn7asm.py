@@ -37,6 +37,15 @@ import os
 import re
 import sys
 
+# The MN10300 instruction encoder lives beside this file. It lets source lines
+# hold real MN10300 mnemonics (unidasm operand syntax) that assemble to bytes,
+# not just raw .incbin/.byte data. Optional: without it, only data directives work.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import mn10300_asm
+except ImportError:
+    mn10300_asm = None
+
 
 class AsmError(Exception):
     pass
@@ -49,6 +58,7 @@ class Assembler:
         self.symbols = {}
         self.cur_file = "<none>"
         self.cur_line = 0
+        self.mn_base = 0   # CPU address that output offset 0 maps to (.mnbase)
 
     # -- expression evaluation ------------------------------------------------
 
@@ -188,6 +198,19 @@ class Assembler:
                 self.do_incbin_range(args)
             elif op == ".include":
                 self.assemble_file(self.resolve_path(self.unquote(args[0])))
+            elif op == ".mnbase":
+                self.mn_base = self.evaluate(args[0])
+            elif not op.startswith("."):
+                # A bare mnemonic => an MN10300 instruction. PC-relative targets
+                # (branches/calls/jumps) are absolute CPU addresses, so encode()
+                # needs this instruction's CPU address = mn_base + output offset.
+                if mn10300_asm is None:
+                    raise AsmError("MN10300 encoder (mn10300_asm.py) not available")
+                pc = self.mn_base + len(self.out)
+                try:
+                    self.out += mn10300_asm.encode(op, rest, pc)
+                except mn10300_asm.EncError as e:
+                    raise AsmError(f"cannot encode '{op} {rest}': {e}")
             else:
                 raise AsmError(f"unknown directive {op!r}")
         self.cur_file, self.cur_line = prev_file, prev_line

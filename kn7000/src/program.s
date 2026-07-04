@@ -1,55 +1,94 @@
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
 # Licensed under the terms of the GNU General Public License v3 or later
 #
-# KN7000 "Program" flash image (kn7000_program.rom) - byte-exact skeleton.
-#
-# Panasonic MN10300 code, mapped at CPU address 0x48400000 (file offset + base).
-# The boot header below is hand-disassembled. Code region 1 is split at the 443
-# function boundaries recovered from the firmware's own reflection tables (see
-# kn7000.sym / tools/gen_symbols.py) -- each raw .incbin_range block is now
-# labelled with its function's name and CPU address, ready to be converted to
-# real disassembly one function at a time while `make verify` stays byte-exact.
-# Disassemble a function with:  make disasm   (writes disasm/program_named.asm)
+# KN7000 "Program" flash image (kn7000_program.rom) - byte-exact.
+# Panasonic MN10300, mapped at CPU 0x48400000. Code region 1 is split at
+# the 443 recovered functions; functions listed in tools/gen_program_s.py
+# CONVERT are emitted as real MN10300 assembly (verified byte-exact by the
+# mn10300_asm encoder), the rest remain raw .incbin_range. Regenerate with
+# tools/gen_program_s.py. make verify guarantees byte-identity.
 
 .equ PROGRAM_ROM_BASE, 0x48400000
-
-# 443 function names + the verified memory map, recovered from the firmware's own
-# MILK-toolkit reflection tables (tools/gen_symbols.py). These names are shared
-# with the KN5000 (same UI toolkit) -- see the kn5000-docs Shared Codebase Map.
+.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/symbols.inc"
 
-# ============================================================================
-# Boot header (0x000000 .. 0x000080)
-# ============================================================================
+# ---- boot header (0x0..0x80) ----
 _reset:
     .byte 0xDC, 0x7E, 0xFF, 0x00, 0x00      # jmp  0x4840FF7E   (reset entry)
     .byte 0xCB, 0xCB, 0xCB, 0xCB, 0xCB      # nop x5
 _vector_0a:
     .byte 0xDC, 0xC5, 0x77, 0x0D, 0x00      # jmp  0x484D77CF
 _rom_marker:
-    .byte 0x16                              # ROM-present marker (cmp'd vs 0xFF)
-    .space 0x80 - 0x10, 0xFF                # 0xFF fill to 0x000080
+    .byte 0x16                              # ROM-present marker (cmp vs 0xFF)
+    .space 0x80 - 0x10, 0xFF
     .org 0x000080
 
 # ============================================================================
-# Code region 1 (main firmware) -- organised by recovered function.
-# Each block is still raw bytes (.incbin_range); convert to real MN10300
-# instructions incrementally. Unnamed gaps are leaf/helper code not present in
-# the reflection tables.
+# Code region 1 -- organised by recovered function.
 # ============================================================================
-
-# ---- pre-function init code (0x80 .. 0x14b8d) ----
 .incbin_range "baserom/kn7000_program.rom", 0x000080, 0x014b8d
 # DeleteEvent  (CPU 0x48414b8d)
 .incbin_range "baserom/kn7000_program.rom", 0x014b8d, 0x014ba7
 # SleepMainTask  (CPU 0x48414ba7)
-.incbin_range "baserom/kn7000_program.rom", 0x014ba7, 0x014bc1
+    add     -0x14, sp
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x00020009, d0
+    mov     0x0006009e, d1
+    call    0x48414a77, 0, 0x14
+    ret     0, 0x14
 # WakeUpMainTask  (CPU 0x48414bc1)
-.incbin_range "baserom/kn7000_program.rom", 0x014bc1, 0x014bdb
+    add     -0x14, sp
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x00020009, d0
+    mov     0x0006009f, d1
+    call    0x48414afd, 0, 0x14
+    ret     0, 0x14
 # SleepApTask  (CPU 0x48414bdb)
-.incbin_range "baserom/kn7000_program.rom", 0x014bdb, 0x014bf5
+    add     -0x14, sp
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x00020009, d0
+    mov     0x000600a0, d1
+    call    0x48414afd, 0, 0x14
+    ret     0, 0x14
 # WakeUpApTask  (CPU 0x48414bf5)
-.incbin_range "baserom/kn7000_program.rom", 0x014bf5, 0x014c98
+    add     -0x14, sp
+    clr     d0
+    mov     d0, (0x50021fd8)
+    mov     d0, (0x50021fdc)
+    mov     d0, (0x50021fe0)
+    mov     -1, d0
+    mov     0x00050006, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x00050005, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x00050007, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x00050017, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x00050014, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x0005000c, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x0005000d, d1
+    call    0x48429906, [d2], 0x18
+    mov     -1, d0
+    mov     0x0005000e, d1
+    call    0x48429906, [d2], 0x18
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x000600a1, d1
+    call    0x484298a0, [d2], 0x1c
+    ret     0, 0x14
 # LcdOn  (CPU 0x48414c98)
 .incbin_range "baserom/kn7000_program.rom", 0x014c98, 0x01567d
 # GetJpegSize  (CPU 0x4841567d)
@@ -325,7 +364,257 @@ _rom_marker:
 # InitializeBlock31  (CPU 0x48421804)
 .incbin_range "baserom/kn7000_program.rom", 0x021804, 0x0218ef
 # RefreshSwEvent  (CPU 0x484218ef)
-.incbin_range "baserom/kn7000_program.rom", 0x0218ef, 0x021bb7
+    add     -8, sp
+    call    0x484218ff, [a2], 0x20
+    ret     0, 8
+    movm    [a2], (sp)
+    add     -0x1c, sp
+    movhu   (0x500d3c64), d0
+    mov     0x5000757c, a2
+    exth    d0
+    mov     a2, a0
+    mov     0x38, d1
+    nop
+    nop
+    mul     d1, d0
+    add     d0, a0
+    movhu   (8, a0), d0
+    mov     sp, a0
+    exth    d0
+    add     0x18, a0
+    mov     1, d1
+    mov     d1, (0x14, sp)
+    call    0x4c03c5af, 0, 0
+    call    0x48421a27, 0, 0
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     d0, a2
+    movhu   (8, a2), d0
+    mov     1, d1
+    exth    d0
+    call    0x4c03cd7f, 0, 0
+    ret     [a2], 0x20
+    movm    [a2,a3], (sp)
+    add     -0x1c, sp
+    movhu   (0x500d3c64), d0
+    mov     0x5000757c, a3
+    exth    d0
+    mov     0x38, d1
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, a0
+    add     a3, a0
+    movhu   (8, a0), d0
+    mov     sp, a0
+    exth    d0
+    add     0x18, a0
+    mov     1, d1
+    mov     d1, (0x14, sp)
+    call    0x4c03c5af, 0, 0
+    call    0x48421a5e, 0, 0
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     d0, a3
+    movhu   (8, a3), d0
+    mov     a0, a2
+    exth    d0
+    mov     1, d1
+    call    0x4c03cd7f, 0, 0
+    mov     a2, a0
+    ret     [a2,a3], 0x24
+    movm    [d2,a2,a3], (sp)
+    add     -0x1c, sp
+    mov     a0, (0x30, sp)
+    mov     sp, a3
+    add     0x18, a3
+    mov     0x5000757c, d2
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, a0
+    add     d2, a0
+    movhu   (8, a0), d0
+    mov     a3, a0
+    exth    d0
+    mov     1, d1
+    mov     d1, (0x14, sp)
+    call    0x4c03c5af, 0, 0
+    mov     (0x30, sp), a0
+    call    0x48421ab1, [a2], 4
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     d2, d0
+    mov     1, d1
+    mov     a0, a2
+    mov     d0, a0
+    movhu   (8, a0), d0
+    exth    d0
+    call    0x4c03cd7f, 0, 0
+    movhu   (0x500d3c64), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     d2, d0
+    mov     d0, a0
+    movhu   (6, a0), d0
+    mov     1, d1
+    exth    d0
+    call    0x4c03cd7f, 0, 0
+    cmp     0, a2
+    bne     0x48421a1f
+    clr     d0
+    mov     d0, d1
+    call    0x4c03c0e4, 0, 0
+    cmp     0, a2
+    beq     0x484219af
+    mov     a2, a0
+    ret     [d2,a2,a3], 0x28
+    clr     d0
+    movhu   d0, (0x5011f880)
+    movhu   d0, (0x5011f882)
+    movhu   d0, (0x5011f884)
+    movhu   d0, (0x5011f886)
+    mov     0x1ff, d0
+    movhu   d0, (0x5011f888)
+    mov     0x5002a034, a0
+    mov     a0, (0x5002c034)
+    mov     a0, (0x5002c038)
+    retf    0, 0
+    movhu   (0x5011f882), d1
+    movhu   (0x5011f886), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    mov     0, a0
+    beq     0x48421aac
+    movhu   (0x5011f882), d0
+    mov     0x5011f88c, a0
+    exth    d0
+    asl2    d0
+    mov     (d0, a0), a0
+    movhu   (0x5011f882), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (0x5011f882)
+    exth    d0
+    cmp     0x80, d0
+    blt     0x48421a9d
+    clr     d0
+    movhu   d0, (0x5011f882)
+    movhu   (0x5011f888), d0
+    exth    d0
+    add     4, d0
+    movhu   d0, (0x5011f888)
+    retf    0, 0
+    movm    [a2], (sp)
+    movhu   (0x5011f888), d0
+    mov     a0, a2
+    exth    d0
+    cmp     4, d0
+    mov     0, a0
+    bcs     0x48421b06
+    movhu   (0x5011f886), d0
+    mov     0x5011f88c, a0
+    exth    d0
+    asl2    d0
+    mov     a2, (d0, a0)
+    movhu   (0x5011f886), d0
+    exth    d0
+    asl2    d0
+    add     d0, a0
+    movhu   (0x5011f886), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (0x5011f886)
+    exth    d0
+    cmp     0x80, d0
+    blt     0x48421af5
+    clr     d0
+    movhu   d0, (0x5011f886)
+    movhu   (0x5011f888), d0
+    mov     4, d1
+    exth    d0
+    sub     d1, d0
+    movhu   d0, (0x5011f888)
+    retf    [a2], 4
+    movhu   (0x5011f882), d0
+    movhu   d0, (0x5011f880)
+    retf    0, 0
+    movhu   (0x5011f880), d1
+    movhu   (0x5011f886), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    mov     0, a0
+    beq     0x48421b57
+    movhu   (0x5011f880), d0
+    mov     0x5011f88c, a0
+    exth    d0
+    asl2    d0
+    mov     (d0, a0), a0
+    movhu   (0x5011f880), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (0x5011f880)
+    exth    d0
+    cmp     0x80, d0
+    blt     0x48421b57
+    clr     d0
+    movhu   d0, (0x5011f880)
+    retf    0, 0
+    movm    [d2], (sp)
+    add     3, d0
+    mov     d0, d2
+    lsr     2, d2
+    asl2    d2
+    mov     (0x5002c038), a0
+    mov     0x5002a034, d0
+    mov     a0, d1
+    sub     d0, d1
+    add     d2, d1
+    cmp     0x2000, d1
+    bcc     0x48421b85
+    mov     a0, d0
+    add     d2, d0
+    mov     d0, (0x5002c038)
+    bra     0x48421b8e
+    mov     d0, a0
+    add     d2, d0
+    mov     d0, (0x5002c038)
+    retf    [d2], 4
+    retf    0, 0
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x4c03dc38, [d2,d3,a2], 0x1c
+    movhu   (0xc, sp), d1
+    movhu   (0x500d3c64), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bne     0x48421bb3
+    mov     1, d0
+    bra     0x48421bb4
+    clr     d0
+    ret     0, 0x10
 # SetRootParam  (CPU 0x48421bb7)
 .incbin_range "baserom/kn7000_program.rom", 0x021bb7, 0x021c59
 # ShiftSize  (CPU 0x48421c59)
@@ -439,33 +728,285 @@ _rom_marker:
 # SetPresetWall  (CPU 0x48428d79)
 .incbin_range "baserom/kn7000_program.rom", 0x028d79, 0x02936f
 # InitializeEventQueue  (CPU 0x4842936f)
-.incbin_range "baserom/kn7000_program.rom", 0x02936f, 0x029388
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    exth    d0
+    call    0x48428c43, [d2,d3,a2,a3], 0x44
+    ret     0, 0x10
 # DispatchEvent  (CPU 0x48429388)
-.incbin_range "baserom/kn7000_program.rom", 0x029388, 0x0293ad
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+    mov     sp, a0
+    add     0x18, a0
+    mov     d1, d3
+    mov     d0, d2
+    call    0x48414a4f, [a2], 4
+    mov     (0x34, sp), a0
+    mov     d2, d0
+    mov     a0, (0x10, sp)
+    movhu   (0x18, sp), d1
+    exth    d1
+    mov     d1, (0x14, sp)
+    mov     d3, d1
+    call    0x48428555, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3], 0x24
 # SendEvent  (CPU 0x484293ad)
-.incbin_range "baserom/kn7000_program.rom", 0x0293ad, 0x0293d2
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+    mov     sp, a0
+    add     0x18, a0
+    mov     d1, d3
+    mov     d0, d2
+    call    0x48414a4f, [a2], 4
+    mov     (0x34, sp), a0
+    mov     d2, d0
+    mov     a0, (0x10, sp)
+    movhu   (0x18, sp), d1
+    exth    d1
+    mov     d1, (0x14, sp)
+    mov     d3, d1
+    call    0x484285e4, [d2,d3,a2,a3], 0x38
+    ret     [d2,d3], 0x24
 # PostEvent  (CPU 0x484293d2)
-.incbin_range "baserom/kn7000_program.rom", 0x0293d2, 0x0293f5
+    movm    [d2,a2,a3], (sp)
+    add     -0x1c, sp
+    mov     d0, d2
+    mov     a1, a3
+    mov     a0, a2
+    mov     sp, a0
+    add     0x18, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0x18, sp), d0
+    mov     d2, d1
+    exth    d0
+    mov     a3, a1
+    mov     a2, a0
+    call    0x48428792, [d2,d3,a2,a3], 0x2c
+    mov     1, d0
+    ret     [d2,a2,a3], 0x28
 # DeleteSpecificEvent  (CPU 0x484293f5)
-.incbin_range "baserom/kn7000_program.rom", 0x0293f5, 0x029416
+    movm    [d2,d3], (sp)
+    add     -0x18, sp
+    mov     sp, a0
+    add     0x14, a0
+    mov     d1, d3
+    mov     d0, d2
+    call    0x48414a4f, [a2], 4
+    movhu   (0x14, sp), d1
+    mov     d2, d0
+    exth    d1
+    mov     d1, (0x10, sp)
+    mov     d3, d1
+    call    0x484288b1, [d2,d3,a2,a3], 0x54
+    ret     [d2,d3], 0x20
 # FuncCall  (CPU 0x48429416)
 .incbin_range "baserom/kn7000_program.rom", 0x029416, 0x02943b
 # GetEvent  (CPU 0x4842943b)
-.incbin_range "baserom/kn7000_program.rom", 0x02943b, 0x029460
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     (0x10, a0), d0
+    ret     0, 0x10
 # GetCurrentTarget  (CPU 0x48429460)
-.incbin_range "baserom/kn7000_program.rom", 0x029460, 0x02948c
+    movm    [d3], (sp)
+    add     -0x10, sp
+    mov     d0, d3
+    cmp     -1, d3
+    beq     0x48429489
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     d3, (0x10, a0)
+    ret     [d3], 0x14
 # SetFocusParam  (CPU 0x4842948c)
-.incbin_range "baserom/kn7000_program.rom", 0x02948c, 0x029564
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     d0, d3
+    mov     d1, (0x3c, sp)
+    mov     sp, a0
+    add     0x18, a0
+    call    0x48414a4f, [a2], 4
+    mov     d3, d0
+    lsr     16, d0
+    exthu   d0
+    asl     4, d0
+    add     0x5011faac, d0
+    mov     d0, a0
+    mov     (4, a0), a2
+    cmp     0, a2
+    bne     0x484294b9
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x30
+    movhu   (0x18, sp), d1
+    mov     0x5000757c, d2
+    exth    d1
+    mov     0x38, d0
+    nop
+    nop
+    mul     d1, d0
+    add     d2, d0
+    mov     d0, a0
+    mov     d3, (0x20, a0)
+    mov     (0x3c, sp), a0
+    mov     0x38, d0
+    nop
+    nop
+    mul     d1, d0
+    add     d2, d0
+    mov     d0, a1
+    mov     a0, (0x24, a1)
+    mov     (0x40, sp), a3
+    mov     0x38, d0
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, a1
+    add     d2, a1
+    mov     a3, (0x28, a1)
+    mov     0x38, d0
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, a0
+    add     d2, a0
+    mov     (0xc, a0), d0
+    mov     0x00060000, d1
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    calls   (a2)
+    movhu   (0x18, sp), d1
+    mov     d3, (0x1c, sp)
+    exth    d1
+    mov     0x38, d3
+    nop
+    nop
+    mul     d1, d3
+    mov     d3, a0
+    add     d2, a0
+    mov     d0, (0xc, a0)
+    lsr     16, d0
+    exthu   d0
+    asl     4, d0
+    mov     0x38, d3
+    nop
+    nop
+    mul     d1, d3
+    mov     d3, a0
+    add     d2, a0
+    mov     (0xc, a0), d1
+    mov     d0, a0
+    add     0x5011faac, a0
+    mov     (0xc, a0), a0
+    exthu   d1
+    mov     0x18, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     (d1, a0), a1
+    clr     d0
+    cmp     0, a1
+    beq     0x4842954f
+    mov     a3, (0x10, sp)
+    mov     (0x3c, sp), d1
+    mov     (0x1c, sp), d0
+    calls   (a1)
+    movhu   (0x18, sp), d1
+    mov     0x38, d3
+    exth    d1
+    nop
+    nop
+    mul     d3, d1
+    add     d1, d2
+    mov     (0x14, sp), d1
+    mov     d2, a0
+    mov     d1, (0xc, a0)
+    ret     [d2,d3,a2,a3], 0x30
 # ObjectProc  (CPU 0x48429564)
 .incbin_range "baserom/kn7000_program.rom", 0x029564, 0x02960c
 # KillApTimer  (CPU 0x4842960c)
-.incbin_range "baserom/kn7000_program.rom", 0x02960c, 0x029631
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     (0x14, a0), d0
+    ret     0, 0x10
 # GetRootObject  (CPU 0x48429631)
-.incbin_range "baserom/kn7000_program.rom", 0x029631, 0x029656
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     (0x18, a0), d0
+    ret     0, 0x10
 # GetRootEvent  (CPU 0x48429656)
-.incbin_range "baserom/kn7000_program.rom", 0x029656, 0x02967b
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     (0x1c, a0), d0
+    ret     0, 0x10
 # SetAutoInc  (CPU 0x4842967b)
-.incbin_range "baserom/kn7000_program.rom", 0x02967b, 0x0296a3
+    movm    [d3], (sp)
+    add     -0x10, sp
+    mov     sp, a0
+    add     0xc, a0
+    mov     d0, d3
+    call    0x48414a4f, [a2], 4
+    movhu   (0xc, sp), d0
+    mov     0x38, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x5000757c, d0
+    mov     d0, a0
+    mov     d3, (0x14, a0)
+    ret     [d3], 0x14
 # InitDrawTask  (CPU 0x484296a3)
 .incbin_range "baserom/kn7000_program.rom", 0x0296a3, 0x0296cb
 # SetRootEvent  (CPU 0x484296cb)
@@ -501,7 +1042,32 @@ _rom_marker:
 # MainGetEvent  (CPU 0x4842989b)
 .incbin_range "baserom/kn7000_program.rom", 0x02989b, 0x0298b7
 # RefreshApTask  (CPU 0x484298b7)
-.incbin_range "baserom/kn7000_program.rom", 0x0298b7, 0x029901
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+    mov     d1, d3
+    mov     d0, d2
+    cmp     -1, d2
+    bne     0x484298cd
+    mov     (0x30, sp), a0
+    mov     a0, (0x10, sp)
+    call    0x484298a0, [d2], 0x1c
+    bra     0x484298fe
+    mov     0xc, d0
+    call    0x4841662a, [d2,a2,a3], 0x28
+    mov     a0, a2
+    mov     d2, (a2)
+    mov     d3, (4, a2)
+    mov     (0x30, sp), a1
+    mov     -1, d0
+    mov     a1, (8, a2)
+    mov     a0, (0x10, sp)
+    mov     0x0005002f, d1
+    call    0x484298a0, [d2], 0x1c
+    mov     a2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00060023, d1
+    call    0x484298a0, [d2], 0x1c
+    ret     [d2,d3,a2], 0x20
 # ApSendEvent  (CPU 0x48429901)
 .incbin_range "baserom/kn7000_program.rom", 0x029901, 0x029919
 # ApDeleteEvent  (CPU 0x48429919)
@@ -927,18 +1493,10 @@ _rom_marker:
 # InitializeBlock40  (CPU 0x485844eb)
 .incbin_range "baserom/kn7000_program.rom", 0x1844eb, 0x186000
 
-# ============================================================================
-# Data / resources region.
-#   float64 dB-ratio table ~0x185DC0, multi-language UI text, FAT boot template,
-#   flash-chip ID strings, RGB palettes, fonts, GUI resource tables, 9 JPEGs,
-#   two Windows BMPs (clef @0x19E704, photo @0x345718).
-# ============================================================================
+# ---- data / resources region ----
 .incbin_range "baserom/kn7000_program.rom", 0x186000, 0x32573C
 
-# ---- display palette (256-entry 0x00RRGGBB CLUT, then a themed sub-range) ----
-# The LCD colour lookup table used to render the table-ROM indexed bitmaps.
-# 512 entries total; the first 256 are the display CLUT (idx0=black, 1=navy,
-# 2=green, 7=gray, 9=blue, 0xF7=the KN5000 transparent index, ...).
+# ---- display palette (256-entry 0x00RRGGBB CLUT + a themed sub-range) ----
 display_palette:
     .long 0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00808080   # idx   0
     .long 0x00303030, 0x000080FF, 0x000048FF, 0x00004080, 0x0038FF68, 0x00000000, 0x00C8C8C8, 0x00808080   # idx   8
@@ -1007,11 +1565,7 @@ display_palette:
 .org 0x325F3C
 .incbin_range "baserom/kn7000_program.rom", 0x32573C + 0x800, 0x3B8000
 
-# ============================================================================
-# Code region 2 (MILK MN10300 kernel + zlib 1.0.4). No reflection-table symbols
-# cover this region (it is the platform/kernel layer, not the app).
-#   kernel banner "MILK MN10300 Ver1.0R1" @0x3B8AAC; zlib banners @0x3B8604/0x3B863C.
-# ============================================================================
+# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4) ----
 .incbin_range "baserom/kn7000_program.rom", 0x3B8000, 0x3F6F01
 
 .org 0x3F6F01   # end of image
