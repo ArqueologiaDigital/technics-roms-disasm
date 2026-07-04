@@ -26,6 +26,40 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
+# 32 synthetic labels for internal helpers called by converted code
+.equ func_48414A4F, 0x48414A4F
+.equ func_48414A77, 0x48414A77
+.equ func_48414AFD, 0x48414AFD
+.equ func_48414B90, 0x48414B90
+.equ func_48414BAA, 0x48414BAA
+.equ func_484156A0, 0x484156A0
+.equ func_4841584C, 0x4841584C
+.equ func_48415AAB, 0x48415AAB
+.equ func_4841662A, 0x4841662A
+.equ func_484166DE, 0x484166DE
+.equ func_4841C37C, 0x4841C37C
+.equ func_484218FF, 0x484218FF
+.equ func_48421A27, 0x48421A27
+.equ func_48421A5E, 0x48421A5E
+.equ func_48421AB1, 0x48421AB1
+.equ func_48428555, 0x48428555
+.equ func_484285E4, 0x484285E4
+.equ func_48428792, 0x48428792
+.equ func_484288B1, 0x484288B1
+.equ func_48428C43, 0x48428C43
+.equ func_48429569, 0x48429569
+.equ func_484298A0, 0x484298A0
+.equ func_48429906, 0x48429906
+.equ func_4842B30C, 0x4842B30C
+.equ func_484483B7, 0x484483B7
+.equ func_48453170, 0x48453170
+.equ func_4849BC1A, 0x4849BC1A
+.equ func_4852FDCD, 0x4852FDCD
+.equ func_48530216, 0x48530216
+.equ func_48532395, 0x48532395
+.equ func_485323BF, 0x485323BF
+.equ func_48532494, 0x48532494
+
 .incbin_range "baserom/kn7000_program.rom", 0x000080, 0x014a74
 # UserBitmapCheck  (CPU 0x48414a74)
 .incbin_range "baserom/kn7000_program.rom", 0x014a74, 0x014afa
@@ -39,7 +73,7 @@ _rom_marker:
     mov     d0, (0x10, sp)
     mov     0x00020009, d0
     mov     0x0006009e, d1
-    call    0x48414a77, 0, 0x14
+    call    func_48414A77, 0, 0x14
     ret     0, 0x14
 # WakeUpMainTask  (CPU 0x48414bc1)
     add     -0x14, sp
@@ -47,7 +81,7 @@ _rom_marker:
     mov     d0, (0x10, sp)
     mov     0x00020009, d0
     mov     0x0006009f, d1
-    call    0x48414afd, 0, 0x14
+    call    func_48414AFD, 0, 0x14
     ret     0, 0x14
 # SleepApTask  (CPU 0x48414bdb)
     add     -0x14, sp
@@ -55,7 +89,7 @@ _rom_marker:
     mov     d0, (0x10, sp)
     mov     0x00020009, d0
     mov     0x000600a0, d1
-    call    0x48414afd, 0, 0x14
+    call    func_48414AFD, 0, 0x14
     ret     0, 0x14
 # WakeUpApTask  (CPU 0x48414bf5)
     add     -0x14, sp
@@ -65,33 +99,33 @@ _rom_marker:
     mov     d0, (0x50021fe0)
     mov     -1, d0
     mov     0x00050006, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x00050005, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x00050007, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x00050017, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x00050014, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x0005000c, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x0005000d, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     mov     -1, d0
     mov     0x0005000e, d1
-    call    0x48429906, [d2], 0x18
+    call    func_48429906, [d2], 0x18
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x000600a1, d1
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     ret     0, 0x14
 # LcdOn  (CPU 0x48414c98)
 .incbin_range "baserom/kn7000_program.rom", 0x014c98, 0x01567d
@@ -101,9 +135,9 @@ _rom_marker:
     exthu   d0
     cmp     2, d0
     beq     0x48415693
-    call    0x484156a0, [d2,d3,a2,a3], 0x84
+    call    func_484156A0, [d2,d3,a2,a3], 0x84
     bra     0x48415698
-    call    0x4841584c, [d2,d3,a2,a3], 0xd4
+    call    func_4841584C, [d2,d3,a2,a3], 0xd4
     ret     0, 8
     movm    [d2,d3,a2,a3], (sp)
     add     -0x74, sp
@@ -118,11 +152,11 @@ _rom_marker:
     mov     (0x50021fc8), d0
     inc     d0
     mov     d0, (0x50021fc8)
-    call    0x4852fdcd, 0, 8
-    call    0x48530216, [d2,d3,a2,a3], 0x10
+    call    func_4852FDCD, 0, 8
+    call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e2f4, a1
-    call    0x48532395, [a2,a3], 0x24
+    call    func_48532395, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x484156ee
@@ -156,10 +190,10 @@ _rom_marker:
     call    0x4c003039, [a2,a3], 8
     mov     0xe, d0
     mov     a2, a0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x4841574d
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     0x28, d0
@@ -184,14 +218,14 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     mov     0x28, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415794
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     0x3c00, d0
-    call    0x4841662a, [d2,a2,a3], 0x28
+    call    func_4841662A, [d2,a2,a3], 0x28
     mov     a0, a3
     cmp     0, a3
     bne     0x484157a4
@@ -255,10 +289,10 @@ _rom_marker:
     blt     0x484157b1
     mov     a3, a0
     mov     0x3c00, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0x3c00, d0
     beq     0x48415824
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     bra     0x48415843
     mov     (0x14, sp), d0
@@ -269,8 +303,8 @@ _rom_marker:
     bge     0x48415834
     jmp     0x484157a7
     mov     a3, a0
-    call    0x484166de, [d2,d3,a2,a3], 0x2c
-    call    0x485323bf, 0, 0x14
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    func_485323BF, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x84
     movm    [d2,d3,a2,a3], (sp)
@@ -286,11 +320,11 @@ _rom_marker:
     mov     (0x50021fcc), d0
     inc     d0
     mov     d0, (0x50021fcc)
-    call    0x4852fdcd, 0, 8
-    call    0x48530216, [d2,d3,a2,a3], 0x10
+    call    func_4852FDCD, 0, 8
+    call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e32c, a1
-    call    0x48532395, [a2,a3], 0x24
+    call    func_48532395, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x4841589a
@@ -324,10 +358,10 @@ _rom_marker:
     call    0x4c003039, [a2,a3], 8
     mov     0xe, d0
     mov     a2, a0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x484158f9
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     mov     0x28, d0
@@ -352,10 +386,10 @@ _rom_marker:
     mov     sp, a0
     add     0x5c, a0
     mov     0x28, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415940
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     clr     d3
@@ -411,14 +445,14 @@ _rom_marker:
     mov     sp, a0
     add     0x84, a0
     mov     0x40, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0x40, d0
     beq     0x484159c6
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     mov     0xa00, d0
-    call    0x4841662a, [d2,a2,a3], 0x28
+    call    func_4841662A, [d2,a2,a3], 0x28
     mov     a0, (0x20, sp)
     cmp     0, a0
     bne     0x484159d7
@@ -478,10 +512,10 @@ _rom_marker:
     blt     0x484159e9
     mov     (0x20, sp), a0
     mov     0xa00, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0xa00, d0
     beq     0x48415a64
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     bra     0x48415a84
     mov     (0x1c, sp), d0
@@ -492,8 +526,8 @@ _rom_marker:
     bge     0x48415a74
     jmp     0x484159da
     mov     (0x20, sp), a0
-    call    0x484166de, [d2,d3,a2,a3], 0x2c
-    call    0x485323bf, 0, 0x14
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    func_485323BF, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0xd4
 # CaptureLcd  (CPU 0x48415a87)
@@ -505,7 +539,7 @@ _rom_marker:
     cmp     2, d0
     beq     0x48415aa1
     mov     a2, a0
-    call    0x48415aab, [d2,d3,a2,a3], 0x94
+    call    func_48415AAB, [d2,d3,a2,a3], 0x94
     bra     0x48415aa2
     clr     d0
     ret     [a2], 0x10
@@ -523,11 +557,11 @@ _rom_marker:
     mov     (0x50021fd0), d0
     inc     d0
     mov     d0, (0x50021fd0)
-    call    0x4852fdcd, 0, 8
-    call    0x48530216, [d2,d3,a2,a3], 0x10
+    call    func_4852FDCD, 0, 8
+    call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e344, a1
-    call    0x48532395, [a2,a3], 0x24
+    call    func_48532395, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x48415afa
@@ -613,10 +647,10 @@ _rom_marker:
     call    0x4c003039, [a2,a3], 8
     mov     a2, a0
     mov     0xe, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x48415bb6
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x94
     mov     0x28, d0
@@ -639,14 +673,14 @@ _rom_marker:
     mov     d0, (0x7c, sp)
     mov     d0, (0x80, sp)
     mov     0x28, d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415bf4
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x94
     mov     (0x20, sp), d0
-    call    0x4841662a, [d2,a2,a3], 0x28
+    call    func_4841662A, [d2,a2,a3], 0x28
     mov     a0, (0x14, sp)
     cmp     0, a0
     bne     0x48415c04
@@ -734,13 +768,13 @@ _rom_marker:
     blt     0x48415c13
     mov     (0x14, sp), a0
     mov     (0x20, sp), d0
-    call    0x48532494, [d2,a2], 0x24
+    call    func_48532494, [d2,a2], 0x24
     mov     (0x20, sp), d1
     cmp     d1, d0
     beq     0x48415cb4
-    call    0x485323bf, 0, 0x14
+    call    func_485323BF, 0, 0x14
     mov     (0x14, sp), a0
-    call    0x484166de, [d2,d3,a2,a3], 0x2c
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
     clr     d0
     bra     0x48415cd2
     mov     (0x18, sp), d0
@@ -752,8 +786,8 @@ _rom_marker:
     bge     0x48415cc2
     jmp     0x48415c10
     mov     (0x14, sp), a0
-    call    0x484166de, [d2,d3,a2,a3], 0x2c
-    call    0x485323bf, 0, 0x14
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    func_485323BF, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x94
 # MainMmmControl  (CPU 0x48415cd5)
@@ -890,7 +924,7 @@ _rom_marker:
     bra     0x484185d4
     mov     (0x24, sp), a0
     mov     a0, (0x10, sp)
-    call    0x48429569, [d2,d3,a2,a3], 0x28
+    call    func_48429569, [d2,d3,a2,a3], 0x28
     ret     0, 0x14
 # VwLabelProc  (CPU 0x484185d7)
 .incbin_range "baserom/kn7000_program.rom", 0x0185d7, 0x018625
@@ -917,7 +951,7 @@ _rom_marker:
     bra     0x48418ba3
     mov     (0x24, sp), a0
     mov     a0, (0x10, sp)
-    call    0x48429569, [d2,d3,a2,a3], 0x28
+    call    func_48429569, [d2,d3,a2,a3], 0x28
     ret     0, 0x14
 # GetEditSwPoint  (CPU 0x48418ba6)
 .incbin_range "baserom/kn7000_program.rom", 0x018ba6, 0x018c2f
@@ -1103,7 +1137,7 @@ _rom_marker:
 .incbin_range "baserom/kn7000_program.rom", 0x021804, 0x0218ef
 # RefreshSwEvent  (CPU 0x484218ef)
     add     -8, sp
-    call    0x484218ff, [a2], 0x20
+    call    func_484218FF, [a2], 0x20
     ret     0, 8
     movm    [a2], (sp)
     add     -0x1c, sp
@@ -1123,7 +1157,7 @@ _rom_marker:
     mov     1, d1
     mov     d1, (0x14, sp)
     call    0x4c03c5af, 0, 0
-    call    0x48421a27, 0, 0
+    call    func_48421A27, 0, 0
     movhu   (0x500d3c64), d0
     mov     0x38, d1
     exth    d0
@@ -1154,7 +1188,7 @@ _rom_marker:
     mov     1, d1
     mov     d1, (0x14, sp)
     call    0x4c03c5af, 0, 0
-    call    0x48421a5e, 0, 0
+    call    func_48421A5E, 0, 0
     movhu   (0x500d3c64), d0
     mov     0x38, d1
     exth    d0
@@ -1190,7 +1224,7 @@ _rom_marker:
     mov     d1, (0x14, sp)
     call    0x4c03c5af, 0, 0
     mov     (0x30, sp), a0
-    call    0x48421ab1, [a2], 4
+    call    func_48421AB1, [a2], 4
     movhu   (0x500d3c64), d0
     mov     0x38, d1
     exth    d0
@@ -1510,10 +1544,10 @@ _rom_marker:
     add     -0x10, sp
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     exth    d0
-    call    0x48428c43, [d2,d3,a2,a3], 0x44
+    call    func_48428C43, [d2,d3,a2,a3], 0x44
     ret     0, 0x10
 # DispatchEvent  (CPU 0x48429388)
     movm    [d2,d3], (sp)
@@ -1522,7 +1556,7 @@ _rom_marker:
     add     0x18, a0
     mov     d1, d3
     mov     d0, d2
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -1530,7 +1564,7 @@ _rom_marker:
     exth    d1
     mov     d1, (0x14, sp)
     mov     d3, d1
-    call    0x48428555, [d2,d3,a2,a3], 0x28
+    call    func_48428555, [d2,d3,a2,a3], 0x28
     ret     [d2,d3], 0x24
 # SendEvent  (CPU 0x484293ad)
     movm    [d2,d3], (sp)
@@ -1539,7 +1573,7 @@ _rom_marker:
     add     0x18, a0
     mov     d1, d3
     mov     d0, d2
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -1547,7 +1581,7 @@ _rom_marker:
     exth    d1
     mov     d1, (0x14, sp)
     mov     d3, d1
-    call    0x484285e4, [d2,d3,a2,a3], 0x38
+    call    func_484285E4, [d2,d3,a2,a3], 0x38
     ret     [d2,d3], 0x24
 # PostEvent  (CPU 0x484293d2)
     movm    [d2,a2,a3], (sp)
@@ -1557,13 +1591,13 @@ _rom_marker:
     mov     a0, a2
     mov     sp, a0
     add     0x18, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0x18, sp), d0
     mov     d2, d1
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    0x48428792, [d2,d3,a2,a3], 0x2c
+    call    func_48428792, [d2,d3,a2,a3], 0x2c
     mov     1, d0
     ret     [d2,a2,a3], 0x28
 # DeleteSpecificEvent  (CPU 0x484293f5)
@@ -1573,13 +1607,13 @@ _rom_marker:
     add     0x14, a0
     mov     d1, d3
     mov     d0, d2
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0x14, sp), d1
     mov     d2, d0
     exth    d1
     mov     d1, (0x10, sp)
     mov     d3, d1
-    call    0x484288b1, [d2,d3,a2,a3], 0x54
+    call    func_484288B1, [d2,d3,a2,a3], 0x54
     ret     [d2,d3], 0x20
 # FuncCall  (CPU 0x48429416)
 .incbin_range "baserom/kn7000_program.rom", 0x029416, 0x02943b
@@ -1587,7 +1621,7 @@ _rom_marker:
     add     -0x10, sp
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1606,7 +1640,7 @@ _rom_marker:
     beq     0x48429489
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1624,7 +1658,7 @@ _rom_marker:
     mov     d1, (0x3c, sp)
     mov     sp, a0
     add     0x18, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     mov     d3, d0
     lsr     16, d0
     exthu   d0
@@ -1728,7 +1762,7 @@ _rom_marker:
     add     -0x10, sp
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1743,7 +1777,7 @@ _rom_marker:
     add     -0x10, sp
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1758,7 +1792,7 @@ _rom_marker:
     add     -0x10, sp
     mov     sp, a0
     add     0xc, a0
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1775,7 +1809,7 @@ _rom_marker:
     mov     sp, a0
     add     0xc, a0
     mov     d0, d3
-    call    0x48414a4f, [a2], 4
+    call    func_48414A4F, [a2], 4
     movhu   (0xc, sp), d0
     mov     0x38, d1
     exth    d0
@@ -1829,10 +1863,10 @@ _rom_marker:
     bne     0x484298cd
     mov     (0x30, sp), a0
     mov     a0, (0x10, sp)
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     bra     0x484298fe
     mov     0xc, d0
-    call    0x4841662a, [d2,a2,a3], 0x28
+    call    func_4841662A, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     d2, (a2)
     mov     d3, (4, a2)
@@ -1841,11 +1875,11 @@ _rom_marker:
     mov     a1, (8, a2)
     mov     a0, (0x10, sp)
     mov     0x0005002f, d1
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
     mov     0x00060023, d1
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     ret     [d2,d3,a2], 0x20
 # ApSendEvent  (CPU 0x48429901)
 .incbin_range "baserom/kn7000_program.rom", 0x029901, 0x029919
@@ -2298,7 +2332,7 @@ _rom_marker:
     bra     0x4847afda
     mov     (0x24, sp), a0
     mov     a0, (0x10, sp)
-    call    0x48429569, [d2,d3,a2,a3], 0x28
+    call    func_48429569, [d2,d3,a2,a3], 0x28
     ret     0, 0x14
 # AcOtpRamBoxProc  (CPU 0x4847afdd)
 .incbin_range "baserom/kn7000_program.rom", 0x07afdd, 0x07b2ae
@@ -2608,7 +2642,7 @@ _rom_marker:
     ret     [d2,a2], 0x1c
     call    GetLinkView, 0, 0
     mov     a0, a2
-    call    0x4849bc1a, [d2], 0x18
+    call    func_4849BC1A, [d2], 0x18
     exth    d0
     cmp     0, d0
     beq     0x4849c7bc
@@ -2668,7 +2702,7 @@ _rom_marker:
     bra     0x4849c83f
     mov     (0x2c, sp), a0
     mov     a0, (0x10, sp)
-    call    0x48429569, [d2,d3,a2,a3], 0x28
+    call    func_48429569, [d2,d3,a2,a3], 0x28
     ret     [d2,a2], 0x1c
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
@@ -2684,7 +2718,7 @@ _rom_marker:
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
     add     0x14, a0
-    call    0x484483b7, [d2,d3,a2,a3], 0x50
+    call    func_484483B7, [d2,d3,a2,a3], 0x50
     movhu   (0x14, sp), d0
     movhu   d0, (0x5006b86a)
     mov     1, d0
@@ -2721,7 +2755,7 @@ _rom_marker:
     add     -0x10, sp
     mov     a0, a2
     mov     d0, d2
-    call    0x4842b30c, 0, 0x10
+    call    func_4842B30C, 0, 0x10
     cmp     0xe000e, d0
     bne     0x4849c8fd
     movhu   (0x5006b86c), d0
@@ -2758,7 +2792,7 @@ _rom_marker:
     add     -0x14, sp
     mov     d1, a3
     mov     d0, a2
-    call    0x4842b30c, 0, 0x10
+    call    func_4842B30C, 0, 0x10
     cmp     0xe000e, d0
     bne     0x4849c96c
     movhu   (0x5006b86c), d0
@@ -2766,7 +2800,7 @@ _rom_marker:
     bne     0x4849c97a
     mov     a2, d0
     mov     a3, d1
-    call    0x4841c37c, [d2,d3,a2], 0x20
+    call    func_4841C37C, [d2,d3,a2], 0x20
     jmp     0x4849ca59
     mov     0x002000b0, d1
     cmp     d1, a2
@@ -2818,14 +2852,14 @@ _rom_marker:
     add     a0, d1
     extbu   d1
     call    0x4c029844, [d2], 0x18
-    call    0x48414b90, 0, 0x14
+    call    func_48414B90, 0, 0x14
     extbu   d3
     mov     d3, d0
     exthu   d0
-    call    0x48453170, [d2,d3,a2,a3], 0x54
-    call    0x48414baa, 0, 0x14
+    call    func_48453170, [d2,d3,a2,a3], 0x54
+    call    func_48414BAA, 0, 0x14
     mov     0x10, d0
-    call    0x4841662a, [d2,a2,a3], 0x28
+    call    func_4841662A, [d2,a2,a3], 0x28
     mov     a2, d0
     and     0x00ffffff, d0
     mov     d0, (a0)
@@ -2834,15 +2868,15 @@ _rom_marker:
     mov     a2, (0x10, sp)
     mov     -1, d0
     mov     0x00050014, d1
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     mov     a2, (0x10, sp)
     mov     -1, d0
     mov     0x00060023, d1
-    call    0x484298a0, [d2], 0x1c
+    call    func_484298A0, [d2], 0x1c
     bra     0x4849ca59
     mov     a2, d0
     mov     a3, d1
-    call    0x4841c37c, [d2,d3,a2], 0x20
+    call    func_4841C37C, [d2,d3,a2], 0x20
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
     cmp     0x6003b, d1

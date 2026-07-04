@@ -58,8 +58,27 @@ def load_syms(data):
     return sorted(syms)
 
 
-def insn_len(d, o):
-    return ASM  # placeholder (unused; unidasm gives lengths)
+def discover_functions(d):
+    """Every `call`/`calls` target in code region 1 is a function entry point.
+    (On the MN10300 the call instruction itself saves the register list, so a
+    callee does not begin with a uniform prologue -- it starts straight into its
+    work -- which is why we key on *being called* rather than on a byte pattern.)
+    These give the internal helpers the reflection tables don't name a synthetic
+    `func_<ADDR>` label, so converted code shows named calls everywhere. `jmp`
+    targets are excluded here (they can be intra-function), but a jmp that lands
+    on one of these entries is still resolved by name_target."""
+    out = subprocess.run(
+        [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{BASE + 0x80:x}",
+         "-skip", "0x80", "-count", str(0x186000 - 0x80)],
+        capture_output=True, text=True).stdout
+    entries = set()
+    for line in out.splitlines():
+        m = re.match(r"[0-9a-f]+:\s+(?:[0-9a-f]{2} )+\s+calls?\s+0x([0-9a-f]+)", line)
+        if m:
+            t = int(m.group(1), 16)
+            if BASE + 0x80 <= t < BASE + 0x186000:
+                entries.add(t)
+    return entries
 
 
 def disasm_function(off, end):
@@ -91,19 +110,21 @@ def disasm_function(off, end):
 CALL_MNEMS = {"call", "calls", "jmp"}
 
 
-def name_target(ops, sym_by_addr):
+def name_target(ops, names, used):
     """Rewrite `call 0x48429388, ...` -> `call DispatchEvent, ...` when the
-    target is a known function. Leaves intra-function branch targets alone."""
+    target is a known function (semantic name or synthetic func_<ADDR>). Records
+    the name in `used` so its equate can be emitted. Branch targets stay numeric."""
     m = re.match(r"(0x[0-9a-fA-F]+)(.*)", ops)
     if not m:
         return ops
     addr = int(m.group(1), 16)
-    if addr in sym_by_addr:
-        return sym_by_addr[addr] + m.group(2)
+    if addr in names:
+        used.add(addr)
+        return names[addr] + m.group(2)
     return ops
 
 
-def emit_function(d, off, end, name, sym_by_addr):
+def emit_function(d, off, end, name, names, used):
     """Returns asm source lines for a converted function (byte-exact)."""
     insns = disasm_function(off, end)
     if insns is None:
@@ -117,7 +138,7 @@ def emit_function(d, off, end, name, sym_by_addr):
             enc = None
         if enc == b:
             if mnem in CALL_MNEMS:
-                ops = name_target(ops, sym_by_addr)
+                ops = name_target(ops, names, used)
             lines.append(f"    {mnem:8s}{ops}".rstrip())
         else:
             # keep the exact bytes; annotate with the disassembly for the reader
@@ -132,6 +153,14 @@ def main():
     r1 = [s for s in syms if 0x80 <= s[0] < 0x186000]
     sym_by_addr = {BASE + off: nm for off, nm in syms}
     pal = [struct.unpack_from("<I", d, 0x32573C + 4 * i)[0] for i in range(512)]
+
+    # Full name map: reflection-table names + synthetic func_<ADDR> for the
+    # internal helpers those tables don't cover, so every call in converted code
+    # resolves to a label. `used` records which get referenced (to emit equates).
+    names = dict(sym_by_addr)
+    for a in discover_functions(d):
+        names.setdefault(a, f"func_{a:08X}")
+    used = set()
 
     L = ['# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>',
          '# Licensed under the terms of the GNU General Public License v3 or later',
@@ -163,19 +192,30 @@ def main():
          '# ============================================================================']
 
     ROMQ = '"baserom/kn7000_program.rom"'
+    body = []
     if r1[0][0] > 0x80:
-        L.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
+        body.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
 
     converted = 0
     for i, (off, name) in enumerate(r1):
         end = r1[i + 1][0] if i + 1 < len(r1) else 0x186000
-        L.append(f"# {name}  (CPU {BASE + off:#010x})")
-        block = emit_function(d, off, end, name, sym_by_addr) if name in CONVERT else None
+        body.append(f"# {name}  (CPU {BASE + off:#010x})")
+        block = emit_function(d, off, end, name, names, used) if name in CONVERT else None
         if block is not None:
-            L.extend(block)
+            body.extend(block)
             converted += 1
         else:
-            L.append(f".incbin_range {ROMQ}, {off:#08x}, {end:#08x}")
+            body.append(f".incbin_range {ROMQ}, {off:#08x}, {end:#08x}")
+
+    # equates for the synthetic helper labels actually referenced by converted code
+    auto = sorted(a for a in used if a not in sym_by_addr)
+    if auto:
+        L.append(f"# {len(auto)} synthetic labels for internal helpers called by "
+                 "converted code")
+        for a in auto:
+            L.append(f".equ {names[a]}, 0x{a:08X}")
+        L.append("")
+    L.extend(body)
 
     # data / resources region, with the display palette as typed .long
     L += ['',
