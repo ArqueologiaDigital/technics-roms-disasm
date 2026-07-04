@@ -1,0 +1,105 @@
+# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
+# Licensed under the terms of the GNU General Public License v3 or later
+#
+# KN7000 "Table" flash image (kn7000_table.rom) - byte-exact skeleton.
+#
+# Layout: an 85-entry uint32 little-endian offset directory at 0x0
+# (dir[0]=0x200 first segment ... dir[84]=file size, end sentinel),
+# zero padding to 0x200, then 84 asset segments. Every region below is
+# still a raw .incbin_range; converting the tagged data chunks into real
+# .word/.byte tables is future work (the JPEG segments will likely stay
+# as .incbin of extracted .jpg files).
+
+.equ TABLE_ROM_BASE, 0x48000000   # CPU address of this flash
+
+# ---- directory + padding (0x000 .. 0x200) ----
+.incbin_range "baserom/kn7000_table.rom", 0x000000, 0x000200
+
+# ---- 84 asset segments ----
+.incbin_range "baserom/kn7000_table.rom", 0x000200, 0x034858   # seg00 @ (0x34658 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x034858, 0x035D08   # seg01 ZZZJ (0x14b0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x035D08, 0x040674   # seg02 TCMP (0xa96c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x040674, 0x04238C   # seg03 TPAD (0x1d18 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x04238C, 0x05667C   # seg04 Tech (0x142f0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x05667C, 0x06EA98   # seg05 l (0x1841c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x06EA98, 0x139EE8   # seg06 JK (0xcb450 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x139EE8, 0x139EEC   # seg07 84 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x139EEC, 0x139EF0   # seg08 ZZZ (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x139EF0, 0x143690   # seg09 JPEG (0x97a0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x143690, 0x14E4D8   # seg10 JPEG (0xae48 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x14E4D8, 0x1523F8   # seg11 JPEG (0x3f20 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1523F8, 0x15AC60   # seg12 JPEG (0x8868 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x15AC60, 0x162C14   # seg13 JPEG (0x7fb4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x162C14, 0x16C128   # seg14 JPEG (0x9514 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x16C128, 0x16DE00   # seg15 JPEG (0x1cd8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x16DE00, 0x171768   # seg16 JPEG (0x3968 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x171768, 0x174698   # seg17 JPEG (0x2f30 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x174698, 0x176480   # seg18 JPEG (0x1de8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x176480, 0x17A590   # seg19 JPEG (0x4110 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17A590, 0x17B394   # seg20 JPEG (0xe04 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17B394, 0x17C14C   # seg21 JPEG (0xdb8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17C14C, 0x17CF58   # seg22 JPEG (0xe0c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17CF58, 0x17D5FC   # seg23 JPEG (0x6a4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17D5FC, 0x17F4FC   # seg24 JPEG (0x1f00 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x17F4FC, 0x19027C   # seg25 JPEG (0x10d80 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x19027C, 0x1A3D78   # seg26 JPEG (0x13afc bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1A3D78, 0x1A649C   # seg27 JPEG (0x2724 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1A649C, 0x1A7F60   # seg28 JPEG (0x1ac4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1A7F60, 0x1B5974   # seg29 JPEG (0xda14 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1B5974, 0x1BAD20   # seg30 JPEG (0x53ac bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1BAD20, 0x1C0D28   # seg31 JPEG (0x6008 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1C0D28, 0x1C4DD8   # seg32 JPEG (0x40b0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1C4DD8, 0x1C6EA8   # seg33 JPEG (0x20d0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1C6EA8, 0x1C9298   # seg34 JPEG (0x23f0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1C9298, 0x1CA0B8   # seg35 JPEG (0xe20 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1CA0B8, 0x1CD2D4   # seg36 JPEG (0x321c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1CD2D4, 0x1CF39C   # seg37 JPEG (0x20c8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1CF39C, 0x1D0DDC   # seg38 JPEG (0x1a40 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1D0DDC, 0x1D8ABC   # seg39 JPEG (0x7ce0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1D8ABC, 0x1DA9E0   # seg40 JPEG (0x1f24 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1DA9E0, 0x1DCBC0   # seg41 JPEG (0x21e0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1DCBC0, 0x1DF50C   # seg42 JPEG (0x294c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1DF50C, 0x1E0BF0   # seg43 JPEG (0x16e4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1E0BF0, 0x1E4098   # seg44 JPEG (0x34a8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1E4098, 0x1E7418   # seg45 JPEG (0x3380 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1E7418, 0x1EA850   # seg46 JPEG (0x3438 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1EA850, 0x1EBF48   # seg47 JPEG (0x16f8 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1EBF48, 0x1F07FC   # seg48 JPEG (0x48b4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1F07FC, 0x1FB438   # seg49 JPEG (0xac3c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FB438, 0x1FD45C   # seg50 JPEG (0x2024 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FD45C, 0x1FD460   # seg51 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FD460, 0x1FD464   # seg52 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FD464, 0x1FD468   # seg53 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FD468, 0x1FD46C   # seg54 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x1FD46C, 0x211694   # seg55 DATA (0x14228 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x211694, 0x22F1C0   # seg56 DATA (0x1db2c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x22F1C0, 0x23CBAC   # seg57 < (0xd9ec bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x23CBAC, 0x244F78   # seg58 DATA (0x83cc bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x244F78, 0x37E784   # seg59 DATA (0x13980c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x37E784, 0x37EFB4   # seg60 JPEG (0x830 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x37EFB4, 0x3820BC   # seg61 JPEG (0x3108 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3820BC, 0x383EFC   # seg62 JPEG (0x1e40 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x383EFC, 0x386BE8   # seg63 JPEG (0x2cec bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x386BE8, 0x389850   # seg64 JPEG (0x2c68 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x389850, 0x389854   # seg65 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x389854, 0x389858   # seg66 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x389858, 0x3BF138   # seg67 F (0x358e0 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3BF138, 0x3BF13C   # seg68 84 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3BF13C, 0x3BF140   # seg69 84 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3BF140, 0x3BF144   # seg70 84 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3BF144, 0x3BF148   # seg71 27 (0x4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3BF148, 0x3D0C14   # seg72 DATA (0x11acc bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3D0C14, 0x3D6BD0   # seg73 JPEG (0x5fbc bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3D6BD0, 0x3D7608   # seg74 JPEG (0xa38 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3D7608, 0x3D8584   # seg75 JPEG (0xf7c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3D8584, 0x3D94C0   # seg76 JPEG (0xf3c bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3D94C0, 0x3DA4A4   # seg77 JPEG (0xfe4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3DA4A4, 0x3DAB14   # seg78 JPEG (0x670 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3DAB14, 0x3DB544   # seg79 JPEG (0xa30 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3DB544, 0x3DC5B4   # seg80 JPEG (0x1070 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3DC5B4, 0x3DEF88   # seg81 JPEG (0x29d4 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3DEF88, 0x3E828C   # seg82 JPEG (0x9304 bytes)
+.incbin_range "baserom/kn7000_table.rom", 0x3E828C, 0x3E94D4   # seg83 Tech (0x1248 bytes)
+
+.org 0x3E94D4   # end of image (== file size)
+
