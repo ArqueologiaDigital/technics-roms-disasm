@@ -14,8 +14,13 @@
 # The reflection data has two index-parallel arrays in the program image:
 #   * a NUL-terminated u32 array of CODE pointers  at file 0x3270AC
 #   * a NUL-terminated u32 array of NAME pointers   at file 0x3277A0
-# Entry i pairs code[i] with the name string at name[i]. Verified: essentially
-# every target begins with an MN10300 function prologue (movm / add -n,sp).
+# The arrays are offset by one: the function at code[j] is named by name[j-1]
+# (equivalently name[i] describes code[i+1]). This was pinned down semantically:
+# e.g. code index for 0x2936F is a tiny no-argument init helper == the name
+# "InitializeEventQueue" that sits one slot back, while the next two entries are
+# the two-argument DispatchEvent/SendEvent siblings -- which only lines up under
+# the shift. code[0] (leading) and the last name (trailing) are therefore
+# unpaired. Verified: essentially every target begins with an MN10300 prologue.
 #
 # Program flash maps at CPU 0x48400000, so cpu_addr = file_offset + 0x48400000.
 #
@@ -67,9 +72,10 @@ def recover_symbols(data):
 
     out = {}          # file_offset -> name
     used = set()      # names already taken (keep them unique)
-    for i in range(n):
-        code = read_u32(data, CODE_ARRAY + 4 * i)
-        name = read_name(data, read_u32(data, NAME_ARRAY + 4 * i))
+    # code[j] is named by name[j-1]; code[0] is the unpaired leading entry.
+    for j in range(1, n):
+        code = read_u32(data, CODE_ARRAY + 4 * j)
+        name = read_name(data, read_u32(data, NAME_ARRAY + 4 * (j - 1)))
         coff = code - PROGRAM_BASE
         if name is None or not (CODE_LO <= coff < CODE_HI) or coff in out:
             continue
