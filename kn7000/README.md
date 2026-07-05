@@ -150,3 +150,12 @@ map, region map and other findings that guide the work.
 
 (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
 Licensed under the terms of the GNU General Public License v3 or later.
+
+## Manual symbol supplement
+
+`kn7000_manual.sym` hand-names functions that the firmware's own reflection
+tables (which produce `kn7000.sym`) leave unnamed -- recovered by reverse-
+engineering in the sibling `kn7000_mame` driver effort (panel serial protocol,
+MIDI ISRs, button dispatch, tone-generator register writes; see that repo's
+`notes/`). `make disasm` merges it with the generated `kn7000.sym`. It does not
+affect the byte-exact build (`make verify` stays 100%).

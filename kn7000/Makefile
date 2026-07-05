@@ -97,10 +97,11 @@ disasm/program.asm: baserom/kn7000_program.rom
 	@echo "wrote $@"
 
 # Named, function-by-function disassembly using the recovered symbols.
-disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym tools/disasm_functions.py
-	@mkdir -p disasm
-	@echo "==> named function disassembly (444 functions) with unidasm"
-	@$(PYTHON) tools/disasm_functions.py --rom $< --sym kn7000.sym \
+disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym tools/disasm_functions.py
+	@mkdir -p disasm build
+	@echo "==> named function disassembly with unidasm (generated + manual symbols)"
+	@cat kn7000.sym kn7000_manual.sym > build/kn7000_merged.sym
+	@$(PYTHON) tools/disasm_functions.py --rom $< --sym build/kn7000_merged.sym \
 	    --unidasm $(UNIDASM) > $@
 	@echo "wrote $@"
 

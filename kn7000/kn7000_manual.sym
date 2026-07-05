@@ -1,0 +1,48 @@
+; KN7000 MANUAL symbol supplement — hand-reversed functions NOT named by the
+; firmware's own MILK-toolkit reflection tables (those live in the generated
+; kn7000.sym). These were recovered by dynamic + static reverse-engineering in
+; the sibling kn7000_mame driver effort; each is a verified instruction-boundary
+; function entry. Merged into the annotated disassembly by `make disasm`.
+; Cross-references: see kn7000_mame/notes/*.md.
+;
+; ---- Control-panel serial protocol (SIO ch0 @ 0x34000800) ------------------
+; The main CPU <-> panel sub-CPU handshake. Full protocol in
+; kn7000_mame/notes/panel-serial-protocol.md. These sit in the large unnamed
+; gap after FadeIOFilter.
+0x484AC2A8  PanelTransaction        ; 10-retry command transaction driver
+0x484AC523  PanelTxKick             ; queue [cmd,arg] into the TX ring, start TX
+0x484AC5F1  PanelAtnIsr             ; ISR, INTC group 0x1A (panel ATN 2-edge pulse)
+0x484AC70E  PanelTxDoneIsr          ; ISR, group 0x11 (sync-transfer-complete TX state machine)
+0x484AC74A  PanelRxIsr              ; ISR, group 0x10 (reply byte -> RX ring)
+0x484AC799  PanelTxState1           ; TX state 1 (line sync)
+0x484AC84D  PanelTxState2           ; TX state 2 (payload byte 1)
+0x484AC923  PanelTxState3           ; TX state 3 (line sync)
+0x484AC98C  PanelTxState4           ; TX state 4 (payload byte 2)
+0x484ACA5E  PanelTxState5           ; TX state 5 (line sync)
+0x484ACAFF  PanelTxState6           ; TX state 6 (line sync)
+0x484ACC13  PanelRxState8           ; RX state 8 (reads 0x34000809 -> reply ring)
+;
+; ---- Panel button dispatch -------------------------------------------------
+0x484ADB59  PanelButtonDispatch     ; normal-mode button dispatcher (descriptor tables 0x48614978/0x486149FC)
+;
+; ---- MIDI (MN10300 on-chip serial SC1/SC2 @ 0x34000810/0x34000820) ---------
+; See kn7000_mame/notes/midi-rx.md, boot-performance-and-clock.md.
+0x484B1E86  Midi1RxIsr              ; MIDI port 1 RX ISR (ICR 0x34000148, group 0x12)
+0x484B2037  Midi2RxIsr              ; MIDI port 2 RX ISR (ICR 0x34000150, group 0x14)
+0x484B2691  MidiBaudTimerSetup      ; sets TM3MD/TM3BR (=0x3F) : baud = IOCLK/8/(TM3BR+1) = 31250
+0x484B2793  MidiSerialInit          ; SC1/SC2 init: 8N1, CK=Timer3-underflow/8
+;
+; ---- Tone generators (main 0x98040000 / sub 0x98050000) --------------------
+; Register-indirect 32-bit writes (HIGH16->base+0 addr, LOW16->base+2 data).
+; See kn7000_mame/notes/tone-generator.md. (The helper has main & sub tails
+; sharing one epilogue; ToneGenWriteMain is the main-TG store path.)
+0x487EFF92  ToneGenWriteMain        ; write a main-TG register (addr in d1, data in d2)
+;
+; ---- Data tables (reference only; commented so the code disassembler skips
+;      them — these are DATA, not code) --------------------------------------
+; 0x48735EE4  RhythmGenreNameTable   ; 16 records x 0x18, "[H"+centred name (8&16 BEAT..MEMORY)
+; 0x4860C9F4  PanelSwitchClassTable  ; service panel-test mode: switch# -> [LED reg, value]
+; 0x486135A0  PanelWireNormTable     ; wire (bank<<1|sub) -> normalized segment
+; 0x48614978  ButtonDescPtrTableA    ; per-normSeg descriptor pointer table (bank A = KN7000)
+; 0x486149FC  ButtonDescPtrTableB    ; per-normSeg descriptor pointer table (bank B)
+; 0x4872573C  ClutPaletteSeedTable   ; 256x 0x00BBGGRR CLUT seed (idx 0x1D-0xF3 = green placeholder)
