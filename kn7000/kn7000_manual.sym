@@ -46,3 +46,8 @@
 ; 0x48614978  ButtonDescPtrTableA    ; per-normSeg descriptor pointer table (bank A = KN7000)
 ; 0x486149FC  ButtonDescPtrTableB    ; per-normSeg descriptor pointer table (bank B)
 ; 0x4872573C  ClutPaletteSeedTable   ; 256x 0x00BBGGRR CLUT seed (idx 0x1D-0xF3 = green placeholder)
+; 0x485FDD5C  PartNameStringPool     ; ASCII pool: "PART 1".."PART 16","RIGHT 1/2","LEFT","ACCOMP 1-5","BASS","DRUM 1/2","CHORD","R.BASS","PADS","BASS PEDAL","CHORDFINDER","MICROPHONE","APC","CONTROL"
+; 0x485FDE70  PartNamePtrTable       ; u32 ptrs into PartNameStringPool; entry [0]=PART 1 (16 MIDI parts, then keyboard sections)
+; 0x485FDEB0  KeyboardPartNames      ; = PartNamePtrTable+16: keyboard/mixer parts (RIGHT 1/2,LEFT,ACCOMP 1-5,BASS,DRUM 1/2,CHORD,R.BASS,PADS,PADS,BASS PEDAL,CHORDFINDER,MICROPHONE,APC,CONTROL) — matches the home-screen mixer
+; 0x485FDED0  AccompPartNames        ; = PartNamePtrTable+24: auto-accompaniment subset (BASS,DRUM 1/2,CHORD,R.BASS,PADS,...)
+; 0x485FDD0C  CprSoundModeNames      ; CPR-board sound-mode labels: DIGITAL DRAWBAR, ACCORDION REGISTER, SOUND EXPLORER, EW EXPANSION, ORGAN TABS
