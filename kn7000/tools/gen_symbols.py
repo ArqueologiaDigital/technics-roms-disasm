@@ -47,6 +47,7 @@ MEMORY_MAP = [
     ("PICTURE_FLASH",    0x57800000, "picture flash (separate device)"),
     # Data-flash windows recovered by RE (notes in kn7000_mame):
     ("CUSTOM_FLASH_READ", 0x56000000, "custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)"),
+    ("CUSTOM_FLASH_BANK", 0x56020000, "compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)"),
     ("CUSTOM_FLASH_CMD",  0x96800000, "custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)"),
     ("FACTORY_DATA_FLASH", 0x57000000, "factory read-only rhythm/style data flash"),
     ("INSTALL_SCRATCH",   0x502B8000, "SDRAM scratch for the disk->flash install"),
@@ -95,6 +96,9 @@ MANUAL_SYMBOLS = [
     (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
     (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
     (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
+    # --- idd7000 .AST custom-style install (writes the compressed bank raw to CUSTOM_FLASH_BANK)
+    (0x4848594D, "AstHeaderIngest",       "reads the .AST header, sets install buffer 0x502B8000"),
+    (0x485335FF, "FatSectorRead",         "FAT sector reader used by the .AST loader"),
 ]
 
 

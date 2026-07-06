@@ -9,6 +9,7 @@
 0x50021CF8  INITIAL_SP	; initial stack pointer
 0x57800000  PICTURE_FLASH	; picture flash (separate device)
 0x56000000  CUSTOM_FLASH_READ	; custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
+0x56020000  CUSTOM_FLASH_BANK	; compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)
 0x96800000  CUSTOM_FLASH_CMD	; custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)
 0x57000000  FACTORY_DATA_FLASH	; factory read-only rhythm/style data flash
 0x502B8000  INSTALL_SCRATCH	; SDRAM scratch for the disk->flash install
@@ -2319,7 +2320,7 @@
 0x48585966  DemoJpgDataL7
 0x48585981  DemoJpgDataL8
 ;
-; 29 manually reverse-engineered symbols (RE, not from reflection tables):
+; 31 manually reverse-engineered symbols (RE, not from reflection tables):
 0x48735EE4  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 0x48736064  GenreCount	; u16 = 16 rhythm genres
 0x48734EE4  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
@@ -2349,3 +2350,5 @@
 0x4855EC34  FavFormat	; memset the favorites directory (0x550 bytes)
 0x4848A931  OpeningFrameDraw	; boot opening-screen draw callback; plays the splash JPEG animation
 0x485E68B8  OpeningFrameTable	; 7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}
+0x4848594D  AstHeaderIngest	; reads the .AST header, sets install buffer 0x502B8000
+0x485335FF  FatSectorRead	; FAT sector reader used by the .AST loader

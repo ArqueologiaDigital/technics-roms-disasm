@@ -9,6 +9,7 @@
 .equ INITIAL_SP, 0x50021CF8   # initial stack pointer
 .equ PICTURE_FLASH, 0x57800000   # picture flash (separate device)
 .equ CUSTOM_FLASH_READ, 0x56000000   # custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
+.equ CUSTOM_FLASH_BANK, 0x56020000   # compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)
 .equ CUSTOM_FLASH_CMD, 0x96800000   # custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)
 .equ FACTORY_DATA_FLASH, 0x57000000   # factory read-only rhythm/style data flash
 .equ INSTALL_SCRATCH, 0x502B8000   # SDRAM scratch for the disk->flash install
@@ -2319,7 +2320,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 29 manually reverse-engineered symbols:
+# 31 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2349,3 +2350,5 @@
 .equ FavFormat, 0x4855EC34   # memset the favorites directory (0x550 bytes)
 .equ OpeningFrameDraw, 0x4848A931   # boot opening-screen draw callback; plays the splash JPEG animation
 .equ OpeningFrameTable, 0x485E68B8   # 7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}
+.equ AstHeaderIngest, 0x4848594D   # reads the .AST header, sets install buffer 0x502B8000
+.equ FatSectorRead, 0x485335FF   # FAT sector reader used by the .AST loader
