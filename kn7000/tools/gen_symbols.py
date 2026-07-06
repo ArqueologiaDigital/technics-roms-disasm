@@ -97,6 +97,11 @@ MANUAL_SYMBOLS = [
     (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
     (0x48424F28, "JpegDecodeBlit",        "JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)"),
     (0x484870C8, "JpegPixelStore",        "picture writer: YCbCr->RGB, 4-bit quantize, store 0xD0|red4 to FB + green4/blue4 to companion plane"),
+    # --- software JPEG decoder (fixed by implementing udf07/BSCH; see notes/mn10300-udf-instructions-unimplemented.md)
+    (0x48486341, "JpegSetup",             "JPEG decode setup: installs the output callback, calls JpegEngine"),
+    (0x4840E721, "JpegEngine",            "JPEG decode engine (Huffman + IDCT, drives the DCT block decode)"),
+    (0x48425267, "JpegHeaderParse",       "JPEG header parser (SOI/APPn/DHT/DQT markers)"),
+    (0x4840FC3A, "JpegBitRefill",         "JPEG bit-buffer refill / ensure-N-bits (state @0x501739C4/C8)"),
     (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
     (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
     (0x5006B5A4, "OpeningFrameTarget",    "boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)"),

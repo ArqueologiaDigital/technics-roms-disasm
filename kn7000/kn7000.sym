@@ -2321,7 +2321,7 @@
 0x48585966  DemoJpgDataL7
 0x48585981  DemoJpgDataL8
 ;
-; 37 manually reverse-engineered symbols (RE, not from reflection tables):
+; 41 manually reverse-engineered symbols (RE, not from reflection tables):
 0x48735EE4  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 0x48736064  GenreCount	; u16 = 16 rhythm genres
 0x48734EE4  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
@@ -2352,6 +2352,10 @@
 0x4848A931  OpeningFrameDraw	; boot opening-screen draw callback; plays the splash JPEG animation
 0x48424F28  JpegDecodeBlit	; JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)
 0x484870C8  JpegPixelStore	; picture writer: YCbCr->RGB, 4-bit quantize, store 0xD0|red4 to FB + green4/blue4 to companion plane
+0x48486341  JpegSetup	; JPEG decode setup: installs the output callback, calls JpegEngine
+0x4840E721  JpegEngine	; JPEG decode engine (Huffman + IDCT, drives the DCT block decode)
+0x48425267  JpegHeaderParse	; JPEG header parser (SOI/APPn/DHT/DQT markers)
+0x4840FC3A  JpegBitRefill	; JPEG bit-buffer refill / ensure-N-bits (state @0x501739C4/C8)
 0x485E68B8  OpeningFrameTable	; 7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}
 0x5006B5A4  OpeningFrameTarget	; boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)
 0x5006B5A8  OpeningFrameIndex	; boot-splash current index into OpeningFrameTable (-1/0xFFFF = done)
