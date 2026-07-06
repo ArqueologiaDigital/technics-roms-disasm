@@ -2320,7 +2320,7 @@
 0x48585966  DemoJpgDataL7
 0x48585981  DemoJpgDataL8
 ;
-; 34 manually reverse-engineered symbols (RE, not from reflection tables):
+; 36 manually reverse-engineered symbols (RE, not from reflection tables):
 0x48735EE4  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 0x48736064  GenreCount	; u16 = 16 rhythm genres
 0x48734EE4  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
@@ -2355,3 +2355,5 @@
 0x5006B5A8  OpeningFrameIndex	; boot-splash current index into OpeningFrameTable (-1/0xFFFF = done)
 0x4848594D  AstHeaderIngest	; reads the .AST header, sets install buffer 0x502B8000
 0x485335FF  FatSectorRead	; FAT sector reader used by the .AST loader
+0x48726CE4  MilkMethodDict	; MILK method-name dictionary: 241 MT_ name ptrs (0x48726CE4..0x487270A4)
+0x487270AC  InitBlockTable	; boot init-block func-ptr table: 48 x InitializeBlockNN

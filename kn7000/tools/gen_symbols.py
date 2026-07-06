@@ -102,6 +102,9 @@ MANUAL_SYMBOLS = [
     # --- idd7000 .AST custom-style install (writes the compressed bank raw to CUSTOM_FLASH_BANK)
     (0x4848594D, "AstHeaderIngest",       "reads the .AST header, sets install buffer 0x502B8000"),
     (0x485335FF, "FatSectorRead",         "FAT sector reader used by the .AST loader"),
+    # --- MILK class-system tables (see notes/milk-class-tables.md)
+    (0x48726CE4, "MilkMethodDict",        "MILK method-name dictionary: 241 MT_ name ptrs (0x48726CE4..0x487270A4)"),
+    (0x487270AC, "InitBlockTable",        "boot init-block func-ptr table: 48 x InitializeBlockNN"),
 ]
 
 
