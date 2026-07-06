@@ -85,6 +85,16 @@ MANUAL_SYMBOLS = [
     (0x48664090, "DiskFileTagTable",      "tag signatures: JK / J K / TCMP / TPAD / KN7000 SOUND RAM"),
     (0x48664438, "DiskFileExtTable",      "extensions: MD / FAV / HMP / AST / SQF / SEQ / ACT"),
     (0x5008FDCA, "FavoritesBankDir",      "40 x 34-byte {name[16], u16 items[9]}"),
+    (0x4855CCE6, "SdcFavBankNameFunc",    "reads FavoritesBankDir[idx].name for the Favorites list"),
+    (0x48561CDB, "FavNameSetter",         "writes FavoritesBankDir[idx].name (0x5008FDCA+idx*0x22)"),
+    (0x48561D8E, "FavItemSetter",         "writes FavoritesBankDir[idx].items[slot] (u16)"),
+    (0x4855EC34, "FavFormat",             "memset the favorites directory (0x550 bytes)"),
+    # --- boot opening-screen splash animation (see notes/splash-green-palette-bug.md)
+    (0x4848A931, "OpeningFrameDraw",      "boot opening-screen draw callback; plays the splash JPEG animation"),
+    (0x4848A4D8, "InitializeBlock04",     "installs OpeningFrameDraw (boot class table 0x487270BC)"),
+    (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
+    (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
+    (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
 ]
 
 
