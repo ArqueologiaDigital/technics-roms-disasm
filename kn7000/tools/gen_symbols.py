@@ -94,6 +94,7 @@ MANUAL_SYMBOLS = [
     (0x4848A931, "OpeningFrameDraw",      "boot opening-screen draw callback; plays the splash JPEG animation"),
     (0x4848A4D8, "InitializeBlock04",     "installs OpeningFrameDraw (boot class table 0x487270BC)"),
     (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
+    (0x48424F28, "JpegDecodeBlit",        "JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)"),
     (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
     (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
     (0x5006B5A4, "OpeningFrameTarget",    "boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)"),

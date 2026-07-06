@@ -2320,7 +2320,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 33 manually reverse-engineered symbols:
+# 34 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2349,6 +2349,7 @@
 .equ FavItemSetter, 0x48561D8E   # writes FavoritesBankDir[idx].items[slot] (u16)
 .equ FavFormat, 0x4855EC34   # memset the favorites directory (0x550 bytes)
 .equ OpeningFrameDraw, 0x4848A931   # boot opening-screen draw callback; plays the splash JPEG animation
+.equ JpegDecodeBlit, 0x48424F28   # JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)
 .equ OpeningFrameTable, 0x485E68B8   # 7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}
 .equ OpeningFrameTarget, 0x5006B5A4   # boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)
 .equ OpeningFrameIndex, 0x5006B5A8   # boot-splash current index into OpeningFrameTable (-1/0xFFFF = done)
