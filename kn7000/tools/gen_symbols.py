@@ -48,6 +48,7 @@ MEMORY_MAP = [
     # Data-flash windows recovered by RE (notes in kn7000_mame):
     ("CUSTOM_FLASH_READ", 0x56000000, "custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)"),
     ("CUSTOM_FLASH_BANK", 0x56020000, "compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)"),
+    ("PICTURE_PLANE2", 0x500F9880, "companion picture plane (green4<<4|blue4); pairs with framebuffer 0x500D4080 (0xD0|red4)"),
     ("CUSTOM_FLASH_CMD",  0x96800000, "custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)"),
     ("FACTORY_DATA_FLASH", 0x57000000, "factory read-only rhythm/style data flash"),
     ("INSTALL_SCRATCH",   0x502B8000, "SDRAM scratch for the disk->flash install"),
@@ -95,6 +96,7 @@ MANUAL_SYMBOLS = [
     (0x4848A4D8, "InitializeBlock04",     "installs OpeningFrameDraw (boot class table 0x487270BC)"),
     (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
     (0x48424F28, "JpegDecodeBlit",        "JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)"),
+    (0x484870C8, "JpegPixelStore",        "picture writer: YCbCr->RGB, 4-bit quantize, store 0xD0|red4 to FB + green4/blue4 to companion plane"),
     (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
     (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
     (0x5006B5A4, "OpeningFrameTarget",    "boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)"),
