@@ -8,6 +8,12 @@
 0x50000000  WORK_RAM_BASE	; work RAM
 0x50021CF8  INITIAL_SP	; initial stack pointer
 0x57800000  PICTURE_FLASH	; picture flash (separate device)
+0x56000000  CUSTOM_FLASH_READ	; custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
+0x96800000  CUSTOM_FLASH_CMD	; custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)
+0x57000000  FACTORY_DATA_FLASH	; factory read-only rhythm/style data flash
+0x502B8000  INSTALL_SCRATCH	; SDRAM scratch for the disk->flash install
+0x50034C3C  CUR_RHYTHM_GENRE	; RAM: current rhythm-genre index (byte)
+0x50083D72  FAVORITES_SRAM	; battery-SRAM favorites block ('KN7000 SDDIR INF')
 ;
 ; 2302 recovered function symbols:
 0x48414A74  ApTaskControl
@@ -2312,3 +2318,29 @@
 0x4858594B  DemoJpgDataL6
 0x48585966  DemoJpgDataL7
 0x48585981  DemoJpgDataL8
+;
+; 24 manually reverse-engineered symbols (RE, not from reflection tables):
+0x48735EE4  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
+0x48736064  GenreCount	; u16 = 16 rhythm genres
+0x48734EE4  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
+0x48435A1B  GetCurrentGenreIndex	; reads RAM CUR_RHYTHM_GENRE
+0x48435A9F  GetGenreName	; record+0x00, 16-byte memcpy
+0x48435AD9  GetGenreStyleCount	; record+0x11
+0x48435B33  ResolveStyleId	; source-select &0x00700000 then LUT
+0x4843FB0D  StyleFlatOrdinalBuilder	; sums preceding genres' counts -> flat ordinal
+0x4858B424  ResourceIdTrie	; nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)
+0x4847F721  FlashWordProgram	; AMD program: AA/55/A0 + data
+0x4847F75A  FlashSectorErase
+0x4847F980  FlashReadAutoselect	; read chip manufacturer/device ID
+0x4847F6C7  FlashReset	; reset to read-array mode
+0x4847F9F7  FlashProgram128Words	; 128-word chunk programmer
+0x4847E7C0  FlashAddrToSector
+0x485CF9E0  FlashChipIdTable	; MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors
+0x485CF788  FlashSectorMap	; bottom-boot sector geometry, total 0x200000
+0x4844A000  CustomFlashArchiveParse	; parses 0x56000000 directory into RAM ptrs ~0x5003A5xx
+0x4852CFE4  DiskLoadDispatch	; walks disk-file handler table
+0x486642B0  DiskFileHandlerTable	; per-file-type load handlers
+0x4852CC9E  AstLoadHandler	; handles 'J K' (.AST) custom/style files
+0x48664090  DiskFileTagTable	; tag signatures: JK / J K / TCMP / TPAD / KN7000 SOUND RAM
+0x48664438  DiskFileExtTable	; extensions: MD / FAV / HMP / AST / SQF / SEQ / ACT
+0x5008FDCA  FavoritesBankDir	; 40 x 34-byte {name[16], u16 items[9]}

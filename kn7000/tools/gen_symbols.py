@@ -45,6 +45,46 @@ MEMORY_MAP = [
     ("WORK_RAM_BASE",    0x50000000, "work RAM"),
     ("INITIAL_SP",       0x50021CF8, "initial stack pointer"),
     ("PICTURE_FLASH",    0x57800000, "picture flash (separate device)"),
+    # Data-flash windows recovered by RE (notes in kn7000_mame):
+    ("CUSTOM_FLASH_READ", 0x56000000, "custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)"),
+    ("CUSTOM_FLASH_CMD",  0x96800000, "custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)"),
+    ("FACTORY_DATA_FLASH", 0x57000000, "factory read-only rhythm/style data flash"),
+    ("INSTALL_SCRATCH",   0x502B8000, "SDRAM scratch for the disk->flash install"),
+    ("CUR_RHYTHM_GENRE",  0x50034C3C, "RAM: current rhythm-genre index (byte)"),
+    ("FAVORITES_SRAM",    0x50083D72, "battery-SRAM favorites block ('KN7000 SDDIR INF')"),
+]
+
+# Symbols recovered by manual reverse-engineering (NOT in the firmware's own reflection
+# tables). Format: (cpu_addr, name, note). Emitted after the auto-recovered symbols,
+# skipping any address the auto-pass already named.
+MANUAL_SYMBOLS = [
+    # --- rhythm genre -> style-list system (see kn7000_mame notes/rhythm-name-list-bug.md)
+    (0x48735EE4, "GenreStyleTable",       "16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}"),
+    (0x48736064, "GenreCount",            "u16 = 16 rhythm genres"),
+    (0x48734EE4, "StyleNumToBankSlotLUT", "2048 x u16: style number -> bank/slot"),
+    (0x48435A1B, "GetCurrentGenreIndex",  "reads RAM CUR_RHYTHM_GENRE"),
+    (0x48435A9F, "GetGenreName",          "record+0x00, 16-byte memcpy"),
+    (0x48435AD9, "GetGenreStyleCount",    "record+0x11"),
+    (0x48435B33, "ResolveStyleId",        "source-select &0x00700000 then LUT"),
+    (0x4843FB0D, "StyleFlatOrdinalBuilder", "sums preceding genres' counts -> flat ordinal"),
+    (0x4858B424, "ResourceIdTrie",        "nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)"),
+    # --- custom-data flash driver (AMD 29LV160 command set at 0x96800000)
+    (0x4847F721, "FlashWordProgram",      "AMD program: AA/55/A0 + data"),
+    (0x4847F75A, "FlashSectorErase",      ""),
+    (0x4847F980, "FlashReadAutoselect",   "read chip manufacturer/device ID"),
+    (0x4847F6C7, "FlashReset",            "reset to read-array mode"),
+    (0x4847F9F7, "FlashProgram128Words",  "128-word chunk programmer"),
+    (0x4847E7C0, "FlashAddrToSector",     ""),
+    (0x485CF9E0, "FlashChipIdTable",      "MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors"),
+    (0x485CF788, "FlashSectorMap",        "bottom-boot sector geometry, total 0x200000"),
+    (0x4844A000, "CustomFlashArchiveParse", "parses 0x56000000 directory into RAM ptrs ~0x5003A5xx"),
+    # --- disk file load / install-to-flash path (idd7000)
+    (0x4852CFE4, "DiskLoadDispatch",      "walks disk-file handler table"),
+    (0x486642B0, "DiskFileHandlerTable",  "per-file-type load handlers"),
+    (0x4852CC9E, "AstLoadHandler",        "handles 'J K' (.AST) custom/style files"),
+    (0x48664090, "DiskFileTagTable",      "tag signatures: JK / J K / TCMP / TPAD / KN7000 SOUND RAM"),
+    (0x48664438, "DiskFileExtTable",      "extensions: MD / FAV / HMP / AST / SQF / SEQ / ACT"),
+    (0x5008FDCA, "FavoritesBankDir",      "40 x 34-byte {name[16], u16 items[9]}"),
 ]
 
 
@@ -166,6 +206,12 @@ def main():
     data = open(args.program_rom, "rb").read()
     syms = recover_symbols(data)
 
+    # Manually-RE'd symbols that the auto-pass can't find; skip any address/name it did.
+    rec_addrs = {cpu for cpu, _off, _name in syms}
+    rec_names = {name for _cpu, _off, name in syms}
+    manual = [(a, n, note) for a, n, note in MANUAL_SYMBOLS
+              if a not in rec_addrs and n not in rec_names]
+
     with open(args.sym, "w") as f:
         f.write("; KN7000 program-image symbols recovered from the MILK toolkit\n")
         f.write("; reflection tables (tools/gen_symbols.py). cpu_addr  name\n")
@@ -175,6 +221,9 @@ def main():
         f.write(f";\n; {len(syms)} recovered function symbols:\n")
         for cpu, _off, name in syms:
             f.write(f"0x{cpu:08X}  {name}\n")
+        f.write(f";\n; {len(manual)} manually reverse-engineered symbols (RE, not from reflection tables):\n")
+        for addr, name, note in manual:
+            f.write(f"0x{addr:08X}  {name}\t; {note}\n" if note else f"0x{addr:08X}  {name}\n")
 
     os.makedirs(os.path.dirname(args.inc), exist_ok=True)
     with open(args.inc, "w") as f:
@@ -186,6 +235,9 @@ def main():
         f.write(f"\n# {len(syms)} recovered functions:\n")
         for cpu, _off, name in syms:
             f.write(f".equ {name}, 0x{cpu:08X}\n")
+        f.write(f"\n# {len(manual)} manually reverse-engineered symbols:\n")
+        for addr, name, note in manual:
+            f.write(f".equ {name}, 0x{addr:08X}" + (f"   # {note}\n" if note else "\n"))
 
     print(f"gen_symbols: recovered {len(syms)} function symbols "
           f"-> {args.sym}, {args.inc}")

@@ -8,6 +8,12 @@
 .equ WORK_RAM_BASE, 0x50000000   # work RAM
 .equ INITIAL_SP, 0x50021CF8   # initial stack pointer
 .equ PICTURE_FLASH, 0x57800000   # picture flash (separate device)
+.equ CUSTOM_FLASH_READ, 0x56000000   # custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
+.equ CUSTOM_FLASH_CMD, 0x96800000   # custom-data flash command/program window (AMD 29LV160; unlocks 0x9680AAAA)
+.equ FACTORY_DATA_FLASH, 0x57000000   # factory read-only rhythm/style data flash
+.equ INSTALL_SCRATCH, 0x502B8000   # SDRAM scratch for the disk->flash install
+.equ CUR_RHYTHM_GENRE, 0x50034C3C   # RAM: current rhythm-genre index (byte)
+.equ FAVORITES_SRAM, 0x50083D72   # battery-SRAM favorites block ('KN7000 SDDIR INF')
 
 # 2302 recovered functions:
 .equ ApTaskControl, 0x48414A74
@@ -2312,3 +2318,29 @@
 .equ DemoJpgDataL6, 0x4858594B
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
+
+# 24 manually reverse-engineered symbols:
+.equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
+.equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
+.equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
+.equ GetCurrentGenreIndex, 0x48435A1B   # reads RAM CUR_RHYTHM_GENRE
+.equ GetGenreName, 0x48435A9F   # record+0x00, 16-byte memcpy
+.equ GetGenreStyleCount, 0x48435AD9   # record+0x11
+.equ ResolveStyleId, 0x48435B33   # source-select &0x00700000 then LUT
+.equ StyleFlatOrdinalBuilder, 0x4843FB0D   # sums preceding genres' counts -> flat ordinal
+.equ ResourceIdTrie, 0x4858B424   # nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)
+.equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
+.equ FlashSectorErase, 0x4847F75A
+.equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
+.equ FlashReset, 0x4847F6C7   # reset to read-array mode
+.equ FlashProgram128Words, 0x4847F9F7   # 128-word chunk programmer
+.equ FlashAddrToSector, 0x4847E7C0
+.equ FlashChipIdTable, 0x485CF9E0   # MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors
+.equ FlashSectorMap, 0x485CF788   # bottom-boot sector geometry, total 0x200000
+.equ CustomFlashArchiveParse, 0x4844A000   # parses 0x56000000 directory into RAM ptrs ~0x5003A5xx
+.equ DiskLoadDispatch, 0x4852CFE4   # walks disk-file handler table
+.equ DiskFileHandlerTable, 0x486642B0   # per-file-type load handlers
+.equ AstLoadHandler, 0x4852CC9E   # handles 'J K' (.AST) custom/style files
+.equ DiskFileTagTable, 0x48664090   # tag signatures: JK / J K / TCMP / TPAD / KN7000 SOUND RAM
+.equ DiskFileExtTable, 0x48664438   # extensions: MD / FAV / HMP / AST / SQF / SEQ / ACT
+.equ FavoritesBankDir, 0x5008FDCA   # 40 x 34-byte {name[16], u16 items[9]}
