@@ -96,6 +96,8 @@ MANUAL_SYMBOLS = [
     (0x48424EC2, "DrawJpegFile",          "JPEG-file decoder/blitter"),
     (0x4842D9AD, "InitPaletteRGB",        "seeds the 256-entry CLUT @0x50031490 from ROM table 0x4872573C"),
     (0x485E68B8, "OpeningFrameTable",     "7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}"),
+    (0x5006B5A4, "OpeningFrameTarget",    "boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)"),
+    (0x5006B5A8, "OpeningFrameIndex",     "boot-splash current index into OpeningFrameTable (-1/0xFFFF = done)"),
     # --- idd7000 .AST custom-style install (writes the compressed bank raw to CUSTOM_FLASH_BANK)
     (0x4848594D, "AstHeaderIngest",       "reads the .AST header, sets install buffer 0x502B8000"),
     (0x485335FF, "FatSectorRead",         "FAT sector reader used by the .AST loader"),
