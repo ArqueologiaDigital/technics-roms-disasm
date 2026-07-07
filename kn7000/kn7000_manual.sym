@@ -51,3 +51,9 @@
 ; 0x485FDEB0  KeyboardPartNames      ; = PartNamePtrTable+16: keyboard/mixer parts (RIGHT 1/2,LEFT,ACCOMP 1-5,BASS,DRUM 1/2,CHORD,R.BASS,PADS,PADS,BASS PEDAL,CHORDFINDER,MICROPHONE,APC,CONTROL) — matches the home-screen mixer
 ; 0x485FDED0  AccompPartNames        ; = PartNamePtrTable+24: auto-accompaniment subset (BASS,DRUM 1/2,CHORD,R.BASS,PADS,...)
 ; 0x485FDD0C  CprSoundModeNames      ; CPR-board sound-mode labels: DIGITAL DRAWBAR, ACCORDION REGISTER, SOUND EXPLORER, EW EXPANSION, ORGAN TABS
+
+; ---- Built-in rhythm-style name table (the "8 Beat 1" list-bug area) ---------
+; The genre style list resolves built-in style names via StyleNameSourceSet
+; 0x48433400 -> builtin resolver 0x48433AC4 (indexes name-table *(0x50034B7C)).
+; See kn7000_mame/notes/rhythm-name-list-bug.md.
+0x48433300  StyleBuiltinNameTableInit  ; loads the "Technics Rhythms" resource (name @0x4872980C via lib 0x4C00203C) and populates the style-name-table globals 0x50034B74/78/7C/80/88; RUNTIME-CONFIRMED to SUCCEED (0x50034B7C = table-ROM name-table 0x483E82BF, non-zero) -- so the "8 Beat 1" bug is downstream in per-style resolution, NOT this init
