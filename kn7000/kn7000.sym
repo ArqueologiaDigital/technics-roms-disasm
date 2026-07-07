@@ -2321,7 +2321,7 @@
 0x48585966  DemoJpgDataL7
 0x48585981  DemoJpgDataL8
 ;
-; 60 manually reverse-engineered symbols (RE, not from reflection tables):
+; 65 manually reverse-engineered symbols (RE, not from reflection tables):
 0x48735EE4  GenreStyleTable	; 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 0x48736064  GenreCount	; u16 = 16 rhythm genres
 0x48734EE4  StyleNumToBankSlotLUT	; 2048 x u16: style number -> bank/slot
@@ -2350,6 +2350,11 @@
 0x48435E84  StyleIdQueueDequeue	; dequeue a style-ID from ring 0x50034C48/0x50035448 (read idx 0x50034C42, count 0x50034C44)
 0x485CF408  StyleListBoxMsgTable	; 16 x {u32 msg-ID, u32 handler} for AcCtgStyleListBoxProc
 0x4847C076  StyleListBoxDrawItem	; list item-draw (msg 0x10/0x12); fetches item text via GUI property 0x4842938D/0x48417740
+0x484403D5  RhyEventLenByStatus	; pattern event length by status nibble: 0x9n=6 0xBn=3 0xCn=4 0xDn=2 0xEn=3 else=1
+0x484403CD  RhySysexLen	; pattern SysEx length = data[1]+2
+0x4843890E  RhyPatternScan	; pattern-stream scanner/validator; uses RhyEventLenByStatus (until 0xF5)
+0x4843982D  RhyPatternPlayer	; real-time pattern player/seek; timing byte -> position:=value (absolute, 96 ticks/beat)
+0x4843DC7C  RhyNoteOnVoice	; note-on: vel@+2(0=skip), note@+1, ch=b0&0xF, gate=b3+(b4<<7), routing@+5
 0x4847F721  FlashWordProgram	; AMD program: AA/55/A0 + data
 0x4847F75A  FlashSectorErase
 0x4847F980  FlashReadAutoselect	; read chip manufacturer/device ID

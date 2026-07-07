@@ -95,6 +95,14 @@ MANUAL_SYMBOLS = [
     (0x485CF408, "StyleListBoxMsgTable",   "16 x {u32 msg-ID, u32 handler} for AcCtgStyleListBoxProc"),
     (0x4847C076, "StyleListBoxDrawItem",   "list item-draw (msg 0x10/0x12); fetches item text via GUI property 0x4842938D/0x48417740"),
 
+    # Rhythm-style PATTERN event stream (DECODED + verified; kn7000_mame/notes/table-rom-format.md)
+    (0x484403D5, "RhyEventLenByStatus",    "pattern event length by status nibble: 0x9n=6 0xBn=3 0xCn=4 0xDn=2 0xEn=3 else=1"),
+    (0x484403CD, "RhySysexLen",            "pattern SysEx length = data[1]+2"),
+    (0x4843890E, "RhyPatternScan",         "pattern-stream scanner/validator; uses RhyEventLenByStatus (until 0xF5)"),
+    (0x4843982D, "RhyPatternPlayer",       "real-time pattern player/seek; timing byte -> position:=value (absolute, 96 ticks/beat)"),
+    (0x4843DC7C, "RhyNoteOnVoice",         "note-on: vel@+2(0=skip), note@+1, ch=b0&0xF, gate=b3+(b4<<7), routing@+5"),
+    (0x48494797, "MainRhyRun",             "rhythm task main (drives RhyPatternPlayer); name from firmware's embedded symbol table"),
+
     # --- custom-data flash driver (AMD 29LV160 command set at 0x96800000)
     (0x4847F721, "FlashWordProgram",      "AMD program: AA/55/A0 + data"),
     (0x4847F75A, "FlashSectorErase",      ""),

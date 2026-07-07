@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 60 manually reverse-engineered symbols:
+# 65 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2350,6 +2350,11 @@
 .equ StyleIdQueueDequeue, 0x48435E84   # dequeue a style-ID from ring 0x50034C48/0x50035448 (read idx 0x50034C42, count 0x50034C44)
 .equ StyleListBoxMsgTable, 0x485CF408   # 16 x {u32 msg-ID, u32 handler} for AcCtgStyleListBoxProc
 .equ StyleListBoxDrawItem, 0x4847C076   # list item-draw (msg 0x10/0x12); fetches item text via GUI property 0x4842938D/0x48417740
+.equ RhyEventLenByStatus, 0x484403D5   # pattern event length by status nibble: 0x9n=6 0xBn=3 0xCn=4 0xDn=2 0xEn=3 else=1
+.equ RhySysexLen, 0x484403CD   # pattern SysEx length = data[1]+2
+.equ RhyPatternScan, 0x4843890E   # pattern-stream scanner/validator; uses RhyEventLenByStatus (until 0xF5)
+.equ RhyPatternPlayer, 0x4843982D   # real-time pattern player/seek; timing byte -> position:=value (absolute, 96 ticks/beat)
+.equ RhyNoteOnVoice, 0x4843DC7C   # note-on: vel@+2(0=skip), note@+1, ch=b0&0xF, gate=b3+(b4<<7), routing@+5
 .equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
 .equ FlashSectorErase, 0x4847F75A
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
