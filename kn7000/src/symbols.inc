@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 58 manually reverse-engineered symbols:
+# 60 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2348,6 +2348,8 @@
 .equ StyleNameSourceSet, 0x48433400   # set *(0x50034B8C) from style-ID source bits &0x00700000: 0=builtin(0x48433AC4)/0x100000=MEM/0x200000=CUSTOM
 .equ StyleBuiltinNameLookup, 0x48433AC4   # builtin name via RAM dir 0x50034B7C(*2)/0x50034B80(*3), base 0x50034B78; returns default on unresolved style-ID (runtime: rhythm passes style-ID 0 -> '8 Beat 1'; sounds pass 0x65A -> real names)
 .equ StyleIdQueueDequeue, 0x48435E84   # dequeue a style-ID from ring 0x50034C48/0x50035448 (read idx 0x50034C42, count 0x50034C44)
+.equ StyleListBoxMsgTable, 0x485CF408   # 16 x {u32 msg-ID, u32 handler} for AcCtgStyleListBoxProc
+.equ StyleListBoxDrawItem, 0x4847C076   # list item-draw (msg 0x10/0x12); fetches item text via GUI property 0x4842938D/0x48417740
 .equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
 .equ FlashSectorErase, 0x4847F75A
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
