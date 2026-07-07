@@ -77,6 +77,15 @@ MANUAL_SYMBOLS = [
     (0x486135A0, "PanelWireNormTable",     "wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)"),
     (0x4860C9F4, "PanelSwitchClassTable",  "per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]"),
     (0x48615058, "PanelLedRegMap",         "LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)"),
+
+    # Style-name / style-list build (RE'd via unidasm mn10300; kn7000_mame/notes/style-name-build.md)
+    (0x48441D1B, "StyleRecordToTemplate",  "parse one style record @a2 -> template RAM 0x5003A2BC+idx*0x18 (subtypes 0xB0/C0/D0/E0)"),
+    (0x48441CBF, "StyleTemplateToNameTable","memcpy 0xC0 B: template 0x5003A2BC -> displayed name-table 0x5003A37C"),
+    (0x48441CDB, "StyleTemplateBuildLoop",  "8x0x18 build loop; per entry calls 0x48440862, handler ptr 0x48435DD0"),
+    (0x48442072, "StyleNameDefaultFill",   "memcpy the 15-byte default name ('8 Beat 1' @0x4872AB42) into a name slot"),
+    (0x48435DD0, "StyleIdArrayHandler",    "per record: build style-ID arrays 0x50034C48/0x50035448 (u16 counters 0x50034C40/44, lim 0x1FF)"),
+    (0x48435D83, "StyleIdArrayStore",      "store a style-ID + source tag into the style-ID arrays"),
+
     # --- custom-data flash driver (AMD 29LV160 command set at 0x96800000)
     (0x4847F721, "FlashWordProgram",      "AMD program: AA/55/A0 + data"),
     (0x4847F75A, "FlashSectorErase",      ""),

@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 46 manually reverse-engineered symbols:
+# 52 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2336,6 +2336,12 @@
 .equ PanelWireNormTable, 0x486135A0   # wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)
 .equ PanelSwitchClassTable, 0x4860C9F4   # per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]
 .equ PanelLedRegMap, 0x48615058   # LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)
+.equ StyleRecordToTemplate, 0x48441D1B   # parse one style record @a2 -> template RAM 0x5003A2BC+idx*0x18 (subtypes 0xB0/C0/D0/E0)
+.equ StyleTemplateToNameTable, 0x48441CBF   # memcpy 0xC0 B: template 0x5003A2BC -> displayed name-table 0x5003A37C
+.equ StyleTemplateBuildLoop, 0x48441CDB   # 8x0x18 build loop; per entry calls 0x48440862, handler ptr 0x48435DD0
+.equ StyleNameDefaultFill, 0x48442072   # memcpy the 15-byte default name ('8 Beat 1' @0x4872AB42) into a name slot
+.equ StyleIdArrayHandler, 0x48435DD0   # per record: build style-ID arrays 0x50034C48/0x50035448 (u16 counters 0x50034C40/44, lim 0x1FF)
+.equ StyleIdArrayStore, 0x48435D83   # store a style-ID + source tag into the style-ID arrays
 .equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
 .equ FlashSectorErase, 0x4847F75A
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
