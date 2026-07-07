@@ -57,3 +57,5 @@
 ; 0x48433400 -> builtin resolver 0x48433AC4 (indexes name-table *(0x50034B7C)).
 ; See kn7000_mame/notes/rhythm-name-list-bug.md.
 0x48433300  StyleBuiltinNameTableInit  ; loads the "Technics Rhythms" resource (name @0x4872980C via lib 0x4C00203C) and populates the style-name-table globals 0x50034B74/78/7C/80/88; RUNTIME-CONFIRMED to SUCCEED (0x50034B7C = table-ROM name-table 0x483E82BF, non-zero) -- so the "8 Beat 1" bug is downstream in per-style resolution, NOT this init
+0x48433AC4  StyleBuiltinNameResolve    ; style-index -> name ptr in a0 (10 call sites): indexes name-table *(0x50034B7C) (table ROM 0x483E82BF, u16), count-gate *(0x50034B74), 0x8000-flag indirection, then 3-byte-offset sub-table *(0x50034B80) into the "Technics Rhythms" resource *(0x50034B78)+off; fallback *(0x50034B88)=" 8 Beat 1". Feeds the current-rhythm display (works), NOT directly the buggy style list
+0x48729988  TechnicsRhythmsResource    ; built-in rhythm style-name resource (name @0x4872980C); embeds its own name string + the style names at byte-offsets (e.g. +0x11BA=" 8 Beat 1"); base cached in RAM 0x50034B78
