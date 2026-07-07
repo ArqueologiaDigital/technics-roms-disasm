@@ -89,7 +89,8 @@ MANUAL_SYMBOLS = [
     (0x48435D83, "StyleIdArrayStore",      "store a style-ID + source tag into the style-ID arrays"),
     (0x484334A4, "StyleNameCommit",        "memcpy 13 B from *(0x50034B8C) -> name buf 0x50034B9C; default 0x4872AB42 => '8 Beat 1'"),
     (0x48433400, "StyleNameSourceSet",     "set *(0x50034B8C) from style-ID source bits &0x00700000: 0=builtin(0x48433AC4)/0x100000=MEM/0x200000=CUSTOM"),
-    (0x48433AC4, "StyleBuiltinNameLookup", "builtin name via RAM dir 0x50034B7C(*2)/0x50034B80(*3), base 0x50034B78; returns default on unresolved style-ID"),
+    (0x48433AC4, "StyleBuiltinNameLookup", "builtin name via RAM dir 0x50034B7C(*2)/0x50034B80(*3), base 0x50034B78; returns default on unresolved style-ID (runtime: rhythm passes style-ID 0 -> '8 Beat 1'; sounds pass 0x65A -> real names)"),
+    (0x48435E84, "StyleIdQueueDequeue",    "dequeue a style-ID from ring 0x50034C48/0x50035448 (read idx 0x50034C42, count 0x50034C44)"),
 
     # --- custom-data flash driver (AMD 29LV160 command set at 0x96800000)
     (0x4847F721, "FlashWordProgram",      "AMD program: AA/55/A0 + data"),
