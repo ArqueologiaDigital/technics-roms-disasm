@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 54 manually reverse-engineered symbols:
+# 57 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2344,6 +2344,9 @@
 .equ StyleNameDefaultFill, 0x48442072   # memcpy the 15-byte default name ('8 Beat 1' @0x4872AB42) into a name slot
 .equ StyleIdArrayHandler, 0x48435DD0   # per record: build style-ID arrays 0x50034C48/0x50035448 (u16 counters 0x50034C40/44, lim 0x1FF)
 .equ StyleIdArrayStore, 0x48435D83   # store a style-ID + source tag into the style-ID arrays
+.equ StyleNameCommit, 0x484334A4   # memcpy 13 B from *(0x50034B8C) -> name buf 0x50034B9C; default 0x4872AB42 => '8 Beat 1'
+.equ StyleNameSourceSet, 0x48433400   # set *(0x50034B8C) from style-ID source bits &0x00700000: 0=builtin(0x48433AC4)/0x100000=MEM/0x200000=CUSTOM
+.equ StyleBuiltinNameLookup, 0x48433AC4   # builtin name via RAM dir 0x50034B7C(*2)/0x50034B80(*3), base 0x50034B78; returns default on unresolved style-ID
 .equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
 .equ FlashSectorErase, 0x4847F75A
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
