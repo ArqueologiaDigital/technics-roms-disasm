@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 41 manually reverse-engineered symbols:
+# 46 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2331,6 +2331,11 @@
 .equ ResolveStyleId, 0x48435B33   # source-select &0x00700000 then LUT
 .equ StyleFlatOrdinalBuilder, 0x4843FB0D   # sums preceding genres' counts -> flat ordinal
 .equ ResourceIdTrie, 0x4858B424   # nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)
+.equ PanelButtonDispatch, 0x484ADB59   # reads per-normSeg 12-byte descriptor arrays; posts 0x00700000|event
+.equ PanelButtonDescPtrTable, 0x48614978   # per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}
+.equ PanelWireNormTable, 0x486135A0   # wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)
+.equ PanelSwitchClassTable, 0x4860C9F4   # per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]
+.equ PanelLedRegMap, 0x48615058   # LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)
 .equ FlashWordProgram, 0x4847F721   # AMD program: AA/55/A0 + data
 .equ FlashSectorErase, 0x4847F75A
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID

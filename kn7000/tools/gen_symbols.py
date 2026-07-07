@@ -70,6 +70,13 @@ MANUAL_SYMBOLS = [
     (0x48435B33, "ResolveStyleId",        "source-select &0x00700000 then LUT"),
     (0x4843FB0D, "StyleFlatOrdinalBuilder", "sums preceding genres' counts -> flat ordinal"),
     (0x4858B424, "ResourceIdTrie",        "nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)"),
+
+    # Panel button/LED matrix (RE'd via the MAME driver; kn7000_mame/notes/panel-descriptor-map.md)
+    (0x484ADB59, "PanelButtonDispatch",   "reads per-normSeg 12-byte descriptor arrays; posts 0x00700000|event"),
+    (0x48614978, "PanelButtonDescPtrTable", "per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}"),
+    (0x486135A0, "PanelWireNormTable",     "wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)"),
+    (0x4860C9F4, "PanelSwitchClassTable",  "per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]"),
+    (0x48615058, "PanelLedRegMap",         "LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)"),
     # --- custom-data flash driver (AMD 29LV160 command set at 0x96800000)
     (0x4847F721, "FlashWordProgram",      "AMD program: AA/55/A0 + data"),
     (0x4847F75A, "FlashSectorErase",      ""),
