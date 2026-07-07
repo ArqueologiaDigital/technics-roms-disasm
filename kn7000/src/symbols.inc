@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 52 manually reverse-engineered symbols:
+# 54 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2334,8 +2334,10 @@
 .equ PanelButtonDispatch, 0x484ADB59   # reads per-normSeg 12-byte descriptor arrays; posts 0x00700000|event
 .equ PanelButtonDescPtrTable, 0x48614978   # per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}
 .equ PanelWireNormTable, 0x486135A0   # wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)
-.equ PanelSwitchClassTable, 0x4860C9F4   # per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]
-.equ PanelLedRegMap, 0x48615058   # LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)
+.equ PanelSwitchClassTable, 0x4860C9F4   # 2-byte entries indexed by switch-MATRIX (row*8+col)*2 at reader 0x484A0D23; self-test scan map, NOT a normSeg.bit->LED map
+.equ PanelSelfTestScanEntry, 0x484A0D07   # reads PanelSwitchClassTable by (row*8+col)*2 -- self-test switch/LED matrix scan
+.equ PanelLedRegMap, 0x48615058   # 21-entry (0..0x14) LED-group index -> LED register byte; reader 0x484B1714
+.equ PanelLedGroupToReg, 0x484B1707   # indexes PanelLedRegMap (bound 0x15) to select an LED register byte
 .equ StyleRecordToTemplate, 0x48441D1B   # parse one style record @a2 -> template RAM 0x5003A2BC+idx*0x18 (subtypes 0xB0/C0/D0/E0)
 .equ StyleTemplateToNameTable, 0x48441CBF   # memcpy 0xC0 B: template 0x5003A2BC -> displayed name-table 0x5003A37C
 .equ StyleTemplateBuildLoop, 0x48441CDB   # 8x0x18 build loop; per entry calls 0x48440862, handler ptr 0x48435DD0

@@ -75,8 +75,10 @@ MANUAL_SYMBOLS = [
     (0x484ADB59, "PanelButtonDispatch",   "reads per-normSeg 12-byte descriptor arrays; posts 0x00700000|event"),
     (0x48614978, "PanelButtonDescPtrTable", "per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}"),
     (0x486135A0, "PanelWireNormTable",     "wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)"),
-    (0x4860C9F4, "PanelSwitchClassTable",  "per-switch# (normSeg*8+bit) 2-byte panel-SELF-TEST LED coords [group,col]"),
-    (0x48615058, "PanelLedRegMap",         "LED-group index -> CM-row LED register (c0-c7, 00-0d, ff)"),
+    (0x4860C9F4, "PanelSwitchClassTable",  "2-byte entries indexed by switch-MATRIX (row*8+col)*2 at reader 0x484A0D23; self-test scan map, NOT a normSeg.bit->LED map"),
+    (0x484A0D07, "PanelSelfTestScanEntry", "reads PanelSwitchClassTable by (row*8+col)*2 -- self-test switch/LED matrix scan"),
+    (0x48615058, "PanelLedRegMap",         "21-entry (0..0x14) LED-group index -> LED register byte; reader 0x484B1714"),
+    (0x484B1707, "PanelLedGroupToReg",     "indexes PanelLedRegMap (bound 0x15) to select an LED register byte"),
 
     # Style-name / style-list build (RE'd via unidasm mn10300; kn7000_mame/notes/style-name-build.md)
     (0x48441D1B, "StyleRecordToTemplate",  "parse one style record @a2 -> template RAM 0x5003A2BC+idx*0x18 (subtypes 0xB0/C0/D0/E0)"),
