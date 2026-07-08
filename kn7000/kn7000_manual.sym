@@ -74,3 +74,4 @@
 0x487BBFF5  LibMemSet              ; = lib 0x4C003024: memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
 0x487BC00A  LibMemCopy             ; = lib 0x4C003039: memcpy(dest=a0, src=a1, len=d0) -- hardware-loop (setlb)
 0x487F6E43  LibIrqSubDispatch      ; = lib 0x4C03DE72: scans the INTC group's DETECT bits 0-3 to pick the sub-source (called by the IRQ handlers)
+0x487CD919  LibResourceLookup      ; = lib 0x4C014948: resource dispatcher -- masks the resource ID to 24 bits, calls the trie lookup at lib 0x4C01BB0C, returns the resource record (the GUI/style-name resource path; see rhythm-name-list-bug.md)
