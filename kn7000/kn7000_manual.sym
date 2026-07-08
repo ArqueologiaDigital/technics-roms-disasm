@@ -78,3 +78,7 @@
 
 ; ---- Resident RAM code overlay (copied ROM image) ----------------------------
 0x48035D08  RamCodeOverlayImage    ; ROM image of the ~0xA96C-byte code overlay copied to RAM 0x50180000 at boot (via LibMemCopy, from the block-copy helper ~0x4843B1A0); the firmware then calls into it at 0x50180000+ (e.g. method dispatch). Requires the library (0x8C) self-loaded first.
+
+; ---- Rhythm/style list-box data hierarchy (holds the REAL style names) --------
+0x4873ACC0  StyleGenreTable        ; style-list genre table, 8-byte entries {+0: genre-name ptr (16B space-padded, e.g. 0x485D0F38 "Rock & Pop"/"Easy Listening"/"Soul & Gospel"), +4: ptr to that genre's style sub-table (8-byte entries {+0: REAL style name 16B "Disco Orchestra"/"Mersey Ballad"/..., +4: per-style numeric table})}. The real per-style names ARE present here -- see notes/rhythm-name-list-bug.md.
+0x4847C216  StyleListBoxGetItem    ; AcCtgStyleListBoxProc msg 0x1003A handler (from StyleListBoxMsgTable 0x485CF408): indexes StyleRecordTable 0x4873BEE8 by CUR_STYLE_IDX 0x50001270, walks StyleGenreTable via record+0x08/+0x0a, builds a 4-field '|'-separated NUMERIC key via 0x4847B191 (not the display name)
