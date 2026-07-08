@@ -61,3 +61,12 @@
 0x48729988  TechnicsRhythmsResource    ; built-in rhythm style-name resource (name @0x4872980C); embeds its own name string + the style names at byte-offsets (e.g. +0x11BA=" 8 Beat 1"); base cached in RAM 0x50034B78
 0x4873BEE8  StyleRecordTable           ; >=400 24-byte built-in style records used by the style list-box (indexed by CUR_STYLE_IDX 0x50001270). Layout: +0x00 patternDataPtr (->0x487674xx, 160B pattern), +0x04 namePtr -> REAL style name (program ROM 0x485D0000+, e.g. "Disco Hustling"/"Orchestral Jazz"), +0x08 u16, +0x0C u32 index, +0x10/12/14 u16 params. Proves all built-in style names exist as data
 0x50001270  CUR_STYLE_IDX              ; RAM: current style index into StyleRecordTable 0x4873BEE8 (used by the list-box msg handlers)
+
+; ---- Self-loaded library / kernel ROM image (stored in program ROM) ----------
+; The boot self-loader (0x484D7BBD) copies this region to 0x8C000000; the firmware
+; then EXECUTES it via the 0x4C000000 alias. So these are code-at-runtime / data-at-rest
+; here. Mapping: library address X  ==  program ROM 0x487B8FD1 + (X - 0x4C000000).
+0x487B8FD1  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
+0x487BC022  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
+0x487F6D71  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
+0x487F6DF7  LibIrqScheduler        ; = lib 0x4C03DE26: RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
