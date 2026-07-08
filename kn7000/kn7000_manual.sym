@@ -70,3 +70,7 @@
 0x487BC022  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
 0x487F6D71  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
 0x487F6DF7  LibIrqScheduler        ; = lib 0x4C03DE26: RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
+0x487BAA19  LibPrintf              ; = lib 0x4C001A48: printf-like formatter (varargs; a1 = &args on the caller stack)
+0x487BBFF5  LibMemSet              ; = lib 0x4C003024: memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
+0x487BC00A  LibMemCopy             ; = lib 0x4C003039: memcpy(dest=a0, src=a1, len=d0) -- hardware-loop (setlb)
+0x487F6E43  LibIrqSubDispatch      ; = lib 0x4C03DE72: scans the INTC group's DETECT bits 0-3 to pick the sub-source (called by the IRQ handlers)
