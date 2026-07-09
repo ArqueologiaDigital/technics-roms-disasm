@@ -21,7 +21,7 @@ UNIDASM     ?= ../mame-sony-video/unidasm
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
 
-.PHONY: all verify disasm symbols program-src constants clean distclean baserom
+.PHONY: all verify disasm disasm-dsp symbols program-src constants clean distclean baserom
 
 # Default: build then verify byte-for-byte.
 all: verify
@@ -87,7 +87,24 @@ verify: $(TARGETS)
 	@echo; echo "All images reproduced byte-for-byte."
 
 # ---- (re)generate the reference disassembly listings -----------------------
-disasm: disasm/program.asm disasm/program_named.asm disasm/table_directory.asm
+disasm: disasm/program.asm disasm/program_named.asm disasm/table_directory.asm disasm-dsp
+
+# ---- effects-DSP (IC306 ADSP-21065L) host-download record pool --------------
+# 80 SHARC programs embedded in the program image at file 0x2BCEC4..0x2CE68D.
+# Extract + disassemble (unidasm -arch sharc), merging curated annotation from
+# dsp/records.tsv and dsp/sym/*.sym. The listings under disasm/dsp/ are tracked;
+# build/dsp/*.bin raw extracts are not (see .gitignore /build/). See dsp/README.md.
+DSP_POOL := 0x2BCEC4 0x2CE68D
+
+.PHONY: disasm-dsp
+disasm-dsp: baserom/kn7000_program.rom tools/gen_dsp_records.py \
+            dsp/records.tsv $(wildcard dsp/sym/*.sym)
+	@mkdir -p disasm/dsp build/dsp
+	@echo "==> extracting + disassembling the SHARC record pool ($(DSP_POOL))"
+	@$(PYTHON) tools/gen_dsp_records.py --rom $< --pool $(DSP_POOL) \
+	    --unidasm $(UNIDASM) --manifest dsp/records.tsv --symdir dsp/sym \
+	    --bindir build/dsp --out disasm/dsp
+	@echo "wrote disasm/dsp/"
 
 disasm/program.asm: baserom/kn7000_program.rom
 	@mkdir -p disasm
