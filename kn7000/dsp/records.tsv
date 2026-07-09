@@ -1,81 +1,81 @@
 # idx	rom_off	cpu_addr	body_bytes	nblocks	role	name	note
-0	0x2BCEC4	0x486BCEC4	685	2	probe		
-1	0x2BD17D	0x486BD17D	685	2	probe		
-2	0x2BD436	0x486BD436	685	2	probe		
-3	0x2BD6EF	0x486BD6EF	685	2	probe		
-4	0x2BD9A8	0x486BD9A8	4597	8	kernel		
-5	0x2BEBA9	0x486BEBA9	48	1	effect		
-6	0x2BEBE5	0x486BEBE5	918	3	effect		
-7	0x2BEF87	0x486BEF87	977	3	effect		
-8	0x2BF364	0x486BF364	981	3	effect		
-9	0x2BF745	0x486BF745	941	3	effect		
-10	0x2BFAFE	0x486BFAFE	1067	3	effect		
-11	0x2BFF35	0x486BFF35	1050	3	effect		
-12	0x2C035B	0x486C035B	870	3	effect		
-13	0x2C06CD	0x486C06CD	634	3	effect		
-14	0x2C0953	0x486C0953	683	3	effect		
-15	0x2C0C0A	0x486C0C0A	640	3	effect		
-16	0x2C0E96	0x486C0E96	913	3	effect		
-17	0x2C1233	0x486C1233	864	3	effect		
-18	0x2C159F	0x486C159F	1042	3	effect		
-19	0x2C19BD	0x486C19BD	864	3	effect		
-20	0x2C1D29	0x486C1D29	861	3	effect		
-21	0x2C2092	0x486C2092	511	3	effect		
-22	0x2C229D	0x486C229D	414	3	effect		
-23	0x2C2447	0x486C2447	802	3	effect		
-24	0x2C2775	0x486C2775	765	3	effect		
-25	0x2C2A7E	0x486C2A7E	511	3	effect		
-26	0x2C2C89	0x486C2C89	759	3	effect		
-27	0x2C2F8C	0x486C2F8C	839	3	effect		
-28	0x2C32DF	0x486C32DF	597	3	effect		
-29	0x2C3540	0x486C3540	631	3	effect		
-30	0x2C37C3	0x486C37C3	925	3	effect		
-31	0x2C3B6C	0x486C3B6C	701	3	effect		
-32	0x2C3E35	0x486C3E35	976	3	effect		
-33	0x2C4211	0x486C4211	965	3	effect		
-34	0x2C45E2	0x486C45E2	394	3	effect		
-35	0x2C4778	0x486C4778	925	3	effect		
-36	0x2C4B21	0x486C4B21	925	3	effect		
-37	0x2C4ECA	0x486C4ECA	974	3	effect		
-38	0x2C52A4	0x486C52A4	974	3	effect		
-39	0x2C567E	0x486C567E	1048	3	effect		
-40	0x2C5AA2	0x486C5AA2	1048	3	effect		
-41	0x2C5EC6	0x486C5EC6	925	3	effect		
-42	0x2C626F	0x486C626F	925	3	effect		
-43	0x2C6618	0x486C6618	925	3	effect		
-44	0x2C69C1	0x486C69C1	925	3	effect		
-45	0x2C6D6A	0x486C6D6A	925	3	effect		
-46	0x2C7113	0x486C7113	1020	3	effect		
-47	0x2C751B	0x486C751B	625	3	effect		
-48	0x2C7798	0x486C7798	846	3	effect		
-49	0x2C7AF2	0x486C7AF2	847	3	effect		
-50	0x2C7E4D	0x486C7E4D	960	3	effect		
-51	0x2C8219	0x486C8219	1010	3	effect		
-52	0x2C8617	0x486C8617	1010	3	effect		
-53	0x2C8A15	0x486C8A15	1010	3	effect		
-54	0x2C8E13	0x486C8E13	1010	3	effect		
-55	0x2C9211	0x486C9211	1010	3	effect		
-56	0x2C960F	0x486C960F	1010	3	effect		
-57	0x2C9A0D	0x486C9A0D	953	3	effect		
-58	0x2C9DD2	0x486C9DD2	854	3	effect		
-59	0x2CA134	0x486CA134	854	3	effect		
-60	0x2CA496	0x486CA496	854	3	effect		
-61	0x2CA7F8	0x486CA7F8	854	3	effect		
-62	0x2CAB5A	0x486CAB5A	1095	3	effect		
-63	0x2CAFAD	0x486CAFAD	1095	3	effect		
-64	0x2CB400	0x486CB400	1095	3	effect		
-65	0x2CB853	0x486CB853	1095	3	effect		
-66	0x2CBCA6	0x486CBCA6	1207	3	effect		
-67	0x2CC169	0x486CC169	1074	3	effect		
-68	0x2CC5A7	0x486CC5A7	748	3	effect		
-69	0x2CC89F	0x486CC89F	951	3	effect		
-70	0x2CCC62	0x486CCC62	870	3	effect		
-71	0x2CCFD4	0x486CCFD4	888	3	effect		
-72	0x2CD358	0x486CD358	863	3	effect		
-73	0x2CD6C3	0x486CD6C3	900	3	effect		
-74	0x2CDA53	0x486CDA53	693	3	effect		
-75	0x2CDD14	0x486CDD14	887	3	effect		
-76	0x2CE097	0x486CE097	887	3	effect		
-77	0x2CE41A	0x486CE41A	197	1	data		
-78	0x2CE4EB	0x486CE4EB	197	1	data		
-79	0x2CE5BC	0x486CE5BC	197	1	data		
+0	0x2BCEC4	0x486BCEC4	685	2	probe	SDRAM POST self-test	unique PM; conf high
+1	0x2BD17D	0x486BD17D	685	2	probe	SDRAM POST self-test	unique PM; conf high
+2	0x2BD436	0x486BD436	685	2	probe	SDRAM POST self-test	unique PM; conf high
+3	0x2BD6EF	0x486BD6EF	685	2	probe	SDRAM POST self-test	unique PM; conf high
+4	0x2BD9A8	0x486BD9A8	4597	8	kernel	resident SHARC kernel	unique PM; conf high
+5	0x2BEBA9	0x486BEBA9	48	1	effect	thru / effect-off stub	Reverb (unit9); types 0x00; unique PM; conf high
+6	0x2BEBE5	0x486BEBE5	918	3	effect	modulated-delay chorus	Reverb (unit9); types 0x01,0x2C; unique PM; conf high
+7	0x2BEF87	0x486BEF87	977	3	effect	modulated-delay chorus	Reverb (unit9); types 0x02,0x07,0x2D; unique PM; conf high
+8	0x2BF364	0x486BF364	981	3	effect	comb+allpass reverb	Multi/Sound-DSP insert (units1-6); types 0x03; unique PM; conf medium
+9	0x2BF745	0x486BF745	941	3	effect	modulated-delay chorus	Reverb (unit9); types 0x04,0x0B; unique PM; conf medium
+10	0x2BFAFE	0x486BFAFE	1067	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x05,0x0D; unique PM; conf medium
+11	0x2BFF35	0x486BFF35	1050	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x06,0x0E; unique PM; conf high
+12	0x2C035B	0x486C035B	870	3	effect	dynamics/compressor + delay/filter composite	Multi/Sound-DSP insert (units1-6); types 0x08; unique PM; conf low
+13	0x2C06CD	0x486C06CD	634	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x09; unique PM; conf medium
+14	0x2C0953	0x486C0953	683	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x0A; unique PM; conf medium
+15	0x2C0C0A	0x486C0C0A	640	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x0C; unique PM; conf medium
+16	0x2C0E96	0x486C0E96	913	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x0F; unique PM; conf medium
+17	0x2C1233	0x486C1233	864	3	effect	waveshaper/distortion + envelope AGC	Multi/Sound-DSP insert (units1-6); types 0x20; unique PM; conf medium
+18	0x2C159F	0x486C159F	1042	3	effect	waveshaper/distortion + allpass/delay	Multi/Sound-DSP insert (units1-6); types 0x21; unique PM; conf medium
+19	0x2C19BD	0x486C19BD	864	3	effect	waveshaper/distortion + short delay	Multi/Sound-DSP insert (units1-6); types 0x22; unique PM; conf medium
+20	0x2C1D29	0x486C1D29	861	3	effect	waveshaper/distortion + biquad EQ (enhancer)	Multi/Sound-DSP insert (units1-6); types 0x23; unique PM; conf medium
+21	0x2C2092	0x486C2092	511	3	effect	dynamics/compressor-limiter	Multi/Sound-DSP insert (units1-6); types 0x24; =rec25 (identical PM); conf high
+22	0x2C229D	0x486C229D	414	3	effect	dynamics/compressor-limiter	Multi/Sound-DSP insert (units1-6); types 0x25; unique PM; conf medium
+23	0x2C2447	0x486C2447	802	3	effect	biquad EQ (cascaded resonant sections)	Multi/Sound-DSP insert (units1-6); types 0x27; unique PM; conf medium
+24	0x2C2775	0x486C2775	765	3	effect	tremolo-pan LFO	Multi/Sound-DSP insert (units1-6); types 0x28; unique PM; conf medium
+25	0x2C2A7E	0x486C2A7E	511	3	effect	dynamics/compressor-limiter	Multi/Sound-DSP insert (units1-6); types 0x29; =rec21 (identical PM); conf medium
+26	0x2C2C89	0x486C2C89	759	3	effect	tremolo-pan LFO	Multi/Sound-DSP insert (units1-6); types 0x30; unique PM; conf medium
+27	0x2C2F8C	0x486C2F8C	839	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x32; unique PM; conf medium
+28	0x2C32DF	0x486C32DF	597	3	effect	dynamics + biquad (envelope filter)	Multi/Sound-DSP insert (units1-6); types 0x34; unique PM; conf low
+29	0x2C3540	0x486C3540	631	3	effect	dynamics + biquad (envelope filter)	Multi/Sound-DSP insert (units1-6); types 0x33; unique PM; conf low
+30	0x2C37C3	0x486C37C3	925	3	effect	modulated-delay + filter (multi-tap, crossfaded)	Multi/Sound-DSP insert (units1-6); types 0x35; =rec35,36,41,42,43,44,45 (identical PM); conf low
+31	0x2C3B6C	0x486C3B6C	701	3	effect	tremolo-pan LFO	Multi/Sound-DSP insert (units1-6); types 0x36; unique PM; conf medium
+32	0x2C3E35	0x486C3E35	976	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x38; unique PM; conf high
+33	0x2C4211	0x486C4211	965	3	effect	FIR convolution + biquad EQ	Multi/Sound-DSP insert (units1-6); types 0x39; unique PM; conf medium
+34	0x2C45E2	0x486C45E2	394	3	effect	5-band output EQUALIZER	EQUALIZER (unit8); types 0x4F; unique PM; conf medium
+35	0x2C4778	0x486C4778	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x80; =rec30,36,41,42,43,44,45 (identical PM); conf high
+36	0x2C4B21	0x486C4B21	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x81; =rec30,35,41,42,43,44,45 (identical PM); conf high
+37	0x2C4ECA	0x486C4ECA	974	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x82; unique PM; conf high
+38	0x2C52A4	0x486C52A4	974	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x83; unique PM; conf high
+39	0x2C567E	0x486C567E	1048	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x84; unique PM; conf high
+40	0x2C5AA2	0x486C5AA2	1048	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x85; unique PM; conf high
+41	0x2C5EC6	0x486C5EC6	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x86; =rec30,35,36,42,43,44,45 (identical PM); conf high
+42	0x2C626F	0x486C626F	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x87; =rec30,35,36,41,43,44,45 (identical PM); conf high
+43	0x2C6618	0x486C6618	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x88; =rec30,35,36,41,42,44,45 (identical PM); conf high
+44	0x2C69C1	0x486C69C1	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x89; =rec30,35,36,41,42,43,45 (identical PM); conf high
+45	0x2C6D6A	0x486C6D6A	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x8A; =rec30,35,36,41,42,43,44 (identical PM); conf high
+46	0x2C7113	0x486C7113	1020	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x8C; unique PM; conf high
+47	0x2C751B	0x486C751B	625	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x90; unique PM; conf medium
+48	0x2C7798	0x486C7798	846	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x91; unique PM; conf high
+49	0x2C7AF2	0x486C7AF2	847	3	effect	modulated-delay chorus	Reverb (unit9); types 0x52; unique PM; conf high
+50	0x2C7E4D	0x486C7E4D	960	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x53; unique PM; conf high
+51	0x2C8219	0x486C8219	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x14,0x15; =rec54,55,56 (identical PM); conf high
+52	0x2C8617	0x486C8617	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x1E,0x1F; unique PM; conf high
+53	0x2C8A15	0x486C8A15	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x10,0x11; unique PM; conf high
+54	0x2C8E13	0x486C8E13	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x12,0x13; =rec51,55,56 (identical PM); conf high
+55	0x2C9211	0x486C9211	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x16,0x17; =rec51,54,56 (identical PM); conf high
+56	0x2C960F	0x486C960F	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x18,0x19; =rec51,54,55 (identical PM); conf high
+57	0x2C9A0D	0x486C9A0D	953	3	effect	modulated-delay pitch-shifter (detune)	Multi/Sound-DSP insert (units1-6); types 0x78; unique PM; conf medium
+58	0x2C9DD2	0x486C9DD2	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x58; unique PM; conf medium
+59	0x2CA134	0x486CA134	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x59; unique PM; conf medium
+60	0x2CA496	0x486CA496	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x5A; unique PM; conf medium
+61	0x2CA7F8	0x486CA7F8	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x5B; unique PM; conf medium
+62	0x2CAB5A	0x486CAB5A	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x64; =rec63,64,65 (identical PM); conf high
+63	0x2CAFAD	0x486CAFAD	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x65; =rec62,64,65 (identical PM); conf high
+64	0x2CB400	0x486CB400	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x66; =rec62,63,65 (identical PM); conf high
+65	0x2CB853	0x486CB853	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x67; =rec62,63,64 (identical PM); conf high
+66	0x2CBCA6	0x486CBCA6	1207	3	effect	modulated-delay chorus/pitch-shift (multi-stage)	Multi/Sound-DSP insert (units1-6); types 0x7C; unique PM; conf low
+67	0x2CC169	0x486CC169	1074	3	effect	waveshaper/nonlinear (+ modulated delay)	Multi/Sound-DSP insert (units1-6); types 0x79; unique PM; conf medium
+68	0x2CC5A7	0x486CC5A7	748	3	effect	waveshaper/nonlinear	Multi/Sound-DSP insert (units1-6); types 0x7A; unique PM; conf medium
+69	0x2CC89F	0x486CC89F	951	3	effect	waveshaper/nonlinear (+ comb)	Multi/Sound-DSP insert (units1-6); types 0x7B; unique PM; conf medium
+70	0x2CCC62	0x486CCC62	870	3	effect	modulated-delay chorus/ensemble	Reverb (unit9); types 0x40; unique PM; conf medium
+71	0x2CCFD4	0x486CCFD4	888	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x42; unique PM; conf medium
+72	0x2CD358	0x486CD358	863	3	effect	modulated-delay chorus/ensemble	Multi/Sound-DSP insert (units1-6); types 0x43; unique PM; conf medium
+73	0x2CD6C3	0x486CD6C3	900	3	effect	modulated-delay + series-allpass (phaser/diffuser)	Multi/Sound-DSP insert (units1-6); types 0x44; unique PM; conf medium
+74	0x2CDA53	0x486CDA53	693	3	effect	modulated-delay / tremolo-rotary (computed LFO)	Multi/Sound-DSP insert (units1-6); types 0x46; unique PM; conf medium
+75	0x2CDD14	0x486CDD14	887	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x50; =rec76 (identical PM); conf medium
+76	0x2CE097	0x486CE097	887	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x51; =rec75 (identical PM); conf medium
+77	0x2CE41A	0x486CE41A	197	1	data	LFO waveform table — sine	conf high
+78	0x2CE4EB	0x486CE4EB	197	1	data	LFO waveform table — triangle	conf high
+79	0x2CE5BC	0x486CE5BC	197	1	data	LFO waveform table — square	conf high

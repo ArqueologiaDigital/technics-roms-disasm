@@ -1,0 +1,38 @@
+; rec62 — overdrive/distortion with auto-gain + cubic soft-clip (family rec62-65)
+; Signal per channel: sum L+R -> level/envelope detect -> reciprocal gain (AGC)
+; -> pre biquad -> cubic soft-clip waveshaper (x - k*x^3, saturating at +/-0.667)
+; -> output gain -> post/tone biquad -> output. Stereo (two identical channel
+; passes). Family shares identical PM; presets differ only in the tone-biquad
+; coeffs dm:c018-c01d.
+pm:0x8400  DistEntry              ; I0 = I1 (coeff base)
+pm:0x8401  readInputs            ; R0=DM(0x20,I4) L, R14=DM(0x21,I4) R, <<8
+pm:0x8405  sumToMono            ; R8 = R0 + R14
+pm:0x8406  absLevel             ; R8 = ABS R8  (rectify for envelope)
+pm:0x8407  envMac              ; MR1F=R7; R8 = MRF+(R3*R4) attack/release smoother
+pm:0x840c  recipGain           ; F8 = RECIPS F8  (1/level = auto-gain)
+pm:0x8412  chA_floatInput      ; F10 = FLOAT R0 (left)
+pm:0x8413  chA_preBiquad       ; pre-clip biquad, coeffs DM(I0,M2), state PM(I8)
+pm:0x8419  chA_clipTestHi      ; COMP(F10,F5); IF GE -> hard-clip +limit
+pm:0x841d  chA_cubicShaper     ; F2=x*x*x*coef; F10 = x - k*x^3 (soft clip)
+pm:0x8422  chA_satPos          ; R10 = +0.6667 saturation constant
+pm:0x8424  chA_satNeg          ; R10 = -0.6667 saturation constant
+pm:0x8425  chA_driveGain       ; F10 = F10 * F13 (drive/output level)
+pm:0x842f  chA_postBiquad      ; post/tone biquad (coeffs dm:c018-c01d = preset)
+pm:0x8439  chA_fixOut          ; R8 = FIX F10, *R2 scale, ASHIFT -8
+pm:0x843e  chA_writeOut        ; DM(I4,M2) = R8 (left output)
+pm:0x843f  chB_floatInput      ; F10 = FLOAT R14 (right) — mirror of chA
+pm:0x844a  chB_cubicShaper     ; cubic soft clip (right)
+pm:0x8469  chB_writeOut        ; DM(I4,M2) = R8 (right output)
+pm:0x846a  DistReturn          ; RTS (DB)
+dm:0xc00d  hp_b0               ; 0.9858 (input DC-block/highpass biquad)
+dm:0xc00e  hp_b1               ; -0.9929
+dm:0xc00f  hp_b2               ; 0.9929
+dm:0xc013  drive_lo            ; 0.06  drive/mix scalers
+dm:0xc014  drive_mid          ; 0.333
+dm:0xc015  drive_hi           ; 0.99
+dm:0xc018  tone_b0            ; tone/cabinet biquad b0 (PRESET, differs c018-c01d)
+dm:0xc019  tone_b1            ; tone biquad b1 (preset)
+dm:0xc01a  tone_b2            ; tone biquad b2 (preset)
+dm:0xc01b  tone_a1            ; tone biquad a1 (preset)
+dm:0xc01c  tone_a2            ; tone biquad a2 (preset)
+dm:0xc021  out_unity         ; 0x7FFFFFFF ~ 1.0

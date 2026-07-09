@@ -1,0 +1,26 @@
+; rec07 — EFFECT: modulated-delay chorus/flanger WITH feedback
+; Same sine-LFO fractional-delay engine as rec06, but adds a regeneration/feedback
+; term (R9 = R8*R4, coeff c005) that sums into each modulated tap (R5=R8+R9,
+; R6=R8+R9) before writing to the delay line -> flanger / resonant chorus.
+;
+dm:0x9800  eff07_lfo_rate       ; LFO increment/rate (=0x055000)
+dm:0x9801  eff07_lfo_phase      ; LFO phase accumulator (=0x800000)
+dm:0xc005  eff07_feedback       ; 0x13333333 (~0.15) feedback/regeneration gain
+dm:0xc007  eff07_depth          ; 0x00400000 modulation depth scaler
+dm:0xc008  eff07_wet            ; 0x7FFFFFFF wet level
+dm:0xc029  eff07_sine_tab       ; 16-point sine LFO table (c029..c03f)
+pm:0x8400  eff07_entry          ; I0=I1
+pm:0x8401  eff07_lfo_acc0       ; phase accumulate (voice/tap 0)
+pm:0x8408  eff07_interp0        ; fractional-delay interpolation tap 0
+pm:0x840d  eff07_feedback_mac   ; R9 = R8*R4 feedback term
+pm:0x8410  eff07_lfo_acc1       ; second LFO accumulate
+pm:0x841a  eff07_tapA           ; R5 = tap + feedback
+pm:0x841e  eff07_tapB           ; R6 = tap + feedback
+pm:0x8420  eff07_read_inL       ; R0 = DM(0x20,I4) input
+pm:0x8422  eff07_write_delayL   ; DM(I2,M7)=R0 push to delay line
+pm:0x8437  eff07_crossfadeL     ; R8=(R8+R9)/2 + wet scale (left)
+pm:0x843b  eff07_clipL          ; CLIP by 0x7FFFFF
+pm:0x843c  eff07_out_L          ; DM(I4,M2)=R8 left output
+pm:0x8452  eff07_crossfadeR     ; R8=(R8+R9)/2 (right)
+pm:0x8457  eff07_out_R          ; DM(I4,M2)=R8 right output
+pm:0x8458  eff07_rts            ; RTS(DB)

@@ -1,0 +1,22 @@
+; rec37 EFFECT — distortion/overdrive: envelope-follower AGC (RECIPS) + waveshaper
+; table lookup + post biquad tone + short delay, stereo (right channel inverted).
+; rec38 = same PM, differs only in two output-level immediates (preset).
+pm:0x8400  Rec37_AudioIn        ; R0=DM(0x20),R8=DM(0x21); R8=L+R; LSHIFT 9
+pm:0x8405  Rec37_EnvRect        ; R8=ABS R8 rectify; PM(I8,M14) env state, DM(I0,M1) attack coef
+pm:0x8407  Rec37_EnvAtkRel      ; IF LT choose release coef; one-pole env: R8=MRF+(R3*R4)
+pm:0x840a  Rec37_EnvStore       ; PM(I8,M8)=R8 save envelope
+pm:0x840c  Rec37_RecipGain      ; F8=RECIPS(env); F15=gain (auto-gain normalisation)
+pm:0x8413  Rec37_ApplyGainL     ; F0=F0*F15*F1 pre-gain (drive)
+pm:0x8415  Rec37_WaveshapeL     ; signal-indexed table lookup DM(I5 @+0x34)+interp = distortion curve
+pm:0x8422  Rec37_ToneBiquadL    ; biquad tone filter, PM(I8) coeffs+state
+pm:0x8429  Rec37_OutLevelL      ; R0=0x3E570A3D output level (preset-differing)
+pm:0x842b  Rec37_DelayL         ; M7=0x190(400) DM(I2,M7) short delay
+pm:0x8433  Rec37_OutLeft        ; DM(I4,M2)=R8 left
+pm:0x8434  Rec37_ChanR          ; re-read DM(0x20), same drive/waveshape/biquad path
+pm:0x844d  Rec37_OutLevelR      ; R0=0x3E4AC083 right level (preset-differing)
+pm:0x8451  Rec37_InvertR        ; R8=-R8 right-channel phase invert (stereo spread)
+pm:0x8454  Rec37_OutRight       ; DM(I4,M2)=R8 right
+pm:0x8455  Rec37_Return         ; RTS
+dm:0xc006  Rec37_EnvCoef        ; envelope attack/release + threshold coeffs c006..c00b
+dm:0xc00d  Rec37_ToneCoef       ; post biquad tone coeffs c00d..c011
+dm:0xc012  Rec37_Unity          ; =0x7FFFFFFF

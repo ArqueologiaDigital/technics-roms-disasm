@@ -1,0 +1,23 @@
+; rec70 [EFFECT] — feedback delay + dual LFO-modulated interpolated taps, stereo (F70-73 modulated-delay family)
+; I6=long delay buffer; I2=modulated read; I1=feedback/state; DM(0x20/0x21,I4) in, DM(I4,M2) x2 out
+pm:0x8400  Entry_I0eqI1          ; I0=I1; R15=I6
+pm:0x8402  LoadFbState           ; R10 = DM(-1,I1) previous feedback
+pm:0x8403  ReadInputL            ; R3 = DM(0x20,I4); F3=FLOAT
+pm:0x8405  FeedbackMix           ; F7=F10*F7(fb gain); F0=F3+F7
+pm:0x8407  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
+pm:0x8409  Delay1_Read           ; R0 = DM(I6,M6) delayed sample
+pm:0x840a  Delay1_Advance        ; I6=R15; M7=0x3C64(15460); MODIFY(I6,M7) wrap
+pm:0x840d  StoreFbState          ; DM(-1,I1)=R0
+pm:0x840f  LFO_PhaseAccum        ; F12=F0*F7; R8=DM(I0,M6)+PM(I8,M8) phase step
+pm:0x8411  Phase_To_Index        ; FDEP SE; ASHIFT R8 BY -11 -> delay offset
+pm:0x8415  IntFrac_Split         ; M7=int part; FDEP R8 15:16 = fraction
+pm:0x8418  Tap1_FracInterp       ; MR1F=R7; MRF+(R4*R3); linear interp (I5 taps)
+pm:0x8422  Tap2_VarModify        ; MODIFY(I2,M7) second modulated read pointer
+pm:0x8424  Tap2_FracInterp       ; MR1F=R7; R7=R4-R7; MRF+(R8*R7)
+pm:0x842b  ReadInputR            ; R3 = DM(0x21,I4); F3=FLOAT (right channel)
+pm:0x842f  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
+pm:0x8431  Delay2_Read           ; R0=DM(I6,M6)
+pm:0x8438  Tap2b_VarModify       ; MODIFY(I2,M7) modulated read
+pm:0x8444  AmpScale              ; R9=R9*R14; R8=R8*R14; doubling
+pm:0x8446  OutputL               ; DM(I4,M2)=R9
+pm:0x8448  OutputR               ; DM(I4,M2)=R8; RTS(DB) at 0x8447

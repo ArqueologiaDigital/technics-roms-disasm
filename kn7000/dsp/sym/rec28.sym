@@ -1,0 +1,38 @@
+; rec28 — EFFECT: envelope-controlled resonant filter (auto-wah / dynamic filter)
+; DM@C000:40e family. Detector: sum L+R, FLOAT, *0.8, ABS (rectify), then a
+; one-pole envelope with attack/release coeff select (IF LT @840a). The smoothed
+; envelope feeds a polynomial (840e..8414: F7,F7^2 products) that derives the
+; per-sample biquad coefficients, which are then applied by the kernel-style
+; 6-op biquad body (8418..8420) to each channel -> envelope-swept filter.
+; Output FIX, *level, CLIP. Confidence: medium-low (env-detector + biquad clear;
+; exact wah vs dynamic-LP mapping inferred).
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4)
+pm:0x8403  SumMono                 ; detector = L+R
+pm:0x8405  DetToFloat              ; F8 = FLOAT det
+pm:0x8406  DetScale08              ; *0.8 (0x3F4CCCCD)
+pm:0x8408  Rectify                 ; F8 = ABS(det)
+pm:0x8409  EnvDelta                ; F3 = det - env(F7)
+pm:0x840a  AttackReleaseSelect     ; IF LT reload release coeff
+pm:0x840c  EnvOnePole              ; F8 = env + delta*coeff
+pm:0x840e  CoeffPoly_Start         ; polynomial: filter coeffs from envelope
+pm:0x8413  StoreCoeffState         ; DM(M6/M1/M2,I0) = derived biquad coeffs
+pm:0x8416  ReadInL2                ; R0 = DM(0x20,I4) filter input L
+pm:0x8418  Biquad_L                ; kernel-style resonant section (L)
+pm:0x8420  FixL                    ; R0 = FIX F10
+pm:0x8421  LevelMul_L              ; *R14 wet level
+pm:0x8423  ClipL                   ; CLIP 0x007FFFFF
+pm:0x8424  OutL                    ; DM(I4,M2) = out L
+pm:0x8425  ReadInR2                ; R0 = DM(0x20,I4)
+pm:0x8428  Biquad_R                ; resonant section (R)
+pm:0x8430  FixR                    ; R0 = FIX F10
+pm:0x8434  OutR                    ; DM(I4,M2) = out R
+pm:0x8435  Return                  ; RTS (delayed)
+pm:0x8437  PMStateRewind           ; MODIFY(I8,0x4B) 75-word PM state
+dm:0xc004  Coeff_AttackRate        ; 0x3B800000 (~0.0039) env attack
+dm:0xc005  Coeff_ReleaseRate       ; 0x3A000000 env release
+dm:0xc006  Coeff_PolyA             ; 0x2DCCCCCC filter-sweep poly term
+dm:0xc009  Coeff_Resonance         ; 0x3FFF7CED (a1~1.999) resonant pole
+dm:0xc00a  Const_One               ; 0x3F800000 = 1.0f
+dm:0xc00e  Coeff_OutLevel          ; 0x7FFFFFFF

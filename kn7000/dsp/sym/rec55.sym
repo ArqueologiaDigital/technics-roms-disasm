@@ -1,0 +1,19 @@
+; rec55 — EFFECT: float comb+allpass REVERB (variant of rec51 family)
+; Same PM algorithm AND same four early delay lengths as rec51.
+; Only the output tone biquad c01f..c023 differs (0x3FD766AA/0xBF40E76F/...) =>
+; a different feedback/damping voicing (brighter/longer tail preset).
+;
+dm:0xc01f  rev_biquad_out_b0     ; 0x3FD766AA output tone biquad b0 (this preset)
+dm:0xc020  rev_biquad_out_b1     ; 0xBF40E76F output tone biquad b1
+dm:0xc021  rev_biquad_out_b2     ; 0x3D10D0CC output tone biquad b2
+pm:0x8400  rev_entry             ; effect entry (see rec51.sym for full trace)
+pm:0x8403  rev_delaybase         ; MODIFY(I6,0x00010747) delay-buffer base
+pm:0x8406  rev_delaylen0         ; M7=0xFFFFF780 (same as rec51)
+pm:0x8410  rev_delaylen1         ; M7=0xFFFFFA00 (same as rec51)
+pm:0x841a  rev_delaylen2         ; M7=0xFFFFFBBE (same as rec51)
+pm:0x841d  rev_delaylen3         ; M7=0xFFFFFB00 (same as rec51)
+pm:0x841f  rev_allpass          ; float allpass core
+pm:0x8425  rev_diffuse_chain     ; allpass/comb diffuser loop
+pm:0x8468  rev_out_L             ; left output write
+pm:0x846d  rev_out_R             ; right output write
+pm:0x846f  rev_rts               ; RTS(DB)

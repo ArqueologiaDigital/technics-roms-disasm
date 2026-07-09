@@ -1,0 +1,23 @@
+; rec74 [EFFECT] — polynomial-sine LFO + dual delay lines (hybrid: F67-69 poly core + F70-73 delay)
+; sums L+R input, computes sine via cubic poly, applies to two delay taps
+pm:0x8400  Entry_I0eqI1          ; I0=I1
+pm:0x8401  ReadInputLR           ; R0=DM(0x20,I4); R8=DM(0x21,I4); R8=R0+R8 (L+R sum)
+pm:0x8404  InScale               ; LSHIFT R8 BY 9; F8=FLOAT R8
+pm:0x8406  AngleScale            ; R0=0x3F4CCCCD(0.8); F8=F8*F0; ABS
+pm:0x8409  RangeReduce           ; F3=F8-F7; IF LT reload coeff
+pm:0x840d  PolySine              ; F4=F7*F7; F10=F3*F7; cubic sine terms
+pm:0x8412  PolyStore             ; F4=F10+F10; F4=F4-F3 finalize modulator
+pm:0x8414  ReChannelL            ; R0=DM(0x20,I4); F10=FLOAT (audio path)
+pm:0x8416  ModApply1             ; F12=F3*F7 chain modulate sample
+pm:0x841d  GainMix               ; R1=0x40800000(4.0); F0=F10*F1; F8=F0+F7
+pm:0x8420  Delay1_Write          ; M7=0xFA0(4000); DM(I6,M7)=R8
+pm:0x8422  Delay1_Read           ; R8=DM(I6,M6)
+pm:0x8424  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7); DM(-1,I1)=R8
+pm:0x8427  Mix1                  ; F0=F0*F7; F12=F8*F7; F0=F0+F12
+pm:0x842a  OutputL               ; R0=FIX; R0=R0*R14; DM(I4,M2)=R0
+pm:0x842d  ReChannelR            ; R0=DM(0x20,I4); F10=FLOAT (right path)
+pm:0x843c  Delay2_Write          ; M7=0x1388(5000); DM(I6,M7)=R8
+pm:0x843e  Delay2_Read           ; R8=DM(I6,M6); DM(-2,I1)=R8
+pm:0x8443  Mix2                  ; F0=F0+F12
+pm:0x8445  Return                ; RTS (DB); R0=R0*R14
+pm:0x8446  OutputR               ; DM(I4,M2)=R0

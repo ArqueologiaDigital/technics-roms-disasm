@@ -1,0 +1,11 @@
+; rec65 — overdrive/distortion (family rec62-65; tone preset D)
+; Identical PM to rec62; only the tone-biquad coeffs dm:c018-c01d differ.
+pm:0x8400  DistEntry            ; I0 = I1
+pm:0x840c  recipGain          ; F8 = RECIPS F8 (auto-gain)
+pm:0x841d  chA_cubicShaper    ; cubic soft-clip waveshaper
+pm:0x842f  chA_postBiquad     ; tone biquad (dm:c018-c01d = this preset)
+pm:0x843e  chA_writeOut       ; DM(I4,M2) = R8
+pm:0x846a  DistReturn         ; RTS (DB)
+dm:0xc018  tone_b0            ; tone biquad b0 (preset D)
+dm:0xc01c  tone_a1            ; tone biquad a1
+dm:0xc01d  tone_a2            ; tone biquad a2

@@ -1,0 +1,26 @@
+; rec73 [EFFECT] — feedback delay + 3x cascaded allpass sections per channel (F70-73 family)
+; series-allpass structure (F12=F3*F7;F10=F11+F12;F1=F10+F12;F12=F1*F7;F10=F3-F12) x3 -> phaser/diffuser
+pm:0x8400  Entry_I0eqI1          ; I0=I1
+pm:0x8401  LoadFbState           ; R10=DM(-1,I1)
+pm:0x8402  ReadInputL            ; R3=DM(0x20,I4); F3=FLOAT
+pm:0x8404  FeedbackMix           ; F7=F10*F7; F0=F3+F7
+pm:0x8406  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
+pm:0x8408  Delay1_Read           ; R0=DM(I6,M6)
+pm:0x840a  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
+pm:0x840f  MixCoefs              ; F12=F0*F7; F11=F1+F12 seed for allpass chain
+pm:0x8411  LFO_PhaseAccum        ; R8=DM(I0,M6)+PM(I8,M14); ASHIFT -11
+pm:0x8418  FracInterp_Tap        ; MR1F=R7; MRF+(R4*R3); MRF-(R3*R7) modulated tap
+pm:0x841f  BlockFloatCoef        ; F7=FLOAT R5 BY R1 (allpass coef from mod tap)
+pm:0x8420  Allpass_A             ; stage1: F12=F3*F7;F10=F11+F12;F1=F10+F12;F10=F3-F12
+pm:0x8424  Allpass_B             ; stage2 allpass
+pm:0x8428  Allpass_C             ; stage3 allpass
+pm:0x8430  ReadInputR            ; R3=DM(0x21,I4) right channel
+pm:0x8434  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
+pm:0x843a  BlockFloatCoef2       ; F7=FLOAT R5 BY R1
+pm:0x843b  Allpass_A2            ; right-channel allpass chain stage1
+pm:0x843f  Allpass_B2            ; stage2
+pm:0x8443  Allpass_C2            ; stage3
+pm:0x844b  OutFix                ; R0=FIX F10; R13=R13*R14; R0=R0*R14
+pm:0x844c  Return                ; RTS (DB)
+pm:0x844d  OutputL               ; DM(I4,M2)=R13
+pm:0x844e  OutputR               ; DM(I4,M2)=R0

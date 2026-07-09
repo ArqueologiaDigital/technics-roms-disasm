@@ -1,0 +1,32 @@
+; rec23 — EFFECT: cascaded biquad / all-pass filter bank (floating-point)
+; DM@C000:40e holds five 3-coeff filter sections (c004..c018): triads such as
+; (b, -b, 1.0) plus resonant denominators (a1~1.977, a2~-0.983) => sharp peaks.
+; PM code runs the same 6-instruction biquad kernel repeatedly (matches kernel
+; sub 0x8300), stepping coeffs from DM(I0,M2) and state from PM(I8). 16 DM@9800
+; words are the per-section z^-1/z^-2 state. Likely a multi-band EQ / resonator
+; (phaser/formant) — cascade of resonant sections. Confidence: medium.
+pm:0x8400  Entry_I0eqI1            ; I0 = I1 coeff base
+pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4) input L
+pm:0x8402  InToFloat               ; F10 = FLOAT inL
+pm:0x8403  Sect1_Head              ; first all-pass/biquad section L
+pm:0x8408  Sect2_Head              ; biquad section (kernel-style 6-op body)
+pm:0x8410  Sect3_Head              ; biquad section
+pm:0x8416  Sect4_Head              ; biquad section
+pm:0x841d  SectTail_L              ; last section, fold to output
+pm:0x8422  FixL                    ; R0 = FIX F10
+pm:0x8424  ClipMaskL               ; R10 = 0x007FFFFF
+pm:0x8426  OutL                    ; DM(I4,M2) = out L
+pm:0x8427  RewindCoeffPtr          ; MODIFY(I0,-22) reset coeff ptr for R
+pm:0x8428  ReadInR                 ; R0 = DM(0x20,I4) input R
+pm:0x8429  InToFloatR              ; F10 = FLOAT inR
+pm:0x842a  Sect1_HeadR             ; repeat cascade for R channel
+pm:0x8449  FixR                    ; R0 = FIX F10
+pm:0x844d  OutR                    ; DM(I4,M2) = out R
+pm:0x844e  Return                  ; RTS (delayed)
+pm:0x8450  PMStateRewind           ; MODIFY(I8,0x40) rewind 64-word PM state
+dm:0xc004  Sect1_Coeffs            ; 0x3F7B7B1B,-b,1.0 : section 1 (b0,b1,gain)
+dm:0xc007  Sect1_Denom             ; 0x3FFD194C (a1~1.977) resonant pole
+dm:0xc00c  Sect2_Denom             ; 0x3FF8FC9A
+dm:0xc011  Sect3_Denom             ; 0x3FED564B
+dm:0xc016  Sect5_Coeffs            ; 0x3E6025A4 final section gain pair
+dm:0xc019  Coeff_OutScale          ; 0x7FFFFFFF

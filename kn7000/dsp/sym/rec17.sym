@@ -1,0 +1,26 @@
+; rec17 — EFFECT: auto-gain waveshaper/distortion (envelope->1/x drive + transfer LUT), C000:77e family
+pm:0x8400  Entry_SetInPtr        ; I0=I1
+pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
+pm:0x8403  ScaleAndSumEnv        ; R0<<9, R8<<9, R8=R0+R8 detector input
+pm:0x8406  RectifyEnv            ; R8=ABS R8
+pm:0x8407  ThreshCompare         ; R3=R8-R7 (threshold from PM ring); IF LT pick coeff
+pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4) one-pole env integrator
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
+pm:0x840c  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8 (1/env)
+pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8 auto drive gain
+pm:0x8410  GainCompare           ; COMP(R4,R7); IF GE clamp
+pm:0x8412  ApplyGain_L           ; F0=FLOAT R0; F0=F0*F15; F0=F0*F1
+pm:0x8415  Index_FixShift        ; R8=FIX; R8=ASHIFT-11; I5=I1+0x34 LUT base
+pm:0x8419  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7 table index
+pm:0x841b  LUT_Fetch_Interp      ; R3=FDEP R8 15:16 frac; R7=DM(I5,M7); FLOAT R3 BY R4; F3*F8 interpolate transfer LUT
+pm:0x8420  PostScale_L           ; R11=DM; F10=F8*F11; *0.222; FIX; *R14 makeup
+pm:0x8428  OutputWriteL          ; DM(I4,M2)=R8
+pm:0x8429  ApplyGain_R           ; R0=DM(0x20)<<9; F0*F15*F1 second channel
+pm:0x8442  NegateR               ; R8=-R8 anti-phase for stereo spread
+pm:0x8445  OutputWriteR          ; DM(I4,M2)=R8
+pm:0x8446  Return                ; RTS(DB)
+dm:0xc006  DetectScale           ; 0.111
+dm:0xc009  DriveBase             ; 4.0
+dm:0xc00a  UnityFloat            ; 1.0
+dm:0xc028  TransferLUT_start     ; monotonic antisymmetric soft-clip transfer table (c028..c048)
+dm:0xc038  TransferLUT_zero      ; curve center (=0)

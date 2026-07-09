@@ -1,0 +1,37 @@
+; rec27 — EFFECT: LFO-modulated fractional delay (chorus / flanger)
+; Same DM@C000:77e half-sine LFO family, but unlike rec24/26/31 it maintains a
+; real audio delay buffer at I2: writes the input (DM(I2,M7)=R0, stride 0xFA)
+; and reads two adjacent taps at an LFO-swept offset, linearly interpolated,
+; per channel -> time-varying delay = chorus/flanger. The sine LFO (interpolated
+; table read, 8402..841e) supplies the delay-tap modulation (scaled by DM coeff).
+; DM@9800: 9800/9801 = 0x00010000 LFO increment.
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  SaveDelayPtr            ; R13 = I2 (delay write base)
+pm:0x8402  PhaseAccum_L            ; LFO phase accumulate ch L
+pm:0x840a  FracWeight_ReadTapL     ; sine table frac + tap
+pm:0x840e  Interp_MAC_L            ; interpolate LFO L
+pm:0x840f  SaveLFO_L               ; R5 = LFO L
+pm:0x8410  PhaseAccum_R            ; LFO phase accumulate ch R
+pm:0x841e  LFO_R                   ; interpolated LFO R (R8)
+pm:0x841f  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8420  DelayStride             ; M7 = 0xFA
+pm:0x8421  WriteDelayL             ; DM(I2,M7) = input (push into delay line)
+pm:0x8423  LFOtoOffset_L           ; R8 = LFO * depth (delay-tap offset)
+pm:0x8426  SweepReadPtr_L          ; MODIFY(I2,M7) sweep read tap by LFO
+pm:0x8427  ReadDelayTap0_L         ; R7 = delayed sample
+pm:0x842a  DelayInterp_L           ; R8 = MRF + LFOfrac*(tap1-tap0)
+pm:0x842c  RestoreDelayPtr_L       ; MODIFY(I2,0xFA)
+pm:0x842e  WetScaleL               ; R8 = wet * R14(level)
+pm:0x8430  ClipL                   ; CLIP 0x007FFFFF
+pm:0x8431  OutL                    ; DM(I4,M2) = out L
+pm:0x8432  ReadInR                 ; R0 = DM(0x20,I4)
+pm:0x8435  DelayReadR              ; R8 = R5(LFO R)*depth -> tap
+pm:0x843c  DelayInterp_R           ; interpolate R tap
+pm:0x843d  RestoreDelayPtr_R       ; I2 = R13
+pm:0x8440  OutR                    ; DM(I4,M2) = out R
+pm:0x8441  Return                  ; RTS (delayed)
+pm:0x8443  PMStateRewind           ; MODIFY(I8,0x4E) 78-word PM state
+dm:0x9800  LFO_Increment           ; 0x00010000 LFO rate
+dm:0xc006  Coeff_ModDepth          ; 0x00400000 LFO->delay depth
+dm:0xc007  Coeff_WetLevel          ; 0x7FFFFFFF
+dm:0xc029  SineWindow_Table        ; half-sine LFO table (c029..c03f)

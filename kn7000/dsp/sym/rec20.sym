@@ -1,0 +1,25 @@
+; rec20 — EFFECT: waveshaper transfer-LUT + biquad/allpass filter + dry mix (enhancer/exciter/overdrive), C000:77e family
+pm:0x8400  Entry_SetInPtr        ; I0=I1
+pm:0x8401  LoadInputL            ; R0=DM(0x20,I4)
+pm:0x8402  Input_ToFloat_Gain    ; F0=FLOAT R0; R9=DM; F0=F0*F9 pre-gain
+pm:0x8404  Index_FixShift        ; R8=FIX; <<8; ASHIFT-11; I5=I1+0x34 LUT base
+pm:0x8409  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7
+pm:0x840b  LUT_Fetch_Interp      ; R3=FDEP 15:16 frac; R7=DM(I5,M7); FLOAT R3 BY R4; F3*F8 interp transfer LUT
+pm:0x8410  PostScale             ; R11=DM; F10=F8*F11
+pm:0x8412  Biquad_PMcoeffRing    ; R3=PM(I8,M8): F12=F3*F7, F2*F7, PM(I8,M11)=R3, PM(I8,M9)=R10 allpass/biquad state
+pm:0x8417  Biquad_Accumulate     ; F10=F10-F12 filtered wet
+pm:0x8418  ScaleWet              ; R13=DM; F8=F10*F13
+pm:0x841b  DryMixL               ; R0=DM(0x20)<<8; R8=R8+R0 wet+dry mix; *R14 makeup
+pm:0x841f  Rescale               ; R8=LSHIFT -8
+pm:0x8421  OutputWriteL          ; DM(I4,M2)=R8
+pm:0x8422  Channel2Setup         ; MODIFY(I0,-7) rewind coeff ptr for right channel
+pm:0x8423  ProcessR              ; R0=DM(0x20): FLOAT, *F9, LUT, biquad, dry mix
+pm:0x8442  OutputWriteR          ; DM(I4,M2)=R8
+pm:0x8443  Return                ; RTS(DB)
+dm:0xc006  Biquad_b0             ; 1.0
+dm:0xc007  Biquad_b1             ; 1.326
+dm:0xc008  Biquad_b2             ; -0.575
+dm:0xc009  Biquad_a1            ; 0.212
+dm:0xc00a  Biquad_a2            ; 0.5
+dm:0xc028  TransferLUT_start     ; shared interpolated waveshaping/transfer table (c028..c048)
+dm:0xc038  TransferLUT_zero      ; curve center (=0)

@@ -1,0 +1,32 @@
+; rec18 — EFFECT: auto-gain waveshaper/distortion + comb/allpass tail (largest variant), C000:77e family
+pm:0x8400  Entry_SetInPtr        ; I0=I1
+pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
+pm:0x8403  SumScaleEnv           ; R8=R0+R8; <<9
+pm:0x8405  RectifyEnv            ; R8=ABS R8
+pm:0x8406  ThreshCompare         ; R3=R8-R7; IF LT pick coeff
+pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
+pm:0x840b  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8
+pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8 auto drive gain
+pm:0x840f  GainCompare           ; COMP(R4,R7); IF GE clamp
+pm:0x8411  ApplyGain_L           ; R0<<9; F0=FLOAT; F0=F0*F15; F0=F0*F9
+pm:0x8415  Index_FixShift        ; R8=FIX; ASHIFT-11; I5=I1+0x34
+pm:0x8419  LUT_Fetch_Interp      ; ASHIFT-16 idx; FDEP frac; DM(I5,M7); interpolate transfer LUT
+pm:0x8420  Comb_MAC_In           ; R0=FIX F8, R3=PM(I8,M8): R6=R3*R0, R12=R2*R7 feed comb
+pm:0x8424  Comb_WriteState       ; DM(I0,M2)=R12
+pm:0x8427  Allpass_PMcoeffRing   ; PM(I8,M11)/M9 rotate allpass coeffs, F10 accumulate taps
+pm:0x8430  Delay_Write_400       ; M7=0x190 DM(I2,M7)=R10 delay write
+pm:0x8432  Delay_Read_Advance    ; R10=DM(I2,M6); MODIFY(I2,-0x190)
+pm:0x8434  PostScale_L           ; F10 -> R0=FIX; *R14; <<-8
+pm:0x8437  OutputWriteL          ; DM(I4,M2)=R0
+pm:0x8438  ProcessR              ; second channel: ApplyGain+LUT+comb+allpass
+pm:0x845a  NegateR               ; R0=-R0 anti-phase spread
+pm:0x845c  OutputWriteR          ; DM(I4,M2)=R0
+pm:0x845d  Return                ; RTS(DB)
+dm:0x9801  ParamSmooth_a         ; 0.10 (0x19999999 fixed)
+dm:0x9802  ParamSmooth_b         ; 0.40 (0x66666666 fixed)
+dm:0xc006  DetectScale           ; 0.111
+dm:0xc009  DriveBase             ; 4.0
+dm:0xc00e  CombCoeff             ; 0.749 allpass/comb gain
+dm:0xc028  TransferLUT_start     ; monotonic antisymmetric transfer table (c028..c048)
+dm:0xc038  TransferLUT_zero      ; curve center

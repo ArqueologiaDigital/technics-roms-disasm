@@ -1,0 +1,26 @@
+; rec50 — EFFECT: stereo multi-tap modulated-delay ENSEMBLE/chorus, 3 triangle LFOs + coupled-form sine osc (C000:67e, PM 94w)
+; same LFO bank + 3-tap delay engine as rec49, but no input interpolation biquad (unity interp coeffs 0xFFFFFFE1/0x7FFFFFFF); output doubled (R8=R8+R8)
+pm:0x8400  Entry                 ; I0=I1 state pointer
+pm:0x8401  LFO_Osc1              ; R13=R13+PM(I8,M14); IF AV negate; R13=R13*R2 triangle LFO 1
+pm:0x8405  LFO_Osc2              ; R11 second triangle LFO
+pm:0x8409  LFO_Osc3              ; R14 third triangle LFO; R15=-R13
+pm:0x840d  SineOsc_Coupled       ; MRF=0; R12=R5*R7; R5=MRF-(R6*R5): coupled-form quadrature sine osc (R6)
+pm:0x8410  Input_L               ; R0=DM(0x20); F10=FLOAT R0
+pm:0x8413  DelayWrite_L          ; M7=0xFA (250) DM(I2,M7) delay-line write, left
+pm:0x8417  ModTap1_L             ; R13 fractional modulated tap
+pm:0x841f  ModTap2_L             ; R14 modulated tap; F9=(F8+F9)/2
+pm:0x8428  ModTap3_L             ; R6 (sine) modulated tap; F8=F8+F9
+pm:0x8431  Output_L              ; MODIFY(I2,0xF4); FIX; *R3; R8+R8 (2x); CLIP; DM(I4,M2)
+pm:0x8439  Input_R               ; R1=DM(0x21); F10=FLOAT R1; right delay write
+pm:0x843c  ModTap1_R             ; R11 modulated tap
+pm:0x8444  ModTap2_R             ; R15 modulated tap
+pm:0x844d  ModTap3_R             ; R6 modulated tap
+pm:0x8455  Output_R              ; FIX; *R3; R8+R8; CLIP; DM(I4,M2)
+pm:0x845b  Return                ; RTS(DB)
+dm:0x9800  LFO1_incr             ; 0x00012599 LFO increment
+dm:0x9802  LFO3_incr             ; 0xFFFEDA67 (negative) LFO increment
+dm:0x9803  SineOsc_incr          ; 0x002407C1 sine-osc coefficient
+dm:0xc005  DelayLen_param        ; 0x00F00000 delay-length related
+dm:0xc006  LFO_damp              ; 0xAAAAAAAC (~-0.667) LFO reflect scale (x2)
+dm:0xc00a  InterpCoeff_unity     ; 0xFFFFFFE1 / 0x7FFFFFFF unity interp (no pre-filter, cf rec49)
+dm:0xc00d  FullScale             ; 0x7FFFFFFF

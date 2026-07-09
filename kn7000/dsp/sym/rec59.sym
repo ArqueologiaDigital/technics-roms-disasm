@@ -1,0 +1,17 @@
+; rec59 — allpass-diffusion reverb/ambience (family rec58-61; preset B)
+; Identical PM to rec58; differs only in delay-tap M7 values and the allpass
+; gain table dm:c013-c017 (here only one active gain 0.7, rest zeroed -> a
+; sparser/shorter ambience than rec58).
+pm:0x8400  ReverbEntry_chSel      ; IF NOT FLAG3, JUMP to 2nd-channel path (0x8432)
+pm:0x8402  chA_floatInput         ; F8 = FLOAT R0
+pm:0x8405  chA_biquadCascade      ; 3x biquad damping filter
+pm:0x8410  chA_writeSample1       ; DM(I4,M2) = R0
+pm:0x841d  chA_tap0_M7            ; M7 delay tap 0 (preset)
+pm:0x841f  chA_allpassRead       ; R3 = DM(I3,M7)
+pm:0x8424  chA_allpassWrite      ; DM(I3,M3) = R0
+pm:0x842f  chA_return            ; RTS (DB)
+pm:0x8432  ReverbEntry_chB        ; 2nd-channel path
+pm:0x845f  chB_return            ; RTS (DB)
+dm:0xc004  biquad1_b0            ; 0.5745
+dm:0xc013  allpass_gain0        ; 0.7  (only active allpass gain in this preset)
+dm:0xc014  allpass_gain1_zero   ; 0.0

@@ -1,0 +1,16 @@
+; rec34 EFFECT — data-driven cascaded biquad/allpass filter (stereo), thin wrapper
+; PM is only 13 words: it reads input, calls kernel routine 0x831B (a 3-section
+; biquad cascade, LCNTR=3 loop) which does the DSP work using DM@C000 coeffs,
+; clips and writes out. Called twice = two channels. Coefficient-driven EQ/filter.
+pm:0x8400  Rec34_ChanA          ; CALL 0x831B (kernel 3x biquad cascade), delay-slot chained
+pm:0x8401  Rec34_InA            ; R0=DM(0x20,I4) input; I0=I1 state base
+pm:0x8403  Rec34_ClipA          ; R0=CLIP R0 BY R15
+pm:0x8404  Rec34_OutA           ; DM(I4,M2)=R0 channel-A output
+pm:0x8405  Rec34_ChanB          ; CALL 0x831B again (second channel)
+pm:0x8407  Rec34_InB            ; R0=DM(0x20,I4)
+pm:0x8409  Rec34_OutB           ; DM(I4,M2)=R0 channel-B output
+pm:0x840a  Rec34_Return         ; RTS
+dm:0xc004  Rec34_Sec1Coef       ; biquad section 1 coeffs (0.982,-0.982,1.0,...) c004..
+dm:0xc009  Rec34_Sec2Coef       ; biquad section 2 coeffs c009..
+dm:0xc00e  Rec34_Sec3Coef       ; biquad section 3 coeffs c00e..
+dm:0xc019  Rec34_OutScale       ; =0x007FFFFF clip/level bound

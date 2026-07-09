@@ -1,0 +1,31 @@
+; rec26 — EFFECT: LFO amplitude modulation (tremolo / auto-pan)
+; Same algorithm as rec24 (DM@C000:77e half-sine LFO table, phase-accumulator
+; interpolated table lookup, LFO*input). Differs only in preset values: slower
+; LFO increment (0x00010000 vs rec24 0x00080000). 53 PM words (one fewer than
+; rec24 — the R-channel reuses the channel-0 LFO reload).
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  PhaseAccum_L            ; R8 = phase + increment
+pm:0x8403  PhaseWrap               ; FDEP 0:31 sign-extend
+pm:0x8404  StorePhase_L            ; DM(I0,M2) = phase
+pm:0x8405  SineTableBase           ; I5 = I1
+pm:0x8407  SineTableOffset         ; MODIFY(I5,0x2C) -> half-sine table
+pm:0x8408  IndexHi                 ; R7 = ASHIFT -16 index
+pm:0x840a  FracWeight_ReadTap0     ; R3=frac; read table[idx]
+pm:0x840d  Interp_MAC              ; linear interpolation
+pm:0x840e  LFO0_Result             ; interpolated sine
+pm:0x840f  SaveLFO0                ; R5 = channel-0 LFO
+pm:0x8410  PhaseAccum_R            ; second LFO phase
+pm:0x841d  LFO1_Result             ; second interpolated sine
+pm:0x841e  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8421  AmpModL                 ; input * modulator
+pm:0x8426  ClipL                   ; CLIP by 0x007FFFFF
+pm:0x8427  OutL                    ; DM(I4,M2) = out L
+pm:0x8428  ReadInR                 ; R0 = DM(0x20,I4)
+pm:0x8431  OutR                    ; DM(I4,M2) = out R
+pm:0x8432  Return                  ; RTS (delayed)
+pm:0x8434  PMStateRewind           ; MODIFY(I8,0x4C) 76-word PM state
+dm:0x9800  LFO_Increment_L         ; 0x00010000 (slower than rec24)
+dm:0x9802  LFO_Depth               ; 0x66666666 depth
+dm:0xc006  Coeff_DepthScale        ; 0x19999999
+dm:0xc007  Coeff_Bias              ; 0x7FFFFFFF
+dm:0xc029  SineWindow_Table        ; half-sine LFO table (c029..c03f)

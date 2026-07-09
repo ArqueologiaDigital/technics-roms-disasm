@@ -1,0 +1,20 @@
+; rec68 [EFFECT] — pure sine-polynomial waveshaper (simplest of F67-69 core, no delay)
+; input DM(0x20,I4) -> polynomial shaper -> DM(I4,M2) x2 (L/R)
+pm:0x8400  Entry_I0eqI1          ; I0=I1
+pm:0x8401  ReadInput             ; R15 = DM(0x20,I4)
+pm:0x8402  InScale               ; ASHIFT R15 BY 8
+pm:0x8403  ToFloat               ; F15=FLOAT R15; F15=F15*F2 (angle scale)
+pm:0x8405  PolyLoop_Head         ; LCNTR=4 DO..UNTIL LCE: series poly eval
+pm:0x8407  Poly_x2x3             ; F8=F4*F4 (x^2); F10=F8*F4 (x^3)
+pm:0x840c  Poly_Accum           ; F6=F15-F5; F6=F6-F11 series accumulate
+pm:0x8414  LoopWrap             ; MODIFY(I0,-6)/(+6) rewind coeff ptr
+pm:0x8417  FinalShape_Begin      ; F12=F3*F7 chain -> F10
+pm:0x8420  ClampCompare          ; COMP(F10,F5)/COMP(F10,F4) guards
+pm:0x8424  CubicShape            ; F2=F10*F10; F2=F2*F10; F2=F2*F3; F10=F10-F2
+pm:0x8429  ClampPos              ; R10=0x3F2AAAAB (+2/3)
+pm:0x842b  ClampNeg              ; R10=0xBF2AAAAB (-2/3)
+pm:0x842e  FinalScale            ; F10=F2*F10; R8=FIX; R8=R8*R7; ASHIFT -6
+pm:0x8433  ClipOut               ; R8=CLIP R8 BY 0x007FFFFF
+pm:0x8434  OutputL               ; DM(I4,M2)=R8
+pm:0x8435  OutputR               ; DM(I4,M2)=R8
+pm:0x8436  Return                ; RTS (DB)

@@ -1,0 +1,30 @@
+; rec49 — EFFECT: stereo multi-tap modulated-delay ENSEMBLE/chorus, 3 triangle LFOs + coupled-form sine osc, with input interpolation biquad (C000:32e, PM 101w)
+; same LFO bank + 3-tap delay engine as rec50; rec49 adds the interpolation/pre-filter cascade
+pm:0x8400  Entry                 ; I0=I1 state pointer; R0/R1 = L/R inputs doubled
+pm:0x8404  LFO_Osc1              ; R13=R13+PM(I8,M14); IF AV negate; R13=R13*R2 triangle LFO 1
+pm:0x8408  LFO_Osc2              ; R11 second triangle LFO
+pm:0x840c  LFO_Osc3              ; R14 third triangle LFO; R15=-R13
+pm:0x8410  SineOsc_Coupled       ; MRF=0; R12=R5*R7; R5=MRF-(R6*R5): coupled-form quadrature sine osc (R6)
+pm:0x8415  InterpFilter_L        ; F10=FLOAT R0; two biquad sections (c00d-c00f) = fractional-delay interp filter
+pm:0x841d  DelayWrite_L          ; M7=0xFA (250) DM(I2,M7) delay-line write, left
+pm:0x8421  ModTap1_L             ; R13 fractional modulated tap (ASHIFT-16/FDEP interp)
+pm:0x8428  ModTap2_L             ; R14 modulated tap; F9=(F8+F9)/2 average
+pm:0x8430  ModTap3_L             ; R6 (sine) modulated tap; F8=(F8+F9)/2
+pm:0x8438  Output_L              ; MODIFY(I2,0xF4); FIX; *R3; CLIP; DM(I4,M2)
+pm:0x843e  InterpFilter_R        ; F10=FLOAT R1; right-channel interp biquad cascade
+pm:0x8447  DelayWrite_R          ; DM(I2,M7) right delay write
+pm:0x8449  ModTap1_R             ; R11 modulated tap
+pm:0x8450  ModTap2_R             ; R15 modulated tap
+pm:0x8458  ModTap3_R             ; R6 modulated tap
+pm:0x8460  Output_R              ; FIX; *R3; CLIP
+pm:0x8462  Return                ; RTS(DB) + output write
+dm:0x9800  LFO1_incr             ; 0x00012599 LFO increment
+dm:0x9802  LFO3_incr             ; 0xFFFEDA67 (negative) LFO increment
+dm:0x9803  SineOsc_incr          ; 0x002407C1 sine-osc coefficient
+dm:0xc006  LFO_damp              ; 0xAAAAAAAC (~-0.667) LFO reflect scale (x2)
+dm:0xc00a  SineOsc_coeff_pos     ; 0x3F6E6215 (~0.931) coupled-osc coefficient
+dm:0xc00b  SineOsc_coeff_neg     ; 0xBF6E6215
+dm:0xc00d  InterpCoeff0          ; 0x3E3F0425 interpolation biquad coeff
+dm:0xc00e  InterpCoeff1          ; 0xBEAE2861
+dm:0xc00f  InterpCoeff2          ; 0x3F93A993
+dm:0xc013  FullScale             ; 0x7FFFFFFF

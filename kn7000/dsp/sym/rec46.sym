@@ -1,0 +1,27 @@
+; rec46 — EFFECT: 6-stage swept-allpass PHASER, sine-LFO modulated coefficient (C000:77e, PM 99w)
+; shares the RECIPS allpass-coeff subroutine and sine-LFO front-end with rec48 (rec48 = 1 stage)
+pm:0x8400  Entry                 ; I0=I1 state pointer
+pm:0x8401  LFO_FeedbackMix       ; R8=DM(I0,M6)+PM(I8,M8): LFO phase accumulate
+pm:0x8404  LFO_StateWrite        ; DM(I0,M2)=R8 store LFO phase
+pm:0x8406  LFO_TableIndex        ; ASHIFT-11; MODIFY(I5,0x2C); ASHIFT-16 -> sine table index
+pm:0x840a  LFO_SineFetch_Interp  ; R7=DM(I5,M7); MR1F/MAC linear-interp between sine samples
+pm:0x840f  Mod_ToFloatUnit       ; F8=FLOAT R8 BY -31; +1.0; *0.5 -> control in [0,1]
+pm:0x8416  Mod_Bias              ; F0=F7*F1+F1; CLIP F0 BY 1.0 clamp control
+pm:0x841c  AllpassCoeffPrep      ; F0=F7*F7,F12=F7*F8,F10=F8+F0; F1=F10-F12,F3=F10+F12,F9=F4-F7
+pm:0x8427  RecipNewton           ; F0=RECIPS F12 + 3 Newton iters (R11=2.0) -> allpass coeff F0/F3
+pm:0x8431  Input_Mono            ; R5=(DM(0x20)+DM(0x21))/2; F5=FLOAT
+pm:0x8435  AllpassStage1         ; 1st of 6 cascaded 1st-order allpass stages (7 instr each, state in DM(I0))
+pm:0x843c  AllpassStage2         ; stage 2
+pm:0x8443  AllpassStage3         ; stage 3
+pm:0x844a  AllpassStage4         ; stage 4
+pm:0x8451  AllpassStage5         ; stage 5
+pm:0x8458  AllpassStage6         ; stage 6 -> F5
+pm:0x8459  OutputScale           ; F5=F5*F0; FIX; *R14; CLIP
+pm:0x845e  OutputWrite           ; DM(I4,M2)=R0 (written twice L/R)
+pm:0x8460  Return                ; RTS(DB)
+dm:0x9800  LFO_phase_init        ; 0x00010000 initial LFO phase
+dm:0xc005  LFO_rate              ; 0x3E4CCCCC LFO increment/rate
+dm:0xc00c  Coeff_neg2            ; -2.0 (0xC0000000) allpass prep constant
+dm:0xc017  Mix_half              ; 0.5 (0x3F000000)
+dm:0xc028  SineLFO_table         ; sine LFO waveform table (c028..c03f, 16 entries, peak 0x7FFFFFFF)
+dm:0xc030  SineLFO_neg_half      ; negative half of sine table

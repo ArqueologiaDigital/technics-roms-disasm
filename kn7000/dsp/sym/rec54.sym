@@ -1,0 +1,22 @@
+; rec54 — EFFECT: float comb+allpass REVERB (variant of rec51 family)
+; Same PM algorithm AND same four early delay lengths as rec51
+; (8406=0xFFFFF780 8410=0xFFFFFA00 841a=0xFFFFFBBE 841d=0xFFFFFB00).
+; Only the diffuser/damping coeff bank differs: c014..c019 and c01b..c01d are
+; zeroed with unity (0x3F800000) at c016/c019/c01d — one diffuser stage bypassed
+; (dry pass-through of that section) => a lighter/plate-like preset of rec51.
+;
+dm:0xc014  rev_diffuser_bypass   ; 0.0 (stage input killed)
+dm:0xc016  rev_diffuser_unity    ; 0x3F800000 (1.0) pass-through
+dm:0xc019  rev_diffuser_unity2   ; 0x3F800000 (1.0) pass-through
+dm:0xc01f  rev_biquad_out        ; 0x3F2D9E83 output tone biquad
+pm:0x8400  rev_entry             ; effect entry (see rec51.sym for full trace)
+pm:0x8403  rev_delaybase         ; MODIFY(I6,0x00010747) delay-buffer base
+pm:0x8406  rev_delaylen0         ; M7=0xFFFFF780 (same as rec51)
+pm:0x8410  rev_delaylen1         ; M7=0xFFFFFA00 (same as rec51)
+pm:0x841a  rev_delaylen2         ; M7=0xFFFFFBBE (same as rec51)
+pm:0x841d  rev_delaylen3         ; M7=0xFFFFFB00 (same as rec51)
+pm:0x841f  rev_allpass          ; float allpass core
+pm:0x8425  rev_diffuse_chain     ; allpass/comb diffuser loop
+pm:0x8468  rev_out_L             ; left output write
+pm:0x846d  rev_out_R             ; right output write
+pm:0x846f  rev_rts               ; RTS(DB)

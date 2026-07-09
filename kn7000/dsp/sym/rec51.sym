@@ -1,0 +1,50 @@
+; rec51 — EFFECT: float comb+allpass REVERB tank (family lead, rec51-56)
+; Structurally identical PM across rec51-56; variants differ only in the four
+; early delay-length immediates (M7 @ 8406/8410/841a/841d) and the DM
+; coefficient/damping/mix bank (c004..c028) = reverb presets.
+;
+; Signal path: input L/R read from I/O area DM(0x20/0x21,I4), FLOAT'd, then run
+; through a Schroeder-style diffuser: a coefficient stream is fetched from the
+; downloaded PM coeff table via PM(I8,M8/M9/M11/M14) and MAC'd (F11=F11+F12,
+; F11=F11*F7 feedback) against delay-line taps read from the DM reverb buffer.
+; I6 is the circular delay pointer (base set by MODIFY(I6,0x00010747) @ 8403);
+; M7 is reloaded with a negative offset before each tap read DM(I6,M7) to hit a
+; specific delay length. A float allpass appears at 841f {F9=F9+F12; F8=F9-F12;
+; F15=F8-F12}. The repeated block 8425-843a is the allpass/comb diffuser chain
+; (each iter: set M7, R5=DM(I6,M7), F6=F11-F13, F13=F2*F6, F11=F5+F13,
+; DM(I6,M3)=R6 writes back). Wet sum is FIX'd, scaled, CLIP'd to 0x7FFFFF, and
+; written to both output slots. I6 saved/restored via DM(0xFFFFFFFF,I1)/R0.
+;
+dm:0x9800  rev_predelay_L        ; 0x404CCCCCCD  early/pre-delay coeff, ch L
+dm:0x9801  rev_predelay_R        ; 0xC04CCCCCCD  early/pre-delay coeff, ch R
+dm:0x9808  rev_damp0             ; 0x3E041893  damping/tone coeff (variant-specific)
+dm:0x980a  rev_damp1             ; 0x3E5374BC  damping/tone coeff (variant-specific)
+dm:0xc004  rev_biquad_inL        ; b0 of input tone biquad, L (5-word section c004..c008)
+dm:0xc009  rev_biquad_inR        ; b0 of input tone biquad, R (5-word section c009..c00d)
+dm:0xc00e  rev_diffuser_coeffs   ; diffuser/allpass gain bank (c00e..c01e)
+dm:0xc011  rev_unity             ; 0x3F800000 (=1.0) pass-through/mix weight
+dm:0xc01f  rev_biquad_out        ; output tone biquad (c01f..c023) — feedback/damping preset
+dm:0xc024  rev_mix_wet_neg       ; 0xBF0FBACC (-0.561) wet mix (inverting)
+dm:0xc025  rev_mix_wet           ; 0x3F0FBACC (0.561) wet mix
+dm:0xc026  rev_out_scale         ; 0x40000000 (2.0) output scale
+dm:0xc027  rev_clip_const        ; 0x007FFFFF fixed clip limit
+dm:0xc028  rev_out_scale2        ; 0x40000000 (2.0)
+pm:0x8400  rev_entry             ; I0=I1  effect entry
+pm:0x8401  rev_save_i6           ; R0=I6; DM(0xFFFFFFFF,I1)=R0 save delay ptr
+pm:0x8403  rev_delaybase         ; MODIFY(I6,0x00010747) set delay-buffer base
+pm:0x8404  rev_read_inL          ; R0=DM(0x20,I4) input L; F0=FLOAT
+pm:0x8406  rev_delaylen0         ; M7=0xFFFFF780 early delay len 0 (VARIANT)
+pm:0x8408  rev_read_inR          ; R1=DM(0x21,I4) input R; F1=FLOAT
+pm:0x840a  rev_firstMAC          ; F13=F0*F4 first diffuser MAC
+pm:0x8410  rev_delaylen1         ; M7=0xFFFFFA00 early delay len 1 (VARIANT)
+pm:0x841a  rev_delaylen2         ; M7=0xFFFFFBBE early delay len 2 (VARIANT)
+pm:0x841d  rev_delaylen3         ; M7=0xFFFFFB00 early delay len 3 (VARIANT)
+pm:0x841f  rev_allpass          ; float allpass F9=F9+F12; F8=F9-F12; F15=F8-F12
+pm:0x8425  rev_diffuse_chain     ; start of allpass/comb diffuser loop body
+pm:0x8459  rev_wet_sum           ; F11=F11+F5; F11=F11+F6 wet accumulation
+pm:0x8465  rev_fixL              ; R8=FIX F1; R8=R8*R2; CLIP → out L
+pm:0x8468  rev_out_L             ; DM(M2,I4)=R8 left output write
+pm:0x846a  rev_fixR              ; R8=FIX F0; R8=R8*R2; CLIP → out R
+pm:0x846d  rev_out_R             ; DM(I4,M1)=R8 right output write
+pm:0x846e  rev_restore_i6        ; I6=R0 restore delay ptr
+pm:0x846f  rev_rts               ; RTS(DB)

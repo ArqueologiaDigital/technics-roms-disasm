@@ -1,0 +1,31 @@
+; rec10 — EFFECT: phaser (LFO-modulated float allpass cascade)
+; A sine-LFO fractional-delay engine (as rec06) produces a slowly-varying value R8,
+; which is converted to a FLOAT allpass coefficient F7 = FLOAT R8 BY R15(exp -31).
+; That modulated coefficient drives a cascade of first-order allpass sections
+; {F12=F3*F7; F1=F10+F12; F12=F1*F7; F10=F3-F12} (5 stages ch0, 6 stages ch1).
+; Sweeping the allpass poles with the LFO = classic phaser. Feedback via c006.
+;
+dm:0x9800  eff10_lfo_phase0     ; LFO phase, ch0 (=0x800000)
+dm:0x9801  eff10_lfo_phase1     ; LFO phase, ch1 (=0x800000)
+dm:0xc004  eff10_lfo_rate       ; 0x7020C49B LFO increment/rate
+dm:0xc005  eff10_depth          ; 0x0F5C28F5 modulation depth
+dm:0xc007  eff10_tap_gain       ; 0x20000000 (0.25) tap gain
+dm:0xc00e  eff10_wet            ; 0x7FFFFFFF wet level
+dm:0xc029  eff10_sine_tab       ; 16-point sine LFO table (c029..c03f)
+pm:0x8400  eff10_entry          ; I0=I1; R9/R10 mix coeffs loaded
+pm:0x8403  eff10_lfo_acc0       ; LFO phase accumulate (voice 0)
+pm:0x840c  eff10_interp0        ; fractional-delay interpolation
+pm:0x8411  eff10_tapscale0      ; R8=R8*R10; R5=R9+R8 modulated control (ch0)
+pm:0x8413  eff10_lfo_acc1       ; second LFO accumulate
+pm:0x8424  eff10_coeff0         ; F7 = FLOAT R8 BY R15  -> allpass coeff from LFO
+pm:0x8426  eff10_float_in       ; F0=FLOAT input; F3 feedback tap
+pm:0x842b  eff10_ap_cascade0    ; allpass cascade begins (ch0)
+pm:0x843f  eff10_fb_write0      ; DM(I1,-1)=R10 feedback state store
+pm:0x8440  eff10_fix_scaleL     ; R0=FIX F10; *R14 wet
+pm:0x8444  eff10_clipL          ; CLIP by 0x7FFFFF
+pm:0x8445  eff10_out_L          ; DM(I4,M2)=R0 left output
+pm:0x8446  eff10_coeff1         ; F7 = FLOAT R5 BY R15 (ch1 allpass coeff)
+pm:0x844b  eff10_ap_cascade1    ; allpass cascade (ch1, 6 stages)
+pm:0x8461  eff10_fix_scaleR     ; R0=FIX F10 (right)
+pm:0x8466  eff10_out_R          ; DM(I4,M2)=R0 right output
+pm:0x8467  eff10_rts            ; RTS(DB)

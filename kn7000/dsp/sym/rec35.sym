@@ -1,0 +1,21 @@
+; rec35 EFFECT — stereo chorus: input biquad, LFO-modulated multi-tap fractional
+; delay + 2x2 rotation matrix for stereo spread. (rec36 = identical PM, diff DM.)
+pm:0x8400  Rec35_AudioIn        ; R0=DM(0x20), R8=DM(0x21); (R0+R8)/2 mono; input gain F0*F3
+pm:0x8405  Rec35_LFO            ; FIX/shift + sine-table lookup(DM I5 @+0x34) + interp
+pm:0x8412  Rec35_PreFilter      ; R6=R3*R7 + R12=R2*R7 filter tap; CALL 0x8300 (kernel biquad)
+pm:0x8416  Rec35_CallBiquad     ; CALL 0x8300 (kernel 2-section biquad)
+pm:0x8419  Rec35_CallAllpass    ; CALL 0x830B (kernel allpass/lattice section)
+pm:0x841a  Rec35_DelayWrite     ; M7=0x140(320); DM(I2,M7)=R10 write into delay line
+pm:0x841d  Rec35_TapVoice1      ; modulated delay tap 1, fractional interp
+pm:0x8425  Rec35_TapVoice2      ; modulated delay tap 2 (R5 mod), M7=0xA0(160)
+pm:0x842e  Rec35_TapVoice3      ; delay tap 3 / MODIFY(I2,0xC8)
+pm:0x8438  Rec35_RotMatrix      ; F10=F0*F6.. 2x2 rotation/quadrature stereo mix -> F12,F13
+pm:0x843e  Rec35_OutLeft        ; R0=FIX F12,*R4,LSHIFT-8, DM(I4,M2)=R8
+pm:0x8442  Rec35_OutRight       ; R0=FIX F13,*R4, DM(I4,M2)=R8
+pm:0x8447  Rec35_Return         ; RTS
+dm:0x9800  Rec35_InGain         ; =0x19999999 input scale
+dm:0x9806  Rec35_LFO1Incr       ; =0x0019BC65 LFO rate 1
+dm:0x9809  Rec35_LFO2Incr       ; =0x001E0676 LFO rate 2
+dm:0xc009  Rec35_BiquadCoef     ; input biquad coeffs c009..c00e
+dm:0xc01e  Rec35_WetUnity       ; =0x7FFFFFFF wet level
+dm:0xc028  Rec35_ModTable       ; c028..c048 delay-modulation ramp/sine table

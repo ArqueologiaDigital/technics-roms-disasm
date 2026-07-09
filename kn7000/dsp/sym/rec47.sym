@@ -1,0 +1,23 @@
+; rec47 — EFFECT: single-stage swept-allpass PHASER/auto-wah, triangle-LFO front-end (C000:40e, PM 64w)
+; shares the RECIPS allpass-coeff subroutine (0x8416-0x842a) with rec46/rec48; differs in LFO generation
+pm:0x8400  Entry                 ; I0=I1 state pointer
+pm:0x8401  Input_Mono            ; R8=DM(0x20)+DM(0x21); <<11; F8=FLOAT
+pm:0x8406  LFO_TriGen            ; F8=ABS F8; F3=F8-F7; conditional -> triangle/reflected LFO
+pm:0x840b  LFO_StateStore        ; PM(I8,M8)=R8 store LFO phase
+pm:0x840c  LFO_ToCoeff           ; F7=SCALB F7 BY -31; F7=F7*F1 scale LFO to coeff range
+pm:0x8411  LFO_Ramp              ; F0=F0-F7; IF LT/GE conditional ramp reflect
+pm:0x8414  Coeff_Store           ; DM(I0,M2)=R7 / DM(I0,M6)=R7
+pm:0x8417  AllpassCoeffPrep      ; F0=F7*F7,F12=F7*F8,F10=F8+F0; F1=F10-F12,F3=F10+F12,F9=F4-F7
+pm:0x8421  RecipNewton           ; F0=RECIPS F12 + 3 Newton iters (R11=2.0) -> allpass coeff
+pm:0x842b  Input_Mono2           ; R5=(DM(0x20)+DM(0x21))/2; F5=FLOAT
+pm:0x842f  AllpassStage1         ; single 1st-order allpass stage, state in DM(I0)
+pm:0x8435  OutputScale           ; F5=F5*F0; FIX; *R14; CLIP
+pm:0x843b  OutputWrite           ; DM(I4,M2)=R0 (twice L/R)
+pm:0x843d  Return                ; RTS(DB)
+dm:0x9800  LFO_phase_init        ; 0x00000000 initial LFO phase
+dm:0xc004  LFO_rate              ; 0x3B800000 LFO increment
+dm:0xc005  LFO_rate2             ; 0x3A000000
+dm:0xc00d  Coeff_one             ; 1.0 (0x3F800000)
+dm:0xc00e  Coeff_neg2            ; -2.0 (0xC0000000) allpass prep constant
+dm:0xc011  Depth                 ; 4.0 (0x40800000) sweep depth
+dm:0xc012  FullScale             ; 0x7FFFFFFF

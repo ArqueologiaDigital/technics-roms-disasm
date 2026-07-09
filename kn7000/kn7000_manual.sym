@@ -88,3 +88,30 @@
 0x48040674  TableChunkTPAD         ; 'TPAD' chunk (0x1d18): performance-pad index/params
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
+
+; ---- Effects DSP (IC306 ADSP-21065L SHARC) host port + downloader -----------
+; The MN10300 host-boots the SHARC and streams effect programs to it (index
+; port 0x98000000, data port 0x9C000000). Full analysis in
+; kn7000_mame/notes/dsp-effect-catalog.md and dsp-host-interface.md; the SHARC
+; programs themselves are disassembled under kn7000_disassembly/disasm/dsp/.
+0x484050B8  DspWritePMWord          ; stream one 48-bit SHARC PM word (3x BE u16) to the data port
+0x4840511A  DspWriteDMWord          ; stream one SHARC DM word (2x u16) to the data port
+0x484052E0  DspRegWrite             ; write DSP host register: idx->0x98000000, 32-bit value->data port
+0x484057A9  DspAllocParamBlock      ; lazily allocate the per-effect RAM parameter block (ptr @0x500A01E0)
+0x4840537D  DspBootDefaultEffects   ; boot: assign the default effects (select unit8/type0, unit0/type0x14)
+0x48405470  DspBootProbe            ; boot: run the 4 SDRAM self-test records + reg 0x0B readback, then load kernel
+0x48405815  DspEffectSelect         ; (unit d0=0..9, type d1=0..0x91) select an effect for a unit slot
+0x4840562C  DspEffectAssign         ; validate(unit,type), store type+dirty into the 0x120-byte per-unit param struct
+0x48406132  DspEffectTypeValid      ; (unit,type)->0/-1: index the per-unit whitelist byte table
+0x48405D4F  DspManagerInit          ; create RTOS objects, zero the 10 per-unit state structs (0x500A04C4, stride 0x14AC)
+0x48404FF6  DspFullReinit           ; full re-init: download kernel then every nonzero effect record
+0x4840603B  DspDownloadAll          ; stream kernel record + loop 0..0x91 over the type->record table
+0x484068D7  DspApplyUnits           ; per-unit apply: for each active unit, download its type's record
+0x48407BD8  DspRecordInterpreter    ; parse+download one pool record (blocks id=0x2004, PM/DM, target,len)
+0x48407BAC  DspStreamReadU16        ; big-endian u16 reader used by the record interpreter
+; DSP ROM data structures:
+0x487B7248  DspTypeRecordTable      ; 146 x u32 LE pointers: effect type -> pool record (the authoritative map)
+0x486CE75D  DspWhitelistUnit0       ; unit 0 (Enhancer) accepted-type byte table
+0x486CE82D  DspWhitelistUnit1_6     ; units 1-6 (Multi/insert) shared accepted-type byte table
+0x486CE8FD  DspWhitelistUnit7       ; unit 7 (Chorus) accepted-type byte table
+0x486CE9CD  DspWhitelistUnit9       ; unit 9 (Reverb) accepted-type byte table

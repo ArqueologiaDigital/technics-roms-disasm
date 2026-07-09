@@ -1,0 +1,33 @@
+; rec41 — EFFECT: dual modulated-delay chorus/ensemble w/ stereo sum-diff matrix (C000:77e "74w" family; PM identical to rec42-45)
+pm:0x8400  Entry_LoadInput       ; R0=DM(0x20) L in, R8=DM(0x21) R in
+pm:0x8402  Mono_Sum              ; R0=(R0+R8)/2; R3=DM(I1,M6)
+pm:0x8403  Input_ToFloat         ; F0=FLOAT R0; I0=I1
+pm:0x8404  PreGain               ; F8=F0*F3 (input pre-gain, c004)
+pm:0x8405  LFO_Index_Fix         ; R8=FIX F8; I5=I1; <<9; ASHIFT-11 -> mod index
+pm:0x8408  Buffer_Base           ; MODIFY(I5,0x34) LUT/delay buffer base
+pm:0x8409  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7
+pm:0x840b  LUT_Fetch_Interp      ; R3=FDEP 15:16; R7=DM(I5,M7) fractional interpolation
+pm:0x8412  TapMix_PMcoeff        ; R6=R3*R7,R12=R2*R7 with coeff from PM(I8,M8)
+pm:0x8416  Call_KernelDelay1     ; CALL 0x8300 kernel allpass/comb tap helper (DB)
+pm:0x8419  Call_KernelDelay2     ; CALL 0x830B kernel tap helper (DB)
+pm:0x841a  DelayWrite_A          ; M7=0x140 (320) DM(I2,M7) modulated delay line A
+pm:0x841d  ModTapRead_A          ; R8=R8*R9 modulated fractional tap A
+pm:0x8425  ModTapRead_B          ; R8=R5*R9 second modulated tap
+pm:0x842e  DelayWrite_B          ; MODIFY(I2,0xC8); M7=0xA0 delay line B
+pm:0x8430  ModTapRead_C          ; R8=R13*R3 third modulated tap
+pm:0x8438  StereoMatrix          ; F12=sum, F13=diff (L/R rotate from taps)
+pm:0x843e  OutputWriteL          ; R0=FIX F12; *R4; ASHIFT-8; DM(I4,M2)
+pm:0x8442  OutputWriteR          ; R0=FIX F13; DM(I4,M2)
+pm:0x8447  Return                ; RTS(DB)
+dm:0x9806  LFO1_incr             ; 0x0019BC65 modulation phase increment (x2)
+dm:0x9809  LFO2_incr             ; 0x001E0676 second modulation increment (x2)
+dm:0xc004  PreGain_coeff         ; 1.0 (0x3F800000) input pre-gain [preset]
+dm:0xc008  FeedbackScale         ; 0.5 (0x3F000000) [preset]
+dm:0xc00c  ToneCoeff0            ; 0x3FDD7DF8 tone/damping filter b [preset]
+dm:0xc00d  ToneCoeff1            ; 0xBF66C6E7 tone filter a1 [preset]
+dm:0xc00e  ToneCoeff2            ; 0x3D49C8C3 tone filter a2 [preset]
+dm:0xc00f  DelayLen_param        ; 0x1D delay-line length
+dm:0xc01c  WetLevel              ; 0.6 (0x3F19999A) wet mix [preset]
+dm:0xc01d  DryLevel              ; 0.3 (0x3E99999A) dry mix [preset]
+dm:0xc028  ModLUT_start          ; interpolation/curve table (c028..c048)
+dm:0xc038  ModLUT_zero           ; center of mod curve

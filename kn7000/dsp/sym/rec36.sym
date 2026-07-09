@@ -1,0 +1,16 @@
+; rec36 EFFECT — stereo chorus; PM byte-identical to rec35 (same algorithm),
+; differs only in DM@9800/DM@C000 coefficients = a different chorus preset.
+pm:0x8400  Rec36_AudioIn        ; R0=DM(0x20),R8=DM(0x21); (R0+R8)/2 mono; input gain
+pm:0x8405  Rec36_LFO            ; sine-table LFO lookup + interpolation
+pm:0x8416  Rec36_CallBiquad     ; CALL 0x8300 kernel biquad
+pm:0x8419  Rec36_CallAllpass    ; CALL 0x830B kernel allpass
+pm:0x841a  Rec36_DelayWrite     ; M7=0x140(320) delay-line write
+pm:0x841d  Rec36_TapVoice1      ; modulated fractional delay tap 1
+pm:0x8425  Rec36_TapVoice2      ; modulated tap 2
+pm:0x8438  Rec36_RotMatrix      ; 2x2 rotation stereo mix
+pm:0x843e  Rec36_OutLeft        ; DM(I4,M2)=R8 left
+pm:0x8442  Rec36_OutRight       ; DM(I4,M2)=R8 right
+pm:0x8447  Rec36_Return         ; RTS
+dm:0x9806  Rec36_LFO1Incr       ; =0x0019BC65 LFO rate 1 (preset)
+dm:0x9809  Rec36_LFO2Incr       ; =0x001E0676 LFO rate 2 (preset)
+dm:0xc009  Rec36_BiquadCoef     ; input biquad coeffs (preset)

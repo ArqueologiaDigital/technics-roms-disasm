@@ -1,0 +1,19 @@
+; rec32 EFFECT — multi-LFO modulated fractional-delay chorus (stereo)
+; Three sine-table phase-accumulator oscillators drive a fractional delay tap.
+pm:0x8400  Rec32_Entry          ; I0=I1 (state base); effect entry @PM 0x8400
+pm:0x8401  Rec32_LFO1           ; osc1: phase acc DM(I0,M6)+PM incr, sine-table lookup+interp -> R9
+pm:0x8410  Rec32_LFO2           ; osc2: 2nd phase accumulator/sine, product forms R5=R9*R8
+pm:0x841f  Rec32_LFO3           ; osc3: 3rd phase accumulator/sine, R8=R9*R8 (combined mod)
+pm:0x840b  Rec32_SineInterp     ; DM(I5,M7) table read + linear interpolation (MRF MAC)
+pm:0x842e  Rec32_AudioIn        ; R0=DM(0x20,I4) input sample; FLOAT; write into delay line
+pm:0x8431  Rec32_DelayWrite     ; DM(I2,M7)=R0, M7=0xFA(250) delay stride
+pm:0x8434  Rec32_TapModA        ; modulated delay tap read, fractional interp (voice A)
+pm:0x8443  Rec32_OutLeft        ; DM(I4,M2)=R8 left output
+pm:0x8448  Rec32_TapModB        ; second tap using R5 mod, fractional interp (voice B)
+pm:0x8456  Rec32_OutRight       ; DM(I4,M2)=R8 right output
+pm:0x8457  Rec32_Return         ; RTS
+dm:0x9800  Rec32_LFO1Incr       ; =0x00010000 phase increment osc1 (rate)
+dm:0x9801  Rec32_LFO2Incr       ; =0x00100000 phase increment osc2
+dm:0x9802  Rec32_LFO3Incr       ; =0x00100000 phase increment osc3
+dm:0xc006  Rec32_Depth          ; =0x20000000 modulation depth/scale
+dm:0xc009  Rec32_Unity          ; =0x7FFFFFFF unity wet coeff

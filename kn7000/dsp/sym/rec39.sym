@@ -1,0 +1,24 @@
+; rec39 EFFECT — distortion/overdrive with extra 1-pole/allpass stage before the
+; tone biquad (97w vs rec37's 88w). Envelope-AGC + waveshaper + filter + delay,
+; stereo (right inverted). rec40 = same PM, differs in delay-length + level presets.
+pm:0x8400  Rec39_AudioIn        ; R0=DM(0x20),R8=DM(0x21); L+R; LSHIFT 9
+pm:0x8405  Rec39_EnvRect        ; ABS rectify; env state PM(I8,M14)
+pm:0x8407  Rec39_EnvAtkRel      ; attack/release one-pole envelope
+pm:0x840c  Rec39_RecipGain      ; RECIPS(env) auto-gain, F15
+pm:0x8413  Rec39_ApplyGainL     ; F0=F0*F15*F9 drive
+pm:0x8415  Rec39_WaveshapeL     ; signal-indexed table lookup (distortion curve)
+pm:0x8420  Rec39_FilterStageL   ; R6=R3*R0+R12=R2*R7 extra 1-pole/allpass; DM(I0,M2)=R12
+pm:0x8427  Rec39_ToneBiquadL    ; post biquad tone, PM(I8) coeffs+state
+pm:0x842e  Rec39_OutLevelL      ; R0=0x3E947AE1 output level (preset-differing)
+pm:0x8430  Rec39_DelayL         ; M7=0x190(400) short delay (preset-differing)
+pm:0x8437  Rec39_OutLeft        ; DM(I4,M2)=R0 left
+pm:0x8438  Rec39_ChanR          ; re-read input, same path (right)
+pm:0x8448  Rec39_FilterStageR   ; extra filter stage (right)
+pm:0x8457  Rec39_OutLevelR      ; R0=0x3E6147AE right level (preset-differing)
+pm:0x845b  Rec39_InvertR        ; R0=-R0 phase invert
+pm:0x845d  Rec39_OutRight       ; DM(I4,M2)=R0 right
+pm:0x845e  Rec39_Return         ; RTS
+dm:0x9801  Rec39_MixCoefA       ; =0x19999999 / 0x66666666 filter mix coeffs
+dm:0xc006  Rec39_EnvCoef        ; envelope attack/release coeffs c006..c00b
+dm:0xc00e  Rec39_ToneCoef       ; post biquad tone coeffs c00e..c012
+dm:0xc013  Rec39_Unity          ; =0x7FFFFFFF

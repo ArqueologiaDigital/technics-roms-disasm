@@ -1,0 +1,16 @@
+; rec78 [DATA] — DM-only parameter push, no PM code.
+; DM 0xC028 = kernel LFO / modulation-waveform table (see rec77). Same slot,
+; same layout; rec78 selects a TRIANGLE waveshape. Values 1.31 fixed-point,
+; linear ramps ±0.25/±0.5/±0.75 between the 0 / ±1.0 apexes. One full cycle
+; over 16 samples (c028..c038) + 8-sample positive-half guard (c039..c040).
+dm:0xc028  LFO_Tri_Table           ; table base = 0.0
+dm:0xc029  LFO_Tri_r1              ; +0.25 (rising ramp)
+dm:0xc02a  LFO_Tri_r2              ; +0.50
+dm:0xc02b  LFO_Tri_r3              ; +0.75
+dm:0xc02c  LFO_Tri_Peak            ; +1.0 (0x7FFFFFFF)
+dm:0xc030  LFO_Tri_ZeroCross       ; 0.0  (mid-cycle)
+dm:0xc034  LFO_Tri_Trough          ; -1.0 (0x80000000)
+dm:0xc038  LFO_Tri_CycleEnd        ; 0.0  (one full cycle)
+dm:0xc039  LFO_Tri_GuardStart      ; +0.25 guard/overlap copy of positive half
+dm:0xc040  LFO_Tri_GuardEnd        ; 0.0  last active entry
+dm:0xc041  LFO_Table_PadStart      ; 0.0  c041..c04c zero pad

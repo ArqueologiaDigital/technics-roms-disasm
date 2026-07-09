@@ -1,0 +1,39 @@
+# rec00 [PROBE] — external-SDRAM POST / board-variant probe, variant A-low
+# Tests SDRAM region 0x80000..0xA0000 (4x 32K-word banks) with pattern 0xAAAAAAAA.
+# One of a 2x2 family: {pattern AAAA/5555} x {region 0x80000 / 0xA0000}.
+# DM@C000 block is identical across rec00-03 (shared kernel coeff table, not the discriminator).
+
+pm:0x8400  Probe_Entry            ; R3 = DM(I1,M6): read run-once guard flag from kernel scratch
+pm:0x8401  GuardTest              ; R3 = R3+R3 (2*R3) — sets Z if flag was 0 (not yet probed)
+pm:0x8402  GuardSkipIfDone        ; IF NE JUMP 0x842B: already probed -> just return
+pm:0x8403  ClearResult            ; R3 = 0 (result/error accumulator)
+pm:0x8404  InitHostReg0B          ; DM(0x0B) = 0: clear host ID-readback register
+pm:0x8405  LoadTestPattern        ; R0 = 0xAAAAAAAA  <-- VARIANT: A-pattern (10101010...)
+pm:0x8406  MarkProbed             ; DM(I1,M6) = R0: set guard flag so test runs only once
+pm:0x8407  Bank0_SetPtr           ; I5 = 0x00080000  <-- VARIANT: SDRAM region base (low)
+pm:0x8408  Bank0_FillLoop         ; LCNTR=0x8000, DO 8409: fill 32K words with pattern
+pm:0x8409  Bank0_FillStore        ; DM(I5,M2) = R0
+pm:0x840a  Bank0_Rewind           ; I5 = 0x00080000: reset pointer for readback
+pm:0x840b  Bank0_VerifyLoop       ; LCNTR=0x8000, DO 840F: read back and compare
+pm:0x840c  Bank0_Readback         ; R1 = DM(I5,M2)
+pm:0x840d  Bank0_Compare          ; R2 = R1 - R0
+pm:0x840e  Bank0_RecordMismatch   ; IF NE R3 = R1: on mismatch, latch bad readback value
+pm:0x840f  Bank0_Report           ; DM(0x0B) = R3: publish result to host reg 0x0B
+pm:0x8410  Bank1_SetPtr           ; I5 = 0x00088000  (region base + 0x8000)
+pm:0x8411  Bank1_FillLoop         ; fill bank 1
+pm:0x8418  Bank1_Report           ; DM(0x0B) = R3
+pm:0x8419  Bank2_SetPtr           ; I5 = 0x00090000
+pm:0x841d  Bank2_VerifyLoop       ; read back and compare bank 2
+pm:0x8421  Bank2_Report           ; DM(0x0B) = R3
+pm:0x8422  Bank3_SetPtr           ; I5 = 0x00098000
+pm:0x8426  Bank3_VerifyLoop       ; read back and compare bank 3
+pm:0x842a  Bank3_Report           ; DM(0x0B) = R3 (final reported value; 0 = all banks OK)
+pm:0x842b  Probe_Return           ; RTS (DB): return with 2 delay slots
+pm:0x842c  RetSlot1_PtrRestore    ; delay slot: R4=DM(I1,M5), R7=PM(I12,M8) kernel ptr housekeeping
+pm:0x842d  RetSlot2_PtrAdvance    ; delay slot: MODIFY(I8, 0x50)
+
+dm:0xc005  Const_0040_0000        ; 0x0040000000 (shared kernel constant)
+dm:0xc006  Const_PosFull          ; 0x7FFFFFFF = +1.0 fullscale
+dm:0xc029  CosTwiddleTable        ; start of 8-pt cos/sin twiddle table (0x30FBC54D=.383 ...)
+dm:0xc02c  CosTwiddle_Unity       ; 0x7FFFFFFF = +1.0 (cos 0)
+dm:0xc034  Const_NegFull          ; 0x80000000 = -1.0 (cos 180)

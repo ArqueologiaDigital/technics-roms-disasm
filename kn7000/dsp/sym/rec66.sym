@@ -1,0 +1,46 @@
+; rec66 — complex modulated-delay / pitch-shift multi-effect (unique, 141w)
+; Signal: input -> pre biquad -> envelope/level detect (ABS + smoothing MAC) ->
+; reciprocal auto-gain -> polynomial waveshaper (tube-like saturation) -> peak /
+; gate-threshold section -> 3-tap fractional-delay interpolator (variable pointer
+; MODIFY(I2,M7=frac) + FDEP fractional addressing, taps averaged = grain
+; crossfade of a modulated delay -> pitch/chorus) -> 2x post biquad -> gain+CLIP
+; -> mono output written to both L/R. No family variants.
+pm:0x8400  Entry                 ; I0 = I1 (coeff base)
+pm:0x8401  readInput            ; R0 = DM(0x20,I4), ASHIFT <<10
+pm:0x8403  preBiquad            ; input biquad, state DM(-4,I0)
+pm:0x8408  absLevel            ; R9 = ABS R0 (rectify)
+pm:0x840b  envSmoothMac        ; MR1F=R7; R11 = MRF+(R3*R4) envelope smoother
+pm:0x840f  recipGain           ; F9 = RECIPS F9 (auto-gain 1/level)
+pm:0x8414  polyShaperStart     ; F15=F10*F15; builds x^2,x^3 terms (waveshaper)
+pm:0x841b  polyShaperMix       ; F6=F15-F5; F6=F6-F11; nonlinear feedforward mix
+pm:0x8424  peakGateStart       ; F10=F0*F7; peak/level compare section
+pm:0x8426  gateCompare         ; COMP(R7,R2); IF GE continue else skip (gate)
+pm:0x8432  peakStateStore      ; DM(-3,I1)=R0; DM(-2,I1)=R8 peak-hold state
+pm:0x843e  delayTapM7          ; M7 = 0x1FE base delay-line span
+pm:0x8441  tap0_sum           ; R8 = R8 + R7 (delay-line accumulate, voice 0)
+pm:0x8446  tap0_fold          ; IF GE R8 = -R8 (sign-fold/reflect)
+pm:0x8447  tap0_fdep          ; R8 = FDEP R8 BY 0:31 (bit-field), state DM(-3,I0)
+pm:0x8449  tap0_delayWrite    ; ASHIFT -5; DM(I2,M7)=R13 write into delay line
+pm:0x844f  tap1_fdep          ; voice 1 (R9) fractional addressing
+pm:0x8457  tap2_fdep          ; voice 2 (R10) fractional addressing
+pm:0x8462  interpAccum        ; R12 = R11+R12 fractional interpolation accumulate
+pm:0x8463  fracIntPart        ; R7 = ASHIFT R8 BY -16 (integer part of read ptr)
+pm:0x8464  fracModify         ; M7 = R7; MODIFY(I2,M7) advance delay read pointer
+pm:0x8466  fracInterp         ; FDEP BY 15:16 frac; MR1F=R7; R8=MRF+(R8*R7) lerp
+pm:0x847a  tapAverage         ; R8 = (R8 + R10)/2 (grain crossfade of 3 taps)
+pm:0x847b  postBiquad1        ; F11 = FLOAT R8; post biquad 1
+pm:0x8480  postBiquad2        ; post biquad 2
+pm:0x8484  fixAndGain         ; R8 = FIX F11; R8 = R8*R15 (output gain)
+pm:0x8489  advPMcoeff         ; MODIFY(I8,0x50) advance PM state pointer
+pm:0x848a  outClip            ; RTS(DB); R8 = CLIP R8 BY R1
+pm:0x848b  writeOutL          ; DM(I4,M2) = R8 (left)
+pm:0x848c  writeOutR          ; DM(I4,M2) = R8 (right, same = mono->stereo)
+dm:0xc005  preFilt_b0          ; 0.9928 input filter coeff
+dm:0xc00e  const40             ; 40.0 (timing/scale constant)
+dm:0xc012  mix_0p7             ; 0.7 mix level
+dm:0xc014  const5e6            ; 5000000.0 (envelope time-constant scale)
+dm:0xc016  smooth_0p05         ; 0.05 envelope smoothing coeff
+dm:0xc031  postFilt1_b0        ; post biquad 1 b0
+dm:0xc034  postFilt2_b0        ; post biquad 2 b0
+dm:0xc037  out_unity           ; 0x7FFFFFFF ~ 1.0
+dm:0xc038  clip_limit          ; 0x007FFFFF output clip bound

@@ -1,0 +1,36 @@
+; rec29 — EFFECT: envelope-controlled resonant filter (auto-wah / dynamic filter)
+; Same algorithm as rec28 with an extra front-end: a first-order pre-filter on
+; the input (8405..8408: MRF=R3*R7, R8=MRF+R2*R7 using coeffs at c004/c005)
+; before rectification, and a 7-entry DM@9800 state block. Detector -> attack/
+; release envelope -> coefficient polynomial -> per-channel resonant biquad.
+; A preset/topology variant of the rec28 family. Confidence: medium-low.
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4)
+pm:0x8403  SumMono                 ; det = L+R
+pm:0x8405  PreFilter               ; MRF=R3*R7 ; R8=MRF+R2*R7 first-order pre-filter
+pm:0x8408  StorePreState           ; DM(I0,M2)=filtered det
+pm:0x8409  DetToFloat              ; F8 = FLOAT
+pm:0x840a  DetScale08              ; *0.8
+pm:0x840c  Rectify                 ; ABS
+pm:0x840d  EnvDelta                ; det - env
+pm:0x840e  AttackReleaseSelect     ; IF LT release coeff
+pm:0x8410  EnvOnePole              ; env update
+pm:0x8412  CoeffPoly_Start         ; derive biquad coeffs from envelope
+pm:0x8417  StoreCoeffState         ; write derived coeffs
+pm:0x841c  Biquad_L                ; resonant section L
+pm:0x8424  FixL                    ; FIX F10
+pm:0x8428  OutL                    ; DM(I4,M2) = out L
+pm:0x842c  Biquad_R                ; resonant section R
+pm:0x8434  FixR                    ; FIX F10
+pm:0x8438  OutR                    ; DM(I4,M2) = out R
+pm:0x8439  Return                  ; RTS (delayed)
+pm:0x843b  PMStateRewind           ; MODIFY(I8,0x49) 73-word PM state
+dm:0x9800  PreFilter_Coeff0        ; 0x3D4CCCCCCD pre-filter coeff
+dm:0x9801  PreFilter_Coeff1        ; 0x3F73333333 pre-filter coeff
+dm:0xc004  Coeff_PreA              ; 0x3E3851EB85
+dm:0xc006  Coeff_AttackRate        ; 0x3B800000 env attack
+dm:0xc007  Coeff_ReleaseRate       ; 0x3A000000 env release
+dm:0xc00b  Coeff_Resonance         ; 0x3FFF7CED resonant pole
+dm:0xc00c  Const_One               ; 0x3F800000 = 1.0f
+dm:0xc010  Coeff_OutLevel          ; 0x7FFFFFFF

@@ -1,0 +1,25 @@
+; rec69 [EFFECT] — sine-polynomial waveshaper + single comb tap (F67-69 core, mid complexity)
+; adds a -512 delay read/feedback around the polynomial shaper
+pm:0x8400  Entry_I0eqI1          ; I0=I1
+pm:0x8401  SaveI2                ; R14=I2; MODIFY(I2,0x3FF) delay-buffer base
+pm:0x8403  ReadInput             ; R8 = DM(0x20,I4); ASHIFT 8
+pm:0x8405  RangeReduce_Abs       ; R8=ABS; R3=R8-R7; MRF+(R3*R4) piecewise
+pm:0x840c  Recip_Divide          ; F8=RECIPS; F8=F4*F8 reciprocal/phase
+pm:0x840f  PhaseAdd              ; F15=F3+F8; scale F15=F8*F15
+pm:0x8417  PolyLoop_Head         ; LCNTR=2 DO..UNTIL LCE poly eval
+pm:0x8419  Poly_x2x3             ; F8=F4*F4; F10=F8*F4
+pm:0x841e  Poly_Accum           ; F6=F15-F5; F6=F6-F11
+pm:0x8428  LoopWrap             ; MODIFY(I0,-6)/(+6)
+pm:0x842a  CombTap_Read          ; M7=0xFFFFFE00(-512); R10=DM(I2,M7) delay read
+pm:0x842d  CombMix              ; F3=F2*F10; F6=F3+F4 feedback mix
+pm:0x842f  CombWriteback         ; DM(I0,M2)=R3; DM(I0,M2)=R6; DM(I2,M3)=R6
+pm:0x8437  FinalShape_Begin      ; F12=F3*F7 chain
+pm:0x8441  ClampCompare          ; COMP(F10,F5)/COMP(F10,F4)
+pm:0x8445  CubicShape            ; F2=F10*F10*F10*F3; F10=F10-F2
+pm:0x844a  ClampPos              ; R10=0x3F2AAAAB
+pm:0x844c  ClampNeg              ; R10=0xBF2AAAAB
+pm:0x844e  FinalScale            ; F10=F2*F10; R8=FIX; R8*R7; ASHIFT -8
+pm:0x8453  ClipOut               ; R8=CLIP R8 BY 0x007FFFFF
+pm:0x8454  OutputL               ; DM(I4,M2)=R8
+pm:0x8455  OutputR               ; DM(I4,M2)=R8
+pm:0x8456  RestoreI2_Return      ; I2=R14; RTS (DB)

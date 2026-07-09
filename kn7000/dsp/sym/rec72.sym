@@ -1,0 +1,21 @@
+; rec72 [EFFECT] — feedback delay + two MAC-summed LFO-modulated taps, stereo (F70-73 family)
+pm:0x8400  Entry_I0eqI1          ; I0=I1
+pm:0x8401  LoadFbState           ; R10=DM(-1,I1)
+pm:0x8402  ReadInputL            ; R3=DM(0x20,I4); F3=FLOAT
+pm:0x8404  FeedbackMix           ; F7=F10*F7; F0=F3+F7
+pm:0x8406  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
+pm:0x8408  Delay1_Read           ; R0=DM(I6,M6)
+pm:0x840a  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
+pm:0x840f  LFO_PhaseAccum1       ; R8=DM(I0,M6)+PM(I8,M8) phase A
+pm:0x8413  Tap1Setup             ; MODIFY(I5,0x2C); int/frac split
+pm:0x8417  Tap1_MAC              ; MR1F=R10; MRF+(R4*R3) interp tap A
+pm:0x8419  LFO_PhaseAccum2       ; R8=DM(I0,M6)+PM(I8,M8) phase B
+pm:0x841f  Tap2_MAC              ; R5=MRF-(R3*R10) interp tap B
+pm:0x8424  Tap_Delay_Write       ; M7=0xFA(250); DM(I2,M7)=R0
+pm:0x8426  Tap_VarModify         ; R8=R8*R11; MODIFY(I2,M7)
+pm:0x842f  ReadInputR            ; R3=DM(0x21,I4)
+pm:0x8433  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
+pm:0x8443  Output_MAC            ; R8=MRF+(R8*R7) final interp
+pm:0x8443  OutputL               ; DM(I4,M2)=R9
+pm:0x8445  Return                ; RTS (DB)
+pm:0x8446  OutputR               ; DM(I4,M2)=R8

@@ -1,0 +1,18 @@
+; rec44 — EFFECT: dual modulated-delay chorus/ensemble (C000:77e "74w" family; PM byte-identical to rec41,42,43,45 — only DM presets differ)
+pm:0x8400  Entry_LoadInput       ; R0=DM(0x20) L, R8=DM(0x21) R; see rec41.sym for full PM map
+pm:0x8404  PreGain               ; F8=F0*F3 (c004)
+pm:0x840b  LUT_Fetch_Interp      ; fractional interpolation tap read
+pm:0x8416  Call_KernelDelay1     ; CALL 0x8300 (DB)
+pm:0x841a  DelayWrite_A          ; M7=0x140 modulated delay line A
+pm:0x842e  DelayWrite_B          ; M7=0xA0 delay line B
+pm:0x8438  StereoMatrix          ; F12=sum L, F13=diff R
+pm:0x843e  OutputWriteL          ; DM(I4,M2)
+pm:0x8442  OutputWriteR          ; DM(I4,M2)
+pm:0x8447  Return                ; RTS(DB)
+dm:0xc004  PreGain_coeff         ; 1.0 (0x3F800000) [preset]
+dm:0xc008  FeedbackScale         ; 0.5 (0x3F000000) [preset]
+dm:0xc00c  ToneCoeff0            ; 0x3FA687CC tone filter b [preset — brighter than rec41/43]
+dm:0xc00d  ToneCoeff1            ; 0xBF381601 tone filter a1 [preset]
+dm:0xc00e  ToneCoeff2            ; 0x3E0FD3FC tone filter a2 [preset]
+dm:0xc01c  WetLevel              ; 0.6 (0x3F19999A) [preset]
+dm:0xc01d  DryLevel              ; ~0.26 (0x3E851EB8) [preset]

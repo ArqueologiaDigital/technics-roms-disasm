@@ -1,0 +1,122 @@
+; ============================================================================
+; rec04 — resident SHARC KERNEL (ADSP-21065L, IC306)
+; Downloaded once at boot; every effect microprogram loads on top at PM 0x8400.
+; PM blocks: 0x8000 vectors+mainloop, 0x8300 float helpers, 0x8400 default
+; passthrough effect, 0x8D00 boot-init. DM blocks: 0x9800/0x9C40/0xC000 per-unit
+; state, 0xC302 descriptor/memory-map tables. Low DM 0x00-0xFF = IOP registers.
+; ============================================================================
+
+; ---- PM 0x8000 : interrupt vector table (4 words/vector) ----
+pm:0x8000  VEC_EMU              ; vector 0 EMUI — NOP (unused)
+pm:0x8004  VEC_RSTI_reset       ; vector 1 RSTI — IDLE then fall to JUMP init
+pm:0x8005  RSTI_jump_init       ; JUMP 0x8071 : real reset handler
+pm:0x800c  VEC_SOVFI            ; stack-overflow vector — RTI stub
+pm:0x8010  VEC_TMZHI            ; timer vector — RTI stub
+pm:0x8014  VEC_VIRPTI           ; vector-interrupt vector — RTI stub
+pm:0x8018  VEC_IRQ2             ; IRQ2 — RTI stub (unused)
+pm:0x801c  VEC_IRQ1             ; IRQ1 — RTI stub (unused)
+pm:0x8020  VEC_IRQ0_frame       ; IRQ0 = THE wired frame/sample interrupt (edge)
+pm:0x8021  IRQ0_set_ready       ; R13 = 1 : signal main loop a frame arrived
+pm:0x8022  IRQ0_set_mode2flag   ; BIT SET MODE2 0x40 : ISR<->mainloop handshake
+pm:0x8028  VEC_SPR0I            ; SPORT0-receive vector — RTI stub
+pm:0x802c  VEC_SPR1I            ; SPORT1-receive vector — RTI stub
+pm:0x8030  VEC_SPT0I            ; SPORT0-transmit vector — RTI stub
+pm:0x8034  VEC_SPT1I            ; SPORT1-transmit vector — RTI stub
+
+; ---- PM 0x8071 : reset handler / runtime bring-up ----
+pm:0x8071  reset_init           ; BIT SET MODE2 0x18011 (IRQ0 edge + flag outs)
+pm:0x8072  reset_enable_irq0    ; BIT SET IMASK 0x100 (bit8 = IRQ0I)
+pm:0x8073  reset_clear_irq0     ; BIT CLEAR IRPTL 0x100
+pm:0x8074  reset_global_ien     ; BIT SET MODE1 0x3000 (IRPTEN + NESTM)
+pm:0x8076  reset_idle           ; IDLE — wait for first IRQ0
+pm:0x8077  reset_call_init      ; CALL 0x8D00 — one-time boot init
+pm:0x8078  mainloop_arm         ; R13 = 0 : re-arm frame flag
+pm:0x807a  mainloop_wait        ; IF EQ JUMP self (DB) : spin until IRQ0 sets R13
+pm:0x807b  mainloop_setptrs     ; I1=0xC004 (param), I8=0x9800 (state)
+pm:0x807d  mainloop_set_i12     ; I12=0x9C40 (per-unit PM table)
+pm:0x807f  mainloop_set_i4      ; I4=0xC342 (coeff/descriptor cursor)
+pm:0x8080  unit_dispatch_first  ; CALL 0x80F7 (DB) — first per-unit step
+pm:0x8082  mainloop_mask_irq0   ; BIT CLEAR IMASK 0x100 during processing
+pm:0x8093  unit_dispatch_mid    ; further CALL 0x80F7 per-unit steps
+pm:0x8097  unit_dispatch_pass   ; CALL 0x80FB (passthrough-copy variant)
+pm:0x8098  mainloop_flag3_in    ; IF FLAG3_IN MODIFY(I3,M3) : read HW input pin
+pm:0x8099  mainloop_toggle_ast  ; BIT TOGGLE ASTAT 0x100000 (bank/ping-pong flag)
+pm:0x809b  mainloop_clr_frame   ; DM(0x2F) = 0
+pm:0x809c  mainloop_clr_mode2   ; BIT CLEAR MODE2 0x40 : ack the ISR handshake
+pm:0x80a0  unit_dispatch_last   ; final CALL 0x80F7
+pm:0x80a3  mainloop_loop        ; JUMP 0x8078 (DB) — back to frame wait
+pm:0x80a4  mainloop_reen_irq0   ; BIT SET IMASK 0x100 (delay slot)
+
+; ---- PM 0x80A6-0x80F6 : delay-buffer allocate/clear helpers ----
+pm:0x80a6  bufalloc_i6_a        ; reserve+zero a DM delay span via I6 (len 0x29)
+pm:0x80b2  bufalloc_i2_a        ; reserve+zero span via I2
+pm:0x80c0  bufalloc_i3          ; reserve+zero span via I3
+pm:0x80de  bufalloc_i6_b        ; variant using I6
+pm:0x80e0  bufalloc_pm_i8       ; zero a PM span via I8 (len 0x14 = 20)
+pm:0x80e7  bufalloc_stride50    ; reserve+zero 0x50-word span (per-unit state)
+pm:0x80f7  advance_param        ; MODIFY(I4,M1); RTS(DB) — bump coeff cursor; the
+pm:0x80f9  advance_param_ld     ; delay slots load R4=DM(I1,M5),R7=PM(I12,M8)
+pm:0x80fa  advance_param_i8     ; MODIFY(I8,0x50) — step per-unit state by 0x50
+pm:0x80fb  passthrough_copy     ; kernel dry-copy: R0=DM(0x20,I4); DM(I4,M2)=R0 x2
+
+; ---- PM 0x8300 : shared floating-point filter/interp helpers ----
+pm:0x8300  fhelp_biquadA        ; float MAC chain (F10=F8*F3 …); called by init
+pm:0x830b  fhelp_iir_fixed      ; fixed-point IIR/biquad (MRF MAC, feedback)
+pm:0x831b  fhelp_interp3        ; FLOAT R0 → 3-tap interp loop → FIX (coeff gen)
+pm:0x8338  fhelp_biquadB        ; second float MAC helper
+
+; ---- PM 0x8400 : kernel's DEFAULT effect slot (7 words, passthrough) ----
+pm:0x8400  effect_entry_default ; R0=DM(0x20,I4) read input sample
+pm:0x8401  effect_write_out     ; DM(I4,M2)=R0 (x2, L/R) : dry passthrough
+pm:0x8403  effect_step_state    ; MODIFY(I8,0x50) : advance per-unit state
+pm:0x8404  effect_return        ; RTS(DB); slots load next unit's params
+
+; ---- PM 0x8D00 : one-time boot initialisation ----
+pm:0x8d00  init_entry           ; set M/modify regs (M2=1,M5=0x4D,M13=0x50 …)
+pm:0x8d0e  init_bufregs         ; B0..B15 / L0..L15 : circular delay buffers
+pm:0x8d12  init_extbuf          ; B3=0x656F0 L3=0x4650, B6=0x20000 L6=0x456F0
+pm:0x8d16  init_statebuf        ; B8..B15 = 0x9800 (per-unit state base)
+pm:0x8d2e  init_clear_iop       ; zero DM control/scratch regs 0x0B..0xFC
+pm:0x8d4e  init_cache_on        ; BIT CLEAR MODE2 0x10 (enable cache)
+pm:0x8d51  init_call_fhelpA     ; CALL 0x8300 — seed filter state
+pm:0x8d54  init_call_fhelpB     ; CALL 0x830B
+pm:0x8d57  init_call_fhelpC     ; CALL 0x831B
+pm:0x8d5a  init_call_fhelpD     ; CALL 0x8338
+pm:0x8d5d  init_set_mode2       ; BIT SET MODE2 0x80000
+pm:0x8d62  init_sport_ctl       ; SPORT ctl words 0x013CB173/0x013C3173 -> 0xE0/0xF0
+pm:0x8d68  init_dma_ptrs        ; write DMA pointers 0x4309..0x4341 -> DM 0x33..0x7B
+pm:0x8d78  init_input_reg       ; DM(0x20)=0x3A2 (input default)
+pm:0x8d7a  init_wait_reg        ; DM(0x02)=0x200D0001 (WAIT/SDRAM timing)
+pm:0x8d7c  init_sdram_ctl       ; DM(0x2E)=0x8852A05B (external-mem control)
+pm:0x8d7e  init_clear_extmem    ; 6x LCNTR=0xEA60 loops zero external delay RAM
+pm:0x8d8a  init_clear_bank2     ; LCNTR=0x4650 zero via I3
+pm:0x8d8c  init_clear_bank3     ; LCNTR=0x1C00 zero via I2
+pm:0x8d90  init_return          ; RTS(DB)
+
+; ---- DM low addresses = IOP / control registers ----
+dm:0x0002  IOP_WAIT             ; external-memory WAIT/SDRAM timing register
+dm:0x0020  IOP_input_sample     ; effect input-sample source (read by 8400/80FB)
+dm:0x002e  IOP_sdram_ctl        ; external-memory control register
+dm:0x002f  frame_flag           ; frame-in-progress flag (R13 stashed here)
+dm:0x00e0  IOP_sport0_ctl       ; SPORT0 control (serial audio in/out)
+dm:0x00f0  IOP_sport1_ctl       ; SPORT1 control (serial audio in/out)
+
+; ---- DM per-unit regions ----
+dm:0x9800  state_base           ; per-effect-unit state/scratch, 0x50 words/unit
+dm:0x9c40  unit_pmtable         ; per-unit PM-resident word (read via PM(I12))
+dm:0xc000  param_base           ; per-effect-unit parameter block, 0x4D words/unit
+dm:0xc004  param_i1_start       ; I1 start (skips 4-word header)
+
+; ---- DM 0xC302 : descriptor + memory-map tables ----
+dm:0xc306  slot0_descriptor     ; {src 0x4309, cnt 8, 1, dst 0xC342} unit-0 I/O desc
+dm:0xc30e  slot1_descriptor     ; {0x4311, 8,1, 0xC34A}
+dm:0xc316  slot2_descriptor     ; {0x4319, 8,1, 0xC352}
+dm:0xc31e  slot3_descriptor     ; {0x4321, 8,1, 0xC35A}
+dm:0xc326  slot4_descriptor     ; {0x4329, 8,1, 0xC362}
+dm:0xc32e  slot5_descriptor     ; {0x4331, 8,1, 0xC36A}
+dm:0xc336  slot6_descriptor     ; {0x4339, 8,1, 0xC372}
+dm:0xc33e  slot7_descriptor     ; {0x4341, 8,1, 0xC37A}
+dm:0xc382  memmap_table         ; region {base,len,stride} descriptors follow
+dm:0xc38c  memmap_extdelay      ; ext delay 0x022000 / 0x020000, stride
+dm:0xc391  memmap_intC000       ; internal 0xC000, len 0x66, stride 0x4D
+dm:0xc399  memmap_int9800       ; internal 0x9800, len 0x33

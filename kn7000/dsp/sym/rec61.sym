@@ -1,0 +1,16 @@
+; rec61 — allpass-diffusion reverb/ambience (family rec58-61; preset D)
+; Identical PM to rec58; allpass gains identical to rec58; M7 delay-tap lengths
+; are the longest of the family (largest space/decay preset).
+pm:0x8400  ReverbEntry_chSel      ; IF NOT FLAG3, JUMP 0x8432
+pm:0x8402  chA_floatInput         ; F8 = FLOAT R0
+pm:0x8405  chA_biquadCascade      ; 3x biquad damping filter
+pm:0x8410  chA_writeSample1       ; DM(I4,M2) = R0
+pm:0x841d  chA_tap0_M7            ; M7 delay tap 0 (preset: longest delay)
+pm:0x841f  chA_allpassRead       ; R3 = DM(I3,M7)
+pm:0x8424  chA_allpassWrite      ; DM(I3,M3) = R0
+pm:0x842f  chA_return            ; RTS (DB)
+pm:0x8432  ReverbEntry_chB        ; 2nd-channel path
+pm:0x845f  chB_return            ; RTS (DB)
+dm:0xc004  biquad1_b0            ; 0.5745
+dm:0xc013  allpass_gain0        ; 0.8
+dm:0xc014  allpass_gain1        ; 0.86

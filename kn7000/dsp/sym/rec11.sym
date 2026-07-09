@@ -1,0 +1,32 @@
+; rec11 — EFFECT: 3-voice modulated-delay ensemble/symphonic chorus
+; Sine-LFO fractional-delay engine reads THREE modulated taps from the delay line
+; (R5, R6, R15) stepping I5 by MODIFY(I5,3)/M6 between interpolations. Each tap is
+; re-interpolated into the output delay DM(I2) and the three are summed by a 3-term
+; MAC (MRF=R7*R9; +R7*R13; +R7*R8) per channel -> lush multi-voice chorus/ensemble.
+;
+dm:0x9800  eff11_lfo_phase      ; LFO phase accumulator (=0x800000)
+dm:0xc005  eff11_depth0         ; 0x00400000 tap-0 depth
+dm:0xc006  eff11_depth1         ; 0x00400000 tap-1 depth
+dm:0xc007  eff11_depth2         ; 0x00400000 tap-2 depth
+dm:0xc008  eff11_tap_gain       ; 0x33333333 (0.4) voice gain
+dm:0xc009  eff11_wet            ; 0x7FFFFFFF wet level
+dm:0xc00b  eff11_spread0        ; 0xFFC00000 per-voice detune/offset
+dm:0xc029  eff11_sine_tab       ; 16-point sine LFO table (c029..c03f)
+pm:0x8400  eff11_entry          ; I0=I1
+pm:0x8401  eff11_lfo_acc        ; phase accumulate (PM(I8,M13) increment)
+pm:0x8409  eff11_interp0        ; fractional interpolation, voice 0
+pm:0x8410  eff11_tap0           ; R5 = modulated voice 0
+pm:0x8411  eff11_tap1           ; R6 = modulated voice 1
+pm:0x8416  eff11_tap2           ; R15 = modulated voice 2
+pm:0x8417  eff11_read_inL       ; R0 = DM(0x20,I4) input
+pm:0x8419  eff11_write_delayL   ; DM(I2,M7)=R0 push to delay line
+pm:0x841b  eff11_voice0L        ; R8=R5*R11 interp voice 0 into out-delay
+pm:0x8424  eff11_voice1L        ; R8=R6*R11 voice 1
+pm:0x842e  eff11_voice2L        ; R8=R15*R11 voice 2
+pm:0x843a  eff11_sum3L          ; MRF=R7*R9 +R7*R13 +R7*R8  3-voice sum
+pm:0x843d  eff11_wet_scaleL     ; R8=R8*R14 wet scale
+pm:0x8441  eff11_clipL          ; CLIP by R12
+pm:0x8442  eff11_out_L          ; DM(I4,M2)=R8 left output
+pm:0x8461  eff11_sum3R          ; 3-voice sum (right)
+pm:0x8465  eff11_rts            ; RTS(DB) (with R8=R8+R8 in slot)
+pm:0x8467  eff11_out_R          ; DM(I4,M2)=R8 right output

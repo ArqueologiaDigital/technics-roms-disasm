@@ -1,0 +1,28 @@
+; rec19 — EFFECT: auto-gain waveshaper/distortion + short delay (variant of rec17), C000:77e family
+pm:0x8400  Entry_SetInPtr        ; I0=I1
+pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
+pm:0x8403  SumScaleEnv           ; R8=R0+R8; <<9
+pm:0x8405  RectifyEnv            ; R8=ABS R8
+pm:0x8406  ThreshCompare         ; R3=R8-R7; IF LT pick coeff
+pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
+pm:0x840c  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8
+pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8
+pm:0x840f  GainCompare           ; COMP(R4,R7); IF GE clamp
+pm:0x8412  ApplyGain_L           ; F0=FLOAT R0; F0=F0*F15; F0=F0*F10
+pm:0x8415  Index_FixShift        ; R8=FIX; ASHIFT-11; I5=I1+0x34
+pm:0x8419  LUT_Fetch_Interp      ; R7=ASHIFT-16 idx; FDEP frac; DM(I5,M7); interpolate transfer LUT
+pm:0x8420  PostScale_L           ; R11=DM; F8=F8*F11; *0.21
+pm:0x8424  Delay_Write_400       ; M7=0x190 (400) DM(I2,M7)=R8 short delay write
+pm:0x8425  Delay_Read            ; R8=DM(I2,M6)
+pm:0x8426  Delay_Advance         ; MODIFY(I2,-0x190)
+pm:0x842c  OutputWriteL          ; DM(I4,M2)=R8
+pm:0x842d  ApplyGain_R           ; R0=DM(0x20)<<9; F0*F15*F10 second channel
+pm:0x8442  NegateR               ; R8=-R8 anti-phase spread
+pm:0x8445  OutputWriteR          ; DM(I4,M2)=R8
+pm:0x8446  Return                ; RTS(DB)
+dm:0xc006  DetectScale           ; 0.111
+dm:0xc009  DriveBase             ; 2.0
+dm:0xc00a  UnityFloat            ; 1.0
+dm:0xc028  TransferLUT_start     ; monotonic antisymmetric transfer table (finer steps than rec17)
+dm:0xc038  TransferLUT_zero      ; curve center

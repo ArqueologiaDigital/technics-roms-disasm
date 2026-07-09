@@ -1,0 +1,31 @@
+; rec09 — EFFECT: modulated-delay chorus + float allpass smoothing, w/ feedback
+; Sine-LFO fractional-delay front-end (as rec06/07) produces modulated taps R5/R8.
+; Each channel then floats the input, adds a feedback term (F4=DM*F7, coeff c006
+; ~0.4) and runs a float allpass {F12=F3*F8; F8=F8-F12; F8=F8+F12} on the
+; interpolated tap before FIX/scale/output. Two LFO phases (9800,9801) = stereo.
+;
+dm:0x9800  eff09_lfo_phase0     ; LFO phase, channel 0 (=0x800000)
+dm:0x9801  eff09_lfo_phase1     ; LFO phase, channel 1 (=0x800000)
+dm:0xc005  eff09_depth          ; 0x20000000 (0.25) modulation depth
+dm:0xc006  eff09_feedback       ; 0x3F333333 (float ~0.7) feedback coefficient
+dm:0xc007  eff09_lfo_rate       ; 0x00400000 LFO increment
+dm:0xc009  eff09_ap_coeff       ; 0x40000000 allpass coefficient
+dm:0xc00a  eff09_fb2            ; 0x3F333333 second feedback coeff
+dm:0xc029  eff09_sine_tab       ; 16-point sine LFO table (c029..c03f)
+pm:0x8400  eff09_entry          ; I0=I1
+pm:0x8401  eff09_lfo_acc0       ; LFO phase accumulate (tap 0)
+pm:0x840a  eff09_interp0        ; fractional-delay interpolation, tap 0
+pm:0x840f  eff09_tapA           ; R5 = modulated tap A
+pm:0x8410  eff09_lfo_acc1       ; LFO accumulate (tap 1)
+pm:0x841e  eff09_read_inL       ; R0 = DM(0x20,I4) input
+pm:0x841f  eff09_float_in       ; F0 = FLOAT R0
+pm:0x8422  eff09_fb_mac         ; F4=F4*F7; F0=F0+F4 feedback inject
+pm:0x8425  eff09_delay_write    ; DM(I2,M7)=R0 push to delay line
+pm:0x842e  eff09_allpass        ; float allpass F12=F3*F8; F8=F8-F12; F8=F8+F12
+pm:0x8434  eff09_fix_scaleL     ; R8=FIX F8; *R14 wet scale
+pm:0x8438  eff09_clipL          ; CLIP by 0x7FFFFF
+pm:0x8439  eff09_out_L          ; DM(I4,M2)=R8 left output
+pm:0x843a  eff09_chanR          ; right channel begins
+pm:0x844c  eff09_fix_scaleR     ; R8=FIX F8 (right)
+pm:0x8451  eff09_out_R          ; DM(I4,M2)=R8 right output
+pm:0x8452  eff09_rts            ; RTS(DB)

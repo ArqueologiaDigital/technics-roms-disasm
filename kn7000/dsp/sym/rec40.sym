@@ -1,0 +1,19 @@
+; rec40 EFFECT — distortion/overdrive; PM matches rec39 except presets:
+; @0x842e R0=0x3ECCCCCD level, @0x8430 M7=0xC8(200) delay len, MODIFY 0xFFFFFF38,
+; @0x8457 R0=0x3E9EB852 right level -> shorter delay / different drive preset.
+pm:0x8400  Rec40_AudioIn        ; L+R sum, LSHIFT 9
+pm:0x8405  Rec40_EnvFollower    ; ABS + attack/release envelope
+pm:0x840c  Rec40_RecipGain      ; RECIPS(env) auto-gain
+pm:0x8415  Rec40_WaveshapeL     ; table-lookup distortion curve (left)
+pm:0x8420  Rec40_FilterStageL   ; extra 1-pole/allpass stage
+pm:0x8427  Rec40_ToneBiquadL    ; post biquad tone
+pm:0x842e  Rec40_OutLevelL      ; R0=0x3ECCCCCD level (preset)
+pm:0x8430  Rec40_DelayL         ; M7=0xC8(200) short delay (preset)
+pm:0x8437  Rec40_OutLeft        ; DM(I4,M2)=R0
+pm:0x8448  Rec40_FilterStageR   ; extra filter stage (right)
+pm:0x8457  Rec40_OutLevelR      ; R0=0x3E9EB852 right level (preset)
+pm:0x845b  Rec40_InvertR        ; R0=-R0 phase invert
+pm:0x845d  Rec40_OutRight       ; DM(I4,M2)=R0
+pm:0x845e  Rec40_Return         ; RTS
+dm:0xc006  Rec40_EnvCoef        ; envelope coeffs
+dm:0xc00e  Rec40_ToneCoef       ; tone biquad coeffs

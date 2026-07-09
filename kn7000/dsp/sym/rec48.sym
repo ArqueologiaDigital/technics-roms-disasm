@@ -1,0 +1,23 @@
+; rec48 — EFFECT: single-stage swept-allpass PHASER, sine-LFO modulated coefficient (C000:77e, PM 70w)
+; front-end (0x8400-0x842f) and sine-LFO table byte-identical to rec46; rec46 uses 6 stages, this uses 1
+pm:0x8400  Entry                 ; I0=I1 state pointer
+pm:0x8401  LFO_FeedbackMix       ; R8=DM(I0,M6)+PM(I8,M8): LFO phase accumulate
+pm:0x8404  LFO_StateWrite        ; DM(I0,M2)=R8
+pm:0x8406  LFO_TableIndex        ; ASHIFT-11; MODIFY(I5,0x2C); ASHIFT-16 -> sine table index
+pm:0x840a  LFO_SineFetch_Interp  ; R7=DM(I5,M7); MR1F/MAC linear interp between sine samples
+pm:0x840f  Mod_ToFloatUnit       ; F8=FLOAT R8 BY -31; +1.0; *0.5 -> control [0,1]
+pm:0x8419  Mod_Clip              ; CLIP F0 BY 1.0
+pm:0x841c  AllpassCoeffPrep      ; F0=F7*F7,F12=F7*F8,F10=F8+F0; F1/F3/F9 coeff terms
+pm:0x8427  RecipNewton           ; F0=RECIPS F12 + 3 Newton iters (R11=2.0) -> allpass coeff
+pm:0x8431  Input_Mono            ; R5=(DM(0x20)+DM(0x21))/2; F5=FLOAT
+pm:0x8435  AllpassStage1         ; single 1st-order allpass stage, state in DM(I0)
+pm:0x843c  OutputScale           ; F5=F5*F0; FIX; *R14; CLIP
+pm:0x8441  OutputWrite           ; DM(I4,M2)=R0 (twice L/R)
+pm:0x8443  Return                ; RTS(DB)
+dm:0x9800  LFO_phase_init        ; 0x00004000 initial LFO phase
+dm:0xc005  Mix_half              ; 0.5 (0x3F000000)
+dm:0xc006  LFO_rate              ; 0x3B83126E LFO increment/rate
+dm:0xc00c  Coeff_neg2            ; -2.0 (0xC0000000) allpass prep constant
+dm:0xc00f  Depth                 ; 4.0 (0x40800000) sweep depth
+dm:0xc010  FullScale             ; 0x7FFFFFFF
+dm:0xc028  SineLFO_table         ; sine LFO waveform table (c028..c03f, 16 entries)

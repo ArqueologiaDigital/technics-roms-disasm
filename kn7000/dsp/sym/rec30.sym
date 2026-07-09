@@ -1,0 +1,56 @@
+; rec30 — EFFECT: modulated multi-tap delay w/ filtering (rotary / ensemble)
+; The richest program in this batch. Signal path per sample:
+;  - average L,R; scale; run one LFO-swept fractional delay-tap read from the
+;    half-sine table (8403..8410, block-float interp F3=FLOAT R3 BY R4);
+;  - CALL 0x8300 (kernel biquad section) then CALL 0x830B (kernel all-pass/comb
+;    section) -> tone-shaping + short reverb/allpass (8416/8419);
+;  - two further LFO-modulated delay taps into a delay buffer at I2 (writes
+;    DM(I2,M7)=..., strides 0x140/0xA0/0xC8; taps 9806..980b each {inc,inc,phase});
+;  - crossfade the two taps through the anti-symmetric window table c028..c048
+;    (843a..843d) and emit two outputs (843e..8446, each FIX then <<-8 scale).
+; Two rotating/detuned taps + crossfade + filtering strongly suggests a rotary-
+; speaker or symphonic-ensemble/pitch effect. Confidence: low (structure solid,
+; GUI role inferred).
+pm:0x8400  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8401  ReadInR                 ; R8 = DM(0x21,I4)
+pm:0x8402  MonoAverage             ; R0 = (L+R)/2, R3 = DM(I1,M6) coeff
+pm:0x8403  InToFloat               ; F0 = FLOAT, I0 = I1
+pm:0x8405  PhaseToIndex            ; R8 = FIX, I5 = I1 (sine table base)
+pm:0x8407  Tap0_ReadSweep          ; ASHIFT -11 sweep into table
+pm:0x8408  Tap0_TableOffset        ; MODIFY(I5,0x34)
+pm:0x840b  Tap0_FracRead           ; FDEP frac + table read
+pm:0x840c  Tap0_BlockFloat         ; F3 = FLOAT R3 BY R4 (block-float interp)
+pm:0x840e  Tap0_Interp             ; linear interpolate tap
+pm:0x8410  Tap0_Fix                ; R0 = FIX F8
+pm:0x8411  Tap0_Store              ; DM(I0,M6) = tap0
+pm:0x8412  PreMix                  ; combine coeff-weighted taps (R12)
+pm:0x8416  CallBiquad              ; CALL 0x8300 kernel biquad section
+pm:0x8417  StoreFiltered           ; DM(I0,M2) = filtered
+pm:0x8419  CallAllpass             ; CALL 0x830B kernel all-pass/comb section
+pm:0x841a  DelayStride1            ; M7 = 0x140
+pm:0x841c  WriteDelayBuf           ; DM(I2,M7) = R10 (push into delay line)
+pm:0x841d  Tap1_ModRead            ; R8 = R8*R9 first modulated tap
+pm:0x8420  Tap1_FracRead           ; FDEP + DM(I2,M7) delayed read
+pm:0x8421  Tap1_BlockFloat         ; F3 = FLOAT R3 BY R4
+pm:0x8423  Tap1_Interp             ; interpolate -> F11
+pm:0x8425  Tap2_ModRead            ; R8 = R5*R9 second modulated tap
+pm:0x842c  Tap2_Stride             ; M7 = 0xA0
+pm:0x842e  Tap2_PtrAdvance         ; MODIFY(I2,0xC8)
+pm:0x8430  Tap3_ModRead            ; R8 = R13*R3 third tap
+pm:0x8437  Crossfade_Start         ; F13=F10*F3 window crossfade of taps
+pm:0x8438  Window_Weights          ; F10=F0*F6 / F0*F7 window envelopes
+pm:0x843a  CrossfadeMix            ; F12/F13 = crossfaded tap pair
+pm:0x843e  OutMixL                 ; R0 = FIX F12
+pm:0x843f  ScaleL                  ; R8 = R0*R4, I2 = R15 restore
+pm:0x8442  OutL                    ; DM(I4,M2) = out L
+pm:0x8443  ScaleR                  ; R8 = R0*R4 (from F13)
+pm:0x8446  OutR                    ; DM(I4,M2) = out R
+pm:0x8447  Return                  ; RTS (delayed)
+pm:0x8449  PMStateRewind           ; MODIFY(I8,0x44) 68-word PM state
+dm:0x9800  Mix_Coeffs              ; 0x19999999 / 0x66666666 wet/dry-ish
+dm:0x9806  LFO_Tap1                ; {inc,inc,0x80000000 phase} tap-1 rotor
+dm:0x9809  LFO_Tap2                ; {inc,inc,0x80000000 phase} tap-2 rotor (180deg)
+dm:0xc004  Coeff_ModDepth          ; 0x3DCCCCCC
+dm:0xc009  Biquad_Coeffs           ; 0x3FEDC5EF.. tone-filter section coeffs
+dm:0xc01c  Coeff_Balance           ; 0x3F1999999A
+dm:0xc028  Window_Table            ; anti-symmetric crossfade/pan window c028..c048

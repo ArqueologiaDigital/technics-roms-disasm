@@ -1,0 +1,30 @@
+; rec08 — EFFECT: float allpass-cascade diffuser + feedback delay (reverb/ambience)
+; Uses SHARC floating-point. Input floated (F10=FLOAT R0). A first-order allpass
+; section {F12=F3*F7; F1=F10+F12; F12=F1*F7; F10=F3-F12} is cascaded ~5x, then a
+; pair of stages reading/writing PM(I8) coefficient state, producing F13/F10 which
+; are FIXed and mixed (MRF=R7*R13; R7=MRF+R7*R10). Result is injected into a long
+; DM(I6) delay line (offsets 0x320 / 0x3C8C) read back with feedback -> reverb tail.
+; Two symmetric halves = two channels. Static (non-modulated) allpass coeffs.
+;
+dm:0xc004  eff08_mix            ; 0x3F604188 (float ~0.876) mix/coeff
+dm:0xc009  eff08_ap_c0          ; 0x3F71CF9A (~0.945) allpass coefficient
+dm:0xc00d  eff08_ap_c4          ; 0xBF5FE260 (~-0.875) allpass coefficient (neg)
+dm:0xc00f  eff08_gain           ; 0x7FFFFFFF unity coeff
+dm:0xc016  eff08_ap_c0b         ; 0x3F71CF9A second-channel allpass coeff set (c016..c01d)
+pm:0x8400  eff08_entry          ; I0=I1
+pm:0x8401  eff08_read_inL       ; R0 = DM(0x20,I4)
+pm:0x8402  eff08_float_in       ; F10 = FLOAT R0
+pm:0x8404  eff08_ap_stage0      ; first-order allpass stage (F12=F3*F7)
+pm:0x8414  eff08_pm_coeff0      ; R3 = PM(I8,M14) load, PM(I8,M8)=R3 write-back state
+pm:0x841e  eff08_fix0           ; R13 = FIX F13
+pm:0x8420  eff08_mac_mix        ; MRF=R7*R13; R7=MRF+R7*R10 diffuser mix
+pm:0x8423  eff08_add_in         ; R0 = R0 + R7 add to input
+pm:0x8425  eff08_delay_write    ; DM(I6,M7)=R0 write reverb delay line
+pm:0x8426  eff08_delay_read     ; R0 = DM(I6,M6) read delayed (feedback)
+pm:0x8429  eff08_wet_scale      ; R0 = R0*R14 wet scale
+pm:0x842b  eff08_clipL          ; CLIP by 0x7FFFFF
+pm:0x842c  eff08_out_L          ; DM(I4,M2)=R0 left output
+pm:0x8440  eff08_chanR          ; second-channel allpass cascade begins
+pm:0x8451  eff08_delay_writeR   ; DM(I6,M7)=R0 right delay write
+pm:0x8456  eff08_out_R          ; DM(I4,M2)=R0 right output
+pm:0x8457  eff08_rts            ; RTS(DB)

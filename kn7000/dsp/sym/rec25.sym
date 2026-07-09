@@ -1,0 +1,38 @@
+; rec25 — EFFECT: dynamics processor (compressor/limiter), floating-point
+; Family sibling of rec22 (same DM@C000:40e I/O framing; rec21 shares signature).
+; Same rectify + attack/release envelope, but computes gain by a Newton-Raphson
+; reciprocal (RECIPS + 3 refine steps) => gain = ref/envelope (true compressor).
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  ReadInL                 ; R13 = DM(0x20,I4) input L
+pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4) input R
+pm:0x8403  SumMono                 ; R8 = L+R detector
+pm:0x8404  ScaleLShift9            ; R8 <<= 9
+pm:0x8405  Rectify_LoadEnvState    ; R8=ABS(det); R7 = PM(I8,M14) prev env
+pm:0x8407  AttackReleaseSelect     ; IF LT reload release coeff
+pm:0x8409  EnvOnePoleUpdate        ; R8 = env + R3*coeff
+pm:0x840a  StoreEnvState           ; PM(I8,M8) = env
+pm:0x840b  EnvToFloat              ; F12 = FLOAT env
+pm:0x8410  RecipSeed               ; F0 = RECIPS F12 (reciprocal seed)
+pm:0x8411  RecipRefine1            ; Newton-Raphson iteration 1
+pm:0x8413  RecipRefine2            ; iteration 2
+pm:0x8415  RecipRefine3            ; iteration 3
+pm:0x8417  ReciprocalDone          ; F0 = 1/env
+pm:0x8418  GainMul                 ; F8 = ref * (1/env)
+pm:0x841a  ThresholdCompare        ; COMP(R4,R1) : only compress above threshold
+pm:0x841b  GainClampGE             ; IF GE force unity region
+pm:0x841e  ApplyGainL              ; F0 = inL * gain
+pm:0x8420  ClipMaskL               ; R13 = 0x007FFFFF
+pm:0x8421  ClipL                   ; R0 = CLIP R0 BY R13
+pm:0x8422  OutL                    ; DM(I4,M2) = out L
+pm:0x8423  ReReadInForR            ; R0 = DM(0x20,I4)
+pm:0x8425  ApplyGainR              ; F0 = inR * gain
+pm:0x8429  OutR                    ; DM(I4,M2) = out R
+pm:0x842a  Return                  ; RTS (delayed)
+pm:0x842c  PMStateRewind           ; MODIFY(I8,0x4F) rewind 79-word PM state
+dm:0xc004  Coeff_AttackRate        ; 0x04000000
+dm:0xc005  Coeff_ReleaseRate       ; 0x00100000
+dm:0xc006  Coeff_Thresh_lo         ; 0x3EE38E38
+dm:0xc007  Coeff_Thresh_hi         ; 0x4CE38E38
+dm:0xc008  Coeff_Ratio             ; 0x0CCCCCCC
+dm:0xc009  Const_One               ; 0x3F800000 = 1.0f
+dm:0xc00a  Coeff_MakeupMax         ; 0x7FFFFFFF

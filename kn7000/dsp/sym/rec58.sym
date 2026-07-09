@@ -1,0 +1,34 @@
+; rec58 — allpass-diffusion reverb/ambience (family rec58-61; preset A)
+; Signal: input -> 3x cascaded biquad damping filter -> chain of Schroeder
+; allpass sections (delay taps via M7 + feedback gains) -> stereo output.
+; Family shares identical PM; presets differ only in the M7 tap lengths and
+; the allpass gains at dm:c013-c017.
+pm:0x8400  ReverbEntry_chSel      ; IF NOT FLAG3, JUMP to 2nd-channel path (0x8432)
+pm:0x8402   chA_floatInput         ; F8 = FLOAT R0 (input sample -> float), I0=I1 coeff ptr
+pm:0x8405  chA_biquadCascade       ; start 3x biquad: coeffs DM(I0,M2), state in PM(I8)
+pm:0x840c  chA_fixAndClip          ; R0 = FIX F10 then CLIP by R13 (0x7FFFFF)
+pm:0x8410  chA_writeSample1        ; DM(I4,M2) = R0  (first output word)
+pm:0x8419  chA_writeSample2        ; DM(I4,M2) = R0  (second output word)
+pm:0x841d  chA_tap0_M7             ; M7 = delay-line tap offset 0 (preset param)
+pm:0x841f  chA_allpassRead         ; R3 = DM(I3,M7) read delayed sample
+pm:0x8422  chA_tap1_M7             ; M7 = delay-line tap offset 1
+pm:0x8424  chA_allpassWrite        ; DM(I3,M3) = R0 write into delay line
+pm:0x8428  chA_tap2_M7             ; M7 = delay-line tap offset 2
+pm:0x842b  chA_advPMcoeff          ; MODIFY(I8, 0x4A) advance PM state pointer
+pm:0x842f  chA_return              ; RTS (DB)
+pm:0x8432  ReverbEntry_chB         ; second-channel processing path
+pm:0x844b  chB_tap0_M7             ; M7 = delay tap offset 0 (channel B)
+pm:0x8451  chB_tap1_M7             ; M7 = delay tap offset 1 (channel B)
+pm:0x8456  chB_tap2_M7             ; M7 = delay tap offset 2 (channel B)
+pm:0x845f  chB_return              ; RTS (DB)
+dm:0xc003  gain_unity             ; 0x7FFFFFFF ~ 1.0 fixed
+dm:0xc004  biquad1_b0             ; 0.5745 (b0 of damping biquad, 3x identical)
+dm:0xc005  biquad1_b1             ; -0.3752
+dm:0xc006  biquad1_b2             ; 0.4004
+dm:0xc007  biquad1_a1             ; 0.2002
+dm:0xc008  biquad1_a2             ; 0.2002
+dm:0xc013  allpass_gain0          ; 0.8   (allpass feedback gains = preset)
+dm:0xc014  allpass_gain1          ; 0.86
+dm:0xc015  allpass_gain2          ; 0.82
+dm:0xc016  allpass_gain3          ; 0.7
+dm:0xc017  allpass_gain4          ; 0.62

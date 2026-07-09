@@ -1,0 +1,16 @@
+; rec38 EFFECT — distortion/overdrive; PM identical to rec37 except two output-level
+; immediates (@0x8429 R0=0x3EB851EC, @0x844d R0=0x3E800000) -> different drive preset.
+pm:0x8400  Rec38_AudioIn        ; L+R sum, LSHIFT 9
+pm:0x8405  Rec38_EnvFollower    ; ABS + one-pole envelope (attack/release)
+pm:0x840c  Rec38_RecipGain      ; RECIPS(env) auto-gain
+pm:0x8415  Rec38_WaveshapeL     ; table-lookup distortion curve (left)
+pm:0x8422  Rec38_ToneBiquadL    ; post biquad tone
+pm:0x8429  Rec38_OutLevelL      ; R0=0x3EB851EC output level (preset)
+pm:0x842b  Rec38_DelayL         ; M7=0x190(400) short delay
+pm:0x8433  Rec38_OutLeft        ; DM(I4,M2)=R8
+pm:0x844d  Rec38_OutLevelR      ; R0=0x3E800000 right level (preset)
+pm:0x8451  Rec38_InvertR        ; R8=-R8 phase invert
+pm:0x8454  Rec38_OutRight       ; DM(I4,M2)=R8
+pm:0x8455  Rec38_Return         ; RTS
+dm:0xc006  Rec38_EnvCoef        ; envelope coeffs
+dm:0xc00d  Rec38_ToneCoef       ; tone biquad coeffs

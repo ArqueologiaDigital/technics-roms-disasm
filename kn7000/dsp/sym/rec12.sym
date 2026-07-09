@@ -1,0 +1,38 @@
+; rec12 — EFFECT: float ladder/allpass filter + multitap delay + envelope-gain
+; Complex composite. Sums L+R to mono (R15=(R0+R8)/2), floats it, and runs a
+; cascade of float allpass/ladder sections whose reflection coefficients are read
+; and written back through PM(I8) state (F12=F3*F7; F3=F10+F12; F7=F3*F7...), tapping
+; a DM(I6) delay line at several negative offsets (M7 = -0x351, -0x58E, -0x5DA,
+; -0x7D2) = a multi-tap diffused delay. A second stage is an envelope follower on
+; |R8| (R8=ABS R8; R2=R8-thr; IF LT ...; MR1F/MAC; R3=SAT MRF) whose output R2 gain-
+; multiplies both channels (R0=R0*R2; R3=R3*R2). Net = dynamically-controlled
+; filtered delay/ambience (compressor/ducking- or auto-wah-like gain control).
+;
+dm:0x9800  eff12_state          ; filter/envelope state block (9800..9806)
+dm:0x9801  eff12_env_coeff      ; 0x3F19999A (float 0.6) envelope time constant
+dm:0xc004  eff12_ap_c0          ; 0x3F5DE5D8 (~0.866) allpass/ladder coeff
+dm:0xc005  eff12_ap_c1          ; 0xBECD6A04 (~-0.401) allpass coeff
+dm:0xc006  eff12_ap_c2          ; 0x3F08CF29 (~0.534) allpass coeff
+dm:0xc007  eff12_ap_c3          ; 0xBF000000 (-0.5) allpass coeff
+dm:0xc008  eff12_env_thr        ; 0x3ECCCCCD (~0.4) envelope threshold
+dm:0xc00c  eff12_ratio          ; 0x19999999 (0.2) gain/ratio coeff
+pm:0x8400  eff12_entry          ; I0=I1
+pm:0x8401  eff12_read_in        ; R0=DM(0x20,I4) L, R8=DM(0x21,I4) R
+pm:0x8404  eff12_mono_sum       ; R15=(R0+R8)/2 mono sum
+pm:0x8405  eff12_float_in       ; F8 = FLOAT R15
+pm:0x8408  eff12_ladder0        ; ladder/allpass stage (PM(I8) reflection coeffs)
+pm:0x840e  eff12_tap0           ; DM(I6,M7) delay tap (offset -0x351)
+pm:0x8413  eff12_tap1           ; delay tap (offset -0x58E)
+pm:0x8419  eff12_tap2           ; delay tap (offset -0x5DA)
+pm:0x841e  eff12_tap3           ; delay tap (offset -0x7D2)
+pm:0x8422  eff12_env_abs        ; R8 = ABS R8 rectify (envelope detector)
+pm:0x8424  eff12_env_cmp        ; R2 = R8 - threshold
+pm:0x8425  eff12_env_gate       ; IF LT R4=... attack/release branch
+pm:0x8427  eff12_env_mac        ; R8 = MRF + R2*R4 envelope integrate
+pm:0x8438  eff12_env_sat        ; R3 = SAT MRF envelope value
+pm:0x843b  eff12_gain           ; R8 = MRF + R3*R7 gain compute
+pm:0x843c  eff12_fix_wet        ; R3=FIX F9; R0=FIX F10 filtered outputs
+pm:0x8440  eff12_apply_gainL    ; R2=R8*R1; R0=R0*R2 apply envelope gain (L)
+pm:0x8442  eff12_rts            ; RTS(DB), R3=R3*R2 (right gain in slot)
+pm:0x8443  eff12_out_L          ; DM(I4,M2)=R0 left output
+pm:0x8444  eff12_out_R          ; DM(I4,M2)=R3 right output

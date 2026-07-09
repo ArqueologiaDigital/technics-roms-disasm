@@ -1,0 +1,30 @@
+; rec06 — EFFECT: modulated-delay chorus (dual interpolated tap, sine-LFO)
+; Sine-table-driven fractional-delay modulator. Two modulated taps read from the
+; delay line with linear interpolation, crossfaded (R8+R9)/2, written to L and R.
+; No feedback path -> chorus / doubling / detune character.
+;
+; DM state / coefficients:
+dm:0x9800  eff06_lfo_phase      ; LFO phase accumulator state (=0x800000)
+dm:0xc005  eff06_depth          ; 0x00400000 modulation depth / tap gain scaler
+dm:0xc006  eff06_wet            ; 0x7FFFFFFF wet-level (full)
+dm:0xc029  eff06_sine_tab       ; 16-point sine LFO waveform table (c029..c037, dup c039..c03f)
+dm:0xc02c  eff06_sine_peak      ; 0x7FFFFFFF sine table +1.0 peak
+dm:0xc034  eff06_sine_trough    ; 0x80000000 sine table -1.0 trough
+; PM program:
+pm:0x8400  eff06_entry          ; I0=I1  set DM state pointer
+pm:0x8401  eff06_read_inL       ; R0 = DM(0x20,I4) left input
+pm:0x8402  eff06_read_inR       ; R11 = DM(0x21,I4) right input
+pm:0x8403  eff06_lfo_acc        ; R8=phase(DM), R7=incr(PM) -> phase accumulate
+pm:0x8406  eff06_lfo_store      ; store updated LFO phase back to DM(I0)
+pm:0x8408  eff06_lfo_scale      ; ASHIFT -11: phase -> delay-index; frac in R3
+pm:0x840c  eff06_interp0        ; sine/tap linear interpolation (tap A) MRF=R4*R3...
+pm:0x8410  eff06_tapA           ; R5 = interpolated modulated tap A
+pm:0x8413  eff06_interp1        ; second interpolation site (tap B)
+pm:0x8417  eff06_tapB           ; R6 = interpolated modulated tap B
+pm:0x841a  eff06_write_delayL   ; DM(I2,M7)=R0 push input into delay line (L)
+pm:0x842f  eff06_crossfadeL     ; R8=(R8+R9)/2 crossfade + wet scale
+pm:0x8433  eff06_clipL          ; CLIP R8 BY R1(0x7FFFFF)
+pm:0x8434  eff06_out_L          ; DM(I4,M2)=R8 left output
+pm:0x8449  eff06_crossfadeR     ; R8=(R8+R9)/2 crossfade (right)
+pm:0x844e  eff06_out_R          ; DM(I4,M2)=R8 right output
+pm:0x844f  eff06_rts            ; RTS(DB) return to kernel
