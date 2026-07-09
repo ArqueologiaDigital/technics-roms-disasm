@@ -26,8 +26,12 @@ class Unmapped(Exception):
 
 
 def valid_io(a):
+    # 0x9C000000 is the effects-DSP (ADSP-21065L) host data port + sound-board
+    # GPIO/rev registers (0x9CC000xx); 0x9CE00000 is the LCD framebuffer window.
+    # Modelling the 0x9C bank as I/O lets the DSP boot path be simulated.
     return (0x20000000 <= a < 0x30000000 or 0x32000000 <= a < 0x38000000
-            or 0x98000000 <= a < 0x99000000)
+            or 0x98000000 <= a < 0x99000000
+            or 0x9C000000 <= a < 0x9D000000)
 
 
 class Mem:

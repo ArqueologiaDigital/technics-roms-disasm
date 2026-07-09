@@ -9,3 +9,4 @@ __pycache__/
 # only the curated samples (program_entry.asm, table_directory.asm) are tracked.
 /disasm/program.asm
 /disasm/program_named.asm
+/disasm/program_region2.asm

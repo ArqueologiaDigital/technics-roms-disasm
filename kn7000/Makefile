@@ -87,7 +87,7 @@ verify: $(TARGETS)
 	@echo; echo "All images reproduced byte-for-byte."
 
 # ---- (re)generate the reference disassembly listings -----------------------
-disasm: disasm/program.asm disasm/program_named.asm disasm/table_directory.asm disasm-dsp
+disasm: disasm/program.asm disasm/program_region2.asm disasm/program_named.asm disasm/table_directory.asm disasm-dsp
 
 # ---- effects-DSP (IC306 ADSP-21065L) host-download record pool --------------
 # 80 SHARC programs embedded in the program image at file 0x2BCEC4..0x2CE68D.
@@ -111,6 +111,15 @@ disasm/program.asm: baserom/kn7000_program.rom
 	@echo "==> disassembling program code region 1 (0x80..0x186000) with unidasm"
 	@$(UNIDASM) $< -arch mn10300 -basepc 0x48400080 -skip 0x80 \
 	    -count $$((0x186000 - 0x80)) > $@
+	@echo "wrote $@"
+
+# Code region 2 (the MILK kernel + late drivers) lives high in the image and was
+# never in the region-1 sweep above. CPU 0x487B8D00..0x487F6F01, file 0x3B8D00.
+disasm/program_region2.asm: baserom/kn7000_program.rom
+	@mkdir -p disasm
+	@echo "==> disassembling program code region 2 (0x487B8D00..0x487F6F01) with unidasm"
+	@$(UNIDASM) $< -arch mn10300 -basepc 0x487B8D00 -skip 0x3B8D00 \
+	    -count $$((0x3F6F01 - 0x3B8D00)) > $@
 	@echo "wrote $@"
 
 # Named, function-by-function disassembly using the recovered symbols.
