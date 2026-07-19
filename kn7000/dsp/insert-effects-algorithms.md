@@ -306,6 +306,18 @@ detail, rec47/57/66–69/70–73/75/76, and the unit-7/unit-0 open questions of
 `reverb-algorithm.md` §7. GUI names per type remain PROVISIONAL throughout
 (the `DspEffectSelect` breakpoint experiment is unchanged).
 
+> **SUPERSEDED (2026-07-19, next pass)**: the rotary speaker **was found** —
+> it is the rec30 PM-family (rec30/35/36/41–45) plus rec16, previously
+> filed as "modulated-delay chorus, conf low": crossover + dual
+> magic-circle rotors with rate glide + Doppler taps. Neither structural
+> candidate above was it (rec24/26/31 = tremolo / auto-pan / ring
+> modulator; rec66 = the vocal harmonizer). And the GUI names are no
+> longer provisional: the firmware's preset-descriptor table (600 entries)
+> pins GUI name → type for every effect. See
+> [`tremolo-rotary-family.md`](tremolo-rotary-family.md) — including
+> §1's table, which upgrades this document's own naming: "Cross Delay"
+> (rec15) and "Autowah+Delay" (rec74) are ROM fact now.
+
 ## 8. Cross-model
 
 KN6000/KN6500 DM banks are byte-identical for all 80 records: every constant

@@ -2,6 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 63  [EFFECT]
 ; cubic soft-clip overdrive (tone bank B: 2.9 kHz notch, low-mid poles)
 ; pool CPU 0x486CAFAD / file 0x2CAFAD   3 blocks: DM@9800:8e DM@C000:73e PM@8400:109w
+; GUI bank 0x41 presets Loud2/Normal2/Soft2 (descriptor table);
 ; Multi/Sound-DSP insert (units1-6); types 0x65; bank B: inject 0.20, poles
 ; r=0.645@322 Hz, complex zeros r=0.901@2.91 kHz = notch where bank A peaks;
 ; full doc dsp/insert-effects-algorithms.md #3; =rec62,64,65 (identical PM);

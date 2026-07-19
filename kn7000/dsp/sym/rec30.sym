@@ -1,56 +1,105 @@
-; rec30 — EFFECT: modulated multi-tap delay w/ filtering (rotary / ensemble)
-; The richest program in this batch. Signal path per sample:
-;  - average L,R; scale; run one LFO-swept fractional delay-tap read from the
-;    half-sine table (8403..8410, block-float interp F3=FLOAT R3 BY R4);
-;  - CALL 0x8300 (kernel biquad section) then CALL 0x830B (kernel all-pass/comb
-;    section) -> tone-shaping + short reverb/allpass (8416/8419);
-;  - two further LFO-modulated delay taps into a delay buffer at I2 (writes
-;    DM(I2,M7)=..., strides 0x140/0xA0/0xC8; taps 9806..980b each {inc,inc,phase});
-;  - crossfade the two taps through the anti-symmetric window table c028..c048
-;    (843a..843d) and emit two outputs (843e..8446, each FIX then <<-8 scale).
-; Two rotating/detuned taps + crossfade + filtering strongly suggests a rotary-
-; speaker or symphonic-ensemble/pitch effect. Confidence: low (structure solid,
-; GUI role inferred).
+; rec30 — EFFECT: ROTARY SPEAKER simulator (GUI "Rotary Speaker" Standard /
+; Single Rotor / Distorted, type 0x35 — names = ROM fact via the
+; preset-descriptor table). PM byte-identical across rec30/35/36/41-45
+; (+ rec16 = same program rebuilt with ASHIFT -8, no NOPs); the nine records
+; differ only in DM voicing. Full algorithm doc dsp/tremolo-rotary-family.md §4.
+; Path: mono sum -> drive c004 -> PWL saturation table (c028..c048,
+; signal-indexed) -> 0.2/0.8 one-pole smoother (1.57 kHz, state c007) ->
+; CALL 0x8300 = CROSSOVER (two parallel float 2-pole sections: drum
+; resonator 500 Hz unity-DC -> F6; horn bandpass ~2 kHz -> F10) ->
+; CALL 0x830B = TWO ROTORS (magic-circle sin/cos oscillators in c012/13 and
+; c016/17, rate GLIDE tau=93ms from host target 9806/9809 to current
+; 9807/980A; drum 5.512 Hz, horn 6.431 Hz — exactly 7:6) -> Doppler taps in
+; the I2 float ring (horn: quadrature pair @320+-29; drum: one tap
+; @160+-40, antiphase L/R) -> mix 0.6 horn / 0.243 drum + direct bands.
 pm:0x8400  ReadInL                 ; R0 = DM(0x20,I4)
 pm:0x8401  ReadInR                 ; R8 = DM(0x21,I4)
-pm:0x8402  MonoAverage             ; R0 = (L+R)/2, R3 = DM(I1,M6) coeff
-pm:0x8403  InToFloat               ; F0 = FLOAT, I0 = I1
-pm:0x8405  PhaseToIndex            ; R8 = FIX, I5 = I1 (sine table base)
-pm:0x8407  Tap0_ReadSweep          ; ASHIFT -11 sweep into table
-pm:0x8408  Tap0_TableOffset        ; MODIFY(I5,0x34)
-pm:0x840b  Tap0_FracRead           ; FDEP frac + table read
-pm:0x840c  Tap0_BlockFloat         ; F3 = FLOAT R3 BY R4 (block-float interp)
-pm:0x840e  Tap0_Interp             ; linear interpolate tap
-pm:0x8410  Tap0_Fix                ; R0 = FIX F8
-pm:0x8411  Tap0_Store              ; DM(I0,M6) = tap0
-pm:0x8412  PreMix                  ; combine coeff-weighted taps (R12)
-pm:0x8416  CallBiquad              ; CALL 0x8300 kernel biquad section
-pm:0x8417  StoreFiltered           ; DM(I0,M2) = filtered
-pm:0x8419  CallAllpass             ; CALL 0x830B kernel all-pass/comb section
-pm:0x841a  DelayStride1            ; M7 = 0x140
-pm:0x841c  WriteDelayBuf           ; DM(I2,M7) = R10 (push into delay line)
-pm:0x841d  Tap1_ModRead            ; R8 = R8*R9 first modulated tap
-pm:0x8420  Tap1_FracRead           ; FDEP + DM(I2,M7) delayed read
-pm:0x8421  Tap1_BlockFloat         ; F3 = FLOAT R3 BY R4
-pm:0x8423  Tap1_Interp             ; interpolate -> F11
-pm:0x8425  Tap2_ModRead            ; R8 = R5*R9 second modulated tap
-pm:0x842c  Tap2_Stride             ; M7 = 0xA0
-pm:0x842e  Tap2_PtrAdvance         ; MODIFY(I2,0xC8)
-pm:0x8430  Tap3_ModRead            ; R8 = R13*R3 third tap
-pm:0x8437  Crossfade_Start         ; F13=F10*F3 window crossfade of taps
-pm:0x8438  Window_Weights          ; F10=F0*F6 / F0*F7 window envelopes
-pm:0x843a  CrossfadeMix            ; F12/F13 = crossfaded tap pair
-pm:0x843e  OutMixL                 ; R0 = FIX F12
-pm:0x843f  ScaleL                  ; R8 = R0*R4, I2 = R15 restore
-pm:0x8442  OutL                    ; DM(I4,M2) = out L
-pm:0x8443  ScaleR                  ; R8 = R0*R4 (from F13)
+pm:0x8402  MonoSum                 ; R0 = (L+R)/2, R3 = c004 drive
+pm:0x8403  InToFloat               ; F0 = FLOAT R0, I0 = I1
+pm:0x8404  Drive                   ; F8 = in * drive (c004: 0.1 clean / 1.0 hot)
+pm:0x8405  Shaper_Fix              ; R8 = FIX F8, I5 = I1
+pm:0x8406  Shaper_Shift9           ; index scale (<<9; net index = x*drive/2^18)
+pm:0x8407  Shaper_IdxHi            ; ASHIFT -11 (R4 = c004 dummy advance)
+pm:0x8408  Shaper_TableBase        ; MODIFY(I5,0x34) -> saturation table centre c038
+pm:0x8409  Shaper_IdxLo            ; ASHIFT -16; R4 = c005 = -31 (frac exponent)
+pm:0x840b  Shaper_FracRead         ; FDEP frac; table[idx] (float entries, +-1.0 rails)
+pm:0x840c  Shaper_FracFloat        ; F3 = FLOAT R3 BY -31
+pm:0x840e  Shaper_Lerp             ; linear-interpolated saturation curve; R15 = I2 save
+pm:0x8410  Shaper_Out              ; R0 = FIX(shaped)
+pm:0x8411  Shaper_Store            ; DM(c006) = shaped
+pm:0x8412  Smooth_Load             ; R7 = c006 shaped, R3 = 9800 = 0.2
+pm:0x8413  Smooth_Mac              ; R6 = 0.2*shaped; R7 = c007 prev, R2 = 9801 = 0.8
+pm:0x8415  Smooth_Sum              ; R12 = 0.2*shaped + 0.8*prev (unity-DC LP 1.57 kHz)
+pm:0x8416  CallCrossover           ; CALL 0x8300: drum resonator -> F6, horn BP -> F10
+pm:0x8417  Smooth_Store            ; (delay slot) DM(c007) = premix
+pm:0x8418  CrossoverArgs           ; (delay slot) F8 = float(premix), F3 = c008 makeup
+pm:0x8419  CallRotors              ; CALL 0x830B: glide rates + advance both sin/cos rotors
+pm:0x841a  HornWriteStride         ; (delay slot) M7 = 0x140 = 320
+pm:0x841b  HornDepthLoad           ; (delay slot) R9 = c00f = 29.0 (16.16 Doppler depth)
+pm:0x841c  HornDelayWrite          ; DM(I2,M7) = F10 horn band -> ring @P, cursor P+320
+pm:0x841d  HornTapSin_Off          ; R8 = sin(horn rotor) * 29.0; R1 = save P+320
+pm:0x841e  HornTapSin_Idx          ; int part -> M7; R4 = c018 = -31
+pm:0x8420  HornTapSin_Read         ; frac + ring walk; float pair read
+pm:0x8421  HornTapSin_Lerp         ; float lerp (ring stores float bit patterns)
+pm:0x8425  HornTapCos_Off          ; R8 = cos(horn rotor) * 29.0; R9 = save sin-tap
+pm:0x8426  HornTapCos_Idx          ; R4 = c019 = -31
+pm:0x842b  HornTapCos_Lerp         ; R3 = c01a = 40.0 drum depth (preload)
+pm:0x842c  DrumWriteStride         ; M7 = 0xA0 = 160
+pm:0x842d  HornTapCos_Done         ; F11 = cos-tap; I2 = P+320
+pm:0x842e  DrumArenaHop            ; MODIFY(I2,0xC8) -> P+520 drum sub-arena
+pm:0x842f  DrumDelayWrite          ; DM(I2,M7) = F6 drum band -> ring @P+520, cursor P+680
+pm:0x8430  DrumTap_Off             ; R8 = sin(drum rotor) * 40.0
+pm:0x8431  DrumTap_Idx             ; R4 = c01b = -31
+pm:0x8436  DrumTap_Lerp            ; R3 = c01c = horn level 0.6 (preload)
+pm:0x8437  Mix_HornDirect          ; F13 = 0.6*hornBP; R0 = c01d drum level 0.243
+pm:0x8438  Mix_DrumDirect          ; F10 = 0.243*drumLP; F7 = drum tap; F4 = sin-tap
+pm:0x8439  Mix_DrumTap             ; F10 = 0.243*drumTap; F13 = direct sum
+pm:0x843a  Mix_L                   ; F9 = 0.6*hornTapSin; F12 = direct + drumTap; F4 = cos-tap
+pm:0x843b  Mix_L_Done              ; F12 = L = 0.6(hornBP+hornTapSin) + 0.243(drumLP+drumTap)
+pm:0x843c  Mix_R_Diff              ; F13 = 0.243*drumTap - direct (drum tap antiphase)
+pm:0x843d  Mix_R_Done              ; F13 = R = 0.6(hornBP+hornTapCos) + 0.243(drumLP-drumTap)
+pm:0x843e  OutFixL                 ; R0 = FIX F12; R4 = c01e level 1.0
+pm:0x843f  OutScaleL               ; * level; I2 = R15 restore slot cursor
+pm:0x8440  OutShiftL               ; LSHIFT -8 (24-bit scale; rec16 build uses ASHIFT)
+pm:0x8442  OutL_FixR               ; write L; R0 = FIX F13
 pm:0x8446  OutR                    ; DM(I4,M2) = out R
 pm:0x8447  Return                  ; RTS (delayed)
-pm:0x8449  PMStateRewind           ; MODIFY(I8,0x44) 68-word PM state
-dm:0x9800  Mix_Coeffs              ; 0x19999999 / 0x66666666 wet/dry-ish
-dm:0x9806  LFO_Tap1                ; {inc,inc,0x80000000 phase} tap-1 rotor
-dm:0x9809  LFO_Tap2                ; {inc,inc,0x80000000 phase} tap-2 rotor (180deg)
-dm:0xc004  Coeff_ModDepth          ; 0x3DCCCCCC
-dm:0xc009  Biquad_Coeffs           ; 0x3FEDC5EF.. tone-filter section coeffs
-dm:0xc01c  Coeff_Balance           ; 0x3F1999999A
-dm:0xc028  Window_Table            ; anti-symmetric crossfade/pan window c028..c048
+pm:0x8449  PMStateRewind           ; MODIFY(I8,0x44): 12 state words (2 smoother + 4 biquad + 6 rotor)
+dm:0x9800  SmootherK               ; 0.2 (with 9801 = 0.8: unity-DC one-pole after the shaper)
+dm:0x9802  CrossoverState          ; 9802-9805: w[n-1]/w[n-2] of the two 0x8300 sections
+dm:0x9806  DrumRotor_Target        ; 0x19BC65 = 5.512 Hz (host writes slow/fast target here)
+dm:0x9807  DrumRotor_Current       ; glides to target, tau = 93 ms (k = 2^-12)
+dm:0x9808  Const_MinusOne          ; 0x80000000 = -1.0 negator for the oscillator update
+dm:0x9809  HornRotor_Target        ; 0x1E0676 = 6.431 Hz — horn:drum exactly 7:6
+dm:0x980a  HornRotor_Current       ; glides, same tau
+dm:0x980b  Const_MinusOne2         ; -1.0
+dm:0xc004  Drive                   ; 0.1f (rec30/42/45) / 1.0f (hot presets)
+dm:0xc005  FracExp31               ; -31 block-float exponent
+dm:0xc006  ShapedScratch           ; FIX(saturation table output)
+dm:0xc007  SmootherPrev            ; one-pole state
+dm:0xc008  CrossoverMakeup         ; 3.0f (drive 0.1) / 0.5f (drive 1.0)
+dm:0xc009  DrumFilt_a1             ; 1.857603f — resonator 500.5 Hz r=0.9312, unity DC
+dm:0xc00a  DrumFilt_a2             ; -0.867075f
+dm:0xc00b  DrumFilt_b              ; 0.0094716f (output tap b*w[n-1])
+dm:0xc00c  HornFilt_a1             ; 1.854196f — bandpass 1985 Hz r=0.9655 (preset-voiced)
+dm:0xc00d  HornFilt_a2             ; -0.932108f
+dm:0xc00e  HornFilt_b              ; 0.0339461f (output b*(w[n]-w[n-2]) — zeros at DC+Nyq)
+dm:0xc00f  HornDopplerDepth        ; 0x001D0000 = 29.0 samples (16.16)
+dm:0xc010  GlideK1                 ; 0x00080000 = 2^-12 rotor-rate glide gain
+dm:0xc011  GlideK2                 ; 0x7FF80000 = 1 - 2^-12 (sum exactly 1.0)
+dm:0xc012  DrumRotor_Cos           ; magic-circle oscillator state (template 0.95)
+dm:0xc013  DrumRotor_Sin           ; (template 0)
+dm:0xc014  GlideK1_Horn            ; 2^-12
+dm:0xc015  GlideK2_Horn            ; 1 - 2^-12
+dm:0xc016  HornRotor_Cos           ; 0.95
+dm:0xc017  HornRotor_Sin           ; 0
+dm:0xc018  FracExp31_b             ; -31
+dm:0xc019  FracExp31_c             ; -31
+dm:0xc01a  DrumDopplerDepth        ; 0x00280000 = 40.0 samples (16.16)
+dm:0xc01b  FracExp31_d             ; -31
+dm:0xc01c  HornLevel               ; 0.6f (0.3 rec42; 0.125 rec16)
+dm:0xc01d  DrumLevel               ; 0.243f (preset-voiced 0.24..1.0)
+dm:0xc01e  OutLevel                ; 1.0 Q31
+dm:0xc028  SatTable_NegRail        ; saturation curve -1.0 (float, 2^31 scale)
+dm:0xc038  SatTable_Zero           ; curve centre (0 at 0) — signal-indexed via I5=I1+0x34
+dm:0xc048  SatTable_PosRail        ; +1.0

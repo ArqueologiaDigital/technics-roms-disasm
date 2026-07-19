@@ -22,6 +22,7 @@ whole effects program set was recovered from firmware.
 | `reverb-algorithm.md` | yes | full algorithm annotation of the reverb engine (rec51–56 family) + the unit-9 records |
 | `chorus-family-algorithms.md` | yes | full algorithm annotation of the unit-9 chorus family: rec06 (quadrature ensemble), rec07 (dual-LFO ensemble), rec09 (stereo flanger) |
 | `insert-effects-algorithms.md` | yes | full algorithm annotation of the Multi/Sound-DSP insert families: rec74 (touch wah), rec46/48 (computed-bilinear swept filters / LFO wah), rec62–65 (cubic overdrive, 4 tone banks), rec37 (table waveshaper + AGC), rec13/14/15 (echo family incl. the cross-feedback ping-pong) |
+| `tremolo-rotary-family.md` | yes | the AM family (rec24 tremolo / rec26 auto-pan / rec31 ring modulator), the **ROTARY SPEAKER simulator** (rec30 = 35 = 36 = 41–45 + rec16: crossover, dual magic-circle rotors with 93 ms rate glide, Doppler taps), rec66 vocal harmonizer — plus the decoded **GUI preset-descriptor table** (600 ROM descriptors pinning GUI name → effect type for every effect screen) |
 | `sym/recNN.sym` | yes | hand-curated SHARC labels/comments per record (`pm:`/`dm:` addrs) |
 | `../disasm/dsp/*.asm` | yes | generated **and tracked** listings (index + one per record) |
 | `../build/dsp/*.bin` | no (git-ignored) | raw per-block extracts, regenerable |

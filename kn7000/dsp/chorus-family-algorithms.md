@@ -321,6 +321,17 @@ confirmation):
 All four bullets are **PROVISIONAL**; the whitelist membership and the
 type→record map are the facts.
 
+> **UPGRADE (2026-07-19)**: the firmware's GUI preset-descriptor table
+> (`tremolo-rotary-family.md` §1) settles the names as ROM fact:
+> **Celeste1–13 = type 0x2C = rec06** and **Mod. Cel.1–13 = 0x2D = rec07**
+> (bullets 1–2 confirmed); the Sound-DSP **Flanger** groups
+> (Deep/Normal/Shallow 1–13 = 0x04, Dry/Wet 1–13 = 0x0B) are **rec09**
+> (bullet 3 confirmed, both preset families on one record); and on the
+> CHORUS screen **GM Chorus1/3 = 0x01 = rec06, GM Chorus2/4 = 0x02 =
+> rec07, Chorus1–4 = 0x52 = rec49, Feedback Chorus = 0x40 = rec70,
+> Flanger = 0x04 = rec09** — supporting bullet 4's chorus/ensemble-send
+> reading of unit 9.
+
 ## 8. Cross-model note
 
 Per the pool diff (`cross-model/`), the KN6000/KN6500 DM blocks are

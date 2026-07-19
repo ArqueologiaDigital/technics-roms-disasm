@@ -1,18 +1,21 @@
-; rec45 — EFFECT: dual modulated-delay chorus/ensemble (C000:77e "74w" family; PM byte-identical to rec41,42,43,44 — only DM presets differ)
-pm:0x8400  Entry_LoadInput       ; R0=DM(0x20) L, R8=DM(0x21) R; see rec41.sym for full PM map
-pm:0x8404  PreGain               ; F8=F0*F3 (c004)
-pm:0x840b  LUT_Fetch_Interp      ; fractional interpolation tap read
-pm:0x8416  Call_KernelDelay1     ; CALL 0x8300 (DB)
-pm:0x841a  DelayWrite_A          ; M7=0x140 modulated delay line A
-pm:0x842e  DelayWrite_B          ; M7=0xA0 delay line B
-pm:0x8438  StereoMatrix          ; F12=sum L, F13=diff R
-pm:0x843e  OutputWriteL          ; DM(I4,M2)
-pm:0x8442  OutputWriteR          ; DM(I4,M2)
-pm:0x8447  Return                ; RTS(DB)
-dm:0xc004  PreGain_coeff         ; 0.1 (0x3DCCCCCC) [preset — matches rec42]
-dm:0xc008  FeedbackScale         ; 3.0 (0x40400000) [preset — high feedback, matches rec42]
-dm:0xc00c  ToneCoeff0            ; 0x3FED564B tone filter b [preset — matches rec42]
-dm:0xc00d  ToneCoeff1            ; 0xBF6E9E9F tone filter a1 [preset]
-dm:0xc00e  ToneCoeff2            ; 0x3D0B0B06 tone filter a2 [preset]
-dm:0xc01c  WetLevel              ; 0.6 (0x3F19999A) [preset — differs from rec42]
-dm:0xc01d  DryLevel              ; ~0.485 (0x3EF851E8) [preset]
+; rec45 — EFFECT: ROTARY SPEAKER simulator preset (GUI "Rotary Speaker / Normal Twin, type 0x8A" — name =
+; ROM fact via the preset-descriptor table). PM byte-identical to rec30;
+; see dsp/sym/rec30.sym for the per-line labels and
+; dsp/tremolo-rotary-family.md §4 for the full algorithm (drive ->
+; saturation table -> 0.2/0.8 smoother -> crossover [0x8300: drum 500 Hz
+; resonator + horn bandpass] -> dual magic-circle rotors with 93 ms rate
+; glide [0x830B: drum 5.512 Hz, horn 6.431 Hz, exactly 7:6] -> Doppler
+; taps: horn quadrature pair @320+-29, drum antiphase @160+-40).
+; This preset's DM voicing: drive 0.1, makeup 3.0, horn BP 1985 Hz r=0.965, horn 0.6, drum 0.485
+pm:0x8400  ReadInL                 ; R0 = DM(0x20,I4) — full labels in rec30.sym
+pm:0x8416  CallCrossover           ; CALL 0x8300 crossover (drum -> F6, horn BP -> F10)
+pm:0x8419  CallRotors              ; CALL 0x830B rate-glide + dual sin/cos rotors
+pm:0x841c  HornDelayWrite          ; horn band -> ring @P
+pm:0x842f  DrumDelayWrite          ; drum band -> ring @P+520
+pm:0x8449  PMStateRewind           ; MODIFY(I8,0x44): 12 state words
+dm:0x9806  DrumRotor_Target        ; 0x19BC65 = 5.512 Hz
+dm:0x9809  HornRotor_Target        ; 0x1E0676 = 6.431 Hz (7:6)
+dm:0xc004  Drive                   ; see header
+dm:0xc00c  HornFilt_a1             ; horn bandpass voicing (see header)
+dm:0xc01c  HornLevel               ;
+dm:0xc01d  DrumLevel               ;

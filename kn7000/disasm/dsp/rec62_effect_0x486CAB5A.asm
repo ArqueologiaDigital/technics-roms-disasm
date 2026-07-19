@@ -2,6 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 62  [EFFECT]
 ; cubic soft-clip overdrive (tone bank A: 2.9 kHz presence peak)
 ; pool CPU 0x486CAB5A / file 0x2CAB5A   3 blocks: DM@9800:8e DM@C000:73e PM@8400:109w
+; GUI Overdrive/Fuzz bank 0x41 presets Loud1/Normal1/Soft1 (descriptor table);
 ; Multi/Sound-DSP insert (units1-6); types 0x64; y=x-x^3/3 rails +-2/3;
 ; DC-block HP 100 Hz; 70 Hz sign-guarded smoother; unity-DC tone bank
 ; r=0.901@2.91 kHz + ~5 kHz rolloff; AGC prologue INERT (env cell c004 never

@@ -1,21 +1,21 @@
-; rec35 EFFECT — stereo chorus: input biquad, LFO-modulated multi-tap fractional
-; delay + 2x2 rotation matrix for stereo spread. (rec36 = identical PM, diff DM.)
-pm:0x8400  Rec35_AudioIn        ; R0=DM(0x20), R8=DM(0x21); (R0+R8)/2 mono; input gain F0*F3
-pm:0x8405  Rec35_LFO            ; FIX/shift + sine-table lookup(DM I5 @+0x34) + interp
-pm:0x8412  Rec35_PreFilter      ; R6=R3*R7 + R12=R2*R7 filter tap; CALL 0x8300 (kernel biquad)
-pm:0x8416  Rec35_CallBiquad     ; CALL 0x8300 (kernel 2-section biquad)
-pm:0x8419  Rec35_CallAllpass    ; CALL 0x830B (kernel allpass/lattice section)
-pm:0x841a  Rec35_DelayWrite     ; M7=0x140(320); DM(I2,M7)=R10 write into delay line
-pm:0x841d  Rec35_TapVoice1      ; modulated delay tap 1, fractional interp
-pm:0x8425  Rec35_TapVoice2      ; modulated delay tap 2 (R5 mod), M7=0xA0(160)
-pm:0x842e  Rec35_TapVoice3      ; delay tap 3 / MODIFY(I2,0xC8)
-pm:0x8438  Rec35_RotMatrix      ; F10=F0*F6.. 2x2 rotation/quadrature stereo mix -> F12,F13
-pm:0x843e  Rec35_OutLeft        ; R0=FIX F12,*R4,LSHIFT-8, DM(I4,M2)=R8
-pm:0x8442  Rec35_OutRight       ; R0=FIX F13,*R4, DM(I4,M2)=R8
-pm:0x8447  Rec35_Return         ; RTS
-dm:0x9800  Rec35_InGain         ; =0x19999999 input scale
-dm:0x9806  Rec35_LFO1Incr       ; =0x0019BC65 LFO rate 1
-dm:0x9809  Rec35_LFO2Incr       ; =0x001E0676 LFO rate 2
-dm:0xc009  Rec35_BiquadCoef     ; input biquad coeffs c009..c00e
-dm:0xc01e  Rec35_WetUnity       ; =0x7FFFFFFF wet level
-dm:0xc028  Rec35_ModTable       ; c028..c048 delay-modulation ramp/sine table
+; rec35 — EFFECT: ROTARY SPEAKER simulator preset (GUI "Rock Rotary / Bright Twin, type 0x80" — name =
+; ROM fact via the preset-descriptor table). PM byte-identical to rec30;
+; see dsp/sym/rec30.sym for the per-line labels and
+; dsp/tremolo-rotary-family.md §4 for the full algorithm (drive ->
+; saturation table -> 0.2/0.8 smoother -> crossover [0x8300: drum 500 Hz
+; resonator + horn bandpass] -> dual magic-circle rotors with 93 ms rate
+; glide [0x830B: drum 5.512 Hz, horn 6.431 Hz, exactly 7:6] -> Doppler
+; taps: horn quadrature pair @320+-29, drum antiphase @160+-40).
+; This preset's DM voicing: drive 1.0, makeup 0.5, horn BP 2369 Hz r=0.946, horn 0.6, drum 0.492
+pm:0x8400  ReadInL                 ; R0 = DM(0x20,I4) — full labels in rec30.sym
+pm:0x8416  CallCrossover           ; CALL 0x8300 crossover (drum -> F6, horn BP -> F10)
+pm:0x8419  CallRotors              ; CALL 0x830B rate-glide + dual sin/cos rotors
+pm:0x841c  HornDelayWrite          ; horn band -> ring @P
+pm:0x842f  DrumDelayWrite          ; drum band -> ring @P+520
+pm:0x8449  PMStateRewind           ; MODIFY(I8,0x44): 12 state words
+dm:0x9806  DrumRotor_Target        ; 0x19BC65 = 5.512 Hz
+dm:0x9809  HornRotor_Target        ; 0x1E0676 = 6.431 Hz (7:6)
+dm:0xc004  Drive                   ; see header
+dm:0xc00c  HornFilt_a1             ; horn bandpass voicing (see header)
+dm:0xc01c  HornLevel               ;
+dm:0xc01d  DrumLevel               ;

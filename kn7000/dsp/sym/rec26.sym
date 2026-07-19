@@ -1,31 +1,43 @@
-; rec26 — EFFECT: LFO amplitude modulation (tremolo / auto-pan)
-; Same algorithm as rec24 (DM@C000:77e half-sine LFO table, phase-accumulator
-; interpolated table lookup, LFO*input). Differs only in preset values: slower
-; LFO increment (0x00010000 vs rec24 0x00080000). 53 PM words (one fewer than
-; rec24 — the R-channel reuses the channel-0 LFO reload).
+; rec26 — EFFECT: AUTO PAN (GUI "Auto Pan1-7", type 0x30 — name = ROM fact
+; via the preset-descriptor table, dsp/tremolo-rotary-family.md §1).
+; Two LFOs from one increment pair, phases c004/c005 with c005 = 0x20000000
+; = +90deg: L gain follows sin(theta+90), R follows sin(theta) — QUADRATURE
+; amplitude panning. gain = 0.8 + 0.2*sin (state bias 0x66666666, trim
+; c006/c008), level c007. Template rate 0x00010000 = 1.346 Hz.
+; rec24 (Tremolo) is this program + one instruction making both channels
+; use LFO A. Full doc dsp/tremolo-rotary-family.md §2.
 pm:0x8400  Entry_I0eqI1            ; I0 = I1
-pm:0x8401  PhaseAccum_L            ; R8 = phase + increment
-pm:0x8403  PhaseWrap               ; FDEP 0:31 sign-extend
-pm:0x8404  StorePhase_L            ; DM(I0,M2) = phase
+pm:0x8401  PhaseAccum_A            ; R8 = phase(c004) + inc(9800)
+pm:0x8403  PhaseWrap               ; FDEP 0:31 31-bit wrap
+pm:0x8404  StorePhase_A            ; DM(I0,M2) = phase
 pm:0x8405  SineTableBase           ; I5 = I1
-pm:0x8407  SineTableOffset         ; MODIFY(I5,0x2C) -> half-sine table
+pm:0x8407  SineTableOffset         ; MODIFY(I5,0x2C) -> table centre c030
 pm:0x8408  IndexHi                 ; R7 = ASHIFT -16 index
-pm:0x840a  FracWeight_ReadTap0     ; R3=frac; read table[idx]
+pm:0x840a  FracWeight_ReadTap0     ; frac + table[idx]
 pm:0x840d  Interp_MAC              ; linear interpolation
-pm:0x840e  LFO0_Result             ; interpolated sine
-pm:0x840f  SaveLFO0                ; R5 = channel-0 LFO
-pm:0x8410  PhaseAccum_R            ; second LFO phase
-pm:0x841d  LFO1_Result             ; second interpolated sine
+pm:0x840e  LFO_A                   ; interpolated sine A (R-channel modulator)
+pm:0x840f  SaveLFO_A               ; R5 = LFO A
+pm:0x8410  PhaseAccum_B            ; LFO B: phase c005 = +90deg ahead
+pm:0x841d  LFO_B                   ; sine B (L-channel modulator) — LIVE here (vs rec24)
 pm:0x841e  ReadInL                 ; R0 = DM(0x20,I4)
-pm:0x8421  AmpModL                 ; input * modulator
+pm:0x841f  LoadTrimBias_L          ; R7 = c006 trim 0.2, R3 = 9802 bias 0.8
+pm:0x8420  GainL_FromLFO_B         ; R3 = bias + trim*sinB (quadrature)
+pm:0x8422  AmpModL                 ; R8 = gain * in_L
+pm:0x8423  LoadLevel               ; R14 = c007 level 1.0
 pm:0x8426  ClipL                   ; CLIP by 0x007FFFFF
 pm:0x8427  OutL                    ; DM(I4,M2) = out L
 pm:0x8428  ReadInR                 ; R0 = DM(0x20,I4)
+pm:0x8429  R_UsesLFO_A             ; R8 = R5
+pm:0x842a  LoadTrimBias_R          ; R7 = c008, R3 = 9803
+pm:0x8430  ClipR                   ; CLIP by 0x007FFFFF
 pm:0x8431  OutR                    ; DM(I4,M2) = out R
 pm:0x8432  Return                  ; RTS (delayed)
-pm:0x8434  PMStateRewind           ; MODIFY(I8,0x4C) 76-word PM state
-dm:0x9800  LFO_Increment_L         ; 0x00010000 (slower than rec24)
-dm:0x9802  LFO_Depth               ; 0x66666666 depth
-dm:0xc006  Coeff_DepthScale        ; 0x19999999
-dm:0xc007  Coeff_Bias              ; 0x7FFFFFFF
-dm:0xc029  SineWindow_Table        ; half-sine LFO table (c029..c03f)
+pm:0x8434  PMStateRewind           ; MODIFY(I8,0x4C): 4 state reads
+dm:0x9800  LFO_A_Inc               ; 0x00010000 = 1.346 Hz (template; host rewrites per preset)
+dm:0x9801  LFO_B_Inc               ; same
+dm:0x9802  GainBias                ; 0x66666666 = 0.8 (NOT depth)
+dm:0xc005  PhaseB_90deg            ; 0x20000000 = +90deg — the quadrature pan offset
+dm:0xc006  GainTrim_L              ; 0x19999999 = 0.2
+dm:0xc007  OutLevel                ; 1.0
+dm:0xc008  GainTrim_R              ; 0.2
+dm:0xc029  SineTable               ; family sine cycle + guard

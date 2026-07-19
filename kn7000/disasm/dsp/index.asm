@@ -20,7 +20,7 @@
 ;  13  effect   0x486C06CD  DM@9800:4e DM@C000:40e PM@8400:63w   stereo echo (dual-mono, damped 0.6 regen)
 ;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   panning multi-tap echo (4 equal taps, repeats walk the stereo field)
 ;  15  effect   0x486C0C0A  DM@9800:4e DM@C000:40e PM@8400:64w   cross-feedback ping-pong echo (Cross Delay candidate)
-;  16  effect   0x486C0E96  DM@9800:12e DM@C000:77e PM@8400:72w   modulated-delay chorus
+;  16  effect   0x486C0E96  DM@9800:12e DM@C000:77e PM@8400:72w   ROTARY SPEAKER simulator (Rock Rotary: Standard/Single Rotor/Distorted)
 ;  17  effect   0x486C1233  DM@9800:1e DM@C000:77e PM@8400:73w   waveshaper/distortion + envelope AGC
 ;  18  effect   0x486C159F  DM@9800:9e DM@C000:77e PM@8400:96w   waveshaper/distortion + allpass/delay
 ;  19  effect   0x486C19BD  DM@9800:1e DM@C000:77e PM@8400:73w   waveshaper/distortion + short delay
@@ -28,28 +28,28 @@
 ;  21  effect   0x486C2092  DM@9800:1e DM@C000:40e PM@8400:45w   dynamics/compressor-limiter
 ;  22  effect   0x486C229D  DM@9800:2e DM@C000:40e PM@8400:28w   dynamics/compressor-limiter
 ;  23  effect   0x486C2447  DM@9800:16e DM@C000:40e PM@8400:81w   biquad EQ (cascaded resonant sections)
-;  24  effect   0x486C2775  DM@9800:4e DM@C000:77e PM@8400:54w   tremolo-pan LFO
+;  24  effect   0x486C2775  DM@9800:4e DM@C000:77e PM@8400:54w   TREMOLO (in-phase LFO AM)
 ;  25  effect   0x486C2A7E  DM@9800:1e DM@C000:40e PM@8400:45w   dynamics/compressor-limiter
-;  26  effect   0x486C2C89  DM@9800:4e DM@C000:77e PM@8400:53w   tremolo-pan LFO
+;  26  effect   0x486C2C89  DM@9800:4e DM@C000:77e PM@8400:53w   AUTO PAN (quadrature LFO AM)
 ;  27  effect   0x486C2F8C  DM@9800:2e DM@C000:77e PM@8400:68w   modulated-delay chorus/flanger
 ;  28  effect   0x486C32DF  DM@9800:5e DM@C000:40e PM@8400:56w   dynamics + biquad (envelope filter)
 ;  29  effect   0x486C3540  DM@9800:7e DM@C000:40e PM@8400:60w   dynamics + biquad (envelope filter)
-;  30  effect   0x486C37C3  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay + filter (multi-tap, crossfaded)
-;  31  effect   0x486C3B6C  DM@9800:2e DM@C000:77e PM@8400:45w   tremolo-pan LFO
+;  30  effect   0x486C37C3  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Standard/Single Rotor/Distorted)
+;  31  effect   0x486C3B6C  DM@9800:2e DM@C000:77e PM@8400:45w   RING MODULATOR (bipolar quadrature AM, audio-rate carrier)
 ;  32  effect   0x486C3E35  DM@9800:3e DM@C000:77e PM@8400:90w   modulated-delay chorus
 ;  33  effect   0x486C4211  DM@9800:20e DM@C000:77e PM@8400:74w   FIR convolution + biquad EQ
 ;  34  effect   0x486C45E2  DM@9800:16e DM@C000:40e PM@8400:13w   5-band output EQUALIZER
-;  35  effect   0x486C4778  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  36  effect   0x486C4B21  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
+;  35  effect   0x486C4778  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Bright Twin)
+;  36  effect   0x486C4B21  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Mellow Twin)
 ;  37  effect   0x486C4ECA  DM@9800:5e DM@C000:77e PM@8400:88w   table-lookup waveshaper distortion + live AGC + Haas stereo
 ;  38  effect   0x486C52A4  DM@9800:5e DM@C000:77e PM@8400:88w   waveshaper/distortion
 ;  39  effect   0x486C567E  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
 ;  40  effect   0x486C5AA2  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
-;  41  effect   0x486C5EC6  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  42  effect   0x486C626F  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  43  effect   0x486C6618  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  44  effect   0x486C69C1  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  45  effect   0x486C6D6A  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
+;  41  effect   0x486C5EC6  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Bright Twin)
+;  42  effect   0x486C626F  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Mellow Twin)
+;  43  effect   0x486C6618  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Brilliant Twin)
+;  44  effect   0x486C69C1  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Brilliant Twin)
+;  45  effect   0x486C6D6A  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Normal Twin)
 ;  46  effect   0x486C7113  DM@9800:1e DM@C000:77e PM@8400:99w   LFO-swept 10-pole resonant lowpass (filter sweep; NOT a phaser)
 ;  47  effect   0x486C751B  DM@9800:1e DM@C000:40e PM@8400:64w   modulated-allpass phaser
 ;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   LFO wah: swept resonant bandpass Q=8 (NOT a phaser)
@@ -70,7 +70,7 @@
 ;  63  effect   0x486CAFAD  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank B: 2.9 kHz notch, low-mid poles)
 ;  64  effect   0x486CB400  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank C: 1.05 kHz mid honk)
 ;  65  effect   0x486CB853  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank D: softened 2.9 kHz peak)
-;  66  effect   0x486CBCA6  DM@9800:1e DM@C000:64e PM@8400:141w   modulated-delay chorus/pitch-shift (multi-stage)
+;  66  effect   0x486CBCA6  DM@9800:1e DM@C000:64e PM@8400:141w   VOCAL HARMONIZER (3-voice granular pitch shifter, mic effect)
 ;  67  effect   0x486CC169  DM@9800:5e DM@C000:73e PM@8400:108w   waveshaper/nonlinear (+ modulated delay)
 ;  68  effect   0x486CC5A7  DM@9800:1e DM@C000:73e PM@8400:57w   waveshaper/nonlinear
 ;  69  effect   0x486CC89F  DM@9800:2e DM@C000:73e PM@8400:90w   waveshaper/nonlinear (+ comb)

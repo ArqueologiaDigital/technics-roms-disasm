@@ -1,8 +1,13 @@
-; rec31 — EFFECT: LFO amplitude modulation (auto-pan / tremolo)
-; Same DM@C000:77e half-sine LFO family as rec24/26 but minimal mix: two
-; interpolated sine LFOs (tap R5 and tap R8), then output L = in*LFO1 and
-; output R = in*LFO0. Two LFO phases -> stereo tremolo / auto-pan. 45 PM words.
-; DM@9800: 9800/9801 = 0x01000000 LFO increment (fast).
+; rec31 — EFFECT: RING MODULATOR (GUI "Ring Mod.1-4", type 0x36 — name = ROM
+; fact via the preset-descriptor table, dsp/tremolo-rotary-family.md §1).
+; Same two-LFO front end as rec24/26 (90deg offset templates) but NO bias
+; term: the full BIPOLAR sine multiplies the signal — gain sweeps through
+; zero and inverts polarity = ring modulation (sum/difference sidebands,
+; carrier suppressed). Template increment 0x01000000 = 344.5 Hz is an
+; AUDIO-RATE CARRIER — intentional here, not a placeholder. Quadrature
+; carriers (L = in*sin(theta+90), R = in*sin(theta)) keep total power
+; constant (cos^2+sin^2) and rotate the sideband image at the carrier
+; rate. Full doc dsp/tremolo-rotary-family.md §3.
 pm:0x8400  Entry_I0eqI1            ; I0 = I1
 pm:0x8401  PhaseAccum_A            ; R8 = DM(I0,M6)phase + PM(I8,M8)inc
 pm:0x8403  PhaseWrap               ; FDEP 0:31
@@ -11,19 +16,20 @@ pm:0x8405  SineTableBaseA          ; I5 = I1
 pm:0x8407  SineTableOffsetA        ; MODIFY(I5,0x2C) -> table
 pm:0x840a  FracWeight_ReadTapA     ; frac + table[idx]
 pm:0x840d  Interp_MAC_A            ; linear interp
-pm:0x840e  LFO_A                   ; interpolated sine A
-pm:0x840f  SaveLFO_A               ; R5 = LFO A
-pm:0x8410  PhaseAccum_B            ; second LFO phase B
-pm:0x841d  LFO_B                   ; interpolated sine B
+pm:0x840e  Carrier_A               ; interpolated sine A (R-channel carrier)
+pm:0x840f  SaveCarrier_A           ; R5 = carrier A
+pm:0x8410  PhaseAccum_B            ; carrier B phase (c005 = +90deg)
+pm:0x841d  Carrier_B               ; interpolated sine B (L-channel carrier)
 pm:0x841e  ReadInL                 ; R0 = DM(0x20,I4)
-pm:0x841f  AmpModL                 ; R8 = in * LFO_B, R14 = level
+pm:0x841f  RingModL                ; R8 = in * sinB (bipolar — no bias), R14 = level
 pm:0x8422  ClipL                   ; CLIP 0x007FFFFF
 pm:0x8423  OutL                    ; DM(I4,M2) = out L
 pm:0x8424  ReadInR                 ; R0 = DM(0x20,I4)
-pm:0x8425  AmpModR                 ; R8 = in * LFO_A
+pm:0x8425  RingModR                ; R8 = in * sinA
 pm:0x8429  OutR                    ; DM(I4,M2) = out R
 pm:0x842a  Return                  ; RTS (delayed)
-pm:0x842c  PMStateRewind           ; MODIFY(I8,0x4E) 78-word PM state
-dm:0x9800  LFO_Increment           ; 0x01000000 LFO rate
-dm:0xc006  Coeff_Level             ; 0x7FFFFFFF output level
-dm:0xc029  SineWindow_Table        ; half-sine LFO table (c029..c03f)
+pm:0x842c  PMStateRewind           ; MODIFY(I8,0x4E): 2 state reads
+dm:0x9800  Carrier_Inc             ; 0x01000000 = 344.5 Hz audio-rate carrier (x2)
+dm:0xc005  PhaseB_90deg            ; 0x20000000 = +90deg carrier offset
+dm:0xc006  OutLevel                ; 0x7FFFFFFF = 1.0 (no bias cell — bipolar AM)
+dm:0xc029  SineTable               ; family sine cycle + guard
