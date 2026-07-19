@@ -8,7 +8,8 @@ Sources of truth:
   * kn7000_mame/src/devices/cpu/sharc/{sharc.cpp,sharcops.hxx,sharcdrc.cpp,sharcfe.cpp,sharc.h}
     (overlay, symlinked into the build tree) + stock upstream
     {compute.hxx,sharcops_table.cpp,sharcinternal.ipp} — the support tables below
-    are a hand-audited mirror of those files (audited 2026-07-19).
+    are a hand-audited mirror of those files (audited 2026-07-19; updated
+    2026-07-20 for the SAT-MRx / native-ABS / native-FDEP(SE)-imm additions).
 
 Decode mirrors MAME exactly:
   * top level    = sharcops_table.cpp mask/value pairs on bits 47..32
@@ -126,9 +127,11 @@ ALU_INTERP_OK = ({0x01, 0x02, 0x05, 0x06, 0x09, 0x0A, 0x21, 0x22, 0x25, 0x26,
                   0xC1, 0xC4, 0xC5, 0xC9, 0xCA, 0xD9, 0xDA, 0xE0, 0xE1, 0xE2,
                   0xE3}
                  | set(range(0x70, 0x80)) | set(range(0xF0, 0x100)))
-# multiplier: 0x14/0x16 (MR=0), 0x30 (FMUL) + the whole general decode for
-# oper=(op>>6)!=0 i.e. every op >= 0x40. SAT/RND (op<0x40 except above) throw.
-MUL_INTERP_OK = {0x14, 0x16, 0x30} | set(range(0x40, 0x100))
+# multiplier: 0x14/0x16 (MR=0), 0x30 (FMUL), SAT MRx family 0x00-0x0F
+# (implemented 2026-07-20) + the whole general decode for oper=(op>>6)!=0
+# i.e. every op >= 0x40. RND (0x18-0x1F) still throws (unused by the pool).
+MUL_INTERP_OK = ({0x14, 0x16, 0x30} | set(range(0x00, 0x10))
+                 | set(range(0x40, 0x100)))
 SHIFTREG_INTERP_OK = {0x00, 0x02, 0x08, 0x10, 0x12, 0x19, 0x30, 0x31, 0x33}
 SHIFTIMM_INTERP_OK = {0x00, 0x01, 0x02, 0x08, 0x10, 0x11, 0x12, 0x13, 0x19,
                       0x30, 0x31, 0x32, 0x33}
@@ -139,16 +142,20 @@ MF_DRC_NATIVE = ({0x00, 0x01,          # native except MR2F/MR2B subcases
                   0x10, 0x11, 0x12, 0x14, 0x15, 0x16}
                  | set(range(0x18, 0x20)) | set(range(0x30, 0x40)))
 MF_DRC_FALLBACK = {0x07, 0x0F} | set(range(0x20, 0x30))
-ALU_DRC_FALLBACK = {0x30, 0x92, 0xA5, 0xAD, 0xCD, 0xDD, 0xE0}
-ALU_DRC_NATIVE = ALU_INTERP_OK - {0x30, 0x92, 0xE0}
-# multiplier: native = all signed*signed forms with oper!=0, + explicit cases
-MUL_DRC_EXTRA_NATIVE = {0x14, 0x16, 0x30, 0x40, 0x70, 0xB0, 0xB2}
+ALU_DRC_FALLBACK = {0x92, 0xA5, 0xAD, 0xCD, 0xDD, 0xE0}
+# ABS (0x30) native since 2026-07-20
+ALU_DRC_NATIVE = ALU_INTERP_OK - {0x92, 0xE0}
+# multiplier: native = all signed*signed forms with oper!=0, + explicit cases,
+# + the SAT MRx family 0x00-0x0F (native 2026-07-20)
+MUL_DRC_EXTRA_NATIVE = ({0x14, 0x16, 0x30, 0x40, 0x70, 0xB0, 0xB2}
+                        | set(range(0x00, 0x10)))
 SHIFTREG_DRC_NATIVE = {0x00, 0x02, 0x08, 0x10, 0x12, 0x19, 0x30, 0x31, 0x33}
 SHIFTREG_DRC_FALLBACK = {0x01, 0x09, 0x11, 0x13, 0x1B, 0x20, 0x21, 0x22, 0x23,
                          0x24, 0x25}
-SHIFTIMM_DRC_NATIVE = {0x00, 0x01, 0x02, 0x08, 0x10, 0x11, 0x12, 0x19, 0x30,
-                       0x31, 0x32, 0x33}
-SHIFTIMM_DRC_FALLBACK = {0x13, 0x1B}   # -> interpreter SHIFT_OPERATION_IMM
+# FDEP (SE) imm (0x13) native since 2026-07-20
+SHIFTIMM_DRC_NATIVE = {0x00, 0x01, 0x02, 0x08, 0x10, 0x11, 0x12, 0x13, 0x19,
+                       0x30, 0x31, 0x32, 0x33}
+SHIFTIMM_DRC_FALLBACK = {0x1B}   # -> interpreter SHIFT_OPERATION_IMM (throws: 0x1B unimplemented there)
 
 # --- frontend describe (sharcfe.cpp): multifunction default returns false ---
 MF_FE_OK = MF_INTERP_OK | {0x07, 0x0F, 0x1D}   # FE also knows 0x07/0x0F
@@ -222,8 +229,12 @@ def mul_name(op):
         return "Fn = Fx * Fy"
     oper = (op >> 6) & 3
     if oper == 0:
-        kind = "SAT" if not (op & 0x10) else "RND"
-        return f"MR {kind} form (op 0x{op:02X})"
+        if (op & 0x30) == 0x00:   # SAT MRx: [3]=frac [2]=dest MR [1]=MRB [0]=signed
+            mr = "MRB" if op & 2 else "MRF"
+            dst = mr if op & 4 else "Rn"
+            mod1 = ("S" if op & 1 else "U") + ("F" if op & 8 else "I")
+            return f"{dst} = SAT {mr} ({mod1})"
+        return f"MR RND form (op 0x{op:02X})"
     sign = ("UU", "US", "SU", "SS")[((op >> 5) & 1) * 2 + ((op >> 4) & 1)]
     frac = "F" if op & 8 else "I"
     rnd = "R" if op & 1 else ""

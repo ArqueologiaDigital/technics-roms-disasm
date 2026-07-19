@@ -4,7 +4,49 @@
 pool is disassembled, is every instruction it uses supported by the SHARC core the
 kn7000 build runs — in BOTH the interpreter and the DRC?
 
-**Answer: almost, with ONE genuine gap.** Of the pool's **6,499 PM words** (80
+## ★ 2026-07-20 — GAP CLOSED, POOL 100% COVERED (and 100% DRC-NATIVE)
+
+All three findings below are FIXED in the overlay core (kn7000_mame
+`src/devices/cpu/sharc/`):
+
+1. **`Rn = SAT MRF/MRB` (multiplier op 0x00–0x0F)** — implemented in the
+   interpreter (sharcops.hxx general-multiplier `oper==0` corner, full TRM B-57
+   family: SI/UI/SF/UF × Rn/MR × MRF/MRB, flags MN/MV/MU/MI per TRM; the MR
+   model is 64-bit so only the integer forms can actually clamp) **and natively
+   in the DRC** (sharcdrc.cpp multiplier case, mirrors the interpreter exactly,
+   flags gated on liveness). RND (0x18–0x1F) remains unimplemented — the pool
+   contains zero uses.
+2. **`Rn = ABS Rx` (ALU 0x30)** — now DRC-NATIVE (was fallback): mirrors
+   `compute_abs` exactly incl. AV+STKY-AOS on `Rx==0x80000000`, translation-
+   time-baked ALUSAT clamp, AS = input sign, AZ/AN from the saturated result.
+3. **`FDEP Rx BY bit:len (SE)` immediate (shiftop 0x13)** — now DRC-NATIVE
+   (was fallback): `sext(Rx, min(len,32)) << bit`, SZ from result,
+   SV = (bit+len > 32), with shift-by-zero routed through flag-generating ops.
+
+**Verification (2026-07-20):**
+* `tools/check_sharc_coverage.py` exits 0 — all **69 used classes**: interpreter
+  OK, **DRC NATIVE for every one** (no interpreter-fallback classes remain in
+  the used set).
+* Reverb A/B oracle: money.lua harness on the rebuilt binary is **bit-identical**
+  to the current-era baseline (md5 `44b09b9d0eaae59d9a65e5b4f4e72ec0`).
+* **LIVE Gate Reverb**: SOUND DSP screen → group "Reverb" → **Short Gate**
+  selected (uploads rec12 into effect slot 2 — PM `0x8638` verified holding the
+  SAT word `0000305003909300`); machine ran 10+ s with the gate active (its
+  "quiet" branch executes `R3 = SAT MRF` every silent frame) plus a keybed note
+  through it, **no fatalerror, both DRC and `-nodrc` interpreter runs**.
+  Gotcha for future GUI drives: the Gate presets are NOT on the (hold-)REVERB
+  screen (2 pages, Room…Stadium); they are the SOUND DSP screen's "Reverb"
+  group (first group in the center list; scroll-up soft rocker = CPC_SEG9 0x01),
+  and pressing the already-stored preset with the insert OFF uploads nothing —
+  toggle SOUND DSP on (short press CPR_SEG3 0x08) or pick a different preset.
+
+The remainder of this file is the original 2026-07-19 audit, kept for the
+method, the support matrix and the ALUSAT/TRM-deviation cross-checks; read
+"THROW/CRASH/FALLBACK" rows below through the fixes above.
+
+---
+
+**Answer (2026-07-19, superseded above): almost, with ONE genuine gap.** Of the pool's **6,499 PM words** (80
 records) falling into **69 distinct instruction/compute classes**, **66 classes are
 native in both paths**, **2 classes are DRC-fallback-to-interpreter** (functionally
 correct, perf-only), and **1 class is unimplemented in BOTH paths**:
@@ -121,7 +163,8 @@ From `kn7000_mame/notes/sharc-upstream-patch-series.md` section C:
 * The script exits non-zero while any used class lacks full support, so it can gate
   future pool re-disassembly or core edits.
 
-**Bottom line:** implement `Rn = SAT MRF/MRB` (the `oper==0` SAT corner — one small
+**Bottom line (2026-07-19, now DONE — see the 2026-07-20 section at the top):**
+implement `Rn = SAT MRF/MRB` (the `oper==0` SAT corner — one small
 interpreter case; DRC inherits via fallback) and the entire effects pool is 100%
-covered in both engines. Until then, do not select Sound-DSP Gate Reverb
-(Medium/Short/Long Gate) in the emulator with the DSP path enabled.
+covered in both engines. Implemented 2026-07-20 (interpreter + DRC-native, plus
+native ABS and FDEP(SE)-imm); the Gate Reverb presets are safe to select.
