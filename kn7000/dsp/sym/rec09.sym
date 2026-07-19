@@ -1,31 +1,55 @@
-; rec09 — EFFECT: modulated-delay chorus + float allpass smoothing, w/ feedback
-; Sine-LFO fractional-delay front-end (as rec06/07) produces modulated taps R5/R8.
-; Each channel then floats the input, adds a feedback term (F4=DM*F7, coeff c006
-; ~0.4) and runs a float allpass {F12=F3*F8; F8=F8-F12; F8=F8+F12} on the
-; interpolated tap before FIX/scale/output. Two LFO phases (9800,9801) = stereo.
+; rec09 — EFFECT: stereo modulated-delay FLANGER (0.7 float regeneration per channel)
+; Full dataflow trace 2026-07-19 (see dsp/reverb-algorithm.md §6).
+; Two independent sine LFOs (one per channel, template phases 45deg apart).
+; Per channel: input + 0.7*prev_tap (float) is written to the delay line as
+; FLOAT BIT PATTERNS; one fractional tap at 300+-64 samples (6.8ms center) is
+; read back with float linear interpolation; the tap is BOTH the output and the
+; next frame's feedback (saved in param c003/c002 via DM(I1-1)/DM(I1-2)).
+; Feedback 0.70 around a ~7ms modulated delay = resonant flanger/chorus.
+; CORRECTIONS vs the earlier read: the "float allpass" at 842e is the fractional
+; -tap LINEAR INTERPOLATION (d[i] + frac*(d[i+1]-d[i])), not an allpass; c007 is
+; the DEPTH (not an LFO rate); c009 is the wet scale (not an allpass coeff);
+; c005 is LFO1's phase accumulator (not a depth).
+; In the unit-9 "Reverb" whitelist (types 0x04,0x0B); no tail (loop ~7ms).
 ;
-dm:0x9800  eff09_lfo_phase0     ; LFO phase, channel 0 (=0x800000)
-dm:0x9801  eff09_lfo_phase1     ; LFO phase, channel 1 (=0x800000)
-dm:0xc005  eff09_depth          ; 0x20000000 (0.25) modulation depth
-dm:0xc006  eff09_feedback       ; 0x3F333333 (float ~0.7) feedback coefficient
-dm:0xc007  eff09_lfo_rate       ; 0x00400000 LFO increment
-dm:0xc009  eff09_ap_coeff       ; 0x40000000 allpass coefficient
-dm:0xc00a  eff09_fb2            ; 0x3F333333 second feedback coeff
-dm:0xc029  eff09_sine_tab       ; 16-point sine LFO table (c029..c03f)
-pm:0x8400  eff09_entry          ; I0=I1
-pm:0x8401  eff09_lfo_acc0       ; LFO phase accumulate (tap 0)
-pm:0x840a  eff09_interp0        ; fractional-delay interpolation, tap 0
-pm:0x840f  eff09_tapA           ; R5 = modulated tap A
-pm:0x8410  eff09_lfo_acc1       ; LFO accumulate (tap 1)
-pm:0x841e  eff09_read_inL       ; R0 = DM(0x20,I4) input
-pm:0x841f  eff09_float_in       ; F0 = FLOAT R0
-pm:0x8422  eff09_fb_mac         ; F4=F4*F7; F0=F0+F4 feedback inject
-pm:0x8425  eff09_delay_write    ; DM(I2,M7)=R0 push to delay line
-pm:0x842e  eff09_allpass        ; float allpass F12=F3*F8; F8=F8-F12; F8=F8+F12
-pm:0x8434  eff09_fix_scaleL     ; R8=FIX F8; *R14 wet scale
-pm:0x8438  eff09_clipL          ; CLIP by 0x7FFFFF
-pm:0x8439  eff09_out_L          ; DM(I4,M2)=R8 left output
-pm:0x843a  eff09_chanR          ; right channel begins
-pm:0x844c  eff09_fix_scaleR     ; R8=FIX F8 (right)
-pm:0x8451  eff09_out_R          ; DM(I4,M2)=R8 right output
-pm:0x8452  eff09_rts            ; RTS(DB)
+dm:0x9800  eff09_lfo0_incr      ; 0x00800000 LFO0 increment (template = fs/256 under the 2^31 wrap — audio-rate, host likely rewrites; PROVISIONAL)
+dm:0x9801  eff09_lfo1_incr      ; 0x00800000 LFO1 increment
+dm:0xc002  eff09_fb_stateR      ; float feedback state R (previous R tap, via DM(I1-2))
+dm:0xc003  eff09_fb_stateL      ; float feedback state L (previous L tap, via DM(I1-1))
+dm:0xc004  eff09_lfo0_phase     ; LFO0 phase accumulator (runtime state, template 0) — modulates the RIGHT tap
+dm:0xc005  eff09_lfo1_phase     ; LFO1 phase accumulator (template 0x20000000 = +45deg) — modulates the LEFT tap
+dm:0xc006  eff09_feedbackL      ; 0x3F333333 float +0.70 regeneration gain, L channel
+dm:0xc007  eff09_depth          ; 0x00400000 depth: tap swing +-64 samples about the 300-sample center
+dm:0xc008  eff09_frac_exp       ; 0xFFFFFFE1 (-31): FLOAT-BY exponent turning the Q31 frac into a [0,1) float
+dm:0xc009  eff09_wet            ; 0x40000000 fixed Q31 0.5 wet scale (x2 makeup -> net 1.0)
+dm:0xc00a  eff09_feedbackR      ; float +0.70 regeneration gain, R channel
+dm:0xc00b  eff09_frac_expR      ; -31 (R channel copy)
+dm:0xc029  eff09_sine_tab       ; 16-point sine cycle + guard half (same layout as rec06)
+pm:0x8400  eff09_entry          ; I0 = I1
+pm:0x8401  eff09_lfo0_acc       ; phase(c004) += incr(0x9800); FDEP 0:31 SE wrap
+pm:0x840a  eff09_lfo0_interp    ; sine-table linear interp
+pm:0x840f  eff09_lfo0_out       ; R5 = sine(phase0) — right-channel modulator
+pm:0x8410  eff09_lfo1_acc       ; phase(c005) += incr(0x9801)
+pm:0x8419  eff09_lfo1_interp    ; R8 = sine(phase1) — left-channel modulator
+pm:0x841e  eff09_read_inL       ; R0 = DM(I4+0x20) input L
+pm:0x841f  eff09_float_inL      ; F0 = FLOAT R0; R15 = I2 save (internal DM ring B2=0xC3A0)
+pm:0x8420  eff09_fb_loadL       ; R4 = DM(I1-1) = c003: previous L tap (float feedback state)
+pm:0x8422  eff09_fb_injectL     ; F4 = F4 * 0.70 (c006); F0 = in + F4
+pm:0x8424  eff09_wr_delayL      ; M7=0x12C: write (in+fb) FLOAT BITS @P; read base P+300 (6.8ms)
+pm:0x8426  eff09_depth_ld       ; R9 = c007 depth
+pm:0x8428  eff09_tapL           ; fractional read @P+300+64*sine1 (int via M7, frac FDEP 15:16)
+pm:0x842d  eff09_float_frac     ; F3 = FLOAT R3 BY c008 (-31): frac -> float; R8 = d[i]
+pm:0x842e  eff09_interpL        ; float linear interp: F8 = d[i] + frac*(d[i+1]-d[i])
+pm:0x8431  eff09_fb_saveL       ; DM(I1-1) = tap: next frame's feedback
+pm:0x8433  eff09_baseR          ; I2 = P+300; MODIFY(I2,0xC8) -> R write base P+500
+pm:0x8434  eff09_fix_wetL       ; R8 = FIX F8; x c009 (Q31 0.5); x2 makeup
+pm:0x8438  eff09_clip_L         ; CLIP +-0x7FFFFF
+pm:0x8439  eff09_out_L          ; DM(I4,M2)=R8; I4+1 (so DM(0x20,I4) now reads in_R)
+pm:0x843a  eff09_chanR          ; right channel: same engine, modulator sine0, fb state c002 (DM(I1-2)), coeff c00a
+pm:0x8441  eff09_wr_delayR      ; write @P+500; read base P+800 -> delay 300-+64 from the R write
+pm:0x8448  eff09_interpR        ; float linear interp (R)
+pm:0x844b  eff09_fb_saveR       ; DM(I1-2) = tap
+pm:0x844c  eff09_fix_wetR       ; R8 = FIX F8; x wet; x2; I2 restored to P
+pm:0x8450  eff09_clip_R         ; CLIP +-0x7FFFFF
+pm:0x8451  eff09_out_R          ; DM(I4,M2)=R8; I4 += 2 total
+pm:0x8452  eff09_rts            ; RTS(DB); epilogue I1 += 0x4D, I8 += 0x4E (+2 incr reads = 0x50)

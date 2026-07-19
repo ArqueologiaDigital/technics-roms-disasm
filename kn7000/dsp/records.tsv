@@ -5,10 +5,10 @@
 3	0x2BD6EF	0x486BD6EF	685	2	probe	SDRAM POST self-test	unique PM; conf high
 4	0x2BD9A8	0x486BD9A8	4597	8	kernel	resident SHARC kernel	unique PM; conf high
 5	0x2BEBA9	0x486BEBA9	48	1	effect	thru / effect-off stub	Reverb (unit9); types 0x00; unique PM; conf high
-6	0x2BEBE5	0x486BEBE5	918	3	effect	modulated-delay chorus	Reverb (unit9); types 0x01,0x2C; unique PM; conf high
-7	0x2BEF87	0x486BEF87	977	3	effect	modulated-delay chorus	Reverb (unit9); types 0x02,0x07,0x2D; unique PM; conf high
+6	0x2BEBE5	0x486BEBE5	918	3	effect	quadrature 2-tap modulated-delay chorus (wet-only)	Reverb(unit9) whitelist; types 0x01,0x2C; no feedback/no tail -> not the audible GUI reverb (dsp/reverb-algorithm.md #6); unique PM; conf high
+7	0x2BEF87	0x486BEF87	977	3	effect	dual-rate-LFO quadrature modulated-delay chorus (wet-only)	Reverb(unit9) whitelist; types 0x02,0x07,0x2D; c005=slow-LFO cross-mix NOT feedback; tail-incapable (dsp/reverb-algorithm.md #6); unique PM; conf high
 8	0x2BF364	0x486BF364	981	3	effect	comb+allpass reverb	Multi/Sound-DSP insert (units1-6); types 0x03; unique PM; conf medium
-9	0x2BF745	0x486BF745	941	3	effect	modulated-delay chorus	Reverb (unit9); types 0x04,0x0B; unique PM; conf medium
+9	0x2BF745	0x486BF745	941	3	effect	stereo modulated-delay flanger (0.70 float regen/channel)	Reverb(unit9) whitelist; types 0x04,0x0B; 300+-64-sample taps, per-channel LFOs; tail-incapable (dsp/reverb-algorithm.md #6); unique PM; conf high
 10	0x2BFAFE	0x486BFAFE	1067	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x05,0x0D; unique PM; conf medium
 11	0x2BFF35	0x486BFF35	1050	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x06,0x0E; unique PM; conf high
 12	0x2C035B	0x486C035B	870	3	effect	dynamics/compressor + delay/filter composite	Multi/Sound-DSP insert (units1-6); types 0x08; unique PM; conf low
@@ -50,12 +50,12 @@
 48	0x2C7798	0x486C7798	846	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x91; unique PM; conf high
 49	0x2C7AF2	0x486C7AF2	847	3	effect	modulated-delay chorus	Reverb (unit9); types 0x52; unique PM; conf high
 50	0x2C7E4D	0x486C7E4D	960	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x53; unique PM; conf high
-51	0x2C8219	0x486C8219	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x14,0x15; =rec54,55,56 (identical PM); conf high
-52	0x2C8617	0x486C8617	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x1E,0x1F; unique PM; conf high
-53	0x2C8A15	0x486C8A15	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x10,0x11; unique PM; conf high
-54	0x2C8E13	0x486C8E13	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x12,0x13; =rec51,55,56 (identical PM); conf high
-55	0x2C9211	0x486C9211	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x16,0x17; =rec51,54,56 (identical PM); conf high
-56	0x2C960F	0x486C960F	1010	3	effect	comb+allpass reverb	Enhancer (unit0); types 0x18,0x19; =rec51,54,55 (identical PM); conf high
+51	0x2C8219	0x486C8219	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x14,0x15 = GUI REVERB engine (role relabeled from 'Enhancer', see dsp/reverb-algorithm.md #7); reference preset, RT60(DC)~1.8s; =rec54,55,56 (identical PM); conf high
+52	0x2C8617	0x486C8617	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x1E,0x1F; long/dark preset (input LP ~1.4kHz, damping p=.799, ER 103/57/59/10ms); PM=rec51 except 4 early-tap immediates; conf high
+53	0x2C8A15	0x486C8A15	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x10,0x11; small-room preset (tank decay -1/24 -> RT60~0.8s, ER 42/16/40/12ms); PM=rec51 except 4 early-tap immediates; conf high
+54	0x2C8E13	0x486C8E13	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x12,0x13; bright preset (loop damping bypassed); =rec51,55,56 (identical PM); conf high
+55	0x2C9211	0x486C9211	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x16,0x17; dark-output preset (wet LP ~1.8kHz); =rec51,54,56 (identical PM); conf high
+56	0x2C960F	0x486C960F	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x18,0x19; presence preset (output shelf, Nyquist x1.45); BOOT-DEFAULT program at PM 0x8400; =rec51,54,55 (identical PM); conf high
 57	0x2C9A0D	0x486C9A0D	953	3	effect	modulated-delay pitch-shifter (detune)	Multi/Sound-DSP insert (units1-6); types 0x78; unique PM; conf medium
 58	0x2C9DD2	0x486C9DD2	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x58; unique PM; conf medium
 59	0x2CA134	0x486CA134	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x59; unique PM; conf medium

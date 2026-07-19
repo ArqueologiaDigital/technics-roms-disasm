@@ -10,10 +10,10 @@
 ;   3  probe    0x486BD6EF  DM@C000:77e PM@8400:46w   SDRAM POST self-test
 ;   4  kernel   0x486BD9A8  DM@9800:80e DM@9C40:20e DM@C000:77e DM@C302:152e PM@8000:258w PM@8300:64w PM@8400:7w PM@8D00:147w   resident SHARC kernel
 ;   5  effect   0x486BEBA9  PM@8400:6w   thru / effect-off stub
-;   6  effect   0x486BEBE5  DM@9800:1e DM@C000:77e PM@8400:82w   modulated-delay chorus
-;   7  effect   0x486BEF87  DM@9800:2e DM@C000:77e PM@8400:91w   modulated-delay chorus
+;   6  effect   0x486BEBE5  DM@9800:1e DM@C000:77e PM@8400:82w   quadrature 2-tap modulated-delay chorus (wet-only)
+;   7  effect   0x486BEF87  DM@9800:2e DM@C000:77e PM@8400:91w   dual-rate-LFO quadrature modulated-delay chorus (wet-only)
 ;   8  effect   0x486BF364  DM@9800:4e DM@C000:77e PM@8400:90w   comb+allpass reverb
-;   9  effect   0x486BF745  DM@9800:2e DM@C000:77e PM@8400:85w   modulated-delay chorus
+;   9  effect   0x486BF745  DM@9800:2e DM@C000:77e PM@8400:85w   stereo modulated-delay flanger (0.70 float regen/channel)
 ;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   modulated-allpass phaser
 ;  11  effect   0x486BFF35  DM@9800:1e DM@C000:77e PM@8400:104w   modulated-delay chorus
 ;  12  effect   0x486C035B  DM@9800:7e DM@C000:77e PM@8400:69w   dynamics/compressor + delay/filter composite
@@ -55,12 +55,12 @@
 ;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   modulated-allpass phaser
 ;  49  effect   0x486C7AF2  DM@9800:9e DM@C000:32e PM@8400:101w   modulated-delay chorus
 ;  50  effect   0x486C7E4D  DM@9800:5e DM@C000:67e PM@8400:94w   modulated-delay chorus
-;  51  effect   0x486C8219  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
-;  52  effect   0x486C8617  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
-;  53  effect   0x486C8A15  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
-;  54  effect   0x486C8E13  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
-;  55  effect   0x486C9211  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
-;  56  effect   0x486C960F  DM@9800:17e DM@C000:41e PM@8400:114w   comb+allpass reverb
+;  51  effect   0x486C8219  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
+;  52  effect   0x486C8617  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
+;  53  effect   0x486C8A15  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
+;  54  effect   0x486C8E13  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
+;  55  effect   0x486C9211  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
+;  56  effect   0x486C960F  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  57  effect   0x486C9A0D  DM@9800:2e DM@C000:77e PM@8400:87w   modulated-delay pitch-shifter (detune)
 ;  58  effect   0x486C9DD2  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
 ;  59  effect   0x486CA134  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
