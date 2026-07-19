@@ -330,6 +330,8 @@ def enc_ldst(mnem, m, r, store):
 
 def enc_alu(mnem, ops):
     src, dst = ops[0], ops[1]
+    if dst == "psw" and mnem in ("and", "or"):     # and/or imm16, psw (FA FC / FA FD)
+        return b"\xfa" + (b"\xfc" if mnem == "and" else b"\xfd") + le16(imm(src))
     dc, di = reg(dst)
 
     if is_reg_tok(src):       # reg, reg
