@@ -1,23 +1,27 @@
-; rec48 — EFFECT: single-stage swept-allpass PHASER, sine-LFO modulated coefficient (C000:77e, PM 70w)
-; front-end (0x8400-0x842f) and sine-LFO table byte-identical to rec46; rec46 uses 6 stages, this uses 1
-pm:0x8400  Entry                 ; I0=I1 state pointer
-pm:0x8401  LFO_FeedbackMix       ; R8=DM(I0,M6)+PM(I8,M8): LFO phase accumulate
-pm:0x8404  LFO_StateWrite        ; DM(I0,M2)=R8
-pm:0x8406  LFO_TableIndex        ; ASHIFT-11; MODIFY(I5,0x2C); ASHIFT-16 -> sine table index
-pm:0x840a  LFO_SineFetch_Interp  ; R7=DM(I5,M7); MR1F/MAC linear interp between sine samples
-pm:0x840f  Mod_ToFloatUnit       ; F8=FLOAT R8 BY -31; +1.0; *0.5 -> control [0,1]
-pm:0x8419  Mod_Clip              ; CLIP F0 BY 1.0
-pm:0x841c  AllpassCoeffPrep      ; F0=F7*F7,F12=F7*F8,F10=F8+F0; F1/F3/F9 coeff terms
-pm:0x8427  RecipNewton           ; F0=RECIPS F12 + 3 Newton iters (R11=2.0) -> allpass coeff
-pm:0x8431  Input_Mono            ; R5=(DM(0x20)+DM(0x21))/2; F5=FLOAT
-pm:0x8435  AllpassStage1         ; single 1st-order allpass stage, state in DM(I0)
-pm:0x843c  OutputScale           ; F5=F5*F0; FIX; *R14; CLIP
-pm:0x8441  OutputWrite           ; DM(I4,M2)=R0 (twice L/R)
+; rec48 — EFFECT: LFO WAH — swept resonant BANDPASS, Q=8, computed bilinear coeffs
+; (corrected from "single-stage swept-allpass phaser": the section is the bilinear
+; transform of (s/8)/(s^2 + s/8 + 1) — numerator 0.125*g*(1-z^-2), output tap w - w[n-2]).
+; Full doc dsp/insert-effects-algorithms.md #2. g = 0.5*m + 0.004 = tan(pi*f0/fs):
+; f0 sweeps 56 Hz .. 6.56 kHz at 0.336 Hz (incr 0x4000 in PM 0x9800). Q = 1/c00a = 8
+; (+18 dB resonant peak) — the classic crying-wah voicing. Mono in/out.
+; Front-end + Newton reciprocal shared with rec46 (which is the 5-stage LP variant).
+pm:0x8400  Entry                 ; I0=I1
+pm:0x8401  LFO_PhaseAcc          ; phase(c004) += incr(PM 0x9800 = 0x4000 -> 0.336 Hz); 31-bit wrap
+pm:0x8404  LFO_StateWrite        ; DM(I0,M2)=R8 -> c004
+pm:0x8406  LFO_TableIndex        ; ASHIFT-11/-16 -> 16-step sine index (center c030)
+pm:0x840a  LFO_SineInterp        ; MR1F/MAC linear interp
+pm:0x840f  Mod_Unipolar          ; FLOAT BY -31; +1.0; *0.5 -> m in [0,1]
+pm:0x8419  SweepClip             ; g = c005(0.5)*m + c006(0.004); CLIP by 1.0
+pm:0x841c  BilinearPrep          ; g^2; q*g (q=c00a=0.125 -> Q=8); 1+g^2-+qg; 2(g^2-1)
+pm:0x8427  RecipNewton           ; RECIPS + 3x Newton -> 1/(1+qg+g^2); numerator = 0.125*g
+pm:0x8431  Input_Mono            ; (DM(0x20)+DM(0x21))/2; FLOAT
+pm:0x8435  BP_Stage              ; w=(0.125g*x -2(g^2-1)w1 -(1+g^2-0.125g)w2)/den; y=w-w2 (bandpass)
+pm:0x843c  OutputScale           ; F5=F5*F0; FIX; *wet; CLIP +-0x7FFFFF
+pm:0x8441  OutputWrite           ; DM(I4,M2)=R0 twice (mono to L and R)
 pm:0x8443  Return                ; RTS(DB)
-dm:0x9800  LFO_phase_init        ; 0x00004000 initial LFO phase
-dm:0xc005  Mix_half              ; 0.5 (0x3F000000)
-dm:0xc006  LFO_rate              ; 0x3B83126E LFO increment/rate
-dm:0xc00c  Coeff_neg2            ; -2.0 (0xC0000000) allpass prep constant
-dm:0xc00f  Depth                 ; 4.0 (0x40800000) sweep depth
-dm:0xc010  FullScale             ; 0x7FFFFFFF
-dm:0xc028  SineLFO_table         ; sine LFO waveform table (c028..c03f, 16 entries)
+dm:0x9800  LFO_incr              ; 0x00004000 = 0.336 Hz — LFO rate, host-writable
+dm:0xc005  SweepScale            ; 0.5 (0x3F000000): g = 0.5*m + offset
+dm:0xc006  SweepOffset           ; 0.004 (0x3B83126E): min g -> f0 = 56 Hz
+dm:0xc00a  QScale                ; 0.125 (0x3E000000): mid coeff q*g -> Q = 1/q = 8
+dm:0xc00c  Coeff_neg2            ; -2.0 (0xC0000000) bilinear prep constant
+dm:0xc028  SineLFO_table         ; sine LFO waveform table (center c030)

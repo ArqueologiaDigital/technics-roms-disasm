@@ -1,24 +1,36 @@
-; rec13 — EFFECT: delay-line comb/allpass reverb (2-comb stereo), C000:40e family
-pm:0x8400  Entry_SetInPtr        ; I0=I1 (input/delay ptr), R15=I6 saves delay-line base
-pm:0x8402  LoadFeedbackState     ; R10 = DM(-1,I1) prev comb feedback/damping state
-pm:0x8403  Comb1_ReadTap_Coeff   ; R7=DM(I0,M2) delayed sample, R3=PM(I8,M14) rotate allpass coeff
-pm:0x8404  Comb1_AllpassMAC      ; F12=F3*F7 / F3=F10+F12 / F7=F3*F7, PM(I8,M8)=R3 store coeff state
-pm:0x8408  LoadInputL            ; R3=DM(0x20,I4) input sample, F3=FLOAT
-pm:0x840b  MixInputPlusFeedback  ; F0=F3+F7 input+damped feedback, R14=DM gain
-pm:0x840c  Comb1_TapLen_8000     ; M7=0x1F40 (8000) delay tap length
-pm:0x840d  Comb1_WriteDelay      ; DM(I6,M7)=R0 write into delay line
-pm:0x840e  Comb1_ReadDelay       ; R8=DM(I6,M6)
-pm:0x8411  AdvanceDelayBase      ; MODIFY(I6,M7=0x3C64) advance circular delay base
-pm:0x8412  StoreFeedbackState    ; DM(-1,I1)=R8
-pm:0x841a  OutputWriteL          ; DM(I4,M2)=R8 (clipped) output
-pm:0x8429  Comb2_TapLen_10000    ; M7=0x2710 (10000) second comb tap
-pm:0x842a  Comb2_WriteDelay      ; DM(I6,M7)=R0
-pm:0x8436  OutputWriteR          ; DM(I4,M2)=R8 second output
-pm:0x8437  CrossMixTaps          ; R7=DM,R3=PM(I8,M8): F8=F3*F7,F12=F2*F7 mix, DM(I0,M6)=R12
+; rec13 — EFFECT: STEREO ECHO, dual mono (type 0x09) — corrected from "comb/allpass reverb"
+; Full doc dsp/insert-effects-algorithms.md #5. L = 8000 smp (181.4 ms), R = 10000 smp
+; (226.8 ms) — 4:5 polyrhythmic bounce. Feedback 0.6 (c007/c009) per channel from its
+; own tap (states c003/c002, one frame late), through a UNITY-DC damping filter
+; (c004-c006: (0.564-0.313z^-1)/(1-0.749z^-1), 0.50 @ Nyquist — repeats darken,
+; tape-style). Output = tap * smoothed-level * wet * 2, CLIP. Level smoother:
+; c00b = 0.004*c00a + 0.996*c00b (coeffs in STATE block 0x9802/3) — the effect
+; FADES IN over ~30 ms after load instead of clicking; host writes c00a to set level.
+pm:0x8400  Entry_SetInPtr        ; I0=I1, R15=I6 saves delay-line base
+pm:0x8402  LoadFeedbackL         ; R10 = DM(-1,I1) = c003 = own tap, prev frame
+pm:0x8403  DampL_Coeff           ; R7=c004(0.749 pole), R3=PM(0x9800) damp state
+pm:0x8404  DampL_Filter          ; u = fb + 0.749*u1; y = 0.564*u - 0.313*u1 (unity DC)
+pm:0x8408  LoadInputL            ; R3=DM(0x20,I4); FLOAT
+pm:0x840b  MixInPlusFbL          ; line_in = inL + 0.6(c007)*damped
+pm:0x840c  DelayL_Len8000        ; M7=0x1F40 (8000) = 181.4 ms
+pm:0x840d  DelayL_Write          ; DM(I6,M7)=R0
+pm:0x840e  DelayL_Read           ; tap @ +8000
+pm:0x8411  ArenaHop              ; MODIFY(I6, 0x3C64) channel-2 arena stride
+pm:0x8412  StoreFbL              ; DM(-1,I1)=tap -> c003
+pm:0x841a  OutputWriteL          ; tap * level(c00b) * wet(c008) * 2, CLIP, DM(I4,M2)
+pm:0x841b  ChanR_Rewind          ; MODIFY(I0,-5); fb R = DM(-2,I1) = c002 (own tap)
+pm:0x8429  DelayR_Len10000       ; M7=0x2710 (10000) = 226.8 ms
+pm:0x842a  DelayR_Write          ; DM(I6,M7)=R0
+pm:0x8436  OutputWriteR          ; DM(I4,M2)
+pm:0x8437  LevelSmoother         ; c00b = 0.004(9802)*c00a + 0.996(9803)*c00b — fade/glide
 pm:0x843c  Return                ; RTS(DB)
 dm:0x9802  ParamSmooth_a         ; 0.004 one-pole param-smoothing coeff
 dm:0x9803  ParamSmooth_1ma       ; 0.996 (1-a)
-dm:0xc004  CombCoeff0            ; 0.749 comb/allpass gain
-dm:0xc005  CombCoeff1            ; -0.313
-dm:0xc006  CombCoeff2            ; 0.564
-dm:0xc008  UnityFixed            ; 0x7FFFFFFF
+dm:0xc004  DampPole              ; 0.749 damping-filter pole
+dm:0xc005  DampB1                ; -0.313
+dm:0xc006  DampB0                ; 0.564 (unity DC, 0.50 @ Nyquist)
+dm:0xc007  FbGainL               ; 0.6 regeneration L
+dm:0xc008  UnityFixed            ; 0x7FFFFFFF wet
+dm:0xc009  FbGainR               ; 0.6 regeneration R
+dm:0xc00a  LevelTarget           ; 1.0 — host-written output level target
+dm:0xc00b  LevelSmoothed         ; smoothed level state (0 template -> fade-in)

@@ -1,14 +1,17 @@
-; rec63 — overdrive/distortion (family rec62-65; tone preset B)
-; Identical PM to rec62; only the tone-biquad coeffs dm:c018-c01d differ.
-pm:0x8400  DistEntry            ; I0 = I1
-pm:0x8405  sumToMono          ; R8 = R0 + R14
-pm:0x840c  recipGain          ; F8 = RECIPS F8 (auto-gain)
-pm:0x841d  chA_cubicShaper    ; cubic soft-clip waveshaper
-pm:0x842f  chA_postBiquad     ; tone biquad (dm:c018-c01d = this preset)
-pm:0x843e  chA_writeOut       ; DM(I4,M2) = R8
-pm:0x846a  DistReturn         ; RTS (DB)
-dm:0xc018  tone_b0            ; tone biquad b0 (preset B)
-dm:0xc019  tone_b1            ; tone biquad b1
-dm:0xc01a  tone_b2            ; tone biquad b2
-dm:0xc01b  tone_a1            ; tone biquad a1
-dm:0xc01c  tone_a2            ; tone biquad a2
+; rec63 — cubic soft-clip overdrive (family rec62-65; tone bank B, type 0x65)
+; Identical PM to rec62 — see sym/rec62.sym + dsp/insert-effects-algorithms.md #3.
+; Bank B: inject 0.20; poles r=0.645 @ 322 Hz (broad low-mid); COMPLEX ZEROS
+; r=0.901 @ 2.91 kHz — a notch exactly where rec62's bank peaks. Unity DC.
+pm:0x8400  DistEntry             ; I0 = I1
+pm:0x8405  sumToMono             ; R8 = R0 + R14
+pm:0x840c  recipGain             ; AGC (inert as in rec62; clamps at 4.0)
+pm:0x841d  chA_cubicShaper       ; y = x - x^3/3, rails +-2/3
+pm:0x842f  chA_toneBank          ; tone bank B (c018-c01d = this preset)
+pm:0x843e  chA_writeOut          ; DM(I4,M2) = R8
+pm:0x846a  DistReturn            ; RTS (DB)
+dm:0xc018  ToneInject            ; 0.20 (0x3E4CCCCD) (PRESET)
+dm:0xc019  ToneA1                ; +1.2885 (0x3FA4ECF8): poles r=0.645 @ 322 Hz
+dm:0xc01a  ToneA2                ; -0.4159 (0xBED4EB87)
+dm:0xc01b  ToneB1                ; -1.2885
+dm:0xc01c  ToneB0                ; +0.7813 (0x3F4802E9): complex zeros r=0.901 @ 2.91 kHz (notch)
+dm:0xc01d  ToneB2                ; +0.6346 (0x3F2272D9)

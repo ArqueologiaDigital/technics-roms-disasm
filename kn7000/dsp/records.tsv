@@ -12,9 +12,9 @@
 10	0x2BFAFE	0x486BFAFE	1067	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x05,0x0D; unique PM; conf medium
 11	0x2BFF35	0x486BFF35	1050	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x06,0x0E; unique PM; conf high
 12	0x2C035B	0x486C035B	870	3	effect	dynamics/compressor + delay/filter composite	Multi/Sound-DSP insert (units1-6); types 0x08; unique PM; conf low
-13	0x2C06CD	0x486C06CD	634	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x09; unique PM; conf medium
-14	0x2C0953	0x486C0953	683	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x0A; unique PM; conf medium
-15	0x2C0C0A	0x486C0C0A	640	3	effect	comb+allpass reverb / delay	Multi/Sound-DSP insert (units1-6); types 0x0C; unique PM; conf medium
+13	0x2C06CD	0x486C06CD	634	3	effect	stereo echo (dual-mono, damped 0.6 regen)	Multi/Sound-DSP insert (units1-6); types 0x09; L 8000/R 10000 smp (181.4/226.8 ms, 4:5 bounce); fb 0.6 via unity-DC damp (0.50@Nyquist); level smoother 0.004 = ~30 ms fade-in; full doc dsp/insert-effects-algorithms.md #5; unique PM; conf high
+14	0x2C0953	0x486C0953	683	3	effect	panning multi-tap echo (4 equal taps, repeats walk the stereo field)	Multi/Sound-DSP insert (units1-6); types 0x0A; one line, taps 5997/11995/17992/23990 smp = 136-544 ms; out banks 0/.3/.6/.9 vs .9/.6/.3/0 pan the repeats across; regen mix 0.25x4, gain host-set (0 template); full doc dsp/insert-effects-algorithms.md #5; unique PM; conf high
+15	0x2C0C0A	0x486C0C0A	640	3	effect	cross-feedback ping-pong echo (Cross Delay candidate)	Multi/Sound-DSP insert (units1-6); types 0x0C; L 4000/R 4400 smp (90.7/99.8 ms); fb 0.6 SWAPPED L<-R/R<-L (repeats cross the field); matches MULTI default 'Cross Delay' name PROVISIONAL; full doc dsp/insert-effects-algorithms.md #5; unique PM; conf high
 16	0x2C0E96	0x486C0E96	913	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x0F; unique PM; conf medium
 17	0x2C1233	0x486C1233	864	3	effect	waveshaper/distortion + envelope AGC	Multi/Sound-DSP insert (units1-6); types 0x20; unique PM; conf medium
 18	0x2C159F	0x486C159F	1042	3	effect	waveshaper/distortion + allpass/delay	Multi/Sound-DSP insert (units1-6); types 0x21; unique PM; conf medium
@@ -36,7 +36,7 @@
 34	0x2C45E2	0x486C45E2	394	3	effect	5-band output EQUALIZER	EQUALIZER (unit8); types 0x4F; unique PM; conf medium
 35	0x2C4778	0x486C4778	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x80; =rec30,36,41,42,43,44,45 (identical PM); conf high
 36	0x2C4B21	0x486C4B21	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x81; =rec30,35,41,42,43,44,45 (identical PM); conf high
-37	0x2C4ECA	0x486C4ECA	974	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x82; unique PM; conf high
+37	0x2C4ECA	0x486C4ECA	974	3	effect	table-lookup waveshaper distortion + live AGC + Haas stereo	Multi/Sound-DSP insert (units1-6); types 0x82; env AGC (atk 1/256 rel 1/2048, gain 0.111+8.35e8/env clamp 4.0 @0.1FS) holds drive constant across velocity; 33-pt PWL knee curve in the c028 table window (host-replaceable); unity-DC tone biquad; L delayed 400 smp + R inverted = Haas widener; full doc dsp/insert-effects-algorithms.md #4; unique PM; conf high
 38	0x2C52A4	0x486C52A4	974	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x83; unique PM; conf high
 39	0x2C567E	0x486C567E	1048	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x84; unique PM; conf high
 40	0x2C5AA2	0x486C5AA2	1048	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x85; unique PM; conf high
@@ -45,9 +45,9 @@
 43	0x2C6618	0x486C6618	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x88; =rec30,35,36,41,42,44,45 (identical PM); conf high
 44	0x2C69C1	0x486C69C1	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x89; =rec30,35,36,41,42,43,45 (identical PM); conf high
 45	0x2C6D6A	0x486C6D6A	925	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x8A; =rec30,35,36,41,42,43,44 (identical PM); conf high
-46	0x2C7113	0x486C7113	1020	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x8C; unique PM; conf high
+46	0x2C7113	0x486C7113	1020	3	effect	LFO-swept 10-pole resonant lowpass (filter sweep; NOT a phaser)	Multi/Sound-DSP insert (units1-6); types 0x8C; five bilinear 2nd-order LP sections Q=1 computed per sample (RECIPS + 3 Newton iters); g=0.2m+0.0014=tan(pi f/fs) -> 19.6 Hz-2.79 kHz @ 1.35 Hz sine; mono; full doc dsp/insert-effects-algorithms.md #2; unique PM; conf high
 47	0x2C751B	0x486C751B	625	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x90; unique PM; conf medium
-48	0x2C7798	0x486C7798	846	3	effect	modulated-allpass phaser	Multi/Sound-DSP insert (units1-6); types 0x91; unique PM; conf high
+48	0x2C7798	0x486C7798	846	3	effect	LFO wah: swept resonant bandpass Q=8 (NOT a phaser)	Multi/Sound-DSP insert (units1-6); types 0x91; single bilinear BP section, numerator 0.125g(1-z^-2), Q=1/0.125=8 (+18 dB peak); g=0.5m+0.004 -> 56 Hz-6.56 kHz @ 0.336 Hz; mono; full doc dsp/insert-effects-algorithms.md #2; unique PM; conf high
 49	0x2C7AF2	0x486C7AF2	847	3	effect	modulated-delay chorus	Reverb (unit9); types 0x52; unique PM; conf high
 50	0x2C7E4D	0x486C7E4D	960	3	effect	modulated-delay chorus	Multi/Sound-DSP insert (units1-6); types 0x53; unique PM; conf high
 51	0x2C8219	0x486C8219	1010	3	effect	stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs	unit0-whitelist types 0x14,0x15 = GUI REVERB engine (role relabeled from 'Enhancer', see dsp/reverb-algorithm.md #7); reference preset, RT60(DC)~1.8s; =rec54,55,56 (identical PM); conf high
@@ -61,10 +61,10 @@
 59	0x2CA134	0x486CA134	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x59; unique PM; conf medium
 60	0x2CA496	0x486CA496	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x5A; unique PM; conf medium
 61	0x2CA7F8	0x486CA7F8	854	3	effect	comb+allpass reverb	Chorus (unit7); types 0x5B; unique PM; conf medium
-62	0x2CAB5A	0x486CAB5A	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x64; =rec63,64,65 (identical PM); conf high
-63	0x2CAFAD	0x486CAFAD	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x65; =rec62,64,65 (identical PM); conf high
-64	0x2CB400	0x486CB400	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x66; =rec62,63,65 (identical PM); conf high
-65	0x2CB853	0x486CB853	1095	3	effect	waveshaper/distortion	Multi/Sound-DSP insert (units1-6); types 0x67; =rec62,63,64 (identical PM); conf high
+62	0x2CAB5A	0x486CAB5A	1095	3	effect	cubic soft-clip overdrive (tone bank A: 2.9 kHz presence peak)	Multi/Sound-DSP insert (units1-6); types 0x64; y=x-x^3/3 rails +-2/3; DC-block HP 100 Hz; 70 Hz sign-guarded smoother; unity-DC tone bank r=0.901@2.91 kHz + ~5 kHz rolloff; AGC prologue INERT (env cell c004 never written; kernel M4=-2) -> drive fixed at 4.0, host c004 write PROVISIONAL; full doc dsp/insert-effects-algorithms.md #3; =rec63,64,65 (identical PM); conf high
+63	0x2CAFAD	0x486CAFAD	1095	3	effect	cubic soft-clip overdrive (tone bank B: 2.9 kHz notch, low-mid poles)	Multi/Sound-DSP insert (units1-6); types 0x65; bank B: inject 0.20, poles r=0.645@322 Hz, complex zeros r=0.901@2.91 kHz = notch where bank A peaks; full doc dsp/insert-effects-algorithms.md #3; =rec62,64,65 (identical PM); conf high
+64	0x2CB400	0x486CB400	1095	3	effect	cubic soft-clip overdrive (tone bank C: 1.05 kHz mid honk)	Multi/Sound-DSP insert (units1-6); types 0x66; bank C: inject 0.17, poles r=0.858@1.05 kHz, real zeros 0.916/0.585; full doc dsp/insert-effects-algorithms.md #3; =rec62,63,65 (identical PM); conf high
+65	0x2CB853	0x486CB853	1095	3	effect	cubic soft-clip overdrive (tone bank D: softened 2.9 kHz peak)	Multi/Sound-DSP insert (units1-6); types 0x67; bank D: inject 0.10, poles = bank A, real zeros 0.889/0.109; full doc dsp/insert-effects-algorithms.md #3; =rec62,63,64 (identical PM); conf high
 66	0x2CBCA6	0x486CBCA6	1207	3	effect	modulated-delay chorus/pitch-shift (multi-stage)	Multi/Sound-DSP insert (units1-6); types 0x7C; unique PM; conf low
 67	0x2CC169	0x486CC169	1074	3	effect	waveshaper/nonlinear (+ modulated delay)	Multi/Sound-DSP insert (units1-6); types 0x79; unique PM; conf medium
 68	0x2CC5A7	0x486CC5A7	748	3	effect	waveshaper/nonlinear	Multi/Sound-DSP insert (units1-6); types 0x7A; unique PM; conf medium
@@ -73,7 +73,7 @@
 71	0x2CCFD4	0x486CCFD4	888	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x42; unique PM; conf medium
 72	0x2CD358	0x486CD358	863	3	effect	modulated-delay chorus/ensemble	Multi/Sound-DSP insert (units1-6); types 0x43; unique PM; conf medium
 73	0x2CD6C3	0x486CD6C3	900	3	effect	modulated-delay + series-allpass (phaser/diffuser)	Multi/Sound-DSP insert (units1-6); types 0x44; unique PM; conf medium
-74	0x2CDA53	0x486CDA53	693	3	effect	modulated-delay / tremolo-rotary (computed LFO)	Multi/Sound-DSP insert (units1-6); types 0x46; unique PM; conf medium
+74	0x2CDA53	0x486CDA53	693	3	effect	TOUCH WAH: envelope-swept resonator + stereo echo (was: tremolo-rotary)	Multi/Sound-DSP insert (units1-6); types 0x46; env (atk 1/256/rel 1/2048) -> quadratic coeff map g=0.05e-0.01e^2, a1=1.996-1.28e^2: bandpass sweeps 443 Hz (quiet, silent) -> ~8.3 kHz (loud); echo 4000/5000 smp fb 0.6; wet-only; full doc dsp/insert-effects-algorithms.md #1; unique PM; conf high
 75	0x2CDD14	0x486CDD14	887	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x50; =rec76 (identical PM); conf medium
 76	0x2CE097	0x486CE097	887	3	effect	modulated-delay chorus/flanger	Multi/Sound-DSP insert (units1-6); types 0x51; =rec75 (identical PM); conf medium
 77	0x2CE41A	0x486CE41A	197	1	data	LFO waveform table — sine	conf high

@@ -1,13 +1,16 @@
-; rec64 — overdrive/distortion (family rec62-65; tone preset C)
-; Identical PM to rec62; only the tone-biquad coeffs dm:c018-c01d differ.
-pm:0x8400  DistEntry            ; I0 = I1
-pm:0x840c  recipGain          ; F8 = RECIPS F8 (auto-gain)
-pm:0x841d  chA_cubicShaper    ; cubic soft-clip waveshaper
-pm:0x842f  chA_postBiquad     ; tone biquad (dm:c018-c01d = this preset)
-pm:0x843e  chA_writeOut       ; DM(I4,M2) = R8
-pm:0x846a  DistReturn         ; RTS (DB)
-dm:0xc018  tone_b0            ; tone biquad b0 (preset C)
-dm:0xc019  tone_b1            ; tone biquad b1
-dm:0xc01a  tone_b2            ; tone biquad b2
-dm:0xc01b  tone_a1            ; tone biquad a1
-dm:0xc01c  tone_a2            ; tone biquad a2
+; rec64 — cubic soft-clip overdrive (family rec62-65; tone bank C, type 0x66)
+; Identical PM to rec62 — see sym/rec62.sym + dsp/insert-effects-algorithms.md #3.
+; Bank C: inject 0.17; poles r=0.858 @ 1.05 kHz (mid honk); real zeros 0.916/0.585
+; (mid dip). Unity DC.
+pm:0x8400  DistEntry             ; I0 = I1
+pm:0x840c  recipGain             ; AGC (inert as in rec62; clamps at 4.0)
+pm:0x841d  chA_cubicShaper       ; y = x - x^3/3, rails +-2/3
+pm:0x842f  chA_toneBank          ; tone bank C (c018-c01d = this preset)
+pm:0x843e  chA_writeOut          ; DM(I4,M2) = R8
+pm:0x846a  DistReturn            ; RTS (DB)
+dm:0xc018  ToneInject            ; 0.168 (0x3E2C0831) (PRESET)
+dm:0xc019  ToneA1                ; +1.6974 (0x3FD94321): poles r=0.858 @ 1.05 kHz
+dm:0xc01a  ToneA2                ; -0.7369 (0xBF3CA3D7)
+dm:0xc01b  ToneB1                ; -1.6974
+dm:0xc01c  ToneB0                ; +1.1309 (0x3F90C29D): real zeros 0.916/0.585
+dm:0xc01d  ToneB2                ; +0.6059 (0x3F1B1E9C)

@@ -1,22 +1,34 @@
-; rec15 — EFFECT: 2-comb reverb, shorter taps (smaller room) variant of rec13, C000:40e family
+; rec15 — EFFECT: CROSS-FEEDBACK PING-PONG ECHO (type 0x0C) — corrected from "2-comb reverb"
+; Full doc dsp/insert-effects-algorithms.md #5. L = 4000 smp (90.7 ms), R = 4400 smp
+; (99.8 ms); feedback 0.6 through the unity-DC damp (c004-c006 = rec13's bank) — but
+; the feedback sources are SWAPPED: L regenerates from R's tap (DM(-2,I1)=c002) and
+; R from L's (DM(-1,I1)=c003), so each repeat crosses the stereo field. Matches the
+; GUI MULTI unit's default type name "Cross Delay" (effect-multi-unit-routing.md) —
+; PROVISIONAL as a name, structural as a fact. Level smoother = rec13's (fade-in).
 pm:0x8400  Entry_SetInPtr        ; I0=I1, R15=I6 base
-pm:0x8402  LoadFeedbackState     ; R10=DM(-2,I1)
-pm:0x8403  Comb1_ReadTap_Coeff   ; R7=DM(I0,M2), R3=PM(I8,M14)
-pm:0x8404  Comb1_AllpassMAC      ; F12=F3*F7 / F3=F10+F12 / F7=F3*F7, PM(I8,M8)=R3
+pm:0x8402  LoadFeedbackL         ; R10=DM(-2,I1) = c002 = the OTHER channel's tap (cross!)
+pm:0x8403  DampL_Coeff           ; R7=c004(0.749), R3=PM(0x9800)
+pm:0x8404  DampL_Filter          ; u = fb + 0.749*u1; y = 0.564*u - 0.313*u1 (unity DC)
 pm:0x8408  LoadInputL            ; R3=DM(0x20,I4)
-pm:0x840c  Comb1_TapLen_4000     ; M7=0x0FA0 (4000) delay tap
-pm:0x840d  Comb1_WriteDelay      ; DM(I6,M7)=R0
-pm:0x8411  AdvanceDelayBase      ; MODIFY(I6,M7=0x3C64)
-pm:0x8412  StoreState_m1         ; DM(-1,I1)=R8
-pm:0x841a  OutputWriteL          ; DM(I4,M2)=R8
-pm:0x8429  Comb2_TapLen_4400     ; M7=0x1130 (4400) second comb tap
-pm:0x842a  Comb2_WriteDelay      ; DM(I6,M7)=R0
-pm:0x8436  OutputWriteR          ; DM(I4,M2)=R8
-pm:0x8437  CrossMixTaps          ; R3=PM(I8,M8): F8=F3*F7,F12=F2*F7, DM(I0,M6)=R12
+pm:0x840c  DelayL_Len4000        ; M7=0x0FA0 (4000) = 90.7 ms
+pm:0x840d  DelayL_Write          ; DM(I6,M7)=R0
+pm:0x8411  ArenaHop              ; MODIFY(I6, 0x3C64) channel-2 arena stride
+pm:0x8412  StoreTapL             ; DM(-1,I1)=tap -> c003 (feeds R, same frame)
+pm:0x841a  OutputWriteL          ; tap * level(c00b) * wet * 2, CLIP, DM(I4,M2)
+pm:0x841c  LoadFeedbackR         ; R10=DM(-1,I1) = c003 = L's tap (cross!)
+pm:0x8429  DelayR_Len4400        ; M7=0x1130 (4400) = 99.8 ms
+pm:0x842a  DelayR_Write          ; DM(I6,M7)=R0
+pm:0x842f  StoreTapR             ; DM(-2,I1)=tap -> c002 (feeds L, next frame)
+pm:0x8436  OutputWriteR          ; DM(I4,M2)
+pm:0x8437  LevelSmoother         ; c00b = 0.004(9802)*c00a + 0.996(9803)*c00b
 pm:0x843d  Return                ; RTS(DB)
 dm:0x9802  ParamSmooth_a         ; 0.004
 dm:0x9803  ParamSmooth_1ma       ; 0.996
-dm:0xc004  CombCoeff0            ; 0.749
-dm:0xc005  CombCoeff1            ; -0.313
-dm:0xc006  CombCoeff2            ; 0.564
-dm:0xc008  UnityFixed            ; 0x7FFFFFFF
+dm:0xc004  DampPole              ; 0.749
+dm:0xc005  DampB1                ; -0.313
+dm:0xc006  DampB0                ; 0.564 (unity DC, 0.50 @ Nyquist)
+dm:0xc007  FbGainL               ; 0.6 cross-regeneration L<-R
+dm:0xc008  UnityFixed            ; 0x7FFFFFFF wet
+dm:0xc009  FbGainR               ; 0.6 cross-regeneration R<-L
+dm:0xc00a  LevelTarget           ; 1.0 — host-written output level target
+dm:0xc00b  LevelSmoothed         ; smoothed level state (fade-in)

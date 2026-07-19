@@ -1,23 +1,43 @@
-; rec74 [EFFECT] — polynomial-sine LFO + dual delay lines (hybrid: F67-69 poly core + F70-73 delay)
-; sums L+R input, computes sine via cubic poly, applies to two delay taps
+; rec74 [EFFECT] — TOUCH WAH: envelope-follower-swept resonator + per-channel echo
+; (corrected from "tremolo-rotary/computed LFO": the polynomial is an env->coefficient
+; map, not a sine). Full doc dsp/insert-effects-algorithms.md #1.
+; env |0.8*(L+R)<<9|, attack 1/256 / release 1/2048 (c004/c005), state PM 0x9800.
+; Quadratic map (e=env/2^31): g=0.05e-0.01e^2 (c006/c007), a1=1.996-1.28e^2 (c008/c009),
+; a2=2g-1 -> bandpass w=x+a1*w1+a2*w2, y=g*(w-w[n-2]); f0 443 Hz (quiet; g=0=silent)
+; -> ~8.3 kHz (full scale). Echo: line in = 4*y + 0.6*fb; L=4000 smp (90.7 ms),
+; R=5000 smp (113.4 ms, arena hop +0x3C64); fb = own tap 1 frame late (c003/c002);
+; out = 2*y + 0.5*tap, wet-only.
 pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  ReadInputLR           ; R0=DM(0x20,I4); R8=DM(0x21,I4); R8=R0+R8 (L+R sum)
-pm:0x8404  InScale               ; LSHIFT R8 BY 9; F8=FLOAT R8
-pm:0x8406  AngleScale            ; R0=0x3F4CCCCD(0.8); F8=F8*F0; ABS
-pm:0x8409  RangeReduce           ; F3=F8-F7; IF LT reload coeff
-pm:0x840d  PolySine              ; F4=F7*F7; F10=F3*F7; cubic sine terms
-pm:0x8412  PolyStore             ; F4=F10+F10; F4=F4-F3 finalize modulator
-pm:0x8414  ReChannelL            ; R0=DM(0x20,I4); F10=FLOAT (audio path)
-pm:0x8416  ModApply1             ; F12=F3*F7 chain modulate sample
-pm:0x841d  GainMix               ; R1=0x40800000(4.0); F0=F10*F1; F8=F0+F7
-pm:0x8420  Delay1_Write          ; M7=0xFA0(4000); DM(I6,M7)=R8
-pm:0x8422  Delay1_Read           ; R8=DM(I6,M6)
-pm:0x8424  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7); DM(-1,I1)=R8
-pm:0x8427  Mix1                  ; F0=F0*F7; F12=F8*F7; F0=F0+F12
-pm:0x842a  OutputL               ; R0=FIX; R0=R0*R14; DM(I4,M2)=R0
-pm:0x842d  ReChannelR            ; R0=DM(0x20,I4); F10=FLOAT (right path)
-pm:0x843c  Delay2_Write          ; M7=0x1388(5000); DM(I6,M7)=R8
-pm:0x843e  Delay2_Read           ; R8=DM(I6,M6); DM(-2,I1)=R8
-pm:0x8443  Mix2                  ; F0=F0+F12
-pm:0x8445  Return                ; RTS (DB); R0=R0*R14
+pm:0x8401  ReadInputLR           ; R0=DM(0x20,I4); R8=DM(0x21,I4); R8=L+R
+pm:0x8404  EnvInScale            ; LSHIFT 9; FLOAT -> follower drive
+pm:0x8406  EnvAbs                ; R0=0x3F4CCCCD(0.8); F8=|0.8*in|
+pm:0x8409  EnvAtkRel             ; F3=|x|-env; IF LT release c005(1/2048) else attack c004(1/256)
+pm:0x840d  CoeffMapG             ; env'->PM(0x9800); g=c006*e-c007*e^2, a1=c009-c008*e^2
+pm:0x8412  CoeffStore            ; scratch: c00b=a1, c00c=2g-1(=a2), c00d=g
+pm:0x8414  WahBiquadL            ; w=inL+a1*w1+a2*w2 (state PM 0x9801/2), y=g*(w-w2)
+pm:0x841c  EchoInL               ; R1=4.0; line_in = 4*y + 0.6*fb(c00e, prev tap c003)
+pm:0x8420  DelayL_Write          ; M7=0xFA0(4000); DM(I6,M7)=line_in
+pm:0x8422  DelayL_Read           ; tap @ +4000 = 90.7 ms
+pm:0x8424  ArenaHop              ; M7=0x3C64 channel-2 arena stride; save tap->c003
+pm:0x8427  MixOutL               ; out = 2*y(c00f=0.5 on 4*y) + 0.5*tap(c010)
+pm:0x842a  OutputL               ; FIX; *wet(c011~1.0); DM(I4,M2)
+pm:0x842d  WahBiquadR            ; same scratch coeffs (MODIFY I0,-7), state PM 0x9803/4
+pm:0x843c  DelayR_Write          ; M7=0x1388(5000); 113.4 ms
+pm:0x843e  DelayR_Read           ; tap; save->c002
+pm:0x8443  MixOutR               ; out = 2*y + 0.5*tap
+pm:0x8445  Return                ; RTS (DB)
 pm:0x8446  OutputR               ; DM(I4,M2)=R0
+dm:0xc004  EnvAttack             ; 0x3B800000 = 1/256 (tau ~5.8 ms)
+dm:0xc005  EnvRelease            ; 0x3A000000 = 1/2048 (tau ~46 ms)
+dm:0xc006  MapG_lin              ; 0.05/2^31: g linear term
+dm:0xc007  MapG_quad             ; 0.01/2^62: g quadratic term
+dm:0xc008  MapA1_quad            ; 1.28/2^62: a1 = 1.996 - 1.28*e^2
+dm:0xc009  MapA1_const           ; 1.996 (f0 = 443 Hz at env=0)
+dm:0xc00a  One                   ; 1.0 (a2 = 2g - 1)
+dm:0xc00e  FbGainL               ; 0.6 echo regeneration L
+dm:0xc00f  OutYGainL             ; 0.5 (x 4.0 immediate = 2*y)
+dm:0xc010  OutTapGainL           ; 0.5
+dm:0xc011  WetL                  ; 0x7FFFFFFF Q31 ~1.0
+dm:0xc012  FbGainR               ; 0.6
+dm:0xc013  OutYGainR             ; 0.5
+dm:0xc014  OutTapGainR           ; 0.5

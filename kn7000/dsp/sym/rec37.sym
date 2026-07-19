@@ -1,22 +1,45 @@
-; rec37 EFFECT — distortion/overdrive: envelope-follower AGC (RECIPS) + waveshaper
-; table lookup + post biquad tone + short delay, stereo (right channel inverted).
-; rec38 = same PM, differs only in two output-level immediates (preset).
-pm:0x8400  Rec37_AudioIn        ; R0=DM(0x20),R8=DM(0x21); R8=L+R; LSHIFT 9
-pm:0x8405  Rec37_EnvRect        ; R8=ABS R8 rectify; PM(I8,M14) env state, DM(I0,M1) attack coef
-pm:0x8407  Rec37_EnvAtkRel      ; IF LT choose release coef; one-pole env: R8=MRF+(R3*R4)
-pm:0x840a  Rec37_EnvStore       ; PM(I8,M8)=R8 save envelope
-pm:0x840c  Rec37_RecipGain      ; F8=RECIPS(env); F15=gain (auto-gain normalisation)
-pm:0x8413  Rec37_ApplyGainL     ; F0=F0*F15*F1 pre-gain (drive)
-pm:0x8415  Rec37_WaveshapeL     ; signal-indexed table lookup DM(I5 @+0x34)+interp = distortion curve
-pm:0x8422  Rec37_ToneBiquadL    ; biquad tone filter, PM(I8) coeffs+state
-pm:0x8429  Rec37_OutLevelL      ; R0=0x3E570A3D output level (preset-differing)
-pm:0x842b  Rec37_DelayL         ; M7=0x190(400) DM(I2,M7) short delay
-pm:0x8433  Rec37_OutLeft        ; DM(I4,M2)=R8 left
-pm:0x8434  Rec37_ChanR          ; re-read DM(0x20), same drive/waveshape/biquad path
-pm:0x844d  Rec37_OutLevelR      ; R0=0x3E4AC083 right level (preset-differing)
-pm:0x8451  Rec37_InvertR        ; R8=-R8 right-channel phase invert (stereo spread)
-pm:0x8454  Rec37_OutRight       ; DM(I4,M2)=R8 right
-pm:0x8455  Rec37_Return         ; RTS
-dm:0xc006  Rec37_EnvCoef        ; envelope attack/release + threshold coeffs c006..c00b
-dm:0xc00d  Rec37_ToneCoef       ; post biquad tone coeffs c00d..c011
-dm:0xc012  Rec37_Unity          ; =0x7FFFFFFF
+; rec37 EFFECT — TABLE-LOOKUP WAVESHAPER distortion with LIVE auto-gain + Haas stereo
+; (types 0x82; rec38/39/40 = structural siblings, own PM). Full doc
+; dsp/insert-effects-algorithms.md #4. Env of |L+R| in PM 0x9800 (attack c004=1/256,
+; release c005=1/2048 — same pair as rec74); gain = c006(0.111) + c007(8.35e8)/env,
+; clamped at c009=4.0 below c008=0.1FS (curve meets clamp exactly) — input held near
+; half scale = constant timbre across velocity. The drive-scaled SIGNAL indexes the
+; c028-c048 table (+-16 idx, 16-bit frac lerp) — same table window the choruses use
+; for LFO shapes, here as the transfer curve: 33-point odd PWL knee, slopes
+; 7.5 / 1.5 / 0.5 (|x| < 1/16 / < 1/8 / < 1) — hard-knee limiter curve, host-replaceable.
+; Tone biquad c00d-c011: unity DC, poles 0.954/0.647, zeros 0.972/0.467 (input x0.5).
+; Stereo: L out = own signal DELAYED 400 smp (9.1 ms, internal I2 ring) at 0.21;
+; R out = undelayed, INVERTED, 0.198 — a Haas widener baked into a distortion.
+pm:0x8400  Rec37_AudioIn         ; R0=DM(0x20),R8=DM(0x21); R8=L+R; LSHIFT 9
+pm:0x8405  Rec37_EnvRect         ; ABS; env state PM(I8,M14)=0x9800; attack c004 via DM(I0,M1)
+pm:0x8407  Rec37_EnvAtkRel       ; IF LT release c005; env' = env + k*(|x|-env)
+pm:0x840a  Rec37_EnvStore        ; PM(I8,M8)=R8 save envelope
+pm:0x840c  Rec37_RecipGain       ; F15 = c006 + c007*RECIPS(env); IF env<=c008, F15 = c009 (4.0)
+pm:0x8413  Rec37_ApplyGainL      ; F0 = inL * F15 * c00a(1.0 trim)
+pm:0x8415  Rec37_WaveshapeL      ; signal-indexed table @ c038+-16, frac lerp = transfer curve
+pm:0x8422  Rec37_ToneBiquadL     ; unity-DC tone biquad (c00d-c011), x0.5 (c00c), state PM(I8)
+pm:0x8429  Rec37_OutLevelL       ; R0=0x3E570A3D = 0.21 L level (preset immediate)
+pm:0x842b  Rec37_DelayL          ; I2 ring: write, tap +400 (9.1 ms), rewind -400 — Haas lag
+pm:0x8433  Rec37_OutLeft         ; DM(I4,M2)=R8 left (delayed)
+pm:0x8434  Rec37_ChanR           ; re-read input R, same drive/waveshape/biquad path
+pm:0x844d  Rec37_OutLevelR       ; R0=0x3E4AC083 = 0.198 R level (preset immediate)
+pm:0x8451  Rec37_InvertR         ; R8=-R8 right polarity invert (stereo spread)
+pm:0x8454  Rec37_OutRight        ; DM(I4,M2)=R8 right (undelayed)
+pm:0x8455  Rec37_Return          ; RTS
+dm:0xc004  EnvAttack             ; 0x00800000 Q31 = 1/256
+dm:0xc005  EnvRelease            ; 0x00100000 Q31 = 1/2048
+dm:0xc006  AgcGainMin            ; 0.111 (0x3DE38E38)
+dm:0xc007  AgcRecipNum           ; 8.35e8 (0x4E471C71)
+dm:0xc008  AgcThresh             ; 0.1 FS Q31 (0x0CCCCCCC)
+dm:0xc009  AgcGainMax            ; 4.0 (0x40800000) clamp
+dm:0xc00a  DriveTrim             ; 1.0
+dm:0xc00b  FloatByM31            ; 0xFFFFFFE1 = -31 (frac FLOAT BY constant)
+dm:0xc00c  ToneInHalf            ; 0.5 tone input scale
+dm:0xc00d  ToneA1                ; +1.6009 (0x3FCCE982): real poles 0.954/0.647
+dm:0xc00e  ToneA2                ; -0.6173 (0xBF1E04F3)
+dm:0xc00f  ToneB1                ; -1.6009
+dm:0xc010  ToneB0                ; +1.1119 (0x3F8E53B9): zeros 0.972/0.467; unity DC
+dm:0xc011  ToneB2                ; +0.5053 (0x3F015D7F)
+dm:0xc012  Rec37_Unity           ; 0x7FFFFFFF wet
+dm:0xc028  ShaperTable           ; 33-pt PWL transfer curve, -1.0 at idx -16 (c028) .. +1.0 (c048)
+dm:0xc038  ShaperTableCenter     ; 0 at idx 0; slopes 7.5/1.5/0.5 — hard-knee limiter curve

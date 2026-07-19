@@ -17,9 +17,9 @@
 ;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   modulated-allpass phaser
 ;  11  effect   0x486BFF35  DM@9800:1e DM@C000:77e PM@8400:104w   modulated-delay chorus
 ;  12  effect   0x486C035B  DM@9800:7e DM@C000:77e PM@8400:69w   dynamics/compressor + delay/filter composite
-;  13  effect   0x486C06CD  DM@9800:4e DM@C000:40e PM@8400:63w   comb+allpass reverb / delay
-;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   comb+allpass reverb / delay
-;  15  effect   0x486C0C0A  DM@9800:4e DM@C000:40e PM@8400:64w   comb+allpass reverb / delay
+;  13  effect   0x486C06CD  DM@9800:4e DM@C000:40e PM@8400:63w   stereo echo (dual-mono, damped 0.6 regen)
+;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   panning multi-tap echo (4 equal taps, repeats walk the stereo field)
+;  15  effect   0x486C0C0A  DM@9800:4e DM@C000:40e PM@8400:64w   cross-feedback ping-pong echo (Cross Delay candidate)
 ;  16  effect   0x486C0E96  DM@9800:12e DM@C000:77e PM@8400:72w   modulated-delay chorus
 ;  17  effect   0x486C1233  DM@9800:1e DM@C000:77e PM@8400:73w   waveshaper/distortion + envelope AGC
 ;  18  effect   0x486C159F  DM@9800:9e DM@C000:77e PM@8400:96w   waveshaper/distortion + allpass/delay
@@ -41,7 +41,7 @@
 ;  34  effect   0x486C45E2  DM@9800:16e DM@C000:40e PM@8400:13w   5-band output EQUALIZER
 ;  35  effect   0x486C4778  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
 ;  36  effect   0x486C4B21  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  37  effect   0x486C4ECA  DM@9800:5e DM@C000:77e PM@8400:88w   waveshaper/distortion
+;  37  effect   0x486C4ECA  DM@9800:5e DM@C000:77e PM@8400:88w   table-lookup waveshaper distortion + live AGC + Haas stereo
 ;  38  effect   0x486C52A4  DM@9800:5e DM@C000:77e PM@8400:88w   waveshaper/distortion
 ;  39  effect   0x486C567E  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
 ;  40  effect   0x486C5AA2  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
@@ -50,9 +50,9 @@
 ;  43  effect   0x486C6618  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
 ;  44  effect   0x486C69C1  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
 ;  45  effect   0x486C6D6A  DM@9800:12e DM@C000:77e PM@8400:74w   modulated-delay chorus
-;  46  effect   0x486C7113  DM@9800:1e DM@C000:77e PM@8400:99w   modulated-allpass phaser
+;  46  effect   0x486C7113  DM@9800:1e DM@C000:77e PM@8400:99w   LFO-swept 10-pole resonant lowpass (filter sweep; NOT a phaser)
 ;  47  effect   0x486C751B  DM@9800:1e DM@C000:40e PM@8400:64w   modulated-allpass phaser
-;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   modulated-allpass phaser
+;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   LFO wah: swept resonant bandpass Q=8 (NOT a phaser)
 ;  49  effect   0x486C7AF2  DM@9800:9e DM@C000:32e PM@8400:101w   modulated-delay chorus
 ;  50  effect   0x486C7E4D  DM@9800:5e DM@C000:67e PM@8400:94w   modulated-delay chorus
 ;  51  effect   0x486C8219  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
@@ -66,10 +66,10 @@
 ;  59  effect   0x486CA134  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
 ;  60  effect   0x486CA496  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
 ;  61  effect   0x486CA7F8  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
-;  62  effect   0x486CAB5A  DM@9800:8e DM@C000:73e PM@8400:109w   waveshaper/distortion
-;  63  effect   0x486CAFAD  DM@9800:8e DM@C000:73e PM@8400:109w   waveshaper/distortion
-;  64  effect   0x486CB400  DM@9800:8e DM@C000:73e PM@8400:109w   waveshaper/distortion
-;  65  effect   0x486CB853  DM@9800:8e DM@C000:73e PM@8400:109w   waveshaper/distortion
+;  62  effect   0x486CAB5A  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank A: 2.9 kHz presence peak)
+;  63  effect   0x486CAFAD  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank B: 2.9 kHz notch, low-mid poles)
+;  64  effect   0x486CB400  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank C: 1.05 kHz mid honk)
+;  65  effect   0x486CB853  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank D: softened 2.9 kHz peak)
 ;  66  effect   0x486CBCA6  DM@9800:1e DM@C000:64e PM@8400:141w   modulated-delay chorus/pitch-shift (multi-stage)
 ;  67  effect   0x486CC169  DM@9800:5e DM@C000:73e PM@8400:108w   waveshaper/nonlinear (+ modulated delay)
 ;  68  effect   0x486CC5A7  DM@9800:1e DM@C000:73e PM@8400:57w   waveshaper/nonlinear
@@ -78,7 +78,7 @@
 ;  71  effect   0x486CCFD4  DM@9800:1e DM@C000:77e PM@8400:77w   modulated-delay chorus/flanger
 ;  72  effect   0x486CD358  DM@9800:2e DM@C000:77e PM@8400:72w   modulated-delay chorus/ensemble
 ;  73  effect   0x486CD6C3  DM@9800:1e DM@C000:77e PM@8400:79w   modulated-delay + series-allpass (phaser/diffuser)
-;  74  effect   0x486CDA53  DM@9800:5e DM@C000:40e PM@8400:72w   modulated-delay / tremolo-rotary (computed LFO)
+;  74  effect   0x486CDA53  DM@9800:5e DM@C000:40e PM@8400:72w   TOUCH WAH: envelope-swept resonator + stereo echo (was: tremolo-rotary)
 ;  75  effect   0x486CDD14  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger
 ;  76  effect   0x486CE097  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger
 ;  77  data     0x486CE41A  DM@C028:37e   LFO waveform table — sine

@@ -1,38 +1,63 @@
-; rec62 — overdrive/distortion with auto-gain + cubic soft-clip (family rec62-65)
-; Signal per channel: sum L+R -> level/envelope detect -> reciprocal gain (AGC)
-; -> pre biquad -> cubic soft-clip waveshaper (x - k*x^3, saturating at +/-0.667)
-; -> output gain -> post/tone biquad -> output. Stereo (two identical channel
-; passes). Family shares identical PM; presets differ only in the tone-biquad
-; coeffs dm:c018-c01d.
-pm:0x8400  DistEntry              ; I0 = I1 (coeff base)
+; rec62 — CUBIC SOFT-CLIP OVERDRIVE (family rec62-65 = 4 tone banks, identical PM)
+; Full doc dsp/insert-effects-algorithms.md #3. Per channel: DC-block HP ~100 Hz
+; (c00d-c00f) -> drive (c00b*c00c*gain) -> cubic clipper y = x - x^3/3 (c014),
+; rails +-2/3 exactly (continuous) -> 70 Hz leaky-integrator smoother w/ sign guard
+; (c013=0.06 in, c015=0.99 fb, state c016) -> unity-DC tone bank (c018 inject,
+; c019/c01a poles, c01b-c01d zeros, c01e-c020 one-pole ~5 kHz rolloff) -> wet >>8.
+; rec62 bank: inject 0.05, poles r=0.901 @ 2.91 kHz = resonant presence peak.
+; AGC prologue (0x8405-0x8411) is INERT here: env read from c004 (never written;
+; the smoother's write lands on c005 via kernel M4=-2) -> gain clamps at c00a=4.0
+; constant. Working form of the same AGC = rec37 (env in PM state). c004 may be a
+; host-written drive parameter — PROVISIONAL. Constants tuned so the reciprocal
+; curve 0.111+8.35e8/env meets the 4.0 clamp exactly at c009 = 0.1 FS.
+pm:0x8400  DistEntry             ; I0 = I1 (coeff base)
 pm:0x8401  readInputs            ; R0=DM(0x20,I4) L, R14=DM(0x21,I4) R, <<8
-pm:0x8405  sumToMono            ; R8 = R0 + R14
-pm:0x8406  absLevel             ; R8 = ABS R8  (rectify for envelope)
-pm:0x8407  envMac              ; MR1F=R7; R8 = MRF+(R3*R4) attack/release smoother
-pm:0x840c  recipGain           ; F8 = RECIPS F8  (1/level = auto-gain)
-pm:0x8412  chA_floatInput      ; F10 = FLOAT R0 (left)
-pm:0x8413  chA_preBiquad       ; pre-clip biquad, coeffs DM(I0,M2), state PM(I8)
-pm:0x8419  chA_clipTestHi      ; COMP(F10,F5); IF GE -> hard-clip +limit
-pm:0x841d  chA_cubicShaper     ; F2=x*x*x*coef; F10 = x - k*x^3 (soft clip)
-pm:0x8422  chA_satPos          ; R10 = +0.6667 saturation constant
-pm:0x8424  chA_satNeg          ; R10 = -0.6667 saturation constant
-pm:0x8425  chA_driveGain       ; F10 = F10 * F13 (drive/output level)
-pm:0x842f  chA_postBiquad      ; post/tone biquad (coeffs dm:c018-c01d = preset)
-pm:0x8439  chA_fixOut          ; R8 = FIX F10, *R2 scale, ASHIFT -8
-pm:0x843e  chA_writeOut        ; DM(I4,M2) = R8 (left output)
-pm:0x843f  chB_floatInput      ; F10 = FLOAT R14 (right) — mirror of chA
-pm:0x844a  chB_cubicShaper     ; cubic soft clip (right)
-pm:0x8469  chB_writeOut        ; DM(I4,M2) = R8 (right output)
-pm:0x846a  DistReturn          ; RTS (DB)
-dm:0xc00d  hp_b0               ; 0.9858 (input DC-block/highpass biquad)
-dm:0xc00e  hp_b1               ; -0.9929
-dm:0xc00f  hp_b2               ; 0.9929
-dm:0xc013  drive_lo            ; 0.06  drive/mix scalers
-dm:0xc014  drive_mid          ; 0.333
-dm:0xc015  drive_hi           ; 0.99
-dm:0xc018  tone_b0            ; tone/cabinet biquad b0 (PRESET, differs c018-c01d)
-dm:0xc019  tone_b1            ; tone biquad b1 (preset)
-dm:0xc01a  tone_b2            ; tone biquad b2 (preset)
-dm:0xc01b  tone_a1            ; tone biquad a1 (preset)
-dm:0xc01c  tone_a2            ; tone biquad a2 (preset)
-dm:0xc021  out_unity         ; 0x7FFFFFFF ~ 1.0
+pm:0x8405  sumToMono             ; R8 = R0 + R14 (envelope source)
+pm:0x8406  absLevel              ; R8 = ABS R8 (rectify)
+pm:0x8407  envMac                ; env' = env + k*(|x|-env); k = c005 atk / c006 rel — INERT (see header)
+pm:0x840c  recipGain             ; gain = c008(0.111) + c007(8.35e8)/env; IF env<=c009(0.1FS) gain=c00a(4.0)
+pm:0x8412  chA_floatInput        ; F10 = FLOAT R0 (left)
+pm:0x8413  chA_dcBlockHP         ; one-pole HP ~100 Hz: 0.9929(1-z^-1)/(1-0.9858z^-1), state PM 0x9800
+pm:0x8419  chA_clipTestHi        ; COMP vs +1.0 (c011); IF GE -> +2/3 rail
+pm:0x841d  chA_cubicShaper       ; y = x - x^3*c014(1/3): textbook smooth clipper
+pm:0x8422  chA_satPos            ; R10 = +0.6667 (= cubic at x=1: continuous)
+pm:0x8424  chA_satNeg            ; R10 = -0.6667
+pm:0x8425  chA_postSmoother      ; *2^31 (c010); lp = c013(0.06)*y + c015(0.99)*lp1, sign guard, state c016
+pm:0x842f  chA_toneBank          ; inject c018; biquad c019/c01a poles + c01b-c01d zeros; c01e-c020 LP
+pm:0x8439  chA_fixOut            ; FIX; *wet c021; ASHIFT -8
+pm:0x843e  chA_writeOut          ; DM(I4,M2) = R8 (left)
+pm:0x843f  chB_floatInput        ; F10 = FLOAT R14 (right) — mirror of chA
+pm:0x844a  chB_cubicShaper       ; cubic soft clip (right)
+pm:0x8452  chB_postSmoother      ; right smoother, state via DM(M4,I0)
+pm:0x845c  chB_toneBank          ; right tone bank (same coeffs)
+pm:0x8469  chB_writeOut          ; DM(I4,M2) = R8 (right)
+pm:0x846a  DistReturn            ; RTS (DB)
+dm:0xc004  EnvPrev_or_Drive      ; read as "previous env" — never written; host drive param? PROVISIONAL
+dm:0xc005  EnvAttack             ; 0x00800000 Q31 = 1/256 (also clobbered by the misaimed env write)
+dm:0xc006  EnvRelease            ; 0x00100000 Q31 = 1/2048
+dm:0xc007  AgcRecipNum           ; 8.35e8 (0x4E471C71): gain = c008 + c007/env
+dm:0xc008  AgcGainMin            ; 0.111 (0x3DE38E38)
+dm:0xc009  AgcThresh             ; 0.1 FS Q31 (0x0CCCCCCC): below -> clamp
+dm:0xc00a  AgcGainMax            ; 4.0 (0x40800000): clamp (constant in practice here)
+dm:0xc00b  DriveNorm             ; 0x30000000: float scale-down, with c00c
+dm:0xc00c  DriveTen              ; 10.0 (0x41200000)
+dm:0xc00d  hp_pole               ; 0.9858 DC-block pole (~100 Hz)
+dm:0xc00e  hp_b1                 ; -0.9929
+dm:0xc00f  hp_b0                 ; 0.9929
+dm:0xc010  FixScale              ; 2^31 float (0x4F000000): back to fixed range
+dm:0xc011  ClipHi                ; +1.0 clipper threshold
+dm:0xc012  ClipLo                ; -1.0
+dm:0xc013  SmootherIn            ; 0.06: lp = 0.06*y + 0.99*lp1 (~70 Hz)
+dm:0xc014  CubicK                ; 0.3333: y = x - x^3/3
+dm:0xc015  SmootherFb            ; 0.99
+dm:0xc016  SmootherStateL        ; scratch (written 0x842e); right uses its own slot
+dm:0xc018  ToneInject            ; 0.05 tone-bank input gain (PRESET)
+dm:0xc019  ToneA1                ; +1.6491 pole coeff (PRESET): r=0.901 @ 2.91 kHz
+dm:0xc01a  ToneA2                ; -0.8122 (PRESET)
+dm:0xc01b  ToneB1                ; -1.6491 zero coeff (PRESET)
+dm:0xc01c  ToneB0                ; +2.394 (PRESET)
+dm:0xc01d  ToneB2                ; -0.582 (PRESET)
+dm:0xc01e  ToneLPpole            ; 0.5015: u = y1 + 0.5015*u1 (~5 kHz rolloff)
+dm:0xc01f  ToneLPb0              ; 0.2492 (out = 0.2492*(u + u1), unity DC)
+dm:0xc020  ToneLPb1              ; 0.2492
+dm:0xc021  out_unity             ; 0x7FFFFFFF ~ 1.0 wet
