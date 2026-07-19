@@ -1,23 +1,36 @@
-; rec21 — EFFECT: dynamics compressor/limiter/AGC (Newton-Raphson divide gain), C000:40e family
+; rec21 — EFFECT: the GUI COMPRESSOR (Comp.1-4, type 0x24; = rec25 LIMITER PM)
+; peak detector |(L+R)<<9| atk 1/32 (0.73 ms) / rel 1/2048 (46 ms) -> float gain
+; = c006 + c007/env = 1/3 + (2^31/6)/env, clamped at c009=2.0 below c008=0.1
+; (curve meets clamp EXACTLY at the threshold — the distortion-AGC construction).
+; Static law out = e/3 + 1/6: soft knee, ratio 6:1 @thr -> 1.5:1 @FS, +6 dB
+; fixed below; unity crossover e=0.25. RECIPS + 3 Newton iterations — full
+; precision because this gain IS the output (the distortion AGCs keep the seed).
+; One gain, both channels (stereo-linked), x makeup c00a, CLIP +-0x7FFFFF.
+; Full doc dsp/dynamics-eq-exciter.md #2.
 pm:0x8400  Entry_SetInPtr        ; I0=I1
 pm:0x8401  LoadInputL_R          ; R13=DM(0x20,I4) L, R8=DM(0x21,I4) R
 pm:0x8403  SumLR                 ; R8=R13+R8
-pm:0x8404  ScaleEnvInput         ; R8=LSHIFT 9
-pm:0x8405  RectifyEnv            ; R8=ABS R8 (rectified stereo sum = detector input)
-pm:0x8406  ThreshCompare         ; R3=R8-R7 (R7=threshold coeff from PM ring)
-pm:0x8407  BelowThresh           ; IF LT R4=DM(M3,I0) select release/attack coeff
-pm:0x8408  EnvSmooth_MAC         ; MR1F=R7 prev; R8=MRF+(R3*R4) one-pole envelope integrator
-pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
-pm:0x840b  Env_ToFloat_Recip     ; F12=FLOAT R7; R11=2.0, R0=1.0 seed for reciprocal
-pm:0x8410  RecipSeed             ; F0=RECIPS F12 reciprocal seed
-pm:0x8411  RecipNR_Iter          ; F12=F0*F12 / F7=F0*F7 / F0=2-F12 Newton-Raphson (x3) => 1/env
-pm:0x8418  ComputeGain           ; F8=F4*F0, F15=F3+F8 gain-reduction factor
-pm:0x841a  GainCompare           ; COMP(R4,R1); IF GE clamp
-pm:0x841c  ApplyGain_L           ; F0=FLOAT R13; F0=F0*F15; R0=FIX; *makeup; CLIP
+pm:0x8404  ScaleEnvInput         ; R8=LSHIFT 9 (wraps above |L+R|=2^22 — noted, harmless)
+pm:0x8405  RectifyEnv            ; R8=ABS R8; R4=c004 attack 1/32; R7=env state PM9800
+pm:0x8406  EnvDelta              ; R3=det-env
+pm:0x8407  ReleaseSelect         ; IF LT R4=c005 release 1/2048
+pm:0x8408  EnvSmooth_MAC         ; MR1F=env; env += k*(det-env)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=env
+pm:0x840b  Env_ToFloat           ; F12=FLOAT env; R3=c006=1/3; R11=2.0, R0=1.0
+pm:0x8410  RecipSeed             ; F0=RECIPS F12
+pm:0x8411  RecipNR_Iter          ; 3x Newton x'=x*(2-d*x), product in F7 => F0=1/env full precision
+pm:0x8418  ComputeGain           ; F8=c007*(1/env)=(2^31/6)/env; F15=1/3+F8
+pm:0x841a  ThreshCompare         ; COMP(c008=0.1, env)
+pm:0x841b  GainClamp             ; IF GE (env<=0.1) F15=c009=2.0 — meets the curve exactly
+pm:0x841c  ApplyGain_L           ; F0=FLOAT inL; x F15; FIX; x c00a makeup; CLIP 24-bit
 pm:0x8422  OutputWriteL          ; DM(I4,M2)=R0
-pm:0x8423  ApplyGain_R           ; R0=DM(0x20,I4)... F0*F15 (same gain both channels)
+pm:0x8423  ApplyGain_R           ; same F15 both channels — stereo-linked, no image shift
 pm:0x8429  OutputWriteR          ; DM(I4,M2)=R0
 pm:0x842a  Return                ; RTS(DB)
-dm:0xc006  ThreshOrKnee          ; 0.333
-dm:0xc009  Makeup_2x             ; 2.0
-dm:0xc00a  UnityFixed            ; 0x7FFFFFFF
+dm:0xc004  AttackRate            ; 0x04000000 = 1/32 (tau 0.73 ms) — 8x faster than the AGC standard
+dm:0xc005  ReleaseRate           ; 0x00100000 = 1/2048 (tau 46 ms)
+dm:0xc006  GainBase              ; float 0.333333 — the 1/3 asymptote
+dm:0xc007  GainRecipScale        ; float 357913920 ~ 2^31/6
+dm:0xc008  Threshold             ; Q31 0.100 (detector units; ~-26 dBFS input-referred)
+dm:0xc009  GainBelowThresh       ; float 2.0 = +6 dB fixed makeup region
+dm:0xc00a  Makeup                ; Q31 ~1.0 output level

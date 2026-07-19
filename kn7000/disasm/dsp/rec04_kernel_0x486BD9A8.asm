@@ -714,7 +714,7 @@ fhelp_iir_fixed:   ; fixed-point IIR/biquad (MRF MAC, feedback)
 8318: 00000a3e045008f0 RTS (DB), MRF = MRF - R3 * R7 (SSF),  R8 = R8 + R12
 8319: 000050fe841f8585 R5 = MRF -(R8 * R5),  DM(I0, M3) = R8
 831a: 0000507e82800000 DM(I0, M1) = R5
-fhelp_interp3:   ; FLOAT R0 -> 3-tap interp loop -> FIX (coeff gen; u8's EQ rec34 CALLs this)
+fhelp_eq5_cascade:   ; the 5-section EQ cascade: FLOAT R0 -> 1st-order + LCNTR=3 biquad loop + 1st-order -> FIX, R15=clip bound (u8's EQ rec34 = a wrapper around this; rec23 = its inlined twin; corrects the old '3-tap interp' reading — see dsp/dynamics-eq-exciter.md #5)
 831b: 0000208e318caa00 F10 = FLOAT R0,  R7 = DM(I0, M2), R3 = PM(I8, M14)
 831c: 000050be03930c37 F12 = F3 * F7,  R7 = DM(I0, M2)
 831d: 000050be03d8c3f8 F12 = F3 * F7,  F3 = F10 + F12,  R7 = DM(I0, M2)
@@ -863,7 +863,7 @@ init_call_fhelpB:   ; CALL 0x830B
 8d54: 000006be0000830b CALL (0x0000830B)
 8d55: 0000000000000000 NOP
 8d56: 0000000000000000 NOP
-init_call_fhelpC:   ; CALL 0x831B
+init_call_fhelpC:   ; CALL 0x831B (the EQ cascade)
 8d57: 000006be0000831b CALL (0x0000831B)
 8d58: 0000000000000000 NOP
 8d59: 0000000000000000 NOP

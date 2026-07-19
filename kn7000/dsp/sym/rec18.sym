@@ -1,32 +1,48 @@
-; rec18 — EFFECT: auto-gain waveshaper/distortion + comb/allpass tail (largest variant), C000:77e family
+; rec18 — EFFECT: AGC waveshaper, group-B base (type 0x21, GUI bank 0x40 grp B
+; Normal/Mild/Hard/Hard Compress). rec17's AGC -> LUT curve B (smooth concave
+; knee, slopes 8/2.67/1.67/1/...) -> ONE-POLE TONE SMOOTHER y=k1*x+k2*y1 with
+; k1/k2 IN PM STATE (9801/2 ch0 = 0.10/0.40, 9805/6 ch1 — host-rewritable per
+; preset; prev y parked in DM c00c/c015) -> x0.5 -> unity-DC 2nd-order LP biquad
+; (double pole 0.374, -3 dB ~4 kHz, per-channel banks c00e../c016..) -> levels
+; 0.625/0.5, ch0 delayed 400 smp (9.1 ms), ch1 inverted. rec39/40 = this engine
+; w/ shared biquad bank + preset voicings. Full doc dsp/dynamics-eq-exciter.md #6.4.
 pm:0x8400  Entry_SetInPtr        ; I0=I1
 pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
 pm:0x8403  SumScaleEnv           ; R8=R0+R8; <<9
-pm:0x8405  RectifyEnv            ; R8=ABS R8
-pm:0x8406  ThreshCompare         ; R3=R8-R7; IF LT pick coeff
-pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4)
-pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
-pm:0x840b  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8
-pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8 auto drive gain
-pm:0x840f  GainCompare           ; COMP(R4,R7); IF GE clamp
-pm:0x8411  ApplyGain_L           ; R0<<9; F0=FLOAT; F0=F0*F15; F0=F0*F9
-pm:0x8415  Index_FixShift        ; R8=FIX; ASHIFT-11; I5=I1+0x34
-pm:0x8419  LUT_Fetch_Interp      ; ASHIFT-16 idx; FDEP frac; DM(I5,M7); interpolate transfer LUT
-pm:0x8420  Comb_MAC_In           ; R0=FIX F8, R3=PM(I8,M8): R6=R3*R0, R12=R2*R7 feed comb
-pm:0x8424  Comb_WriteState       ; DM(I0,M2)=R12
-pm:0x8427  Allpass_PMcoeffRing   ; PM(I8,M11)/M9 rotate allpass coeffs, F10 accumulate taps
-pm:0x8430  Delay_Write_400       ; M7=0x190 DM(I2,M7)=R10 delay write
-pm:0x8432  Delay_Read_Advance    ; R10=DM(I2,M6); MODIFY(I2,-0x190)
-pm:0x8434  PostScale_L           ; F10 -> R0=FIX; *R14; <<-8
+pm:0x8405  RectifyEnv            ; ABS; R4=c004 attack 1/256; R7=env PM9800
+pm:0x8406  ReleaseSelect         ; R3=det-env; IF LT R4=c005 release 1/2048
+pm:0x8409  EnvSmooth_MAC         ; env += k*(det-env)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=env
+pm:0x840b  Env_RecipSeed         ; FLOAT + RECIPS (seed only)
+pm:0x840d  ComputeDriveGain      ; F15 = 0.111 + 8.35e8/env
+pm:0x840f  DriveClamp            ; IF GE (env<=0.1) F15=c009=4.0
+pm:0x8411  ApplyGain_L           ; R0<<9; FLOAT; x F15; x F9=c00a trim
+pm:0x8415  Index_FixShift        ; FIX; ASHIFT-11; I5=I1+0x34
+pm:0x8419  LUT_Fetch_Interp      ; curve B fetch + linear interp
+pm:0x8420  ToneSmoother_L        ; y = k1*x + k2*y1; k1=PM9801(0.10), k2=PM9802(0.40); y1 in c00c
+pm:0x8424  ToneSmoother_Store    ; DM(I0,M2)=y (c00c); F10 = FLOAT y x c00d=0.5
+pm:0x8427  ToneBiquad_L          ; unity-DC LP (a1,a2,b1,g,b2)=c00e..c012: double pole .374, ~4 kHz
+pm:0x842e  OutLevelL             ; R0=0x3F200000 = 0.625 (preset immediate)
+pm:0x8430  HaasDelayL            ; M7=0x190: write, read +400 smp (9.1 ms), rewind
+pm:0x8434  PostScale_L           ; FIX; x R14=c013 makeup; >>8
 pm:0x8437  OutputWriteL          ; DM(I4,M2)=R0
-pm:0x8438  ProcessR              ; second channel: ApplyGain+LUT+comb+allpass
-pm:0x845a  NegateR               ; R0=-R0 anti-phase spread
+pm:0x8438  ProcessR              ; ch1: same AGC gain, LUT (exp c014), smoother k=PM9805/6 y1=c015
+pm:0x844f  ToneBiquad_R          ; own bank c016..c01a (template = ch0 bank; per-channel tone possible)
+pm:0x8456  OutLevelR             ; R0=0x3F000000 = 0.5 (preset immediate)
+pm:0x845a  NegateR               ; R0=-R0 — ch1 inverted, undelayed
 pm:0x845c  OutputWriteR          ; DM(I4,M2)=R0
-pm:0x845d  Return                ; RTS(DB)
-dm:0x9801  ParamSmooth_a         ; 0.10 (0x19999999 fixed)
-dm:0x9802  ParamSmooth_b         ; 0.40 (0x66666666 fixed)
-dm:0xc006  DetectScale           ; 0.111
-dm:0xc009  DriveBase             ; 4.0
-dm:0xc00e  CombCoeff             ; 0.749 allpass/comb gain
-dm:0xc028  TransferLUT_start     ; monotonic antisymmetric transfer table (c028..c048)
+pm:0x845d  Return                ; RTS(DB); MODIFY(I8,0x47): 9 state words
+dm:0x9801  SmootherK1_ch0        ; 0x19999999 = 0.10 — tone-smoother input gain (host-rewritable)
+dm:0x9802  SmootherK2_ch0        ; 0x66666666 = 0.40 — feedback (DC gain 1/6, -3 dB ~5.7 kHz)
+dm:0x9805  SmootherK1_ch1        ; 0.10 (ch1 copy)
+dm:0x9806  SmootherK2_ch1        ; 0.40
+dm:0xc006  DriveBase             ; 0.111 (c007=8.35e8, c008=0.1, c009=4.0 — the family AGC)
+dm:0xc00c  SmootherState_ch0     ; previous smoother output (written every sample)
+dm:0xc00d  SmootherPost          ; float 0.5
+dm:0xc00e  ToneBiq_ch0           ; (a1,a2,b1,g,b2) = 0.748/-0.140/0.196/0.098/0.098: unity-DC LP
+dm:0xc013  Makeup                ; Q31 ~1.0
+dm:0xc014  FracExp2              ; -31 (ch1)
+dm:0xc015  SmootherState_ch1     ; ch1 smoother state
+dm:0xc016  ToneBiq_ch1           ; ch1 bank (template = ch0)
+dm:0xc028  TransferLUT_start     ; curve B: smooth concave knee (slopes 8/2.67/1.67/1/0.67...)
 dm:0xc038  TransferLUT_zero      ; curve center

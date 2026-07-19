@@ -1,29 +1,36 @@
-; rec22 — EFFECT: dynamics processor (envelope follower + gain), fixed-point
-; Family: DM@C000:40e "gain" super-family (shares I/O framing with rec21/25).
-; Mono-summed detector drives a two-stage one-pole envelope with attack/release
-; coeff select; the resulting gain multiplies the L and R input samples.
-pm:0x8400  Entry_I0eqI1            ; I0 = I1 : copy effect DM coeff/state base
-pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4) input L
-pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4) input R
-pm:0x8403  SumMono                 ; R8 = L+R (mono detector signal)
-pm:0x8404  ScaleLShift9            ; R8 <<= 9 headroom rescale
-pm:0x8405  Rectify_LoadEnvState    ; R8=ABS(det); R7 = PM(I8,M14) prev env state
+; rec22 — EFFECT: the GUI SLOW ATTACKER1-4 (type 0x25) — attack-transient eater
+; smallest real effect (28 words). rec21's peak detector (atk 1/32 / rel 1/2048,
+; env PM9800) -> threshold c006=0.125 (~-24 dBFS) -> TWO-TARGET GAIN SLEW (state
+; PM9801): loud: gain -> c007~1.0 with step c008=2^-15 (tau 743 ms swell);
+; quiet: gain -> c009=0 with step c00a=2^-7 (tau 2.9 ms reset so the next note
+; swells again). Same +-target one-pole machine as rec12's gate, pointed at the
+; note attack. Full doc dsp/dynamics-eq-exciter.md #3.
+pm:0x8400  Entry_I0eqI1            ; I0 = I1
+pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4)
+pm:0x8403  SumMono                 ; R8 = L+R detector
+pm:0x8404  ScaleLShift9            ; R8 <<= 9
+pm:0x8405  Rectify_LoadEnvState    ; R8=ABS; R4=c004 attack; R7=env PM9800
 pm:0x8406  EnvDelta                ; R3 = det - env
-pm:0x8407  AttackReleaseSelect     ; IF LT reload alt (release) coeff from DM
-pm:0x8409  EnvOnePoleUpdate        ; R8 = env + R3*coeff  (one-pole smoothing)
-pm:0x840a  StoreEnvState           ; PM(I8,M8) = new env state
-pm:0x840d  ThresholdCompare        ; COMP(R7,R3) gain-stage threshold test
-pm:0x8411  GainOnePole             ; R3 = gain state + R3*step
-pm:0x8412  ApplyGain_L_StoreState  ; R0 = gain*inL ; PM(I8,M8) = gain state
+pm:0x8407  ReleaseSelect           ; IF LT R4=c005 release
+pm:0x8409  EnvOnePoleUpdate        ; env += k*(det-env)
+pm:0x840a  StoreEnvState           ; PM(I8,M8)=env -> I8 at gain state 9801
+pm:0x840b  LoadGainState           ; R3=c006 threshold; R4=gain state PM9801
+pm:0x840d  ThresholdCompare        ; COMP(env, 0.125); R3=c008 loud-step (cursor +3)
+pm:0x840e  QuietTarget             ; IF LT R8=c009=0 (target), R3=c00a=2^-7 (fast reset)
+pm:0x8410  TargetDelta             ; R8 = target - gain
+pm:0x8411  GainSlew                ; gain += step*(target-gain) — 743 ms open / 2.9 ms close
+pm:0x8412  ApplyGain_L_StoreState  ; R0=gain*inL; R14=c00b makeup; PM(I8,M8)=gain
 pm:0x8414  OutL                    ; DM(I4,M2) = out L
 pm:0x8415  ReReadInForR            ; R0 = DM(0x20,I4)
-pm:0x8418  OutR                    ; DM(I4,M2) = out R
+pm:0x8418  OutR                    ; DM(I4,M2) = out R (same gain — stereo-linked)
 pm:0x8419  Return                  ; RTS (delayed)
-pm:0x841b  PMStateRewind           ; MODIFY(I8,0x4E) rewind 78-word PM state
-dm:0xc004  Coeff_AttackRate        ; 0x04000000 attack step
-dm:0xc005  Coeff_ReleaseRate       ; 0x00100000 release step
-dm:0xc006  Coeff_GainStep          ; 0x10000000
-dm:0xc007  Coeff_Threshold         ; 0x7FFFFFFF detector/threshold max
-dm:0xc008  Coeff_A                 ; 0x00010000
-dm:0xc00a  Coeff_B                 ; 0x01000000
-dm:0xc00b  Coeff_MakeupMax         ; 0x7FFFFFFF
+pm:0x841b  PMStateRewind           ; MODIFY(I8,0x4E) -> next unit state base
+dm:0xc004  AttackRate              ; 0x04000000 = 1/32 (tau 0.73 ms)
+dm:0xc005  ReleaseRate             ; 0x00100000 = 1/2048 (tau 46 ms)
+dm:0xc006  Threshold               ; 0x10000000 = 0.125 detector-FS (~-24 dBFS)
+dm:0xc007  TargetLoud              ; 0x7FFFFFFF ~ 1.0 — gain target while note sounds
+dm:0xc008  StepLoud                ; 0x00010000 = 2^-15 -> tau 743 ms (THE slow attack)
+dm:0xc009  TargetQuiet             ; 0 — gain target below threshold
+dm:0xc00a  StepQuiet               ; 0x01000000 = 2^-7 -> tau 2.9 ms fast reset
+dm:0xc00b  Makeup                  ; Q31 ~1.0

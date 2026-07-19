@@ -322,10 +322,14 @@ M11=−1, M12=−2, M13=0x50, M14=0` (PM). Every program ends
 advance the next unit's cursors.
 
 Shared helpers (PM `0x8300`): `0x8300` float biquad/MAC chain, `0x830B`
-fixed-point IIR (MRF), `0x831B` FLOAT→3-tap-interpolation→FIX coefficient
-generator, `0x8338` second float MAC — all stream coefficients from
-`DM(I0,M2)` and state from `PM(I8,…)`; boot init calls each once (cache
-warming, §3).
+fixed-point IIR (MRF), `0x831B` **the 5-section EQ cascade** — FLOAT →
+first-order + `LCNTR=3` biquad loop + first-order → FIX, loading the clip
+bound into R15 (this corrects the earlier "3-tap-interpolation coefficient
+generator" reading: the "3" is the biquad loop count; rec34, the unit-8
+5-band EQ, is a 13-word wrapper around it and rec23 is its inlined twin —
+`dynamics-eq-exciter.md` §5) — and `0x8338` second float MAC — all stream
+coefficients from `DM(I0,M2)` and state from `PM(I8,…)`; boot init calls
+each once (cache warming, §3).
 
 **How CPU parameter writes land in a running effect**: the host simply
 DMA-writes the unit's DM param block (`0xC000+unit*0x4D`, and/or state at

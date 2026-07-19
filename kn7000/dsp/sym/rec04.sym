@@ -105,7 +105,7 @@ pm:0x8100  copy_unit_epi        ; RTS delay slots: same cursor epilogue as null_
 ; Boot-init calls each once to warm the conflict cache before freezing it.
 pm:0x8300  fhelp_biquadA        ; float MAC chain (F10=F8*F3 ...); called by init + effects
 pm:0x830b  fhelp_iir_fixed      ; fixed-point IIR/biquad (MRF MAC, feedback)
-pm:0x831b  fhelp_interp3        ; FLOAT R0 -> 3-tap interp loop -> FIX (coeff gen; u8's EQ rec34 CALLs this)
+pm:0x831b  fhelp_eq5_cascade    ; the 5-section EQ cascade: FLOAT R0 -> 1st-order + LCNTR=3 biquad loop + 1st-order -> FIX, R15=clip bound (u8's EQ rec34 = a wrapper around this; rec23 = its inlined twin; corrects the old '3-tap interp' reading — see dsp/dynamics-eq-exciter.md #5)
 pm:0x8338  fhelp_biquadB        ; second float MAC helper
 
 ; ---- PM 0x8400 : kernel's DEFAULT effect program (7 words, passthrough) ----
@@ -125,7 +125,7 @@ pm:0x8d2e  init_clear_iop       ; R0=0 -> MSGR3-7 (0x0B-0x0F host mailbox), time
 pm:0x8d4e  init_cache_on        ; BIT CLEAR MODE2 0x10 = clear CADIS (enable instruction cache)
 pm:0x8d51  init_call_fhelpA     ; CALL 0x8300 — run each helper once: warm the PM-bus conflict cache
 pm:0x8d54  init_call_fhelpB     ; CALL 0x830B
-pm:0x8d57  init_call_fhelpC     ; CALL 0x831B
+pm:0x8d57  init_call_fhelpC     ; CALL 0x831B (the EQ cascade)
 pm:0x8d5a  init_call_fhelpD     ; CALL 0x8338
 pm:0x8d5d  init_cache_freeze    ; BIT SET MODE2 0x80000 = CAFRZ (TRM bit19): freeze the warmed cache; CORRECTED from unlabeled "set_mode2"
 pm:0x8d62  init_sport_ctl       ; STCTL0/1=0x013CB173 -> 0xE0/0xF0, SRCTL0/1=0x013C3173 -> 0xE1/0xF1: STANDARD mode (not I2S/multichannel), 24-bit words (SLEN=23), sign-extend, MSB first, EXTERNAL clock+frame sync (TG is timing master), CKRE, DMA+chaining enabled on A and B of both SPORTs (SDEN/SCHEN A+B, SPEN A+B)

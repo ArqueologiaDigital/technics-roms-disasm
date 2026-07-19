@@ -21,15 +21,15 @@
 ;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   panning multi-tap echo (4 equal taps, repeats walk the stereo field)
 ;  15  effect   0x486C0C0A  DM@9800:4e DM@C000:40e PM@8400:64w   cross-feedback ping-pong echo (Cross Delay candidate)
 ;  16  effect   0x486C0E96  DM@9800:12e DM@C000:77e PM@8400:72w   ROTARY SPEAKER simulator (Rock Rotary: Standard/Single Rotor/Distorted)
-;  17  effect   0x486C1233  DM@9800:1e DM@C000:77e PM@8400:73w   waveshaper/distortion + envelope AGC
-;  18  effect   0x486C159F  DM@9800:9e DM@C000:77e PM@8400:96w   waveshaper/distortion + allpass/delay
-;  19  effect   0x486C19BD  DM@9800:1e DM@C000:77e PM@8400:73w   waveshaper/distortion + short delay
-;  20  effect   0x486C1D29  DM@9800:4e DM@C000:77e PM@8400:70w   waveshaper/distortion + biquad EQ (enhancer)
-;  21  effect   0x486C2092  DM@9800:1e DM@C000:40e PM@8400:45w   dynamics/compressor-limiter
-;  22  effect   0x486C229D  DM@9800:2e DM@C000:40e PM@8400:28w   dynamics/compressor-limiter
-;  23  effect   0x486C2447  DM@9800:16e DM@C000:40e PM@8400:81w   biquad EQ (cascaded resonant sections)
+;  17  effect   0x486C1233  DM@9800:1e DM@C000:77e PM@8400:73w   AGC waveshaper distortion (grp A base: no tone filter)
+;  18  effect   0x486C159F  DM@9800:9e DM@C000:77e PM@8400:96w   AGC waveshaper distortion (grp B base: tone smoother + unity-DC LP)
+;  19  effect   0x486C19BD  DM@9800:1e DM@C000:77e PM@8400:73w   AGC waveshaper distortion (rail-curve fuzz variant)
+;  20  effect   0x486C1D29  DM@9800:4e DM@C000:77e PM@8400:70w   HARMONIC EXCITER: waveshaper -> unity-peak presence bandpass -> added to dry
+;  21  effect   0x486C2092  DM@9800:1e DM@C000:40e PM@8400:45w   COMPRESSOR: peak detector + closed-form reciprocal gain law
+;  22  effect   0x486C229D  DM@9800:2e DM@C000:40e PM@8400:28w   SLOW ATTACK envelope shaper (two-target gain machine)
+;  23  effect   0x486C2447  DM@9800:16e DM@C000:40e PM@8400:81w   PARAMETRIC EQ: mirror-flat 5-section cascade (1st + 3 biquads + 1st)
 ;  24  effect   0x486C2775  DM@9800:4e DM@C000:77e PM@8400:54w   TREMOLO (in-phase LFO AM)
-;  25  effect   0x486C2A7E  DM@9800:1e DM@C000:40e PM@8400:45w   dynamics/compressor-limiter
+;  25  effect   0x486C2A7E  DM@9800:1e DM@C000:40e PM@8400:45w   LIMITER (= rec21's compressor PM, Limiter DM/state banks)
 ;  26  effect   0x486C2C89  DM@9800:4e DM@C000:77e PM@8400:53w   AUTO PAN (quadrature LFO AM)
 ;  27  effect   0x486C2F8C  DM@9800:2e DM@C000:77e PM@8400:68w   modulated-delay chorus/flanger
 ;  28  effect   0x486C32DF  DM@9800:5e DM@C000:40e PM@8400:56w   dynamics + biquad (envelope filter)
@@ -38,13 +38,13 @@
 ;  31  effect   0x486C3B6C  DM@9800:2e DM@C000:77e PM@8400:45w   RING MODULATOR (bipolar quadrature AM, audio-rate carrier)
 ;  32  effect   0x486C3E35  DM@9800:3e DM@C000:77e PM@8400:90w   modulated-delay chorus
 ;  33  effect   0x486C4211  DM@9800:20e DM@C000:77e PM@8400:74w   FIR convolution + biquad EQ
-;  34  effect   0x486C45E2  DM@9800:16e DM@C000:40e PM@8400:13w   5-band output EQUALIZER
+;  34  effect   0x486C45E2  DM@9800:16e DM@C000:40e PM@8400:13w   5-band output EQUALIZER (13-word wrapper around kernel helper 0x831B)
 ;  35  effect   0x486C4778  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Bright Twin)
 ;  36  effect   0x486C4B21  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Mellow Twin)
 ;  37  effect   0x486C4ECA  DM@9800:5e DM@C000:77e PM@8400:88w   table-lookup waveshaper distortion + live AGC + Haas stereo
-;  38  effect   0x486C52A4  DM@9800:5e DM@C000:77e PM@8400:88w   waveshaper/distortion
-;  39  effect   0x486C567E  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
-;  40  effect   0x486C5AA2  DM@9800:9e DM@C000:77e PM@8400:97w   waveshaper/distortion
+;  38  effect   0x486C52A4  DM@9800:5e DM@C000:77e PM@8400:88w   AGC waveshaper distortion (grp A 'Fat': resonant-LP voicing)
+;  39  effect   0x486C567E  DM@9800:9e DM@C000:77e PM@8400:97w   AGC waveshaper distortion (grp B 'Bright': +3 dB HF shelf)
+;  40  effect   0x486C5AA2  DM@9800:9e DM@C000:77e PM@8400:97w   AGC waveshaper distortion (grp B 'Fat': +3.8 dB mid bump, short Haas)
 ;  41  effect   0x486C5EC6  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Bright Twin)
 ;  42  effect   0x486C626F  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Mellow Twin)
 ;  43  effect   0x486C6618  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Brilliant Twin)

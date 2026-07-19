@@ -1,26 +1,41 @@
-; rec17 — EFFECT: auto-gain waveshaper/distortion (envelope->1/x drive + transfer LUT), C000:77e family
+; rec17 — EFFECT: AGC waveshaper, group-A base (type 0x20, GUI bank 0x40 grp A
+; Normal/Mild/Hard/Hard Compress). Env AGC (atk 1/256 rel 1/2048, drive =
+; 0.111+8.35e8/env clamp 4.0 @0.1 — RECIPS SEED ONLY, no Newton: a drive gain
+; doesn't need precision) -> 33-pt PWL knee LUT (curve A: 7.5/1.5/0.5) -> x0.5
+; -> levels 0.222 (ch0) / 0.25 (ch1); ch1 DELAYED 200 smp (4.5 ms Haas) via the
+; I2 ring AND inverted. NO tone filter (the barest family member; rec37 = this
+; + tone biquad). Full doc dsp/dynamics-eq-exciter.md #6.3.
 pm:0x8400  Entry_SetInPtr        ; I0=I1
 pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
 pm:0x8403  ScaleAndSumEnv        ; R0<<9, R8<<9, R8=R0+R8 detector input
-pm:0x8406  RectifyEnv            ; R8=ABS R8
-pm:0x8407  ThreshCompare         ; R3=R8-R7 (threshold from PM ring); IF LT pick coeff
-pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4) one-pole env integrator
-pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
-pm:0x840c  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8 (1/env)
-pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8 auto drive gain
-pm:0x8410  GainCompare           ; COMP(R4,R7); IF GE clamp
-pm:0x8412  ApplyGain_L           ; F0=FLOAT R0; F0=F0*F15; F0=F0*F1
-pm:0x8415  Index_FixShift        ; R8=FIX; R8=ASHIFT-11; I5=I1+0x34 LUT base
-pm:0x8419  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7 table index
-pm:0x841b  LUT_Fetch_Interp      ; R3=FDEP R8 15:16 frac; R7=DM(I5,M7); FLOAT R3 BY R4; F3*F8 interpolate transfer LUT
-pm:0x8420  PostScale_L           ; R11=DM; F10=F8*F11; *0.222; FIX; *R14 makeup
-pm:0x8428  OutputWriteL          ; DM(I4,M2)=R8
-pm:0x8429  ApplyGain_R           ; R0=DM(0x20)<<9; F0*F15*F1 second channel
-pm:0x8442  NegateR               ; R8=-R8 anti-phase for stereo spread
+pm:0x8406  RectifyEnv            ; R8=ABS R8; R4=c004 attack 1/256; R7=env PM9800
+pm:0x8407  ReleaseSelect         ; R3=det-env; IF LT R4=c005 release 1/2048
+pm:0x8409  EnvSmooth_MAC         ; env += k*(det-env)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=env
+pm:0x840c  Env_RecipSeed         ; F8=FLOAT env; F8=RECIPS F8 (seed only, ~8-bit)
+pm:0x840d  ComputeDriveGain      ; F15 = c006 + c007*(1/env) = 0.111 + 8.35e8/env
+pm:0x8410  DriveClamp            ; COMP(c008=0.1, env); IF GE F15=c009=4.0 (exact continuity)
+pm:0x8412  ApplyGain_L           ; F0=FLOAT R0(<<9); x F15; x F1=c00a trim (1.0)
+pm:0x8415  Index_FixShift        ; R8=FIX; ASHIFT-11; I5=I1+0x34 LUT center
+pm:0x8419  LUT_IndexHi           ; R7=ASHIFT-16 -> M7; R4=c00b=-31 frac exp
+pm:0x841b  LUT_Fetch_Interp      ; FDEP frac; fetch idx/idx+1; linear interp (curve A)
+pm:0x8420  PostScale_L           ; R11=c00c=0.5; x 0.222 immediate; FIX; x R14=c00d makeup
+pm:0x8428  OutputWriteL          ; DM(I4,M2)=R8 (ch0: undelayed)
+pm:0x8429  ApplyGain_R           ; ch1: re-read <<9, same F15/F1, LUT, x0.5, x0.25 immediate
+pm:0x843c  HaasDelayR            ; M7=0xC8: DM(I2,M7)=wet, read +200 smp (4.5 ms), MODIFY -200
+pm:0x8442  NegateR               ; R8=-R8 — ch1 inverted (family Haas+invert widener)
 pm:0x8445  OutputWriteR          ; DM(I4,M2)=R8
 pm:0x8446  Return                ; RTS(DB)
-dm:0xc006  DetectScale           ; 0.111
-dm:0xc009  DriveBase             ; 4.0
-dm:0xc00a  UnityFloat            ; 1.0
-dm:0xc028  TransferLUT_start     ; monotonic antisymmetric soft-clip transfer table (c028..c048)
+dm:0xc004  AttackRate            ; 0x00800000 = 1/256 (tau 5.8 ms)
+dm:0xc005  ReleaseRate           ; 0x00100000 = 1/2048 (tau 46 ms)
+dm:0xc006  DriveBase             ; float 0.111
+dm:0xc007  DriveRecipScale       ; float 8.35e8
+dm:0xc008  Threshold             ; Q31 0.100
+dm:0xc009  DriveClampMax         ; float 4.0 — meets the curve exactly at 0.1
+dm:0xc00a  DriveTrim             ; float 1.0
+dm:0xc00b  FracExp               ; -31
+dm:0xc00c  ShaperPost            ; float 0.5
+dm:0xc00d  Makeup                ; Q31 ~1.0
+dm:0xc00e  FracExp2              ; -31 (ch1 copy)
+dm:0xc028  TransferLUT_start     ; curve A: 33-pt PWL knee, slopes 7.5/1.5/0.5 (= rec37/rec20)
 dm:0xc038  TransferLUT_zero      ; curve center (=0)

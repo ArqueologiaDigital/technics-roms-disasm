@@ -429,6 +429,13 @@ rec27 (VIBRATO), rec28/29 (the bank-0x38 wahs), rec32 (MIXUP), rec33
 (choruses), rec57 (VOICE CHANGER), rec58–61 (mic reverbs), rec67–69 (BRASS
 SIM), rec70/71/72 (chorus combis), rec75/76 (COMP+DST/OVD+DELAY).
 
+> **Follow-up (2026-07-19, next pass)**: rec17–23, rec25, rec34 and
+> rec38–40 are done — including rec20, which completes this document's §2
+> story: the GUI **EXCITER** really does generate harmonics (waveshaper →
+> unity-peak 3.56 kHz bandpass → added to dry), the exact nonlinear
+> counterpart to the linear Enhancer decoded here. See
+> [`dynamics-eq-exciter.md`](dynamics-eq-exciter.md).
+
 ## 9. Cross-model
 
 KN6000/KN6500 DM banks are byte-identical for all 80 records: every constant

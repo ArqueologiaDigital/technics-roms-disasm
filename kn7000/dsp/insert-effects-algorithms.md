@@ -209,6 +209,17 @@ is rec37, where the same math keeps its envelope in PM state.
 are structural siblings with their own PM (undocumented in detail — the
 family's remaining work).
 
+> **Follow-up (2026-07-19, tone-shaping pass)**: the family detail is done —
+> rec38 = rec37 ± 2 level immediates (tone bank → resonant LP 1744 Hz =
+> "Fat"); rec39/40 = the *group-B* engine (rec18's: + PM-state tone smoother
+> + unity-DC biquad, its own smoother transfer curve) with per-preset
+> levels/Haas/voicings; rec17/rec19 = the filterless group-A variants (rec19
+> with a near-hard-clip curve, fast release and a deliberate below-threshold
+> drive gate). Full delta map:
+> [`dynamics-eq-exciter.md`](dynamics-eq-exciter.md) §6 — which also
+> documents rec20 (the real EXCITER built on this same LUT engine), the
+> rec21/25 compressor, rec22, and the two EQs.
+
 - **AGC, working form** (`0x8405–0x8410`): envelope of |L+R| in PM `0x9800`
   (attack c004 = 1/256, release c005 = 1/2048 — the same constants as
   rec74's follower); gain = c006 + c007/env = 0.111 + 8.35e8/env, clamped

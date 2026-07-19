@@ -1,25 +1,34 @@
-; rec20 — EFFECT: waveshaper transfer-LUT + biquad/allpass filter + dry mix (enhancer/exciter/overdrive), C000:77e family
+; rec20 — EFFECT: the GUI EXCITER1-3 — real harmonic exciter (type 0x23)
+; drive (c004) -> 33-pt PWL waveshaper (c028..c048, template = rec37's knee curve
+; 7.5/1.5/0.5) -> unity-peak resonant bandpass 3556 Hz (r=0.758, g=0.2125 makes
+; |H(fc)|=0.97~1) selecting the presence-band distortion products -> wet 0.5
+; ADDED TO DRY, x c00b master level (template 0 = host-set). Full doc
+; dsp/dynamics-eq-exciter.md #1.
 pm:0x8400  Entry_SetInPtr        ; I0=I1
 pm:0x8401  LoadInputL            ; R0=DM(0x20,I4)
-pm:0x8402  Input_ToFloat_Gain    ; F0=FLOAT R0; R9=DM; F0=F0*F9 pre-gain
-pm:0x8404  Index_FixShift        ; R8=FIX; <<8; ASHIFT-11; I5=I1+0x34 LUT base
-pm:0x8409  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7
-pm:0x840b  LUT_Fetch_Interp      ; R3=FDEP 15:16 frac; R7=DM(I5,M7); FLOAT R3 BY R4; F3*F8 interp transfer LUT
-pm:0x8410  PostScale             ; R11=DM; F10=F8*F11
-pm:0x8412  Biquad_PMcoeffRing    ; R3=PM(I8,M8): F12=F3*F7, F2*F7, PM(I8,M11)=R3, PM(I8,M9)=R10 allpass/biquad state
-pm:0x8417  Biquad_Accumulate     ; F10=F10-F12 filtered wet
-pm:0x8418  ScaleWet              ; R13=DM; F8=F10*F13
-pm:0x841b  DryMixL               ; R0=DM(0x20)<<8; R8=R8+R0 wet+dry mix; *R14 makeup
-pm:0x841f  Rescale               ; R8=LSHIFT -8
+pm:0x8402  Drive                 ; F0=FLOAT R0; R9=c004 drive (template 1.0; static, no envelope)
+pm:0x8404  Index_FixShift        ; R8=FIX; <<8; ASHIFT-11; I5=I1+0x34 LUT center c038
+pm:0x8409  LUT_IndexHi           ; R7=ASHIFT R8 BY -16 -> M7 (+-16 index)
+pm:0x840b  LUT_Fetch_Interp      ; R3=FDEP 15:16 frac; table fetch + linear interp (exp c005=-31)
+pm:0x8410  ShaperOutTrim         ; R11=c006 (1.0); F10=F8*F11 into the bandpass
+pm:0x8412  PresenceBP            ; w=u+a1*w1+a2*w2 (a1=c007=1.3261, a2=c008=-0.5751); states PM9800/1
+pm:0x8417  PresenceBP_Out        ; y=g*(w-w2), g=c009=0.2125 -> unity-peak BP @3556 Hz
+pm:0x8418  ScaleWet              ; R13=c00a=0.5; F8=F10*F13 wet level
+pm:0x841b  DryAdd                ; R0=DM(0x20)<<8; R8=wet+dry; x R14=c00b master level (template 0!)
+pm:0x841f  Rescale               ; R8=LSHIFT -8 back to 24-bit
 pm:0x8421  OutputWriteL          ; DM(I4,M2)=R8
-pm:0x8422  Channel2Setup         ; MODIFY(I0,-7) rewind coeff ptr for right channel
-pm:0x8423  ProcessR              ; R0=DM(0x20): FLOAT, *F9, LUT, biquad, dry mix
+pm:0x8422  Channel2Setup         ; MODIFY(I0,-7) rewind coeff ptr to c005 for ch1
+pm:0x8423  ProcessR              ; ch1: same drive/LUT/BP/dry-add, coeffs shared; states PM9802/3
+pm:0x8433  SkipTrimR             ; MODIFY(I0,+1) skip c006 (F11 kept in-register)
 pm:0x8442  OutputWriteR          ; DM(I4,M2)=R8
 pm:0x8443  Return                ; RTS(DB)
-dm:0xc006  Biquad_b0             ; 1.0
-dm:0xc007  Biquad_b1             ; 1.326
-dm:0xc008  Biquad_b2             ; -0.575
-dm:0xc009  Biquad_a1            ; 0.212
-dm:0xc00a  Biquad_a2            ; 0.5
-dm:0xc028  TransferLUT_start     ; shared interpolated waveshaping/transfer table (c028..c048)
+dm:0xc004  Drive                 ; float, template 1.0 — the EXCITER drive (host per preset)
+dm:0xc005  FracExp               ; -31: FLOAT-BY exponent for the LUT fraction
+dm:0xc006  ShaperTrim            ; 1.0 — shaper output -> bandpass input trim
+dm:0xc007  BP_a1                 ; 1.32615 (poles r=0.7583 @ 3556 Hz)
+dm:0xc008  BP_a2                 ; -0.57508
+dm:0xc009  BP_g                  ; 0.21246 — makes the bandpass peak unity (|H|=0.97)
+dm:0xc00a  WetLevel              ; 0.5 — harmonic-band mix into dry
+dm:0xc00b  MasterLevel           ; Q31, template 0 — silent until the host writes it (rec14 idiom)
+dm:0xc028  TransferLUT_start     ; 33-pt PWL curve (= rec37's knee template: slopes 7.5/1.5/0.5)
 dm:0xc038  TransferLUT_zero      ; curve center (=0)

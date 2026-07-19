@@ -1,16 +1,24 @@
-; rec34 EFFECT — data-driven cascaded biquad/allpass filter (stereo), thin wrapper
-; PM is only 13 words: it reads input, calls kernel routine 0x831B (a 3-section
-; biquad cascade, LCNTR=3 loop) which does the DSP work using DM@C000 coeffs,
-; clips and writes out. Called twice = two channels. Coefficient-driven EQ/filter.
-pm:0x8400  Rec34_ChanA          ; CALL 0x831B (kernel 3x biquad cascade), delay-slot chained
-pm:0x8401  Rec34_InA            ; R0=DM(0x20,I4) input; I0=I1 state base
-pm:0x8403  Rec34_ClipA          ; R0=CLIP R0 BY R15
-pm:0x8404  Rec34_OutA           ; DM(I4,M2)=R0 channel-A output
-pm:0x8405  Rec34_ChanB          ; CALL 0x831B again (second channel)
+; rec34 — EFFECT: the unit-8 output EQUALIZER (type 0x4F) — 13-word wrapper
+; around kernel helper 0x831B (which IS the 5-section EQ cascade: 1st-order +
+; LCNTR=3 biquad loop + 1st-order, FLOAT->FIX, loads clip bound into R15).
+; Same mirror-flat template structure as rec23 with graphic-EQ band placement:
+; LOW ~124 Hz / 484 / 969 / 1940 Hz / HIGH (p=0.547, ~4 kHz) = the GUI 5-BAND
+; EQ. I/O convention = pure in-line insert: no wet/dry, no makeup — input ->
+; cascade -> clip -> output 1:1 (u8's empty-slot kernel stub is the 0x80FB
+; copy-through for the same reason). No DSP-side unit chaining exists: the
+; master-bus insert must be closed TG-side. Full doc dsp/dynamics-eq-exciter.md #5.
+pm:0x8400  Rec34_ChanA          ; CALL 0x831B (DB) — the kernel 5-section EQ cascade
+pm:0x8401  Rec34_InA            ; delay slots: R0=DM(0x20,I4) input; I0=I1 coeff base
+pm:0x8403  Rec34_ClipA          ; R0=CLIP R0 BY R15 (R15=c019 loaded by the helper)
+pm:0x8404  Rec34_OutA           ; DM(I4,M2)=R0 channel-A output (full replace)
+pm:0x8405  Rec34_ChanB          ; CALL 0x831B again (second channel, own states)
+pm:0x8406  Rec34_RewindCoeffs   ; delay slot: MODIFY(I0,-21) — c019 back to c004
 pm:0x8407  Rec34_InB            ; R0=DM(0x20,I4)
 pm:0x8409  Rec34_OutB           ; DM(I4,M2)=R0 channel-B output
-pm:0x840a  Rec34_Return         ; RTS
-dm:0xc004  Rec34_Sec1Coef       ; biquad section 1 coeffs (0.982,-0.982,1.0,...) c004..
-dm:0xc009  Rec34_Sec2Coef       ; biquad section 2 coeffs c009..
-dm:0xc00e  Rec34_Sec3Coef       ; biquad section 3 coeffs c00e..
-dm:0xc019  Rec34_OutScale       ; =0x007FFFFF clip/level bound
+pm:0x840a  Rec34_Return         ; RTS; MODIFY(I8,0x40): 16 state words (8/channel)
+dm:0xc004  S1_pole              ; 0.982347 LOW band ~124 Hz (c005=-p, c006=1.0: identity template)
+dm:0xc007  S2_a1                ; 1.960049; a2 c008=-0.965033 (r=.9824 @484 Hz); b1/g/b2 mirror
+dm:0xc00c  S3_a1                ; 1.911866; a2=-0.931437 (r=.9651 @969 Hz)
+dm:0xc011  S4_a1                ; 1.793320; a2=-0.868674 (r=.9320 @1940 Hz)
+dm:0xc016  S5_pole              ; 0.546882 HIGH band (~4 kHz); c017=-p, c018=1.0
+dm:0xc019  ClipBound            ; 0x007FFFFF — loaded into R15 by the helper

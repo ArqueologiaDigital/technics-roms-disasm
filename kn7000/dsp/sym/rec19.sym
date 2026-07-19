@@ -1,28 +1,41 @@
-; rec19 — EFFECT: auto-gain waveshaper/distortion + short delay (variant of rec17), C000:77e family
+; rec19 — EFFECT: AGC waveshaper, rail-curve variant (type 0x22, GUI bank 0x41
+; Normal/Hard Compress). rec17's engine with THREE deliberate bank changes:
+; (1) release c005 = 1/128 (2.9 ms — FASTER than the 5.8 ms attack: drive
+; re-opens instantly as notes decay = max sustain); (2) drive clamp c009 = 2.0,
+; NOT the curve-meeting 4.0 -> drive steps down 6 dB below env=0.1 (built-in
+; quiet-signal gate keeping hiss out of the fuzz); (3) LUT curve C (10.67/4.33
+; then ~0.08 rail = near-hard clipper). Output stage = rec37's numbers: levels
+; 0.21/0.198, ch0 delayed 400 smp, ch1 inverted; no tone filter.
+; Full doc dsp/dynamics-eq-exciter.md #6.1/#6.3.
 pm:0x8400  Entry_SetInPtr        ; I0=I1
 pm:0x8401  LoadInputL_R          ; R0=DM(0x20), R8=DM(0x21)
 pm:0x8403  SumScaleEnv           ; R8=R0+R8; <<9
-pm:0x8405  RectifyEnv            ; R8=ABS R8
-pm:0x8406  ThreshCompare         ; R3=R8-R7; IF LT pick coeff
-pm:0x8409  EnvSmooth_MAC         ; MR1F=R7; R8=MRF+(R3*R4)
-pm:0x840a  StoreEnvState         ; PM(I8,M8)=R8
-pm:0x840c  Env_Recip             ; F8=FLOAT R7; F8=RECIPS F8
-pm:0x840d  ComputeDriveGain      ; F8=F4*F8; F15=F3+F8
-pm:0x840f  GainCompare           ; COMP(R4,R7); IF GE clamp
-pm:0x8412  ApplyGain_L           ; F0=FLOAT R0; F0=F0*F15; F0=F0*F10
-pm:0x8415  Index_FixShift        ; R8=FIX; ASHIFT-11; I5=I1+0x34
-pm:0x8419  LUT_Fetch_Interp      ; R7=ASHIFT-16 idx; FDEP frac; DM(I5,M7); interpolate transfer LUT
-pm:0x8420  PostScale_L           ; R11=DM; F8=F8*F11; *0.21
-pm:0x8424  Delay_Write_400       ; M7=0x190 (400) DM(I2,M7)=R8 short delay write
-pm:0x8425  Delay_Read            ; R8=DM(I2,M6)
-pm:0x8426  Delay_Advance         ; MODIFY(I2,-0x190)
-pm:0x842c  OutputWriteL          ; DM(I4,M2)=R8
-pm:0x842d  ApplyGain_R           ; R0=DM(0x20)<<9; F0*F15*F10 second channel
-pm:0x8442  NegateR               ; R8=-R8 anti-phase spread
+pm:0x8405  RectifyEnv            ; ABS; R4=c004 attack 1/256; R7=env PM9800
+pm:0x8406  ReleaseSelect         ; R3=det-env; IF LT R4=c005 release 1/128 (fast!)
+pm:0x8409  EnvSmooth_MAC         ; env += k*(det-env)
+pm:0x840a  StoreEnvState         ; PM(I8,M8)=env
+pm:0x840c  Env_RecipSeed         ; FLOAT + RECIPS (seed only)
+pm:0x840d  ComputeDriveGain      ; F15 = 0.111 + 8.35e8/env
+pm:0x840f  DriveClamp            ; IF GE F15=c009=2.0 — DISCONTINUOUS (-6 dB step below 0.1)
+pm:0x8412  ApplyGain_L           ; FLOAT; x F15; x F10=c00a trim
+pm:0x8415  Index_FixShift        ; FIX; ASHIFT-11; I5=I1+0x34
+pm:0x8419  LUT_Fetch_Interp      ; curve C fetch + linear interp (near-hard clipper)
+pm:0x8420  PostScale_L           ; R11=c00c; x 0.21 immediate (= rec37's L level)
+pm:0x8424  HaasDelayL            ; M7=0x190: write, read +400 smp (9.1 ms), rewind
+pm:0x8428  FixMakeupL            ; FIX; x R14=c00d makeup; >>8
+pm:0x842c  OutputWriteL          ; DM(I4,M2)=R8 (ch0: delayed)
+pm:0x842d  ApplyGain_R           ; ch1: <<9, same F15/F10, LUT, x c00c, x 0.198 immediate
+pm:0x8442  NegateR               ; R8=-R8 — ch1 inverted, undelayed
 pm:0x8445  OutputWriteR          ; DM(I4,M2)=R8
 pm:0x8446  Return                ; RTS(DB)
-dm:0xc006  DetectScale           ; 0.111
-dm:0xc009  DriveBase             ; 2.0
-dm:0xc00a  UnityFloat            ; 1.0
-dm:0xc028  TransferLUT_start     ; monotonic antisymmetric transfer table (finer steps than rec17)
+dm:0xc004  AttackRate            ; 0x00800000 = 1/256 (tau 5.8 ms)
+dm:0xc005  ReleaseRate           ; 0x01000000 = 1/128 (tau 2.9 ms) — faster than attack
+dm:0xc006  DriveBase             ; float 0.111
+dm:0xc007  DriveRecipScale       ; float 8.35e8
+dm:0xc008  Threshold             ; Q31 0.100
+dm:0xc009  DriveClampMax         ; float 2.0 — 6 dB BELOW the curve's 4.0 meeting point
+dm:0xc00a  DriveTrim             ; float 1.0
+dm:0xc00c  ShaperPost            ; float post-LUT scale
+dm:0xc00d  Makeup                ; Q31 ~1.0
+dm:0xc028  TransferLUT_start     ; curve C: 10.67/4.33 then ~0.08 rail — near-hard clip (fuzz)
 dm:0xc038  TransferLUT_zero      ; curve center

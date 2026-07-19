@@ -1,24 +1,37 @@
-; rec39 EFFECT — distortion/overdrive with extra 1-pole/allpass stage before the
-; tone biquad (97w vs rec37's 88w). Envelope-AGC + waveshaper + filter + delay,
-; stereo (right inverted). rec40 = same PM, differs in delay-length + level presets.
+; rec39 — EFFECT: grp B distortion "Bright" (type 0x84, GUI bank 0x40 grp B).
+; rec18's engine (AGC -> curve B LUT -> PM-state tone smoother -> unity-DC
+; biquad -> levels/Haas/invert) with ONE structural delta: ch1's biquad REWINDS
+; onto ch0's coefficient bank (extra word @0x844f MODIFY(I0,-8); c016..c01a
+; zeroed) — one shared tone bank, 97w vs rec18's 96. Voicing: biquad = poles
+; r=.919 @1032 Hz over zeros r=.931 @867 Hz -> +3 dB HIGH SHELF from ~1.5 kHz;
+; levels 0.29/0.22 (vs rec18 0.625/0.5); Haas 400 ch0; ch1 inverted.
+; rec40 = this PM w/ levels 0.40/0.31 + Haas 200 + mid-bump bank.
+; Full doc dsp/dynamics-eq-exciter.md #6.4.
 pm:0x8400  Rec39_AudioIn        ; R0=DM(0x20),R8=DM(0x21); L+R; LSHIFT 9
-pm:0x8405  Rec39_EnvRect        ; ABS rectify; env state PM(I8,M14)
+pm:0x8405  Rec39_EnvRect        ; ABS; env state PM9800 (atk 1/256 / rel 1/2048)
 pm:0x8407  Rec39_EnvAtkRel      ; attack/release one-pole envelope
-pm:0x840c  Rec39_RecipGain      ; RECIPS(env) auto-gain, F15
+pm:0x840c  Rec39_RecipGain      ; RECIPS seed-only drive = 0.111+8.35e8/env clamp 4.0, F15
 pm:0x8413  Rec39_ApplyGainL     ; F0=F0*F15*F9 drive
-pm:0x8415  Rec39_WaveshapeL     ; signal-indexed table lookup (distortion curve)
-pm:0x8420  Rec39_FilterStageL   ; R6=R3*R0+R12=R2*R7 extra 1-pole/allpass; DM(I0,M2)=R12
-pm:0x8427  Rec39_ToneBiquadL    ; post biquad tone, PM(I8) coeffs+state
-pm:0x842e  Rec39_OutLevelL      ; R0=0x3E947AE1 output level (preset-differing)
-pm:0x8430  Rec39_DelayL         ; M7=0x190(400) short delay (preset-differing)
-pm:0x8437  Rec39_OutLeft        ; DM(I4,M2)=R0 left
-pm:0x8438  Rec39_ChanR          ; re-read input, same path (right)
-pm:0x8448  Rec39_FilterStageR   ; extra filter stage (right)
-pm:0x8457  Rec39_OutLevelR      ; R0=0x3E6147AE right level (preset-differing)
-pm:0x845b  Rec39_InvertR        ; R0=-R0 phase invert
-pm:0x845d  Rec39_OutRight       ; DM(I4,M2)=R0 right
+pm:0x8415  Rec39_WaveshapeL     ; curve B LUT (smooth concave knee)
+pm:0x8420  Rec39_ToneSmootherL  ; y=k1*x+k2*y1, k=PM9801/2 (0.10/0.40), y1 in c00c
+pm:0x8427  Rec39_ToneBiquadL    ; unity-DC shelf: poles r=.919 @1032 Hz / zeros r=.931 @867 Hz
+pm:0x842e  Rec39_OutLevelL      ; R0=0x3E947AE1 = 0.29 (preset immediate)
+pm:0x8430  Rec39_DelayL         ; M7=0x190(400) Haas 9.1 ms, ch0
+pm:0x8437  Rec39_OutLeft        ; DM(I4,M2)=R0
+pm:0x8438  Rec39_ChanR          ; ch1: same path, smoother k=PM9805/6, y1=c015
+pm:0x8448  Rec39_ToneSmootherR  ; ch1 smoother
+pm:0x844f  Rec39_BankRewind     ; MODIFY(I0,-8): ch1 biquad REUSES ch0's bank c00e..c012
+pm:0x8457  Rec39_OutLevelR      ; R0=0x3E6147AE = 0.22 (preset immediate)
+pm:0x845b  Rec39_InvertR        ; R0=-R0 phase invert (undelayed ch1)
+pm:0x845d  Rec39_OutRight       ; DM(I4,M2)=R0
 pm:0x845e  Rec39_Return         ; RTS
-dm:0x9801  Rec39_MixCoefA       ; =0x19999999 / 0x66666666 filter mix coeffs
-dm:0xc006  Rec39_EnvCoef        ; envelope attack/release coeffs c006..c00b
-dm:0xc00e  Rec39_ToneCoef       ; post biquad tone coeffs c00e..c012
-dm:0xc013  Rec39_Unity          ; =0x7FFFFFFF
+dm:0x9801  SmootherK1_ch0       ; 0x19999999 = 0.10 (host-rewritable tone smoother; 9802=0.40)
+dm:0x9805  SmootherK1_ch1       ; ch1 copy (9806=0.40)
+dm:0xc006  Rec39_DriveBase      ; 0.111 (family AGC)
+dm:0xc00c  SmootherState_ch0    ; previous smoother output
+dm:0xc00e  Rec39_ToneShelf      ; (a1,a2,b1,g,b2)=1.818/-0.845/-2.577/1.394/1.209: +3 dB HF shelf
+dm:0xc013  Rec39_Makeup         ; 0x7FFFFFFF
+dm:0xc015  SmootherState_ch1    ; ch1 smoother state
+dm:0xc016  Rec39_UnusedBank     ; zeroed — ch1 shares ch0's bank (the -8 rewind)
+dm:0xc028  TransferLUT_start    ; curve B (= rec18/rec40 template)
+dm:0xc038  TransferLUT_zero     ; curve center

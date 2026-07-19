@@ -1,32 +1,33 @@
-; rec23 — EFFECT: cascaded biquad / all-pass filter bank (floating-point)
-; DM@C000:40e holds five 3-coeff filter sections (c004..c018): triads such as
-; (b, -b, 1.0) plus resonant denominators (a1~1.977, a2~-0.983) => sharp peaks.
-; PM code runs the same 6-instruction biquad kernel repeatedly (matches kernel
-; sub 0x8300), stepping coeffs from DM(I0,M2) and state from PM(I8). 16 DM@9800
-; words are the per-section z^-1/z^-2 state. Likely a multi-band EQ / resonator
-; (phaser/formant) — cascade of resonant sections. Confidence: medium.
+; rec23 — EFFECT: the GUI PARAMETRIC EQ (type 0x27) — mirror-flat 5-section cascade
+; presets Make Up/Middle Cut/Radio/Treble Boost/Treble Cut/No Hi Hat/Bass Cut/
+; Too Bright, 20 params. Per channel: 1st-order + 3 biquads + 1st-order, ALL
+; template numerators = bit-exact mirrors of their denominators -> H(z)=1 (flat
+; by pole/zero cancellation) with the POLES PRE-PLACED: ~124 Hz / 496 / 992 /
+; 1985 Hz (octave-spaced!) / high (p=0.219). Presets move the zeros off the
+; poles; untouched bands stay exactly flat. Inlined twin of kernel helper 0x831B
+; (rec34 = the wrapper version). Full doc dsp/dynamics-eq-exciter.md #4.
 pm:0x8400  Entry_I0eqI1            ; I0 = I1 coeff base
 pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4) input L
 pm:0x8402  InToFloat               ; F10 = FLOAT inL
-pm:0x8403  Sect1_Head              ; first all-pass/biquad section L
-pm:0x8408  Sect2_Head              ; biquad section (kernel-style 6-op body)
-pm:0x8410  Sect3_Head              ; biquad section
-pm:0x8416  Sect4_Head              ; biquad section
-pm:0x841d  SectTail_L              ; last section, fold to output
-pm:0x8422  FixL                    ; R0 = FIX F10
+pm:0x8403  Sect1_LowShelf          ; 1st-order (p,z,g)=c004..c006: w=x+p*s; y=g*w+z*s; p=0.9823 ~124 Hz
+pm:0x8408  Sect2_Biquad496         ; (a1,a2,b1,g,b2)=c007..c00b; poles r=.9911 @496 Hz; template mirror-flat
+pm:0x8410  Sect3_Biquad992         ; c00c..c010; poles r=.9824 @992 Hz
+pm:0x8416  Sect4_Biquad1985        ; c011..c015; poles r=.9655 @1985 Hz
+pm:0x841d  Sect5_HighShelf         ; 1st-order c016..c018; p=0.2189 (high band)
+pm:0x8422  FixL                    ; R0 = FIX F10; R14=c019 output level
 pm:0x8424  ClipMaskL               ; R10 = 0x007FFFFF
 pm:0x8426  OutL                    ; DM(I4,M2) = out L
-pm:0x8427  RewindCoeffPtr          ; MODIFY(I0,-22) reset coeff ptr for R
+pm:0x8427  RewindCoeffPtr          ; MODIFY(I0,-22) reset coeff ptr for ch1 (coeffs shared)
 pm:0x8428  ReadInR                 ; R0 = DM(0x20,I4) input R
 pm:0x8429  InToFloatR              ; F10 = FLOAT inR
-pm:0x842a  Sect1_HeadR             ; repeat cascade for R channel
+pm:0x842a  Sect1_R                 ; same 5-section cascade, own states (PM9808..)
 pm:0x8449  FixR                    ; R0 = FIX F10
 pm:0x844d  OutR                    ; DM(I4,M2) = out R
 pm:0x844e  Return                  ; RTS (delayed)
-pm:0x8450  PMStateRewind           ; MODIFY(I8,0x40) rewind 64-word PM state
-dm:0xc004  Sect1_Coeffs            ; 0x3F7B7B1B,-b,1.0 : section 1 (b0,b1,gain)
-dm:0xc007  Sect1_Denom             ; 0x3FFD194C (a1~1.977) resonant pole
-dm:0xc00c  Sect2_Denom             ; 0x3FF8FC9A
-dm:0xc011  Sect3_Denom             ; 0x3FED564B
-dm:0xc016  Sect5_Coeffs            ; 0x3E6025A4 final section gain pair
-dm:0xc019  Coeff_OutScale          ; 0x7FFFFFFF
+pm:0x8450  PMStateRewind           ; MODIFY(I8,0x40): 16 state words (8/channel: 1+2+2+2+1)
+dm:0xc004  S1_pole                 ; 0.982347 (~124 Hz); c005 zero=-p, c006 g=1.0 -> identity template
+dm:0xc007  S2_a1                   ; 1.977334; a2 c008=-0.982362 (r=.9911 @496 Hz); b1/g/b2 mirror
+dm:0xc00c  S3_a1                   ; 1.945209; a2=-0.965120 (r=.9824 @992 Hz)
+dm:0xc011  S4_a1                   ; 1.854196; a2=-0.932108 (r=.9655 @1985 Hz)
+dm:0xc016  S5_pole                 ; 0.218894 high-band 1st-order; c017=-p, c018=1.0
+dm:0xc019  OutLevel                ; Q31 ~1.0

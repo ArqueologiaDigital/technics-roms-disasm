@@ -1,16 +1,23 @@
-; rec38 EFFECT — distortion/overdrive; PM identical to rec37 except two output-level
-; immediates (@0x8429 R0=0x3EB851EC, @0x844d R0=0x3E800000) -> different drive preset.
+; rec38 — EFFECT: grp A distortion "Fat" (type 0x83, GUI bank 0x40 grp A).
+; PM = rec37 except TWO level immediates: ch0 0.21->0.36 (@0x8429), ch1
+; 0.198->0.25 (@0x844d). DM bank change = the tone biquad c00d..c011:
+; rec37's presence tilt -> unity-DC RESONANT LOWPASS, poles r=0.868 @1744 Hz,
+; numerator 0.0177*(1+z^-1)^2 (-6 dB @3 kHz, -16 dB @5 kHz): darker + louder
+; = "Fat". Everything else (AGC seed-only, curve A LUT, Haas 400 ch0, ch1
+; invert) identical to rec37. Full doc dsp/dynamics-eq-exciter.md #6.3.
 pm:0x8400  Rec38_AudioIn        ; L+R sum, LSHIFT 9
-pm:0x8405  Rec38_EnvFollower    ; ABS + one-pole envelope (attack/release)
-pm:0x840c  Rec38_RecipGain      ; RECIPS(env) auto-gain
-pm:0x8415  Rec38_WaveshapeL     ; table-lookup distortion curve (left)
-pm:0x8422  Rec38_ToneBiquadL    ; post biquad tone
-pm:0x8429  Rec38_OutLevelL      ; R0=0x3EB851EC output level (preset)
-pm:0x842b  Rec38_DelayL         ; M7=0x190(400) short delay
+pm:0x8405  Rec38_EnvFollower    ; ABS + one-pole envelope (atk 1/256 / rel 1/2048)
+pm:0x840c  Rec38_RecipGain      ; RECIPS(env) seed-only drive = 0.111+8.35e8/env clamp 4.0
+pm:0x8415  Rec38_WaveshapeL     ; curve A LUT (33-pt knee 7.5/1.5/0.5)
+pm:0x8422  Rec38_ToneBiquadL    ; unity-DC resonant LP: poles r=.868 @1744 Hz (c00d..c011)
+pm:0x8429  Rec38_OutLevelL      ; R0=0x3EB851EC = 0.36 (vs rec37 0.21)
+pm:0x842b  Rec38_DelayL         ; M7=0x190(400) Haas 9.1 ms, ch0
 pm:0x8433  Rec38_OutLeft        ; DM(I4,M2)=R8
-pm:0x844d  Rec38_OutLevelR      ; R0=0x3E800000 right level (preset)
-pm:0x8451  Rec38_InvertR        ; R8=-R8 phase invert
+pm:0x844d  Rec38_OutLevelR      ; R0=0x3E800000 = 0.25 (vs rec37 0.198)
+pm:0x8451  Rec38_InvertR        ; R8=-R8 phase invert (undelayed ch1)
 pm:0x8454  Rec38_OutRight       ; DM(I4,M2)=R8
 pm:0x8455  Rec38_Return         ; RTS
-dm:0xc006  Rec38_EnvCoef        ; envelope coeffs
-dm:0xc00d  Rec38_ToneCoef       ; tone biquad coeffs
+dm:0xc006  Rec38_DriveBase      ; 0.111 (family AGC: c007=8.35e8, c008=0.1, c009=4.0)
+dm:0xc00d  Rec38_ToneLP         ; (a1,a2,b1,g,b2)=1.683/-0.754/0.0354/0.0177/0.0177: res LP 1744 Hz
+dm:0xc028  TransferLUT_start    ; curve A (= rec37/rec17/rec20 template)
+dm:0xc038  TransferLUT_zero     ; curve center
