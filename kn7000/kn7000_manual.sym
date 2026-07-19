@@ -8,22 +8,160 @@
 ; ---- Control-panel serial protocol (SIO ch0 @ 0x34000800) ------------------
 ; The main CPU <-> panel sub-CPU handshake. Full protocol in
 ; kn7000_mame/notes/panel-serial-protocol.md. These sit in the large unnamed
-; gap after FadeIOFilter.
-0x484AC2A8  PanelTransaction        ; 10-retry command transaction driver
-0x484AC523  PanelTxKick             ; queue [cmd,arg] into the TX ring, start TX
-0x484AC5F1  PanelAtnIsr             ; ISR, INTC group 0x1A (panel ATN 2-edge pulse)
-0x484AC70E  PanelTxDoneIsr          ; ISR, group 0x11 (sync-transfer-complete TX state machine)
-0x484AC74A  PanelRxIsr              ; ISR, group 0x10 (reply byte -> RX ring)
-0x484AC799  PanelTxState1           ; TX state 1 (line sync)
-0x484AC84D  PanelTxState2           ; TX state 2 (payload byte 1)
-0x484AC923  PanelTxState3           ; TX state 3 (line sync)
-0x484AC98C  PanelTxState4           ; TX state 4 (payload byte 2)
-0x484ACA5E  PanelTxState5           ; TX state 5 (line sync)
-0x484ACAFF  PanelTxState6           ; TX state 6 (line sync)
-0x484ACC13  PanelRxState8           ; RX state 8 (reads 0x34000809 -> reply ring)
+; gap after FadeIOFilter. MN10300 two-entry ABI: the canonical start is the
+; movm/frame prologue (plain name); the register-save-`call` entry a few bytes
+; in is named *_entry (`call X_entry,[regs],frame` performs the save itself).
+; Wire format (TX side, one command frame = 7 bytes with interleaved syncs):
+;   [00 sync(kick)] [00 s1] [CMD s2] [00 s3] [ARG s4] [00 s5] [00 s6]
+; then the panel answers with an ATN pulse (INTC group 0x1A) and reply bytes
+; clocked in by RX states 8/9. Link state byte = 0x5006BDA0, flags 0x5006BDA2
+; (bit0 ATN pass, bit1 RX overrun, bit2 TX busy, bits6-7 pump phase), status
+; 0x5006BDA4, reply countdown 0x5006BDA1, RX ring 0x5006BDB4 (tail 0x5006BDB0 /
+; head 0x5006BDB2, wrap 0x5C), TX ring 0x5006BE14 (rd 0x5006BE10 / wr
+; 0x5006BE12, wrap 0x3C).
+0x484ABAF4  PanelModeFlagSet        ; write panel wiring-mode flag 0x5006BE94 (0 = mode A, else mode B; boot derives it from strap probe 0x484D7713==3)
+0x484ABAFD  PanelModeFlagGet        ; read 0x5006BE94 (selects LED addr tables, norm tables, GPIO strobes)
+0x484AC0AC  PanelBusyWait3000       ; counted busy loop (0xBB8 iterations)
+0x484AC0C8  PanelBusyWait6000       ; counted busy loop (0x1770 iterations)
+0x484AC0E7  PanelTickWait2          ; wait ~2 ticks of counter 0x50151BFC (tick noted at 0x5006BDAC)
+0x484AC102  PanelTickWait6          ; wait ~6 ticks (the NO-TIMEOUT delay inside the ping transaction: the tick ISR must run)
+0x484AC11D  PanelTickWait51         ; wait ~0x33 ticks
+0x484AC138  PanelTypeProbeShadow    ; mode-B panel type 1..7 from sign-on bytes left in the wire shadow tables (0x5006BE52/54/5A/80/82)
+0x484AC19F  PanelTypeDetect         ; mode flag==1 -> PanelTypeProbeShadow; else ROM {ptr,expected} pair table 0x48612F74
+0x484AC1A4  PanelTypeDetect_entry
+0x484AC2A5  PanelTransaction        ; boot ping transaction: 0x20,00 ping CPL + 0xE0,00 ping CPR; result nibble in 0x5006BDA5 (bit0 CPL / bit3 CPR answered); retried up to 10x by 0x484ABBB5 until ==9
+0x484AC2A8  PanelTransaction_entry
+0x484AC343  PanelSignOnRequest      ; boot sign-on/ID sequence: 0x29,00 / 0xEA,00 / 0x20,10 / 0xE3,10 then decode replies (PanelRxDecodeQuiet); reply bytes land in the wire shadows read by PanelTypeDetect (called from 0x484ABBD9)
+0x484AC346  PanelSignOnRequest_entry
+0x484AC3F3  PanelInitHookNop        ; retf-only init step (called from the boot init 0x484ABB47)
+0x484AC3F6  PanelStatusPoll         ; runtime poll sequence: 0x29,00 / 0xEB,00 / 0x20,10 / 0xE6,10 with PanelRxDecodeExpect after each; run by the pump every 4th flush + service method 0x484ABBA5
+0x484AC3F9  PanelStatusPoll_entry
+0x484AC4A1  PanelWaitLinkIdle       ; wait (200 retries w/ PanelBusyWait3000) for presence GPIO 0x36008084 bit0 high, flags 0x5006BDA2 bits1-2 clear and TX ring drained; timeout sets error bit7 of 0x5006BDA4
+0x484AC4A4  PanelWaitLinkIdle_entry
+0x484AC51E  PanelTxKick             ; queue [cmd,arg] into TX ring slots 0x5006BE14/15, state:=1, dwell 0x78->0x34001010, board-select strobes 0x36008024/25/04/64, SIO0 direction TX (cfg&0xFFF8|4), disable grp4/6 + enable grp5 ints, start (cfg|=0x8000) + first sync byte
+0x484AC523  PanelTxKick_entry
+0x484AC5F1  PanelAtnIsr             ; ISR, INTC group 0x1A (panel ATN 2-edge pulse): pass 1 (0x5006BE92==0) re-arms EXTMD 0x34000280 bits7:6 for the opposite edge; pass 2 turns the link around to RX (cfg|=0x07 then |=0x4000, enable grp6/disable grp5, state:=8) or flags a spurious pulse (bit6 of 0x5006BDA4)
+0x484AC70E  PanelTxDoneIsr          ; ISR, group 0x11 (TX transfer complete): calls state handler via PanelXferStateTable 0x48613034[state 0x5006BDA0], acks GxICR 0x34000144
+0x484AC74A  PanelRxIsr              ; ISR, group 0x10 (RX byte ready): SIO0 status 0x3400080C err bits0-2 -> flag 0x50150A38, dispatches the same state table, acks GxICR 0x34000140
+0x484AC799  PanelTxState1           ; TX state 1: board strobes + presence check GPIO 0x36008084 bit0 (clear -> ABORT whole transaction, state:=0, bit2 of 0x5006BDA4); dwell 0x3C, direction TX, start, send sync 0x00, state:=2
+0x484AC84D  PanelTxState2           ; TX state 2: ack pending ATN, enable grp5, transmit ring[rd++] (payload 1 = CMD), classify: (b&0x3F)>=0x30 -> reply countdown 0x5006BDA1:=(b&0xF)+3 else 2, state:=3
+0x484AC923  PanelTxState3           ; TX state 3: send interleaved sync 0x00, state:=4
+0x484AC98C  PanelTxState4           ; TX state 4: transmit ring[rd++] (payload 2 = ARG), state:=5
+0x484ACA5E  PanelTxState5           ; TX state 5: strobes + dwell 0x3C, send sync 0x00, re-arm ATN (enable grp4+5, disable grp6), direction TX, send sync, state:=6
+0x484ACAFF  PanelTxState6           ; TX state 6: frame done -- if >=2 more ring bytes: state:=1 and kick the next frame; else final: re-arm ATN (grp4), disable grp5/6, dwell 0x3C, clear TX-busy (bit2 of 0x5006BDA2), state:=0
+0x484ACC13  PanelRxState8           ; RX state 8 (first reply byte): cfg|=0x07, ack+enable grp4/6, read 0x34000809 -> RX ring head 0x5006BDB2 (tail-gap check -> overrun bit1 of 0x5006BDA4), reply countdown:=2 or (b&0xF)+3 for length-extended (b&0x3F)>=0x30, state:=9
+0x484ACCF6  PanelRxState9           ; RX state 9 (subsequent reply bytes): store 0x34000809 -> ring, countdown 0x5006BDA1--; ==1 -> transaction complete (state:=0, direction TX, disable grp5, cfg&=0xBFFF); else stay in RX (cfg|=0x07, enable grp4/6, disable grp5)
+0x484ACE38  PanelXferIdleState      ; state-table slots 0/7/10: unexpected transfer-complete -> set error bit7 of 0x5006BDA4
+0x484ACE42  PanelLinkRxRearm        ; reset the link to ATN-armed idle: clear flag bit3, set status bit4, cfg&=0xBFFF, disable grp5/6, ack GxICR 0x34000168, enable grp4 (no static caller found -- runtime-dispatched)
+0x484ACEA0  PanelTxPump             ; periodic TX flush (called from service method 0x484ABB98): 2-bit phase in 0x5006BDA2 bits6-7 (+0x40/call; wrap -> PanelStatusPoll + 0x484ABAE6, else PanelTxFifoToRing), then if link free and >=2 ring bytes re-kick TX inline; busy 0x14x -> error bit7 0x5006BDA4
+0x484ACEA5  PanelTxPump_entry
+0x484ACFE4  PanelLedMirrorResetA    ; clear LED bank-A last-sent mirror 0x50150A5C..0x50150A6D -> forces a full LED re-send on the next diff-flush
+0x484ACFF9  PanelHeaderValidate     ; report header framing rule: (b&0xC0) must be 00 or C0 -> 0, else -1
+0x484AD00C  PanelErrorRecovery      ; error-nibble state machine on 0x5006BE91 (hi nibble countdown -> full link/ring/FIFO reset + 0x484ABD54/73 + error code 0x0A; lo nibble countdown -> PanelLedMirrorResetA)
+0x484AD011  PanelErrorRecovery_entry
+0x484AD0ED  PanelRxDecodeExpect     ; decode RX frames with flag bit4 of 0x5006BDA2 SET (reply expected; used inside PanelStatusPoll)
+0x484AD0F0  PanelRxDecodeExpect_entry
+0x484AD0FF  PanelRxDecodeQuiet      ; decode RX frames with flag bit4 CLEAR (idle drain; service method 0x484ABB8D)
+0x484AD102  PanelRxDecodeQuiet_entry
+0x484AD111  PanelFrameDecode        ; THE switch-report frame decoder (loop @0x484AD11C): backpressure gate on PanelEventFifoFree (stop while 0<=free<4), needs >=2 ring bytes, header=first data byte (PanelHeaderValidate; bad -> error nibble 0x10 in 0x5006BE91), type=(b&0x38)>>3: 0/1 momentary switch [ADDR,DATA] XOR-edge vs shadows 0x5006BE50/80 -> triplet into event FIFO; 2 latched control -> PanelCtrlDispatch; 3/4/5 status/sync (sets bit3 0x5006BDA4); 6/7 length-checked batch
+0x484AD116  PanelFrameDecode_entry
+;
+; ---- Panel switch-event pipeline (cooked FIFO -> button events) ------------
+; See panel-serial-protocol.md "Switch-report frame" + the MILK dispatch RE:
+; PanelButtonDispatch -> pump 0x484145FF -> resolver 0x4841473A -> ApPostEvent.
+0x484AD45F  PanelTxFifoToRing       ; drain TX byte-FIFO 0x5006BD8C -> 60-byte TX ring 0x5006BE14 in [addr,data] pairs (skips pairs whose addr class (b&0x30)>>4 not in {0,1,2}); stops when <3 ring slots free
+0x484AD464  PanelTxFifoToRing_entry
+0x484AD516  PanelEventFifoPush      ; push byte into the cooked switch-event FIFO 0x5006BCF8
+0x484AD519  PanelEventFifoPush_entry
+0x484AD528  PanelTxFifoPush         ; push byte into the LED/TX byte-FIFO 0x5006BD8C
+0x484AD52B  PanelTxFifoPush_entry
+0x484AD53A  PanelEventFifoPop       ; pop byte (-1 = empty) from the cooked FIFO
+0x484AD53D  PanelEventFifoPop_entry
+0x484AD54B  PanelTxFifoPop          ; pop byte (-1 = empty) from the TX byte-FIFO
+0x484AD54E  PanelTxFifoPop_entry
+0x484AD55C  PanelEventFifoFree      ; cooked FIFO free-space (-1 = empty); the decoder's backpressure gate
+0x484AD55F  PanelEventFifoFree_entry
+0x484AD56D  PanelTxFifoFree         ; TX byte-FIFO free-space (-1 = empty)
+0x484AD570  PanelTxFifoFree_entry
+0x484AD57E  PanelEventFifoInit      ; re-init cooked FIFO descriptor from ROM image 0x48613060
+0x484AD596  PanelTxFifoInit         ; re-init TX byte-FIFO descriptor from ROM image 0x48613074
+0x484AD5AE  PanelFifoPushByte       ; generic FIFO push primitive (a0=descriptor {base,end,rd,wr,free}) -> -1 when full
+0x484AD5B0  PanelFifoPushByte_entry
+0x484AD5DF  PanelFifoPopByte        ; generic FIFO pop primitive -> -1 when empty
+0x484AD5E1  PanelFifoPopByte_entry
+0x484AD60E  PanelFifoFreeCount      ; generic FIFO query: -1 when empty, else free-space count
+0x484AD610  PanelFifoFreeCount_entry
+0x484AD621  PanelCtrlLatchReset     ; reset latched-control shadows 0x5006BEA8..0x5006BEB2 (dial/slider centers 0x80)
+0x484AD65F  PanelCtrlValueGet       ; wire ADDR -> current latched control value via ptr table 0x48613088[((b&0xC0)>>3)|(b&7)]
+0x484AD67B  PanelCtrlDispatch       ; TYPE-2 latched-control dispatch via table 0x48613108 (d0=DATA, d1=ADDR); handlers return 0xFFFF when unchanged
+0x484AD680  PanelCtrlDispatch_entry
+0x484AD6A0  PanelCtrlLatch07        ; (0,7): latch DATA -> 0x5006BE9F + 0x5006BEA8
+0x484AD6B0  PanelCtrlLatch00        ; (0,0): latch -> 0x5006BEA0, remap 0x48613188, diff vs 0x5006BEA9
+0x484AD6DE  PanelCtrlLatch31        ; (3,1): not+latch -> 0x5006BEA1, remap 0x48613288, diff vs 0x5006BEAA
+0x484AD70F  PanelCtrlLatch33        ; (3,3): not+latch -> 0x5006BEA2, remap 0x48613388, diff vs 0x5006BEAB
+0x484AD740  PanelCtrlLatch30        ; (3,0): latch -> 0x5006BEA3, asr 1, remap 0x48613488, diff vs 0x5006BEAC
+0x484AD772  PanelCtrlLatch32        ; (3,2): not+latch -> 0x5006BEA6
+0x484AD7A7  PanelCtrlLatchDefault   ; unused (group,sub) slots: no event (0xFFFF)
+0x484AD7B0  PanelExtSwShadowInit    ; init the GPIO-scanned switch shadows: mode A writes 0xC0 -> 0x9CC00004, reset event records, copy 6x4-byte shadow init from ROM 0x48613588 -> 0x5006BED2
+0x484AD7B5  PanelExtSwShadowInit_entry
+0x484AD801  PanelPollTick           ; periodic poll tick: counter 0x5006BEF1++, debounce 0x5006BEF2--, 16-tick throttle vs 0x50151BFC, every 2nd tick -> PanelPollRun (no static caller found -- runtime-dispatched)
+0x484AD804  PanelPollTick_entry
+0x484AD84D  PanelPollRun            ; one poll pass: unless test-mode gate 0x484A4F9F==1: PanelSwEventHarvest + PanelGpioSwScan + PanelPollHookNop
+0x484AD850  PanelPollRun_entry
+0x484AD87A  PanelSwEventHarvest     ; drain cooked FIFO -> up to 7 [normSeg,DATA,CHANGED] records at 0x5006BEB4 (via PanelSwEventAssemble + PanelSwEventPush)
+0x484AD87F  PanelSwEventHarvest_entry
+0x484AD8AA  PanelSwEventAssemble    ; pop 3 cooked bytes, normalize the ADDR byte via PanelWireNormalize -> triplet at (a0); -1 when FIFO exhausted
+0x484AD8AF  PanelSwEventAssemble_entry
+0x484AD8E3  PanelGpioSwScan         ; scan the NON-serial switch sources into pseudo-segment shadows 0x5006BED2..: 0x98070000 bits8-9 + bits4-7 (0xF = debounce 0x1F4) + 0x484025E0 result + mode-A 0x9CC00008 active-low (the six SD-menu phantom buttons, &0x3F) + 0x4854B5B9 + 0x98070000 bit12 inverted
+0x484AD8E8  PanelGpioSwScan_entry
+0x484AD9AB  PanelGpioSwEdge         ; per-source XOR edge-detect on a 4-byte shadow record; changed bits -> event record (PanelSwEventPush)
+0x484AD9B0  PanelGpioSwEdge_entry
+0x484ADA13  PanelPollHookNop        ; retf-only hook called from PanelPollRun
+0x484ADA16  PanelWireNormalize      ; wire ADDR -> logical normSeg: idx=((b&0xC0)>>1)|(b&0x1F); mode A table 0x486135A0, mode B table 0x48613620
+0x484ADA1B  PanelWireNormalize_entry
+0x484ADA59  PanelSwEventPush        ; append a 3-byte record at 0x5006BEB4[count 0x5006BEF0 *3], 0xFF terminator after
+0x484ADA5B  PanelSwEventPush_entry
+0x484ADA9A  PanelSwEventPeek        ; copy record #d0 (3 bytes) to (a0); 0xFF marker when d0 >= 7
+0x484ADAC2  PanelSwEventReset       ; records[0]:=0xFF, count:=0
+0x484ADAD5  PanelBtnMaskReset       ; call 0x484AE278 + clear the 11 per-group button enable-masks 0x5006BF9C..0x5006BFB0 + self-test flag 0x5006BFB2 (caller 0x4854AC40)
+0x484ADAD8  PanelBtnMaskReset_entry
+0x484ADB29  PanelSwEventDispatchAll ; consumer loop: for each harvested record (PanelSwEventPeek until 0xFF) call PanelButtonDispatch, then PanelSwEventReset (no static caller found -- runtime-dispatched)
+0x484ADB2E  PanelSwEventDispatchAll_entry
 ;
 ; ---- Panel button dispatch -------------------------------------------------
-0x484ADB59  PanelButtonDispatch     ; normal-mode button dispatcher (descriptor tables 0x48614978/0x486149FC)
+; PanelButtonDispatch itself is named via gen_symbols.py (canonical start
+; 0x484ADB54; the register-save call entry is +5):
+0x484ADB59  PanelButtonDispatch_entry
+0x484ADC33  PanelBtnEnableMaskGet   ; enable-group 0..0xC -> mask halfword 0x5006BF9C.. via jump table 0x48614BC4
+0x484ADC9B  PanelBtnSuppressCheck   ; descriptor gate byte (hi nibble group / lo bit#): 1 = suppressed (mask==0xFFFF or bit set)
+0x484ADCA0  PanelBtnSuppressCheck_entry
+0x484ADCCD  PanelBtnActType0        ; action type 0: post 0x10000000|event with ((DATA&CHANGED&mask)>>shift)+(arg<<8) payload
+0x484ADCD2  PanelBtnActType0_entry
+0x484ADD16  PanelBtnActType1        ; action type 1: as type 0 (0x10000000 group) + key-click via 0x484A3A4E gate -> 0x484468A5 on press
+0x484ADD1B  PanelBtnActType1_entry
+0x484ADD81  PanelBtnActType2        ; action type 2: post 0x16000000|event (system/UI group), same payload math
+0x484ADD86  PanelBtnActType2_entry
+0x484ADDCA  PanelBtnActType4        ; action type 4 (continuous value): payload = DATA<<6 (0x3FC0 saturates to 0x3FFF), event 0x16000000|id
+0x484ADDCF  PanelBtnActType4_entry
+0x484ADDFF  PanelBtnActType3        ; action type 3 (rhythm transport composite): post 0x16000000|event, then per changed bit 1/2/4/8/0x10/0x20 LibParamGet 0x4007..0x4002 + walk the returned descriptor via 0x484ADFC8
+0x484ADE04  PanelBtnActType3_entry
+0x484AE17D  PanelEventPost          ; post (event,param) into the panel event queue 0x5006BEF4/0x5006BF44 (wr idx 0x5006BF96, gate 0x5006BF98); drained by the MILK pump 0x484145FF -> resolver 0x4841473A -> ApPostEvent
+0x484AE182  PanelEventPost_entry
+;
+; Panel-protocol data tables (reference only; DATA, not code):
+; 0x48612F74  PanelTypeIdTable        ; 4 x {ptr, expected byte} checked by PanelTypeDetect mode A
+; 0x48613014  PanelTypeIdTable2       ; 4 x {ptr, expected byte} (checker 0x484AC280)
+; 0x48613034  PanelXferStateTable     ; 11 x code ptr: link state 0..10 -> handler (0=7=10 idle, 1-6 TX, 8-9 RX)
+; 0x48613060  PanelEventFifoDescInit  ; 5-word cooked-FIFO descriptor image {base,end,rd,wr,free}
+; 0x48613074  PanelTxFifoDescInit     ; 5-word TX byte-FIFO descriptor image
+; 0x48613088  PanelCtrlValuePtrTable  ; 32 x ptr to latched-control value bytes (PanelCtrlValueGet)
+; 0x48613108  PanelCtrlDispatchTable  ; 32 x code ptr, only (0,0)(0,7)(3,0)(3,1)(3,2)(3,3) live
+; 0x48613588  PanelGpioSwShadowInit   ; 6 x 4-byte GPIO-switch shadow-record init image
+; 0x48613620  PanelWireNormTableB     ; wire ADDR -> normSeg, mode-B twin of PanelWireNormTable 0x486135A0
+; 0x48614BC4  PanelBtnMaskJumpTable   ; 13 x code ptr for PanelBtnEnableMaskGet
+; 0x5006BCF8  PANEL_EVENT_FIFO        ; cooked switch-event FIFO descriptor
+; 0x5006BD8C  PANEL_TX_FIFO           ; LED/command TX byte-FIFO descriptor
+; 0x5006BEB4  PANEL_SW_EVENT_RECORDS  ; 7 x 3-byte [normSeg,DATA,CHANGED] (count 0x5006BEF0)
 ;
 ; ---- MIDI (MN10300 on-chip serial SC1/SC2 @ 0x34000810/0x34000820) ---------
 ; See kn7000_mame/notes/midi-rx.md, boot-performance-and-clock.md.
@@ -142,6 +280,8 @@
 0x48473766  TechniChordAugDimFold   ; (d0=chord type, d1=root 1..12) -> root-fold offset for the symmetric chord types: type 4 buckets of 4 semitones -> 0/4/8, type 7 buckets of 3 -> 0/3/6/9; 0 for other types, -1 for type 0 (no chord). Called by the 7 matrix voicers so enharmonically identical aug/dim chords share matrix columns
 0x48473768  TechniChordAugDimFold_entry
 0x4C0149FA  LibParamGet             ; library ROM: parameter/table get by id (d0=param id, d1=index<<24); reads the sound-parameter database (techni-chord uses ids 0x8080-0x8082, 0xB0007E)
+0x4C03DCC8  LibIntcEnable           ; library ROM: ENABLE a registered interrupt (d0=slot id) -- sets the ICR control bit (verified from the helper body; panel uses ids 4=ATN grp 0x1A, 5=TX grp 0x11, 6=RX grp 0x10)
+0x4C03DD3F  LibIntcDisable          ; library ROM: DISABLE a registered interrupt (d0=slot id) -- clears the ICR control bit
 ; Techni-Chord data (reference only; DATA, not code):
 ; 0x485EC940  TechniChordStyleParamMap   ; 14 halfwords, param value -> GUI grid slot: 0,1,2,4,5,6,7,8,9,10,11,12,13,3 (see header note; same map in the KN6000)
 ; 0x485EC960  TechniChordStyleNamePool   ; "CLOSE"..."FANFARE" NUL-separated, grid order; ptr table follows @0x485EC9D4

@@ -72,7 +72,7 @@ MANUAL_SYMBOLS = [
     (0x4858B424, "ResourceIdTrie",        "nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)"),
 
     # Panel button/LED matrix (RE'd via the MAME driver; kn7000_mame/notes/panel-descriptor-map.md)
-    (0x484ADB59, "PanelButtonDispatch",   "reads per-normSeg 12-byte descriptor arrays; posts 0x00700000|event"),
+    (0x484ADB54, "PanelButtonDispatch",   "walks the per-normSeg 12-byte descriptor array (bank A 0x48614978 / bank B 0x486149FC), 5 action types; posts events via PanelEventPost 0x484AE17D (canonical movm start; register-save call entry = +5, see kn7000_manual.sym)"),
     (0x48614978, "PanelButtonDescPtrTable", "per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}"),
     (0x486135A0, "PanelWireNormTable",     "wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)"),
     (0x4860C9F4, "PanelSwitchClassTable",  "2-byte entries indexed by switch-MATRIX (row*8+col)*2 at reader 0x484A0D23; self-test scan map, NOT a normSeg.bit->LED map"),
