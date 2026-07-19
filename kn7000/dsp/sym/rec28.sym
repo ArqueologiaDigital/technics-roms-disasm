@@ -1,38 +1,45 @@
-; rec28 — EFFECT: envelope-controlled resonant filter (auto-wah / dynamic filter)
-; DM@C000:40e family. Detector: sum L+R, FLOAT, *0.8, ABS (rectify), then a
-; one-pole envelope with attack/release coeff select (IF LT @840a). The smoothed
-; envelope feeds a polynomial (840e..8414: F7,F7^2 products) that derives the
-; per-sample biquad coefficients, which are then applied by the kernel-style
-; 6-op biquad body (8418..8420) to each channel -> envelope-swept filter.
-; Output FIX, *level, CLIP. Confidence: medium-low (env-detector + biquad clear;
-; exact wah vs dynamic-LP mapping inferred).
-pm:0x8400  Entry_I0eqI1            ; I0 = I1
-pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4)
-pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4)
-pm:0x8403  SumMono                 ; detector = L+R
-pm:0x8405  DetToFloat              ; F8 = FLOAT det
-pm:0x8406  DetScale08              ; *0.8 (0x3F4CCCCD)
-pm:0x8408  Rectify                 ; F8 = ABS(det)
-pm:0x8409  EnvDelta                ; F3 = det - env(F7)
-pm:0x840a  AttackReleaseSelect     ; IF LT reload release coeff
-pm:0x840c  EnvOnePole              ; F8 = env + delta*coeff
-pm:0x840e  CoeffPoly_Start         ; polynomial: filter coeffs from envelope
-pm:0x8413  StoreCoeffState         ; DM(M6/M1/M2,I0) = derived biquad coeffs
-pm:0x8416  ReadInL2                ; R0 = DM(0x20,I4) filter input L
-pm:0x8418  Biquad_L                ; kernel-style resonant section (L)
-pm:0x8420  FixL                    ; R0 = FIX F10
-pm:0x8421  LevelMul_L              ; *R14 wet level
-pm:0x8423  ClipL                   ; CLIP 0x007FFFFF
-pm:0x8424  OutL                    ; DM(I4,M2) = out L
-pm:0x8425  ReadInR2                ; R0 = DM(0x20,I4)
-pm:0x8428  Biquad_R                ; resonant section (R)
-pm:0x8430  FixR                    ; R0 = FIX F10
-pm:0x8434  OutR                    ; DM(I4,M2) = out R
-pm:0x8435  Return                  ; RTS (delayed)
-pm:0x8437  PMStateRewind           ; MODIFY(I8,0x4B) 75-word PM state
-dm:0xc004  Coeff_AttackRate        ; 0x3B800000 (~0.0039) env attack
-dm:0xc005  Coeff_ReleaseRate       ; 0x3A000000 env release
-dm:0xc006  Coeff_PolyA             ; 0x2DCCCCCC filter-sweep poly term
-dm:0xc009  Coeff_Resonance         ; 0x3FFF7CED (a1~1.999) resonant pole
-dm:0xc00a  Const_One               ; 0x3F800000 = 1.0f
-dm:0xc00e  Coeff_OutLevel          ; 0x7FFFFFFF
+; rec28 — EFFECT: GUI AUTO WAH, presets Wah1-5 (type 0x34)
+; The standalone build of rec74's touch wah (IDENTICAL polynomial constants).
+; MONO (both channels read in_L; dual-mono out). Float detector
+; |0.8*(L+R)<<9|, attack 1/256 (5.8 ms) / release 1/2048 (46 ms). Per-sample
+; coefficient polynomial (against the 2^31-scaled envelope e):
+;   a1 = 1.99594 - 1.28 e^2   a2 = -(1 - 0.1 e + 0.02 e^2)   g = 0.05 e - 0.01 e^2
+; applied as w = x + a1 w1 + a2 w2; y = 4g(w - w2) (zeros at DC+Nyquist).
+; Sweep: parked at 447 Hz with r=1.0 and g=0 (silent) at e=0, UP to ~6.4 kHz
+; at the e=0.8 detector cap, peak ~ +12 dB mid-sweep. Coefficients shared,
+; biquad states per channel. Full doc: dsp/modulation-pitch-family.md #4.
+dm:0xc004  wah_atk              ; 0x3B800000f = 1/256 attack (5.8 ms)
+dm:0xc005  wah_rel              ; 0x3A000000f = 1/2048 release (46 ms)
+dm:0xc006  wah_poly_g1          ; 0x2DCCCCCCf: *e -> 0.05 e (g linear term)
+dm:0xc007  wah_poly_g2          ; 0x1D23B795f: *e^2 -> 0.01 e^2 (g quadratic term)
+dm:0xc008  wah_poly_a1q         ; 0x20A3D70Af: *e^2 -> 1.28 e^2 (a1 depression)
+dm:0xc009  wah_a1_base          ; 0x3FFF7CEDf = 1.99594 (a1 at silence: poles ON the circle @447 Hz)
+dm:0xc00a  wah_one              ; 0x3F800000f = 1.0 (a2 base)
+dm:0xc00b  wah_a1               ; derived per sample: a1
+dm:0xc00c  wah_a2               ; derived per sample: a2
+dm:0xc00d  wah_g                ; derived per sample: g
+dm:0xc00e  wah_level            ; 0x7FFFFFFF output level
+pm:0x8400  wah_entry            ; I0 = I1
+pm:0x8401  wah_read_inL         ; R0 = DM(0x20,I4)
+pm:0x8402  wah_read_inR         ; R8 = DM(0x21,I4) — used by the DETECTOR only
+pm:0x8403  wah_det_sum          ; det = (L+R)<<9
+pm:0x8405  wah_det_float        ; F8 = FLOAT det
+pm:0x8406  wah_det_scale        ; x0.8 (caps e at 0.8 -> max sweep 6.4 kHz)
+pm:0x8408  wah_rectify          ; ABS; R4 = attack (M1 skip), F7 = env (PM state)
+pm:0x8409  wah_env_delta        ; F3 = det - env
+pm:0x840a  wah_atk_rel_sel      ; IF LT pre-modify reload: release
+pm:0x840c  wah_env_update       ; env += k*(det-env); store PM state
+pm:0x840e  wah_poly             ; derive a1/a2/g from env (e, e^2 products)
+pm:0x8413  wah_store_coeffs     ; pre-modify writes -> c00b/c00c/c00d
+pm:0x8416  wah_read_L2          ; R0 = DM(0x20,I4) filter input (mono)
+pm:0x8418  wah_biquad_L         ; w = x + a1 w1 + a2 w2; y = g(w - w2)
+pm:0x841e  wah_x4               ; R1 = 4.0f: y *= 4 (resonance makeup)
+pm:0x8420  wah_fix_L            ; FIX; R14 = level (c00e)
+pm:0x8423  wah_clip_L           ; CLIP 0x007FFFFF
+pm:0x8424  wah_out_L            ; DM(I4,M2) = out L
+pm:0x8425  wah_read_L3          ; R0 = DM(0x20,I4) — LEFT again: dual-mono
+pm:0x8426  wah_rewind           ; two M4 reads rewind I0 to c00b (shared coeffs)
+pm:0x8428  wah_biquad_R         ; same section, own states
+pm:0x8434  wah_out_R            ; DM(I4,M2) = out R
+pm:0x8435  wah_rts              ; RTS (delayed)
+pm:0x8437  wah_state_rewind     ; MODIFY(I8,0x4B) — 5 state words (env + 2x{w1,w2})

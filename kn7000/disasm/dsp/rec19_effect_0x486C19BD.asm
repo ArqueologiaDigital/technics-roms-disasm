@@ -2,7 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 19  [EFFECT]
 ; AGC waveshaper distortion (rail-curve fuzz variant)
 ; pool CPU 0x486C19BD / file 0x2C19BD   3 blocks: DM@9800:1e DM@C000:77e PM@8400:73w
-; GUI distortion bank 0x41 presets Normal/Hard Compress (descriptor table);
+; GUI FUZZ group Normal/Hard Compress (group table = ROM fact);
 ; Multi/Sound-DSP insert (units1-6); types 0x22; rec17's engine, 3 bank
 ; changes: release 1/128 (2.9 ms, FASTER than attack = max sustain), drive
 ; clamp 2.0 not the curve-meeting 4.0 (-6 dB step below 0.1 = quiet-signal

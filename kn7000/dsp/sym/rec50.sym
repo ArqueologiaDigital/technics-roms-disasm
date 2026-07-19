@@ -1,26 +1,44 @@
-; rec50 — EFFECT: stereo multi-tap modulated-delay ENSEMBLE/chorus, 3 triangle LFOs + coupled-form sine osc (C000:67e, PM 94w)
-; same LFO bank + 3-tap delay engine as rec49, but no input interpolation biquad (unity interp coeffs 0xFFFFFFE1/0x7FFFFFFF); output doubled (R8=R8+R8)
-pm:0x8400  Entry                 ; I0=I1 state pointer
-pm:0x8401  LFO_Osc1              ; R13=R13+PM(I8,M14); IF AV negate; R13=R13*R2 triangle LFO 1
-pm:0x8405  LFO_Osc2              ; R11 second triangle LFO
-pm:0x8409  LFO_Osc3              ; R14 third triangle LFO; R15=-R13
-pm:0x840d  SineOsc_Coupled       ; MRF=0; R12=R5*R7; R5=MRF-(R6*R5): coupled-form quadrature sine osc (R6)
-pm:0x8410  Input_L               ; R0=DM(0x20); F10=FLOAT R0
-pm:0x8413  DelayWrite_L          ; M7=0xFA (250) DM(I2,M7) delay-line write, left
-pm:0x8417  ModTap1_L             ; R13 fractional modulated tap
-pm:0x841f  ModTap2_L             ; R14 modulated tap; F9=(F8+F9)/2
-pm:0x8428  ModTap3_L             ; R6 (sine) modulated tap; F8=F8+F9
-pm:0x8431  Output_L              ; MODIFY(I2,0xF4); FIX; *R3; R8+R8 (2x); CLIP; DM(I4,M2)
-pm:0x8439  Input_R               ; R1=DM(0x21); F10=FLOAT R1; right delay write
-pm:0x843c  ModTap1_R             ; R11 modulated tap
-pm:0x8444  ModTap2_R             ; R15 modulated tap
-pm:0x844d  ModTap3_R             ; R6 modulated tap
-pm:0x8455  Output_R              ; FIX; *R3; R8+R8; CLIP; DM(I4,M2)
-pm:0x845b  Return                ; RTS(DB)
-dm:0x9800  LFO1_incr             ; 0x00012599 LFO increment
-dm:0x9802  LFO3_incr             ; 0xFFFEDA67 (negative) LFO increment
-dm:0x9803  SineOsc_incr          ; 0x002407C1 sine-osc coefficient
-dm:0xc005  DelayLen_param        ; 0x00F00000 delay-length related
-dm:0xc006  LFO_damp              ; 0xAAAAAAAC (~-0.667) LFO reflect scale (x2)
-dm:0xc00a  InterpCoeff_unity     ; 0xFFFFFFE1 / 0x7FFFFFFF unity interp (no pre-filter, cf rec49)
-dm:0xc00d  FullScale             ; 0x7FFFFFFF
+; rec50 — EFFECT: GUI TRIO CHORUS, Deep/Normal/Shallow 1-8 (type 0x53, insert)
+; rec49's triangle-trio engine, insert build: NO input conditioning (input
+; floated straight to the line), triangle scale c005 = 0x00F00000 -> +-240 smp
+; sweep (+-14.5 cents constant-slope detune at template; deepest L read 491,
+; one word shy of the R write head at 494), sine amplitude 0x00040000 =
+; +-4 smp (7.6-cent shimmer), tap mix = sine + (tri_a+tri_b)/2, x2 makeup at
+; the OUTPUT (R8+R8). Same oscillators, same 0.386 Hz / 7.717 Hz templates,
+; same degenerate template stereo (host phases decorrelate). The GUI name is
+; the topology: a TRIO of taps per channel.
+; Full doc: dsp/modulation-pitch-family.md #7.
+dm:0x9800  tri1_incr            ; +0x12599 signed triangle increment (0.386 Hz)
+dm:0x9801  tri2_incr            ; +0x12599 (right)
+dm:0x9802  tri3_incr            ; -0x12599 (contrary)
+dm:0x9803  sineosc_eps          ; 0x2407C1 -> 7.717 Hz magic-circle rate
+dm:0x9804  sineosc_neg1         ; 0x80000000 = -1.0 negator
+dm:0xc004  tri1_phase           ; triangle accumulator 1
+dm:0xc005  tri_scale            ; 0x00F00000: accumulator -> +-240 smp 16.16 offset
+dm:0xc006  tri2_phase           ; triangle accumulator 2
+dm:0xc007  tri3_phase           ; triangle accumulator 3
+dm:0xc008  sineosc_sin          ; magic-circle state (sin)
+dm:0xc009  sineosc_cos          ; magic-circle state (cos; templ 0x00040000 = +-4 smp)
+dm:0xc00a  fexp_L               ; 0xFFFFFFE1 = -31 fraction float scale (x3)
+dm:0xc00d  wet_L                ; 0x7FFFFFFF
+dm:0xc00e  fexp_R               ; -31 (x3, right)
+dm:0xc011  wet_R                ; 0x7FFFFFFF
+pm:0x8400  trio_entry           ; I0=I1 (no input doubling — makeup is at output)
+pm:0x8401  trio_osc1            ; triangle 1 (IF AV reflect) -> R13
+pm:0x8405  trio_osc2            ; triangle 2 -> R11
+pm:0x8409  trio_osc3            ; triangle 3 -> R14; R15 = -R13
+pm:0x840d  trio_sineosc         ; magic-circle sin/cos -> R6
+pm:0x8410  trio_read_inL        ; R0 = DM(0x20,I4); FLOAT
+pm:0x8413  trio_write_L         ; write at P (float bits), stride 250
+pm:0x8417  trio_tapL1           ; tap 250 + tri1 (+-240)
+pm:0x841f  trio_tapL2           ; tap 250 + tri3; F9 = (t1+t2)/2
+pm:0x8428  trio_tapL3           ; tap 250 + sine (+-4); F8 = t3 + (t1+t2)/2
+pm:0x8431  trio_advance_R       ; MODIFY(I2,0xF4) -> R write base P+494
+pm:0x8433  trio_out_L           ; FIX, x wet, x2 (R8+R8), CLIP, out L
+pm:0x8439  trio_read_inR        ; R1 = DM(0x21,I4); FLOAT; write at P+494
+pm:0x843c  trio_tapR1           ; tap: tri2
+pm:0x8444  trio_tapR2           ; tap: -tri1
+pm:0x844d  trio_tapR3           ; tap: sine
+pm:0x8455  trio_out_R           ; FIX, x wet, x2, CLIP, out R
+pm:0x845b  trio_rts             ; RTS (delayed)
+pm:0x845d  trio_state_rewind    ; MODIFY(I8,0x4B) — 5 state reads

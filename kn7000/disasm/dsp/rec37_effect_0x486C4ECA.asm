@@ -2,7 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 37  [EFFECT]
 ; table-lookup waveshaper distortion + live AGC + Haas stereo
 ; pool CPU 0x486C4ECA / file 0x2C4ECA   3 blocks: DM@9800:5e DM@C000:77e PM@8400:88w
-; GUI distortion bank 0x40 grp A preset 'Bright' (descriptor table);
+; GUI Distortion group preset 'Bright' (group table = ROM fact);
 ; Multi/Sound-DSP insert (units1-6); types 0x82; env AGC (atk 1/256 rel
 ; 1/2048, gain 0.111+8.35e8/env clamp 4.0 @0.1FS, RECIPS seed only) holds
 ; drive constant across velocity; 33-pt PWL knee curve in the c028 table

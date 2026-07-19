@@ -2,7 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 39  [EFFECT]
 ; AGC waveshaper distortion (grp B 'Bright': +3 dB HF shelf)
 ; pool CPU 0x486C567E / file 0x2C567E   3 blocks: DM@9800:9e DM@C000:77e PM@8400:97w
-; GUI distortion bank 0x40 grp B preset 'Bright' (descriptor table);
+; GUI Overdrive group preset 'Bright' (group table = ROM fact);
 ; Multi/Sound-DSP insert (units1-6); types 0x84; rec18's engine + ONE
 ; structural word (@0x844f MODIFY(I0,-8): ch1 biquad reuses ch0's bank, c016..
 ; zeroed); voicing: poles r=.919 @1032 Hz over zeros r=.931 @867 Hz = +3 dB

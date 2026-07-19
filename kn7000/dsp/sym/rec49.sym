@@ -1,30 +1,63 @@
-; rec49 — EFFECT: stereo multi-tap modulated-delay ENSEMBLE/chorus, 3 triangle LFOs + coupled-form sine osc, with input interpolation biquad (C000:32e, PM 101w)
-; same LFO bank + 3-tap delay engine as rec50; rec49 adds the interpolation/pre-filter cascade
-pm:0x8400  Entry                 ; I0=I1 state pointer; R0/R1 = L/R inputs doubled
-pm:0x8404  LFO_Osc1              ; R13=R13+PM(I8,M14); IF AV negate; R13=R13*R2 triangle LFO 1
-pm:0x8408  LFO_Osc2              ; R11 second triangle LFO
-pm:0x840c  LFO_Osc3              ; R14 third triangle LFO; R15=-R13
-pm:0x8410  SineOsc_Coupled       ; MRF=0; R12=R5*R7; R5=MRF-(R6*R5): coupled-form quadrature sine osc (R6)
-pm:0x8415  InterpFilter_L        ; F10=FLOAT R0; two biquad sections (c00d-c00f) = fractional-delay interp filter
-pm:0x841d  DelayWrite_L          ; M7=0xFA (250) DM(I2,M7) delay-line write, left
-pm:0x8421  ModTap1_L             ; R13 fractional modulated tap (ASHIFT-16/FDEP interp)
-pm:0x8428  ModTap2_L             ; R14 modulated tap; F9=(F8+F9)/2 average
-pm:0x8430  ModTap3_L             ; R6 (sine) modulated tap; F8=(F8+F9)/2
-pm:0x8438  Output_L              ; MODIFY(I2,0xF4); FIX; *R3; CLIP; DM(I4,M2)
-pm:0x843e  InterpFilter_R        ; F10=FLOAT R1; right-channel interp biquad cascade
-pm:0x8447  DelayWrite_R          ; DM(I2,M7) right delay write
-pm:0x8449  ModTap1_R             ; R11 modulated tap
-pm:0x8450  ModTap2_R             ; R15 modulated tap
-pm:0x8458  ModTap3_R             ; R6 modulated tap
-pm:0x8460  Output_R              ; FIX; *R3; CLIP
-pm:0x8462  Return                ; RTS(DB) + output write
-dm:0x9800  LFO1_incr             ; 0x00012599 LFO increment
-dm:0x9802  LFO3_incr             ; 0xFFFEDA67 (negative) LFO increment
-dm:0x9803  SineOsc_incr          ; 0x002407C1 sine-osc coefficient
-dm:0xc006  LFO_damp              ; 0xAAAAAAAC (~-0.667) LFO reflect scale (x2)
-dm:0xc00a  SineOsc_coeff_pos     ; 0x3F6E6215 (~0.931) coupled-osc coefficient
-dm:0xc00b  SineOsc_coeff_neg     ; 0xBF6E6215
-dm:0xc00d  InterpCoeff0          ; 0x3E3F0425 interpolation biquad coeff
-dm:0xc00e  InterpCoeff1          ; 0xBEAE2861
-dm:0xc00f  InterpCoeff2          ; 0x3F93A993
-dm:0xc013  FullScale             ; 0x7FFFFFFF
+; rec49 — EFFECT: CHORUS-screen Chorus1-4 (type 0x52, unit 9) — triangle-trio chorus
+; A THIRD LFO idiom (neither the sine table nor the rotors):
+;  - 3 overflow-reflect TRIANGLE oscillators: phase += inc; IF AV, inc = -inc
+;    (the SIGNED increment lives in PM state and flips at each 32-bit rail).
+;    f = inc*fs/2^33; template 0x12599 -> 0.386 Hz. Raw accumulator scaled by
+;    c005 (0x00800000 = 2^-8) into a 16.16 offset: +-128 smp. Triangle FM =
+;    CONSTANT-SLOPE detune (+-7.8 cents at template, sign alternating).
+;  - 1 magic-circle sine pair (the rotary's oscillator; state c008/c009 in the
+;    PARAM block, eps = 0x9803 = 0x2407C1 -> 7.717 Hz, amplitude = c009 seed
+;    0x00020000 = +-2 smp -> 3.8-cent shimmer).
+; Taps/channel about the 250-smp center: L {tri1, tri3, sine}, R {tri2, -tri1,
+; sine}; mix = sine/2 + (tri_a+tri_b)/4; x2 makeup at the INPUT (R0+R0).
+; Template state is degenerate (tri2==tri1, tri3==-tri1 -> L==R): the host's
+; per-preset initial phases (c004/c006/c007) decorrelate the channels — osc2
+; exists solely to give R its own triangle.
+; Input conditioning per channel (banks c00a-c00f / c015-c01a): section 1 =
+; MIRROR-FLAT tone slot (pole = zero = 0.9311, g = 1 — the rec23 trick,
+; host-voiced per preset); section 2 = fixed shelf (1.15364 - 0.34015 z^-1)/
+; (1 - 0.18654 z^-1): unity DC, +2.0 dB at Nyquist. Float delay line.
+; R write base P+494 (MODIFY 0xF4); deepest reads L 379 / R 873.
+; Full doc: dsp/modulation-pitch-family.md #7.
+dm:0x9800  tri1_incr            ; +0x12599 signed triangle increment (0.386 Hz), sign flips on AV
+dm:0x9801  tri2_incr            ; +0x12599 (right channel's triangle)
+dm:0x9802  tri3_incr            ; -0x12599 (contrary-motion triangle)
+dm:0x9803  sineosc_eps          ; 0x2407C1 magic-circle rate -> 7.717 Hz
+dm:0x9804  sineosc_neg1         ; 0x80000000 = -1.0 negator for the coupled form
+dm:0xc004  tri1_phase           ; triangle accumulator 1 (host preset phase decorrelates)
+dm:0xc005  tri_scale            ; 0x00800000 = 2^-8: accumulator -> +-128 smp 16.16 offset
+dm:0xc006  tri2_phase           ; triangle accumulator 2
+dm:0xc007  tri3_phase           ; triangle accumulator 3
+dm:0xc008  sineosc_sin          ; magic-circle state (sin)
+dm:0xc009  sineosc_cos          ; magic-circle state (cos; templ 0x00020000 = +-2 smp amplitude)
+dm:0xc00a  filt1_pole_L         ; 0.93115f — section-1 pole (= zero: mirror-flat tone slot)
+dm:0xc00b  filt1_zero_L         ; -0.93115f
+dm:0xc00c  filt1_g_L            ; 1.0f
+dm:0xc00d  filt2_pole_L         ; 0.18654f — section-2 pole
+dm:0xc00e  filt2_zero_L         ; -0.34015f
+dm:0xc00f  filt2_g_L            ; 1.15364f -> unity DC, +2.0 dB Nyquist shelf
+dm:0xc010  fexp_L               ; 0xFFFFFFE1 = -31 fraction float scale (x3 per channel)
+dm:0xc013  wet_L                ; 0x7FFFFFFF
+dm:0xc014  clip_L               ; 0x007FFFFF
+dm:0xc015  filt1_pole_R         ; right-channel conditioning bank (identical template)
+dm:0xc01e  wet_R                ; 0x7FFFFFFF
+dm:0xc01f  clip_R               ; 0x007FFFFF
+pm:0x8400  tri_entry            ; I0=I1; inputs doubled (x2 makeup at input)
+pm:0x8404  tri_osc1             ; phase += inc; IF AV inc=-inc; scale by c005 -> R13
+pm:0x8408  tri_osc2             ; second triangle -> R11 (right)
+pm:0x840c  tri_osc3             ; third triangle -> R14; R15 = -R13
+pm:0x8410  tri_sineosc          ; magic-circle sin/cos update -> R6 (tap 3 modulator)
+pm:0x8415  tri_filter_L         ; conditioning cascade L (flat slot + 2 dB shelf)
+pm:0x841d  tri_write_L          ; write filtered L at P (float bits), stride 250
+pm:0x8421  tri_tapL1            ; fractional tap at 250 + tri1 (+-128)
+pm:0x8428  tri_tapL2            ; tap at 250 + tri3; F9 = (t1+t2)/2
+pm:0x8430  tri_tapL3            ; tap at 250 + sine (+-2); F8 = (t3 + (t1+t2)/2)/2
+pm:0x8438  tri_advance_R        ; MODIFY(I2,0xF4) -> R write base P+494
+pm:0x843a  tri_out_L            ; FIX, x wet, CLIP, out L
+pm:0x843e  tri_filter_R         ; conditioning cascade R
+pm:0x8447  tri_write_R          ; write at P+494 -> read base P+744
+pm:0x8449  tri_tapR1            ; tap: tri2
+pm:0x8450  tri_tapR2            ; tap: -tri1
+pm:0x8458  tri_tapR3            ; tap: sine (same osc)
+pm:0x8460  tri_out_R            ; FIX, x wet, CLIP (in RTS slot), out R
+pm:0x8464  tri_state_rewind     ; MODIFY(I8,0x47) — 9 state reads

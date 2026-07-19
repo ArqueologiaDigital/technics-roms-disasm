@@ -2,11 +2,11 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 12  [EFFECT]
 ; GATE REVERB: damped allpass-ring tank + hold-gate on the output
 ; pool CPU 0x486C035B / file 0x2C035B   3 blocks: DM@9800:7e DM@C000:77e PM@8400:69w
-; GUI REVERB-screen Medium/Short/Long Gate presets (descriptor table) -> this
-; is the GATE REVERB engine; Multi/Sound-DSP insert (units1-6); types 0x08;
-; mono tank = 3 Schroeder APs 849/1422/1498 smp (k .6/.6/.4, k12 = PM9801) in
-; a -0.5 loop through a unity-DC damp (Nyq .5) + 0.4 mid-loop dry inject ->
-; loop 85.5 ms, RT60(DC)~0.85 s; out pair = loop out + AP 2002 k=.4
+; GUI Sound-DSP 'Reverb' group = Medium/Short/Long Gate (group table = ROM
+; fact) -> this is the GATE REVERB engine; Multi/Sound-DSP insert (units1-6);
+; types 0x08; mono tank = 3 Schroeder APs 849/1422/1498 smp (k .6/.6/.4, k12 =
+; PM9801) in a -0.5 loop through a unity-DC damp (Nyq .5) + 0.4 mid-loop dry
+; inject -> loop 85.5 ms, RT60(DC)~0.85 s; out pair = loop out + AP 2002 k=.4
 ; decorrelator; GATE outside the loop: thr c00c 0.2 (~-56 dBFS), attack tau
 ; 22.7 ms (PM9805 .001), HOLD counter reload PM9804 (templ 511 smp —
 ; preset-set), release x.999/smp (157 ms, PM9806), ALUSAT-dependent 63-frame

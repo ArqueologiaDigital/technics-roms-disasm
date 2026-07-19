@@ -1,19 +1,40 @@
-; rec32 EFFECT — multi-LFO modulated fractional-delay chorus (stereo)
-; Three sine-table phase-accumulator oscillators drive a fractional delay tap.
-pm:0x8400  Rec32_Entry          ; I0=I1 (state base); effect entry @PM 0x8400
-pm:0x8401  Rec32_LFO1           ; osc1: phase acc DM(I0,M6)+PM incr, sine-table lookup+interp -> R9
-pm:0x8410  Rec32_LFO2           ; osc2: 2nd phase accumulator/sine, product forms R5=R9*R8
-pm:0x841f  Rec32_LFO3           ; osc3: 3rd phase accumulator/sine, R8=R9*R8 (combined mod)
-pm:0x840b  Rec32_SineInterp     ; DM(I5,M7) table read + linear interpolation (MRF MAC)
-pm:0x842e  Rec32_AudioIn        ; R0=DM(0x20,I4) input sample; FLOAT; write into delay line
-pm:0x8431  Rec32_DelayWrite     ; DM(I2,M7)=R0, M7=0xFA(250) delay stride
-pm:0x8434  Rec32_TapModA        ; modulated delay tap read, fractional interp (voice A)
-pm:0x8443  Rec32_OutLeft        ; DM(I4,M2)=R8 left output
-pm:0x8448  Rec32_TapModB        ; second tap using R5 mod, fractional interp (voice B)
-pm:0x8456  Rec32_OutRight       ; DM(I4,M2)=R8 right output
-pm:0x8457  Rec32_Return         ; RTS
-dm:0x9800  Rec32_LFO1Incr       ; =0x00010000 phase increment osc1 (rate)
-dm:0x9801  Rec32_LFO2Incr       ; =0x00100000 phase increment osc2
-dm:0x9802  Rec32_LFO3Incr       ; =0x00100000 phase increment osc3
-dm:0xc006  Rec32_Depth          ; =0x20000000 modulation depth/scale
-dm:0xc009  Rec32_Unity          ; =0x7FFFFFFF unity wet coeff
+; rec32 — EFFECT: GUI MIXUP1-4 (type 0x38) — burst vibrato
+; Three sine LFOs: LFO1 slow (templ 1.346 Hz) + LFO2/LFO3 a FAST QUADRATURE
+; PAIR (templ 21.5 Hz, phase3 = +90 deg via c006=0x20000000). The tap
+; modulators are Q31 PRODUCTS:
+;   modR = sin(slow)*sin(fast)      modL = sin(slow)*sin(fast+90)
+; = a beating pair (20.2/22.9 Hz) whose envelope |sin(slow)| swells and nulls
+; 2.7x/s: bursts of deep fast vibrato (up to +-3.1 semitones at template
+; peaks), L/R 90 deg apart -> the wobble swirls across the image. MONO source
+; (both channels read in_L). Float delay line, taps 250+-64, wet x2.
+; Full doc: dsp/modulation-pitch-family.md #5.
+dm:0x9800  mix_lfo1_incr        ; 0x00010000 = 1.346 Hz — the SLOW gate LFO
+dm:0x9801  mix_lfo2_incr        ; 0x00100000 = 21.5 Hz — fast pair, 0 deg
+dm:0x9802  mix_lfo3_incr        ; 0x00100000 = 21.5 Hz — fast pair, +90 deg
+dm:0xc004  mix_phase1           ; slow phase (templ 0)
+dm:0xc005  mix_phase2           ; fast phase A (templ 0)
+dm:0xc006  mix_phase3           ; fast phase B (templ 0x20000000 = +90 deg)
+dm:0xc007  mix_depth            ; 0x00400000 = +-64 smp tap depth
+dm:0xc008  mix_fexp_L           ; 0xFFFFFFE1 = -31: FLOAT R3 BY -31 fraction scale (L)
+dm:0xc009  mix_wet              ; 0x7FFFFFFF wet (shared)
+dm:0xc00a  mix_fexp_R           ; -31 fraction scale (R)
+pm:0x8400  mix_entry            ; I0=I1
+pm:0x8401  mix_lfo1             ; slow sine -> R9
+pm:0x8410  mix_lfo2             ; fast sine A
+pm:0x841e  mix_modR             ; R5 = sin(slow)*sin(fastA) — right modulator (product!)
+pm:0x841f  mix_lfo3             ; fast sine B (+90)
+pm:0x842d  mix_modL             ; R8 = sin(slow)*sin(fastB) — left modulator; R15=I2 save
+pm:0x842e  mix_read_inL         ; R0 = DM(0x20,I4); FLOAT (float delay line)
+pm:0x8431  mix_write_L          ; write at P, advance 250
+pm:0x8433  mix_offset_L         ; R8 = modL * depth; R1 = read base
+pm:0x8434  mix_tap_L            ; fractional float lerp
+pm:0x843d  mix_advance_R        ; MODIFY(I2,0xFA) -> R write base P+500
+pm:0x843e  mix_wet_L            ; FIX, x wet, x2
+pm:0x8443  mix_out_L            ; DM(I4,M2) = out L
+pm:0x8444  mix_read_inL2        ; DM(0x20,I4) AGAIN — mono source
+pm:0x8448  mix_offset_R         ; R8 = modR * depth
+pm:0x8449  mix_tap_R            ; fractional float lerp about P+750
+pm:0x8451  mix_restore          ; I2 = R15 (entry base)
+pm:0x8456  mix_out_R            ; DM(I4,M2) = out R
+pm:0x8457  mix_rts              ; RTS (delayed)
+pm:0x8459  mix_state_rewind     ; MODIFY(I8,0x4D) — 3 state reads

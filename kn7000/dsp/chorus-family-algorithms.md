@@ -332,6 +332,14 @@ type→record map are the facts.
 > Flanger = 0x04 = rec09** — supporting bullet 4's chorus/ensemble-send
 > reading of unit 9.
 
+> **UPGRADE 2 (2026-07-19, group-table walk)**: the GUI *group* table is now
+> fully decoded (`modulation-pitch-family.md` §1). It adds: the Sound-DSP
+> **Chorus** group (Deep/Normal/Shallow 1–13, type 0x01) is **rec06** as well
+> — rec06 serves both Chorus and Celeste; the **Modulated Chorus** group
+> (0x02) + its D/W list (0x07) are **rec07**; the Flanger D/W list (0x0B) is
+> **rec09**. The §6 rate question is unchanged (0x01's 39 presets are host
+> rewrites over the same record).
+
 ## 8. Cross-model note
 
 Per the pool diff (`cross-model/`), the KN6000/KN6500 DM blocks are

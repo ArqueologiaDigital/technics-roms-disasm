@@ -1,16 +1,45 @@
-; rec33 EFFECT — 16-tap FIR convolution + biquad, stereo
-; Averages L/R, convolves against a coefficient kernel (PM), two accumulators
-; -> two biquad-filtered outputs. Circular delay buffer L=0x400 (1024 words).
-pm:0x8400  Rec33_Entry          ; I0=I1; save I2; MODIFY(I2,0x3FF) circular buffer setup
-pm:0x8403  Rec33_AudioIn        ; R0=DM(0x20) L, R1=DM(0x21) R; F11=(F0+F1)/2 mono sum
-pm:0x8407  Rec33_FIR_AccA       ; FIR MAC chain: F8=F2*F6,F12=F8+F12, taps DM(I2,M3)*PM(I8,M8)
-pm:0x841c  Rec33_FIR_AccB       ; second FIR accumulator into F13 (other channel/tap set)
-pm:0x842e  Rec33_Biquad         ; biquad sections, state in PM(I8,M11/M9) write-back
-pm:0x843d  Rec33_MixCross       ; F12=F12+F4, F13=F13-F5 stereo cross-mix
-pm:0x843f  Rec33_OutLeft        ; R8=FIX F12, *level, CLIP, DM(I4,M2)=R8
-pm:0x8443  Rec33_OutRight       ; R8=FIX F13, *level, CLIP, DM(I4,M2)=R8
-pm:0x8447  Rec33_Return         ; RTS; I2=R15 restore
-dm:0x9800  Rec33_FIR_Taps       ; 16 float FIR coefficients (kernel) 0x9800..0x980f
-dm:0xc006  Rec33_BiquadCoefA    ; biquad section coeffs (b0,b1,b2,a1,a2) c006..c00a
-dm:0xc00b  Rec33_BiquadCoefB    ; duplicate biquad section c00b..c00f
-dm:0xc010  Rec33_Unity          ; =0x7FFFFFFF unity
+; rec33 — EFFECT: GUI SPREADER (type 0x39; menu group 'Space', 2 params)
+; Stereo widener, three tricks:
+;  1) DECORRELATION MICRO-FIRs: 16 float coefficients live in PM STATE
+;     0x9800-0x980f (host-rewritable; shared between channels via
+;     MODIFY(I8,-16)). Each output = a 16-tap FIR over the last 8 samples
+;     (0.18 ms) of BOTH inputs, tap groups channel-swapped: same-channel
+;     kernel h0-h7 all positive (sum +0.30), cross-channel h8-h15 mostly
+;     negative (sum -0.13) -> phase scramble above ~3 kHz, different per side.
+;  2) WARMTH BELL: each FIR out through an identical float biquad
+;     (banks c006-c00a / c00b-c00f = (a1,a2,b1,g,b2)): poles r=0.9504 @349 Hz,
+;     real zeros 0.981/0.764 -> +8.2 dB @349 Hz, unity at DC and Nyquist.
+;  3) ANTIPHASE HAAS ECHOES at UNITY (the dominant output): mono avg (L+R)/2
+;     written deep in the ring; outL += mono[544 smp = 12.3 ms],
+;     outR -= mono[800 smp = 18.1 ms] (rec08's 800-smp constant, doubled and
+;     antiphase). Mono-sum incompatible by design.
+; Ring walk: cursor parked at P+1023 (MODIFY(I2,0x3FF)), M3 reads walking
+; down, 4 interleaved write heads (in_L @1016/@991, in_R @1007/@999), mono
+; @190; deep taps via pre-M7 -256 (@990) and -544 (@734).
+; Full doc: dsp/modulation-pitch-family.md #6.
+dm:0x9800  spr_fir_h            ; h[0..15]: +.0363 +.0054 +.0555 +.0290 +.1221 +.0387 +.0112 +.0015 -.0350 -.0239 -.0310 +.0253 +.0034 +.0085 -.0647 -.0161
+dm:0x9810  spr_biq_states       ; 4 biquad state words (2 per channel)
+dm:0xc006  spr_biq_a1_L         ; 1.89840f (a1) — poles r=.9504 @349 Hz
+dm:0xc007  spr_biq_a2_L         ; -0.90320f (a2)
+dm:0xc008  spr_biq_b1_L         ; -1.89840f (b1)
+dm:0xc009  spr_biq_g_L          ; 1.08800f (g/b0)
+dm:0xc00a  spr_biq_b2_L         ; 0.81530f (b2) — +8.2 dB bell, unity DC/Nyq
+dm:0xc00b  spr_biq_a1_R         ; identical bank, right channel
+dm:0xc010  spr_level            ; 0x7FFFFFFF output level
+pm:0x8400  spr_entry            ; I0=I1; R15=I2; MODIFY(I2,0x3FF) park at arena top
+pm:0x8403  spr_read_in          ; L and R read + floated; F11 = (F0+F1)/2 mono avg
+pm:0x8407  spr_firA             ; ch-A FIR: 7 ring taps (in_L[7..1]) ...
+pm:0x840e  spr_firA_wrL         ; ... write in_L @1016; h7*in_L[0] direct tap ...
+pm:0x8419  spr_firA_wrR         ; ... 7 taps in_R[8..2] + h15*in_R[0]; write in_R @1007
+pm:0x841b  spr_fir_rewind       ; MODIFY(I8,-16): reuse the kernel for channel B
+pm:0x841c  spr_firB             ; ch-B FIR: same taps with L/R swapped (writes @999/@991)
+pm:0x842e  spr_biquad_L         ; 349 Hz bell on FIR-A accumulator (F12)
+pm:0x8430  spr_deeptap1         ; M7 = -256: R5 = ring[@990] = mono 800 smp ago
+pm:0x8436  spr_deeptap2         ; M7 = -544: R4 = ring[@734] = mono 544 smp ago
+pm:0x8437  spr_biquad_R         ; 349 Hz bell on FIR-B accumulator (F13)
+pm:0x843c  spr_mono_write       ; DM(I2,M3) = mono avg @190 (feeds the deep taps)
+pm:0x843d  spr_haas_mix         ; outL += mono[-544]; outR -= mono[-800] AT UNITY
+pm:0x843f  spr_out_L            ; FIX, x level, CLIP, out L
+pm:0x8443  spr_out_R            ; FIX, x level, CLIP, out R; I2 = R15 restore
+pm:0x8447  spr_rts              ; RTS (delayed)
+pm:0x8449  spr_state_rewind     ; MODIFY(I8,0x3C) — 20 state reads (16 FIR + 4 biquad)

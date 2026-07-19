@@ -1,37 +1,39 @@
-; rec27 — EFFECT: LFO-modulated fractional delay (chorus / flanger)
-; Same DM@C000:77e half-sine LFO family, but unlike rec24/26/31 it maintains a
-; real audio delay buffer at I2: writes the input (DM(I2,M7)=R0, stride 0xFA)
-; and reads two adjacent taps at an LFO-swept offset, linearly interpolated,
-; per channel -> time-varying delay = chorus/flanger. The sine LFO (interpolated
-; table read, 8402..841e) supplies the delay-tap modulation (scaled by DM coeff).
-; DM@9800: 9800/9801 = 0x00010000 LFO increment.
-pm:0x8400  Entry_I0eqI1            ; I0 = I1
-pm:0x8401  SaveDelayPtr            ; R13 = I2 (delay write base)
-pm:0x8402  PhaseAccum_L            ; LFO phase accumulate ch L
-pm:0x840a  FracWeight_ReadTapL     ; sine table frac + tap
-pm:0x840e  Interp_MAC_L            ; interpolate LFO L
-pm:0x840f  SaveLFO_L               ; R5 = LFO L
-pm:0x8410  PhaseAccum_R            ; LFO phase accumulate ch R
-pm:0x841e  LFO_R                   ; interpolated LFO R (R8)
-pm:0x841f  ReadInL                 ; R0 = DM(0x20,I4)
-pm:0x8420  DelayStride             ; M7 = 0xFA
-pm:0x8421  WriteDelayL             ; DM(I2,M7) = input (push into delay line)
-pm:0x8423  LFOtoOffset_L           ; R8 = LFO * depth (delay-tap offset)
-pm:0x8426  SweepReadPtr_L          ; MODIFY(I2,M7) sweep read tap by LFO
-pm:0x8427  ReadDelayTap0_L         ; R7 = delayed sample
-pm:0x842a  DelayInterp_L           ; R8 = MRF + LFOfrac*(tap1-tap0)
-pm:0x842c  RestoreDelayPtr_L       ; MODIFY(I2,0xFA)
-pm:0x842e  WetScaleL               ; R8 = wet * R14(level)
-pm:0x8430  ClipL                   ; CLIP 0x007FFFFF
-pm:0x8431  OutL                    ; DM(I4,M2) = out L
-pm:0x8432  ReadInR                 ; R0 = DM(0x20,I4)
-pm:0x8435  DelayReadR              ; R8 = R5(LFO R)*depth -> tap
-pm:0x843c  DelayInterp_R           ; interpolate R tap
-pm:0x843d  RestoreDelayPtr_R       ; I2 = R13
-pm:0x8440  OutR                    ; DM(I4,M2) = out R
-pm:0x8441  Return                  ; RTS (delayed)
-pm:0x8443  PMStateRewind           ; MODIFY(I8,0x4E) 78-word PM state
-dm:0x9800  LFO_Increment           ; 0x00010000 LFO rate
-dm:0xc006  Coeff_ModDepth          ; 0x00400000 LFO->delay depth
-dm:0xc007  Coeff_WetLevel          ; 0x7FFFFFFF
-dm:0xc029  SineWindow_Table        ; half-sine LFO table (c029..c03f)
+; rec27 — EFFECT: GUI VIBRATO1-8 (type 0x32)
+; Pure vibrato: wet-only single-tap modulated delay with NO dry mix anywhere
+; (chorus = this + dry; the GUI name is exact). MONO source — BOTH channels
+; read the LEFT input slot (DM(0x20,I4) at 0x841f AND 0x8432). Two sine LFOs,
+; template 1.346 Hz (a real vibrato rate, not the fs/256 placeholder), phases
+; 0 / +90 deg (c005=0x20000000); L uses the +90 LFO, R the 0-deg one — the
+; rec26 auto-pan channel assignment applied to FM. Taps 250+-64 smp
+; (peak deviation ~21 cents at template). Full-replace: wet 1.0, no makeup.
+; Full doc: dsp/modulation-pitch-family.md #3.
+dm:0x9800  vib_lfo_incrA        ; 0x00010000 = 1.346 Hz LFO increment (phase A)
+dm:0x9801  vib_lfo_incrB        ; 0x00010000 LFO increment (phase B)
+dm:0xc004  vib_phaseA           ; phase accumulator A (templ 0) -> RIGHT channel
+dm:0xc005  vib_phaseB           ; phase accumulator B (templ 0x20000000 = +90 deg) -> LEFT
+dm:0xc006  vib_depth            ; 0x00400000 = +-64 smp LFO->delay depth (shared)
+dm:0xc007  vib_wet              ; 0x7FFFFFFF wet level — full replace, no dry
+dm:0xc029  vib_sine_tab         ; 16-point sine LFO table (c029..c03f)
+pm:0x8400  vib_entry            ; I0 = I1
+pm:0x8401  vib_save_i2          ; R13 = I2 (delay write base P)
+pm:0x8402  vib_lfoA             ; LFO A phase accumulate + table interp
+pm:0x840f  vib_lfoA_out         ; R5 = sine(phiA) — used by the RIGHT channel
+pm:0x8410  vib_lfoB             ; LFO B (phase c005 = +90 deg) accumulate + interp
+pm:0x841e  vib_lfoB_out         ; R8 = sine(phiB) — used by the LEFT channel
+pm:0x841f  vib_read_inL         ; R0 = DM(0x20,I4) — mono source
+pm:0x8420  vib_stride           ; M7 = 0xFA (250)
+pm:0x8421  vib_write_L          ; write in_L at P -> read base P+250
+pm:0x8423  vib_offset_L         ; R8 = LFO(+90) * depth (16.16 tap offset)
+pm:0x8426  vib_sweep_L          ; MODIFY(I2,M7) to the swept tap
+pm:0x8427  vib_tap_L            ; fractional lerp read
+pm:0x842c  vib_advance_R        ; MODIFY(I2,0xFA) -> R write base P+500
+pm:0x842e  vib_wet_L            ; x wet (1.0) — NO makeup
+pm:0x8430  vib_clip_L           ; CLIP 0x007FFFFF (immediate)
+pm:0x8431  vib_out_L            ; DM(I4,M2) = out L
+pm:0x8432  vib_read_inL2        ; R0 = DM(0x20,I4) — the LEFT slot again (mono!)
+pm:0x8435  vib_offset_R         ; R8 = LFO(0deg) * depth; tap about P+750
+pm:0x843c  vib_tap_R            ; fractional lerp read
+pm:0x843d  vib_restore          ; I2 = R13 (entry base)
+pm:0x8440  vib_out_R            ; DM(I4,M2) = out R
+pm:0x8441  vib_rts              ; RTS (delayed)
+pm:0x8443  vib_state_rewind     ; MODIFY(I8,0x4E) — 2 state reads

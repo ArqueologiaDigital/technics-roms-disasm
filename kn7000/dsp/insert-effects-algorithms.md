@@ -33,6 +33,12 @@ D samples earlier. Addresses are record-local (unit-0 form).
 
 ## 1. rec74 — touch wah (envelope-swept resonator) + stereo echo (type 0x46)
 
+> **UPGRADE (2026-07-19)**: rec74's wah half now exists standalone —
+> **rec28 (GUI Auto Wah)** uses the identical coefficient polynomial
+> (`modulation-pitch-family.md` §4), and **rec29 (GUI Pedal Wah)** is the
+> same resonator driven by a host cell. Also from the group-table walk:
+> rec13's GUI group is **Dual Delay** (Deep/Normal/Shallow 1–20).
+
 72 PM words at `0x8400–0x8447` (`rec74_effect_0x486CDA53.asm`). Corrects the
 old "modulated-delay / tremolo-rotary (computed LFO)" identification: there
 is **no LFO** — the sweep source is the input envelope.

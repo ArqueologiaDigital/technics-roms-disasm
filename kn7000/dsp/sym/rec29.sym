@@ -1,36 +1,50 @@
-; rec29 — EFFECT: envelope-controlled resonant filter (auto-wah / dynamic filter)
-; Same algorithm as rec28 with an extra front-end: a first-order pre-filter on
-; the input (8405..8408: MRF=R3*R7, R8=MRF+R2*R7 using coeffs at c004/c005)
-; before rectification, and a 7-entry DM@9800 state block. Detector -> attack/
-; release envelope -> coefficient polynomial -> per-channel resonant biquad.
-; A preset/topology variant of the rec28 family. Confidence: medium-low.
-pm:0x8400  Entry_I0eqI1            ; I0 = I1
-pm:0x8401  ReadInL                 ; R0 = DM(0x20,I4)
-pm:0x8402  ReadInR                 ; R8 = DM(0x21,I4)
-pm:0x8403  SumMono                 ; det = L+R
-pm:0x8405  PreFilter               ; MRF=R3*R7 ; R8=MRF+R2*R7 first-order pre-filter
-pm:0x8408  StorePreState           ; DM(I0,M2)=filtered det
-pm:0x8409  DetToFloat              ; F8 = FLOAT
-pm:0x840a  DetScale08              ; *0.8
-pm:0x840c  Rectify                 ; ABS
-pm:0x840d  EnvDelta                ; det - env
-pm:0x840e  AttackReleaseSelect     ; IF LT release coeff
-pm:0x8410  EnvOnePole              ; env update
-pm:0x8412  CoeffPoly_Start         ; derive biquad coeffs from envelope
-pm:0x8417  StoreCoeffState         ; write derived coeffs
-pm:0x841c  Biquad_L                ; resonant section L
-pm:0x8424  FixL                    ; FIX F10
-pm:0x8428  OutL                    ; DM(I4,M2) = out L
-pm:0x842c  Biquad_R                ; resonant section R
-pm:0x8434  FixR                    ; FIX F10
-pm:0x8438  OutR                    ; DM(I4,M2) = out R
-pm:0x8439  Return                  ; RTS (delayed)
-pm:0x843b  PMStateRewind           ; MODIFY(I8,0x49) 73-word PM state
-dm:0x9800  PreFilter_Coeff0        ; 0x3D4CCCCCCD pre-filter coeff
-dm:0x9801  PreFilter_Coeff1        ; 0x3F73333333 pre-filter coeff
-dm:0xc004  Coeff_PreA              ; 0x3E3851EB85
-dm:0xc006  Coeff_AttackRate        ; 0x3B800000 env attack
-dm:0xc007  Coeff_ReleaseRate       ; 0x3A000000 env release
-dm:0xc00b  Coeff_Resonance         ; 0x3FFF7CED resonant pole
-dm:0xc00c  Const_One               ; 0x3F800000 = 1.0f
-dm:0xc010  Coeff_OutLevel          ; 0x7FFFFFFF
+; rec29 — EFFECT: GUI PEDAL WAH, presets Wah1-3 (type 0x33)
+; rec28's swept resonator with the audio detector REPLACED by a host control —
+; and the old detector left in as DEAD CODE: (L+R)<<9 is computed (0x8403-04)
+; and overwritten at 0x8407 without ever being used (fork fossil, cf rec24's
+; dead LFO). The sweep source is host cell c004 (pedal position, template
+; 0.486 Q31 = mid-travel), smoothed by a FIXED-POINT one-pole
+;   c005' = 0.4789*c004 + 0.4966*c005      (settles in ~10 samples, gain 0.95)
+; then floated, x0.8, and run through the same asymmetric slew (5.8 ms up /
+; 46 ms down = click-free pedal glide) and the same polynomial/resonator as
+; rec28 (447 Hz .. 6.4 kHz, y = 4g(w-w2)). MONO, dual-mono out. 7 state words.
+; Which physical controller writes c004 is host-side (PROVISIONAL); the c004
+; data flow is opcode fact. Full doc: dsp/modulation-pitch-family.md #4.3.
+dm:0x9800  pwah_smooth_k0       ; 0x3D4CCCCC Q31 = 0.4789 — c004 (target) weight
+dm:0x9801  pwah_smooth_k1       ; 0x3F733333 Q31 = 0.4966 — c005 (state) weight
+dm:0xc004  pwah_position        ; HOST-WRITTEN pedal position (templ 0x3E3851EB = 0.486 = mid)
+dm:0xc005  pwah_pos_smoothed    ; smoothed position state (rewritten every sample)
+dm:0xc006  pwah_atk             ; 1/256 float — pedal-up glide 5.8 ms
+dm:0xc007  pwah_rel             ; 1/2048 float — pedal-down glide 46 ms
+dm:0xc008  pwah_poly_g1         ; 0.05 e term (= rec28 c006)
+dm:0xc009  pwah_poly_g2         ; 0.01 e^2 term
+dm:0xc00a  pwah_poly_a1q        ; 1.28 e^2 term
+dm:0xc00b  pwah_a1_base         ; 1.99594 (447 Hz park)
+dm:0xc00c  pwah_one             ; 1.0f
+dm:0xc00d  pwah_a1              ; derived a1
+dm:0xc00e  pwah_a2              ; derived a2
+dm:0xc00f  pwah_g               ; derived g
+dm:0xc010  pwah_level           ; 0x7FFFFFFF output level
+pm:0x8400  pwah_entry           ; I0 = I1
+pm:0x8401  pwah_dead_inL        ; R0 = DM(0x20,I4) — DEAD (detector fossil)
+pm:0x8402  pwah_dead_inR        ; R8 = DM(0x21,I4) — DEAD
+pm:0x8403  pwah_dead_sum        ; (L+R)<<9 computed, then clobbered at 0x8407
+pm:0x8405  pwah_pos_smooth      ; fixed-point one-pole on c004 -> R8 (replaces the detector!)
+pm:0x8408  pwah_pos_store       ; c005 = smoothed position
+pm:0x8409  pwah_pos_float       ; F8 = FLOAT(position)
+pm:0x840a  pwah_pos_scale       ; x0.8
+pm:0x840c  pwah_rectify         ; ABS; F7 = slewed position (PM state)
+pm:0x840d  pwah_glide_delta     ; delta = pos - state
+pm:0x840e  pwah_glide_sel       ; IF LT: down-glide coeff (46 ms)
+pm:0x8410  pwah_glide_update    ; state += k*delta; store
+pm:0x8412  pwah_poly            ; a1/a2/g polynomial (rec28's)
+pm:0x8417  pwah_store_coeffs    ; -> c00d/c00e/c00f
+pm:0x841a  pwah_read_L          ; R0 = DM(0x20,I4) filter input (mono)
+pm:0x841c  pwah_biquad_L        ; w = x + a1 w1 + a2 w2; y = 4g(w - w2)
+pm:0x8424  pwah_fix_L           ; FIX; R14 = level (c010)
+pm:0x8428  pwah_out_L           ; DM(I4,M2) = out L
+pm:0x8429  pwah_read_L2         ; LEFT input again — dual-mono
+pm:0x842c  pwah_biquad_R        ; same coeffs, own states
+pm:0x8438  pwah_out_R           ; DM(I4,M2) = out R
+pm:0x8439  pwah_rts             ; RTS (delayed)
+pm:0x843b  pwah_state_rewind    ; MODIFY(I8,0x49) — 7 state words

@@ -461,12 +461,14 @@ rec17/18/19/38/39/40 → engine/curve/voicing identities (conf high).
 `kernel-architecture.md` §7's `0x831B` description corrected (EQ cascade,
 not interpolator); syms rewritten for all ten records + the kernel label.
 
-Still undocumented at full depth: rec11 (0x06/0x0E chorus), rec27
-(VIBRATO), rec28/29 (the bank-0x38 wahs — "dynamics + biquad" is now
-suspicious given this family's shapes), rec32 (MIXUP), rec33 (SPREADER),
-rec49/50 (choruses), rec57 (VOICE CHANGER), rec58–61 (mic reverbs),
-rec67–69 (BRASS SIM), rec70/71/72 (combi back-ends), rec75/76
-(COMP+DST/OVD+DELAY).
+Still undocumented at full depth: rec58–61 (mic reverbs), rec67–69 (BRASS
+SIM), rec70/71/72 (combi back-ends), rec75/76 (COMP+DST/OVD+DELAY). The
+modulation/pitch cluster (rec11/27/28/29/32/33/49/50/57) is now covered by
+`modulation-pitch-family.md` — the rec28/29 suspicion resolved as **Auto Wah
+vs Pedal Wah** (rec29's detector is dead code; it tracks a host cell), and
+the group-table walk there renames this family's GUI homes: rec17/37/38 =
+the **Distortion** group, rec18/39/40 = **Overdrive**, rec19 = **Fuzz**,
+rec62–65 = **Distorted Amp** (the "bank 0x40/0x41" pairings are superseded).
 
 ## 9. Cross-model
 

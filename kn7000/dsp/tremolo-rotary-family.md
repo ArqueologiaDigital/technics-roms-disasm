@@ -87,6 +87,16 @@ rec57; Brass simulator1–3 = rec67–69; mic Room/Karaoke/Stage/Cave =
 rec58–61; Spreader = rec33) is recorded in `records.tsv` per row and in
 `../../kn7000_mame/notes/dsp-effect-catalog.md`.
 
+> **UPGRADE (2026-07-19, group-table walk)**: the *group* tables' true entry
+> layout is `{u16 count, char name[16], u16 0, u32 preset_list_ptr}` (24
+> bytes) — the earlier bank-byte pairings put some names against the
+> *neighboring* entry's list. The corrected full walk is in
+> `modulation-pitch-family.md` §1; notable fixes: the two "bank-0x38 wah"
+> records are **rec28 = Auto Wah (Wah1–5)** and **rec29 = Pedal Wah
+> (Wah1–3)**; rec47 = **Reverse Wah**; rec50 = **Trio Chorus**; rec11 =
+> **Ensemble**; rec33's Spreader sits in the menu group **Space**; the
+> distortion GUI groups are **Distortion/Overdrive/Fuzz/Distorted Amp**.
+
 Since **multiple GUI presets share one record and one DM bank** (e.g. all
 eight Tremolos are rec24), preset character differences within a group are
 host-written parameter updates over the template — the descriptor's

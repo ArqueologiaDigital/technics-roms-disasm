@@ -258,6 +258,10 @@ pass is still open).
 
 ## 5. rec47 — not a phaser: the fourth wah (type 0x90, GUI Wah1–8)
 
+> **UPGRADE (2026-07-19)**: the group-table walk
+> (`modulation-pitch-family.md` §1) names rec47's GUI group **Reverse Wah**
+> (Wah1–8) — the ROM name confirms the down-sweep reading below.
+
 64 PM words (`rec47_effect_0x486C751B.asm`). The last "modulated-allpass
 phaser" label falls: rec47 is the **rec46/48 computed-bilinear engine**
 (shared `0x8417–0x842A`: coefficient construction from g and g², `RECIPS` +

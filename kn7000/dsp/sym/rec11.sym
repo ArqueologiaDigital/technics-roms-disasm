@@ -1,32 +1,41 @@
-; rec11 — EFFECT: 3-voice modulated-delay ensemble/symphonic chorus
-; Sine-LFO fractional-delay engine reads THREE modulated taps from the delay line
-; (R5, R6, R15) stepping I5 by MODIFY(I5,3)/M6 between interpolations. Each tap is
-; re-interpolated into the output delay DM(I2) and the three are summed by a 3-term
-; MAC (MRF=R7*R9; +R7*R13; +R7*R8) per channel -> lush multi-voice chorus/ensemble.
-;
-dm:0x9800  eff11_lfo_phase      ; LFO phase accumulator (=0x800000)
-dm:0xc005  eff11_depth0         ; 0x00400000 tap-0 depth
-dm:0xc006  eff11_depth1         ; 0x00400000 tap-1 depth
-dm:0xc007  eff11_depth2         ; 0x00400000 tap-2 depth
-dm:0xc008  eff11_tap_gain       ; 0x33333333 (0.4) voice gain
-dm:0xc009  eff11_wet            ; 0x7FFFFFFF wet level
-dm:0xc00b  eff11_spread0        ; 0xFFC00000 per-voice detune/offset
-dm:0xc029  eff11_sine_tab       ; 16-point sine LFO table (c029..c03f)
+; rec11 — EFFECT: GUI ENSEMBLE (types 0x06 Deep/Normal/Shallow 1-13, 0x0E Dry/Wet 1-13)
+; Hexaphase 3-voice chorus: ONE sine LFO re-interpolated at +0/+67.5/+135 deg
+; (MODIFY(I5,3) between voice reads = 3 table steps = 67.5 deg). L taps at
+; 250+-64; R channel (write P+500, read P+750) uses NEGATIVE depths
+; (c00b..c00d = 0xFFC00000 = -64) -> antiphase modulators in DATA, not opcodes:
+; the 6 taps sit at 0/67.5/135/180/247.5/315 deg — the multiphase string-machine
+; ensemble topology. Sum 0.4/voice x wet x2, CLIP. The single PM state read uses
+; M13 = +0x50 (whole-stride auto-advance) — hence NO epilogue MODIFY(I8).
+; Full doc: dsp/modulation-pitch-family.md #2.
+dm:0x9800  eff11_lfo_incr       ; LFO increment (M13 read; templ 0x800000 = fs/256 placeholder, host rewrites)
+dm:0xc004  eff11_lfo_phase      ; LFO phase accumulator (31-bit wrap)
+dm:0xc005  eff11_depthL0        ; 0x00400000 = +64 smp, L voice 0 depth
+dm:0xc006  eff11_depthL1        ; 0x00400000 L voice 1 depth
+dm:0xc007  eff11_depthL2        ; 0x00400000 L voice 2 depth
+dm:0xc008  eff11_gainL          ; 0x33333333 (0.4) per-voice sum gain, L
+dm:0xc009  eff11_wet            ; 0x7FFFFFFF wet level (shared L/R via R14)
+dm:0xc00a  eff11_clip           ; 0x007FFFFF clip bound (shared via R12)
+dm:0xc00b  eff11_depthR0        ; 0xFFC00000 = -64 smp: R depths NEGATED -> antiphase
+dm:0xc00c  eff11_depthR1        ; -64 R voice 1
+dm:0xc00d  eff11_depthR2        ; -64 R voice 2
+dm:0xc00e  eff11_gainR          ; 0x33333333 (0.4) per-voice sum gain, R
+dm:0xc029  eff11_sine_tab       ; 16-point sine LFO table + guard (c029..c03f; +7 reach safe)
 pm:0x8400  eff11_entry          ; I0=I1
-pm:0x8401  eff11_lfo_acc        ; phase accumulate (PM(I8,M13) increment)
-pm:0x8409  eff11_interp0        ; fractional interpolation, voice 0
-pm:0x8410  eff11_tap0           ; R5 = modulated voice 0
-pm:0x8411  eff11_tap1           ; R6 = modulated voice 1
-pm:0x8416  eff11_tap2           ; R15 = modulated voice 2
-pm:0x8417  eff11_read_inL       ; R0 = DM(0x20,I4) input
-pm:0x8419  eff11_write_delayL   ; DM(I2,M7)=R0 push to delay line
-pm:0x841b  eff11_voice0L        ; R8=R5*R11 interp voice 0 into out-delay
-pm:0x8424  eff11_voice1L        ; R8=R6*R11 voice 1
-pm:0x842e  eff11_voice2L        ; R8=R15*R11 voice 2
-pm:0x843a  eff11_sum3L          ; MRF=R7*R9 +R7*R13 +R7*R8  3-voice sum
-pm:0x843d  eff11_wet_scaleL     ; R8=R8*R14 wet scale
-pm:0x8441  eff11_clipL          ; CLIP by R12
+pm:0x8401  eff11_lfo_acc        ; phase += PM(I8,M13) — M13=+0x50: no epilogue rewind needed
+pm:0x8409  eff11_interp0        ; fractional interpolation, voice 0 (phase +0)
+pm:0x8410  eff11_tap0           ; R5 = sine(phi) — voice 0 modulator
+pm:0x8411  eff11_tap1           ; R6 = sine(phi+67.5deg) — voice 1 (after MODIFY(I5,3))
+pm:0x8416  eff11_tap2           ; R15 = sine(phi+135deg) — voice 2 (after second MODIFY(I5,3))
+pm:0x8417  eff11_read_inL       ; R0 = DM(0x20,I4) input L
+pm:0x8419  eff11_write_delayL   ; DM(I2,M7)=in_L at P, advance 250 -> read base P+250
+pm:0x841b  eff11_voiceL0        ; fractional tap at 250+64*sine(phi)
+pm:0x8424  eff11_voiceL1        ; tap at 250+64*sine(phi+67.5)
+pm:0x842e  eff11_voiceL2        ; tap at 250+64*sine(phi+135)
+pm:0x843a  eff11_sum3L          ; MRF = 0.4*(v0+v1+v2) 3-voice sum
+pm:0x843d  eff11_wet_scaleL     ; x wet (c009), x2 makeup
+pm:0x8441  eff11_clipL          ; CLIP by c00a; delay-slot write of in_R at P+500
 pm:0x8442  eff11_out_L          ; DM(I4,M2)=R8 left output
-pm:0x8461  eff11_sum3R          ; 3-voice sum (right)
-pm:0x8465  eff11_rts            ; RTS(DB) (with R8=R8+R8 in slot)
+pm:0x8443  eff11_voiceR0        ; R voices: read base P+750, depths NEGATIVE (antiphase)
+pm:0x8461  eff11_sum3R          ; 0.4*(v0+v1+v2) right sum (I1 += 0x4D in parallel)
+pm:0x8465  eff11_rts            ; RTS(DB) with x2 makeup in slot
 pm:0x8467  eff11_out_R          ; DM(I4,M2)=R8 right output

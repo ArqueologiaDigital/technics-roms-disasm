@@ -2,7 +2,7 @@
 ; KN7000 effects-DSP (IC306 ADSP-21065L) download record 65  [EFFECT]
 ; cubic soft-clip overdrive (tone bank D: softened 2.9 kHz peak)
 ; pool CPU 0x486CB853 / file 0x2CB853   3 blocks: DM@9800:8e DM@C000:73e PM@8400:109w
-; GUI bank 0x41 presets Loud4/Normal4/Soft4 (descriptor table);
+; GUI DISTORTED AMP presets Loud4/Normal4/Soft4 (group table = ROM fact);
 ; Multi/Sound-DSP insert (units1-6); types 0x67; bank D: inject 0.10, poles =
 ; bank A, real zeros 0.889/0.109; full doc dsp/insert-effects-algorithms.md
 ; #3; =rec62,63,64 (identical PM); conf high

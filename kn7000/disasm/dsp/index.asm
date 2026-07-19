@@ -15,7 +15,7 @@
 ;   8  effect   0x486BF364  DM@9800:4e DM@C000:77e PM@8400:90w   STEREO ENHANCER: phase rotator + low/high emphasis + Haas offset (NO exciter nonlinearity)
 ;   9  effect   0x486BF745  DM@9800:2e DM@C000:77e PM@8400:85w   stereo modulated-delay flanger (0.70 float regen/channel)
 ;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   true PHASER: 5+5 swept 1st-order allpasses, quadrature stereo LFOs
-;  11  effect   0x486BFF35  DM@9800:1e DM@C000:77e PM@8400:104w   modulated-delay chorus
+;  11  effect   0x486BFF35  DM@9800:1e DM@C000:77e PM@8400:104w   ENSEMBLE: hexaphase 3-voice chorus (one LFO, taps 67.5deg apart)
 ;  12  effect   0x486C035B  DM@9800:7e DM@C000:77e PM@8400:69w   GATE REVERB: damped allpass-ring tank + hold-gate on the output
 ;  13  effect   0x486C06CD  DM@9800:4e DM@C000:40e PM@8400:63w   stereo echo (dual-mono, damped 0.6 regen)
 ;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   panning multi-tap echo (4 equal taps, repeats walk the stereo field)
@@ -31,13 +31,13 @@
 ;  24  effect   0x486C2775  DM@9800:4e DM@C000:77e PM@8400:54w   TREMOLO (in-phase LFO AM)
 ;  25  effect   0x486C2A7E  DM@9800:1e DM@C000:40e PM@8400:45w   LIMITER (= rec21's compressor PM, Limiter DM/state banks)
 ;  26  effect   0x486C2C89  DM@9800:4e DM@C000:77e PM@8400:53w   AUTO PAN (quadrature LFO AM)
-;  27  effect   0x486C2F8C  DM@9800:2e DM@C000:77e PM@8400:68w   modulated-delay chorus/flanger
-;  28  effect   0x486C32DF  DM@9800:5e DM@C000:40e PM@8400:56w   dynamics + biquad (envelope filter)
-;  29  effect   0x486C3540  DM@9800:7e DM@C000:40e PM@8400:60w   dynamics + biquad (envelope filter)
+;  27  effect   0x486C2F8C  DM@9800:2e DM@C000:77e PM@8400:68w   VIBRATO: wet-only single-tap modulated delay (no dry anywhere)
+;  28  effect   0x486C32DF  DM@9800:5e DM@C000:40e PM@8400:56w   AUTO WAH: envelope-swept resonant bandpass (rec74's touch wah, standalone)
+;  29  effect   0x486C3540  DM@9800:7e DM@C000:40e PM@8400:60w   PEDAL WAH: host-driven swept resonator (the audio detector is dead code)
 ;  30  effect   0x486C37C3  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Standard/Single Rotor/Distorted)
 ;  31  effect   0x486C3B6C  DM@9800:2e DM@C000:77e PM@8400:45w   RING MODULATOR (bipolar quadrature AM, audio-rate carrier)
-;  32  effect   0x486C3E35  DM@9800:3e DM@C000:77e PM@8400:90w   modulated-delay chorus
-;  33  effect   0x486C4211  DM@9800:20e DM@C000:77e PM@8400:74w   FIR convolution + biquad EQ
+;  32  effect   0x486C3E35  DM@9800:3e DM@C000:77e PM@8400:90w   MIXUP: burst vibrato (slow sine gates a fast quadrature FM pair)
+;  33  effect   0x486C4211  DM@9800:20e DM@C000:77e PM@8400:74w   SPREADER: stereo widener (decorrelation micro-FIRs + 349 Hz bell + antiphase mono Haas echoes)
 ;  34  effect   0x486C45E2  DM@9800:16e DM@C000:40e PM@8400:13w   5-band output EQUALIZER (13-word wrapper around kernel helper 0x831B)
 ;  35  effect   0x486C4778  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Bright Twin)
 ;  36  effect   0x486C4B21  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Mellow Twin)
@@ -53,15 +53,15 @@
 ;  46  effect   0x486C7113  DM@9800:1e DM@C000:77e PM@8400:99w   LFO-swept 10-pole resonant lowpass (filter sweep; NOT a phaser)
 ;  47  effect   0x486C751B  DM@9800:1e DM@C000:40e PM@8400:64w   TOUCH WAH (down-sweep): envelope-swept bilinear bandpass Q=8 (NOT a phaser)
 ;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   LFO wah: swept resonant bandpass Q=8 (NOT a phaser)
-;  49  effect   0x486C7AF2  DM@9800:9e DM@C000:32e PM@8400:101w   modulated-delay chorus
-;  50  effect   0x486C7E4D  DM@9800:5e DM@C000:67e PM@8400:94w   modulated-delay chorus
+;  49  effect   0x486C7AF2  DM@9800:9e DM@C000:32e PM@8400:101w   triangle-trio chorus, unit-9 build (2 contrary triangle detunes + 7.7 Hz sine shimmer)
+;  50  effect   0x486C7E4D  DM@9800:5e DM@C000:67e PM@8400:94w   TRIO CHORUS, insert build (deeper +-240-smp triangle sweep, no input filters)
 ;  51  effect   0x486C8219  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  52  effect   0x486C8617  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  53  effect   0x486C8A15  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  54  effect   0x486C8E13  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  55  effect   0x486C9211  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  56  effect   0x486C960F  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
-;  57  effect   0x486C9A0D  DM@9800:2e DM@C000:77e PM@8400:87w   modulated-delay pitch-shifter (detune)
+;  57  effect   0x486C9A0D  DM@9800:2e DM@C000:77e PM@8400:87w   VOICE CHANGER: dual-saw granular detune (equal-gain triangular crossfade)
 ;  58  effect   0x486C9DD2  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
 ;  59  effect   0x486CA134  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
 ;  60  effect   0x486CA496  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
