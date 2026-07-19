@@ -3,7 +3,7 @@
 1	0x2BD17D	0x486BD17D	685	2	probe	SDRAM POST self-test	unique PM; conf high
 2	0x2BD436	0x486BD436	685	2	probe	SDRAM POST self-test	unique PM; conf high
 3	0x2BD6EF	0x486BD6EF	685	2	probe	SDRAM POST self-test	unique PM; conf high
-4	0x2BD9A8	0x486BD9A8	4597	8	kernel	resident SHARC kernel	unique PM; conf high
+4	0x2BD9A8	0x486BD9A8	4597	8	kernel	resident SHARC kernel	full architecture doc dsp/kernel-architecture.md: 10 call slots/frame, 8 self-chaining SPORT DMA rings (TRM-pinned), per-slot SDRAM/internal delay windows (-1/sample scroll), BUSLK coefficient window, arena-scrub stubs; host protocol = 21065L IOP regs (SYSCON probe, EPB0 DMA, DMAC 0xA1/0x41); unique PM; conf high
 5	0x2BEBA9	0x486BEBA9	48	1	effect	thru / effect-off stub	Reverb (unit9); types 0x00; unique PM; conf high
 6	0x2BEBE5	0x486BEBE5	918	3	effect	quadrature 2-tap ensemble chorus (wet-only)	Reverb(unit9) whitelist; types 0x01,0x2C; 250+-64-sample quadrature tap pair per channel, antiphase R; no feedback/no tail -> not the audible GUI reverb; Celeste-class candidate PROVISIONAL; full doc dsp/chorus-family-algorithms.md #2; unique PM; conf high
 7	0x2BEF87	0x486BEF87	977	3	effect	dual-rate-LFO quadrature ensemble chorus (wet-only)	Reverb(unit9) whitelist; types 0x02,0x07,0x2D; c005=slow-LFO cross-mix NOT feedback; modulator sum ALUSAT-clipped so swing stays +-64; Mod.Celeste-class candidate PROVISIONAL; tail-incapable; full doc dsp/chorus-family-algorithms.md #3; unique PM; conf high

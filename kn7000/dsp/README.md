@@ -18,6 +18,7 @@ whole effects program set was recovered from firmware.
 |---|---|---|
 | `README.md` | yes | this file |
 | `records.tsv` | yes | hand-curated manifest: role + name + one-line note per record |
+| `kernel-architecture.md` | yes | the definitive doc of the resident kernel (rec04): host-boot protocol (= 21065L IOP registers), vector table, the 10-slot per-sample dispatch chain, the eight self-chaining SPORT DMA rings, the scrolling delay-arena windows, BUSLK coefficient-update window, scrub stubs |
 | `reverb-algorithm.md` | yes | full algorithm annotation of the reverb engine (rec51–56 family) + the unit-9 records |
 | `chorus-family-algorithms.md` | yes | full algorithm annotation of the unit-9 chorus family: rec06 (quadrature ensemble), rec07 (dual-LFO ensemble), rec09 (stereo flanger) |
 | `sym/recNN.sym` | yes | hand-curated SHARC labels/comments per record (`pm:`/`dm:` addrs) |
@@ -51,7 +52,9 @@ u16 A(=0)   u16 target (word address in DSP memory)   u16 C(=0)   u16 len (bytes
 
 - **kernel** (rec 04): the resident SHARC kernel — reset/IRQ vectors at PM
   `0x8000`, plus PM `0x8300`/`0x8400`/`0x8D00` and the DM tables. Downloaded
-  once at boot; all effect microprograms load *on top of it* at PM `0x8400`.
+  once at boot; all effect microprograms load *on top of it* at PM
+  `0x8400+unit*0x100` (slot 9 recycles the boot-init block at `0x8D00`).
+  Fully documented in [`kernel-architecture.md`](kernel-architecture.md).
 - **probe** (rec 00–03): four near-identical board-variant probe records tried
   in turn at boot (host reg `0x0B` ID readback) until one matches.
 - **effect** (rec 05–76): the per-effect microprograms — reverb, chorus, multi,
