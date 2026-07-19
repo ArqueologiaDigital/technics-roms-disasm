@@ -1,38 +1,61 @@
-; rec12 — EFFECT: float ladder/allpass filter + multitap delay + envelope-gain
-; Complex composite. Sums L+R to mono (R15=(R0+R8)/2), floats it, and runs a
-; cascade of float allpass/ladder sections whose reflection coefficients are read
-; and written back through PM(I8) state (F12=F3*F7; F3=F10+F12; F7=F3*F7...), tapping
-; a DM(I6) delay line at several negative offsets (M7 = -0x351, -0x58E, -0x5DA,
-; -0x7D2) = a multi-tap diffused delay. A second stage is an envelope follower on
-; |R8| (R8=ABS R8; R2=R8-thr; IF LT ...; MR1F/MAC; R3=SAT MRF) whose output R2 gain-
-; multiplies both channels (R0=R0*R2; R3=R3*R2). Net = dynamically-controlled
-; filtered delay/ambience (compressor/ducking- or auto-wah-like gain control).
+; rec12 — EFFECT: GATE REVERB (REVERB-screen Short/Medium/Long Gate, type 0x08) — full doc dsp/phaser-enhancer-gate.md #6
+; A reverberator AND a gate. Tank: mono (L+R)/2 -> [in - 0.5*damp(loopout)] ->
+; AP 849 (k=.6) -> AP 1422 (k=.6) -> +0.4*in -> AP 1498 (k=.4) -> loopout (saved
+; c003; loop 3770 smp = 85.5 ms, per-pass 0.5 -> RT60(DC) ~0.85 s; damp = unity-DC
+; (0.5344-0.4012z)/(1-0.8668z), Nyquist 0.5, state PM9800). k1=k2 come from PM9801
+; (a coefficient in the STATE block — preset-rewritable); k3 = c008 = 0.4 doubles
+; as the mid-loop dry-injection gain. Outputs: loopout and AP 2002 (k=.4)
+; decorrelator. Cursor parked at arena top (MODIFY(I6,0x7918)), taps M7 -0x351/
+; -0x58E/-0x5DA/-0x7D2, delay = write depth - read depth.
+; GATE (outside the loop — tank rings while shut): env += ~0.48*(|mono<<15|-env)
+; (rates c009/c00a as Q31; fixed MAC), threshold c00c = 0.2 (~ -56 dBFS);
+; gain slews 0.001*target + 0.999*gain (PM9805/PM9806): attack tau 22.7 ms toward
+; target -1.0 (polarity inversion, inaudible on a mono tail), release x0.999 =
+; -60 dB in 157 ms; HOLD = frame counter c00b, reload PM9804 (template 511 smp =
+; the gate time, preset-set) on loud, PM9803 (63-frame debounce) on first quiet —
+; the R7=R4+R4 / IF EQ pair works only because ALUSAT saturates -1-1. Gain x wet
+; (c00f) multiplies both outputs; no CLIP.
 ;
-dm:0x9800  eff12_state          ; filter/envelope state block (9800..9806)
-dm:0x9801  eff12_env_coeff      ; 0x3F19999A (float 0.6) envelope time constant
-dm:0xc004  eff12_ap_c0          ; 0x3F5DE5D8 (~0.866) allpass/ladder coeff
-dm:0xc005  eff12_ap_c1          ; 0xBECD6A04 (~-0.401) allpass coeff
-dm:0xc006  eff12_ap_c2          ; 0x3F08CF29 (~0.534) allpass coeff
-dm:0xc007  eff12_ap_c3          ; 0xBF000000 (-0.5) allpass coeff
-dm:0xc008  eff12_env_thr        ; 0x3ECCCCCD (~0.4) envelope threshold
-dm:0xc00c  eff12_ratio          ; 0x19999999 (0.2) gain/ratio coeff
-pm:0x8400  eff12_entry          ; I0=I1
-pm:0x8401  eff12_read_in        ; R0=DM(0x20,I4) L, R8=DM(0x21,I4) R
-pm:0x8404  eff12_mono_sum       ; R15=(R0+R8)/2 mono sum
-pm:0x8405  eff12_float_in       ; F8 = FLOAT R15
-pm:0x8408  eff12_ladder0        ; ladder/allpass stage (PM(I8) reflection coeffs)
-pm:0x840e  eff12_tap0           ; DM(I6,M7) delay tap (offset -0x351)
-pm:0x8413  eff12_tap1           ; delay tap (offset -0x58E)
-pm:0x8419  eff12_tap2           ; delay tap (offset -0x5DA)
-pm:0x841e  eff12_tap3           ; delay tap (offset -0x7D2)
-pm:0x8422  eff12_env_abs        ; R8 = ABS R8 rectify (envelope detector)
-pm:0x8424  eff12_env_cmp        ; R2 = R8 - threshold
-pm:0x8425  eff12_env_gate       ; IF LT R4=... attack/release branch
-pm:0x8427  eff12_env_mac        ; R8 = MRF + R2*R4 envelope integrate
-pm:0x8438  eff12_env_sat        ; R3 = SAT MRF envelope value
-pm:0x843b  eff12_gain           ; R8 = MRF + R3*R7 gain compute
-pm:0x843c  eff12_fix_wet        ; R3=FIX F9; R0=FIX F10 filtered outputs
-pm:0x8440  eff12_apply_gainL    ; R2=R8*R1; R0=R0*R2 apply envelope gain (L)
-pm:0x8442  eff12_rts            ; RTS(DB), R3=R3*R2 (right gain in slot)
-pm:0x8443  eff12_out_L          ; DM(I4,M2)=R0 left output
-pm:0x8444  eff12_out_R          ; DM(I4,M2)=R3 right output
+dm:0x9800  eff12_damp_state      ; loop damping-filter state
+dm:0x9801  eff12_k12             ; float 0.6 — allpass k for AP849+AP1422 (preset-rewritable state)
+dm:0x9802  eff12_env             ; gate envelope state
+dm:0x9803  eff12_recheck_reload  ; counter reload on first quiet frame (0x7FFFFFFF-63 = 1.4 ms debounce)
+dm:0x9804  eff12_hold_reload     ; counter reload on loud (template 0x7FFFFE00 = 511 smp HOLD — the gate time)
+dm:0x9805  eff12_attack_step     ; Q31 0.001 — gain slew step toward target (tau 22.7 ms)
+dm:0x9806  eff12_release_mul     ; Q31 0.999 — gain decay per sample (-60 dB in 157 ms)
+dm:0xc004  eff12_damp_pole       ; 0.8668 — damp pole (unity DC, Nyquist 0.5)
+dm:0xc005  eff12_damp_z          ; -0.4012 — damp zero coeff
+dm:0xc006  eff12_damp_g          ; 0.5344 — damp gain coeff
+dm:0xc007  eff12_loop_gain       ; -0.5 float — tank feedback gain (RT60 ~0.85 s)
+dm:0xc008  eff12_k34_inject      ; 0.4 float — AP1498/AP2002 k AND mid-loop dry injection gain
+dm:0xc009  eff12_env_attack      ; ~0.48 Q31 — envelope attack rate (bits also decode as float 0.082 — PROVISIONAL dual-use)
+dm:0xc00a  eff12_env_release     ; ~0.49 Q31 — envelope release rate
+dm:0xc00b  eff12_hold_counter    ; frame counter (template 0x7FFFFFFF = saturated -> decide path)
+dm:0xc00c  eff12_threshold       ; Q31 0.2 — gate threshold (~ -56 dBFS through the <<15 detector)
+dm:0xc00d  eff12_gain_target     ; slew target: -1.0 (loud/hold) or 0 (quiet)
+dm:0xc00e  eff12_gain_state      ; gate gain (template 1.0 = open at load)
+dm:0xc00f  eff12_wet             ; Q31 wet level
+pm:0x8400  eff12_entry           ; I0=I1
+pm:0x8401  eff12_read_in         ; inputs; R14=I8, R13=I6 saves
+pm:0x8404  eff12_mono            ; R15 = (L+R)/2; F8 = FLOAT
+pm:0x8406  eff12_arena_top       ; MODIFY(I6,0x7918) — park at arena top, lines walk down
+pm:0x8407  eff12_loop_fb         ; R10 = c003 (last loop output)
+pm:0x8408  eff12_damp            ; unity-DC damp on loop fb (state PM9800), then x -0.5 (c007)
+pm:0x840e  eff12_ap1             ; AP 849 smp, k=0.6 (PM9801); in = mono - 0.5*damped
+pm:0x8413  eff12_ap2             ; AP 1422 smp, k=0.6
+pm:0x8419  eff12_inject_ap3      ; +0.4*in mid-loop injection; AP 1498 smp, k=0.4 (c008)
+pm:0x841e  eff12_ap4             ; AP 2002 smp, k=0.4 — OUT-of-loop decorrelator; R9 = loopout save
+pm:0x8422  eff12_det             ; |mono<<15| rectifier; rate select c009/c00a (IF LT)
+pm:0x8424  eff12_loop_save       ; c003 = loop output (the tank feedback point)
+pm:0x8427  eff12_env_mac         ; env += rate*(|x|-env); PM9802 store
+pm:0x8429  eff12_counter         ; c00b+1; IF AV -> decide path, else counting path
+pm:0x842d  eff12_counting        ; hold window: counter++, target unchanged (c00d), -> 0x843A
+pm:0x8431  eff12_decide          ; IF GE (env <= thr) -> quiet; else loud
+pm:0x8434  eff12_loud            ; target c00d = -1.0; counter = PM9804 (HOLD reload)
+pm:0x8437  eff12_quiet           ; target c00d = 0; counter = PM9803 unless already released (ALUSAT debounce)
+pm:0x843a  eff12_gain_slew       ; gain = 0.001*target + 0.999*gain (PM9805/9806), state c00e
+pm:0x843c  eff12_fix_outs        ; R3 = FIX loopout, R0 = FIX AP4out; I8 restore
+pm:0x8440  eff12_apply_gain      ; R2 = gain*wet; both outputs x R2
+pm:0x8442  eff12_rts             ; RTS(DB)
+pm:0x8443  eff12_out0            ; DM(I4,M2) = AP4 channel
+pm:0x8444  eff12_out1            ; DM(I4,M2) = loop channel

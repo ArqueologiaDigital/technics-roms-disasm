@@ -12,11 +12,11 @@
 ;   5  effect   0x486BEBA9  PM@8400:6w   thru / effect-off stub
 ;   6  effect   0x486BEBE5  DM@9800:1e DM@C000:77e PM@8400:82w   quadrature 2-tap ensemble chorus (wet-only)
 ;   7  effect   0x486BEF87  DM@9800:2e DM@C000:77e PM@8400:91w   dual-rate-LFO quadrature ensemble chorus (wet-only)
-;   8  effect   0x486BF364  DM@9800:4e DM@C000:77e PM@8400:90w   comb+allpass reverb
+;   8  effect   0x486BF364  DM@9800:4e DM@C000:77e PM@8400:90w   STEREO ENHANCER: phase rotator + low/high emphasis + Haas offset (NO exciter nonlinearity)
 ;   9  effect   0x486BF745  DM@9800:2e DM@C000:77e PM@8400:85w   stereo modulated-delay flanger (0.70 float regen/channel)
-;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   modulated-allpass phaser
+;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   true PHASER: 5+5 swept 1st-order allpasses, quadrature stereo LFOs
 ;  11  effect   0x486BFF35  DM@9800:1e DM@C000:77e PM@8400:104w   modulated-delay chorus
-;  12  effect   0x486C035B  DM@9800:7e DM@C000:77e PM@8400:69w   dynamics/compressor + delay/filter composite
+;  12  effect   0x486C035B  DM@9800:7e DM@C000:77e PM@8400:69w   GATE REVERB: damped allpass-ring tank + hold-gate on the output
 ;  13  effect   0x486C06CD  DM@9800:4e DM@C000:40e PM@8400:63w   stereo echo (dual-mono, damped 0.6 regen)
 ;  14  effect   0x486C0953  DM@9800:3e DM@C000:40e PM@8400:72w   panning multi-tap echo (4 equal taps, repeats walk the stereo field)
 ;  15  effect   0x486C0C0A  DM@9800:4e DM@C000:40e PM@8400:64w   cross-feedback ping-pong echo (Cross Delay candidate)
@@ -51,7 +51,7 @@
 ;  44  effect   0x486C69C1  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Rock Rotary: Brilliant Twin)
 ;  45  effect   0x486C6D6A  DM@9800:12e DM@C000:77e PM@8400:74w   ROTARY SPEAKER simulator (Normal Twin)
 ;  46  effect   0x486C7113  DM@9800:1e DM@C000:77e PM@8400:99w   LFO-swept 10-pole resonant lowpass (filter sweep; NOT a phaser)
-;  47  effect   0x486C751B  DM@9800:1e DM@C000:40e PM@8400:64w   modulated-allpass phaser
+;  47  effect   0x486C751B  DM@9800:1e DM@C000:40e PM@8400:64w   TOUCH WAH (down-sweep): envelope-swept bilinear bandpass Q=8 (NOT a phaser)
 ;  48  effect   0x486C7798  DM@9800:1e DM@C000:77e PM@8400:70w   LFO wah: swept resonant bandpass Q=8 (NOT a phaser)
 ;  49  effect   0x486C7AF2  DM@9800:9e DM@C000:32e PM@8400:101w   modulated-delay chorus
 ;  50  effect   0x486C7E4D  DM@9800:5e DM@C000:67e PM@8400:94w   modulated-delay chorus
@@ -77,7 +77,7 @@
 ;  70  effect   0x486CCC62  DM@9800:1e DM@C000:77e PM@8400:74w   modulated-delay chorus/ensemble
 ;  71  effect   0x486CCFD4  DM@9800:1e DM@C000:77e PM@8400:77w   modulated-delay chorus/flanger
 ;  72  effect   0x486CD358  DM@9800:2e DM@C000:77e PM@8400:72w   modulated-delay chorus/ensemble
-;  73  effect   0x486CD6C3  DM@9800:1e DM@C000:77e PM@8400:79w   modulated-delay + series-allpass (phaser/diffuser)
+;  73  effect   0x486CD6C3  DM@9800:1e DM@C000:77e PM@8400:79w   DELAY+PHASER combi: regen echo -> 3-stage swept-allpass phaser w/ internal 50/50 mix
 ;  74  effect   0x486CDA53  DM@9800:5e DM@C000:40e PM@8400:72w   TOUCH WAH: envelope-swept resonator + stereo echo (was: tremolo-rotary)
 ;  75  effect   0x486CDD14  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger
 ;  76  effect   0x486CE097  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger

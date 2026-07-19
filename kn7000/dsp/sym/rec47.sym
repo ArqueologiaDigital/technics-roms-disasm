@@ -1,23 +1,40 @@
-; rec47 — EFFECT: single-stage swept-allpass PHASER/auto-wah, triangle-LFO front-end (C000:40e, PM 64w)
-; shares the RECIPS allpass-coeff subroutine (0x8416-0x842a) with rec46/rec48; differs in LFO generation
-pm:0x8400  Entry                 ; I0=I1 state pointer
-pm:0x8401  Input_Mono            ; R8=DM(0x20)+DM(0x21); <<11; F8=FLOAT
-pm:0x8406  LFO_TriGen            ; F8=ABS F8; F3=F8-F7; conditional -> triangle/reflected LFO
-pm:0x840b  LFO_StateStore        ; PM(I8,M8)=R8 store LFO phase
-pm:0x840c  LFO_ToCoeff           ; F7=SCALB F7 BY -31; F7=F7*F1 scale LFO to coeff range
-pm:0x8411  LFO_Ramp              ; F0=F0-F7; IF LT/GE conditional ramp reflect
-pm:0x8414  Coeff_Store           ; DM(I0,M2)=R7 / DM(I0,M6)=R7
-pm:0x8417  AllpassCoeffPrep      ; F0=F7*F7,F12=F7*F8,F10=F8+F0; F1=F10-F12,F3=F10+F12,F9=F4-F7
-pm:0x8421  RecipNewton           ; F0=RECIPS F12 + 3 Newton iters (R11=2.0) -> allpass coeff
-pm:0x842b  Input_Mono2           ; R5=(DM(0x20)+DM(0x21))/2; F5=FLOAT
-pm:0x842f  AllpassStage1         ; single 1st-order allpass stage, state in DM(I0)
-pm:0x8435  OutputScale           ; F5=F5*F0; FIX; *R14; CLIP
-pm:0x843b  OutputWrite           ; DM(I4,M2)=R0 (twice L/R)
-pm:0x843d  Return                ; RTS(DB)
-dm:0x9800  LFO_phase_init        ; 0x00000000 initial LFO phase
-dm:0xc004  LFO_rate              ; 0x3B800000 LFO increment
-dm:0xc005  LFO_rate2             ; 0x3A000000
-dm:0xc00d  Coeff_one             ; 1.0 (0x3F800000)
-dm:0xc00e  Coeff_neg2            ; -2.0 (0xC0000000) allpass prep constant
-dm:0xc011  Depth                 ; 4.0 (0x40800000) sweep depth
-dm:0xc012  FullScale             ; 0x7FFFFFFF
+; rec47 — EFFECT: TOUCH WAH, down-sweep (GUI Wah1-8 bank 0x3A, type 0x90) — full doc dsp/phaser-enhancer-gate.md #5
+; NOT a phaser. The rec46/48 computed-bilinear engine (coeffs built from g and g^2,
+; RECIPS + 3 Newton iterations, q = c00c = 0.125 -> Q = 8 bandpass, output w - w2)
+; driven by an ENVELOPE FOLLOWER, not an LFO: env += k*(|(L+R)<<11| - env) with
+; attack c004 = 1/256 (5.8 ms) and release c005 = 1/2048 (46 ms) — rec74/rec37's
+; constants as floats; state PM 0x9800. Control: g = c007 + (c008 - env_n*c006)
+; = 0.014 + (0.3 - 0.3*env), floored at 0.014 when env saturates -> resonance
+; 4.27 kHz (silence) DOWN to 197 Hz (loud): a CLOSING wah, opposite of rec74.
+; Mono (L+R)/2 through the single Q=8 section, x4 makeup (c011), x wet, CLIP,
+; same sample to both outputs. The 4th wah in the pool (74/48/46/47).
+;
+dm:0x9800  eff47_env_state       ; envelope follower state (was 'LFO_phase_init')
+dm:0xc004  eff47_attack          ; float 1/256 — envelope attack rate
+dm:0xc005  eff47_release         ; float 1/2048 — envelope release rate (IF LT reload)
+dm:0xc006  eff47_env_scale       ; 0.3 — envelope -> sweep-domain scale
+dm:0xc007  eff47_g_min           ; 0.014 — sweep floor (g = tan(pi f/fs) domain, 197 Hz)
+dm:0xc008  eff47_g_span          ; 0.3 — sweep span (g up to 0.314 = 4.27 kHz at silence)
+dm:0xc009  eff47_g_scratch1      ; per-frame g store #1 (never read back — PROVISIONAL purpose)
+dm:0xc00a  eff47_g_scratch2      ; per-frame g store #2 (read back at 0x8416)
+dm:0xc00c  eff47_q               ; 0.125 = q -> filter Q = 8 (c00b unused twin)
+dm:0xc00d  eff47_one             ; 1.0 constant for coeff build
+dm:0xc00e  eff47_neg2            ; -2.0 constant -> a1 = 2(g^2-1)
+dm:0xc00f  eff47_bp_w1           ; biquad state w[n-1]
+dm:0xc010  eff47_bp_w2           ; biquad state w[n-2]
+dm:0xc011  eff47_makeup          ; 4.0 float — output makeup gain
+dm:0xc012  eff47_wet             ; Q31 wet level
+pm:0x8400  eff47_entry           ; I0=I1
+pm:0x8401  eff47_in_env          ; R8 = (inL+inR)<<11; F8 = FLOAT — envelope source
+pm:0x8406  eff47_env_follow      ; |x| vs env, IF LT release-rate reload, env += k*(|x|-env)
+pm:0x840b  eff47_env_store       ; PM(0x9800) = env
+pm:0x840c  eff47_env_to_g        ; e = env*2^-31*0.3; g = 0.014 + (0.3-e), floor 0.014 (IF LT/GE)
+pm:0x8414  eff47_g_store         ; g -> c009 and c00a scratch
+pm:0x8417  eff47_coeff_build     ; g^2, q*g, 1+g^2+-qg, 2(g^2-1) — bilinear coefficients
+pm:0x8421  eff47_recip_newton    ; RECIPS + 3 Newton iters -> 1/(1+g^2+qg)
+pm:0x842b  eff47_in_audio        ; R5 = (inL+inR)/2; F5 = FLOAT — the audio path
+pm:0x842f  eff47_bp_stage        ; one bilinear bandpass stage Q=8, states c00f/c010, out = w - w2
+pm:0x8435  eff47_makeup_wet      ; x4 makeup (c011), FIX, x wet (c012)
+pm:0x843a  eff47_clip            ; CLIP 0x7FFFFF
+pm:0x843b  eff47_out             ; DM(I4,M2) twice — same mono sample to both channels
+pm:0x843d  eff47_rts             ; RTS(DB) + kernel epilogue

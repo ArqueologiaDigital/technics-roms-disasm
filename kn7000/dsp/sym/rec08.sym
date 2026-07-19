@@ -1,30 +1,48 @@
-; rec08 — EFFECT: float allpass-cascade diffuser + feedback delay (reverb/ambience)
-; Uses SHARC floating-point. Input floated (F10=FLOAT R0). A first-order allpass
-; section {F12=F3*F7; F1=F10+F12; F12=F1*F7; F10=F3-F12} is cascaded ~5x, then a
-; pair of stages reading/writing PM(I8) coefficient state, producing F13/F10 which
-; are FIXed and mixed (MRF=R7*R13; R7=MRF+R7*R10). Result is injected into a long
-; DM(I6) delay line (offsets 0x320 / 0x3C8C) read back with feedback -> reverb tail.
-; Two symmetric halves = two channels. Static (non-modulated) allpass coeffs.
+; rec08 — EFFECT: STEREO ENHANCER (GUI Enhancer1-6, type 0x03) — full doc dsp/phaser-enhancer-gate.md #2
+; NOT a reverb and NOT an exciter: no feedback and no nonlinearity anywhere.
+; Per channel: 4 cascaded 1st-order allpasses k=c004=0.876 (1-sample state in the
+; DM param cells, f90=926 Hz -> -360deg midband phase rotator) -> two complementary
+; unity-gain one-pole band filters (LP 400 Hz pole .9446, HP 2.04 kHz pole .7491,
+; single-sample states in PM 0x9800-0x9803) -> per-band Q31 gains summed in the MAC
+; -> ADDED to the dry input (bass+treble +6 dB, 400Hz-2kHz mid scoop, phase-comb
+; skirts). ch0 output delayed 800 samples (18.1 ms) through the I6 arena, ch1
+; written+read at delay 0 -> Haas stereo widener (cf rec37's 400-smp variant).
+; x wet (c011, shared), CLIP, out. The old 'allpass diffuser + feedback delay ->
+; reverb tail' reading is dead: the delay line input never recirculates.
 ;
-dm:0xc004  eff08_mix            ; 0x3F604188 (float ~0.876) mix/coeff
-dm:0xc009  eff08_ap_c0          ; 0x3F71CF9A (~0.945) allpass coefficient
-dm:0xc00d  eff08_ap_c4          ; 0xBF5FE260 (~-0.875) allpass coefficient (neg)
-dm:0xc00f  eff08_gain           ; 0x7FFFFFFF unity coeff
-dm:0xc016  eff08_ap_c0b         ; 0x3F71CF9A second-channel allpass coeff set (c016..c01d)
+dm:0xc004  eff08_disp_k         ; 0.876 float — shared allpass k, all 8 disperser stages (R15 carries it to ch1)
+dm:0xc005  eff08_ap_s0          ; ch0 disperser states (c005..c008), 1-sample delay cells
+dm:0xc009  eff08_lp_pole        ; 0.9446 — LP pole (400 Hz), ch0
+dm:0xc00a  eff08_lp_g           ; 0.0277 x2 (c00a/c00b) — LP zero-at-Nyquist gains, unity DC
+dm:0xc00c  eff08_hp_pole        ; 0.7491 — HP pole (2.04 kHz), ch0
+dm:0xc00d  eff08_hp_g           ; -/+0.8745 (c00d/c00e) — HP zero-at-DC gains, unity Nyquist
+dm:0xc00f  eff08_gain_lo        ; Q31 low-band mix gain, ch0 (template ~1.0)
+dm:0xc010  eff08_gain_hi        ; Q31 high-band mix gain, ch0
+dm:0xc011  eff08_wet            ; Q31 wet level, shared by both channels (R14)
+dm:0xc012  eff08_ap_s0b         ; ch1 disperser states (c012..c015)
+dm:0xc016  eff08_lp_pole_b      ; ch1 band-filter bank (c016..c01b mirrors c009..c00e)
+dm:0xc01c  eff08_gain_lo_b      ; Q31 low-band mix gain, ch1
+dm:0xc01d  eff08_gain_hi_b      ; Q31 high-band mix gain, ch1
+dm:0xc029  eff08_sine_tab       ; family sine table (template furniture — never indexed by this PM)
 pm:0x8400  eff08_entry          ; I0=I1
-pm:0x8401  eff08_read_inL       ; R0 = DM(0x20,I4)
-pm:0x8402  eff08_float_in       ; F10 = FLOAT R0
-pm:0x8404  eff08_ap_stage0      ; first-order allpass stage (F12=F3*F7)
-pm:0x8414  eff08_pm_coeff0      ; R3 = PM(I8,M14) load, PM(I8,M8)=R3 write-back state
-pm:0x841e  eff08_fix0           ; R13 = FIX F13
-pm:0x8420  eff08_mac_mix        ; MRF=R7*R13; R7=MRF+R7*R10 diffuser mix
-pm:0x8423  eff08_add_in         ; R0 = R0 + R7 add to input
-pm:0x8425  eff08_delay_write    ; DM(I6,M7)=R0 write reverb delay line
-pm:0x8426  eff08_delay_read     ; R0 = DM(I6,M6) read delayed (feedback)
-pm:0x8429  eff08_wet_scale      ; R0 = R0*R14 wet scale
-pm:0x842b  eff08_clipL          ; CLIP by 0x7FFFFF
-pm:0x842c  eff08_out_L          ; DM(I4,M2)=R0 left output
-pm:0x8440  eff08_chanR          ; second-channel allpass cascade begins
-pm:0x8451  eff08_delay_writeR   ; DM(I6,M7)=R0 right delay write
-pm:0x8456  eff08_out_R          ; DM(I4,M2)=R0 right output
-pm:0x8457  eff08_rts            ; RTS(DB)
+pm:0x8401  eff08_read_in0       ; R0 = DM(0x20,I4) input ch0
+pm:0x8402  eff08_float_in       ; F10 = FLOAT R0; R7=c004 k
+pm:0x8404  eff08_disperse0      ; 4x 1st-order allpass, k=0.876, states c005..c008 (phase rotator)
+pm:0x8414  eff08_lowpass0       ; one-pole LP 400 Hz on dispersed sig (state PM 0x9800) -> F13
+pm:0x8419  eff08_highpass0      ; one-pole HP 2.04 kHz (state PM 0x9801) -> F10
+pm:0x841e  eff08_fix_bands0     ; R13/R10 = FIX low/high
+pm:0x8420  eff08_band_mix0      ; MRF=gLO*low; R7=MRF+gHI*high
+pm:0x8423  eff08_add_dry0       ; R0 = dry + bands (the enhancer sum)
+pm:0x8425  eff08_delay_wr0      ; write sum at cursor, M7=0x320
+pm:0x8426  eff08_delay_rd0      ; tap at +0x320 = 800 smp ago -> 18.1 ms Haas delay on ch0
+pm:0x8428  eff08_arena_hop      ; MODIFY(I6,0x3C8C) ch1 sub-arena
+pm:0x8429  eff08_wet0           ; x wet (c011)
+pm:0x842b  eff08_clip0          ; CLIP 0x7FFFFF
+pm:0x842c  eff08_out0           ; DM(I4,M2) ch0 out (the delayed channel)
+pm:0x842d  eff08_read_in1       ; input ch1; k from R15
+pm:0x8430  eff08_disperse1      ; ch1 disperser, states c012..c015
+pm:0x8440  eff08_bands1         ; ch1 LP/HP (states PM 0x9802/3), bank c016..
+pm:0x844f  eff08_add_dry1       ; dry + bands, ch1
+pm:0x8450  eff08_zero_delay1    ; M7=0: write+readback at same address — ch1 delay 0 (Haas reference)
+pm:0x8456  eff08_out1           ; ch1 out (undelayed)
+pm:0x8457  eff08_rts            ; RTS(DB) + kernel epilogue

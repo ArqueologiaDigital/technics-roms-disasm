@@ -1,26 +1,56 @@
-; rec73 [EFFECT] — feedback delay + 3x cascaded allpass sections per channel (F70-73 family)
-; series-allpass structure (F12=F3*F7;F10=F11+F12;F1=F10+F12;F12=F1*F7;F10=F3-F12) x3 -> phaser/diffuser
-pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  LoadFbState           ; R10=DM(-1,I1)
-pm:0x8402  ReadInputL            ; R3=DM(0x20,I4); F3=FLOAT
-pm:0x8404  FeedbackMix           ; F7=F10*F7; F0=F3+F7
-pm:0x8406  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
-pm:0x8408  Delay1_Read           ; R0=DM(I6,M6)
-pm:0x840a  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
-pm:0x840f  MixCoefs              ; F12=F0*F7; F11=F1+F12 seed for allpass chain
-pm:0x8411  LFO_PhaseAccum        ; R8=DM(I0,M6)+PM(I8,M14); ASHIFT -11
-pm:0x8418  FracInterp_Tap        ; MR1F=R7; MRF+(R4*R3); MRF-(R3*R7) modulated tap
-pm:0x841f  BlockFloatCoef        ; F7=FLOAT R5 BY R1 (allpass coef from mod tap)
-pm:0x8420  Allpass_A             ; stage1: F12=F3*F7;F10=F11+F12;F1=F10+F12;F10=F3-F12
-pm:0x8424  Allpass_B             ; stage2 allpass
-pm:0x8428  Allpass_C             ; stage3 allpass
-pm:0x8430  ReadInputR            ; R3=DM(0x21,I4) right channel
-pm:0x8434  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
-pm:0x843a  BlockFloatCoef2       ; F7=FLOAT R5 BY R1
-pm:0x843b  Allpass_A2            ; right-channel allpass chain stage1
-pm:0x843f  Allpass_B2            ; stage2
-pm:0x8443  Allpass_C2            ; stage3
-pm:0x844b  OutFix                ; R0=FIX F10; R13=R13*R14; R0=R0*R14
-pm:0x844c  Return                ; RTS (DB)
-pm:0x844d  OutputL               ; DM(I4,M2)=R13
-pm:0x844e  OutputR               ; DM(I4,M2)=R0
+; rec73 — EFFECT: DELAY+PHASER combi (GUI DELAY+PHASER, type 0x44) — full doc dsp/phaser-enhancer-gate.md #4
+; Per channel: rec13's regenerative echo run in FLOAT with no damping — line input
+; = in + 0.6*fb (c004/c012), delays 8000 smp ch0 / 10000 smp ch1 (181.4/226.8 ms),
+; tap saved to c003/c002 as next frame's feedback — then mix = 0.5*in + 0.5*tap
+; (c006/c007) feeds a 3-stage swept-allpass phaser: k = c008 + c009*sin =
+; 0.876 +- 0.12 from ONE mono family LFO (phase c00a, inc PM9800 placeholder
+; 0x800000), cascade feedback 0.6 (c00c) via c001/c000 saves. Unlike rec10 the
+; dry/wet sum is INTERNAL: out = 0.5*mix + 0.5*phased (c010/c011) — real notches
+; (up to 2) ride the echo repeats. x wet (c005), NO CLIP stage. Kernel epilogue
+; cursor chores folded inline (0x8444/0x8445/0x844a).
+;
+dm:0x9800  eff73_lfo_inc         ; LFO increment (template 0x800000 placeholder; host-set)
+dm:0xc004  eff73_echo_fb0        ; 0.6 float — ch0 echo regeneration
+dm:0xc005  eff73_wet             ; Q31 wet level (R14, both channels)
+dm:0xc006  eff73_dry_gain0       ; 0.5 — ch0 dry into the phaser-input mix
+dm:0xc007  eff73_tap_gain0       ; 0.5 — ch0 echo tap into the mix
+dm:0xc008  eff73_center          ; 0x7020C49B Q31 = 0.876 — allpass-k sweep center
+dm:0xc009  eff73_depth           ; 0x0F5C28F5 Q31 = 0.12 — sweep depth
+dm:0xc00a  eff73_lfo_phase       ; LFO phase accumulator (31-bit wrap)
+dm:0xc00b  eff73_float_exp       ; -31 — FLOAT BY exponent for the k control, ch0
+dm:0xc00c  eff73_ap_fb           ; 0.6 float — phaser cascade feedback (F4, both channels)
+dm:0xc00d  eff73_ap_s0           ; ch0 allpass states c00d..c00f
+dm:0xc010  eff73_mix_gain0       ; 0.5 — ch0 output: mix side
+dm:0xc011  eff73_phase_gain0     ; 0.5 — ch0 output: phased side
+dm:0xc012  eff73_echo_fb1        ; 0.6 — ch1 echo regeneration
+dm:0xc013  eff73_dry_gain1       ; 0.5
+dm:0xc014  eff73_tap_gain1       ; 0.5
+dm:0xc015  eff73_float_exp1      ; -31 — FLOAT BY exponent, ch1
+dm:0xc016  eff73_ap_s1           ; ch1 allpass states c016..c018
+dm:0xc019  eff73_mix_gain1       ; 0.5
+dm:0xc01a  eff73_phase_gain1     ; 0.5
+dm:0xc029  eff73_sine_tab        ; 16-point sine LFO table + guard
+pm:0x8400  eff73_entry           ; I0=I1
+pm:0x8401  eff73_fb_load0        ; R10 = c003 (ch0 echo feedback, float bits)
+pm:0x8402  eff73_in0             ; in ch0, FLOAT
+pm:0x8404  eff73_echo_in0        ; F0 = in + 0.6*fb; R15 = I6 save
+pm:0x8406  eff73_echo_wr0        ; write float line input; M7=0x1F40 (8000 smp)
+pm:0x8408  eff73_echo_rd0        ; tap = 181.4 ms ago; cursor restore; hop 0x3C64
+pm:0x840c  eff73_fb_save0        ; c003 = tap (next frame's feedback)
+pm:0x840d  eff73_mix0            ; F11 = 0.5*in + 0.5*tap — phaser input
+pm:0x8411  eff73_lfo             ; mono family LFO: phase c00a += PM9800, wrap
+pm:0x8418  eff73_interp          ; table walk + linear interpolation -> sine
+pm:0x841d  eff73_ctl             ; R5 = center + 0.12*sine (shared by both channels)
+pm:0x841f  eff73_k_ch0           ; F7 = FLOAT R5 BY c00b(-31); R3 = c001 cascade fb state
+pm:0x8420  eff73_cascade0        ; 0.6*apfb into F11 mix, then 3 allpass cells (c00d..c00f)
+pm:0x842d  eff73_out_mix0        ; F13 = 0.5*mix(F6) + 0.5*phased — internal dry/wet
+pm:0x8430  eff73_in1             ; in ch1; R1 = c002 echo fb
+pm:0x8434  eff73_echo_wr1        ; M7=0x2710 (10000 smp); write; R13 = FIX ch0 out
+pm:0x8436  eff73_echo_rd1        ; tap 226.8 ms; c002 save
+pm:0x843a  eff73_k_ch1           ; F7 = FLOAT R5 BY c015 — same k, no quadrature
+pm:0x843b  eff73_cascade1        ; 3 allpass cells (c016..c018), I6/I8/I12 chores folded in
+pm:0x8448  eff73_out_mix1        ; F10 = 0.5*mix + 0.5*phased
+pm:0x844b  eff73_fix_out         ; FIX; x wet both; no CLIP
+pm:0x844c  eff73_rts             ; RTS(DB), R13 = R13*R14
+pm:0x844d  eff73_out0            ; DM(I4,M2) = R13 ch0
+pm:0x844e  eff73_out1            ; DM(I4,M2) = R0 ch1

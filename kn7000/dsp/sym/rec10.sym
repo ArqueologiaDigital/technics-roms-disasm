@@ -1,31 +1,41 @@
-; rec10 — EFFECT: phaser (LFO-modulated float allpass cascade)
-; A sine-LFO fractional-delay engine (as rec06) produces a slowly-varying value R8,
-; which is converted to a FLOAT allpass coefficient F7 = FLOAT R8 BY R15(exp -31).
-; That modulated coefficient drives a cascade of first-order allpass sections
-; {F12=F3*F7; F1=F10+F12; F12=F1*F7; F10=F3-F12} (5 stages ch0, 6 stages ch1).
-; Sweeping the allpass poles with the LFO = classic phaser. Feedback via c006.
+; rec10 — EFFECT: true PHASER (GUI Phaser groups, types 0x05/0x0D) — full doc dsp/phaser-enhancer-gate.md #3
+; Five 1st-order allpass cells per channel whose COEFFICIENT is LFO-swept:
+; k(t) = c004 + c005*sin(theta) = 0.876 +- 0.12, f90 sweeps 28 Hz - 1.9 kHz. Two family LFOs (phase c006/c007, incs PM9800/1
+; template 0x800000 = placeholder the host rewrites) run in permanent quadrature
+; (c007 template 0x20000000 = +90deg): ch0 takes the +90 LFO, ch1 the base one.
+; Float feedback c008 x last frame's cascade output (saved c003/c002) around each
+; cascade. Wet-only x2 makeup: the notch comb (up to 3 notches) forms when the TG
+; send mix adds this to dry. Old sym's '5 stages ch0 / 6 ch1' was a miscount: 5+5.
 ;
-dm:0x9800  eff10_lfo_phase0     ; LFO phase, ch0 (=0x800000)
-dm:0x9801  eff10_lfo_phase1     ; LFO phase, ch1 (=0x800000)
-dm:0xc004  eff10_lfo_rate       ; 0x7020C49B LFO increment/rate
-dm:0xc005  eff10_depth          ; 0x0F5C28F5 modulation depth
-dm:0xc007  eff10_tap_gain       ; 0x20000000 (0.25) tap gain
-dm:0xc00e  eff10_wet            ; 0x7FFFFFFF wet level
-dm:0xc029  eff10_sine_tab       ; 16-point sine LFO table (c029..c03f)
-pm:0x8400  eff10_entry          ; I0=I1; R9/R10 mix coeffs loaded
-pm:0x8403  eff10_lfo_acc0       ; LFO phase accumulate (voice 0)
-pm:0x840c  eff10_interp0        ; fractional-delay interpolation
-pm:0x8411  eff10_tapscale0      ; R8=R8*R10; R5=R9+R8 modulated control (ch0)
-pm:0x8413  eff10_lfo_acc1       ; second LFO accumulate
-pm:0x8424  eff10_coeff0         ; F7 = FLOAT R8 BY R15  -> allpass coeff from LFO
-pm:0x8426  eff10_float_in       ; F0=FLOAT input; F3 feedback tap
-pm:0x842b  eff10_ap_cascade0    ; allpass cascade begins (ch0)
-pm:0x843f  eff10_fb_write0      ; DM(I1,-1)=R10 feedback state store
-pm:0x8440  eff10_fix_scaleL     ; R0=FIX F10; *R14 wet
-pm:0x8444  eff10_clipL          ; CLIP by 0x7FFFFF
-pm:0x8445  eff10_out_L          ; DM(I4,M2)=R0 left output
-pm:0x8446  eff10_coeff1         ; F7 = FLOAT R5 BY R15 (ch1 allpass coeff)
-pm:0x844b  eff10_ap_cascade1    ; allpass cascade (ch1, 6 stages)
-pm:0x8461  eff10_fix_scaleR     ; R0=FIX F10 (right)
-pm:0x8466  eff10_out_R          ; DM(I4,M2)=R0 right output
-pm:0x8467  eff10_rts            ; RTS(DB)
+dm:0x9800  eff10_lfo_inc0       ; LFO A increment (template 0x800000 = 172 Hz placeholder; host-set)
+dm:0x9801  eff10_lfo_inc1       ; LFO B increment (ditto)
+dm:0xc004  eff10_center         ; 0x7020C49B Q31 = 0.876 — allpass-k sweep center (R9)
+dm:0xc005  eff10_depth          ; 0x0F5C28F5 Q31 = 0.12 — sweep depth (R10)
+dm:0xc006  eff10_lfo_phase0     ; LFO A phase accumulator (31-bit wrap)
+dm:0xc007  eff10_lfo_phase1     ; LFO B phase; template 0x20000000 = +90deg — quadrature stereo
+dm:0xc008  eff10_feedback       ; float cascade-feedback gain, both channels (template 0 = off)
+dm:0xc009  eff10_ap_s0          ; ch0 allpass states c009..c00d (5 one-sample cells)
+dm:0xc00e  eff10_wet            ; Q31 wet level (R14, both channels)
+dm:0xc00f  eff10_ap_s0b         ; ch1 allpass states c00f..c013
+dm:0xc029  eff10_sine_tab       ; 16-point sine LFO table + guard (c029..c03f)
+pm:0x8400  eff10_entry          ; I0=I1; R9=center, R10=depth
+pm:0x8403  eff10_lfo_a          ; LFO A: phase c006 += PM9800, FDEP 31-bit wrap
+pm:0x840c  eff10_interp_a       ; table walk + linear interpolation -> sine A
+pm:0x8411  eff10_ctl_a          ; R5 = center + 0.12*sineA  (used by ch1 at 0x8446)
+pm:0x8413  eff10_lfo_b          ; LFO B: phase c007 += PM9801 (the +90deg one)
+pm:0x8421  eff10_ctl_b          ; R8 = center + 0.12*sineB  (used by ch0)
+pm:0x8424  eff10_k_ch0          ; F7 = FLOAT R8 BY -31 — the swept allpass coefficient, ch0
+pm:0x8426  eff10_in_fb0         ; F0=FLOAT in0; F3 = c003 (last cascade out) * c008 fb
+pm:0x842b  eff10_cascade0       ; 5x 1st-order allpass, k=F7, states c009..c00d
+pm:0x843f  eff10_fb_save0       ; c003 = cascade output (float bits) for next frame
+pm:0x8440  eff10_wet0           ; FIX, x wet
+pm:0x8442  eff10_makeup0        ; R0 = R0+R0 (x2 makeup)
+pm:0x8444  eff10_clip0          ; CLIP 0x7FFFFF
+pm:0x8445  eff10_out0           ; ch0 out
+pm:0x8446  eff10_k_ch1          ; F7 = FLOAT R5 BY -31 (LFO A control) — ch1 coefficient
+pm:0x8448  eff10_in_fb1         ; in1 + c002*c008 feedback
+pm:0x844b  eff10_cascade1       ; 5x allpass, states c00f..c013
+pm:0x8460  eff10_fb_save1       ; c002 = ch1 cascade output
+pm:0x8461  eff10_wet1           ; FIX, x wet, x2
+pm:0x8466  eff10_out1           ; ch1 out
+pm:0x8467  eff10_rts            ; RTS(DB) + kernel epilogue

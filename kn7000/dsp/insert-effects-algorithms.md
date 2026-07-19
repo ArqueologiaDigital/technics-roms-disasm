@@ -138,6 +138,15 @@ sample to L and R. Nothing here can produce a phaser's notch comb — the
 numerators are lowpass/bandpass, not allpass. (The remaining true-phaser
 candidates in the pool are rec10/rec47/rec73, still undocumented.)
 
+> **Follow-up (2026-07-19, next pass)**: resolved — rec10 and rec73 ARE
+> true modulated-allpass phasers (the LFO sweeps the first-order allpass
+> *coefficient* directly, no bilinear machinery needed), while rec47 turned
+> out to be **another wah on this very engine**: the same coefficient
+> construction + `RECIPS`/Newton reciprocal and q = 0.125, but driven by an
+> envelope follower and sweeping *downward* (4.27 kHz → 197 Hz with playing
+> level) — the pool's fourth wah. See
+> [`phaser-enhancer-gate.md`](phaser-enhancer-gate.md).
+
 ## 3. rec62–65 — cubic soft-clip overdrive, four tone banks (0x64–0x67)
 
 One byte-identical program (109 PM words, `rec62_effect_0x486CAB5A.asm`),
