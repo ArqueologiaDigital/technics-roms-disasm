@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 83 synthetic labels for internal helpers called by converted code
+# 117 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -102,6 +102,38 @@ _rom_marker:
 .equ func_4847EC92, 0x4847EC92
 .equ func_4849C8E2, 0x4849C8E2
 .equ func_4849C94F, 0x4849C94F
+.equ func_484A11E1, 0x484A11E1
+.equ func_484ABAE6, 0x484ABAE6
+.equ PanelModeFlagGet, 0x484ABAFD
+.equ func_484ABD54, 0x484ABD54
+.equ func_484ABD73, 0x484ABD73
+.equ func_484AC06E, 0x484AC06E
+.equ PanelBusyWait3000, 0x484AC0AC
+.equ PanelTickWait6, 0x484AC102
+.equ PanelTransaction_entry, 0x484AC2A8
+.equ PanelSignOnRequest_entry, 0x484AC346
+.equ PanelStatusPoll_entry, 0x484AC3F9
+.equ PanelWaitLinkIdle_entry, 0x484AC4A4
+.equ PanelTxKick_entry, 0x484AC523
+.equ PanelTxPump_entry, 0x484ACEA5
+.equ PanelLedMirrorResetA, 0x484ACFE4
+.equ PanelHeaderValidate, 0x484ACFF9
+.equ PanelErrorRecovery_entry, 0x484AD011
+.equ PanelRxDecodeExpect_entry, 0x484AD0F0
+.equ PanelRxDecodeQuiet_entry, 0x484AD102
+.equ PanelFrameDecode_entry, 0x484AD116
+.equ PanelTxFifoToRing_entry, 0x484AD464
+.equ PanelEventFifoPush_entry, 0x484AD519
+.equ PanelEventFifoFree_entry, 0x484AD55F
+.equ PanelEventFifoInit, 0x484AD57E
+.equ PanelTxFifoInit, 0x484AD596
+.equ PanelCtrlDispatch_entry, 0x484AD680
+.equ PanelButtonDispatch_entry, 0x484ADB59
+.equ PanelBtnActType0_entry, 0x484ADCD2
+.equ PanelBtnActType1_entry, 0x484ADD1B
+.equ PanelBtnActType2_entry, 0x484ADD86
+.equ PanelBtnActType4_entry, 0x484ADDCF
+.equ PanelBtnActType3_entry, 0x484ADE04
 .equ func_484B1BCB, 0x484B1BCB
 .equ func_484B1CA1, 0x484B1CA1
 .equ func_4852FDCD, 0x4852FDCD
@@ -111,6 +143,8 @@ _rom_marker:
 .equ func_48532494, 0x48532494
 .equ func_4854D84B, 0x4854D84B
 .equ LibParamGet, 0x4C0149FA
+.equ LibIntcEnable, 0x4C03DCC8
+.equ LibIntcDisable, 0x4C03DD3F
 
 .incbin_range "baserom/kn7000_program.rom", 0x000080, 0x004ff6
 # DspFullReinit  (CPU 0x48404ff6)
@@ -312,8 +346,7 @@ _rom_marker:
     add     d0, d0
     mov     a2, (0x24, sp)
     mov     0x50122aac, a2
-    .byte 0xF4   # movhu (d0, a2), d0
-    mov     d0, d2
+    movhu   (d0, a2), d0
     mov     (0x24, sp), a2
     movhu   d0, (a0)
     bra     0x48414dcb
@@ -410,9 +443,8 @@ _rom_marker:
     exthu   d0
     add     d0, d0
     mov     0x50122aac, a0
-    .byte 0xF4   # movhu (d0, a0), d0
-    mov     -0x10, d0
-    mov     (a3), d0
+    movhu   (d0, a0), d0
+    movhu   d0, (a3)
     bra     0x48414ef0
     mov     (0xc, sp), a0
     and     0x0f, d1
@@ -544,8 +576,7 @@ _rom_marker:
     add     d1, d1
     mov     a2, (0x28, sp)
     mov     0x50122aac, a2
-    .byte 0xF4   # movhu (d1, a2), d0
-    mov     d1, d2
+    movhu   (d1, a2), d0
     mov     (0x28, sp), a2
     movhu   d0, (a0)
     bra     0x48414fef
@@ -796,9 +827,8 @@ _rom_marker:
     mov     d1, d0
     add     d0, d0
     mov     0x50122aac, a0
-    .byte 0xF4   # movhu (d0, a0), d0
-    mov     -0x10, d0
-    mov     (a1), d0
+    movhu   (d0, a0), d0
+    movhu   d0, (a1)
     bra     0x48415210
     movbu   (a2), d1
     movbu   (a2), d2
@@ -938,8 +968,7 @@ _rom_marker:
     exthu   d2
     add     d2, d2
     mov     0x50122aac, a0
-    .byte 0xF4   # movhu (d2, a0), d0
-    mov     d2, d0
+    movhu   (d2, a0), d0
     movhu   d0, (a3)
     bra     0x48415374
     mov     (0x10, sp), a0
@@ -1111,8 +1140,7 @@ _rom_marker:
     add     d0, d0
     mov     a3, (0x48, sp)
     mov     0x50122aac, a3
-    .byte 0xF4   # movhu (d0, a3), d0
-    mov     d0, d3
+    movhu   (d0, a3), d0
     mov     (0x48, sp), a3
     movhu   d0, (a0)
     bra     0x484154a7
@@ -1462,23 +1490,21 @@ _rom_marker:
     mov     0x1f, d1
     and     d3, d1
     asl     3, d1
-    .byte 0xF4   # movbu d1, (d2, a3)
-    mov     (0x48, sp), d3
+    movbu   d1, (d2, a3)
+    inc     d2
     mov     d2, d0
     exth    d0
     mov     0x7e0, d1
     and     d3, d1
     asr     3, d1
-    .byte 0xF4   # movbu d1, (d0, a3)
-    inc4    a3
+    movbu   d1, (d0, a3)
     exth    d2
     inc     d2
     mov     d2, d0
     exth    d0
     and     0xf800, d3
     asr     8, d3
-    .byte 0xF4   # movbu d3, (d0, a3)
-    mov     (a3), d0
+    movbu   d3, (d0, a3)
     exth    d2
     inc     d2
     add     2, a0
@@ -1605,8 +1631,7 @@ _rom_marker:
     add     0x84, a2
     mov     d3, d0
     add     d0, d0
-    .byte 0xF4   # movhu (d0, a3), d0
-    mov     d0, d3
+    movhu   (d0, a3), d0
     mov     0xff, d2
     exth    d0
     cmp     0xf9, d0
@@ -1614,8 +1639,7 @@ _rom_marker:
     mov     d3, a0
     add     a0, a0
     mov     a0, d0
-    .byte 0xF4   # movhu (d0, a3), d0
-    mov     d0, d3
+    movhu   (d0, a3), d0
     exth    d0
     call    GetPaletteRGB, 0, 0
     mov     d0, d2
@@ -1624,8 +1648,8 @@ _rom_marker:
     mov     d2, d0
     and     0x00ff0000, d0
     lsr     16, d0
-    .byte 0xF4   # movbu d0, (d1, a2)
-    mov     d1, (0x8d, sp)
+    movbu   d0, (d1, a2)
+    mov     d3, d1
     asl2    d1
     add     a2, d1
     mov     0x0000ff00, d0
@@ -1700,8 +1724,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     exth    d1
     add     d3, d0
-    .byte 0xF4   # movbu d0, (d1, a0)
-    inc     d1
+    movbu   d0, (d1, a0)
     inc     d1
     movhu   d1, (0x28, sp)
     mov     (0x14, sp), d0
@@ -6098,8 +6121,7 @@ _rom_marker:
     nop
     nop
     mul     d1, d0
-    .byte 0xF4   # movhu (d0, a3), d2
-    cmp     d0, d3
+    movhu   (d0, a3), d2
     mov     d3, d1
     exth    d2
     exth    d1
@@ -6251,15 +6273,13 @@ _rom_marker:
     mov     a2, d0
     add     d0, d0
     mov     0x5011faa4, a1
-    .byte 0xF4   # movhu (d0, a1), d0
-    mov     d0, d1
+    movhu   (d0, a1), d0
     mov     a2, a0
     add     a0, a0
     inc     d0
     mov     a0, d1
-    .byte 0xF4   # movhu d0, (d1, a1)
-    bhi     0x4842874a
-    leq
+    movhu   d0, (d1, a1)
+    mov     a2, d0
     mov     0x38, d1
     nop
     nop
@@ -6306,8 +6326,7 @@ _rom_marker:
     nop
     nop
     mul     d3, d0
-    .byte 0xF4   # movhu (d0, a2), d2
-    cmp     d0, d2
+    movhu   (d0, a2), d2
     mov     0x38, d0
     nop
     nop
@@ -6400,34 +6419,32 @@ _rom_marker:
     nop
     mul     d3, d0
     clr     d1
-    .byte 0xF4   # movhu d1, (d0, a2)
-    lge
+    movhu   d1, (d0, a2)
     bra     0x4842887e
     mov     0x38, d0
     nop
     nop
     mul     d3, d0
-    .byte 0xF4   # movhu (d0, a2), d0
-    mov     d0, d2
+    movhu   (d0, a2), d0
     mov     0x38, d1
     exth    d0
     nop
     nop
     mul     d3, d1
     inc     d0
-    .byte 0xF4   # movhu d0, (d1, a2)
-    bcc     0x48428809
+    movhu   d0, (d1, a2)
+    mov     d3, d0
     add     d0, d0
     mov     0x5011faa4, a1
-    .byte 0xF4   # movhu (d0, a1), d0
-    mov     d0, d1
+    movhu   (d0, a1), d0
     mov     d3, a0
     add     a0, a0
     add     -1, d0
     mov     a0, d1
-    .byte 0xF4   # movhu d0, (d1, a1)
-    bhi     0x48428811
-    movhu   (0xcbcb), d0
+    movhu   d0, (d1, a1)
+    mov     0x38, d0
+    nop
+    nop
     mul     d0, d3
     add     d3, a2
     movhu   (8, a2), d0
@@ -6471,8 +6488,8 @@ _rom_marker:
     mul     d2, d0
     movhu   (2, a0), d1
     mov     0x5000757c, a0
-    .byte 0xF4   # movhu (d0, a0), d2
-    cmp     0x19, d0
+    movhu   (d0, a0), d2
+    exth    d1
     mov     d2, a2
     exth    d2
     mov     d1, (0x1c, sp)
@@ -6694,8 +6711,8 @@ _rom_marker:
     mul     d1, d0
     movhu   (2, a0), d3
     mov     0x5000757c, a0
-    .byte 0xF4   # movhu (d0, a0), d2
-    cmp     0x1b, d0
+    movhu   (d0, a0), d2
+    exth    d3
     mov     d2, a2
     exth    d2
     mov     d3, (0x20, sp)
@@ -7425,9 +7442,10 @@ _rom_marker:
     nop
     nop
     mul     d3, d0
-    .byte 0xF4   # movhu (d0, a0), d1
-    mov     0x80, a0
-    movhu   (0xcbcb), d0
+    movhu   (d0, a0), d1
+    mov     0x38, d0
+    nop
+    nop
     mul     d2, d0
     mov     d0, a0
     mov     0x38, d0
@@ -7450,8 +7468,7 @@ _rom_marker:
     nop
     nop
     mul     d2, d0
-    .byte 0xF4   # movhu d1, (d0, a2)
-    lge
+    movhu   d1, (d0, a2)
     movhu   (0x1c, sp), d1
     mov     0x38, d0
     exth    d1
@@ -7465,8 +7482,8 @@ _rom_marker:
     nop
     nop
     mul     d3, d0
-    .byte 0xF4   # movhu (d0, a0), d0
-    mov     0x18, d0
+    movhu   (d0, a0), d0
+    exth    d0
     cmp     -1, d0
     beq     0x4842a166
     mov     0x38, d0
@@ -7500,9 +7517,8 @@ _rom_marker:
     nop
     nop
     mul     d3, d0
-    .byte 0xF4   # movhu (d0, a0), d0
-    mov     -0x7b, d0
-    exth    d0
+    movhu   (d0, a0), d0
+    mov     0x18, d1
     exth    d0
     nop
     nop
@@ -7583,8 +7599,9 @@ _rom_marker:
     nop
     nop
     mul     d0, d3
-    .byte 0xF4   # movhu d1, (d3, a0)
-    jmp     0x5d0ca36e
+    movhu   d1, (d3, a0)
+    mov     1, d0
+    bra     0x4842a205
     mov     0x18, d0
     nop
     nop
@@ -7711,8 +7728,8 @@ _rom_marker:
     mov     0x500009bc, a0
     exth    d0
     add     d0, d0
-    .byte 0xF4   # movhu (d0, a0), d1
-    mov     0, a0
+    movhu   (d0, a0), d1
+    clr     d0
     btst    0x04, d1
     beq     0x4842ca0a
     mov     1, d0
@@ -7912,9 +7929,8 @@ _rom_marker:
     asl     3, d0
     mov     a0, a2
     mov     (0x50122dac), a0
-    .byte 0xF4   # movhu (d0, a0), d1
-    mov     0xf0, a0
-    mov     (a2), d1
+    movhu   (d0, a0), d1
+    movhu   d1, (a2)
     mov     (0x50122dac), d1
     add     d0, d1
     mov     d1, a0
@@ -8461,8 +8477,8 @@ _rom_marker:
     mov     (0x14, sp), a1
     exthu   d0
     add     d0, d0
-    .byte 0xF4   # movbu (d0, a1), d3
-    mov     (0x44f0), d1
+    movbu   (d0, a1), d3
+    movbu   (a0), d1
     mov     (0x24, sp), a1
     mov     d3, d2
     extb    d2
@@ -8512,8 +8528,7 @@ _rom_marker:
     mov     (0x18, sp), a1
     exthu   d0
     add     d0, d0
-    .byte 0xF4   # movbu d3, (d0, a1)
-    mov     (a1), d0
+    movbu   d3, (d0, a1)
     mov     a3, d0
     inc     d0
     mov     d0, a1
@@ -8584,8 +8599,9 @@ _rom_marker:
     exthu   d2
     mov     d2, d0
     add     d0, d0
-    .byte 0xF4   # movbu (d0, a3), d0
-    movhu   d0, (0x1011)
+    movbu   (d0, a3), d0
+    extb    d1
+    extb    d0
     cmp     d0, d1
     bge     0x48473195
     mov     d2, d0
@@ -8619,15 +8635,15 @@ _rom_marker:
     movbu   (0x48, sp), d1
     add     a0, a0
     mov     a0, d0
-    .byte 0xF4   # movbu (d0, a3), d0
-    movhu   d0, (0x1011)
+    movbu   (d0, a3), d0
+    extb    d1
+    extb    d0
     cmp     d0, d1
     bne     0x484731b0
     mov     d2, d0
     add     d0, d0
     mov     -1, d1
-    .byte 0xF4   # movbu d1, (d0, a3)
-    inc4    a3
+    movbu   d1, (d0, a3)
     movhu   (a2), d0
     add     d1, d0
     movhu   d0, (a2)
@@ -8730,23 +8746,23 @@ _rom_marker:
     mov     d1, a0
     add     a0, a0
     mov     a0, d0
-    .byte 0xF4   # movbu (d0, a2), d0
-    movbu   d0, (0xecf1)
+    movbu   (d0, a2), d0
+    mov     d3, a0
     extb    d0
     sub     d0, a0
     cmp     8, a0
     bgt     0x48473276
     mov     d1, d0
     add     d0, d0
-    .byte 0xF4   # movbu (d0, a2), d0
-    movbu   d0, (0xe4f1)
+    movbu   (d0, a2), d0
+    mov     d1, a0
     extb    d0
     add     a0, a0
     add     0xc, d0
     mov     a0, d1
-    .byte 0xF4   # movbu d0, (d1, a2)
-    mov     d1, (0xca, sp)
-    mov     d2, (0xff2a)
+    movbu   d0, (d1, a2)
+    bra     0x4847327d
+    add     -1, d2
     mov     d2, d1
     exthu   d2
     cmp     0, d2
@@ -8796,8 +8812,7 @@ _rom_marker:
     div     d1, d0
     mov     mdr, d0
     exth    d0
-    .byte 0xF4   # movbu (d0, a0), d1
-    extb    d0
+    movbu   (d0, a0), d1
     mov     (0x10, sp), a0
     extb    d2
     extb    d1
@@ -8854,8 +8869,7 @@ _rom_marker:
     div     d1, d0
     mov     mdr, d0
     exth    d0
-    .byte 0xF4   # movbu (d0, a0), d1
-    extb    d0
+    movbu   (d0, a0), d1
     mov     (0x10, sp), a0
     extb    d2
     extb    d1
@@ -8918,8 +8932,7 @@ _rom_marker:
     mov     a2, d1
     add     d1, d1
     mov     d0, a0
-    .byte 0xF4   # movbu (d1, a0), d0
-    clr     d1
+    movbu   (d1, a0), d0
     extb    d3
     extb    d0
     add     6, a1
@@ -9002,8 +9015,7 @@ _rom_marker:
     asl2    d1
     sub     a1, d1
     mov     d0, a0
-    .byte 0xF4   # movbu (d1, a0), d1
-    extbu   d0
+    movbu   (d1, a0), d1
     extb    d2
     extb    d1
     add     6, a2
@@ -9103,8 +9115,7 @@ _rom_marker:
     mov     a3, d1
     asl2    d1
     mov     d0, a0
-    .byte 0xF4   # movbu (d1, a0), d1
-    extbu   d0
+    movbu   (d1, a0), d1
     extb    d2
     extb    d1
     add     6, a2
@@ -9220,8 +9231,7 @@ _rom_marker:
     asl2    d1
     sub     a1, d1
     mov     d0, a0
-    .byte 0xF4   # movbu (d1, a0), d1
-    extbu   d0
+    movbu   (d1, a0), d1
     extb    d2
     extb    d1
     add     6, a2
@@ -9322,8 +9332,7 @@ _rom_marker:
     mov     a3, d1
     asl2    d1
     mov     d0, a0
-    .byte 0xF4   # movbu (d1, a0), d1
-    extbu   d0
+    movbu   (d1, a0), d1
     extb    d2
     extb    d1
     add     6, a2
@@ -10529,33 +10538,1553 @@ _rom_marker:
 # FadeSetGridCheck  (CPU 0x484ab756)
 .incbin_range "baserom/kn7000_program.rom", 0x0ab756, 0x0aba23
 # FadeIOFilter  (CPU 0x484aba23)
-.incbin_range "baserom/kn7000_program.rom", 0x0aba23, 0x0ac2a8
-# PanelTransaction  (CPU 0x484ac2a8)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac2a8, 0x0ac523
-# PanelTxKick  (CPU 0x484ac523)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac523, 0x0ac5f1
+.incbin_range "baserom/kn7000_program.rom", 0x0aba23, 0x0abaf4
+# PanelModeFlagSet  (CPU 0x484abaf4)
+.incbin_range "baserom/kn7000_program.rom", 0x0abaf4, 0x0abafd
+# PanelModeFlagGet  (CPU 0x484abafd)
+.incbin_range "baserom/kn7000_program.rom", 0x0abafd, 0x0ac0ac
+# PanelBusyWait3000  (CPU 0x484ac0ac)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac0ac, 0x0ac0c8
+# PanelBusyWait6000  (CPU 0x484ac0c8)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac0c8, 0x0ac0e7
+# PanelTickWait2  (CPU 0x484ac0e7)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac0e7, 0x0ac102
+# PanelTickWait6  (CPU 0x484ac102)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac102, 0x0ac11d
+# PanelTickWait51  (CPU 0x484ac11d)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac11d, 0x0ac138
+# PanelTypeProbeShadow  (CPU 0x484ac138)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac138, 0x0ac19f
+# PanelTypeDetect  (CPU 0x484ac19f)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac19f, 0x0ac2a5
+# PanelTransaction  (CPU 0x484ac2a5)
+#   boot ping transaction: PanelTxKick(0x20,00) pings CPL, then (0xE0,00)
+#   pings CPR, each bracketed by wait-idle + ring reset; an RX-ring head
+#   move (0x5006BDB2 != 0) marks the board as answered in result nibble
+#   0x5006BDA5 (bit0 CPL, bit3 CPR). Caller 0x484ABBB5 retries 10x for 9
+    add     -0x10, sp
+# PanelTransaction_entry:   (register-save `call` entry)
+    clr     d0
+    movbu   d0, (0x5006bda5)
+    call    PanelWaitLinkIdle_entry, 0, 8
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   d0, (0x5006bdb2)
+    bset    0x01, (0x5006bda4)
+    call    0x4c03d6bc, 0, 0
+    mov     0x20, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    movhu   (0x5006bdb2), d0
+    cmp     0, d0
+    beq     0x484ac2f4
+    bset    0x01, (0x5006bda5)
+    call    PanelWaitLinkIdle_entry, 0, 8
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   d0, (0x5006bdb2)
+    bset    0x01, (0x5006bda4)
+    call    0x4c03d6bc, 0, 0
+    mov     0xe0, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    movhu   (0x5006bdb2), d0
+    cmp     0, d0
+    beq     0x484ac33a
+    bset    0x08, (0x5006bda5)
+    movbu   (0x5006bda5), d0
+    ret     0, 0x10
+# PanelSignOnRequest  (CPU 0x484ac343)
+#   boot sign-on/ID sequence: commands 0x29,00 / 0xEA,00 / 0x20,10 /
+#   0xE3,10 with tick waits, then PanelRxDecodeQuiet parses the replies;
+#   the sign-on bytes land in the wire shadow tables that PanelTypeDetect
+#   (0x484AC19F) reads to identify the panel hardware type
+    add     -0x10, sp
+# PanelSignOnRequest_entry:   (register-save `call` entry)
+    call    PanelEventFifoInit, 0, 0
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   d0, (0x5006bdb2)
+    bset    0x01, (0x5006bda4)
+    call    0x4c03d6bc, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0x29, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0xea, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0x20, d0
+    mov     0x10, d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0xe3, d0
+    mov     0x10, d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeQuiet_entry, 0, 8
+    ret     0, 0x10
+# PanelInitHookNop  (CPU 0x484ac3f3)
+#   retf-only init step (boot init 0x484ABB47 calls it last)
+    retf    0, 0
+# PanelStatusPoll  (CPU 0x484ac3f6)
+#   runtime poll: commands 0x29,00 / 0xEB,00 / 0x20,10 / 0xE6,10, each
+#   followed by PanelRxDecodeExpect; run by PanelTxPump every 4th flush
+#   and by service method 0x484ABBA5
+    add     -0x10, sp
+# PanelStatusPoll_entry:   (register-save `call` entry)
+    call    PanelEventFifoInit, 0, 0
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   d0, (0x5006bdb2)
+    bset    0x01, (0x5006bda4)
+    call    0x4c03d6bc, 0, 0
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0x29, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0xeb, d0
+    clr     d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0x20, d0
+    mov     0x10, d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    call    PanelWaitLinkIdle_entry, 0, 8
+    mov     0xe6, d0
+    mov     0x10, d1
+    call    PanelTxKick_entry, [d2,d3], 0x14
+    call    PanelTickWait6, 0, 0
+    call    PanelTickWait6, 0, 0
+    call    PanelRxDecodeExpect_entry, 0, 8
+    ret     0, 0x10
+# PanelWaitLinkIdle  (CPU 0x484ac4a1)
+#   wait for the link to go idle: presence GPIO 0x36008084 bit0 high,
+#   flags 0x5006BDA2 bits1-2 clear, TX ring drained (rd==wr); 200 retries
+#   of PanelBusyWait3000, timeout sets error bit7 of status 0x5006BDA4
+    add     -8, sp
+# PanelWaitLinkIdle_entry:   (register-save `call` entry)
+    mov     0xc8, d0
+    movbu   d0, (0x5006bda9)
+    call    0x4c03dcfa, 0, 0x10
+    btst    0x01, (0x36008084)
+    beq     0x484ac4e5
+    movbu   (0x5006bda2), d0
+    btst    0x02, d0
+    bne     0x484ac4e5
+    btst    0x01, d0
+    bne     0x484ac4e5
+    movhu   (0x5006be12), d1
+    movhu   (0x5006be10), d0
+    cmp     d0, d1
+    bne     0x484ac4e5
+    call    0x4c03d6bc, 0, 0
+    bra     0x484ac51b
+    movbu   (0x5006bda9), d0
+    add     -1, d0
+    movbu   d0, (0x5006bda9)
+    movbu   (0x5006bda9), d0
+    cmp     0, d0
+    bne     0x484ac506
+    call    0x4c03d6bc, 0, 0
+    bra     0x484ac514
+    call    0x4c03d6bc, 0, 0
+    call    PanelBusyWait3000, 0, 8
+    bra     0x484ac4ad
+    bset    0x80, (0x5006bda4)
+    ret     0, 8
+# PanelTxKick  (CPU 0x484ac51e)
+#   start a command transaction: [cmd,arg] -> TX ring slots 0x5006BE14/15
+#   (rd:=0, wr:=2), TX-busy bit2 set / overrun bit1 clear, state:=1, dwell
+#   0x78 -> 0x34001010, board-select strobes (0x36008024/25 set, 0x36008004
+#   bit6 mirrors PanelModeFlagGet, bit1 clear, 0x36008064 set), disable
+#   INTC grp4(ATN)+grp6(RX) / enable grp5(TX-done), SIO0 direction TX
+#   (cfg&0xFFF8|4), start (cfg|=0x8000) and send the first sync 0x00
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+# PanelTxKick_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movhu   d0, (0x5006be10)
+    movbu   d2, (0x5006be14)
+    movbu   d3, (0x5006be15)
+    mov     2, d0
+    movhu   d0, (0x5006be12)
+    bset    0x02, (0x5006bda2)
+    bclr    0x01, (0x5006bda2)
+    mov     1, d0
+    movbu   d0, (0x5006bda0)
+    mov     0x78, d0
+    movbu   d0, (0x34001010)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484ac584
+    bset    0x40, (0x36008004)
+    bclr    0x01, (0x36008004)
+    bset    0x01, (0x36008064)
+    call    0x4c03d6bc, 0, 0
+    mov     4, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xbfff, d0
+    movhu   d0, (0x34000800)
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    movhu   (0x34000800), d0
+    or      0x8000, d0
+    movhu   d0, (0x34000800)
+    clr     d0
+    movbu   d0, (0x34000808)
+    ret     [d2,d3], 0x14
 # PanelAtnIsr  (CPU 0x484ac5f1)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac5f1, 0x0ac70e
+#   INTC group 0x1A: the panel's 2-edge ATN pulse. Pass 1 (0x5006BE92==0):
+#   EXTMD 0x34000280 bits7:6 11b->10b (arm the opposite edge), ATN flag
+#   bit0 of 0x5006BDA2. Pass 2: if no reply pending (0x5006BDA1==0) turn
+#   the link around to RX -- cfg|=0x07 then |=0x4000 (RX enable), enable
+#   grp6 / disable grp5, state:=8; else spurious -> error bit6 0x5006BDA4.
+#   Both passes ack GxICR 0x34000168 inside an IE-off bracket and restore
+#   EXTMD to 11b
+    add     -0xc, sp
+    movbu   (0x5006be92), d0
+    cmp     0, d0
+    bne     0x484ac642
+    movhu   (0x34000280), d0
+    and     0xff3f, d0
+    or      0x80, d0
+    movhu   d0, (0x34000280)
+    mov     1, d0
+    movbu   d0, (0x5006be92)
+    bset    0x01, (0x5006bda2)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    jmp     0x484ac705
+    clr     d0
+    movbu   d0, (0x5006bdaa)
+    movbu   (0x5006bda1), d0
+    cmp     0, d0
+    bne     0x484ac6c2
+    bset    0x01, (0x36008024)
+    bclr    0x01, (0x36008064)
+    movhu   (0x34000800), d0
+    or      0x07, d0
+    movhu   d0, (0x34000800)
+    mov     6, d0
+    call    LibIntcEnable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x34000800), d0
+    or      0x4000, d0
+    movhu   d0, (0x34000800)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     8, d0
+    movbu   d0, (0x5006bda0)
+    bset    0x01, (0x5006bda2)
+    bra     0x484ac6ef
+    bset    0x40, (0x5006bda4)
+    bclr    0x02, (0x5006bda2)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    movhu   (0x34000280), d0
+    or      0xc0, d0
+    movhu   d0, (0x34000280)
+    clr     d0
+    movbu   d0, (0x5006be92)
+    movhu   (0x34000168), d0
+    ret     0, 0xc
 # PanelTxDoneIsr  (CPU 0x484ac70e)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac70e, 0x0ac74a
+#   INTC group 0x11 (sync-transfer complete, TX side): dispatch the link
+#   state via PanelXferStateTable 0x48613034[0x5006BDA0], ack 0x34000144
+    add     -8, sp
+    movbu   (0x5006bda0), d0
+    asl2    d0
+    mov     0x48613034, a0
+    mov     (d0, a0), a0
+    calls   (a0)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000144), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000144)
+    or      0x0800, psw
+    nop
+    nop
+    movhu   (0x34000144), d0
+    ret     0, 8
 # PanelRxIsr  (CPU 0x484ac74a)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac74a, 0x0ac799
+#   INTC group 0x10 (RX byte ready): SIO0 status 0x3400080C error bits0-2
+#   -> flag 0x50150A38, dispatch the same state table, ack 0x34000140
+    add     -8, sp
+    movhu   (0x3400080c), d0
+    btst    0x07, d0
+    beq     0x484ac760
+    mov     1, d0
+    movbu   d0, (0x50150a38)
+    movbu   (0x5006bda0), d0
+    asl2    d0
+    mov     0x48613034, a0
+    mov     (d0, a0), a0
+    calls   (a0)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000140), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000140)
+    or      0x0800, psw
+    nop
+    nop
+    movhu   (0x34000140), d0
+    ret     0, 8
 # PanelTxState1  (CPU 0x484ac799)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac799, 0x0ac84d
+#   TX state 1 (line sync): board strobes, presence GPIO 0x36008084 bit0
+#   -- if LOW abort the transaction (state:=0, error bit2 of 0x5006BDA4,
+#   disable grp5/6); else dwell 0x3C, direction TX + start, sync 0x00,
+#   state:=2. (This presence test was the silent killer of the MAME HLE
+#   bring-up until GPIO 0x36008084 bit0 was mapped high)
+    add     -0xc, sp
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008025)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484ac7bb
+    bclr    0x40, (0x36008004)
+    mov     0x3c, d0
+    movbu   d0, (0x34001010)
+    mov     4, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    movhu   (0x34000800), d0
+    or      0x8000, d0
+    movhu   d0, (0x34000800)
+    clr     d0
+    movbu   d0, (0x34000808)
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    btst    0x01, (0x36008084)
+    bne     0x484ac84a
+    clr     d0
+    movbu   d0, (0x5006bda1)
+    movbu   d0, (0x5006bda0)
+    bset    0x02, (0x5006bda4)
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    mov     0x3c, d0
+    movbu   d0, (0x34001010)
+    bclr    0x02, (0x5006bda2)
+    ret     0, 0xc
 # PanelTxState2  (CPU 0x484ac84d)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac84d, 0x0ac923
+#   TX state 2 (payload 1 = CMD): ack pending ATN (GxICR 0x34000168),
+#   enable grp5, transmit ring[rd++] from 0x5006BE14; reply-length
+#   classify: (b&0x3F)>=0x30 -> countdown 0x5006BDA1:=(b&0xF)+3, else 2;
+#   state:=3. No CONFIG bit15 write: in the interrupt-driven protocol
+#   every DATA write clocks one transfer (bit15 is only the boot's
+#   polled-path start/busy flag)
+    add     -0xc, sp
+    mov     0xa, d0
+    movbu   d0, (0x34001010)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484ac869
+    bset    0x40, (0x36008004)
+    bclr    0x01, (0x36008024)
+    bclr    0x01, (0x36008025)
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    movhu   (0x5006be10), d0
+    mov     0x5006be14, a0
+    movbu   (d0, a0), d1
+    movbu   d1, (0x34000808)
+    movhu   (0x5006be10), d0
+    inc     d0
+    movhu   d0, (0x5006be10)
+    movhu   (0x5006be10), d0
+    cmp     0x3c, d0
+    blt     0x484ac8f6
+    clr     d0
+    movhu   d0, (0x5006be10)
+    mov     2, d0
+    movbu   d0, (0x5006bda1)
+    extbu   d1
+    and     0x3f, d1
+    extbu   d1
+    cmp     0x30, d1
+    blt     0x484ac913
+    and     0x0f, d1
+    extbu   d1
+    add     3, d1
+    movbu   d1, (0x5006bda1)
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    ret     0, 0xc
 # PanelTxState3  (CPU 0x484ac923)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac923, 0x0ac98c
+#   TX state 3: interleaved line sync 0x00, state:=4
+    add     -0xc, sp
+    call    func_484AC06E, 0, 8
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484ac93c
+    bclr    0x40, (0x36008004)
+    mov     0x3c, d0
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    movbu   d0, (0x34001010)
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    clr     d0
+    movbu   d0, (0x34000808)
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    ret     0, 0xc
 # PanelTxState4  (CPU 0x484ac98c)
-.incbin_range "baserom/kn7000_program.rom", 0x0ac98c, 0x0aca5e
+#   TX state 4 (payload 2 = ARG): transmit ring[rd++], state:=5
+    add     -0xc, sp
+    mov     0xa, d0
+    movbu   d0, (0x34001010)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484ac9a8
+    bset    0x40, (0x36008004)
+    bclr    0x01, (0x36008024)
+    bclr    0x01, (0x36008025)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x5006be10), d0
+    mov     0x5006be14, a0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x34000808)
+    movhu   (0x5006be10), d0
+    inc     d0
+    movhu   d0, (0x5006be10)
+    movhu   (0x5006be10), d0
+    cmp     0x3c, d0
+    blt     0x484aca22
+    clr     d0
+    movhu   d0, (0x5006be10)
+    movbu   (0x5006bda1), d0
+    add     -1, d0
+    movbu   d0, (0x5006bda1)
+    movbu   (0x5006bda1), d0
+    cmp     1, d0
+    beq     0x484aca4e
+    cmp     0, d0
+    beq     0x484aca4e
+    movbu   (0x5006bda0), d0
+    add     -1, d0
+    movbu   d0, (0x5006bda0)
+    bra     0x484aca5b
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    ret     0, 0xc
 # PanelTxState5  (CPU 0x484aca5e)
-.incbin_range "baserom/kn7000_program.rom", 0x0aca5e, 0x0acaff
+#   TX state 5 (line sync): strobes + dwell 0x3C, sync 0x00, re-arm the
+#   ATN path (enable grp4+grp5, disable grp6), direction TX, sync again,
+#   state:=6
+    add     -0xc, sp
+    call    func_484AC06E, 0, 8
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484aca77
+    bclr    0x40, (0x36008004)
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    mov     0x3c, d0
+    movbu   d0, (0x34001010)
+    clr     d0
+    movbu   d0, (0x34000808)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    clr     d0
+    movbu   d0, (0x34000808)
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    ret     0, 0xc
 # PanelTxState6  (CPU 0x484acaff)
-.incbin_range "baserom/kn7000_program.rom", 0x0acaff, 0x0acc13
+#   TX state 6 (frame end): if >=2 more bytes queued in the TX ring ->
+#   state:=1 and kick the next 7-byte frame inline (strobes, dwell 0x78,
+#   direction TX, sync, TX-busy set); else final -- re-arm ATN (grp4),
+#   disable grp5/6, dwell 0x3C, TX-busy bit2 clear, state stays 0
+    movm    [d2], (sp)
+    add     -0xc, sp
+    clr     d0
+    movbu   d0, (0x5006bda1)
+    movbu   d0, (0x5006bda0)
+    movhu   (0x5006be12), d2
+    movhu   (0x5006be10), d1
+    mov     0x3c, d0
+    add     d2, d0
+    sub     d1, d0
+    cmp     d1, d2
+    blt     0x484acb28
+    mov     d2, d0
+    sub     d1, d0
+    exthu   d0
+    cmp     2, d0
+    blt     0x484acba1
+    mov     1, d0
+    movbu   d0, (0x5006bda0)
+    bset    0x01, (0x36008024)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484acb4d
+    bset    0x40, (0x36008004)
+    mov     0x78, d0
+    bclr    0x01, (0x36008004)
+    bset    0x01, (0x36008064)
+    movbu   d0, (0x34001010)
+    mov     4, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    clr     d0
+    movbu   d0, (0x34000808)
+    bset    0x02, (0x5006bda2)
+    bra     0x484acc10
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484acbc7
+    bclr    0x40, (0x36008004)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    mov     0x3c, d0
+    movbu   d0, (0x34001010)
+    bclr    0x02, (0x5006bda2)
+    ret     [d2], 0x10
 # PanelRxState8  (CPU 0x484acc13)
-.incbin_range "baserom/kn7000_program.rom", 0x0acc13, 0x0adb59
-# PanelButtonDispatch  (CPU 0x484adb59)
-.incbin_range "baserom/kn7000_program.rom", 0x0adb59, 0x0b1707
+#   RX state 8 (first reply byte): direction RX (cfg|=0x07), ack+enable
+#   grp4/6 inside the IE-off bracket, read RXD 0x34000809 into the RX
+#   ring 0x5006BDB4[head 0x5006BDB2] (ring-gap < 3 -> overrun bit1 of
+#   0x5006BDA4, head not advanced), reply countdown 0x5006BDA1 := 2, or
+#   (b&0xF)+3 for a length-extended reply ((b&0x3F)>=0x30); state:=9
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    movhu   (0x34000800), d0
+    or      0x07, d0
+    movhu   d0, (0x34000800)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcEnable, [d2], 4
+    movbu   (0x34000809), d3
+    movhu   (0x5006bdb2), d0
+    mov     0x5006bdb4, a0
+    movbu   d3, (d0, a0)
+    movhu   (0x5006bdb2), d2
+    movhu   (0x5006bdb0), d1
+    mov     d1, d0
+    sub     d2, d0
+    cmp     d1, d2
+    blt     0x484acc9b
+    mov     d2, d0
+    sub     d1, d0
+    mov     d0, d1
+    mov     0x5c, d0
+    sub     d1, d0
+    exthu   d0
+    cmp     3, d0
+    bge     0x484acca9
+    bset    0x01, (0x5006bda4)
+    bra     0x484accc8
+    inc     d2
+    movhu   d2, (0x5006bdb2)
+    movhu   (0x5006bdb2), d0
+    bclr    0x01, (0x5006bda4)
+    cmp     0x5c, d0
+    blt     0x484accc8
+    clr     d0
+    movhu   d0, (0x5006bdb2)
+    mov     2, d0
+    movbu   d0, (0x5006bda1)
+    extbu   d3
+    and     0x3f, d3
+    extbu   d3
+    cmp     0x30, d3
+    blt     0x484acce6
+    mov     0xf, d0
+    and     d3, d0
+    extbu   d0
+    add     3, d0
+    movbu   d0, (0x5006bda1)
+    movbu   (0x5006bda0), d0
+    inc     d0
+    movbu   d0, (0x5006bda0)
+    ret     [d2,d3], 0x14
+# PanelRxState9  (CPU 0x484accf6)
+#   RX state 9 (rest of the reply): store RXD -> ring (unless overrun),
+#   countdown--; at 1 the transaction completes -- state:=0, overrun flag
+#   clear, strobes, direction TX, ack ATN, enable grp4/6, disable grp5,
+#   RX enable off (cfg&=0xBFFF); otherwise stay in RX for the next byte
+    add     -0xc, sp
+    movhu   (0x5006bdb2), d0
+    movbu   (0x34000809), d1
+    mov     0x5006bdb4, a0
+    movbu   d1, (d0, a0)
+    btst    0x01, (0x5006bda4)
+    bne     0x484acd34
+    movhu   (0x5006bdb2), d0
+    inc     d0
+    movhu   d0, (0x5006bdb2)
+    movhu   (0x5006bdb2), d0
+    cmp     0x5c, d0
+    blt     0x484acd34
+    clr     d0
+    movhu   d0, (0x5006bdb2)
+    movbu   (0x5006bda1), d0
+    add     -1, d0
+    movbu   d0, (0x5006bda1)
+    movbu   (0x5006bda1), d0
+    cmp     1, d0
+    beq     0x484acd4f
+    jmp     0x484acdd7
+    clr     d0
+    movbu   d0, (0x5006bda1)
+    bclr    0x01, (0x5006bda2)
+    movbu   d0, (0x5006bda0)
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcEnable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    movhu   (0x34000800), d0
+    and     0xbfff, d0
+    movhu   d0, (0x34000800)
+    bra     0x484ace35
+    bclr    0x01, (0x36008064)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    movhu   (0x34000800), d0
+    or      0x07, d0
+    movhu   d0, (0x34000800)
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    mov     6, d0
+    call    LibIntcEnable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    ret     0, 0xc
+# PanelXferIdleState  (CPU 0x484ace38)
+#   state-table slots 0/7/10: a transfer completed while idle -> error
+#   bit7 of 0x5006BDA4
+    bset    0x80, (0x5006bda4)
+    retf    0, 0
+# PanelLinkRxRearm  (CPU 0x484ace42)
+#   reset the link to ATN-armed idle: flag bit3 clear, status bit4 set,
+#   RX enable off, disable grp5/6, ack GxICR 0x34000168, enable grp4
+#   (no static caller in either code region -- runtime-dispatched)
+    add     -0xc, sp
+    bclr    0x03, (0x5006bda2)
+    bset    0x04, (0x5006bda4)
+    movhu   (0x34000800), d0
+    and     0xbfff, d0
+    movhu   d0, (0x34000800)
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcDisable, [d2], 4
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x34000168), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x34000168)
+    or      0x0800, psw
+    nop
+    nop
+    mov     4, d0
+    call    LibIntcEnable, [d2], 4
+    ret     0, 0xc
+# PanelTxPump  (CPU 0x484acea0)
+#   periodic TX flush (from panel service method 0x484ABB98): a 2-bit
+#   phase counter in 0x5006BDA2 bits6-7 advances 0x40/call; on wrap runs
+#   PanelStatusPoll + 0x484ABAE6, otherwise PanelTxFifoToRing; then if
+#   the link is free (presence high, flags idle) and the ring holds >=2
+#   bytes, re-kicks the TX state machine inline (same sequence as
+#   PanelTxKick); busy 0x14 consecutive calls -> error bit7 0x5006BDA4
+    movm    [d2], (sp)
+    add     -0xc, sp
+# PanelTxPump_entry:   (register-save `call` entry)
+    movbu   (0x5006bda2), d1
+    mov     0xc0, d2
+    mov     d1, d0
+    and     d2, d0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484aced4
+    add     0x40, d1
+    movbu   d1, (0x5006bda2)
+    cmp     d2, d0
+    bne     0x484acecd
+    call    PanelStatusPoll_entry, 0, 0x10
+    call    func_484ABAE6, 0, 0xc
+    bra     0x484aced9
+    call    PanelTxFifoToRing_entry, [d2,a2], 0x10
+    bra     0x484aced9
+    call    PanelTxFifoToRing_entry, [d2,a2], 0x10
+    call    0x4c03dcfa, 0, 0x10
+    btst    0x01, (0x36008084)
+    bne     0x484aceec
+    jmp     0x484acfbc
+    movbu   (0x5006bda2), d0
+    btst    0x02, d0
+    beq     0x484acefa
+    jmp     0x484acfbc
+    btst    0x01, d0
+    beq     0x484acf02
+    jmp     0x484acfbc
+    movhu   (0x5006be12), d2
+    movhu   (0x5006be10), d1
+    mov     0x3c, d0
+    add     d2, d0
+    sub     d1, d0
+    cmp     d1, d2
+    blt     0x484acf19
+    mov     d2, d0
+    sub     d1, d0
+    exthu   d0
+    cmp     2, d0
+    bge     0x484acf21
+    jmp     0x484acfda
+    mov     4, d0
+    call    LibIntcDisable, [d2], 4
+    bset    0x02, (0x5006bda2)
+    mov     1, d0
+    movbu   d0, (0x5006bda0)
+    mov     0x78, d0
+    movbu   d0, (0x34001010)
+    bset    0x01, (0x36008024)
+    bset    0x01, (0x36008025)
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x484acf60
+    bset    0x40, (0x36008004)
+    bclr    0x01, (0x36008004)
+    bset    0x01, (0x36008064)
+    movhu   (0x34000800), d0
+    and     0xbfff, d0
+    movhu   d0, (0x34000800)
+    movhu   (0x34000800), d0
+    and     0xfff8, d0
+    or      0x04, d0
+    movhu   d0, (0x34000800)
+    mov     6, d0
+    call    LibIntcDisable, [d2], 4
+    mov     5, d0
+    call    LibIntcEnable, [d2], 4
+    movhu   (0x34000800), d0
+    or      0x8000, d0
+    movhu   d0, (0x34000800)
+    clr     d0
+    movbu   d0, (0x34000808)
+    bra     0x484acfda
+    movbu   (0x5006bdaa), d0
+    inc     d0
+    movbu   d0, (0x5006bdaa)
+    movbu   (0x5006bdaa), d0
+    cmp     0x14, d0
+    blt     0x484acfda
+    bset    0x80, (0x5006bda4)
+    call    0x4c03d6bc, 0, 0
+    ret     [d2], 0x10
+# PanelLedMirrorResetA  (CPU 0x484acfe4)
+#   clear the LED bank-A last-sent mirror 0x50150A5C..0x50150A6D so the
+#   diff-flush task retransmits every LED register
+    mov     0x50150a5c, a0
+    setlb
+    clr     d0
+    movbu   d0, (a0)
+    inc     a0
+    cmp     0x50150a6e, a0
+    lls
+    retf    0, 0
+# PanelHeaderValidate  (CPU 0x484acff9)
+#   switch-report framing rule: header bits7:6 must be 00 or 11 (2 wire
+#   banks) -> 0 ok, else -1
+    mov     0xc0, d1
+    extbu   d0
+    and     d1, d0
+    beq     0x484ad004
+    cmp     d1, d0
+    bne     0x484ad007
+    clr     d0
+    bra     0x484ad009
+    mov     -1, d0
+    retf    0, 0
+# PanelErrorRecovery  (CPU 0x484ad00c)
+#   error-nibble state machine on 0x5006BE91: hi-nibble countdown -> on 0
+#   full link reset (FIFOs, rings, flags, 0x484ABD54/0x484ABD73) + error
+#   code 0x0A; else lo-nibble countdown -> on 0 PanelLedMirrorResetA
+    movm    [d2,d3], (sp)
+    add     -8, sp
+# PanelErrorRecovery_entry:   (register-save `call` entry)
+    btst    0xf0, (0x5006be91)
+    bne     0x484ad01d
+    jmp     0x484ad0af
+    movbu   (0x5006be91), d0
+    movbu   (0x5006be91), d2
+    lsr     4, d0
+    and     0x0f, d0
+    mov     1, d3
+    sub     d3, d0
+    extbu   d0
+    and     0x0f, d0
+    asl     4, d0
+    mov     d0, d1
+    and     0xffffff0f, d2
+    or      d2, d1
+    movbu   d1, (0x5006be91)
+    mov     d1, d0
+    extbu   d0
+    btst    0xf0, d0
+    bne     0x484ad0af
+    call    PanelEventFifoInit, 0, 0
+    call    PanelTxFifoInit, 0, 0
+    call    0x4c03dcfa, 0, 0x10
+    clr     d0
+    movbu   d0, (0x5006bda1)
+    bclr    0x03, (0x5006bda2)
+    movhu   d0, (0x5006be10)
+    movhu   d0, (0x5006be12)
+    movhu   d0, (0x5006bdb0)
+    movhu   d0, (0x5006bdb2)
+    call    0x4c03d6bc, 0, 0
+    call    func_484ABD54, 0, 0x10
+    call    func_484ABD73, 0, 0x10
+    movbu   (0x5006be91), d0
+    and     0xfffffff0, d0
+    or      0x0a, d0
+    movbu   d0, (0x5006be91)
+    bra     0x484ad0ea
+    btst    0x0f, (0x5006be91)
+    beq     0x484ad0ea
+    movbu   (0x5006be91), d0
+    movbu   (0x5006be91), d2
+    and     0x0f, d0
+    mov     1, d1
+    sub     d1, d0
+    mov     d0, d1
+    extbu   d1
+    and     0x0f, d1
+    and     0xfffffff0, d2
+    or      d2, d1
+    movbu   d1, (0x5006be91)
+    mov     d1, d0
+    extbu   d0
+    btst    0x0f, d0
+    bne     0x484ad0ea
+    call    PanelLedMirrorResetA, 0, 0
+    ret     [d2,d3], 0x10
+# PanelRxDecodeExpect  (CPU 0x484ad0ed)
+#   run PanelFrameDecode with flag bit4 of 0x5006BDA2 SET (a reply is
+#   expected; used between PanelStatusPoll commands)
+    add     -8, sp
+# PanelRxDecodeExpect_entry:   (register-save `call` entry)
+    bset    0x04, (0x5006bda2)
+    call    PanelFrameDecode_entry, [d2,d3,a2,a3], 0x24
+    ret     0, 8
+# PanelRxDecodeQuiet  (CPU 0x484ad0ff)
+#   run PanelFrameDecode with flag bit4 CLEAR (idle drain; service
+#   method 0x484ABB8D)
+    add     -8, sp
+# PanelRxDecodeQuiet_entry:   (register-save `call` entry)
+    bclr    0x04, (0x5006bda2)
+    call    PanelFrameDecode_entry, [d2,d3,a2,a3], 0x24
+    ret     0, 8
+# PanelFrameDecode  (CPU 0x484ad111)
+#   THE switch-report frame decoder (loop head 0x484AD11C). Per frame:
+#   backpressure gate (stop while 0 <= PanelEventFifoFree < 4), need >=2
+#   RX-ring bytes, validate the header byte (= the first data byte;
+#   PanelHeaderValidate fail -> error nibble 0x10 in 0x5006BE91), then
+#   type=(b&0x38)>>3: 0/1 momentary [ADDR,DATA] -> XOR edge-detect vs
+#   shadow tables 0x5006BE50 (bank 00) / 0x5006BE80 (bank 11), enqueue
+#   [ADDR,DATA,CHANGED] into the cooked FIFO + latch 0x5006BDA6/7/8;
+#   2 -> PanelCtrlDispatch (latched controls; event enqueued only on
+#   change); 3/4/5 -> skip 2 bytes, sync flag bit3 of 0x5006BDA4;
+#   6/7 -> length-checked batch of control updates
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# PanelFrameDecode_entry:   (register-save `call` entry)
+    mov     0x5006bdb4, a3
+    call    PanelEventFifoFree_entry, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    blt     0x484ad133
+    call    PanelEventFifoFree_entry, 0, 0xc
+    exth    d0
+    cmp     4, d0
+    bge     0x484ad133
+    ret     [d2,d3,a2,a3], 0x24
+    call    0x4c03dcfa, 0, 0x10
+    movhu   (0x5006bdb2), d1
+    movhu   (0x5006bdb0), d0
+    mov     0x5c, d2
+    add     d1, d2
+    mov     d2, d3
+    sub     d0, d3
+    cmp     d0, d1
+    blt     0x484ad152
+    mov     d1, d3
+    sub     d0, d3
+    call    0x4c03d6bc, 0, 0
+    exthu   d3
+    cmp     2, d3
+    bge     0x484ad161
+    ret     [d2,d3,a2,a3], 0x24
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d2
+    extbu   d2
+    mov     d2, d0
+    call    PanelHeaderValidate, 0, 0
+    exth    d0
+    cmp     0, d0
+    beq     0x484ad18d
+    movbu   (0x5006be91), d0
+    and     0xffffff0f, d0
+    or      0x10, d0
+    movbu   d0, (0x5006be91)
+    ret     [d2,d3,a2,a3], 0x24
+    and     0x38, d2
+    asr     3, d2
+    beq     0x484ad1c6
+    cmp     1, d2
+    beq     0x484ad1c6
+    cmp     2, d2
+    bne     0x484ad1a0
+    jmp     0x484ad25f
+    cmp     3, d2
+    bne     0x484ad1a7
+    jmp     0x484ad2eb
+    cmp     4, d2
+    bne     0x484ad1ae
+    jmp     0x484ad2eb
+    cmp     5, d2
+    bne     0x484ad1b5
+    jmp     0x484ad2eb
+    cmp     6, d2
+    bne     0x484ad1bc
+    jmp     0x484ad331
+    cmp     7, d2
+    bne     0x484ad1c3
+    jmp     0x484ad331
+    jmp     0x484ad11c
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d2
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad1ec
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    extbu   d2
+    mov     d2, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    movbu   d2, (0x5006bda6)
+    movhu   (0x5006bdb0), d0
+    mov     d2, a2
+    movbu   (d0, a3), d3
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad221
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    mov     d3, d2
+    extbu   d2
+    mov     d2, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    movbu   d3, (0x5006bda7)
+    mov     0x5006be50, a0
+    mov     a2, d0
+    and     0xc0, d0
+    beq     0x484ad242
+    mov     0x5006be80, a0
+    mov     a2, d0
+    and     0x0f, d0
+    add     d0, a0
+    movbu   (a0), d0
+    movbu   d3, (a0)
+    xor     d0, d2
+    mov     d2, d0
+    extbu   d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    movbu   d2, (0x5006bda8)
+    jmp     0x484ad11c
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d3
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad285
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d1
+    movhu   (0x5006bdb0), d0
+    inc     d1
+    movbu   d3, (0x5006bda6)
+    movbu   (d0, a3), d0
+    movhu   d1, (0x5006bdb0)
+    movhu   (0x5006bdb0), d1
+    cmp     0x5c, d1
+    blt     0x484ad2b1
+    clr     d1
+    movhu   d1, (0x5006bdb0)
+    movbu   d0, (0x5006bda7)
+    extbu   d3
+    extbu   d0
+    mov     d3, d1
+    call    PanelCtrlDispatch_entry, [d2,d3], 0x14
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     0xffff, d1
+    bne     0x484ad2cd
+    ret     [d2,d3,a2,a3], 0x24
+    movbu   d0, (0x5006bda8)
+    mov     d3, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    extbu   d2
+    mov     d2, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    mov     0xff, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    jmp     0x484ad11c
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad309
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad327
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    bset    0x08, (0x5006bda4)
+    jmp     0x484ad11c
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d2
+    mov     0xf, d0
+    extbu   d2
+    and     d2, d0
+    inc     d0
+    movbu   d0, (0x10, sp)
+    movbu   (0x10, sp), d1
+    mov     2, d0
+    add     d1, d0
+    cmp     d0, d3
+    bge     0x484ad34e
+    ret     [d2,d3,a2,a3], 0x24
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad36c
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d3
+    movhu   (0x5006bdb0), d0
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad392
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    and     0xc0, d2
+    extbu   d3
+    mov     0x1f, d0
+    and     d3, d0
+    extbu   d0
+    mov     d2, d3
+    or      d0, d3
+    movbu   (0x10, sp), d0
+    add     -1, d1
+    movbu   d1, (0x11, sp)
+    extbu   d0
+    cmp     0, d0
+    bne     0x484ad3ae
+    jmp     0x484ad11c
+    movhu   (0x5006bdb0), d0
+    movbu   (d0, a3), d1
+    movhu   (0x5006bdb0), d0
+    movbu   d1, (0x10, sp)
+    inc     d0
+    movhu   d0, (0x5006bdb0)
+    movhu   (0x5006bdb0), d0
+    cmp     0x5c, d0
+    blt     0x484ad3d7
+    clr     d0
+    movhu   d0, (0x5006bdb0)
+    extbu   d3
+    btst    0x10, d3
+    bne     0x484ad402
+    mov     0x5006be50, a0
+    btst    0xc0, d3
+    beq     0x484ad3ee
+    mov     0x5006be80, a0
+    movbu   (0x10, sp), d0
+    mov     0xf, d1
+    and     d3, d1
+    add     d1, a0
+    movbu   (a0), d1
+    xor     d1, d0
+    movbu   (0x10, sp), d1
+    movbu   d1, (a0)
+    bra     0x484ad41d
+    movbu   (0x10, sp), d0
+    mov     d3, d1
+    call    PanelCtrlDispatch_entry, [d2,d3], 0x14
+    mov     d0, d2
+    clr     d0
+    mov     d2, d1
+    exthu   d1
+    cmp     0xffff, d1
+    beq     0x484ad41d
+    movbu   d2, (0x10, sp)
+    mov     0xff, d0
+    mov     d0, d2
+    extbu   d2
+    cmp     0, d2
+    bne     0x484ad431
+    btst    0x10, d3
+    bne     0x484ad445
+    btst    0x04, (0x5006bda2)
+    bne     0x484ad445
+    mov     d3, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    movbu   (0x10, sp), d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    mov     d2, d0
+    call    PanelEventFifoPush_entry, 0, 0x10
+    movbu   (0x11, sp), d1
+    movbu   (0x11, sp), d0
+    inc     d3
+    add     -1, d0
+    movbu   d0, (0x11, sp)
+    extbu   d1
+    cmp     0, d1
+    beq     0x484ad459
+    jmp     0x484ad3ae
+    jmp     0x484ad11c
+    ret     [d2,d3,a2,a3], 0x24
+# PanelTxFifoToRing  (CPU 0x484ad45f)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad45f, 0x0ad516
+# PanelEventFifoPush  (CPU 0x484ad516)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad516, 0x0ad528
+# PanelTxFifoPush  (CPU 0x484ad528)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad528, 0x0ad53a
+# PanelEventFifoPop  (CPU 0x484ad53a)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad53a, 0x0ad54b
+# PanelTxFifoPop  (CPU 0x484ad54b)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad54b, 0x0ad55c
+# PanelEventFifoFree  (CPU 0x484ad55c)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad55c, 0x0ad56d
+# PanelTxFifoFree  (CPU 0x484ad56d)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad56d, 0x0ad57e
+# PanelEventFifoInit  (CPU 0x484ad57e)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad57e, 0x0ad596
+# PanelTxFifoInit  (CPU 0x484ad596)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad596, 0x0ad5ae
+# PanelFifoPushByte  (CPU 0x484ad5ae)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad5ae, 0x0ad5df
+# PanelFifoPopByte  (CPU 0x484ad5df)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad5df, 0x0ad60e
+# PanelFifoFreeCount  (CPU 0x484ad60e)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad60e, 0x0ad621
+# PanelCtrlLatchReset  (CPU 0x484ad621)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad621, 0x0ad65f
+# PanelCtrlValueGet  (CPU 0x484ad65f)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad65f, 0x0ad67b
+# PanelCtrlDispatch  (CPU 0x484ad67b)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad67b, 0x0ad6a0
+# PanelCtrlLatch07  (CPU 0x484ad6a0)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad6a0, 0x0ad6b0
+# PanelCtrlLatch00  (CPU 0x484ad6b0)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad6b0, 0x0ad6de
+# PanelCtrlLatch31  (CPU 0x484ad6de)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad6de, 0x0ad70f
+# PanelCtrlLatch33  (CPU 0x484ad70f)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad70f, 0x0ad740
+# PanelCtrlLatch30  (CPU 0x484ad740)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad740, 0x0ad772
+# PanelCtrlLatch32  (CPU 0x484ad772)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad772, 0x0ad7a7
+# PanelCtrlLatchDefault  (CPU 0x484ad7a7)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad7a7, 0x0ad7b0
+# PanelExtSwShadowInit  (CPU 0x484ad7b0)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad7b0, 0x0ad801
+# PanelPollTick  (CPU 0x484ad801)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad801, 0x0ad84d
+# PanelPollRun  (CPU 0x484ad84d)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad84d, 0x0ad87a
+# PanelSwEventHarvest  (CPU 0x484ad87a)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad87a, 0x0ad8aa
+# PanelSwEventAssemble  (CPU 0x484ad8aa)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad8aa, 0x0ad8e3
+# PanelGpioSwScan  (CPU 0x484ad8e3)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad8e3, 0x0ad9ab
+# PanelGpioSwEdge  (CPU 0x484ad9ab)
+.incbin_range "baserom/kn7000_program.rom", 0x0ad9ab, 0x0ada13
+# PanelPollHookNop  (CPU 0x484ada13)
+.incbin_range "baserom/kn7000_program.rom", 0x0ada13, 0x0ada16
+# PanelWireNormalize  (CPU 0x484ada16)
+.incbin_range "baserom/kn7000_program.rom", 0x0ada16, 0x0ada59
+# PanelSwEventPush  (CPU 0x484ada59)
+.incbin_range "baserom/kn7000_program.rom", 0x0ada59, 0x0ada9a
+# PanelSwEventPeek  (CPU 0x484ada9a)
+.incbin_range "baserom/kn7000_program.rom", 0x0ada9a, 0x0adac2
+# PanelSwEventReset  (CPU 0x484adac2)
+.incbin_range "baserom/kn7000_program.rom", 0x0adac2, 0x0adad5
+# PanelBtnMaskReset  (CPU 0x484adad5)
+.incbin_range "baserom/kn7000_program.rom", 0x0adad5, 0x0adb29
+# PanelSwEventDispatchAll  (CPU 0x484adb29)
+.incbin_range "baserom/kn7000_program.rom", 0x0adb29, 0x0adb54
+# PanelButtonDispatch  (CPU 0x484adb54)
+#   one switch-event record [normSeg,DATA,CHANGED] -> button events:
+#   normSeg >= 0x21 rejected; self-test mode (0x5006BFB2==1) routes to
+#   the panel-test grid handler 0x484A11E1 first; descriptor array =
+#   ButtonDescPtrTable[normSeg] (bank A 0x48614978 / B 0x486149FC by
+#   PanelModeFlagGet), then per 12-byte descriptor {evt u32, mask, shift,
+#   gate, arg, type} while CHANGED bits remain: bit match -> action by
+#   type 0/1 press event 0x10000000|evt (1 adds the key-click), 2 system
+#   event 0x16000000|evt, 3 rhythm-transport composite, 4 continuous
+#   value (DATA<<6); handled bits are cleared from CHANGED
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# PanelButtonDispatch_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     2, d0
+    add     d3, d0
+    mov     d0, (0x10, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    mov     d3, a0
+    movbu   d0, (0x14, sp)
+    movbu   (a0), d0
+    cmp     0x21, d0
+    bcs     0x484adb72
+    ret     [d2,d3,a2,a3], 0x28
+    movbu   (0x5006bfb2), d0
+    cmp     1, d0
+    bne     0x484adb85
+    mov     d3, a0
+    call    func_484A11E1, [a2], 0x10
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    bne     0x484adb9e
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     0x48614978, a0
+    asl2    d0
+    mov     (d0, a0), a2
+    bra     0x484adbab
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     0x486149fc, a0
+    asl2    d0
+    mov     (d0, a0), a2
+    movbu   (0x14, sp), d0
+    cmp     0, d0
+    bne     0x484adbb5
+    ret     [d2,d3,a2,a3], 0x28
+    mov     a2, a3
+    inc4    a3
+    mov     8, d2
+    add     a2, d2
+    mov     (a2), d0
+    cmp     -1, d0
+    bne     0x484adbc3
+    ret     [d2,d3,a2,a3], 0x28
+    mov     (0x10, sp), a0
+    movbu   (a3), d0
+    movbu   (a0), d1
+    and     d0, d1
+    beq     0x484adc23
+    mov     d2, a0
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     0x484adbe7
+    cmp     1, d0
+    beq     0x484adbf1
+    cmp     2, d0
+    beq     0x484adbfb
+    cmp     3, d0
+    beq     0x484adc05
+    cmp     4, d0
+    beq     0x484adc0f
+    bra     0x484adc17
+    mov     a2, a0
+    mov     d3, a1
+    call    PanelBtnActType0_entry, [d2,d3,a2,a3], 0x28
+    bra     0x484adc17
+    mov     a2, a0
+    mov     d3, a1
+    call    PanelBtnActType1_entry, [d2,d3,a2,a3], 0x24
+    bra     0x484adc17
+    mov     a2, a0
+    mov     d3, a1
+    call    PanelBtnActType2_entry, [d2,d3,a2,a3], 0x28
+    bra     0x484adc17
+    mov     a2, a0
+    mov     d3, a1
+    call    PanelBtnActType3_entry, [d2,d3,a2,a3], 0x3c
+    bra     0x484adc17
+    mov     a2, a0
+    mov     d3, a1
+    call    PanelBtnActType4_entry, [d2,d3,a2,a3], 0x20
+    movbu   (a3), d0
+    movbu   (0x14, sp), d1
+    not     d0
+    and     d0, d1
+    movbu   d1, (0x14, sp)
+    movbu   (0x14, sp), d0
+    add     0xc, a2
+    add     0xc, d2
+    add     0xc, a3
+    cmp     0, d0
+    bne     0x484adbbb
+    ret     [d2,d3,a2,a3], 0x28
+# PanelBtnEnableMaskGet  (CPU 0x484adc33)
+.incbin_range "baserom/kn7000_program.rom", 0x0adc33, 0x0adc9b
+# PanelBtnSuppressCheck  (CPU 0x484adc9b)
+.incbin_range "baserom/kn7000_program.rom", 0x0adc9b, 0x0adccd
+# PanelBtnActType0  (CPU 0x484adccd)
+.incbin_range "baserom/kn7000_program.rom", 0x0adccd, 0x0add16
+# PanelBtnActType1  (CPU 0x484add16)
+.incbin_range "baserom/kn7000_program.rom", 0x0add16, 0x0add81
+# PanelBtnActType2  (CPU 0x484add81)
+.incbin_range "baserom/kn7000_program.rom", 0x0add81, 0x0addca
+# PanelBtnActType4  (CPU 0x484addca)
+.incbin_range "baserom/kn7000_program.rom", 0x0addca, 0x0addff
+# PanelBtnActType3  (CPU 0x484addff)
+.incbin_range "baserom/kn7000_program.rom", 0x0addff, 0x0ae17d
+# PanelEventPost  (CPU 0x484ae17d)
+.incbin_range "baserom/kn7000_program.rom", 0x0ae17d, 0x0b1707
 # PanelLedGroupToReg  (CPU 0x484b1707)
 .incbin_range "baserom/kn7000_program.rom", 0x0b1707, 0x0b1e86
 # Midi1RxIsr  (CPU 0x484b1e86)

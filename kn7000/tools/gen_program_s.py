@@ -64,6 +64,18 @@ CONVERT = {
     "TechniChordBigBandBrass", "TechniChordBigBandReeds", "TechniChordOctave",
     "TechniChordHardRock", "TechniChordFanfare", "TechniChordOff",
     "TechniChordAugDimFold",
+    # Control-panel serial transport + frame decode + button dispatch
+    # (kn7000_manual.sym names; RE'd in kn7000_mame/notes/panel-serial-protocol.md
+    # -- the boot-handshake bring-up chain and the switch-report wire format)
+    "PanelTransaction", "PanelSignOnRequest", "PanelInitHookNop",
+    "PanelStatusPoll", "PanelWaitLinkIdle", "PanelTxKick",
+    "PanelAtnIsr", "PanelTxDoneIsr", "PanelRxIsr",
+    "PanelTxState1", "PanelTxState2", "PanelTxState3", "PanelTxState4",
+    "PanelTxState5", "PanelTxState6", "PanelRxState8", "PanelRxState9",
+    "PanelXferIdleState", "PanelLinkRxRearm", "PanelTxPump",
+    "PanelLedMirrorResetA", "PanelHeaderValidate", "PanelErrorRecovery",
+    "PanelRxDecodeExpect", "PanelRxDecodeQuiet", "PanelFrameDecode",
+    "PanelButtonDispatch",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -158,6 +170,159 @@ FUNC_DOC = {
         "chord). Makes enharmonically identical aug/dim chords share one set",
         "of matrix columns in the 7 matrix voicing styles",
     ],
+    # ---- control-panel serial protocol (notes/panel-serial-protocol.md) ----
+    "PanelTransaction": [
+        "boot ping transaction: PanelTxKick(0x20,00) pings CPL, then (0xE0,00)",
+        "pings CPR, each bracketed by wait-idle + ring reset; an RX-ring head",
+        "move (0x5006BDB2 != 0) marks the board as answered in result nibble",
+        "0x5006BDA5 (bit0 CPL, bit3 CPR). Caller 0x484ABBB5 retries 10x for 9",
+    ],
+    "PanelSignOnRequest": [
+        "boot sign-on/ID sequence: commands 0x29,00 / 0xEA,00 / 0x20,10 /",
+        "0xE3,10 with tick waits, then PanelRxDecodeQuiet parses the replies;",
+        "the sign-on bytes land in the wire shadow tables that PanelTypeDetect",
+        "(0x484AC19F) reads to identify the panel hardware type",
+    ],
+    "PanelInitHookNop": [
+        "retf-only init step (boot init 0x484ABB47 calls it last)",
+    ],
+    "PanelStatusPoll": [
+        "runtime poll: commands 0x29,00 / 0xEB,00 / 0x20,10 / 0xE6,10, each",
+        "followed by PanelRxDecodeExpect; run by PanelTxPump every 4th flush",
+        "and by service method 0x484ABBA5",
+    ],
+    "PanelWaitLinkIdle": [
+        "wait for the link to go idle: presence GPIO 0x36008084 bit0 high,",
+        "flags 0x5006BDA2 bits1-2 clear, TX ring drained (rd==wr); 200 retries",
+        "of PanelBusyWait3000, timeout sets error bit7 of status 0x5006BDA4",
+    ],
+    "PanelTxKick": [
+        "start a command transaction: [cmd,arg] -> TX ring slots 0x5006BE14/15",
+        "(rd:=0, wr:=2), TX-busy bit2 set / overrun bit1 clear, state:=1, dwell",
+        "0x78 -> 0x34001010, board-select strobes (0x36008024/25 set, 0x36008004",
+        "bit6 mirrors PanelModeFlagGet, bit1 clear, 0x36008064 set), disable",
+        "INTC grp4(ATN)+grp6(RX) / enable grp5(TX-done), SIO0 direction TX",
+        "(cfg&0xFFF8|4), start (cfg|=0x8000) and send the first sync 0x00",
+    ],
+    "PanelAtnIsr": [
+        "INTC group 0x1A: the panel's 2-edge ATN pulse. Pass 1 (0x5006BE92==0):",
+        "EXTMD 0x34000280 bits7:6 11b->10b (arm the opposite edge), ATN flag",
+        "bit0 of 0x5006BDA2. Pass 2: if no reply pending (0x5006BDA1==0) turn",
+        "the link around to RX -- cfg|=0x07 then |=0x4000 (RX enable), enable",
+        "grp6 / disable grp5, state:=8; else spurious -> error bit6 0x5006BDA4.",
+        "Both passes ack GxICR 0x34000168 inside an IE-off bracket and restore",
+        "EXTMD to 11b",
+    ],
+    "PanelTxDoneIsr": [
+        "INTC group 0x11 (sync-transfer complete, TX side): dispatch the link",
+        "state via PanelXferStateTable 0x48613034[0x5006BDA0], ack 0x34000144",
+    ],
+    "PanelRxIsr": [
+        "INTC group 0x10 (RX byte ready): SIO0 status 0x3400080C error bits0-2",
+        "-> flag 0x50150A38, dispatch the same state table, ack 0x34000140",
+    ],
+    "PanelTxState1": [
+        "TX state 1 (line sync): board strobes, presence GPIO 0x36008084 bit0",
+        "-- if LOW abort the transaction (state:=0, error bit2 of 0x5006BDA4,",
+        "disable grp5/6); else dwell 0x3C, direction TX + start, sync 0x00,",
+        "state:=2. (This presence test was the silent killer of the MAME HLE",
+        "bring-up until GPIO 0x36008084 bit0 was mapped high)",
+    ],
+    "PanelTxState2": [
+        "TX state 2 (payload 1 = CMD): ack pending ATN (GxICR 0x34000168),",
+        "enable grp5, transmit ring[rd++] from 0x5006BE14; reply-length",
+        "classify: (b&0x3F)>=0x30 -> countdown 0x5006BDA1:=(b&0xF)+3, else 2;",
+        "state:=3. No CONFIG bit15 write: in the interrupt-driven protocol",
+        "every DATA write clocks one transfer (bit15 is only the boot's",
+        "polled-path start/busy flag)",
+    ],
+    "PanelTxState3": ["TX state 3: interleaved line sync 0x00, state:=4"],
+    "PanelTxState4": ["TX state 4 (payload 2 = ARG): transmit ring[rd++], state:=5"],
+    "PanelTxState5": [
+        "TX state 5 (line sync): strobes + dwell 0x3C, sync 0x00, re-arm the",
+        "ATN path (enable grp4+grp5, disable grp6), direction TX, sync again,",
+        "state:=6",
+    ],
+    "PanelTxState6": [
+        "TX state 6 (frame end): if >=2 more bytes queued in the TX ring ->",
+        "state:=1 and kick the next 7-byte frame inline (strobes, dwell 0x78,",
+        "direction TX, sync, TX-busy set); else final -- re-arm ATN (grp4),",
+        "disable grp5/6, dwell 0x3C, TX-busy bit2 clear, state stays 0",
+    ],
+    "PanelRxState8": [
+        "RX state 8 (first reply byte): direction RX (cfg|=0x07), ack+enable",
+        "grp4/6 inside the IE-off bracket, read RXD 0x34000809 into the RX",
+        "ring 0x5006BDB4[head 0x5006BDB2] (ring-gap < 3 -> overrun bit1 of",
+        "0x5006BDA4, head not advanced), reply countdown 0x5006BDA1 := 2, or",
+        "(b&0xF)+3 for a length-extended reply ((b&0x3F)>=0x30); state:=9",
+    ],
+    "PanelRxState9": [
+        "RX state 9 (rest of the reply): store RXD -> ring (unless overrun),",
+        "countdown--; at 1 the transaction completes -- state:=0, overrun flag",
+        "clear, strobes, direction TX, ack ATN, enable grp4/6, disable grp5,",
+        "RX enable off (cfg&=0xBFFF); otherwise stay in RX for the next byte",
+    ],
+    "PanelXferIdleState": [
+        "state-table slots 0/7/10: a transfer completed while idle -> error",
+        "bit7 of 0x5006BDA4",
+    ],
+    "PanelLinkRxRearm": [
+        "reset the link to ATN-armed idle: flag bit3 clear, status bit4 set,",
+        "RX enable off, disable grp5/6, ack GxICR 0x34000168, enable grp4",
+        "(no static caller in either code region -- runtime-dispatched)",
+    ],
+    "PanelTxPump": [
+        "periodic TX flush (from panel service method 0x484ABB98): a 2-bit",
+        "phase counter in 0x5006BDA2 bits6-7 advances 0x40/call; on wrap runs",
+        "PanelStatusPoll + 0x484ABAE6, otherwise PanelTxFifoToRing; then if",
+        "the link is free (presence high, flags idle) and the ring holds >=2",
+        "bytes, re-kicks the TX state machine inline (same sequence as",
+        "PanelTxKick); busy 0x14 consecutive calls -> error bit7 0x5006BDA4",
+    ],
+    "PanelLedMirrorResetA": [
+        "clear the LED bank-A last-sent mirror 0x50150A5C..0x50150A6D so the",
+        "diff-flush task retransmits every LED register",
+    ],
+    "PanelHeaderValidate": [
+        "switch-report framing rule: header bits7:6 must be 00 or 11 (2 wire",
+        "banks) -> 0 ok, else -1",
+    ],
+    "PanelErrorRecovery": [
+        "error-nibble state machine on 0x5006BE91: hi-nibble countdown -> on 0",
+        "full link reset (FIFOs, rings, flags, 0x484ABD54/0x484ABD73) + error",
+        "code 0x0A; else lo-nibble countdown -> on 0 PanelLedMirrorResetA",
+    ],
+    "PanelRxDecodeExpect": [
+        "run PanelFrameDecode with flag bit4 of 0x5006BDA2 SET (a reply is",
+        "expected; used between PanelStatusPoll commands)",
+    ],
+    "PanelRxDecodeQuiet": [
+        "run PanelFrameDecode with flag bit4 CLEAR (idle drain; service",
+        "method 0x484ABB8D)",
+    ],
+    "PanelFrameDecode": [
+        "THE switch-report frame decoder (loop head 0x484AD11C). Per frame:",
+        "backpressure gate (stop while 0 <= PanelEventFifoFree < 4), need >=2",
+        "RX-ring bytes, validate the header byte (= the first data byte;",
+        "PanelHeaderValidate fail -> error nibble 0x10 in 0x5006BE91), then",
+        "type=(b&0x38)>>3: 0/1 momentary [ADDR,DATA] -> XOR edge-detect vs",
+        "shadow tables 0x5006BE50 (bank 00) / 0x5006BE80 (bank 11), enqueue",
+        "[ADDR,DATA,CHANGED] into the cooked FIFO + latch 0x5006BDA6/7/8;",
+        "2 -> PanelCtrlDispatch (latched controls; event enqueued only on",
+        "change); 3/4/5 -> skip 2 bytes, sync flag bit3 of 0x5006BDA4;",
+        "6/7 -> length-checked batch of control updates",
+    ],
+    "PanelButtonDispatch": [
+        "one switch-event record [normSeg,DATA,CHANGED] -> button events:",
+        "normSeg >= 0x21 rejected; self-test mode (0x5006BFB2==1) routes to",
+        "the panel-test grid handler 0x484A11E1 first; descriptor array =",
+        "ButtonDescPtrTable[normSeg] (bank A 0x48614978 / B 0x486149FC by",
+        "PanelModeFlagGet), then per 12-byte descriptor {evt u32, mask, shift,",
+        "gate, arg, type} while CHANGED bits remain: bit match -> action by",
+        "type 0/1 press event 0x10000000|evt (1 adds the key-click), 2 system",
+        "event 0x16000000|evt, 3 rhythm-transport composite, 4 continuous",
+        "value (DATA<<6); handled bits are cleared from CHANGED",
+    ],
 }
 
 INSN = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")
@@ -212,26 +377,40 @@ def discover_functions(d):
     return entries
 
 
-def disasm_function(off, end):
-    """Returns list of (file_off, bytes, mnem, ops) using unidasm; None on F4 gap."""
-    cpu = BASE + off
-    out = subprocess.run(
-        [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{cpu:x}",
-         "-skip", f"0x{off:x}", "-count", str(end - off)],
-        capture_output=True, text=True).stdout
+def disasm_function(d, off, end):
+    """Returns list of (file_off, bytes, mnem, ops) using unidasm; None on a
+    misaligned decode. unidasm's mn10300 has a LENGTH BUG on the F4 page (movbu
+    register-indexed, always 2 bytes): it prints the instruction correctly but
+    consumes only the 0xF4 byte, then re-decodes the postbyte as a phantom
+    instruction. When a bare-F4 line appears, take the true 2 bytes from the
+    ROM and restart unidasm past them (the byte-exact enc==b check in
+    emit_function still guards the result either way)."""
     insns = []
     cur = off
-    for line in out.splitlines():
-        m = INSN.match(line)
-        if not m:
-            continue
-        addr = int(m.group(1), 16) - BASE
-        b = bytes.fromhex(m.group(2).replace(" ", ""))
-        if addr != cur:          # misalignment (unidasm F4 length bug) -> bail
-            return None
-        insns.append((addr, b, m.group(3), m.group(4).strip()))
-        cur += len(b)
-        if cur >= end:
+    while cur < end:
+        out = subprocess.run(
+            [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{BASE + cur:x}",
+             "-skip", f"0x{cur:x}", "-count", str(end - cur)],
+            capture_output=True, text=True).stdout
+        restart = False
+        for line in out.splitlines():
+            m = INSN.match(line)
+            if not m:
+                continue
+            addr = int(m.group(1), 16) - BASE
+            b = bytes.fromhex(m.group(2).replace(" ", ""))
+            if addr != cur:      # misaligned decode -> bail, keep as .incbin
+                return None
+            if b == b"\xf4":     # F4 length bug: real op = F4 + postbyte
+                insns.append((addr, d[cur:cur + 2], m.group(3), m.group(4).strip()))
+                cur += 2
+                restart = True
+                break
+            insns.append((addr, b, m.group(3), m.group(4).strip()))
+            cur += len(b)
+            if cur >= end:
+                break
+        if not restart:
             break
     return insns if cur == end else None
 
@@ -257,7 +436,7 @@ def name_target(ops, names, used):
 
 def emit_function(d, off, end, name, names, used):
     """Returns asm source lines for a converted function (byte-exact)."""
-    insns = disasm_function(off, end)
+    insns = disasm_function(d, off, end)
     if insns is None:
         return None                       # contains an F4 gap; keep as .incbin
     lines = []

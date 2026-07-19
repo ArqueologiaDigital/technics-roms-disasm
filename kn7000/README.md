@@ -136,15 +136,25 @@ linear listing is regenerable and git-ignored.
 
 100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`
 is organised by the recovered functions** (kn7000.sym reflection names plus the
-kn7000_manual.sym hand-recovered names), and **84 functions are now converted
+kn7000_manual.sym hand-recovered names), and **111 functions are now converted
 to real, re-assemblable MN10300 assembly**: the task/event and display/object
-framework clusters (e.g. `SetVisible`, `DispatchEvent`) and the complete
+framework clusters (e.g. `SetVisible`, `DispatchEvent`), the complete
 **Techni-Chord harmony engine** (`TechniChordCompute`, the 14 per-style voicing
 routines, and their helpers — including the corrected style mapping: parameter
 `0x8081` uses a legacy order that the GUI translates through the 14-halfword
-table at `0x485EC940`, with `DUET 1` stored last). Call targets are resolved to
-labels so the source reads normally, and `kn7asm.py` assembles it back to the
-exact ROM bytes. Growing the `CONVERT` set in `tools/gen_program_s.py` and
+table at `0x485EC940`, with `DUET 1` stored last), and the complete
+**control-panel serial protocol** (`PanelTransaction`/`PanelTxKick`, the three
+ISRs `PanelAtnIsr`/`PanelTxDoneIsr`/`PanelRxIsr`, the 10-state transfer machine
+`PanelTxState1..6`/`PanelRxState8..9`, the switch-report frame decoder
+`PanelFrameDecode` and the button dispatcher `PanelButtonDispatch` — the chain
+whose reverse-engineering drove the MAME HLE bring-up in
+`kn7000_mame/notes/panel-serial-protocol.md`; the surrounding FIFO helpers and
+switch-event pipeline are named as boundaries in `kn7000_manual.sym`). Call
+targets are resolved to labels so the source reads normally, and `kn7asm.py`
+assembles it back to the exact ROM bytes. The converted set now contains **zero
+`.byte` escapes** outside the annotated boot header: the encoder gained the
+`and`/`or imm16, psw` forms, and the generator repairs unidasm's F4-page length
+bug (movbu register-indexed ops printed as one byte) from the ROM bytes. Growing the `CONVERT` set in `tools/gen_program_s.py` and
 running `make program-src` converts more; the remaining functions stay raw
 `.incbin_range` until then. The **display palette** (256-entry `0x00BBGGRR`
 CLUT at `0x32573C`) is lifted into typed `.long` source.
