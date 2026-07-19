@@ -10,8 +10,8 @@
 ;   3  probe    0x486BD6EF  DM@C000:77e PM@8400:46w   SDRAM POST self-test
 ;   4  kernel   0x486BD9A8  DM@9800:80e DM@9C40:20e DM@C000:77e DM@C302:152e PM@8000:258w PM@8300:64w PM@8400:7w PM@8D00:147w   resident SHARC kernel
 ;   5  effect   0x486BEBA9  PM@8400:6w   thru / effect-off stub
-;   6  effect   0x486BEBE5  DM@9800:1e DM@C000:77e PM@8400:82w   quadrature 2-tap modulated-delay chorus (wet-only)
-;   7  effect   0x486BEF87  DM@9800:2e DM@C000:77e PM@8400:91w   dual-rate-LFO quadrature modulated-delay chorus (wet-only)
+;   6  effect   0x486BEBE5  DM@9800:1e DM@C000:77e PM@8400:82w   quadrature 2-tap ensemble chorus (wet-only)
+;   7  effect   0x486BEF87  DM@9800:2e DM@C000:77e PM@8400:91w   dual-rate-LFO quadrature ensemble chorus (wet-only)
 ;   8  effect   0x486BF364  DM@9800:4e DM@C000:77e PM@8400:90w   comb+allpass reverb
 ;   9  effect   0x486BF745  DM@9800:2e DM@C000:77e PM@8400:85w   stereo modulated-delay flanger (0.70 float regen/channel)
 ;  10  effect   0x486BFAFE  DM@9800:2e DM@C000:77e PM@8400:106w   modulated-allpass phaser

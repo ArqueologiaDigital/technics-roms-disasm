@@ -19,6 +19,7 @@ whole effects program set was recovered from firmware.
 | `README.md` | yes | this file |
 | `records.tsv` | yes | hand-curated manifest: role + name + one-line note per record |
 | `reverb-algorithm.md` | yes | full algorithm annotation of the reverb engine (rec51–56 family) + the unit-9 records |
+| `chorus-family-algorithms.md` | yes | full algorithm annotation of the unit-9 chorus family: rec06 (quadrature ensemble), rec07 (dual-LFO ensemble), rec09 (stereo flanger) |
 | `sym/recNN.sym` | yes | hand-curated SHARC labels/comments per record (`pm:`/`dm:` addrs) |
 | `../disasm/dsp/*.asm` | yes | generated **and tracked** listings (index + one per record) |
 | `../build/dsp/*.bin` | no (git-ignored) | raw per-block extracts, regenerable |

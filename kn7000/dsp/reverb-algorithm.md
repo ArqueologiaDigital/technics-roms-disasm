@@ -254,6 +254,13 @@ rewrites the 0x9800 state block at select time (observed in the live upload
 captures), the templates are probably placeholders; the wrap/scale reading
 could also hide a 40-bit-shifter subtlety. Marked PROVISIONAL in the syms.
 
+These three records now have their own full annotation at the standard of
+this document — `chorus-family-algorithms.md` — with two corrections to the
+summaries above: rec09's LFO phase templates are **90°** apart (not 45°; the
+2^31 wrap makes `0x20000000` 4 of 16 table steps), and the kernel's MODE1
+write `0x3000` sets **ALUSAT** (not NESTM), so rec07's ±1.15 modulator sums
+saturate at ±1.0 and its tap swing stays ±64 samples.
+
 ## 7. Open question: the unit-number / GUI-role mapping
 
 The host whitelist table was previously read as "unit 0 = Enhancer (types

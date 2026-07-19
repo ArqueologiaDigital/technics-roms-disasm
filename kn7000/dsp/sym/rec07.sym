@@ -1,5 +1,6 @@
 ; rec07 — EFFECT: dual-rate-LFO quadrature modulated-delay chorus/ensemble (wet-only)
-; Full dataflow trace 2026-07-19 (see dsp/reverb-algorithm.md §6).
+; Full dataflow trace 2026-07-19; full algorithm doc dsp/chorus-family-algorithms.md §3
+; (see also dsp/reverb-algorithm.md §6).
 ; Same engine as rec06 (two fractional taps/channel, 250-sample centers,
 ; antiphase right channel, internal-DM I2 ring, no dry, NO audio feedback) plus
 ; a SECOND slow LFO: modA = sineB(phase) + 0.15*sineA, modB = sineB(phase+90deg)
@@ -13,9 +14,9 @@ dm:0x9801  eff07_lfoB_incr      ; 0x00800000 fast/main-LFO increment (template =
 dm:0xc004  eff07_lfoA_phase     ; slow-LFO phase accumulator (runtime state, template 0)
 dm:0xc005  eff07_crossmix       ; 0x13333333 (0.15) slow-LFO amount summed into BOTH modulators (not audio feedback)
 dm:0xc006  eff07_lfoB_phase     ; fast-LFO phase accumulator (runtime state)
-dm:0xc007  eff07_depth          ; 0x00400000 depth: tap swing +-73 samples (modulators reach +-1.15) about the 250-sample center
+dm:0xc007  eff07_depth          ; 0x00400000 depth: tap swing +-64 samples about the 250-sample center (the modulator SUM saturates at +-1.0 — kernel sets MODE1 ALUSAT @0x8074 — so the 1.15 peak is clipped, flattening the extremes, NOT extending the swing)
 dm:0xc008  eff07_wet            ; 0x7FFFFFFF wet level ((v1+v2)/2 then x2 makeup)
-dm:0xc029  eff07_sine_tab       ; 16-point sine cycle + guard half (same layout as rec06)
+dm:0xc029  eff07_sine_tab       ; 16-point sine cycle + guard half (same layout as rec06); occupies the host-swappable waveform slot c028..c040 (rec77 sine is bit-identical; rec78/79 = tri/square)
 pm:0x8400  eff07_entry          ; I0 = I1
 pm:0x8401  eff07_lfoA_acc       ; phase(c004) += incr(0x9800); FDEP 0:31 SE wrap
 pm:0x8404  eff07_lfoA_store     ; store phase; R8 = phase>>11; I5 -> c030 table center
@@ -30,14 +31,15 @@ pm:0x841f  eff07_save_i2        ; R15 = I2 (internal DM ring B2=0xC3A0 L2=0x1C60
 pm:0x8420  eff07_read_inL       ; R0 = DM(I4+0x20) input L
 pm:0x8422  eff07_wr_delayL      ; DM(I2,M7)=R0 write @P; M7=0xFA -> read base P+250 (5.7ms)
 pm:0x8423  eff07_depth_ld       ; R3 = c007 depth
-pm:0x8424  eff07_tap1L          ; L voice 1: fractional read @P+250+73*modA (int via M7, frac FDEP 15:16, linear interp)
-pm:0x842d  eff07_tap2L          ; L voice 2 @P+250+73*modB; R9 = voice 1
+pm:0x8424  eff07_tap1L          ; L voice 1: fractional read @P+250+64*modA (int via M7, frac FDEP 15:16, linear interp; modA ALUSAT-clipped to +-1)
+pm:0x842d  eff07_tap2L          ; L voice 2 @P+250+64*modB; R9 = voice 1
 pm:0x8437  eff07_mix_L          ; R8 = (v1+v2)/2, x wet(c008), x2 makeup
 pm:0x843b  eff07_clip_L         ; CLIP +-0x7FFFFF
 pm:0x843c  eff07_out_L          ; DM(I4,M2)=R8; I4+1
+pm:0x843d  eff07_read_inR       ; R0 = DM(I4+0x20) = in_R (I4 advanced by out_L)
 pm:0x843f  eff07_wr_delayR      ; (MODIFY(I2,0xF0) @8436 -> I2=P+490) write in_R; read base P+740
-pm:0x8441  eff07_tap1R          ; R voice 1 @P+740-73*modA (negated modulators = antiphase stereo)
-pm:0x844a  eff07_tap2R          ; R voice 2 @P+740-73*modB
+pm:0x8441  eff07_tap1R          ; R voice 1 @P+740-64*modA (negated modulators = antiphase stereo)
+pm:0x844a  eff07_tap2R          ; R voice 2 @P+740-64*modB
 pm:0x8452  eff07_mix_R          ; (v1+v2)/2, x wet, x2; I2 restored to P
 pm:0x8456  eff07_clip_R         ; CLIP +-0x7FFFFF
 pm:0x8457  eff07_out_R          ; DM(I4,M2)=R8; I4 += 2 total

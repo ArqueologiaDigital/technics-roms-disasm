@@ -27,7 +27,7 @@ pm:0x8034  VEC_SPT1I            ; SPORT1-transmit vector — RTI stub
 pm:0x8071  reset_init           ; BIT SET MODE2 0x18011 (IRQ0 edge + flag outs)
 pm:0x8072  reset_enable_irq0    ; BIT SET IMASK 0x100 (bit8 = IRQ0I)
 pm:0x8073  reset_clear_irq0     ; BIT CLEAR IRPTL 0x100
-pm:0x8074  reset_global_ien     ; BIT SET MODE1 0x3000 (IRPTEN + NESTM)
+pm:0x8074  reset_global_ien     ; BIT SET MODE1 0x3000 = IRPTEN (bit12) + ALUSAT (bit13, fixed-point ALU saturation — clips e.g. rec07's modulator sums at +-1.0); CORRECTED from "NESTM" (NESTM is bit11=0x800, not set)
 pm:0x8076  reset_idle           ; IDLE — wait for first IRQ0
 pm:0x8077  reset_call_init      ; CALL 0x8D00 — one-time boot init
 pm:0x8078  mainloop_arm         ; R13 = 0 : re-arm frame flag

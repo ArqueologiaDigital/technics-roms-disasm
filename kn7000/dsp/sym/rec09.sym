@@ -1,6 +1,9 @@
 ; rec09 — EFFECT: stereo modulated-delay FLANGER (0.7 float regeneration per channel)
-; Full dataflow trace 2026-07-19 (see dsp/reverb-algorithm.md §6).
-; Two independent sine LFOs (one per channel, template phases 45deg apart).
+; Full dataflow trace 2026-07-19; full algorithm doc dsp/chorus-family-algorithms.md §4
+; (see also dsp/reverb-algorithm.md §6).
+; Two independent sine LFOs (one per channel, template phases 90deg apart —
+; QUADRATURE; corrected from an earlier 45deg reading: 0x20000000 = 4 of the
+; 16 table steps under the 2^31 phase wrap).
 ; Per channel: input + 0.7*prev_tap (float) is written to the delay line as
 ; FLOAT BIT PATTERNS; one fractional tap at 300+-64 samples (6.8ms center) is
 ; read back with float linear interpolation; the tap is BOTH the output and the
@@ -17,14 +20,14 @@ dm:0x9801  eff09_lfo1_incr      ; 0x00800000 LFO1 increment
 dm:0xc002  eff09_fb_stateR      ; float feedback state R (previous R tap, via DM(I1-2))
 dm:0xc003  eff09_fb_stateL      ; float feedback state L (previous L tap, via DM(I1-1))
 dm:0xc004  eff09_lfo0_phase     ; LFO0 phase accumulator (runtime state, template 0) — modulates the RIGHT tap
-dm:0xc005  eff09_lfo1_phase     ; LFO1 phase accumulator (template 0x20000000 = +45deg) — modulates the LEFT tap
+dm:0xc005  eff09_lfo1_phase     ; LFO1 phase accumulator (template 0x20000000 = +90deg: 4/16 steps of the 2^31 cycle) — modulates the LEFT tap
 dm:0xc006  eff09_feedbackL      ; 0x3F333333 float +0.70 regeneration gain, L channel
 dm:0xc007  eff09_depth          ; 0x00400000 depth: tap swing +-64 samples about the 300-sample center
 dm:0xc008  eff09_frac_exp       ; 0xFFFFFFE1 (-31): FLOAT-BY exponent turning the Q31 frac into a [0,1) float
 dm:0xc009  eff09_wet            ; 0x40000000 fixed Q31 0.5 wet scale (x2 makeup -> net 1.0)
 dm:0xc00a  eff09_feedbackR      ; float +0.70 regeneration gain, R channel
 dm:0xc00b  eff09_frac_expR      ; -31 (R channel copy)
-dm:0xc029  eff09_sine_tab       ; 16-point sine cycle + guard half (same layout as rec06)
+dm:0xc029  eff09_sine_tab       ; 16-point sine cycle + guard half (same layout as rec06); occupies the host-swappable waveform slot c028..c040 (data records rec77/78/79 = sine/tri/square overwrite it live)
 pm:0x8400  eff09_entry          ; I0 = I1
 pm:0x8401  eff09_lfo0_acc       ; phase(c004) += incr(0x9800); FDEP 0:31 SE wrap
 pm:0x840a  eff09_lfo0_interp    ; sine-table linear interp
@@ -45,8 +48,12 @@ pm:0x8433  eff09_baseR          ; I2 = P+300; MODIFY(I2,0xC8) -> R write base P+
 pm:0x8434  eff09_fix_wetL       ; R8 = FIX F8; x c009 (Q31 0.5); x2 makeup
 pm:0x8438  eff09_clip_L         ; CLIP +-0x7FFFFF
 pm:0x8439  eff09_out_L          ; DM(I4,M2)=R8; I4+1 (so DM(0x20,I4) now reads in_R)
-pm:0x843a  eff09_chanR          ; right channel: same engine, modulator sine0, fb state c002 (DM(I1-2)), coeff c00a
+pm:0x843a  eff09_read_inR       ; right channel (same engine, NOT negated — stereo comes from the 90deg LFO offset): R0 = DM(I4+0x20) = in_R (I4 advanced at out_L)
+pm:0x843c  eff09_fb_loadR       ; R4 = DM(I1-2) = c002: previous R tap (float feedback state)
+pm:0x843e  eff09_fb_injectR     ; F4 = F4 * 0.70 (c00a); F0 = in + F4
 pm:0x8441  eff09_wr_delayR      ; write @P+500; read base P+800 -> delay 300-+64 from the R write
+pm:0x8442  eff09_tapR           ; R8 = sine0(R5) * depth — right tap offset (modulator = LFO0)
+pm:0x8447  eff09_float_fracR    ; F3 = FLOAT R3 BY c00b (-31); R8 = d[i]
 pm:0x8448  eff09_interpR        ; float linear interp (R)
 pm:0x844b  eff09_fb_saveR       ; DM(I1-2) = tap
 pm:0x844c  eff09_fix_wetR       ; R8 = FIX F8; x wet; x2; I2 restored to P

@@ -479,7 +479,7 @@ reset_enable_irq0:   ; BIT SET IMASK 0x100 (bit8 = IRQ0I)
 8072: 0000140d00000100 BIT SET IMASK 0x00000100
 reset_clear_irq0:   ; BIT CLEAR IRPTL 0x100
 8073: 0000142900000100 BIT CLEAR IRPTL 0x00000100
-reset_global_ien:   ; BIT SET MODE1 0x3000 (IRPTEN + NESTM)
+reset_global_ien:   ; BIT SET MODE1 0x3000 = IRPTEN (bit12) + ALUSAT (bit13, fixed-point ALU saturation — clips e.g. rec07's modulator sums at +-1.0); CORRECTED from "NESTM" (NESTM is bit11=0x800, not set)
 8074: 0000140b00003000 BIT SET MODE1 0x00003000
 8075: 0000000000000000 NOP
 reset_idle:   ; IDLE — wait for first IRQ0

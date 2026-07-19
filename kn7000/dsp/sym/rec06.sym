@@ -1,5 +1,6 @@
 ; rec06 — EFFECT: quadrature 2-tap modulated-delay chorus/ensemble (wet-only)
-; Full dataflow trace 2026-07-19 (see dsp/reverb-algorithm.md §6).
+; Full dataflow trace 2026-07-19; full algorithm doc dsp/chorus-family-algorithms.md §2
+; (see also dsp/reverb-algorithm.md §6).
 ; One sine LFO (table-interpolated); each channel reads TWO fractional taps of
 ; its delay line, modulated by sine(phase) and sine(phase+90deg), averaged and
 ; summed.  The right channel uses the NEGATED modulators (antiphase stereo).
@@ -14,7 +15,7 @@ dm:0x9800  eff06_lfo_incr       ; 0x00800000 LFO phase increment (template = fs/
 dm:0xc004  eff06_lfo_phase      ; LFO phase accumulator (runtime state kept in the param block, template 0)
 dm:0xc005  eff06_depth          ; 0x00400000 mod depth: tap swing = +-64 samples about the 250-sample center
 dm:0xc006  eff06_wet            ; 0x7FFFFFFF wet level (applied to the (v1+v2)/2 average, then x2 makeup)
-dm:0xc029  eff06_sine_tab       ; 16-point sine cycle c029..c038 (c030 = index-0 zero) + positive-half guard c039..c03f for wrap-free interp/quadrature reads
+dm:0xc029  eff06_sine_tab       ; 16-point sine cycle c029..c038 (c030 = index-0 zero; stored angle-negated, output = -sin) + positive-half guard c039..c03f for wrap-free interp/quadrature reads; occupies the host-swappable waveform slot c028..c040 (data records rec77/78/79 = sine/tri/square overwrite it live)
 dm:0xc02c  eff06_sine_peak      ; +1.0 (0x7FFFFFFF)
 dm:0xc034  eff06_sine_trough    ; -1.0 (0x80000000)
 pm:0x8400  eff06_entry          ; I0 = I1: LFO phase accumulator lives at param c004
@@ -32,6 +33,7 @@ pm:0x841a  eff06_wr_delayL      ; DM(I2,M7)=R0 write in_L @P; M7=0xFA -> read ba
 pm:0x841b  eff06_depth_ld       ; R10 = c005 depth (tap offset = modulator*depth -> +-64 samples)
 pm:0x841c  eff06_tap1L          ; L voice 1: fractional read @P+250+64*B (int part via M7, frac FDEP 15:16, linear interp d[i]+f*(d[i+1]-d[i]))
 pm:0x8424  eff06_tap2L          ; L voice 2 @P+250+64*A; R9 = voice 1
+pm:0x842e  eff06_baseR          ; MODIFY(I2,0xF0): I2 = P+250+240 = P+490, the R-channel write base
 pm:0x842f  eff06_mix_L          ; R8 = (v1+v2)/2, x wet(c006), x2 makeup
 pm:0x8433  eff06_clip_L         ; CLIP +-0x7FFFFF
 pm:0x8434  eff06_out_L          ; DM(I4,M2)=R8 output slot; I4+1
