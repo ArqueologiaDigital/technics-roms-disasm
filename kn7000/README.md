@@ -135,14 +135,19 @@ linear listing is regenerable and git-ignored.
 ## Status
 
 100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`
-is organised by the recovered functions**, and **66 functions are now converted
-to real, re-assemblable MN10300 assembly** (the task/event and display/object
-framework clusters — e.g. `SetVisible`, `DispatchEvent`), with call targets
-resolved to labels so the source reads normally, and `kn7asm.py` assembles it
-back to the exact ROM bytes. Growing the `CONVERT` set in
-`tools/gen_program_s.py` and running `make program-src` converts more; the
-remaining functions stay raw `.incbin_range` until then. The **display palette**
-(256-entry `0x00BBGGRR` CLUT at `0x32573C`) is lifted into typed `.long` source.
+is organised by the recovered functions** (kn7000.sym reflection names plus the
+kn7000_manual.sym hand-recovered names), and **84 functions are now converted
+to real, re-assemblable MN10300 assembly**: the task/event and display/object
+framework clusters (e.g. `SetVisible`, `DispatchEvent`) and the complete
+**Techni-Chord harmony engine** (`TechniChordCompute`, the 14 per-style voicing
+routines, and their helpers — including the corrected style mapping: parameter
+`0x8081` uses a legacy order that the GUI translates through the 14-halfword
+table at `0x485EC940`, with `DUET 1` stored last). Call targets are resolved to
+labels so the source reads normally, and `kn7asm.py` assembles it back to the
+exact ROM bytes. Growing the `CONVERT` set in `tools/gen_program_s.py` and
+running `make program-src` converts more; the remaining functions stay raw
+`.incbin_range` until then. The **display palette** (256-entry `0x00BBGGRR`
+CLUT at `0x32573C`) is lifted into typed `.long` source.
 See [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory
 map, region map and other findings that guide the work.
 

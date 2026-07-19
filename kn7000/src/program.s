@@ -3,7 +3,8 @@
 #
 # KN7000 "Program" flash image (kn7000_program.rom) - byte-exact.
 # Panasonic MN10300, mapped at CPU 0x48400000. Code region 1 is split at
-# the 443 recovered functions; functions listed in tools/gen_program_s.py
+# the recovered functions (kn7000.sym + kn7000_manual.sym); functions
+# listed in tools/gen_program_s.py
 # CONVERT are emitted as real MN10300 assembly (verified byte-exact by the
 # mn10300_asm encoder), the rest remain raw .incbin_range. Regenerate with
 # tools/gen_program_s.py. make verify guarantees byte-identity.
@@ -26,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 63 synthetic labels for internal helpers called by converted code
+# 83 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -78,6 +79,25 @@ _rom_marker:
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
 .equ func_484492E7, 0x484492E7
+.equ GetCurrentChord, 0x4844DDF2
+.equ GetChordToneList, 0x4844E9F1
+.equ TechniChordOrchestratorPart_entry, 0x48472E60
+.equ TechniChordClose_entry, 0x48473051
+.equ TechniChordDuet1_entry, 0x484731D0
+.equ TechniChordOpen1_entry, 0x484731EB
+.equ TechniChordOpen2_entry, 0x4847320C
+.equ TechniChordDuet2_entry, 0x48473288
+.equ TechniChordCountry_entry, 0x484732F0
+.equ TechniChordTheatre_entry, 0x48473358
+.equ TechniChordHymn_entry, 0x484733E3
+.equ TechniChordBlock_entry, 0x48473495
+.equ TechniChordBigBandBrass_entry, 0x4847355D
+.equ TechniChordBigBandReeds_entry, 0x4847360F
+.equ TechniChordOctave_entry, 0x484736D4
+.equ TechniChordHardRock_entry, 0x48473703
+.equ TechniChordFanfare_entry, 0x48473732
+.equ TechniChordOff, 0x4847375F
+.equ TechniChordAugDimFold_entry, 0x48473768
 .equ func_4847B17D, 0x4847B17D
 .equ func_4847EC92, 0x4847EC92
 .equ func_4849C8E2, 0x4849C8E2
@@ -90,8 +110,43 @@ _rom_marker:
 .equ func_485323BF, 0x485323BF
 .equ func_48532494, 0x48532494
 .equ func_4854D84B, 0x4854D84B
+.equ LibParamGet, 0x4C0149FA
 
-.incbin_range "baserom/kn7000_program.rom", 0x000080, 0x014a74
+.incbin_range "baserom/kn7000_program.rom", 0x000080, 0x004ff6
+# DspFullReinit  (CPU 0x48404ff6)
+.incbin_range "baserom/kn7000_program.rom", 0x004ff6, 0x0050b8
+# DspWritePMWord  (CPU 0x484050b8)
+.incbin_range "baserom/kn7000_program.rom", 0x0050b8, 0x00511a
+# DspWriteDMWord  (CPU 0x4840511a)
+.incbin_range "baserom/kn7000_program.rom", 0x00511a, 0x0052e0
+# DspRegWrite  (CPU 0x484052e0)
+.incbin_range "baserom/kn7000_program.rom", 0x0052e0, 0x00537d
+# DspBootDefaultEffects  (CPU 0x4840537d)
+.incbin_range "baserom/kn7000_program.rom", 0x00537d, 0x005470
+# DspBootProbe  (CPU 0x48405470)
+.incbin_range "baserom/kn7000_program.rom", 0x005470, 0x00562c
+# DspEffectAssign  (CPU 0x4840562c)
+.incbin_range "baserom/kn7000_program.rom", 0x00562c, 0x0057a9
+# DspAllocParamBlock  (CPU 0x484057a9)
+.incbin_range "baserom/kn7000_program.rom", 0x0057a9, 0x005815
+# DspEffectSelect  (CPU 0x48405815)
+.incbin_range "baserom/kn7000_program.rom", 0x005815, 0x005d4f
+# DspManagerInit  (CPU 0x48405d4f)
+.incbin_range "baserom/kn7000_program.rom", 0x005d4f, 0x00603b
+# DspDownloadAll  (CPU 0x4840603b)
+.incbin_range "baserom/kn7000_program.rom", 0x00603b, 0x006132
+# DspEffectTypeValid  (CPU 0x48406132)
+.incbin_range "baserom/kn7000_program.rom", 0x006132, 0x0068d7
+# DspApplyUnits  (CPU 0x484068d7)
+.incbin_range "baserom/kn7000_program.rom", 0x0068d7, 0x007bac
+# DspStreamReadU16  (CPU 0x48407bac)
+.incbin_range "baserom/kn7000_program.rom", 0x007bac, 0x007bd8
+# DspRecordInterpreter  (CPU 0x48407bd8)
+.incbin_range "baserom/kn7000_program.rom", 0x007bd8, 0x00e721
+# JpegEngine  (CPU 0x4840e721)
+.incbin_range "baserom/kn7000_program.rom", 0x00e721, 0x00fc3a
+# JpegBitRefill  (CPU 0x4840fc3a)
+.incbin_range "baserom/kn7000_program.rom", 0x00fc3a, 0x014a74
 # ApTaskControl  (CPU 0x48414a74)
 .incbin_range "baserom/kn7000_program.rom", 0x014a74, 0x014afa
 # MainTaskControl  (CPU 0x48414afa)
@@ -1756,7 +1811,7 @@ _rom_marker:
     asl2    d1
     mov     (d1, a2), d0
     clr     d1
-    call    0x4c0149fa, 0, 0x10
+    call    LibParamGet, 0, 0x10
     exthu   d0
     cmp     d0, a3
     bne     0x484161f5
@@ -2646,168 +2701,15 @@ _rom_marker:
 # DrawBitmapFileEx  (CPU 0x48424cc8)
 .incbin_range "baserom/kn7000_program.rom", 0x024cc8, 0x024ebd
 # DrawJpegFile  (CPU 0x48424ebd)
-.incbin_range "baserom/kn7000_program.rom", 0x024ebd, 0x024f7d
+.incbin_range "baserom/kn7000_program.rom", 0x024ebd, 0x024f28
+# JpegDecodeBlit  (CPU 0x48424f28)
+.incbin_range "baserom/kn7000_program.rom", 0x024f28, 0x024f7d
 # DrawJpegFileR  (CPU 0x48424f7d)
 .incbin_range "baserom/kn7000_program.rom", 0x024f7d, 0x025265
 # GetJpegSize  (CPU 0x48425265)
     movm    [d2,d3,a2,a3], (sp)
-    mov     d0, (0x20, sp)
-    mov     a1, (0x1c, sp)
-    mov     0xffffffff, a1
-    mov     a1, a2
-    movbu   (a0), d0
-    movbu   (1, a0), d1
-    exthu   d0
-    asl     8, d0
-    add     d1, d0
-    exthu   d0
-    cmp     0xffd8, d0
-    beq     0x48425288
-    jmp     0x4842536a
-    mov     2, d1
-    setlb
-    .byte 0xF4   # movbu (d1, a0), d2
-    mov     0x8444, a0
-    exth    d1
-    .byte 0xF4   # movbu (d1, a0), d1
-    extbu   d0
-    exth    d0
-    inc     d0
-    exthu   d2
-    asl     8, d2
-    add     d1, d2
-    exthu   d2
-    cmp     0xffe0, d2
-    blt     0x484252c1
-    cmp     0xffef, d2
-    bgt     0x484252c1
-    exth    d0
-    .byte 0xF4   # movbu (d0, a0), d1
-    extb    d0
-    inc     d0
-    mov     d0, d2
-    exth    d2
-    .byte 0xF4   # movbu (d2, a0), d2
-    add     0x18, d0
-    inc     d0
-    exth    d0
-    exthu   d1
-    asl     8, d1
-    add     d2, d1
-    exthu   d1
-    add     d0, d1
-    add     -2, d1
-    jmp     0x48425366
-    cmp     0xffc4, d2
-    beq     0x484252fb
-    cmp     0xffdb, d2
-    beq     0x484252fb
-    cmp     0xffdd, d2
-    beq     0x484252fb
-    cmp     0xffdc, d2
-    beq     0x484252fb
-    cmp     0xfffe, d2
-    beq     0x484252fb
-    cmp     0xffc0, d2
-    beq     0x48425312
-    cmp     0xffda, d2
-    beq     0x48425312
-    bra     0x48425364
-    mov     d0, d1
-    exth    d1
-    .byte 0xF4   # movbu (d1, a0), d0
-    clr     d1
-    inc     d1
-    mov     d1, d2
-    exth    d2
-    .byte 0xF4   # movbu (d2, a0), d2
-    add     0x19, d0
-    inc     d1
-    exth    d1
-    exthu   d0
-    asl     8, d0
-    add     d2, d0
-    exthu   d0
-    add     d0, d1
-    add     -2, d1
-    bra     0x48425366
-    exth    d0
-    .byte 0xF4   # movbu (d0, a0), d3
-    mov     (0x8140), d0
-    exth    d1
-    .byte 0xF4   # movbu (d1, a0), d2
-    mov     0x8118, a0
-    inc     d1
-    exthu   d3
-    asl     8, d3
-    mov     d2, d0
-    add     d3, d0
-    exthu   d0
-    cmp     2, d0
-    blt     0x48425366
-    mov     d1, d2
-    exth    d2
-    .byte 0xF4   # movbu (d2, a0), d2
-    add     0x19, d0
-    inc     d1
-    cmp     8, d2
-    bne     0x48425366
-    exth    d1
-    .byte 0xF4   # movbu (d1, a0), d3
-    movbu   (0x8644), d0
-    exth    d2
-    .byte 0xF4   # movbu (d2, a0), d2
-    add     0x19, d0
-    inc     d1
-    exthu   d3
-    mov     d3, d0
-    asl     8, d0
-    add     d2, d0
-    mov     d0, a1
-    exth    d0
-    cmp     0, d0
-    ble     0x48425366
-    exth    d1
-    .byte 0xF4   # movbu (d1, a0), d2
-    mov     0x8444, a0
-    exth    d0
-    .byte 0xF4   # movbu (d0, a0), d3
-    mov     (0x4419), d0
-    exthu   d2
-    asl     8, d2
-    add     d3, d2
-    mov     d2, a2
-    mov     d2, d0
-    exth    d0
-    cmp     0, d0
-    ble     0x48425366
-    mov     -1, d1
-    bra     0x48425366
-    mov     -1, d1
-    exth    d1
-    cmp     -1, d1
-    lne
-    mov     a2, d0
-    exth    d0
-    cmp     0, d0
-    ble     0x48425378
-    mov     a1, d0
-    exth    d0
-    cmp     0, d0
-    bgt     0x48425384
-    mov     (0x1c, sp), a0
-    mov     -1, d0
-    movhu   d0, (a0)
-    mov     (0x20, sp), a0
-    movhu   d0, (a0)
-    bra     0x48425390
-    mov     (0x1c, sp), a0
-    mov     a2, d0
-    movhu   d0, (a0)
-    mov     (0x20, sp), a0
-    mov     a1, d0
-    movhu   d0, (a0)
-    retf    [d2,d3,a2,a3], 0x10
+# JpegHeaderParse  (CPU 0x48425267)
+.incbin_range "baserom/kn7000_program.rom", 0x025267, 0x025393
 # DrawString  (CPU 0x48425393)
 .incbin_range "baserom/kn7000_program.rom", 0x025393, 0x025896
 # DrawStringCentered  (CPU 0x48425896)
@@ -8243,7 +8145,1394 @@ _rom_marker:
 # InitializeBlock46  (CPU 0x48431cd4)
 .incbin_range "baserom/kn7000_program.rom", 0x031cd4, 0x031cd7
 # InitializeBlock47  (CPU 0x48431cd7)
-.incbin_range "baserom/kn7000_program.rom", 0x031cd7, 0x078c6d
+.incbin_range "baserom/kn7000_program.rom", 0x031cd7, 0x033300
+# StyleBuiltinNameTableInit  (CPU 0x48433300)
+.incbin_range "baserom/kn7000_program.rom", 0x033300, 0x033400
+# StyleNameSourceSet  (CPU 0x48433400)
+.incbin_range "baserom/kn7000_program.rom", 0x033400, 0x0334a4
+# StyleNameCommit  (CPU 0x484334a4)
+.incbin_range "baserom/kn7000_program.rom", 0x0334a4, 0x033ac4
+# StyleBuiltinNameLookup  (CPU 0x48433ac4)
+.incbin_range "baserom/kn7000_program.rom", 0x033ac4, 0x035a1b
+# GetCurrentGenreIndex  (CPU 0x48435a1b)
+.incbin_range "baserom/kn7000_program.rom", 0x035a1b, 0x035a9f
+# GetGenreName  (CPU 0x48435a9f)
+.incbin_range "baserom/kn7000_program.rom", 0x035a9f, 0x035ad9
+# GetGenreStyleCount  (CPU 0x48435ad9)
+.incbin_range "baserom/kn7000_program.rom", 0x035ad9, 0x035b33
+# ResolveStyleId  (CPU 0x48435b33)
+.incbin_range "baserom/kn7000_program.rom", 0x035b33, 0x035d83
+# StyleIdArrayStore  (CPU 0x48435d83)
+.incbin_range "baserom/kn7000_program.rom", 0x035d83, 0x035dd0
+# StyleIdArrayHandler  (CPU 0x48435dd0)
+.incbin_range "baserom/kn7000_program.rom", 0x035dd0, 0x035e84
+# StyleIdQueueDequeue  (CPU 0x48435e84)
+.incbin_range "baserom/kn7000_program.rom", 0x035e84, 0x03890e
+# RhyPatternScan  (CPU 0x4843890e)
+.incbin_range "baserom/kn7000_program.rom", 0x03890e, 0x03982d
+# RhyPatternPlayer  (CPU 0x4843982d)
+.incbin_range "baserom/kn7000_program.rom", 0x03982d, 0x03dc7c
+# RhyNoteOnVoice  (CPU 0x4843dc7c)
+.incbin_range "baserom/kn7000_program.rom", 0x03dc7c, 0x03fb0d
+# StyleFlatOrdinalBuilder  (CPU 0x4843fb0d)
+.incbin_range "baserom/kn7000_program.rom", 0x03fb0d, 0x0403cd
+# RhySysexLen  (CPU 0x484403cd)
+.incbin_range "baserom/kn7000_program.rom", 0x0403cd, 0x0403d5
+# RhyEventLenByStatus  (CPU 0x484403d5)
+.incbin_range "baserom/kn7000_program.rom", 0x0403d5, 0x041cbf
+# StyleTemplateToNameTable  (CPU 0x48441cbf)
+.incbin_range "baserom/kn7000_program.rom", 0x041cbf, 0x041cdb
+# StyleTemplateBuildLoop  (CPU 0x48441cdb)
+.incbin_range "baserom/kn7000_program.rom", 0x041cdb, 0x041d1b
+# StyleRecordToTemplate  (CPU 0x48441d1b)
+.incbin_range "baserom/kn7000_program.rom", 0x041d1b, 0x042072
+# StyleNameDefaultFill  (CPU 0x48442072)
+.incbin_range "baserom/kn7000_program.rom", 0x042072, 0x04a000
+# CustomFlashArchiveParse  (CPU 0x4844a000)
+.incbin_range "baserom/kn7000_program.rom", 0x04a000, 0x04ddf2
+# GetCurrentChord  (CPU 0x4844ddf2)
+.incbin_range "baserom/kn7000_program.rom", 0x04ddf2, 0x04e9f1
+# GetChordToneList  (CPU 0x4844e9f1)
+.incbin_range "baserom/kn7000_program.rom", 0x04e9f1, 0x072e5b
+# TechniChordOrchestratorPart  (CPU 0x48472e5b)
+#   returns d0 = the part that sounds the harmony notes: param 0x8082
+#   (0xFF = auto -> part 0x10 or 0x11 by lib part-mask), then rejects the
+#   part (-1) when part-check param 0xB0007E[part<<24] == 1
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# TechniChordOrchestratorPart_entry:   (register-save `call` entry)
+    mov     0x00008082, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    exth    d0
+    cmp     0xff, d0
+    bne     0x48472e9e
+    call    0x4c01e256, 0, 0
+    mov     d0, d3
+    mov     0x10, d0
+    call    0x4c029cb4, 0, 0
+    mov     0x10, d2
+    and     d3, d0
+    bne     0x48472e9e
+    mov     0x11, d0
+    call    0x4c029cb4, 0, 0
+    mov     0x11, d2
+    and     d3, d0
+    bne     0x48472e9e
+    mov     -1, d2
+    mov     0x00b0007e, d0
+    mov     d2, d1
+    exth    d1
+    asl     24, d1
+    call    LibParamGet, 0, 0x10
+    cmp     1, d0
+    bne     0x48472eb6
+    mov     -1, d2
+    mov     d2, d0
+    ret     [d2,d3], 0x18
+# TechniChordCompute  (CPU 0x48472eba)
+#   the Techni-Chord harmony engine (pure software -- no TG registers):
+#    1. GetCurrentChord copies {type, root, ...} from RAM 0x50000B18
+#    2. chord-type normalise via jump table 0x485BC3EC (types 29..41 are
+#       remapped to a basic type so the 28-row voicing matrices suffice)
+#    3. gate on param 0x8080 == 1 (techni-chord ON), then dispatch the
+#       voicing via the 14-entry jump table 0x485BC3B4 indexed by style
+#       param 0x8081 (LEGACY order: the GUI grid maps through 0x485EC940;
+#       param 13 = grid slot 3 = DUET 1, appended after FANFARE)
+#    4. tail: fill each emitted note entry's flag byte from struct+0x27
+#   struct (a0): +0x26 melody note, +0x27 melody flag, +4 note count,
+#   +6 the 2-byte harmony note entries
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+    mov     sp, a3
+    add     0x10, a3
+    clr     d0
+    movhu   d0, (0x5004ca68)
+    mov     a0, a2
+    mov     a3, a0
+    call    GetCurrentChord, 0, 0
+    movbu   (0x10, sp), d0
+    cmp     0, d0
+    blt     0x48472f45
+    cmp     0x29, d0
+    bgt     0x48472f45
+    asl2    d0
+    mov     0x485bc3ec, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    bra     0x48472f4a
+    mov     0xc, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     3, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     3, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     2, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     6, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     0xc, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     1, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     5, d0
+    movbu   d0, (0x10, sp)
+    bra     0x48472f4a
+    mov     1, d0
+    movbu   d0, (0x10, sp)
+    mov     0x27, d2
+    add     a2, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     0, d0
+    bne     0x48472f5e
+    clr     d0
+    movhu   d0, (4, a2)
+    ret     [d2,d3,a2,a3], 0x28
+    mov     0x00008080, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    mov     0xe, d0
+    cmp     1, d1
+    bne     0x48472f81
+    mov     0x00008081, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    extbu   d0
+    cmp     0, d0
+    bge     0x48472f89
+    jmp     0x48473014
+    cmp     0xd, d0
+    ble     0x48472f90
+    jmp     0x48473014
+    asl2    d0
+    mov     0x485bc3b4, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    mov     a2, a0
+    call    TechniChordClose_entry, [d2,d3,a2,a3], 0x5c
+    jmp     0x4847301a
+    mov     a2, a0
+    call    TechniChordOpen1_entry, [a2], 0x10
+    jmp     0x4847301a
+    mov     a2, a0
+    call    TechniChordOpen2_entry, [d2,d3,a2,a3], 0x1c
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordDuet2_entry, [d2,d3,a2,a3], 0x24
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordCountry_entry, [d2,d3,a2,a3], 0x24
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordTheatre_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordHymn_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordBlock_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordBigBandBrass_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4847301a
+    mov     a2, a0
+    mov     a3, a1
+    call    TechniChordBigBandReeds_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4847301a
+    mov     a2, a0
+    call    TechniChordOctave_entry, [a2], 4
+    bra     0x4847301a
+    mov     a2, a0
+    call    TechniChordHardRock_entry, [a2], 4
+    bra     0x4847301a
+    mov     a2, a0
+    call    TechniChordFanfare_entry, [a2], 4
+    bra     0x4847301a
+    mov     a2, a0
+    call    TechniChordDuet1_entry, [a2], 0x10
+    bra     0x4847301a
+    mov     a2, a0
+    call    TechniChordOff, 0, 0
+    mov     d2, a0
+    movbu   (a0), d0
+    mov     1, d3
+    extb    d0
+    cmp     0xf, d0
+    ble     0x4847302d
+    mov     d2, a0
+    movbu   (a0), d0
+    mov     -0xf, d3
+    extb    d0
+    add     d0, d3
+    mov     a2, a1
+    inc4    a1
+    movhu   (a1), d0
+    clr     d1
+    clr     d2
+    cmp     d1, d0
+    ble     0x48473049
+    add     6, a2
+    setlb
+    exthu   d1
+    mov     d1, d0
+    add     d0, d0
+    mov     a2, a0
+    add     d0, a0
+    movbu   d3, (1, a0)
+    movhu   (a1), d0
+    inc     d2
+    mov     d2, d1
+    exthu   d2
+    cmp     d0, d2
+    llt
+    ret     [d2,d3,a2,a3], 0x28
+# TechniChordClose  (CPU 0x4847304c)
+#   style CLOSE (param 0, and the base for OPEN 1/2 + DUET 1): fetch the
+#   chord-tone list (max 0x10), fold each tone by octaves into the octave
+#   below the melody, keep tones more than 2 semitones below it, max 4
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x4c, sp
+# TechniChordClose_entry:   (register-save `call` entry)
+    mov     a0, (0x64, sp)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x28, d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    mov     0x10, d0
+    call    GetChordToneList, [d2], 4
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     0, d1
+    bne     0x4847306f
+    jmp     0x484730fc
+    clr     d0
+    mov     0, a1
+    mov     a1, a2
+    exthu   d2
+    mov     d2, (0x10, sp)
+    cmp     d0, d2
+    bgt     0x4847307c
+    jmp     0x484730f2
+    mov     (0x64, sp), d1
+    mov     (0x64, sp), a0
+    add     6, d1
+    mov     d1, (0x18, sp)
+    add     0x26, a0
+    mov     a1, d1
+    exthu   d1
+    mov     d1, a3
+    cmp     4, a3
+    beq     0x484730f2
+    mov     a1, (0x24, sp)
+    mov     (0x14, sp), a1
+    exthu   d0
+    add     d0, d0
+    .byte 0xF4   # movbu (d0, a1), d3
+    mov     (0x44f0), d1
+    mov     (0x24, sp), a1
+    mov     d3, d2
+    extb    d2
+    extb    d1
+    cmp     d1, d2
+    ble     0x484730b4
+    movbu   (a0), d1
+    extb    d1
+    cmp     d1, d2
+    ble     0x484730d1
+    movbu   (a0), d1
+    extb    d1
+    setlb
+    mov     -0xc, d3
+    add     d2, d3
+    mov     d3, d2
+    extb    d2
+    cmp     d1, d2
+    lgt
+    bra     0x484730d1
+    movbu   (a0), d1
+    extb    d1
+    add     -0xc, d1
+    cmp     d1, d2
+    bgt     0x484730d1
+    movbu   (a0), d0
+    extb    d0
+    add     -0xc, d0
+    cmp     d0, d2
+    bgt     0x484730d1
+    movbu   (a0), d1
+    extb    d1
+    add     -0xc, d1
+    setlb
+    mov     0xc, d3
+    add     d2, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     d1, d2
+    lle
+    movbu   (a0), d0
+    extb    d0
+    sub     d2, d0
+    cmp     2, d0
+    ble     0x484730e7
+    mov     a1, d0
+    mov     (0x18, sp), a1
+    exthu   d0
+    add     d0, d0
+    .byte 0xF4   # movbu d3, (d0, a1)
+    mov     (a1), d0
+    mov     a3, d0
+    inc     d0
+    mov     d0, a1
+    mov     (0x10, sp), d1
+    mov     a2, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a2
+    cmp     d1, d0
+    blt     0x48473086
+    mov     (0x64, sp), a2
+    mov     a1, d0
+    inc4    a2
+    extbu   d0
+    movhu   d0, (a2)
+    bra     0x48473102
+    mov     (0x64, sp), a2
+    clr     d0
+    inc4    a2
+    movhu   d0, (a2)
+    movhu   (a2), d0
+    cmp     1, d0
+    bgt     0x4847310b
+    jmp     0x484731c6
+    movhu   (a2), d1
+    clr     d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    exthu   d1
+    mov     d1, (0x1c, sp)
+    add     -1, d1
+    cmp     d0, d1
+    bgt     0x4847311c
+    jmp     0x484731c6
+    mov     (0x64, sp), a3
+    mov     (0x1c, sp), d0
+    add     6, a3
+    add     -1, d0
+    mov     d0, (0x20, sp)
+    exthu   d2
+    mov     d2, a0
+    add     a0, a0
+    add     a3, a0
+    movbu   (a0), d0
+    mov     sp, a1
+    add     0x48, a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (1, a1)
+    mov     (0x10, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d0
+    mov     d0, d3
+    exthu   d3
+    cmp     d1, d3
+    bge     0x484731b7
+    mov     d2, d1
+    add     d1, d1
+    add     a3, d1
+    mov     d1, (0x14, sp)
+    mov     d2, a0
+    add     a0, a0
+    add     a3, a0
+    mov     a0, (0x18, sp)
+    setlb
+    mov     d0, d2
+    movbu   (0x48, sp), d1
+    exthu   d2
+    mov     d2, d0
+    add     d0, d0
+    .byte 0xF4   # movbu (d0, a3), d0
+    movhu   d0, (0x1011)
+    cmp     d0, d1
+    bge     0x48473195
+    mov     d2, d0
+    add     d0, d0
+    mov     a3, a1
+    add     d0, a1
+    movbu   (a1), d0
+    mov     sp, a0
+    add     0x48, a0
+    movbu   d0, (a0)
+    movbu   (1, a1), d0
+    movbu   d0, (1, a0)
+    mov     (0x14, sp), a1
+    mov     d2, d0
+    add     d0, d0
+    mov     a3, a0
+    add     d0, a0
+    movbu   (a1), d0
+    movbu   d0, (a0)
+    movbu   (1, a1), d0
+    mov     sp, a1
+    movbu   d0, (1, a0)
+    mov     (0x18, sp), a0
+    add     0x48, a1
+    movbu   (a1), d0
+    movbu   d0, (a0)
+    movbu   (1, a1), d0
+    movbu   d0, (1, a0)
+    bra     0x484731b0
+    mov     d2, a0
+    movbu   (0x48, sp), d1
+    add     a0, a0
+    mov     a0, d0
+    .byte 0xF4   # movbu (d0, a3), d0
+    movhu   d0, (0x1011)
+    cmp     d0, d1
+    bne     0x484731b0
+    mov     d2, d0
+    add     d0, d0
+    mov     -1, d1
+    .byte 0xF4   # movbu d1, (d0, a3)
+    inc4    a3
+    movhu   (a2), d0
+    add     d1, d0
+    movhu   d0, (a2)
+    mov     (0x1c, sp), d1
+    inc     d3
+    mov     d3, d0
+    exthu   d3
+    cmp     d1, d3
+    llt
+    mov     (0x10, sp), d0
+    mov     (0x20, sp), d1
+    inc     d0
+    mov     d0, d2
+    exthu   d2
+    mov     d2, (0x10, sp)
+    cmp     d1, d2
+    bge     0x484731c6
+    jmp     0x48473126
+    movhu   (a2), d0
+    ret     [d2,d3,a2,a3], 0x5c
+# TechniChordDuet1  (CPU 0x484731cb)
+#   DUET 1 (param 13 = grid slot 3; the style Technics appended to the
+#   legacy 13-style enumeration): CLOSE voicing clamped to 1 note
+    movm    [a2], (sp)
+    add     -0xc, sp
+# TechniChordDuet1_entry:   (register-save `call` entry)
+    mov     a0, a2
+    call    TechniChordClose_entry, [d2,d3,a2,a3], 0x5c
+    exthu   d0
+    cmp     0, d0
+    beq     0x484731e0
+    mov     1, d0
+    movhu   d0, (4, a2)
+    movhu   (4, a2), d0
+    ret     [a2], 0x10
+# TechniChordOpen1  (CPU 0x484731e6)
+#   OPEN 1 (param 1): CLOSE, then drop the first harmony note an octave
+    movm    [a2], (sp)
+    add     -0xc, sp
+# TechniChordOpen1_entry:   (register-save `call` entry)
+    mov     a0, a2
+    call    TechniChordClose_entry, [d2,d3,a2,a3], 0x5c
+    exthu   d0
+    cmp     0, d0
+    beq     0x48473201
+    mov     6, a1
+    add     a2, a1
+    movbu   (a1), d0
+    extb    d0
+    add     -0xc, d0
+    movbu   d0, (a1)
+    movhu   (4, a2), d0
+    ret     [a2], 0x10
+# TechniChordOpen2  (CPU 0x48473207)
+#   OPEN 2 (param 2): CLOSE re-spread by octave shifts (single close note
+#   raised above the melody; multi-note: first down, close followers up)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# TechniChordOpen2_entry:   (register-save `call` entry)
+    mov     a0, a3
+    call    TechniChordClose_entry, [d2,d3,a2,a3], 0x5c
+    exthu   d0
+    cmp     0, d0
+    beq     0x4847327d
+    mov     a3, a0
+    inc4    a0
+    movhu   (a0), d0
+    cmp     1, d0
+    bne     0x48473239
+    movbu   (0x26, a3), d1
+    mov     6, a0
+    add     a3, a0
+    movbu   (a0), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    cmp     8, d1
+    bgt     0x4847327d
+    movbu   (a0), d0
+    extb    d0
+    add     0xc, d0
+    movbu   d0, (a0)
+    bra     0x4847327d
+    mov     6, a2
+    add     a3, a2
+    movbu   (a2), d0
+    extb    d0
+    add     -0xc, d0
+    movbu   d0, (a2)
+    movhu   (a0), d1
+    add     -1, d1
+    mov     d1, d2
+    exthu   d2
+    cmp     0, d2
+    ble     0x4847327d
+    movbu   (0x26, a3), d3
+    extb    d3
+    setlb
+    exthu   d1
+    mov     d1, a0
+    add     a0, a0
+    mov     a0, d0
+    .byte 0xF4   # movbu (d0, a2), d0
+    movbu   d0, (0xecf1)
+    extb    d0
+    sub     d0, a0
+    cmp     8, a0
+    bgt     0x48473276
+    mov     d1, d0
+    add     d0, d0
+    .byte 0xF4   # movbu (d0, a2), d0
+    movbu   d0, (0xe4f1)
+    extb    d0
+    add     a0, a0
+    add     0xc, d0
+    mov     a0, d1
+    .byte 0xF4   # movbu d0, (d1, a2)
+    mov     d1, (0xca, sp)
+    mov     d2, (0xff2a)
+    mov     d2, d1
+    exthu   d2
+    cmp     0, d2
+    lgt
+    movhu   (4, a3), d0
+    ret     [d2,d3,a2,a3], 0x1c
+# TechniChordDuet2  (CPU 0x48473283)
+#   DUET 2 (param 3 -- the ORIGINAL 'DUET' slot): one harmony note =
+#   melody - matrix[type][interval], matrix 0x485BA574 (28 rows x 12);
+#   interval = (melody - root + AugDimFold + 1) mod 12
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TechniChordDuet2_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     a1, a3
+    movbu   (a3), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d2
+    exth    d0
+    cmp     0, d0
+    blt     0x484732e0
+    mov     0x26, a0
+    add     d3, a0
+    movbu   (a0), d1
+    movbu   (a2), d0
+    extb    d1
+    sub     d0, d1
+    exth    d2
+    add     d2, d1
+    movbu   (a0), d2
+    mov     d1, d0
+    movbu   (a3), d1
+    mov     d3, (0x10, sp)
+    inc     d0
+    mov     0xfffffff4, a0
+    mov     0xc, d3
+    nop
+    nop
+    mul     d3, d1
+    ext     d0
+    add     0x485ba574, d1
+    add     d1, a0
+    mov     0xc, d1
+    div     d1, d0
+    mov     mdr, d0
+    exth    d0
+    .byte 0xF4   # movbu (d0, a0), d1
+    extb    d0
+    mov     (0x10, sp), a0
+    extb    d2
+    extb    d1
+    sub     d1, d2
+    movbu   d2, (6, a0)
+    inc4    a0
+    mov     1, d0
+    movhu   d0, (a0)
+    bra     0x484732e6
+    mov     d3, a0
+    inc4    a0
+    clr     d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x24
+# TechniChordCountry  (CPU 0x484732eb)
+#   COUNTRY (param 4): one note; matrix 0x485BAEA4 (28 x 12 x 1)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TechniChordCountry_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     a1, a3
+    movbu   (a3), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d2
+    exth    d0
+    cmp     0, d0
+    blt     0x48473348
+    mov     0x26, a0
+    add     d3, a0
+    movbu   (a0), d1
+    movbu   (a2), d0
+    extb    d1
+    sub     d0, d1
+    exth    d2
+    add     d2, d1
+    movbu   (a0), d2
+    mov     d1, d0
+    movbu   (a3), d1
+    mov     d3, (0x10, sp)
+    inc     d0
+    mov     0xfffffff4, a0
+    mov     0xc, d3
+    nop
+    nop
+    mul     d3, d1
+    ext     d0
+    add     0x485baea4, d1
+    add     d1, a0
+    mov     0xc, d1
+    div     d1, d0
+    mov     mdr, d0
+    exth    d0
+    .byte 0xF4   # movbu (d0, a0), d1
+    extb    d0
+    mov     (0x10, sp), a0
+    extb    d2
+    extb    d1
+    sub     d1, d2
+    movbu   d2, (6, a0)
+    inc4    a0
+    mov     1, d0
+    movhu   d0, (a0)
+    bra     0x4847334e
+    mov     d3, a0
+    inc4    a0
+    clr     d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x24
+# TechniChordTheatre  (CPU 0x48473353)
+#   THEATRE (param 5): two notes; matrix 0x485BA6C4 (28 x 12 x 2)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TechniChordTheatre_entry:   (register-save `call` entry)
+    mov     a0, (0x28, sp)
+    mov     a1, (0x2c, sp)
+    movbu   (a1), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    blt     0x484733d3
+    mov     (0x28, sp), a3
+    mov     (0x2c, sp), a0
+    add     0x26, a3
+    movbu   (a3), d2
+    movbu   (a2), d1
+    extb    d2
+    sub     d1, d2
+    exth    d0
+    mov     0xc, d1
+    add     d0, d2
+    mov     d2, d0
+    inc     d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    movbu   (a0), d1
+    exth    d0
+    mov     d0, a2
+    movbu   (a3), d3
+    mov     (0x28, sp), a1
+    mov     0x485ba6c4, d2
+    mov     0x18, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    add     d2, d0
+    add     -0x18, d0
+    mov     a2, d1
+    add     d1, d1
+    mov     d0, a0
+    .byte 0xF4   # movbu (d1, a0), d0
+    clr     d1
+    extb    d3
+    extb    d0
+    add     6, a1
+    sub     d0, d3
+    movbu   d3, (a1)
+    mov     (0x2c, sp), a0
+    movbu   (a3), d1
+    movbu   (a0), d0
+    mov     a2, a0
+    add     a2, a0
+    mov     0x18, d3
+    nop
+    nop
+    mul     d3, d0
+    add     d0, d2
+    add     d2, a0
+    movbu   (-0x17, a0), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (2, a1)
+    mov     (0x28, sp), a0
+    mov     2, d0
+    inc4    a0
+    movhu   d0, (a0)
+    bra     0x484733d9
+    mov     (0x28, sp), a0
+    clr     d0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x20
+# TechniChordHymn  (CPU 0x484733de)
+#   HYMN (param 6): three notes = four-part writing incl. the melody;
+#   matrix 0x485BAFF4 (28 x 12 x 3)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TechniChordHymn_entry:   (register-save `call` entry)
+    mov     a0, (0x28, sp)
+    mov     a1, (0x2c, sp)
+    movbu   (a1), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484733fb
+    jmp     0x48473485
+    mov     (0x28, sp), a3
+    mov     (0x2c, sp), a0
+    add     0x26, a3
+    movbu   (a3), d2
+    movbu   (a2), d1
+    extb    d2
+    sub     d1, d2
+    exth    d0
+    mov     0xc, d1
+    add     d0, d2
+    mov     d2, d0
+    inc     d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    movbu   (a0), d1
+    exth    d0
+    mov     d0, a1
+    movbu   (a3), d2
+    mov     (0x28, sp), a2
+    mov     0x485baff4, d3
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d3, d1
+    mov     -0x24, d0
+    add     d1, d0
+    mov     a1, d1
+    asl2    d1
+    sub     a1, d1
+    mov     d0, a0
+    .byte 0xF4   # movbu (d1, a0), d1
+    extbu   d0
+    extb    d2
+    extb    d1
+    add     6, a2
+    sub     d1, d2
+    movbu   d2, (a2)
+    mov     (0x2c, sp), a0
+    movbu   (a3), d2
+    movbu   (a0), d1
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d3, d1
+    extb    d2
+    mov     a1, d0
+    asl2    d0
+    sub     a1, d0
+    add     d0, d1
+    mov     d1, a0
+    movbu   (-0x23, a0), d0
+    extb    d0
+    sub     d0, d2
+    movbu   d2, (2, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a3), d2
+    movbu   (a0), d1
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d1, d3
+    extb    d2
+    mov     a1, d0
+    asl2    d0
+    sub     a1, d0
+    add     d0, d3
+    mov     d3, a0
+    movbu   (-0x22, a0), d0
+    extb    d0
+    sub     d0, d2
+    movbu   d2, (4, a2)
+    mov     (0x28, sp), a0
+    mov     3, d0
+    inc4    a0
+    movhu   d0, (a0)
+    bra     0x4847348b
+    mov     (0x28, sp), a0
+    clr     d0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x20
+# TechniChordBlock  (CPU 0x48473490)
+#   BLOCK (param 7): four notes; matrix 0x485BA964 (28 x 12 x 4)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TechniChordBlock_entry:   (register-save `call` entry)
+    mov     a0, (0x28, sp)
+    mov     a1, (0x2c, sp)
+    movbu   (a1), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484734ad
+    jmp     0x4847354d
+    mov     (0x28, sp), a1
+    mov     (0x2c, sp), a0
+    add     0x26, a1
+    movbu   (a1), d2
+    movbu   (a2), d1
+    extb    d2
+    sub     d1, d2
+    exth    d0
+    add     d0, d2
+    mov     d2, d1
+    mov     0xc, d0
+    inc     d1
+    ext     d1
+    div     d0, d1
+    mov     mdr, d1
+    movbu   (a0), d0
+    exth    d1
+    mov     d1, a3
+    movbu   (a1), d2
+    mov     (0x28, sp), a2
+    mov     0x485ba964, d3
+    mov     0x30, d1
+    nop
+    nop
+    mul     d1, d0
+    add     d3, d0
+    add     -0x30, d0
+    mov     a3, d1
+    asl2    d1
+    mov     d0, a0
+    .byte 0xF4   # movbu (d1, a0), d1
+    extbu   d0
+    extb    d2
+    extb    d1
+    add     6, a2
+    sub     d1, d2
+    movbu   d2, (a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d0
+    movbu   (a0), d2
+    mov     0x30, d1
+    nop
+    nop
+    mul     d1, d2
+    add     d3, d2
+    mov     a3, d1
+    asl2    d1
+    add     d1, d2
+    mov     d2, a0
+    movbu   (-0x2f, a0), d1
+    extb    d0
+    extb    d1
+    sub     d1, d0
+    movbu   d0, (2, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d1
+    movbu   (a0), d0
+    mov     a3, a0
+    add     a0, a0
+    add     a0, a0
+    mov     0x30, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d3, d0
+    add     d0, a0
+    movbu   (-0x2e, a0), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (4, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d1
+    movbu   (a0), d0
+    extb    d1
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d3
+    mov     d3, a0
+    mov     a3, d0
+    asl2    d0
+    add     d0, a0
+    movbu   (-0x2d, a0), d0
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (6, a2)
+    mov     (0x28, sp), a0
+    mov     4, d0
+    inc4    a0
+    movhu   d0, (a0)
+    bra     0x48473553
+    mov     (0x28, sp), a0
+    clr     d0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x20
+# TechniChordBigBandBrass  (CPU 0x48473558)
+#   BIG BAND BRASS (param 8): three notes; matrix 0x485BB3E4 (28 x 12 x 3)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TechniChordBigBandBrass_entry:   (register-save `call` entry)
+    mov     a0, (0x28, sp)
+    mov     a1, (0x2c, sp)
+    movbu   (a1), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48473575
+    jmp     0x484735ff
+    mov     (0x28, sp), a3
+    mov     (0x2c, sp), a0
+    add     0x26, a3
+    movbu   (a3), d2
+    movbu   (a2), d1
+    extb    d2
+    sub     d1, d2
+    exth    d0
+    mov     0xc, d1
+    add     d0, d2
+    mov     d2, d0
+    inc     d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    movbu   (a0), d1
+    exth    d0
+    mov     d0, a1
+    movbu   (a3), d2
+    mov     (0x28, sp), a2
+    mov     0x485bb3e4, d3
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d3, d1
+    mov     -0x24, d0
+    add     d1, d0
+    mov     a1, d1
+    asl2    d1
+    sub     a1, d1
+    mov     d0, a0
+    .byte 0xF4   # movbu (d1, a0), d1
+    extbu   d0
+    extb    d2
+    extb    d1
+    add     6, a2
+    sub     d1, d2
+    movbu   d2, (a2)
+    mov     (0x2c, sp), a0
+    movbu   (a3), d2
+    movbu   (a0), d1
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d3, d1
+    extb    d2
+    mov     a1, d0
+    asl2    d0
+    sub     a1, d0
+    add     d0, d1
+    mov     d1, a0
+    movbu   (-0x23, a0), d0
+    extb    d0
+    sub     d0, d2
+    movbu   d2, (2, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a3), d2
+    movbu   (a0), d1
+    mov     0x24, d0
+    nop
+    nop
+    mul     d0, d1
+    add     d1, d3
+    extb    d2
+    mov     a1, d0
+    asl2    d0
+    sub     a1, d0
+    add     d0, d3
+    mov     d3, a0
+    movbu   (-0x22, a0), d0
+    extb    d0
+    sub     d0, d2
+    movbu   d2, (4, a2)
+    mov     (0x28, sp), a0
+    mov     3, d0
+    inc4    a0
+    movhu   d0, (a0)
+    bra     0x48473605
+    mov     (0x28, sp), a0
+    clr     d0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x20
+# TechniChordBigBandReeds  (CPU 0x4847360a)
+#   BIG BAND REEDS (param 9): four notes; matrix 0x485BBE64 (28 x 12 x 4)
+#   -- 'big band reeds which adds four harmony notes' (users manual)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TechniChordBigBandReeds_entry:   (register-save `call` entry)
+    mov     a0, (0x28, sp)
+    mov     a1, (0x2c, sp)
+    movbu   (a1), d0
+    mov     a1, a2
+    inc     a2
+    movbu   (a2), d1
+    call    TechniChordAugDimFold_entry, [d2], 4
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48473627
+    jmp     0x484736c7
+    mov     (0x28, sp), a1
+    mov     (0x2c, sp), a0
+    add     0x26, a1
+    movbu   (a1), d2
+    movbu   (a2), d1
+    extb    d2
+    sub     d1, d2
+    exth    d0
+    add     d0, d2
+    mov     d2, d1
+    mov     0xc, d0
+    inc     d1
+    ext     d1
+    div     d0, d1
+    mov     mdr, d1
+    movbu   (a0), d0
+    exth    d1
+    mov     d1, a3
+    movbu   (a1), d2
+    mov     (0x28, sp), a2
+    mov     0x485bbe64, d3
+    mov     0x30, d1
+    nop
+    nop
+    mul     d1, d0
+    add     d3, d0
+    add     -0x30, d0
+    mov     a3, d1
+    asl2    d1
+    mov     d0, a0
+    .byte 0xF4   # movbu (d1, a0), d1
+    extbu   d0
+    extb    d2
+    extb    d1
+    add     6, a2
+    sub     d1, d2
+    movbu   d2, (a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d0
+    movbu   (a0), d2
+    mov     0x30, d1
+    nop
+    nop
+    mul     d1, d2
+    add     d3, d2
+    mov     a3, d1
+    asl2    d1
+    add     d1, d2
+    mov     d2, a0
+    movbu   (-0x2f, a0), d1
+    extb    d0
+    extb    d1
+    sub     d1, d0
+    movbu   d0, (2, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d1
+    movbu   (a0), d0
+    mov     a3, a0
+    add     a0, a0
+    add     a0, a0
+    mov     0x30, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d3, d0
+    add     d0, a0
+    movbu   (-0x2e, a0), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (4, a2)
+    mov     (0x2c, sp), a0
+    movbu   (a1), d1
+    movbu   (a0), d0
+    extb    d1
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d3
+    mov     d3, a0
+    mov     a3, d0
+    asl2    d0
+    add     d0, a0
+    movbu   (-0x2d, a0), d0
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (6, a2)
+    mov     (0x28, sp), a0
+    mov     4, d0
+    inc4    a0
+    movhu   d0, (a0)
+    bra     0x484736cd
+    mov     (0x28, sp), a0
+    clr     d0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    ret     [d2,d3,a2,a3], 0x20
+# TechniChordOctave  (CPU 0x484736d2)
+#   OCTAVE (param 10): fixed melody+12 & melody-12 (pair 0x485BC3A4);
+#   chord-independent -- works even unsplit (users manual)
+    movm    [a2], (sp)
+# TechniChordOctave_entry:   (register-save `call` entry)
+    mov     0x26, a1
+    add     a0, a1
+    movbu   (a1), d1
+    movbu   (0x485bc3a4), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    mov     6, a2
+    add     a0, a2
+    movbu   d1, (a2)
+    movbu   (a1), d1
+    movbu   (0x485bc3a5), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (2, a2)
+    mov     2, d0
+    movhu   d0, (4, a0)
+    retf    [a2], 4
+# TechniChordHardRock  (CPU 0x48473701)
+#   HARDROCK (param 11): fixed melody-5 & melody-12 (pair 0x485BC3A6,
+#   fourth + octave below = power chords); chord-independent
+    movm    [a2], (sp)
+# TechniChordHardRock_entry:   (register-save `call` entry)
+    mov     0x26, a1
+    add     a0, a1
+    movbu   (a1), d1
+    movbu   (0x485bc3a6), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    mov     6, a2
+    add     a0, a2
+    movbu   d1, (a2)
+    movbu   (a1), d1
+    movbu   (0x485bc3a7), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (2, a2)
+    mov     2, d0
+    movhu   d0, (4, a0)
+    retf    [a2], 4
+# TechniChordFanfare  (CPU 0x48473730)
+#   FANFARE (param 12): fixed melody+10 & melody+5 (pair 0x485BC3A8,
+#   stacked fourths above the melody); chord-independent
+    movm    [a2], (sp)
+# TechniChordFanfare_entry:   (register-save `call` entry)
+    mov     0x26, a1
+    add     a0, a1
+    movbu   (a1), d1
+    movbu   (0x485bc3a8), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    mov     6, a2
+    add     a0, a2
+    movbu   d1, (a2)
+    movbu   (a1), d1
+    movbu   (0x485bc3a9), d0
+    extb    d1
+    extb    d0
+    sub     d0, d1
+    movbu   d1, (2, a2)
+    mov     2, d0
+    movhu   d0, (4, a0)
+    retf    [a2], 4
+# TechniChordOff  (CPU 0x4847375f)
+#   techni-chord off / style out of range: harmony note count = 0
+    clr     d0
+    movhu   d0, (4, a0)
+    retf    0, 0
+# TechniChordAugDimFold  (CPU 0x48473766)
+#   (d0 = chord type, d1 = root 1..12) -> root-fold offset for the
+#   symmetric chord types: type 4 in buckets of 4 semitones (0/4/8),
+#   type 7 in buckets of 3 (0/3/6/9); 0 otherwise, -1 for type 0 (no
+#   chord). Makes enharmonically identical aug/dim chords share one set
+#   of matrix columns in the 7 matrix voicing styles
+    movm    [d2], (sp)
+# TechniChordAugDimFold_entry:   (register-save `call` entry)
+    mov     -1, d2
+    extbu   d0
+    cmp     0, d0
+    beq     0x484737ce
+    cmp     4, d0
+    beq     0x48473779
+    cmp     7, d0
+    beq     0x4847379d
+    bra     0x484737cd
+    extbu   d1
+    cmp     1, d1
+    bge     0x48473782
+    cmp     4, d1
+    bgt     0x48473785
+    clr     d2
+    bra     0x484737ce
+    cmp     5, d1
+    bge     0x4847378d
+    cmp     8, d1
+    bgt     0x48473791
+    mov     4, d2
+    bra     0x484737ce
+    cmp     9, d1
+    bge     0x48473799
+    cmp     0xc, d1
+    bgt     0x484737ce
+    mov     8, d2
+    bra     0x484737ce
+    extbu   d1
+    cmp     1, d1
+    bge     0x484737a6
+    cmp     3, d1
+    bgt     0x484737a9
+    clr     d2
+    bra     0x484737ce
+    cmp     4, d1
+    bge     0x484737b1
+    cmp     6, d1
+    bgt     0x484737b5
+    mov     3, d2
+    bra     0x484737ce
+    cmp     7, d1
+    bge     0x484737bd
+    cmp     9, d1
+    bgt     0x484737c1
+    mov     6, d2
+    bra     0x484737ce
+    cmp     0xa, d1
+    bge     0x484737c9
+    cmp     0xc, d1
+    bgt     0x484737ce
+    mov     9, d2
+    bra     0x484737ce
+    clr     d2
+    mov     d2, d0
+    retf    [d2], 4
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0737d2, 0x078c6d
 # StylCnvWaitTtlFunc  (CPU 0x48478c6d)
 .incbin_range "baserom/kn7000_program.rom", 0x078c6d, 0x078d26
 # StylCnvModlTtlFunc  (CPU 0x48478d26)
@@ -8367,7 +9656,11 @@ _rom_marker:
 # AcSubCategoryListBoxProc  (CPU 0x4847b6b2)
 .incbin_range "baserom/kn7000_program.rom", 0x07b6b2, 0x07bcca
 # AcCtgStyleListBoxProc  (CPU 0x4847bcca)
-.incbin_range "baserom/kn7000_program.rom", 0x07bcca, 0x07c5e3
+.incbin_range "baserom/kn7000_program.rom", 0x07bcca, 0x07c076
+# StyleListBoxDrawItem  (CPU 0x4847c076)
+.incbin_range "baserom/kn7000_program.rom", 0x07c076, 0x07c216
+# StyleListBoxGetItem  (CPU 0x4847c216)
+.incbin_range "baserom/kn7000_program.rom", 0x07c216, 0x07c5e3
 # AcAlphabetListBoxProc  (CPU 0x4847c5e3)
 .incbin_range "baserom/kn7000_program.rom", 0x07c5e3, 0x07cb28
 # AcAlpStyleListBoxProc  (CPU 0x4847cb28)
@@ -8381,13 +9674,31 @@ _rom_marker:
 # AcCustomListBoxProc  (CPU 0x4847e26d)
 .incbin_range "baserom/kn7000_program.rom", 0x07e26d, 0x07e7bc
 # AcCustomStyleListBoxProc  (CPU 0x4847e7bc)
-.incbin_range "baserom/kn7000_program.rom", 0x07e7bc, 0x07eff8
+.incbin_range "baserom/kn7000_program.rom", 0x07e7bc, 0x07e7c0
+# FlashAddrToSector  (CPU 0x4847e7c0)
+.incbin_range "baserom/kn7000_program.rom", 0x07e7c0, 0x07eff8
 # AcEraTitleMenuProc  (CPU 0x4847eff8)
 .incbin_range "baserom/kn7000_program.rom", 0x07eff8, 0x07f0ee
 # AcCtgOrgTitleMenuProc  (CPU 0x4847f0ee)
 .incbin_range "baserom/kn7000_program.rom", 0x07f0ee, 0x07f24b
 # MoreStyleFunc  (CPU 0x4847f24b)
-.incbin_range "baserom/kn7000_program.rom", 0x07f24b, 0x087420
+.incbin_range "baserom/kn7000_program.rom", 0x07f24b, 0x07f6c7
+# FlashReset  (CPU 0x4847f6c7)
+.incbin_range "baserom/kn7000_program.rom", 0x07f6c7, 0x07f721
+# FlashWordProgram  (CPU 0x4847f721)
+.incbin_range "baserom/kn7000_program.rom", 0x07f721, 0x07f75a
+# FlashSectorErase  (CPU 0x4847f75a)
+.incbin_range "baserom/kn7000_program.rom", 0x07f75a, 0x07f980
+# FlashReadAutoselect  (CPU 0x4847f980)
+.incbin_range "baserom/kn7000_program.rom", 0x07f980, 0x07f9f7
+# FlashProgram128Words  (CPU 0x4847f9f7)
+.incbin_range "baserom/kn7000_program.rom", 0x07f9f7, 0x08594d
+# AstHeaderIngest  (CPU 0x4848594d)
+.incbin_range "baserom/kn7000_program.rom", 0x08594d, 0x086341
+# JpegSetup  (CPU 0x48486341)
+.incbin_range "baserom/kn7000_program.rom", 0x086341, 0x0870c8
+# JpegPixelStore  (CPU 0x484870c8)
+.incbin_range "baserom/kn7000_program.rom", 0x0870c8, 0x087420
 # InitializeBlock01  (CPU 0x48487420)
 .incbin_range "baserom/kn7000_program.rom", 0x087420, 0x087634
 # DbMemoProc  (CPU 0x48487634)
@@ -8439,7 +9750,9 @@ _rom_marker:
 # MessageHeader  (CPU 0x4848a3e1)
 .incbin_range "baserom/kn7000_program.rom", 0x08a3e1, 0x08a4d8
 # InitializeBlock04  (CPU 0x4848a4d8)
-.incbin_range "baserom/kn7000_program.rom", 0x08a4d8, 0x08a9b8
+.incbin_range "baserom/kn7000_program.rom", 0x08a4d8, 0x08a931
+# OpeningFrameDraw  (CPU 0x4848a931)
+.incbin_range "baserom/kn7000_program.rom", 0x08a931, 0x08a9b8
 # InitializeBlock07  (CPU 0x4848a9b8)
 .incbin_range "baserom/kn7000_program.rom", 0x08a9b8, 0x08ae37
 # AcResetPageProc  (CPU 0x4848ae37)
@@ -8980,7 +10293,9 @@ _rom_marker:
 # TestDiskFunc  (CPU 0x484a0a32)
 .incbin_range "baserom/kn7000_program.rom", 0x0a0a32, 0x0a0a95
 # FdIoFunc  (CPU 0x484a0a95)
-.incbin_range "baserom/kn7000_program.rom", 0x0a0a95, 0x0a11f7
+.incbin_range "baserom/kn7000_program.rom", 0x0a0a95, 0x0a0d07
+# PanelSelfTestScanEntry  (CPU 0x484a0d07)
+.incbin_range "baserom/kn7000_program.rom", 0x0a0d07, 0x0a11f7
 # CpRamEditCheck  (CPU 0x484a11f7)
 .incbin_range "baserom/kn7000_program.rom", 0x0a11f7, 0x0a1396
 # LEDHideOffFunc  (CPU 0x484a1396)
@@ -9214,7 +10529,43 @@ _rom_marker:
 # FadeSetGridCheck  (CPU 0x484ab756)
 .incbin_range "baserom/kn7000_program.rom", 0x0ab756, 0x0aba23
 # FadeIOFilter  (CPU 0x484aba23)
-.incbin_range "baserom/kn7000_program.rom", 0x0aba23, 0x0ceeb6
+.incbin_range "baserom/kn7000_program.rom", 0x0aba23, 0x0ac2a8
+# PanelTransaction  (CPU 0x484ac2a8)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac2a8, 0x0ac523
+# PanelTxKick  (CPU 0x484ac523)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac523, 0x0ac5f1
+# PanelAtnIsr  (CPU 0x484ac5f1)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac5f1, 0x0ac70e
+# PanelTxDoneIsr  (CPU 0x484ac70e)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac70e, 0x0ac74a
+# PanelRxIsr  (CPU 0x484ac74a)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac74a, 0x0ac799
+# PanelTxState1  (CPU 0x484ac799)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac799, 0x0ac84d
+# PanelTxState2  (CPU 0x484ac84d)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac84d, 0x0ac923
+# PanelTxState3  (CPU 0x484ac923)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac923, 0x0ac98c
+# PanelTxState4  (CPU 0x484ac98c)
+.incbin_range "baserom/kn7000_program.rom", 0x0ac98c, 0x0aca5e
+# PanelTxState5  (CPU 0x484aca5e)
+.incbin_range "baserom/kn7000_program.rom", 0x0aca5e, 0x0acaff
+# PanelTxState6  (CPU 0x484acaff)
+.incbin_range "baserom/kn7000_program.rom", 0x0acaff, 0x0acc13
+# PanelRxState8  (CPU 0x484acc13)
+.incbin_range "baserom/kn7000_program.rom", 0x0acc13, 0x0adb59
+# PanelButtonDispatch  (CPU 0x484adb59)
+.incbin_range "baserom/kn7000_program.rom", 0x0adb59, 0x0b1707
+# PanelLedGroupToReg  (CPU 0x484b1707)
+.incbin_range "baserom/kn7000_program.rom", 0x0b1707, 0x0b1e86
+# Midi1RxIsr  (CPU 0x484b1e86)
+.incbin_range "baserom/kn7000_program.rom", 0x0b1e86, 0x0b2037
+# Midi2RxIsr  (CPU 0x484b2037)
+.incbin_range "baserom/kn7000_program.rom", 0x0b2037, 0x0b2691
+# MidiBaudTimerSetup  (CPU 0x484b2691)
+.incbin_range "baserom/kn7000_program.rom", 0x0b2691, 0x0b2793
+# MidiSerialInit  (CPU 0x484b2793)
+.incbin_range "baserom/kn7000_program.rom", 0x0b2793, 0x0ceeb6
 # BitmapKn7000  (CPU 0x484ceeb6)
 .incbin_range "baserom/kn7000_program.rom", 0x0ceeb6, 0x0cef02
 # BitmapNx  (CPU 0x484cef02)
@@ -10572,7 +11923,13 @@ _rom_marker:
 # DocDiskNameFunc  (CPU 0x4852a9e7)
 .incbin_range "baserom/kn7000_program.rom", 0x12a9e7, 0x12ab8b
 # FmmDocFileNameFunc  (CPU 0x4852ab8b)
-.incbin_range "baserom/kn7000_program.rom", 0x12ab8b, 0x134200
+.incbin_range "baserom/kn7000_program.rom", 0x12ab8b, 0x12cc9e
+# AstLoadHandler  (CPU 0x4852cc9e)
+.incbin_range "baserom/kn7000_program.rom", 0x12cc9e, 0x12cfe4
+# DiskLoadDispatch  (CPU 0x4852cfe4)
+.incbin_range "baserom/kn7000_program.rom", 0x12cfe4, 0x1335ff
+# FatSectorRead  (CPU 0x485335ff)
+.incbin_range "baserom/kn7000_program.rom", 0x1335ff, 0x134200
 # InitializeBlock14  (CPU 0x48534200)
 .incbin_range "baserom/kn7000_program.rom", 0x134200, 0x134bac
 # FE_SeqMenuSongSel  (CPU 0x48534bac)
@@ -11396,7 +12753,13 @@ _rom_marker:
 # SdcFmmSeqSongNameFunc  (CPU 0x4855e132)
 .incbin_range "baserom/kn7000_program.rom", 0x15e132, 0x15e574
 # SdcFmmPasswordFunc  (CPU 0x4855e574)
-.incbin_range "baserom/kn7000_program.rom", 0x15e574, 0x1661a0
+.incbin_range "baserom/kn7000_program.rom", 0x15e574, 0x15ec34
+# FavFormat  (CPU 0x4855ec34)
+.incbin_range "baserom/kn7000_program.rom", 0x15ec34, 0x161cdb
+# FavNameSetter  (CPU 0x48561cdb)
+.incbin_range "baserom/kn7000_program.rom", 0x161cdb, 0x161d8e
+# FavItemSetter  (CPU 0x48561d8e)
+.incbin_range "baserom/kn7000_program.rom", 0x161d8e, 0x1661a0
 # InitializeBlock12  (CPU 0x485661a0)
 .incbin_range "baserom/kn7000_program.rom", 0x1661a0, 0x1665d3
 # REVSELTitleFunc  (CPU 0x485665d3)

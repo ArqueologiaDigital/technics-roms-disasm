@@ -89,6 +89,75 @@
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
 
+; ---- Techni-Chord harmony engine (docs: kn5000-docs /kn7000-technichord/) ----
+; Pure-software auto-harmony on the main CPU: copy the detected chord, pick a
+; per-style voicing routine, emit the added notes as ordinary note-ons on the
+; orchestrator part. IMPORTANT (verified vs the users manual + GUI code): the
+; style parameter 0x8081 is stored in a LEGACY order, NOT the on-screen grid
+; order -- the GUI maps it through the 14-halfword table 0x485EC940
+; (param->grid slot: 0,1,2,4,5,6,7,8,9,10,11,12,13,3). "DUET 1" is stored LAST
+; (param 13, grid slot 3): it was appended to the older 13-style enumeration
+; (whose param 3 = the original DUET, renamed "DUET 2") so stored registration
+; data keeps its meaning. The KN6000 firmware embeds the same pool + map.
+; Grid/name order (string pool 0x485EC960): CLOSE, OPEN 1, OPEN 2, DUET 1,
+; DUET 2, COUNTRY, THEATRE, HYMN, BLOCK, BIG BAND BRASS, BIG BAND REEDS,
+; OCTAVE, HARDROCK, FANFARE.
+; MN10300 two-entry ABI: each voicing routine's canonical start is its movm
+; prologue (plain name); the register-save-`call` entry 2-5 bytes in is named
+; *_entry (a `call X_entry,[regs],frame` performs the register save itself).
+0x48472E5B  TechniChordOrchestratorPart ; resolve the harmony output part: param 0x8082 (0xFF = auto -> part 0x10/0x11 chosen via lib 0x4C01E256/0x4C029CB4 masks); part rejected (-1) when part-check param 0xB0007E[part] == 1
+0x48472E60  TechniChordOrchestratorPart_entry
+0x48472EBA  TechniChordCompute      ; THE harmony engine: GetCurrentChord -> chord-type normalise (jump table 0x485BC3EC; types 29..41 remapped to a basic type 1..28) -> gate on param 0x8080==1 -> style dispatch via 14-ptr jump table 0x485BC3B4 indexed by param 0x8081 -> per-note flag-fill tail
+0x4844DDF2  GetCurrentChord         ; copy the 6-byte current-chord record {type 0..0x29, root 1..12, ...} from RAM 0x50000B18 to (a0)
+0x4844E9F1  GetChordToneList        ; copy up to d0 chord tones (2-byte entries) from RAM 0x5003AB04 (count) / 0x5003AB05 (list) to (a0); returns copied count
+0x4847304C  TechniChordClose        ; style 0 CLOSE: fold each chord tone into the octave below the melody, keep tones >2 semitones below it, max 4 notes
+0x48473051  TechniChordClose_entry
+0x484731CB  TechniChordDuet1        ; param 13 = grid 3 "DUET 1" (the style appended last): CLOSE voicing clamped to its first harmony note
+0x484731D0  TechniChordDuet1_entry
+0x484731E6  TechniChordOpen1        ; param 1 OPEN 1: CLOSE, then drop the first harmony note one octave
+0x484731EB  TechniChordOpen1_entry
+0x48473207  TechniChordOpen2        ; param 2 OPEN 2: CLOSE re-spread by octave shifts (single note near the melody moved up, multi-note case first note down, close followers up)
+0x4847320C  TechniChordOpen2_entry
+0x48473283  TechniChordDuet2        ; param 3 (the legacy DUET slot) "DUET 2": 1 note = melody - matrix byte; matrix 0x485BA574 (28 chord-type rows x 12 interval cols)
+0x48473288  TechniChordDuet2_entry
+0x484732EB  TechniChordCountry      ; param 4 COUNTRY: 1 note; matrix 0x485BAEA4
+0x484732F0  TechniChordCountry_entry
+0x48473353  TechniChordTheatre      ; param 5 THEATRE: 2 notes; matrix 0x485BA6C4 (0x18-byte rows)
+0x48473358  TechniChordTheatre_entry
+0x484733DE  TechniChordHymn         ; param 6 HYMN: 3 notes (four-part incl. melody); matrix 0x485BAFF4 (0x24-byte rows)
+0x484733E3  TechniChordHymn_entry
+0x48473490  TechniChordBlock        ; param 7 BLOCK: 4 notes; matrix 0x485BA964 (0x30-byte rows)
+0x48473495  TechniChordBlock_entry
+0x48473558  TechniChordBigBandBrass ; param 8 BIG BAND BRASS: 3 notes; matrix 0x485BB3E4 (0x24-byte rows)
+0x4847355D  TechniChordBigBandBrass_entry
+0x4847360A  TechniChordBigBandReeds ; param 9 BIG BAND REEDS: 4 notes ("adds four harmony notes" -- users manual); matrix 0x485BBE64 (0x30-byte rows)
+0x4847360F  TechniChordBigBandReeds_entry
+0x484736D2  TechniChordOctave       ; param 10 OCTAVE: fixed intervals melody+12 & melody-12 (pair @0x485BC3A4); chord-independent (works unsplit, per the manual)
+0x484736D4  TechniChordOctave_entry
+0x48473701  TechniChordHardRock     ; param 11 HARDROCK: melody-5 & melody-12 (pair @0x485BC3A6); chord-independent
+0x48473703  TechniChordHardRock_entry
+0x48473730  TechniChordFanfare      ; param 12 FANFARE: melody+10 & melody+5, stacked fourths above (pair @0x485BC3A8); chord-independent
+0x48473732  TechniChordFanfare_entry
+0x4847375F  TechniChordOff          ; techni-chord off / style out of range: note count = 0
+0x48473766  TechniChordAugDimFold   ; (d0=chord type, d1=root 1..12) -> root-fold offset for the symmetric chord types: type 4 buckets of 4 semitones -> 0/4/8, type 7 buckets of 3 -> 0/3/6/9; 0 for other types, -1 for type 0 (no chord). Called by the 7 matrix voicers so enharmonically identical aug/dim chords share matrix columns
+0x48473768  TechniChordAugDimFold_entry
+0x4C0149FA  LibParamGet             ; library ROM: parameter/table get by id (d0=param id, d1=index<<24); reads the sound-parameter database (techni-chord uses ids 0x8080-0x8082, 0xB0007E)
+; Techni-Chord data (reference only; DATA, not code):
+; 0x485EC940  TechniChordStyleParamMap   ; 14 halfwords, param value -> GUI grid slot: 0,1,2,4,5,6,7,8,9,10,11,12,13,3 (see header note; same map in the KN6000)
+; 0x485EC960  TechniChordStyleNamePool   ; "CLOSE"..."FANFARE" NUL-separated, grid order; ptr table follows @0x485EC9D4
+; 0x485BA574  TechniChordDuet2Matrix     ; 28 rows (chord types 1..28) x 12 cols (interval mod 12), 1 harmony byte/col; harmony note = melody - byte
+; 0x485BA6C4  TechniChordTheatreMatrix   ; 28 x 12 x 2 bytes/col
+; 0x485BA964  TechniChordBlockMatrix     ; 28 x 12 x 4 bytes/col
+; 0x485BAEA4  TechniChordCountryMatrix   ; 28 x 12 x 1
+; 0x485BAFF4  TechniChordHymnMatrix      ; 28 x 12 x 3
+; 0x485BB3E4  TechniChordBigBandBrassMatrix ; 28 x 12 x 3
+; 0x485BBE64  TechniChordBigBandReedsMatrix ; 28 x 12 x 4 (ends at 0x485BC3A4)
+; 0x485BC3A4  TechniChordFixedIntervals  ; 3 signed byte pairs {F4,0C},{05,0C},{F6,FB} for OCTAVE/HARDROCK/FANFARE; harmony = melody - byte
+; 0x485BC3B4  TechniChordStyleJumpTable  ; 14 code ptrs, indexed by param 0x8081 (dispatch stubs 0x48472F9B..0x4847300C)
+; 0x485BC3EC  TechniChordChordTypeJumpTable ; 0x2A code ptrs, chord type 0..41 -> normalise stub
+; 0x50000B18  CUR_CHORD_RECORD           ; RAM: current detected chord {type, root, ...} (6 bytes), source for GetCurrentChord
+; 0x5003AB04  CHORD_TONE_LIST            ; RAM: chord-tone count byte + 2-byte tone entries (GetChordToneList source)
+
 ; ---- Effects DSP (IC306 ADSP-21065L SHARC) host port + downloader -----------
 ; The MN10300 host-boots the SHARC and streams effect programs to it (index
 ; port 0x98000000, data port 0x9C000000). Full analysis in
