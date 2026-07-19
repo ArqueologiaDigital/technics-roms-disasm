@@ -112,7 +112,7 @@
 0x484AD87F  PanelSwEventHarvest_entry
 0x484AD8AA  PanelSwEventAssemble    ; pop 3 cooked bytes, normalize the ADDR byte via PanelWireNormalize -> triplet at (a0); -1 when FIFO exhausted
 0x484AD8AF  PanelSwEventAssemble_entry
-0x484AD8E3  PanelGpioSwScan         ; scan the NON-serial switch sources into pseudo-segment shadows 0x5006BED2..: 0x98070000 bits8-9 + bits4-7 (0xF = debounce 0x1F4) + 0x484025E0 result + mode-A 0x9CC00008 active-low (the six SD-menu phantom buttons, &0x3F) + 0x4854B5B9 + 0x98070000 bit12 inverted
+0x484AD8E3  PanelGpioSwScan         ; scan the NON-serial switch sources into pseudo-segment shadows 0x5006BED2..: 0x98070000 bits8-9 + bits4-7 (0xF = debounce 0x1F4) + 0x484025E0 result + mode-A 0x9CC00008 active-low (the six SD-menu phantom buttons, &0x3F) + SdCardDetectPoll 0x4854B5B9 + 0x98070000 bit12 inverted
 0x484AD8E8  PanelGpioSwScan_entry
 0x484AD9AB  PanelGpioSwEdge         ; per-source XOR edge-detect on a 4-byte shadow record; changed bits -> event record (PanelSwEventPush)
 0x484AD9B0  PanelGpioSwEdge_entry
@@ -298,7 +298,243 @@
 ; 0x50000B18  CUR_CHORD_RECORD           ; RAM: current detected chord {type, root, ...} (6 bytes), source for GetCurrentChord
 ; 0x5003AB04  CHORD_TONE_LIST            ; RAM: chord-tone count byte + 2-byte tone entries (GetChordToneList source)
 
-; ---- Effects DSP (IC306 ADSP-21065L SHARC) host port + downloader -----------
+; ---- SD-card subsystem: disk worker + SPI transport (0x4854ACED..0x4854D2xx) -
+; The SD data path is a byte-wide SPI master on the sound bus: shift register
+; 0x9805000C, per-byte handshake = INTC group 0x1C ICR 0x34000170 (W1C bit0 arm,
+; poll DETECT bit4), clock-rate latch 0x9805000E (rate|0x80, rate 1/2/3), chip
+; select = GPIO 0x36008004 bit1 active-low. Slot GPIO (subtype!=4 only, see
+; PanelSubTypeGet): 0x9cc00009 bit0 sense-in, bit1 slot-enable out, bit2
+; power-line out, bit4 write-protect-in; power rail = 0x98060000 (shadow
+; 0x50005214) bit2; card LED 0x9cc00008 bit6, in-use LED bit7 (SdInUseLedSet).
+; Stock SD SPI protocol: CRC7 frames (table 0x4875896c), R1/R2/R1b, 0xFE data
+; token, CRC16 poly 0x1021 INIT 0 (the spi_sdcard patch finding). RE notes:
+; kn7000_mame/notes/sd-card-emulation-plan.md (Phase-2 updates).
+; Command-frame struct {clockMode u16, respType u16 (2=R2,3=R1b,else R1),
+; cmd[6]} -- clockMode doubles as the SdSpiClockSet arg (2=forced slow).
+; RAM frames: 0x50007ec6 CMD0, 0x50007ed0 CMD59(good CRC), 0x50007eda CMD1,
+; 0x50007e8a park-CMD0, 0x50007e94 CMD9 (drive-ctrl '@'), 0x50007ee4 CMD17
+; read frame / 0x50007eee CMD24 write frame (byte address big-endian @+5..+8).
+; ROM frames: 0x4867b9cc CMD10(CID), 0x4867b9d8 CMD9(CSD), 0x4867b9e4
+; CMD16(0x200), 0x4867ba64 CMD59 arg=1 (deliberately WRONG CRC self-test).
+; Driver state block @0x50160644: +0 probe/attach flag, +2 media state 0..3
+; (3=ready), +4 drv phase, +8 card-info record 0x5016064c {initflag u16 (the
+; mount-gate flag), +2 last error 0x5016064e, +8/+0xc TAAC/NSAC timeouts,
+; +0x10 total bytes 0x5016065c, +0x14 block len 0x200, +0x18 sector-count
+; limit 0x50160664, +0x1c byte-addr multiplier 0x200 0x50160668}, +0x28 CSD
+; record 0x5016066c {valid u16, len u16, 16 data bytes}. CID shadow (CMD10)
+; = 0x50082728 (16 bytes). Worker: MILK task id 8 (descriptor 0x4867b9a4:
+; entry DiskWorkerTask, prio 3, stack 0xc00), mailboxes 9 (cmd) / 0xa (done),
+; per-client ctrl blocks 0x50082738..0x50082918 (0x30 bytes each), active-block
+; ptr *(0x50082918). Blocking-transact shadow 0x501606b0 (16-byte reply),
+; flags 0x500051b0 (pending) / 0x500051b2 (result) / 0x500051b4 (busy).
+; Card-detect: ICR 0x3400016c bit4 (strobe write 1, read back, clear=present),
+; software override 0x50005204 (>=0 wins; latched by SdSlotDischarge, released
+; -1 by SdSlotRelease), debounce shadow 0x5000520c + tick 0x50005210 (100
+; ticks of 0x50151bfc). SPI gap count 0x50005200, operational rate/gap pair
+; 0x50005208/0x50005209.
+0x4854ACED  DiskInit                ; create the disk-worker world: SdHwInit, SdDrvRecordsReset(0x50160644), phase:=1, power line+rail off, SdSlotRelease, media state:=1, create+start task 8 (descriptor 0x4867b9a4 -> DiskWorkerTask), create mailboxes 9/0xa, clear the 10 ctrl blocks 0x50082738.. (+post done-event 0xa to each)
+0x4854ACF2  DiskInit_entry
+0x4854AD80  DiskHookNops            ; 3x retf filler between DiskInit and the status-clear helper
+0x4854AD89  DiskWorkerStatusClear   ; clear the ctrl-block status halfword (4,a0)
+0x4854AD90  DiskWorkerTask          ; MILK task 8: loop { receive mailbox 9 (blocking, lib 0x4C03D36D) -> 0x14-byte message; type (+8) 2 -> DiskDriveCtrlHandler + optional per-message callback (calls (a3)); 3 -> SdWorkerCmdHandler + callback (0x40,sp); clear status, post done-event 0xa (lib 0x4C03D219) }
+0x4854AE0B  DiskCmdReplyCopy        ; transact completion callback (installed at ctrl+0x2c): when 0x500051b0==1 copy the 16-byte reply to/from the shadow 0x501606b0, result -> 0x500051b2, pending:=0
+0x4854AE65  DiskCmdTransact         ; BLOCKING disk command: a0=ctrl cmds (0x14 -> phase:=3, 0x15 -> phase:=1, 0 resets busy), busy-gate 0x500051b4 (-> 0xFB), mailbox-full check (-0x55 -> 1), copy msg -> shadow 0x501606b0 + ctrl+0x1c, install DiskCmdReplyCopy, post event 9, wake task 3, then sleep-poll 0x500051b0 with a 0x1F40-tick timeout on 0x50151bfc (-> 1); reply copied back, returns 0x500051b2
+0x4854AE6A  DiskCmdTransact_entry
+0x4854AF85  DiskCmdPostAsync        ; non-blocking post: phase==3 -> 0x8002, mailbox full -> 0x8001; status:=2, copy the 0x14-byte message to ctrl+8, post event 9, 0
+0x4854AF8A  DiskCmdPostAsync_entry
+0x4854AFE9  SdWorkerCmdHandler      ; worker message TYPE 3 = SD media commands. msg: {+0 cmd u16, +4 sector u32, +8 count u32, +0xc buffer}. Gate: state==3 or cmd==0 else 0x40. In-use LED on. cmd 0 = init/mount ladder (state 2: park frame 0x50007e8a, power line+rail on, SdCardInitFull; state 0: rails off + SdSlotDrainWait -> probe flag 0x50160644; then power on + SdCardInitFull -> state 3, fail 0xFD); 3 = read (initflag else 0x30, range vs 0x50160664 else 2, per sector: byteaddr=sector*mult -> CMD17 frame 0x50007ee4, SdReadBlockCmd x4 retries); 4 = write (WP -> 0x2F, CMD24 frame 0x50007eee, SdWriteBlockCmd, err 3); 8 = last error 0x5016064e; 0xA = init check; 0xB = nop; 0xC = total bytes 0x5016065c LE -> buffer; else 7. Error -> 0x5016064e, LED off
+0x4854AFEE  SdWorkerCmdHandler_entry
+0x4854B32B  DiskDriveCtrlHandler    ; worker message TYPE 2 = drive control, keyed by drive letter 0x40..0x4E via jump table 0x4867b9f0 (gate: state==2 or cmd 0x40 else 0x8003; probe flag else 0x8004; phase==3 -> 0x8002). '@' = attach: park frame, SdSlotDischarge, SdSlotDrainWait, probe flag:=1, read the CSD into record 0x5016066c (CMD9 frame 0x50007e94). Reply {2, cmd, 4 arg bytes}; class from DriveLetterClass
+0x4854B330  DiskDriveCtrlHandler_entry
+0x4854B51F  SdMediaStateGet         ; read media state 0x50160646 (0..3, 3 = ready)
+0x4854B528  SdMediaStateSet         ; validate {0,1,2,3} -> 0x50160646 (else -1)
+0x4854B52A  SdMediaStateSet_entry
+0x4854B549  SdDrvPhaseSet           ; validate {1,2,3} -> 0x50160648 (3 blocks DiskCmdPostAsync)
+0x4854B54B  SdDrvPhaseSet_entry
+0x4854B566  SdDrvPhaseGet           ; read 0x50160648
+0x4854B56F  SdDrvRecordsReset       ; a0=driver block 0x50160644: invalidate the CSD record (+0x28) + reset the card-info record (+8)
+0x4854B574  SdDrvRecordsReset_entry
+0x4854B58B  SdProbeFlagGet          ; read the drive probe/attach flag 0x50160644
+0x4854B594  SdCardReadyCheck        ; debounced detect AND initflag 0x5016064c -> 1 else 0 (the mount worker's card gate)
+0x4854B597  SdCardReadyCheck_entry
+0x4854B5B6  SdCardDetectPoll        ; debounced card-detect (also a PanelGpioSwScan pseudo-switch source)
+0x4854B5B9  SdCardDetectPoll_entry
+0x4854B5C2  SdCardDetectPoll2       ; identical twin of SdCardDetectPoll
+0x4854B5C5  SdCardDetectPoll2_entry
+0x4854B5CE  SdWriteProtectPoll      ; wrapper around SdWriteProtectGet
+0x4854B5D1  SdWriteProtectPoll_entry
+0x4854B5DA  SdCidPtrGet             ; return the 16-byte CID shadow 0x50082728
+0x4854B5E3  SdCardRegRead           ; re-read a card register into record a0 {valid,len,data}: CS release, SdReadBlockCmd(frame a1, 15 bytes -> rec+1) up to 20 tries (0xFA-tick sleeps); ok -> len 0xF; R1 0x0400 -> invalidate+-1; 0x1200 -> invalidate
+0x4854B5E8  SdCardRegRead_entry
+0x4854B657  SdCardRegInvalidate     ; record: valid:=0, len:=0, data[0..7] = ROM default 0x4867b9c0
+0x4854B65A  SdCardRegInvalidate_entry
+0x4854B674  SdCardRegSetValid       ; record: valid:=1, len:=0xF, copy 8 bytes from a1
+0x4854B677  SdCardRegSetValid_entry
+0x4854B68C  SdCardInitFull          ; THE full SPI card init: CS release, slow-rate program (0xA)+apply(3), 10x 0xFF wake clocks, rate 0xB, CMD0 loop (R1==0x01, retry ladder via rate query 0xD: rate1-fail->0xB, rate2-fail->0xA, rate3-fail->reset+-1), CMD1 loop (0x100 retries, 0x14-tick sleeps, !=idle -> -2), CMD59+bad-CRC self-test x3 (non-fatal, fallback rate 0xA), SdCardIdentify w/ retry ladder (-3); a0 = card-info 0x5016064c
+0x4854B691  SdCardInitFull_entry
+0x4854B7FB  SdCardInfoReset         ; zero the card-info record (blocklen:=0x200, capacity:=0, initflag:=0) + re-init the CID shadow 0x50082728 from ROM 0x4875894c
+0x4854B7FE  SdCardInfoReset_entry
+0x4854B838  SdCardIdentify          ; identify stage: CMD9 -> CSD (SdReadBlockCmd 16 bytes), CMD16(0x200), multiplier 0x50160668:=0x200; CSD fields via SdCsdBitfield: C_SIZE/C_SIZE_MULT/READ_BL_LEN -> capacity 0x50160664 + total bytes 0x5016065c, TAAC/NSAC/R2W -> timeouts +8/+0xc; initflag:=1; CMD10 -> CID shadow 0x50082728. ROM frames 0x4867b9cc/d8/e4
+0x4854B83E  SdCardIdentify_entry
+0x4854B9B7  SdMediaChangeService    ; on debounced presence: post canned drive-ctrl msgs 0x500051c0 + 0x500051d4 (x2, 1000-tick spacing), state:=2, card LED 0x9cc00008 bit6 on; on absence: slot discharge + power-off + state:=1 + re-send the 0x500051d4 command rebuilt on-stack
+0x4854B9BC  SdMediaChangeService_entry
+0x4854BAF0  SdPowerDownNotify       ; card LED bit6 off + run the canned power-down ctrl msg 0x500051e8 through DiskDriveCtrlHandler
+0x4854BAF3  SdPowerDownNotify_entry
+0x4854BB14  DriveLetterClass        ; drive letter 'A'..'N' -> class via jump table 0x4867ba2c: 'A'/'J'/'K' -> 1 (floppy-class), others -> 2 (SD-class), out of range -> -1
+0x4854BB3A  SdHwInit                ; boot hw init: CS assert pulse + SdSpiPortSetup + SdDetectPortInit
+0x4854BB3D  SdHwInit_entry
+0x4854BB4F  SdSpiPortSetup          ; subtype!=4: flush 0xFFFF -> 0x98050004; EXTMD 0x34000280 |= 0x0C00 (SPI-handshake group edge cfg); force slow clock (mode 2)
+0x4854BB52  SdSpiPortSetup_entry
+0x4854BB84  SdSpiClockSet           ; d0: 2 = force slow (rate 3, gap 0x19), 3 = apply the stored operational pair 0x50005208/09 (subtype 5/3 -> forced slow), 0xA/0xB/0xC = program op rate slow/med/fast (rate 3/2/1, gap 0x1C/0xE/4), 0xD = query rate code, else -1; writes latch 0x9805000E = rate|0x80 w/ 2-tick verify poll; gap count -> 0x50005200
+0x4854BB89  SdSpiClockSet_entry
+0x4854BC7A  SdCsAssertWrap          ; plain-call wrapper around SdCsAssert
+0x4854BC7D  SdCsAssertWrap_entry
+0x4854BC85  SdCsRelease             ; CS high: bset bit1 (0x02) of GPIO 0x36008004
+0x4854BC8F  SdCsAssert              ; CS low (active): bclr bit1 of 0x36008004
+0x4854BC99  SdDetectPortInit        ; subtype!=4: bset 0x06 -> 0x9cc00005; SdSlotDischarge; power line+rail off; EXTMD bits9:8 := 01 (card-detect edge); W1C ICR 0x3400016c
+0x4854BC9C  SdDetectPortInit_entry
+0x4854BCDD  SdCardDetectRaw         ; raw detect: subtype 4 -> always 1; override 0x50005204 >= 0 -> its low byte; else IE-off strobe (write 1 -> ICR 0x3400016c, read back), IE-on, btst bit4: clear = present(1), set = absent(0)
+0x4854BCE0  SdCardDetectRaw_entry
+0x4854BD34  SdCardDetectDebounce    ; 100-tick (0x50151bfc) insert debounce on the raw read; shadow 0x5000520c, edge tick 0x50005210; removal reports immediately
+0x4854BD39  SdCardDetectDebounce_entry
+0x4854BD90  SdPowerLineSet          ; subtype!=4: bset bit2 (0x04) of 0x9cc00009 (slot power line)
+0x4854BD93  SdPowerLineSet_entry
+0x4854BDA9  SdPowerLineClear        ; bclr bit2 of 0x9cc00009
+0x4854BDAC  SdPowerLineClear_entry
+0x4854BDC2  SdPowerRailSet          ; SdPowerCtrlSet(4): raise 0x98060000 bit2 (SD power rail, shadow 0x50005214)
+0x4854BDC5  SdPowerRailSet_entry
+0x4854BDCF  SdPowerRailClear        ; SdPowerCtrlClear(4)
+0x4854BDD2  SdPowerRailClear_entry
+0x4854BDDC  SdSlotDrainWait         ; power down (line+rail off, bit1 off, override:=-1), 0x1E-tick sleep, then watch the sense line (bit0 0x9cc00009) decay: 0x7D0-tick window (timeout marks 0x50007efc:=0xFA), 100-tick low-confirm; always 0
+0x4854BDE1  SdSlotDrainWait_entry
+0x4854BE8D  SdSlotDischarge         ; slot flush cycle: line+rail off, CS assert, LATCH presence into the override 0x50005204, bset bit1 0x9cc00009, gap 0xA, slow clock, then 20,000 x 0x00 shifted out 0x9805000C (the boot-time SPI write storm)
+0x4854BE92  SdSlotDischarge_entry
+0x4854BEE0  SdSlotSenseGet          ; read 0x9cc00009 bit0 (subtype 4 -> 0)
+0x4854BEE3  SdSlotSenseGet_entry
+0x4854BEFF  SdWriteProtectGet       ; read 0x9cc00009 bit4 (0x10) (subtype 4 -> 0)
+0x4854BF02  SdWriteProtectGet_entry
+0x4854BF1E  SdSlotRelease           ; line+rail off, bclr bit1 0x9cc00009, detect override 0x50005204 := -1
+0x4854BF21  SdSlotRelease_entry
+0x4854BF4A  SdSpiSendByte           ; THE byte primitive: IE-off {W1C ICR 0x34000170, readback}, IE-on, write d0 -> shift reg 0x9805000C, bounded spin (count 0x50005200) on DETECT bit4
+0x4854BF4D  SdSpiSendByte_entry
+0x4854BF9D  SdSpiSendBuf            ; send d0 bytes from (a0) via the same W1C/write/spin sequence
+0x4854BFA2  SdSpiSendBuf_entry
+0x4854C013  SdSpiRecvByte           ; shift 0xFF out, spin on DETECT, read the answered byte from 0x9805000C
+0x4854C016  SdSpiRecvByte_entry
+0x4854C06F  SdSpiRecvBuf            ; receive d0 bytes -> (a0) (0xFF filler clocks)
+0x4854C074  SdSpiRecvBuf_entry
+0x4854C0EF  SdSpinDelay             ; counted spin (d0 iterations)
+0x4854C0F2  SdSpinDelay_entry
+0x4854C108  SdSpiClockBurst         ; send d0 x 0xFF filler clocks (the CS-released wake-up train)
+0x4854C10D  SdSpiClockBurst_entry
+0x4854C131  SdResponseScan          ; scan for the R1 (bit7 clear) up to 0x200 reads (0x64-spin between) -> (a0) halfword R1<<8; type 2 (R2) ORs a 2nd byte in; type 3 (R1b) appends SdWaitNotBusy(0x1F4); timeout -1
+0x4854C136  SdResponseScan_entry
+0x4854C193  SdWaitNotBusy           ; poll until 0xFF (card released busy), d0/2-tick timeout -> -1, 2-tick sleeps
+0x4854C198  SdWaitNotBusy_entry
+0x4854C1D0  SdSenseBusyWait         ; expect the slot sense high then wait (d0/2-tick timeout) for it to clear; -1 if already low or timeout
+0x4854C1D5  SdSenseBusyWait_entry
+0x4854C229  SdDataRespWait          ; scan for the write data-response token (b&0x11)==0x01: sss==010 (0x05) -> 0 accepted, else -2 (CRC/write error); 0x1400 reads max -> -1
+0x4854C22E  SdDataRespWait_entry
+0x4854C25F  SdTokenWait             ; poll for the 0xFE start-block token, d0/2-tick timeout -> -1
+0x4854C264  SdTokenWait_entry
+0x4854C291  SdCommandSend           ; send a command frame a0 {clockMode,respType,cmd[6]}: CS assert, clock set, CRC7 -> cmd[5], send 6 bytes, mode-2 extras (5-tick sleep + SdSenseBusyWait 0x258 + 0xC8 spin), SdResponseScan, CS release, mode-3 flush byte; returns -0xA busy-sense fail / -1 no response / else R1<<8 halfword (0x100 = idle)
+0x4854C296  SdCommandSend_entry
+0x4854C32A  SdCrcSelfTest           ; send the ROM CMD59 frame 0x4867ba64 with a DELIBERATELY wrong CRC7 ((crc-1)<<1|1) and expect the card to flag COM_CRC_ERROR: returns 1 iff R1 bit3 (0x0800 in the halfword) came back set
+0x4854C32F  SdCrcSelfTest_entry
+0x4854C3A6  SdReadBlockCmd          ; block read: command preamble as SdCommandSend, R1 gates (mode 3: ==0; else btst 0x0400/0x1200 fail), SdTokenWait(0x64), SdSpiRecvBuf(d0 bytes -> a1), read CRC16 pair, verify vs SdDataCrc16 (mismatch -> 0x0800 flag in the returned status); -0xA/-1/-2 = busy/response/token fail
+0x4854C3AB  SdReadBlockCmd_entry
+0x4854C4D2  SdReadChainCmd          ; block-read variant whose last received byte gives a continuation length read into buffer+len (2 CRC bytes discarded)
+0x4854C4D7  SdReadChainCmd_entry
+0x4854C5C0  SdWriteBlockCmd         ; block write: preamble, R1==0 gate, CRC16 over (a1,d0), send 0xFE token + data + CRC hi/lo, SdDataRespWait, SdWaitNotBusy(0x1F4); -0xA/-1/-2/-3 = busy/response/data-response/notbusy fail
+0x4854C5C5  SdWriteBlockCmd_entry
+0x4854C6EE  SdCsdBitfield           ; extract CSD bits [d0..d1] from the big-endian 16-byte buffer (0x40,sp); LSB/MSB mask tables ROM 0x4867ba70/0x4867ba78, byte-span switch 0..3, lib divide 0x4C0019D5
+0x4854C6F3  SdCsdBitfield_entry
+0x4854C917  SdDataCrc16             ; CRC-16 poly 0x1021 over (a0, len d0) -- INIT 0x0000 (the spi_sdcard-patch finding: MAME util::crc16 init 0xFFFF failed every CSD read)
+0x4854C919  SdDataCrc16_entry
+0x4854C94B  SdCmdCrc7               ; table-driven CRC7 (ROM table 0x4875896c) over (a0, len d0), returns accumulator>>1; callers store (crc<<1)|1 as cmd[5]
+0x4854C94D  SdCmdCrc7_entry
+0x4854C975  SdStatusProbeCmdA       ; vendor/status probe: ROM frame 0x4867ba80 (cmd bytes 00 00 00 00 FF, resp code 0x7C), 2 extra reply bytes -> 0x5008291c/0x5008291e (no in-cluster caller)
+0x4854CA2A  SdStatusProbeCmdB       ; twin via ROM frame 0x4867ba8c (CRC handled inline)
+0x4854CAC9  SdPlaylistDbInitAll     ; playlist/song-database full reset (helpers 0x4854ccb5/cce7/cd18 + SdPlaylistDbClear(0))
+0x4854CAE4  SdPlaylistLoad          ; mount-time load: parse stage 0x4854cd32 (result 1 = no file), then 0x4854cf66; feeds the SD song/playlist tables
+0x4854CAE7  SdPlaylistLoad_entry
+0x4854CB13  SdPlaylistDbClear       ; reset the playlist DB: header 0x501720f0 named from ROM "Default Playlist" 0x4867ba98, 0x63 slots @0x50160e98/0x50172108, 0x3E7 entries @0x5016c348
+0x4854CB18  SdPlaylistDbClear_entry
+0x4854CD30  SdPlaylistFileParse     ; read+parse the playlist file (3KB stack sector buffer)
+0x4854D076  SdPowerCtrlSet          ; IE-off: OR d0 into the power shadow 0x50005214 -> 0x98060000, 10-count settle
+0x4854D0A8  SdPowerCtrlClear        ; IE-off: AND ~d0 into 0x50005214 -> 0x98060000
+0x4854D0DC  SdPowerCtrlWrite        ; direct byte -> 0x50005214 + 0x98060000
+0x4854D0F4  SdPowerSerial16         ; bit-bang a 16-bit word into the power controller via 0x98060000 bits3(latch)/4(clock)/5(data), MSB first
+0x4854D0F9  SdPowerSerial16_entry
+0x4854D152  SdPowerDacInit          ; send the two power-controller init words 0x1220 + 0x1380
+0x4854D168  SdPowerCtrlSetRaw       ; SdPowerCtrlSet without the IE bracket (ISR-side twin)
+0x4854D18F  SdPowerCtrlClearRaw     ; SdPowerCtrlClear without the IE bracket
+0x4854D1B8  ModeAPortDefaultsInit   ; write the mode-A aux/LED port defaults across the 0x9cc000xx bank (0x9cc00021 panel-ID:=3, etc.)
+0x4854D1BD  ModeAPortDefaultsInit_entry
+0x484B11CB  SdInUseLedSet           ; d0!=0 -> bset else bclr bit7 (0x80) of 0x9cc00008 (the SD IN-USE lamp; bit6 = card-mounted LED)
+0x484D774E  PanelSubTypeGet         ; hardware subtype: strap probe 0x484D7713==3 (mode A) -> panel ID 0x9cc00021 bits3:2 = 0/1/2/3 -> 4/3/2/1; else strap 0x98070000 bits11:10 -> 00=5,01=1,10=2,11=3. Subtype 4 = SD slot GPIO bank 0x9cc0000x ABSENT (detect forced present, WP/sense read 0)
+0x484D7751  PanelSubTypeGet_entry
+;
+; ---- SD-card subsystem: mount state machine (0x485517E0..0x48552257) --------
+; UI-side supervisor around the disk worker. State byte 0x50083cd8 (SD_Get/
+; SetState): 0 idle, 1 = mount requested (card inserted), 2 = mount job
+; running, 3 = MOUNTED, 4 = mount failed. Status block 0x50083bxx: 0x50083bc1
+; card-busy, 0x50083bc2 card-ready (1 ok / 2 fs-init failed), 0x50083bc3
+; error flags (bit0 info, bit1 dir, bit2 playlist), 0x50083bc4 done flag,
+; 0x50083bc5 busy-UI flag, 0x50083bc8/0x50083bcc = {job, done} callback pair
+; run by the job poster 0x484729AD, 0x50083bac.. handles (-1 = closed).
+; Pending-eject latch 0x500058a0 (1 = removed while mounting, 2 = re-insert).
+; Insert/remove message = 0x107020BB (SdCardInsertMsgHandler). See
+; kn7000_mame/notes/sd-card-emulation-plan.md + the kn7000-sd-strap-gate notes.
+0x485517E0  SdStateReset            ; full reset to idle: state:=0, clear the favorites dir (FavFormat_entry), close handles 0x50083bac..b2:=-1, clear 0x50083bb6..ba/bbf/bc4/bc5, defaults 0x50083bc6/c7 from ROM 0x4868da64
+0x485517E3  SdStateReset_entry
+0x48551872  SdUnmountCleanup        ; unmount: same teardown without touching the state byte or 0x50083bb6..ba
+0x48551875  SdUnmountCleanup_entry
+0x485518D8  SdStateResetCall        ; thin wrapper -> SdStateReset
+0x485518DB  SdStateResetCall_entry
+0x485518E3  SdHookNops              ; 3x retf filler
+0x485518EC  SdUiBusyBegin           ; busy-UI flag 0x50083bc5:=1 + 0x4851abae(d0)
+0x48551902  SdUiBusyEnd             ; if flagged: 0x4851abe9 + clear
+0x48551920  SdCardInsertMsgHandler  ; system message hook: UI mode 0xFC ignored; msg 0x107020BB: d1==0 REMOVE -> card-busy:=0, VFS invalidate 0x48565f64, state 2 -> pending-eject:=1 else unmount+state:=0, card-ready:=0; d1==1 INSERT -> 0x48565f67, pending 0 -> state:=1 (kicks the mount) / 1 -> pending:=2; forwards to the SD-audio notifier 0x48578ddd
+0x48551925  SdCardInsertMsgHandler_entry
+0x485519B7  SdStateMachineTick      ; THE demand-driven SD supervisor, dispatch on SD_GetState: 1 -> gate SdMountBusyCheck==0, install {SdMountWorker,SdMountDone} at 0x50083bc8/cc, state:=2, schedule via job poster 0x484729AD; 2 -> pump the job runner 0x48472a55; 3 -> SdUiMountGateCheck then UI supervision (event 0x106 + error bit1 -> property 0x0006008F dialog; 0x108/109/10B/10C/113/120 screen syncs gated on card-busy 0x50083bc1); 4 -> failed-mount UI (0x48551d2a); 0 -> idle UI resync (0x48551f28); properties on object 0x0210033F via 0x484298a0
+0x485519BC  SdStateMachineTick_entry
+0x48551F8D  SdMountWorker           ; the mount job (pointer-installed): clear error flags, SdCardReadyCheck + SdCardDetectPoll2 gates (fail -> card-ready:=0, -8), SdCardFsInit (fail -> card-ready:=2, -7) else card-ready:=1; then info 0x4855ea17/0x4855eabd, 0x4855e845 (fail -> errbit0), dir 0x4857bf6c (fail -> errbit1), SdPlaylistLoad (fail -> errbit2), handle 0x4855fbec -> 0x50083bac
+0x48551F92  SdMountWorker_entry
+0x4855203A  SdMountDone             ; mount completion (pointer-installed): result<0 -> state 4 else state 3 (MOUNTED); done flag 0x50083bc4:=1; pending-eject 1 -> unmount+ready:=0, 2 -> unmount+state:=1; SD-audio notifies 0x4857926f/0x48578ff0
+0x485520AF  SdSyncWorker            ; re-sync job (installed by SdMountSyncPost): card gates + SdCardFsInit + card-ready, then rescan 0x4855fab3
+0x4855210B  SdSyncDone              ; re-sync completion: state 3/4 + the same pending-eject handling
+0x48552168  SdMountSyncPost         ; the Sdc screens' sync poster: install {SdSyncWorker,SdSyncDone}, state:=2, schedule via 0x484729AD
+0x4855216B  SdMountSyncPost_entry
+0x4855219C  SdUiMountGateCheck      ; GetProperty(object 0x0210033F, property 0x00060047) via 0x4842938d != -1 -> 1 (the state-0/3/4 UI gate)
+0x485521A1  SdUiMountGateCheck_entry
+0x485521C3  SdMountBusyCheck        ; job runner busy (0x48472abb) or 0x4851ad68 -> 1 (blocks the state-1 kick)
+0x485521C6  SdMountBusyCheck_entry
+0x485521EA  SdRemountSync           ; synchronous remount: state:=0, unmount, refresh info/dir/playlist inline, then state 3/4
+0x485521EF  SdRemountSync_entry
+0x4855224E  SdErrorFlagsGet         ; read the mount error flags 0x50083bc3
+0x4855E803  SD_SetState             ; write the SD state byte 0x50083cd8 (name from the MAME-side RE notes)
+0x4855E80C  SD_GetState             ; read 0x50083cd8
+0x4855E815  SdCardUsableCheck       ; state 3 -> 1; state 4 -> usable iff error bit0 clear
+0x4855EC37  FavFormat_entry         ; register-save entry of FavFormat (0x4855EC34, reflection-named)
+0x485630DB  SdCardFsInit            ; card init + FAT mount trampoline -> 0x48565d17 (the VFS device-'C' chain; state-3 gate); "card-init 0x485630de" in the MAME notes
+0x485630DE  SdCardFsInit_entry
+0x4C0019D5  LibDiv32                ; library ROM: signed 32-bit divide d0/d1 (fast paths d1=1/-1)
+0x4C03DD74  LibTickSleep            ; library ROM: sleep d0 ticks of the lib tick counter 0x500d3c58 (yield loop via 0x4c03c0e4)
+0x4C03D219  LibMsgSend              ; library ROM: post message id d0 to the kernel object of ctrl block a0 (ring-buffer op; disk worker ids 9=cmd, 0xA=done)
+0x4C03D36D  LibMsgReceive           ; library ROM: blocking receive of message id d0 into (a0) (the disk-worker task loop)
+;
+; SD data tables (reference only; DATA, not code):
+; 0x4867B9A4  DiskWorkerTaskDesc     ; MILK task descriptor {0,1,DiskWorkerTask,3,0xC00}
+; 0x4867B9CC  SdCmd10Frame           ; {3,1,4A 00 00 00 00} = CMD10 SEND_CID
+; 0x4867B9D8  SdCmd9Frame            ; {3,1,49 00 00 00 00} = CMD9 SEND_CSD
+; 0x4867B9E4  SdCmd16Frame           ; {3,1,50 00 00 02 00} = CMD16 SET_BLOCKLEN 0x200
+; 0x4867B9F0  DriveCtrlJumpTable     ; 15 x code ptr, drive-ctrl cmd 0x40..0x4E
+; 0x4867BA2C  DriveLetterClassTable  ; 14 x code ptr for DriveLetterClass
+; 0x4867BA64  SdCmd59BadCrcFrame     ; {3,1,7B 00 00 00 01} = CMD59 CRC_ON, sent with a corrupted CRC by SdCrcSelfTest
+; 0x4867BA70  SdCsdBitMaskTables     ; 8 LSB masks + 8 MSB masks for SdCsdBitfield
+; 0x4875894C  SdCidShadowInit        ; 16 zero bytes -> 0x50082728
+; 0x4875896C  SdCrc7Table            ; 256-byte CRC7 table (poly 0x09<<1)
 ; The MN10300 host-boots the SHARC and streams effect programs to it (index
 ; port 0x98000000, data port 0x9C000000). Full analysis in
 ; kn7000_mame/notes/dsp-effect-catalog.md and dsp-host-interface.md; the SHARC
