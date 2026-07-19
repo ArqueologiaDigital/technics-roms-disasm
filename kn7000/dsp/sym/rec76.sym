@@ -1,23 +1,26 @@
-; rec76 [EFFECT] — reciprocal-phase LFO + allpass-interpolated modulated delay, stereo (F75-76 family)
-; PM byte-identical to rec75; differs only in DM coeffs (preset: 9801=0x6666666600). Chorus/flanger-class.
-pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  ReadInputLR           ; R0=DM(0x20,I4); R6=DM(0x21,I4); R8=R0+R6
-pm:0x8404  InScale               ; LSHIFT R8 BY 9; LSHIFT R0 BY 9; F0=FLOAT R0
-pm:0x8407  RangeReduce_Abs       ; R8=ABS; R3=R8-R7; MRF+(R3*R4) piecewise
-pm:0x840c  Recip_PhaseGen        ; F8=RECIPS; F8=F4*F8; F15=F3+F8 phase
-pm:0x8412  PhaseScale            ; F15=F15*F1; F0=F0*F15
-pm:0x8414  Phase_To_Index        ; R8=FIX F0; ASHIFT -11; MODIFY(I5,0x34) tap
-pm:0x8417  IntFrac_Split         ; int part->M7; FDEP R8 15:16 fraction
-pm:0x841a  AllpassInterp1        ; F3=FLOAT R3 BY R4; F12=F3*F8; F8=F8-F12; F8=F8+F12
-pm:0x841f  Tap_MAC               ; MRF=R2*R0; R8=MRF+(R9*R7) feedback MAC
-pm:0x8421  WetScale              ; F8=FLOAT R8; F10=F8*F11; F0=F10*F0
-pm:0x8428  Delay1_Write          ; M7=0x1388(5000); DM(I6,M7)=R8
-pm:0x842a  Delay1_Read           ; R8=DM(I6,M6)
-pm:0x842c  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
-pm:0x8430  Tap2Setup             ; MODIFY(I5,0x34) second modulated tap
-pm:0x8434  AllpassInterp2        ; second-channel allpass frac interp
-pm:0x8440  Delay2_Write          ; M7=0x1388(5000); DM(I6,M7)=R4
-pm:0x8447  OutputL               ; R1=LSHIFT -8; DM(I4,M2)=R1
-pm:0x8449  Return                ; RTS (DB); R8=R8*R14
-pm:0x844b  OutputR               ; R8=LSHIFT -8; DM(I4,M2)=R8
-dm:0x9801  Preset_Coef           ; 0x6666666600 (=0.9 approx) — differs from rec75 (zero)
+; rec76 — COMP+OVD+DELAY combi (type 0x51, Multi "Delay Complex" group).
+; PM byte-identical to rec75; the DST->OVD change is pure DATA, and it
+; reproduces the dynamics doc's engine-A/engine-B distortion taxonomy inside
+; one program:
+; - the c028 float LUT = CURVE B (smooth concave knee, slopes 8/2.67/1.67/
+;   1/0.67/0.33.../0.083... — rec18's = the GUI Overdrive curve) instead of
+;   rec75's curve A;
+; - the post-LUT one-pole is ENABLED as a unity-DC tone smoother: k1 = c00e =
+;   0.2 (Q31), k2 = PM state 9801 = 0x66666666 = 0.8 -> H = 0.2/(1-0.8z^-1),
+;   DC gain exactly 1.0, -3 dB ~1.6 kHz (engine B's "tube rounding" smoother
+;   stage, its coefficient hidden in PM state exactly like rec18's).
+; Everything else (AGC compressor front, 5000/5000-smp float echo, 0.0625y +
+; 0.5*tap output mix) = rec75. See sym/rec75.sym and
+; dsp/final-batch-algorithms.md §4.
+pm:0x8400  CmpOvd_entry           ; I0 = I1 (all labels = rec75's, one PM)
+pm:0x8407  CmpOvd_env             ; family envelope
+pm:0x840c  CmpOvd_agcRecip        ; drive = 0.111 + 8.35e8/env clamp 4.0
+pm:0x841a  CmpOvd_lutLerpL        ; float lerp of CURVE B
+pm:0x841f  CmpOvd_smootherL       ; y = 0.2*shaped + 0.8*y' — ENABLED unity-DC tone smoother
+pm:0x8428  CmpOvd_echoL           ; 5000-smp float echo
+pm:0x8440  CmpOvd_echoR           ; 5000-smp float echo
+pm:0x8447  CmpOvd_outL            ; out = 0.0625y + 0.5*tap, x wet, >>8
+pm:0x844b  CmpOvd_outR
+dm:0x9801  cmpovd_smoother_k2     ; 0x66666666 = 0.8 Q31 — tone-smoother pole (rec75: 0)
+dm:0xc00e  cmpovd_smoother_k1     ; 0x19999999 = 0.2 Q31 — in-gain (unity DC with k2=0.8)
+dm:0xc028  cmpovd_curveB          ; 33-pt float LUT: CURVE B smooth knee (rec18's Overdrive curve)

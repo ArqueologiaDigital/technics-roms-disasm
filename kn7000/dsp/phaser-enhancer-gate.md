@@ -440,6 +440,14 @@ SIM), rec70/71/72 (chorus combis), rec75/76 (COMP+DST/OVD+DELAY).
 > counterpart to the linear Enhancer decoded here. See
 > [`dynamics-eq-exciter.md`](dynamics-eq-exciter.md).
 
+> **Follow-up 2 (2026-07-19, final pass)**: the §8 remainder list is now
+> empty — rec58–61 (half-rate series-allpass mic reverbs; a *third* reverb
+> architecture beside rec51's hybrid and this document's rec12 gate tank),
+> rec67–69 (brass physical-modeling cluster), rec70–72 and rec75/76 (the
+> combis; rec73's siblings, detailed at last) are in
+> [`final-batch-algorithms.md`](final-batch-algorithms.md). **The pool is
+> fully documented.**
+
 ## 9. Cross-model
 
 KN6000/KN6500 DM banks are byte-identical for all 80 records: every constant

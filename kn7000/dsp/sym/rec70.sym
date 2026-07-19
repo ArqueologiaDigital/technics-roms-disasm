@@ -1,23 +1,60 @@
-; rec70 [EFFECT] — feedback delay + dual LFO-modulated interpolated taps, stereo (F70-73 modulated-delay family)
-; I6=long delay buffer; I2=modulated read; I1=feedback/state; DM(0x20/0x21,I4) in, DM(I4,M2) x2 out
-pm:0x8400  Entry_I0eqI1          ; I0=I1; R15=I6
-pm:0x8402  LoadFbState           ; R10 = DM(-1,I1) previous feedback
-pm:0x8403  ReadInputL            ; R3 = DM(0x20,I4); F3=FLOAT
-pm:0x8405  FeedbackMix           ; F7=F10*F7(fb gain); F0=F3+F7
-pm:0x8407  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
-pm:0x8409  Delay1_Read           ; R0 = DM(I6,M6) delayed sample
-pm:0x840a  Delay1_Advance        ; I6=R15; M7=0x3C64(15460); MODIFY(I6,M7) wrap
-pm:0x840d  StoreFbState          ; DM(-1,I1)=R0
-pm:0x840f  LFO_PhaseAccum        ; F12=F0*F7; R8=DM(I0,M6)+PM(I8,M8) phase step
-pm:0x8411  Phase_To_Index        ; FDEP SE; ASHIFT R8 BY -11 -> delay offset
-pm:0x8415  IntFrac_Split         ; M7=int part; FDEP R8 15:16 = fraction
-pm:0x8418  Tap1_FracInterp       ; MR1F=R7; MRF+(R4*R3); linear interp (I5 taps)
-pm:0x8422  Tap2_VarModify        ; MODIFY(I2,M7) second modulated read pointer
-pm:0x8424  Tap2_FracInterp       ; MR1F=R7; R7=R4-R7; MRF+(R8*R7)
-pm:0x842b  ReadInputR            ; R3 = DM(0x21,I4); F3=FLOAT (right channel)
-pm:0x842f  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
-pm:0x8431  Delay2_Read           ; R0=DM(I6,M6)
-pm:0x8438  Tap2b_VarModify       ; MODIFY(I2,M7) modulated read
-pm:0x8444  AmpScale              ; R9=R9*R14; R8=R8*R14; doubling
-pm:0x8446  OutputL               ; DM(I4,M2)=R9
-pm:0x8448  OutputR               ; DM(I4,M2)=R8; RTS(DB) at 0x8447
+; rec70 — DELAY+CHORUS combi (type 0x40) — GUI "Feedback Chorus" on the
+; CHORUS screen (unit-9 whitelist) AND "Delay+Chorus" in the Multi group
+; (insert), one record, both names ROM fact. Per channel:
+; 1. rec13's echo IN FLOAT (= rec73's front end): line_in = in + 0.6*fb
+;    (c004/c00c), I6 SDRAM, L 8000 smp (181.4 ms) / R 10000 (226.8 ms),
+;    0x3C64 channel stride, fb = the tap saved in c003/c002 (one frame late,
+;    the rec09 idiom), no damping filter.
+; 2. mix = 0.5*in + 0.5*tap (c005/c006; c00d/c00e) — the rec73 combi idiom.
+; 3. ONE chorus voice per channel on rec06's exact geometry: mix written to
+;    the I2 ring (L at P read base P+250, R at P+490 read base P+740, centers
+;    250 smp), ONE sine LFO (family table c029-c03f, phase c007, increment
+;    PM 9800 = 0x8000 = 0.673 Hz — a REAL rate, not the fs/256 placeholder),
+;    depth c009 = +-64 smp; L tap = +sine, R tap = -sine(+90 deg) (the
+;    quadrature table read + negated MAC = rec06's antiphase R).
+; 4. out = 0.5*mix + 0.5*voice (c00a/c00b; c00f/c010) x wet (c008) x2 makeup.
+;    No CLIP (combi-family trait, cf rec73).
+; Footprints: I2 805 w < 1024; I6 ch2 tap depth 25460 < the 31000-w window.
+; Full doc: dsp/final-batch-algorithms.md §3.
+pm:0x8400  DlyCho_entry           ; I0 = I1; R15 = I6 (cursor save)
+pm:0x8402  DlyCho_fbL             ; R10 = c003 = last frame's L echo tap
+pm:0x8403  DlyCho_readL           ; in_L -> F3
+pm:0x8405  DlyCho_echoInL         ; line_in = in + 0.6*fb (c004); R13 = I2 save
+pm:0x8407  DlyCho_echoL           ; M7=8000: write float line-in, tap 181.4 ms
+pm:0x840a  DlyCho_strideL         ; I6 restore; MODIFY(I6,0x3C64) -> ch2 arena
+pm:0x840d  DlyCho_fbSaveL         ; c003 <- tap
+pm:0x840f  DlyCho_lfo             ; phase c007 += PM9800 (0.673 Hz); I5 = table
+pm:0x8413  DlyCho_tblBase         ; MODIFY(I5,0x2C) -> c030 sine-table center
+pm:0x8415  DlyCho_mixL            ; F0 = 0.5*in + 0.5*tap; M7 = table index
+pm:0x8418  DlyCho_sineA           ; lerp sine(phase); +3 hop -> quadrature read
+pm:0x841d  DlyCho_wrMixL          ; DM(I2,+250) = FIX(mix) — chorus line write at P
+pm:0x841e  DlyCho_sineB           ; lerp sine(phase+90); R10 = depth c009 (+-64)
+pm:0x8422  DlyCho_tapL            ; L voice: tap at P+250 + sineA*depth (MAC lerp)
+pm:0x8427  DlyCho_rBase           ; MODIFY(I2,0xF0) -> R write base P+490
+pm:0x8428  DlyCho_outMixL         ; out_L = 0.5*mix (c00a) + 0.5*voice (c00b)
+pm:0x842a  DlyCho_fbR             ; R1 = c002 = last frame's R echo tap
+pm:0x842b  DlyCho_readR           ; in_R -> F3; echo R: 0.6 fb (c00c)
+pm:0x842f  DlyCho_echoR           ; M7=10000: write, tap 226.8 ms; c002 <- tap
+pm:0x8437  DlyCho_wrMixR          ; DM(I2,+250) = FIX(mix R) at P+490 -> read base P+740
+pm:0x843a  DlyCho_tapR            ; R voice: tap at P+740 - sineB*depth (negated modulator)
+pm:0x8444  DlyCho_wetL            ; out_L x wet (c008) x2
+pm:0x8446  DlyCho_outL            ; DM(I4,M2)
+pm:0x8447  DlyCho_return          ; RTS (DB); out_R x wet x2
+pm:0x8448  DlyCho_outR
+dm:0x9800  dlycho_lfo_inc         ; 0x00008000 = 0.673 Hz — a real shipped chorus rate
+dm:0xc002  dlycho_fbR             ; R echo tap (runtime, float bits)
+dm:0xc003  dlycho_fbL             ; L echo tap (runtime)
+dm:0xc004  dlycho_fb_gL           ; 0.6 float — L echo regeneration
+dm:0xc005  dlycho_mix_dryL        ; 0.5 — mix = 0.5*in + 0.5*tap
+dm:0xc006  dlycho_mix_tapL        ; 0.5
+dm:0xc007  dlycho_lfo_phase       ; LFO phase accumulator (runtime)
+dm:0xc008  dlycho_wet             ; Q31 ~1.0 wet (x2 makeup in code)
+dm:0xc009  dlycho_depth           ; 0x00400000 = +-64 smp chorus depth
+dm:0xc00a  dlycho_out_dryL        ; 0.5 Q31 — out = 0.5*mix + 0.5*voice
+dm:0xc00b  dlycho_out_wetL        ; 0.5 Q31
+dm:0xc00c  dlycho_fb_gR           ; 0.6 — R echo regeneration
+dm:0xc00d  dlycho_mix_dryR        ; 0.5
+dm:0xc00e  dlycho_mix_tapR        ; 0.5
+dm:0xc00f  dlycho_out_dryR        ; 0.5 Q31
+dm:0xc010  dlycho_out_wetR        ; 0.5 Q31
+dm:0xc029  dlycho_sine_table      ; family 16-step sine + guard (rec77-79 hot-swappable)

@@ -1,21 +1,52 @@
-; rec72 [EFFECT] — feedback delay + two MAC-summed LFO-modulated taps, stereo (F70-73 family)
-pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  LoadFbState           ; R10=DM(-1,I1)
-pm:0x8402  ReadInputL            ; R3=DM(0x20,I4); F3=FLOAT
-pm:0x8404  FeedbackMix           ; F7=F10*F7; F0=F3+F7
-pm:0x8406  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
-pm:0x8408  Delay1_Read           ; R0=DM(I6,M6)
-pm:0x840a  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
-pm:0x840f  LFO_PhaseAccum1       ; R8=DM(I0,M6)+PM(I8,M8) phase A
-pm:0x8413  Tap1Setup             ; MODIFY(I5,0x2C); int/frac split
-pm:0x8417  Tap1_MAC              ; MR1F=R10; MRF+(R4*R3) interp tap A
-pm:0x8419  LFO_PhaseAccum2       ; R8=DM(I0,M6)+PM(I8,M8) phase B
-pm:0x841f  Tap2_MAC              ; R5=MRF-(R3*R10) interp tap B
-pm:0x8424  Tap_Delay_Write       ; M7=0xFA(250); DM(I2,M7)=R0
-pm:0x8426  Tap_VarModify         ; R8=R8*R11; MODIFY(I2,M7)
-pm:0x842f  ReadInputR            ; R3=DM(0x21,I4)
-pm:0x8433  Delay2_Write          ; M7=0x2710(10000); DM(I6,M7)=R0
-pm:0x8443  Output_MAC            ; R8=MRF+(R8*R7) final interp
-pm:0x8443  OutputL               ; DM(I4,M2)=R9
-pm:0x8445  Return                ; RTS (DB)
-pm:0x8446  OutputR               ; DM(I4,M2)=R8
+; rec72 — DELAY+VIBRATO combi (type 0x43, Multi "Delay Complex" group).
+; Per channel: echo (float, fb 0.6 = c004/c00b, L 8000 / R 10000 smp =
+; 181.4/226.8 ms; fb states c003/c002) -> mix = 0.5*in + 0.5*tap (c005/c006;
+; c00c/c00d) -> rec27's VIBRATO exactly: TWO sine LFOs at increment PM
+; 9800/9801 = 0x10000 = 1.346 Hz (rec27's real vibrato rate), phases c007 = 0
+; and c009 = 0x20000000 = +90 deg, L tap modulated by the +90 LFO / R by the
+; 0-deg one (rec27's channel assignment); centers 250 smp (L write P read
+; P+250, R write P+500 read P+750); depth c00a = 0x00700000 = +-112 smp
+; (DEEPER than rec27's 64 -> ~37 cents at template). Output = the vibrato tap
+; FULL-REPLACE x wet (c008): no dry term, no makeup, no CLIP — vibrato
+; semantics, applied to the echoed signal. Stereo source (rec27 was mono).
+; Full doc: dsp/final-batch-algorithms.md §3.
+pm:0x8400  DlyVib_entry           ; I0 = I1
+pm:0x8401  DlyVib_fbL             ; R10 = c003
+pm:0x8402  DlyVib_readL           ; in_L -> F3
+pm:0x8404  DlyVib_echoInL         ; line_in = in + 0.6*fb (c004)
+pm:0x8406  DlyVib_echoL           ; M7=8000: float echo (181.4 ms)
+pm:0x840a  DlyVib_strideL         ; MODIFY(I6,0x3C64)
+pm:0x840c  DlyVib_fbSaveL         ; c003 <- tap
+pm:0x840f  DlyVib_lfoA            ; phase c007 += PM9800 (1.346 Hz)
+pm:0x8413  DlyVib_tblA            ; MODIFY(I5,0x2C); index/frac split
+pm:0x8415  DlyVib_mixL            ; F0 = 0.5*in + 0.5*tap
+pm:0x8417  DlyVib_sineA           ; MAC lerp sine A (0 deg) -> R tap modulator
+pm:0x8419  DlyVib_lfoB            ; phase c009 += PM9801 (1.346 Hz, +90 deg)
+pm:0x841f  DlyVib_sineB           ; MAC lerp sine B (+90) -> L tap modulator
+pm:0x8424  DlyVib_wrMixL          ; DM(I2,+250) = FIX(mix) at P; R11 = depth c00a (+-112)
+pm:0x8426  DlyVib_tapL            ; L tap at P+250 + sineB*depth (MAC lerp)
+pm:0x842e  DlyVib_rBase           ; MODIFY(I2,0xFA) -> R write base P+500
+pm:0x842f  DlyVib_readR           ; in_R; echo R (0.6 = c00b, 10000 smp)
+pm:0x8433  DlyVib_echoR           ; M7=10000; c002 <- tap
+pm:0x8437  DlyVib_mixR            ; mix R = 0.5*in + 0.5*tap (c00c/c00d)
+pm:0x843c  DlyVib_wrMixR          ; write at P+500 -> read base P+750
+pm:0x843d  DlyVib_tapR            ; R tap at P+750 + sineA*depth
+pm:0x843f  DlyVib_wetL            ; out_L = tapL x wet (c008) — FULL REPLACE
+pm:0x8443  DlyVib_outL            ; DM(I4,M2)
+pm:0x8445  DlyVib_return          ; RTS (DB)
+pm:0x8446  DlyVib_outR            ; out_R = tapR x wet
+dm:0x9800  dlyvib_lfoA_inc        ; 0x00010000 = 1.346 Hz (= rec27's template)
+dm:0x9801  dlyvib_lfoB_inc        ; 0x00010000 = 1.346 Hz
+dm:0xc002  dlyvib_fbR             ; R echo tap (runtime)
+dm:0xc003  dlyvib_fbL             ; L echo tap (runtime)
+dm:0xc004  dlyvib_fb_gL           ; 0.6 float
+dm:0xc005  dlyvib_mix_dryL        ; 0.5
+dm:0xc006  dlyvib_mix_tapL        ; 0.5
+dm:0xc007  dlyvib_lfoA_phase      ; phase A (0 deg; runtime)
+dm:0xc008  dlyvib_wet             ; Q31 ~1.0 (full-replace output)
+dm:0xc009  dlyvib_lfoB_phase      ; phase B template 0x20000000 = +90 deg
+dm:0xc00a  dlyvib_depth           ; 0x00700000 = +-112 smp (~37 cents @1.35 Hz)
+dm:0xc00b  dlyvib_fb_gR           ; 0.6
+dm:0xc00c  dlyvib_mix_dryR        ; 0.5
+dm:0xc00d  dlyvib_mix_tapR        ; 0.5
+dm:0xc029  dlyvib_sine_table      ; family 16-step sine + guard

@@ -1,22 +1,64 @@
-; rec71 [EFFECT] — feedback delay + allpass-interpolated LFO-modulated tap, stereo (F70-73 family)
-; uses block-float FLOAT R3 BY R4 + allpass frac interp (F8=F8-F12; F8=F8+F12)
-pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  LoadFbState           ; R10 = DM(-1,I1)
-pm:0x8402  ReadInputL            ; R3=DM(0x20,I4); F3=FLOAT
-pm:0x8404  FeedbackMix           ; F7=F10*F7; F0=F3+F7
-pm:0x8406  Delay1_Write          ; M7=0x1F40(8000); DM(I6,M7)=R0
-pm:0x8408  Delay1_Read           ; R0=DM(I6,M6)
-pm:0x8409  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
-pm:0x840f  LFO_PhaseAccum        ; F12=F0*F7; R8=DM(I0,M6)+PM(I8,M8)
-pm:0x8411  Phase_To_Index        ; FDEP SE; ASHIFT -11
-pm:0x8413  TapSetup              ; MODIFY(I5,0x2C) tap base; int/frac split
-pm:0x841a  AllpassInterp1        ; F3=FLOAT R4; F12=F3*F8; F8=F8-F12; F8=F8+F12
-pm:0x841d  Tap_Delay             ; M7=0x12C(300); DM(I2,M7)=R0
-pm:0x8420  LFO_PhaseAccum2       ; R8=R5*R9 second modulation index
-pm:0x8425  AllpassInterp2        ; FLOAT R3 BY R4; allpass frac interp
-pm:0x842d  ReadInputR            ; R3=DM(0x21,I4) right channel path
-pm:0x8431  Delay2_Write          ; M7=0x1F40; DM(I6,M7)=R0
-pm:0x8441  AllpassInterp3        ; second-channel allpass interp
-pm:0x8449  AmpScale_Return       ; R6=R6*R14; R8=R8*R14; RTS(DB)
-pm:0x844b  OutputL               ; DM(I4,M2)=R6
-pm:0x844c  OutputR               ; DM(I4,M2)=R8
+; rec71 — DELAY+FLANGER combi (type 0x42, Multi "Delay Complex" group).
+; Per channel: echo (float, fb 0.6 = c004/c00e, BOTH channels 8000 smp =
+; 181.4 ms — the only combi with equal delays; fb state c003/c002) ->
+; mix = 0.5*in + 0.5*tap (c006/c007; c00f/c010) -> rec09's FLANGER exactly:
+; float I2 ring, write L at P / R at P+500, read bases 300/800 (center 300),
+; depth +-64 (c00a), 0.70 FLOAT REGEN (c009/c011; states c001/c000 — rec09's
+; one-frame-late idiom), float lerp (FLOAT R3 BY c00b/c012 = -31). But where
+; rec09 ran two independent LFOs 90 deg apart, rec71 runs ONE mono LFO
+; (phase c008, inc PM 9800 = 0x8000 = 0.673 Hz) with the R modulator NEGATED
+; (antiphase, the rec06 trick). Internal mix: out = 0.5*(line-in incl regen)
+; + 0.5*tap (c00c/c00d; c013/c014) x wet (c005). No makeup, no CLIP.
+; Full doc: dsp/final-batch-algorithms.md §3.
+pm:0x8400  DlyFla_entry           ; I0 = I1
+pm:0x8401  DlyFla_fbL             ; R10 = c003 = last frame's L echo tap
+pm:0x8402  DlyFla_readL           ; in_L -> F3
+pm:0x8404  DlyFla_echoInL         ; line_in = in + 0.6*fb (c004); R14 = wet c005
+pm:0x8406  DlyFla_echoL           ; M7=8000: float echo write/tap (181.4 ms)
+pm:0x8409  DlyFla_strideL         ; I6 restore; MODIFY(I6,0x3C64)
+pm:0x840c  DlyFla_fbSaveL         ; c003 <- tap
+pm:0x840f  DlyFla_lfo             ; phase c008 += PM9800 (0.673 Hz), ONE mono LFO
+pm:0x8413  DlyFla_tblBase         ; MODIFY(I5,0x2C) -> sine table
+pm:0x8415  DlyFla_mixL            ; F0 = 0.5*in + 0.5*tap
+pm:0x8419  DlyFla_regenL          ; R4 = c001; F4 = fb * 0.70 (c009) — rec09's float regen
+pm:0x841c  DlyFla_lineInL         ; F0 = mix + 0.70*fb — flanger line input
+pm:0x841d  DlyFla_wrLineL         ; DM(I2,+300) = R0 (float bits) at P
+pm:0x8420  DlyFla_offL            ; R8 = sine * depth (c00a)
+pm:0x8425  DlyFla_lerpL           ; float lerp (FLOAT R3 BY -31, c00b) at P+300+off
+pm:0x8429  DlyFla_rBase           ; MODIFY(I2,0xC8) -> R write base P+500
+pm:0x842a  DlyFla_outMixL         ; out_L = 0.5*line-in (c00c) + 0.5*tap (c00d)
+pm:0x842b  DlyFla_fbSaveFlaL      ; c001 <- tap (next frame's regen)
+pm:0x842d  DlyFla_readR           ; in_R; echo R (0.6 = c00e, 8000 smp)
+pm:0x8438  DlyFla_regenR          ; c000 * 0.70 (c011); line-in R
+pm:0x843b  DlyFla_wrLineR         ; write at P+500 -> read base P+800
+pm:0x843c  DlyFla_offR            ; R8 = -sine * depth — ANTIPHASE R modulator
+pm:0x8441  DlyFla_lerpR           ; float lerp (c012 = -31)
+pm:0x8446  DlyFla_fbSaveFlaR      ; c000 <- tap
+pm:0x8447  DlyFla_outMixR         ; out_R = 0.5*line-in (c013) + 0.5*tap (c014)
+pm:0x8449  DlyFla_wet             ; FIX; x wet (c005); I2 restore
+pm:0x844a  DlyFla_return          ; RTS (DB)
+pm:0x844b  DlyFla_outL            ; DM(I4,M2) x2
+pm:0x844c  DlyFla_outR
+dm:0x9800  dlyfla_lfo_inc         ; 0x00008000 = 0.673 Hz
+dm:0xc000  dlyfla_regenR_state    ; R flanger tap (runtime, float bits)
+dm:0xc001  dlyfla_regenL_state    ; L flanger tap (runtime)
+dm:0xc002  dlyfla_fbR             ; R echo tap (runtime)
+dm:0xc003  dlyfla_fbL             ; L echo tap (runtime)
+dm:0xc004  dlyfla_fb_gL           ; 0.6 float — L echo regeneration
+dm:0xc005  dlyfla_wet             ; Q31 ~1.0 output level (no makeup)
+dm:0xc006  dlyfla_mix_dryL        ; 0.5
+dm:0xc007  dlyfla_mix_tapL        ; 0.5
+dm:0xc008  dlyfla_lfo_phase       ; LFO phase (runtime)
+dm:0xc009  dlyfla_regen_gL        ; 0.70 float — rec09's flanger regeneration
+dm:0xc00a  dlyfla_depth           ; 0x00400000 = +-64 smp
+dm:0xc00b  dlyfla_fracExpL        ; -31 (FLOAT R3 BY — float-lerp fraction)
+dm:0xc00c  dlyfla_out_dryL        ; 0.5
+dm:0xc00d  dlyfla_out_wetL        ; 0.5
+dm:0xc00e  dlyfla_fb_gR           ; 0.6 — R echo regeneration
+dm:0xc00f  dlyfla_mix_dryR        ; 0.5
+dm:0xc010  dlyfla_mix_tapR        ; 0.5
+dm:0xc011  dlyfla_regen_gR        ; 0.70
+dm:0xc012  dlyfla_fracExpR        ; -31
+dm:0xc013  dlyfla_out_dryR        ; 0.5
+dm:0xc014  dlyfla_out_wetR        ; 0.5
+dm:0xc029  dlyfla_sine_table      ; family 16-step sine + guard

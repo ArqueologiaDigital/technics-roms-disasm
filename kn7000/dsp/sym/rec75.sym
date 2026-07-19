@@ -1,22 +1,70 @@
-; rec75 [EFFECT] — reciprocal-phase LFO + allpass-interpolated modulated delay, stereo (F75-76 family)
-; PM byte-identical to rec76; differs only in DM coeffs (preset). Chorus/flanger-class.
-pm:0x8400  Entry_I0eqI1          ; I0=I1
-pm:0x8401  ReadInputLR           ; R0=DM(0x20,I4); R6=DM(0x21,I4); R8=R0+R6
-pm:0x8404  InScale               ; LSHIFT R8 BY 9; LSHIFT R0 BY 9; F0=FLOAT R0
-pm:0x8407  RangeReduce_Abs       ; R8=ABS; R3=R8-R7; MRF+(R3*R4) piecewise
-pm:0x840c  Recip_PhaseGen        ; F8=RECIPS; F8=F4*F8; F15=F3+F8 phase
-pm:0x8412  PhaseScale            ; F15=F15*F1; F0=F0*F15
-pm:0x8414  Phase_To_Index        ; R8=FIX F0; ASHIFT -11; MODIFY(I5,0x34) tap
-pm:0x8417  IntFrac_Split         ; int part->M7; FDEP R8 15:16 fraction
-pm:0x841a  AllpassInterp1        ; F3=FLOAT R3 BY R4; F12=F3*F8; F8=F8-F12; F8=F8+F12
-pm:0x841f  Tap_MAC               ; MRF=R2*R0; R8=MRF+(R9*R7) feedback MAC
-pm:0x8421  WetScale              ; F8=FLOAT R8; F10=F8*F11; F0=F10*F0
-pm:0x8428  Delay1_Write          ; M7=0x1388(5000); DM(I6,M7)=R8
-pm:0x842a  Delay1_Read           ; R8=DM(I6,M6)
-pm:0x842c  Delay1_Advance        ; M7=0x3C64; MODIFY(I6,M7)
-pm:0x8430  Tap2Setup             ; MODIFY(I5,0x34) second modulated tap
-pm:0x8434  AllpassInterp2        ; second-channel allpass frac interp
-pm:0x8440  Delay2_Write          ; M7=0x1388(5000); DM(I6,M7)=R4
-pm:0x8447  OutputL               ; R1=LSHIFT -8; DM(I4,M2)=R1
-pm:0x8449  Return                ; RTS (DB); R8=R8*R14
-pm:0x844b  OutputR               ; R8=LSHIFT -8; DM(I4,M2)=R8
+; rec75 — COMP+DST+DELAY combi (type 0x50, Multi "Delay Complex" group).
+; PM byte-identical to rec76 — ONE program serves both combis; the DST/OVD
+; split is done entirely in DATA (see rec76). Chain:
+; 1. the GUI "COMP" = the family AGC made load-bearing: stereo-linked
+;    detector |(L+R)<<9| (attack c005 = 1/256, release c006 = 1/2048, state
+;    PM 9800), drive = 0.111 + 8.35e8/env clamp 4.0 (c007-c00a), x master
+;    trim c004 (1.0f).
+; 2. per channel: x * drive -> 33-point LUT in the c028 window STORED AS
+;    IEEE FLOATS (float lerp via FLOAT R3 BY c00b/c014 = -31 — a float
+;    variant of the rec37 signal-indexed table). rec75's curve = CURVE A
+;    (slopes 7.5/1.5/0.5 — rec37's knee = the GUI Distortion voicing).
+; 3. one-pole y = k1*x + k2*y[n-1] with k1 = c00e (Q31) and k2 = PM state
+;    9801: rec75 ships k1~1.0 / k2=0 -> BYPASSED (engine A has no mid-stage);
+;    y[n-1] parked in c00f/c016.
+; 4. echo: line_in = 0.125*shaped + 0.6*fb (c00c=0.5 x c010/c017=0.25 path;
+;    fb gain c00d/c015 = 0.6 float), I6 SDRAM, 5000/5000 smp (113.4 ms both
+;    channels), float, undamped; fb states c003/c002.
+; 5. out = 0.0625*shaped + 0.5*tap (c011-c012 / c018-c019) — the first
+;    repeat lands at exactly the direct level — x wet (c013), >>8. No CLIP.
+; Full doc: dsp/final-batch-algorithms.md §4.
+pm:0x8400  CmpDst_entry           ; I0 = I1
+pm:0x8401  CmpDst_readLR          ; in_L, in_R; detector sum (L+R)<<9
+pm:0x8407  CmpDst_env             ; family envelope (atk 1/256, rel 1/2048, state PM 9800)
+pm:0x840c  CmpDst_agcRecip        ; drive = 0.111 + 8.35e8/env (RECIPS seed)
+pm:0x8410  CmpDst_agcClamp        ; env <= 0.1 -> drive = c00a = 4.0
+pm:0x8412  CmpDst_trim            ; drive x c004 (1.0f); F0 = in_L * drive
+pm:0x8414  CmpDst_lutIdxL         ; FIX >>11 -> +-16 index; I5 -> c038 curve center
+pm:0x841a  CmpDst_lutLerpL        ; FLOAT-domain lerp of the float LUT (c00b = -31)
+pm:0x841f  CmpDst_smootherL       ; y = c00e*shaped + PM9801*y' (y' = c00f) — rec75: bypassed
+pm:0x8421  CmpDst_ySaveL          ; c00f <- y (the one-pole memory)
+pm:0x8422  CmpDst_echoInL         ; line_in = 0.5y*0.25 (c00e-path x c010) + 0.6*fb (c00d)
+pm:0x8428  CmpDst_echoL           ; M7=5000: float echo write/tap (113.4 ms)
+pm:0x842c  CmpDst_strideL         ; MODIFY(I6,0x3C64) -> ch2 arena; c003 <- tap
+pm:0x842f  CmpDst_lutIdxR         ; ch2: in_R * drive -> LUT (same curve, I5 re-based)
+pm:0x8434  CmpDst_lutLerpR        ; float lerp (c014 = -31)
+pm:0x8439  CmpDst_smootherR       ; y = c00e*shaped + PM9801*y' (y' = c016, same k pair)
+pm:0x843b  CmpDst_ySaveR          ; c016 <- y
+pm:0x843d  CmpDst_echoInR         ; line_in R = 0.125y + 0.6*fb (c015)
+pm:0x8440  CmpDst_echoR           ; M7=5000; c002 <- tap
+pm:0x8441  CmpDst_outMixL         ; out_L = 0.0625y (c011) + 0.5*tap (c012), x wet c013
+pm:0x8444  CmpDst_outMixR         ; out_R = 0.0625y (c018) + 0.5*tap (c019)
+pm:0x8447  CmpDst_outL            ; >>8; DM(I4,M2)
+pm:0x8449  CmpDst_return          ; RTS (DB); x wet
+pm:0x844b  CmpDst_outR            ; >>8; DM(I4,M2)
+dm:0x9801  cmpdst_smoother_k2     ; 0 — post-LUT one-pole pole (rec76: 0.8; PM-state parameter idiom)
+dm:0xc002  cmpdst_fbR             ; R echo tap (runtime, float bits)
+dm:0xc003  cmpdst_fbL             ; L echo tap (runtime)
+dm:0xc004  cmpdst_trim            ; 1.0f — master drive trim
+dm:0xc005  cmpdst_env_atk         ; 0x00800000 = 1/256
+dm:0xc006  cmpdst_env_rel         ; 0x00100000 = 1/2048
+dm:0xc007  cmpdst_agc_base        ; 0.111
+dm:0xc008  cmpdst_agc_num         ; 8.35e8
+dm:0xc009  cmpdst_agc_thr         ; 0.1 (Q31)
+dm:0xc00a  cmpdst_agc_clamp       ; 4.0
+dm:0xc00b  cmpdst_fracExpL        ; -31 (float-lerp fraction exponent)
+dm:0xc00c  cmpdst_half            ; 0.5f — shaped-output pre-scale
+dm:0xc00d  cmpdst_fb_gL           ; 0.6f — L echo regeneration
+dm:0xc00e  cmpdst_smoother_k1     ; Q31 ~1.0 (rec76: 0.2) — one-pole in-gain
+dm:0xc00f  cmpdst_smootherL_y     ; one-pole memory L (runtime)
+dm:0xc010  cmpdst_echoin_g        ; 0.25f -> 0.125*shaped into the line
+dm:0xc011  cmpdst_out_dryL        ; 0.5f (x the 0.125 path = 0.0625 direct)
+dm:0xc012  cmpdst_out_tapL        ; 0.5f
+dm:0xc013  cmpdst_wet             ; Q31 ~1.0
+dm:0xc014  cmpdst_fracExpR        ; -31
+dm:0xc015  cmpdst_fb_gR           ; 0.6f
+dm:0xc016  cmpdst_smootherR_y     ; one-pole memory R (runtime)
+dm:0xc017  cmpdst_echoin_gR       ; 0.25f
+dm:0xc018  cmpdst_out_dryR        ; 0.5f
+dm:0xc019  cmpdst_out_tapR        ; 0.5f
+dm:0xc028  cmpdst_curveA          ; 33-pt float LUT: CURVE A knee, slopes 7.5/1.5/0.5 (rec37's)

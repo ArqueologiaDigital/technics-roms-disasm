@@ -461,8 +461,12 @@ rec17/18/19/38/39/40 → engine/curve/voicing identities (conf high).
 `kernel-architecture.md` §7's `0x831B` description corrected (EQ cascade,
 not interpolator); syms rewritten for all ten records + the kernel label.
 
-Still undocumented at full depth: rec58–61 (mic reverbs), rec67–69 (BRASS
-SIM), rec70/71/72 (combi back-ends), rec75/76 (COMP+DST/OVD+DELAY). The
+~~Still undocumented at full depth: rec58–61 (mic reverbs), rec67–69 (BRASS
+SIM), rec70/71/72 (combi back-ends), rec75/76 (COMP+DST/OVD+DELAY)~~ — done
+2026-07-19 in [`final-batch-algorithms.md`](final-batch-algorithms.md),
+which also vindicates this document's §6 taxonomy: rec75/76 reproduce the
+engine-A/engine-B split (curve A vs curve B + PM-state tone smoother)
+purely in data, inside one PM image. The
 modulation/pitch cluster (rec11/27/28/29/32/33/49/50/57) is now covered by
 `modulation-pitch-family.md` — the rec28/29 suspicion resolved as **Auto Wah
 vs Pedal Wah** (rec29's detector is dead code; it tracks a host cell), and

@@ -244,9 +244,17 @@ Facts worth naming:
   CALLs helper `0x831B`).
 - The `FLAG3` poll shifts I3 (the third delay ring, §6) by −1 only when the
   external pin is high, and `ASTAT` bit 20 toggles every frame — a
-  frame-parity flag effects can branch on. Only rec58–61 gate on FLAG3; what
-  drives the pin on the real board is still untraced (open question in
-  `effect-multi-unit-routing.md`).
+  frame-parity flag effects can branch on. Only rec58–61 gate on FLAG3 —
+  and their design **pins its function** (2026-07-19,
+  `final-batch-algorithms.md` §1): FLAG3 must be a **fs/2 frame-parity
+  strobe**. The mic reverbs split a series-allpass tank across the two
+  FLAG3 phases and rely on the I3 ring scrolling exactly once per two
+  frames (the poll sits in u7's call delay slot, so the scroll lands
+  immediately before the mic program runs); any other FLAG3 behavior
+  breaks their delay bookkeeping. I3 is therefore a **half-rate delay
+  arena** — 18,000 words = 816 ms of reach. (The pin's physical driver on
+  the board remains untraced — function is design fact, source
+  PROVISIONAL.)
 
 ## 6. The delay-memory manager
 
@@ -290,8 +298,12 @@ effectively u0+u9 shared), u1..u5 1,024 w each, u6+u7+u8 shared 1,024 w.
 The sharings are consistent with the unit roles: u8 (EQ) needs no delay, u9's
 programs (rec06/07/09 family) are I2-only with ≤866-word footprints — fitting
 the 1,119-word first window they share with the I6-only reverb on u0. The
-{u6,u7} SDRAM share is the one corner where two concurrently-active delay
-effects could collide (**open**, see §8).
+{u6,u7} SDRAM share looked like the one corner where two concurrently-active
+delay effects could collide — **resolved** (2026-07-19): u7's whitelist
+admits only the mic reverbs rec58–61, and those use **no I6 and no I2 at
+all** — their tank lives entirely in the u7-exclusive half-rate I3 ring
+(`final-batch-algorithms.md` §1). The shared windows have exactly one real
+user (u6).
 
 **The scrub stubs** (`0x80A6..0x80F6`): six variants of a
 silence-and-zero-fill routine, elegantly overlapped (each stub's `RTS(DB)`
@@ -390,8 +402,13 @@ same capture.
 
 - Bank↔line identity order (§8) — the one hypothesis load-bearing for the
   MULTI verdict.
-- What drives the FLAG3 input pin, and the {u6,u7} shared-SDRAM-window
-  concurrency corner (§6).
+- ~~What drives the FLAG3 input pin, and the {u6,u7} shared-SDRAM-window
+  concurrency corner (§6)~~ — **both resolved 2026-07-19** by the rec58–61
+  annotation (`final-batch-algorithms.md` §1): FLAG3 = fs/2 parity strobe
+  by design necessity (physical source still untraced), and u7's mic
+  reverbs never touch the shared windows. Related detail explained there:
+  boot init zeroes MSGR3–7 but *not* MSGR2 (`DM 0x0A`) — MSGR2 is the mic
+  reverbs' I3-cursor save cell.
 - FLAG0/FLAG1 output sinks; host reg `0xA0`; the exact SDIE/SDOE index↔pin
   order; the DSP core-clock (SDRDIV reading, §6).
 - The `0xC382..0xC399` memory-map table: `{0x022000,0,0x020000}` /

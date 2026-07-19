@@ -62,25 +62,25 @@
 ;  55  effect   0x486C9211  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  56  effect   0x486C960F  DM@9800:17e DM@C000:41e PM@8400:114w   stereo REVERB: ER + 4-AP diffuser + absorbing AP + 2 damped combs
 ;  57  effect   0x486C9A0D  DM@9800:2e DM@C000:77e PM@8400:87w   VOICE CHANGER: dual-saw granular detune (equal-gain triangular crossfade)
-;  58  effect   0x486C9DD2  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
-;  59  effect   0x486CA134  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
-;  60  effect   0x486CA496  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
-;  61  effect   0x486CA7F8  DM@9800:6e DM@C000:40e PM@8400:98w   comb+allpass reverb
+;  58  effect   0x486C9DD2  DM@9800:6e DM@C000:40e PM@8400:98w   mic reverb ROOM: half-rate series-allpass tank (FLAG3 phase-split)
+;  59  effect   0x486CA134  DM@9800:6e DM@C000:40e PM@8400:98w   mic reverb KARAOKE: half-rate 363 ms echo allpass
+;  60  effect   0x486CA496  DM@9800:6e DM@C000:40e PM@8400:98w   mic reverb STAGE: half-rate series-allpass tank
+;  61  effect   0x486CA7F8  DM@9800:6e DM@C000:40e PM@8400:98w   mic reverb CAVE: half-rate series-allpass tank (longest)
 ;  62  effect   0x486CAB5A  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank A: 2.9 kHz presence peak)
 ;  63  effect   0x486CAFAD  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank B: 2.9 kHz notch, low-mid poles)
 ;  64  effect   0x486CB400  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank C: 1.05 kHz mid honk)
 ;  65  effect   0x486CB853  DM@9800:8e DM@C000:73e PM@8400:109w   cubic soft-clip overdrive (tone bank D: softened 2.9 kHz peak)
 ;  66  effect   0x486CBCA6  DM@9800:1e DM@C000:64e PM@8400:141w   VOCAL HARMONIZER (3-voice granular pitch shifter, mic effect)
-;  67  effect   0x486CC169  DM@9800:5e DM@C000:73e PM@8400:108w   waveshaper/nonlinear (+ modulated delay)
-;  68  effect   0x486CC5A7  DM@9800:1e DM@C000:73e PM@8400:57w   waveshaper/nonlinear
-;  69  effect   0x486CC89F  DM@9800:2e DM@C000:73e PM@8400:90w   waveshaper/nonlinear (+ comb)
-;  70  effect   0x486CCC62  DM@9800:1e DM@C000:77e PM@8400:74w   modulated-delay chorus/ensemble
-;  71  effect   0x486CCFD4  DM@9800:1e DM@C000:77e PM@8400:77w   modulated-delay chorus/flanger
-;  72  effect   0x486CD358  DM@9800:2e DM@C000:77e PM@8400:72w   modulated-delay chorus/ensemble
+;  67  effect   0x486CC169  DM@9800:5e DM@C000:73e PM@8400:108w   BRASS SIMULATOR1: pitch-tracked octave grains + nonlinear lip ODE
+;  68  effect   0x486CC5A7  DM@9800:1e DM@C000:73e PM@8400:57w   BRASS SIMULATOR2: pure lip-ODE rasp (4x-oversampled)
+;  69  effect   0x486CC89F  DM@9800:2e DM@C000:73e PM@8400:90w   BRASS SIMULATOR3: lip ODE + 512-smp bore waveguide
+;  70  effect   0x486CCC62  DM@9800:1e DM@C000:77e PM@8400:74w   DELAY+CHORUS combi (GUI Feedback Chorus): float echo -> one-voice quadrature chorus
+;  71  effect   0x486CCFD4  DM@9800:1e DM@C000:77e PM@8400:77w   DELAY+FLANGER combi: float echo -> rec09 flanger (mono LFO)
+;  72  effect   0x486CD358  DM@9800:2e DM@C000:77e PM@8400:72w   DELAY+VIBRATO combi: float echo -> rec27 vibrato (full-replace)
 ;  73  effect   0x486CD6C3  DM@9800:1e DM@C000:77e PM@8400:79w   DELAY+PHASER combi: regen echo -> 3-stage swept-allpass phaser w/ internal 50/50 mix
 ;  74  effect   0x486CDA53  DM@9800:5e DM@C000:40e PM@8400:72w   TOUCH WAH: envelope-swept resonator + stereo echo (was: tremolo-rotary)
-;  75  effect   0x486CDD14  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger
-;  76  effect   0x486CE097  DM@9800:2e DM@C000:77e PM@8400:76w   modulated-delay chorus/flanger
+;  75  effect   0x486CDD14  DM@9800:2e DM@C000:77e PM@8400:76w   COMP+DST+DELAY combi: AGC compressor -> float-LUT curve A -> echo
+;  76  effect   0x486CE097  DM@9800:2e DM@C000:77e PM@8400:76w   COMP+OVD+DELAY combi: AGC compressor -> float-LUT curve B + tone smoother -> echo
 ;  77  data     0x486CE41A  DM@C028:37e   LFO waveform table — sine
 ;  78  data     0x486CE4EB  DM@C028:37e   LFO waveform table — triangle
 ;  79  data     0x486CE5BC  DM@C028:37e   LFO waveform table — square

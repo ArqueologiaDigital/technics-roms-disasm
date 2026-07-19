@@ -1,17 +1,30 @@
-; rec59 — allpass-diffusion reverb/ambience (family rec58-61; preset B)
-; Identical PM to rec58; differs only in delay-tap M7 values and the allpass
-; gain table dm:c013-c017 (here only one active gain 0.7, rest zeroed -> a
-; sparser/shorter ambience than rec58).
-pm:0x8400  ReverbEntry_chSel      ; IF NOT FLAG3, JUMP to 2nd-channel path (0x8432)
-pm:0x8402  chA_floatInput         ; F8 = FLOAT R0
-pm:0x8405  chA_biquadCascade      ; 3x biquad damping filter
-pm:0x8410  chA_writeSample1       ; DM(I4,M2) = R0
-pm:0x841d  chA_tap0_M7            ; M7 delay tap 0 (preset)
-pm:0x841f  chA_allpassRead       ; R3 = DM(I3,M7)
-pm:0x8424  chA_allpassWrite      ; DM(I3,M3) = R0
-pm:0x842f  chA_return            ; RTS (DB)
-pm:0x8432  ReverbEntry_chB        ; 2nd-channel path
-pm:0x845f  chB_return            ; RTS (DB)
-dm:0xc004  biquad1_b0            ; 0.5745
-dm:0xc013  allpass_gain0        ; 0.7  (only active allpass gain in this preset)
-dm:0xc014  allpass_gain1_zero   ; 0.0
+; rec59 — MIC REVERB "Karaoke" (unit-7, type 0x59) — rec58's half-rate
+; program (PM identical except the six M7 tap immediates) with the tank
+; COLLAPSED to a single echo: phase-A AP1 = 8000 ticks = 16000 samples =
+; 362.8 ms with k = c013 = 0.70; every other section is disabled — a2/a3/b1/b3
+; get length-1 taps and b2 length 2002, and ALL their gains (c014-c017) are 0,
+; so a zero-gain "allpass" degenerates to a pure delay. Result: a regenerating
+; 363 ms slap echo (3.1 dB per repeat -> ~7 s of discrete repeats — the
+; classic karaoke mic echo), with the two outputs split by the phase-B pure
+; delays: ch1 = tank + 2003 ticks (90.8 ms), ch2 = tank + 2 ticks — a wide
+; stereo echo offset. Same audio-rate smoothing biquads as rec58.
+; Full doc: dsp/final-batch-algorithms.md §1.4.
+pm:0x8400  MicRev_phaseSel        ; IF NOT FLAG3, JUMP phase-B (see rec58)
+pm:0x8404  phA_bq1_in             ; out-ch1 smoother input = c002
+pm:0x8410  phA_out1               ; output word 1
+pm:0x8419  phA_out2               ; output word 2
+pm:0x841d  phA_ap1_len            ; M7 = -8000 ticks = 362.8 ms — THE echo (k = 0.70)
+pm:0x8422  phA_ap2_len            ; M7 = -1: disabled stub (k = 0 -> 1-tick delay)
+pm:0x8428  phA_ap3_len            ; M7 = -1: disabled stub
+pm:0x842f  phA_return             ; c000 <- echo out
+pm:0x8432  MicRev_phaseB          ; phase-B: all-zero gains -> pure delays only
+pm:0x844b  phB_ap1_len            ; M7 = -1 (pure 1-tick delay)
+pm:0x8451  phB_ap2_len            ; M7 = -2002 ticks -> ch1 = tank + 90.8 ms
+pm:0x8456  phB_ap3_len            ; M7 = -1 -> ch2 = tank + 2 ticks
+pm:0x845f  phB_return             ; RTS (DB)
+dm:0xc004  mic_bq_a1              ; 0.5745 — same smoothing-biquad banks as rec58
+dm:0xc013  mic_apA1_k             ; 0.70 — the echo regeneration (only nonzero gain)
+dm:0xc014  mic_apA23_k_zero       ; 0 — a2/a3 disabled (pure delays)
+dm:0xc015  mic_apB1_k_zero        ; 0
+dm:0xc016  mic_apB2_k_zero        ; 0 — b2 = pure 2002-tick delay (ch1 offset)
+dm:0xc017  mic_apB3_k_zero        ; 0

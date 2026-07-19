@@ -1,30 +1,89 @@
-; rec67 [EFFECT] — sine-polynomial waveshaper + variable-delay (most complex of F67-69 core)
-; I4=I/O frame (0x20/0x21 in, DM(I4,M2) out); I0/I1=coeff/state walk; I2=modulated delay; I8=PM coeff table
-pm:0x8400  Entry_I0eqI1          ; entry: alias state ptr I0=I1
-pm:0x8401  ReadInput             ; R0 = DM(0x20,I4) input sample
-pm:0x8402  InScale               ; ASHIFT R0 BY 8 (fixed-point align)
-pm:0x8403  ToFloat_LoadCoef      ; F10=FLOAT R0; walk DM/PM coeff tables
-pm:0x8409  RangeReduce_Abs       ; R9=ABS; R3=R9-R7(thresh); piecewise via MRF+(R3*R4)
-pm:0x840e  Recip_Divide          ; F9=RECIPS; F9=F4*F9 -> reciprocal/phase scale
-pm:0x8411  PhaseAdd              ; F15 = F3 + F9 (reduced phase)
-pm:0x8422  ClampCompare          ; COMP(F10,F2)/COMP(F11,F2) branch guards
-pm:0x842d  DelaySetup_M7         ; M7=0x1FE(510); R8=DM(I0,M6) delay-tap base
-pm:0x8430  DelayWrite            ; DM(I2,M7)=R0 write into modulated delay line
-pm:0x8438  VarDelayModify        ; M7=R7; MODIFY(I2,M7) variable read pointer
-pm:0x843a  FracInterp_MAC        ; MR1F=R7; R7=R4-R7; R8=MRF+(R8*R7) linear interp
-pm:0x843e  PolySine_Begin        ; F10=FLOAT; cubic/poly sine approx (F12=F3*F7 chain)
-pm:0x845a  CubicShape            ; F2=F10*F10; F2=F2*F10; F2=F2*F3; F10=F10-F2
-pm:0x845f  ClampPos              ; R10=0x3F2AAAAB (+2/3) saturation const
-pm:0x8461  ClampNeg              ; R10=0xBF2AAAAB (-2/3) saturation const
-pm:0x8463  FinalScale            ; F10=F2*F10; R8=FIX; R8=R8*R7; ASHIFT -9
-pm:0x8467  OutputL               ; DM(I4,M2)=R8 (left)
-pm:0x8468  OutputR               ; DM(I4,M2)=R8 (right)
-pm:0x8469  Return                ; RTS (DB)
-dm:0x9802  StateInit             ; 0xFFE0000000 seed
-dm:0xc00c  Coef_4p0              ; 0x4080000000 = 4.0
-dm:0xc010  Coef_0p5              ; 0x3F000000.. = 0.5
-dm:0xc01c  Coef_0p7              ; 0x3F333333.. = 0.7
-dm:0xc021  Coef_1p0             ; 0x3F800000.. = +1.0
-dm:0xc022  Coef_neg1p0           ; 0xBF800000.. = -1.0
-dm:0xc023  Coef_third            ; 0x3EAAAAA9.. = 1/3
-dm:0xc025  Coef_max              ; 0x7FFFFFFF.. fullscale clamp
+; rec67 — BRASS SIMULATOR1 (type 0x79, GUI group Vocal Effect) — the pool's
+; only PITCH-TRACKING effect. Mono (in_L), dual-mono out. Chain:
+; 1. bass-weighted one-pole pre-filter (c004-c006: s'=x+.9935s, y=.033(s'+s);
+;    DC gain ~x10, -17 dB @5k) -> |y| -> SLOW envelope (attack c007=1/256,
+;    release c008=1/32768 = 743 ms) -> the family AGC drive law
+;    0.111 + 8.35e8/env clamp 4.0 (c009-c00c) applied to the RAW input.
+; 2. PERIOD DETECTOR: trigger once per fundamental cycle when driven-LP >= env
+;    AND driven-raw < env AND the running integral c000 (+= (y-env)/4) < 0;
+;    on trigger: c000=0, latch the period ramp c00f (+= c00e = 0x100000/smp,
+;    cap 0x3F000000 = 1008 smp = 43.75 Hz floor) into c012, reset c00f.
+; 3. PITCH-SYNCHRONOUS PING-PONG TAP: fixed-point I2 line (driven input),
+;    write at P, read at P+510+off; off = (c013 accumulator += state 9802 =
+;    -0x200000)>>5 in 16.16, REFLECTED at |acc| >= c012 (rec66's ping-pong
+;    grain idiom) -> off spans +-T/2 samples at slope +-1 smp/smp: grains
+;    alternate octave-up readout and held (frozen) readout, period-locked
+;    (perceptual character PROVISIONAL; the mechanism is opcode fact).
+; 4. tap -> unity-DC LP biquad c014-c018 (poles r=.628 @3.46 kHz) -> x c019
+;    (1e-8 normalize to ODE units).
+; 5. NONLINEAR "LIP" ODE (Euler eps = c01f = 0.04, 1 step/sample): u' = x - v
+;    - 0.0667u^3 - 0.7u^2 (c01b/c01c); v' = u^3 - x - 2v (c01e=2.0); states
+;    u=c01a, v=c01d. Output u^3 - 2v = the ODE's distortion products with the
+;    drive removed (equilibrium output is ZERO -> transient-emphasizing).
+; 6. x c020 (0.0025) -> cubic soft clip x - x^3/3 rails +-2/3 (rec62's
+;    clipper, c021/c022/c023) -> x c024 (4e9 renorm) x c025 (Q31 level) >>9.
+; Full doc: dsp/final-batch-algorithms.md §2.
+pm:0x8400  Brass1_entry           ; I0 = I1
+pm:0x8401  Brass1_readIn          ; R0 = in_L (mono)
+pm:0x8402  Brass1_inScale         ; <<8
+pm:0x8403  Brass1_preLP           ; bass-weighted one-pole (c004-c006, state PM 9800) — detector emphasis
+pm:0x8408  Brass1_fixLP           ; R8 = FIX(pre-LP out)
+pm:0x8409  Brass1_env             ; |y| -> asymmetric one-pole: atk 1/256, rel 1/32768 (state PM 9801)
+pm:0x840e  Brass1_agcRecip        ; RECIPS seed: drive = 0.111 + 8.35e8/env
+pm:0x8412  Brass1_agcClamp        ; env <= 0.1 -> drive = c00c = 4.0
+pm:0x8414  Brass1_driveRaw        ; F11 = raw x * drive (the delay-line signal)
+pm:0x8417  Brass1_driveLP         ; F10 = pre-LP y * drive (the trigger signal)
+pm:0x841a  Brass1_integrate       ; c000 += (driven-LP - env)/4 — trigger debounce integral
+pm:0x841e  Brass1_periodRamp      ; c00f += c00e (0x100000/smp), clamp c010 -> period ramp
+pm:0x8422  Brass1_trigTest        ; trigger: F10>=env & F11<env & c000<0
+pm:0x8429  Brass1_trigLatch       ; c000=0; c012 <- c00f (LATCH PERIOD); c00f=0
+pm:0x842d  Brass1_tapBase         ; M7=0x1FE: write driven x at P, read base P+510
+pm:0x842f  Brass1_pingpong        ; acc(c013) += state 9802 (-0x200000); reflect at +-c012
+pm:0x8436  Brass1_offScale        ; >>5 -> 16.16 offset (slope +-1 smp/smp, span +-T/2)
+pm:0x8438  Brass1_tapRead         ; MODIFY(I2,int); MAC lerp (fixed-point line)
+pm:0x843e  Brass1_postLP          ; unity-DC LP biquad c014-c018 (3.46 kHz) on the tap
+pm:0x8445  Brass1_normalize       ; F15 = tap * c019 (1e-8) — ODE input
+pm:0x8446  Brass1_odeU            ; u' = x - v - 0.0667u^3 - 0.7u^2 (Euler 0.04)
+pm:0x844e  Brass1_odeV            ; v' = u^3 - x - 2v; out = u^3 - 2v
+pm:0x8456  Brass1_clipTest        ; cubic clip guards (+-1.0)
+pm:0x845a  Brass1_cubic           ; y = x - x^3/3
+pm:0x845f  Brass1_railPos         ; +2/3
+pm:0x8461  Brass1_railNeg         ; -2/3
+pm:0x8463  Brass1_outScale        ; x c024 (4e9) x c025 (Q31) >>9
+pm:0x8467  Brass1_outL            ; dual-mono out
+pm:0x8468  Brass1_outR
+pm:0x8469  Brass1_return          ; RTS (DB); MODIFY(I8,0x4B) (3 state words)
+dm:0x9802  brass1_pp_inc          ; 0xFFE00000 = -0x200000: ping-pong tap increment (host preset)
+dm:0xc000  brass1_integral        ; trigger-debounce integral (runtime)
+dm:0xc004  brass1_preLP_p         ; 0.9935 — pre-filter pole (bass emphasis, DC x10)
+dm:0xc005  brass1_preLP_q0        ; 0.033
+dm:0xc006  brass1_preLP_q1        ; 0.033
+dm:0xc007  brass1_env_atk         ; 0x00800000 = 1/256 (5.8 ms)
+dm:0xc008  brass1_env_rel         ; 0x00010000 = 1/32768 (743 ms — slowest release in the pool)
+dm:0xc009  brass1_agc_base        ; 0.111 — the family AGC law
+dm:0xc00a  brass1_agc_num         ; 8.35e8
+dm:0xc00b  brass1_agc_thr         ; 0.1 (Q31)
+dm:0xc00c  brass1_agc_clamp       ; 4.0
+dm:0xc00e  brass1_ramp_inc        ; 0x00100000 — period-ramp increment per sample
+dm:0xc00f  brass1_ramp            ; running period ramp (runtime)
+dm:0xc010  brass1_ramp_cap        ; 0x3F000000 -> max period 1008 smp (43.75 Hz)
+dm:0xc012  brass1_period          ; LATCHED period (reflect bound; runtime)
+dm:0xc013  brass1_pp_acc          ; ping-pong tap accumulator (runtime)
+dm:0xc014  brass1_lp_a1           ; 1.106 — unity-DC LP on the tap (r=.628 @3.46 kHz)
+dm:0xc015  brass1_lp_a2           ; -0.394
+dm:0xc016  brass1_lp_b1           ; 0.1439
+dm:0xc017  brass1_lp_b0           ; 0.0719
+dm:0xc018  brass1_lp_b2           ; 0.0719
+dm:0xc019  brass1_norm            ; 1.0e-8 — fixed->ODE-unit normalize
+dm:0xc01a  brass1_ode_u           ; ODE state u ("lip displacement"; runtime)
+dm:0xc01b  brass1_ode_a           ; 0.0667 — u^3 stiffness
+dm:0xc01c  brass1_ode_b           ; 0.70 — u^2 stiffness (asymmetric term)
+dm:0xc01d  brass1_ode_v           ; ODE state v (leaky integrator; runtime)
+dm:0xc01e  brass1_ode_2           ; 2.0 — v leak (out = ~560 Hz-highpassed products)
+dm:0xc01f  brass1_ode_eps         ; 0.04 — Euler step
+dm:0xc020  brass1_preclip         ; 0.0025 — scale into the clipper
+dm:0xc021  brass1_clip_hi         ; +1.0
+dm:0xc022  brass1_clip_lo         ; -1.0
+dm:0xc023  brass1_third           ; 1/3 (cubic y = x - x^3/3)
+dm:0xc024  brass1_renorm          ; 4.0e9 — back to fixed scale
+dm:0xc025  brass1_level           ; Q31 ~1.0 output level
