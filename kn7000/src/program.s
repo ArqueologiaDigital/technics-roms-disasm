@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 117 synthetic labels for internal helpers called by converted code
+# 218 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -60,6 +60,7 @@ _rom_marker:
 .equ func_48428792, 0x48428792
 .equ func_48428A6C, 0x48428A6C
 .equ func_48428C43, 0x48428C43
+.equ func_48429372, 0x48429372
 .equ func_4842938D, 0x4842938D
 .equ func_484293B2, 0x484293B2
 .equ func_4842943E, 0x4842943E
@@ -74,6 +75,7 @@ _rom_marker:
 .equ func_48429C9A, 0x48429C9A
 .equ func_4842AD45, 0x4842AD45
 .equ func_4842B3F4, 0x4842B3F4
+.equ func_4842B4A0, 0x4842B4A0
 .equ func_4842C985, 0x4842C985
 .equ func_4842D366, 0x4842D366
 .equ func_4842DC8A, 0x4842DC8A
@@ -81,6 +83,11 @@ _rom_marker:
 .equ func_484492E7, 0x484492E7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
+.equ func_484720D3, 0x484720D3
+.equ func_484720FE, 0x484720FE
+.equ func_484729AD, 0x484729AD
+.equ func_48472A55, 0x48472A55
+.equ func_48472ABB, 0x48472ABB
 .equ TechniChordOrchestratorPart_entry, 0x48472E60
 .equ TechniChordClose_entry, 0x48473051
 .equ TechniChordDuet1_entry, 0x484731D0
@@ -134,17 +141,111 @@ _rom_marker:
 .equ PanelBtnActType2_entry, 0x484ADD86
 .equ PanelBtnActType4_entry, 0x484ADDCF
 .equ PanelBtnActType3_entry, 0x484ADE04
+.equ SdInUseLedSet, 0x484B11CB
 .equ func_484B1BCB, 0x484B1BCB
 .equ func_484B1CA1, 0x484B1CA1
+.equ PanelSubTypeGet_entry, 0x484D7751
+.equ func_4851AD68, 0x4851AD68
 .equ func_4852FDCD, 0x4852FDCD
 .equ func_48530216, 0x48530216
 .equ func_48532395, 0x48532395
 .equ func_485323BF, 0x485323BF
 .equ func_48532494, 0x48532494
+.equ DiskInit_entry, 0x4854ACF2
+.equ DiskWorkerStatusClear, 0x4854AD89
+.equ DiskCmdTransact_entry, 0x4854AE6A
+.equ DiskCmdPostAsync_entry, 0x4854AF8A
+.equ SdWorkerCmdHandler_entry, 0x4854AFEE
+.equ DiskDriveCtrlHandler_entry, 0x4854B330
+.equ SdMediaStateGet, 0x4854B51F
+.equ SdMediaStateSet_entry, 0x4854B52A
+.equ SdDrvPhaseSet_entry, 0x4854B54B
+.equ SdDrvPhaseGet, 0x4854B566
+.equ SdDrvRecordsReset_entry, 0x4854B574
+.equ SdCardReadyCheck_entry, 0x4854B597
+.equ SdCardDetectPoll_entry, 0x4854B5B9
+.equ SdCardDetectPoll2_entry, 0x4854B5C5
+.equ SdCardRegInvalidate_entry, 0x4854B65A
+.equ SdCardInitFull_entry, 0x4854B691
+.equ SdCardInfoReset_entry, 0x4854B7FE
+.equ SdCardIdentify_entry, 0x4854B83E
+.equ SdHwInit_entry, 0x4854BB3D
+.equ SdSpiPortSetup_entry, 0x4854BB52
+.equ SdSpiClockSet_entry, 0x4854BB89
+.equ SdCsAssertWrap_entry, 0x4854BC7D
+.equ SdCsRelease, 0x4854BC85
+.equ SdCsAssert, 0x4854BC8F
+.equ SdDetectPortInit_entry, 0x4854BC9C
+.equ SdCardDetectRaw_entry, 0x4854BCE0
+.equ SdCardDetectDebounce_entry, 0x4854BD39
+.equ SdPowerLineSet_entry, 0x4854BD93
+.equ SdPowerLineClear_entry, 0x4854BDAC
+.equ SdPowerRailSet_entry, 0x4854BDC5
+.equ SdPowerRailClear_entry, 0x4854BDD2
+.equ SdSlotDrainWait_entry, 0x4854BDE1
+.equ SdSlotDischarge_entry, 0x4854BE92
+.equ SdSlotSenseGet_entry, 0x4854BEE3
+.equ SdWriteProtectGet_entry, 0x4854BF02
+.equ SdSlotRelease_entry, 0x4854BF21
+.equ SdSpiSendByte_entry, 0x4854BF4D
+.equ SdSpiSendBuf_entry, 0x4854BFA2
+.equ SdSpiRecvByte_entry, 0x4854C016
+.equ SdSpiRecvBuf_entry, 0x4854C074
+.equ SdSpinDelay_entry, 0x4854C0F2
+.equ SdSpiClockBurst_entry, 0x4854C10D
+.equ SdResponseScan_entry, 0x4854C136
+.equ SdWaitNotBusy_entry, 0x4854C198
+.equ SdSenseBusyWait_entry, 0x4854C1D5
+.equ SdDataRespWait_entry, 0x4854C22E
+.equ SdTokenWait_entry, 0x4854C264
+.equ SdCommandSend_entry, 0x4854C296
+.equ SdCrcSelfTest_entry, 0x4854C32F
+.equ SdReadBlockCmd_entry, 0x4854C3AB
+.equ SdWriteBlockCmd_entry, 0x4854C5C5
+.equ SdCsdBitfield_entry, 0x4854C6F3
+.equ SdDataCrc16_entry, 0x4854C919
+.equ SdCmdCrc7_entry, 0x4854C94D
+.equ SdPlaylistLoad_entry, 0x4854CAE7
+.equ SdPowerCtrlSet, 0x4854D076
+.equ SdPowerCtrlClear, 0x4854D0A8
 .equ func_4854D84B, 0x4854D84B
+.equ SdStateReset_entry, 0x485517E3
+.equ SdUnmountCleanup_entry, 0x48551875
+.equ SdStateResetCall_entry, 0x485518DB
+.equ SdCardInsertMsgHandler_entry, 0x48551925
+.equ SdStateMachineTick_entry, 0x485519BC
+.equ SdMountWorker_entry, 0x48551F92
+.equ SdMountSyncPost_entry, 0x4855216B
+.equ SdUiMountGateCheck_entry, 0x485521A1
+.equ SdMountBusyCheck_entry, 0x485521C6
+.equ SD_SetState, 0x4855E803
+.equ SD_GetState, 0x4855E80C
+.equ func_4855E845, 0x4855E845
+.equ func_4855E8B1, 0x4855E8B1
+.equ func_4855EA17, 0x4855EA17
+.equ func_4855EABD, 0x4855EABD
+.equ func_4855EB25, 0x4855EB25
+.equ FavFormat_entry, 0x4855EC37
+.equ func_4855FAB3, 0x4855FAB3
+.equ func_4855FBEC, 0x4855FBEC
+.equ func_485612A3, 0x485612A3
+.equ SdCardFsInit_entry, 0x485630DE
+.equ func_48565D17, 0x48565D17
+.equ func_48565F64, 0x48565F64
+.equ func_48565F67, 0x48565F67
+.equ func_48578DDD, 0x48578DDD
+.equ func_48578FF0, 0x48578FF0
+.equ func_48579255, 0x48579255
+.equ func_4857926F, 0x4857926F
+.equ func_4857BE97, 0x4857BE97
+.equ func_4857BF6C, 0x4857BF6C
+.equ LibDiv32, 0x4C0019D5
 .equ LibParamGet, 0x4C0149FA
+.equ LibMsgSend, 0x4C03D219
+.equ LibMsgReceive, 0x4C03D36D
 .equ LibIntcEnable, 0x4C03DCC8
 .equ LibIntcDisable, 0x4C03DD3F
+.equ LibTickSleep, 0x4C03DD74
 
 .incbin_range "baserom/kn7000_program.rom", 0x000080, 0x004ff6
 # DspFullReinit  (CPU 0x48404ff6)
@@ -1228,14 +1329,14 @@ _rom_marker:
     mov     d0, (0x3c, sp)
     movhu   (0x50, sp), d0
     exth    d0
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, (0x2c, sp)
     movhu   (0x52, sp), d0
     mov     8, d1
     exth    d0
     mov     d0, (0x34, sp)
     mov     d2, d0
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d1
     mov     (0x24, sp), d0
     mov     0x50, d2
@@ -1256,7 +1357,7 @@ _rom_marker:
     mov     8, d1
     mov     d0, (0x18, sp)
     mov     (0x30, sp), d0
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     (0x1c, sp), d1
     asl     3, d0
     add     0x500d4080, d1
@@ -1264,7 +1365,7 @@ _rom_marker:
     mov     d1, (0x10, sp)
     mov     (0x38, sp), d0
     mov     8, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     (0x1c, sp), d1
     asl     3, d0
     add     0x500f9880, d1
@@ -1272,7 +1373,7 @@ _rom_marker:
     mov     (0x40, sp), d0
     mov     d1, a3
     mov     8, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, (0x14, sp)
     mov     (0x2c, sp), d1
     cmp     d1, d0
@@ -1280,7 +1381,7 @@ _rom_marker:
     jmp     0x4841563b
     mov     (0x3c, sp), d0
     mov     8, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, (0x28, sp)
     mov     0, a2
     clr     d3
@@ -1811,7 +1912,7 @@ _rom_marker:
     bgt     0x484161ba
     movbu   (0x15, sp), d0
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     -1, d2
     add     d0, d2
     mov     d2, d0
@@ -3268,12 +3369,12 @@ _rom_marker:
     exth    d3
     sub     d1, d0
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d2
     mov     d3, d0
     add     a2, d2
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     sub     d0, d2
     inc     d2
     movhu   d2, (0x56, sp)
@@ -3308,12 +3409,12 @@ _rom_marker:
     sub     d1, d0
     exth    d2
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d3
     mov     d2, d0
     add     a2, d3
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d3, d0
     sub     d1, d0
@@ -3752,12 +3853,12 @@ _rom_marker:
     exth    d3
     sub     d1, d0
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d2
     mov     d3, d0
     add     a2, d2
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d2, d0
     sub     d1, d0
@@ -3848,12 +3949,12 @@ _rom_marker:
     sub     d1, d0
     exth    d2
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d3
     mov     d2, d0
     add     a2, d3
     mov     2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     d0, d1
     mov     d3, d0
     sub     d1, d0
@@ -9641,7 +9742,7 @@ _rom_marker:
     mov     4, d2
     mov     d3, d0
     mov     d2, d1
-    call    0x4c0019d5, 0, 0
+    call    LibDiv32, 0, 0
     mov     0x5004fb52, a3
     exthu   d0
     ext     d3
@@ -12084,7 +12185,9 @@ _rom_marker:
 # PanelBtnActType3  (CPU 0x484addff)
 .incbin_range "baserom/kn7000_program.rom", 0x0addff, 0x0ae17d
 # PanelEventPost  (CPU 0x484ae17d)
-.incbin_range "baserom/kn7000_program.rom", 0x0ae17d, 0x0b1707
+.incbin_range "baserom/kn7000_program.rom", 0x0ae17d, 0x0b11cb
+# SdInUseLedSet  (CPU 0x484b11cb)
+.incbin_range "baserom/kn7000_program.rom", 0x0b11cb, 0x0b1707
 # PanelLedGroupToReg  (CPU 0x484b1707)
 .incbin_range "baserom/kn7000_program.rom", 0x0b1707, 0x0b1e86
 # Midi1RxIsr  (CPU 0x484b1e86)
@@ -12210,7 +12313,9 @@ _rom_marker:
 # VocalistPage1OK  (CPU 0x484d6eaa)
 .incbin_range "baserom/kn7000_program.rom", 0x0d6eaa, 0x0d6f07
 # VocalistPage2OK  (CPU 0x484d6f07)
-.incbin_range "baserom/kn7000_program.rom", 0x0d6f07, 0x0d7bbd
+.incbin_range "baserom/kn7000_program.rom", 0x0d6f07, 0x0d774e
+# PanelSubTypeGet  (CPU 0x484d774e)
+.incbin_range "baserom/kn7000_program.rom", 0x0d774e, 0x0d7bbd
 # InitializeBlock27  (CPU 0x484d7bbd)
 .incbin_range "baserom/kn7000_program.rom", 0x0d7bbd, 0x0d8356
 # AcResetPageSeProc  (CPU 0x484d8356)
@@ -14004,7 +14109,2768 @@ _rom_marker:
 # MainSEQ_Read_1EventLyricsSeq  (CPU 0x48545d3b)
 .incbin_range "baserom/kn7000_program.rom", 0x145d3b, 0x145dec
 # AppSEQ_InitSmfLyricsSeq  (CPU 0x48545dec)
-.incbin_range "baserom/kn7000_program.rom", 0x145dec, 0x14d8ab
+.incbin_range "baserom/kn7000_program.rom", 0x145dec, 0x14aced
+# DiskInit  (CPU 0x4854aced)
+#   create the disk-worker world: SdHwInit, reset the driver records
+#   (0x50160644 block), phase:=1, power line+rail off, SdSlotRelease,
+#   media state:=1; create+start MILK task 8 (descriptor 0x4867b9a4 ->
+#   DiskWorkerTask, prio 3, stack 0xC00), create mailboxes 9 (commands)
+#   and 0xA (completions), clear the 10 client ctrl blocks 0x50082738..
+#   0x50082918 (0x30 bytes each) and post the done-event to each
+    movm    [a2], (sp)
+    add     -0x10, sp
+# DiskInit_entry:   (register-save `call` entry)
+    call    SdHwInit_entry, 0, 8
+    mov     0x50160644, a0
+    call    SdDrvRecordsReset_entry, [d2], 0x10
+    mov     1, d0
+    movhu   d0, (0x50160648)
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdSlotRelease_entry, 0, 8
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    mov     8, d0
+    mov     0x4867b9a4, a0
+    call    0x4c03d0c8, 0, 0
+    mov     8, d0
+    clr     d1
+    call    0x4c03d8ab, 0, 0
+    mov     0x4867b9b8, a2
+    mov     9, d0
+    mov     a2, a0
+    call    0x4c03bf3c, 0, 0
+    mov     0xa, d0
+    mov     a2, a0
+    call    0x4c03bf3c, 0, 0
+    mov     0x50082738, a2
+    mov     a2, a0
+    call    DiskWorkerStatusClear, 0, 0
+    mov     0xa, d0
+    mov     a2, a0
+    call    LibMsgSend, 0, 0
+    add     0x30, a2
+    cmp     0x50082918, a2
+    bcs     0x4854ad63
+    ret     [a2], 0x14
+# DiskHookNops  (CPU 0x4854ad80)
+.incbin_range "baserom/kn7000_program.rom", 0x14ad80, 0x14ad89
+# DiskWorkerStatusClear  (CPU 0x4854ad89)
+#   clear the ctrl-block status halfword (4,a0)
+    clr     d0
+    movhu   d0, (4, a0)
+    retf    0, 0
+# DiskWorkerTask  (CPU 0x4854ad90)
+#   MILK task 8 main loop: blocking-receive a 0x14-byte message from
+#   mailbox 9 (LibMsgReceive), dispatch on type halfword +8: 2 ->
+#   DiskDriveCtrlHandler (drive-letter control commands), 3 ->
+#   SdWorkerCmdHandler (SD media commands); optional per-message
+#   completion callback (calls), then clear status + post done-event 0xA
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x44, sp
+    mov     sp, a0
+    mov     a0, d3
+    add     0x10, d3
+    mov     a0, d2
+    add     0x14, d2
+    mov     8, a2
+    add     d2, a2
+    mov     0x10, a3
+    add     a2, a3
+    add     0x1c, d2
+    mov     d3, a0
+    mov     9, d0
+    call    LibMsgReceive, 0, 0
+    mov     (0x10, sp), a0
+    mov     sp, a1
+    add     0x14, a1
+    mov     -0xc, d1
+    setlb
+    mov     (a0), d0
+    inc4    a0
+    mov     d0, (a1)
+    inc4    a1
+    inc     d1
+    lne
+    movhu   (0x18, sp), d0
+    cmp     2, d0
+    beq     0x4854adce
+    cmp     3, d0
+    beq     0x4854ade1
+    bra     0x4854adf4
+    mov     a2, a0
+    call    DiskDriveCtrlHandler_entry, [d2,d3,a2], 0x40
+    mov     (a3), d1
+    cmp     0, d1
+    beq     0x4854adf4
+    mov     (a3), a1
+    exth    d0
+    mov     a2, a0
+    calls   (a1)
+    bra     0x4854adf4
+    mov     d2, a0
+    call    SdWorkerCmdHandler_entry, [d2,d3,a2,a3], 0x48
+    mov     (0x40, sp), a0
+    cmp     0, a0
+    beq     0x4854adf4
+    mov     a0, a1
+    exth    d0
+    mov     d2, a0
+    calls   (a1)
+    mov     (0x10, sp), a0
+    call    DiskWorkerStatusClear, 0, 0
+    mov     0xa, d0
+    mov     (0x10, sp), a0
+    call    LibMsgSend, 0, 0
+    bra     0x4854ada8
+    ret     [d2,d3,a2,a3], 0x54
+# DiskCmdReplyCopy  (CPU 0x4854ae0b)
+#   transact completion callback (installed at ctrl+0x2C): when the
+#   pending flag 0x500051b0 == 1 copy the 16-byte reply between the
+#   caller buffer and the shadow 0x501606b0, result -> 0x500051b2,
+#   pending := 0
+    movm    [d2], (sp)
+    mov     d0, d2
+    movhu   (0x500051b0), d0
+    mov     -1, d1
+    exth    d0
+    cmp     1, d0
+    bne     0x4854ae61
+    movhu   (a0), d0
+    movhu   (0x501606b0), d1
+    cmp     d0, d1
+    bne     0x4854ae44
+    mov     0x501606b0, a1
+    mov     -4, d1
+    setlb
+    mov     (a0), d0
+    inc4    a0
+    mov     d0, (a1)
+    inc4    a1
+    inc     d1
+    lne
+    movhu   d2, (0x500051b2)
+    clr     d0
+    movhu   d0, (0x500051b0)
+    bra     0x4854ae60
+    mov     0x501606b0, a1
+    mov     -4, d1
+    setlb
+    mov     (a0), d0
+    inc4    a0
+    mov     d0, (a1)
+    inc4    a1
+    inc     d1
+    lne
+    movhu   d2, (0x500051b2)
+    clr     d0
+    movhu   d0, (0x500051b0)
+    clr     d1
+    mov     d1, d0
+    retf    [d2], 4
+# DiskCmdTransact  (CPU 0x4854ae65)
+#   BLOCKING disk command: ctrl codes at (a0) (0x14 -> phase:=3, 0x15 ->
+#   phase:=1, 0 resets the busy latch); busy gate 0x500051b4 -> 0xFB;
+#   mailbox-full probe (-0x55) -> 1; copy the message into the shadow
+#   0x501606b0 + ctrl+0x1C, install DiskCmdReplyCopy, post event 9, wake
+#   task 3, then sleep-poll the pending flag with a 0x1F40-tick timeout
+#   on 0x50151bfc (-> 1); on completion the reply is copied back and
+#   0x500051b2 is returned
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# DiskCmdTransact_entry:   (register-save `call` entry)
+    mov     a0, a2
+    movhu   (a2), d0
+    cmp     0x14, d0
+    bne     0x4854ae7c
+    mov     3, d0
+    call    SdDrvPhaseSet_entry, [d2], 4
+    clr     d0
+    ret     [d2,a2], 0x18
+    movhu   (a2), d0
+    cmp     0x15, d0
+    bne     0x4854ae8d
+    mov     1, d0
+    call    SdDrvPhaseSet_entry, [d2], 4
+    clr     d0
+    ret     [d2,a2], 0x18
+    movhu   (a2), d0
+    cmp     0, d0
+    bne     0x4854ae9a
+    clr     d0
+    movbu   d0, (0x500051b4)
+    movbu   (0x500051b4), d0
+    cmp     0, d0
+    beq     0x4854aeaa
+    mov     0xfb, d0
+    ret     [d2,a2], 0x18
+    mov     1, d0
+    movbu   d0, (0x500051b4)
+    mov     0x50082918, a0
+    mov     0xa, d0
+    call    0x4c03ca58, 0, 0
+    cmp     -0x55, d0
+    bne     0x4854aeca
+    mov     1, d0
+    ret     [d2,a2], 0x18
+    mov     a2, a1
+    mov     0x501606b0, a0
+    mov     -4, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    mov     1, d0
+    movhu   d0, (0x500051b0)
+    mov     (0x50082918), a0
+    mov     3, d0
+    movhu   d0, (4, a0)
+    mov     a2, a1
+    mov     (0x50082918), d1
+    mov     0x1c, a0
+    add     d1, a0
+    mov     -4, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    mov     (0x50082918), a0
+    mov     0x4854ae0b, d0
+    mov     d0, (0x2c, a0)
+    mov     9, d0
+    mov     (0x50082918), a0
+    call    LibMsgSend, 0, 0
+    mov     3, d0
+    call    0x4c03d968, 0, 0
+    movhu   (0x500051b0), d0
+    mov     (0x50151bfc), d2
+    exth    d0
+    cmp     0, d0
+    beq     0x4854af66
+    mov     (0x50151bfc), d0
+    sub     d2, d0
+    cmp     0x1f40, d0
+    bls     0x4854af52
+    clr     d0
+    movbu   d0, (0x500051b4)
+    mov     1, d0
+    bra     0x4854af82
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    movhu   (0x500051b0), d0
+    exth    d0
+    cmp     0, d0
+    bne     0x4854af39
+    mov     0x501606b0, a1
+    mov     -4, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a2)
+    inc4    a2
+    inc     d1
+    lne
+    clr     d0
+    movbu   d0, (0x500051b4)
+    movhu   (0x500051b2), d0
+    ret     [d2,a2], 0x18
+# DiskCmdPostAsync  (CPU 0x4854af85)
+#   non-blocking post: phase==3 -> 0x8002, mailbox full -> 0x8001; else
+#   status:=2, copy the 0x14-byte message to ctrl+8, post event 9, 0
+    movm    [a2], (sp)
+    add     -0x10, sp
+# DiskCmdPostAsync_entry:   (register-save `call` entry)
+    mov     a0, a2
+    call    SdDrvPhaseGet, 0, 0
+    exthu   d0
+    cmp     3, d0
+    bne     0x4854af9d
+    mov     0x00008002, d0
+    bra     0x4854afe6
+    mov     0x50082918, a0
+    mov     0xa, d0
+    call    0x4c03ca58, 0, 0
+    cmp     -0x55, d0
+    bne     0x4854afb8
+    mov     0x00008001, d0
+    bra     0x4854afe6
+    mov     (0x50082918), a0
+    mov     2, d0
+    movhu   d0, (4, a0)
+    mov     (0x50082918), d1
+    mov     8, a1
+    add     d1, a1
+    mov     -5, d1
+    setlb
+    mov     (a2), d0
+    inc4    a2
+    mov     d0, (a1)
+    inc4    a1
+    inc     d1
+    lne
+    mov     9, d0
+    mov     (0x50082918), a0
+    call    LibMsgSend, 0, 0
+    clr     d0
+    ret     [a2], 0x14
+# SdWorkerCmdHandler  (CPU 0x4854afe9)
+#   worker message TYPE 3 = SD media commands. Message: {+0 cmd u16,
+#   +4 start sector u32, +8 sector count u32, +0xC buffer ptr}.
+#   Gate: media state==3 or cmd==0, else 0x40 (not ready). In-use LED on
+#   (SdInUseLedSet). cmd 0 = init/mount ladder: state 2 -> park frame
+#   0x50007e8a, power line+rail on, SdCardInitFull; state 0 -> rails off
+#   + SdSlotDrainWait (-> probe flag 0x50160644), then power on + init;
+#   success -> state 3, fail -> state 1 + 0xFD. cmd 3 = read: initflag
+#   0x5016064c else 0x30; range vs capacity 0x50160664 else 2; per
+#   sector: byte addr = sector * mult 0x50160668 -> CMD17 frame
+#   0x50007ee4 (arg big-endian @+5..+8), SdReadBlockCmd(0x200 -> buffer),
+#   4 retries. cmd 4 = write: WP -> 0x2F, CMD24 frame 0x50007eee,
+#   SdWriteBlockCmd, error 3. cmd 8 = last error 0x5016064e; 0xA = init
+#   check (0x30); 0xB = nop; 0xC = total bytes 0x5016065c LE -> buffer;
+#   else 7. Nonzero result -> 0x5016064e; LED off
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x38, sp
+# SdWorkerCmdHandler_entry:   (register-save `call` entry)
+    mov     0, a3
+    clr     d0
+    movhu   d0, (0x24, sp)
+    mov     sp, a1
+    add     0x28, a1
+    mov     -4, d1
+    setlb
+    mov     (a0), d0
+    inc4    a0
+    mov     d0, (a1)
+    inc4    a1
+    inc     d1
+    lne
+    call    SdMediaStateGet, 0, 0
+    exthu   d0
+    cmp     3, d0
+    beq     0x4854b016
+    movhu   (0x28, sp), d0
+    cmp     0, d0
+    beq     0x4854b016
+    mov     0x40, d0
+    ret     [d2,d3,a2,a3], 0x48
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854b02b
+    mov     1, d0
+    call    SdInUseLedSet, 0, 0
+    movhu   (0x28, sp), d0
+    cmp     0, d0
+    beq     0x4854b05f
+    cmp     3, d0
+    bne     0x4854b039
+    jmp     0x4854b13e
+    cmp     4, d0
+    bne     0x4854b040
+    jmp     0x4854b1e6
+    cmp     8, d0
+    bne     0x4854b047
+    jmp     0x4854b299
+    cmp     0xa, d0
+    bne     0x4854b04e
+    jmp     0x4854b2a3
+    cmp     0xc, d0
+    bne     0x4854b055
+    jmp     0x4854b2b1
+    cmp     0xb, d0
+    bne     0x4854b05c
+    jmp     0x4854b303
+    jmp     0x4854b301
+    call    SdMediaStateGet, 0, 0
+    exthu   d0
+    cmp     2, d0
+    beq     0x4854b07e
+    cmp     0, d0
+    beq     0x4854b0d2
+    cmp     1, d0
+    bne     0x4854b074
+    jmp     0x4854b0fe
+    cmp     3, d0
+    bne     0x4854b07b
+    jmp     0x4854b0fe
+    jmp     0x4854b303
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    mov     0x50007e8a, a0
+    call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
+    mov     0x64, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    SdPowerLineSet_entry, 0, 8
+    call    SdPowerRailSet_entry, 0, 0xc
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     0x5016064c, a0
+    call    SdCardInitFull_entry, [d2,d3,a2,a3], 0x1c
+    exth    d0
+    cmp     0, d0
+    blt     0x4854b0c6
+    mov     3, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    jmp     0x4854b303
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    mov     0xfd, a3
+    jmp     0x4854b303
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdSlotDrainWait_entry, [d2], 0x14
+    exth    d0
+    cmp     0, d0
+    blt     0x4854b0f7
+    mov     1, d0
+    movhu   d0, (0x50160644)
+    bra     0x4854b0fe
+    clr     d0
+    movhu   d0, (0x50160644)
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    call    SdPowerLineSet_entry, 0, 8
+    call    SdPowerRailSet_entry, 0, 0xc
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     0x5016064c, a0
+    call    SdCardInitFull_entry, [d2,d3,a2,a3], 0x1c
+    exth    d0
+    cmp     0, d0
+    blt     0x4854b132
+    mov     3, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    jmp     0x4854b303
+    mov     1, d0
+    call    SdMediaStateSet_entry, [d2], 4
+    mov     0xfd, a3
+    jmp     0x4854b303
+    movhu   (0x5016064c), d0
+    cmp     0, d0
+    bne     0x4854b14d
+    mov     0x30, a3
+    jmp     0x4854b303
+    mov     (0x2c, sp), d2
+    mov     (0x30, sp), d0
+    mov     (0x50160664), d1
+    add     d0, d2
+    cmp     d1, d2
+    bls     0x4854b160
+    mov     2, a3
+    jmp     0x4854b303
+    mov     a3, a2
+    cmp     0, d0
+    bls     0x4854b1d6
+    mov     d0, (0x20, sp)
+    mov     (0x2c, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x1c, sp), d0
+    mov     a2, a0
+    add     d0, a0
+    mov     (0x34, sp), d0
+    mov     a0, (0x18, sp)
+    mov     d0, (0x14, sp)
+    clr     d3
+    mov     (0x18, sp), d0
+    movhu   (0x50160668), d1
+    mov     4, d2
+    nop
+    nop
+    mulu    d0, d1
+    setlb
+    mov     0x50007ee8, a0
+    mov     0xff, d0
+    and     d1, d0
+    movbu   d0, (d2, a0)
+    lsr     8, d1
+    add     -1, d2
+    exth    d2
+    cmp     0, d2
+    lgt
+    mov     0x50007ee4, a0
+    mov     0x200, d0
+    mov     (0x14, sp), a1
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c
+    movhu   d0, (0x24, sp)
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b1ba
+    inc     d3
+    exth    d3
+    cmp     4, d3
+    blt     0x4854b177
+    movhu   (0x24, sp), d0
+    exth    d0
+    cmp     0, d0
+    bne     0x4854b1d6
+    mov     (0x34, sp), d0
+    add     0x200, d0
+    mov     d0, (0x34, sp)
+    mov     a2, d0
+    inc     d0
+    exth    d0
+    mov     d0, a2
+    mov     (0x20, sp), d0
+    cmp     d0, a2
+    bcs     0x4854b16b
+    movhu   (0x24, sp), d0
+    exth    d0
+    cmp     0, d0
+    bne     0x4854b1e1
+    jmp     0x4854b303
+    mov     2, a3
+    jmp     0x4854b303
+    movhu   (0x5016064c), d0
+    cmp     0, d0
+    bne     0x4854b1f5
+    mov     0x30, a3
+    jmp     0x4854b303
+    call    SdWriteProtectGet_entry, 0, 8
+    extbu   d0
+    cmp     0, d0
+    beq     0x4854b204
+    mov     0x2f, a3
+    jmp     0x4854b303
+    mov     (0x2c, sp), d2
+    mov     (0x30, sp), d0
+    mov     (0x50160664), d1
+    add     d0, d2
+    cmp     d1, d2
+    bls     0x4854b217
+    mov     3, a3
+    jmp     0x4854b303
+    mov     a3, a2
+    cmp     0, d0
+    bls     0x4854b28d
+    mov     d0, (0x1c, sp)
+    mov     (0x2c, sp), d0
+    mov     d0, (0x20, sp)
+    mov     (0x20, sp), d0
+    mov     a2, a0
+    add     d0, a0
+    mov     (0x34, sp), d0
+    mov     a0, (0x18, sp)
+    mov     d0, (0x14, sp)
+    clr     d3
+    mov     (0x18, sp), d0
+    movhu   (0x50160668), d1
+    mov     4, d2
+    nop
+    nop
+    mulu    d0, d1
+    setlb
+    mov     0x50007ef2, a0
+    mov     0xff, d0
+    and     d1, d0
+    movbu   d0, (d2, a0)
+    lsr     8, d1
+    add     -1, d2
+    exth    d2
+    cmp     0, d2
+    lgt
+    mov     0x50007eee, a0
+    mov     0x200, d0
+    mov     (0x14, sp), a1
+    call    SdWriteBlockCmd_entry, [d2,d3,a2,a3], 0x2c
+    movhu   d0, (0x24, sp)
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b271
+    inc     d3
+    exth    d3
+    cmp     4, d3
+    blt     0x4854b22e
+    movhu   (0x24, sp), d0
+    exth    d0
+    cmp     0, d0
+    bne     0x4854b28d
+    mov     (0x34, sp), d0
+    add     0x200, d0
+    mov     d0, (0x34, sp)
+    mov     a2, d0
+    inc     d0
+    exth    d0
+    mov     d0, a2
+    mov     (0x1c, sp), d0
+    cmp     d0, a2
+    bcs     0x4854b222
+    movhu   (0x24, sp), d0
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b303
+    mov     3, a3
+    bra     0x4854b303
+    movhu   (0x5016064e), d0
+    mov     d0, a3
+    bra     0x4854b303
+    movhu   (0x5016064c), d0
+    cmp     0, d0
+    bne     0x4854b303
+    mov     0x30, a3
+    bra     0x4854b303
+    movhu   (0x5016064c), d0
+    cmp     0, d0
+    bne     0x4854b2bf
+    mov     0x30, a3
+    bra     0x4854b303
+    mov     (0x34, sp), a0
+    mov     (0x5016065c), d0
+    and     0xff, d0
+    movbu   d0, (a0)
+    mov     (0x34, sp), a0
+    mov     (0x5016065c), d0
+    lsr     8, d0
+    and     0xff, d0
+    movbu   d0, (1, a0)
+    mov     (0x34, sp), a0
+    mov     (0x5016065c), d0
+    lsr     16, d0
+    and     0xff, d0
+    movbu   d0, (2, a0)
+    mov     (0x34, sp), a0
+    mov     (0x5016065c), d0
+    lsr     24, d0
+    and     0xff, d0
+    movbu   d0, (3, a0)
+    bra     0x4854b303
+    mov     7, a3
+    mov     a3, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4854b312
+    mov     a3, d0
+    movhu   d0, (0x5016064e)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854b326
+    clr     d0
+    call    SdInUseLedSet, 0, 0
+    mov     a3, d0
+    ret     [d2,d3,a2,a3], 0x48
+# DiskDriveCtrlHandler  (CPU 0x4854b32b)
+.incbin_range "baserom/kn7000_program.rom", 0x14b32b, 0x14b51f
+# SdMediaStateGet  (CPU 0x4854b51f)
+#   read the media state 0x50160646 (0..3, 3 = ready)
+    movhu   (0x50160646), d0
+    retf    0, 0
+# SdMediaStateSet  (CPU 0x4854b528)
+#   validate {0,1,2,3} -> 0x50160646, else -1
+    movm    [d2], (sp)
+# SdMediaStateSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     2, d1
+    beq     0x4854b53f
+    cmp     3, d1
+    beq     0x4854b53f
+    cmp     1, d1
+    beq     0x4854b53f
+    mov     -1, d0
+    cmp     0, d1
+    bne     0x4854b546
+    movhu   d2, (0x50160646)
+    clr     d0
+    retf    [d2], 4
+# SdDrvPhaseSet  (CPU 0x4854b549)
+#   validate {1,2,3} -> 0x50160648 (3 blocks the async post)
+    movm    [d2], (sp)
+# SdDrvPhaseSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     2, d1
+    beq     0x4854b55c
+    cmp     3, d1
+    beq     0x4854b55c
+    mov     -1, d0
+    cmp     1, d1
+    bne     0x4854b563
+    movhu   d2, (0x50160648)
+    clr     d0
+    retf    [d2], 4
+# SdDrvPhaseGet  (CPU 0x4854b566)
+#   read 0x50160648
+    movhu   (0x50160648), d0
+    retf    0, 0
+# SdDrvRecordsReset  (CPU 0x4854b56f)
+#   a0 = driver block 0x50160644: invalidate the CSD record (+0x28 =
+#   0x5016066c) and reset the card-info record (+8 = 0x5016064c)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdDrvRecordsReset_entry:   (register-save `call` entry)
+    mov     a0, d2
+    mov     0x28, a0
+    add     d2, a0
+    call    SdCardRegInvalidate_entry, 0, 0x14
+    mov     8, a0
+    add     d2, a0
+    call    SdCardInfoReset_entry, 0, 0x14
+    ret     [d2], 0x10
+# SdProbeFlagGet  (CPU 0x4854b58b)
+#   read the drive probe/attach flag 0x50160644
+    movhu   (0x50160644), d0
+    retf    0, 0
+# SdCardReadyCheck  (CPU 0x4854b594)
+#   debounced card-detect AND initflag 0x5016064c -> 1 else 0 (the
+#   mount worker's card gate; the MAME 'initflag chicken-and-egg' site)
+    add     -8, sp
+# SdCardReadyCheck_entry:   (register-save `call` entry)
+    call    SdCardDetectDebounce_entry, [d2,d3], 0x10
+    extbu   d0
+    cmp     0, d0
+    beq     0x4854b5b2
+    movhu   (0x5016064c), d0
+    cmp     0, d0
+    beq     0x4854b5af
+    mov     1, d0
+    bra     0x4854b5b3
+    clr     d0
+    bra     0x4854b5b3
+    clr     d0
+    ret     0, 8
+# SdCardDetectPoll  (CPU 0x4854b5b6)
+#   debounced card-detect (also scanned by PanelGpioSwScan as a
+#   pseudo-switch source)
+    add     -8, sp
+# SdCardDetectPoll_entry:   (register-save `call` entry)
+    call    SdCardDetectDebounce_entry, [d2,d3], 0x10
+    extbu   d0
+    ret     0, 8
+# SdCardDetectPoll2  (CPU 0x4854b5c2)
+.incbin_range "baserom/kn7000_program.rom", 0x14b5c2, 0x14b5ce
+# SdWriteProtectPoll  (CPU 0x4854b5ce)
+.incbin_range "baserom/kn7000_program.rom", 0x14b5ce, 0x14b5da
+# SdCidPtrGet  (CPU 0x4854b5da)
+.incbin_range "baserom/kn7000_program.rom", 0x14b5da, 0x14b5e3
+# SdCardRegRead  (CPU 0x4854b5e3)
+.incbin_range "baserom/kn7000_program.rom", 0x14b5e3, 0x14b657
+# SdCardRegInvalidate  (CPU 0x4854b657)
+.incbin_range "baserom/kn7000_program.rom", 0x14b657, 0x14b674
+# SdCardRegSetValid  (CPU 0x4854b674)
+.incbin_range "baserom/kn7000_program.rom", 0x14b674, 0x14b68c
+# SdCardInitFull  (CPU 0x4854b68c)
+#   THE full SPI card init (a0 = card-info record 0x5016064c):
+#   CS release, program slowest op rate (0xA) + apply (3), 10x 0xFF wake
+#   clocks with CS released, rate 0xB (medium); CMD0 loop until R1==0x01
+#   (retry ladder via rate query 0xD: rate-1 failure x3 -> drop to 0xB,
+#   rate-2 x3 -> 0xA, rate-3 x3 -> reset + -1); CMD1 loop (0x100 tries,
+#   0x14-tick sleeps; non-idle reply -> -2); CMD59 (good CRC, frame
+#   0x50007ed0) + SdCrcSelfTest (bad CRC) x3 -- non-fatal, fallback
+#   rate 0xA; SdCardIdentify with the same retry ladder (-3 on failure)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# SdCardInitFull_entry:   (register-save `call` entry)
+    mov     a0, a3
+    call    SdCsRelease, 0, 0
+    mov     0xa, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    mov     3, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    mov     0xa, d0
+    call    SdSpiClockBurst_entry, [d2], 0x14
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     0xb, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    mov     0x100, a2
+    mov     0x50007ec6, a0
+    call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     a2, d0
+    beq     0x4854b728
+    mov     0xd, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    exth    d0
+    cmp     1, d0
+    beq     0x4854b6e6
+    cmp     2, d0
+    beq     0x4854b6f8
+    cmp     3, d0
+    beq     0x4854b70a
+    bra     0x4854b71d
+    mov     d3, d1
+    exth    d1
+    mov     d1, d3
+    inc     d3
+    cmp     3, d1
+    blt     0x4854b71d
+    mov     0xb, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    bra     0x4854b71d
+    mov     d3, d1
+    exth    d1
+    mov     d1, d3
+    inc     d3
+    cmp     3, d1
+    blt     0x4854b71d
+    mov     0xa, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    bra     0x4854b71d
+    mov     d3, d2
+    exth    d2
+    mov     d2, d3
+    inc     d3
+    cmp     3, d2
+    blt     0x4854b71d
+    mov     a3, a0
+    call    SdCardInfoReset_entry, 0, 0x14
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x1c
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    bra     0x4854b6c0
+    clr     d2
+    mov     0x50007eda, a0
+    call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b759
+    cmp     a2, d0
+    bne     0x4854b748
+    mov     0x14, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    bra     0x4854b753
+    mov     a3, a0
+    call    SdCardInfoReset_entry, 0, 0x14
+    mov     -2, d0
+    ret     [d2,d3,a2,a3], 0x1c
+    inc     d2
+    exth    d2
+    cmp     a2, d2
+    blt     0x4854b729
+    cmp     a2, d2
+    blt     0x4854b768
+    mov     a3, a0
+    call    SdCardInfoReset_entry, 0, 0x14
+    mov     -2, d0
+    ret     [d2,d3,a2,a3], 0x1c
+    clr     d2
+    mov     0x50007ed0, a0
+    call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    bne     0x4854b783
+    call    SdCrcSelfTest_entry, [d2,a2], 0x28
+    exth    d0
+    cmp     0, d0
+    bne     0x4854b789
+    inc     d2
+    exth    d2
+    cmp     3, d2
+    blt     0x4854b769
+    cmp     3, d2
+    blt     0x4854b794
+    mov     0xa, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    mov     a3, a0
+    call    SdCardIdentify_entry, [d2,d3,a2,a3], 0xcc
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b7f7
+    mov     0xd, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    exth    d0
+    cmp     1, d0
+    beq     0x4854b7b6
+    cmp     2, d0
+    beq     0x4854b7c8
+    cmp     3, d0
+    beq     0x4854b7da
+    bra     0x4854b7ec
+    mov     d3, d1
+    exth    d1
+    mov     d1, d3
+    inc     d3
+    cmp     2, d1
+    blt     0x4854b7ec
+    mov     0xb, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    bra     0x4854b7ec
+    mov     d3, d2
+    exth    d2
+    mov     d2, d3
+    inc     d3
+    cmp     2, d2
+    blt     0x4854b7ec
+    mov     0xa, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d3
+    bra     0x4854b7ec
+    mov     d3, d1
+    exth    d1
+    mov     d1, d3
+    inc     d3
+    cmp     2, d1
+    blt     0x4854b7ec
+    mov     a3, a0
+    call    SdCardInfoReset_entry, 0, 0x14
+    mov     -3, d0
+    bra     0x4854b7f8
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    bra     0x4854b795
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x1c
+# SdCardInfoReset  (CPU 0x4854b7fb)
+#   zero the card-info record (block len := 0x200, capacity := 0,
+#   initflag := 0) + re-init the CID shadow 0x50082728 from ROM
+#   0x4875894c
+    add     -0x14, sp
+# SdCardInfoReset_entry:   (register-save `call` entry)
+    mov     2, a1
+    add     a0, a1
+    movhu   (a1), d0
+    movhu   d0, (a1)
+    clr     d0
+    movhu   d0, (4, a0)
+    mov     d0, (8, a0)
+    mov     d0, (0xc, a0)
+    mov     d0, (0x10, a0)
+    mov     0x200, d0
+    mov     d0, (0x14, a0)
+    clr     d0
+    mov     d0, (0x18, a0)
+    movhu   d0, (a0)
+    mov     0x50082728, a0
+    mov     0x4875894c, a1
+    mov     0x10, d0
+    call    0x4c003039, [a2,a3], 8
+    clr     d0
+    ret     0, 0x14
+# SdCardIdentify  (CPU 0x4854b838)
+#   identify stage (ROM frames 0x4867b9cc CMD10 / 0x4867b9d8 CMD9 /
+#   0x4867b9e4 CMD16): CMD9 -> 16-byte CSD; CMD16(0x200); multiplier
+#   0x50160668 := 0x200 (byte addressing, SDSC); CSD fields via
+#   SdCsdBitfield: C_SIZE [0x36..0x41] + C_SIZE_MULT [0x4E..0x50] +
+#   READ_BL_LEN [0x2C..0x2F] -> sector-count limit 0x50160664 + total
+#   bytes 0x5016065c; TAAC/NSAC/R2W_FACTOR -> access timeouts +8/+0xC;
+#   initflag := 1; CMD10 -> CID shadow 0x50082728
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xbc, sp
+# SdCardIdentify_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     0x4867b9cc, a1
+    mov     sp, a0
+    add     0x18, a0
+    mov     -5, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    mov     0x4867b9d8, a1
+    mov     sp, a0
+    add     0x24, a0
+    mov     -5, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    mov     0x4867b9e4, a1
+    mov     sp, a0
+    add     0x30, a0
+    mov     -5, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    mov     sp, a3
+    add     0x3c, a3
+    mov     sp, a0
+    add     0x24, a0
+    mov     a3, a1
+    mov     0x10, d0
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c
+    movhu   d0, (0x14, sp)
+    movhu   (0x14, sp), d0
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b8a0
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0xcc
+    mov     sp, a0
+    add     0x30, a0
+    call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    beq     0x4854b8b2
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0xcc
+    mov     0x14, a2
+    add     d3, a2
+    mov     0x200, d0
+    mov     d0, (a2)
+    mov     d3, a0
+    movhu   d0, (0x1c, a0)
+    mov     a3, a0
+    mov     0x36, d0
+    mov     0x41, d1
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    mov     d0, d2
+    mov     a3, a0
+    mov     0x4e, d0
+    mov     0x50, d1
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    inc     d2
+    add     2, d0
+    asl     d0, d2
+    mov     a3, a0
+    mov     0x2c, d0
+    mov     0x2f, d1
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    mov     1, d1
+    asl     d0, d1
+    mov     d1, d0
+    exthu   d0
+    mov     0x200, d1
+    cmp     d1, d0
+    beq     0x4854b901
+    call    LibDiv32, 0, 0
+    nop
+    nop
+    mulu    d2, d0
+    mov     d3, a0
+    mov     d0, (0x18, a0)
+    bra     0x4854b906
+    mov     d3, a0
+    mov     d2, (0x18, a0)
+    mov     (a2), d0
+    mov     0xf, d1
+    nop
+    nop
+    mulu    d0, d2
+    mov     d2, (0x10, a0)
+    mov     a3, a0
+    mov     8, d0
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    mov     0x78, d2
+    and     d0, d2
+    lsr     3, d2
+    mov     0xa, d1
+    nop
+    nop
+    mulu    d1, d2
+    mov     7, d1
+    and     d0, d1
+    cmp     7, d1
+    beq     0x4854b934
+    mov     0x78, d2
+    and     d0, d2
+    lsr     3, d2
+    mov     a3, a0
+    mov     0x18, d0
+    mov     0x1f, d1
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    mov     7, d1
+    and     d0, d1
+    cmp     2, d1
+    bcs     0x4854b94f
+    mov     d3, a2
+    inc4    a2
+    mov     8, d0
+    movhu   d0, (a2)
+    bra     0x4854b96d
+    cmp     1, d1
+    bcs     0x4854b966
+    and     0x78, d0
+    lsr     3, d0
+    cmp     9, d0
+    bcs     0x4854b966
+    mov     d3, a2
+    inc4    a2
+    mov     4, d0
+    movhu   d0, (a2)
+    bra     0x4854b96d
+    mov     d3, a2
+    inc4    a2
+    mov     1, d0
+    movhu   d0, (a2)
+    mov     a3, a0
+    mov     0x10, d0
+    mov     0x17, d1
+    call    SdCsdBitfield_entry, [d2,d3,a2,a3], 0x38
+    movhu   (a2), d1
+    lsr     3, d0
+    cmp     8, d1
+    beq     0x4854b986
+    cmp     4, d1
+    beq     0x4854b98b
+    bra     0x4854b98e
+    lsr     3, d0
+    bra     0x4854b98e
+    lsr     2, d0
+    add     d0, d2
+    mov     d3, a0
+    mov     d2, (8, a0)
+    mov     0xa, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, (0xc, a0)
+    mov     1, d0
+    movhu   d0, (a0)
+    mov     sp, a0
+    add     0x18, a0
+    mov     0x10, d0
+    mov     0x50082728, a1
+    call    SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c
+    movhu   (0x14, sp), d0
+    ret     [d2,d3,a2,a3], 0xcc
+# SdMediaChangeService  (CPU 0x4854b9b7)
+.incbin_range "baserom/kn7000_program.rom", 0x14b9b7, 0x14baf0
+# SdPowerDownNotify  (CPU 0x4854baf0)
+.incbin_range "baserom/kn7000_program.rom", 0x14baf0, 0x14bb14
+# DriveLetterClass  (CPU 0x4854bb14)
+#   drive letter 'A'..'N' -> class via jump table 0x4867ba2c:
+#   'A'/'J'/'K' -> 1 (floppy-class), others -> 2 (SD-class), else -1
+    mov     1, d1
+    extbu   d0
+    cmp     0x41, d0
+    blt     0x4854bb30
+    cmp     0x4e, d0
+    bgt     0x4854bb30
+    add     -0x41, d0
+    asl2    d0
+    mov     0x4867ba2c, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    bra     0x4854bb30
+    mov     2, d1
+    mov     d1, d0
+    extbu   d0
+    retf    0, 0
+    mov     -1, d0
+    retf    0, 0
+# SdHwInit  (CPU 0x4854bb3a)
+#   boot hw init: CS assert pulse + SdSpiPortSetup + SdDetectPortInit
+    add     -8, sp
+# SdHwInit_entry:   (register-save `call` entry)
+    call    SdCsAssertWrap_entry, 0, 8
+    call    SdSpiPortSetup_entry, 0, 0xc
+    call    SdDetectPortInit_entry, 0, 8
+    ret     0, 8
+# SdSpiPortSetup  (CPU 0x4854bb4f)
+#   subtype!=4: flush 0xFFFF -> 0x98050004; EXTMD 0x34000280 |= 0x0C00
+#   (the SPI-handshake group edge config); force the slow clock (mode 2)
+    add     -0xc, sp
+# SdSpiPortSetup_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    bne     0x4854bb6a
+    mov     0x0000ffff, d0
+    movhu   d0, (0x98050004)
+    movhu   (0x34000280), d0
+    or      0x0c00, d0
+    movhu   d0, (0x34000280)
+    mov     2, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    ret     0, 0xc
+# SdSpiClockSet  (CPU 0x4854bb84)
+#   d0 = mode: 2 = force slow (rate 3, gap 0x19); 3 = apply the stored
+#   operational pair 0x50005208/09 (subtypes 5/3 stay slow); 0xA/0xB/0xC
+#   = program the op rate slow/med/fast (rate code 3/2/1, gap
+#   0x1C/0xE/4); 0xD = query the rate code; else -1. Writes the clock
+#   latch 0x9805000E = rate|0x80 with a 2-tick verify poll; the
+#   inter-byte gap count lands in 0x50005200 (read by SdSpiSendByte)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSpiClockSet_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    cmp     2, d1
+    beq     0x4854bbac
+    cmp     3, d1
+    beq     0x4854bbc0
+    cmp     0xc, d1
+    beq     0x4854bbff
+    cmp     0xb, d1
+    beq     0x4854bc12
+    cmp     0xa, d1
+    bne     0x4854bba2
+    jmp     0x4854bc25
+    cmp     0xd, d1
+    bne     0x4854bba9
+    jmp     0x4854bc38
+    jmp     0x4854bc40
+    extbu   d0
+    mov     d0, (0x500051fc)
+    mov     3, d1
+    mov     0x19, d0
+    mov     d0, (0x50005200)
+    jmp     0x4854bc44
+    extbu   d0
+    mov     d0, (0x500051fc)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     5, d0
+    beq     0x4854bbdf
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     3, d0
+    bne     0x4854bbeb
+    mov     3, d1
+    mov     0x19, d0
+    mov     d0, (0x50005200)
+    bra     0x4854bc44
+    movbu   (0x50005209), d0
+    movbu   (0x50005208), d1
+    mov     d0, (0x50005200)
+    bra     0x4854bc44
+    mov     1, d0
+    movbu   d0, (0x50005208)
+    mov     4, d0
+    movbu   d0, (0x50005209)
+    clr     d0
+    bra     0x4854bc77
+    mov     2, d0
+    movbu   d0, (0x50005208)
+    mov     0xe, d0
+    movbu   d0, (0x50005209)
+    clr     d0
+    bra     0x4854bc77
+    mov     3, d0
+    movbu   d0, (0x50005208)
+    mov     0x1c, d0
+    movbu   d0, (0x50005209)
+    clr     d0
+    bra     0x4854bc77
+    movbu   (0x50005208), d0
+    bra     0x4854bc77
+    mov     -1, d0
+    bra     0x4854bc77
+    mov     (0x50151bfc), d0
+    extbu   d1
+    mov     d0, (8, sp)
+    movhu   (0x9805000e), d0
+    or      0x80, d1
+    cmp     d1, d0
+    beq     0x4854bc76
+    setlb
+    movhu   d1, (0x9805000e)
+    mov     (8, sp), d2
+    mov     (0x50151bfc), d0
+    sub     d2, d0
+    cmp     2, d0
+    bhi     0x4854bc76
+    movhu   (0x9805000e), d0
+    cmp     d1, d0
+    lne
+    clr     d0
+    ret     [d2], 0x10
+# SdCsAssertWrap  (CPU 0x4854bc7a)
+#   plain-call wrapper around SdCsAssert
+    add     -8, sp
+# SdCsAssertWrap_entry:   (register-save `call` entry)
+    call    SdCsAssert, 0, 0
+    ret     0, 8
+# SdCsRelease  (CPU 0x4854bc85)
+#   CS high (inactive): bset bit1 (0x02) of GPIO 0x36008004
+    bset    0x02, (0x36008004)
+    retf    0, 0
+# SdCsAssert  (CPU 0x4854bc8f)
+#   CS low (active): bclr bit1 of GPIO 0x36008004
+    bclr    0x02, (0x36008004)
+    retf    0, 0
+# SdDetectPortInit  (CPU 0x4854bc99)
+#   subtype!=4: bset 0x06 -> 0x9cc00005; SdSlotDischarge; power line +
+#   rail off; EXTMD 0x34000280 bits9:8 := 01 (the card-detect edge);
+#   W1C the pending detect (write 1 -> ICR 0x3400016c)
+    add     -8, sp
+# SdDetectPortInit_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bcaf
+    bset    0x06, (0x9cc00005)
+    call    SdSlotDischarge_entry, [d2], 0x10
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    movhu   (0x34000280), d0
+    and     0xfcff, d0
+    or      0x0100, d0
+    movhu   d0, (0x34000280)
+    mov     1, d0
+    movhu   d0, (0x3400016c)
+    ret     0, 8
+# SdCardDetectRaw  (CPU 0x4854bcdd)
+#   raw card-detect: subtype 4 -> always present (1); software override
+#   0x50005204 >= 0 -> its low byte; else IE-off strobe (write 1 ->
+#   ICR 0x3400016c, read back), IE-on, btst bit4: clear = present (1),
+#   set = absent (0). (The MAME driver drives this bit + the override)
+    add     -0xc, sp
+# SdCardDetectRaw_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bd2f
+    movhu   (0x50005204), d0
+    exth    d0
+    cmp     0, d0
+    blt     0x4854bd00
+    movhu   (0x50005204), d0
+    extbu   d0
+    bra     0x4854bd31
+    and     0xf7ff, psw
+    nop
+    nop
+    mov     1, d0
+    movhu   d0, (0x3400016c)
+    movhu   (0x3400016c), d0
+    movhu   d0, (8, sp)
+    or      0x0800, psw
+    nop
+    nop
+    movhu   (0x3400016c), d0
+    btst    0x10, d0
+    beq     0x4854bd2b
+    clr     d0
+    bra     0x4854bd31
+    mov     1, d0
+    bra     0x4854bd31
+    mov     1, d0
+    ret     0, 0xc
+# SdCardDetectDebounce  (CPU 0x4854bd34)
+#   100-tick (counter 0x50151bfc) insertion debounce over the raw read;
+#   last-raw shadow 0x5000520c, edge timestamp 0x50005210; removal is
+#   reported immediately
+    movm    [d2,d3], (sp)
+    add     -8, sp
+# SdCardDetectDebounce_entry:   (register-save `call` entry)
+    call    SdCardDetectRaw_entry, 0, 0xc
+    mov     d0, d2
+    movbu   (0x5000520c), d0
+    cmp     0, d0
+    bne     0x4854bd5b
+    mov     d2, d0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4854bd5b
+    mov     (0x50151bfc), d0
+    mov     d0, (0x50005210)
+    mov     d2, d0
+    extbu   d0
+    cmp     0, d0
+    bne     0x4854bd68
+    clr     d0
+    mov     d0, (0x50005210)
+    mov     (0x50005210), d1
+    mov     d2, d0
+    cmp     0, d1
+    beq     0x4854bd86
+    mov     (0x50151bfc), d3
+    add     0x64, d1
+    clr     d0
+    cmp     d1, d3
+    bls     0x4854bd86
+    mov     d0, (0x50005210)
+    mov     d2, d0
+    movbu   d2, (0x5000520c)
+    extbu   d0
+    ret     [d2,d3], 0x10
+# SdPowerLineSet  (CPU 0x4854bd90)
+#   subtype!=4: bset bit2 (0x04) of 0x9cc00009 (slot power line)
+    add     -8, sp
+# SdPowerLineSet_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bda6
+    bset    0x04, (0x9cc00009)
+    ret     0, 8
+# SdPowerLineClear  (CPU 0x4854bda9)
+#   bclr bit2 of 0x9cc00009
+    add     -8, sp
+# SdPowerLineClear_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bdbf
+    bclr    0x04, (0x9cc00009)
+    ret     0, 8
+# SdPowerRailSet  (CPU 0x4854bdc2)
+#   SdPowerCtrlSet(4): raise 0x98060000 bit2 (SD power rail)
+    add     -0xc, sp
+# SdPowerRailSet_entry:   (register-save `call` entry)
+    mov     4, d0
+    call    SdPowerCtrlSet, 0, 0
+    ret     0, 0xc
+# SdPowerRailClear  (CPU 0x4854bdcf)
+#   SdPowerCtrlClear(4): drop 0x98060000 bit2
+    add     -0xc, sp
+# SdPowerRailClear_entry:   (register-save `call` entry)
+    mov     4, d0
+    call    SdPowerCtrlClear, 0, 0
+    ret     0, 0xc
+# SdSlotDrainWait  (CPU 0x4854bddc)
+#   power everything down (line+rail off, bit1 off, override := -1),
+#   sleep 0x1E ticks, then watch the slot sense (0x9cc00009 bit0) decay:
+#   0x7D0-tick window (timeout marks 0x50007efc := 0xFA), 100-tick
+#   low-confirm; always returns 0 (caller then sets the probe flag)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SdSlotDrainWait_entry:   (register-save `call` entry)
+    mov     0xff, d2
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854be01
+    bclr    0x02, (0x9cc00009)
+    mov     -1, d0
+    movhu   d0, (0x50005204)
+    mov     0x1e, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     (0x50151bfc), d0
+    mov     d0, (0xc, sp)
+    clr     d0
+    movbu   d0, (0x50007efc)
+    mov     (0xc, sp), d1
+    mov     (0x50151bfc), d0
+    sub     d1, d0
+    cmp     0x7d0, d0
+    bls     0x4854be3c
+    mov     0xfa, d0
+    movbu   d0, (0x50007efc)
+    bra     0x4854be89
+    call    SdSlotSenseGet_entry, 0, 8
+    extbu   d0
+    cmp     0, d0
+    beq     0x4854be52
+    mov     d2, d0
+    extbu   d0
+    cmp     0xff, d0
+    bne     0x4854be74
+    mov     1, d2
+    bra     0x4854be74
+    mov     d2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4854be5f
+    clr     d2
+    movbu   d2, (0x50007efc)
+    mov     (0xc, sp), d1
+    mov     (0x50151bfc), d0
+    sub     d1, d0
+    cmp     0x64, d0
+    bls     0x4854be74
+    clr     d2
+    movbu   d2, (0x50007efc)
+    mov     d2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4854be83
+    mov     0xa, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     d2, d0
+    extbu   d0
+    cmp     0, d0
+    bne     0x4854be21
+    clr     d0
+    ret     [d2], 0x14
+# SdSlotDischarge  (CPU 0x4854be8d)
+#   slot flush cycle: line+rail off, CS assert, LATCH the debounced
+#   presence into the override 0x50005204, bset bit1 of 0x9cc00009, gap
+#   0xA, slow clock, then shift out 20,000 x 0x00 through 0x9805000C --
+#   the boot-time SPI write storm the MAME RE first observed
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSlotDischarge_entry:   (register-save `call` entry)
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    SdCsAssert, 0, 0
+    call    SdCardDetectDebounce_entry, [d2,d3], 0x10
+    extbu   d0
+    movhu   d0, (0x50005204)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bec0
+    bset    0x02, (0x9cc00009)
+    mov     0xa, d0
+    movbu   d0, (0x50007efc)
+    mov     2, d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    clr     d2
+    clr     d0
+    call    SdSpiSendByte_entry, 0, 8
+    inc     d2
+    cmp     0x4e20, d2
+    bcs     0x4854bed0
+    ret     [d2], 0x10
+# SdSlotSenseGet  (CPU 0x4854bee0)
+#   read 0x9cc00009 bit0 (subtype 4 -> 0)
+    add     -8, sp
+# SdSlotSenseGet_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854befb
+    movbu   (0x9cc00009), d0
+    and     0x01, d0
+    extbu   d0
+    bra     0x4854befc
+    clr     d0
+    ret     0, 8
+# SdWriteProtectGet  (CPU 0x4854beff)
+#   read the WP switch 0x9cc00009 bit4 (subtype 4 -> 0)
+    add     -8, sp
+# SdWriteProtectGet_entry:   (register-save `call` entry)
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bf1a
+    movbu   (0x9cc00009), d0
+    and     0x10, d0
+    extbu   d0
+    bra     0x4854bf1b
+    clr     d0
+    ret     0, 8
+# SdSlotRelease  (CPU 0x4854bf1e)
+#   line+rail off, bclr bit1 of 0x9cc00009, detect override := -1
+#   (back to the physical pin)
+    add     -8, sp
+# SdSlotRelease_entry:   (register-save `call` entry)
+    call    SdPowerLineClear_entry, 0, 8
+    call    SdPowerRailClear_entry, 0, 0xc
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     4, d0
+    beq     0x4854bf3e
+    bclr    0x02, (0x9cc00009)
+    mov     -1, d0
+    movhu   d0, (0x50005204)
+    clr     d0
+    ret     0, 8
+# SdSpiSendByte  (CPU 0x4854bf4a)
+#   THE byte primitive: IE-off bracket {W1C ICR 0x34000170, read back},
+#   IE-on, write d0 to the SPI shift register 0x9805000C (clocks 8 bits
+#   MSB-first through the card), bounded spin on DETECT bit4 with the
+#   per-rate gap count 0x50005200
+    add     -8, sp
+# SdSpiSendByte_entry:   (register-save `call` entry)
+    and     0xf7ff, psw
+    nop
+    nop
+    mov     1, d1
+    movhu   d1, (0x34000170)
+    movhu   (0x34000170), d1
+    movhu   d1, (4, sp)
+    or      0x0800, psw
+    nop
+    nop
+    mov     (0x50005200), d1
+    extbu   d0
+    mov     d1, (0, sp)
+    movhu   d0, (0x9805000c)
+    mov     (0, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (0, sp)
+    cmp     0, d0
+    beq     0x4854bf9a
+    setlb
+    movhu   (0x34000170), d0
+    btst    0x10, d0
+    bne     0x4854bf9a
+    mov     (0, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (0, sp)
+    cmp     0, d0
+    lne
+    ret     0, 8
+# SdSpiSendBuf  (CPU 0x4854bf9d)
+#   send d0 bytes from (a0) with the same W1C/write/spin per byte
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSpiSendBuf_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     0, d1
+    bne     0x4854bfac
+    clr     d0
+    bra     0x4854c010
+    clr     d0
+    mov     d0, (0, sp)
+    mov     (0, sp), d0
+    exthu   d2
+    cmp     d2, d0
+    bge     0x4854c00f
+    and     0xf7ff, psw
+    nop
+    nop
+    mov     1, d0
+    movhu   d0, (0x34000170)
+    movhu   (0x34000170), d0
+    movhu   d0, (8, sp)
+    or      0x0800, psw
+    nop
+    nop
+    mov     (0x50005200), d1
+    mov     (0, sp), d0
+    mov     d1, (4, sp)
+    movbu   (d0, a0), d1
+    mov     (4, sp), d0
+    movhu   d1, (0x9805000c)
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (4, sp)
+    cmp     0, d0
+    beq     0x4854c005
+    setlb
+    movhu   (0x34000170), d1
+    btst    0x10, d1
+    bne     0x4854c005
+    mov     (4, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (4, sp)
+    cmp     0, d0
+    lne
+    mov     (0, sp), d0
+    inc     d0
+    mov     d0, (0, sp)
+    mov     (0, sp), d0
+    cmp     d2, d0
+    blt     0x4854bfb5
+    clr     d0
+    ret     [d2], 0x10
+# SdSpiRecvByte  (CPU 0x4854c013)
+#   full-duplex read: shift 0xFF out, spin on DETECT, read the answered
+#   byte back from 0x9805000C
+    add     -8, sp
+# SdSpiRecvByte_entry:   (register-save `call` entry)
+    and     0xf7ff, psw
+    nop
+    nop
+    mov     1, d0
+    movhu   d0, (0x34000170)
+    movhu   (0x34000170), d0
+    movhu   d0, (4, sp)
+    or      0x0800, psw
+    nop
+    nop
+    mov     (0x50005200), d0
+    mov     -1, d1
+    mov     d0, (0, sp)
+    mov     (0, sp), d0
+    add     d0, d1
+    mov     d1, (0, sp)
+    cmp     0, d0
+    mov     0xff, d0
+    movhu   d0, (0x9805000c)
+    beq     0x4854c065
+    setlb
+    movhu   (0x34000170), d0
+    btst    0x10, d0
+    bne     0x4854c065
+    mov     (0, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (0, sp)
+    cmp     0, d0
+    lne
+    movhu   (0x9805000c), d0
+    extbu   d0
+    ret     0, 8
+# SdSpiRecvBuf  (CPU 0x4854c06f)
+#   receive d0 bytes into (a0) (0xFF filler clocks)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSpiRecvBuf_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     0, d1
+    bne     0x4854c07f
+    clr     d0
+    ret     [d2], 0x10
+    clr     d0
+    mov     d0, (0, sp)
+    mov     (0, sp), d0
+    exthu   d2
+    cmp     d2, d0
+    bge     0x4854c0eb
+    and     0xf7ff, psw
+    nop
+    nop
+    mov     1, d0
+    movhu   d0, (0x34000170)
+    movhu   (0x34000170), d0
+    movhu   d0, (8, sp)
+    or      0x0800, psw
+    nop
+    nop
+    mov     (0x50005200), d1
+    mov     0xff, d0
+    mov     d1, (4, sp)
+    movhu   d0, (0x9805000c)
+    mov     (4, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (4, sp)
+    cmp     0, d0
+    beq     0x4854c0d7
+    setlb
+    movhu   (0x34000170), d1
+    btst    0x10, d1
+    bne     0x4854c0d7
+    mov     (4, sp), d0
+    mov     -1, d1
+    add     d0, d1
+    mov     d1, (4, sp)
+    cmp     0, d0
+    lne
+    mov     (0, sp), d0
+    movhu   (0x9805000c), d1
+    movbu   d1, (d0, a0)
+    mov     (0, sp), d0
+    inc     d0
+    mov     d0, (0, sp)
+    mov     (0, sp), d0
+    cmp     d2, d0
+    blt     0x4854c088
+    clr     d0
+    ret     [d2], 0x10
+# SdSpinDelay  (CPU 0x4854c0ef)
+#   counted spin loop (d0 iterations)
+    add     -4, sp
+# SdSpinDelay_entry:   (register-save `call` entry)
+    clr     d1
+    mov     d1, (0, sp)
+    mov     (0, sp), d1
+    cmp     d0, d1
+    bcc     0x4854c105
+    nop
+    mov     (0, sp), d1
+    inc     d1
+    mov     d1, (0, sp)
+    mov     (0, sp), d1
+    cmp     d0, d1
+    bcs     0x4854c0fa
+    ret     0, 4
+# SdSpiClockBurst  (CPU 0x4854c108)
+#   send d0 x 0xFF filler clocks (the >=74 wake-up clocks run with CS
+#   RELEASED, per the SD spec)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SdSpiClockBurst_entry:   (register-save `call` entry)
+    mov     d0, d2
+    clr     d0
+    movhu   d0, (0xc, sp)
+    movhu   (0xc, sp), d1
+    exthu   d2
+    cmp     d2, d1
+    bge     0x4854c12e
+    mov     0xff, d0
+    call    SdSpiSendByte_entry, 0, 8
+    movhu   (0xc, sp), d0
+    inc     d0
+    movhu   d0, (0xc, sp)
+    movhu   (0xc, sp), d1
+    cmp     d2, d1
+    blt     0x4854c119
+    ret     [d2], 0x14
+# SdResponseScan  (CPU 0x4854c131)
+#   scan for the R1 byte (bit7 clear) across up to 0x200 reads (0x64
+#   spin between) -> (a0) halfword R1<<8; type 2 (R2) ORs a second byte
+#   into the low half; type 3 (R1b) appends SdWaitNotBusy(0x1F4);
+#   timeout -> -1. (R1 0x01 idle therefore reads back as 0x100)
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# SdResponseScan_entry:   (register-save `call` entry)
+    movbu   d0, (0x24, sp)
+    mov     a0, a2
+    clr     d2
+    mov     0x200, d3
+    call    SdSpiRecvByte_entry, 0, 8
+    mov     d0, d1
+    extbu   d1
+    btst    0x80, d1
+    bne     0x4854c165
+    extbu   d0
+    asl     8, d0
+    movhu   d0, (a2)
+    movbu   (0x24, sp), d0
+    cmp     2, d0
+    bne     0x4854c170
+    call    SdSpiRecvByte_entry, 0, 8
+    movhu   (a2), d1
+    extbu   d0
+    or      d1, d0
+    movhu   d0, (a2)
+    bra     0x4854c170
+    mov     0x64, d0
+    call    SdSpinDelay_entry, 0, 4
+    inc     d2
+    cmp     d3, d2
+    blt     0x4854c13e
+    cmp     d3, d2
+    blt     0x4854c177
+    mov     -1, d0
+    bra     0x4854c190
+    movbu   (0x24, sp), d0
+    cmp     3, d0
+    bne     0x4854c18f
+    mov     0x1f4, d0
+    call    SdWaitNotBusy_entry, [d2], 0x14
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c18f
+    mov     -1, d0
+    bra     0x4854c190
+    clr     d0
+    ret     [d2,d3,a2], 0x18
+# SdWaitNotBusy  (CPU 0x4854c193)
+#   poll until the card answers 0xFF (busy released); d0/2-tick timeout
+#   -> -1, 2-tick sleeps between polls
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SdWaitNotBusy_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     (0x50151bfc), d0
+    lsr     1, d2
+    mov     d0, (0xc, sp)
+    mov     (0xc, sp), d0
+    mov     (0x50151bfc), d1
+    sub     d0, d1
+    cmp     d2, d1
+    bhi     0x4854c1cb
+    call    SdSpiRecvByte_entry, 0, 8
+    extbu   d0
+    cmp     0xff, d0
+    bne     0x4854c1c0
+    clr     d0
+    bra     0x4854c1cd
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    bra     0x4854c1a4
+    mov     -1, d0
+    ret     [d2], 0x14
+# SdSenseBusyWait  (CPU 0x4854c1d0)
+#   expect the slot sense (0x9cc00009 bit0) high, then wait (d0/2-tick
+#   timeout) for it to clear; -1 if already low or timed out (used for
+#   the slow-clock class-2 commands during init)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SdSenseBusyWait_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     (0x50151bfc), d0
+    mov     d0, (0xc, sp)
+    mov     1, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    SdSlotSenseGet_entry, 0, 8
+    extbu   d0
+    cmp     0, d0
+    beq     0x4854c224
+    mov     (0xc, sp), d1
+    mov     (0x50151bfc), d0
+    lsr     1, d2
+    sub     d1, d0
+    cmp     d2, d0
+    bcc     0x4854c21b
+    call    SdSlotSenseGet_entry, 0, 8
+    extbu   d0
+    cmp     0, d0
+    bne     0x4854c20e
+    clr     d0
+    bra     0x4854c226
+    mov     (0xc, sp), d1
+    mov     (0x50151bfc), d0
+    sub     d1, d0
+    cmp     d2, d0
+    bcs     0x4854c201
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     -1, d0
+    ret     [d2], 0x14
+# SdDataRespWait  (CPU 0x4854c229)
+#   scan for the write data-response token (b & 0x11) == 0x01: sss ==
+#   010 (0x05) -> 0 accepted, else -2 (CRC/write error); 0x1400 reads
+#   max -> -1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdDataRespWait_entry:   (register-save `call` entry)
+    clr     d2
+    call    SdSpiRecvByte_entry, 0, 8
+    extbu   d0
+    mov     0x11, d1
+    and     d0, d1
+    cmp     1, d1
+    bne     0x4854c24b
+    and     0x1f, d0
+    cmp     5, d0
+    bne     0x4854c247
+    clr     d0
+    bra     0x4854c25c
+    mov     -2, d0
+    bra     0x4854c25c
+    mov     0x64, d0
+    call    SdSpinDelay_entry, 0, 4
+    inc     d2
+    exthu   d2
+    cmp     0x1400, d2
+    blt     0x4854c22f
+    mov     -1, d0
+    ret     [d2], 0x10
+# SdTokenWait  (CPU 0x4854c25f)
+#   poll for the 0xFE start-block token, d0/2-tick timeout -> -1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdTokenWait_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     (0x50151bfc), d0
+    lsr     1, d2
+    mov     d0, (8, sp)
+    mov     (8, sp), d0
+    mov     (0x50151bfc), d1
+    sub     d0, d1
+    cmp     d2, d1
+    bhi     0x4854c28c
+    call    SdSpiRecvByte_entry, 0, 8
+    extbu   d0
+    cmp     0xfe, d0
+    bne     0x4854c270
+    clr     d0
+    bra     0x4854c28e
+    mov     -1, d0
+    ret     [d2], 0x10
+# SdCommandSend  (CPU 0x4854c291)
+#   send one command frame a0 = {clockMode u16, respType u16, cmd[6]}:
+#   CS assert, clock set from clockMode, CRC7 -> cmd[5] ((crc<<1)|1),
+#   send the 6 bytes; mode-2 extras (5-tick sleep, SdSenseBusyWait 0x258,
+#   0xC8 spin); SdResponseScan(respType); CS release; mode-3 flush byte.
+#   -0xA = busy-sense fail, -1 = no response, else the R1<<8 halfword
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# SdCommandSend_entry:   (register-save `call` entry)
+    mov     a0, a3
+    clr     d0
+    movhu   d0, (0x10, sp)
+    call    SdCsAssert, 0, 0
+    movhu   (a3), d0
+    clr     d2
+    extbu   d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    movhu   (a3), d0
+    mov     d2, d3
+    cmp     2, d0
+    bne     0x4854c2b9
+    mov     5, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     a3, a2
+    inc4    a2
+    mov     a2, a0
+    mov     5, d0
+    call    SdCmdCrc7_entry, [d2,d3], 8
+    extbu   d0
+    add     d0, d0
+    inc     d0
+    movbu   d0, (5, a2)
+    mov     a2, a0
+    mov     6, d0
+    call    SdSpiSendBuf_entry, [d2], 0x10
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c2e4
+    mov     0x258, d0
+    call    SdSenseBusyWait_entry, [d2], 0x14
+    mov     d0, d2
+    exth    d0
+    cmp     d3, d0
+    blt     0x4854c2f1
+    movhu   (2, a3), d0
+    mov     sp, a0
+    add     0x10, a0
+    extbu   d0
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
+    mov     d0, d3
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c2ff
+    mov     0xc8, d0
+    call    SdSpinDelay_entry, 0, 4
+    call    SdCsRelease, 0, 0
+    movhu   (a3), d0
+    cmp     3, d0
+    bne     0x4854c312
+    mov     0xff, d0
+    call    SdSpiSendByte_entry, 0, 8
+    exth    d2
+    cmp     0, d2
+    bge     0x4854c31b
+    mov     -0xa, d0
+    bra     0x4854c327
+    exth    d3
+    cmp     0, d3
+    bge     0x4854c324
+    mov     -1, d0
+    bra     0x4854c327
+    movhu   (0x10, sp), d0
+    ret     [d2,d3,a2,a3], 0x24
+# SdCrcSelfTest  (CPU 0x4854c32a)
+#   send the ROM CMD59 frame 0x4867ba64 with a DELIBERATELY corrupted
+#   CRC7 ((crc-1)<<1|1) and expect the card to flag COM_CRC_ERROR:
+#   returns 1 iff R1 bit3 (0x0800 in the halfword) came back set.
+#   SdCardInitFull runs good+bad CMD59 three times, non-fatally
+    movm    [d2,a2], (sp)
+    add     -0x20, sp
+# SdCrcSelfTest_entry:   (register-save `call` entry)
+    mov     0x4867ba64, a1
+    mov     sp, a0
+    add     0x14, a0
+    mov     -5, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    clr     d0
+    movhu   d0, (0x10, sp)
+    call    SdCsAssert, 0, 0
+    movhu   (0x14, sp), d0
+    mov     sp, a2
+    add     0x14, a2
+    extbu   d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    inc4    a2
+    mov     a2, a0
+    mov     5, d0
+    call    SdCmdCrc7_entry, [d2,d3], 8
+    extbu   d0
+    add     -1, d0
+    add     d0, d0
+    inc     d0
+    movbu   d0, (5, a2)
+    mov     a2, a0
+    mov     6, d0
+    call    SdSpiSendBuf_entry, [d2], 0x10
+    movhu   (0x16, sp), d0
+    mov     sp, a0
+    add     0x10, a0
+    extbu   d0
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
+    mov     d0, d2
+    call    SdCsRelease, 0, 0
+    exth    d2
+    mov     0xff, d0
+    call    SdSpiSendByte_entry, 0, 8
+    cmp     0, d2
+    bge     0x4854c395
+    clr     d0
+    bra     0x4854c3a3
+    movhu   (0x10, sp), d0
+    btst    0x0800, d0
+    beq     0x4854c3a2
+    mov     1, d0
+    bra     0x4854c3a3
+    clr     d0
+    ret     [d2,a2], 0x28
+# SdReadBlockCmd  (CPU 0x4854c3a6)
+#   block read (a0=frame, d0=len, a1=dest): command preamble as in
+#   SdCommandSend; R1 gates (mode 3 needs ==0, else btst 0x0400/0x1200
+#   R1-error bits fail); SdTokenWait(0x64) for 0xFE; SdSpiRecvBuf(len);
+#   read the CRC16 pair and verify vs SdDataCrc16 -- mismatch sets the
+#   0x0800 flag in the returned status (the check that failed against
+#   MAME's init-0xFFFF CRC16 until spi_sdcard was patched).
+#   -0xA/-1/-2 = busy-sense/response/token failure
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# SdReadBlockCmd_entry:   (register-save `call` entry)
+    mov     a0, a3
+    mov     a1, (0x3c, sp)
+    mov     d0, d3
+    clr     d0
+    movhu   d0, (0x18, sp)
+    movhu   d0, (0x14, sp)
+    movhu   d0, (0x10, sp)
+    movhu   d0, (0x12, sp)
+    call    SdCsAssert, 0, 0
+    movhu   (a3), d0
+    extbu   d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c3d8
+    mov     5, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     a3, a2
+    inc4    a2
+    mov     a2, a0
+    mov     5, d0
+    call    SdCmdCrc7_entry, [d2,d3], 8
+    extbu   d0
+    add     d0, d0
+    inc     d0
+    movbu   d0, (5, a2)
+    mov     a2, a0
+    mov     6, d0
+    call    SdSpiSendBuf_entry, [d2], 0x10
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c409
+    mov     0x258, d0
+    call    SdSenseBusyWait_entry, [d2], 0x14
+    movhu   d0, (0x14, sp)
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c409
+    jmp     0x4854c487
+    movhu   (2, a3), d0
+    mov     sp, a0
+    add     0x18, a0
+    extbu   d0
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
+    movhu   d0, (0x10, sp)
+    movhu   (a3), d0
+    cmp     3, d0
+    bne     0x4854c427
+    movhu   (0x18, sp), d0
+    cmp     0, d0
+    beq     0x4854c436
+    bra     0x4854c487
+    movhu   (0x18, sp), d0
+    btst    0x0400, d0
+    bne     0x4854c487
+    btst    0x1200, d0
+    bne     0x4854c487
+    movhu   (0x10, sp), d0
+    exth    d0
+    cmp     0, d0
+    blt     0x4854c487
+    mov     0x64, d0
+    call    SdTokenWait_entry, [d2], 0x10
+    movhu   d0, (0x12, sp)
+    exth    d0
+    cmp     0, d0
+    bne     0x4854c487
+    mov     d3, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4854c45c
+    mov     d3, d0
+    exthu   d0
+    mov     (0x3c, sp), a0
+    call    SdSpiRecvBuf_entry, [d2], 0x10
+    call    SdSpiRecvByte_entry, 0, 8
+    mov     d0, d2
+    exthu   d2
+    asl     8, d2
+    call    SdSpiRecvByte_entry, 0, 8
+    exthu   d2
+    exthu   d0
+    or      d0, d2
+    mov     (0x3c, sp), a0
+    exthu   d3
+    mov     d3, d0
+    call    SdDataCrc16_entry, [d2,d3], 8
+    exthu   d0
+    exthu   d2
+    cmp     d2, d0
+    beq     0x4854c487
+    movhu   (0x18, sp), d0
+    or      0x0800, d0
+    movhu   d0, (0x18, sp)
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c495
+    mov     0xc8, d0
+    call    SdSpinDelay_entry, 0, 4
+    call    SdCsRelease, 0, 0
+    movhu   (a3), d0
+    cmp     3, d0
+    bne     0x4854c4a8
+    mov     0xff, d0
+    call    SdSpiSendByte_entry, 0, 8
+    movhu   (0x14, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c4b4
+    mov     -0xa, d0
+    bra     0x4854c4cf
+    movhu   (0x10, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c4c0
+    mov     -1, d0
+    bra     0x4854c4cf
+    movhu   (0x12, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c4cc
+    mov     -2, d0
+    bra     0x4854c4cf
+    movhu   (0x18, sp), d0
+    ret     [d2,d3,a2,a3], 0x2c
+# SdReadChainCmd  (CPU 0x4854c4d2)
+.incbin_range "baserom/kn7000_program.rom", 0x14c4d2, 0x14c5c0
+# SdWriteBlockCmd  (CPU 0x4854c5c0)
+#   block write (a0=frame, d0=len, a1=src): preamble, R1==0 gate, CRC16
+#   over the payload, send 0xFE token + data + CRC hi/lo, SdDataRespWait,
+#   SdWaitNotBusy(0x1F4). -0xA/-1/-2/-3 = busy/response/data-response/
+#   not-busy failure, else the status halfword
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# SdWriteBlockCmd_entry:   (register-save `call` entry)
+    mov     a0, a3
+    mov     a1, (0x3c, sp)
+    mov     d0, d3
+    clr     d0
+    movhu   d0, (0x18, sp)
+    movhu   d0, (0x10, sp)
+    movhu   d0, (0x16, sp)
+    movhu   d0, (0x14, sp)
+    movhu   d0, (0x12, sp)
+    call    SdCsAssert, 0, 0
+    movhu   (a3), d0
+    extbu   d0
+    call    SdSpiClockSet_entry, [d2], 0x10
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c5f5
+    mov     5, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    mov     a3, a2
+    inc4    a2
+    mov     a2, a0
+    mov     5, d0
+    call    SdCmdCrc7_entry, [d2,d3], 8
+    extbu   d0
+    add     d0, d0
+    inc     d0
+    movbu   d0, (5, a2)
+    mov     a2, a0
+    mov     6, d0
+    call    SdSpiSendBuf_entry, [d2], 0x10
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c626
+    mov     0x258, d0
+    call    SdSenseBusyWait_entry, [d2], 0x14
+    movhu   d0, (0x10, sp)
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c626
+    jmp     0x4854c697
+    movhu   (2, a3), d0
+    mov     sp, a0
+    add     0x18, a0
+    extbu   d0
+    call    SdResponseScan_entry, [d2,d3,a2], 0x18
+    movhu   d0, (0x16, sp)
+    exth    d0
+    cmp     0, d0
+    bne     0x4854c697
+    exthu   d3
+    mov     (0x3c, sp), a0
+    mov     d3, d0
+    call    SdDataCrc16_entry, [d2,d3], 8
+    mov     d0, d2
+    exthu   d2
+    mov     0xfe, d0
+    call    SdSpiSendByte_entry, 0, 8
+    mov     (0x3c, sp), a0
+    mov     d3, d0
+    call    SdSpiSendBuf_entry, [d2], 0x10
+    mov     d2, d0
+    asr     8, d0
+    extbu   d0
+    call    SdSpiSendByte_entry, 0, 8
+    and     0xff, d2
+    mov     d2, d0
+    extbu   d0
+    call    SdSpiSendByte_entry, 0, 8
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c67f
+    mov     0x258, d0
+    call    SdSenseBusyWait_entry, [d2], 0x14
+    movhu   d0, (0x10, sp)
+    exth    d0
+    cmp     0, d0
+    blt     0x4854c697
+    call    SdDataRespWait_entry, [d2], 0x10
+    movhu   d0, (0x14, sp)
+    exth    d0
+    cmp     0, d0
+    bne     0x4854c697
+    mov     0x1f4, d0
+    call    SdWaitNotBusy_entry, [d2], 0x14
+    movhu   d0, (0x12, sp)
+    movhu   (a3), d0
+    cmp     2, d0
+    bne     0x4854c6a5
+    mov     0xc8, d0
+    call    SdSpinDelay_entry, 0, 4
+    call    SdCsRelease, 0, 0
+    movhu   (a3), d0
+    cmp     3, d0
+    bne     0x4854c6b8
+    mov     0xff, d0
+    call    SdSpiSendByte_entry, 0, 8
+    movhu   (0x10, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c6c4
+    mov     -0xa, d0
+    bra     0x4854c6eb
+    movhu   (0x16, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c6d0
+    mov     -1, d0
+    bra     0x4854c6eb
+    movhu   (0x14, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c6dc
+    mov     -2, d0
+    bra     0x4854c6eb
+    movhu   (0x12, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4854c6e8
+    mov     -3, d0
+    bra     0x4854c6eb
+    movhu   (0x18, sp), d0
+    ret     [d2,d3,a2,a3], 0x2c
+# SdCsdBitfield  (CPU 0x4854c6ee)
+#   extract CSD bits [d0..d1] from the big-endian 16-byte buffer at
+#   (0x40,sp): byte-span switch 0..3, LSB/MSB mask tables ROM
+#   0x4867ba70/0x4867ba78, bit math via LibDiv32
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x28, sp
+# SdCsdBitfield_entry:   (register-save `call` entry)
+    mov     a0, (0x40, sp)
+    mov     d0, d3
+    mov     0x4867ba70, a1
+    mov     sp, a0
+    add     0x18, a0
+    mov     -8, d2
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d2
+    lne
+    mov     0x4867ba78, a1
+    mov     sp, a0
+    add     0x20, a0
+    mov     -8, d2
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d2
+    lne
+    exthu   d3
+    mov     d3, (0x14, sp)
+    exthu   d1
+    mov     d1, a3
+    cmp     d1, d3
+    blt     0x4854c72c
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x38
+    mov     d1, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     d0, d2
+    mov     (0x14, sp), d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    sub     d0, d2
+    beq     0x4854c75b
+    cmp     1, d2
+    beq     0x4854c7a6
+    cmp     2, d2
+    bne     0x4854c751
+    jmp     0x4854c807
+    cmp     3, d2
+    bne     0x4854c758
+    jmp     0x4854c882
+    jmp     0x4854c913
+    mov     a3, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     a3, d3
+    movbu   (d0, a0), d2
+    mov     (0x14, sp), d0
+    mov     sp, a0
+    ext     d0
+    add     0x18, a0
+    mov     8, d1
+    div     d1, d0
+    mov     mdr, d0
+    sub     d0, d1
+    add     -1, d1
+    movbu   (d1, a0), d0
+    ext     d3
+    mov     sp, a0
+    add     0x20, a0
+    mov     8, d1
+    div     d1, d3
+    mov     mdr, d1
+    movbu   (d1, a0), d1
+    and     d0, d2
+    and     d1, d2
+    mov     d2, d0
+    mov     a3, d1
+    ext     d1
+    mov     8, d2
+    div     d2, d1
+    mov     mdr, d2
+    mov     8, d1
+    sub     d2, d1
+    add     -1, d1
+    lsr     d1, d0
+    ret     [d2,d3,a2,a3], 0x38
+    mov     a3, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     a3, d2
+    movbu   (d0, a0), d1
+    ext     d2
+    mov     sp, a0
+    add     0x20, a0
+    mov     8, d0
+    div     d0, d2
+    mov     mdr, d0
+    movbu   (d0, a0), d3
+    mov     a3, d0
+    and     d1, d3
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    add     -1, d0
+    movbu   (d0, a0), d2
+    mov     (0x14, sp), d0
+    mov     sp, a0
+    ext     d0
+    add     0x18, a0
+    mov     8, d1
+    div     d1, d0
+    mov     mdr, d0
+    sub     d0, d1
+    add     -1, d1
+    movbu   (d1, a0), d0
+    mov     a3, d1
+    and     d0, d2
+    asl     8, d2
+    mov     d2, d0
+    or      d3, d0
+    ext     d1
+    mov     8, d2
+    div     d2, d1
+    mov     mdr, d2
+    mov     8, d1
+    sub     d2, d1
+    add     -1, d1
+    lsr     d1, d0
+    ret     [d2,d3,a2,a3], 0x38
+    mov     a3, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     a3, d1
+    movbu   (d0, a0), d2
+    ext     d1
+    mov     sp, a0
+    add     0x20, a0
+    mov     8, d0
+    div     d0, d1
+    mov     mdr, d0
+    movbu   (d0, a0), d0
+    mov     8, d1
+    and     d0, d2
+    mov     a3, d0
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    add     -1, d0
+    movbu   (d0, a0), d0
+    mov     8, d1
+    asl     8, d0
+    or      d2, d0
+    mov     d0, (0x10, sp)
+    mov     a3, d0
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     (0x14, sp), d2
+    add     -2, d0
+    movbu   (d0, a0), d3
+    ext     d2
+    mov     sp, a1
+    add     0x18, a1
+    mov     8, d0
+    div     d0, d2
+    mov     mdr, d2
+    mov     d0, d1
+    sub     d2, d1
+    add     -1, d1
+    movbu   (d1, a1), d0
+    mov     a3, d1
+    and     d0, d3
+    mov     (0x10, sp), d0
+    asl     16, d3
+    or      d3, d0
+    ext     d1
+    mov     8, d2
+    div     d2, d1
+    mov     mdr, d2
+    mov     8, d1
+    sub     d2, d1
+    add     -1, d1
+    lsr     d1, d0
+    ret     [d2,d3,a2,a3], 0x38
+    mov     a3, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     a3, d2
+    movbu   (d0, a0), d1
+    ext     d2
+    mov     sp, a0
+    add     0x20, a0
+    mov     8, d0
+    div     d0, d2
+    mov     mdr, d0
+    movbu   (d0, a0), d2
+    mov     a3, d0
+    and     d1, d2
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    add     -1, d0
+    movbu   (d0, a0), d0
+    mov     8, d1
+    asl     8, d0
+    or      d0, d2
+    mov     a3, d0
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    add     -2, d0
+    movbu   (d0, a0), d0
+    mov     8, d1
+    asl     16, d0
+    or      d2, d0
+    mov     d0, (0x10, sp)
+    mov     a3, d0
+    call    LibDiv32, 0, 0
+    mov     (0x40, sp), a0
+    mov     (0x14, sp), d2
+    add     -3, d0
+    movbu   (d0, a0), d3
+    ext     d2
+    mov     sp, a1
+    add     0x18, a1
+    mov     8, d0
+    div     d0, d2
+    mov     mdr, d2
+    mov     d0, d1
+    sub     d2, d1
+    add     -1, d1
+    movbu   (d1, a1), d0
+    mov     a3, d2
+    and     d0, d3
+    mov     (0x10, sp), d0
+    asl     24, d3
+    or      d3, d0
+    ext     d2
+    mov     8, d1
+    div     d1, d2
+    mov     mdr, d1
+    mov     8, d2
+    sub     d1, d2
+    mov     d2, d1
+    add     -1, d1
+    lsr     d1, d0
+    bra     0x4854c914
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x38
+# SdDataCrc16  (CPU 0x4854c917)
+#   CRC-16 poly 0x1021 over (a0, len d0) -- INIT 0x0000: the finding
+#   that unblocked the MAME mount (util::crc16 inits 0xFFFF, so every
+#   CSD/data read failed CRC until spi_sdcard's sd_data_crc16 was
+#   patched to init 0)
+    movm    [d2,d3], (sp)
+# SdDataCrc16_entry:   (register-save `call` entry)
+    clr     d1
+    clr     d3
+    exthu   d0
+    mov     d0, a1
+    cmp     0, a1
+    ble     0x4854c947
+    movbu   (a0), d0
+    exthu   d1
+    asl     8, d0
+    xor     d0, d1
+    clr     d2
+    setlb
+    exthu   d1
+    btst    0x8000, d1
+    beq     0x4854c93c
+    mov     d1, d0
+    add     d0, d0
+    mov     0x1021, d1
+    xor     d0, d1
+    bra     0x4854c93d
+    add     d1, d1
+    inc     d2
+    cmp     8, d2
+    llt
+    inc     a0
+    inc     d3
+    cmp     a1, d3
+    blt     0x4854c922
+    mov     d1, d0
+    retf    [d2,d3], 8
+# SdCmdCrc7  (CPU 0x4854c94b)
+#   table-driven CRC7 (ROM table 0x4875896c, poly 0x09) over (a0, len
+#   d0), returns the accumulator >> 1; callers store (crc<<1)|1 as the
+#   frame's end byte
+    movm    [d2,d3], (sp)
+# SdCmdCrc7_entry:   (register-save `call` entry)
+    mov     d0, d3
+    clr     d1
+    clr     d0
+    clr     d2
+    exthu   d3
+    cmp     d0, d3
+    ble     0x4854c96c
+    setlb
+    mov     0x4875896c, a1
+    exthu   d0
+    movbu   (d0, a0), d0
+    extbu   d1
+    and     0xff, d0
+    xor     d0, d1
+    movbu   (d1, a1), d1
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     d3, d2
+    llt
+    extbu   d1
+    asr     1, d1
+    mov     d1, d0
+    extbu   d0
+    retf    [d2,d3], 8
+# SdStatusProbeCmdA  (CPU 0x4854c975)
+.incbin_range "baserom/kn7000_program.rom", 0x14c975, 0x14ca2a
+# SdStatusProbeCmdB  (CPU 0x4854ca2a)
+.incbin_range "baserom/kn7000_program.rom", 0x14ca2a, 0x14cac9
+# SdPlaylistDbInitAll  (CPU 0x4854cac9)
+.incbin_range "baserom/kn7000_program.rom", 0x14cac9, 0x14cae4
+# SdPlaylistLoad  (CPU 0x4854cae4)
+.incbin_range "baserom/kn7000_program.rom", 0x14cae4, 0x14cb13
+# SdPlaylistDbClear  (CPU 0x4854cb13)
+.incbin_range "baserom/kn7000_program.rom", 0x14cb13, 0x14cd30
+# SdPlaylistFileParse  (CPU 0x4854cd30)
+.incbin_range "baserom/kn7000_program.rom", 0x14cd30, 0x14d076
+# SdPowerCtrlSet  (CPU 0x4854d076)
+#   IE-off: OR d0 into the power shadow 0x50005214 -> 0x98060000,
+#   10-count settle spin (bit2 = the SD power rail)
+    and     0xf7ff, psw
+    nop
+    nop
+    movbu   (0x50005214), d1
+    extbu   d0
+    or      d0, d1
+    movbu   d1, (0x50005214)
+    movbu   (0x50005214), d0
+    movbu   d0, (0x98060000)
+    or      0x0800, psw
+    nop
+    nop
+    clr     d1
+    setlb
+    exthu   d0
+    inc     d0
+    inc     d1
+    exthu   d1
+    cmp     0xa, d1
+    llt
+    rets
+# SdPowerCtrlClear  (CPU 0x4854d0a8)
+#   IE-off: AND ~d0 into 0x50005214 -> 0x98060000, settle
+    and     0xf7ff, psw
+    nop
+    nop
+    movbu   (0x50005214), d1
+    extbu   d0
+    not     d0
+    and     d0, d1
+    movbu   d1, (0x50005214)
+    movbu   (0x50005214), d0
+    movbu   d0, (0x98060000)
+    or      0x0800, psw
+    nop
+    nop
+    clr     d1
+    setlb
+    exthu   d0
+    inc     d0
+    inc     d1
+    exthu   d1
+    cmp     0xa, d1
+    llt
+    rets
+# SdPowerCtrlWrite  (CPU 0x4854d0dc)
+#   direct byte -> shadow 0x50005214 + 0x98060000
+    movbu   d0, (0x50005214)
+    movbu   d0, (0x98060000)
+    clr     d1
+    setlb
+    exthu   d0
+    inc     d0
+    inc     d1
+    exthu   d1
+    cmp     0xa, d1
+    llt
+    retf    0, 0
+# SdPowerSerial16  (CPU 0x4854d0f4)
+.incbin_range "baserom/kn7000_program.rom", 0x14d0f4, 0x14d152
+# SdPowerDacInit  (CPU 0x4854d152)
+.incbin_range "baserom/kn7000_program.rom", 0x14d152, 0x14d168
+# SdPowerCtrlSetRaw  (CPU 0x4854d168)
+.incbin_range "baserom/kn7000_program.rom", 0x14d168, 0x14d18f
+# SdPowerCtrlClearRaw  (CPU 0x4854d18f)
+.incbin_range "baserom/kn7000_program.rom", 0x14d18f, 0x14d1b8
+# ModeAPortDefaultsInit  (CPU 0x4854d1b8)
+.incbin_range "baserom/kn7000_program.rom", 0x14d1b8, 0x14d8ab
 # InitializeBlock28  (CPU 0x4854d8ab)
 .incbin_range "baserom/kn7000_program.rom", 0x14d8ab, 0x14dcda
 # AcDemoScreenProc  (CPU 0x4854dcda)
@@ -14120,7 +16986,786 @@ _rom_marker:
 # SdcCheckTtlJg  (CPU 0x48550eee)
 .incbin_range "baserom/kn7000_program.rom", 0x150eee, 0x150f84
 # PsFileNameDualDialBoxProc  (CPU 0x48550f84)
-.incbin_range "baserom/kn7000_program.rom", 0x150f84, 0x152418
+.incbin_range "baserom/kn7000_program.rom", 0x150f84, 0x1517e0
+# SdStateReset  (CPU 0x485517e0)
+#   full reset to idle: state := 0, clear the favorites directory
+#   (FavFormat), close handles 0x50083bac..b2 := -1, clear the
+#   0x50083bb6..ba work bytes + bbf/bc4/bc5, reload the defaults
+#   0x50083bc6/c7 from ROM 0x4868da64
+    add     -0xc, sp
+# SdStateReset_entry:   (register-save `call` entry)
+    clr     d0
+    call    SD_SetState, 0, 0
+    call    FavFormat_entry, 0, 0x14
+    call    func_4855E8B1, [d2], 0xc
+    call    func_4855EB25, 0, 0x10
+    call    func_4857BE97, 0, 0x14
+    call    func_48579255, 0, 8
+    mov     -1, d0
+    movhu   d0, (0x50083bac)
+    movhu   d0, (0x50083bae)
+    movhu   d0, (0x50083bb0)
+    movhu   d0, (0x50083bb2)
+    clr     d0
+    movbu   d0, (0x50083bb6)
+    movbu   d0, (0x50083bb7)
+    movbu   d0, (0x50083bb8)
+    movbu   d0, (0x50083bb9)
+    movbu   d0, (0x50083bba)
+    movbu   d0, (0x50083bbf)
+    movbu   d0, (0x50083bc4)
+    movbu   d0, (0x50083bc5)
+    mov     0x4868da64, a0
+    movbu   (a0), d0
+    mov     0x50083bc6, a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (1, a1)
+    ret     0, 0xc
+# SdUnmountCleanup  (CPU 0x48551872)
+#   unmount teardown: the same cleanup without touching the state byte
+#   or the 0x50083bb6..ba work bytes
+    add     -8, sp
+# SdUnmountCleanup_entry:   (register-save `call` entry)
+    call    FavFormat_entry, 0, 0x14
+    call    func_4855E8B1, [d2], 0xc
+    call    func_4855EB25, 0, 0x10
+    call    func_4857BE97, 0, 0x14
+    call    func_48579255, 0, 8
+    mov     -1, d0
+    movhu   d0, (0x50083bac)
+    movhu   d0, (0x50083bae)
+    movhu   d0, (0x50083bb0)
+    movhu   d0, (0x50083bb2)
+    clr     d0
+    movbu   d0, (0x50083bbf)
+    movbu   d0, (0x50083bc4)
+    mov     0x4868da64, a0
+    movbu   (a0), d0
+    mov     0x50083bc6, a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (1, a1)
+    ret     0, 8
+# SdStateResetCall  (CPU 0x485518d8)
+#   thin wrapper -> SdStateReset
+    add     -8, sp
+# SdStateResetCall_entry:   (register-save `call` entry)
+    call    SdStateReset_entry, 0, 0xc
+    ret     0, 8
+# SdHookNops  (CPU 0x485518e3)
+.incbin_range "baserom/kn7000_program.rom", 0x1518e3, 0x1518ec
+# SdUiBusyBegin  (CPU 0x485518ec)
+.incbin_range "baserom/kn7000_program.rom", 0x1518ec, 0x151902
+# SdUiBusyEnd  (CPU 0x48551902)
+.incbin_range "baserom/kn7000_program.rom", 0x151902, 0x151920
+# SdCardInsertMsgHandler  (CPU 0x48551920)
+#   system-message hook for the card-detect transition message
+#   0x107020BB (d1 = inserted): UI mode 0xFC ignored. REMOVE: card-busy
+#   0x50083bc1 := 0, VFS invalidate 0x48565f64; state 2 -> pending-eject
+#   0x500058a0 := 1, else SdUnmountCleanup + state := 0; card-ready := 0.
+#   INSERT: 0x48565f67; pending 0 -> state := 1 (kicks the mount), 1 ->
+#   pending := 2. Always forwarded to the SD-audio notifier 0x48578ddd
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# SdCardInsertMsgHandler_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d3
+    call    func_4842C985, 0, 0x10
+    exthu   d0
+    cmp     0xfc, d0
+    bne     0x48551939
+    clr     d0
+    ret     [d2,d3], 0x18
+    cmp     0x107020bb, d3
+    bne     0x485519b3
+    clr     d0
+    movbu   d0, (0x50083bc1)
+    cmp     d0, d2
+    bne     0x4855197e
+    call    func_48565F64, 0, 0
+    call    SD_GetState, 0, 0
+    extbu   d0
+    cmp     2, d0
+    bne     0x48551968
+    mov     1, d0
+    movbu   d0, (0x500058a0)
+    bra     0x48551975
+    call    SdUnmountCleanup_entry, 0, 8
+    clr     d0
+    call    SD_SetState, 0, 0
+    clr     d0
+    movbu   d0, (0x50083bc2)
+    bra     0x485519aa
+    cmp     1, d2
+    bne     0x485519aa
+    call    func_48565F67, 0, 0
+    movbu   (0x500058a0), d0
+    cmp     0, d0
+    bne     0x4855199e
+    mov     1, d0
+    call    SD_SetState, 0, 0
+    bra     0x485519aa
+    cmp     1, d0
+    bne     0x485519aa
+    mov     2, d0
+    movbu   d0, (0x500058a0)
+    mov     d2, d1
+    mov     d3, d0
+    call    func_48578DDD, 0, 0xc
+    clr     d0
+    ret     [d2,d3], 0x18
+# SdStateMachineTick  (CPU 0x485519b7)
+#   THE demand-driven SD supervisor (the notes' 'state machine tick'),
+#   dispatching on SD_GetState (0x50083cd8):
+#    1 = mount requested: gate SdMountBusyCheck==0, install the
+#        {SdMountWorker, SdMountDone} pair at 0x50083bc8/cc, state:=2,
+#        schedule via the job poster 0x484729ad
+#    2 = job running: pump the runner 0x48472a55
+#    3 = MOUNTED: SdUiMountGateCheck, then UI supervision -- event 0x106
+#        + error bit1 raises the property-0x0006008F dialog; events
+#        0x108/109/10B/10C/113/120 sync the SD screens, gated on the
+#        card-busy byte 0x50083bc1
+#    4 = mount failed: failure-UI branch (0x48551d2a)
+#    0 = idle: UI resync branch (0x48551f28)
+#   UI properties live on object 0x0210033F (setter 0x484298a0)
+    movm    [d2], (sp)
+    add     -0x14, sp
+# SdStateMachineTick_entry:   (register-save `call` entry)
+    call    SD_GetState, 0, 0
+    extbu   d0
+    cmp     1, d0
+    beq     0x485519e1
+    cmp     2, d0
+    beq     0x48551a1f
+    cmp     3, d0
+    beq     0x48551a29
+    cmp     4, d0
+    bne     0x485519d7
+    jmp     0x48551d2a
+    cmp     0, d0
+    bne     0x485519de
+    jmp     0x48551f28
+    ret     [d2], 0x18
+    call    SdMountBusyCheck_entry, 0, 8
+    extbu   d0
+    cmp     0, d0
+    beq     0x485519ee
+    ret     [d2], 0x18
+    mov     0x48551f8d, d0
+    mov     d0, (0x50083bc8)
+    mov     0x4855203a, d0
+    mov     d0, (0x50083bcc)
+    mov     2, d0
+    call    SD_SetState, 0, 0
+    mov     0x50083bc8, a0
+    call    func_484729AD, [a2], 0x14
+    ret     [d2], 0x18
+    call    func_48472A55, 0, 0x10
+    ret     [d2], 0x18
+    call    SdUiMountGateCheck_entry, [d2], 0x18
+    extbu   d0
+    cmp     0, d0
+    bne     0x48551a36
+    jmp     0x48551d13
+    call    func_4842C985, 0, 0x10
+    mov     d0, d2
+    exthu   d2
+    cmp     0x106, d2
+    bne     0x48551a89
+    btst    0x02, (0x50083bc3)
+    beq     0x48551a89
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     0x104, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     3, d0
+    mov     0x5c, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    mov     0x108, d1
+    cmp     d1, d2
+    beq     0x48551ab0
+    cmp     0x109, d2
+    beq     0x48551ab0
+    cmp     0x10b, d2
+    beq     0x48551ab0
+    cmp     0x10c, d2
+    beq     0x48551ab0
+    cmp     0x113, d2
+    beq     0x48551ab0
+    cmp     0x120, d2
+    beq     0x48551ab0
+    jmp     0x48551cad
+    movbu   (0x50083bc1), d0
+    cmp     1, d0
+    beq     0x48551abd
+    jmp     0x48551c92
+    cmp     0x109, d2
+    beq     0x48551aed
+    cmp     0x10c, d2
+    beq     0x48551aed
+    cmp     d1, d2
+    bne     0x48551acf
+    jmp     0x48551ba6
+    cmp     0x10b, d2
+    bne     0x48551ad8
+    jmp     0x48551ba6
+    cmp     0x113, d2
+    bne     0x48551ae1
+    jmp     0x48551ba6
+    cmp     0x120, d2
+    bne     0x48551aea
+    jmp     0x48551ba6
+    jmp     0x48551c1b
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    btst    0x02, (0x50083bc3)
+    beq     0x48551b5d
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    cmp     0x10c, d2
+    bne     0x48551b32
+    mov     0x10b, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    bra     0x48551b3d
+    mov     0x104, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     3, d0
+    mov     0x5c, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    jmp     0x48551c77
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    jmp     0x48551c77
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    btst    0x01, (0x50083bc3)
+    beq     0x48551bd3
+    mov     3, d0
+    mov     0x5c, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    jmp     0x48551c77
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    bra     0x48551c77
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    movbu   d0, (0x50083bc1)
+    cmp     0x113, d2
+    beq     0x48551c88
+    ret     [d2], 0x18
+    call    func_485612A3, 0, 0x14
+    ret     [d2], 0x18
+    cmp     0, d0
+    beq     0x48551c99
+    ret     [d2], 0x18
+    mov     1, d0
+    call    SD_SetState, 0, 0
+    mov     1, d0
+    movbu   d0, (0x50083bc1)
+    ret     [d2], 0x18
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    movbu   d0, (0x50083bc1)
+    ret     [d2], 0x18
+    movbu   (0x50083bc1), d0
+    cmp     0, d0
+    bne     0x48551d20
+    ret     [d2], 0x18
+    clr     d0
+    movbu   d0, (0x50083bc1)
+    ret     [d2], 0x18
+    call    SdUiMountGateCheck_entry, [d2], 0x18
+    extbu   d0
+    cmp     0, d0
+    bne     0x48551d37
+    ret     [d2], 0x18
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    call    func_4842C985, 0, 0x10
+    mov     d0, d2
+    exthu   d2
+    cmp     0x109, d2
+    beq     0x48551d89
+    cmp     0x10c, d2
+    beq     0x48551d89
+    cmp     0x108, d2
+    bne     0x48551d6b
+    jmp     0x48551e42
+    cmp     0x10b, d2
+    bne     0x48551d74
+    jmp     0x48551e42
+    cmp     0x113, d2
+    bne     0x48551d7d
+    jmp     0x48551e42
+    cmp     0x120, d2
+    bne     0x48551d86
+    jmp     0x48551e42
+    jmp     0x48551ec3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    btst    0x02, (0x50083bc3)
+    beq     0x48551df9
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    cmp     0x10c, d2
+    bne     0x48551dce
+    mov     0x10b, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    bra     0x48551dd9
+    mov     0x104, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     3, d0
+    mov     0x5c, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    jmp     0x48551f1f
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    jmp     0x48551f1f
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    btst    0x01, (0x50083bc3)
+    beq     0x48551e6e
+    mov     3, d0
+    mov     0x5c, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    bra     0x48551eb4
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    cmp     0x113, d2
+    bne     0x48551f1f
+    call    func_485612A3, 0, 0x14
+    bra     0x48551f1f
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     2, d0
+    call    LibTickSleep, [d2,a2], 0x18
+    call    func_48429372, 0, 0x10
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050001, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x02150011, d1
+    call    func_484298A0, [d2], 0x1c
+    clr     d0
+    movbu   d0, (0x50083bc1)
+    bra     0x48551f8a
+    call    SdUiMountGateCheck_entry, [d2], 0x18
+    extbu   d0
+    cmp     0, d0
+    beq     0x48551f8a
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00050002, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     0x104, d0
+    clr     d1
+    call    func_4842B3F4, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x0006008f, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     3, d0
+    mov     0x5e, d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    clr     d0
+    movbu   d0, (0x50083bc1)
+    ret     [d2], 0x18
+# SdMountWorker  (CPU 0x48551f8d)
+#   the mount job (pointer-installed by state 1): clear the error flags
+#   0x50083bc3; gates SdCardReadyCheck + SdCardDetectPoll2 (fail ->
+#   card-ready := 0, -8); SdCardFsInit = card init + FAT mount (fail ->
+#   card-ready := 2, -7) else card-ready := 1; then card info
+#   0x4855ea17/0x4855eabd, 0x4855e845 (fail -> error bit0), directory
+#   0x4857bf6c (bit1), SdPlaylistLoad (bit2), handle 0x4855fbec ->
+#   0x50083bac. This is the path that reaches 'state 3 MOUNTED' in MAME
+    movm    [d2], (sp)
+    add     -8, sp
+# SdMountWorker_entry:   (register-save `call` entry)
+    clr     d2
+    call    func_484720FE, 0, 0x1c
+    clr     d0
+    movbu   d0, (0x50083bc3)
+    call    SdCardReadyCheck_entry, 0, 8
+    exthu   d0
+    cmp     d2, d0
+    beq     0x48551fd3
+    call    SdCardDetectPoll2_entry, 0, 8
+    exthu   d0
+    cmp     d2, d0
+    beq     0x48551fd3
+    call    SdCardFsInit_entry, 0, 8
+    mov     1, d1
+    movbu   d1, (0x50083bc2)
+    exth    d0
+    cmp     d2, d0
+    bge     0x48551fdd
+    mov     2, d0
+    movbu   d0, (0x50083bc2)
+    mov     -7, d0
+    ret     [d2], 0xc
+    movbu   d2, (0x50083bc2)
+    mov     -8, d0
+    bra     0x48552037
+    call    func_4855EA17, [a2], 0x14
+    call    func_4855EABD, [d2,a2,a3], 0x1c
+    call    func_4855E845, 0, 8
+    exth    d0
+    cmp     d2, d0
+    bge     0x48552001
+    cmp     -0x68, d0
+    beq     0x48552001
+    bset    0x01, (0x50083bc3)
+    call    func_4857BF6C, [d2,d3,a2,a3], 0x20
+    exth    d0
+    cmp     d2, d0
+    bge     0x48552017
+    cmp     -6, d0
+    beq     0x48552017
+    bset    0x02, (0x50083bc3)
+    call    SdPlaylistLoad_entry, 0, 8
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    bge     0x48552029
+    mov     d0, d2
+    bset    0x04, (0x50083bc3)
+    call    func_4855FBEC, [d2], 0xc
+    movhu   d0, (0x50083bac)
+    mov     d2, d0
+    ret     [d2], 0xc
+# SdMountDone  (CPU 0x4855203a)
+#   mount completion callback: result < 0 -> state 4, else state 3
+#   (MOUNTED); done flag 0x50083bc4 := 1; pending-eject 0x500058a0:
+#   1 -> unmount + card-ready := 0, 2 -> unmount + state := 1 (remount);
+#   SD-audio notifies 0x4857926f / 0x48578ff0
+    add     -0x10, sp
+    mov     1, d1
+    movbu   d1, (0x50083bc4)
+    exth    d0
+    cmp     0, d0
+    bge     0x48552055
+    mov     4, d0
+    call    SD_SetState, 0, 0
+    bra     0x4855205e
+    mov     3, d0
+    call    SD_SetState, 0, 0
+    movbu   (0x500058a0), d0
+    cmp     1, d0
+    bne     0x4855207c
+    call    SdUnmountCleanup_entry, 0, 8
+    clr     d0
+    movbu   d0, (0x500058a0)
+    movbu   d0, (0x50083bc2)
+    bra     0x4855209b
+    cmp     2, d0
+    bne     0x4855209b
+    call    SdUnmountCleanup_entry, 0, 8
+    clr     d0
+    movbu   d0, (0x500058a0)
+    movbu   d0, (0x50083bc2)
+    mov     1, d0
+    call    SD_SetState, 0, 0
+    call    func_4857926F, 0, 0xc
+    clr     d0
+    mov     d0, d1
+    call    func_48578FF0, 0, 0xc
+    clr     d0
+    ret     0, 0x10
+# SdSyncWorker  (CPU 0x485520af)
+#   re-sync job (installed by SdMountSyncPost): the card gates +
+#   SdCardFsInit + card-ready, then rescan 0x4855fab3
+    add     -8, sp
+    call    func_484720D3, 0, 0x1c
+    call    SdCardReadyCheck_entry, 0, 8
+    exthu   d0
+    cmp     0, d0
+    beq     0x485520ed
+    call    SdCardDetectPoll2_entry, 0, 8
+    exthu   d0
+    cmp     0, d0
+    beq     0x485520ed
+    call    SdCardFsInit_entry, 0, 8
+    mov     1, d1
+    movbu   d1, (0x50083bc2)
+    exth    d0
+    cmp     0, d0
+    bge     0x485520f8
+    mov     2, d0
+    movbu   d0, (0x50083bc2)
+    mov     -7, d0
+    bra     0x48552108
+    clr     d0
+    movbu   d0, (0x50083bc2)
+    mov     -8, d0
+    bra     0x48552108
+    call    func_4855FAB3, [d2,d3,a2,a3], 0x10
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48552107
+    bra     0x48552108
+    clr     d0
+    ret     0, 8
+# SdSyncDone  (CPU 0x4855210b)
+#   re-sync completion: state 3/4 + the same pending-eject logic
+    add     -0xc, sp
+    exth    d0
+    cmp     0, d0
+    bge     0x4855211e
+    mov     4, d0
+    call    SD_SetState, 0, 0
+    bra     0x48552127
+    mov     3, d0
+    call    SD_SetState, 0, 0
+    movbu   (0x500058a0), d0
+    cmp     1, d0
+    bne     0x48552145
+    call    SdUnmountCleanup_entry, 0, 8
+    clr     d0
+    movbu   d0, (0x500058a0)
+    movbu   d0, (0x50083bc2)
+    bra     0x48552164
+    cmp     2, d0
+    bne     0x48552164
+    call    SdUnmountCleanup_entry, 0, 8
+    clr     d0
+    movbu   d0, (0x500058a0)
+    movbu   d0, (0x50083bc2)
+    mov     1, d0
+    call    SD_SetState, 0, 0
+    clr     d0
+    ret     0, 0xc
+# SdMountSyncPost  (CPU 0x48552168)
+#   the Sdc screens' sync poster (notes: 0x4855216b): install the
+#   {SdSyncWorker, SdSyncDone} pair, state := 2, schedule via 0x484729ad
+    add     -0xc, sp
+# SdMountSyncPost_entry:   (register-save `call` entry)
+    mov     0x485520af, d0
+    mov     d0, (0x50083bc8)
+    mov     0x4855210b, d0
+    mov     d0, (0x50083bcc)
+    mov     2, d0
+    call    SD_SetState, 0, 0
+    mov     0x50083bc8, a0
+    call    func_484729AD, [a2], 0x14
+    ret     0, 0xc
+# SdUiMountGateCheck  (CPU 0x4855219c)
+#   GetProperty(object 0x0210033F, property 0x00060047) != -1 -> 1
+#   (the gate the MAME RE found blocking the state-0 UI kick)
+    movm    [d2], (sp)
+    add     -0x14, sp
+# SdUiMountGateCheck_entry:   (register-save `call` entry)
+    clr     d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0210033f, d0
+    mov     0x00060047, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     -1, d0
+    beq     0x485521be
+    mov     1, d2
+    mov     d2, d0
+    extbu   d0
+    ret     [d2], 0x18
+# SdMountBusyCheck  (CPU 0x485521c3)
+#   job runner busy (0x48472abb) or 0x4851ad68 -> 1 (blocks the
+#   state-1 mount kick)
+    add     -8, sp
+# SdMountBusyCheck_entry:   (register-save `call` entry)
+    call    func_48472ABB, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x485521d6
+    mov     1, d0
+    bra     0x485521e7
+    call    func_4851AD68, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x485521e6
+    mov     1, d0
+    bra     0x485521e7
+    clr     d0
+    ret     0, 8
+# SdRemountSync  (CPU 0x485521ea)
+.incbin_range "baserom/kn7000_program.rom", 0x1521ea, 0x15224e
+# SdErrorFlagsGet  (CPU 0x4855224e)
+#   read the mount error flags 0x50083bc3
+    movbu   (0x50083bc3), d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x152257, 0x152418
 # SdcLoadTtlJgFunc  (CPU 0x48552418)
 .incbin_range "baserom/kn7000_program.rom", 0x152418, 0x15254c
 # SdcUtilityTtlJgFunc  (CPU 0x4855254c)
@@ -14282,13 +17927,32 @@ _rom_marker:
 # SdcFmmSeqSongNameFunc  (CPU 0x4855e132)
 .incbin_range "baserom/kn7000_program.rom", 0x15e132, 0x15e574
 # SdcFmmPasswordFunc  (CPU 0x4855e574)
-.incbin_range "baserom/kn7000_program.rom", 0x15e574, 0x15ec34
+.incbin_range "baserom/kn7000_program.rom", 0x15e574, 0x15e803
+# SD_SetState  (CPU 0x4855e803)
+#   write the SD state byte 0x50083cd8 (0 idle / 1 kick / 2 mounting / 3 mounted / 4 failed)
+    movbu   d0, (0x50083cd8)
+    retf    0, 0
+# SD_GetState  (CPU 0x4855e80c)
+#   read 0x50083cd8
+    movbu   (0x50083cd8), d0
+    retf    0, 0
+# SdCardUsableCheck  (CPU 0x4855e815)
+.incbin_range "baserom/kn7000_program.rom", 0x15e815, 0x15ec34
 # FavFormat  (CPU 0x4855ec34)
 .incbin_range "baserom/kn7000_program.rom", 0x15ec34, 0x161cdb
 # FavNameSetter  (CPU 0x48561cdb)
 .incbin_range "baserom/kn7000_program.rom", 0x161cdb, 0x161d8e
 # FavItemSetter  (CPU 0x48561d8e)
-.incbin_range "baserom/kn7000_program.rom", 0x161d8e, 0x1661a0
+.incbin_range "baserom/kn7000_program.rom", 0x161d8e, 0x1630db
+# SdCardFsInit  (CPU 0x485630db)
+#   card init + FAT mount trampoline -> 0x48565d17 (the VFS device-'C'
+#   chain; 'card-init 0x485630de' in the MAME notes)
+    add     -8, sp
+# SdCardFsInit_entry:   (register-save `call` entry)
+    call    func_48565D17, [d2], 0x14
+    ret     0, 8
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x1630e6, 0x1661a0
 # InitializeBlock12  (CPU 0x485661a0)
 .incbin_range "baserom/kn7000_program.rom", 0x1661a0, 0x1665d3
 # REVSELTitleFunc  (CPU 0x485665d3)
