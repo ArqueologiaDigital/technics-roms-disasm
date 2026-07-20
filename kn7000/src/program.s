@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 406 synthetic labels for internal helpers called by converted code
+# 408 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -348,6 +348,8 @@ _rom_marker:
 .equ TgElemKeyOffRelease_entry, 0x4C013F0F
 .equ TgActiveHighWaterUpdate_entry, 0x4C014786
 .equ TgLastKeyPartSet, 0x4C0147A4
+.equ TgStageHeldPolicyShed, 0x4C0147AD
+.equ TgVoicePoolReset_entry, 0x4C014808
 .equ LibParamGet, 0x4C0149FA
 .equ LibParamSet, 0x4C014A56
 .equ TgVoiceRoutePtrCalc_entry, 0x4C02BE4A
@@ -25877,7 +25879,215 @@ display_palette:
     movbu   d0, (0x500d2878)
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3cd77e, 0x3e4e16
+# TgStageHeldPolicyShed  (lib CPU 0x4c0147ad)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     a0, a1
+    movhu   (a1), d0
+    and     0x3f00, d0
+    asr     8, d0
+    extbu   d0
+    cmp     0x12, d0
+    ble     0x4c014800
+    movbu   (0x500d2878), d0
+    cmp     0, d0
+    beq     0x4c0147e4
+    movhu   (0x500d287a), d0
+    cmp     0x40, d0
+    blt     0x4c014800
+    inc4    a0
+    movbu   (a0), d0
+    add     5, a1
+    mov     -0x81, d1
+    and     d1, d0
+    movbu   d0, (a0)
+    movbu   (a1), d0
+    and     d1, d0
+    movbu   d0, (a1)
+    bra     0x4c014800
+    movhu   (0x500d287a), d0
+    cmp     0x60, d0
+    blt     0x4c014800
+    inc4    a0
+    movbu   (a0), d0
+    add     5, a1
+    mov     -0x81, d1
+    and     d1, d0
+    movbu   d0, (a0)
+    movbu   (a1), d0
+    and     d1, d0
+    movbu   d0, (a1)
+    retf    0, 0
+.mnbase 0x48400000
+# TgVoicePoolReset  (lib CPU 0x4c014803)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# TgVoicePoolReset_entry:   (register-save `call` entry)
+    clr     d0
+    clr     d1
+    setlb
+    mov     0x500d287c, a0
+    extbu   d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    cmp     0, d0
+    bne     0x4c01481f
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     8, d1
+    llt
+    cmp     8, d1
+    bge     0x4c014834
+    clr     d2
+    mov     d2, d0
+    call    0x4c037244, [d2], 0x18
+    inc     d2
+    extbu   d2
+    cmp     0x80, d2
+    blt     0x4c014824
+    clr     d0
+    clr     d2
+    extbu   d0
+    mov     0x486d379c, a0
+    movbu   (d0, a0), d1
+    asl     5, d0
+    mov     d0, a0
+    add     0x500d1038, a0
+    movbu   d1, (1, a0)
+    movbu   d1, (a0)
+    clr     d1
+    movbu   d1, (3, a0)
+    movbu   d1, (2, a0)
+    mov     d1, d0
+    inc4    a0
+    setlb
+    extbu   d0
+    asl2    d0
+    clr     d3
+    mov     d3, (d0, a0)
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     7, d1
+    llt
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x12, d2
+    blt     0x4c014836
+    clr     d1
+    mov     0, a1
+    extbu   d1
+    mov     d1, d0
+    asl2    d0
+    mov     0x486d37b0, a0
+    mov     (d0, a0), d0
+    mov     0x1c, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     0x500d0c64, d1
+    mov     d1, a0
+    mov     d0, (a0)
+    clr     d0
+    clr     d2
+    inc4    a0
+    setlb
+    extbu   d0
+    asl2    d0
+    mov     a1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     2, d2
+    llt
+    clr     d0
+    clr     d2
+    mov     0xc, a0
+    add     d1, a0
+    setlb
+    extbu   d0
+    clr     d1
+    movbu   d1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x10, d2
+    llt
+    inc     d3
+    mov     d3, d1
+    extbu   d3
+    cmp     0x23, d3
+    blt     0x4c01486e
+    clr     d1
+    clr     d2
+    mov     0x80, d3
+    setlb
+    mov     d1, d0
+    extbu   d0
+    mov     d3, (0xc, sp)
+    mov     0x2c, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0xc, sp), d3
+    mov     d0, a0
+    add     0x500d1278, a0
+    movbu   d1, (0x29, a0)
+    mov     a0, (a0)
+    mov     a0, (4, a0)
+    mov     a0, (8, a0)
+    mov     a0, (0xc, a0)
+    mov     a0, (0x10, a0)
+    mov     a0, (0x14, a0)
+    clr     d0
+    movhu   d0, (0x26, a0)
+    mov     0x500d0c64, d0
+    mov     d0, (0x18, a0)
+    mov     1, d0
+    movbu   d0, (0x1c, a0)
+    mov     0x500d1038, d0
+    mov     d0, (0x20, a0)
+    mov     6, d0
+    movbu   d0, (0x24, a0)
+    clr     d0
+    movbu   d0, (0x2a, a0)
+    inc     d2
+    mov     d2, d1
+    extbu   d2
+    cmp     d3, d2
+    llt
+    mov     0x500d1278, a2
+    clr     d2
+    mov     a2, a0
+    call    TgVoiceNodeRetire_entry, [d2,a2,a3], 0x24
+    add     0x2c, a2
+    inc     d2
+    extbu   d2
+    cmp     d3, d2
+    blt     0x4c01490c
+    clr     d0
+    clr     d2
+    setlb
+    extbu   d0
+    mov     d0, d1
+    add     d1, d1
+    clr     d0
+    mov     0x500d287c, a0
+    movhu   d0, (d1, a0)
+    mov     0x500d288c, a0
+    movhu   d0, (d1, a0)
+    mov     0x500d289c, a0
+    movhu   d0, (d1, a0)
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     8, d2
+    llt
+    ret     [d2,d3,a2], 0x1c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3cd914, 0x3e4e16
 # TgVoiceRoutePtrCalc  (lib CPU 0x4c02be45)
 #   rec+0x34 := the note's routing-entry ptr (kit tables via maincpu
 #   0x48449DAA/0x48449DF8 indexed by note rec+0xA hi7) -- the halfword
@@ -36919,7 +37129,7 @@ display_palette:
     blt     0x4c03ae1b
     jmp     0x4c03b0b4
     extbu   d2
-    call    0x4c0147ad, 0, 0
+    call    TgStageHeldPolicyShed, 0, 0
     mov     0x1c, d0
     nop
     nop

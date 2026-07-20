@@ -199,6 +199,8 @@ LIB_CONVERT = {
     "TgKitZoneFilterEgLevel2Calc": (0x4C01217D, 0x4C0121D3),
     "TgKitZoneFilterEgLevelCalc": (0x4C0121D3, 0x4C012225),
     "TgPartElemLastSet":  (0x4C012225, 0x4C012254),
+    "TgStageHeldPolicyShed": (0x4C0147AD, 0x4C014803),
+    "TgVoicePoolReset":   (0x4C014803, 0x4C014943),
     # ---- the raw EG/shadow param helpers + the routing-field writer --------
     "TgVoiceEgSegParamGet": (0x4C03A20F, 0x4C03A2BD),
     "TgVoiceEgSegFlagTest": (0x4C03A2BD, 0x4C03A310),

@@ -989,3 +989,13 @@
 0x4C03A2BF  TgVoiceEgSegFlagTest_entry
 0x4C037C16  TgVoiceRouteFieldSet    ; (a0 shadow rec, d0 route sel, d1 mode 0..4) write the ROUTING field: shadow +0x40 word bits 12..19 := route byte; mode 0 = hw-config remap via PanelSubTypeGet_entry (types 1/2 direct, 3 -> ROM halfword table 0x485877B4, 5 -> 0x48587774), modes 1/3 -> sel+0x20, modes 2/4 -> sel+0x30 (the two alternate output banks) -- TgElemNoteOnFresh/TgKitElemNoteOn's routing/level init
 0x4C037C1B  TgVoiceRouteFieldSet_entry
+;
+; ---- allocator load governor + cold reset (found via the sustain-mask
+;      0x500D288C static consumer scan, 2026-07-20). The mask block:
+;      0x500D2878 = source-context byte (TgLastKeyPartSet's write),
+;      0x500D287A = active-voice high water (TgActiveHighWaterUpdate),
+;      0x500D287C/0x500D288C/0x500D289C = 8-halfword gone / SUSTAIN /
+;      metronome slot masks. -------------------------------------------------
+0x4C0147AD  TgStageHeldPolicyShed   ; (a0 staged request rec) POLYPHONY LOAD GOVERNOR called inside TgSlotAllocate: for parts > 0x12 only, when the active-voice high water 0x500D287A reaches the threshold (0x40 when context byte 0x500D2878 nonzero, else 0x60) clear the HELD policy bit7 of pool bytes rec+4/rec+5 -- under voice pressure a note's elements 3/4 are staged WITHOUT the sustain-hold mark (so the damper keeps at most 2 held elements per note); retf leaf
+0x4C014803  TgVoicePoolReset        ; the voice allocator COLD RESET: if any gone-mask halfword 0x500D287C[0..7] is nonzero first force every hw slot off via 0x4C037244(slot) x 0x80; then rebuild the class-list arrays 0x500D1038 (0x12 x 0x20 bytes, side quotas from ROM 0x486D379C), the part order arrays 0x500D0C64 (0x23 x 0x1C, first word from ROM 0x486D37B0), re-seed all 0x80 nodes 0x500D1278 (self-linked rings, +0x1C free, +0x24 class 6) + TgVoiceNodeRetire_entry each, and clear the 8-halfword masks 0x500D287C/0x500D288C/0x500D289C
+0x4C014808  TgVoicePoolReset_entry
