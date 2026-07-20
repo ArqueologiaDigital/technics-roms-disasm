@@ -154,6 +154,50 @@ FUNC_END = {
 # the lib region has no reflection name table.
 LIB_CONVERT = {
     "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
+    # ---- the TG voice allocator + steal engine under TgNoteOn (element
+    #      staging -> side select -> hw slot pick w/ ROM steal-order lists;
+    #      kn7000_mame/notes/tg-voice-allocator.md) ---------------------------
+    "TgPartElemMaskUpdate": (0x4C00ECA1, 0x4C00ECEA),
+    "TgPartElemMaskGet":  (0x4C00ECEA, 0x4C00ECFF),
+    "TgPartElemEnabled":  (0x4C00ECFF, 0x4C00ED20),
+    "TgPartElemLastClear": (0x4C012254, 0x4C01226C),
+    "TgPartElemLastGet":  (0x4C01226C, 0x4C01227F),
+    "TgVoiceRoutePtrCalc": (0x4C02BE45, 0x4C02BECB),
+    "TgVoiceSideSelect":  (0x4C02BECB, 0x4C02BF32),
+    "TgPartPitchWordCalc": (0x4C02BF32, 0x4C02BF86),
+    "TgPartHoldQuery":    (0x4C02E0F3, 0x4C02E2C1),
+    "TgPartHoldMark":     (0x4C02E2C1, 0x4C02E5A7),
+    "TgPitchZoneFold":    (0x4C02FB25, 0x4C02FB79),
+    "TgPitchNoteResolve": (0x4C02FB79, 0x4C02FBDE),
+    "TgLevelResolve":     (0x4C02FBDE, 0x4C02FCBA),
+    "TgElemStageFresh":   (0x4C034927, 0x4C034BA4),
+    "TgElemStageRestrike": (0x4C034BA4, 0x4C034E58),
+    "TgElemRequestFlags": (0x4C034E58, 0x4C034FF0),
+    "TgMelodicVoiceAlloc": (0x4C034FF0, 0x4C035879),
+    "TgDrumStageStd":     (0x4C035879, 0x4C03595A),
+    "TgDrumNoteOnStd":    (0x4C03595A, 0x4C035BE0),
+    "TgDrumStageTable":   (0x4C035BE0, 0x4C035CC4),
+    "TgDrumReqFlagsTable": (0x4C035CC4, 0x4C035D1C),
+    "TgDrumNoteOnTable":  (0x4C035D1C, 0x4C035EA5),
+    "TgTableToneStage":   (0x4C035EA5, 0x4C03600D),
+    "TgNodeRingSeed":     (0x4C03A779, 0x4C03A78D),
+    "TgNodeRingInsert":   (0x4C03A78D, 0x4C03A7AC),
+    "TgVoiceNodeToClassRing": (0x4C03A7AC, 0x4C03A80A),
+    "TgNodeFreeUnlink":   (0x4C03A80A, 0x4C03A825),
+    "TgNodeFreeInsert":   (0x4C03A825, 0x4C03A84D),
+    "TgVoiceNodeToOrderList": (0x4C03A84D, 0x4C03A8E3),
+    "TgNodeSlotUnlink":   (0x4C03A8E3, 0x4C03A8FE),
+    "TgNodeSlotInsert":   (0x4C03A8FE, 0x4C03A926),
+    "TgVoiceNodeRetire":  (0x4C03A926, 0x4C03AA06),
+    "TgVoiceNodeFadeKick": (0x4C03AA06, 0x4C03AA31),
+    "TgVoiceNodeReleaseStep": (0x4C03AA31, 0x4C03AA81),
+    "TgVoiceStatusSweep": (0x4C03AA81, 0x4C03AC8C),
+    "TgNodeScanSideA":    (0x4C03AC8C, 0x4C03ACA8),
+    "TgNodeScanSideB":    (0x4C03ACA8, 0x4C03ACC4),
+    "TgVoiceNodePick":    (0x4C03ACC4, 0x4C03AD9F),
+    "TgVoiceMigrateFind": (0x4C03AD9F, 0x4C03AE02),
+    "TgSlotAllocate":     (0x4C03AE02, 0x4C03B0C8),
+    "TgVoiceNodeKeyOff":  (0x4C03B0C8, 0x4C03B12B),
     # ---- the TG note path: key event -> note-on -> per-element EG/release
     #      programming (tg-pitch-pipeline.md + tg-envelope-sweep-results.md) --
     "TgExclGroupChoke":   (0x4C03099F, 0x4C030A7F),
@@ -1142,6 +1186,117 @@ FUNC_DOC = {
     ],
     "TgVoiceDirtyRelease": [
         "clear bit7 in the same masks (drop pending flushes on release/steal)",
+    ],
+    # ---- the voice allocator + steal engine (tg-voice-allocator.md): each hw
+    #      slot has a 0x2C-byte node at 0x500D1278+slot*0x2C; class rings live
+    #      in list arrays (+0/+1 side quotas, +2/+3 side-active counts, +4..
+    #      class heads): per-part *(0x500D0C64+part*0x1C), global active
+    #      0x500D1238, global free 0x500D1258 (class-6 head 0x500D1274) ------
+    "TgMelodicVoiceAlloc": [
+        "THE melodic 4-element allocator under TgNoteOn (d0 part, d1 note, a0",
+        "request rec, stack vel/damp). Per element k enabled by the tone",
+        "block halfword +4 (bits 1/2/4/8; APC-class 0xD parts remap the pair):",
+        "TgPartElemLastGet == 0xFF ? TgElemStageFresh : TgElemStageRestrike",
+        "into the staging record 0x500C9D58+k*0xB4, TgVoiceSideSelect ->",
+        "TgElemRequestFlags; then the TgPartElemEnabled gate, TgSlotAllocate,",
+        "and each staged record is copied over the LIVE lib voice record",
+        "0x500AF940+slot*0xB4 (chosen slots at rec+0xA.., 0x80+ = failed)",
+    ],
+    "TgSlotAllocate": [
+        "hw slot assignment for a staged request (a0 rec: +0 (part<<8)|note|",
+        "0x80, +2.. pool bytes bit7|pool-desc idx, +6.. policy 0x18 side bits/",
+        "bit7 held/bit6 no-retrigger, out +0xA.. slots): per element",
+        "TgVoiceNodePick over the pool's ROM steal-order list (0x485879D8+",
+        "pool*8) -> fail = slot 0xFF; on success the node is re-armed (+0x28",
+        "note, +0x2A 0xFF, +0x2B refade class, +0x26 8|held<<7, sustain mask",
+        "0x500D288C bit per policy bit7), moved to the part's class ring",
+        "(entry class = pooldesc+4) + order list; a side over quota migrates",
+        "a TgVoiceMigrateFind donor node to the global array 0x500D1238,",
+        "victim slot released via 0x4C00F824",
+    ],
+    "TgVoiceNodePick": [
+        "THE steal chooser (d0 side policy &0x18, a0 part array, a1 ROM",
+        "steal-order list): 0x18 = either side -> free head 0x500D1274 first,",
+        "then the first non-empty ring in list order (entry bit7 = global ring",
+        "0x500D123C[cls], else the part's own ring); 0x08/0x10 = must land on",
+        "TG A/B -> same walk but each ring is scanned with TgNodeScanSideA/B;",
+        "policy 0 -> no allocation. List order = the steal priority: retired",
+        "(6) first, then releasing (5..2), held (1,0) last, global before",
+        "own-part at each step",
+    ],
+    "TgVoiceMigrateFind": [
+        "side-rebalance donor search (d0 wanted slot, a0 global array): walk",
+        "the ROM order 0x486D383C [06 05 02 04 03 01 00] over the global class",
+        "rings, return the first node on the OPPOSITE TG side",
+    ],
+    "TgVoiceStatusSweep": [
+        "periodic TG poll driving retire/fade (16 slots per pass, rotating",
+        "group 0x5000B210): gone-bits via cmd 0xFC08 vs the sustain mask",
+        "0x500D288C -> TgVoiceNodeRetire + notify; surviving slots read their",
+        "envelope level (cmd 0xFC02, (x&0x1FFF)>>5) into node+0x2A, < 0x80",
+        "with flag bit2 -> TgVoiceNodeFadeKick; TG A half then TG B half",
+    ],
+    "TgVoiceNodeRetire": [
+        "envelope-finished voice -> free pool: side-active count-- (never",
+        "below the quota), node to the free array 0x500D1258 class 6 (head",
+        "0x500D1274 = the pick's first choice), order list 0x500D101C,",
+        "slot ring unlinked, flags := 1, level := 0",
+    ],
+    "TgVoiceNodeKeyOff": [
+        "key-up node transition (d0 slot): drop the held flag (+0x26 bit7),",
+        "clear the slot's sustain-mask bit (0x500D288C[slot>>4]), then",
+        "TgVoiceNodeReleaseStep -- TgPartKeyEvent's per-slot call before",
+        "TgVoiceSlotService",
+    ],
+    "TgVoiceSideSelect": [
+        "TG side word for a staged voice (a0 rec): kit class (+0x18) 1/2 ->",
+        "0x400 (TG A), 3/4 -> 0x800 (TG B); melodic class 0 -> mode",
+        "0x484D7751(): 1..3 = the note's routing entry *(rec+0x34) & 0x0C00,",
+        "5 = table 0x48586514, 4 = 0; folded into request bits 0x08/0x10 by",
+        "TgElemRequestFlags",
+    ],
+    "TgVoiceRoutePtrCalc": [
+        "rec+0x34 := the note's routing-entry ptr (kit tables via maincpu",
+        "0x48449DAA/0x48449DF8 indexed by note rec+0xA hi7) -- the halfword",
+        "TgVoiceSideSelect reads bits 10/11 from",
+    ],
+    "TgPartHoldQuery": [
+        "key-off hold/top-note query (d0 part, d1 note): part flags bit6",
+        "clear -> 0xFE (release now); else find the part's highest sounding",
+        "note; releasing the TOP note promotes the next-highest (class-0x3000",
+        "word rewrites via TgVoiceRegWrite_entry, top-note byte 0x500AD5A8+",
+        "part*0x10C+0x26 updated); returns 0 = hold-managed (mark only)",
+    ],
+    "TgPartHoldMark": [
+        "the Part-52 mark-only pedal path (d0 part, d1 note): records the",
+        "held key in the part's 0x500AD5A8 block for the pedal-release sweep;",
+        "no TG write happens here",
+    ],
+    "TgPitchZoneFold": [
+        "multisample octave fold (a0 librec): librec+0x0C := zone center16,",
+        "librec+0x0A := zone pitch folded by +-0xC00 octave steps into the",
+        "sample's mapped key window [desc+9 << 8, (desc+0xA << 8)+0xFF]",
+    ],
+    "TgPitchNoteResolve": [
+        "pitch16 producer for TgElemNoteOnStd (a0 librec) = folded zone pitch",
+        "+0x0A + optional sample corr + part word (+0x64) + master tune",
+        "0x500C075C + part offset resolve 0x4C0067D2, clamped 0..0x7FFF",
+    ],
+    "TgLevelResolve": [
+        "note level 0..0x7F (a0 librec): part state +0x1D 1..3 w/ flags bit0",
+        "-> 0 (mute) / bit1 -> 0x7F (solo); part-link flag borrows the linked",
+        "part's level byte; else 0x4C006A17 + velocity + expression sum",
+    ],
+    "TgDrumNoteOnStd": [
+        "drum-kit note-on builder (TgNoteOn class-0x80 sub-path): up to 2",
+        "layers staged via TgDrumStageStd (class 0x10 voices) into",
+        "0x500C9D58/0x500C9E0C, pool bytes ROM 0x48587114/15, then",
+        "TgSlotAllocate + the staged-record copy to 0x500AF940+slot*0xB4",
+    ],
+    "TgDrumNoteOnTable": [
+        "drum-kit note-on builder, table-class variant (class 0x81..0x83",
+        "kits): layers staged via TgDrumStageTable (class 0x40 voices) +",
+        "TgDrumReqFlagsTable (pool bytes ROM 0x48587118)",
     ],
     # ---- tempo-sync parameter layer (0x484478E7..0x48447F33), directly after
     #      the TM5 clock module: keeps the mode trio 0xD001/0xD002/0xD003
