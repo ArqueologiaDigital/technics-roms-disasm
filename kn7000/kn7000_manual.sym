@@ -825,3 +825,74 @@
 0x4C035D21  TgDrumNoteOnTable_entry
 0x4C035EA5  TgTableToneStage        ; (d0 part, d1 sound id, a0 request rec, stack...) stage one synthesized TABLE-TONE layer (TgNoteOnTableTone's builder): tone record via 0x4C038503/0x4C038592/0x4C038632/0x4C038876 chain, tempo-scaled params via maincpu 0x4844992A + 0x48570C46, pitch via TgPitchZoneFold_entry, level via 0x4C02BE4A route calc
 0x4C035EAA  TgTableToneStage_entry
+; ---- the TG note-path closure set (2026-07-20 static RE): the per-class
+;      note-on/key-off programmers under TgNoteOn/TgVoiceSlotService, the
+;      voice-list collect/release engine, and the portamento (glide) pair
+;      that the earlier notes read as the "pedal-release collection sweep".
+;      KEY REINTERPRETATION (code-settled): the 0x500AD5A8+part*0x10C block
+;      +0x26..+0x48 is the part's MONO/PORTAMENTO state, not a damper-pedal
+;      mark list -- +0x26 = current (top) note, +0x27 = previous note,
+;      +0x28/+0x29 = glide tick period/counter, +0x2A/+0x2C = step count/
+;      index, +0x30/+0x38 = per-step pitch deltas (SOFT DOUBLES), +0x40/
+;      +0x42 = interpolated pitch offset, +0x46 = curve base step. --------
+0x4C00AD43  TgDrumAmpReleaseCalc    ; (a0 librec, a1 out [rate|lvl]x2) key-off AMP release for DRUM (class 0x10) voices: rate = curve ROM 0x486D2649[desc2(librec+0x3C)+0x2E & 0x7F] + key scaling (desc2+0x36 slope * clamped breakpoint delta desc2+0x31..0x33 vs librec+0xC note, >>5); class bit8 -> immediate pair (out0=out2=0x4C009F03(rate), out1=0x80 level-0, out3=0), else the bit13/bit14 two-step variant; finally sets class bit14 (release programmed)
+0x4C00AD48  TgDrumAmpReleaseCalc_entry
+0x4C00C0AC  TgDrumKeyOffProgram     ; (d0 slot) key-off release programmer for class-0x10 DRUM voices (TgVoiceSlotService dispatch): clear librec+8 bit7 (note-on flag), compute the three release families into 0x50008680/88/90 (TgDrumAmpReleaseCalc_entry / TgKeyOffPitchRelease 0x4C031F07 / TgKeyOffFilterRelease 0x4C032490), merge the release halves into the shadow regs +0x02/+0x06/+0x0E/+0x12/+0x1A/+0x1E, then TgVoiceEgBurstWrite_entry = the 6-write release burst
+0x4C00C0B1  TgDrumKeyOffProgram_entry
+0x4C00C233  TgPartAuxRecPtr         ; (d0 part) -> a0 = 0x500C0784+(part-0x10)*0x2C8 for the aux parts 0x10..0x12 (APC/technichord layer), else NULL
+0x4C0115A5  TgTableKeyOffProgram    ; (d0 slot) key-off release programmer for class-0x40 TABLE voices (TgVoiceSlotService dispatch): same shape as TgDrumKeyOffProgram but the amp release comes from TgKeyOffAmpRelease_entry(offset 0) into 0x50009D1C/24/2C, then the 6-write TgVoiceEgBurstWrite_entry burst
+0x4C0115AA  TgTableKeyOffProgram_entry
+0x4C010042  TgVoiceListReleaseByNote ; (d0 part, d1 note, a0 req) collect-AND-RELEASE the part's voices sounding `note`: req = {flags 0x80, match part<<8|note|0x80, mask 0} -> TgVoiceListBuild_entry walks the part's sounding order ring via TgNodeRingReleaseWalk (each match moved to the releasing ring + TgVoiceNodeReleaseStep), slots 0x80/0xFF-terminated at req+6 -- TgPartKeyEvent's key-off list call
+0x4C010047  TgVoiceListReleaseByNote_entry
+0x4C010068  TgVoiceListCollectByNote ; (d0 part, d1 note, a0 req) plain collect (no state change): req = {flags 0, match part<<8|note|0x80, mask 0} -> slot bytes at req+6 -- the glide tick's survivor list
+0x4C01006D  TgVoiceListCollectByNote_entry
+0x4C01008C  TgVoiceListReleasePart  ; (d0 part, a0 req) release-walk EVERY note of the part: {flags 0x80, match part<<8|0x80, mask 0x7F}
+0x4C01008F  TgVoiceListReleasePart_entry
+0x4C0100AC  TgVoiceListCollectPart  ; (d0 part, a0 req) plain collect of the whole part: {flags 0, match part<<8|0x80, mask 0x7F}
+0x4C0100AF  TgVoiceListCollectPart_entry
+0x4C0100CB  TgVoiceListCollectPartLive ; (d0 part, a0 req) {flags 0x40, match part<<8, mask 0x7F}: collect the part's RELEASING ring skipping nodes already marked pending (flag bit11) via TgNodeRingCollectActive
+0x4C0100CE  TgVoiceListCollectPartLive_entry
+0x4C0100E8  TgVoiceListCollectPart2 ; byte-identical compiler duplicate of TgVoiceListCollectPart (TgPartHoldQuery's copy)
+0x4C0100EB  TgVoiceListCollectPart2_entry
+0x4C010107  TgVoiceListCollectPartAll ; (d0 part, a0 req) {flags 0, match part<<8, mask 0xFF}: collect BOTH of the part's order rings (sounding + releasing) -- TgExclGroupChoke's list call
+0x4C01010A  TgVoiceListCollectPartAll_entry
+0x4C010124  TgVoiceListCollectGlobal ; (a0 req) {flags 0, match 0, mask 0x3FFF}: all-parts scan -- TgVoiceListBuild's pool sweep over the 128 nodes 0x500D1278+n*0x2C collecting every non-free slot
+0x4C010127  TgVoiceListCollectGlobal_entry
+0x4C013542  TgKitElemNoteOn         ; (d0 slot, a0 request rec) the FRESH note-on programmer for the NON-melodic classes (drum 0x10 / table 0x40 staged records; TgNoteOn's else-dispatch): near-twin of TgElemNoteOnFresh -- builds the full shadow register image (pitch via TgPitchRuntimeCalc chain 0x4C0311F3/0x4C0312A2/0x4C031330, level word via TgVoiceLevelWordCalc_entry + 0x4C03162C/0x4C03178C, all four EG segment programmers TgPitchEgAttack/Decay + TgFilterEgAttack/Decay, EG raw writes via 0x4C03A214/0x4C03A2BF) but fetches its tone params through the kit/table fetchers 0x4C011F31/0x4C0121D8 (x2 each side) instead of the melodic zone fetchers
+0x4C013547  TgKitElemNoteOn_entry
+0x4C013F0A  TgElemKeyOffRelease     ; (d0 slot, d1 mode) key-off release programmer for the classes with no special handler (the class-2 RESTRIKE voices; TgVoiceSlotService else-dispatch): clear librec+8 bit7, amp release via TgKeyOffAmpRelease_entry(key-off offset = routing entry (librec+0x48)+1) into 0x50009F58 + pitch/filter releases into 0x50009F60/68, then (class bit8) the APC-part special case (part tone desc+0x44 nibble 0xD), TgVoiceGateOff_entry + raw write helpers 0x4C03783B/0x4C037AC3 + TgVoiceNodeKeyOff_entry
+0x4C013F0F  TgElemKeyOffRelease_entry
+0x4C014784  TgActiveHighWaterUpdate ; (d0 count) 0x500D287A := max(0x500D287A, count) -- the active-voice high-water mark
+0x4C014786  TgActiveHighWaterUpdate_entry
+0x4C01479A  TgActiveHighWaterReset  ; 0x500D287A := 0
+0x4C0147A4  TgLastKeyPartSet        ; (d0 part) 0x500D2878 := part -- noted by TgPartKeyEvent before TgNoteOn
+0x4C02D795  TgPartGlidePlan         ; (d0 part, d1 from-note, stack to-note) plan the part's PORTAMENTO ramp (called under TgPartHoldMark when partrec bit7 = portamento on): interval = to - from; SOFT-DOUBLE math (100.0/12.0/256.0/5.0 constants, runtime 0x4C0007E7/0x4C000856/0x4C000879/0x4C000B1C/0x4C001629/0x4C0016AC/0x4C0019F2) against the per-part curve record 0x486D319C[partrec+6] (12 bytes: rate double + base step halfword at +8): finds the per-step tick count, writes the glide state -- +0x30 dbl per-step delta, +0x38 dbl remainder, +0x28 tick period, +0x2A steps+1, +0x40 start offset (interval<<8), +0x46 curve base, and ARMS the tick (+0x29 := 0, +0x2C := 0); interval 0 or portamento off -> state cleared
+0x4C02D79A  TgPartGlidePlan_entry
+0x4C02E5A7  TgPartGlideTick         ; (d0 part) the per-part PORTAMENTO/legato tick (called from the periodic part service at 0x4C02D2F8/0x4C02D552 when partrec bits 6+7 set) -- this is the function the earlier notes called the "pedal-release collection sweep"; the code says GLIDE: +0x29 == -1 -> idle; every +0x28 ticks advance step +0x2C; mid-ramp -> interpolate the pitch offset (+0x42/+0x40) from the planned soft-double deltas (mul 0x4C000523 / div 0x4C000B1C / to-int 0x4C001629) and rewrite every collected voice's pitch word (TgVoiceListCollectPart_entry, TgPitchRuntimeCalc_entry -> class-0x2400 write) + level word (bit14 cleared, TgVoiceLevelWordCalc_entry -> class-0x3000 write); final step -> snap the CURRENT note's (+0x26) voices to pitch (TgVoiceListCollectByNote_entry), then when +0x48 == 0 release the PREVIOUS note's (+0x27) voices via TgVoiceListReleaseByNote_entry + TgVoiceNodeKeyOff_entry + TgVoiceSlotService_entry, +0x29 := -1
+0x4C02E5AD  TgPartGlideTick_entry
+0x4C0315CD  TgVoiceLevelWordCalc    ; (a0 librec) -> the 13-bit level term of the class-0x3000 word: desc(librec+0x3C)+0x19 & 0x7F nonzero -> librec+0x12 + that - 0x64, else librec+0x12 - 0x200; + the kit tone block byte 0x500CE404+part*0x130+elem*0x34+0x90 (signed); tail transform via 0x4C02BF8B
+0x4C0315D2  TgVoiceLevelWordCalc_entry
+0x4C033CAE  TgElemNoteOnFresh       ; (d0 slot, a0 request rec) THE fresh-strike note-on programmer for MELODIC class-bit2 voices (TgNoteOn dispatch librec+2 bit2; fresh staging sets class 0x104/0x004 so every first strike lands here -- TgElemNoteOnStd programs the bit1 RESTRIKES): builds the complete shadow register image before TgVoiceGateOn -- routing/level init 0x4C037C1B, pitch pipeline TgPitchRuntimeCalc chain (0x4C0311F3/0x4C0312A2/0x4C031330), level word TgVoiceLevelWordCalc_entry + 0x4C03162C/0x4C03178C, melodic zone param fetchers 0x4C00FD4E/0x4C00FD6D/0x4C00FE03/0x4C00FE4F/0x4C00FF49/0x4C00FF9F/0x4C00FFF5, all four EG segment computers (TgPitchEgAttackCalc/TgPitchEgDecayCalc/TgFilterEgAttackCalc/TgFilterEgDecayCalc entries) + the amp EG, raw EG writes via 0x4C03A214/0x4C03A2BF (x2: even+odd companion block), part-FX hook 0x4C0146D3 + glide/mono state 0x500AD5A8 reads for the initial pitch offset
+0x4C033CB3  TgElemNoteOnFresh_entry
+0x4C0365FD  TgKitLayerStage         ; (d0 flags<<8|zone?, d1, a0 staging rec, stack note/vel/pan) stage the drum-kit AUXILIARY one-shot layer (class 0x40 staging record at 0x500C9D58): zone ptr getters 0x4C010828/0x4C01083C/0x4C010850/0x4C010864 -> rec+0x38/+0x3C/+0x40/+0x44, TgPitchInitCalc_entry + TgVoiceRoutePtrCalc_entry, retrigger fields cleared / +0x54 := 0xFFFF
+0x4C036602  TgKitLayerStage_entry
+0x4C0366D2  TgKitLayerNoteOn        ; (d0 part, d1 note, a0 request rec, stack ...) build + allocate the kit's auxiliary layer: TgKitLayerStage_entry, req+0 := part<<8|note|0x80, pool byte req+2 := 0x83, policy req+6 := 0x40 (no-retrigger), side bits via TgVoiceSideSelect_entry, TgSlotAllocate_entry, then the staged 0xB4 record copied over the live slot record 0x500AF940+slot*0xB4 (slot at req+0xA)
+0x4C0366D7  TgKitLayerNoteOn_entry
+0x4C03678A  TgNoteOnKitLayer        ; (d0 part, d1 note, stack vel/pan) TgNoteOn's kit-class sub-path for the PCM layer of kit tone classes 0x81/0x82/0x83 (desc+0x10 & 0xCF; 0x81/0x83 unless vel bit7, 0x82/0x83 also need kit +4 bit4): TgKitLayerNoteOn_entry then the one-shot program chain per slot -- TgVoiceRecordReset_entry, TgElemNoteOnFresh_entry, TgVoiceDirtyAll_entry, TgVoiceGateOn_entry, TgVoiceGateOff_entry (immediate gate-off = one-shot), TgVoiceDirtyRelease_entry
+0x4C03678F  TgNoteOnKitLayer_entry
+0x4C03B12B  TgNodeRingCollect       ; (d0 note, d1 all-flag, a0 out-cursor ptr, a1 ring head) walk an order ring (+8 links) collecting the slot byte (+0x29) of every node whose note (+0x28) matches (d1 nonzero = all), 0xFF-terminate -- TgVoiceListBuild's plain collector
+0x4C03B12D  TgNodeRingCollect_entry
+0x4C03B15A  TgPartSlotMaskBuild     ; (d0 part) rebuild the part's slot BITMASK: collect the sounding ring (head 0x500D0C64+part*0x1C+4) into 0x5000B295, then set bit (slot&7) of mask byte (0x500D0C64+part*0x1C+0xC)[slot/8] for each -- the mask TgNodePendingMark tests
+0x4C03B15F  TgPartSlotMaskBuild_entry
+0x4C03B1E5  TgPartPendingFlush      ; (d0 part) flush the part's PENDING-RELEASE marks: walk the releasing ring (head +8), for each node with flag bit11 set: clear bit11 + TgVoiceNodeReleaseStep_entry, collect its slot into 0x5000B214 (0xFF-terminated), then zero the part's 16-byte slot bitmask
+0x4C03B1EA  TgPartPendingFlush_entry
+0x4C03B280  TgNodePendingMark       ; (a0 node) if the node's slot bit is set in its owner array's bitmask (+0x18 array +0xC): set node flag bit11 = PENDING RELEASE
+0x4C03B285  TgNodePendingMark_entry
+0x4C03B2BF  TgNodeRingCollectActive ; TgNodeRingCollect variant that SKIPS nodes whose flag bit11 (pending release) is set
+0x4C03B2C1  TgNodeRingCollectActive_entry
+0x4C03B2F7  TgSlotReleaseKick       ; (d0 slot) push one hw slot into release: node = 0x500D1278+slot*0x2C; free (+0x1C == 1) -> no-op; else move to its order array class 1 (releasing) via TgVoiceNodeToOrderList_entry, TgNodePendingMark_entry, TgVoiceNodeReleaseStep_entry, and unlink the slot ring if linked -- TgKeyOffSample's per-slot call
+0x4C03B2FC  TgSlotReleaseKick_entry
+0x4C03B342  TgNodeRingReleaseWalk   ; (d0 note, d1 all-flag, a0 out-cursor ptr, a1 ring head) the collect-AND-RELEASE walk: for each matching node -- move to order class 1 (releasing), TgNodePendingMark_entry, TgVoiceNodeReleaseStep_entry, collect the slot unless already pending (bit11), then follow + unlink the node's SLOT ring (+0x10) so same-note stacked voices release together
+0x4C03B347  TgNodeRingReleaseWalk_entry
+0x4C03B3B0  TgVoiceListBuild        ; (a0 req {+0 flags, +2 match hi=part lo=note|0x80, +4 mask}) THE voice-list engine behind the TgVoiceListCollect*/Release* wrappers: match hi-byte & 0x3F00 all set -> pool sweep over the 128 nodes (0x500D1278+n*0x2C, flag bit0 clear = in use) collecting every slot; else part < 0x22 -> the part's order-ring heads (0x500D0C64+part*0x1C: +4 sounding, +8 releasing) dispatched by flags: 0x80 -> TgNodeRingReleaseWalk (note-filtered when mask&0x7F, re-walk while the head moves), 0x40 -> TgNodeRingCollectActive on the releasing ring, else TgNodeRingCollect on one or both rings (mask bit7/match bit7 select); slots to req+6, 0xFF/0x80-terminated
+0x4C03B3B5  TgVoiceListBuild_entry
