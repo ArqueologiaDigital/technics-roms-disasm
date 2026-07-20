@@ -210,6 +210,24 @@ CONVERT = {
     "PartFlagsSet", "PartFlagsSetAll", "PartFlagsApplyTable8",
     "PartFlagsApplyTable4", "PanelLatch9CC0Bit67Set", "PartFlagsApplyTable12",
     "PartListIterateApply", "LowestSetBitIndex",
+    # ---- the five remaining VOICE-DIRECTORY hash tables 0x48572607..0x48572F46
+    #      (Find/KeyEqual/HashIndex triples + their probe cascades), the
+    #      SOUND-EDIT target registry and the bank-id helpers
+    "VoiceDirRemapProbe", "VoiceDirRemapFind", "VoiceDirRemapKeyEqual",
+    "VoiceDirRemapHashIndex",
+    "VoiceDirClassProbe", "VoiceDirClassFind", "VoiceDirClassKeyEqual",
+    "VoiceDirClassHashIndex",
+    "VoiceDirIndexProbe", "VoiceDirIndexFind", "VoiceDirIndexKeyEqual",
+    "VoiceDirIndexHashIndex",
+    "VoiceDirRefProbe", "VoiceDirRefFind", "VoiceDirRefKeyEqual",
+    "VoiceDirRefHashIndex",
+    "VoiceDirPartRefToIndex", "VoiceDirPartRefProbe", "VoiceDirPartRefFind",
+    "VoiceDirPartRefKeyEqual", "VoiceDirPartRefHashIndex",
+    "VoiceDirDefaultRefGet",
+    "SoundEditSelEventHandler", "DrumNoteSelGet", "SoundEditRefGet",
+    "SoundEditRefSet", "SoundEditRefInvalidatePost",
+    "VoiceBankIdToAlias", "VoiceBankIdFromAlias",
+    "VoiceBankIdSource1", "VoiceBankIdSource2",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -758,6 +776,52 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "VoiceDirRemapFind": [
+        "★ the first of FIVE more MILK open-hash VOICE DIRECTORIES converted",
+        "in this pass (0x48572607..0x48572F46).  Every one has the identical",
+        "shape already documented for the VoiceList* / VoiceBank* families:",
+        "  header  { u16 count, u16 modulus }  at the table base",
+        "  buckets u32 chain-head[modulus]     at base + 4",
+        "  record  { u32 next, key, payload }  in the resource region",
+        "and a {Find, KeyEqual, HashIndex} triple, HashIndex being",
+        "(key * count) / modulus.  Find returns a0 = &payload, NULL if absent.",
+        "The five tables here are 0x4876398C (986 recs, u16 key, 2-byte",
+        "payload), 0x48763F5C and 0x48764944 (570 each, u16 key), 0x4876532C",
+        "(645, 12-byte recs) and 0x48765D14 (582, 12-byte recs, u32 key).",
+        "Above each sits a PROBE CASCADE that retries with a coarser key.",
+        "The callers are the thin wrappers 0x4844910D..0x4844943F of the",
+        "voice-record module, alongside VoiceRecFetchBanked /",
+        "VoiceParamRecFetchBanked / VoiceAttrByteGet.",
+    ],
+    "VoiceDirPartRefProbe": [
+        "The only 32-bit-key member of the family: the key is",
+        "(part << 16) | (arg1 << 8) | arg3, and parts 0x28..0x2F retry as",
+        "0x20..0x27 -- the same part-family folding VoiceModRecFetch applies.",
+    ],
+    "VoiceDirDefaultRefGet": [
+        "128-entry ROM table of 3-byte reference triples at 0x486AAA3C.",
+        "Entries 0..119 all start 0x79, entries 120..126 start 0x26; the",
+        "out-of-range answer is (0x79, 0, 0), the same triple entry 12 holds.",
+    ],
+    "SoundEditSelEventHandler": [
+        "★ the SOUND EDIT TARGET REGISTRY.  Three 4-byte slots",
+        "0x50006194 / 0x50006198 / 0x5000619C = { valid, b0, b1, b2 }, one per",
+        "edit target 0x10 / 0x11 / 0x12 -- the same three parts the SOUND EDIT",
+        "record 0x500C0784 + (part - 0x10) * 0x2C8 covers (see",
+        "kn7000_mame/notes/sound-edit-parameters.md).  SoundEditRefSet writes a",
+        "slot and notifies 0x4844FE37; SoundEditRefGet reads it back; this",
+        "handler invalidates one when event (d0 & 0xFFFFFF) == 0xC00000",
+        "arrives with the target in param bits 31..24 -- exactly what",
+        "SoundEditRefInvalidatePost sends (event 0x90C00000).  The same sink",
+        "handles event 0xC00000's sibling 0x900000, which loads the DRUM note",
+        "selection byte 0x5009260C that DrumNoteSelGet returns.",
+    ],
+    "VoiceBankIdToAlias": [
+        "Bank-id aliasing pair: 0x0E <-> 0x11 and 0x1E <-> 0x23.  0x0E and",
+        "0x1E are the constants VoiceBankIdSource1 / VoiceBankIdSource2 hand",
+        "out once VoiceBankSourcePresent reports expansion archive 1 / 2",
+        "fitted, so the alias pair is the archive-bank <-> internal-bank map.",
+    ],
     "SndCmdEmitGlobalDepth": [
         "★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector, d1 = 0..0x63).",
         "Builds { len 3, status 0xF0, id, value } on the stack and hands it to",

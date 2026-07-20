@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 820 synthetic labels for internal helpers called by converted code
+# 846 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -208,6 +208,7 @@ _rom_marker:
 .equ TempoSyncE000Set_entry, 0x48447D67
 .equ func_48448273, 0x48448273
 .equ VoiceBankSourcePresent, 0x48448C0F
+.equ func_48449087, 0x48449087
 .equ func_484492E7, 0x484492E7
 .equ func_484494E4, 0x484494E4
 .equ func_4844952A, 0x4844952A
@@ -232,6 +233,7 @@ _rom_marker:
 .equ UserVoiceRecPtr, 0x4844ABF7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
+.equ func_4844FE37, 0x4844FE37
 .equ func_48450BA6, 0x48450BA6
 .equ func_484720D3, 0x484720D3
 .equ func_484720FE, 0x484720FE
@@ -455,6 +457,30 @@ _rom_marker:
 .equ VoiceListMapLookupSrc4_entry, 0x48572578
 .equ VoiceListMapKeyEqual, 0x485725E9
 .equ VoiceListMapHashIndex, 0x485725F6
+.equ VoiceDirRemapProbe_entry, 0x4857260C
+.equ VoiceDirRemapFind_entry, 0x48572680
+.equ VoiceDirRemapKeyEqual, 0x485726C3
+.equ VoiceDirRemapHashIndex, 0x485726D0
+.equ VoiceDirClassProbe_entry, 0x485726E6
+.equ VoiceDirClassFind_entry, 0x4857272F
+.equ VoiceDirClassKeyEqual, 0x48572772
+.equ VoiceDirClassHashIndex, 0x4857277F
+.equ VoiceDirIndexProbe_entry, 0x48572795
+.equ VoiceDirIndexFind_entry, 0x48572817
+.equ VoiceDirIndexKeyEqual, 0x4857285A
+.equ VoiceDirIndexHashIndex, 0x48572867
+.equ VoiceDirRefProbe_entry, 0x4857287D
+.equ VoiceDirRefFind_entry, 0x4857296F
+.equ VoiceDirRefKeyEqual, 0x485729B2
+.equ VoiceDirRefHashIndex, 0x485729BF
+.equ VoiceDirPartRefToIndex_entry, 0x485729D5
+.equ VoiceDirPartRefProbe_entry, 0x48572A01
+.equ VoiceDirPartRefFind_entry, 0x48572CCB
+.equ VoiceDirPartRefKeyEqual, 0x48572D0D
+.equ VoiceDirPartRefHashIndex_entry, 0x48572D1A
+.equ VoiceDirDefaultRefGet_entry, 0x48572D2E
+.equ SoundEditRefSet_entry, 0x48572E6E
+.equ SoundEditRefInvalidatePost_entry, 0x48572EF6
 .equ func_48578DDD, 0x48578DDD
 .equ func_48578FF0, 0x48578FF0
 .equ func_48579255, 0x48579255
@@ -28946,8 +28972,1099 @@ _rom_marker:
     div     d1, d0
     mov     mdr, d0
     rets
-# (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x172607, 0x172f46
+# VoiceDirRemapProbe  (CPU 0x48572607)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# VoiceDirRemapProbe_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, (0x30, sp)
+    mov     d1, d2
+    extbu   d0
+    mov     d0, a2
+    extbu   d2
+    mov     d0, d3
+    asl     8, d3
+    mov     d2, d0
+    add     d3, d0
+    exthu   d0
+    call    VoiceDirRemapFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857266b
+    and     0xffffffc0, d2
+    extbu   d2
+    add     d2, d3
+    mov     d3, d0
+    exthu   d0
+    call    VoiceDirRemapFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857266b
+    mov     a2, d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    asl     3, d0
+    extbu   d0
+    asl     8, d0
+    add     d2, d0
+    exthu   d0
+    call    VoiceDirRemapFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857266b
+    mov     d2, d0
+    exthu   d0
+    call    VoiceDirRemapFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857266b
+    mov     (0x30, sp), a0
+    mov     0x7f, d0
+    movbu   d0, (a0)
+    movbu   d0, (a3)
+    mov     1, d0
+    bra     0x48572678
+    movbu   (a0), d0
+    mov     (0x30, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (a3)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+# VoiceDirRemapFind  (CPU 0x4857267b)
+#   ★ the first of FIVE more MILK open-hash VOICE DIRECTORIES converted
+#   in this pass (0x48572607..0x48572F46).  Every one has the identical
+#   shape already documented for the VoiceList* / VoiceBank* families:
+#     header  { u16 count, u16 modulus }  at the table base
+#     buckets u32 chain-head[modulus]     at base + 4
+#     record  { u32 next, key, payload }  in the resource region
+#   and a {Find, KeyEqual, HashIndex} triple, HashIndex being
+#   (key * count) / modulus.  Find returns a0 = &payload, NULL if absent.
+#   The five tables here are 0x4876398C (986 recs, u16 key, 2-byte
+#   payload), 0x48763F5C and 0x48764944 (570 each, u16 key), 0x4876532C
+#   (645, 12-byte recs) and 0x48765D14 (582, 12-byte recs, u32 key).
+#   Above each sits a PROBE CASCADE that retries with a coarser key.
+#   The callers are the thin wrappers 0x4844910D..0x4844943F of the
+#   voice-record module, alongside VoiceRecFetchBanked /
+#   VoiceParamRecFetchBanked / VoiceAttrByteGet.
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# VoiceDirRemapFind_entry:   (register-save `call` entry)
+    movhu   (0x4876398c), d1
+    mov     d0, d2
+    movhu   (0x4876398e), d0
+    exthu   d2
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    exthu   d1
+    call    VoiceDirRemapHashIndex, 0, 0
+    asl2    d0
+    mov     0x48763990, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    beq     0x485726be
+    movhu   (4, a2), d1
+    mov     d2, d0
+    call    VoiceDirRemapKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x485726b8
+    mov     6, a0
+    add     a2, a0
+    bra     0x485726c0
+    mov     (a2), a2
+    cmp     0, a2
+    bne     0x485726a5
+    mov     0, a0
+    ret     [d2,a2], 0x1c
+# VoiceDirRemapKeyEqual  (CPU 0x485726c3)
+    exthu   d0
+    exthu   d1
+    cmp     d1, d0
+    bne     0x485726cc
+    mov     1, d0
+    bra     0x485726cd
+    clr     d0
+    retf    0, 0
+# VoiceDirRemapHashIndex  (CPU 0x485726d0)
+    exthu   d0
+    exthu   d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (0x10, sp), d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    rets
+# VoiceDirClassProbe  (CPU 0x485726e1)
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+# VoiceDirClassProbe_entry:   (register-save `call` entry)
+    mov     d1, d3
+    extbu   d3
+    mov     d3, d2
+    asl     8, d2
+    extbu   d0
+    add     d2, d0
+    exthu   d0
+    call    VoiceDirClassFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572724
+    cmp     0x80, d3
+    bge     0x48572721
+    mov     d2, d0
+    exthu   d0
+    call    VoiceDirClassFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572724
+    and     0xfffffff8, d3
+    extbu   d3
+    asl     8, d3
+    mov     d3, d0
+    exthu   d0
+    call    VoiceDirClassFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572724
+    clr     d0
+    bra     0x48572727
+    clr     d0
+    bra     0x48572727
+    movbu   (a0), d0
+    extb    d0
+    ret     [d2,d3], 0x14
+# VoiceDirClassFind  (CPU 0x4857272a)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# VoiceDirClassFind_entry:   (register-save `call` entry)
+    movhu   (0x48763f5c), d1
+    mov     d0, d2
+    movhu   (0x48763f5e), d0
+    exthu   d2
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    exthu   d1
+    call    VoiceDirClassHashIndex, 0, 0
+    asl2    d0
+    mov     0x48763f60, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    beq     0x4857276d
+    movhu   (4, a2), d1
+    mov     d2, d0
+    call    VoiceDirClassKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48572767
+    mov     6, a0
+    add     a2, a0
+    bra     0x4857276f
+    mov     (a2), a2
+    cmp     0, a2
+    bne     0x48572754
+    mov     0, a0
+    ret     [d2,a2], 0x1c
+# VoiceDirClassKeyEqual  (CPU 0x48572772)
+    exthu   d0
+    exthu   d1
+    cmp     d1, d0
+    bne     0x4857277b
+    mov     1, d0
+    bra     0x4857277c
+    clr     d0
+    retf    0, 0
+# VoiceDirClassHashIndex  (CPU 0x4857277f)
+    exthu   d0
+    exthu   d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (0x10, sp), d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    rets
+# VoiceDirIndexProbe  (CPU 0x48572790)
+    movm    [d2,d3,a2], (sp)
+    add     -0x24, sp
+# VoiceDirIndexProbe_entry:   (register-save `call` entry)
+    mov     d0, d3
+    extbu   d1
+    mov     d1, a2
+    extbu   d3
+    mov     d1, d2
+    asl     8, d2
+    mov     d3, d0
+    add     d2, d0
+    exthu   d0
+    call    VoiceDirIndexFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857280c
+    cmp     0x80, a2
+    bge     0x485727d2
+    mov     d2, d0
+    exthu   d0
+    call    VoiceDirIndexFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857280c
+    mov     a2, d0
+    and     0xfffffff8, d0
+    extbu   d0
+    asl     8, d0
+    exthu   d0
+    call    VoiceDirIndexFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x4857280c
+    clr     d0
+    bra     0x4857280f
+    cmp     0, d3
+    bne     0x48572809
+    cmp     0xf0, a2
+    bge     0x48572809
+    mov     sp, a0
+    mov     a0, d0
+    add     0x1c, d0
+    mov     d0, (0x18, sp)
+    mov     a2, d0
+    add     0x1d, a0
+    mov     sp, a1
+    add     0x1e, a1
+    mov     d3, d1
+    call    VoiceDirRefProbe_entry, [d2,d3,a2,a3], 0x1c
+    movbu   (0x1c, sp), d0
+    mov     sp, a0
+    mov     d0, (0x10, sp)
+    movbu   (0x1d, sp), d0
+    movbu   (0x1e, sp), d1
+    add     0x20, a0
+    call    func_48449087, [d2,d3,a2], 0x20
+    movbu   (0x20, sp), d0
+    extb    d0
+    bra     0x4857280f
+    clr     d0
+    bra     0x4857280f
+    movbu   (a0), d0
+    extb    d0
+    ret     [d2,d3,a2], 0x30
+# VoiceDirIndexFind  (CPU 0x48572812)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# VoiceDirIndexFind_entry:   (register-save `call` entry)
+    movhu   (0x48764944), d1
+    mov     d0, d2
+    movhu   (0x48764946), d0
+    exthu   d2
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    exthu   d1
+    call    VoiceDirIndexHashIndex, 0, 0
+    asl2    d0
+    mov     0x48764948, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    beq     0x48572855
+    movhu   (4, a2), d1
+    mov     d2, d0
+    call    VoiceDirIndexKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x4857284f
+    mov     6, a0
+    add     a2, a0
+    bra     0x48572857
+    mov     (a2), a2
+    cmp     0, a2
+    bne     0x4857283c
+    mov     0, a0
+    ret     [d2,a2], 0x1c
+# VoiceDirIndexKeyEqual  (CPU 0x4857285a)
+    exthu   d0
+    exthu   d1
+    cmp     d1, d0
+    bne     0x48572863
+    mov     1, d0
+    bra     0x48572864
+    clr     d0
+    retf    0, 0
+# VoiceDirIndexHashIndex  (CPU 0x48572867)
+    exthu   d0
+    exthu   d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (0x10, sp), d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    rets
+# VoiceDirRefProbe  (CPU 0x48572878)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# VoiceDirRefProbe_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, (0x2c, sp)
+    mov     d1, d2
+    extbu   d0
+    mov     d0, a2
+    extbu   d2
+    mov     d0, d3
+    asl     8, d3
+    mov     d2, d0
+    add     d3, d0
+    exthu   d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572898
+    jmp     0x48572955
+    cmp     0x80, a2
+    bge     0x485728cc
+    exthu   d3
+    mov     d3, d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x485728aa
+    jmp     0x48572955
+    mov     a2, d0
+    and     0xfffffff8, d0
+    extbu   d0
+    asl     8, d0
+    exthu   d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x485728c3
+    jmp     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    jmp     0x48572955
+    cmp     0, d2
+    bne     0x485728ee
+    cmp     0xf0, a2
+    bge     0x485728ee
+    mov     0x00008000, d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x485728e6
+    jmp     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    bra     0x48572955
+    cmp     0, d2
+    beq     0x485728f6
+    cmp     1, d2
+    bne     0x48572911
+    cmp     0xf0, a2
+    blt     0x48572955
+    mov     0x0000f000, d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    bra     0x48572955
+    cmp     6, d2
+    bne     0x48572932
+    cmp     0xf0, a2
+    blt     0x48572932
+    add     0xf000, d2
+    mov     d2, d0
+    exthu   d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    bra     0x48572955
+    cmp     7, d2
+    bne     0x4857294f
+    add     0x8000, d2
+    exthu   d2
+    mov     d2, d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    bra     0x48572955
+    clr     d0
+    call    VoiceDirRefFind_entry, [d2,a2], 0x1c
+    movbu   (a0), d0
+    mov     (0x2c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (a3)
+    movbu   (2, a0), d0
+    mov     (0x34, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x1c
+# VoiceDirRefFind  (CPU 0x4857296a)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# VoiceDirRefFind_entry:   (register-save `call` entry)
+    movhu   (0x4876532c), d1
+    mov     d0, d2
+    movhu   (0x4876532e), d0
+    exthu   d2
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    exthu   d1
+    call    VoiceDirRefHashIndex, 0, 0
+    asl2    d0
+    mov     0x48765330, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    beq     0x485729ad
+    movhu   (4, a2), d1
+    mov     d2, d0
+    call    VoiceDirRefKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x485729a7
+    mov     6, a0
+    add     a2, a0
+    bra     0x485729af
+    mov     (a2), a2
+    cmp     0, a2
+    bne     0x48572994
+    mov     0, a0
+    ret     [d2,a2], 0x1c
+# VoiceDirRefKeyEqual  (CPU 0x485729b2)
+    exthu   d0
+    exthu   d1
+    cmp     d1, d0
+    bne     0x485729bb
+    mov     1, d0
+    bra     0x485729bc
+    clr     d0
+    retf    0, 0
+# VoiceDirRefHashIndex  (CPU 0x485729bf)
+    exthu   d0
+    exthu   d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (0x10, sp), d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    rets
+# VoiceDirPartRefToIndex  (CPU 0x485729d0)
+    movm    [d2], (sp)
+    add     -0x20, sp
+# VoiceDirPartRefToIndex_entry:   (register-save `call` entry)
+    mov     d0, d2
+    movbu   (0x34, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    extbu   d1
+    mov     sp, a0
+    add     0x1c, a0
+    mov     sp, a1
+    add     0x1d, a1
+    mov     d2, d0
+    call    VoiceDirPartRefProbe_entry, [d2,d3,a2,a3], 0x28
+    movbu   (0x1d, sp), d0
+    movbu   (0x1c, sp), d1
+    call    VoiceDirIndexProbe_entry, [d2,d3,a2], 0x30
+    extb    d0
+    not     d0
+    inc     d0
+    extb    d0
+    ret     [d2], 0x24
+# VoiceDirPartRefProbe  (CPU 0x485729fc)
+#   The only 32-bit-key member of the family: the key is
+#   (part << 16) | (arg1 << 8) | arg3, and parts 0x28..0x2F retry as
+#   0x20..0x27 -- the same part-family folding VoiceModRecFetch applies.
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# VoiceDirPartRefProbe_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     a1, (0x40, sp)
+    mov     a0, (0x3c, sp)
+    mov     d1, (0x10, sp)
+    mov     d0, d3
+    movbu   (0x38, sp), d0
+    mov     d3, d2
+    mov     d0, (0x14, sp)
+    mov     d1, d0
+    asl     8, d0
+    mov     d0, (0xc, sp)
+    mov     (0x14, sp), d1
+    extbu   d2
+    mov     d0, a2
+    mov     d2, d0
+    asl     16, d0
+    mov     d0, a3
+    add     a3, a2
+    add     a2, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572a3e
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x28, d2
+    blt     0x48572ab3
+    cmp     0x2f, d2
+    bgt     0x48572ab3
+    cmp     0x28, d2
+    beq     0x48572a68
+    cmp     0x29, d2
+    beq     0x48572a6c
+    cmp     0x2a, d2
+    beq     0x48572a70
+    cmp     0x2b, d2
+    beq     0x48572a74
+    cmp     0x2c, d2
+    beq     0x48572a78
+    cmp     0x2d, d2
+    beq     0x48572a7c
+    cmp     0x2e, d2
+    beq     0x48572a80
+    cmp     0x2f, d2
+    beq     0x48572a84
+    bra     0x48572a86
+    mov     0x20, d3
+    bra     0x48572a86
+    mov     0x21, d3
+    bra     0x48572a86
+    mov     0x22, d3
+    bra     0x48572a86
+    mov     0x23, d3
+    bra     0x48572a86
+    mov     0x24, d3
+    bra     0x48572a86
+    mov     0x25, d3
+    bra     0x48572a86
+    mov     0x26, d3
+    bra     0x48572a86
+    mov     0x27, d3
+    mov     (0xc, sp), a2
+    mov     (0x14, sp), d1
+    mov     d3, d2
+    extbu   d2
+    mov     d2, d0
+    asl     16, d0
+    mov     d0, a3
+    add     a3, a2
+    add     a2, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572aa3
+    jmp     0x48572b4f
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x4d, d2
+    bne     0x48572ac3
+    mov     (0x3c, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x4e, d2
+    beq     0x48572acb
+    cmp     0x4f, d2
+    bne     0x48572b0b
+    mov     (0x10, sp), d0
+    mov     4, d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    asl     5, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    asl     8, d0
+    mov     d0, (0xc, sp)
+    mov     (0x14, sp), d1
+    mov     d0, a2
+    mov     0x26, d3
+    mov     d3, d2
+    mov     0x00260000, a3
+    add     a3, a2
+    add     a2, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572b4f
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x50, d2
+    blt     0x48572b4f
+    cmp     0x5f, d2
+    bgt     0x48572b4f
+    mov     (0x10, sp), d0
+    mov     0x20, d3
+    ext     d0
+    div     d3, d0
+    mov     mdr, d0
+    asl2    d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    asl     8, d0
+    mov     d0, (0xc, sp)
+    mov     (0x14, sp), d1
+    mov     d3, d2
+    mov     d0, a2
+    mov     0x00200000, a3
+    add     a3, a2
+    add     a2, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572b4f
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x21, d2
+    beq     0x48572b57
+    cmp     0x23, d2
+    bne     0x48572b92
+    cmp     0x21, d2
+    beq     0x48572b61
+    cmp     0x23, d2
+    beq     0x48572b65
+    bra     0x48572b67
+    mov     0x20, d3
+    bra     0x48572b67
+    mov     0x22, d3
+    mov     (0xc, sp), a2
+    mov     (0x14, sp), a0
+    mov     d3, d2
+    extbu   d2
+    mov     d2, d0
+    asl     16, d0
+    mov     d0, a3
+    add     a3, a2
+    add     a2, a0
+    mov     a0, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572b92
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x24, d2
+    bne     0x48572bf6
+    mov     (0x14, sp), d0
+    mov     a2, a0
+    and     0xfffffff8, d0
+    extbu   d0
+    add     d0, a0
+    mov     a0, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572bbd
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    mov     a2, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572bd8
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    mov     a3, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572be6
+    jmp     0x48572cba
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x27, d2
+    beq     0x48572c02
+    cmp     0x69, d2
+    beq     0x48572c02
+    cmp     0x6b, d2
+    bne     0x48572c0e
+    mov     (0x3c, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    cmp     0x68, d2
+    bne     0x48572c33
+    mov     (0x14, sp), d1
+    add     a3, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    bne     0x48572c23
+    jmp     0x48572cba
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    mov     (0x10, sp), d0
+    mov     (0x14, sp), d1
+    and     0xfffffff8, d0
+    extbu   d0
+    asl     8, d0
+    add     a3, d0
+    add     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572c5d
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+    mov     (0x14, sp), d1
+    add     a3, d1
+    mov     d1, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572c7a
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    bra     0x48572cc3
+    mov     (0x14, sp), d0
+    mov     a3, a0
+    and     0xfffffff8, d0
+    extbu   d0
+    add     d0, a0
+    mov     a0, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572ca0
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    bra     0x48572cc3
+    mov     a3, d0
+    call    VoiceDirPartRefFind_entry, [d2,a2], 0x1c
+    cmp     0, a0
+    beq     0x48572cba
+    movbu   (a0), d0
+    mov     (0x3c, sp), a1
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    bra     0x48572cc3
+    mov     (0x3c, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    mov     (0x40, sp), a0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+# VoiceDirPartRefFind  (CPU 0x48572cc6)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# VoiceDirPartRefFind_entry:   (register-save `call` entry)
+    movhu   (0x48765d14), d1
+    mov     d0, d2
+    movhu   (0x48765d16), d0
+    exthu   d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    VoiceDirPartRefHashIndex_entry, [d2], 4
+    asl2    d0
+    mov     0x48765d18, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    beq     0x48572d08
+    mov     (4, a2), d1
+    mov     d2, d0
+    call    VoiceDirPartRefKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48572d02
+    mov     8, a0
+    add     a2, a0
+    bra     0x48572d0a
+    mov     (a2), a2
+    cmp     0, a2
+    bne     0x48572cef
+    mov     0, a0
+    ret     [d2,a2], 0x1c
+# VoiceDirPartRefKeyEqual  (CPU 0x48572d0d)
+    cmp     d1, d0
+    bne     0x48572d14
+    mov     1, d0
+    bra     0x48572d15
+    clr     d0
+    retf    0, 0
+# VoiceDirPartRefHashIndex  (CPU 0x48572d18)
+    movm    [d2], (sp)
+# VoiceDirPartRefHashIndex_entry:   (register-save `call` entry)
+    exthu   d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (0x14, sp), d2
+    clr     d1
+    mov     d1, mdr
+    divu    d2, d0
+    mov     mdr, d0
+    ret     [d2], 4
+# VoiceDirDefaultRefGet  (CPU 0x48572d2c)
+#   128-entry ROM table of 3-byte reference triples at 0x486AAA3C.
+#   Entries 0..119 all start 0x79, entries 120..126 start 0x26; the
+#   out-of-range answer is (0x79, 0, 0), the same triple entry 12 holds.
+    movm    [a2,a3], (sp)
+# VoiceDirDefaultRefGet_entry:   (register-save `call` entry)
+    mov     d1, a3
+    mov     a1, a2
+    mov     a0, a1
+    mov     d0, d1
+    extbu   d1
+    cmp     0x7f, d1
+    bgt     0x48572d55
+    extbu   d0
+    mov     d0, d1
+    asl2    d1
+    sub     d0, d1
+    mov     d1, a0
+    add     0x486aaa3c, a0
+    movbu   (a0), d0
+    movbu   d0, (a1)
+    movbu   (1, a0), d0
+    movbu   d0, (a2)
+    movbu   (2, a0), d0
+    movbu   d0, (a3)
+    bra     0x48572d5e
+    mov     0x79, d0
+    movbu   d0, (a1)
+    clr     d0
+    movbu   d0, (a2)
+    movbu   d0, (a3)
+    retf    [a2,a3], 8
+# SoundEditSelEventHandler  (CPU 0x48572d61)
+#   ★ the SOUND EDIT TARGET REGISTRY.  Three 4-byte slots
+#   0x50006194 / 0x50006198 / 0x5000619C = { valid, b0, b1, b2 }, one per
+#   edit target 0x10 / 0x11 / 0x12 -- the same three parts the SOUND EDIT
+#   record 0x500C0784 + (part - 0x10) * 0x2C8 covers (see
+#   kn7000_mame/notes/sound-edit-parameters.md).  SoundEditRefSet writes a
+#   slot and notifies 0x4844FE37; SoundEditRefGet reads it back; this
+#   handler invalidates one when event (d0 & 0xFFFFFF) == 0xC00000
+#   arrives with the target in param bits 31..24 -- exactly what
+#   SoundEditRefInvalidatePost sends (event 0x90C00000).  The same sink
+#   handles event 0xC00000's sibling 0x900000, which loads the DRUM note
+#   selection byte 0x5009260C that DrumNoteSelGet returns.
+    and     0x00ffffff, d0
+    cmp     0x900000, d0
+    beq     0x48572d79
+    cmp     0xc00000, d0
+    beq     0x48572d9c
+    bra     0x48572dce
+    mov     -1, d0
+    movbu   d0, (0x5009260c)
+    mov     0x0000ff00, d0
+    and     d1, d0
+    lsr     8, d0
+    extbu   d0
+    cmp     0, d0
+    beq     0x48572dce
+    and     0xff, d1
+    movbu   d1, (0x5009260c)
+    bra     0x48572dce
+    and     0xff000000, d1
+    mov     d1, d0
+    lsr     24, d0
+    extbu   d0
+    cmp     0x10, d0
+    beq     0x48572db5
+    cmp     0x11, d0
+    beq     0x48572dbe
+    cmp     0x12, d0
+    beq     0x48572dc7
+    bra     0x48572dce
+    clr     d0
+    movbu   d0, (0x50006194)
+    bra     0x48572dce
+    clr     d0
+    movbu   d0, (0x50006198)
+    bra     0x48572dce
+    clr     d0
+    movbu   d0, (0x5000619c)
+    clr     d0
+    retf    0, 0
+# DrumNoteSelGet  (CPU 0x48572dd2)
+    movbu   (0x5009260c), d0
+    extb    d0
+    retf    0, 0
+# SoundEditRefGet  (CPU 0x48572ddc)
+    extbu   d0
+    cmp     0x10, d0
+    beq     0x48572dec
+    cmp     0x11, d0
+    beq     0x48572e15
+    cmp     0x12, d0
+    beq     0x48572e3e
+    jmp     0x48572e67
+    movbu   (0x50006194), d0
+    extb    d0
+    cmp     1, d0
+    bne     0x48572e67
+    movbu   (0x50006195), d0
+    movbu   d0, (a0)
+    movbu   (0x50006196), d0
+    movbu   d0, (1, a0)
+    movbu   (0x50006197), d0
+    movbu   d0, (2, a0)
+    mov     1, d0
+    bra     0x48572e68
+    movbu   (0x50006198), d0
+    extb    d0
+    cmp     1, d0
+    bne     0x48572e67
+    movbu   (0x50006199), d0
+    movbu   d0, (a0)
+    movbu   (0x5000619a), d0
+    movbu   d0, (1, a0)
+    movbu   (0x5000619b), d0
+    movbu   d0, (2, a0)
+    mov     1, d0
+    bra     0x48572e68
+    movbu   (0x5000619c), d0
+    extb    d0
+    cmp     1, d0
+    bne     0x48572e67
+    movbu   (0x5000619d), d0
+    movbu   d0, (a0)
+    movbu   (0x5000619e), d0
+    movbu   d0, (1, a0)
+    movbu   (0x5000619f), d0
+    movbu   d0, (2, a0)
+    mov     1, d0
+    bra     0x48572e68
+    clr     d0
+    retf    0, 0
+# SoundEditRefSet  (CPU 0x48572e6b)
+    add     -8, sp
+# SoundEditRefSet_entry:   (register-save `call` entry)
+    extbu   d0
+    cmp     0x10, d0
+    beq     0x48572e7d
+    cmp     0x11, d0
+    beq     0x48572ea1
+    cmp     0x12, d0
+    beq     0x48572ec5
+    bra     0x48572ee7
+    mov     1, d0
+    movbu   d0, (0x50006194)
+    movbu   (a0), d0
+    movbu   d0, (0x50006195)
+    movbu   (1, a0), d0
+    movbu   d0, (0x50006196)
+    movbu   (2, a0), d0
+    movbu   d0, (0x50006197)
+    bra     0x48572ee7
+    mov     1, d0
+    movbu   d0, (0x50006198)
+    movbu   (a0), d0
+    movbu   d0, (0x50006199)
+    movbu   (1, a0), d0
+    movbu   d0, (0x5000619a)
+    movbu   (2, a0), d0
+    movbu   d0, (0x5000619b)
+    bra     0x48572ee7
+    mov     1, d0
+    movbu   d0, (0x5000619c)
+    movbu   (a0), d0
+    movbu   d0, (0x5000619d)
+    movbu   (1, a0), d0
+    movbu   d0, (0x5000619e)
+    movbu   (2, a0), d0
+    movbu   d0, (0x5000619f)
+    call    func_4844FE37, [d2,d3,a2,a3], 0x4c
+    ret     0, 8
+# SoundEditRefInvalidatePost  (CPU 0x48572ef1)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# SoundEditRefInvalidatePost_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     d0, d2
+    asl     24, d2
+    exthu   d1
+    add     d1, d2
+    add     0x100000, d2
+    mov     d2, d1
+    mov     0x90c00000, d0
+    call    0x4c014b94, [d2,d3,a2], 0x24
+    ret     [d2,d3], 0x18
+# VoiceBankIdToAlias  (CPU 0x48572f14)
+#   Bank-id aliasing pair: 0x0E <-> 0x11 and 0x1E <-> 0x23.  0x0E and
+#   0x1E are the constants VoiceBankIdSource1 / VoiceBankIdSource2 hand
+#   out once VoiceBankSourcePresent reports expansion archive 1 / 2
+#   fitted, so the alias pair is the archive-bank <-> internal-bank map.
+    mov     d0, d1
+    extbu   d1
+    cmp     0xe, d1
+    bne     0x48572f1e
+    mov     0x11, d0
+    bra     0x48572f24
+    cmp     0x1e, d1
+    bne     0x48572f24
+    mov     0x23, d0
+    extbu   d0
+    retf    0, 0
+# VoiceBankIdFromAlias  (CPU 0x48572f28)
+    mov     d0, d1
+    extbu   d1
+    cmp     0x11, d1
+    bne     0x48572f32
+    mov     0xe, d0
+    bra     0x48572f38
+    cmp     0x23, d1
+    bne     0x48572f38
+    mov     0x1e, d0
+    extbu   d0
+    retf    0, 0
+# VoiceBankIdSource1  (CPU 0x48572f3c)
+    mov     0xe, d0
+    retf    0, 0
+# VoiceBankIdSource2  (CPU 0x48572f41)
+    mov     0x1e, d0
+    retf    0, 0
 # InitializeBlock34  (CPU 0x48572f46)
 .incbin_range "baserom/kn7000_program.rom", 0x172f46, 0x1736b7
 # AcIntTitleMenuSDProc  (CPU 0x485736b7)

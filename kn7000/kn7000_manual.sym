@@ -1985,3 +1985,64 @@
 0x484A0C4C  PartListIterateApply    ; walk the part list (0x484AD8AF / 0x484AD8E8 / 0x484ADA9A) applying 0x484A11E1 to each entry until the 0xFF terminator
 0x484A0C97  LowestSetBitIndex       ; (d0) index 0..0x20 of the lowest set bit of d0 (0x20 when d0 == 0)
 0x484A0C99  LowestSetBitIndex_entry
+
+; ---- the fifth-to-ninth VOICE-DIRECTORY hash tables (program ROM 0x48572607
+;      ..0x48572F46). Each is the same MILK-generated open-hash triple
+;      {Find, KeyEqual, HashIndex} over a header {u16 count, u16 modulus} +
+;      a modulus-sized bucket array of chain heads; every chained record is
+;      { u32 next, key, payload } and Find returns a0 = &payload (NULL when
+;      absent). On top of each sits a PROBE CASCADE that retries the lookup
+;      with progressively coarser keys. Callers are the (unnamed) thin wrappers
+;      0x4844910D..0x4844943F of the voice-record module, next to
+;      VoiceRecFetchBanked / VoiceParamRecFetchBanked / VoiceAttrByteGet.
+0x48572607  VoiceDirRemapProbe      ; (d0 hi, d1 lo, a0 out u8, a1 out u8) 4-probe cascade over table 0x4876398C: exact (hi<<8)|lo, then lo&0xC0, then (hi/8)*8, then lo&0xC0 alone; on a hit copies the record's two bytes to *a0/*a1 and returns 0, otherwise writes 0x7F/0x7F and returns 1
+0x4857260C  VoiceDirRemapProbe_entry
+0x4857267B  VoiceDirRemapFind       ; (d0 u16 key) -> a0 = &payload in the 0x4876398C table (986 8-byte records, 2-byte payload), NULL when absent
+0x48572680  VoiceDirRemapFind_entry
+0x485726C3  VoiceDirRemapKeyEqual   ; (d0, d1) -> 1 when the two 16-bit keys are equal -- retf leaf
+0x485726D0  VoiceDirRemapHashIndex  ; (d0 key, d1 count, stack modulus) -> (key*count)/modulus, the bucket index -- rets leaf
+0x485726E1  VoiceDirClassProbe      ; (d0 lo/bank, d1 hi/program) 3-probe cascade over table 0x48763F5C: exact (hi<<8)|lo, then lo = 0, then hi &= ~7; returns the record's first byte sign-extended, or 0
+0x485726E6  VoiceDirClassProbe_entry
+0x4857272A  VoiceDirClassFind       ; (d0 u16 key) -> a0 = &payload in the 0x48763F5C table (570 8-byte records), NULL when absent
+0x4857272F  VoiceDirClassFind_entry
+0x48572772  VoiceDirClassKeyEqual   ; (d0, d1) -> 1 on equal 16-bit keys -- retf leaf
+0x4857277F  VoiceDirClassHashIndex  ; (d0 key, d1 count, stack modulus) -> bucket index -- rets leaf
+0x48572790  VoiceDirIndexProbe      ; (d0 lo, d1 hi) cascade over table 0x48764944; when hi >= 0x80 it instead resolves the reference through VoiceDirRefProbe + 0x48449087 and returns that byte
+0x48572795  VoiceDirIndexProbe_entry
+0x48572812  VoiceDirIndexFind       ; (d0 u16 key) -> a0 = &payload in the 0x48764944 table (570 8-byte records), NULL when absent
+0x48572817  VoiceDirIndexFind_entry
+0x4857285A  VoiceDirIndexKeyEqual   ; (d0, d1) -> 1 on equal 16-bit keys -- retf leaf
+0x48572867  VoiceDirIndexHashIndex  ; (d0 key, d1 count, stack modulus) -> bucket index -- rets leaf
+0x48572878  VoiceDirRefProbe        ; (d0, d1, a0 out, a1 out, stack) cascade over table 0x4876532C (645 12-byte records, 6-byte payload)
+0x4857287D  VoiceDirRefProbe_entry
+0x4857296A  VoiceDirRefFind         ; (d0 u16 key) -> a0 = &payload in the 0x4876532C table, NULL when absent
+0x4857296F  VoiceDirRefFind_entry
+0x485729B2  VoiceDirRefKeyEqual     ; (d0, d1) -> 1 on equal 16-bit keys -- retf leaf
+0x485729BF  VoiceDirRefHashIndex    ; (d0 key, d1 count, stack modulus) -> bucket index -- rets leaf
+0x485729D0  VoiceDirPartRefToIndex  ; (d0 part, d1, stack) -> -VoiceDirIndexProbe(the two bytes VoiceDirPartRefProbe wrote to the local pair): the negated index of a part's current voice reference
+0x485729D5  VoiceDirPartRefToIndex_entry
+0x485729FC  VoiceDirPartRefProbe    ; (d0 part, d1, a0 out u8, a1 out u8, stack) 32-bit-key lookup (part<<16)|(arg1<<8)|arg3 in table 0x48765D14; parts 0x28..0x2F retry as 0x20..0x27; on a hit copies the record's two bytes to *a0/*a1
+0x48572A01  VoiceDirPartRefProbe_entry
+0x48572CC6  VoiceDirPartRefFind     ; (d0 u32 key) -> a0 = &payload in the 0x48765D14 table (582 12-byte records: u32 next, u32 key, payload), NULL when absent
+0x48572CCB  VoiceDirPartRefFind_entry
+0x48572D0D  VoiceDirPartRefKeyEqual ; (d0, d1) -> 1 on equal 32-bit keys -- retf leaf
+0x48572D18  VoiceDirPartRefHashIndex ; (d0 key, d1 count, stack modulus) -> unsigned (key*count)/modulus
+0x48572D1A  VoiceDirPartRefHashIndex_entry
+0x48572D2C  VoiceDirDefaultRefGet   ; (d0 index 0..0x7F, a0/a1/d1 out u8 x3) -> the 3-byte reference triple ROM 0x486AAA3C + index*3; out-of-range yields (0x79, 0, 0)
+0x48572D2E  VoiceDirDefaultRefGet_entry
+
+; ---- the SOUND-EDIT target registry (three 4-byte slots 0x50006194 /
+;      0x50006198 / 0x5000619C = { valid, b0, b1, b2 }, one per edit target
+;      0x10 / 0x11 / 0x12 -- the same three parts the SOUND EDIT record
+;      0x500C0784+(part-0x10)*0x2C8 covers) plus the DRUM note selection.
+0x48572D61  SoundEditSelEventHandler ; (d0 event, d1 param) the module's event sink: event 0x??900000 loads the drum note selection 0x5009260C (-1, then param bits 7..0 when bits 15..8 are non-zero); event 0x??C00000 invalidates the registry slot named by param bits 31..24
+0x48572DD2  DrumNoteSelGet          ; -> the selected drum note 0x5009260C, sign-extended (-1 = none); read by DrumNoteSelSeProc -- retf leaf
+0x48572DDC  SoundEditRefGet         ; (d0 target 0x10/0x11/0x12, a0 out u8 x3) -> 1 and the slot's three bytes when the slot is valid, else 0
+0x48572E6B  SoundEditRefSet         ; (d0 target 0x10/0x11/0x12, a0 in u8 x3) marks the slot valid, stores the three bytes and notifies 0x4844FE37; called by AcCompareToggleSeProc / VwSnameSeProc / OctShiftSe / RightSplitSe / LeftSplitSe / MonoPolySe and the rest of the SOUND EDIT "Se" handlers
+0x48572E6E  SoundEditRefSet_entry
+0x48572EF1  SoundEditRefInvalidatePost ; (d0 target, d1 u16) posts event 0x90C00000 with (target<<24) + 0x100000 + value via the library poster 0x4C014B94 -- the write side of SoundEditSelEventHandler's 0xC00000 case; used by MemoryWriteSe
+0x48572EF6  SoundEditRefInvalidatePost_entry
+0x48572F14  VoiceBankIdToAlias      ; (d0 bank id) 0x0E -> 0x11, 0x1E -> 0x23, everything else unchanged -- retf leaf
+0x48572F28  VoiceBankIdFromAlias    ; the inverse: 0x11 -> 0x0E, 0x23 -> 0x1E -- retf leaf
+0x48572F3C  VoiceBankIdSource1      ; -> the constant bank id 0x0E, taken only after VoiceBankSourcePresent(1) reports the archive fitted -- retf leaf
+0x48572F41  VoiceBankIdSource2      ; -> the constant bank id 0x1E, guarded by VoiceBankSourcePresent(2) -- retf leaf
