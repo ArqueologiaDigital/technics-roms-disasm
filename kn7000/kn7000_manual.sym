@@ -2267,7 +2267,10 @@
 ;            style 0 owns 0x00..0x13, style 1 0x14..0x27, style 2 0x28..0x3B.
 ;            CustStyleImportToMem renormalises these on import; the check is
 ;            "every entry must land in [style*0x14, style*0x14+0x14)".
-;     +0x68  two u16 fields (0x0044 0x0044 in the factory container)
+;     +0x70  two u16 fields (0x0044 0x0044 in the factory container, 0x0010
+;            0x0023 in the ROM template). CORRECTED 2026-07-20 from "+0x68" --
+;            the offset was off by 8; verified against both the template and all
+;            three factory records by tools/tcmp_build.py --verify-templates.
 ;
 ;   VARIATION RECORD (0xE0 bytes, ROM template 0x487313D8):
 ;     +0x00        content/kind byte (0x5A / 0x60 / 0x22 in the factory data)
@@ -2306,6 +2309,19 @@
 ;     0x487314C5 = 00 00 00 09  F4 x8 F5         (8 bars, used when rec[0x10]!=0)
 ;   -- chosen precisely so the marker count matches MemStyleVarBarCount with the
 ;   rec[0x11]=3 the same routine writes.
+;
+;   EXECUTABLE FORM OF ALL OF THE ABOVE: tools/tcmp_build.py builds a container
+;   from this recipe and re-implements MemStyleAreaSignatureVerify /
+;   MemStyleAreaChecksumVerify / MemStyleAreaStreamsVerify / MemStyleAreaValidate
+;   / MemStyleAreaValidateOrInit in Python. `--self-test` runs them against the
+;   real FactoryMemStyleContainer 0x48035D08 (all pass -- the oracle) and then
+;   against the synthetic one (all pass). NEGATIVE RESULT recorded in
+;   notes/tcmp-container-synthesis.md: a synthetic "TCMP" container CANNOT stand
+;   in for the built-in style source. StyleBuiltinNameTableInit 0x484332F9 wants a
+;   "Technics Rhythms" NAME RESOURCE (16-byte ASCII signature + u24BE directory at
+;   +0x18/+0x1B/+0x1E/+0x21/+0x24, count 0xDD), which is a different format; the
+;   two readers reject each other at their first strncmp and nothing converts
+;   between them.
 
 0x48434645  StyleBlockKindClassify  ; (a0 = a candidate style block) strncmp its first 3 bytes against the four tag strings at 0x485B6BDC/DF/E5/E8/EB (library strncmp 0x4C003678): -> 0 unrecognised, 2 or 3 for the two legacy kinds that need MemStyleLegacyBlockUpconvert (2 vs 3 chosen by the byte at +0x10), -1 on no match at all
 0x4843464A  StyleBlockKindClassify_entry
