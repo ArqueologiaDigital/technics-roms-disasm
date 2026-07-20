@@ -1895,3 +1895,93 @@
 0x4C009565  TgGlobalParamInit       ; module reset: 0x500C0758 = 0, 0x500C075A = 0x18, the 0x500082A4..C4 globals to their defaults, then every part 0..0x21 through the whole part-parameter setter chain and finally the id-0x40..0x47 enable setters to 0
 0x4C00956A  TgGlobalParamInit_entry
 0x4C009837  TgGlobalRampTick        ; one step of the 0x500082A4 ramp state machine over the program-ROM curve 0x486D27EB (not converted yet)
+
+; ---- the SOUND-COMMAND MESSAGE STREAM ------------------------------------
+;      The library's byte-stream interpreter 0x4C003B31 is an internal MIDI-ish
+;      command stream: it pulls a status byte and dispatches on its high nibble
+;      (0x9x/0xAx/0xBx/0xCx/0xDx/0xEx as on the wire, 0xFx = "set TG global
+;      parameter", two data bytes -> TgGlobalParamCommand 0x4C0092B9).
+;      Region-1 code PRODUCES those messages by building a length-prefixed
+;      byte buffer and handing it to the stream writer 0x4C003A65.
+;      Bit map of the parameters they reach: kn7000_mame/notes/effect-enable-bits.md
+0x4C003A60  SndCmdStreamWrite       ; (a0 = length-prefixed message buffer) append a sound-command message to the 0x200-byte stream ring 0x500AD3A0/0x500082A2; the 32 region-1 call sites are the message PRODUCERS
+0x4C003A65  SndCmdStreamWrite_entry
+0x4C003A15  SndCmdStreamGetByte     ; (a0 = stream object) pop one byte: count at +4, read index at +2 masked 0x1FF, data at +6; returns -1 when empty
+0x4C003A17  SndCmdStreamGetByte_entry
+0x4C003A3D  SndCmdStreamSkipToStatus ; skip data bytes until the next status byte (bit7 set), then rewind the read index
+0x4C003A42  SndCmdStreamSkipToStatus_entry
+0x4C003B2C  SndCmdStreamInterpret   ; THE stream interpreter: status & 0xF0 -> 0x90 note, 0xA0, 0xB0 control change, 0xC0 program change, 0xD0, 0xE0, 0xFx = TG global parameter (id, value) -> TgGlobalParamCommand
+0x4C003B31  SndCmdStreamInterpret_entry
+0x4844B334  SndCmdSendReverbPartsApply ; sends the canned ROM message 0x485B85EC = { len 3, 0xF0, id 0x2B, 0x7F } -- i.e. TgReverbPartsApply(0x7F), the per-part reverb send pass, for every part
+
+; ---- the SOUND-UNIT SETTING module 0x484104C7..0x4841202C -----------------
+;      Five parameter-database groups 0xB010/0xB020/0xB030/0xB040/0xB050 (each
+;      with sub-keys +0x04 = the target part 0x13..0x1A, +0x14/+0x24 ...) read
+;      through the library param-DB getter 0x4C0149FA, applied to the TG and
+;      re-broadcast as sound-command messages. Two of the functions here are
+;      the only region-1 producers of TG global-parameter command ids found by
+;      a full scan of the image: ids 0x32/0x33/0x34/0x35.
+0x484104C7  SndDbTriDefaultsA       ; (d0 = selector 0..9, 8 -> -1) packed 24-bit default from the 12 x 3 x u16 ROM table 0x4858EA14 via jump table 0x4858F258: (t[2]<<16)|(t[1]<<8)|t[0]
+0x484104CC  SndDbTriDefaultsA_entry
+0x48410528  SndDbTriDefaultsB       ; same shape, ROM table 0x4858EA5C / jump table 0x4858F280
+0x4841052D  SndDbTriDefaultsB_entry
+0x48410589  SndDbTriDefaultsC       ; same shape, ROM table 0x4858EAA4 / jump table 0x4858F2A8
+0x4841058E  SndDbTriDefaultsC_entry
+0x484105EA  SndUnitSettingApplyFull ; the full apply pass for one sound unit: resolves the record, calls DspEffectTypeValid/DspEffectSelect, re-emits the unit CC and depth messages
+0x484105EF  SndUnitSettingApplyFull_entry
+0x4841089D  SndUnitSettingApply1    ; apply pass variant: reads the five group part keys 0xB014/24/34/44/54, then the record/CC/depth chain
+0x484108A2  SndUnitSettingApply1_entry
+0x48410AE3  SndUnitSettingApply2    ; apply pass variant 2 (same five group keys, different record path)
+0x48410AE8  SndUnitSettingApply2_entry
+0x48410D35  SndUnitRefreshGroups56  ; refresh the two last groups (keys 0xB044/0xB040 and 0xB054/0xB050, plus 0x00B0005F) and re-run SndCmdEmitUnitCc for selectors 5 and 6
+0x48410DF3  SndSetupBroadcastAll    ; re-broadcast the whole sound setup (param keys 0x8029 / 0x802C / 0x8000)
+0x48410DF5  SndSetupBroadcastAll_entry
+0x48410F42  SndSetupBroadcastOne    ; the short broadcast: gated on param key 0x8029, resolves 0x180 and emits three 0x48405ABB events
+0x48410F47  SndSetupBroadcastOne_entry
+0x48410FB0  SndCmdEmitUnitCc        ; ★ MESSAGE PRODUCER (d0 = selector 1..6, d1 = value). Selector 2..6 read the group keys 0xB010..0xB050; then emits { 4, 0xB0, part, 0xC6, v } or { 4, 0xB0, part, 0xC4, v } per part, or -- when the resolved unit is 0xFF -- the GLOBAL parameter message { 3, 0xF0, 0x35, v } (id 0x35 = TgDrawbarGlobal82BCSet, chan 0x0C + chan 6 refresh)
+0x48410FB5  SndCmdEmitUnitCc_entry
+0x48411101  SndCmdEmitGlobalDepth   ; ★ MESSAGE PRODUCER (d0 = selector, d1 = 0..0x63 percent). Emits { 3, 0xF0, id, v*0x7F/0x63 } with id = 0x33 (selector 1), 0x34 (selector 5, only when param key 0xB040 reads 0x7F) or 0x32 (selector 9). Per effect-enable-bits.md: id 0x32 -> 0x500082BE -> TgGlobalChanBRefresh (chan 0x0B = the live-captured REVERB SEND), id 0x33 -> 0x500082BF -> chan 6 (the MULTI return channel), id 0x34 -> 0x500082C0 -> chan 7
+0x48411106  SndCmdEmitGlobalDepth_entry
+0x4841116D  SndSetupApplyMemoryPair ; applies the two memory slots 0x40 and 0x50 through SndUnitRecApplyShort + SndUnitRecApply, counted in 0x500002D4/0x500002D8
+0x484111D3  SndUnitRecApply         ; (d0 = selector) fetch the group's part key 0xB0n4, require part 0x13..0x1A, build the 0x80-tagged record key, fetch the record and apply it
+0x484111D8  SndUnitRecApply_entry
+0x48411335  SndUnitRecApplyShort    ; (a2 = out, d1 = selector) the short form of the same lookup, ending in 0x484122BB instead of the full apply
+0x4841133A  SndUnitRecApplyShort_entry
+0x4841143E  SndUnitRecApplyAlt      ; third form of the record apply (same key chain, different tail)
+0x48411443  SndUnitRecApplyAlt_entry
+0x48411589  SndSetupPowerOnInit     ; the module's init pass: param keys 0xA401/0xA402/0x802C, 14 x 0x4841376B, then the two apply passes
+0x4841177B  SndUnitSettingApply3    ; apply pass variant 3
+0x48411780  SndUnitSettingApply3_entry
+0x48411913  SndUnitSettingApply4    ; apply pass variant 4 (d0 = selector, d1 = value; the path SndUnitRefreshGroups56 uses)
+0x48411918  SndUnitSettingApply4_entry
+0x48411AF5  SndUnitDbGroupQuery     ; (d0 = selector) read the group base key 0xB010..0xB050 (+ 0x00B0005F) and return the resolved unit descriptor
+0x48411AFA  SndUnitDbGroupQuery_entry
+0x48411BE6  SndRecTriFieldGet       ; packed 24-bit field from bytes +0x3E/+0x3F/+0x40 of the sound record (0x48412C25 / 0x48484681); no record -> the SndDbTriDefaultsB table
+0x48411BEB  SndRecTriFieldGet_entry
+0x48411D38  SndRecByteFieldGetA     ; single-byte record field accessor (record via 0x48412BD8 / 0x48412C25)
+0x48411D3D  SndRecByteFieldGetA_entry
+0x48411DA0  SndRecTriFieldGet2      ; second packed-24-bit record field, same default-table fallback
+0x48411DA5  SndRecTriFieldGet2_entry
+0x48411E75  SndRecByteFieldGetB     ; record field accessor that falls back to the library object query 0x4C003039 (id 0x11)
+0x48411E7A  SndRecByteFieldGetB_entry
+0x48411EC2  SndRecCountGet          ; (d0) element count of the record's sub-list -- the loop bound used by every apply pass here (19 call sites)
+0x48411EC7  SndRecCountGet_entry
+0x48411FA9  SndRecByteFieldGetC     ; third single-byte record field accessor
+0x48411FAE  SndRecByteFieldGetC_entry
+0x48411FF1  SndRecScanApply         ; scan the record's elements (SndRecCountGet bound) until 0x484127BA reports -2, then apply through 0x484122BB
+
+; ---- the PART-FLAG (mute/enable) MESSAGE BUILDERS 0x484A0B39..0x484A0CB0 --
+0x484A0B39  PartFlagsSet            ; (d0 = part 0..0x13, d1 = flags) set a part's flag byte through 0x484B1780; parts 0x0E..0x13 additionally get bit 0x04 forced when 0x484ABAFD returns 0
+0x484A0B3E  PartFlagsSet_entry
+0x484A0B68  PartFlagsSetAll         ; (d0) apply 0xFF (d0 != 0) or 0 to every part 0..0x13
+0x484A0B6D  PartFlagsSetAll_entry
+0x484A0B8F  PartFlagsApplyTable8    ; (d0 = on/off) 8 u16 entries at 0x4860C9C4: high byte = flags to set when on, low byte = part
+0x484A0B94  PartFlagsApplyTable8_entry
+0x484A0BC6  PartFlagsApplyTable4    ; same, 4 entries at 0x4860C9D4
+0x484A0BCB  PartFlagsApplyTable4_entry
+0x484A0BFD  PanelLatch9CC0Bit67Set  ; (d0) bset/bclr 0xC0 (bits 6 and 7) of the panel latch 0x9CC00008
+0x484A0C15  PartFlagsApplyTable12   ; same, 12 entries at 0x4860C9DC
+0x484A0C1A  PartFlagsApplyTable12_entry
+0x484A0C4C  PartListIterateApply    ; walk the part list (0x484AD8AF / 0x484AD8E8 / 0x484ADA9A) applying 0x484A11E1 to each entry until the 0xFF terminator
+0x484A0C97  LowestSetBitIndex       ; (d0) index 0..0x20 of the lowest set bit of d0 (0x20 when d0 == 0)
+0x484A0C99  LowestSetBitIndex_entry

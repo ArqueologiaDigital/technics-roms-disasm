@@ -194,12 +194,31 @@ CONVERT = {
     "TableRomStyleResourcePtr", "TableRomSeg04Ptr", "TableRomNullPtr",
     "TableRomSeg01PtrSize", "TableRomSeg02PtrSize", "TableRomSeg03PtrSize",
     "TableRomOneStub",
+    # ---- the SOUND-COMMAND MESSAGE PRODUCERS and the SOUND-UNIT SETTING
+    #      module 0x484104C7..0x4841202C (kn7000_mame/notes/effect-enable-bits.md)
+    "SndDbTriDefaultsA", "SndDbTriDefaultsB", "SndDbTriDefaultsC",
+    "SndUnitSettingApplyFull", "SndUnitSettingApply1", "SndUnitSettingApply2",
+    "SndUnitRefreshGroups56", "SndSetupBroadcastAll", "SndSetupBroadcastOne",
+    "SndCmdEmitUnitCc", "SndCmdEmitGlobalDepth", "SndSetupApplyMemoryPair",
+    "SndUnitRecApply", "SndUnitRecApplyShort", "SndUnitRecApplyAlt",
+    "SndSetupPowerOnInit", "SndUnitSettingApply3", "SndUnitSettingApply4",
+    "SndUnitDbGroupQuery", "SndRecTriFieldGet", "SndRecByteFieldGetA",
+    "SndRecTriFieldGet2", "SndRecByteFieldGetB", "SndRecCountGet",
+    "SndRecByteFieldGetC", "SndRecScanApply",
+    "SndCmdSendReverbPartsApply",
+    # ---- the PART-FLAG message builders 0x484A0B39..0x484A0CB0
+    "PartFlagsSet", "PartFlagsSetAll", "PartFlagsApplyTable8",
+    "PartFlagsApplyTable4", "PanelLatch9CC0Bit67Set", "PartFlagsApplyTable12",
+    "PartListIterateApply", "LowestSetBitIndex",
 }
 
 # A converted function whose named block extends past its real end (because the
 # next named boundary is far away) can cap the converted range here; the
 # remainder of the block stays raw .incbin_range.
 FUNC_END = {
+    "SndRecScanApply": 0x1202C,          # next (unnamed) function at 0x4841202C
+    "LowestSetBitIndex": 0xA0CB0,        # next (unnamed) function at 0x484A0CB0
+    "SndCmdSendReverbPartsApply": 0x4B347,  # next (unnamed) function at 0x4844B347
     "TechniChordAugDimFold": 0x737D2,   # next (unnamed) function at 0x484737D2
     "SdErrorFlagsGet": 0x152257,        # next (unnamed) function at 0x48552257
     "SdCardFsInit": 0x1630E6,           # next (unnamed) function at 0x485630E6
@@ -739,6 +758,35 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "SndCmdEmitGlobalDepth": [
+        "★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector, d1 = 0..0x63).",
+        "Builds { len 3, status 0xF0, id, value } on the stack and hands it to",
+        "the library stream writer SndCmdStreamWrite (0x4C003A65); the stream",
+        "interpreter 0x4C003B31 decodes 0xFx + two data bytes as",
+        "TgGlobalParamCommand(id, value).  value = d1 * 0x7F / 0x63.",
+        "  selector 1 -> id 0x33   (TgDrawbarGlobal82BFSet, chan 6 refresh)",
+        "  selector 5 -> id 0x34   (TgDrawbarGlobal82C0Set, chan 7 refresh)",
+        "                only when the param-DB key 0xB040 reads 0x7F",
+        "  selector 9 -> id 0x32   (TgDrawbarGlobal82BESet, chan 0x0B refresh)",
+        "Chan 0x0B is the live-captured REVERB SEND channel and chan 6 the",
+        "MULTI return -- see kn7000_mame/notes/effect-enable-bits.md.",
+    ],
+    "SndCmdEmitUnitCc": [
+        "★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector 1..6, d1 = value).",
+        "Selectors 2..6 read the param-DB group keys 0xB010/0xB020/0xB030/",
+        "0xB040/0xB050 through LibParamGet; 0x484120DE turns the result into a",
+        "unit number, and the message emitted is one of",
+        "  { 4, 0xB0, part, 0xC6, v }  control change 0xC6, parts 0x13..0x1A",
+        "  { 4, 0xB0, part, 0xC4, v }  control change 0xC4",
+        "  { 3, 0xF0, 0x35, v }        the GLOBAL parameter id 0x35",
+        "                              (TgDrawbarGlobal82BCSet: chan 0x0C + 6)",
+    ],
+    "SndCmdSendReverbPartsApply": [
+        "Sends the canned ROM message at 0x485B85EC = { 3, 0xF0, 0x2B, 0x7F }:",
+        "TG global-parameter id 0x2B = TgReverbPartsApply, value 0x7F.  It is",
+        "the ONLY ROM-resident 0xFx sound-command template in the image (found",
+        "by scanning the whole data region for `03 F0 <id 9..0x50> <val<=0x7F>`).",
+    ],
     "TgGlobalParamCommand": [
         "★ the TG GLOBAL-PARAMETER COMMAND DISPATCHER (d0 = command id,",
         "d1 = value). ONE function: the ~30 blocks after the jump are inline",

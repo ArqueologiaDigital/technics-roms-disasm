@@ -27,7 +27,54 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 756 synthetic labels for internal helpers called by converted code
+# 820 synthetic labels for internal helpers called by converted code
+.equ func_484057D9, 0x484057D9
+.equ DspEffectSelect, 0x48405815
+.equ func_48405859, 0x48405859
+.equ func_48405ABB, 0x48405ABB
+.equ func_48405B27, 0x48405B27
+.equ DspEffectTypeValid, 0x48406132
+.equ SndDbTriDefaultsA_entry, 0x484104CC
+.equ SndDbTriDefaultsB_entry, 0x4841052D
+.equ SndDbTriDefaultsC_entry, 0x4841058E
+.equ SndUnitSettingApplyFull_entry, 0x484105EF
+.equ SndUnitSettingApply1_entry, 0x484108A2
+.equ SndUnitSettingApply2_entry, 0x48410AE8
+.equ SndSetupBroadcastAll_entry, 0x48410DF5
+.equ SndSetupBroadcastOne_entry, 0x48410F47
+.equ SndCmdEmitUnitCc_entry, 0x48410FB5
+.equ SndCmdEmitGlobalDepth_entry, 0x48411106
+.equ SndUnitRecApply_entry, 0x484111D8
+.equ SndUnitRecApplyShort_entry, 0x4841133A
+.equ SndUnitRecApplyAlt_entry, 0x48411443
+.equ SndUnitSettingApply3_entry, 0x48411780
+.equ SndUnitSettingApply4_entry, 0x48411918
+.equ SndUnitDbGroupQuery_entry, 0x48411AFA
+.equ SndRecTriFieldGet_entry, 0x48411BEB
+.equ SndRecByteFieldGetA_entry, 0x48411D3D
+.equ SndRecTriFieldGet2_entry, 0x48411DA5
+.equ SndRecByteFieldGetB_entry, 0x48411E7A
+.equ SndRecCountGet_entry, 0x48411EC7
+.equ SndRecByteFieldGetC_entry, 0x48411FAE
+.equ func_4841206A, 0x4841206A
+.equ func_484120A4, 0x484120A4
+.equ func_484120DE, 0x484120DE
+.equ func_48412118, 0x48412118
+.equ func_48412152, 0x48412152
+.equ func_4841218C, 0x4841218C
+.equ func_484122BB, 0x484122BB
+.equ func_484123C4, 0x484123C4
+.equ func_4841259F, 0x4841259F
+.equ func_484125E5, 0x484125E5
+.equ func_4841262B, 0x4841262B
+.equ func_48412671, 0x48412671
+.equ func_484127BA, 0x484127BA
+.equ func_48412847, 0x48412847
+.equ func_4841289A, 0x4841289A
+.equ func_48412B6F, 0x48412B6F
+.equ func_48412BD8, 0x48412BD8
+.equ func_48412C25, 0x48412C25
+.equ func_4841376B, 0x4841376B
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -159,6 +206,7 @@ _rom_marker:
 .equ TempoSyncModeBSet_entry, 0x48447C43
 .equ TempoSyncPartB0Set_entry, 0x48447D07
 .equ TempoSyncE000Set_entry, 0x48447D67
+.equ func_48448273, 0x48448273
 .equ VoiceBankSourcePresent, 0x48448C0F
 .equ func_484492E7, 0x484492E7
 .equ func_484494E4, 0x484494E4
@@ -184,6 +232,7 @@ _rom_marker:
 .equ UserVoiceRecPtr, 0x4844ABF7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
+.equ func_48450BA6, 0x48450BA6
 .equ func_484720D3, 0x484720D3
 .equ func_484720FE, 0x484720FE
 .equ func_484729AD, 0x484729AD
@@ -210,11 +259,19 @@ _rom_marker:
 .equ func_4847EC92, 0x4847EC92
 .equ func_4848457D, 0x4848457D
 .equ func_4848463F, 0x4848463F
+.equ func_48484681, 0x48484681
 .equ func_4849C8E2, 0x4849C8E2
 .equ func_4849C94F, 0x4849C94F
+.equ PartFlagsSet_entry, 0x484A0B3E
+.equ PartFlagsSetAll_entry, 0x484A0B6D
+.equ PartFlagsApplyTable8_entry, 0x484A0B94
+.equ PartFlagsApplyTable4_entry, 0x484A0BCB
+.equ PartFlagsApplyTable12_entry, 0x484A0C1A
+.equ LowestSetBitIndex_entry, 0x484A0C99
 .equ func_484A11E1, 0x484A11E1
 .equ func_484ABAE6, 0x484ABAE6
 .equ PanelModeFlagGet, 0x484ABAFD
+.equ func_484ABB98, 0x484ABB98
 .equ func_484ABD54, 0x484ABD54
 .equ func_484ABD73, 0x484ABD73
 .equ func_484AC06E, 0x484AC06E
@@ -238,6 +295,10 @@ _rom_marker:
 .equ PanelEventFifoInit, 0x484AD57E
 .equ PanelTxFifoInit, 0x484AD596
 .equ PanelCtrlDispatch_entry, 0x484AD680
+.equ PanelSwEventAssemble_entry, 0x484AD8AF
+.equ PanelGpioSwScan_entry, 0x484AD8E8
+.equ PanelSwEventPeek, 0x484ADA9A
+.equ PanelSwEventReset, 0x484ADAC2
 .equ PanelButtonDispatch_entry, 0x484ADB59
 .equ PanelBtnActType0_entry, 0x484ADCD2
 .equ PanelBtnActType1_entry, 0x484ADD1B
@@ -245,6 +306,7 @@ _rom_marker:
 .equ PanelBtnActType4_entry, 0x484ADDCF
 .equ PanelBtnActType3_entry, 0x484ADE04
 .equ SdInUseLedSet, 0x484B11CB
+.equ func_484B1780, 0x484B1780
 .equ func_484B1BCB, 0x484B1BCB
 .equ func_484B1CA1, 0x484B1CA1
 .equ func_484B22B4, 0x484B22B4
@@ -338,6 +400,7 @@ _rom_marker:
 .equ func_48565D17, 0x48565D17
 .equ func_48565F64, 0x48565F64
 .equ func_48565F67, 0x48565F67
+.equ func_4856C324, 0x4856C324
 .equ func_48570941, 0x48570941
 .equ func_48570AD2, 0x48570AD2
 .equ VoiceParamBankClassify_entry, 0x48570C46
@@ -420,6 +483,7 @@ _rom_marker:
 .equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
+.equ SndCmdStreamWrite_entry, 0x4C003A65
 .equ TgPartGlobalChanRefresh_entry, 0x4C004DE9
 .equ TgGlobalChan6Refresh_entry, 0x4C0050E3
 .equ TgGlobalChan7Refresh_entry, 0x4C005246
@@ -819,7 +883,2983 @@ _rom_marker:
 # JpegEngine  (CPU 0x4840e721)
 .incbin_range "baserom/kn7000_program.rom", 0x00e721, 0x00fc3a
 # JpegBitRefill  (CPU 0x4840fc3a)
-.incbin_range "baserom/kn7000_program.rom", 0x00fc3a, 0x014a74
+.incbin_range "baserom/kn7000_program.rom", 0x00fc3a, 0x0104c7
+# SndDbTriDefaultsA  (CPU 0x484104c7)
+    movm    [d2,d3], (sp)
+    add     -0x48, sp
+# SndDbTriDefaultsA_entry:   (register-save `call` entry)
+    mov     0x4858ea14, a1
+    mov     sp, a0
+    mov     -0x48, d2
+    setlb
+    movbu   (a1), d1
+    inc     a1
+    movbu   d1, (a0)
+    inc     a0
+    inc     d2
+    lne
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    blt     0x48410523
+    cmp     9, d1
+    bgt     0x48410523
+    asl2    d1
+    mov     0x4858f258, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    exthu   d0
+    mov     sp, a1
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    movhu   (d1, a1), d3
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     a1, a0
+    movhu   (2, a0), d2
+    mov     6, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a1
+    movhu   (4, a1), d1
+    exth    d3
+    exth    d2
+    exth    d1
+    asl     8, d2
+    add     d2, d3
+    asl     16, d1
+    mov     d1, d0
+    add     d3, d0
+    bra     0x48410525
+    mov     -1, d0
+    ret     [d2,d3], 0x50
+# SndDbTriDefaultsB  (CPU 0x48410528)
+    movm    [d2,d3], (sp)
+    add     -0x48, sp
+# SndDbTriDefaultsB_entry:   (register-save `call` entry)
+    mov     0x4858ea5c, a1
+    mov     sp, a0
+    mov     -0x48, d2
+    setlb
+    movbu   (a1), d1
+    inc     a1
+    movbu   d1, (a0)
+    inc     a0
+    inc     d2
+    lne
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    blt     0x48410584
+    cmp     9, d1
+    bgt     0x48410584
+    asl2    d1
+    mov     0x4858f280, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    exthu   d0
+    mov     sp, a1
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    movhu   (d1, a1), d3
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     a1, a0
+    movhu   (2, a0), d2
+    mov     6, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a1
+    movhu   (4, a1), d1
+    exth    d3
+    exth    d2
+    exth    d1
+    asl     8, d2
+    add     d2, d3
+    asl     16, d1
+    mov     d1, d0
+    add     d3, d0
+    bra     0x48410586
+    mov     -1, d0
+    ret     [d2,d3], 0x50
+# SndDbTriDefaultsC  (CPU 0x48410589)
+    movm    [d2,d3], (sp)
+    add     -0x48, sp
+# SndDbTriDefaultsC_entry:   (register-save `call` entry)
+    mov     0x4858eaa4, a1
+    mov     sp, a0
+    mov     -0x48, d2
+    setlb
+    movbu   (a1), d1
+    inc     a1
+    movbu   d1, (a0)
+    inc     a0
+    inc     d2
+    lne
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    blt     0x484105e5
+    cmp     9, d1
+    bgt     0x484105e5
+    asl2    d1
+    mov     0x4858f2a8, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    exthu   d0
+    mov     sp, a1
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    movhu   (d1, a1), d3
+    mov     6, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     a1, a0
+    movhu   (2, a0), d2
+    mov     6, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a1
+    movhu   (4, a1), d1
+    exth    d3
+    exth    d2
+    exth    d1
+    asl     8, d2
+    add     d2, d3
+    asl     16, d1
+    mov     d1, d0
+    add     d3, d0
+    bra     0x484105e7
+    mov     -1, d0
+    ret     [d2,d3], 0x50
+# SndUnitSettingApplyFull  (CPU 0x484105ea)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x6c, sp
+# SndUnitSettingApplyFull_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d1, d3
+    clr     d0
+    movhu   d0, (0x48, sp)
+    mov     -1, d1
+    mov     d1, (0x38, sp)
+    mov     d1, (0x2c, sp)
+    mov     d3, d0
+    call    func_48412BD8, 0, 0
+    exth    d0
+    cmp     0, d0
+    bge     0x48410609
+    ret     [d2,d3,a2,a3], 0x7c
+    extbu   d2
+    mov     d2, (0x24, sp)
+    cmp     0, d2
+    bge     0x48410613
+    ret     [d2,d3,a2,a3], 0x7c
+    cmp     9, d2
+    ble     0x4841061a
+    ret     [d2,d3,a2,a3], 0x7c
+    mov     d2, d0
+    asl2    d0
+    mov     0x4858f2d0, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    extbu   d2
+    asl     8, d2
+    mov     d3, d0
+    and     0x00ff0000, d0
+    lsr     16, d0
+    extbu   d0
+    asl     16, d0
+    mov     d2, d1
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, (0x20, sp)
+    mov     d3, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d0, d1
+    mov     (0x24, sp), d0
+    exthu   d1
+    call    DspEffectTypeValid, 0, 4
+    exth    d0
+    cmp     0, d0
+    bge     0x48410659
+    ret     [d2,d3,a2,a3], 0x7c
+    mov     d3, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d0, d2
+    mov     (0x20, sp), d0
+    call    func_4841218C, [d2], 0x14
+    exthu   d2
+    mov     d2, (0x34, sp)
+    exth    d0
+    cmp     d2, d0
+    beq     0x48410695
+    mov     (0x24, sp), d0
+    mov     1, d1
+    call    func_48448273, [d2,d3], 0x24
+    mov     (0x24, sp), d0
+    mov     d3, d1
+    call    SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
+    mov     (0x24, sp), d0
+    mov     (0x34, sp), d1
+    call    DspEffectSelect, 0, 0x20
+    call    func_48405859, 0, 0
+    bra     0x484106cc
+    mov     (0x20, sp), d0
+    call    func_48412152, [d2], 0x10
+    exth    d0
+    cmp     -1, d0
+    bne     0x484106ae
+    mov     (0x24, sp), d0
+    mov     (0x34, sp), d1
+    call    func_484057D9, 0, 0x18
+    bra     0x484106cc
+    mov     (0x20, sp), d0
+    call    SndRecTriFieldGet_entry, [d2], 0x14
+    and     0x7f7f, d0
+    mov     0x7f7f, d1
+    and     d3, d1
+    cmp     d1, d0
+    beq     0x484106cc
+    mov     (0x24, sp), d0
+    mov     (0x34, sp), d1
+    call    func_484057D9, 0, 0x18
+    mov     (0x20, sp), d0
+    mov     d3, d1
+    call    func_4841289A, [d2,d3,a2,a3], 0x24
+    mov     sp, a0
+    mov     a0, d0
+    add     0x4c, d0
+    mov     d0, (0x30, sp)
+    mov     d0, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x20, sp), d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    mov     d0, d2
+    mov     d2, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484106f8
+    ret     [d2,d3,a2,a3], 0x7c
+    mov     0xffffffff, a2
+    clr     d0
+    clr     d1
+    mov     d1, (0x28, sp)
+    exth    d2
+    mov     d2, (0x3c, sp)
+    cmp     d0, d2
+    bgt     0x4841070b
+    jmp     0x48410850
+    mov     sp, a3
+    add     0x60, a3
+    mov     sp, a0
+    mov     a0, d1
+    add     0x48, d1
+    mov     d1, (0x40, sp)
+    movbu   d0, (0x44, sp)
+    mov     (0x20, sp), d0
+    movbu   (0x44, sp), d1
+    call    func_4841262B, [d2,d3], 0x14
+    mov     a2, d1
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bne     0x4841072c
+    jmp     0x48410842
+    mov     (0x20, sp), d0
+    movbu   (0x44, sp), d1
+    call    func_4841262B, [d2,d3], 0x14
+    mov     d0, a2
+    mov     a3, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x40, sp), d0
+    mov     a2, d2
+    mov     d0, (0x10, sp)
+    mov     a3, a0
+    mov     (0x30, sp), a1
+    mov     (0x20, sp), d0
+    mov     d2, d1
+    extbu   d1
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    bne     0x4841075d
+    jmp     0x48410820
+    mov     (0x20, sp), d0
+    call    func_48412118, [d2], 0x10
+    mov     a2, d3
+    exth    d3
+    exth    d0
+    cmp     d3, d0
+    bne     0x4841076e
+    jmp     0x48410817
+    extbu   d2
+    mov     d2, (0x10, sp)
+    mov     (0x24, sp), d0
+    mov     (0x20, sp), d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    clr     d2
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    bge     0x484107ae
+    mov     d3, d0
+    inc     d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d0
+    mov     (0x20, sp), d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484107ae
+    add     2, d3
+    extbu   d3
+    mov     d3, (0x10, sp)
+    mov     (0x24, sp), d0
+    mov     (0x20, sp), d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     2, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484107ae
+    mov     -1, d2
+    mov     d2, d3
+    exth    d3
+    cmp     0, d3
+    blt     0x484107f9
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a3), d2
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    mov     0x50, d1
+    call    LibDiv32, 0, 0
+    mov     d3, d1
+    asl2    d1
+    mov     d0, (d1, a3)
+    mov     (0x20, sp), d0
+    movbu   (0x44, sp), d1
+    call    func_484125E5, [d2,d3], 0x14
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a3), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    blt     0x484107e2
+    mov     d3, d1
+    asl2    d1
+    exth    d0
+    mov     d0, (d1, a3)
+    mov     (0x20, sp), d0
+    movbu   (0x44, sp), d1
+    call    func_4841259F, [d2,d3], 0x14
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a3), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    bgt     0x484107f9
+    asl2    d3
+    exth    d0
+    mov     d0, (d3, a3)
+    mov     a2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x60, sp), d0
+    mov     d0, (0x14, sp)
+    mov     (0x64, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x68, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), d0
+    mov     (0x34, sp), d1
+    call    func_48405ABB, 0, 0x38
+    bra     0x48410820
+    mov     (0x60, sp), d1
+    mov     (0x24, sp), d0
+    call    SndCmdEmitGlobalDepth_entry, [d2,a2], 0x1c
+    mov     (0x24, sp), d0
+    cmp     7, d0
+    bne     0x48410831
+    mov     a2, d0
+    exth    d0
+    cmp     0, d0
+    bne     0x48410831
+    mov     (0x60, sp), d0
+    mov     d0, (0x38, sp)
+    mov     (0x24, sp), d0
+    cmp     7, d0
+    bne     0x48410842
+    mov     a2, d0
+    exth    d0
+    cmp     1, d0
+    bne     0x48410842
+    mov     (0x60, sp), d0
+    mov     d0, (0x2c, sp)
+    mov     (0x28, sp), d0
+    mov     (0x3c, sp), d2
+    inc     d0
+    exth    d0
+    mov     d0, (0x28, sp)
+    cmp     d2, d0
+    bge     0x48410850
+    jmp     0x48410715
+    call    func_48405B27, 0, 0x14
+    movbu   (0x500002d0), d0
+    cmp     0, d0
+    bne     0x4841088f
+    mov     (0x38, sp), d0
+    cmp     0, d0
+    blt     0x48410878
+    movbu   (0x38, sp), d1
+    mov     0xa000a401, d0
+    extbu   d1
+    call    LibParamSet, [d2,d3,a2], 0x24
+    mov     (0x2c, sp), d0
+    cmp     0, d0
+    blt     0x4841088f
+    movbu   (0x2c, sp), d1
+    mov     0xa000a402, d0
+    extbu   d1
+    call    LibParamSet, [d2,d3,a2], 0x24
+    mov     (0x24, sp), d0
+    cmp     1, d0
+    bne     0x4841089a
+    call    SndSetupBroadcastOne_entry, [d2], 0x24
+    ret     [d2,d3,a2,a3], 0x7c
+# SndUnitSettingApply1  (CPU 0x4841089d)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x54, sp
+# SndUnitSettingApply1_entry:   (register-save `call` entry)
+    movhu   d0, (0x6c, sp)
+    mov     d1, d3
+    clr     d0
+    movhu   d0, (0x30, sp)
+    movhu   (0x6c, sp), d0
+    mov     d0, (0x24, sp)
+    cmp     0, d0
+    bge     0x484108b6
+    ret     [d2,d3,a2,a3], 0x64
+    mov     (0x24, sp), d0
+    cmp     9, d0
+    ble     0x484108bf
+    ret     [d2,d3,a2,a3], 0x64
+    mov     (0x24, sp), d0
+    mov     0x4858f2f8, a0
+    asl2    d0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    clr     d2
+    jmp     0x4841095f
+    clr     d2
+    jmp     0x4841095f
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x4841095f
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x4841095f
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    mov     d0, d2
+    asr     16, d2
+    bra     0x4841095f
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x4841095f
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x4841095f
+    clr     d2
+    bra     0x4841095f
+    clr     d2
+    bra     0x4841095f
+    ret     [d2,d3,a2,a3], 0x64
+    movhu   (0x6c, sp), d1
+    mov     d2, d0
+    asl     8, d1
+    extb    d0
+    asl     16, d0
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, a3
+    mov     d1, d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    mov     d3, d1
+    exthu   d1
+    exth    d0
+    cmp     d0, d1
+    blt     0x48410980
+    ret     [d2,d3,a2,a3], 0x64
+    movbu   d3, (0x29, sp)
+    mov     a3, d0
+    movbu   (0x29, sp), d1
+    call    func_484127BA, [d2,d3], 0x14
+    exth    d0
+    cmp     -1, d0
+    beq     0x484109a4
+    mov     a3, d0
+    movbu   (0x29, sp), d1
+    call    func_484127BA, [d2,d3], 0x14
+    exth    d0
+    extb    d2
+    cmp     d2, d0
+    beq     0x484109a4
+    ret     [d2,d3,a2,a3], 0x64
+    mov     sp, a2
+    add     0x34, a2
+    mov     a2, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    mov     a0, d0
+    add     0x48, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     a3, d0
+    call    func_4841218C, [d2], 0x14
+    movhu   d0, (0x2e, sp)
+    mov     a3, d0
+    movbu   (0x29, sp), d1
+    call    func_4841262B, [d2,d3], 0x14
+    movhu   d0, (0x2c, sp)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x30, d0
+    mov     d0, (0x10, sp)
+    movhu   (0x2c, sp), d2
+    mov     (0x20, sp), a0
+    mov     a3, d0
+    mov     d2, d1
+    extbu   d1
+    mov     a2, a1
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    bne     0x484109fa
+    ret     [d2,d3,a2,a3], 0x64
+    mov     a3, d0
+    call    func_48412118, [d2], 0x10
+    movhu   (0x2c, sp), d3
+    exth    d0
+    exth    d3
+    cmp     d3, d0
+    bne     0x48410a0c
+    jmp     0x48410ad5
+    movhu   (0x6c, sp), d0
+    extbu   d2
+    movbu   d0, (0x28, sp)
+    mov     d2, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a3, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     d0, d1
+    exth    d1
+    clr     d2
+    cmp     d2, d1
+    bge     0x48410a56
+    mov     d3, d0
+    inc     d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a3, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48410a56
+    add     2, d3
+    mov     d3, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a3, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     2, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48410a56
+    mov     -1, d2
+    mov     d2, d3
+    exth    d3
+    cmp     0, d3
+    blt     0x48410aad
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    mov     0x50, d1
+    call    LibDiv32, 0, 0
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     d0, (d1, a0)
+    mov     a3, d0
+    movbu   (0x29, sp), d1
+    call    func_484125E5, [d2,d3], 0x14
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    blt     0x48410a92
+    mov     d3, d1
+    asl2    d1
+    mov     (0x20, sp), a0
+    exth    d0
+    mov     d0, (d1, a0)
+    mov     a3, d0
+    movbu   (0x29, sp), d1
+    call    func_4841259F, [d2,d3], 0x14
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    bgt     0x48410aad
+    asl2    d3
+    mov     (0x20, sp), a0
+    exth    d0
+    mov     d0, (d3, a0)
+    movhu   (0x2c, sp), d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x48, sp), d0
+    mov     d0, (0x14, sp)
+    mov     (0x4c, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x50, sp), d0
+    mov     d0, (0x1c, sp)
+    movhu   (0x2e, sp), d1
+    mov     (0x24, sp), d0
+    exthu   d1
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    bra     0x48410ae0
+    movhu   (0x6c, sp), d0
+    mov     (0x48, sp), d1
+    extbu   d0
+    call    SndCmdEmitGlobalDepth_entry, [d2,a2], 0x1c
+    ret     [d2,d3,a2,a3], 0x64
+# SndUnitSettingApply2  (CPU 0x48410ae3)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x54, sp
+# SndUnitSettingApply2_entry:   (register-save `call` entry)
+    movhu   d0, (0x6c, sp)
+    mov     d1, d3
+    clr     d0
+    movhu   d0, (0x30, sp)
+    movhu   (0x6c, sp), d0
+    mov     d0, (0x24, sp)
+    cmp     0, d0
+    bge     0x48410afc
+    ret     [d2,d3,a2,a3], 0x64
+    mov     (0x24, sp), d0
+    cmp     9, d0
+    ble     0x48410b05
+    ret     [d2,d3,a2,a3], 0x64
+    mov     (0x24, sp), d0
+    mov     0x4858f320, a0
+    asl2    d0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    clr     d2
+    jmp     0x48410ba5
+    clr     d2
+    jmp     0x48410ba5
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x48410ba5
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    mov     d0, d2
+    asr     16, d2
+    bra     0x48410ba5
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    and     0x00ff0000, d2
+    asr     16, d2
+    bra     0x48410ba5
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    and     0x00ff0000, d2
+    asr     16, d2
+    bra     0x48410ba5
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    bra     0x48410ba5
+    clr     d2
+    bra     0x48410ba5
+    clr     d2
+    bra     0x48410ba5
+    ret     [d2,d3,a2,a3], 0x64
+    movhu   (0x6c, sp), d1
+    mov     d2, d0
+    asl     8, d1
+    extb    d0
+    asl     16, d0
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, a2
+    mov     d1, d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    mov     d3, d1
+    exthu   d1
+    exth    d0
+    cmp     d0, d1
+    blt     0x48410bc6
+    ret     [d2,d3,a2,a3], 0x64
+    movbu   d3, (0x29, sp)
+    mov     a2, d0
+    movbu   (0x29, sp), d1
+    call    func_484127BA, [d2,d3], 0x14
+    exth    d0
+    cmp     -1, d0
+    beq     0x48410bea
+    mov     a2, d0
+    movbu   (0x29, sp), d1
+    call    func_484127BA, [d2,d3], 0x14
+    exth    d0
+    extb    d2
+    cmp     d2, d0
+    beq     0x48410bea
+    ret     [d2,d3,a2,a3], 0x64
+    mov     sp, a3
+    add     0x34, a3
+    mov     a3, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    mov     a0, d0
+    add     0x48, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     a2, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d0, d2
+    mov     a2, d0
+    movbu   (0x29, sp), d1
+    call    func_4841262B, [d2,d3], 0x14
+    movhu   d0, (0x2c, sp)
+    movhu   d2, (0x2e, sp)
+    mov     (0x24, sp), d0
+    movhu   (0x2e, sp), d1
+    call    func_484057D9, 0, 0x18
+    mov     sp, a0
+    mov     a0, d0
+    add     0x30, d0
+    mov     d0, (0x10, sp)
+    movhu   (0x2c, sp), d2
+    mov     (0x20, sp), a0
+    mov     a2, d0
+    mov     d2, d1
+    extbu   d1
+    mov     a3, a1
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    bne     0x48410c4d
+    ret     [d2,d3,a2,a3], 0x64
+    mov     a2, d0
+    call    func_48412118, [d2], 0x10
+    movhu   (0x2c, sp), d3
+    exth    d0
+    exth    d3
+    cmp     d3, d0
+    bne     0x48410c5f
+    jmp     0x48410d27
+    movhu   (0x6c, sp), d0
+    extbu   d2
+    movbu   d0, (0x28, sp)
+    mov     d2, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a2, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     d0, d1
+    exth    d1
+    clr     d2
+    cmp     d2, d1
+    bge     0x48410ca9
+    mov     d3, d0
+    inc     d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a2, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48410ca9
+    add     2, d3
+    mov     d3, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (0x28, sp), d0
+    mov     a2, d1
+    call    SndUnitDbGroupQuery_entry, [d2,d3,a2,a3], 0x24
+    mov     2, d2
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x48410ca9
+    mov     -1, d2
+    mov     d2, d3
+    exth    d3
+    cmp     0, d3
+    blt     0x48410d00
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    mov     0x50, d1
+    call    LibDiv32, 0, 0
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     d0, (d1, a0)
+    mov     a2, d0
+    movbu   (0x29, sp), d1
+    call    func_484125E5, [d2,d3], 0x14
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    blt     0x48410ce5
+    mov     d3, d1
+    asl2    d1
+    mov     (0x20, sp), a0
+    exth    d0
+    mov     d0, (d1, a0)
+    mov     a2, d0
+    movbu   (0x29, sp), d1
+    call    func_4841259F, [d2,d3], 0x14
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a0), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    bgt     0x48410d00
+    asl2    d3
+    mov     (0x20, sp), a0
+    exth    d0
+    mov     d0, (d3, a0)
+    movhu   (0x2c, sp), d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x48, sp), d0
+    mov     d0, (0x14, sp)
+    mov     (0x4c, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x50, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), d0
+    movhu   (0x2e, sp), d1
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    bra     0x48410d32
+    movhu   (0x6c, sp), d0
+    mov     (0x48, sp), d1
+    extbu   d0
+    call    SndCmdEmitGlobalDepth_entry, [d2,a2], 0x1c
+    ret     [d2,d3,a2,a3], 0x64
+# SndUnitRefreshGroups56  (CPU 0x48410d35)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    mov     5, d0
+    mov     1, d1
+    call    func_48448273, [d2,d3], 0x24
+    mov     5, d0
+    mov     d2, d1
+    call    SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
+    mov     0x0000b040, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    mov     d1, d2
+    exthu   d2
+    cmp     0x7f, d2
+    beq     0x48410d8b
+    mov     0x00b0005f, d0
+    exthu   d1
+    asl     24, d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    extbu   d1
+    mov     5, d0
+    call    SndUnitSettingApply4_entry, [d2,d3,a2,a3], 0x78
+    mov     5, d0
+    clr     d1
+    call    func_48448273, [d2,d3], 0x24
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    mov     6, d0
+    mov     1, d1
+    call    func_48448273, [d2,d3], 0x24
+    mov     6, d0
+    mov     d2, d1
+    call    SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
+    mov     0x0000b050, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    mov     d1, d2
+    exthu   d2
+    cmp     0x7f, d2
+    beq     0x48410de6
+    mov     0x00b0005f, d0
+    exthu   d1
+    asl     24, d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    extbu   d1
+    mov     6, d0
+    call    SndUnitSettingApply4_entry, [d2,d3,a2,a3], 0x78
+    mov     6, d0
+    clr     d1
+    call    func_48448273, [d2,d3], 0x24
+    ret     [d2,d3], 0x18
+# SndSetupBroadcastAll  (CPU 0x48410df3)
+    movm    [d2,d3,a2,a3], (sp)
+# SndSetupBroadcastAll_entry:   (register-save `call` entry)
+    add     -0x138, sp
+    mov     d0, d2
+    mov     0x00008029, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    cmp     0, d0
+    bne     0x48410e0f
+    jmp     0x48410f3b
+    mov     0x0000802c, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    exth    d0
+    cmp     0x1b, d0
+    bne     0x48410e28
+    mov     d2, d1
+    exthu   d1
+    cmp     0x21, d1
+    beq     0x48410e37
+    cmp     0x1b, d0
+    bne     0x48410e2f
+    jmp     0x48410f3b
+    mov     d2, d1
+    exthu   d1
+    cmp     d1, d0
+    beq     0x48410e37
+    jmp     0x48410f3b
+    cmp     0x1b, d0
+    bne     0x48410e43
+    mov     0xc, d0
+    mov     d0, (0x24, sp)
+    cmp     0x21, d1
+    beq     0x48410e46
+    clr     d0
+    mov     d0, (0x24, sp)
+    mov     0x180, d0
+    call    func_4841218C, [d2], 0x14
+    movhu   d0, (0x28, sp)
+    exthu   d0
+    cmp     0x7c, d0
+    beq     0x48410e59
+    jmp     0x48410f3b
+    mov     0x1ff, d0
+    movhu   d0, (0x2c, sp)
+    movhu   d0, (0x2e, sp)
+    movbu   d2, (0x30, sp)
+    mov     -1, d0
+    movbu   d0, (0x31, sp)
+    clr     d0
+    movhu   d0, (0x34, sp)
+    mov     sp, a3
+    add     0x38, a3
+    mov     a3, a0
+    mov     3, d0
+    mov     sp, a1
+    add     0x2c, a1
+    call    func_48450BA6, [d2,d3,a2,a3], 0x4c
+    mov     d0, d3
+    exth    d0
+    cmp     0, d0
+    bne     0x48410e87
+    jmp     0x48410f12
+    mov     3, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d3, d1
+    exth    d1
+    cmp     4, d1
+    blt     0x48410e99
+    mov     3, d3
+    clr     d2
+    exth    d3
+    cmp     d2, d3
+    ble     0x48410eeb
+    movhu   (0x28, sp), d1
+    mov     0xffffffc0, a2
+    mov     d1, (0x20, sp)
+    add     d0, a2
+    mov     d2, d0
+    asl2    d0
+    sub     d2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    asl     4, d0
+    mov     d0, a0
+    add     a3, a0
+    movbu   (0xc, a0), d0
+    mov     (0x24, sp), d1
+    extb    d0
+    add     a2, d0
+    add     d1, d0
+    mov     d0, (0x14, sp)
+    mov     d2, d0
+    asl     4, d0
+    mov     d0, a0
+    add     a3, a0
+    mov     0x00008000, d0
+    mov     d0, (0x18, sp)
+    movbu   (0xd, a0), d0
+    inc     d2
+    extb    d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d1
+    exth    d2
+    mov     1, d0
+    call    func_48405ABB, 0, 0x38
+    cmp     d3, d2
+    blt     0x48410eab
+    cmp     3, d2
+    bge     0x48410f34
+    movhu   (0x28, sp), d3
+    mov     d2, d0
+    asl2    d0
+    sub     d2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     1, d0
+    mov     d3, d1
+    call    func_48405ABB, 0, 0x38
+    inc     d2
+    exth    d2
+    cmp     3, d2
+    blt     0x48410ef2
+    bra     0x48410f34
+    clr     d2
+    movhu   (0x28, sp), d3
+    mov     d2, d0
+    asl2    d0
+    sub     d2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     1, d0
+    mov     d3, d1
+    call    func_48405ABB, 0, 0x38
+    inc     d2
+    exth    d2
+    cmp     3, d2
+    blt     0x48410f16
+    call    func_48405B27, 0, 0x14
+    add     0x138, sp
+    ret     [d2,d3,a2,a3], 0x10
+# SndSetupBroadcastOne  (CPU 0x48410f42)
+    movm    [d2], (sp)
+    add     -0x20, sp
+# SndSetupBroadcastOne_entry:   (register-save `call` entry)
+    mov     0x00008029, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    cmp     0, d0
+    beq     0x48410fad
+    mov     0x180, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d0, d2
+    mov     d2, d1
+    exthu   d1
+    cmp     0x7c, d1
+    bne     0x48410fad
+    exthu   d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     1, d0
+    mov     d2, d1
+    call    func_48405ABB, 0, 0x38
+    mov     3, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     1, d0
+    mov     d2, d1
+    call    func_48405ABB, 0, 0x38
+    mov     6, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     1, d0
+    mov     d2, d1
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    ret     [d2], 0x24
+# SndCmdEmitUnitCc  (CPU 0x48410fb0)
+#   ★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector 1..6, d1 = value).
+#   Selectors 2..6 read the param-DB group keys 0xB010/0xB020/0xB030/
+#   0xB040/0xB050 through LibParamGet; 0x484120DE turns the result into a
+#   unit number, and the message emitted is one of
+#     { 4, 0xB0, part, 0xC6, v }  control change 0xC6, parts 0x13..0x1A
+#     { 4, 0xB0, part, 0xC4, v }  control change 0xC4
+#     { 3, 0xF0, 0x35, v }        the GLOBAL parameter id 0x35
+#                                 (TgDrawbarGlobal82BCSet: chan 0x0C + 6)
+    movm    [d2,d3,a2], (sp)
+    add     -0x18, sp
+# SndCmdEmitUnitCc_entry:   (register-save `call` entry)
+    mov     d1, d3
+    extbu   d0
+    mov     -1, d2
+    cmp     1, d0
+    beq     0x4841102e
+    cmp     2, d0
+    beq     0x48410fd4
+    cmp     3, d0
+    beq     0x48410fe5
+    cmp     4, d0
+    beq     0x48410ff6
+    cmp     5, d0
+    beq     0x48411007
+    cmp     6, d0
+    beq     0x4841101f
+    ret     [d2,d3,a2], 0x24
+    mov     0x0000b010, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    bra     0x4841102e
+    mov     0x0000b020, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    bra     0x4841102e
+    mov     0x0000b030, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    bra     0x4841102e
+    mov     0x0000b040, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    extb    d0
+    cmp     0x7f, d0
+    bne     0x4841102e
+    mov     -2, d2
+    bra     0x4841102e
+    mov     0x0000b050, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    mov     d3, d0
+    call    func_484120DE, [d2], 0x10
+    exth    d0
+    clr     d3
+    cmp     d3, d0
+    beq     0x48411066
+    mov     1, d3
+    cmp     d3, d0
+    beq     0x48411066
+    cmp     2, d0
+    beq     0x48411048
+    cmp     3, d0
+    beq     0x48411056
+    bra     0x48411065
+    mov     d2, d0
+    extb    d0
+    cmp     -1, d0
+    beq     0x48411052
+    cmp     -2, d0
+    bne     0x48411066
+    mov     2, d3
+    bra     0x48411066
+    mov     d2, d0
+    extb    d0
+    cmp     -1, d0
+    beq     0x48411062
+    mov     3, d3
+    cmp     -2, d0
+    bne     0x48411066
+    clr     d3
+    bra     0x48411066
+    clr     d3
+    mov     sp, a2
+    add     0x10, a2
+    mov     4, d0
+    movbu   d0, (0x10, sp)
+    mov     0xb0, d0
+    movbu   d0, (0x11, sp)
+    mov     d2, d0
+    extb    d0
+    cmp     -2, d0
+    beq     0x48411080
+    cmp     -1, d0
+    beq     0x484110a0
+    bra     0x484110ea
+    mov     0xc6, d0
+    movbu   d0, (0x13, sp)
+    movbu   d3, (0x14, sp)
+    mov     0x13, d2
+    mov     d2, d3
+    movbu   d2, (0x12, sp)
+    mov     a2, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    inc     d3
+    mov     d3, d2
+    extb    d3
+    cmp     0x1a, d3
+    ble     0x4841108c
+    bra     0x484110fe
+    mov     0xc6, d0
+    movbu   d0, (0x13, sp)
+    movbu   d3, (0x14, sp)
+    clr     d0
+    clr     d2
+    cmp     0x13, d2
+    blt     0x484110b3
+    cmp     0x1a, d2
+    ble     0x484110be
+    movbu   d0, (0x12, sp)
+    mov     a2, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    inc     d2
+    mov     d2, d0
+    extb    d2
+    cmp     0x21, d2
+    ble     0x484110ab
+    mov     d3, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x484110cd
+    mov     2, d3
+    mov     3, d0
+    movbu   d0, (0x10, sp)
+    mov     0xf0, d0
+    movbu   d0, (0x11, sp)
+    mov     0x35, d0
+    movbu   d0, (0x12, sp)
+    movbu   d3, (0x13, sp)
+    mov     a2, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    bra     0x484110fe
+    mov     0xc4, d0
+    movbu   d0, (0x13, sp)
+    movbu   d3, (0x14, sp)
+    movbu   d2, (0x12, sp)
+    mov     a2, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    ret     [d2,d3,a2], 0x24
+# SndCmdEmitGlobalDepth  (CPU 0x48411101)
+#   ★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector, d1 = 0..0x63).
+#   Builds { len 3, status 0xF0, id, value } on the stack and hands it to
+#   the library stream writer SndCmdStreamWrite (0x4C003A65); the stream
+#   interpreter 0x4C003B31 decodes 0xFx + two data bytes as
+#   TgGlobalParamCommand(id, value).  value = d1 * 0x7F / 0x63.
+#     selector 1 -> id 0x33   (TgDrawbarGlobal82BFSet, chan 6 refresh)
+#     selector 5 -> id 0x34   (TgDrawbarGlobal82C0Set, chan 7 refresh)
+#                   only when the param-DB key 0xB040 reads 0x7F
+#     selector 9 -> id 0x32   (TgDrawbarGlobal82BESet, chan 0x0B refresh)
+#   Chan 0x0B is the live-captured REVERB SEND channel and chan 6 the
+#   MULTI return -- see kn7000_mame/notes/effect-enable-bits.md.
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# SndCmdEmitGlobalDepth_entry:   (register-save `call` entry)
+    mov     d1, d2
+    extbu   d0
+    cmp     1, d0
+    beq     0x48411116
+    cmp     5, d0
+    beq     0x48411120
+    cmp     9, d0
+    beq     0x4841113c
+    bra     0x4841116a
+    mov     sp, a2
+    add     0x10, a2
+    mov     0x33, d0
+    movbu   d0, (0x12, sp)
+    bra     0x48411144
+    mov     0x0000b040, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    cmp     0x7f, d0
+    bne     0x4841116a
+    mov     sp, a2
+    add     0x10, a2
+    mov     0x34, d0
+    movbu   d0, (0x12, sp)
+    bra     0x48411144
+    mov     sp, a2
+    add     0x10, a2
+    mov     0x32, d0
+    movbu   d0, (0x12, sp)
+    mov     3, d0
+    movbu   d0, (0x10, sp)
+    mov     0xf0, d0
+    movbu   d0, (0x11, sp)
+    mov     0x7f, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x63, d1
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    movbu   d0, (0x13, sp)
+    mov     a2, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    ret     [d2,a2], 0x1c
+# SndSetupApplyMemoryPair  (CPU 0x4841116d)
+    add     -0x10, sp
+    call    func_484455EB, 0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x484111d0
+    mov     (0x500002d8), d1
+    movhu   (0x50149664), d0
+    cmp     d1, d0
+    bge     0x484111c4
+    mov     (0x500002d4), d0
+    mov     0x40, d1
+    inc     d0
+    mov     d0, (0x500002d4)
+    call    SndUnitRecApplyShort_entry, [d2,d3,a2], 0x1c
+    exth    d0
+    cmp     0, d0
+    beq     0x484111ab
+    mov     0x40, d0
+    call    SndUnitRecApply_entry, [d2,d3,a2,a3], 0x5c
+    mov     (0x500002d4), d0
+    mov     0x50, d1
+    call    SndUnitRecApplyShort_entry, [d2,d3,a2], 0x1c
+    exth    d0
+    cmp     0, d0
+    beq     0x484111c4
+    mov     0x50, d0
+    call    SndUnitRecApply_entry, [d2,d3,a2,a3], 0x5c
+    movhu   (0x50149664), d0
+    mov     d0, (0x500002d8)
+    ret     0, 0x10
+# SndUnitRecApply  (CPU 0x484111d3)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x4c, sp
+# SndUnitRecApply_entry:   (register-save `call` entry)
+    mov     d0, d2
+    clr     d0
+    movhu   d0, (0x28, sp)
+    mov     d2, d0
+    extbu   d0
+    exthu   d0
+    mov     d0, (0x20, sp)
+    call    func_48412B6F, 0, 0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    exth    d1
+    cmp     0x13, d1
+    bge     0x484111f8
+    jmp     0x48411331
+    exth    d0
+    cmp     0x1a, d0
+    ble     0x48411200
+    jmp     0x48411331
+    mov     (0x20, sp), d0
+    cmp     2, d0
+    beq     0x48411219
+    cmp     3, d0
+    beq     0x48411233
+    cmp     4, d0
+    beq     0x4841124d
+    cmp     5, d0
+    beq     0x48411267
+    cmp     6, d0
+    beq     0x48411281
+    jmp     0x4841129b
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484112a0
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484112a0
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484112a0
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484112a0
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484112a0
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x5c
+    extbu   d2
+    asl     8, d2
+    exth    d0
+    asl     16, d0
+    mov     d2, d1
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, d2
+    exth    d2
+    mov     d2, d0
+    call    func_4841218C, [d2], 0x14
+    movhu   d0, (0x24, sp)
+    mov     d2, d0
+    call    func_4841206A, [d2], 0x10
+    mov     d0, d3
+    exth    d0
+    cmp     -1, d0
+    beq     0x48411331
+    mov     sp, a3
+    add     0x2c, a3
+    mov     a3, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a2
+    add     0x40, a2
+    mov     a2, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    mov     a0, d0
+    add     0x28, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d1
+    extbu   d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    beq     0x48411331
+    movhu   (0x24, sp), d2
+    exthu   d3
+    mov     d3, (0x10, sp)
+    mov     (0x40, sp), d0
+    mov     d2, d1
+    mov     d0, (0x14, sp)
+    mov     (0x44, sp), d0
+    exthu   d1
+    mov     d0, (0x18, sp)
+    mov     (0x48, sp), d0
+    exthu   d2
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    call    func_48405ABB, 0, 0x38
+    mov     d2, d1
+    mov     3, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x5c
+# SndUnitRecApplyShort  (CPU 0x48411335)
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# SndUnitRecApplyShort_entry:   (register-save `call` entry)
+    mov     d0, a2
+    mov     d1, d3
+    mov     d3, d2
+    extbu   d2
+    exthu   d2
+    mov     d2, d0
+    call    func_48412B6F, 0, 0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    exthu   d1
+    cmp     0x13, d1
+    bge     0x48411357
+    jmp     0x4841143a
+    exthu   d0
+    cmp     0x1a, d0
+    ble     0x4841135f
+    jmp     0x4841143a
+    cmp     2, d2
+    beq     0x48411376
+    cmp     3, d2
+    beq     0x48411391
+    cmp     4, d2
+    beq     0x484113ac
+    cmp     5, d2
+    beq     0x484113c7
+    cmp     6, d2
+    beq     0x484113e2
+    jmp     0x484113fd
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    extbu   d2
+    bra     0x48411401
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    mov     d0, d2
+    extbu   d2
+    bra     0x48411401
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    and     0x00ff0000, d2
+    asr     16, d2
+    extbu   d2
+    bra     0x48411401
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    and     0x00ff0000, d2
+    asr     16, d2
+    extbu   d2
+    bra     0x48411401
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d2
+    and     0x00ff0000, d2
+    asr     16, d2
+    extbu   d2
+    bra     0x48411401
+    mov     -1, d0
+    bra     0x4841143b
+    extbu   d3
+    asl     8, d3
+    exthu   d2
+    asl     16, d2
+    or      d3, d2
+    or      0x80, d2
+    exthu   d2
+    mov     d2, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d2, d0
+    call    func_4841206A, [d2], 0x10
+    exth    d0
+    cmp     -1, d0
+    beq     0x4841143a
+    mov     1, d1
+    mov     d2, d0
+    call    func_484122BB, [d2,d3], 0x18
+    exth    d0
+    clr     d1
+    mov     d1, mdr
+    mov     a2, d1
+    divu    d0, d1
+    mov     mdr, d1
+    cmp     0, d1
+    bne     0x4841143a
+    mov     1, d0
+    bra     0x4841143b
+    clr     d0
+    ret     [d2,d3,a2], 0x1c
+# SndUnitRecApplyAlt  (CPU 0x4841143e)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x48, sp
+# SndUnitRecApplyAlt_entry:   (register-save `call` entry)
+    mov     d0, d2
+    clr     d0
+    movhu   d0, (0x24, sp)
+    mov     d2, d0
+    extbu   d0
+    exthu   d0
+    mov     d0, (0x20, sp)
+    call    func_48412B6F, 0, 0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    exthu   d1
+    cmp     0x13, d1
+    bge     0x48411463
+    jmp     0x48411585
+    exthu   d0
+    cmp     0x1a, d0
+    ble     0x4841146b
+    jmp     0x48411585
+    mov     (0x20, sp), d0
+    cmp     2, d0
+    beq     0x48411484
+    cmp     3, d0
+    beq     0x4841149e
+    cmp     4, d0
+    beq     0x484114b8
+    cmp     5, d0
+    beq     0x484114d2
+    cmp     6, d0
+    beq     0x484114ec
+    jmp     0x48411506
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x4841150b
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x4841150b
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x4841150b
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x4841150b
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x4841150b
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x58
+    extbu   d2
+    mov     d2, d1
+    asl     8, d1
+    exthu   d0
+    mov     d0, d2
+    asl     16, d2
+    or      d1, d2
+    or      0x80, d2
+    mov     d2, d0
+    call    func_4841218C, [d2], 0x14
+    mov     d2, d0
+    call    func_4841206A, [d2], 0x10
+    mov     d0, d3
+    exthu   d0
+    cmp     -1, d0
+    beq     0x48411585
+    mov     sp, a3
+    add     0x28, a3
+    mov     a3, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a2
+    add     0x3c, a2
+    mov     a2, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    mov     a0, d0
+    add     0x24, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    mov     d3, d1
+    extbu   d1
+    mov     a3, a1
+    mov     a2, a0
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    beq     0x48411585
+    mov     d2, d0
+    call    func_4841218C, [d2], 0x14
+    exthu   d3
+    mov     d3, (0x10, sp)
+    mov     d0, d1
+    mov     (0x3c, sp), d0
+    exthu   d1
+    mov     d0, (0x14, sp)
+    mov     (0x40, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x44, sp), a0
+    mov     a0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x58
+# SndSetupPowerOnInit  (CPU 0x48411589)
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+    mov     d1, d3
+    and     0x00ffffff, d0
+    cmp     1, d0
+    bcc     0x4841159c
+    ret     [d2,d3], 0x1c
+    cmp     0x601001, d0
+    bls     0x484115a7
+    ret     [d2,d3], 0x1c
+    mov     0x4858f348, a1
+    mov     d0, d1
+    and     0x1f, d1
+    asl     3, d1
+    mov     d1, a0
+    add     a1, a0
+    mov     (a0), d1
+    cmp     d0, d1
+    beq     0x484115d2
+    setlb
+    cmp     0, d1
+    bne     0x484115c4
+    ret     [d2,d3], 0x1c
+    add     8, a0
+    cmp     0x4858f448, a0
+    bcs     0x484115cf
+    mov     a1, a0
+    mov     (a0), d1
+    cmp     d0, d1
+    lne
+    mov     (4, a0), a0
+    jmp     (a0)
+    mov     1, d0
+    movbu   d0, (0x500002d0)
+    ret     [d2,d3], 0x1c
+    mov     0x0000a401, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0xff, d0
+    extbu   d0
+    exth    d0
+    mov     d0, (0x10, sp)
+    mov     0x780, d0
+    clr     d1
+    call    func_48412847, [d2,d3], 0x18
+    mov     7, d0
+    clr     d1
+    call    SndUnitSettingApply1_entry, [d2,d3,a2,a3], 0x64
+    mov     0x0000a402, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0xff, d0
+    extbu   d0
+    exth    d0
+    mov     d0, (0x10, sp)
+    mov     0x780, d0
+    mov     1, d1
+    call    func_48412847, [d2,d3], 0x18
+    mov     7, d0
+    mov     1, d1
+    call    SndUnitSettingApply1_entry, [d2,d3,a2,a3], 0x64
+    call    func_4856C324, 0, 0x14
+    clr     d0
+    movbu   d0, (0x500002d0)
+    ret     [d2,d3], 0x1c
+    mov     1, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    cmp     0, d0
+    beq     0x48411668
+    cmp     1, d0
+    bne     0x48411668
+    mov     5, d0
+    call    SndUnitRecApply_entry, [d2,d3,a2,a3], 0x5c
+    mov     6, d0
+    call    SndUnitRecApply_entry, [d2,d3,a2,a3], 0x5c
+    clr     d0
+    mov     d0, (0x500002d4)
+    mov     5, d0
+    call    SndUnitRecApplyAlt_entry, [d2,d3,a2,a3], 0x58
+    mov     6, d0
+    call    SndUnitRecApplyAlt_entry, [d2,d3,a2,a3], 0x58
+    ret     [d2,d3], 0x1c
+    call    SndSetupBroadcastOne_entry, [d2], 0x24
+    ret     [d2,d3], 0x1c
+    mov     0x0000802c, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    extbu   d0
+    cmp     0x1b, d0
+    bne     0x48411697
+    mov     0x21, d1
+    extbu   d1
+    exthu   d1
+    mov     d1, d0
+    call    SndSetupBroadcastAll_entry, [d2,d3,a2,a3], 0x10
+    ret     [d2,d3], 0x1c
+    mov     d3, d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    ret     [d2,d3], 0x1c
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    bra     0x48411775
+    clr     d1
+    call    func_4841376B, [d2,d3,a2,a3], 0x30
+    bra     0x48411775
+    movbu   (0x500002d0), d0
+    cmp     0, d0
+    bne     0x48411775
+    and     0xff, d3
+    mov     d3, d0
+    extbu   d0
+    exth    d0
+    mov     d0, (0x10, sp)
+    mov     0x780, d0
+    clr     d1
+    call    func_48412847, [d2,d3], 0x18
+    mov     7, d0
+    clr     d1
+    call    SndUnitSettingApply1_entry, [d2,d3,a2,a3], 0x64
+    call    func_4856C324, 0, 0x14
+    bra     0x48411775
+    movbu   (0x500002d0), d0
+    cmp     0, d0
+    bne     0x48411775
+    and     0xff, d3
+    extbu   d3
+    exth    d3
+    mov     d3, (0x10, sp)
+    mov     0x780, d0
+    mov     1, d1
+    call    func_48412847, [d2,d3], 0x18
+    mov     7, d0
+    mov     1, d1
+    call    SndUnitSettingApply1_entry, [d2,d3,a2,a3], 0x64
+    call    func_4856C324, 0, 0x14
+    ret     [d2,d3], 0x1c
+    retf    0, 0
+# SndUnitSettingApply3  (CPU 0x4841177b)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x50, sp
+# SndUnitSettingApply3_entry:   (register-save `call` entry)
+    movbu   d1, (0x6c, sp)
+    mov     d0, d2
+    clr     d0
+    movhu   d0, (0x2c, sp)
+    extbu   d2
+    mov     d2, (0x20, sp)
+    cmp     2, d2
+    beq     0x484117a2
+    cmp     3, d2
+    beq     0x484117bc
+    cmp     4, d2
+    beq     0x484117d6
+    cmp     5, d2
+    beq     0x484117f0
+    cmp     6, d2
+    beq     0x4841180a
+    ret     [d2,d3,a2,a3], 0x60
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x48411822
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x48411822
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x48411822
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x48411822
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    extbu   d2
+    asl     8, d2
+    exthu   d0
+    asl     16, d0
+    mov     d2, d1
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, a3
+    mov     d1, d0
+    call    func_484120A4, [d2], 0x10
+    movhu   d0, (0x28, sp)
+    exthu   d0
+    cmp     -1, d0
+    bne     0x48411843
+    ret     [d2,d3,a2,a3], 0x60
+    clr     d3
+    mov     a3, d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    clr     d2
+    exth    d0
+    cmp     d2, d0
+    ble     0x48411872
+    movhu   (0x28, sp), d0
+    mov     d0, a2
+    mov     a3, d0
+    mov     d3, d1
+    extbu   d1
+    call    func_4841262B, [d2,d3], 0x14
+    exth    d0
+    cmp     a2, d0
+    beq     0x48411872
+    mov     d2, d3
+    inc     d3
+    mov     a3, d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    mov     d3, d2
+    exth    d2
+    exth    d0
+    cmp     d0, d2
+    blt     0x48411855
+    mov     sp, a2
+    mov     a3, d0
+    call    func_4841218C, [d2], 0x14
+    movhu   d0, (0x2a, sp)
+    add     0x30, a2
+    mov     a2, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    mov     a0, d0
+    add     0x2c, d0
+    mov     d0, (0x10, sp)
+    movhu   (0x28, sp), d1
+    mov     a2, a0
+    mov     sp, a1
+    add     0x3c, a1
+    mov     a3, d0
+    extbu   d1
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    beq     0x48411910
+    movhu   (0x2c, sp), d1
+    mov     d1, d0
+    asl2    d0
+    mov     (d0, a2), d2
+    movbu   (0x6c, sp), d0
+    asl2    d1
+    add     d2, d0
+    add     -0x40, d0
+    mov     d0, (d1, a2)
+    movbu   d3, (0x24, sp)
+    mov     a3, d0
+    movbu   (0x24, sp), d1
+    call    func_484125E5, [d2,d3], 0x14
+    movhu   (0x2c, sp), d3
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a2), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    blt     0x484118d2
+    asl2    d3
+    exth    d0
+    mov     d0, (d3, a2)
+    mov     a3, d0
+    movbu   (0x24, sp), d1
+    call    func_4841259F, [d2,d3], 0x14
+    movhu   (0x2c, sp), d3
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a2), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    bgt     0x484118ec
+    asl2    d3
+    exth    d0
+    mov     d0, (d3, a2)
+    movhu   (0x28, sp), d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    mov     d0, (0x14, sp)
+    mov     (0x34, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x38, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    movhu   (0x2a, sp), d1
+    call    func_48405ABB, 0, 0x38
+    call    func_48405B27, 0, 0x14
+    ret     [d2,d3,a2,a3], 0x60
+# SndUnitSettingApply4  (CPU 0x48411913)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x68, sp
+# SndUnitSettingApply4_entry:   (register-save `call` entry)
+    movbu   d1, (0x84, sp)
+    mov     d0, d2
+    clr     d0
+    movhu   d0, (0x44, sp)
+    mov     d0, d3
+    extbu   d2
+    mov     d2, (0x28, sp)
+    cmp     2, d2
+    beq     0x4841193b
+    cmp     3, d2
+    beq     0x48411955
+    cmp     4, d2
+    beq     0x4841196f
+    cmp     5, d2
+    beq     0x48411989
+    cmp     6, d2
+    beq     0x484119a3
+    jmp     0x484119bd
+    mov     0x0000b014, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484119c2
+    mov     0x0000b024, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484119c2
+    mov     0x0000b034, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484119c2
+    mov     0x0000b044, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484119c2
+    mov     0x0000b054, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    and     0x00ff0000, d0
+    asr     16, d0
+    extbu   d0
+    bra     0x484119c2
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x78
+    extbu   d2
+    asl     8, d2
+    exthu   d0
+    asl     16, d0
+    mov     d2, d1
+    or      d0, d1
+    or      0x80, d1
+    mov     d1, (0x30, sp)
+    mov     d1, d0
+    call    SndRecTriFieldGet_entry, [d2], 0x14
+    mov     d0, (0x20, sp)
+    call    func_484120DE, [d2], 0x10
+    exth    d0
+    cmp     1, d0
+    beq     0x484119eb
+    cmp     2, d0
+    beq     0x484119eb
+    jmp     0x48411aed
+    mov     (0x20, sp), d0
+    call    func_4841218C, [d2], 0x14
+    mov     d0, d2
+    mov     sp, a0
+    mov     a0, d0
+    add     0x48, d0
+    mov     d0, (0x24, sp)
+    mov     d0, a0
+    clr     d0
+    mov     0x14, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x20, sp), d0
+    clr     d1
+    call    func_48412671, [d2,d3,a2,a3], 0x24
+    mov     d0, a3
+    exth    d0
+    cmp     d3, d0
+    bge     0x48411a17
+    jmp     0x48411adf
+    movbu   (0x84, sp), d0
+    mov     sp, a2
+    add     0x5c, a2
+    mov     sp, a0
+    mov     d0, (0x38, sp)
+    mov     a0, d0
+    add     0x44, d0
+    mov     d0, (0x2c, sp)
+    exthu   d2
+    mov     d2, (0x34, sp)
+    mov     a3, d0
+    movbu   d0, (0x3c, sp)
+    mov     (0x20, sp), d0
+    movbu   (0x3c, sp), d1
+    call    func_4841262B, [d2,d3], 0x14
+    movhu   d0, (0x40, sp)
+    mov     a2, a0
+    clr     d0
+    mov     0xc, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x2c, sp), d0
+    mov     a2, a0
+    mov     d0, (0x10, sp)
+    movhu   (0x40, sp), d1
+    mov     (0x24, sp), a1
+    mov     (0x30, sp), d0
+    extbu   d1
+    call    func_484123C4, [d2,d3,a2,a3], 0x2c
+    exth    d0
+    cmp     0, d0
+    beq     0x48411ac9
+    movhu   (0x44, sp), d2
+    mov     (0x38, sp), d1
+    mov     d2, d0
+    asl2    d0
+    mov     (d0, a2), d0
+    asl2    d2
+    nop
+    nop
+    mul     d1, d0
+    mov     0x50, d1
+    call    LibDiv32, 0, 0
+    mov     d0, (d2, a2)
+    mov     (0x20, sp), d0
+    movbu   (0x3c, sp), d1
+    call    func_484125E5, [d2,d3], 0x14
+    movhu   (0x44, sp), d3
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a2), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    blt     0x48411a90
+    asl2    d3
+    exth    d0
+    mov     d0, (d3, a2)
+    mov     (0x20, sp), d0
+    movbu   (0x3c, sp), d1
+    call    func_4841259F, [d2,d3], 0x14
+    movhu   (0x44, sp), d3
+    mov     d3, d1
+    asl2    d1
+    mov     (d1, a2), d2
+    mov     d0, d1
+    exth    d1
+    cmp     d1, d2
+    bgt     0x48411aaa
+    asl2    d3
+    exth    d0
+    mov     d0, (d3, a2)
+    movhu   (0x40, sp), d0
+    mov     1, d3
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x5c, sp), d0
+    mov     d0, (0x14, sp)
+    mov     (0x60, sp), d0
+    mov     d0, (0x18, sp)
+    mov     (0x64, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), d0
+    mov     (0x34, sp), d1
+    call    func_48405ABB, 0, 0x38
+    mov     (0x20, sp), d0
+    mov     a3, d1
+    exth    d1
+    inc     d1
+    extbu   d1
+    call    func_48412671, [d2,d3,a2,a3], 0x24
+    mov     d0, a3
+    exth    d0
+    cmp     0, d0
+    blt     0x48411adf
+    jmp     0x48411a29
+    exthu   d3
+    cmp     0, d3
+    beq     0x48411af1
+    call    func_48405B27, 0, 0x14
+    bra     0x48411af1
+    mov     -1, d0
+    bra     0x48411af2
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x78
+# SndUnitDbGroupQuery  (CPU 0x48411af5)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# SndUnitDbGroupQuery_entry:   (register-save `call` entry)
+    mov     d1, (0x30, sp)
+    extbu   d0
+    cmp     2, d0
+    beq     0x48411b13
+    cmp     3, d0
+    beq     0x48411b24
+    cmp     4, d0
+    beq     0x48411b35
+    cmp     5, d0
+    beq     0x48411b46
+    cmp     6, d0
+    beq     0x48411b57
+    bra     0x48411b68
+    mov     0x0000b010, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    bra     0x48411b6d
+    mov     0x0000b020, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    bra     0x48411b6d
+    mov     0x0000b030, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    bra     0x48411b6d
+    mov     0x0000b040, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    bra     0x48411b6d
+    mov     0x0000b050, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    mov     d0, d1
+    bra     0x48411b6d
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    blt     0x48411b8c
+    cmp     0x21, d0
+    bgt     0x48411b8c
+    mov     0x00b0005f, d0
+    exth    d1
+    asl     24, d1
+    call    LibParamGet, 0, 0x10
+    movhu   d0, (0x10, sp)
+    bra     0x48411b91
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x24
+    mov     (0x30, sp), d0
+    call    func_484120DE, [d2], 0x10
+    exth    d0
+    cmp     1, d0
+    beq     0x48411ba1
+    cmp     2, d0
+    bne     0x48411bdd
+    mov     (0x30, sp), d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    clr     d2
+    clr     d3
+    exth    d0
+    mov     d0, a2
+    cmp     0, a2
+    ble     0x48411bcb
+    movbu   (0x34, sp), d0
+    mov     d0, a3
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    extbu   d1
+    call    func_4841262B, [d2,d3], 0x14
+    exth    d0
+    cmp     a3, d0
+    beq     0x48411bcb
+    inc     d3
+    mov     d3, d2
+    exth    d3
+    cmp     a2, d3
+    blt     0x48411bb6
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    extbu   d1
+    call    func_48412671, [d2,d3,a2,a3], 0x24
+    exth    d0
+    cmp     d3, d0
+    bne     0x48411be1
+    movhu   (0x10, sp), d0
+    bra     0x48411be3
+    mov     -1, d0
+    bra     0x48411be3
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x24
+# SndRecTriFieldGet  (CPU 0x48411be6)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SndRecTriFieldGet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    bge     0x48411bfa
+    jmp     0x48411ca3
+    cmp     0xc, d1
+    ble     0x48411c01
+    jmp     0x48411ca3
+    asl2    d1
+    mov     0x4858f448, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    mov     d2, d0
+    ret     [d2], 0x14
+    exthu   d0
+    and     0xff00, d2
+    mov     d2, d1
+    lsr     8, d1
+    extbu   d1
+    exthu   d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    beq     0x48411c3d
+    movbu   (0x3e, a0), d0
+    mov     d0, a1
+    movbu   (0x3f, a0), d0
+    mov     a1, d1
+    asl     8, d0
+    or      d0, d1
+    movbu   (0x40, a0), d0
+    asl     16, d0
+    or      d1, d0
+    bra     0x48411ca5
+    mov     -1, d0
+    ret     [d2], 0x14
+    mov     d2, d0
+    call    func_48484681, [d2,d3,a2], 0x18
+    cmp     0, a0
+    beq     0x48411c67
+    movbu   (0x3e, a0), d0
+    mov     d0, a1
+    movbu   (0x3f, a0), d0
+    mov     a1, d1
+    asl     8, d0
+    or      d0, d1
+    movbu   (0x40, a0), d0
+    asl     16, d0
+    or      d1, d0
+    bra     0x48411ca5
+    mov     d2, d0
+    call    func_48412BD8, 0, 0
+    exthu   d0
+    cmp     8, d0
+    beq     0x48411c80
+    cmp     0xa, d0
+    beq     0x48411c88
+    cmp     0xb, d0
+    beq     0x48411c91
+    cmp     0xc, d0
+    beq     0x48411c9a
+    bra     0x48411ca5
+    clr     d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    bra     0x48411ca5
+    mov     2, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    bra     0x48411ca5
+    mov     1, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    bra     0x48411ca5
+    mov     9, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    bra     0x48411ca5
+    mov     -1, d0
+    ret     [d2], 0x14
+    exthu   d0
+    cmp     0, d0
+    beq     0x48411ccb
+    cmp     1, d0
+    beq     0x48411ccf
+    cmp     2, d0
+    beq     0x48411cd3
+    cmp     3, d0
+    beq     0x48411cd7
+    cmp     4, d0
+    beq     0x48411cdb
+    cmp     5, d0
+    beq     0x48411cdf
+    cmp     6, d0
+    beq     0x48411ce3
+    cmp     9, d0
+    beq     0x48411ce7
+    bra     0x48411ceb
+    mov     0x70, d0
+    bra     0x48411ced
+    mov     0x73, d0
+    bra     0x48411ced
+    mov     0x72, d0
+    bra     0x48411ced
+    mov     0x72, d0
+    bra     0x48411ced
+    mov     0x72, d0
+    bra     0x48411ced
+    mov     0x72, d0
+    bra     0x48411ced
+    mov     0x72, d0
+    bra     0x48411ced
+    mov     0x74, d0
+    bra     0x48411ced
+    mov     -1, d0
+    retf    0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48411d13
+    cmp     1, d0
+    beq     0x48411d17
+    cmp     2, d0
+    beq     0x48411d1b
+    cmp     3, d0
+    beq     0x48411d1f
+    cmp     4, d0
+    beq     0x48411d23
+    cmp     5, d0
+    beq     0x48411d27
+    cmp     6, d0
+    beq     0x48411d2b
+    cmp     9, d0
+    beq     0x48411d2f
+    bra     0x48411d33
+    mov     0x78, d0
+    bra     0x48411d35
+    mov     0x7b, d0
+    bra     0x48411d35
+    mov     0x7a, d0
+    bra     0x48411d35
+    mov     0x7a, d0
+    bra     0x48411d35
+    mov     0x7a, d0
+    bra     0x48411d35
+    mov     0x7a, d0
+    bra     0x48411d35
+    mov     0x7a, d0
+    bra     0x48411d35
+    mov     0x7c, d0
+    bra     0x48411d35
+    mov     -1, d0
+    retf    0, 0
+# SndRecByteFieldGetA  (CPU 0x48411d38)
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# SndRecByteFieldGetA_entry:   (register-save `call` entry)
+    mov     d1, a2
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     1, d1
+    blt     0x48411d98
+    cmp     0xc, d1
+    bgt     0x48411d98
+    add     -1, d1
+    asl2    d1
+    mov     0x4858f47c, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    mov     0x0000ff00, d3
+    exthu   d0
+    and     d3, d2
+    lsr     8, d2
+    extbu   d2
+    exthu   d2
+    mov     d2, d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    beq     0x48411d94
+    mov     a2, d0
+    and     0xff, d0
+    movbu   d0, (0x3e, a0)
+    mov     a2, d0
+    and     d0, d3
+    lsr     8, d3
+    movbu   d3, (0x3f, a0)
+    and     0x00ff0000, d0
+    lsr     16, d0
+    movbu   d0, (0x40, a0)
+    bra     0x48411d9c
+    mov     -1, d0
+    bra     0x48411d9d
+    mov     -1, d0
+    bra     0x48411d9d
+    clr     d0
+    ret     [d2,d3,a2], 0x1c
+# SndRecTriFieldGet2  (CPU 0x48411da0)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SndRecTriFieldGet2_entry:   (register-save `call` entry)
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    bge     0x48411db4
+    jmp     0x48411e70
+    cmp     0xc, d1
+    ble     0x48411dbb
+    jmp     0x48411e70
+    asl2    d1
+    mov     0x4858f4ac, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    mov     0xff, d1
+    and     d2, d1
+    extbu   d1
+    asl     6, d1
+    and     0xff00, d2
+    lsr     8, d2
+    mov     d2, d0
+    extbu   d0
+    and     0x3f, d0
+    or      d0, d1
+    asl2    d1
+    mov     0x48703558, a0
+    mov     (d1, a0), a0
+    ret     [d2], 0x14
+    exthu   d0
+    and     0xff00, d2
+    lsr     8, d2
+    mov     d2, d1
+    extbu   d1
+    exthu   d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    beq     0x48411e70
+    ret     [d2], 0x14
+    mov     d2, d0
+    call    func_48484681, [d2,d3,a2], 0x18
+    cmp     0, a0
+    beq     0x48411e0f
+    ret     [d2], 0x14
+    mov     d2, d0
+    call    func_48412BD8, 0, 0
+    exthu   d0
+    cmp     8, d0
+    beq     0x48411e28
+    cmp     0xa, d0
+    beq     0x48411e31
+    cmp     0xb, d0
+    beq     0x48411e3b
+    cmp     0xc, d0
+    beq     0x48411e45
+    bra     0x48411e4d
+    clr     d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411e4d
+    mov     2, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411e4d
+    mov     1, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411e4d
+    mov     9, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    mov     0xff, d1
+    and     d2, d1
+    extbu   d1
+    asl     6, d1
+    and     0xff00, d2
+    mov     d2, d0
+    lsr     8, d0
+    extbu   d0
+    and     0x3f, d0
+    or      d0, d1
+    mov     d1, d0
+    asl2    d0
+    mov     0x48703558, a0
+    mov     (d0, a0), a0
+    bra     0x48411e72
+    mov     0, a0
+    ret     [d2], 0x14
+# SndRecByteFieldGetB  (CPU 0x48411e75)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# SndRecByteFieldGetB_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     1, d1
+    blt     0x48411eb0
+    cmp     0xc, d1
+    bgt     0x48411eb0
+    add     -1, d1
+    asl2    d1
+    mov     0x4858f4e0, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    exthu   d0
+    and     0xff00, d2
+    lsr     8, d2
+    extbu   d2
+    mov     d2, d1
+    exthu   d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    bne     0x48411eb4
+    mov     -1, d0
+    bra     0x48411ebf
+    mov     -1, d0
+    bra     0x48411ebf
+    mov     0x11, d0
+    mov     a2, a1
+    call    0x4c003039, [a2,a3], 8
+    clr     d0
+    ret     [d2,a2], 0x1c
+# SndRecCountGet  (CPU 0x48411ec2)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# SndRecCountGet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    bge     0x48411ed6
+    jmp     0x48411fa4
+    cmp     0xc, d1
+    ble     0x48411edd
+    jmp     0x48411fa4
+    asl2    d1
+    mov     0x4858f510, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    mov     0xff, d1
+    and     d2, d1
+    extbu   d1
+    asl     6, d1
+    and     0xff00, d2
+    mov     d2, d0
+    lsr     8, d0
+    extbu   d0
+    and     0x3f, d0
+    or      d0, d1
+    asl2    d1
+    mov     0x48703558, a0
+    mov     (d1, a0), a0
+    movhu   (0x14, a0), d0
+    ret     [d2], 0x14
+    exthu   d0
+    and     0xff00, d2
+    lsr     8, d2
+    mov     d2, d1
+    extbu   d1
+    exthu   d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    beq     0x48411f28
+    movhu   (0x14, a0), d0
+    ret     [d2], 0x14
+    mov     -1, d0
+    ret     [d2], 0x14
+    mov     d2, d0
+    call    func_48484681, [d2,d3,a2], 0x18
+    cmp     0, a0
+    beq     0x48411f3f
+    movhu   (0x14, a0), d0
+    ret     [d2], 0x14
+    mov     d2, d0
+    call    func_48412BD8, 0, 0
+    exthu   d0
+    cmp     8, d0
+    beq     0x48411f58
+    cmp     0xa, d0
+    beq     0x48411f61
+    cmp     0xb, d0
+    beq     0x48411f6b
+    cmp     0xc, d0
+    beq     0x48411f75
+    bra     0x48411f7d
+    clr     d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411f7d
+    mov     2, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411f7d
+    mov     1, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    bra     0x48411f7d
+    mov     9, d0
+    call    SndDbTriDefaultsB_entry, [d2,d3], 0x50
+    mov     d0, d2
+    mov     0xff, d0
+    and     d2, d0
+    mov     d0, d1
+    extbu   d1
+    asl     6, d1
+    and     0xff00, d2
+    mov     d2, d0
+    lsr     8, d0
+    extbu   d0
+    and     0x3f, d0
+    or      d0, d1
+    mov     d1, d0
+    asl2    d0
+    mov     0x48703558, a0
+    mov     (d0, a0), a0
+    movhu   (0x14, a0), d0
+    bra     0x48411fa6
+    mov     -1, d0
+    ret     [d2], 0x14
+# SndRecByteFieldGetC  (CPU 0x48411fa9)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# SndRecByteFieldGetC_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    call    func_48412BD8, 0, 0
+    mov     d0, d1
+    exthu   d1
+    cmp     1, d1
+    blt     0x48411fe9
+    cmp     0xc, d1
+    bgt     0x48411fe9
+    add     -1, d1
+    asl2    d1
+    mov     0x4858f544, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    exthu   d0
+    and     0xff00, d2
+    lsr     8, d2
+    extbu   d2
+    mov     d2, d1
+    exthu   d1
+    call    func_48412C25, 0, 0
+    cmp     0, a0
+    beq     0x48411fe5
+    movhu   d3, (0x14, a0)
+    bra     0x48411fed
+    mov     -1, d0
+    bra     0x48411fee
+    mov     -1, d0
+    bra     0x48411fee
+    clr     d0
+    ret     [d2,d3], 0x18
+# SndRecScanApply  (CPU 0x48411ff1)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+    mov     d0, (0x20, sp)
+    clr     d2
+    call    SndRecCountGet_entry, [d2], 0x14
+    exth    d0
+    cmp     d2, d0
+    ble     0x48412028
+    mov     d2, d3
+    mov     (0x20, sp), d0
+    mov     d3, d1
+    extbu   d1
+    call    func_484127BA, [d2,d3], 0x14
+    exth    d0
+    cmp     -2, d0
+    bne     0x4841201c
+    mov     (0x20, sp), d0
+    extbu   d3
+    mov     d3, d1
+    call    func_484122BB, [d2,d3], 0x18
+    bra     0x48412029
+    inc     d2
+    mov     (0x20, sp), d0
+    call    SndRecCountGet_entry, [d2], 0x14
+    exth    d0
+    cmp     d0, d2
+    blt     0x48412002
+    clr     d0
+    ret     [d2,d3], 0x18
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x01202c, 0x014a74
 # ApTaskControl  (CPU 0x48414a74)
 .incbin_range "baserom/kn7000_program.rom", 0x014a74, 0x014afa
 # MainTaskControl  (CPU 0x48414afa)
@@ -12689,7 +15729,18 @@ _rom_marker:
     add     d1, a0
     rets
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x04ac0d, 0x04ddf2
+.incbin_range "baserom/kn7000_program.rom", 0x04ac0d, 0x04b334
+# SndCmdSendReverbPartsApply  (CPU 0x4844b334)
+#   Sends the canned ROM message at 0x485B85EC = { 3, 0xF0, 0x2B, 0x7F }:
+#   TG global-parameter id 0x2B = TgReverbPartsApply, value 0x7F.  It is
+#   the ONLY ROM-resident 0xFx sound-command template in the image (found
+#   by scanning the whole data region for `03 F0 <id 9..0x50> <val<=0x7F>`).
+    add     -0xc, sp
+    mov     0x485b85ec, a0
+    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    ret     0, 0xc
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x04b347, 0x04ddf2
 # GetCurrentChord  (CPU 0x4844ddf2)
 .incbin_range "baserom/kn7000_program.rom", 0x04ddf2, 0x04e9f1
 # GetChordToneList  (CPU 0x4844e9f1)
@@ -14786,7 +17837,188 @@ _rom_marker:
 # TestDiskFunc  (CPU 0x484a0a32)
 .incbin_range "baserom/kn7000_program.rom", 0x0a0a32, 0x0a0a95
 # FdIoFunc  (CPU 0x484a0a95)
-.incbin_range "baserom/kn7000_program.rom", 0x0a0a95, 0x0a0d07
+.incbin_range "baserom/kn7000_program.rom", 0x0a0a95, 0x0a0b39
+# PartFlagsSet  (CPU 0x484a0b39)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# PartFlagsSet_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d3
+    call    PanelModeFlagGet, 0, 0
+    extbu   d0
+    cmp     0, d0
+    bne     0x484a0b5a
+    mov     d3, d0
+    extbu   d0
+    cmp     0xe, d0
+    blt     0x484a0b5a
+    cmp     0x13, d0
+    bgt     0x484a0b5a
+    extbu   d2
+    or      0x04, d2
+    extbu   d3
+    extbu   d2
+    mov     d2, d1
+    mov     d3, d0
+    call    func_484B1780, [d2,d3], 0x18
+    ret     [d2,d3], 0x18
+# PartFlagsSetAll  (CPU 0x484a0b68)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# PartFlagsSetAll_entry:   (register-save `call` entry)
+    mov     0xff, d3
+    exthu   d0
+    cmp     0, d0
+    bne     0x484a0b76
+    clr     d3
+    clr     d2
+    extbu   d3
+    mov     d2, d0
+    mov     d3, d1
+    call    PartFlagsSet_entry, [d2,d3], 0x18
+    call    func_484ABB98, 0, 8
+    inc     d2
+    extbu   d2
+    cmp     0x13, d2
+    ble     0x484a0b78
+    ret     [d2,d3], 0x18
+# PartFlagsApplyTable8  (CPU 0x484a0b8f)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# PartFlagsApplyTable8_entry:   (register-save `call` entry)
+    mov     d0, d3
+    clr     d2
+    mov     0, a0
+    exthu   d3
+    add     d2, a0
+    add     0x4860c9c4, a0
+    movhu   (a0), d0
+    clr     d1
+    asr     8, d0
+    cmp     d1, d3
+    beq     0x484a0bad
+    movhu   (a0), d1
+    extbu   d1
+    extbu   d0
+    extbu   d1
+    call    PartFlagsSet_entry, [d2,d3], 0x18
+    inc     d2
+    extbu   d2
+    mov     d2, a0
+    cmp     8, a0
+    bcs     0x484a0b99
+    call    func_484ABB98, 0, 8
+    ret     [d2,d3], 0x18
+# PartFlagsApplyTable4  (CPU 0x484a0bc6)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# PartFlagsApplyTable4_entry:   (register-save `call` entry)
+    mov     d0, d3
+    clr     d2
+    mov     0, a0
+    exthu   d3
+    add     d2, a0
+    add     0x4860c9d4, a0
+    movhu   (a0), d0
+    clr     d1
+    asr     8, d0
+    cmp     d1, d3
+    beq     0x484a0be4
+    movhu   (a0), d1
+    extbu   d1
+    extbu   d0
+    extbu   d1
+    call    PartFlagsSet_entry, [d2,d3], 0x18
+    inc     d2
+    extbu   d2
+    mov     d2, a0
+    cmp     4, a0
+    bcs     0x484a0bd0
+    call    func_484ABB98, 0, 8
+    ret     [d2,d3], 0x18
+# PanelLatch9CC0Bit67Set  (CPU 0x484a0bfd)
+    exthu   d0
+    cmp     0, d0
+    beq     0x484a0c0b
+    bset    0xc0, (0x9cc00008)
+    bra     0x484a0c12
+    bclr    0xc0, (0x9cc00008)
+    retf    0, 0
+# PartFlagsApplyTable12  (CPU 0x484a0c15)
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# PartFlagsApplyTable12_entry:   (register-save `call` entry)
+    mov     d0, d3
+    clr     d2
+    mov     0, a0
+    exthu   d3
+    add     d2, a0
+    add     0x4860c9dc, a0
+    movhu   (a0), d0
+    clr     d1
+    asr     8, d0
+    cmp     d1, d3
+    beq     0x484a0c33
+    movhu   (a0), d1
+    extbu   d1
+    extbu   d0
+    extbu   d1
+    call    PartFlagsSet_entry, [d2,d3], 0x18
+    inc     d2
+    extbu   d2
+    mov     d2, a0
+    cmp     0xc, a0
+    bcs     0x484a0c1f
+    call    func_484ABB98, 0, 8
+    ret     [d2,d3], 0x18
+# PartListIterateApply  (CPU 0x484a0c4c)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    PanelSwEventAssemble_entry, [d2,a2], 0x14
+    exth    d0
+    cmp     -1, d0
+    beq     0x484a0c69
+    mov     a2, a0
+    call    func_484A11E1, [a2], 0x10
+    bra     0x484a0c54
+    clr     d2
+    call    PanelGpioSwScan_entry, [d2,a2], 0x18
+    extbu   d2
+    mov     a2, a0
+    mov     d2, d0
+    call    PanelSwEventPeek, 0, 0
+    movbu   (0x10, sp), d0
+    cmp     0xff, d0
+    beq     0x484a0c8d
+    mov     a2, a0
+    call    func_484A11E1, [a2], 0x10
+    inc     d2
+    bra     0x484a0c71
+    call    PanelSwEventReset, 0, 0
+    ret     [d2,a2], 0x1c
+# LowestSetBitIndex  (CPU 0x484a0c97)
+    movm    [d2], (sp)
+# LowestSetBitIndex_entry:   (register-save `call` entry)
+    mov     d0, d2
+    clr     d1
+    clr     d0
+    setlb
+    btst    0x01, d2
+    bne     0x484a0cac
+    lsr     1, d2
+    mov     d0, d1
+    inc     d1
+    mov     d1, d0
+    exthu   d0
+    cmp     0x20, d0
+    llt
+    mov     d1, d0
+    retf    [d2], 4
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0a0cb0, 0x0a0d07
 # PanelSelfTestScanEntry  (CPU 0x484a0d07)
 .incbin_range "baserom/kn7000_program.rom", 0x0a0d07, 0x0a11f7
 # CpRamEditCheck  (CPU 0x484a11f7)
