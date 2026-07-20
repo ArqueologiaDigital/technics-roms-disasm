@@ -131,6 +131,11 @@ CONVERT = {
     "MidiStopRxHandler", "Tm5TempoTimerStart", "Tm5TempoIsrRegister",
     "TempoTimerInit", "TempoBpmReloadWrite", "TempoReloadFromInterval",
     "Tm5TimerRestart",
+    # Tempo-sync parameter layer (params 0xD001-0xD003 + the 0x70xxxx property
+    # group; sits directly after Tm5TimerRestart)
+    "TempoSyncD001Set", "TempoSyncD002Set", "TempoSyncD002Apply",
+    "TempoSyncD003Set", "TempoSyncModeASet", "TempoSyncModeBSet",
+    "TempoSyncPartB0Set", "TempoSyncE000Set", "TempoSyncSetDispatch",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -141,7 +146,7 @@ FUNC_END = {
     "SdErrorFlagsGet": 0x152257,        # next (unnamed) function at 0x48552257
     "SdCardFsInit": 0x1630E6,           # next (unnamed) function at 0x485630E6
     "TempoSyncParamDispatch": 0x45358,  # next (unnamed) function at 0x48445358
-    "Tm5TimerRestart": 0x478E7,         # next (unnamed) function at 0x484478E7
+    "TempoSyncSetDispatch": 0x47F33,    # next (unnamed) function at 0x48447F33
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live
@@ -149,7 +154,26 @@ FUNC_END = {
 # the lib region has no reflection name table.
 LIB_CONVERT = {
     "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
-    "TgVoiceSlotService": (0x4C036D3F, 0x4C036E9E),
+    # ---- the TG note path: key event -> note-on -> per-element EG/release
+    #      programming (tg-pitch-pipeline.md + tg-envelope-sweep-results.md) --
+    "TgExclGroupChoke":   (0x4C03099F, 0x4C030A7F),
+    "TgTotalLevelCalc":   (0x4C030A7F, 0x4C030A98),
+    "TgElemNoteOnStd":    (0x4C030A98, 0x4C030E6E),
+    "TgVoiceKillHandler": (0x4C030E6E, 0x4C030FB4),
+    "TgPitchInitCalc":    (0x4C030FB4, 0x4C031122),
+    "TgPitchRuntimeCalc": (0x4C031122, 0x4C0311F1),
+    "TgKeyOffAmpRelease": (0x4C031944, 0x4C031C4B),
+    "TgFilterEgAttackCalc": (0x4C031C4B, 0x4C031D96),
+    "TgFilterEgDecayCalc":  (0x4C031D96, 0x4C031F02),
+    "TgKeyOffFilterRelease": (0x4C031F02, 0x4C0321BA),
+    "TgPitchEgAttackCalc":  (0x4C0321BA, 0x4C03231A),
+    "TgPitchEgDecayCalc":   (0x4C03231A, 0x4C03248B),
+    "TgKeyOffPitchRelease": (0x4C03248B, 0x4C032747),
+    "TgNoteOnTableTone":  (0x4C03600D, 0x4C036187),
+    "TgKeyOffSample":     (0x4C03656E, 0x4C0365FD),
+    "TgNoteOn":           (0x4C036832, 0x4C036D3A),
+    "TgVoiceSlotService": (0x4C036D3A, 0x4C036E9E),
+    "TgPartKeyEvent":     (0x4C036E9E, 0x4C036F98),
     "TgVoiceRegWrite":    (0x4C036F98, 0x4C036FE5),
     "TgVoiceRegWriteB":   (0x4C036FE5, 0x4C037008),
     "TgGlobalRegWriteBoth": (0x4C037008, 0x4C037037),
@@ -159,6 +183,12 @@ LIB_CONVERT = {
     "TgVoiceStatusRead":  (0x4C0370AA, 0x4C0370F3),
     "TgVoiceRecordReset": (0x4C0370F3, 0x4C037123),
     "TgVoiceRecordPtr":   (0x4C037123, 0x4C037135),
+    "TgVoiceGateOn":      (0x4C037393, 0x4C037694),
+    "TgVoiceGateOnWrap":  (0x4C037694, 0x4C0376A0),
+    "TgVoiceGateOff":     (0x4C0376A0, 0x4C0376DE),
+    "TgVoiceEgBurstWrite": (0x4C0376DE, 0x4C037759),
+    "TgVoiceDirtyAll":    (0x4C037C90, 0x4C037CCC),
+    "TgVoiceDirtyRelease": (0x4C037CCC, 0x4C037D0F),
     "LibTickSleep":       (0x4C03DD74, 0x4C03DD98),
 }
 
@@ -957,6 +987,208 @@ FUNC_DOC = {
         "record array, stride confirmed); returns a0 = the record",
     ],
     "TgVoiceRecordPtr": ["a0 := 0x500CA0B0 + slot*0x84"],
+    # ---- the TG note path (tg-pitch-pipeline.md, tg-envelope-sweep-results.md).
+    #      The 0x84-byte shadow record 0x500CA0B0+slot*0x84 caches each TG reg
+    #      as a 4-byte entry [lo16 = note-on value | hi16 = release value]:
+    #      +0 reg0, +4 reg1, +8 reg2, +0xC reg4, +0x10 reg5, +0x18 reg8,
+    #      +0x1C reg9 (+0x0A also holds the reg3 gate-off value).
+    "TgPartKeyEvent": [
+        "(d0 flags, d1 part, stack note/velocity) the part-level key router",
+        "(parts >= 0x22 rejected). velocity&0x7F nonzero -> NOTE-ON via",
+        "0x4C0147A4 + TgNoteOn. velocity 0 -> KEY-OFF: hold-state query",
+        "0x4C02E0F9 -> 0xFF/0xFE release the note's voices now (voice list",
+        "0x4C010047, per slot 0x4C03B0CD + TgVoiceSlotService_entry(slot,0));",
+        "0 -> mark-only via 0x4C02E2C7 = the sustain/hold path (the pedal",
+        "keeps the voice sounding; released later by the slot service).",
+        "Both key-off flavours finish with TgKeyOffSample.",
+    ],
+    "TgNoteOn": [
+        "THE per-part note-on dispatcher (d0 part, d1 note, stack velocity).",
+        "Tone class = (part tone block 0x500CE404+part*0x130 desc +0x10)&0xC0:",
+        " 0x00/0xC0 melodic: repeat-note damping (part pitch struct 0x500AD5A8+",
+        "  part*0x10C: +0x20 last-on tick vs global tick 0x50151BFC, repeats",
+        "  within 0x19 ticks bump the +0x24 counter -> damp code 0x10/0x20 at",
+        "  +0x25), allocate up to 4 element slots via 0x4C034FF5 (slot bytes at",
+        "  stack rec+0x0A, steal list +0x20), then per slot: TgVoiceRecordReset",
+        "  + per-class programmer (lib rec +2 bit1 -> TgElemNoteOnStd, bit2 ->",
+        "  0x4C033CB3, else 0x4C013547) + TgVoiceDirtyAll + TgVoiceGateOn;",
+        "  stolen slots: TgVoiceGateOff + TgVoiceDirtyRelease (skipped while",
+        "  rec+0x52 != 0 or rec+2 bit8)",
+        " 0x80: drum-kit sub-classes 0x80..0x83 (&0xCF) with their own",
+        "  builders (0x4C03595F / 0x4C035D21) and per-element programmers",
+        " 0x40: TgNoteOnTableTone, then per new slot TgExclGroupChoke +",
+        "  TgElemNoteOnStd/TgVoiceGateOn",
+        "epilogue: clears desc halfword +4 bit15 (the note-pending flag)",
+    ],
+    "TgNoteOnTableTone": [
+        "class-0x40 note-on record builder (d0 part, d1 note, a0 out record):",
+        "out+0 := (part<<8)|note|0x80; the tone's per-note 3-byte table",
+        "(0x4C038503(part) +0x27 + note*3) enables up to two synth layers,",
+        "each staged in 0x500C9D58 / 0x500C9E0C (built by 0x4C035EAA; flag",
+        "bytes from ROM 0x4858711C/1D or'd 0x80 -> out+2/+3; send bits from",
+        "0x4C02BED0 -> out+6/+7), then each staged 0xB4-byte record is copied",
+        "over the lib voice record 0x500AF940+slot*0xB4 (slot bytes out+0xA/B)",
+    ],
+    "TgKeyOffSample": [
+        "key-off retrigger (d0 part, d1 note): only for tone class",
+        "(desc+0x10)&0xCF == 0x80 kits whose zone halfword flags 1|2|4 request",
+        "a key-off sample; allocates a slot via 0x4C036312 (slot byte at",
+        "rec+0x0B), then TgVoiceRecordReset + the 0x4C00BC83 programmer +",
+        "TgVoiceDirtyAll + TgVoiceGateOn + gate-off bookkeeping 0x4C037CCE",
+    ],
+    "TgExclGroupChoke": [
+        "exclusive-group choke, the hi-hat-style cutoff (d0 part, d1 new",
+        "slot): desc(lib rec+0x38)+0x0E bit7 = tone is in an exclusive group",
+        "(id &0x7F indexes the damp-rate table 0x48586EA4); collects the",
+        "part's sounding voices via 0x4C01010A and for each voice whose",
+        "descriptor carries the same group id: shadow release halves of",
+        "reg0/reg1 := damp rate<<8 (levels cleared) then TgVoiceEgBurstWrite",
+    ],
+    "TgElemNoteOnStd": [
+        "per-element note-on programmer, standard class (d0 slot, a0 shadow",
+        "rec; lib rec +2 bit1): fills the shadow cache -- +0x40 zone word",
+        "(desc+2 & 0xFFF), pitch16 via 0x4C02FB7E then +0x48 pitch18 :=",
+        "((pitch16+0x1800)<<2)&0x3FFFF (THE tg-pitch-pipeline formula),",
+        "+0x24 level (0x4C02FBE3 & 0x7F), effect sends +0x5C/+0x2C from",
+        "desc2+0x18/+0x19 via the curve tables 0x486D1F54/0x486D2154",
+        "(suppressed when TgTotalLevelCalc >= 0x100), plus the class-0x04 /",
+        "class-0x0C global broadcasts",
+    ],
+    "TgVoiceKillHandler": [
+        "slot-service class-0x08 handler (d0 slot): clears the lib record's",
+        "active bit (+8 bit7); when desc+0x0D bit5 continues into the",
+        "0x50009944 block via 0x4C02FE59, else plain return",
+    ],
+    "TgPitchInitCalc": [
+        "the tg-pitch-pipeline notes' INIT pitch computation (0x4C030FB9):",
+        "note16 -> pitch16 with zone center/key-follow exponent, coarse/fine",
+        "tunes and multisample correction; populates lib rec +0x0C notePitch16",
+        "race-free before the note's first TG pitch write",
+    ],
+    "TgPitchRuntimeCalc": [
+        "the notes' RUNTIME pitch recompute (0x4C031127): the init formula",
+        "plus modulation (part offset, mod matrix, LFO, portamento); called",
+        "from every per-class voice-refresh handler",
+    ],
+    "TgKeyOffAmpRelease": [
+        "key-off AMPLITUDE release compute -- h1 of the key-off trio (d0",
+        "key-off offset, a0 lib rec, a1 out = two [rate|level] pairs).",
+        "rate index = clamp(desc2+0x2E base + part-FX record (0x500B5340+",
+        "n*0x54C) +0x48 RELEASE offset + d0 + key scaling (desc2+0x31..0x33",
+        "breakpoints vs lib rec+0xC note), 0..100) -> curve ROM 0x486D2649.",
+        "The pairs land in the shadow release halves of reg0/reg1 and reach",
+        "the chip via TgVoiceEgBurstWrite (the piano's 0x9180/0x9100 burst).",
+        "STATIC ANSWER to tg-envelope-sweep-results RESULT 2: the screen RLS",
+        "param enters the key-off COMPUTATION here, not any TG register.",
+    ],
+    "TgKeyOffFilterRelease": [
+        "key-off FILTER-EG release compute -- h2 (a0 lib rec, a1 out):",
+        "desc2+0x11 release rate + desc2+0x12 scale via the curves",
+        "0x486D2649/0x486D2713; out pairs -> shadow reg4/reg5 release halves",
+        "(the piano burst's 0xAE00/0xAE00)",
+    ],
+    "TgKeyOffPitchRelease": [
+        "key-off PITCH-EG release compute -- h3 (a0 lib rec, a1 out):",
+        "desc2+0x46 rate via 0x486D2649, signed depth = clamp(desc2+0x47 +",
+        "desc2+0x3E, -50..50) via 0x486D2713; out pairs -> shadow reg8/reg9",
+        "release halves (the piano burst's 0x22B0: rate 0x22, level 0xB0)",
+    ],
+    "TgFilterEgAttackCalc": [
+        "running-voice EG-2 (filter) ATTACK program (a0 lib rec, a1 desc2):",
+        "rate desc2+0x0B via curve 0x486D2649, key scaling desc2+0x15..0x17;",
+        "called by every per-class refresh handler alongside its decay partner",
+    ],
+    "TgFilterEgDecayCalc": [
+        "running-voice EG-2 (filter) DECAY program: rates desc2+0x0D/+0x0F",
+        "via curve 0x486D2649, key scaling desc2+0x17",
+    ],
+    "TgPitchEgAttackCalc": [
+        "running-voice PITCH-EG ATTACK program: desc2+0x40 rate (values >= 2",
+        "via curve 0x486D2649), key scaling desc2+0x4A",
+    ],
+    "TgPitchEgDecayCalc": [
+        "running-voice PITCH-EG DECAY program: desc2+0x42/+0x44 rates via",
+        "curve 0x486D2649, desc2+0x4C scaling",
+    ],
+    "TgTotalLevelCalc": [
+        "(d0, d1) -> 0x4C00F9B4(d0, d1, 0x40) & 0xFFFF; a result >= 0x100",
+        "makes TgElemNoteOnStd skip the effect-send fields",
+    ],
+    "TgVoiceGateOn": [
+        "NOTE-ON commit (d0 slot, a0 shadow rec): reg3 := 0x87FF (the",
+        "envelope notes' RESULT-3 gate-on), class-0x3000 reg := (rec+0x54 &",
+        "0x18000)|0x4000, then streams the cached note-on halves (reg0 :=",
+        "rec+0, reg1 := rec+4, reg2 := rec+8, reg4 := rec+0xC, ...)",
+    ],
+    "TgVoiceGateOff": [
+        "KEY-UP commit (d0 slot, a0 shadow rec): class-0x3000 reg := rec+0x54",
+        "& ~0x4000, then reg3 := the rec+0x0A gate-off value -- the envelope",
+        "notes' universal r3 hi-byte-0x80 key-release write",
+    ],
+    "TgVoiceEgBurstWrite": [
+        "flush the cached RELEASE halves of regs 0,1,4,5,8,9 (rec +0x02/+0x06/",
+        "+0x0E/+0x12/+0x1A/+0x1E) -- THE managed key-off 6-write release burst",
+        "of the envelope sweep (wire regs 0x10/0x11/0x14/0x15/0x18/0x19 = the",
+        "odd element's register bank at +0x10); also the choke flush",
+    ],
+    "TgVoiceDirtyAll": [
+        "set bit7 in the shadow dirty masks +0x78/+0x7A/+0x7C/+0x80 (mark",
+        "every register bank for the flush pass)",
+    ],
+    "TgVoiceDirtyRelease": [
+        "clear bit7 in the same masks (drop pending flushes on release/steal)",
+    ],
+    # ---- tempo-sync parameter layer (0x484478E7..0x48447F33), directly after
+    #      the TM5 clock module: keeps the mode trio 0xD001/0xD002/0xD003
+    #      consistent and mirrors into the 0x70xxxx property group ----------
+    "TempoSyncD001Set": [
+        "set sync param 0xD001 := d1 (gate: unchanged -> return): value 0 only",
+        "while the 0x50149682 clock is stopped (bit15 getter 0x484455EB);",
+        "values 1..3 first propagate the current value into 0xD002/0xD003",
+        "(when nonzero) via LibParamSet",
+    ],
+    "TempoSyncD002Set": [
+        "set 0xD002 := d1 (gates: 0x50149682 bit15 stopped, 0x48445645 bit12",
+        "clear, value != current and != 0); propagates into 0xD001/0xD003",
+    ],
+    "TempoSyncD002Apply": [
+        "apply 0xD002 (d0 value, d1 target 1/2): gate 0x484455EB, require",
+        "0xD002 != 0; propagate into 0xD001/0xD003, then property 0x702023",
+        "(the realtime-suppress id TempoSyncParamDispatch consumes) with",
+        "index 0 (d1=1) or 1 (d1=2)",
+    ],
+    "TempoSyncD003Set": [
+        "set 0xD003 := d1 (values 0..2; gate 0x484455EB); propagates into",
+        "0xD001/0xD002 first",
+    ],
+    "TempoSyncModeASet": [
+        "composite setter A (d0 value, d1: lo byte = apply gate, hi byte =",
+        "variant): running (0x484455EB) -> defer via TempoSyncD003Set(1/2);",
+        "stopped -> toggle 0xD001 between 0 and 2 (variant 0) or 0 and 3",
+        "(variant 1) via TempoSyncD001Set",
+    ],
+    "TempoSyncModeBSet": [
+        "composite setter B: variant 0 stopped -> property 0x600010 := value",
+        "(gate 0x48445454 bit15); running -> TempoSyncD002Set(value,1);",
+        "variant 1 -> toggle 0xD001 1<->0 / defer via TempoSyncD002Set(2);",
+        "value 0 -> TempoSyncD002Apply(1/2) by variant",
+    ],
+    "TempoSyncPartB0Set": [
+        "gated by d1 lo byte: read param 0xC000, then 0x4843FCA5 == 0 ->",
+        "0x4843FCEB(val,1) + part property 0xB0 index 1 := d0, else",
+        "0x4843FCEB(val,0) + property 0xB0 index 0 := d0",
+    ],
+    "TempoSyncE000Set": [
+        "gated by d1 lo byte: property 0xE000 index d0 := 0x007F7F7F",
+    ],
+    "TempoSyncSetDispatch": [
+        "the module's property SET dispatcher: ids 0x1xxxxxx route through the",
+        "hash table 0x485B7A0C (8-byte {key,handler} rows, keys 0x702022..",
+        "0x703004) -> handlers call TempoSyncModeASet/ModeBSet/PartB0Set/",
+        "E000Set/the metronome poster 0x48446AE5; ids 0x0xxxxxx handle",
+        "0x702023 (via TempoSyncD002Apply) and 0xD001/0xD002/0xD003/0xD008",
+        "directly (0xD008: applies to whichever of 0xD001/0xD002 is active)",
+    ],
 }
 
 INSN = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")
