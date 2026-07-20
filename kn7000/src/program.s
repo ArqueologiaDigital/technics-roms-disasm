@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 680 synthetic labels for internal helpers called by converted code
+# 711 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -80,9 +80,38 @@ _rom_marker:
 .equ func_4842D366, 0x4842D366
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
+.equ StyleBuiltinNameTableInit_entry, 0x484332FE
+.equ StyleNameSourceSet_entry, 0x48433404
+.equ StyleNameCommit_entry, 0x484334A9
+.equ StyleNameCommitMem_entry, 0x48433520
+.equ StyleNameCommitCustom_entry, 0x4843356E
+.equ StyleVariationNameGet_entry, 0x484335C4
+.equ StyleRecordSlotSelect_entry, 0x48433648
+.equ StyleRecordBindBuiltin_entry, 0x484336E0
+.equ StyleRecordBindMem_entry, 0x4843374F
+.equ StyleRecordBindCustom_entry, 0x484337D5
+.equ StyleNameModuleBoot_entry, 0x48433863
+.equ StyleResourceVerify_entry, 0x484338B4
+.equ StyleNameSelectCommit_entry, 0x4843391C
+.equ StyleSlotRecordDiffers_entry, 0x48433962
+.equ StyleRecordSelectBind_entry, 0x48433994
+.equ StyleNameAndRecordSelect_entry, 0x484339F9
+.equ StyleBuiltinNameResolve_entry, 0x48433AC4
+.equ func_484355E2, 0x484355E2
+.equ func_484355F8, 0x484355F8
+.equ func_48435614, 0x48435614
 .equ func_484373AE, 0x484373AE
+.equ StyleResourceWindowProbe_entry, 0x4843D6DC
+.equ TableRomStyleSubTablePtr, 0x4843D797
+.equ TableRomStyleResourcePtr, 0x4843D7A8
+.equ func_4843E107, 0x4843E107
+.equ func_4843E10C, 0x4843E10C
+.equ func_4843E128, 0x4843E128
 .equ func_4843FCA5, 0x4843FCA5
 .equ func_4843FCEB, 0x4843FCEB
+.equ func_48440363, 0x48440363
+.equ func_4844038B, 0x4844038B
+.equ func_484403A7, 0x484403A7
 .equ func_48445454, 0x48445454
 .equ func_484455EB, 0x484455EB
 .equ func_48445645, 0x48445645
@@ -144,6 +173,7 @@ _rom_marker:
 .equ VoiceParamRecFetchBanked_entry, 0x4844992A
 .equ func_484499EB, 0x484499EB
 .equ VoiceAttrByteGet_entry, 0x48449B19
+.equ VoiceArchiveScanBoot_entry, 0x48449EF6
 .equ VoiceBankSourceFlagGet, 0x4844A3D4
 .equ VoiceBankSourceFlagStubB, 0x4844A3EE
 .equ func_4844A3F9, 0x4844A3F9
@@ -178,6 +208,7 @@ _rom_marker:
 .equ TechniChordAugDimFold_entry, 0x48473768
 .equ func_4847B17D, 0x4847B17D
 .equ func_4847EC92, 0x4847EC92
+.equ func_4848457D, 0x4848457D
 .equ func_4848463F, 0x4848463F
 .equ func_4849C8E2, 0x4849C8E2
 .equ func_4849C94F, 0x4849C94F
@@ -8724,15 +8755,892 @@ _rom_marker:
 # InitializeBlock46  (CPU 0x48431cd4)
 .incbin_range "baserom/kn7000_program.rom", 0x031cd4, 0x031cd7
 # InitializeBlock47  (CPU 0x48431cd7)
-.incbin_range "baserom/kn7000_program.rom", 0x031cd7, 0x033300
-# StyleBuiltinNameTableInit  (CPU 0x48433300)
-.incbin_range "baserom/kn7000_program.rom", 0x033300, 0x033400
-# StyleNameSourceSet  (CPU 0x48433400)
-.incbin_range "baserom/kn7000_program.rom", 0x033400, 0x0334a4
+.incbin_range "baserom/kn7000_program.rom", 0x031cd7, 0x0332f9
+# StyleBuiltinNameTableInit  (CPU 0x484332f9)
+    movm    [d2,a2,a3], (sp)
+    add     -0x14, sp
+# StyleBuiltinNameTableInit_entry:   (register-save `call` entry)
+    mov     a0, d2
+    mov     0x50034b74, a0
+    clr     d0
+    mov     0x20, d1
+    call    0x4c003024, [a2], 4
+    cmp     0, d2
+    bne     0x48433319
+    mov     -1, d0
+    ret     [d2,a2,a3], 0x20
+    mov     0x4872980c, a3
+    mov     a3, a0
+    call    0x4c0032f7, 0, 0
+    mov     d2, a0
+    mov     a3, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    beq     0x4843333a
+    mov     -3, d0
+    ret     [d2,a2,a3], 0x20
+    mov     d2, (0x50034b78)
+    mov     0x18, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x48433361
+    add     d2, d0
+    mov     d0, a0
+    add     2, a0
+    call    func_4844038B, 0, 0
+    movhu   d0, (0x50034b74)
+    mov     0x1b, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x48433377
+    add     d2, d0
+    mov     d0, (0x50034b7c)
+    mov     0x1e, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x4843338d
+    add     d2, d0
+    mov     d0, (0x50034b80)
+    mov     0x21, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x484333a3
+    add     d2, d0
+    mov     d0, (0x50034b84)
+    mov     0x24, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x484333b9
+    add     d0, d2
+    mov     d2, (0x50034b88)
+    call    TableRomStyleSubTablePtr, 0, 0
+    mov     a0, (0x50034b90)
+    call    TableRomStyleResourcePtr, 0, 0
+    mov     a0, a2
+    mov     a3, a0
+    call    0x4c0032f7, 0, 0
+    mov     a2, a0
+    mov     a3, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x484333fa
+    mov     0x1b, a0
+    add     a2, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    beq     0x484333fa
+    add     a2, d0
+    mov     d0, (0x50034b7c)
+    mov     1, d0
+    ret     [d2,a2,a3], 0x20
+# StyleNameSourceSet  (CPU 0x484333ff)
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# StyleNameSourceSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     0xf00, d1
+    and     d2, d1
+    lsr     1, d1
+    exthu   d1
+    mov     0x7f, d0
+    and     d2, d0
+    exthu   d0
+    or      d0, d1
+    mov     d1, d0
+    and     0x00700000, d2
+    bne     0x4843342d
+    exthu   d0
+    call    StyleBuiltinNameResolve_entry, [d2,d3,a2,a3], 0x1c
+    clr     d0
+    mov     d0, (0x50034b94)
+    bra     0x4843348e
+    mov     0x00200000, d3
+    cmp     d3, d2
+    bne     0x48433477
+    mov     d0, d2
+    exthu   d2
+    mov     d2, d0
+    and     0x7f, d0
+    extbu   d0
+    call    func_4848457D, [d2], 0x10
+    mov     a0, a2
+    cmp     0, a2
+    beq     0x4843345e
+    call    func_4843E107, 0, 0
+    mov     a2, (0x50034b98)
+    mov     d3, (0x50034b94)
+    bra     0x4843348e
+    mov     0x7f, d0
+    and     d2, d0
+    extbu   d0
+    exthu   d0
+    call    func_484355E2, 0, 0
+    mov     0x00100000, d0
+    mov     d0, (0x50034b94)
+    bra     0x4843348e
+    exthu   d0
+    and     0x7f, d0
+    extbu   d0
+    exthu   d0
+    call    func_484355E2, 0, 0
+    mov     0x00100000, d0
+    mov     d0, (0x50034b94)
+    mov     (0x50034b8c), a1
+    cmp     a1, a0
+    beq     0x4843349f
+    mov     a0, (0x50034b8c)
+    bra     0x484334a1
+    mov     0, a0
+    ret     [d2,d3,a2], 0x18
 # StyleNameCommit  (CPU 0x484334a4)
-.incbin_range "baserom/kn7000_program.rom", 0x0334a4, 0x033ac4
-# StyleBuiltinNameLookup  (CPU 0x48433ac4)
-.incbin_range "baserom/kn7000_program.rom", 0x033ac4, 0x035a1b
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# StyleNameCommit_entry:   (register-save `call` entry)
+    mov     (0x50034b8c), a3
+    mov     0x50034b9c, a0
+    mov     a3, a1
+    mov     0xd, d0
+    call    0x4c003039, [a2,a3], 8
+    clr     d0
+    movbu   d0, (0x50034ba9)
+    clr     d2
+    mov     0x11, d3
+    add     a3, d3
+    setlb
+    mov     0x50034bac, a0
+    exthu   d0
+    mov     0xf, d1
+    nop
+    nop
+    mulu    d0, d1
+    add     d3, d1
+    asl2    d0
+    mov     d1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     8, d2
+    llt
+    clr     d0
+    clr     d3
+    mov     0x8a, a2
+    add     a3, a2
+    mov     d0, d2
+    exthu   d2
+    mov     d2, a0
+    add     a0, a0
+    add     a0, a0
+    sub     d2, a0
+    add     a2, a0
+    call    func_48440363, 0, 0
+    add     a3, d0
+    asl2    d2
+    mov     0x50034bcc, a0
+    mov     d0, (d2, a0)
+    inc     d3
+    mov     d3, d0
+    exthu   d3
+    cmp     0x14, d3
+    blt     0x484334e9
+    mov     0xd, d0
+    add     a3, d0
+    mov     d0, (0x50034c20)
+    ret     [d2,d3,a2,a3], 0x24
+# StyleNameCommitMem  (CPU 0x4843351b)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# StyleNameCommitMem_entry:   (register-save `call` entry)
+    mov     (0x50034b8c), a3
+    mov     0x50034b9c, a0
+    mov     a3, a1
+    mov     0xd, d0
+    call    0x4c003039, [a2,a3], 8
+    clr     d0
+    movbu   d0, (0x50034ba9)
+    clr     d2
+    clr     d3
+    mov     0x50, a2
+    add     a3, a2
+    exthu   d2
+    movbu   (d2, a2), d0
+    asl2    d2
+    exthu   d0
+    call    func_484355F8, 0, 0
+    inc     d3
+    mov     0x50034bcc, a1
+    mov     a0, (d2, a1)
+    mov     d3, d2
+    exthu   d3
+    cmp     0x14, d3
+    blt     0x48433543
+    mov     0x70, d0
+    add     a3, d0
+    mov     d0, (0x50034c20)
+    ret     [d2,d3,a2,a3], 0x24
+# StyleNameCommitCustom  (CPU 0x48433569)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# StyleNameCommitCustom_entry:   (register-save `call` entry)
+    mov     (0x50034b8c), a3
+    mov     0x50034b9c, a0
+    mov     a3, a1
+    mov     0xd, d0
+    call    0x4c003039, [a2,a3], 8
+    clr     d0
+    movbu   d0, (0x50034ba9)
+    clr     d3
+    mov     0x50, a2
+    add     a3, a2
+    mov     d0, d2
+    exthu   d2
+    movbu   (d2, a2), d0
+    asl2    d2
+    exthu   d0
+    inc     d3
+    mov     (0x50034b98), a0
+    call    func_4843E10C, 0, 0
+    mov     d3, d0
+    exthu   d3
+    cmp     0x14, d3
+    mov     0x50034bcc, a1
+    mov     a0, (d2, a1)
+    blt     0x48433590
+    mov     0x70, d0
+    add     a3, d0
+    mov     d0, (0x50034c20)
+    ret     [d2,d3,a2,a3], 0x24
+# StyleVariationNameGet  (CPU 0x484335bf)
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# StyleVariationNameGet_entry:   (register-save `call` entry)
+    extbu   d0
+    asl2    d0
+    mov     0, a2
+    mov     0x50034bcc, a0
+    mov     (d0, a0), a0
+    mov     (0x50034b94), d0
+    cmp     0, d0
+    bne     0x484335e3
+    movbu   (1, a0), d0
+    mov     7, d2
+    and     d0, d2
+    bra     0x484335e9
+    movbu   (0x11, a0), d2
+    and     0x07, d2
+    mov     0x0000d00a, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    cmp     1, d0
+    bne     0x48433606
+    mov     d2, d0
+    exthu   d0
+    asl2    d0
+    mov     0x48736078, a0
+    mov     (d0, a0), a2
+    cmp     0, a2
+    bne     0x48433633
+    mov     (0x50034b84), a0
+    cmp     0, a0
+    beq     0x48433633
+    mov     a0, a1
+    exthu   d2
+    mov     d2, d0
+    asl2    d0
+    mov     d0, a0
+    sub     d2, a0
+    add     a0, a1
+    mov     a1, a0
+    call    func_48440363, 0, 0
+    cmp     0, d0
+    bls     0x48433633
+    mov     (0x50034b78), d1
+    add     d0, d1
+    mov     d1, a2
+    cmp     0, a2
+    beq     0x4843363f
+    mov     1, d0
+    movbu   d0, (0x50122dd0)
+    mov     a2, a0
+    ret     [d2,a2], 0x18
+# StyleRecordSlotSelect  (CPU 0x48433643)
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# StyleRecordSlotSelect_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d0
+    cmp     0xc, d0
+    bge     0x48433654
+    extbu   d1
+    cmp     0x14, d1
+    ble     0x48433659
+    mov     0, a0
+    ret     [d2,d3], 0x1c
+    mov     d1, (0xc, sp)
+    mov     3, d1
+    mov     d3, (0x10, sp)
+    mov     d0, d3
+    ext     d3
+    div     d1, d3
+    mov     mdr, d3
+    cmp     0, d3
+    mov     (0xc, sp), d1
+    beq     0x48433671
+    mov     0, a0
+    ret     [d2,d3], 0x1c
+    clr     d3
+    movbu   d3, (0x50122dd0)
+    mov     (0x10, sp), d3
+    cmp     0x14, d1
+    bne     0x48433697
+    call    StyleVariationNameGet_entry, [d2,a2], 0x18
+    cmp     0, a0
+    bne     0x484336c5
+    movbu   (0x2c, sp), d0
+    mov     0x50034bcc, a0
+    add     0xc, d0
+    asl2    d0
+    mov     (d0, a0), a0
+    bra     0x484336c5
+    cmp     0xc, d1
+    blt     0x484336aa
+    movbu   (0x2c, sp), d0
+    mov     0x50034bcc, a0
+    add     d1, d0
+    asl2    d0
+    mov     (d0, a0), a0
+    bra     0x484336c5
+    cmp     0, d1
+    beq     0x484336ba
+    extbu   d3
+    asl2    d3
+    mov     0x50034bcc, a0
+    mov     (d3, a0), a0
+    bra     0x484336c5
+    extbu   d2
+    mov     d2, d0
+    asl2    d0
+    mov     0x50034bcc, a0
+    mov     (d0, a0), a0
+    mov     (0x50034c1c), a1
+    cmp     a1, a0
+    beq     0x484336d6
+    mov     a0, (0x50034c1c)
+    bra     0x484336d8
+    mov     0, a0
+    ret     [d2,d3], 0x1c
+# StyleRecordBindBuiltin  (CPU 0x484336db)
+    movm    [d2,a2], (sp)
+    add     -0xc, sp
+# StyleRecordBindBuiltin_entry:   (register-save `call` entry)
+    mov     (0x50034c1c), a2
+    mov     3, d2
+    movbu   (a2), d0
+    mov     a2, a0
+    movbu   d0, (0x50122dce)
+    movbu   (1, a2), d0
+    inc4    a0
+    movbu   d0, (0x50122dcf)
+    call    func_4844038B, 0, 0
+    movhu   d0, (0x50122dcc)
+    exthu   d0
+    mov     6, d1
+    add     a2, d1
+    mov     d1, (0x50122dc8)
+    add     d0, d1
+    add     d1, d2
+    mov     d2, (0x50122dc0)
+    mov     d1, a0
+    call    func_48440363, 0, 0
+    mov     1, d1
+    sub     d1, d0
+    add     d0, d2
+    mov     d2, (0x50122dc4)
+    mov     2, d0
+    add     a2, d0
+    mov     d0, (0x50122dd4)
+    mov     (0x50122dc0), a0
+    movbu   (a0), d0
+    cmp     0xf4, d0
+    bne     0x48433747
+    ret     [d2,a2], 0x14
+# StyleRecordBindMem  (CPU 0x4843374a)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# StyleRecordBindMem_entry:   (register-save `call` entry)
+    mov     (0x50034c1c), a3
+    clr     d2
+    movbu   (0x10, a3), d0
+    movbu   d0, (0x50122dce)
+    movbu   (0x11, a3), d0
+    movbu   d0, (0x50122dcf)
+    mov     a3, a0
+    call    func_48435614, 0, 0xc
+    mov     a0, a2
+    inc     a0
+    call    func_48440363, 0, 0
+    mov     d0, d1
+    inc4    a2
+    mov     a2, d0
+    mov     a2, (0x50122dc0)
+    add     d1, d0
+    mov     1, d1
+    sub     d1, d0
+    mov     d0, (0x50122dc4)
+    mov     a2, (0x50122dc8)
+    clr     d0
+    movhu   d0, (0x50122dcc)
+    mov     0x20, d3
+    add     a3, d3
+    setlb
+    mov     0x50034bac, a0
+    exthu   d0
+    mov     0x18, d1
+    nop
+    nop
+    mulu    d0, d1
+    add     d3, d1
+    asl2    d0
+    mov     d1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     8, d2
+    llt
+    mov     (0x50122dc0), a0
+    mov     0x18, d0
+    add     a3, d0
+    mov     d0, (0x50122dd4)
+    movbu   (a0), d0
+    cmp     0xf4, d0
+    bne     0x484337cd
+    ret     [d2,d3,a2,a3], 0x1c
+# StyleRecordBindCustom  (CPU 0x484337d0)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# StyleRecordBindCustom_entry:   (register-save `call` entry)
+    mov     (0x50034c1c), a3
+    clr     d2
+    movbu   (0x10, a3), d0
+    movbu   d0, (0x50122dce)
+    movbu   (0x11, a3), d0
+    movbu   d0, (0x50122dcf)
+    mov     (0x50034b98), a0
+    mov     a3, a1
+    call    func_4843E128, [a2], 0x10
+    mov     a0, a2
+    inc     a0
+    call    func_48440363, 0, 0
+    mov     d0, d1
+    inc4    a2
+    mov     a2, d0
+    mov     a2, (0x50122dc0)
+    add     d1, d0
+    mov     1, d1
+    sub     d1, d0
+    mov     d0, (0x50122dc4)
+    mov     a2, (0x50122dc8)
+    clr     d0
+    movhu   d0, (0x50122dcc)
+    mov     0x20, d3
+    add     a3, d3
+    setlb
+    mov     0x50034bac, a0
+    exthu   d0
+    mov     0x18, d1
+    nop
+    nop
+    mulu    d0, d1
+    add     d3, d1
+    asl2    d0
+    mov     d1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     8, d2
+    llt
+    mov     (0x50122dc0), a0
+    mov     0x18, d0
+    add     a3, d0
+    mov     d0, (0x50122dd4)
+    movbu   (a0), d0
+    cmp     0xf4, d0
+    bne     0x4843385b
+    ret     [d2,d3,a2,a3], 0x20
+# StyleNameModuleBoot  (CPU 0x4843385e)
+#   ★ boot entry of the RHYTHM/STYLE NAME MODULE and the exact place
+#   the "8 Beat 1" bug is decided (kn7000_mame/notes/
+#   sequenced-playback-and-style-data-rootcause.md, root cause 2a):
+#   StyleResourceWindowProbe picks a "Technics Rhythms" resource window
+#   (cached at 0x5000775C) and StyleBuiltinNameTableInit opens it; if that
+#   fails the PROGRAM-ROM STUB 0x48729988 -- whose header declares
+#   count = 1 -- is installed instead, after which StyleBuiltinNameResolve
+#   gates every style-ID out of range and returns the fallback string
+#   "  8 Beat 1" (0x4872AB42). In emulation none of the probed windows
+#   carries the resource, so the stub always wins.
+    movm    [d2], (sp)
+    add     -0xc, sp
+# StyleNameModuleBoot_entry:   (register-save `call` entry)
+    call    StyleResourceWindowProbe_entry, [a2], 0x18
+    mov     a0, (0x5000775c)
+    call    StyleBuiltinNameTableInit_entry, [d2,a2,a3], 0x20
+    exth    d0
+    cmp     0, d0
+    bge     0x4843388b
+    mov     0x48729988, a0
+    mov     a0, (0x5000775c)
+    call    StyleBuiltinNameTableInit_entry, [d2,a2,a3], 0x20
+    clr     d0
+    movbu   d0, (0x50034b9c)
+    clr     d1
+    setlb
+    mov     0x50034bcc, a0
+    exthu   d0
+    asl2    d0
+    clr     d2
+    mov     d2, (d0, a0)
+    inc     d1
+    mov     d1, d0
+    exthu   d1
+    cmp     0x14, d1
+    llt
+    clr     d0
+    mov     d0, (0x50034c1c)
+    ret     [d2], 0x10
+# StyleResourceVerify  (CPU 0x484338af)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# StyleResourceVerify_entry:   (register-save `call` entry)
+    call    StyleResourceWindowProbe_entry, [a2], 0x18
+    mov     a0, d2
+    mov     0x4872980c, a2
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     d2, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    beq     0x484338dd
+    mov     -1, d0
+    bra     0x48433916
+    mov     0x12, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    add     d2, d0
+    mov     d0, a2
+    mov     0x15, a0
+    add     d2, a0
+    call    func_48440363, 0, 0
+    mov     d0, d3
+    mov     0x10, a0
+    add     d2, a0
+    call    func_4844038B, 0, 0
+    mov     d0, d2
+    mov     d3, d0
+    mov     a2, a0
+    call    func_484403A7, [d2,a2], 8
+    mov     1, d1
+    exthu   d2
+    exthu   d0
+    cmp     d0, d2
+    beq     0x48433915
+    mov     -1, d1
+    mov     d1, d0
+    ret     [d2,d3,a2], 0x20
+# StyleNameSelectCommit  (CPU 0x48433919)
+    add     -0xc, sp
+# StyleNameSelectCommit_entry:   (register-save `call` entry)
+    call    StyleNameSourceSet_entry, [d2,d3,a2], 0x18
+    cmp     0, a0
+    beq     0x4843395c
+    mov     (0x50034b94), d0
+    cmp     0, d0
+    beq     0x48433941
+    cmp     0x100000, d0
+    beq     0x4843394a
+    cmp     0x200000, d0
+    beq     0x48433953
+    bra     0x4843395c
+    call    StyleNameCommit_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d0
+    bra     0x4843395d
+    call    StyleNameCommitMem_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d0
+    bra     0x4843395d
+    call    StyleNameCommitCustom_entry, [d2,d3,a2,a3], 0x24
+    mov     1, d0
+    bra     0x4843395d
+    clr     d0
+    ret     0, 0xc
+# StyleSlotRecordDiffers  (CPU 0x48433960)
+    movm    [d2,d3], (sp)
+# StyleSlotRecordDiffers_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    cmp     0x14, d2
+    blt     0x4843396b
+    clr     d0
+    bra     0x4843398c
+    cmp     0xc, d2
+    bge     0x48433972
+    clr     d0
+    bra     0x4843398c
+    extbu   d1
+    add     d2, d1
+    mov     d1, d0
+    asl2    d0
+    mov     (0x50034c1c), d3
+    mov     0x50034bcc, a0
+    mov     (d0, a0), d0
+    cmp     d0, d3
+    bne     0x4843398a
+    clr     d0
+    bra     0x4843398c
+    mov     1, d0
+    retf    [d2,d3], 8
+# StyleRecordSelectBind  (CPU 0x4843398f)
+    movm    [d2], (sp)
+    add     -0x14, sp
+# StyleRecordSelectBind_entry:   (register-save `call` entry)
+    mov     d1, d2
+    movbu   (0x28, sp), d1
+    extbu   d0
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     d2, d1
+    call    StyleRecordSlotSelect_entry, [d2,d3], 0x1c
+    cmp     0, a0
+    beq     0x484339f0
+    movbu   (0x50122dd0), d0
+    cmp     0, d0
+    beq     0x484339b9
+    call    StyleRecordBindBuiltin_entry, [d2,a2], 0x14
+    mov     1, d0
+    bra     0x484339f1
+    mov     (0x50034b94), d0
+    cmp     0, d0
+    beq     0x484339d5
+    cmp     0x100000, d0
+    beq     0x484339de
+    cmp     0x200000, d0
+    beq     0x484339e7
+    bra     0x484339f0
+    call    StyleRecordBindBuiltin_entry, [d2,a2], 0x14
+    mov     1, d0
+    bra     0x484339f1
+    call    StyleRecordBindMem_entry, [d2,d3,a2,a3], 0x1c
+    mov     1, d0
+    bra     0x484339f1
+    call    StyleRecordBindCustom_entry, [d2,d3,a2,a3], 0x20
+    mov     1, d0
+    bra     0x484339f1
+    clr     d0
+    ret     [d2], 0x18
+# StyleNameAndRecordSelect  (CPU 0x484339f4)
+    movm    [d2], (sp)
+    add     -0x14, sp
+# StyleNameAndRecordSelect_entry:   (register-save `call` entry)
+    mov     d1, d2
+    call    StyleNameSourceSet_entry, [d2,d3,a2], 0x18
+    mov     (0x50034b94), a0
+    cmp     0, a0
+    beq     0x48433a1b
+    cmp     0x100000, a0
+    beq     0x48433a22
+    cmp     0x200000, a0
+    beq     0x48433a29
+    bra     0x48433a2e
+    call    StyleNameCommit_entry, [d2,d3,a2,a3], 0x24
+    bra     0x48433a2e
+    call    StyleNameCommitMem_entry, [d2,d3,a2,a3], 0x24
+    bra     0x48433a2e
+    call    StyleNameCommitCustom_entry, [d2,d3,a2,a3], 0x24
+    movbu   (0x2c, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    movbu   (0x28, sp), d1
+    mov     d2, d0
+    call    StyleRecordSlotSelect_entry, [d2,d3], 0x1c
+    movbu   (0x50122dd0), d0
+    cmp     0, d0
+    beq     0x48433a4e
+    call    StyleRecordBindBuiltin_entry, [d2,a2], 0x14
+    bra     0x48433a7d
+    mov     (0x50034b94), d0
+    cmp     0, d0
+    beq     0x48433a6a
+    cmp     0x100000, d0
+    beq     0x48433a71
+    cmp     0x200000, d0
+    beq     0x48433a78
+    bra     0x48433a7d
+    call    StyleRecordBindBuiltin_entry, [d2,a2], 0x14
+    bra     0x48433a7d
+    call    StyleRecordBindMem_entry, [d2,d3,a2,a3], 0x1c
+    bra     0x48433a7d
+    call    StyleRecordBindCustom_entry, [d2,d3,a2,a3], 0x20
+    ret     [d2], 0x18
+# StyleNameBufCopy  (CPU 0x48433a80)
+    add     -0x10, sp
+    mov     0x50034b9c, a1
+    call    0x4c003051, [a2], 4
+    mov     1, d0
+    ret     0, 0x10
+# StyleBoundRecByteCfGet  (CPU 0x48433a95)
+    movbu   (0x50122dcf), d0
+    retf    0, 0
+# StyleBoundRecByteCeInc  (CPU 0x48433a9e)
+    movbu   (0x50122dce), d0
+    inc     d0
+    extbu   d0
+    retf    0, 0
+# StyleBoundRecByteCfLow3  (CPU 0x48433aa9)
+    movbu   (0x50122dcf), d0
+    and     0x07, d0
+    extbu   d0
+    retf    0, 0
+# StyleVariationNameFlagGet  (CPU 0x48433ab6)
+    movbu   (0x50122dd0), d0
+    retf    0, 0
+# StyleBuiltinNameResolve  (CPU 0x48433abf)
+#   style-index -> name pointer. Name table *(0x50034B7C) (u16BE entries),
+#   count gate *(0x50034B74); entry < count = plain, name = resource base
+#   *(0x50034B78) + u24BE(sub-table *(0x50034B80) + entry*3). Entries with
+#   bits 0xC000 == 0x8000 take one extra hop through the name table;
+#   0xC000 == 0x4000 resolves against the SECONDARY sub-table
+#   *(0x50034B90) (table ROM segment 59, 0x48244F78, intact in our dump).
+#   Anything unresolved returns the fallback *(0x50034B88).
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# StyleBuiltinNameResolve_entry:   (register-save `call` entry)
+    mov     (0x50034b7c), a1
+    mov     0, a2
+    cmp     a2, a1
+    beq     0x48433ad8
+    mov     (0x50034b80), a1
+    cmp     a2, a1
+    bne     0x48433ae8
+    mov     (0x50034b88), a0
+    cmp     a2, a0
+    bne     0x48433ae4
+    jmp     0x48433c00
+    mov     a0, a2
+    jmp     0x48433c00
+    mov     (0x50034b7c), a1
+    exthu   d0
+    mov     d0, a0
+    add     a0, a0
+    add     a0, a1
+    mov     a1, a0
+    call    func_4844038B, 0, 0
+    mov     d0, d1
+    movhu   (0x50034b74), d0
+    mov     d1, d2
+    exthu   d2
+    cmp     d0, d2
+    bge     0x48433b28
+    mov     (0x50034b80), a0
+    mov     d2, d1
+    asl2    d1
+    sub     d2, d1
+    add     d1, a0
+    call    func_48440363, 0, 0
+    mov     (0x50034b78), d1
+    add     d0, d1
+    mov     d1, a2
+    jmp     0x48433c00
+    mov     d2, d0
+    and     0xc000, d0
+    cmp     0x8000, d0
+    beq     0x48433b38
+    jmp     0x48433bbb
+    mov     (0x50034b7c), a0
+    and     0x07ff, d2
+    add     d2, d2
+    add     d2, a0
+    call    func_4844038B, 0, 0
+    mov     d0, d2
+    movhu   (0x50034b74), d0
+    mov     d2, d1
+    exthu   d1
+    cmp     d0, d1
+    bge     0x48433b77
+    mov     (0x50034b80), a0
+    mov     d1, d0
+    asl2    d0
+    sub     d1, d0
+    add     d0, a0
+    call    func_48440363, 0, 0
+    mov     (0x50034b78), d1
+    add     d0, d1
+    mov     d1, a2
+    jmp     0x48433c00
+    and     0xc000, d1
+    cmp     0x4000, d1
+    beq     0x48433b84
+    jmp     0x48433c00
+    mov     (0x50034b90), a0
+    cmp     a2, a0
+    beq     0x48433c00
+    movhu   (0x50034b74), d1
+    exthu   d2
+    mov     0x7ff, d0
+    and     d2, d0
+    exthu   d0
+    cmp     d1, d0
+    bge     0x48433c00
+    mov     a0, a2
+    mov     d0, a0
+    add     a0, a0
+    add     a0, a0
+    sub     d0, a0
+    add     a0, a2
+    mov     a2, a0
+    call    func_48440363, 0, 0
+    mov     (0x50034b90), d1
+    add     d0, d1
+    mov     d1, a2
+    bra     0x48433c00
+    mov     d2, d0
+    and     0xc000, d0
+    cmp     0x4000, d0
+    bne     0x48433c00
+    mov     (0x50034b90), d0
+    cmp     0, d0
+    beq     0x48433c00
+    movhu   (0x50034b74), d0
+    exthu   d1
+    and     0x07ff, d1
+    exthu   d1
+    cmp     d0, d1
+    bge     0x48433c00
+    mov     (0x50034b90), a2
+    mov     d1, a0
+    add     a0, a0
+    add     a0, a0
+    sub     d1, a0
+    add     a0, a2
+    mov     a2, a0
+    call    func_48440363, 0, 0
+    mov     (0x50034b90), d1
+    add     d0, d1
+    mov     d1, a2
+    cmp     0, a2
+    bne     0x48433c1a
+    mov     (0x50034b80), a0
+    call    func_48440363, 0, 0
+    mov     (0x50034b78), d1
+    add     d0, d1
+    mov     d1, a2
+    mov     a2, a0
+    ret     [d2,d3,a2,a3], 0x1c
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x033c1e, 0x035a1b
 # GetCurrentGenreIndex  (CPU 0x48435a1b)
 .incbin_range "baserom/kn7000_program.rom", 0x035a1b, 0x035a9f
 # GetGenreName  (CPU 0x48435a9f)
@@ -8750,7 +9658,114 @@ _rom_marker:
 # RhyPatternScan  (CPU 0x4843890e)
 .incbin_range "baserom/kn7000_program.rom", 0x03890e, 0x03982d
 # RhyPatternPlayer  (CPU 0x4843982d)
-.incbin_range "baserom/kn7000_program.rom", 0x03982d, 0x03dc7c
+.incbin_range "baserom/kn7000_program.rom", 0x03982d, 0x03d6d7
+# StyleResourceWindowProbe  (CPU 0x4843d6d7)
+#   probes five physical windows for the 16-byte "Technics Rhythms"
+#   signature -- 0x48010000 (table ROM +0x10000), 0x40610000, 0x40010000,
+#   0x54E10000, 0x40810000 -- and UNCONDITIONALLY returns 0x54E00000 as the
+#   last resort (no signature gate ahead of it, which is why 0x54E00000 is
+#   the natural install window for a Phase-C dump / Phase-D synthetic).
+    movm    [a2], (sp)
+    add     -0x14, sp
+# StyleResourceWindowProbe_entry:   (register-save `call` entry)
+    mov     0x4872980c, a2
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     0x48010000, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x4843d705
+    mov     0x48010000, a0
+    ret     [a2], 0x18
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     0x40610000, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x4843d728
+    mov     0x40610000, a0
+    ret     [a2], 0x18
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     0x40010000, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x4843d74a
+    mov     0x40010000, a0
+    bra     0x4843d794
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     0x54e10000, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x4843d76c
+    mov     0x54e10000, a0
+    bra     0x4843d794
+    mov     a2, a0
+    call    0x4c0032f7, 0, 0
+    mov     0x40810000, a0
+    mov     a2, a1
+    call    0x4c00203c, [a2], 4
+    cmp     0, d0
+    bne     0x4843d78e
+    mov     0x40810000, a0
+    bra     0x4843d794
+    mov     0x54e00000, a0
+    ret     [a2], 0x18
+# TableRomStyleSubTablePtr  (CPU 0x4843d797)
+    mov     (0x480000ec), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomStyleResourcePtr  (CPU 0x4843d7a8)
+    mov     (0x4800014c), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomSeg04Ptr  (CPU 0x4843d7b9)
+    mov     (0x48000010), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomNullPtr  (CPU 0x4843d7ca)
+    mov     0, a0
+    retf    0, 0
+# TableRomSeg01PtrSize  (CPU 0x4843d7cf)
+    mov     (0x48000008), d1
+    mov     (0x48000004), d0
+    sub     d0, d1
+    mov     d1, (a0)
+    mov     (0x48000004), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomSeg02PtrSize  (CPU 0x4843d7ef)
+    mov     (0x4800000c), d1
+    mov     (0x48000008), d0
+    sub     d0, d1
+    mov     d1, (a0)
+    mov     (0x48000008), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomSeg03PtrSize  (CPU 0x4843d80f)
+    mov     (0x48000010), d1
+    mov     (0x4800000c), d0
+    sub     d0, d1
+    mov     d1, (a0)
+    mov     (0x4800000c), d1
+    add     0x48000000, d1
+    mov     d1, a0
+    retf    0, 0
+# TableRomOneStub  (CPU 0x4843d82f)
+    mov     1, d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x03d834, 0x03dc7c
 # RhyNoteOnVoice  (CPU 0x4843dc7c)
 .incbin_range "baserom/kn7000_program.rom", 0x03dc7c, 0x03fb0d
 # StyleFlatOrdinalBuilder  (CPU 0x4843fb0d)
@@ -11165,9 +12180,399 @@ _rom_marker:
     movbu   (0x5003a5b8), d0
     ret     [d2], 0x20
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x049b3b, 0x04a000
-# CustomFlashArchiveParse  (CPU 0x4844a000)
-.incbin_range "baserom/kn7000_program.rom", 0x04a000, 0x04a3d4
+.incbin_range "baserom/kn7000_program.rom", 0x049b3b, 0x049ef4
+# VoiceArchiveScanBoot  (CPU 0x48449ef4)
+#   ★ the BOOT ARCHIVE PARSER (kn7000_mame/notes/sound-bank-classes.md,
+#   'How sources 1..4 are validated'). Four near-identical blocks, one per
+#   expansion voice-archive window -- 0x57000000, 0x56000000, 0x41000000,
+#   0x41800000 -- each doing:
+#     1. header self-check   *(u32*)base + base == base + 0x200
+#     2. TWO 16-byte signature compares against "Expansion Board "
+#        (0x485B8518) at *(base+4) and *(base+8); the compare walks the
+#        reference string only while bytes match, so a mismatch leaves the
+#        counter < 0x10 and fails the gate
+#     3. present  -> presence byte 0x501496B4+n = 1, archive ID
+#        *(base + *(base)) -> 0x501496A4+n*4, and the five parallel
+#        descriptor arrays 0x5003A554 / 0x5003A568 / 0x5003A57C /
+#        0x5003A590 / 0x5003A5A4 get slot n+1 from dir = base +
+#        *(base+0x0C), dir + *(dir+0x14) and that + 0x0C
+#        absent   -> all five slots alias the INTERNAL bank (index 0,
+#        built at the top of the function from table ROM *(0x48000018))
+#   Which SOUND GROUP panel button (MEMORY vs EW EXPANSION) is which of
+#   classes 1..4 is deliberately NOT claimed: the firmware uses the same
+#   signature for all four windows, only the address differs.
+    movm    [d2,d3,a2,a3], (sp)
+# VoiceArchiveScanBoot_entry:   (register-save `call` entry)
+    mov     (0x48000018), d1
+    mov     0x57000000, a2
+    add     0x48000000, d1
+    mov     d1, a0
+    mov     a0, (0x5003a554)
+    mov     d1, (0x5003a568)
+    mov     (0x14, a0), d0
+    add     d1, d0
+    mov     d0, a3
+    mov     d0, (0x5003a57c)
+    mov     a3, (0x5003a590)
+    mov     0xc, d0
+    add     a3, d0
+    mov     d0, (0x5003a5a4)
+    mov     (0x57000000), a0
+    add     a2, a0
+    cmp     0x57000200, a0
+    beq     0x48449f45
+    jmp     0x4844a01a
+    mov     (0x57000004), d1
+    clr     d0
+    add     a2, d1
+    mov     d1, a1
+    clr     d3
+    setlb
+    mov     a1, a0
+    movbu   (a0), d2
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d2
+    bne     0x48449f68
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     0x10, d3
+    llt
+    mov     (0x57000008), d0
+    clr     d2
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x48449f8b
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x10, d2
+    llt
+    cmp     0x10, d3
+    blt     0x48449f93
+    cmp     0x10, d2
+    bge     0x48449fd2
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a580)
+    mov     d0, (0x5003a558)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a594)
+    mov     d0, (0x5003a56c)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5a8)
+    clr     d0
+    movbu   d0, (0x501496b4)
+    mov     d0, (0x501496a4)
+    bra     0x4844a04b
+    mov     1, d0
+    movbu   d0, (0x501496b4)
+    mov     (0x57000000), a0
+    mov     a2, d1
+    add     a2, a0
+    mov     (a0), d0
+    mov     d0, (0x501496a4)
+    mov     (0x5700000c), d0
+    add     d0, d1
+    mov     d1, (0x5003a558)
+    mov     d1, a0
+    mov     a0, (0x5003a56c)
+    mov     (0x14, a0), d0
+    add     d1, d0
+    mov     d0, (0x5003a580)
+    mov     d0, (0x5003a594)
+    add     0xc, d0
+    mov     d0, (0x5003a5a8)
+    bra     0x4844a04b
+    mov     (0x5003a5a4), d0
+    mov     d1, (0x5003a558)
+    mov     d1, (0x5003a56c)
+    mov     a3, (0x5003a580)
+    mov     a3, (0x5003a594)
+    mov     d0, (0x5003a5a8)
+    clr     d0
+    movbu   d0, (0x501496b4)
+    mov     d0, (0x501496a4)
+    mov     (0x56000000), d0
+    mov     0x56000000, a2
+    add     a2, d0
+    cmp     0x56000200, d0
+    beq     0x4844a064
+    jmp     0x4844a13c
+    mov     (0x56000004), d0
+    clr     d3
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a087
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     0x10, d3
+    llt
+    mov     (0x56000008), d0
+    clr     d2
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a0aa
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x10, d2
+    llt
+    cmp     0x10, d3
+    blt     0x4844a0b2
+    cmp     0x10, d2
+    bge     0x4844a0f2
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a584)
+    mov     d0, (0x5003a55c)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a598)
+    mov     d0, (0x5003a570)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5ac)
+    clr     d0
+    movbu   d0, (0x501496b5)
+    mov     d0, (0x501496a8)
+    jmp     0x4844a179
+    mov     1, d0
+    movbu   d0, (0x501496b5)
+    mov     (0x56000000), d0
+    add     a2, d0
+    mov     d0, a0
+    mov     (a0), d1
+    mov     d1, (0x501496a8)
+    mov     (0x5600000c), d0
+    add     a2, d0
+    mov     d0, a0
+    mov     d0, (0x5003a55c)
+    mov     a0, (0x5003a570)
+    mov     (0x14, a0), d0
+    add     a0, d0
+    mov     d0, (0x5003a584)
+    mov     d0, (0x5003a598)
+    add     0xc, d0
+    mov     d0, (0x5003a5ac)
+    bra     0x4844a179
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a584)
+    mov     d0, (0x5003a55c)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a598)
+    mov     d0, (0x5003a570)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5ac)
+    clr     d0
+    movbu   d0, (0x501496b5)
+    mov     d0, (0x501496a8)
+    mov     (0x41000000), d1
+    mov     0x41000000, a2
+    add     a2, d1
+    cmp     0x41000200, d1
+    beq     0x4844a192
+    jmp     0x4844a26a
+    mov     (0x41000004), d0
+    clr     d3
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a1b5
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     0x10, d3
+    llt
+    mov     (0x41000008), d0
+    clr     d2
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a1d8
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x10, d2
+    llt
+    cmp     0x10, d3
+    blt     0x4844a1e0
+    cmp     0x10, d2
+    bge     0x4844a220
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a588)
+    mov     d0, (0x5003a560)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a59c)
+    mov     d0, (0x5003a574)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5b0)
+    clr     d0
+    movbu   d0, (0x501496b6)
+    mov     d0, (0x501496ac)
+    jmp     0x4844a2a7
+    mov     1, d0
+    movbu   d0, (0x501496b6)
+    mov     (0x41000000), d0
+    add     a2, d0
+    mov     d0, a0
+    mov     (a0), d1
+    mov     d1, (0x501496ac)
+    mov     (0x4100000c), d0
+    add     a2, d0
+    mov     d0, a0
+    mov     d0, (0x5003a560)
+    mov     a0, (0x5003a574)
+    mov     (0x14, a0), d0
+    add     a0, d0
+    mov     d0, (0x5003a588)
+    mov     d0, (0x5003a59c)
+    add     0xc, d0
+    mov     d0, (0x5003a5b0)
+    bra     0x4844a2a7
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a588)
+    mov     d0, (0x5003a560)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a59c)
+    mov     d0, (0x5003a574)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5b0)
+    clr     d0
+    movbu   d0, (0x501496b6)
+    mov     d0, (0x501496ac)
+    mov     (0x41800000), d1
+    mov     0x41800000, a2
+    add     a2, d1
+    cmp     0x41800200, d1
+    beq     0x4844a2c0
+    jmp     0x4844a394
+    mov     (0x41800004), d0
+    clr     d3
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a2e3
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     0x10, d3
+    llt
+    mov     (0x41800008), d0
+    clr     d2
+    add     a2, d0
+    mov     d0, a1
+    clr     d0
+    setlb
+    mov     a1, a0
+    movbu   (a0), d1
+    extbu   d0
+    mov     0x485b8518, a0
+    movbu   (d0, a0), d0
+    inc     a1
+    cmp     d0, d1
+    bne     0x4844a306
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x10, d2
+    llt
+    cmp     0x10, d3
+    blt     0x4844a30e
+    cmp     0x10, d2
+    bge     0x4844a34e
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a58c)
+    mov     d0, (0x5003a564)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a5a0)
+    mov     d0, (0x5003a578)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5b4)
+    clr     d0
+    movbu   d0, (0x501496b7)
+    mov     d0, (0x501496b0)
+    retf    [d2,d3,a2,a3], 0x10
+    mov     1, d0
+    movbu   d0, (0x501496b7)
+    mov     (0x41800000), a0
+    add     a2, a0
+    mov     (a0), d0
+    mov     d0, (0x501496b0)
+    mov     (0x4180000c), a0
+    add     a2, a0
+    mov     a0, (0x5003a564)
+    mov     a0, (0x5003a578)
+    mov     (0x14, a0), d0
+    add     a0, d0
+    mov     d0, (0x5003a58c)
+    mov     d0, (0x5003a5a0)
+    add     0xc, d0
+    mov     d0, (0x5003a5b4)
+    bra     0x4844a3d1
+    mov     (0x5003a554), d0
+    mov     a3, (0x5003a58c)
+    mov     d0, (0x5003a564)
+    mov     (0x5003a568), d0
+    mov     a3, (0x5003a5a0)
+    mov     d0, (0x5003a578)
+    mov     (0x5003a5a4), d0
+    mov     d0, (0x5003a5b4)
+    clr     d0
+    movbu   d0, (0x501496b7)
+    mov     d0, (0x501496b0)
+    retf    [d2,d3,a2,a3], 0x10
 # VoiceBankSourceFlagGet  (CPU 0x4844a3d4)
     mov     d0, d1
     extbu   d1

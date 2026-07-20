@@ -88,8 +88,6 @@ MANUAL_SYMBOLS = [
     (0x48435DD0, "StyleIdArrayHandler",    "per record: build style-ID arrays 0x50034C48/0x50035448 (u16 counters 0x50034C40/44, lim 0x1FF)"),
     (0x48435D83, "StyleIdArrayStore",      "store a style-ID + source tag into the style-ID arrays"),
     (0x484334A4, "StyleNameCommit",        "memcpy 13 B from *(0x50034B8C) -> name buf 0x50034B9C; default 0x4872AB42 => '8 Beat 1'"),
-    (0x48433400, "StyleNameSourceSet",     "set *(0x50034B8C) from style-ID source bits &0x00700000: 0=builtin(0x48433AC4)/0x100000=MEM/0x200000=CUSTOM"),
-    (0x48433AC4, "StyleBuiltinNameLookup", "builtin name via RAM dir 0x50034B7C(*2)/0x50034B80(*3), base 0x50034B78; returns default on unresolved style-ID (runtime: rhythm passes style-ID 0 -> '8 Beat 1'; sounds pass 0x65A -> real names)"),
     (0x48435E84, "StyleIdQueueDequeue",    "dequeue a style-ID from ring 0x50034C48/0x50035448 (read idx 0x50034C42, count 0x50034C44)"),
     (0x4847BCCA, "AcCtgStyleListBoxProc",  "genre style-list widget proc; dispatches via msg table 0x485CF408 (jmp (a0))"),
     (0x485CF408, "StyleListBoxMsgTable",   "16 x {u32 msg-ID, u32 handler} for AcCtgStyleListBoxProc"),
@@ -112,7 +110,6 @@ MANUAL_SYMBOLS = [
     (0x4847E7C0, "FlashAddrToSector",     ""),
     (0x485CF9E0, "FlashChipIdTable",      "MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors"),
     (0x485CF788, "FlashSectorMap",        "bottom-boot sector geometry, total 0x200000"),
-    (0x4844A000, "CustomFlashArchiveParse", "parses 0x56000000 directory into RAM ptrs ~0x5003A5xx"),
     # --- disk file load / install-to-flash path (idd7000)
     (0x4852CFE4, "DiskLoadDispatch",      "walks disk-file handler table"),
     (0x486642B0, "DiskFileHandlerTable",  "per-file-type load handlers"),

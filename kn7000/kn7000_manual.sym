@@ -190,12 +190,73 @@
 ; 0x485FDED0  AccompPartNames        ; = PartNamePtrTable+24: auto-accompaniment subset (BASS,DRUM 1/2,CHORD,R.BASS,PADS,...)
 ; 0x485FDD0C  CprSoundModeNames      ; CPR-board sound-mode labels: DIGITAL DRAWBAR, ACCORDION REGISTER, SOUND EXPLORER, EW EXPANSION, ORGAN TABS
 
-; ---- Built-in rhythm-style name table (the "8 Beat 1" list-bug area) ---------
-; The genre style list resolves built-in style names via StyleNameSourceSet
-; 0x48433400 -> builtin resolver 0x48433AC4 (indexes name-table *(0x50034B7C)).
-; See kn7000_mame/notes/rhythm-name-list-bug.md.
-0x48433300  StyleBuiltinNameTableInit  ; loads the "Technics Rhythms" resource (name @0x4872980C via lib 0x4C00203C) and populates the style-name-table globals 0x50034B74/78/7C/80/88; RUNTIME-CONFIRMED to SUCCEED (0x50034B7C = table-ROM name-table 0x483E82BF, non-zero) -- so the "8 Beat 1" bug is downstream in per-style resolution, NOT this init
-0x48433AC4  StyleBuiltinNameResolve    ; style-index -> name ptr in a0 (10 call sites): indexes name-table *(0x50034B7C) (table ROM 0x483E82BF, u16), count-gate *(0x50034B74), 0x8000-flag indirection, then 3-byte-offset sub-table *(0x50034B80) into the "Technics Rhythms" resource *(0x50034B78)+off; fallback *(0x50034B88)=" 8 Beat 1". Feeds the current-rhythm display (works), NOT directly the buggy style list
+; ---- RHYTHM/STYLE NAME MODULE (0x484332F9..0x48433C1E) -----------------------
+; The whole style NAME + RECORD path, converted 2026-07-20 (see
+; kn7000_mame/notes/sequenced-playback-and-style-data-rootcause.md 2a and
+; notes/rhythm-name-list-bug.md). Three SOURCES of a style, selected by the
+; style-ID's bits 0x00700000 and cached in *(0x50034B94):
+;   0          = BUILT-IN  ("Technics Rhythms" flash resource, base 0x50034B78)
+;   0x00100000 = MEMORY    (user styles, via 0x484355E2 / 0x484355F8)
+;   0x00200000 = CUSTOM    (custom-flash styles, via 0x4848457D / 0x4843E1xx)
+; RAM: 0x50034B74 count / 0x50034B78 resource base / 0x50034B7C u16 name table /
+;      0x50034B80 3-byte-offset sub-table / 0x50034B84 variation sub-table /
+;      0x50034B88 fallback name / 0x50034B8C selected NAME RECORD /
+;      0x50034B90 secondary sub-table (table ROM seg59 0x48244F78) /
+;      0x50034B98 custom-source handle / 0x50034B9C 13-byte display name /
+;      0x50034BAC[8] sub-record ptrs / 0x50034BCC[20] variation-record ptrs /
+;      0x50034C1C bound style record / 0x50034C20 its data area /
+;      0x50122DC0..0x50122DD4 the bound record's runtime view.
+0x484332F9  StyleBuiltinNameTableInit  ; (a0 = resource window) opens the "Technics Rhythms" resource (name string 0x4872980C, lib strncmp 0x4C00203C) and populates the style-name-table globals 0x50034B74/78/7C/80/84/88; then re-points 0x50034B7C at the table-ROM copy (TableRomStyleResourcePtr, seg83 0x483E828C) when that one also carries the signature. RUNTIME-CONFIRMED to SUCCEED -- the "8 Beat 1" bug is downstream, in per-style resolution
+0x484332FE  StyleBuiltinNameTableInit_entry
+0x484333FF  StyleNameSourceSet         ; (d0 = style-ID) -> a0 = the 13-byte NAME RECORD, cached in *(0x50034B8C); index = ((id & 0x0F00) >> 1) | (id & 0x7F), source = id & 0x00700000 (0 = builtin -> StyleBuiltinNameResolve, 0x200000 = custom -> 0x4848457D, else MEMORY -> 0x484355E2). Returns 0 when the record is unchanged
+0x48433404  StyleNameSourceSet_entry
+0x484334A9  StyleNameCommit_entry
+0x4843351B  StyleNameCommitMem         ; MEMORY-source twin of StyleNameCommit: 13-byte name copy, then the 20 variation-record pointers 0x50034BCC[] resolved from the bytes at record+0x50 through 0x484355F8; data area = record+0x70
+0x48433520  StyleNameCommitMem_entry
+0x48433569  StyleNameCommitCustom      ; CUSTOM-source twin: same shape, records resolved through 0x4843E10C against the custom-source handle *(0x50034B98)
+0x4843356E  StyleNameCommitCustom_entry
+0x484335BF  StyleVariationNameGet      ; (d0 = variation slot 0..19) -> a0 = the variation's NAME. Takes the low 3 bits of the record byte +1 (builtin) or +0x11 (MEM/CUSTOM) as a variation kind, asks the library resource dispatcher (LibResourceLookup path, resource 0x0000D00A via lib 0x4C0149FA) and on success indexes the ROM pointer table 0x48736078; otherwise falls back to the 3-byte-offset variation sub-table *(0x50034B84) into the resource base *(0x50034B78). Sets the "name resolved" flag 0x50122DD0
+0x484335C4  StyleVariationNameGet_entry
+0x48433643  StyleRecordSlotSelect      ; (d0 = group < 0x0C, d1 = slot <= 0x14, arg5 = index) selects one of the 20 cached style records 0x50034BCC[] as the CURRENT record *(0x50034C1C); slot 0x14 goes through StyleVariationNameGet first. The group index must be a multiple of 3. Returns the newly selected record, or 0 when unchanged
+0x48433648  StyleRecordSlotSelect_entry
+0x484336DB  StyleRecordBindBuiltin     ; publishes the current BUILT-IN style record *(0x50034C1C) into the pattern-player's runtime view: header bytes -> 0x50122DCE/CF, u16BE -> 0x50122DCC, event-stream start 0x50122DC8/C0, end 0x50122DC4, aux 0x50122DD4 (the stream is expected to end with the 0xF4 terminator)
+0x484336E0  StyleRecordBindBuiltin_entry
+0x4843374A  StyleRecordBindMem         ; MEMORY twin of StyleRecordBindBuiltin (record fetched through 0x48435614; eight sub-record pointers at 0x50034BAC[], stride 0x18, from record+0x20)
+0x4843374F  StyleRecordBindMem_entry
+0x484337D0  StyleRecordBindCustom      ; CUSTOM twin (record fetched through 0x4843E128 against *(0x50034B98))
+0x484337D5  StyleRecordBindCustom_entry
+0x4843385E  StyleNameModuleBoot        ; boot entry of the style-name module: StyleResourceWindowProbe picks the resource window (cached at 0x5000775C), StyleBuiltinNameTableInit opens it, and on failure the program-ROM STUB resource 0x48729988 is used instead -- which is exactly the fallback that makes every style display "  8 Beat 1" in emulation. Then clears the 20 record slots and the current record
+0x48433863  StyleNameModuleBoot_entry
+0x484338AF  StyleResourceVerify        ; integrity check of a probed resource window: signature strncmp, then a checksum (0x484403A7) over the block at u24BE(+0x12) of length u24BE(+0x15) compared against the u16BE at +0x10. Returns 0 / -1
+0x484338B4  StyleResourceVerify_entry
+0x48433919  StyleNameSelectCommit      ; StyleNameSourceSet + the matching per-source name commit (builtin / MEM / CUSTOM). Returns 1 when a new name was committed
+0x4843391C  StyleNameSelectCommit_entry
+0x48433960  StyleSlotRecordDiffers     ; (d0 = group, d1 = slot) -> 1 when 0x50034BCC[group+slot] is not the currently bound record *(0x50034C1C); 0 for group outside 0x0C..0x13
+0x48433962  StyleSlotRecordDiffers_entry
+0x4843398F  StyleRecordSelectBind      ; StyleRecordSlotSelect + the matching per-source record bind; returns 1 when a record was bound
+0x48433994  StyleRecordSelectBind_entry
+0x484339F4  StyleNameAndRecordSelect   ; the full "style changed" path: name select+commit, then record select+bind, in one call
+0x484339F9  StyleNameAndRecordSelect_entry
+0x48433A80  StyleNameBufCopy           ; (a0 = dest) strcpy the 13-byte display name buffer 0x50034B9C out to the caller; always returns 1
+0x48433A95  StyleBoundRecByteCfGet     ; -> the bound record's header byte 0x50122DCF -- retf leaf
+0x48433A9E  StyleBoundRecByteCeInc     ; -> the bound record's header byte 0x50122DCE + 1 -- retf leaf
+0x48433AA9  StyleBoundRecByteCfLow3    ; -> 0x50122DCF & 7 (the variation kind) -- retf leaf
+0x48433AB6  StyleVariationNameFlagGet  ; -> 0x50122DD0, the "variation name was resolved" flag set by StyleVariationNameGet -- retf leaf
+0x48433ABF  StyleBuiltinNameResolve    ; style-index -> name ptr in a0 (10 call sites): indexes name-table *(0x50034B7C) (table ROM 0x483E82BF, u16), count-gate *(0x50034B74), 0x8000-flag indirection, then 3-byte-offset sub-table *(0x50034B80) into the "Technics Rhythms" resource *(0x50034B78)+off; entries with 0xC000==0x4000 go through the secondary sub-table *(0x50034B90); fallback *(0x50034B88)=" 8 Beat 1"
+0x48433AC4  StyleBuiltinNameResolve_entry
+
+; ---- the style resource WINDOW PROBE + the table-ROM segment accessors -------
+0x4843D6D7  StyleResourceWindowProbe   ; probes five physical windows for the "Technics Rhythms" signature -- 0x48010000 (table ROM +0x10000), 0x40610000, 0x40010000, 0x54E10000, 0x40810000 -- and UNCONDITIONALLY returns 0x54E00000 as the last resort. None of them carries the resource in emulation (the real one lives on an undumped rhythm/style flash), so StyleNameModuleBoot ends up on the program-ROM stub
+0x4843D6DC  StyleResourceWindowProbe_entry
+0x4843D797  TableRomStyleSubTablePtr   ; -> table ROM + *(0x480000EC) = 0x48244F78, the secondary style-name sub-table (cached in 0x50034B90) -- retf leaf
+0x4843D7A8  TableRomStyleResourcePtr   ; -> table ROM + *(0x4800014C) = 0x483E828C, the TRUNCATED in-flash copy of the "Technics Rhythms" resource -- retf leaf
+0x4843D7B9  TableRomSeg04Ptr           ; -> table ROM + *(0x48000010) = segment 4 ("Tech") -- retf leaf
+0x4843D7CA  TableRomNullPtr            ; -> 0, the null member of this accessor family -- retf leaf
+0x4843D7CF  TableRomSeg01PtrSize       ; (a0 = out u32 size) -> table ROM segment 1 ("ZZZJ") base; size = dir[2]-dir[1] -- retf leaf
+0x4843D7EF  TableRomSeg02PtrSize       ; (a0 = out u32 size) -> table ROM segment 2 ("TCMP") base -- retf leaf
+0x4843D80F  TableRomSeg03PtrSize       ; (a0 = out u32 size) -> table ROM segment 3 ("TPAD") base -- retf leaf
+0x4843D82F  TableRomOneStub            ; -> 1, the constant member of this accessor family -- retf leaf
+
 0x48729988  TechnicsRhythmsResource    ; built-in rhythm style-name resource (name @0x4872980C); embeds its own name string + the style names at byte-offsets (e.g. +0x11BA=" 8 Beat 1"); base cached in RAM 0x50034B78
 0x4873BEE8  StyleRecordTable           ; >=400 24-byte built-in style records used by the style list-box (indexed by CUR_STYLE_IDX 0x50001270). Layout: +0x00 patternDataPtr (->0x487674xx, 160B pattern), +0x04 namePtr -> REAL style name (program ROM 0x485D0000+, e.g. "Disco Hustling"/"Orchestral Jazz"), +0x08 u16, +0x0C u32 index, +0x10/12/14 u16 params. Proves all built-in style names exist as data
 0x50001270  CUR_STYLE_IDX              ; RAM: current style index into StyleRecordTable 0x4873BEE8 (used by the list-box msg handlers)
@@ -1736,3 +1797,8 @@
 0x48572578  VoiceListMapLookupSrc4_entry
 0x485725E9  VoiceListMapKeyEqual    ; (d0,d1) -> 1 on u16 key match -- retf leaf
 0x485725F6  VoiceListMapHashIndex   ; (d0 key, d1 mult, arg nbuckets@0x10,sp) -> (key*mult) % nbuckets -- rets leaf
+
+; ---- the BOOT ARCHIVE PARSER (voice-resource windows 1..4) --------------------
+0x48449EF4  VoiceArchiveScanBoot       ; validates the four expansion voice-archive windows 0x57000000 / 0x56000000 / 0x41000000 / 0x41800000 at boot, one near-identical block each: header self-check (*(base)+base == base+0x200), then TWO 16-byte signature compares against "Expansion Board " (0x485B8518) at *(base+4) and *(base+8). On success the presence byte 0x501496B4+n is set to 1, the archive ID *(base + *(base)) is cached at 0x501496A4+n*4, and the five parallel descriptor arrays 0x5003A554/68/7C/90/A4 (index 0 = INTERNAL, from table ROM *(0x48000018)) get slot n+1 from the directory base + *(base+0x0C); on failure everything aliases the internal bank. See kn7000_mame/notes/sound-bank-classes.md
+0x48449EF6  VoiceArchiveScanBoot_entry
+0x485B8518  ExpansionBoardSigStrings   ; "Expansion Board KN7000 SOUND RAM" then "KN6000 SOUND RAM" / "KN5000 SOUND R..." -- only the first 16 bytes ("Expansion Board ") are compared by VoiceArchiveScanBoot

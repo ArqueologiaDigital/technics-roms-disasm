@@ -175,6 +175,25 @@ CONVERT = {
     "VoiceListMapLookupInternal", "VoiceListMapLookupSrc1",
     "VoiceListMapLookupSrc2", "VoiceListMapLookupSrc3",
     "VoiceListMapLookupSrc4", "VoiceListMapKeyEqual", "VoiceListMapHashIndex",
+    # the BOOT ARCHIVE PARSER that decides which of the four expansion voice
+    # archives are fitted (notes/sound-bank-classes.md "How sources 1..4 are
+    # validated"): four near-identical blocks, one per window
+    "VoiceArchiveScanBoot",
+    # ---- the RHYTHM/STYLE NAME MODULE 0x484332F9..0x48433C1E plus the
+    #      resource WINDOW PROBE and the table-ROM segment accessors
+    #      (notes/sequenced-playback-and-style-data-rootcause.md 2a) ----------
+    "StyleBuiltinNameTableInit", "StyleNameSourceSet", "StyleNameCommit",
+    "StyleNameCommitMem", "StyleNameCommitCustom", "StyleVariationNameGet",
+    "StyleRecordSlotSelect", "StyleRecordBindBuiltin", "StyleRecordBindMem",
+    "StyleRecordBindCustom", "StyleNameModuleBoot", "StyleResourceVerify",
+    "StyleNameSelectCommit", "StyleSlotRecordDiffers", "StyleRecordSelectBind",
+    "StyleNameAndRecordSelect", "StyleNameBufCopy", "StyleBoundRecByteCfGet",
+    "StyleBoundRecByteCeInc", "StyleBoundRecByteCfLow3",
+    "StyleVariationNameFlagGet", "StyleBuiltinNameResolve",
+    "StyleResourceWindowProbe", "TableRomStyleSubTablePtr",
+    "TableRomStyleResourcePtr", "TableRomSeg04Ptr", "TableRomNullPtr",
+    "TableRomSeg01PtrSize", "TableRomSeg02PtrSize", "TableRomSeg03PtrSize",
+    "TableRomOneStub",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -197,6 +216,8 @@ FUNC_END = {
     "UserVoiceRecPtr": 0x4AC0D,            # next (unnamed) function at 0x4844AC0D
     "VoiceAttrByteGet": 0x49B3B,           # next (unnamed) function at 0x48449B3B
     "VoiceListMapHashIndex": 0x172607,     # next (unnamed) function at 0x48572607
+    "StyleBuiltinNameResolve": 0x33C1E,    # next (unnamed) function at 0x48433C1E
+    "TableRomOneStub": 0x3D834,            # next (unnamed) function at 0x4843D834
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live
@@ -655,6 +676,55 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "VoiceArchiveScanBoot": [
+        "\u2605 the BOOT ARCHIVE PARSER (kn7000_mame/notes/sound-bank-classes.md,",
+        "'How sources 1..4 are validated'). Four near-identical blocks, one per",
+        "expansion voice-archive window -- 0x57000000, 0x56000000, 0x41000000,",
+        "0x41800000 -- each doing:",
+        "  1. header self-check   *(u32*)base + base == base + 0x200",
+        "  2. TWO 16-byte signature compares against \"Expansion Board \"",
+        "     (0x485B8518) at *(base+4) and *(base+8); the compare walks the",
+        "     reference string only while bytes match, so a mismatch leaves the",
+        "     counter < 0x10 and fails the gate",
+        "  3. present  -> presence byte 0x501496B4+n = 1, archive ID",
+        "     *(base + *(base)) -> 0x501496A4+n*4, and the five parallel",
+        "     descriptor arrays 0x5003A554 / 0x5003A568 / 0x5003A57C /",
+        "     0x5003A590 / 0x5003A5A4 get slot n+1 from dir = base +",
+        "     *(base+0x0C), dir + *(dir+0x14) and that + 0x0C",
+        "     absent   -> all five slots alias the INTERNAL bank (index 0,",
+        "     built at the top of the function from table ROM *(0x48000018))",
+        "Which SOUND GROUP panel button (MEMORY vs EW EXPANSION) is which of",
+        "classes 1..4 is deliberately NOT claimed: the firmware uses the same",
+        "signature for all four windows, only the address differs.",
+    ],
+    "StyleNameModuleBoot": [
+        "\u2605 boot entry of the RHYTHM/STYLE NAME MODULE and the exact place",
+        "the \"8 Beat 1\" bug is decided (kn7000_mame/notes/",
+        "sequenced-playback-and-style-data-rootcause.md, root cause 2a):",
+        "StyleResourceWindowProbe picks a \"Technics Rhythms\" resource window",
+        "(cached at 0x5000775C) and StyleBuiltinNameTableInit opens it; if that",
+        "fails the PROGRAM-ROM STUB 0x48729988 -- whose header declares",
+        "count = 1 -- is installed instead, after which StyleBuiltinNameResolve",
+        "gates every style-ID out of range and returns the fallback string",
+        "\"  8 Beat 1\" (0x4872AB42). In emulation none of the probed windows",
+        "carries the resource, so the stub always wins.",
+    ],
+    "StyleResourceWindowProbe": [
+        "probes five physical windows for the 16-byte \"Technics Rhythms\"",
+        "signature -- 0x48010000 (table ROM +0x10000), 0x40610000, 0x40010000,",
+        "0x54E10000, 0x40810000 -- and UNCONDITIONALLY returns 0x54E00000 as the",
+        "last resort (no signature gate ahead of it, which is why 0x54E00000 is",
+        "the natural install window for a Phase-C dump / Phase-D synthetic).",
+    ],
+    "StyleBuiltinNameResolve": [
+        "style-index -> name pointer. Name table *(0x50034B7C) (u16BE entries),",
+        "count gate *(0x50034B74); entry < count = plain, name = resource base",
+        "*(0x50034B78) + u24BE(sub-table *(0x50034B80) + entry*3). Entries with",
+        "bits 0xC000 == 0x8000 take one extra hop through the name table;",
+        "0xC000 == 0x4000 resolves against the SECONDARY sub-table",
+        "*(0x50034B90) (table ROM segment 59, 0x48244F78, intact in our dump).",
+        "Anything unresolved returns the fallback *(0x50034B88).",
+    ],
     "TgDrawbarToneRecInit": [
         "\u2605 DIGITAL DRAWBAR (manual p36, kn7000_mame/notes/",
         "sound-gui-inventory.md). The nine drawbars of the KN7000's tonewheel",
