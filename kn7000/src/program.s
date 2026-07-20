@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 719 synthetic labels for internal helpers called by converted code
+# 756 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -453,6 +453,43 @@ _rom_marker:
 .equ TgPartModSumDest40_entry, 0x4C006AA1
 .equ TgPartModDestEnableUpdate_entry, 0x4C006B28
 .equ TgPartModDestValueCalc_entry, 0x4C006BE2
+.equ TgGlobalAllPartsRefresh_entry, 0x4C008CC0
+.equ TgMasterVolumeRecompute_entry, 0x4C008CD5
+.equ TgMasterVolumeMainSet_entry, 0x4C008D93
+.equ TgMasterTuneFineSet, 0x4C008DAE
+.equ TgMasterTuneTransposeSet, 0x4C008DBE
+.equ TgMasterVolumeSubSet_entry, 0x4C008DD2
+.equ TgMasterVolumeAuxSet_entry, 0x4C008DF2
+.equ TgGroupGainPartsLoSet, 0x4C008E0D
+.equ TgGroupGainClass23Set, 0x4C008E21
+.equ TgGroupGainParts13To1ASet, 0x4C008E35
+.equ TgGlobalRampStateSet, 0x4C008E49
+.equ TgGlobalRampParamSet_entry, 0x4C008EA6
+.equ TgAllPartsRefreshAndFlush_entry, 0x4C008F12
+.equ TgPartEffectRefresh_entry, 0x4C008F4A
+.equ TgAllPartsEffectRefresh_entry, 0x4C008F91
+.equ TgEffectRouteSelect, 0x4C008FA1
+.equ TgReverbPartsApply_entry, 0x4C008FFB
+.equ TgDrawbarGlobal82B2Set, 0x4C009059
+.equ TgDrawbarGlobal82BDSet, 0x4C009062
+.equ TgDrawbarGlobal82BESet, 0x4C00906B
+.equ TgDrawbarGlobal82BFSet, 0x4C009074
+.equ TgDrawbarGlobal82C0Set, 0x4C00907D
+.equ TgDrawbarGlobal82BCSet, 0x4C009086
+.equ TgEffectEnableReverb, 0x4C00908F
+.equ TgEffectEnableBit10, 0x4C0090C0
+.equ TgEffectEnableBit4, 0x4C0090EC
+.equ TgGroupGainClass23Enable, 0x4C009115
+.equ TgGroupGainParts13To1AEnable, 0x4C009140
+.equ TgEffectEnableMulti, 0x4C00916B
+.equ TgEffectEnableBit13, 0x4C009197
+.equ TgEffectEnableBit14, 0x4C0091C3
+.equ TgMasterVolumeSubEnable, 0x4C0091EF
+.equ TgGlobalFlag0Get, 0x4C00921A
+.equ TgGlobalFlag1Get, 0x4C009226
+.equ TgGlobalFlag2Get, 0x4C009232
+.equ TgGlobalParamCommand_entry, 0x4C0092B9
+.equ TgGlobalParamInit_entry, 0x4C00956A
 .equ TgDrumZoneParamClamp_entry, 0x4C009F03
 .equ TgDrumZoneLevelScaleCalc_entry, 0x4C009F22
 .equ TgDrumZoneSendLevelsCalc_entry, 0x4C00A004
@@ -32334,7 +32371,1238 @@ display_palette:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x64
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3bfea2, 0x3c2ed2
+.incbin_range "baserom/kn7000_program.rom", 0x3bfea2, 0x3c1c8c
+# TgGlobalAllPartsRefresh  (lib CPU 0x4c008cbb)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgGlobalAllPartsRefresh_entry:   (register-save `call` entry)
+    clr     d2
+    mov     d2, d0
+    call    0x4c007b63, [d2,d3,a2,a3], 0x28
+    inc     d2
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c008cc1
+    ret     [d2], 0x10
+.mnbase 0x48400000
+# TgMasterVolumeRecompute  (lib CPU 0x4c008cd0)
+#   The MASTER VOLUME summing node. Three byte terms live at
+#   0x500082B4 (main), 0x500082B6 (sub) and 0x500082B8 (aux); each is
+#   biased by -0x7F and they are added, clamped to [-0x7F, 0] and
+#   published twice:
+#     0x500C077E = 0x7F + sum of ALL THREE, hw write via 0x4C038028
+#     0x500C0780 = 0x7F + main + aux + (sub only if 0x500C075A bit5),
+#                  hw write via 0x4C038046
+#   so 0x500C075A bit5 (TgMasterVolumeSubEnable) is what takes the SUB
+#   term out of the second bus. Each store is followed by a
+#   0x7F-denominator scale through LibDiv32 (value * 0xC992 / 0x7F).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# TgMasterVolumeRecompute_entry:   (register-save `call` entry)
+    movhu   (0x500082b4), d2
+    movhu   (0x500082b8), d0
+    exth    d2
+    exth    d0
+    mov     0x7f, a2
+    sub     a2, d2
+    mov     d2, d3
+    movhu   (0x500082b6), d2
+    exth    d3
+    exth    d2
+    sub     a2, d2
+    add     d2, d3
+    exth    d3
+    sub     a2, d0
+    add     d0, d3
+    mov     d3, d1
+    exth    d1
+    cmp     0, d1
+    ble     0x4c008d00
+    clr     d3
+    bra     0x4c008d06
+    cmp     -0x7f, d1
+    bge     0x4c008d06
+    mov     -0x7f, d3
+    exth    d3
+    mov     0x7f, d1
+    add     d3, d1
+    movhu   d1, (0x500c077e)
+    mov     0x7f, d0
+    add     d3, d0
+    mov     0x0000c992, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     0x7f, d1
+    call    LibDiv32, 0, 0
+    call    0x4c038028, 0, 0x14
+    movhu   (0x500082b4), d0
+    movhu   (0x500c075a), d1
+    exth    d0
+    sub     a2, d0
+    btst    0x20, d1
+    beq     0x4c008d4c
+    mov     d0, d1
+    movhu   (0x500082b6), d0
+    exth    d1
+    exth    d0
+    sub     a2, d0
+    add     d0, d1
+    mov     d1, d0
+    mov     d0, d1
+    movhu   (0x500082b8), d0
+    exth    d1
+    exth    d0
+    sub     a2, d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d1
+    cmp     0, d1
+    ble     0x4c008d61
+    clr     d0
+    bra     0x4c008d67
+    cmp     -0x7f, d1
+    bge     0x4c008d67
+    mov     -0x7f, d0
+    exth    d0
+    mov     0x7f, d1
+    add     d0, d1
+    movhu   d1, (0x500c0780)
+    add     0x7f, d0
+    mov     0x0000c992, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     0x7f, d1
+    call    LibDiv32, 0, 0
+    call    0x4c038046, 0, 0x14
+    ret     [d2,d3,a2], 0x1c
+.mnbase 0x48400000
+# TgMasterVolumeMainSet  (lib CPU 0x4c008d8e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -8, sp
+# TgMasterVolumeMainSet_entry:   (register-save `call` entry)
+    movhu   (0x500082b4), d2
+    mov     d0, d1
+    exth    d2
+    extbu   d1
+    cmp     d1, d2
+    beq     0x4c008dab
+    extbu   d0
+    movhu   d0, (0x500082b4)
+    call    TgMasterVolumeRecompute_entry, [d2,d3,a2], 0x1c
+    ret     [d2], 0xc
+.mnbase 0x48400000
+# TgMasterTuneFineSet  (lib CPU 0x4c008dae)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d0
+    movhu   d0, (0x500c075c)
+    retf    0, 0
+.mnbase 0x48400000
+# TgMasterTuneTransposeSet  (lib CPU 0x4c008dbe)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    add     -0x40, d0
+    asl     8, d0
+    movhu   d0, (0x500c075e)
+    retf    0, 0
+.mnbase 0x48400000
+# TgMasterVolumeSubSet  (lib CPU 0x4c008dcd)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -8, sp
+# TgMasterVolumeSubSet_entry:   (register-save `call` entry)
+    movhu   (0x500082b6), d2
+    mov     d0, d1
+    exth    d2
+    extbu   d1
+    cmp     d1, d2
+    beq     0x4c008dea
+    extbu   d0
+    movhu   d0, (0x500082b6)
+    call    TgMasterVolumeRecompute_entry, [d2,d3,a2], 0x1c
+    ret     [d2], 0xc
+.mnbase 0x48400000
+# TgMasterVolumeAuxSet  (lib CPU 0x4c008ded)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -8, sp
+# TgMasterVolumeAuxSet_entry:   (register-save `call` entry)
+    movhu   (0x500082b8), d2
+    mov     d0, d1
+    exth    d2
+    extbu   d1
+    cmp     d1, d2
+    beq     0x4c008e0a
+    extbu   d0
+    movhu   d0, (0x500082b8)
+    call    TgMasterVolumeRecompute_entry, [d2,d3,a2], 0x1c
+    ret     [d2], 0xc
+.mnbase 0x48400000
+# TgGroupGainPartsLoSet  (lib CPU 0x4c008e0d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    mov     -0x7f, d1
+    add     d0, d1
+    cmp     0, d0
+    bne     0x4c008e18
+    mov     -0x200, d1
+    movhu   d1, (0x500c0764)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGroupGainClass23Set  (lib CPU 0x4c008e21)
+#   GROUP MASTER GAIN for part class 2/3 -> halfword 0x500C0760, the
+#   term TgLevelTermFinalize folds in (gated there on 0x500C075A bit3 --
+#   the bit TgGroupGainClass23Enable owns, and note that setter is
+#   INVERTED: a non-zero argument CLEARS the bit). Value 0 stores the
+#   hard mute -0x200; otherwise value - 0x7F. Dispatcher id 0x23.
+#   Its three siblings: 0x500C0764 parts <= 0x0F (id 0x22),
+#   0x500C0762 parts 0x13..0x1A (id 0x24, gated on bit4), and
+#   0x500C0766 class 4, written by the id-0x50 handler through the
+#   program-ROM curve 0x4858662E.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    mov     -0x7f, d1
+    add     d0, d1
+    cmp     0, d0
+    bne     0x4c008e2c
+    mov     -0x200, d1
+    movhu   d1, (0x500c0760)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGroupGainParts13To1ASet  (lib CPU 0x4c008e35)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    mov     -0x7f, d1
+    add     d0, d1
+    cmp     0, d0
+    bne     0x4c008e40
+    mov     -0x200, d1
+    movhu   d1, (0x500c0762)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalRampStateSet  (lib CPU 0x4c008e49)
+#   Start/stop of the 0x500082A4 RAMP STATE MACHINE (state bits in
+#   0x500082A4, step counter 0x500082A6/A8, advanced once per tick by
+#   0x4C009837 walking the program-ROM curve 0x486D27EB). It sits in the
+#   0x500082xx DIGITAL DRAWBAR global block, so a rotary/tremolo
+#   slow<->fast speed ramp is the natural reading -- deliberately NOT
+#   claimed, the code names nothing.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c008e6b
+    movbu   (0x500082a4), d0
+    btst    0x04, d0
+    bne     0x4c008ea1
+    or      0x02, d0
+    movbu   d0, (0x500082a4)
+    clr     d0
+    movhu   d0, (0x500082a8)
+    bra     0x4c008ea1
+    movbu   (0x500082a4), d0
+    btst    0x04, d0
+    beq     0x4c008ea1
+    movhu   (0x500082a8), d1
+    and     0xffffffcb, d0
+    extbu   d0
+    or      0x08, d0
+    cmp     0x14, d1
+    ble     0x4c008e90
+    extbu   d0
+    or      0x20, d0
+    bra     0x4c008e94
+    extbu   d0
+    or      0x10, d0
+    movbu   d0, (0x500082a4)
+    clr     d0
+    movhu   d0, (0x500082a8)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalRampParamSet  (lib CPU 0x4c008ea4)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgGlobalRampParamSet_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    mov     3, d0
+    movbu   d0, (0x500082aa)
+    btst    0x08, d1
+    bne     0x4c008ebd
+    mov     1, d0
+    movbu   d0, (0x500082aa)
+    mov     1, d0
+    movbu   d0, (0x500082ab)
+    mov     0xf0, d0
+    and     d1, d0
+    extbu   d0
+    asr     4, d0
+    extbu   d0
+    add     d0, d0
+    mov     0x48586648, a0
+    movhu   (d0, a0), d2
+    btst    0x04, d1
+    movhu   d2, (0x500082ac)
+    mov     0x80, d0
+    movhu   d0, (0x500082ae)
+    bne     0x4c008ef5
+    mov     0xa0, d0
+    movhu   d0, (0x500082ae)
+    and     0x03, d1
+    mov     d1, d0
+    extbu   d0
+    asl     3, d0
+    extbu   d0
+    mov     0xc8, d1
+    sub     d0, d1
+    movhu   d1, (0x500082b0)
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgAllPartsRefreshAndFlush  (lib CPU 0x4c008f0c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x94, sp
+# TgAllPartsRefreshAndFlush_entry:   (register-save `call` entry)
+    clr     d2
+    mov     d2, d0
+    call    0x4c007b63, [d2,d3,a2,a3], 0x28
+    inc     d2
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c008f13
+    mov     sp, a2
+    add     0xc, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    add     6, a2
+    movbu   (a2), d0
+    mov     0x80, d2
+    cmp     d2, d0
+    bge     0x4c008f42
+    movbu   (a2), d0
+    inc     a2
+    exthu   d0
+    call    TgVoiceForceOff_entry, [d2], 0x18
+    movbu   (a2), d0
+    cmp     d2, d0
+    blt     0x4c008f32
+    ret     [d2,a2], 0x9c
+.mnbase 0x48400000
+# TgPartEffectRefresh  (lib CPU 0x4c008f45)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x18, sp
+# TgPartEffectRefresh_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    0x4c007b63, [d2,d3,a2,a3], 0x28
+    mov     d2, d0
+    call    0x4c007c45, 0, 0
+    mov     d2, d0
+    call    TgPartToneProgramGet, 0, 0
+    mov     d0, d3
+    mov     d2, d0
+    call    TgPartToneBankLoGet, 0, 0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    TgPartToneBankHiGet, 0, 0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     d2, d0
+    extbu   d3
+    mov     d3, d1
+    call    TgPartProgramApply_entry, [d2,d3,a2,a3], 0x48
+    mov     d2, d0
+    call    TgPartToneModSetupDispatch_entry, [d2,d3], 0x14
+    ret     [d2,d3], 0x20
+.mnbase 0x48400000
+# TgAllPartsEffectRefresh  (lib CPU 0x4c008f8c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgAllPartsEffectRefresh_entry:   (register-save `call` entry)
+    clr     d2
+    mov     d2, d0
+    call    TgPartEffectRefresh_entry, [d2,d3], 0x20
+    inc     d2
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c008f92
+    ret     [d2], 0x10
+.mnbase 0x48400000
+# TgEffectRouteSelect  (lib CPU 0x4c008fa1)
+#   0x500C0758 bits 1..3 as a 3-VALUE FIELD: clears the 0x000E mask,
+#   then value 1/2/3 sets bit1/bit2/bit3 (0 = none). Dispatcher id 0x29.
+#   bit2 and bit3 are read by the low-level element layer
+#   (0x4C0350E4 / 0x4C03517E / 0x4C03527F / 0x4C03531E / 0x4C035555 /
+#   0x4C03578C for bit2, 0x4C03545D / 0x4C035502 / 0x4C035693 /
+#   0x4C035739 for bit1) and bit3 also forces REVERB on in
+#   TgEffectEnableReverb. Which GUI control writes it is NOT claimed.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c0758), d1
+    extbu   d0
+    and     0xfffffff1, d1
+    movhu   d1, (0x500c0758)
+    cmp     1, d0
+    beq     0x4c008fc2
+    cmp     2, d0
+    beq     0x4c008fd3
+    cmp     3, d0
+    beq     0x4c008fe4
+    bra     0x4c008ff3
+    movhu   (0x500c0758), d0
+    or      0x02, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c008ff3
+    movhu   (0x500c0758), d0
+    or      0x04, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c008ff3
+    movhu   (0x500c0758), d0
+    or      0x08, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgReverbPartsApply  (lib CPU 0x4c008ff6)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x18, sp
+# TgReverbPartsApply_entry:   (register-save `call` entry)
+    clr     d2
+    mov     d2, d0
+    call    TgPartToneProgramGet, 0, 0
+    extbu   d0
+    cmp     0x10, d0
+    beq     0x4c009016
+    mov     d2, d0
+    call    TgPartToneProgramGet, 0, 0
+    extbu   d0
+    cmp     0x11, d0
+    bne     0x4c009047
+    mov     d2, d0
+    call    TgPartToneProgramGet, 0, 0
+    mov     d0, d3
+    mov     d2, d0
+    call    TgPartToneBankLoGet, 0, 0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    TgPartToneBankHiGet, 0, 0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     d2, d0
+    extbu   d3
+    mov     d3, d1
+    call    TgPartProgramApply_entry, [d2,d3,a2,a3], 0x48
+    mov     d2, d0
+    call    TgPartToneModSetupDispatch_entry, [d2,d3], 0x14
+    inc     d2
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c008ffc
+    ret     [d2,d3], 0x20
+.mnbase 0x48400000
+# TgGlobalByte0768Set  (lib CPU 0x4c009050)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500c0768)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82B2Set  (lib CPU 0x4c009059)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082b2)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82BDSet  (lib CPU 0x4c009062)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082bd)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82BESet  (lib CPU 0x4c00906b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082be)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82BFSet  (lib CPU 0x4c009074)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082bf)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82C0Set  (lib CPU 0x4c00907d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082c0)
+    retf    0, 0
+.mnbase 0x48400000
+# TgDrawbarGlobal82BCSet  (lib CPU 0x4c009086)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500082bc)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableReverb  (lib CPU 0x4c00908f)
+#   ★ REVERB ENABLE (0x500C0758 bit9). Identified twice over: the
+#   live button trace in kn7000_mame/notes/reverb-toggle-findings.md
+#   puts the panel REVERB toggle on exactly these two stores, and the
+#   handler that calls it (dispatcher id 0x40) then re-runs
+#   TgGlobalChan3Refresh + TgGlobalChanBRefresh -- sub-TG channels 3 and
+#   0x0B, which notes/effect-return-routing.md captured live as the
+#   reverb RETURN (ch03 reg 0xA) and reverb SEND (ch0B reg 8).
+#   NOTE the asymmetry: 'off' only really clears bit9 when 0x500C0758
+#   bit3 is clear -- with route bit3 set (TgEffectRouteSelect value 3)
+#   the reverb is forced ON regardless of the requested state.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    bne     0x4c00909f
+    movhu   (0x500c0758), d0
+    btst    0x08, d0
+    beq     0x4c0090b1
+    movhu   (0x500c0758), d0
+    or      0x0200, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c0090bd
+    and     0xfffffdff, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableBit10  (lib CPU 0x4c0090c0)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0090d7
+    movhu   (0x500c0758), d0
+    or      0x0400, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c0090e9
+    movhu   (0x500c0758), d0
+    and     0xfffffbff, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableBit4  (lib CPU 0x4c0090ec)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c009102
+    movhu   (0x500c0758), d0
+    or      0x10, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c009112
+    movhu   (0x500c0758), d0
+    and     0xffef, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGroupGainClass23Enable  (lib CPU 0x4c009115)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    cmp     0, d0
+    beq     0x4c00912e
+    movhu   (0x500c075a), d0
+    and     0xfffffff7, d0
+    movhu   d0, (0x500c075a)
+    bra     0x4c00913d
+    movhu   (0x500c075a), d0
+    or      0x08, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGroupGainParts13To1AEnable  (lib CPU 0x4c009140)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extb    d0
+    cmp     0, d0
+    beq     0x4c009159
+    movhu   (0x500c075a), d0
+    and     0xffffffef, d0
+    movhu   d0, (0x500c075a)
+    bra     0x4c009168
+    movhu   (0x500c075a), d0
+    or      0x10, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableMulti  (lib CPU 0x4c00916b)
+#   MULTI ENABLE (0x500C0758 bit12). Its dispatcher handler (id 0x45)
+#   re-runs TgGlobalChanCRefresh + TgGlobalChan6Refresh, and both of
+#   those gate their programming on this same bit (0x4C0055A4 and
+#   0x4C0051BE). Sub-TG channel 6 is the MULTI return captured live in
+#   kn7000_mame/notes/effect-return-routing.md (ch06 reg 0xA, 0 <-> 0x7F
+#   on the panel MULTI toggle), which is what pins this bit to the MULTI
+#   effect. Channel 0x0C is additionally gated on 0x500082C4 == 1, a
+#   DIGITAL DRAWBAR global.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c009182
+    movhu   (0x500c0758), d0
+    or      0x1000, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c009194
+    movhu   (0x500c0758), d0
+    and     0xffffefff, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableBit13  (lib CPU 0x4c009197)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0091ae
+    movhu   (0x500c0758), d0
+    or      0x2000, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c0091c0
+    movhu   (0x500c0758), d0
+    and     0xffffdfff, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgEffectEnableBit14  (lib CPU 0x4c0091c3)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0091da
+    movhu   (0x500c0758), d0
+    or      0x4000, d0
+    movhu   d0, (0x500c0758)
+    bra     0x4c0091ec
+    movhu   (0x500c0758), d0
+    and     0xffffbfff, d0
+    movhu   d0, (0x500c0758)
+    retf    0, 0
+.mnbase 0x48400000
+# TgMasterVolumeSubEnable  (lib CPU 0x4c0091ef)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c009205
+    movhu   (0x500c075a), d0
+    or      0x20, d0
+    movhu   d0, (0x500c075a)
+    bra     0x4c009217
+    movhu   (0x500c075a), d0
+    and     0xffffffdf, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag0Get  (lib CPU 0x4c00921a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0x01, d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag1Get  (lib CPU 0x4c009226)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0x02, d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag2Get  (lib CPU 0x4c009232)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0x04, d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag0Set  (lib CPU 0x4c00923e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    or      0x01, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag1Set  (lib CPU 0x4c009250)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    or      0x02, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag2Set  (lib CPU 0x4c009262)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    or      0x04, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag0Clear  (lib CPU 0x4c009274)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0xfffffffe, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag1Clear  (lib CPU 0x4c009289)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0xfffffffd, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalFlag2Clear  (lib CPU 0x4c00929e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movhu   (0x500c075a), d0
+    and     0xfffffffb, d0
+    movhu   d0, (0x500c075a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalParamCommand  (lib CPU 0x4c0092b3)
+#   ★ the TG GLOBAL-PARAMETER COMMAND DISPATCHER (d0 = command id,
+#   d1 = value). ONE function: the ~30 blocks after the jump are inline
+#   handlers, all returning through this frame ('ret [d2,d3,a2],0xa4').
+#     id < 9 or id > 0x50 -> ignored;  slot = (id - 8) & 0x3F in the
+#     64-entry program-ROM table 0x48586C60 (8 bytes: u32 key = id-8,
+#     u32 handler); a key mismatch means 'unassigned' and falls into the
+#     no-op tail 0x4C009562.
+#   Fed from the sound-command byte stream (the only caller is the stream
+#   interpreter at 0x4C003ED3, which pulls two bytes and calls the
+#   post-prologue entry 0x4C0092B9).
+#   The handlers that matter for the DSP effects (see the map in
+#   kn7000_mame/notes/effect-enable-bits.md):
+#     id 0x29 -> TgEffectRouteSelect       0x500C0758 bits 1..3
+#     id 0x2B -> TgReverbPartsApply        per-part reverb send pass
+#     id 0x40 -> TgEffectEnableReverb      bit9  + chan 3 and 0x0B
+#     id 0x41 -> TgEffectEnableBit10       bit10 (no channel refresh)
+#     id 0x42 -> TgEffectEnableBit4        bit4  (no channel refresh)
+#     id 0x43/0x44 -> the two GROUP-GAIN gates in 0x500C075A
+#     id 0x45 -> TgEffectEnableMulti       bit12 + chan 0x0C and 6
+#     id 0x46 -> TgEffectEnableBit13       bit13 + chan 1
+#     id 0x47 -> TgEffectEnableBit14       bit14 + chan 5
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x98, sp
+# TgGlobalParamCommand_entry:   (register-save `call` entry)
+    mov     d1, d3
+    extbu   d0
+    cmp     9, d0
+    bge     0x4c0092c2
+    ret     [d2,d3,a2], 0xa4
+    cmp     0x50, d0
+    ble     0x4c0092c9
+    ret     [d2,d3,a2], 0xa4
+    add     -8, d0
+    mov     0x3f, d2
+    and     d0, d2
+    asl     3, d2
+    mov     d2, a0
+    add     0x48586c60, a0
+    mov     (a0), d1
+    cmp     d0, d1
+    beq     0x4c0092e1
+    ret     [d2,d3,a2], 0xa4
+    mov     (4, a0), a0
+    jmp     (a0)
+    extbu   d3
+    mov     d3, d0
+    call    TgGlobalAllPartsRefresh_entry, [d2], 0x10
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgMasterVolumeMainSet_entry, [d2], 0xc
+    ret     [d2,d3,a2], 0xa4
+    mov     d3, d0
+    extb    d0
+    call    TgMasterTuneFineSet, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0040f4, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extb    d3
+    mov     d3, d0
+    call    TgMasterTuneTransposeSet, 0, 0
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgMasterVolumeSubSet_entry, [d2], 0xc
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgMasterVolumeAuxSet_entry, [d2], 0xc
+    ret     [d2,d3,a2], 0xa4
+    extb    d3
+    mov     d3, d0
+    call    TgGroupGainPartsLoSet, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extb    d3
+    mov     d3, d0
+    call    TgGroupGainClass23Set, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extb    d3
+    mov     d3, d0
+    call    TgGroupGainParts13To1ASet, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgGlobalRampStateSet, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0040f4, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgGlobalRampParamSet_entry, [d2], 4
+    ret     [d2,d3,a2], 0xa4
+    call    TgAllPartsRefreshAndFlush_entry, [d2,a2], 0x9c
+    ret     [d2,d3,a2], 0xa4
+    call    TgAllPartsEffectRefresh_entry, [d2], 0x10
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectRouteSelect, 0, 0
+    ret     [d2,d3,a2], 0xa4
+    call    TgReverbPartsApply_entry, [d2,d3], 0x20
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82B2Set, 0, 0
+    call    TgGlobalChan3Refresh_entry, 0, 0x18
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82BDSet, 0, 0
+    call    TgGlobalChan6Refresh_entry, [d2,d3], 0x20
+    call    TgGlobalChanCRefresh_entry, 0, 0x10
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82BESet, 0, 0
+    call    TgGlobalChanBRefresh_entry, 0, 0x18
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82BFSet, 0, 0
+    call    TgGlobalChan6Refresh_entry, [d2,d3], 0x20
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82C0Set, 0, 0
+    call    TgGlobalChan7Refresh_entry, [d2,d3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgDrawbarGlobal82BCSet, 0, 0
+    call    TgGlobalChanCRefresh_entry, 0, 0x10
+    call    TgGlobalChan6Refresh_entry, [d2,d3], 0x20
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableReverb, 0, 0
+    call    TgGlobalChan3Refresh_entry, 0, 0x18
+    call    TgGlobalChanBRefresh_entry, 0, 0x18
+    clr     d2
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    mov     d2, d0
+    call    0x4c0046b5, [d2,d3,a2,a3], 0x30
+    inc     d2
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c00943a
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableBit10, 0, 0
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableBit4, 0, 0
+    ret     [d2,d3,a2], 0xa4
+    mov     d3, d0
+    extb    d0
+    call    TgGroupGainClass23Enable, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extb    d3
+    mov     d3, d0
+    call    TgGroupGainParts13To1AEnable, 0, 0
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableMulti, 0, 0
+    call    TgGlobalChanCRefresh_entry, 0, 0x10
+    call    TgGlobalChan6Refresh_entry, [d2,d3], 0x20
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableBit13, 0, 0
+    call    TgGlobalChan1Refresh_entry, 0, 0x18
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgEffectEnableBit14, 0, 0
+    call    TgGlobalChan5Refresh_entry, 0, 0x18
+    ret     [d2,d3,a2], 0xa4
+    extbu   d3
+    mov     d3, d0
+    call    TgMasterVolumeSubEnable, 0, 0
+    call    TgMasterVolumeRecompute_entry, [d2,d3,a2], 0x1c
+    ret     [d2,d3,a2], 0xa4
+    movhu   (0x500c075a), d0
+    extbu   d3
+    and     0xfffffff8, d0
+    movhu   d0, (0x500c075a)
+    movhu   (0x500c075a), d1
+    and     0x07, d3
+    or      d3, d1
+    movhu   d1, (0x500c075a)
+    clr     d0
+    clr     d2
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x82, d0
+    bne     0x4c009531
+    mov     d2, d0
+    clr     d1
+    call    0x4c00db7d, [d2,d3,a2,a3], 0xcc
+    mov     d2, d0
+    mov     1, d1
+    call    0x4c00db7d, [d2,d3,a2,a3], 0xcc
+    mov     d2, d0
+    mov     2, d1
+    call    0x4c00db7d, [d2,d3,a2,a3], 0xcc
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c0094fe
+    bra     0x4c009562
+    extbu   d3
+    mov     -0x200, d0
+    cmp     0, d3
+    beq     0x4c00954d
+    mov     0x4858662e, a0
+    movbu   (d3, a0), d0
+    exth    d0
+    add     -0x7f, d0
+    movhu   d0, (0x500c0766)
+    mov     sp, a2
+    add     0x10, a2
+    mov     a2, a0
+    call    TgVoiceListCollectGlobal_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2], 0xa4
+.mnbase 0x48400000
+# TgGlobalParamInit  (lib CPU 0x4c009565)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# TgGlobalParamInit_entry:   (register-save `call` entry)
+    clr     d0
+    movhu   d0, (0x500c0758)
+    mov     0x18, d0
+    movhu   d0, (0x500c075a)
+    clr     d0
+    movbu   d0, (0x500082a4)
+    movhu   d0, (0x500082a6)
+    movhu   d0, (0x500082a8)
+    movbu   d0, (0x500082ab)
+    movbu   d0, (0x500082aa)
+    movhu   d0, (0x500082b0)
+    movhu   d0, (0x500082ae)
+    movhu   d0, (0x500082ac)
+    mov     0x7f, d0
+    movhu   d0, (0x500c0766)
+    movhu   d0, (0x500082ba)
+    movhu   d0, (0x500082b8)
+    movhu   d0, (0x500082b6)
+    movhu   d0, (0x500082b4)
+    mov     0xff, d0
+    movhu   d0, (0x500082c4)
+    clr     d2
+    clr     d3
+    mov     d3, d0
+    call    0x4c007b63, [d2,d3,a2,a3], 0x28
+    extbu   d2
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d2
+    mov     d2, a2
+    add     0x500b5340, a2
+    mov     0x28, a0
+    add     a2, a0
+    clr     d0
+    mov     d0, (a0)
+    mov     d0, (4, a0)
+    mov     d0, (8, a0)
+    mov     d0, (0xc, a0)
+    mov     0x00040000, d0
+    mov     d0, (0x10, a0)
+    clr     d0
+    movbu   d0, (0x3c, a2)
+    movhu   d0, (0x52c, a2)
+    mov     d3, d0
+    mov     0x7f, d1
+    call    0x4c008034, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c006ed6, [d2,d3,a2,a3], 0x38
+    mov     d3, d0
+    clr     d1
+    call    0x4c006fa1, [d2], 4
+    mov     d3, d0
+    mov     0x7f, d1
+    call    0x4c0071f1, [d2,d3], 8
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007232, [d2], 4
+    mov     d3, d0
+    mov     0x7f, d1
+    call    0x4c00724a, [d2,d3], 8
+    mov     d3, d0
+    clr     d1
+    call    0x4c00728b, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c0072a3, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c0072be, [d2,d3,a2,a3], 0x38
+    mov     d3, d0
+    clr     d1
+    call    0x4c00738c, [d2,d3,a2,a3], 0x38
+    mov     d3, d0
+    clr     d1
+    call    0x4c007457, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c00746f, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007487, [d2,d3], 8
+    mov     d3, d0
+    clr     d1
+    call    0x4c0074a6, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c0074e5, [d2,d3,a2], 0x1c
+    mov     d3, d0
+    clr     d1
+    call    0x4c007555, 0, 0
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007593, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c0075c2, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c0075e8, [d2], 4
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007608, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007637, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c0076b6, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c00767d, [d2,d3], 0x18
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c0076b6, [d2,d3], 0x18
+    mov     d3, d0
+    clr     d1
+    call    0x4c0076dc, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c0079e2, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c00770c, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007724, [d2,d3,a2], 0xc
+    mov     d3, d0
+    clr     d1
+    call    0x4c0076f4, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c0079fa, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007a24, [d2], 4
+    mov     d3, d0
+    call    0x4c007a52, [d2,d3,a2,a3], 0xa8
+    mov     d3, d0
+    call    0x4c007c45, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007c79, 0, 0
+    mov     d3, d0
+    mov     2, d1
+    call    0x4c007cb5, [d2], 4
+    mov     d3, d0
+    mov     0x80, d1
+    call    0x4c007ccd, [d2], 4
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007cea, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007d04, 0, 0
+    mov     d3, d0
+    mov     6, d1
+    call    0x4c007d3f, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007d57, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007d73, [d2,d3], 8
+    mov     d3, d0
+    clr     d1
+    call    0x4c007d94, [d2], 4
+    mov     d3, d0
+    mov     2, d1
+    call    0x4c007dd5, [d2,d3], 8
+    mov     d3, d0
+    mov     0x40, d1
+    call    0x4c007dfd, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007e23, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007e39, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007e75, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007eae, 0, 0
+    mov     d3, d0
+    mov     1, d1
+    call    0x4c007eea, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007f24, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007f60, [d2], 4
+    mov     d3, d0
+    clr     d1
+    call    0x4c007fbf, 0, 0
+    mov     d3, d0
+    clr     d1
+    call    0x4c007ff9, 0, 0
+    clr     d2
+    mov     0x80, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     d2, d1
+    call    0x4c00832c, [d2,d3], 0x18
+    inc     d2
+    extbu   d2
+    cmp     0xc, d2
+    blt     0x4c009791
+    mov     0x6c, d0
+    movbu   d0, (0x22, a2)
+    clr     d0
+    movbu   d0, (0x24, a2)
+    mov     0x1c, d0
+    movbu   d0, (0x21, a2)
+    clr     d0
+    movbu   d0, (0x23, a2)
+    mov     d3, d0
+    call    0x4c008083, [d2,d3,a2,a3], 0x4c
+    mov     d3, d0
+    clr     d1
+    call    0x4c008a93, [d2,d3,a2,a3], 0x48
+    inc     d3
+    mov     d3, d2
+    extbu   d3
+    cmp     0x22, d3
+    bge     0x4c0097cc
+    jmp     0x4c0095d5
+    mov     0x7f, d0
+    call    TgMasterVolumeMainSet_entry, [d2], 0xc
+    mov     0x7f, d0
+    call    TgMasterVolumeSubSet_entry, [d2], 0xc
+    mov     0x7f, d0
+    call    TgMasterVolumeAuxSet_entry, [d2], 0xc
+    mov     0x40, d0
+    call    TgMasterTuneFineSet, 0, 0
+    mov     0x40, d0
+    call    TgMasterTuneTransposeSet, 0, 0
+    clr     d0
+    call    TgGlobalRampStateSet, 0, 0
+    call    TgAllPartsRefreshAndFlush_entry, [d2,a2], 0x9c
+    mov     0x7f, d0
+    call    TgGroupGainClass23Set, 0, 0
+    clr     d0
+    call    TgDrawbarGlobal82BDSet, 0, 0
+    mov     0x28, d0
+    call    TgDrawbarGlobal82BESet, 0, 0
+    mov     0x28, d0
+    call    TgDrawbarGlobal82BFSet, 0, 0
+    mov     0x28, d0
+    call    TgDrawbarGlobal82C0Set, 0, 0
+    clr     d0
+    call    TgEffectEnableReverb, 0, 0
+    clr     d0
+    call    TgEffectEnableBit13, 0, 0
+    clr     d0
+    call    TgMasterVolumeSubEnable, 0, 0
+    clr     d0
+    call    TgEffectEnableBit14, 0, 0
+    ret     [d2,d3,a2], 0x20
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c2808, 0x3c2ed2
 # TgDrumZoneParamClamp  (lib CPU 0x4c009f01)
 #   the DRUM-side zone param fetcher set (third link of the family after
 #   the melodic 0x4C00FD4C.. and kit 0x4C011F2F.. sets), serving the
@@ -58174,13 +59442,13 @@ display_palette:
     cmp     4, d0
     beq     0x4c03983c
     bra     0x4c039844
-    call    0x4c00921a, 0, 0
+    call    TgGlobalFlag0Get, 0, 0
     mov     d0, d2
     bra     0x4c039844
-    call    0x4c009226, 0, 0
+    call    TgGlobalFlag1Get, 0, 0
     mov     d0, d2
     bra     0x4c039844
-    call    0x4c009232, 0, 0
+    call    TgGlobalFlag2Get, 0, 0
     mov     d0, d2
     mov     a2, d0
     exth    d0
