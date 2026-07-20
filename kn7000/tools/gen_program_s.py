@@ -156,6 +156,25 @@ CONVERT = {
     "VoiceBankSourceQuery", "VoiceBankSourceFlagGet",
     "VoiceBankSourceFlagStubB", "VoiceBankSourceFlagStubC",
     "VoiceParamRecFetchBanked", "CustomVoiceRecFetch", "UserVoiceRecPtr",
+    # the VOICE-LIST INDEX layer: three more per-archive hash directories plus
+    # the byte-attribute one, and the two global index spaces the tone/drum
+    # SELECTION GRIDS address sounds by (notes/sound-bank-classes.md)
+    "VoiceAttrClassify", "VoiceAttrLookupInternal", "VoiceAttrLookupSrc1",
+    "VoiceAttrLookupSrc2", "VoiceAttrLookupSrc3", "VoiceAttrLookupSrc4",
+    "VoiceAttrKeyEqual", "VoiceAttrHashIndex", "VoiceAttrByteGet",
+    "VoiceListIndexOfBank", "VoiceListIndexLookupInternal",
+    "VoiceListIndexLookupSrc1", "VoiceListIndexLookupSrc2",
+    "VoiceListIndexLookupSrc3", "VoiceListIndexLookupSrc4",
+    "VoiceListIndexKeyEqual", "VoiceListIndexHashIndex",
+    "VoiceArchiveKindByte", "VoiceArchiveKindByteAlt",
+    "VoiceListEntryByIndex", "VoiceListEntryLookupInternal",
+    "VoiceListEntryLookupSrc1", "VoiceListEntryLookupSrc2",
+    "VoiceListEntryLookupSrc3", "VoiceListEntryLookupSrc4",
+    "VoiceListEntryKeyEqual", "VoiceListEntryHashIndex",
+    "VoiceListIndexMapAtoB", "VoiceArchiveCountA", "VoiceArchiveCountB",
+    "VoiceListMapLookupInternal", "VoiceListMapLookupSrc1",
+    "VoiceListMapLookupSrc2", "VoiceListMapLookupSrc3",
+    "VoiceListMapLookupSrc4", "VoiceListMapKeyEqual", "VoiceListMapHashIndex",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -176,6 +195,8 @@ FUNC_END = {
     "VoiceBankSourceFlagStubC": 0x4A3F6,   # next (unnamed) function at 0x4844A3F6
     "CustomVoiceRecFetch": 0x4A47A,        # next (unnamed) function at 0x4844A47A
     "UserVoiceRecPtr": 0x4AC0D,            # next (unnamed) function at 0x4844AC0D
+    "VoiceAttrByteGet": 0x49B3B,           # next (unnamed) function at 0x48449B3B
+    "VoiceListMapHashIndex": 0x172607,     # next (unnamed) function at 0x48572607
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live

@@ -1618,3 +1618,121 @@
 0x4C00CF2A  TgPartEditLfoLoadH_entry
 0x4C00CF8B  TgPartEditLfoGroupLoad  ; (d0 part) ★ the dispatcher: group = (tone descriptor byte +0x44) & 0x0F, rejected unless 0..0x0B, then the jump table 0x48586F28 picks one of the twelve thunks that call the eight unpackers above with the group index
 0x4C00D047  TgPartEditLfoFlagSet    ; (d0 part, d1 bool) set/clear bit7 of the SOUND EDIT record byte +0x44 (the LFO block header) for parts 0x10..0x12 -- one of the LFO EDIT page's on/off toggles (KEYSYNC or CONNECTION; not settled which). Lazily activates the local-edit shadow first (TgPartLocalEditActivate_entry)
+
+; ---- ★ THE VOICE-LIST INDEX LAYER: four more archive directories, and the
+;      SOUND-EXPLORER / TONE-SELECT grids that ride on them
+;      (region 1, 2026-07-20). Extends notes/sound-bank-classes.md.
+;
+;      The five bank sources documented above (INTERNAL 0x48000000 plus the
+;      four 0x57000000 / 0x56000000 / 0x41000000 / 0x41800000 windows) do NOT
+;      carry just one directory each. Each archive's sound directory -- the
+;      block at base + *(base+0x18) -- carries SIX parallel hash directories,
+;      each a (bucket-table offset, descriptor offset) pair:
+;
+;        buckets  descr   key     payload         used by
+;        +0x08    +0x20   u32     u16 @entry+8    family B  VoiceParamBank*
+;        +0x0C    +0x24   u32     u16 @entry+8    family A  VoiceBank*
+;        +0x28    +0x2C   u16     rec @entry+6    VoiceListIndexOfBank
+;        +0x30    +0x34   u16     rec @entry+6    VoiceListEntryByIndex
+;        +0x38    +0x3C   u16     rec @entry+6    VoiceListIndexMapAtoB
+;        +0x40    +0x44   u32     u8  @entry+8    VoiceAttrClassify
+;
+;      A descriptor is halfwords {mult, nbuckets, countA, countB}; the walk is
+;      always the same multiplicative-hash bucket chain (bucket =
+;      (key*mult) % nbuckets, chain link at entry+0, key at entry+4).
+;      countA / countB live in the +0x3C descriptor and are read back by
+;      VoiceArchiveCountA / VoiceArchiveCountB.
+;
+;      TWO GLOBAL INDEX SPACES. The tone-selection GUI does not address a
+;      sound by (bank, program) -- it addresses it by a position in ONE merged
+;      list spanning every fitted archive. Two such numbering spaces exist:
+;        space A -- byte-wide per archive, running total VoiceArchiveCountA
+;        space B -- halfword-wide,        running total VoiceArchiveCountB
+;      Each source's local index is made global by adding the running sum of
+;      (count+1) over all preceding sources, which is exactly what the three
+;      classifiers below do as they walk sources 0,1,2,3,4.
+;
+;      The three functions compose, and the SOUND/TONE selection grids call
+;      them back-to-back in this order (see ToneSelGridSe 0x484DF84E ->
+;      0x484DF863 -> 0x484DF883, and the same triple in TsetGridSe,
+;      DrumTsetGridSe, DrumMainGridSe, DrumLfoGridSe):
+;
+;        (bank LSB, program)  --VoiceListIndexOfBank-->  index A (and index B)
+;        index A + 1          --VoiceListIndexMapAtoB->  index B
+;        index B & 0x7FFF     --VoiceListEntryByIndex->  (kind, byte0, byte1)
+;
+;      WHAT THIS IS NOT: these are the VOICE archives' own index directories.
+;      Every caller found in the image is a tone/drum SELECTION GRID; nothing
+;      here reaches the rhythm/style resource windows, so this pass does NOT
+;      connect the bank machinery to the missing STYLE data
+;      (notes/sequenced-playback-and-style-data-rootcause.md).
+;
+;      DELIBERATELY NOT CLAIMED: which UI axis space A and space B each are
+;      (group/page ordinal vs. sound ordinal is the natural reading but is not
+;      proven from the code), and the meaning of the byte VoiceAttrClassify
+;      returns (0xFF when the sound has none).
+0x48571056  VoiceAttrClassify       ; (d0 program, d1 bank LSB, a0 out u8 attr, a1 out u8 class, arg5 bank MSB) -> always 1; same five-source walk and same 24-bit MIDI key as VoiceBankClassify, but over the +0x40/+0x44 directory, and the payload is a BYTE. Total miss -> attr 0xFF, class 0
+0x4857105B  VoiceAttrClassify_entry
+0x48571178  VoiceAttrLookupInternal ; +0x40/+0x44 hash lookup in the class-0 archive (0x48000000)
+0x4857117D  VoiceAttrLookupInternal_entry
+0x485711EB  VoiceAttrLookupSrc1     ; class-1 archive (0x57000000)
+0x485711F0  VoiceAttrLookupSrc1_entry
+0x4857125E  VoiceAttrLookupSrc2     ; class-2 archive (0x56000000)
+0x48571263  VoiceAttrLookupSrc2_entry
+0x485712D1  VoiceAttrLookupSrc3     ; class-3 archive (0x41000000)
+0x485712D6  VoiceAttrLookupSrc3_entry
+0x48571344  VoiceAttrLookupSrc4     ; class-4 archive (0x41800000)
+0x48571349  VoiceAttrLookupSrc4_entry
+0x485713B7  VoiceAttrKeyEqual       ; (d0,d1) -> 1 on u32 key match -- retf leaf
+0x485713C2  VoiceAttrHashIndex      ; (d0 key, d1 mult, arg nbuckets@0x14,sp) -> (key*mult) % nbuckets, mulu/divu remainder
+0x485713C4  VoiceAttrHashIndex_entry
+0x48449B14  VoiceAttrByteGet        ; (d0 program, d1 bank LSB, a0 out u8 class, arg5 bank MSB) -> the attribute byte, staged through the scratch byte 0x5003A5B8. No caller in this image
+0x48449B19  VoiceAttrByteGet_entry
+0x4857176B  VoiceListIndexOfBank    ; (d0 bank LSB, d1 program, a0 out u8 index A, a1 out u32 record ptr, arg5 archive kind, arg6 out u16 index B) -> 1 when found. Walks sources 1..4 then 0, skipping any source whose VoiceArchiveKindByte differs from the requested kind, accumulating (VoiceArchiveCountA+1)/(VoiceArchiveCountB+1) as it goes; key = (LSB<<8)|program over the +0x28/+0x2C directory. Misses degrade program -> program&~7 -> program 0 -> the 0x7F7F default, like family B
+0x48571770  VoiceListIndexOfBank_entry
+0x485719D5  VoiceListIndexLookupInternal ; +0x28/+0x2C hash lookup in the class-0 archive (0x48000000)
+0x485719DA  VoiceListIndexLookupInternal_entry
+0x48571A4B  VoiceListIndexLookupSrc1 ; class-1 archive (0x57000000)
+0x48571A50  VoiceListIndexLookupSrc1_entry
+0x48571AC1  VoiceListIndexLookupSrc2 ; class-2 archive (0x56000000)
+0x48571AC6  VoiceListIndexLookupSrc2_entry
+0x48571B37  VoiceListIndexLookupSrc3 ; class-3 archive (0x41000000)
+0x48571B3C  VoiceListIndexLookupSrc3_entry
+0x48571BAD  VoiceListIndexLookupSrc4 ; class-4 archive (0x41800000)
+0x48571BB2  VoiceListIndexLookupSrc4_entry
+0x48571C23  VoiceListIndexKeyEqual  ; (d0,d1) -> 1 on u16 key match -- retf leaf
+0x48571C30  VoiceListIndexHashIndex ; (d0 key, d1 mult, arg nbuckets@0x10,sp) -> (key*mult) % nbuckets -- rets leaf (no register frame)
+0x48571C41  VoiceArchiveKindByte    ; (d0 source 1..4) -> the archive's KIND byte, the first byte of the header block at base + *(base): *(u8 *)(window + *(window)). 0 for any other source. The index classifiers use it to skip archives that do not hold the requested resource kind
+0x48571CA0  VoiceListEntryByIndex   ; (d0 global index B, d1 out u8 kind, a0 out u8 byte0, a1 out u8 byte1) -> 1 when the index resolves. The INVERSE of VoiceListIndexOfBank: subtracts (VoiceArchiveCountB+1) per source until the index falls inside one, looks the local index up as the key in that archive's +0x30/+0x34 directory, and returns the entry's first two bytes plus the source's VoiceArchiveKindByteAlt
+0x48571CA5  VoiceListEntryByIndex_entry
+0x48571E07  VoiceListEntryLookupInternal ; +0x30/+0x34 hash lookup in the class-0 archive (0x48000000)
+0x48571E0C  VoiceListEntryLookupInternal_entry
+0x48571E7D  VoiceListEntryLookupSrc1 ; class-1 archive (0x57000000)
+0x48571E82  VoiceListEntryLookupSrc1_entry
+0x48571EF3  VoiceListEntryLookupSrc2 ; class-2 archive (0x56000000)
+0x48571EF8  VoiceListEntryLookupSrc2_entry
+0x48571F69  VoiceListEntryLookupSrc3 ; class-3 archive (0x41000000)
+0x48571F6E  VoiceListEntryLookupSrc3_entry
+0x48571FDF  VoiceListEntryLookupSrc4 ; class-4 archive (0x41800000)
+0x48571FE4  VoiceListEntryLookupSrc4_entry
+0x48572055  VoiceListEntryKeyEqual  ; (d0,d1) -> 1 on u16 key match -- retf leaf
+0x48572062  VoiceListEntryHashIndex ; (d0 key, d1 mult, arg nbuckets@0x10,sp) -> (key*mult) % nbuckets -- rets leaf
+0x48572073  VoiceArchiveKindByteAlt ; a second, byte-identical copy of VoiceArchiveKindByte used by the index-B side
+0x485720D2  VoiceListIndexMapAtoB   ; (d0 global index A, a0 out u16 index B) -> 1 when it resolves. Subtracts (VoiceArchiveCountA+1) per source to find the owning archive, looks the local index up as the key in its +0x38/+0x3C directory and adds the running (VoiceArchiveCountB+1) sum to the halfword it finds -- i.e. the space A -> space B conversion the selection grids apply between VoiceListIndexOfBank and VoiceListEntryByIndex
+0x485720D7  VoiceListIndexMapAtoB_entry
+0x48572225  VoiceArchiveCountA      ; (d0 source 0..4) -> u16 at (sound directory +0x3C)+4, the archive's entry count in global index space A; -1 for any other source
+0x48572227  VoiceArchiveCountA_entry
+0x485722E0  VoiceArchiveCountB      ; (d0 source 0..4) -> u16 at (sound directory +0x3C)+6, the archive's entry count in global index space B; -1 for any other source
+0x485722E2  VoiceArchiveCountB_entry
+0x4857239B  VoiceListMapLookupInternal ; +0x38/+0x3C hash lookup in the class-0 archive (0x48000000)
+0x485723A0  VoiceListMapLookupInternal_entry
+0x48572411  VoiceListMapLookupSrc1  ; class-1 archive (0x57000000)
+0x48572416  VoiceListMapLookupSrc1_entry
+0x48572487  VoiceListMapLookupSrc2  ; class-2 archive (0x56000000)
+0x4857248C  VoiceListMapLookupSrc2_entry
+0x485724FD  VoiceListMapLookupSrc3  ; class-3 archive (0x41000000)
+0x48572502  VoiceListMapLookupSrc3_entry
+0x48572573  VoiceListMapLookupSrc4  ; class-4 archive (0x41800000)
+0x48572578  VoiceListMapLookupSrc4_entry
+0x485725E9  VoiceListMapKeyEqual    ; (d0,d1) -> 1 on u16 key match -- retf leaf
+0x485725F6  VoiceListMapHashIndex   ; (d0 key, d1 mult, arg nbuckets@0x10,sp) -> (key*mult) % nbuckets -- rets leaf
