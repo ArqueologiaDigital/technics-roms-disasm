@@ -204,11 +204,26 @@ the DM bank. Early taps (samples @ 44.1 kHz):
 
 Fixed across all presets: diffuser 313/607/1227/2587, absorber 5239, combs
 16232/14464 (+ taps 8912/8466), line J 1/257, k=0.618, wet ±0.5614.
-Whitelist pairs (0x10/0x11 etc.) are the usual mono/stereo type aliases; how
-the 8 GUI names (Room1/2, Plate1/2, Concert1/2, Dark1/2) map onto the 6
-records + host-side coefficient edits is **not pinned statically** (the live
-checksums showed Dark2 and Concert sharing PM with different DM — consistent
-with this family).
+Whitelist pairs (0x10/0x11 etc.) are the usual mono/stereo type aliases.
+**GUI-name map PINNED LIVE 2026-07-20**
+(`kn7000_mame/notes/dsp-unit-roles-live-capture.md`): the reverb screen's
+page-1 presets select, on **unit 0** (the reverb unit — not unit 9),
+
+| GUI | type | record |
+|---|---|---|
+| Room1 | 0x10 | rec53 |
+| Plate1 | 0x12 | rec54 |
+| Concert1 | 0x14 | rec51 |
+| Dark1 | 0x16 | rec55 |
+
+and each "…2" partner (Room2/Plate2/Concert2/Dark2) issues **no type
+change** — a DM-bank-only rewrite of the same record (coefficient cells
+c011–c01e/c026/c028 + the single PM word `0x8463`), i.e. each GUI pair =
+one record + two host voicings. This matches the live checksum observation
+(same PM, different DM) and the descriptor-table names for the un-driven
+page 2 (rec56 = Bright1/2 0x18/0x19, the boot default; rec52 = Live
+Stage/Stadium 0x1E/0x1F; rec51's alias types also serve Long1/2 + Large
+Hall1/2).
 
 ## 4. Classification
 
@@ -247,6 +262,12 @@ Full traces of rec06/07/09 (syms updated accordingly):
 None of these can produce a seconds-long exponential tail (longest loop
 ≈ 7 ms), so **the audible GUI reverb cannot be rec06/07/09**. Their delay
 lines live in the small internal I2 ring (B2=0xC3A0), not SDRAM.
+**Mystery closed 2026-07-20**: the live unit-role capture
+(`kn7000_mame/notes/dsp-unit-roles-live-capture.md`) shows unit 9 is the
+**CHORUS** unit (the hold-CHORUS GUI selects {u9, 0x52=rec49} / {u9,
+0x02=rec07}); the "Reverb" label on its whitelist was wrong — of course the
+unit-9 records are all choruses. The GUI reverb runs on unit 0, whose
+whitelist admits exactly this document's rec51–56.
 
 Provisional oddity: the shipped LFO increment templates (`0x800000` = fs/256
 ≈ 172 Hz under the 2^31 FDEP phase wrap) are audio-rate. Since the host
@@ -261,26 +282,19 @@ summaries above: rec09's LFO phase templates are **90°** apart (not 45°; the
 write `0x3000` sets **ALUSAT** (not NESTM), so rec07's ±1.15 modulator sums
 saturate at ±1.0 and its tap swing stays ±64 samples.
 
-## 7. Open question: the unit-number / GUI-role mapping
+## 7. ~~Open question~~ RESOLVED (2026-07-20): the unit-number / GUI-role mapping
 
-The host whitelist table was previously read as "unit 0 = Enhancer (types
-0x10-0x1F), unit 9 = Reverb (0x01/02/04/40/52)" (`dsp-effect-catalog.md` §3).
-This annotation shows the 0x10-0x1F family **is** the reverb engine and the
-unit-9 types are ensemble/flanger programs — and the live evidence agrees
-(the GUI reverb executed the rec5x program; its return sits at the first call
-slot `0xC342`; rec56 is the boot-default there). Two readings reconcile it:
-
-1. the whitelist's unit indices don't map 1:1 onto GUI roles the way the
-   catalog assumed (unit 0 ↔ the REVERB screen, the "unit 9" path serving
-   something else — e.g. an ensemble/"space" unit), or
-2. `DspEffectSelect`'s unit numbering ≠ mainloop call-slot numbering, and the
-   earlier per-slot boot inventory mislabeled which host unit owns slot 0.
-
-**Decisive experiment** (not doable statically): breakpoint
-`DspEffectSelect` (`0x48405815`) while switching Room1→Dark2 on the REVERB
-screen and log (unit, type) + which PM slot the download rewrites. Until
-then, records.tsv keeps both facts: the whitelist membership and the
-corrected algorithm identity.
+The decisive experiment this section called for was run
+(`kn7000_mame/notes/dsp-unit-roles-live-capture.md`): tapping the
+DspEffectSelect param block AND the download ports while driving the REVERB
+screen shows **reading 1 was correct** — DspEffectSelect unit numbers DO
+equal mainloop call-slot numbers, and the *labels* were wrong: **unit 0 IS
+the REVERB unit** (Room1/Plate1/Concert1/Dark1 → {unit 0, types
+0x10/0x12/0x14/0x16} → records to PM `0x8400`) and **unit 9 IS the CHORUS
+unit** (Chorus1–4 → {u9, 0x52=rec49}, GM Chorus1–4 → {u9, 0x02=rec07} → PM
+`0x8D00`). The "…2" GUI partners are DM-bank-only voicings of the same
+record (§3). `dsp-effect-catalog.md` §3's role column is corrected
+accordingly (unit 7 = MIC REVERB as well).
 
 ## 8. Cross-model
 

@@ -318,8 +318,11 @@ words instead), `0x80E7` (0x50-stride state+arena variant). Net effect: park
 a slot on a scrub stub with `0x9C40[unit] = arena size` and its delay memory
 is wiped end-to-start, 41 words per frame, while the slot outputs silence —
 **no stale reverb tail can bleed into the next effect**. (Mechanism is fact;
-the host-side usage — presumably poking the CALL target to a stub during
-effect swaps — has not been captured live: PROVISIONAL.)
+the host-side usage is now **captured live** (2026-07-20,
+`kn7000_mame/notes/dsp-unit-roles-live-capture.md`): every GUI effect-select
+burst arms `0x9C40+unit` and writes the unit's CALL-slot word twice —
+once around the swap, once to re-patch the effect — exactly the
+park-on-scrub choreography this section predicted.)
 
 ## 7. Effect ABI + the coefficient hot-patch path
 
@@ -358,50 +361,51 @@ reverb-depth changes. (BUSLK's decode is TRM fact; "designed as the
 coefficient-window" is interpretation — PROVISIONAL. Note the two units that
 run *after* the unlock, u8/u9, are exactly the two that touch no SDRAM.)
 
-## 8. The MULTI question: which slot serves the `0x8298` TG send
+## 8. The MULTI question: ~~which slot serves the `0x8298` TG send~~ — ANSWERED LIVE 2026-07-20 (the §8 verdict below was WRONG)
 
-Prior state (`effect-multi-unit-routing.md`): sends are TG mixer channels —
-REVERB `0x80B8`, SOUND DSP `0x8098/0x80C8` (bank 0x80), CHORUS `0x8198` (bank
-0x81), **MULTI `0x8298` (bank 0x82)**; reverb lives on u0 (live-verified);
-MULTI's unit was "one of u1(rec15)/u2(rec08)/u3(rec11)/u5(rec10)", with a
-noise-level coeff-diff hint at u5.
+**Resolved by the DspEffectSelect + upload live capture**
+(`kn7000_mame/notes/dsp-unit-roles-live-capture.md`): driving the four
+effect GUIs while tapping the param block AND the host download ports gives
+the full fixed-function unit map as live fact:
 
-The kernel structure narrows this hard:
+| unit | live role | GUI evidence |
+|---|---|---|
+| u0 | **REVERB** | reverb presets → {unit0, types 0x10/0x12/0x14/0x16}, records to PM `0x8400` |
+| u1 | **MULTI** (captured state) | Multi Cross-Delay presets → {unit1, 0x0C=rec15}, PM `0x850C/0x8529` delay-immediate patches |
+| u2..u6 | per-part Sound-DSP / Digital-Effect insert pool | SOUND DSP (RIGHT1) → {unit2, 0x03=rec08}; boot defaults u2=0x03 u3=0x06 u4=0x01 u5=0x29 u6=0x05; PANEL MEMORY recalls resync all five |
+| u7 | **MIC REVERB** | resyncs write {unit7, 0x58=rec58} + rec58's PM immediates |
+| u8 | EQUALIZER | boot {unit8, 0x4F} |
+| u9 | **CHORUS** | Chorus1–4 → {unit9, 0x52=rec49}; GM Chorus1–4 → {unit9, 0x02=rec07} |
 
-1. **Three send banks exist (0x80/0x81/0x82; 0x83 is the depth plane) and
-   exactly three RX lines have readers** (§4.3; SPORT1-B is armed but no unit
-   reads it, and no fourth bank exists). The bank↔line correspondence is
-   1:1 or nothing.
-2. **Anchor**: reverb (bank 0x80, live u0) → bank 0x80 = SPORT0-A, whose
-   readers are u0..u3.
-3. **Cross-check**: the Chorus whitelist unit u7 (types 0x58–0x5B,
-   `dsp-effect-catalog.md` §3) reads SPORT0-B — and CHORUS is bank 0x81. The
-   second bank lands on the second line. ✓
-4. Therefore **MULTI (bank 0x82) arrives on SPORT1-A (`0xC372..0xC379`),
-   whose readers are u8, u9, u6**. u8 accepts only type 0x4F (EQ), u9 only
-   the unit-9 whitelist — and MULTI types validate against the units-1–6
-   insert whitelist. **The only insert slot on that line is u6.**
+So the prior verdict "MULTI = u6" is **REFUTED**, and with it this section's
+load-bearing hypothesis (bank↔line 1:1): the three TG send banks land on
+specific TDM **pairs**, two of them on the same line —
 
-**Verdict: MULTI = unit 6 = call slot 7 (`0x8093`), PM `0x8A00`, input
-`0xC378/9`, return `0xC358/9` on DT1A** — the slot the `+0x0A` I4 hop exists
-to serve. Corollaries: the "u6 = chorus twin" reading dissolves — u6's boot
-default rec06 is loaded via its *insert* alias type 0x2C, i.e. the MULTI
-slot's default program; every prior candidate (u1/u2/u3/u5) is excluded
-(wrong line); SOUND DSP's real units are among u1..u3 (+u4/u5 = the five
-GUI Sound-DSP inserts on banks 0x80/0x81), so the MAME bridge's u9-feed for
-SOUND DSP is a placeholder, not the hardware routing. Status:
-**answered-provisional** — every link is ROM/TRM fact except the bank↔line
-identity order, which rests on the u0 anchor + u7 cross-check (two
-independent hits, zero contradictions). Decisive live test unchanged: log
-which RX slot goes nonzero on real hardware (or a faithful TG-TDM model)
-when MULTI depth > 0; the within-line pair map (send ch 0x09/0x19/0x29 all =
-in-bank index 9 → pair 3 on u3/u7/u6 under this reading) falls out of the
-same capture.
+| TG send bus | unit | input pair (§4.3) | line |
+|---|---|---|---|
+| REVERB `0x80xx` | u0 | `0xC362/3` | SPORT0-A pair 0 |
+| MULTI `0x82xx` | u1 | `0xC364/5` | SPORT0-A pair 1 |
+| CHORUS `0x81xx` | u9 | `0xC376/7` | SPORT1-A pair 2 |
+
+The step-3 "cross-check" above rested on the whitelist role labels
+(u7=Chorus, u9=Reverb, u0=Enhancer) — all three of which the capture
+falsifies. The whitelist *contents* always agreed with the corrected roles:
+u0 admits the six rec5x comb+allpass reverbs (0x10–0x1F), u9 admits only
+modulated-delay choruses (rec06/07/09/70/49 — this doc's own §6-family
+finding that "the unit-9 records are NOT reverbs" is finally explained), u7
+admits the rec58–61 mic reverbs. Correct corollaries that survive: u6's
+`+0x0A` I4 hop serves an ordinary insert slot (nothing special about u6);
+u7's input `0xC370/1` is the TG's MIC feed; u8's `0xC372/3` is the
+master-mix insert feed. Caveat recorded: "MULTI = u1" is the captured
+machine state (boot default + two PMEM registrations); a registration that
+allocates the multi elsewhere in the u1–u6 pool is not excluded.
 
 ## 9. Open questions
 
-- Bank↔line identity order (§8) — the one hypothesis load-bearing for the
-  MULTI verdict.
+- ~~Bank↔line identity order (§8)~~ — **resolved 2026-07-20** by the live
+  unit-role capture (§8): banks map to TDM pairs (u0/u1/u9), not lines.
+  Still open from that capture: whether the ALLOCATION screen can move the
+  MULTI/Sound-DSP assignments within the u1–u6 pool.
 - ~~What drives the FLAG3 input pin, and the {u6,u7} shared-SDRAM-window
   concurrency corner (§6)~~ — **both resolved 2026-07-19** by the rec58–61
   annotation (`final-batch-algorithms.md` §1): FLAG3 = fs/2 parity strobe

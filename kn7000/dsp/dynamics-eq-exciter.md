@@ -319,14 +319,21 @@ feasibility question as far as statics can:
   the DAC path). For the MAME bridge this endorses exactly the note's
   proposed model: feed u8's input with the final mix and take u8's return as
   the DAC feed.
-- **Flat should be transparent**: the template is mathematically identity
-  (§5.2), so inserting a *template* rec34 costs only float rounding + FIX.
-  The live measurement of ~15%-of-peak per-sample difference at "flat"
-  (2026-07-12 note) therefore implies the **host's real coefficient bank is
-  not a mirror bank** even at 0 dB (or the GUI's flat isn't 0 dB
-  internally) — worth one live DM dump of u8 c004–c019 to settle
-  (**PROVISIONAL**; the conditional-insert guard design in the note stands
-  either way).
+- **Flat should be transparent** — **SETTLED LIVE 2026-07-20** (u8 DM dumps,
+  `kn7000_mame/notes/dsp-unit-roles-live-capture.md`): the host's runtime
+  bank at flat **IS an exact mirror bank** (bit-mirrored numerators, all
+  g = 1.0 → H(z) ≡ 1), so GUI-flat is 0 dB internally and transparent. The
+  old "~15%-of-peak per-sample difference at flat" was a measurement
+  artifact of that feed test, not a coefficient effect. Two refinements the
+  dumps add: (1) the host computes the bank from the on-screen FC/GAIN/Q —
+  the flat poles match the GUI's FC row 125/500/1k/2k/8k and equal
+  **rec23's template values**, not rec34's ROM template (which is never
+  used at runtime); (2) presets rewrite poles *and* zeros per band
+  (Treble Boost: S5 → p=0.034, z=−0.815, g=1.782 = unity-DC +8 dB shelf;
+  Radio: mid g 1.02/1.05 + S5 g 0.39; No Hi Hat: S4-only non-mirror
+  notch), and edits upload as per-word DM writes with **no
+  DspEffectSelect call** (type stays 0x4F). The bank updates even with
+  `EQ : OFF` — the on/off gate lives outside the DSP coefficients.
 
 ## 6. The distortion variants — deltas against the documented engines
 
