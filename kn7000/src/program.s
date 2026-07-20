@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 606 synthetic labels for internal helpers called by converted code
+# 622 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -362,6 +362,14 @@ _rom_marker:
 .equ TgDrumFilterEgLevel1Calc_entry, 0x4C00A0FE
 .equ TgDrumFilterEgLevel2Calc_entry, 0x4C00A154
 .equ TgDrumFilterEgLevelCalc_entry, 0x4C00A1AA
+.equ TgPartDrawbarCapture_entry, 0x4C00A258
+.equ TgPartDrawbarTypeSet, 0x4C00A2F1
+.equ TgPartDrawbarTypeClear, 0x4C00A307
+.equ TgPartDrawbarUnitEnable_entry, 0x4C00A38E
+.equ TgDrawbarNibbleScatter_entry, 0x4C00A44E
+.equ TgDrawbarLevelsScan_entry, 0x4C00A488
+.equ TgPartDrawbarLevelsDerive_entry, 0x4C00A51E
+.equ TgEditOffsetAddClamp_entry, 0x4C00A7BE
 .equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
 .equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
 .equ TgPartAuxRecPtr, 0x4C00C233
@@ -405,6 +413,14 @@ _rom_marker:
 .equ TgPartLocalEditRecBuildAll_entry, 0x4C00CAC2
 .equ TgPartLocalEditActivate_entry, 0x4C00CB44
 .equ TgPartLocalEditSelect_entry, 0x4C00CBC7
+.equ TgPartEditLfoLoadA_entry, 0x4C00CCBC
+.equ TgPartEditLfoLoadB_entry, 0x4C00CD12
+.equ TgPartEditLfoLoadC_entry, 0x4C00CD71
+.equ TgPartEditLfoLoadD_entry, 0x4C00CDC8
+.equ TgPartEditLfoLoadE_entry, 0x4C00CE1E
+.equ TgPartEditLfoLoadF_entry, 0x4C00CE76
+.equ TgPartEditLfoLoadG_entry, 0x4C00CECA
+.equ TgPartEditLfoLoadH_entry, 0x4C00CF2A
 .equ TgPartLocalEditClear, 0x4C00E5C0
 .equ TgLocalEditResetAll_entry, 0x4C00E5D7
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
@@ -27110,7 +27126,939 @@ display_palette:
     movbu   (d0, a0), d0
     ret     [d2], 0x18
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c31c8, 0x3c3d14
+# TgDrawbarToneRecInit  (lib CPU 0x4c00a1f7)
+#   ★ DIGITAL DRAWBAR (manual p36, kn7000_mame/notes/
+#   sound-gui-inventory.md). The nine drawbars of the KN7000's tonewheel
+#   organ model are stored as nine 4-BIT levels packed three to a word in
+#   the per-part registration record 0x500082C8+part*0x1C:
+#     +0x00/+0x02/+0x04  three 12-bit registration words
+#     +0x06              PERCUSSIVE TONE (2 bits = the 2 2/3' + 4' buttons)
+#     +0x08 ATTACK TIME  +0x09 RELEASE TIME
+#     +0x0A PERCUSSIVE TONE DECAY  +0x0B PERCUSSIVE TONE LEVEL
+#     +0x0C/+0x0E/+0x10  derived level words   +0x19  drawbar TYPE flag
+#   The scatter table 0x486D10A0 (3 x 3 bytes) maps word nibbles onto the
+#   nine display slots -- word0 -> 0,1,6 / word1 -> 3,5,8 / word2 -> 2,4,7 --
+#   which is exactly why the five TgPartDrawbarPairSetN entry points below
+#   hand over the drawbars in screen order, two per call.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    extbu   d0
+    mov     0x8c, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     0x50008698, d0
+    extbu   d1
+    mov     0x23, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     d1, d0
+    mov     d0, a2
+    mov     0x48586e60, a1
+    mov     a2, a0
+    mov     -0x23, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    movbu   (0x1c, sp), d1
+    clr     d0
+    and     0x7f, d1
+    mov     d1, a1
+    clr     d2
+    mov     5, d3
+    add     a2, d3
+    setlb
+    extbu   d0
+    mov     d0, d1
+    asl2    d1
+    add     d0, d1
+    add     d3, d1
+    mov     d1, a0
+    mov     a1, d0
+    movbu   d0, (a0)
+    movbu   (0x20, sp), d0
+    inc     d2
+    movbu   d0, (1, a0)
+    movbu   (0x24, sp), d0
+    movbu   d0, (2, a0)
+    mov     d2, d0
+    extbu   d2
+    cmp     6, d2
+    llt
+    mov     a2, a0
+    ret     [d2,d3,a2], 0xc
+.mnbase 0x48400000
+# TgPartDrawbarCapture  (lib CPU 0x4c00a253)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgPartDrawbarCapture_entry:   (register-save `call` entry)
+    movbu   d0, (0x2c, sp)
+    clr     d2
+    clr     d3
+    movbu   (0x2c, sp), d1
+    mov     0x1c, d0
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500082c8, d0
+    mov     d0, (0x10, sp)
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     0x500ce404, d0
+    add     d1, d0
+    mov     0x60, a3
+    add     d0, a3
+    setlb
+    extbu   d2
+    mov     a3, a1
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, a1
+    mov     (a1), a0
+    add     d2, d2
+    movbu   (4, a0), d1
+    mov     d2, a2
+    add     0x5000993c, a2
+    movhu   d1, (a2)
+    mov     (a1), a0
+    exthu   d1
+    movbu   (5, a0), d0
+    inc     d3
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x10, sp), a0
+    mov     d1, d0
+    exthu   d0
+    and     0x0fff, d0
+    movhu   d0, (d2, a0)
+    mov     d3, d2
+    extbu   d3
+    cmp     4, d3
+    llt
+    movbu   (0x2c, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d0
+    cmp     0x10, d0
+    beq     0x4c00a2e0
+    movbu   (0x2c, sp), d0
+    call    TgPartToneProgramGet, 0, 0
+    extbu   d0
+    cmp     0x18, d0
+    bne     0x4c00a2ee
+    movbu   (0x2c, sp), d0
+    mov     0x5000993c, a0
+    call    0x4c008679, [d2,d3,a2,a3], 0x14
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgPartDrawbarTypeSet  (lib CPU 0x4c00a2f1)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500082c8, d0
+    mov     1, d1
+    mov     d0, a0
+    movbu   d1, (0x19, a0)
+    rets
+.mnbase 0x48400000
+# TgPartDrawbarTypeClear  (lib CPU 0x4c00a307)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500082c8, d0
+    clr     d1
+    mov     d0, a0
+    movbu   d1, (0x19, a0)
+    rets
+.mnbase 0x48400000
+# TgPartDrawbarTypeGet  (lib CPU 0x4c00a31c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500082c8, d0
+    mov     d0, a0
+    movbu   (0x19, a0), d0
+    rets
+.mnbase 0x48400000
+# TgPartDrawbarRegExport  (lib CPU 0x4c00a330)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -4, sp
+    mov     a0, a1
+    mov     d0, d3
+    clr     d0
+    clr     d2
+    mov     d3, d1
+    extbu   d1
+    mov     d3, (0, sp)
+    mov     0x1c, d3
+    nop
+    nop
+    mulu    d3, d1
+    mov     (0, sp), d3
+    mov     d1, a0
+    add     0x500082c8, a0
+    setlb
+    extbu   d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    inc     d2
+    exthu   d0
+    mov     0xff, d1
+    and     d0, d1
+    movbu   d1, (a1)
+    inc     a1
+    asr     8, d0
+    and     0x0f, d0
+    movbu   d0, (a1)
+    inc     a1
+    mov     d2, d0
+    extbu   d2
+    cmp     3, d2
+    llt
+    extbu   d3
+    mov     0x1c, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a0
+    add     0x500082c8, a0
+    movhu   (6, a0), d0
+    exthu   d0
+    and     0x0f, d0
+    movbu   d0, (a1)
+    inc     a1
+    clr     d0
+    movbu   d0, (a1)
+    ret     [d2,d3], 0xc
+.mnbase 0x48400000
+# TgPartDrawbarUnitEnable  (lib CPU 0x4c00a389)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0xc, sp
+# TgPartDrawbarUnitEnable_entry:   (register-save `call` entry)
+    mov     0x1c, d1
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x500082c8, a1
+    movhu   (a1), d1
+    cmp     0, d1
+    beq     0x4c00a3be
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500ce404, a2
+    mov     a2, a0
+    inc4    a0
+    movhu   (a0), d0
+    or      0x01, d0
+    movhu   d0, (a0)
+    bra     0x4c00a3d9
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500ce404, a2
+    mov     a2, a0
+    inc4    a0
+    movhu   (a0), d0
+    and     0xfffffffe, d0
+    movhu   d0, (a0)
+    movhu   (2, a1), d0
+    cmp     0, d0
+    beq     0x4c00a3e9
+    movhu   (a0), d0
+    or      0x02, d0
+    movhu   d0, (a0)
+    bra     0x4c00a3f3
+    movhu   (a0), d0
+    and     0xfffffffd, d0
+    movhu   d0, (a0)
+    movhu   (4, a1), d0
+    cmp     0, d0
+    beq     0x4c00a403
+    movhu   (a0), d0
+    or      0x04, d0
+    movhu   d0, (a0)
+    bra     0x4c00a40d
+    movhu   (a0), d0
+    and     0xfffffffb, d0
+    movhu   d0, (a0)
+    movhu   (6, a1), d0
+    cmp     0, d0
+    beq     0x4c00a41d
+    movhu   (a0), d0
+    or      0x08, d0
+    movhu   d0, (a0)
+    bra     0x4c00a427
+    movhu   (a0), d0
+    and     0xfffffff7, d0
+    movhu   d0, (a0)
+    extbu   d2
+    mov     d2, d0
+    call    TgPartToneProgramGet, 0, 0
+    extbu   d0
+    cmp     0x10, d0
+    bne     0x4c00a449
+    mov     (a2), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x80, d0
+    bne     0x4c00a449
+    mov     d2, d0
+    call    TgPartDrawbarTypeSet, 0, 0
+    ret     [d2,a2], 0x14
+.mnbase 0x48400000
+# TgDrawbarNibbleScatter  (lib CPU 0x4c00a44c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgDrawbarNibbleScatter_entry:   (register-save `call` entry)
+    mov     d0, d3
+    extbu   d1
+    mov     d1, d0
+    asl2    d0
+    sub     d1, d0
+    mov     d0, a1
+    add     0x486d10a0, a1
+    movbu   (a1), d2
+    exthu   d3
+    mov     0xf, d0
+    and     d3, d0
+    movbu   d0, (d2, a0)
+    mov     d3, d1
+    asr     4, d1
+    movbu   (1, a1), d2
+    mov     d1, d0
+    exthu   d0
+    and     0x0f, d0
+    movbu   d0, (d2, a0)
+    exthu   d1
+    asr     4, d1
+    movbu   (2, a1), d0
+    exthu   d1
+    and     0x0f, d1
+    movbu   d1, (d0, a0)
+    retf    [d2,d3], 8
+.mnbase 0x48400000
+# TgDrawbarLevelsScan  (lib CPU 0x4c00a483)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgDrawbarLevelsScan_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     d1, (0x3c, sp)
+    mov     d0, (0x38, sp)
+    mov     a1, (0x34, sp)
+    movhu   (a2), d0
+    mov     0x50009930, a3
+    mov     a3, a0
+    clr     d1
+    call    TgDrawbarNibbleScatter_entry, [d2,d3], 8
+    movhu   (2, a2), d0
+    mov     a3, a0
+    mov     1, d1
+    call    TgDrawbarNibbleScatter_entry, [d2,d3], 8
+    movhu   (4, a2), d0
+    mov     a3, a0
+    mov     2, d1
+    call    TgDrawbarNibbleScatter_entry, [d2,d3], 8
+    mov     0xff, d0
+    movbu   d0, (0x14, sp)
+    mov     (0x34, sp), a0
+    mov     d0, d3
+    clr     d0
+    movbu   d0, (a0)
+    mov     d0, d1
+    clr     d2
+    mov     0xff, a0
+    setlb
+    movbu   (0x14, sp), d0
+    cmp     a0, d0
+    bne     0x4c00a4d7
+    mov     d1, d0
+    extbu   d0
+    movbu   (d0, a3), d0
+    cmp     0, d0
+    ble     0x4c00a4d7
+    movbu   d1, (0x14, sp)
+    mov     d1, d0
+    extbu   d0
+    movbu   (d0, a3), d0
+    cmp     4, d0
+    blt     0x4c00a4ed
+    mov     (0x34, sp), a1
+    movbu   (a1), d0
+    inc     d0
+    movbu   d0, (a1)
+    mov     d3, d0
+    extbu   d0
+    cmp     a0, d0
+    bne     0x4c00a4ed
+    mov     d1, d3
+    inc     d2
+    mov     d2, d1
+    extbu   d2
+    cmp     9, d2
+    llt
+    mov     d3, d0
+    extbu   d0
+    cmp     a0, d0
+    beq     0x4c00a506
+    mov     (0x38, sp), a0
+    movbu   d3, (a0)
+    extbu   d3
+    movbu   (d3, a3), d0
+    mov     (0x3c, sp), a0
+    movbu   d0, (a0)
+    bra     0x4c00a516
+    mov     (0x38, sp), a0
+    movbu   (0x14, sp), d0
+    movbu   d0, (a0)
+    movbu   (0x14, sp), d0
+    mov     (0x3c, sp), a0
+    movbu   (d0, a3), d0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+# TgPartDrawbarLevelsDerive  (lib CPU 0x4c00a519)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+# TgPartDrawbarLevelsDerive_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500082c8, a2
+    mov     a2, a0
+    mov     0x50009939, a1
+    mov     0x5000993a, d0
+    mov     0x5000993b, d1
+    call    TgDrawbarLevelsScan_entry, [d2,d3,a2,a3], 0x28
+    movbu   (0x50009939), d2
+    mov     0x486d10aa, a0
+    add     d2, d2
+    movhu   (d2, a0), d0
+    mov     0x486d10be, a0
+    movhu   d0, (0xc, a2)
+    movbu   (0x5000993a), d1
+    add     d1, d1
+    movhu   (d1, a0), d0
+    mov     0x486d10f6, a0
+    movhu   d0, (0x10, a2)
+    movhu   (d2, a0), d0
+    mov     0x486d10d0, a0
+    movhu   (d1, a0), d1
+    mov     0x486d10e2, a0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    movbu   (0x5000993b), d1
+    exth    d0
+    add     d1, d1
+    movhu   (d1, a0), d1
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0xe, a2)
+    ret     [d2,a2], 0x20
+.mnbase 0x48400000
+# TgPartDrawbarOffsetsReset  (lib CPU 0x4c00a594)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    mov     d2, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    extbu   d3
+    mov     0x1c, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a0
+    add     0x500082c8, a0
+    clr     d0
+    movbu   d0, (8, a0)
+    movbu   d0, (9, a0)
+    movbu   d0, (0xa, a0)
+    movbu   d0, (0xb, a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarPairSet1  (lib CPU 0x4c00a5c7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d1, d3
+    mov     0x1c, d1
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500082c8, a0
+    movhu   (a0), d1
+    extbu   d3
+    and     0xff00, d1
+    movhu   d1, (a0)
+    exthu   d1
+    or      d3, d1
+    movhu   d1, (a0)
+    extbu   d2
+    mov     d2, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarPairSet2  (lib CPU 0x4c00a5fb)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d0
+    mov     0x1c, d3
+    nop
+    nop
+    mulu    d0, d3
+    add     0x500082c8, d3
+    mov     d3, a0
+    inc4    a0
+    mov     d1, d2
+    movhu   (a0), d1
+    extbu   d2
+    and     0xfff0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     0xf, d0
+    and     d2, d0
+    exthu   d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     2, a0
+    add     d3, a0
+    movhu   (a0), d0
+    and     0xf0, d2
+    and     0xfff0, d0
+    movhu   d0, (a0)
+    exthu   d0
+    exthu   d2
+    asr     4, d2
+    or      d2, d0
+    movhu   d0, (a0)
+    movbu   (0x1c, sp), d2
+    mov     d2, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarPairSet3  (lib CPU 0x4c00a653)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d0
+    mov     d1, d3
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500082c8, a1
+    mov     a1, a0
+    inc4    a0
+    movhu   (a0), d1
+    extbu   d3
+    and     0xff0f, d1
+    movhu   d1, (a0)
+    exthu   d1
+    add     2, a1
+    mov     0xf, d0
+    and     d3, d0
+    exthu   d0
+    asl     4, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (a1), d0
+    and     0xf0, d3
+    and     0xff0f, d0
+    mov     d0, d1
+    movhu   d1, (a1)
+    exthu   d1
+    exthu   d3
+    or      d3, d1
+    movhu   d1, (a1)
+    movbu   (0x1c, sp), d2
+    mov     d2, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarPairSet4  (lib CPU 0x4c00a6ab)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d0
+    mov     d1, d3
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500082c8, a0
+    movhu   (a0), d1
+    extbu   d3
+    and     0xf0ff, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     0xf, d0
+    and     d3, d0
+    exthu   d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    inc4    a0
+    movhu   (a0), d0
+    and     0xf0, d3
+    and     0xf0ff, d0
+    movhu   d0, (a0)
+    exthu   d0
+    exthu   d3
+    asl     4, d3
+    or      d3, d0
+    movhu   d0, (a0)
+    movbu   (0x1c, sp), d2
+    mov     d2, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarPairSet5  (lib CPU 0x4c00a702)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     2, a0
+    mov     d1, d2
+    mov     0x1c, d1
+    mov     d0, d3
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500082c8, a1
+    add     a1, a0
+    movhu   (a0), d1
+    extbu   d2
+    and     0xf0ff, d1
+    movhu   d1, (a0)
+    exthu   d1
+    extbu   d3
+    mov     0xf, d0
+    and     d2, d0
+    exthu   d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    and     0x30, d2
+    exthu   d2
+    mov     d2, d1
+    asr     4, d1
+    movhu   d1, (6, a1)
+    mov     d3, d0
+    call    TgPartDrawbarUnitEnable_entry, [d2,a2], 0x14
+    mov     d3, d0
+    call    TgPartDrawbarLevelsDerive_entry, [d2,a2], 0x20
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartDrawbarAtkRlsSet  (lib CPU 0x4c00a74d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    mov     d1, d3
+    extbu   d3
+    mov     0x48586e84, a0
+    mov     d0, d2
+    mov     d3, d0
+    asr     4, d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    extbu   d2
+    extb    d0
+    asl2    d0
+    and     0x0f, d3
+    add     d3, d3
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a1
+    add     0x500082c8, a1
+    movbu   d0, (8, a1)
+    movhu   (d3, a0), d0
+    extb    d0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d0
+    movbu   d0, (9, a1)
+    ret     [d2,d3], 8
+.mnbase 0x48400000
+# TgPartDrawbarPercSet  (lib CPU 0x4c00a786)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    mov     d1, d3
+    extbu   d3
+    mov     0x48586e84, a1
+    mov     d0, d2
+    mov     d3, d0
+    asr     4, d0
+    add     d0, d0
+    movhu   (d0, a1), d0
+    extbu   d2
+    extb    d0
+    asl2    d0
+    and     0x0f, d3
+    add     d3, d3
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a0
+    add     0x500082c8, a0
+    movbu   d0, (0xa, a0)
+    movhu   (d3, a1), d0
+    extb    d0
+    asl     3, d0
+    movbu   d0, (0xb, a0)
+    ret     [d2,d3], 8
+.mnbase 0x48400000
+# TgEditOffsetAddClamp  (lib CPU 0x4c00a7bc)
+#   the shared +/- applier behind every offset-style edit parameter:
+#   clamp((u8)current + (s8)delta, min, max) with min/max on the caller's
+#   outgoing-arg area. Callers pass max 0x64 (the manual's +/-100 ranges)
+#   or 0x7F. Also used by the SOUND EDIT aux-field setters.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgEditOffsetAddClamp_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    exth    d2
+    mov     d1, d0
+    movhu   (0x14, sp), d1
+    extb    d0
+    add     d0, d2
+    mov     d2, d0
+    exth    d0
+    exth    d1
+    mov     d0, a0
+    cmp     d1, d0
+    ble     0x4c00a7d1
+    mov     d1, a0
+    movhu   (0x18, sp), d1
+    mov     a0, d0
+    exth    d0
+    exth    d1
+    mov     d0, a0
+    cmp     d1, d0
+    bge     0x4c00a7df
+    mov     d1, a0
+    mov     a0, d0
+    extb    d0
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgPartDrawbarOffsetApply  (lib CPU 0x4c00a7e5)
+#   ★ the bridge from the DRAWBAR screen to the synthesis engine: the
+#   four registration words go straight into aux mod-unit fields +0x04/+0x05
+#   of the part's SOUND EDIT shadow, and the four parameter bytes are added
+#   as SIGNED OFFSETS on top of whatever the sound already had, clamped by
+#   TgEditOffsetAddClamp_entry. Units 0..2 (the sustained footages) take the
+#   percussive decay/level bytes into aux +0x28/+0x2E with a 0..100 range;
+#   unit 3 (the percussion tap) takes ATTACK into aux +0x19 (0..0x7F) and
+#   RELEASE into aux +0x2A/+0x2C (0..100).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+    mov     d0, d2
+    clr     d0
+    clr     d3
+    mov     d2, d1
+    extbu   d1
+    mov     d0, (0x28, sp)
+    mov     0x1c, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d3, d0
+    mov     d1, a3
+    add     0x500082c8, a3
+    mov     8, d1
+    add     a3, d1
+    mov     d1, (0x1c, sp)
+    mov     9, d1
+    add     a3, d1
+    mov     d1, (0x18, sp)
+    mov     0xa, d1
+    add     a3, d1
+    mov     d1, (0x24, sp)
+    mov     0xb, d1
+    add     a3, d1
+    mov     d1, (0x20, sp)
+    extbu   d2
+    mov     d2, a2
+    extbu   d0
+    add     d0, d0
+    movhu   (d0, a3), d2
+    mov     d3, d1
+    mov     0xff, d0
+    exthu   d2
+    and     d2, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    call    TgPartAuxMod04Set_entry, [d2], 4
+    asr     8, d2
+    mov     d2, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod05Set_entry, [d2], 4
+    cmp     3, d3
+    bge     0x4c00a890
+    mov     d3, d1
+    mov     a2, d0
+    call    TgPartAuxMod28Get_entry, [d2], 4
+    mov     (0x24, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     0x64, d2
+    extb    d1
+    mov     d2, (0x10, sp)
+    clr     d2
+    mov     d2, (0x14, sp)
+    call    TgEditOffsetAddClamp_entry, [d2], 4
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod28Set_entry, [d2], 4
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2EGet_entry, [d2], 4
+    mov     (0x20, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     0x64, d2
+    extb    d1
+    mov     d2, (0x10, sp)
+    clr     d2
+    mov     d2, (0x14, sp)
+    call    TgEditOffsetAddClamp_entry, [d2], 4
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2ESet_entry, [d2], 4
+    jmp     0x4c00a8ff
+    mov     d3, d1
+    mov     a2, d0
+    call    TgPartAuxMod19Get_entry, [d2], 4
+    mov     (0x1c, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     0x7f, d2
+    extb    d1
+    mov     d2, (0x10, sp)
+    clr     d2
+    mov     d2, (0x14, sp)
+    call    TgEditOffsetAddClamp_entry, [d2], 4
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod19Set_entry, [d2], 4
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2AGet_entry, [d2], 4
+    mov     (0x18, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     0x64, d2
+    extb    d1
+    mov     d2, (0x10, sp)
+    clr     d2
+    mov     d2, (0x14, sp)
+    call    TgEditOffsetAddClamp_entry, [d2], 4
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2ASet_entry, [d2], 4
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2CGet_entry, [d2], 4
+    mov     (0x18, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     0x64, d2
+    extb    d1
+    mov     d2, (0x10, sp)
+    clr     d2
+    mov     d2, (0x14, sp)
+    call    TgEditOffsetAddClamp_entry, [d2], 4
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d3, d1
+    call    TgPartAuxMod2CSet_entry, [d2], 4
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     4, d3
+    bge     0x4c00a909
+    jmp     0x4c00a81b
+    ret     [d2,d3,a2,a3], 0x3c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c38dd, 0x3c3d14
 # TgDrumAmpReleaseCalc  (lib CPU 0x4c00ad43)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
@@ -28885,7 +29833,465 @@ display_palette:
     movbu   d0, (0x500c59e0)
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c5c8b, 0x3c7591
+# TgPartEditLfoLoadA  (lib CPU 0x4c00ccba)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgPartEditLfoLoadA_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x486d2ed5, a2
+    movbu   (a2), d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a1
+    add     d0, a1
+    movbu   d1, (a1)
+    movbu   (1, a2), d1
+    mov     0x18, a0
+    movbu   d1, (1, a1)
+    add     a2, a0
+    movbu   (2, a0), d1
+    movbu   d1, (2, a1)
+    movbu   (4, a0), d1
+    movbu   d1, (3, a1)
+    movbu   (3, a0), d1
+    movbu   d1, (4, a1)
+    movbu   (0xe, a2), d1
+    movbu   d1, (6, a1)
+    movbu   (0x12, a2), d1
+    movbu   d1, (7, a1)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgPartEditLfoLoadB  (lib CPU 0x4c00cd10)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgPartEditLfoLoadB_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x486d2ed5, a2
+    movbu   (a2), d2
+    extbu   d0
+    mov     0x2c8, d1
+    nop
+    nop
+    mul     d1, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a1
+    add     d0, a1
+    movbu   d2, (a1)
+    movbu   (1, a2), d0
+    mov     3, a0
+    movbu   d0, (1, a1)
+    add     a2, a0
+    movbu   (a0), d0
+    movbu   d0, (2, a1)
+    movbu   (1, a0), d0
+    mov     0x18, a0
+    movbu   d0, (3, a1)
+    add     a2, a0
+    movbu   (2, a0), d0
+    movbu   d0, (4, a1)
+    movbu   (4, a0), d0
+    movbu   d0, (5, a1)
+    movbu   (0xe, a2), d0
+    movbu   d0, (6, a1)
+    movbu   (0x12, a2), d0
+    movbu   d0, (7, a1)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgPartEditLfoLoadC  (lib CPU 0x4c00cd6f)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgPartEditLfoLoadC_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x486d2ed5, a2
+    mov     6, a1
+    add     a2, a1
+    movbu   (a1), d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a0
+    add     d0, a0
+    movbu   d1, (a0)
+    movbu   (1, a1), d0
+    movbu   d0, (1, a0)
+    movbu   (2, a1), d0
+    movbu   d0, (2, a0)
+    movbu   (0x1b, a2), d0
+    movbu   d0, (3, a0)
+    clr     d0
+    movbu   d0, (4, a0)
+    movbu   d0, (5, a0)
+    movbu   (0xe, a2), d0
+    movbu   d0, (6, a0)
+    movbu   (0x12, a2), d0
+    movbu   d0, (7, a0)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgPartEditLfoLoadD  (lib CPU 0x4c00cdc6)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgPartEditLfoLoadD_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x486d2ed5, a2
+    movbu   (a2), d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a1
+    add     d0, a1
+    movbu   d1, (a1)
+    movbu   (1, a2), d1
+    mov     3, a0
+    movbu   d1, (1, a1)
+    add     a2, a0
+    movbu   (a0), d1
+    clr     d0
+    movbu   d1, (2, a1)
+    movbu   (1, a0), d1
+    movbu   d1, (3, a1)
+    movbu   d0, (4, a1)
+    movbu   d0, (5, a1)
+    movbu   (0xe, a2), d1
+    movbu   d1, (6, a1)
+    movbu   (0x12, a2), d1
+    movbu   d1, (7, a1)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgPartEditLfoLoadE  (lib CPU 0x4c00ce1c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgPartEditLfoLoadE_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x486d2ed5, a2
+    mov     0x18, a1
+    add     a2, a1
+    movbu   (4, a1), d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a0
+    add     d0, a0
+    movbu   d1, (a0)
+    movbu   (2, a1), d0
+    movbu   d0, (1, a0)
+    movbu   (1, a1), d0
+    movbu   d0, (2, a0)
+    movbu   (3, a1), d0
+    movbu   d0, (3, a0)
+    clr     d0
+    movbu   d0, (4, a0)
+    movbu   d0, (5, a0)
+    movbu   (0xe, a2), d0
+    movbu   d0, (6, a0)
+    movbu   (0x12, a2), d0
+    movbu   d0, (7, a0)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgPartEditLfoLoadF  (lib CPU 0x4c00ce74)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartEditLfoLoadF_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a1
+    add     0x486d2ed5, a1
+    movbu   (9, a1), d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3c5, a0
+    add     d0, a0
+    movbu   d1, (a0)
+    movbu   (0xa, a1), d0
+    movbu   d0, (1, a0)
+    movbu   (0xb, a1), d0
+    movbu   d0, (2, a0)
+    movbu   (0xc, a1), d0
+    movbu   d0, (3, a0)
+    clr     d0
+    movbu   d0, (4, a0)
+    movbu   d0, (5, a0)
+    movbu   (0xe, a1), d0
+    movbu   d0, (6, a0)
+    movbu   (0x12, a1), d0
+    movbu   d0, (7, a0)
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartEditLfoLoadG  (lib CPU 0x4c00cec8)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartEditLfoLoadG_entry:   (register-save `call` entry)
+    extbu   d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd380, a0
+    add     d0, a0
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x486d2ed5, a1
+    movbu   (0x13, a1), d1
+    btst    0x80, d1
+    beq     0x4c00ceff
+    add     0x45, a0
+    mov     1, d0
+    movbu   d0, (a0)
+    bra     0x4c00cf04
+    add     0x45, a0
+    clr     d0
+    movbu   d0, (a0)
+    movbu   (2, a1), d1
+    clr     d0
+    and     0x3f, d1
+    movbu   d1, (1, a0)
+    movbu   (a1), d1
+    movbu   d1, (2, a0)
+    movbu   d0, (3, a0)
+    movbu   d0, (4, a0)
+    movbu   d0, (5, a0)
+    movbu   d0, (6, a0)
+    movbu   (0x12, a1), d1
+    movbu   d1, (7, a0)
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartEditLfoLoadH  (lib CPU 0x4c00cf28)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartEditLfoLoadH_entry:   (register-save `call` entry)
+    extbu   d1
+    extbu   d0
+    mov     0x2c8, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd380, a0
+    add     d0, a0
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x486d2ed5, a1
+    movbu   (0x13, a1), d1
+    btst    0x80, d1
+    beq     0x4c00cf5f
+    add     0x45, a0
+    mov     1, d0
+    movbu   d0, (a0)
+    bra     0x4c00cf64
+    add     0x45, a0
+    clr     d0
+    movbu   d0, (a0)
+    movbu   (2, a1), d1
+    clr     d0
+    and     0x3f, d1
+    movbu   d1, (1, a0)
+    movbu   (a1), d1
+    movbu   d1, (2, a0)
+    movbu   d0, (3, a0)
+    movbu   d0, (4, a0)
+    movbu   d0, (5, a0)
+    movbu   (0xe, a1), d1
+    movbu   d1, (6, a0)
+    movbu   (0x12, a1), d1
+    movbu   d1, (7, a0)
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartEditLfoGroupLoad  (lib CPU 0x4c00cf8b)
+#   ★ LFO EDIT (manual p174). The firmware really does carry TWELVE LFO
+#   GROUPS: ROM table 0x486D2ED5, stride 0x27, twelve records, each with
+#   four (speed, depth, ...) triples at +0x00/+0x03/+0x06/+0x09 -- one per
+#   LFO EDIT destination page (PITCH MODULATION / AMP / FILTER / PAN).
+#   The group is the low nibble of byte +0x44 of the part's tone descriptor;
+#   the jump table 0x48586F28 routes it to one of EIGHT different unpackers,
+#   because the groups do not all use the same triples -- groups 0..3 read
+#   the first, 4..5 the first two, 6 the third, 9 the fourth, 8 only the
+#   +0x18 tail, and 0x0A/0x0B a flag-plus-6-bit form. Each unpacker writes
+#   the 8-byte LFO parameter block at +0x45 of the per-part SOUND EDIT
+#   record 0x500C0784+(part-0x10)*0x2C8 (parts 0x10..0x12 only).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x10, sp
+    mov     0x130, d1
+    mov     0x500ce404, a0
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     (d0, a0), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     0, d0
+    bge     0x4c00cfae
+    ret     [d2], 0x14
+    cmp     0xb, d0
+    ble     0x4c00cfb5
+    ret     [d2], 0x14
+    asl2    d0
+    mov     0x48586f28, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    extbu   d2
+    clr     d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadA_entry, [d2,a2], 8
+    ret     [d2], 0x14
+    extbu   d2
+    mov     1, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadA_entry, [d2,a2], 8
+    ret     [d2], 0x14
+    extbu   d2
+    mov     2, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadA_entry, [d2,a2], 8
+    ret     [d2], 0x14
+    extbu   d2
+    mov     3, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadA_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     4, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadB_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     5, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadB_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     6, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadC_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     7, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadD_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     8, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadE_entry, [d2,a2], 8
+    bra     0x4c00d044
+    extbu   d2
+    mov     9, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadF_entry, [d2], 4
+    bra     0x4c00d044
+    extbu   d2
+    mov     0xa, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadG_entry, [d2], 4
+    bra     0x4c00d044
+    extbu   d2
+    mov     0xb, d1
+    mov     d2, d0
+    call    TgPartEditLfoLoadH_entry, [d2], 4
+    ret     [d2], 0x14
+.mnbase 0x48400000
+# TgPartEditLfoFlagSet  (lib CPU 0x4c00d047)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00d0a9
+    cmp     0x12, d2
+    bgt     0x4c00d0a9
+    extbu   d0
+    mov     9, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500c58ae, a0
+    movbu   (a0), d1
+    btst    0x01, d1
+    bne     0x4c00d074
+    movbu   (a0), d1
+    btst    0x02, d1
+    beq     0x4c00d0a9
+    mov     d2, d0
+    call    TgPartLocalEditActivate_entry, [d2,d3], 0x20
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3c4, a0
+    add     d0, a0
+    movbu   (a0), d1
+    extbu   d3
+    and     0xffffff7f, d1
+    movbu   d1, (a0)
+    cmp     0, d3
+    mov     0x80, d2
+    bne     0x4c00d0a3
+    clr     d2
+    movbu   (a0), d1
+    or      d2, d1
+    movbu   d1, (a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c607d, 0x3c7591
 # TgPartLocalEditClear  (lib CPU 0x4c00e5c0)
 #   ★ THE CLEARER. (d0 part) writes 0 over byte 0 of the 9-byte record
 #   0x500C58AE+part*9 -- one store, and the part is no longer 'edited'.
@@ -52455,7 +53861,7 @@ display_palette:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    0x4c00a258, [d2,d3,a2,a3], 0x24
+    call    TgPartDrawbarCapture_entry, [d2,d3,a2,a3], 0x24
     mov     d2, d0
     call    0x4c00a599, [d2,d3], 0x14
     mov     d2, d0
@@ -52464,7 +53870,7 @@ display_palette:
     clr     d1
     call    TgPartEgRampBuild_entry, [d2,d3,a2,a3], 0x4c
     mov     d2, d0
-    call    0x4c00a307, 0, 0
+    call    TgPartDrawbarTypeClear, 0, 0
     mov     d2, d0
     call    TgPartToneModParamBuild_entry, [d2,d3,a2,a3], 0x58
     ret     [d2], 0x14

@@ -1456,3 +1456,78 @@
 0x4844982A  VoiceModRecFetch        ; (a0 record, d0 part, d1 unit) -> record +0x54+unit*0x7A; parts 0x22/0x23/0x2A/0x2B take that directly, the rest remap the unit through 0x484494E4(part, record byte +0x11) and fall back to VoiceModRecDefaultPtr
 0x4844987C  VoiceElemRecFetch       ; (d0 elem, d1 class) -> element record: bank descriptor +0x18 table + elem*0x23
 0x4844987E  VoiceElemRecFetch_entry
+
+; ---- ★ DIGITAL DRAWBAR (library 0x4C00A1F7..0x4C00A90C, 2026-07-20) --------
+; The per-part DRAWBAR REGISTRATION record lives at 0x500082C8+part*0x1C:
+;   +0x00/+0x02/+0x04  three 12-bit registration words; each holds three
+;                      4-bit drawbar levels. The scatter table 0x486D10A0
+;                      (3 x 3 bytes) maps word->slot: word0 nibbles -> slots
+;                      0,1,6 / word1 -> 3,5,8 / word2 -> 2,4,7, so the nine
+;                      slots come out in DISPLAY order 16' 5 1/3' 8' 4'
+;                      2 2/3' 2' 1 3/5' 1 1/3' 1' (manual p36).
+;   +0x06              PERCUSSIVE TONE, 2 bits (the 2 2/3' and 4' buttons)
+;   +0x08 ATTACK TIME, +0x09 RELEASE TIME, +0x0A PERCUSSIVE TONE DECAY,
+;   +0x0B PERCUSSIVE TONE LEVEL -- all stored as SIGNED offsets and applied
+;                      on top of the sound's tone parameters, see
+;                      TgPartDrawbarOffsetApply
+;   +0x0C/+0x0E/+0x10  level words derived from the registration
+;   +0x19              drawbar TYPE flag (the <Jazz Drawbars>/<Rock Drawbars>
+;                      button; 0/1)
+; Scratch: 0x50009930 = the 9 unpacked drawbar levels, 0x50009939/3A/3B the
+; scan results, 0x5000993C = the four captured registration words.
+; Screen inventory: kn7000_mame/notes/sound-gui-inventory.md (DIGITAL DRAWBAR,
+; manual p36); the +/-offset clamp is shared with the SOUND EDIT shadow.
+0x4C00A1F7  TgDrawbarToneRecInit    ; (d0 part, d1 tone, stack 3 bytes) seed the 0x23-byte drawbar tone record at 0x50008698+part*0x8C+tone*0x23 from the ROM template 0x48586E60, then fill its six 5-byte sub-entries at +5 with (arg0&0x7F, arg1, arg2)
+0x4C00A253  TgPartDrawbarCapture    ; (d0 part) CAPTURE the sound's registration: for each of the four tone-block mod units of 0x500CE404+part*0x130 read bytes +4/+5 as a 16-bit word into 0x5000993C+unit*2 and its low 12 bits into the drawbar record; if the tone class (+8) is 0x10 or 0x4C0384C4(part)==0x18 push the four words on through 0x4C008679
+0x4C00A258  TgPartDrawbarCapture_entry
+0x4C00A2F1  TgPartDrawbarTypeSet    ; (d0 part) drawbar record +0x19 = 1 (Rock/Jazz drawbar TYPE flag) -- rets leaf
+0x4C00A307  TgPartDrawbarTypeClear  ; (d0 part) drawbar record +0x19 = 0 -- rets leaf
+0x4C00A31C  TgPartDrawbarTypeGet    ; (d0 part) -> drawbar record +0x19 -- rets leaf
+0x4C00A330  TgPartDrawbarRegExport  ; (d0 part, a0 out) export the registration as bytes: for words 0..2 write (word & 0xFF) then ((word>>8) & 0x0F), then the PERCUSSIVE TONE nibble from +6 and a 0 terminator (8 bytes)
+0x4C00A389  TgPartDrawbarUnitEnable ; (d0 part) set/clear bits 0..3 of the halfword at 0x500CE404+part*0x130+4 -- one enable bit per registration word, set when that word is non-zero, so an all-zero footage group switches its tone unit off
+0x4C00A38E  TgPartDrawbarUnitEnable_entry
+0x4C00A44C  TgDrawbarNibbleScatter  ; (d0 12-bit word, d1 group, a0 out) scatter the word's three nibbles into out[] at the slots named by 0x486D10A0+group*3 -- the table that puts the nine drawbars into display order
+0x4C00A44E  TgDrawbarNibbleScatter_entry
+0x4C00A483  TgDrawbarLevelsScan     ; (a0 the three registration words, d0/d1/a1 outputs) unpack all nine drawbar levels into 0x50009930 via TgDrawbarNibbleScatter_entry, then scan them: count of non-zero drawbars, index of the first maximum and index of the last non-zero
+0x4C00A488  TgDrawbarLevelsScan_entry
+0x4C00A519  TgPartDrawbarLevelsDerive ; (d0 part) run TgDrawbarLevelsScan_entry over the part's registration and fold its three results through the s16 curve tables 0x486D10AA / 0x486D10BE / 0x486D10D0 / 0x486D10E2 / 0x486D10F6 into the derived level words at record +0x0C/+0x0E/+0x10
+0x4C00A51E  TgPartDrawbarLevelsDerive_entry
+0x4C00A594  TgPartDrawbarOffsetsReset ; (d0 part) zero the four offset bytes +0x08..+0x0B (ATTACK / RELEASE / PERC DECAY / PERC LEVEL back to centre) and refresh through TgPartDrawbarUnitEnable_entry + TgPartDrawbarLevelsDerive_entry
+0x4C00A5C7  TgPartDrawbarPairSet1   ; (d0 part, d1 packed pair) drawbars 1+2 (16', 5 1/3'): word0 low byte := d1
+0x4C00A5FB  TgPartDrawbarPairSet2   ; (d0 part, d1 packed pair) drawbars 3+4 (8', 4'): word2 bits0-3 := d1&0xF, word1 bits0-3 := d1>>4
+0x4C00A653  TgPartDrawbarPairSet3   ; (d0 part, d1 packed pair) drawbars 5+6 (2 2/3', 2'): word2 bits4-7 := d1&0xF, word1 bits4-7 := d1>>4
+0x4C00A6AB  TgPartDrawbarPairSet4   ; (d0 part, d1 packed pair) drawbars 7+8 (1 3/5', 1 1/3'): word0 bits8-11 := d1&0xF, word2 bits8-11 := d1>>4
+0x4C00A702  TgPartDrawbarPairSet5   ; (d0 part, d1 packed pair) drawbar 9 (1') + PERCUSSIVE TONE: word1 bits8-11 := d1&0xF, record +6 := (d1&0x30)>>4 -- the two percussive-tone buttons
+0x4C00A74D  TgPartDrawbarAtkRlsSet  ; (d0 part, d1 packed pair of 4-bit indices) DRAWBAR ATTACK TIME / RELEASE TIME: record +8 := (s8)0x48586E84[d1>>4]<<2, +9 := (s8)0x48586E84[d1&0xF]*2 -- the table is the signed ladder 0,1,..,7,-8,..,-1
+0x4C00A786  TgPartDrawbarPercSet    ; (d0 part, d1 packed pair of 4-bit indices) PERCUSSIVE TONE DECAY / LEVEL: record +0x0A and +0x0B from the same 0x48586E84 ladder (<<2 and <<3)
+0x4C00A7BC  TgEditOffsetAddClamp    ; (d0 current unsigned byte, d1 signed delta, stack max, min) -> clamp(d0 + (s8)d1, min, max) as a byte -- the shared +/- applier behind every offset-style edit parameter (callers pass max 0x64 = 100 or 0x7F)
+0x4C00A7BE  TgEditOffsetAddClamp_entry
+0x4C00A7E5  TgPartDrawbarOffsetApply ; (d0 part) ★ push the drawbar record onto the part's SOUND EDIT shadow: for each of the four tone mod units write the registration word's low/high byte to aux fields +0x04/+0x05, then add the offset bytes through TgEditOffsetAddClamp_entry -- units 0..2 take +0x0A/+0x0B (percussive decay/level) into aux +0x28/+0x2E clamped 0..100, unit 3 takes +0x08 into aux +0x19 clamped 0..0x7F and +0x09 into aux +0x2A/+0x2C clamped 0..100
+
+; ---- ★ LFO EDIT group loaders (library 0x4C00CCBA..0x4C00D0AC, 2026-07-20) -
+; Twelve LFO groups (manual p174 "12 LFO groups") live in the ROM table
+; 0x486D2ED5, stride 0x27. Each record carries four (speed, depth, ...) triples
+; at +0x00/+0x03/+0x06/+0x09 -- the four LFO EDIT destination pages (PITCH
+; MODULATION / AMP / FILTER / PAN). The group is chosen by the low nibble of
+; byte +0x44 of the part's tone descriptor, and eight different unpackers
+; project the record onto the 8-byte LFO parameter block at +0x45 of the
+; per-part SOUND EDIT record 0x500C0784+(part-0x10)*0x2C8 (parts 0x10..0x12,
+; the three editable parts -- see TgPartLocalEditActivate).
+0x4C00CCBA  TgPartEditLfoLoadA      ; (d0 part, d1 group) groups 0..3: block := rec[0], rec[1], rec[0x1A], rec[0x1C], rec[0x1B], -, rec[0x0E], rec[0x12]
+0x4C00CCBC  TgPartEditLfoLoadA_entry
+0x4C00CD10  TgPartEditLfoLoadB      ; (d0 part, d1 group) groups 4..5 (two active triples): rec[0], rec[1], rec[3], rec[4], rec[0x1A], rec[0x1C], rec[0x0E], rec[0x12]
+0x4C00CD12  TgPartEditLfoLoadB_entry
+0x4C00CD6F  TgPartEditLfoLoadC      ; (d0 part, d1 group) group 6 (the third triple): rec[6], rec[7], rec[8], rec[0x1B], 0, 0, rec[0x0E], rec[0x12]
+0x4C00CD71  TgPartEditLfoLoadC_entry
+0x4C00CDC6  TgPartEditLfoLoadD      ; (d0 part, d1 group) group 7: rec[0], rec[1], rec[3], rec[4], 0, 0, rec[0x0E], rec[0x12]
+0x4C00CDC8  TgPartEditLfoLoadD_entry
+0x4C00CE1C  TgPartEditLfoLoadE      ; (d0 part, d1 group) group 8 (the +0x18 tail block only): rec[0x1C], rec[0x1A], rec[0x19], rec[0x1B], 0, 0, rec[0x0E], rec[0x12]
+0x4C00CE1E  TgPartEditLfoLoadE_entry
+0x4C00CE74  TgPartEditLfoLoadF      ; (d0 part, d1 group) group 9 (the fourth triple): rec[9], rec[0x0A], rec[0x0B], rec[0x0C], 0, 0, rec[0x0E], rec[0x12]
+0x4C00CE76  TgPartEditLfoLoadF_entry
+0x4C00CEC8  TgPartEditLfoLoadG      ; (d0 part, d1 group) group 0x0A: block +0 := rec[0x13] bit7 as a 0/1 flag, +1 := rec[2]&0x3F, +2 := rec[0], +3..+6 := 0, +7 := rec[0x12]
+0x4C00CECA  TgPartEditLfoLoadG_entry
+0x4C00CF28  TgPartEditLfoLoadH      ; (d0 part, d1 group) group 0x0B: as TgPartEditLfoLoadG but +6 := rec[0x0E]
+0x4C00CF2A  TgPartEditLfoLoadH_entry
+0x4C00CF8B  TgPartEditLfoGroupLoad  ; (d0 part) ★ the dispatcher: group = (tone descriptor byte +0x44) & 0x0F, rejected unless 0..0x0B, then the jump table 0x48586F28 picks one of the twelve thunks that call the eight unpackers above with the group index
+0x4C00D047  TgPartEditLfoFlagSet    ; (d0 part, d1 bool) set/clear bit7 of the SOUND EDIT record byte +0x44 (the LFO block header) for parts 0x10..0x12 -- one of the LFO EDIT page's on/off toggles (KEYSYNC or CONNECTION; not settled which). Lazily activates the local-edit shadow first (TgPartLocalEditActivate_entry)
