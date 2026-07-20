@@ -896,3 +896,96 @@
 0x4C03B347  TgNodeRingReleaseWalk_entry
 0x4C03B3B0  TgVoiceListBuild        ; (a0 req {+0 flags, +2 match hi=part lo=note|0x80, +4 mask}) THE voice-list engine behind the TgVoiceListCollect*/Release* wrappers: match hi-byte & 0x3F00 all set -> pool sweep over the 128 nodes (0x500D1278+n*0x2C, flag bit0 clear = in use) collecting every slot; else part < 0x22 -> the part's order-ring heads (0x500D0C64+part*0x1C: +4 sounding, +8 releasing) dispatched by flags: 0x80 -> TgNodeRingReleaseWalk (note-filtered when mask&0x7F, re-walk while the head moves), 0x40 -> TgNodeRingCollectActive on the releasing ring, else TgNodeRingCollect on one or both rings (mask bit7/match bit7 select); slots to req+6, 0xFF/0x80-terminated
 0x4C03B3B5  TgVoiceListBuild_entry
+;
+; ---- SOFT-FLOAT IEEE-754 DOUBLE RUNTIME + libm subset (library image
+;      0x4C000000..0x4C001A00 -- the firmware has no FPU; TgPartGlidePlan/
+;      TgPartGlideTick's portamento math runs here, and the module is generic
+;      compiler runtime shared by any double-typed code). ABI: doubles are
+;      passed on the CALLER's outgoing-arg area -- arg1 lo32 at (8,sp) /
+;      hi32 at (0xC,sp), arg2 at (0x10,sp)/(0x14,sp) -- and returned in
+;      d0 (lo32) : d1 (hi32); the canonical movm prologue is bypassed by the
+;      register-save `call X_entry,[regs],frame` form as usual. Unpack class
+;      codes (d2/d3): 0 = normal, 1 = Inf, 2 = zero, 4 = NaN. Error cell
+;      0x500AD390 (1 = domain, 2 = range) with DBL_MAX / -DBL_MAX / 0
+;      returns = a classic errno-style libm. ---------------------------------
+0x4C000000  LibF64Pow               ; pow(x,y): y==0 -> 1.0; x==0 -> y<=0 sets errno(0x500AD390)=1 dom, returns 0; else split y via LibF64Modf (integer part -> repeated squaring path, fraction -> LibF64Exp(frac*LibF64Log(x))); negative x only legal for integral y (sign fixed at the end)
+0x4C000005  LibF64Pow_entry
+0x4C000263  LibF64UnpackedToI32     ; tail core: unpacked double (d0/d1 mantissa, a1 sign copy, a3 exponent field, d3 class) -> signed i32 in d0, truncating; class 2/4 -> 0, class 1 or exp >= 0x41E00000 -> saturate 0x7FFFFFFF/0x80000000, exp < 0x3FF00000 (|x| < 1) -> 0
+0x4C0002B3  LibF64ToI32             ; (double at (8,sp)/(0xC,sp)) -> d0 = (int32)x, truncation toward zero: LibF64Unpack then LibF64UnpackedToI32
+0x4C0002B8  LibF64ToI32_entry
+0x4C0002CB  LibF64Unpack            ; unpack core (retf leaf): double d0:d1 -> d1 = hi-20 mantissa bits w/ implicit 1 restored, d0 = lo32, a3 = exponent field (hi & 0x7FF00000), a1 = original hi word (sign), d3 = class code (0 normal / 1 Inf / 2 zero / 4 NaN; denormals bump a3 one ulp)
+0x4C000311  LibF64Log               ; log(x): x==0 -> errno=2, -DBL_MAX; sign bit -> errno=1, 0.0; else LibF64Frexp + LibF64Ldexp(m,1) to m in [1,2), ratio z=(m-sqrt2)/(m+sqrt2) (0x3FF6A09E667F3BCD), odd polynomial in z*z walked from the coeff table 0x48586198..0x485861C0 (Horner via LibF64Div/Mul/Add), + (e - 0.5)*ln2 (0x3FE62E42FEFA39EF, half-term 0x3FD62E42... when the sqrt2 fold applied)
+0x4C000316  LibF64Log_entry
+0x4C000523  LibI32ToF64             ; (d0 signed i32) -> double d0:d1 (retf leaf): sign/abs split, normalize into exponent base 0x41D00000 (2^30) by shift-and-decrement
+0x4C00057D  LibF64Sub               ; arg1 - arg2: flips arg2's sign bit on the stack and falls into LibF64Add
+0x4C000582  LibF64Sub_entry
+0x4C00058E  LibF64Add               ; arg1 + arg2, full IEEE double add/sub with unpack, operand swap so |a|>=|b|, guard/round shifts, renormalize + repack; specials via the class codes (NaN/Inf/zero fast paths)
+0x4C000593  LibF64Add_entry
+0x4C0007E2  LibF64Cmp               ; compare arg1 ? arg2 and return with the CPU flags set for SIGNED branches (bge/blt/ble after the call); +-0 fold via the LibF64CmpZero tail when arg2 == 0; the sign-flip is done by xor-ing PSW N|V when the shared-sign magnitude order inverts
+0x4C0007E7  LibF64Cmp_entry
+0x4C000851  LibF64CmpZero           ; compare arg1 against 0.0: flags set (bne = nonzero), d1 = +2 / -2 / 0 sign code
+0x4C000856  LibF64CmpZero_entry
+0x4C000874  LibF64Mul               ; arg1 * arg2: 4 x 16-bit cross products for the 53-bit mantissa product, exponent sum - bias, renormalize/round, sign = xor; specials via class codes
+0x4C000879  LibF64Mul_entry
+0x4C000B17  LibF64Div               ; arg1 / arg2: long division of the mantissas (shift-subtract loop), exponent difference + bias, round, sign = xor; specials via class codes
+0x4C000B1C  LibF64Div_entry
+0x4C000CD3  LibF64Ldexp             ; ldexp(x at (8,sp), d0 = n): exponent field += n with overflow -> errno=2 + +-DBL_MAX (0x7FEFFFFF.../0xFFEFFFFF...) and underflow -> errno=2 + 0.0; x==0 passes through
+0x4C000CD8  LibF64Ldexp_entry
+0x4C000D54  LibF64Frexp             ; frexp(x at (8,sp), a0 = &int exp-out): returns the mantissa in [0.5,1) (exponent field forced to 0x3FE), *a0 = unbiased exponent + 1; x==0 -> *a0=0
+0x4C000D59  LibF64Frexp_entry
+0x4C000D99  LibF64Exp               ; exp(x): x < ln(DBL_MIN) (0xC086232BDD7ABCD2 = -708.396) -> errno=2, 0.0; x > ln(DBL_MAX) (0x40862E42FEFA39EF = +709.782) -> errno=2, DBL_MAX; else argument reduction x = k*ln2 + r and rational approximation in r, LibF64Ldexp(result, k)
+0x4C000D9E  LibF64Exp_entry
+0x4C000F54  LibU32ToF64             ; (d0 unsigned u32) -> double d0:d1 (retf leaf): normalize into exponent base 0x41E00000 (2^31)
+0x4C000F8F  LibF64Abs               ; fabs (retf leaf): clears the sign bit of the stack double in place (byte +7 &= 0x7F) and returns it in d0:d1
+0x4C000FA7  LibF64Modf              ; modf(x at (0x34,sp)-rel, a0 = &double int-part out): split into integral + fractional part -- LibF64Pow's y-splitter
+0x4C000FAC  LibF64Modf_entry
+0x4C001624  LibF64ToI16             ; (double at (8,sp)) -> d0 = (int16)x: LibF64Unpack + LibF64UnpackedToI32 + exth -- TgPartGlideTick's step-offset conversion
+0x4C001629  LibF64ToI16_entry
+0x4C0016AC  LibU16ToF64             ; (d0) -> double: exthu then LibI32ToF64 (jmp tail)
+0x4C0019F2  LibI16ToF64             ; (d0) -> double: exth then LibI32ToF64 (jmp tail)
+;
+; ---- melodic ZONE PARAM FETCHERS 0x4C00FD4C..0x4C010042 (the leaf layer
+;      under TgElemNoteOnFresh/TgElemNoteOnStd: tone-zone record (desc2, a1)
+;      bytes -> the shadow-image level/velocity/send/filter-EG fields; the
+;      +-50-index SENSITIVITY CURVE ROM 0x486D2713 converts UI offsets to
+;      hardware units, key scaling via the pair 0x486D1354/0x486D13D4;
+;      negative zone bytes select the mirrored curve with negated result).
+;      The 0x4C011F2F..0x4C012225 set is their BYTE-FOR-BYTE TWIN linked
+;      into TgKitElemNoteOn for the drum-kit/table classes. ------------------
+0x4C00FD4C  TgZoneParamClamp        ; (d0 value, d1 max, (stack) min) -> d0 clamped to [min,max] (both halfword-signed) -- the shared clamp every fetcher tails into (kit twin 0x4C011F2F)
+0x4C00FD4E  TgZoneParamClamp_entry
+0x4C00FD68  TgZoneLevelScaleCalc    ; (a0 librec, a1 desc2) -> signed level term: desc2+9 level offset through the sensitivity curve 0x486D2713 (negative -> negated mirror), then if desc2+0x14 key-scale slope nonzero: += slope * key-curve[note&0x7F] (librec+0x10; tables 0x486D1354 down /0x486D13D4 up) >> 6, clamped 0..0x7F -- feeds the shadow +0x16 total-level hi byte
+0x4C00FD6D  TgZoneLevelScaleCalc_entry
+0x4C00FE03  TgZoneVeloSenseCalc     ; (a0 desc2) -> signed velocity-sense term from desc2+0x0A through the curve 0x486D2713 (retf leaf, no frame) -- feeds the shadow +0x16 low byte
+0x4C00FE4D  TgZoneSendLevelsCalc    ; (a0 librec, a1 desc2) write the pair librec+0x69/librec+0x6B: desc2+9 >= 0 -> curve[desc2+0x0E] / curve[desc2+0x10] else the negated-mirror variants -- the two effect-send levels merged into the shadow send fields
+0x4C00FE4F  TgZoneSendLevelsCalc_entry
+0x4C00FF44  TgZoneFilterEgLevel1Calc ; (a0 desc2) -> curve[clamp(desc2+0x3E + desc2+0x3F, -50..50)] signed: filter-EG segment-1 level = per-segment offset shifted by the folded CUTOFF ADJUST desc2+0x3E (cf TgKeyOffFilterRelease) -- ahead of TgFilterEgAttackCalc
+0x4C00FF49  TgZoneFilterEgLevel1Calc_entry
+0x4C00FF9A  TgZoneFilterEgLevel2Calc ; same for segment 2: curve[clamp(desc2+0x3E + desc2+0x41, -50..50)] -- ahead of TgFilterEgDecayCalc
+0x4C00FF9F  TgZoneFilterEgLevel2Calc_entry
+0x4C00FFF0  TgZoneFilterEgLevelCalc ; generic: (d0 = segment offset byte, a0 desc2) -> curve[clamp(desc2+0x3E + d0, -50..50)] -- called with desc2+0x43 and desc2+0x45 for filter-EG segments 3/4
+0x4C00FFF5  TgZoneFilterEgLevelCalc_entry
+0x4C011F2F  TgKitZoneParamClamp     ; kit/table twin of TgZoneParamClamp (byte-identical code, second link)
+0x4C011F31  TgKitZoneParamClamp_entry
+0x4C011F4B  TgKitZoneLevelScaleCalc ; kit/table twin of TgZoneLevelScaleCalc
+0x4C011F50  TgKitZoneLevelScaleCalc_entry
+0x4C011FE6  TgKitZoneVeloSenseCalc  ; kit/table twin of TgZoneVeloSenseCalc (retf leaf)
+0x4C012030  TgKitZoneSendLevelsCalc ; kit/table twin of TgZoneSendLevelsCalc
+0x4C012032  TgKitZoneSendLevelsCalc_entry
+0x4C012127  TgKitZoneFilterEgLevel1Calc ; kit/table twin of TgZoneFilterEgLevel1Calc
+0x4C01212C  TgKitZoneFilterEgLevel1Calc_entry
+0x4C01217D  TgKitZoneFilterEgLevel2Calc ; kit/table twin of TgZoneFilterEgLevel2Calc
+0x4C012182  TgKitZoneFilterEgLevel2Calc_entry
+0x4C0121D3  TgKitZoneFilterEgLevelCalc ; kit/table twin of TgZoneFilterEgLevelCalc
+0x4C0121D8  TgKitZoneFilterEgLevelCalc_entry
+0x4C012225  TgPartElemLastSet       ; (d0 part, d1 elem, stack args) recompute + store one byte of the part's last-element table 0x50009E48+part*8+elem*2 (pair byte at +1) via the region-1 helper 0x48449B19 -- the setter behind TgPartElemLastGet/Clear
+0x4C01222A  TgPartElemLastSet_entry
+;
+; ---- raw EG-segment helpers + the routing-field writer (the last leaves
+;      under the note-on programmers) ----------------------------------------
+0x4C03A20F  TgVoiceEgSegParamGet    ; (d0 part, d1 seg, (stack) sel) -> the part's cached EG halfword 0x500CE404+part*0x130+0x4A+seg*4, gated by the tone-TYPE feature record 0x486D2ED5+type*0x27 (+0x13+seg*5 flag byte vs mask table 0x4858782C[sel]; type = tone rec +0x44 & 0xF): type 7 -> scaled by the curve helpers 0x4C011ACE (sel 0) / 0x4C0118F5 (sel 1) >> 8, types 0xA/0xB -> zeroed unless tone rec +0x45 set -- the "raw EG read" both fresh note-on programmers call per segment
+0x4C03A214  TgVoiceEgSegParamGet_entry
+0x4C03A2BD  TgVoiceEgSegFlagTest    ; (d0 part, d1 seg, (stack) sel) -> 1 when the tone-type feature flag for the segment is CLEAR (same 0x486D2ED5/0x4858782C test), else 0; -1 override when tone rec +0x44 bit6 -- the enable its caller pairs with TgVoiceEgSegParamGet
+0x4C03A2BF  TgVoiceEgSegFlagTest_entry
+0x4C037C16  TgVoiceRouteFieldSet    ; (a0 shadow rec, d0 route sel, d1 mode 0..4) write the ROUTING field: shadow +0x40 word bits 12..19 := route byte; mode 0 = hw-config remap via PanelSubTypeGet_entry (types 1/2 direct, 3 -> ROM halfword table 0x485877B4, 5 -> 0x48587774), modes 1/3 -> sel+0x20, modes 2/4 -> sel+0x30 (the two alternate output banks) -- TgElemNoteOnFresh/TgKitElemNoteOn's routing/level init
+0x4C037C1B  TgVoiceRouteFieldSet_entry
