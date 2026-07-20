@@ -121,6 +121,14 @@ def encode(mnem, ops_str, pc):
     if mnem[0] == "l" and mnem[1:] in CONDS:          # Lcc loop branch (1 byte)
         return u8(0xD0 | CONDS[mnem[1:]])
 
+    # --- extended-condition branches (V/carry flags): F8 E8-EB + disp8 ---
+    if mnem in ("bvc", "bvs", "bnc", "bns"):
+        target = imm(ops[0]); d = target - pc
+        if not fits_s8(d):
+            raise EncError(f"{mnem} disp8 out of range: {d}")
+        idx = ("bvc", "bvs", "bnc", "bns").index(mnem)
+        return b"\xf8" + u8(0xE8 | idx) + u8(d)
+
     # --- branches / jumps / calls ---
     if mnem == "bra" or mnem in ("b" + c for c in CONDS):
         target = imm(ops[0]); disp = (target - pc) & 0xFFFFFFFF
@@ -169,9 +177,16 @@ def encode(mnem, ops_str, pc):
         _, si = reg(ops[0])                                   # reg count -> F2 9x/Ax/Bx
         return b"\xf2" + u8((0x90 + sh * 0x10) | (si << 2) | di)
 
-    # --- F2 reg-reg: not / mul / div / ext ---
+    # --- F2 reg-reg: not / rol / ror / mul / div / ext ---
     if mnem == "not":
         _, di = reg(ops[0]); return b"\xf2" + u8(0x30 | di)
+    if mnem in ("rol", "ror"):
+        _, di = reg(ops[0])
+        return b"\xf2" + u8((0x80 if mnem == "rol" else 0x84) | di)
+    # --- F1 carry-chained add/sub (multi-precision math): addc / subc ---
+    if mnem in ("addc", "subc"):
+        _, si = reg(ops[0]); _, di = reg(ops[1])
+        return b"\xf1" + u8((0x40 if mnem == "addc" else 0x80) | (si << 2) | di)
     if mnem == "ext":
         _, di = reg(ops[0]); return b"\xf2" + u8(0xD0 | di)
     if mnem in ("mul", "mulu", "div", "divu"):
