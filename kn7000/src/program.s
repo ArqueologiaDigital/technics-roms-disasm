@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 880 synthetic labels for internal helpers called by converted code
+# 898 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -515,12 +515,30 @@ _rom_marker:
 .equ VoiceDirDefaultRefGet_entry, 0x48572D2E
 .equ SoundEditRefSet_entry, 0x48572E6E
 .equ SoundEditRefInvalidatePost_entry, 0x48572EF6
+.equ SdAudSongIndexSet_entry, 0x4857322D
+.equ SdAudListIndexSetClamped_entry, 0x4857324D
+.equ SdSndSongIndexSet_entry, 0x4857328C
+.equ SdSndListIndexSetClamped_entry, 0x485732B0
+.equ SdSndEditDefListIndexGet, 0x4857330A
+.equ SdSndEditDefEntryIndexSet_entry, 0x48573333
+.equ SdSndEditDefListIndexSet_entry, 0x48573353
+.equ SdSndEditCurEntryIndexSet_entry, 0x4857336E
+.equ SdSndEditCurListIndexSet_entry, 0x48573389
+.equ func_4857355C, 0x4857355C
 .equ func_48578DDD, 0x48578DDD
 .equ func_48578FF0, 0x48578FF0
 .equ func_48579255, 0x48579255
 .equ func_4857926F, 0x4857926F
+.equ SdAudListCountGet, 0x485792FA
+.equ SdAudOpenListIndexGet, 0x48579303
+.equ SdAudListEntryCountGet, 0x48579344
+.equ SdSndListCountGet_entry, 0x4857B249
+.equ SdSndListEntryCountGet_entry, 0x4857B2AF
 .equ func_4857BE97, 0x4857BE97
 .equ func_4857BF6C, 0x4857BF6C
+.equ func_4857C28E, 0x4857C28E
+.equ func_4857C388, 0x4857C388
+.equ func_4857C3C3, 0x4857C3C3
 .equ LibF64Pow_entry, 0x4C000005
 .equ LibF64UnpackedToI32, 0x4C000263
 .equ LibF64ToI32_entry, 0x4C0002B8
@@ -30720,7 +30738,183 @@ _rom_marker:
     mov     0x1e, d0
     retf    0, 0
 # InitializeBlock34  (CPU 0x48572f46)
-.incbin_range "baserom/kn7000_program.rom", 0x172f46, 0x1736b7
+.incbin_range "baserom/kn7000_program.rom", 0x172f46, 0x1731fb
+# SdAudSongIndexGet  (CPU 0x485731fb)
+    mov     (0x500062fc), d0
+    retf    0, 0
+# SdAudListIndexGet  (CPU 0x48573204)
+    mov     (0x50006300), d0
+    retf    0, 0
+# SdSndSongIndexGet  (CPU 0x4857320d)
+    mov     (0x50006304), d0
+    retf    0, 0
+# SdSndListIndexGet  (CPU 0x48573216)
+    mov     (0x50006308), d0
+    retf    0, 0
+# SdSndPlayChIndexGet  (CPU 0x4857321f)
+    mov     (0x5000630c), d0
+    retf    0, 0
+# SdAudSongIndexSet  (CPU 0x48573228)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdAudSongIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x48573245
+    call    SdAudOpenListIndexGet, 0, 0
+    call    SdAudListEntryCountGet, 0, 0
+    cmp     d0, d2
+    bge     0x48573245
+    mov     d2, (0x500062fc)
+    ret     [d2], 0x10
+# SdAudListIndexSetClamped  (CPU 0x48573248)
+    movm    [d2], (sp)
+    add     -8, sp
+# SdAudListIndexSetClamped_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x48573262
+    call    SdAudListCountGet, 0, 0
+    cmp     d0, d2
+    bge     0x48573262
+    mov     d2, (0x50006300)
+    bra     0x48573284
+    cmp     0, d2
+    bge     0x4857326f
+    clr     d0
+    mov     d0, (0x50006300)
+    bra     0x48573284
+    call    SdAudListCountGet, 0, 0
+    cmp     d0, d2
+    blt     0x48573284
+    call    SdAudListCountGet, 0, 0
+    add     -1, d0
+    mov     d0, (0x50006300)
+    ret     [d2], 0xc
+# SdSndSongIndexSet  (CPU 0x48573287)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSndSongIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x485732a8
+    .byte 0xDD, 0xC0, 0x7F, 0x00, 0x00, 0x00, 0x00   # call 0x4857b251, 0, 0
+    call    SdSndListEntryCountGet_entry, 0, 0xc
+    cmp     d0, d2
+    bge     0x485732a8
+    mov     d2, (0x50006304)
+    ret     [d2], 0x10
+# SdSndListIndexSetClamped  (CPU 0x485732ab)
+    movm    [d2], (sp)
+    add     -8, sp
+# SdSndListIndexSetClamped_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x485732c7
+    .byte 0xDD, 0x94, 0x7F, 0x00, 0x00, 0x00, 0x08   # call 0x4857b249, 0, 8
+    cmp     d0, d2
+    bge     0x485732c7
+    mov     d2, (0x50006308)
+    bra     0x485732e9
+    cmp     0, d2
+    bge     0x485732d4
+    clr     d0
+    mov     d0, (0x50006308)
+    bra     0x485732e9
+    call    SdSndListCountGet_entry, 0, 8
+    cmp     d0, d2
+    blt     0x485732e9
+    call    SdSndListCountGet_entry, 0, 8
+    add     -1, d0
+    mov     d0, (0x50006308)
+    ret     [d2], 0xc
+# SdSndPlayChIndexSetClamped  (CPU 0x485732ec)
+    clr     d1
+    mov     d1, (0x5000630c)
+    cmp     d1, d0
+    blt     0x48573307
+    mov     0xf, d1
+    mov     d1, (0x5000630c)
+    cmp     d1, d0
+    bgt     0x48573307
+    mov     d0, (0x5000630c)
+    retf    0, 0
+# SdSndEditDefListIndexGet  (CPU 0x4857330a)
+    mov     (0x50006310), d0
+    retf    0, 0
+# SdSndEditDefEntryIndexGet  (CPU 0x48573313)
+    mov     (0x50006314), d0
+    retf    0, 0
+# SdSndEditCurListIndexGet  (CPU 0x4857331c)
+    mov     (0x50006318), d0
+    retf    0, 0
+# SdSndEditCurEntryIndexGet  (CPU 0x48573325)
+    mov     (0x5000631c), d0
+    retf    0, 0
+# SdSndEditDefEntryIndexSet  (CPU 0x4857332e)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# SdSndEditDefEntryIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x4857334b
+    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndListEntryCountGet_entry, 0, 0xc
+    cmp     d0, d2
+    bge     0x4857334b
+    mov     d2, (0x50006314)
+    ret     [d2], 0x10
+# SdSndEditDefListIndexSet  (CPU 0x4857334e)
+    movm    [d2], (sp)
+    add     -8, sp
+# SdSndEditDefListIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x48573366
+    call    SdSndListCountGet_entry, 0, 8
+    cmp     d0, d2
+    bge     0x48573366
+    mov     d2, (0x50006310)
+    ret     [d2], 0xc
+# SdSndEditCurEntryIndexSet  (CPU 0x48573369)
+    movm    [d2], (sp)
+    add     -8, sp
+# SdSndEditCurEntryIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x48573381
+    call    func_4857355C, 0, 0
+    cmp     d0, d2
+    bgt     0x48573381
+    mov     d2, (0x5000631c)
+    ret     [d2], 0xc
+# SdSndEditCurListIndexSet  (CPU 0x48573384)
+    movm    [d2], (sp)
+    add     -8, sp
+# SdSndEditCurListIndexSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    cmp     0, d2
+    blt     0x4857339c
+    call    SdSndListCountGet_entry, 0, 8
+    cmp     d0, d2
+    bgt     0x4857339c
+    mov     d2, (0x50006318)
+    ret     [d2], 0xc
+# SdSndEditMoveDirGet  (CPU 0x4857339f)
+    movbu   (0x50006322), d0
+    extb    d0
+    retf    0, 0
+# SdSndEditMoveDirSet  (CPU 0x485733a9)
+    mov     d0, d1
+    extb    d1
+    cmp     1, d1
+    beq     0x485733b3
+    cmp     -1, d1
+    bne     0x485733b9
+    movbu   d0, (0x50006322)
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x1733bc, 0x1736b7
 # AcIntTitleMenuSDProc  (CPU 0x485736b7)
 .incbin_range "baserom/kn7000_program.rom", 0x1736b7, 0x173712
 # AcSDFuncStrBoxProc  (CPU 0x48573712)
@@ -31002,7 +31196,56 @@ _rom_marker:
 # MainSD_LyricsCharaReq  (CPU 0x48577e54)
 .incbin_range "baserom/kn7000_program.rom", 0x177e54, 0x177e60
 # MainSD_PlayStatusJudge  (CPU 0x48577e60)
-.incbin_range "baserom/kn7000_program.rom", 0x177e60, 0x17dd90
+.incbin_range "baserom/kn7000_program.rom", 0x177e60, 0x1792fa
+# SdAudListCountGet  (CPU 0x485792fa)
+    movbu   (0x50007f3c), d0
+    retf    0, 0
+# SdAudOpenListIndexGet  (CPU 0x48579303)
+    movhu   (0x500063f0), d0
+    exth    d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x17930d, 0x179344
+# SdAudListEntryCountGet  (CPU 0x48579344)
+    mov     0x18, d1
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, a0
+    add     0x501720f0, a0
+    movhu   (0x12, a0), d0
+    rets
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x179357, 0x17b246
+# SdSndListCountGet  (CPU 0x4857b246)
+    add     -8, sp
+# SdSndListCountGet_entry:   (register-save `call` entry)
+    call    func_4857C388, [d2,d3,a2,a3], 0x1c
+    ret     0, 8
+# SdSndSelListIndexGet  (CPU 0x4857b251)
+    movhu   (0x500063e0), d0
+    exth    d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x17b25b, 0x17b2ac
+# SdSndListEntryCountGet  (CPU 0x4857b2ac)
+    add     -0xc, sp
+# SdSndListEntryCountGet_entry:   (register-save `call` entry)
+    extbu   d0
+    call    func_4857C28E, [d2,d3,a2,a3], 0x20
+    mov     d0, d1
+    mov     -1, d0
+    cmp     0, d1
+    blt     0x4857b2c9
+    mov     d1, d0
+    extbu   d0
+    call    func_4857C3C3, [d2,d3,a2,a3], 0x1c
+    cmp     0, d0
+    bge     0x4857b2c9
+    mov     -1, d0
+    ret     0, 0xc
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x17b2cc, 0x17dd90
 # InitializeBlock35  (CPU 0x4857dd90)
 .incbin_range "baserom/kn7000_program.rom", 0x17dd90, 0x17e0b5
 # AcSswScreenProc  (CPU 0x4857e0b5)

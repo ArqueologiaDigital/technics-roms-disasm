@@ -246,6 +246,21 @@ CONVERT = {
     "CustStyleVarRecData",
     "CustomStyleIndexFromParam", "CustomStyleBlockFetch",
     "CustomStyleBlockFetchCur", "CustomSoundEditRecFetch",
+    # ---- SD-CARD BROWSER CURSORS (kn7000_manual.sym section of that name):
+    #      the validated cursor getters/setters for the SD AUDIO and SD SOUND
+    #      file browsers and the SD SOUND LIST EDIT screen. -----------------
+    "SdAudSongIndexGet", "SdAudListIndexGet", "SdSndSongIndexGet",
+    "SdSndListIndexGet", "SdSndPlayChIndexGet",
+    "SdAudSongIndexSet", "SdAudListIndexSetClamped",
+    "SdSndSongIndexSet", "SdSndListIndexSetClamped",
+    "SdSndPlayChIndexSetClamped",
+    "SdSndEditDefListIndexGet", "SdSndEditDefEntryIndexGet",
+    "SdSndEditCurListIndexGet", "SdSndEditCurEntryIndexGet",
+    "SdSndEditDefEntryIndexSet", "SdSndEditDefListIndexSet",
+    "SdSndEditCurEntryIndexSet", "SdSndEditCurListIndexSet",
+    "SdSndEditMoveDirGet", "SdSndEditMoveDirSet",
+    "SdAudListCountGet", "SdAudOpenListIndexGet", "SdAudListEntryCountGet",
+    "SdSndListCountGet", "SdSndSelListIndexGet", "SdSndListEntryCountGet",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -278,6 +293,11 @@ FUNC_END = {
     "MemStyleVarBarCount": 0x3C463,        # next (unnamed) function at 0x4843C463
     "CustStyleVarRecData": 0x3E14E,        # next (unnamed) function at 0x4843E14E
     "CustomSoundEditRecFetch": 0x8463A,    # next (unnamed) function at 0x4848463A
+    "SdSndEditMoveDirSet": 0x1733BC,       # next (unnamed) function at 0x485733BC
+    "SdAudOpenListIndexGet": 0x17930D,     # next (unnamed) function at 0x4857930D
+    "SdAudListEntryCountGet": 0x179357,    # next (unnamed) function at 0x48579357
+    "SdSndSelListIndexGet": 0x17B25B,      # next (unnamed) function at 0x4857B25B
+    "SdSndListEntryCountGet": 0x17B2CC,    # next (unnamed) function at 0x4857B2CC
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live

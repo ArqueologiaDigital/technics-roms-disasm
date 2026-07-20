@@ -2148,3 +2148,60 @@
 0x484845AB  CustomStyleBlockFetchCur_entry
 0x484845E1  CustomSoundEditRecFetch ; (d0 = index) -> a 0x2C8-byte record inside the current custom slot's block -- the same stride as the SOUND EDIT record 0x500C0784+(part-0x10)*0x2C8; bounds-checked against the block's own count (0x48484291)
 0x484845E6  CustomSoundEditRecFetch_entry
+
+; ---- SD-CARD BROWSER CURSORS (0x485731FB..0x485733BC) ------------------------
+; Converted 2026-07-20. The validated getter/setter block behind the SD CARD
+; file browsers -- every one of them range-checks against a live count before
+; committing, which is why the browser cursors survive a card swap. Callers are
+; the Get*ListFunc list-content suppliers and the MainSD*SW soft-key handlers
+; (kn7000_mame/notes/kn7000-sd-strap-gate memory + the SD nav findings).
+;
+;   0x500062FC  SD AUDIO song cursor      count = SdAudListEntryCountGet(open list)
+;   0x50006300  SD AUDIO list cursor      count = SdAudListCountGet     (CLAMPED)
+;   0x50006304  SD SOUND song cursor      count = SdSndListEntryCountGet(sel list)
+;   0x50006308  SD SOUND list cursor      count = SdSndListCountGet     (CLAMPED)
+;   0x5000630C  SD SOUND play channel     0..0x0F                       (CLAMPED)
+;   0x50006310  LIST EDIT default-list cursor    count = SdSndListCountGet
+;   0x50006314  LIST EDIT default-entry cursor   count = entries of that list
+;   0x50006318  LIST EDIT current-list cursor    <= count  (one past end = NEW)
+;   0x5000631C  LIST EDIT current-entry cursor   <= count  (one past end = insert)
+;   0x50006322  LIST EDIT move direction, accepts only +1 / -1
+;
+; "CLAMPED" setters do not reject an out-of-range index, they saturate it to 0
+; or count-1; the plain setters silently ignore it.
+0x485731FB  SdAudSongIndexGet       ; -> *(0x500062FC) -- retf leaf
+0x48573204  SdAudListIndexGet       ; -> *(0x50006300) -- retf leaf
+0x4857320D  SdSndSongIndexGet       ; -> *(0x50006304) -- retf leaf
+0x48573216  SdSndListIndexGet       ; -> *(0x50006308) -- retf leaf
+0x4857321F  SdSndPlayChIndexGet     ; -> *(0x5000630C), the SD SOUND play screen's channel/mute cursor -- retf leaf
+0x48573228  SdAudSongIndexSet       ; (d0) accepted only when 0 <= d0 < SdAudListEntryCountGet(SdAudOpenListIndexGet())
+0x4857322D  SdAudSongIndexSet_entry
+0x48573248  SdAudListIndexSetClamped ; (d0) saturating: < 0 -> 0, >= SdAudListCountGet -> count-1
+0x4857324D  SdAudListIndexSetClamped_entry
+0x48573287  SdSndSongIndexSet       ; (d0) accepted only when 0 <= d0 < SdSndListEntryCountGet(SdSndSelListIndexGet())
+0x4857328C  SdSndSongIndexSet_entry
+0x485732AB  SdSndListIndexSetClamped ; (d0) saturating against SdSndListCountGet
+0x485732B0  SdSndListIndexSetClamped_entry
+0x485732EC  SdSndPlayChIndexSetClamped ; (d0) saturating to 0..0x0F (16 channels) -- retf leaf
+0x4857330A  SdSndEditDefListIndexGet ; -> *(0x50006310) -- retf leaf
+0x48573313  SdSndEditDefEntryIndexGet ; -> *(0x50006314) -- retf leaf
+0x4857331C  SdSndEditCurListIndexGet ; -> *(0x50006318) -- retf leaf
+0x48573325  SdSndEditCurEntryIndexGet ; -> *(0x5000631C) -- retf leaf
+0x4857332E  SdSndEditDefEntryIndexSet ; bound = the entry count of the DEFAULT list *(0x50006310)
+0x48573333  SdSndEditDefEntryIndexSet_entry
+0x4857334E  SdSndEditDefListIndexSet ; bound = SdSndListCountGet
+0x48573353  SdSndEditDefListIndexSet_entry
+0x48573369  SdSndEditCurEntryIndexSet ; bound = 0x4857355C, and d0 == count IS allowed (the append/insert slot)
+0x4857336E  SdSndEditCurEntryIndexSet_entry
+0x48573384  SdSndEditCurListIndexSet ; bound = SdSndListCountGet, and d0 == count IS allowed (the NEW LIST slot)
+0x48573389  SdSndEditCurListIndexSet_entry
+0x4857339F  SdSndEditMoveDirGet     ; -> the signed byte *(0x50006322) -- retf leaf
+0x485733A9  SdSndEditMoveDirSet     ; stores d0 only when it is exactly +1 or -1 -- retf leaf
+0x485792FA  SdAudListCountGet       ; -> the byte *(0x50007F3C): how many SD AUDIO lists exist -- retf leaf
+0x48579303  SdAudOpenListIndexGet   ; -> the signed u16 *(0x500063F0): which AUDIO list the song cursor indexes into -- retf leaf
+0x48579344  SdAudListEntryCountGet  ; (d0 = list) -> u16 at SD_AUD_LIST_DIR 0x501720F0 + list*0x18 + 0x12 -- rets leaf
+0x4857B246  SdSndListCountGet       ; -> how many SD SOUND lists exist (0x4857C388)
+0x4857B249  SdSndListCountGet_entry
+0x4857B251  SdSndSelListIndexGet    ; -> the signed u16 *(0x500063E0): which SOUND list the song cursor indexes into -- retf leaf
+0x4857B2AC  SdSndListEntryCountGet  ; (d0 = list) -> its entry count via 0x4857C28E/0x4857C3C3, or -1
+0x4857B2AF  SdSndListEntryCountGet_entry
