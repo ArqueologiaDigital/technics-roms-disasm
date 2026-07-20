@@ -999,3 +999,108 @@
 0x4C0147AD  TgStageHeldPolicyShed   ; (a0 staged request rec) POLYPHONY LOAD GOVERNOR called inside TgSlotAllocate: for parts > 0x12 only, when the active-voice high water 0x500D287A reaches the threshold (0x40 when context byte 0x500D2878 nonzero, else 0x60) clear the HELD policy bit7 of pool bytes rec+4/rec+5 -- under voice pressure a note's elements 3/4 are staged WITHOUT the sustain-hold mark (so the damper keeps at most 2 held elements per note); retf leaf
 0x4C014803  TgVoicePoolReset        ; the voice allocator COLD RESET: if any gone-mask halfword 0x500D287C[0..7] is nonzero first force every hw slot off via 0x4C037244(slot) x 0x80; then rebuild the class-list arrays 0x500D1038 (0x12 x 0x20 bytes, side quotas from ROM 0x486D379C), the part order arrays 0x500D0C64 (0x23 x 0x1C, first word from ROM 0x486D37B0), re-seed all 0x80 nodes 0x500D1278 (self-linked rings, +0x1C free, +0x24 class 6) + TgVoiceNodeRetire_entry each, and clear the 8-halfword masks 0x500D287C/0x500D288C/0x500D289C
 0x4C014808  TgVoicePoolReset_entry
+;
+; ---- the NOTE LEVEL chain under the note-on programmers (2026-07-20 pass;
+;      NB the AUTONOMOUS-STATUS "pitch chain internals" label was a misnomer:
+;      0x4C0311F3/0x4C0312A2/0x4C031330 compute the note/element LEVEL, not
+;      pitch -- they follow TgPitchRuntimeCalc in program order only) ---------
+0x4C0311F1  TgNoteLevelVariationCalc ; (a0 request rec, a1 desc entry ptr, d0 shadow byte-offset) per-note LEVEL VARIATION source, mode = desc halfword bits 15..14: 0 = part tone block byte 0x500CE404+part*0x130+elem*0x34+0x91 (signed) + desc byte(+3-advanced ptr) * (velocity(rec+0xC hi7) - 0x42) >> 5 (velocity-sense level offset); 1 = PSEUDO-RANDOM level from the 1 kHz tick 0x50151BFC (tick^2>>2 * 0x83, low16 * 0x7F >> 16); 2/3 = set bit15/bit16 of the class-0x3000 level word at shadow(+0x54+off) and return neutral 0x40 -- result stored to librec+0x50 by the caller
+0x4C0311F3  TgNoteLevelVariationCalc_entry
+0x4C03129D  TgVoiceNoteLevelCalc    ; (a0 librec, a1 desc entry ptr) -> the 7-bit note level the programmers pack into shadow +0x24 bits 0..6: part state 0x500B5340+part*0x54C+0x1D in 1..3 with +2 bit0 -> 0 (muted) / bit1 -> 0x7F (solo); desc mode 1 (random) -> librec+0x50 as-is; else 0x4C006A17(part, note) + expression (partrec+0x0A - 0x40) + librec+0x50 variation, clamped 0..0x7F via TgZoneParamClamp_entry -- the TgLevelResolve of the per-element path
+0x4C0312A2  TgVoiceNoteLevelCalc_entry
+0x4C03132B  TgElemLevelBaseCalc     ; (a0 librec, a1 desc2, d0 accum) -> librec+0x12 AND +0x14 (halfword pair) := the element's base level term, +0x56 := 0; adds: key follow (desc2+0x1B == 0x70 -> fixed table 0x486D2805[note]-0xC, else slope desc2+0x1A via note-fold 0x486D1354 + bank 0x486D1454[hi-nibble<<8]/0x486D1B54 curve, *slope>>5 + 0xD8), the region-1 tuning hook 0x48449B0A(librec+0x40 table, +0x17 elem), the VELOCITY FADE zones desc2+0x20..0x23 (outside hard edge -0x200, slope -0x40*delta/(hi-lo) via LibDiv32) and the KEY FADE zones desc2+0x24..0x27 on note&0x7F, glide state 0x500AD5A8+part*0x10C+0x25 when desc2+0x19 bit7, +0x40 when master flag 0x500C0758 bit2 && part sub-rec +0x12; also sets librec+2 class bit11 when +0x10 bit7
+0x4C031330  TgElemLevelBaseCalc_entry
+0x4C031627  TgAmpEgAttackRateCalc   ; (d0 rate accum, a0 librec, a1 desc2) -> the amp-EG ATTACK rate byte (caller packs it into shadow r0 HI): curve ROM 0x486D25E4[clamp(d0 + desc2+0x28, 0..0x64)] then (desc2+0x34 velocity sense != 0) velocity vs breakpoints desc2+0x31/0x32/0x33 * sense >> 5 and key follow desc2+0x2F (negative -> 0x486D1354 fold) * 0x486D13D4[note] >> 4, clamp 0..0xFF; 0xFF -> 0xFE when routing rec (librec+0x44)+8 bit0
+0x4C03162C  TgAmpEgAttackRateCalc_entry
+0x4C031787  TgAmpEgDecayRatePairCalc ; (d0/d1 rate accums, a0 librec, a1 desc2) computes BOTH amp-EG decay rates -> librec+0x64/+0x66 (caller packs them into shadow r1 HI / +8 HI): curve ROM 0x486D2649[clamp(d0 + desc2+0x2A, 0..0x64)] and [clamp(d1 + desc2+0x2C, 0..0x64)], then one shared velocity-sense (desc2+0x35, breakpoints +0x31..0x33) + key-follow (desc2+0x30, 0x486D1354/0x486D13D4 >> 4) adjustment added to both, each clamped 0..0xFF
+0x4C03178C  TgAmpEgDecayRatePairCalc_entry
+0x4C02BF86  TgLevelTermFinalize     ; (d0 level index, a0 librec) -> d0/d1 := halfword ROM 0x486D1BD4[idx*2], the log->hw mapping at the tail of TgVoiceLevelWordCalc; before the lookup it folds in the PART gains: partrec 0x500B5340+part*0x54C +8 (or -0x200 hard mute when +4 bit0 clear), +0xC, sbyte +0x20, the GROUP masters by part class (librec+0x16): 2/3 -> h 0x500C0760 gated 0x500C075A bit3, parts 0x13..0x1A -> 0x500C0762 gated bit4, parts <= 0xF -> 0x500C0764, class 4 -> 0x500C0766, the hook 0x4C00685C(elem, note) + librec+0x56 + partrec+0x3C, the mono/legato gates (librec+0x44 halfword bit1/bit3 vs glide state 0x500AD5A8 +0x26/+0x27 -> level 0) and a +0x0B bump for legato followers (partrec+0x62 bits 11..12/13..15 with +0 bit3), clamped 0..0xFF
+0x4C02BF8B  TgLevelTermFinalize_entry
+;
+; ---- the per-part TYPE-7 EG TIME-RAMP module (the curve helpers under
+;      TgVoiceEgSegParamGet; closes the whole 0x4C011730..0x4C011F2F gap).
+;      State: 8-byte record 0x50009D38+part*8 -- byte0 = flags (bit0 active,
+;      bit1 engaged input, bit2 engaged latch, bit3 rampA done, bit4 hold-off),
+;      byte1/byte2 = tick counters (max 0x4F / 0x96), +4/+6 = the two Q8.8
+;      time scales (0x100 = 1.0). Enable = partrec halfword bit 0x1000 AND
+;      tone type 7 (tone rec +0x44 & 0xF); the dispatcher ticks all 0x22
+;      parts and runs an engage/release edge state machine, ramping the
+;      scales through curve ROMs 0x4858712C/0x4858717C. Setters refresh the
+;      LIVE voices: part class-reg list via TgPartClassRegCollect ->
+;      TgGlobalRegWriteBoth_entry, per-slot EG via TgVoiceEgSegParamGet/
+;      FlagTest entries -> TgVoiceReg0401Write/TgVoiceReg0405Write.
+;      WHICH panel feature drives partrec bit12 is still open (candidate:
+;      the part sustain/damper response of sustaining type-7 tones). --------
+0x4C011730  TgPartEgRampInit        ; (d0 part, d1 phase) phase 0: partrec bit 0x1000 set -> state {flags 0x0F, cnt 0x4F/0x96, scales 0x100/0x100} else {flags 1, cnt 1/1, scales 0/0}; phase != 0: flags := (flags & 5) | (partrec bit 0x1000 ? 2 : 0) -- the engage-input writer; tone type != 7 -> whole state zeroed
+0x4C011732  TgPartEgRampInit_entry
+0x4C01180E  TgPartEgRampScaleASet   ; (d0 part, d1 scale) scale A (+4) := scale, then LIVE refresh: ratio = TgVoiceEgSegParamGet-style scaled read via 0x4C03A315(part, 1), part class regs (mask 0x11) rescaled via TgGlobalRegWriteBoth_entry, and every sounding slot of the part (TgVoiceListCollectPartAll_entry) gets EgSegParamGet*FlagTest (sel 1) -> TgVoiceReg0405Write
+0x4C011814  TgPartEgRampScaleASet_entry
+0x4C0118E3  TgPartEgRampScaleAGet   ; (d0 part) -> raw scale A halfword +4 (retf leaf)
+0x4C0118F5  TgPartEgRampScaleACurve ; (d0 part) -> curve ROM halfword 0x48587196[scale A * 2] -- TgVoiceEgSegParamGet's sel-1 (type 7) scale source
+0x4C011910  TgPartEgRampScaleAReset ; (d0 part) scale A := 0x100 + the same mask-0x11/sel-1 live refresh as TgPartEgRampScaleASet
+0x4C011916  TgPartEgRampScaleAReset_entry
+0x4C0119EA  TgPartEgRampScaleBSet   ; (d0 part, d1 scale) scale B (+6) := scale + live refresh mask 0x10 / sel 0 -> TgVoiceReg0401Write
+0x4C0119F0  TgPartEgRampScaleBSet_entry
+0x4C011ABC  TgPartEgRampScaleBGet   ; (d0 part) -> raw scale B halfword +6 (retf leaf)
+0x4C011ACE  TgPartEgRampScaleBCurve ; (d0 part) -> curve ROM halfword 0x48587398[scale B * 2] -- TgVoiceEgSegParamGet's sel-0 (type 7) scale source
+0x4C011AE9  TgPartEgRampScaleBReset ; (d0 part) scale B := 0x100 + live refresh mask 0x10 / sel 0
+0x4C011AEF  TgPartEgRampScaleBReset_entry
+0x4C011BC0  TgPartEgRampScaleBSet2  ; (d0 part, d1 scale) scale B := scale + live refresh with reg-list mask 0x20 and the 0x4C03A38E scaled ratio -- the release-side variant of TgPartEgRampScaleBSet
+0x4C011BC5  TgPartEgRampScaleBSet2_entry
+0x4C011C23  TgPartEgRampScaleBGet2  ; duplicate raw scale-B getter (second link of the leaf)
+0x4C011C35  TgPartEgRampScaleBReset2 ; (d0 part) scale B := 0x100 + the mask-0x20 variant refresh
+0x4C011C3A  TgPartEgRampScaleBReset2_entry
+0x4C011C9D  TgPartEgRampTickHeld    ; (d0 part) steady-ENGAGED tick: cntA(byte1) < 0x4F -> ++cntA, flags &= ~8, scale A := curve ROM 0x4858712C[cntA] (else flags |= 8 + TgPartEgRampScaleAReset); cntB(byte2) < 0x96 -> ++cntB, scale B := curve ROM 0x4858717C[cntB / 6] via LibDiv32 + TgPartEgRampScaleBSet2 (else ScaleBReset + ScaleBReset2)
+0x4C011CA2  TgPartEgRampTickHeld_entry
+0x4C011D32  TgPartEgRampTickIdle    ; (d0 part) steady-RELEASED tick: the counter walk-down twin (scale A via ScaleASet, scale B via ScaleBSet + ScaleBSet2 mask-0x20 path)
+0x4C011D37  TgPartEgRampTickIdle_entry
+0x4C011DB6  TgPartEgRampReleaseEdge ; (d0 part) engage -> release transition (flags bit2 just cleared): re-seed the counters and push both scales
+0x4C011DBB  TgPartEgRampReleaseEdge_entry
+0x4C011E44  TgPartEgRampEngageEdge  ; (d0 part) release -> engage transition (flags bit2 just set)
+0x4C011E49  TgPartEgRampEngageEdge_entry
+0x4C011EC9  TgPartEgRampDispatchTick ; FOR EACH part 0..0x21: flags bit0 gate, then the edge state machine on bits 1/2 -- engage edge (bit1 & !bit2: set bit2, EngageEdge), steady engaged (bit1 & bit2 & bit4clear...: TickHeld unless bit3+bit4 done), release edge (!bit1 & bit2: clear bit2, ReleaseEdge), steady released (!bit1 & !bit2 & !bit4: TickIdle) -- the module's periodic driver
+0x4C011ECE  TgPartEgRampDispatchTick_entry
+0x4C03A310  TgPartEgRampSegScaled   ; (d0 part, d1 sel) -> part EG cache halfword 0x500CE404+part*0x130+0x4C+sel*4 scaled by the ramp: tone type 7 only; sel 0 -> * scale B >> 8 floor 0x1C, sel 1 -> * scale A >> 8 floor 0x2C
+0x4C03A315  TgPartEgRampSegScaled_entry
+0x4C03A389  TgPartEgRampCache54Scaled ; (d0 part) -> part EG cache halfword +0x54 scaled the same way (type-7 gate) -- the ratio source of the mask-0x20 setter pair
+0x4C03A38E  TgPartEgRampCache54Scaled_entry
+;
+; ---- the per-slot FORCE-OFF / damp programmers (between TgVoiceRecordPtr
+;      and TgVoiceGateOn; all gated on TG-enable 0x500CE380 != 0x7F and all
+;      built from TgVoiceRegWrite_entry [rate|level] halfword writes) --------
+0x4C037135  TgVoiceStealSilence     ; (d0 slot) the STEAL/boot silencer (TgSlotAllocate's steal path): r1/r2 := 0xC000 (the boot/steal-only pattern from the forever-note erratum), r4/r5/r6 := 0, r8/r9/rA := 0, then librec(0x500CA0B0+slot*0x84)+2 bit7 ? (r0 := 0xFF80, r1 := 0xFF00) : (r1 := 0xFF00, r2 := 0xFF00) -- instant-rate ramp to silence before slot reuse
+0x4C03713A  TgVoiceStealSilence_entry
+0x4C03723F  TgVoiceForceOff         ; (d0 slot) the per-slot FORCE-OFF (TgVoicePoolReset's 0x80-slot sweep target): r0 := 0xA280, r1 := 0xA200 (rate 0xA2 to level 0x80/0), r4/r5 := 0, r8/r9 := 0
+0x4C037244  TgVoiceForceOff_entry
+0x4C0372B7  TgVoiceForceOffSoft     ; (d0 slot) rate-0x7F variant of TgVoiceForceOff (r0 := 0x7F80, r1 := 0x7F00, r4/r5/r8/r9 := 0)
+0x4C0372BC  TgVoiceForceOffSoft_entry
+0x4C037329  TgVoiceDamp7F           ; (d0 slot) r0 := 0x7F80, r1 := 0x7F00 only -- the rate-0x7F damp ramp without clearing the EG segments
+0x4C03732E  TgVoiceDamp7F_entry
+0x4C03735B  TgVoiceDampA2           ; (d0 slot) r0 := 0xA280, r1 := 0xA200 only -- the rate-0xA2 damp ramp
+0x4C037360  TgVoiceDampA2_entry
+0x4C037A34  TgVoiceReg0401Write     ; (d0 slot, d1 value) librec 0x500CA0B0+slot*0x84 +0x28 halfword: low 14 bits := value (bits 15..14 kept), then TgVoiceRegWrite_entry(slot, class 0x0401, new halfword) -- the live EG-time write the scale-B refreshes use
+0x4C037A39  TgVoiceReg0401Write_entry
+0x4C037A79  TgVoiceReg0405Write     ; (d0 slot, d1 value) same for librec +0x2A / register class 0x0405 -- the scale-A refresh write
+0x4C037A7E  TgVoiceReg0405Write_entry
+0x4C037ABE  TgVoiceEgSegRegsWrite   ; (d0 slot, a0 shadow rec) push the four EG-segment registers from the shadow image: r8 := h(+0x18), r9 := h(+0x1C), rA := h(+0x20), rB := h(+0x22) via TgVoiceRegWrite_entry (TG-enable gated) -- cited by the TgElemKeyOffRelease doc
+0x4C037AC3  TgVoiceEgSegRegsWrite_entry
+;
+; ---- the DRUM-side zone param fetchers (the third link of the fetcher
+;      family, serving the class-0x10 drum programmers around
+;      TgDrumAmpReleaseCalc; same curve ROMs as the melodic/kit sets) --------
+0x4C009F01  TgDrumZoneParamClamp    ; (d0 val, d1 hi, stack lo) clamp -- the drum-side link of TgZoneParamClamp (TgDrumAmpReleaseCalc's "0x4C009F03")
+0x4C009F03  TgDrumZoneParamClamp_entry
+0x4C009F1D  TgDrumZoneLevelScaleCalc ; (a0 rec, a1 desc) drum twin of TgZoneLevelScaleCalc: sense byte desc+9 through the +-50 curve ROM 0x486D2713 (negated mirror for negative), key scaling desc+0x14 slope via 0x486D1354/0x486D13D4 >> 6 vs note rec+0x10, clamp 0..0x7F
+0x4C009F22  TgDrumZoneLevelScaleCalc_entry
+0x4C009FB8  TgDrumZoneVeloSenseCalc ; (a0 desc) drum twin of TgZoneVeloSenseCalc: desc+0xA sense -> 0x486D2713 curve, sign-folded; rets leaf
+0x4C00A002  TgDrumZoneSendLevelsCalc ; (a0 shadow rec, a1 desc) drum twin of TgZoneSendLevelsCalc: desc+9 >= 0 path uses desc+0xE/+0x10 else the negated pair; both sends through 0x486D2713, negated, -> shadow bytes +0x69/+0x6B
+0x4C00A004  TgDrumZoneSendLevelsCalc_entry
+0x4C00A0F9  TgDrumFilterEgLevel1Calc ; (a0 desc2) drum twin of TgZoneFilterEgLevel1Calc: clamp(desc2+0x3E CUTOFF ADJUST + desc2+0x3F, -0x32..0x32) -> 0x486D2713, negated fold
+0x4C00A0FE  TgDrumFilterEgLevel1Calc_entry
+0x4C00A14F  TgDrumFilterEgLevel2Calc ; (a0 desc2) drum twin of TgZoneFilterEgLevel2Calc (offset byte +0x41)
+0x4C00A154  TgDrumFilterEgLevel2Calc_entry
+0x4C00A1A5  TgDrumFilterEgLevelCalc ; (d0 offset, a0 desc2) drum twin of TgZoneFilterEgLevelCalc: caller-supplied segment offset + desc2+0x3E, same clamp/curve
+0x4C00A1AA  TgDrumFilterEgLevelCalc_entry
+;
+; ---- named-only satellites of the 2026-07-20 pass --------------------------
+0x4C00FBCA  TgPartClassRegCollect   ; (d0 part, d1 mask, stack sel) build the -1-terminated list 0x500C9848 of the part's cached class-register halfwords (table 0x500C59E4+part*0x36, 0x1B entries) whose tag byte ROM 0x485870F0[i] & ~sel matches mask; each entry = tag<<16 | halfword; returns a0 = list -- the reg enumerator behind the EG-ramp live refreshes

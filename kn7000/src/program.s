@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 408 synthetic labels for internal helpers called by converted code
+# 448 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -313,11 +313,18 @@ _rom_marker:
 .equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
+.equ TgDrumZoneParamClamp_entry, 0x4C009F03
+.equ TgDrumZoneLevelScaleCalc_entry, 0x4C009F22
+.equ TgDrumZoneSendLevelsCalc_entry, 0x4C00A004
+.equ TgDrumFilterEgLevel1Calc_entry, 0x4C00A0FE
+.equ TgDrumFilterEgLevel2Calc_entry, 0x4C00A154
+.equ TgDrumFilterEgLevelCalc_entry, 0x4C00A1AA
 .equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
 .equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
 .equ TgPartElemMaskGet, 0x4C00ECEA
 .equ TgPartElemEnabled_entry, 0x4C00ED01
+.equ TgPartClassRegCollect, 0x4C00FBCA
 .equ TgZoneParamClamp_entry, 0x4C00FD4E
 .equ TgZoneLevelScaleCalc_entry, 0x4C00FD6D
 .equ TgZoneVeloSenseCalc, 0x4C00FE03
@@ -334,6 +341,23 @@ _rom_marker:
 .equ TgVoiceListCollectPartAll_entry, 0x4C01010A
 .equ TgVoiceListCollectGlobal_entry, 0x4C010127
 .equ TgTableKeyOffProgram_entry, 0x4C0115AA
+.equ TgPartEgRampInit_entry, 0x4C011732
+.equ TgPartEgRampScaleASet_entry, 0x4C011814
+.equ TgPartEgRampScaleAGet, 0x4C0118E3
+.equ TgPartEgRampScaleACurve, 0x4C0118F5
+.equ TgPartEgRampScaleAReset_entry, 0x4C011916
+.equ TgPartEgRampScaleBSet_entry, 0x4C0119F0
+.equ TgPartEgRampScaleBGet, 0x4C011ABC
+.equ TgPartEgRampScaleBCurve, 0x4C011ACE
+.equ TgPartEgRampScaleBReset_entry, 0x4C011AEF
+.equ TgPartEgRampScaleBSet2_entry, 0x4C011BC5
+.equ TgPartEgRampScaleBGet2, 0x4C011C23
+.equ TgPartEgRampScaleBReset2_entry, 0x4C011C3A
+.equ TgPartEgRampTickHeld_entry, 0x4C011CA2
+.equ TgPartEgRampTickIdle_entry, 0x4C011D37
+.equ TgPartEgRampReleaseEdge_entry, 0x4C011DBB
+.equ TgPartEgRampEngageEdge_entry, 0x4C011E49
+.equ TgPartEgRampDispatchTick_entry, 0x4C011ECE
 .equ TgKitZoneParamClamp_entry, 0x4C011F31
 .equ TgKitZoneLevelScaleCalc_entry, 0x4C011F50
 .equ TgKitZoneVeloSenseCalc, 0x4C011FE6
@@ -355,6 +379,7 @@ _rom_marker:
 .equ TgVoiceRoutePtrCalc_entry, 0x4C02BE4A
 .equ TgVoiceSideSelect_entry, 0x4C02BED0
 .equ TgPartPitchWordCalc_entry, 0x4C02BF34
+.equ TgLevelTermFinalize_entry, 0x4C02BF8B
 .equ TgPartGlidePlan_entry, 0x4C02D79A
 .equ TgPartHoldQuery_entry, 0x4C02E0F9
 .equ TgPartHoldMark_entry, 0x4C02E2C7
@@ -368,7 +393,12 @@ _rom_marker:
 .equ TgVoiceKillHandler, 0x4C030E73
 .equ TgPitchInitCalc, 0x4C030FB9
 .equ TgPitchRuntimeCalc, 0x4C031127
+.equ TgNoteLevelVariationCalc_entry, 0x4C0311F3
+.equ TgVoiceNoteLevelCalc_entry, 0x4C0312A2
+.equ TgElemLevelBaseCalc_entry, 0x4C031330
 .equ TgVoiceLevelWordCalc_entry, 0x4C0315D2
+.equ TgAmpEgAttackRateCalc_entry, 0x4C03162C
+.equ TgAmpEgDecayRatePairCalc_entry, 0x4C03178C
 .equ TgKeyOffAmpRelease, 0x4C031949
 .equ TgPitchEgAttackCalc, 0x4C031C50
 .equ TgPitchEgDecayCalc, 0x4C031D9B
@@ -399,14 +429,24 @@ _rom_marker:
 .equ TgCmdReadB_entry, 0x4C037085
 .equ TgVoiceRecordReset_entry, 0x4C0370F5
 .equ TgVoiceRecordPtr, 0x4C037123
+.equ TgVoiceStealSilence_entry, 0x4C03713A
+.equ TgVoiceForceOff_entry, 0x4C037244
+.equ TgVoiceForceOffSoft_entry, 0x4C0372BC
+.equ TgVoiceDamp7F_entry, 0x4C03732E
+.equ TgVoiceDampA2_entry, 0x4C037360
 .equ TgVoiceGateOn, 0x4C037398
 .equ TgVoiceGateOff, 0x4C0376A5
 .equ TgVoiceEgBurstWrite, 0x4C0376E3
+.equ TgVoiceReg0401Write_entry, 0x4C037A39
+.equ TgVoiceReg0405Write_entry, 0x4C037A7E
+.equ TgVoiceEgSegRegsWrite_entry, 0x4C037AC3
 .equ TgVoiceRouteFieldSet_entry, 0x4C037C1B
 .equ TgVoiceDirtyAll, 0x4C037C92
 .equ TgVoiceDirtyRelease, 0x4C037CCE
 .equ TgVoiceEgSegParamGet_entry, 0x4C03A214
 .equ TgVoiceEgSegFlagTest_entry, 0x4C03A2BF
+.equ TgPartEgRampSegScaled_entry, 0x4C03A315
+.equ TgPartEgRampCache54Scaled_entry, 0x4C03A38E
 .equ TgNodeRingSeed_entry, 0x4C03A77B
 .equ TgNodeRingInsert_entry, 0x4C03A78F
 .equ TgVoiceNodeToClassRing_entry, 0x4C03A7B1
@@ -23046,7 +23086,465 @@ display_palette:
     exth    d0
     jmp     LibI32ToF64
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3c3d14
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3c2ed2
+# TgDrumZoneParamClamp  (lib CPU 0x4c009f01)
+#   the DRUM-side zone param fetcher set (third link of the family after
+#   the melodic 0x4C00FD4C.. and kit 0x4C011F2F.. sets), serving the
+#   class-0x10 drum programmers around TgDrumAmpReleaseCalc; same
+#   sensitivity curve ROM 0x486D2713 + key-scale pair 0x486D1354/13D4
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgDrumZoneParamClamp_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d1
+    movhu   (0x18, sp), d0
+    mov     d1, d2
+    exth    d2
+    exth    d0
+    cmp     d0, d2
+    bge     0x4c009f13
+    movhu   (0x18, sp), d1
+    bra     0x4c009f19
+    mov     d3, d0
+    exth    d0
+    cmp     d0, d2
+    ble     0x4c009f19
+    mov     d3, d1
+    mov     d1, d0
+    retf    [d2,d3], 8
+.mnbase 0x48400000
+# TgDrumZoneLevelScaleCalc  (lib CPU 0x4c009f1d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgDrumZoneLevelScaleCalc_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     a1, a0
+    movbu   (9, a0), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c009f4f
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     0x7f, d0
+    ble     0x4c009f3d
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a3
+    movbu   (d1, a3), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c009f5e
+    cmp     0x7f, d1
+    ble     0x4c009f55
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a3
+    movbu   (d0, a3), d0
+    mov     d0, d3
+    exth    d0
+    cmp     0, d0
+    bge     0x4c009f6a
+    mov     -1, d3
+    nop
+    nop
+    mul     d0, d3
+    add     0x14, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     0, d0
+    beq     0x4c009fb4
+    movbu   (a0), d2
+    movbu   (0x10, a2), d1
+    extb    d2
+    extbu   d1
+    and     0x7f, d1
+    mov     d2, d0
+    extb    d0
+    cmp     0, d0
+    bge     0x4c009f90
+    extbu   d1
+    mov     0x486d1354, a0
+    movbu   (d1, a0), d1
+    not     d0
+    mov     d0, d2
+    inc     d2
+    extbu   d1
+    mov     0x486d13d4, a0
+    movbu   (d1, a0), d1
+    exth    d3
+    extb    d1
+    extb    d2
+    nop
+    nop
+    mul     d1, d2
+    mov     d2, d0
+    exth    d0
+    asr     6, d0
+    exth    d0
+    add     d0, d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d1
+    mov     d3, d0
+    exth    d0
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d3
+    mov     d3, d0
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgDrumZoneVeloSenseCalc  (lib CPU 0x4c009fb8)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   (0xa, a0), d1
+    extb    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c009fe2
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c009fd0
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a1
+    movbu   (d0, a1), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c009ff1
+    cmp     0x7f, d0
+    ble     0x4c009fe8
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a1
+    movbu   (d1, a1), d0
+    movbu   (9, a0), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c00a000
+    exth    d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    rets
+.mnbase 0x48400000
+# TgDrumZoneSendLevelsCalc  (lib CPU 0x4c00a002)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgDrumZoneSendLevelsCalc_entry:   (register-save `call` entry)
+    movbu   (9, a1), d0
+    mov     a0, a2
+    extb    d0
+    cmp     0, d0
+    blt     0x4c00a00f
+    bra     0x4c00a08a
+    movbu   (0xe, a1), d1
+    extb    d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00a03a
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     0x7f, d2
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c00a028
+    mov     d2, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a049
+    mov     0x7f, d2
+    cmp     d2, d0
+    ble     0x4c00a040
+    mov     d2, d1
+    mov     0x486d2713, a0
+    extbu   d1
+    movbu   (d1, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c00a076
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c00a06a
+    mov     d2, d1
+    extbu   d1
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a07d
+    cmp     d2, d1
+    ble     0x4c00a07a
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+    movbu   (0xe, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c00a0b5
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     0x7f, d2
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c00a0a3
+    mov     d2, d1
+    extbu   d1
+    mov     0x486d2713, a0
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a0c4
+    mov     0x7f, d2
+    cmp     d2, d1
+    ble     0x4c00a0bb
+    mov     d2, d0
+    mov     0x486d2713, a0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00a0eb
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c00a0df
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a0f3
+    cmp     d2, d0
+    ble     0x4c00a0ef
+    mov     d2, d1
+    mov     d1, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgDrumFilterEgLevel1Calc  (lib CPU 0x4c00a0f9)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgDrumFilterEgLevel1Calc_entry:   (register-save `call` entry)
+    movbu   (0x3f, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00a13c
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00a12a
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a14c
+    cmp     0x7f, d0
+    ble     0x4c00a142
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgDrumFilterEgLevel2Calc  (lib CPU 0x4c00a14f)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgDrumFilterEgLevel2Calc_entry:   (register-save `call` entry)
+    movbu   (0x41, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00a192
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00a180
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a1a2
+    cmp     0x7f, d0
+    ble     0x4c00a198
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgDrumFilterEgLevelCalc  (lib CPU 0x4c00a1a5)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgDrumFilterEgLevelCalc_entry:   (register-save `call` entry)
+    movbu   (0x3e, a0), d1
+    exth    d0
+    extb    d1
+    add     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00a1e4
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00a1d2
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00a1f4
+    cmp     0x7f, d0
+    ble     0x4c00a1ea
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c31c8, 0x3c3d14
 # TgDrumAmpReleaseCalc  (lib CPU 0x4c00ad43)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
@@ -23124,7 +23622,7 @@ display_palette:
     exth    d2
     mov     d2, d0
     mov     0xff, d1
-    call    0x4c009f03, [d2,d3], 8
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
     movhu   d0, (a3)
     movhu   d0, (4, a3)
     mov     0x80, d0
@@ -23154,7 +23652,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c009f03, [d2,d3], 8
+    call    TgDrumZoneParamClamp_entry, [d2,d3], 8
     movhu   d0, (a3)
     movhu   d0, (4, a3)
     mov     0x80, d0
@@ -24151,7 +24649,959 @@ display_palette:
     call    TgVoiceEgBurstWrite, [d2,a2], 0x1c
     ret     [d2,d3,a2,a3], 0x2c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ca701, 0x3caf00
+# TgPartEgRampInit  (lib CPU 0x4c011730)
+#   per-part TYPE-7 EG TIME-RAMP module (0x4C011730..0x4C011F2F, the
+#   curve helpers under TgVoiceEgSegParamGet): 8-byte state 0x50009D38+
+#   part*8 {flags, cntA, cntB, scaleA h+4, scaleB h+6; 0x100 = 1.0},
+#   enabled for tone type 7 when partrec halfword bit 0x1000 is set;
+#   TgPartEgRampDispatchTick runs an engage/release edge machine per
+#   part, ramping the scales through ROMs 0x4858712C/0x4858717C and
+#   LIVE-refreshing sounding voices (TgPartClassRegCollect ->
+#   TgGlobalRegWriteBoth_entry + per-slot TgVoiceReg0401/0405Write).
+#   Which panel feature drives partrec bit12 is still open.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartEgRampInit_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     7, d0
+    beq     0x4c011750
+    jmp     0x4c0117f1
+    extbu   d1
+    cmp     0, d1
+    bne     0x4c0117ae
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d2, d1
+    mov     0x500b5340, a0
+    movhu   (d1, a0), d0
+    btst    0x1000, d0
+    beq     0x4c011790
+    asl     3, d2
+    mov     d2, a0
+    add     0x50009d38, a0
+    mov     0xf, d0
+    movbu   d0, (a0)
+    mov     0x4f, d0
+    movbu   d0, (1, a0)
+    mov     0x96, d0
+    movbu   d0, (2, a0)
+    mov     0x100, d0
+    movhu   d0, (4, a0)
+    movhu   d0, (6, a0)
+    ret     [d2], 4
+    asl     3, d2
+    mov     d2, a0
+    add     0x50009d38, a0
+    mov     1, d0
+    movbu   d0, (a0)
+    movbu   d0, (1, a0)
+    movbu   d0, (2, a0)
+    clr     d0
+    movhu   d0, (4, a0)
+    movhu   d0, (6, a0)
+    bra     0x4c01180b
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     0x500b5340, a0
+    movhu   (d0, a0), d0
+    btst    0x1000, d0
+    beq     0x4c0117dd
+    asl     3, d2
+    mov     d2, a0
+    add     0x50009d38, a0
+    movbu   (a0), d1
+    and     0x05, d1
+    movbu   d1, (a0)
+    extbu   d1
+    or      0x02, d1
+    movbu   d1, (a0)
+    bra     0x4c01180b
+    asl     3, d2
+    mov     d2, a0
+    add     0x50009d38, a0
+    movbu   (a0), d0
+    and     0x05, d0
+    movbu   d0, (a0)
+    bra     0x4c01180b
+    asl     3, d2
+    mov     d2, a0
+    add     0x50009d38, a0
+    clr     d0
+    movbu   d0, (a0)
+    movbu   d0, (1, a0)
+    movbu   d0, (2, a0)
+    movhu   d0, (4, a0)
+    movhu   d0, (6, a0)
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartEgRampScaleASet  (lib CPU 0x4c01180e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa4, sp
+# TgPartEgRampScaleASet_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    extbu   d2
+    movhu   d2, (4, a0)
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     1, d1
+    call    TgPartEgRampSegScaled_entry, [d2,d3], 0x14
+    exthu   d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    mov     0x11, d1
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    mov     a0, a2
+    clr     d2
+    mov     (a2), d0
+    mov     0xffff, a3
+    mov     a3, d1
+    and     d1, d0
+    mov     0x100, d3
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    bge     0x4c011872
+    mov     (0x14, sp), d1
+    exthu   d0
+    mov     d1, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    mov     a3, d1
+    and     d1, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011853
+    mov     sp, a2
+    add     0x1c, a2
+    mov     a2, a0
+    mov     (0x18, sp), d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    add     6, a2
+    movbu   (a2), d0
+    mov     0x80, d3
+    cmp     d3, d0
+    bge     0x4c0118e0
+    mov     0x500af940, a3
+    movbu   (a2), d0
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
+    mov     a3, a0
+    mov     0xb4, d1
+    mov     d0, d2
+    movbu   (a2), d0
+    exth    d2
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a0
+    movbu   (6, a0), d1
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
+    mov     d0, d1
+    movbu   (a2), d0
+    exth    d1
+    nop
+    nop
+    mul     d2, d1
+    exthu   d0
+    exthu   d1
+    call    TgVoiceReg0405Write_entry, [d2,d3], 0x1c
+    inc     a2
+    movbu   (a2), d0
+    cmp     d3, d0
+    blt     0x4c01188d
+    ret     [d2,d3,a2,a3], 0xb4
+.mnbase 0x48400000
+# TgPartEgRampScaleAGet  (lib CPU 0x4c0118e3)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    asl     3, d0
+    add     0x50009d38, d0
+    mov     d0, a0
+    movhu   (4, a0), d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartEgRampScaleACurve  (lib CPU 0x4c0118f5)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    asl     3, d0
+    mov     d0, a0
+    add     0x50009d38, a0
+    movhu   (4, a0), d0
+    mov     0x48587196, a0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartEgRampScaleAReset  (lib CPU 0x4c011910)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa0, sp
+# TgPartEgRampScaleAReset_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    extbu   d0
+    mov     0x100, d1
+    movhu   d1, (4, a0)
+    mov     d0, (0x14, sp)
+    mov     1, d1
+    call    TgPartEgRampSegScaled_entry, [d2,d3], 0x14
+    mov     0x11, d1
+    mov     d0, a3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    mov     a0, a2
+    mov     (a2), d0
+    clr     d2
+    and     0xffff, d0
+    mov     d0, d1
+    exthu   d1
+    mov     0x100, d3
+    cmp     d3, d1
+    bge     0x4c011974
+    mov     a3, d1
+    exthu   d1
+    mov     d1, a3
+    exthu   d0
+    mov     a3, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    and     0xffff, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011957
+    mov     sp, a2
+    add     0x18, a2
+    mov     a2, a0
+    mov     (0x14, sp), d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    add     6, a2
+    movbu   (a2), d0
+    cmp     0x80, d0
+    bge     0x4c0119e7
+    mov     0x500af940, a3
+    movbu   (a2), d0
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
+    mov     0xb4, d1
+    mov     d0, d3
+    movbu   (a2), d0
+    exth    d3
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
+    mov     d0, d1
+    movbu   (a2), d0
+    exth    d1
+    nop
+    nop
+    mul     d3, d1
+    exthu   d0
+    exthu   d1
+    call    TgVoiceReg0405Write_entry, [d2,d3], 0x1c
+    inc     a2
+    movbu   (a2), d0
+    cmp     0x80, d0
+    blt     0x4c01198f
+    ret     [d2,d3,a2,a3], 0xb0
+.mnbase 0x48400000
+# TgPartEgRampScaleBSet  (lib CPU 0x4c0119ea)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa4, sp
+# TgPartEgRampScaleBSet_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    extbu   d2
+    movhu   d2, (6, a0)
+    extbu   d0
+    mov     d0, (0x18, sp)
+    clr     d1
+    call    TgPartEgRampSegScaled_entry, [d2,d3], 0x14
+    exthu   d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    mov     0x10, d1
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    mov     a0, a2
+    clr     d2
+    mov     (a2), d0
+    mov     0xffff, a3
+    mov     a3, d1
+    and     d1, d0
+    mov     0x100, d3
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    bge     0x4c011a4d
+    mov     (0x14, sp), d1
+    exthu   d0
+    mov     d1, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    mov     a3, d1
+    and     d1, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011a2e
+    mov     sp, a2
+    add     0x1c, a2
+    mov     a2, a0
+    mov     (0x18, sp), d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    add     6, a2
+    movbu   (a2), d0
+    mov     0x80, d3
+    cmp     d3, d0
+    bge     0x4c011ab9
+    mov     0x500af940, a3
+    movbu   (a2), d0
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
+    mov     a3, a0
+    mov     0xb4, d1
+    mov     d0, d2
+    movbu   (a2), d0
+    exth    d2
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a0
+    movbu   (6, a0), d1
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
+    mov     d0, d1
+    movbu   (a2), d0
+    exth    d1
+    nop
+    nop
+    mul     d2, d1
+    exthu   d0
+    exthu   d1
+    call    TgVoiceReg0401Write_entry, [d2,d3], 0x1c
+    inc     a2
+    movbu   (a2), d0
+    cmp     d3, d0
+    blt     0x4c011a68
+    ret     [d2,d3,a2,a3], 0xb4
+.mnbase 0x48400000
+# TgPartEgRampScaleBGet  (lib CPU 0x4c011abc)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    asl     3, d0
+    add     0x50009d38, d0
+    mov     d0, a0
+    movhu   (6, a0), d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartEgRampScaleBCurve  (lib CPU 0x4c011ace)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    asl     3, d0
+    mov     d0, a0
+    add     0x50009d38, a0
+    movhu   (6, a0), d0
+    mov     0x48587398, a0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartEgRampScaleBReset  (lib CPU 0x4c011ae9)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa0, sp
+# TgPartEgRampScaleBReset_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    extbu   d0
+    mov     0x100, d1
+    movhu   d1, (6, a0)
+    mov     d0, (0x14, sp)
+    clr     d1
+    call    TgPartEgRampSegScaled_entry, [d2,d3], 0x14
+    mov     0x10, d1
+    mov     d0, a3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    mov     a0, a2
+    mov     (a2), d0
+    clr     d2
+    and     0xffff, d0
+    mov     d0, d1
+    exthu   d1
+    mov     0x100, d3
+    cmp     d3, d1
+    bge     0x4c011b4c
+    mov     a3, d1
+    exthu   d1
+    mov     d1, a3
+    exthu   d0
+    mov     a3, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    and     0xffff, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011b2f
+    mov     sp, a2
+    add     0x18, a2
+    mov     a2, a0
+    mov     (0x14, sp), d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    add     6, a2
+    movbu   (a2), d0
+    cmp     0x80, d0
+    bge     0x4c011bbd
+    mov     0x500af940, a3
+    movbu   (a2), d0
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
+    mov     0xb4, d1
+    mov     d0, d3
+    movbu   (a2), d0
+    exth    d3
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, a0
+    movbu   (6, a0), d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    mov     d2, d1
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
+    mov     d0, d1
+    movbu   (a2), d0
+    exth    d1
+    nop
+    nop
+    mul     d3, d1
+    exthu   d0
+    exthu   d1
+    call    TgVoiceReg0401Write_entry, [d2,d3], 0x1c
+    inc     a2
+    movbu   (a2), d0
+    cmp     0x80, d0
+    blt     0x4c011b67
+    ret     [d2,d3,a2,a3], 0xb0
+.mnbase 0x48400000
+# TgPartEgRampScaleBSet2  (lib CPU 0x4c011bc0)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgPartEgRampScaleBSet2_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    extbu   d2
+    movhu   d2, (6, a0)
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    TgPartEgRampCache54Scaled_entry, [d2], 0x10
+    exthu   d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x20, d1
+    mov     d2, d0
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    mov     a0, a2
+    clr     d2
+    mov     (a2), d0
+    mov     0xffff, a3
+    mov     a3, d1
+    and     d1, d0
+    mov     0x100, d3
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    bge     0x4c011c20
+    mov     (0x14, sp), d1
+    exthu   d0
+    mov     d1, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    mov     a3, d1
+    and     d1, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011c01
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+# TgPartEgRampScaleBGet2  (lib CPU 0x4c011c23)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    asl     3, d0
+    add     0x50009d38, d0
+    mov     d0, a0
+    movhu   (6, a0), d0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartEgRampScaleBReset2  (lib CPU 0x4c011c35)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgPartEgRampScaleBReset2_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     d2, d1
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    mov     0x100, d0
+    movhu   d0, (6, a0)
+    extbu   d2
+    mov     d2, d0
+    call    TgPartEgRampCache54Scaled_entry, [d2], 0x10
+    mov     d0, a2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x20, d1
+    mov     d2, d0
+    call    TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
+    clr     d2
+    mov     (a0), d0
+    mov     0xffff, a3
+    mov     a3, d1
+    and     d1, d0
+    mov     0x100, d3
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    bge     0x4c011c9a
+    mov     a2, d1
+    exthu   d1
+    mov     d1, (0x14, sp)
+    mov     a0, a2
+    mov     (0x14, sp), d1
+    exthu   d0
+    mov     d1, (0x10, sp)
+    inc4    a2
+    mov     0x04000000, d1
+    call    0x4c03700a, [d2], 4
+    mov     (a2), d0
+    exthu   d2
+    inc     d2
+    mov     a3, d1
+    and     d1, d0
+    mov     d0, d1
+    exthu   d1
+    cmp     d3, d1
+    blt     0x4c011c7b
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+# TgPartEgRampTickHeld  (lib CPU 0x4c011c9d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# TgPartEgRampTickHeld_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d0
+    asl     3, d0
+    mov     d0, a2
+    add     0x50009d38, a2
+    mov     a2, a0
+    inc     a0
+    movbu   (a0), d0
+    cmp     0x4f, d0
+    blt     0x4c011cc7
+    movbu   (a2), d0
+    extbu   d2
+    or      0x08, d0
+    movbu   d0, (a2)
+    mov     d2, d0
+    call    TgPartEgRampScaleAReset_entry, [d2,d3,a2,a3], 0xb0
+    bra     0x4c011ce5
+    movbu   (a0), d0
+    extbu   d2
+    inc     d0
+    movbu   d0, (a0)
+    movbu   (a2), d0
+    and     0xf7, d0
+    movbu   d0, (a2)
+    movbu   (a0), d0
+    mov     0x4858712c, a0
+    extbu   d0
+    movbu   (d0, a0), d1
+    mov     d2, d0
+    call    TgPartEgRampScaleASet_entry, [d2,d3,a2,a3], 0xb4
+    mov     2, a0
+    add     a2, a0
+    movbu   (a0), d0
+    cmp     0x96, d0
+    blt     0x4c011cff
+    mov     d2, d0
+    call    TgPartEgRampScaleBReset_entry, [d2,d3,a2,a3], 0xb0
+    mov     d2, d0
+    call    TgPartEgRampScaleBReset2_entry, [d2,d3,a2,a3], 0x28
+    bra     0x4c011d2f
+    movbu   (a0), d0
+    mov     6, d1
+    inc     d0
+    movbu   d0, (a0)
+    movbu   (a2), d0
+    and     0xf7, d0
+    movbu   d0, (a2)
+    movbu   (a0), d0
+    call    LibDiv32, 0, 0
+    extbu   d0
+    mov     d0, a2
+    add     0x4858717c, a2
+    movbu   (a2), d1
+    mov     d2, d0
+    call    TgPartEgRampScaleBSet_entry, [d2,d3,a2,a3], 0xb4
+    movbu   (a2), d1
+    mov     d2, d0
+    call    TgPartEgRampScaleBSet2_entry, [d2,d3,a2,a3], 0x28
+    ret     [d2,a2], 0x18
+.mnbase 0x48400000
+# TgPartEgRampTickIdle  (lib CPU 0x4c011d32)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# TgPartEgRampTickIdle_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d0
+    asl     3, d0
+    mov     d0, a2
+    add     0x50009d38, a2
+    mov     a2, a0
+    inc     a0
+    movbu   (a0), d0
+    cmp     0, d0
+    bne     0x4c011d55
+    movbu   (a2), d0
+    or      0x10, d0
+    movbu   d0, (a2)
+    bra     0x4c011d77
+    movbu   (a0), d0
+    add     -1, d0
+    movbu   d0, (a0)
+    movbu   (a2), d0
+    and     0xef, d0
+    movbu   d0, (a2)
+    movbu   (a0), d0
+    mov     0x4858717c, a0
+    asr     1, d0
+    extbu   d0
+    movbu   (d0, a0), d1
+    mov     d2, d0
+    extbu   d0
+    call    TgPartEgRampScaleASet_entry, [d2,d3,a2,a3], 0xb4
+    mov     2, a0
+    add     a2, a0
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     0x4c011db3
+    movbu   (a0), d0
+    extbu   d2
+    add     -1, d0
+    movbu   d0, (a0)
+    movbu   (a2), d0
+    mov     5, d1
+    and     0xef, d0
+    movbu   d0, (a2)
+    movbu   (a0), d0
+    call    LibDiv32, 0, 0
+    extbu   d0
+    mov     d0, a2
+    add     0x4858717c, a2
+    movbu   (a2), d1
+    mov     d2, d0
+    call    TgPartEgRampScaleBSet_entry, [d2,d3,a2,a3], 0xb4
+    movbu   (a2), d1
+    mov     d2, d0
+    call    TgPartEgRampScaleBSet2_entry, [d2,d3,a2,a3], 0x28
+    ret     [d2,a2], 0x18
+.mnbase 0x48400000
+# TgPartEgRampReleaseEdge  (lib CPU 0x4c011db6)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgPartEgRampReleaseEdge_entry:   (register-save `call` entry)
+    movbu   d0, (0x2c, sp)
+    movbu   (0x2c, sp), d0
+    mov     0x4858712c, a3
+    asl     3, d0
+    mov     d0, a2
+    add     0x50009d38, a2
+    movbu   (a2), d0
+    mov     a2, a1
+    and     0xffffffe7, d0
+    movbu   d0, (a2)
+    inc     a1
+    movbu   (a1), d0
+    mov     0x19, d1
+    movbu   (d0, a3), d3
+    movbu   (0x48587195), d0
+    mov     d3, d2
+    extbu   d2
+    cmp     d0, d2
+    bge     0x4c011e01
+    mov     0x48587195, a0
+    setlb
+    mov     1, d0
+    sub     d0, a0
+    movbu   (a0), d0
+    extbu   d1
+    add     -1, d1
+    cmp     d0, d2
+    llt
+    movbu   d1, (a1)
+    movbu   (0x2c, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (d3, a3), d1
+    call    TgPartEgRampScaleASet_entry, [d2,d3,a2,a3], 0xb4
+    add     2, a2
+    movbu   (a2), d0
+    mov     6, d1
+    extbu   d0
+    call    LibDiv32, 0, 0
+    mov     d0, d1
+    mov     d1, d2
+    extbu   d1
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    movbu   d0, (a2)
+    extbu   d2
+    mov     d2, a2
+    add     0x4858717c, a2
+    movbu   (a2), d1
+    mov     (0x10, sp), d0
+    call    TgPartEgRampScaleBSet_entry, [d2,d3,a2,a3], 0xb4
+    movbu   (a2), d1
+    mov     (0x10, sp), d0
+    call    TgPartEgRampScaleBSet2_entry, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgPartEgRampEngageEdge  (lib CPU 0x4c011e44)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TgPartEgRampEngageEdge_entry:   (register-save `call` entry)
+    movbu   d0, (0x28, sp)
+    movbu   (0x28, sp), d0
+    mov     0x4858717c, a3
+    asl     3, d0
+    mov     d0, a2
+    add     0x50009d38, a2
+    movbu   (a2), d0
+    mov     a2, a1
+    and     0xffffffe7, d0
+    movbu   d0, (a2)
+    inc     a1
+    movbu   (a1), d0
+    clr     d1
+    asr     1, d0
+    movbu   (d0, a3), d3
+    movbu   (0x4858712c), d0
+    extbu   d3
+    clr     d2
+    cmp     d0, d3
+    mov     0x4858712c, a0
+    ble     0x4c011e8e
+    setlb
+    extbu   d1
+    inc     d1
+    mov     d1, d2
+    extbu   d2
+    movbu   (d2, a0), d0
+    cmp     d0, d3
+    lgt
+    movbu   d1, (a1)
+    movbu   (0x28, sp), d3
+    movbu   (d2, a3), d1
+    mov     d3, d0
+    call    TgPartEgRampScaleASet_entry, [d2,d3,a2,a3], 0xb4
+    add     2, a2
+    movbu   (a2), d0
+    mov     5, d1
+    extbu   d0
+    call    LibDiv32, 0, 0
+    mov     d0, d1
+    extbu   d0
+    extbu   d1
+    add     d1, a3
+    mov     6, d2
+    nop
+    nop
+    mul     d2, d0
+    movbu   d0, (a2)
+    movbu   (a3), d1
+    mov     d3, d0
+    call    TgPartEgRampScaleBSet_entry, [d2,d3,a2,a3], 0xb4
+    movbu   (a3), d1
+    mov     d3, d0
+    call    TgPartEgRampScaleBSet2_entry, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x20
+.mnbase 0x48400000
+# TgPartEgRampDispatchTick  (lib CPU 0x4c011ec9)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgPartEgRampDispatchTick_entry:   (register-save `call` entry)
+    clr     d1
+    clr     d2
+    extbu   d1
+    asl     3, d1
+    mov     d1, a0
+    add     0x50009d38, a0
+    movbu   (a0), d0
+    extbu   d0
+    btst    0x01, d0
+    beq     0x4c011f25
+    btst    0x02, d0
+    beq     0x4c011f08
+    btst    0x04, d0
+    beq     0x4c011efb
+    btst    0x08, d0
+    bne     0x4c011f25
+    mov     d2, d0
+    call    TgPartEgRampTickHeld_entry, [d2,a2], 0x18
+    bra     0x4c011f25
+    or      0x04, d0
+    movbu   d0, (a0)
+    mov     d2, d0
+    call    TgPartEgRampEngageEdge_entry, [d2,d3,a2,a3], 0x20
+    bra     0x4c011f25
+    btst    0x04, d0
+    bne     0x4c011f1a
+    btst    0x10, d0
+    bne     0x4c011f25
+    mov     d2, d0
+    call    TgPartEgRampTickIdle_entry, [d2,a2], 0x18
+    bra     0x4c011f25
+    and     0xfb, d0
+    movbu   d0, (a0)
+    mov     d2, d0
+    call    TgPartEgRampReleaseEdge_entry, [d2,d3,a2,a3], 0x24
+    inc     d2
+    mov     d2, d1
+    extbu   d2
+    cmp     0x22, d2
+    blt     0x4c011ed0
+    ret     [d2], 0x10
+.mnbase 0x48400000
 # TgKitZoneParamClamp  (lib CPU 0x4c011f2f)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3], (sp)
@@ -24746,13 +26196,13 @@ display_palette:
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
     mov     (0x60, sp), d0
-    call    0x4c0311f3, [d2,d3,a2], 0xc
+    call    TgNoteLevelVariationCalc_entry, [d2,d3,a2], 0xc
     mov     (0x20, sp), a0
     extbu   d3
     movhu   d0, (0x50, a0)
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
-    call    0x4c0312a2, [d2,d3,a2,a3], 0x24
+    call    TgVoiceNoteLevelCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x60, sp), a0
     and     0x7f, d0
     add     0x24, a0
@@ -25335,7 +26785,7 @@ display_palette:
     exth    d0
     add     d1, d0
     exth    d0
-    call    0x4c03162c, [d2,d3,a2,a3], 0x28
+    call    TgAmpEgAttackRateCalc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x60, sp), a0
     mov     d0, d3
     movhu   (a0), d2
@@ -25395,7 +26845,7 @@ display_palette:
     exth    d1
     mov     d1, d0
     mov     d2, d1
-    call    0x4c03178c, [d2,d3,a2,a3], 0x28
+    call    TgAmpEgDecayRatePairCalc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x60, sp), a3
     mov     (0x20, sp), a0
     inc4    a3
@@ -25722,7 +27172,7 @@ display_palette:
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
     exth    d0
-    call    0x4c031330, [d2,d3,a2,a3], 0x24
+    call    TgElemLevelBaseCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x20, sp), a0
     call    0x4c01231a, 0, 0
     mov     (0x20, sp), a0
@@ -25843,7 +27293,7 @@ display_palette:
     call    0x4c03783b, [d2,a2], 0x1c
     mov     (0x18, sp), d0
     mov     a3, a0
-    call    0x4c037ac3, [d2,a2], 0x1c
+    call    TgVoiceEgSegRegsWrite_entry, [d2,a2], 0x1c
     mov     (0x18, sp), d0
     mov     a3, a0
     call    TgVoiceGateOff, [d2,a2], 0x1c
@@ -25941,7 +27391,7 @@ display_palette:
     bge     0x4c014834
     clr     d2
     mov     d2, d0
-    call    0x4c037244, [d2], 0x18
+    call    TgVoiceForceOff_entry, [d2], 0x18
     inc     d2
     extbu   d2
     cmp     0x80, d2
@@ -26247,7 +27697,230 @@ display_palette:
     movhu   d2, (d3, a0)
     ret     [d2,d3], 8
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3e4f57, 0x3e6766
+# TgLevelTermFinalize  (lib CPU 0x4c02bf86)
+#   TgVoiceLevelWordCalc's tail: fold in part volume/expression/offset,
+#   the four GROUP MASTER gains (0x500C0760/62/64/66 by part class),
+#   the mono/legato mute gates, then map the attenuation index through
+#   the log->hw level ROM 0x486D1BD4 -- the last step of every
+#   class-0x3000 level word
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgLevelTermFinalize_entry:   (register-save `call` entry)
+    mov     a0, (0x30, sp)
+    movbu   (7, a0), d3
+    mov     d0, d1
+    extbu   d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     0x500b5340, d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movhu   (4, a0), d2
+    movhu   (8, a0), d0
+    mov     d3, a3
+    exth    d0
+    btst    0x01, d2
+    bne     0x4c02bfb7
+    mov     0x0000fe00, d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    mov     d1, d0
+    movhu   (0xc, a0), d1
+    exth    d0
+    exth    d1
+    add     d1, d0
+    movbu   (0x20, a0), d1
+    mov     (0x30, sp), a0
+    extb    d1
+    add     0x16, a0
+    exth    d0
+    add     d0, d1
+    movbu   (a0), d0
+    cmp     2, d0
+    beq     0x4c02bfd7
+    movbu   (a0), d0
+    cmp     3, d0
+    bne     0x4c02bff3
+    movhu   (0x500c0760), d2
+    movhu   (0x500c075a), d0
+    exth    d2
+    btst    0x08, d0
+    bne     0x4c02bfef
+    mov     0x0000fe00, d2
+    exth    d1
+    mov     d2, d0
+    exth    d0
+    add     d0, d1
+    extbu   d3
+    mov     d3, (0x10, sp)
+    cmp     0x13, d3
+    blt     0x4c02c01a
+    cmp     0x1a, d3
+    bgt     0x4c02c01a
+    movhu   (0x500c0762), d2
+    movhu   (0x500c075a), d0
+    exth    d2
+    btst    0x10, d0
+    bne     0x4c02c016
+    mov     0x0000fe00, d2
+    exth    d1
+    mov     d2, d0
+    exth    d0
+    add     d0, d1
+    cmp     0xf, d3
+    bgt     0x4c02c027
+    movhu   (0x500c0764), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    movbu   (a0), d0
+    cmp     4, d0
+    bne     0x4c02c036
+    movhu   (0x500c0766), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    mov     (0x14, sp), a0
+    mov     d3, d0
+    movbu   (0x3c, a0), d2
+    mov     (0x30, sp), a0
+    extb    d2
+    exth    d1
+    add     d1, d2
+    movbu   (6, a0), d1
+    call    0x4c00685c, [d2,d3,a2,a3], 0x30
+    mov     (0x30, sp), a0
+    exth    d2
+    movhu   (0x56, a0), d1
+    inc4    a0
+    exth    d0
+    add     d0, d2
+    exth    d1
+    mov     d2, d0
+    exth    d0
+    add     d1, d0
+    mov     d0, a2
+    movhu   (a0), d0
+    btst    0x02, d0
+    beq     0x4c02c0ab
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c02c0a2
+    mov     a3, d1
+    mov     0x10c, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ad5a8, a1
+    mov     0x27, a3
+    add     a1, a3
+    movbu   (a3), d0
+    cmp     0xff, d0
+    beq     0x4c02c0a2
+    mov     (0x30, sp), a0
+    movbu   (0x26, a1), d2
+    add     8, a0
+    movbu   (a0), d1
+    and     0x7f, d1
+    cmp     d2, d1
+    beq     0x4c02c0ab
+    movbu   (a0), d0
+    movbu   (a3), d1
+    mov     0, a2
+    and     0x7f, d0
+    cmp     d1, d0
+    beq     0x4c02c0ab
+    bra     0x4c02c0ab
+    movhu   (a0), d0
+    btst    0x04, d0
+    beq     0x4c02c0ab
+    mov     0, a2
+    mov     a2, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0xff, d1
+    ble     0x4c02c0bb
+    mov     0xff, d0
+    bra     0x4c02c0c0
+    cmp     0, d1
+    bge     0x4c02c0c0
+    clr     d0
+    mov     d0, d1
+    mov     d1, d3
+    exth    d3
+    cmp     0, d3
+    beq     0x4c02c141
+    movbu   (0x10, sp), d0
+    mov     0x54c, d2
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    mov     0x62, a1
+    add     a0, a1
+    movhu   (a1), d0
+    mov     0xb, d2
+    lsr     d2, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c02c0ef
+    cmp     3, d0
+    bne     0x4c02c10d
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c02c107
+    movhu   (a1), d0
+    btst    0xe000, d0
+    beq     0x4c02c107
+    movbu   (0x14, a0), d0
+    mov     1, a0
+    cmp     0, d0
+    bne     0x4c02c109
+    mov     0, a0
+    mov     a0, d0
+    bra     0x4c02c122
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c02c11e
+    movhu   (a1), d0
+    mov     1, a0
+    btst    0xe000, d0
+    bne     0x4c02c120
+    mov     0, a0
+    mov     a0, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c02c141
+    mov     (0x14, sp), a0
+    add     0x62, a0
+    movhu   (a0), d0
+    btst    0xe000, d0
+    beq     0x4c02c141
+    movhu   (a0), d0
+    lsr     d2, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    bne     0x4c02c141
+    add     d2, d3
+    mov     d3, d1
+    exth    d1
+    mov     d1, a0
+    add     a0, a0
+    mov     0x486d1bd4, a1
+    mov     a0, d0
+    movhu   (d0, a1), d0
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3e5124, 0x3e6766
 # TgPartGlidePlan  (lib CPU 0x4c02d795)
 #   plan the part's PORTAMENTO ramp (d0 part, d1 from-note, stack
 #   to-note; called under TgPartHoldMark when partrec bit7 = portamento
@@ -28610,7 +30283,510 @@ display_palette:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ea1c2, 0x3ea59e
+# TgNoteLevelVariationCalc  (lib CPU 0x4c0311f1)
+#   the NOTE LEVEL chain (2026-07-20): this + TgVoiceNoteLevelCalc +
+#   TgElemLevelBaseCalc were the previous pass's 'pitch chain internals'
+#   -- they follow TgPitchRuntimeCalc in program order but compute the
+#   note/element LEVEL. Modes (desc halfword bits 15..14): 0 = velocity-
+#   sense level offset (tone block +0x91), 1 = PSEUDO-RANDOM level from
+#   the 1 kHz tick 0x50151BFC, 2/3 = set level-word bit15/bit16 +
+#   neutral 0x40 -- per-note level humanization for kit voices
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+# TgNoteLevelVariationCalc_entry:   (register-save `call` entry)
+    mov     d0, d3
+    mov     a0, a2
+    movhu   (a1), d0
+    mov     0x0000c000, d1
+    and     d1, d0
+    beq     0x4c031215
+    cmp     0x4000, d0
+    beq     0x4c03125a
+    cmp     0x8000, d0
+    beq     0x4c03127d
+    cmp     d1, d0
+    beq     0x4c03128b
+    jmp     0x4c031299
+    add     3, a1
+    movbu   (7, a2), d0
+    movbu   (6, a2), d1
+    mov     0x130, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     0x500ce404, d0
+    mov     0x34, d2
+    nop
+    nop
+    mulu    d1, d2
+    mov     d2, a0
+    add     d0, a0
+    movbu   (a1), d0
+    movbu   (0x91, a0), d2
+    extb    d0
+    cmp     0, d0
+    beq     0x4c031299
+    movbu   (a1), d0
+    movhu   (0xc, a2), d1
+    extb    d0
+    and     0x7f00, d1
+    asr     8, d1
+    exth    d1
+    add     -0x42, d1
+    nop
+    nop
+    mul     d0, d1
+    asr     5, d1
+    exth    d2
+    add     d1, d2
+    bra     0x4c031299
+    mov     (0x50151bfc), d0
+    mov     0x83, d1
+    nop
+    nop
+    mulu    d0, d0
+    lsr     2, d0
+    nop
+    nop
+    mulu    d1, d0
+    and     0xffff, d0
+    mov     0x7f, d2
+    nop
+    nop
+    mulu    d0, d2
+    lsr     16, d2
+    bra     0x4c031299
+    mov     0x54, a0
+    add     d3, a0
+    mov     (a0), d0
+    mov     0x40, d2
+    or      0x8000, d0
+    mov     d0, (a0)
+    bra     0x4c031299
+    mov     0x54, a0
+    add     d3, a0
+    mov     (a0), d0
+    mov     0x40, d2
+    or      0x00010000, d0
+    mov     d0, (a0)
+    mov     d2, d0
+    ret     [d2,d3,a2], 0xc
+.mnbase 0x48400000
+# TgVoiceNoteLevelCalc  (lib CPU 0x4c03129d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgVoiceNoteLevelCalc_entry:   (register-save `call` entry)
+    movbu   (7, a0), d2
+    mov     0x54c, d1
+    mov     d2, d0
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500b5340, a2
+    mov     a1, a3
+    mov     0x1d, a1
+    add     a2, a1
+    movbu   (a1), d0
+    cmp     1, d0
+    blt     0x4c0312d0
+    movbu   (a1), d0
+    cmp     3, d0
+    bgt     0x4c0312d0
+    movhu   (2, a2), d0
+    clr     d3
+    btst    0x01, d0
+    bne     0x4c031327
+    movbu   (a1), d0
+    cmp     1, d0
+    blt     0x4c0312e6
+    movbu   (a1), d0
+    cmp     3, d0
+    bgt     0x4c0312e6
+    movhu   (2, a2), d0
+    mov     0x7f, d3
+    btst    0x02, d0
+    bne     0x4c031327
+    movhu   (0x50, a0), d3
+    movhu   (a3), d0
+    mov     0x0000c000, d1
+    and     d1, d0
+    beq     0x4c031300
+    cmp     0x8000, d0
+    beq     0x4c031300
+    cmp     d1, d0
+    bne     0x4c031327
+    movbu   (6, a0), d1
+    extbu   d2
+    mov     d2, d0
+    call    0x4c006a17, [d2,d3,a2,a3], 0x30
+    movbu   (0xa, a2), d1
+    clr     d2
+    mov     d2, (0x10, sp)
+    add     -0x40, d1
+    mov     d1, d2
+    extb    d2
+    mov     d0, d1
+    exth    d1
+    add     d1, d2
+    exth    d3
+    add     d3, d2
+    mov     d2, d0
+    exth    d0
+    mov     0x7f, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d3
+    mov     d3, d0
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgElemLevelBaseCalc  (lib CPU 0x4c03132b)
+#   -> librec+0x12/+0x14 base level term (read back by TgVoiceLevelWord-
+#   Calc): key follow (0x70 -> fixed table 0x486D2805), the VELOCITY and
+#   KEY FADE zones desc2+0x1C..0x27 (crossfade attenuation, hard edge
+#   -0x200, slopes -0x40*delta/(hi-lo) via LibDiv32) + glide/master
+#   adjusts -- tg-envelope-sweep-results.md level pipeline
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgElemLevelBaseCalc_entry:   (register-save `call` entry)
+    mov     a0, (0x2c, sp)
+    mov     d0, d3
+    movbu   (0x10, a0), d0
+    mov     a1, a3
+    exthu   d0
+    btst    0x80, d0
+    beq     0x4c031347
+    add     2, a0
+    movhu   (a0), d1
+    or      0x0800, d1
+    movhu   d1, (a0)
+    mov     0x1b, a0
+    add     a1, a0
+    movbu   (a0), d1
+    and     0x7f, d0
+    cmp     0x70, d1
+    bne     0x4c031362
+    exthu   d0
+    mov     0x486d2805, a0
+    movbu   (d0, a0), d0
+    exth    d0
+    add     -0xc, d0
+    bra     0x4c0313da
+    mov     0x1a, a1
+    add     a3, a1
+    movbu   (a1), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c0313a6
+    exthu   d0
+    mov     0x486d1354, a2
+    movbu   (d0, a2), d1
+    movbu   (a0), d0
+    exthu   d1
+    mov     0x486d1b54, a0
+    movbu   (d1, a0), d1
+    and     0xf0, d0
+    asr     4, d0
+    asl     8, d0
+    mov     d0, a0
+    add     0x486d1454, a0
+    movbu   (d1, a0), d1
+    movbu   (a1), d0
+    add     -0xd0, d1
+    extb    d0
+    exth    d1
+    not     d0
+    inc     d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    bra     0x4c0313d1
+    exthu   d0
+    movbu   (a0), d1
+    mov     0x486d1b54, a0
+    movbu   (d0, a0), d0
+    and     0xf0, d1
+    asr     4, d1
+    asl     8, d1
+    add     0x486d1454, d1
+    mov     d1, a0
+    movbu   (d0, a0), d1
+    movbu   (a1), d2
+    add     -0xd0, d1
+    extb    d2
+    mov     d1, d0
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    exth    d0
+    asr     5, d0
+    exth    d0
+    add     0xd8, d0
+    mov     d0, d1
+    exth    d1
+    exth    d3
+    add     d3, d1
+    movhu   d1, (0x10, sp)
+    mov     (0x2c, sp), a0
+    movbu   (0x1c, a3), d1
+    movhu   (0xc, a0), d0
+    movbu   (0x1e, a3), d3
+    mov     d1, a1
+    movbu   (0x1d, a3), d1
+    exthu   d0
+    mov     d1, a0
+    movbu   (0x1f, a3), d1
+    and     0x7f00, d0
+    extb    d1
+    mov     d1, a2
+    exthu   d0
+    mov     d0, d1
+    asr     8, d1
+    mov     d1, d2
+    exthu   d2
+    mov     d3, d0
+    extbu   d0
+    cmp     d0, d2
+    ble     0x4c03140e
+    mov     d3, d1
+    extbu   d1
+    bra     0x4c031417
+    mov     a0, d0
+    extbu   d0
+    cmp     d0, d2
+    bge     0x4c031417
+    mov     a0, d1
+    extbu   d1
+    mov     (0x2c, sp), a0
+    mov     d1, d0
+    mov     (0x40, a0), a0
+    exth    d0
+    mov     a1, d1
+    mov     (0x2c, sp), a1
+    extbu   d1
+    exth    d1
+    sub     d1, d0
+    mov     a2, d1
+    extb    d1
+    nop
+    nop
+    mul     d0, d1
+    movhu   (0x10, sp), d0
+    exth    d1
+    asr     5, d1
+    exth    d1
+    exth    d0
+    add     d0, d1
+    mov     d1, a2
+    movbu   (0x17, a1), d1
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (8, a0), d2
+    mov     a1, a0
+    mov     (0x34, a0), a0
+    extb    d2
+    movbu   (4, a0), d3
+    call    0x48449b0a, 0, 0
+    extb    d3
+    mov     d0, a0
+    mov     a2, d0
+    exth    d0
+    add     d2, d0
+    exth    d0
+    add     d3, d0
+    mov     d0, d1
+    exth    d1
+    mov     a0, d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x10, sp)
+    mov     (0x2c, sp), a0
+    mov     0x20, a1
+    movhu   (0xc, a0), d0
+    add     a3, a1
+    exth    d0
+    and     0x7f00, d0
+    exth    d0
+    asr     8, d0
+    exth    d0
+    mov     d0, a2
+    movbu   (a1), d0
+    exth    d0
+    cmp     d0, a2
+    bge     0x4c0314ae
+    mov     0x21, a0
+    add     a3, a0
+    movbu   (a0), d1
+    mov     -0x200, d0
+    exth    d1
+    cmp     d1, a2
+    blt     0x4c0314e5
+    movbu   (a1), d0
+    movbu   (a1), d3
+    movbu   (a0), d1
+    exth    d0
+    mov     d0, d2
+    sub     a2, d2
+    mov     -0x40, d0
+    nop
+    nop
+    mul     d0, d2
+    exth    d3
+    exth    d1
+    sub     d1, d3
+    mov     d3, d1
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    bra     0x4c0314e5
+    mov     0x22, a1
+    add     a3, a1
+    movbu   (a1), d1
+    clr     d0
+    exth    d1
+    cmp     d1, a2
+    ble     0x4c0314e5
+    mov     0x23, a0
+    add     a3, a0
+    movbu   (a0), d1
+    mov     -0x200, d0
+    exth    d1
+    cmp     d1, a2
+    bgt     0x4c0314e5
+    movbu   (a1), d0
+    movbu   (a0), d2
+    movbu   (a1), d1
+    exth    d0
+    sub     d0, a2
+    mov     a2, d0
+    mov     -0x40, d3
+    nop
+    nop
+    mul     d3, d0
+    exth    d2
+    exth    d1
+    sub     d1, d2
+    mov     d2, d1
+    call    LibDiv32, 0, 0
+    movhu   (0x10, sp), d1
+    exth    d0
+    exth    d1
+    add     d0, d1
+    movhu   d1, (0x10, sp)
+    mov     (0x2c, sp), a0
+    mov     0x24, a1
+    movbu   (0x10, a0), d0
+    add     a3, a1
+    exth    d0
+    and     0x7f, d0
+    exth    d0
+    mov     d0, a2
+    movbu   (a1), d0
+    exth    d0
+    cmp     d0, a2
+    bge     0x4c031531
+    mov     0x25, a0
+    add     a3, a0
+    movbu   (a0), d1
+    mov     -0x200, d0
+    exth    d1
+    cmp     d1, a2
+    blt     0x4c031568
+    movbu   (a1), d0
+    movbu   (a1), d1
+    movbu   (a0), d3
+    exth    d0
+    mov     d0, d2
+    sub     a2, d2
+    mov     -0x40, d0
+    nop
+    nop
+    mul     d0, d2
+    exth    d1
+    exth    d3
+    sub     d3, d1
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    bra     0x4c031568
+    mov     0x26, a1
+    add     a3, a1
+    movbu   (a1), d1
+    clr     d0
+    exth    d1
+    cmp     d1, a2
+    ble     0x4c031568
+    mov     0x27, a0
+    add     a3, a0
+    movbu   (a0), d1
+    mov     -0x200, d0
+    exth    d1
+    cmp     d1, a2
+    bgt     0x4c031568
+    movbu   (a1), d0
+    movbu   (a0), d2
+    movbu   (a1), d1
+    exth    d0
+    sub     d0, a2
+    mov     a2, d0
+    mov     -0x40, d3
+    nop
+    nop
+    mul     d3, d0
+    exth    d2
+    exth    d1
+    sub     d1, d2
+    mov     d2, d1
+    call    LibDiv32, 0, 0
+    movhu   (0x10, sp), d1
+    mov     d0, d2
+    movbu   (0x19, a3), d0
+    exth    d1
+    exth    d2
+    add     d1, d2
+    btst    0x80, d0
+    beq     0x4c031591
+    mov     (0x2c, sp), a0
+    mov     0x10c, d1
+    movbu   (7, a0), d0
+    exth    d2
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ad5a8, a0
+    movbu   (0x25, a0), d1
+    exth    d1
+    add     d1, d2
+    movhu   (0x500c0758), d1
+    btst    0x04, d1
+    beq     0x4c0315ba
+    mov     (0x2c, sp), a0
+    mov     0x54c, d0
+    movbu   (7, a0), d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movbu   (0x12, a0), d0
+    cmp     0, d0
+    beq     0x4c0315ba
+    exth    d2
+    add     0x40, d2
+    mov     (0x2c, sp), a0
+    clr     d0
+    movhu   d2, (0x12, a0)
+    mov     (0x2c, sp), a0
+    movhu   d2, (0x14, a0)
+    mov     (0x2c, sp), a0
+    movhu   d0, (0x56, a0)
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
 # TgVoiceLevelWordCalc  (lib CPU 0x4c0315cd)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2], (sp)
@@ -28655,10 +30831,421 @@ display_palette:
     add     d1, d0
     exth    d0
     mov     a2, a0
-    call    0x4c02bf8b, [d2,d3,a2,a3], 0x28
+    call    TgLevelTermFinalize_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2], 0x1c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ea5f8, 0x3ea915
+# TgAmpEgAttackRateCalc  (lib CPU 0x4c031627)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgAmpEgAttackRateCalc_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, (0x30, sp)
+    movbu   (0x28, a3), d1
+    exth    d0
+    exth    d1
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    clr     d2
+    mov     d2, (0x10, sp)
+    mov     0x64, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     0x486d25e4, a0
+    extbu   d0
+    movbu   (d0, a0), d1
+    mov     0x34, a0
+    add     a3, a0
+    movbu   (a0), d0
+    mov     d1, a2
+    extb    d0
+    cmp     d2, d0
+    bne     0x4c03165b
+    jmp     0x4c031717
+    movbu   (0x31, a3), d1
+    mov     (0x30, sp), a1
+    movhu   (0xc, a1), d0
+    mov     d1, (0x14, sp)
+    movbu   (0x32, a3), d1
+    movbu   (0x33, a3), d3
+    mov     d1, a1
+    movbu   (a0), d1
+    exthu   d0
+    extb    d1
+    mov     d1, a0
+    and     0x7f00, d0
+    exthu   d0
+    asr     8, d0
+    mov     d0, d2
+    exthu   d2
+    mov     d3, d1
+    extbu   d1
+    cmp     d1, d2
+    ble     0x4c031686
+    mov     d3, d0
+    extbu   d0
+    bra     0x4c03168f
+    mov     a1, d1
+    extbu   d1
+    cmp     d1, d2
+    bge     0x4c03168f
+    mov     a1, d0
+    extbu   d0
+    add     0x2f, a3
+    movbu   (0x14, sp), d1
+    mov     d0, d2
+    exth    d2
+    mov     a0, d0
+    extb    d0
+    exth    d1
+    sub     d1, d2
+    nop
+    nop
+    mul     d0, d2
+    mov     d2, d0
+    exth    d0
+    asr     5, d0
+    mov     d0, a1
+    movbu   (a3), d0
+    extb    d0
+    cmp     0, d0
+    beq     0x4c0316fd
+    mov     (0x30, sp), a0
+    movbu   (a3), d2
+    movbu   (0x10, a0), d0
+    extb    d2
+    extbu   d0
+    and     0x7f, d0
+    mov     d2, d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c0316cd
+    extbu   d0
+    mov     0x486d1354, a0
+    movbu   (d0, a0), d0
+    not     d1
+    mov     d1, d2
+    inc     d2
+    extbu   d0
+    mov     0x486d13d4, a0
+    movbu   (d0, a0), d3
+    mov     a2, d0
+    extb    d3
+    exth    d0
+    mov     a1, d1
+    exth    d1
+    add     d0, d1
+    extb    d2
+    nop
+    nop
+    mul     d3, d2
+    mov     d2, d0
+    exth    d0
+    asr     4, d0
+    exth    d0
+    add     d0, d1
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d1, d0
+    mov     0xff, d1
+    exth    d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, a2
+    bra     0x4c031768
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     a2, d1
+    exth    d1
+    mov     a1, d0
+    exth    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     0xff, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, a2
+    bra     0x4c031768
+    add     0x2f, a3
+    movbu   (a3), d0
+    extb    d0
+    cmp     d2, d0
+    beq     0x4c031768
+    mov     (0x30, sp), a0
+    movbu   (a3), d2
+    movbu   (0x10, a0), d1
+    extb    d2
+    extbu   d1
+    and     0x7f, d1
+    mov     d2, d0
+    extb    d0
+    cmp     0, d0
+    bge     0x4c03173e
+    extbu   d1
+    mov     0x486d1354, a0
+    movbu   (d1, a0), d1
+    mov     d0, d2
+    not     d2
+    inc     d2
+    extbu   d1
+    mov     0x486d13d4, a0
+    movbu   (d1, a0), d1
+    mov     a2, d3
+    extb    d1
+    exth    d3
+    extb    d2
+    nop
+    nop
+    mul     d1, d2
+    mov     d2, d0
+    exth    d0
+    asr     4, d0
+    exth    d0
+    add     d0, d3
+    exth    d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0xff, d1
+    mov     d3, d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, a2
+    mov     (0x30, sp), a0
+    mov     (0x44, a0), a0
+    movbu   (8, a0), d0
+    btst    0x01, d0
+    beq     0x4c031782
+    mov     a2, d0
+    exth    d0
+    cmp     0xff, d0
+    bne     0x4c031782
+    add     -1, d0
+    mov     d0, a2
+    mov     a2, d0
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+# TgAmpEgDecayRatePairCalc  (lib CPU 0x4c031787)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgAmpEgDecayRatePairCalc_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, (0x30, sp)
+    exth    d0
+    clr     d3
+    mov     0x486d2649, a2
+    mov     d1, d2
+    movbu   (0x2a, a3), d1
+    mov     d3, (0x10, sp)
+    add     d1, d0
+    exth    d0
+    mov     0x64, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    extbu   d0
+    movbu   (d0, a2), d1
+    exth    d2
+    extbu   d1
+    movhu   d1, (0x14, sp)
+    movbu   (0x2c, a3), d1
+    mov     d3, (0x10, sp)
+    add     d1, d2
+    mov     d2, d0
+    exth    d0
+    mov     0x64, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    extbu   d0
+    movbu   (d0, a2), d1
+    mov     0x35, a0
+    extbu   d1
+    movhu   d1, (0x16, sp)
+    add     a3, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     d3, d0
+    bne     0x4c0317d5
+    jmp     0x4c0318c5
+    mov     (0x30, sp), a1
+    movbu   (0x31, a3), d1
+    movhu   (0xc, a1), d0
+    movbu   (0x33, a3), d3
+    mov     d1, a2
+    movbu   (0x32, a3), d1
+    exthu   d0
+    mov     d1, a1
+    movbu   (a0), d1
+    and     0x7f00, d0
+    extb    d1
+    mov     d1, a0
+    exthu   d0
+    asr     8, d0
+    mov     d0, d2
+    exthu   d2
+    mov     d3, d1
+    extbu   d1
+    cmp     d1, d2
+    ble     0x4c031800
+    mov     d3, d0
+    extbu   d0
+    bra     0x4c031809
+    mov     a1, d1
+    extbu   d1
+    cmp     d1, d2
+    bge     0x4c031809
+    mov     a1, d0
+    extbu   d0
+    add     0x30, a3
+    mov     d0, d2
+    exth    d2
+    mov     a0, d0
+    extb    d0
+    mov     a2, d1
+    extbu   d1
+    exth    d1
+    sub     d1, d2
+    nop
+    nop
+    mul     d0, d2
+    movbu   (a3), d0
+    mov     d2, d3
+    exth    d3
+    asr     5, d3
+    extb    d0
+    cmp     0, d0
+    beq     0x4c031891
+    mov     (0x30, sp), a0
+    movbu   (a3), d2
+    movbu   (0x10, a0), d0
+    extb    d2
+    extbu   d0
+    and     0x7f, d0
+    mov     d2, d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c031845
+    extbu   d0
+    mov     0x486d1354, a0
+    movbu   (d0, a0), d0
+    not     d1
+    mov     d1, d2
+    inc     d2
+    extbu   d0
+    mov     0x486d13d4, a0
+    movbu   (d0, a0), d1
+    clr     d0
+    mov     d0, (0x10, sp)
+    extb    d1
+    exth    d3
+    extb    d2
+    mov     d2, d0
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d2
+    exth    d2
+    movhu   (0x14, sp), d0
+    asr     4, d2
+    exth    d2
+    exth    d0
+    add     d3, d0
+    add     d2, d0
+    exth    d0
+    mov     0xff, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    mov     0xff, d1
+    movbu   d0, (0x64, a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x16, sp), d0
+    exth    d0
+    add     d3, d0
+    add     d2, d0
+    exth    d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    movbu   d0, (0x66, a0)
+    ret     [d2,d3,a2,a3], 0x28
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x14, sp), d0
+    exth    d3
+    exth    d0
+    add     d3, d0
+    exth    d0
+    mov     0xff, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    mov     0xff, d1
+    movbu   d0, (0x64, a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x16, sp), d0
+    exth    d0
+    add     d3, d0
+    exth    d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    movbu   d0, (0x66, a0)
+    ret     [d2,d3,a2,a3], 0x28
+    add     0x30, a3
+    movbu   (a3), d0
+    extb    d0
+    cmp     d3, d0
+    beq     0x4c031931
+    mov     (0x30, sp), a0
+    movbu   (a3), d2
+    movbu   (0x10, a0), d0
+    extb    d2
+    extbu   d0
+    and     0x7f, d0
+    mov     d2, d1
+    extb    d1
+    cmp     d3, d1
+    bge     0x4c0318eb
+    extbu   d0
+    mov     0x486d1354, a0
+    movbu   (d0, a0), d0
+    mov     d1, d2
+    not     d2
+    inc     d2
+    extbu   d0
+    mov     0x486d13d4, a0
+    movbu   (d0, a0), d0
+    extb    d2
+    extb    d0
+    nop
+    nop
+    mul     d0, d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x14, sp), d0
+    exth    d2
+    asr     4, d2
+    exth    d2
+    exth    d0
+    add     d2, d0
+    exth    d0
+    mov     0xff, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    mov     0xff, d1
+    movbu   d0, (0x64, a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x16, sp), d0
+    exth    d0
+    add     d2, d0
+    exth    d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     (0x30, sp), a0
+    movbu   d0, (0x66, a0)
+    bra     0x4c031941
+    mov     (0x30, sp), a0
+    movhu   (0x14, sp), d0
+    movbu   d0, (0x64, a0)
+    movhu   (0x16, sp), d0
+    mov     (0x30, sp), a0
+    movbu   d0, (0x66, a0)
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
 # TgKeyOffAmpRelease  (lib CPU 0x4c031944)
 #   key-off AMPLITUDE release compute -- h1 of the key-off trio (d0
 #   key-off offset, a0 lib rec, a1 out = two [rate|level] pairs).
@@ -30578,13 +33165,13 @@ display_palette:
     mov     (0x24, sp), a0
     mov     (0x20, sp), a1
     mov     (0x60, sp), d0
-    call    0x4c0311f3, [d2,d3,a2], 0xc
+    call    TgNoteLevelVariationCalc_entry, [d2,d3,a2], 0xc
     mov     (0x24, sp), a0
     extbu   d3
     movhu   d0, (0x50, a0)
     mov     (0x24, sp), a0
     mov     (0x20, sp), a1
-    call    0x4c0312a2, [d2,d3,a2,a3], 0x24
+    call    TgVoiceNoteLevelCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x60, sp), a0
     and     0x7f, d0
     add     0x24, a0
@@ -31178,7 +33765,7 @@ display_palette:
     exth    d0
     add     d1, d0
     exth    d0
-    call    0x4c03162c, [d2,d3,a2,a3], 0x28
+    call    TgAmpEgAttackRateCalc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x60, sp), a0
     mov     d0, d3
     movhu   (a0), d2
@@ -31231,7 +33818,7 @@ display_palette:
     extb    d1
     mov     (0x20, sp), a1
     mov     (0x24, sp), a0
-    call    0x4c03178c, [d2,d3,a2,a3], 0x28
+    call    TgAmpEgDecayRatePairCalc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x60, sp), a3
     mov     (0x24, sp), a0
     inc4    a3
@@ -31560,7 +34147,7 @@ display_palette:
     mov     (0x24, sp), a0
     mov     (0x20, sp), a1
     exth    d0
-    call    0x4c031330, [d2,d3,a2,a3], 0x24
+    call    TgElemLevelBaseCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x24, sp), a0
     call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
     mov     (0x60, sp), a0
@@ -35647,7 +38234,249 @@ display_palette:
     add     0x500ca0b0, a0
     rets
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f0106, 0x3f0364
+# TgVoiceStealSilence  (lib CPU 0x4c037135)
+#   the STEAL/boot silencer (TgSlotAllocate's steal path) -- the only
+#   writer of the r1/r2=0xC000 pattern (the forever-note erratum's
+#   'boot/steal only' finding, notes/reverb-toggle-findings.md era):
+#   zero the EG segments and ramp to silence at rate 0xFF before reuse
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgVoiceStealSilence_entry:   (register-save `call` entry)
+    mov     d0, d3
+    movhu   (0x500ce380), d0
+    cmp     0x7f, d0
+    bne     0x4c037148
+    ret     [d2,d3], 0x1c
+    mov     d3, d2
+    mov     0x0000c000, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     0x00010000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x0000c000, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     0x00020000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     0x00040000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00050000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00060000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    exthu   d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x84, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     d2, d0
+    extbu   d0
+    mov     0x00080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00090000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x000a0000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     d3, a0
+    add     0x500ca0b0, a0
+    movhu   (2, a0), d0
+    btst    0x80, d0
+    beq     0x4c037212
+    mov     0x0000ff80, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    clr     d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x0000ff00, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00010000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    bra     0x4c03723c
+    mov     0x0000ff00, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00010000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x0000ff00, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00020000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgVoiceForceOff  (lib CPU 0x4c03723f)
+#   the per-slot FORCE-OFF TgVoicePoolReset sweeps over all 0x80 slots:
+#   r0=0xA280/r1=0xA200 (rate 0xA2 -> level 0x80/0) + EG segs cleared;
+#   rate-0x7F and no-clear variants follow it
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgVoiceForceOff_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d1
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c0372b4
+    mov     0x0000a280, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    clr     d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x0000a200, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00010000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00040000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00050000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00090000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgVoiceForceOffSoft  (lib CPU 0x4c0372b7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgVoiceForceOffSoft_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d1
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c037326
+    mov     0x7f80, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    clr     d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x7f00, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00010000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00040000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00050000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x00080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    clr     d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00090000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgVoiceDamp7F  (lib CPU 0x4c037329)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgVoiceDamp7F_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d1
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c037358
+    mov     0x7f80, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    clr     d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x7f00, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00010000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgVoiceDampA2  (lib CPU 0x4c03735b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgVoiceDampA2_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d1
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c037390
+    mov     0x0000a280, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    clr     d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     0x0000a200, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     0x00010000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
 # TgVoiceGateOn  (lib CPU 0x4c037393)
 #   NOTE-ON commit (d0 slot, a0 shadow rec): reg3 := 0x87FF (the
 #   envelope notes' RESULT-3 gate-on), class-0x3000 reg := (rec+0x54 &
@@ -35997,7 +38826,108 @@ display_palette:
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     ret     [d2,a2], 0x1c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f072a, 0x3f0be7
+.incbin_range "baserom/kn7000_program.rom", 0x3f072a, 0x3f0a05
+# TgVoiceReg0401Write  (lib CPU 0x4c037a34)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgVoiceReg0401Write_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    exthu   d0
+    mov     0x84, d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (0x500ce380), d1
+    add     0x500ca0b0, d0
+    cmp     0x7f, d1
+    beq     0x4c037a76
+    mov     0x28, a0
+    add     d0, a0
+    movhu   (a0), d1
+    and     0x3fff, d3
+    and     0xc000, d1
+    or      d3, d1
+    movhu   d1, (a0)
+    mov     d1, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x04010000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgVoiceReg0405Write  (lib CPU 0x4c037a79)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgVoiceReg0405Write_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    exthu   d0
+    mov     0x84, d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (0x500ce380), d1
+    add     0x500ca0b0, d0
+    cmp     0x7f, d1
+    beq     0x4c037abb
+    mov     0x2a, a0
+    add     d0, a0
+    movhu   (a0), d1
+    and     0x3fff, d3
+    and     0xc000, d1
+    or      d3, d1
+    movhu   d1, (a0)
+    mov     d1, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x04050000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgVoiceEgSegRegsWrite  (lib CPU 0x4c037abe)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# TgVoiceEgSegRegsWrite_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d1
+    mov     a0, a2
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c037b17
+    movhu   (0x18, a2), d0
+    mov     0x00080000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x1c, a2), d0
+    mov     0x00090000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x20, a2), d0
+    mov     0x000a0000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x22, a2), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    mov     0x000b0000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,a2], 0x1c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f0aeb, 0x3f0be7
 # TgVoiceRouteFieldSet  (lib CPU 0x4c037c16)
 #   the routing/level init at the top of TgElemNoteOnFresh and
 #   TgKitElemNoteOn: shadow +0x40 word bits 12..19 := route byte;
@@ -36192,7 +39122,7 @@ display_palette:
     cmp     0, d0
     bne     0x4c03a294
     movbu   (0x1c, sp), d0
-    call    0x4c011ace, 0, 0
+    call    TgPartEgRampScaleBCurve, 0, 0
     mov     d0, d1
     exthu   d1
     exthu   d3
@@ -36204,7 +39134,7 @@ display_palette:
     cmp     1, d0
     bne     0x4c03a2b9
     movbu   (0x1c, sp), d0
-    call    0x4c0118f5, 0, 0
+    call    TgPartEgRampScaleACurve, 0, 0
     mov     d0, d1
     exthu   d1
     exthu   d3
@@ -36264,7 +39194,110 @@ display_palette:
     mov     d3, d0
     ret     [d2,d3], 8
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f32e1, 0x3f374a
+# TgPartEgRampSegScaled  (lib CPU 0x4c03a310)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+# TgPartEgRampSegScaled_entry:   (register-save `call` entry)
+    movbu   d1, (0x20, sp)
+    mov     d0, d3
+    mov     d3, d1
+    extbu   d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x500ce404, a1
+    movbu   (0x20, sp), d0
+    mov     a1, a0
+    asl2    d0
+    add     d0, a0
+    movhu   (0x4c, a0), d2
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     7, d0
+    bne     0x4c03a385
+    movbu   (0x20, sp), d0
+    cmp     0, d0
+    bne     0x4c03a365
+    extbu   d3
+    mov     d3, d0
+    call    TgPartEgRampScaleBGet, 0, 0
+    mov     d0, d1
+    exthu   d1
+    exthu   d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, d2
+    lsr     8, d2
+    mov     d2, d0
+    exthu   d0
+    cmp     0x1c, d0
+    bge     0x4c03a385
+    mov     0x1c, d2
+    bra     0x4c03a385
+    cmp     1, d0
+    bne     0x4c03a385
+    extbu   d3
+    mov     d3, d0
+    call    TgPartEgRampScaleAGet, 0, 0
+    mov     d0, d1
+    exthu   d1
+    exthu   d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, d2
+    lsr     8, d2
+    mov     d2, d0
+    exthu   d0
+    cmp     0x2c, d0
+    bge     0x4c03a385
+    mov     0x2c, d2
+    mov     d2, d0
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgPartEgRampCache54Scaled  (lib CPU 0x4c03a389)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgPartEgRampCache54Scaled_entry:   (register-save `call` entry)
+    mov     0x130, d2
+    mov     d0, d1
+    extbu   d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movhu   (0x54, a0), d2
+    mov     (a0), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     7, d0
+    bne     0x4c03a3c9
+    extbu   d1
+    mov     d1, d0
+    call    TgPartEgRampScaleBGet2, 0, 0
+    mov     d0, d1
+    exthu   d1
+    exthu   d2
+    nop
+    nop
+    mulu    d1, d2
+    lsr     8, d2
+    mov     d2, d0
+    exthu   d0
+    cmp     0x1c, d0
+    bge     0x4c03a3c9
+    mov     0x1c, d2
+    mov     d2, d0
+    ret     [d2], 0x10
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f339e, 0x3f374a
 # TgNodeRingSeed  (lib CPU 0x4c03a779)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [a2,a3], (sp)
@@ -37193,7 +40226,7 @@ display_palette:
     movbu   (0x44, sp), d0
     exthu   d0
     mov     d0, (0x1c, sp)
-    call    0x4c03713a, [d2,d3], 0x1c
+    call    TgVoiceStealSilence_entry, [d2,d3], 0x1c
     mov     (0x20, sp), a0
     movbu   (a0), d0
     cmp     0x40, d0
