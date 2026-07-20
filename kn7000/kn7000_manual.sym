@@ -1250,11 +1250,36 @@
 0x4C039D83  TgPartEgRampBuild_entry
 
 ; ---- the WRITE side of the controller mod matrix (2026-07-20) -------------
-0x4C00580B  TgModValueScaleA        ; (d0 value, d1 flags, stack depth) -> value*depth<<8 / 0x1FC0 (LibDiv32); flags bit7 = bipolar (re-centre at 0x40, doubled)
-0x4C00583E  TgModValueScaleB        ; byte-identical twin of TgModValueScaleA
-0x4C005841  TgModValueScaleB_entry
+0x4C005673  TgPartModRouteMaskSet   ; (d0 part, d1 src, stack mask/set/clr) THE ROUTE/SIGN MASK WRITER: per-dest ROM bit tables 0x485865EC (route) / 0x485865F0 (sign) gate OR/AND into partrec 0x500B5340+part*0x54C +0x53A+dest*4 (ROUTE) and +0x53C+dest*4 (SIGN)
+0x4C005730  TgModValueScale1        ; (d0 value, d1 flags, stack depth) -> value*depth<<8 / 0x1FC0 (LibDiv32); flags bit7 = bipolar (re-centre at 0x40, doubled). Six byte-identical twins: 0x4C005730/5766/579C/57D2/580B/583E
+0x4C005733  TgModValueScale1_entry
+0x4C005766  TgModValueScale2
+0x4C005769  TgModValueScale2_entry
+0x4C00579C  TgModValueScale3
+0x4C00579F  TgModValueScale3_entry
+0x4C0057D2  TgModValueScale4
+0x4C0057D5  TgModValueScale4_entry
+0x4C00580B  TgModValueScale5
+0x4C00583E  TgModValueScale6
+0x4C005841  TgModValueScale6_entry
 0x4C005874  TgModDepthScaleClamp    ; same bipolar scaling normalised by divu 0x7F then >>6, clamped 0..0x1FFF (the +-0x1FFF mod-slot range)
 0x4C005876  TgModDepthScaleClamp_entry
+0x4C0058B3  TgPartModVoiceApply     ; (d0 sel, d1 slot, a0 part state) re-apply one mod parameter to a live voice (TgVoiceRecordPtr + per-sel register rewrite)
+0x4C0058B8  TgPartModVoiceApply_entry
+0x4C005A28  TgPartModVoiceApplyB    ; larger sibling of TgPartModVoiceApply (part state +0x3C)
+0x4C005A2D  TgPartModVoiceApplyB_entry
+0x4C005CD6  TgPartModVoicesRefreshA ; (d0 part, d1 param) TgVoiceListCollectPartAll then push every live voice through TgPartModVoiceApply* -- the live re-apply TgPartModConfigSet runs after storing
+0x4C005CDC  TgPartModVoicesRefreshA_entry
+0x4C005DBF  TgPartModVoicesRefreshB
+0x4C005DC5  TgPartModVoicesRefreshB_entry
+0x4C005EBB  TgModDepthScaleRom      ; (d0 value, d1 flags) -> value * ROM halfword 0x486D1E90 / 0x7F, same bit7 bipolar re-centring
+0x4C005EBD  TgModDepthScaleRom_entry
+0x4C005EF0  TgPartModVoicesRefreshC
+0x4C005EF6  TgPartModVoicesRefreshC_entry
+0x4C005F6B  TgPartModDepthDefaultSet ; (d0 part, d1 dest, stack param 1..6) write per-destination DEFAULT depths into partrec +0x6C+dest*0xC (0x200), +0x78 (0x20), ...
+0x4C005F6D  TgPartModDepthDefaultSet_entry
+0x4C00603B  TgPartModConfigStore    ; STORE-ONLY twin of TgPartModConfigSet (own 46-entry jump table 0x48586658, same partrec targets, no voice re-collect/re-apply) -- the bulk/preset-load path
+0x4C006040  TgPartModConfigStore_entry
 0x4C006333  TgPartModConfigSet      ; THE MOD-MATRIX SETTER (read side = TgPartModSumPitch..Dest40): param byte &0x7F in 1..0x2E indexes the 46-entry jump table 0x48586710; each case scales the value (TgModValueScale*/0x4C0057xx) into partrec 0x500B5340+part*0x54C +0x66+dest*0xC+src*2 (value) / +0x6C+... (depth), then re-collects the part's voices and re-applies; the mask cases call TgPartModDestEnableUpdate to rebuild partrec+0x52C
 0x4C006339  TgPartModConfigSet_entry
 
