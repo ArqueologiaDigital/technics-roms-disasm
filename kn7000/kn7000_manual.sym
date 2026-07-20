@@ -1457,6 +1457,93 @@
 0x4844987C  VoiceElemRecFetch       ; (d0 elem, d1 class) -> element record: bank descriptor +0x18 table + elem*0x23
 0x4844987E  VoiceElemRecFetch_entry
 
+; ---- ★ THE FIVE VOICE-RESOURCE BANK SOURCES + the MIDI-keyed classifier
+;      (region 1, 2026-07-20).  Full write-up:
+;      kn7000_mame/notes/sound-bank-classes.md
+;
+;      Every voice lookup starts from a MIDI-SHAPED TRIPLE -- exactly what the
+;      SOUND EXPLORER screen prints next to each sound as "[32.11-1"
+;      (kn7000_mame/notes/sound-gui-inventory.md p35):
+;          d0        = PROGRAM CHANGE number (masked &0x7F by the caller)
+;          d1        = BANK SELECT LSB
+;          arg5 (sp) = BANK SELECT MSB
+;      The classifier packs them into one 24-bit key
+;          key = (MSB << 16) | (LSB << 8) | PROGRAM
+;      and asks each source, in order 1,2,3,4, whether it is fitted
+;      (VoiceBankSourcePresent -> VoiceBankSourceFlagGet -> presence byte
+;      0x501496B4+source-1); the first source whose archive contains the key
+;      wins.  Source 0 (the INTERNAL archive) is the always-present fallback.
+;      The number of the winning source IS the class code 0..4 that
+;      VoiceRecFetchBanked / VoiceParamRecFetchBanked then use to pick the bank
+;      descriptor 0x5003A5A4+class*4 and load base 0x5003A554+class*4.
+;
+;      THE FIVE SOURCES (address window / directory pointer at window+0x0C):
+;        class 0  INTERNAL  0x48000000, directory pointer at 0x48000018 -- the
+;                 program+table flash's own resource archive (factory PRESET
+;                 sounds; the only source that is always present)
+;        class 1  0x57000000 -- factory read-only DATA flash
+;        class 2  0x56000000 -- CUSTOM flash (disk-programmed data)
+;        class 3  0x41000000
+;        class 4  0x41800000
+;      Sources 1..4 are all validated the same way by the boot archive parser
+;      0x48449EF4..0x4844A3D1: header self-check *(base) + base == base+0x200
+;      and a 16-byte signature compare against "Expansion Board" (0x485B8518),
+;      then the presence byte 0x501496B4+n is set and the per-source directory
+;      pointers are cached in 0x5003A554.. / 0x5003A5A4...  Which panel button
+;      (SOUND GROUP "MEMORY" vs "EW EXPANSION") maps to which of classes 1..4
+;      is NOT settled here -- that needs a live session with a card fitted.
+;
+;      Each source has its own lookup routine; all ten are the same
+;      multiplicative-hash bucket walk over the archive's sound directory
+;      (bucket = (key*mult) % nbuckets via *HashIndex, chain compare via
+;      *KeyEqual, chain link at entry+0, payload halfword at entry+8).
+;      Family A (VoiceBank*, used by VoiceRecFetchBanked) returns the raw
+;      halfword index; family B (VoiceParamBank*, used by
+;      VoiceParamRecFetchBanked) additionally treats bit15 as "entry invalid"
+;      and degrades: exact key -> LSB rounded down to a multiple of 8 ->
+;      LSB-only -> the 0x7F7F default.
+0x485713D6  VoiceBankClassify       ; (d0 program, d1 bank LSB, a0 out u16 index, a1 out u8 class, arg5 bank MSB) -> 1 when resolved; MSB==0 short-circuits to the internal archive
+0x485713DB  VoiceBankClassify_entry
+0x4857150D  VoiceBankLookupInternal ; hash lookup in the class-0 archive (0x48000000, dir ptr *(0x48000018))
+0x48571512  VoiceBankLookupInternal_entry
+0x48571580  VoiceBankLookupSrc1     ; hash lookup in the class-1 archive (0x57000000, dir ptr *(0x5700000C))
+0x48571585  VoiceBankLookupSrc1_entry
+0x485715F3  VoiceBankLookupSrc2     ; hash lookup in the class-2 archive (0x56000000, dir ptr *(0x5600000C))
+0x485715F8  VoiceBankLookupSrc2_entry
+0x48571666  VoiceBankLookupSrc3     ; hash lookup in the class-3 archive (0x41000000, dir ptr *(0x4100000C))
+0x4857166B  VoiceBankLookupSrc3_entry
+0x485716D9  VoiceBankLookupSrc4     ; hash lookup in the class-4 archive (0x41800000, dir ptr *(0x4180000C))
+0x485716DE  VoiceBankLookupSrc4_entry
+0x4857174C  VoiceBankKeyEqual       ; (d0,d1) -> 1 when the chain entry's key matches -- retf leaf
+0x48571757  VoiceBankHashIndex      ; (d0 key, d1 mult, arg nbuckets@0x14,sp) -> (key*mult) % nbuckets
+0x48571759  VoiceBankHashIndex_entry
+0x48570C41  VoiceParamBankClassify  ; the family-B classifier: same five sources, but bit15 of the entry marks it invalid and misses fall back LSB-family -> LSB-only -> 0x7F7F
+0x48570C46  VoiceParamBankClassify_entry
+0x48570DF8  VoiceParamBankLookupInternal ; class-0 archive (0x48000000)
+0x48570DFD  VoiceParamBankLookupInternal_entry
+0x48570E6B  VoiceParamBankLookupSrc1 ; class-1 archive (0x57000000)
+0x48570E70  VoiceParamBankLookupSrc1_entry
+0x48570EDE  VoiceParamBankLookupSrc2 ; class-2 archive (0x56000000)
+0x48570EE3  VoiceParamBankLookupSrc2_entry
+0x48570F51  VoiceParamBankLookupSrc3 ; class-3 archive (0x41000000)
+0x48570F56  VoiceParamBankLookupSrc3_entry
+0x48570FC4  VoiceParamBankLookupSrc4 ; class-4 archive (0x41800000)
+0x48570FC9  VoiceParamBankLookupSrc4_entry
+0x48571037  VoiceParamBankKeyEqual  ; (d0,d1) -> 1 on key match -- retf leaf
+0x48571042  VoiceParamBankHashIndex ; (d0 key, d1 mult, arg nbuckets) -> (key*mult) % nbuckets
+0x48571044  VoiceParamBankHashIndex_entry
+0x48448C0F  VoiceBankSourcePresent  ; (d0 source 1..4) -> 0 when that source archive is fitted, -1 otherwise (the classifier's per-source gate)
+0x48448C21  VoiceBankSourcePresentAlt ; same shape over the stubbed probe VoiceBankSourceFlagStubB -- always reports "absent" in this firmware
+0x48448C36  VoiceBankSourceQuery    ; (d0 source) -> u8 answer from 0x48570941 (per-source archive query)
+0x4844A3D4  VoiceBankSourceFlagGet  ; (d0 source) -> presence byte 0x501496B4+source-1 for source 1..4, else 0; the four flags are set by the boot archive parser
+0x4844A3EE  VoiceBankSourceFlagStubB ; retf 0 -- second presence probe, stubbed out in this firmware
+0x4844A3F2  VoiceBankSourceFlagStubC ; retf 0 -- third presence probe, stubbed out
+0x48449925  VoiceParamRecFetchBanked ; (d0 program&0x7F, d1 bank LSB, stack bank MSB) -> the 0x10-byte per-sound PARAMETER record, from the winning bank descriptor's +0x1C directory + index*0x10
+0x4844992A  VoiceParamRecFetchBanked_entry
+0x4844A42F  CustomVoiceRecFetch     ; (d1 idx) -> a 0x8E voice record inside the resource block 0x4848463F(): block+0x1A7+idx*0x8E; when the block is absent it reports error 0x26 and re-resolves through VoiceRecFetchBanked_entry using the 3-byte {program, bank LSB, bank MSB} triple stored at block+0x27+idx*3
+0x4844A434  CustomVoiceRecFetch_entry
+0x4844ABF7  UserVoiceRecPtr         ; (d1 idx) -> user/MEMORY voice record *(0x501496B8) + 0x70F7 + idx*0x8E -- rets leaf
+
 ; ---- ★ DIGITAL DRAWBAR (library 0x4C00A1F7..0x4C00A90C, 2026-07-20) --------
 ; The per-part DRAWBAR REGISTRATION record lives at 0x500082C8+part*0x1C:
 ;   +0x00/+0x02/+0x04  three 12-bit registration words; each holds three

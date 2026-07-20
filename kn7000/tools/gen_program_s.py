@@ -143,6 +143,19 @@ CONVERT = {
     "VoiceRecFetchBanked", "VoiceSubRecFetch", "VoiceModRecDefaultPtr",
     "VoiceRecDefaultPtr", "VoiceSubRecDefaultPtr", "VoiceElemRecFetchBank0",
     "VoiceModRecFetch", "VoiceElemRecFetch",
+    # the five voice-resource BANK SOURCES + the MIDI-keyed classifier
+    # (notes/sound-bank-classes.md)
+    "VoiceBankClassify", "VoiceBankLookupInternal", "VoiceBankLookupSrc1",
+    "VoiceBankLookupSrc2", "VoiceBankLookupSrc3", "VoiceBankLookupSrc4",
+    "VoiceBankKeyEqual", "VoiceBankHashIndex",
+    "VoiceParamBankClassify", "VoiceParamBankLookupInternal",
+    "VoiceParamBankLookupSrc1", "VoiceParamBankLookupSrc2",
+    "VoiceParamBankLookupSrc3", "VoiceParamBankLookupSrc4",
+    "VoiceParamBankKeyEqual", "VoiceParamBankHashIndex",
+    "VoiceBankSourcePresent", "VoiceBankSourcePresentAlt",
+    "VoiceBankSourceQuery", "VoiceBankSourceFlagGet",
+    "VoiceBankSourceFlagStubB", "VoiceBankSourceFlagStubC",
+    "VoiceParamRecFetchBanked", "CustomVoiceRecFetch", "UserVoiceRecPtr",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -156,6 +169,13 @@ FUNC_END = {
     "TempoSyncSetDispatch": 0x47F33,    # next (unnamed) function at 0x48447F33
     "TgStrapProbeSideB": 0xD774E,       # next (unnamed) function at 0x484D774E
     "VoiceElemRecFetch": 0x49925,       # next (unnamed) function at 0x48449925
+    "VoiceParamRecFetchBanked": 0x499E9,   # next (unnamed) function at 0x484499E9
+    "VoiceBankHashIndex": 0x17176B,        # next (unnamed) function at 0x4857176B
+    "VoiceParamBankHashIndex": 0x171056,   # next (unnamed) function at 0x48571056
+    "VoiceBankSourceQuery": 0x48C45,       # next (unnamed) function at 0x48448C45
+    "VoiceBankSourceFlagStubC": 0x4A3F6,   # next (unnamed) function at 0x4844A3F6
+    "CustomVoiceRecFetch": 0x4A47A,        # next (unnamed) function at 0x4844A47A
+    "UserVoiceRecPtr": 0x4AC0D,            # next (unnamed) function at 0x4844AC0D
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live
@@ -192,6 +212,21 @@ LIB_CONVERT = {
     #      (tone-zone desc2 bytes -> shadow-image level/velo/send/filter-EG
     #      fields; sensitivity curve ROM 0x486D2713, key-scale pair
     #      0x486D1354/0x486D13D4) -------------------------------------------
+    # ---- SOUND EDIT: the nine uniform FLAG REFRESHERS that copy single bits
+    #      (and two whole bytes) out of the part-setting record
+    #      0x500B5340+part*0x54C into the SOUND EDIT record
+    #      0x500C0784+(part-0x10)*0x2C8. All nine are gated on part 0x10..0x12
+    #      and on 0x4C00C6BF(part). Section 3 of
+    #      kn7000_mame/notes/sound-edit-parameters.md ---------------------
+    "TgSoundEditFlag4DBit7Refresh": (0x4C00EDE4, 0x4C00EE41),
+    "TgSoundEditFlag4DLowRefresh":  (0x4C00EE41, 0x4C00EE9A),
+    "TgSoundEditFlag4EBit7Refresh": (0x4C00EE9A, 0x4C00EEF7),
+    "TgSoundEditFlag4ELowRefresh":  (0x4C00EEF7, 0x4C00EF4B),
+    "TgSoundEditFlag4FBit7Refresh": (0x4C00EF4B, 0x4C00EFA8),
+    "TgSoundEditFlag51Bit7Refresh": (0x4C00EFA8, 0x4C00F04E),
+    "TgSoundEditFlag51LowRefresh":  (0x4C00F04E, 0x4C00F0A2),
+    "TgSoundEditByte52Refresh":     (0x4C00F0A2, 0x4C00F0E6),
+    "TgSoundEditByte53Refresh":     (0x4C00F0E6, 0x4C00F12A),
     "TgZoneParamClamp":   (0x4C00FD4C, 0x4C00FD68),
     "TgZoneLevelScaleCalc": (0x4C00FD68, 0x4C00FE03),
     "TgZoneVeloSenseCalc": (0x4C00FE03, 0x4C00FE4D),

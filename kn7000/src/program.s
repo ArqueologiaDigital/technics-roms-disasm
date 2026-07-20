@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 622 synthetic labels for internal helpers called by converted code
+# 643 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -130,6 +130,7 @@ _rom_marker:
 .equ TempoSyncModeBSet_entry, 0x48447C43
 .equ TempoSyncPartB0Set_entry, 0x48447D07
 .equ TempoSyncE000Set_entry, 0x48447D67
+.equ VoiceBankSourcePresent, 0x48448C0F
 .equ func_484492E7, 0x484492E7
 .equ func_484494E4, 0x484494E4
 .equ func_4844952A, 0x4844952A
@@ -140,12 +141,16 @@ _rom_marker:
 .equ VoiceSubRecDefaultPtr_entry, 0x48449813
 .equ func_4844982F, 0x4844982F
 .equ VoiceElemRecFetch_entry, 0x4844987E
+.equ VoiceParamRecFetchBanked_entry, 0x4844992A
 .equ func_484499EB, 0x484499EB
+.equ VoiceBankSourceFlagGet, 0x4844A3D4
+.equ VoiceBankSourceFlagStubB, 0x4844A3EE
 .equ func_4844A3F9, 0x4844A3F9
 .equ func_4844A416, 0x4844A416
+.equ CustomVoiceRecFetch_entry, 0x4844A434
 .equ func_4844ABD6, 0x4844ABD6
 .equ func_4844ABEA, 0x4844ABEA
-.equ func_4844ABF7, 0x4844ABF7
+.equ UserVoiceRecPtr, 0x4844ABF7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
 .equ func_484720D3, 0x484720D3
@@ -172,6 +177,7 @@ _rom_marker:
 .equ TechniChordAugDimFold_entry, 0x48473768
 .equ func_4847B17D, 0x4847B17D
 .equ func_4847EC92, 0x4847EC92
+.equ func_4848463F, 0x4848463F
 .equ func_4849C8E2, 0x4849C8E2
 .equ func_4849C94F, 0x4849C94F
 .equ func_484A11E1, 0x484A11E1
@@ -300,9 +306,24 @@ _rom_marker:
 .equ func_48565D17, 0x48565D17
 .equ func_48565F64, 0x48565F64
 .equ func_48565F67, 0x48565F67
+.equ func_48570941, 0x48570941
 .equ func_48570AD2, 0x48570AD2
-.equ func_48570C46, 0x48570C46
-.equ func_485713DB, 0x485713DB
+.equ VoiceParamBankClassify_entry, 0x48570C46
+.equ VoiceParamBankLookupInternal_entry, 0x48570DFD
+.equ VoiceParamBankLookupSrc1_entry, 0x48570E70
+.equ VoiceParamBankLookupSrc2_entry, 0x48570EE3
+.equ VoiceParamBankLookupSrc3_entry, 0x48570F56
+.equ VoiceParamBankLookupSrc4_entry, 0x48570FC9
+.equ VoiceParamBankKeyEqual, 0x48571037
+.equ VoiceParamBankHashIndex_entry, 0x48571044
+.equ VoiceBankClassify_entry, 0x485713DB
+.equ VoiceBankLookupInternal_entry, 0x48571512
+.equ VoiceBankLookupSrc1_entry, 0x48571585
+.equ VoiceBankLookupSrc2_entry, 0x485715F8
+.equ VoiceBankLookupSrc3_entry, 0x4857166B
+.equ VoiceBankLookupSrc4_entry, 0x485716DE
+.equ VoiceBankKeyEqual, 0x4857174C
+.equ VoiceBankHashIndex_entry, 0x48571759
 .equ func_48578DDD, 0x48578DDD
 .equ func_48578FF0, 0x48578FF0
 .equ func_48579255, 0x48579255
@@ -10700,7 +10721,36 @@ _rom_marker:
     mov     d2, d0
     ret     [d2,d3,a2], 0x20
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x047f33, 0x0496c9
+.incbin_range "baserom/kn7000_program.rom", 0x047f33, 0x048c0f
+# VoiceBankSourcePresent  (CPU 0x48448c0f)
+    extbu   d0
+    call    VoiceBankSourceFlagGet, 0, 0
+    clr     d1
+    extbu   d0
+    cmp     1, d0
+    beq     0x48448c1d
+    mov     -1, d1
+    mov     d1, d0
+    ret     0, 0xc
+# VoiceBankSourcePresentAlt  (CPU 0x48448c21)
+    add     -0xc, sp
+    extbu   d0
+    call    VoiceBankSourceFlagStubB, 0, 0
+    clr     d1
+    extbu   d0
+    cmp     1, d0
+    beq     0x48448c32
+    mov     -1, d1
+    mov     d1, d0
+    ret     0, 0xc
+# VoiceBankSourceQuery  (CPU 0x48448c36)
+    add     -0xc, sp
+    extbu   d0
+    call    func_48570941, [d2], 0x10
+    extbu   d0
+    ret     0, 0xc
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x048c45, 0x0496c9
 # VoiceRecFetchBanked  (CPU 0x484496c9)
 #   The region-1 VOICE-RESOURCE BANK FETCHERS -- the read-only side the
 #   local-edit shadow is copied FROM. Five banks: a class code 0..4
@@ -10730,7 +10780,7 @@ _rom_marker:
     mov     sp, a1
     add     0x20, a1
     mov     d2, d1
-    call    func_485713DB, [d2,d3,a2,a3], 0x1c
+    call    VoiceBankClassify_entry, [d2,d3,a2,a3], 0x1c
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     0x484496ff
@@ -10984,10 +11034,156 @@ _rom_marker:
     mulu    d0, d3
     add     d3, a0
     ret     [d2,d3], 8
+# VoiceParamRecFetchBanked  (CPU 0x48449925)
+    movm    [d2,d3], (sp)
+    add     -0x24, sp
+# VoiceParamRecFetchBanked_entry:   (register-save `call` entry)
+    mov     d1, d2
+    movbu   (0x3c, sp), d1
+    extbu   d0
+    mov     d1, (0x10, sp)
+    and     0x7f, d0
+    extbu   d0
+    extbu   d2
+    mov     sp, a0
+    add     0x20, a0
+    mov     sp, a1
+    add     0x1c, a1
+    mov     d2, d1
+    call    VoiceParamBankClassify_entry, [d2,d3,a2,a3], 0x20
+    movbu   (0x1c, sp), d0
+    cmp     0, d0
+    beq     0x4844995b
+    cmp     1, d0
+    beq     0x48449978
+    cmp     2, d0
+    beq     0x48449994
+    cmp     3, d0
+    beq     0x484499b0
+    cmp     4, d0
+    beq     0x484499cc
+    mov     (0x5003a5a4), a0
+    mov     (0x5003a554), d0
+    mov     (0x1c, a0), d1
+    add     d0, d1
+    mov     d1, d0
+    movhu   (0x20, sp), d1
+    asl     4, d1
+    mov     d1, a0
+    add     d0, a0
+    bra     0x484499e6
+    mov     (0x5003a5a8), a0
+    mov     (0x5003a558), d1
+    mov     (0x1c, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    movhu   (0x20, sp), d1
+    asl     4, d1
+    add     d1, a0
+    bra     0x484499e6
+    mov     (0x5003a5ac), a0
+    mov     (0x5003a55c), d0
+    mov     (0x1c, a0), d1
+    add     d0, d1
+    mov     d1, a0
+    movhu   (0x20, sp), d0
+    asl     4, d0
+    add     d0, a0
+    bra     0x484499e6
+    mov     (0x5003a5b0), a0
+    mov     (0x5003a560), d3
+    mov     (0x1c, a0), d0
+    add     d3, d0
+    mov     d0, a0
+    movhu   (0x20, sp), d3
+    asl     4, d3
+    add     d3, a0
+    bra     0x484499e6
+    mov     (0x5003a5b4), a0
+    mov     (0x5003a564), d2
+    mov     (0x1c, a0), d0
+    add     d2, d0
+    mov     d0, a0
+    movhu   (0x20, sp), d2
+    asl     4, d2
+    add     d2, a0
+    ret     [d2,d3], 0x2c
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x049925, 0x04a000
+.incbin_range "baserom/kn7000_program.rom", 0x0499e9, 0x04a000
 # CustomFlashArchiveParse  (CPU 0x4844a000)
-.incbin_range "baserom/kn7000_program.rom", 0x04a000, 0x04ddf2
+.incbin_range "baserom/kn7000_program.rom", 0x04a000, 0x04a3d4
+# VoiceBankSourceFlagGet  (CPU 0x4844a3d4)
+    mov     d0, d1
+    extbu   d1
+    cmp     1, d1
+    blt     0x4844a3e9
+    mov     -1, d0
+    add     d1, d0
+    mov     0x501496b4, a0
+    movbu   (d0, a0), d0
+    cmp     4, d1
+    ble     0x4844a3ea
+    clr     d0
+    extbu   d0
+    retf    0, 0
+# VoiceBankSourceFlagStubB  (CPU 0x4844a3ee)
+    clr     d0
+    retf    0, 0
+# VoiceBankSourceFlagStubC  (CPU 0x4844a3f2)
+    clr     d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x04a3f6, 0x04a42f
+# CustomVoiceRecFetch  (CPU 0x4844a42f)
+    movm    [d2], (sp)
+    add     -0x14, sp
+# CustomVoiceRecFetch_entry:   (register-save `call` entry)
+    mov     d1, d2
+    call    func_4848463F, [d2], 0x10
+    cmp     0, a0
+    beq     0x4844a450
+    extbu   d2
+    mov     0x8e, d0
+    nop
+    nop
+    mulu    d0, d2
+    add     0x1a7, a0
+    add     d2, a0
+    bra     0x4844a477
+    extbu   d2
+    mov     d2, d1
+    asl2    d2
+    sub     d1, d2
+    mov     0x26, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, d1
+    call    func_4844952A, [d2,d3], 0x2c
+    mov     0x27, d0
+    add     a0, d0
+    add     d2, d0
+    mov     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    VoiceRecFetchBanked_entry, [d2,d3], 0x30
+    ret     [d2], 0x18
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x04a47a, 0x04abf7
+# UserVoiceRecPtr  (CPU 0x4844abf7)
+    mov     (0x501496b8), a0
+    extbu   d1
+    mov     0x8e, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x70f7, a0
+    add     d1, a0
+    rets
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x04ac0d, 0x04ddf2
 # GetCurrentChord  (CPU 0x4844ddf2)
 .incbin_range "baserom/kn7000_program.rom", 0x04ddf2, 0x04e9f1
 # GetChordToneList  (CPU 0x4844e9f1)
@@ -20869,7 +21065,941 @@ _rom_marker:
 # On3WaitEditCheck  (CPU 0x4856f8b4)
 .incbin_range "baserom/kn7000_program.rom", 0x16f8b4, 0x16f942
 # CheckChordDebugWindow  (CPU 0x4856f942)
-.incbin_range "baserom/kn7000_program.rom", 0x16f942, 0x172f46
+.incbin_range "baserom/kn7000_program.rom", 0x16f942, 0x170c41
+# VoiceParamBankClassify  (CPU 0x48570c41)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# VoiceParamBankClassify_entry:   (register-save `call` entry)
+    mov     a0, a3
+    mov     a1, (0x38, sp)
+    movbu   d0, (0x28, sp)
+    movbu   (0x30, sp), d0
+    mov     d1, d3
+    mov     d0, a2
+    cmp     0, a2
+    bne     0x48570c59
+    jmp     0x48570d6d
+    mov     1, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48570c95
+    movbu   (0x28, sp), d0
+    mov     d3, d2
+    extbu   d2
+    asl     8, d2
+    add     d0, d2
+    mov     a2, d1
+    asl     16, d1
+    add     d1, d2
+    mov     d2, d0
+    call    VoiceParamBankLookupSrc1_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570c95
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570c95
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     (0x38, sp), a0
+    mov     1, d0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x20
+    mov     2, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48570cd3
+    movbu   (0x28, sp), d1
+    mov     d3, d2
+    extbu   d2
+    asl     8, d2
+    add     d1, d2
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d2
+    mov     d2, d0
+    call    VoiceParamBankLookupSrc2_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570cd3
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570cd3
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     (0x38, sp), a0
+    mov     2, d0
+    movbu   d0, (a0)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+    mov     3, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48570d11
+    movbu   (0x28, sp), d0
+    mov     d3, d1
+    extbu   d1
+    asl     8, d1
+    add     d0, d1
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d1
+    mov     d1, d0
+    call    VoiceParamBankLookupSrc3_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570d11
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570d11
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     (0x38, sp), a0
+    mov     3, d0
+    movbu   d0, (a0)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+    mov     4, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48570d4f
+    movbu   (0x28, sp), d1
+    mov     d3, d2
+    extbu   d2
+    asl     8, d2
+    add     d1, d2
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d2
+    mov     d2, d0
+    call    VoiceParamBankLookupSrc4_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570d4f
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570d4f
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     (0x38, sp), a0
+    mov     4, d0
+    movbu   d0, (a0)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+    mov     d3, d0
+    extbu   d0
+    cmp     0x80, d0
+    blt     0x48570d6d
+    mov     0x7f7f, d0
+    call    VoiceParamBankLookupInternal_entry, [d2,d3,a2], 0x20
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     (0x38, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+    mov     (0x38, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    movbu   (0x28, sp), d2
+    extbu   d3
+    mov     d3, d1
+    asl     8, d1
+    add     d2, d1
+    mov     d1, d0
+    call    VoiceParamBankLookupInternal_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570d96
+    movhu   (a0), d1
+    btst    0x8000, d1
+    bne     0x48570d96
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+    cmp     0x80, d3
+    bge     0x48570de7
+    cmp     0x60, d2
+    bge     0x48570de7
+    mov     8, d1
+    mov     d3, d0
+    call    LibDiv32, 0, 0
+    asl     3, d0
+    extbu   d0
+    asl     8, d0
+    add     d2, d0
+    call    VoiceParamBankLookupInternal_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570dcb
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570dcb
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     1, d0
+    bra     0x48570df5
+    movbu   (0x28, sp), d0
+    call    VoiceParamBankLookupInternal_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48570de7
+    movhu   (a0), d0
+    btst    0x8000, d0
+    bne     0x48570de7
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     1, d0
+    bra     0x48570df5
+    mov     0x7f7f, d0
+    call    VoiceParamBankLookupInternal_entry, [d2,d3,a2], 0x20
+    movhu   (a0), d0
+    movhu   d0, (a3)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x20
+# VoiceParamBankLookupInternal  (CPU 0x48570df8)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceParamBankLookupInternal_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x48000018), d1
+    mov     0x18, a2
+    add     0x48000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x20, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x20, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceParamBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (8, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48570e66
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceParamBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48570e5d
+    mov     8, a0
+    add     a2, a0
+    bra     0x48570e68
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48570e49
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceParamBankLookupSrc1  (CPU 0x48570e6b)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceParamBankLookupSrc1_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x5700000c), d1
+    mov     0x18, a2
+    add     0x57000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x20, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x20, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceParamBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (8, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48570ed9
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceParamBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48570ed0
+    mov     8, a0
+    add     a2, a0
+    bra     0x48570edb
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48570ebc
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceParamBankLookupSrc2  (CPU 0x48570ede)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceParamBankLookupSrc2_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x5600000c), d1
+    mov     0x18, a2
+    add     0x56000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x20, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x20, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceParamBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (8, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48570f4c
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceParamBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48570f43
+    mov     8, a0
+    add     a2, a0
+    bra     0x48570f4e
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48570f2f
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceParamBankLookupSrc3  (CPU 0x48570f51)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceParamBankLookupSrc3_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x4100000c), d1
+    mov     0x18, a2
+    add     0x41000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x20, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x20, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceParamBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (8, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48570fbf
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceParamBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48570fb6
+    mov     8, a0
+    add     a2, a0
+    bra     0x48570fc1
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48570fa2
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceParamBankLookupSrc4  (CPU 0x48570fc4)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceParamBankLookupSrc4_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x4180000c), d1
+    mov     0x18, a2
+    add     0x41800000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x20, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x20, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceParamBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (8, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48571032
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceParamBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48571029
+    mov     8, a0
+    add     a2, a0
+    bra     0x48571034
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48571015
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceParamBankKeyEqual  (CPU 0x48571037)
+    cmp     d1, d0
+    bne     0x4857103e
+    mov     1, d0
+    bra     0x4857103f
+    clr     d0
+    retf    0, 0
+# VoiceParamBankHashIndex  (CPU 0x48571042)
+    movm    [d2], (sp)
+# VoiceParamBankHashIndex_entry:   (register-save `call` entry)
+    exthu   d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (0x14, sp), d2
+    clr     d1
+    mov     d1, mdr
+    divu    d2, d0
+    mov     mdr, d0
+    ret     [d2], 4
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x171056, 0x1713d6
+# VoiceBankClassify  (CPU 0x485713d6)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+# VoiceBankClassify_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, (0x30, sp)
+    movbu   d0, (0x24, sp)
+    movbu   (0x2c, sp), d0
+    mov     d1, d3
+    mov     d0, a2
+    cmp     0, a2
+    bne     0x485713ee
+    jmp     0x485714d9
+    mov     1, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48571422
+    movbu   (0x24, sp), d1
+    mov     d3, d2
+    extbu   d2
+    asl     8, d2
+    add     d1, d2
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d2
+    mov     d2, d0
+    call    VoiceBankLookupSrc1_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48571422
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     1, d0
+    movbu   d0, (a3)
+    ret     [d2,d3,a2,a3], 0x1c
+    mov     2, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x48571458
+    movbu   (0x24, sp), d0
+    mov     d3, d1
+    extbu   d1
+    asl     8, d1
+    add     d0, d1
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d1
+    mov     d1, d0
+    call    VoiceBankLookupSrc2_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x48571458
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     2, d0
+    movbu   d0, (a3)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x1c
+    mov     3, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x4857148e
+    movbu   (0x24, sp), d1
+    mov     d3, d2
+    extbu   d2
+    asl     8, d2
+    add     d1, d2
+    mov     a2, d0
+    asl     16, d0
+    add     d0, d2
+    mov     d2, d0
+    call    VoiceBankLookupSrc3_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x4857148e
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     3, d0
+    movbu   d0, (a3)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x1c
+    mov     4, d0
+    call    VoiceBankSourcePresent, 0, 0xc
+    exth    d0
+    cmp     0, d0
+    bne     0x485714c6
+    movbu   (0x24, sp), d0
+    extbu   d3
+    asl     8, d3
+    add     d0, d3
+    mov     a2, d0
+    asl     16, d0
+    mov     d0, a0
+    add     d3, a0
+    mov     a0, d0
+    call    VoiceBankLookupSrc4_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x485714c6
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     4, d0
+    movbu   d0, (a3)
+    mov     1, d0
+    bra     0x4857150a
+    clr     d0
+    call    VoiceBankLookupInternal_entry, [d2,d3,a2], 0x20
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    clr     d0
+    movbu   d0, (a3)
+    mov     1, d0
+    bra     0x4857150a
+    clr     d0
+    movbu   d0, (a3)
+    movbu   (0x24, sp), d0
+    extbu   d3
+    asl     8, d3
+    mov     d3, a0
+    add     d0, a0
+    mov     a0, d0
+    call    VoiceBankLookupInternal_entry, [d2,d3,a2], 0x20
+    cmp     0, a0
+    beq     0x485714fc
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     1, d0
+    bra     0x4857150a
+    clr     d0
+    call    VoiceBankLookupInternal_entry, [d2,d3,a2], 0x20
+    movhu   (a0), d0
+    mov     (0x30, sp), a0
+    movhu   d0, (a0)
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x1c
+# VoiceBankLookupInternal  (CPU 0x4857150d)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceBankLookupInternal_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x48000018), d1
+    mov     0x18, a2
+    add     0x48000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x24, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x24, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (0xc, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x4857157b
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48571572
+    mov     8, a0
+    add     a2, a0
+    bra     0x4857157d
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x4857155e
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceBankLookupSrc1  (CPU 0x48571580)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceBankLookupSrc1_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x5700000c), d1
+    mov     0x18, a2
+    add     0x57000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x24, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x24, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (0xc, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x485715ee
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x485715e5
+    mov     8, a0
+    add     a2, a0
+    bra     0x485715f0
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x485715d1
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceBankLookupSrc2  (CPU 0x485715f3)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceBankLookupSrc2_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x5600000c), d1
+    mov     0x18, a2
+    add     0x56000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x24, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x24, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (0xc, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48571661
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x48571658
+    mov     8, a0
+    add     a2, a0
+    bra     0x48571663
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x48571644
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceBankLookupSrc3  (CPU 0x48571666)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceBankLookupSrc3_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x4100000c), d1
+    mov     0x18, a2
+    add     0x41000000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x24, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x24, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (0xc, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x485716d4
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x485716cb
+    mov     8, a0
+    add     a2, a0
+    bra     0x485716d6
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x485716b7
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceBankLookupSrc4  (CPU 0x485716d9)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# VoiceBankLookupSrc4_entry:   (register-save `call` entry)
+    mov     d0, (0x28, sp)
+    mov     (0x4180000c), d1
+    mov     0x18, a2
+    add     0x41800000, d1
+    add     d1, a2
+    mov     (a2), a0
+    mov     d1, d3
+    add     d1, a0
+    mov     (0x24, a0), d0
+    add     d1, d0
+    mov     d0, a0
+    mov     (a2), d0
+    movhu   (a0), d2
+    add     d1, d0
+    mov     d0, a0
+    mov     (0x24, a0), a0
+    exthu   d2
+    add     d3, a0
+    movhu   (2, a0), d0
+    mov     d2, d1
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    VoiceBankHashIndex_entry, [d2], 4
+    mov     (a2), a0
+    asl2    d0
+    add     d3, a0
+    mov     (0xc, a0), d1
+    add     d3, d1
+    mov     d1, a0
+    mov     (d0, a0), d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    sub     d3, d0
+    beq     0x48571747
+    mov     (4, a2), d1
+    mov     (0x28, sp), d0
+    call    VoiceBankKeyEqual, 0, 0
+    cmp     0, d0
+    beq     0x4857173e
+    mov     8, a0
+    add     a2, a0
+    bra     0x48571749
+    mov     (a2), d0
+    add     d3, d0
+    mov     d0, a2
+    mov     a2, a0
+    sub     d3, a0
+    bne     0x4857172a
+    mov     0, a0
+    ret     [d2,d3,a2], 0x20
+# VoiceBankKeyEqual  (CPU 0x4857174c)
+    cmp     d1, d0
+    bne     0x48571753
+    mov     1, d0
+    bra     0x48571754
+    clr     d0
+    retf    0, 0
+# VoiceBankHashIndex  (CPU 0x48571757)
+    movm    [d2], (sp)
+# VoiceBankHashIndex_entry:   (register-save `call` entry)
+    exthu   d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (0x14, sp), d2
+    clr     d1
+    mov     d1, mdr
+    divu    d2, d0
+    mov     mdr, d0
+    ret     [d2], 4
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x17176b, 0x172f46
 # InitializeBlock34  (CPU 0x48572f46)
 .incbin_range "baserom/kn7000_program.rom", 0x172f46, 0x1736b7
 # AcIntTitleMenuSDProc  (CPU 0x485736b7)
@@ -30402,7 +31532,400 @@ display_palette:
     extbu   d0
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3c8d1d
+.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3c7db5
+# TgSoundEditFlag4DBit7Refresh  (lib CPU 0x4c00ede4)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00ee3e
+    cmp     0x12, d2
+    bgt     0x4c00ee3e
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00ee3e
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3cd, a0
+    add     d0, a0
+    movbu   (a0), d0
+    extbu   d3
+    and     0xffffff7f, d0
+    movbu   d0, (a0)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     0x500b5340, a1
+    movhu   (d0, a1), d2
+    mov     0x80, d1
+    and     0x80, d2
+    bne     0x4c00ee38
+    clr     d1
+    movbu   (a0), d0
+    or      d1, d0
+    movbu   d0, (a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag4DLowRefresh  (lib CPU 0x4c00ee41)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d2
+    cmp     0x10, d2
+    blt     0x4c00ee97
+    cmp     0x12, d2
+    bgt     0x4c00ee97
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00ee97
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    add     0x500c0784, d2
+    mov     0xffffd3cd, a0
+    add     d2, a0
+    movbu   (a0), d0
+    mov     -0x80, d3
+    and     d0, d3
+    movbu   d3, (a0)
+    movbu   (0x1c, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500b5340, d0
+    mov     d0, a1
+    movbu   (6, a1), d1
+    extbu   d3
+    exth    d1
+    or      d3, d1
+    movbu   d1, (a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag4EBit7Refresh  (lib CPU 0x4c00ee9a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00eef4
+    cmp     0x12, d2
+    bgt     0x4c00eef4
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00eef4
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3ce, a0
+    add     d0, a0
+    movbu   (a0), d0
+    extbu   d3
+    and     0xffffff7f, d0
+    movbu   d0, (a0)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     0x500b5340, a1
+    movhu   (d0, a1), d0
+    mov     0x80, d1
+    btst    0x02, d0
+    bne     0x4c00eeee
+    clr     d1
+    movbu   (a0), d0
+    or      d1, d0
+    movbu   d0, (a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag4ELowRefresh  (lib CPU 0x4c00eef7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00ef48
+    cmp     0x12, d2
+    bgt     0x4c00ef48
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00ef48
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3ce, a1
+    add     d0, a1
+    movbu   (a1), d0
+    mov     -0x80, d2
+    and     d0, d2
+    movbu   d2, (a1)
+    extbu   d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movbu   (0x15, a0), d1
+    extbu   d2
+    or      d1, d2
+    movbu   d2, (a1)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag4FBit7Refresh  (lib CPU 0x4c00ef4b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00efa5
+    cmp     0x12, d2
+    bgt     0x4c00efa5
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00efa5
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3cf, a0
+    add     d0, a0
+    movbu   (a0), d0
+    extbu   d3
+    and     0xffffff7f, d0
+    movbu   d0, (a0)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     0x500b5340, a1
+    movhu   (d0, a1), d0
+    mov     0x80, d1
+    btst    0x40, d0
+    bne     0x4c00ef9f
+    clr     d1
+    movbu   (a0), d0
+    or      d1, d0
+    movbu   d0, (a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag51Bit7Refresh  (lib CPU 0x4c00efa8)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0xc, sp
+    mov     d0, d2
+    extbu   d2
+    cmp     0x10, d2
+    bge     0x4c00efb6
+    ret     [d2,a2], 0x14
+    cmp     0x12, d2
+    ble     0x4c00efbd
+    ret     [d2,a2], 0x14
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    bne     0x4c00efcb
+    ret     [d2,a2], 0x14
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d2, d0
+    add     0x500c0784, d0
+    mov     0xffffd3d1, a2
+    add     d0, a2
+    movbu   (a2), d1
+    extbu   d2
+    and     0xffffff7f, d1
+    movbu   d1, (a2)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    mov     0x62, a1
+    add     a0, a1
+    movhu   (a1), d0
+    lsr     11, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c00f00f
+    cmp     3, d0
+    bne     0x4c00f02a
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c00f027
+    movhu   (a1), d0
+    btst    0xe000, d0
+    beq     0x4c00f027
+    movbu   (0x14, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c00f03c
+    clr     d0
+    bra     0x4c00f03c
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c00f03b
+    movhu   (a1), d1
+    mov     1, d0
+    btst    0xe000, d1
+    bne     0x4c00f03c
+    clr     d0
+    mov     0x80, d1
+    exthu   d0
+    cmp     0, d0
+    bne     0x4c00f045
+    clr     d1
+    movbu   (a2), d0
+    or      d1, d0
+    movbu   d0, (a2)
+    ret     [d2,a2], 0x14
+.mnbase 0x48400000
+# TgSoundEditFlag51LowRefresh  (lib CPU 0x4c00f04e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00f09f
+    cmp     0x12, d2
+    bgt     0x4c00f09f
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00f09f
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     0x500c0784, d0
+    add     d2, d0
+    mov     0xffffd3d1, a1
+    add     d0, a1
+    movbu   (a1), d0
+    mov     -0x80, d2
+    and     d0, d2
+    movbu   d2, (a1)
+    extbu   d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movbu   (0xe, a0), d1
+    extbu   d2
+    or      d1, d2
+    movbu   d2, (a1)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditByte52Refresh  (lib CPU 0x4c00f0a2)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00f0e3
+    cmp     0x12, d2
+    bgt     0x4c00f0e3
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00f0e3
+    extbu   d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     0x500b5340, d0
+    mov     d0, a0
+    movbu   (0xf, a0), d1
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d2, d0
+    mov     d0, a0
+    add     0x500c0784, a0
+    movbu   d1, (-0x2c2e, a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgSoundEditByte53Refresh  (lib CPU 0x4c00f0e6)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+    mov     d0, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x10, d2
+    blt     0x4c00f127
+    cmp     0x12, d2
+    bgt     0x4c00f127
+    mov     d2, d0
+    call    TgPartLocalEditActive, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c00f127
+    extbu   d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     0x500b5340, d0
+    mov     d0, a0
+    movbu   (0x14, a0), d1
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d2, d0
+    mov     d0, a0
+    add     0x500c0784, a0
+    movbu   d1, (-0x2c2d, a0)
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c80fb, 0x3c8d1d
 # TgZoneParamClamp  (lib CPU 0x4c00fd4c)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3], (sp)
@@ -34543,7 +36066,7 @@ display_palette:
     mov     sp, a1
     add     0x1c, a1
     mov     d3, d1
-    call    func_48570C46, [d2,d3,a2,a3], 0x20
+    call    VoiceParamBankClassify_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x1c, sp), d0
     cmp     0, d0
     bne     0x4c02c1af
@@ -43690,7 +45213,7 @@ display_palette:
     add     0x34, a0
     mov     0x18, a1
     add     a2, a1
-    call    func_48570C46, [d2,d3,a2,a3], 0x20
+    call    VoiceParamBankClassify_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x54, sp), d2
     mov     d2, d0
     call    TgPartToneDescPtr, 0, 0
@@ -43975,7 +45498,7 @@ display_palette:
     mov     sp, a0
     add     0x38, a0
     mov     d2, d0
-    call    func_48570C46, [d2,d3,a2,a3], 0x20
+    call    VoiceParamBankClassify_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x58, sp), d2
     mov     d2, d0
     call    TgPartToneDescPtr, 0, 0
@@ -46030,7 +47553,7 @@ display_palette:
     mov     d1, a0
     movbu   (a0), d1
     mov     d2, (0x10, sp)
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     a0, (0x2c, sp)
     mov     d3, a0
     mov     8, d0
@@ -46062,7 +47585,7 @@ display_palette:
     extbu   d0
     mov     sp, a0
     add     0x3c, a0
-    call    func_48570C46, [d2,d3,a2,a3], 0x20
+    call    VoiceParamBankClassify_entry, [d2,d3,a2,a3], 0x20
     mov     (0x34, sp), d0
     mov     d3, a0
     mov     d0, (0x38, a0)
@@ -49842,12 +51365,12 @@ display_palette:
     movbu   (6, a0), d0
     extbu   d2
     mov     d2, d1
-    call    func_4844ABF7, 0, 0
+    call    UserVoiceRecPtr, 0, 0
     bra     0x4c03858a
     movbu   (6, a0), d0
     extbu   d2
     mov     d2, d1
-    call    0x4844a434, [d2], 0x18
+    call    CustomVoiceRecFetch_entry, [d2], 0x18
     bra     0x4c03858a
     movbu   (0x30, sp), d1
     mov     d1, (0x10, sp)
@@ -50547,7 +52070,7 @@ display_palette:
     movbu   (a2), d0
     mov     d1, (0x10, sp)
     mov     d3, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x20, sp), a1
     mov     a3, d2
     mov     a0, (8, a1)
@@ -50613,7 +52136,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x1c, sp), a1
     mov     a2, d0
     asl2    d0
@@ -50838,7 +52361,7 @@ display_palette:
     movbu   (a2), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x20, sp), a1
     mov     a3, d2
     mov     a0, (8, a1)
@@ -50904,7 +52427,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x1c, sp), a1
     mov     a2, d0
     asl2    d0
@@ -51119,7 +52642,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x1c, sp), a1
     mov     a2, d0
     asl2    d0
@@ -51193,7 +52716,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x1c, sp), a1
     mov     a2, d0
     asl2    d0
@@ -51425,7 +52948,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     (0x1c, sp), a1
     mov     a2, d0
     asl2    d0
@@ -51520,7 +53043,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     a2, d0
     asl2    d0
     mov     a0, (d0, a3)
@@ -51634,7 +53157,7 @@ display_palette:
     movbu   (a0), d0
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    0x4844992a, [d2,d3], 0x2c
+    call    VoiceParamRecFetchBanked_entry, [d2,d3], 0x2c
     mov     a2, d0
     asl2    d0
     mov     a0, (d0, a3)
