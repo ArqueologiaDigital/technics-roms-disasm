@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 711 synthetic labels for internal helpers called by converted code
+# 719 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -420,6 +420,14 @@ _rom_marker:
 .equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
+.equ TgPartGlobalChanRefresh_entry, 0x4C004DE9
+.equ TgGlobalChan6Refresh_entry, 0x4C0050E3
+.equ TgGlobalChan7Refresh_entry, 0x4C005246
+.equ TgGlobalChanBRefresh_entry, 0x4C005399
+.equ TgGlobalChan3Refresh_entry, 0x4C005431
+.equ TgGlobalChan5Refresh_entry, 0x4C0054A8
+.equ TgGlobalChan1Refresh_entry, 0x4C005538
+.equ TgGlobalChanCRefresh_entry, 0x4C005596
 .equ TgPartModRouteMaskSet, 0x4C005673
 .equ TgModValueScale1_entry, 0x4C005733
 .equ TgModValueScale2_entry, 0x4C005769
@@ -28370,7 +28378,864 @@ display_palette:
     exth    d0
     jmp     LibI32ToF64
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3be644
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3bddb5
+# TgPartGlobalChanRefresh  (lib CPU 0x4c004de4)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+# TgPartGlobalChanRefresh_entry:   (register-save `call` entry)
+    mov     0x54c, d2
+    mov     d0, d1
+    extbu   d0
+    nop
+    nop
+    mulu    d2, d0
+    add     0x500b5340, d0
+    mov     d0, (0x20, sp)
+    add     0x62, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0x486d109a, a0
+    lsr     8, d0
+    and     0x07, d0
+    exthu   d0
+    movbu   (d0, a0), d2
+    mov     (0x1c, sp), a0
+    movbu   d2, (0x2a, sp)
+    movhu   (a0), d0
+    mov     0x486d1094, a0
+    lsr     13, d0
+    and     0x07, d0
+    exthu   d0
+    movbu   (d0, a0), d2
+    mov     d2, d0
+    extbu   d0
+    cmp     8, d0
+    bne     0x4c004e30
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     d2, d0
+    extbu   d0
+    mov     0x500c076c, a0
+    movbu   (d0, a0), d0
+    cmp     0, d0
+    beq     0x4c004e4e
+    clr     d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     d0, d1
+    mov     d2, d0
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    ret     [d2,d3,a2,a3], 0x3c
+    extbu   d1
+    mov     d1, (0x24, sp)
+    movbu   (0x24, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    mov     0x62, a1
+    add     a0, a1
+    movhu   (a1), d1
+    lsr     11, d1
+    and     0x03, d1
+    exthu   d1
+    cmp     0, d1
+    beq     0x4c004e78
+    cmp     3, d1
+    bne     0x4c004e97
+    movhu   (a0), d1
+    mov     8, d0
+    mov     d0, (0x18, sp)
+    btst    0x08, d1
+    beq     0x4c004e94
+    movhu   (a1), d1
+    btst    0xe000, d1
+    beq     0x4c004e94
+    movbu   (0x14, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c004ead
+    clr     d0
+    bra     0x4c004ead
+    movhu   (a0), d1
+    mov     8, d0
+    mov     d0, (0x18, sp)
+    btst    0x08, d1
+    beq     0x4c004eac
+    movhu   (a1), d1
+    mov     1, d0
+    btst    0xe000, d1
+    bne     0x4c004ead
+    clr     d0
+    exthu   d0
+    cmp     0, d0
+    bne     0x4c004eb5
+    jmp     0x4c005083
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    lsr     11, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c004ed0
+    cmp     3, d0
+    beq     0x4c004ee6
+    cmp     1, d0
+    beq     0x4c004f05
+    cmp     2, d0
+    beq     0x4c004f17
+    mov     (0x20, sp), a0
+    extbu   d2
+    movbu   (0x14, a0), d0
+    mov     d2, a2
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    mov     0x50, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    bra     0x4c004f27
+    mov     (0x20, sp), a0
+    extbu   d2
+    add     0x14, a0
+    movbu   (a0), d0
+    mov     d2, a2
+    mov     0x50000050, a1
+    movbu   (d0, a1), d1
+    movbu   (a0), d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    bra     0x4c004f27
+    extbu   d2
+    mov     d2, a2
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    bra     0x4c004f27
+    extbu   d2
+    mov     d2, a2
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     (0x20, sp), a3
+    mov     0x200, d2
+    inc4    a3
+    movhu   (a3), d0
+    and     d2, d0
+    bne     0x4c004f36
+    jmp     0x4c005023
+    movbu   (0x24, sp), d0
+    cmp     0x13, d0
+    blt     0x4c004f72
+    cmp     0x1a, d0
+    bgt     0x4c004f72
+    movhu   (0x500c0758), d0
+    btst    0x0800, d0
+    beq     0x4c004f6f
+    movbu   (0x24, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movhu   (a0), d0
+    btst    0x04, d0
+    beq     0x4c004f6f
+    movbu   (0x16, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c004f95
+    clr     d0
+    bra     0x4c004f95
+    movbu   (0x24, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movhu   (a0), d0
+    btst    0x04, d0
+    beq     0x4c004f94
+    movbu   (0x16, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c004f95
+    clr     d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c004ff7
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    lsr     6, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c004fb1
+    cmp     1, d0
+    beq     0x4c004fd4
+    cmp     2, d0
+    beq     0x4c004fea
+    mov     (0x24, sp), d0
+    call    TgPartModRetrigger_entry, [d2,d3,a2,a3], 0x28
+    mov     (0x20, sp), a0
+    mov     d0, d3
+    movbu   (0x16, a0), d0
+    mov     5, a0
+    movbu   d0, (0x29, sp)
+    movhu   (a3), d0
+    and     d2, d0
+    bne     0x4c004fcd
+    mov     (0x18, sp), a0
+    mov     a0, d0
+    movbu   d0, (0x28, sp)
+    bra     0x4c005014
+    mov     (0x24, sp), d0
+    call    TgPartModRetrigger_entry, [d2,d3,a2,a3], 0x28
+    mov     d0, d3
+    mov     0x7f, d0
+    movbu   d0, (0x29, sp)
+    mov     8, d0
+    movbu   d0, (0x28, sp)
+    bra     0x4c005014
+    clr     d3
+    mov     0x7f, d0
+    movbu   d0, (0x29, sp)
+    mov     8, d0
+    movbu   d0, (0x28, sp)
+    bra     0x4c005014
+    mov     (0x24, sp), d0
+    call    TgPartModRetrigger_entry, [d2,d3,a2,a3], 0x28
+    mov     d0, d3
+    clr     d0
+    movbu   d0, (0x29, sp)
+    movhu   (a3), d0
+    mov     5, a0
+    and     d2, d0
+    bne     0x4c00500f
+    mov     (0x18, sp), a0
+    mov     a0, d0
+    movbu   d0, (0x28, sp)
+    mov     (0x20, sp), a0
+    movhu   (a0), d1
+    movbu   (0x15, a0), d2
+    btst    0x02, d1
+    bne     0x4c00502d
+    clr     d2
+    bra     0x4c00502d
+    clr     d3
+    mov     d3, d2
+    movbu   d2, (0x29, sp)
+    mov     8, d0
+    movbu   d0, (0x28, sp)
+    extbu   d3
+    mov     a2, d0
+    mov     d3, d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     a2, d0
+    extbu   d2
+    mov     d2, d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    movbu   (0x29, sp), d0
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    movbu   (0x2a, sp), d1
+    call    TgChanEgSeg2Set_entry, [d2,d3], 0x1c
+    movbu   (0x28, sp), d2
+    cmp     8, d2
+    bne     0x4c005067
+    mov     a2, d0
+    clr     d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    bra     0x4c0050db
+    mov     (0x24, sp), d0
+    call    TgPartFadeRatePick, 0, 0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     0x50, d0
+    mov     d0, (0x14, sp)
+    mov     a2, d0
+    mov     d2, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c0050db
+    extbu   d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     d2, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     d2, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    clr     d0
+    mov     d0, (0x10, sp)
+    movbu   (0x2a, sp), d1
+    mov     d2, d0
+    call    TgChanEgSeg2Set_entry, [d2,d3], 0x1c
+    mov     (0x20, sp), a0
+    mov     5, a2
+    movhu   (4, a0), d0
+    btst    0x0200, d0
+    bne     0x4c0050c0
+    mov     (0x18, sp), a2
+    mov     (0x24, sp), d0
+    call    TgPartFadeRatePick, 0, 0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     0x50, d0
+    mov     d0, (0x14, sp)
+    mov     a2, d1
+    extbu   d1
+    mov     d2, d0
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     [d2,d3,a2,a3], 0x3c
+.mnbase 0x48400000
+# TgGlobalChan6Refresh  (lib CPU 0x4c0050de)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x18, sp
+# TgGlobalChan6Refresh_entry:   (register-save `call` entry)
+    movbu   (0x500082bd), d0
+    cmp     0, d0
+    beq     0x4c0050f0
+    jmp     0x4c00519f
+    clr     d2
+    clr     d1
+    setlb
+    mov     d2, d0
+    extbu   d0
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a0
+    add     0x500b5340, a0
+    movhu   (0x62, a0), d0
+    and     0x0700, d0
+    cmp     0x100, d0
+    beq     0x4c005118
+    mov     d1, d2
+    inc     d2
+    mov     d2, d1
+    extbu   d1
+    cmp     0x22, d1
+    llt
+    cmp     0x22, d1
+    bge     0x4c00518f
+    movbu   (0x500c0772), d0
+    cmp     0, d0
+    bne     0x4c00518f
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     6, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    extbu   d2
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     0x500b5340, d0
+    mov     d0, a0
+    movhu   (0x62, a0), d1
+    mov     0x7f, d2
+    lsr     6, d1
+    mov     3, d0
+    and     d1, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c005157
+    mov     0x50, d2
+    mov     6, d0
+    movbu   (0x500082bf), d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     d2, (0x14, sp)
+    mov     6, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     [d2,d3], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     6, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    ret     [d2,d3], 0x20
+    cmp     1, d0
+    beq     0x4c0051a6
+    ret     [d2,d3], 0x20
+    movbu   (0x500c0772), d0
+    cmp     0, d0
+    bne     0x4c005209
+    clr     d1
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     6, d0
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    movhu   (0x500c0758), d0
+    btst    0x1000, d0
+    beq     0x4c0051d4
+    movbu   (0x500082bf), d2
+    mov     0x7f, d3
+    bra     0x4c0051d6
+    clr     d2
+    mov     d2, d3
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    extbu   d2
+    mov     d2, d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    extbu   d3
+    mov     d3, (0x14, sp)
+    mov     6, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c00523e
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     6, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     6, d0
+    clr     d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    ret     [d2,d3], 0x20
+.mnbase 0x48400000
+# TgGlobalChan7Refresh  (lib CPU 0x4c005241)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+# TgGlobalChan7Refresh_entry:   (register-save `call` entry)
+    movhu   (0x500c0758), d0
+    mov     0x800, d3
+    mov     d0, a1
+    and     d3, d0
+    bne     0x4c005258
+    ret     [d2,d3], 0x24
+    clr     d2
+    clr     d1
+    setlb
+    mov     d2, d0
+    extbu   d0
+    mov     d3, (0x18, sp)
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a0
+    add     0x500b5340, a0
+    movhu   (0x62, a0), d0
+    mov     (0x18, sp), d3
+    and     0x0700, d0
+    cmp     0x200, d0
+    beq     0x4c005284
+    mov     d1, d2
+    inc     d2
+    mov     d2, d1
+    extbu   d1
+    cmp     0x22, d1
+    llt
+    cmp     0x22, d1
+    blt     0x4c00528b
+    ret     [d2,d3], 0x24
+    mov     d1, d0
+    extbu   d0
+    cmp     0x13, d0
+    blt     0x4c0052be
+    cmp     0x1a, d0
+    bgt     0x4c0052be
+    mov     a1, d0
+    and     d3, d0
+    beq     0x4c0052bb
+    extbu   d1
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     0x500b5340, a0
+    movhu   (a0), d0
+    btst    0x04, d0
+    beq     0x4c0052bb
+    movbu   (0x16, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c0052df
+    clr     d0
+    bra     0x4c0052df
+    extbu   d1
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     0x500b5340, a0
+    movhu   (a0), d0
+    btst    0x04, d0
+    beq     0x4c0052de
+    movbu   (0x16, a0), d1
+    mov     1, d0
+    cmp     0, d1
+    bne     0x4c0052df
+    clr     d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c005355
+    movbu   (0x500c0773), d0
+    cmp     0, d0
+    bne     0x4c005355
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     7, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    extbu   d2
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d2
+    mov     d2, a0
+    add     0x500b5340, a0
+    movhu   (0x62, a0), d0
+    mov     0x7f, d2
+    lsr     6, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c00531e
+    mov     0x50, d2
+    mov     7, d0
+    movbu   (0x500082c0), d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     7, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     7, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     d2, (0x14, sp)
+    mov     7, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c005393
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     7, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     7, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     7, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     7, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     7, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     [d2,d3], 0x24
+.mnbase 0x48400000
+# TgGlobalChanBRefresh  (lib CPU 0x4c005396)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x18, sp
+# TgGlobalChanBRefresh_entry:   (register-save `call` entry)
+    movbu   (0x500c0777), d0
+    cmp     0, d0
+    bne     0x4c0053f7
+    clr     d1
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     0xb, d0
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    movhu   (0x500c0758), d0
+    btst    0x0200, d0
+    beq     0x4c0053ce
+    mov     0xb, d0
+    movbu   (0x500082be), d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    bra     0x4c0053d8
+    mov     0xb, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xb, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    mov     0x50, d0
+    mov     d0, (0x14, sp)
+    mov     0xb, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c00542b
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0xb, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     0xb, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xb, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     0xb, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     0, 0x18
+.mnbase 0x48400000
+# TgGlobalChan3Refresh  (lib CPU 0x4c00542e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x18, sp
+# TgGlobalChan3Refresh_entry:   (register-save `call` entry)
+    movhu   (0x500c0758), d0
+    btst    0x0200, d0
+    beq     0x4c005478
+    movbu   (0x500c076f), d0
+    cmp     0, d0
+    bne     0x4c005478
+    clr     d1
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     3, d0
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     3, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    movbu   (0x500082b2), d0
+    mov     5, d1
+    mov     d0, (0x14, sp)
+    mov     3, d0
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c0054a2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     3, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     3, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     3, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     0, 0x18
+.mnbase 0x48400000
+# TgGlobalChan5Refresh  (lib CPU 0x4c0054a5)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x18, sp
+# TgGlobalChan5Refresh_entry:   (register-save `call` entry)
+    movbu   (0x500c0771), d0
+    cmp     0, d0
+    bne     0x4c0054f1
+    movhu   (0x500c0758), d0
+    btst    0x4000, d0
+    beq     0x4c0054ce
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     5, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    bra     0x4c0054dc
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     5, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d0
+    mov     d0, (0x14, sp)
+    mov     5, d0
+    mov     0xc, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c005532
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     5, d0
+    mov     0x7f, d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    movhu   (0x500c0758), d0
+    btst    0x4000, d0
+    beq     0x4c00551f
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     5, d0
+    mov     0xc, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c005532
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d0
+    mov     d0, (0x14, sp)
+    mov     5, d0
+    mov     0xc, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     0, 0x18
+.mnbase 0x48400000
+# TgGlobalChan1Refresh  (lib CPU 0x4c005535)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x18, sp
+# TgGlobalChan1Refresh_entry:   (register-save `call` entry)
+    movhu   (0x500c0758), d0
+    btst    0x2000, d0
+    beq     0x4c005571
+    movbu   (0x500c076d), d0
+    cmp     0, d0
+    bne     0x4c005571
+    mov     0x7f, d0
+    mov     d0, (0x10, sp)
+    mov     1, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d0
+    mov     d0, (0x14, sp)
+    mov     1, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    bra     0x4c005590
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     1, d0
+    clr     d1
+    call    TgChanOutLevelPairSet_entry, [d2,d3], 0x1c
+    mov     8, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     1, d0
+    mov     5, d1
+    call    TgChanEgSeg3Set_entry, [d2,d3], 0x1c
+    ret     0, 0x18
+.mnbase 0x48400000
+# TgGlobalChanCRefresh  (lib CPU 0x4c005593)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x10, sp
+# TgGlobalChanCRefresh_entry:   (register-save `call` entry)
+    movhu   (0x500082c4), d0
+    exth    d0
+    cmp     1, d0
+    beq     0x4c0055a4
+    jmp     0x4c00563f
+    movhu   (0x500c0758), d0
+    btst    0x1000, d0
+    beq     0x4c005613
+    movbu   (0x500082bc), d0
+    cmp     0, d0
+    bne     0x4c0055e8
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    ret     0, 0x10
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    bra     0x4c00566b
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    mov     0x2d, d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    bra     0x4c00566b
+    cmp     0, d0
+    bne     0x4c00566b
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg0LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg1LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg2LevelSet_entry, [d2], 0x18
+    mov     0xc, d0
+    clr     d1
+    call    TgChanEgSeg3LevelSet_entry, [d2,d3], 0x1c
+    ret     0, 0x10
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3be63f, 0x3be644
 # TgPartModRouteMaskSet  (lib CPU 0x4c005673)
 #   THE ROUTE/SIGN MASK WRITER of the mod matrix: (d0 part, d1 src,
 #   stack mask/setbits/clrbits) walks the 12 destinations, and for

@@ -670,6 +670,18 @@ LIB_CONVERT = {
     "TgPartCtrlSenseKit": (0x4C013497, 0x4C013542),
     "TgPartCtrlSenseElem": (0x4C030896, 0x4C03099F),
     "TgPartCtrlSenseMelodic": (0x4C033C0A, 0x4C033CAE),
+    # ---- the GLOBAL EFFECT-CHANNEL REFRESHERS: the caller layer above the
+    #      output-channel register file 0x4C037D0F.., re-run by the effect
+    #      ENABLE setters at 0x4C00908F+ (per-part-effect-application.md,
+    #      reverb-toggle-findings.md) ------------------------------------
+    "TgPartGlobalChanRefresh": (0x4C004DE4, 0x4C0050DE),
+    "TgGlobalChan6Refresh": (0x4C0050DE, 0x4C005241),
+    "TgGlobalChan7Refresh": (0x4C005241, 0x4C005396),
+    "TgGlobalChanBRefresh": (0x4C005396, 0x4C00542E),
+    "TgGlobalChan3Refresh": (0x4C00542E, 0x4C0054A5),
+    "TgGlobalChan5Refresh": (0x4C0054A5, 0x4C005535),
+    "TgGlobalChan1Refresh": (0x4C005535, 0x4C005593),
+    "TgGlobalChanCRefresh": (0x4C005593, 0x4C00566E),
 }
 
 # Reverse-engineering facts emitted as comments under the function headers.

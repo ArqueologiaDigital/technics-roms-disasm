@@ -1802,3 +1802,35 @@
 0x48449EF4  VoiceArchiveScanBoot       ; validates the four expansion voice-archive windows 0x57000000 / 0x56000000 / 0x41000000 / 0x41800000 at boot, one near-identical block each: header self-check (*(base)+base == base+0x200), then TWO 16-byte signature compares against "Expansion Board " (0x485B8518) at *(base+4) and *(base+8). On success the presence byte 0x501496B4+n is set to 1, the archive ID *(base + *(base)) is cached at 0x501496A4+n*4, and the five parallel descriptor arrays 0x5003A554/68/7C/90/A4 (index 0 = INTERNAL, from table ROM *(0x48000018)) get slot n+1 from the directory base + *(base+0x0C); on failure everything aliases the internal bank. See kn7000_mame/notes/sound-bank-classes.md
 0x48449EF6  VoiceArchiveScanBoot_entry
 0x485B8518  ExpansionBoardSigStrings   ; "Expansion Board KN7000 SOUND RAM" then "KN6000 SOUND RAM" / "KN5000 SOUND R..." -- only the first 16 bytes ("Expansion Board ") are compared by VoiceArchiveScanBoot
+
+; ---- the GLOBAL EFFECT-CHANNEL REFRESHERS (lib 0x4C004DE4..0x4C00566E) -------
+; The CALLER layer above the output-channel register file documented at
+; 0x4C037D0F..: each of these programs one of the thirteen TG global output
+; channels (EG segments 0..3 + the output-level pair) from the current part
+; settings 0x500B5340+part*0x54C and the global effect-enable halfword
+; 0x500C0758. Seven of them own ONE fixed channel and are (re)run by the
+; effect ENABLE setters at lib 0x4C00908F+ when a panel effect is toggled
+; (kn7000_mame/notes/per-part-effect-application.md, reverb-toggle-findings.md
+; -- 0x4C0053B3 / 0x4C005433 are named there as the "lib consumers" of the
+; reverb flag). The scan pattern is uniform: walk parts 0..0x21 for the first
+; whose partrec+0x62 bits 10..8 select this channel, then either program the
+; channel from that part or mute it (output-level pair := 0).
+; DELIBERATELY NOT CLAIMED: which panel effect each fixed channel IS. The
+; enable bits are known only positionally (bit9 = reverb, per the MAME notes);
+; bits 0x0200/0x0800/0x1000/0x2000/0x4000 are used here but not identified.
+0x4C004DE4  TgPartGlobalChanRefresh ; (d0 part) programs the GLOBAL CHANNEL the part is routed to: channel = partrec+0x62 bits 10..8 through ROM 0x486D109A (8 = none -> return), a second ROM map 0x486D1094 on bits 15..13 and the gate table 0x500C076C decide whether the channel is muted (TgChanOutLevelPairSet 0,0) or fully programmed; the same inputs TgVoiceFadeParamsPlan uses for the per-voice auto-fade
+0x4C004DE9  TgPartGlobalChanRefresh_entry
+0x4C0050DE  TgGlobalChan6Refresh    ; global channel 6: first part with (partrec+0x62 & 0x0700) == 0x100, gated on the byte 0x500C0772 and on 0x500082BD; EG seg0 level from 0x500082BF, output pair 0x7F/(0x7F or 0x50 by +0x62 bits 7..6); no candidate -> pair := 0
+0x4C0050E3  TgGlobalChan6Refresh_entry
+0x4C005241  TgGlobalChan7Refresh    ; global channel 7: gated on 0x500C0758 bit 0x0800, first part with (partrec+0x62 & 0x0700) == 0x200; the rhythm/accomp parts 0x13..0x1A take a second path with its own flag test; EG seg0 level from 0x500082C0
+0x4C005246  TgGlobalChan7Refresh_entry
+0x4C005396  TgGlobalChanBRefresh    ; global channel 0x0B, gated on the byte 0x500C0777 and the flags 0x500C0758
+0x4C005399  TgGlobalChanBRefresh_entry
+0x4C00542E  TgGlobalChan3Refresh    ; global channel 3, gated on 0x500C0758 bit 0x0200 and the byte 0x500C076F
+0x4C005431  TgGlobalChan3Refresh_entry
+0x4C0054A5  TgGlobalChan5Refresh    ; global channel 5, gated on the byte 0x500C0771 and 0x500C0758 bit 0x4000
+0x4C0054A8  TgGlobalChan5Refresh_entry
+0x4C005535  TgGlobalChan1Refresh    ; global channel 1, gated on 0x500C0758 bit 0x2000 and the byte 0x500C076D
+0x4C005538  TgGlobalChan1Refresh_entry
+0x4C005593  TgGlobalChanCRefresh    ; global channel 0x0C, gated on 0x500082C4 == 1 (a DIGITAL DRAWBAR global, cf. the drawbar record 0x500082C8+part*0x1C) and 0x500C0758 bit 0x1000; the byte 0x500082BC picks between two full EG programmings (rate 0x2D vs 0)
+0x4C005596  TgGlobalChanCRefresh_entry
