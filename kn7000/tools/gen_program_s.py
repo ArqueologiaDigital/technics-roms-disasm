@@ -228,6 +228,24 @@ CONVERT = {
     "SoundEditRefSet", "SoundEditRefInvalidatePost",
     "VoiceBankIdToAlias", "VoiceBankIdFromAlias",
     "VoiceBankIdSource1", "VoiceBankIdSource2",
+    # ---- BIG-ENDIAN FIELD PRIMITIVES + the "TCMP" STYLE CONTAINER ----------
+    #      (kn7000_manual.sym sections of the same names). The MEMORY source
+    #      (RAM 0x50180000, N=3 styles) and the CUSTOM source (flash block,
+    #      N=1) are the SAME container format; these are the two style paths
+    #      that work without the undumped rhythm flash.
+    "LoadU24BE", "StoreU24BE", "LoadU16BE", "StoreU16BE", "SumU16BE",
+    "MemStyleAllocOffsetGet", "MemStyleAllocPtrGet", "MemStyleAllocPtrSet",
+    "MemStyleAllocFits", "MemStyleAreaBase", "MemStyleRecPtr",
+    "MemStyleVarRecPtr", "MemStyleRecData", "MemStyleVarRecData",
+    "MemStyleVarRecDataSet", "MemStyleRecPtrAt", "MemStyleVarRecPtrAt",
+    "MemStyleRecDataAt", "MemStyleVarRecDataAt",
+    "MemStyleAreaChecksumVerify", "MemStyleAreaChecksumInit",
+    "MemStyleAreaSignatureVerify", "MemStyleAreaStreamsVerify",
+    "MemStyleModuleReset", "MemStyleVarBarCount",
+    "CustStyleRecPtr", "CustStyleVarRecPtr", "CustStyleRecData",
+    "CustStyleVarRecData",
+    "CustomStyleIndexFromParam", "CustomStyleBlockFetch",
+    "CustomStyleBlockFetchCur", "CustomSoundEditRecFetch",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -255,6 +273,11 @@ FUNC_END = {
     "VoiceListMapHashIndex": 0x172607,     # next (unnamed) function at 0x48572607
     "StyleBuiltinNameResolve": 0x33C1E,    # next (unnamed) function at 0x48433C1E
     "TableRomOneStub": 0x3D834,            # next (unnamed) function at 0x4843D834
+    "SumU16BE": 0x403CD,                   # next function RhySysexLen at 0x484403CD
+    "MemStyleModuleReset": 0x358A9,        # next (unnamed) function at 0x484358A9
+    "MemStyleVarBarCount": 0x3C463,        # next (unnamed) function at 0x4843C463
+    "CustStyleVarRecData": 0x3E14E,        # next (unnamed) function at 0x4843E14E
+    "CustomSoundEditRecFetch": 0x8463A,    # next (unnamed) function at 0x4848463A
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live
@@ -776,6 +799,49 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "SumU16BE": (
+        "SumU16BE(a0 = base, d0 = count) -> the u16 sum of `count` BIG-endian",
+        "halfwords. The checksum every \"TCMP\" style container carries at +6;",
+        "also used by StyleResourceVerify on a probed resource window.",
+    ),
+    "MemStyleAreaBase": (
+        "MEM_STYLE_AREA = 0x50180000, 0x25800 bytes: the MEMORY (user) style",
+        "container. Its header is the same \"TCMP\" layout the table ROM's",
+        "segment 2 carries; ROM template at 0x487312E8. Layout:",
+        "  +0x00 \"TCMP\"  +0x04 00 00  +0x06 u16BE checksum",
+        "  +0x08 u24BE checksum start (0x70)  +0x0B u24BE length (0x1B00 HALFwords)",
+        "  +0x13 u24BE bump-allocator top",
+        "  +0x70   N style records,        stride 0x80   (N = 3)",
+        "  +0x1F0  N*20 variation records, stride 0xE0   (60)",
+        "  +0x3670 event-stream heap, up to 0x25800",
+        "The CUSTOM container (CustStyleRecPtr / CustStyleVarRecPtr) is the",
+        "IDENTICAL format with N = 1 -- records at +0x70, variations at +0xF0,",
+        "i.e. 0x70 + N*0x80 in both. See kn7000_manual.sym and",
+        "kn7000_mame/notes/style-name-build.md.",
+    ),
+    "MemStyleVarRecPtr": (
+        "(d0 = variation 0..0x3B) -> the 0xE0-byte variation record. Record",
+        "fields used elsewhere: +0x00 kind, +0x01 u24BE stream length,",
+        "+0x04.. the stream (starts 0xF4, ends 0xF5), +0x10/+0x11 bar/segment",
+        "counts (MemStyleVarBarCount), +0x15 u24BE stream offset in the container.",
+    ),
+    "MemStyleAreaStreamsVerify": (
+        "The MEMORY container's structural self-check, and the clearest",
+        "statement of the pattern-stream grammar: per variation the stream must",
+        "open with a 0xF4 bar marker, close with 0xF5, and contain exactly",
+        "MemStyleVarBarCount 0xF4 markers -- walked with RhySysexLen for 0xF0",
+        "SysEx and RhyEventLenByStatus for channel events, bytes < 0x80 stepping",
+        "one at a time (running status).",
+    ),
+    "CustomStyleBlockFetch": (
+        "The CUSTOM style source. The custom flash bank is at 0x96820000,",
+        "RAM-shadowed at 0x5037A000 (0x6000 words written back through",
+        "FlashProgram128Words); *(0x50001298) is the module status halfword,",
+        "-1 = absent, and 0x96820002 + slot*2 is the 20-entry slot descriptor",
+        "array. So MEMORY and CUSTOM are the two style sources that need NO",
+        "rhythm-flash dump -- unlike the built-in source, which does",
+        "(StyleResourceWindowProbe / notes/rhythm-name-list-bug.md).",
+    ),
     "VoiceDirRemapFind": [
         "★ the first of FIVE more MILK open-hash VOICE DIRECTORIES converted",
         "in this pass (0x48572607..0x48572F46).  Every one has the identical",

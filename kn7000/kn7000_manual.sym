@@ -2046,3 +2046,105 @@
 0x48572F28  VoiceBankIdFromAlias    ; the inverse: 0x11 -> 0x0E, 0x23 -> 0x1E -- retf leaf
 0x48572F3C  VoiceBankIdSource1      ; -> the constant bank id 0x0E, taken only after VoiceBankSourcePresent(1) reports the archive fitted -- retf leaf
 0x48572F41  VoiceBankIdSource2      ; -> the constant bank id 0x1E, guarded by VoiceBankSourcePresent(2) -- retf leaf
+
+; ---- BIG-ENDIAN FIELD PRIMITIVES (0x48440363..0x484403CB) --------------------
+; The four byte-order accessors + the checksum every "TCMP" style container is
+; validated with. Every multi-byte field in the style/rhythm containers is
+; stored BIG-endian even though the MN10300 is little-endian, so these five
+; leaves are the bottleneck the whole style path goes through.
+0x48440363  LoadU24BE               ; (a0) -> d0 = 24-bit big-endian field at a0 -- retf leaf
+0x48440378  StoreU24BE              ; (a0, d0) store d0 as a 24-bit big-endian field at a0 -- retf leaf
+0x4844038B  LoadU16BE               ; (a0) -> d0 = 16-bit big-endian field at a0 -- retf leaf
+0x48440398  StoreU16BE              ; (a0, d0) store d0 as a 16-bit big-endian field at a0 -- retf leaf
+0x484403A5  SumU16BE                ; (a0 = base, d0 = count) -> d0 = the u16 sum of `count` big-endian halfwords, truncated to 16 bits. The container checksum: used by StyleResourceVerify, MemStyleAreaChecksumVerify and MemStyleAreaChecksumInit
+0x484403A7  SumU16BE_entry
+
+; ---- "TCMP" STYLE CONTAINER: the MEMORY source (0x48435564..0x484358A9) ------
+; Converted 2026-07-20. This is the fetcher family behind the MEMORY style
+; source (style-ID bits 0x00700000 == 0x100000) that StyleNameSourceSet /
+; StyleNameCommitMem / StyleRecordBindMem call. The user styles live in RAM at
+; MEM_STYLE_AREA = 0x50180000, 0x25800 bytes long, in a container whose header
+; is the same "TCMP" layout the table ROM's segment 2 carries:
+;
+;   +0x00  4-byte signature "TCMP"            (0x487312E8 in ROM)
+;   +0x04  2-byte sub-signature 00 00         (0x487312EC)
+;   +0x06  u16BE checksum of the record block
+;   +0x08  u24BE checksum start offset  = 0x70
+;   +0x0B  u24BE checksum length        = 0x1B00 HALFWORDS (= 0x3600 bytes)
+;   +0x13  u24BE bump-allocator top (offset of the next free byte)
+;   +0x70  N style records,       stride 0x80   (N = 3 here)
+;  +0x1F0  N*20 variation records, stride 0xE0  (60 here)
+;  +0x3670 the event-stream heap, up to 0x25800
+;
+; N is the ONLY thing that differs between the two containers: the CUSTOM one
+; (0x4843E107/0x4843E10C, below) is the identical layout with N = 1, so its
+; style record is at +0x70 and its 20 variation records start at +0xF0 --
+; exactly 0x70 + N*0x80 in both cases. The ROM template for the header sits at
+; 0x487312E8 (and carries 0x3670 / 0x0003 at +0x14/+0x18).
+;
+; A variation record's stream is described by: +0x00 kind byte (0 for MEMORY),
+; +0x01 u24BE stream length, +0x04.. the event stream itself, which starts with
+; a 0xF4 bar marker and ends with 0xF5; +0x15 u24BE offset of the stream inside
+; the container; +0x10/+0x11 the bar/segment counts MemStyleVarBarCount uses.
+0x48435564  MemStyleAllocOffsetGet  ; -> d0 = the container's bump-allocator top as a RAW OFFSET (u24BE at base+0x13)
+0x48435567  MemStyleAllocOffsetGet_entry
+0x48435578  MemStyleAllocPtrGet     ; -> a0 = MEM_STYLE_AREA + that offset, i.e. the next free byte
+0x4843557B  MemStyleAllocPtrGet_entry
+0x48435594  MemStyleAllocPtrSet     ; (a0 = new top pointer) store it back as an offset at base+0x13
+0x48435599  MemStyleAllocPtrSet_entry
+0x484355B3  MemStyleAllocFits       ; (d0 = byte count) -> 1 when top+count still fits the 0x25800-byte area, -2 when it would overflow
+0x484355B8  MemStyleAllocFits_entry
+0x484355D9  MemStyleAreaBase        ; -> a0 = MEM_STYLE_AREA (0x50180000) -- retf leaf
+0x484355E2  MemStyleRecPtr          ; (d0 = style 0..2, out-of-range folds to 0) -> a0 = the 0x80-byte MEMORY style record at 0x50180070 + style*0x80. THE MEMORY arm of StyleNameSourceSet -- retf leaf
+0x484355F8  MemStyleVarRecPtr       ; (d0 = variation 0..0x3B, out-of-range folds to 0) -> a0 = the 0xE0-byte variation record at 0x501801F0 + var*0xE0 (3 styles x 20 variations). The MEMORY arm of StyleNameCommitMem -- rets leaf
+0x48435611  MemStyleRecData         ; (a0 = a record) -> a0 = MEM_STYLE_AREA + u24BE(record+0x15): the record's event stream in the heap. Cited by StyleRecordBindMem
+0x48435614  MemStyleRecData_entry
+0x48435628  MemStyleVarRecData      ; (d0 = variation) -> a0 = that variation's event stream (MemStyleVarRecPtr + MemStyleRecData)
+0x4843562B  MemStyleVarRecData_entry
+0x48435640  MemStyleVarRecDataSet   ; (a0 = stream pointer, d0 = variation) store the stream back into the record as an offset at +0x15
+0x48435645  MemStyleVarRecDataSet_entry
+0x48435660  MemStyleRecPtrAt        ; (a0 = container base, d0 = style) -> base+0x70+style*0x80 -- the base-relative twin of MemStyleRecPtr, used when the container is not the RAM one -- retf leaf
+0x48435672  MemStyleVarRecPtrAt     ; (a0 = container base, d0 = variation) -> base+0x1F0+var*0xE0 -- rets leaf
+0x48435689  MemStyleRecDataAt       ; (a0 = container base, a1 = record) -> base + u24BE(record+0x15)
+0x4843568E  MemStyleRecDataAt_entry
+0x484356A0  MemStyleVarRecDataAt    ; (a0 = container base, d0 = variation) -> that variation's stream inside an arbitrary container
+0x484356A5  MemStyleVarRecDataAt_entry
+0x484356BD  MemStyleAreaChecksumVerify ; recompute SumU16BE over base+u24BE(+8) for u24BE(+0xB) halfwords and compare with the stored u16BE at +6. Returns 1 / -1
+0x484356C2  MemStyleAreaChecksumVerify_entry
+0x48435705  MemStyleAreaChecksumInit   ; write the canonical checksum descriptor (start 0x70, length 0x1B00 halfwords) and store the freshly computed sum at +6
+0x4843570A  MemStyleAreaChecksumInit_entry
+0x48435749  MemStyleAreaSignatureVerify ; strncmp(base, "TCMP", 4) + strncmp(base+4, 00 00, 2) through the library strncmp 0x4C003678, then require the byte just below the allocator top to be 0xF5 (the last stream's terminator). Returns 1 / -3
+0x4843574E  MemStyleAreaSignatureVerify_entry
+0x4843579E  MemStyleAreaStreamsVerify  ; full structural check of all 0x3C variation streams: kind byte 0, first stream byte 0xF4, last byte 0xF5, and the number of 0xF4 bar markers walked (skipping SysEx via RhySysexLen and running-status events via RhyEventLenByStatus) equal to MemStyleVarBarCount. Returns 1 / -3
+0x484357A3  MemStyleAreaStreamsVerify_entry
+0x48435842  MemStyleModuleReset     ; clears the current-rhythm selection cells (0x50034C3C..0x50034C44, 0x50035C48..0x50035C4C) and re-runs StyleNameModuleBoot plus the rest of the rhythm-module boot chain
+0x48435845  MemStyleModuleReset_entry
+0x4843C445  MemStyleVarBarCount     ; (d0 = variation) -> (rec[0x10] + 1) * ((rec[0x11] & 7) + 1): the number of 0xF4 bar markers the variation's stream must contain. 18 call sites
+0x4843C448  MemStyleVarBarCount_entry
+
+; ---- "TCMP" STYLE CONTAINER: the CUSTOM source (0x4843E107..0x4843E14E) ------
+; The same container with N = 1, addressed relative to a caller-supplied base
+; (the custom-flash block handle *(0x50034B98)). These are the three fetchers
+; StyleNameSourceSet / StyleNameCommitCustom / StyleRecordBindCustom cite.
+0x4843E107  CustStyleRecPtr         ; (a0 = block base) -> base+0x70, the single CUSTOM style record -- retf leaf
+0x4843E10C  CustStyleVarRecPtr      ; (a0 = block base, d0 = variation 0..0x13) -> base+0xF0+var*0xE0 -- rets leaf
+0x4843E123  CustStyleRecData        ; (a0 = block base, a1 = record) -> base + u24BE(record+0x15)
+0x4843E128  CustStyleRecData_entry
+0x4843E138  CustStyleVarRecData     ; (a0 = block base, d0 = variation) -> that variation's event stream
+0x4843E13D  CustStyleVarRecData_entry
+
+; ---- CUSTOM-FLASH BLOCK SOURCE (0x4848453B..0x4848463A) ----------------------
+; Where a CUSTOM style/sound block actually comes from: the custom flash bank
+; at 0x96820000, RAM-shadowed at 0x5037A000 (0x6000 words written back through
+; FlashProgram128Words). *(0x50001298) is the module status halfword -- -1 means
+; the custom flash is absent/unusable and every fetcher below returns NULL.
+; 0x96820002 + slot*2 is the 20-entry slot descriptor array (0x48483F53 reads
+; its presence byte).
+0x4848453B  CustomStyleIndexFromParam ; read the current style id (LibParamGet 0xC000); if its source field (& 0x00700000) is CUSTOM (0x200000) return its low byte clamped to 0..0x13, else 0xFF
+0x48484540  CustomStyleIndexFromParam_entry
+0x48484578  CustomStyleBlockFetch   ; (d0 = custom slot 0..0x13) -> a0 = the slot's block, or NULL when the flash is absent or the slot is empty. THE CUSTOM arm of StyleNameSourceSet
+0x4848457D  CustomStyleBlockFetch_entry
+0x484845A6  CustomStyleBlockFetchCur ; the same, for the slot CustomStyleIndexFromParam derives from the current style id
+0x484845AB  CustomStyleBlockFetchCur_entry
+0x484845E1  CustomSoundEditRecFetch ; (d0 = index) -> a 0x2C8-byte record inside the current custom slot's block -- the same stride as the SOUND EDIT record 0x500C0784+(part-0x10)*0x2C8; bounds-checked against the block's own count (0x48484291)
+0x484845E6  CustomSoundEditRecFetch_entry
