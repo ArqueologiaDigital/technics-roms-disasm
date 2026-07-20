@@ -1360,3 +1360,99 @@
 0x484D7713  TgStrapProbe            ; -> 3 when 0x98070000 bit 0x02 is CLEAR ("no TG": the caller leaves the TG-enable gate 0x500CE380 at 0x7F and every register writer stays a no-op), else 2 when bit 0x04 is clear, else 1. NOTE the bits are 0x02/0x04 of the halfword -- earlier notes said "bit1/bit2"
 0x484D7736  TgStrapProbeZero        ; -> 0 (the stubbed twin)
 0x484D773A  TgStrapProbeSideB       ; -> 2 when 0x98070000 bit 0x01 is clear, else 1 -- the second strap line
+
+; ---- the AUX-RECORD FIELD ACCESSORS (2026-07-20): the leaf get/set pairs the
+;      SOUND EDIT layer uses on the aux record 0x500BDB04+idx*0x2C8. Names carry
+;      the field's byte offset: Hdr<NN> = header +0xNN, Mod<NN> = mod-unit
+;      +0x54+unit*0x7A, +0xNN. The ranged fields are driven by the offset
+;      applier 0x4C00A820 (read field, add a signed delta, clamp through
+;      0x4C00A7BE to +/-0x64 or +/-0x7F, write back).
+0x4C00C318  TgPartAuxHdr45Get       ; (d0 idx) -> aux header byte +0x45 (retf leaf)
+0x4C00C32E  TgPartAuxHdr46Get       ; (d0 idx) -> aux header byte +0x46
+0x4C00C344  TgPartAuxHdr47Get       ; (d0 idx) -> aux header byte +0x47
+0x4C00C35A  TgPartAuxMod04Get       ; (d0 idx, d1 unit) -> mod-unit byte +0x04
+0x4C00C35C  TgPartAuxMod04Get_entry
+0x4C00C37D  TgPartAuxMod05Get       ; (d0 idx, d1 unit) -> mod-unit byte +0x05
+0x4C00C37F  TgPartAuxMod05Get_entry
+0x4C00C3A0  TgPartAuxMod06Get       ; (d0 idx, d1 unit) -> mod-unit byte +0x06
+0x4C00C3A2  TgPartAuxMod06Get_entry
+0x4C00C3C3  TgPartAuxMod19Get       ; (d0 idx, d1 unit) -> mod-unit byte +0x19 masked to 7 bits (bit7 is a separate flag, see TgPartAuxMod19Set)
+0x4C00C3C5  TgPartAuxMod19Get_entry
+0x4C00C3E9  TgPartAuxMod28Get       ; (d0 idx, d1 unit) -> mod-unit byte +0x28
+0x4C00C3EB  TgPartAuxMod28Get_entry
+0x4C00C40C  TgPartAuxMod2AGet       ; (d0 idx, d1 unit) -> mod-unit byte +0x2A
+0x4C00C40E  TgPartAuxMod2AGet_entry
+0x4C00C42F  TgPartAuxMod2CGet       ; (d0 idx, d1 unit) -> mod-unit byte +0x2C
+0x4C00C431  TgPartAuxMod2CGet_entry
+0x4C00C452  TgPartAuxMod2EGet       ; (d0 idx, d1 unit) -> mod-unit byte +0x2E
+0x4C00C454  TgPartAuxMod2EGet_entry
+0x4C00C475  TgPartAuxHdr45Set       ; (d0 idx, d1 value) header byte +0x45
+0x4C00C477  TgPartAuxHdr45Set_entry
+0x4C00C48E  TgPartAuxHdr46Set       ; (d0 idx, d1 value) header byte +0x46
+0x4C00C490  TgPartAuxHdr46Set_entry
+0x4C00C4A7  TgPartAuxHdr47Set       ; (d0 idx, d1 value) header byte +0x47
+0x4C00C4A9  TgPartAuxHdr47Set_entry
+0x4C00C4C0  TgPartAuxMod04Set       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x04
+0x4C00C4C2  TgPartAuxMod04Set_entry
+0x4C00C4E6  TgPartAuxMod05Set       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x05
+0x4C00C4E8  TgPartAuxMod05Set_entry
+0x4C00C50C  TgPartAuxMod06Set       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x06
+0x4C00C50E  TgPartAuxMod06Set_entry
+0x4C00C532  TgPartAuxMod19Set       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x19, LOW 7 BITS ONLY -- bit7 is cleared then the 7-bit value or'd in, so the flag bit is destroyed by design
+0x4C00C534  TgPartAuxMod19Set_entry
+0x4C00C56A  TgPartAuxMod28Set       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x28
+0x4C00C56C  TgPartAuxMod28Set_entry
+0x4C00C590  TgPartAuxMod2ASet       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x2A
+0x4C00C592  TgPartAuxMod2ASet_entry
+0x4C00C5B6  TgPartAuxMod2CSet       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x2C
+0x4C00C5B8  TgPartAuxMod2CSet_entry
+0x4C00C5DC  TgPartAuxMod2ESet       ; (d0 idx, d1 unit, stack value) mod-unit byte +0x2E
+0x4C00C5DE  TgPartAuxMod2ESet_entry
+0x4C00C602  TgPartAuxMod52Bit7Set   ; (d0 idx, d1 unit, stack flag) set/clear bit7 of mod-unit byte +0x52
+0x4C00C604  TgPartAuxMod52Bit7Set_entry
+0x4C00C641  TgPartAuxMod56Bit7Set   ; (d0 idx, d1 unit, stack flag) set/clear bit7 of mod-unit byte +0x56
+0x4C00C643  TgPartAuxMod56Bit7Set_entry
+0x4C00C680  TgPartAuxMod5ABit7Set   ; (d0 idx, d1 unit, stack flag) set/clear bit7 of mod-unit byte +0x5A
+0x4C00C682  TgPartAuxMod5ABit7Set_entry
+
+; ---- THE LOCAL-EDIT LIFECYCLE (2026-07-20): who SETS and who CLEARS bit0 of
+;      the 9-byte per-part edit-state record 0x500C58AE+part*9. Byte 0 is the
+;      flag byte (bit0 = TgPartLocalEditActive, bit1 = "this part may be
+;      edited"); bytes 1..6 are edit parameters seeded from ROM defaults.
+0x4C00C890  TgPartAuxHdrDerive      ; (d0 part) recompute aux header bytes +0x4D..+0x53 from the part record 0x500B5340+part*0x54C (halfword +0 bits 0x80/0x02/0x40, bytes +6/+0x15/+0xE/+0xF/+0x14, channel field +0x62 bits 10..8)
+0x4C00C892  TgPartAuxHdrDerive_entry
+0x4C00C96C  TgPartAuxRecRefresh     ; (d0 part) full aux refresh: TgPartAuxRecBuild_entry, then the four mod units through TgPartAuxElemRecBuild_entry, then aux byte +0x44 bit7 = (part != 6), then TgPartAuxHdrDerive_entry
+0x4C00C971  TgPartAuxRecRefresh_entry
+0x4C00CA19  TgPartAuxModAllEnabled  ; (d0 idx) -> 0 when all four mod units have bit7 set in BOTH +0x52 and +0x56, else 1
+0x4C00CA1B  TgPartAuxModAllEnabled_entry
+0x4C00CA67  TgPartEditStateDefaults ; (d0 part) seed the 9-byte edit-state record's bytes 1..6 from the ROM defaults 0x486D3192/94/95/97/98; byte 1 becomes 1 or -0xB depending on TgPartAuxModAllEnabled_entry
+0x4C00CA6C  TgPartEditStateDefaults_entry
+0x4C00CABD  TgPartLocalEditRecBuildAll ; (d0 part) copy the tone descriptor into the scratch, then rebuild all 0x80 shadow records: for each idx the 0x8E record (TgPartLocalEditRecBuild_entry, seeded from ROM table 0x500C1003+idx*7) and its two element sub-records
+0x4C00CAC2  TgPartLocalEditRecBuildAll_entry
+0x4C00CB3F  TgPartLocalEditActivate ; ★ THE SETTER of bit0. (d0 part) only for parts 0x10..0x12 (or a part already flagged bit0+bit1); returns at once if bit0 is already set, otherwise SETS bit0, refreshes the aux record, seeds the edit-state defaults and re-applies the tone. Called lazily by the SOUND EDIT parameter get/set APIs -- the shadow springs into existence the first time a parameter is touched
+0x4C00CB44  TgPartLocalEditActivate_entry
+0x4C00CBC2  TgPartLocalEditSelect   ; (d0 part) make `part` the CURRENT edit part: if the global 0x500C59E0 already names a different part, CLEAR that part's flag byte (TgPartLocalEditClear) and re-apply its unedited tone, then set 0x500C59E0 = part, set bit0 and build the whole shadow (TgPartLocalEditRecBuildAll_entry)
+0x4C00CBC7  TgPartLocalEditSelect_entry
+0x4C00CCB1  TgLocalEditPartSet      ; 0x500C59E0 = d0 (the current-edit-part global; 0xFF = none) -- retf leaf
+0x4C00E5C0  TgPartLocalEditClear    ; ★ THE CLEARER. (d0 part) zero byte 0 of 0x500C58AE+part*9 -- bit0 goes away, so the tone-apply layer stops reading the RAM shadow and falls back to the read-only resource record. Nothing frees the shadow: the edit is discarded purely by dropping this bit
+0x4C00E5D2  TgLocalEditResetAll     ; boot-time reset: 0x500C59E0 = 0xFF and TgPartLocalEditClear for all 0x22 parts (called from the lib bring-up 0x4C004069)
+0x4C00E5D7  TgLocalEditResetAll_entry
+
+; ---- the region-1 VOICE-RESOURCE BANK FETCHERS (2026-07-20). Five resource
+;      banks; a class code 0..4 (from the classifier 0x485713DB) picks the bank
+;      descriptor 0x5003A5A4+class*4 and its load base 0x5003A554+class*4.
+;      Descriptor +0x04/+0x14 = record directories (dword offsets), +0x18 = the
+;      element table (stride 0x23). Records are 0x8E bytes: +0x10 sub-records
+;      (0x1C), +0x54 mod units (0x7A).
+0x484496C9  VoiceRecFetchBanked     ; (d0 idx&0x7F, d1 class-arg, stack) -> the 0x8E voice resource record, via the +0x14 directory of the selected bank
+0x484496CE  VoiceRecFetchBanked_entry
+0x4844978B  VoiceSubRecFetch        ; (d0 part, d1 idx, stack) -> record +0x10+n*0x1C, where n = 0x484494E4(part, record byte +0x0D); 0xFF means "no override" and VoiceSubRecDefaultPtr_entry supplies the default
+0x48449790  VoiceSubRecFetch_entry
+0x484497CB  VoiceModRecDefaultPtr   ; -> the DEFAULT record's first mod unit (bank 0 pointer 0x5003A590, +0x54) -- retf leaf
+0x484497E0  VoiceRecDefaultPtr      ; -> the DEFAULT voice record: 0x5003A590+4 when non-zero, else the bank-0 directory's entry 0 -- retf leaf
+0x48449810  VoiceSubRecDefaultPtr   ; -> VoiceRecDefaultPtr + 0x10 (the default +0x10 sub-record) -- the fallback TgPartLocalEditRecBuild uses
+0x48449813  VoiceSubRecDefaultPtr_entry
+0x4844981D  VoiceElemRecFetchBank0  ; -> VoiceElemRecFetch_entry(0, 0): element record 0 of bank 0
+0x4844982A  VoiceModRecFetch        ; (a0 record, d0 part, d1 unit) -> record +0x54+unit*0x7A; parts 0x22/0x23/0x2A/0x2B take that directly, the rest remap the unit through 0x484494E4(part, record byte +0x11) and fall back to VoiceModRecDefaultPtr
+0x4844987C  VoiceElemRecFetch       ; (d0 elem, d1 class) -> element record: bank descriptor +0x18 table + elem*0x23
+0x4844987E  VoiceElemRecFetch_entry
