@@ -22340,10 +22340,11 @@ display_palette:
     movhu   d0, (a0)
     ret     [d2,d3,a2,a3], 0x30
 .mnbase 0x48400000
-# TgFilterEgAttackCalc  (lib CPU 0x4c031c4b)
-#   running-voice EG-2 (filter) ATTACK program (a0 lib rec, a1 desc2):
-#   rate desc2+0x0B via curve 0x486D2649, key scaling desc2+0x15..0x17;
-#   called by every per-class refresh handler alongside its decay partner
+# TgPitchEgAttackCalc  (lib CPU 0x4c031c4b)
+#   running-voice PITCH-EG ATTACK program (a0 lib rec, a1 desc2): rate
+#   desc2+0x0B via curve 0x486D2649, key scaling desc2+0x15..0x17; the
+#   desc2+0x0B..0x12 block is the PITCH EG (regs 4..6 -- the a1 sweep's
+#   live r4..rB decode fixed the filter/pitch attribution)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
@@ -22518,9 +22519,9 @@ display_palette:
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-# TgFilterEgDecayCalc  (lib CPU 0x4c031d96)
-#   running-voice EG-2 (filter) DECAY program: rates desc2+0x0D/+0x0F
-#   via curve 0x486D2649, key scaling desc2+0x17
+# TgPitchEgDecayCalc  (lib CPU 0x4c031d96)
+#   running-voice PITCH-EG DECAY program: rates desc2+0x0D/+0x0F via
+#   curve 0x486D2649, key scaling desc2+0x17
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
@@ -22700,11 +22701,12 @@ display_palette:
     movbu   d0, (0x6a, a2)
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-# TgKeyOffFilterRelease  (lib CPU 0x4c031f02)
-#   key-off FILTER-EG release compute -- h2 (a0 lib rec, a1 out):
+# TgKeyOffPitchRelease  (lib CPU 0x4c031f02)
+#   key-off PITCH-EG release compute -- h2 (a0 lib rec, a1 out):
 #   desc2+0x11 release rate + desc2+0x12 scale via the curves
 #   0x486D2649/0x486D2713; out pairs -> shadow reg4/reg5 release halves
-#   (the piano burst's 0xAE00/0xAE00)
+#   (the piano burst's 0xAE00/0xAE00 = pitch pairs rewritten to a flat
+#   instant-zero, exactly the a1 sweep's re-reading)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
@@ -23052,9 +23054,10 @@ display_palette:
     movhu   d0, (6, a0)
     ret     [d2,d3,a2,a3], 0x34
 .mnbase 0x48400000
-# TgPitchEgAttackCalc  (lib CPU 0x4c0321ba)
-#   running-voice PITCH-EG ATTACK program: desc2+0x40 rate (values >= 2
-#   via curve 0x486D2649), key scaling desc2+0x4A
+# TgFilterEgAttackCalc  (lib CPU 0x4c0321ba)
+#   running-voice FILTER-EG ATTACK program: desc2+0x40 rate (values >= 2
+#   via curve 0x486D2649), key scaling desc2+0x4A; the desc2+0x3E..0x4C
+#   block is the FILTER EG (regs 8..0xA per the a1 live decode)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
@@ -23239,8 +23242,8 @@ display_palette:
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-# TgPitchEgDecayCalc  (lib CPU 0x4c03231a)
-#   running-voice PITCH-EG DECAY program: desc2+0x42/+0x44 rates via
+# TgFilterEgDecayCalc  (lib CPU 0x4c03231a)
+#   running-voice FILTER-EG DECAY program: desc2+0x42/+0x44 rates via
 #   curve 0x486D2649, desc2+0x4C scaling
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
@@ -23426,11 +23429,13 @@ display_palette:
     movbu   d0, (0x7c, a3)
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-# TgKeyOffPitchRelease  (lib CPU 0x4c03248b)
-#   key-off PITCH-EG release compute -- h3 (a0 lib rec, a1 out):
-#   desc2+0x46 rate via 0x486D2649, signed depth = clamp(desc2+0x47 +
-#   desc2+0x3E, -50..50) via 0x486D2713; out pairs -> shadow reg8/reg9
-#   release halves (the piano burst's 0x22B0: rate 0x22, level 0xB0)
+# TgKeyOffFilterRelease  (lib CPU 0x4c03248b)
+#   key-off FILTER-EG release compute -- h3 (a0 lib rec, a1 out):
+#   desc2+0x46 rate via 0x486D2649, signed level = clamp(desc2+0x47 +
+#   desc2+0x3E, -50..50) via 0x486D2713 -- desc2+0x3E is the folded
+#   CUTOFF ADJUST the a1 sweep saw in every filter level byte; out
+#   pairs -> shadow reg8/reg9 release halves (the piano burst's 0x22B0:
+#   rate 0x22 sweeping the filter to signed level 0xB0 = fully dark)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
