@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 218 synthetic labels for internal helpers called by converted code
+# 255 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -80,6 +80,42 @@ _rom_marker:
 .equ func_4842D366, 0x4842D366
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
+.equ func_484373AE, 0x484373AE
+.equ func_48445886, 0x48445886
+.equ func_484458EA, 0x484458EA
+.equ func_484458F6, 0x484458F6
+.equ func_4844590E, 0x4844590E
+.equ func_4844591D, 0x4844591D
+.equ func_4844592C, 0x4844592C
+.equ func_4844593B, 0x4844593B
+.equ func_48445959, 0x48445959
+.equ func_4844598C, 0x4844598C
+.equ func_48445CA9, 0x48445CA9
+.equ MetronomeClickPost_entry, 0x48446AEE
+.equ MetronomeNoteEvent_entry, 0x48446C9D
+.equ TempoClkStartApply, 0x48446CAE
+.equ TempoClkStopApply, 0x48446D14
+.equ TempoClkAdvance_entry, 0x48446D66
+.equ TempoClkAdvanceExtHold_entry, 0x48446DE5
+.equ TempoClkMidiClockStep_entry, 0x48446E2E
+.equ MidiRealtimeSend_entry, 0x48446EB1
+.equ TempoClocksReset_entry, 0x48446EEC
+.equ TempoClkArmRestart, 0x48446F5C
+.equ TempoClkStartNow_entry, 0x48446F94
+.equ TempoClkArmContinue, 0x48446FB6
+.equ TempoClkContinueNow_entry, 0x48446FE6
+.equ TempoClkStopRequest, 0x48447002
+.equ TempoClkStopNow_entry, 0x48447034
+.equ MidiClockRxHandler_entry, 0x48447366
+.equ MidiStartRxHandler_entry, 0x4844744A
+.equ MidiContinueRxHandler_entry, 0x484475C8
+.equ MidiStopRxHandler_entry, 0x48447717
+.equ Tm5TempoTimerStart, 0x484477D3
+.equ Tm5TempoIsrRegister_entry, 0x4844780C
+.equ TempoTimerInit_entry, 0x4844784A
+.equ TempoBpmReloadWrite_entry, 0x4844786E
+.equ TempoReloadFromInterval_entry, 0x48447894
+.equ Tm5TimerRestart, 0x484478C8
 .equ func_484492E7, 0x484492E7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
@@ -144,6 +180,7 @@ _rom_marker:
 .equ SdInUseLedSet, 0x484B11CB
 .equ func_484B1BCB, 0x484B1BCB
 .equ func_484B1CA1, 0x484B1CA1
+.equ func_484B22B4, 0x484B22B4
 .equ PanelSubTypeGet_entry, 0x484D7751
 .equ func_4851AD68, 0x4851AD68
 .equ func_4852FDCD, 0x4852FDCD
@@ -8304,7 +8341,1360 @@ _rom_marker:
 # StyleRecordToTemplate  (CPU 0x48441d1b)
 .incbin_range "baserom/kn7000_program.rom", 0x041d1b, 0x042072
 # StyleNameDefaultFill  (CPU 0x48442072)
-.incbin_range "baserom/kn7000_program.rom", 0x042072, 0x04a000
+.incbin_range "baserom/kn7000_program.rom", 0x042072, 0x04525b
+# TempoModuleBoot  (CPU 0x4844525b)
+#   boot hook (function table 0x487314D4): TempoTimerInit +
+#   TempoClocksReset, zero the MIDI-sync bytes 0x50149654..62 and the
+#   metronome enables 0x5003A50C/0D/0E
+    add     -8, sp
+    call    TempoTimerInit_entry, 0, 8
+    call    TempoClocksReset_entry, 0, 0x14
+    clr     d0
+    movhu   d0, (0x50149654)
+    movhu   d0, (0x50149656)
+    movhu   d0, (0x50149658)
+    movhu   d0, (0x5014965a)
+    movhu   d0, (0x5014965c)
+    movhu   d0, (0x5014965e)
+    movhu   d0, (0x50149660)
+    movbu   d0, (0x5003a50c)
+    movbu   d0, (0x5003a50d)
+    movbu   d0, (0x5003a50e)
+    movbu   d0, (0x50149662)
+    ret     0, 8
+# TempoHookNop  (CPU 0x484452ae)
+#   retf-only filler for the 0x487314D4 hook table
+    retf    0, 0
+# MidiRealtimeModeSet  (CPU 0x484452b1)
+#   validate 0..3 -> mode 0x50149654 (< 3 allows realtime out, == 0
+#   required by the realtime RX handlers)
+    mov     d0, d1
+    exthu   d1
+    cmp     3, d1
+    bgt     0x484452bd
+    movhu   d0, (0x50149654)
+    retf    0, 0
+# MidiRealtimeModeGet  (CPU 0x484452c0)
+#   read 0x50149654 -> mode >= 2
+    movhu   (0x50149654), d1
+    clr     d0
+    cmp     2, d1
+    blt     0x484452cd
+    mov     1, d0
+    retf    0, 0
+# TempoClockSourceSet  (CPU 0x484452d0)
+#   clock-source byte 0x50149662 := 1
+    mov     1, d0
+    movbu   d0, (0x50149662)
+    retf    0, 0
+# TempoClockSourceClear  (CPU 0x484452db)
+#   0x50149662 := 0
+    clr     d0
+    movbu   d0, (0x50149662)
+    retf    0, 0
+# TempoClockSourceGet  (CPU 0x484452e5)
+#   read the clock-source byte 0x50149662
+    movbu   (0x50149662), d0
+    retf    0, 0
+# TempoSyncParamDispatch  (CPU 0x484452ee)
+#   property dispatch on the low 24 bits of d0: 0x2020 -> MIDI-clock-
+#   slave flag 0x50149656 := (d1==1), and on clearing re-program TM5
+#   from tempo param 4 (GetParam -> TempoBpmReloadWrite); 0x2023 ->
+#   suppress byte 0x5014965A; 0x2041 -> enable byte 0x50149658
+    add     -0x10, sp
+    and     0x00ffffff, d0
+    cmp     0x2020, d0
+    beq     0x4844530b
+    cmp     0x2023, d0
+    beq     0x48445339
+    cmp     0x2041, d0
+    beq     0x48445348
+    bra     0x48445355
+    clr     d0
+    cmp     1, d1
+    bne     0x48445312
+    mov     1, d0
+    movhu   d0, (0x50149656)
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    bne     0x48445332
+    mov     4, d0
+    clr     d1
+    call    LibParamGet, 0, 0x10
+    exthu   d0
+    call    TempoBpmReloadWrite_entry, [d2], 4
+    call    func_48445CA9, 0, 0xc
+    bra     0x48445355
+    clr     d0
+    cmp     1, d1
+    bne     0x48445340
+    mov     1, d0
+    movhu   d0, (0x5014965a)
+    bra     0x48445355
+    clr     d0
+    cmp     1, d1
+    bne     0x4844534f
+    mov     1, d0
+    movhu   d0, (0x50149658)
+    ret     0, 0x10
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x045358, 0x046ae9
+# MetronomeClickPost  (CPU 0x48446ae9)
+#   (d0 = beat-in-bar, d1 = tick-in-beat) key one metronome click:
+#   pending note-off first (countdown 0x5003A532 > 0), then beat 0 &
+#   tick < 0xC -> note 0x10 vel 0x6A (downbeat), other beat & tick <
+#   0xC -> 0x11/0x54, subdivision -> 0x11/0x34; off-countdown := 0x10
+    movm    [d2,d3], (sp)
+    add     -0x10, sp
+# MetronomeClickPost_entry:   (register-save `call` entry)
+    mov     d1, d3
+    movhu   (0x5003a532), d1
+    mov     d0, d2
+    cmp     0, d1
+    ble     0x48446b06
+    movbu   (0x5003a530), d0
+    clr     d1
+    call    MetronomeNoteEvent_entry, [d2], 0x18
+    exthu   d2
+    cmp     0, d2
+    bne     0x48446b1d
+    mov     d3, d0
+    exthu   d0
+    cmp     0xc, d0
+    bge     0x48446b1d
+    mov     0x10, d0
+    movbu   d0, (0x5003a530)
+    mov     0x6a, d1
+    bra     0x48446b38
+    exthu   d3
+    cmp     0xc, d3
+    bge     0x48446b2e
+    mov     0x11, d0
+    movbu   d0, (0x5003a530)
+    mov     0x54, d1
+    bra     0x48446b38
+    mov     0x11, d0
+    movbu   d0, (0x5003a530)
+    mov     0x34, d1
+    movbu   (0x5003a530), d0
+    extbu   d1
+    call    MetronomeNoteEvent_entry, [d2], 0x18
+    mov     0x10, d0
+    movhu   d0, (0x5003a532)
+    ret     [d2,d3], 0x18
+# MetronomeStateReset  (CPU 0x48446b4f)
+#   click-off countdown 0x5003A532 := 0, click interval 0x5003A534 :=
+#   0x60 (one beat)
+    clr     d0
+    movhu   d0, (0x5003a532)
+    mov     0x60, d0
+    movhu   d0, (0x5003a534)
+    retf    0, 0
+# MetronomeVoiceInit  (CPU 0x48446b61)
+#   program the metronome part 0x20: lib 0x4C02986D(0x20, 0) with the
+#   parameter block {0, 0x26, 0} (part 0x21 is the chord finder's)
+    add     -0x1c, sp
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x26, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     0x20, d0
+    clr     d1
+    call    0x4c02986d, [d2], 0x18
+    ret     0, 0x1c
+# MetronomeClickRateSet  (CPU 0x48446b7b)
+#   d0 = 2..4 -> click interval 0x5003A534 := 0x60/d0 (LibDiv32);
+#   out of range -> 0x60 (one click per beat)
+    add     -0x10, sp
+    mov     d0, d1
+    exthu   d1
+    cmp     1, d1
+    ble     0x48446b99
+    cmp     4, d1
+    bgt     0x48446b99
+    mov     0x60, d0
+    call    LibDiv32, 0, 0
+    movhu   d0, (0x5003a534)
+    bra     0x48446ba1
+    mov     0x60, d0
+    movhu   d0, (0x5003a534)
+    ret     0, 0x10
+# MetronomeBeatTask  (CPU 0x48446ba4)
+#   metronome pump (runtime-dispatched, no static caller): reads the
+#   metro clock pos/tick under the scheduler lock (0x48445886) and the
+#   flag getters 0x4844590E (run) / 1D (just-started) / 2C (stopped) /
+#   3B (at-origin); just-started at the origin -> immediate downbeat;
+#   stopped -> flush the note-off; running -> countdown -= elapsed
+#   ticks (counter get/clear 0x484458EA/0x484458F6) and click when the
+#   beat/tick window (last state 0x5003A536/38/3A) advances
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+    mov     sp, a0
+    add     0x10, a0
+    mov     sp, a1
+    add     0x12, a1
+    call    func_48445886, [a2,a3], 0x10
+    call    func_4844591D, 0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48446be0
+    call    func_4844593B, 0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48446bcf
+    clr     d0
+    mov     d0, d1
+    call    MetronomeClickPost_entry, [d2,d3], 0x18
+    call    func_48445959, 0, 0
+    movhu   (0x12, sp), d0
+    movhu   d0, (0x5003a536)
+    jmp     0x48446c83
+    call    func_4844592C, 0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48446c0f
+    movhu   (0x5003a532), d0
+    cmp     0, d0
+    ble     0x48446c07
+    clr     d0
+    movhu   d0, (0x5003a532)
+    movbu   (0x5003a530), d0
+    clr     d1
+    call    MetronomeNoteEvent_entry, [d2], 0x18
+    call    func_4844598C, 0, 0
+    jmp     0x48446c83
+    call    func_4844590E, 0, 0
+    exthu   d0
+    cmp     0, d0
+    beq     0x48446c83
+    call    func_484458EA, 0, 0
+    mov     d0, d2
+    call    func_484458F6, 0, 8
+    movhu   (0x5003a532), d0
+    exthu   d2
+    mov     d0, d1
+    sub     d2, d1
+    movhu   d1, (0x5003a532)
+    cmp     d0, d2
+    blt     0x48446c4a
+    clr     d0
+    movhu   d0, (0x5003a532)
+    movbu   (0x5003a530), d0
+    clr     d1
+    call    MetronomeNoteEvent_entry, [d2], 0x18
+    movhu   (0x10, sp), d0
+    movhu   (0x5003a538), d1
+    cmp     d1, d0
+    bne     0x48446c72
+    movhu   (0x12, sp), d3
+    movhu   (0x5003a53a), d1
+    cmp     d1, d3
+    blt     0x48446c72
+    movhu   (0x5003a536), d2
+    movhu   (0x5003a534), d1
+    add     d1, d2
+    cmp     d2, d3
+    blt     0x48446c83
+    movhu   (0x12, sp), d1
+    call    MetronomeClickPost_entry, [d2,d3], 0x18
+    movhu   (0x12, sp), d0
+    movhu   d0, (0x5003a536)
+    movhu   (0x10, sp), d0
+    movhu   d0, (0x5003a538)
+    movhu   (0x12, sp), d0
+    movhu   d0, (0x5003a53a)
+    ret     [d2,d3], 0x1c
+# MetronomeNoteEvent  (CPU 0x48446c98)
+#   (d0 = note, d1 = velocity) -> lib key event 0x4C02976F on part 0x20
+    movm    [d2], (sp)
+    add     -0x14, sp
+# MetronomeNoteEvent_entry:   (register-save `call` entry)
+    extbu   d1
+    mov     d1, (0x10, sp)
+    mov     d0, d1
+    extbu   d1
+    mov     0x20, d0
+    call    0x4c02976f, [d2], 0x18
+    ret     [d2], 0x18
+# TempoClkStartApply  (CPU 0x48446cae)
+#   apply a pending start: gate bit14 -> set RUNNING + bit11, clear
+#   14/10/13/12; bit8 := started at the origin (pos==0 && tick==0);
+#   clear the bar-wrap event bit7
+    mov     8, a1
+    add     a0, a1
+    movhu   (a1), d0
+    btst    0x4000, d0
+    beq     0x48446d11
+    movhu   (a1), d0
+    or      0x8000, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    or      0x0800, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xbfff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xfbff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xdfff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xefff, d0
+    movhu   d0, (a1)
+    movhu   (a0), d0
+    cmp     0, d0
+    bne     0x48446d01
+    movhu   (4, a0), d0
+    cmp     0, d0
+    bne     0x48446d01
+    movhu   (a1), d0
+    or      0x0100, d0
+    movhu   d0, (a1)
+    bra     0x48446d09
+    movhu   (a1), d0
+    and     0xfeff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xff7f, d0
+    movhu   d0, (a1)
+    retf    0, 0
+# TempoClkStopApply  (CPU 0x48446d14)
+#   apply a pending stop: gate bit13 -> clear RUNNING + every transient
+#   flag, set bit10 (stopped)
+    add     8, a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    beq     0x48446d5e
+    movhu   (a0), d0
+    and     0x7fff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x0400, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xdfff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xf7ff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xbfff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xefff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xfeff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xff7f, d0
+    movhu   d0, (a0)
+    retf    0, 0
+# TempoClkAdvance  (CPU 0x48446d61)
+#   per-tick advance: tick-in-beat++, wrap at 0x60 -> beat-in-bar++ vs
+#   beats-per-bar (0 = free run; bar wrap rewinds and sets bit7); a
+#   stop-at-beat request (bit12) becomes a stop-request + apply at the
+#   beat wrap; the +6 free tick counter increments every call
+    movm    [a2], (sp)
+    add     -0xc, sp
+# TempoClkAdvance_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     8, a1
+    add     a2, a1
+    movhu   (a1), d0
+    btst    0x8000, d0
+    beq     0x48446dd6
+    inc4    a0
+    movhu   (a0), d0
+    inc     d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    cmp     0x60, d0
+    bge     0x48446d89
+    movhu   (a1), d0
+    and     0xff7f, d0
+    movhu   d0, (a1)
+    bra     0x48446dd6
+    clr     d0
+    movhu   d0, (a0)
+    mov     2, a0
+    add     a2, a0
+    movhu   (a0), d0
+    cmp     0, d0
+    beq     0x48446d9f
+    movhu   (a2), d1
+    movhu   (a0), d0
+    add     -1, d0
+    cmp     d0, d1
+    bge     0x48446dae
+    movhu   (a2), d0
+    inc     d0
+    movhu   d0, (a2)
+    movhu   (a1), d0
+    and     0xff7f, d0
+    movhu   d0, (a1)
+    bra     0x48446db8
+    clr     d0
+    movhu   d0, (a2)
+    movhu   (a1), d0
+    or      0x80, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    btst    0x1000, d0
+    beq     0x48446dd6
+    movhu   (a1), d0
+    mov     a2, a0
+    and     0xfdff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    or      0x2000, d0
+    movhu   d0, (a1)
+    call    TempoClkStopApply, 0, 0
+    add     6, a2
+    movhu   (a2), d0
+    inc     d0
+    movhu   d0, (a2)
+    ret     [a2], 0x10
+# TempoClkAdvanceExtHold  (CPU 0x48446de0)
+#   MIDI-clock-slave advance: only while tick%4 < 3, then HOLD at the
+#   24-PPQN boundary until the next real 0xF8 steps past it (a pending
+#   stop still advances + applies)
+    movm    [a2], (sp)
+    add     -0xc, sp
+# TempoClkAdvanceExtHold_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     8, a0
+    add     a2, a0
+    movhu   (a0), d0
+    btst    0x8000, d0
+    beq     0x48446e1f
+    movhu   (4, a2), d0
+    mov     4, d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     3, d0
+    bge     0x48446e09
+    mov     a2, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    bra     0x48446e26
+    movhu   (a0), d0
+    btst    0x2000, d0
+    beq     0x48446e26
+    mov     a2, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    mov     a2, a0
+    call    TempoClkStopApply, 0, 0
+    bra     0x48446e26
+    add     6, a2
+    movhu   (a2), d0
+    inc     d0
+    movhu   d0, (a2)
+    ret     [a2], 0x10
+# TempoClkMidiClockStep  (CPU 0x48446e29)
+#   consume one received 0xF8: snap tick-in-beat to the next multiple
+#   of 4 (one 24-PPQN quantum) with the same wrap/bar logic; the free
+#   counter accounts the skipped ticks
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# TempoClkMidiClockStep_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     8, a0
+    add     a2, a0
+    movhu   (a0), d0
+    btst    0x8000, d0
+    beq     0x48446ea4
+    mov     a2, a1
+    inc4    a1
+    movhu   (a1), d0
+    movhu   (a1), d3
+    and     0xfffffffc, d0
+    add     4, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    cmp     0x60, d0
+    bge     0x48446e5b
+    movhu   (a0), d0
+    and     0xff7f, d0
+    movhu   d0, (a0)
+    bra     0x48446e8a
+    clr     d0
+    movhu   d0, (a1)
+    mov     2, a1
+    add     a2, a1
+    movhu   (a1), d0
+    cmp     0, d0
+    beq     0x48446e71
+    movhu   (a2), d1
+    movhu   (a1), d0
+    add     -1, d0
+    cmp     d0, d1
+    bge     0x48446e80
+    movhu   (a2), d0
+    inc     d0
+    movhu   d0, (a2)
+    movhu   (a0), d0
+    and     0xff7f, d0
+    movhu   d0, (a0)
+    bra     0x48446e8a
+    clr     d0
+    movhu   d0, (a2)
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    mov     a2, a0
+    call    TempoClkStopApply, 0, 0
+    add     6, a2
+    movhu   (a2), d2
+    extbu   d3
+    mov     4, d0
+    ext     d3
+    div     d0, d3
+    mov     mdr, d3
+    sub     d3, d0
+    add     d2, d0
+    movhu   d0, (a2)
+    bra     0x48446eab
+    add     6, a2
+    movhu   (a2), d0
+    inc     d0
+    movhu   d0, (a2)
+    ret     [d2,d3,a2], 0x18
+# MidiRealtimeSend  (CPU 0x48446eae)
+#   send realtime byte d0 to MIDI out (0x484B22B4): gate mode
+#   0x50149654 < 3; 0xF8 always passes, others need enable 0x50149658
+#   set and suppress 0x5014965A clear
+    add     -0xc, sp
+# MidiRealtimeSend_entry:   (register-save `call` entry)
+    movhu   (0x50149654), d1
+    cmp     3, d1
+    bge     0x48446ee6
+    extbu   d0
+    cmp     0xf8, d0
+    bne     0x48446ecb
+    call    func_484B22B4, 0, 8
+    bra     0x48446ee6
+    movhu   (0x50149658), d1
+    cmp     0, d1
+    beq     0x48446ee6
+    movhu   (0x5014965a), d1
+    cmp     0, d1
+    bne     0x48446ee6
+    call    func_484B22B4, 0, 8
+    ret     0, 0xc
+# TempoClocksReset  (CPU 0x48446ee9)
+#   zero the five clock blocks + the count-in block (lib memset
+#   0x4C003024), the global phase 0x50149664 and last-tick 0x5003A53C
+    add     -0x14, sp
+# TempoClocksReset_entry:   (register-save `call` entry)
+    mov     0x50149666, a0
+    clr     d0
+    mov     0xa, d1
+    call    0x4c003024, [a2], 4
+    mov     0x50149670, a0
+    clr     d0
+    mov     0xa, d1
+    call    0x4c003024, [a2], 4
+    mov     0x5014967a, a0
+    clr     d0
+    mov     0xa, d1
+    call    0x4c003024, [a2], 4
+    mov     0x50149684, a0
+    clr     d0
+    mov     0xa, d1
+    call    0x4c003024, [a2], 4
+    mov     0x5014968e, a0
+    clr     d0
+    mov     0xa, d1
+    call    0x4c003024, [a2], 4
+    mov     0x50149698, a0
+    clr     d0
+    mov     6, d1
+    call    0x4c003024, [a2], 4
+    clr     d0
+    movhu   d0, (0x50149664)
+    mov     d0, (0x5003a53c)
+    ret     0, 0x14
+# TempoClkArmRestart  (CPU 0x48446f5c)
+#   rewind (pos := 0, tick := 0) and request a start (set bit14, clear
+#   RUNNING/9/13/12) -- the ISR applies it on the next tick
+    mov     8, a1
+    add     a0, a1
+    movhu   (a1), d0
+    and     0xfdff, d0
+    movhu   d0, (a1)
+    clr     d0
+    movhu   d0, (a0)
+    movhu   d0, (4, a0)
+    movhu   (a1), d0
+    or      0x4000, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0x7fff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xdfff, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xefff, d0
+    movhu   d0, (a1)
+    retf    0, 0
+# TempoClkStartNow  (CPU 0x48446f91)
+#   set bit9 (hot start), rewind, set bit14, then TempoClkStartApply
+#   inline: immediate start from zero (the slave-mode 0xFA path)
+    add     -0xc, sp
+# TempoClkStartNow_entry:   (register-save `call` entry)
+    mov     8, a1
+    add     a0, a1
+    movhu   (a1), d0
+    or      0x0200, d0
+    movhu   d0, (a1)
+    clr     d0
+    movhu   d0, (a0)
+    movhu   d0, (4, a0)
+    movhu   (a1), d0
+    or      0x4000, d0
+    movhu   d0, (a1)
+    call    TempoClkStartApply, 0, 0
+    ret     0, 0xc
+# TempoClkArmContinue  (CPU 0x48446fb6)
+#   request a start WITHOUT rewinding: clear bit9, set bit14, clear
+#   15/13/12 (position and tick keep their values)
+    add     8, a0
+    movhu   (a0), d0
+    and     0xfdff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x4000, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0x7fff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xdfff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xefff, d0
+    movhu   d0, (a0)
+    retf    0, 0
+# TempoClkContinueNow  (CPU 0x48446fe3)
+#   set bit9 + bit14 and apply inline: immediate continue from the
+#   current position (the slave-mode 0xFB path)
+    add     -0xc, sp
+# TempoClkContinueNow_entry:   (register-save `call` entry)
+    mov     8, a1
+    add     a0, a1
+    movhu   (a1), d0
+    or      0x0200, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    or      0x4000, d0
+    movhu   d0, (a1)
+    call    TempoClkStartApply, 0, 0
+    ret     0, 0xc
+# TempoClkStopRequest  (CPU 0x48447002)
+#   request a stop: clear bit9, set bit13 (+ bit15 so the clock counts
+#   until it lands), clear 12/14; the ISR applies it on a 24-PPQN
+#   boundary so the outgoing clock stream stays aligned
+    add     8, a0
+    movhu   (a0), d0
+    and     0xfdff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x2000, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xefff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x8000, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xbfff, d0
+    movhu   d0, (a0)
+    retf    0, 0
+# TempoClkStopNow  (CPU 0x4844702f)
+#   set bit9 + bit13, apply the stop inline, then rewind pos/tick
+    movm    [a2], (sp)
+    add     -0xc, sp
+# TempoClkStopNow_entry:   (register-save `call` entry)
+    mov     8, a1
+    add     a0, a1
+    movhu   (a1), d0
+    mov     a0, a2
+    or      0x0200, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    or      0x2000, d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    and     0xefff, d0
+    movhu   d0, (a1)
+    call    TempoClkStopApply, 0, 0
+    clr     d0
+    movhu   d0, (a2)
+    movhu   d0, (4, a2)
+    ret     [a2], 0x10
+# TempoClkBeatStopRequest  (CPU 0x4844705f)
+#   request a stop at the next beat wrap: clear bit9, set bit12
+#   (+ bit15), clear bit14 (TempoClkAdvance converts it at the wrap)
+    add     8, a0
+    movhu   (a0), d0
+    and     0xfdff, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x1000, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    or      0x8000, d0
+    movhu   d0, (a0)
+    movhu   (a0), d0
+    and     0xbfff, d0
+    movhu   d0, (a0)
+    retf    0, 0
+# TempoTick96Isr  (CPU 0x48447084)
+#   THE 96-PPQN TEMPO ISR (TM5 underflow -> INTC group 7; the handler
+#   the MAME RE found registered at 0x4844780C):
+#    1. global phase 0x50149664 = (phase+1) mod 0x60
+#    2. slave mode (0x50149656): advance all five clocks with the
+#       24-PPQN HOLD variant, re-apply pending sub-clock starts, ack
+#    3. internal: advance all five; a RUNNING->stopped edge on the
+#       main clock sends 0xFC (MIDI stop)
+#    4. apply pending starts: main first; if main runs, the three
+#       sub-clocks follow; otherwise the COUNT-IN ladder counts the
+#       metronome clock's bar wraps (bit7) up to 0x5014969A, then
+#       starts/continues per the ctl bits 11..13 of 0x50149698 and
+#       sends 0xFA (start) or 0xFB (continue)
+#    5. apply pending stops only when tick%4 == 0 (24-PPQN alignment;
+#       a main-clock stop takes all five down together)
+#    6. main running & tick%4 == 0 -> send 0xF8 (24-PPQN clock out)
+#    7. ack: GxICR 0x3400011C := (icr & 0xFF00) | 1 inside an IE-off
+#       bracket, read back
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xc, sp
+    movhu   (0x50149664), d0
+    cmp     0x5f, d0
+    bge     0x484470a2
+    movhu   (0x50149664), d0
+    inc     d0
+    movhu   d0, (0x50149664)
+    bra     0x484470a9
+    clr     d0
+    movhu   d0, (0x50149664)
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    beq     0x484470b6
+    jmp     0x484472df
+    movhu   (0x5014966e), d2
+    mov     0x50149666, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    mov     0x5014967a, a2
+    mov     a2, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    mov     0x50149670, d3
+    mov     d3, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    mov     0x50149684, a3
+    mov     a3, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    mov     0x5014968e, a0
+    call    TempoClkAdvance_entry, [a2], 0x10
+    lsr     15, d2
+    mov     1, d0
+    and     d2, d0
+    extbu   d0
+    cmp     0, d0
+    beq     0x48447117
+    movhu   (0x5014966e), d0
+    btst    0x8000, d0
+    bne     0x48447117
+    mov     0xfc, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     0x50149666, a0
+    call    TempoClkStartApply, 0, 0
+    movhu   (0x5014966e), d0
+    and     0x8000, d0
+    beq     0x48447144
+    mov     a2, a0
+    call    TempoClkStartApply, 0, 0
+    mov     d3, a0
+    call    TempoClkStartApply, 0, 0
+    mov     a3, a0
+    call    TempoClkStartApply, 0, 0
+    jmp     0x4844724d
+    movhu   (0x50149698), d0
+    btst    0x4000, d0
+    bne     0x48447153
+    jmp     0x4844724d
+    movhu   (0x50149696), d0
+    and     0x8000, d0
+    bne     0x48447162
+    jmp     0x4844724d
+    movhu   (0x50149696), d0
+    btst    0x80, d0
+    bne     0x48447170
+    jmp     0x4844724d
+    movhu   (0x5014969c), d0
+    inc     d0
+    movhu   d0, (0x5014969c)
+    movhu   (0x5014969c), d1
+    movhu   (0x5014969a), d0
+    cmp     d0, d1
+    bge     0x4844718f
+    jmp     0x4844724d
+    movhu   (0x50149698), d0
+    and     0xbfff, d0
+    movhu   d0, (0x50149698)
+    movhu   (0x50149698), d0
+    btst    0x0800, d0
+    beq     0x484471b4
+    mov     a3, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    jmp     0x4844724d
+    movhu   (0x50149698), d0
+    btst    0x2000, d0
+    beq     0x48447228
+    movhu   (0x50149698), d0
+    btst    0x0400, d0
+    beq     0x484471fa
+    mov     0x50149666, a0
+    call    TempoClkContinueNow_entry, 0, 0xc
+    mov     0xfb, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     d3, a0
+    call    TempoClkContinueNow_entry, 0, 0xc
+    movhu   (0x50149698), d0
+    btst    0x1000, d0
+    beq     0x4844724d
+    mov     a2, a0
+    call    TempoClkContinueNow_entry, 0, 0xc
+    bra     0x4844724d
+    mov     0x50149666, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    mov     0xfa, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     d3, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    movhu   (0x50149698), d0
+    btst    0x1000, d0
+    beq     0x4844724d
+    mov     a2, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    bra     0x4844724d
+    movhu   (0x50149698), d0
+    btst    0x1000, d0
+    beq     0x4844724d
+    mov     0x50149666, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    mov     0xfa, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     a2, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    movhu   (0x5014966e), d0
+    btst    0x2000, d0
+    beq     0x48447296
+    movhu   (0x5014966a), d0
+    mov     4, d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     0, d0
+    bne     0x484472b4
+    mov     0x50149666, a0
+    call    TempoClkStopApply, 0, 0
+    mov     a2, a0
+    call    TempoClkStopApply, 0, 0
+    mov     d3, a0
+    call    TempoClkStopApply, 0, 0
+    mov     a3, a0
+    call    TempoClkStopApply, 0, 0
+    mov     0x5014968e, a0
+    call    TempoClkStopApply, 0, 0
+    bra     0x484472b4
+    mov     a2, a0
+    call    TempoClkStopApply, 0, 0
+    mov     d3, a0
+    call    TempoClkStopApply, 0, 0
+    mov     a3, a0
+    call    TempoClkStopApply, 0, 0
+    mov     0x5014968e, a0
+    call    TempoClkStopApply, 0, 0
+    movhu   (0x5014966e), d0
+    and     0x8000, d0
+    bne     0x484472c3
+    jmp     0x48447339
+    movhu   (0x5014966a), d0
+    mov     4, d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     0, d0
+    bne     0x48447339
+    mov     0xf8, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    bra     0x48447339
+    mov     0x50149666, a0
+    call    TempoClkAdvanceExtHold_entry, [a2], 0x10
+    mov     0x50149670, d2
+    mov     d2, a0
+    call    TempoClkAdvanceExtHold_entry, [a2], 0x10
+    mov     0x5014967a, a2
+    mov     a2, a0
+    call    TempoClkAdvanceExtHold_entry, [a2], 0x10
+    mov     0x50149684, a3
+    mov     a3, a0
+    call    TempoClkAdvanceExtHold_entry, [a2], 0x10
+    mov     0x5014968e, a0
+    call    TempoClkAdvanceExtHold_entry, [a2], 0x10
+    movhu   (0x5014966e), d0
+    btst    0x8000, d0
+    beq     0x48447339
+    mov     a2, a0
+    call    TempoClkStartApply, 0, 0
+    mov     d2, a0
+    call    TempoClkStartApply, 0, 0
+    mov     a3, a0
+    call    TempoClkStartApply, 0, 0
+    and     0xf7ff, psw
+    nop
+    nop
+    movhu   (0x3400011c), d0
+    and     0xff00, d0
+    or      0x01, d0
+    movhu   d0, (0x3400011c)
+    or      0x0800, psw
+    nop
+    nop
+    movhu   (0x3400011c), d0
+    ret     [d2,d3,a2,a3], 0x1c
+# MidiClockRxHandler  (CPU 0x48447361)
+#   received 0xF8 (acts only in slave mode 0x50149656): measure the
+#   interval on the 1 kHz tick 0x50151BFC (last at 0x5003A53C, clamped
+#   0x7F) -> TempoReloadFromInterval(2*dt) re-programs TM5 as a 4x
+#   interpolator; then step every armed/running clock by one 24-PPQN
+#   quantum (TempoClkMidiClockStep / start-apply for armed ones)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# MidiClockRxHandler_entry:   (register-save `call` entry)
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    bne     0x48447373
+    ret     [d2], 0x10
+    movhu   (0x50151bfc), d2
+    mov     (0x5003a53c), d1
+    mov     0x7f, d0
+    add     d1, d0
+    cmp     d0, d2
+    bhi     0x4844738b
+    mov     d2, d0
+    sub     d1, d0
+    cmp     d1, d2
+    bcc     0x4844738d
+    mov     0x7f, d0
+    exthu   d0
+    add     d0, d0
+    exthu   d0
+    call    TempoReloadFromInterval_entry, 0, 0xc
+    mov     d2, (0x5003a53c)
+    mov     0x50149666, a0
+    movhu   (0x5014966e), d0
+    mov     0x4000, d2
+    and     d2, d0
+    beq     0x484473cb
+    call    TempoClkStartApply, 0, 0
+    mov     0x5014967a, a0
+    call    TempoClkStartApply, 0, 0
+    mov     0x50149670, a0
+    call    TempoClkStartApply, 0, 0
+    bra     0x484473f2
+    movhu   (0x5014966e), d0
+    btst    0x8000, d0
+    beq     0x484473f2
+    call    TempoClkMidiClockStep_entry, [d2,d3,a2], 0x18
+    mov     0x5014967a, a0
+    call    TempoClkMidiClockStep_entry, [d2,d3,a2], 0x18
+    mov     0x50149670, a0
+    call    TempoClkMidiClockStep_entry, [d2,d3,a2], 0x18
+    movhu   (0x5014968c), d0
+    mov     0x50149684, a0
+    and     d2, d0
+    beq     0x48447409
+    call    TempoClkStartApply, 0, 0
+    bra     0x4844741a
+    movhu   (0x5014968c), d0
+    btst    0x8000, d0
+    beq     0x4844741a
+    call    TempoClkMidiClockStep_entry, [d2,d3,a2], 0x18
+    movhu   (0x50149696), d0
+    mov     0x5014968e, a0
+    and     d2, d0
+    beq     0x48447431
+    call    TempoClkStartApply, 0, 0
+    bra     0x48447442
+    movhu   (0x50149696), d0
+    btst    0x8000, d0
+    beq     0x48447442
+    call    TempoClkMidiClockStep_entry, [d2,d3,a2], 0x18
+    ret     [d2], 0x10
+# MidiStartRxHandler  (CPU 0x48447445)
+#   received 0xFA: gates mode==0, enable, !suppress, clock-source==0,
+#   main clock neither armed nor running. Internal clock: ArmRestart
+#   the main clock [+ the sub-clocks per 0x5014965C/5E, + 0x50149684
+#   when byte 0x50037C64 != 0, + the count-in clock per ctl bit15].
+#   Slave: relay 0xFA, TempoClkStartNow set, Tm5TimerRestart, 0xF8
+    movm    [d2,a2], (sp)
+    add     -0xc, sp
+# MidiStartRxHandler_entry:   (register-save `call` entry)
+    movhu   (0x50149654), d0
+    cmp     1, d0
+    blt     0x48447457
+    ret     [d2,a2], 0x14
+    movhu   (0x50149658), d0
+    cmp     0, d0
+    bne     0x48447464
+    ret     [d2,a2], 0x14
+    movhu   (0x5014965a), d0
+    cmp     0, d0
+    beq     0x48447471
+    ret     [d2,a2], 0x14
+    movbu   (0x50149662), d0
+    cmp     0, d0
+    beq     0x4844747e
+    ret     [d2,a2], 0x14
+    movhu   (0x5014966e), d0
+    mov     0x50149666, a2
+    btst    0x4000, d0
+    beq     0x48447493
+    ret     [d2,a2], 0x14
+    movhu   (0x5014966e), d0
+    and     0x8000, d0
+    beq     0x484474a2
+    ret     [d2,a2], 0x14
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    bne     0x484474af
+    jmp     0x48447530
+    mov     a2, a0
+    call    TempoClkArmRestart, 0, 0
+    movhu   (0x5014965c), d0
+    cmp     0, d0
+    beq     0x484474e1
+    mov     0x50149670, a0
+    call    TempoClkArmRestart, 0, 0
+    movhu   (0x5014965e), d0
+    cmp     0, d0
+    beq     0x484474ec
+    mov     0x5014967a, a0
+    call    TempoClkArmRestart, 0, 0
+    bra     0x484474ec
+    mov     0x5014967a, a0
+    call    TempoClkArmRestart, 0, 0
+    call    func_484373AE, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x48447503
+    mov     0x50149684, a0
+    call    TempoClkArmRestart, 0, 0
+    movhu   (0x50149698), d0
+    and     0x8000, d0
+    bne     0x48447512
+    ret     [d2,a2], 0x14
+    movhu   (0x50149698), d0
+    mov     0x5014968e, a0
+    and     0xbfff, d0
+    movhu   d0, (0x50149698)
+    call    TempoClkArmRestart, 0, 0
+    ret     [d2,a2], 0x14
+    mov     0xfa, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     a2, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    movhu   (0x5014965c), d0
+    cmp     0, d0
+    beq     0x4844756a
+    mov     0x50149670, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    movhu   (0x5014965e), d0
+    cmp     0, d0
+    beq     0x48447575
+    mov     0x5014967a, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    bra     0x48447575
+    mov     0x5014967a, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    call    func_484373AE, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4844758c
+    mov     0x50149684, a0
+    call    TempoClkStartNow_entry, 0, 0xc
+    movhu   (0x50149698), d0
+    and     0x8000, d0
+    beq     0x484475b3
+    movhu   (0x50149698), d0
+    mov     0x5014968e, a0
+    and     0xbfff, d0
+    movhu   d0, (0x50149698)
+    call    TempoClkStartNow_entry, 0, 0xc
+    call    Tm5TimerRestart, 0, 0
+    mov     0xf8, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    ret     [d2,a2], 0x14
+# MidiContinueRxHandler  (CPU 0x484475c3)
+#   received 0xFB: same gates; ArmContinue set (internal) or relay
+#   0xFB + ContinueNow set + Tm5TimerRestart + 0xF8 (slave)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# MidiContinueRxHandler_entry:   (register-save `call` entry)
+    movhu   (0x50149654), d0
+    cmp     1, d0
+    blt     0x484475d5
+    ret     [d2], 0x10
+    movhu   (0x50149658), d0
+    cmp     0, d0
+    bne     0x484475e2
+    ret     [d2], 0x10
+    movhu   (0x5014965a), d0
+    cmp     0, d0
+    beq     0x484475ef
+    ret     [d2], 0x10
+    movbu   (0x50149662), d0
+    cmp     0, d0
+    beq     0x484475fc
+    ret     [d2], 0x10
+    movhu   (0x5014966e), d0
+    mov     0x50149666, a0
+    btst    0x4000, d0
+    beq     0x48447611
+    ret     [d2], 0x10
+    movhu   (0x5014966e), d0
+    and     0x8000, d0
+    beq     0x48447620
+    ret     [d2], 0x10
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    beq     0x48447698
+    call    TempoClkArmContinue, 0, 0
+    movhu   (0x5014965c), d0
+    cmp     0, d0
+    bne     0x4844763c
+    ret     [d2], 0x10
+    mov     0x50149670, a0
+    call    TempoClkArmContinue, 0, 0
+    movhu   (0x5014965e), d0
+    cmp     0, d0
+    beq     0x4844765c
+    mov     0x5014967a, a0
+    call    TempoClkArmContinue, 0, 0
+    movhu   (0x50149698), d0
+    and     0x8000, d0
+    bne     0x4844766b
+    ret     [d2], 0x10
+    movhu   (0x50149698), d0
+    btst    0x2000, d0
+    bne     0x4844767a
+    ret     [d2], 0x10
+    movhu   (0x50149698), d0
+    mov     0x5014968e, a0
+    and     0xbfff, d0
+    movhu   d0, (0x50149698)
+    call    TempoClkArmContinue, 0, 0
+    ret     [d2], 0x10
+    call    TempoClkContinueNow_entry, 0, 0xc
+    mov     0xfb, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    movhu   (0x5014965c), d0
+    cmp     0, d0
+    beq     0x48447702
+    mov     0x50149670, a0
+    call    TempoClkContinueNow_entry, 0, 0xc
+    movhu   (0x5014965e), d0
+    cmp     0, d0
+    beq     0x484476cf
+    mov     0x5014967a, a0
+    call    TempoClkContinueNow_entry, 0, 0xc
+    movhu   (0x50149698), d0
+    and     0x8000, d0
+    beq     0x48447702
+    movhu   (0x50149698), d0
+    btst    0x2000, d0
+    beq     0x48447702
+    movhu   (0x50149698), d0
+    mov     0x5014968e, a0
+    and     0xbfff, d0
+    movhu   d0, (0x50149698)
+    call    TempoClkContinueNow_entry, 0, 0xc
+    call    Tm5TimerRestart, 0, 0
+    mov     0xf8, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    ret     [d2], 0x10
+# MidiStopRxHandler  (CPU 0x48447712)
+#   received 0xFC: gates mode < 1, enable, !suppress; stop-request the
+#   main clock (0xFC relayed when main was already idle), then stop
+#   each sub-clock that is armed or running
+    movm    [d2], (sp)
+    add     -0xc, sp
+# MidiStopRxHandler_entry:   (register-save `call` entry)
+    movhu   (0x50149654), d0
+    cmp     1, d0
+    blt     0x48447724
+    ret     [d2], 0x10
+    movhu   (0x50149658), d0
+    cmp     0, d0
+    bne     0x48447731
+    ret     [d2], 0x10
+    movhu   (0x5014965a), d0
+    cmp     0, d0
+    beq     0x4844773e
+    ret     [d2], 0x10
+    movhu   (0x5014966e), d0
+    mov     0x50149666, a0
+    btst    0x4000, d0
+    bne     0x4844775f
+    movhu   (0x5014966e), d0
+    btst    0x8000, d0
+    bne     0x4844775f
+    ret     [d2], 0x10
+    call    TempoClkStopRequest, 0, 0
+    movhu   (0x50149656), d0
+    cmp     0, d0
+    bne     0x48447776
+    mov     0xfc, d0
+    call    MidiRealtimeSend_entry, 0, 0xc
+    mov     0x5014967a, a0
+    movhu   (0x50149682), d0
+    mov     0x00008000, d2
+    and     d2, d0
+    beq     0x48447791
+    call    TempoClkStopRequest, 0, 0
+    movhu   (0x50149678), d0
+    mov     0x50149670, a0
+    and     d2, d0
+    beq     0x484477a6
+    call    TempoClkStopRequest, 0, 0
+    movhu   (0x5014968c), d0
+    mov     0x50149684, a0
+    and     d2, d0
+    beq     0x484477bb
+    call    TempoClkStopRequest, 0, 0
+    movhu   (0x50149696), d0
+    mov     0x5014968e, a0
+    and     d2, d0
+    beq     0x484477d0
+    call    TempoClkStopRequest, 0, 0
+    ret     [d2], 0x10
+# Tm5TempoTimerStart  (CPU 0x484477d3)
+#   TM5 bring-up (the sequence the MAME driver models): mode
+#   0x34001082 low3 := 1, reload 0x34001092 := 0x28B0 (= 120 BPM),
+#   bset/bclr 0x40 (load pulse), bset 0x80 (count enable)
+    movbu   (0x34001082), d0
+    and     0xfffffff8, d0
+    or      0x01, d0
+    movbu   d0, (0x34001082)
+    mov     0x28b0, d0
+    movhu   d0, (0x34001092)
+    bset    0x40, (0x34001082)
+    bclr    0x40, (0x34001082)
+    bset    0x80, (0x34001082)
+    retf    0, 0
+# Tm5TempoIsrRegister  (CPU 0x48447809)
+#   register TempoTick96Isr for INTC group 7: descriptor {1, isr, 7,
+#   GxICR 0x3400011C, 0, level 4} -> lib 0x4C03DB26, then enable via
+#   0x4C03DCC8(3)
+    add     -0x24, sp
+# Tm5TempoIsrRegister_entry:   (register-save `call` entry)
+    mov     1, d0
+    movhu   d0, (0x10, sp)
+    mov     0x48447084, d0
+    mov     d0, (0x14, sp)
+    mov     7, d0
+    movhu   d0, (0x18, sp)
+    mov     0x3400011c, d0
+    mov     d0, (0x1c, sp)
+    clr     d0
+    movhu   d0, (0x20, sp)
+    mov     4, d0
+    movhu   d0, (0x1a, sp)
+    mov     3, d0
+    mov     sp, a0
+    add     0x10, a0
+    call    0x4c03db26, [d2,d3,a2,a3], 0x24
+    mov     3, d0
+    call    LibIntcEnable, [d2], 4
+    ret     0, 0x24
+# TempoTimerInit  (CPU 0x48447847)
+#   module init: 0x5003A540 := 1,250,000 (the 2 MHz timebase constant:
+#   reload = 1,250,000/BPM), 0x5003A544 := 0x7D0, then start TM5 +
+#   register the ISR
+    add     -8, sp
+# TempoTimerInit_entry:   (register-save `call` entry)
+    mov     0x001312d0, d0
+    mov     d0, (0x5003a540)
+    mov     0x7d0, d0
+    mov     d0, (0x5003a544)
+    call    Tm5TempoTimerStart, 0, 0
+    call    Tm5TempoIsrRegister_entry, 0, 0x24
+    ret     0, 8
+# TempoBpmReloadWrite  (CPU 0x4844786c)
+#   THE live tempo rewrite (25 callers across the tempo UI): clamp BPM
+#   to 40..300 (out of range -> 120), TM5 reload 0x34001092 :=
+#   1,250,000 / BPM -- takes effect at the next underflow
+    movm    [d2], (sp)
+# TempoBpmReloadWrite_entry:   (register-save `call` entry)
+    mov     d0, d1
+    exthu   d1
+    cmp     0x28, d1
+    blt     0x4844787a
+    cmp     0x12c, d1
+    ble     0x4844787c
+    mov     0x78, d0
+    mov     (0x5003a540), d1
+    exthu   d0
+    clr     d2
+    mov     d2, mdr
+    divu    d0, d1
+    movhu   d1, (0x34001092)
+    ret     [d2], 4
+# TempoReloadFromInterval  (CPU 0x48447891)
+#   slave-mode reload from a measured 0xF8 interval (d0 = 2*ms):
+#   >= 0x3F -> clamp 40 BPM, <= 8 -> clamp 300 BPM, else reload :=
+#   d0 * 0x7D0 / 4 (four internal ticks per received clock)
+    add     -0xc, sp
+# TempoReloadFromInterval_entry:   (register-save `call` entry)
+    mov     d0, d1
+    exthu   d1
+    cmp     0x3f, d1
+    blt     0x484478a3
+    mov     0x28, d0
+    call    TempoBpmReloadWrite_entry, [d2], 4
+    bra     0x484478c5
+    cmp     8, d1
+    bgt     0x484478b1
+    mov     0x12c, d0
+    call    TempoBpmReloadWrite_entry, [d2], 4
+    bra     0x484478c5
+    mov     (0x5003a544), d1
+    exthu   d0
+    nop
+    nop
+    mulu    d1, d0
+    lsr     2, d0
+    movhu   d0, (0x34001092)
+    ret     0, 0xc
+# Tm5TimerRestart  (CPU 0x484478c8)
+#   TM5 phase resync: bclr 0x80, load pulse, bset 0x80 (slave-mode
+#   start/continue re-aligns the interpolator to the incoming clock)
+    bclr    0x80, (0x34001082)
+    bset    0x40, (0x34001082)
+    bclr    0x40, (0x34001082)
+    bset    0x80, (0x34001082)
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0478e7, 0x04a000
 # CustomFlashArchiveParse  (CPU 0x4844a000)
 .incbin_range "baserom/kn7000_program.rom", 0x04a000, 0x04ddf2
 # GetCurrentChord  (CPU 0x4844ddf2)
