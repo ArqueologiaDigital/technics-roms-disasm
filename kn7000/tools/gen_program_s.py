@@ -261,6 +261,18 @@ CONVERT = {
     "SdSndEditMoveDirGet", "SdSndEditMoveDirSet",
     "SdAudListCountGet", "SdAudOpenListIndexGet", "SdAudListEntryCountGet",
     "SdSndListCountGet", "SdSndSelListIndexGet", "SdSndListEntryCountGet",
+    # ---- "TCMP" style container: the WRITER side (2026-07-20) ----
+    "StyleBlockKindClassify", "MemStyleSlotImport",
+    "MemStyleLegacyBlockUpconvert", "MemStyleImportBlock",
+    "MemStyleImportBlockStyle", "MemStyleAreaHeaderInit",
+    "MemStyleAreaHeaderRestamp", "MemStyleRecInit", "MemStyleRecInitAll",
+    "MemStyleVarRecInit", "MemStyleAreaVarStreamsInit",
+    "MemStyleAreaLoadFactory", "MemStyleAreaValidate",
+    "MemStyleAreaValidateOrInit", "MemStyleVarCopy", "MemStyleVarClear",
+    "MemStyleStyleClear", "MemStyleExportSize", "CustStyleAllocPtrGet",
+    "CustStyleAllocPtrSet", "CustStyleVarRecDataSet", "StyleRefIdMark",
+    "StyleRefIdApply", "MemStyleExportToCustom", "CustStyleImportToMem",
+    "InitializeBlock34",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -298,6 +310,9 @@ FUNC_END = {
     "SdAudListEntryCountGet": 0x179357,    # next (unnamed) function at 0x48579357
     "SdSndSelListIndexGet": 0x17B25B,      # next (unnamed) function at 0x4857B25B
     "SdSndListEntryCountGet": 0x17B2CC,    # next (unnamed) function at 0x4857B2CC
+    "StyleBlockKindClassify": 0x346E9,     # next (unnamed) function at 0x484346E9
+    "MemStyleVarCopy": 0x3B386,            # next (unnamed) function at 0x4843B386
+    "MemStyleStyleClear": 0x3BF8F,         # next (unnamed) function at 0x4843BF8F
 }
 
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live

@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 898 synthetic labels for internal helpers called by converted code
+# 935 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -74,6 +74,7 @@ _rom_marker:
 .equ func_48412B6F, 0x48412B6F
 .equ func_48412BD8, 0x48412BD8
 .equ func_48412C25, 0x48412C25
+.equ func_48413688, 0x48413688
 .equ func_4841376B, 0x4841376B
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
@@ -127,6 +128,8 @@ _rom_marker:
 .equ func_4842D366, 0x4842D366
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
+.equ func_484317D3, 0x484317D3
+.equ func_48431838, 0x48431838
 .equ StyleBuiltinNameTableInit_entry, 0x484332FE
 .equ StyleNameSourceSet_entry, 0x48433404
 .equ StyleNameCommit_entry, 0x484334A9
@@ -144,6 +147,21 @@ _rom_marker:
 .equ StyleRecordSelectBind_entry, 0x48433994
 .equ StyleNameAndRecordSelect_entry, 0x484339F9
 .equ StyleBuiltinNameResolve_entry, 0x48433AC4
+.equ StyleBlockKindClassify_entry, 0x4843464A
+.equ func_4843492E, 0x4843492E
+.equ func_48434FCD, 0x48434FCD
+.equ func_484350D0, 0x484350D0
+.equ func_48435121, 0x48435121
+.equ MemStyleSlotImport_entry, 0x4843519D
+.equ MemStyleLegacyBlockUpconvert_entry, 0x48435226
+.equ MemStyleImportBlock_entry, 0x48435285
+.equ MemStyleImportBlockStyle_entry, 0x484352E0
+.equ MemStyleAreaHeaderInit_entry, 0x4843531D
+.equ MemStyleAreaHeaderRestamp_entry, 0x4843533B
+.equ MemStyleRecInit_entry, 0x484353B4
+.equ MemStyleRecInitAll_entry, 0x484353EE
+.equ MemStyleVarRecInit_entry, 0x48435403
+.equ MemStyleAreaVarStreamsInit_entry, 0x484354E3
 .equ MemStyleAllocOffsetGet_entry, 0x48435567
 .equ MemStyleAllocPtrGet_entry, 0x4843557B
 .equ MemStyleAllocPtrSet_entry, 0x48435599
@@ -164,12 +182,29 @@ _rom_marker:
 .equ MemStyleModuleReset_entry, 0x48435845
 .equ func_48436855, 0x48436855
 .equ func_484373AE, 0x484373AE
-.equ func_4843B1B8, 0x4843B1B8
+.equ func_48439D85, 0x48439D85
+.equ func_4843A407, 0x4843A407
+.equ func_4843A848, 0x4843A848
+.equ MemStyleAreaLoadFactory_entry, 0x4843B160
+.equ MemStyleAreaValidate_entry, 0x4843B1B8
+.equ MemStyleAreaValidateOrInit_entry, 0x4843B1F9
+.equ MemStyleVarCopy_entry, 0x4843B233
+.equ MemStyleVarClear_entry, 0x4843BF30
+.equ MemStyleStyleClear_entry, 0x4843BF69
 .equ MemStyleVarBarCount_entry, 0x4843C448
+.equ func_4843CA68, 0x4843CA68
 .equ func_4843CFDD, 0x4843CFDD
 .equ StyleResourceWindowProbe_entry, 0x4843D6DC
 .equ TableRomStyleSubTablePtr, 0x4843D797
 .equ TableRomStyleResourcePtr, 0x4843D7A8
+.equ TableRomSeg02PtrSize, 0x4843D7EF
+.equ MemStyleExportSize_entry, 0x4843DDD7
+.equ CustStyleAllocPtrGet_entry, 0x4843DE0C
+.equ CustStyleAllocPtrSet_entry, 0x4843DE1F
+.equ CustStyleVarRecDataSet_entry, 0x4843DE35
+.equ StyleRefIdApply_entry, 0x4843DE92
+.equ MemStyleExportToCustom_entry, 0x4843DECC
+.equ CustStyleImportToMem_entry, 0x4843E005
 .equ CustStyleRecPtr, 0x4843E107
 .equ CustStyleVarRecPtr, 0x4843E10C
 .equ CustStyleRecData_entry, 0x4843E128
@@ -183,6 +218,8 @@ _rom_marker:
 .equ StoreU16BE, 0x48440398
 .equ SumU16BE_entry, 0x484403A7
 .equ func_484418F1, 0x484418F1
+.equ func_48442092, 0x48442092
+.equ func_484420CA, 0x484420CA
 .equ func_484433C5, 0x484433C5
 .equ func_48443B60, 0x48443B60
 .equ func_48445454, 0x48445454
@@ -12803,7 +12840,543 @@ _rom_marker:
     mov     a2, a0
     ret     [d2,d3,a2,a3], 0x1c
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x033c1e, 0x035564
+.incbin_range "baserom/kn7000_program.rom", 0x033c1e, 0x034645
+# StyleBlockKindClassify  (CPU 0x48434645)
+    movm    [a2], (sp)
+    add     -0x14, sp
+# StyleBlockKindClassify_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     0x485b6beb, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x48434662
+    clr     d0
+    ret     [a2], 0x18
+    mov     a2, a0
+    mov     0x485b6be5, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x4843467a
+    clr     d0
+    ret     [a2], 0x18
+    mov     a2, a0
+    mov     0x485b6be8, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x48434691
+    clr     d0
+    bra     0x484346e6
+    mov     a2, a0
+    mov     0x485b6bdf, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x484346a9
+    mov     1, d0
+    bra     0x484346e6
+    mov     a2, a0
+    mov     0x485b6be2, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x484346c1
+    mov     1, d0
+    bra     0x484346e6
+    mov     a2, a0
+    mov     0x485b6bdc, a1
+    mov     3, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    bne     0x484346e4
+    movbu   (0x10, a2), d0
+    cmp     0, d0
+    beq     0x484346e0
+    mov     2, d0
+    bra     0x484346e6
+    mov     3, d0
+    bra     0x484346e6
+    mov     -1, d0
+    ret     [a2], 0x18
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0346e9, 0x035198
+# MemStyleSlotImport  (CPU 0x48435198)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# MemStyleSlotImport_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     d0, d3
+    extbu   d1
+    exthu   d1
+    mov     d1, a3
+    mov     d1, d0
+    call    MemStyleRecInit_entry, [d2,d3,a2], 0x18
+    clr     d1
+    clr     d2
+    mov     a3, d0
+    extbu   d1
+    call    MemStyleVarClear_entry, [d2,a2], 0x1c
+    inc     d2
+    mov     d2, d1
+    exthu   d2
+    cmp     0x14, d2
+    blt     0x484351ab
+    extbu   d3
+    cmp     0, d3
+    beq     0x484351c8
+    mov     a2, a0
+    movbu   (0x3c, sp), d0
+    call    func_484350D0, [d2,d3,a2,a3], 0x10
+    movbu   (0x3c, sp), d2
+    mov     a3, d0
+    mov     a2, a0
+    mov     d2, d1
+    call    func_4843492E, [d2,d3,a2,a3], 0x40
+    mov     a3, d0
+    mov     d2, d1
+    mov     a2, a0
+    call    func_48434FCD, [d2,d3,a2,a3], 0x44
+    mov     d0, d2
+    cmp     3, d3
+    bne     0x484351ea
+    mov     a3, d0
+    call    func_48435121, [d2,d3,a2,a3], 0x2c
+    mov     d0, d2
+    mov     1, d3
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    blt     0x4843521d
+    mov     d3, d1
+    exthu   d1
+    mov     0x485b6c40, a0
+    movbu   (d1, a0), d0
+    mov     d0, d1
+    exthu   d1
+    cmp     0, d1
+    ble     0x48435211
+    mov     a3, (0x10, sp)
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     a3, d0
+    mov     d3, d1
+    extbu   d1
+    call    MemStyleVarCopy_entry, [d2,d3,a2,a3], 0x34
+    mov     d0, d2
+    inc     d3
+    exthu   d3
+    cmp     0x14, d3
+    bge     0x4843521d
+    mov     d2, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484351f2
+    mov     d2, d0
+    ret     [d2,d3,a2,a3], 0x28
+# MemStyleLegacyBlockUpconvert  (CPU 0x48435221)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# MemStyleLegacyBlockUpconvert_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     0x1400, a0
+    add     d3, a0
+    mov     0x800, a1
+    add     d3, a1
+    mov     0x0000e800, d0
+    call    0x4c0039b5, [a2,a3], 8
+    movbu   (0x485b6c71), d1
+    add     0x60, d3
+    cmp     0, d1
+    mov     0x1d, d2
+    mov     0x485b6c54, a2
+    ble     0x4843527d
+    movbu   (d2, a2), d0
+    mov     0x60, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d3, d0
+    mov     d0, a1
+    nop
+    nop
+    mul     d2, d1
+    add     d3, d1
+    mov     d1, a0
+    mov     -0x60, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    add     -1, d2
+    exth    d2
+    cmp     0, d2
+    blt     0x4843527d
+    movbu   (d2, a2), d1
+    cmp     0, d1
+    bgt     0x48435253
+    ret     [d2,d3,a2], 0x20
+# MemStyleImportBlock  (CPU 0x48435280)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# MemStyleImportBlock_entry:   (register-save `call` entry)
+    mov     a0, a3
+    call    StyleBlockKindClassify_entry, [a2], 0x18
+    mov     d0, d2
+    exth    d0
+    cmp     0, d0
+    bge     0x48435295
+    mov     -1, d0
+    bra     0x484352d8
+    mov     d2, d0
+    exth    d0
+    cmp     2, d0
+    beq     0x4843529f
+    cmp     3, d0
+    bne     0x484352a5
+    mov     a3, a0
+    call    MemStyleLegacyBlockUpconvert_entry, [d2,d3,a2], 0x20
+    call    MemStyleAreaBase, 0, 0
+    add     0xe, a0
+    mov     0xe, a1
+    add     a3, a1
+    mov     2, d0
+    call    0x4c003039, [a2,a3], 8
+    clr     d1
+    clr     d3
+    extbu   d2
+    mov     d2, a2
+    mov     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     a2, d0
+    extbu   d1
+    mov     a3, a0
+    call    MemStyleSlotImport_entry, [d2,d3,a2,a3], 0x28
+    inc     d3
+    mov     d3, d1
+    exthu   d3
+    cmp     3, d3
+    bge     0x484352d8
+    mov     d0, d2
+    exth    d2
+    cmp     0, d2
+    bge     0x484352be
+    ret     [d2,d3,a2,a3], 0x28
+# MemStyleImportBlockStyle  (CPU 0x484352db)
+    movm    [d2,d3,a2], (sp)
+    add     -0x18, sp
+# MemStyleImportBlockStyle_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     d0, d3
+    extbu   d3
+    cmp     3, d3
+    blt     0x484352eb
+    mov     -1, d0
+    bra     0x48435317
+    call    StyleBlockKindClassify_entry, [a2], 0x18
+    mov     d0, d2
+    mov     d2, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x484352fb
+    mov     -1, d0
+    bra     0x48435317
+    mov     d0, d1
+    exth    d1
+    cmp     2, d1
+    beq     0x48435305
+    cmp     3, d1
+    bne     0x4843530b
+    mov     a2, a0
+    call    MemStyleLegacyBlockUpconvert_entry, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x14, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     a2, a0
+    mov     d3, d1
+    call    MemStyleSlotImport_entry, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2], 0x24
+# MemStyleAreaHeaderInit  (CPU 0x4843531a)
+    add     -8, sp
+# MemStyleAreaHeaderInit_entry:   (register-save `call` entry)
+    call    MemStyleAreaBase, 0, 0
+    mov     0x487312e8, a1
+    mov     -0x70, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    ret     0, 8
+# MemStyleAreaHeaderRestamp  (CPU 0x48435336)
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# MemStyleAreaHeaderRestamp_entry:   (register-save `call` entry)
+    call    MemStyleAreaBase, 0, 0
+    mov     a0, a2
+    mov     0x487312e8, a1
+    mov     4, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     a2, a0
+    inc4    a0
+    mov     0x487312ec, a1
+    mov     2, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     0x10, a0
+    add     a2, a0
+    mov     0x487312f8, a1
+    mov     3, d0
+    call    0x4c003039, [a2,a3], 8
+    add     0x16, a2
+    mov     0x487312fe, a1
+    mov     0x1a, d0
+    mov     a2, a0
+    call    0x4c003039, [a2,a3], 8
+    clr     d3
+    mov     d3, d0
+    call    MemStyleRecPtr, 0, 0
+    clr     d0
+    clr     d2
+    mov     0x14, d1
+    nop
+    nop
+    mul     d3, d1
+    mov     d1, a1
+    add     0x50, a0
+    setlb
+    mov     a1, d1
+    add     d2, d1
+    exthu   d0
+    movbu   d1, (d0, a0)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0x14, d2
+    llt
+    inc     d3
+    exthu   d3
+    cmp     3, d3
+    blt     0x48435387
+    ret     [d2,d3,a2], 0x20
+# MemStyleRecInit  (CPU 0x484353af)
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# MemStyleRecInit_entry:   (register-save `call` entry)
+    mov     d0, d3
+    exthu   d3
+    mov     d3, d0
+    call    MemStyleRecPtr, 0, 0
+    mov     0x48731358, a2
+    mov     a0, a1
+    mov     -0x80, d1
+    setlb
+    movbu   (a2), d0
+    inc     a2
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    clr     d1
+    clr     d2
+    add     0x50, a0
+    mov     0x14, d0
+    nop
+    nop
+    mul     d0, d3
+    exthu   d3
+    setlb
+    exthu   d1
+    movbu   (d1, a0), d0
+    inc     d2
+    add     d3, d0
+    movbu   d0, (d1, a0)
+    mov     d2, d1
+    exthu   d2
+    cmp     0x14, d2
+    llt
+    ret     [d2,d3,a2], 0x18
+# MemStyleRecInitAll  (CPU 0x484353e9)
+    movm    [d2], (sp)
+    add     -0xc, sp
+# MemStyleRecInitAll_entry:   (register-save `call` entry)
+    clr     d2
+    mov     d2, d0
+    call    MemStyleRecInit_entry, [d2,d3,a2], 0x18
+    inc     d2
+    exthu   d2
+    cmp     3, d2
+    blt     0x484353ef
+    ret     [d2], 0x10
+# MemStyleVarRecInit  (CPU 0x484353fe)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# MemStyleVarRecInit_entry:   (register-save `call` entry)
+    exthu   d0
+    mov     d0, (0x10, sp)
+    call    MemStyleVarRecPtr, 0, 0
+    mov     a0, d3
+    mov     0x15, a3
+    add     a0, a3
+    mov     a3, a0
+    call    LoadU24BE, 0, 0
+    mov     d0, (0x18, sp)
+    mov     0x10, d0
+    add     d3, d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    mov     d3, a0
+    movbu   d0, (0x1c, sp)
+    mov     0x11, a2
+    add     d3, a2
+    movbu   (a2), d2
+    mov     0x487313d8, a1
+    mov     -0xe0, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    movbu   d2, (a2)
+    movbu   (0x1c, sp), d0
+    mov     (0x14, sp), a0
+    movbu   d0, (a0)
+    mov     (0x18, sp), d0
+    mov     a3, a0
+    call    StoreU24BE, 0, 0
+    mov     (0x10, sp), d0
+    mov     0x14, d1
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    mov     0x485b6d74, a0
+    movbu   (d0, a0), d0
+    cmp     0, d0
+    beq     0x48435475
+    mov     3, a0
+    add     d3, a0
+    movbu   (a0), d0
+    or      0x10, d0
+    movbu   d0, (a0)
+    mov     (0x10, sp), d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     0xc, d0
+    bge     0x4843549c
+    mov     (0x10, sp), d0
+    mov     3, d2
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    ext     d0
+    div     d2, d0
+    mov     mdr, d0
+    cmp     0, d0
+    beq     0x4843549c
+    mov     (0x14, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    bra     0x484354db
+    mov     (0x10, sp), d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     0xc, d0
+    bge     0x484354c4
+    mov     (0x10, sp), d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    ext     d0
+    mov     3, d1
+    div     d1, d0
+    mov     mdr, d0
+    cmp     0, d0
+    bne     0x484354c4
+    mov     (0x14, sp), a0
+    mov     1, d0
+    movbu   d0, (a0)
+    bra     0x484354db
+    clr     d1
+    clr     d2
+    mov     d3, a0
+    inc4    a0
+    setlb
+    exthu   d1
+    movbu   (d1, a0), d0
+    cmp     0, d0
+    beq     0x484354d5
+    mov     1, d0
+    movbu   d0, (d1, a0)
+    inc     d2
+    mov     d2, d1
+    exthu   d2
+    cmp     8, d2
+    llt
+    ret     [d2,d3,a2,a3], 0x30
+# MemStyleAreaVarStreamsInit  (CPU 0x484354de)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# MemStyleAreaVarStreamsInit_entry:   (register-save `call` entry)
+    clr     d0
+    movhu   d0, (0x1c, sp)
+    clr     d3
+    mov     0x50180000, d0
+    mov     d0, (0x18, sp)
+    mov     d3, d0
+    call    MemStyleVarRecPtr, 0, 0
+    mov     a0, (0x14, sp)
+    mov     3, d0
+    movbu   d0, (0x11, a0)
+    mov     (0x14, sp), a2
+    mov     1, d0
+    add     0x10, a2
+    movbu   d0, (a2)
+    mov     d3, d0
+    call    MemStyleVarRecInit_entry, [d2,d3,a2,a3], 0x30
+    movbu   (a2), d0
+    mov     0x487314b8, a2
+    cmp     0, d0
+    beq     0x4843551d
+    mov     0x487314c5, a2
+    mov     a2, a0
+    inc     a0
+    call    LoadU24BE, 0, 0
+    mov     d0, d2
+    add     4, d2
+    call    MemStyleAllocPtrGet_entry, 0, 0xc
+    mov     a0, a3
+    add     d2, a0
+    call    MemStyleAllocPtrSet_entry, [a2], 0x14
+    mov     a3, a0
+    mov     d2, d0
+    mov     a2, a1
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x14, sp), a0
+    mov     (0x18, sp), d1
+    add     0x15, a0
+    mov     a3, d0
+    sub     d1, d0
+    call    StoreU24BE, 0, 0
+    movhu   (0x1c, sp), d0
+    inc     d3
+    movbu   d0, (a3)
+    movhu   d3, (0x1c, sp)
+    movhu   (0x1c, sp), d3
+    cmp     0x3c, d3
+    blt     0x484354f0
+    ret     [d2,d3,a2,a3], 0x30
 # MemStyleAllocOffsetGet  (CPU 0x48435564)
     add     -0xc, sp
 # MemStyleAllocOffsetGet_entry:   (register-save `call` entry)
@@ -13159,7 +13732,7 @@ _rom_marker:
     movhu   d0, (0x50035c4a)
     movhu   d0, (0x50035c48)
     movhu   d0, (0x50035c4c)
-    call    func_4843B1B8, 0, 8
+    call    MemStyleAreaValidate_entry, 0, 8
     call    func_4843FC7B, 0, 0x14
     call    func_484433C5, 0, 0x14
     call    func_4843CFDD, [d2,d3], 0x18
@@ -13187,7 +13760,286 @@ _rom_marker:
 # RhyPatternScan  (CPU 0x4843890e)
 .incbin_range "baserom/kn7000_program.rom", 0x03890e, 0x03982d
 # RhyPatternPlayer  (CPU 0x4843982d)
-.incbin_range "baserom/kn7000_program.rom", 0x03982d, 0x03c445
+.incbin_range "baserom/kn7000_program.rom", 0x03982d, 0x03b15b
+# MemStyleAreaLoadFactory  (CPU 0x4843b15b)
+    movm    [a2,a3], (sp)
+    add     -0x18, sp
+# MemStyleAreaLoadFactory_entry:   (register-save `call` entry)
+    mov     0x50180000, a3
+    mov     a3, a0
+    clr     d0
+    mov     0x00025800, d1
+    call    0x4c003024, [a2], 4
+    mov     sp, a0
+    add     0x14, a0
+    call    TableRomSeg02PtrSize, 0, 0
+    mov     a0, a2
+    mov     0x487312e8, a1
+    mov     4, d0
+    call    0x4c003678, [d2,a2], 8
+    cmp     0, d0
+    beq     0x4843b1a2
+    call    MemStyleAreaHeaderInit_entry, 0, 8
+    call    MemStyleRecInitAll_entry, [d2], 0x10
+    call    MemStyleAreaVarStreamsInit_entry, [d2,d3,a2,a3], 0x30
+    bra     0x4843b1ad
+    mov     (0x14, sp), d0
+    mov     a2, a1
+    mov     a3, a0
+    call    0x4c003039, [a2,a3], 8
+    call    MemStyleAreaChecksumInit_entry, [d2], 0x14
+    ret     [a2,a3], 0x20
+# MemStyleAreaValidate  (CPU 0x4843b1b5)
+    add     -8, sp
+# MemStyleAreaValidate_entry:   (register-save `call` entry)
+    call    MemStyleAreaSignatureVerify_entry, [a2], 0x18
+    exth    d0
+    cmp     0, d0
+    bge     0x4843b1cb
+    call    MemStyleAreaLoadFactory_entry, [a2,a3], 0x20
+    mov     -1, d0
+    bra     0x4843b1f3
+    call    MemStyleAreaChecksumVerify_entry, [d2,d3,a2], 0x1c
+    exth    d0
+    cmp     0, d0
+    bge     0x4843b1de
+    call    MemStyleAreaLoadFactory_entry, [a2,a3], 0x20
+    mov     -1, d0
+    bra     0x4843b1f3
+    call    MemStyleAreaStreamsVerify_entry, [d2,d3,a2,a3], 0x1c
+    exth    d0
+    cmp     0, d0
+    bge     0x4843b1f1
+    call    MemStyleAreaLoadFactory_entry, [a2,a3], 0x20
+    mov     -1, d0
+    bra     0x4843b1f3
+    mov     1, d0
+    ret     0, 8
+# MemStyleAreaValidateOrInit  (CPU 0x4843b1f6)
+    add     -8, sp
+# MemStyleAreaValidateOrInit_entry:   (register-save `call` entry)
+    call    MemStyleAreaSignatureVerify_entry, [a2], 0x18
+    exth    d0
+    cmp     0, d0
+    bge     0x4843b20c
+    call    MemStyleAreaLoadFactory_entry, [a2,a3], 0x20
+    mov     -3, d0
+    bra     0x4843b22b
+    call    MemStyleAreaStreamsVerify_entry, [d2,d3,a2,a3], 0x1c
+    exth    d0
+    cmp     0, d0
+    bge     0x4843b21f
+    call    MemStyleAreaLoadFactory_entry, [a2,a3], 0x20
+    mov     -3, d0
+    bra     0x4843b22b
+    call    MemStyleAreaHeaderRestamp_entry, [d2,d3,a2], 0x20
+    call    MemStyleAreaChecksumInit_entry, [d2], 0x14
+    mov     1, d0
+    ret     0, 8
+# MemStyleVarCopy  (CPU 0x4843b22e)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x24, sp
+# MemStyleVarCopy_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    movbu   (0x44, sp), d0
+    extbu   d2
+    exthu   d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a0, (0x14, sp)
+    movbu   (0x48, sp), d1
+    add     0x50, a0
+    movbu   (d1, a0), d0
+    exthu   d2
+    extbu   d0
+    movhu   d0, (0x22, sp)
+    mov     d2, d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a0, a3
+    mov     d3, d0
+    extbu   d0
+    mov     0x50, a0
+    add     a3, a0
+    movbu   (d0, a0), d1
+    extbu   d1
+    movhu   d1, (0x20, sp)
+    movhu   (0x20, sp), d0
+    mov     d0, (0x18, sp)
+    movhu   (0x22, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    cmp     d1, d0
+    bne     0x4843b276
+    mov     -1, d0
+    ret     [d2,d3,a2,a3], 0x34
+    mov     d3, d2
+    extbu   d2
+    mov     a3, a0
+    mov     d2, d0
+    call    func_4843A407, [d2,d3], 0x1c
+    cmp     0xc, d2
+    blt     0x4843b286
+    jmp     0x4843b334
+    mov     3, d3
+    mov     d2, d0
+    ext     d0
+    div     d3, d0
+    mov     mdr, d0
+    cmp     0, d0
+    beq     0x4843b296
+    jmp     0x4843b334
+    movbu   (0x48, sp), d0
+    mov     d0, a2
+    cmp     0xc, a2
+    blt     0x4843b2a2
+    jmp     0x4843b334
+    ext     d0
+    div     d3, d0
+    mov     mdr, d0
+    cmp     0, d0
+    beq     0x4843b2af
+    jmp     0x4843b334
+    mov     d3, d1
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    cmp     0, d0
+    beq     0x4843b2d3
+    mov     0x20, d2
+    add     a3, d2
+    cmp     1, d0
+    beq     0x4843b2d7
+    mov     0x30, d2
+    add     a3, d2
+    cmp     2, d0
+    beq     0x4843b2d7
+    mov     0x40, d2
+    add     a3, d2
+    cmp     d3, d0
+    beq     0x4843b2d7
+    mov     0x10, d2
+    add     a3, d2
+    mov     a2, d0
+    mov     d3, d1
+    call    LibDiv32, 0, 0
+    cmp     0, d0
+    beq     0x4843b2f2
+    cmp     1, d0
+    beq     0x4843b303
+    cmp     2, d0
+    beq     0x4843b314
+    cmp     d3, d0
+    beq     0x4843b325
+    bra     0x4843b334
+    mov     (0x14, sp), a1
+    mov     d2, a0
+    add     0x10, a1
+    mov     0xd, d0
+    call    0x4c0039eb, [a2,a3], 8
+    bra     0x4843b334
+    mov     (0x14, sp), a1
+    mov     d2, a0
+    add     0x20, a1
+    mov     0xd, d0
+    call    0x4c0039eb, [a2,a3], 8
+    bra     0x4843b334
+    mov     (0x14, sp), a1
+    mov     d2, a0
+    add     0x30, a1
+    mov     0xd, d0
+    call    0x4c0039eb, [a2,a3], 8
+    bra     0x4843b334
+    mov     (0x14, sp), a1
+    mov     d2, a0
+    add     0x40, a1
+    mov     0xd, d0
+    call    0x4c0039eb, [a2,a3], 8
+    mov     (0x18, sp), d0
+    call    MemStyleVarRecData_entry, 0, 0xc
+    movhu   (0x22, sp), d0
+    mov     a0, a3
+    extbu   d0
+    exthu   d0
+    call    MemStyleVarRecPtr, 0, 0
+    movhu   (0x20, sp), d0
+    mov     a0, a2
+    extbu   d0
+    exthu   d0
+    call    MemStyleVarRecPtr, 0, 0
+    mov     a2, a1
+    mov     0xe0, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x18, sp), d0
+    mov     a3, a0
+    call    MemStyleVarRecDataSet_entry, [a2], 0x14
+    mov     (0x18, sp), d0
+    call    MemStyleVarBarCount_entry, 0, 0xc
+    mov     d0, d1
+    mov     (0x18, sp), d0
+    exthu   d1
+    mov     0x48729840, a0
+    call    func_48439D85, [d2,d3,a2,a3], 0x3c
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    call    func_4843A848, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0x34
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x03b386, 0x03bf2b
+# MemStyleVarClear  (CPU 0x4843bf2b)
+    movm    [d2,a2], (sp)
+    add     -0x14, sp
+# MemStyleVarClear_entry:   (register-save `call` entry)
+    mov     d1, d2
+    extbu   d0
+    exthu   d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a0, a2
+    mov     d2, d0
+    extbu   d0
+    call    func_4843A407, [d2,d3], 0x1c
+    extbu   d2
+    add     0x50, a2
+    movbu   (d2, a2), d2
+    extbu   d2
+    exthu   d2
+    mov     d2, d0
+    call    MemStyleVarRecInit_entry, [d2,d3,a2,a3], 0x30
+    mov     d2, d0
+    call    MemStyleVarBarCount_entry, 0, 0xc
+    mov     d0, d1
+    exthu   d1
+    mov     d2, d0
+    mov     0x48729840, a0
+    call    func_48439D85, [d2,d3,a2,a3], 0x3c
+    ret     [d2,a2], 0x1c
+# MemStyleStyleClear  (CPU 0x4843bf64)
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# MemStyleStyleClear_entry:   (register-save `call` entry)
+    extbu   d0
+    exthu   d0
+    mov     d0, a2
+    call    MemStyleRecInit_entry, [d2,d3,a2], 0x18
+    clr     d0
+    clr     d2
+    mov     d0, d1
+    extbu   d1
+    mov     a2, d0
+    call    MemStyleVarClear_entry, [d2,a2], 0x1c
+    mov     d0, d3
+    inc     d2
+    mov     d2, d0
+    mov     d3, d1
+    exth    d1
+    cmp     0, d1
+    blt     0x4843bf8b
+    exthu   d2
+    cmp     0x14, d2
+    blt     0x4843bf74
+    mov     d3, d0
+    ret     [d2,d3,a2], 0x1c
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x03bf8f, 0x03c445
 # MemStyleVarBarCount  (CPU 0x4843c445)
     add     -0xc, sp
 # MemStyleVarBarCount_entry:   (register-save `call` entry)
@@ -13315,7 +14167,411 @@ _rom_marker:
 # (unnamed code follows to the next boundary)
 .incbin_range "baserom/kn7000_program.rom", 0x03d834, 0x03dc7c
 # RhyNoteOnVoice  (CPU 0x4843dc7c)
-.incbin_range "baserom/kn7000_program.rom", 0x03dc7c, 0x03e107
+.incbin_range "baserom/kn7000_program.rom", 0x03dc7c, 0x03ddd2
+# MemStyleExportSize  (CPU 0x4843ddd2)
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# MemStyleExportSize_entry:   (register-save `call` entry)
+    mov     0x1270, d3
+    extbu   d0
+    exthu   d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a0, a2
+    clr     d0
+    clr     d2
+    add     0x50, a2
+    exthu   d0
+    movbu   (d0, a2), d0
+    inc     d2
+    exthu   d0
+    call    MemStyleVarRecData_entry, 0, 0xc
+    inc     a0
+    call    LoadU24BE, 0, 0
+    add     d0, d3
+    add     4, d3
+    mov     d2, d0
+    exthu   d2
+    cmp     0x14, d2
+    blt     0x4843dde8
+    mov     d3, d0
+    ret     [d2,d3,a2], 0x18
+# CustStyleAllocPtrGet  (CPU 0x4843de07)
+    movm    [a2], (sp)
+    add     -0xc, sp
+# CustStyleAllocPtrGet_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     0x13, a0
+    add     a2, a0
+    call    LoadU24BE, 0, 0
+    mov     a2, a0
+    add     d0, a0
+    ret     [a2], 0x10
+# CustStyleAllocPtrSet  (CPU 0x4843de1c)
+    add     -0x10, sp
+# CustStyleAllocPtrSet_entry:   (register-save `call` entry)
+    mov     a1, d0
+    mov     0x13, a1
+    add     a0, a1
+    sub     a0, d0
+    mov     a1, a0
+    call    StoreU24BE, 0, 0
+    ret     0, 0x10
+# CustStyleVarRecDataSet  (CPU 0x4843de30)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+# CustStyleVarRecDataSet_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    exthu   d0
+    call    CustStyleVarRecPtr, 0, 0
+    add     0x15, a0
+    mov     a3, d0
+    sub     a2, d0
+    call    StoreU24BE, 0, 0
+    ret     [a2,a3], 0x18
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# StyleRefIdMark  (CPU 0x4843de50)
+    mov     a0, a2
+    mov     a1, a0
+    call    func_484420CA, [d2], 4
+    mov     d0, d1
+    mov     0xff, d3
+    and     d1, d3
+    mov     d3, d2
+    extbu   d2
+    cmp     0x78, d2
+    blt     0x4843de6c
+    extbu   d3
+    cmp     0x7f, d3
+    bgt     0x4843de6c
+    mov     -1, d0
+    bra     0x4843de8a
+    mov     5, d0
+    call    func_48413688, [d2,d3], 8
+    extb    d0
+    cmp     0, d0
+    blt     0x4843de89
+    cmp     0x37, d0
+    bge     0x4843de89
+    asl2    d0
+    add     d0, a2
+    mov     (a2), d0
+    or      0x80000000, d0
+    mov     d0, (a2)
+    clr     d0
+    ret     [d2,d3,a2], 0x1c
+# StyleRefIdApply  (CPU 0x4843de8d)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+# StyleRefIdApply_entry:   (register-save `call` entry)
+    mov     a0, a3
+    mov     a1, a2
+    mov     a2, a0
+    call    func_484420CA, [d2], 4
+    mov     d0, d1
+    mov     5, d0
+    call    func_48413688, [d2,d3], 8
+    extb    d0
+    cmp     0, d0
+    blt     0x4843dec4
+    cmp     0x37, d0
+    bge     0x4843dec4
+    asl2    d0
+    mov     (d0, a3), d0
+    btst    0x80000000, d0
+    beq     0x4843dec4
+    and     0x00ffffff, d0
+    mov     a2, a0
+    call    func_48442092, [d2], 4
+    ret     [a2,a3], 0x18
+# MemStyleExportToCustom  (CPU 0x4843dec7)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x24, sp
+# MemStyleExportToCustom_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a0, (0x3c, sp)
+    call    MemStyleAreaBase, 0, 0
+    mov     (0x3c, sp), a1
+    mov     -0x70, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    mov     (0x3c, sp), a0
+    clr     d0
+    add     6, a0
+    mov     2, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x3c, sp), a0
+    clr     d0
+    add     8, a0
+    mov     3, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x3c, sp), a0
+    clr     d0
+    add     0xb, a0
+    mov     3, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x3c, sp), a0
+    clr     d0
+    add     0xe, a0
+    mov     2, d1
+    call    0x4c003024, [a2], 4
+    mov     (0x3c, sp), a0
+    extbu   d2
+    add     0x16, a0
+    exthu   d2
+    mov     1, d0
+    call    StoreU16BE, 0, 0
+    mov     d2, d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a0, a3
+    mov     (0x3c, sp), a0
+    call    CustStyleRecPtr, 0, 0
+    mov     a0, a2
+    mov     a3, a1
+    mov     -0x80, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    clr     d0
+    clr     d2
+    mov     0x50, a1
+    add     a2, a1
+    setlb
+    mov     d0, d1
+    exthu   d1
+    movbu   d0, (d1, a1)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0x14, d2
+    llt
+    mov     (0x3c, sp), a0
+    add     0x50, a3
+    mov     a0, a1
+    add     0x1270, a1
+    call    CustStyleAllocPtrSet_entry, 0, 0x10
+    mov     a3, (0x14, sp)
+    add     0x50, a2
+    mov     a2, (0x18, sp)
+    clr     d0
+    clr     d3
+    exthu   d0
+    mov     (0x14, sp), a0
+    movbu   (d0, a0), d1
+    mov     (0x18, sp), a0
+    movbu   (d0, a0), d2
+    mov     d1, d0
+    extbu   d2
+    movhu   d2, (0x20, sp)
+    extbu   d0
+    exthu   d0
+    call    MemStyleVarRecPtr, 0, 0
+    movhu   (0x20, sp), d0
+    mov     a0, a2
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d0
+    mov     (0x3c, sp), a0
+    exthu   d0
+    call    CustStyleVarRecPtr, 0, 0
+    mov     a2, a1
+    mov     -0xe0, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    mov     a2, a0
+    call    MemStyleRecData_entry, 0, 0xc
+    mov     a0, a2
+    mov     (0x3c, sp), a0
+    call    CustStyleAllocPtrGet_entry, [a2], 0x10
+    mov     a0, a3
+    mov     a2, a0
+    inc     a0
+    call    LoadU24BE, 0, 0
+    mov     d0, d2
+    mov     a3, a0
+    mov     a2, a1
+    mov     4, d0
+    add     d2, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x3c, sp), a0
+    mov     a3, a1
+    add     d2, a1
+    inc4    a1
+    call    CustStyleAllocPtrSet_entry, 0, 0x10
+    mov     (0x3c, sp), a0
+    movhu   (0x20, sp), d0
+    mov     a3, a1
+    call    CustStyleVarRecDataSet_entry, [a2,a3], 0x18
+    movbu   (0x1c, sp), d0
+    inc     d3
+    movbu   d0, (a3)
+    mov     d3, d0
+    exthu   d3
+    cmp     0x14, d3
+    bge     0x4843dfec
+    jmp     0x4843df6c
+    mov     (0x3c, sp), a0
+    mov     (0x3c, sp), a1
+    add     0x10, a0
+    add     0x13, a1
+    mov     3, d0
+    call    0x4c003039, [a2,a3], 8
+    ret     [d2,d3,a2,a3], 0x34
+# CustStyleImportToMem  (CPU 0x4843e000)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x24, sp
+# CustStyleImportToMem_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a0, (0x40, sp)
+    call    CustStyleRecPtr, 0, 0
+    mov     a0, a3
+    extbu   d2
+    exthu   d2
+    mov     d2, d0
+    call    MemStyleRecPtr, 0, 0
+    mov     a3, a2
+    mov     a0, a1
+    mov     -0x80, d1
+    setlb
+    movbu   (a2), d0
+    inc     a2
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    clr     d3
+    add     0x50, a0
+    mov     a0, (0x14, sp)
+    movbu   (a0), d1
+    mov     0x14, d0
+    nop
+    nop
+    mul     d0, d2
+    exthu   d2
+    cmp     d2, d1
+    blt     0x4843e03c
+    movbu   (a0), d1
+    add     d2, d0
+    cmp     d0, d1
+    blt     0x4843e063
+    mov     0x14, d1
+    add     d2, d1
+    setlb
+    movbu   (a0), d0
+    cmp     d2, d0
+    bge     0x4843e050
+    movbu   (a0), d0
+    exth    d3
+    add     0x14, d0
+    movbu   d0, (a0)
+    add     0x14, d3
+    bra     0x4843e059
+    movbu   (a0), d0
+    exth    d3
+    add     -0x14, d0
+    movbu   d0, (a0)
+    add     -0x14, d3
+    mov     (0x14, sp), a0
+    movbu   (a0), d0
+    cmp     d2, d0
+    llt
+    movbu   (a0), d0
+    cmp     d1, d0
+    lge
+    mov     1, d1
+    mov     d1, d2
+    exth    d3
+    setlb
+    mov     (0x14, sp), a0
+    exthu   d1
+    movbu   (d1, a0), d0
+    inc     d2
+    add     d3, d0
+    movbu   d0, (d1, a0)
+    mov     d2, d1
+    exthu   d2
+    cmp     0x14, d2
+    llt
+    clr     d0
+    clr     d1
+    mov     d1, (0x1c, sp)
+    add     0x50, a3
+    mov     a3, (0x20, sp)
+    exthu   d0
+    mov     (0x20, sp), a0
+    movbu   (d0, a0), d2
+    mov     (0x14, sp), a0
+    extbu   d2
+    movbu   (d0, a0), d3
+    exthu   d3
+    mov     d3, d0
+    call    MemStyleVarRecData_entry, 0, 0xc
+    mov     a0, a3
+    mov     (0x40, sp), a0
+    mov     d2, d0
+    exthu   d0
+    call    CustStyleVarRecPtr, 0, 0
+    mov     a0, (0x18, sp)
+    mov     d3, d0
+    extbu   d0
+    exthu   d0
+    call    MemStyleVarRecPtr, 0, 0
+    mov     (0x18, sp), a1
+    mov     -0xe0, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    mov     d3, d0
+    mov     a3, a0
+    call    MemStyleVarRecDataSet_entry, [a2], 0x14
+    mov     d3, d0
+    call    func_4843CA68, [d2], 0x18
+    mov     d3, d0
+    call    MemStyleVarRecData_entry, 0, 0xc
+    mov     a0, a3
+    mov     (0x40, sp), a0
+    mov     (0x18, sp), a1
+    call    CustStyleRecData_entry, [a2], 0x10
+    mov     a0, a2
+    inc     a0
+    call    LoadU24BE, 0, 0
+    mov     d0, d2
+    mov     a3, a0
+    mov     a2, a1
+    mov     4, d0
+    add     d2, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     a3, a0
+    add     d2, a0
+    inc4    a0
+    call    MemStyleAllocPtrSet_entry, [a2], 0x14
+    movbu   d3, (a3)
+    mov     (0x1c, sp), d0
+    inc     d0
+    exthu   d0
+    mov     d0, (0x1c, sp)
+    cmp     0x14, d0
+    bge     0x4843e104
+    jmp     0x4843e07e
+    ret     [d2,d3,a2,a3], 0x34
 # CustStyleRecPtr  (CPU 0x4843e107)
     add     0x70, a0
     retf    0, 0
@@ -30738,7 +31994,181 @@ _rom_marker:
     mov     0x1e, d0
     retf    0, 0
 # InitializeBlock34  (CPU 0x48572f46)
-.incbin_range "baserom/kn7000_program.rom", 0x172f46, 0x1731fb
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+    mov     sp, a3
+    add     0x1c, a3
+    mov     0x00040004, d0
+    mov     d0, (0x1c, sp)
+    mov     0x4842a802, d0
+    mov     d0, (0x20, sp)
+    mov     0xa, d3
+    movhu   d3, (0x24, sp)
+    mov     0x487666fc, d0
+    mov     d0, (0x28, sp)
+    mov     0x224, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040009, d0
+    mov     d0, (0x1c, sp)
+    mov     0x4842cb02, d0
+    mov     d0, (0x20, sp)
+    mov     0xf, d0
+    movhu   d0, (0x24, sp)
+    mov     0x48766804, d0
+    mov     d0, (0x28, sp)
+    mov     0x225, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x0004000a, d0
+    mov     d0, (0x1c, sp)
+    mov     0x4842cb4a, d0
+    mov     d0, (0x20, sp)
+    mov     2, d0
+    movhu   d0, (0x24, sp)
+    mov     0x48766844, d0
+    mov     d0, (0x28, sp)
+    mov     0x226, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040001, d2
+    mov     d2, (0x1c, sp)
+    mov     0x4842ab7d, a2
+    mov     a2, (0x20, sp)
+    movhu   d3, (0x24, sp)
+    mov     0x48766850, d0
+    mov     d0, (0x28, sp)
+    mov     0x221, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     d2, (0x1c, sp)
+    mov     a2, (0x20, sp)
+    movhu   d3, (0x24, sp)
+    mov     0x4876687c, d0
+    mov     d0, (0x28, sp)
+    mov     0x229, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040002, d3
+    mov     d3, (0x1c, sp)
+    mov     0x4842ac35, a2
+    mov     a2, (0x20, sp)
+    mov     0x32, d2
+    movhu   d2, (0x24, sp)
+    mov     0x487668a8, d0
+    mov     d0, (0x28, sp)
+    mov     0x222, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     d3, (0x1c, sp)
+    mov     a2, (0x20, sp)
+    movhu   d2, (0x24, sp)
+    mov     0x48766974, d0
+    mov     d0, (0x28, sp)
+    mov     0x22a, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040003, d3
+    mov     d3, (0x1c, sp)
+    mov     0x4842acfa, a2
+    mov     a2, (0x20, sp)
+    mov     0x51, d2
+    movhu   d2, (0x24, sp)
+    mov     0x48766a40, d0
+    mov     d0, (0x28, sp)
+    mov     0x223, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     d3, (0x1c, sp)
+    mov     a2, (0x20, sp)
+    movhu   d2, (0x24, sp)
+    mov     0x48766b88, d0
+    mov     d0, (0x28, sp)
+    mov     0x22b, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040011, d0
+    mov     d0, (0x1c, sp)
+    mov     0x4842cb92, d0
+    mov     d0, (0x20, sp)
+    mov     0xb0, d2
+    movhu   d2, (0x24, sp)
+    mov     0x48766cd0, d0
+    mov     d0, (0x28, sp)
+    mov     0x220, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x00040010, d0
+    mov     d0, (0x1c, sp)
+    mov     0x4842d934, d0
+    mov     d0, (0x20, sp)
+    movhu   d2, (0x24, sp)
+    mov     0x48766f94, d0
+    mov     d0, (0x28, sp)
+    mov     0x228, d0
+    mov     a3, a0
+    call    RegisterObjectTable, 0, 0
+    mov     0x22, d0
+    mov     0x486ae03c, a0
+    mov     0x486ae048, a1
+    call    func_484317D3, [a2], 4
+    mov     0x02200000, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x116, d0
+    mov     0x02230000, d1
+    mov     0x486ae054, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x0220001c, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x117, d0
+    mov     0x02230001, d1
+    mov     0x486ae060, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x02200029, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x11a, d0
+    mov     0x02230002, d1
+    mov     0x486ae070, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x0220004c, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x11b, d0
+    mov     0x02230003, d1
+    mov     0x486ae07c, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x0220005a, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x11c, d0
+    mov     0x02230004, d1
+    mov     0x486ae08c, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x02200085, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x11d, d0
+    mov     0x02230005, d1
+    mov     0x486ae09c, a0
+    call    func_48431838, [d2,a2], 8
+    mov     0x02200088, d0
+    mov     d0, (0x10, sp)
+    mov     0x000c0022, d0
+    mov     d0, (0x14, sp)
+    mov     0x11e, d0
+    mov     0x02230006, d1
+    mov     0x486ae0ac, a0
+    call    func_48431838, [d2,a2], 8
+    ret     [d2,d3,a2,a3], 0x3c
 # SdAudSongIndexGet  (CPU 0x485731fb)
     mov     (0x500062fc), d0
     retf    0, 0

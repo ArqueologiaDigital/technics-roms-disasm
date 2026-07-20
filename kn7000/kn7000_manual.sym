@@ -275,8 +275,29 @@
 0x487F6E43  LibIrqSubDispatch      ; = lib 0x4C03DE72: scans the INTC group's DETECT bits 0-3 to pick the sub-source (called by the IRQ handlers)
 0x487CD919  LibResourceLookup      ; = lib 0x4C014948: resource dispatcher -- masks the resource ID to 24 bits, calls the trie lookup at lib 0x4C01BB0C, returns the resource record (the GUI/style-name resource path; see rhythm-name-list-bug.md)
 
-; ---- Resident RAM code overlay (copied ROM image) ----------------------------
-0x48035D08  RamCodeOverlayImage    ; ROM image of the ~0xA96C-byte code overlay copied to RAM 0x50180000 at boot (via LibMemCopy, from the block-copy helper ~0x4843B1A0); the firmware then calls into it at 0x50180000+ (e.g. method dispatch). Requires the library (0x8C) self-loaded first.
+; ---- Table-ROM segment 2: the FACTORY MEMORY-STYLE container -----------------
+; RETRACTION 2026-07-20: this used to be called `RamCodeOverlayImage` and was
+; described as a "~0xA96C-byte CODE overlay copied to RAM 0x50180000 at boot".
+; That was wrong on both counts, and it collided with MEM_STYLE_AREA = 0x50180000
+; (whose 0x25800-byte extent is hard-coded in MemStyleAllocFits). The live trace
+; behind the old note -- LibMemCopy(dest=0x50180000, src=0x48035D08, len=0xA96C),
+; 44036 non-zero writes spanning 0x50180000..0x5018A964 -- was REAL, but it is
+; MemStyleAreaLoadFactory 0x4843B15B doing it, and what it copies is DATA:
+;   0x4843B160  LibMemSet(0x50180000, 0, 0x25800)          <- MEM_STYLE_AREA
+;               TableRomSeg02PtrSize -> a2 = 0x48000000 + dir[2] = 0x48035D08
+;                                       size = dir[3]-dir[2] = 0x40674-0x35D08
+;                                            = 0xA96C       <- the "overlay" len
+;               strncmp(a2, 0x487312E8, 4) == "TCMP" ?
+;                 yes -> LibMemCopy(0x50180000, a2, 0xA96C)
+;                 no  -> build an empty container from the ROM templates
+;               MemStyleAreaChecksumInit
+; The chunk itself starts with the ASCII bytes "TCMP" and carries the very same
+; header this file documents below: checksum 0x00CC, start 0x70, length 0x1B00
+; halfwords, allocator top 0x00A969 (= the 0x5018A964 the write-tap saw, +4 of
+; slack to the 0xA96C chunk length), N = 3 at +0x16, and three named styles
+; " Easy 8 Beat ", "Easy 16 Beat ", " Easy Swing  ". It is the FACTORY DEFAULT
+; MEMORY-STYLE container, not code, and nothing calls into 0x50180000.
+0x48035D08  FactoryMemStyleContainer  ; table ROM segment 2 (dir[2], 0xA96C bytes): the factory-default "TCMP" MEMORY-style container, copied verbatim to MEM_STYLE_AREA 0x50180000 by MemStyleAreaLoadFactory. See notes/table-rom-format.md, which already had it right as the 'TCMP' chunk.
 
 ; ---- Rhythm/style list-box data hierarchy (holds the REAL style names) --------
 0x4873ACC0  StyleGenreTable        ; style-list genre table, 8-byte entries {+0: genre-name ptr (16B space-padded, e.g. 0x485D0F38 "Rock & Pop"/"Easy Listening"/"Soul & Gospel"), +4: ptr to that genre's style sub-table (8-byte entries {+0: REAL style name 16B "Disco Orchestra"/"Mersey Ballad"/..., +4: per-style numeric table})}. The real per-style names ARE present here -- see notes/rhythm-name-list-bug.md.
@@ -2115,7 +2136,7 @@
 0x4843570A  MemStyleAreaChecksumInit_entry
 0x48435749  MemStyleAreaSignatureVerify ; strncmp(base, "TCMP", 4) + strncmp(base+4, 00 00, 2) through the library strncmp 0x4C003678, then require the byte just below the allocator top to be 0xF5 (the last stream's terminator). Returns 1 / -3
 0x4843574E  MemStyleAreaSignatureVerify_entry
-0x4843579E  MemStyleAreaStreamsVerify  ; full structural check of all 0x3C variation streams: kind byte 0, first stream byte 0xF4, last byte 0xF5, and the number of 0xF4 bar markers walked (skipping SysEx via RhySysexLen and running-status events via RhyEventLenByStatus) equal to MemStyleVarBarCount. Returns 1 / -3
+0x4843579E  MemStyleAreaStreamsVerify  ; full structural check of all 0x3C variation streams: stream[0] == the VARIATION INDEX (corrected 2026-07-20; the earlier "kind byte 0" reading was wrong -- see the header comment above), event byte stream[4] == 0xF4, last byte 0xF5, and the number of 0xF4 bar markers walked (skipping SysEx via RhySysexLen and running-status events via RhyEventLenByStatus) equal to MemStyleVarBarCount. Returns 1 / -3
 0x484357A3  MemStyleAreaStreamsVerify_entry
 0x48435842  MemStyleModuleReset     ; clears the current-rhythm selection cells (0x50034C3C..0x50034C44, 0x50035C48..0x50035C4C) and re-runs StyleNameModuleBoot plus the rest of the rhythm-module boot chain
 0x48435845  MemStyleModuleReset_entry
@@ -2205,3 +2226,133 @@
 0x4857B251  SdSndSelListIndexGet    ; -> the signed u16 *(0x500063E0): which SOUND list the song cursor indexes into -- retf leaf
 0x4857B2AC  SdSndListEntryCountGet  ; (d0 = list) -> its entry count via 0x4857C28E/0x4857C3C3, or -1
 0x4857B2AF  SdSndListEntryCountGet_entry
+
+; ---- "TCMP" STYLE CONTAINER: the WRITER side --------------------------------
+; Converted 2026-07-20. The previous pass converted everything that READS a
+; "TCMP" container; this is the side that BUILDS one. Together they close the
+; round trip RAM <-> CUSTOM flash <-> table ROM.
+;
+; WHAT A WRITER MUST PRODUCE (all offsets container-relative, all multi-byte
+; header fields BIG-endian even though the CPU is little-endian):
+;
+;   +0x00  "TCMP"                       4 bytes, checked by MemStyleAreaSignatureVerify
+;   +0x04  00 00                        2 bytes, also checked
+;   +0x06  u16BE checksum               SumU16BE over the record block (below)
+;   +0x08  u24BE checksum start  = 0x70
+;   +0x0B  u24BE checksum length = 0x1B00 HALFWORDS (= 0x3600 bytes)
+;   +0x0E  u16BE  (copied verbatim between containers; not validated)
+;   +0x10  u24BE container length       MEMORY: 0x025800 (the capacity);
+;                                       CUSTOM: the used size, which
+;                                       MemStyleExportToCustom sets by copying
+;                                       the allocator top over it at the end
+;   +0x13  u24BE bump-allocator top     offset of the next free heap byte
+;   +0x16  u16BE N                      style count (MEMORY 3, CUSTOM 1)
+;   +0x18  a fixed 0x18-byte tail       (0x0D 0x08 0x04 0x02 0x02 0x01 0x02 0x0F,
+;                                        then zeros) taken verbatim from the ROM
+;                                        template; +0x30..+0x6F is 0x20 padding
+;   +0x70            N style records,      stride 0x80
+;   +0x70+N*0x80     N*20 variation records, stride 0xE0
+;   +0x70+N*0xA0*... the event-stream heap, growing up to the container length
+;
+;   The checksum therefore covers EXACTLY the record block and nothing else:
+;   for N = 3, 3*0x80 + 60*0xE0 = 0x180 + 0x3480 = 0x3600 bytes = 0x1B00
+;   halfwords, starting at 0x70. That is why the descriptor at +0x08/+0x0B is a
+;   constant that MemStyleAreaChecksumInit simply stamps.
+;
+;   STYLE RECORD (0x80 bytes, ROM template 0x48731358):
+;     +0x00  13-byte style name, space padded, then 00 00 00
+;     +0x10 / +0x20 / +0x30 / +0x40   four 13-byte VARIATION names, same shape
+;     +0x50  20 bytes: the ABSOLUTE variation indices this style owns.
+;            The template holds 00..13 and MemStyleRecInit adds style*0x14, so
+;            style 0 owns 0x00..0x13, style 1 0x14..0x27, style 2 0x28..0x3B.
+;            CustStyleImportToMem renormalises these on import; the check is
+;            "every entry must land in [style*0x14, style*0x14+0x14)".
+;     +0x68  two u16 fields (0x0044 0x0044 in the factory container)
+;
+;   VARIATION RECORD (0xE0 bytes, ROM template 0x487313D8):
+;     +0x00        content/kind byte (0x5A / 0x60 / 0x22 in the factory data)
+;     +0x03  bit 4 set when 0x485B6D74[var % 20] is non-zero (the "B" half of a
+;            paired variation -- the table is 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
+;            0,1,0,1, i.e. the odd slots from 13 up)
+;     +0x04..+0x0B  eight per-part bytes; for var % 20 >= 0x0C every non-zero
+;            entry is clamped to 1 by MemStyleVarRecInit (the factory container
+;            shows exactly this: 00 10 11 11 11 11 11 00 for variations 0..11
+;            and 00 01 01 01 01 01 01 00 for 12..19)
+;     +0x10        bar-count field   \ MemStyleVarBarCount =
+;     +0x11        meter field       /   (rec[0x10]+1) * ((rec[0x11]&7)+1)
+;     +0x15  u24BE offset of this variation's event stream in the container
+;
+;   EVENT STREAM (in the heap):
+;     +0x00        THE VARIATION INDEX -- NOT a zero "kind" byte. Every writer
+;                  in the firmware stamps it (MemStyleAreaVarStreamsInit,
+;                  MemStyleExportToCustom, CustStyleImportToMem all do
+;                  `movbu <var>,(stream)` right after copying), and
+;                  MemStyleAreaStreamsVerify rejects the container if
+;                  stream[0] != var. Verified against the factory container in
+;                  table ROM segment 2: stream[0] == var for all 60 variations.
+;     +0x01  u24BE event-byte count L (the stream's total size is L + 4)
+;     +0x04  L bytes of events: opens with a 0xF4 bar marker, ends with 0xF5,
+;            0xF0 = SysEx (length via RhySysexLen), >= 0x80 = channel event
+;            (length via RhyEventLenByStatus), <= 0x7F = one running-status
+;            data byte. The number of 0xF4 markers must equal
+;            MemStyleVarBarCount for that variation.
+;     The byte immediately below the allocator top must be 0xF5 --
+;     MemStyleAreaSignatureVerify checks it as a cheap "the heap is intact" test,
+;     so a writer must allocate streams contiguously and leave no tail slack.
+;
+;   MINIMUM EMPTY CONTAINER: MemStyleAreaVarStreamsInit shows the smallest legal
+;   stream. Two ROM prototypes sit right after the record templates:
+;     0x487314B8 = 00 00 00 05  F4 F4 F4 F4 F5   (4 bars, used when rec[0x10]==0)
+;     0x487314C5 = 00 00 00 09  F4 x8 F5         (8 bars, used when rec[0x10]!=0)
+;   -- chosen precisely so the marker count matches MemStyleVarBarCount with the
+;   rec[0x11]=3 the same routine writes.
+
+0x48434645  StyleBlockKindClassify  ; (a0 = a candidate style block) strncmp its first 3 bytes against the four tag strings at 0x485B6BDC/DF/E5/E8/EB (library strncmp 0x4C003678): -> 0 unrecognised, 2 or 3 for the two legacy kinds that need MemStyleLegacyBlockUpconvert (2 vs 3 chosen by the byte at +0x10), -1 on no match at all
+0x4843464A  StyleBlockKindClassify_entry
+0x48435198  MemStyleSlotImport      ; (a0 = source container, d0 = kind from StyleBlockKindClassify, d1 = destination MEMORY style 0..2, (0x3C,sp) = flags) reset the slot with MemStyleRecInit, clear all 20 variations with MemStyleVarClear, then pull name/record/stream data across. Called once per style by MemStyleImportBlock, once total by MemStyleImportBlockStyle
+0x4843519D  MemStyleSlotImport_entry
+0x48435221  MemStyleLegacyBlockUpconvert ; (a0 = source block) in-place layout fix applied only to kinds 2 and 3: LibMemMove 0xE800 bytes from block+0x800 to block+0x1400, then walk the index list 0x485B6C54[0x1D..0] (gated by the flag byte 0x485B6C71) moving the 0x60-byte records at block+0x60 into their new slots, high index first
+0x48435226  MemStyleLegacyBlockUpconvert_entry
+0x48435280  MemStyleImportBlock     ; (a0 = source container) classify it, up-convert if needed, copy the u16BE at +0x0E into MEM_STYLE_AREA+0x0E, then MemStyleSlotImport all three styles. -> -1 when the block is not a style block
+0x48435285  MemStyleImportBlock_entry
+0x484352DB  MemStyleImportBlockStyle ; (a0 = source container, d0 = destination style 0..2) the single-style twin of MemStyleImportBlock. -> -1 for d0 >= 3 or an unclassifiable block
+0x484352E0  MemStyleImportBlockStyle_entry
+0x4843531A  MemStyleAreaHeaderInit  ; copy the whole 0x70-byte header template 0x487312E8 over MEM_STYLE_AREA+0x00. Leaves the checksum and allocator top at the template's zeros -- callers follow with MemStyleAreaChecksumInit
+0x4843531D  MemStyleAreaHeaderInit_entry
+0x48435336  MemStyleAreaHeaderRestamp ; the REPAIR twin: re-stamps only the constant header fields from the template -- [0x00,0x04) signature, [0x04,0x06) sub-signature, [0x10,0x13) container length, [0x16,0x30) the fixed tail -- deliberately PRESERVING the checksum descriptor [0x06,0x10) and the allocator top [0x13,0x16), then rewrites all three styles' variation-index tables (rec+0x50+i = style*0x14 + i). Used by MemStyleAreaValidateOrInit when the streams survived but the header did not
+0x4843533B  MemStyleAreaHeaderRestamp_entry
+0x484353AF  MemStyleRecInit         ; (d0 = style 0..2) copy the 0x80-byte style-record template 0x48731358 into that style's record, then bias its 20 variation indices at +0x50 by style*0x14. The template's name field reads "    clear    "
+0x484353B4  MemStyleRecInit_entry
+0x484353E9  MemStyleRecInitAll      ; MemStyleRecInit for styles 0, 1 and 2
+0x484353EE  MemStyleRecInitAll_entry
+0x484353FE  MemStyleVarRecInit      ; (d0 = absolute variation 0..0x3B) copy the 0xE0-byte variation template 0x487313D8 over the record while PRESERVING three fields the caller has already set: rec[0x10], rec[0x11] and the u24BE stream offset at rec+0x15. Then apply the slot rules -- set bit 4 of rec[3] when 0x485B6D74[var%20] != 0; for var%20 < 0x0C write rec[0x10] = 1 on multiples of 3 and 0 otherwise; for var%20 >= 0x0C clamp each non-zero byte of rec[4..0x0B] to 1
+0x48435403  MemStyleVarRecInit_entry
+0x484354DE  MemStyleAreaVarStreamsInit ; build all 0x3C empty variation streams from scratch: per variation set rec[0x11] = 3 and rec[0x10] = 1, MemStyleVarRecInit, then pick the ROM prototype stream (0x487314B8 for rec[0x10]==0, 0x487314C5 otherwise), bump-allocate LoadU24BE(proto+1)+4 bytes through MemStyleAllocPtrGet/Set, LibMemCopy it in, StoreU24BE the heap offset into rec+0x15, and stamp stream[0] with the variation index
+0x484354E3  MemStyleAreaVarStreamsInit_entry
+0x4843B15B  MemStyleAreaLoadFactory ; wipe MEM_STYLE_AREA (LibMemSet 0x25800 zeros) and repopulate it: if table-ROM segment 2 (TableRomSeg02PtrSize -> 0x48035D08, 0xA96C bytes) starts with "TCMP" copy the whole factory container in, otherwise build an empty one (MemStyleAreaHeaderInit + MemStyleRecInitAll + MemStyleAreaVarStreamsInit); finish with MemStyleAreaChecksumInit. 7 call sites -- THIS is the LibMemCopy(0x50180000, 0x48035D08, 0xA96C) the old boot write-taps saw and mistook for a code overlay
+0x4843B160  MemStyleAreaLoadFactory_entry
+0x4843B1B5  MemStyleAreaValidate    ; signature, then checksum, then streams; any failure re-runs MemStyleAreaLoadFactory and returns -1, success returns 1
+0x4843B1B8  MemStyleAreaValidate_entry
+0x4843B1F6  MemStyleAreaValidateOrInit ; the cheaper boot-time variant: signature and streams only (no checksum). A failure reloads the factory container and returns -3; a pass runs MemStyleAreaHeaderRestamp + MemStyleAreaChecksumInit and returns 1, i.e. it repairs a container whose records are intact but whose header drifted. 10 call sites
+0x4843B1F9  MemStyleAreaValidateOrInit_entry
+0x4843B22E  MemStyleVarCopy         ; (d0 = destination style, d1 = destination variation slot, (0x44,sp) = source style, (0x48,sp) = source variation slot) copy one variation between MEMORY styles: refuses when the two resolve to the same absolute variation, copies the matching 13-byte variation name (record +0x10/+0x20/+0x30/+0x40, selected by slot/3, only for slots < 0x0C that are multiples of 3), copies the 0xE0 record, then restores the DESTINATION's own stream offset with MemStyleVarRecDataSet and rebuilds the stream to the new bar count
+0x4843B233  MemStyleVarCopy_entry
+0x4843BF2B  MemStyleVarClear        ; (d0 = style, d1 = variation slot 0..0x13) resolve the absolute variation through record+0x50, MemStyleVarRecInit it, then reset its event stream to an empty MemStyleVarBarCount-bar pattern from the prototype 0x48729840
+0x4843BF30  MemStyleVarClear_entry
+0x4843BF64  MemStyleStyleClear      ; (d0 = style 0..2) MemStyleRecInit plus MemStyleVarClear for all 20 slots -- the "clear this MEMORY style" user operation, which is why the record template is named "clear"
+0x4843BF69  MemStyleStyleClear_entry
+0x4843DDD2  MemStyleExportSize      ; (d0 = style 0..2) -> the exact byte size a CUSTOM export of that style needs: 0x1270 (= 0x70 header + 1*0x80 style record + 20*0xE0 variation records) plus, for each of its 20 variations, LoadU24BE(stream+1) + 4
+0x4843DDD7  MemStyleExportSize_entry
+0x4843DE07  CustStyleAllocPtrGet    ; (a0 = container base) -> base + u24BE(base+0x13): the container's next free heap byte. The base-relative twin of MemStyleAllocPtrGet
+0x4843DE0C  CustStyleAllocPtrGet_entry
+0x4843DE1C  CustStyleAllocPtrSet    ; (a0 = container base, a1 = new top) StoreU24BE(base+0x13, a1 - base)
+0x4843DE1F  CustStyleAllocPtrSet_entry
+0x4843DE30  CustStyleVarRecDataSet  ; (a0 = container base, a1 = stream pointer, d0 = variation) StoreU24BE(CustStyleVarRecPtr(base,var)+0x15, stream - base)
+0x4843DE35  CustStyleVarRecDataSet_entry
+0x4843DE50  StyleRefIdMark          ; (a0 = a 0x37-entry u32 table, a1 = a name/key) resolve it through 0x484420CA, reject ids whose low byte is 0x78..0x7F (-1), map it with 0x48413688(kind 5) to an index 0..0x36 and set bit 31 of table[index]. Mechanical reading; the table's role is not yet pinned down
+0x4843DE8D  StyleRefIdApply         ; the inverse of StyleRefIdMark: look the id up the same way and, when table[index] has bit 31 set, hand the low 24 bits to 0x48442092
+0x4843DE92  StyleRefIdApply_entry
+0x4843DEC7  MemStyleExportToCustom  ; (d0 = MEMORY style 0..2, a0 = destination block, sized by MemStyleExportSize) write a complete N=1 "TCMP" container: copy MEM_STYLE_AREA's 0x70 header, zero [0x06,0x10) so the checksum descriptor is rebuilt later, StoreU16BE(dest+0x16, 1), copy the 0x80 style record, renumber its variation indices to 0..0x13, set the allocator top to 0x1270, then for each of the 20 variations copy the 0xE0 record, bump-allocate and copy the stream, point the record at it with CustStyleVarRecDataSet and stamp stream[0] with the destination variation index; finally copy the allocator top over the container-length field at +0x10
+0x4843DECC  MemStyleExportToCustom_entry
+0x4843E000  CustStyleImportToMem    ; (d0 = destination MEMORY style 0..2, a0 = a CUSTOM container) the exact inverse: copy the 0x80 style record in, renormalise its 20 variation indices by adding or subtracting 0x14 until each lands in [style*0x14, style*0x14+0x14), then for each of the 20 variations copy the 0xE0 record and its stream into the MEMORY heap and stamp stream[0] with the MEMORY variation index
+0x4843E005  CustStyleImportToMem_entry
