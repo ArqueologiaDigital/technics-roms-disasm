@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 543 synthetic labels for internal helpers called by converted code
+# 569 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -134,6 +134,7 @@ _rom_marker:
 .equ func_4844952A, 0x4844952A
 .equ func_484496CE, 0x484496CE
 .equ func_48449790, 0x48449790
+.equ func_48449813, 0x48449813
 .equ func_4844982F, 0x4844982F
 .equ func_4844987E, 0x4844987E
 .equ func_484499EB, 0x484499EB
@@ -206,6 +207,7 @@ _rom_marker:
 .equ func_484B1BCB, 0x484B1BCB
 .equ func_484B1CA1, 0x484B1CA1
 .equ func_484B22B4, 0x484B22B4
+.equ TgStrapProbe, 0x484D7713
 .equ PanelSubTypeGet_entry, 0x484D7751
 .equ func_4851AD68, 0x4851AD68
 .equ func_4852FDCD, 0x4852FDCD
@@ -359,6 +361,17 @@ _rom_marker:
 .equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
 .equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
 .equ TgPartAuxRecPtr, 0x4C00C233
+.equ TgPartAuxModRecPtr_entry, 0x4C00C25D
+.equ TgPartAuxElemRecPtr_entry, 0x4C00C28F
+.equ TgPartToneDescScratchPtr, 0x4C00C2BF
+.equ TgPartLocalEditRecPtr, 0x4C00C2C8
+.equ TgPartLocalEditModRecPtr_entry, 0x4C00C2DC
+.equ TgPartLocalEditElemRecPtr_entry, 0x4C00C2FB
+.equ TgPartLocalEditActive, 0x4C00C6BF
+.equ TgPartAuxRecBuild_entry, 0x4C00C6EE
+.equ TgPartLocalEditRecBuild_entry, 0x4C00C788
+.equ TgPartAuxElemRecBuild_entry, 0x4C00C7FC
+.equ TgPartLocalEditElemRecBuild_entry, 0x4C00C845
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
 .equ TgPartElemMaskGet, 0x4C00ECEA
 .equ TgPartElemEnabled_entry, 0x4C00ED01
@@ -512,6 +525,19 @@ _rom_marker:
 .equ TgVoiceRouteFieldSet_entry, 0x4C037C1B
 .equ TgVoiceDirtyAll, 0x4C037C92
 .equ TgVoiceDirtyRelease, 0x4C037CCE
+.equ TgChanEgSeg0LevelSet_entry, 0x4C037D14
+.equ TgChanEgSeg0Set_entry, 0x4C037D47
+.equ TgChanEgSeg1LevelSet_entry, 0x4C037D8C
+.equ TgChanEgSeg1Set_entry, 0x4C037DC1
+.equ TgChanEgSeg2LevelSet_entry, 0x4C037E08
+.equ TgChanEgSeg2Set_entry, 0x4C037E3C
+.equ TgChanEgSeg3LevelSet_entry, 0x4C037E82
+.equ TgChanEgSeg3Set_entry, 0x4C037EB7
+.equ TgChanOutLevelPairSet_entry, 0x4C037F10
+.equ TgGlobalRegsA0LoadA_entry, 0x4C037F5A
+.equ TgGlobalRegsA0LoadB_entry, 0x4C037FC0
+.equ TgGlobalRegsB0LoadA_entry, 0x4C038069
+.equ TgGlobalRegsB0LoadB_entry, 0x4C038106
 .equ TgPartToneBankHiGet, 0x4C0384EE
 .equ TgPartToneDescPtr, 0x4C038503
 .equ TgPartToneIsTableClass, 0x4C038515
@@ -14630,7 +14656,31 @@ _rom_marker:
 # VocalistPage1OK  (CPU 0x484d6eaa)
 .incbin_range "baserom/kn7000_program.rom", 0x0d6eaa, 0x0d6f07
 # VocalistPage2OK  (CPU 0x484d6f07)
-.incbin_range "baserom/kn7000_program.rom", 0x0d6f07, 0x0d774e
+.incbin_range "baserom/kn7000_program.rom", 0x0d6f07, 0x0d7713
+# TgStrapProbe  (CPU 0x484d7713)
+    movhu   (0x98070000), d0
+    btst    0x02, d0
+    bne     0x484d7722
+    mov     3, d0
+    bra     0x484d7733
+    movhu   (0x98070000), d0
+    btst    0x04, d0
+    bne     0x484d7731
+    mov     2, d0
+    bra     0x484d7733
+    mov     1, d0
+    retf    0, 0
+# TgStrapProbeZero  (CPU 0x484d7736)
+    clr     d0
+    retf    0, 0
+# TgStrapProbeSideB  (CPU 0x484d773a)
+    movhu   (0x98070000), d0
+    btst    0x01, d0
+    bne     0x484d7749
+    mov     2, d0
+    bra     0x484d774b
+    mov     1, d0
+    retf    0, 0
 # PanelSubTypeGet  (CPU 0x484d774e)
 .incbin_range "baserom/kn7000_program.rom", 0x0d774e, 0x0d7bbd
 # InitializeBlock27  (CPU 0x484d7bbd)
@@ -27037,7 +27087,427 @@ display_palette:
     mov     0, a0
     rets
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c522c, 0x3c7c72
+# TgPartAuxModRecPtr  (lib CPU 0x4c00c25b)
+#   THE LOCAL-EDIT SHADOW (0x4C00C233..0x4C00C890). A part playing an
+#   EDITED sound does not read the read-only tone resource record; it
+#   reads a writable RAM copy, and every fetch/apply entry in the
+#   part tone-apply layer comes in a plain and a *Sel flavour, the
+#   *Sel one asking TgPartLocalEditActive which to use.
+#   There are TWO copy families, laid out contiguously in .bss:
+#     0x500BDB04 + idx*0x2C8   AUX EDIT RECORD (TgPartAuxRecPtr), but
+#           ONLY idx 0x10/0x11/0x12 exist -- every other index returns
+#           NULL, so the three records occupy exactly 0x500C0784..
+#           0x500C0FDC. The 0x2C8 divides EXACTLY: header 0x54, then
+#           4 x 0x7A mod units at +0x54 (this function), then
+#           4 x 0x23 elements at +0x23C (TgPartAuxElemRecPtr).
+#     0x500C0FDC               a 423-byte tone-descriptor SCRATCH copy
+#           (TgPartToneDescScratchPtr / *Copy), filling the gap up to
+#     0x500C1183 + idx*0x8E    THE LOCAL-EDIT SHADOW proper. 0x8E is
+#           exactly the resource record's stride, and the record
+#           divides as header 0x10 + 2 x 0x1C (at +0x10, TgPartLocal-
+#           EditModRecPtr) + 2 x 0x23 (at +0x48, TgPartLocalEdit-
+#           ElemRecPtr) = 0x8E.
+#   Lifecycle: TgPartAuxRecBuild and TgPartLocalEditRecBuild POPULATE
+#   (from the resource record), TgPartAuxElemRecBuild / TgPartLocal-
+#   EditElemRecBuild refresh one sub-record, and nothing here frees or
+#   clears them -- the copies are permanent per-part buffers, so an
+#   edit is invalidated only by REBUILDING it from the resource.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartAuxModRecPtr_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    cmp     0x10, d2
+    beq     0x4c00c26b
+    cmp     0x11, d2
+    beq     0x4c00c26b
+    cmp     0x12, d2
+    bne     0x4c00c288
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    add     0x500c0784, d2
+    add     -0x2c2c, d2
+    extbu   d1
+    mov     0x7a, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     d1, d2
+    mov     d2, a0
+    bra     0x4c00c28a
+    mov     0, a0
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartAuxElemRecPtr  (lib CPU 0x4c00c28d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartAuxElemRecPtr_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    cmp     0x10, d2
+    beq     0x4c00c29d
+    cmp     0x11, d2
+    beq     0x4c00c29d
+    cmp     0x12, d2
+    bne     0x4c00c2ba
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    add     0x500c0784, d2
+    add     -0x2a44, d2
+    extbu   d1
+    mov     0x23, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     d1, d2
+    mov     d2, a0
+    bra     0x4c00c2bc
+    mov     0, a0
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartToneDescScratchPtr  (lib CPU 0x4c00c2bf)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     0x500c0fdc, a0
+    retf    0, 0
+.mnbase 0x48400000
+# TgPartLocalEditRecPtr  (lib CPU 0x4c00c2c8)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x8e, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     0x500c1183, a0
+    rets
+.mnbase 0x48400000
+# TgPartLocalEditModRecPtr  (lib CPU 0x4c00c2da)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartLocalEditModRecPtr_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     0x8e, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     0x500c1183, d0
+    add     0x10, d0
+    extbu   d1
+    mov     0x1c, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     d1, d0
+    mov     d0, a0
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartLocalEditElemRecPtr  (lib CPU 0x4c00c2f9)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartLocalEditElemRecPtr_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     0x8e, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     0x500c1183, d0
+    add     0x48, d0
+    extbu   d1
+    mov     0x23, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     d1, d0
+    mov     d0, a0
+    ret     [d2], 4
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c52e9, 0x3c5690
+# TgPartLocalEditActive  (lib CPU 0x4c00c6bf)
+#   (d0 part) -> nonzero when the part runs its LOCAL EDIT copy: bit0
+#   of the byte 0x500C58AE + part*9. This is the predicate every *Sel
+#   front end in the tone-apply layer consults (0x4C00EDF5 and ~30
+#   more call sites) to choose the RAM shadow 0x500C1183+idx*0x8E over
+#   the resource record. TgPartLocalEditFlagB reads bit1 of the same
+#   byte -- the 9-byte per-part record is the edit-state block; which
+#   UI action sets it is a live question, not settled statically.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     9, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500c58ae, a0
+    movbu   (d0, a0), d0
+    and     0x01, d0
+    extbu   d0
+    rets
+.mnbase 0x48400000
+# TgPartLocalEditFlagB  (lib CPU 0x4c00c6d4)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     9, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500c58ae, a0
+    movbu   (d0, a0), d0
+    and     0x02, d0
+    extbu   d0
+    rets
+.mnbase 0x48400000
+# TgPartAuxRecBuild  (lib CPU 0x4c00c6e9)
+#   (d0 part) POPULATE the aux edit record: TgPartToneDescPtr gives
+#   the read-only descriptor, 286 halfwords (572 bytes) of it are
+#   copied into 0x500BDB04+idx*0x2C8 -- i.e. the header plus all four
+#   mod-unit slots -- then for each of the four mod units the
+#   0x3D-halfword (122 = 0x7A byte) block pointed at by tone block
+#   +0x60+unit*0x34 is copied over the unit sub-record +0x54+
+#   unit*0x7A. The 0x7A stride of TgPartAuxModRecPtr is therefore
+#   exactly one mod-unit parameter block.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# TgPartAuxRecBuild_entry:   (register-save `call` entry)
+    movbu   d0, (0x24, sp)
+    movbu   (0x24, sp), d2
+    mov     d2, d0
+    call    TgPartToneDescPtr, 0, 0
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    add     0x500c0784, d2
+    add     -0x2c80, d2
+    mov     d2, a1
+    mov     -0x11e, d1
+    setlb
+    movhu   (a0), d0
+    add     2, a0
+    movhu   d0, (a1)
+    add     2, a1
+    inc     d1
+    lne
+    clr     d1
+    clr     d3
+    movbu   (0x24, sp), d0
+    mov     d1, (0xc, sp)
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d3, d1
+    add     0x500ce404, d0
+    mov     0x60, a2
+    add     d0, a2
+    add     0x54, d2
+    extbu   d1
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     (d0, a2), d0
+    mov     d0, a1
+    mov     0x7a, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     d2, d1
+    mov     d1, a0
+    mov     -0x3d, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    inc     d3
+    mov     d3, d1
+    extbu   d3
+    cmp     4, d3
+    blt     0x4c00c738
+    ret     [d2,d3,a2], 0x1c
+.mnbase 0x48400000
+# TgPartToneDescScratchCopy  (lib CPU 0x4c00c763)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+    extbu   d0
+    call    TgPartToneDescPtr, 0, 0
+    mov     0x500c0fdc, a1
+    mov     -0x1a7, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgPartLocalEditRecBuild  (lib CPU 0x4c00c783)
+#   (d0 part, d1 idx, stack ...) POPULATE the local-edit shadow:
+#   TgPartVoiceRecFetch_entry returns the resource record, its first
+#   0x48 bytes are copied verbatim to 0x500C1183+idx*0x8E, then the
+#   region-1 fetcher 0x48449813 supplies replacements for the two
+#   0x1C sub-records -- +0x10 is overwritten unless resource byte
+#   +0xD bit1 is set, +0x2C unless bit2 is set. So the shadow is a
+#   byte-for-byte copy of the resource record EXCEPT for those two
+#   banked sub-records, which come from a separate lookup.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+    add     -0x1c, sp
+# TgPartLocalEditRecBuild_entry:   (register-save `call` entry)
+    mov     d1, d2
+    movbu   (0x38, sp), d1
+    extbu   d0
+    mov     d1, (0x10, sp)
+    movbu   (0x3c, sp), d1
+    mov     d1, (0x14, sp)
+    movbu   (0x40, sp), d1
+    mov     d1, (0x18, sp)
+    mov     d2, d1
+    extbu   d1
+    call    TgPartVoiceRecFetch_entry, [d2], 0x18
+    mov     a0, a3
+    extbu   d2
+    mov     0x8e, d0
+    nop
+    nop
+    mulu    d0, d2
+    add     0x500c1183, d2
+    mov     d2, a1
+    mov     -0x48, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    add     0xd, a3
+    call    func_48449813, 0, 8
+    movbu   (a3), d0
+    btst    0x01, d0
+    bne     0x4c00c7de
+    mov     a0, a2
+    mov     0x10, a1
+    add     d2, a1
+    mov     -0x1c, d1
+    setlb
+    movbu   (a2), d0
+    inc     a2
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    movbu   (a3), d0
+    btst    0x04, d0
+    bne     0x4c00c7f4
+    mov     0x2c, a1
+    add     d2, a1
+    mov     -0x1c, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    ret     [d2,a2,a3], 0x28
+.mnbase 0x48400000
+# TgPartAuxElemRecBuild  (lib CPU 0x4c00c7f7)
+#   (d0 part, d1 elem, stack ...) refresh ONE aux ELEMENT sub-record:
+#   TgPartElemProgramApply_entry produces the source, 0x23 bytes go
+#   to 0x500BDB04+idx*0x2C8 +0x23C+elem*0x23. TgPartLocalEditElem-
+#   RecBuild is the shadow-side twin (source TgPartElemProgram-
+#   ApplyIdx_entry, destination 0x500C1183+idx*0x8E +0x48+elem*0x23).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+# TgPartAuxElemRecBuild_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    movbu   (0x34, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    movbu   (0x38, sp), d0
+    extbu   d1
+    mov     d0, (0x14, sp)
+    movbu   (0x3c, sp), d0
+    extbu   d3
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApply_entry, [d2,d3], 0x28
+    mov     0x2c8, d0
+    nop
+    nop
+    mul     d0, d2
+    add     0x500c0784, d2
+    add     -0x2a44, d2
+    mov     0x23, d1
+    nop
+    nop
+    mulu    d3, d1
+    add     d1, d2
+    mov     d2, a1
+    mov     -0x23, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    ret     [d2,d3], 0x24
+.mnbase 0x48400000
+# TgPartLocalEditElemRecBuild  (lib CPU 0x4c00c840)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x20, sp
+# TgPartLocalEditElemRecBuild_entry:   (register-save `call` entry)
+    mov     d0, d2
+    movbu   (0x38, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    mov     d1, d3
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    extbu   d1
+    mov     d0, (0x18, sp)
+    movbu   (0x44, sp), d0
+    extbu   d3
+    mov     d0, (0x1c, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApplyIdx_entry, [d2,d3], 0x24
+    movbu   (0x38, sp), d1
+    mov     0x8e, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x500c1183, d1
+    mov     0x48, a1
+    add     d1, a1
+    mov     0x23, d1
+    nop
+    nop
+    mulu    d3, d1
+    add     d1, a1
+    mov     -0x23, d1
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a1)
+    inc     a1
+    inc     d1
+    lne
+    ret     [d2,d3], 0x28
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c5861, 0x3c7c72
 # TgPartElemMaskUpdate  (lib CPU 0x4c00eca1)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3], (sp)
@@ -45607,7 +46077,836 @@ display_palette:
     mov     d0, (a0)
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f0ce0, 0x3f1495
+# TgChanEgSeg0LevelSet  (lib CPU 0x4c037d0f)
+#   THE TG OUTPUT-CHANNEL REGISTER FILE (0x4C037D0F..0x4C037F52).
+#   Thirteen channels, shadowed in RAM at 0x500CE2B0 + chan*0x10 and
+#   mirrored to the chip through TgVoiceRegWrite_entry with the
+#   channel number in the 20-bit SLOT field, so the composed address
+#   halfword is 0x8008 + chan*0x10 (bit15 set = the non-voice
+#   register space). The shadow holds a four-segment level envelope:
+#     +0x00 hw  class 0x8008  seg0  rate = bits 11..8, level = bits 6..0
+#     +0x02 hw  class 0x8108  seg1  same layout
+#     +0x04 hw  class 0x8208  seg2  same layout
+#     +0x08 long class 0x8308  seg3  rate bits 11..8, level bits 6..0,
+#                                    plus a 5-bit field at bits 16..12
+#     +0x0C long class 0x800A  a pair of 7-bit levels (bits 14..8, 6..0)
+#   Each field has a LEVEL-ONLY setter and a rate+level setter; both
+#   read-modify-write the shadow first, then push the whole halfword.
+#   Channels are picked per part: the part record 0x500B5340+part*
+#   0x54C halfword +0x62 bits 10..8 index the ROM map 0x486D109A
+#   (value 8 = 'no channel', the caller 0x4C004DE4 returns early).
+#   Defaults come from the 13 x 16-byte ROM image 0x4858759C, copied
+#   into the shadow by TgChipResetSideA.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgChanEgSeg0LevelSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d0
+    asl     4, d0
+    mov     d0, a0
+    add     0x500ce2b0, a0
+    movhu   (a0), d0
+    extbu   d1
+    and     0x7f, d1
+    and     0xff80, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     0x80080000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgChanEgSeg0Set  (lib CPU 0x4c037d42)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanEgSeg0Set_entry:   (register-save `call` entry)
+    mov     d1, d2
+    extbu   d2
+    and     0x0f, d2
+    asl     8, d2
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    mov     d0, a0
+    add     0x500ce2b0, a0
+    movhu   (a0), d1
+    extbu   d3
+    and     0xf0ff, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    movbu   (0x2c, sp), d0
+    and     0xff80, d2
+    and     0x7f, d0
+    or      d2, d0
+    movhu   d0, (a0)
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x80080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanEgSeg1LevelSet  (lib CPU 0x4c037d87)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgChanEgSeg1LevelSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    mov     2, a0
+    add     d0, a0
+    movhu   (a0), d0
+    extbu   d1
+    and     0x7f, d1
+    and     0xff80, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     0x81080000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgChanEgSeg1Set  (lib CPU 0x4c037dbc)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanEgSeg1Set_entry:   (register-save `call` entry)
+    mov     2, a0
+    extbu   d1
+    and     0x0f, d1
+    asl     8, d1
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    add     d0, a0
+    movhu   (a0), d2
+    mov     d1, d0
+    and     0xf0ff, d2
+    or      d2, d0
+    movhu   d0, (a0)
+    movbu   (0x2c, sp), d1
+    and     0xff80, d0
+    and     0x7f, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     d1, (0x10, sp)
+    extbu   d3
+    mov     d3, d0
+    mov     0x81080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanEgSeg2LevelSet  (lib CPU 0x4c037e03)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgChanEgSeg2LevelSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    mov     d0, a0
+    inc4    a0
+    movhu   (a0), d0
+    extbu   d1
+    and     0x7f, d1
+    and     0xff80, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     0x82080000, d1
+    mov     d2, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgChanEgSeg2Set  (lib CPU 0x4c037e37)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanEgSeg2Set_entry:   (register-save `call` entry)
+    extbu   d1
+    and     0x0f, d1
+    asl     8, d1
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    mov     d0, a0
+    inc4    a0
+    movhu   (a0), d2
+    mov     d1, d0
+    and     0xf0ff, d2
+    or      d2, d0
+    movhu   d0, (a0)
+    movbu   (0x2c, sp), d1
+    and     0xff80, d0
+    and     0x7f, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    exthu   d1
+    mov     d1, (0x10, sp)
+    extbu   d3
+    mov     d3, d0
+    mov     0x82080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanEgSeg3LevelSet  (lib CPU 0x4c037e7d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanEgSeg3LevelSet_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    mov     8, a0
+    add     d0, a0
+    mov     (a0), d1
+    extbu   d2
+    and     0x7f, d2
+    and     0xffffff80, d1
+    or      d1, d2
+    mov     d2, (a0)
+    mov     d2, (0x10, sp)
+    extbu   d3
+    mov     0x83080000, d1
+    mov     d3, d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanEgSeg3Set  (lib CPU 0x4c037eb2)
+#   the seg3 rate+level setter also writes the 5-bit field at bits
+#   16..12 of the +0x08 longword. Bit 16 straddles OUT of the 16-bit
+#   data word: TgVoiceRegWrite ORs it into the register-address half,
+#   so a set bit 16 addresses 0x8309 instead of 0x8308.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanEgSeg3Set_entry:   (register-save `call` entry)
+    mov     8, a0
+    extbu   d1
+    and     0x0f, d1
+    asl     8, d1
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    add     d0, a0
+    mov     (a0), d0
+    extbu   d3
+    and     0xfffff0ff, d0
+    or      d0, d1
+    mov     d1, (a0)
+    movbu   (0x2c, sp), d2
+    and     0xfffe0fff, d1
+    and     0x1f, d2
+    asl     12, d2
+    or      d1, d2
+    mov     d2, (a0)
+    movbu   (0x30, sp), d0
+    mov     d2, d1
+    and     0x7f, d0
+    and     0xffffff80, d1
+    or      d1, d0
+    mov     d0, (a0)
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x83080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanOutLevelPairSet  (lib CPU 0x4c037f0b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x14, sp
+# TgChanOutLevelPairSet_entry:   (register-save `call` entry)
+    mov     0xc, a0
+    extbu   d1
+    and     0x7f, d1
+    asl     8, d1
+    mov     d0, d3
+    extbu   d0
+    asl     4, d0
+    add     0x500ce2b0, d0
+    add     d0, a0
+    mov     (a0), d2
+    mov     d1, d0
+    and     0xffff80ff, d2
+    or      d2, d0
+    mov     d0, (a0)
+    movbu   (0x2c, sp), d1
+    and     0xffffff80, d0
+    and     0x7f, d1
+    or      d0, d1
+    mov     d1, (a0)
+    mov     d1, (0x10, sp)
+    extbu   d3
+    mov     d3, d0
+    mov     0x800a0000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [d2,d3], 0x1c
+.mnbase 0x48400000
+# TgChanRegHookNop  (lib CPU 0x4c037f52)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    retf    0, 0
+.mnbase 0x48400000
+# TgGlobalRegsA0LoadA  (lib CPU 0x4c037f55)
+#   (a0 table) load the five class-0xA0xx GLOBAL registers of TG A
+#   from an 18-byte image: longs at +0/+4/+8/+0xC -> classes 0xA000/
+#   0xA002/0xA004/0xA006, halfword +0x10 -> class 0xA008, all at slot
+#   0 through TgVoiceRegWrite_entry. Gated on the TG-enable cell
+#   0x500CE380 != 0x7F like the whole writer family. ROM image =
+#   0x486D11F4; the TG B twin TgGlobalRegsA0LoadB uses 0x486D1208 and
+#   notably IGNORES the table for the first four, writing the
+#   constant 0x00008000 instead.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x14, sp
+# TgGlobalRegsA0LoadA_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d0
+    mov     a0, a2
+    cmp     0x7f, d0
+    beq     0x4c037fb8
+    mov     (a2), d0
+    mov     0xa0000000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (4, a2), d0
+    mov     0xa0020000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (8, a2), d0
+    mov     0xa0040000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (0xc, a2), d0
+    mov     0xa0060000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x10, a2), d0
+    mov     0xa0080000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [a2], 0x18
+.mnbase 0x48400000
+# TgGlobalRegsA0LoadB  (lib CPU 0x4c037fbb)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x14, sp
+# TgGlobalRegsA0LoadB_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     0x00008000, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0000000, d1
+    call    0x4c036fe7, [d2], 4
+    mov     0x00008000, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0020000, d1
+    call    0x4c036fe7, [d2], 4
+    mov     0x00008000, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0040000, d1
+    call    0x4c036fe7, [d2], 4
+    mov     0x00008000, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0060000, d1
+    call    0x4c036fe7, [d2], 4
+    movhu   (0x10, a2), d0
+    mov     0xa0080000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    ret     [a2], 0x18
+.mnbase 0x48400000
+# TgGlobalRegA000Set  (lib CPU 0x4c038025)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x14, sp
+    movhu   (0x500ce380), d1
+    cmp     0x7f, d1
+    beq     0x4c038040
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0000000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     0, 0x14
+.mnbase 0x48400000
+# TgGlobalRegA002Set  (lib CPU 0x4c038043)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x14, sp
+    movhu   (0x500ce380), d1
+    cmp     0x7f, d1
+    beq     0x4c038061
+    lsr     6, d0
+    mov     d0, (0x10, sp)
+    clr     d0
+    mov     0xa0020000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     0, 0x14
+.mnbase 0x48400000
+# TgGlobalRegsB0LoadA  (lib CPU 0x4c038064)
+#   (a0 table) load the eight class-0xB000..0xB00E GLOBAL registers
+#   of TG A from eight consecutive halfwords, slot 0, through
+#   TgVoiceRegWrite_entry; same 0x500CE380 != 0x7F gate. ROM image =
+#   0x486D11D4 (TG A) / 0x486D11E4 (TG B, TgGlobalRegsB0LoadB): the
+#   two differ in exactly one halfword (+0xC: 0x03AF vs 0x032F).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x14, sp
+# TgGlobalRegsB0LoadA_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d0
+    mov     a0, a2
+    cmp     0x7f, d0
+    bne     0x4c038077
+    ret     [a2], 0x18
+    movhu   (a2), d0
+    mov     0xb0000000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (2, a2), d0
+    mov     0xb0020000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (4, a2), d0
+    mov     0xb0040000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (6, a2), d0
+    mov     0xb0060000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (8, a2), d0
+    mov     0xb0080000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0xa, a2), d0
+    mov     0xb00a0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0xc, a2), d0
+    mov     0xb00c0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0xe, a2), d0
+    mov     0xb00e0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    ret     [a2], 0x18
+.mnbase 0x48400000
+# TgGlobalRegsB0LoadB  (lib CPU 0x4c038101)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x14, sp
+# TgGlobalRegsB0LoadB_entry:   (register-save `call` entry)
+    movhu   (0x500ce380), d0
+    mov     a0, a2
+    cmp     0x7f, d0
+    bne     0x4c038114
+    ret     [a2], 0x18
+    movhu   (a2), d0
+    mov     0xb0000000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (2, a2), d0
+    mov     0xb0020000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (4, a2), d0
+    mov     0xb0040000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (6, a2), d0
+    mov     0xb0060000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (8, a2), d0
+    mov     0xb0080000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (0xa, a2), d0
+    mov     0xb00a0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (0xc, a2), d0
+    mov     0xb00c0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    movhu   (0xe, a2), d0
+    mov     0xb00e0000, d1
+    mov     d0, (0x10, sp)
+    clr     d0
+    call    0x4c036fe7, [d2], 4
+    ret     [a2], 0x18
+.mnbase 0x48400000
+# TgChipResetSideA  (lib CPU 0x4c03819e)
+#   THE TG COLD BRING-UP, side A -- the other half of the silence
+#   story in kn7000_mame/notes (the TG-enable gate 0x500CE380).
+#   Sequence, verbatim from the code:
+#     1. call the STRAP PROBE 0x484D7713 and set 0x500CE380 = 0x7F
+#        ('no TG', every register writer becomes a no-op);
+#     2. if the probe returns 3 the chip is absent -- SKIP the reset
+#        and leave 0x7F in place;
+#     3. otherwise 0x500CE380 = 0x40 (TG present) and pulse the chip:
+#        1 -> 0x98050010 three times, then 3 -> 0x98050004 three times;
+#     4. load the global blocks (TgGlobalRegsB0LoadA 0x486D11D4,
+#        TgGlobalRegsA0LoadA 0x486D11F4);
+#     5. for each of the 0x40 hardware voice slots: copy the 0x84-byte
+#        ROM template 0x4858766C into the voice record 0x500CA0B0+
+#        slot*0x84, then TgVoiceGateOnWrap / TgVoiceGateOff /
+#        TgVoiceStealSilence;
+#     6. for each of 0x100 sample entries write classes 0x0400/0x0C00
+#        from 0x48587700/0x48587702 via TgGlobalRegWriteBoth;
+#     7. for each of the 13 output channels copy the 16-byte default
+#        0x4858759C+chan*0x10 into the shadow 0x500CE2B0+chan*0x10 and
+#        push all five channel registers (0x8008/0x8108/0x8208/0x8308/
+#        0x800A).
+#   TgChipResetSideB is the same for TG B (port 0x98040000/0x98040004,
+#   0x80 voice slots, channel slots 0x40+chan, and it RETURNS when the
+#   probe says 3 rather than skipping only the reset).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+    call    TgStrapProbe, 0, 0
+    mov     0x7f, d1
+    movhu   d1, (0x500ce380)
+    extbu   d0
+    cmp     3, d0
+    beq     0x4c0381e7
+    mov     0x40, d0
+    movhu   d0, (0x500ce380)
+    mov     1, d0
+    movhu   d0, (0x98050010)
+    movhu   d0, (0x98050010)
+    movhu   d0, (0x98050010)
+    mov     3, d0
+    movhu   d0, (0x98050004)
+    movhu   d0, (0x98050004)
+    movhu   d0, (0x98050004)
+    mov     0x486d11d4, a0
+    call    TgGlobalRegsB0LoadA_entry, [a2], 0x18
+    mov     0x486d11f4, a0
+    call    TgGlobalRegsA0LoadA_entry, [a2], 0x18
+    clr     d3
+    clr     d2
+    mov     0x500ca0b0, a2
+    mov     0x84, a3
+    exthu   d3
+    mov     0x4858766c, a1
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     a2, a0
+    add     d1, a0
+    mov     -0x21, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    mov     d2, d0
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     a2, a0
+    add     d1, a0
+    call    0x4c037697, 0, 0x10
+    mov     d2, d0
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     d1, a0
+    add     a2, a0
+    call    TgVoiceGateOff, [d2,a2], 0x1c
+    mov     d2, d0
+    call    TgVoiceStealSilence_entry, [d2,d3], 0x1c
+    inc     d2
+    mov     d2, d3
+    exthu   d2
+    cmp     0x40, d2
+    blt     0x4c038207
+    clr     d2
+    movhu   (0x48587700), d0
+    mov     0x04000000, d1
+    and     0x3fff, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    0x4c03700a, [d2], 4
+    movhu   (0x48587702), d0
+    mov     0x0c000000, d1
+    and     0xffff, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    0x4c03700a, [d2], 4
+    inc     d2
+    exthu   d2
+    cmp     0x100, d2
+    blt     0x4c03824d
+    clr     d2
+    mov     0, a3
+    mov     0x500ce2b0, a2
+    mov     d2, d3
+    exthu   d3
+    mov     d3, d0
+    asl     4, d0
+    mov     d0, a1
+    add     0x4858759c, a1
+    mov     d3, d1
+    asl     4, d1
+    mov     a2, a0
+    add     d1, a0
+    mov     -4, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    mov     d3, d0
+    asl     4, d0
+    movhu   (d0, a2), d0
+    mov     0x80080000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     d3, d0
+    asl     4, d0
+    add     a2, d0
+    mov     d0, a0
+    movhu   (2, a0), d0
+    mov     0x81080000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     d3, d0
+    asl     4, d0
+    mov     d0, a0
+    add     a2, a0
+    movhu   (4, a0), d0
+    mov     0x82080000, d1
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     d3, d0
+    asl     4, d0
+    mov     d0, a0
+    add     a2, a0
+    mov     (8, a0), d0
+    asl     4, d3
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    extbu   d0
+    mov     0x83080000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     d3, a0
+    add     a2, a0
+    mov     (0xc, a0), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    mov     a3, d2
+    inc     d2
+    exthu   d2
+    mov     d2, a3
+    mov     0x800a0000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    cmp     0xd, a3
+    bge     0x4c038337
+    jmp     0x4c038290
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgChipResetSideB  (lib CPU 0x4c03833a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+    call    TgStrapProbe, 0, 0
+    mov     0x7f, d1
+    movhu   d1, (0x500ce380)
+    extbu   d0
+    cmp     3, d0
+    bne     0x4c038356
+    ret     [d2,d3,a2,a3], 0x24
+    mov     0x40, d2
+    movhu   d2, (0x500ce380)
+    mov     1, d1
+    movhu   d1, (0x98040010)
+    movhu   d1, (0x98040010)
+    movhu   d1, (0x98040010)
+    mov     3, d1
+    movhu   d1, (0x98040004)
+    movhu   d1, (0x98040004)
+    movhu   d1, (0x98040004)
+    mov     0x486d11e4, a0
+    call    TgGlobalRegsB0LoadB_entry, [a2], 0x18
+    mov     0x486d1208, a0
+    call    TgGlobalRegsA0LoadB_entry, [a2], 0x18
+    mov     d2, d0
+    mov     0x500ca0b0, a2
+    mov     0x84, a3
+    mov     d0, d3
+    exthu   d3
+    mov     0x4858766c, a1
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     a2, a0
+    add     d1, a0
+    mov     -0x21, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    mov     d2, d0
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     a2, a0
+    add     d1, a0
+    call    0x4c037697, 0, 0x10
+    mov     d2, d0
+    mov     a3, d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     d1, a0
+    add     a2, a0
+    call    TgVoiceGateOff, [d2,a2], 0x1c
+    mov     d2, d0
+    call    TgVoiceStealSilence_entry, [d2,d3], 0x1c
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0x80, d2
+    blt     0x4c0383a5
+    clr     d2
+    movhu   (0x48587700), d0
+    mov     0x04000000, d1
+    and     0x3fff, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    0x4c037039, [d2], 4
+    movhu   (0x48587702), d0
+    mov     0x0c000000, d1
+    and     0xffff, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    call    0x4c037039, [d2], 4
+    inc     d2
+    exthu   d2
+    cmp     0x100, d2
+    blt     0x4c0383ee
+    clr     d2
+    movhu   (0x485876f0), d0
+    mov     0x80080000, d1
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    add     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x485876f2), d0
+    mov     0x81080000, d1
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    add     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    movhu   (0x485876f4), d0
+    mov     0x82080000, d1
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    add     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (0x485876f8), d0
+    mov     0x83080000, d1
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    add     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (0x485876fc), d0
+    mov     0x800a0000, d1
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    add     d2, d0
+    extbu   d0
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    inc     d2
+    exthu   d2
+    cmp     0xd, d2
+    bge     0x4c0384a5
+    jmp     0x4c038429
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgGlobalRegsReloadA  (lib CPU 0x4c0384a8)
+#   re-push TG A's global blocks from the same ROM images the cold
+#   reset used (0x486D11D4 -> TgGlobalRegsB0LoadA, 0x486D11F4 ->
+#   TgGlobalRegsA0LoadA) without touching the voice slots or the
+#   channel shadow -- the 'restore global defaults' entry
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+    mov     0x486d11d4, a0
+    call    TgGlobalRegsB0LoadA_entry, [a2], 0x18
+    mov     0x486d11f4, a0
+    call    TgGlobalRegsA0LoadA_entry, [a2], 0x18
+    ret     0, 0xc
+.mnbase 0x48400000
 # TgPartToneProgramGet  (lib CPU 0x4c0384c4)
 #   the PART TONE BLOCK accessor leaves (2026-07-20). The block is
 #   0x500CE404+part*0x130; TgPartProgramSet writes the three tone-
@@ -45742,13 +47041,13 @@ display_palette:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    0x4c00c6bf, 0, 0
+    call    TgPartLocalEditActive, 0, 0
     extbu   d0
     cmp     0, d0
     beq     0x4c0385ad
     extbu   d3
     mov     d3, d0
-    call    0x4c00c2c8, 0, 0
+    call    TgPartLocalEditRecPtr, 0, 0
     bra     0x4c0385c4
     movbu   (0x34, sp), d0
     extbu   d3
@@ -45814,14 +47113,14 @@ display_palette:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    0x4c00c6bf, 0, 0
+    call    TgPartLocalEditActive, 0, 0
     extbu   d0
     cmp     0, d0
     beq     0x4c038650
     extbu   d3
     movbu   (0x38, sp), d1
     mov     d3, d0
-    call    0x4c00c2dc, [d2], 4
+    call    TgPartLocalEditModRecPtr_entry, [d2], 4
     bra     0x4c03866c
     movbu   (0x38, sp), d0
     extbu   d3
@@ -46014,14 +47313,14 @@ display_palette:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    0x4c00c6bf, 0, 0
+    call    TgPartLocalEditActive, 0, 0
     extbu   d0
     cmp     0, d0
     beq     0x4c0387e8
     extbu   d3
     mov     d3, d1
     mov     d2, d0
-    call    0x4c00c28f, [d2], 4
+    call    TgPartAuxElemRecPtr_entry, [d2], 4
     bra     0x4c0387ff
     movbu   (0x34, sp), d0
     extbu   d3
@@ -46096,14 +47395,14 @@ display_palette:
     mov     d0, d2
     extbu   d2
     mov     d2, d0
-    call    0x4c00c6bf, 0, 0
+    call    TgPartLocalEditActive, 0, 0
     extbu   d0
     cmp     0, d0
     beq     0x4c038894
     movbu   (0x38, sp), d0
     extbu   d3
     mov     d3, d1
-    call    0x4c00c2fb, [d2], 4
+    call    TgPartLocalEditElemRecPtr_entry, [d2], 4
     bra     0x4c0388b0
     movbu   (0x38, sp), d0
     extbu   d3
@@ -46211,7 +47510,7 @@ display_palette:
     extbu   d3
     mov     d3, (0x28, sp)
     mov     d3, d0
-    call    0x4c00c6bf, 0, 0
+    call    TgPartLocalEditActive, 0, 0
     extbu   d0
     cmp     0, d0
     bne     0x4c038957
@@ -46243,7 +47542,7 @@ display_palette:
     lne
     mov     (4, a0), a0
     jmp     (a0)
-    call    0x4c00c2bf, 0, 0
+    call    TgPartToneDescScratchPtr, 0, 0
     extbu   d3
     mov     0x130, d0
     nop
@@ -46274,7 +47573,7 @@ display_palette:
     mov     a1, (0x20, sp)
     mov     d3, d1
     mov     (0x28, sp), d0
-    call    0x4c00c25d, [d2], 4
+    call    TgPartAuxModRecPtr_entry, [d2], 4
     mov     a0, d1
     extbu   d2
     mov     0x34, d0
@@ -46354,7 +47653,7 @@ display_palette:
     mov     a1, (0x24, sp)
     mov     (0x28, sp), d0
     mov     a3, d1
-    call    0x4c00c25d, [d2], 4
+    call    TgPartAuxModRecPtr_entry, [d2], 4
     mov     a0, d3
     mov     0x34, d0
     extbu   d2
@@ -46442,7 +47741,7 @@ display_palette:
     mov     a1, (0x24, sp)
     mov     (0x28, sp), d0
     mov     a3, d1
-    call    0x4c00c25d, [d2], 4
+    call    TgPartAuxModRecPtr_entry, [d2], 4
     mov     a0, a2
     mov     0x34, d0
     extbu   d2
@@ -46456,7 +47755,7 @@ display_palette:
     mov     d0, a0
     mov     a2, (a0)
     mov     (0x28, sp), d0
-    call    0x4c00c28f, [d2], 4
+    call    TgPartAuxElemRecPtr_entry, [d2], 4
     mov     a0, d2
     mov     (0x1c, sp), a0
     mov     a3, d1

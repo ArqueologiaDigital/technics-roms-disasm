@@ -1290,3 +1290,73 @@
 0x4C03089B  TgPartCtrlSenseElem_entry
 0x4C033C0A  TgPartCtrlSenseMelodic  ; melodic twin of TgPartCtrlSenseKit, clamped through TgZoneParamClamp instead
 0x4C033C0F  TgPartCtrlSenseMelodic_entry
+
+; ---- the TG CHIP BRING-UP + the OUTPUT-CHANNEL / GLOBAL register file
+;      (2026-07-20; the 0x4C037D0F..0x4C0384C4 gap). Thirteen output
+;      channels shadowed at 0x500CE2B0+chan*0x10, mirrored to the chip via
+;      TgVoiceRegWrite_entry with the channel in the SLOT field (address
+;      halfword 0x8008+chan*0x10). Channel choice per part = partrec+0x62
+;      bits 10..8 through the ROM map 0x486D109A (8 = none). ------------
+0x4C037D0F  TgChanEgSeg0LevelSet    ; (d0 chan, d1 level) shadow +0 halfword low7 := level&0x7F, then class 0x8008
+0x4C037D14  TgChanEgSeg0LevelSet_entry
+0x4C037D42  TgChanEgSeg0Set         ; (d0 chan, d1 rate, stack level) shadow +0: bits 11..8 := rate&0xF, low7 := level&0x7F, then class 0x8008
+0x4C037D47  TgChanEgSeg0Set_entry
+0x4C037D87  TgChanEgSeg1LevelSet    ; same for shadow +2 / class 0x8108
+0x4C037D8C  TgChanEgSeg1LevelSet_entry
+0x4C037DBC  TgChanEgSeg1Set         ; rate+level twin for shadow +2 / class 0x8108
+0x4C037DC1  TgChanEgSeg1Set_entry
+0x4C037E03  TgChanEgSeg2LevelSet    ; same for shadow +4 / class 0x8208
+0x4C037E08  TgChanEgSeg2LevelSet_entry
+0x4C037E37  TgChanEgSeg2Set         ; rate+level twin for shadow +4 / class 0x8208
+0x4C037E3C  TgChanEgSeg2Set_entry
+0x4C037E7D  TgChanEgSeg3LevelSet    ; same for the shadow +8 LONGWORD / class 0x8308
+0x4C037E82  TgChanEgSeg3LevelSet_entry
+0x4C037EB2  TgChanEgSeg3Set         ; (d0 chan, d1 rate, stack extra5, level) shadow +8 long: bits 11..8 rate, bits 16..12 extra5, low7 level; bit16 straddles out of the data word and lands on the register-address LSB (0x8308 -> 0x8309)
+0x4C037EB7  TgChanEgSeg3Set_entry
+0x4C037F0B  TgChanOutLevelPairSet   ; (d0 chan, d1 levelA, stack levelB) shadow +0xC long: bits 14..8 := levelA&0x7F, low7 := levelB&0x7F, then class 0x800A
+0x4C037F10  TgChanOutLevelPairSet_entry
+0x4C037F52  TgChanRegHookNop        ; `retf 0, 0` -- an empty hook between the channel setters and the global-register loaders
+0x4C037F55  TgGlobalRegsA0LoadA     ; (a0 table) TG A globals: longs +0/+4/+8/+0xC -> classes 0xA000/2/4/6, halfword +0x10 -> 0xA008, slot 0 (ROM image 0x486D11F4); gated on 0x500CE380 != 0x7F
+0x4C037F5A  TgGlobalRegsA0LoadA_entry
+0x4C037FBB  TgGlobalRegsA0LoadB     ; TG B twin (TgVoiceRegWriteB_entry, ROM image 0x486D1208) -- writes the CONSTANT 0x00008000 for classes 0xA000..0xA006 and only reads +0x10 for 0xA008
+0x4C037FC0  TgGlobalRegsA0LoadB_entry
+0x4C038025  TgGlobalRegA000Set      ; (d0 value) single class-0xA000 global write, slot 0, same TG-enable gate
+0x4C038043  TgGlobalRegA002Set      ; (d0 value) single class-0xA002 global write, data = value >> 6
+0x4C038064  TgGlobalRegsB0LoadA     ; (a0 table) TG A globals: eight halfwords +0..+0xE -> classes 0xB000..0xB00E, slot 0 (ROM image 0x486D11D4)
+0x4C038069  TgGlobalRegsB0LoadA_entry
+0x4C038101  TgGlobalRegsB0LoadB     ; TG B twin via TgVoiceRegWriteB_entry (ROM image 0x486D11E4; differs from the A image in one halfword, +0xC 0x032F vs 0x03AF)
+0x4C038106  TgGlobalRegsB0LoadB_entry
+0x4C03819E  TgChipResetSideA        ; THE TG COLD BRING-UP (side A): strap probe 0x484D7713 -> 0x500CE380 = 0x7F (no TG, all writers no-op); probe == 3 -> leave it absent; else 0x500CE380 = 0x40, pulse 1 -> 0x98050010 x3 and 3 -> 0x98050004 x3, load the global blocks, template 0x4858766C into all 0x40 voice records 0x500CA0B0+slot*0x84 (+ gate-on/off/silence), 0x100 sample entries from 0x48587700/2, and the 13 channel defaults 0x4858759C
+0x4C03833A  TgChipResetSideB        ; the TG B twin (ports 0x98040010/0x98040004, 0x80 voice slots, channel slots 0x40+chan, defaults 0x485876F0); returns outright when the probe says 3
+0x4C0384A8  TgGlobalRegsReloadA     ; re-push TG A's two global blocks from the cold-reset ROM images (0x486D11D4, 0x486D11F4) without touching voices or the channel shadow
+
+; ---- the LOCAL-EDIT SHADOW: the writable per-part edit copies of the
+;      read-only tone resource records (2026-07-20). Contiguous .bss:
+;      0x500BDB04+idx*0x2C8 aux records (idx 0x10/0x11/0x12 only) ->
+;      0x500C0FDC tone-descriptor scratch -> 0x500C1183+idx*0x8E shadow.
+0x4C00C25B  TgPartAuxModRecPtr      ; (d0 idx, d1 unit) -> aux record +0x54+unit*0x7A (one mod-unit parameter block); NULL unless idx is 0x10/0x11/0x12
+0x4C00C25D  TgPartAuxModRecPtr_entry
+0x4C00C28D  TgPartAuxElemRecPtr     ; (d0 idx, d1 elem) -> aux record +0x23C+elem*0x23 (0x54 + 4*0x7A = 0x23C, + 4*0x23 = 0x2C8 exactly)
+0x4C00C28F  TgPartAuxElemRecPtr_entry
+0x4C00C2BF  TgPartToneDescScratchPtr ; -> the 423-byte tone-descriptor scratch buffer 0x500C0FDC (retf leaf)
+0x4C00C2C8  TgPartLocalEditRecPtr   ; (d0 idx) -> 0x500C1183+idx*0x8E, THE local-edit shadow of the 0x8E resource record
+0x4C00C2DA  TgPartLocalEditModRecPtr ; (d0 idx, d1 sub) -> shadow +0x10+sub*0x1C (two sub-records)
+0x4C00C2DC  TgPartLocalEditModRecPtr_entry
+0x4C00C2F9  TgPartLocalEditElemRecPtr ; (d0 idx, d1 elem) -> shadow +0x48+elem*0x23 (two elements; 0x10 + 2*0x1C + 2*0x23 = 0x8E exactly)
+0x4C00C2FB  TgPartLocalEditElemRecPtr_entry
+0x4C00C6BF  TgPartLocalEditActive   ; (d0 part) -> bit0 of 0x500C58AE+part*9: THE predicate every *Sel front end in the tone-apply layer consults to read the RAM shadow instead of the resource record
+0x4C00C6D4  TgPartLocalEditFlagB    ; bit1 of the same per-part 9-byte edit-state record
+0x4C00C6E9  TgPartAuxRecBuild       ; (d0 part) populate the aux record: 0x23C bytes of TgPartToneDescPtr's descriptor (header + the four mod-unit slots), then each tone-block mod unit (+0x60+unit*0x34 -> ptr, 0x7A bytes) over +0x54+unit*0x7A
+0x4C00C6EE  TgPartAuxRecBuild_entry
+0x4C00C763  TgPartToneDescScratchCopy ; (d0 part) copy 0x1A7 bytes of the part's tone descriptor into the 0x500C0FDC scratch
+0x4C00C783  TgPartLocalEditRecBuild ; (d0 part, d1 idx, ...) populate the shadow: 0x48 bytes verbatim from TgPartVoiceRecFetch_entry's resource record, then the region-1 fetcher 0x48449813 replaces the +0x10 sub-record unless resource byte +0xD bit1 is set and the +0x2C one unless bit2 is set
+0x4C00C788  TgPartLocalEditRecBuild_entry
+0x4C00C7F7  TgPartAuxElemRecBuild   ; (d0 part, d1 elem, ...) refresh one aux ELEMENT sub-record: 0x23 bytes from TgPartElemProgramApply_entry into +0x23C+elem*0x23
+0x4C00C7FC  TgPartAuxElemRecBuild_entry
+0x4C00C840  TgPartLocalEditElemRecBuild ; shadow-side twin: 0x23 bytes from TgPartElemProgramApplyIdx_entry into shadow +0x48+elem*0x23
+0x4C00C845  TgPartLocalEditElemRecBuild_entry
+
+; ---- the TG-present STRAP PROBE read by TgChipResetSideA/B (2026-07-20)
+0x484D7713  TgStrapProbe            ; -> 3 when 0x98070000 bit 0x02 is CLEAR ("no TG": the caller leaves the TG-enable gate 0x500CE380 at 0x7F and every register writer stays a no-op), else 2 when bit 0x04 is clear, else 1. NOTE the bits are 0x02/0x04 of the halfword -- earlier notes said "bit1/bit2"
+0x484D7736  TgStrapProbeZero        ; -> 0 (the stubbed twin)
+0x484D773A  TgStrapProbeSideB       ; -> 2 when 0x98070000 bit 0x01 is clear, else 1 -- the second strap line
