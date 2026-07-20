@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 367 synthetic labels for internal helpers called by converted code
+# 406 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -291,12 +291,40 @@ _rom_marker:
 .equ func_4857926F, 0x4857926F
 .equ func_4857BE97, 0x4857BE97
 .equ func_4857BF6C, 0x4857BF6C
+.equ LibF64Pow_entry, 0x4C000005
+.equ LibF64UnpackedToI32, 0x4C000263
+.equ LibF64ToI32_entry, 0x4C0002B8
+.equ LibF64Unpack, 0x4C0002CB
+.equ LibF64Log_entry, 0x4C000316
+.equ LibI32ToF64, 0x4C000523
+.equ LibF64Sub_entry, 0x4C000582
+.equ LibF64Add_entry, 0x4C000593
+.equ LibF64Cmp_entry, 0x4C0007E7
+.equ LibF64CmpZero_entry, 0x4C000856
+.equ LibF64Mul_entry, 0x4C000879
+.equ LibF64Div_entry, 0x4C000B1C
+.equ LibF64Ldexp_entry, 0x4C000CD8
+.equ LibF64Frexp_entry, 0x4C000D59
+.equ LibF64Exp_entry, 0x4C000D9E
+.equ LibU32ToF64, 0x4C000F54
+.equ LibF64Abs, 0x4C000F8F
+.equ LibF64Modf_entry, 0x4C000FAC
+.equ LibF64ToI16_entry, 0x4C001629
+.equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
+.equ LibI16ToF64, 0x4C0019F2
 .equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
 .equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
 .equ TgPartElemMaskGet, 0x4C00ECEA
 .equ TgPartElemEnabled_entry, 0x4C00ED01
+.equ TgZoneParamClamp_entry, 0x4C00FD4E
+.equ TgZoneLevelScaleCalc_entry, 0x4C00FD6D
+.equ TgZoneVeloSenseCalc, 0x4C00FE03
+.equ TgZoneSendLevelsCalc_entry, 0x4C00FE4F
+.equ TgZoneFilterEgLevel1Calc_entry, 0x4C00FF49
+.equ TgZoneFilterEgLevel2Calc_entry, 0x4C00FF9F
+.equ TgZoneFilterEgLevelCalc_entry, 0x4C00FFF5
 .equ TgVoiceListReleaseByNote_entry, 0x4C010047
 .equ TgVoiceListCollectByNote_entry, 0x4C01006D
 .equ TgVoiceListReleasePart_entry, 0x4C01008F
@@ -306,6 +334,14 @@ _rom_marker:
 .equ TgVoiceListCollectPartAll_entry, 0x4C01010A
 .equ TgVoiceListCollectGlobal_entry, 0x4C010127
 .equ TgTableKeyOffProgram_entry, 0x4C0115AA
+.equ TgKitZoneParamClamp_entry, 0x4C011F31
+.equ TgKitZoneLevelScaleCalc_entry, 0x4C011F50
+.equ TgKitZoneVeloSenseCalc, 0x4C011FE6
+.equ TgKitZoneSendLevelsCalc_entry, 0x4C012032
+.equ TgKitZoneFilterEgLevel1Calc_entry, 0x4C01212C
+.equ TgKitZoneFilterEgLevel2Calc_entry, 0x4C012182
+.equ TgKitZoneFilterEgLevelCalc_entry, 0x4C0121D8
+.equ TgPartElemLastSet_entry, 0x4C01222A
 .equ TgPartElemLastClear_entry, 0x4C012256
 .equ TgPartElemLastGet, 0x4C01226C
 .equ TgKitElemNoteOn_entry, 0x4C013547
@@ -364,8 +400,11 @@ _rom_marker:
 .equ TgVoiceGateOn, 0x4C037398
 .equ TgVoiceGateOff, 0x4C0376A5
 .equ TgVoiceEgBurstWrite, 0x4C0376E3
+.equ TgVoiceRouteFieldSet_entry, 0x4C037C1B
 .equ TgVoiceDirtyAll, 0x4C037C92
 .equ TgVoiceDirtyRelease, 0x4C037CCE
+.equ TgVoiceEgSegParamGet_entry, 0x4C03A214
+.equ TgVoiceEgSegFlagTest_entry, 0x4C03A2BF
 .equ TgNodeRingSeed_entry, 0x4C03A77B
 .equ TgNodeRingInsert_entry, 0x4C03A78F
 .equ TgVoiceNodeToClassRing_entry, 0x4C03A7B1
@@ -21044,7 +21083,1941 @@ display_palette:
 #      0x3B8FD1 (notes/library-rom-loading.md); converted lib functions
 #      are emitted under the shifted .mnbase so their PC-relative
 #      encodings reproduce the 0x4C link address byte-exactly. ----
-.incbin_range "baserom/kn7000_program.rom", 0x3b8000, 0x3ba9a6
+.incbin_range "baserom/kn7000_program.rom", 0x3b8000, 0x3b8fd1
+# LibF64Pow  (lib CPU 0x4c000000)
+#   SOFT-FLOAT RUNTIME (the firmware has no FPU): IEEE-754 double
+#   helpers 0x4C000000..0x4C001A00, a classic errno-style compiler
+#   runtime + libm subset. ABI: doubles on the caller's outgoing-arg
+#   area -- arg1 lo/hi at (8,sp)/(0xC,sp), arg2 at (0x10,sp)/(0x14,sp),
+#   result in d0(lo):d1(hi); error cell 0x500AD390 (1=domain, 2=range).
+#   pow(x,y) = this function: y split by LibF64Modf; the integer part
+#   by repeated squaring, the fraction via LibF64Exp(frac*LibF64Log(x))
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x38, sp
+# LibF64Pow_entry:   (register-save `call` entry)
+    clr     d0
+    mov     0x3ff00000, d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     0, a3
+    mov     sp, a2
+    add     0x50, a2
+    mov     (0x58, sp), d0
+    mov     (0x5c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     sp, a0
+    add     0x28, a0
+    nop
+    call    LibF64Modf_entry, [d2,d3,a2], 0x2c
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    nop
+    clr     d3
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    bne     0x4c000039
+    mov     1, d3
+    cmp     0, d3
+    nop
+    beq     0x4c00006f
+    mov     (0x58, sp), d0
+    mov     (0x5c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     -1, d0
+    call    LibF64Ldexp_entry, [d2,d3,a2], 0x1c
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     sp, a0
+    add     0x30, a0
+    nop
+    call    LibF64Modf_entry, [d2,d3,a2], 0x2c
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    nop
+    clr     d2
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    beq     0x4c00006d
+    mov     1, d2
+    mov     d2, a3
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    bne     0x4c00009b
+    mov     (0x58, sp), d0
+    mov     (0x5c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    ble     0x4c000090
+    jmp     0x4c00025c
+    mov     1, d0
+    mov     d0, (0x500ad390)
+    jmp     0x4c00025c
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64Abs, 0, 0
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64Log_entry, [d2,a2,a3], 0x48
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x58, sp), d0
+    mov     (0x5c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xfefa39ef, d0
+    mov     0x40862e42, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    blt     0x4c00013a
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    movbu   (7, a2), d0
+    mov     -1, d1
+    mov     0x7fefffff, d2
+    mov     d1, (0x50, sp)
+    mov     d2, (0x54, sp)
+    nop
+    btst    0x80, d0
+    nop
+    bne     0x4c00010e
+    jmp     0x4c00025c
+    cmp     0, d3
+    nop
+    bne     0x4c000124
+    mov     1, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, (0x50, sp)
+    mov     d0, (0x54, sp)
+    jmp     0x4c00025c
+    mov     0xffefffff, d1
+    mov     d1, (0x54, sp)
+    nop
+    cmp     0, a3
+    nop
+    beq     0x4c000135
+    jmp     0x4c00025c
+    mov     d2, (0x54, sp)
+    jmp     0x4c00025c
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xdd7abcd2, d0
+    mov     0xc086232b, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    bge     0x4c00016a
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, (0x50, sp)
+    mov     d0, (0x54, sp)
+    jmp     0x4c00025c
+    cmp     0, d3
+    nop
+    bne     0x4c000172
+    jmp     0x4c00021f
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64Abs, 0, 0
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    nop
+    clr     d0
+    mov     0x40e00000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    blt     0x4c000199
+    jmp     0x4c00021f
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64ToI32_entry, [d3,a3], 0x10
+    mov     d0, d2
+    clr     d3
+    cmp     d3, d2
+    nop
+    bge     0x4c0001ae
+    mov     1, d3
+    cmp     0, d3
+    nop
+    beq     0x4c0001b6
+    not     d2
+    inc     d2
+    cmp     0, d2
+    nop
+    ble     0x4c0001f8
+    btst    0x01, d2
+    nop
+    beq     0x4c0001da
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x50, sp)
+    mov     d1, (0x54, sp)
+    nop
+    lsr     1, d2
+    cmp     0, d2
+    nop
+    bgt     0x4c0001bb
+    cmp     0, d3
+    nop
+    beq     0x4c000219
+    clr     d0
+    mov     0x3ff00000, d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    bra     0x4c000260
+    add     7, a2
+    movbu   (a2), d1
+    nop
+    and     0x80, d1
+    nop
+    beq     0x4c00023c
+    cmp     0, d3
+    nop
+    bne     0x4c00023c
+    mov     1, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, d1
+    bra     0x4c000260
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64Exp_entry, [d2,d3], 0x38
+    mov     d0, (0x50, sp)
+    mov     d1, (0x54, sp)
+    nop
+    cmp     0, a3
+    nop
+    beq     0x4c00025c
+    movbu   (a2), d0
+    nop
+    xor     0x0080, d0
+    movbu   d0, (a2)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    ret     [d2,d3,a2,a3], 0x48
+.mnbase 0x48400000
+# LibF64UnpackedToI32  (lib CPU 0x4c000263)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    btst    0x06, d3
+    nop
+    beq     0x4c00026c
+    clr     d0
+    bra     0x4c0002b0
+    btst    0x01, d3
+    nop
+    beq     0x4c000280
+    mov     0x7fffffff, d0
+    add     a1, a1
+    nop
+    bcc     0x4c0002b0
+    inc     d0
+    bra     0x4c0002b0
+    cmp     0x3ff00000, a3
+    nop
+    bcs     0x4c000269
+    cmp     0x41e00000, a3
+    nop
+    bcc     0x4c000272
+    asl     10, d1
+    lsr     22, d0
+    or      d1, d0
+    mov     0x41d00000, d1
+    sub     a3, d1
+    lsr     20, d1
+    lsr     d1, d0
+    mov     a1, d1
+    asr     31, d1
+    xor     d1, d0
+    sub     d1, d0
+    retf    0, 0
+.mnbase 0x48400000
+# LibF64ToI32  (lib CPU 0x4c0002b3)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d3,a3], (sp)
+    add     -8, sp
+# LibF64ToI32_entry:   (register-save `call` entry)
+    mov     (0x1c, sp), d1
+    mov     (0x18, sp), d0
+    mov     d1, a1
+    call    LibF64Unpack, 0, 0
+    call    LibF64UnpackedToI32, 0, 0
+    ret     [d3,a3], 0x10
+.mnbase 0x48400000
+# LibF64Unpack  (lib CPU 0x4c0002cb)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     d1, d3
+    and     0x000fffff, d1
+    and     0x7ff00000, d3
+    mov     d3, a3
+    beq     0x4c0002ff
+    or      0x00100000, d1
+    clr     d3
+    cmp     0x7ff00000, a3
+    nop
+    bne     0x4c00030e
+    and     0x000fffff, d1
+    or      d1, d0
+    nop
+    beq     0x4c0002fb
+    mov     4, d3
+    bra     0x4c00030e
+    mov     1, d3
+    bra     0x4c00030e
+    or      d1, d0
+    nop
+    bne     0x4c000308
+    mov     2, d3
+    bra     0x4c00030e
+    add     0x100000, a3
+    retf    0, 0
+.mnbase 0x48400000
+# LibF64Log  (lib CPU 0x4c000311)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+    add     -0x3c, sp
+# LibF64Log_entry:   (register-save `call` entry)
+    mov     sp, a2
+    add     0x50, a2
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    bne     0x4c00033f
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    mov     -1, d0
+    mov     0xffefffff, d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    ret     [d2,a2,a3], 0x48
+    movbu   (7, a2), d0
+    nop
+    btst    0x80, d0
+    nop
+    beq     0x4c00035b
+    mov     1, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    ret     [d2,a2,a3], 0x48
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     sp, a0
+    add     0x38, a0
+    nop
+    call    LibF64Frexp_entry, [a2], 0x14
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     1, d0
+    call    LibF64Ldexp_entry, [d2,d3,a2], 0x1c
+    mov     d0, (0x50, sp)
+    mov     d1, (0x54, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0x667f3bcd, d0
+    mov     0x3ff6a09e, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    bge     0x4c0003a6
+    clr     d0
+    mov     0x3ff00000, d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    nop
+    clr     d2
+    nop
+    bra     0x4c0003b8
+    mov     0x667f3bcd, d0
+    mov     0x3ff6a09e, d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     1, d2
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Sub_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     0x333f9de6, d0
+    mov     0x4017504f, d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     0x0f2d0bbb, d0
+    mov     0x3db4aba6, d1
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     0x48586198, a3
+    mov     0x485861c0, a2
+    cmp     a3, a2
+    nop
+    bcs     0x4c000497
+    mov     (a2), d0
+    mov     (4, a2), d1
+    mov     d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     8, d0
+    sub     d0, a2
+    cmp     a3, a2
+    nop
+    bcc     0x4c000455
+    mov     (0x38, sp), d0
+    nop
+    add     -1, d0
+    nop
+    call    LibI32ToF64, 0, 0
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     0xfefa39ef, d0
+    mov     d0, (8, sp)
+    mov     0x3fe62e42, d1
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    nop
+    cmp     0, d2
+    nop
+    beq     0x4c000520
+    mov     0xfefa39ef, d0
+    mov     0x3fd62e42, d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    ret     [d2,a2,a3], 0x48
+.mnbase 0x48400000
+# LibI32ToF64  (lib CPU 0x4c000523)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     d2, a0
+    mov     0x41d00000, d2
+    mov     d0, d1
+    and     0x80000000, d1
+    mov     d1, a1
+    mov     d0, d1
+    asr     31, d1
+    xor     d1, d0
+    sub     d1, d0
+    nop
+    bnc     0x4c00054a
+    clr     d1
+    clr     d0
+    add     0x100000, d2
+    bra     0x4c00056c
+    bne     0x4c000550
+    sub     d2, d2
+    bra     0x4c000578
+    mov     d0, d1
+    lsr     10, d1
+    asl     22, d0
+    btst    0x00100000, d1
+    nop
+    bne     0x4c00056c
+    sub     0x100000, d2
+    add     d0, d0
+    nop
+    rol     d1
+    bra     0x4c000557
+    and     0x000fffff, d1
+    or      d2, d1
+    mov     a1, d2
+    or      d2, d1
+    mov     a0, d2
+    retf    0, 0
+.mnbase 0x48400000
+# LibF64Sub  (lib CPU 0x4c00057d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -8, sp
+# LibF64Sub_entry:   (register-save `call` entry)
+    mov     (0x2c, sp), d0
+    xor     0x80000000, d0
+    mov     d0, (0x2c, sp)
+    bra     0x4c000593
+.mnbase 0x48400000
+# LibF64Add  (lib CPU 0x4c00058e)
+#   arg1 + arg2 (LibF64Sub flips arg2's sign bit and falls in here):
+#   unpack both (class codes 0=normal/1=Inf/2=zero/4=NaN), align,
+#   add/sub mantissas with guard bits, renormalize, repack
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -8, sp
+# LibF64Add_entry:   (register-save `call` entry)
+    mov     (0x24, sp), d1
+    mov     d1, d2
+    and     0x000fffff, d1
+    lsr     20, d2
+    and     0x07ff, d2
+    mov     d2, a2
+    beq     0x4c0005ca
+    or      0x00100000, d1
+    cmp     0x7ff, d2
+    mov     0, d2
+    bne     0x4c0005d8
+    mov     (0x20, sp), d0
+    and     0x000fffff, d1
+    or      d1, d0
+    nop
+    beq     0x4c0005c6
+    mov     4, d2
+    bra     0x4c0005d8
+    mov     1, d2
+    bra     0x4c0005d8
+    mov     (0x20, sp), d0
+    nop
+    or      d1, d0
+    nop
+    bne     0x4c0005d6
+    mov     2, d2
+    bra     0x4c0005d8
+    add     1, a2
+    mov     d1, a0
+    mov     (0x2c, sp), d1
+    mov     d1, d3
+    and     0x000fffff, d1
+    lsr     20, d3
+    and     0x07ff, d3
+    mov     d3, a3
+    beq     0x4c000611
+    or      0x00100000, d1
+    cmp     0x7ff, d3
+    mov     0, d3
+    bne     0x4c00061f
+    mov     (0x28, sp), d0
+    and     0x000fffff, d1
+    or      d1, d0
+    nop
+    beq     0x4c00060d
+    mov     4, d3
+    bra     0x4c00061f
+    mov     1, d3
+    bra     0x4c00061f
+    mov     (0x28, sp), d0
+    nop
+    or      d1, d0
+    nop
+    bne     0x4c00061d
+    mov     2, d3
+    bra     0x4c00061f
+    add     1, a3
+    mov     d1, a1
+    mov     d2, d0
+    or      d3, d0
+    nop
+    beq     0x4c000690
+    btst    0x04, d0
+    nop
+    bne     0x4c000685
+    and     d2, d3
+    btst    0x01, d0
+    nop
+    beq     0x4c000655
+    mov     (0x24, sp), d1
+    nop
+    btst    0x01, d3
+    nop
+    beq     0x4c000649
+    mov     (0x2c, sp), d0
+    nop
+    xor     d1, d0
+    nop
+    bns     0x4c000685
+    bra     0x4c000651
+    btst    0x01, d2
+    nop
+    bne     0x4c000651
+    mov     (0x2c, sp), d1
+    clr     d0
+    jmp     0x4c0007da
+    btst    0x02, d0
+    nop
+    beq     0x4c000690
+    btst    0x02, d3
+    nop
+    beq     0x4c000671
+    mov     (0x24, sp), d1
+    mov     (0x2c, sp), d0
+    nop
+    xor     d1, d0
+    nop
+    bnc     0x4c00066d
+    clr     d1
+    clr     d0
+    jmp     0x4c0007da
+    btst    0x02, d2
+    nop
+    beq     0x4c00067e
+    mov     (0x2c, sp), d1
+    mov     (0x28, sp), d0
+    jmp     0x4c0007da
+    mov     (0x24, sp), d1
+    mov     (0x20, sp), d0
+    jmp     0x4c0007da
+    mov     0x7ff80000, d1
+    mov     0, d0
+    jmp     0x4c0007da
+    mov     a2, d3
+    sub     a3, d3
+    nop
+    bcs     0x4c0006a9
+    cmp     0x38, d3
+    nop
+    bcc     0x4c00067e
+    mov     a2, a3
+    mov     a1, d1
+    mov     a0, d0
+    mov     d0, mdr
+    mov     (0x28, sp), d0
+    mov     (0x20, sp), a0
+    bra     0x4c0006c2
+    not     d3
+    add     1, d3
+    cmp     0x38, d3
+    nop
+    bcc     0x4c000677
+    mov     a0, d1
+    mov     a1, d0
+    mov     d0, mdr
+    mov     (0x20, sp), d0
+    mov     (0x28, sp), a0
+    mov     0xffffffff, a1
+    add     -3, d3
+    nop
+    beq     0x4c000719
+    bcs     0x4c0006db
+    not     d3
+    inc     d3
+    asl     d3, d1
+    mov     d0, d2
+    asl     d3, d0
+    not     d3
+    add     0x21, d3
+    lsr     d3, d2
+    or      d2, d1
+    bra     0x4c000719
+    cmp     0x20, d3
+    nop
+    bcc     0x4c0006f5
+    mov     d1, d2
+    asr     d3, d1
+    mov     d0, a2
+    lsr     d3, d0
+    not     d3
+    add     0x21, d3
+    asl     d3, d2
+    or      d2, d0
+    mov     a2, d2
+    asl     d3, d2
+    bra     0x4c000714
+    or      d0, d0
+    nop
+    beq     0x4c0006fd
+    or      0x01, d1
+    mov     d1, d0
+    asr     31, d1
+    sub     0x20, d3
+    nop
+    beq     0x4c000719
+    mov     d0, d2
+    asr     d3, d0
+    not     d3
+    add     0x21, d3
+    asl     d3, d2
+    nop
+    beq     0x4c000719
+    or      0x01, d0
+    mov     d1, d3
+    mov     d0, a2
+    mov     mdr, d1
+    mov     a0, d0
+    asl     3, d1
+    mov     d0, d2
+    asl     3, d0
+    lsr     29, d2
+    or      d2, d1
+    mov     d0, a0
+    mov     (0x24, sp), d2
+    mov     (0x2c, sp), d0
+    nop
+    xor     d2, d0
+    nop
+    bnc     0x4c000751
+    sub     a2, a0
+    mov     a0, d0
+    subc    d3, d1
+    mov     a1, d3
+    bnc     0x4c000757
+    xor     d1, d3
+    not     d0
+    not     d1
+    inc     d0
+    nop
+    bcc     0x4c000757
+    inc     d1
+    bra     0x4c000757
+    add     a2, a0
+    mov     a0, d0
+    addc    d3, d1
+    xor     d2, d3
+    lsr     1, d1
+    mov     d0, d2
+    ror     d0
+    nop
+    bne     0x4c000767
+    or      d1, d1
+    nop
+    beq     0x4c0007da
+    btst    0x00800000, d1
+    nop
+    beq     0x4c00077c
+    add     1, a3
+    or      d0, d2
+    asr     1, d1
+    nop
+    ror     d0
+    bra     0x4c000790
+    btst    0x00400000, d1
+    nop
+    bne     0x4c000790
+    add     -1, a3
+    nop
+    beq     0x4c000790
+    add     d0, d0
+    nop
+    rol     d1
+    bra     0x4c00077c
+    or      d0, d2
+    lsr     1, d1
+    nop
+    ror     d0
+    lsr     1, d1
+    nop
+    ror     d0
+    nop
+    bcc     0x4c0007bc
+    ror     d2
+    nop
+    bcs     0x4c0007ac
+    btst    0x01, d0
+    nop
+    beq     0x4c0007bc
+    inc     d0
+    nop
+    bcc     0x4c0007bc
+    inc     d1
+    and     0x000fffff, d1
+    nop
+    bne     0x4c0007bc
+    add     1, a3
+    mov     a3, d2
+    cmp     0x7ff, d2
+    nop
+    bcs     0x4c0007c7
+    clr     d0
+    clr     d1
+    and     0x000fffff, d1
+    and     0x80000000, d3
+    or      d3, d1
+    asl     20, d2
+    or      d2, d1
+    mov     d1, d2
+    add     d2, d2
+    or      d0, d2
+    nop
+    ret     [d2,d3,a2,a3], 0x18
+.mnbase 0x48400000
+# LibF64Cmp  (lib CPU 0x4c0007e2)
+#   compare arg1 ? arg2, returning with the CPU flags set so the
+#   caller's SIGNED branches (blt/bge/ble) read the result directly;
+#   the sign-fold xors PSW N|V when the magnitude order inverts
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -8, sp
+# LibF64Cmp_entry:   (register-save `call` entry)
+    mov     (0x24, sp), d3
+    mov     (0x20, sp), d0
+    mov     d3, d2
+    and     0x7fffffff, d2
+    nop
+    bne     0x4c0007fc
+    or      d0, d0
+    nop
+    bne     0x4c0007fc
+    bra     0x4c000856
+    mov     d0, a0
+    mov     (0x1c, sp), d1
+    mov     (0x18, sp), d0
+    mov     d1, d2
+    and     0x7fffffff, d2
+    nop
+    bne     0x4c000812
+    or      d0, d0
+    nop
+    bne     0x4c000812
+    mov     d2, d1
+    mov     d3, a1
+    mov     d1, d2
+    not     d2
+    not     d3
+    lsr     31, d2
+    lsr     31, d3
+    cmp     d3, d2
+    nop
+    bne     0x4c00084e
+    mov     0x7fffffff, d3
+    and     d3, d1
+    mov     a1, d2
+    and     d2, d3
+    cmp     d3, d1
+    nop
+    bne     0x4c00083f
+    sub     a0, d0
+    nop
+    beq     0x4c00084e
+    subc    d3, d1
+    nop
+    bne     0x4c00083f
+    inc     d1
+    nop
+    mov     psw, d0
+    add     a1, a1
+    nop
+    bcc     0x4c00084b
+    xor     0x0006, d0
+    nop
+    mov     d0, psw
+    nop
+    retf    [d2,d3], 0x10
+.mnbase 0x48400000
+# LibF64CmpZero  (lib CPU 0x4c000851)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -8, sp
+# LibF64CmpZero_entry:   (register-save `call` entry)
+    mov     (0x1c, sp), d1
+    mov     (0x18, sp), d0
+    mov     d1, d2
+    and     0x7fffffff, d2
+    nop
+    bne     0x4c000869
+    or      d0, d0
+    nop
+    beq     0x4c000871
+    asr     31, d1
+    or      0x01, d1
+    add     d1, d1
+    nop
+    retf    [d2,d3], 0x10
+.mnbase 0x48400000
+# LibF64Mul  (lib CPU 0x4c000874)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -8, sp
+# LibF64Mul_entry:   (register-save `call` entry)
+    mov     (0x24, sp), d1
+    mov     d1, d2
+    and     0x000fffff, d1
+    lsr     20, d2
+    and     0x07ff, d2
+    mov     d2, a2
+    beq     0x4c0008b0
+    or      0x00100000, d1
+    cmp     0x7ff, d2
+    mov     0, d2
+    bne     0x4c0008be
+    mov     (0x20, sp), d0
+    and     0x000fffff, d1
+    or      d1, d0
+    nop
+    beq     0x4c0008ac
+    mov     4, d2
+    bra     0x4c0008be
+    mov     1, d2
+    bra     0x4c0008be
+    mov     (0x20, sp), d0
+    nop
+    or      d1, d0
+    nop
+    bne     0x4c0008bc
+    mov     2, d2
+    bra     0x4c0008be
+    add     1, a2
+    mov     d1, a0
+    mov     (0x2c, sp), d1
+    mov     d1, d3
+    and     0x000fffff, d1
+    lsr     20, d3
+    and     0x07ff, d3
+    mov     d3, a3
+    beq     0x4c0008f7
+    or      0x00100000, d1
+    cmp     0x7ff, d3
+    mov     0, d3
+    bne     0x4c000905
+    mov     (0x28, sp), d0
+    and     0x000fffff, d1
+    or      d1, d0
+    nop
+    beq     0x4c0008f3
+    mov     4, d3
+    bra     0x4c000905
+    mov     1, d3
+    bra     0x4c000905
+    mov     (0x28, sp), d0
+    nop
+    or      d1, d0
+    nop
+    bne     0x4c000903
+    mov     2, d3
+    bra     0x4c000905
+    add     1, a3
+    mov     d1, a1
+    mov     d2, d0
+    or      d3, d0
+    nop
+    beq     0x4c000954
+    btst    0x04, d0
+    nop
+    bne     0x4c00093a
+    mov     d2, d0
+    and     d3, d0
+    btst    0x01, d0
+    nop
+    bne     0x4c00093a
+    btst    0x02, d0
+    nop
+    bne     0x4c00093a
+    btst    0x02, d2
+    nop
+    bne     0x4c00094f
+    btst    0x01, d2
+    nop
+    bne     0x4c000945
+    btst    0x02, d3
+    nop
+    bne     0x4c000945
+    btst    0x01, d3
+    nop
+    bne     0x4c00094f
+    mov     0x7ff80000, d1
+    mov     0, d0
+    jmp     0x4c000b0f
+    mov     0x7ff00000, d1
+    clr     d0
+    jmp     0x4c000b01
+    clr     d1
+    clr     d0
+    jmp     0x4c000b01
+    sub     a3, a2
+    mov     a2, d2
+    cmp     0x400, d2
+    nop
+    bgt     0x4c000945
+    cmp     -0x433, d2
+    nop
+    blt     0x4c00094f
+    mov     a2, a3
+    mov     a0, d2
+    mov     a1, d0
+    mov     (0x28, sp), d1
+    mov     d1, d3
+    asl     11, d0
+    asl     11, d3
+    mov     d3, a0
+    lsr     21, d1
+    or      d1, d0
+    nop
+    bns     0x4c00098a
+    add     1, a3
+    add     a0, a0
+    nop
+    rol     d0
+    nop
+    bnc     0x4c00097f
+    mov     d0, a1
+    mov     (0x20, sp), d1
+    asl     11, d2
+    mov     d1, d0
+    asl     11, d1
+    lsr     21, d0
+    or      d0, d2
+    nop
+    bns     0x4c0009a8
+    add     -1, a3
+    add     d1, d1
+    nop
+    rol     d2
+    nop
+    bnc     0x4c00099e
+    cmp     0x400, a3
+    nop
+    bgt     0x4c000945
+    cmp     a1, d2
+    nop
+    bcs     0x4c0009d6
+    bne     0x4c0009ce
+    cmp     a0, d1
+    nop
+    bne     0x4c0009ce
+    cmp     0xfffffbce, a3
+    nop
+    blt     0x4c00094f
+    mov     0x80000000, d1
+    clr     d0
+    jmp     0x4c000a62
+    lsr     1, d2
+    nop
+    ror     d1
+    add     1, a3
+    cmp     0xfffffbce, a3
+    nop
+    bge     0x4c0009e2
+    jmp     0x4c00094f
+    add     -1, a3
+    mov     d2, mdr
+    mov     a1, d3
+    divu    d3, d1
+    cmp     0, a0
+    nop
+    bne     0x4c0009f6
+    clr     d0
+    divu    d3, d0
+    mov     mdr, d2
+    bra     0x4c000a62
+    mov     mdr, d0
+    mov     a0, d2
+    mov     d1, a2
+    cmp     0, d2
+    nop
+    bns     0x4c000a09
+    mulu    d2, d1
+    mov     d1, d2
+    mov     a2, d1
+    bra     0x4c000a0b
+    mulu    d1, d2
+    sub     a2, a2
+    sub     d2, a2
+    mov     mdr, d2
+    subc    d2, d0
+    nop
+    bcc     0x4c000a20
+    add     -1, d1
+    add     a0, a2
+    nop
+    addc    d3, d0
+    nop
+    bcc     0x4c000a16
+    cmp     d0, d3
+    nop
+    bne     0x4c000a28
+    mov     -1, d0
+    bra     0x4c000a62
+    mov     d0, mdr
+    mov     a2, d0
+    divu    d3, d0
+    mov     mdr, d3
+    mov     a0, d2
+    mov     d0, a2
+    cmp     0, d2
+    nop
+    bns     0x4c000a41
+    mulu    d2, d0
+    mov     d0, d2
+    mov     a2, d0
+    bra     0x4c000a43
+    mulu    d0, d2
+    sub     a2, a2
+    sub     d2, a2
+    mov     mdr, d2
+    subc    d2, d3
+    nop
+    bcc     0x4c000a5e
+    mov     a1, d2
+    sub     1, d0
+    add     a0, a2
+    nop
+    addc    d2, d3
+    nop
+    bcc     0x4c000a50
+    mov     a2, d2
+    or      d3, d2
+    mov     0xa, d3
+    btst    0x80000000, d1
+    nop
+    bne     0x4c000a71
+    add     -1, a3
+    add     -1, d3
+    cmp     0xfffffc02, a3
+    nop
+    bge     0x4c000a86
+    add     -0x3fe, d3
+    sub     a3, d3
+    mov     0xfffffc01, a3
+    cmp     0x20, d3
+    nop
+    bcs     0x4c000aa9
+    or      d0, d2
+    mov     d1, d0
+    clr     d1
+    sub     0x20, d3
+    nop
+    beq     0x4c000ac2
+    mov     d2, a0
+    mov     d0, d2
+    lsr     d3, d0
+    not     d3
+    add     0x21, d3
+    asl     d3, d2
+    mov     a0, d3
+    or      d3, d2
+    bra     0x4c000ac2
+    mov     d2, a0
+    mov     d0, a1
+    mov     d1, d2
+    lsr     d3, d1
+    lsr     d3, d0
+    not     d3
+    add     0x21, d3
+    asl     d3, d2
+    or      d2, d0
+    mov     a1, d2
+    asl     d3, d2
+    mov     a0, d3
+    or      d3, d2
+    lsr     1, d1
+    nop
+    ror     d0
+    nop
+    bcc     0x4c000ae6
+    or      d2, d2
+    nop
+    bne     0x4c000ad6
+    btst    0x01, d0
+    nop
+    beq     0x4c000ae6
+    inc     d0
+    nop
+    bcc     0x4c000ae6
+    inc     d1
+    and     0x000fffff, d1
+    nop
+    bne     0x4c000ae6
+    add     1, a3
+    add     0x3ff, a3
+    cmp     0x7fe, a3
+    nop
+    bls     0x4c000af4
+    jmp     0x4c000945
+    and     0x000fffff, d1
+    mov     a3, d2
+    asl     20, d2
+    or      d2, d1
+    mov     (0x24, sp), d2
+    mov     (0x2c, sp), d3
+    xor     d3, d2
+    and     0x80000000, d2
+    or      d2, d1
+    mov     d1, d2
+    add     d2, d2
+    or      d0, d2
+    nop
+    ret     [d2,d3,a2,a3], 0x18
+.mnbase 0x48400000
+# LibF64Div  (lib CPU 0x4c000b17)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -8, sp
+# LibF64Div_entry:   (register-save `call` entry)
+    mov     0x000fffff, d0
+    mov     (0x24, sp), d1
+    mov     d1, d2
+    and     d0, d1
+    lsr     20, d2
+    and     0x07ff, d2
+    mov     d2, a2
+    beq     0x4c000b51
+    or      0x00100000, d1
+    cmp     0x7ff, d2
+    mov     0, d2
+    bne     0x4c000b5f
+    mov     (0x20, sp), d3
+    and     d0, d1
+    or      d1, d3
+    nop
+    beq     0x4c000b4d
+    mov     4, d2
+    bra     0x4c000b5f
+    mov     1, d2
+    bra     0x4c000b5f
+    mov     (0x20, sp), d3
+    nop
+    or      d1, d3
+    nop
+    bne     0x4c000b5d
+    mov     2, d2
+    bra     0x4c000b5f
+    add     1, a2
+    mov     d1, a0
+    mov     (0x2c, sp), d1
+    mov     d1, d3
+    and     d0, d1
+    lsr     20, d3
+    and     0x07ff, d3
+    mov     d3, a3
+    beq     0x4c000b91
+    or      0x00100000, d1
+    cmp     0x7ff, d3
+    nop
+    bne     0x4c000ba0
+    mov     (0x28, sp), d3
+    and     d0, d1
+    or      d1, d3
+    nop
+    beq     0x4c000b8c
+    or      0x04, d2
+    bra     0x4c000ba0
+    or      0x01, d2
+    bra     0x4c000ba0
+    mov     (0x28, sp), d3
+    nop
+    or      d1, d3
+    nop
+    bne     0x4c000b9e
+    or      0x02, d2
+    bra     0x4c000ba0
+    add     1, a3
+    mov     d1, a1
+    or      d2, d2
+    nop
+    beq     0x4c000bd8
+    btst    0x04, d2
+    nop
+    bne     0x4c000bbe
+    cmp     3, d2
+    nop
+    beq     0x4c000bbe
+    btst    0x02, d2
+    nop
+    bne     0x4c000bd3
+    btst    0x01, d2
+    nop
+    bne     0x4c000bc9
+    mov     0x7ff80000, d1
+    mov     0, d0
+    jmp     0x4c000ccb
+    mov     0x7ff00000, d1
+    clr     d0
+    jmp     0x4c000cbd
+    clr     d1
+    clr     d0
+    jmp     0x4c000cbd
+    add     a2, a3
+    mov     a3, d2
+    cmp     0xbfd, d2
+    nop
+    bhi     0x4c000bc9
+    cmp     0x3ca, d2
+    nop
+    bcs     0x4c000bd3
+    mov     (0x20, sp), d2
+    mov     (0x28, sp), d1
+    mov     d2, a2
+    cmp     0, d2
+    nop
+    bns     0x4c000bfd
+    mulu    d2, d1
+    mov     d1, d2
+    mov     (0x28, sp), d1
+    bra     0x4c000bff
+    mulu    d1, d2
+    mov     mdr, d3
+    mov     a0, d0
+    mulu    d0, d1
+    clr     d0
+    add     d1, d3
+    mov     mdr, d1
+    addc    d1, d0
+    mov     a1, d1
+    mov     d0, a1
+    mov     a2, d0
+    nop
+    mulu    d1, d0
+    add     d0, d3
+    mov     mdr, d0
+    bcc     0x4c000c1a
+    inc     d0
+    add     d0, a1
+    mov     a0, d0
+    nop
+    mulu    d1, d0
+    add     a1, d0
+    mov     mdr, d1
+    bcc     0x4c000c28
+    inc     d1
+    sub     0x3fe, a3
+    nop
+    bhi     0x4c000c4a
+    add     0xb, a3
+    nop
+    bgt     0x4c000c6d
+    cmp     1, a3
+    nop
+    bge     0x4c000c6d
+    or      d3, d2
+    asr     1, d1
+    nop
+    ror     d0
+    nop
+    ror     d3
+    add     1, a3
+    bra     0x4c000c36
+    mov     d2, a0
+    asl     11, d1
+    mov     d0, d2
+    lsr     21, d2
+    or      d2, d1
+    asl     11, d0
+    mov     d3, d2
+    lsr     21, d2
+    or      d2, d0
+    asl     11, d3
+    mov     a0, d2
+    lsr     21, d2
+    or      d2, d3
+    mov     a0, d2
+    asl     11, d2
+    btst    0x00100000, d1
+    nop
+    bne     0x4c000c87
+    add     -1, a3
+    nop
+    beq     0x4c000c87
+    add     d2, d2
+    nop
+    rol     d3
+    nop
+    rol     d0
+    nop
+    rol     d1
+    bra     0x4c000c6d
+    add     d3, d3
+    nop
+    bcc     0x4c000ca6
+    or      d3, d2
+    nop
+    bne     0x4c000c96
+    btst    0x01, d0
+    nop
+    beq     0x4c000ca6
+    inc     d0
+    nop
+    bcc     0x4c000ca6
+    inc     d1
+    and     0x000fffff, d1
+    nop
+    bne     0x4c000ca6
+    add     1, a3
+    mov     a3, d3
+    cmp     0x7ff, d3
+    nop
+    bcs     0x4c000cb2
+    jmp     0x4c000bc9
+    and     0x000fffff, d1
+    asl     20, d3
+    or      d3, d1
+    mov     (0x24, sp), d2
+    mov     (0x2c, sp), d3
+    xor     d3, d2
+    and     0x80000000, d2
+    or      d2, d1
+    mov     d1, d2
+    add     d2, d2
+    or      d0, d2
+    nop
+    ret     [d2,d3,a2,a3], 0x18
+.mnbase 0x48400000
+# LibF64Ldexp  (lib CPU 0x4c000cd3)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# LibF64Ldexp_entry:   (register-save `call` entry)
+    mov     d0, d3
+    mov     sp, a2
+    add     0x24, a2
+    mov     (0x24, sp), d0
+    mov     (0x28, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    beq     0x4c000d4d
+    mov     6, a0
+    add     a2, a0
+    movhu   (a0), d2
+    mov     0x7ff, d1
+    asr     4, d2
+    and     d1, d2
+    add     d3, d2
+    cmp     d1, d3
+    nop
+    bge     0x4c000d02
+    cmp     d1, d2
+    nop
+    ble     0x4c000d2a
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    movbu   (7, a2), d0
+    mov     -1, d1
+    mov     0xffefffff, d2
+    mov     d1, (0x24, sp)
+    mov     d2, (0x28, sp)
+    nop
+    btst    0x80, d0
+    nop
+    bne     0x4c000d4d
+    mov     0x7fefffff, d1
+    mov     d1, (0x28, sp)
+    bra     0x4c000d4d
+    cmp     0, d2
+    nop
+    bgt     0x4c000d3f
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, (0x24, sp)
+    mov     d0, (0x28, sp)
+    bra     0x4c000d4d
+    movhu   (a0), d0
+    nop
+    asl     4, d2
+    and     0x800f, d0
+    or      d2, d0
+    movhu   d0, (a0)
+    mov     (0x24, sp), d0
+    mov     (0x28, sp), d1
+    ret     [d2,d3,a2], 0x1c
+.mnbase 0x48400000
+# LibF64Frexp  (lib CPU 0x4c000d54)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x10, sp
+# LibF64Frexp_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     (0x1c, sp), d0
+    mov     (0x20, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
+    bne     0x4c000d6d
+    clr     d0
+    mov     d0, (a2)
+    bra     0x4c000d92
+    mov     sp, a0
+    mov     a0, d1
+    add     0x1c, d1
+    mov     6, a1
+    add     d1, a1
+    movhu   (a1), d0
+    nop
+    asr     4, d0
+    and     0x07ff, d0
+    add     -0x3fe, d0
+    mov     d0, (a2)
+    movhu   (a1), d0
+    nop
+    and     0x800f, d0
+    add     0x3fe0, d0
+    movhu   d0, (a1)
+    mov     (0x1c, sp), d0
+    mov     (0x20, sp), d1
+    ret     [a2], 0x14
+.mnbase 0x48400000
+# LibF64Exp  (lib CPU 0x4c000d99)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x30, sp
+# LibF64Exp_entry:   (register-save `call` entry)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xdd7abcd2, d0
+    mov     0xc086232b, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    bge     0x4c000dd0
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    nop
+    clr     d0
+    mov     d0, d1
+    ret     [d2,d3], 0x38
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xfefa39ef, d0
+    mov     0x40862e42, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Cmp_entry, [d2,d3], 0x10
+    blt     0x4c000e02
+    mov     2, d0
+    mov     d0, (0x500ad390)
+    mov     -1, d0
+    mov     0x7fefffff, d1
+    ret     [d2,d3], 0x38
+    mov     sp, a0
+    clr     d0
+    mov     d0, (0x28, sp)
+    mov     0x3fe00000, d2
+    mov     d2, (0x2c, sp)
+    mov     a0, d1
+    add     0x28, d1
+    add     0x40, a0
+    movbu   (7, a0), d0
+    mov     7, a1
+    add     d1, a1
+    movbu   (a1), d1
+    nop
+    and     0x80, d0
+    or      d0, d1
+    movbu   d1, (a1)
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xfefa39ef, d0
+    mov     d0, (0x10, sp)
+    mov     0x3fe62e42, d1
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    LibF64ToI32_entry, [d3,a3], 0x10
+    mov     d0, d3
+    call    LibI32ToF64, 0, 0
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     0xfefa39ef, d0
+    mov     d0, (0x10, sp)
+    mov     0x3fe62e42, d1
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Sub_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x40, sp)
+    mov     d1, (0x44, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     0x12, d2
+    mov     d2, d0
+    call    LibU32ToF64, 0, 0
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     4, d0
+    sub     d0, d2
+    cmp     6, d2
+    nop
+    bcc     0x4c000eab
+    clr     d0
+    mov     0x40000000, d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x40, sp), d0
+    mov     (0x44, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Sub_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     d3, d0
+    call    LibF64Ldexp_entry, [d2,d3,a2], 0x1c
+    ret     [d2,d3], 0x38
+.mnbase 0x48400000
+# LibU32ToF64  (lib CPU 0x4c000f54)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     d2, a0
+    or      d0, d0
+    nop
+    bne     0x4c000f60
+    clr     d1
+    sub     d2, d2
+    bra     0x4c000f8a
+    mov     0x41e00000, d2
+    mov     d0, d1
+    lsr     11, d1
+    asl     21, d0
+    btst    0x00100000, d1
+    nop
+    bne     0x4c000f82
+    sub     0x100000, d2
+    add     d0, d0
+    nop
+    rol     d1
+    bra     0x4c000f6d
+    and     0x000fffff, d1
+    or      d2, d1
+    mov     a0, d2
+    retf    0, 0
+.mnbase 0x48400000
+# LibF64Abs  (lib CPU 0x4c000f8f)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     sp, a0
+    mov     a0, d1
+    add     8, d1
+    mov     7, a0
+    add     d1, a0
+    movbu   (a0), d0
+    nop
+    and     0x7f, d0
+    movbu   d0, (a0)
+    mov     (8, sp), d0
+    mov     (0xc, sp), d1
+    retf    0, 0
+.mnbase 0x48400000
+# LibF64Modf  (lib CPU 0x4c000fa7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x20, sp
+# LibF64Modf_entry:   (register-save `call` entry)
+    mov     (0x34, sp), d0
+    mov     (0x38, sp), d1
+    mov     d0, (0x18, sp)
+    mov     d1, (0x1c, sp)
+    mov     sp, a1
+    add     0x34, a1
+    movhu   (6, a1), d1
+    mov     a0, a2
+    asr     4, d1
+    and     0x07ff, d1
+    mov     0x3ff, d0
+    cmp     d0, d1
+    nop
+    bge     0x4c000fd5
+    clr     d0
+    mov     d0, (a2)
+    mov     d0, (4, a2)
+    mov     (0x34, sp), d0
+    mov     (0x38, sp), d1
+    ret     [d2,d3,a2], 0x2c
+    cmp     0x433, d1
+    nop
+    blt     0x4c000fe9
+    mov     (0x34, sp), d0
+    mov     (0x38, sp), d1
+    mov     d0, (a2)
+    mov     d1, (4, a2)
+    nop
+    clr     d0
+    mov     d0, d1
+    bra     0x4c001049
+    sub     d0, d1
+    add     0xc, d1
+    mov     d1, d0
+    lsr     4, d0
+    mov     3, d3
+    sub     d0, d3
+    mov     d3, a0
+    add     a0, a0
+    add     a1, a0
+    movhu   (a0), d2
+    nop
+    and     0x0f, d1
+    mov     0x10, d0
+    sub     d1, d0
+    mov     0x0000ffff, d1
+    asl     d0, d1
+    mov     d1, d0
+    and     d2, d0
+    movhu   d0, (a0)
+    mov     1, d0
+    sub     d0, d3
+    cmp     0, d3
+    nop
+    blt     0x4c00102c
+    mov     d3, a0
+    add     a0, a0
+    add     a1, a0
+    setlb
+    clr     d0
+    movhu   d0, (a0)
+    mov     2, d0
+    sub     d0, a0
+    cmp     a1, a0
+    nop
+    lcc
+    mov     (0x34, sp), d0
+    mov     (0x38, sp), d1
+    mov     d0, (a2)
+    mov     d1, (4, a2)
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x34, sp), d0
+    mov     (0x38, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Sub_entry, [d2,d3,a2,a3], 0x18
+    ret     [d2,d3,a2], 0x2c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ba01d, 0x3ba5f5
+# LibF64ToI16  (lib CPU 0x4c001624)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d3,a3], (sp)
+    add     -8, sp
+# LibF64ToI16_entry:   (register-save `call` entry)
+    mov     (0x1c, sp), d1
+    mov     (0x18, sp), d0
+    mov     d1, a1
+    call    LibF64Unpack, 0, 0
+    call    LibF64UnpackedToI32, 0, 0
+    exth    d0
+    ret     [d3,a3], 0x10
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ba60e, 0x3ba67d
+# LibU16ToF64  (lib CPU 0x4c0016ac)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    exthu   d0
+    jmp     LibI32ToF64
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ba681, 0x3ba9a6
 # LibDiv32  (lib CPU 0x4c0019d5)
 #   signed 32-bit divide d0/d1 with the fast paths the sym file
 #   documents: d1==1 -> d0, d1==-1 -> -d0, else ext/div
@@ -21066,7 +23039,12 @@ display_palette:
     nop
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c3, 0x3c3d14
+# LibI16ToF64  (lib CPU 0x4c0019f2)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    exth    d0
+    jmp     LibI32ToF64
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3c3d14
 # TgDrumAmpReleaseCalc  (lib CPU 0x4c00ad43)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
@@ -21437,7 +23415,465 @@ display_palette:
     extbu   d0
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3c9013
+.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3c8d1d
+# TgZoneParamClamp  (lib CPU 0x4c00fd4c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgZoneParamClamp_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d1
+    movhu   (0x18, sp), d0
+    mov     d1, d2
+    exth    d2
+    exth    d0
+    cmp     d0, d2
+    bge     0x4c00fd5e
+    movhu   (0x18, sp), d1
+    bra     0x4c00fd64
+    mov     d3, d0
+    exth    d0
+    cmp     d0, d2
+    ble     0x4c00fd64
+    mov     d3, d1
+    mov     d1, d0
+    retf    [d2,d3], 8
+.mnbase 0x48400000
+# TgZoneLevelScaleCalc  (lib CPU 0x4c00fd68)
+#   first of the melodic ZONE PARAM FETCHERS (the leaf layer under
+#   TgElemNoteOnFresh/Std; byte-for-byte twins at 0x4C011F2F.. serve
+#   TgKitElemNoteOn): tone-zone (desc2) UI bytes -> hardware units via
+#   the +-50-index sensitivity curve ROM 0x486D2713 (negative offsets
+#   use the negated mirror), key scaling via 0x486D1354/0x486D13D4
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgZoneLevelScaleCalc_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     a1, a0
+    movbu   (9, a0), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c00fd9a
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     0x7f, d0
+    ble     0x4c00fd88
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a3
+    movbu   (d1, a3), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00fda9
+    cmp     0x7f, d1
+    ble     0x4c00fda0
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a3
+    movbu   (d0, a3), d0
+    mov     d0, d3
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00fdb5
+    mov     -1, d3
+    nop
+    nop
+    mul     d0, d3
+    add     0x14, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     0, d0
+    beq     0x4c00fdff
+    movbu   (a0), d2
+    movbu   (0x10, a2), d1
+    extb    d2
+    extbu   d1
+    and     0x7f, d1
+    mov     d2, d0
+    extb    d0
+    cmp     0, d0
+    bge     0x4c00fddb
+    extbu   d1
+    mov     0x486d1354, a0
+    movbu   (d1, a0), d1
+    not     d0
+    mov     d0, d2
+    inc     d2
+    extbu   d1
+    mov     0x486d13d4, a0
+    movbu   (d1, a0), d1
+    exth    d3
+    extb    d1
+    extb    d2
+    nop
+    nop
+    mul     d1, d2
+    mov     d2, d0
+    exth    d0
+    asr     6, d0
+    exth    d0
+    add     d0, d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d1
+    mov     d3, d0
+    exth    d0
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d3
+    mov     d3, d0
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgZoneVeloSenseCalc  (lib CPU 0x4c00fe03)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   (0xa, a0), d1
+    extb    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00fe2d
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00fe1b
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a1
+    movbu   (d0, a1), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00fe3c
+    cmp     0x7f, d0
+    ble     0x4c00fe33
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a1
+    movbu   (d1, a1), d0
+    movbu   (9, a0), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c00fe4b
+    exth    d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    rets
+.mnbase 0x48400000
+# TgZoneSendLevelsCalc  (lib CPU 0x4c00fe4d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgZoneSendLevelsCalc_entry:   (register-save `call` entry)
+    movbu   (9, a1), d0
+    mov     a0, a2
+    extb    d0
+    cmp     0, d0
+    blt     0x4c00fe5a
+    bra     0x4c00fed5
+    movbu   (0xe, a1), d1
+    extb    d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00fe85
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     0x7f, d2
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c00fe73
+    mov     d2, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00fe94
+    mov     0x7f, d2
+    cmp     d2, d0
+    ble     0x4c00fe8b
+    mov     d2, d1
+    mov     0x486d2713, a0
+    extbu   d1
+    movbu   (d1, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c00fec1
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c00feb5
+    mov     d2, d1
+    extbu   d1
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00fec8
+    cmp     d2, d1
+    ble     0x4c00fec5
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+    movbu   (0xe, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c00ff00
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     0x7f, d2
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c00feee
+    mov     d2, d1
+    extbu   d1
+    mov     0x486d2713, a0
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00ff0f
+    mov     0x7f, d2
+    cmp     d2, d1
+    ble     0x4c00ff06
+    mov     d2, d0
+    mov     0x486d2713, a0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00ff36
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c00ff2a
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00ff3e
+    cmp     d2, d0
+    ble     0x4c00ff3a
+    mov     d2, d1
+    mov     d1, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgZoneFilterEgLevel1Calc  (lib CPU 0x4c00ff44)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgZoneFilterEgLevel1Calc_entry:   (register-save `call` entry)
+    movbu   (0x3f, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00ff87
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00ff75
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00ff97
+    cmp     0x7f, d0
+    ble     0x4c00ff8d
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgZoneFilterEgLevel2Calc  (lib CPU 0x4c00ff9a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgZoneFilterEgLevel2Calc_entry:   (register-save `call` entry)
+    movbu   (0x41, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c00ffdd
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c00ffcb
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c00ffed
+    cmp     0x7f, d0
+    ble     0x4c00ffe3
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgZoneFilterEgLevelCalc  (lib CPU 0x4c00fff0)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgZoneFilterEgLevelCalc_entry:   (register-save `call` entry)
+    movbu   (0x3e, a0), d1
+    exth    d0
+    extb    d1
+    add     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c01002f
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c01001d
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c01003f
+    cmp     0x7f, d0
+    ble     0x4c010035
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
 # TgVoiceListReleaseByNote  (lib CPU 0x4c010042)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2], (sp)
@@ -21713,7 +24149,484 @@ display_palette:
     call    TgVoiceEgBurstWrite, [d2,a2], 0x1c
     ret     [d2,d3,a2,a3], 0x2c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ca701, 0x3cb225
+.incbin_range "baserom/kn7000_program.rom", 0x3ca701, 0x3caf00
+# TgKitZoneParamClamp  (lib CPU 0x4c011f2f)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgKitZoneParamClamp_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d1
+    movhu   (0x18, sp), d0
+    mov     d1, d2
+    exth    d2
+    exth    d0
+    cmp     d0, d2
+    bge     0x4c011f41
+    movhu   (0x18, sp), d1
+    bra     0x4c011f47
+    mov     d3, d0
+    exth    d0
+    cmp     d0, d2
+    ble     0x4c011f47
+    mov     d3, d1
+    mov     d1, d0
+    retf    [d2,d3], 8
+.mnbase 0x48400000
+# TgKitZoneLevelScaleCalc  (lib CPU 0x4c011f4b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x14, sp
+# TgKitZoneLevelScaleCalc_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     a1, a0
+    movbu   (9, a0), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c011f7d
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     0x7f, d0
+    ble     0x4c011f6b
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a3
+    movbu   (d1, a3), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c011f8c
+    cmp     0x7f, d1
+    ble     0x4c011f83
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a3
+    movbu   (d0, a3), d0
+    mov     d0, d3
+    exth    d0
+    cmp     0, d0
+    bge     0x4c011f98
+    mov     -1, d3
+    nop
+    nop
+    mul     d0, d3
+    add     0x14, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     0, d0
+    beq     0x4c011fe2
+    movbu   (a0), d2
+    movbu   (0x10, a2), d1
+    extb    d2
+    extbu   d1
+    and     0x7f, d1
+    mov     d2, d0
+    extb    d0
+    cmp     0, d0
+    bge     0x4c011fbe
+    extbu   d1
+    mov     0x486d1354, a0
+    movbu   (d1, a0), d1
+    not     d0
+    mov     d0, d2
+    inc     d2
+    extbu   d1
+    mov     0x486d13d4, a0
+    movbu   (d1, a0), d1
+    exth    d3
+    extb    d1
+    extb    d2
+    nop
+    nop
+    mul     d1, d2
+    mov     d2, d0
+    exth    d0
+    asr     6, d0
+    exth    d0
+    add     d0, d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x7f, d1
+    mov     d3, d0
+    exth    d0
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d3
+    mov     d3, d0
+    ret     [d2,d3,a2,a3], 0x24
+.mnbase 0x48400000
+# TgKitZoneVeloSenseCalc  (lib CPU 0x4c011fe6)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   (0xa, a0), d1
+    extb    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c012010
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c011ffe
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a1
+    movbu   (d0, a1), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c01201f
+    cmp     0x7f, d0
+    ble     0x4c012016
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a1
+    movbu   (d1, a1), d0
+    movbu   (9, a0), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c01202e
+    exth    d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    rets
+.mnbase 0x48400000
+# TgKitZoneSendLevelsCalc  (lib CPU 0x4c012030)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgKitZoneSendLevelsCalc_entry:   (register-save `call` entry)
+    movbu   (9, a1), d0
+    mov     a0, a2
+    extb    d0
+    cmp     0, d0
+    blt     0x4c01203d
+    bra     0x4c0120b8
+    movbu   (0xe, a1), d1
+    extb    d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c012068
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     0x7f, d2
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c012056
+    mov     d2, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c012077
+    mov     0x7f, d2
+    cmp     d2, d0
+    ble     0x4c01206e
+    mov     d2, d1
+    mov     0x486d2713, a0
+    extbu   d1
+    movbu   (d1, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c0120a4
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c012098
+    mov     d2, d1
+    extbu   d1
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c0120ab
+    cmp     d2, d1
+    ble     0x4c0120a8
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    exthu   d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+    movbu   (0xe, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c0120e3
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     0x7f, d2
+    mov     d1, d0
+    exth    d0
+    cmp     d2, d0
+    ble     0x4c0120d1
+    mov     d2, d1
+    extbu   d1
+    mov     0x486d2713, a0
+    movbu   (d1, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c0120f2
+    mov     0x7f, d2
+    cmp     d2, d1
+    ble     0x4c0120e9
+    mov     d2, d0
+    mov     0x486d2713, a0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x69, a2)
+    movbu   (0x10, a1), d0
+    extb    d0
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c012119
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c01210d
+    mov     d2, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c012121
+    cmp     d2, d0
+    ble     0x4c01211d
+    mov     d2, d1
+    mov     d1, d0
+    extbu   d0
+    movbu   (d0, a0), d0
+    movbu   d0, (0x6b, a2)
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgKitZoneFilterEgLevel1Calc  (lib CPU 0x4c012127)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgKitZoneFilterEgLevel1Calc_entry:   (register-save `call` entry)
+    movbu   (0x3f, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c01216a
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c012158
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c01217a
+    cmp     0x7f, d0
+    ble     0x4c012170
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgKitZoneFilterEgLevel2Calc  (lib CPU 0x4c01217d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgKitZoneFilterEgLevel2Calc_entry:   (register-save `call` entry)
+    movbu   (0x41, a0), d1
+    movbu   (0x3e, a0), d0
+    extb    d1
+    extb    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c0121c0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c0121ae
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c0121d0
+    cmp     0x7f, d0
+    ble     0x4c0121c6
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgKitZoneFilterEgLevelCalc  (lib CPU 0x4c0121d3)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgKitZoneFilterEgLevelCalc_entry:   (register-save `call` entry)
+    movbu   (0x3e, a0), d1
+    exth    d0
+    extb    d1
+    add     d1, d0
+    exth    d0
+    mov     -0x32, d2
+    mov     d2, (0x10, sp)
+    mov     0x32, d1
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c012212
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c012200
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c012222
+    cmp     0x7f, d0
+    ble     0x4c012218
+    mov     0x7f, d1
+    mov     d1, d0
+    extbu   d0
+    mov     0x486d2713, a0
+    movbu   (d0, a0), d0
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgPartElemLastSet  (lib CPU 0x4c012225)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+# TgPartElemLastSet_entry:   (register-save `call` entry)
+    mov     d0, d2
+    movbu   (0x38, sp), d0
+    extbu   d1
+    mov     d0, (0x10, sp)
+    extbu   d2
+    mov     d2, d0
+    asl     3, d0
+    add     0x50009e48, d0
+    add     d1, d1
+    add     d1, d0
+    mov     d0, a2
+    movbu   (0x30, sp), d0
+    movbu   (0x34, sp), d1
+    mov     a2, a0
+    inc     a0
+    call    0x48449b19, [d2], 0x20
+    movbu   d0, (a2)
+    ret     [d2,a2], 0x20
+.mnbase 0x48400000
 # TgPartElemLastClear  (lib CPU 0x4c012254)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2], (sp)
@@ -21773,7 +24686,7 @@ display_palette:
     movbu   (0x18, a0), d1
     mov     (0x60, sp), a0
     exthu   d0
-    call    0x4c037c1b, [d2,d3,a2], 0x14
+    call    TgVoiceRouteFieldSet_entry, [d2,d3,a2], 0x14
     mov     (0x60, sp), a1
     mov     (a2), a0
     add     0x40, a1
@@ -21922,14 +24835,14 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
     mov     d2, d1
-    call    0x4c03a214, [d2,d3], 0x14
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
     mov     d2, d1
     mov     0x130, d2
     mov     d0, d3
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    call    0x4c03a2bf, [d2,d3], 8
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
     mov     (0x20, sp), a0
     exthu   d3
     exth    d0
@@ -22047,13 +24960,13 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
     mov     d2, d1
-    call    0x4c03a214, [d2,d3], 0x14
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
     mov     d2, d1
     mov     d0, d3
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    call    0x4c03a2bf, [d2,d3], 8
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
     mov     (0x60, sp), a0
     exthu   d3
     add     0x2a, a0
@@ -22536,7 +25449,7 @@ display_palette:
     movhu   d1, (a2)
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
-    call    0x4c011f50, [d2,d3,a2,a3], 0x24
+    call    TgKitZoneLevelScaleCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x60, sp), a2
     and     0x7f, d0
     add     0x16, a2
@@ -22546,7 +25459,7 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x24, sp), a0
-    call    0x4c011fe6, 0, 0
+    call    TgKitZoneVeloSenseCalc, 0, 0
     movhu   (a2), d1
     and     0xff, d0
     and     d2, d1
@@ -22637,7 +25550,7 @@ display_palette:
     movhu   d1, (a2)
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
-    call    0x4c012032, [d2,a2], 8
+    call    TgKitZoneSendLevelsCalc_entry, [d2,a2], 8
     mov     (0x20, sp), a0
     movhu   (a3), d1
     movbu   (0x69, a0), d0
@@ -22655,12 +25568,12 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x24, sp), a0
-    call    0x4c01212c, [d2], 0x18
+    call    TgKitZoneFilterEgLevel1Calc_entry, [d2], 0x18
     exth    d0
     mov     -0x80, d1
     mov     d1, (0x10, sp)
     mov     0x7f, d1
-    call    0x4c011f31, [d2,d3], 8
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
     mov     (0x28, sp), a0
     extb    d0
     movhu   (a0), d1
@@ -22680,7 +25593,7 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x24, sp), a0
-    call    0x4c012182, [d2], 0x18
+    call    TgKitZoneFilterEgLevel2Calc_entry, [d2], 0x18
     movhu   (a2), d1
     extb    d0
     and     d2, d1
@@ -22715,7 +25628,7 @@ display_palette:
     movbu   (0x43, a0), d0
     extb    d0
     exth    d0
-    call    0x4c0121d8, [d2], 0x18
+    call    TgKitZoneFilterEgLevelCalc_entry, [d2], 0x18
     movhu   (a2), d1
     and     0xff, d0
     and     d2, d1
@@ -22725,7 +25638,7 @@ display_palette:
     movbu   (0x45, a0), d0
     extb    d0
     exth    d0
-    call    0x4c0121d8, [d2], 0x18
+    call    TgKitZoneFilterEgLevelCalc_entry, [d2], 0x18
     movhu   (a3), d1
     and     0xff, d0
     and     d2, d1
@@ -22792,7 +25705,7 @@ display_palette:
     clr     d2
     mov     d2, (0x10, sp)
     mov     0x7ff, d1
-    call    0x4c011f31, [d2,d3], 8
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
     mov     (0x38, sp), a0
     and     0x07ff, d0
     movhu   (a0), d1
@@ -23175,7 +26088,7 @@ display_palette:
     blt     0x4c02d7d5
     mov     a3, a0
     mov     a0, d0
-    call    0x4c0019f2, 0, 0
+    call    LibI16ToF64, 0, 0
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     extbu   d3
@@ -23198,19 +26111,19 @@ display_palette:
     mov     0x40590000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     mov     (0x28, sp), d0
     mov     (0x2c, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    0x4c000856, [d2,d3], 0x10
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
     bne     0x4c02d86e
     mov     a2, d1
     clr     d3
@@ -23240,7 +26153,7 @@ display_palette:
     mov     0x40280000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c0007e7, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bgt     0x4c02d88d
     jmp     0x4c02da80
     mov     1, d3
@@ -23252,20 +26165,20 @@ display_palette:
     mov     0x40280000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    0x4c001629, [d3,a3], 0x10
+    call    LibF64ToI16_entry, [d3,a3], 0x10
     movhu   d0, (0x1c, sp)
     mov     d2, d0
-    call    0x4c0019f2, 0, 0
+    call    LibI16ToF64, 0, 0
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     clr     d0
     mov     0x40590000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -23276,7 +26189,7 @@ display_palette:
     mov     0x40280000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x30, sp)
     mov     d1, (0x34, sp)
     mov     (0x28, sp), d0
@@ -23287,7 +26200,7 @@ display_palette:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     mov     (0x20, sp), d0
@@ -23298,7 +26211,7 @@ display_palette:
     mov     0x40280000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     clr     d0
@@ -23309,18 +26222,18 @@ display_palette:
     mov     (0x24, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x20, sp)
     mov     d1, (0x24, sp)
     mov     (0x28, sp), d0
     mov     (0x2c, sp), d1
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    0x4c000856, [d2,d3], 0x10
+    call    LibF64CmpZero_entry, [d2,d3], 0x10
     ble     0x4c02d99f
     mov     d3, d2
     mov     d2, d0
-    call    0x4c0016ac, 0, 0
+    call    LibU16ToF64, 0, 0
     mov     d0, (0x30, sp)
     mov     d1, (0x34, sp)
     mov     (0x28, sp), d0
@@ -23331,21 +26244,21 @@ display_palette:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     clr     d0
     mov     0x40140000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c0007e7, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     bgt     0x4c02d9df
     exthu   d2
     inc     d2
     bra     0x4c02d960
     mov     d3, d2
     mov     d2, d0
-    call    0x4c0016ac, 0, 0
+    call    LibU16ToF64, 0, 0
     mov     d0, (0x30, sp)
     mov     d1, (0x34, sp)
     mov     (0x28, sp), d0
@@ -23356,14 +26269,14 @@ display_palette:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     clr     d0
     mov     0xc0140000, d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c0007e7, [d2,d3], 0x10
+    call    LibF64Cmp_entry, [d2,d3], 0x10
     blt     0x4c02d9df
     exthu   d2
     inc     d2
@@ -23376,7 +26289,7 @@ display_palette:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x28, sp)
     mov     d1, (0x2c, sp)
     clr     d0
@@ -23394,14 +26307,14 @@ display_palette:
     mulu    d0, d1
     mov     d1, a2
     add     0x500ad5a8, a2
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x40590000, d1
     mov     d1, (0x14, sp)
-    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x30, a2)
     mov     d1, (0x34, a2)
     mov     (0x20, sp), d0
@@ -23412,7 +26325,7 @@ display_palette:
     mov     (0x34, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x38, a2)
     mov     d1, (0x3c, a2)
     movbu   d2, (0x28, a2)
@@ -24182,7 +27095,7 @@ display_palette:
     movhu   (a3), d0
     exth    d0
     inc     d0
-    call    0x4c000523, 0, 0
+    call    LibI32ToF64, 0, 0
     mov     d0, (0x2c, sp)
     mov     d1, (0x30, sp)
     mov     (0x24, sp), d0
@@ -24193,10 +27106,10 @@ display_palette:
     mov     (0x30, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    0x4c001629, [d3,a3], 0x10
+    call    LibF64ToI16_entry, [d3,a3], 0x10
     mov     d3, a0
     movhu   d0, (0x42, a0)
     mov     (a2), d0
@@ -24210,7 +27123,7 @@ display_palette:
     exth    d1
     inc     d1
     sub     d1, d0
-    call    0x4c000523, 0, 0
+    call    LibI32ToF64, 0, 0
     mov     d0, (0x2c, sp)
     mov     d1, (0x30, sp)
     mov     (0x24, sp), d0
@@ -24221,10 +27134,10 @@ display_palette:
     mov     (0x30, sp), d1
     mov     d0, (0x10, sp)
     mov     d1, (0x14, sp)
-    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
-    call    0x4c001629, [d3,a3], 0x10
+    call    LibF64ToI16_entry, [d3,a3], 0x10
     mov     d3, a0
     movhu   d0, (0x40, a0)
     mov     sp, a3
@@ -24670,7 +27583,7 @@ display_palette:
     movbu   (0x18, a0), d1
     mov     (0x5c, sp), a0
     exthu   d0
-    call    0x4c037c1b, [d2,d3,a2], 0x14
+    call    TgVoiceRouteFieldSet_entry, [d2,d3,a2], 0x14
     mov     (0x5c, sp), a1
     mov     (a2), a0
     add     0x40, a1
@@ -25584,7 +28497,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0x64, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     extbu   d0
     exth    d0
     mov     0x486d2649, a0
@@ -25660,7 +28573,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x3c, sp), a0
     movhu   d0, (a0)
     mov     (0x3c, sp), a0
@@ -25727,7 +28640,7 @@ display_palette:
     mov     d1, d0
     mov     0xff, d1
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x3c, sp), a0
     movhu   d0, (a0)
     mov     (0x3c, sp), a0
@@ -25757,7 +28670,7 @@ display_palette:
     exth    d2
     mov     d2, d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x3c, sp), a0
     movhu   d0, (a0)
     mov     (0x3c, sp), a0
@@ -25888,7 +28801,7 @@ display_palette:
     exth    d2
     mov     d2, d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x3c, sp), a0
     movhu   d0, (a0)
     mov     (0x3c, sp), a0
@@ -26017,7 +28930,7 @@ display_palette:
     mov     d1, d0
     mov     0xff, d1
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     jmp     0x4c031d91
     clr     d0
@@ -26030,7 +28943,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     bra     0x4c031d91
     clr     d0
@@ -26043,7 +28956,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     bra     0x4c031d91
     movbu   (a1), d0
@@ -26090,7 +29003,7 @@ display_palette:
     mov     0xff, d1
     mov     d3, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
@@ -26186,7 +29099,7 @@ display_palette:
     add     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x68, a2)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26196,7 +29109,7 @@ display_palette:
     add     d3, d0
     add     d2, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x6a, a2)
     ret     [d2,d3,a2,a3], 0x28
     exth    d3
@@ -26207,7 +29120,7 @@ display_palette:
     add     d3, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x68, a2)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26216,7 +29129,7 @@ display_palette:
     exth    d0
     add     d3, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x6a, a2)
     ret     [d2,d3,a2,a3], 0x28
     add     0x13, a1
@@ -26259,7 +29172,7 @@ display_palette:
     add     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x68, a2)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26268,7 +29181,7 @@ display_palette:
     exth    d0
     add     d2, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x6a, a2)
     bra     0x4c031eff
     mov     a3, d0
@@ -26439,7 +29352,7 @@ display_palette:
     exth    d3
     mov     d3, d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -26505,7 +29418,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -26524,7 +29437,7 @@ display_palette:
     mov     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -26617,7 +29530,7 @@ display_palette:
     mov     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -26739,7 +29652,7 @@ display_palette:
     mov     d1, d0
     mov     0xff, d1
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     jmp     0x4c032315
     clr     d0
@@ -26752,7 +29665,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     bra     0x4c032315
     clr     d0
@@ -26765,7 +29678,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     bra     0x4c032315
     mov     (0x14, sp), a1
@@ -26813,7 +29726,7 @@ display_palette:
     mov     0xff, d1
     mov     d3, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, a3
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
@@ -26914,7 +29827,7 @@ display_palette:
     add     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7b, a3)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26924,7 +29837,7 @@ display_palette:
     add     d3, d0
     add     d2, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7c, a3)
     ret     [d2,d3,a2,a3], 0x28
     exth    d3
@@ -26935,7 +29848,7 @@ display_palette:
     add     d3, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7b, a3)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26944,7 +29857,7 @@ display_palette:
     exth    d0
     add     d3, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7c, a3)
     ret     [d2,d3,a2,a3], 0x28
     add     0x48, a0
@@ -26987,7 +29900,7 @@ display_palette:
     add     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7b, a3)
     clr     d0
     mov     d0, (0x10, sp)
@@ -26996,7 +29909,7 @@ display_palette:
     exth    d0
     add     d2, d0
     exth    d0
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     movbu   d0, (0x7c, a3)
     bra     0x4c032488
     mov     a1, d0
@@ -27039,7 +29952,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0x32, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     d0, d1
     exth    d1
     mov     d1, d0
@@ -27166,7 +30079,7 @@ display_palette:
     exth    d2
     mov     d2, d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -27234,7 +30147,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -27253,7 +30166,7 @@ display_palette:
     mov     d1, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -27344,7 +30257,7 @@ display_palette:
     mov     d2, d0
     exth    d0
     mov     0xff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     movhu   d0, (a0)
     mov     (0x40, sp), a0
@@ -27397,7 +30310,7 @@ display_palette:
     movbu   (0x18, a0), d1
     mov     (0x60, sp), a0
     exthu   d0
-    call    0x4c037c1b, [d2,d3,a2], 0x14
+    call    TgVoiceRouteFieldSet_entry, [d2,d3,a2], 0x14
     mov     (0x60, sp), a1
     mov     (a2), a0
     add     0x40, a1
@@ -27546,13 +30459,13 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
     mov     d2, d1
-    call    0x4c03a214, [d2,d3], 0x14
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
     mov     d2, d1
     mov     d0, d3
     clr     d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    call    0x4c03a2bf, [d2,d3], 8
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
     mov     (0x24, sp), a0
     exth    d0
     exthu   d3
@@ -27673,13 +30586,13 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
     mov     d2, d1
-    call    0x4c03a214, [d2,d3], 0x14
+    call    TgVoiceEgSegParamGet_entry, [d2,d3], 0x14
     mov     d2, d1
     mov     d0, d3
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     (0x30, sp), d0
-    call    0x4c03a2bf, [d2,d3], 8
+    call    TgVoiceEgSegFlagTest_entry, [d2,d3], 8
     mov     (0x60, sp), a0
     exthu   d3
     add     0x2a, a0
@@ -28163,7 +31076,7 @@ display_palette:
     movhu   d1, (a2)
     mov     (0x24, sp), a0
     mov     (0x20, sp), a1
-    call    0x4c00fd6d, [d2,d3,a2,a3], 0x24
+    call    TgZoneLevelScaleCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x60, sp), a2
     and     0x7f, d0
     add     0x16, a2
@@ -28173,7 +31086,7 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x20, sp), a0
-    call    0x4c00fe03, 0, 0
+    call    TgZoneVeloSenseCalc, 0, 0
     movhu   (a2), d1
     and     0xff, d0
     and     d3, d1
@@ -28264,7 +31177,7 @@ display_palette:
     movhu   d1, (a2)
     mov     (0x24, sp), a0
     mov     (0x20, sp), a1
-    call    0x4c00fe4f, [d2,a2], 8
+    call    TgZoneSendLevelsCalc_entry, [d2,a2], 8
     mov     (0x24, sp), a0
     movhu   (a3), d1
     movbu   (0x69, a0), d0
@@ -28282,12 +31195,12 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x20, sp), a0
-    call    0x4c00ff49, [d2], 0x18
+    call    TgZoneFilterEgLevel1Calc_entry, [d2], 0x18
     exth    d0
     mov     -0x80, d1
     mov     d1, (0x10, sp)
     mov     0x7f, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x28, sp), a0
     extb    d0
     movhu   (a0), d1
@@ -28307,7 +31220,7 @@ display_palette:
     or      d0, d1
     movhu   d1, (a2)
     mov     (0x20, sp), a0
-    call    0x4c00ff9f, [d2], 0x18
+    call    TgZoneFilterEgLevel2Calc_entry, [d2], 0x18
     movhu   (a2), d1
     extb    d0
     and     d3, d1
@@ -28341,7 +31254,7 @@ display_palette:
     movbu   (0x43, a0), d0
     extb    d0
     exth    d0
-    call    0x4c00fff5, [d2], 0x18
+    call    TgZoneFilterEgLevelCalc_entry, [d2], 0x18
     movhu   (a2), d2
     mov     d0, d1
     and     d3, d2
@@ -28353,7 +31266,7 @@ display_palette:
     movbu   (0x45, a0), d0
     extb    d0
     exth    d0
-    call    0x4c00fff5, [d2], 0x18
+    call    TgZoneFilterEgLevelCalc_entry, [d2], 0x18
     movhu   (a3), d1
     and     0xff, d0
     and     d3, d1
@@ -28420,7 +31333,7 @@ display_palette:
     clr     d2
     mov     d2, (0x10, sp)
     mov     0x7ff, d1
-    call    0x4c00fd4e, [d2,d3], 8
+    call    TgZoneParamClamp_entry, [d2,d3], 8
     mov     (0x38, sp), a0
     mov     d0, d1
     movhu   (a0), d0
@@ -32874,7 +35787,74 @@ display_palette:
     call    TgVoiceRegWrite_entry, [d2,d3], 8
     ret     [d2,a2], 0x1c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f072a, 0x3f0c61
+.incbin_range "baserom/kn7000_program.rom", 0x3f072a, 0x3f0be7
+# TgVoiceRouteFieldSet  (lib CPU 0x4c037c16)
+#   the routing/level init at the top of TgElemNoteOnFresh and
+#   TgKitElemNoteOn: shadow +0x40 word bits 12..19 := route byte;
+#   mode 0 remaps by hardware config (PanelSubTypeGet_entry -> ROM
+#   tables 0x485877B4/0x48587774), modes 1..4 = the +0x20/+0x30 banks
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -8, sp
+# TgVoiceRouteFieldSet_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     d0, d2
+    extbu   d1
+    cmp     0, d1
+    beq     0x4c037c32
+    cmp     1, d1
+    beq     0x4c037c66
+    cmp     2, d1
+    beq     0x4c037c6b
+    cmp     3, d1
+    beq     0x4c037c70
+    cmp     4, d1
+    beq     0x4c037c75
+    call    PanelSubTypeGet_entry, 0, 8
+    extbu   d0
+    cmp     1, d0
+    beq     0x4c037c78
+    cmp     2, d0
+    beq     0x4c037c78
+    cmp     3, d0
+    beq     0x4c037c4c
+    cmp     5, d0
+    beq     0x4c037c59
+    bra     0x4c037c78
+    exthu   d2
+    mov     d2, d0
+    add     d0, d0
+    mov     0x485877b4, a0
+    movhu   (d0, a0), d2
+    bra     0x4c037c78
+    exthu   d2
+    mov     d2, d0
+    add     d0, d0
+    mov     0x48587774, a0
+    movhu   (d0, a0), d2
+    bra     0x4c037c78
+    exthu   d2
+    add     0x20, d2
+    bra     0x4c037c78
+    exthu   d2
+    add     0x30, d2
+    bra     0x4c037c78
+    exthu   d2
+    add     0x20, d2
+    bra     0x4c037c78
+    exthu   d2
+    add     0x30, d2
+    add     0x40, a2
+    mov     (a2), d3
+    exthu   d2
+    mov     0xff, d1
+    and     d2, d1
+    asl     12, d1
+    and     0xfff00fff, d3
+    or      d3, d1
+    mov     d1, (a2)
+    ret     [d2,d3,a2], 0x14
+.mnbase 0x48400000
 # TgVoiceDirtyAll  (lib CPU 0x4c037c90)
 #   set bit7 in the shadow dirty masks +0x78/+0x7A/+0x7C/+0x80 (mark
 #   every register bank for the flush pass)
@@ -32941,7 +35921,140 @@ display_palette:
     mov     d0, (a0)
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f0ce0, 0x3f374a
+.incbin_range "baserom/kn7000_program.rom", 0x3f0ce0, 0x3f31e0
+# TgVoiceEgSegParamGet  (lib CPU 0x4c03a20f)
+#   the raw EG-segment read both fresh note-on programmers call: the
+#   part's cached EG halfword (0x500CE404+part*0x130+0x4A+seg*4) gated
+#   by the tone-TYPE feature record 0x486D2ED5+type*0x27 (type = tone
+#   rec +0x44 & 0xF; type 7 scales through the curve helpers, types
+#   0xA/0xB need tone rec +0x45)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0xc, sp
+# TgVoiceEgSegParamGet_entry:   (register-save `call` entry)
+    movbu   d0, (0x1c, sp)
+    movbu   (0x1c, sp), d0
+    mov     d1, d2
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    mov     0xf, d1
+    movbu   (0x44, a0), d0
+    extbu   d2
+    and     d0, d1
+    extbu   d1
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x486d2ed5, d1
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    mov     0x13, a0
+    add     d1, a0
+    movbu   (0x24, sp), d1
+    movbu   (d0, a0), d2
+    mov     0x48587828, a0
+    movbu   (d1, a0), d0
+    clr     d3
+    and     d0, d2
+    beq     0x4c03a2b9
+    mov     (a1), a0
+    asl2    d1
+    movbu   (0x44, a0), d0
+    mov     0x4a, a0
+    add     a1, a0
+    movhu   (d1, a0), d3
+    and     0x0f, d0
+    cmp     7, d0
+    beq     0x4c03a277
+    cmp     0xa, d0
+    beq     0x4c03a2af
+    cmp     0xb, d0
+    beq     0x4c03a2af
+    bra     0x4c03a2b9
+    movbu   (0x24, sp), d0
+    cmp     0, d0
+    bne     0x4c03a294
+    movbu   (0x1c, sp), d0
+    call    0x4c011ace, 0, 0
+    mov     d0, d1
+    exthu   d1
+    exthu   d3
+    nop
+    nop
+    mulu    d1, d3
+    lsr     8, d3
+    bra     0x4c03a2b9
+    cmp     1, d0
+    bne     0x4c03a2b9
+    movbu   (0x1c, sp), d0
+    call    0x4c0118f5, 0, 0
+    mov     d0, d1
+    exthu   d1
+    exthu   d3
+    nop
+    nop
+    mulu    d3, d1
+    mov     d1, d3
+    lsr     8, d3
+    bra     0x4c03a2b9
+    mov     (a1), a0
+    movbu   (0x45, a0), d0
+    cmp     0, d0
+    bne     0x4c03a2b9
+    clr     d3
+    mov     d3, d0
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+# TgVoiceEgSegFlagTest  (lib CPU 0x4c03a2bd)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgVoiceEgSegFlagTest_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     d1, d2
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    extbu   d2
+    movbu   (0x44, a0), d0
+    mov     1, d3
+    and     0x0f, d0
+    extbu   d0
+    mov     0x27, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x486d2ed5, d0
+    add     0x13, d0
+    mov     d0, a0
+    movbu   (0x18, sp), d0
+    mov     d2, d1
+    asl2    d1
+    add     d2, d1
+    movbu   (d1, a0), d1
+    mov     0x4858782c, a0
+    movbu   (d0, a0), d0
+    and     d0, d1
+    beq     0x4c03a30c
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    btst    0x40, d0
+    beq     0x4c03a30c
+    mov     -1, d3
+    mov     d3, d0
+    ret     [d2,d3], 8
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f32e1, 0x3f374a
 # TgNodeRingSeed  (lib CPU 0x4c03a779)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [a2,a3], (sp)

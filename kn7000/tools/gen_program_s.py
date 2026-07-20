@@ -154,6 +154,55 @@ FUNC_END = {
 # the lib region has no reflection name table.
 LIB_CONVERT = {
     "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
+    # ---- the SOFT-FLOAT IEEE-754 double runtime + libm subset (the firmware
+    #      has no FPU: TgPartGlidePlan/Tick and others do their math here;
+    #      args on the caller's stack at (8,sp) lo/(0xC,sp) hi and
+    #      (0x10,sp)/(0x14,sp), result in d0 lo : d1 hi; errno = 0x500AD390)
+    "LibF64Pow":          (0x4C000000, 0x4C000263),
+    "LibF64UnpackedToI32": (0x4C000263, 0x4C0002B3),
+    "LibF64ToI32":        (0x4C0002B3, 0x4C0002CB),
+    "LibF64Unpack":       (0x4C0002CB, 0x4C000311),
+    "LibF64Log":          (0x4C000311, 0x4C000523),
+    "LibI32ToF64":        (0x4C000523, 0x4C00057D),
+    "LibF64Sub":          (0x4C00057D, 0x4C00058E),
+    "LibF64Add":          (0x4C00058E, 0x4C0007E2),
+    "LibF64Cmp":          (0x4C0007E2, 0x4C000851),
+    "LibF64CmpZero":      (0x4C000851, 0x4C000874),
+    "LibF64Mul":          (0x4C000874, 0x4C000B17),
+    "LibF64Div":          (0x4C000B17, 0x4C000CD3),
+    "LibF64Ldexp":        (0x4C000CD3, 0x4C000D54),
+    "LibF64Frexp":        (0x4C000D54, 0x4C000D99),
+    "LibF64Exp":          (0x4C000D99, 0x4C000F54),
+    "LibU32ToF64":        (0x4C000F54, 0x4C000F8F),
+    "LibF64Abs":          (0x4C000F8F, 0x4C000FA7),
+    "LibF64Modf":         (0x4C000FA7, 0x4C00104C),
+    "LibF64ToI16":        (0x4C001624, 0x4C00163D),
+    "LibU16ToF64":        (0x4C0016AC, 0x4C0016B0),
+    "LibI16ToF64":        (0x4C0019F2, 0x4C0019F6),
+    # ---- the melodic zone param fetchers under TgElemNoteOnFresh/Std
+    #      (tone-zone desc2 bytes -> shadow-image level/velo/send/filter-EG
+    #      fields; sensitivity curve ROM 0x486D2713, key-scale pair
+    #      0x486D1354/0x486D13D4) -------------------------------------------
+    "TgZoneParamClamp":   (0x4C00FD4C, 0x4C00FD68),
+    "TgZoneLevelScaleCalc": (0x4C00FD68, 0x4C00FE03),
+    "TgZoneVeloSenseCalc": (0x4C00FE03, 0x4C00FE4D),
+    "TgZoneSendLevelsCalc": (0x4C00FE4D, 0x4C00FF44),
+    "TgZoneFilterEgLevel1Calc": (0x4C00FF44, 0x4C00FF9A),
+    "TgZoneFilterEgLevel2Calc": (0x4C00FF9A, 0x4C00FFF0),
+    "TgZoneFilterEgLevelCalc": (0x4C00FFF0, 0x4C010042),
+    # ---- their byte-for-byte KIT/TABLE twins under TgKitElemNoteOn ---------
+    "TgKitZoneParamClamp": (0x4C011F2F, 0x4C011F4B),
+    "TgKitZoneLevelScaleCalc": (0x4C011F4B, 0x4C011FE6),
+    "TgKitZoneVeloSenseCalc": (0x4C011FE6, 0x4C012030),
+    "TgKitZoneSendLevelsCalc": (0x4C012030, 0x4C012127),
+    "TgKitZoneFilterEgLevel1Calc": (0x4C012127, 0x4C01217D),
+    "TgKitZoneFilterEgLevel2Calc": (0x4C01217D, 0x4C0121D3),
+    "TgKitZoneFilterEgLevelCalc": (0x4C0121D3, 0x4C012225),
+    "TgPartElemLastSet":  (0x4C012225, 0x4C012254),
+    # ---- the raw EG/shadow param helpers + the routing-field writer --------
+    "TgVoiceEgSegParamGet": (0x4C03A20F, 0x4C03A2BD),
+    "TgVoiceEgSegFlagTest": (0x4C03A2BD, 0x4C03A310),
+    "TgVoiceRouteFieldSet": (0x4C037C16, 0x4C037C90),
     # ---- the TG voice allocator + steal engine under TgNoteOn (element
     #      staging -> side select -> hw slot pick w/ ROM steal-order lists;
     #      kn7000_mame/notes/tg-voice-allocator.md) ---------------------------
@@ -275,6 +324,45 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "LibF64Pow": [
+        "SOFT-FLOAT RUNTIME (the firmware has no FPU): IEEE-754 double",
+        "helpers 0x4C000000..0x4C001A00, a classic errno-style compiler",
+        "runtime + libm subset. ABI: doubles on the caller's outgoing-arg",
+        "area -- arg1 lo/hi at (8,sp)/(0xC,sp), arg2 at (0x10,sp)/(0x14,sp),",
+        "result in d0(lo):d1(hi); error cell 0x500AD390 (1=domain, 2=range).",
+        "pow(x,y) = this function: y split by LibF64Modf; the integer part",
+        "by repeated squaring, the fraction via LibF64Exp(frac*LibF64Log(x))",
+    ],
+    "LibF64Add": [
+        "arg1 + arg2 (LibF64Sub flips arg2's sign bit and falls in here):",
+        "unpack both (class codes 0=normal/1=Inf/2=zero/4=NaN), align,",
+        "add/sub mantissas with guard bits, renormalize, repack",
+    ],
+    "LibF64Cmp": [
+        "compare arg1 ? arg2, returning with the CPU flags set so the",
+        "caller's SIGNED branches (blt/bge/ble) read the result directly;",
+        "the sign-fold xors PSW N|V when the magnitude order inverts",
+    ],
+    "TgZoneLevelScaleCalc": [
+        "first of the melodic ZONE PARAM FETCHERS (the leaf layer under",
+        "TgElemNoteOnFresh/Std; byte-for-byte twins at 0x4C011F2F.. serve",
+        "TgKitElemNoteOn): tone-zone (desc2) UI bytes -> hardware units via",
+        "the +-50-index sensitivity curve ROM 0x486D2713 (negative offsets",
+        "use the negated mirror), key scaling via 0x486D1354/0x486D13D4",
+    ],
+    "TgVoiceEgSegParamGet": [
+        "the raw EG-segment read both fresh note-on programmers call: the",
+        "part's cached EG halfword (0x500CE404+part*0x130+0x4A+seg*4) gated",
+        "by the tone-TYPE feature record 0x486D2ED5+type*0x27 (type = tone",
+        "rec +0x44 & 0xF; type 7 scales through the curve helpers, types",
+        "0xA/0xB need tone rec +0x45)",
+    ],
+    "TgVoiceRouteFieldSet": [
+        "the routing/level init at the top of TgElemNoteOnFresh and",
+        "TgKitElemNoteOn: shadow +0x40 word bits 12..19 := route byte;",
+        "mode 0 remaps by hardware config (PanelSubTypeGet_entry -> ROM",
+        "tables 0x485877B4/0x48587774), modes 1..4 = the +0x20/+0x30 banks",
+    ],
     "TechniChordOrchestratorPart": [
         "returns d0 = the part that sounds the harmony notes: param 0x8082",
         "(0xFF = auto -> part 0x10 or 0x11 by lib part-mask), then rejects the",
