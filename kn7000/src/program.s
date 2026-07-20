@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 330 synthetic labels for internal helpers called by converted code
+# 367 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -292,18 +292,35 @@ _rom_marker:
 .equ func_4857BE97, 0x4857BE97
 .equ func_4857BF6C, 0x4857BF6C
 .equ LibDiv32, 0x4C0019D5
+.equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
+.equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
 .equ TgPartElemMaskGet, 0x4C00ECEA
 .equ TgPartElemEnabled_entry, 0x4C00ED01
+.equ TgVoiceListReleaseByNote_entry, 0x4C010047
+.equ TgVoiceListCollectByNote_entry, 0x4C01006D
+.equ TgVoiceListReleasePart_entry, 0x4C01008F
+.equ TgVoiceListCollectPart_entry, 0x4C0100AF
+.equ TgVoiceListCollectPartLive_entry, 0x4C0100CE
+.equ TgVoiceListCollectPart2_entry, 0x4C0100EB
+.equ TgVoiceListCollectPartAll_entry, 0x4C01010A
+.equ TgVoiceListCollectGlobal_entry, 0x4C010127
+.equ TgTableKeyOffProgram_entry, 0x4C0115AA
 .equ TgPartElemLastClear_entry, 0x4C012256
 .equ TgPartElemLastGet, 0x4C01226C
+.equ TgKitElemNoteOn_entry, 0x4C013547
+.equ TgElemKeyOffRelease_entry, 0x4C013F0F
+.equ TgActiveHighWaterUpdate_entry, 0x4C014786
+.equ TgLastKeyPartSet, 0x4C0147A4
 .equ LibParamGet, 0x4C0149FA
 .equ LibParamSet, 0x4C014A56
 .equ TgVoiceRoutePtrCalc_entry, 0x4C02BE4A
 .equ TgVoiceSideSelect_entry, 0x4C02BED0
 .equ TgPartPitchWordCalc_entry, 0x4C02BF34
+.equ TgPartGlidePlan_entry, 0x4C02D79A
 .equ TgPartHoldQuery_entry, 0x4C02E0F9
 .equ TgPartHoldMark_entry, 0x4C02E2C7
+.equ TgPartGlideTick_entry, 0x4C02E5AD
 .equ TgPitchZoneFold_entry, 0x4C02FB27
 .equ TgPitchNoteResolve_entry, 0x4C02FB7E
 .equ TgLevelResolve_entry, 0x4C02FBE3
@@ -313,6 +330,15 @@ _rom_marker:
 .equ TgVoiceKillHandler, 0x4C030E73
 .equ TgPitchInitCalc, 0x4C030FB9
 .equ TgPitchRuntimeCalc, 0x4C031127
+.equ TgVoiceLevelWordCalc_entry, 0x4C0315D2
+.equ TgKeyOffAmpRelease, 0x4C031949
+.equ TgPitchEgAttackCalc, 0x4C031C50
+.equ TgPitchEgDecayCalc, 0x4C031D9B
+.equ TgKeyOffPitchRelease, 0x4C031F07
+.equ TgFilterEgAttackCalc, 0x4C0321BF
+.equ TgFilterEgDecayCalc, 0x4C03231F
+.equ TgKeyOffFilterRelease, 0x4C032490
+.equ TgElemNoteOnFresh_entry, 0x4C033CB3
 .equ TgElemStageFresh_entry, 0x4C03492C
 .equ TgElemStageRestrike_entry, 0x4C034BA9
 .equ TgElemRequestFlags_entry, 0x4C034E5D
@@ -325,6 +351,9 @@ _rom_marker:
 .equ TgTableToneStage_entry, 0x4C035EAA
 .equ TgNoteOnTableTone, 0x4C036012
 .equ TgKeyOffSample, 0x4C036573
+.equ TgKitLayerStage_entry, 0x4C036602
+.equ TgKitLayerNoteOn_entry, 0x4C0366D7
+.equ TgNoteOnKitLayer_entry, 0x4C03678F
 .equ TgNoteOn, 0x4C036837
 .equ TgVoiceSlotService_entry, 0x4C036D3F
 .equ TgVoiceRegWrite_entry, 0x4C036F9A
@@ -353,6 +382,14 @@ _rom_marker:
 .equ TgVoiceMigrateFind_entry, 0x4C03ADA1
 .equ TgSlotAllocate_entry, 0x4C03AE07
 .equ TgVoiceNodeKeyOff_entry, 0x4C03B0CD
+.equ TgNodeRingCollect_entry, 0x4C03B12D
+.equ TgPartSlotMaskBuild_entry, 0x4C03B15F
+.equ TgPartPendingFlush_entry, 0x4C03B1EA
+.equ TgNodePendingMark_entry, 0x4C03B285
+.equ TgNodeRingCollectActive_entry, 0x4C03B2C1
+.equ TgSlotReleaseKick_entry, 0x4C03B2FC
+.equ TgNodeRingReleaseWalk_entry, 0x4C03B347
+.equ TgVoiceListBuild_entry, 0x4C03B3B5
 .equ LibMsgSend, 0x4C03D219
 .equ LibMsgReceive, 0x4C03D36D
 .equ LibIntcEnable, 0x4C03DCC8
@@ -21029,7 +21066,306 @@ display_palette:
     nop
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c3, 0x3c7c72
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c3, 0x3c3d14
+# TgDrumAmpReleaseCalc  (lib CPU 0x4c00ad43)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# TgDrumAmpReleaseCalc_entry:   (register-save `call` entry)
+    mov     a0, (0x34, sp)
+    mov     (0x3c, a0), a0
+    mov     a1, a3
+    movbu   (0x2e, a0), d0
+    mov     0x486d2649, a1
+    and     0x7f, d0
+    exth    d0
+    movbu   (d0, a1), d1
+    mov     0x36, a1
+    extbu   d1
+    movhu   d1, (0x18, sp)
+    add     a0, a1
+    movbu   (a1), d0
+    clr     d2
+    extb    d0
+    cmp     d2, d0
+    beq     0x4c00adb3
+    movbu   (0x31, a0), d0
+    mov     (0x34, sp), a2
+    movhu   (0xc, a2), d1
+    mov     d0, (0x14, sp)
+    movbu   (0x32, a0), d0
+    movbu   (0x33, a0), d3
+    mov     d0, a2
+    movbu   (a1), d0
+    exthu   d1
+    extb    d0
+    mov     d0, a0
+    and     0x7f00, d1
+    exthu   d1
+    asr     8, d1
+    mov     d1, d2
+    exthu   d2
+    mov     d3, d0
+    extbu   d0
+    cmp     d0, d2
+    ble     0x4c00ad97
+    mov     d3, d1
+    extbu   d1
+    bra     0x4c00ada0
+    mov     a2, d0
+    extbu   d0
+    cmp     d0, d2
+    bge     0x4c00ada0
+    mov     a2, d1
+    extbu   d1
+    movbu   (0x14, sp), d0
+    mov     d1, d2
+    exth    d2
+    exth    d0
+    sub     d0, d2
+    mov     a0, d0
+    extb    d0
+    nop
+    nop
+    mul     d0, d2
+    exth    d2
+    asr     5, d2
+    mov     (0x34, sp), a2
+    add     2, a2
+    movhu   (a2), d0
+    btst    0x0100, d0
+    beq     0x4c00ade3
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x18, sp), d1
+    exth    d2
+    exth    d1
+    add     d1, d2
+    exth    d2
+    mov     d2, d0
+    mov     0xff, d1
+    call    0x4c009f03, [d2,d3], 8
+    movhu   d0, (a3)
+    movhu   d0, (4, a3)
+    mov     0x80, d0
+    movhu   d0, (2, a3)
+    clr     d0
+    movhu   d0, (6, a3)
+    bra     0x4c00ae30
+    movhu   (a2), d0
+    mov     0x4000, d3
+    and     d3, d0
+    beq     0x4c00ae00
+    movhu   (a2), d0
+    btst    0x2000, d0
+    beq     0x4c00ae00
+    mov     2, a0
+    add     a3, a0
+    movhu   (a0), d0
+    exth    d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    movhu   (0x18, sp), d1
+    exth    d2
+    exth    d1
+    add     d2, d1
+    mov     d1, d0
+    exth    d0
+    mov     0xff, d1
+    call    0x4c009f03, [d2,d3], 8
+    movhu   d0, (a3)
+    movhu   d0, (4, a3)
+    mov     0x80, d0
+    movhu   d0, (2, a3)
+    clr     d0
+    movhu   d0, (6, a3)
+    movhu   (a2), d0
+    and     d3, d0
+    bne     0x4c00ae30
+    movhu   (a2), d0
+    or      0x2000, d0
+    movhu   d0, (a2)
+    movhu   (a2), d0
+    or      0x4000, d0
+    movhu   d0, (a2)
+    ret     [d2,d3,a2,a3], 0x2c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c3e0c, 0x3c507d
+# TgDrumKeyOffProgram  (lib CPU 0x4c00c0ac)
+#   key-off release programmer for class-0x10 DRUM voices (d0 slot;
+#   TgVoiceSlotService dispatch): clear the note-on flag librec+8 bit7,
+#   compute the three release families into 0x50008680/88/90
+#   (TgDrumAmpReleaseCalc / TgKeyOffPitchRelease /
+#   TgKeyOffFilterRelease), merge the release halves into the shadow
+#   regs +0x02/+0x06/+0x0E/+0x12/+0x1A/+0x1E, then TgVoiceEgBurstWrite
+#   -- the same 6-write release burst the melodic path uses
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# TgDrumKeyOffProgram_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    extbu   d0
+    exthu   d0
+    mov     d0, (0x14, sp)
+    mov     0xb4, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x500af940, a2
+    call    TgVoiceRecordPtr, 0, 0
+    mov     a0, (0x10, sp)
+    mov     8, a0
+    add     a2, a0
+    movbu   (a0), d0
+    mov     -0x81, d1
+    and     d1, d0
+    movbu   d0, (a0)
+    mov     a2, a0
+    mov     0x50008680, a1
+    call    TgDrumAmpReleaseCalc_entry, [d2,d3,a2,a3], 0x2c
+    mov     a2, a0
+    mov     0x50008688, a1
+    call    TgKeyOffPitchRelease, [d2,d3,a2,a3], 0x34
+    mov     a2, a0
+    mov     0x50008690, a1
+    call    TgKeyOffFilterRelease, [d2,d3,a2,a3], 0x34
+    mov     (0x10, sp), a0
+    movhu   (0x50008680), d0
+    add     2, a0
+    movhu   (a0), d1
+    mov     0xff, a2
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x50008682), d0
+    exth    d0
+    and     0x80, d0
+    beq     0x4c00c134
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    bra     0x4c00c13c
+    movhu   (a0), d0
+    and     0xff7f, d0
+    movhu   d0, (a0)
+    movhu   (a0), d2
+    movhu   (0x50008682), d1
+    and     0xff80, d2
+    exth    d1
+    mov     -0x81, d0
+    and     d0, d1
+    and     0x7f, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    mov     (0x10, sp), a0
+    movhu   (0x50008684), d1
+    add     6, a0
+    movhu   (a0), d0
+    mov     a2, d2
+    and     d2, d0
+    and     d2, d1
+    asl     8, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x50008686), d0
+    and     0xff80, d1
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x10, sp), a0
+    movhu   (0x50008688), d0
+    add     0xe, a0
+    movhu   (a0), d1
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x5000868a), d0
+    mov     0x0000ff00, d3
+    and     d3, d1
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x10, sp), a0
+    movhu   (0x5000868c), d1
+    add     0x12, a0
+    movhu   (a0), d2
+    mov     a2, d0
+    and     d0, d2
+    and     d0, d1
+    asl     8, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    movhu   (0x5000868e), d0
+    and     d3, d2
+    and     0xff, d0
+    or      d0, d2
+    movhu   d2, (a0)
+    mov     (0x10, sp), a0
+    movhu   (0x50008690), d0
+    add     0x1a, a0
+    movhu   (a0), d1
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d1, d0
+    movhu   d0, (a0)
+    movhu   (0x50008692), d1
+    and     d3, d0
+    and     0xff, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x10, sp), a0
+    movhu   (0x50008694), d0
+    add     0x1e, a0
+    movhu   (a0), d1
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d1, d0
+    movhu   d0, (a0)
+    movhu   (0x50008696), d1
+    and     d3, d0
+    and     0xff, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x14, sp), d0
+    mov     (0x10, sp), a0
+    call    TgVoiceEgBurstWrite, [d2,a2], 0x1c
+    ret     [d2,d3,a2,a3], 0x28
+.mnbase 0x48400000
+# TgPartAuxRecPtr  (lib CPU 0x4c00c233)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    cmp     0x10, d0
+    beq     0x4c00c240
+    cmp     0x11, d0
+    beq     0x4c00c240
+    cmp     0x12, d0
+    bne     0x4c00c257
+    mov     0x2c8, d1
+    nop
+    nop
+    mul     d1, d0
+    add     0x500c0784, d0
+    mov     0xffffd380, a0
+    add     d0, a0
+    rets
+    mov     0, a0
+    rets
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c522c, 0x3c7c72
 # TgPartElemMaskUpdate  (lib CPU 0x4c00eca1)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3], (sp)
@@ -21101,7 +21437,283 @@ display_palette:
     extbu   d0
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3cb225
+.incbin_range "baserom/kn7000_program.rom", 0x3c7cf1, 0x3c9013
+# TgVoiceListReleaseByNote  (lib CPU 0x4c010042)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgVoiceListReleaseByNote_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    mov     0x80, d0
+    movbu   d0, (a0)
+    extbu   d1
+    asl     8, d1
+    extbu   d2
+    or      d2, d1
+    or      d0, d1
+    movhu   d1, (2, a0)
+    clr     d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     [d2], 0x10
+.mnbase 0x48400000
+# TgVoiceListCollectByNote  (lib CPU 0x4c010068)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+# TgVoiceListCollectByNote_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    clr     d0
+    movbu   d0, (a0)
+    extbu   d1
+    asl     8, d1
+    extbu   d2
+    or      d2, d1
+    or      0x80, d1
+    movhu   d1, (2, a0)
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     [d2], 0x10
+.mnbase 0x48400000
+# TgVoiceListReleasePart  (lib CPU 0x4c01008c)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListReleasePart_entry:   (register-save `call` entry)
+    mov     0x80, d1
+    movbu   d1, (a0)
+    extbu   d0
+    asl     8, d0
+    or      d1, d0
+    movhu   d0, (2, a0)
+    mov     0x7f, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgVoiceListCollectPart  (lib CPU 0x4c0100ac)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListCollectPart_entry:   (register-save `call` entry)
+    clr     d1
+    movbu   d1, (a0)
+    extbu   d0
+    asl     8, d0
+    or      0x80, d0
+    movhu   d0, (2, a0)
+    mov     0x7f, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgVoiceListCollectPartLive  (lib CPU 0x4c0100cb)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListCollectPartLive_entry:   (register-save `call` entry)
+    mov     0x40, d1
+    movbu   d1, (a0)
+    extbu   d0
+    asl     8, d0
+    movhu   d0, (2, a0)
+    mov     0x7f, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgVoiceListCollectPart2  (lib CPU 0x4c0100e8)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListCollectPart2_entry:   (register-save `call` entry)
+    clr     d1
+    movbu   d1, (a0)
+    extbu   d0
+    asl     8, d0
+    or      0x80, d0
+    movhu   d0, (2, a0)
+    mov     0x7f, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgVoiceListCollectPartAll  (lib CPU 0x4c010107)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListCollectPartAll_entry:   (register-save `call` entry)
+    clr     d1
+    movbu   d1, (a0)
+    extbu   d0
+    asl     8, d0
+    movhu   d0, (2, a0)
+    mov     0xff, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+# TgVoiceListCollectGlobal  (lib CPU 0x4c010124)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0xc, sp
+# TgVoiceListCollectGlobal_entry:   (register-save `call` entry)
+    clr     d0
+    movbu   d0, (a0)
+    movhu   d0, (2, a0)
+    mov     0x3fff, d0
+    movhu   d0, (4, a0)
+    call    TgVoiceListBuild_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0xc
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3c910e, 0x3ca576
+# TgTableKeyOffProgram  (lib CPU 0x4c0115a5)
+#   key-off release programmer for class-0x40 TABLE voices: identical
+#   shape to TgDrumKeyOffProgram but the amp release comes from
+#   TgKeyOffAmpRelease(offset 0), buffers at 0x50009D1C/24/2C
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# TgTableKeyOffProgram_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    extbu   d0
+    exthu   d0
+    mov     d0, (0x18, sp)
+    mov     0xb4, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x500af940, a2
+    call    TgVoiceRecordPtr, 0, 0
+    mov     a0, (0x14, sp)
+    mov     8, a0
+    add     a2, a0
+    movbu   (a0), d0
+    mov     -0x81, d1
+    and     d1, d0
+    movbu   d0, (a0)
+    mov     a2, a0
+    mov     0x50009d1c, a1
+    clr     d0
+    call    TgKeyOffAmpRelease, [d2,d3,a2,a3], 0x30
+    mov     a2, a0
+    mov     0x50009d24, a1
+    call    TgKeyOffPitchRelease, [d2,d3,a2,a3], 0x34
+    mov     a2, a0
+    mov     0x50009d2c, a1
+    call    TgKeyOffFilterRelease, [d2,d3,a2,a3], 0x34
+    mov     (0x14, sp), a0
+    movhu   (0x50009d1c), d0
+    add     2, a0
+    movhu   (a0), d1
+    mov     0xff, a2
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x50009d1e), d0
+    exth    d0
+    and     0x80, d0
+    beq     0x4c011630
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    bra     0x4c011638
+    movhu   (a0), d0
+    and     0xff7f, d0
+    movhu   d0, (a0)
+    movhu   (a0), d2
+    movhu   (0x50009d1e), d1
+    and     0xff80, d2
+    exth    d1
+    mov     -0x81, d0
+    and     d0, d1
+    and     0x7f, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    mov     (0x14, sp), a0
+    movhu   (0x50009d20), d1
+    add     6, a0
+    movhu   (a0), d0
+    mov     a2, d2
+    and     d2, d0
+    and     d2, d1
+    asl     8, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x50009d22), d0
+    and     0xff80, d1
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x14, sp), a0
+    movhu   (0x50009d24), d1
+    add     0xe, a0
+    movhu   (a0), d2
+    mov     a2, d0
+    and     d0, d2
+    and     d0, d1
+    asl     8, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    movhu   (0x50009d26), d0
+    mov     0x0000ff00, d3
+    and     d3, d2
+    and     0xff, d0
+    or      d0, d2
+    movhu   d2, (a0)
+    mov     (0x14, sp), a0
+    movhu   (0x50009d28), d1
+    add     0x12, a0
+    movhu   (a0), d2
+    mov     a2, d0
+    and     d0, d2
+    and     d0, d1
+    asl     8, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    movhu   (0x50009d2a), d0
+    and     d3, d2
+    and     0xff, d0
+    or      d0, d2
+    movhu   d2, (a0)
+    mov     (0x14, sp), a0
+    movhu   (0x50009d2c), d0
+    add     0x1a, a0
+    movhu   (a0), d1
+    mov     a2, d2
+    and     d2, d1
+    and     d2, d0
+    asl     8, d0
+    or      d1, d0
+    movhu   d0, (a0)
+    movhu   (0x50009d2e), d1
+    and     d3, d0
+    and     0xff, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x14, sp), a0
+    movhu   (0x50009d30), d0
+    add     0x1e, a0
+    movhu   (a0), d2
+    mov     a2, d1
+    and     d1, d2
+    and     d1, d0
+    asl     8, d0
+    or      d0, d2
+    movhu   d2, (a0)
+    movhu   (0x50009d32), d1
+    and     d3, d2
+    and     0xff, d1
+    mov     d2, d0
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x18, sp), d0
+    mov     (0x14, sp), a0
+    call    TgVoiceEgBurstWrite, [d2,a2], 0x1c
+    ret     [d2,d3,a2,a3], 0x2c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ca701, 0x3cb225
 # TgPartElemLastClear  (lib CPU 0x4c012254)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2], (sp)
@@ -21127,7 +21739,1232 @@ display_palette:
     movbu   (d1, a0), d0
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3cb250, 0x3e4e16
+.incbin_range "baserom/kn7000_program.rom", 0x3cb250, 0x3cc513
+# TgKitElemNoteOn  (lib CPU 0x4c013542)
+#   the fresh note-on programmer for the NON-melodic classes (drum 0x10
+#   / table 0x40 staged records; TgNoteOn's else-dispatch). Near-twin
+#   of TgElemNoteOnFresh -- same pitch/level/EG program structure, but
+#   the tone parameters come through the kit/table fetchers
+#   0x4C011F31/0x4C0121D8 instead of the melodic zone fetchers
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x44, sp
+# TgKitElemNoteOn_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     a0, (0x60, sp)
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500af940, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    mov     (0x3c, a0), d0
+    mov     a0, a2
+    mov     d0, (0x24, sp)
+    movbu   (6, a0), d0
+    movbu   (7, a0), d3
+    movbu   d0, (0x3c, sp)
+    add     0x34, a2
+    mov     (a2), a0
+    movhu   (a0), d0
+    mov     (0x20, sp), a0
+    and     0xff, d0
+    movbu   (0x18, a0), d1
+    mov     (0x60, sp), a0
+    exthu   d0
+    call    0x4c037c1b, [d2,d3,a2], 0x14
+    mov     (0x60, sp), a1
+    mov     (a2), a0
+    add     0x40, a1
+    mov     (a1), d1
+    movhu   (2, a0), d0
+    and     0xfffff000, d1
+    and     0x0fff, d0
+    or      d0, d1
+    mov     d1, (a1)
+    mov     (0x20, sp), a1
+    add     0x34, a1
+    mov     (a1), a0
+    movhu   (a0), d0
+    btst    0x8000, d0
+    beq     0x4c0135b6
+    mov     (a1), a0
+    movhu   (a0), d0
+    exthu   d0
+    and     0x7000, d0
+    exthu   d0
+    asr     12, d0
+    bra     0x4c0135c7
+    mov     (0x20, sp), a0
+    movhu   (0xa, a0), d0
+    mov     0x486d1254, a0
+    asr     8, d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    mov     (0x60, sp), d1
+    extbu   d0
+    add     0xa, d1
+    mov     d1, (0x38, sp)
+    mov     d1, a0
+    movhu   (a0), d2
+    extbu   d0
+    and     0x8fff, d2
+    mov     7, d1
+    and     d0, d1
+    asl     12, d1
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    call    TgPitchRuntimeCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    exthu   d0
+    add     0x48, a0
+    mov     (a0), d2
+    add     0x1800, d0
+    mov     d0, d1
+    asl2    d1
+    and     0x0003ffff, d1
+    and     0xfffc0000, d2
+    or      d2, d1
+    mov     d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x60, sp), d0
+    call    0x4c0311f3, [d2,d3,a2], 0xc
+    mov     (0x20, sp), a0
+    extbu   d3
+    movhu   d0, (0x50, a0)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    0x4c0312a2, [d2,d3,a2,a3], 0x24
+    mov     (0x60, sp), a0
+    and     0x7f, d0
+    add     0x24, a0
+    movhu   (a0), d1
+    and     0xff80, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     d3, (0x30, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     d3, d0
+    mov     (0x60, sp), d1
+    call    0x4c01290b, [d2,d3,a2,a3], 0x3c
+    movhu   d0, (0x42, sp)
+    extbu   d3
+    mov     d3, (0x28, sp)
+    mov     d3, d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500b5340, d0
+    mov     d0, (0x34, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    bne     0x4c013666
+    jmp     0x4c013825
+    mov     d3, d0
+    mov     0x10c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ad5a8, d0
+    add     0x1a, d0
+    mov     d0, (0x2c, sp)
+    mov     d0, a0
+    movhu   (a0), d3
+    mov     d3, d0
+    exthu   d0
+    cmp     0x100, d0
+    blt     0x4c013687
+    jmp     0x4c01377e
+    mov     (0x28, sp), d0
+    mov     0x500ce404, a3
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     (d0, a3), a0
+    mov     (0x60, sp), a1
+    movbu   (0x44, a0), d0
+    mov     0x27, d1
+    and     0x0f, d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x486d2ed5, d0
+    mov     d0, a0
+    movbu   (2, a0), d1
+    add     0x58, a1
+    mov     (a1), d2
+    and     0xe0, d1
+    asr     5, d1
+    add     d1, d1
+    mov     0x486d2254, a0
+    movhu   (d1, a0), d0
+    and     0xfffffcff, d2
+    and     0x03, d0
+    asl     8, d0
+    or      d0, d2
+    mov     d2, (a1)
+    exthu   d3
+    and     0xff, d3
+    mov     d2, d0
+    and     0xffffff00, d0
+    mov     d3, d1
+    or      d0, d1
+    mov     d1, (a1)
+    movbu   (0x3c, sp), d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    call    0x4c03a214, [d2,d3], 0x14
+    mov     d2, d1
+    mov     0x130, d2
+    mov     d0, d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    call    0x4c03a2bf, [d2,d3], 8
+    mov     (0x20, sp), a0
+    exthu   d3
+    exth    d0
+    mov     d3, d1
+    nop
+    nop
+    mul     d0, d1
+    movbu   (0x30, sp), d0
+    exth    d1
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, a3
+    mov     d1, a2
+    movbu   (0x10, a0), d1
+    mov     (a3), a0
+    movbu   (0x44, a0), d2
+    and     0x0f, d2
+    cmp     0xa, d2
+    beq     0x4c01372b
+    clr     d0
+    cmp     0xb, d2
+    bne     0x4c013733
+    mov     (a3), a0
+    movbu   (0x46, a0), d0
+    and     0x3f, d0
+    mov     a2, d3
+    exth    d3
+    extbu   d0
+    mov     d0, d2
+    extbu   d2
+    extbu   d1
+    mov     0x7f, d0
+    sub     d1, d0
+    nop
+    nop
+    mul     d0, d2
+    nop
+    nop
+    mul     d3, d2
+    asr     4, d2
+    mov     d2, d0
+    asr     8, d0
+    cmp     0, d3
+    ble     0x4c01375d
+    mov     d3, a0
+    cmp     d3, d0
+    bgt     0x4c013759
+    exth    d0
+    mov     d0, a0
+    mov     a0, d0
+    bra     0x4c013767
+    mov     d3, a1
+    cmp     d3, d0
+    blt     0x4c013765
+    exth    d0
+    mov     d0, a1
+    mov     a1, d0
+    mov     (0x60, sp), a0
+    exth    d0
+    add     0x28, a0
+    movhu   (a0), d1
+    sub     d0, a2
+    mov     a2, d0
+    and     0x3fff, d0
+    and     0xc000, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x2c, sp), a0
+    movhu   (2, a0), d3
+    mov     d3, d0
+    exthu   d0
+    cmp     0x100, d0
+    blt     0x4c01378e
+    jmp     0x4c013825
+    mov     (0x28, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    mov     (0x60, sp), a1
+    movbu   (0x44, a0), d0
+    mov     0x27, d1
+    and     0x0f, d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x486d2ed5, d0
+    mov     d0, a0
+    movbu   (5, a0), d0
+    add     0x58, a1
+    mov     (a1), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a0
+    movhu   (d0, a0), d1
+    and     0xfff3ffff, d2
+    and     0x03, d1
+    asl     18, d1
+    or      d1, d2
+    mov     d2, (a1)
+    exthu   d3
+    mov     d2, d1
+    and     0xfffc03ff, d1
+    mov     0xff, d0
+    and     d3, d0
+    asl     10, d0
+    or      d1, d0
+    mov     d0, (a1)
+    movbu   (0x3c, sp), d2
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    call    0x4c03a214, [d2,d3], 0x14
+    mov     d2, d1
+    mov     d0, d3
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    call    0x4c03a2bf, [d2,d3], 8
+    mov     (0x60, sp), a0
+    exthu   d3
+    add     0x2a, a0
+    movhu   (a0), d2
+    exth    d0
+    mov     d3, d1
+    nop
+    nop
+    mul     d0, d1
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x30, sp), d0
+    clr     d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d2
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c013897
+    mov     (0x24, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x55, a1), d0
+    add     0x5c, a0
+    mov     (a0), d1
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d0
+    and     0xfffffcff, d1
+    and     0x03, d0
+    asl     8, d0
+    or      d0, d1
+    mov     d1, (a0)
+    exthu   d2
+    and     0xff, d2
+    and     0xffffff00, d1
+    mov     d2, d0
+    or      d1, d0
+    mov     d0, (a0)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x2c, a0
+    movhu   (a0), d0
+    and     0x3fff, d1
+    and     0xc000, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x30, sp), d0
+    mov     1, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d3
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c01390f
+    mov     (0x24, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x59, a1), d1
+    add     0x60, a0
+    mov     (a0), d2
+    and     0xe0, d1
+    asr     5, d1
+    add     d1, d1
+    mov     0x486d2254, a1
+    movhu   (d1, a1), d0
+    and     0xfffffcff, d2
+    and     0x03, d0
+    asl     8, d0
+    or      d0, d2
+    mov     d2, (a0)
+    exthu   d3
+    and     0xff, d3
+    mov     d2, d0
+    and     0xffffff00, d0
+    mov     d3, d1
+    or      d0, d1
+    mov     d1, (a0)
+    mov     1, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    and     0x3fff, d0
+    add     0x30, a0
+    movhu   (a0), d1
+    and     0xc000, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    jmp     0x4c013a40
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    bne     0x4c01391c
+    jmp     0x4c013a40
+    mov     (0x28, sp), d0
+    mov     0x10c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ad5a8, d0
+    mov     d0, a0
+    movhu   (0x1e, a0), d1
+    mov     d1, d3
+    exthu   d1
+    cmp     0x100, d1
+    blt     0x4c01393b
+    jmp     0x4c013a40
+    mov     (0x28, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    mov     0, a0
+    and     0x0f, d0
+    cmp     6, d0
+    bne     0x4c01395c
+    mov     1, a0
+    movhu   (0x486d2254), d1
+    mov     a0, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c013977
+    mov     (a1), a0
+    movbu   (0x47, a0), d0
+    mov     0x486d2254, a0
+    add     d0, d0
+    movhu   (d0, a0), d1
+    mov     (0x60, sp), a1
+    mov     d1, d0
+    add     0x60, a1
+    mov     (a1), d2
+    and     0x03, d0
+    asl     8, d0
+    and     0xfffffcff, d2
+    or      d2, d0
+    mov     d0, (a1)
+    exthu   d3
+    and     0xff, d3
+    and     0xffffff00, d0
+    mov     d3, d1
+    or      d0, d1
+    mov     d1, (a1)
+    movbu   (0x3c, sp), d0
+    mov     0x130, d1
+    mov     d0, a3
+    clr     d0
+    movhu   d0, (0x40, sp)
+    movbu   (0x30, sp), d0
+    mov     a3, d2
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    extbu   d2
+    movbu   (0x44, a0), d1
+    mov     0x486d2ed5, a2
+    mov     0x27, d0
+    and     0x0f, d1
+    extbu   d1
+    nop
+    nop
+    mulu    d0, d1
+    add     a2, d1
+    add     0x13, d1
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    mov     d1, a0
+    movbu   (d0, a0), d0
+    btst    0x20, d0
+    beq     0x4c0139e3
+    movhu   (0x52, a1), d0
+    movhu   d0, (0x40, sp)
+    movbu   (0x30, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    mov     a3, d2
+    movbu   (0x44, a0), d1
+    extbu   d2
+    and     0x0f, d1
+    extbu   d1
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     a2, d1
+    add     0x13, d1
+    mov     d1, a0
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    movbu   (d0, a0), d0
+    mov     1, d3
+    btst    0x02, d0
+    beq     0x4c013a25
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    btst    0x40, d0
+    beq     0x4c013a25
+    mov     -1, d3
+    mov     (0x60, sp), a0
+    movhu   (0x40, sp), d1
+    add     0x30, a0
+    movhu   (a0), d2
+    exth    d3
+    nop
+    nop
+    mul     d3, d1
+    and     0xc000, d2
+    mov     0x3fff, d0
+    and     d1, d0
+    or      d2, d0
+    movhu   d0, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x30, sp), d0
+    mov     2, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d3
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c013ab9
+    mov     (0x24, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x5d, a1), d1
+    add     0x5c, a0
+    mov     (a0), d2
+    and     0xe0, d1
+    asr     5, d1
+    add     d1, d1
+    mov     0x486d2254, a1
+    movhu   (d1, a1), d0
+    and     0xfff3ffff, d2
+    and     0x03, d0
+    asl     18, d0
+    or      d0, d2
+    mov     d2, (a0)
+    exthu   d3
+    mov     d2, d0
+    and     0xfffc03ff, d0
+    mov     0xff, d1
+    and     d3, d1
+    asl     10, d1
+    or      d0, d1
+    mov     d1, (a0)
+    mov     2, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    and     0x3fff, d0
+    add     0x2e, a0
+    movhu   (a0), d1
+    and     0xc000, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x30, sp), d0
+    mov     3, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d3
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c013b33
+    mov     (0x24, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x61, a1), d0
+    add     0x60, a0
+    mov     (a0), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d1
+    and     0xfff3ffff, d2
+    and     0x03, d1
+    asl     18, d1
+    or      d1, d2
+    mov     d2, (a0)
+    exthu   d3
+    mov     d2, d1
+    and     0xfffc03ff, d1
+    mov     0xff, d0
+    and     d3, d0
+    asl     10, d0
+    or      d1, d0
+    mov     d0, (a0)
+    mov     3, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x32, a0
+    movhu   (a0), d2
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    movbu   (0x15, a0), d2
+    btst    0x02, d0
+    bne     0x4c013b40
+    clr     d2
+    extbu   d2
+    mov     (0x30, sp), d0
+    call    0x4c01349c, [d2,d3,a2], 0x20
+    mov     d0, d1
+    mov     d2, (0x14, sp)
+    mov     (0x60, sp), a0
+    extbu   d1
+    mov     (0x30, sp), d0
+    call    0x4c02cd72, [d2,d3,a2,a3], 0x28
+    mov     (0x20, sp), a0
+    mov     5, d1
+    add     2, a0
+    movhu   (a0), d0
+    and     0xefff, d0
+    movhu   d0, (a0)
+    mov     (0x30, sp), d0
+    call    0x4c0146d3, [d2,d3], 0x14
+    mov     (0x34, sp), a0
+    mov     (0x24, sp), a1
+    movbu   (0x46, a0), d1
+    mov     (0x20, sp), a0
+    extb    d1
+    exth    d0
+    add     d1, d0
+    exth    d0
+    call    0x4c03162c, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    mov     d0, d3
+    movhu   (a0), d2
+    mov     0xff, d1
+    and     0xff, d2
+    and     d3, d1
+    asl     8, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    exthu   d3
+    cmp     0xff, d3
+    mov     0x7f, d0
+    beq     0x4c013b9e
+    clr     d0
+    mov     (0x60, sp), d1
+    and     0x7f, d0
+    add     0x22, d1
+    mov     d1, (0x28, sp)
+    mov     d1, a0
+    movhu   (a0), d1
+    asl     8, d0
+    and     0x80ff, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    mov     0x486d26ae, d3
+    add     0x29, a0
+    movbu   (a0), d0
+    mov     d3, a1
+    extb    d0
+    movbu   (d0, a1), d1
+    mov     1, d0
+    cmp     0, d1
+    beq     0x4c013bd2
+    movbu   (a0), d0
+    extb    d0
+    movbu   (d0, a1), d0
+    mov     (0x60, sp), a0
+    and     0x7f, d0
+    movhu   (a0), d1
+    and     0xff80, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x34, sp), a1
+    mov     (0x20, sp), a0
+    add     0x47, a1
+    mov     (0x48, a0), a0
+    movbu   (a1), d1
+    movbu   (a0), d0
+    movbu   (a1), d2
+    extb    d1
+    extb    d0
+    extb    d2
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    add     d0, d1
+    exth    d1
+    mov     d1, d0
+    mov     d2, d1
+    call    0x4c03178c, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a3
+    mov     (0x20, sp), a0
+    inc4    a3
+    movhu   (a3), d1
+    movbu   (0x64, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x60, sp), a2
+    mov     (0x20, sp), a0
+    add     8, a2
+    movhu   (a2), d1
+    movbu   (0x66, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    mov     0x0000ff00, d2
+    movbu   (0x2b, a0), d0
+    mov     d3, a0
+    extbu   d0
+    movbu   (d0, a0), d0
+    mov     (0x20, sp), a0
+    add     0x65, a0
+    movbu   d0, (a0)
+    mov     (0x24, sp), a1
+    movbu   (0x2d, a1), d0
+    mov     d3, a1
+    extbu   d0
+    movbu   (d0, a1), d0
+    mov     (0x20, sp), a1
+    add     0x67, a1
+    movbu   d0, (a1)
+    movhu   (a3), d1
+    movbu   (a0), d0
+    and     0xff80, d1
+    extb    d0
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    movhu   (a2), d1
+    movbu   (a1), d0
+    and     0xff80, d1
+    extb    d0
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    0x4c011f50, [d2,d3,a2,a3], 0x24
+    mov     (0x60, sp), a2
+    and     0x7f, d0
+    add     0x16, a2
+    movhu   (a2), d1
+    asl     8, d0
+    and     0x80ff, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    call    0x4c011fe6, 0, 0
+    movhu   (a2), d1
+    and     0xff, d0
+    and     d2, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    TgPitchEgAttackCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    and     0xff, d0
+    add     0xc, a0
+    movhu   (a0), d1
+    asl     8, d0
+    and     0xff, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a1
+    movbu   (0xc, a1), d1
+    extb    d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c013cf3
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c013ce1
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a1
+    movbu   (d0, a1), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c013d02
+    cmp     0x7f, d0
+    ble     0x4c013cf9
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a1
+    movbu   (d1, a1), d0
+    mov     (0x24, sp), a1
+    movbu   (9, a1), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c013d13
+    exth    d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (a0), d1
+    and     0xff, d0
+    and     d2, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    TgPitchEgDecayCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a3
+    mov     (0x20, sp), a0
+    add     0x10, a3
+    movhu   (a3), d1
+    movbu   (0x68, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x60, sp), a2
+    mov     (0x20, sp), a0
+    add     0x14, a2
+    movhu   (a2), d1
+    movbu   (0x6a, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    0x4c012032, [d2,a2], 8
+    mov     (0x20, sp), a0
+    movhu   (a3), d1
+    movbu   (0x69, a0), d0
+    and     d2, d1
+    extb    d0
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x20, sp), a0
+    movhu   (a2), d1
+    movbu   (0x6b, a0), d0
+    and     d2, d1
+    extb    d0
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    call    0x4c01212c, [d2], 0x18
+    exth    d0
+    mov     -0x80, d1
+    mov     d1, (0x10, sp)
+    mov     0x7f, d1
+    call    0x4c011f31, [d2,d3], 8
+    mov     (0x28, sp), a0
+    extb    d0
+    movhu   (a0), d1
+    and     0xff, d0
+    and     d2, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    TgFilterEgAttackCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a2
+    and     0xff, d0
+    add     0x18, a2
+    movhu   (a2), d1
+    asl     8, d0
+    and     0xff, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    call    0x4c012182, [d2], 0x18
+    movhu   (a2), d1
+    extb    d0
+    and     d2, d1
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    call    TgFilterEgDecayCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a2
+    mov     (0x20, sp), a0
+    add     0x1c, a2
+    movhu   (a2), d1
+    movbu   (0x7b, a0), d0
+    and     0xff, d1
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x60, sp), a3
+    mov     (0x20, sp), a0
+    add     0x20, a3
+    movhu   (a3), d1
+    movbu   (0x7c, a0), d0
+    and     0xff, d1
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x24, sp), a0
+    mov     0xfff00000, d3
+    movbu   (0x43, a0), d0
+    extb    d0
+    exth    d0
+    call    0x4c0121d8, [d2], 0x18
+    movhu   (a2), d1
+    and     0xff, d0
+    and     d2, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    movbu   (0x45, a0), d0
+    extb    d0
+    exth    d0
+    call    0x4c0121d8, [d2], 0x18
+    movhu   (a3), d1
+    and     0xff, d0
+    and     d2, d1
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x34, sp), a1
+    mov     (0x60, sp), a0
+    add     0x28, a1
+    add     0x64, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    mov     0x000fffff, d2
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x68, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x6c, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x70, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    mov     (4, a1), d0
+    add     0x74, a0
+    mov     (a0), d1
+    and     d2, d0
+    and     d3, d1
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c006aa1, [d2,d3,a2,a3], 0x30
+    mov     (0x24, sp), a0
+    mov     d0, d1
+    movhu   (a0), d0
+    exth    d1
+    and     0x07ff, d0
+    exth    d0
+    add     d0, d1
+    exth    d1
+    mov     d1, d0
+    clr     d2
+    mov     d2, (0x10, sp)
+    mov     0x7ff, d1
+    call    0x4c011f31, [d2,d3], 8
+    mov     (0x38, sp), a0
+    and     0x07ff, d0
+    movhu   (a0), d1
+    and     0xf800, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x38, sp), a0
+    exthu   d0
+    or      0x8000, d0
+    movhu   d0, (a0)
+    movhu   (0x42, sp), d0
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), a1
+    exth    d0
+    call    0x4c031330, [d2,d3,a2,a3], 0x24
+    mov     (0x20, sp), a0
+    call    0x4c01231a, 0, 0
+    mov     (0x20, sp), a0
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
+    mov     (0x60, sp), a0
+    exthu   d0
+    add     0x54, a0
+    mov     (a0), d1
+    and     0x1fff, d0
+    and     0xffffe000, d1
+    or      d1, d0
+    mov     d0, (a0)
+    ret     [d2,d3,a2,a3], 0x54
+.mnbase 0x48400000
+# TgElemKeyOffRelease  (lib CPU 0x4c013f0a)
+#   key-off release programmer for the remaining classes (the class-2
+#   restrikes; TgVoiceSlotService else-dispatch): amp release with the
+#   key-off offset from the note's routing entry ((librec+0x48)+1),
+#   buffers 0x50009F58/60/68; class bit8 -> the APC-part special case
+#   (part tone desc+0x44 nibble 0xD), TgVoiceGateOff + raw writes
+#   0x4C03783B/0x4C037AC3 + TgVoiceNodeKeyOff
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# TgElemKeyOffRelease_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    extbu   d0
+    exthu   d0
+    mov     0xb4, d2
+    nop
+    nop
+    mulu    d2, d1
+    mov     d1, a2
+    add     0x500af940, a2
+    movbu   (7, a2), d2
+    mov     d0, (0x18, sp)
+    call    TgVoiceRecordPtr, 0, 0
+    mov     0x50009f58, a1
+    mov     a0, a3
+    mov     8, a0
+    add     a2, a0
+    movbu   (a0), d0
+    and     0xffffff7f, d0
+    movbu   d0, (a0)
+    mov     (0x48, a2), a0
+    movbu   (1, a0), d0
+    mov     a2, a0
+    extb    d0
+    call    TgKeyOffAmpRelease, [d2,d3,a2,a3], 0x30
+    mov     a2, a0
+    mov     0x50009f60, a1
+    call    TgKeyOffPitchRelease, [d2,d3,a2,a3], 0x34
+    mov     a2, a0
+    add     2, a2
+    mov     0x50009f68, a1
+    call    TgKeyOffFilterRelease, [d2,d3,a2,a3], 0x34
+    mov     a2, (0x14, sp)
+    movhu   (a2), d0
+    btst    0x0100, d0
+    bne     0x4c013f7d
+    jmp     0x4c014040
+    extbu   d2
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d2, d1
+    mov     0x500b5340, a0
+    movhu   (d1, a0), d1
+    btst    0x2000, d1
+    beq     0x4c013fba
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     0xd, d0
+    bne     0x4c013fba
+    mov     8, a0
+    add     a3, a0
+    movhu   (a0), d0
+    and     0xff80, d0
+    movhu   d0, (a0)
+    bra     0x4c01400c
+    mov     a3, a0
+    inc4    a0
+    movhu   (a0), d2
+    movhu   (0x50009f58), d0
+    and     0xff, d2
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d2
+    movhu   d2, (a0)
+    movhu   (0x50009f5a), d1
+    and     0xff80, d2
+    and     0x7f, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    mov     8, a0
+    add     a3, a0
+    movhu   (a0), d1
+    movhu   (0x50009f5c), d0
+    and     0xff, d1
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    movhu   (0x50009f5e), d0
+    and     0xff80, d1
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     a3, a0
+    mov     (0x18, sp), d0
+    call    0x4c03783b, [d2,a2], 0x1c
+    mov     (0x18, sp), d0
+    mov     a3, a0
+    call    0x4c037ac3, [d2,a2], 0x1c
+    mov     (0x18, sp), d0
+    mov     a3, a0
+    call    TgVoiceGateOff, [d2,a2], 0x1c
+    mov     (0x18, sp), d0
+    call    TgVoiceNodeKeyOff_entry, [d2,d3], 0x18
+    mov     (0x14, sp), a0
+    movhu   (a0), d0
+    and     0xfeff, d0
+    movhu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x2c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3cd011, 0x3cd755
+# TgActiveHighWaterUpdate  (lib CPU 0x4c014784)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgActiveHighWaterUpdate_entry:   (register-save `call` entry)
+    movhu   (0x500d287a), d2
+    mov     d0, d1
+    exthu   d1
+    cmp     d1, d2
+    bge     0x4c014797
+    movhu   d0, (0x500d287a)
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgActiveHighWaterReset  (lib CPU 0x4c01479a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    clr     d0
+    movhu   d0, (0x500d287a)
+    retf    0, 0
+.mnbase 0x48400000
+# TgLastKeyPartSet  (lib CPU 0x4c0147a4)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movbu   d0, (0x500d2878)
+    retf    0, 0
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3cd77e, 0x3e4e16
 # TgVoiceRoutePtrCalc  (lib CPU 0x4c02be45)
 #   rec+0x34 := the note's routing-entry ptr (kit tables via maincpu
 #   0x48449DAA/0x48449DF8 indexed by note rec+0xA hi7) -- the halfword
@@ -21287,7 +23124,360 @@ display_palette:
     movhu   d2, (d3, a0)
     ret     [d2,d3], 8
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3e4f57, 0x3e70c4
+.incbin_range "baserom/kn7000_program.rom", 0x3e4f57, 0x3e6766
+# TgPartGlidePlan  (lib CPU 0x4c02d795)
+#   plan the part's PORTAMENTO ramp (d0 part, d1 from-note, stack
+#   to-note; called under TgPartHoldMark when partrec bit7 = portamento
+#   on): interval = to - from, then SOFT-DOUBLE math (constants 100.0 /
+#   12.0 / 256.0 / +-5.0) against the per-part curve record
+#   0x486D319C[partrec+6] (rate double + base step halfword at +8) finds
+#   the ticks-per-step; writes the glide state into the part's
+#   0x500AD5A8+part*0x10C block -- +0x30 dbl per-step delta, +0x38 dbl
+#   remainder, +0x28 tick period, +0x2A steps+1, +0x40 start offset
+#   (interval<<8), +0x46 curve base -- and ARMS the tick (+0x29 := 0,
+#   +0x2C := 0); zero interval or portamento off -> state cleared.
+#   NOTE: this settles the block's meaning -- it is the part's
+#   mono/portamento state, not a damper-pedal mark list
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x38, sp
+# TgPartGlidePlan_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     d1, d2
+    mov     d0, d1
+    mov     d0, a2
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movhu   (a0), d1
+    btst    0x80, d1
+    bne     0x4c02d7b8
+    jmp     0x4c02dab9
+    movbu   (0x58, sp), d1
+    movbu   (6, a0), d3
+    exth    d1
+    extbu   d2
+    mov     d2, d0
+    exth    d0
+    mov     d1, d2
+    sub     d0, d2
+    exth    d2
+    mov     d2, a3
+    mov     -1, d1
+    nop
+    nop
+    mul     d2, d1
+    mov     d1, a0
+    cmp     0, a3
+    blt     0x4c02d7d5
+    mov     a3, a0
+    mov     a0, d0
+    call    0x4c0019f2, 0, 0
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    extbu   d3
+    mov     0xc, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     0x486d319c, d0
+    mov     d0, (0x18, sp)
+    mov     d0, a0
+    mov     (a0), d0
+    mov     (4, a0), d1
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40590000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c000856, [d2,d3], 0x10
+    bne     0x4c02d86e
+    mov     a2, d1
+    clr     d3
+    mov     0x10c, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500ad5a8, a2
+    mov     d3, (0x30, a2)
+    mov     d3, (0x34, a2)
+    movbu   d3, (0x28, a2)
+    movhu   d3, (0x2a, a2)
+    movbu   d3, (0x29, a2)
+    movhu   d3, (0x2c, a2)
+    mov     (0x18, sp), a0
+    movhu   (8, a0), d0
+    movhu   d0, (0x46, a2)
+    movhu   d3, (0x42, a2)
+    movhu   d3, (0x40, a2)
+    jmp     0x4c02daa8
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40280000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c0007e7, [d2,d3], 0x10
+    bgt     0x4c02d88d
+    jmp     0x4c02da80
+    mov     1, d3
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40280000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c001629, [d3,a3], 0x10
+    movhu   d0, (0x1c, sp)
+    mov     d2, d0
+    call    0x4c0019f2, 0, 0
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40590000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40280000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40280000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    clr     d0
+    mov     0x40700000, d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x20, sp)
+    mov     d1, (0x24, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c000856, [d2,d3], 0x10
+    ble     0x4c02d99f
+    mov     d3, d2
+    mov     d2, d0
+    call    0x4c0016ac, 0, 0
+    mov     d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0x40140000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c0007e7, [d2,d3], 0x10
+    bgt     0x4c02d9df
+    exthu   d2
+    inc     d2
+    bra     0x4c02d960
+    mov     d3, d2
+    mov     d2, d0
+    call    0x4c0016ac, 0, 0
+    mov     d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     0xc0140000, d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c0007e7, [d2,d3], 0x10
+    blt     0x4c02d9df
+    exthu   d2
+    inc     d2
+    bra     0x4c02d9a0
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x28, sp)
+    mov     d1, (0x2c, sp)
+    clr     d0
+    mov     d0, (8, sp)
+    mov     0x40700000, d1
+    mov     d1, (0xc, sp)
+    mov     (0x28, sp), d0
+    mov     (0x2c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     a2, d0
+    mov     d1, (0x14, sp)
+    mov     0x10c, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a2
+    add     0x500ad5a8, a2
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x40590000, d1
+    mov     d1, (0x14, sp)
+    call    0x4c000879, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x30, a2)
+    mov     d1, (0x34, a2)
+    mov     (0x20, sp), d0
+    mov     (0x24, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x30, sp), d0
+    mov     (0x34, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (0x38, a2)
+    mov     d1, (0x3c, a2)
+    movbu   d2, (0x28, a2)
+    movhu   (0x1c, sp), d0
+    exthu   d2
+    exth    d0
+    mov     d2, d1
+    call    LibDiv32, 0, 0
+    inc     d0
+    movhu   d0, (0x2a, a2)
+    clr     d0
+    movhu   d0, (0x42, a2)
+    mov     a3, d0
+    asl     8, d0
+    movhu   d0, (0x40, a2)
+    bra     0x4c02daa8
+    clr     d3
+    mov     a2, d1
+    mov     0x10c, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500ad5a8, a2
+    mov     d3, (0x30, a2)
+    mov     d3, (0x34, a2)
+    movbu   d3, (0x28, a2)
+    movhu   d3, (0x2a, a2)
+    movhu   d3, (0x42, a2)
+    mov     d2, d0
+    asl     8, d0
+    movhu   d0, (0x40, a2)
+    clr     d0
+    movbu   d0, (0x29, a2)
+    movhu   d0, (0x2c, a2)
+    mov     (0x18, sp), a0
+    movhu   (8, a0), d0
+    movhu   d0, (0x46, a2)
+    bra     0x4c02daef
+    mov     a2, d1
+    mov     0x10c, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500ad5a8, a2
+    clr     d0
+    mov     d0, (0x30, a2)
+    mov     d0, (0x34, a2)
+    movbu   d0, (0x28, a2)
+    movhu   d0, (0x2a, a2)
+    movbu   d0, (0x29, a2)
+    movhu   d0, (0x2c, a2)
+    movhu   (0x486d31a4), d0
+    mov     -1, d3
+    movhu   d0, (0x46, a2)
+    clr     d0
+    movhu   d0, (0x42, a2)
+    movhu   d0, (0x40, a2)
+    movbu   d3, (0x44, a2)
+    mov     d3, d0
+    extb    d0
+    ret     [d2,d3,a2,a3], 0x48
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3e6ac8, 0x3e70c4
 # TgPartHoldQuery  (lib CPU 0x4c02e0f3)
 #   key-off hold/top-note query (d0 part, d1 note): part flags bit6
 #   clear -> 0xFE (release now); else find the part's highest sounding
@@ -21317,7 +23507,7 @@ display_palette:
     add     0x20, d2
     mov     d2, a0
     extbu   d0
-    call    0x4c0100eb, 0, 0xc
+    call    TgVoiceListCollectPart2_entry, 0, 0xc
     add     6, d2
     mov     d2, (0x18, sp)
     mov     d2, a1
@@ -21471,7 +23661,7 @@ display_palette:
     mov     d2, a0
     and     0xffffbfff, d0
     mov     d0, (a2)
-    call    0x4c0315d2, [d2,d3,a2], 0x1c
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
     mov     (a2), d1
     exthu   d0
     and     0x1fff, d0
@@ -21551,7 +23741,7 @@ display_palette:
     mov     d2, d0
     extbu   d3
     mov     d3, d1
-    call    0x4c010047, [d2], 0x10
+    call    TgVoiceListReleaseByNote_entry, [d2], 0x10
     mov     (0x14, sp), d0
     add     6, d0
     mov     d0, (0x18, sp)
@@ -21574,7 +23764,7 @@ display_palette:
     extbu   d3
     mov     d3, (0x10, sp)
     mov     (0x20, sp), d0
-    call    0x4c02d79a, [d2,d3,a2,a3], 0x48
+    call    TgPartGlidePlan_entry, [d2,d3,a2,a3], 0x48
     extb    d0
     cmp     -1, d0
     beq     0x4c02e371
@@ -21585,7 +23775,7 @@ display_palette:
     mov     (0x14, sp), a0
     mov     (0x20, sp), d0
     extbu   d1
-    call    0x4c01006d, [d2], 0x10
+    call    TgVoiceListCollectByNote_entry, [d2], 0x10
     mov     (0x18, sp), a3
     movbu   (a3), d0
     cmp     0x80, d0
@@ -21619,7 +23809,7 @@ display_palette:
     mov     d2, a0
     and     0xffffbfff, d0
     mov     d0, (a2)
-    call    0x4c0315d2, [d2,d3,a2], 0x1c
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
     mov     (a2), d1
     exthu   d0
     and     0x1fff, d0
@@ -21650,7 +23840,7 @@ display_palette:
     mov     d3, d1
     mov     (0x14, sp), a0
     mov     (0x20, sp), d0
-    call    0x4c01006d, [d2], 0x10
+    call    TgVoiceListCollectByNote_entry, [d2], 0x10
     mov     (0x18, sp), a3
     movbu   (a3), d0
     cmp     0x80, d0
@@ -21770,7 +23960,7 @@ display_palette:
     or      d1, d0
     movhu   d0, (a1)
     mov     a2, a0
-    call    0x4c0315d2, [d2,d3,a2], 0x1c
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
     mov     (0x14, sp), a0
     exthu   d0
     mov     (a0), d1
@@ -21799,7 +23989,7 @@ display_palette:
     extbu   d3
     mov     d3, d1
     mov     d2, d0
-    call    0x4c010047, [d2], 0x10
+    call    TgVoiceListReleaseByNote_entry, [d2], 0x10
     add     6, a2
     movbu   (a2), d0
     mov     0x80, d2
@@ -21816,7 +24006,294 @@ display_palette:
     blt     0x4c02e58b
     ret     [d2,d3,a2,a3], 0xc0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3e7578, 0x3e8af6
+# TgPartGlideTick  (lib CPU 0x4c02e5a7)
+#   the per-part PORTAMENTO tick (d0 part; called from the periodic
+#   part service when partrec bits 6+7 are set): idle while +0x29 ==
+#   -1; every +0x28 ticks advance the step +0x2C; mid-ramp ->
+#   interpolate the pitch offset halfwords +0x42/+0x40 from the planned
+#   soft-double deltas (mul 0x4C000523 / div 0x4C000B1C / to-int
+#   0x4C001629), then rewrite every part voice (TgVoiceListCollectPart):
+#   pitch via TgPitchRuntimeCalc -> class-0x2400 write, level via
+#   TgVoiceLevelWordCalc (bit14 cleared) -> class-0x3000 write; final
+#   step -> snap the current note's (+0x26) voices, and when +0x48 == 0
+#   release the previous note's (+0x27) voices (TgVoiceListReleaseByNote
+#   + TgVoiceNodeKeyOff + TgVoiceSlotService), then disarm (+0x29 := -1)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xbc, sp
+# TgPartGlideTick_entry:   (register-save `call` entry)
+    movbu   d0, (0xd4, sp)
+    movbu   (0xd4, sp), d3
+    mov     0x10c, d0
+    nop
+    nop
+    mulu    d0, d3
+    add     0x500ad5a8, d3
+    mov     0x29, a1
+    add     d3, a1
+    movbu   (a1), d0
+    extb    d0
+    cmp     -1, d0
+    bne     0x4c02e5ce
+    ret     [d2,d3,a2,a3], 0xcc
+    movbu   (a1), d0
+    mov     0x28, a0
+    extb    d0
+    inc     d0
+    movbu   d0, (a1)
+    add     d3, a0
+    movbu   (a0), d0
+    extb    d0
+    cmp     0, d0
+    bne     0x4c02e5e2
+    ret     [d2,d3,a2,a3], 0xcc
+    movbu   (a1), d1
+    movbu   (a0), d0
+    extb    d1
+    extb    d0
+    cmp     d0, d1
+    bge     0x4c02e5ee
+    ret     [d2,d3,a2,a3], 0xcc
+    clr     d0
+    movbu   d0, (a1)
+    mov     0x2c, a3
+    add     d3, a3
+    movhu   (a3), d0
+    mov     0x2a, d2
+    exth    d0
+    inc     d0
+    movhu   d0, (a3)
+    add     d3, d2
+    mov     d2, a0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    bge     0x4c02e60a
+    jmp     0x4c02e721
+    mov     -1, d0
+    movbu   d0, (a1)
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   d0, (a3)
+    clr     d0
+    movhu   d0, (0x40, a0)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x34, d0
+    mov     d0, (0x18, sp)
+    movbu   (0xd4, sp), d0
+    mov     d3, a0
+    mov     d0, (0x1c, sp)
+    movbu   (0x26, a0), d1
+    mov     (0x18, sp), a0
+    call    TgVoiceListCollectByNote_entry, [d2], 0x10
+    mov     (0x18, sp), d0
+    add     6, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a3
+    movbu   (a3), d0
+    cmp     0x80, d0
+    blt     0x4c02e645
+    jmp     0x4c02e6db
+    movbu   (a3), d0
+    mov     0xb4, d2
+    nop
+    nop
+    mulu    d0, d2
+    add     0x500af940, d2
+    mov     d2, a0
+    movhu   (2, a0), d0
+    and     0x7c, d0
+    cmp     8, d0
+    beq     0x4c02e6cf
+    movbu   (a3), d0
+    exthu   d0
+    call    TgVoiceRecordPtr, 0, 0
+    mov     a0, a2
+    mov     d2, a0
+    call    TgPitchRuntimeCalc, [d2,d3,a2,a3], 0x28
+    mov     0x48, a1
+    add     a2, a1
+    mov     (a1), d1
+    exthu   d0
+    add     0x1800, d0
+    asl2    d0
+    and     0x0003ffff, d0
+    and     0xfffc0000, d1
+    or      d0, d1
+    mov     d1, (a1)
+    movbu   (a3), d0
+    mov     d1, (0x10, sp)
+    add     0x54, a2
+    mov     0x24000000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (a2), d0
+    mov     d2, a0
+    and     0xffffbfff, d0
+    mov     d0, (a2)
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
+    mov     d0, d1
+    mov     (a2), d0
+    exthu   d1
+    and     0x1fff, d1
+    and     0xffffe000, d0
+    or      d0, d1
+    mov     d1, (a2)
+    movbu   (a3), d0
+    mov     d1, (0x10, sp)
+    mov     0x30000000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    inc     a3
+    movbu   (a3), d0
+    cmp     0x80, d0
+    bge     0x4c02e6db
+    jmp     0x4c02e645
+    mov     d3, a0
+    movbu   (0x48, a0), d0
+    cmp     0, d0
+    beq     0x4c02e6e7
+    ret     [d2,d3,a2,a3], 0xcc
+    mov     (0x1c, sp), d0
+    movbu   (0x27, a0), d1
+    mov     (0x18, sp), a0
+    call    TgVoiceListReleaseByNote_entry, [d2], 0x10
+    mov     (0x20, sp), a2
+    movbu   (a2), d0
+    cmp     0x80, d0
+    blt     0x4c02e702
+    ret     [d2,d3,a2,a3], 0xcc
+    movbu   (a2), d0
+    call    TgVoiceNodeKeyOff_entry, [d2,d3], 0x18
+    movbu   (a2), d0
+    inc     a2
+    clr     d1
+    call    TgVoiceSlotService_entry, [d2,d3], 0x14
+    movbu   (a2), d0
+    cmp     0x80, d0
+    blt     0x4c02e702
+    ret     [d2,d3,a2,a3], 0xcc
+    mov     0x30, a2
+    add     d3, a2
+    mov     (a2), d0
+    mov     (4, a2), d1
+    mov     d0, (0x24, sp)
+    mov     d1, (0x28, sp)
+    movhu   (a3), d0
+    exth    d0
+    inc     d0
+    call    0x4c000523, 0, 0
+    mov     d0, (0x2c, sp)
+    mov     d1, (0x30, sp)
+    mov     (0x24, sp), d0
+    mov     (0x28, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x2c, sp), d0
+    mov     (0x30, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c001629, [d3,a3], 0x10
+    mov     d3, a0
+    movhu   d0, (0x42, a0)
+    mov     (a2), d0
+    mov     (4, a2), d1
+    mov     d0, (0x24, sp)
+    mov     d1, (0x28, sp)
+    mov     d2, a0
+    movhu   (a0), d0
+    movhu   (a3), d1
+    exth    d0
+    exth    d1
+    inc     d1
+    sub     d1, d0
+    call    0x4c000523, 0, 0
+    mov     d0, (0x2c, sp)
+    mov     d1, (0x30, sp)
+    mov     (0x24, sp), d0
+    mov     (0x28, sp), d1
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x2c, sp), d0
+    mov     (0x30, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    0x4c000b1c, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c001629, [d3,a3], 0x10
+    mov     d3, a0
+    movhu   d0, (0x40, a0)
+    mov     sp, a3
+    add     0x34, a3
+    mov     a3, a0
+    movbu   (0xd4, sp), d0
+    call    TgVoiceListCollectPart_entry, 0, 0xc
+    add     6, a3
+    movbu   (a3), d0
+    cmp     0x80, d0
+    blt     0x4c02e7c3
+    ret     [d2,d3,a2,a3], 0xcc
+    movbu   (a3), d0
+    mov     0xb4, d3
+    nop
+    nop
+    mulu    d0, d3
+    add     0x500af940, d3
+    mov     d3, a0
+    movhu   (2, a0), d0
+    and     0x7c, d0
+    cmp     8, d0
+    beq     0x4c02e84e
+    movbu   (a3), d0
+    exthu   d0
+    call    TgVoiceRecordPtr, 0, 0
+    mov     a0, a2
+    mov     d3, a0
+    call    TgPitchRuntimeCalc, [d2,d3,a2,a3], 0x28
+    mov     0x48, a1
+    add     a2, a1
+    mov     d0, d1
+    mov     (a1), d0
+    exthu   d1
+    add     0x1800, d1
+    asl2    d1
+    and     0x0003ffff, d1
+    and     0xfffc0000, d0
+    or      d0, d1
+    mov     d1, (a1)
+    movbu   (a3), d2
+    mov     d1, (0x10, sp)
+    mov     d2, d0
+    add     0x54, a2
+    mov     0x24000000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    mov     (a2), d0
+    mov     d3, a0
+    and     0xffffbfff, d0
+    mov     d0, (a2)
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
+    mov     (a2), d1
+    exthu   d0
+    and     0x1fff, d0
+    and     0xffffe000, d1
+    or      d0, d1
+    mov     d1, (a2)
+    movbu   (a3), d0
+    mov     d1, (0x10, sp)
+    mov     0x30000000, d1
+    call    TgVoiceRegWrite_entry, [d2,d3], 8
+    inc     a3
+    movbu   (a3), d0
+    cmp     0x80, d0
+    bge     0x4c02e85a
+    jmp     0x4c02e7c3
+    ret     [d2,d3,a2,a3], 0xcc
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3e782e, 0x3e8af6
 # TgPitchZoneFold  (lib CPU 0x4c02fb25)
 #   multisample octave fold (a0 librec): librec+0x0C := zone center16,
 #   librec+0x0A := zone pitch folded by +-0xC00 octave steps into the
@@ -22078,7 +24555,7 @@ display_palette:
     mov     6, a3
     add     d3, a3
     mov     d1, a2
-    call    0x4c01010a, 0, 0xc
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
     movbu   (a3), d0
     cmp     0x80, d0
     blt     0x4c0309fa
@@ -23010,7 +25487,55 @@ display_palette:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ea1c2, 0x3ea915
+.incbin_range "baserom/kn7000_program.rom", 0x3ea1c2, 0x3ea59e
+# TgVoiceLevelWordCalc  (lib CPU 0x4c0315cd)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x10, sp
+# TgVoiceLevelWordCalc_entry:   (register-save `call` entry)
+    mov     a0, a2
+    mov     0x3c, a1
+    add     a2, a1
+    mov     (a1), a0
+    movhu   (0x12, a2), d2
+    movbu   (0x19, a0), d0
+    and     0x7f, d0
+    beq     0x4c0315f4
+    mov     (a1), a0
+    exth    d2
+    movbu   (0x19, a0), d0
+    and     0x7f, d0
+    exth    d0
+    add     d0, d2
+    mov     -0x64, d0
+    add     d2, d0
+    bra     0x4c0315fa
+    exth    d2
+    add     -0x200, d2
+    mov     d2, d0
+    movbu   (7, a2), d1
+    movbu   (6, a2), d2
+    mov     0x130, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500ce404, d1
+    mov     0x34, d3
+    nop
+    nop
+    mulu    d3, d2
+    add     d2, d1
+    mov     d1, a0
+    movbu   (0x90, a0), d1
+    exth    d0
+    extb    d1
+    add     d1, d0
+    exth    d0
+    mov     a2, a0
+    call    0x4c02bf8b, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2], 0x1c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ea5f8, 0x3ea915
 # TgKeyOffAmpRelease  (lib CPU 0x4c031944)
 #   key-off AMPLITUDE release compute -- h1 of the key-off trio (d0
 #   key-off offset, a0 lib rec, a1 out = two [rate|level] pairs).
@@ -24832,7 +27357,1101 @@ display_palette:
     movhu   d0, (6, a0)
     ret     [d2,d3,a2,a3], 0x34
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3eb718, 0x3ed8f8
+.incbin_range "baserom/kn7000_program.rom", 0x3eb718, 0x3ecc7f
+# TgElemNoteOnFresh  (lib CPU 0x4c033cae)
+#   THE fresh-strike note-on programmer for melodic class-bit2 voices
+#   (d0 slot, a0 request rec; TgNoteOn dispatch librec+2 bit2 -- fresh
+#   staging sets class 0x104/0x004, so every FIRST strike lands here;
+#   TgElemNoteOnStd programs the bit1 restrikes): builds the complete
+#   shadow register image before gate-on -- routing/level init
+#   0x4C037C1B, the TgPitchRuntimeCalc pitch chain, the level word via
+#   TgVoiceLevelWordCalc, melodic zone param fetchers (0x4C00FD4E ..
+#   0x4C00FFF5), all four EG segment computers (pitch/filter attack +
+#   decay) and the amp EG, raw EG writes via 0x4C03A214/0x4C03A2BF for
+#   both the even and odd companion register blocks, and the initial
+#   glide offset from the part's 0x500AD5A8 block
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x44, sp
+# TgElemNoteOnFresh_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     a0, (0x60, sp)
+    mov     0xb4, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500af940, d0
+    mov     d0, (0x24, sp)
+    mov     d0, a0
+    mov     (0x3c, a0), d0
+    mov     a0, a2
+    mov     d0, (0x20, sp)
+    movbu   (6, a0), d0
+    movbu   (7, a0), d3
+    movbu   d0, (0x3c, sp)
+    add     0x34, a2
+    mov     (a2), a0
+    movhu   (a0), d0
+    mov     (0x24, sp), a0
+    and     0xff, d0
+    movbu   (0x18, a0), d1
+    mov     (0x60, sp), a0
+    exthu   d0
+    call    0x4c037c1b, [d2,d3,a2], 0x14
+    mov     (0x60, sp), a1
+    mov     (a2), a0
+    add     0x40, a1
+    mov     (a1), d1
+    movhu   (2, a0), d0
+    and     0xfffff000, d1
+    and     0x0fff, d0
+    or      d0, d1
+    mov     d1, (a1)
+    mov     (0x24, sp), a1
+    add     0x34, a1
+    mov     (a1), a0
+    movhu   (a0), d0
+    btst    0x8000, d0
+    beq     0x4c033d20
+    mov     (a1), a0
+    movhu   (a0), d0
+    exthu   d0
+    and     0x7000, d0
+    exthu   d0
+    asr     12, d0
+    bra     0x4c033d31
+    mov     (0x24, sp), a0
+    movhu   (0xa, a0), d0
+    mov     0x486d1254, a0
+    asr     8, d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    mov     (0x60, sp), d1
+    extbu   d0
+    add     0xa, d1
+    mov     d1, (0x38, sp)
+    mov     d1, a0
+    movhu   (a0), d2
+    extbu   d0
+    and     0x8fff, d2
+    mov     7, d1
+    and     d0, d1
+    asl     12, d1
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    call    TgPitchRuntimeCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    exthu   d0
+    add     0x48, a0
+    mov     (a0), d2
+    add     0x1800, d0
+    mov     d0, d1
+    asl2    d1
+    and     0x0003ffff, d1
+    and     0xfffc0000, d2
+    or      d2, d1
+    mov     d1, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     (0x60, sp), d0
+    call    0x4c0311f3, [d2,d3,a2], 0xc
+    mov     (0x24, sp), a0
+    extbu   d3
+    movhu   d0, (0x50, a0)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    0x4c0312a2, [d2,d3,a2,a3], 0x24
+    mov     (0x60, sp), a0
+    and     0x7f, d0
+    add     0x24, a0
+    movhu   (a0), d1
+    and     0xff80, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     d3, (0x30, sp)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     d3, d0
+    mov     (0x60, sp), d1
+    call    0x4c0331bd, [d2,d3,a2,a3], 0x3c
+    movhu   d0, (0x42, sp)
+    extbu   d3
+    mov     d3, (0x2c, sp)
+    mov     d3, d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500b5340, d0
+    mov     d0, (0x34, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    bne     0x4c033dca
+    jmp     0x4c033f89
+    mov     d3, d0
+    mov     0x10c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ad5a8, d0
+    add     0x1a, d0
+    mov     d0, (0x28, sp)
+    mov     d0, a0
+    movhu   (a0), d3
+    mov     d3, d0
+    exthu   d0
+    cmp     0x100, d0
+    blt     0x4c033deb
+    jmp     0x4c033ee8
+    mov     (0x2c, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    mov     (0x60, sp), a1
+    movbu   (0x44, a0), d0
+    mov     0x27, d1
+    and     0x0f, d0
+    nop
+    nop
+    mul     d1, d0
+    add     0x486d2ed5, d0
+    mov     d0, a0
+    movbu   (2, a0), d1
+    add     0x58, a1
+    mov     (a1), d2
+    and     0xe0, d1
+    asr     5, d1
+    add     d1, d1
+    mov     0x486d2254, a0
+    movhu   (d1, a0), d0
+    and     0xfffffcff, d2
+    and     0x03, d0
+    asl     8, d0
+    mov     d2, d1
+    or      d0, d1
+    mov     d1, (a1)
+    exthu   d3
+    and     0xff, d3
+    and     0xffffff00, d1
+    mov     d3, d0
+    or      d1, d0
+    mov     d0, (a1)
+    movbu   (0x3c, sp), d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    call    0x4c03a214, [d2,d3], 0x14
+    mov     d2, d1
+    mov     d0, d3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    call    0x4c03a2bf, [d2,d3], 8
+    mov     (0x24, sp), a0
+    exth    d0
+    exthu   d3
+    mov     d3, d1
+    nop
+    nop
+    mul     d0, d1
+    mov     0x130, d0
+    exth    d1
+    mov     d1, a3
+    movbu   (0x30, sp), d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x500ce404, a1
+    movbu   (0x10, a0), d0
+    mov     (a1), a0
+    mov     d0, a2
+    movbu   (0x44, a0), d1
+    and     0x0f, d1
+    cmp     0xa, d1
+    beq     0x4c033e93
+    clr     d0
+    cmp     0xb, d1
+    bne     0x4c033e9b
+    mov     (a1), a0
+    movbu   (0x46, a0), d0
+    and     0x3f, d0
+    mov     a3, d3
+    exth    d3
+    extbu   d0
+    mov     d0, d2
+    extbu   d2
+    mov     a2, d1
+    extbu   d1
+    mov     0x7f, d0
+    sub     d1, d0
+    nop
+    nop
+    mul     d0, d2
+    nop
+    nop
+    mul     d3, d2
+    mov     d2, d0
+    asr     4, d0
+    asr     8, d0
+    cmp     0, d3
+    ble     0x4c033ec7
+    mov     d3, a0
+    cmp     d3, d0
+    bgt     0x4c033ec3
+    exth    d0
+    mov     d0, a0
+    mov     a0, d0
+    bra     0x4c033ed1
+    mov     d3, a1
+    cmp     d3, d0
+    blt     0x4c033ecf
+    exth    d0
+    mov     d0, a1
+    mov     a1, d0
+    mov     (0x60, sp), a0
+    exth    d0
+    add     0x28, a0
+    movhu   (a0), d2
+    mov     a3, d1
+    sub     d0, d1
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x28, sp), a0
+    movhu   (2, a0), d1
+    mov     d1, d0
+    exthu   d0
+    cmp     0x100, d0
+    blt     0x4c033ef8
+    jmp     0x4c033f89
+    mov     (0x2c, sp), d0
+    mov     0x130, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    mov     (0x60, sp), a1
+    movbu   (0x44, a0), d0
+    mov     0x27, d3
+    and     0x0f, d0
+    nop
+    nop
+    mul     d0, d3
+    mov     d3, a0
+    add     0x486d2ed5, a0
+    movbu   (5, a0), d0
+    add     0x58, a1
+    mov     (a1), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a0
+    movhu   (d0, a0), d0
+    and     0xfff3ffff, d2
+    and     0x03, d0
+    asl     18, d0
+    or      d0, d2
+    mov     d2, (a1)
+    exthu   d1
+    and     0xff, d1
+    asl     10, d1
+    mov     d2, d0
+    and     0xfffc03ff, d0
+    or      d0, d1
+    mov     d1, (a1)
+    movbu   (0x3c, sp), d2
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    mov     d2, d1
+    call    0x4c03a214, [d2,d3], 0x14
+    mov     d2, d1
+    mov     d0, d3
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x30, sp), d0
+    call    0x4c03a2bf, [d2,d3], 8
+    mov     (0x60, sp), a0
+    exthu   d3
+    add     0x2a, a0
+    movhu   (a0), d2
+    exth    d0
+    mov     d3, d1
+    nop
+    nop
+    mul     d0, d1
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x30, sp), d0
+    clr     d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d3
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c033ff8
+    mov     (0x20, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x55, a1), d0
+    add     0x5c, a0
+    mov     (a0), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d1
+    and     0xfffffcff, d2
+    and     0x03, d1
+    asl     8, d1
+    or      d1, d2
+    mov     d2, (a0)
+    exthu   d3
+    and     0xff, d3
+    mov     d2, d1
+    and     0xffffff00, d1
+    mov     d3, d0
+    or      d1, d0
+    mov     d0, (a0)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x2c, a0
+    movhu   (a0), d2
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x30, sp), d0
+    mov     1, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d1
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c03406b
+    mov     (0x20, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x59, a1), d0
+    add     0x60, a0
+    mov     (a0), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d0
+    and     0xfffffcff, d2
+    and     0x03, d0
+    asl     8, d0
+    or      d0, d2
+    mov     d2, (a0)
+    exthu   d1
+    and     0xff, d1
+    and     0xffffff00, d2
+    or      d2, d1
+    mov     d1, (a0)
+    mov     1, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x30, a0
+    movhu   (a0), d0
+    and     0x3fff, d1
+    and     0xc000, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    jmp     0x4c03419c
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    bne     0x4c034078
+    jmp     0x4c03419c
+    mov     (0x2c, sp), d0
+    mov     0x10c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ad5a8, d0
+    mov     d0, a0
+    movhu   (0x1e, a0), d1
+    mov     d1, d3
+    exthu   d1
+    cmp     0x100, d1
+    blt     0x4c034097
+    jmp     0x4c03419c
+    mov     (0x2c, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    mov     0, a0
+    and     0x0f, d0
+    cmp     6, d0
+    bne     0x4c0340b8
+    mov     1, a0
+    movhu   (0x486d2254), d2
+    mov     a0, d1
+    exthu   d1
+    cmp     0, d1
+    beq     0x4c0340d3
+    mov     (a1), a0
+    movbu   (0x47, a0), d0
+    mov     0x486d2254, a0
+    add     d0, d0
+    movhu   (d0, a0), d2
+    mov     (0x60, sp), a0
+    and     0x03, d2
+    add     0x60, a0
+    mov     (a0), d1
+    asl     8, d2
+    and     0xfffffcff, d1
+    or      d1, d2
+    mov     d2, (a0)
+    exthu   d3
+    and     0xff, d3
+    mov     d2, d0
+    and     0xffffff00, d0
+    mov     d3, d1
+    or      d0, d1
+    mov     d1, (a0)
+    movbu   (0x3c, sp), d0
+    mov     0x130, d1
+    mov     d0, a3
+    clr     d0
+    movhu   d0, (0x40, sp)
+    movbu   (0x30, sp), d0
+    mov     a3, d2
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    extbu   d2
+    movbu   (0x44, a0), d1
+    mov     0x486d2ed5, a2
+    mov     0x27, d0
+    and     0x0f, d1
+    extbu   d1
+    nop
+    nop
+    mulu    d0, d1
+    add     a2, d1
+    add     0x13, d1
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    mov     d1, a0
+    movbu   (d0, a0), d0
+    btst    0x20, d0
+    beq     0x4c03413f
+    movhu   (0x52, a1), d0
+    movhu   d0, (0x40, sp)
+    movbu   (0x30, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    mov     a3, d2
+    movbu   (0x44, a0), d1
+    extbu   d2
+    and     0x0f, d1
+    extbu   d1
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     a2, d1
+    add     0x13, d1
+    mov     d1, a0
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    movbu   (d0, a0), d0
+    mov     1, d3
+    btst    0x02, d0
+    beq     0x4c034181
+    mov     (a1), a0
+    movbu   (0x44, a0), d0
+    btst    0x40, d0
+    beq     0x4c034181
+    mov     -1, d3
+    mov     (0x60, sp), a0
+    movhu   (0x40, sp), d0
+    add     0x30, a0
+    movhu   (a0), d2
+    exth    d3
+    mov     d0, d1
+    nop
+    nop
+    mul     d3, d1
+    and     0x3fff, d1
+    and     0xc000, d2
+    or      d2, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x30, sp), d0
+    mov     2, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d3
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c034211
+    mov     (0x20, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x5d, a1), d0
+    add     0x5c, a0
+    mov     (a0), d2
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d1
+    and     0xfff3ffff, d2
+    and     0x03, d1
+    asl     18, d1
+    or      d1, d2
+    mov     d2, (a0)
+    exthu   d3
+    mov     d2, d1
+    and     0xfffc03ff, d1
+    mov     0xff, d0
+    and     d3, d0
+    asl     10, d0
+    or      d1, d0
+    mov     d0, (a0)
+    mov     2, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    and     0x3fff, d0
+    add     0x2e, a0
+    movhu   (a0), d1
+    and     0xc000, d1
+    or      d1, d0
+    movhu   d0, (a0)
+    mov     (0x20, sp), a0
+    mov     (0x30, sp), d0
+    mov     3, d1
+    call    0x4c02ca52, [d2], 4
+    mov     d0, d2
+    exthu   d0
+    cmp     0x100, d0
+    bge     0x4c034287
+    mov     (0x20, sp), a1
+    mov     (0x60, sp), a0
+    movbu   (0x61, a1), d0
+    add     0x60, a0
+    mov     (a0), d1
+    and     0xe0, d0
+    asr     5, d0
+    add     d0, d0
+    mov     0x486d2254, a1
+    movhu   (d0, a1), d0
+    and     0xfff3ffff, d1
+    and     0x03, d0
+    asl     18, d0
+    or      d0, d1
+    mov     d1, (a0)
+    exthu   d2
+    and     0xff, d2
+    asl     10, d2
+    and     0xfffc03ff, d1
+    mov     d2, d0
+    or      d1, d0
+    mov     d0, (a0)
+    mov     3, d0
+    mov     d0, (0x18, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    .byte 0xDD, 0x61, 0x80, 0xFF, 0xFF, 0xF0, 0x50   # call 0x4c02c2ce, [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x32, a0
+    movhu   (a0), d0
+    and     0x3fff, d1
+    and     0xc000, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    movbu   (0x15, a0), d2
+    btst    0x02, d0
+    bne     0x4c034294
+    clr     d2
+    extbu   d2
+    mov     (0x30, sp), d0
+    call    0x4c033c0f, [d2,d3,a2], 0x20
+    mov     d0, d1
+    mov     d2, (0x14, sp)
+    mov     (0x60, sp), a0
+    extbu   d1
+    mov     (0x30, sp), d0
+    call    0x4c02cd72, [d2,d3,a2,a3], 0x28
+    mov     (0x20, sp), a0
+    movbu   (0x2e, a0), d0
+    btst    0x80, d0
+    beq     0x4c0342c1
+    mov     (0x24, sp), a0
+    add     2, a0
+    movhu   (a0), d0
+    and     0xefff, d0
+    movhu   d0, (a0)
+    bra     0x4c0342cd
+    mov     (0x24, sp), a0
+    add     2, a0
+    movhu   (a0), d0
+    or      0x1000, d0
+    movhu   d0, (a0)
+    mov     (0x30, sp), d0
+    mov     5, d1
+    call    0x4c0146d3, [d2,d3], 0x14
+    mov     (0x34, sp), a0
+    mov     (0x20, sp), a1
+    movbu   (0x46, a0), d1
+    mov     (0x24, sp), a0
+    extb    d1
+    exth    d0
+    add     d1, d0
+    exth    d0
+    call    0x4c03162c, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    mov     d0, d3
+    movhu   (a0), d2
+    mov     0xff, d1
+    and     0xff, d2
+    and     d3, d1
+    asl     8, d1
+    or      d1, d2
+    movhu   d2, (a0)
+    exthu   d3
+    cmp     0xff, d3
+    mov     0x7f, d0
+    beq     0x4c034308
+    clr     d0
+    mov     (0x60, sp), d1
+    and     0x7f, d0
+    add     0x22, d1
+    mov     d1, (0x28, sp)
+    mov     d1, a0
+    movhu   (a0), d1
+    asl     8, d0
+    and     0x80ff, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a0
+    mov     0x486d26ae, d2
+    add     0x29, a0
+    movbu   (a0), d0
+    mov     d2, a1
+    extb    d0
+    movbu   (d0, a1), d1
+    mov     1, d0
+    cmp     0, d1
+    beq     0x4c03433c
+    movbu   (a0), d0
+    extb    d0
+    movbu   (d0, a1), d0
+    mov     (0x60, sp), a0
+    and     0x7f, d0
+    movhu   (a0), d1
+    mov     0x0000ff00, d3
+    and     0xff80, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x34, sp), a0
+    add     0x47, a0
+    movbu   (a0), d0
+    movbu   (a0), d1
+    extb    d0
+    extb    d1
+    mov     (0x20, sp), a1
+    mov     (0x24, sp), a0
+    call    0x4c03178c, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a3
+    mov     (0x24, sp), a0
+    inc4    a3
+    movhu   (a3), d1
+    movbu   (0x64, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x60, sp), a2
+    mov     (0x24, sp), a0
+    add     8, a2
+    movhu   (a2), d1
+    movbu   (0x66, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    movbu   (0x2b, a0), d0
+    mov     d2, a0
+    extbu   d0
+    movbu   (d0, a0), d0
+    mov     (0x24, sp), a0
+    add     0x65, a0
+    movbu   d0, (a0)
+    mov     (0x20, sp), a1
+    movbu   (0x2d, a1), d0
+    mov     d2, a1
+    extbu   d0
+    movbu   (d0, a1), d0
+    mov     (0x24, sp), a1
+    add     0x67, a1
+    movbu   d0, (a1)
+    movhu   (a3), d1
+    movbu   (a0), d0
+    and     0xff80, d1
+    extb    d0
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    movhu   (a2), d1
+    movbu   (a1), d0
+    and     0xff80, d1
+    extb    d0
+    and     0x7f, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    0x4c00fd6d, [d2,d3,a2,a3], 0x24
+    mov     (0x60, sp), a2
+    and     0x7f, d0
+    add     0x16, a2
+    movhu   (a2), d1
+    asl     8, d0
+    and     0x80ff, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    call    0x4c00fe03, 0, 0
+    movhu   (a2), d1
+    and     0xff, d0
+    and     d3, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    TgPitchEgAttackCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a0
+    and     0xff, d0
+    add     0xc, a0
+    movhu   (a0), d1
+    asl     8, d0
+    and     0xff, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x20, sp), a1
+    movbu   (0xc, a1), d0
+    extb    d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c034451
+    mov     -1, d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    cmp     0x7f, d0
+    ble     0x4c03443f
+    mov     0x7f, d1
+    extbu   d1
+    mov     0x486d2713, a1
+    movbu   (d1, a1), d0
+    mov     -1, d1
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    bra     0x4c034460
+    cmp     0x7f, d1
+    ble     0x4c034457
+    mov     0x7f, d0
+    extbu   d0
+    mov     0x486d2713, a1
+    movbu   (d0, a1), d0
+    mov     (0x20, sp), a1
+    movbu   (9, a1), d1
+    extb    d1
+    cmp     0, d1
+    bge     0x4c034471
+    exth    d0
+    mov     -1, d1
+    nop
+    nop
+    mul     d1, d0
+    movhu   (a0), d1
+    and     0xff, d0
+    and     d3, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    TgPitchEgDecayCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a3
+    mov     (0x24, sp), a0
+    add     0x10, a3
+    movhu   (a3), d1
+    movbu   (0x68, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x60, sp), a2
+    mov     (0x24, sp), a0
+    add     0x14, a2
+    movhu   (a2), d1
+    movbu   (0x6a, a0), d0
+    and     0xff, d1
+    extb    d0
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    0x4c00fe4f, [d2,a2], 8
+    mov     (0x24, sp), a0
+    movhu   (a3), d1
+    movbu   (0x69, a0), d0
+    and     d3, d1
+    extb    d0
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x24, sp), a0
+    movhu   (a2), d1
+    movbu   (0x6b, a0), d0
+    and     d3, d1
+    extb    d0
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    call    0x4c00ff49, [d2], 0x18
+    exth    d0
+    mov     -0x80, d1
+    mov     d1, (0x10, sp)
+    mov     0x7f, d1
+    call    0x4c00fd4e, [d2,d3], 8
+    mov     (0x28, sp), a0
+    extb    d0
+    movhu   (a0), d1
+    and     0xff, d0
+    and     d3, d1
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    TgFilterEgAttackCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a2
+    and     0xff, d0
+    add     0x18, a2
+    movhu   (a2), d1
+    asl     8, d0
+    and     0xff, d1
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x20, sp), a0
+    call    0x4c00ff9f, [d2], 0x18
+    movhu   (a2), d1
+    extb    d0
+    and     d3, d1
+    and     0xff, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    call    TgFilterEgDecayCalc, [d2,d3,a2,a3], 0x28
+    mov     (0x60, sp), a2
+    mov     (0x24, sp), a0
+    add     0x1c, a2
+    movhu   (a2), d1
+    movbu   (0x7b, a0), d0
+    and     0xff, d1
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a2)
+    mov     (0x60, sp), a3
+    mov     (0x24, sp), a0
+    add     0x20, a3
+    movhu   (a3), d1
+    movbu   (0x7c, a0), d0
+    and     0xff, d1
+    and     0xff, d0
+    asl     8, d0
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x20, sp), a0
+    movbu   (0x43, a0), d0
+    extb    d0
+    exth    d0
+    call    0x4c00fff5, [d2], 0x18
+    movhu   (a2), d2
+    mov     d0, d1
+    and     d3, d2
+    and     0xff, d1
+    or      d1, d2
+    movhu   d2, (a2)
+    mov     (0x20, sp), a0
+    mov     0x000fffff, d2
+    movbu   (0x45, a0), d0
+    extb    d0
+    exth    d0
+    call    0x4c00fff5, [d2], 0x18
+    movhu   (a3), d1
+    and     0xff, d0
+    and     d3, d1
+    or      d0, d1
+    movhu   d1, (a3)
+    mov     (0x34, sp), a1
+    mov     (0x60, sp), a0
+    add     0x28, a1
+    add     0x64, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    mov     0xfff00000, d3
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x68, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x6c, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    inc4    a1
+    add     0x70, a0
+    mov     (a0), d1
+    mov     (a1), d0
+    and     d3, d1
+    and     d2, d0
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x60, sp), a0
+    mov     (4, a1), d0
+    add     0x74, a0
+    mov     (a0), d1
+    and     d2, d0
+    and     d3, d1
+    or      d0, d1
+    mov     d1, (a0)
+    mov     (0x30, sp), d0
+    movbu   (0x3c, sp), d1
+    call    0x4c006aa1, [d2,d3,a2,a3], 0x30
+    mov     (0x20, sp), a0
+    mov     d0, d1
+    movhu   (a0), d0
+    exth    d1
+    and     0x07ff, d0
+    exth    d0
+    add     d0, d1
+    exth    d1
+    mov     d1, d0
+    clr     d2
+    mov     d2, (0x10, sp)
+    mov     0x7ff, d1
+    call    0x4c00fd4e, [d2,d3], 8
+    mov     (0x38, sp), a0
+    mov     d0, d1
+    movhu   (a0), d0
+    and     0x07ff, d1
+    and     0xf800, d0
+    or      d0, d1
+    movhu   d1, (a0)
+    mov     (0x38, sp), a0
+    mov     d1, d0
+    exthu   d0
+    or      0x8000, d0
+    movhu   d0, (a0)
+    movhu   (0x42, sp), d0
+    mov     (0x24, sp), a0
+    mov     (0x20, sp), a1
+    exth    d0
+    call    0x4c031330, [d2,d3,a2,a3], 0x24
+    mov     (0x24, sp), a0
+    call    TgVoiceLevelWordCalc_entry, [d2,d3,a2], 0x1c
+    mov     (0x60, sp), a0
+    mov     d0, d1
+    add     0x54, a0
+    mov     (a0), d0
+    exthu   d1
+    and     0x1fff, d1
+    and     0xffffe000, d0
+    or      d0, d1
+    mov     d1, (a0)
+    ret     [d2,d3,a2,a3], 0x54
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ed63a, 0x3ed8f8
 # TgElemStageFresh  (lib CPU 0x4c034927)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)
@@ -27590,10 +31209,252 @@ display_palette:
     mov     d2, d0
     call    TgVoiceDirtyRelease, [d2], 4
     mov     d2, d0
-    call    0x4c03b2fc, [a2], 0x1c
+    call    TgSlotReleaseKick_entry, [a2], 0x1c
     ret     [d2,d3,a2,a3], 0x3c
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ef5ce, 0x3ef803
+# TgKitLayerStage  (lib CPU 0x4c0365fd)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0xc, sp
+# TgKitLayerStage_entry:   (register-save `call` entry)
+    movbu   d1, (0x28, sp)
+    movbu   d0, (0x24, sp)
+    mov     a0, a2
+    mov     2, a0
+    add     a2, a0
+    mov     0x40, d0
+    movhu   d0, (a0)
+    movbu   (0x24, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500b5340, a1
+    movhu   (a1), d1
+    mov     2, d2
+    btst    0x40, d1
+    bne     0x4c03662d
+    clr     d2
+    movhu   (a1), d0
+    mov     0x80, d3
+    mov     8, d1
+    and     d3, d0
+    bne     0x4c036639
+    clr     d1
+    or      d1, d2
+    movhu   d2, (4, a2)
+    movbu   (0x30, sp), d0
+    mov     d3, d1
+    and     d0, d1
+    beq     0x4c03664e
+    movhu   (a0), d1
+    or      0x0800, d1
+    movhu   d1, (a0)
+    movbu   (0x28, sp), d1
+    and     0x7f, d0
+    movbu   d1, (6, a2)
+    movbu   (0x24, sp), d1
+    movbu   d1, (7, a2)
+    movbu   (0x2c, sp), d1
+    or      d3, d1
+    movbu   d1, (8, a2)
+    movbu   d0, (0x10, a2)
+    movbu   (0x34, sp), d0
+    movbu   d0, (0x16, a2)
+    clr     d0
+    movbu   d0, (0x17, a2)
+    movbu   d0, (0x18, a2)
+    movbu   (0x24, sp), d2
+    mov     d2, d0
+    call    0x4c010828, 0, 0
+    mov     a0, (0x38, a2)
+    mov     d2, d0
+    call    0x4c01083c, 0, 0
+    mov     a0, (0x3c, a2)
+    mov     d2, d0
+    call    0x4c010850, 0, 0
+    mov     a0, (0x40, a2)
+    mov     d2, d0
+    call    0x4c010864, 0, 0
+    mov     a0, (0x44, a2)
+    mov     a2, a0
+    call    TgPitchInitCalc, [d2,d3,a2,a3], 0x30
+    mov     a2, a0
+    call    TgVoiceRoutePtrCalc_entry, [d2,d3,a2,a3], 0x24
+    clr     d0
+    mov     d0, (0x48, a2)
+    mov     d0, (0x4c, a2)
+    movhu   d0, (0x52, a2)
+    mov     0xff, d0
+    movhu   d0, (0x54, a2)
+    clr     d0
+    movbu   d0, (0x58, a2)
+    movhu   d0, (0x5a, a2)
+    movhu   d0, (0x5e, a2)
+    movhu   d0, (0x5c, a2)
+    ret     [d2,d3,a2], 0x18
+.mnbase 0x48400000
+# TgKitLayerNoteOn  (lib CPU 0x4c0366d2)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# TgKitLayerNoteOn_entry:   (register-save `call` entry)
+    mov     d1, d2
+    extbu   d2
+    mov     d2, (0x14, sp)
+    mov     a0, a3
+    mov     d0, d3
+    movbu   (0x44, sp), d0
+    extbu   d3
+    mov     d0, (0x18, sp)
+    movbu   (0x48, sp), d0
+    mov     0x500c9d58, a0
+    mov     d0, (0x1c, sp)
+    mov     d3, d0
+    asl     8, d3
+    clr     d1
+    call    TgKitLayerStage_entry, [d2,d3,a2], 0x18
+    mov     d3, d0
+    or      d2, d0
+    or      0x80, d0
+    movhu   d0, (a3)
+    mov     0x83, d0
+    movbu   d0, (2, a3)
+    mov     6, a2
+    add     a3, a2
+    mov     0x40, d0
+    movbu   d0, (a2)
+    mov     0x500c9d58, a0
+    call    TgVoiceSideSelect_entry, [a2], 0xc
+    exthu   d0
+    btst    0x0400, d0
+    beq     0x4c036729
+    movbu   (a2), d1
+    or      0x08, d1
+    movbu   d1, (a2)
+    btst    0x0800, d0
+    beq     0x4c036736
+    movbu   (a2), d0
+    or      0x10, d0
+    movbu   d0, (a2)
+    mov     a3, a0
+    clr     d0
+    movbu   d0, (3, a3)
+    movbu   d0, (7, a3)
+    movbu   d0, (4, a3)
+    movbu   d0, (8, a3)
+    movbu   d0, (5, a3)
+    movbu   d0, (9, a3)
+    call    TgSlotAllocate_entry, [d2,d3,a2,a3], 0x5c
+    add     0xa, a3
+    movbu   (a3), d0
+    cmp     0x80, d0
+    bge     0x4c036787
+    movbu   (a3), d1
+    mov     0x500af940, a2
+    mov     0x500c9d58, a1
+    mov     0xb4, d0
+    nop
+    nop
+    mulu    d0, d1
+    mov     a2, a0
+    add     d1, a0
+    mov     -0x2d, d1
+    setlb
+    mov     (a1), d0
+    inc4    a1
+    mov     d0, (a0)
+    inc4    a0
+    inc     d1
+    lne
+    movbu   (a3), d1
+    movbu   (a3), d0
+    mov     0xb4, d2
+    nop
+    nop
+    mulu    d2, d0
+    movbu   d1, (d0, a2)
+    ret     [d2,d3,a2,a3], 0x30
+.mnbase 0x48400000
+# TgNoteOnKitLayer  (lib CPU 0x4c03678a)
+#   TgNoteOn's kit sub-path for the PCM layer of kit classes
+#   0x81/0x82/0x83 (&0xCF; 0x81/0x83 unless velocity bit7, 0x82/0x83
+#   also need kit halfword +4 bit4): allocate via TgKitLayerNoteOn,
+#   then the ONE-SHOT program chain per slot -- TgVoiceRecordReset,
+#   TgElemNoteOnFresh, TgVoiceDirtyAll, TgVoiceGateOn, TgVoiceGateOff
+#   (immediate gate-off = one-shot), TgVoiceDirtyRelease
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x2c, sp
+# TgNoteOnKitLayer_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     0x130, d1
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x81, d0
+    beq     0x4c0367bd
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x83, d0
+    bne     0x4c0367d2
+    movbu   (0x48, sp), d0
+    btst    0x80, d0
+    beq     0x4c0367c8
+    ret     [d2,d3,a2], 0x38
+    movhu   (4, a1), d0
+    btst    0x10, d0
+    bne     0x4c0367e8
+    bra     0x4c03682f
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x82, d0
+    bne     0x4c03682f
+    movhu   (4, a1), d0
+    btst    0x10, d0
+    beq     0x4c03682f
+    movbu   (0x48, sp), d0
+    mov     sp, a0
+    mov     d0, (0x14, sp)
+    movbu   (0x4c, sp), d0
+    add     0x1c, a0
+    mov     d0, (0x18, sp)
+    extbu   d2
+    extbu   d3
+    mov     d3, d1
+    mov     d2, d0
+    call    TgKitLayerNoteOn_entry, [d2,d3,a2,a3], 0x30
+    movbu   (0x26, sp), d2
+    extbu   d2
+    cmp     0x80, d2
+    bge     0x4c03682f
+    mov     d2, d0
+    call    TgVoiceRecordReset_entry, [d2,a2], 8
+    mov     a0, a2
+    mov     d2, d0
+    call    TgElemNoteOnFresh_entry, [d2,d3,a2,a3], 0x54
+    mov     d2, d0
+    call    TgVoiceDirtyAll, [d2], 4
+    mov     d2, d0
+    mov     a2, a0
+    call    TgVoiceGateOn, [d2,a2], 0x1c
+    mov     d2, d0
+    mov     a2, a0
+    call    TgVoiceGateOff, [d2,a2], 0x1c
+    mov     d2, d0
+    call    TgVoiceDirtyRelease, [d2], 4
+    ret     [d2,d3,a2], 0x38
+.mnbase 0x48400000
 # TgNoteOn  (lib CPU 0x4c036832)
 #   THE per-part note-on dispatcher (d0 part, d1 note, stack velocity).
 #   Tone class = (part tone block 0x500CE404+part*0x130 desc +0x10)&0xC0:
@@ -27748,11 +31609,11 @@ display_palette:
     beq     0x4c03695a
     mov     d3, d0
     mov     a2, a0
-    call    0x4c033cb3, [d2,d3,a2,a3], 0x54
+    call    TgElemNoteOnFresh_entry, [d2,d3,a2,a3], 0x54
     bra     0x4c036963
     mov     d3, d0
     mov     a2, a0
-    call    0x4c013547, [d2,d3,a2,a3], 0x54
+    call    TgKitElemNoteOn_entry, [d2,d3,a2,a3], 0x54
     mov     d3, d0
     call    TgVoiceDirtyAll, [d2], 4
     mov     a2, a0
@@ -28105,7 +31966,7 @@ display_palette:
     mov     d0, (0x14, sp)
     mov     (0x20, sp), d0
     mov     (0x24, sp), d1
-    call    0x4c03678f, [d2,d3,a2], 0x38
+    call    TgNoteOnKitLayer_entry, [d2,d3,a2], 0x38
     jmp     0x4c036d2a
     mov     sp, a0
     mov     a0, d0
@@ -28290,11 +32151,11 @@ display_palette:
     ret     [d2,d3], 0x14
     extbu   d2
     mov     d2, d0
-    call    0x4c00c0b1, [d2,d3,a2,a3], 0x28
+    call    TgDrumKeyOffProgram_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3], 0x14
     extbu   d2
     mov     d2, d0
-    call    0x4c0115aa, [d2,d3,a2,a3], 0x2c
+    call    TgTableKeyOffProgram_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3], 0x14
     extbu   d2
     mov     d2, d0
@@ -28325,7 +32186,7 @@ display_palette:
     bra     0x4c036e9b
     extbu   d2
     mov     d2, d0
-    call    0x4c013f0f, [d2,d3,a2,a3], 0x2c
+    call    TgElemKeyOffRelease_entry, [d2,d3,a2,a3], 0x2c
     bra     0x4c036e9b
     mov     0x52, a0
     add     a1, a0
@@ -28348,7 +32209,7 @@ display_palette:
     movhu   d0, (a1)
     extbu   d2
     mov     d2, d0
-    call    0x4c013f0f, [d2,d3,a2,a3], 0x2c
+    call    TgElemKeyOffRelease_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3], 0x14
 .mnbase 0x48400000
 # TgPartKeyEvent  (lib CPU 0x4c036e9e)
@@ -28383,7 +32244,7 @@ display_palette:
     bne     0x4c036eee
     and     0x08, d0
     extbu   d0
-    call    0x4c0147a4, 0, 0
+    call    TgLastKeyPartSet, 0, 0
     mov     (0x18, sp), d0
     mov     d0, (0x10, sp)
     movbu   (0x1c, sp), d0
@@ -28411,7 +32272,7 @@ display_palette:
     mov     a2, a0
     mov     d3, d0
     mov     a3, d1
-    call    0x4c010047, [d2], 0x10
+    call    TgVoiceListReleaseByNote_entry, [d2], 0x10
     add     6, a2
     movbu   (a2), d0
     mov     0x80, d2
@@ -28435,7 +32296,7 @@ display_palette:
     mov     a2, a0
     mov     d3, d0
     mov     a3, d1
-    call    0x4c010047, [d2], 0x10
+    call    TgVoiceListReleaseByNote_entry, [d2], 0x10
     add     6, a2
     movbu   (a2), d0
     mov     0x80, d2
@@ -30304,7 +34165,517 @@ display_palette:
     call    TgVoiceNodeReleaseStep_entry, 0, 0x14
     ret     [d2,d3], 0x18
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f40fc, 0x3f6d45
+# TgNodeRingCollect  (lib CPU 0x4c03b12b)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+# TgNodeRingCollect_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a1, a3
+    cmp     0, a3
+    beq     0x4c03b150
+    mov     a1, a2
+    extbu   d1
+    extbu   d2
+    setlb
+    cmp     0, d1
+    bne     0x4c03b141
+    movbu   (0x28, a2), d0
+    cmp     d2, d0
+    bne     0x4c03b14b
+    mov     (a0), a1
+    movbu   (0x29, a2), d0
+    movbu   d0, (a1)
+    mov     (a0), d0
+    inc     d0
+    mov     d0, (a0)
+    mov     (8, a2), a2
+    cmp     a3, a2
+    lne
+    mov     (a0), a0
+    mov     0xff, d0
+    movbu   d0, (a0)
+    retf    [d2,a2,a3], 0xc
+.mnbase 0x48400000
+# TgPartSlotMaskBuild  (lib CPU 0x4c03b15a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# TgPartSlotMaskBuild_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     sp, a0
+    add     0x18, a0
+    mov     0x5000b295, a2
+    mov     a2, (0x18, sp)
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a3
+    add     0x500d0c64, a3
+    mov     (4, a3), a1
+    mov     0x80, d0
+    mov     0x7f, d1
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    mov     a2, (0x18, sp)
+    movbu   (a2), d0
+    cmp     0xff, d0
+    beq     0x4c03b1e2
+    mov     0x500d1278, d3
+    add     0xc, a3
+    movbu   (a2), d0
+    mov     0x2c, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     d3, a0
+    movbu   (0x28, a0), d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    movbu   (a2), d1
+    extbu   d0
+    mov     0x2c, d2
+    nop
+    nop
+    mulu    d1, d2
+    mov     d2, a0
+    add     d3, a0
+    movbu   (0x28, a0), d1
+    mov     a3, a0
+    add     d0, a0
+    movbu   (a0), d2
+    ext     d1
+    inc     a2
+    mov     8, d0
+    div     d0, d1
+    mov     mdr, d1
+    extbu   d1
+    mov     1, d0
+    asl     d1, d0
+    extbu   d0
+    or      d2, d0
+    movbu   d0, (a0)
+    mov     a2, (0x18, sp)
+    movbu   (a2), d0
+    mov     d0, a0
+    cmp     0xff, a0
+    bne     0x4c03b198
+    ret     [d2,d3,a2,a3], 0x2c
+.mnbase 0x48400000
+# TgPartPendingFlush  (lib CPU 0x4c03b1e5)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+    add     -0x1c, sp
+# TgPartPendingFlush_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     sp, a0
+    add     0x18, a0
+    mov     0x5000b295, a2
+    mov     a2, (0x18, sp)
+    mov     0x1c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a3
+    add     0x500d0c64, a3
+    mov     (8, a3), a1
+    clr     d0
+    mov     0x7f, d1
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    mov     a2, a1
+    mov     a1, (0x18, sp)
+    movbu   (a1), d0
+    clr     d2
+    mov     d0, a0
+    cmp     0xff, a0
+    beq     0x4c03b262
+    mov     0x5000b214, a2
+    movbu   (a1), d0
+    mov     0x2c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500d1278, d0
+    mov     0x26, a1
+    add     d0, a1
+    movhu   (a1), d1
+    btst    0x0800, d1
+    beq     0x4c03b255
+    movhu   (a1), d1
+    mov     d0, a0
+    and     0xfffff7ff, d1
+    movhu   d1, (a1)
+    call    TgVoiceNodeReleaseStep_entry, 0, 0x14
+    mov     (0x18, sp), a0
+    extbu   d2
+    movbu   (a0), d0
+    inc     d2
+    movbu   d0, (a2)
+    inc     a2
+    mov     (0x18, sp), a1
+    inc     a1
+    mov     a1, (0x18, sp)
+    movbu   (a1), d0
+    mov     d0, a0
+    cmp     0xff, a0
+    bne     0x4c03b221
+    mov     0x5000b214, a0
+    extbu   d2
+    mov     0xff, d0
+    movbu   d0, (d2, a0)
+    clr     d0
+    clr     d1
+    add     0xc, a3
+    setlb
+    extbu   d0
+    clr     d2
+    movbu   d2, (d0, a3)
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     0x10, d1
+    llt
+    ret     [d2,a2,a3], 0x28
+.mnbase 0x48400000
+# TgNodePendingMark  (lib CPU 0x4c03b280)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+    add     -0x10, sp
+# TgNodePendingMark_entry:   (register-save `call` entry)
+    mov     a0, a3
+    mov     0x28, a2
+    add     a3, a2
+    movbu   (a2), d0
+    mov     8, d2
+    mov     d2, d1
+    call    LibDiv32, 0, 0
+    mov     (0x18, a3), a0
+    movbu   (a2), d1
+    extbu   d0
+    add     0xc, a0
+    movbu   (d0, a0), d0
+    ext     d1
+    div     d2, d1
+    mov     mdr, d1
+    extbu   d0
+    extbu   d1
+    mov     1, d2
+    asl     d1, d2
+    mov     d2, d1
+    extbu   d1
+    and     d1, d0
+    beq     0x4c03b2bc
+    add     0x26, a3
+    movhu   (a3), d0
+    or      0x0800, d0
+    movhu   d0, (a3)
+    ret     [d2,a2,a3], 0x1c
+.mnbase 0x48400000
+# TgNodeRingCollectActive  (lib CPU 0x4c03b2bf)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+# TgNodeRingCollectActive_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a1, a3
+    cmp     0, a3
+    beq     0x4c03b2ed
+    mov     a1, a2
+    extbu   d1
+    extbu   d2
+    setlb
+    cmp     0, d1
+    bne     0x4c03b2d5
+    movbu   (0x28, a2), d0
+    cmp     d2, d0
+    bne     0x4c03b2e8
+    movhu   (0x26, a2), d0
+    btst    0x0800, d0
+    bne     0x4c03b2e8
+    mov     (a0), a1
+    movbu   (0x29, a2), d0
+    movbu   d0, (a1)
+    mov     (a0), d0
+    inc     d0
+    mov     d0, (a0)
+    mov     (8, a2), a2
+    cmp     a3, a2
+    lne
+    mov     (a0), a0
+    mov     0xff, d0
+    movbu   d0, (a0)
+    retf    [d2,a2,a3], 0xc
+.mnbase 0x48400000
+# TgSlotReleaseKick  (lib CPU 0x4c03b2f7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [a2], (sp)
+    add     -0x18, sp
+# TgSlotReleaseKick_entry:   (register-save `call` entry)
+    mov     d0, d1
+    extbu   d1
+    cmp     0x80, d1
+    bge     0x4c03b33f
+    extbu   d0
+    mov     0x2c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a2
+    add     0x500d1278, a2
+    movbu   (0x1c, a2), d0
+    cmp     1, d0
+    beq     0x4c03b33f
+    mov     a2, a0
+    mov     (0x18, a2), a1
+    mov     1, d0
+    clr     d1
+    call    TgVoiceNodeToOrderList_entry, [d2,d3,a2,a3], 0x28
+    mov     a2, a0
+    call    TgNodePendingMark_entry, [d2,a2,a3], 0x1c
+    mov     a2, a0
+    call    TgVoiceNodeReleaseStep_entry, 0, 0x14
+    mov     (0x10, a2), d1
+    cmp     d1, a2
+    beq     0x4c03b33f
+    mov     a2, a0
+    call    TgNodeSlotUnlink_entry, [a2,a3], 8
+    ret     [a2], 0x1c
+.mnbase 0x48400000
+# TgNodeRingReleaseWalk  (lib CPU 0x4c03b342)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2,a3], (sp)
+    add     -0x18, sp
+# TgNodeRingReleaseWalk_entry:   (register-save `call` entry)
+    mov     a0, (0x2c, sp)
+    mov     d0, d2
+    cmp     0, a1
+    beq     0x4c03b3a4
+    mov     a1, a2
+    extbu   d1
+    extbu   d2
+    setlb
+    cmp     0, d1
+    bne     0x4c03b35c
+    movbu   (0x28, a2), d0
+    cmp     d2, d0
+    bne     0x4c03b39f
+    mov     a2, a0
+    mov     (0x18, a2), a1
+    mov     1, d0
+    clr     d1
+    call    TgVoiceNodeToOrderList_entry, [d2,d3,a2,a3], 0x28
+    mov     a2, a0
+    call    TgNodePendingMark_entry, [d2,a2,a3], 0x1c
+    mov     a2, a0
+    call    TgVoiceNodeReleaseStep_entry, 0, 0x14
+    movhu   (0x26, a2), d0
+    btst    0x0800, d0
+    bne     0x4c03b38b
+    mov     (0x2c, sp), a0
+    movbu   (0x29, a2), d0
+    mov     (a0), a0
+    movbu   d0, (a0)
+    mov     (0x2c, sp), a0
+    mov     (a0), d0
+    inc     d0
+    mov     d0, (a0)
+    mov     0x10, a1
+    add     a2, a1
+    mov     (a1), d0
+    cmp     d0, a2
+    beq     0x4c03b3a4
+    mov     (a1), a3
+    mov     a2, a0
+    call    TgNodeSlotUnlink_entry, [a2,a3], 8
+    mov     a3, a2
+    bra     0x4c03b35c
+    mov     (8, a2), a2
+    cmp     a1, a2
+    lne
+    mov     (0x2c, sp), a0
+    mov     0xff, d0
+    mov     (a0), a0
+    movbu   d0, (a0)
+    ret     [d2,a2,a3], 0x24
+.mnbase 0x48400000
+# TgVoiceListBuild  (lib CPU 0x4c03b3b0)
+#   THE voice-list engine behind the TgVoiceList* wrappers (a0 req: +0
+#   flags, +2 match hi=part lo=note|0x80, +4 mask): match hi & 0x3F00
+#   all set -> pool sweep over the 128 nodes 0x500D1278+n*0x2C (flag
+#   bit0 clear = in use) collecting every slot; else part < 0x22 ->
+#   the part's order-ring heads (0x500D0C64+part*0x1C: +4 sounding, +8
+#   releasing), dispatched by flags: 0x80 -> TgNodeRingReleaseWalk
+#   (note-filtered when mask & 0x7F; re-walked while the head moves),
+#   0x40 -> TgNodeRingCollectActive on the releasing ring, else
+#   TgNodeRingCollect on one or both rings; slot bytes to req+6,
+#   0xFF/0x80-terminated
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+# TgVoiceListBuild_entry:   (register-save `call` entry)
+    mov     a0, a1
+    inc4    a1
+    movhu   (a1), d0
+    mov     0x7f, d3
+    and     d3, d0
+    movbu   d0, (0x21, sp)
+    mov     2, d2
+    add     a0, d2
+    mov     d2, a2
+    movhu   (a2), d0
+    mov     6, a2
+    and     d3, d0
+    movbu   d0, (0x20, sp)
+    add     a0, a2
+    mov     a2, (0x24, sp)
+    movhu   (a1), d1
+    mov     0x3f00, d0
+    and     d0, d1
+    beq     0x4c03b40d
+    clr     d1
+    mov     0x500d129e, a1
+    mov     0x500d12a1, a0
+    setlb
+    movhu   (a1), d0
+    btst    0x01, d0
+    bne     0x4c03b3fa
+    movbu   (a0), d0
+    movbu   d0, (a2)
+    mov     (0x24, sp), a2
+    inc     a2
+    mov     a2, (0x24, sp)
+    add     0x2c, a0
+    add     0x2c, a1
+    inc     d1
+    extbu   d1
+    cmp     0x80, d1
+    llt
+    mov     0xff, d0
+    movbu   d0, (a2)
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     d2, a3
+    movhu   (a3), d1
+    mov     d3, (0x28, sp)
+    and     d0, d1
+    asr     8, d1
+    mov     d1, d0
+    extbu   d0
+    extbu   d1
+    mov     0x1c, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0x28, sp), d3
+    add     0x500d0c64, d0
+    mov     d0, a3
+    inc4    a3
+    mov     4, d0
+    add     a3, d0
+    mov     d0, (0x18, sp)
+    cmp     0x22, d1
+    blt     0x4c03b439
+    jmp     0x4c03b50c
+    movbu   (a0), d0
+    and     0x80, d0
+    beq     0x4c03b493
+    movhu   (a1), d0
+    and     d3, d0
+    beq     0x4c03b47f
+    mov     (a3), d0
+    cmp     0, d0
+    beq     0x4c03b475
+    mov     (a3), d0
+    mov     sp, a0
+    mov     d0, (0x1c, sp)
+    movbu   (0x20, sp), d0
+    movbu   (0x21, sp), d3
+    mov     d0, a2
+    mov     a0, d0
+    add     0x24, d0
+    mov     d0, (0x18, sp)
+    mov     (a3), d2
+    mov     (0x18, sp), a0
+    mov     d2, a1
+    mov     a2, d0
+    mov     d3, d1
+    call    TgNodeRingReleaseWalk_entry, [d2,a2,a3], 0x24
+    mov     (a3), d0
+    cmp     0, d0
+    beq     0x4c03b475
+    mov     (a3), d0
+    mov     (0x1c, sp), d1
+    cmp     d1, d0
+    bne     0x4c03b45d
+    mov     (0x24, sp), a0
+    mov     0xff, d0
+    movbu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     (a3), d2
+    mov     sp, a0
+    add     0x24, a0
+    mov     d2, a1
+    movbu   (0x20, sp), d0
+    movbu   (0x21, sp), d1
+    call    TgNodeRingReleaseWalk_entry, [d2,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0x3c
+    movbu   (a0), d0
+    btst    0x40, d0
+    beq     0x4c03b4af
+    mov     (0x18, sp), a0
+    movbu   (0x20, sp), d0
+    mov     (a0), d2
+    mov     sp, a0
+    add     0x24, a0
+    mov     d2, a1
+    movbu   (0x21, sp), d1
+    call    TgNodeRingCollectActive_entry, [d2,a2,a3], 0xc
+    bra     0x4c03b511
+    movhu   (a1), d0
+    and     0x80, d0
+    beq     0x4c03b4db
+    movbu   (0x21, sp), d3
+    mov     (a3), d2
+    movbu   (0x20, sp), d0
+    mov     sp, a2
+    add     0x24, a2
+    mov     a2, a0
+    mov     d2, a1
+    mov     d3, d1
+    mov     d0, a3
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    mov     (0x18, sp), a0
+    mov     a3, d0
+    mov     (a0), d2
+    mov     d3, d1
+    mov     d2, a1
+    mov     a2, a0
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    bra     0x4c03b511
+    mov     d2, a0
+    movhu   (a0), d0
+    and     0x80, d0
+    beq     0x4c03b4f7
+    mov     (a3), d2
+    mov     sp, a0
+    add     0x24, a0
+    mov     d2, a1
+    movbu   (0x20, sp), d0
+    movbu   (0x21, sp), d1
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    bra     0x4c03b511
+    mov     (0x18, sp), a0
+    movbu   (0x20, sp), d0
+    mov     (a0), d2
+    mov     sp, a0
+    add     0x24, a0
+    mov     d2, a1
+    movbu   (0x21, sp), d1
+    call    TgNodeRingCollect_entry, [d2,a2,a3], 0xc
+    bra     0x4c03b511
+    mov     0xff, d0
+    movbu   d0, (a2)
+    ret     [d2,d3,a2,a3], 0x3c
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f44e5, 0x3f6d45
 # LibTickSleep  (lib CPU 0x4c03dd74)
 #   sleep d0 ticks of the lib tick counter 0x500D3C58: yield loop via
 #   0x4C03C0E4 until the counter passes start+d0
