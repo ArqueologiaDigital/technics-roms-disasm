@@ -1104,3 +1104,105 @@
 ;
 ; ---- named-only satellites of the 2026-07-20 pass --------------------------
 0x4C00FBCA  TgPartClassRegCollect   ; (d0 part, d1 mask, stack sel) build the -1-terminated list 0x500C9848 of the part's cached class-register halfwords (table 0x500C59E4+part*0x36, 0x1B entries) whose tag byte ROM 0x485870F0[i] & ~sel matches mask; each entry = tag<<16 | halfword; returns a0 = list -- the reg enumerator behind the EG-ramp live refreshes
+;
+; ---- the part CONTROLLER MOD-MATRIX 0x4C0067CD..0x4C006ED1 (2026-07-20
+;      pass; the "level hooks" of the earlier TgLevelTermFinalize /
+;      TgLevelResolve docs).  Per part: 3 mod sources x 12 destinations.
+;      Sum resolvers: value halfwords partrec+0x66+dest*0xC+i*2, depths
+;      +0x6C+dest*0xC+i*2, route/sign mask bytes partrec+0x53A+bank*4;
+;      each sibling owns one dest-enable bit (0x02..0x40) ------------------
+0x4C0067CD  TgPartModSumPitch       ; (d0 part, d1 bank) -> signed sum of value*depth/0x100 over the routed sources, dest bit 0x02 = PITCH -- TgPitchNoteResolve/TgPitchRuntimeCalc's "part offset resolve"
+0x4C0067D2  TgPartModSumPitch_entry
+0x4C006857  TgPartModSumLevel       ; (d0 part, d1 bank) dest bit 0x04 (values +0x72 / depths +0x78) -- TgLevelTermFinalize's level-term hook
+0x4C00685C  TgPartModSumLevel_entry
+0x4C0068E1  TgPartModSumFilter      ; (d0 part, d1 bank) dest bit 0x08 (+0x7E/+0x84) + the part's signed base byte partrec+0x44 added at the tail -- TgVoiceKillHandler's retrigger path
+0x4C0068E6  TgPartModSumFilter_entry
+0x4C006988  TgPartModSumCutoff      ; (d0 part, d1 bank) dest bit 0x10 (+0x8A/+0x90) -- the cutoff term folded by TgPartCutoffResolve
+0x4C00698D  TgPartModSumCutoff_entry
+0x4C006A12  TgPartModSumNoteLevel   ; (d0 part, d1 bank) dest bit 0x20 (+0x96/+0x9C) -- the note-level hook of TgLevelResolve / TgVoiceNoteLevelCalc
+0x4C006A17  TgPartModSumNoteLevel_entry
+0x4C006A9C  TgPartModSumDest40      ; (d0 part, d1 bank) dest bit 0x40 (+0xA2/+0xA8) -- consumed by TgElemNoteOnFresh / TgKitElemNoteOn
+0x4C006AA1  TgPartModSumDest40_entry
+0x4C006B23  TgPartModDestEnableUpdate ; (d0 part, d1 dest) recompute partrec+0x52C bit<dest>: set iff any route byte (+0x34E+bank*0x78+dest*0xA, 4 bytes, 3 banks) is nonzero AND the summed +0x354 depth halfwords are nonzero
+0x4C006B28  TgPartModDestEnableUpdate_entry
+0x4C006BDD  TgPartModDestValueCalc  ; (d0 part, d1 bank, stack dest/sel/neg) -> the destination's current routed value from the partrec+0x34C bank tables (stride 0xA) -- the compute engine behind TgVoiceModSlotUpdate / TgVoiceModLfoStep
+0x4C006BE2  TgPartModDestValueCalc_entry
+;
+; ---- the raw voice-record register writers (the gaps 0x4C037759..
+;      0x4C037A34 and 0x4C037B1A..0x4C037C16; all TG-enable gated on
+;      0x500CE380 != 0x7F, all through TgVoiceRegWrite_entry) ---------------
+0x4C037759  TgVoiceEgRegsWriteAuto  ; (d0 slot, a0 regs) write regs +4/+8/+0x10/+0x14/+0x1C/+0x20 -> classes 0x0001/0x0002/0x0005/0x0006/0x0009/0x000A, OR TgVoiceEgBurstWrite when the voice record's +2 has bit7
+0x4C03775E  TgVoiceEgRegsWriteAuto_entry
+0x4C0377FE  TgVoiceReg0102Write     ; (d0 slot, a0 regs) write regs +4/+8 -> classes 0x0001/0x0002 only
+0x4C037803  TgVoiceReg0102Write_entry
+0x4C037836  TgVoiceEgRegsWriteRaw   ; (d0 slot, a0 regs) the no-burst-check twin of TgVoiceEgRegsWriteAuto -- TgElemKeyOffRelease's raw helper 0x4C03783B
+0x4C03783B  TgVoiceEgRegsWriteRaw_entry
+0x4C0378B6  TgVoiceSendWordALevelSet ; (d0 level8, a0 rec) rec+0x4C (the class-0x2800 SEND word): low 15 bits := level << 8; retf leaf
+0x4C0378D7  TgVoiceSendWordBLevelSet ; (d0 level8, a0 rec) same for rec+0x50 (the class-0x2C00 send word)
+0x4C0378F8  TgVoiceSendWordsWrite   ; (d0 slot, a0 rec) write rec+0x4C -> class 0x2800 and rec+0x50 -> class 0x2C00 (the two effect-send words)
+0x4C0378FD  TgVoiceSendWordsWrite_entry
+0x4C037930  TgVoiceNoteLevelWrite   ; (d0 slot, d1 level7) voice record +0x24: low 7 bits := level, then write the halfword to class 0x000C (the per-note level register)
+0x4C037935  TgVoiceNoteLevelWrite_entry
+0x4C037974  TgVoiceFadeLevelGateOff ; (d0 slot, d1 level13) restore r0/r1 from the record, LEVEL WORD +0x54 low 13 := level + bit14 cleared -> class 0x3000, then TgVoiceGateOff -- the fade-to-level kill
+0x4C037979  TgVoiceFadeLevelGateOff_entry
+0x4C0379EA  TgVoiceReg01WriteGateOff ; (d0 slot) write record +0 -> class 0 and +4 -> class 1, then TgVoiceGateOff
+0x4C0379EF  TgVoiceReg01WriteGateOff_entry
+0x4C037B1A  TgVoiceEgRate89HiSet    ; (d0 byte, a0 rec) set the HIGH byte of rec+0x1A and rec+0x1E (the class-8/9 rate halfwords); retf leaf
+0x4C037B1F  TgVoiceEgRate89HiSet_entry
+0x4C037B4A  TgVoiceEgRate89LoSet    ; (d0 byte, a0 rec) same for the LOW bytes
+0x4C037B4C  TgVoiceEgRate89LoSet_entry
+0x4C037B70  TgVoiceReg0809Write     ; (d0 slot, a0 rec) write rec+0x1A -> class 0x0008 and rec+0x1E -> class 0x0009
+0x4C037B75  TgVoiceReg0809Write_entry
+0x4C037BA8  TgVoiceReg4000GroupWrite ; (d0 slot, a0 rec) write the five dwords rec+0x64/+0x68/+0x6C/+0x70/+0x74 -> classes 0x4000/0x4400/0x4800/0x4C00/0x5000 (the filter-coefficient word group)
+0x4C037BAD  TgVoiceReg4000GroupWrite_entry
+;
+; ---- the part TONE/PROGRAM setup module 0x4C03A3CD..0x4C03A779 ------------
+0x4C03A3CD  TgPartToneModSetupMelodic ; (d0 part) build the tone block's (0x500CE404+part*0x130) mod control halfword +4 + the four LFO/mod unit blocks +0x60+u*0x34 (source code 1/2/4 from desc+0x12 2-bit fields -> block byte +0x20; active bits via jump tables 0x485879B4/0x48587990 on desc+0x44's low nibble; partrec bit-0x2000 + nibble 0xD forces units 2/3); tails 0x4C0394A4/0x4C039D83/0x4C0396E7
+0x4C03A3D2  TgPartToneModSetupMelodic_entry
+0x4C03A5CD  TgPartToneModSetupDrum  ; (d0 part) the drum-kit (tone class 0x80) variant: 0x4C00A258/0x4C00A599 + the shared apply tail
+0x4C03A5D2  TgPartToneModSetupDrum_entry
+0x4C03A602  TgPartToneModSetupTable ; (d0 part) the table-tone (classes 0x81..0x83) variant: 0x4C010525/0x4C0109DA, re-reads the tone address bytes +6/+7/+8 into 0x4C038942
+0x4C03A607  TgPartToneModSetupTable_entry
+0x4C03A65B  TgPartToneModSetupDispatch ; (d0 part) dispatch by tone desc+0x10 & 0xCF: 0x4C038515(part) != 0 -> only 0x4C009AAC; 0x80 -> drum, 0x81..0x83 -> table (both + 0x4C009AAC), else 0x4C009AA9 + melodic
+0x4C03A660  TgPartToneModSetupDispatch_entry
+0x4C03A6F2  TgPartProgramSet        ; (d0 part, d1 prog, stack bank-lo/bank-hi/opt) set the part's tone address (tone block +8/+7/+6), rebuild via 0x4C00E5C0/0x4C009C8D/0x4C007C45/0x4C038942/0x4C007724, then TgPartToneModSetupDispatch
+0x4C03A6F7  TgPartProgramSet_entry
+0x4C03A75B  TgPartProgramInitAll    ; reset all 0x22 parts to program 0x20 bank 0/0 via TgPartProgramSet
+0x4C03A760  TgPartProgramInitAll_entry
+;
+; ---- the LFO/mod RUNTIME engine 0x4C02C153..0x4C02D795 (between
+;      TgLevelTermFinalize and TgPartGlidePlan) -----------------------------
+0x4C02C153  TgVoiceZoneVeloResolve  ; (a0 librec, d0 base16) -> clamp(base' + 0x18, 0..0x7F): 5-byte zone entries at (librec+0x40)+5 indexed by librec+0x17, resolved through the maincpu services 0x48570C46 (entry bytes 0/1, out flag) and 0x48449ADB(librec+0xC >> 8) taken as a max
+0x4C02C158  TgVoiceZoneVeloResolve_entry
+0x4C02C1ED  TgVoiceZoneVeloGate     ; (d0 val16, a0 librec) partrec bit-0x2000 AND tone block +4 bit9 -> keep val, else recompute via TgVoiceZoneVeloResolve
+0x4C02C1F2  TgVoiceZoneVeloGate_entry
+0x4C02C236  TgModCurveSquareScale   ; (d0 val, d1 idx) -> val * rom^2 / 0x1440 with rom = halfword ROM 0x48586554[idx*2] (the squared depth curve)
+0x4C02C23B  TgModCurveSquareScale_entry
+0x4C02C25D  TgPartCutoffResolve     ; (d0 part, d1 bank, a0 librec, stack depth/base) -> 0..0x70 cutoff: key-follow ROM 0x486D23E4[note & 0x7F] * depth >> 5 + TgPartModSumCutoff + base + sbyte partrec+0x45
+0x4C02C262  TgPartCutoffResolve_entry
+0x4C02C2C9  TgVoiceModSlotUpdate    ; update one mod-destination slot (8 bytes {val,flags,phase,,depth,,target}) at librec+0x82+u*8 (or partstate 0x500AD5A8+part*0x10C+0x4A+bank*0x30+u*8): target = 0x4C0399DD source read scaled by velocity, +-0x1FFF; sel 0/1 adds 0x4C0146D3(part,3) + partrec+0x43 << 6; rate = tone entry low 5 bits clamped 0..0x1E
+0x4C02C2CE  TgVoiceModSlotUpdate_entry
+0x4C02C6CD  TgPartModDestApply      ; (d0 part, d1 sel, stack bank/dest) compute + latch one part-level mod destination: cache partstate+2+dest*2, gates ROM 0x486D1224[dest] vs tone +0xA and partrec+0x52C bit<dest>; value 0x4C00F9B4 summed with the partrec+0x34C bank tables, clamp 0..0x3FFF -> GLOBAL reg class 0x0400 (and 0x0C00 for the bit7-marked dests)
+0x4C02C6D2  TgPartModDestApply_entry
+0x4C02C941  TgPartModDestRefreshAll ; (d0 part, d1 sel) apply all 12 destinations; partrec bit-0x2000 parts add the TYPE-7 EG-ramp registers (TgPartEgRampSegScaled 0/1 + Cache54 -> 0x4C00F9B4 sels 0x10/0x11/0x20 -> class 0x0400, latched at partstate+0x1A/+0x1C/+0x1E)
+0x4C02C946  TgPartModDestRefreshAll_entry
+0x4C02CA50  TgPartModValueForElem   ; (d0 part, d1 elem, a0 tone block) -> the cached value partstate+2+dest*2 with dest = tone +0x52+elem*4 low nibble
+0x4C02CA52  TgPartModValueForElem_entry
+0x4C02CA74  TgPartModRetrigger      ; (d0 part) live re-trigger dispatch by tone class: melodic -> per-elem (TgPartElemLastGet != 0xFF, tone +0x11 vs ROM 0x486D121C) 0x4C01349C else 0x4C033C0F; 0x80 -> 0x4C033C0F; 0x40 -> 0x4C03089B
+0x4C02CA79  TgPartModRetrigger_entry
+0x4C02CB24  TgVoiceReleaseCountdownTick ; (a0 librec) tick the release countdown +0x52: bit15 counts hi byte -> at 0 record +0xA bit15 set + TgVoiceGateOff + TgVoiceNodeKeyOff; bit7 counts low 7 -> at 0 TgVoiceSlotService(slot, 0xFF)
+0x4C02CB29  TgVoiceReleaseCountdownTick_entry
+0x4C02CBA4  TgVoiceLevelRampTick    ; (a0 librec) tick the LEVEL WORD +0x54 auto-ramp: low7 != 0 counts down; note level from +0x58/+0x50 by bit11 -> TgVoiceNoteLevelWrite; modes 0x7000: 0x4000 ramp by +0x5A (floor -0x100 = kill, hold level +0x5E -> TgVoiceLevelWordCalc + TgVoiceFadeLevelGateOff), 0x2000 damp 0x7F + TgVoiceReg01WriteGateOff, 0x1000 ramp by +0x5C
+0x4C02CBA9  TgVoiceLevelRampTick_entry
+0x4C02CD50  TgPartFadeRatePick      ; (d0 part) -> 0xD when the part state byte partrec+0x1D == 1 (muted), else 8; rets leaf
+0x4C02CD6D  TgVoiceFadeParamsPlan   ; (d0 part, a0 librec) plan the voice's auto-fade words librec+0x78/+0x7A/+0x7C/+0x80 from partrec+0x62's bit fields (8..10 -> ROM 0x486D109A + gate table 0x500C076C, 6..7 mode, 13..15 -> ROM 0x486D1094) with the rhythm-part (0x13..0x1A) extra gate 0x500C0758 bit11 and TgPartFadeRatePick's rate
+0x4C02CD72  TgVoiceFadeParamsPlan_entry
+0x4C02CFE6  TgVoiceModDepthWrite    ; (d0 slot, d1 unit, stack val14) latch the voice record's mod depth halfword (+0x2C/+0x30/+0x2E/+0x32 for units 0..3, top 2 bits kept) and write it to class 0x0409/0x0402/0x040D/0x0406
+0x4C02CFEB  TgVoiceModDepthWrite_entry
+0x4C02D0A7  TgVoiceModLfoStep       ; (d0 part, a0 tone entry, a1 slot state) step one mod-slot oscillator: flags bit4 = delay counter (re-arms as running), bit3 = running (phase wrap -> new value via 0x4C0399DD / triangle), scaled by tone +0xE+dest*2 / 0x800, +-0x1FFF out
+0x4C02D0AC  TgVoiceModLfoStep_entry
+0x4C02D2B0  TgPartModSlotSweep      ; the per-part MOD-SLOT service sweep (all 0x22 parts): TgPartGlideTick (partrec bits6+7), 0x4C039A09, then per collected voice step the 4 mod units (tone +0x52+u*4 bit7 = per-voice at librec+0x82+u*8) via TgVoiceModLfoStep -> TgVoiceModDepthWrite; tail = global +0x52 release-countdown sweep (graceful for partrec bit-0x2000 parts)
+0x4C02D2B6  TgPartModSlotSweep_entry
+0x4C02D52A  TgVoicePeriodicService  ; the periodic voice tick: glide + 0x4C039A09 for all parts, 0x4C009A16/0x4C009839, then the global sweep running the +0x52 countdowns and +0x54 level ramps (TgVoiceReleaseCountdownTick / TgVoiceLevelRampTick; immediate key-off for non-bit-0x2000 parts)
+0x4C02D530  TgVoicePeriodicService_entry
+0x4C02D75F  TgPartGlideStateReset   ; (d0 part) reset the portamento state 0x500AD5A8+part*0x10C: +0x26 := 0xFF, clear +0x28..+0x35 and +0x40/+0x42, +0x44 := -1; rets leaf
