@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 490 synthetic labels for internal helpers called by converted code
+# 530 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -131,6 +131,17 @@ _rom_marker:
 .equ TempoSyncPartB0Set_entry, 0x48447D07
 .equ TempoSyncE000Set_entry, 0x48447D67
 .equ func_484492E7, 0x484492E7
+.equ func_4844952A, 0x4844952A
+.equ func_484496CE, 0x484496CE
+.equ func_48449790, 0x48449790
+.equ func_4844982F, 0x4844982F
+.equ func_4844987E, 0x4844987E
+.equ func_484499EB, 0x484499EB
+.equ func_4844A3F9, 0x4844A3F9
+.equ func_4844A416, 0x4844A416
+.equ func_4844ABD6, 0x4844ABD6
+.equ func_4844ABEA, 0x4844ABEA
+.equ func_4844ABF7, 0x4844ABF7
 .equ GetCurrentChord, 0x4844DDF2
 .equ GetChordToneList, 0x4844E9F1
 .equ func_484720D3, 0x484720D3
@@ -284,6 +295,7 @@ _rom_marker:
 .equ func_48565D17, 0x48565D17
 .equ func_48565F64, 0x48565F64
 .equ func_48565F67, 0x48565F67
+.equ func_48570AD2, 0x48570AD2
 .equ func_48570C46, 0x48570C46
 .equ func_48578DDD, 0x48578DDD
 .equ func_48578FF0, 0x48578FF0
@@ -313,6 +325,10 @@ _rom_marker:
 .equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
+.equ TgModValueScaleA, 0x4C00580B
+.equ TgModValueScaleB_entry, 0x4C005841
+.equ TgModDepthScaleClamp_entry, 0x4C005876
+.equ TgPartModConfigSet_entry, 0x4C006339
 .equ TgPartModSumPitch_entry, 0x4C0067D2
 .equ TgPartModSumLevel_entry, 0x4C00685C
 .equ TgPartModSumFilter_entry, 0x4C0068E6
@@ -329,6 +345,7 @@ _rom_marker:
 .equ TgDrumFilterEgLevelCalc_entry, 0x4C00A1AA
 .equ TgDrumAmpReleaseCalc_entry, 0x4C00AD48
 .equ TgDrumKeyOffProgram_entry, 0x4C00C0B1
+.equ TgPartAuxRecPtr, 0x4C00C233
 .equ TgPartElemMaskUpdate_entry, 0x4C00ECA3
 .equ TgPartElemMaskGet, 0x4C00ECEA
 .equ TgPartElemEnabled_entry, 0x4C00ED01
@@ -376,6 +393,7 @@ _rom_marker:
 .equ TgPartElemLastSet_entry, 0x4C01222A
 .equ TgPartElemLastClear_entry, 0x4C012256
 .equ TgPartElemLastGet, 0x4C01226C
+.equ TgPartCtrlSenseKit_entry, 0x4C01349C
 .equ TgKitElemNoteOn_entry, 0x4C013547
 .equ TgElemKeyOffRelease_entry, 0x4C013F0F
 .equ TgActiveHighWaterUpdate_entry, 0x4C014786
@@ -412,6 +430,7 @@ _rom_marker:
 .equ TgPitchZoneFold_entry, 0x4C02FB27
 .equ TgPitchNoteResolve_entry, 0x4C02FB7E
 .equ TgLevelResolve_entry, 0x4C02FBE3
+.equ TgPartCtrlSenseElem_entry, 0x4C03089B
 .equ TgExclGroupChoke, 0x4C0309A5
 .equ TgTotalLevelCalc, 0x4C030A84
 .equ TgElemNoteOnStd, 0x4C030A9D
@@ -431,6 +450,7 @@ _rom_marker:
 .equ TgFilterEgAttackCalc, 0x4C0321BF
 .equ TgFilterEgDecayCalc, 0x4C03231F
 .equ TgKeyOffFilterRelease, 0x4C032490
+.equ TgPartCtrlSenseMelodic_entry, 0x4C033C0F
 .equ TgElemNoteOnFresh_entry, 0x4C033CB3
 .equ TgElemStageFresh_entry, 0x4C03492C
 .equ TgElemStageRestrike_entry, 0x4C034BA9
@@ -479,6 +499,26 @@ _rom_marker:
 .equ TgVoiceRouteFieldSet_entry, 0x4C037C1B
 .equ TgVoiceDirtyAll, 0x4C037C92
 .equ TgVoiceDirtyRelease, 0x4C037CCE
+.equ TgPartToneBankHiGet, 0x4C0384EE
+.equ TgPartToneDescPtr, 0x4C038503
+.equ TgPartToneIsTableClass, 0x4C038515
+.equ TgPartVoiceRecFetch_entry, 0x4C03853A
+.equ TgPartVoiceRecFetchSel_entry, 0x4C038592
+.equ TgPartVoiceRecFetchIdx_entry, 0x4C0385CC
+.equ TgPartVoiceRecFetchIdxSel_entry, 0x4C038632
+.equ TgPartElemMapScratchBuild_entry, 0x4C038674
+.equ TgPartElemProgramApply_entry, 0x4C038718
+.equ TgPartElemProgramApplySel_entry, 0x4C0387CC
+.equ TgPartElemProgramApplyIdx_entry, 0x4C038807
+.equ TgPartElemProgramApplyIdxSel_entry, 0x4C038876
+.equ TgPartProgramApply_entry, 0x4C038942
+.equ TgPartToneModUnitBuild_entry, 0x4C0394A4
+.equ TgPartToneModParamBuild_entry, 0x4C0396E7
+.equ TgPartModUnitParamGet_entry, 0x4C0399DD
+.equ TgPartModUnitRampStep_entry, 0x4C039A09
+.equ TgPartModUnitDepthCurve_entry, 0x4C039C61
+.equ TgPartToneTypeParamGet_entry, 0x4C039CA5
+.equ TgPartEgRampBuild_entry, 0x4C039D83
 .equ TgVoiceEgSegParamGet_entry, 0x4C03A214
 .equ TgVoiceEgSegFlagTest_entry, 0x4C03A2BF
 .equ TgPartEgRampSegScaled_entry, 0x4C03A315
@@ -23128,7 +23168,676 @@ display_palette:
     exth    d0
     jmp     LibI32ToF64
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3bf79e
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3be7dc
+# TgModValueScaleA  (lib CPU 0x4c00580b)
+#   (d0 value, d1 flags, stack depth) -> value*depth scaled: flags
+#   bit7 = BIPOLAR (value re-centred at 0x40 and doubled), the
+#   product is <<8 and divided by 0x1FC0 through LibDiv32.
+#   TgModValueScaleB is a byte-identical twin.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d1
+    btst    0x80, d1
+    beq     0x4c005823
+    extbu   d0
+    exth    d0
+    mov     -0x40, d1
+    add     d0, d1
+    movbu   (0x20, sp), d0
+    add     d1, d1
+    exth    d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    bra     0x4c005830
+    mov     d0, d1
+    movbu   (0x20, sp), d0
+    extbu   d1
+    exth    d1
+    exth    d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    asl     8, d0
+    mov     0x1fc0, d1
+    call    LibDiv32, 0, 0
+    ret     0, 0x10
+.mnbase 0x48400000
+# TgModValueScaleB  (lib CPU 0x4c00583e)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -0x10, sp
+# TgModValueScaleB_entry:   (register-save `call` entry)
+    extbu   d1
+    btst    0x80, d1
+    beq     0x4c005859
+    extbu   d0
+    exth    d0
+    mov     -0x40, d1
+    add     d0, d1
+    movbu   (0x20, sp), d0
+    add     d1, d1
+    exth    d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    bra     0x4c005866
+    mov     d0, d1
+    movbu   (0x20, sp), d0
+    extbu   d1
+    exth    d1
+    exth    d0
+    nop
+    nop
+    mul     d0, d1
+    mov     d1, d0
+    exth    d0
+    asl     8, d0
+    mov     0x1fc0, d1
+    call    LibDiv32, 0, 0
+    ret     0, 0x10
+.mnbase 0x48400000
+# TgModDepthScaleClamp  (lib CPU 0x4c005874)
+#   (d0 value, d1 flags, stack depth) -> the same bipolar scaling but
+#   normalised through divu by 0x7F and >>6, clamped to 0..0x1FFF --
+#   the +-0x1FFF slot range TgVoiceModSlotUpdate/TgVoiceModLfoStep
+#   work in
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgModDepthScaleClamp_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d1
+    btst    0x80, d1
+    beq     0x4c005886
+    extbu   d0
+    cmp     0x40, d0
+    ble     0x4c005886
+    add     -0x40, d0
+    mov     d0, d2
+    add     d0, d2
+    extbu   d2
+    mov     d2, d1
+    mov     0x7f, d0
+    asl     8, d1
+    clr     d2
+    mov     d2, mdr
+    divu    d0, d1
+    movbu   (0x14, sp), d0
+    exthu   d1
+    nop
+    nop
+    mulu    d0, d1
+    lsr     6, d1
+    mov     d1, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    bge     0x4c0058a7
+    clr     d0
+    bra     0x4c0058b0
+    cmp     0x1fff, d1
+    ble     0x4c0058b0
+    mov     0x1fff, d0
+    ret     [d2], 4
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3be884, 0x3bf304
+# TgPartModConfigSet  (lib CPU 0x4c006333)
+#   THE WRITE SIDE OF THE CONTROLLER MOD MATRIX (2026-07-20) --
+#   the setter whose read side is TgPartModSumPitch..TgPartModSum-
+#   Dest40. (d0 part, d1 source, stack param/value/...): the param
+#   byte (&0x7F, valid 1..0x2E) indexes the 46-entry jump table
+#   0x48586710. Each case scales the incoming value through one of
+#   the 0x4C0057xx / TgModValueScale* leaves and stores it into the
+#   PART RECORD 0x500B5340+part*0x54C at +0x66+dest*0xC+src*2 (value)
+#   or +0x72+... (i.e. +0x66+dest*0xC with dest stepping by 0xC) --
+#   exactly the value/depth pair layout the sum resolvers read. It
+#   then re-collects the part's live voices (TgVoiceListCollectPart-
+#   All) and re-applies (0x4C0040F4/0x4C004324/0x4C0043F5/0x4C004499)
+#   so the change is audible immediately. The route/sign-mask and
+#   dest-enable cases call TgPartModDestEnableUpdate to recompute
+#   partrec+0x52C from the +0x34C bank tables.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xcc, sp
+# TgPartModConfigSet_entry:   (register-save `call` entry)
+    mov     d1, d3
+    movbu   d0, (0xe4, sp)
+    movbu   (0xf4, sp), d0
+    mov     d0, (0x24, sp)
+    and     0x7f, d0
+    cmp     1, d0
+    bge     0x4c00634c
+    ret     [d2,d3,a2,a3], 0xdc
+    cmp     0x2e, d0
+    ble     0x4c006353
+    ret     [d2,d3,a2,a3], 0xdc
+    mov     -1, d1
+    add     d0, d1
+    asl2    d1
+    mov     0x48586710, a0
+    mov     (d1, a0), a0
+    jmp     (a0)
+    movbu   (0xf8, sp), d0
+    mov     sp, a2
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     (0x24, sp), d1
+    call    0x4c005733, 0, 0x10
+    movbu   (0xec, sp), d2
+    movbu   (0xe4, sp), d1
+    add     d2, d2
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500b5340, d1
+    mov     0x66, a0
+    add     d1, a0
+    movhu   d0, (d2, a0)
+    movbu   (0xe4, sp), d2
+    movbu   (0xf0, sp), d0
+    add     0x44, a2
+    mov     d0, (0x10, sp)
+    mov     2, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0040f4, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xf8, sp), d0
+    mov     sp, a2
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     (0x24, sp), d1
+    call    0x4c005769, 0, 0x10
+    movbu   (0xec, sp), d2
+    movbu   (0xe4, sp), d1
+    add     d2, d2
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500b5340, d1
+    mov     0x72, a0
+    add     d1, a0
+    movhu   d0, (d2, a0)
+    movbu   (0xe4, sp), d2
+    movbu   (0xf0, sp), d0
+    add     0x44, a2
+    mov     d0, (0x10, sp)
+    mov     4, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0041ad, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xf8, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     d3, d0
+    call    0x4c00579f, 0, 0x10
+    movbu   (0xec, sp), d2
+    movbu   (0xe4, sp), d1
+    add     d2, d2
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500b5340, d1
+    mov     0x7e, a0
+    add     d1, a0
+    movhu   d0, (d2, a0)
+    movbu   (0xe4, sp), d2
+    movbu   (0xf0, sp), d0
+    mov     sp, a2
+    mov     d0, (0x10, sp)
+    add     0x44, a2
+    mov     8, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c004324, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xf8, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     d3, d0
+    call    0x4c0057d5, 0, 0x10
+    movbu   (0xec, sp), d1
+    movbu   (0xe4, sp), d2
+    add     d1, d1
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d2
+    add     0x500b5340, d2
+    mov     0x8a, a0
+    add     d2, a0
+    movhu   d0, (d1, a0)
+    movbu   (0xe4, sp), d2
+    movbu   (0xf0, sp), d0
+    mov     sp, a2
+    mov     d0, (0x10, sp)
+    add     0x44, a2
+    mov     0x10, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c0043f5, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xf8, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     d3, d0
+    call    TgModValueScaleA, 0, 0x10
+    movbu   (0xec, sp), d2
+    movbu   (0xe4, sp), d1
+    add     d2, d2
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500b5340, d1
+    mov     0x96, a0
+    add     d1, a0
+    movhu   d0, (d2, a0)
+    movbu   (0xe4, sp), d2
+    movbu   (0xf0, sp), d0
+    mov     sp, a2
+    mov     d0, (0x10, sp)
+    add     0x44, a2
+    mov     0x20, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    mov     a2, a0
+    mov     d2, d0
+    call    TgVoiceListCollectPartAll_entry, 0, 0xc
+    mov     a2, a0
+    call    0x4c004499, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xf8, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     d3, d0
+    call    TgModValueScaleB_entry, 0, 0x10
+    movbu   (0xec, sp), d1
+    movbu   (0xe4, sp), d2
+    add     d1, d1
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d2
+    add     0x500b5340, d2
+    mov     0xa2, a0
+    add     d2, a0
+    movhu   d0, (d1, a0)
+    movbu   (0xf0, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x40, d0
+    mov     d0, (0x14, sp)
+    mov     d0, (0x18, sp)
+    movbu   (0xe4, sp), d0
+    movbu   (0xec, sp), d1
+    call    0x4c005673, [d2,d3,a2,a3], 0x24
+    ret     [d2,d3,a2,a3], 0xdc
+    add     -0x10, d0
+    asr     1, d0
+    movbu   d0, (0x38, sp)
+    movbu   (0xf8, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     d3, d0
+    call    TgModDepthScaleClamp_entry, [d2], 4
+    movbu   (0xe4, sp), d3
+    mov     d0, d2
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d3, d1
+    add     0x500b5340, d1
+    mov     0x34c, d0
+    add     d1, d0
+    movbu   (0xec, sp), d1
+    mov     d3, (0x3c, sp)
+    mov     0x78, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     d0, d1
+    movbu   (0x38, sp), d0
+    mov     0xa, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0x3c, sp), d3
+    add     d0, d1
+    mov     d1, a0
+    movhu   d2, (8, a0)
+    add     2, a0
+    mov     a0, (0x1c, sp)
+    movbu   (0x38, sp), d0
+    clr     d2
+    mov     d0, a2
+    mov     0, a1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     0x500ce404, d0
+    add     d3, d0
+    mov     0x60, a3
+    add     d0, a3
+    clr     d0
+    clr     d1
+    extbu   d2
+    mov     d2, d3
+    asl2    d3
+    setlb
+    extbu   d0
+    mov     d1, (0x40, sp)
+    mov     0x34, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     (d0, a3), a0
+    mov     (0x40, sp), d1
+    add     0x52, a0
+    movbu   (d3, a0), d0
+    and     0x0f, d0
+    cmp     a2, d0
+    bne     0x4c0065d3
+    mov     (0x1c, sp), a0
+    movbu   (0xf0, sp), d0
+    movbu   d0, (d2, a0)
+    bra     0x4c0065d9
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     4, d1
+    llt
+    mov     a1, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a1
+    cmp     4, a1
+    blt     0x4c0065ac
+    movbu   (0xe4, sp), d2
+    movbu   (0x38, sp), d3
+    mov     d2, d0
+    mov     d3, d1
+    call    TgPartModDestEnableUpdate_entry, [d2,d3,a2,a3], 0x1c
+    mov     d3, d1
+    mov     d2, d0
+    call    0x4c005dc5, [d2,d3,a2,a3], 0xc8
+    ret     [d2,d3,a2,a3], 0xdc
+    add     -0x11, d0
+    asr     1, d0
+    movbu   d0, (0x38, sp)
+    movbu   (0xf8, sp), d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    extbu   d0
+    mov     (0x24, sp), d1
+    call    0x4c005ebd, [d2], 4
+    mov     d0, d2
+    movbu   (0xe4, sp), d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500b5340, d0
+    movbu   (0xec, sp), d1
+    mov     0x34c, a0
+    add     d0, a0
+    mov     0x78, d0
+    nop
+    nop
+    mulu    d0, d1
+    movbu   (0x38, sp), d0
+    add     d1, a0
+    mov     0xa, d1
+    nop
+    nop
+    mulu    d1, d0
+    movhu   d2, (d0, a0)
+    movbu   (0xe4, sp), d0
+    movbu   (0x38, sp), d1
+    call    0x4c005ef6, [d2,d3,a2], 0xb0
+    ret     [d2,d3,a2,a3], 0xdc
+    add     -0x28, d0
+    movbu   d0, (0x38, sp)
+    movbu   (0xe4, sp), d1
+    movbu   (0x38, sp), d0
+    extbu   d3
+    mov     d0, a3
+    asl2    d0
+    mov     d0, (0x2c, sp)
+    movbu   (0xf8, sp), d0
+    mov     d3, (0x28, sp)
+    mov     d0, (0x30, sp)
+    movbu   (0xe4, sp), d0
+    clr     d2
+    mov     d0, (0x1c, sp)
+    mov     0, a2
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ce404, d0
+    add     0x60, d0
+    mov     d0, (0x34, sp)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x500b5340, d1
+    mov     0x34c, d0
+    add     d1, d0
+    movbu   (0xec, sp), d1
+    mov     0x78, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     d1, d0
+    mov     d0, (0x20, sp)
+    mov     (0x34, sp), a0
+    extbu   d2
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     (d0, a0), a0
+    mov     (0x2c, sp), d0
+    add     0x52, a0
+    movbu   (d0, a0), d0
+    mov     0xf, d3
+    and     d0, d3
+    mov     (0x30, sp), d0
+    mov     0xa, d2
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     (0x28, sp), d0
+    call    TgModDepthScaleClamp_entry, [d2], 4
+    mov     (0x20, sp), a0
+    mov     d3, d1
+    extbu   d1
+    nop
+    nop
+    mulu    d2, d1
+    add     d1, a0
+    movhu   d0, (8, a0)
+    clr     d0
+    clr     d1
+    mov     2, a1
+    add     a0, a1
+    setlb
+    extbu   d0
+    clr     d2
+    movbu   d2, (d0, a1)
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     4, d1
+    llt
+    add     2, a0
+    movbu   (0xf0, sp), d0
+    mov     a3, d1
+    movbu   d0, (d1, a0)
+    mov     (0x1c, sp), d0
+    mov     d3, d1
+    extbu   d1
+    call    TgPartModDestEnableUpdate_entry, [d2,d3,a2,a3], 0x1c
+    mov     a2, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a2
+    cmp     4, a2
+    blt     0x4c006698
+    movbu   (0x38, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0xe4, sp), d0
+    mov     d3, d1
+    call    0x4c005cdc, [d2,d3,a2,a3], 0xc0
+    ret     [d2,d3,a2,a3], 0xdc
+    movbu   (0xe4, sp), d0
+    movbu   (0xf8, sp), d1
+    extbu   d3
+    mov     d3, (0x30, sp)
+    mov     d1, (0x2c, sp)
+    clr     d2
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d0, d1
+    add     0x500ce404, d1
+    add     0x60, d1
+    mov     d1, (0x34, sp)
+    mov     0, a2
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500b5340, d0
+    add     0x34c, d0
+    movbu   (0xec, sp), d1
+    mov     0x78, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     d1, d0
+    mov     d0, (0x28, sp)
+    movbu   (0xe4, sp), d0
+    mov     d0, (0x20, sp)
+    clr     d0
+    clr     d3
+    extbu   d2
+    mov     d2, a3
+    mov     d2, d1
+    asl2    d1
+    mov     d1, (0x1c, sp)
+    mov     (0x34, sp), a0
+    extbu   d0
+    mov     0x34, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     (d0, a0), a0
+    mov     (0x1c, sp), d0
+    add     0x52, a0
+    movbu   (d0, a0), d0
+    mov     0xa, d2
+    and     0x0f, d0
+    movbu   d0, (0x38, sp)
+    mov     (0x2c, sp), d0
+    mov     d0, (0x10, sp)
+    mov     (0x24, sp), d1
+    mov     (0x30, sp), d0
+    call    TgModDepthScaleClamp_entry, [d2], 4
+    movbu   (0x38, sp), d1
+    mov     (0x28, sp), a0
+    nop
+    nop
+    mulu    d2, d1
+    add     d1, a0
+    movhu   d0, (8, a0)
+    clr     d0
+    clr     d2
+    mov     2, a1
+    add     a0, a1
+    setlb
+    extbu   d0
+    clr     d1
+    movbu   d1, (d0, a1)
+    inc     d2
+    mov     d2, d0
+    extbu   d2
+    cmp     4, d2
+    llt
+    add     2, a0
+    movbu   (0xf0, sp), d0
+    mov     a3, d1
+    movbu   d0, (d1, a0)
+    mov     (0x20, sp), d0
+    movbu   (0x38, sp), d1
+    call    TgPartModDestEnableUpdate_entry, [d2,d3,a2,a3], 0x1c
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     4, d3
+    blt     0x4c006752
+    mov     a2, (0x10, sp)
+    mov     (0x20, sp), d0
+    movbu   (0x38, sp), d1
+    call    0x4c005cdc, [d2,d3,a2,a3], 0xc0
+    mov     a2, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a2
+    cmp     4, d2
+    bge     0x4c0067ca
+    jmp     0x4c006749
+    ret     [d2,d3,a2,a3], 0xdc
+.mnbase 0x48400000
 # TgPartModSumPitch  (lib CPU 0x4c0067cd)
 #   the part CONTROLLER MOD-MATRIX (six per-destination siblings, one
 #   per enable bit 0x02..0x40): 3 mod SOURCES per part, source i's
@@ -27130,7 +27839,102 @@ display_palette:
     movbu   (d1, a0), d0
     retf    0, 0
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3cb250, 0x3cc513
+.incbin_range "baserom/kn7000_program.rom", 0x3cb250, 0x3cc468
+# TgPartCtrlSenseKit  (lib CPU 0x4c013497)
+#   the three TgPartModRetrigger SATELLITES (0x4C01349C kit /
+#   0x4C033C0F melodic / 0x4C03089B element). All three are gated by
+#   the same pair: the GLOBAL mode halfword 0x500C0758 bit 0x0200 and
+#   the part record's halfword bit0; the sensitivity byte is
+#   partrec+0x13. The kit/melodic pair scale it by the tone
+#   descriptor's +0x4C byte (only for partrec bit-0x2000 parts) and
+#   then by desc+0x43, both as (0x80 + signed byte)/0x100 through
+#   LibDiv32, and clamp through TgKitZoneParamClamp / TgZoneParam-
+#   Clamp to 0..0x7F; with the global bit clear they fall back to
+#   0x28 when 0x500C0758 bit 0x02 is also clear. NOTE the scaling
+#   bytes +0x43/+0x4C are read from the TONE DESCRIPTOR (tone block
+#   +0 -> desc), not from the part record -- earlier mod-matrix docs
+#   that said 'partrec+0x43' conflated the two.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# TgPartCtrlSenseKit_entry:   (register-save `call` entry)
+    movhu   (0x500c0758), d1
+    clr     d2
+    btst    0x0200, d1
+    bne     0x4c0134ac
+    jmp     0x4c013537
+    extbu   d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x500b5340, a1
+    movhu   (a1), d1
+    mov     d0, a2
+    btst    0x01, d1
+    beq     0x4c01353e
+    mov     0x13, a0
+    add     a1, a0
+    movbu   (a0), d1
+    cmp     d2, d1
+    beq     0x4c01353e
+    movhu   (a1), d0
+    movbu   (a0), d3
+    btst    0x2000, d0
+    beq     0x4c013500
+    mov     a2, d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    exth    d3
+    movbu   (0x4c, a0), d2
+    mov     0x80, d1
+    extb    d2
+    add     d1, d2
+    nop
+    nop
+    mul     d3, d2
+    mov     d2, d0
+    exth    d0
+    call    LibDiv32, 0, 0
+    mov     d0, d3
+    mov     a2, d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    exth    d3
+    movbu   (0x43, a0), d0
+    mov     d3, d2
+    extb    d0
+    exth    d0
+    mov     0x80, d1
+    add     d1, d0
+    nop
+    nop
+    mul     d0, d2
+    exth    d2
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    exth    d0
+    clr     d1
+    mov     d1, (0x10, sp)
+    mov     0x7f, d1
+    call    TgKitZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d2
+    bra     0x4c01353e
+    btst    0x02, d1
+    bne     0x4c01353e
+    mov     0x28, d2
+    mov     d2, d0
+    ret     [d2,d3,a2], 0x20
+.mnbase 0x48400000
 # TgKitElemNoteOn  (lib CPU 0x4c013542)
 #   the fresh note-on programmer for the NON-melodic classes (drum 0x10
 #   / table 0x40 staged records; TgNoteOn's else-dispatch). Near-twin
@@ -27788,7 +28592,7 @@ display_palette:
     clr     d2
     extbu   d2
     mov     (0x30, sp), d0
-    call    0x4c01349c, [d2,d3,a2], 0x20
+    call    TgPartCtrlSenseKit_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     mov     d2, (0x14, sp)
     mov     (0x60, sp), a0
@@ -29199,7 +30003,7 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
     mov     d3, d1
-    call    0x4c0399dd, [d2,d3], 8
+    call    TgPartModUnitParamGet_entry, [d2,d3], 8
     mov     d0, a2
     exth    d0
     mov     d0, (0x1c, sp)
@@ -29403,7 +30207,7 @@ display_palette:
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
     mov     d3, d1
-    call    0x4c0399dd, [d2,d3], 8
+    call    TgPartModUnitParamGet_entry, [d2,d3], 8
     mov     d0, a2
     exth    d0
     mov     d0, a1
@@ -29724,7 +30528,7 @@ display_palette:
     ret     [d2,d3,a2,a3], 0x44
     extbu   d2
     mov     d2, d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     mov     (0x14, sp), d0
     mov     d2, a3
     add     d0, a0
@@ -29794,7 +30598,7 @@ display_palette:
     exth    d0
     mov     d0, (0x10, sp)
     mov     a3, d0
-    call    0x4c039c61, [d2], 4
+    call    TgPartModUnitDepthCurve_entry, [d2], 4
     mov     0x54c, d1
     mov     0x34c, a0
     mov     d0, d2
@@ -29865,7 +30669,7 @@ display_palette:
     exth    d0
     mov     d0, (0x10, sp)
     mov     a3, d0
-    call    0x4c039c61, [d2], 4
+    call    TgPartModUnitDepthCurve_entry, [d2], 4
     mov     0x54c, d1
     mov     0x34c, a0
     mov     d0, d2
@@ -30126,20 +30930,20 @@ display_palette:
     cmp     1, d0
     bne     0x4c02cb01
     movbu   (0x30, sp), d0
-    call    0x4c01349c, [d2,d3,a2], 0x20
+    call    TgPartCtrlSenseKit_entry, [d2,d3,a2], 0x20
     exthu   d0
     bra     0x4c02cb21
     movbu   (0x30, sp), d0
-    call    0x4c033c0f, [d2,d3,a2], 0x20
+    call    TgPartCtrlSenseMelodic_entry, [d2,d3,a2], 0x20
     exthu   d0
     bra     0x4c02cb21
     movbu   (0x30, sp), d0
-    call    0x4c033c0f, [d2,d3,a2], 0x20
+    call    TgPartCtrlSenseMelodic_entry, [d2,d3,a2], 0x20
     bra     0x4c02cb21
     mov     0, a0
     mov     a0, a1
     movbu   (0x30, sp), d0
-    call    0x4c03089b, [d2,d3,a2,a3], 0x20
+    call    TgPartCtrlSenseElem_entry, [d2,d3,a2,a3], 0x20
     ret     [d2,d3,a2,a3], 0x28
 .mnbase 0x48400000
 # TgVoiceReleaseCountdownTick  (lib CPU 0x4c02cb24)
@@ -30940,7 +31744,7 @@ display_palette:
     mov     d0, a3
     mov     d3, (0x10, sp)
     mov     (0x1c, sp), d1
-    call    0x4c0399dd, [d2,d3], 8
+    call    TgPartModUnitParamGet_entry, [d2,d3], 8
     mov     (0x40, sp), a0
     mov     d0, d2
     movhu   d2, (6, a0)
@@ -31070,7 +31874,7 @@ display_palette:
     bne     0x4c02d318
     jmp     0x4c02d495
     mov     (0x1c, sp), d0
-    call    0x4c039a09, [d2,d3,a2,a3], 0x6c
+    call    TgPartModUnitRampStep_entry, [d2,d3,a2,a3], 0x6c
     mov     (0x48, sp), a0
     mov     (0x1c, sp), d0
     call    TgVoiceListCollectPartAll_entry, 0, 0xc
@@ -31350,7 +32154,7 @@ display_palette:
     cmp     0, d0
     beq     0x4c02d575
     mov     d3, d0
-    call    0x4c039a09, [d2,d3,a2,a3], 0x6c
+    call    TgPartModUnitRampStep_entry, [d2,d3,a2,a3], 0x6c
     inc     d3
     mov     d3, d0
     extbu   d3
@@ -32951,7 +33755,142 @@ display_palette:
     mov     d1, d0
     ret     [d2,d3,a2,a3], 0x20
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3e8c8b, 0x3e9970
+.incbin_range "baserom/kn7000_program.rom", 0x3e8c8b, 0x3e9867
+# TgPartCtrlSenseElem  (lib CPU 0x4c030896)
+#   the ELEMENT flavour of the TgPartModRetrigger satellites (a0 tone
+#   rec, a1 zone rec): same 0x500C0758 bit9 + partrec bit0 +
+#   partrec+0x13 gate, then a mode taken from partrec+0x62 bits
+#   11..12 selects between the per-element signed offset
+#   partrec+0xCE+elem*5 and the zone record's +0xF byte scaled by
+#   (0x80 + signed)/0x100 -- the per-element tuning term
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x10, sp
+# TgPartCtrlSenseElem_entry:   (register-save `call` entry)
+    mov     d0, d1
+    movhu   (0x500c0758), d0
+    mov     a1, (0x2c, sp)
+    mov     a0, (0x28, sp)
+    clr     d2
+    btst    0x0200, d0
+    bne     0x4c0308b0
+    jmp     0x4c03099b
+    mov     d1, d0
+    extbu   d0
+    mov     0x54c, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     d0, a3
+    add     0x500b5340, a3
+    movhu   (a3), d0
+    mov     1, a2
+    btst    0x01, d0
+    bne     0x4c0308cd
+    jmp     0x4c03099b
+    mov     0x13, a0
+    add     a3, a0
+    movbu   (a0), d0
+    cmp     d2, d0
+    bne     0x4c0308d9
+    jmp     0x4c03099b
+    extbu   d1
+    nop
+    nop
+    mulu    d3, d1
+    mov     0x62, a1
+    movbu   (a0), d2
+    mov     d1, a0
+    add     0x500b5340, a0
+    add     a0, a1
+    movhu   (a1), d0
+    lsr     11, d0
+    and     0x03, d0
+    exthu   d0
+    cmp     0, d0
+    beq     0x4c0308fd
+    cmp     3, d0
+    bne     0x4c030919
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c030913
+    movhu   (a1), d0
+    btst    0xe000, d0
+    beq     0x4c030913
+    movbu   (0x14, a0), d0
+    cmp     0, d0
+    bne     0x4c030915
+    mov     0, a2
+    mov     a2, d0
+    bra     0x4c03092c
+    movhu   (a0), d0
+    btst    0x08, d0
+    beq     0x4c030928
+    movhu   (a1), d0
+    btst    0xe000, d0
+    bne     0x4c03092a
+    mov     0, a2
+    mov     a2, d0
+    exthu   d0
+    cmp     0, d0
+    bne     0x4c03099b
+    mov     (0x28, sp), a1
+    mov     -0x81, d3
+    add     8, a1
+    movbu   (a1), d0
+    and     d3, d0
+    mov     d0, d1
+    asl2    d1
+    mov     d1, a0
+    add     d0, a0
+    add     a0, a3
+    movbu   (0xd0, a3), d0
+    btst    0x04, d0
+    beq     0x4c030971
+    mov     (0x28, sp), a0
+    movbu   (a1), d1
+    movbu   (7, a0), d0
+    and     d3, d1
+    mov     0x54c, d2
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (0xce, a0), d2
+    extb    d2
+    bra     0x4c03099b
+    mov     (0x2c, sp), a0
+    exth    d2
+    movbu   (0xf, a0), d0
+    mov     0x80, d1
+    extb    d0
+    exth    d0
+    add     d1, d0
+    nop
+    nop
+    mul     d0, d2
+    mov     d2, d0
+    exth    d0
+    call    LibDiv32, 0, 0
+    exth    d0
+    mov     d0, d2
+    mov     d2, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c030995
+    clr     d2
+    bra     0x4c03099b
+    cmp     0x7f, d1
+    ble     0x4c03099b
+    mov     0x7f, d2
+    mov     d2, d0
+    ret     [d2,d3,a2,a3], 0x20
+.mnbase 0x48400000
 # TgExclGroupChoke  (lib CPU 0x4c03099f)
 #   exclusive-group choke, the hi-hat-style cutoff (d0 part, d1 new
 #   slot): desc(lib rec+0x38)+0x0E bit7 = tone is in an exclusive group
@@ -33350,7 +34289,7 @@ display_palette:
     mov     (0x1c, sp), a0
     mov     (0x30, sp), a1
     mov     (0x24, sp), d0
-    call    0x4c03089b, [d2,d3,a2,a3], 0x20
+    call    TgPartCtrlSenseElem_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d1
     mov     d2, (0x14, sp)
     mov     (0x5c, sp), a0
@@ -36707,7 +37646,85 @@ display_palette:
     movhu   d0, (6, a0)
     ret     [d2,d3,a2,a3], 0x34
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3eb718, 0x3ecc7f
+.incbin_range "baserom/kn7000_program.rom", 0x3eb718, 0x3ecbdb
+# TgPartCtrlSenseMelodic  (lib CPU 0x4c033c0a)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+# TgPartCtrlSenseMelodic_entry:   (register-save `call` entry)
+    movhu   (0x500c0758), d1
+    clr     d2
+    btst    0x0200, d1
+    bne     0x4c033c1f
+    jmp     0x4c033caa
+    extbu   d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a1
+    add     0x500b5340, a1
+    movhu   (a1), d1
+    mov     d0, a2
+    btst    0x01, d1
+    beq     0x4c033caa
+    mov     0x13, a0
+    add     a1, a0
+    movbu   (a0), d1
+    cmp     d2, d1
+    beq     0x4c033caa
+    movhu   (a1), d0
+    movbu   (a0), d3
+    btst    0x2000, d0
+    beq     0x4c033c73
+    mov     a2, d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    exth    d3
+    movbu   (0x4c, a0), d2
+    mov     0x80, d1
+    extb    d2
+    add     d1, d2
+    nop
+    nop
+    mul     d3, d2
+    mov     d2, d0
+    exth    d0
+    call    LibDiv32, 0, 0
+    mov     d0, d3
+    mov     a2, d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    exth    d3
+    movbu   (0x43, a0), d0
+    mov     d3, d2
+    extb    d0
+    exth    d0
+    mov     0x80, d1
+    add     d1, d0
+    nop
+    nop
+    mul     d0, d2
+    exth    d2
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    exth    d0
+    clr     d1
+    mov     d1, (0x10, sp)
+    mov     0x7f, d1
+    call    TgZoneParamClamp_entry, [d2,d3], 8
+    mov     d0, d2
+    mov     d2, d0
+    ret     [d2,d3,a2], 0x20
+.mnbase 0x48400000
 # TgElemNoteOnFresh  (lib CPU 0x4c033cae)
 #   THE fresh-strike note-on programmer for melodic class-bit2 voices
 #   (d0 slot, a0 request rec; TgNoteOn dispatch librec+2 bit2 -- fresh
@@ -37372,7 +38389,7 @@ display_palette:
     clr     d2
     extbu   d2
     mov     (0x30, sp), d0
-    call    0x4c033c0f, [d2,d3,a2], 0x20
+    call    TgPartCtrlSenseMelodic_entry, [d2,d3,a2], 0x20
     mov     d0, d1
     mov     d2, (0x14, sp)
     mov     (0x60, sp), a0
@@ -37924,7 +38941,7 @@ display_palette:
     call    func_48570C46, [d2,d3,a2,a3], 0x20
     movbu   (0x54, sp), d2
     mov     d2, d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     mov     0x38, d0
     add     a2, d0
     mov     d0, (0x20, sp)
@@ -38209,7 +39226,7 @@ display_palette:
     call    func_48570C46, [d2,d3,a2,a3], 0x20
     movbu   (0x58, sp), d2
     mov     d2, d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     mov     0x38, d0
     add     a2, d0
     mov     d0, (0x24, sp)
@@ -39535,7 +40552,7 @@ display_palette:
     clr     d0
     movbu   d0, (0x18, a2)
     movbu   (0x30, sp), d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     mov     a0, (0x38, a2)
     mov     (0x10, sp), d0
     mov     a2, a0
@@ -39913,7 +40930,7 @@ display_palette:
     movbu   d0, (0x17, a2)
     movbu   d0, (0x18, a2)
     movbu   (0x30, sp), d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     mov     a0, (0x38, a2)
     mov     (0x10, sp), d0
     mov     a2, a0
@@ -40173,7 +41190,7 @@ display_palette:
     mov     2, a3
     mov     d0, (0x24, sp)
     mov     a0, d3
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     movbu   (0x64, sp), d0
     mov     0x27, d1
     mov     d0, (0x30, sp)
@@ -40196,7 +41213,7 @@ display_palette:
     mov     d0, (0x18, sp)
     mov     (0x30, sp), d1
     mov     (0x24, sp), d0
-    call    0x4c038592, [d2,d3], 0x24
+    call    TgPartVoiceRecFetchSel_entry, [d2,d3], 0x24
     mov     a0, (0x34, sp)
     movbu   (0x60, sp), d0
     mov     d2, a0
@@ -40210,7 +41227,7 @@ display_palette:
     mov     d0, (0x1c, sp)
     mov     (0x24, sp), d0
     mov     (0x30, sp), d1
-    call    0x4c038632, [d2,d3], 0x28
+    call    TgPartVoiceRecFetchIdxSel_entry, [d2,d3], 0x28
     mov     a0, (0x28, sp)
     mov     (0x30, sp), d0
     mov     d0, (0x10, sp)
@@ -40222,7 +41239,7 @@ display_palette:
     mov     d0, (0x1c, sp)
     mov     (0x24, sp), d0
     mov     (0x20, sp), d1
-    call    0x4c038876, [d2,d3], 0x28
+    call    TgPartElemProgramApplyIdxSel_entry, [d2,d3], 0x28
     mov     a0, (0x24, sp)
     movbu   (0x68, sp), d0
     movbu   (a0), d1
@@ -40342,7 +41359,7 @@ display_palette:
     or      0x80, d0
     movhu   d0, (a3)
     mov     (0x24, sp), d0
-    call    0x4c038503, 0, 0
+    call    TgPartToneDescPtr, 0, 0
     extbu   d2
     mov     d2, d1
     asl2    d1
@@ -40360,7 +41377,7 @@ display_palette:
     mov     d0, (0x18, sp)
     mov     (0x24, sp), d0
     mov     (0x20, sp), d1
-    call    0x4c038592, [d2,d3], 0x24
+    call    TgPartVoiceRecFetchSel_entry, [d2,d3], 0x24
     add     a0, d3
     mov     d3, a0
     movbu   (a0), d0
@@ -43131,7 +44148,3658 @@ display_palette:
     mov     d0, (a0)
     ret     [d2], 4
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3f0ce0, 0x3f31e0
+.incbin_range "baserom/kn7000_program.rom", 0x3f0ce0, 0x3f1495
+# TgPartToneProgramGet  (lib CPU 0x4c0384c4)
+#   the PART TONE BLOCK accessor leaves (2026-07-20). The block is
+#   0x500CE404+part*0x130; TgPartProgramSet writes the three tone-
+#   address bytes +8/+7/+6 (program / bank-lo / bank-hi) and the
+#   resolved tone DESCRIPTOR pointer lives at +0. This one reads +8.
+#   All four are `rets` leaves (called with `calls`, no reg save).
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ce404, d0
+    mov     d0, a0
+    movbu   (8, a0), d0
+    rets
+.mnbase 0x48400000
+# TgPartToneBankLoGet  (lib CPU 0x4c0384d9)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ce404, d0
+    mov     d0, a0
+    movbu   (7, a0), d0
+    rets
+.mnbase 0x48400000
+# TgPartToneBankHiGet  (lib CPU 0x4c0384ee)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x500ce404, d0
+    mov     d0, a0
+    movbu   (6, a0), d0
+    rets
+.mnbase 0x48400000
+# TgPartToneDescPtr  (lib CPU 0x4c038503)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    rets
+.mnbase 0x48400000
+# TgPartToneIsTableClass  (lib CPU 0x4c038515)
+#   (d0 part, 16-bit) -> 1 when the part's tone descriptor is a TABLE
+#   tone, i.e. (desc+0x10 & 0xC0) == 0x40 -- the same class nibble
+#   TgNoteOn dispatches on (0x00/0xC0 melodic, 0x80 drum kit, 0x40
+#   table)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    exthu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    clr     d0
+    movbu   (0x10, a0), d1
+    and     0xc0, d1
+    cmp     0x40, d1
+    bne     0x4c038532
+    mov     1, d0
+    extbu   d0
+    rets
+.mnbase 0x48400000
+# TgPartVoiceRecFetch  (lib CPU 0x4c038535)
+#   the VOICE-RECORD FETCH ladder (2026-07-20). Four parallel entries:
+#   TgPartVoiceRecFetch/Idx take (part, elem[, idx]) plus a flag byte
+#   whose bit7 selects the RESOURCE path; TgPartVoiceRecFetch*Sel are
+#   the thin front ends that first ask 0x4C00C6BF whether the part is
+#   using its LOCAL EDIT copy -- if so they read the RAM record
+#   0x500C1183+idx*0x8E (0x4C00C2C8/0x4C00C2DC) instead. On the
+#   resource path the tone-block program byte +8 picks the fetcher:
+#   0x11/0x19 are special-cased (0x4844A434/0x4844A4B5) against the
+#   generic ones (0x4844ABF7 = table 0x501496B8+0x70F7+idx*0x8E,
+#   0x4844AC30, 0x48449790/0x484496CE = the banked resource lookup
+#   through 0x5003A5A4/A8/AC + 0x5003A554/58/5C). Same 0x8E record
+#   stride on both sides -- the RAM copy is an edit shadow of the
+#   resource record.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x14, sp
+# TgPartVoiceRecFetch_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d1
+    movbu   (0x28, sp), d0
+    btst    0x80, d0
+    beq     0x4c03857b
+    extbu   d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d1
+    cmp     0x11, d1
+    beq     0x4c03855f
+    cmp     0x19, d1
+    beq     0x4c03856d
+    movbu   (6, a0), d0
+    extbu   d2
+    mov     d2, d1
+    call    func_4844ABF7, 0, 0
+    bra     0x4c03858a
+    movbu   (6, a0), d0
+    extbu   d2
+    mov     d2, d1
+    call    0x4844a434, [d2], 0x18
+    bra     0x4c03858a
+    movbu   (0x30, sp), d1
+    mov     d1, (0x10, sp)
+    movbu   (0x2c, sp), d1
+    call    func_484496CE, [d2,d3], 0x30
+    ret     [d2], 0x18
+.mnbase 0x48400000
+# TgPartVoiceRecFetchSel  (lib CPU 0x4c03858d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+# TgPartVoiceRecFetchSel_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00c6bf, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0385ad
+    extbu   d3
+    mov     d3, d0
+    call    0x4c00c2c8, 0, 0
+    bra     0x4c0385c4
+    movbu   (0x34, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x38, sp), d0
+    mov     d3, d1
+    mov     d0, (0x14, sp)
+    movbu   (0x3c, sp), d0
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    call    TgPartVoiceRecFetch_entry, [d2], 0x18
+    ret     [d2,d3], 0x24
+.mnbase 0x48400000
+# TgPartVoiceRecFetchIdx  (lib CPU 0x4c0385c7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0x18, sp
+# TgPartVoiceRecFetchIdx_entry:   (register-save `call` entry)
+    mov     d1, d2
+    movbu   (0x30, sp), d1
+    btst    0x80, d1
+    beq     0x4c038616
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d1
+    cmp     0x11, d1
+    beq     0x4c0385f0
+    cmp     0x19, d1
+    beq     0x4c038603
+    movbu   (0x2c, sp), d1
+    movbu   (6, a0), d0
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     d2, d1
+    call    0x4844ac30, [d2], 4
+    bra     0x4c03862a
+    movbu   (0x2c, sp), d1
+    movbu   (6, a0), d0
+    mov     d1, (0x10, sp)
+    extbu   d2
+    mov     d2, d1
+    call    0x4844a4b5, [d2], 0x1c
+    bra     0x4c03862a
+    movbu   (0x34, sp), d0
+    mov     d0, (0x10, sp)
+    movbu   (0x38, sp), d0
+    mov     d0, (0x14, sp)
+    movbu   (0x2c, sp), d0
+    call    func_48449790, [d2,d3,a2], 0x20
+    ret     [d2], 0x1c
+.mnbase 0x48400000
+# TgPartVoiceRecFetchIdxSel  (lib CPU 0x4c03862d)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x20, sp
+# TgPartVoiceRecFetchIdxSel_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00c6bf, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c038650
+    extbu   d3
+    movbu   (0x38, sp), d1
+    mov     d3, d0
+    call    0x4c00c2dc, [d2], 4
+    bra     0x4c03866c
+    movbu   (0x38, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    mov     d3, d1
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    mov     d0, (0x18, sp)
+    movbu   (0x44, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     d2, d0
+    call    TgPartVoiceRecFetchIdx_entry, [d2], 0x1c
+    ret     [d2,d3], 0x28
+.mnbase 0x48400000
+# TgPartElemMapScratchBuild  (lib CPU 0x4c03866f)
+#   (d0 part, d1 sub, stack note/arg/arg) build the part's ELEMENT MAP
+#   scratch record at 0x50009F70+part*0x8C+sub*0x23: when the global
+#   halfword 0x5000B208 has bit15 set the record comes from
+#   0x4844987E instead; otherwise a 0x23-byte template is copied from
+#   ROM 0x485877FC and six 3-byte entries at +5 are filled with
+#   (note&0x7F, arg, arg). Returns the record in a0.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -0x20, sp
+# TgPartElemMapScratchBuild_entry:   (register-save `call` entry)
+    mov     0x5000b208, a0
+    mov     0x5000b20a, a1
+    mov     d1, d3
+    mov     d0, d2
+    movbu   (0x3c, sp), d0
+    and     0x7f, d0
+    movbu   d0, (0x1c, sp)
+    movbu   (0x44, sp), d0
+    mov     d0, (0x10, sp)
+    movbu   (0x1c, sp), d0
+    movbu   (0x40, sp), d1
+    call    func_48570AD2, [d2,d3,a2,a3], 0x20
+    movhu   (0x5000b208), d0
+    btst    0x8000, d0
+    beq     0x4c0386c0
+    and     0xffff7fff, d0
+    exthu   d0
+    movbu   (0x5000b20a), d1
+    call    func_4844987E, [d2,d3], 8
+    mov     a0, a2
+    bra     0x4c03870f
+    extbu   d2
+    mov     0x8c, d0
+    nop
+    nop
+    mulu    d0, d2
+    add     0x50009f70, d2
+    extbu   d3
+    mov     0x23, d0
+    nop
+    nop
+    mulu    d0, d3
+    add     d3, d2
+    mov     d2, a2
+    mov     0x485877fc, a1
+    mov     a2, a0
+    mov     -0x23, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    clr     d1
+    clr     d2
+    mov     5, d3
+    add     a2, d3
+    setlb
+    extbu   d1
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    add     d3, d0
+    mov     d0, a0
+    movbu   (0x1c, sp), d0
+    inc     d2
+    movbu   d0, (a0)
+    movbu   (0x40, sp), d0
+    mov     d2, d1
+    movbu   d0, (1, a0)
+    movbu   (0x44, sp), d0
+    extbu   d2
+    movbu   d0, (2, a0)
+    cmp     6, d2
+    llt
+    mov     a2, a0
+    ret     [d2,d3,a2], 0x2c
+.mnbase 0x48400000
+# TgPartElemProgramApply  (lib CPU 0x4c038713)
+#   the APPLY twin of the fetch ladder: same four-entry shape (plain /
+#   Sel / Idx / IdxSel) but instead of returning a record it programs
+#   the part -- flag bit7 = resource path (tone-block +8 of 0x10/0x18
+#   special-cased to 0x4844AC55/0x4844A510/0x4844AC78/0x4844A56B),
+#   class match on desc+0x10 & 0xCF routing to 0x4C00A1F9 or the
+#   element-map builder TgPartElemMapScratchBuild, and the *Sel front
+#   ends divert to the local-edit writers 0x4C00C28F/0x4C00C2FB when
+#   0x4C00C6BF says the part is edited locally
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x20, sp
+# TgPartElemProgramApply_entry:   (register-save `call` entry)
+    movbu   d1, (0x34, sp)
+    mov     d0, d3
+    movbu   (0x38, sp), d1
+    mov     0x80, d2
+    mov     d2, d0
+    and     d1, d0
+    beq     0x4c03876e
+    mov     d3, d0
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d0
+    cmp     0x10, d0
+    beq     0x4c038743
+    cmp     0x18, d0
+    beq     0x4c038757
+    extbu   d3
+    mov     d3, d0
+    call    TgPartToneBankHiGet, 0, 0
+    extbu   d0
+    movbu   (0x34, sp), d1
+    call    0x4844ac55, [d2,d3], 8
+    bra     0x4c0387c4
+    extbu   d3
+    mov     d3, d0
+    call    TgPartToneBankHiGet, 0, 0
+    movbu   (0x34, sp), d1
+    extbu   d0
+    mov     d1, (0x10, sp)
+    mov     d3, d1
+    call    0x4844a510, [d2,d3], 0x24
+    bra     0x4c0387c4
+    mov     d3, d0
+    extbu   d0
+    mov     d3, (0x1c, sp)
+    mov     0x130, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    mov     (0x1c, sp), d3
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     d2, d0
+    bne     0x4c0387aa
+    and     0x7f, d1
+    extbu   d1
+    mov     d1, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    extbu   d3
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    mov     d0, (0x18, sp)
+    movbu   (0x34, sp), d1
+    mov     d3, d0
+    call    0x4c00a1f9, [d2,d3,a2], 0xc
+    bra     0x4c0387c4
+    and     0x7f, d1
+    extbu   d1
+    mov     d1, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    extbu   d3
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    mov     d0, (0x18, sp)
+    movbu   (0x34, sp), d1
+    mov     d3, d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    ret     [d2,d3], 0x28
+.mnbase 0x48400000
+# TgPartElemProgramApplySel  (lib CPU 0x4c0387c7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+# TgPartElemProgramApplySel_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00c6bf, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0387e8
+    extbu   d3
+    mov     d3, d1
+    mov     d2, d0
+    call    0x4c00c28f, [d2], 4
+    bra     0x4c0387ff
+    movbu   (0x34, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x38, sp), d0
+    mov     d3, d1
+    mov     d0, (0x14, sp)
+    movbu   (0x3c, sp), d0
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApply_entry, [d2,d3], 0x28
+    ret     [d2,d3], 0x24
+.mnbase 0x48400000
+# TgPartElemProgramApplyIdx  (lib CPU 0x4c038802)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x1c, sp
+# TgPartElemProgramApplyIdx_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    movbu   (0x38, sp), d0
+    btst    0x80, d0
+    beq     0x4c038855
+    mov     d2, d0
+    extbu   d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d1
+    cmp     0x11, d1
+    beq     0x4c03882d
+    cmp     0x19, d1
+    beq     0x4c03883f
+    movbu   (6, a0), d0
+    extbu   d3
+    mov     d3, (0x10, sp)
+    movbu   (0x34, sp), d1
+    call    0x4844ac78, [d2], 4
+    bra     0x4c03886e
+    movbu   (0x34, sp), d1
+    movbu   (6, a0), d0
+    mov     d1, (0x10, sp)
+    extbu   d3
+    mov     d3, (0x14, sp)
+    extbu   d2
+    mov     d2, d1
+    call    0x4844a56b, [d2,d3], 0x24
+    bra     0x4c03886e
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    extbu   d2
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    extbu   d3
+    mov     d0, (0x18, sp)
+    mov     d3, d1
+    mov     d2, d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    ret     [d2,d3], 0x24
+.mnbase 0x48400000
+# TgPartElemProgramApplyIdxSel  (lib CPU 0x4c038871)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x20, sp
+# TgPartElemProgramApplyIdxSel_entry:   (register-save `call` entry)
+    mov     d1, d3
+    mov     d0, d2
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00c6bf, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c038894
+    movbu   (0x38, sp), d0
+    extbu   d3
+    mov     d3, d1
+    call    0x4c00c2fb, [d2], 4
+    bra     0x4c0388b0
+    movbu   (0x38, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    mov     d3, d1
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    mov     d0, (0x18, sp)
+    movbu   (0x44, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApplyIdx_entry, [d2,d3], 0x24
+    ret     [d2,d3], 0x28
+.mnbase 0x48400000
+# TgPartProgramHandlerDispatch  (lib CPU 0x4c0388b3)
+#   (d0 part, ...) dispatch on the part's tone-block program byte +8
+#   (range 0x11..0x78) through the 8-byte {program, handler} hash
+#   table 0x48587830..0x485878B0 (linear probe, wraps at the end):
+#   a hit jumps to the entry's handler, a miss falls through to the
+#   generic TgPartElemProgramApplyIdxSel / *IdxSel pair. Reached by
+#   an indirect jump, not by a `call`.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    add     -0x20, sp
+    mov     d1, d3
+    mov     0x130, d1
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x500ce404, a0
+    movbu   (8, a0), d1
+    cmp     0x11, d1
+    blt     0x4c038922
+    cmp     0x78, d1
+    bgt     0x4c038922
+    mov     0x48587830, a1
+    add     -0x10, d1
+    mov     a1, a0
+    mov     0xf, d0
+    and     d1, d0
+    asl     3, d0
+    add     d0, a0
+    mov     (a0), d0
+    cmp     d1, d0
+    beq     0x4c0388fe
+    setlb
+    cmp     0, d0
+    beq     0x4c038922
+    add     8, a0
+    cmp     0x485878b0, a0
+    bcs     0x4c0388fb
+    mov     a1, a0
+    mov     (a0), d0
+    cmp     d1, d0
+    lne
+    mov     (4, a0), a0
+    jmp     (a0)
+    movbu   (0x38, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    movbu   (0x3c, sp), d0
+    extbu   d3
+    mov     d0, (0x14, sp)
+    movbu   (0x40, sp), d0
+    mov     d3, d1
+    mov     d0, (0x18, sp)
+    movbu   (0x44, sp), d0
+    mov     d0, (0x1c, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApplyIdxSel_entry, [d2,d3], 0x28
+    bra     0x4c03893a
+    movbu   (0x3c, sp), d0
+    extbu   d2
+    mov     d0, (0x10, sp)
+    movbu   (0x40, sp), d0
+    extbu   d3
+    mov     d0, (0x14, sp)
+    movbu   (0x44, sp), d0
+    mov     d3, d1
+    mov     d0, (0x18, sp)
+    mov     d2, d0
+    call    TgPartElemProgramApplySel_entry, [d2,d3], 0x24
+    ret     [d2,d3], 0x28
+.mnbase 0x48400000
+# TgPartProgramApply  (lib CPU 0x4c03893d)
+#   THE PROGRAM-CHANGE REBUILD (0x4C038942, called by TgPartProgram-
+#   Set after it stores the tone-address bytes). 2.9 KB of per-class
+#   work: the same {program, handler} table pair 0x485878B0/
+#   0x48587930 selects a case, each of which re-fetches the part's
+#   records (0x4C00C233 TgPartAuxRecPtr, 0x4C00C25D/0x4C00C28F,
+#   0x4C0109E5), rebuilds the element assignment (TgPartElemLastSet
+#   0x4C01222A, 0x4844992A/0x484499EB) and re-runs the element
+#   programmers 0x4C00A1F9 / TgPartElemMapScratchBuild. Local-edit
+#   parts (0x4C00C6BF) take the 0x4C038BE4 branch.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x38, sp
+# TgPartProgramApply_entry:   (register-save `call` entry)
+    mov     d1, d2
+    mov     d0, d3
+    extbu   d3
+    mov     d3, (0x28, sp)
+    mov     d3, d0
+    call    0x4c00c6bf, 0, 0
+    extbu   d0
+    cmp     0, d0
+    bne     0x4c038957
+    jmp     0x4c038be4
+    extbu   d2
+    cmp     0x11, d2
+    blt     0x4c0389a9
+    cmp     0x78, d2
+    bgt     0x4c0389a9
+    mov     0x485878b0, a1
+    add     -0x10, d2
+    mov     0xf, d0
+    and     d2, d0
+    asl     3, d0
+    mov     d0, a0
+    add     a1, a0
+    mov     (a0), d0
+    cmp     d2, d0
+    beq     0x4c03898a
+    setlb
+    cmp     0, d0
+    beq     0x4c0389a9
+    add     8, a0
+    cmp     0x48587930, a0
+    bcs     0x4c038987
+    mov     a1, a0
+    mov     (a0), d0
+    cmp     d2, d0
+    lne
+    mov     (4, a0), a0
+    jmp     (a0)
+    call    0x4c00c2bf, 0, 0
+    extbu   d3
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     0x500ce404, a1
+    mov     a0, (d3, a1)
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x28, sp), d0
+    call    TgPartAuxRecPtr, 0, 0
+    extbu   d3
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     d0, a1
+    add     0x500ce404, a1
+    mov     a0, (a1)
+    movbu   (0x10, a0), d0
+    mov     0xcf, d2
+    and     d2, d0
+    cmp     0x80, d0
+    beq     0x4c0389d5
+    jmp     0x4c038a5d
+    clr     d2
+    clr     d3
+    add     0x60, a1
+    mov     a1, (0x20, sp)
+    mov     d3, d1
+    mov     (0x28, sp), d0
+    call    0x4c00c25d, [d2], 4
+    mov     a0, d1
+    extbu   d2
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     (0x20, sp), d2
+    mov     5, a3
+    add     d0, d2
+    mov     d2, (0x1c, sp)
+    mov     d2, a0
+    mov     d1, (a0)
+    mov     4, d2
+    add     d1, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    add     d1, a3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     6, a2
+    mov     d0, (0x14, sp)
+    add     d1, a2
+    movbu   (a2), d0
+    mov     d3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    0x4c00a1f9, [d2,d3,a2], 0xc
+    mov     (0x1c, sp), a1
+    mov     d3, d1
+    mov     a0, (4, a1)
+    mov     d2, a0
+    movbu   (a0), d0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d3, d0
+    call    func_484499EB, [d2], 4
+    mov     (0x1c, sp), a1
+    inc     d3
+    mov     a0, (8, a1)
+    mov     d3, d2
+    extbu   d3
+    cmp     4, d3
+    blt     0x4c0389db
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x81, d0
+    beq     0x4c038a87
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x82, d0
+    beq     0x4c038a87
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x83, d0
+    beq     0x4c038a87
+    jmp     0x4c038b47
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x24, sp)
+    mov     (0x28, sp), d0
+    mov     a3, d1
+    call    0x4c00c25d, [d2], 4
+    mov     a0, d3
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x24, sp), d0
+    mov     a3, d1
+    add     d2, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    mov     d3, (a0)
+    mov     4, d0
+    add     d3, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    mov     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    add     d3, d2
+    mov     d2, a0
+    movbu   (a0), d1
+    extbu   d0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    add     6, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, a2
+    mov     (0x20, sp), a0
+    mov     a3, d1
+    mov     a2, (4, a0)
+    mov     (0x1c, sp), a0
+    add     5, a2
+    movbu   (a0), d0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     d2, a0
+    movbu   (a0), d1
+    extbu   d0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    movbu   (1, a2), d3
+    movbu   (2, a2), d1
+    movbu   (a2), d0
+    mov     d1, (0x10, sp)
+    mov     d3, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x20, sp), a1
+    mov     a3, d2
+    mov     a0, (8, a1)
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, d2
+    bge     0x4c038b44
+    jmp     0x4c038a8e
+    ret     [d2,d3,a2,a3], 0x48
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x24, sp)
+    mov     (0x28, sp), d0
+    mov     a3, d1
+    call    0x4c00c25d, [d2], 4
+    mov     a0, a2
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x24, sp), d0
+    mov     a3, d1
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    mov     a2, (a0)
+    mov     (0x28, sp), d0
+    call    0x4c00c28f, [d2], 4
+    mov     a0, d2
+    mov     (0x1c, sp), a0
+    mov     a3, d1
+    mov     d2, (4, a0)
+    movbu   (4, a2), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (5, a2), d0
+    clr     d3
+    mov     d0, (0x14, sp)
+    movbu   (6, a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x1c, sp), d1
+    clr     d0
+    add     8, d1
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x1c, sp), a1
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a1)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c038baa
+    mov     a3, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, a3
+    bge     0x4c038be1
+    jmp     0x4c038b4e
+    ret     [d2,d3,a2,a3], 0x48
+    extbu   d2
+    mov     d2, (0x30, sp)
+    cmp     0x10, d2
+    beq     0x4c038c2d
+    mov     (0x30, sp), d0
+    cmp     0x11, d0
+    bne     0x4c038bf4
+    jmp     0x4c038e6b
+    mov     (0x30, sp), d0
+    cmp     0x18, d0
+    bne     0x4c038bfd
+    jmp     0x4c038e88
+    mov     (0x30, sp), d0
+    cmp     0x19, d0
+    bne     0x4c038c06
+    jmp     0x4c0390e8
+    mov     (0x30, sp), d0
+    cmp     0x22, d0
+    bne     0x4c038c0f
+    jmp     0x4c039105
+    mov     (0x30, sp), d0
+    cmp     0x2a, d0
+    bne     0x4c038c18
+    jmp     0x4c039105
+    mov     (0x30, sp), d0
+    cmp     0x23, d0
+    bne     0x4c038c21
+    jmp     0x4c039105
+    mov     (0x30, sp), d0
+    cmp     0x2b, d0
+    bne     0x4c038c2a
+    jmp     0x4c039105
+    jmp     0x4c0393ac
+    movbu   (0x5c, sp), d0
+    extbu   d3
+    mov     d0, (0x24, sp)
+    call    func_4844ABD6, 0, 0
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a1
+    add     0x500ce404, a1
+    mov     a0, (a1)
+    movbu   (0x10, a0), d0
+    mov     0xcf, d2
+    and     d2, d0
+    cmp     0x80, d0
+    beq     0x4c038c5c
+    jmp     0x4c038ce4
+    clr     d2
+    clr     d3
+    add     0x60, a1
+    mov     a1, (0x20, sp)
+    mov     d3, d1
+    mov     (0x24, sp), d0
+    call    0x4844ac0f, [d2,d3], 8
+    mov     a0, d1
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x20, sp), d0
+    mov     5, a3
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    mov     d1, (a0)
+    mov     4, d2
+    add     d1, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    add     d1, a3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     6, a2
+    mov     d0, (0x14, sp)
+    add     d1, a2
+    movbu   (a2), d0
+    mov     d3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    0x4c00a1f9, [d2,d3,a2], 0xc
+    mov     (0x1c, sp), a1
+    mov     d3, d1
+    mov     a0, (4, a1)
+    mov     d2, a0
+    movbu   (a0), d0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d3, d0
+    call    func_484499EB, [d2], 4
+    mov     (0x1c, sp), a1
+    inc     d3
+    mov     a0, (8, a1)
+    mov     d3, d2
+    extbu   d3
+    cmp     4, d3
+    blt     0x4c038c62
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x81, d0
+    beq     0x4c038d0e
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x82, d0
+    beq     0x4c038d0e
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x83, d0
+    beq     0x4c038d0e
+    jmp     0x4c038dce
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x2c, sp)
+    mov     (0x24, sp), d0
+    mov     a3, d1
+    call    0x4844ac0f, [d2,d3], 8
+    mov     a0, d3
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x2c, sp), d0
+    mov     a3, d1
+    add     d2, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    mov     d3, (a0)
+    mov     4, d2
+    add     d3, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     5, d1
+    add     d3, d1
+    mov     d1, (0x1c, sp)
+    mov     d1, a0
+    movbu   (a0), d1
+    extbu   d0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    add     6, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, a2
+    mov     (0x20, sp), a0
+    mov     a3, d1
+    mov     a2, (4, a0)
+    mov     d2, a0
+    movbu   (a0), d0
+    add     5, a2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     (0x1c, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    mov     d3, a0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    movbu   (a0), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    movbu   (1, a2), d2
+    movbu   (2, a2), d1
+    movbu   (a2), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x20, sp), a1
+    mov     a3, d2
+    mov     a0, (8, a1)
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, d2
+    bge     0x4c038dcb
+    jmp     0x4c038d15
+    ret     [d2,d3,a2,a3], 0x48
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x2c, sp)
+    mov     (0x24, sp), d0
+    mov     a3, d1
+    call    0x4844ac0f, [d2,d3], 8
+    mov     (0x2c, sp), d1
+    mov     a0, a2
+    extbu   d2
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    mov     d1, (0x1c, sp)
+    mov     d1, a0
+    mov     a2, (a0)
+    mov     (0x24, sp), d0
+    mov     a3, d1
+    call    0x4844ac55, [d2,d3], 8
+    mov     a0, d2
+    mov     (0x1c, sp), a0
+    mov     a3, d1
+    mov     d2, (4, a0)
+    movbu   (4, a2), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (5, a2), d0
+    clr     d3
+    mov     d0, (0x14, sp)
+    movbu   (6, a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x1c, sp), d1
+    clr     d0
+    add     8, d1
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x1c, sp), a1
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a1)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c038e31
+    mov     a3, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, a3
+    bge     0x4c038e68
+    jmp     0x4c038dd5
+    ret     [d2,d3,a2,a3], 0x48
+    movbu   (0x5c, sp), d0
+    call    func_4844ABEA, 0, 0
+    extbu   d3
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     0x500ce404, a1
+    mov     a0, (d3, a1)
+    ret     [d2,d3,a2,a3], 0x48
+    movbu   (0x5c, sp), d0
+    extbu   d3
+    mov     d0, (0x2c, sp)
+    call    func_4844A3F9, 0, 0x14
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     d3, a1
+    add     0x500ce404, a1
+    mov     a0, (a1)
+    movbu   (0x10, a0), d0
+    mov     0xcf, d2
+    and     d2, d0
+    cmp     0x80, d0
+    beq     0x4c038eb7
+    jmp     0x4c038f3f
+    clr     d2
+    clr     d3
+    add     0x60, a1
+    mov     a1, (0x20, sp)
+    mov     d3, d1
+    mov     (0x2c, sp), d0
+    call    0x4844a47f, [d2], 0x18
+    mov     a0, d1
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x20, sp), d0
+    mov     5, a3
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    mov     d1, (a0)
+    mov     4, d2
+    add     d1, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    add     d1, a3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     6, a2
+    mov     d0, (0x14, sp)
+    add     d1, a2
+    movbu   (a2), d0
+    mov     d3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    0x4c00a1f9, [d2,d3,a2], 0xc
+    mov     (0x1c, sp), a1
+    mov     d3, d1
+    mov     a0, (4, a1)
+    mov     d2, a0
+    movbu   (a0), d0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d3, d0
+    call    func_484499EB, [d2], 4
+    mov     (0x1c, sp), a1
+    inc     d3
+    mov     a0, (8, a1)
+    mov     d3, d2
+    extbu   d3
+    cmp     4, d3
+    blt     0x4c038ebd
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x81, d0
+    beq     0x4c038f69
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x82, d0
+    beq     0x4c038f69
+    mov     (a1), a0
+    movbu   (0x10, a0), d0
+    and     d2, d0
+    cmp     0x83, d0
+    beq     0x4c038f69
+    jmp     0x4c039049
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x30, sp)
+    mov     (0x2c, sp), d0
+    mov     a3, d1
+    call    0x4844a47f, [d2], 0x18
+    mov     (0x30, sp), d1
+    mov     a0, d3
+    extbu   d2
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    mov     d1, (0x24, sp)
+    mov     d1, a0
+    mov     d3, (a0)
+    mov     4, d2
+    add     d3, d2
+    mov     d2, a0
+    movbu   (a0), d0
+    mov     a3, d1
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     5, d1
+    add     d3, d1
+    mov     d1, (0x20, sp)
+    mov     d1, a0
+    movbu   (a0), d1
+    extbu   d0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    mov     6, a2
+    add     d3, a2
+    movbu   (a2), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, (0x1c, sp)
+    mov     a0, d0
+    mov     (0x24, sp), a0
+    mov     a3, d1
+    mov     d0, (4, a0)
+    mov     d2, a0
+    movbu   (a0), d0
+    clr     d3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     (0x20, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     (0x1c, sp), d1
+    clr     d0
+    add     5, d1
+    mov     d1, (0x20, sp)
+    mov     (0x24, sp), d1
+    add     8, d1
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x1c, sp), a1
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a1)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c03900f
+    mov     a3, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, a3
+    bge     0x4c039046
+    jmp     0x4c038f70
+    ret     [d2,d3,a2,a3], 0x48
+    clr     d2
+    mov     0, a3
+    add     0x60, a1
+    mov     a1, (0x24, sp)
+    mov     (0x2c, sp), d0
+    mov     a3, d1
+    call    0x4844a47f, [d2], 0x18
+    mov     a0, a2
+    mov     0x34, d0
+    extbu   d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     (0x24, sp), d0
+    clr     d3
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    mov     a2, (a0)
+    mov     a3, (0x10, sp)
+    mov     (0x28, sp), d1
+    mov     (0x2c, sp), d0
+    call    0x4844a510, [d2,d3], 0x24
+    mov     a0, d2
+    mov     (0x1c, sp), a0
+    mov     a3, d1
+    mov     d2, (4, a0)
+    movbu   (4, a2), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (5, a2), d0
+    mov     d0, (0x14, sp)
+    movbu   (6, a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x1c, sp), d1
+    clr     d0
+    add     8, d1
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x1c, sp), a1
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a1)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c0390ae
+    mov     a3, d2
+    inc     d2
+    extbu   d2
+    mov     d2, a3
+    cmp     4, a3
+    bge     0x4c0390e5
+    jmp     0x4c039050
+    ret     [d2,d3,a2,a3], 0x48
+    movbu   (0x5c, sp), d0
+    call    func_4844A416, 0, 0x14
+    extbu   d3
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    mov     0x500ce404, a1
+    mov     a0, (d3, a1)
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x30, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x5c, sp), d0
+    movbu   (0x58, sp), d1
+    call    func_4844952A, [d2,d3], 0x2c
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    add     0x500ce404, d3
+    mov     d3, (0x2c, sp)
+    mov     d3, a1
+    mov     a0, (a1)
+    movbu   (0x10, a0), d0
+    mov     0xcf, d1
+    and     d1, d0
+    cmp     0x80, d0
+    beq     0x4c03913b
+    jmp     0x4c0391da
+    mov     (0x2c, sp), d0
+    clr     d3
+    add     0x60, d0
+    mov     d0, (0x24, sp)
+    mov     0, a2
+    mov     (0x2c, sp), a0
+    mov     (0x30, sp), d0
+    mov     (a0), d2
+    mov     a2, d1
+    mov     d2, a0
+    call    func_4844982F, [d2,a2], 0x18
+    mov     a0, d2
+    mov     0x34, d0
+    extbu   d3
+    nop
+    nop
+    mulu    d0, d3
+    mov     (0x24, sp), d0
+    mov     6, a3
+    add     d3, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    mov     d2, (a0)
+    mov     4, d0
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    mov     5, d3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    add     d2, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    add     d2, a3
+    mov     d0, (0x14, sp)
+    movbu   (a3), d0
+    mov     a2, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    0x4c00a1f9, [d2,d3,a2], 0xc
+    mov     (0x20, sp), a1
+    mov     a2, d1
+    mov     a0, (4, a1)
+    mov     (0x1c, sp), a0
+    movbu   (a0), d0
+    mov     d3, a0
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a0), d0
+    mov     a2, d3
+    mov     d0, (0x14, sp)
+    movbu   (a3), d0
+    inc     d3
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     a2, d0
+    call    func_484499EB, [d2], 4
+    mov     (0x20, sp), a1
+    extbu   d3
+    mov     a0, (8, a1)
+    mov     d3, a2
+    cmp     4, d3
+    bge     0x4c0391d7
+    jmp     0x4c039144
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x2c, sp), a0
+    mov     (a0), a0
+    movbu   (0x10, a0), d0
+    and     d1, d0
+    cmp     0x81, d0
+    beq     0x4c03920a
+    mov     (0x2c, sp), a0
+    mov     (a0), a0
+    movbu   (0x10, a0), d0
+    and     d1, d0
+    cmp     0x82, d0
+    beq     0x4c03920a
+    mov     (0x2c, sp), a0
+    mov     (a0), a0
+    movbu   (0x10, a0), d0
+    and     d1, d0
+    cmp     0x83, d0
+    beq     0x4c03920a
+    jmp     0x4c0392ed
+    mov     (0x2c, sp), d0
+    clr     d3
+    add     0x60, d0
+    mov     d0, (0x34, sp)
+    mov     0, a3
+    mov     (0x2c, sp), a0
+    mov     (0x30, sp), d0
+    mov     (a0), d2
+    mov     a3, d1
+    mov     d2, a0
+    call    func_4844982F, [d2,a2], 0x18
+    mov     a0, d2
+    mov     0x34, d0
+    extbu   d3
+    nop
+    nop
+    mulu    d0, d3
+    mov     (0x34, sp), d0
+    mov     a3, d1
+    add     d3, d0
+    mov     d0, (0x24, sp)
+    mov     d0, a0
+    mov     d2, (a0)
+    mov     4, d3
+    add     d2, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     6, a2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     5, d1
+    add     d2, d1
+    mov     d1, (0x1c, sp)
+    mov     d1, a0
+    movbu   (a0), d1
+    extbu   d0
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    add     d2, a2
+    movbu   (a2), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, d2
+    mov     (0x24, sp), a0
+    mov     a3, d1
+    mov     d2, (4, a0)
+    mov     d3, a0
+    movbu   (a0), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    mov     (0x28, sp), d0
+    call    0x4c0109e5, [d2], 4
+    mov     (0x1c, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    clr     d3
+    add     d1, d0
+    extbu   d0
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    mov     a3, d1
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x24, sp), d1
+    clr     d0
+    add     8, d1
+    mov     d1, (0x1c, sp)
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     (0x1c, sp), a1
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a1)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c0392b3
+    mov     a3, d3
+    inc     d3
+    extbu   d3
+    mov     d3, a3
+    cmp     4, a3
+    bge     0x4c0392ea
+    jmp     0x4c039213
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x2c, sp), d0
+    clr     d3
+    add     0x60, d0
+    mov     d0, (0x34, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x2c, sp), a0
+    mov     (0x30, sp), d0
+    mov     (a0), d2
+    mov     (0x1c, sp), d1
+    mov     d2, a0
+    call    func_4844982F, [d2,a2], 0x18
+    mov     (0x34, sp), d1
+    mov     a0, d2
+    extbu   d3
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     d0, d1
+    mov     d1, (0x24, sp)
+    mov     d1, a0
+    mov     d2, (a0)
+    mov     4, d3
+    add     d2, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    mov     5, a3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    add     d2, a3
+    movbu   (a3), d0
+    mov     6, a2
+    mov     d0, (0x14, sp)
+    add     d2, a2
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    mov     (0x1c, sp), d1
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, d2
+    mov     (0x24, sp), a0
+    mov     d2, (4, a0)
+    mov     d3, a0
+    movbu   (a0), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    clr     d3
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    mov     (0x1c, sp), d1
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x24, sp), a3
+    clr     d0
+    add     8, a3
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a3)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c039374
+    mov     (0x1c, sp), d3
+    inc     d3
+    extbu   d3
+    mov     d3, (0x1c, sp)
+    cmp     4, d3
+    bge     0x4c0393a9
+    jmp     0x4c0392f7
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x30, sp), d0
+    extbu   d3
+    mov     d0, (0x10, sp)
+    movbu   (0x5c, sp), d0
+    movbu   (0x58, sp), d1
+    call    func_4844952A, [d2,d3], 0x2c
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     0x500ce404, d0
+    mov     d0, (0x2c, sp)
+    mov     d0, a1
+    mov     a0, (a1)
+    mov     (0x28, sp), d0
+    call    TgPartToneIsTableClass, 0, 0
+    extbu   d0
+    cmp     0, d0
+    beq     0x4c0393e0
+    ret     [d2,d3,a2,a3], 0x48
+    mov     (0x2c, sp), d0
+    clr     d3
+    add     0x60, d0
+    mov     d0, (0x34, sp)
+    clr     d0
+    mov     d0, (0x1c, sp)
+    mov     (0x2c, sp), a0
+    mov     (0x30, sp), d0
+    mov     (a0), d2
+    mov     (0x1c, sp), d1
+    mov     d2, a0
+    call    func_4844982F, [d2,a2], 0x18
+    mov     a0, d2
+    mov     0x34, d0
+    extbu   d3
+    nop
+    nop
+    mulu    d0, d3
+    mov     (0x34, sp), d0
+    mov     5, a3
+    add     d3, d0
+    mov     d0, (0x24, sp)
+    mov     d0, a0
+    mov     d2, (a0)
+    mov     4, d3
+    add     d2, d3
+    mov     d3, a0
+    movbu   (a0), d0
+    add     d2, a3
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    mov     6, a2
+    mov     d0, (0x14, sp)
+    add     d2, a2
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    mov     (0x1c, sp), d1
+    call    TgPartElemMapScratchBuild_entry, [d2,d3,a2], 0x2c
+    mov     a0, d2
+    mov     (0x24, sp), a0
+    mov     d2, (4, a0)
+    mov     d3, a0
+    movbu   (a0), d0
+    add     5, d2
+    and     0x7f, d0
+    extbu   d0
+    mov     d0, (0x10, sp)
+    movbu   (a3), d0
+    clr     d3
+    mov     d0, (0x14, sp)
+    movbu   (a2), d0
+    and     0x1f, d0
+    extbu   d0
+    mov     d0, (0x18, sp)
+    mov     (0x28, sp), d0
+    mov     (0x1c, sp), d1
+    call    TgPartElemLastSet_entry, [d2,a2], 0x20
+    mov     d2, (0x20, sp)
+    mov     (0x24, sp), a3
+    clr     d0
+    add     8, a3
+    mov     (0x20, sp), a0
+    extbu   d0
+    mov     d0, a2
+    asl2    d0
+    add     a2, d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movbu   (2, a0), d1
+    movbu   (a0), d0
+    mov     d1, (0x10, sp)
+    mov     d2, d1
+    call    0x4844992a, [d2,d3], 0x2c
+    mov     a2, d0
+    asl2    d0
+    mov     a0, (d0, a3)
+    inc     d3
+    mov     d3, d0
+    extbu   d3
+    cmp     6, d3
+    blt     0x4c039467
+    mov     (0x1c, sp), d3
+    inc     d3
+    extbu   d3
+    mov     d3, (0x1c, sp)
+    cmp     4, d3
+    bge     0x4c03949c
+    jmp     0x4c0393ea
+    ret     [d2,d3,a2,a3], 0x48
+.mnbase 0x48400000
+# TgPartToneModUnitBuild  (lib CPU 0x4c03949f)
+#   (d0 part) the apply layer TgPartToneModSetupMelodic tails into:
+#   copies the 8-byte ROM template 0x48587820 to the frame, then
+#   walks the part's four mod-unit blocks (tone block +0x60+u*0x34)
+#   against the PART RECORD 0x500B5340+part*0x54C, latching the unit
+#   configuration built by TgPartToneModSetup*
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x40, sp
+# TgPartToneModUnitBuild_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     0x48587820, a1
+    mov     sp, a0
+    add     0x38, a0
+    mov     -8, d1
+    setlb
+    movbu   (a1), d0
+    inc     a1
+    movbu   d0, (a0)
+    inc     a0
+    inc     d1
+    lne
+    extbu   d2
+    mov     d2, (0x2c, sp)
+    mov     d2, d0
+    extbu   d2
+    mov     0x500ce404, d3
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d3, d0
+    mov     d0, (0x30, sp)
+    mov     d2, d0
+    call    0x4844aab2, 0, 0
+    extbu   d2
+    mov     d0, d1
+    clr     d0
+    movbu   d0, (0x34, sp)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d2, d0
+    mov     d0, a0
+    add     0x500b5340, a0
+    movhu   (a0), d0
+    exth    d1
+    mov     d0, (0x1c, sp)
+    movhu   (a0), d0
+    mov     0, a3
+    mov     d0, (0x18, sp)
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d2
+    add     d2, d3
+    mov     0x60, d0
+    add     d3, d0
+    mov     0x34, d2
+    add     d0, d2
+    mov     d2, (0xc, sp)
+    mov     4, d2
+    add     d3, d2
+    mov     d2, (0x10, sp)
+    mov     0x68, d2
+    add     d0, d2
+    mov     d2, (0x14, sp)
+    add     0x9c, d0
+    mov     d0, (0x20, sp)
+    mov     d1, (0x28, sp)
+    mov     (0x30, sp), d0
+    mov     d3, a2
+    add     0x60, d0
+    mov     d0, (0x24, sp)
+    setlb
+    mov     (a2), a0
+    clr     d1
+    movbu   (0x44, a0), d0
+    mov     (a2), a0
+    mov     0xf, d2
+    movbu   (0x11, a0), d3
+    and     d0, d2
+    mov     a3, d0
+    extbu   d0
+    cmp     d1, d0
+    beq     0x4c039545
+    cmp     1, d0
+    beq     0x4c039560
+    cmp     2, d0
+    beq     0x4c03957b
+    cmp     3, d0
+    beq     0x4c03959f
+    jmp     0x4c0395c2
+    mov     (0x10, sp), a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    beq     0x4c039558
+    mov     (0xc, sp), a0
+    mov     (a0), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x60, a2), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x10, sp), a0
+    movhu   (a0), d0
+    btst    0x4000, d0
+    beq     0x4c039572
+    mov     (0x60, a2), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0xc, sp), a0
+    mov     (a0), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x1c, sp), d0
+    btst    0x2000, d0
+    beq     0x4c039596
+    extbu   d2
+    cmp     0xd, d2
+    bne     0x4c039596
+    extbu   d3
+    btst    0x01, d3
+    beq     0x4c039596
+    mov     (0x60, a2), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x14, sp), a0
+    mov     (a0), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x18, sp), d0
+    btst    0x2000, d0
+    beq     0x4c0395bb
+    extbu   d2
+    cmp     0xd, d2
+    bne     0x4c0395bb
+    extbu   d3
+    btst    0x01, d3
+    beq     0x4c0395bb
+    mov     (0xc, sp), a0
+    mov     (a0), a0
+    movbu   (2, a0), d1
+    bra     0x4c0395c2
+    mov     (0x20, sp), a0
+    mov     (a0), a0
+    movbu   (2, a0), d1
+    movbu   (0x34, sp), d2
+    mov     sp, a0
+    mov     d2, a1
+    add     d2, a1
+    mov     a0, d0
+    add     0x38, d0
+    add     d0, a1
+    movhu   d1, (a1)
+    exth    d1
+    cmp     0x80, d1
+    beq     0x4c0395f1
+    movhu   (a1), d0
+    mov     (0x28, sp), d1
+    exth    d0
+    add     d1, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x7f, d1
+    ble     0x4c0395ea
+    mov     0x7f, d0
+    bra     0x4c0395ef
+    cmp     0, d1
+    bge     0x4c0395ef
+    clr     d0
+    movhu   d0, (a1)
+    movhu   (a1), d0
+    mov     (0x24, sp), a0
+    mov     0x34, d1
+    nop
+    nop
+    mulu    d1, d2
+    add     d2, a0
+    movbu   d0, (0x31, a0)
+    movhu   (a1), d0
+    movbu   d0, (0x32, a0)
+    mov     a3, d0
+    inc     d0
+    movbu   d0, (0x34, sp)
+    movbu   (0x34, sp), d0
+    mov     d0, a3
+    cmp     4, d0
+    llt
+    mov     (0x30, sp), a0
+    mov     (0x2c, sp), d0
+    mov     (a0), a0
+    mov     0x54c, d2
+    nop
+    nop
+    mulu    d2, d0
+    movbu   (0x44, a0), d1
+    mov     0x500b5340, a0
+    movhu   (d0, a0), d0
+    btst    0x2000, d0
+    bne     0x4c039634
+    ret     [d2,d3,a2,a3], 0x50
+    extbu   d1
+    mov     d1, a1
+    mov     d1, d0
+    and     0x40, d0
+    bne     0x4c039640
+    ret     [d2,d3,a2,a3], 0x50
+    movhu   (0x38, sp), d1
+    movhu   (0x3a, sp), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    beq     0x4c03964e
+    ret     [d2,d3,a2,a3], 0x50
+    movhu   (0x38, sp), d0
+    exth    d0
+    cmp     0x80, d0
+    bne     0x4c03965b
+    ret     [d2,d3,a2,a3], 0x50
+    movhu   (0x38, sp), d0
+    mov     d0, d1
+    exth    d1
+    cmp     0x40, d1
+    bge     0x4c03968c
+    exth    d0
+    add     -0x10, d0
+    exth    d0
+    mov     d0, d3
+    mov     d3, d1
+    exth    d1
+    mov     0x7f, d2
+    cmp     d2, d1
+    ble     0x4c039673
+    mov     d2, d3
+    bra     0x4c039678
+    cmp     0, d1
+    bge     0x4c039678
+    clr     d3
+    mov     d3, d0
+    exth    d0
+    add     0x28, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c039685
+    mov     d2, d0
+    bra     0x4c0396b2
+    cmp     0, d1
+    bge     0x4c0396b2
+    clr     d0
+    bra     0x4c0396b2
+    exth    d0
+    add     0x10, d0
+    exth    d0
+    mov     d0, d3
+    mov     d3, d1
+    exth    d1
+    mov     0x7f, d2
+    cmp     d2, d1
+    ble     0x4c03969b
+    mov     d2, d3
+    bra     0x4c0396a0
+    cmp     0, d1
+    bge     0x4c0396a0
+    clr     d3
+    mov     d3, d0
+    exth    d0
+    add     -0x28, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     d2, d1
+    ble     0x4c0396ad
+    mov     d2, d0
+    bra     0x4c0396b2
+    cmp     0, d1
+    bge     0x4c0396b2
+    clr     d0
+    mov     a1, d1
+    and     0x0f, d1
+    cmp     9, d1
+    bne     0x4c0396d1
+    mov     (0x30, sp), a1
+    mov     0x34, a0
+    add     0x60, a1
+    movbu   d3, (0x31, a1)
+    add     a1, a0
+    movbu   d3, (0x31, a0)
+    movbu   d0, (0x32, a1)
+    movbu   d0, (0x32, a0)
+    bra     0x4c0396df
+    cmp     0xa, d1
+    bge     0x4c0396df
+    mov     (0x30, sp), a0
+    add     0x60, a0
+    movbu   d3, (0x31, a0)
+    movbu   d0, (0x65, a0)
+    ret     [d2,d3,a2,a3], 0x50
+.mnbase 0x48400000
+# TgPartToneModParamBuild  (lib CPU 0x4c0396e2)
+#   (d0 part, d1 sel) clear the tone block's mod control halfwords
+#   +0xA/+0xC and rebuild the per-unit parameter set from the part
+#   record 0x500B5340+part*0x54C+0x42 and the block fields +4/+0x26/
+#   +0x32/+0x60 -- the companion of TgPartToneModUnitBuild
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x48, sp
+# TgPartToneModParamBuild_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d2, d1
+    add     0x500ce404, d1
+    mov     d1, (0x18, sp)
+    add     0xa, d1
+    mov     d1, (0x20, sp)
+    mov     (0x20, sp), a0
+    clr     d1
+    movhu   d1, (a0)
+    mov     (0x18, sp), d1
+    clr     d3
+    add     0xc, d1
+    mov     d1, (0x24, sp)
+    mov     (0x24, sp), a0
+    clr     d1
+    movhu   d1, (a0)
+    mov     d3, (0x10, sp)
+    mov     (0x18, sp), d3
+    extbu   d0
+    add     4, d3
+    mov     d3, (0x34, sp)
+    mov     (0x18, sp), d3
+    add     0x60, d3
+    mov     d3, (0x38, sp)
+    mov     d0, (0x1c, sp)
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d0, d2
+    add     0x500b5340, d2
+    add     0x42, d2
+    mov     d2, (0x3c, sp)
+    mov     (0x18, sp), d0
+    add     0x26, d0
+    mov     d0, (0x28, sp)
+    mov     (0x18, sp), d0
+    add     0x32, d0
+    mov     d0, (0x2c, sp)
+    cmp     0, d1
+    bne     0x4c039750
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    btst    0x2000, d0
+    beq     0x4c039750
+    mov     (0x38, sp), a0
+    mov     (0x34, a0), d0
+    bra     0x4c03976f
+    cmp     1, d1
+    bne     0x4c039763
+    mov     (0x34, sp), a0
+    movhu   (a0), d0
+    btst    0x4000, d0
+    beq     0x4c039763
+    mov     (0x38, sp), a0
+    mov     (a0), d0
+    bra     0x4c03976f
+    mov     (0x38, sp), a0
+    mov     d1, d0
+    extbu   d0
+    mov     0x34, d2
+    nop
+    nop
+    mulu    d2, d0
+    mov     (d0, a0), d0
+    clr     d2
+    movbu   d2, (0x40, sp)
+    clr     d3
+    add     0x52, d0
+    mov     d0, (0x14, sp)
+    extbu   d1
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d1, d0
+    add     a0, d0
+    add     0x22, d0
+    mov     d0, (0x30, sp)
+    cmp     0, d3
+    beq     0x4c03978d
+    cmp     1, d3
+    bne     0x4c0397ab
+    mov     (0x1c, sp), d0
+    mov     1, d1
+    call    0x4c0146d3, [d2,d3], 0x14
+    exth    d0
+    cmp     0x7f, d0
+    beq     0x4c0397ab
+    mov     (0x1c, sp), d0
+    mov     1, d1
+    call    0x4c0146d3, [d2,d3], 0x14
+    exth    d0
+    bra     0x4c0397ac
+    clr     d0
+    movhu   d0, (0x46, sp)
+    cmp     0, d3
+    beq     0x4c0397b8
+    clr     d0
+    cmp     1, d3
+    bne     0x4c0397bd
+    mov     (0x3c, sp), a0
+    movbu   (a0), d0
+    extb    d0
+    mov     (0x18, sp), a0
+    movhu   d0, (0x44, sp)
+    mov     (a0), a0
+    mov     0, a2
+    movbu   (0x10, a0), d0
+    clr     d2
+    and     0xcf, d0
+    cmp     0x81, d0
+    beq     0x4c0397e3
+    mov     (0x18, sp), a0
+    mov     (a0), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x83, d0
+    bne     0x4c0397fd
+    mov     (0x10, sp), d0
+    cmp     2, d0
+    beq     0x4c0397ed
+    cmp     3, d0
+    bne     0x4c039844
+    cmp     d2, d3
+    bne     0x4c039844
+    mov     (0x1c, sp), d0
+    call    0x4c008622, 0, 0
+    mov     d0, a2
+    bra     0x4c039844
+    mov     (0x18, sp), a0
+    mov     (a0), a0
+    movbu   (0x10, a0), d0
+    and     0xcf, d0
+    cmp     0x82, d0
+    bne     0x4c039844
+    cmp     3, d3
+    beq     0x4c039844
+    mov     (0x10, sp), d0
+    cmp     d2, d0
+    beq     0x4c039828
+    cmp     1, d0
+    beq     0x4c039828
+    cmp     3, d0
+    beq     0x4c039832
+    cmp     2, d0
+    beq     0x4c03983c
+    cmp     4, d0
+    beq     0x4c03983c
+    bra     0x4c039844
+    call    0x4c00921a, 0, 0
+    mov     d0, d2
+    bra     0x4c039844
+    call    0x4c009226, 0, 0
+    mov     d0, d2
+    bra     0x4c039844
+    call    0x4c009232, 0, 0
+    mov     d0, d2
+    mov     a2, d0
+    exth    d0
+    cmp     0, d0
+    bne     0x4c039883
+    exth    d2
+    cmp     0, d2
+    bne     0x4c039883
+    mov     (0x1c, sp), d0
+    mov     1, d1
+    call    0x4c0146d3, [d2,d3], 0x14
+    exth    d0
+    cmp     0x7f, d0
+    bne     0x4c039863
+    jmp     0x4c039972
+    mov     (0x14, sp), a0
+    movbu   (0x40, sp), d0
+    asl2    d0
+    movbu   (d0, a0), d0
+    btst    0x80, d0
+    bne     0x4c039883
+    movhu   (0x46, sp), d0
+    exth    d0
+    cmp     0, d0
+    bgt     0x4c039883
+    movhu   (0x44, sp), d0
+    exth    d0
+    cmp     0, d0
+    bgt     0x4c039883
+    jmp     0x4c039972
+    cmp     0, d3
+    beq     0x4c039899
+    cmp     1, d3
+    beq     0x4c0398ce
+    cmp     2, d3
+    beq     0x4c039904
+    cmp     3, d3
+    bne     0x4c039896
+    jmp     0x4c03991d
+    jmp     0x4c039939
+    mov     (0x14, sp), d1
+    movbu   (0x40, sp), d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (1, a0), d2
+    movhu   (0x46, sp), d0
+    movhu   (0x44, sp), d1
+    exth    d2
+    exth    d0
+    add     d0, d2
+    exth    d1
+    add     d2, d1
+    exth    d1
+    mov     d1, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c0398ba
+    clr     d1
+    bra     0x4c0398c0
+    cmp     0x7f, d0
+    ble     0x4c0398c0
+    mov     0x7f, d1
+    extbu   d1
+    add     d1, d1
+    mov     0x486d1f54, a0
+    movhu   (d1, a0), d0
+    mov     d0, a3
+    bra     0x4c039939
+    mov     (0x14, sp), a0
+    movbu   (0x40, sp), d0
+    movhu   (0x46, sp), d1
+    asl2    d0
+    add     d0, a0
+    movbu   (1, a0), d2
+    movhu   (0x44, sp), d0
+    exth    d2
+    exth    d1
+    add     d1, d2
+    exth    d0
+    mov     d0, d1
+    add     d2, d1
+    mov     d1, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c0398f0
+    clr     d0
+    bra     0x4c0398f6
+    cmp     0x7f, d1
+    ble     0x4c0398f6
+    mov     0x7f, d0
+    extbu   d0
+    add     d0, d0
+    mov     0x486d2054, a0
+    movhu   (d0, a0), d1
+    mov     d1, a3
+    bra     0x4c039939
+    mov     (0x14, sp), d1
+    movbu   (0x40, sp), d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (1, a0), d0
+    mov     0x486d2154, a0
+    add     d0, d0
+    movhu   (d0, a0), d1
+    mov     d1, a3
+    bra     0x4c039939
+    mov     (0x14, sp), d1
+    movbu   (0x40, sp), d0
+    mov     0x486d1f54, a1
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (1, a0), d1
+    mov     d1, a0
+    add     a0, a0
+    mov     a0, d0
+    movhu   (d0, a1), d1
+    mov     d1, a3
+    mov     (0x14, sp), a0
+    movbu   (0x40, sp), d0
+    mov     -1, d1
+    asl2    d0
+    add     d0, a0
+    movbu   (a0), d0
+    btst    0x40, d0
+    bne     0x4c03994c
+    mov     1, d1
+    mov     a3, d0
+    exth    d0
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, a3
+    exth    d0
+    cmp     0, d0
+    beq     0x4c039974
+    mov     (0x20, sp), a1
+    movbu   (a0), d0
+    movhu   (a1), d1
+    and     0x0f, d0
+    add     d0, d0
+    mov     0x486d1224, a0
+    movhu   (d0, a0), d0
+    or      d0, d1
+    movhu   d1, (a1)
+    bra     0x4c039974
+    mov     0, a3
+    movbu   (0x40, sp), d1
+    mov     (0x30, sp), a1
+    mov     d1, a0
+    add     a0, a0
+    mov     a0, d0
+    mov     a3, d2
+    movhu   d2, (d0, a1)
+    mov     (0x14, sp), a0
+    asl2    d1
+    add     d1, a0
+    movbu   (3, a0), d0
+    and     0xe0, d0
+    cmp     0x80, d0
+    bne     0x4c0399bd
+    mov     (0x24, sp), a1
+    movbu   (a0), d0
+    movhu   (a1), d1
+    and     0x0f, d0
+    add     d0, d0
+    mov     0x486d123c, a0
+    movhu   (d0, a0), d0
+    or      d0, d1
+    movhu   d1, (a1)
+    clr     d0
+    clr     d1
+    setlb
+    mov     (0x28, sp), a0
+    extbu   d0
+    clr     d2
+    movbu   d2, (d0, a0)
+    mov     (0x2c, sp), a0
+    inc     d1
+    movbu   d2, (d0, a0)
+    mov     d1, d0
+    extbu   d1
+    cmp     0xc, d1
+    llt
+    inc     d3
+    movbu   d3, (0x40, sp)
+    movbu   (0x40, sp), d3
+    cmp     4, d3
+    bge     0x4c0399cb
+    jmp     0x4c039785
+    mov     (0x10, sp), d1
+    inc     d1
+    extbu   d1
+    mov     d1, (0x10, sp)
+    cmp     4, d1
+    bge     0x4c0399d8
+    jmp     0x4c03973b
+    ret     [d2,d3,a2,a3], 0x58
+.mnbase 0x48400000
+# TgPartModUnitParamGet  (lib CPU 0x4c0399db)
+#   THE MOD-SOURCE READ cited by TgVoiceModSlotUpdate/TgVoiceModLfo-
+#   Step (0x4C0399DD): (d0 part, d1 unit, stack idx) -> the halfword
+#   at tone block +0x60+unit*0x34 +0x22+idx*2 (i.e. 0x500CE404+part*
+#   0x130 +0x82+unit*0x34+idx*2). Confirms the +0x60+u*0x34 mod-unit
+#   block stride documented for TgPartToneModSetupMelodic.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+# TgPartModUnitParamGet_entry:   (register-save `call` entry)
+    mov     d1, d2
+    movbu   (0x18, sp), d3
+    mov     d0, d1
+    extbu   d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x500ce404, d1
+    extbu   d2
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    mov     0x82, d0
+    add     d1, d0
+    add     d3, d3
+    mov     d0, a0
+    movhu   (d3, a0), d0
+    ret     [d2,d3], 8
+.mnbase 0x48400000
+# TgPartModUnitRampStep  (lib CPU 0x4c039a04)
+#   (d0 part) the per-part mod-unit RAMP step run by TgPartModSlot-
+#   Sweep and TgVoicePeriodicService (the 0x4C039A09 call sites):
+#   for each unit it interpolates through the halfword curve ROM
+#   0x486D1E54 in DOUBLE PRECISION (LibU32ToF64/LibU16ToF64 ->
+#   LibF64Div/Mul/Add -> 0x4C001417) and stores the result back as a
+#   halfword -- the only soft-float user in the mod runtime
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x5c, sp
+# TgPartModUnitRampStep_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     d0, a2
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d0, d1
+    add     0x500ce404, d1
+    mov     d1, a0
+    mov     (a0), a1
+    movhu   (0xc, a0), d3
+    clr     d2
+    clr     d0
+    mov     d0, (0x20, sp)
+    mov     0x26, d0
+    add     d1, d0
+    mov     d0, (0x40, sp)
+    mov     0x32, d0
+    add     d1, d0
+    mov     d0, (0x3c, sp)
+    mov     0x500b5340, a3
+    mov     0x34c, a0
+    mov     d3, (0x58, sp)
+    mov     a2, d3
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0x58, sp), d3
+    add     a3, d0
+    add     a0, d0
+    mov     d0, (0x30, sp)
+    add     0x2b, a1
+    mov     a1, (0x34, sp)
+    mov     0x3e, d0
+    add     d1, d0
+    mov     d0, (0x2c, sp)
+    mov     (0x50151bfc), d0
+    add     0xe, d1
+    mov     d1, (0x44, sp)
+    nop
+    nop
+    mulu    d0, d0
+    lsr     2, d0
+    mov     0x83, d1
+    nop
+    nop
+    mulu    d1, d0
+    and     0xffff, d0
+    asl     12, d0
+    lsr     16, d0
+    exth    d0
+    add     -0x800, d0
+    mov     d0, (0x38, sp)
+    mov     a2, d1
+    mov     0x54c, d0
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    add     a0, d0
+    mov     d0, (0x28, sp)
+    exthu   d3
+    mov     d3, (0x24, sp)
+    btst    0x01, d3
+    bne     0x4c039a96
+    jmp     0x4c039c4a
+    mov     (0x40, sp), d0
+    extbu   d2
+    add     d2, d0
+    mov     d0, (0x18, sp)
+    mov     (0x3c, sp), d0
+    mov     (0x18, sp), a0
+    add     d2, d0
+    mov     d0, (0x1c, sp)
+    movbu   (a0), d0
+    mov     d2, a2
+    cmp     0, d0
+    beq     0x4c039aae
+    jmp     0x4c039b71
+    mov     (0x1c, sp), a0
+    clr     d0
+    movbu   d0, (a0)
+    mov     (0x30, sp), a0
+    mov     (0x34, sp), a1
+    mov     0xa, d1
+    nop
+    nop
+    mulu    d2, d1
+    movhu   (d1, a0), d2
+    add     0x78, a0
+    movhu   (d1, a0), d0
+    mov     a2, a0
+    add     a0, a0
+    mov     a0, d1
+    movbu   (d1, a1), d3
+    exth    d2
+    exth    d0
+    add     d0, d2
+    mov     d2, d0
+    exth    d3
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    add     d0, d3
+    exth    d3
+    mov     d3, d0
+    exth    d0
+    cmp     0, d0
+    bge     0x4c039ae3
+    clr     d3
+    bra     0x4c039ae9
+    cmp     0x61, d0
+    ble     0x4c039ae9
+    mov     0x61, d3
+    mov     (0x18, sp), a0
+    mov     d3, d2
+    movbu   (a0), d0
+    call    LibU32ToF64, 0, 0
+    mov     d0, (0x48, sp)
+    mov     d1, (0x4c, sp)
+    extbu   d2
+    mov     d2, a0
+    add     a0, a0
+    mov     a0, d0
+    mov     0x486d1e54, a1
+    movhu   (d0, a1), d0
+    call    LibU16ToF64, 0, 0
+    mov     d0, (0x50, sp)
+    mov     d1, (0x54, sp)
+    mov     0x27525461, d0
+    mov     d0, (8, sp)
+    mov     0x40aef590, d1
+    mov     d1, (0xc, sp)
+    mov     (0x48, sp), d0
+    mov     (0x4c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x3fe00000, d1
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c001417, [d3,a3], 0x10
+    mov     (0x2c, sp), a3
+    and     0xff, d0
+    add     a2, a3
+    movbu   d0, (a3)
+    bra     0x4c039b77
+    mov     (0x2c, sp), a3
+    add     d2, a3
+    movbu   (a3), d0
+    mov     (0x1c, sp), a0
+    extbu   d0
+    movbu   (a0), d1
+    cmp     d0, d1
+    beq     0x4c039b82
+    jmp     0x4c039c43
+    mov     (0x38, sp), d0
+    mov     (0x44, sp), a0
+    mov     a2, d2
+    add     d2, d2
+    movhu   d0, (d2, a0)
+    mov     (0x18, sp), a0
+    mov     a2, d1
+    movbu   (a0), d0
+    inc     d0
+    movbu   d0, (a0)
+    mov     (0x28, sp), a0
+    mov     0xa, d0
+    nop
+    nop
+    mulu    d1, d0
+    movhu   (d0, a0), d1
+    mov     a0, a1
+    mov     (0x34, sp), a0
+    add     0x78, a1
+    movhu   (d0, a1), d0
+    movbu   (d2, a0), d2
+    exth    d1
+    exth    d0
+    add     d1, d0
+    exth    d2
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    add     d2, d0
+    mov     d0, d2
+    exth    d2
+    mov     d2, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c039bc0
+    clr     d2
+    bra     0x4c039bc6
+    cmp     0x61, d1
+    ble     0x4c039bc6
+    mov     0x61, d2
+    mov     (0x18, sp), a0
+    extbu   d2
+    movbu   (a0), d0
+    call    LibU32ToF64, 0, 0
+    mov     d0, (0x48, sp)
+    mov     d1, (0x4c, sp)
+    mov     d2, d0
+    add     d0, d0
+    mov     0x486d1e54, a0
+    movhu   (d0, a0), d0
+    call    LibU16ToF64, 0, 0
+    mov     d0, (0x50, sp)
+    mov     d1, (0x54, sp)
+    mov     0x27525461, d0
+    mov     d0, (8, sp)
+    mov     0x40aef590, d1
+    mov     d1, (0xc, sp)
+    mov     (0x48, sp), d0
+    mov     (0x4c, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Div_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    mov     (0x50, sp), d0
+    mov     (0x54, sp), d1
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibF64Mul_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x3fe00000, d1
+    mov     d1, (0x14, sp)
+    call    LibF64Add_entry, [d2,d3,a2,a3], 0x18
+    mov     d0, (8, sp)
+    mov     d1, (0xc, sp)
+    call    0x4c001417, [d3,a3], 0x10
+    and     0xff, d0
+    movbu   d0, (a3)
+    mov     (0x1c, sp), a0
+    movbu   (a0), d0
+    inc     d0
+    movbu   d0, (a0)
+    mov     (0x24, sp), d3
+    mov     (0x20, sp), d2
+    asr     1, d3
+    inc     d2
+    extbu   d2
+    mov     d2, (0x20, sp)
+    cmp     0xc, d2
+    bge     0x4c039c5c
+    jmp     0x4c039a8b
+    ret     [d2,d3,a2,a3], 0x6c
+.mnbase 0x48400000
+# TgPartModUnitDepthCurve  (lib CPU 0x4c039c5f)
+#   (d0 part, d1 idx, stack signed offset) -> curve ROM 0x486D1E54
+#   halfword at clamp(desc+0x2B+idx*2 + offset, 0..0x7F) -- the depth
+#   curve TgPartModUnitRampStep interpolates between
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+# TgPartModUnitDepthCurve_entry:   (register-save `call` entry)
+    extbu   d0
+    mov     0x130, d2
+    nop
+    nop
+    mulu    d2, d0
+    mov     0x500ce404, a0
+    mov     (d0, a0), a0
+    extbu   d1
+    mov     d1, a1
+    add     a1, a1
+    add     0x2b, a0
+    mov     a1, d0
+    movbu   (d0, a0), d1
+    movhu   (0x14, sp), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    mov     d1, d0
+    exth    d0
+    mov     d0, d1
+    exth    d1
+    cmp     0, d1
+    bge     0x4c039c8d
+    clr     d0
+    bra     0x4c039c93
+    cmp     0x7f, d1
+    ble     0x4c039c93
+    mov     0x7f, d0
+    extbu   d0
+    add     d0, d0
+    mov     0x486d1e54, a0
+    movhu   (d0, a0), d0
+    ret     [d2], 4
+.mnbase 0x48400000
+# TgPartToneTypeParamGet  (lib CPU 0x4c039ca0)
+#   (d0 part, d1 sel) read a parameter of the tone's TYPE feature
+#   record 0x486D2ED5+type*0x27 (type = desc+0x44 & 0xF), byte
+#   +0x16+sel*5, with per-type dispatch: types 0..3 share one path
+#   (sel 1 subtracts the desc+0x49 signed byte from -0x64), 4/5 a
+#   second, 6/8 a third, everything else the default. Same feature
+#   record TgVoiceEgSegParamGet indexes.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2], (sp)
+    add     -4, sp
+# TgPartToneTypeParamGet_entry:   (register-save `call` entry)
+    movbu   d0, (0x18, sp)
+    movbu   (0x18, sp), d0
+    mov     0x500ce404, a2
+    mov     a2, a1
+    mov     d1, d3
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a1
+    mov     (a1), a0
+    mov     d3, d1
+    movbu   (0x44, a0), d0
+    extbu   d1
+    mov     d3, (0, sp)
+    mov     0xf, d2
+    and     d0, d2
+    mov     d2, d0
+    extbu   d0
+    extbu   d2
+    mov     0x27, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0, sp), d3
+    mov     d0, a0
+    add     0x486d2ed5, a0
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (0x16, a0), d1
+    cmp     0, d2
+    beq     0x4c039d06
+    cmp     1, d2
+    beq     0x4c039d06
+    cmp     2, d2
+    beq     0x4c039d06
+    cmp     3, d2
+    beq     0x4c039d06
+    cmp     4, d2
+    beq     0x4c039d3e
+    cmp     5, d2
+    beq     0x4c039d3e
+    cmp     6, d2
+    beq     0x4c039d6b
+    cmp     8, d2
+    beq     0x4c039d6b
+    bra     0x4c039d79
+    extbu   d3
+    cmp     1, d3
+    bne     0x4c039d14
+    mov     (a1), a0
+    mov     -0x64, d1
+    movbu   (0x49, a0), d0
+    extb    d0
+    add     d0, d1
+    movbu   (0x18, sp), d0
+    mov     0x130, d2
+    nop
+    nop
+    mulu    d0, d2
+    add     d2, a2
+    movhu   (4, a2), d2
+    clr     d0
+    btst    0x6000, d2
+    beq     0x4c039d38
+    extbu   d3
+    mov     -4, d0
+    cmp     0, d3
+    beq     0x4c039d38
+    mov     -0x10, d0
+    cmp     1, d3
+    beq     0x4c039d38
+    clr     d0
+    extb    d1
+    extb    d0
+    extb    d0
+    add     d0, d1
+    bra     0x4c039d79
+    movbu   (0x18, sp), d0
+    extbu   d3
+    mov     d0, d1
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d1, d0
+    add     a2, d0
+    mov     d0, a0
+    movhu   (4, a0), d2
+    clr     d0
+    btst    0x6000, d2
+    beq     0x4c039d67
+    mov     d3, d1
+    extbu   d1
+    mov     -4, d0
+    cmp     0, d1
+    beq     0x4c039d67
+    mov     -0x10, d0
+    cmp     1, d1
+    beq     0x4c039d67
+    clr     d0
+    mov     d0, d1
+    extb    d1
+    bra     0x4c039d79
+    extbu   d3
+    cmp     1, d3
+    bne     0x4c039d79
+    mov     (a1), a0
+    movbu   (0x48, a0), d0
+    mov     d0, d1
+    extb    d1
+    add     -0x64, d1
+    mov     d1, d0
+    extb    d0
+    ret     [d2,d3,a2], 0x10
+.mnbase 0x48400000
+# TgPartEgRampBuild  (lib CPU 0x4c039d7e)
+#   (d0 part, d1 sel) THE TYPE-7 EG TIME-RAMP BUILDER (0x4C039D83,
+#   the third tail of TgPartToneModSetupMelodic): starts with
+#   TgPartEgRampInit and then RETURNS IMMEDIATELY unless the part
+#   record's halfword 0x500B5340+part*0x54C has bit 0x2000 set --
+#   independent confirmation that partrec bit13 gates the EXTENDED /
+#   type-7 family. The body walks the part's cached EG halfwords
+#   (tone block +0x4A) against the ROM feature/curve set 0x486D2ED5
+#   (type record), 0x486D2986/0x486D29DA/0x486D2D0A and writes the
+#   scaled ramp back -- the source TgPartEgRampSegScaled and
+#   TgPartEgRampCache54Scaled later read.
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x3c, sp
+# TgPartEgRampBuild_entry:   (register-save `call` entry)
+    mov     d0, d2
+    extbu   d2
+    mov     d2, (0x20, sp)
+    mov     d2, d0
+    extbu   d1
+    call    TgPartEgRampInit_entry, [d2], 4
+    extbu   d2
+    mov     d2, (0x28, sp)
+    mov     d2, d0
+    mov     0x54c, d1
+    nop
+    nop
+    mulu    d1, d0
+    mov     0x500b5340, a0
+    movhu   (d0, a0), d0
+    btst    0x2000, d0
+    bne     0x4c039dac
+    jmp     0x4c03a1b8
+    mov     (0x28, sp), d0
+    mov     0x500ce404, d1
+    mov     0x130, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     d1, d0
+    add     0x4a, d0
+    mov     d0, (0x24, sp)
+    movbu   (0x20, sp), d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d1, d0
+    mov     d0, (0x18, sp)
+    movbu   (0x20, sp), d0
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    mov     d1, (0x1c, sp)
+    clr     d0
+    movbu   d0, (0x2d, sp)
+    mov     d0, (0x10, sp)
+    setlb
+    mov     (0x18, sp), a0
+    clr     d3
+    mov     (a0), a0
+    mov     0xf, d2
+    movbu   (0x44, a0), d0
+    mov     d3, (0x30, sp)
+    and     d0, d2
+    movbu   (0x10, sp), d0
+    mov     d2, d1
+    extbu   d1
+    add     d0, d0
+    mov     6, d3
+    nop
+    nop
+    mulu    d3, d1
+    add     0x486d2986, d1
+    mov     d1, a0
+    movbu   (d0, a0), d3
+    extbu   d2
+    movbu   d3, (0x2c, sp)
+    mov     (0x30, sp), d3
+    cmp     0, d2
+    bge     0x4c039e0c
+    jmp     0x4c039eae
+    cmp     0xb, d2
+    ble     0x4c039e13
+    jmp     0x4c039eae
+    mov     d2, d0
+    asl2    d0
+    mov     0x48587960, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    mov     (0x18, sp), a0
+    movbu   (0x2c, sp), d1
+    mov     (a0), a0
+    mov     0x66, d2
+    movbu   (0x45, a0), d0
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2d0a, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d3
+    bra     0x4c039eaf
+    movbu   (0x10, sp), d0
+    cmp     0, d0
+    bne     0x4c039e60
+    mov     (0x18, sp), a0
+    movbu   (0x2c, sp), d1
+    mov     (a0), a0
+    mov     0x66, d2
+    movbu   (0x45, a0), d0
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2d0a, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d3
+    bra     0x4c039eaf
+    cmp     1, d0
+    bne     0x4c039eaf
+    mov     (0x18, sp), a0
+    movbu   (0x2c, sp), d0
+    mov     (a0), a0
+    mov     0x66, d2
+    movbu   (0x47, a0), d1
+    nop
+    nop
+    mulu    d2, d0
+    add     0x486d2d0a, d0
+    add     d1, d1
+    mov     d0, a0
+    movhu   (d1, a0), d3
+    bra     0x4c039eaf
+    movbu   (0x2c, sp), d0
+    cmp     0xff, d0
+    beq     0x4c039eaf
+    movbu   (0x10, sp), d0
+    cmp     0, d0
+    bne     0x4c039eaf
+    mov     (0x18, sp), a0
+    movbu   (0x2c, sp), d1
+    mov     (a0), a0
+    mov     0x66, d2
+    movbu   (0x47, a0), d0
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2d0a, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d3
+    bra     0x4c039eaf
+    clr     d3
+    mov     (0x24, sp), d1
+    movbu   (0x2d, sp), d0
+    asl2    d0
+    add     d0, d1
+    mov     d1, (0x14, sp)
+    mov     d1, a0
+    movhu   d3, (a0)
+    mov     (0x1c, sp), a0
+    movbu   (0x10, sp), d0
+    mov     (a0), a0
+    mov     d0, a1
+    movbu   (0x44, a0), d2
+    mov     d0, d1
+    and     0x0f, d2
+    extbu   d2
+    mov     d2, a2
+    add     d1, d1
+    mov     6, d0
+    nop
+    nop
+    mulu    d2, d0
+    add     0x486d2986, d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (1, a0), d3
+    extbu   d2
+    cmp     0, d2
+    bge     0x4c039eea
+    jmp     0x4c039f98
+    cmp     0xb, d2
+    ble     0x4c039ef1
+    jmp     0x4c039f98
+    mov     d2, d0
+    asl2    d0
+    mov     0x48587930, a0
+    mov     (d0, a0), a0
+    jmp     (a0)
+    mov     (0x1c, sp), a0
+    extbu   d3
+    mov     (a0), a0
+    mov     0x66, d1
+    movbu   (0x46, a0), d0
+    nop
+    nop
+    mulu    d3, d1
+    add     0x486d29da, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d2
+    mov     d2, a3
+    jmp     0x4c039f9a
+    movbu   (0x10, sp), d0
+    cmp     0, d0
+    bne     0x4c039f3f
+    mov     (0x1c, sp), a0
+    extbu   d3
+    mov     (a0), a0
+    mov     0x66, d0
+    movbu   (0x46, a0), d1
+    nop
+    nop
+    mulu    d3, d0
+    add     0x486d29da, d0
+    add     d1, d1
+    mov     d0, a0
+    movhu   (d1, a0), d2
+    mov     d2, a3
+    bra     0x4c039f9a
+    cmp     1, d0
+    bne     0x4c039f9a
+    mov     (0x1c, sp), a0
+    extbu   d3
+    mov     (a0), a0
+    mov     0x66, d1
+    movbu   (0x48, a0), d0
+    nop
+    nop
+    mulu    d1, d3
+    add     0x486d29da, d3
+    add     d0, d0
+    mov     d3, a0
+    movhu   (d0, a0), d1
+    mov     d1, a3
+    bra     0x4c039f9a
+    mov     d3, d0
+    extbu   d0
+    cmp     0xff, d0
+    beq     0x4c039f9a
+    mov     a2, d1
+    mov     0x27, d0
+    nop
+    nop
+    mulu    d1, d0
+    mov     d0, a0
+    add     0x486d2ed5, a0
+    mov     a1, d0
+    asl2    d0
+    sub     a1, d0
+    add     d0, a0
+    movbu   (1, a0), d1
+    extbu   d3
+    add     d1, d1
+    mov     0x66, d0
+    nop
+    nop
+    mulu    d0, d3
+    add     0x486d29da, d3
+    mov     d3, a0
+    movhu   (d1, a0), d0
+    mov     d0, a3
+    bra     0x4c039f9a
+    mov     0, a3
+    mov     (0x14, sp), a0
+    mov     a3, d0
+    movhu   d0, (2, a0)
+    mov     (0x10, sp), d0
+    inc     d0
+    movbu   d0, (0x2d, sp)
+    movbu   (0x2d, sp), d0
+    mov     d0, (0x10, sp)
+    cmp     1, d0
+    lle
+    movbu   (0x20, sp), d0
+    mov     0x500ce404, a3
+    mov     a3, a1
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a1
+    mov     (a1), a0
+    mov     6, d1
+    movbu   (0x44, a0), d2
+    and     0x0f, d2
+    mov     d2, d0
+    extbu   d0
+    nop
+    nop
+    mulu    d0, d1
+    add     0x486d2986, d1
+    mov     d1, a0
+    movbu   (4, a0), d1
+    extbu   d2
+    cmp     6, d2
+    beq     0x4c039fe8
+    cmp     7, d2
+    beq     0x4c03a001
+    bra     0x4c03a026
+    mov     (a1), a0
+    extbu   d1
+    movbu   (0x45, a0), d0
+    mov     0x66, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2e3c, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d1
+    bra     0x4c03a027
+    mov     0x27, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     0x486d2ed5, d0
+    mov     d0, a0
+    movbu   (6, a0), d0
+    extbu   d1
+    mov     0x66, d2
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2e3c, d1
+    add     d0, d0
+    mov     d1, a0
+    movhu   (d0, a0), d1
+    bra     0x4c03a027
+    clr     d1
+    mov     (0x28, sp), d0
+    mov     0x130, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     a3, d0
+    mov     d0, (0x18, sp)
+    mov     d0, a2
+    add     0x4a, a2
+    movhu   d1, (8, a2)
+    movbu   (0x20, sp), d0
+    mov     a3, a1
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, a1
+    mov     (a1), a0
+    movbu   (0x44, a0), d2
+    and     0x0f, d2
+    mov     d2, d1
+    extbu   d1
+    cmp     6, d1
+    beq     0x4c03a058
+    clr     d0
+    cmp     7, d1
+    bne     0x4c03a080
+    extbu   d2
+    mov     6, d1
+    nop
+    nop
+    mulu    d2, d1
+    add     0x486d2986, d1
+    mov     d1, a0
+    movbu   (5, a0), d2
+    mov     (a1), a0
+    mov     0x66, d0
+    movbu   (0x46, a0), d1
+    nop
+    nop
+    mulu    d0, d2
+    add     0x486d29da, d2
+    add     d1, d1
+    mov     d2, a0
+    movhu   (d1, a0), d0
+    movhu   d0, (0xa, a2)
+    movbu   (0x20, sp), d0
+    mov     0x130, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     a3, d0
+    mov     d0, (0x14, sp)
+    mov     (0x18, sp), d0
+    clr     d3
+    add     0x60, d0
+    mov     d0, (0x1c, sp)
+    movbu   (0x20, sp), d0
+    mov     0, a2
+    nop
+    nop
+    mulu    d1, d0
+    add     d0, a3
+    mov     a3, (0x10, sp)
+    mov     (0x14, sp), a0
+    mov     a2, d1
+    mov     (a0), a0
+    extbu   d1
+    movbu   (0x44, a0), d0
+    mov     d3, (0x34, sp)
+    mov     0xf, d2
+    and     d0, d2
+    mov     d2, d0
+    extbu   d0
+    extbu   d2
+    mov     0x27, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0x34, sp), d3
+    mov     d0, a0
+    add     0x486d2ed5, a0
+    mov     d1, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (0x14, a0), d1
+    cmp     8, d2
+    bne     0x4c03a0e2
+    mov     a2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4c03a0e2
+    mov     (0x14, sp), a0
+    mov     (a0), a0
+    movbu   (0x47, a0), d1
+    mov     (0x1c, sp), a3
+    extbu   d3
+    extb    d1
+    mov     0x34, d0
+    nop
+    nop
+    mulu    d3, d0
+    add     d0, a3
+    movbu   d1, (0x2e, a3)
+    mov     (0x10, sp), a0
+    mov     a2, d2
+    mov     (a0), a0
+    extbu   d2
+    movbu   (0x44, a0), d3
+    mov     0x27, d0
+    and     0x0f, d3
+    mov     d3, d1
+    extbu   d1
+    nop
+    nop
+    mulu    d0, d1
+    add     0x486d2ed5, d1
+    mov     d2, d0
+    asl2    d0
+    add     d2, d0
+    add     d0, d1
+    mov     d1, a0
+    movbu   (0x15, a0), d1
+    extbu   d3
+    cmp     0, d3
+    beq     0x4c03a134
+    cmp     1, d3
+    beq     0x4c03a134
+    cmp     2, d3
+    beq     0x4c03a134
+    cmp     3, d3
+    beq     0x4c03a134
+    cmp     4, d3
+    beq     0x4c03a147
+    cmp     5, d3
+    beq     0x4c03a147
+    cmp     8, d3
+    beq     0x4c03a15e
+    bra     0x4c03a173
+    mov     a2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4c03a173
+    mov     (0x10, sp), a0
+    mov     (a0), a0
+    movbu   (0x47, a0), d0
+    extb    d0
+    mov     d0, d1
+    add     d1, d1
+    bra     0x4c03a173
+    mov     a2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4c03a173
+    mov     (0x10, sp), a0
+    mov     (a0), a0
+    movbu   (0x49, a0), d0
+    extb    d0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d1
+    bra     0x4c03a173
+    mov     a2, d0
+    extbu   d0
+    cmp     1, d0
+    bne     0x4c03a173
+    mov     (0x10, sp), a0
+    mov     (a0), a0
+    movbu   (0x46, a0), d0
+    extb    d0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d1
+    extb    d1
+    movbu   d1, (0x2f, a3)
+    mov     (0x20, sp), d0
+    mov     a2, d1
+    call    TgPartToneTypeParamGet_entry, [d2,d3,a2], 0x10
+    movbu   d0, (0x30, a3)
+    mov     a2, d3
+    inc     d3
+    extbu   d3
+    mov     d3, a2
+    cmp     4, d3
+    bge     0x4c03a190
+    jmp     0x4c03a0a5
+    mov     (0x18, sp), a0
+    mov     (a0), a0
+    movbu   (0x44, a0), d0
+    and     0x0f, d0
+    cmp     0xa, d0
+    bne     0x4c03a1ab
+    mov     (0x18, sp), a0
+    inc4    a0
+    movhu   (a0), d0
+    or      0x0200, d0
+    movhu   d0, (a0)
+    bra     0x4c03a20c
+    mov     (0x18, sp), a0
+    inc4    a0
+    movhu   (a0), d0
+    and     0xfdff, d0
+    movhu   d0, (a0)
+    bra     0x4c03a20c
+    mov     (0x28, sp), d3
+    mov     0x130, d0
+    nop
+    nop
+    mulu    d0, d3
+    add     0x500ce404, d3
+    mov     0x4a, a1
+    add     d3, a1
+    clr     d0
+    movhu   d0, (a1)
+    movhu   d0, (2, a1)
+    mov     a1, a0
+    inc4    a0
+    movhu   d0, (a0)
+    movhu   d0, (2, a0)
+    movhu   d0, (8, a1)
+    movhu   d0, (0xa, a1)
+    clr     d1
+    mov     0x60, d2
+    add     d3, d2
+    setlb
+    extbu   d0
+    mov     d3, (0x38, sp)
+    mov     0x34, d3
+    nop
+    nop
+    mulu    d3, d0
+    mov     (0x38, sp), d3
+    add     d2, d0
+    mov     d0, a0
+    clr     d0
+    movbu   d0, (0x2e, a0)
+    movbu   d0, (0x2f, a0)
+    movbu   d0, (0x30, a0)
+    inc     d1
+    mov     d1, d0
+    extbu   d1
+    cmp     4, d1
+    llt
+    mov     d3, a0
+    inc4    a0
+    movhu   (a0), d0
+    and     0xfdff, d0
+    movhu   d0, (a0)
+    ret     [d2,d3,a2,a3], 0x4c
+.mnbase 0x48400000
 # TgVoiceEgSegParamGet  (lib CPU 0x4c03a20f)
 #   the raw EG-segment read both fresh note-on programmers call: the
 #   part's cached EG halfword (0x500CE404+part*0x130+0x4A+seg*4) gated
@@ -43596,12 +48264,12 @@ display_palette:
     mov     (0x1c, sp), a0
     movhu   d2, (a0)
     mov     (0x18, sp), d0
-    call    0x4c0394a4, [d2,d3,a2,a3], 0x50
+    call    TgPartToneModUnitBuild_entry, [d2,d3,a2,a3], 0x50
     mov     (0x18, sp), d0
     clr     d1
-    call    0x4c039d83, [d2,d3,a2,a3], 0x4c
+    call    TgPartEgRampBuild_entry, [d2,d3,a2,a3], 0x4c
     mov     (0x18, sp), d0
-    call    0x4c0396e7, [d2,d3,a2,a3], 0x58
+    call    TgPartToneModParamBuild_entry, [d2,d3,a2,a3], 0x58
     ret     [d2,d3,a2,a3], 0x34
 .mnbase 0x48400000
 # TgPartToneModSetupDrum  (lib CPU 0x4c03a5cd)
@@ -43616,14 +48284,14 @@ display_palette:
     mov     d2, d0
     call    0x4c00a599, [d2,d3], 0x14
     mov     d2, d0
-    call    0x4c0394a4, [d2,d3,a2,a3], 0x50
+    call    TgPartToneModUnitBuild_entry, [d2,d3,a2,a3], 0x50
     mov     d2, d0
     clr     d1
-    call    0x4c039d83, [d2,d3,a2,a3], 0x4c
+    call    TgPartEgRampBuild_entry, [d2,d3,a2,a3], 0x4c
     mov     d2, d0
     call    0x4c00a307, 0, 0
     mov     d2, d0
-    call    0x4c0396e7, [d2,d3,a2,a3], 0x58
+    call    TgPartToneModParamBuild_entry, [d2,d3,a2,a3], 0x58
     ret     [d2], 0x14
 .mnbase 0x48400000
 # TgPartToneModSetupTable  (lib CPU 0x4c03a602)
@@ -43651,16 +48319,16 @@ display_palette:
     movbu   (6, a0), d0
     mov     d0, (0x14, sp)
     mov     d3, d0
-    call    0x4c038942, [d2,d3,a2,a3], 0x48
+    call    TgPartProgramApply_entry, [d2,d3,a2,a3], 0x48
     mov     d3, d0
-    call    0x4c0394a4, [d2,d3,a2,a3], 0x50
+    call    TgPartToneModUnitBuild_entry, [d2,d3,a2,a3], 0x50
     mov     d3, d0
     clr     d1
-    call    0x4c039d83, [d2,d3,a2,a3], 0x4c
+    call    TgPartEgRampBuild_entry, [d2,d3,a2,a3], 0x4c
     mov     d3, d0
     call    0x4c0108c7, 0, 0
     mov     d3, d0
-    call    0x4c0396e7, [d2,d3,a2,a3], 0x58
+    call    TgPartToneModParamBuild_entry, [d2,d3,a2,a3], 0x58
     ret     [d2,d3], 0x20
 .mnbase 0x48400000
 # TgPartToneModSetupDispatch  (lib CPU 0x4c03a65b)
@@ -43673,7 +48341,7 @@ display_palette:
     extbu   d3
     exthu   d3
     mov     d3, d0
-    call    0x4c038515, 0, 0
+    call    TgPartToneIsTableClass, 0, 0
     extbu   d0
     cmp     0, d0
     beq     0x4c03a67a
@@ -43763,7 +48431,7 @@ display_palette:
     movbu   (0x34, sp), d0
     mov     d0, (0x14, sp)
     mov     d2, d0
-    call    0x4c038942, [d2,d3,a2,a3], 0x48
+    call    TgPartProgramApply_entry, [d2,d3,a2,a3], 0x48
     mov     d2, d0
     movbu   (0x38, sp), d1
     call    0x4c007724, [d2,d3,a2], 0xc

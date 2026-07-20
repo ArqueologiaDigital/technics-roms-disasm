@@ -1206,3 +1206,62 @@
 0x4C02D52A  TgVoicePeriodicService  ; the periodic voice tick: glide + 0x4C039A09 for all parts, 0x4C009A16/0x4C009839, then the global sweep running the +0x52 countdowns and +0x54 level ramps (TgVoiceReleaseCountdownTick / TgVoiceLevelRampTick; immediate key-off for non-bit-0x2000 parts)
 0x4C02D530  TgVoicePeriodicService_entry
 0x4C02D75F  TgPartGlideStateReset   ; (d0 part) reset the portamento state 0x500AD5A8+part*0x10C: +0x26 := 0xFF, clear +0x28..+0x35 and +0x40/+0x42, +0x44 := -1; rets leaf
+
+; ---- the PART TONE APPLY LAYER 0x4C038503..0x4C03A20F (2026-07-20) --------
+0x4C0384C4  TgPartToneProgramGet    ; (d0 part) -> tone block 0x500CE404+part*0x130 byte +8 (program); rets leaf
+0x4C0384D9  TgPartToneBankLoGet     ; (d0 part) -> tone block byte +7 (bank lo); rets leaf
+0x4C0384EE  TgPartToneBankHiGet     ; (d0 part) -> tone block byte +6 (bank hi); rets leaf
+0x4C038503  TgPartToneDescPtr       ; (d0 part) -> the resolved tone DESCRIPTOR pointer at tone block +0; rets leaf
+0x4C038515  TgPartToneIsTableClass  ; (d0 part, 16-bit) -> 1 when (desc+0x10 & 0xC0) == 0x40 (TABLE tone class); rets leaf
+0x4C038535  TgPartVoiceRecFetch     ; (d0 part, d1 elem, stack flags) -> voice record: flags bit7 = resource path (program +8 of 0x11/0x19 special), else 0x484496CE banked lookup
+0x4C03853A  TgPartVoiceRecFetch_entry
+0x4C03858D  TgPartVoiceRecFetchSel  ; front end: 0x4C00C6BF says local-edit -> RAM record 0x500C1183+idx*0x8E (0x4C00C2C8), else TgPartVoiceRecFetch
+0x4C038592  TgPartVoiceRecFetchSel_entry
+0x4C0385C7  TgPartVoiceRecFetchIdx  ; indexed flavour of TgPartVoiceRecFetch (0x4844AC30/0x4844A4B5/0x48449790)
+0x4C0385CC  TgPartVoiceRecFetchIdx_entry
+0x4C03862D  TgPartVoiceRecFetchIdxSel ; local-edit front end of TgPartVoiceRecFetchIdx (0x4C00C2DC)
+0x4C038632  TgPartVoiceRecFetchIdxSel_entry
+0x4C03866F  TgPartElemMapScratchBuild ; (d0 part, d1 sub, stack note/args) -> element-map scratch 0x50009F70+part*0x8C+sub*0x23 (template ROM 0x485877FC, six 3-byte entries at +5); 0x5000B208 bit15 -> 0x4844987E instead
+0x4C038674  TgPartElemMapScratchBuild_entry
+0x4C038713  TgPartElemProgramApply  ; apply twin of the fetch ladder: flags bit7 = resource path (program +8 0x10/0x18 -> 0x4844AC55/0x4844A510), class desc+0x10&0xCF -> 0x4C00A1F9 or the element-map builder
+0x4C038718  TgPartElemProgramApply_entry
+0x4C0387C7  TgPartElemProgramApplySel ; local-edit front end (0x4C00C28F) of TgPartElemProgramApply
+0x4C0387CC  TgPartElemProgramApplySel_entry
+0x4C038802  TgPartElemProgramApplyIdx ; indexed apply (0x4844AC78/0x4844A56B)
+0x4C038807  TgPartElemProgramApplyIdx_entry
+0x4C038871  TgPartElemProgramApplyIdxSel ; local-edit front end (0x4C00C2FB) of TgPartElemProgramApplyIdx
+0x4C038876  TgPartElemProgramApplyIdxSel_entry
+0x4C0388B3  TgPartProgramHandlerDispatch ; dispatch on tone-block program byte +8 (0x11..0x78) through the 8-byte {program,handler} hash table 0x48587830..0x485878B0 (linear probe, wraps); miss -> the generic apply pair. Reached by indirect jmp
+0x4C03893D  TgPartProgramApply      ; THE PROGRAM-CHANGE REBUILD called by TgPartProgramSet: per-class re-fetch + element reassignment (TgPartElemLastSet, 0x4844992A/0x484499EB) + re-run of the element programmers, keyed by the {program,handler} tables 0x485878B0/0x48587930
+0x4C038942  TgPartProgramApply_entry
+0x4C03949F  TgPartToneModUnitBuild  ; (d0 part) tail of TgPartToneModSetupMelodic: 8-byte ROM template 0x48587820 + walk the four mod-unit blocks (tone block +0x60+u*0x34) against partrec 0x500B5340+part*0x54C
+0x4C0394A4  TgPartToneModUnitBuild_entry
+0x4C0396E2  TgPartToneModParamBuild ; (d0 part, d1 sel) clear tone-block +0xA/+0xC and rebuild the per-unit params from partrec+0x42 and the block fields +4/+0x26/+0x32/+0x60
+0x4C0396E7  TgPartToneModParamBuild_entry
+0x4C0399DB  TgPartModUnitParamGet   ; (d0 part, d1 unit, stack idx) -> halfword at tone block +0x60+unit*0x34 +0x22+idx*2 -- THE mod-source read of TgVoiceModSlotUpdate/TgVoiceModLfoStep
+0x4C0399DD  TgPartModUnitParamGet_entry
+0x4C039A04  TgPartModUnitRampStep   ; (d0 part) the per-part mod-unit RAMP step of TgPartModSlotSweep/TgVoicePeriodicService: double-precision interpolation through the curve ROM 0x486D1E54 (LibF64Div/Mul/Add)
+0x4C039A09  TgPartModUnitRampStep_entry
+0x4C039C5F  TgPartModUnitDepthCurve ; (d0 part, d1 idx, stack signed off) -> ROM 0x486D1E54 halfword at clamp(desc+0x2B+idx*2 + off, 0..0x7F)
+0x4C039C61  TgPartModUnitDepthCurve_entry
+0x4C039CA0  TgPartToneTypeParamGet  ; (d0 part, d1 sel) -> tone TYPE feature record 0x486D2ED5+(desc+0x44 & 0xF)*0x27 byte +0x16+sel*5, per-type dispatch (0..3 / 4..5 / 6,8 / default)
+0x4C039CA5  TgPartToneTypeParamGet_entry
+0x4C039D7E  TgPartEgRampBuild       ; (d0 part, d1 sel) THE TYPE-7 EG TIME-RAMP BUILDER: TgPartEgRampInit then returns unless partrec (0x500B5340+part*0x54C) halfword bit 0x2000 is set -- independent confirmation that bit13 gates the extended family; walks tone-block +0x4A EG halfwords against ROM 0x486D2ED5/0x486D2986/0x486D29DA/0x486D2D0A
+0x4C039D83  TgPartEgRampBuild_entry
+
+; ---- the WRITE side of the controller mod matrix (2026-07-20) -------------
+0x4C00580B  TgModValueScaleA        ; (d0 value, d1 flags, stack depth) -> value*depth<<8 / 0x1FC0 (LibDiv32); flags bit7 = bipolar (re-centre at 0x40, doubled)
+0x4C00583E  TgModValueScaleB        ; byte-identical twin of TgModValueScaleA
+0x4C005841  TgModValueScaleB_entry
+0x4C005874  TgModDepthScaleClamp    ; same bipolar scaling normalised by divu 0x7F then >>6, clamped 0..0x1FFF (the +-0x1FFF mod-slot range)
+0x4C005876  TgModDepthScaleClamp_entry
+0x4C006333  TgPartModConfigSet      ; THE MOD-MATRIX SETTER (read side = TgPartModSumPitch..Dest40): param byte &0x7F in 1..0x2E indexes the 46-entry jump table 0x48586710; each case scales the value (TgModValueScale*/0x4C0057xx) into partrec 0x500B5340+part*0x54C +0x66+dest*0xC+src*2 (value) / +0x6C+... (depth), then re-collects the part's voices and re-applies; the mask cases call TgPartModDestEnableUpdate to rebuild partrec+0x52C
+0x4C006339  TgPartModConfigSet_entry
+
+; ---- the three TgPartModRetrigger satellites (2026-07-20) -----------------
+0x4C013497  TgPartCtrlSenseKit      ; (d0 part) -> 0..0x7F controller sense for KIT tones: gated by global 0x500C0758 bit 0x0200 + partrec bit0, amount partrec+0x13 scaled by tone DESC +0x4C (partrec bit-0x2000 parts only) and DESC +0x43 as (0x80+signed)/0x100 via LibDiv32, clamped by TgKitZoneParamClamp; global bit clear -> 0x28 unless 0x500C0758 bit 0x02
+0x4C01349C  TgPartCtrlSenseKit_entry
+0x4C030896  TgPartCtrlSenseElem     ; (d0 part, a0 tone rec, a1 zone rec) element flavour: same gate, mode from partrec+0x62 bits 11..12 selects the per-element signed offset partrec+0xCE+elem*5 or the zone record's +0xF byte scaled by (0x80+signed)/0x100
+0x4C03089B  TgPartCtrlSenseElem_entry
+0x4C033C0A  TgPartCtrlSenseMelodic  ; melodic twin of TgPartCtrlSenseKit, clamped through TgZoneParamClamp instead
+0x4C033C0F  TgPartCtrlSenseMelodic_entry
