@@ -560,3 +560,83 @@
 0x486CE82D  DspWhitelistUnit1_6     ; units 1-6 (Multi/insert) shared accepted-type byte table
 0x486CE8FD  DspWhitelistUnit7       ; unit 7 (Chorus) accepted-type byte table
 0x486CE9CD  DspWhitelistUnit9       ; unit 9 (Reverb) accepted-type byte table
+;
+; ---- Tempo / TM5 clock module (96-PPQN sequencer timebase) ----------------
+; RE: kn7000_mame/notes/sequenced-playback-and-style-data-rootcause.md (root
+; cause 1, FIXED in MAME commit 60d5392). TM5 mode 0x34001082 / 16-bit reload
+; 0x34001092 / counter 0x340010A2, underflow -> INTC group 7 (GxICR
+; 0x3400011C); timebase 2 MHz (IOCLK 16 MHz / 8), reload = 1,250,000 / BPM.
+; The ISR drives SIX 10-byte "clock consumer" blocks:
+;   0x50149666 seq main (flags 0x5014966E = the notes' RUN gate)
+;   0x50149670 / 0x5014967A sub-clocks (armed per mode bytes 0x5014965C/5E)
+;   0x50149684 sub-clock (armed when byte 0x50037C64 != 0)
+;   0x5014968E metronome/count-in clock (flags 0x50149696)
+;   0x50149698 count-in control {ctl, target 0x5014969A, count 0x5014969C}
+; Block layout: +0 beat-in-bar, +2 beats-per-bar (0 = free run), +4 tick-in-
+; beat (0..0x5F = 96 PPQN), +6 free-running tick counter, +8 flags:
+;   bit15 RUNNING  bit14 start-request  bit13 stop-request  bit12 stop-at-beat
+;   bit11 just-started  bit10 stopped  bit9 hot-start marker  bit8 started-at-
+;   origin  bit7 bar-wrap event
+; MIDI-sync state: 0x50149654 realtime mode (0..3), 0x50149656 MIDI-clock-
+; slave active (property 0x2020), 0x50149658 realtime enable (prop 0x2041),
+; 0x5014965A realtime suppress (prop 0x2023), 0x50149662 clock-source byte,
+; 0x50149664 global 96-PPQN phase (mod 0x60). Metronome state: 0x5003A530
+; last click note, 0x5003A532 click-off countdown, 0x5003A534 click interval,
+; 0x5003A536 last click tick, 0x5003A538/3A last seen beat/tick.
+0x4844525B  TempoModuleBoot         ; boot hook (table 0x487314D4): TempoTimerInit + TempoClocksReset, zero the MIDI-sync bytes 0x50149654..62 + metronome enables 0x5003A50C/0D/0E
+0x484452AE  TempoHookNop            ; retf-only filler slots of the 0x487314D4 hook table
+0x484452B1  MidiRealtimeModeSet     ; validate 0..3 -> 0x50149654 (must be <3 to send realtime, ==0 for the RX handlers to act)
+0x484452C0  MidiRealtimeModeGet     ; read 0x50149654 -> mode >= 2
+0x484452D0  TempoClockSourceSet     ; 0x50149662 := 1
+0x484452DB  TempoClockSourceClear   ; 0x50149662 := 0
+0x484452E5  TempoClockSourceGet     ; read the clock-source byte 0x50149662
+0x484452EE  TempoSyncParamDispatch  ; property dispatch (low 24 bits of d0): 0x2020 -> MIDI-clock-slave flag 0x50149656 (on clear, re-program TM5 from tempo param 4); 0x2023 -> suppress 0x5014965A; 0x2041 -> enable 0x50149658
+0x48446AE9  MetronomeClickPost      ; (d0 beat-in-bar, d1 tick-in-beat) key the click: pending note-off first, then beat0&tick<0xC -> note 0x10 vel 0x6A (downbeat), tick<0xC -> 0x11/0x54, else 0x11/0x34; off-countdown := 0x10
+0x48446AEE  MetronomeClickPost_entry
+0x48446B4F  MetronomeStateReset     ; click-off countdown := 0, click interval := 0x60 (one beat)
+0x48446B61  MetronomeVoiceInit      ; program the metronome part 0x20 (lib 0x4C02986D, block {0, 0x26, 0})
+0x48446B7B  MetronomeClickRateSet   ; d0 = 2..4 -> click interval 0x5003A534 := 0x60/d0 (LibDiv32), else 0x60
+0x48446BA4  MetronomeBeatTask       ; metronome pump (runtime-dispatched): reads the metro clock pos/tick (locked accessor 0x48445886) + flag getters 0x4844590E/1D/2C/3B; just-started@origin -> immediate downbeat; stopped -> note-off; running -> countdown -= elapsed (0x484458EA/F6), click when the beat/tick window 0x5003A536/38/3A advances
+0x48446C98  MetronomeNoteEvent      ; (d0 note, d1 velocity) -> lib key event 0x4C02976F on part 0x20 (the metronome part; part 0x21 = chord finder)
+0x48446C9D  MetronomeNoteEvent_entry
+0x48446CAE  TempoClkStartApply      ; apply a pending start: gate bit14 -> RUNNING+bit11, clear 14/10/13/12; bit8 := (pos==0 && tick==0); clear bit7
+0x48446D14  TempoClkStopApply       ; apply a pending stop: gate bit13 -> clear RUNNING + all transient flags, set bit10 (stopped)
+0x48446D61  TempoClkAdvance         ; per-tick advance: tick-in-beat++ (wrap at 0x60 -> beat-in-bar++ vs beats-per-bar, bar wrap sets bit7); bit12 -> convert to a stop-request at the beat wrap + apply; +6 free tick counter always++
+0x48446D66  TempoClkAdvance_entry
+0x48446DE0  TempoClkAdvanceExtHold  ; MIDI-clock-slave per-tick advance: advance only while tick%4 < 3, then HOLD at the 24-PPQN boundary for the next real 0xF8 (stop-requests still advance+apply)
+0x48446DE5  TempoClkAdvanceExtHold_entry
+0x48446E29  TempoClkMidiClockStep   ; consume one received 0xF8: snap tick-in-beat to the next multiple of 4 (one 24-PPQN quantum), same wrap/bar logic, +6 counter += ticks skipped
+0x48446E2E  TempoClkMidiClockStep_entry
+0x48446EAE  MidiRealtimeSend        ; send realtime byte d0 to MIDI out (0x484B22B4): gate mode 0x50149654 < 3; 0xF8 always, others need enable 0x50149658 && !suppress 0x5014965A
+0x48446EB1  MidiRealtimeSend_entry
+0x48446EE9  TempoClocksReset        ; zero all five 10-byte clock blocks + the count-in block (lib memset 0x4C003024), global phase 0x50149664 := 0, last-tick 0x5003A53C := 0
+0x48446EEC  TempoClocksReset_entry
+0x48446F5C  TempoClkArmRestart      ; rewind (pos:=0, tick:=0) + request start (bit14; clears RUNNING/9/13/12) -- applied at the next ISR tick
+0x48446F91  TempoClkStartNow        ; set bit9, rewind, bit14, then TempoClkStartApply inline (immediate start from zero)
+0x48446F94  TempoClkStartNow_entry
+0x48446FB6  TempoClkArmContinue     ; request start WITHOUT rewinding (clear bit9, set bit14, clear 15/13/12)
+0x48446FE3  TempoClkContinueNow     ; set bit9 + bit14, then TempoClkStartApply inline (immediate continue from the current position)
+0x48446FE6  TempoClkContinueNow_entry
+0x48447002  TempoClkStopRequest     ; request stop: clear bit9, set bit13 (+bit15), clear 12/14 -- applied by the ISR on a 24-PPQN boundary
+0x4844702F  TempoClkStopNow         ; set bit9+bit13, apply the stop inline, then rewind pos/tick
+0x48447034  TempoClkStopNow_entry
+0x4844705F  TempoClkBeatStopRequest ; request stop at the next beat wrap: clear bit9, set bit12 (+bit15), clear bit14
+0x48447084  TempoTick96Isr          ; THE 96-PPQN TM5 ISR (registered for INTC group 7): global phase mod 0x60; slave-hold branch when 0x50149656; advance all clocks, main run-edge -> 0xFC; apply starts (count-in ladder: metro-clock bar wraps count to 0x5014969A, then start/continue + 0xFA/0xFB per ctl bits); stops on 24-PPQN alignment; 0xF8 out every 4th tick while running; ack GxICR 0x3400011C
+0x48447361  MidiClockRxHandler      ; received 0xF8 (only while slave 0x50149656): interval vs the 1 kHz tick 0x50151BFC (last @0x5003A53C, clamp 0x7F) -> TempoReloadFromInterval(2*dt) re-programs TM5 as an interpolator; then step each armed/running clock by one 24-PPQN quantum
+0x48447366  MidiClockRxHandler_entry
+0x48447445  MidiStartRxHandler      ; received 0xFA: gates mode==0, enable, !suppress, source==0, main not armed/running; internal -> TempoClkArmRestart(main [+subs per 0x5014965C/5E, +0x50149684 if 0x50037C64, +count-in per ctl bit15]); slave -> send 0xFA, TempoClkStartNow set + Tm5TimerRestart + 0xF8
+0x4844744A  MidiStartRxHandler_entry
+0x484475C3  MidiContinueRxHandler   ; received 0xFB: same gates; ArmContinue set (internal) or 0xFB + ContinueNow set + Tm5TimerRestart + 0xF8 (slave)
+0x484475C8  MidiContinueRxHandler_entry
+0x48447712  MidiStopRxHandler       ; received 0xFC: gates mode<1, enable, !suppress; TempoClkStopRequest(main) [+0xFC out when main idle], then stop each running sub-clock
+0x48447717  MidiStopRxHandler_entry
+0x484477D3  Tm5TempoTimerStart      ; TM5 bring-up: mode 0x34001082 low3 := 1, reload 0x34001092 := 0x28B0 (120 BPM), bset/bclr 0x40 (load pulse), bset 0x80 (enable)
+0x48447809  Tm5TempoIsrRegister     ; register TempoTick96Isr for INTC group 7 (desc {1, isr, 7, GxICR 0x3400011C, 0, level 4} -> lib 0x4C03DB26), then enable via 0x4C03DCC8(3)
+0x4844780C  Tm5TempoIsrRegister_entry
+0x48447847  TempoTimerInit          ; module init: 0x5003A540 := 1,250,000 (2 MHz timebase ticks/min/BPM), 0x5003A544 := 0x7D0, then Tm5TempoTimerStart + Tm5TempoIsrRegister
+0x4844784A  TempoTimerInit_entry
+0x4844786C  TempoBpmReloadWrite     ; THE live tempo rewrite: clamp BPM to 40..300 (else 120), TM5 reload 0x34001092 := 1,250,000 / BPM (takes effect next underflow)
+0x4844786E  TempoBpmReloadWrite_entry
+0x48447891  TempoReloadFromInterval ; slave-mode reload: d0 = 2*ms between 0xF8s; >= 0x3F -> 40 BPM, <= 8 -> 300 BPM, else reload := d0 * 0x7D0 / 4 (interpolate 4 internal ticks per received clock)
+0x48447894  TempoReloadFromInterval_entry
+0x484478C8  Tm5TimerRestart         ; TM5 phase resync: bclr 0x80, load pulse, bset 0x80 (used on slave start/continue)
