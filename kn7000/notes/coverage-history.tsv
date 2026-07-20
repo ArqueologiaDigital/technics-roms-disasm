@@ -1,0 +1,4 @@
+# KN7000 source-coverage history (append one row per CONVERT pass)
+# byte-match is always 100%; this tracks REAL source vs .incbin passthrough
+date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
+2026-07-20	1e891a8	743770	4157185	17.89	56899	71	925
