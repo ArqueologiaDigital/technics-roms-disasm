@@ -21,6 +21,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import mn10300_asm as ASM
 
 BASE = 0x48400000
+# The "library ROM" is NOT a separate chip: the boot copies file offset
+# 0x3B8FD1.. of this image to 0x4C000000 (via the 0x8C000000 alias) and runs it
+# there -- kn7000_mame/notes/library-rom-loading.md. Library code is therefore
+# linked for 0x4C000000: converted lib functions are emitted under a shifted
+# .mnbase so PC-relative encodings reproduce byte-exactly.
+LIB_FILE_BASE = 0x3B8FD1
+LIB_CPU_BASE = 0x4C000000
+LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE   # cpu addr = file offset + delta
 ROM = "baserom/kn7000_program.rom"
 SYM = "kn7000.sym"
 MANUAL_SYM = "kn7000_manual.sym"
@@ -134,6 +142,24 @@ FUNC_END = {
     "SdCardFsInit": 0x1630E6,           # next (unnamed) function at 0x485630E6
     "TempoSyncParamDispatch": 0x45358,  # next (unnamed) function at 0x48445358
     "Tm5TimerRestart": 0x478E7,         # next (unnamed) function at 0x484478E7
+}
+
+# Library-image functions to convert (CPU start, CPU end-exclusive). These live
+# in code region 2 and execute at 0x4C000000; boundaries are explicit because
+# the lib region has no reflection name table.
+LIB_CONVERT = {
+    "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
+    "TgVoiceSlotService": (0x4C036D3F, 0x4C036E9E),
+    "TgVoiceRegWrite":    (0x4C036F98, 0x4C036FE5),
+    "TgVoiceRegWriteB":   (0x4C036FE5, 0x4C037008),
+    "TgGlobalRegWriteBoth": (0x4C037008, 0x4C037037),
+    "TgGlobalRegWriteB":  (0x4C037037, 0x4C03705A),
+    "TgCmdReadA":         (0x4C03705A, 0x4C037082),
+    "TgCmdReadB":         (0x4C037082, 0x4C0370AA),
+    "TgVoiceStatusRead":  (0x4C0370AA, 0x4C0370F3),
+    "TgVoiceRecordReset": (0x4C0370F3, 0x4C037123),
+    "TgVoiceRecordPtr":   (0x4C037123, 0x4C037135),
+    "LibTickSleep":       (0x4C03DD74, 0x4C03DD98),
 }
 
 # Reverse-engineering facts emitted as comments under the function headers.
@@ -883,6 +909,54 @@ FUNC_DOC = {
         "TM5 phase resync: bclr 0x80, load pulse, bset 0x80 (slave-mode",
         "start/continue re-aligns the interpolator to the incoming clock)",
     ],
+    # ---- library window: TG voice/register primitives ----
+    # RE: notes/tg-pitch-pipeline.md (voice records + TG A/B port split).
+    "LibDiv32": [
+        "signed 32-bit divide d0/d1 with the fast paths the sym file",
+        "documents: d1==1 -> d0, d1==-1 -> -d0, else ext/div",
+    ],
+    "LibTickSleep": [
+        "sleep d0 ticks of the lib tick counter 0x500D3C58: yield loop via",
+        "0x4C03C0E4 until the counter passes start+d0",
+    ],
+    "TgVoiceSlotService": [
+        "(d0 = slot, d1 = mode) service dispatch on the lib voice record",
+        "0x500AF940 + slot*0xB4 (the notePitch16 record of the pitch",
+        "pipeline): class bits (+2)&0x7C select 0x10/0x40/0x08 -> handlers",
+        "0x4C00C0B1/0x4C0115AA/0x4C030E73; 0x04/0x20 -> bookkeeping on",
+        "rec+0x52 (set 0x80) / rec+0x54 (!=0xFF: clear bits13:12, set",
+        "bit12) with fallthrough to 0x4C013F0F; run in the note-on loops",
+        "for every sounding element (callers 0x4C036F35/0x4C036F6E)",
+    ],
+    "TgVoiceRegWrite": [
+        "THE slot-routed TG register write (the pitch-pipeline notes'",
+        "primitive): word = (slot<<20) | d1 | data16 from (0x18,sp);",
+        "slot < 0x40 -> hi16 to TG A addr port 0x98050000 + lo16 to data",
+        "port 0x98050002; else slot&0x3F to TG B 0x98040000/0x98040002",
+    ],
+    "TgVoiceRegWriteB": ["the same 20-bit slot layout, TG B only"],
+    "TgGlobalRegWriteBoth": [
+        "global-register write (16-bit d0 shifted 18, not a slot field):",
+        "broadcast the word to TG A then TG B",
+    ],
+    "TgGlobalRegWriteB": ["the 18-shift global write, TG B only"],
+    "TgCmdReadA": [
+        "issue the raw 32-bit word d0 to TG A (hi16 -> 0x98050000, lo16 ->",
+        "0x98050002), then read the data port back: the TG readback",
+        "primitive (returns the answered halfword)",
+    ],
+    "TgCmdReadB": ["the same readback primitive on TG B 0x98040000/0x98040002"],
+    "TgVoiceStatusRead": [
+        "(d0 = slot) poll one voice's status: gate byte 0x500CE380 == 0x7F",
+        "(no TG present) skips the hardware; else command 0xFC010000 |",
+        "(slot&0x3F)<<20 through TgCmdReadA/B -> status & 0x1FFF",
+    ],
+    "TgVoiceRecordReset": [
+        "re-init voice record d0: copy the 0x84-byte ROM template",
+        "0x4858766C over 0x500CA0B0 + slot*0x84 (the tg-pitch notes'",
+        "record array, stride confirmed); returns a0 = the record",
+    ],
+    "TgVoiceRecordPtr": ["a0 := 0x500CA0B0 + slot*0x84"],
 }
 
 INSN = re.compile(r"([0-9a-fA-F]+):\s+((?:[0-9a-fA-F]{2} )+)\s+(\S+)\s*(.*)")
@@ -937,19 +1011,21 @@ def discover_functions(d):
     return entries
 
 
-def disasm_function(d, off, end):
+def disasm_function(d, off, end, delta=BASE):
     """Returns list of (file_off, bytes, mnem, ops) using unidasm; None on a
-    misaligned decode. unidasm's mn10300 has a LENGTH BUG on the F4 page (movbu
-    register-indexed, always 2 bytes): it prints the instruction correctly but
-    consumes only the 0xF4 byte, then re-decodes the postbyte as a phantom
-    instruction. When a bare-F4 line appears, take the true 2 bytes from the
-    ROM and restart unidasm past them (the byte-exact enc==b check in
-    emit_function still guards the result either way)."""
+    misaligned decode. `delta` maps file offset -> CPU address (BASE for code
+    region 1, LIB_DELTA for the 0x4C library window). unidasm's mn10300 has a
+    LENGTH BUG on the F4 page (movbu register-indexed, always 2 bytes): it
+    prints the instruction correctly but consumes only the 0xF4 byte, then
+    re-decodes the postbyte as a phantom instruction. When a bare-F4 line
+    appears, take the true 2 bytes from the ROM and restart unidasm past them
+    (the byte-exact enc==b check in emit_function still guards the result
+    either way)."""
     insns = []
     cur = off
     while cur < end:
         out = subprocess.run(
-            [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{BASE + cur:x}",
+            [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{delta + cur:x}",
              "-skip", f"0x{cur:x}", "-count", str(end - cur)],
             capture_output=True, text=True).stdout
         restart = False
@@ -957,7 +1033,7 @@ def disasm_function(d, off, end):
             m = INSN.match(line)
             if not m:
                 continue
-            addr = int(m.group(1), 16) - BASE
+            addr = int(m.group(1), 16) - delta
             b = bytes.fromhex(m.group(2).replace(" ", ""))
             if addr != cur:      # misaligned decode -> bail, keep as .incbin
                 return None
@@ -994,14 +1070,14 @@ def name_target(ops, names, used):
     return ops
 
 
-def emit_function(d, off, end, name, names, used):
+def emit_function(d, off, end, name, names, used, delta=BASE):
     """Returns asm source lines for a converted function (byte-exact)."""
-    insns = disasm_function(d, off, end)
+    insns = disasm_function(d, off, end, delta)
     if insns is None:
         return None                       # contains an F4 gap; keep as .incbin
     lines = []
     for addr, b, mnem, ops in insns:
-        cpu = BASE + addr
+        cpu = delta + addr
         if addr != off and cpu in names and names[cpu].endswith("_entry"):
             # register-save-`call` entry point (the caller's reg list + frame
             # size perform the prologue); referenced by name at the call sites
@@ -1103,6 +1179,37 @@ def main():
         else:
             body.append(f".incbin_range {ROMQ}, {off:#08x}, {end:#08x}")
 
+    # ---- code region 2: the library window (built before the equates so its
+    # named calls are recorded in `used`) ------------------------------------
+    lib_body = ['',
+                '# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library',
+                '#      image the boot self-loads to 0x4C000000 starts at file offset',
+                '#      0x3B8FD1 (notes/library-rom-loading.md); converted lib functions',
+                '#      are emitted under the shifted .mnbase so their PC-relative',
+                '#      encodings reproduce the 0x4C link address byte-exactly. ----']
+    cur2 = 0x3B8000
+    lib_converted = 0
+    for name, (cs, ce) in sorted(LIB_CONVERT.items(), key=lambda kv: kv[1][0]):
+        so, eo = cs - LIB_DELTA, ce - LIB_DELTA
+        assert 0x3B8FD1 <= so < eo <= 0x3F6F01, name
+        if cur2 < so:
+            lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, {so:#08x}")
+        lib_body.append(f"# {name}  (lib CPU {cs:#010x})")
+        for doc in FUNC_DOC.get(name, ()):
+            lib_body.append(f"#   {doc}")
+        block = emit_function(d, so, eo, name, names, used, LIB_DELTA)
+        if block is not None:
+            lib_body.append(f".mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x3B8FD1")
+            lib_body.extend(block)
+            lib_body.append(".mnbase 0x48400000")
+            lib_converted += 1
+        else:
+            lib_body.append(f".incbin_range {ROMQ}, {so:#08x}, {eo:#08x}")
+        cur2 = eo
+    lib_body += [f".incbin_range {ROMQ}, {cur2:#08x}, 0x3F6F01",
+                 '',
+                 '.org 0x3F6F01   # end of image']
+
     # equates for the synthetic helper labels actually referenced by converted code
     auto = sorted(a for a in used if a not in sym_by_addr)
     if auto:
@@ -1124,15 +1231,12 @@ def main():
         row = ", ".join(f"0x{v:08X}" for v in pal[i:i + 8])
         L.append(f"    .long {row}   # idx {i:3d}")
     L += ['.org 0x325F3C',
-          f'.incbin_range {ROMQ}, 0x32573C + 0x800, 0x3B8000',
-          '',
-          '# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4) ----',
-          f'.incbin_range {ROMQ}, 0x3B8000, 0x3F6F01',
-          '',
-          '.org 0x3F6F01   # end of image']
+          f'.incbin_range {ROMQ}, 0x32573C + 0x800, 0x3B8000']
+    L.extend(lib_body)
 
     open(OUT, "w").write("\n".join(L) + "\n")
-    print(f"wrote {OUT}: {converted}/{len(CONVERT)} requested functions converted to asm")
+    print(f"wrote {OUT}: {converted}/{len(CONVERT)} region-1 + "
+          f"{lib_converted}/{len(LIB_CONVERT)} library functions converted to asm")
 
 
 if __name__ == "__main__":

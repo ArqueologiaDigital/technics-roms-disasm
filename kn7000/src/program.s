@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 255 synthetic labels for internal helpers called by converted code
+# 258 synthetic labels for internal helpers called by converted code
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
@@ -278,6 +278,9 @@ _rom_marker:
 .equ func_4857BF6C, 0x4857BF6C
 .equ LibDiv32, 0x4C0019D5
 .equ LibParamGet, 0x4C0149FA
+.equ TgCmdReadA_entry, 0x4C03705D
+.equ TgCmdReadB_entry, 0x4C037085
+.equ TgVoiceRecordReset_entry, 0x4C0370F5
 .equ LibMsgSend, 0x4C03D219
 .equ LibMsgReceive, 0x4C03D36D
 .equ LibIntcEnable, 0x4C03DCC8
@@ -20288,7 +20291,406 @@ display_palette:
 .org 0x325F3C
 .incbin_range "baserom/kn7000_program.rom", 0x32573C + 0x800, 0x3B8000
 
-# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4) ----
-.incbin_range "baserom/kn7000_program.rom", 0x3B8000, 0x3F6F01
+# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library
+#      image the boot self-loads to 0x4C000000 starts at file offset
+#      0x3B8FD1 (notes/library-rom-loading.md); converted lib functions
+#      are emitted under the shifted .mnbase so their PC-relative
+#      encodings reproduce the 0x4C link address byte-exactly. ----
+.incbin_range "baserom/kn7000_program.rom", 0x3b8000, 0x3ba9a6
+# LibDiv32  (lib CPU 0x4c0019d5)
+#   signed 32-bit divide d0/d1 with the fast paths the sym file
+#   documents: d1==1 -> d0, d1==-1 -> -d0, else ext/div
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    cmp     1, d1
+    nop
+    beq     0x4c0019e5
+    cmp     -1, d1
+    nop
+    beq     0x4c0019eb
+    ext     d0
+    div     d1, d0
+    rets
+    cmp     0, d0
+    nop
+    retf    0, 0
+    not     d0
+    inc     d0
+    nop
+    retf    0, 0
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c3, 0x3efd10
+# TgVoiceSlotService  (lib CPU 0x4c036d3f)
+#   (d0 = slot, d1 = mode) service dispatch on the lib voice record
+#   0x500AF940 + slot*0xB4 (the notePitch16 record of the pitch
+#   pipeline): class bits (+2)&0x7C select 0x10/0x40/0x08 -> handlers
+#   0x4C00C0B1/0x4C0115AA/0x4C030E73; 0x04/0x20 -> bookkeeping on
+#   rec+0x52 (set 0x80) / rec+0x54 (!=0xFF: clear bits13:12, set
+#   bit12) with fallthrough to 0x4C013F0F; run in the note-on loops
+#   for every sounding element (callers 0x4C036F35/0x4C036F6E)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     0xb4, d3
+    mov     d0, d2
+    extbu   d0
+    nop
+    nop
+    mulu    d3, d0
+    mov     d0, a1
+    add     0x500af940, a1
+    movhu   (2, a1), d0
+    and     0x7c, d0
+    cmp     4, d0
+    beq     0x4c036d76
+    cmp     0x10, d0
+    bne     0x4c036d61
+    jmp     0x4c036def
+    cmp     0x40, d0
+    bne     0x4c036d68
+    jmp     0x4c036e0e
+    cmp     8, d0
+    bne     0x4c036d6f
+    jmp     0x4c036e1a
+    cmp     0x20, d0
+    bne     0x4c036d76
+    jmp     0x4c036e24
+    extbu   d1
+    cmp     0, d1
+    bne     0x4c036db7
+    mov     0x52, a0
+    add     a1, a0
+    movhu   (a0), d0
+    cmp     0, d0
+    beq     0x4c036d8f
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    ret     [d2,d3], 0x14
+    add     0x54, a1
+    movhu   (a1), d0
+    cmp     0xff, d0
+    beq     0x4c036dad
+    movhu   (a1), d0
+    and     0xffff9fff, d0
+    movhu   d0, (a1)
+    exthu   d0
+    or      0x1000, d0
+    movhu   d0, (a1)
+    ret     [d2,d3], 0x14
+    extbu   d2
+    mov     d2, d0
+    call    0x4c03466e, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3], 0x14
+    mov     0x52, a0
+    add     a1, a0
+    movhu   (a0), d0
+    cmp     0, d0
+    beq     0x4c036dca
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    bra     0x4c036de5
+    add     0x54, a1
+    movhu   (a1), d0
+    cmp     0xff, d0
+    beq     0x4c036de5
+    movhu   (a1), d0
+    and     0xffff9fff, d0
+    movhu   d0, (a1)
+    exthu   d0
+    or      0x1000, d0
+    movhu   d0, (a1)
+    extbu   d2
+    mov     d2, d0
+    call    0x4c03466e, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3], 0x14
+    movbu   (6, a1), d0
+    cmp     2, d0
+    bgt     0x4c036e02
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00bf2a, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3], 0x14
+    extbu   d2
+    mov     d2, d0
+    call    0x4c00c0b1, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3], 0x14
+    extbu   d2
+    mov     d2, d0
+    call    0x4c0115aa, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3], 0x14
+    extbu   d2
+    mov     d2, d0
+    call    0x4c030e73, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3], 0x14
+    extbu   d1
+    cmp     0, d1
+    bne     0x4c036e64
+    mov     0x52, a0
+    add     a1, a0
+    movhu   (a0), d0
+    cmp     0, d0
+    beq     0x4c036e3c
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    bra     0x4c036e9b
+    add     0x54, a1
+    movhu   (a1), d0
+    cmp     0xff, d0
+    beq     0x4c036e59
+    movhu   (a1), d0
+    and     0xffff9fff, d0
+    movhu   d0, (a1)
+    exthu   d0
+    or      0x1000, d0
+    movhu   d0, (a1)
+    bra     0x4c036e9b
+    extbu   d2
+    mov     d2, d0
+    call    0x4c013f0f, [d2,d3,a2,a3], 0x2c
+    bra     0x4c036e9b
+    mov     0x52, a0
+    add     a1, a0
+    movhu   (a0), d0
+    cmp     0, d0
+    beq     0x4c036e77
+    movhu   (a0), d0
+    or      0x80, d0
+    movhu   d0, (a0)
+    bra     0x4c036e92
+    add     0x54, a1
+    movhu   (a1), d0
+    cmp     0xff, d0
+    beq     0x4c036e92
+    movhu   (a1), d0
+    and     0xffff9fff, d0
+    movhu   d0, (a1)
+    exthu   d0
+    or      0x1000, d0
+    movhu   d0, (a1)
+    extbu   d2
+    mov     d2, d0
+    call    0x4c013f0f, [d2,d3,a2,a3], 0x2c
+    ret     [d2,d3], 0x14
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3efe6f, 0x3eff69
+# TgVoiceRegWrite  (lib CPU 0x4c036f98)
+#   THE slot-routed TG register write (the pitch-pipeline notes'
+#   primitive): word = (slot<<20) | d1 | data16 from (0x18,sp);
+#   slot < 0x40 -> hi16 to TG A addr port 0x98050000 + lo16 to data
+#   port 0x98050002; else slot&0x3F to TG B 0x98040000/0x98040002
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,d3], (sp)
+    mov     d0, d2
+    extbu   d0
+    cmp     0x40, d0
+    bge     0x4c036fc1
+    mov     (0x18, sp), d3
+    extbu   d2
+    mov     d2, d0
+    asl     20, d0
+    or      d1, d0
+    or      d3, d0
+    mov     d0, d1
+    lsr     16, d1
+    movhu   d1, (0x98050000)
+    and     0xffff, d0
+    movhu   d0, (0x98050002)
+    bra     0x4c036fe2
+    and     0x3f, d0
+    mov     (0x18, sp), d2
+    extbu   d0
+    asl     20, d0
+    or      d1, d0
+    or      d2, d0
+    mov     d0, d1
+    lsr     16, d1
+    movhu   d1, (0x98040000)
+    and     0xffff, d0
+    movhu   d0, (0x98040002)
+    retf    [d2,d3], 8
+.mnbase 0x48400000
+# TgVoiceRegWriteB  (lib CPU 0x4c036fe5)
+#   the same 20-bit slot layout, TG B only
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    mov     (0x14, sp), d2
+    extbu   d0
+    asl     20, d0
+    or      d1, d0
+    or      d2, d0
+    mov     d0, d1
+    lsr     16, d1
+    movhu   d1, (0x98040000)
+    and     0xffff, d0
+    movhu   d0, (0x98040002)
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgGlobalRegWriteBoth  (lib CPU 0x4c037008)
+#   global-register write (16-bit d0 shifted 18, not a slot field):
+#   broadcast the word to TG A then TG B
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    mov     (0x14, sp), d2
+    exthu   d0
+    asl     18, d0
+    or      d1, d0
+    or      d2, d0
+    mov     d0, d1
+    lsr     16, d1
+    movhu   d1, (0x98050000)
+    and     0xffff, d0
+    movhu   d0, (0x98050002)
+    movhu   d1, (0x98040000)
+    movhu   d0, (0x98040002)
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgGlobalRegWriteB  (lib CPU 0x4c037037)
+#   the 18-shift global write, TG B only
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    mov     (0x14, sp), d2
+    exthu   d0
+    asl     18, d0
+    or      d1, d0
+    or      d2, d0
+    mov     d0, d1
+    lsr     16, d1
+    movhu   d1, (0x98040000)
+    and     0xffff, d0
+    movhu   d0, (0x98040002)
+    retf    [d2], 4
+.mnbase 0x48400000
+# TgCmdReadA  (lib CPU 0x4c03705a)
+#   issue the raw 32-bit word d0 to TG A (hi16 -> 0x98050000, lo16 ->
+#   0x98050002), then read the data port back: the TG readback
+#   primitive (returns the answered halfword)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -4, sp
+# TgCmdReadA_entry:   (register-save `call` entry)
+    mov     d0, (0, sp)
+    lsr     16, d0
+    movhu   d0, (0x98050000)
+    mov     (0, sp), d0
+    and     0xffff, d0
+    movhu   d0, (0x98050002)
+    movhu   (0x98050002), d0
+    mov     d0, (0, sp)
+    movhu   (0, sp), d0
+    retf    0, 4
+.mnbase 0x48400000
+# TgCmdReadB  (lib CPU 0x4c037082)
+#   the same readback primitive on TG B 0x98040000/0x98040002
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    add     -4, sp
+# TgCmdReadB_entry:   (register-save `call` entry)
+    mov     d0, (0, sp)
+    lsr     16, d0
+    movhu   d0, (0x98040000)
+    mov     (0, sp), d0
+    and     0xffff, d0
+    movhu   d0, (0x98040002)
+    movhu   (0x98040002), d0
+    mov     d0, (0, sp)
+    movhu   (0, sp), d0
+    retf    0, 4
+.mnbase 0x48400000
+# TgVoiceStatusRead  (lib CPU 0x4c0370aa)
+#   (d0 = slot) poll one voice's status: gate byte 0x500CE380 == 0x7F
+#   (no TG present) skips the hardware; else command 0xFC010000 |
+#   (slot&0x3F)<<20 through TgCmdReadA/B -> status & 0x1FFF
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2], (sp)
+    add     -0xc, sp
+    movhu   (0x500ce380), d1
+    mov     d0, d2
+    cmp     0x7f, d1
+    beq     0x4c0370f0
+    extbu   d0
+    cmp     0x40, d0
+    bge     0x4c0370d7
+    extbu   d2
+    mov     d2, d1
+    asl     20, d1
+    add     0xfc010000, d1
+    mov     d1, d0
+    call    TgCmdReadA_entry, 0, 4
+    exthu   d0
+    and     0x1fff, d0
+    bra     0x4c0370f0
+    and     0x3f, d0
+    extbu   d0
+    mov     d0, d1
+    asl     20, d1
+    add     0xfc010000, d1
+    mov     d1, d0
+    call    TgCmdReadB_entry, 0, 4
+    exthu   d0
+    and     0x1fff, d0
+    ret     [d2], 0x10
+.mnbase 0x48400000
+# TgVoiceRecordReset  (lib CPU 0x4c0370f3)
+#   re-init voice record d0: copy the 0x84-byte ROM template
+#   0x4858766C over 0x500CA0B0 + slot*0x84 (the tg-pitch notes'
+#   record array, stride confirmed); returns a0 = the record
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    movm    [d2,a2], (sp)
+# TgVoiceRecordReset_entry:   (register-save `call` entry)
+    exthu   d0
+    mov     0x500ca0b0, a2
+    mov     0x4858766c, a1
+    mov     0x84, d2
+    nop
+    nop
+    mulu    d0, d2
+    mov     a2, a0
+    add     d2, a0
+    mov     -0x21, d2
+    setlb
+    mov     (a1), d1
+    inc4    a1
+    mov     d1, (a0)
+    inc4    a0
+    inc     d2
+    lne
+    mov     0x84, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     a2, a0
+    ret     [d2,a2], 8
+.mnbase 0x48400000
+# TgVoiceRecordPtr  (lib CPU 0x4c037123)
+#   a0 := 0x500CA0B0 + slot*0x84
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    exthu   d0
+    mov     0x84, d1
+    nop
+    nop
+    mulu    d0, d1
+    mov     d1, a0
+    add     0x500ca0b0, a0
+    rets
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f0106, 0x3f6d45
+# LibTickSleep  (lib CPU 0x4c03dd74)
+#   sleep d0 ticks of the lib tick counter 0x500D3C58: yield loop via
+#   0x4C03C0E4 until the counter passes start+d0
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     (0x500d3c58), d2
+    add     d0, d2
+    mov     (0x500d3c58), d0
+    cmp     d0, d2
+    bls     0x4c03dd94
+    clr     d0
+    mov     d0, d1
+    call    0x4c03c0e4, 0, 0
+    mov     (0x500d3c58), d0
+    cmp     d0, d2
+    bhi     0x4c03dd84
+    clr     d0
+    ret     [d2,a2], 0x18
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3f6d69, 0x3F6F01
 
 .org 0x3F6F01   # end of image
