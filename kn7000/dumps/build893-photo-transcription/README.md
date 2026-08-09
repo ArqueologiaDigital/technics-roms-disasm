@@ -11,11 +11,16 @@ nowhere else. Never present it as a dump and never load it as one.
   photo recorded per screen. Unknown cells are `"??"`.
 - `screens.hex` — the same, address-ordered, human-auditable.
 
-**3,072 bytes, 6 unknown cells.** The 60-photo set was only partly transcribed before the
+**3,328 bytes, 6 unknown cells** (13 screens). The 60-photo set was only partly transcribed before the
 run hit a usage limit; these 12 screens are what completed.
 
 Coverage: table half at 0x48039000, 0x48049000, 0x48059000, 0x48159000, 0x48259000,
-0x48359000; program half at 0x487F4400–0x487F49FF.
+0x48359000; program half at 0x48400D00 and 0x487F4400–0x487F49FF.
+
+**The insertion point is bounded.** The 0x48400D00 screen agrees with build 941 at shift **0**
+(98.4 %, 252/256), while every 0x487F44xx–49xx screen needs **+0x1933**. So the ~6,451-byte
+block that build 941 has and build 893 lacks sits somewhere in
+**0x48400E00 – 0x487F4400**.
 
 ## ★ The finding: build 893 is build 941 minus ~6.4 KB
 
