@@ -55,6 +55,7 @@ build/          Reassembled output (git-ignored).
 ```
 make            # build + verify (regenerates baserom/ from the disks if needed)
 make verify     # assert 100% byte-match
+make verify-listings  # byte-check + re-encode the curated disasm/*.asm listings
 make symbols    # regenerate kn7000.sym + src/symbols.inc from the ROM
 make disasm     # (re)generate disassembly listings (raw + named) via MAME unidasm
 make clean      # remove build/
@@ -131,6 +132,17 @@ Disassembly listings are produced by **MAME's `unidasm`**
 `disasm/program_entry.asm` (the boot/entry region) and
 `disasm/table_directory.asm` are committed as curated samples; the full ~30 MB
 linear listing is regenerable and git-ignored.
+
+Some listings are **hand-annotated** rather than generated — currently
+[`disasm/debugger_memdump.asm`](disasm/debugger_memdump.asm), the complete
+semantic disassembly of the hidden factory MEMORY DUMP hex viewer (its chord
+dispatcher, config-byte gate, all ten window-procedure event handlers, and its
+static data). Those are not part of the byte-exact build, so
+[`tools/verify_listing.py`](tools/verify_listing.py) (`make verify-listings`)
+keeps them honest: it re-reads every byte column straight out of `baserom/` and
+re-encodes every printed mnemonic with `tools/mn10300_asm.py`. Today it reports
+2321 bytes verified with 0 mismatches, 0 unexplained gaps and 803/803
+instructions re-encoding byte-identically.
 
 ## Status
 

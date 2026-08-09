@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 935 synthetic labels for internal helpers called by converted code
+# 963 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -79,30 +79,45 @@ _rom_marker:
 .equ func_48414A4F, 0x48414A4F
 .equ func_48414A77, 0x48414A77
 .equ func_48414AFD, 0x48414AFD
+.equ func_48414B90, 0x48414B90
+.equ func_48414BAA, 0x48414BAA
+.equ func_48415680, 0x48415680
 .equ func_484156A0, 0x484156A0
 .equ func_4841584C, 0x4841584C
+.equ func_48415AAB, 0x48415AAB
 .equ func_484161C3, 0x484161C3
 .equ func_4841662A, 0x4841662A
 .equ func_484166DE, 0x484166DE
 .equ func_4841680C, 0x4841680C
+.equ func_484168D7, 0x484168D7
+.equ func_48416AE5, 0x48416AE5
+.equ func_48416DF2, 0x48416DF2
+.equ func_48416E33, 0x48416E33
 .equ func_48417617, 0x48417617
 .equ func_48417690, 0x48417690
 .equ func_48417740, 0x48417740
 .equ func_48417AC0, 0x48417AC0
+.equ func_48417B27, 0x48417B27
 .equ func_4841C40F, 0x4841C40F
+.equ func_4841D820, 0x4841D820
 .equ func_484219A4, 0x484219A4
 .equ func_48421B5C, 0x48421B5C
 .equ func_48421B97, 0x48421B97
 .equ func_48422627, 0x48422627
 .equ func_48422917, 0x48422917
+.equ func_48423031, 0x48423031
 .equ func_4842309A, 0x4842309A
 .equ func_4842320D, 0x4842320D
 .equ func_48423A03, 0x48423A03
 .equ func_48423B5B, 0x48423B5B
 .equ func_48423F73, 0x48423F73
 .equ func_48424AA4, 0x48424AA4
+.equ func_48425398, 0x48425398
+.equ func_48425898, 0x48425898
+.equ func_484261A6, 0x484261A6
 .equ func_4842621C, 0x4842621C
 .equ func_48427DA6, 0x48427DA6
+.equ func_484282A4, 0x484282A4
 .equ func_48428555, 0x48428555
 .equ func_484285E4, 0x484285E4
 .equ func_48428792, 0x48428792
@@ -121,11 +136,14 @@ _rom_marker:
 .equ func_484298A0, 0x484298A0
 .equ func_48429906, 0x48429906
 .equ func_48429C9A, 0x48429C9A
+.equ func_48429FD5, 0x48429FD5
 .equ func_4842AD45, 0x4842AD45
+.equ func_4842B348, 0x4842B348
 .equ func_4842B3F4, 0x4842B3F4
 .equ func_4842B4A0, 0x4842B4A0
 .equ func_4842C985, 0x4842C985
 .equ func_4842D366, 0x4842D366
+.equ func_4842D409, 0x4842D409
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
 .equ func_484317D3, 0x484317D3
@@ -298,6 +316,9 @@ _rom_marker:
 .equ GetChordToneList, 0x4844E9F1
 .equ func_4844FE37, 0x4844FE37
 .equ func_48450BA6, 0x48450BA6
+.equ func_484562ED, 0x484562ED
+.equ func_484562FE, 0x484562FE
+.equ Rec8E0Field120Ptr, 0x48456EBB
 .equ func_484720D3, 0x484720D3
 .equ func_484720FE, 0x484720FE
 .equ func_484729AD, 0x484729AD
@@ -333,6 +354,7 @@ _rom_marker:
 .equ CustomSoundEditRecFetch_entry, 0x484845E6
 .equ func_4848463F, 0x4848463F
 .equ func_48484681, 0x48484681
+.equ func_48487836, 0x48487836
 .equ func_4849C8E2, 0x4849C8E2
 .equ func_4849C94F, 0x4849C94F
 .equ PartFlagsSet_entry, 0x484A0B3E
@@ -385,11 +407,15 @@ _rom_marker:
 .equ func_484B22B4, 0x484B22B4
 .equ TgStrapProbe, 0x484D7713
 .equ PanelSubTypeGet_entry, 0x484D7751
+.equ SumU32Words_entry, 0x484D78A8
+.equ BackupSramChecksumVerify_entry, 0x484D78C8
+.equ GetRomConfigByte, 0x484D7928
 .equ func_4851AD68, 0x4851AD68
 .equ func_4852FDCD, 0x4852FDCD
 .equ func_48530216, 0x48530216
 .equ func_48532395, 0x48532395
 .equ func_485323BF, 0x485323BF
+.equ func_48532468, 0x48532468
 .equ func_48532494, 0x48532494
 .equ DiskInit_entry, 0x4854ACF2
 .equ DiskWorkerStatusClear, 0x4854AD89
@@ -598,6 +624,8 @@ _rom_marker:
 .equ LibU16ToF64, 0x4C0016AC
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
+.equ LibSprintf, 0x4C001A48
+.equ LibStrlen, 0x4C0032F7
 .equ SndCmdStreamWrite_entry, 0x4C003A65
 .equ TgPartGlobalChanRefresh_entry, 0x4C004DE9
 .equ TgGlobalChan6Refresh_entry, 0x4C0050E3
@@ -3974,7 +4002,183 @@ _rom_marker:
     clr     d0
     ret     [d2,d3], 0x18
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x01202c, 0x014a74
+.incbin_range "baserom/kn7000_program.rom", 0x01202c, 0x014735
+# IndexSwEventHandler  (CPU 0x48414735)
+#   The balance (index-switch) UP/DOWN handler. It rebuilds the
+#   both-buttons-held accumulator 0x50021FE0 = (0x50021FDC & 0x50021FD8)
+#   and edge-detects new & ~old (`not d2`), then falls through to the
+#   hidden-chord tail at 0x484148C0, which compares the accumulator
+#   against exactly three constants:
+#     0x99 (columns 1,4,5,8) -> gated on GetRomConfigByte: != 0xFF opens
+#          title _TT_MEMDUMP (0xF2, the MEMORY DUMP hex viewer), == 0xFF
+#          calls ChangeMode(0,0) = Panel Simulator instead
+#     0xA1 (columns 1,6,8)   -> ungated: title _TT_SOFTVER (0xF0)
+#     0x110000               -> INVERSE gate: CaptureLcd only when the
+#          config byte IS 0xFF, so LCD capture is dead on PROGRAM 941
+#   Bit N of the accumulator is column N+1 (mask table 0x4859E1A0 is a
+#   plain 1 << N) and the test is an equality, so one extra held column
+#   kills the chord. Annotated: disasm/debugger_memdump.asm
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+    movhu   d0, (0x30, sp)
+    mov     d1, (0x34, sp)
+    cmp     0, d1
+    bne     0x484147bc
+    mov     (0x38, sp), d0
+    cmp     0, d0
+    beq     0x4841478a
+    movhu   (0x30, sp), d0
+    mov     0x4859e1a0, a3
+    mov     d0, a2
+    asl2    d0
+    mov     (d0, a3), d1
+    mov     (0x50021fd8), d0
+    or      d0, d1
+    mov     d1, (0x50021fd8)
+    mov     a2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050006, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     a2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050005, d1
+    call    func_484298A0, [d2], 0x1c
+    jmp     0x48414842
+    movhu   (0x30, sp), d0
+    mov     0x4859e1a0, a3
+    mov     (0x50021fd8), d1
+    mov     d0, a2
+    asl2    d0
+    mov     (d0, a3), d0
+    not     d0
+    and     d1, d0
+    mov     d0, (0x50021fd8)
+    mov     a2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050007, d1
+    call    func_484298A0, [d2], 0x1c
+    jmp     0x48414842
+    mov     (0x38, sp), d0
+    cmp     0, d0
+    beq     0x4841480d
+    movhu   (0x30, sp), d0
+    mov     0x4859e1a0, a3
+    mov     d0, a2
+    asl2    d0
+    mov     (d0, a3), d1
+    mov     (0x50021fdc), d0
+    or      d0, d1
+    mov     d1, (0x50021fdc)
+    movhu   (0x30, sp), d3
+    mov     0x80, d0
+    or      d3, d0
+    mov     d0, (0x10, sp)
+    or      0x80, d3
+    mov     -1, d0
+    mov     0x00050006, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     d3, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050005, d1
+    call    func_484298A0, [d2], 0x1c
+    bra     0x48414842
+    movhu   (0x30, sp), d0
+    mov     0x4859e1a0, a3
+    mov     (0x50021fdc), d1
+    mov     d0, a2
+    asl2    d0
+    mov     (d0, a3), d0
+    not     d0
+    and     d1, d0
+    mov     d0, (0x50021fdc)
+    movhu   (0x30, sp), d0
+    mov     0x00050007, d1
+    or      0x80, d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    call    func_484298A0, [d2], 0x1c
+    mov     (0x50021fe0), d2
+    mov     (0x50021fdc), d0
+    mov     (0x50021fd8), d1
+    not     d2
+    and     d0, d1
+    mov     d1, (0x50021fe0)
+    mov     (0x38, sp), d0
+    and     d1, d2
+    clr     d3
+    cmp     d3, d0
+    beq     0x4841486b
+    mov     a2, d0
+    asl2    d0
+    mov     (d0, a3), d3
+    cmp     0, d2
+    beq     0x48414880
+    mov     a2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050028, d1
+    call    func_484298A0, [d2], 0x1c
+    movhu   (0x30, sp), d0
+    cmp     0x16, d0
+    bne     0x484148c0
+    cmp     0, d2
+    beq     0x48414898
+    mov     3, d0
+    mov     0x40, d1
+    call    LibParamSet, [d2,d3,a2], 0x24
+    bra     0x484148c0
+    cmp     0, d3
+    beq     0x484148c0
+    mov     (0x34, sp), d0
+    cmp     0, d0
+    bne     0x484148b2
+    mov     3, d0
+    mov     sp, a0
+    add     0x14, a0
+    mov     1, d1
+    call    0x4c014dbb, [d2,d3,a2,a3], 0x2c
+    bra     0x484148c0
+    mov     3, d0
+    mov     sp, a0
+    add     0x14, a0
+    mov     -1, d1
+    call    0x4c014dbb, [d2,d3,a2,a3], 0x2c
+    mov     (0x50021fe0), d0
+    cmp     0x99, d0
+    beq     0x484148dc
+    cmp     0xa1, d0
+    beq     0x48414919
+    cmp     0x110000, d0
+    beq     0x48414926
+    bra     0x48414939
+    call    GetRomConfigByte, 0, 0
+    extbu   d0
+    cmp     0xff, d0
+    bne     0x484148f5
+    clr     d0
+    clr     d1
+    call    func_4842B348, [d2,d3,a2], 0x20
+    bra     0x48414939
+    mov     0xf2, d0
+    clr     d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     0x000f00f2, d0
+    mov     0x000600a4, d1
+    call    func_484298A0, [d2], 0x1c
+    bra     0x48414939
+    mov     0xf0, d0
+    clr     d1
+    call    func_4842B4A0, [d2,d3,a2], 0x20
+    bra     0x48414939
+    call    GetRomConfigByte, 0, 0
+    extbu   d0
+    cmp     0xff, d0
+    bne     0x48414939
+    call    func_48415680, 0, 8
+    ret     [d2,d3,a2,a3], 0x28
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x01493c, 0x014a74
 # ApTaskControl  (CPU 0x48414a74)
 .incbin_range "baserom/kn7000_program.rom", 0x014a74, 0x014afa
 # MainTaskControl  (CPU 0x48414afa)
@@ -5159,6 +5363,24 @@ _rom_marker:
     call    func_4854D84B, 0, 0xc
     ret     0, 0xc
 # CaptureLcd  (CPU 0x4841567d)
+#   The LCD SCREEN CAPTURE chord (accumulator 0x110000) -- the ONLY debug
+#   primitive in the firmware that writes a file. The entry at 0x4841567D
+#   picks one of two bodies (0x484156A0 / 0x4841584C) on a mode word, then:
+#   sprintf(name, "LCDCAP%02d.BMP" @0x4859E2E4, (*0x50021FC8)++), fopen
+#   with mode "wb" @0x4859E2F4, emit a BMP header, then read the source
+#   and fwrite it.
+#   The SOURCE IS HARDCODED: `add 0x9ce00000, a0` at 0x484157C0, i.e. the
+#   composited 640-pixel-wide LCD framebuffer, unpacked from RGB565 by the
+#   5/6/5 field extraction that follows. It is NOT the MEMORY DUMP address
+#   slots -- capturing the hex viewer captures the RENDERED SCREEN, 256
+#   inspected bytes as ASCII text, so this is not a bulk ROM-dump path.
+#   The file lands on whatever media the current-drive selector 0x5007125A
+#   names, because the fopen thunk 0x48532395 indexes a per-backend vtable
+#   (FDD prepends "A:\\" @0x4866476C, SD prepends "C:\\" @0x4868E320) and
+#   CaptureLcd passes a bare filename.
+#   DEAD on PROGRAM 941: its chord branch at 0x48414926 requires
+#   GetRomConfigByte() == 0xFF and ours reads 0x16 -- the exact INVERSE of
+#   the gate that opens the MEMORY DUMP hex viewer.
     add     -8, sp
     call    GetLcdMode, 0, 0
     exthu   d0
@@ -5177,7 +5399,7 @@ _rom_marker:
     mov     d0, (0xc, sp)
     mov     (0x50021fc8), a1
     mov     a1, (0x10, sp)
-    call    0x4c001a48, [a2], 0x20
+    call    LibSprintf, [a2], 0x20
     mov     (0x50021fc8), d0
     inc     d0
     mov     d0, (0x50021fc8)
@@ -5343,7 +5565,7 @@ _rom_marker:
     mov     d0, (0xc, sp)
     mov     (0x50021fcc), a1
     mov     a1, (0x10, sp)
-    call    0x4c001a48, [a2], 0x20
+    call    LibSprintf, [a2], 0x20
     mov     (0x50021fcc), d0
     inc     d0
     mov     d0, (0x50021fcc)
@@ -5555,7 +5777,262 @@ _rom_marker:
     mov     1, d0
     ret     [d2,d3,a2,a3], 0xd4
 # CaptureLcdArea  (CPU 0x48415a87)
-.incbin_range "baserom/kn7000_program.rom", 0x015a87, 0x015cd5
+    movm    [a2], (sp)
+    add     -0xc, sp
+    mov     a0, a2
+    call    GetLcdMode, 0, 0
+    exthu   d0
+    cmp     2, d0
+    beq     0x48415aa1
+    mov     a2, a0
+    call    func_48415AAB, [d2,d3,a2,a3], 0x94
+    bra     0x48415aa2
+    clr     d0
+    ret     [a2], 0x10
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x84, sp
+    mov     sp, a2
+    add     0x24, a2
+    mov     a2, (8, sp)
+    mov     0x4859e334, d0
+    mov     d0, (0xc, sp)
+    mov     (0x50021fd0), a1
+    mov     a0, a3
+    mov     a1, (0x10, sp)
+    call    LibSprintf, [a2], 0x20
+    mov     (0x50021fd0), d0
+    inc     d0
+    mov     d0, (0x50021fd0)
+    call    func_4852FDCD, 0, 8
+    call    func_48530216, [d2,d3,a2,a3], 0x10
+    mov     a2, a0
+    mov     0x4859e344, a1
+    call    func_48532395, [a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    beq     0x48415afa
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x94
+    mov     4, d0
+    add     a3, d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movhu   (a0), d2
+    movhu   (a3), d1
+    mov     6, d3
+    add     a3, d3
+    mov     d3, a0
+    movhu   (a0), d0
+    mov     2, a2
+    add     a3, a2
+    exth    d2
+    exth    d1
+    sub     d1, d2
+    movhu   (a2), d1
+    inc     d2
+    exth    d0
+    exth    d1
+    exth    d2
+    mov     d2, (0x18, sp)
+    sub     d1, d0
+    inc     d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     (0x18, sp), a0
+    mov     4, d1
+    nop
+    nop
+    mul     d0, d2
+    mov     a0, d0
+    asl2    d0
+    sub     a0, d0
+    add     3, d0
+    call    LibDiv32, 0, 0
+    asl2    d0
+    mov     d0, (0x20, sp)
+    movhu   (a2), d0
+    mov     sp, a2
+    movhu   d0, (0x36, sp)
+    movhu   (a3), d0
+    movhu   d0, (0x34, sp)
+    mov     (0x14, sp), a0
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   d0, (0x38, sp)
+    movhu   (a0), d0
+    mov     sp, a3
+    movhu   d0, (0x3a, sp)
+    add     0x3c, a3
+    mov     a3, a0
+    mov     d2, d0
+    asl2    d0
+    mov     d0, d3
+    sub     d2, d3
+    mov     0x4859e348, a1
+    call    0x4c003051, [a2], 4
+    add     0x4c, a2
+    mov     a3, a1
+    mov     4, d2
+    add     a3, d2
+    mov     d2, a0
+    mov     0x36, d0
+    add     d3, d0
+    mov     d0, (a0)
+    mov     a2, a0
+    clr     d0
+    movhu   d0, (0x44, sp)
+    movhu   d0, (0x46, sp)
+    mov     0x36, d0
+    mov     d0, (0x48, sp)
+    mov     2, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     d2, a1
+    mov     2, a0
+    add     a2, a0
+    mov     0xc, d0
+    call    0x4c003039, [a2,a3], 8
+    mov     a2, a0
+    mov     0xe, d0
+    call    func_48532494, [d2,a2], 0x24
+    cmp     0xe, d0
+    beq     0x48415bb6
+    call    func_485323BF, 0, 0x14
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x94
+    mov     0x28, d0
+    mov     d0, (0x5c, sp)
+    mov     (0x18, sp), d0
+    mov     sp, a0
+    mov     d0, (0x60, sp)
+    mov     (0x1c, sp), d0
+    add     0x5c, a0
+    mov     d0, (0x64, sp)
+    mov     1, d0
+    movhu   d0, (0x68, sp)
+    mov     0x18, d0
+    movhu   d0, (0x6a, sp)
+    clr     d0
+    mov     d0, (0x6c, sp)
+    mov     d3, (0x70, sp)
+    mov     d0, (0x74, sp)
+    mov     d0, (0x78, sp)
+    mov     d0, (0x7c, sp)
+    mov     d0, (0x80, sp)
+    mov     0x28, d0
+    call    func_48532494, [d2,a2], 0x24
+    cmp     0x28, d0
+    beq     0x48415bf4
+    call    func_485323BF, 0, 0x14
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x94
+    mov     (0x20, sp), d0
+    call    func_4841662A, [d2,a2,a3], 0x28
+    mov     a0, (0x14, sp)
+    cmp     0, a0
+    bne     0x48415c04
+    jmp     0x48415cc9
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x1c, sp), d0
+    cmp     0, d0
+    bgt     0x48415c10
+    jmp     0x48415cc2
+    clr     d1
+    mov     0, a3
+    mov     (0x1c, sp), d3
+    movhu   (0x36, sp), d0
+    movhu   (0x34, sp), d2
+    exth    d0
+    exth    d2
+    add     d3, d0
+    mov     (0x18, sp), d3
+    add     -1, d0
+    sub     d3, d0
+    sub     a3, d0
+    mov     0x280, d3
+    nop
+    nop
+    mul     d3, d0
+    add     d2, d0
+    add     d0, d0
+    add     0x9ce00000, d0
+    mov     0x500, a2
+    add     d0, a2
+    movhu   (0x34, sp), d0
+    exth    d0
+    mov     d0, a1
+    movhu   (0x38, sp), d0
+    exth    d0
+    cmp     d0, a1
+    bgt     0x48415c89
+    setlb
+    movhu   (a2), d3
+    mov     (0x14, sp), a0
+    mov     d1, d2
+    exth    d2
+    exthu   d3
+    mov     0x1f, d0
+    and     d3, d0
+    asl     3, d0
+    movbu   d0, (d2, a0)
+    mov     (0x14, sp), a0
+    inc     d2
+    mov     d2, d1
+    exth    d1
+    mov     0x7e0, d0
+    and     d3, d0
+    asr     3, d0
+    movbu   d0, (d1, a0)
+    mov     (0x14, sp), a0
+    exth    d2
+    inc     d2
+    mov     d2, d1
+    exth    d1
+    and     0xf800, d3
+    asr     8, d3
+    movbu   d3, (d1, a0)
+    exth    d2
+    mov     a1, d0
+    inc     d0
+    exth    d0
+    mov     d0, a1
+    movhu   (0x38, sp), d0
+    mov     d2, d1
+    inc     d1
+    add     2, a2
+    exth    d0
+    cmp     d0, a1
+    lle
+    mov     a3, d0
+    inc     d0
+    exth    d0
+    mov     d0, a3
+    cmp     1, d0
+    blt     0x48415c13
+    mov     (0x14, sp), a0
+    mov     (0x20, sp), d0
+    call    func_48532494, [d2,a2], 0x24
+    mov     (0x20, sp), d1
+    cmp     d1, d0
+    beq     0x48415cb4
+    call    func_485323BF, 0, 0x14
+    mov     (0x14, sp), a0
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    clr     d0
+    bra     0x48415cd2
+    mov     (0x18, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d0
+    exth    d0
+    mov     d0, (0x18, sp)
+    cmp     d1, d0
+    bge     0x48415cc2
+    jmp     0x48415c10
+    mov     (0x14, sp), a0
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    func_485323BF, 0, 0x14
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x94
 # MainAutoFree  (CPU 0x48415cd5)
 .incbin_range "baserom/kn7000_program.rom", 0x015cd5, 0x015ce3
 # MainRamControl  (CPU 0x48415ce3)
@@ -6315,11 +6792,595 @@ _rom_marker:
 # AcWindowPageProc  (CPU 0x4841e0ce)
 .incbin_range "baserom/kn7000_program.rom", 0x01e0ce, 0x01e1cd
 # PsToggleBoxProc  (CPU 0x4841e1cd)
-.incbin_range "baserom/kn7000_program.rom", 0x01e1cd, 0x01e5c5
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x40, sp
+    mov     d0, d3
+    cmp     0x6003b, d1
+    bge     0x4841e1de
+    jmp     0x4841e5b6
+    cmp     0x600ef, d1
+    ble     0x4841e1e9
+    jmp     0x4841e5b6
+    mov     0x485a20b8, a2
+    mov     0xf, d0
+    mov     0xfff9ffc6, d2
+    add     d1, d2
+    and     d2, d0
+    asl     3, d0
+    mov     d0, a0
+    add     a2, a0
+    mov     (a0), d0
+    cmp     d2, d0
+    beq     0x4841e21b
+    setlb
+    cmp     0, d0
+    bne     0x4841e20d
+    jmp     0x4841e5b6
+    add     8, a0
+    cmp     0x485a2138, a0
+    bcs     0x4841e218
+    mov     a2, a0
+    mov     (a0), d0
+    cmp     d2, d0
+    lne
+    mov     (4, a0), a0
+    jmp     (a0)
+    mov     (0x60, sp), a0
+    mov     d3, d0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a3
+    mov     sp, a0
+    add     0x28, a0
+    mov     0x28, a2
+    add     a3, a2
+    movhu   (a2), d0
+    call    func_48417B27, 0, 0x10
+    movhu   (0x2a, sp), d0
+    exth    d0
+    cmp     0xef, d0
+    beq     0x4841e254
+    movhu   (a2), d0
+    call    func_4841D820, [d2,d3,a2,a3], 0x48
+    mov     (0x24, a3), a0
+    mov     0x000600b4, d1
+    mov     (a0), d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a2
+    mov     d3, d0
+    mov     a2, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     a0, d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x24, a3
+    mov     d3, d0
+    add     d2, a3
+    mov     0x000600af, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     d0, (0x24, sp)
+    mov     (a3), a0
+    mov     (a0), d0
+    cmp     d0, a2
+    beq     0x4841e2a4
+    mov     (a3), a0
+    mov     a2, (a0)
+    mov     sp, a2
+    add     0x2c, a2
+    mov     d3, d0
+    mov     a2, a0
+    call    func_48416DF2, 0, 0x14
+    mov     sp, a0
+    mov     a0, d0
+    add     0x34, d0
+    mov     d0, (0x20, sp)
+    mov     d0, a0
+    mov     d3, d0
+    call    func_48416AE5, 0, 0x14
+    mov     sp, a0
+    mov     a0, d3
+    add     0x3c, d3
+    mov     (0x20, sp), a0
+    mov     d3, a1
+    call    func_48416E33, [d2,d3,a2,a3], 0x20
+    mov     (a3), a0
+    mov     (a0), d0
+    cmp     0, d0
+    bne     0x4841e2d5
+    jmp     0x4841e39e
+    call    GetColorMode, 0, 0
+    exthu   d0
+    cmp     1, d0
+    beq     0x4841e2e6
+    cmp     2, d0
+    beq     0x4841e324
+    jmp     0x4841e360
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e2fd
+    mov     0xca, d0
+    mov     0xff, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e309
+    mov     0xc3, d0
+    mov     0xff, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x1c, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    clr     d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    jmp     0x4841e45f
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e33a
+    mov     0xca, d0
+    mov     7, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e345
+    mov     0xc3, d0
+    mov     7, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x1c, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    clr     d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    jmp     0x4841e45f
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e376
+    mov     0xca, d0
+    mov     0xa, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e381
+    mov     0xc3, d0
+    mov     0xa, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x1c, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    mov     0xff, d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    jmp     0x4841e45f
+    call    GetColorMode, 0, 0
+    exthu   d0
+    cmp     1, d0
+    beq     0x4841e3af
+    cmp     2, d0
+    beq     0x4841e3eb
+    jmp     0x4841e426
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e3c4
+    mov     0xc9, d0
+    clr     d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e3ce
+    mov     0xc1, d0
+    clr     d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x20, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    mov     0xff, d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    jmp     0x4841e45f
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e400
+    mov     0xc9, d0
+    clr     d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e40a
+    mov     0xc1, d0
+    clr     d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x20, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    mov     0xff, d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    bra     0x4841e45f
+    mov     d2, a0
+    movhu   (0x28, a0), d0
+    cmp     0xf, d0
+    bgt     0x4841e43c
+    mov     0xc9, d0
+    mov     7, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    bra     0x4841e447
+    mov     0xc1, d0
+    mov     7, d1
+    mov     a2, a0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     d2, a0
+    mov     (0x20, a0), a0
+    mov     d3, a1
+    mov     a0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x24, sp), d0
+    clr     d1
+    call    func_48425898, [d2,d3,a2,a3], 0x10
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a2
+    mov     d3, d0
+    call    func_4842D409, 0, 0xc
+    cmp     0, d0
+    beq     0x4841e49a
+    mov     (0x60, sp), a0
+    mov     0x000d0024, d0
+    mov     a0, (0x10, sp)
+    mov     0x00060029, d1
+    call    func_4842938D, [d2,d3], 0x24
+    movhu   (0x28, a2), d1
+    cmp     d0, d1
+    bne     0x4841e49a
+    mov     1, d0
+    ret     [d2,d3,a2,a3], 0x50
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a2
+    add     0x24, a2
+    mov     (a2), a0
+    mov     (a0), d0
+    cmp     0, d0
+    beq     0x4841e4c3
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b4, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    bra     0x4841e4d5
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b4, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (a2), a0
+    mov     (a0), d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     (0x24, a0), a0
+    mov     (0x60, sp), a1
+    mov     (a0), d0
+    cmp     a1, d0
+    beq     0x4841e4fd
+    mov     a1, (0x10, sp)
+    mov     0x000600b4, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     (0x24, a0), a0
+    mov     (a0), d0
+    ret     [d2,d3,a2,a3], 0x50
+    mov     (0x60, sp), a0
+    mov     d3, d0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     d3, d0
+    call    func_4842D409, 0, 0xc
+    cmp     0, d0
+    beq     0x4841e53c
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     0x00050009, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    bra     0x4841e583
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a2
+    mov     sp, a3
+    add     0x34, a3
+    mov     a3, a0
+    mov     d3, d0
+    call    func_48416DF2, 0, 0x14
+    movhu   (0x28, a2), d0
+    mov     sp, a0
+    add     0x3c, a0
+    call    func_48417B27, 0, 0x10
+    movhu   (0x3e, sp), d0
+    exth    d0
+    cmp     0xef, d0
+    beq     0x4841e57a
+    movhu   (0x3c, sp), d0
+    exth    d0
+    cmp     0x27f, d0
+    beq     0x4841e574
+    clr     d0
+    movhu   d0, (0x34, sp)
+    bra     0x4841e57a
+    mov     0x27f, d0
+    movhu   d0, (0x38, sp)
+    mov     0xf5, d0
+    mov     a3, a0
+    call    func_48423031, [d2,a2], 0x18
+    clr     d0
+    bra     0x4841e5c2
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    mov     (0x18, a0), d0
+    bra     0x4841e5c2
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    movhu   (0x28, a0), d0
+    bra     0x4841e5c2
+    mov     (0x60, sp), a2
+    mov     d3, d0
+    mov     a2, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     a2, a0
+    mov     d3, d0
+    call    func_484168D7, [d2,a2,a3], 0x1c
+    clr     d0
+    bra     0x4841e5c2
+    mov     (0x60, sp), a0
+    mov     d3, d0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x50
 # AcFuncToggleProc  (CPU 0x4841e5c5)
 .incbin_range "baserom/kn7000_program.rom", 0x01e5c5, 0x01e637
 # AcIndexToggleProc  (CPU 0x4841e637)
-.incbin_range "baserom/kn7000_program.rom", 0x01e637, 0x01e894
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+    mov     d0, d3
+    mov     d1, d2
+    cmp     0x50005, d2
+    beq     0x4841e68b
+    cmp     0x50013, d2
+    bne     0x4841e651
+    jmp     0x4841e72c
+    cmp     0x50022, d2
+    bne     0x4841e65c
+    jmp     0x4841e760
+    cmp     0x600eb, d2
+    bne     0x4841e667
+    jmp     0x4841e7df
+    cmp     0x600ec, d2
+    bne     0x4841e672
+    jmp     0x4841e815
+    cmp     0x6004e, d2
+    bne     0x4841e67d
+    jmp     0x4841e833
+    cmp     0x6004d, d2
+    bne     0x4841e688
+    jmp     0x4841e868
+    jmp     0x4841e886
+    call    func_4842D409, 0, 0xc
+    cmp     0, d0
+    bne     0x4841e699
+    jmp     0x4841e71c
+    mov     (0x30, sp), a0
+    mov     d3, d0
+    mov     a0, (0x10, sp)
+    mov     0x00060051, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e71c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x0006004e, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     d0, d2
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x000600eb, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     d0, a2
+    mov     d2, d0
+    exth    d0
+    cmp     -1, d0
+    beq     0x4841e6ed
+    mov     d2, d0
+    exth    d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050013, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     0x0006003b, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    exthu   d2
+    asl     16, d2
+    mov     a2, d0
+    exthu   d0
+    add     d0, d2
+    mov     d2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050021, d1
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2], 0x20
+    mov     (0x30, sp), a0
+    mov     d2, d1
+    mov     a0, (0x10, sp)
+    mov     d3, d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2], 0x20
+    mov     (0x30, sp), a2
+    mov     a2, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     a2, (0x10, sp)
+    mov     d3, d0
+    mov     0x0006004d, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e75c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0006003b, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2], 0x20
+    mov     (0x30, sp), a2
+    mov     a2, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0006004e, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     d0, d2
+    exth    d0
+    cmp     -1, d0
+    beq     0x4841e7db
+    mov     a2, d0
+    lsr     16, d0
+    and     0xffff, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x0006004d, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e7db
+    mov     a2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x000600ec, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e7db
+    exth    d2
+    mov     d2, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050013, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     1, d0
+    mov     d0, (0x10, sp)
+    mov     0x0006003b, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2], 0x20
+    mov     0x0004004c, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x00060014, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e806
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    movhu   (0x32, a0), d0
+    bra     0x4841e811
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    movhu   (0x2e, a0), d0
+    exth    d0
+    ret     [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x000600eb, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (0x30, sp), a0
+    cmp     a0, d0
+    bne     0x4841e830
+    mov     1, d0
+    bra     0x4841e891
+    clr     d0
+    bra     0x4841e891
+    mov     0x0004004c, d0
+    mov     d0, (0x10, sp)
+    mov     d3, d0
+    mov     0x00060014, d1
+    call    func_4842938D, [d2,d3], 0x24
+    cmp     0, d0
+    beq     0x4841e85a
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    movhu   (0x30, a0), d0
+    bra     0x4841e865
+    mov     d3, d0
+    call    GetViewInstance, 0, 0
+    movhu   (0x2c, a0), d0
+    exth    d0
+    bra     0x4841e891
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x0006004e, d1
+    mov     d3, d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (0x30, sp), a0
+    cmp     a0, d0
+    bne     0x4841e883
+    mov     1, d0
+    bra     0x4841e891
+    clr     d0
+    bra     0x4841e891
+    mov     (0x30, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2], 0x20
 # PsWideToggleProc  (CPU 0x4841e894)
 .incbin_range "baserom/kn7000_program.rom", 0x01e894, 0x01e8f4
 # PsInvisibleBoxProc  (CPU 0x4841e8f4)
@@ -11971,7 +13032,7 @@ _rom_marker:
     ret     [d2,a2,a3], 0x20
     mov     0x4872980c, a3
     mov     a3, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     d2, a0
     mov     a3, a1
     call    0x4c00203c, [a2], 4
@@ -12023,7 +13084,7 @@ _rom_marker:
     call    TableRomStyleResourcePtr, 0, 0
     mov     a0, a2
     mov     a3, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     a2, a0
     mov     a3, a1
     call    0x4c00203c, [a2], 4
@@ -12520,7 +13581,7 @@ _rom_marker:
     mov     a0, d2
     mov     0x4872980c, a2
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     d2, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -14070,7 +15131,7 @@ _rom_marker:
 # StyleResourceWindowProbe_entry:   (register-save `call` entry)
     mov     0x4872980c, a2
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     0x48010000, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -14079,7 +15140,7 @@ _rom_marker:
     mov     0x48010000, a0
     ret     [a2], 0x18
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     0x40610000, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -14088,7 +15149,7 @@ _rom_marker:
     mov     0x40610000, a0
     ret     [a2], 0x18
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     0x40010000, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -14097,7 +15158,7 @@ _rom_marker:
     mov     0x40010000, a0
     bra     0x4843d794
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     0x54e10000, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -14106,7 +15167,7 @@ _rom_marker:
     mov     0x54e10000, a0
     bra     0x4843d794
     mov     a2, a0
-    call    0x4c0032f7, 0, 0
+    call    LibStrlen, 0, 0
     mov     0x40810000, a0
     mov     a2, a1
     call    0x4c00203c, [a2], 4
@@ -17570,7 +18631,45 @@ _rom_marker:
 # GetCurrentChord  (CPU 0x4844ddf2)
 .incbin_range "baserom/kn7000_program.rom", 0x04ddf2, 0x04e9f1
 # GetChordToneList  (CPU 0x4844e9f1)
-.incbin_range "baserom/kn7000_program.rom", 0x04e9f1, 0x072e5b
+.incbin_range "baserom/kn7000_program.rom", 0x04e9f1, 0x056e49
+# Rec8E0TablePtr  (CPU 0x48456e49)
+    mov     d0, d1
+    extbu   d1
+    cmp     0xb, d1
+    bge     0x48456e5f
+    extbu   d0
+    mov     0x8e0, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x501a5800, d0
+    rets
+    mov     0x501a60e0, d0
+    rets
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x056e67, 0x056ebb
+# Rec8E0Field120Ptr  (CPU 0x48456ebb)
+#   -> Rec8E0TablePtr(index) + 0x120, fallback 0x501A5920. This is where
+#   the MEMORY DUMP viewer's fourth power-on address comes from: its
+#   EV_SHOW handler calls it with index 0. The only 0x501A5920 literal in
+#   the image is this function's own fallback at 0x48456ED8.
+    mov     d0, d1
+    extbu   d1
+    cmp     0xb, d1
+    bge     0x48456ed6
+    extbu   d0
+    mov     0x8e0, d1
+    nop
+    nop
+    mulu    d1, d0
+    add     0x501a5800, d0
+    mov     0x120, a0
+    add     d0, a0
+    rets
+    mov     0x501a5920, a0
+    rets
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x056ede, 0x072e5b
 # TechniChordOrchestratorPart  (CPU 0x48472e5b)
 #   returns d0 = the part that sounds the harmony notes: param 0x8082
 #   (0xFF = auto -> part 0x10 or 0x11 by lib part-mask), then rejects the
@@ -18990,7 +20089,7 @@ _rom_marker:
     mov     d1, (0xc, sp)
     exthu   d0
     mov     d0, (0x10, sp)
-    call    0x4c001a48, [a2], 0x20
+    call    LibSprintf, [a2], 0x20
     mov     a2, a1
     mov     a3, a0
     call    0x4c003987, [a2], 4
@@ -19200,9 +20299,998 @@ _rom_marker:
 # InitializeBlock01  (CPU 0x48487420)
 .incbin_range "baserom/kn7000_program.rom", 0x087420, 0x087634
 # DbMemoProc  (CPU 0x48487634)
-.incbin_range "baserom/kn7000_program.rom", 0x087634, 0x0878ac
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x70, sp
+    mov     d0, (0x88, sp)
+    cmp     0x600b2, d1
+    beq     0x48487659
+    cmp     0x600b4, d1
+    beq     0x48487691
+    cmp     0x5001d, d1
+    bne     0x48487656
+    jmp     0x4848776e
+    jmp     0x48487823
+    mov     (0x90, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     (0x88, sp), d0
+    call    GetViewInstance, 0, 0
+    add     0xe, a0
+    mov     0xc5, d0
+    mov     7, d1
+    call    func_484261A6, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x88, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x80
+    mov     (0x90, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     (0x88, sp), d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a2
+    add     0xe, a2
+    mov     a2, a1
+    mov     sp, a0
+    add     0x20, a0
+    mov     -4, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    movhu   (0x22, sp), d0
+    mov     sp, a3
+    exth    d0
+    add     4, d0
+    movhu   d0, (0x22, sp)
+    movhu   (0x20, sp), d0
+    add     0x20, a3
+    exth    d0
+    add     4, d0
+    movhu   d0, (0x20, sp)
+    movhu   (0x24, sp), d0
+    mov     a3, a0
+    exth    d0
+    add     -4, d0
+    movhu   d0, (0x24, sp)
+    movhu   (0x26, sp), d0
+    mov     7, d1
+    exth    d0
+    add     -4, d0
+    movhu   d0, (0x26, sp)
+    mov     0xc6, d0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     sp, a0
+    add     0x20, a0
+    mov     -4, d1
+    setlb
+    movhu   (a2), d0
+    add     2, a2
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    movhu   (0x20, sp), d0
+    mov     sp, a2
+    exth    d0
+    add     5, d0
+    movhu   d0, (0x20, sp)
+    movhu   (0x26, sp), d0
+    add     0x28, a2
+    exth    d0
+    add     -5, d0
+    movhu   d0, (0x26, sp)
+    movhu   (0x22, sp), d0
+    mov     0x1f, d2
+    exth    d0
+    add     5, d0
+    movhu   d0, (0x22, sp)
+    movhu   (0x24, sp), d0
+    exth    d0
+    add     -5, d0
+    movhu   d0, (0x24, sp)
+    movhu   (0x20, sp), d0
+    movhu   d0, (0x28, sp)
+    movhu   (0x26, sp), d0
+    exth    d0
+    add     -8, d0
+    movhu   d0, (0x2a, sp)
+    mov     d2, d0
+    asl     6, d0
+    add     0x5006ad24, d0
+    mov     d0, (0x10, sp)
+    mov     a3, a0
+    mov     a2, a1
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    movhu   (0x2a, sp), d0
+    exth    d0
+    add     -8, d0
+    movhu   d0, (0x2a, sp)
+    movhu   (0x22, sp), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    blt     0x4848776a
+    add     -1, d2
+    exth    d2
+    cmp     0, d2
+    bge     0x48487735
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x80
+    mov     (0x90, sp), a2
+    mov     a2, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     (0x88, sp), d0
+    call    GetViewInstance, 0, 0
+    add     0xe, a0
+    mov     sp, a1
+    add     0x20, a1
+    mov     -4, d1
+    setlb
+    movhu   (a0), d0
+    add     2, a0
+    movhu   d0, (a1)
+    add     2, a1
+    inc     d1
+    lne
+    mov     0x5006ad24, d3
+    mov     sp, a3
+    add     0x2c, a3
+    mov     1, d2
+    mov     d2, d1
+    asl     6, d1
+    add     d3, d1
+    mov     0xffffffc0, a0
+    add     d1, a0
+    mov     d2, d1
+    asl     6, d1
+    add     d3, d1
+    mov     d1, a1
+    mov     0x40, d0
+    call    0x4c003039, [a2,a3], 8
+    inc     d2
+    exth    d2
+    cmp     0x20, d2
+    blt     0x4848779f
+    mov     0x5006b4e4, a0
+    clr     d0
+    mov     0x40, d1
+    call    0x4c003024, [a2], 4
+    mov     a3, a0
+    mov     a2, a1
+    mov     0x40, d0
+    call    0x4c0039eb, [a2,a3], 8
+    clr     d0
+    movbu   d0, (0x6c, sp)
+    mov     0x5006b4e4, a0
+    mov     a3, a1
+    call    0x4c003051, [a2], 4
+    mov     a3, a0
+    call    LibStrlen, 0, 0
+    cmp     0x40, d0
+    bne     0x484877ff
+    add     0x40, a2
+    bra     0x4848779d
+    call    func_4842943E, 0, 0x10
+    cmp     0x100026, d0
+    bne     0x48487820
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x88, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    bra     0x4848782e
+    mov     (0x90, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x80
+    movm    [a2,a3], (sp)
+    add     -0x14, sp
+    mov     a0, a3
+    call    LibStrlen, 0, 0
+    inc     d0
+    call    func_4841662A, [d2,a2,a3], 0x28
+    mov     a0, a2
+    mov     a3, a1
+    call    0x4c003051, [a2], 4
+    mov     a2, (0x10, sp)
+    mov     0x00100026, d0
+    mov     0x0005001d, d1
+    call    func_484298A0, [d2], 0x1c
+    mov     a2, (0x10, sp)
+    mov     0x00100026, d0
+    mov     0x00060023, d1
+    call    func_484298A0, [d2], 0x1c
+    ret     [a2,a3], 0x1c
+    movm    [d2], (sp)
+    add     -0xc, sp
+    clr     d1
+    clr     d0
+    mov     d1, d2
+    asl     6, d2
+    mov     d2, a0
+    add     0x5006ad24, a0
+    setlb
+    clr     d2
+    movbu   d2, (d0, a0)
+    inc     d0
+    exth    d0
+    cmp     0x40, d0
+    llt
+    inc     d1
+    exth    d1
+    cmp     0x20, d1
+    blt     0x48487882
+    mov     0x485d6704, a0
+    call    func_48487836, [a2,a3], 0x1c
+    ret     [d2], 0x10
 # DbMemoryDumpProc  (CPU 0x484878ac)
-.incbin_range "baserom/kn7000_program.rom", 0x0878ac, 0x087ffc
+#   The MEMORY DUMP hex viewer: 16 rows x 16 bytes over the CPU address
+#   space with an ASCII column, four user-settable byte highlights and
+#   four independent address slots. Dispatches through an open-addressed
+#   16 x 8-byte {key, handler} table at 0x485D6830 keyed on
+#   (event - 0x50000); ten handlers, everything else -> InheritedProc.
+#   State (work RAM, referenced NOWHERE else in the image): ADR[4] at
+#   0x500012EC, Highlight[4] at 0x500012FC, ColdFlag 0x50001304,
+#   SlotIndex 0x5006B524, SelectLatch (FULLTIME) 0x5006B528.
+#   STRICTLY READ-ONLY with respect to the inspected address: every
+#   access through the row base a2 is a movbu load, and every store
+#   targets the stack frame or those five cells. The address editor
+#   clamps at 0xC0000000 (&= 0x0FFFFFFF) and the renderer re-clamps each
+#   row base at 0xBFFFFFF0, so both flashes are fully viewable.
+#   The screen repaints on a self-rearming 0x78-tick SetApTimer loop.
+#   Annotated listing: disasm/debugger_memdump.asm
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x7c, sp
+    mov     d0, (0x94, sp)
+    mov     d1, a3
+    cmp     0x50001, a3
+    bge     0x484878c0
+    jmp     0x48487fea
+    cmp     0x600b4, a3
+    ble     0x484878cb
+    jmp     0x48487fea
+    mov     0xf, d0
+    mov     0xfffb0000, d1
+    add     a3, d1
+    and     d1, d0
+    asl     3, d0
+    mov     d0, a0
+    mov     0x485d6830, a1
+    add     a1, a0
+    mov     (a0), d0
+    cmp     d1, d0
+    beq     0x484878fe
+    setlb
+    cmp     0, d0
+    bne     0x484878f0
+    jmp     0x48487fea
+    add     8, a0
+    cmp     0x485d68b0, a0
+    bcs     0x484878fb
+    mov     a1, a0
+    mov     (a0), d0
+    cmp     d1, d0
+    lne
+    mov     (4, a0), a0
+    jmp     (a0)
+    mov     (0x50001304), d0
+    cmp     0, d0
+    beq     0x48487944
+    mov     0x84000000, d0
+    mov     d0, (0x500012ec)
+    add     0x770, d0
+    mov     d0, (0x500012f0)
+    mov     0x84000814, d0
+    mov     d0, (0x500012f4)
+    clr     d0
+    call    Rec8E0Field120Ptr, 0, 0
+    mov     a0, (0x500012f8)
+    clr     d0
+    mov     d0, (0x50001304)
+    mov     (0x94, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b3, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x94, sp), d1
+    mov     0x78, d0
+    call    func_48429FD5, [d2,d3,a2,a3], 0x30
+    cmp     0, d0
+    beq     0x48487980
+    mov     (0x94, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b3, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x94, sp), d1
+    mov     0x78, d0
+    call    func_48429FD5, [d2,d3,a2,a3], 0x30
+    cmp     0, d0
+    bne     0x48487962
+    mov     (0x9c, sp), a0
+    mov     a3, d1
+    mov     a0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     (0x5006b528), d0
+    cmp     0, d0
+    bne     0x484879d9
+    mov     (0x94, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b3, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x94, sp), d1
+    mov     0x78, d0
+    call    func_48429FD5, [d2,d3,a2,a3], 0x30
+    cmp     0, d0
+    beq     0x484879d9
+    mov     (0x94, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b3, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x94, sp), d1
+    mov     0x78, d0
+    call    func_48429FD5, [d2,d3,a2,a3], 0x30
+    cmp     0, d0
+    bne     0x484879bb
+    mov     (0x9c, sp), a0
+    mov     a3, d1
+    mov     a0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     (0x9c, sp), a0
+    mov     a3, d1
+    mov     a0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     (0x94, sp), d0
+    call    GetViewInstance, 0, 0
+    add     0xe, a0
+    mov     0xc5, d0
+    mov     7, d1
+    call    func_484261A6, [d2,d3,a2], 0x20
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b3, d1
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (0x94, sp), d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b3, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     (0x94, sp), d1
+    mov     0x78, d0
+    call    func_48429C9A, [d2,d3,a2,a3], 0x34
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     (0x94, sp), d0
+    call    GetViewInstance, 0, 0
+    mov     a0, a2
+    add     0xe, a2
+    mov     a2, a1
+    mov     sp, a0
+    add     0x30, a0
+    mov     -4, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    mov     sp, a0
+    mov     a0, d0
+    add     0x30, d0
+    mov     d0, (0x28, sp)
+    movhu   (0x32, sp), d0
+    mov     7, d1
+    exth    d0
+    add     4, d0
+    movhu   d0, (0x32, sp)
+    movhu   (0x30, sp), d0
+    exth    d0
+    add     4, d0
+    movhu   d0, (0x30, sp)
+    movhu   (0x34, sp), d0
+    exth    d0
+    add     -4, d0
+    movhu   d0, (0x34, sp)
+    movhu   (0x36, sp), d0
+    exth    d0
+    add     -4, d0
+    movhu   d0, (0x36, sp)
+    mov     (0x28, sp), a0
+    mov     0xc6, d0
+    call    func_484261A6, [d2,d3,a2], 0x20
+    mov     sp, a0
+    add     0x30, a0
+    mov     -4, d1
+    setlb
+    movhu   (a2), d0
+    add     2, a2
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    movhu   (0x32, sp), d0
+    mov     sp, a3
+    exth    d0
+    add     5, d0
+    movhu   d0, (0x32, sp)
+    movhu   (0x30, sp), d0
+    add     0x38, a3
+    exth    d0
+    add     5, d0
+    movhu   d0, (0x30, sp)
+    movhu   (0x34, sp), d0
+    mov     sp, a0
+    exth    d0
+    add     -5, d0
+    movhu   d0, (0x34, sp)
+    movhu   (0x36, sp), d0
+    exth    d0
+    add     -5, d0
+    movhu   d0, (0x36, sp)
+    mov     a0, d0
+    add     0x3c, d0
+    mov     d0, (0x20, sp)
+    clr     d0
+    mov     d0, (0x24, sp)
+    mov     (0x24, sp), d0
+    movhu   (0x32, sp), d1
+    mov     9, d2
+    exth    d1
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d1
+    movhu   (0x30, sp), d0
+    inc     d1
+    movhu   d1, (0x3a, sp)
+    movhu   d0, (0x38, sp)
+    movhu   (0x5006b524), d0
+    mov     (0x24, sp), d1
+    asl2    d0
+    mov     0x500012ec, a0
+    mov     (d0, a0), d0
+    asl     4, d1
+    mov     d1, a2
+    add     d0, a2
+    cmp     0xbffffff0, a2
+    bcs     0x48487b30
+    mov     a2, d0
+    and     0x0fffffff, d0
+    mov     d0, a2
+    mov     (0x20, sp), d0
+    mov     a2, d1
+    mov     d0, (8, sp)
+    exthu   d1
+    mov     0x485d6714, d0
+    mov     d0, (0xc, sp)
+    mov     a2, d0
+    lsr     16, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     d1, (0x14, sp)
+    call    LibSprintf, [a2], 0x20
+    mov     (0x20, sp), d0
+    mov     a3, a1
+    mov     d0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    mov     (0x20, sp), a0
+    call    LibStrlen, 0, 0
+    movhu   (0x38, sp), d1
+    mov     6, d2
+    exth    d1
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    movhu   d1, (0x38, sp)
+    clr     d2
+    clr     d3
+    mov     (0x20, sp), d0
+    exthu   d2
+    mov     d0, (8, sp)
+    mov     0x485d6720, d0
+    mov     d0, (0xc, sp)
+    movbu   (d2, a2), d0
+    mov     d0, (0x10, sp)
+    call    LibSprintf, [a2], 0x20
+    movbu   (d2, a2), d0
+    mov     0x000600b0, d1
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (0x20, sp), d1
+    exth    d0
+    mov     d1, (0x10, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     a3, a1
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    mov     (0x20, sp), a0
+    call    LibStrlen, 0, 0
+    movhu   (0x38, sp), d1
+    mov     6, d2
+    exth    d1
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    movhu   d1, (0x38, sp)
+    mov     d3, d0
+    ext     d0
+    mov     8, d1
+    div     d1, d0
+    mov     mdr, d0
+    cmp     7, d0
+    bne     0x48487c04
+    mov     d3, d0
+    inc     d0
+    cmp     0x10, d0
+    beq     0x48487c04
+    mov     0x485d6728, d0
+    mov     d0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     a3, a1
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    bra     0x48487c1e
+    mov     0x485d672c, d0
+    mov     d0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     a3, a1
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    movhu   (0x38, sp), d0
+    inc     d3
+    exth    d0
+    add     6, d0
+    movhu   d0, (0x38, sp)
+    mov     d3, d2
+    exthu   d3
+    cmp     0x10, d3
+    bge     0x48487c31
+    jmp     0x48487b7f
+    mov     a3, a1
+    mov     0x485d6730, d0
+    mov     d0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    movhu   (0x38, sp), d0
+    clr     d2
+    exth    d0
+    add     6, d0
+    movhu   d0, (0x38, sp)
+    clr     d0
+    movbu   d0, (0x3d, sp)
+    exthu   d0
+    movbu   (d0, a2), d1
+    cmp     0x20, d1
+    bge     0x48487c67
+    mov     0x2e, d1
+    movbu   d1, (0x3c, sp)
+    bra     0x48487c6c
+    movbu   (d0, a2), d1
+    movbu   d1, (0x3c, sp)
+    movbu   (d0, a2), d0
+    mov     0x000600b0, d1
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_4842938D, [d2,d3], 0x24
+    mov     (0x20, sp), d1
+    exth    d0
+    mov     d1, (0x10, sp)
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     a3, a1
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    movhu   (0x38, sp), d0
+    mov     8, d1
+    exth    d0
+    add     6, d0
+    movhu   d0, (0x38, sp)
+    mov     d2, d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    cmp     7, d0
+    bne     0x48487cd2
+    mov     d2, d0
+    inc     d0
+    cmp     0x10, d0
+    beq     0x48487cd2
+    mov     a3, a1
+    mov     0x485d6734, d0
+    mov     d0, (0x10, sp)
+    mov     0xf7, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    movhu   (0x38, sp), d0
+    exth    d0
+    add     6, d0
+    movhu   d0, (0x38, sp)
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0x10, d2
+    bge     0x48487cdb
+    bra     0x48487c59
+    mov     (0x24, sp), d0
+    inc     d0
+    exthu   d0
+    mov     d0, (0x24, sp)
+    cmp     0x10, d0
+    bge     0x48487ce8
+    jmp     0x48487aef
+    mov     (0x24, sp), d0
+    movhu   (0x32, sp), d1
+    mov     sp, a0
+    exth    d1
+    mov     9, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d1
+    movhu   (0x30, sp), d0
+    inc     d1
+    movhu   d1, (0x3a, sp)
+    movhu   d0, (0x38, sp)
+    mov     a0, d0
+    add     0x38, d0
+    mov     d0, (0x2c, sp)
+    mov     a0, d1
+    add     0x3c, d1
+    mov     d1, (0x20, sp)
+    clr     d0
+    clr     d3
+    mov     0x500012fc, a3
+    mov     d0, d2
+    exthu   d2
+    mov     d2, a0
+    add     a0, a0
+    mov     a0, d0
+    movhu   (d0, a3), d0
+    exth    d0
+    cmp     -1, d0
+    beq     0x48487d4b
+    mov     (0x20, sp), a2
+    mov     d2, d1
+    mov     a2, (8, sp)
+    asl2    d1
+    mov     0x485d6764, d0
+    mov     d0, (0xc, sp)
+    mov     0x485d6754, a0
+    mov     (d1, a0), d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    add     d0, d0
+    movhu   (d0, a3), d0
+    exth    d0
+    mov     d0, (0x14, sp)
+    call    LibSprintf, [a2], 0x20
+    bra     0x48487d71
+    mov     (0x20, sp), a2
+    mov     0x485d6774, d0
+    mov     a2, (8, sp)
+    mov     d0, (0xc, sp)
+    mov     d2, d0
+    asl2    d0
+    mov     0x485d6754, a0
+    mov     (d0, a0), d0
+    mov     d0, (0x10, sp)
+    mov     d2, d0
+    add     d0, d0
+    movhu   (d0, a3), d0
+    exth    d0
+    mov     d0, (0x14, sp)
+    call    LibSprintf, [a2], 0x20
+    mov     d2, d0
+    mov     a2, (0x10, sp)
+    add     d0, d0
+    mov     0x485d6708, a0
+    movhu   (d0, a0), d0
+    clr     d1
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     (0x2c, sp), a1
+    mov     3, d0
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    mov     a2, a0
+    call    LibStrlen, 0, 0
+    movhu   (0x38, sp), d1
+    inc     d3
+    exth    d1
+    mov     6, d2
+    nop
+    nop
+    mulu    d2, d0
+    add     d0, d1
+    movhu   d1, (0x38, sp)
+    mov     d3, d0
+    exthu   d3
+    cmp     3, d3
+    bgt     0x48487dae
+    jmp     0x48487d14
+    mov     sp, a0
+    mov     a0, d2
+    add     0x3c, d2
+    mov     d2, (8, sp)
+    mov     0x485d6780, d0
+    mov     d0, (0xc, sp)
+    movhu   (0x5006b524), d0
+    mov     0x500012ec, a0
+    mov     d0, (0x10, sp)
+    movhu   (0x5006b524), d1
+    mov     d1, d0
+    asl2    d0
+    mov     (d0, a0), d0
+    asl2    d1
+    lsr     16, d0
+    exthu   d0
+    mov     d0, (0x14, sp)
+    mov     (d1, a0), d0
+    exthu   d0
+    mov     d0, (0x18, sp)
+    call    LibSprintf, [a2], 0x20
+    mov     d2, (0x10, sp)
+    mov     0xa, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x28, sp), a0
+    mov     (0x2c, sp), a1
+    mov     3, d0
+    clr     d1
+    call    func_48425398, [d2,d3,a2,a3], 0x30
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     (0x9c, sp), a2
+    mov     a3, d1
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     a2, d0
+    lsr     16, d0
+    and     0xffff, d0
+    exthu   d0
+    cmp     8, d0
+    bne     0x48487e50
+    mov     (0x5006b528), d0
+    cmp     0, d0
+    beq     0x48487e44
+    clr     d0
+    mov     d0, (0x5006b528)
+    mov     a2, d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    mov     -1, d0
+    mov     0x00050013, d1
+    call    func_4842938D, [d2,d3], 0x24
+    bra     0x48487e4c
+    mov     1, d0
+    mov     d0, (0x5006b528)
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     a3, d1
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x8c
+    mov     (0x9c, sp), a2
+    cmp     7, a2
+    bhi     0x48487ede
+    mov     a2, d0
+    asl2    d0
+    mov     1, d3
+    asl     d0, d3
+    cmp     0x50010, a3
+    bne     0x48487e8d
+    movhu   (0x5006b524), d2
+    mov     0x500012ec, a0
+    mov     d2, d0
+    asl2    d0
+    mov     (d0, a0), d1
+    mov     d2, d0
+    sub     d3, d1
+    asl2    d0
+    mov     d1, (d0, a0)
+    bra     0x48487ea2
+    movhu   (0x5006b524), d2
+    mov     0x500012ec, a0
+    mov     d2, d0
+    asl2    d0
+    mov     (d0, a0), d0
+    mov     d2, d1
+    add     d3, d0
+    asl2    d1
+    mov     d0, (d1, a0)
+    mov     d2, d0
+    asl2    d0
+    mov     (d0, a0), d0
+    cmp     0xc0000000, d0
+    bcs     0x48487ebb
+    mov     d2, d0
+    asl2    d0
+    mov     (d0, a0), d0
+    asl2    d2
+    and     0x0fffffff, d0
+    mov     d0, (d2, a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     a3, d1
+    call    func_48417740, [d2,d3,a2,a3], 0x2c
+    clr     d0
+    ret     [d2,d3,a2,a3], 0x8c
+    cmp     9, a2
+    bcs     0x48487f48
+    cmp     0xc, a2
+    bhi     0x48487f48
+    cmp     0x50010, a3
+    bne     0x48487f0b
+    mov     a2, d1
+    add     -9, d1
+    add     d1, d1
+    mov     d1, a0
+    add     0x500012fc, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    blt     0x48487f27
+    movhu   (a0), d0
+    exth    d0
+    add     -1, d0
+    movhu   d0, (a0)
+    bra     0x48487f27
+    mov     a2, d1
+    add     -9, d1
+    add     d1, d1
+    mov     d1, a0
+    add     0x500012fc, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0xff, d0
+    bge     0x48487f27
+    movhu   (a0), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (a0)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     a3, d1
+    call    func_48417740, [d2,d3,a2,a3], 0x2c
+    bra     0x48487f98
+    cmp     0xd, a2
+    bne     0x48487f98
+    cmp     0x50010, a3
+    bne     0x48487f68
+    movhu   (0x5006b524), d0
+    cmp     0, d0
+    ble     0x48487f79
+    add     -1, d0
+    movhu   d0, (0x5006b524)
+    bra     0x48487f79
+    movhu   (0x5006b524), d0
+    cmp     3, d0
+    bge     0x48487f79
+    inc     d0
+    movhu   d0, (0x5006b524)
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b4, d1
+    call    func_4842938D, [d2,d3], 0x24
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     a3, d1
+    call    func_48417740, [d2,d3,a2,a3], 0x2c
+    mov     a2, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     a3, d1
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    bra     0x48487ff9
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     (0x94, sp), d0
+    mov     0x000600b3, d1
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    bra     0x48487ff9
+    clr     d2
+    clr     d0
+    setlb
+    mov     0x500012fc, a0
+    mov     d2, d1
+    exthu   d1
+    add     d1, d1
+    movhu   (d1, a0), d1
+    mov     (0x9c, sp), a0
+    exth    d1
+    cmp     d1, a0
+    beq     0x48487fd8
+    mov     d0, d2
+    inc     d2
+    mov     d2, d0
+    exthu   d0
+    cmp     3, d0
+    lle
+    exthu   d2
+    mov     d2, a1
+    add     a1, a1
+    mov     a1, d0
+    mov     0x485d6708, a0
+    movhu   (d0, a0), d0
+    exth    d0
+    bra     0x48487ff9
+    mov     (0x9c, sp), a0
+    mov     a3, d1
+    mov     a0, (0x10, sp)
+    mov     (0x94, sp), d0
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x8c
 # DbColorListProc  (CPU 0x48487ffc)
 .incbin_range "baserom/kn7000_program.rom", 0x087ffc, 0x0880c7
 # DbColorRGBProc  (CPU 0x484880c7)
@@ -19212,7 +21300,70 @@ _rom_marker:
 # DbBitmapFileProc  (CPU 0x484884da)
 .incbin_range "baserom/kn7000_program.rom", 0x0884da, 0x0886da
 # DbBitmapLoadProc  (CPU 0x484886da)
-.incbin_range "baserom/kn7000_program.rom", 0x0886da, 0x0887cb
+    movm    [d2], (sp)
+    add     -0x18, sp
+    mov     d0, d2
+    cmp     0x50001, d1
+    beq     0x48488709
+    cmp     0x50009, d1
+    beq     0x48488757
+    cmp     0x600b2, d1
+    bne     0x484886fb
+    jmp     0x48488776
+    cmp     0x6003a, d1
+    bne     0x48488706
+    jmp     0x48488797
+    jmp     0x484887bd
+    mov     (0x2c, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    call    func_48414B90, 0, 0x14
+    mov     0x5006b52e, a0
+    mov     0x485d67cc, a1
+    call    func_48532395, [a2,a3], 0x24
+    exth    d0
+    cmp     0, d0
+    blt     0x4848874d
+    mov     0x502b8000, a0
+    mov     0x00018000, d0
+    call    func_48532468, [d2,a2], 0x24
+    call    func_485323BF, 0, 0x14
+    call    func_48414BAA, 0, 0x14
+    clr     d0
+    bra     0x484887c8
+    mov     (0x2c, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    clr     d0
+    mov     d0, (0x10, sp)
+    mov     0x000600b4, d1
+    mov     d2, d0
+    call    func_4842938D, [d2,d3], 0x24
+    clr     d0
+    bra     0x484887c8
+    mov     (0x2c, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    mov     0x485d67c8, a0
+    mov     0x502b8000, a1
+    call    func_484282A4, [a2,a3], 0x18
+    clr     d0
+    bra     0x484887c8
+    mov     (0x2c, sp), a1
+    mov     0x485d67d0, d0
+    mov     a1, (8, sp)
+    mov     d0, (0xc, sp)
+    movhu   (0x5006b52c), d0
+    mov     d0, (0x10, sp)
+    mov     0x5006b52e, d0
+    mov     d0, (0x14, sp)
+    call    LibSprintf, [a2], 0x20
+    clr     d0
+    bra     0x484887c8
+    mov     (0x2c, sp), a0
+    mov     a0, (0x10, sp)
+    call    func_48429569, [d2,d3,a2,a3], 0x28
+    ret     [d2], 0x1c
 # IvMpVerWinProc  (CPU 0x484887cb)
 .incbin_range "baserom/kn7000_program.rom", 0x0887cb, 0x088897
 # AcProgVerBoxProc  (CPU 0x48488897)
@@ -19767,7 +21918,52 @@ _rom_marker:
 # RomTestRunFunc  (CPU 0x4849fdcf)
 .incbin_range "baserom/kn7000_program.rom", 0x09fdcf, 0x09fdf8
 # MainRomTestFunc  (CPU 0x4849fdf8)
-.incbin_range "baserom/kn7000_program.rom", 0x09fdf8, 0x0a0165
+.incbin_range "baserom/kn7000_program.rom", 0x09fdf8, 0x0a0055
+# BackupSramTest  (CPU 0x484a0055)
+#   Service RAM DEVICE TEST: from 0x44000000, 0x20000 iterations x 2
+#   bytes = 256 KB, writing 0x5A then 0xA5 to each byte and restoring the
+#   original. This fixes the extent of the battery-backed backup SRAM
+#   IC23 (mirror 0x84000000), which holds the live panel-settings record
+#   at 0x84000020 (0x750 bytes) and the 104 PANEL MEMORY records at
+#   0x84000824 (13 banks x 8, stride 0x3A90 per bank).
+    movm    [d2], (sp)
+    add     -4, sp
+    clr     d1
+    mov     0x44000000, a0
+    clr     d2
+    setlb
+    movbu   (a0), d0
+    movbu   d0, (0, sp)
+    mov     0x5a, d0
+    movbu   d0, (a0)
+    movbu   (a0), d0
+    cmp     0x5a, d0
+    beq     0x484a0076
+    extbu   d1
+    or      0x04, d1
+    movbu   (0, sp), d0
+    movbu   d0, (a0)
+    inc     a0
+    movbu   (a0), d0
+    movbu   d0, (0, sp)
+    mov     0xa5, d0
+    movbu   d0, (a0)
+    movbu   (a0), d0
+    cmp     0xa5, d0
+    beq     0x484a0092
+    extbu   d1
+    or      0x04, d1
+    movbu   (0, sp), d0
+    inc     d2
+    movbu   d0, (a0)
+    inc     a0
+    cmp     0x20000, d2
+    lcs
+    mov     d1, d0
+    extbu   d0
+    retf    [d2], 8
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0a00a5, 0x0a0165
 # RamTestRunFunc  (CPU 0x484a0165)
 .incbin_range "baserom/kn7000_program.rom", 0x0a0165, 0x0a018e
 # MainRamTestFunc  (CPU 0x484a018e)
@@ -21908,7 +24104,67 @@ _rom_marker:
     mov     1, d0
     retf    0, 0
 # PanelSubTypeGet  (CPU 0x484d774e)
-.incbin_range "baserom/kn7000_program.rom", 0x0d774e, 0x0d7bbd
+.incbin_range "baserom/kn7000_program.rom", 0x0d774e, 0x0d78a6
+# SumU32Words  (CPU 0x484d78a6)
+    movm    [d2,d3], (sp)
+# SumU32Words_entry:   (register-save `call` entry)
+    mov     d0, d2
+    clr     d3
+    lsr     2, d2
+    cmp     d3, d2
+    beq     0x484d78bd
+    setlb
+    mov     d2, d1
+    asl2    d1
+    mov     (d1, a0), d0
+    add     d0, d3
+    mov     1, d0
+    sub     d0, d2
+    cmp     0, d2
+    lne
+    mov     d3, d0
+    not     d0
+    retf    [d2,d3], 8
+# BackupSramChecksumVerify  (CPU 0x484d78c3)
+    movm    [d2], (sp)
+    add     -0x10, sp
+# BackupSramChecksumVerify_entry:   (register-save `call` entry)
+    mov     0x84000000, a0
+    mov     0x7a0, d0
+    call    SumU32Words_entry, [d2,d3], 8
+    mov     (0x84030174), d1
+    mov     -1, d2
+    movbu   d2, (0x5006cc80)
+    cmp     d0, d1
+    bne     0x484d7910
+    clr     d0
+    movbu   d0, (0x5006cc80)
+    call    MemStyleAreaChecksumVerify_entry, [d2,d3,a2], 0x1c
+    exth    d0
+    cmp     0, d0
+    bge     0x484d7910
+    call    func_484562FE, 0, 0xc
+    mov     d0, d1
+    add     0x12345678, d1
+    mov     d1, d0
+    call    func_484562ED, 0, 0x10
+    ret     [d2], 0x14
+# BackupSramValidGet  (CPU 0x484d7913)
+    movbu   (0x5006cc80), d0
+    extb    d0
+    retf    0, 0
+# BackupSramValidInvalidate  (CPU 0x484d791d)
+    mov     -1, d0
+    movbu   d0, (0x5006cc80)
+    retf    0, 0
+# GetRomConfigByte  (CPU 0x484d7928)
+#   -> *(uint8*)0x4840000F, the lone configuration byte in the flash
+#   header (0x16 in PROGRAM 941). Gates both hidden chords above; also
+#   compared against 0x77 at 0x484A5084.
+    movbu   (0x4840000f), d0
+    retf    0, 0
+# (unnamed code follows to the next boundary)
+.incbin_range "baserom/kn7000_program.rom", 0x0d7931, 0x0d7bbd
 # InitializeBlock27  (CPU 0x484d7bbd)
 .incbin_range "baserom/kn7000_program.rom", 0x0d7bbd, 0x0d8356
 # AcResetPageSeProc  (CPU 0x484d8356)
@@ -35091,7 +37347,46 @@ display_palette:
     exth    d0
     jmp     LibI32ToF64
 .mnbase 0x48400000
-.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3bddb5
+.incbin_range "baserom/kn7000_program.rom", 0x3ba9c7, 0x3baa19
+# LibSprintf  (lib CPU 0x4c001a48)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     (0x28, sp), a2
+    mov     sp, a0
+    mov     a0, d1
+    add     0x2c, d1
+    mov     d1, a1
+    inc4    a1
+    mov     a2, (0x18, sp)
+    nop
+    add     8, a0
+    mov     a2, (a0)
+    mov     (0x2c, sp), a0
+    mov     1, d0
+    call    0x4c001a6b, [d2,d3,a2,a3], 0x98
+    ret     [a2], 0x20
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3baa36, 0x3bc2c8
+# LibStrlen  (lib CPU 0x4c0032f7)
+.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
+    mov     a0, a1
+    movbu   (a1), d1
+    extb    d1
+    cmp     0, d1
+    nop
+    beq     0x4c003309
+    setlb
+    inc     a1
+    movbu   (a1), d1
+    extb    d1
+    cmp     0, d1
+    nop
+    lne
+    mov     a1, d0
+    sub     a0, d0
+    nop
+    retf    0, 0
+.mnbase 0x48400000
+.incbin_range "baserom/kn7000_program.rom", 0x3bc2e2, 0x3bddb5
 # TgPartGlobalChanRefresh  (lib CPU 0x4c004de4)
 .mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1
     movm    [d2,d3,a2,a3], (sp)

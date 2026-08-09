@@ -2,3 +2,4 @@
 # byte-match is always 100%; this tracks REAL source vs .incbin passthrough
 date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
 2026-07-20	1e891a8	743770	4157185	17.89	56899	71	925
+2026-08-09	7605a1c	749584	4157185	18.03	59008	71	942

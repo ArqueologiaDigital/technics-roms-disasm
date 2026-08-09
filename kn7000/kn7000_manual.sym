@@ -2372,3 +2372,92 @@
 0x4843DECC  MemStyleExportToCustom_entry
 0x4843E000  CustStyleImportToMem    ; (d0 = destination MEMORY style 0..2, a0 = a CUSTOM container) the exact inverse: copy the 0x80 style record in, renormalise its 20 variation indices by adding or subtracting 0x14 until each lands in [style*0x14, style*0x14+0x14), then for each of the 20 variations copy the 0xE0 record and its stream into the MEMORY heap and stamp stream[0] with the MEMORY variation index
 0x4843E005  CustStyleImportToMem_entry
+
+; ---- ★ THE HIDDEN FACTORY DEBUG SCREENS (chord-opened, 2026-08-09) ----------
+; Holding UP+DOWN together on a set of balance (index-switch) columns makes
+; IndexSwEventHandler's both-held accumulator at 0x50021FE0 equal a magic
+; constant, and its tail at 0x484148C0 opens a hidden factory screen. The
+; accumulator is rebuilt at 0x48414842 as (0x50021FDC & 0x50021FD8) -- note the
+; `not d2` at 0x48414854: the handler edge-detects new & ~old before comparing.
+; Bit N of the accumulator is balance column N+1 (the index->mask table at
+; 0x4859E1A0 is a plain 1 << N) and the test is an EQUALITY, so one extra held
+; column silently kills the chord:
+;   0x00000099  columns 1,4,5,8 -> GATED on GetRomConfigByte: != 0xFF opens
+;               title _TT_MEMDUMP (0xF2) = the MEMORY DUMP hex viewer;
+;               == 0xFF calls ChangeMode(0,0) (Panel Simulator) instead
+;   0x000000A1  columns 1,6,8   -> ungated: title _TT_SOFTVER (0xF0)
+;   0x00110000  LCD soft keys   -> INVERSE gate: runs CaptureLcd only when the
+;               config byte IS 0xFF, so LCD capture is DEAD on PROGRAM 941
+; A byte scan finds exactly five references to 0x50021FE0 in the whole image:
+; 0x48414844 / 0x4841485A (the rebuild), 0x484148C2 (the chord read) and two
+; plain zero-stores at 0x48414C05 / 0x48414CA8. There is no second chord site.
+; Full annotated listing: disasm/debugger_memdump.asm (byte-checked against the
+; ROM and re-encoded 803/803 by tools/verify_listing.py).
+;
+; MEMORY DUMP viewer state, all in ordinary work RAM. Every reference to each
+; of these five cells in the whole 4 MB image is inside DbMemoryDumpProc (byte
+; scan), so the viewer neither persists them nor shares them with anything:
+;   0x500012EC  uint32 ADR[0..3]        the four inspected addresses
+;   0x500012FC  int16  Highlight[0..3]  -1 = off, else the byte to colour
+;   0x50001304  uint32 ColdFlag         1 from .data, cleared by the first EV_SHOW
+;   0x5006B524  uint16 SlotIndex        0..3, which ADR is displayed
+;   0x5006B528  uint32 SelectLatch      the FULLTIME toggle's shadow (below)
+; Their power-on values come from the .data image at ROM 0x487B1E54 (crt0 copies
+; 0x7F34 bytes from 0x487B0B78 to 0x50000010 at 0x48410055; the arithmetic
+; 0x487B0B78 + (0x500012EC - 0x50000010) lands exactly there) and read
+; 84000000 / 50000000 / 4C000000 / 48400000 -- one address space each, INCLUDING
+; the program flash. Nobody has ever seen those: the first EV_SHOW overwrites
+; them with 0x84000000 / 0x84000770 / 0x84000814 / Rec8E0Field120Ptr(0) =
+; 0x501A5920 and clears ColdFlag. The viewer is strictly READ-ONLY with respect
+; to the inspected address (every access through the row base a2 is a movbu
+; load; every store targets the stack frame or the five cells above).
+;
+; 0x44000000, mirrored at 0x84000000, is NOT generic work RAM: it is the 256 KB
+; battery-backed backup SRAM (IC23), whose extent BackupSramTest fixes exactly.
+; Three of the four runtime defaults are therefore watch-points on the user's
+; own stored data:
+;   0x84000000              header checksummed by SumU32Words over 0x7A0 bytes,
+;                           result stored at 0x84030174 (code at 0x484D788F)
+;   0x84000020..0x8400076F  the LIVE panel-settings record; the library folds
+;                           its 0x750 size as 0x84000770 - 0x84000020 (0x4C01ED94)
+;   0x84000814              0x10-byte header of the PANEL MEMORY store
+;   0x84000824 + (i/8)*0x3A90 + 0x10 + (i%8)*0x750, i < 0x68 -- 104 records
+;                           = 13 banks x 8 memories, matching the owner's manual
+;                           spec page (0x3A90 = 0x10 + 8*0x750). The accessor at
+;                           lib 0x4C021A57 takes a 1-BASED memory number and
+;                           subtracts 1 before applying this formula.
+;                           The store therefore spans 13 * 0x3A90 = 0x2F950
+;                           bytes, i.e. 0x84000824..0x84030173 -- ending EXACTLY
+;                           at the checksum cell 0x84030174 above. That the two
+;                           independently-derived addresses abut is a check on
+;                           both the 13 x 8 count and the checksum-cell address.
+;
+; FULLTIME, the ON/OFF box on the MEMORY DUMP screen, is resource id 0x16 at
+; 0x485D5F6C -- an AcIndexToggle (class 0x4A of class-table 4) on edit switch
+; ES_Left2 = 0x91, i.e. the SECOND LCD soft key down the LEFT side (the firmware
+; enumerates its own edit switches in a {name, value} pair array at 0x485B0C68:
+; ES_Bottom1..16 = 0x00..0x0F, ES_Right1..5 = 0x10..0x14, ES_Exit = 0x17,
+; ES_Left1..5 = 0x90..0x94, ES_None = 0xFF) -- captioned
+; by the VwLabel at 0x485D5FA8 whose string "FULLTIME" at 0x485D5F9C has exactly
+; one reference in the image (0x485D5FC0, that label's str field). The toggle
+; writes the widget bool at 0x500012C8 (also exactly one reference: the resource
+; word at 0x485D5F90) and, via EV_IAMSELECTED packed as (index << 16) | tag with
+; index 8, the viewer's shadow at 0x5006B528. That shadow has exactly four
+; references, all inside DbMemoryDumpProc, and ONE behavioural effect: in the
+; EV_HIDE handler at 0x48487993 a non-zero shadow SKIPS the KillApTimer(0x78,
+; self, self, MT_SeleDraw) flush, so the viewer's self-rearming repaint timer
+; survives leaving the screen and keeps re-reading the parked address. FULLTIME
+; is not a freeze, not a global debug-enable, and not an export path.
+0x48414735  IndexSwEventHandler     ; the balance (index-switch) UP/DOWN handler; rebuilds the both-held accumulator 0x50021FE0 at 0x48414842 and ends in the hidden-chord dispatch tail at 0x484148C0
+0x484D7928  GetRomConfigByte        ; -> *(uint8*)0x4840000F, the lone configuration byte in the flash header (0x16 in PROGRAM 941; the boot header reads DC 7E FF 00 00 CB CB CB CB CB DC C5 77 0D 00 16). Gates both chords above. Exactly six callers, found by decoding every call displacement in the image: 0x484148DC, 0x48414926, 0x48414A27, 0x48488829, 0x4848A8E1, 0x484A5084 (which compares it against 0x77)
+0x484A0055  BackupSramTest          ; service RAM DEVICE TEST: from 0x44000000, 0x20000 iterations x 2 bytes = 256 KB = IC23, writing 0x5A then 0xA5 to each byte and restoring the original; sets bit 0x04 of the returned flag byte on any read-back mismatch. This is what fixes the extent of the battery-backed backup SRAM (mirror 0x84000000)
+0x484D78A6  SumU32Words             ; (a0 = base, d0 = byte count) -> the ONE'S COMPLEMENT (`not d0` at 0x484D78BE) of the sum of the d0/4 little-endian u32 words at (a0). The backup-SRAM validity checksum
+0x484D78A8  SumU32Words_entry
+0x484D78C3  BackupSramChecksumVerify ; SumU32Words over the 0x7A0-byte header at 0x84000000, compared against the value stored at 0x84030174; leaves 0 in the validity byte 0x5006CC80 on a match, -1 otherwise. The stamping twin -- same base and length, result written to 0x84030174 -- is the inline tail at 0x484D788F
+0x484D78C8  BackupSramChecksumVerify_entry
+0x484D7913  BackupSramValidGet      ; -> *(int8*)0x5006CC80: 0 once BackupSramChecksumVerify has matched, -1 while unverified
+0x484D791D  BackupSramValidInvalidate ; 0x5006CC80 = -1
+0x48456E49  Rec8E0TablePtr          ; (d0 = index) -> 0x501A5800 + (index & 0xFF) * 0x8E0 for index < 11, else the fallback 0x501A60E0. An 11-entry table of 0x8E0-byte records in work RAM; the next array starts at 0x501AB9A0 = base + 11*0x8E0, which fixes the count independently. IDENTITY PLAUSIBLE ONLY -- probably the sequencer song slots (the manual says 10 SONG MAX. and AppSEQ_InitSmfLyricsSeq is one caller) -- NOT proven
+0x48456EBB  Rec8E0Field120Ptr       ; (d0 = index) -> Rec8E0TablePtr(index) + 0x120, out-of-range fallback 0x501A5920. Supplies the MEMORY DUMP viewer's ADR3 power-on default (EV_SHOW calls it with index 0). The only 0x501A5920 literal in the whole image is this function's fallback at 0x48456ED8
+0x4C001A48  LibSprintf              ; library ROM: sprintf(buf = caller's (8,sp), fmt = caller's (0xC,sp), varargs from (0x10,sp)) -- builds the va_list at &(0x30,sp) and tail-calls the formatter at 0x4C001A6B. INFERRED from the call-site shape; the library window has no reflection name table
+0x4C0032F7  LibStrlen               ; library ROM: strlen(a0) -- NUL walk returning a1 - a0

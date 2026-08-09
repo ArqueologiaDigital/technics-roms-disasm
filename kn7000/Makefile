@@ -21,7 +21,7 @@ UNIDASM     ?= ../mame-sony-video/unidasm
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
 
-.PHONY: all verify disasm disasm-dsp symbols program-src constants clean distclean baserom
+.PHONY: all verify verify-listings disasm disasm-dsp symbols program-src constants clean distclean baserom
 
 # Default: build then verify byte-for-byte.
 all: verify
@@ -85,6 +85,16 @@ verify: $(TARGETS)
 	done; \
 	[ $$ok -eq 1 ] || { echo; echo "byte-match FAILED"; exit 1; }
 	@echo; echo "All images reproduced byte-for-byte."
+
+# ---- check the CURATED listings under disasm/ ------------------------------
+# The hand-annotated listings are not part of the byte-exact build, so nothing
+# else would catch a typo in them. verify_listing.py re-reads every byte column
+# straight out of baserom/ and re-encodes every mnemonic with the repo's own
+# MN10300 encoder, so a wrong byte or a wrong operand fails here.
+CURATED_LISTINGS := disasm/debugger_memdump.asm
+
+verify-listings: baserom/kn7000_program.rom tools/verify_listing.py tools/mn10300_asm.py
+	$(PYTHON) tools/verify_listing.py $(CURATED_LISTINGS)
 
 # ---- (re)generate the reference disassembly listings -----------------------
 disasm: disasm/program.asm disasm/program_region2.asm disasm/program_named.asm disasm/table_directory.asm disasm-dsp

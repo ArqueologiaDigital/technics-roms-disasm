@@ -273,12 +273,34 @@ CONVERT = {
     "CustStyleAllocPtrSet", "CustStyleVarRecDataSet", "StyleRefIdMark",
     "StyleRefIdApply", "MemStyleExportToCustom", "CustStyleImportToMem",
     "InitializeBlock34",
+    # the hidden factory debug screens (chord-opened) and the cells they read:
+    # the MEMORY DUMP hex viewer, the MEMO LOG and BITMAP LOAD panes, the
+    # FULLTIME toggle's widget classes, the chord dispatcher itself, and the
+    # backup-SRAM / record-table helpers the viewer's defaults come from.
+    # Annotated listing: disasm/debugger_memdump.asm
+    "IndexSwEventHandler", "GetRomConfigByte", "DbMemoryDumpProc",
+    "DbMemoProc", "DbBitmapLoadProc", "CaptureLcdArea",  # CaptureLcd: line 51
+    "AcIndexToggleProc", "PsToggleBoxProc",
+    "BackupSramTest", "SumU32Words", "BackupSramChecksumVerify",
+    "BackupSramValidGet", "BackupSramValidInvalidate",
+    "Rec8E0TablePtr", "Rec8E0Field120Ptr",
 }
 
 # A converted function whose named block extends past its real end (because the
 # next named boundary is far away) can cap the converted range here; the
 # remainder of the block stays raw .incbin_range.
 FUNC_END = {
+    # the hidden-debug-screen pass: cap every one of these at its real end so
+    # the conversion covers only routines this pass actually read.
+    "IndexSwEventHandler": 0x1493C,      # ret at 0x48414939; next (unnamed) function at 0x4841493C
+    "Rec8E0TablePtr": 0x56E67,           # rets at 0x48456E65; next (unnamed) function at 0x48456E67
+    "Rec8E0Field120Ptr": 0x56EDE,        # rets at 0x48456EDC; next (unnamed) function at 0x48456EDE
+    "BackupSramTest": 0xA00A5,           # retf at 0x484A00A2; next (unnamed) function at 0x484A00A5
+    "SumU32Words": 0xD78C3,              # retf at 0x484D78C0
+    "BackupSramChecksumVerify": 0xD7913, # ret  at 0x484D7910
+    "BackupSramValidGet": 0xD791D,
+    "BackupSramValidInvalidate": 0xD7928,
+    "GetRomConfigByte": 0xD7931,         # retf at 0x484D792E; next (unnamed) function at 0x484D7931
     "SndRecScanApply": 0x1202C,          # next (unnamed) function at 0x4841202C
     "LowestSetBitIndex": 0xA0CB0,        # next (unnamed) function at 0x484A0CB0
     "SndCmdSendReverbPartsApply": 0x4B347,  # next (unnamed) function at 0x4844B347
@@ -320,6 +342,9 @@ FUNC_END = {
 # the lib region has no reflection name table.
 LIB_CONVERT = {
     "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
+    # the two C-library helpers the debug screens' renderer calls
+    "LibSprintf":         (0x4C001A48, 0x4C001A65),
+    "LibStrlen":          (0x4C0032F7, 0x4C003311),
     # ---- the SOFT-FLOAT IEEE-754 double runtime + libm subset (the firmware
     #      has no FPU: TgPartGlidePlan/Tick and others do their math here;
     #      args on the caller's stack at (8,sp) lo/(0xC,sp) hi and
@@ -834,6 +859,78 @@ LIB_CONVERT = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    "IndexSwEventHandler": (
+        "The balance (index-switch) UP/DOWN handler. It rebuilds the",
+        "both-buttons-held accumulator 0x50021FE0 = (0x50021FDC & 0x50021FD8)",
+        "and edge-detects new & ~old (`not d2`), then falls through to the",
+        "hidden-chord tail at 0x484148C0, which compares the accumulator",
+        "against exactly three constants:",
+        "  0x99 (columns 1,4,5,8) -> gated on GetRomConfigByte: != 0xFF opens",
+        "       title _TT_MEMDUMP (0xF2, the MEMORY DUMP hex viewer), == 0xFF",
+        "       calls ChangeMode(0,0) = Panel Simulator instead",
+        "  0xA1 (columns 1,6,8)   -> ungated: title _TT_SOFTVER (0xF0)",
+        "  0x110000               -> INVERSE gate: CaptureLcd only when the",
+        "       config byte IS 0xFF, so LCD capture is dead on PROGRAM 941",
+        "Bit N of the accumulator is column N+1 (mask table 0x4859E1A0 is a",
+        "plain 1 << N) and the test is an equality, so one extra held column",
+        "kills the chord. Annotated: disasm/debugger_memdump.asm",
+    ),
+    "GetRomConfigByte": (
+        "-> *(uint8*)0x4840000F, the lone configuration byte in the flash",
+        "header (0x16 in PROGRAM 941). Gates both hidden chords above; also",
+        "compared against 0x77 at 0x484A5084.",
+    ),
+    "DbMemoryDumpProc": (
+        "The MEMORY DUMP hex viewer: 16 rows x 16 bytes over the CPU address",
+        "space with an ASCII column, four user-settable byte highlights and",
+        "four independent address slots. Dispatches through an open-addressed",
+        "16 x 8-byte {key, handler} table at 0x485D6830 keyed on",
+        "(event - 0x50000); ten handlers, everything else -> InheritedProc.",
+        "State (work RAM, referenced NOWHERE else in the image): ADR[4] at",
+        "0x500012EC, Highlight[4] at 0x500012FC, ColdFlag 0x50001304,",
+        "SlotIndex 0x5006B524, SelectLatch (FULLTIME) 0x5006B528.",
+        "STRICTLY READ-ONLY with respect to the inspected address: every",
+        "access through the row base a2 is a movbu load, and every store",
+        "targets the stack frame or those five cells. The address editor",
+        "clamps at 0xC0000000 (&= 0x0FFFFFFF) and the renderer re-clamps each",
+        "row base at 0xBFFFFFF0, so both flashes are fully viewable.",
+        "The screen repaints on a self-rearming 0x78-tick SetApTimer loop.",
+        "Annotated listing: disasm/debugger_memdump.asm",
+    ),
+    "CaptureLcd": (
+        "The LCD SCREEN CAPTURE chord (accumulator 0x110000) -- the ONLY debug",
+        "primitive in the firmware that writes a file. The entry at 0x4841567D",
+        "picks one of two bodies (0x484156A0 / 0x4841584C) on a mode word, then:",
+        "sprintf(name, \"LCDCAP%02d.BMP\" @0x4859E2E4, (*0x50021FC8)++), fopen",
+        "with mode \"wb\" @0x4859E2F4, emit a BMP header, then read the source",
+        "and fwrite it.",
+        "The SOURCE IS HARDCODED: `add 0x9ce00000, a0` at 0x484157C0, i.e. the",
+        "composited 640-pixel-wide LCD framebuffer, unpacked from RGB565 by the",
+        "5/6/5 field extraction that follows. It is NOT the MEMORY DUMP address",
+        "slots -- capturing the hex viewer captures the RENDERED SCREEN, 256",
+        "inspected bytes as ASCII text, so this is not a bulk ROM-dump path.",
+        "The file lands on whatever media the current-drive selector 0x5007125A",
+        "names, because the fopen thunk 0x48532395 indexes a per-backend vtable",
+        "(FDD prepends \"A:\\\\\" @0x4866476C, SD prepends \"C:\\\\\" @0x4868E320) and",
+        "CaptureLcd passes a bare filename.",
+        "DEAD on PROGRAM 941: its chord branch at 0x48414926 requires",
+        "GetRomConfigByte() == 0xFF and ours reads 0x16 -- the exact INVERSE of",
+        "the gate that opens the MEMORY DUMP hex viewer.",
+    ),
+    "BackupSramTest": (
+        "Service RAM DEVICE TEST: from 0x44000000, 0x20000 iterations x 2",
+        "bytes = 256 KB, writing 0x5A then 0xA5 to each byte and restoring the",
+        "original. This fixes the extent of the battery-backed backup SRAM",
+        "IC23 (mirror 0x84000000), which holds the live panel-settings record",
+        "at 0x84000020 (0x750 bytes) and the 104 PANEL MEMORY records at",
+        "0x84000824 (13 banks x 8, stride 0x3A90 per bank).",
+    ),
+    "Rec8E0Field120Ptr": (
+        "-> Rec8E0TablePtr(index) + 0x120, fallback 0x501A5920. This is where",
+        "the MEMORY DUMP viewer's fourth power-on address comes from: its",
+        "EV_SHOW handler calls it with index 0. The only 0x501A5920 literal in",
+        "the image is this function's own fallback at 0x48456ED8.",
+    ),
     "SumU16BE": (
         "SumU16BE(a0 = base, d0 = count) -> the u16 sum of `count` BIG-endian",
         "halfwords. The checksum every \"TCMP\" style container carries at +6;",
