@@ -11,8 +11,8 @@ nowhere else. Never present it as a dump and never load it as one.
   photo recorded per screen. Unknown cells are `"??"`.
 - `screens.hex` — the same, address-ordered, human-auditable.
 
-**3,328 bytes, 6 unknown cells** (13 screens). The 60-photo set was only partly transcribed before the
-run hit a usage limit; these 12 screens are what completed.
+**9,472 bytes, 17 unknown cells** (37 of the 60 screens). Two transcription runs were cut
+short -- one by a usage limit, one interrupted deliberately -- and these are what completed.
 
 Coverage: table half at 0x48039000, 0x48049000, 0x48059000, 0x48159000, 0x48259000,
 0x48359000; program half at 0x48400D00 and 0x487F4400–0x487F49FF.
@@ -22,7 +22,11 @@ Coverage: table half at 0x48039000, 0x48049000, 0x48059000, 0x48159000, 0x482590
 block that build 941 has and build 893 lacks sits somewhere in
 **0x48400E00 – 0x487F4400**.
 
-## ★ The finding: build 893 is build 941 minus ~6.4 KB
+⚠ **The single-shift model below is SUPERSEDED by DRIFT-ANALYSIS.md**, which shows the
+drift accumulates in at least four steps (0 -> +201 -> +6428 -> +6453 -> +6451) rather than
+being one block. The correlation evidence and the verification argument still hold.
+
+## ★ The original finding (12 screens): build 893 is build 941 minus ~6.4 KB
 
 Every screen was correlated against our archived images (`kn7000_program.rom` build 941,
 `kn7000_table.rom` build 84) at every shift in ±0x4000. Each landed on a single
