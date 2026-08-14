@@ -3,3 +3,9 @@
 date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
 2026-07-20	1e891a8	743770	4157185	17.89	56899	71	925
 2026-08-09	7605a1c	749584	4157185	18.03	59008	71	942
+# ⚠ 2026-08-14: the two rows above OVER-REPORT by ~5x. coverage_score.py's regex required
+# bare-hex operands, so `.incbin_range "...", 0x32573C + 0x800, 0x3B8000` never matched and
+# its 598,212 passthrough bytes were counted as SOURCE. The parser now evaluates additive
+# expressions and asserts parsed==occurrences, so the miss cannot recur. Real figures below.
+2026-08-14	3644616	151372	4157185	3.64	59008	71	942
+

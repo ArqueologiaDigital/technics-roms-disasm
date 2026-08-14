@@ -41,12 +41,40 @@ def measure():
     lines = src.split("\n")
 
     # Bytes handed back to the assembler verbatim, per source ROM.
+    #
+    # ⚠ Operands are EXPRESSIONS, not always bare hex. The earlier regex demanded
+    # `0x...`, so `.incbin_range "...", 0x32573C + 0x800, 0x3B8000` silently did not
+    # match and its 598,212 bytes were counted as SOURCE -- inflating KN7000 coverage
+    # about 5x (18.03% reported vs 3.64% real). The assertion below makes that class
+    # of miss impossible rather than relying on the regex being right.
+    def _val(expr):
+        """Evaluate a simple additive hex/decimal operand expression."""
+        total, sign = 0, 1
+        for tok in re.findall(r'[+-]|0x[0-9A-Fa-f]+|\d+', expr):
+            if tok == '+':
+                sign = 1
+            elif tok == '-':
+                sign = -1
+            else:
+                total += sign * int(tok, 16 if tok.lower().startswith('0x') else 10)
+        return total
+
     raw = {}
+    parsed = 0
     for f, a, b in re.findall(
-        r'\.incbin_range\s+"([^"]+)",\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+)', src
+        r'\.incbin_range\s+"([^"]+)",\s*([^,]+?),\s*([^\n]+?)\s*(?:;|$)', src, re.M
     ):
         name = f.split("/")[-1]
-        raw[name] = raw.get(name, 0) + int(b, 16) - int(a, 16)
+        raw[name] = raw.get(name, 0) + _val(b) - _val(a)
+        parsed += 1
+
+    # Only line-leading directives count; the file also *mentions* the name in a comment.
+    occurrences = len(re.findall(r'^\s*\.incbin_range\b', src, re.M))
+    if parsed != occurrences:
+        raise SystemExit(
+            "coverage_score: parsed %d .incbin_range directives but the file contains %d. "
+            "An unparsed directive is counted as SOURCE and inflates the score -- fix the "
+            "parser rather than the number." % (parsed, occurrences))
 
     sizes = {n: os.path.getsize(p) for n, p in ROMS.items() if os.path.exists(p)}
     prog_total = sizes.get("kn7000_program.rom", 0)
@@ -61,6 +89,16 @@ def measure():
     )
     # Escape hatches: bytes we could NOT encode. Should stay near zero.
     escapes = sum(1 for l in lines if re.match(r"^\s+\.(byte|word|long|short)\b", l))
+
+    # Sanity: MN10300 instructions encode in 1..7 bytes, so source bytes per
+    # instruction line must land in that band. Outside it, one of the two numbers is
+    # measuring something other than what its name says.
+    if insn:
+        bpi = prog_src / insn
+        if not 1.0 <= bpi <= 7.0:
+            raise SystemExit(
+                "coverage_score: %.2f source bytes per instruction line (%d B / %d lines). "
+                "MN10300 encodings are 1..7 bytes, so this score is wrong." % (bpi, prog_src, insn))
 
     # Converted-function count: gen_program_s.py's CONVERT (a set of names) +
     # LIB_CONVERT (name -> (start, end) for the 0x4C library window).
