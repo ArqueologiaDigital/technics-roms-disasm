@@ -253,12 +253,18 @@ def recover_symbols(data):
 
 
 def main():
+    global PROGRAM_BASE
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("program_rom", nargs="?",
                         default="baserom/kn7000_program.rom")
     parser.add_argument("--sym", default="kn7000.sym")
     parser.add_argument("--inc", default="src/symbols.inc")
+    parser.add_argument("--program-base", type=lambda v: int(v, 0), default=PROGRAM_BASE,
+                        help="link base of the image being scanned. The KN7000 program flash is "
+                             "0x48400000 (default); the self-loaded library/kernel image and the "
+                             "KN6000/KN6500 program images are linked at 0x4C000000.")
     args = parser.parse_args()
+    PROGRAM_BASE = args.program_base
 
     data = open(args.program_rom, "rb").read()
     syms = recover_symbols(data)
