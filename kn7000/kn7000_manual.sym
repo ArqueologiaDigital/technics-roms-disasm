@@ -2461,3 +2461,15 @@
 0x48456EBB  Rec8E0Field120Ptr       ; (d0 = index) -> Rec8E0TablePtr(index) + 0x120, out-of-range fallback 0x501A5920. Supplies the MEMORY DUMP viewer's ADR3 power-on default (EV_SHOW calls it with index 0). The only 0x501A5920 literal in the whole image is this function's fallback at 0x48456ED8
 0x4C001A48  LibSprintf              ; library ROM: sprintf(buf = caller's (8,sp), fmt = caller's (0xC,sp), varargs from (0x10,sp)) -- builds the va_list at &(0x30,sp) and tail-calls the formatter at 0x4C001A6B. INFERRED from the call-site shape; the library window has no reflection name table
 0x4C0032F7  LibStrlen               ; library ROM: strlen(a0) -- NUL walk returning a1 - a0
+
+; ---- SD PLUG-iN (SP7001) investigation, 2026-10-08 -------------------------
+; KEY SOFT SERVICE's SP7001 "SD PLUG-iN" loaded plug-in program code from the SD
+; card into a Technics-reserved RAM/ROM region -- but it required the later
+; "Update V2.0" firmware, which is unpreserved. This image is build 941
+; (GetTtSoftverID 0x48488AAC returns softver 0x00100000) and has NO SD code-load /
+; plug-in / overlay path: every SD file is fixed-table dispatched (DiskLoadDispatch
+; 0x4852CFE4, matcher 0x4852B6B0) and the library self-loads from program flash
+; (LibRomImageBase 0x487B8FD1), never from the card. The sole "load a fn-ptr from a
+; fixed RAM cell and jump" site in the whole image is the RTOS switch below -- NOT a
+; plug-in vector. See notes/sd-plugin-interface.md and docs /kn7000-sd-plugin/.
+0x487F46D8  TaskYieldSwitch         ; RTOS cooperative task switch (companion to LibIrqScheduler 0x487F6DF7): saves SP into the current TCB *(0x5038002C), resumes another task's stack from 0x50380CB8, jmp (a2) = saved task PC. The only load-fnptr-from-RAM-and-jump site in the image; verified NOT an SD plug-in/overlay vector (SD PLUG-iN investigation 2026-10-08).
