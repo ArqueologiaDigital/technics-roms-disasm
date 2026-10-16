@@ -187,8 +187,8 @@ bytes to the fixed work-RAM address **0x5029B000** and calls its first byte with
 `a0` = framework object, `a1 = 0x502992E4`, `d0`/`d1` -> compile id / plug-in id; it then
 checks both ("Compile id's dont match: base=%i != baseext=%i"). So the file is an absolute
 image linked at 0x5029B000 (the code-pointer test peaks sharply there: 122 pointers land on
-function prologues vs 1 at +/-0x10; a string-pointer vote that seemed to favour another base was
-two BSS variables read hundreds of times):
+function prologues vs 1 at +/-0x10; a string-pointer vote that seemed to favour 0x5029E8C0 was
+mostly one variable, `XapFrameworkObj` 0x502B4044, read 970 times -- `notes/sp7001-probes/`):
 
 | file range        | content                                                                                                                         |
 |-------------------|---------------------------------------------------------------------------------------------------------------------------------|
