@@ -35,6 +35,26 @@ MANUAL_SYM = "kn7000_manual.sym"
 UNIDASM = os.environ.get("UNIDASM", "../mame-sony-video/unidasm")
 OUT = "src/program.s"
 
+# Image layout of the build being generated. The defaults describe program build
+# 941 (this repo's default target); select_profile() rebinds them for another
+# build of the same firmware (e.g. SP7001's build 942).
+R1_END = 0x186000          # end of code region 1 (file offset)
+PALETTE = 0x32573C         # display palette (512 x u32) in the data region
+DATA_END = 0x3B8000        # data region end == start of code region 2
+IMAGE_END = 0x3F6F01       # last image byte + 1
+PAD_TO = None              # pad erased flash (0xFF) up to here, if the image is
+SYMBOLS_INC = "src/symbols.inc"
+TITLE = [                  # header comment lines after the licence
+    '# KN7000 "Program" flash image (kn7000_program.rom) - byte-exact.',
+    '# Panasonic MN10300, mapped at CPU 0x48400000. Code region 1 is split at',
+    '# the recovered functions (kn7000.sym + kn7000_manual.sym); functions',
+    '# listed in tools/gen_program_s.py',
+    '# CONVERT are emitted as real MN10300 assembly (verified byte-exact by the',
+    '# mn10300_asm encoder), the rest remain raw .incbin_range. Regenerate with',
+    '# tools/gen_program_s.py. make verify guarantees byte-identity.',
+]
+DOC_XLATE = None           # optional fn(str)->str applied to FUNC_DOC lines
+
 # Functions to emit as real assembly this pass (verified clusters). Growing this
 # set converts more of the ROM from opaque .incbin into understood source.
 CONVERT = {
@@ -3134,12 +3154,13 @@ def load_manual_syms():
     bytes after a function's movm prologue: they become equates + in-code
     comment markers, but NOT function-split boundaries."""
     syms = []
-    for line in open(MANUAL_SYM):
-        if line.lstrip().startswith(";"):
-            continue
-        m = re.match(r"0x([0-9A-Fa-f]+)\s+(\S+)", line)
-        if m:
-            syms.append((int(m.group(1), 16), m.group(2)))
+    for path in ([MANUAL_SYM] if isinstance(MANUAL_SYM, str) else MANUAL_SYM):
+        for line in open(path):
+            if line.lstrip().startswith(";"):
+                continue
+            m = re.match(r"0x([0-9A-Fa-f]+)\s+(\S+)", line)
+            if m:
+                syms.append((int(m.group(1), 16), m.group(2)))
     return syms
 
 
@@ -3154,14 +3175,14 @@ def discover_functions(d):
     on one of these entries is still resolved by name_target."""
     out = subprocess.run(
         [UNIDASM, ROM, "-arch", "mn10300", "-basepc", f"0x{BASE + 0x80:x}",
-         "-skip", "0x80", "-count", str(0x186000 - 0x80)],
+         "-skip", "0x80", "-count", str(R1_END - 0x80)],
         capture_output=True, text=True).stdout
     entries = set()
     for line in out.splitlines():
         m = re.match(r"[0-9a-f]+:\s+(?:[0-9a-f]{2} )+\s+calls?\s+0x([0-9a-f]+)", line)
         if m:
             t = int(m.group(1), 16)
-            if BASE + 0x80 <= t < BASE + 0x186000:
+            if BASE + 0x80 <= t < BASE + R1_END:
                 entries.add(t)
     return entries
 
@@ -3253,23 +3274,148 @@ def emit_function(d, off, end, name, names, used, delta=BASE):
     return lines
 
 
+# ---------------------------------------------------------------------------
+# Build profiles. "941" is the default above. "sp7001" generates the SP7001
+# firmware's program build 942 by PORTING everything recovered for 941 through
+# the exact 941->942 offset map (tools/offset_map.py, tools/port_symbols.py):
+# the same function split, the same CONVERT set (plus the code new in 942),
+# FUNC_END caps, the library functions, and the FUNC_DOC notes with their CPU
+# addresses translated. Nothing is re-derived by hand except names for the new
+# code (kn7000_sp7001_new.sym).
+# ---------------------------------------------------------------------------
+NEW_IN_942 = "kn7000_sp7001_new.sym"            # hand-curated: the plug-in host
+EXPORTS_942 = "kn7000_sp7001_exports.sym"      # the firmware's own plug-in export names
+# The code that exists only in 942: the 1285-byte insertion found by
+# tools/offset_map.py (942 file 0x18598B..0x185E90; its last byte is 0xFF padding
+# after the final `ret`, so the last function ends at 0x185E8F).
+NEW_CODE_942 = (0x18598B, 0x185E8F)
+
+
+def select_profile(name):
+    global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
+    global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
+    global FUNC_END, LIB_CONVERT, CONVERT
+    if name == "941":
+        return
+    if name != "sp7001":
+        sys.exit(f"gen_program_s: unknown profile {name!r} (941, sp7001)")
+    from port_symbols import Porter
+    rd = lambda path: open(path, "rb").read()
+    P = Porter(rd("baserom/kn7000_program.rom"), rd("baserom/kn7000_program_sp7001.rom"),
+               rd("baserom/kn7000_table.rom"), rd("baserom/kn7000_table_sp7001.rom"))
+
+    def fmap(off):
+        n = P.pmap.map(off)
+        if n is None:
+            sys.exit(f"gen_program_s: build-941 file offset {off:#x} has no build-942 counterpart")
+        return n
+
+    def lmap(cpu):
+        n, why = P.port(cpu)
+        if n is None:
+            sys.exit(f"gen_program_s: library address {cpu:#x}: {why}")
+        return n
+
+    ROM = "baserom/kn7000_program_sp7001.rom"
+    SYM = "kn7000_sp7001.sym"
+    MANUAL_SYM = ["kn7000_sp7001_manual.sym", NEW_IN_942, EXPORTS_942]
+    OUT = "src/sp7001/program.s"
+    SYMBOLS_INC = "src/sp7001/symbols.inc"
+    R1_END, PALETTE, DATA_END = fmap(0x186000), fmap(0x32573C), fmap(0x3B8000)
+    LIB_FILE_BASE = P.new_lib_base
+    LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE
+    IMAGE_END, PAD_TO = P.pmap.new_len, 0x400000
+    FUNC_END = {k: fmap(v) for k, v in FUNC_END.items()}
+    LIB_CONVERT = {k: (lmap(cs), lmap(ce - 1) + 1) for k, (cs, ce) in LIB_CONVERT.items()}
+
+    # the code that exists only in 942: convert all of it (it is what changed),
+    # whichever file names it
+    new = []
+    for path in (NEW_IN_942, EXPORTS_942, SYM):
+        for line in open(path):
+            m = re.match(r"0x([0-9A-Fa-f]{8})\s+(\S+)", line)
+            if m and not line.lstrip().startswith(";"):
+                a, nm = int(m.group(1), 16), m.group(2)
+                if NEW_CODE_942[0] <= a - BASE < NEW_CODE_942[1] and not nm.endswith("_entry"):
+                    new.append((a, nm))
+    new.sort()
+    CONVERT = set(CONVERT) | {nm for _a, nm in new}
+    # the last new function ends at its `ret`; the bytes after it are 941's own
+    # region-1 tail (941 0x18599C..0x186000), not part of it
+    FUNC_END[new[-1][1]] = NEW_CODE_942[1]
+
+    tok = re.compile(r"0x([0-9A-Fa-f]{8})")
+
+    def xlate(text):
+        def one(mo):
+            a = int(mo.group(1), 16)
+            if not (0x48000000 <= a < 0x48800000 or 0x4C000000 <= a < 0x4C100000
+                    or 0x50000000 <= a < 0x51000000):
+                return mo.group(0)
+            n, _why = P.port(a)
+            return f"0x{n:08X}" if n is not None else mo.group(0)
+        return tok.sub(one, text)
+    DOC_XLATE = xlate
+
+    TITLE = [
+        '# KN7000 SP7001 "Program" flash image (build 942) - byte-exact.',
+        '# Panasonic MN10300, mapped at CPU 0x48400000. GENERATED by',
+        '# `tools/gen_program_s.py --profile sp7001` -- do not edit by hand.',
+        '#',
+        '# Build 942 is build 941 plus a handful of edits (notes/sp7001-build-diff.md):',
+        '# every one of 941\'s 2302 reflection-named functions is present, shifted by',
+        '# +0/+2/-17 bytes; the new code is the table-flash XAPR plug-in host',
+        '# (PlugInProbe, PlugInCallSlot*, kn7000_sp7001_new.sym) and the services',
+        '# it exports to the plug-in BY NAME (kn7000_sp7001_exports.sym: uITRON calls,',
+        '# file/compression APIs, buffer accessors). The function split, the converted set and the',
+        '# FUNC_DOC notes are ported from build 941 through the exact offset map',
+        '# (tools/offset_map.py); CPU addresses quoted in the notes are translated',
+        '# to build 942, file offsets quoted in them are build 941\'s.',
+        '# make verify-sp7001 guarantees byte-identity.',
+    ]
+
+
+def boot_header(d):
+    """The 0x80-byte boot header: reset jmp, 5 nops, a second vector jmp, the
+    ROM-present marker byte, 0xFF fill. Emitted from the image's own bytes (the
+    jmp targets differ between builds); any other layout stays .incbin_range."""
+    def jmp(at):
+        disp = int.from_bytes(d[at + 1:at + 5], "little", signed=True)
+        return BASE + at + disp
+    hb = lambda bs: ", ".join(f"0x{b:02X}" for b in bs)
+    if not (d[0] == 0xDC and d[5:10] == b"\xCB" * 5 and d[0xA] == 0xDC
+            and set(d[0x10:0x80]) == {0xFF}):
+        return ['# ---- boot header (0x0..0x80) ----',
+                f'.incbin_range "{ROM}", 0x000000, 0x000080']
+    return ['# ---- boot header (0x0..0x80) ----',
+            '_reset:',
+            f'    .byte {hb(d[0:5])}      # jmp  0x{jmp(0):08X}   (reset entry)',
+            f'    .byte {hb(d[5:10])}      # nop x5',
+            '_vector_0a:',
+            f'    .byte {hb(d[0xA:0xF])}      # jmp  0x{jmp(0xA):08X}',
+            '_rom_marker:',
+            f'    .byte 0x{d[0xF]:02X}                              # ROM-present marker (cmp vs 0xFF)',
+            '    .space 0x80 - 0x10, 0xFF',
+            '    .org 0x000080']
+
+
 def main():
     d = open(ROM, "rb").read()
     syms = load_syms(d)
     manual = load_manual_syms()
-    r1 = [s for s in syms if 0x80 <= s[0] < 0x186000]
+    r1 = [s for s in syms if 0x80 <= s[0] < R1_END]
     # manual function starts inside code region 1 become split boundaries too
     # (the `_entry` register-save entries deliberately do not)
     known = {off for off, _ in r1}
     for a, nm in manual:
         off = a - BASE
-        if 0x80 <= off < 0x186000 and off not in known \
+        if 0x80 <= off < R1_END and off not in known \
                 and not nm.endswith("_entry"):
             r1.append((off, nm))
             known.add(off)
     r1.sort()
     sym_by_addr = {BASE + off: nm for off, nm in syms}
-    pal = [struct.unpack_from("<I", d, 0x32573C + 4 * i)[0] for i in range(512)]
+    pal = [struct.unpack_from("<I", d, PALETTE + 4 * i)[0] for i in range(512)]
 
     # Full name map: reflection-table names + manual names + synthetic
     # func_<ADDR> for the internal helpers neither covers, so every call in
@@ -3284,45 +3430,28 @@ def main():
 
     L = ['# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>',
          '# Licensed under the terms of the GNU General Public License v3 or later',
-         '#',
-         '# KN7000 "Program" flash image (kn7000_program.rom) - byte-exact.',
-         '# Panasonic MN10300, mapped at CPU 0x48400000. Code region 1 is split at',
-         '# the recovered functions (kn7000.sym + kn7000_manual.sym); functions',
-         '# listed in tools/gen_program_s.py',
-         '# CONVERT are emitted as real MN10300 assembly (verified byte-exact by the',
-         '# mn10300_asm encoder), the rest remain raw .incbin_range. Regenerate with',
-         '# tools/gen_program_s.py. make verify guarantees byte-identity.',
+         '#'] + TITLE + [
          '',
          '.equ PROGRAM_ROM_BASE, 0x48400000',
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
-         '.include "src/symbols.inc"',
-         '',
-         '# ---- boot header (0x0..0x80) ----',
-         '_reset:',
-         '    .byte 0xDC, 0x7E, 0xFF, 0x00, 0x00      # jmp  0x4840FF7E   (reset entry)',
-         '    .byte 0xCB, 0xCB, 0xCB, 0xCB, 0xCB      # nop x5',
-         '_vector_0a:',
-         '    .byte 0xDC, 0xC5, 0x77, 0x0D, 0x00      # jmp  0x484D77CF',
-         '_rom_marker:',
-         '    .byte 0x16                              # ROM-present marker (cmp vs 0xFF)',
-         '    .space 0x80 - 0x10, 0xFF',
-         '    .org 0x000080',
+         f'.include "{SYMBOLS_INC}"',
+         ''] + boot_header(d) + [
          '',
          '# ============================================================================',
          '# Code region 1 -- organised by recovered function.',
          '# ============================================================================']
 
-    ROMQ = '"baserom/kn7000_program.rom"'
+    ROMQ = f'"{ROM}"'
     body = []
     if r1[0][0] > 0x80:
         body.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
 
     converted = 0
     for i, (off, name) in enumerate(r1):
-        end = r1[i + 1][0] if i + 1 < len(r1) else 0x186000
+        end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
         body.append(f"# {name}  (CPU {BASE + off:#010x})")
         for doc in FUNC_DOC.get(name, ()):
-            body.append(f"#   {doc}")
+            body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         end_conv = min(end, FUNC_END.get(name, end))
         block = emit_function(d, off, end_conv, name, names, used) if name in CONVERT else None
         if block is not None:
@@ -3339,31 +3468,36 @@ def main():
     lib_body = ['',
                 '# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library',
                 '#      image the boot self-loads to 0x4C000000 starts at file offset',
-                '#      0x3B8FD1 (notes/library-rom-loading.md); converted lib functions',
+                f'#      0x{LIB_FILE_BASE:06X} (notes/library-rom-loading.md); converted lib functions',
                 '#      are emitted under the shifted .mnbase so their PC-relative',
                 '#      encodings reproduce the 0x4C link address byte-exactly. ----']
-    cur2 = 0x3B8000
+    cur2 = DATA_END
     lib_converted = 0
     for name, (cs, ce) in sorted(LIB_CONVERT.items(), key=lambda kv: kv[1][0]):
         so, eo = cs - LIB_DELTA, ce - LIB_DELTA
-        assert 0x3B8FD1 <= so < eo <= 0x3F6F01, name
+        assert LIB_FILE_BASE <= so < eo <= IMAGE_END, name
         if cur2 < so:
             lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, {so:#08x}")
         lib_body.append(f"# {name}  (lib CPU {cs:#010x})")
         for doc in FUNC_DOC.get(name, ()):
-            lib_body.append(f"#   {doc}")
+            lib_body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         block = emit_function(d, so, eo, name, names, used, LIB_DELTA)
         if block is not None:
-            lib_body.append(f".mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x3B8FD1")
+            lib_body.append(f".mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}")
             lib_body.extend(block)
             lib_body.append(".mnbase 0x48400000")
             lib_converted += 1
         else:
             lib_body.append(f".incbin_range {ROMQ}, {so:#08x}, {eo:#08x}")
         cur2 = eo
-    lib_body += [f".incbin_range {ROMQ}, {cur2:#08x}, 0x3F6F01",
+    lib_body += [f".incbin_range {ROMQ}, {cur2:#08x}, 0x{IMAGE_END:06X}",
                  '',
-                 '.org 0x3F6F01   # end of image']
+                 f'.org 0x{IMAGE_END:06X}   # end of image']
+    if PAD_TO:
+        lib_body += ['',
+                     '# ---- erased flash (0xFF) to the end of the device ----',
+                     f'.space 0x{PAD_TO:06X} - 0x{IMAGE_END:06X}, 0xFF',
+                     f'.org 0x{PAD_TO:06X}']
 
     # equates for the synthetic helper labels actually referenced by converted code
     auto = sorted(a for a in used if a not in sym_by_addr)
@@ -3378,15 +3512,15 @@ def main():
     # data / resources region, with the display palette as typed .long
     L += ['',
           '# ---- data / resources region ----',
-          f'.incbin_range {ROMQ}, 0x186000, 0x32573C',
+          f'.incbin_range {ROMQ}, 0x{R1_END:06X}, 0x{PALETTE:06X}',
           '',
           '# ---- display palette (256-entry 0x00BBGGRR CLUT + a themed sub-range) ----',
           'display_palette:']
     for i in range(0, 512, 8):
         row = ", ".join(f"0x{v:08X}" for v in pal[i:i + 8])
         L.append(f"    .long {row}   # idx {i:3d}")
-    L += ['.org 0x325F3C',
-          f'.incbin_range {ROMQ}, 0x32573C + 0x800, 0x3B8000']
+    L += [f'.org 0x{PALETTE + 0x800:06X}',
+          f'.incbin_range {ROMQ}, 0x{PALETTE:06X} + 0x800, 0x{DATA_END:06X}']
     L.extend(lib_body)
 
     open(OUT, "w").write("\n".join(L) + "\n")
@@ -3395,4 +3529,12 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="generate a byte-exact program .s")
+    ap.add_argument("--profile", default="941", help="941 (default) or sp7001")
+    ap.add_argument("--out", help="override the output path")
+    a = ap.parse_args()
+    select_profile(a.profile)
+    if a.out:
+        OUT = a.out
     main()

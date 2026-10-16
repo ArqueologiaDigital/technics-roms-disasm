@@ -1,0 +1,37 @@
+; KN7000 SP7001 table-flash XAPR plug-in (table build 83, CPU 0x483E8000..0x483FB5A0)
+; -- hand-curated names, NOT from the plug-in's own MILK reflection tables (those are in
+; the generated kn7000_sp7001_table.sym). Sources: the XAPR header layout and the program
+; side's plug-in host (kn7000_sp7001_new.sym), and the activation reverse-engineering in
+; research-scratch/kn7000-sp7001-activation/ (ALGORITHM.md, README.md; live traces).
+; Entries marked "label" are code points inside a larger routine (not call/pointer
+; targets); tools/gen_table_s.py prints them as in-code markers, not function splits.
+;
+; ---- XAPR header (0x483E8000): 'XAPR', footer pointer, then entry slots ----
+0x483E8000  XaprHeader              ; 'XAPR' magic; +0x04 -> XaprFooter; +0x08/+0x0C/+0x10 entry slots; +0x14..+0x38 -> XapSlotDefault
+0x483FB59C  XaprFooter              ; 'XAPR' again: PlugInProbe (program 0x48585B95) checks both magics
+0x483E88E4  XapSlot08               ; header slot +0x08: called once by the program's PlugInProbeCallSlot08 (from 0x4854AC83) with a0 = 0x5011FABC
+0x483E88FE  XapSlot0C               ; header slot +0x0C: called every pass of the firmware's library main loop (program PlugInCallSlot0C, call site 0x4C02BE74)
+0x483E8303  XapSlot10               ; header slot +0x10: d0/d1 in, result out (program PlugInCallSlot10; -1 when no plug-in)
+0x483E803C  XapSlotDefault          ; `rets`: the ten unused header slots +0x14..+0x38 point here
+;
+; ---- activation gate (research-scratch/kn7000-sp7001-activation) ----
+0x483E9E1C  KssActivationOkHandler  ; label: OK-button path of the activation dialog (live-traced; runs 4x per OK press); calls KssPasswordCheck at +4
+0x483EE8E9  KssPasswordCheck        ; builds the two serial-derived targets and runs KssKeyCompare; status -> 0x502992C4 (0 = ok), match in d0
+0x483EE921  KssActivationApply      ; activation apply: re-validates through KssKeyCompare and sets 0x502992C4
+0x483EF0AF  KssKeyCompare           ; comparator(a0 = framework obj, a1 = param1, d0 = param2): checks transformed[1:12] (field-3 vs param2, field-8 vs param1)
+0x483EF2F7  KssKeyStripDashes       ; strips the dashes of the typed XXXX-XXXX-XXXX-XXXX key
+0x483EF1AD  KssKeyTransform         ; applies one keystream record: copies char 0, then KssKeyCharTransform for i = 1..15 (two passes per check)
+0x483EF234  KssKeyCharTransform     ; out = enc(((dec(in) - i) & 0x1F) XOR dec(key)) over the base-35 alphabet {1-9,a-z} (invertible; invert.py)
+0x483EEF21  KssBuildParam1          ; builds the field-8 target at boot: SD card CID -> KssPad16 -> KssHash275 (trace_param1_build.lua)
+0x483EEF26  KssBuildParam1_entry
+0x483ECC6D  KssPad16                ; (buf, fill = 0x20, n = 0x10): from the first NUL, right-pad with spaces to 16 chars
+0x483EF275  KssHash275              ; hashes 16 chars -> 8 chars with two 32-bit accumulators (param1_hash.py)
+;
+; ---- activation data ----
+0x483F8B74  KssKeystreamRecords     ; 27 static keystream records, 20 base-35 chars + NUL each (stride 0x15); the key's first char selects the pair used
+0x483F782C  KssMsgWrongPassword     ; 'Falsches Passwort'
+0x483F88F0  KssStrPluginCtrl        ; 'PluginCtrl', then the plug-in type names 'BASE', 'mr7', 'MIDI', ...
+0x483F8900  KssStrMr7               ; 'mr7': the field-3 target (param2) for this plug-in
+0x483F892C  KssActivationFilePath   ; 'C:\TECHNICS\DATA\CTDV10KL.CDF' -- the SD-card file caching the typed key (the RE note's 0x483F893D is the bare filename inside it)
+0x483F89A8  KssMsgPluginReleased    ; "Plugin '%s', id %i, serial %s, is released" (the RE note's 0x483F89C7 points inside it)
+0x483F89D4  KssMsgPluginWrongPw     ; "Plugin '%s', id %i, serial %s, is has WRONG PASSWORT in passfile!"

@@ -173,7 +173,7 @@ baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
 	    "$(ROMSET_DIR)/kn7000_table_even_sp7001_b83.ic17" \
 	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
 
-build/kn7000_program_sp7001.rom: src/sp7001/program.s tools/kn7asm.py baserom/kn7000_program_sp7001.rom
+build/kn7000_program_sp7001.rom: src/sp7001/program.s src/sp7001/symbols.inc tools/kn7asm.py baserom/kn7000_program_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@
 
@@ -182,6 +182,64 @@ build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000
 	$(ASM) src/sp7001/table.s -I . -o $@
 
 build-sp7001: $(SP7001_TARGETS)
+
+# ---- SP7001 symbols: PORTED from build 941/84, not re-derived ---------------
+# tools/port_symbols.py translates every recovered name through the exact
+# 941->942 / 84->83 offset maps (tools/offset_map.py) and cross-checks the
+# 2302 reflection names against 942's own tables. The plug-in blob in table
+# flash carries its own MILK reflection tables (35 KSS functions). Code ranges:
+# 941's region bounds 0x186000 / 0x3B8000 mapped to 942 (0x1864F4 / 0x3B97B4).
+SP7001_REFS := baserom/kn7000_program_sp7001.rom baserom/kn7000_table_sp7001.rom
+SP7001_PORT := $(PYTHON) tools/port_symbols.py \
+    baserom/kn7000_program.rom baserom/kn7000_program_sp7001.rom \
+    baserom/kn7000_table.rom   baserom/kn7000_table_sp7001.rom
+SP7001_PLUGIN := 0x3E8000:0x3FB5A0
+# library image in program-flash 942 (941's 0x3B8FD1 through the offset map;
+# tools/port_symbols.py prints it)
+SP7001_LIB_FILE := 0x3BA785
+
+.PHONY: symbols-sp7001 program-src-sp7001
+symbols-sp7001 kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
+kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc &: \
+		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py tools/sp7001_exports.py \
+		kn7000.sym kn7000_manual.sym kn7000_sp7001_new.sym $(REFS) $(SP7001_REFS)
+	$(SP7001_PORT) kn7000.sym kn7000_sp7001.sym --inc src/sp7001/symbols.inc \
+	    --title "KN7000 SP7001 (program 942 / table 83) symbols" \
+	    --check-recovered 0x80:0x1864F4 0x3B97B4:0x3F8BDB
+	$(SP7001_PORT) kn7000_manual.sym kn7000_sp7001_manual.sym \
+	    --title "KN7000 SP7001 manual symbol supplement"
+	LIB_FILE_BASE=$(SP7001_LIB_FILE) UNIDASM=$(UNIDASM) $(PYTHON) tools/sp7001_exports.py \
+	    baserom/kn7000_program_sp7001.rom kn7000_sp7001_exports.sym \
+	    kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym
+	$(PYTHON) tools/gen_symbols.py baserom/kn7000_table_sp7001.rom --program-base 0x48000000 \
+	    --code-range $(SP7001_PLUGIN) --no-manual \
+	    --title "KN7000 SP7001 table-flash XAPR plug-in: names from its own MILK reflection tables" \
+	    --sym kn7000_sp7001_table.sym --inc src/sp7001/table_symbols.inc
+
+# Regenerate src/sp7001/program.s from build 942 by porting build 941's split,
+# conversions and notes (needs unidasm). The committed file is the result.
+# Regenerate src/sp7001/table.s: the 84-segment directory image (each segment
+# compared against build 84) plus the XAPR plug-in appended after it, whose code
+# is emitted as real MN10300 assembly (needs unidasm). The committed file is the
+# result.
+SP7001_PLUGIN_CODE := 0x3E803C:0x3EF6C5
+SP7001_TABLE_SYMS  := kn7000_sp7001_table.sym kn7000_sp7001_table_manual.sym \
+                      kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
+                      kn7000_sp7001_exports.sym
+.PHONY: table-src-sp7001
+table-src-sp7001: tools/gen_table_s.py tools/gen_program_s.py tools/gen_symbols.py \
+		$(SP7001_TABLE_SYMS) baserom/kn7000_table.rom baserom/kn7000_table_sp7001.rom
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table_sp7001.rom \
+	    --out src/sp7001/table.s \
+	    --title 'KN7000 SP7001 "Table" flash image (build 83) - byte-exact.' \
+	    --compare baserom/kn7000_table.rom --compare-label "build 84" \
+	    --plugin $(SP7001_PLUGIN) --plugin-code $(SP7001_PLUGIN_CODE) \
+	    --sym $(SP7001_TABLE_SYMS)
+
+program-src-sp7001: tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py \
+		kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
+		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py --profile sp7001
 
 verify-sp7001: $(SP7001_TARGETS)
 	@ok=1; \
