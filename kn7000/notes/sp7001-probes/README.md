@@ -13,3 +13,8 @@ Everything else quoted there comes from the make targets (`verify-sp7001`, `veri
 1 kHz tick, ms since ~0.27 s after power-on), `0x50151C0C` 499.8 counts/s (`GetTimBase`, 2 ms units);
 task-pointer table `0x50380000`: ids 0-4, 7, 8 allocated, 5, 6, 9, 10 = `0xFFFFFFFF` (free), and the
 next word `0x5038002C` holds the running task.
+
+Build 941 (`-bios v16`, `RATE_KERNEL=0x500D3C58 RATE_TIMEBASE=0x50151BFC`): the same routines with the
+RAM moved 16 bytes -- kernel counter `0x500D3C58` 999.5 counts/s, `0x50151BFC` 499.8 counts/s. So
+`0x50151BFC` is a **2 ms** time base, not the "1 kHz tick" earlier comments called it (corrected in
+`kn7000_manual.sym`, `MidiClockRxHandler` and `TgNoteLevelVariationCalc`).

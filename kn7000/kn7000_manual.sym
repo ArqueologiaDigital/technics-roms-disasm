@@ -704,7 +704,7 @@
 0x48447034  TempoClkStopNow_entry
 0x4844705F  TempoClkBeatStopRequest ; request stop at the next beat wrap: clear bit9, set bit12 (+bit15), clear bit14
 0x48447084  TempoTick96Isr          ; THE 96-PPQN TM5 ISR (registered for INTC group 7): global phase mod 0x60; slave-hold branch when 0x50149656; advance all clocks, main run-edge -> 0xFC; apply starts (count-in ladder: metro-clock bar wraps count to 0x5014969A, then start/continue + 0xFA/0xFB per ctl bits); stops on 24-PPQN alignment; 0xF8 out every 4th tick while running; ack GxICR 0x3400011C
-0x48447361  MidiClockRxHandler      ; received 0xF8 (only while slave 0x50149656): interval vs the 1 kHz tick 0x50151BFC (last @0x5003A53C, clamp 0x7F) -> TempoReloadFromInterval(2*dt) re-programs TM5 as an interpolator; then step each armed/running clock by one 24-PPQN quantum
+0x48447361  MidiClockRxHandler      ; received 0xF8 (only while slave 0x50149656): interval vs the 2 ms time base 0x50151BFC (500 Hz, hence the 2*dt below) (last @0x5003A53C, clamp 0x7F) -> TempoReloadFromInterval(2*dt) re-programs TM5 as an interpolator; then step each armed/running clock by one 24-PPQN quantum
 0x48447366  MidiClockRxHandler_entry
 0x48447445  MidiStartRxHandler      ; received 0xFA: gates mode==0, enable, !suppress, source==0, main not armed/running; internal -> TempoClkArmRestart(main [+subs per 0x5014965C/5E, +0x50149684 if 0x50037C64, +count-in per ctl bit15]); slave -> send 0xFA, TempoClkStartNow set + Tm5TimerRestart + 0xF8
 0x4844744A  MidiStartRxHandler_entry
@@ -1086,7 +1086,7 @@
 ;      NB the AUTONOMOUS-STATUS "pitch chain internals" label was a misnomer:
 ;      0x4C0311F3/0x4C0312A2/0x4C031330 compute the note/element LEVEL, not
 ;      pitch -- they follow TgPitchRuntimeCalc in program order only) ---------
-0x4C0311F1  TgNoteLevelVariationCalc ; (a0 request rec, a1 desc entry ptr, d0 shadow byte-offset) per-note LEVEL VARIATION source, mode = desc halfword bits 15..14: 0 = part tone block byte 0x500CE404+part*0x130+elem*0x34+0x91 (signed) + desc byte(+3-advanced ptr) * (velocity(rec+0xC hi7) - 0x42) >> 5 (velocity-sense level offset); 1 = PSEUDO-RANDOM level from the 1 kHz tick 0x50151BFC (tick^2>>2 * 0x83, low16 * 0x7F >> 16); 2/3 = set bit15/bit16 of the class-0x3000 level word at shadow(+0x54+off) and return neutral 0x40 -- result stored to librec+0x50 by the caller
+0x4C0311F1  TgNoteLevelVariationCalc ; (a0 request rec, a1 desc entry ptr, d0 shadow byte-offset) per-note LEVEL VARIATION source, mode = desc halfword bits 15..14: 0 = part tone block byte 0x500CE404+part*0x130+elem*0x34+0x91 (signed) + desc byte(+3-advanced ptr) * (velocity(rec+0xC hi7) - 0x42) >> 5 (velocity-sense level offset); 1 = PSEUDO-RANDOM level from the 2 ms time base 0x50151BFC (tick^2>>2 * 0x83, low16 * 0x7F >> 16); 2/3 = set bit15/bit16 of the class-0x3000 level word at shadow(+0x54+off) and return neutral 0x40 -- result stored to librec+0x50 by the caller
 0x4C0311F3  TgNoteLevelVariationCalc_entry
 0x4C03129D  TgVoiceNoteLevelCalc    ; (a0 librec, a1 desc entry ptr) -> the 7-bit note level the programmers pack into shadow +0x24 bits 0..6: part state 0x500B5340+part*0x54C+0x1D in 1..3 with +2 bit0 -> 0 (muted) / bit1 -> 0x7F (solo); desc mode 1 (random) -> librec+0x50 as-is; else 0x4C006A17(part, note) + expression (partrec+0x0A - 0x40) + librec+0x50 variation, clamped 0..0x7F via TgZoneParamClamp_entry -- the TgLevelResolve of the per-element path
 0x4C0312A2  TgVoiceNoteLevelCalc_entry
@@ -2474,3 +2474,9 @@
 ; fixed RAM cell and jump" site in the whole image is the RTOS switch below -- NOT a
 ; plug-in vector. See notes/sd-plugin-interface.md and docs /kn7000-sd-plugin/.
 0x487F46D8  TaskYieldSwitch         ; RTOS cooperative task switch (companion to LibIrqScheduler 0x487F6DF7): saves SP into the current TCB *(0x5038002C), resumes another task's stack from 0x50380CB8, jmp (a2) = saved task PC. The only load-fnptr-from-RAM-and-jump site in the image; verified NOT an SD plug-in/overlay vector (SD PLUG-iN investigation 2026-10-08).
+;
+; ---- kernel tick and time bases (measured: notes/sp7001-probes/rate_probe.lua, builds 941 and 942) ----
+0x4C02BB05  KernelTickHandler       ; the 1 kHz system tick (measured 999.5/s): increments the kernel millisecond counter 0x500D3C58 (942: 0x500D3C68; ms since ~0.27 s after power-on, dly_tsk's time base) and on every second tick calls TimeBase2msTick_entry
+0x484D7931  TimeBase2msTick         ; increments the 2 ms time base 0x50151BFC (942: 0x50151C0C; 500 Hz, measured 499.8/s -- NOT a 1 kHz tick), cleared at boot by the timer set-up; 942's GetTimBase returns its low 16 bits
+0x484D7936  TimeBase2msTick_entry
+0x4C03D0C8  cre_tsk                 ; micro-ITRON cre_tsk(d0 = task id, a0 = &T_CTSK {exinf, tskatr, task, itskpri (16-bit) at +0x0C, stksz at +0x10}): takes the TCB from the table 0x50380000[id] (ids 0-10; 0xFFFFFFFF = free) and the stack from the kernel pool; E_NOMEM = -10. 942's plug-in export cre_tsk_X forwards to it

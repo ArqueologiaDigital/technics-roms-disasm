@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 969 synthetic labels for internal helpers called by converted code
+# 970 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -989,6 +989,7 @@ _rom_marker:
 .equ TgVoiceListBuild_entry, 0x4C03B3B5
 .equ del_sem, 0x4C03C5AF
 .equ set_flg, 0x4C03CD7F
+.equ cre_tsk, 0x4C03D0C8
 .equ LibMsgSend, 0x4C03D219
 .equ LibMsgReceive, 0x4C03D36D
 .equ unl_cpu, 0x4C03D6BC
@@ -24306,7 +24307,7 @@ _rom_marker:
 #   compared against 0x77 at 0x484A5084.
     movbu   (0x4840000f), d0
     retf    0, 0
-# (unnamed code follows to the next boundary)
+# TimeBase2msTick  (CPU 0x484d7931)
 .incbin_range "baserom/kn7000_program.rom", 0x0d7931, 0x0d7bbd
 # InitializeBlock27  (CPU 0x484d7bbd)
 .incbin_range "baserom/kn7000_program.rom", 0x0d7bbd, 0x0d8356
@@ -26218,7 +26219,7 @@ _rom_marker:
     call    SdMediaStateSet_entry, [d2], 4
     mov     8, d0
     mov     0x4867b9a4, a0
-    call    0x4c03d0c8, 0, 0
+    call    cre_tsk, 0, 0
     mov     8, d0
     clr     d1
     call    ext_tsk, 0, 0
