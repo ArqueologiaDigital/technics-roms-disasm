@@ -243,14 +243,42 @@ routines and take their names (`LibStrncmp`, `LibDiv32`, `LibF64Unpack`, ...).
   function it splits. 941 keeps exactly its converted bytes; 942's regained the ~2.4 KB the
   export boundaries had cut.
 
-## Open
+## How the plug-in is called, loaded and activated (2026-10-16)
 
-- `BASEEXT.XAP`'s firmware services come through pointer tables filled at run time (the
-  `0x502992E4` context and the framework object's method slots); naming those slots would name
-  its calls.
-- The SP7001 *program* disks (`HAMA1/2.SLD`) reconstruct the 942 image (see
-  `research-scratch/kn7000-sp7001/PROVENANCE.txt`); their `SMCKPR*.INF` mismatches all 16 blocks
-  (dated before the payload). Not yet re-checked here the way the table is.
-- Elsewhere in this firmware family the one lost disk is the **v1.4 program update's disk 1**
-  (`kn7-14_1.exe` -> `JK1.SLD`, program build 929; only a Wayback "page not found" stub survives),
-  which is why MAME's `v14` BIOS has `NO_DUMP` for the lower half.
+Three of the open questions were answered from the byte-exact sources (no emulator); the probe is
+`research-scratch/kn7000-sp7001-disasm/sp7001_q1q2.py`.
+
+**What `BASEEXT.XAP` calls (Q1).** It never calls a fixed firmware address: at no load base does any
+of its `call` instructions land on a known firmware routine. It is handed the firmware's MILK
+framework object -- `*(0x50299298)`, saved in the `.XAP` as `XapFrameworkObj` (`0x502B4044`) -- and
+reaches every firmware service through that object's method tables, `obj->+0x1C` and `obj->+0x2E1C`.
+Of its 1,340 `calls (aN)`, 567 resolve directly to those two tables (472 via `+0x1C`, 95 via
+`+0x2E1C`; the rest go through deeper object chains). The plug-in host's init, `func_483E8071`
+(run by `XapSlot08`), uses the same tables the other way: it calls `obj->+0x1C`'s slots `+0xEC`
+and `+0x130` with class ids `0x00040004`/`0x00040009` and name pointers (`0x483F8DB8`,
+`0x483F8EC0`) -- i.e. it registers the plug-in's own object classes with the firmware, exactly as
+the KN5000's HD-AE5000 `Boot_Init` does. So "what it calls" is the firmware's MILK object method
+set, dispatched by table offset; naming the individual slots is the remaining, mappable work.
+
+**Load before activation (Q2).** In `Ap_Ce_StartUp` (`0x483EA0A6`) the base-extension load case
+reads a latch `KssBaseExtLoadedLatch` (`0x50299070`); when it is 0 it calls `KssPluginLoad(d0=3)`
+to read `BASEEXT.XAP` to RAM `0x5029B000` and run it, then sets the latch to 1 (so it loads once).
+Only *after* the load returns does it read `KssActivationStatus` (`0x502992C4`, 0 = ok). The
+activation gate (`KssPasswordCheck`/`KssKeyCompare`) is on user-action paths, not on the load path.
+So an `.XAP` on the SD card runs on a never-activated unit; activation releases features, it does
+not gate the load. (This strengthens the dumper-plug-in dumping route: a dumper `.XAP` in place of
+`BASEEXT.XAP` would execute at startup without activation.)
+
+**Program 942 vs its disks (Q4).** `make verify-sp7001-progdisks`: `HAMA1.SLD` + `HAMA2.SLD`
+decompress to exactly program 942 (`0x000000`-`0x3F8BDB`; the dump's tail is 0xFF). Their
+`SMCKPR1.INF` = `SMCKPR2.INF`, total `0x18C91B13`, matches none of the images held (942, 941, 935)
+in total or in any block, so like the table's it predates the final build -- but here there is no
+earlier image on hand to match it against.
+
+## Still open
+
+- Naming the MILK method slots (`obj+0x1C` `+0x108`/`+0x10C`/`+0x2A4`/..., `obj+0x2E1C`
+  `+0x78`/`+0x340`/...) would turn `BASEEXT.XAP`'s 1,340 indirect calls into named firmware calls.
+- The v1.4 program update's **disk 1** (`kn7-14_1.exe` -> `JK1.SLD`, build 929) is the one lost disk
+  in this family (only a Wayback "page not found" stub), which is why MAME's `v14` BIOS has
+  `NO_DUMP` for the lower half.

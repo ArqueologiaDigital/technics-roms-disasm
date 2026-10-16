@@ -27,6 +27,11 @@
 0x483ECC6D  KssPad16                ; (buf, fill = 0x20, n = 0x10): from the first NUL, right-pad with spaces to 16 chars
 0x483EF275  KssHash275              ; hashes 16 chars -> 8 chars with two 32-bit accumulators (param1_hash.py)
 ;
+; ---- plug-in loader / framework data (RAM) ----
+0x50299298  KssFrameworkObj         ; *(this) = the MILK framework object the plug-in host hands to a loaded .XAP (XapSlot08 0x483E88E4 stores a0 here); plug-ins call the firmware only through its method tables (obj+0x1C and obj+0x2E1C)
+0x50299070  KssBaseExtLoadedLatch   ; 0 until the base extension is loaded; Ap_Ce_StartUp's load case reads it, calls KssPluginLoad(3), then sets it to 1 (so the .XAP loads once)
+0x502992C4  KssActivationStatus     ; 0 = ok; set by KssPasswordCheck / KssActivationApply and read AFTER KssPluginLoad returns -- activation does not gate the load
+;
 ; ---- .XAP plug-in loader ----
 0x483EEAA9  KssPluginLoad           ; (d3 = plug-in id) logs 'PluginLoad id=%i', opens the .XAP (A:\%s.XAP / %s\%s.XAP), rejects files over 0x1D000 bytes, reads exactly 0x1D000 bytes to 0x5029B000, calls 0x5029B000 (a0 = framework object, a1 = 0x502992E4, d0/d1 -> compile id / plug-in id), checks the id and the compile id ('Compile id's dont match: base=%i != baseext=%i'), then registers the handle in 0x50299ED0[id]
 ;

@@ -23,6 +23,8 @@ ROMSET_DIR  ?= ../technics_romsets/kn7000
 SP7001_UPDATES ?= ../nonfree/kn7000-sp7001/sp7001-kn7000-updates
 SP7001_TB1  := $(SP7001_UPDATES)/table1_2.exe
 SP7001_TB2  := $(SP7001_UPDATES)/table2_2PLUG-iN.exe
+SP7001_PR1  := $(SP7001_UPDATES)/PROGR1_2v1.6PLUG-iN.exe
+SP7001_PR2  := $(SP7001_UPDATES)/PROGR2_2v1.6PLUG-iN.exe
 
 # MAME's unidasm, used only by `make disasm` to (re)generate the reference
 # listings. Point this at your MAME build's unidasm binary.
@@ -211,8 +213,16 @@ baserom/sp7001_tb1_jkt1.sld: tools/sfx_extract.py
 baserom/sp7001_tb2_jktbl2.sld: tools/sfx_extract.py
 	@mkdir -p baserom
 	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) JKTBL2.SLD $@
+baserom/sp7001_pr1_hama1.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_PR1) HAMA1.SLD $@
+baserom/sp7001_pr2_hama2.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_PR2) HAMA2.SLD $@
 # decompressed with the extraction repo's lzss module (its venv)
 baserom/sp7001_tb%.bin: baserom/sp7001_tb%.sld tools/sld_decompress.py
+	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
+baserom/sp7001_pr%.bin: baserom/sp7001_pr%.sld tools/sld_decompress.py
 	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
 
 # Provenance of table 83 (notes/sp7001-build-diff.md): (1) the two table disks'
@@ -234,6 +244,16 @@ verify-sp7001-floppy: baserom/sp7001_tb1_jkt1.bin baserom/sp7001_tb2_jktbl2.bin 
 	    --length 0x3E0660 --patch 0x3B7508:83 --patch 0x3B750C:83 --patch 0x3B7510:83 --expect match
 	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
 	    --length 0x3E0660 --expect mismatch
+
+# The program update's two disks reconstruct program 942 the same way; its shipped
+# SMCKPR*.INF predates the build and matches none of the images we hold, so there
+# is nothing to patch it back to -- just the byte-identity.
+.PHONY: verify-sp7001-progdisks
+verify-sp7001-progdisks: baserom/sp7001_pr1_hama1.bin baserom/sp7001_pr2_hama2.bin \
+		baserom/kn7000_program_sp7001.rom
+	@cat baserom/sp7001_pr1_hama1.bin baserom/sp7001_pr2_hama2.bin > baserom/sp7001_prog_disks.bin
+	@cmp -n 4164571 baserom/sp7001_prog_disks.bin baserom/kn7000_program_sp7001.rom \
+	    && echo "OK    HAMA1.SLD + HAMA2.SLD (decompressed) == program 942 [0:0x3F8BDB]"
 
 # ---- SP7001 symbols: PORTED from build 941/84, not re-derived ---------------
 # tools/port_symbols.py translates every recovered name through the exact
