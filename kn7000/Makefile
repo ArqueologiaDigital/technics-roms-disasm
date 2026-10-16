@@ -14,6 +14,11 @@ ASM         := $(PYTHON) tools/kn7asm.py
 EXTRACT_DIR ?= ../kn7000_extraction
 DISKS_DIR   ?= ../KN7000
 
+# SP7001 variant: its reference images come from the raw EPROM-half dumps in the
+# (private) MAME romset, de-interleaved by tools/rom_from_eproms.py — not from
+# the update disks. Override if the romset lives elsewhere.
+ROMSET_DIR  ?= ../technics_romsets/kn7000
+
 # MAME's unidasm, used only by `make disasm` to (re)generate the reference
 # listings. Point this at your MAME build's unidasm binary.
 UNIDASM     ?= ../mame-sony-video/unidasm
@@ -146,6 +151,51 @@ disasm/table_directory.asm: baserom/kn7000_table.rom tools/dump_table_dir.py
 	@mkdir -p disasm
 	$(PYTHON) tools/dump_table_dir.py $< > $@
 	@echo "wrote $@"
+
+# ---- SP7001 variant (program build 942 / table build 83) -------------------
+# A second byte-exact target. Its reference images are the de-interleaved raw
+# EPROM dumps; the source currently passes them through verbatim and is refined
+# only on the SP7001-unique code. See notes/sp7001-build-diff.md.
+SP7001_TARGETS := build/kn7000_program_sp7001.rom build/kn7000_table_sp7001.rom
+
+.PHONY: baserom-sp7001 build-sp7001 verify-sp7001
+baserom-sp7001: baserom/kn7000_program_sp7001.rom baserom/kn7000_table_sp7001.rom
+
+baserom/kn7000_program_sp7001.rom: tools/rom_from_eproms.py
+	@mkdir -p baserom
+	$(PYTHON) tools/rom_from_eproms.py \
+	    "$(ROMSET_DIR)/kn7000_program_even_sp7001_b942.ic17" \
+	    "$(ROMSET_DIR)/kn7000_program_odd_sp7001_b942.ic16" $@
+
+baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
+	@mkdir -p baserom
+	$(PYTHON) tools/rom_from_eproms.py \
+	    "$(ROMSET_DIR)/kn7000_table_even_sp7001_b83.ic17" \
+	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
+
+build/kn7000_program_sp7001.rom: src/sp7001/program.s tools/kn7asm.py baserom/kn7000_program_sp7001.rom
+	@mkdir -p build
+	$(ASM) src/sp7001/program.s -I . -o $@
+
+build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+	@mkdir -p build
+	$(ASM) src/sp7001/table.s -I . -o $@
+
+build-sp7001: $(SP7001_TARGETS)
+
+verify-sp7001: $(SP7001_TARGETS)
+	@ok=1; \
+	for name in kn7000_program_sp7001.rom kn7000_table_sp7001.rom; do \
+	  if cmp -s "build/$$name" "baserom/$$name"; then \
+	    echo "OK    $$name is 100% byte-identical to the SP7001 dump"; \
+	  else \
+	    echo "FAIL  $$name differs from the SP7001 dump:"; \
+	    cmp "build/$$name" "baserom/$$name" || true; \
+	    ok=0; \
+	  fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "SP7001 byte-match FAILED"; exit 1; }
+	@echo; echo "SP7001 images reproduced byte-for-byte."
 
 clean:
 	rm -rf build
