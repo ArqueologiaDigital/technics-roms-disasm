@@ -131,12 +131,19 @@ def encode(mnem, ops_str, pc):
 
     # --- branches / jumps / calls ---
     if mnem == "bra" or mnem in ("b" + c for c in CONDS):
-        target = imm(ops[0]); disp = (target - pc) & 0xFFFFFFFF
-        d = target - pc
-        if not fits_s8(d):
-            raise EncError(f"{mnem} disp8 out of range: {d}")
-        op = 0xCA if mnem == "bra" else (0xC0 | CONDS[mnem[1:]])
-        return u8(op) + u8(d)
+        target = imm(ops[0]); d = target - pc
+        if fits_s8(d):
+            op = 0xCA if mnem == "bra" else (0xC0 | CONDS[mnem[1:]])
+            return u8(op) + u8(d)
+        # Relaxation: the disp8 forms do not reach. `bra` becomes a `jmp`; a `Bcc`
+        # becomes the inverted `Bcc` over a `jmp` to the target. Only triggers for
+        # out-of-range targets, so byte-exact reconstruction is unaffected.
+        if mnem == "bra":
+            return encode("jmp", ops[0], pc)
+        inv = {"lt": "ge", "ge": "lt", "gt": "le", "le": "gt", "cs": "cc",
+               "cc": "cs", "hi": "ls", "ls": "hi", "eq": "ne", "ne": "eq"}[mnem[1:]]
+        jmp_bytes = encode("jmp", ops[0], pc + 2)
+        return u8(0xC0 | CONDS[inv]) + u8(2 + len(jmp_bytes)) + jmp_bytes
     if mnem == "jmp":
         if ops[0].startswith("("):                # jmp (aM) -> F0 F4-F7
             return b"\xf0" + u8(0xF4 | mem(ops[0])["a"])
