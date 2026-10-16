@@ -18,6 +18,7 @@
 #   .mnbase EXPR                 CPU address of output offset 0 (default 0)
 #   .byte / .word / .long EXPR [, EXPR ...]
 #   .space N [, FILL]            N fill bytes (FILL default 0)
+#   .fill COUNT, SIZE, VALUE     COUNT copies of VALUE as SIZE (<=4) little-endian bytes
 #   .align N [, FILL]            pad to a multiple of N (FILL default 0)
 #   .ascii "text" / .asciz "text"
 #   .include "file"              relative to the including file, then the -I dirs
@@ -146,6 +147,11 @@ class XapAsm:
             w = {".byte": 1, ".word": 2, ".long": 4}[op]
             for a in enc.split_ops(rest):
                 self.out += (self.eval(a) & ((1 << (8 * w)) - 1)).to_bytes(w, "little")
+        elif op == ".fill":
+            a = enc.split_ops(rest)                 # .fill COUNT, SIZE, VALUE (SIZE<=4)
+            count, size = self.eval(a[0]), (self.eval(a[1]) if len(a) > 1 else 1)
+            val = self.eval(a[2]) if len(a) > 2 else 0
+            self.out += (val & ((1 << (8 * size)) - 1)).to_bytes(size, "little") * count
         elif op == ".space":
             a = enc.split_ops(rest)
             self.out += bytes([self.eval(a[1]) & 0xFF if len(a) > 1 else 0]) * self.eval(a[0])
