@@ -117,9 +117,13 @@ class XapAsm:
                 raise AsmError(f"{path}:{n}: {e}") from None
 
     def _line(self, raw, cur_dir):
-        line = raw
-        if '"' not in line:
-            line = line.split("#", 1)[0].split(";", 1)[0]
+        line, quoted = "", False
+        for ch in raw:                      # `#` and `;` start a comment outside "strings"
+            if ch == '"':
+                quoted = not quoted
+            elif ch in "#;" and not quoted:
+                break
+            line += ch
         line = line.strip()
         m = re.match(r"([A-Za-z_][\w.]*):(.*)$", line)
         if m:
