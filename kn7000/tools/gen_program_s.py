@@ -31,7 +31,7 @@ LIB_CPU_BASE = 0x4C000000
 LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE   # cpu addr = file offset + delta
 ROM = "baserom/kn7000_program.rom"
 SYM = "kn7000.sym"
-MANUAL_SYM = "kn7000_manual.sym"
+MANUAL_SYM = ["kn7000_manual.sym", "kn7000_exports_from_942.sym"]
 UNIDASM = os.environ.get("UNIDASM", "../mame-sony-video/unidasm")
 OUT = "src/program.s"
 
@@ -54,6 +54,14 @@ TITLE = [                  # header comment lines after the licence
     '# tools/gen_program_s.py. make verify guarantees byte-identity.',
 ]
 DOC_XLATE = None           # optional fn(str)->str applied to FUNC_DOC lines
+# Symbol files whose names were recovered AFTER the function split was made (e.g.
+# the SP7001 plug-in export table). Their names become boundaries and labels, but
+# a boundary of this kind INHERITS the converted state of the function it splits
+# (up to that function's FUNC_END) instead of turning part of it back into
+# .incbin_range -- naming more functions must never shrink the converted source.
+# build 941: names from the SP7001 plug-in export table, ported back from 942
+# (tools/port_symbols.py); they name functions 941 already had
+INHERIT_SYMS = ("kn7000_exports_from_942.sym",)
 
 # Functions to emit as real assembly this pass (verified clusters). Growing this
 # set converts more of the ROM from opaque .incbin into understood source.
@@ -3294,7 +3302,7 @@ NEW_CODE_942 = (0x18598B, 0x185E8F)
 def select_profile(name):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
     global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
-    global FUNC_END, LIB_CONVERT, CONVERT
+    global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS
     if name == "941":
         return
     if name != "sp7001":
@@ -3319,6 +3327,7 @@ def select_profile(name):
     ROM = "baserom/kn7000_program_sp7001.rom"
     SYM = "kn7000_sp7001.sym"
     MANUAL_SYM = ["kn7000_sp7001_manual.sym", NEW_IN_942, EXPORTS_942]
+    INHERIT_SYMS = (EXPORTS_942,)
     OUT = "src/sp7001/program.s"
     SYMBOLS_INC = "src/sp7001/symbols.inc"
     R1_END, PALETTE, DATA_END = fmap(0x186000), fmap(0x32573C), fmap(0x3B8000)
@@ -3414,6 +3423,27 @@ def main():
             r1.append((off, nm))
             known.add(off)
     r1.sort()
+    inherit = set()
+    for path in INHERIT_SYMS:
+        for line in open(path):
+            m = re.match(r"0x[0-9A-Fa-f]+\s+(\S+)", line)
+            if m and not line.lstrip().startswith(";"):
+                inherit.add(m.group(1))
+    inherit -= set(CONVERT)
+    # conversion limit per boundary: a converted function's range ends at the
+    # next boundary that is NOT an inherited split (or at its FUNC_END cap);
+    # inherited splits inside that range stay converted
+    limit, parent = {}, None
+    for i, (off, name) in enumerate(r1):
+        if name in inherit:
+            limit[off] = parent if parent is not None and off < parent else None
+            continue
+        j = i + 1
+        while j < len(r1) and r1[j][1] in inherit:
+            j += 1
+        nxt = r1[j][0] if j < len(r1) else R1_END
+        parent = min(nxt, FUNC_END.get(name, nxt)) if name in CONVERT else None
+        limit[off] = parent
     sym_by_addr = {BASE + off: nm for off, nm in syms}
     pal = [struct.unpack_from("<I", d, PALETTE + 4 * i)[0] for i in range(512)]
 
@@ -3446,17 +3476,21 @@ def main():
     if r1[0][0] > 0x80:
         body.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
 
-    converted = 0
+    converted = inherited = 0
     for i, (off, name) in enumerate(r1):
         end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
         body.append(f"# {name}  (CPU {BASE + off:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
-        end_conv = min(end, FUNC_END.get(name, end))
-        block = emit_function(d, off, end_conv, name, names, used) if name in CONVERT else None
+        lim = limit[off]
+        end_conv = min(end, lim) if lim is not None else end
+        block = emit_function(d, off, end_conv, name, names, used) if lim is not None else None
         if block is not None:
             body.extend(block)
-            converted += 1
+            if name in inherit:
+                inherited += 1
+            else:
+                converted += 1
             if end_conv < end:
                 body.append(f"# (unnamed code follows to the next boundary)")
                 body.append(f".incbin_range {ROMQ}, {end_conv:#08x}, {end:#08x}")
@@ -3525,7 +3559,8 @@ def main():
 
     open(OUT, "w").write("\n".join(L) + "\n")
     print(f"wrote {OUT}: {converted}/{len(CONVERT)} region-1 + "
-          f"{lib_converted}/{len(LIB_CONVERT)} library functions converted to asm")
+          f"{lib_converted}/{len(LIB_CONVERT)} library functions converted to asm"
+          + (f" (+{inherited} newly-named pieces of converted functions)" if inherited else ""))
 
 
 if __name__ == "__main__":

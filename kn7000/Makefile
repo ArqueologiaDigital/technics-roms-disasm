@@ -67,7 +67,8 @@ symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.
 constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
 
-program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym baserom/kn7000_program.rom
+program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
+		kn7000_exports_from_942.sym baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
 build/kn7000_table.rom: src/table.s tools/kn7asm.py baserom/kn7000_table.rom
@@ -138,10 +139,11 @@ disasm/program_region2.asm: baserom/kn7000_program.rom
 	@echo "wrote $@"
 
 # Named, function-by-function disassembly using the recovered symbols.
-disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym tools/disasm_functions.py
+disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym \
+		kn7000_exports_from_942.sym tools/disasm_functions.py
 	@mkdir -p disasm build
 	@echo "==> named function disassembly with unidasm (generated + manual symbols)"
-	@cat kn7000.sym kn7000_manual.sym > build/kn7000_merged.sym
+	@cat kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym > build/kn7000_merged.sym
 	@$(PYTHON) tools/disasm_functions.py --rom $< --sym build/kn7000_merged.sym \
 	    --unidasm $(UNIDASM) > $@
 	@echo "wrote $@"
@@ -197,6 +199,17 @@ SP7001_PLUGIN := 0x3E8000:0x3FB5A0
 # library image in program-flash 942 (941's 0x3B8FD1 through the offset map;
 # tools/port_symbols.py prints it)
 SP7001_LIB_FILE := 0x3BA785
+
+# Build 941 names carried BACK from 942's plug-in export table (the functions
+# they name exist in 941 too). Needs both builds' baserom; the committed
+# kn7000_exports_from_942.sym is the result, so the default build doesn't.
+.PHONY: exports-941
+exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.py \
+		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
+	$(PYTHON) tools/port_symbols.py baserom/kn7000_program_sp7001.rom baserom/kn7000_program.rom \
+	    baserom/kn7000_table_sp7001.rom baserom/kn7000_table.rom \
+	    kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --old-lib-base $(SP7001_LIB_FILE) \
+	    --title "KN7000 build 941: names from the SP7001 (build 942) plug-in export table, ported back"
 
 .PHONY: symbols-sp7001 program-src-sp7001
 symbols-sp7001 kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \

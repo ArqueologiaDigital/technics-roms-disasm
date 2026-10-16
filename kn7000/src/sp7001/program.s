@@ -34,7 +34,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 980 synthetic labels for internal helpers called by converted code
+# 983 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -151,6 +151,7 @@ _rom_marker:
 .equ func_4842C987, 0x4842C987
 .equ func_4842D368, 0x4842D368
 .equ func_4842D40B, 0x4842D40B
+.equ func_4842DC8C, 0x4842DC8C
 .equ func_4842DF25, 0x4842DF25
 .equ func_484317D5, 0x484317D5
 .equ func_4843183A, 0x4843183A
@@ -491,6 +492,7 @@ _rom_marker:
 .equ SdPlaylistLoad_entry, 0x4854CAD6
 .equ SdPowerCtrlSet, 0x4854D065
 .equ SdPowerCtrlClear, 0x4854D097
+.equ func_4854D83A, 0x4854D83A
 .equ SdStateReset_entry, 0x485517D2
 .equ SdUnmountCleanup_entry, 0x48551864
 .equ SdStateResetCall_entry, 0x485518CA
@@ -645,6 +647,7 @@ _rom_marker:
 .equ LibDiv32, 0x4C0019D5
 .equ LibI16ToF64, 0x4C0019F2
 .equ LibSprintf, 0x4C001A48
+.equ LibStrncmp, 0x4C00203C
 .equ LibStrlen, 0x4C0032F7
 .equ SndCmdStreamWrite_entry, 0x4C003ABF
 .equ TgPartGlobalChanRefresh_entry, 0x4C004E43
@@ -4303,11 +4306,1092 @@ _rom_marker:
     mov     d0, (0x50021ffc)
     retf    0, 0
 # LcdOut  (CPU 0x48414d05)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x014d05, 0x015660
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+    mov     (0x50022004), d0
+    cmp     0, d0
+    bne     0x48414d17
+    jmp     0x48414f43
+    call    GetLcdMode, 0, 0
+    exthu   d0
+    cmp     2, d0
+    bne     0x48414d26
+    jmp     0x48414e03
+    clr     d1
+    clr     d0
+    mov     d0, (0x14, sp)
+    exthu   d1
+    mov     d1, d0
+    asl     3, d0
+    mov     0x4859e798, a0
+    mov     (d0, a0), d2
+    asl     3, d1
+    mov     d2, (0x10, sp)
+    mov     d1, a0
+    add     0x4859e798, a0
+    mov     (4, a0), d2
+    mov     (0x10, sp), a2
+    mov     (0x10, sp), a1
+    mov     (0x10, sp), d0
+    mov     d2, (0xc, sp)
+    mov     0x27f, d1
+    sub     d0, d1
+    mov     0xef, d0
+    sub     d2, d0
+    mov     0x280, d3
+    nop
+    nop
+    mul     d3, d0
+    add     d0, d1
+    add     d1, d1
+    mov     d1, a0
+    add     0x9ce00000, a0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d2, d1
+    mov     0x500d4090, d0
+    add     d1, d0
+    add     d0, a2
+    add     0x500f9890, d1
+    add     d1, a1
+    cmp     0xf0, d2
+    bge     0x48414df3
+    mov     (0x10, sp), a3
+    cmp     0x280, a3
+    bge     0x48414dda
+    setlb
+    movbu   (a2), d0
+    mov     0xf0, d1
+    mov     d0, d3
+    exthu   d3
+    and     d3, d1
+    cmp     0xd0, d1
+    beq     0x48414db2
+    exthu   d0
+    add     d0, d0
+    mov     a2, (0x24, sp)
+    mov     0x50122abc, a2
+    movhu   (d0, a2), d0
+    mov     (0x24, sp), a2
+    movhu   d0, (a0)
+    bra     0x48414dcb
+    movbu   (a1), d2
+    movbu   (a1), d1
+    and     0xf0, d2
+    and     0x0f, d1
+    asl     3, d2
+    and     0x0f, d3
+    asl     12, d3
+    add     d3, d2
+    mov     d1, d0
+    add     d2, d0
+    add     d1, d0
+    movhu   d0, (a0)
+    add     2, a2
+    add     2, a1
+    mov     4, d0
+    sub     d0, a0
+    add     2, a3
+    cmp     0x280, a3
+    llt
+    add     0x280, a2
+    mov     0x500, d0
+    sub     d0, a0
+    mov     (0xc, sp), d0
+    add     0x280, a1
+    add     2, d0
+    mov     d0, (0xc, sp)
+    cmp     0xf0, d0
+    blt     0x48414d88
+    mov     (0x14, sp), d1
+    inc     d1
+    exthu   d1
+    mov     d1, (0x14, sp)
+    cmp     4, d1
+    bge     0x48414e00
+    jmp     0x48414d2a
+    ret     [d2,d3,a2,a3], 0x3c
+    clr     d0
+    clr     d1
+    mov     d1, (0x20, sp)
+    exthu   d0
+    mov     d0, d1
+    asl     3, d1
+    mov     0x4859e798, a0
+    mov     (d1, a0), d2
+    asl     3, d0
+    mov     d2, (0x1c, sp)
+    add     a0, d0
+    mov     d0, a0
+    mov     (4, a0), d3
+    mov     0x280, d0
+    nop
+    nop
+    mul     d3, d0
+    mov     d3, (0x18, sp)
+    mov     0x500d4090, d1
+    add     d0, d1
+    add     d2, d1
+    mov     d1, (0x10, sp)
+    add     0x500f9890, d0
+    add     d2, d0
+    mov     d0, (0xc, sp)
+    mov     0x27f, d1
+    sub     d2, d1
+    mov     0xef, d0
+    sub     d3, d0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d1
+    mov     d1, d0
+    add     d1, d0
+    mov     d0, a3
+    add     0x9ce00000, a3
+    cmp     0xf0, d3
+    blt     0x48414e61
+    jmp     0x48414f33
+    mov     (0x1c, sp), d0
+    mov     d0, (0x14, sp)
+    cmp     0x280, d0
+    blt     0x48414e6e
+    jmp     0x48414f0f
+    mov     (0x10, sp), a0
+    mov     0xf0, d2
+    movbu   (a0), d0
+    mov     d0, d1
+    exthu   d1
+    and     d1, d2
+    cmp     0xd0, d2
+    beq     0x48414e8d
+    exthu   d0
+    add     d0, d0
+    mov     0x50122abc, a0
+    movhu   (d0, a0), d0
+    movhu   d0, (a3)
+    bra     0x48414ef0
+    mov     (0xc, sp), a0
+    and     0x0f, d1
+    movbu   (a0), d0
+    asl     20, d1
+    and     0xf0, d0
+    asl     16, d0
+    mov     d0, d3
+    movbu   (a0), d0
+    add     d1, d3
+    and     0x0f, d0
+    asl     4, d0
+    add     d0, d3
+    mov     d3, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, a2
+    mov     d3, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, d2
+    mov     d3, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, d1
+    mov     a2, d0
+    and     0xff, d0
+    and     0xf8, d0
+    asl     8, d0
+    and     0xff00, d2
+    lsr     8, d2
+    and     0xfc, d2
+    asl     3, d2
+    add     d2, d0
+    mov     d1, d2
+    and     0x00ff0000, d2
+    lsr     16, d2
+    and     0xf8, d2
+    asr     3, d2
+    add     d2, d0
+    movhu   d0, (a3)
+    mov     (0x10, sp), d0
+    add     2, d0
+    mov     d0, (0x10, sp)
+    mov     (0xc, sp), d0
+    add     2, d0
+    mov     d0, (0xc, sp)
+    mov     4, d0
+    sub     d0, a3
+    mov     (0x14, sp), d0
+    add     2, d0
+    mov     d0, (0x14, sp)
+    cmp     0x280, d0
+    bge     0x48414f0f
+    jmp     0x48414e6e
+    mov     (0x10, sp), d0
+    add     0x280, d0
+    mov     d0, (0x10, sp)
+    mov     (0xc, sp), d0
+    add     0x280, d0
+    mov     d0, (0xc, sp)
+    mov     0x500, d0
+    sub     d0, a3
+    mov     (0x18, sp), d0
+    add     2, d0
+    mov     d0, (0x18, sp)
+    cmp     0xf0, d0
+    bge     0x48414f33
+    jmp     0x48414e61
+    mov     (0x20, sp), d0
+    inc     d0
+    exthu   d0
+    mov     d0, (0x20, sp)
+    cmp     4, d0
+    bge     0x48414f40
+    jmp     0x48414e07
+    ret     [d2,d3,a2,a3], 0x3c
+    call    GetLcdMode, 0, 0
+    exthu   d0
+    cmp     2, d0
+    bne     0x48414f52
+    jmp     0x48415023
+    clr     d1
+    clr     d0
+    mov     d0, (0x14, sp)
+    exthu   d1
+    mov     d1, d0
+    asl     3, d0
+    mov     0x4859e798, a0
+    mov     (d0, a0), d2
+    asl     3, d1
+    mov     d2, (0x10, sp)
+    mov     d1, a0
+    add     0x4859e798, a0
+    mov     (4, a0), d2
+    mov     (0x10, sp), a2
+    mov     (0x10, sp), a1
+    mov     (0x10, sp), d1
+    mov     d2, (0xc, sp)
+    mov     0x280, d0
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    add     d0, d0
+    add     0x9ce00000, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d2, d1
+    mov     0x500, a0
+    add     d0, a0
+    mov     0x500d4090, d0
+    add     d1, d0
+    add     d0, a2
+    add     0x500f9890, d1
+    add     d1, a1
+    cmp     0xf0, d2
+    bge     0x48415013
+    mov     (0x10, sp), a3
+    cmp     0x280, a3
+    bge     0x48414ffb
+    setlb
+    movbu   (a2), d1
+    mov     0xf0, d0
+    mov     d1, d3
+    exthu   d3
+    and     d3, d0
+    cmp     0xd0, d0
+    beq     0x48414fd7
+    exthu   d1
+    add     d1, d1
+    mov     a2, (0x28, sp)
+    mov     0x50122abc, a2
+    movhu   (d1, a2), d0
+    mov     (0x28, sp), a2
+    movhu   d0, (a0)
+    bra     0x48414fef
+    movbu   (a1), d1
+    movbu   (a1), d2
+    and     0xf0, d1
+    and     0x0f, d2
+    asl     3, d1
+    and     0x0f, d3
+    asl     12, d3
+    add     d3, d1
+    add     d2, d1
+    add     d2, d1
+    movhu   d1, (a0)
+    add     2, a2
+    add     2, a1
+    inc4    a0
+    add     2, a3
+    cmp     0x280, a3
+    llt
+    mov     (0xc, sp), d0
+    add     0x280, a2
+    add     0x280, a1
+    add     0x500, a0
+    add     2, d0
+    mov     d0, (0xc, sp)
+    cmp     0xf0, d0
+    blt     0x48414fad
+    mov     (0x14, sp), d1
+    inc     d1
+    exthu   d1
+    mov     d1, (0x14, sp)
+    cmp     4, d1
+    bge     0x48415020
+    jmp     0x48414f56
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     0x9ce00000, d0
+    mov     d0, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    mov     d0, (0x10, sp)
+    mov     (0x10, sp), a3
+    mov     (0x10, sp), a2
+    add     0x500d4090, a3
+    add     0x500f9890, a2
+    clr     d0
+    mov     d0, (0xc, sp)
+    clr     d2
+    clr     d3
+    movbu   (a3), d1
+    mov     0xf0, d0
+    exthu   d1
+    and     d1, d0
+    cmp     0xd0, d0
+    beq     0x4841505f
+    movbu   (a3), d0
+    exth    d0
+    call    GetPaletteRGB4, 0, 0
+    bra     0x48415084
+    movbu   (a2), d0
+    and     0x0f, d1
+    asl     20, d1
+    and     0xf0, d0
+    asl     16, d0
+    add     d0, d1
+    movbu   (a2), d0
+    and     0x0f, d0
+    asl     4, d0
+    add     d1, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    lsr     6, d0
+    and     0x03, d0
+    exthu   d2
+    asl2    d2
+    mov     d0, d1
+    exthu   d1
+    add     d1, d2
+    inc     a3
+    inc     a2
+    inc     d3
+    cmp     8, d3
+    blt     0x48415045
+    mov     (0x14, sp), a0
+    exthu   d2
+    mov     d2, d1
+    asr     8, d1
+    extbu   d1
+    mov     0xff, d0
+    and     d2, d0
+    extbu   d0
+    asl     8, d0
+    add     d0, d1
+    movhu   d1, (a0)
+    mov     (0x14, sp), d0
+    add     2, d0
+    mov     d0, (0x14, sp)
+    mov     (0xc, sp), d0
+    inc     d0
+    mov     d0, (0xc, sp)
+    cmp     0x50, d0
+    blt     0x48415043
+    mov     (0x18, sp), d0
+    inc     d0
+    mov     d0, (0x18, sp)
+    mov     (0x10, sp), d0
+    add     0x280, d0
+    mov     d0, (0x10, sp)
+    mov     (0x18, sp), d0
+    cmp     0xf0, d0
+    bge     0x484150cb
+    jmp     0x48415030
+    ret     [d2,d3,a2,a3], 0x3c
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x54, sp
+    mov     a0, (0x6c, sp)
+    mov     a0, d0
+    add     2, d0
+    mov     d0, (0x38, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x484150e7
+    clr     d0
+    movhu   d0, (a0)
+    mov     (0x6c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x484150f3
+    clr     d0
+    movhu   d0, (a0)
+    mov     (0x6c, sp), d0
+    add     4, d0
+    mov     d0, (0x2c, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0x27f, d0
+    ble     0x48415109
+    mov     0x27f, d0
+    movhu   d0, (a0)
+    mov     (0x6c, sp), d0
+    add     6, d0
+    mov     d0, (0x34, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0xef, d0
+    ble     0x4841511f
+    mov     0xef, d0
+    movhu   d0, (a0)
+    mov     (0x50022004), d0
+    cmp     0, d0
+    bne     0x4841512c
+    jmp     0x484153ca
+    call    GetLcdMode, 0, 0
+    exthu   d0
+    cmp     2, d0
+    bne     0x4841513b
+    jmp     0x48415259
+    clr     d1
+    clr     d0
+    mov     d0, (0x24, sp)
+    exthu   d1
+    mov     d1, d0
+    asl     3, d0
+    mov     0x4859e7b8, a0
+    mov     (d0, a0), d2
+    mov     (0x38, sp), a0
+    mov     d2, (0x20, sp)
+    asl     3, d1
+    movhu   (a0), d0
+    mov     d1, a0
+    add     0x4859e7b8, a0
+    mov     (4, a0), d1
+    exth    d0
+    add     d1, d0
+    mov     d0, (0x18, sp)
+    mov     (0x34, sp), a0
+    mov     (0x18, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, d1
+    ble     0x48415171
+    jmp     0x48415249
+    mov     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x14, sp)
+    mov     (0x18, sp), d0
+    mov     0xef, d1
+    sub     d0, d1
+    mov     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x6c, sp), a0
+    mov     (0x20, sp), d2
+    movhu   (a0), d0
+    mov     (0x14, sp), d1
+    exth    d0
+    add     0x500d4090, d1
+    add     d2, d0
+    add     d0, d1
+    mov     d1, (0x10, sp)
+    movhu   (a0), d0
+    mov     (0x14, sp), d1
+    exth    d0
+    add     0x500f9890, d1
+    add     d2, d0
+    add     d0, d1
+    movhu   (a0), d0
+    mov     d1, a2
+    exth    d0
+    mov     d2, a3
+    mov     0x27f, d1
+    sub     d0, d1
+    movhu   (a0), d0
+    mov     (0x2c, sp), a0
+    exth    d0
+    add     d0, a3
+    mov     d1, d0
+    mov     (0x1c, sp), d1
+    sub     d2, d0
+    add     d1, d0
+    add     d0, d0
+    mov     d0, a1
+    movhu   (a0), d0
+    add     0x9ce00000, a1
+    exth    d0
+    cmp     d0, a3
+    bgt     0x48415226
+    setlb
+    mov     (0x10, sp), a0
+    mov     0xf0, d0
+    movbu   (a0), d1
+    mov     d1, d3
+    exthu   d3
+    and     d3, d0
+    cmp     0xd0, d0
+    beq     0x484151f6
+    exthu   d1
+    mov     d1, d0
+    add     d0, d0
+    mov     0x50122abc, a0
+    movhu   (d0, a0), d0
+    movhu   d0, (a1)
+    bra     0x48415210
+    movbu   (a2), d1
+    movbu   (a2), d2
+    and     0xf0, d1
+    and     0x0f, d2
+    asl     3, d1
+    and     0x0f, d3
+    mov     d3, d0
+    asl     12, d0
+    add     d0, d1
+    mov     d2, d0
+    add     d1, d0
+    add     d2, d0
+    movhu   d0, (a1)
+    mov     (0x10, sp), d0
+    mov     (0x2c, sp), a0
+    add     2, d0
+    mov     d0, (0x10, sp)
+    add     2, a2
+    mov     4, d0
+    sub     d0, a1
+    movhu   (a0), d0
+    add     2, a3
+    exth    d0
+    cmp     d0, a3
+    lle
+    mov     (0x18, sp), d0
+    mov     (0x34, sp), a0
+    add     2, d0
+    mov     d0, (0x18, sp)
+    mov     (0x1c, sp), d0
+    mov     (0x18, sp), d1
+    add     -0x500, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x14, sp), d0
+    add     0x500, d0
+    mov     d0, (0x14, sp)
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, d1
+    bgt     0x48415249
+    jmp     0x4841518c
+    mov     (0x24, sp), d1
+    inc     d1
+    exthu   d1
+    mov     d1, (0x24, sp)
+    cmp     4, d1
+    bge     0x48415256
+    jmp     0x4841513f
+    ret     [d2,d3,a2,a3], 0x64
+    clr     d0
+    clr     d1
+    mov     d1, (0x30, sp)
+    exthu   d0
+    mov     d0, d1
+    asl     3, d1
+    mov     0x4859e7b8, a0
+    mov     (d1, a0), d2
+    asl     3, d0
+    mov     d2, (0x28, sp)
+    add     a0, d0
+    mov     d0, a0
+    mov     (4, a0), d2
+    mov     (0x38, sp), a0
+    movhu   (a0), d0
+    mov     (0x34, sp), a0
+    exth    d0
+    add     d2, d0
+    mov     d0, (0x20, sp)
+    movhu   (a0), d0
+    mov     (0x20, sp), d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x4841528b
+    jmp     0x484153ba
+    mov     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    mov     0xef, d1
+    sub     d0, d1
+    mov     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x24, sp)
+    mov     (0x6c, sp), a0
+    mov     (0x28, sp), d2
+    movhu   (a0), d0
+    mov     (0x1c, sp), d1
+    exth    d0
+    add     0x500d4090, d1
+    add     d2, d0
+    add     d0, d1
+    mov     d1, (0x18, sp)
+    movhu   (a0), d0
+    mov     (0x1c, sp), d1
+    exth    d0
+    add     0x500f9890, d1
+    add     d2, d0
+    add     d0, d1
+    mov     d1, (0x10, sp)
+    movhu   (a0), d0
+    mov     0x27f, d1
+    exth    d0
+    sub     d0, d1
+    movhu   (a0), d0
+    mov     (0x2c, sp), a0
+    exth    d0
+    add     d2, d0
+    mov     d0, (0x14, sp)
+    mov     d1, d0
+    mov     (0x24, sp), d1
+    sub     d2, d0
+    add     d1, d0
+    mov     (0x14, sp), d1
+    add     d0, d0
+    mov     d0, a3
+    movhu   (a0), d0
+    add     0x9ce00000, a3
+    exth    d0
+    cmp     d0, d1
+    ble     0x484152f2
+    jmp     0x48415397
+    mov     (0x18, sp), a0
+    mov     0xf0, d1
+    movbu   (a0), d2
+    mov     d2, d0
+    exthu   d0
+    and     d0, d1
+    cmp     0xd0, d1
+    beq     0x48415311
+    exthu   d2
+    add     d2, d2
+    mov     0x50122abc, a0
+    movhu   (d2, a0), d0
+    movhu   d0, (a3)
+    bra     0x48415374
+    mov     (0x10, sp), a0
+    and     0x0f, d0
+    movbu   (a0), d3
+    movbu   (a0), d2
+    asl     20, d0
+    and     0xf0, d3
+    asl     16, d3
+    add     d3, d0
+    and     0x0f, d2
+    asl     4, d2
+    add     d0, d2
+    mov     d2, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, d3
+    mov     d2, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, a2
+    mov     d2, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    mov     d0, d1
+    and     0xff, d3
+    and     0xf8, d3
+    asl     8, d3
+    mov     a2, d0
+    and     0xff00, d0
+    lsr     8, d0
+    and     0xfc, d0
+    asl     3, d0
+    mov     d0, d2
+    add     d3, d2
+    and     0x00ff0000, d1
+    lsr     16, d1
+    and     0xf8, d1
+    mov     d1, d0
+    asr     3, d0
+    add     d0, d2
+    movhu   d2, (a3)
+    mov     (0x14, sp), d0
+    mov     (0x2c, sp), a0
+    add     2, d0
+    mov     d0, (0x14, sp)
+    mov     (0x18, sp), d0
+    mov     (0x14, sp), d1
+    add     2, d0
+    mov     d0, (0x18, sp)
+    mov     (0x10, sp), d0
+    add     2, d0
+    mov     d0, (0x10, sp)
+    mov     4, d0
+    sub     d0, a3
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, d1
+    bgt     0x48415397
+    jmp     0x484152f2
+    mov     (0x20, sp), d0
+    mov     (0x34, sp), a0
+    add     2, d0
+    mov     d0, (0x20, sp)
+    mov     (0x24, sp), d0
+    mov     (0x20, sp), d1
+    add     -0x500, d0
+    mov     d0, (0x24, sp)
+    mov     (0x1c, sp), d0
+    add     0x500, d0
+    mov     d0, (0x1c, sp)
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, d1
+    bgt     0x484153ba
+    jmp     0x484152a6
+    mov     (0x30, sp), d0
+    inc     d0
+    exthu   d0
+    mov     d0, (0x30, sp)
+    cmp     4, d0
+    bge     0x484153c7
+    jmp     0x4841525d
+    ret     [d2,d3,a2,a3], 0x64
+    call    GetLcdMode, 0, 0
+    exthu   d0
+    cmp     2, d0
+    bne     0x484153d9
+    jmp     0x484154ed
+    clr     d0
+    clr     d1
+    mov     d1, (0x20, sp)
+    exthu   d0
+    mov     d0, d1
+    asl     3, d1
+    mov     0x4859e7b8, a0
+    mov     (d1, a0), d2
+    asl     3, d0
+    mov     d2, (0x1c, sp)
+    mov     d0, a0
+    add     0x4859e7b8, a0
+    mov     (4, a0), d1
+    mov     (0x38, sp), a0
+    movhu   (a0), d0
+    mov     (0x34, sp), a0
+    exth    d0
+    add     d1, d0
+    mov     d0, (0x14, sp)
+    movhu   (a0), d0
+    mov     (0x14, sp), d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x4841540f
+    jmp     0x484154dd
+    mov     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x10, sp)
+    mov     (0x14, sp), d0
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x18, sp)
+    mov     (0x6c, sp), a0
+    mov     (0x1c, sp), d2
+    mov     (0x6c, sp), a2
+    movhu   (a0), d0
+    mov     (0x10, sp), d1
+    exth    d0
+    add     d2, d0
+    add     0x500d4090, d1
+    add     d0, d1
+    movhu   (a0), d0
+    mov     d1, a3
+    exth    d0
+    mov     (0x10, sp), d1
+    add     d2, d0
+    add     0x500f9890, d1
+    add     d0, d1
+    movhu   (a0), d0
+    mov     0x500, a0
+    mov     d1, a1
+    mov     (0x18, sp), d1
+    exth    d0
+    add     d2, d0
+    add     d1, d0
+    add     d0, d0
+    add     0x9ce00000, d0
+    add     d0, a0
+    movhu   (a2), d0
+    mov     a0, (0x44, sp)
+    mov     (0x2c, sp), a0
+    exth    d0
+    mov     d2, a2
+    add     d0, a2
+    movhu   (a0), d0
+    mov     (0x44, sp), a0
+    exth    d0
+    cmp     d0, a2
+    bgt     0x484154ba
+    setlb
+    movbu   (a3), d0
+    mov     0xf0, d1
+    mov     d0, d3
+    exthu   d3
+    and     d3, d1
+    cmp     0xd0, d1
+    beq     0x4841548e
+    exthu   d0
+    add     d0, d0
+    mov     a3, (0x48, sp)
+    mov     0x50122abc, a3
+    movhu   (d0, a3), d0
+    mov     (0x48, sp), a3
+    movhu   d0, (a0)
+    bra     0x484154a7
+    movbu   (a1), d1
+    movbu   (a1), d2
+    and     0xf0, d1
+    and     0x0f, d2
+    asl     3, d1
+    and     0x0f, d3
+    asl     12, d3
+    add     d3, d1
+    mov     d2, d0
+    add     d1, d0
+    add     d2, d0
+    movhu   d0, (a0)
+    inc4    a0
+    mov     a0, (0x44, sp)
+    mov     (0x2c, sp), a0
+    add     2, a3
+    movhu   (a0), d0
+    add     2, a1
+    add     2, a2
+    exth    d0
+    mov     (0x44, sp), a0
+    cmp     d0, a2
+    lle
+    mov     (0x14, sp), d0
+    mov     (0x34, sp), a0
+    add     2, d0
+    mov     d0, (0x14, sp)
+    mov     (0x18, sp), d0
+    mov     (0x14, sp), d1
+    add     0x500, d0
+    mov     d0, (0x18, sp)
+    mov     (0x10, sp), d0
+    add     0x500, d0
+    mov     d0, (0x10, sp)
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, d1
+    bgt     0x484154dd
+    jmp     0x48415421
+    mov     (0x20, sp), d0
+    inc     d0
+    exthu   d0
+    mov     d0, (0x20, sp)
+    cmp     4, d0
+    bge     0x484154ea
+    jmp     0x484153dd
+    ret     [d2,d3,a2,a3], 0x64
+    mov     (0x6c, sp), a1
+    mov     sp, a0
+    add     0x4c, a0
+    mov     -4, d1
+    setlb
+    movhu   (a1), d0
+    add     2, a1
+    movhu   d0, (a0)
+    add     2, a0
+    inc     d1
+    lne
+    movhu   (0x4e, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    movhu   (0x52, sp), d0
+    mov     (0x24, sp), d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x48415511
+    ret     [d2,d3,a2,a3], 0x64
+    movhu   (0x4c, sp), d2
+    movhu   (0x4c, sp), d0
+    mov     8, d1
+    exth    d0
+    mov     d0, (0x30, sp)
+    movhu   (0x4c, sp), d0
+    exth    d2
+    exth    d0
+    mov     d0, (0x38, sp)
+    movhu   (0x4c, sp), d0
+    exth    d0
+    mov     d0, (0x40, sp)
+    movhu   (0x50, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    movhu   (0x50, sp), d0
+    exth    d0
+    call    LibDiv32, 0, 0
+    mov     d0, (0x2c, sp)
+    movhu   (0x52, sp), d0
+    mov     8, d1
+    exth    d0
+    mov     d0, (0x34, sp)
+    mov     d2, d0
+    call    LibDiv32, 0, 0
+    mov     d0, d1
+    mov     (0x24, sp), d0
+    mov     0x50, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    add     d0, d0
+    add     0x9ce00000, d0
+    mov     d0, (0x20, sp)
+    mov     (0x24, sp), d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    mov     8, d1
+    mov     d0, (0x18, sp)
+    mov     (0x30, sp), d0
+    call    LibDiv32, 0, 0
+    mov     (0x1c, sp), d1
+    asl     3, d0
+    add     0x500d4090, d1
+    add     d0, d1
+    mov     d1, (0x10, sp)
+    mov     (0x38, sp), d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     (0x1c, sp), d1
+    asl     3, d0
+    add     0x500f9890, d1
+    add     d0, d1
+    mov     (0x40, sp), d0
+    mov     d1, a3
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     d0, (0x14, sp)
+    mov     (0x2c, sp), d1
+    cmp     d1, d0
+    ble     0x484155b5
+    jmp     0x4841563b
+    mov     (0x3c, sp), d0
+    mov     8, d1
+    call    LibDiv32, 0, 0
+    mov     d0, (0x28, sp)
+    mov     0, a2
+    clr     d3
+    mov     (0x10, sp), a0
+    mov     0xf0, d0
+    movbu   (a0), d2
+    exthu   d2
+    and     d2, d0
+    cmp     0xd0, d0
+    beq     0x484155e1
+    movbu   (a0), d0
+    exth    d0
+    call    GetPaletteRGB4, 0, 0
+    bra     0x48415606
+    movbu   (a3), d1
+    movbu   (a3), d0
+    and     0x0f, d2
+    asl     20, d2
+    and     0xf0, d1
+    asl     16, d1
+    add     d1, d2
+    and     0x0f, d0
+    asl     4, d0
+    add     d2, d0
+    call    func_4842DC8C, [d2,d3,a2,a3], 0x10
+    lsr     6, d0
+    and     0x03, d0
+    exthu   d0
+    mov     a2, d1
+    exthu   d1
+    asl2    d1
+    add     d0, d1
+    mov     (0x10, sp), d0
+    mov     d1, a2
+    inc     d0
+    mov     d0, (0x10, sp)
+    inc     a3
+    inc     d3
+    cmp     8, d3
+    blt     0x484155c5
+    mov     (0x18, sp), a0
+    exthu   d1
+    mov     d1, d0
+    asr     8, d0
+    extbu   d0
+    and     0xff, d1
+    extbu   d1
+    asl     8, d1
+    add     d0, d1
+    movhu   d1, (a0)
+    mov     (0x18, sp), d0
+    add     2, d0
+    mov     d0, (0x18, sp)
+    mov     (0x14, sp), d0
+    inc     d0
+    mov     d0, (0x14, sp)
+    mov     (0x28, sp), d1
+    cmp     d1, d0
+    ble     0x484155c2
+    mov     (0x24, sp), d0
+    mov     (0x34, sp), d1
+    inc     d0
+    mov     d0, (0x24, sp)
+    mov     (0x1c, sp), d0
+    add     0x280, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x20, sp), d0
+    add     0xa0, d0
+    mov     d0, (0x20, sp)
+    mov     (0x24, sp), d0
+    cmp     d1, d0
+    bgt     0x4841565a
+    jmp     0x4841556a
+    ret     [d2,d3,a2,a3], 0x64
+    retf    0, 0
 # ScreenOn  (CPU 0x48415660)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x015660, 0x01566f
+    add     -0xc, sp
+    mov     1, d0
+    call    func_4854D83A, 0, 0xc
+    ret     0, 0xc
 # ScreenOff  (CPU 0x4841566f)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x01566f, 0x01567d
+    add     -0xc, sp
+    clr     d0
+    call    func_4854D83A, 0, 0xc
+    ret     0, 0xc
 # CaptureLcd  (CPU 0x4841567d)
 #   The LCD SCREEN CAPTURE chord (accumulator 0x110000) -- the ONLY debug
 #   primitive in the firmware that writes a file. The entry at 0x4841567D
@@ -11979,7 +13063,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     d2, a0
     mov     a3, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     beq     0x48433329
     mov     -3, d0
@@ -12031,7 +13115,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x484333e9
     mov     0x1b, a0
@@ -12528,7 +13612,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     d2, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     beq     0x484338cc
     mov     -1, d0
@@ -14082,7 +15166,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     0x48010000, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x4843d6f4
     mov     0x48010000, a0
@@ -14091,7 +15175,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     0x40610000, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x4843d717
     mov     0x40610000, a0
@@ -14100,7 +15184,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     0x40010000, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x4843d739
     mov     0x40010000, a0
@@ -14109,7 +15193,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     0x54e10000, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x4843d75b
     mov     0x54e10000, a0
@@ -14118,7 +15202,7 @@ _rom_marker:
     call    LibStrlen, 0, 0
     mov     0x40810000, a0
     mov     a2, a1
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     bne     0x4843d77d
     mov     0x40810000, a0
@@ -34661,14 +35745,14 @@ _rom_marker:
     mov     0x483e8000, a0
     mov     0x486bdecc, a1
     mov     4, d0
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     beq     0x48585bb3
     bra     0x48585bd8
     mov     (0x483e8004), a0
     mov     0x486bded1, a1
     mov     4, d0
-    call    0x4c00203c, [a2], 4
+    call    LibStrncmp, [a2], 4
     cmp     0, d0
     beq     0x48585bce
     bra     0x48585bd8

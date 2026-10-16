@@ -87,11 +87,12 @@ def ram_map(pmap, A, B):
 
 
 class Porter:
-    def __init__(self, old_prog, new_prog, old_tab, new_tab):
+    def __init__(self, old_prog, new_prog, old_tab, new_tab, old_lib_base=OLD_LIB_FILE_BASE):
         self.A, self.B = _trim(old_prog), _trim(new_prog)
         self.pmap = OffsetMap(old_prog, new_prog)
         self.tmap = OffsetMap(old_tab, new_tab)
-        self.new_lib_base = self.pmap.map(OLD_LIB_FILE_BASE)
+        self.old_lib_base = old_lib_base
+        self.new_lib_base = self.pmap.map(old_lib_base)
         self.ram = ram_map(self.pmap, self.A, self.B)
         self._ram_keys = sorted(self.ram)
 
@@ -117,7 +118,7 @@ class Porter:
             n = self.tmap.map(a - TABLE)
             return (TABLE + n, None) if n is not None else (None, "table bytes not present in new build")
         if sp == "lib":
-            n = self.pmap.map(a - LIB + OLD_LIB_FILE_BASE)
+            n = self.pmap.map(a - LIB + self.old_lib_base)
             if n is None:
                 return None, "library bytes deleted in new build"
             return LIB + n - self.new_lib_base, None
@@ -140,12 +141,16 @@ def main():
     ap.add_argument("out_sym")
     ap.add_argument("--inc", help="also write .equ lines for every ported entry")
     ap.add_argument("--title", default="ported symbols")
+    ap.add_argument("--old-lib-base", type=lambda v: int(v, 0), default=OLD_LIB_FILE_BASE,
+                    help="program-flash file offset of the OLD build's library image "
+                         "(default: build 941's 0x3B8FD1; 0x3BA785 when porting from 942)")
     ap.add_argument("--check-recovered", nargs="+", metavar="LO:HI",
                     help="new-build code file ranges for gen_symbols' reflection scan")
     args = ap.parse_args()
 
     P = Porter(*(open(p, "rb").read() for p in
-                 (args.old_prog, args.new_prog, args.old_table, args.new_table)))
+                 (args.old_prog, args.new_prog, args.old_table, args.new_table)),
+               old_lib_base=args.old_lib_base)
 
     # The new build's own reflection tables are authoritative for the names they
     # carry. Where they disagree with the offset map, accept the build's address
@@ -226,7 +231,7 @@ def main():
             + "\n".join(equ) + "\n")
 
     print(f"port_symbols: {args.in_sym} -> {args.out_sym}")
-    print(f"  library image: old file 0x{OLD_LIB_FILE_BASE:06X} -> new file 0x{P.new_lib_base:06X}")
+    print(f"  library image: old file 0x{P.old_lib_base:06X} -> new file 0x{P.new_lib_base:06X}")
     print(f"  RAM references voted: {len(P.ram)} addresses, deltas "
           f"{dict(collections.Counter(P.ram.values()).most_common(6))}")
     for k in sorted(stats):

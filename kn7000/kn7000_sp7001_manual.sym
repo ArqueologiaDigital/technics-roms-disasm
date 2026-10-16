@@ -2466,6 +2466,7 @@
 0x48456EAA  Rec8E0Field120Ptr       ; (d0 = index) -> Rec8E0TablePtr(index) + 0x120, out-of-range fallback 0x501A5920. Supplies the MEMORY DUMP viewer's ADR3 power-on default (EV_SHOW calls it with index 0). The only 0x501A5920 literal in the whole image is this function's fallback at 0x48456ED8
 0x4C001A48  LibSprintf              ; library ROM: sprintf(buf = caller's (8,sp), fmt = caller's (0xC,sp), varargs from (0x10,sp)) -- builds the va_list at &(0x30,sp) and tail-calls the formatter at 0x4C001A6B. INFERRED from the call-site shape; the library window has no reflection name table
 0x4C0032F7  LibStrlen               ; library ROM: strlen(a0) -- NUL walk returning a1 - a0
+0x4C00203C  LibStrncmp              ; library ROM: strncmp(a0 = s1, a1 = s2, d0 = n): hardware loop over at most n bytes; at the first difference returns *s1 - *s2 (unsigned bytes), returns 0 early on a NUL in s1 -- the NUL stop is what makes it strncmp, not memcmp. Most callers pass n = LibStrlen(...); SP7001's PlugInProbe uses it for the 4-byte 'XAPR' magic
 
 ; ---- SD PLUG-iN (SP7001) investigation, 2026-10-08 -------------------------
 ; KEY SOFT SERVICE's SP7001 "SD PLUG-iN" loaded plug-in program code from the SD
