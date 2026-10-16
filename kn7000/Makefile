@@ -18,10 +18,11 @@ DISKS_DIR   ?= ../KN7000
 # (private) MAME romset, de-interleaved by tools/rom_from_eproms.py — not from
 # the update disks. Override if the romset lives elsewhere.
 ROMSET_DIR  ?= ../technics_romsets/kn7000
-# ...and the SP7001 table update floppy ('SP7001 TB2': JKTBL2.SLD, SMCKTB2.INF,
-# BASEEXT.XAP), read with tools/fat12_extract.py.
-FLOPPY_DIR  ?= ../technics_roms/media
-SP7001_TB2  := $(FLOPPY_DIR)/sp7001_table_2of2.img
+# ...and the SP7001 update itself: four self-extracting ZIP "disks" (program 1/2,
+# 2/2, table 1/2, 2/2), read with tools/sfx_extract.py (never executed).
+SP7001_UPDATES ?= ../nonfree/kn7000-sp7001/sp7001-kn7000-updates
+SP7001_TB1  := $(SP7001_UPDATES)/table1_2.exe
+SP7001_TB2  := $(SP7001_UPDATES)/table2_2PLUG-iN.exe
 
 # MAME's unidasm, used only by `make disasm` to (re)generate the reference
 # listings. Point this at your MAME build's unidasm binary.
@@ -194,30 +195,41 @@ build/sp7001_baseext.xap: src/sp7001/baseext.s tools/kn7asm.py baserom/sp7001_ba
 
 build-sp7001: $(SP7001_TARGETS)
 
-# ---- the SP7001 table floppy ------------------------------------------------
-baserom/sp7001_baseext.xap: tools/fat12_extract.py
+# ---- the SP7001 table update disks -----------------------------------------
+baserom/sp7001_baseext.xap: tools/sfx_extract.py
 	@mkdir -p baserom
-	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) BASEEXT.XAP $@
-baserom/sp7001_tb2_smck.inf: tools/fat12_extract.py
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) BASEEXT.XAP $@
+baserom/sp7001_tb1_smck.inf: tools/sfx_extract.py
 	@mkdir -p baserom
-	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) SMCKTB2.INF $@
-baserom/sp7001_tb2_jktbl2.sld: tools/fat12_extract.py
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB1) SMCKTB1.INF $@
+baserom/sp7001_tb2_smck.inf: tools/sfx_extract.py
 	@mkdir -p baserom
-	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) JKTBL2.SLD $@
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) SMCKTB2.INF $@
+baserom/sp7001_tb1_jkt1.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB1) JKT1.SLD $@
+baserom/sp7001_tb2_jktbl2.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) JKTBL2.SLD $@
 # decompressed with the extraction repo's lzss module (its venv)
-baserom/sp7001_tb2_jktbl2.bin: baserom/sp7001_tb2_jktbl2.sld tools/sld_decompress.py
+baserom/sp7001_tb%.bin: baserom/sp7001_tb%.sld tools/sld_decompress.py
 	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
 
-# Provenance of table 83 (notes/sp7001-build-diff.md): (1) the floppy's disk-2
-# payload is byte-identical to the dump's upper 2 MiB, plug-in included; (2) the
-# floppy's SMCKTB2.INF describes the directory image (0x3E0660 bytes, no plug-in)
-# with the seg68-70 markers reading '83' -- it matches exactly that, and the dump
-# as shipped ('80') does NOT match (the checksum file predates the final payload).
+# Provenance of table 83 (notes/sp7001-build-diff.md): (1) the two table disks'
+# payloads are byte-identical to the dump's two halves, plug-in included; (2) the
+# disks' (identical) SMCKTB1/2.INF describe the directory image (0x3E0660 bytes, no
+# plug-in) with the seg68-70 markers reading '83' -- they match exactly that, and the
+# dump as shipped ('80') does NOT match (the checksum file predates the final payload).
 .PHONY: verify-sp7001-floppy
-verify-sp7001-floppy: baserom/sp7001_tb2_jktbl2.bin baserom/sp7001_tb2_smck.inf \
+verify-sp7001-floppy: baserom/sp7001_tb1_jkt1.bin baserom/sp7001_tb2_jktbl2.bin \
+		baserom/sp7001_tb1_smck.inf baserom/sp7001_tb2_smck.inf \
 		baserom/kn7000_table_sp7001.rom tools/smck_check.py
+	@cmp -n 2097152 baserom/sp7001_tb1_jkt1.bin baserom/kn7000_table_sp7001.rom \
+	    && echo "OK    disk 1 JKT1.SLD (decompressed) == table 83 [0x000000:0x200000]"
 	@cmp -i 0:2097152 baserom/sp7001_tb2_jktbl2.bin baserom/kn7000_table_sp7001.rom \
-	    && echo "OK    JKTBL2.SLD (decompressed) == table 83 [0x200000:0x400000], plug-in included"
+	    && echo "OK    disk 2 JKTBL2.SLD (decompressed) == table 83 [0x200000:0x400000], plug-in included"
+	@cmp baserom/sp7001_tb1_smck.inf baserom/sp7001_tb2_smck.inf \
+	    && echo "OK    SMCKTB1.INF == SMCKTB2.INF (both describe the whole image)"
 	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
 	    --length 0x3E0660 --patch 0x3B7508:83 --patch 0x3B750C:83 --patch 0x3B7510:83 --expect match
 	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \

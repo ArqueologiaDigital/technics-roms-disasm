@@ -61,7 +61,7 @@ make verify-listings  # byte-check + re-encode the curated disasm/*.asm listings
 make symbols    # regenerate kn7000.sym + src/symbols.inc from the ROM
 make disasm     # (re)generate disassembly listings (raw + named) via MAME unidasm
 make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% byte-match
-make verify-sp7001-floppy  # table 83 vs the SP7001 table floppy (payload, SMCKTB2.INF)
+make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make clean      # remove build/
@@ -195,8 +195,8 @@ verified against uITRON interrupt semantics). Table 83 is table 84 with 6 small 
 plus that plug-in appended, which `tools/gen_table_s.py` disassembles (its own 35 reflection
 names; the activation gate named from the earlier reverse-engineering). That plug-in loads
 `.XAP` extensions to the fixed RAM address `0x5029B000`; `BASEEXT.XAP`, from the SP7001 table
-floppy, is disassembled too (`tools/gen_xap_s.py`), and the floppy's payload proves table 83's
-upper half byte-for-byte. Full measurements and
+update, is disassembled too (`tools/gen_xap_s.py`), and the update's two table disks prove
+table 83 byte-for-byte. Full measurements and
 the edit-site catalogue: [`notes/sp7001-build-diff.md`](notes/sp7001-build-diff.md).
 
 ## License

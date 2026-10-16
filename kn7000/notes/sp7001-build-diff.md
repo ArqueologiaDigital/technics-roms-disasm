@@ -24,7 +24,7 @@ IC16 odd) word-interleaved into a 4 MiB image (program at `0x48400000`, table at
 ## Reproduce
 
     make verify-sp7001          # program 942, table 83 and BASEEXT.XAP rebuilt byte-for-byte
-    make verify-sp7001-floppy   # table 83 vs the SP7001 table floppy (payload + SMCKTB2.INF)
+    make verify-sp7001-floppy   # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
     make symbols-sp7001         # port the symbols (needs the 941/84 baserom too)
     make exports-941            # carry the plug-in export names back to build 941
     make program-src-sp7001     # regenerate src/sp7001/program.s   (needs unidasm)
@@ -49,6 +49,7 @@ extracted length (the extraction only trims the trailing 0xFF padding).
 | `tools/gen_table_s.py`                    | a table-image source, with the XAPR plug-in disassembled               |
 | `tools/gen_xap_s.py`                      | an .XAP plug-in's source (linked at 0x5029B000)                        |
 | `tools/fat12_extract.py`                  | one file off a FAT12 floppy image                                      |
+| `tools/sfx_extract.py`                    | one member of a self-extracting ZIP update "disk" (never run)          |
 | `tools/sld_decompress.py`                 | an update floppy's .SLD payload, decompressed (extraction repo's lzss) |
 | `tools/smck_check.py`                     | is this image the one an SMCK*.INF describes; which blocks differ      |
 
@@ -160,26 +161,37 @@ the real starts (`KssMsgPluginReleased` `0x483F89A8`, `KssActivationFilePath` `0
 
 `KssPluginLoad` (`0x483EEAA9`) is the loader for `.XAP` plug-ins: see "BASEEXT.XAP" below.
 
-## Table 83 provenance: the SP7001 table floppy
+## Table 83 provenance: the SP7001 update disks
 
-`technics_roms/media/sp7001_table_2of2.img` (label 'SP7001 TB2') holds `TECHNICS.TB2`,
-`SMCKTB2.INF`, `DUMMY.2`, `JKTBL2.SLD` and `BASEEXT.XAP` (`make verify-sp7001-floppy`):
+The SP7001 update was distributed as four self-extracting ZIP "disks"
+(`nonfree/kn7000-sp7001/sp7001-kn7000-updates/`, read with `tools/sfx_extract.py`, never run):
 
-- **`JKTBL2.SLD`** (`JKTB24K`, LZSS) decompresses to 0x200000 bytes that are **byte-identical
-  to the dump's upper half** `0x200000..0x400000` -- the XAPR plug-in and the 0xFF tail
-  included. So the dump is exactly what this update floppy installs, plug-in and all.
-- **`SMCKTB2.INF`** (32-bit total + 16 x 16-bit block sums over 0x40000-byte blocks, format in
-  `../kn7000_extraction/FORMAT.md`) does **not** describe that payload. It matches -- the total
-  and all 16 blocks -- the 0x3E0660-byte directory image (no plug-in) **with seg68..70 reading
-  '83' instead of '80'**. As shipped, those three markers read '80' (block 14 is off by exactly
-  -9 = 3 x ('0' - '3')) and the plug-in is appended. That is what the MAME driver's "its SMCK
-  checksum predates the final payload" amounts to, byte for byte. Blocks the shipped edits
-  leave alone match, so the lower half (disk 1, not preserved) is consistent with the vendor's
-  sums too.
+| archive                   | members                                                               |
+|---------------------------|-----------------------------------------------------------------------|
+| `PROGR1_2v1.6PLUG-iN.exe` | `TECHNICS.PR1`, `SMCKPR1.INF`, `DUMMY.2`, `HAMA1.SLD`                 |
+| `PROGR2_2v1.6PLUG-iN.exe` | `TECHNICS.PR2`, `SMCKPR2.INF`, `DUMMY.2`, `HAMA2.SLD`                 |
+| `table1_2.exe`            | `TECHNICS.TB1`, `SMCKTB1.INF`, `DUMMY.2`, `JKT1.SLD`                  |
+| `table2_2PLUG-iN.exe`     | `TECHNICS.TB2`, `SMCKTB2.INF`, `DUMMY.2`, `JKTBL2.SLD`, `BASEEXT.XAP` |
+
+(`technics_roms/media/sp7001_table_2of2.img` is a FAT12 image built from table disk 2's
+members for the emulator, `research-scratch/kn7000-sp7001/make_sp7001_tb2_floppy.py`; its
+`JKTBL2.SLD` and `BASEEXT.XAP` are byte-identical to the archive's.) `make verify-sp7001-floppy`:
+
+- **Both table payloads are byte-identical to the dump.** Disk 1's `JKT1.SLD` (`JKTB14K`)
+  decompresses to exactly `0x000000..0x200000` and disk 2's `JKTBL2.SLD` (`JKTB24K`) to exactly
+  `0x200000..0x400000` -- the XAPR plug-in and the 0xFF tail included. So table 83 is precisely
+  what this update installs. (Disk 1 differs from the standard table-84 disk 1 in 57 bytes, from
+  the directory entries on.)
+- **`SMCKTB1.INF` = `SMCKTB2.INF`** (32-bit total + 16 x 16-bit block sums over 0x40000-byte
+  blocks, format in `../kn7000_extraction/FORMAT.md`) and they do **not** describe that payload.
+  They match -- the total and all 16 blocks -- the 0x3E0660-byte directory image (no plug-in)
+  **with seg68..70 reading '83' instead of '80'**. As shipped those three markers read '80'
+  (block 14 off by exactly -9 = 3 x ('0' - '3')) and the plug-in is appended. That is what the
+  MAME driver's "its SMCK checksum predates the final payload" amounts to, byte for byte.
 
 ## BASEEXT.XAP
 
-The SP7001 table floppy also carries `BASEEXT.XAP` (118,784 = 0x1D000 bytes), which the setup
+Table disk 2 also carries `BASEEXT.XAP` (118,784 = 0x1D000 bytes), which the setup
 copies to the SD card ("BaseExt.xap wurde auf der SD Card nicht gefunden!" is the resident
 plug-in's error when it is missing). The resident plug-in's **`KssPluginLoad`** opens an
 `.XAP` (`A:\%s.XAP` / `%s\%s.XAP`), rejects files over 0x1D000 bytes, reads exactly 0x1D000
@@ -236,5 +248,9 @@ routines and take their names (`LibStrncmp`, `LibDiv32`, `LibF64Unpack`, ...).
 - `BASEEXT.XAP`'s firmware services come through pointer tables filled at run time (the
   `0x502992E4` context and the framework object's method slots); naming those slots would name
   its calls.
-- `SMCKTB1.INF` / `JKTBL1.SLD` (disk 1 of the table update) are not preserved here, so the lower
-  half is checked only against the block sums.
+- The SP7001 *program* disks (`HAMA1/2.SLD`) reconstruct the 942 image (see
+  `research-scratch/kn7000-sp7001/PROVENANCE.txt`); their `SMCKPR*.INF` mismatches all 16 blocks
+  (dated before the payload). Not yet re-checked here the way the table is.
+- Elsewhere in this firmware family the one lost disk is the **v1.4 program update's disk 1**
+  (`kn7-14_1.exe` -> `JK1.SLD`, program build 929; only a Wayback "page not found" stub survives),
+  which is why MAME's `v14` BIOS has `NO_DUMP` for the lower half.
