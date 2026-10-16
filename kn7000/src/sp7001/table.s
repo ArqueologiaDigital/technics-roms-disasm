@@ -131,7 +131,7 @@
 .equ func_483EE85D_entry, 0x483EE860
 .equ KssPasswordCheck, 0x483EE8E9
 .equ KssActivationApply, 0x483EE921
-.equ func_483EEAA9, 0x483EEAA9
+.equ KssPluginLoad, 0x483EEAA9
 .equ func_483EED2F, 0x483EED2F
 .equ func_483EED42, 0x483EED42
 .equ func_483EED5E_entry, 0x483EED61
@@ -3578,7 +3578,7 @@
     beq     0x483ea48f
     jmp     0x483ea628
     mov     3, d0
-    call    func_483EEAA9, [d2,d3,a2,a3], 0x10
+    call    KssPluginLoad, [d2,d3,a2,a3], 0x10
     mov     (0x502992c4), d0
     cmp     0, d0
     bne     0x483ea4a3
@@ -10071,7 +10071,8 @@
     calls   (a0)
     ret     [d2,d3,a2,a3], 0x44
     movm    [d2,d3,a2,a3], (sp)
-# func_483EEAA9  (CPU 0x483EEAA9)
+# KssPluginLoad  (CPU 0x483EEAA9)
+#   (d3 = plug-in id) logs 'PluginLoad id=%i', opens the .XAP (A:\%s.XAP / %s\%s.XAP), rejects files over 0x1D000 bytes, reads exactly 0x1D000 bytes to 0x5029B000, calls 0x5029B000 (a0 = framework object, a1 = 0x502992E4, d0/d1 -> compile id / plug-in id), checks the id and the compile id ('Compile id's dont match: base=%i != baseext=%i'), then registers the handle in 0x50299ED0[id]
     add     -0x194, sp
     mov     (0x502991c4), a0
     mov     d0, d3

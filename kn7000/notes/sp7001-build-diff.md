@@ -23,10 +23,13 @@ IC16 odd) word-interleaved into a 4 MiB image (program at `0x48400000`, table at
 
 ## Reproduce
 
-    make verify-sp7001          # both SP7001 images rebuilt byte-for-byte
+    make verify-sp7001          # program 942, table 83 and BASEEXT.XAP rebuilt byte-for-byte
+    make verify-sp7001-floppy   # table 83 vs the SP7001 table floppy (payload + SMCKTB2.INF)
     make symbols-sp7001         # port the symbols (needs the 941/84 baserom too)
+    make exports-941            # carry the plug-in export names back to build 941
     make program-src-sp7001     # regenerate src/sp7001/program.s   (needs unidasm)
     make table-src-sp7001       # regenerate src/sp7001/table.s     (needs unidasm)
+    make xap-src-sp7001         # regenerate src/sp7001/baseext.s   (needs unidasm)
     python3 -I tools/offset_map.py baserom/kn7000_program.rom baserom/kn7000_program_sp7001.rom kn7000.sym kn7000_manual.sym
     python3 -I tools/offset_map.py baserom/kn7000_table.rom   baserom/kn7000_table_sp7001.rom
 
@@ -35,15 +38,19 @@ The SP7001 reference images are the de-interleaved raw EPROM dumps
 v16 dumps is byte-identical to this repo's `baserom/kn7000_{program,table}.rom` over their full
 extracted length (the extraction only trims the trailing 0xFF padding).
 
-| tool                         | question it answers                                                    |
-|------------------------------|------------------------------------------------------------------------|
-| `tools/rom_from_eproms.py`   | IC17/IC16 halves -> the linear 4 MiB image the CPU sees                |
-| `tools/diff_builds.py`       | raw in-place byte diff (misleading across a shift; kept for reference) |
-| `tools/offset_map.py`        | where did every byte of the old build go; which bytes are new          |
-| `tools/port_symbols.py`      | which old names apply to the new build, and where                      |
-| `tools/sp7001_exports.py`    | what the firmware calls the services it exports to the plug-in         |
-| `tools/gen_program_s.py --profile sp7001` | the 942 program source, ported from 941's                 |
-| `tools/gen_table_s.py`       | a table-image source, with the XAPR plug-in disassembled               |
+| tool                                      | question it answers                                                    |
+|-------------------------------------------|------------------------------------------------------------------------|
+| `tools/rom_from_eproms.py`                | IC17/IC16 halves -> the linear 4 MiB image the CPU sees                |
+| `tools/diff_builds.py`                    | raw in-place byte diff (misleading across a shift; kept for reference) |
+| `tools/offset_map.py`                     | where did every byte of the old build go; which bytes are new          |
+| `tools/port_symbols.py`                   | which old names apply to the new build, and where                      |
+| `tools/sp7001_exports.py`                 | what the firmware calls the services it exports to the plug-in         |
+| `tools/gen_program_s.py --profile sp7001` | the 942 program source, ported from 941's                              |
+| `tools/gen_table_s.py`                    | a table-image source, with the XAPR plug-in disassembled               |
+| `tools/gen_xap_s.py`                      | an .XAP plug-in's source (linked at 0x5029B000)                        |
+| `tools/fat12_extract.py`                  | one file off a FAT12 floppy image                                      |
+| `tools/sld_decompress.py`                 | an update floppy's .SLD payload, decompressed (extraction repo's lzss) |
+| `tools/smck_check.py`                     | is this image the one an SMCK*.INF describes; which blocks differ      |
 
 ## Program 941 -> 942: what actually changed
 
@@ -52,29 +59,29 @@ difflib inside the gaps. Result: **42 insertions (7,692 B) and 30 deletions (306
 +7,386 B = exactly the image growth (0x3F6F01 -> 0x3F8BDB). Everything else is the same bytes,
 shifted:
 
-| 941 file range        | delta  | content                                   |
-|-----------------------|--------|-------------------------------------------|
-| `0x000000-0x02A601`   | +0     | boot header, code region 1 (start)        |
-| `0x02A663-0x031CB6`   | +2     | code region 1                             |
-| `0x031D21-0x18599C`   | -17    | code region 1 (to its last function)      |
-| `0x18599C-0x2BCEC4`   | +1268  | data region                               |
-| `0x2BCEC4-0x3B0B79`   | +4132  | DSP record pool, data                     |
-| `0x3B0BA8-0x3BC6BB`   | +6060 / +6068 | data tail, library image start     |
-| `0x3BC765-0x3F547E`   | +6158  | library                                   |
-| `0x3F547E-0x3F6F01`   | +6470 .. +7386 | library tail (uITRON kernel)     |
+| 941 file range      | delta          | content                              |
+|---------------------|----------------|--------------------------------------|
+| `0x000000-0x02A601` | +0             | boot header, code region 1 (start)   |
+| `0x02A663-0x031CB6` | +2             | code region 1                        |
+| `0x031D21-0x18599C` | -17            | code region 1 (to its last function) |
+| `0x18599C-0x2BCEC4` | +1268          | data region                          |
+| `0x2BCEC4-0x3B0B79` | +4132          | DSP record pool, data                |
+| `0x3B0BA8-0x3BC6BB` | +6060 / +6068  | data tail, library image start       |
+| `0x3BC765-0x3F547E` | +6158          | library                              |
+| `0x3F547E-0x3F6F01` | +6470 .. +7386 | library tail (uITRON kernel)         |
 
 The edit sites, with what each one is:
 
-| site (942)                         | size       | what it is                                                        |
-|------------------------------------|------------|-------------------------------------------------------------------|
-| `InitializeObjectTable` (0x4842A5xx) | net +2 B | four small instruction rewrites                                   |
-| `InitializeBlock30..47` stub run   | -3, -16 B  | the 3-byte `InitializeBlock46` stub removed; its name now points at new code |
-| `0x4858598B..0x48585E90`           | **+1285 B**| **new code**: `InitializeBlock46`, the XAPR plug-in host, 35 export forwarders/accessors |
-| `0x486BD3B8..0x486BDEE8`           | **+2864 B**| **export name block**: 'loc_cpu', 'unl_cpu', ... 'PlugHome'       |
-| `0x487B1B9D..0x487B231D` (+8 B)    | **+1928 B**| `InitializeBlock46`'s object records + the **export table**       |
-| just before `DspTypeRecordTable`   | +8 B       | the table itself is unchanged (compared as relocated pointers)    |
-| library `0x4C0036EA`               | **+87 B**  | new C-library `rand` / `srand` (both exported)                     |
-| library tail `0x4C03C507..`        | +1,289 / -61 B | uITRON kernel growth: `preq_sem`, `del_tsk`, `sta_tsk`, `get_tid`, `clr_flg` are new code |
+| site (942)                           | size           | what it is                                                                                |
+|--------------------------------------|----------------|-------------------------------------------------------------------------------------------|
+| `InitializeObjectTable` (0x4842A5xx) | net +2 B       | four small instruction rewrites                                                           |
+| `InitializeBlock30..47` stub run     | -3, -16 B      | the 3-byte `InitializeBlock46` stub removed; its name now points at new code              |
+| `0x4858598B..0x48585E90`             | **+1285 B**    | **new code**: `InitializeBlock46`, the XAPR plug-in host, 35 export forwarders/accessors  |
+| `0x486BD3B8..0x486BDEE8`             | **+2864 B**    | **export name block**: 'loc_cpu', 'unl_cpu', ... 'PlugHome'                               |
+| `0x487B1B9D..0x487B231D` (+8 B)      | **+1928 B**    | `InitializeBlock46`'s object records + the **export table**                               |
+| just before `DspTypeRecordTable`     | +8 B           | the table itself is unchanged (compared as relocated pointers)                            |
+| library `0x4C0036EA`                 | **+87 B**      | new C-library `rand` / `srand` (both exported)                                            |
+| library tail `0x4C03C507..`          | +1,289 / -61 B | uITRON kernel growth: `preq_sem`, `del_tsk`, `sta_tsk`, `get_tid`, `clr_flg` are new code |
 
 (The byte-level edit list also shows ~30 tiny edits inside `DspTypeRecordTable`; those are
 difflib aligning relocated pointers differently, not record changes -- compared word by word with
@@ -98,12 +105,12 @@ Of the 1623 hand-recovered names in `kn7000_manual.sym`, **1622** port (the miss
 
 The table-flash plug-in is validated and called by four new routines (`kn7000_sp7001_new.sym`):
 
-| routine                 | does                                                                           |
-|-------------------------|--------------------------------------------------------------------------------|
+| routine                 | does                                                                                                    |
+|-------------------------|---------------------------------------------------------------------------------------------------------|
 | `PlugInProbe`           | 4-byte 'XAPR' at `0x483E8000` and at `*(0x483E8004)` (the footer) -> `PlugInPresent` (RAM `0x500066D0`) |
-| `PlugInProbeCallSlot08` | re-probe, then call header slot `+0x08` with `a0 = 0x5011FABC`; called from `0x4854AC83` |
-| `PlugInCallSlot0C`      | call slot `+0x0C`; called once per pass of the library main loop (`0x4C02BE74`) |
-| `PlugInCallSlot10`      | call slot `+0x10` with `d0`/`d1`, else return -1; reached via a pointer at `0x48732EA0` |
+| `PlugInProbeCallSlot08` | re-probe, then call header slot `+0x08` with `a0 = 0x5011FABC`; called from `0x4854AC83`                |
+| `PlugInCallSlot0C`      | call slot `+0x0C`; called once per pass of the library main loop (`0x4C02BE74`)                         |
+| `PlugInCallSlot10`      | call slot `+0x10` with `d0`/`d1`, else return -1; reached via a pointer at `0x48732EA0`                 |
 
 The firmware also **exports services to the plug-in by name**: a code-pointer array at
 `0x487B1BB8`, a NUL word, and a name-pointer array at `0x487B1F5C` (231 pairs). The pairing is
@@ -121,12 +128,12 @@ The firmware also **exports services to the plug-in by name**: a code-pointer ar
 `tools/offset_map.py` on the tables, and a per-segment comparison in `tools/gen_table_s.py`.
 Table 83 has the same 84-segment directory layout; **78 segments are byte-identical** to 84's:
 
-| segment | 84                 | 83                   | note                                     |
-|---------|--------------------|----------------------|------------------------------------------|
-| seg07   | '84'               | '83'                 | the table's 4-byte build marker          |
-| seg59   | data, 0x13980c B   | data, 0x131bdc B     | 31,789 B removed at its end (+ a 3-byte edit at its start) |
-| seg68-70| '84' x3            | '80' x3              | three more 4-byte markers                |
-| seg83   | 'Tech', 0x1248 B   | 'DMY', 4 B           | asset replaced by a stub (`TechnicsRhythmsTable` was here) |
+| segment  | 84               | 83               | note                                                       |
+|----------|------------------|------------------|------------------------------------------------------------|
+| seg07    | '84'             | '83'             | the table's 4-byte build marker                            |
+| seg59    | data, 0x13980c B | data, 0x131bdc B | 31,789 B removed at its end (+ a 3-byte edit at its start) |
+| seg68-70 | '84' x3          | '80' x3          | three more 4-byte markers                                  |
+| seg83    | 'Tech', 0x1248 B | 'DMY', 4 B       | asset replaced by a stub (`TechnicsRhythmsTable` was here) |
 
 Then, past the directory image (`0x3E0660`): 0xFF up to `0x3E8000`, and **the XAPR plug-in,
 `0x483E8000..0x483FB5A0` (79,264 B)**. The raw in-place diff reported "1.78 MB changed"; that
@@ -134,12 +141,12 @@ was the -31,792 B shift after seg59.
 
 ## The XAPR plug-in in table flash
 
-| range (CPU)                 | content                                                                        |
-|-----------------------------|--------------------------------------------------------------------------------|
-| `0x483E8000-0x483E803C`     | header: 'XAPR', footer pointer, slots `+08 XapSlot08`, `+0C XapSlot0C`, `+10 XapSlot10`, ten unused slots -> `XapSlotDefault` (`rets`) |
-| `0x483E803C-0x483EF6C5`     | **code** (30,345 B): 141 chunks, all emitted as MN10300 assembly              |
-| `0x483EF6C8-0x483FB59C`     | data: field-name strings, widget/descriptor tables, messages, two MILK reflection tables (35 names), 27 keystream records |
-| `0x483FB59C`                | footer 'XAPR'                                                                  |
+| range (CPU)             | content                                                                                                                                |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `0x483E8000-0x483E803C` | header: 'XAPR', footer pointer, slots `+08 XapSlot08`, `+0C XapSlot0C`, `+10 XapSlot10`, ten unused slots -> `XapSlotDefault` (`rets`) |
+| `0x483E803C-0x483EF6C5` | **code** (30,345 B): 141 chunks, all emitted as MN10300 assembly                                                                       |
+| `0x483EF6C8-0x483FB59C` | data: field-name strings, widget/descriptor tables, messages, two MILK reflection tables (35 names), 27 keystream records              |
+| `0x483FB59C`            | footer 'XAPR'                                                                                                                          |
 
 Its own reflection tables name 35 routines -- the Key Soft Service ("KSS") UI: `Ap_CE_Main`,
 `Ap_Ce_StartUp`, `Ap_Ce_Fd2Sd` (floppy -> SD), `Ap_Ce_JukeBox`, `AcKssScreenMenuProc`, ...
@@ -151,10 +158,50 @@ with a `movm` prologue; the traced OK-handler address is a point inside a dispat
 as a label). Two string addresses in the RE notes point inside strings; the curated file labels
 the real starts (`KssMsgPluginReleased` `0x483F89A8`, `KssActivationFilePath` `0x483F892C`).
 
-`BASEEXT.XAP` on the SP7001 table floppy (`technics_roms/media/sp7001_table_2of2.img`, label
-'SP7001 TB2', with `JKTBL2.SLD`, `SMCKTB2.INF`) is **not** this blob: it is a separate, larger
-KSS application (118,784 B, code from its first byte, no 'XAPR'); of 181 sampled 32-byte chunks
-1 occurs in the blob, 17 in program 942, 163 nowhere in either flash image.
+`KssPluginLoad` (`0x483EEAA9`) is the loader for `.XAP` plug-ins: see "BASEEXT.XAP" below.
+
+## Table 83 provenance: the SP7001 table floppy
+
+`technics_roms/media/sp7001_table_2of2.img` (label 'SP7001 TB2') holds `TECHNICS.TB2`,
+`SMCKTB2.INF`, `DUMMY.2`, `JKTBL2.SLD` and `BASEEXT.XAP` (`make verify-sp7001-floppy`):
+
+- **`JKTBL2.SLD`** (`JKTB24K`, LZSS) decompresses to 0x200000 bytes that are **byte-identical
+  to the dump's upper half** `0x200000..0x400000` -- the XAPR plug-in and the 0xFF tail
+  included. So the dump is exactly what this update floppy installs, plug-in and all.
+- **`SMCKTB2.INF`** (32-bit total + 16 x 16-bit block sums over 0x40000-byte blocks, format in
+  `../kn7000_extraction/FORMAT.md`) does **not** describe that payload. It matches -- the total
+  and all 16 blocks -- the 0x3E0660-byte directory image (no plug-in) **with seg68..70 reading
+  '83' instead of '80'**. As shipped, those three markers read '80' (block 14 is off by exactly
+  -9 = 3 x ('0' - '3')) and the plug-in is appended. That is what the MAME driver's "its SMCK
+  checksum predates the final payload" amounts to, byte for byte. Blocks the shipped edits
+  leave alone match, so the lower half (disk 1, not preserved) is consistent with the vendor's
+  sums too.
+
+## BASEEXT.XAP
+
+The SP7001 table floppy also carries `BASEEXT.XAP` (118,784 = 0x1D000 bytes), which the setup
+copies to the SD card ("BaseExt.xap wurde auf der SD Card nicht gefunden!" is the resident
+plug-in's error when it is missing). The resident plug-in's **`KssPluginLoad`** opens an
+`.XAP` (`A:\%s.XAP` / `%s\%s.XAP`), rejects files over 0x1D000 bytes, reads exactly 0x1D000
+bytes to the fixed work-RAM address **0x5029B000** and calls its first byte with
+`a0` = framework object, `a1 = 0x502992E4`, `d0`/`d1` -> compile id / plug-in id; it then
+checks both ("Compile id's dont match: base=%i != baseext=%i"). So the file is an absolute
+image linked at 0x5029B000 (the code-pointer test peaks sharply there: 122 pointers land on
+function prologues vs 1 at +/-0x10; a string-pointer vote that seemed to favour another base was
+two BSS variables read hundreds of times):
+
+| file range        | content                                                                                                                         |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `0x00000-0x1321E` | code (398 chunks, all emitted as MN10300 assembly); `XapEntry` at 0                                                             |
+| `0x1321E-0x16B4C` | data: 391 strings (SD-card prompts, song/lyrics UI in German and English, printf runtime), 36 pointer tables, a C `ctype` table |
+| `0x16B4C-0x1D000` | 0xFF: the space its variables occupy at run time (e.g. `XapFrameworkObj` 0x502B4044)                                            |
+
+`XapEntry` saves `a0`/`a1`, initialises, and returns the plug-in object `0x502B1E50`, the
+compile id from `0x502B2090` and **plug-in id 3**. It calls the firmware only through pointer
+tables (no direct `call` reaches a firmware entry at any base); internal calls are PC-relative.
+It links its own copy of the compiler runtime: 7 routines are byte-identical to named firmware
+routines and take their names (`LibStrncmp`, `LibDiv32`, `LibF64Unpack`, ...).
+`tools/gen_xap_s.py` -> `src/sp7001/baseext.s`; `make verify-sp7001` checks it byte-exact.
 
 ## How the SP7001 source is built
 
@@ -170,9 +217,24 @@ KSS application (118,784 B, code from its first byte, no 'XAPR'); of 181 sampled
   text). The same generator also reproduces table 84 byte-for-byte.
 - `make verify-sp7001`: both images 100% byte-identical; `make verify` (941/84) unaffected.
 
+## Names carried back to build 941
+
+- `0x4C00203C` is **`LibStrncmp`** (stops at a NUL in s1, returns the unsigned byte difference;
+  callers pass n = `LibStrlen(...)`), now in `kn7000_manual.sym`; BASEEXT.XAP's own copy is
+  byte-identical to it.
+- The plug-in export table's names are ported back to 941 (`make exports-941`,
+  `kn7000_exports_from_942.sym`): **186 land**; the 42 that don't are exactly the code only 942
+  has (the 35 new routines, `rand`/`srand`, five new uITRON services). The interrupt services
+  still check out in 941 (`loc_cpu`/`dis_int` clear PSW.IE, `ena_int` sets it).
+- Names recovered after the function split no longer shrink the converted source: a boundary
+  from such a file (`INHERIT_SYMS` in `gen_program_s.py`) inherits the converted state of the
+  function it splits. 941 keeps exactly its converted bytes; 942's regained the ~2.4 KB the
+  export boundaries had cut.
+
 ## Open
 
-- The export names apply to build 941 too wherever their targets exist there; porting them back
-  (inverse map) would name ~190 more 941 functions.
-- `0x4C00203C` (a byte-compare loop the probe uses) has no name in any source.
-- `SMCKTB2.INF` on the TB2 floppy carries per-block sums; checking table 83 against it is not done.
+- `BASEEXT.XAP`'s firmware services come through pointer tables filled at run time (the
+  `0x502992E4` context and the framework object's method slots); naming those slots would name
+  its calls.
+- `SMCKTB1.INF` / `JKTBL1.SLD` (disk 1 of the table update) are not preserved here, so the lower
+  half is checked only against the block sums.

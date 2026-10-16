@@ -18,6 +18,10 @@ DISKS_DIR   ?= ../KN7000
 # (private) MAME romset, de-interleaved by tools/rom_from_eproms.py — not from
 # the update disks. Override if the romset lives elsewhere.
 ROMSET_DIR  ?= ../technics_romsets/kn7000
+# ...and the SP7001 table update floppy ('SP7001 TB2': JKTBL2.SLD, SMCKTB2.INF,
+# BASEEXT.XAP), read with tools/fat12_extract.py.
+FLOPPY_DIR  ?= ../technics_roms/media
+SP7001_TB2  := $(FLOPPY_DIR)/sp7001_table_2of2.img
 
 # MAME's unidasm, used only by `make disasm` to (re)generate the reference
 # listings. Point this at your MAME build's unidasm binary.
@@ -158,7 +162,8 @@ disasm/table_directory.asm: baserom/kn7000_table.rom tools/dump_table_dir.py
 # A second byte-exact target. Its reference images are the de-interleaved raw
 # EPROM dumps; the source currently passes them through verbatim and is refined
 # only on the SP7001-unique code. See notes/sp7001-build-diff.md.
-SP7001_TARGETS := build/kn7000_program_sp7001.rom build/kn7000_table_sp7001.rom
+SP7001_TARGETS := build/kn7000_program_sp7001.rom build/kn7000_table_sp7001.rom \
+                  build/sp7001_baseext.xap
 
 .PHONY: baserom-sp7001 build-sp7001 verify-sp7001
 baserom-sp7001: baserom/kn7000_program_sp7001.rom baserom/kn7000_table_sp7001.rom
@@ -183,7 +188,40 @@ build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
+build/sp7001_baseext.xap: src/sp7001/baseext.s tools/kn7asm.py baserom/sp7001_baseext.xap
+	@mkdir -p build
+	$(ASM) src/sp7001/baseext.s -I . -o $@
+
 build-sp7001: $(SP7001_TARGETS)
+
+# ---- the SP7001 table floppy ------------------------------------------------
+baserom/sp7001_baseext.xap: tools/fat12_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) BASEEXT.XAP $@
+baserom/sp7001_tb2_smck.inf: tools/fat12_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) SMCKTB2.INF $@
+baserom/sp7001_tb2_jktbl2.sld: tools/fat12_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/fat12_extract.py $(SP7001_TB2) JKTBL2.SLD $@
+# decompressed with the extraction repo's lzss module (its venv)
+baserom/sp7001_tb2_jktbl2.bin: baserom/sp7001_tb2_jktbl2.sld tools/sld_decompress.py
+	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
+
+# Provenance of table 83 (notes/sp7001-build-diff.md): (1) the floppy's disk-2
+# payload is byte-identical to the dump's upper 2 MiB, plug-in included; (2) the
+# floppy's SMCKTB2.INF describes the directory image (0x3E0660 bytes, no plug-in)
+# with the seg68-70 markers reading '83' -- it matches exactly that, and the dump
+# as shipped ('80') does NOT match (the checksum file predates the final payload).
+.PHONY: verify-sp7001-floppy
+verify-sp7001-floppy: baserom/sp7001_tb2_jktbl2.bin baserom/sp7001_tb2_smck.inf \
+		baserom/kn7000_table_sp7001.rom tools/smck_check.py
+	@cmp -i 0:2097152 baserom/sp7001_tb2_jktbl2.bin baserom/kn7000_table_sp7001.rom \
+	    && echo "OK    JKTBL2.SLD (decompressed) == table 83 [0x200000:0x400000], plug-in included"
+	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
+	    --length 0x3E0660 --patch 0x3B7508:83 --patch 0x3B750C:83 --patch 0x3B7510:83 --expect match
+	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
+	    --length 0x3E0660 --expect mismatch
 
 # ---- SP7001 symbols: PORTED from build 941/84, not re-derived ---------------
 # tools/port_symbols.py translates every recovered name through the exact
@@ -239,6 +277,20 @@ SP7001_PLUGIN_CODE := 0x3E803C:0x3EF6C5
 SP7001_TABLE_SYMS  := kn7000_sp7001_table.sym kn7000_sp7001_table_manual.sym \
                       kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
                       kn7000_sp7001_exports.sym
+# Regenerate src/sp7001/baseext.s: BASEEXT.XAP as linked for 0x5029B000 (needs
+# unidasm). Routines byte-identical to named program-942 routines take their names.
+.PHONY: xap-src-sp7001
+xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
+		kn7000_sp7001_baseext.sym kn7000_sp7001.sym kn7000_sp7001_manual.sym \
+		kn7000_sp7001_exports.sym kn7000_sp7001_new.sym \
+		baserom/sp7001_baseext.xap baserom/kn7000_program_sp7001.rom
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_xap_s.py --xap baserom/sp7001_baseext.xap \
+	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E \
+	    --title 'SP7001 BASEEXT.XAP (Key Soft Service base extension) - byte-exact.' \
+	    --sym kn7000_sp7001_baseext.sym \
+	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
+	    --fw-sym kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_exports.sym kn7000_sp7001_new.sym
+
 .PHONY: table-src-sp7001
 table-src-sp7001: tools/gen_table_s.py tools/gen_program_s.py tools/gen_symbols.py \
 		$(SP7001_TABLE_SYMS) baserom/kn7000_table.rom baserom/kn7000_table_sp7001.rom
@@ -256,7 +308,7 @@ program-src-sp7001: tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbo
 
 verify-sp7001: $(SP7001_TARGETS)
 	@ok=1; \
-	for name in kn7000_program_sp7001.rom kn7000_table_sp7001.rom; do \
+	for name in kn7000_program_sp7001.rom kn7000_table_sp7001.rom sp7001_baseext.xap; do \
 	  if cmp -s "build/$$name" "baserom/$$name"; then \
 	    echo "OK    $$name is 100% byte-identical to the SP7001 dump"; \
 	  else \

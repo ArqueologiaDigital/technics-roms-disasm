@@ -180,6 +180,77 @@ def main():
           + (f", plug-in 0x{plo:06X}..0x{phi:06X}" if a.plugin else ""))
 
 
+def code_entries(d, rom, unidasm, base, clo, chi, names, labels=(), extra=()):
+    """Entry points of the MN10300 code in file range [clo, chi) of an image linked
+    at `base`: the named starts in `names` (except in-code labels and *_entry
+    register-save entries), every `call`/`calls` target inside the range, and any
+    `extra` addresses (e.g. function pointers found in data). A target 3 bytes past
+    an `add -N, sp` frame setup is that function's register-save entry, not a new
+    function. Updates `names` with func_<ADDR> / *_entry labels; returns sorted CPU
+    addresses."""
+    import subprocess
+    raw = subprocess.run([unidasm, rom, "-arch", "mn10300", "-basepc", f"0x{base + clo:x}",
+                          "-skip", f"0x{clo:x}", "-count", str(chi - clo)],
+                         capture_output=True, text=True).stdout
+    targets = {int(t, 16) for t in re.findall(r"\scalls?\s+0x([0-9a-f]+)", raw)} | set(extra)
+    starts = {c for c in names if clo <= c - base < chi and c not in labels
+              and not names[c].endswith("_entry")}
+    for t in sorted(targets):
+        o = t - base
+        if not clo <= o < chi or t in starts:
+            continue
+        if d[o - 3:o - 1] == b"\xf8\xfe" and (t - 3) in starts:      # X+3 entry of a named X
+            names.setdefault(t, names[t - 3] + "_entry")
+        elif d[o - 3:o - 1] == b"\xf8\xfe":                         # unnamed X with an +3 entry
+            starts.add(t - 3)
+            names.setdefault(t - 3, f"func_{t - 3:08X}")
+            names.setdefault(t, f"func_{t - 3:08X}_entry")
+        elif t not in names or not names[t].endswith("_entry"):
+            starts.add(t)
+            names.setdefault(t, f"func_{t:08X}")
+    return sorted(starts | {base + clo})
+
+
+def emit_code(d, base, clo, chi, starts, names, notes, ROMQ, used):
+    """MN10300 assembly for [clo, chi), split at `starts`: each chunk's mnemonics
+    come from unidasm and are kept only where the repo's encoder reproduces the
+    exact bytes (else a .byte escape); a chunk whose decode runs off its end stays
+    .incbin_range. Returns (lines, chunks converted, chunks kept raw)."""
+    B, nconv, nfail = [], 0, 0
+    bounds = list(starts) + [base + chi]
+    for i, s in enumerate(bounds[:-1]):
+        e = bounds[i + 1]
+        so, eo = s - base, e - base
+        nm = names.get(s, f"func_{s:08X}")
+        B.append(f"# {nm}  (CPU 0x{s:08X})")
+        if notes.get(s):
+            B.append(f"#   {notes[s]}")
+        ins = G.disasm_function(d, so, eo, base)
+        if ins is None:
+            B.append(f".incbin_range {ROMQ}, 0x{so:06X}, 0x{eo:06X}   # decode misaligned: kept raw")
+            nfail += 1
+            continue
+        nconv += 1
+        for off, bs, mn, ops in ins:
+            cpu = base + off
+            if cpu != s and cpu in names:
+                kind = ("register-save `call` entry" if names[cpu].endswith("_entry") else
+                        notes.get(cpu, "label"))
+                B.append(f"# {names[cpu]}:   ({kind})")
+                used.add(cpu)
+            try:
+                enc = G.ASM.encode(mn, ops, cpu)
+            except G.ASM.EncError:
+                enc = None
+            if enc == bs:
+                if mn in G.CALL_MNEMS:
+                    ops = G.name_target(ops, names, used)
+                B.append(f"    {mn:8s}{ops}".rstrip())
+            else:
+                B.append(f"    .byte {hexbytes(bs)}   # {mn} {ops}".rstrip())
+    return B, nconv, nfail
+
+
 def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
     """Returns (body lines, extra header-comment lines) for the XAPR plug-in."""
     syms = load_syms(a.sym)
@@ -196,29 +267,8 @@ def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
     notes = {cpu: n for cpu, (_nm, n) in syms.items()}
     labels = {cpu for cpu, n in notes.items() if n.startswith("label:")}
 
-    # code entry points: named starts + call targets inside the code range
     G.ROM, G.UNIDASM = a.rom, a.unidasm
-    import subprocess
-    raw = subprocess.run([a.unidasm, a.rom, "-arch", "mn10300", "-basepc", f"0x{BASE + clo:x}",
-                          "-skip", f"0x{clo:x}", "-count", str(chi - clo)],
-                         capture_output=True, text=True).stdout
-    targets = {int(t, 16) for t in re.findall(r"\scalls?\s+0x([0-9a-f]+)", raw)}
-    starts = {c for c in names if clo <= c - BASE < chi and c not in labels
-              and not names[c].endswith("_entry")}
-    for t in sorted(targets):
-        o = t - BASE
-        if not clo <= o < chi or t in starts:
-            continue
-        if d[o - 3:o - 1] == b"\xf8\xfe" and (t - 3) in starts:      # X+3 entry of a named X
-            names.setdefault(t, names[t - 3] + "_entry")
-        elif d[o - 3:o - 1] == b"\xf8\xfe":                         # unnamed X with an +3 entry
-            starts.add(t - 3)
-            names.setdefault(t - 3, f"func_{t - 3:08X}")
-            names.setdefault(t, f"func_{t - 3:08X}_entry")
-        elif t not in names or not names[t].endswith("_entry"):
-            starts.add(t)
-            names.setdefault(t, f"func_{t:08X}")
-    starts = sorted(starts | {BASE + clo})
+    starts = code_entries(d, a.rom, a.unidasm, BASE, clo, chi, names, labels)
     names.setdefault(BASE + clo, f"plugin_code_{BASE + clo:08X}")
 
     B = ["", "# ============================================================================",
@@ -241,38 +291,8 @@ def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
         B.append(f"    .long {nm_or_hex(v)}   # +0x{o - plo:02X}")
 
     # ---- code ----
-    nconv = nfail = 0
-    bounds = starts + [BASE + chi]
-    for i, s in enumerate(bounds[:-1]):
-        e = bounds[i + 1]
-        so, eo = s - BASE, e - BASE
-        nm = names.get(s, f"func_{s:08X}")
-        B.append(f"# {nm}  (CPU 0x{s:08X})")
-        if notes.get(s):
-            B.append(f"#   {notes[s]}")
-        ins = G.disasm_function(d, so, eo, BASE)
-        if ins is None:
-            B.append(f".incbin_range {ROMQ}, 0x{so:06X}, 0x{eo:06X}   # decode misaligned: kept raw")
-            nfail += 1
-            continue
-        nconv += 1
-        for off, bs, mn, ops in ins:
-            cpu = BASE + off
-            if cpu != s and cpu in names:
-                kind = ("register-save `call` entry" if names[cpu].endswith("_entry") else
-                        notes.get(cpu, "label"))
-                B.append(f"# {names[cpu]}:   ({kind})")
-                used.add(cpu)
-            try:
-                enc = G.ASM.encode(mn, ops, cpu)
-            except G.ASM.EncError:
-                enc = None
-            if enc == bs:
-                if mn in G.CALL_MNEMS:
-                    ops = G.name_target(ops, names, used)
-                B.append(f"    {mn:8s}{ops}".rstrip())
-            else:
-                B.append(f"    .byte {hexbytes(bs)}   # {mn} {ops}".rstrip())
+    lines, nconv, nfail = emit_code(d, BASE, clo, chi, starts, names, notes, ROMQ, used)
+    B += lines
 
     # ---- data: reflection tables, keystream, known strings, the rest raw ----
     special = {}                                   # file off -> (end, lines)

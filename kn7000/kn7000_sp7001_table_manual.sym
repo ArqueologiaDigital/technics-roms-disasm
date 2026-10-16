@@ -27,6 +27,9 @@
 0x483ECC6D  KssPad16                ; (buf, fill = 0x20, n = 0x10): from the first NUL, right-pad with spaces to 16 chars
 0x483EF275  KssHash275              ; hashes 16 chars -> 8 chars with two 32-bit accumulators (param1_hash.py)
 ;
+; ---- .XAP plug-in loader ----
+0x483EEAA9  KssPluginLoad           ; (d3 = plug-in id) logs 'PluginLoad id=%i', opens the .XAP (A:\%s.XAP / %s\%s.XAP), rejects files over 0x1D000 bytes, reads exactly 0x1D000 bytes to 0x5029B000, calls 0x5029B000 (a0 = framework object, a1 = 0x502992E4, d0/d1 -> compile id / plug-in id), checks the id and the compile id ('Compile id's dont match: base=%i != baseext=%i'), then registers the handle in 0x50299ED0[id]
+;
 ; ---- activation data ----
 0x483F8B74  KssKeystreamRecords     ; 27 static keystream records, 20 base-35 chars + NUL each (stride 0x15); the key's first char selects the pair used
 0x483F782C  KssMsgWrongPassword     ; 'Falsches Passwort'
