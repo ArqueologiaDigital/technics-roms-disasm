@@ -133,6 +133,15 @@ understands `.byte`/`.word`/`.long`/`.space`, labels/`.equ`/`.org`, and the two
 output offset equals `START`, so any gap or overlap in the region layout is
 caught immediately.
 
+For **new** code (homebrew apps) there is [`tools/xapasm.py`](tools/xapasm.py), a
+two-pass assembler on the same encoder: labels are CPU addresses and may be used
+before they are defined, and operands take expressions. Two companions build an
+SP7001 SD-card app: [`tools/xap_addon.py`](tools/xap_addon.py) places a module in
+the unused tail of the vendor `BASEEXT.XAP` and hooks `XapEntry` to it, and
+[`tools/sd_splice.py`](tools/sd_splice.py) overwrites a same-size file in place on
+a FAT SD-card image. The demos themselves live in the `kn5000_homebrew` repo
+(`demos/kn7000_clock`).
+
 Disassembly listings are produced by **MAME's `unidasm`**
 (`unidasm <rom> -arch mn10300 -basepc <cpu_addr>`); `make disasm` drives it.
 `disasm/program_entry.asm` (the boot/entry region) and
