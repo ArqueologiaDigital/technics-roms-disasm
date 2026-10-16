@@ -251,14 +251,20 @@ Three of the open questions were answered from the byte-exact sources (no emulat
 **What `BASEEXT.XAP` calls (Q1).** It never calls a fixed firmware address: at no load base does any
 of its `call` instructions land on a known firmware routine. It is handed the firmware's MILK
 framework object -- `*(0x50299298)`, saved in the `.XAP` as `XapFrameworkObj` (`0x502B4044`) -- and
-reaches every firmware service through that object's method tables, `obj->+0x1C` and `obj->+0x2E1C`.
-Of its 1,340 `calls (aN)`, 567 resolve directly to those two tables (472 via `+0x1C`, 95 via
-`+0x2E1C`; the rest go through deeper object chains). The plug-in host's init, `func_483E8071`
-(run by `XapSlot08`), uses the same tables the other way: it calls `obj->+0x1C`'s slots `+0xEC`
-and `+0x130` with class ids `0x00040004`/`0x00040009` and name pointers (`0x483F8DB8`,
-`0x483F8EC0`) -- i.e. it registers the plug-in's own object classes with the firmware, exactly as
-the KN5000's HD-AE5000 `Boot_Init` does. So "what it calls" is the firmware's MILK object method
-set, dispatched by table offset; naming the individual slots is the remaining, mappable work.
+calls the firmware through that object's method table. The object's `+0x1C` field points at a
+**static method vtable in program flash at `0x487280D0`** (a MILK reflection table: a name-pointer
+array, a NUL, then the code-pointer array the object indexes). That base is proven: `*(0x487280D0
++ 0xEC)` is `RegisterObjectTable` -- the very method the plug-in's init `func_483E8071` (run by
+`XapSlot08`) calls to register its 11 classes (ids `0x00040004`..`0x00040011`, name tables
+`0x483F8EC0` etc.), just as the KN5000's HD-AE5000 `Boot_Init` registers its titles -- and `+0x108`
+/ `+0x10C` / `+0x27C` are `SendEvent` / `PostEvent` / `RegisterTitle`. Reading each slot of that
+vtable names the calls: **639 of `BASEEXT.XAP`'s 1,340 indirect calls resolve to named MILK
+methods** -- `SendEvent` (285), `PostEvent` (89), `InheritedProc` (76), `SetVisible` (65),
+`GetViewInstance` (35), `SetApTimer`, `ApFuncCall`, `GetClientBox`, the drawing/dial/box helpers,
+`SleepMainTask`/`WakeUpMainTask`. The remaining 701 go through other MILK objects it is given or
+creates (view instances, its own objects), reached by pointer chains the probe does not follow.
+So `BASEEXT.XAP` drives the instrument entirely through the firmware's MILK UI framework, and its
+firmware calls are now named, not opaque (`research-scratch/kn7000-sp7001-disasm/sp7001_q1q2.py`).
 
 **Load before activation (Q2).** In `Ap_Ce_StartUp` (`0x483EA0A6`) the base-extension load case
 reads a latch `KssBaseExtLoadedLatch` (`0x50299070`); when it is 0 it calls `KssPluginLoad(d0=3)`
@@ -277,8 +283,9 @@ earlier image on hand to match it against.
 
 ## Still open
 
-- Naming the MILK method slots (`obj+0x1C` `+0x108`/`+0x10C`/`+0x2A4`/..., `obj+0x2E1C`
-  `+0x78`/`+0x340`/...) would turn `BASEEXT.XAP`'s 1,340 indirect calls into named firmware calls.
+- Of `BASEEXT.XAP`'s 1,340 indirect calls, 701 go through MILK objects other than the framework
+  object (view instances it creates, its own objects); naming those would need their vtables
+  pinned (they are not simple static code arrays like `framework+0x1C`'s at `0x487280D0`).
 - The v1.4 program update's **disk 1** (`kn7-14_1.exe` -> `JK1.SLD`, build 929) is the one lost disk
   in this family (only a Wayback "page not found" stub), which is why MAME's `v14` BIOS has
   `NO_DUMP` for the lower half.
