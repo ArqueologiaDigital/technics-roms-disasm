@@ -1,0 +1,427 @@
+[
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper18",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11673,
+  "named_callers": [
+   "MidiPkt_SendGroup_AccompBlocks",
+   "MidiPkt_SendGroup_Panel",
+   "MidiPkt_SendGroup_SoundRam"
+  ],
+  "n_named": 3
+ },
+ {
+  "name": "AccPat_CalcAccentVelocity_Body_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 23206,
+  "named_callers": [
+   "RhythmROM_PatternDispatcher"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "AccPatch_CheckAndInitDemo_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 14142,
+  "named_callers": [
+   "AccPatch_SlotConfigByteData"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "AccStyle_TableDataEntry_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 39436,
+  "named_callers": [
+   "SingleLoad_CopyComposerPatternFromFile"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "AccStyle_TableDataEntry_Helper2",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 13950,
+  "named_callers": [
+   "SingleLoad_CopyComposerPatternFromFile"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "Display_BytecodeBlock_F_Tbl2_Helper2",
+  "file": "display/scoop_display.s",
+  "line": 15076,
+  "named_callers": [
+   "DisplayStr_WriteControlNameValue"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "ExtVoice_ProcessList_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 29584,
+  "named_callers": [
+   "CmpEsy_ApplyEdit"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "FDC_MODE_CONFIG_Helper2",
+  "file": "storage/fdc_routines.s",
+  "line": 1797,
+  "named_callers": [
+   "FDC_MODE_CONFIG"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "Flash_InitBytecodeBlock_Helper10",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 2301,
+  "named_callers": [
+   "Flash_InitBytecodeBlock"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "Flash_InitBytecodeBlock_Helper11",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 3239,
+  "named_callers": [
+   "Flash_InitBytecodeBlock"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MemConfig_Handler_4_Helper2",
+  "file": "display/scoop_display.s",
+  "line": 9307,
+  "named_callers": [
+   "SqStep_SetupCursorTrack"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper15",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11621,
+  "named_callers": [
+   "MidiPkt_SendGroup_AccompBlocks"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper16",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11638,
+  "named_callers": [
+   "MidiPkt_SendGroup_AccompBlocks"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper17",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11655,
+  "named_callers": [
+   "MidiPkt_SendGroup_AccompBlocks"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper2",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11402,
+  "named_callers": [
+   "MidiPkt_SendGroup_Panel"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper3",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11419,
+  "named_callers": [
+   "MidiPkt_SendGroup_Panel"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper5",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11450,
+  "named_callers": [
+   "MidiPkt_SendGroup_SoundRam"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "MidiPkt_ArpConfigChain_Data_Helper6",
+  "file": "midi/midi_dispatch_handlers.s",
+  "line": 11467,
+  "named_callers": [
+   "MidiPkt_SendGroup_SoundRam"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "Not_sure_maybe_SOFT_VERSION_related_Code_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 14003,
+  "named_callers": [
+   "Not_sure_maybe_SOFT_VERSION_related"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "PortConfig_Handler_0_Helper",
+  "file": "display/scoop_display.s",
+  "line": 7658,
+  "named_callers": [
+   "SqStep_SetupCursorTrack"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "ScoopParam_ValueTable_Sub_Helper",
+  "file": "display/scoop_display.s",
+  "line": 7808,
+  "named_callers": [
+   "SqStep_SetupCursorTrack"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_ApplyPartEdit_Helper",
+  "file": "audio/semenu_routines.s",
+  "line": 1697,
+  "named_callers": [
+   "SeLfo1_StepSelectorAndReload"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_ApplyPartEdit_Helper8",
+  "file": "audio/semenu_routines.s",
+  "line": 4527,
+  "named_callers": [
+   "SeMenu_DrawPitFilEnvGraph"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_ApplyPartEdit_Helper9_Helper",
+  "file": "audio/semenu_routines.s",
+  "line": 4699,
+  "named_callers": [
+   "SeMenu_DrawEnvGraphLine"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7",
+  "file": "audio/semenu_routines.s",
+  "line": 2482,
+  "named_callers": [
+   "SeWrtSnd_SetupNamingPage"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_CopyWriteUpdate_Step3_Helper12",
+  "file": "audio/semenu_routines.s",
+  "line": 5956,
+  "named_callers": [
+   "SeMenuTitleFunc_DispatchSwitch"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_CopyWriteUpdate_Step3_Helper13",
+  "file": "audio/semenu_routines.s",
+  "line": 5961,
+  "named_callers": [
+   "SeMenuTitleFunc_DispatchSwitch"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeMenu_CopyWriteUpdate_Step3_Helper2",
+  "file": "audio/semenu_routines.s",
+  "line": 599,
+  "named_callers": [
+   "SeMenuTitleFunc_DispatchSwitch"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeqChan_UnhandledCmd_Helper",
+  "file": "kn5000_v10_program.s",
+  "line": 2166,
+  "named_callers": [
+   "MidiPkt_PrepareAccompBlocksReceive"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeqLoad_ProcessDataBlock_Helper",
+  "file": "sequencer/sequencer_engine.s",
+  "line": 26441,
+  "named_callers": [
+   "SingleLoad_FinishSongLoad"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeqLoad_ProcessDataBlock_Helper2",
+  "file": "sequencer/sequencer_engine.s",
+  "line": 26445,
+  "named_callers": [
+   "SingleLoad_FinishSongLoad"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeqLoad_ProcessDataBlock_Helper3",
+  "file": "sequencer/sequencer_engine.s",
+  "line": 26476,
+  "named_callers": [
+   "SingleLoad_FinishSongLoad"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SeqPart_ByteBlockA207_Code_Helper",
+  "file": "sequencer/sequencer_engine.s",
+  "line": 30413,
+  "named_callers": [
+   "SeqPart_ByteBlockA207"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SerialPort_ModeHandler_0_Helper",
+  "file": "display/scoop_display.s",
+  "line": 4242,
+  "named_callers": [
+   "SqStep_SetupCursorTrack"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "SndBuf_WriteParamEntries_Helper",
+  "file": "audio/note_voice_mapping.s",
+  "line": 24588,
+  "named_callers": [
+   "MidiStream_ResolveVoiceIndexMode1_Impl"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "TimeSig_DisplayStrings_Helper3",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 27063,
+  "named_callers": [
+   "CmpEsy_PrepareRealtimeRecording"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "UpdSeSel_DetailedUpdate_Helper",
+  "file": "audio/sound_editor_ui.s",
+  "line": 1085,
+  "named_callers": [
+   "SeEasy_DrawPage"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "UpdSeSel_DetailedUpdate_Helper2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 1106,
+  "named_callers": [
+   "SeEasy_DrawPage"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_Dispatch_Return_Helper",
+  "file": "sequencer/accompaniment_engine.s",
+  "line": 28887,
+  "named_callers": [
+   "CmpEsy_StepVariPattern"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper2",
+  "file": "display/scoop_display.s",
+  "line": 14704,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper3",
+  "file": "display/scoop_display.s",
+  "line": 15130,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper4",
+  "file": "display/scoop_display.s",
+  "line": 16324,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper6",
+  "file": "display/scoop_display.s",
+  "line": 16365,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper7",
+  "file": "display/scoop_display.s",
+  "line": 16367,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper8",
+  "file": "display/scoop_display.s",
+  "line": 16375,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceSlot_StatusRet_Helper9",
+  "file": "display/scoop_display.s",
+  "line": 16406,
+  "named_callers": [
+   "VoiceSlot_StatusRet"
+  ],
+  "n_named": 1
+ },
+ {
+  "name": "VoiceState_DataBlock2_Helper2",
+  "file": "display/scoop_display.s",
+  "line": 12363,
+  "named_callers": [
+   "SqStep_SetupCursorTrack"
+  ],
+  "n_named": 1
+ }
+]

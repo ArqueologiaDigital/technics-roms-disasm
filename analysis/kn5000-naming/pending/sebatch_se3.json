@@ -1,0 +1,2474 @@
+[
+ {
+  "name": "SeScreenData_0x07B7",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12702,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12719",
+    "code": ".long\tSeScreenData_0x07B7",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:12720",
+    "code": ".long\tSeScreenData_0x07B7",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x07BE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12706,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12721",
+    "code": ".long\tSeScreenData_0x07BE",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x07C5",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12710,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12722",
+    "code": ".long\tSeScreenData_0x07C5",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x07CC",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12714,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12723",
+    "code": ".long\tSeScreenData_0x07CC",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x07EB",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12727,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12744",
+    "code": ".long\tSeScreenData_0x07EB",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:12745",
+    "code": ".long\tSeScreenData_0x07EB",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x07F7",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12731,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12746",
+    "code": ".long\tSeScreenData_0x07F7",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0803",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12735,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12747",
+    "code": ".long\tSeScreenData_0x0803",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x080F",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12739,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12748",
+    "code": ".long\tSeScreenData_0x080F",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0883",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12776,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12772",
+    "code": "sdb_box\t0x03, 0x065d, 0x0f, 0, 0x05, SeScreenData_0x0883",
+    "enclosing_label": "SeMenu_DrawPartSelector_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x08AB",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12787,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x0B99",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12904,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12919",
+    "code": ".long\tSeScreenData_0x0B99",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BA0",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12908,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12920",
+    "code": ".long\tSeScreenData_0x0BA0",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BA7",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12912,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12921",
+    "code": ".long\tSeScreenData_0x0BA7",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BC6",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12925,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12942",
+    "code": ".long\tSeScreenData_0x0BC6",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records3"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:12943",
+    "code": ".long\tSeScreenData_0x0BC6",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BD2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12929,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12944",
+    "code": ".long\tSeScreenData_0x0BD2",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BDE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12933,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12945",
+    "code": ".long\tSeScreenData_0x0BDE",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0BEA",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12937,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12946",
+    "code": ".long\tSeScreenData_0x0BEA",
+    "enclosing_label": "SeMenu_DrawPartLabels_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C0E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12950,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12971",
+    "code": ".long\tSeScreenData_0x0C0E",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:12972",
+    "code": ".long\tSeScreenData_0x0C0E",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C21",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12955,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12973",
+    "code": ".long\tSeScreenData_0x0C21",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C34",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12960,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12974",
+    "code": ".long\tSeScreenData_0x0C34",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C47",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12965,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:12975",
+    "code": ".long\tSeScreenData_0x0C47",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C72",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12979,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13000",
+    "code": ".long\tSeScreenData_0x0C72",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:13001",
+    "code": ".long\tSeScreenData_0x0C72",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0C8A",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12984,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13002",
+    "code": ".long\tSeScreenData_0x0C8A",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0CA2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12989,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13003",
+    "code": ".long\tSeScreenData_0x0CA2",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0CBA",
+  "file": "audio/sound_editor_ui.s",
+  "line": 12994,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13004",
+    "code": ".long\tSeScreenData_0x0CBA",
+    "enclosing_label": "SeMenu_DrawPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0CEA",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13008,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13019",
+    "code": ".long\tSeScreenData_0x0CEA",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:13020",
+    "code": ".long\tSeScreenData_0x0CEA",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0CFF",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13013,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13021",
+    "code": ".long\tSeScreenData_0x0CFF",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0D24",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13025,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13036",
+    "code": ".long\tSeScreenData_0x0D24",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:13037",
+    "code": ".long\tSeScreenData_0x0D24",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x0D39",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13030,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13038",
+    "code": ".long\tSeScreenData_0x0D39",
+    "enclosing_label": "SeMenu_DrawTwoPartRadioButtons_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1089",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13090,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9379",
+    "code": "ld xiy, SeScreenData_0x1089",
+    "enclosing_label": "SeAmp_DrawSectionFrame"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9385",
+    "code": "ld xix, SeScreenData_0x1089 + 119",
+    "enclosing_label": "SeMenu_CompareAndApply_Data2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10583",
+    "code": "ld\txix, SeScreenData_0x1089",
+    "enclosing_label": "SePitEnv1_DrawStaticScreen"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x113B",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13112,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9382",
+    "code": "ld xix, SeScreenData_0x113B",
+    "enclosing_label": "SeAmp_DrawSectionFrame"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9392",
+    "code": "ld xiy, SeScreenData_0x113B",
+    "enclosing_label": "SeMenu_CompareAndApply_Data4"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x117E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13121,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13159",
+    "code": ".long\tSeScreenData_0x117E",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x11A8",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13128,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13160",
+    "code": ".long\tSeScreenData_0x11A8",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x11D2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13135,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13161",
+    "code": ".long\tSeScreenData_0x11D2",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x11FC",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13142,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13165",
+    "code": ".long\tSeScreenData_0x11FC",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:13166",
+    "code": ".long\tSeScreenData_0x11FC",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1226",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13149,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13167",
+    "code": ".long\tSeScreenData_0x1226",
+    "enclosing_label": "SeMenu_DrawSelectedPartEnvCurve_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x137D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13205,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9347",
+    "code": "ld xix, SeScreenData_0x137D",
+    "enclosing_label": "SeAmpAmp1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9412",
+    "code": "ld\txiy, SeScreenData_0x137D",
+    "enclosing_label": "SeAmpAmp2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10602",
+    "code": "ld\txiy, SeScreenData_0x137D",
+    "enclosing_label": "SeFilFil2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10603",
+    "code": "ld\txix, SeScreenData_0x137D + 180",
+    "enclosing_label": "SeFilFil2_DrawStaticScreen"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1452",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13216,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9408",
+    "code": "ld\txiy, SeScreenData_0x1452",
+    "enclosing_label": "SeAmpAmp2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9413",
+    "code": "ld\txix, SeScreenData_0x1452",
+    "enclosing_label": "SeAmpAmp2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10606",
+    "code": "ld\txiy, SeScreenData_0x1452",
+    "enclosing_label": "SeFilFil2_DrawStaticScreen"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1AEB",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13400,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9439",
+    "code": "ld\txiy, SeScreenData_0x1AEB",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9440",
+    "code": "ld\txix, SeScreenData_0x1AEB + 10",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9482",
+    "code": "ld\txiy, SeScreenData_0x1AEB",
+    "enclosing_label": "SeMenu_DrawEnvKeyOffFields"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9720",
+    "code": "ld\txix, SeScreenData_0x1AEB + 10",
+    "enclosing_label": "SeEnv1_DrawEnvelopeLayout"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1C7A",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13454,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9708",
+    "code": "ld\txix, SeScreenData_0x1C7A",
+    "enclosing_label": "SeFilEnv1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10623",
+    "code": "ld\txiy, SeScreenData_0x1C7A",
+    "enclosing_label": "SeMenu_FilterEdit_Init_Sub"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1DB7",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13492,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10624",
+    "code": "ld\txix, SeScreenData_0x1DB7",
+    "enclosing_label": "SeMenu_FilterEdit_Init_Sub"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10627",
+    "code": "ld\txiy, SeScreenData_0x1DB7",
+    "enclosing_label": "SeMenu_FilterEdit_Init_Sub"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x1EE7",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13548,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x1F80",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13604,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:8980",
+    "code": "ld\txix, SeScreenData_0x1F80",
+    "enclosing_label": "SeTonHyb1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9930",
+    "code": "ld xiy, SeScreenData_0x1F80",
+    "enclosing_label": "SeMenu_BankEdit_LoopHelper"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:552",
+    "code": ".long\tSeScreenData_0x1F80 + 0x149",
+    "enclosing_label": "SeMenuTitle_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:580",
+    "code": ".long\tSeScreenData_0x1F80 + 0x149",
+    "enclosing_label": "SeMenuTitle_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x22D3",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13759,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13828",
+    "code": ".long\tSeScreenData_0x22D3",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x22DE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13763,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13819",
+    "code": ".long\tSeScreenData_0x22DE",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x22E9",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13767,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13821",
+    "code": ".long\tSeScreenData_0x22E9",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x22F3",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13771,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13822",
+    "code": ".long\tSeScreenData_0x22F3",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x22FE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13775,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13823",
+    "code": ".long\tSeScreenData_0x22FE",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2308",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13779,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13824",
+    "code": ".long\tSeScreenData_0x2308",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2313",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13783,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13825",
+    "code": ".long\tSeScreenData_0x2313",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x231D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13787,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13826",
+    "code": ".long\tSeScreenData_0x231D",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2328",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13791,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13827",
+    "code": ".long\tSeScreenData_0x2328",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2332",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13795,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13818",
+    "code": ".long\tSeScreenData_0x2332",
+    "enclosing_label": "SePitFilEnv1_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x241A",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13849,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9362",
+    "code": "ld xix, SeScreenData_0x241A",
+    "enclosing_label": "SeMenu_CompareAndApply_Match"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10111",
+    "code": "ld\txiy, SeScreenData_0x241A",
+    "enclosing_label": "SeAmpAmp1_DrawField"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x24D2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13905,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13931",
+    "code": ".long\tSeScreenData_0x24D2",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x24DC",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13909,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13932",
+    "code": ".long\tSeScreenData_0x24DC",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x24E6",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13913,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13933",
+    "code": ".long\tSeScreenData_0x24E6",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x24F0",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13917,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13934",
+    "code": ".long\tSeScreenData_0x24F0",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x24FA",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13921,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13935",
+    "code": ".long\tSeScreenData_0x24FA",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2504",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13925,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13936",
+    "code": ".long\tSeScreenData_0x2504",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x250E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13929,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9457",
+    "code": "ld\txix, SeScreenData_0x250E",
+    "enclosing_label": "SeAmpEnv1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10132",
+    "code": "ld\txiy, SeScreenData_0x250E",
+    "enclosing_label": "SeAmpEnv1_DrawField"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2535",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13943,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13984",
+    "code": ".long\tSeScreenData_0x2535",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2540",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13947,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13985",
+    "code": ".long\tSeScreenData_0x2540",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x254F",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13951,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13986",
+    "code": ".long\tSeScreenData_0x254F",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x255E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13955,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13987",
+    "code": ".long\tSeScreenData_0x255E",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x256D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13959,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13988",
+    "code": ".long\tSeScreenData_0x256D",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2578",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13963,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13989",
+    "code": ".long\tSeScreenData_0x2578",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2583",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13967,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13990",
+    "code": ".long\tSeScreenData_0x2583",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x258E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 13971,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:13991",
+    "code": ".long\tSeScreenData_0x258E",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:13992",
+    "code": ".long\tSeScreenData_0x258E",
+    "enclosing_label": "SeAmpEnv2_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x27D9",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14066,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2801",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14075,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x287D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14111,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9193",
+    "code": "ld\txiy, SeScreenData_0x287D",
+    "enclosing_label": "SeLfo1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10040",
+    "code": "ld\txiy, SeScreenData_0x287D",
+    "enclosing_label": "SePitAmpFilLfo1_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:14159",
+    "code": ".long\tSeScreenData_0x287D",
+    "enclosing_label": "SePitAmpFilLfo1_DrawField_Records4"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x28A0",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14120,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14156",
+    "code": ".long\tSeScreenData_0x28A0",
+    "enclosing_label": "SePitAmpFilLfo1_DrawField_Records4"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x28DD",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14137,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14164",
+    "code": ".long\tSeScreenData_0x28DD",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x28EC",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14141,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14165",
+    "code": ".long\tSeScreenData_0x28EC",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x28FB",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14145,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14166",
+    "code": ".long\tSeScreenData_0x28FB",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x293C",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14175,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14130",
+    "code": "sdb_box\t0x03, 0x0660, 0x07, 0, 0x05, SeScreenData_0x293C",
+    "enclosing_label": "SePitAmpFilLfo1_DrawField_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2982",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14195,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14209",
+    "code": ".long\tSeScreenData_0x2982",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x298C",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14199,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14210",
+    "code": ".long\tSeScreenData_0x298C",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2996",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14203,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14211",
+    "code": ".long\tSeScreenData_0x2996",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records3"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x29E6",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14232,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14250",
+    "code": ".long\tSeScreenData_0x29E6",
+    "enclosing_label": "SeMenu_DrawLfoSelectedPartLine_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x29FA",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14237,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14251",
+    "code": ".long\tSeScreenData_0x29FA",
+    "enclosing_label": "SeMenu_DrawLfoSelectedPartLine_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2A0E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14242,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14252",
+    "code": ".long\tSeScreenData_0x2A0E",
+    "enclosing_label": "SeMenu_DrawLfoSelectedPartLine_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2A36",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14255,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14320",
+    "code": ".long\tSeScreenData_0x2A36",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records6"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2A40",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14259,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A4A",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14263,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A54",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14267,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A5E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14271,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14321",
+    "code": ".long\tSeScreenData_0x2A5E",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records6"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2A68",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14275,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A72",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14279,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A7C",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14283,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A86",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14287,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14322",
+    "code": ".long\tSeScreenData_0x2A86",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records6"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2A90",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14291,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2A9A",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14295,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2AA4",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14299,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2AAE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14303,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14323",
+    "code": ".long\tSeScreenData_0x2AAE",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records6"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2AB8",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14307,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2AC2",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14311,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2ACC",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14315,
+  "refs": []
+ },
+ {
+  "name": "SeScreenData_0x2AE6",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14326,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14343",
+    "code": ".long\tSeScreenData_0x2AE6",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2AED",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14330,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14344",
+    "code": ".long\tSeScreenData_0x2AED",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2AF4",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14334,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14345",
+    "code": ".long\tSeScreenData_0x2AF4",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x2AFB",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14338,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14346",
+    "code": ".long\tSeScreenData_0x2AFB",
+    "enclosing_label": "SeMenu_DrawLfoPartSwitches_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x34E9",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14701,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10468",
+    "code": "ld xix, SeScreenData_0x34E9",
+    "enclosing_label": "SeTonTon2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10544",
+    "code": "ld\txiy, SeScreenData_0x34E9",
+    "enclosing_label": "SeTonRan1_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10567",
+    "code": "ld\txiy, SeScreenData_0x34E9",
+    "enclosing_label": "SeTonRan2_DrawStaticScreen"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x39BE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14825,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10527",
+    "code": "ld xiy, SeScreenData_0x39BE",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup2"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10688",
+    "code": "ld\txiy, SeScreenData_0x39BE",
+    "enclosing_label": "SeTonTon2_DrawField"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:611",
+    "code": ".long\tSeScreenData_0x39BE + 0x94",
+    "enclosing_label": "SeMenuTitle_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:615",
+    "code": ".long\tSeScreenData_0x39BE + 0x94",
+    "enclosing_label": "SeMenuTitle_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x39FE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14844,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14861",
+    "code": ".long\tSeScreenData_0x39FE",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:14862",
+    "code": ".long\tSeScreenData_0x39FE",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:14863",
+    "code": ".long\tSeScreenData_0x39FE",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3A0D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14848,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14864",
+    "code": ".long\tSeScreenData_0x3A0D",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3A1C",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14852,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14865",
+    "code": ".long\tSeScreenData_0x3A1C",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3A2B",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14856,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:14866",
+    "code": ".long\tSeScreenData_0x3A2B",
+    "enclosing_label": "SeMenu_PresetInit_TableLookup1_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3B0B",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14928,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10700",
+    "code": "ld\txiy, SeScreenData_0x3B0B",
+    "enclosing_label": "SeTonRan1_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10716",
+    "code": "ld\txiy, SeScreenData_0x3B0B",
+    "enclosing_label": "SeTonRan2_DrawField"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3B15",
+  "file": "audio/sound_editor_ui.s",
+  "line": 14933,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10701",
+    "code": "ld\txix, SeScreenData_0x3B15",
+    "enclosing_label": "SeTonRan1_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10717",
+    "code": "ld\txix, SeScreenData_0x3B15",
+    "enclosing_label": "SeTonRan2_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:14917",
+    "code": "sdb_box\t0x03, 0x065d, 0x0f, 0, 0x05, SeScreenData_0x3B15",
+    "enclosing_label": "SeTonRan1_Field0_Record"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:14958",
+    "code": "sdb_box\t0x03, 0x065d, 0x0f, 0, 0x05, SeScreenData_0x3B15",
+    "enclosing_label": "SeTonRan2_Field0_Record"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x3E60",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15075,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:10760",
+    "code": "ld\txix, SeScreenData_0x3E60",
+    "enclosing_label": "SeCtr2_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:10830",
+    "code": "ld xiy, SeScreenData_0x3E60",
+    "enclosing_label": "SeCtr2_DrawField_DefaultPath"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x495E",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15417,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15511",
+    "code": ".long\tSeDigEff_DrawStaticScreen_Records6, SeScreenData_0x495E",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15512",
+    "code": ".long\tSeDigEff_DrawStaticScreen_Records6, SeScreenData_0x495E",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15513",
+    "code": ".long\tSeDigEff_DrawStaticScreen_Records6, SeScreenData_0x495E",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15514",
+    "code": ".long\tSeDigEff_DrawStaticScreen_Records6, SeScreenData_0x495E",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15515",
+    "code": ".long\tSeScreenData_0x495E, SeScreenData_0x49FE",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15516",
+    "code": ".long\tSeScreenData_0x495E, SeScreenData_0x49FE",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x49FE",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15438,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15515",
+    "code": ".long\tSeScreenData_0x495E, SeScreenData_0x49FE",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15516",
+    "code": ".long\tSeScreenData_0x495E, SeScreenData_0x49FE",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15517",
+    "code": ".long\tSeScreenData_0x49FE, SeScreenData_0x4A64",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4A64",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15453,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15517",
+    "code": ".long\tSeScreenData_0x49FE, SeScreenData_0x4A64",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15518",
+    "code": ".long\tSeScreenData_0x4A64, SeScreenData_0x4AD0",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4AD0",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15468,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15518",
+    "code": ".long\tSeScreenData_0x4A64, SeScreenData_0x4AD0",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15519",
+    "code": ".long\tSeScreenData_0x4AD0, SeScreenData_0x4B3C",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4B3C",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15483,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15519",
+    "code": ".long\tSeScreenData_0x4AD0, SeScreenData_0x4B3C",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15520",
+    "code": ".long\tSeScreenData_0x4B3C, SeScreenData_0x4BA8",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4BA8",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15498,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:15520",
+    "code": ".long\tSeScreenData_0x4B3C, SeScreenData_0x4BA8",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15521",
+    "code": ".long\tSeScreenData_0x4BA8, SeDigEff_DrawStaticScreen_Records7",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:15522",
+    "code": ".long\tSeScreenData_0x4BA8, SeDigEff_DrawStaticScreen_Records7",
+    "enclosing_label": "SeDigEff_DrawStaticScreen_Records7"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4C6D",
+  "file": "audio/sound_editor_ui.s",
+  "line": 15529,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:7975",
+    "code": "ld\txiy, SeScreenData_0x4C6D",
+    "enclosing_label": "SeGfx_BoundOp06"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9855",
+    "code": "ld\txiy, SeScreenData_0x4C6D",
+    "enclosing_label": "SeDigEff_DrawField"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D01",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 41,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:15",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:17",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:19",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:21",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:57",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:58",
+    "code": ".long\tSeScreenData_0x4D01",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:59",
+    "code": ".long\tSeScreenData_0x4D01 + 0xa",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:60",
+    "code": ".long\tSeScreenData_0x4D01 + 0x14",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:61",
+    "code": ".long\tSeScreenData_0x4D01 + 0x1f",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:62",
+    "code": ".long\tSeScreenData_0x4D01 + 0x29",
+    "enclosing_label": "SeScreenData_ListBounds"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D34",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 55,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:16",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:18",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:20",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:22",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:203",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:204",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:205",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:206",
+    "code": ".long\tSeScreenData_0x4D34",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D4C",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 67,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:23",
+    "code": ".long\tSeScreenData_0x4D4C",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:25",
+    "code": ".long\tSeScreenData_0x4D4C",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:104",
+    "code": ".long\tSeScreenData_0x4D4C",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:105",
+    "code": ".long\tSeScreenData_0x4D4C",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D56",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 73,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:106",
+    "code": ".long\tSeScreenData_0x4D56",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D60",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 78,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:107",
+    "code": ".long\tSeScreenData_0x4D60",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D6A",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 83,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:108",
+    "code": ".long\tSeScreenData_0x4D6A",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D74",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 88,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:109",
+    "code": ".long\tSeScreenData_0x4D74",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4D7F",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 93,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:110",
+    "code": ".long\tSeScreenData_0x4D7F",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4DAD",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 115,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:27",
+    "code": ".long\tSeScreenData_0x4DAD",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:131",
+    "code": ".long\tSeScreenData_0x4DAD",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:132",
+    "code": ".long\tSeScreenData_0x4DAD",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:133",
+    "code": ".long\tSeScreenData_0x4DAD + 0xa",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:134",
+    "code": ".long\tSeScreenData_0x4DAD + 0x14",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:135",
+    "code": ".long\tSeScreenData_0x4DAD + 0x23",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4DDA",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 129,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:28",
+    "code": ".long\tSeScreenData_0x4DDA",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:209",
+    "code": ".long\tSeScreenData_0x4DDA",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4DEE",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 138,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:29",
+    "code": ".long\tSeScreenData_0x4DEE",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:33",
+    "code": ".long\tSeScreenData_0x4DEE",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:152",
+    "code": ".long\tSeScreenData_0x4DEE",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:153",
+    "code": ".long\tSeScreenData_0x4DEE",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:154",
+    "code": ".long\tSeScreenData_0x4DEE + 0xa",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:155",
+    "code": ".long\tSeScreenData_0x4DEE + 0x14",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:156",
+    "code": ".long\tSeScreenData_0x4DEE + 0x1e",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4E16",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 150,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:30",
+    "code": ".long\tSeScreenData_0x4E16",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:34",
+    "code": ".long\tSeScreenData_0x4E16",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:210",
+    "code": ".long\tSeScreenData_0x4E16",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:212",
+    "code": ".long\tSeScreenData_0x4E16",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4E2A",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 159,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:31",
+    "code": ".long\tSeScreenData_0x4E2A",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:173",
+    "code": ".long\tSeScreenData_0x4E2A",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:174",
+    "code": ".long\tSeScreenData_0x4E2A",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:175",
+    "code": ".long\tSeScreenData_0x4E2A + 0xa",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:176",
+    "code": ".long\tSeScreenData_0x4E2A + 0x15",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:177",
+    "code": ".long\tSeScreenData_0x4E2A + 0x20",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4E54",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 171,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:32",
+    "code": ".long\tSeScreenData_0x4E54",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:211",
+    "code": ".long\tSeScreenData_0x4E54",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4E68",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 180,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:35",
+    "code": ".long\tSeScreenData_0x4E68",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:37",
+    "code": ".long\tSeScreenData_0x4E68",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:195",
+    "code": ".long\tSeScreenData_0x4E68",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:196",
+    "code": ".long\tSeScreenData_0x4E68",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:197",
+    "code": ".long\tSeScreenData_0x4E68 + 0xf",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:198",
+    "code": ".long\tSeScreenData_0x4E68 + 0x19",
+    "enclosing_label": "SeDigEff_DrawField_Records"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x4E8B",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 193,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:36",
+    "code": ".long\tSeScreenData_0x4E8B",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:38",
+    "code": ".long\tSeScreenData_0x4E8B",
+    "enclosing_label": "SeScreenData_ListBounds"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:213",
+    "code": ".long\tSeScreenData_0x4E8B",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:214",
+    "code": ".long\tSeScreenData_0x4E8B",
+    "enclosing_label": "SeDigEff_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5400",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 536,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3696",
+    "code": ".set DrumDetailEdit_Entry_01, SeScreenData_0x5400",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:657",
+    "code": ".long\tSeScreenData_0x5400",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:658",
+    "code": ".long\tSeScreenData_0x5400",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5422",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 549,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3697",
+    "code": ".set DrumDetailEdit_Entry_02, SeScreenData_0x5422",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:671",
+    "code": ".long\tSeScreenData_0x5422",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5444",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 560,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3698",
+    "code": ".set DrumDetailEdit_Entry_03, SeScreenData_0x5444",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:659",
+    "code": ".long\tSeScreenData_0x5444",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5450",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 565,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3699",
+    "code": ".set DrumDetailEdit_Entry_04, SeScreenData_0x5450",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:661",
+    "code": ".long\tSeScreenData_0x5450",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x545D",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 570,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3700",
+    "code": ".set DrumDetailEdit_Entry_05, SeScreenData_0x545D",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:663",
+    "code": ".long\tSeScreenData_0x545D",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x546A",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 577,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3701",
+    "code": ".set DrumDetailEdit_Entry_06, SeScreenData_0x546A",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:672",
+    "code": ".long\tSeScreenData_0x546A",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x548C",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 588,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3702",
+    "code": ".set DrumDetailEdit_Entry_07, SeScreenData_0x548C",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:660",
+    "code": ".long\tSeScreenData_0x548C",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5498",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 593,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3703",
+    "code": ".set DrumDetailEdit_Entry_08, SeScreenData_0x5498",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:662",
+    "code": ".long\tSeScreenData_0x5498",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x54A5",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 598,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3704",
+    "code": ".set DrumDetailEdit_Entry_09, SeScreenData_0x54A5",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:664",
+    "code": ".long\tSeScreenData_0x54A5",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x54B2",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 603,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3705",
+    "code": ".set Data_Dispatch_Entry, SeScreenData_0x54B2",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:665",
+    "code": ".long\tSeScreenData_0x54B2",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:666",
+    "code": ".long\tSeScreenData_0x54B2",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:667",
+    "code": ".long\tSeScreenData_0x54B2",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x54EB",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 626,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:8796",
+    "code": "ld\txix, SeScreenData_0x54EB",
+    "enclosing_label": "SeMenuTitle_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:8891",
+    "code": "ld\txix, SeScreenData_0x54EB",
+    "enclosing_label": "SeMenuTitle_DrawField"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:668",
+    "code": ".long\tSeScreenData_0x54EB",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:669",
+    "code": ".long\tSeScreenData_0x54EB",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x54F7",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 631,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:670",
+    "code": ".long\tSeScreenData_0x54F7",
+    "enclosing_label": "DrumDetailEdit_Menu_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5503",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 636,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:623",
+    "code": ".long\tSeScreenData_0x5503",
+    "enclosing_label": "SeMenuTitle_DrawField_Records2"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5525",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 653,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:8844",
+    "code": "ld\txiy, SeScreenData_0x5525",
+    "enclosing_label": "SeMenu_WaveformSelect_Apply_Helper3"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:8879",
+    "code": "ld\txix, SeScreenData_0x5525",
+    "enclosing_label": "SeMenuTitle_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:8882",
+    "code": "ld\txiy, SeScreenData_0x5525",
+    "enclosing_label": "SeMenuTitle_DrawField"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:8911",
+    "code": "ld\txiy, SeScreenData_0x5525",
+    "enclosing_label": "SeMenuTitle_DrawField"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5895",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 825,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3706",
+    "code": ".set EffectParamEdit_Entry_01, SeScreenData_0x5895",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:880",
+    "code": ".long\tSeScreenData_0x5895",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58A0",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 829,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3707",
+    "code": ".set EffectParamEdit_Entry_02, SeScreenData_0x58A0",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:881",
+    "code": ".long\tSeScreenData_0x58A0",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58AF",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 835,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3708",
+    "code": ".set EffectParamEdit_Entry_03, SeScreenData_0x58AF",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:882",
+    "code": ".long\tSeScreenData_0x58AF",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58BA",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 839,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3709",
+    "code": ".set EffectParamEdit_Entry_04, SeScreenData_0x58BA",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:883",
+    "code": ".long\tSeScreenData_0x58BA",
+    "enclosing_label": "EffectParam_Edit_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:884",
+    "code": ".long\tSeScreenData_0x58BA",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58C5",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 843,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3710",
+    "code": ".set EffectParamEdit_Entry_05, SeScreenData_0x58C5",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:888",
+    "code": ".long\tSeScreenData_0x58C5",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58D0",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 847,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3711",
+    "code": ".set EffectParamEdit_Entry_06, SeScreenData_0x58D0",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:885",
+    "code": ".long\tSeScreenData_0x58D0",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58DB",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 851,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3712",
+    "code": ".set EffectParamEdit_Entry_07, SeScreenData_0x58DB",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:886",
+    "code": ".long\tSeScreenData_0x58DB",
+    "enclosing_label": "EffectParam_Edit_Table"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:887",
+    "code": ".long\tSeScreenData_0x58DB",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58E6",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 855,
+  "refs": [
+   {
+    "line": "kn5000_v10_program.s:3713",
+    "code": ".set EffectParamEdit_Entry_08, SeScreenData_0x58E6",
+    "enclosing_label": "SubCPU_SendPayloadEnableFlag"
+   },
+   {
+    "line": "storage/flash_floppy_handlers.s:879",
+    "code": ".long\tSeScreenData_0x58E6",
+    "enclosing_label": "EffectParam_Edit_Table"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x58F1",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 860,
+  "refs": [
+   {
+    "line": "audio/sound_editor_ui.s:9798",
+    "code": "ld\txix, SeScreenData_0x58F1",
+    "enclosing_label": "SeEasy_DrawStaticScreen"
+   },
+   {
+    "line": "audio/sound_editor_ui.s:9834",
+    "code": "ld xiy, SeScreenData_0x58F1",
+    "enclosing_label": "SeMenu_NameEdit_Bit7Set"
+   }
+  ]
+ },
+ {
+  "name": "SeScreenData_0x5951",
+  "file": "storage/flash_floppy_handlers.s",
+  "line": 891,
+  "refs": [
+   {
+    "line": "storage/flash_floppy_handlers.s:857",
+    "code": ".long\tSeScreenData_0x5951",
+    "enclosing_label": "SeMenu_DrawEnvKeyOffFields_Records3"
+   }
+  ]
+ }
+]

@@ -1,0 +1,1434 @@
+[
+ {
+  "old": "CompIface_ProcessInput",
+  "verdict": "name",
+  "new": "Fade_Tick",
+  "kind": "label",
+  "header": "FADE IN/OUT engine, once per input pass of the main loop (Encoder_TimingAndOutput tail-jumps here): while no fade-out has finished (0xC1F0 bit 3 clear) it steps the level ramp (Fade_Tick_Ramp); once one has, it applies the FADE OUT \"Rhythm Auto stop\" / \"SEQ Auto stop\" settings (0xC1F0 bits 4/5) to a playing rhythm / sequencer and, with \"Auto reset\" (bit 6), puts FADE OUT (key 0x40C1) off when (0xC1FC) ticks have passed since the level reached 0. Basis: caller + body + the settings Fade_ParamListener copies into 0xC1F0.",
+  "basis": "caller + body",
+  "evidence": [
+   "v10/maincpu/boot/system_handlers.s:1128 `call Encoder_TimingAndOutput` -- input phase of the main loop (gated by `tset 0, (0x0422)`)",
+   "v10/maincpu/audio/audio_control_engine.s:2022-2024 `call MidiOut_SerializeAndSend / pop sr / jp CompIface_ProcessInput` -- its only reference: the tail of the per-pass input routine",
+   "v10/maincpu/audio/dsp_config_sysex.s:1879-1880 `bit 3, (0xc1f0:16) / jrl z, CompIface_RampControl` -- bit 3 clear (no fade-out finished): go step the ramp",
+   "v10/maincpu/audio/dsp_config_sysex.s:1881-1883 `bit 2, (1054:16) / jr z, CompIface_FilterBySource / bit 2, (SEQ_TRANSPORT_STATE:16)` -- RAM 0x41E / SEQ_TRANSPORT_STATE bit 2 = rhythm / sequencer running (the transport bytes AccPlayMode_Dispatch also tests)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2285-2288 `ld xwa, 0x2a10 / call SndParam_LookupReadOnly / and hl, 0x1 / sla hl, 4` -- 0xC1F0 bit 4 = SndParam_FadeOut_RhythmAutoStop (bit 5 = 0x2A11 SEQ Auto stop, bit 6 = 0x2A12 Auto reset, the next two arms)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1945-1952 `bit 6, (0xc1f0:16) / ret z / ld wa, (SYSTEM_TIMESTAMP:16) / sub wa, (0xc1ea:16) / cp wa, (0xc1fc:16) / ret ule / ld xwa, 0x40c1 / ld bc, 0:i3` -- Auto reset: FADE OUT off after the delay",
+   "v10/maincpu/audio/dsp_config_sysex.s:1983-1985 `ld xwa, 0x4005 / ld de, 1:i3 / call SoundParam_NotifyChange` -- the ramp writes key 0x4005 = SndParam_Fade_Level"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_CheckUpDown",
+  "verdict": "name",
+  "new": "Fade_Tick_BothPlaying_RhythmStop",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1885-1888 `bit 4, (0xc1f0:16) / jr z, CompIface_CheckUpDown / bit 5, (0xc1f0:16) / jr z, CompIface_CheckUpDown` -- its only two references: rhythm and sequencer both playing, not both Auto stops on",
+   "v10/maincpu/audio/dsp_config_sysex.s:1894-1896 `bit 4, (0xc1f0:16) / jr z, CompIface_RampDown / call AccWrap_PlayModeStartPlay` -- Rhythm Auto stop: AccPlayMode_StartPlay2, the AccPlayMode_Dispatch case for \"rhythm alone running\" (entry 1 of AccPlayMode_Dispatch_Execute_Data)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampDown",
+  "verdict": "name",
+  "new": "Fade_Tick_BothPlaying_SeqStop",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1895 `jr z, CompIface_RampDown` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:1901-1902 `bit 5, (0xc1f0:16) / jr z, CompIface_PostProcess` -- SEQ Auto stop alone; nothing ramps down here"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampDown_Start",
+  "verdict": "name",
+  "new": "Fade_Tick_BothPlaying_SeqStop_Join",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1903-1905 `cpw (0x28a8:16), 0 / jr z, CompIface_RampDown_Start / set 1, (9834:16)` -- only reference: the join after the optional flag",
+   "v10/maincpu/audio/dsp_config_sysex.s:1908-1909 `call AccWrap_PlayModeStopExpr / jr CompIface_CallSync` -- AccPlayMode_StopExprD = the \"sequencer alone running\" case of AccPlayMode_Dispatch, then the sequencer stop"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_FilterBySource",
+  "verdict": "name",
+  "new": "Fade_Tick_NotBothPlaying",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1882-1884 `jr z, CompIface_FilterBySource / bit 2, (SEQ_TRANSPORT_STATE:16) / jr z, CompIface_FilterBySource` -- its only references: rhythm or sequencer not running",
+   "v10/maincpu/audio/dsp_config_sysex.s:1912-1916 `bit 2, (1054:16) / jr z, CompIface_FromSource2 / bit 4, (0xc1f0:16) / jr z, CompIface_PostProcess / call AccWrap_PlayModeDispatch` -- rhythm playing + Rhythm Auto stop: stop it"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_FromSource2",
+  "verdict": "name",
+  "new": "Fade_Tick_SeqOnly",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1913 `jr z, CompIface_FromSource2` -- only reference (rhythm not running)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1920-1923 `bit 2, (SEQ_TRANSPORT_STATE:16) / jr z, CompIface_PostProcess / bit 5, (0xc1f0:16) / jr z, CompIface_PostProcess` -- sequencer playing + SEQ Auto stop"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_Source2_ZeroCheck",
+  "verdict": "name",
+  "new": "Fade_Tick_SeqOnly_Stop",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1924-1926 `call SeqState_GetFlags / and hl, 0x7 / jr z, CompIface_Source2_ZeroCheck` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:1931-1932 `cpw (0x28a8:16), 0 / jr z, CompIface_CallFilterA` -- falls into the shared stop"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SetPedalBit",
+  "verdict": "name",
+  "new": "Fade_Tick_StopAll_SetFlag",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1889-1890 `cpw (0x28a8:16), 0 / jr nz, CompIface_SetPedalBit` -- reached when both Auto stops are on (and by fall-through from Fade_Tick_SeqOnly_Stop)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1935 `set 1, (9834:16)` -- sets RAM 0x266A bit 1 (meaning not established; no pedal involved) before the shared stop"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_CallFilterA",
+  "verdict": "name",
+  "new": "Fade_Tick_StopAll",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1891 `jr CompIface_CallFilterA` -- both Auto stops on, (0x28A8) = 0",
+   "v10/maincpu/audio/dsp_config_sysex.s:1938 `call AccWrap_PlayModeDispatch` -- AccPlayMode_Dispatch stops whatever its running bits say is playing (it filters nothing)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1941 `call SeqPlay_StopAndResetAll` -- then the sequencer stop"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_CallSync",
+  "verdict": "name",
+  "new": "Fade_Tick_StopSequencer",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1909 `jr CompIface_CallSync` -- only jump reference (also reached by fall-through)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1941 `call SeqPlay_StopAndResetAll` -- nothing is synchronised; it stops the sequencer"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_PostProcess",
+  "verdict": "name",
+  "new": "Fade_Tick_AutoReset",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1898 `jr CompIface_PostProcess` -- every arm of the faded-out case joins here",
+   "v10/maincpu/audio/dsp_config_sysex.s:1944-1946 `call AccompSeq_StopSequence / bit 6, (0xc1f0:16) / ret z` -- then the Auto reset test (0x2A12 copied to bit 6)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1955-1957 `res 3, (0xc1f0:16) / ldw wa, 0x4e / call CtrlPanel_SetIndicatorLED` -- leaves the faded-out state, FADE OUT LED steady"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampControl",
+  "verdict": "name",
+  "new": "Fade_Tick_Ramp",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1880 `jrl z, CompIface_RampControl` -- only reference: Fade_Tick with no fade-out finished",
+   "v10/maincpu/audio/dsp_config_sysex.s:1961-1967 `ld wa, (SYSTEM_TIMESTAMP:16) / ld bc, wa / sub bc, (0xc1ea:16) / bit 0, (0xc1f0:16) / jr z, CompIface_RampDown_Apply / cp bc, 0xf / ret c` -- bit 0 = fading in; one step per 15+ ticks since the last (0xC1EA)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1971-1974 `ld wa, (0xc1f8:16) / extz xwa / add xbc, xwa / cp xbc, 0x7f00` -- adds the FADE IN step (0xC1F8) to the 8.8 level (0xC1EE), clamped at 127.0"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampUp_Clamp",
+  "verdict": "name",
+  "new": "Fade_Tick_FadeInStore",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1975 `jr le, CompIface_RampUp_Clamp` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:1979-1983 `ld (0xc1ee:16), bc / srl bc, 8 / ld (0xc1ec:16), c / extz bc / ld xwa, 0x4005` -- stores the level and writes key 0x4005",
+   "v10/maincpu/audio/dsp_config_sysex.s:1986-1990 `cp (0xc1ec:16), 127 / ret nz / res 0, (0xc1f0:16) / ld xwa, 0x40c0 / ld bc, 0:i3` -- at 127 the fade-in ends and FADE IN (0x40C0) goes off"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampDown_Apply",
+  "verdict": "name",
+  "new": "Fade_Tick_FadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1965 `jr z, CompIface_RampDown_Apply` -- only reference (not fading in)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1996-1999 `bit 1, (0xc1f0:16) / ret z / cp bc, 0xf / ret c` -- bit 1 = fading out",
+   "v10/maincpu/audio/dsp_config_sysex.s:2003-2005 `ld wa, (0xc1fa:16) / extz xwa / sub xbc, xwa` -- subtracts the FADE OUT step (0xC1FA)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_RampDown_Clamp",
+  "verdict": "name",
+  "new": "Fade_Tick_FadeOutStore",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2006 `jr ge, CompIface_RampDown_Clamp` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2017-2024 `cp (0xc1ec:16), 0 / ret nz / res 1, (0xc1f0:16) / set 3, (0xc1f0:16) / ldw wa, 0x4e / ld bc, 1:i3 / ld de, 0:i3 / call CtrlPanel_IndicatorDispatch` -- at 0: fading-out ends, faded-out state (bit 3) begins, FADE OUT LED flashes",
+   "v10/maincpu/extensions/extension_data.s:2758-2761 `.short 0x2000 / .long CtrlPanel_SetResBit5_ViaLookup4C / .short 0x4000 / .long CtrlPanel_SetResBit6_ViaLookup4C` -- held (every-pass) handlers of the same two bits toggle FADE IN / FADE OUT with the blink counter 0x8F4A: CtrlPanel_IndicatorDispatch 0x4D/0x4E = flash, CtrlPanel_SetIndicatorLED = steady"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_ResetPedal",
+  "verdict": "name",
+  "new": "Fade_StartArmedFadeIn",
+  "kind": "label",
+  "header": "Starts an armed FADE IN: if 0xC1F0 bit 2 is set (FADE IN switched on while no fade ran: level 0, FADE IN LED flashing), clears it, makes the LED steady (0x4D) and sets bit 0 so Fade_Tick ramps the level up. Called when playing starts: the keyboard / accompaniment note-on paths, chord changes, AccAutoPlay_NoteDispatch, and the main loop after the timer ISR flags a rhythm or sequencer start (RAM 0x473 bit 0). No pedal is involved. Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2028-2033 `bit 2, (0xc1f0:16) / ret z / res 2, (0xc1f0:16) / ldw wa, 0x4d / call CtrlPanel_SetIndicatorLED / set 0, (0xc1f0:16)` -- the whole body",
+   "v10/maincpu/audio/dsp_config_sysex.s:2215-2221 `set 2, (0xc1f0:16) / ldw wa, 0x4d / ld bc, 1:i3 / ld de, 0:i3 / call CtrlPanel_IndicatorDispatch / ld wa, 0:i3 / calr CompIface_WriteVolume` -- where bit 2 is set: FADE IN switched on while idle -> FADE IN LED flashes, level 0",
+   "v10/maincpu/extensions/extension_data.s:2712-2713 `.short 0x2000 / .long MidiChanged_ProcessGroup3_Data_Target9` -- LED request code 0x4D = group 0x40, bit 13 (mask 0x2000; CtrlPanel_SingleBitMaskTable): its one-shot handler draws FADE IN from key 0x40C0",
+   "v10/maincpu/audio/note_voice_mapping.s:98 `call CompIface_ResetPedal` -- keyboard note-on path",
+   "v10/maincpu/sequencer/accompseq_routines.s:1757 `call CompIface_ResetPedal` -- chord change",
+   "v10/maincpu/boot/system_handlers.s:1178-1180 `tset_dd16 0, 0x73, 0x04 / jr nz, MainLoop_AfterPedalReset / call CompIface_ResetPedal` -- `tset 0, (1139:16)` (f1 73 04 a8): called once after RAM 0x473 bit 0 is cleared",
+   "v10/maincpu/boot/system_handlers.s:467-470 `bit 0, (1054:16) / jr z, INTT1_CheckAltSeqOverflow / ld (1054:16), 6 / res 0, (1139:16)` -- the timer ISR clears it when the rhythm (and, next lines, the sequencer) goes from start-pending to running"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SetMax",
+  "verdict": "name",
+  "new": "Fade_SetFullLevelAndFlush",
+  "kind": "label",
+  "header": "Puts the fade level back to 127 (Fade_SetLevel), then runs the queued parameter-write listeners (SwbtWr_CallProcessAll) and resends both banks (SwbtWr_ReinitBothBanks); the tail of Audio_ReinitToneGen and Audio_ReinitToneGenAndOutput. Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2037-2038 `ldw wa, 0x7f / calr CompIface_WriteVolume` -- level 127",
+   "v10/maincpu/audio/dsp_config_sysex.s:2043-2044 `call SwbtWr_CallProcessAll / call SwbtWr_ReinitBothBanks` -- flush",
+   "v10/maincpu/audio/audio_control_engine.s:4120 `jp CompIface_SetMax` -- caller 1",
+   "v10/maincpu/audio/audio_control_engine.s:4169 `jp CompIface_SetMax` -- caller 2 (Audio_ReinitToneGenAndOutput)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_ScaleValue",
+  "verdict": "name",
+  "new": "Fade_MeasuresToTicks",
+  "kind": "label",
+  "header": "HL = A * 120000 / BC, BC = the tempo (key 4): the length of A measures in SYSTEM_TIMESTAMP ticks, on the scale Fade_CalcRampStep uses for the measure-denominated FADE times. Its one caller passes A = 1 and keeps the result at 0xC1FC, the delay Fade_Tick waits before an Auto reset. Basis: caller + body.",
+  "basis": "caller + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2055-2061 `ld w, 0x0:opc / extz xwa / ld xbc, 0x1d4c0 / call Math_Multiply32 / ld xwa, xhl / ld xbc, xiz / call Math_DivideU32` -- 0x1D4C0 = 120000; divided by BC (the tempo)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2332-2334 `ld (0xc1fa:16), hl / ld bc, (0xc1f6:16) / ld wa, 1:i3` -- A = 1, BC = tempo copy (0xC1F6, key 4)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2337-2338 `calr CompIface_ScaleValue / ld (0xc1fc:16), hl` -- only caller: the Auto reset delay",
+   "v10/maincpu/audio/dsp_config_sysex.s:2071 `ld xbc, 0x1ef0` -- 0x1EF0 = 7920 in Fade_CalcRampStep: a fade of t measures takes t*7920/tempo steps of 15+ ticks; 7920 x 15 = 118800, within 1% of 120000, so 120000/tempo ticks is one measure on both scales",
+   "v10/maincpu/ui_widgets/naka_widget_tables_2.c:12630 `.FadeSetGridCheck_LocalInit_Strings = \" %2d measure \\0\"` -- the FADE IN/OUT SETTING grid draws the times in measures (FadeSetGridCheck, README-lsw-param-namespace-map.md section 9)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_ScaleAndNormalize",
+  "verdict": "name",
+  "new": "Fade_CalcRampStep",
+  "kind": "label",
+  "header": "HL = 0x7F00 / (A * 7920 / BC): the 8.8 fixed-point level step Fade_Tick adds (fade-in) or subtracts (fade-out) every 15+ ticks, so that a fade of A measures (FADE IN / FADE OUT time, keys 0x2A00 / 0x2A01, 1..16) at tempo BC (key 4) spans 0..127. The results are kept at 0xC1F8 (in) and 0xC1FA (out). Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2071-2078 `ld xbc, 0x1ef0 / call Math_Multiply32 / ld xwa, xhl / ld xbc, xiz / call Math_DivideU32 / ld xbc, xhl / ld xwa, 0x7f00 / call Math_DivideU32` -- body",
+   "v10/maincpu/audio/dsp_config_sysex.s:2257-2264 `ld xwa, 0x2a00 / call SndParam_LookupReadOnly / ld (0xc1f2:16), l / extz hl / ld bc, (0xc1f6:16) / ld wa, hl / calr CompIface_ScaleAndNormalize / ld (0xc1f8:16), hl` -- FADE IN time -> fade-in step",
+   "v10/maincpu/audio/dsp_config_sysex.s:2270-2272 `ld xwa, 0x2a01 / call SndParam_LookupReadOnly / ld (0xc1f4:16), l` -- FADE OUT time -> 0xC1FA (next lines)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1971 `ld wa, (0xc1f8:16)` -- read by the ramp"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_WriteVolume",
+  "verdict": "name",
+  "new": "Fade_SetLevel",
+  "kind": "label",
+  "header": "A = fade level 0..127: if it differs from 0xC1EC, stores it there and as 8.8 fixed point at 0xC1EE (the ramp accumulator), and writes key 0x4005 (SndParam_Fade_Level; the sub CPU's DSP_Set_FadeLevel output-gain stage). Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2083-2086 `ld c, (0xc1ec:16) / cp c, a / ret z / ld (0xc1ec:16), a` -- level byte",
+   "v10/maincpu/audio/dsp_config_sysex.s:2089-2090 `sll bc, 8 / ld (0xc1ee:16), bc` -- 8.8 accumulator the ramp steps",
+   "v10/maincpu/audio/dsp_config_sysex.s:2093-2095 `ld xwa, 0x4005 / ld de, 3:i3 / call SoundParam_NotifyChange` -- key 0x4005",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:84 `.long 0x0000c1ec` -- 0xC1EC is entry 5 of the controller-value pointers beside the analog controllers (0x8EE4..0x8EF4)",
+   "v142/subcpu/kn5000_subprogram_v142.s:44969 `ld (17846:16), wa` -- sub CPU: the fade level is the DE stage of DSP_MixerCoeff_Compute"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Audio_ConfigureDSP",
+  "verdict": "name",
+  "new": "Fade_Cancel",
+  "kind": "label",
+  "header": "Cancels any fade: clears the fade state bits 0-3 of 0xC1F0, puts FADE IN (key 0x40C0) and FADE OUT (0x40C1) off and refreshes their LEDs (0x4D, 0x4E), and restores the level to 127 (Fade_SetLevel). Called at song load / playback start (Acc_LoadAndStartPlayback), demo start (DemoMode_Main_Operation) and by BitMapOut_PrepareAndRender. It configures no DSP. Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2099-2102 `and (0xc1f0:16), 243 / and (0xc1f0:16), 252 / ld xwa, 0x40c0 / ld bc, 0:i3` -- state bits 3,2 then 1,0 cleared; FADE IN off",
+   "v10/maincpu/audio/dsp_config_sysex.s:2107-2114 `ld xwa, 0x40c1 / ld bc, 0:i3 / ld de, 1:i3 / call SoundParam_NotifyChange / ldw wa, 0x4e / call CtrlPanel_SetIndicatorLED / ldw wa, 0x7f / jr CompIface_WriteVolume` -- FADE OUT off, LED, level 127",
+   "v10/maincpu/audio/note_voice_mapping.s:19874 `call Audio_ConfigureDSP` -- caller",
+   "v10/maincpu/demo/file_demo_proc.s:555 `call Audio_ConfigureDSP` -- caller"
+  ],
+  "scope": "extra: sits inside the fade engine, between Fade_SetLevel and Fade_ParamListener",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_ProcessInput",
+  "verdict": "name",
+  "new": "Fade_ParamListener",
+  "kind": "label",
+  "header": "Parameter-write listener of the FADE IN/OUT engine (in the SwbtWr listener lists of records 0x48, 0x70 and 0x98): the tempo (0x48 +8/+9, keys 4/5) and the FADE IN/OUT SETTING values (0x70 +5..+7, keys 0x2A00/0x2A01/0x2A10-0x2A12) recompute the ramp steps and the Auto reset delay; the FADE IN / FADE OUT switches (0x98 +11 bits 7/6, keys 0x40C0/0x40C1) drive the state in 0xC1F0 (bit 0 fading in, 1 fading out, 2 FADE IN armed, 3 faded out). Basis: listener tables + body.",
+  "basis": "listener tables + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:6463 `.long DSPCfg_ProcessInput` -- record 0x48 listener",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:6538 `.long DSPCfg_ProcessInput` -- record 0x70 listener",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:6601 `.long DSPCfg_ProcessInput` -- record 0x98 listener",
+   "v10/maincpu/audio/dsp_config_sysex.s:2116-2123 `ld c, (SWBTWR_EVENT_TYPE:16) / ld e, (SWBTWR_PAYLOAD_1:16) / cp c, 0x48 / jrl z, DSPCfg_ScaleFactor_Dispatch / ld a, (SWBTWR_PAYLOAD_3:16) / cp c, 0x70 / jrl z, DSPCfg_FadeSettingDispatch / cp c, 0x98` -- record dispatch",
+   "v10/maincpu/audio/dsp_config_sysex.s:2125-2129 `cp e, 0xb / ret nz / ld c, a / and a, 0xc0 / ret z` -- record 0x98 byte 11, changed bits 7/6 = SndParam_FadeIn_OnOff / SndParam_FadeOut_OnOff"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_Reverb_CheckSustain",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadingIn_CheckFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2130-2136 `bit 0, (0xc1f0:16) / jr z, DSPCfg_Chorus_Active / bit 7, c / jr z, DSPCfg_Reverb_CheckSustain / bit 7, (SWBTWR_PAYLOAD_2:16) / jr nz, DSPCfg_Reverb_CheckSustain / res 0, (0xc1f0:16)` -- state fading in: FADE IN switched off stops the fade-in; its only references",
+   "v10/maincpu/audio/dsp_config_sysex.s:2139-2144 `bit 6, (SWBTWR_PAYLOAD_3:16) / jrl z, DSPCfg_UpdateOutputVolume / bit 6, (SWBTWR_PAYLOAD_2:16) / jrl z, DSPCfg_UpdateOutputVolume / res 0, (0xc1f0:16) / jrl DSPCfg_SetFadeBit` -- FADE OUT (bit 6) switched on: fade out from the current level; no reverb or sustain"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_Chorus_Active",
+  "verdict": "name",
+  "new": "Fade_ParamListener_Armed",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2131 `jr z, DSPCfg_Chorus_Active` -- only reference (not fading in)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2147-2149 `bit 2, (0xc1f0:16) / jr z, DSPCfg_FadeOut_Active / bit 7, c` -- state FADE IN armed (bit 2)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2153-2155 `res 2, (0xc1f0:16) / ldw wa, 0x4d / call CtrlPanel_SetIndicatorLED` -- FADE IN switched off: disarm, LED steady"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_Chorus_CheckSustain",
+  "verdict": "name",
+  "new": "Fade_ParamListener_Armed_CheckFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2150-2152 `jr z, DSPCfg_Chorus_CheckSustain / bit 7, (SWBTWR_PAYLOAD_2:16) / jr nz, DSPCfg_Chorus_CheckSustain` -- only references",
+   "v10/maincpu/audio/dsp_config_sysex.s:2162-2167 `res 2, (0xc1f0:16) / ldw wa, 0x4d / call CtrlPanel_SetIndicatorLED / set 1, (0xc1f0:16) / ldw wa, 0x7f / calr CompIface_WriteVolume` -- FADE OUT switched on while armed: fade out from 127"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeOut_Active",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadingOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2148 `jr z, DSPCfg_FadeOut_Active` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2171-2178 `bit 1, (0xc1f0:16) / jr z, DSPCfg_EQ_Active / bit 7, c / jr z, DSPCfg_FadeOut_CheckSustain / bit 7, (SWBTWR_PAYLOAD_2:16) / jr z, DSPCfg_FadeOut_CheckSustain / set 0, (0xc1f0:16) / res 1, (0xc1f0:16)` -- state fading out; FADE IN switched on turns it into a fade-in from the current level"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeOut_CheckSustain",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadingOut_CheckFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2174 `jr z, DSPCfg_FadeOut_CheckSustain` -- only references (two)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2181-2185 `bit 6, (SWBTWR_PAYLOAD_3:16) / jr z, DSPCfg_UpdateOutputVolume / bit 6, (SWBTWR_PAYLOAD_2:16) / jr nz, DSPCfg_UpdateOutputVolume / res 1, (0xc1f0:16)` -- FADE OUT switched off stops the fade-out"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_EQ_Active",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadedOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2172 `jr z, DSPCfg_EQ_Active` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2189-2190 `bit 3, (0xc1f0:16) / jr z, DSPCfg_Idle_EnableChorus` -- state faded out (bit 3); no EQ",
+   "v10/maincpu/audio/dsp_config_sysex.s:2195-2198 `set 0, (0xc1f0:16) / res 3, (0xc1f0:16) / ldw wa, 0x4e / call CtrlPanel_SetIndicatorLED` -- FADE IN switched on: fade in from 0, FADE OUT LED steady",
+   "v10/maincpu/extensions/extension_data.s:2714-2715 `.short 0x4000 / .long CtrlPanel_SetResBit6_ViaLookup` -- LED request code 0x4E = group 0x40, bit 14: its one-shot handler draws FADE OUT from key 0x40C1 (LED-image byte 0 bit 6)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_EQ_CheckSustain",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadedOut_CheckFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2192 `jr z, DSPCfg_EQ_CheckSustain` -- only references (two)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2203-2207 `bit 6, (SWBTWR_PAYLOAD_2:16) / jr nz, DSPCfg_UpdateOutputVolume / res 3, (0xc1f0:16) / ldw wa, 0x4e / call CtrlPanel_SetIndicatorLED` -- FADE OUT switched off leaves the faded-out state"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_Idle_EnableChorus",
+  "verdict": "name",
+  "new": "Fade_ParamListener_Idle",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2190 `jr z, DSPCfg_Idle_EnableChorus` -- only reference: no fade state bit set",
+   "v10/maincpu/audio/dsp_config_sysex.s:2215-2216 `set 2, (0xc1f0:16) / ldw wa, 0x4d` -- FADE IN switched on: arm it (bit 2), FADE IN LED flashes, level 0 -- no chorus"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_Idle_CheckSustain",
+  "verdict": "name",
+  "new": "Fade_ParamListener_Idle_CheckFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2211-2214 `bit 7, c / jr z, DSPCfg_Idle_CheckSustain / bit 7, (SWBTWR_PAYLOAD_2:16) / jr z, DSPCfg_Idle_CheckSustain` -- only references",
+   "v10/maincpu/audio/dsp_config_sysex.s:2224-2227 `bit 6, (SWBTWR_PAYLOAD_3:16) / jr z, DSPCfg_UpdateOutputVolume / bit 6, (SWBTWR_PAYLOAD_2:16) / jr z, DSPCfg_UpdateOutputVolume` -- FADE OUT switched on falls into the fade-out start"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_SetFadeBit",
+  "verdict": "name",
+  "new": "Fade_ParamListener_StartFadeOut",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2144 `jrl DSPCfg_SetFadeBit` -- only jump reference (also the fall-through of the idle case)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2230 `set 1, (0xc1f0:16)` -- bit 1 = fading out (Fade_Tick_FadeOut)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_UpdateOutputVolume",
+  "verdict": "name",
+  "new": "Fade_ParamListener_ApplyLevel",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2140 `jrl z, DSPCfg_UpdateOutputVolume` -- join of every state arm (13 references, all in Fade_ParamListener)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2233-2237 `ld a, (0xc1f0:16) / and a, 0x3 / jr nz, DSPCfg_CheckChorusMuted / ldw wa, 0x7f / calr CompIface_WriteVolume` -- no ramp running: fade level 127"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_CheckChorusMuted",
+  "verdict": "name",
+  "new": "Fade_ParamListener_MuteIfArmed",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2235 `jr nz, DSPCfg_CheckChorusMuted` -- only jump reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2240-2243 `bit 2, (0xc1f0:16) / ret z / ld wa, 0:i3 / calr CompIface_WriteVolume` -- FADE IN armed: fade level 0"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeSettingDispatch",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadeSettings",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2122 `jrl z, DSPCfg_FadeSettingDispatch` -- only reference; the meaning (72afaf8eb) stays, the prefix follows the routine",
+   "v10/maincpu/audio/dsp_config_sysex.s:2249-2253 `cp e, 7:i3 / jr z, DSPCfg_FadeSetting_Flags / cp e, 6:i3 / jr z, DSPCfg_FadeSetting_OutTime / cp e, 5:i3` -- record 0x70 bytes 7 / 6 / 5"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeSetting_OutTime",
+  "verdict": "name",
+  "new": "Fade_ParamListener_FadeOutTime",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2252 `jr z, DSPCfg_FadeSetting_OutTime` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2270 `ld xwa, 0x2a01` -- SndParam_FadeOut_Time"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeSetting_Flags",
+  "verdict": "name",
+  "new": "Fade_ParamListener_RhythmAutoStop",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2250 `jr z, DSPCfg_FadeSetting_Flags` -- only reference (byte 7)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2283-2285 `bit 0, c / jr z, DSPCfg_FadeSetting_SeqAutoStop / ld xwa, 0x2a10` -- its own arm is bit 0 = SndParam_FadeOut_RhythmAutoStop, named like its two siblings"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeSetting_SeqAutoStop",
+  "verdict": "name",
+  "new": "Fade_ParamListener_SeqAutoStop",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2284 `jr z, DSPCfg_FadeSetting_SeqAutoStop` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2295 `ld xwa, 0x2a11` -- SndParam_FadeOut_SeqAutoStop -> 0xC1F0 bit 5"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_FadeSetting_AutoReset",
+  "verdict": "name",
+  "new": "Fade_ParamListener_AutoReset",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2294 `jr z, DSPCfg_FadeSetting_AutoReset` -- only reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2305 `ld xwa, 0x2a12` -- SndParam_FadeOut_AutoReset -> 0xC1F0 bit 6"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_ScaleFactor_Dispatch",
+  "verdict": "name",
+  "new": "Fade_ParamListener_Tempo",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2119 `jrl z, DSPCfg_ScaleFactor_Dispatch` -- only reference: record 0x48",
+   "v10/maincpu/audio/dsp_config_sysex.s:2314-2317 `cp e, 0x9 / jr z, DSPCfg_ScaleFactor_Update / cp e, 0x8 / ret nz` -- bytes 8/9 = SndParam_Tempo / SndParam_Tempo_Bit8"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_ScaleFactor_Update",
+  "verdict": "name",
+  "new": "Fade_ParamListener_TempoUpdate",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2315 `jr z, DSPCfg_ScaleFactor_Update` -- only jump reference",
+   "v10/maincpu/audio/dsp_config_sysex.s:2320-2323 `ld xwa, 4:i3 / call SndParam_LookupReadOnly / ld (0xc1f6:16), hl / ld a, (0xc1f2:16)` -- tempo (key 4) -> recompute both fade steps and the Auto reset delay"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "DSPCfg_ScaleFactor_StoreResult",
+  "verdict": "name",
+  "new": "Fade_ParamListener_StoreResetDelay",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:2280 `jrl DSPCfg_ScaleFactor_StoreResult` -- only jump reference (also the fall-through of the tempo update)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2337-2338 `calr CompIface_ScaleValue / ld (0xc1fc:16), hl` -- 0xC1FC = Auto reset delay"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SerialEnableTx",
+  "verdict": "refuse",
+  "kind": "label",
+  "header": "",
+  "basis": "callers + body",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1626 `ret` -- empty",
+   "v10/maincpu/midi/midi_serial_routines.s:1001 `call CompIface_SerialEnableTx` -- the non-MIDI arm of the SC0 TX dispatcher"
+  ],
+  "why_refused": "Its name and header (empty computer-interface counterpart of MIDI_SC0_ENABLE_TX) match the code; keep it.",
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SendActiveSensing",
+  "verdict": "name",
+  "new": "CompIface_SendPortTypeByte",
+  "kind": "label",
+  "header": "Sends the computer-interface port-type byte through sendCOMM channel 4 (the sub CPU's TO HOST port, SC1): CompIface_PortByte_F5 for COM SELECT = MAC or PC1, CompIface_PortByte_F4 for PC2, nothing for MIDI. Called once, by SC0_InitSerialPort; it sends no active sensing (0xFE). Basis: caller + body + data.",
+  "basis": "caller + body + data",
+  "evidence": [
+   "v10/maincpu/midi/midi_serial_routines.s:889-890 `calr READ_COM_SELECT_SWITCH / call CompIface_SendActiveSensing` -- only caller, at serial-port init (its header: \"sends the computer-interface port byte (0xF5 MAC/PC1, 0xF4 PC2, nothing for MIDI)\")",
+   "v10/maincpu/audio/dsp_config_sysex.s:1731-1733 `ld a, (COM_SELECT:16) / cp a, 0:i3 / ret z` -- MIDI: nothing",
+   "v10/maincpu/audio/dsp_config_sysex.s:1744-1747 `ld wa, 4:i3 / ld bc, 1:i3 / ld xde, CompIface_PortByte_F5 / call sendCOMM` -- one byte 0xF5 on COMM channel 4",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:3811 `.byte 0xf4, 0xff` -- data"
+  ],
+  "scope": "task: the code says otherwise for the \"ActiveSensing\" part",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SendActiveSensing_PC1MAC",
+  "verdict": "name",
+  "new": "CompIface_SendPortTypeByte_PC1Mac",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1737 `jr z, CompIface_SendActiveSensing_PC1MAC` -- only reference (plus the MAC fall-through)"
+  ],
+  "scope": "task: follows CompIface_SendPortTypeByte",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "CompIface_SendActiveSensing_PC2",
+  "verdict": "name",
+  "new": "CompIface_SendPortTypeByte_PC2",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1735 `jr z, CompIface_SendActiveSensing_PC2` -- only reference"
+  ],
+  "scope": "task: follows CompIface_SendPortTypeByte",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_ModWheel",
+  "verdict": "name",
+  "new": "PanelAction_ExpressionPedal",
+  "kind": "label",
+  "header": "Panel event 26, the expression pedal (main-CPU A/D channel 0, ADREG04, queued by PanelInput_QueueWheelChanges from ENCODER_0_OUTPUT): posts it as record 0xB0 +1 (TOTAL EXPRESSION, key 0x4001) when the pedal's FOOT CONTROLLERS function (key 0x2880) is 182 TOTAL EXPRESSION, re-targets it to record 0xB3 (part expression) for 183 PART EXPRESSION (not in MD_DEMO), and drops it for any other function. Basis: event table + body + FswAssign_FunctionCodes.",
+  "basis": "event table + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6179 `{ 0xB0, 0x01, 0x00, 0x7F, NAKA_ADDR(PanelAction_ModWheel) },  /* event 26 */` -- panel event 26 = record 0xB0 +1 (key 0x4001 SndParam_TotalExpression), mask 0x7F",
+   "v10/maincpu/audio/audio_control_engine.s:1239-1244 `ld xwa, 10368 / call SndParam_LookupReadOnly / cp hl, 183 / jr z, PanelAction_ModWheel_Skip / cp hl, 182 / jr nz, PanelAction_ModWheel_Epilogue` -- 10368 = 0x2880 = SndParam_FootCtrl_ExpressionPedal",
+   "v10/maincpu/audio/audio_control_engine.s:1250-1251 `ld (xiz), 179 / ld (xiz+1), 0` -- PART EXPRESSION: re-target to record 0xB3",
+   "v10/maincpu/extensions/extension_data.s:674 `.byte 0x93, 0x94, 0x95, 0x40, 0x96, 0x99, 0x97, 0x98, 0xad, 0xb0, 0xb1, 0xb8, 0xb9, 0xb6, 0xb7, 0xff` -- codes 29/30 = 0xB6/0xB7 (182/183) ...",
+   "v10/maincpu/extensions/extension_data.s:705-706 `.long CtrlAssignStr_TotalExpression / .long CtrlAssignStr_PartExpression` -- ... TOTAL EXPRESSION / PART EXPRESSION",
+   "v10/maincpu/audio/audio_control_engine.s:2194 `lda xbc, (ENCODER_0_OUTPUT:16)` -- event 26 source ...",
+   "v10/maincpu/audio/audio_control_engine.s:2415-2416 `ld wa, 0:i3 / calr MidiChannel_GetParamByIndex` -- ... A/D channel 0 (MidiChannel_GetParamByIndex 0 = ADREG04H, SFR 0x121)",
+   "v10/maincpu/audio/audio_control_engine.s:2432-2433 `ld bc, 2:i3 / call CPanel_EncoderDispatch` -- processed as analog ID 2 (Encoder_ProcessModwheel -> RAM 0x8EE4)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_ModWheel_Skip",
+  "verdict": "name",
+  "new": "PanelAction_ExpressionPedal_PartExpr",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1242 `jr z, PanelAction_ModWheel_Skip` -- only reference: function 183 PART EXPRESSION"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_ModWheel_Join",
+  "verdict": "name",
+  "new": "PanelAction_ExpressionPedal_Post",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1246 `jr PanelAction_ModWheel_Join` -- only jump reference",
+   "v10/maincpu/audio/audio_control_engine.s:1254 `calr PanelEvent_Post` -- posts the event"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_ModWheel_Epilogue",
+  "verdict": "name",
+  "new": "PanelAction_ExpressionPedal_Epilogue",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1244 `jr nz, PanelAction_ModWheel_Epilogue` -- other functions: dropped"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Volume",
+  "verdict": "name",
+  "new": "PanelAction_AfterTouch",
+  "kind": "label",
+  "header": "Panel event 27, the after-touch sensor (main-CPU A/D channel 1, ADREG15, queued from ENCODER_1_OUTPUT): posts it as record 0xB4 (part channel pressure) when AFTER TOUCH is on (key 0x104, SndParam_AfterTouch_OnOff), not in MD_DEMO. Basis: event table + body.",
+  "basis": "event table + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6184 `{ 0xB4, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Volume) },  /* event 27 */` -- panel event 27 = record 0xB4 (part channel pressure), mask 0x7F",
+   "v10/maincpu/audio/audio_control_engine.s:1269-1272 `ld xwa, 260 / call SndParam_LookupReadOnly / cp hl, 0:i3 / jr z, PanelAction_Volume_Epilogue` -- 260 = 0x104 = SndParam_AfterTouch_OnOff",
+   "v10/maincpu/audio/audio_control_engine.s:2466-2467 `ld bc, 5:i3 / call CPanel_EncoderDispatch` -- A/D channel 1 processed as analog ID 5 (threshold / curve of the AFTER TOUCH settings)"
+  ],
+  "scope": "extra: the sibling of PanelAction_ModWheel, same evidence",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Volume_Epilogue",
+  "verdict": "name",
+  "new": "PanelAction_AfterTouch_Epilogue",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1268 `jr z, PanelAction_Volume_Epilogue` -- MD_DEMO or AFTER TOUCH off"
+  ],
+  "scope": "extra: follows PanelAction_AfterTouch",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Event22",
+  "verdict": "name",
+  "new": "PanelAction_PitchBend",
+  "kind": "label",
+  "header": "Panel event 22, the pitch-bend wheel (left-panel analog header 0xD1, ID 25): posts record 0xB1 (part pitch bend) with the byte split into the 14-bit pair ((b & 1) << 6, b >> 1), 0xFF = full up (127, 127); not in MD_DEMO. Basis: event table + body.",
+  "basis": "event table + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6154 `{ 0xB1, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelAction_Event22) },  /* event 22 */` -- record 0xB1 = SndParam_PartNN_PitchBend",
+   "v10/maincpu/audio/audio_control_engine.s:1227-1232 `ld c, e / and c, 1 / sll c, 6 / ld (xhl), c / srl e, 1 / ld (xix), e` -- 14-bit split",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6492 `0x1F, 0x16, 0x17, 0x18, 0x1F, 0x1F, 0x1F, 0x19,` -- PanelInput_EventIndexByHeader [0x71..0x73] = 22, 23, 24 (headers 0xD1-0xD3), [0x77] = 25 (data wheel)"
+  ],
+  "scope": "extra: positional name, same evidence",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Event22_Skip",
+  "verdict": "name",
+  "new": "PanelAction_PitchBend_Split",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1222 `jr nz, PanelAction_Event22_Skip` -- only reference: value not 0xFF"
+  ],
+  "scope": "extra: follows PanelAction_PitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Event22_Join",
+  "verdict": "name",
+  "new": "PanelAction_PitchBend_Post",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:1225 `jr PanelAction_Event22_Join` -- only jump reference",
+   "v10/maincpu/audio/audio_control_engine.s:1234 `jrl PanelEvent_Post` -- posts"
+  ],
+  "scope": "extra: follows PanelAction_PitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "PanelAction_Event23",
+  "verdict": "name",
+  "new": "PanelAction_Modulation",
+  "kind": "label",
+  "header": "Panel event 23, the modulation wheel (left-panel analog header 0xD2, ID 26): posts record 0xB2 (part modulation) unless MD_DEMO. Basis: event table + body.",
+  "basis": "event table + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6159 `{ 0xB2, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Event23) },  /* event 23 */` -- record 0xB2 = SndParam_PartNN_Modulation",
+   "v10/maincpu/audio/audio_control_engine.s:1260-1262 `cp (CURRENT_MODE:16), 19 / ret z / jrl PanelEvent_Post` -- body"
+  ],
+  "scope": "extra: positional name, same evidence",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Timer7_DisableInterrupt",
+  "verdict": "name",
+  "new": "Demo_ReleaseGlidePedal",
+  "kind": "label",
+  "header": "Releases the GLIDE pedal at demo start: clears bit 7 of record 0x98 +2 in RAM (0xFD98: key 0x4080, the GLIDE gate) and queues the record write (AddswbWr 0x98, 2, mask 0x80), which SndParam_ApplySystemParam sends to the sub CPU as system message 0x85 (glide off). Called only by DemoMode_Main_Operation; it touches no timer. Basis: caller + body + descriptor 0x4080.",
+  "basis": "caller + body + descriptor",
+  "evidence": [
+   "v10/maincpu/demo/file_demo_proc.s:934-942 `lda xbc, (0xfd98:16) / ld e, (xbc) / res 7, e / ld (xbc), e / extz de / pushw 0x80 / ldw wa, 0x98 / ld bc, 2:i3 / call AddswbWr` -- the whole body (record 0x98 RAM base 0xFD96, SndParam_BlockRamPtrs)",
+   "v10/maincpu/audio/sndparam_records/run_edc2a4.c:170 `{ .key = 0x00004080, .bank_index = 0x98, .bank_offset = 0x02,` -- key 0x4080 = record 0x98 +2 (mask 0x80, next line)",
+   "v10/maincpu/demo/file_demo_proc.s:564-565 `call MIDI_BroadcastPitchReset / calr Timer7_DisableInterrupt` -- only caller, next to the pitch reset of demo setup",
+   "v10/maincpu/audio/audio_control_engine.s:1572-1576 `ld a, (PART_SELECT:16) / extz wa / ldw bc, 1539 / call SndParam_LookupViaEncode / cp hl, 1:i3` -- the setter: pedal function handler 8, only when the selected part's Lsw 0x603 (1539, _GlidePedal) is on ...",
+   "v10/maincpu/audio/audio_control_engine.s:1579-1580 `ld (xiz), 152 / ld (xiz+1), 2` -- ... posts record 0x98 +2 bit 7 (0x80) with the pedal state",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6385 `0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0A, 0x09, 0x0B, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,` -- PanelAction_PedalAssignHandlerIndex[0x96] = 8: function code 0x96 ...",
+   "v10/maincpu/extensions/extension_data.s:696 `.long CtrlAssignStr_Glide` -- ... is entry 20 of FswAssign_FunctionCodes (0x96) = \"GLIDE\"",
+   "v10/maincpu/audio/note_voice_mapping.s:18526-18528 `ldw wa, 80 / ldw bc, 133 / calr SeqVoice_CheckAndRet_Prologue` -- key 0x4080 (namespace 0x40, field 0x80) -> system message 0x50/0x85",
+   "v142/subcpu/kn5000_subprogram_v142.s:19137-19138 `cp a, 0:i3 / jr z, Voice_SetKeyShiftRange` -- sub CPU 0x85: non-zero starts the pitch offset, 0 starts the ramp back",
+   "v142/subcpu/subcpu_data_tables.s:2394 `.byte 0x81, 0x81, 0x8b, 0x99, 0xa6, 0xb2, 0xbb, 0xc2` -- drop to about -1 semitone (-127 * 2, semitones << 8) and glide back to 0: the GLIDE effect",
+   "v10/maincpu/ui/ui_mode_handlers.s:8208-8213 `ld xwa, 0x00004080 / call SndParam_LookupReadOnly / cp hl, 1:i3 / ret nz / ld xwa, 0x00004080 / ld bc, 0:i3` -- FswAsIniFunc releases it too"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8",
+  "verdict": "name",
+  "new": "SndParam_ApplySystemParam_SendGlide",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/audio/note_voice_mapping.s:18473-18474 `cp wa, 128 / jr z, SndParam_ApplySystemParam_SendEqualizerOnOff_Skip8` -- only reference: namespace 0x40, field 0x80 = key 0x4080",
+   "v10/maincpu/audio/note_voice_mapping.s:18526-18527 `ldw wa, 80 / ldw bc, 133` -- sends system message 0x85 (glide); nothing to do with the equalizer"
+  ],
+  "scope": "extra: the sender of 0x4080",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_MODWHEEL_VALUE",
+  "verdict": "name",
+  "new": "EXPRESSION_PEDAL_VALUE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EE4 (v7 0x8E48): the expression pedal, 0..127 (main-CPU A/D channel 0 through Encoder_ProcessModwheel / ENCODER_LUT_MODWHEEL; bit 7 marks a value MidiCh_ConfigVoiceAndParts has taken up). It is the value of TOTAL EXPRESSION (key 0x4001, descriptor aux 0) and of PART EXPRESSION (record 0xB3, MIDI_DispatchVoiceParamCC). Not a modulation wheel and no MIDI CC. Basis: readers + accessor table + panel event 26.",
+  "basis": "readers + accessor table",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:79-84 `.long 0x00008ee4 / .long 0x00008ee6 / .long 0x00008ee8 / .long 0x00008eea / .long 0x00008ef4 / .long 0x0000c1ec` -- aux index 0..5 of SndParam_ReadRegWithLUT, the read accessor of the virtual records 0xB0-0xB4",
+   "v10/maincpu/audio/sndparam_routines.s:850-856 `ld e, (xwa + 11) / ld c, e / sla c, 2 / lda xhl, (SndParam_RegRamPtrs:24) / ld xbc, (xhl+c) / ld c, (xbc) / cp e, 2:i3` -- reads the byte the descriptor's aux index (byte 11) selects; aux 2 is decoded as 14 bits ((c >> 1) << 7 | (c & 1) << 6), the pitch-bend form",
+   "v10 descriptor 0x04001 (SndParam_TotalExpression, ROM 0xEDC358) bytes `b0 01 7f 00 7f 00 00 00 02 03` -- record 0xB0 +1, aux 0 (0x8EE4), read handler 2 (SndParam_ReadRegWithLUT); dumped with analysis/disk-format-probes/sndparam-r3/desc_dump.py and xxd",
+   "v10/maincpu/midi/midi_encoder_routines.s:70 `ld (MIDI_CC_MODWHEEL_VALUE:16), a` -- writer: analog ID 2 = A/D channel 0 (MidiParam_ProcessChannel0 / MidiParam_ForceResync pass BC = 2)",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6179 `{ 0xB0, 0x01, 0x00, 0x7F, NAKA_ADDR(PanelAction_ModWheel) },  /* event 26 */` -- panel event 26 = record 0xB0 +1 (key 0x4001 SndParam_TotalExpression), mask 0x7F",
+   "v10/maincpu/audio/audio_control_engine.s:5938 `ld c, (MIDI_CC_MODWHEEL_VALUE:16)` -- compared with TOTAL_EXPRESSION_PENDING, then written as record 0xB0 +1 (status 176 / data1 1 = record / byte, not MIDI)",
+   "v10/maincpu/audio/audio_control_engine.s:6270-6275 `ld a, (MIDI_CC_MODWHEEL_VALUE:16) / res 7, a / extz wa / ld c, (xbc) / extz bc / calr MIDI_DispatchVoiceParamCC` -- sent to newly controlled parts as record 0xB3 (part expression) when 0x2880 = 183 (MIDI_DispatchVoiceParamCC tests (0xFD32) = record 0x99 +2)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_EXPRESSION_VALUE",
+  "verdict": "name",
+  "new": "MAIN_VOLUME_VALUE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EE6 (v7 0x8E4A): the left-panel analog control at header 0xD3 (ID 27, Encoder_ProcessExpression), posted as panel event 24 = record 0xB0 +0 and read back as key 0x4000 (descriptor aux 1), the master output-gain stage the sub CPU multiplies with TOTAL EXPRESSION and the fade level: the MAIN VOLUME slider. Identity by elimination: the CPL board's analog inputs are BEND, MOD and MAIN VOLUME, and 0xD1 / 0xD2 are proven to be bend and modulation. Not the expression pedal. Basis: readers + panel event table + sub-CPU gain stage.",
+  "basis": "readers + event table + elimination",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:79-84 `.long 0x00008ee4 / .long 0x00008ee6 / .long 0x00008ee8 / .long 0x00008eea / .long 0x00008ef4 / .long 0x0000c1ec` -- aux index 0..5 of SndParam_ReadRegWithLUT, the read accessor of the virtual records 0xB0-0xB4",
+   "v10 descriptor 0x04000 (MidiChParam_Entry_040, ROM 0xEDC346) bytes `b0 00 7f 00 7f 00 00 01 02 03` -- record 0xB0 +0, aux 1 (0x8EE6), read handler 2",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6164 `{ 0xB0, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelEvent_Post) },  /* event 24 */` -- event 24 (header 0xD3) = record 0xB0 +0",
+   "v10/maincpu/midi/midi_encoder_routines.s:215 `ld (MIDI_CC_EXPRESSION_VALUE:16), a` -- writer: analog ID 27",
+   "v142/subcpu/kn5000_subprogram_v142.s:44944-44948 `extz wa / ld (17842:16), wa / ld bc, (17844:16) / ld de, (17846:16) / jp DSP_MixerCoeff_Compute` -- sub CPU global sub-command 1 (key 0x4000): stage WA of the DSP2 output gain, with 0x4001 (BC) and the fade level (DE)",
+   "../technics-docs/hardware-architecture.md:81-83 `| `BEND` | Pitch bend wheel (analog) | / | `MOD0`, `MOD1` | Modulation inputs (analog) | / | `MAIN VOLUME` | Master volume (analog) |` -- the CPL board's analog inputs (service-manual schematics); headers 0xD1-0xD3 come from the left panel",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:13722-13723 `ld (MIDI_MSG_DATA1:16), 0 / ld a, (MIDI_CC_EXPRESSION_VALUE:16)` -- written back as record 0xB0 +0 (status 176, data1 0)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_BREATH_VALUE",
+  "verdict": "name",
+  "new": "PITCH_BEND_VALUE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EE8 (v7 0x8E4C): the pitch-bend wheel, 0..255 centred on 0x80 (left-panel analog header 0xD1, ID 25, Encoder_ProcessBreath through a curve with a flat 0x80 centre); in the scaled case it is narrowed to the Composer bend range. Read as part pitch bend (record 0xB1, descriptor aux 2, decoded to 14 bits). No breath controller. Basis: readers + accessor table + panel event 22.",
+  "basis": "readers + accessor table",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:79-84 `.long 0x00008ee4 / .long 0x00008ee6 / .long 0x00008ee8 / .long 0x00008eea / .long 0x00008ef4 / .long 0x0000c1ec` -- aux index 0..5 of SndParam_ReadRegWithLUT, the read accessor of the virtual records 0xB0-0xB4",
+   "v10/maincpu/audio/sndparam_routines.s:850-856 `ld e, (xwa + 11) / ld c, e / sla c, 2 / lda xhl, (SndParam_RegRamPtrs:24) / ld xbc, (xhl+c) / ld c, (xbc) / cp e, 2:i3` -- reads the byte the descriptor's aux index (byte 11) selects; aux 2 is decoded as 14 bits ((c >> 1) << 7 | (c & 1) << 6), the pitch-bend form",
+   "v10 descriptors 0x081B0 + 0x400*T (SndParam_PartTT_PitchBend, T = 0..0x18): record 0xB1, aux 2 (0x8EE8), read handler 2 -- all 25 listed by agent_c2/lut_descs.py",
+   "v10/maincpu/midi/midi_encoder_routines.s:166-170 `add hl, 0x4080 / srl hl, 8 / add hl, hl / ld a, l / ld (MIDI_CC_BREATH_VALUE:16), a` -- writer: centred result",
+   "v10/maincpu/extensions/extension_data.s:2602 `.byte 0x7d, 0x7d, 0x7e, 0x7e, 0x7e, 0x7f, 0x7f, 0x7f, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80` -- its curve: a flat 0x80 centre (spring-return wheel)",
+   "v10/maincpu/audio/audio_control_engine.s:6242-6247 `ld a, (MIDI_CC_BREATH_VALUE:16) / extz wa / ld XBC, (xsp + 0x0172) / ld c, (xbc + 1) / extz bc / calr Audio_IteratePartsWithExpression` -- sent to parts as record 0xB1 (Audio_IteratePartsWithExpression stores record 177 with the 14-bit split; its reset value is 0x80)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_FOOT_VALUE",
+  "verdict": "name",
+  "new": "MODULATION_VALUE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EEA (v7 0x8E4E): the modulation wheel, 0..127 (left-panel analog header 0xD2, ID 26, Encoder_ProcessFoot). Read as part modulation (record 0xB2, descriptor aux 3, keys 0x8001 + 0x400*T). No foot controller. Basis: readers + accessor table + panel event 23.",
+  "basis": "readers + accessor table",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:79-84 `.long 0x00008ee4 / .long 0x00008ee6 / .long 0x00008ee8 / .long 0x00008eea / .long 0x00008ef4 / .long 0x0000c1ec` -- aux index 0..5 of SndParam_ReadRegWithLUT, the read accessor of the virtual records 0xB0-0xB4",
+   "v10 descriptors 0x08001 + 0x400*T (SndParam_PartTT_Modulation, T = 0..0x18): record 0xB2, aux 3 (0x8EEA), read handler 2 -- agent_c2/lut_descs.py",
+   "v10/maincpu/midi/midi_encoder_routines.s:198 `ld (MIDI_CC_FOOT_VALUE:16), a` -- writer: analog ID 26",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6159 `{ 0xB2, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Event23) },  /* event 23 */` -- event 23 (header 0xD2) = record 0xB2",
+   "v10/maincpu/audio/audio_control_engine.s:6248-6254 `ld a, (MIDI_CC_FOOT_VALUE:16) / res 7, a / extz wa / ld XBC, (xsp + 0x0172) / ld c, (xbc + 1) / extz bc / calr Audio_IteratePartsWithVolume` -- sent to parts as record 0xB2 (Audio_IteratePartsWithVolume stores record 178)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_VOLUME_VALUE",
+  "verdict": "name",
+  "new": "AFTERTOUCH_VALUE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EF4 (v7 0x8E58): the after-touch (channel pressure) value, 0..127 (main-CPU A/D channel 1 through Encoder_ProcessVolume: ENCODER_LUT_VOLUME, then the AFTER TOUCH threshold (key 0x103) and curve (key 0x102) in Encoder_ClampScaleAndNormalize). Read as part channel pressure (record 0xB4, descriptor aux 4). No volume slider. Basis: readers + accessor table + panel event 27.",
+  "basis": "readers + accessor table",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:79-84 `.long 0x00008ee4 / .long 0x00008ee6 / .long 0x00008ee8 / .long 0x00008eea / .long 0x00008ef4 / .long 0x0000c1ec` -- aux index 0..5 of SndParam_ReadRegWithLUT, the read accessor of the virtual records 0xB0-0xB4",
+   "v10 descriptors 0x081B2 + 0x400*T (SndParam_PartTT_ChannelPressure, T = 0..0x18): record 0xB4, aux 4 (0x8EF4), read handler 2 -- agent_c2/lut_descs.py",
+   "v10/maincpu/midi/midi_encoder_routines.s:86-90 `calr Encoder_ClampScaleAndNormalize / ld a, l / cp a, (MIDI_CC_VOLUME_VALUE:16) / jr z, Encoder_ProcessVolume_NoChange / ld (MIDI_CC_VOLUME_VALUE:16), a` -- writer: analog ID 5",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6184 `{ 0xB4, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Volume) },  /* event 27 */` -- panel event 27 = record 0xB4 (part channel pressure), mask 0x7F",
+   "v10/maincpu/audio/audio_control_engine.s:6255-6260 `ld a, (MIDI_CC_VOLUME_VALUE:16) / extz wa / ld XBC, (xsp + 0x0172) / ld c, (xbc + 1) / extz bc / calr Audio_IteratePartsWithPan` -- sent to parts as record 0xB4 (Audio_IteratePartsWithPan stores record 180, only for parts with AfterTouch on, +12 bit 4)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_MODWHEEL_PENDING",
+  "verdict": "name",
+  "new": "TOTAL_EXPRESSION_PENDING",
+  "kind": "equ",
+  "header": "RAM byte 0x8EE0 (v7 0x8E44): the TOTAL EXPRESSION value (record 0xB0 +1, key 0x4001) last taken or queued for writing, bit 7 = write pending; Audio_FlushPendingBankSelects / Audio_WriteBankSelectParams send it as {0xB0, 1, value, 0x7F}. Filled from EXPRESSION_PEDAL_VALUE (MidiCh_ConfigVoiceAndParts) or from a received CC11 on the CTRL part (MidiStream_LoadBankSelect). Basis: readers + writers.",
+  "basis": "readers + writers",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:7170-7176 `ld a, (MIDI_CC_MODWHEEL_PENDING:16) / bit 7, a / ret z / res 7, a / ld (MIDI_CC_MODWHEEL_PENDING:16), a / ld (MIDI_MSG_STATUS:16), 176 / ld (MIDI_MSG_DATA1:16), 1` -- record 0xB0 byte 1, pending flag bit 7",
+   "v10/maincpu/audio/audio_control_engine.s:8298-8301 `bit 7, (MIDI_CC_MODWHEEL_PENDING:16) / jr z, BankSelect_Done / and (MIDI_CC_MODWHEEL_PENDING:16), 127 / ldw (MIDI_MSG_STATUS:16), 432` -- 432 = 0x01B0: record 0xB0, byte 1",
+   "v10/maincpu/audio/audio_control_engine.s:5961 `ld (MIDI_CC_MODWHEEL_PENDING), (MIDI_CC_MODWHEEL_VALUE:16)` -- filled from the expression pedal",
+   "v10/maincpu/audio/audio_control_engine.s:11373-11375 `res 7, a / ld (xiy), a / ld (MIDI_CC_MODWHEEL_PENDING:16), a` -- filled from 0x94F2, the deferred CC11 of the CTRL part (MidiCC_SetPendingPartExpression header)",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:2316 `.byte 0xff, 0xff, 0xff, 0xb0, 0x01, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff` -- CC11 of part 25 targets record 0xB0 +1"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "MIDI_CC_EXPRESSION_PENDING",
+  "verdict": "name",
+  "new": "MAIN_VOLUME_PENDING",
+  "kind": "equ",
+  "header": "RAM byte 0x8EE2 (v7 0x8E46): the record 0xB0 +0 value (key 0x4000, MAIN_VOLUME_VALUE) last taken or queued for writing, bit 7 = write pending; flushed with TOTAL_EXPRESSION_PENDING by Audio_FlushPendingBankSelects / Audio_WriteBankSelectParams as {0xB0, 0, value, 0x7F}. Basis: readers + writers.",
+  "basis": "readers + writers",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:7158-7164 `ld a, (MIDI_CC_EXPRESSION_PENDING:16) / bit 7, a / jr z, BankFlush_CheckChannel1 / res 7, a / ld (MIDI_CC_EXPRESSION_PENDING:16), a / ld (MIDI_MSG_STATUS:16), 176 / ld (MIDI_MSG_DATA1:16), 0` -- record 0xB0 byte 0",
+   "v10/maincpu/audio/audio_control_engine.s:5897-5899 `ld a, (MIDI_CC_EXPRESSION_VALUE:16) / set 7, a / ld (MIDI_CC_EXPRESSION_PENDING:16), a` -- filled from 0x8EE6 with the pending flag",
+   "v10/maincpu/audio/audio_control_engine.s:11168-11169 `ld (MIDI_CC_EXPRESSION_PENDING:16), e / call Audio_WriteBankSelectParams` -- the 0x00B0 target of the CC7 path writes it too"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RAW_MODWHEEL",
+  "verdict": "name",
+  "new": "ENCODER_RAW_EXPRESSION_PEDAL",
+  "kind": "equ",
+  "header": "RAM byte 0x8ECA (v7 0x8E2E): the last inverted raw A/D reading of the expression pedal (A/D channel 0), stored by Encoder_ProcessModwheel; no reader. Basis: writer.",
+  "basis": "writer",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:59-61 `cpl a / ld c, a / ld (ENCODER_RAW_MODWHEEL:16), c` -- only access"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RAW_VOLUME",
+  "verdict": "name",
+  "new": "ENCODER_RAW_AFTERTOUCH",
+  "kind": "equ",
+  "header": "RAM byte 0x8ECC (v7 0x8E30): the last raw A/D reading of the after-touch sensor (A/D channel 1), stored by Encoder_ProcessVolume; no reader. Basis: writer.",
+  "basis": "writer",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:82 `ld (ENCODER_RAW_VOLUME:16), a` -- only access"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RAW_BREATH",
+  "verdict": "name",
+  "new": "ENCODER_RAW_PITCH_BEND",
+  "kind": "equ",
+  "header": "RAM byte 0x8ED4 (v7 0x8E38): the last inverted raw reading of the pitch-bend wheel (header 0xD1), stored by Encoder_ProcessBreath; no reader. Basis: writer.",
+  "basis": "writer",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:139-140 `cpl a / ld (ENCODER_RAW_BREATH:16), a` -- only access"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RAW_FOOT",
+  "verdict": "name",
+  "new": "ENCODER_RAW_MODULATION",
+  "kind": "equ",
+  "header": "RAM byte 0x8ED6 (v7 0x8E3A): the last raw reading of the modulation wheel (header 0xD2), stored by Encoder_ProcessFoot; no reader. Basis: writer.",
+  "basis": "writer",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:189 `ld (ENCODER_RAW_FOOT:16), a` -- only access"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RAW_EXPRESSION",
+  "verdict": "name",
+  "new": "ENCODER_RAW_MAIN_VOLUME",
+  "kind": "equ",
+  "header": "RAM byte 0x8ED8 (v7 0x8E3C): the last inverted raw reading of the MAIN VOLUME slider (header 0xD3), stored by Encoder_ProcessExpression; no reader. Basis: writer (identity as MAIN_VOLUME_VALUE).",
+  "basis": "writer",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:208-210 `cpl a / ld c, a / ld (ENCODER_RAW_EXPRESSION:16), c` -- only access"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_BREATH_MODE",
+  "verdict": "name",
+  "new": "COMPOSER_BEND_RANGE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EDA (v7 0x8E3E): copy of key 0x28403 (record 0x93 +4 low nibble, 0..12), the Composer's BEND RANGE (CmpBndRngFunc answers its address). Encoder_ProcessBreath uses it when (0x379B) & 0x0F or (0x7F0B) is non-zero: 0 drops pitch-bend events, 1..12 scale the wheel by n/12 (ENCODER_LUT_BREATH_MULT = 256n/12). Basis: listener + reader + ApFunction.",
+  "basis": "listener + reader + ApFunction",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:248-253 `ld a, (SWBTWR_PAYLOAD_3:16) / and a, 0xf / ret z / ld a, (SWBTWR_PAYLOAD_2:16) / and a, 0xf / ld (ENCODER_BREATH_MODE:16), a` -- record 0x93 byte 4 low nibble (SwbtB2_Code93_Listeners)",
+   "v10/maincpu/audio/sndparam_records/run_ee0010.c:70 `{ .key = 0x00028403, .bank_index = 0x93, .bank_offset = 0x04,` -- key 0x28403 = record 0x93 +4",
+   "v10/maincpu/storage/flash_floppy_handlers.s:5842 `ld xhl, 0x28403` -- CmpBndRngFunc (entry 0 of Composer_FunctionTable) answers EVT_GET_LSW_ADDRESS with it; its string arm accepts 0..12",
+   "v10/maincpu/storage/flash_floppy_handlers.s:5820-5823 `cp bc, 0:i3 / jr lt, CmpBndRng_DefaultString / cp bc, 0xc / jr gt, CmpBndRng_DefaultString` -- its EVT_GET_LSW_STRING arm draws values 0..12",
+   "v10/maincpu/sequencer/composer_msp_defaults.s:256 `.long CmpBndRngFunc` -- entry 0 of the Composer's ApFunction table",
+   "v10/maincpu/midi/midi_encoder_routines.s:151-154 `ld c, (ENCODER_BREATH_MODE:16) / cp c, 0:i3 / ret z / srl a, 1` -- reader",
+   "v10/maincpu/extensions/extension_data.s:2613 `.byte 0x15, 0x00, 0x2b, 0x00, 0x40, 0x00, 0x55, 0x00, 0x6b, 0x00, 0x80, 0x00, 0x95, 0x00, 0xab, 0x00` -- 0x15, 0x2B, 0x40 ... 0x100 = 256n/12 for n = 1..12"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_VOLUME_MODE",
+  "verdict": "name",
+  "new": "AFTERTOUCH_CURVE",
+  "kind": "equ",
+  "header": "RAM byte 0x8EDC (v7 0x8E40): copy of key 0x102 (SndParam_AfterTouch_Curve, record 0x93 +5, 1..10); Encoder_ClampScaleAndNormalize scales the after-touch value by ENCODER_LUT_BREATH_INDEX[curve] / 20. Basis: listener + reader.",
+  "basis": "listener + reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:260-262 `ld a, (SWBTWR_PAYLOAD_2:16) / and a, 0xff / ld (ENCODER_VOLUME_MODE:16), a` -- record 0x93 byte 5",
+   "v10/maincpu/midi/midi_encoder_routines.s:117-120 `ld a, (ENCODER_VOLUME_MODE:16) / extz wa / add wa, wa / lda xbc, (ENCODER_LUT_BREATH_INDEX:24)` -- reader",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:6589 `.long Encoder_ApplySystemModeSettings` -- the listener is on record 0x93 (OVERALL TOUCH SENSITIVITY)"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_RANGE_LIMIT",
+  "verdict": "name",
+  "new": "AFTERTOUCH_THRESHOLD",
+  "kind": "equ",
+  "header": "RAM byte 0x8EDE (v7 0x8E42): copy of key 0x103 (SndParam_AfterTouch_Threshold, record 0x93 +6 bits 0-6, 1..127); Encoder_ClampScaleAndNormalize floors the after-touch reading at it and subtracts it. Basis: listener + reader.",
+  "basis": "listener + reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:270-272 `ld a, (SWBTWR_PAYLOAD_2:16) / res 7, a / ld (ENCODER_RANGE_LIMIT:16), a` -- record 0x93 byte 6, bit 7 (0x104 AfterTouch_OnOff) masked off",
+   "v10/maincpu/midi/midi_encoder_routines.s:104-107 `ld c, (ENCODER_RANGE_LIMIT:16) / cp l, c / jr nc, Encoder_PerformScaling / ld l, c` -- reader"
+  ],
+  "scope": "task",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_STATE_BASE",
+  "verdict": "name",
+  "new": "PANEL_LED_IMAGE",
+  "kind": "equ",
+  "header": "RAM 0x8F18 (v7 0x8E7C), 15 bytes: the wanted panel-LED image, byte n = the LEDs of row Protocol_values_for_LED_rows[n] (0xC0..0xC8 left panel, 0x00..0x0C right); the PanelLed_* handlers set its bits and CtrlPanel_UpdateLEDState sends each byte that differs from the copy at 0x8F28. No encoder state. Basis: readers + writers.",
+  "basis": "readers + writers",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:2696-2698 `lda xwa, (ENCODER_STATE_BASE:16) / ld (xsp + 2), xwa / lda xwa, (0x8f28:16)` -- compared byte by byte with the sent copy",
+   "v10/maincpu/audio/audio_control_engine.s:2708-2713 `ld c, (xbc+wa) / ldfr_berp C, 0xfa / ld xbc, (xsp + 6) / ld c, (xbc+wa) / cpb_erp C, 0xfa / jr z, LEDUpdate_NextChannel` -- differences go to Set_LEDs (row n, pattern)",
+   "v10/maincpu/audio/audio_control_engine.s:3399-3400 `lda xiz, (ENCODER_STATE_BASE:16) / ld xwa, 0x40c0` -- e.g. FADE IN = byte 0 bit 5",
+   "v10/maincpu/extensions/extension_data.s:2795 `.byte 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x08, 0x0a, 0x0b, 0x0c, 0xff` -- row of each byte"
+  ],
+  "scope": "extra: neighbour in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessModwheel",
+  "verdict": "name",
+  "new": "Encoder_ProcessExpressionPedal",
+  "kind": "label",
+  "header": "Analog ID 2, which only the main CPU's own A/D channel 0 produces (MidiParam_ProcessChannel0 / MidiParam_ForceResync pass BC = 2; no panel header maps to it): the expression pedal. Inverts the raw byte, maps (~raw) >> 1 through ENCODER_LUT_MODWHEEL into EXPRESSION_PEDAL_VALUE (0x8EE4); HL = the value, or 0xFFFF if unchanged. Basis: callers + readers of its output.",
+  "basis": "callers + readers",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6498 `NAKA_ADDR(Encoder_ProcessModwheel),` -- ENCODER_HANDLER_TABLE entry 2",
+   "v10/maincpu/audio/audio_control_engine.s:2432-2433 `ld bc, 2:i3 / call CPanel_EncoderDispatch` -- A/D channel 0 (ADREG04H)",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6485 `0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,  /* [0x00..] */` -- PanelInput_EventIndexByHeader: panel headers 0x12/0x15 (IDs 2/5) map to no event",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6179 `{ 0xB0, 0x01, 0x00, 0x7F, NAKA_ADDR(PanelAction_ModWheel) },  /* event 26 */` -- panel event 26 = record 0xB0 +1 (key 0x4001 SndParam_TotalExpression), mask 0x7F"
+  ],
+  "scope": "extra: writer of MIDI_CC_MODWHEEL_VALUE",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessModwheel_End",
+  "verdict": "name",
+  "new": "Encoder_ProcessExpressionPedal_End",
+  "kind": "local",
+  "header": "",
+  "basis": "end marker",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:74 `Encoder_ProcessModwheel_End:` -- end marker after the routine's ret (no reference)"
+  ],
+  "scope": "extra: follows Encoder_ProcessExpressionPedal",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessVolume",
+  "verdict": "name",
+  "new": "Encoder_ProcessAfterTouch",
+  "kind": "label",
+  "header": "Analog ID 5, produced only by the main CPU's A/D channel 1 (MidiParam_ProcessChannel1, BC = 5): the after-touch sensor. Maps the raw byte through ENCODER_LUT_VOLUME, applies the AFTER TOUCH threshold and curve (Encoder_ClampScaleAndNormalize) and stores AFTERTOUCH_VALUE (0x8EF4); HL = the value or 0xFFFF. Basis: callers + readers of its output.",
+  "basis": "callers + readers",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6501 `NAKA_ADDR(Encoder_ProcessVolume),` -- ENCODER_HANDLER_TABLE entry 5",
+   "v10/maincpu/audio/audio_control_engine.s:2466-2467 `ld bc, 5:i3 / call CPanel_EncoderDispatch` -- A/D channel 1 (ADREG15H)",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6184 `{ 0xB4, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Volume) },  /* event 27 */` -- panel event 27 = record 0xB4 (part channel pressure), mask 0x7F"
+  ],
+  "scope": "extra: writer of MIDI_CC_VOLUME_VALUE",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessVolume_NoChange",
+  "verdict": "name",
+  "new": "Encoder_ProcessAfterTouch_NoChange",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:89 `jr z, Encoder_ProcessVolume_NoChange` -- only reference"
+  ],
+  "scope": "extra: follows Encoder_ProcessAfterTouch",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessBreath",
+  "verdict": "name",
+  "new": "Encoder_ProcessPitchBend",
+  "kind": "label",
+  "header": "Analog ID 25 = left-panel header 0xD1, the pitch-bend wheel: inverts the raw byte, maps it through ENCODER_LUT_BREATH_VALUE (flat 0x80 centre) and stores PITCH_BEND_VALUE (0x8EE8) -- directly, or, when (0x379B) & 0x0F or (0x7F0B) is non-zero, narrowed to COMPOSER_BEND_RANGE / 12 around the centre (0 = no event). HL = the value or 0xFFFF. Basis: header map + readers of its output.",
+  "basis": "header map + readers",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6521 `NAKA_ADDR(Encoder_ProcessBreath),` -- ENCODER_HANDLER_TABLE entry 25 = (0xD1 & 7) | ((0xD1 & 0xC0) >> 3)",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6154 `{ 0xB1, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelAction_Event22) },  /* event 22 */` -- its panel event 22 = record 0xB1 (part pitch bend)"
+  ],
+  "scope": "extra: writer of MIDI_CC_BREATH_VALUE",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessBreath_WithModeAdjustment",
+  "verdict": "name",
+  "new": "Encoder_ProcessPitchBend_Scaled",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:146 `jr nz, Encoder_ProcessBreath_WithModeAdjustment` -- only reference",
+   "v10/maincpu/midi/midi_encoder_routines.s:151 `ld c, (ENCODER_BREATH_MODE:16)` -- scaled by the Composer bend range"
+  ],
+  "scope": "extra: follows Encoder_ProcessPitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessBreath_SimplePassthrough",
+  "verdict": "name",
+  "new": "Encoder_ProcessPitchBend_Direct",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:148 `jr z, Encoder_ProcessBreath_SimplePassthrough` -- only reference"
+  ],
+  "scope": "extra: follows Encoder_ProcessPitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessBreath_Return",
+  "verdict": "name",
+  "new": "Encoder_ProcessPitchBend_Return",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:171 `jr Encoder_ProcessBreath_Return` -- only reference"
+  ],
+  "scope": "extra: follows Encoder_ProcessPitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessBreath_End",
+  "verdict": "name",
+  "new": "Encoder_ProcessPitchBend_End",
+  "kind": "local",
+  "header": "",
+  "basis": "end marker",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:182 `Encoder_ProcessBreath_End:` -- end marker (no reference)"
+  ],
+  "scope": "extra: follows Encoder_ProcessPitchBend",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessFoot",
+  "verdict": "name",
+  "new": "Encoder_ProcessModulation",
+  "kind": "label",
+  "header": "Analog ID 26 = left-panel header 0xD2, the modulation wheel: maps raw >> 1 through ENCODER_LUT_FOOT into MODULATION_VALUE (0x8EEA); HL = the value or 0xFFFF if unchanged. Basis: header map + readers of its output.",
+  "basis": "header map + readers",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6522 `NAKA_ADDR(Encoder_ProcessFoot),` -- ENCODER_HANDLER_TABLE entry 26 = header 0xD2",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6159 `{ 0xB2, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelAction_Event23) },  /* event 23 */` -- its panel event 23 = record 0xB2 (part modulation)"
+  ],
+  "scope": "extra: writer of MIDI_CC_FOOT_VALUE",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessFoot_End",
+  "verdict": "name",
+  "new": "Encoder_ProcessModulation_End",
+  "kind": "local",
+  "header": "",
+  "basis": "end marker",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:202 `Encoder_ProcessFoot_End:` -- end marker (no reference)"
+  ],
+  "scope": "extra: follows Encoder_ProcessModulation",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessExpression",
+  "verdict": "name",
+  "new": "Encoder_ProcessMainVolume",
+  "kind": "label",
+  "header": "Analog ID 27 = left-panel header 0xD3, the MAIN VOLUME slider: inverts the raw byte, maps (~raw) >> 1 through ENCODER_LUT_EXPRESSION into MAIN_VOLUME_VALUE (0x8EE6) and always returns it in HL. Basis: header map + readers of its output (identity as MAIN_VOLUME_VALUE).",
+  "basis": "header map + readers",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6523 `NAKA_ADDR(Encoder_ProcessExpression),` -- ENCODER_HANDLER_TABLE entry 27 = header 0xD3",
+   "v10/maincpu/ui_widgets/naka_extension_device.c:6164 `{ 0xB0, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelEvent_Post) },  /* event 24 */` -- its panel event 24 = record 0xB0 +0 (key 0x4000)"
+  ],
+  "scope": "extra: writer of MIDI_CC_EXPRESSION_VALUE",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ProcessExpression_End",
+  "verdict": "name",
+  "new": "Encoder_ProcessMainVolume_End",
+  "kind": "local",
+  "header": "",
+  "basis": "end marker",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:219 `Encoder_ProcessExpression_End:` -- end marker (no reference)"
+  ],
+  "scope": "extra: follows Encoder_ProcessMainVolume",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ApplySystemModeSettings",
+  "verdict": "name",
+  "new": "Encoder_TouchSettingsListener",
+  "kind": "label",
+  "header": "Listener of record 0x93 (OVERALL TOUCH SENSITIVITY): copies byte 4 low nibble (key 0x28403, the Composer bend range) to COMPOSER_BEND_RANGE, byte 5 (0x102 AFTER TOUCH curve) to AFTERTOUCH_CURVE and byte 6 bits 0-6 (0x103 threshold) to AFTERTOUCH_THRESHOLD when their bits changed. Basis: listener table + body.",
+  "basis": "listener table + body",
+  "evidence": [
+   "v10/maincpu/ui_widgets/widget_dispatch.s:6589 `.long Encoder_ApplySystemModeSettings` -- record 0x93 listener",
+   "v10/maincpu/midi/midi_encoder_routines.s:240-245 `ld a, (SWBTWR_PAYLOAD_1:16) / cp a, 6:i3 / jr z, Encoder_ConfigureRangeLimit / cp a, 5:i3 / jr z, Encoder_ConfigureVolumeMode / cp a, 4:i3` -- byte offset of the write; the old header's \"mode value from 0xc07d\" is not in the code"
+  ],
+  "scope": "extra: writer of the three settings",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ConfigureVolumeMode",
+  "verdict": "name",
+  "new": "Encoder_TouchSettingsListener_Curve",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:244 `jr z, Encoder_ConfigureVolumeMode` -- only reference: byte 5 = AFTER TOUCH curve"
+  ],
+  "scope": "extra: follows Encoder_TouchSettingsListener",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "Encoder_ConfigureRangeLimit",
+  "verdict": "name",
+  "new": "Encoder_TouchSettingsListener_Threshold",
+  "kind": "local",
+  "header": "",
+  "basis": "branch target",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:242 `jr z, Encoder_ConfigureRangeLimit` -- only reference: byte 6 = AFTER TOUCH threshold"
+  ],
+  "scope": "extra: follows Encoder_TouchSettingsListener",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_MODWHEEL",
+  "verdict": "name",
+  "new": "ENCODER_LUT_EXPRESSION_PEDAL",
+  "kind": "label",
+  "header": "The 128-byte curve of the expression pedal (A/D channel 0); read only by Encoder_ProcessModwheel. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:64 `lda xbc, (ENCODER_LUT_MODWHEEL:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_VOLUME",
+  "verdict": "name",
+  "new": "ENCODER_LUT_AFTERTOUCH",
+  "kind": "label",
+  "header": "The 256-byte curve of the after-touch sensor (A/D channel 1); read only by Encoder_ProcessVolume. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:84 `lda xbc, (ENCODER_LUT_VOLUME:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_BREATH_INDEX",
+  "verdict": "name",
+  "new": "ENCODER_LUT_AFTERTOUCH_CURVE",
+  "kind": "label",
+  "header": "The 11 x u16 after-touch curve multipliers (/20), indexed by AFTERTOUCH_CURVE; read only by Encoder_PerformScaling. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:120 `lda xbc, (ENCODER_LUT_BREATH_INDEX:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_BREATH_VALUE",
+  "verdict": "name",
+  "new": "ENCODER_LUT_PITCH_BEND",
+  "kind": "label",
+  "header": "The 256-byte pitch-bend wheel curve with a flat 0x80 centre; read only by Encoder_ProcessBreath. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:142 `lda xbc, (ENCODER_LUT_BREATH_VALUE:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_BREATH_MULT",
+  "verdict": "name",
+  "new": "ENCODER_LUT_BEND_RANGE_MULT",
+  "kind": "label",
+  "header": "The 12 x u16 = 256n/12, the bend-range scale for COMPOSER_BEND_RANGE = n; read only by Encoder_ProcessBreath_WithModeAdjustment. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:160 `lda xwa, (ENCODER_LUT_BREATH_MULT:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_BREATH_OFFSET",
+  "verdict": "name",
+  "new": "ENCODER_LUT_BEND_RANGE_OFFSET",
+  "kind": "label",
+  "header": "The 12 x u16 = 0x4000n/12, the matching centre correction; read only by Encoder_ProcessBreath_WithModeAdjustment. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:163 `lda xwa, (ENCODER_LUT_BREATH_OFFSET:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_FOOT",
+  "verdict": "name",
+  "new": "ENCODER_LUT_MODULATION",
+  "kind": "label",
+  "header": "The 128-byte modulation-wheel curve; read only by Encoder_ProcessFoot. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:192 `lda xbc, (ENCODER_LUT_FOOT:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ },
+ {
+  "old": "ENCODER_LUT_EXPRESSION",
+  "verdict": "name",
+  "new": "ENCODER_LUT_MAIN_VOLUME",
+  "kind": "label",
+  "header": "The 128-byte MAIN VOLUME slider curve; read only by Encoder_ProcessExpression. Basis: reader (the analog ID it serves, see that handler).",
+  "basis": "reader",
+  "evidence": [
+   "v10/maincpu/midi/midi_encoder_routines.s:213 `lda xbc, (ENCODER_LUT_EXPRESSION:24)` -- its only code reference"
+  ],
+  "scope": "extra: ROM curve listed in midi_encoder_constants.s",
+  "snapshot_commit": "98670dc62"
+ }
+]
