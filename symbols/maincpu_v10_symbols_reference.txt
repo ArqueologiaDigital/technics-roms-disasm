@@ -6,8 +6,8 @@
 # Do not hand-edit: rename in the sources and regenerate.
 #
 #   symbols .................. 53,745
-#   semantic names ........... 53,194 (99.0%)
-#   positional names ......... 551
+#   semantic names ........... 53,199 (99.0%)
+#   positional names ......... 546
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -20864,7 +20864,7 @@ SeEnvCurve_BitmapTable 00F0F4D6
 SeTitle_UnusedSlot 00F0F4F2
 SeTitle_DrawWall 00F0F4F3
 SeTitle_UpdateScreen 00F0F4FE
-SeMenu_WaveformSelect_Apply 00F0F507
+SeMenu_DrawDrumKitCopyConfirm 00F0F507
 SeMenuTitle_DrawStaticScreen 00F0F536
 SeMenuTitle_DrawStaticScreen_Skip 00F0F543
 SeMenuTitle_DrawStaticScreen_Skip2 00F0F564
@@ -21502,13 +21502,13 @@ SeValText_Disable_Enable 00F14E4E
 SeTonHyb1_DrawStaticScreen_Records 00F14E5C
 SeTonHyb1_DrawStaticScreen_Records2 00F14E67
 SeTonHyb1_DrawStaticScreen_Records3 00F15020
-SeScreenData_0x4447 00F1504D
-SeMenu_WaveformSelect_Apply_Records 00F1508C
-SeScreenData_0x44F5 00F150FB
-SeScreenData_0x4560 00F15166
-SeScreenData_0x45DE 00F151E4
-SeScreenData_0x464E 00F15254
-SeMenu_WaveformSelect_Apply_Records2 00F152BA
+SeMenu_DrumKitCopyConfirm_YesNo_Records 00F1504D
+SeMenu_DrumKitCopyConfirm_English_Records 00F1508C
+SeMenu_DrumKitCopyConfirm_German_Records 00F150FB
+SeMenu_DrumKitCopyConfirm_French_Records 00F15166
+SeMenu_DrumKitCopyConfirm_Spanish_Records 00F151E4
+SeMenu_DrumKitCopyConfirm_Italian_Records 00F15254
+SeMenu_DrumKitCopyConfirm_TextByLanguage 00F152BA
 SeMenu_NameEdit_DataBlock1_Records 00F152D2
 SeMenu_NameEdit_DataBlock1_Records2 00F15386
 SeMenu_NameEdit_DataBlock1_Records3 00F153A4

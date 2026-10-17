@@ -1857,3 +1857,9 @@ s/\bSeScreenData_0x4240\b/SeValText_Long_Hold/g
 s/\bSeScreenData_0x4248\b/SeValText_Disable_Enable/g
 s/\bSeScreenData_0x4EFB\b/SeValText_DigEffTypes/g
 s/\bSeScreenData_0x590F\b/SeValText_Off_Off/g
+# run 2026-10-17
+s/\bSeScreenData_0x4447\b/SeMenu_DrumKitCopyConfirm_YesNo_Records/g
+s/\bSeScreenData_0x44F5\b/SeMenu_DrumKitCopyConfirm_German_Records/g
+s/\bSeScreenData_0x4560\b/SeMenu_DrumKitCopyConfirm_French_Records/g
+s/\bSeScreenData_0x45DE\b/SeMenu_DrumKitCopyConfirm_Spanish_Records/g
+s/\bSeScreenData_0x464E\b/SeMenu_DrumKitCopyConfirm_Italian_Records/g

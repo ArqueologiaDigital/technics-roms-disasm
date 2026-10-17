@@ -8682,9 +8682,9 @@ SeTitle_UpdateScreen:
 	call Display_DeferOrUpdateScreen
 	ret
 
-SeMenu_WaveformSelect_Apply:
+SeMenu_DrawDrumKitCopyConfirm:
 	ld	(COLORBLIT_MODE:24), 0
-	ld	xiz, SeMenu_WaveformSelect_Apply_Records2
+	ld	xiz, SeMenu_DrumKitCopyConfirm_TextByLanguage
 	xor	xwa, xwa
 	ld	a, (0x0340e4:24)
 	sla	wa, 2
@@ -8692,8 +8692,8 @@ SeMenu_WaveformSelect_Apply:
 	ld	xiy, (xiz)
 	ld	xix, (xiz+4)
 	call	SeGfx_DrawStaticList
-	ld	xiy, SeScreenData_0x4447
-	ld	xix, SeMenu_WaveformSelect_Apply_Records
+	ld	xiy, SeMenu_DrumKitCopyConfirm_YesNo_Records
+	ld	xix, SeMenu_DrumKitCopyConfirm_English_Records
 	call	SeGfx_DrawStaticList
 	ret
 ; SeMenuTitle_DrawStaticScreen: Static-screen routine of sound-editor title 0x20 TT_SEMENU (entry 0 of
@@ -8702,7 +8702,7 @@ SeMenu_WaveformSelect_Apply:
 SeMenuTitle_DrawStaticScreen:
 	cp	(1720:16), 1
 	jr	nz, SeMenuTitle_DrawStaticScreen_Skip
-	call	SeMenu_WaveformSelect_Apply
+	call	SeMenu_DrawDrumKitCopyConfirm
 	jr	SeMenuTitle_DrawStaticScreen_Return
 SeMenuTitle_DrawStaticScreen_Skip:
 	ld	(COLORBLIT_MODE:24), 0
@@ -8889,7 +8889,7 @@ SeTonHyb1_DrawStaticScreen:
 	jr	SeTonHyb1_DrawStaticScreen_Join
 SeTonHyb1_DrawStaticScreen_Skip:
 	ld	xiy, SeTonHyb1_DrawStaticScreen_Records3
-	ld	xix, SeScreenData_0x4447
+	ld	xix, SeMenu_DrumKitCopyConfirm_YesNo_Records
 	call	SeGfx_DrawStaticList
 	ld	xiy, SeTonHyb1_DrawStaticScreen_Records2
 	ld	xix, SeTonHyb1_DrawStaticScreen_Records3
@@ -15286,15 +15286,15 @@ SeTonHyb1_DrawStaticScreen_Records2:
 	sd_quad	0x02, 242, 54, 242, 61
 	sd_quad	0x02, 243, 55, 243, 60
 	sd_quad	0x02, 244, 56, 244, 59
-; static record list (3 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x4447
+; static record list (3 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_YesNo_Records
 ; evidence: SeTonHyb1_DrawStaticScreen
 SeTonHyb1_DrawStaticScreen_Records3:
 	sd_ptext	0x1c, 19, 114, 5, "TONE DYNAMICS"
 	sd_ptext	0x17, 16, 6, 7, "SOUND EDIT"
 	sd_quad	0x09, 4, 4, 68, 16
-; static record list (8 records), read by GraphicsRender_ProcessEntries; end SeMenu_WaveformSelect_Apply_Records
-; evidence: SeMenu_WaveformSelect_Apply
-SeScreenData_0x4447:
+; static record list (8 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_English_Records
+; evidence: SeMenu_DrawDrumKitCopyConfirm
+SeMenu_DrumKitCopyConfirm_YesNo_Records:
 	sd_ctext	0x07, 5, 74*40+39, "\021"
 	sd_ctext	0x20, 7, 75*40+35, "YES"
 	sd_ctext	0x07, 5, 113*40+39, "\021"
@@ -15303,27 +15303,27 @@ SeScreenData_0x4447:
 	sd_quad	0x09, 277, 72, 307, 87
 	sd_quad	0x09, 275, 109, 309, 128
 	sd_quad	0x09, 277, 111, 307, 126
-; static record list (6 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x44F5
-; evidence: bounds at SeMenu_WaveformSelect_Apply_Records2
-SeMenu_WaveformSelect_Apply_Records:
+; static record list (6 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_German_Records
+; evidence: bounds at SeMenu_DrumKitCopyConfirm_TextByLanguage
+SeMenu_DrumKitCopyConfirm_English_Records:
 	sd_ctext	0x08, 14, 64*40+7, "ATTENTION!"
 	sd_ctext	0x07, 30, 105*40+4, "THE SELECTED DRUM KIT WILL"
 	sd_ctext	0x07, 30, 134*40+4, "BE COPIED TO THE USER KIT."
 	sd_ctext	0x08, 17, 166*40+4, "ARE YOU SURE?"
 	sd_quad	0x22, 7, 47, 267, 204
 	sd_quad	0x09, 54, 80, 212, 81
-; static record list (6 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x4560
-; evidence: bounds at SeMenu_WaveformSelect_Apply_Records2
-SeScreenData_0x44F5:
+; static record list (6 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_French_Records
+; evidence: bounds at SeMenu_DrumKitCopyConfirm_TextByLanguage
+SeMenu_DrumKitCopyConfirm_German_Records:
 	sd_ctext	0x08, 12, 50*40+9, "ACHTUNG!"
 	sd_ctext	0x07, 35, 93*40+1, "SIE KOPIEREN EIN PRESET-DRUMKIT"
 	sd_ctext	0x07, 20, 118*40+1, "IN DAS USER KIT."
 	sd_ctext	0x08, 20, 164*40+1, "SIND SIE SICHER?"
 	sd_quad	0x22, 2, 33, 267, 201
 	sd_quad	0x09, 72, 66, 198, 67
-; static record list (9 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x45DE
-; evidence: bounds at SeMenu_WaveformSelect_Apply_Records2
-SeScreenData_0x4560:
+; static record list (9 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_Spanish_Records
+; evidence: bounds at SeMenu_DrumKitCopyConfirm_TextByLanguage
+SeMenu_DrumKitCopyConfirm_French_Records:
 	sd_ctext	0x08, 14, 54*40+7, "ATTENTION!"
 	sd_ctext	0x07, 28, 93*40+5, "COPIE DU DRUMKIT VERS LE"
 	sd_ctext	0x07, 13, 118*40+5, "USER KIT."
@@ -15333,9 +15333,9 @@ SeScreenData_0x4560:
 	sd_ctext	0x07, 18, 181*40+11, "IL VOUS PLAIT!"
 	sd_quad	0x22, 3, 37, 270, 210
 	sd_quad	0x09, 54, 70, 216, 71
-; static record list (7 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x464E
-; evidence: bounds at SeMenu_WaveformSelect_Apply_Records2
-SeScreenData_0x45DE:
+; static record list (7 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_Italian_Records
+; evidence: bounds at SeMenu_DrumKitCopyConfirm_TextByLanguage
+SeMenu_DrumKitCopyConfirm_Spanish_Records:
 	sd_ctext	0x08, 13, 65*40+8, "ATENCION!"
 	sd_ctext	0x07, 33, 99*40+3, "COPIA DEL EQUIPO DE TAMBOR EN"
 	sd_ctext	0x07, 26, 125*40+3, "EL EQUIPO DEL USUARIO."
@@ -15343,9 +15343,9 @@ SeScreenData_0x45DE:
 	sd_ctext	0x08, 11, 163*40+16, "SEGURO?"
 	sd_quad	0x22, 7, 47, 267, 204
 	sd_quad	0x09, 64, 81, 203, 82
-; static record list (8 records), read by GraphicsRender_ProcessEntries; end SeMenu_WaveformSelect_Apply_Records2
-; evidence: bounds at SeMenu_WaveformSelect_Apply_Records2
-SeScreenData_0x464E:
+; static record list (8 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrumKitCopyConfirm_TextByLanguage
+; evidence: bounds at SeMenu_DrumKitCopyConfirm_TextByLanguage
+SeMenu_DrumKitCopyConfirm_Italian_Records:
 	sd_ctext	0x08, 15, 66*40+6, "ATTENZIONE!"
 	sd_ctext	0x07, 25, 107*40+6, "COPIATURA DEL DRUMKIT"
 	sd_ctext	0x07, 5, 123*40+9, ","
@@ -15355,14 +15355,14 @@ SeScreenData_0x464E:
 	sd_quad	0x22, 7, 47, 267, 204
 	sd_quad	0x09, 46, 82, 221, 83
 ; list-boundary table: entry i and i+1 bound list i (6 entries, LE32)
-; evidence: SeMenu_WaveformSelect_Apply
-SeMenu_WaveformSelect_Apply_Records2:
-	.long	SeMenu_WaveformSelect_Apply_Records
-	.long	SeScreenData_0x44F5
-	.long	SeScreenData_0x4560
-	.long	SeScreenData_0x45DE
-	.long	SeScreenData_0x464E
-	.long	SeMenu_WaveformSelect_Apply_Records2
+; evidence: SeMenu_DrawDrumKitCopyConfirm
+SeMenu_DrumKitCopyConfirm_TextByLanguage:
+	.long	SeMenu_DrumKitCopyConfirm_English_Records
+	.long	SeMenu_DrumKitCopyConfirm_German_Records
+	.long	SeMenu_DrumKitCopyConfirm_French_Records
+	.long	SeMenu_DrumKitCopyConfirm_Spanish_Records
+	.long	SeMenu_DrumKitCopyConfirm_Italian_Records
+	.long	SeMenu_DrumKitCopyConfirm_TextByLanguage
 ; static record list (24 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x4726, SeScreenData_0x4744, SeScreenData_0x4762 ...
 ; evidence: SeDigEff_DrawStaticScreen
 SeMenu_NameEdit_DataBlock1_Records:
