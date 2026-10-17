@@ -2523,7 +2523,7 @@ SeMenu_CopyWriteUpdate_Loop:
 	ldw	de, 16
 	call	SeMenu_SetupPartDisplay
 	lda	xwa, (xsp+4)
-	call	SeMenu_CopyWriteUpdate_Helper17
+	call	SeWrtMem_ChooseInitialSlot
 	lda	xde, (xsp+6)
 	ld	a, (xsp+4)
 	extz	wa
@@ -2580,7 +2580,7 @@ SeMenu_CopyWriteUpdate_Join:
 	ld	a, 16:opc
 SeMenu_CopyWriteUpdate_Skip3:
 	extz	wa
-	call	SeMenu_CopyWriteUpdate_Helper18
+	call	SeWrtSnd_SetupNamingPage
 	inc	2, xsp
 	ret
 SeMenu_CopyWriteUpdate_Step3_Join:
@@ -6642,17 +6642,17 @@ SeWrtMem_OnSwitch15:
 	call	SeMenu_SendEvent
 	ret
 SeWrtSnd_OnColumn1:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join18
+	jrl	SeWrtSnd_SetupNamingPage_Join6
 SeWrtSnd_OnColumn2:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join19
+	jrl	SeWrtSnd_SetupNamingPage_Join7
 SeWrtSnd_OnColumn3:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join20
+	jrl	SeWrtSnd_SetupNamingPage_Join8
 SeWrtSnd_OnColumn4:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join21
+	jrl	SeWrtSnd_SetupNamingPage_Join
 SeWrtSnd_OnColumn5:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join22
+	jrl	SeWrtSnd_SetupNamingPage_Join2
 SeWrtSnd_OnColumn6:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join24
+	jrl	SeWrtSnd_SetupNamingPage_Join3
 SeWrtSnd_OnColumn7:
 	ld	c, a
 	res	7, c
@@ -6661,9 +6661,9 @@ SeWrtSnd_OnColumn7:
 	jr	nz, SeWrtSnd_OnColumn7_Skip81
 	ld	wa, 0:i3
 SeWrtSnd_OnColumn7_Skip81:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join25
+	jrl	SeWrtSnd_SetupNamingPage_Join4
 SeWrtSnd_OnColumn8:
-	jrl	SeMenu_CopyWriteUpdate_Helper18_Join27
+	jrl	SeWrtSnd_SetupNamingPage_Join5
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -6767,14 +6767,14 @@ SeWrtSnd_OnSwitch15_Epilogue:
 	pop	qiz
 	lda	xsp, (xsp+20)
 	ret
-SeMenu_CopyWriteUpdate_Helper18:
+SeWrtSnd_SetupNamingPage:
 	dec	4, xsp
 	ld	c, a
 	and	c, 31
 	cp	c, 16
-	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Skip28
+	jr	ule, SeWrtSnd_SetupNamingPage_Skip2
 	ld	c, 16:opc
-SeMenu_CopyWriteUpdate_Helper18_Skip28:
+SeWrtSnd_SetupNamingPage_Skip2:
 	extz	bc
 	ld	wa, 2:i3
 	call	SeMenu_StorePartParam
@@ -6807,13 +6807,13 @@ SeMenu_CopyWriteUpdate_Helper18_Skip28:
 	call	SeMenu_PostEditUpDownSet
 	inc	4, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join18:
+SeWrtSnd_SetupNamingPage_Join6:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+4), 0
-	jr	z, SeMenu_CopyWriteUpdate_Helper18_Epilogue22
+	jr	z, SeWrtSnd_SetupNamingPage_Epilogue22
 	decm8	1, (xsp+4)
 	ld	c, (xsp+4)
 	extz	bc
@@ -6838,10 +6838,10 @@ SeMenu_CopyWriteUpdate_Helper18_Join18:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue22:
+SeWrtSnd_SetupNamingPage_Epilogue22:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join19:
+SeWrtSnd_SetupNamingPage_Join7:
 	dec	8, xsp
 	lda	xbc, (xsp+6)
 	ld	wa, 0:i3
@@ -6852,7 +6852,7 @@ SeMenu_CopyWriteUpdate_Helper18_Join19:
 	ld	a, (xsp)
 	dec	1, a
 	cp	(xsp+6), a
-	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Epilogue23
+	jr	nc, SeWrtSnd_SetupNamingPage_Epilogue6
 	incm8	1, (xsp+6)
 	ld	c, (xsp+6)
 	extz	bc
@@ -6877,17 +6877,17 @@ SeMenu_CopyWriteUpdate_Helper18_Join19:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue23:
+SeWrtSnd_SetupNamingPage_Epilogue6:
 	inc	8, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join20:
+SeWrtSnd_SetupNamingPage_Join8:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
 	ld	wa, 2:i3
 	call	SeMenu_LoadPartParam
 	ldib_erp	251, 0
-SeMenu_CopyWriteUpdate_Helper18_Loop5:
+SeWrtSnd_SetupNamingPage_Loop5:
 	ldto_berp	a, 251
 	extz	wa
 	lda	xbc, (xsp+6)
@@ -6895,13 +6895,13 @@ SeMenu_CopyWriteUpdate_Helper18_Loop5:
 	call	SeMenu_GetNameBufferChar
 	inc1b_erp	251
 	cp_erpb	251, 15
-	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Loop5
+	jr	ule, SeWrtSnd_SetupNamingPage_Loop5
 	ld	c, (xsp+2)
 	dec	1, c
 	extz	bc
 	lda	xwa, (xsp+6)
 	.byte	0xc3,	0x07, 0xe0, 0xe4, 0x3f, 0x20
-	jrl	nz, SeMenu_CopyWriteUpdate_Helper18_Epilogue24
+	jrl	nz, SeWrtSnd_SetupNamingPage_Epilogue24
 	lda	xbc, (xsp+24)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
@@ -6920,8 +6920,8 @@ SeMenu_CopyWriteUpdate_Helper18_Loop5:
 	extz	hl
 	ldto_berp	a, 251
 	cpb_erp	a, 226
-	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Skip29
-SeMenu_CopyWriteUpdate_Helper18_Loop6:
+	jr	nc, SeWrtSnd_SetupNamingPage_Skip3
+SeWrtSnd_SetupNamingPage_Loop6:
 	ld	iy, hl
 	ld	wa, de
 	ld	a, (xix+wa)
@@ -6931,8 +6931,8 @@ SeMenu_CopyWriteUpdate_Helper18_Loop6:
 	dec	1, de
 	ldto_berp	a, 251
 	cpb_erp	a, 226
-	jr	c, SeMenu_CopyWriteUpdate_Helper18_Loop6
-SeMenu_CopyWriteUpdate_Helper18_Skip29:
+	jr	c, SeWrtSnd_SetupNamingPage_Loop6
+SeWrtSnd_SetupNamingPage_Skip3:
 	ld	a, (xsp+24)
 	extz	wa
 	.byte	0xf3,	0x07, 0xe4, 0xe0, 0x00, 0x20
@@ -6954,18 +6954,18 @@ SeMenu_CopyWriteUpdate_Helper18_Skip29:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue24:
+SeWrtSnd_SetupNamingPage_Epilogue24:
 	pop	qiz
 	lda	xsp, (xsp+24)
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join21:
+SeWrtSnd_SetupNamingPage_Join:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
 	ld	wa, 2:i3
 	call	SeMenu_LoadPartParam
 	ldib_erp	251, 0
-SeMenu_CopyWriteUpdate_Helper18_Loop7:
+SeWrtSnd_SetupNamingPage_Loop:
 	ldto_berp	a, 251
 	extz	wa
 	lda	xbc, (xsp+6)
@@ -6973,7 +6973,7 @@ SeMenu_CopyWriteUpdate_Helper18_Loop7:
 	call	SeMenu_GetNameBufferChar
 	inc1b_erp	251
 	cp_erpb	251, 15
-	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Loop7
+	jr	ule, SeWrtSnd_SetupNamingPage_Loop
 	lda	xbc, (xsp+24)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
@@ -6984,13 +6984,13 @@ SeMenu_CopyWriteUpdate_Helper18_Loop7:
 	ld	l, c
 	ldto_berp	a, 251
 	cp	a, l
-	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Skip30
+	jr	nc, SeWrtSnd_SetupNamingPage_Skip
 	lda	xde, (xsp+6)
 	ldto_berp	c, 251
 	extz	bc
 	ld	wa, 1:i3
 	add	bc, wa
-SeMenu_CopyWriteUpdate_Helper18_Loop8:
+SeWrtSnd_SetupNamingPage_Loop8:
 	ld	ix, bc
 	ldw	wa, 65535
 	add	ix, wa
@@ -7001,8 +7001,8 @@ SeMenu_CopyWriteUpdate_Helper18_Loop8:
 	inc	1, bc
 	ldto_berp	a, 251
 	cp	a, l
-	jr	c, SeMenu_CopyWriteUpdate_Helper18_Loop8
-SeMenu_CopyWriteUpdate_Helper18_Skip30:
+	jr	c, SeWrtSnd_SetupNamingPage_Loop8
+SeWrtSnd_SetupNamingPage_Skip:
 	ld	a, (xsp+2)
 	dec	1, a
 	extz	wa
@@ -7029,7 +7029,7 @@ SeMenu_CopyWriteUpdate_Helper18_Skip30:
 	pop	qiz
 	lda	xsp, (xsp+24)
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join22:
+SeWrtSnd_SetupNamingPage_Join2:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
@@ -7041,12 +7041,12 @@ SeMenu_CopyWriteUpdate_Helper18_Join22:
 	lda	xde, (xsp+2)
 	ld	a, (xde)
 	cp	a, 65
-	jr	c, SeMenu_CopyWriteUpdate_Helper18_Skip31
+	jr	c, SeWrtSnd_SetupNamingPage_Skip4
 	cp	a, 90
-	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Skip31
+	jr	ugt, SeWrtSnd_SetupNamingPage_Skip4
 	sub	a, 65
 	ld	c, 97:opc
-SeMenu_CopyWriteUpdate_Helper18_Join23:
+SeWrtSnd_SetupNamingPage_Join10:
 	add	a, c
 	ld	(xde), a
 	ld	a, (xsp+4)
@@ -7066,25 +7066,25 @@ SeMenu_CopyWriteUpdate_Helper18_Join23:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-	jr	SeMenu_CopyWriteUpdate_Helper18_Epilogue25
-SeMenu_CopyWriteUpdate_Helper18_Skip31:
+	jr	SeWrtSnd_SetupNamingPage_Epilogue25
+SeWrtSnd_SetupNamingPage_Skip4:
 	cp	a, 97
-	jr	c, SeMenu_CopyWriteUpdate_Helper18_Epilogue25
+	jr	c, SeWrtSnd_SetupNamingPage_Epilogue25
 	cp	a, 122
-	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Epilogue25
+	jr	ugt, SeWrtSnd_SetupNamingPage_Epilogue25
 	sub	a, 97
 	ld	c, 65:opc
-	jr	SeMenu_CopyWriteUpdate_Helper18_Join23
-SeMenu_CopyWriteUpdate_Helper18_Epilogue25:
+	jr	SeWrtSnd_SetupNamingPage_Join10
+SeWrtSnd_SetupNamingPage_Epilogue25:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join24:
+SeWrtSnd_SetupNamingPage_Join3:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 0
-	jr	z, SeMenu_CopyWriteUpdate_Helper18_Epilogue26
+	jr	z, SeWrtSnd_SetupNamingPage_Epilogue8
 	decm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -7106,10 +7106,10 @@ SeMenu_CopyWriteUpdate_Helper18_Join24:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue26:
+SeWrtSnd_SetupNamingPage_Epilogue8:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join25:
+SeWrtSnd_SetupNamingPage_Join4:
 	dec	6, xsp
 	push	qiz
 	and	wa, 32768
@@ -7120,18 +7120,18 @@ SeMenu_CopyWriteUpdate_Helper18_Join25:
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cpib_erp	251, 0
-	jr	nz, SeMenu_CopyWriteUpdate_Helper18_Skip32
+	jr	nz, SeWrtSnd_SetupNamingPage_Skip5
 	cp	(xsp+4), 16
-	jr	c, SeMenu_CopyWriteUpdate_Helper18_Epilogue27
+	jr	c, SeWrtSnd_SetupNamingPage_Epilogue9
 	submi8	(xsp+4), 16
-	jr	SeMenu_CopyWriteUpdate_Helper18_Join26
-SeMenu_CopyWriteUpdate_Helper18_Skip32:
+	jr	SeWrtSnd_SetupNamingPage_Join9
+SeWrtSnd_SetupNamingPage_Skip5:
 	ld	a, (xsp+4)
 	add	a, 16
 	cp	a, 95
-	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Epilogue27
+	jr	ugt, SeWrtSnd_SetupNamingPage_Epilogue9
 	addmi8	(xsp+4), 16
-SeMenu_CopyWriteUpdate_Helper18_Join26:
+SeWrtSnd_SetupNamingPage_Join9:
 	ld	c, (xsp+4)
 	extz	bc
 	ld	wa, 1:i3
@@ -7152,17 +7152,17 @@ SeMenu_CopyWriteUpdate_Helper18_Join26:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue27:
+SeWrtSnd_SetupNamingPage_Epilogue9:
 	pop	qiz
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper18_Join27:
+SeWrtSnd_SetupNamingPage_Join5:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 95
-	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Epilogue28
+	jr	nc, SeWrtSnd_SetupNamingPage_Epilogue
 	incm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -7184,7 +7184,7 @@ SeMenu_CopyWriteUpdate_Helper18_Join27:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Helper18_Epilogue28:
+SeWrtSnd_SetupNamingPage_Epilogue:
 	inc	6, xsp
 	ret
 SeWrtSnd_ClearName:
@@ -8590,7 +8590,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Join2:
 	xor	xwa, xwa
 	ldb_d8	a, (0x65d)
 	add	xiz, xwa
-	call	SeMenu_ShowConfirmDialog_Helper2
+	call	SeMenu_DrawEnvCurvePicture
 	pop	xwa
 	cp	(0x6ae:16), 1
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip4
@@ -8605,7 +8605,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Join3:
 	add	xix, 42
 	call	SeGfx_DrawStaticList
 	ret
-SeMenu_ShowConfirmDialog_Helper2:
+SeMenu_DrawEnvCurvePicture:
 	ld	a, (xiz)
 	and	a, 224
 	srl	a, 5
@@ -9076,7 +9076,7 @@ SeMenu_FilterEdit_DataBlock1_Helper:
 	ld XIY,SeLfo1_Records
 	ld XIX,SeLfo1_DrawStaticScreen_Records2
 	call SeGfx_DrawStaticList
-	call SeMenu_PresetBrowser_Select_Helper
+	call SeLfo1_DrawPartLabels
 	call SeMenu_DrawSoloButton
 	call SeMenu_DrawLfoPartSwitches
 	call SeMenu_DrawLfoSelectedPartLine
@@ -9085,7 +9085,7 @@ SeMenu_FilterEdit_DataBlock1_Helper:
 	ld	xix, SeLfo1_DrawStaticScreen_Records
 	call	SeGfx_DrawBoundList
 	ret
-SeMenu_PresetBrowser_Select_Helper:
+SeLfo1_DrawPartLabels:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	c, 4:opc
 	ld	w, (1630:16)
@@ -9093,7 +9093,7 @@ SeMenu_PresetBrowser_Select_Helper:
 	sla	a, 1
 	dec	1, a
 	.byte 0xc8, 0xff
-	jr	c, SeMenu_PresetBrowser_Select_Helper_Skip
+	jr	c, SeLfo1_DrawPartLabels_Skip
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2
@@ -9104,7 +9104,7 @@ SeMenu_PresetBrowser_Select_Helper:
 	call	SeGfx_DrawStaticList
 	pop c
 	jr	SeMenu_PresetBrowser_Data_Code_Join
-SeMenu_PresetBrowser_Select_Helper_Skip:
+SeLfo1_DrawPartLabels_Skip:
 	.byte 0xcb, 0x04
 	xor	b, b
 	sla	bc, 2

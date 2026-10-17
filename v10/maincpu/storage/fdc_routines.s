@@ -36,7 +36,12 @@ FDC_ReadDataRegister:
 FDC_Send_Command:
 	ld	(0x110008:24), a
 	ret
-FDC_WaitReady_Helper:
+; FDC_RecordDensityCode: Shifts the byte at RAM 0x8B22 into 0x8B20 and stores A at 0x8B22 (a two-deep history of a
+;   media code). FDC_CONFIG_VERIFY's media-type stanzas pass 2 for the 250/300 kbps (double-density) types 0, 1, 4, 5
+;   and the default and 0 for the 500 kbps (high-density) types 2 (1024-byte sectors) and 3 (1440 KB); nothing in the
+;   v10 image reads 0x8B20/0x8B22, so what the code means beyond that rate correlation is not established. Basis:
+;   callers + body.
+FDC_RecordDensityCode:
 	ldmm8	0x8b20, 0x8b22
 	ld	(0x8b22:16), a
 	ret
@@ -220,56 +225,56 @@ FDC_CONFIG_VERIFY_Skip10:
 	lda xix, (FDC_CONFIG_VERIFY_On720KMedia:24)
 	jp	t, (xix+wa)
 ; FDC_CONFIG_VERIFY_On720KMedia: Media-type 0 case of FDC_CONFIG_VERIFY's switch on the low nibble of 0x8A6E: stores
-;   drive mode 0 in 0x8A6C, rate/mode bits 0 and FDC_WaitReady_Helper(2) -- the 9 x 512 B, 80-track 720 KB (2DD)
+;   drive mode 0 in 0x8A6C, rate/mode bits 0 and FDC_RecordDensityCode(2) -- the 9 x 512 B, 80-track 720 KB (2DD)
 ;   setting; codes 4 and 5 and the default run the same body with their own code. Basis: callers + body.
 FDC_CONFIG_VERIFY_On720KMedia:
 	ld (35436:16), 0
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case1:
 	ld	(0x8a6c:16), 0
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 192
 	ld	wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_On1024ByteSectorMedia:
 	ld	(0x8a6c:16), 2
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 64
 	ld wa, 0:i3
-	calr FDC_WaitReady_Helper
+	calr FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_On1440KMedia:
 	ld	(0x8a6c:16), 3
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 64
 	ld wa, 0:i3
-	calr FDC_WaitReady_Helper
+	calr FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case4:
 	ld	(0x8a6c:16), 4
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case5:
 	ld	(0x8a6c:16), 5
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_WaitReady_Skip11:
 	ld	(0x8a6c:16), 0
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 FDC_WaitReady_Join:
 	ldto_berp a, 251
 	or a, 11

@@ -3331,7 +3331,7 @@ SingleLoad_LoadSong_Skip9:
 	jr	c, SingleLoad_LoadSong_Skip10
 	ld	wa, (xsp+32)
 	extz	wa
-	call	FileIO_ByteBlock_DemoProc1_Helper
+	call	SingleLoad_PrepareSongSlot
 	ld	xiz, xhl
 	ld	bc, (xsp+32)
 	extz	xbc
@@ -3349,7 +3349,7 @@ SingleLoad_LoadSong_Skip9:
 	ld	wa, (xsp+32)
 	extz	wa
 	ld	bc, iz
-	call	FileIO_ByteBlock_DemoProc1_Helper2
+	call	SingleLoad_FinishSongLoad
 	cp	iz, 0:i3
 	jr	lt, SingleLoad_LoadSong_Join3
 	ld	wa, (xsp+32)
@@ -3407,7 +3407,7 @@ SingleLoad_LoadComposerPattern_Skip13:
 	extz	wa
 	ld	bc, (xsp+26)
 	extz	bc
-	call	FileIO_ByteBlock_DemoProc1_Helper3
+	call	SingleLoad_CopyComposerPatternFromFile
 	ld	iz, hl
 	jr	SingleLoad_LoadComposerPattern_Join4
 SingleLoad_LoadComposerPattern_Skip14:
@@ -6690,7 +6690,7 @@ GetFileEntryByIndex_Skip:
 GetFileEntryByIndex_Epilogue:
 	popw	iz
 	ret
-SLSrcBankList_FuncBody_Helper12:
+SingleLoadSrc_ReadPmtBankName:
 	lda	xsp, (xsp-26)
 	pushw	iz
 	ld	(xsp+26), wa
@@ -6735,7 +6735,7 @@ GetFileEntryByIndex_Epilogue2:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
-SLSrcBankList_FuncBody_Helper13:
+SingleLoadSrc_ReadPmtMemoryName:
 	lda	xsp, (xsp-26)
 	push	xiz
 	ld	(xsp+28), wa
@@ -6832,7 +6832,7 @@ SingleLoadSrc_ReadSqtSongName_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
-SLSrcBankList_FuncBody_Helper15:
+SingleLoadSrc_ReadCmpPatternName:
 	lda	xsp, (xsp-28)
 	pushw	iz
 	ld	(xsp+26), bc
@@ -6880,7 +6880,7 @@ GetFileEntryByIndex_Epilogue5:
 	popw	iz
 	lda	xsp, (xsp+28)
 	ret
-SLSrcBankList_FuncBody_Helper16:
+SingleLoadSrc_ReadTmSoundName:
 	lda	xsp, (xsp-26)
 	pushw	iz
 	ld	(xsp+26), wa
@@ -6926,7 +6926,7 @@ GetFileEntryByIndex_Epilogue6:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
-SLSrcBankList_FuncBody_Helper17:
+SingleLoadSrc_ReadTmUserKitName:
 	lda	xsp, (xsp-24)
 	pushw	iz
 	calr	GetCurrentFileIndex
@@ -6968,7 +6968,7 @@ GetFileEntryByIndex_Epilogue7:
 	popw	iz
 	lda	xsp, (xsp+24)
 	ret
-SLSrcBankList_FuncBody_Helper18:
+SingleLoadSrc_ReadTmUserKitEntryName:
 	lda	xsp, (xsp-26)
 	pushw	iz
 	ld	(xsp+26), wa

@@ -25037,10 +25037,15 @@ RhythmFillIn_PatternTable:
 ;   (EVT_ACTIVATE_STATE phase 2) and CmpRealTtlFunc_OnTitleActivate (phase 5) call it.
 CmpRealTtl_EnterTitle:
 	push	xiz
-	call	RhythmFillIn_PatternTable_Sub_Helper
+	call	CmpRealTtl_EnterTitle_Impl
 	pop	xiz
 	ret
-RhythmFillIn_PatternTable_Sub_Helper:
+; CmpRealTtl_EnterTitle_Impl: Body of CmpRealTtl_EnterTitle: clears 0x28A7 bit 2 and 0xE3E2 bit 0; unless
+;   PREVIOUS_TITLE is TT_CMREAL (181) it sets 0x8D88 bit 0 and, when not playing (0x3283 bit 0 clear), sets 0x34CD bit
+;   7, runs Seq_DispatcherEntry and, coming from TT_CMBKSL_S (178), starts the accompaniment
+;   (AccWrap_PlayModeStartAccPlay). Basis: callers + body -- its only caller is the XIZ wrapper CmpRealTtl_EnterTitle,
+;   whose header describes exactly this (the _Impl pairing of CmpSetTtl_StepEntryIndex).
+CmpRealTtl_EnterTitle_Impl:
 	and	(0x28a7:16), 251
 	and	(0xe3e2:16), 254
 	cp	(PREVIOUS_TITLE:16), 181
@@ -25275,17 +25280,22 @@ RhythmVariation_InlineCode_Code:
 	.zero 8
 	nop
 ; CmpStep_MoveRecPartTowardDrums: XIZ-preserving part step of the Composer STEP title: through
-;   RhythmVariation_InlineCode_Sub_Helper it replaces the record part 0x379B by its successor in the order BAS (8) ->
+;   CmpStep_MoveRecPartTowardDrums_Impl it replaces the record part 0x379B by its successor in the order BAS (8) ->
 ;   AC1 (1) -> AC2 (2) -> AC3 (4) -> DRM (16) (32-byte map RhythmVariation_InlineCode_Code2), re-dispatches the audio
 ;   state and updates the status flags. Basis: callers + body -- AccDraw_SecondarySub_Handler09 (TT_CMSTEP switch 9)
 ;   calls it unless W bit 7 is set or the part is already DRM (bit 4); Handler08's AccScreen_DataBlock_Helper3 is the
 ;   opposite step (map RhythmVariation_InlineCode_Code, DRM -> AC3 -> AC2 -> AC1 -> BAS).
 CmpStep_MoveRecPartTowardDrums:
 	push	xiz
-	calr	RhythmVariation_InlineCode_Sub_Helper
+	calr	CmpStep_MoveRecPartTowardDrums_Impl
 	pop	xiz
 	ret
-RhythmVariation_InlineCode_Sub_Helper:
+; CmpStep_MoveRecPartTowardDrums_Impl: Body of CmpStep_MoveRecPartTowardDrums: replaces the record part 0x379B by its
+;   successor through the 32-byte map RhythmVariation_InlineCode_Code2 (BAS 8 -> AC1 1 -> AC2 2 -> AC3 4 -> DRM 16),
+;   re-dispatches the audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and updates the status
+;   flags (DrumKit_UpdateStatusFlags). Basis: callers + body -- its only caller is the XIZ wrapper
+;   CmpStep_MoveRecPartTowardDrums, whose header describes exactly this.
+CmpStep_MoveRecPartTowardDrums_Impl:
 	ld	xhl, 0:i3
 	ld	l, (0x379b:16)
 	and	l, 31
@@ -25890,18 +25900,21 @@ CmpNcp_ItemA_HandlerIndex:
 ;   index CmpNcp_StepItemBValue maps through CmpNcp_ItemB_HandlerIndex.
 CmpNcp_StepItemB_Wrap:
 	push	xiz
-	call	DrumVoice_Handler7_Data_3_Helper3
+	call	CmpNcp_StepItemB
 	pop	xiz
 	ret
-DrumVoice_Handler7_Data_3_Helper3:
+; CmpNcp_StepItemB: Steps the Composer NCP TO-item selector 0x39A8 within 0..1: W bit 7 set = up, clear = down; no
+;   wrap. Basis: callers + body -- its only caller is the XIZ wrapper CmpNcp_StepItemB_Wrap, whose header describes
+;   exactly this; the FROM twin is CmpNcp_StepItemA (0x39A7, 0..2).
+CmpNcp_StepItemB:
 	ld	a, (0x39a8:16)
 	bit	7, w
-	jr	z, DrumVoice_Handler7_Data_3_Helper3_Skip
+	jr	z, CmpNcp_StepItemB_Skip
 	cp	a, 1:i3
 	jr	z, DrumVoice_Handler7_Code_Return5
 	inc	1, a
 	jr	DrumVoice_Handler7_Code_Join2
-DrumVoice_Handler7_Data_3_Helper3_Skip:
+CmpNcp_StepItemB_Skip:
 	cp	a, 0:i3
 	jr	z, DrumVoice_Handler7_Code_Return5
 	dec	1, a
@@ -25931,7 +25944,7 @@ CmpNcp_StepItemBValue:
 	call	CmpNcp_CallItemHandler
 	ret
 CmpNcp_ItemB_HandlerIndex:
-	; (0x39A8), stepped between 0 and 1 by DrumVoice_Handler7_Data_3_Helper3 -> the
+	; (0x39A8), stepped between 0 and 1 by CmpNcp_StepItemB -> the
 	; CmpNcp_ItemHandlerTable index that CmpNcp_StepItemBValue dispatches.
 	; Reached through CmpNcp_StepItemBValue_Wrap.
 	.short	3, 4
@@ -27036,7 +27049,13 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 	ld	xiy, 0x390e
 	ldir85
 	ret
-CmEsyTtl_Dispatch2_Helper:
+; CmpEsy_PrepareRealtimeRecording: XIZ-preserving call of TimeSig_DisplayStrings_Helper3, run by EASY COMPOSER's EDIT
+;   before it changes to TT_CMREAL (0xB5): sets the record part 0x379B from the EASY part mask 0x37C9 (AC1/AC2/AC3/BAS
+;   bits 4/5/6/3 -> 1/2/4/8, else DRM 16), updates the status flags (DrumKit_UpdateStatusFlags), re-dispatches the
+;   audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and loads the current pattern's parameters
+;   (RhythmPatInit_LoadParams). Basis: callers + body -- CmpEsyTtl_Mode2_OnEdit calls it after
+;   CmEsyTtl_Dispatch2_Helper2 and then posts the title change 0xB5 (TT_CMREAL, the Composer realtime recording).
+CmpEsy_PrepareRealtimeRecording:
 	push	xiz
 	call	TimeSig_DisplayStrings_Helper3
 	pop	xiz
@@ -29550,7 +29569,14 @@ ExtVoice_ProcessList_Data:
 	call	AccWrap_PlayModeStartAccPlay
 DrumParam_ReadMaxCount_Return:
 	ret
-CmpEsy_DeliverEventAndCheck_Helper:
+; CmpEsy_ApplyEdit: XIZ-preserving call of ExtVoice_ProcessList_Helper, the EASY COMPOSER SET: stops the
+;   accompaniment, rebuilds the pattern data of every part whose bit is set in the difference mask 0x37C8
+;   (DrumParam_ReadMaxCount_Helper5: AccVoice_SetupStyleSlots per part), clears 0x37C8 on success or re-initialises
+;   the slot and marks everything changed on failure (GLOBAL_ERROR_CODE != 0), then restarts the accompaniment
+;   (AccWrap_PlayModeStartAccPlay) or reports the error (DrumVoice_NotifyEE). Basis: callers + body --
+;   CmpEsyTtl_Mode2_OnSet calls it when 0x37C8 is non-zero and saves the edit rows only when GLOBAL_ERROR_CODE is 0
+;   afterwards; its header calls this 'applies the edit'.
+CmpEsy_ApplyEdit:
 	push	xiz
 	call	ExtVoice_ProcessList_Helper
 	pop	xiz
@@ -32161,7 +32187,7 @@ CmpEsyTtl_Mode2_OnEdit:
 	push xix
 	push xiz
 	call CmEsyTtl_Dispatch2_Helper2
-	call CmEsyTtl_Dispatch2_Helper
+	call CmpEsy_PrepareRealtimeRecording
 	pop xiz
 	pop xix
 	pop xhl
@@ -32206,7 +32232,7 @@ CmpEsy_DeliverEventAndCheck:
 	call ApDeliveryEvent
 	jr t, S2cTtl_ReturnZero
 ; CmpEsyTtl_Mode2_OnSet: Switch 11 SET: when the difference mask 0x37C8 is nonzero applies the edit
-;   (CmpEsy_DeliverEventAndCheck_Helper) and on success saves rows 0x37AB/0x37B2 to 0x37B9/0x37C0 and 0x34D6 to
+;   (CmpEsy_ApplyEdit) and on success saves rows 0x37AB/0x37B2 to 0x37B9/0x37C0 and 0x34D6 to
 ;   0x37C7.
 CmpEsyTtl_Mode2_OnSet:
 	cp	(0x37c8:16), 0
@@ -32215,7 +32241,7 @@ CmpEsyTtl_Mode2_OnSet:
 	push xhl
 	push xix
 	push xiz
-	call CmpEsy_DeliverEventAndCheck_Helper
+	call CmpEsy_ApplyEdit
 	pop xiz
 	pop xix
 	pop xhl
@@ -39136,7 +39162,14 @@ AccStyle_TableDataEntry_Skip6:
 AccStyle_TableDataEntry_Join:
 	call	UI_PostModeChangeEvent
 	ret
-FileIO_ByteBlock_DemoProc1_Helper3:
+; SingleLoad_CopyComposerPatternFromFile: Composer single-load body: reads the open .CMP file's style image into the
+;   work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K'
+;   and resetting byte 2 of the copied sections' part entries), then copies source A into destination C with
+;   DualVoice_ParamLoadDone -- one composer pattern, or the ten of a memory bank when both are 30 + bank
+;   (AccStyle_TableDataEntry_Helper); HL = 0xFF95 when a copy fails (0x3950 = 131), else 0 (0x3950 = 130 for an
+;   unknown header or a pattern / bank mix). Basis: callers + body -- SingleLoad_LoadComposerPattern hands it source
+;   WA and destination BC after FileIO_ReadAndValidateHeader; its header describes this copy.
+SingleLoad_CopyComposerPatternFromFile:
 	lda	xsp, (xsp-34)
 	push	xiz
 	ld	(xsp+34), c

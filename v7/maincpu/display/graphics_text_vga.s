@@ -5208,13 +5208,13 @@ MainSysCtrl_Entry5_VoiceInit:
 	call Voice_InitBankDataSafe
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitCurrentPanel:
-	call MainSysCtrl_Entry5_VoiceInit_Helper
+	call MainSysCtrl_ResetCurrentPanel
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_Entry7:
-	call MainSysCtrl_Entry5_VoiceInit_Helper2
+	call MainSysCtrl_ResetPartSettings
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitMidiSetting:
-	call MainSysCtrl_Entry5_VoiceInit_Helper3
+	call MainSysCtrl_ResetMidiSettings
 
 
 MainSysControl_PostDispatchFinalize:

@@ -374,7 +374,7 @@ SeqPlay_DataBlock_BBE_Skip2:
 	jrl	SeqAcc_SetupRepeatCount
 ; SeqPlay_DecPunchInMeasure: Parameter 8 down on the sequencer play screen: decrements the punch-in measure 0xF238
 ;   (the "P" in-measure of MT_GetPInMeasString), not below 1, recomputes the playback start from it
-;   (SeqPlay_DataBlock_BBE_Helper2, the step-down counterpart of SeqPlay_UpdateStartFromPunchIn) and tail-jumps to
+;   (SeqPlay_UpdateStartFromPunchInDown, the step-down counterpart of SeqPlay_UpdateStartFromPunchIn) and tail-jumps to
 ;   SeqAcc_SetupRepeatCount. Basis: callers + body -- SeqAccomp_SubChain_DecPunchParam ("Parameters 8/9/10 (punch in,
 ;   punch out, count-in) down: one helper each") calls it for parameter 8; the parameter-8 increment is
 ;   SeqPlay_DataBlock_BBE (cap 998).
@@ -385,7 +385,7 @@ SeqPlay_DecPunchInMeasure:
 	dec	1, wa
 	ld	(0xf238:16), wa
 SeqPlay_DecPunchInMeasure_Skip3:
-	calr	SeqPlay_DataBlock_BBE_Helper2
+	calr	SeqPlay_UpdateStartFromPunchInDown
 	jrl	SeqAcc_SetupRepeatCount
 ; SeqPlay_UpdateStartFromPunchIn: After the punch-in measure (0xF238, the "P" in-measure of MT_GetPInMeasString) has
 ;   changed, recomputes the playback start measure (words 0x2668 and 0x26EC) as punch-in minus the count in 0xF23F,
@@ -424,17 +424,23 @@ SeqPlay_UpdateStartFromPunchIn_Skip2:
 	ld	(9832:16), wa
 	ld	(9964:16), wa
 	ret
-SeqPlay_DataBlock_BBE_Helper2:
+; SeqPlay_UpdateStartFromPunchInDown: Step-down counterpart of SeqPlay_UpdateStartFromPunchIn: recomputes the playback
+;   start words 0x2668 / 0x26EC after the punch-in measure 0xF238 went down -- with bit 0 of 0x28B2 set, punch-in 1
+;   gives start 0x8002 and count-in 0xF23F = 2, punch-in 2 gives 0x2668 = 2, 0x26EC = 0x8002 and 0xF23F = 3; otherwise
+;   it clamps the count-in to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition) and sets start = punch-in - count-in.
+;   Basis: callers + body -- SeqPlay_DecPunchInMeasure and SeqPlay_DecPunchOutMeasure call it after lowering 0xF238;
+;   their headers already call it the step-down counterpart.
+SeqPlay_UpdateStartFromPunchInDown:
 	bit	0, (10418:16)
-	jr	z, SeqPlay_DataBlock_BBE_Helper2_Skip2
+	jr	z, SeqPlay_UpdateStartFromPunchInDown_Skip2
 	ldw_d16	wa, (62008)
 	cp	wa, 1:i3
-	jr	nz, SeqPlay_DataBlock_BBE_Helper2_Skip
+	jr	nz, SeqPlay_UpdateStartFromPunchInDown_Skip
 	ldw	(9832:16), 0x8002
 	ldw	(9964:16), 0x8002
 	ldw	(0xf23f:16), 2
 	ret
-SeqPlay_DataBlock_BBE_Helper2_Skip:
+SeqPlay_UpdateStartFromPunchInDown_Skip:
 	cp	wa, 2:i3
 	jr	nz, SeqPlay_DataBlock_BBE_Skip5
 	ldw	(9832:16), 2
@@ -444,7 +450,7 @@ SeqPlay_DataBlock_BBE_Helper2_Skip:
 SeqPlay_DataBlock_BBE_Skip5:
 	cp	wa, 3:i3
 	ret	c
-SeqPlay_DataBlock_BBE_Helper2_Skip2:
+SeqPlay_UpdateStartFromPunchInDown_Skip2:
 	ld	wa, (0xf238:16)
 	dec	1, wa
 	ld	(0x28c3:16), wa
@@ -480,7 +486,7 @@ SeqPlay_IncPunchOutMeasure_Join:
 	ret
 ; SeqPlay_DecPunchOutMeasure: Parameter 9 down on the sequencer play screen: decrements the punch-out measure 0xF23A,
 ;   not below 2; if the punch-in measure 0xF238 is not below it, sets punch-in to punch-out - 1, recomputes the start
-;   (SeqPlay_DataBlock_BBE_Helper2) and runs SeqAcc_SetupRepeatCount. Basis: callers + body --
+;   (SeqPlay_UpdateStartFromPunchInDown) and runs SeqAcc_SetupRepeatCount. Basis: callers + body --
 ;   SeqAccomp_SubChain_DecPunchParam calls it for parameter 9 (punch out); mirror of SeqPlay_IncPunchOutMeasure
 ;   (parameter 9 up).
 SeqPlay_DecPunchOutMeasure:
@@ -499,7 +505,7 @@ SeqPlay_DecPunchOutMeasure_Join2:
 	ret	c
 	dec	1, wa
 	ld	(0xf238:16), wa
-	calr	SeqPlay_DataBlock_BBE_Helper2
+	calr	SeqPlay_UpdateStartFromPunchInDown
 	calr	SeqAcc_SetupRepeatCount
 	ret
 ; SeqPlay_IncPunchCountIn: Parameter 10 up on the sequencer play screen: increments the punch count-in 0xF23F
@@ -25879,7 +25885,13 @@ SeqLoad_ProcessDataBlock_Skip2:
 	pop qiz
 	inc	6, xsp
 	ret
-FileIO_ByteBlock_DemoProc1_Helper:
+; SingleLoad_PrepareSongSlot: Before single-loading a song into slot A: saves word 0xFFEC to 0xF19E, makes A the
+;   current song (stores the old current song back to its slot, copies slot A to 0xF180, 0xFFE3 := A), re-initialises
+;   it (SeqVoice_InitEntryForCurrentBank), stores it back and compacts the event memory (SeqStep_FindAndCompact,
+;   0xF1CE := used size / 16); returns XHL = the byte offset of the first free event block. Basis: callers + body --
+;   SingleLoad_LoadSong reads the file's event data to 0xB0000 + the returned offset, and
+;   SingleLoad_FinishSongLoad restores 0xFFEC from 0xF19E when the load is finished.
+SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
 	ld	(xsp+2), a
@@ -25904,7 +25916,13 @@ FileIO_ByteBlock_DemoProc1_Helper:
 	popw	iz
 	inc	2, xsp
 	ret
-FileIO_ByteBlock_DemoProc1_Helper2:
+; SingleLoad_FinishSongLoad: After a song file's header and events were read into slot A: on a read error (BC < 0) re-
+;   initialises the song again; otherwise makes it current, relocates the loaded block numbers by the free-block base
+;   ((0xF22F) - 1: the 16 part-chain head/tail words and every block's link words), recomputes positions, stores it
+;   back into its slot, re-inits pans and voice data, restarts the accompaniment and restores word 0xFFEC from 0xF19E.
+;   Basis: callers + body -- SingleLoad_LoadSong calls it with BC = the read result after
+;   SingleLoad_PrepareSongSlot prepared the slot.
+SingleLoad_FinishSongLoad:
 	dec	8, xsp
 	push	xiz
 	ld	(xsp+10), a

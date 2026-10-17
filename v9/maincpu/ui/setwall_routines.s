@@ -75,18 +75,18 @@ NoRef_SetWall_SlotMap20x2:
 	.byte 0x00, 0x02, 0x00, 0x0a, 0x03, 0x04, 0x05, 0x06, 0x0b, 0x08, 0x09, 0x01, 0x13, 0x0c, 0x0d, 0x0e, 0x0f, 0x07, 0x11, 0x12
 	.byte 0x02, 0x0b, 0x01, 0x04, 0x05, 0x06, 0x07, 0x11, 0x09, 0x0a, 0x03, 0x08, 0x0d, 0x0e, 0x0f, 0x10, 0x10, 0x12, 0x13, 0x0c
 SqTrAs_PartInc_UpdateOkSw:
-	call	NoRef_SetWall_SlotMap20x2_Helper
+	call	SqTrAs_UpdateOkSwVisibility
 	ret
-NoRef_SetWall_SlotMap20x2_Helper:
+SqTrAs_UpdateOkSwVisibility:
 	ld	a, (0x2873:16)
 	cp	a, 13
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 16
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 15
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 14
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	call	CDlikeSwTtl_SendStartEvt
 	ld	xhl, 0xf1a0
 	xor	w, w
@@ -94,20 +94,20 @@ NoRef_SetWall_SlotMap20x2_Helper:
 	ld	iy, wa
 	ld	a, (xhl+iy)
 	cp a, 13
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 16
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 15
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 14
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
-	jr	NoRef_SetWall_SlotMap20x2_Helper_Return
-NoRef_SetWall_SlotMap20x2_Helper_Skip:
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
+	jr	SqTrAs_UpdateOkSwVisibility_Return
+SqTrAs_UpdateOkSwVisibility_Skip:
 	call	CDlikeSwTtl_SendStartEvtArg1
-NoRef_SetWall_SlotMap20x2_Helper_Return:
+SqTrAs_UpdateOkSwVisibility_Return:
 	ret
 MiddleFuncCall_DispatchData_Helper:
-	call	NoRef_SetWall_SlotMap20x2_Helper
+	call	SqTrAs_UpdateOkSwVisibility
 	ret
 ; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
 ; SetWall_CompareAndSwap (0xF1EFF7) and SetWall_InlineCodeBlock2_Skip read it with
@@ -323,7 +323,7 @@ SetWall_DataBlock1:
 	ld	a, (0xffe3:24)
 	ld	(3391:16), a
 	ret
-SqTrAsPsTtl_Dispatch_Helper:
+SqTrAsPsTtl_NullRet:
 	ret
 	ret
 	ret
@@ -1927,7 +1927,7 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 	popw	bc
 	pop	xix
 	ret
-SqTrAs_CondCheck_Helper2:
+SqSngSel_LeaveTitle:
 	and (10407:16), 251
 	xor	wa, wa
 	ld	a, 76:opc

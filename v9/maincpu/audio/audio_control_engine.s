@@ -4248,7 +4248,7 @@ VoiceData_ExtendedParamSetup:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ret
-MainSysCtrl_Entry5_VoiceInit_Helper:
+MainSysCtrl_ResetCurrentPanel:
 	calr	Display_SetupAndPrepareRender
 	call	PanelTlv_ValidateLivePanel
 	call	PanelTlv_ResolvePartCompanions
@@ -4256,7 +4256,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper:
 	calr	MidiMsg_ParseChannelStream
 	call	MainTitle_SetBootFlag
 	jrl	Audio_FillParamBuffer
-MainSysCtrl_Entry5_VoiceInit_Helper2:
+MainSysCtrl_ResetPartSettings:
 	dec	8, xsp
 	pushw	iz
 	lda	xwa, (SndParamRam_DefaultImage:24)
@@ -4297,7 +4297,7 @@ VoiceData_ExtendedParamSetup_Loop3:
 	popw	iz
 	inc	8, xsp
 	ret
-MainSysCtrl_Entry5_VoiceInit_Helper3:
+MainSysCtrl_ResetMidiSettings:
 	lda	xsp, (xsp-10)
 	push	qiz
 	lda	xwa, (SndParamRam_DefaultImage:24)
@@ -4305,7 +4305,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3:
 	lda	xwa, (0xf9a0:16)
 	ld	(xsp+8), xwa
 	ld	(xsp+2), 0
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop:
+MainSysCtrl_ResetMidiSettings_Loop:
 	ld	a, (xsp+2)
 	extz	wa
 	muls	wa, 26
@@ -4349,7 +4349,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop:
 	; Mem_Copy
 	lda	xsp, (xsp+10)
 	ldi_erpb 251, 13
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
+MainSysCtrl_ResetMidiSettings_Loop2:
 	ld	a, (xsp+2)
 	extz	wa
 	muls	wa, 26
@@ -4369,10 +4369,10 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
 	calr	MIDI_WriteCommandToBuffer
 	inc1b_erp 251
 	cp_erpb 251, 21
-	jr	ule, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2
+	jr	ule, MainSysCtrl_ResetMidiSettings_Loop2
 	incm8	1, (xsp+2)
 	cp	(xsp+2), 24
-	jrl	c, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop
+	jrl	c, MainSysCtrl_ResetMidiSettings_Loop
 	set	1, (65472:24)
 	pushw	14
 	ld	xwa, (xsp+6)
@@ -4384,7 +4384,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ld	(xsp+2), 0
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
+MainSysCtrl_ResetMidiSettings_Loop3:
 	ld	c, (xsp+2)
 	extz	bc
 	ld	de, bc
@@ -4397,12 +4397,12 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
 	calr	MIDI_WriteCommandToBuffer
 	incm8	1, (xsp+2)
 	cp	(xsp+2), 14
-	jr	c, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3
+	jr	c, MainSysCtrl_ResetMidiSettings_Loop3
 	ld	xwa, (xsp+8)
 	lda	xbc, (xwa+1037)
 	ld	a, (xbc)
 	bit	2, a
-	jr	z, MainSysCtrl_Entry5_VoiceInit_Helper3_Skip
+	jr	z, MainSysCtrl_ResetMidiSettings_Skip
 	res	2, a
 	ld	(xbc), a
 	ld	e, a
@@ -4411,7 +4411,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
 	ldw	wa, 145
 	ld	bc, 3:i3
 	calr	MIDI_WriteCommandToBuffer
-MainSysCtrl_Entry5_VoiceInit_Helper3_Skip:
+MainSysCtrl_ResetMidiSettings_Skip:
 	push	xde
 	push	xhl
 	push	xix
@@ -5184,7 +5184,7 @@ ExtData_ToneParam_AltDispatch_DrawbarNibbleFields:	; cases 1, 2
 ExtData_ToneParam_AltDispatch_DrawbarFootages:	; cases 3, 4, 5, 6
 	jr	ExtData_ToneParam_AltDispatch_Join3
 ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches:
-	calr	ExtData_ToneParam_AltDispatch_Helper
+	calr	ExtData_Drawbar_SetByte7Fields
 	ret
 ExtData_ToneParam_AltDispatch_Join:
 	ldw	wa, 255
@@ -5202,7 +5202,7 @@ ExtData_ToneParam_AltDispatch_Join3:
 	ldw	wa, 240
 	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
-ExtData_ToneParam_AltDispatch_Helper:
+ExtData_Drawbar_SetByte7Fields:
 	ldw	wa, 15
 	calr	ExtData_SetTlvField
 	ldw	wa, 48
@@ -7241,7 +7241,7 @@ RegBitManip_Handler_4_Helper:
 	ld	(xde+2), a
 	inc	6, xsp
 	ret
-MidiStream_ExtendedDispatch_Helper3_Helper:
+MidiStream_ResolveVoiceIndexMode1_Impl:
 	dec	6, xsp
 	ld	a, (0x90f7:16)
 	lda	xbc, (0x916f:16)
@@ -8342,7 +8342,7 @@ MidiStream_ResolveVoiceIndexMode1:
 	push	xix
 	push	xiy
 	push	xiz
-	call	MidiStream_ExtendedDispatch_Helper3_Helper
+	call	MidiStream_ResolveVoiceIndexMode1_Impl
 	pop	xiz
 	pop	xiy
 	pop	xix

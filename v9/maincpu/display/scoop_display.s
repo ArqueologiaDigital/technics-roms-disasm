@@ -4971,7 +4971,7 @@ PerfMode_ParamHandler_3_Helper:
 DisplayMode_Handler_3_Skip31:
 	call	PerfMode_StepCursorEventByte
 PerfMode_EventTable_0_Target1_Join2:
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe3e2:16), 8
 DisplayMode_Handler_3_Return8:
@@ -5000,7 +5000,7 @@ PerfMode_ParamHandler_3_Helper2:
 DisplayMode_Handler_3_Skip11:
 	call	PerfMode_StepCursorEventByte
 PerfMode_EventTable_0_Target1_Join3:
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe3e2:16), 8
 DisplayMode_Handler_3_Return9:
@@ -6884,14 +6884,14 @@ SqStep_SetupCursorTrack:
 	ld	(14100:16), 4
 	ld	(14101:16), 0
 	ld	(14102:16), 1
-	call	PortConfig_Handler_0_Helper3
+	call	SeqNode_SetPoolBaseToEventMemory
 	call	SqStep_SetDisplayModeFromTrack
 	ld	a, (PART_SELECT:16)
 	ld	(3430:16), a
 	call	PortConfig_Handler_0_Sub
-	call	PortConfig_Handler_0_Helper5
+	call	SqStep_SetPopupIdForDisplayMode
 	call	PortConfig_Handler_0_Return
-	call	ClockConfig_Handler_0_Helper
+	call	SqStep_TrackSetupNullRet
 	cpw	(62001:16), 0
 	jrl	nz, SqStep_SetupCursorTrack_Skip
 	call	SqStep_CheckCursorTrackUsed
@@ -6994,7 +6994,7 @@ SerialPort_ModeHandler_0_Skip9:
 	jp	SerialPort_ModeHandler_0_Return4
 ScoopParam_ValueTable_Entry3_Code_Skip:
 	call	PortConfig_Handler_0_Return
-	call	ClockConfig_Handler_0_Helper
+	call	SqStep_TrackSetupNullRet
 	bit	3, (0x0d53:16)
 	jrl	z, SerialPort_ModeHandler_0_Skip10
 	call	SqStep_SetupScreenForDisplayMode
@@ -7431,7 +7431,7 @@ PortConfig_DataTable_A_Sub_Return:
 PortConfig_DataTable_B:
 	.byte	0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03, 0x0f, 0xff, 0xff, 0xff
 	.byte	0xff, 0x0c, 0x0d, 0x0e
-PortConfig_Handler_0_Helper3:
+SeqNode_SetPoolBaseToEventMemory:
 	ld	xhl, 4362
 	ld	xwa, (7514:16)
 	ld	(xhl), xwa
@@ -7442,7 +7442,7 @@ TempoRingBuf_DiscardAll:
 	cp	wa, 0xffff
 	jrl	nz, TempoRingBuf_DiscardAll
 	ret
-PortConfig_Handler_0_Helper5:
+SqStep_SetPopupIdForDisplayMode:
 	ld	xhl, PortConfig_Handler_0_Tbl
 	ld	a, (3429:16)
 	and	a, 3
@@ -7469,7 +7469,7 @@ ClockConfig_Handler_1:
 ClockConfig_Handler_0:
 	and	(0xe3e2:16), 253
 	ret
-ClockConfig_Handler_0_Helper:
+SqStep_TrackSetupNullRet:
 	ret
 	; Byte data, 4 B.  No reader found: no label, positional or absolute .set
 	; name at this address is loaded anywhere in the image (searched by
@@ -14041,7 +14041,7 @@ DisplayStr_WriteStoredControlLine:
 	ld	a, 32:opc
 	ld	(xix+), a
 	call	Display_UpdateRegion5
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	ret
 DisplayStr_RedrawStatusAndControlLine:
@@ -14053,7 +14053,7 @@ DisplayStr_WriteIncomingControlLine:
 	ld	bc, 7:i3
 	ldir85
 	call	Display_UpdateRegion5
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	ret
 	; Lcd text, 7 B.  Read by DisplayStr_BytecodeBlock_B (0xEFED12): `ld xiy, Str_Control`
@@ -14474,7 +14474,7 @@ DisplayStr_ShowPartSoundLine:
 	call	DisplayStr_WritePartAndSoundName
 	call	Display_UpdateRegion3
 	ret
-PerfMode_EventTable_0_Target1_Helper10:
+DisplayStr_WriteControlNameValue:
 	ld	xiy, Str_PBendModExpEq
 	ld	xix, 3800
 	xor	hl, hl
@@ -15972,7 +15972,7 @@ SqStep_FindMsaStateAtCursor_Skip4:
 	and	a, 240
 	cp	a, 176
 	jrl	nz, SqStep_FindMsaStateAtCursor_Loop
-	call	Tbl_MsaStates_Helper
+	call	SqStep_UpdateMsaStateFromEvent
 	jp	SqStep_FindMsaStateAtCursor_Loop
 SqStep_FindMsaStateAtCursor_Skip5:
 	ld	a, 5:opc
@@ -15990,7 +15990,7 @@ SqStep_FindMsaStateAtCursor_Skip5:
 	ld (4349:16), xiz
 	pop xiz
 	ret
-Tbl_MsaStates_Helper:
+SqStep_UpdateMsaStateFromEvent:
 	call	VoiceSlot_ComputeWordIndex
 	push	xhl
 	ld	xhl, 3230
@@ -19260,8 +19260,8 @@ Scoop_EventLoop_36Entry_Skip3:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@hi16
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@lo16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@hi16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19337,8 +19337,8 @@ Scoop_EventLoop_36Entry_Skip12:
 	jr	Scoop_EventLoop_36Entry_Join4
 Scoop_EventLoop_36Entry_Skip13:
 	pushm	(xbc)
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@hi16
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@lo16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@hi16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

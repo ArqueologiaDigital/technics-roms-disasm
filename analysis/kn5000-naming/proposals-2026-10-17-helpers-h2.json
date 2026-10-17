@@ -1,0 +1,1019 @@
+[
+ {
+  "old": "FDC_WaitReady_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "FDC_RecordDensityCode",
+  "header": "Shifts the byte at RAM 0x8B22 into 0x8B20 and stores A at 0x8B22 (a two-deep history of a media code). FDC_CONFIG_VERIFY's media-type stanzas pass 2 for the 250/300 kbps (double-density) types 0, 1, 4, 5 and the default and 0 for the 500 kbps (high-density) types 2 (1024-byte sectors) and 3 (1440 KB); nothing in the v10 image reads 0x8B20/0x8B22, so what the code means beyond that rate correlation is not established. Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "storage/fdc_routines.s:40 `ldmm8 0x8b20, 0x8b22` -- ld (0x8B20),(0x8B22): the previous code moves to 0x8B20 (ldmm8 is dst, src)",
+   "storage/fdc_routines.s:41 `ld (0x8b22:16), a` -- the new code from A",
+   "storage/fdc_routines.s:228 `ldib_erp 251, 0` / 229 `ld wa, 2:i3` / 230 `calr FDC_WaitReady_Helper` -- caller FDC_CONFIG_VERIFY_On720KMedia: rate bits 0x00 (250 kbps), code 2",
+   "storage/fdc_routines.s:235 `ldi_erpb 251, 192` / 237 `calr FDC_WaitReady_Helper` -- media type 1: rate bits 0xC0 (300 kbps), code 2 (types 4, 5 and the default: 256-272, rate 0, code 2)",
+   "storage/fdc_routines.s:249 `ldi_erpb 251, 64` / 250 `ld wa, 0:i3` / 251 `calr FDC_WaitReady_Helper` -- caller FDC_CONFIG_VERIFY_On1440KMedia: rate bits 0x40 (500 kbps), code 0; FDC_CONFIG_VERIFY_On1024ByteSectorMedia (242-244) is the same",
+   "storage/fdc_routines.s:274 `ldto_berp a, 251` / 275 `or a, 11` -- the rate bits go out as the uPD72068 aux command rate|0x0B; technics-docs/fdc-subsystem.md: 0x00 = 250, 0x40 = 500, 0xC0 = 300 kbps",
+   "../../table_data/kn5000_table_data.s:4837 `ldmm8 3406, 3408` -- the bootloader driver's twin (FDC_SaveCommand, 0x0D50 -> 0x0D4E) is called by the same six media stanzas (table_data/boot_fdc_driver.s:204-249) with the same 2/0 codes; nothing reads 0x0D4E/0x0D50 either",
+   "original_ROMs/kn5000_v10_program.rom (read-only scan) -- the only 16-bit-address operands 0x8B20/0x8B22 are at 0xF96B25/0xF96B2B (this routine); no 24-bit or imm32 reference exists"
+  ]
+ },
+ {
+  "old": "MidiSeq_ClearSyncFlag_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferTotal_SoundRam",
+  "header": "Fills the transfer descriptor at XWA for the whole sound-RAM group: {+0 start 0x1E0000, +4 end 0x1E72AA, +8 length 0x72AA} (the 16-byte 'KN5000 SOUND RAM' id plus the data). Basis: callers + body -- MidiPkt_XferOnSoundRamStart (message 13, state 0) points the receive total 0xBCDC with it before the block descriptor 0xBCEC (MidiPkt_ArpPopReturn_Helper3), and SysEx_SendSoundMemoryData points the send-side total 0xBCBC with it; the shape of MidiPkt_SetXferTotal_Panel / _SeqData.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11795 `ld xwa, 0xbcdc` / 11796 `call MidiSeq_ClearSyncFlag_Helper3` -- caller MidiPkt_XferOnSoundRamStart, receive total",
+   "midi/midi_dispatch_handlers.s:11220 `ld xwa, 0xbcbc` / 11221 `call MidiSeq_ClearSyncFlag_Helper3` -- caller SysEx_SendSoundMemoryData, send-side total",
+   "midi/midi_dispatch_handlers.s:10278 `lda xbc, (0x1e0000:24)` -- +0 = 0x1E0000",
+   "midi/midi_dispatch_handlers.s:10280 `ld xbc, 0x72aa` -- +8 = 0x72AA; +4 = start + 0x72AA (10283)",
+   "midi/midi_dispatch_handlers.s:10234 `MidiPkt_SetXferTotal_Panel:` -- sibling total descriptor with the same {start, end, length} layout"
+  ]
+ },
+ {
+  "old": "MidiSeq_ClearSyncFlag_Helper6",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferTotal_AccompBlocks",
+  "header": "Fills the transfer descriptor at XWA for the whole accompaniment-block-area group: {start 0x1E8800, end 0x1EC400, length 0x3C00}; with bit 6 of 0xBD18 set the length is the used size (MidiPkt_GetUsedSize_AccompBlocks) and the end start + that. Basis: callers + body -- MidiPkt_XferOnAccompBlocksStart (message 23, state 0) points the receive total 0xBCDC with it, SysEx_SendMspUserData the send-side total 0xBCBC; MidiPkt_GetUsedSize_AccompBlocks' header already names it as the area total.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11884 `ld xwa, 0xbcdc` / 11885 `call MidiSeq_ClearSyncFlag_Helper6` -- caller MidiPkt_XferOnAccompBlocksStart, receive total",
+   "midi/midi_dispatch_handlers.s:11244 `ld xwa, 0xbcbc` / 11245 `call MidiSeq_ClearSyncFlag_Helper6` -- caller SysEx_SendMspUserData, send-side total",
+   "midi/midi_dispatch_handlers.s:10453 `lda xwa, (0x1e8800:24)` / 10457 `ld xwa, 0x3c00` -- start 0x1E8800, length 0x3C00",
+   "midi/midi_dispatch_handlers.s:10461 `calr MidiPkt_GetUsedSize_AccompBlocks` -- used size when bit 6 of 0xBD18 is set"
+  ]
+ },
+ {
+  "old": "PerfMode_EventTable_0_Target1_Helper10",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DisplayStr_WriteControlNameValue",
+  "header": "Writes the control event's name and value into the TT_SQSTEP text line: the 8-character cell (0x3720 & 7) of Str_PBendModExpEq (blank / P.BEND= / MOD.  = / EXP.  = / P.MEM = / AFT.  =) at 0x0ED8, then at 0x0EDF nothing for kind 0, the pitch-bend value (Display_BytecodeBlock_F_Tbl2_Helper2) for kind 1, else ON/OFF when (0x3721) bit 7 is set or the value in digits. Basis: callers + body -- DisplayStr_WriteIncomingControlLine and DisplayStr_WriteStoredControlLine call it after writing \"CONTROL\" and describe it as the control name/value of kind 0x3720.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:14513 `call PerfMode_EventTable_0_Target1_Helper10` -- caller DisplayStr_WriteIncomingControlLine, after \"CONTROL\" at 0x0ECF",
+   "display/scoop_display.s:14492 `call PerfMode_EventTable_0_Target1_Helper10` -- caller DisplayStr_WriteStoredControlLine",
+   "display/scoop_display.s:14996 `ld xiy, Str_PBendModExpEq` / 14999 `ld l, (0x3720:16)` / 15001 `sla hl, 3` -- name cell = kind * 8, copied to 3800 (0x0ED8)",
+   "display/scoop_display.s:15047 `.ascii \"        P.BEND= MOD.  = EXP.  = P.MEM = AFT.  =` -- the kind names, 8 characters each",
+   "display/scoop_display.s:15015 `call Display_BytecodeBlock_F_Tbl2_Helper2` -- kind 1: value from (0x3721) and (0x1112) at 0x0EDF",
+   "display/scoop_display.s:15025 `ld xiy, Str_On2` / 15036 `call ParamDigit_ExtractAndFormat` -- other kinds: ON/OFF when (0x3721) bit 7, else digits at 3807 (0x0EDF)"
+  ]
+ },
+ {
+  "old": "SeMenu_ApplyPartEdit_Helper7",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeMenu_DrawPitFilEnvGraph",
+  "header": "Clears the box (51,59)-(256,144) and draws the envelope graph of the pitch / filter envelope page 1 from the current part's params: five levels (params 2, 4, 6, 8, 10; clamped to -50..+50 and, except on TT_SEFILENV1, scaled by param 1 in SeMenu_ApplyPartEdit_Helper8) joined by four times (params 3, 5, 7, 9, clamped 0..100) through SeMenu_DrawClippedEnvSegment, release from x 214. Basis: callers + body -- the TT_SEPITENV1 (0x28) and TT_SEFILENV1 (0x37) page draws call it after SeTitle_DrawStaticScreen, and the TT_SEFILENV1 column handlers after each SeMenu_StepParamFieldAndSend(0x37, ...); sibling of SeMenu_DrawAmpEnvGraph.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sound_editor_ui.s:823 `pushw 40` / 826 `call SeMenu_ApplyPartEdit_Helper7` -- caller: the TT_SEPITENV1 (0x28) draw method UpdSeSel_DetailedUpdate_SetDisplayState_Join2 (audio/sound_editor_routines.s:263 `jp UpdSeSel_DetailedUpdate_SetDisplayState_Join2` = SePitEnv1TitleFunc_OnDraw); the batch attributed it to SeEasy_DrawPage, the nearest named label above",
+   "audio/sound_editor_ui.s:1804 `pushw 55` / 1807 `call SeMenu_ApplyPartEdit_Helper7` -- caller: the TT_SEFILENV1 (0x37) page draw (UpdSeSel_DetailedUpdate_Helper8)",
+   "audio/semenu_routines.s:3030 `ldw wa, 55` / 3033 `calr SeMenu_ApplyPartEdit_Helper7` -- caller: a TT_SEFILENV1 column handler (one of seven, 3033-3324; the batch attributed them to SeLfo1_StepSelectorAndReload, the nearest label above)",
+   "audio/semenu_routines.s:3098 `ld (xwa+8), 50` / 3099 `ld (xwa+9), 206` -- those handlers edit the even params as levels -50..+50 and the odd ones as 0..100 (3111)",
+   "audio/semenu_routines.s:4088 `pushw 144` / 4092 `call SeMenu_ClearRect` -- clears (51,59)-(256,144), the box SeMenu_DrawAmpEnvGraph also clears",
+   "audio/semenu_routines.s:4115 `ld (xwa), 100` -- times (params 3, 5, 7, 9) capped at 100",
+   "audio/semenu_routines.s:4124 `calr SeMenu_ApplyPartEdit_Helper8` / 4131 `muls wa, 87` -- each level clamped (4516 `cp (xiz), 50`) and scaled to y",
+   "audio/semenu_routines.s:4416 `calr SeMenu_DrawClippedEnvSegment` -- the segments; SeMenu_DrawClippedEnvSegment's header calls this the second envelope graph"
+  ]
+ },
+ {
+  "old": "SeqPlay_DataBlock_BBE_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeqPlay_UpdateStartFromPunchInDown",
+  "header": "Step-down counterpart of SeqPlay_UpdateStartFromPunchIn: recomputes the playback start words 0x2668 / 0x26EC after the punch-in measure 0xF238 went down -- with bit 0 of 0x28B2 set, punch-in 1 gives start 0x8002 and count-in 0xF23F = 2, punch-in 2 gives 0x2668 = 2, 0x26EC = 0x8002 and 0xF23F = 3; otherwise it clamps the count-in to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition) and sets start = punch-in - count-in. Basis: callers + body -- SeqPlay_DecPunchInMeasure and SeqPlay_DecPunchOutMeasure call it after lowering 0xF238; their headers already call it the step-down counterpart.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/sequencer_engine.s:388 `calr SeqPlay_DataBlock_BBE_Helper2` -- caller SeqPlay_DecPunchInMeasure, after 0xF238 - 1",
+   "sequencer/sequencer_engine.s:502 `calr SeqPlay_DataBlock_BBE_Helper2` -- caller SeqPlay_DecPunchOutMeasure, after pulling 0xF238 to punch-out - 1",
+   "sequencer/sequencer_engine.s:430 `ldw_d16 wa, (62008)` / 433 `ldw (9832:16), 0x8002` -- punch-in (0xF238) 1: start 0x8002, 0xF23F = 2",
+   "sequencer/sequencer_engine.s:440 `ldw (9832:16), 2` -- punch-in 2: 0x2668 = 2, 0x26EC = 0x8002, 0xF23F = 3",
+   "sequencer/sequencer_engine.s:451 `calr SeqAcc_UpdateEndPosition` / 453 `sub wa, (62015:16)` -- general case: start = punch-in - count-in (0xF23F)",
+   "sequencer/sequencer_engine.s:397 `SeqPlay_UpdateStartFromPunchIn:` -- the step-up twin, same three cases with the other start values"
+  ]
+ },
+ {
+  "old": "ClockConfig_Handler_0_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_TrackSetupNullRet",
+  "header": "Empty routine (a single `ret`): the step-record set-up calls it right after PortConfig_Handler_0_Return, which is also a bare `ret`; what it once did is not recoverable (the unreferenced ClockConfig_Select_Table beside it is not read). Basis: callers + body -- SqStep_SetupCursorTrack and SqStep_InitOnEnter's redraw-within-the-title path call it; this tree's X_NullRet convention (PlayMode_NullRet, DpMdlySmfLyrTtl_NullRet).",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:7194 `call PortConfig_Handler_0_Return` / 7195 `call ClockConfig_Handler_0_Helper` -- caller SqStep_SetupCursorTrack",
+   "display/scoop_display.s:7297 `call PortConfig_Handler_0_Return` / 7298 `call ClockConfig_Handler_0_Helper` -- caller SqStep_InitOnEnter, redraw path (its header: 'only re-runs PortConfig_Handler_0_Return and ClockConfig_Handler_0_Helper')",
+   "display/scoop_display.s:7788 `ret` -- the whole body",
+   "display/scoop_display.s:7771 `PortConfig_Handler_0_Return:` -- the preceding call is a bare ret as well"
+  ]
+ },
+ {
+  "old": "CmEsyTtl_Dispatch2_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpEsy_PrepareRealtimeRecording",
+  "header": "XIZ-preserving call of TimeSig_DisplayStrings_Helper3, run by EASY COMPOSER's EDIT before it changes to TT_CMREAL (0xB5): sets the record part 0x379B from the EASY part mask 0x37C9 (AC1/AC2/AC3/BAS bits 4/5/6/3 -> 1/2/4/8, else DRM 16), updates the status flags (DrumKit_UpdateStatusFlags), re-dispatches the audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and loads the current pattern's parameters (RhythmPatInit_LoadParams). Basis: callers + body -- CmpEsyTtl_Mode2_OnEdit calls it after CmEsyTtl_Dispatch2_Helper2 and then posts the title change 0xB5 (TT_CMREAL, the Composer realtime recording).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:32163 `call CmEsyTtl_Dispatch2_Helper` / 32169 `ldw wa, 0x00b5` / 32170 `call UI_PostModeChangeEvent` -- caller CmpEsyTtl_Mode2_OnEdit; UI_PostModeChangeEvent posts EVT_CHANGE_TITLE TITLE_PS + 0xB5",
+   "storage/flash_floppy_handlers.s:5770 `RegTitle 0x4, InitializeSuna_Str_TT_CMREAL, 0xb5, NAKA_MAINFUNC_CmpRealTtlFunc, 0xb50000` -- title 0xB5 is TT_CMREAL",
+   "sequencer/accompaniment_engine.s:27041 `call TimeSig_DisplayStrings_Helper3` -- the whole body, between push/pop xiz",
+   "sequencer/accompaniment_engine.s:27052 `ld (0x379b:16), 1` / 27053 `bit 4, (0x37c9:16)` -- TimeSig_DisplayStrings_Code_Helper4 picks the record part from 0x37C9 (1, 2, 4, 8, else 16)",
+   "sequencer/accompaniment_engine.s:25277 `; CmpStep_MoveRecPartTowardDrums:` -- 0x379B is the record part BAS 8 / AC1 1 / AC2 2 / AC3 4 / DRM 16",
+   "sequencer/accompaniment_engine.s:27046 `calr DrumKit_UpdateStatusFlags` / 27049 `calr RhythmPatInit_LoadParams` -- status flags and the current pattern's parameters"
+  ]
+ },
+ {
+  "old": "CmpEsy_DeliverEventAndCheck_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpEsy_ApplyEdit",
+  "header": "XIZ-preserving call of ExtVoice_ProcessList_Helper, the EASY COMPOSER SET: stops the accompaniment, rebuilds the pattern data of every part whose bit is set in the difference mask 0x37C8 (DrumParam_ReadMaxCount_Helper5: AccVoice_SetupStyleSlots per part), clears 0x37C8 on success or re-initialises the slot and marks everything changed on failure (GLOBAL_ERROR_CODE != 0), then restarts the accompaniment (AccWrap_PlayModeStartAccPlay) or reports the error (DrumVoice_NotifyEE). Basis: callers + body -- CmpEsyTtl_Mode2_OnSet calls it when 0x37C8 is non-zero and saves the edit rows only when GLOBAL_ERROR_CODE is 0 afterwards; its header calls this 'applies the edit'.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:32218 `call CmpEsy_DeliverEventAndCheck_Helper` / 32223 `cp (GLOBAL_ERROR_CODE:16), 0` -- caller CmpEsyTtl_Mode2_OnSet, then saves rows 0x37AB/0x37B2 on success",
+   "sequencer/accompaniment_engine.s:29555 `call ExtVoice_ProcessList_Helper` -- the whole body, between push/pop xiz",
+   "sequencer/accompaniment_engine.s:29559 `call AccWrap_PlayModeDispatch` / 29566 `calr DrumParam_ReadMaxCount_Helper5` -- stop, then rebuild the changed parts",
+   "sequencer/accompaniment_engine.s:29613 `bit 3, (0x37c8:16)` / 29616 `calr AccVoice_SetupStyleSlots` -- one stanza per difference bit (3, 4, 5, 6, then 0-2)",
+   "sequencer/accompaniment_engine.s:29569 `call AccPatch_InitCurrentSlot` / 29570 `or (0x37c8:16), 127` -- failure path; 29573 `ld (0x37c8:16), 0` on success",
+   "sequencer/accompaniment_engine.s:29580 `call AccWrap_PlayModeStartAccPlay` / 29583 `calr DrumParam_ReadMaxCount_Helper` -- restart, or DrumVoice_NotifyEE on error"
+  ]
+ },
+ {
+  "old": "DSPCfg_Data_ParamDispatch_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DSPCfg_FindParamAtRecordOffset",
+  "header": "Finds the effect parameter stored at byte offset E of a DSP-block panel record: walks the effect type's parameter list (XBC, from DspFxRecListPtrTable) with DSPCfg_Data_ParamDispatch, adding up each parameter's byte size and taking its bit mask, until it reaches offset E with a field whose mask meets the changed-bit mask at the stacked pointer (or passes E); clears those bits from that mask and returns HL = the index of the parameter that covers offset E; retd 4. Basis: callers + body -- DSPCfg_RecordFieldToParamId calls it with E = record offset - 1 and adds 0x10 + HL to the block's id base; its header describes exactly this lookup.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/dsp_config_sysex.s:4130 `calr DSPCfg_Data_ParamDispatch_Helper` -- caller DSPCfg_RecordFieldToParamId (after the case DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord), XBC = DspFxRecListPtrTable entry, E = C - 1",
+   "audio/dsp_config_sysex.s:4136 `add hl, 16` -- the caller turns HL into parameter id base + 0x10 + index",
+   "audio/dsp_config_sysex.s:4006 `calr DSPCfg_Data_ParamDispatch` -- per parameter: size (xsp+0xE), mask (xsp+0xC), running offset (xsp+0xA)",
+   "audio/dsp_config_sysex.s:4021 `cp a, (xsp+0x10)` / 4027 `and a, (xsp+0xc)` -- stop past offset E, or at E when the field's mask meets the changed bits",
+   "audio/dsp_config_sysex.s:4045 `cpl a` / 4049 `ld (xwa), c` -- clears the found field's bits from the caller's mask",
+   "audio/dsp_config_sysex.s:4050 `ld hl, iz` / 4053 `retd 4` -- HL = parameter index"
+  ]
+ },
+ {
+  "old": "DpMdlyDocTtl_Dispatch_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DpMdlyDoc_DisarmStartCountdown",
+  "header": "Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyDocTtlFunc_OnTitleOld calls it; 0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the transport).",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:1833 `call DpMdlyDocTtl_Dispatch_Helper2` -- caller DpMdlyDocTtlFunc_OnTitleOld",
+   "ui/ui_playback_modes.s:559 `ld (3380:16), 0` -- the body: 0x0D34 := 0",
+   "ui/ui_playback_modes.s:548 `cp (3380:16), 0` / 550 `ld (3380:16), 1` -- SongMode_InitFlagBlock_Helper arms it once (and loads countdown 0x1144 = 10)",
+   "ui/ui_playback_modes.s:378 `PlayMode_ArmStartCountdown:` -- header: 0x0D34 = 1 once per arming; the starters act only while it is 1",
+   "sequencer/sequencer_ui.s:76 `RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYDOC, 0x74, NAKA_MAINFUNC_DpMdlyDocTtlFunc, 0x740001` -- the title"
+  ]
+ },
+ {
+  "old": "DpMdlyPdTtl_Dispatch_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DpMdlyPd_DisarmStartCountdown",
+  "header": "Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin of DpMdlyDocTtl_Dispatch_Helper2 for the PD medley title.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:1927 `call DpMdlyPdTtl_Dispatch_Helper2` -- caller DpMdlyPdTtlFunc_OnTitleOld",
+   "ui/ui_playback_modes.s:712 `ld (3380:16), 0` -- the body: 0x0D34 := 0",
+   "ui/ui_playback_modes.s:701 `cp (3380:16), 0` / 703 `ld (3380:16), 1` -- PartFormat_InitFlagBlock_Helper arms it once",
+   "ui/ui_playback_modes.s:738 `cp (3380:16), 1` -- PartFormat_StartPlayback acts only while it is 1",
+   "sequencer/sequencer_ui.s:77 `RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYPD, 0x75, NAKA_MAINFUNC_DpMdlyPdTtlFunc, 0x750000` -- the title"
+  ]
+ },
+ {
+  "old": "DpMdlySmfLyrTtl_Dispatch_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DpMdlySmfLyr_DisarmStartCountdown",
+  "header": "When the TT_DPMDLYSMFLYR title (0x76) is left with CURRENT_TITLE = 108 (0x6C TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 so the next activation arms the countdown again. Basis: callers + body -- DpMdlySmfLyrTtlFunc_OnTitleOld calls it; same body as DpMdlySmfTtl_Dispatch_Helper2, the SMF title's twin, whose arming side is PlayModeStop_InitFlagBlock_Helper.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:2141 `call DpMdlySmfLyrTtl_Dispatch_Helper2` -- caller DpMdlySmfLyrTtlFunc_OnTitleOld",
+   "ui/ui_playback_modes.s:829 `cp (CURRENT_TITLE:16), 108` / 831 `ld (3380:16), 0` -- the body",
+   "file_io/medley.s:4228 `RegTitle 0x5, InitializeCheap_Str_TT_DKDPSMF, 0x6c, NAKA_MAINFUNC_FmmSmfMedleyFunc, 0x6c0000` -- 108 = TT_DKDPSMF",
+   "ui/ui_playback_modes.s:765 `ld (3380:16), 1` -- PlayModeStop_InitFlagBlock_Helper arms the flag",
+   "sequencer/sequencer_ui.s:78 `RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYSMFLYR, 0x76, NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc, 0x760000` -- the title"
+  ]
+ },
+ {
+  "old": "DpMdlySmfTtl_Dispatch_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DpMdlySmf_DisarmStartCountdown",
+  "header": "When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next activation arms it again; PlayMode_SendCommand6C starts the transport only while the flag is 1. Basis: callers + body -- DpMdlySmfTtlFunc_OnTitleOld calls it.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:2025 `call DpMdlySmfTtl_Dispatch_Helper2` -- caller DpMdlySmfTtlFunc_OnTitleOld",
+   "ui/ui_playback_modes.s:774 `cp (CURRENT_TITLE:16), 108` / 776 `ld (3380:16), 0` -- the body",
+   "ui/ui_playback_modes.s:763 `cp (3380:16), 0` / 765 `ld (3380:16), 1` -- PlayModeStop_InitFlagBlock_Helper arms it",
+   "ui/ui_playback_modes.s:804 `cp (3380:16), 1` -- PlayMode_SendCommand6C acts only while it is 1",
+   "sequencer/sequencer_ui.s:75 `RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYSMF, 0x73, NAKA_MAINFUNC_DpMdlySmfTtlFunc, 0x730000` -- the title"
+  ]
+ },
+ {
+  "old": "DrumVoice_Handler7_Data_3_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpNcp_StepItemB",
+  "header": "Steps the Composer NCP TO-item selector 0x39A8 within 0..1: W bit 7 set = up, clear = down; no wrap. Basis: callers + body -- its only caller is the XIZ wrapper CmpNcp_StepItemB_Wrap, whose header describes exactly this; the FROM twin is CmpNcp_StepItemA (0x39A7, 0..2).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:25893 `call DrumVoice_Handler7_Data_3_Helper3` -- caller CmpNcp_StepItemB_Wrap",
+   "sequencer/accompaniment_engine.s:25897 `ld a, (0x39a8:16)` / 25898 `bit 7, w` -- reads the selector, direction in W bit 7",
+   "sequencer/accompaniment_engine.s:25900 `cp a, 1:i3` -- up stops at 1; 25905 `cp a, 0:i3` -- down stops at 0",
+   "sequencer/accompaniment_engine.s:25846 `ld a, (0x39a7:16)` -- CmpNcp_StepItemA, the same shape for 0x39A7 (max 2)"
+  ]
+ },
+ {
+  "old": "ExtData_ToneParam_AltDispatch_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "ExtData_Drawbar_SetByte7Fields",
+  "header": "Applies an incoming event to byte +7 of a drawbar record (0x44/0x45/0x46) as the 1' drawbar (low nibble, ExtData_SetTlvField 0x0F) and the two switch bits 0x10/0x20 (ExtData_ToggleTlvBits 0x30), then posts the change with SwbtWr_FlushAndAppendParams. Basis: callers + body -- its only caller is case 7 of ExtData_ToneParam_AltDispatch, ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches, whose header names these two fields; same shape as ExtData_Tag43_SetByte1Fields.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/audio_control_engine.s:5241 `calr ExtData_ToneParam_AltDispatch_Helper` -- caller ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches (payload +7)",
+   "audio/audio_control_engine.s:5260 `ldw wa, 15` / 5261 `calr ExtData_SetTlvField` -- low nibble",
+   "audio/audio_control_engine.s:5262 `ldw wa, 48` / 5263 `calr ExtData_ToggleTlvBits` -- bits 0x30",
+   "audio/audio_control_engine.s:5264 `jrl SwbtWr_FlushAndAppendParams` -- posts the change",
+   "audio/audio_control_engine.s:5202 `ExtData_Tag43_SetByte1Fields:` -- the named sibling of the same shape"
+  ]
+ },
+ {
+  "old": "FileIO_ByteBlock_DemoProc1_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoad_PrepareSongSlot",
+  "header": "Before single-loading a song into slot A: saves word 0xFFEC to 0xF19E, makes A the current song (stores the old current song back to its slot, copies slot A to 0xF180, 0xFFE3 := A), re-initialises it (SeqVoice_InitEntryForCurrentBank), stores it back and compacts the event memory (SeqStep_FindAndCompact, 0xF1CE := used size / 16); returns XHL = the byte offset of the first free event block. Basis: callers + body -- SingleLoad_LoadSong reads the file's event data to 0xB0000 + the returned offset, and FileIO_ByteBlock_DemoProc1_Helper2 restores 0xFFEC from 0xF19E when the load is finished.",
+  "basis": "callers + body",
+  "evidence": [
+   "demo/file_demo_proc.s:3360 `call FileIO_ByteBlock_DemoProc1_Helper` / 3361 `ld xiz, xhl` -- caller SingleLoad_LoadSong, WA = destination song",
+   "demo/file_demo_proc.s:3369 `lda xwa, (0xb0000:24)` / 3370 `add xwa, xiz` -- the event data is read to 0xB0000 + the returned offset",
+   "sequencer/sequencer_engine.s:25887 `ldw (0xf19e:16), (0xffec:24)` -- saves 0xFFEC",
+   "sequencer/sequencer_engine.s:25891 `call SeqData_CopyBlockToBuffer` / 25894 `call VoicePreset_LoadAndInitPan` -- current song 0xF180 back to its slot, slot A into 0xF180",
+   "sequencer/sequencer_engine.s:25896 `ld (0xffe3:24), a` / 25897 `call SeqVoice_InitEntryForCurrentBank` -- A becomes current and is re-initialised (SeqVoice_InitEntry for song 0xFFE3)",
+   "sequencer/sequencer_engine.s:25902 `call SeqStep_FindAndCompact` -- compacts; returns XHL = used blocks * 256 (seq_step_routines.s SeqStep_CompactDone)"
+  ]
+ },
+ {
+  "old": "FileIO_ByteBlock_DemoProc1_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoad_FinishSongLoad",
+  "header": "After a song file's header and events were read into slot A: on a read error (BC < 0) re-initialises the song again; otherwise makes it current, relocates the loaded block numbers by the free-block base ((0xF22F) - 1: the 16 part-chain head/tail words and every block's link words), recomputes positions, stores it back into its slot, re-inits pans and voice data, restarts the accompaniment and restores word 0xFFEC from 0xF19E. Basis: callers + body -- SingleLoad_LoadSong calls it with BC = the read result after FileIO_ByteBlock_DemoProc1_Helper prepared the slot.",
+  "basis": "callers + body",
+  "evidence": [
+   "demo/file_demo_proc.s:3377 `ld bc, iz` / 3378 `call FileIO_ByteBlock_DemoProc1_Helper2` -- caller SingleLoad_LoadSong, BC = FileIO_ReturnError result",
+   "sequencer/sequencer_engine.s:25911 `cp bc, 0:i3` / 25913 `call SeqVoice_InitEntryForCurrentBank` -- error: re-initialise the song",
+   "sequencer/sequencer_engine.s:25921 `calr SeqLoad_ProcessDataBlock_Helper2` / 25922 `ld (xsp+6), hl` -- base = (0xF22F) - 1",
+   "sequencer/sequencer_engine.s:25934 `add iz, (xsp+6)` / 25939 `call Part_WriteVoiceWord` -- part chain words relocated (parts 1..16)",
+   "sequencer/sequencer_engine.s:25972 `add bc, (xsp+6)` / 25975 `call PartCtrl_WriteWord_Off1` -- block link words relocated",
+   "sequencer/sequencer_engine.s:26001 `call SeqData_CopyBlockToBuffer` / 26006 `ldw (0xffec:24), (0xf19e:16)` -- stored back to the slot; 0xFFEC restored"
+  ]
+ },
+ {
+  "old": "FileIO_ByteBlock_DemoProc1_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoad_CopyComposerPatternFromFile",
+  "header": "Composer single-load body: reads the open .CMP file's style image into the work buffer 0x69800, accepts the headers 'H',0,'K' / 'G',0,'K' / 'L','K','E' (rewriting an older one to 'H',0,'K' and resetting byte 2 of the copied sections' part entries), then copies source A into destination C with DualVoice_ParamLoadDone -- one composer pattern, or the ten of a memory bank when both are 30 + bank (AccStyle_TableDataEntry_Helper); HL = 0xFF95 when a copy fails (0x3950 = 131), else 0 (0x3950 = 130 for an unknown header or a pattern / bank mix). Basis: callers + body -- SingleLoad_LoadComposerPattern hands it source WA and destination BC after FileIO_ReadAndValidateHeader; its header describes this copy.",
+  "basis": "callers + body",
+  "evidence": [
+   "demo/file_demo_proc.s:3442 `call FileIO_ByteBlock_DemoProc1_Helper3` -- caller SingleLoad_LoadComposerPattern (file type 3, .CMP), A = source, C = destination",
+   "sequencer/accompaniment_engine.s:39151 `ld xwa, 0x069800` / 39152 `call FileIO_ReadBlock` -- the file's image into the work buffer, length SEQ_SONG_SLOTS - RHYTHM_PATTERN_BUF_A",
+   "sequencer/accompaniment_engine.s:39166 `cp_erpb 249, 72` / 39173 `cp_erpb 249, 71` / 39180 `cp_erpb 249, 76` -- header 'H',0,'K', 'G',0,'K' or 'L','K','E'",
+   "sequencer/accompaniment_engine.s:39271 `calr AccStyle_TableDataEntry_Helper` -- both >= 30: copies the ten patterns of the bank (AccStyle_SlotOrderA)",
+   "sequencer/accompaniment_engine.s:39363 `call DualVoice_ParamLoadDone` -- single pattern 0x39AC -> 0x39AD between images 0x39AE / 0x39B2",
+   "sequencer/accompaniment_engine.s:39368 `ld (0x3950:16), 131` / 39393 `ldw hl, 0xff95` -- a failed copy returns 0xFF95"
+  ]
+ },
+ {
+  "old": "Flash_InitBytecodeBlock_Helper8",
+  "verdict": "refuse",
+  "why_refused": "The caller only establishes the role -- CstmCpTtl_ResolvePendingCopy runs it to complete the pending CUSTOM COPY when FROM (0x0C68) < 10 -- but neither what a FROM below 10 denotes (custom memory vs composer pattern) nor what the body's steps do is pinned: Flash_StoreBaseAndInitAccPatch_Sub, NoteEvent_Store / NoteEventBuffer_Store, Flash_WriteSlotOwnerMap, Flash_CopyBlocksToSlots, TmFlash_CopyToExtMem and a 50-entry slot table loop at (0x938)+106 all carry unreviewed names. A name would restate the index split.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "storage/flash_floppy_handlers.s:1579 `calr Flash_InitBytecodeBlock_Helper8` -- caller CstmCpTtl_ResolvePendingCopy, FROM < 10 (1577 `cp l, 10`)",
+   "storage/flash_floppy_handlers.s:3998 `calr Flash_StoreBaseAndInitAccPatch_Sub` / 4002 `calr NoteEvent_Store` / 4009 `calr Flash_WriteSlotOwnerMap` / 4011 `call TmFlash_CopyToExtMem` -- unreviewed steps",
+   "storage/flash_floppy_handlers.s:4042 `Flash_InitBytecodeBlock_Helper8_Loop:` / 4081 `cp (xsp+0x2), 50` -- 50-entry loop over the slot table at (0x938)+106"
+  ]
+ },
+ {
+  "old": "Flash_InitBytecodeBlock_Helper9",
+  "verdict": "refuse",
+  "why_refused": "CstmCpTtl_ResolvePendingCopy runs it to complete the pending CUSTOM COPY when FROM >= 10 (and its unnamed twin after it for the other direction), but the body's meaning is not pinned: it copies the 0x16800-byte work image (0x0C72 = 0x69800) over the style image (RHYTHM_PATTERN_BUF_PTR), then Flash_InitBytecodeBlock_Helper9_Helper (slot-table / Flash_GetSlotAddressAndSize work) and TmFlash_BulkTransferToSubCPU, which sends the 0x72AA-byte sound RAM 0x1E0000 to the sub-CPU -- why a composer copy ends with a sound-RAM transfer, and what FROM >= 10 denotes, is not established.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "storage/flash_floppy_handlers.s:1582 `calr Flash_InitBytecodeBlock_Helper9` -- caller CstmCpTtl_ResolvePendingCopy, FROM >= 10",
+   "storage/flash_floppy_handlers.s:1600 `calr Flash_InitBytecodeBlock_Helper9` -- second caller, the unnamed routine after it",
+   "storage/flash_floppy_handlers.s:4146 `ld xix, (RHYTHM_PATTERN_BUF_PTR:16)` / 4147 `ld xiy, (3186:16)` / 4148 `ldw bc, 0xb400` -- work image over the style image",
+   "storage/flash_floppy_handlers.s:4151 `jp TmFlash_BulkTransferToSubCPU` -- audio/note_voice_mapping.s TmFlash_BulkTransferToSubCPU sends 0x1E0000, 0x72AA bytes, to sub-CPU 0x7800"
+  ]
+ },
+ {
+  "old": "HdaeRom_DataHandler_Helper",
+  "verdict": "refuse",
+  "why_refused": "HdaeRom_DataHandler_ConvertKn2000MkaMkb calls it only on its single-entry path (C = entry index, not 0xFF) on the 144-byte record at image +80 + 144 * index, just before HdaeRom_DataHandler_Helper2 converts that record; the body rewrites the record in place (byte +16 bits 6/3 from +17 bits 7/1, +18/+19 nibbles packed through HdaeRom_DataByteMap into +17, bytes +22.. moved down 2, a byte rotated in three 34-byte blocks). Which layout it converts from, and why only single-entry loads need it, is not established, so any name would invent the reason.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:27560 `calr HdaeRom_DataHandler_Helper` -- caller HdaeRom_DataHandler_ConvertKn2000MkaMkb, single-entry loop only (the all-entries loop HdaeRom_DataHandler_Loop3 skips it)",
+   "audio/note_voice_mapping.s:26786 `lda xhl, (HdaeRom_DataByteMap:24)` / 26809 `ld (xwa+17), d` -- nibble repacking into +17",
+   "audio/note_voice_mapping.s:26812 `lda xhl, (xbc+124)` / 26815 `ld (xde-2), c` -- shifts the record body down by 2",
+   "audio/note_voice_mapping.s:27776 `PostTmLoadEntry:` -- the single-entry path comes from a single SOUND MEMORY entry load (C = entry)"
+  ]
+ },
+ {
+  "old": "HdaeRom_DataHandler_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundRam_ConvertKn2000Record",
+  "header": "Converts one 144-byte sound record of a KN2000 / MKA / MKB sound-RAM image (XBC) into a 470-byte KN5000 record at XWA: fills it with defaults (SendPartDataBlock_Return5_Helper), copies the 16-byte name, maps the flag bits, packed nibble fields and levels (+0x12 * 127 / 30) to their KN5000 offsets. Basis: callers + body -- HdaeRom_DataHandler_ConvertKn2000MkaMkb (image ids 1-3) calls it per record with XWA = image +16 + 470 * n and XBC = the record; the KN1500 counterpart is SoundRam_ConvertKn1500Record.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:27541 `calr HdaeRom_DataHandler_Helper2` -- caller HdaeRom_DataHandler_ConvertKn2000MkaMkb, all-entries loop: XWA = +16 + 470 * n (27535 `ld xbc, 470`), XBC = the 144-byte record copied with 27533 `ldw bc, 72`",
+   "audio/note_voice_mapping.s:27575 `calr HdaeRom_DataHandler_Helper2` -- same caller, single-entry loop",
+   "audio/note_voice_mapping.s:26891 `calr SendPartDataBlock_Return5_Helper` -- destination first filled with the default record",
+   "audio/note_voice_mapping.s:26897 `ldw bc, 8` -- the 16-byte name (8 words) copied first",
+   "audio/note_voice_mapping.s:26950 `mul a, 127` / 26952 `div a, 30` -- a 0..30 source level rescaled to 0..127",
+   "audio/note_voice_mapping.s:26551 `SoundRam_ConvertKn1500Record:` -- the KN1500 sibling (289-byte source records), same default-fill-then-move shape"
+  ]
+ },
+ {
+  "old": "MainSysCtrl_Entry5_VoiceInit_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MainSysCtrl_ResetCurrentPanel",
+  "header": "INITIAL SETTING 'CURRENT PANEL': resets the live panel -- Display_SetupAndPrepareRender copies the header template (0x20 bytes, DataSlot_HeaderTemplate) to 0xF980 and SndParamRam_DefaultImage (0x620 bytes) to 0xF9A0 and sets the region bytes -- then validates and re-resolves it (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, PanelTlv_WriteLivePanelHeaders), applies it (MidiMsg_ParseChannelStream), sets GLOBAL_ERROR_CODE 35 ('COMPLETED!') and tail-jumps to Audio_FillParamBuffer. Basis: callers + body -- MainSysCtrl_OnInitCurrentPanel (case 1, item 'CURRENT PANEL') calls it.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/graphics_text_vga.s:5234 `call MainSysCtrl_Entry5_VoiceInit_Helper` -- caller MainSysCtrl_OnInitCurrentPanel, INITIAL SETTING item 1",
+   "audio/audio_control_engine.s:4290 `calr Display_SetupAndPrepareRender` -- first step",
+   "audio/audio_control_engine.s:4598 `pushw 0xf980` / 4599 `call Mem_Copy` / 4600 `pushw 0x620` / 4604 `pushw 0xf9a0` -- Display_SetupAndPrepareRender copies the defaults over the live panel",
+   "audio/audio_control_engine.s:4291 `call PanelTlv_ValidateLivePanel` / 4292 `call PanelTlv_ResolvePartCompanions` -- re-validate",
+   "audio/audio_control_engine.s:4295 `call MainTitle_SetBootFlag` -- boot/main_title_ctrl_panel.s:41 `ld (GLOBAL_ERROR_CODE:16), 35`; message 0x23 of the TT_MESAGE catalog (IvMessage_Catalog + 35 * 14) reads 'COMPLETED!'",
+   "audio/audio_control_engine.s:4296 `jrl Audio_FillParamBuffer` -- tail"
+  ]
+ },
+ {
+  "old": "MainSysCtrl_Entry5_VoiceInit_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MainSysCtrl_ResetPartSettings",
+  "header": "INITIAL SETTING 'PART SETTING': for each of the 24 part records (26-byte stride from +20) copies the record's field run (length at +1, data from +2) from SndParamRam_DefaultImage into the live panel 0xF9A0, sends each record (MIDI_WriteMultiByteWithHeader), then re-resolves the part companions. Basis: callers + body -- MainSysCtrl_OnInitPartSetting (case 2, item 'PART SETTING') calls it; its header already says it copies part records of SndParamRam_DefaultImage into 0xF9A0.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/graphics_text_vga.s:5240 `call MainSysCtrl_Entry5_VoiceInit_Helper2` -- caller MainSysCtrl_OnInitPartSetting, item 2",
+   "audio/audio_control_engine.s:4300 `lda xwa, (SndParamRam_DefaultImage:24)` / 4302 `lda xwa, (0xf9a0:16)` -- source defaults, destination live panel",
+   "audio/audio_control_engine.s:4321 `call Mem_Copy` -- per record, length byte +1, data +2",
+   "audio/audio_control_engine.s:4330 `calr MIDI_WriteMultiByteWithHeader` / 4332 `cp iz, 24` -- send each of 24 records",
+   "audio/audio_control_engine.s:4334 `call PanelTlv_ResolvePartCompanions`"
+  ]
+ },
+ {
+  "old": "MainSysCtrl_Entry5_VoiceInit_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MainSysCtrl_ResetMidiSettings",
+  "header": "INITIAL SETTING 'MIDI SETTING': in the live panel 0xF9A0 restores, for each of the 24 part records, bits 0-2 of byte +14 and the 9 bytes at +15 from SndParamRam_DefaultImage and re-sends them (MIDI_WriteCommandToBuffer), restores and re-sends the 14 bytes at +944 and clears bit 2 of byte +1037 (SwbtWr_ReinitOutputBank); then makes the same +14 / +15 / +944 restore in each of the 80 panel memories (0x1ED400 + 960 * n). Basis: callers + body -- MainSysCtrl_OnInitMidiSetting (case 3, item 'MIDI SETTING') calls it; its header already names the +14 restore.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/graphics_text_vga.s:5246 `call MainSysCtrl_Entry5_VoiceInit_Helper3` -- caller MainSysCtrl_OnInitMidiSetting, item 3",
+   "audio/audio_control_engine.s:4341 `lda xwa, (SndParamRam_DefaultImage:24)` / 4343 `lda xwa, (0xf9a0:16)`",
+   "audio/audio_control_engine.s:4356 `and c, 248` / 4361 `and a, 7` -- bits 0-2 of +14 from the defaults",
+   "audio/audio_control_engine.s:4370 `calr MIDI_WriteCommandToBuffer` / 4386 `call Mem_Copy` -- sent, then the +15 run copied",
+   "audio/audio_control_engine.s:4417 `lda xwa, (xwa+944)` / 4422 `call Mem_Copy` -- the 14 bytes at +944",
+   "audio/audio_control_engine.s:4472 `ld xwa, 0x1ed400` / 4517 `cp (xsp+2), 80` -- the same restore for the 80 panel memories, 960 bytes apart"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpConfigChain_Data_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SendGroup_Panel",
+  "header": "Sends the panel group of a MIDI bulk dump: block 1 = the live panel (MidiPkt_ArpConfigChain_Data_Helper2: descriptor 0xBCCC from MidiPkt_SetXferBlock_LivePanel), block 2 = the 80 panel memories (MidiPkt_ArpConfigChain_Data_Helper3: MidiPkt_ArpPopReturn_Helper2), then the group end F0 50 27 7E F7 (MidiPkt_ArpConfigChain_Data_Helper18). Basis: callers + body -- SysEx_SendPanelMemoryData (code 4) tail-jumps here and MidiPkt_ArpConfigChain_Data (code 0, ALL) calls it first; both headers call it the panel group.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11231 `jrl MidiPkt_ArpConfigChain_Data_Helper` -- caller SysEx_SendPanelMemoryData (code 4)",
+   "midi/midi_dispatch_handlers.s:11315 `calr MidiPkt_ArpConfigChain_Data_Helper` -- caller MidiPkt_ArpConfigChain_Data, the ALL dump, first group",
+   "midi/midi_dispatch_handlers.s:11321 `calr MidiPkt_ArpConfigChain_Data_Helper2` / 11322 `calr MidiPkt_ArpConfigChain_Data_Helper3` / 11323 `jrl MidiPkt_ArpConfigChain_Data_Helper18` -- the whole body",
+   "midi/midi_dispatch_handlers.s:11335 `call MidiPkt_SetXferBlock_LivePanel` -- block 1 descriptor",
+   "midi/midi_dispatch_handlers.s:11352 `call MidiPkt_ArpPopReturn_Helper2` -- block 2 descriptor (0x1ED350, 0x12CB0 bytes)",
+   "midi/midi_dispatch_handlers.s:11593 `ld xwa, SysEx_Msg_35A0` -- MidiPkt_ArpConfigChain_Data_Helper18 sends the group end"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpConfigChain_Data_Helper14",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SendGroup_AccompBlocks",
+  "header": "Sends the accompaniment-block-area group of a MIDI bulk dump: block 1 = 0x1E8800..0x1E8820 (MidiPkt_ArpConfigChain_Data_Helper15), block 2 = 0x1E8820..0x1E8B00 (_Helper16), block 3 = the block pool (_Helper17: MidiPkt_SetXferBlock_AccompBlockPool), then the group end (_Helper18). Basis: callers + body -- SysEx_SendMspUserData (code 6) tail-jumps here and MidiPkt_ArpConfigChain_Data (ALL) calls it third; SysEx_SendMspUserData's header lists these three blocks.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11246 `jrl MidiPkt_ArpConfigChain_Data_Helper14` -- caller SysEx_SendMspUserData (code 6)",
+   "midi/midi_dispatch_handlers.s:11317 `calr MidiPkt_ArpConfigChain_Data_Helper14` -- caller MidiPkt_ArpConfigChain_Data, ALL dump",
+   "midi/midi_dispatch_handlers.s:11529 `calr MidiPkt_ArpConfigChain_Data_Helper15` / 11530 `calr MidiPkt_ArpConfigChain_Data_Helper16` / 11531 `calr MidiPkt_ArpConfigChain_Data_Helper17` / 11532 `jrl MidiPkt_ArpConfigChain_Data_Helper18` -- the body",
+   "midi/midi_dispatch_handlers.s:11544 `call MidiPkt_ArpPopReturn_Helper11` / 11561 `call MidiPkt_ArpPopReturn_Helper12` -- block 1 and 2 descriptors"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpConfigChain_Data_Helper4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SendGroup_SoundRam",
+  "header": "Sends the sound-RAM group of a MIDI bulk dump unless AccWrap_ReturnZero(1) returns 0xFFFF (it always returns 0): block 1 = the 16-byte id at 0x1E0000 (MidiPkt_ArpConfigChain_Data_Helper5), block 2 = the data from 0x1E0010 (_Helper6), then the group end (_Helper18). Basis: callers + body -- SysEx_SendSoundMemoryData (code 3) tail-jumps here and MidiPkt_ArpConfigChain_Data (ALL) calls it second; SysEx_SendSoundMemoryData's header names these two blocks.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11222 `jrl MidiPkt_ArpConfigChain_Data_Helper4` -- caller SysEx_SendSoundMemoryData (code 3)",
+   "midi/midi_dispatch_handlers.s:11316 `calr MidiPkt_ArpConfigChain_Data_Helper4` -- caller MidiPkt_ArpConfigChain_Data, ALL dump",
+   "midi/midi_dispatch_handlers.s:11359 `ld wa, 1:i3` / 11360 `call AccWrap_ReturnZero` -- presence check (group 1)",
+   "midi/midi_dispatch_handlers.s:11363 `calr MidiPkt_ArpConfigChain_Data_Helper5` / 11364 `calr MidiPkt_ArpConfigChain_Data_Helper6` / 11365 `calr MidiPkt_ArpConfigChain_Data_Helper18` -- id block, data block, group end",
+   "midi/midi_dispatch_handlers.s:11378 `call MidiPkt_ArpPopReturn_Helper3` / 11395 `call MidiPkt_ArpPopReturn_Helper4` -- their descriptors"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpExtHandler_A_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_PrepareStyleImageReceive",
+  "header": "Before a style-image group is received: re-initialises the style image at RHYTHM_PATTERN_BUF_A (AccDemo_InitWithFlag: bit 7 of 0x34D1, then AccDemo_Init's default header, section records and pattern blocks) and clears bit 0 of 0x32F3, preserving XDE/XHL/XIX/XIZ. Basis: callers + body -- MidiPkt_XferOnStyleImageStart (message 15, state 0) calls it before pointing the style-image descriptors; the disk loader's pre-load hook cmp_ld_mae runs the same AccDemo_InitWithFlag; twin of MidiPkt_PreparePanelReceive.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11831 `call MidiPkt_ArpExtHandler_A_Helper` / 11833 `call MidiSeq_ClearSyncFlag_Helper4` -- caller MidiPkt_XferOnStyleImageStart, state 0, before the descriptors",
+   "midi/midi_dispatch_handlers.s:12590 `call AccDemo_InitWithFlag` / 12591 `res 0, (0x32f3:16)` -- the body (register-preserving)",
+   "sequencer/accompaniment_engine.s:11667 `AccDemo_Init:` -- AccDemo_LoadRhythm etc. build the default image at RHYTHM_PATTERN_BUF_A (its Demo_StyleRhythmData header)",
+   "sequencer/accompaniment_engine.s:36212 `call AccDemo_InitWithFlag` -- CmpLoad_InitWithFlag, reached from cmp_ld_mae (composer load 'mae', before)",
+   "midi/midi_dispatch_handlers.s:10619 `MidiPkt_PreparePanelReceive:` -- the panel group's counterpart"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpExtHandler_G_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_PrepareAccompBlocksReceive",
+  "header": "Before an accompaniment-block-area group is received: re-initialises the area at 0x1E8800 with its defaults (SeqChan_UnhandledCmd_Helper -> Voice_InitBankTables: header, slot table, compile/user bank names, the 57-block pool), preserving XDE/XHL/XIX/XIZ. Basis: callers + body -- MidiPkt_XferOnAccompBlocksStart (message 23, state 0) calls it before pointing the area descriptors; twin of MidiPkt_PreparePanelReceive.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11883 `call MidiPkt_ArpExtHandler_G_Helper2` / 11885 `call MidiSeq_ClearSyncFlag_Helper6` -- caller MidiPkt_XferOnAccompBlocksStart, state 0",
+   "midi/midi_dispatch_handlers.s:12626 `call SeqChan_UnhandledCmd_Helper` -- the body (register-preserving)",
+   "kn5000_v10_program.s:2168 `call Voice_InitBankTables` -- SeqChan_UnhandledCmd_Helper, XIZ-preserving",
+   "kn5000_v10_program.s:2174 `ld xix, 0x1e8800` -- Voice_InitBankTables fills 0x1E8800.. (header, slots, 0x1E8A40 compile banks, 0x1E8A80 user banks, 0x1E8B00 pool)"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper10",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_SeqEvents",
+  "header": "Fills the transfer descriptor at XWA for block 3 of the sequencer transfer, the event memory: {start 0xB0000, end 0xFD800, length 0x4D800}; with bit 6 of 0xBD18 set the length is the used size (MidiPkt_GetUsedSize_SeqEvents). Basis: callers + body -- MidiPkt_XferOnSeqEventBlock (message 20, state 13) points the block descriptor 0xBCEC with it, and the send side (MidiPkt_ArpConfigChain_Data_Helper13) 0xBCCC; MidiPkt_GetUsedSize_SeqEvents' header names it as the event-memory block.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11965 `ld xwa, 0xbcec` / 11966 `call MidiPkt_ArpPopReturn_Helper10` -- caller MidiPkt_XferOnSeqEventBlock",
+   "midi/midi_dispatch_handlers.s:11517 `ld xwa, 0xbccc` / 11518 `call MidiPkt_ArpPopReturn_Helper10` -- send side, MidiPkt_ArpConfigChain_Data_Helper13",
+   "midi/midi_dispatch_handlers.s:10431 `lda xwa, (0xb0000:24)` / 10433 `add xwa, 0x4d800` -- 0xB0000, 0x4D800 bytes",
+   "midi/midi_dispatch_handlers.s:10439 `calr MidiPkt_GetUsedSize_SeqEvents` -- used size when bit 6 of 0xBD18 is set"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper11",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_AccompAreaHeader",
+  "header": "Fills the transfer descriptor at XWA for block 1 of the accompaniment-block-area transfer: {start 0x1E8800, end 0x1E8820, length 0x20}, the area header that Voice_InitBankTables fills from Voice_BankHeaderDefaults. Basis: callers + body -- MidiPkt_XferOnAccompBlocksStart points the block descriptor 0xBCEC with it after the total, the send side (MidiPkt_ArpConfigChain_Data_Helper15) 0xBCCC; MidiPkt_SetXferBlock_AccompBlockPool's header calls it block 1 (0x20).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11886 `ld xwa, 0xbcec` / 11887 `call MidiPkt_ArpPopReturn_Helper11` -- caller MidiPkt_XferOnAccompBlocksStart",
+   "midi/midi_dispatch_handlers.s:11543 `ld xwa, 0xbccc` / 11544 `call MidiPkt_ArpPopReturn_Helper11` -- send side",
+   "midi/midi_dispatch_handlers.s:10470 `lda xde, (0x1e8800:24)` / 10472 `lda xbc, (0x1e8820:24)` -- 0x1E8800..0x1E8820",
+   "kn5000_v10_program.s:2173 `ld xiy, Voice_BankHeaderDefaults` / 2175 `ldw bc, 0x10` -- Voice_InitBankTables writes these 0x20 bytes"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper12",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_AccompBankTables",
+  "header": "Fills the transfer descriptor at XWA for block 2 of the accompaniment-block-area transfer: {start 0x1E8820, end 0x1E8B00, length 0x2E0}, the slot table and the compile/user bank name headers that Voice_InitBankTables writes between the area header and the block pool. Basis: callers + body -- MidiPkt_XferOnAccompBlocksBlock2 (message 24, state 19) points 0xBCEC with it, the send side (MidiPkt_ArpConfigChain_Data_Helper16) 0xBCCC; MidiPkt_SetXferBlock_AccompBlockPool's header calls it block 2 (0x2E0).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11903 `ld xwa, 0xbcec` / 11904 `call MidiPkt_ArpPopReturn_Helper12` -- caller MidiPkt_XferOnAccompBlocksBlock2",
+   "midi/midi_dispatch_handlers.s:11560 `ld xwa, 0xbccc` / 11561 `call MidiPkt_ArpPopReturn_Helper12` -- send side",
+   "midi/midi_dispatch_handlers.s:10480 `lda xde, (0x1e8820:24)` / 10482 `lda xbc, (0x1e8b00:24)` -- 0x1E8820..0x1E8B00",
+   "kn5000_v10_program.s:2190 `ld xix, 0x1e8a40` / 2194 `ld xix, 0x1e8a80` -- HEADER__COMPILE_BANKS / HEADER__USER_BANKS inside that range"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_PanelMemories",
+  "header": "Fills the transfer descriptor at XWA for block 2 of the panel transfer, the 80 panel memories: {start 0x1ED350, end 0x200000, length 0x12CB0}. Basis: callers + body -- MidiPkt_XferOnPanelMemBlock (message 12, state 2) points the block descriptor 0xBCEC with it, the send side (MidiPkt_ArpConfigChain_Data_Helper3) 0xBCCC; MidiPkt_SetXferBlock_LivePanel's header calls it block 2.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11778 `ld xwa, 0xbcec` / 11779 `call MidiPkt_ArpPopReturn_Helper2` -- caller MidiPkt_XferOnPanelMemBlock",
+   "midi/midi_dispatch_handlers.s:11351 `ld xwa, 0xbccc` / 11352 `call MidiPkt_ArpPopReturn_Helper2` -- send side",
+   "midi/midi_dispatch_handlers.s:10270 `lda xbc, (0x1ed350:24)` / 10274 `ld xbc, 0x12cb0` -- 0x1ED350, 0x12CB0 = 80 x 960 bytes"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_SoundRamId",
+  "header": "Fills the transfer descriptor at XWA for block 1 of the sound-RAM transfer: {start 0x1E0000, end 0x1E0010, length 16}, the 'KN5000 SOUND RAM' identifier. Basis: callers + body -- MidiPkt_XferOnSoundRamStart points the block descriptor 0xBCEC with it after the total, the send side (MidiPkt_ArpConfigChain_Data_Helper5) 0xBCCC; SysEx_SendSoundMemoryData's header names this 16-byte id.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11797 `ld xwa, 0xbcec` / 11798 `call MidiPkt_ArpPopReturn_Helper3` -- caller MidiPkt_XferOnSoundRamStart",
+   "midi/midi_dispatch_handlers.s:11377 `ld xwa, 0xbccc` / 11378 `call MidiPkt_ArpPopReturn_Helper3` -- send side",
+   "midi/midi_dispatch_handlers.s:10287 `lda xbc, (0x1e0000:24)` / 10289 `ld xbc, 16` -- 0x1E0000, 16 bytes",
+   "ui_widgets/widget_dispatch.s:9449 `.asciz \"KN5000 SOUND RAM\"` -- the identifier the sound-RAM code checks"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_SoundRamData",
+  "header": "Fills the transfer descriptor at XWA for block 2 of the sound-RAM transfer: {start 0x1E0010, end 0x1E72AA, length 0x729A}, the data after the 16-byte id. Basis: callers + body -- MidiPkt_XferOnSoundRamDataBlock (message 14, state 5) points the block descriptor 0xBCEC with it, the send side (MidiPkt_ArpConfigChain_Data_Helper6) 0xBCCC.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11814 `ld xwa, 0xbcec` / 11815 `call MidiPkt_ArpPopReturn_Helper4` -- caller MidiPkt_XferOnSoundRamDataBlock",
+   "midi/midi_dispatch_handlers.s:11394 `ld xwa, 0xbccc` / 11395 `call MidiPkt_ArpPopReturn_Helper4` -- send side",
+   "midi/midi_dispatch_handlers.s:10297 `add xbc, 16` / 10299 `ld xbc, 0x729a` -- 0x1E0010, 0x729A bytes"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_StyleImageHeader",
+  "header": "Fills the transfer descriptor at XWA for block 1 of the style-image transfer: {start RHYTHM_PATTERN_BUF_A (0x94800), end 0x94860, length 0x60}, the image's 0x60-byte header (AccDemo_LoadRhythm's part of Demo_StyleRhythmData; +46 holds the used size / 16). Basis: callers + body -- MidiPkt_XferOnStyleImageStart points the block descriptor 0xBCEC with it after the total, the send side (MidiPkt_ArpConfigChain_Data_Helper8) 0xBCCC; MidiPkt_SetXferBlock_StyleImagePool's header calls it block 1 (0x60).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11834 `ld xwa, 0xbcec` / 11835 `call MidiPkt_ArpPopReturn_Helper5` -- caller MidiPkt_XferOnStyleImageStart",
+   "midi/midi_dispatch_handlers.s:11421 `ld xwa, 0xbccc` / 11422 `call MidiPkt_ArpPopReturn_Helper5` -- send side",
+   "midi/midi_dispatch_handlers.s:10325 `lda xde, (RHYTHM_PATTERN_BUF_A:24)` / 10327 `lda xbc, (0x94860:24)` -- 0x94800..0x94860",
+   "sequencer/accompaniment_engine.s:11853 `; +0x000  0x60 B  -- AccDemo_LoadRhythm copies all 0x60 bytes to 0x94800+0x0000.` -- the header block of the image"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpPopReturn_Helper6",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferBlock_StyleImageTables",
+  "header": "Fills the transfer descriptor at XWA for block 2 of the style-image transfer: {start 0x94860, end 0x95BC0, length 0x1360}, the tables between the header and the pattern pool (the 30 section records from +0x60 and the tables at +0xBA0 / +0xC40 that AccDemo_Init fills). Basis: callers + body -- MidiPkt_XferOnStyleImageBlock2 (message 16, state 8) points the block descriptor 0xBCEC with it, the send side (MidiPkt_ArpConfigChain_Data_Helper9) 0xBCCC; MidiPkt_SetXferBlock_StyleImagePool's header calls it block 2 (0x1360).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11851 `ld xwa, 0xbcec` / 11852 `call MidiPkt_ArpPopReturn_Helper6` -- caller MidiPkt_XferOnStyleImageBlock2",
+   "midi/midi_dispatch_handlers.s:11438 `ld xwa, 0xbccc` / 11439 `call MidiPkt_ArpPopReturn_Helper6` -- send side",
+   "midi/midi_dispatch_handlers.s:10334 `lda xde, (0x94860:24)` / 10336 `lda xbc, (0x95bc0:24)` -- 0x94860..0x95BC0",
+   "sequencer/accompaniment_engine.s:11861 `; +0x060  30 x 16 B  section names, one per accompaniment section in the` -- AccDemo_LoadVariation builds the 30 section records from +0x60"
+  ]
+ },
+ {
+  "old": "MidiSeq_ClearSyncFlag_Helper4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SetXferTotal_StyleImage",
+  "header": "Fills the transfer descriptor at XWA for the whole style-image group: {start RHYTHM_PATTERN_BUF_A (0x94800), end 0xAB000, length 0x16800}; with bit 6 of 0xBD18 set the length is the used size (MidiPkt_GetUsedSize_StyleImage). Basis: callers + body -- MidiPkt_XferOnStyleImageStart points the receive total 0xBCDC with it, SysEx_ResetAndReturn_Helper (code 1) the send-side total 0xBCBC; MidiPkt_GetUsedSize_StyleImage's header already names it as the style-image total.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11832 `ld xwa, 0xbcdc` / 11833 `call MidiSeq_ClearSyncFlag_Helper4` -- caller MidiPkt_XferOnStyleImageStart, receive total",
+   "midi/midi_dispatch_handlers.s:11202 `ld xwa, 0xbcbc` / 11203 `call MidiSeq_ClearSyncFlag_Helper4` -- caller SysEx_ResetAndReturn_Helper, send-side total",
+   "midi/midi_dispatch_handlers.s:10308 `lda xwa, (RHYTHM_PATTERN_BUF_A:24)` / 10312 `ld xwa, 0x16800` -- 0x94800, 0x16800 bytes",
+   "midi/midi_dispatch_handlers.s:10316 `calr MidiPkt_GetUsedSize_StyleImage` -- used size when bit 6 of 0xBD18 is set"
+  ]
+ },
+ {
+  "old": "MidiSeq_PartLookup_Data_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_XferShowCompleted",
+  "header": "End of a successful MIDI bulk transfer (status 0): sets GLOBAL_ERROR_CODE 35 and opens the TT_MESAGE box (SoundCtrl_SendCommand 0xEE), whose catalog entry 0x23 reads 'COMPLETED!'. Basis: callers + body -- MidiPkt_XferShowResult calls it when the transfer status (field 4) is 0; the other statuses go to MidiSeq_PartLookup_Data_Helper3 (error message) or, for 34, MidiSeq_PartLookup_Data_Helper2 (nothing).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11116 `cp l, 0:i3` / 11118 `calr MidiSeq_PartLookup_Data_Helper` -- caller MidiPkt_XferShowResult, status 0",
+   "midi/midi_dispatch_handlers.s:11131 `ld (GLOBAL_ERROR_CODE:16), 35` / 11132 `ldw wa, 238` / 11133 `jp SoundCtrl_SendCommand` -- the body",
+   "ui_widgets/technichord_string_data.s:2319 `IvMessage_Catalog:` -- 14-byte message records; record 0x23 points at 'COMPLETED!' / 'Vorgang beendet!' / 'TERMINE!' (read-only decode of 0xE9D340 + 35 * 14 in the v10 ROM)",
+   "ui/drawbar_panel_ui.s:8741 `ld a, (GLOBAL_ERROR_CODE:16)` -- IvMesageProc (the TT_MESAGE box) shows the message GLOBAL_ERROR_CODE selects"
+  ]
+ },
+ {
+  "old": "MidiSeq_PartLookup_Data_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_XferShowNothing",
+  "header": "Empty routine (`ret`): the transfer-status 34 arm of MidiPkt_XferShowResult, which shows no message box. Basis: callers + body -- MidiPkt_XferShowResult calls it when field 4 of the active MIDI message is 34 (its header: 'status 34 shows nothing'); the name says literally what it does, as SysEx_SendNothing does for send code 5.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11114 `cp l, 34` / 11121 `calr MidiSeq_PartLookup_Data_Helper2` -- caller MidiPkt_XferShowResult, status 34",
+   "midi/midi_dispatch_handlers.s:11135 `ret` -- the whole body"
+  ]
+ },
+ {
+  "old": "MidiSeq_PartLookup_Data_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_XferShowErrorMessage",
+  "header": "End of a failed MIDI bulk transfer: maps the transfer status (field 4 of the active MIDI message) to a message through MidiRx_PartLookup_ByteMap (0x20 SysEx transmission error, 0x21 reception error, 0x22 ID mismatch, 0x0F memory full) into GLOBAL_ERROR_CODE and opens the TT_MESAGE box (SoundCtrl_SendCommand 0xEE). Basis: callers + body -- MidiPkt_XferShowResult calls it for every status other than 0 and 34.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11124 `calr MidiSeq_PartLookup_Data_Helper3` -- caller MidiPkt_XferShowResult, status not 0 / 34",
+   "midi/midi_dispatch_handlers.s:11141 `lda xbc, (MidiRx_PartLookup_ByteMap:24)` / 11142 `ld (GLOBAL_ERROR_CODE), (xbc+hl)` -- status -> message code",
+   "ui_widgets/widget_dispatch.s:3317 `.byte 0x23, 0x21, 0x21, 0x21` -- MidiRx_PartLookup_ByteMap: 0x21/0x22/0x20/0x0F entries",
+   "ui_widgets/technichord_string_data.s:2319 `IvMessage_Catalog:` -- messages 0x20 'An error has occurred during System Exclusive transmission', 0x21 '... reception', 0x22 'The Identification (ID) code ...', 0x0F 'Memory full' (read-only decode of the v10 ROM)",
+   "midi/midi_dispatch_handlers.s:11143 `ldw wa, 238` / 11144 `jp SoundCtrl_SendCommand` -- opens the box"
+  ]
+ },
+ {
+  "old": "MidiStream_ExtendedDispatch_Helper3_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiStream_ResolveVoiceIndexMode1_Impl",
+  "header": "Body of MidiStream_ResolveVoiceIndexMode1: for part (0x90F7) up to 31 builds a selection record (+2 part, +3/+4 the program/bank bytes at 0x916F/0x9170), resolves it (SndBuf_WriteParamEntries_Helper) and copies the result to 0x90EE and 0x916B; for part 72 it hands the pair to Rhythm_DispatchNote_Finalize through the 0x90EA record instead; finally copies 0x90EE +0/+1/+3 to 0x9173-0x9175. Basis: callers + body -- MidiStream_ResolveVoiceIndexMode1 stores HL at 0x916F, calls it and returns HL/W from 0x9173-0x9175; its header describes the resolve.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/audio_control_engine.s:8464 `ld (0x916f:16), hl` / 8473 `call MidiStream_ExtendedDispatch_Helper3_Helper` / 8481 `ldw_d16 hl, (0x9173)` -- caller MidiStream_ResolveVoiceIndexMode1",
+   "audio/audio_control_engine.s:7358 `ld a, (0x90f7:16)` / 7361 `cp a, 31` -- parts 0..31",
+   "audio/audio_control_engine.s:7369 `call SndBuf_WriteParamEntries_Helper` -- the resolve (ApplyProgramChangeAs_LoadReg)",
+   "audio/audio_control_engine.s:7374 `lda xde, (0x916b:16)` -- result copied to 0x90EE and 0x916B",
+   "audio/audio_control_engine.s:7381 `cp a, 72` / 7394 `call Rhythm_DispatchNote_Finalize` -- part 72 path",
+   "audio/audio_control_engine.s:7400 `lda xde, (0x9173:16)` -- output triple the caller returns"
+  ]
+ },
+ {
+  "old": "NoRef_SetWall_SlotMap20x2_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqTrAs_UpdateOkSwVisibility",
+  "header": "Track-assign page: shows the TrAsOkSw view 0x8B0003 (EVT_SET_VISIBLE 1, CDlikeSwTtl_SendStartEvtArg1) when the edited assignment (0x2873) or the cursor track's stored one (0xF1A0[(0x0CDF)]) is 13-16 (CHORD / APC / CONTROL / RHYTHM), else hides it (EVT_SET_VISIBLE 0, CDlikeSwTtl_SendStartEvt). Basis: callers + body -- SqTrAs_PartInc_UpdateOkSw (EVT_TR_AS_PART_INC) and MiddleFuncCall_DispatchData_Helper (PART_DEC) call it; the first one's header describes this update.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/setwall_routines.s:94 `call NoRef_SetWall_SlotMap20x2_Helper` -- caller SqTrAs_PartInc_UpdateOkSw",
+   "ui/setwall_routines.s:126 `call NoRef_SetWall_SlotMap20x2_Helper` -- caller MiddleFuncCall_DispatchData_Helper (part decrement)",
+   "ui/setwall_routines.s:97 `ld a, (0x2873:16)` / 98 `cp a, 13` -- the edited assignment against 13..16",
+   "ui/setwall_routines.s:106 `call CDlikeSwTtl_SendStartEvt` / 107 `ld xhl, 0xf1a0` -- hide, then test the cursor track's stored assignment",
+   "ui/setwall_routines.s:122 `call CDlikeSwTtl_SendStartEvtArg1` -- show",
+   "demo/demo_seq_bridge.s:482 `ld xwa, 0x8b0003` / 483 `ld xbc, EVT_SET_VISIBLE` -- CDlikeSwTtl_SendStartEvtArg1 (XDE 1) / CDlikeSwTtl_SendStartEvt (XDE 0)"
+  ]
+ },
+ {
+  "old": "PortConfig_Handler_0_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeqNode_SetPoolBaseToEventMemory",
+  "header": "Sets the block-pool base pointer 0x110A, through which SeqNode_ResolveSlotPtr turns block n into address base + (n - 1) * 256 (0x10FD), to the sequencer event-memory base held at 0x1D5A (0xB0000, stored at init together with the block count 1240 = 0x4D800 / 256 in 0x286D). Basis: callers + body -- SqStep_SetupCursorTrack calls it first; every writer of 0x110A copies 0x1D5A the same way (DispatchHandler_StoreNodePtr, SetWall_BankInit, MemConfig_Handler_1_Helper5).",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:7188 `call PortConfig_Handler_0_Helper3` -- caller SqStep_SetupCursorTrack, first call",
+   "display/scoop_display.s:7746 `ld xhl, 4362` / 7747 `ld xwa, (7514:16)` -- body: (0x110A) := (0x1D5A)",
+   "demo/demo_seq_bridge.s:983 `add xhl, (4362:16)` -- SeqNode_ResolveSlotPtr: (n - 1) * 256 + (0x110A) -> 0x10FD",
+   "sequencer/sequencer_engine.s:18456 `ldw (0x286d:16), 1240` / 18457 `lda xwa, (0x0b0000:24)` / 18458 `ld (7514:16), xwa` -- 0x1D5A = event memory 0xB0000, 1240 blocks",
+   "demo/demo_seq_bridge.s:781 `DispatchHandler_StoreNodePtr:` -- the same copy, XDE-preserving"
+  ]
+ },
+ {
+  "old": "PortConfig_Handler_0_Helper5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_SetPopupIdForDisplayMode",
+  "header": "Sets the TT_SQSTEP pop-up id (0x0DEF) for the cursor track's display mode (0x0D65): PortConfig_Handler_0_Tbl {0, 0, 0, 12}, so 12 for display mode 3 (a RHYTHM track) and 0 otherwise. Basis: callers + body -- SqStep_SetupCursorTrack calls it after SqStep_SetDisplayModeFromTrack; Display_ModePopupDispatch picks the pop-up id from the same display mode through Display_ModePopupIds {0, 5, 5, 15}.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:7189 `call SqStep_SetDisplayModeFromTrack` / 7193 `call PortConfig_Handler_0_Helper5` -- caller SqStep_SetupCursorTrack",
+   "display/scoop_display.s:7761 `ld xhl, PortConfig_Handler_0_Tbl` / 7762 `ld a, (3429:16)` / 7765 `ld (3567:16), a` -- (0x0DEF) := table[(0x0D65) & 3]",
+   "display/scoop_display.s:7770 `.byte 0x00, 0x00, 0x00, 0x0c` -- the table",
+   "display/scoop_display.s:11697 `Display_ModePopupDispatch:` / 11728 `.byte 0x00, 0x05, 0x05, 0x0f` -- the other per-display-mode pop-up id table",
+   "display/scoop_display.s:7690 `; SqStep_SetDisplayModeFromTrack:` -- display mode 3 = track assignment 16 (RHYTHM)"
+  ]
+ },
+ {
+  "old": "RhythmFillIn_PatternTable_Sub_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpRealTtl_EnterTitle_Impl",
+  "header": "Body of CmpRealTtl_EnterTitle: clears 0x28A7 bit 2 and 0xE3E2 bit 0; unless PREVIOUS_TITLE is TT_CMREAL (181) it sets 0x8D88 bit 0 and, when not playing (0x3283 bit 0 clear), sets 0x34CD bit 7, runs Seq_DispatcherEntry and, coming from TT_CMBKSL_S (178), starts the accompaniment (AccWrap_PlayModeStartAccPlay). Basis: callers + body -- its only caller is the XIZ wrapper CmpRealTtl_EnterTitle, whose header describes exactly this (the _Impl pairing of CmpSetTtl_StepEntryIndex).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:25040 `call RhythmFillIn_PatternTable_Sub_Helper` -- caller CmpRealTtl_EnterTitle (push/pop xiz)",
+   "sequencer/accompaniment_engine.s:25046 `cp (PREVIOUS_TITLE:16), 181` -- not from TT_CMREAL itself",
+   "sequencer/accompaniment_engine.s:25052 `call Seq_DispatcherEntry` / 25053 `cp (PREVIOUS_TITLE:16), 178` / 25055 `call AccWrap_PlayModeStartAccPlay` -- the start steps"
+  ]
+ },
+ {
+  "old": "RhythmVariation_InlineCode_Sub_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpStep_MoveRecPartTowardDrums_Impl",
+  "header": "Body of CmpStep_MoveRecPartTowardDrums: replaces the record part 0x379B by its successor through the 32-byte map RhythmVariation_InlineCode_Code2 (BAS 8 -> AC1 1 -> AC2 2 -> AC3 4 -> DRM 16), re-dispatches the audio state (AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState) and updates the status flags (DrumKit_UpdateStatusFlags). Basis: callers + body -- its only caller is the XIZ wrapper CmpStep_MoveRecPartTowardDrums, whose header describes exactly this.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:25285 `calr RhythmVariation_InlineCode_Sub_Helper` -- caller CmpStep_MoveRecPartTowardDrums (push/pop xiz)",
+   "sequencer/accompaniment_engine.s:25292 `add xhl, RhythmVariation_InlineCode_Code2` / 25294 `ld (0x379b:16), a` -- next record part from the map",
+   "sequencer/accompaniment_engine.s:25295 `call AudioInit_SelectAndDispatch` -- audio state, then the status flags"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper12",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadPmtBankName",
+  "header": "Returns XHL = the 16-character name of bank WA in the selected .PMT file: opens it (type 1), reads 16 bytes at offset 16 + 16 * WA into 0x25BD2 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_PanelMemDrawBankName puts its result in row 1 of the PANEL MEMORY source list; same shape as SingleLoadSrc_ReadSqtSongName.",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:220 `call SLSrcBankList_FuncBody_Helper12` -- caller SingleLoadSrc_PanelMemDrawBankName, WA = (0x89FC) / bank size",
+   "demo/file_demo_proc.s:6754 `ld de, 1:i3` -- FileIO_ReadHeader with file type 1 (.PMT)",
+   "demo/file_demo_proc.s:6767 `sll wa, 4` / 6768 `add wa, 16` -- offset 16 + 16 * bank",
+   "demo/file_demo_proc.s:6772 `ld xwa, 0x25bd2` -- 16 bytes into 0x25BD2, NUL at 0x25BE2",
+   "demo/file_demo_proc.s:6839 `SingleLoadSrc_ReadSqtSongName:` -- the named sibling of the same shape"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper13",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadPmtMemoryName",
+  "header": "Returns XHL = the 16-character name of panel memory WA in the selected .PMT file: opens it (type 1), reads the entry size word at offset 13, reads 16 bytes at 178 + WA * size into 0x25BE8 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_PanelMemDrawMemoryName puts its result in row 3 of the PANEL MEMORY source list; +178 is the name offset in a panel-memory record (single_load.s: 0x1ED350 + entry size * n + 178).",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:310 `call SLSrcBankList_FuncBody_Helper13` -- caller SingleLoadSrc_PanelMemDrawMemoryName, WA = (0x89FC)",
+   "demo/file_demo_proc.s:6800 `ld de, 1:i3` -- file type 1 (.PMT)",
+   "demo/file_demo_proc.s:6811 `ld xwa, 13` -- the entry size word at offset 13",
+   "demo/file_demo_proc.s:6821 `add xwa, 178` / 6824 `ld xwa, 0x25be8` -- 16 bytes at 178 + index * size"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper15",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadCmpPatternName",
+  "header": "Returns XHL = the 13-character name of composer pattern (bank WA, slot BC) in the selected .CMP file: opens it (type 3), reads 13 bytes at 160 + 96 * (4 * bank + slot) into 0x25C14 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_ComposerDrawPatternName puts its result in row 3 of the COMPOSER source list; its header gives this offset (the layout of RAM 0x948A0).",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:736 `call SLSrcBankList_FuncBody_Helper15` -- caller SingleLoadSrc_ComposerDrawPatternName, WA = (0x89FE) / C",
+   "demo/file_demo_proc.s:6903 `ld de, 3:i3` -- file type 3 (.CMP)",
+   "demo/file_demo_proc.s:6917 `mul wa, 96` / 6918 `add wa, 160` -- 160 + 96 * (4 * bank + slot)",
+   "demo/file_demo_proc.s:6922 `ld xwa, 0x25c14` / 6923 `ld xbc, 13` -- 13 bytes"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper16",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadTmSoundName",
+  "header": "Returns XHL = the 16-character name of sound WA in the selected sound-memory (.TM) file: opens it (type 4), reads 16 bytes at 16 + 470 * WA into 0x25C2A and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_DrawSoundMemItemName uses it for positions below 2 x C (the 40 sounds); 470 is the KN5000 sound-record size (SingleLoad_LoadSoundMemEntry).",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:1159 `call SLSrcBankList_FuncBody_Helper16` -- caller SingleLoadSrc_DrawSoundMemItemName, sound positions",
+   "demo/file_demo_proc.s:6950 `ld de, 4:i3` -- file type 4 (.TM)",
+   "demo/file_demo_proc.s:6963 `mul wa, 470` / 6964 `add wa, 16` -- 16 + 470 * index",
+   "demo/file_demo_proc.s:6968 `ld xwa, 0x25c2a` -- 16 bytes into 0x25C2A"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper17",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadTmUserKitName",
+  "header": "Returns XHL = the 16-character USER KIT name of the selected sound-memory (.TM) file: opens it (type 4), reads 16 bytes at offset 0x4980 (16 + 40 * 470, after the 40 sound records) into 0x25C40 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_DrawUserKitName puts it in row 1 for USER KIT positions; its header already describes this read.",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:1037 `call SLSrcBankList_FuncBody_Helper17` -- caller SingleLoadSrc_DrawUserKitName",
+   "demo/file_demo_proc.s:6995 `ld de, 4:i3` -- file type 4 (.TM)",
+   "demo/file_demo_proc.s:7007 `ld xwa, 0x4980` / 7010 `ld xwa, 0x25c40` -- 16 bytes at 0x4980"
+  ]
+ },
+ {
+  "old": "SLSrcBankList_FuncBody_Helper18",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SingleLoadSrc_ReadTmUserKitEntryName",
+  "header": "Returns XHL = ' ' + the 13-character name of USER KIT entry WA in the selected sound-memory (.TM) file: opens it (type 4), reads 13 bytes at 0x4AA7 + 80 * WA into 0x25C57 after a leading space at 0x25C56 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body -- SingleLoadSrc_DrawSoundMemItemName uses it for positions past the 2 x C sounds (WA = position - 2C); the 80-byte records at 0x4AA7 are the ones SingleLoad_LoadSoundMemEntry copies for entries from 40.",
+  "basis": "callers + body",
+  "evidence": [
+   "file_io/single_load.s:1153 `call SLSrcBankList_FuncBody_Helper18` -- caller SingleLoadSrc_DrawSoundMemItemName, USER KIT positions",
+   "demo/file_demo_proc.s:7038 `ld de, 4:i3` -- file type 4 (.TM)",
+   "demo/file_demo_proc.s:7049 `ld (0x25c56:24), 32` -- leading space",
+   "demo/file_demo_proc.s:7051 `mul wa, 80` / 7052 `add wa, 0x4aa7` -- 0x4AA7 + 80 * index",
+   "demo/file_demo_proc.s:7057 `ld xbc, 13` -- 13 bytes"
+  ]
+ },
+ {
+  "old": "SeMenu_ApplyPartEdit_Helper14",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeLfo1_StepSelector",
+  "header": "Steps the 1..4 selector of LFO page A (0 = AMP RAM 0x68D, 1 = PITCH 0x68E, 2 = FILTER 0x68F; other A do nothing): C = 0 steps up, C != 0 steps down, wrapping 4 -> 1 and 1 -> 4. Basis: callers + body -- SeLfo1_StepSelectorAndReload calls it with A = the page and C from the switch value, then re-enters TT_SEAMPLFO1 / TT_SEPITLFO1 / TT_SEFILLFO1; its header describes this step.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/semenu_routines.s:2676 `calr SeMenu_ApplyPartEdit_Helper14` -- caller SeLfo1_StepSelectorAndReload",
+   "audio/semenu_routines.s:2679 `ld a, 42:opc` / 2688 `ld a, 47:opc` / 2693 `ld a, 57:opc` -- the caller then re-enters 0x2A / 0x2F / 0x39",
+   "audio/semenu_routines.s:1608 `lda xwa, (1677:16)` / 1617 `lda xwa, (1678:16)` / 1622 `lda xwa, (1679:16)` -- selector by page",
+   "audio/semenu_routines.s:1612 `decm8 1, (xwa)` / 1625 `incm8 1, (xwa)` -- C != 0 down, C = 0 up",
+   "audio/semenu_routines.s:1629 `ld (xwa), 4` / 1633 `ld (xwa), 1` -- wrap 0 -> 4, 5 -> 1"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Step3_Helper17",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeWrtSnd_SetupNamingPage",
+  "header": "Sets up the WRITE SOUND naming page (TT_SEWRTSND, 0x3F): page param 2 = the name length (A & 31, at most 16), param 1 = the character-grid index of the name's first character (SeMenu_GetNameBufferChar, SeMenu_CharToNameCharIndex), param 0 = cursor 0; draws the static screen 0x3F, enables the dial and sets the up/down edit switches. Basis: callers + body -- the title's draw method (SeWrtSndTitleFunc_OnDraw -> SeMenu_CopyWriteUpdate_Step3_Join) calls it with A = 13 or 16; the batch attributed the call to SeWrtMem_DrawPage, the nearest named label above.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_editor_data.s:33 `jp SeMenu_CopyWriteUpdate_Step3_Join` -- SeWrtSndTitleFunc_OnDraw, TT_SEWRTSND's draw method, enters the caller",
+   "audio/sound_editor_ui.s:2585 `ld a, 13:opc` / 2588 `ld a, 16:opc` / 2591 `call SeMenu_CopyWriteUpdate_Step3_Helper17` -- caller SeMenu_CopyWriteUpdate_Step3_Join passes the length",
+   "audio/sound_editor_ui.s:6792 `and c, 31` / 6795 `ld c, 16:opc` -- length capped at 16, stored as page param 2",
+   "audio/sound_editor_ui.s:6802 `call SeMenu_GetNameBufferChar` / 6806 `call SeMenu_CharToNameCharIndex` -- param 1 from the first name character",
+   "audio/sound_editor_ui.s:6814 `pushw 63` / 6815 `call SeTitle_DrawStaticScreen` -- static screen 0x3F",
+   "audio/sound_editor_ui.s:6818 `call SeMenu_PostDialEnable` -- dial, then two SeMenu_PostEditUpDownSet"
+  ]
+ },
+ {
+  "old": "SeMenu_CopyWriteUpdate_Step3_Helper5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeWrtMem_ChooseInitialSlot",
+  "header": "Picks the WRITE TO MEMORY page's destination slot (0..39) into (XWA) and 0x6AD: resolves the part's current sound (0xF9D0 / 0xF9EA / 0xF9B6 by part group, SndParam_FetchOscTableEntry); when it is a memory sound (resolved bank 16 / 17) and flag 0x6AF is 0 the slot is that sound's own (number + 20 for bank 17) and 0x6AF := 1, otherwise the remembered 0x6AD, reset to 0 when above 39. Basis: callers + body -- SeWrtMem_DrawPage calls it and turns the slot into bank (slot / 20 + 1) and number (slot mod 20 + 1); SeMenu_GetWriteMemSlot / SeMenu_SetWriteMemSlot are 0x6AD's accessors.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sound_editor_ui.s:2534 `call SeMenu_CopyWriteUpdate_Step3_Helper5` / 2539 `div wa, 20` -- caller SeWrtMem_DrawPage, slot -> bank / number",
+   "audio/semenu_routines.s:2309 `lda xwa, (0xf9d0:16)` / 2328 `call SndParam_FetchOscTableEntry` -- the part's current sound resolved",
+   "audio/semenu_routines.s:2334 `cp_erpb 251, 16` / 2336 `cp_erpb 251, 17` -- memory banks 16 / 17",
+   "audio/semenu_routines.s:2359 `mul c, 20` / 2361 `ld (0x6ad), (xwa)` -- slot = number + 20 * bank index",
+   "audio/semenu_routines.s:2368 `cp (xwa), 39` / 2373 `ld (1709:16), 0` -- remembered slot, reset when above 39",
+   "audio/semenu_routines.s:2381 `SeMenu_GetWriteMemSlot:` -- 0x6AD is the page's selected destination slot"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetBrowser_Select_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeLfo1_DrawPartLabels",
+  "header": "Draws the LFO pages' four part labels from the part-enable mask 0x65E: for parts 4..1, the record pair from SeLfo_Part4HatchRecord+12 (the hatch shown for a disabled part) when the part's bit (2p - 2) is clear, else the pair from SeMenu_PresetBrowser_Select_Sub_Data+7 (the label). Basis: callers + body -- SeLfo1_DrawStaticScreen (shared by the three LFO1 titles) calls it after the frame; the same per-part loop as SeMenu_DrawPartLabels / SeMenu_DrawPartSelector, whose headers name the mask and the hatch.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sound_editor_ui.s:9177 `call SeMenu_PresetBrowser_Select_Helper` -- caller SeLfo1_DrawStaticScreen",
+   "audio/sound_editor_ui.s:9189 `ld w, (1630:16)` / 9193 `srla w` -- part p's enable bit of 0x65E into carry",
+   "audio/sound_editor_ui.s:9198 `ld xiz, SeLfo_Part4HatchRecord + 12` -- disabled: hatch records",
+   "audio/sound_editor_ui.s:9209 `ld xiz, SeMenu_PresetBrowser_Select_Sub_Data + 7` -- enabled: label records",
+   "audio/sound_editor_ui.s:8977 `SeMenu_DrawPartLabels:` -- same loop and mask for the other pages"
+  ]
+ },
+ {
+  "old": "SeMenu_ShowConfirmDialog_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeMenu_DrawEnvCurvePicture",
+  "header": "Draws the envelope-curve picture of the curve-type byte at (XIZ) at the cell (0x6C6, 0x6C8): type = bits 7-5; type 3 draws a framed box (SeGfx_StaticOp1B_FromBuf, then SeGfx_StaticOp00_FromBuf), the others blit SeEnvCurve_BitmapTable[type] (SeGfx_StaticOp03_BlitAtCell). Basis: callers + body -- SeMenu_DrawSelectedPartEnvCurve calls it with XIZ = the selected part's curve byte (0x662/0x668 + part) after setting the cell; its header describes this choice.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sound_editor_ui.s:8649 `call SeMenu_ShowConfirmDialog_Helper2` -- caller SeMenu_DrawSelectedPartEnvCurve",
+   "audio/sound_editor_ui.s:8667 `srl a, 5` / 8668 `cp a, 3:i3` -- type from bits 7-5",
+   "audio/sound_editor_ui.s:8680 `call SeGfx_StaticOp1B_FromBuf` -- type 3: framed box",
+   "audio/sound_editor_ui.s:8694 `ld xiz, SeEnvCurve_BitmapTable` / 8707 `call SeGfx_StaticOp03_BlitAtCell` -- other types: bitmap"
+  ]
+ },
+ {
+  "old": "SendPartDataBlock_Return5_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundRam_FillDefaultRecord",
+  "header": "Fills the sound record at XWA with the 426-byte SoundRam_DefaultRecord ('    Initial     ', copied through a stack buffer) and copies its 81-byte block at +102 to +183, +264 and +345. Basis: callers + body -- SoundRam_ConvertKn1500Record ('fills it with defaults (SoundRam_DefaultRecord)') and HdaeRom_DataHandler_Helper2 call it on the destination KN5000 record before moving the converted fields in.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:26557 `calr SendPartDataBlock_Return5_Helper` -- caller SoundRam_ConvertKn1500Record, first step",
+   "audio/note_voice_mapping.s:26891 `calr SendPartDataBlock_Return5_Helper` -- caller HdaeRom_DataHandler_Helper2, first step",
+   "audio/note_voice_mapping.s:26857 `ld xiy, SoundRam_DefaultRecord` / 26859 `ldw bc, 213` -- 213 words of defaults",
+   "audio/note_voice_mapping.s:26865 `lda xwa, (xde+102)` / 26867 `lda xix, (xde+183)` -- block +102 copied to +183 (and +264, +345)",
+   "ui_widgets/widget_dispatch.s:9462 `; 426-byte default record (213 words) beginning with the 16-character name` -- the default record"
+  ]
+ },
+ {
+  "old": "SeqData_FormatOutput_Data_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SysEx_DispatchTechnicsParamChange",
+  "header": "Switch of SysEx_OnTechnicsParamChange: reads field 1 of the active MIDI message (the address group, 1..7) and jumps through SeqDataFmt_SwitchOffsets to its handler (SysEx_OnTechnicsParamChange_Addr00 ... _Case7, which apply the parameter through MidiCtl_SelectTableN / MidiCtl_FormatHandlers); other values return. Basis: callers + body -- SysEx_OnTechnicsParamChange calls it first, and its header describes this switch.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:14062 `calr SeqData_FormatOutput_Data_Helper` -- caller SysEx_OnTechnicsParamChange",
+   "midi/midi_dispatch_handlers.s:14079 `ld bc, 1:i3` -- field 1 of MIDISEQ_ACTIVE_BUF_PTR",
+   "midi/midi_dispatch_handlers.s:14085 `cp hl, 6:i3` / 14088 `lda xix, (SeqDataFmt_SwitchOffsets:24)` / 14090 `lda xix, (SysEx_OnTechnicsParamChange_Addr00:24)` -- 7-way switch"
+  ]
+ },
+ {
+  "old": "SndTable_ByteBlock_ReadOps_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "TaskSched_ExitCurrentTask",
+  "header": "Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's TCB (0x487) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters TaskSched_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action once the stream is read (0x2357E := 0); Show_ScreenGroup is the start side (TCB +9 := 4, linked into queue 0x4C1 + 4 * priority).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/smf_event_processor.s:10246 `ld (0x2357e:24), 0` / 10247 `call SndTable_ByteBlock_ReadOps_Helper` -- caller DiskStream_ReaderTask, its end",
+   "boot/system_handlers.s:2371 `ld xsp, 0x1e53a` / 2372 `ld ix, (1159:16)` -- scheduler stack, current TCB",
+   "boot/system_handlers.s:2374 `ld (xix + 9), 0x0` / 2377 `ld (1159:16), wa` -- task state cleared, no current task",
+   "boot/system_handlers.s:2383 `ld (xhl + 0:8), wa` / 2384 `ld (xwa + 2), hl` -- prev->next = next, next->prev = prev",
+   "boot/system_handlers.s:2385 `jrl TaskSched_Dispatch`",
+   "boot/system_handlers.s:2353 `ld (xix + 9), 0x4` -- Show_ScreenGroup starting a task"
+  ]
+ },
+ {
+  "old": "SqTrAsPsTtl_Dispatch_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqTrAsPsTtl_NullRet",
+  "header": "Empty routine (`ret`; two dead `ret`s follow): the leave-title hook of TT_SQTRASPS -- SqTrAsPsTtlFunc_OnTitleOld calls it between its register saves and does nothing else. Basis: callers + body -- the X_NullRet convention of these title files (PlayMode_NullRet, DpMdlySmfLyrTtl_NullRet).",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:1392 `call SqTrAsPsTtl_Dispatch_Helper` -- caller SqTrAsPsTtlFunc_OnTitleOld",
+   "ui/setwall_routines.s:349 `ret` -- the body"
+  ]
+ },
+ {
+  "old": "SqTrAs_CondCheck_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqSngSel_LeaveTitle",
+  "header": "When the song-select title is left: clears 0x28A7 bit 2 again -- the transport's 'ignore incoming MIDI Start/Continue' flag that SqSngSel_CalcSongUsageOnEnter set on entry (Transport_EnableMidiStartContinue clears the same bit) -- and sets panel indicator 0x4C (CtrlPanel_SetIndicatorBit). Basis: callers + body -- SqSngSelTtlFunc_OnTitleOld (EVT_ACTIVATE_STATE phase 3) calls it; SqSngSel_CalcSongUsageOnEnter's header names it as the phase-3 step.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/ui_playback_modes.s:1151 `call SqTrAs_CondCheck_Helper2` -- caller SqSngSelTtlFunc_OnTitleOld",
+   "ui/setwall_routines.s:1960 `and (10407:16), 251` -- 0x28A7 bit 2 cleared",
+   "ui/setwall_routines.s:1937 `or (10407:16), 4` -- SqSngSel_CalcSongUsageOnEnter set it on entry",
+   "ui/setwall_routines.s:1962 `ld a, 76:opc` / 1963 `call CtrlPanel_SetIndicatorBit` -- indicator 0x4C on",
+   "audio/note_voice_mapping.s:20322 `res 2, (0x28a7:16)` -- Transport_EnableMidiStartContinue, whose header names bit 2"
+  ]
+ },
+ {
+  "old": "SysEx_ResetAndReturn_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SysEx_SendStyleImageData",
+  "header": "Code-1 (STYLE IMAGE) sender of SysEx_InitiateSend: points the send-side total 0xBCBC at the style image (MidiSeq_ClearSyncFlag_Helper4) and tail-jumps into the style-image group of MidiPkt_ArpConfigChain_Data (MidiPkt_ArpConfigChain_Data_Helper7: header, tables and pattern pool blocks, then the group end). Basis: callers + body -- only SysEx_InitiateSend_SendStyleImage (entry 1 of SysExSend_SwitchOffsets) calls it; same shape as SysEx_SendSequencerData / SysEx_SendSoundMemoryData.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:13819 `call SysEx_ResetAndReturn_Helper` -- caller SysEx_InitiateSend_SendStyleImage (code 1)",
+   "midi/midi_dispatch_handlers.s:11202 `ld xwa, 0xbcbc` / 11203 `call MidiSeq_ClearSyncFlag_Helper4` / 11204 `jrl MidiPkt_ArpConfigChain_Data_Helper7` -- the body",
+   "midi/midi_dispatch_handlers.s:11210 `SysEx_SendSequencerData:` -- the code-2 sibling of the same shape"
+  ]
+ },
+ {
+  "old": "Tbl_MsaStates_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_UpdateMsaStateFromEvent",
+  "header": "For the 0xBn event at the song-data scan position: records the position (0x28BF / 0x28C1), reads the event (VoiceBank_ProcessCommand) and, when it is the M.S.A. event -- tag 0x98 from the bytes at 0x0EB5/0x0EB7, offset (0x0EB8) = 3 and flag (0x0EBA) bit 0 set -- stores its value bit 0 ((0x0EB9) & 1) in 0x10F6; it returns through ParamPopup_PartPedal's leading `ret`. Basis: callers + body -- SqStep_FindMsaStateAtCursor calls it for each 0xBn event up to the cursor; its header describes this test.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:16522 `call Tbl_MsaStates_Helper` -- caller SqStep_FindMsaStateAtCursor, for status 0xBn",
+   "display/scoop_display.s:16545 `ld (10431:16), ix` / 16552 `call VoiceBank_ProcessCommand` -- position and event read",
+   "display/scoop_display.s:16566 `cp a, 152` / 16568 `cp (0x0eb8:16), 3` / 16570 `bit 0, (0x0eba:16)` -- the M.S.A. event test",
+   "display/scoop_display.s:16574 `ld (4342:16), a` -- 0x10F6 = value bit 0",
+   "display/scoop_display.s:16579 `ParamPopup_PartPedal:` -- its first instruction is the `ret` the jumps reach"
+  ]
+ },
+ {
+  "old": "ToneParam_ExtendedOpsBlock_Helper3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccPatch_CopySection",
+  "header": "Copies section (0x39AC) of the source image (0x39AE) to section (0x39AD) of the destination image (0x39B2) with DualVoice_ParamLoadDone; when the copy reports failure (0x35B0 bit 0) it re-initialises the destination section (AccPatch_InitFromSlotIndex), restores the source pointer 0x39AE to the work image (0x0C72) and returns HL = 0xFF95, else HL = 0. Basis: callers + body -- AccPatch_ConvertLegacySectionLayout calls it for each old -> new section pair (0x39AC / 0x39AD) and keeps the first 0xFF95; its header calls this 'copies each old section into its new place(s)'.",
+  "basis": "callers + body",
+  "evidence": [
+   "storage/flash_floppy_handlers.s:5099 `ld (0x39ac:16), a` / 5100 `ld (0x39ad:16), a` / 5101 `calr ToneParam_ExtendedOpsBlock_Helper3` -- caller AccPatch_ConvertLegacySectionLayout, variations 0-11 one to one",
+   "storage/flash_floppy_handlers.s:5139 `ld (0x39ac:16), 16` / 5140 `ld (0x39ad:16), 24` / 5141 `calr ToneParam_ExtendedOpsBlock_Helper3` -- old 16 into the C set",
+   "storage/flash_floppy_handlers.s:5243 `res 0, (0x35b0:16)` / 5244 `call DualVoice_ParamLoadDone` -- the copy",
+   "storage/flash_floppy_handlers.s:5251 `ldmm8 0x39ac, 0x39ad` / 5252 `call AccPatch_InitFromSlotIndex` -- failure: destination section re-initialised",
+   "storage/flash_floppy_handlers.s:5255 `ldw iz, 0xff95` -- failure code",
+   "sequencer/accompaniment_engine.s:22421 `add xiy, (0x39ae:16)` / 22434 `add xiy, (0x39b2:16)` -- AccPatch_LoadDualVoiceParams (DualVoice_ParamLoadDone's body) addresses section (0x39AC) of image (0x39AE) and section (0x39AD) of image (0x39B2), then copies the record (22441 `ldw bc, 0x54`) and its banks"
+  ]
+ },
+ {
+  "old": "ToneParam_ExtendedOpsBlock_Helper4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccPatch_LoadSectionFromRhythm",
+  "header": "Loads part (0x34EF) of rhythm (0x34ED/0x34EE) into section (0x34D6): sets 0x34D1 bit 0 and calls AccPat_IndexToAddress_Sub (AccPat_DispatchNoteChange: a ROM rhythm below 0x80 through RhythmROM_PatternDispatcher, 0x80-0x9F a copy of a section); returns HL = 0xFF95 when it reports failure (0x35B0 bit 0), else the status passed in WA. Basis: callers + body -- AccPatch_LoadIntroFillEndingFromRhythm calls it for each intro / fill-in / ending section with 0x34EF = part and 0x34D6 = target; its header describes this call.",
+  "basis": "callers + body",
+  "evidence": [
+   "storage/flash_floppy_handlers.s:5313 `ld (0x34ef:16), 4` / 5314 `ld (0x34d6:16), 12` / 5316 `calr ToneParam_ExtendedOpsBlock_Helper4` -- caller AccPatch_LoadIntroFillEndingFromRhythm: part 4 (intro) into section 12",
+   "storage/flash_floppy_handlers.s:5404 `set 0, (0x34d1:16)` / 5405 `call AccPat_IndexToAddress_Sub` -- the load",
+   "storage/flash_floppy_handlers.s:5406 `ldb_d8 a, (0x35b0)` / 5410 `ldw iz, 0xff95` -- failure code, else HL = incoming WA",
+   "sequencer/accompaniment_engine.s:22313 `bit 0, (0x34d1:16)` -- AccPat_DispatchNoteChange acts only with 0x34D1 bit 0 set"
+  ]
+ }
+]

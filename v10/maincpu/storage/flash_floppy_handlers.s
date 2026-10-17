@@ -5064,7 +5064,7 @@ AccPatch_ConvertLegacyStyleImage_Skip11:
 ; AccPatch_ConvertLegacySectionLayout: Converts a style image in the older 20-section layout to the current 30-section
 ;   one: copies the image as read (RHYTHM_PATTERN_BUF_PTR) into the work buffer (word 0x0C72 = 0x69800) -- header byte
 ;   +16, the 20 section records at +0x60, the pattern data moved from +0x800 to +0x1400 -- then copies each old
-;   section into its new place(s) in the live image (ToneParam_ExtendedOpsBlock_Helper3, 0x39AC old -> 0x39AD new):
+;   section into its new place(s) in the live image (AccPatch_CopySection, 0x39AC old -> 0x39AD new):
 ;   variations 0-11 one to one, old 12-15 (intro, fill-in 1/2, ending) into both the A (12-17) and B (18-23) sets, old
 ;   16-19 into the C set (24-29), intros and endings into both 1 and 2; HL = 0xFF95 if a copy failed (that section is
 ;   re-initialised), else 0. Basis: callers + body -- AccPatch_ConvertLegacyStyleImage calls it for the headers
@@ -5098,7 +5098,7 @@ AccPatch_ConvertLegacySectionLayout_Loop:
 	ld	xwa, (xsp)
 	ld	(0x39ac:16), a
 	ld	(0x39ad:16), a
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip12
 	ld	(xsp+4), hl
@@ -5110,126 +5110,126 @@ AccPatch_ConvertLegacySectionLayout_Skip12:
 	jr	ule, AccPatch_ConvertLegacySectionLayout_Loop
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 12
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip13
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip13:
 	ld	(0x39ac:16), 13
 	ld	(0x39ad:16), 14
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip14
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip14:
 	ld	(0x39ac:16), 14
 	ld	(0x39ad:16), 15
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip15
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip15:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 16
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip16
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip16:
 	ld	(0x39ac:16), 16
 	ld	(0x39ad:16), 24
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip17
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip17:
 	ld	(0x39ac:16), 17
 	ld	(0x39ad:16), 26
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip18
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip18:
 	ld	(0x39ac:16), 18
 	ld	(0x39ad:16), 27
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip19
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip19:
 	ld	(0x39ac:16), 19
 	ld	(0x39ad:16), 28
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip20
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip20:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 18
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip21
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip21:
 	ld	(0x39ac:16), 13
 	ld	(0x39ad:16), 20
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip22
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip22:
 	ld	(0x39ac:16), 14
 	ld	(0x39ad:16), 21
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip23
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip23:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 22
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip24
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip24:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 13
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip25
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip25:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 17
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip26
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip26:
 	ld	(0x39ac:16), 16
 	ld	(0x39ad:16), 25
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip27
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip27:
 	ld	(0x39ac:16), 19
 	ld	(0x39ad:16), 29
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip28
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip28:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 19
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip29
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip29:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 23
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip30
 	ld	(xsp+4), hl
@@ -5237,7 +5237,13 @@ AccPatch_ConvertLegacySectionLayout_Skip30:
 	ld	hl, (xsp+4)
 	inc	6, xsp
 	ret
-ToneParam_ExtendedOpsBlock_Helper3:
+; AccPatch_CopySection: Copies section (0x39AC) of the source image (0x39AE) to section (0x39AD) of the destination
+;   image (0x39B2) with DualVoice_ParamLoadDone; when the copy reports failure (0x35B0 bit 0) it re-initialises the
+;   destination section (AccPatch_InitFromSlotIndex), restores the source pointer 0x39AE to the work image (0x0C72)
+;   and returns HL = 0xFF95, else HL = 0. Basis: callers + body -- AccPatch_ConvertLegacySectionLayout calls it for
+;   each old -> new section pair (0x39AC / 0x39AD) and keeps the first 0xFF95; its header calls this 'copies each old
+;   section into its new place(s)'.
+AccPatch_CopySection:
 	pushw	iz
 	ld	iz, 0:i3
 	res	0, (0x35b0:16)
@@ -5262,7 +5268,7 @@ ToneParam_ExtendedOpsBlock_Epilogue:
 ;   the values the 'clear' section template AccPatch_DefaultSlotData holds there; what byte 2 means is not
 ;   established. Basis: callers + body -- AccPatch_ConvertLegacyStyleImage runs it last on every path (relabelled,
 ;   converted or rebuilt default image) when an older-format style image is loaded; the composer single-load path
-;   (FileIO_ByteBlock_DemoProc1_Helper3) writes the same four values into sections taken from a file whose header is
+;   (SingleLoad_CopyComposerPatternFromFile) writes the same four values into sections taken from a file whose header is
 ;   not 'H',0,'K'.
 AccPatch_ResetSectionPartByte2Defaults:
 	ld	l, 0:opc
@@ -5291,7 +5297,7 @@ AccPatch_ResetSectionPartByte2Defaults_Loop:
 ; AccPatch_LoadIntroFillEndingFromRhythm: Rebuilds the intro 1/2, fill-in 1/2 and ending 1/2 sections of the A, B and
 ;   C groups (12-17, 18-23, 24-29) from the rhythm recorded in word +16 of the group's variation-1 section (sections
 ;   0, 4, 8: image bytes +0x70, +0x1F0, +0x370 into 0x34ED/0x34EE): for each it sets 0x34EF = part (4/5 intro, 10/11
-;   fill-in, 6/7 ending) and 0x34D6 = target section and calls ToneParam_ExtendedOpsBlock_Helper4
+;   fill-in, 6/7 ending) and 0x34D6 = target section and calls AccPatch_LoadSectionFromRhythm
 ;   (AccPat_DispatchNoteChange: a ROM rhythm below 0x80 via RhythmROM_PatternDispatcher, 0x80-0x9F a copy of that
 ;   section); saves and restores 0x34ED-0x34EF; returns the incoming status in HL, or 0xFF95 once a section fails.
 ;   Basis: callers + body -- AccPatch_ConvertLegacyStyleImage calls it after relabelling or converting an older-format
@@ -5313,27 +5319,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 12
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 13
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 16
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 17
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 14
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 15
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
 	ld	(0x34ed), (xbc+0x1f0)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
@@ -5341,27 +5347,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 18
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 19
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 22
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 23
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 20
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 21
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
 	ld	(0x34ed), (xbc+0x370)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
@@ -5369,27 +5375,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 24
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 25
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 28
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 29
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 26
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 27
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ldto_berp c, 251
 	ld (13549:16), c
 	ldto_berp c, 250
@@ -5398,7 +5404,12 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld (13551:16), c
 	pop xiz
 	ret
-ToneParam_ExtendedOpsBlock_Helper4:
+; AccPatch_LoadSectionFromRhythm: Loads part (0x34EF) of rhythm (0x34ED/0x34EE) into section (0x34D6): sets 0x34D1 bit
+;   0 and calls AccPat_IndexToAddress_Sub (AccPat_DispatchNoteChange: a ROM rhythm below 0x80 through
+;   RhythmROM_PatternDispatcher, 0x80-0x9F a copy of a section); returns HL = 0xFF95 when it reports failure (0x35B0
+;   bit 0), else the status passed in WA. Basis: callers + body -- AccPatch_LoadIntroFillEndingFromRhythm calls it for
+;   each intro / fill-in / ending section with 0x34EF = part and 0x34D6 = target; its header describes this call.
+AccPatch_LoadSectionFromRhythm:
 	pushw	iz
 	ld	iz, wa
 	set	0, (0x34d1:16)

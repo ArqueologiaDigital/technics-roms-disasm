@@ -4981,7 +4981,7 @@ AccPatch_ConvertLegacySectionLayout_Loop:
 	ld	xwa, (xsp)
 	ld	(0x39ac:16), a
 	ld	(0x39ad:16), a
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip12
 	ld	(xsp+4), hl
@@ -4993,126 +4993,126 @@ AccPatch_ConvertLegacySectionLayout_Skip12:
 	jr	ule, AccPatch_ConvertLegacySectionLayout_Loop
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 12
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip13
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip13:
 	ld	(0x39ac:16), 13
 	ld	(0x39ad:16), 14
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip14
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip14:
 	ld	(0x39ac:16), 14
 	ld	(0x39ad:16), 15
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip15
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip15:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 16
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip16
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip16:
 	ld	(0x39ac:16), 16
 	ld	(0x39ad:16), 24
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip17
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip17:
 	ld	(0x39ac:16), 17
 	ld	(0x39ad:16), 26
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip18
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip18:
 	ld	(0x39ac:16), 18
 	ld	(0x39ad:16), 27
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip19
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip19:
 	ld	(0x39ac:16), 19
 	ld	(0x39ad:16), 28
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip20
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip20:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 18
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip21
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip21:
 	ld	(0x39ac:16), 13
 	ld	(0x39ad:16), 20
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip22
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip22:
 	ld	(0x39ac:16), 14
 	ld	(0x39ad:16), 21
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip23
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip23:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 22
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip24
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip24:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 13
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip25
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip25:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 17
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip26
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip26:
 	ld	(0x39ac:16), 16
 	ld	(0x39ad:16), 25
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip27
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip27:
 	ld	(0x39ac:16), 19
 	ld	(0x39ad:16), 29
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip28
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip28:
 	ld	(0x39ac:16), 12
 	ld	(0x39ad:16), 19
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip29
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip29:
 	ld	(0x39ac:16), 15
 	ld	(0x39ad:16), 23
-	calr	ToneParam_ExtendedOpsBlock_Helper3
+	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip30
 	ld	(xsp+4), hl
@@ -5120,7 +5120,7 @@ AccPatch_ConvertLegacySectionLayout_Skip30:
 	ld	hl, (xsp+4)
 	inc	6, xsp
 	ret
-ToneParam_ExtendedOpsBlock_Helper3:
+AccPatch_CopySection:
 	pushw	iz
 	ld	iz, 0:i3
 	res	0, (0x35b0:16)
@@ -5180,27 +5180,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 12
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 13
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 16
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 17
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 14
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 15
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
 	ld	(0x34ed), (xbc+0x1f0)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
@@ -5208,27 +5208,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 18
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 19
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 22
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 23
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 20
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 21
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
 	ld	(0x34ed), (xbc+0x370)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
@@ -5236,27 +5236,27 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld	(0x34ef:16), 4
 	ld	(0x34d6:16), 24
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 5
 	ld	(0x34d6:16), 25
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 6
 	ld	(0x34d6:16), 28
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 7
 	ld	(0x34d6:16), 29
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 10
 	ld	(0x34d6:16), 26
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ld	(0x34ef:16), 11
 	ld	(0x34d6:16), 27
 	ld	wa, hl
-	calr	ToneParam_ExtendedOpsBlock_Helper4
+	calr	AccPatch_LoadSectionFromRhythm
 	ldto_berp c, 251
 	ld (13549:16), c
 	ldto_berp c, 250
@@ -5265,7 +5265,7 @@ AccPatch_LoadIntroFillEndingFromRhythm:
 	ld (13551:16), c
 	pop xiz
 	ret
-ToneParam_ExtendedOpsBlock_Helper4:
+AccPatch_LoadSectionFromRhythm:
 	pushw	iz
 	ld	iz, wa
 	set	0, (0x34d1:16)

@@ -5091,7 +5091,7 @@ PerfMode_ParamHandler_3_Helper:
 DisplayMode_Handler_3_Skip31:
 	call	PerfMode_StepCursorEventByte
 PerfMode_EventTable_0_Target1_Join2:
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe3e2:16), 8
 DisplayMode_Handler_3_Return8:
@@ -5120,7 +5120,7 @@ PerfMode_ParamHandler_3_Helper2:
 DisplayMode_Handler_3_Skip11:
 	call	PerfMode_StepCursorEventByte
 PerfMode_EventTable_0_Target1_Join3:
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	or	(0xe3e2:16), 8
 DisplayMode_Handler_3_Return9:
@@ -7152,7 +7152,7 @@ SerialPort_ModeHandler_0_Data2:
 ;   (CURRENT_TITLE != PREVIOUS_TITLE) it resets the sequencer buffers (SeqBuf_Init), clears error and flag bytes,
 ;   saves (0xFC5D) to 0x1128, derives the display mode (0x0D65) from the track type (SqStep_SetDisplayModeFromTrack), in
 ;   display mode 0 clears 0xFC5D bit 3 and posts it, then sets up the cursor / step state; on a redraw within the
-;   title it only re-runs PortConfig_Handler_0_Return and ClockConfig_Handler_0_Helper. Basis: callers + body -- only
+;   title it only re-runs PortConfig_Handler_0_Return and SqStep_TrackSetupNullRet. Basis: callers + body -- only
 ;   caller chain: SqStepTtlFunc_Methods[0] (Display_InitGraphicsAndScreen) -> Display_InitScreenLayout ->
 ;   Display_CallMenuInit; the hide-method body (SqStep_RestoreOnLeave) restores (0xFC5D) from 0x1128.
 SqStep_InitOnEnter:
@@ -7185,14 +7185,14 @@ SqStep_SetupCursorTrack:
 	ld	(14100:16), 4
 	ld	(14101:16), 0
 	ld	(14102:16), 1
-	call	PortConfig_Handler_0_Helper3
+	call	SeqNode_SetPoolBaseToEventMemory
 	call	SqStep_SetDisplayModeFromTrack
 	ld	a, (PART_SELECT:16)
 	ld	(3430:16), a
 	call	PortConfig_Handler_0_Sub
-	call	PortConfig_Handler_0_Helper5
+	call	SqStep_SetPopupIdForDisplayMode
 	call	PortConfig_Handler_0_Return
-	call	ClockConfig_Handler_0_Helper
+	call	SqStep_TrackSetupNullRet
 	cpw	(62001:16), 0
 	jrl	nz, SqStep_SetupCursorTrack_Skip
 	call	SqStep_CheckCursorTrackUsed
@@ -7295,7 +7295,7 @@ SerialPort_ModeHandler_0_Skip9:
 	jp	SerialPort_ModeHandler_0_Return4
 ScoopParam_ValueTable_Entry3_Code_Skip:
 	call	PortConfig_Handler_0_Return
-	call	ClockConfig_Handler_0_Helper
+	call	SqStep_TrackSetupNullRet
 	bit	3, (0x0d53:16)
 	jrl	z, SerialPort_ModeHandler_0_Skip10
 	call	SqStep_SetupScreenForDisplayMode
@@ -7742,7 +7742,12 @@ PortConfig_DataTable_A_Sub_Return:
 PortConfig_DataTable_B:
 	.byte	0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03, 0x0f, 0xff, 0xff, 0xff
 	.byte	0xff, 0x0c, 0x0d, 0x0e
-PortConfig_Handler_0_Helper3:
+; SeqNode_SetPoolBaseToEventMemory: Sets the block-pool base pointer 0x110A, through which SeqNode_ResolveSlotPtr
+;   turns block n into address base + (n - 1) * 256 (0x10FD), to the sequencer event-memory base held at 0x1D5A
+;   (0xB0000, stored at init together with the block count 1240 = 0x4D800 / 256 in 0x286D). Basis: callers + body --
+;   SqStep_SetupCursorTrack calls it first; every writer of 0x110A copies 0x1D5A the same way
+;   (DispatchHandler_StoreNodePtr, SetWall_BankInit, MemConfig_Handler_1_Helper5).
+SeqNode_SetPoolBaseToEventMemory:
 	ld	xhl, 4362
 	ld	xwa, (7514:16)
 	ld	(xhl), xwa
@@ -7757,7 +7762,11 @@ TempoRingBuf_DiscardAll:
 	cp	wa, 0xffff
 	jrl	nz, TempoRingBuf_DiscardAll
 	ret
-PortConfig_Handler_0_Helper5:
+; SqStep_SetPopupIdForDisplayMode: Sets the TT_SQSTEP pop-up id (0x0DEF) for the cursor track's display mode (0x0D65):
+;   PortConfig_Handler_0_Tbl {0, 0, 0, 12}, so 12 for display mode 3 (a RHYTHM track) and 0 otherwise. Basis: callers
+;   + body -- SqStep_SetupCursorTrack calls it after SqStep_SetDisplayModeFromTrack; Display_ModePopupDispatch picks
+;   the pop-up id from the same display mode through Display_ModePopupIds {0, 5, 5, 15}.
+SqStep_SetPopupIdForDisplayMode:
 	ld	xhl, PortConfig_Handler_0_Tbl
 	ld	a, (3429:16)
 	and	a, 3
@@ -7784,7 +7793,12 @@ ClockConfig_Handler_1:
 ClockConfig_Handler_0:
 	and	(0xe3e2:16), 253
 	ret
-ClockConfig_Handler_0_Helper:
+; SqStep_TrackSetupNullRet: Empty routine (a single `ret`): the step-record set-up calls it right after
+;   PortConfig_Handler_0_Return, which is also a bare `ret`; what it once did is not recoverable (the unreferenced
+;   ClockConfig_Select_Table beside it is not read). Basis: callers + body -- SqStep_SetupCursorTrack and
+;   SqStep_InitOnEnter's redraw-within-the-title path call it; this tree's X_NullRet convention (PlayMode_NullRet,
+;   DpMdlySmfLyrTtl_NullRet).
+SqStep_TrackSetupNullRet:
 	ret
 	; Byte data, 4 B.  No reader found: no label, positional or absolute .set
 	; name at this address is loaded anywhere in the image (searched by
@@ -14472,7 +14486,7 @@ DisplayStr_ComputeTableAddr:
 DisplayStr_BytecodeBlock_B:
 	call	Display_UpdateRegion0
 ; DisplayStr_WriteStoredControlLine: TT_SQSTEP pop-up line for a control event stored at the song cursor: blanks the
-;   text line 0x0ECA, writes "CONTROL " at 0x0ECF, the control name/value (PerfMode_EventTable_0_Target1_Helper10,
+;   text line 0x0ECA, writes "CONTROL " at 0x0ECF, the control name/value (DisplayStr_WriteControlNameValue,
 ;   kind 0x3720) and marks regions 5 and 3. Second entry of DisplayStr_BytecodeBlock_B (which first marks the status
 ;   bar). Basis: callers + body.
 DisplayStr_WriteStoredControlLine:
@@ -14489,12 +14503,12 @@ DisplayStr_WriteStoredControlLine:
 	ld	a, 32:opc
 	ld	(xix+), a
 	call	Display_UpdateRegion5
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	ret
 ; DisplayStr_RedrawStatusAndControlLine: Marks the status-bar region 0 for redraw (it shows pop-up mode 0x0DEF, which
 ;   the callers have just set to 2), then falls into DisplayStr_WriteIncomingControlLine: blanks the text line, writes
-;   "CONTROL" at 0x0ECF, appends the control name and value (PerfMode_EventTable_0_Target1_Helper10) and marks regions
+;   "CONTROL" at 0x0ECF, appends the control name and value (DisplayStr_WriteControlNameValue) and marks regions
 ;   5 and 3. Basis: callers + body -- TempoRingBuf_OnModulationEvent and TempoRingBuf_OnPitchBendEvent call it after
 ;   (0x0DEF) := 2 when the status bar was not already in mode 2, and call DisplayStr_WriteIncomingControlLine directly
 ;   when it was.
@@ -14510,7 +14524,7 @@ DisplayStr_WriteIncomingControlLine:
 	ld	bc, 7:i3
 	ldir85
 	call	Display_UpdateRegion5
-	call	PerfMode_EventTable_0_Target1_Helper10
+	call	DisplayStr_WriteControlNameValue
 	call	Display_UpdateRegion3
 	ret
 	; Lcd text, 7 B.  Read by DisplayStr_BytecodeBlock_B (0xEFED12): `ld xiy, Str_Control`
@@ -14992,7 +15006,13 @@ DisplayStr_ShowPartSoundLine:
 	call	DisplayStr_WritePartAndSoundName
 	call	Display_UpdateRegion3
 	ret
-PerfMode_EventTable_0_Target1_Helper10:
+; DisplayStr_WriteControlNameValue: Writes the control event's name and value into the TT_SQSTEP text line: the
+;   8-character cell (0x3720 & 7) of Str_PBendModExpEq (blank / P.BEND= / MOD. = / EXP. = / P.MEM = / AFT. =) at
+;   0x0ED8, then at 0x0EDF nothing for kind 0, the pitch-bend value (Display_BytecodeBlock_F_Tbl2_Helper2) for kind 1,
+;   else ON/OFF when (0x3721) bit 7 is set or the value in digits. Basis: callers + body --
+;   DisplayStr_WriteIncomingControlLine and DisplayStr_WriteStoredControlLine call it after writing "CONTROL" and
+;   describe it as the control name/value of kind 0x3720.
+DisplayStr_WriteControlNameValue:
 	ld	xiy, Str_PBendModExpEq
 	ld	xix, 3800
 	xor	hl, hl
@@ -16464,7 +16484,7 @@ Tbl_MsaStates:
 	.ascii	"OFF ON  #2  #3  "
 ; SqStep_FindMsaStateAtCursor: Finds the M.S.A. state in force at the song-data cursor: saves the cursor (slot 5) and
 ;   block pointer, clears 0x10F6, restarts at the cursor track's first block (MemConfig_VoiceSlotLookup) and steps
-;   forward until the saved position, and for each 0xBn event on the way Tbl_MsaStates_Helper sets 0x10F6 = value bit
+;   forward until the saved position, and for each 0xBn event on the way SqStep_UpdateMsaStateFromEvent sets 0x10F6 = value bit
 ;   0 when the event's tag is 0x98, offset 3 and flag byte +5 bit 0 is set; restores everything. Basis: callers + body
 ;   -- DisplayStr_ShowRhythmVariationLine calls it and then writes 'M.S.A.' instead of ' RHYTHM' when 0x10F6 bit 0 is
 ;   set.
@@ -16519,7 +16539,7 @@ SqStep_FindMsaStateAtCursor_Skip4:
 	and	a, 240
 	cp	a, 176
 	jrl	nz, SqStep_FindMsaStateAtCursor_Loop
-	call	Tbl_MsaStates_Helper
+	call	SqStep_UpdateMsaStateFromEvent
 	jp	SqStep_FindMsaStateAtCursor_Loop
 SqStep_FindMsaStateAtCursor_Skip5:
 	ld	a, 5:opc
@@ -16537,7 +16557,12 @@ SqStep_FindMsaStateAtCursor_Skip5:
 	ld (4349:16), xiz
 	pop xiz
 	ret
-Tbl_MsaStates_Helper:
+; SqStep_UpdateMsaStateFromEvent: For the 0xBn event at the song-data scan position: records the position (0x28BF /
+;   0x28C1), reads the event (VoiceBank_ProcessCommand) and, when it is the M.S.A. event -- tag 0x98 from the bytes at
+;   0x0EB5/0x0EB7, offset (0x0EB8) = 3 and flag (0x0EBA) bit 0 set -- stores its value bit 0 ((0x0EB9) & 1) in 0x10F6;
+;   it returns through ParamPopup_PartPedal's leading `ret`. Basis: callers + body -- SqStep_FindMsaStateAtCursor
+;   calls it for each 0xBn event up to the cursor; its header describes this test.
+SqStep_UpdateMsaStateFromEvent:
 	call	VoiceSlot_ComputeWordIndex
 	push	xhl
 	ld	xhl, 3230

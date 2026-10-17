@@ -379,7 +379,7 @@ SeqPlay_DecPunchInMeasure:
 	dec	1, wa
 	ld	(0xf238:16), wa
 SeqPlay_DecPunchInMeasure_Skip3:
-	calr	SeqPlay_DataBlock_BBE_Helper2
+	calr	SeqPlay_UpdateStartFromPunchInDown
 	jrl	SeqAcc_SetupRepeatCount
 SeqPlay_UpdateStartFromPunchIn:
 	bit	0, (10418:16)
@@ -411,17 +411,17 @@ SeqPlay_UpdateStartFromPunchIn_Skip2:
 	ld	(9832:16), wa
 	ld	(9964:16), wa
 	ret
-SeqPlay_DataBlock_BBE_Helper2:
+SeqPlay_UpdateStartFromPunchInDown:
 	bit	0, (10418:16)
-	jr	z, SeqPlay_DataBlock_BBE_Helper2_Skip2
+	jr	z, SeqPlay_UpdateStartFromPunchInDown_Skip2
 	ldw_d16	wa, (62008)
 	cp	wa, 1:i3
-	jr	nz, SeqPlay_DataBlock_BBE_Helper2_Skip
+	jr	nz, SeqPlay_UpdateStartFromPunchInDown_Skip
 	ldw	(9832:16), 0x8002
 	ldw	(9964:16), 0x8002
 	ldw	(0xf23f:16), 2
 	ret
-SeqPlay_DataBlock_BBE_Helper2_Skip:
+SeqPlay_UpdateStartFromPunchInDown_Skip:
 	cp	wa, 2:i3
 	jr	nz, SeqPlay_DataBlock_BBE_Skip5
 	ldw	(9832:16), 2
@@ -431,7 +431,7 @@ SeqPlay_DataBlock_BBE_Helper2_Skip:
 SeqPlay_DataBlock_BBE_Skip5:
 	cp	wa, 3:i3
 	ret	c
-SeqPlay_DataBlock_BBE_Helper2_Skip2:
+SeqPlay_UpdateStartFromPunchInDown_Skip2:
 	ld	wa, (0xf238:16)
 	dec	1, wa
 	ld	(0x28c3:16), wa
@@ -476,7 +476,7 @@ SeqPlay_DecPunchOutMeasure_Join2:
 	ret	c
 	dec	1, wa
 	ld	(0xf238:16), wa
-	calr	SeqPlay_DataBlock_BBE_Helper2
+	calr	SeqPlay_UpdateStartFromPunchInDown
 	calr	SeqAcc_SetupRepeatCount
 	ret
 SeqPlay_IncPunchCountIn:
@@ -25764,7 +25764,7 @@ SeqLoad_ProcessDataBlock_Skip2:
 	pop qiz
 	inc	6, xsp
 	ret
-FileIO_ByteBlock_DemoProc1_Helper:
+SingleLoad_PrepareSongSlot:
 	dec	2, xsp
 	pushw	iz
 	ld	(xsp+2), a
@@ -25789,7 +25789,7 @@ FileIO_ByteBlock_DemoProc1_Helper:
 	popw	iz
 	inc	2, xsp
 	ret
-FileIO_ByteBlock_DemoProc1_Helper2:
+SingleLoad_FinishSongLoad:
 	dec	8, xsp
 	push	xiz
 	ld	(xsp+10), a

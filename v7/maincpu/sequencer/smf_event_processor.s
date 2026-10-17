@@ -10147,7 +10147,7 @@ SndTable_ByteBlock_ReadOps_Code_Skip2:
 	jrl	ule, DiskStream_ReaderTask_Loop
 SndTable_ByteBlock_ReadOps_Code_Join:
 	ld	(0x2357e:24), 0
-	call	SndTable_ByteBlock_ReadOps_Helper
+	call	TaskSched_ExitCurrentTask
 	pop	xiz
 	inc	2, xsp
 	ret

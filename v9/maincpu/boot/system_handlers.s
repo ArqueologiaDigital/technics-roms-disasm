@@ -2366,7 +2366,7 @@ Show_ScreenGroup:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
-SndTable_ByteBlock_ReadOps_Helper:
+TaskSched_ExitCurrentTask:
 	ei 6
 	ld xsp, 0x1e53a
 	ld ix, (1159:16)

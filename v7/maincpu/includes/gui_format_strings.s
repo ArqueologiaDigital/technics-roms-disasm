@@ -17,13 +17,13 @@ Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d:	.asciz "%1d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d:	.asciz "%2d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d:	.asciz "%3d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_2:	.asciz "%2d"
-Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3:	.asciz "%3d"
+Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2:	.asciz "%3d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt4d:	.asciz "%4d"
 Scoop_BoundOp0A_ClipBox:
 	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_2:	.asciz "%1d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_3:	.asciz "%2d"
-Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2:	.asciz "%3d"
+Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3:	.asciz "%3d"
 Scoop_BoundOp07_ClipBox:	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
 Scoop_BoundOpHandlerTable:	.long Scoop_EnvProcessor_Data
 	.long Scoop_Dispatch_Nop

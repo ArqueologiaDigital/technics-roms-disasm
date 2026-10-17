@@ -25651,7 +25651,7 @@ DrumVoice_NotifyEE_Return10:
 	ld	xiy, 14450
 	ldir85
 	ret
-CmEsyTtl_Dispatch2_Helper:
+CmpEsy_PrepareRealtimeRecording:
 	push XIZ
 	call DrumVoice_NotifyEE_Entry4_Data
 	pop XIZ
@@ -28142,7 +28142,7 @@ ExtVoice_ProcessList_Data:
 	call	AccWrap_PlayModeStartAccPlay
 DrumParam_ReadMaxCount_Return:
 	ret
-ExtVoice_ProcessList_0x1C:
+CmpEsy_ApplyEdit:
 	push	xiz
 	call	ExtVoice_ProcessList_Helper
 	pop	xiz
@@ -30798,7 +30798,7 @@ CmpEsyTtl_Mode2_OnEdit:
 	push xix
 	push xiz
 	call CmEsyTtl_Dispatch2_Helper2
-	call CmEsyTtl_Dispatch2_Helper
+	call CmpEsy_PrepareRealtimeRecording
 	pop xiz
 	pop xix
 	pop xhl
@@ -30849,7 +30849,7 @@ CmpEsyTtl_Mode2_Case5:
 	push	xhl
 	push	xix
 	push	xiz
-	call	ExtVoice_ProcessList_0x1C
+	call	CmpEsy_ApplyEdit
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -37768,7 +37768,7 @@ AccStyle_TableDataEntry_Skip6:
 AccStyle_TableDataEntry_Join:
 	call	UI_PostModeChangeEvent
 	ret
-AccStyle_TableDataEntry_0x90:
+SingleLoad_CopyComposerPatternFromFile:
 	lda	xsp, (xsp-34)
 	push	xiz
 	ld	(xsp+34), c

@@ -91,18 +91,23 @@ NoRef_SetWall_SlotMap20x2:
 ;   (0xF1A0[(0x0CDF)]) is 13-16, else hidden. Basis: callers + body -- only caller MiddleFuncCall_OnTrAsPartInc;
 ;   MiddleFuncCall_DispatchData_Helper is the same wrapper for PART_DEC.
 SqTrAs_PartInc_UpdateOkSw:
-	call	NoRef_SetWall_SlotMap20x2_Helper
+	call	SqTrAs_UpdateOkSwVisibility
 	ret
-NoRef_SetWall_SlotMap20x2_Helper:
+; SqTrAs_UpdateOkSwVisibility: Track-assign page: shows the TrAsOkSw view 0x8B0003 (EVT_SET_VISIBLE 1,
+;   CDlikeSwTtl_SendStartEvtArg1) when the edited assignment (0x2873) or the cursor track's stored one
+;   (0xF1A0[(0x0CDF)]) is 13-16 (CHORD / APC / CONTROL / RHYTHM), else hides it (EVT_SET_VISIBLE 0,
+;   CDlikeSwTtl_SendStartEvt). Basis: callers + body -- SqTrAs_PartInc_UpdateOkSw (EVT_TR_AS_PART_INC) and
+;   MiddleFuncCall_DispatchData_Helper (PART_DEC) call it; the first one's header describes this update.
+SqTrAs_UpdateOkSwVisibility:
 	ld	a, (0x2873:16)
 	cp	a, 13
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 16
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 15
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 14
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	call	CDlikeSwTtl_SendStartEvt
 	ld	xhl, 0xf1a0
 	xor	w, w
@@ -110,20 +115,20 @@ NoRef_SetWall_SlotMap20x2_Helper:
 	ld	iy, wa
 	ld	a, (xhl+iy)
 	cp a, 13
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 16
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 15
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 14
-	jr	z, NoRef_SetWall_SlotMap20x2_Helper_Skip
-	jr	NoRef_SetWall_SlotMap20x2_Helper_Return
-NoRef_SetWall_SlotMap20x2_Helper_Skip:
+	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
+	jr	SqTrAs_UpdateOkSwVisibility_Return
+SqTrAs_UpdateOkSwVisibility_Skip:
 	call	CDlikeSwTtl_SendStartEvtArg1
-NoRef_SetWall_SlotMap20x2_Helper_Return:
+SqTrAs_UpdateOkSwVisibility_Return:
 	ret
 MiddleFuncCall_DispatchData_Helper:
-	call	NoRef_SetWall_SlotMap20x2_Helper
+	call	SqTrAs_UpdateOkSwVisibility
 	ret
 ; 20 x u8 mask per SetWall slot number 0..0x13 (0xFF, or 0 for slots 13-16):
 ; SetWall_CompareAndSwap (0xF1EFF7) and SetWall_InlineCodeBlock2_Skip read it with
@@ -345,7 +350,10 @@ SetWall_DataBlock1:
 	ld	a, (0xffe3:24)
 	ld	(3391:16), a
 	ret
-SqTrAsPsTtl_Dispatch_Helper:
+; SqTrAsPsTtl_NullRet: Empty routine (`ret`; two dead `ret`s follow): the leave-title hook of TT_SQTRASPS --
+;   SqTrAsPsTtlFunc_OnTitleOld calls it between its register saves and does nothing else. Basis: callers + body -- the
+;   X_NullRet convention of these title files (PlayMode_NullRet, DpMdlySmfLyrTtl_NullRet).
+SqTrAsPsTtl_NullRet:
 	ret
 	ret
 	ret
@@ -1930,7 +1938,7 @@ SetWall_InlineCodeBlock3:
 ;   with each song's memory use in percent (SqSngSel_CalcSongUsagePercent: sum over the song's used tracks * 100 /
 ;   (0x286D) + 1, capped at 99, 0 for an empty song; the current song is read from 0xF250, others from SEQ_SONG_SLOTS
 ;   + 2048*n + 208). Basis: callers + body -- SqSngSelTtlFunc dispatches EVT_ACTIVATE_STATE phase 2 to
-;   SqTrAs_CondCheck, which calls it (phase 3 goes to SqTrAs_CondCheck_Helper2, which clears 0x28A7 bit 2 again);
+;   SqTrAs_CondCheck, which calls it (phase 3 goes to SqSngSel_LeaveTitle, which clears 0x28A7 bit 2 again);
 ;   SongBank_LookupTableEntry prints 0x1145[song] with "%3d%%".
 SqSngSel_CalcSongUsageOnEnter:
 	call	AccWrap_PlayModeDispatch
@@ -1956,7 +1964,12 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 	popw	bc
 	pop	xix
 	ret
-SqTrAs_CondCheck_Helper2:
+; SqSngSel_LeaveTitle: When the song-select title is left: clears 0x28A7 bit 2 again -- the transport's 'ignore
+;   incoming MIDI Start/Continue' flag that SqSngSel_CalcSongUsageOnEnter set on entry
+;   (Transport_EnableMidiStartContinue clears the same bit) -- and sets panel indicator 0x4C
+;   (CtrlPanel_SetIndicatorBit). Basis: callers + body -- SqSngSelTtlFunc_OnTitleOld (EVT_ACTIVATE_STATE phase 3)
+;   calls it; SqSngSel_CalcSongUsageOnEnter's header names it as the phase-3 step.
+SqSngSel_LeaveTitle:
 	and (10407:16), 251
 	xor	wa, wa
 	ld	a, 76:opc

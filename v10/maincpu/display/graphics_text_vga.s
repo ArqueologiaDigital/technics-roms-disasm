@@ -5228,22 +5228,22 @@ MainSysCtrl_Entry5_VoiceInit:
 	call Voice_InitBankDataSafe
 	jr t, MainSysControl_PostDispatchFinalize
 ; MainSysCtrl_OnInitCurrentPanel: Case 1 of MainSysControl's EVT_SYS_INI switch = item 1 "CURRENT PANEL" of the
-;   INITIAL SETTING list (widget 0x410002): calls MainSysCtrl_Entry5_VoiceInit_Helper, which validates and re-resolves
+;   INITIAL SETTING list (widget 0x410002): calls MainSysCtrl_ResetCurrentPanel, which validates and re-resolves
 ;   the live panel (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, ...). Basis: callers + body.
 MainSysCtrl_OnInitCurrentPanel:
-	call MainSysCtrl_Entry5_VoiceInit_Helper
+	call MainSysCtrl_ResetCurrentPanel
 	jr t, MainSysControl_PostDispatchFinalize
 ; MainSysCtrl_OnInitPartSetting: Case 2 of MainSysControl's EVT_SYS_INI switch = item 2 "PART SETTING" of the INITIAL
-;   SETTING list (widget 0x410002): calls MainSysCtrl_Entry5_VoiceInit_Helper2, which copies part records of
+;   SETTING list (widget 0x410002): calls MainSysCtrl_ResetPartSettings, which copies part records of
 ;   SndParamRam_DefaultImage into the live panel 0xF9A0. Basis: callers + body.
 MainSysCtrl_OnInitPartSetting:
-	call MainSysCtrl_Entry5_VoiceInit_Helper2
+	call MainSysCtrl_ResetPartSettings
 	jr t, MainSysControl_PostDispatchFinalize
 ; MainSysCtrl_OnInitMidiSetting: Case 3 of MainSysControl's EVT_SYS_INI switch = item 3 "MIDI SETTING" of the INITIAL
-;   SETTING list (widget 0x410002): calls MainSysCtrl_Entry5_VoiceInit_Helper3, which restores bits 0-2 of byte +14 of
+;   SETTING list (widget 0x410002): calls MainSysCtrl_ResetMidiSettings, which restores bits 0-2 of byte +14 of
 ;   each part record from SndParamRam_DefaultImage. Basis: callers + body.
 MainSysCtrl_OnInitMidiSetting:
-	call MainSysCtrl_Entry5_VoiceInit_Helper3
+	call MainSysCtrl_ResetMidiSettings
 
 
 MainSysControl_PostDispatchFinalize:

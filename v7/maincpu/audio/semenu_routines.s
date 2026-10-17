@@ -1559,7 +1559,7 @@ SeMenu_TransferPartValues_EndData_Skip9:
 SeMenu_TransferPartValues_EndData_Join:
 	ld	(xbc), a
 	ret
-SeMenu_ApplyPartEdit_Helper:
+SeLfo1_StepSelector:
 	cp	a, 0:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip10
 	lda	xwa, (1677:16)
@@ -2246,7 +2246,7 @@ SeMenu_CopyNameChars_Loop6:
 	cp	b, e
 	jr	c, SeMenu_CopyNameChars_Loop6
 	ret
-SeMenu_CopyWriteUpdate_Helper17:
+SeWrtMem_ChooseInitialSlot:
 	lda	xsp, (xsp-16)
 	push	qiz
 	ld	(xsp+14), xwa
@@ -2579,7 +2579,7 @@ SeLfo1_StepSelectorAndReload:
 	ld	a, (xsp)
 	extz	wa
 	extz	bc
-	calr	SeMenu_ApplyPartEdit_Helper
+	calr	SeLfo1_StepSelector
 	cp	(xsp), 1
 	jr	nz, SeLfo1_StepSelectorAndReload_Skip29
 	ld	a, 42:opc

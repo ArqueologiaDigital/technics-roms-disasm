@@ -4286,7 +4286,13 @@ VoiceData_ExtendedParamSetup:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ret
-MainSysCtrl_Entry5_VoiceInit_Helper:
+; MainSysCtrl_ResetCurrentPanel: INITIAL SETTING 'CURRENT PANEL': resets the live panel --
+;   Display_SetupAndPrepareRender copies the header template (0x20 bytes, DataSlot_HeaderTemplate) to 0xF980 and
+;   SndParamRam_DefaultImage (0x620 bytes) to 0xF9A0 and sets the region bytes -- then validates and re-resolves it
+;   (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, PanelTlv_WriteLivePanelHeaders), applies it
+;   (MidiMsg_ParseChannelStream), sets GLOBAL_ERROR_CODE 35 ('COMPLETED!') and tail-jumps to Audio_FillParamBuffer.
+;   Basis: callers + body -- MainSysCtrl_OnInitCurrentPanel (case 1, item 'CURRENT PANEL') calls it.
+MainSysCtrl_ResetCurrentPanel:
 	calr	Display_SetupAndPrepareRender
 	call	PanelTlv_ValidateLivePanel
 	call	PanelTlv_ResolvePartCompanions
@@ -4294,7 +4300,12 @@ MainSysCtrl_Entry5_VoiceInit_Helper:
 	calr	MidiMsg_ParseChannelStream
 	call	MainTitle_SetBootFlag
 	jrl	Audio_FillParamBuffer
-MainSysCtrl_Entry5_VoiceInit_Helper2:
+; MainSysCtrl_ResetPartSettings: INITIAL SETTING 'PART SETTING': for each of the 24 part records (26-byte stride from
+;   +20) copies the record's field run (length at +1, data from +2) from SndParamRam_DefaultImage into the live panel
+;   0xF9A0, sends each record (MIDI_WriteMultiByteWithHeader), then re-resolves the part companions. Basis: callers +
+;   body -- MainSysCtrl_OnInitPartSetting (case 2, item 'PART SETTING') calls it; its header already says it copies
+;   part records of SndParamRam_DefaultImage into 0xF9A0.
+MainSysCtrl_ResetPartSettings:
 	dec	8, xsp
 	pushw	iz
 	lda	xwa, (SndParamRam_DefaultImage:24)
@@ -4335,7 +4346,13 @@ VoiceData_ExtendedParamSetup_Loop3:
 	popw	iz
 	inc	8, xsp
 	ret
-MainSysCtrl_Entry5_VoiceInit_Helper3:
+; MainSysCtrl_ResetMidiSettings: INITIAL SETTING 'MIDI SETTING': in the live panel 0xF9A0 restores, for each of the 24
+;   part records, bits 0-2 of byte +14 and the 9 bytes at +15 from SndParamRam_DefaultImage and re-sends them
+;   (MIDI_WriteCommandToBuffer), restores and re-sends the 14 bytes at +944 and clears bit 2 of byte +1037
+;   (SwbtWr_ReinitOutputBank); then makes the same +14 / +15 / +944 restore in each of the 80 panel memories (0x1ED400
+;   + 960 * n). Basis: callers + body -- MainSysCtrl_OnInitMidiSetting (case 3, item 'MIDI SETTING') calls it; its
+;   header already names the +14 restore.
+MainSysCtrl_ResetMidiSettings:
 	lda	xsp, (xsp-10)
 	push	qiz
 	lda	xwa, (SndParamRam_DefaultImage:24)
@@ -4343,7 +4360,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3:
 	lda	xwa, (0xf9a0:16)
 	ld	(xsp+8), xwa
 	ld	(xsp+2), 0
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop:
+MainSysCtrl_ResetMidiSettings_Loop:
 	ld	a, (xsp+2)
 	extz	wa
 	muls	wa, 26
@@ -4387,7 +4404,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop:
 	; Mem_Copy
 	lda	xsp, (xsp+10)
 	ldi_erpb	251, 13
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
+MainSysCtrl_ResetMidiSettings_Loop2:
 	ld	a, (xsp+2)
 	extz	wa
 	muls	wa, 26
@@ -4407,10 +4424,10 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
 	calr	MIDI_WriteCommandToBuffer
 	inc1b_erp 251
 	cp_erpb 251, 21
-	jr	ule, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2
+	jr	ule, MainSysCtrl_ResetMidiSettings_Loop2
 	incm8	1, (xsp+2)
 	cp	(xsp+2), 24
-	jrl	c, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop
+	jrl	c, MainSysCtrl_ResetMidiSettings_Loop
 	set	1, (65472:24)
 	pushw	14
 	ld	xwa, (xsp+6)
@@ -4422,7 +4439,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop2:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ld	(xsp+2), 0
-MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
+MainSysCtrl_ResetMidiSettings_Loop3:
 	ld	c, (xsp+2)
 	extz	bc
 	ld	de, bc
@@ -4435,12 +4452,12 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
 	calr	MIDI_WriteCommandToBuffer
 	incm8	1, (xsp+2)
 	cp	(xsp+2), 14
-	jr	c, MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3
+	jr	c, MainSysCtrl_ResetMidiSettings_Loop3
 	ld	xwa, (xsp+8)
 	lda	xbc, (xwa+1037)
 	ld	a, (xbc)
 	bit	2, a
-	jr	z, MainSysCtrl_Entry5_VoiceInit_Helper3_Skip
+	jr	z, MainSysCtrl_ResetMidiSettings_Skip
 	res	2, a
 	ld	(xbc), a
 	ld	e, a
@@ -4449,7 +4466,7 @@ MainSysCtrl_Entry5_VoiceInit_Helper3_Loop3:
 	ldw	wa, 145
 	ld	bc, 3:i3
 	calr	MIDI_WriteCommandToBuffer
-MainSysCtrl_Entry5_VoiceInit_Helper3_Skip:
+MainSysCtrl_ResetMidiSettings_Skip:
 	push	xde
 	push	xhl
 	push	xix
@@ -5238,7 +5255,7 @@ ExtData_ToneParam_AltDispatch_DrawbarFootages:	; cases 3, 4, 5, 6
 ; ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches: Payload +7: the 1' drawbar (low nibble, ExtData_SetTlvField
 ;   0x0F) and the two switch bits 0x10/0x20 (ExtData_ToggleTlvBits 0x30).
 ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches:
-	calr	ExtData_ToneParam_AltDispatch_Helper
+	calr	ExtData_Drawbar_SetByte7Fields
 	ret
 ExtData_ToneParam_AltDispatch_Join:
 	ldw	wa, 255
@@ -5256,7 +5273,12 @@ ExtData_ToneParam_AltDispatch_Join3:
 	ldw	wa, 240
 	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
-ExtData_ToneParam_AltDispatch_Helper:
+; ExtData_Drawbar_SetByte7Fields: Applies an incoming event to byte +7 of a drawbar record (0x44/0x45/0x46) as the 1'
+;   drawbar (low nibble, ExtData_SetTlvField 0x0F) and the two switch bits 0x10/0x20 (ExtData_ToggleTlvBits 0x30),
+;   then posts the change with SwbtWr_FlushAndAppendParams. Basis: callers + body -- its only caller is case 7 of
+;   ExtData_ToneParam_AltDispatch, ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches, whose header names these two
+;   fields; same shape as ExtData_Tag43_SetByte1Fields.
+ExtData_Drawbar_SetByte7Fields:
 	ldw	wa, 15
 	calr	ExtData_SetTlvField
 	ldw	wa, 48
@@ -7353,7 +7375,13 @@ RegBitManip_Handler_4_Helper:
 	ld	(xde+2), a
 	inc	6, xsp
 	ret
-MidiStream_ExtendedDispatch_Helper3_Helper:
+; MidiStream_ResolveVoiceIndexMode1_Impl: Body of MidiStream_ResolveVoiceIndexMode1: for part (0x90F7) up to 31 builds
+;   a selection record (+2 part, +3/+4 the program/bank bytes at 0x916F/0x9170), resolves it
+;   (SndBuf_WriteParamEntries_Helper) and copies the result to 0x90EE and 0x916B; for part 72 it hands the pair to
+;   Rhythm_DispatchNote_Finalize through the 0x90EA record instead; finally copies 0x90EE +0/+1/+3 to 0x9173-0x9175.
+;   Basis: callers + body -- MidiStream_ResolveVoiceIndexMode1 stores HL at 0x916F, calls it and returns HL/W from
+;   0x9173-0x9175; its header describes the resolve.
+MidiStream_ResolveVoiceIndexMode1_Impl:
 	dec	6, xsp
 	ld	a, (0x90f7:16)
 	lda	xbc, (0x916f:16)
@@ -8458,7 +8486,7 @@ MidiStream_ResolveVoiceIndex:
 	pop	xwa
 	ret
 ; MidiStream_ResolveVoiceIndexMode1: MIDI-mode-1 twin of PartCtrl_WriteProgramChange: stores HL (program L, bank H) at
-;   0x916F, resolves it for part (0x90F7) (MidiStream_ExtendedDispatch_Helper3_Helper) and returns HL/W from
+;   0x916F, resolves it for part (0x90F7) (MidiStream_ResolveVoiceIndexMode1_Impl) and returns HL/W from
 ;   0x9173-0x9175; registers preserved. Basis: callers + body.
 MidiStream_ResolveVoiceIndexMode1:
 	ld	(0x916f:16), hl
@@ -8470,7 +8498,7 @@ MidiStream_ResolveVoiceIndexMode1:
 	push	xix
 	push	xiy
 	push	xiz
-	call	MidiStream_ExtendedDispatch_Helper3_Helper
+	call	MidiStream_ResolveVoiceIndexMode1_Impl
 	pop	xiz
 	pop	xiy
 	pop	xix

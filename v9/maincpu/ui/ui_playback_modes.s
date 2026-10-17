@@ -538,7 +538,7 @@ SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlyDocTtl_Dispatch_Helper2:
+DpMdlyDoc_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
 
@@ -691,7 +691,7 @@ PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlyPdTtl_Dispatch_Helper2:
+DpMdlyPd_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
 
@@ -753,7 +753,7 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlySmfTtl_Dispatch_Helper2:
+DpMdlySmf_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PartFormat_StartPlayback_Return3
 	ld	(3380:16), 0
@@ -804,7 +804,7 @@ PlayModeStop_ClearFlagBlock:
 	ret
 DpMdlySmfLyrTtl_NullRet:
 	ret
-DpMdlySmfLyrTtl_Dispatch_Helper2:
+DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PlayMode_SendCommand6C_Return
 	ld	(3380:16), 0
@@ -1127,7 +1127,7 @@ SqSngSelTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SqTrAs_CondCheck_Helper2
+	call	SqSngSel_LeaveTitle
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1368,7 +1368,7 @@ SqTrAsPsTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	SqTrAsPsTtl_Dispatch_Helper
+	call	SqTrAsPsTtl_NullRet
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1806,7 +1806,7 @@ DpMdlyDocTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlyDocTtl_Dispatch_Helper2
+	call	DpMdlyDoc_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1900,7 +1900,7 @@ DpMdlyPdTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlyPdTtl_Dispatch_Helper2
+	call	DpMdlyPd_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1998,7 +1998,7 @@ DpMdlySmfTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlySmfTtl_Dispatch_Helper2
+	call	DpMdlySmf_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2114,7 +2114,7 @@ DpMdlySmfLyrTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlySmfLyrTtl_Dispatch_Helper2
+	call	DpMdlySmfLyr_DisarmStartCountdown
 	pop xiz
 	pop xix
 	pop xhl

@@ -3973,7 +3973,13 @@ DSPCfg_Data_ParamDispatch_Skip8:
 	ld	hl, wa
 	ld	qiz, 1
 	jr	DSPCfg_Data_ParamDispatch_Join5
-DSPCfg_Data_ParamDispatch_Helper:
+; DSPCfg_FindParamAtRecordOffset: Finds the effect parameter stored at byte offset E of a DSP-block panel record:
+;   walks the effect type's parameter list (XBC, from DspFxRecListPtrTable) with DSPCfg_Data_ParamDispatch, adding up
+;   each parameter's byte size and taking its bit mask, until it reaches offset E with a field whose mask meets the
+;   changed-bit mask at the stacked pointer (or passes E); clears those bits from that mask and returns HL = the index
+;   of the parameter that covers offset E; retd 4. Basis: callers + body -- DSPCfg_RecordFieldToParamId calls it with
+;   E = record offset - 1 and adds 0x10 + HL to the block's id base; its header describes exactly this lookup.
+DSPCfg_FindParamAtRecordOffset:
 	lda	xsp, (xsp-0x18)
 	pushw	iz
 	ld	(xsp+0x10), e
@@ -3986,7 +3992,7 @@ DSPCfg_Data_ParamDispatch_Helper:
 	ld	xwa, (xsp+0x1e)
 	ld	a, (xwa)
 	ld	(xsp+0x2), a
-DSPCfg_Data_ParamDispatch_Helper_Loop:
+DSPCfg_FindParamAtRecordOffset_Loop:
 	inc	1, iz
 	ld	wa, (xsp+0xe)
 	add	(xsp+0xa), a
@@ -4007,40 +4013,40 @@ DSPCfg_Data_ParamDispatch_Helper_Loop:
 	ld	bc, 0:i3
 	cpw	(xsp+0xe), 0
 	jr	ule, DSPCfg_Data_ParamDispatch_Skip5
-DSPCfg_Data_ParamDispatch_Helper_Loop2:
+DSPCfg_FindParamAtRecordOffset_Loop2:
 	ld	xwa, 1:i3
 	add	(xsp+0x16), xwa
 	inc	1, bc
 	cp	bc, (xsp+0xe)
-	jr	c, DSPCfg_Data_ParamDispatch_Helper_Loop2
+	jr	c, DSPCfg_FindParamAtRecordOffset_Loop2
 DSPCfg_Data_ParamDispatch_Skip5:
 	ld	xwa, (xsp+0x12)
 	calr	DSPCfg_PackAddress
 	ld	(xsp+0x12), xhl
 	ld	a, (xsp+0xa)
 	cp	a, (xsp+0x10)
-	jr	ugt, DSPCfg_Data_ParamDispatch_Helper_Skip
+	jr	ugt, DSPCfg_FindParamAtRecordOffset_Skip
 	ld	a, (xsp+0xa)
 	cp	a, (xsp+0x10)
-	jr	nz, DSPCfg_Data_ParamDispatch_Helper_Loop
+	jr	nz, DSPCfg_FindParamAtRecordOffset_Loop
 	ld	a, (xsp+0x2)
 	and	a, (xsp+0xc)
-	jr	z, DSPCfg_Data_ParamDispatch_Helper_Loop
-DSPCfg_Data_ParamDispatch_Helper_Skip:
+	jr	z, DSPCfg_FindParamAtRecordOffset_Loop
+DSPCfg_FindParamAtRecordOffset_Skip:
 	ld	a, (xsp+0xa)
 	cp	a, (xsp+0x10)
-	jr	ule, DSPCfg_Data_ParamDispatch_Helper_Skip3
+	jr	ule, DSPCfg_FindParamAtRecordOffset_Skip3
 	cp	(xsp+0x4), 112
-	jr	nz, DSPCfg_Data_ParamDispatch_Helper_Skip2
+	jr	nz, DSPCfg_FindParamAtRecordOffset_Skip2
 	dec	3, iz
-	jr	DSPCfg_Data_ParamDispatch_Helper_Join
-DSPCfg_Data_ParamDispatch_Helper_Skip2:
+	jr	DSPCfg_FindParamAtRecordOffset_Join
+DSPCfg_FindParamAtRecordOffset_Skip2:
 	dec	1, iz
-DSPCfg_Data_ParamDispatch_Helper_Join:
+DSPCfg_FindParamAtRecordOffset_Join:
 	cp	(xsp+0x6), 1
-	jr	nz, DSPCfg_Data_ParamDispatch_Helper_Skip3
+	jr	nz, DSPCfg_FindParamAtRecordOffset_Skip3
 	inc	1, iz
-DSPCfg_Data_ParamDispatch_Helper_Skip3:
+DSPCfg_FindParamAtRecordOffset_Skip3:
 	ld	a, (xsp+0xc)
 	cpl	a
 	and	a, (xsp+0x2)
@@ -4054,7 +4060,7 @@ DSPCfg_Data_ParamDispatch_Helper_Skip3:
 ; DSPCfg_RecordFieldToParamId: Maps a SwbtWr change event on a DSP-block panel record -- A = object code 0x61..0x66
 ;   ('a'..'f'), C = byte offset (SWBTWR_PAYLOAD_1), E = changed-bit mask (SWBTWR_PAYLOAD_3) -- to a DSP parameter id
 ;   stored through the stacked pointer: the block base 0x4900/0x4A00/0x4B00/0x4C00/0x4D00/0x4E00, or for C = 1..16
-;   base + 0x10 + the parameter index that DSPCfg_Data_ParamDispatch_Helper finds at field C-1 of the effect type's
+;   base + 0x10 + the parameter index that DSPCfg_FindParamAtRecordOffset finds at field C-1 of the effect type's
 ;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
 ;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
 ;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
@@ -4127,7 +4133,7 @@ DSPCfg_Data_ParamDispatch_Join3:
 	lda	xwa, (xsp+10)
 	push	xwa
 	ld	xwa, (xsp+10)
-	calr	DSPCfg_Data_ParamDispatch_Helper
+	calr	DSPCfg_FindParamAtRecordOffset
 	cp	hl, 0xffff
 	jr	nz, DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Skip7
 	ldw	(xsp+4), 65535

@@ -206,7 +206,7 @@ SLSrcBankList_FuncBody_Helper8:
 	extz	wa
 	div	wa, c
 	extz	wa
-	call	FileIO_ByteBlock_DemoProc2_0x2D
+	call	SingleLoadSrc_ReadPmtBankName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -286,7 +286,7 @@ SLSrcBankList_FuncBody_Helper10:
 	lda	xiz, (xwa+64)
 	ld	a, (35168:16)
 	extz	wa
-	call	FileIO_ByteBlock_DemoProc2_0xA7
+	call	SingleLoadSrc_ReadPmtMemoryName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -696,7 +696,7 @@ SLSrcBankList_FuncBody_Helper13:
 	extz	wa
 	div	wa, e
 	extz	wa
-	call	FileIO_ByteBlock_DemoProc2_0x1B4
+	call	SingleLoadSrc_ReadCmpPatternName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -713,7 +713,7 @@ SLSrcBankList_FuncBody_Epilogue4:
 	ret
 ; SingleLoadSrc_ComposerListProc: Single-load source list for area 2 COMPOSER: 30 items laid out in columns of
 ;   SLSrcComposer_RowsPerColumn (10) -- parameter 5 moves the cursor (RAM 0x89FE) by +-10, parameter 6 by +-1;
-;   EVT_PAINT draws via SLSrcBankList_FuncBody_Helper5/_Helper4/_Helper6 (WP_GetPresetName1, WP_GetBankMemName); entry
+;   EVT_PAINT draws via SingleLoadSrc_ReadTmSoundName/_Helper4/_Helper6 (WP_GetPresetName1, WP_GetBankMemName); entry
 ;   [2] of SingleLoadSrc_ListProcByMode and CmpSingleLoadSrc_ListProcByMode, called with XWA = file-name box, XBC =
 ;   event, XDE = parameter
 SingleLoadSrc_ComposerListProc:
@@ -977,7 +977,7 @@ SLSrcBankList_FuncBody_Helper16:
 	lda	xwa, (34994:16)
 	ld	(xwa+21), 1
 	lda	xiz, (xwa+22)
-	call	SLSrcBankList_FuncBody_Helper6
+	call	SingleLoadSrc_ReadTmUserKitName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -1086,7 +1086,7 @@ SLSrcBankList_FuncBody_Helper18:
 	jr	SLSrcBankList_FuncBody_Join12
 SLSrcBankList_FuncBody_Skip30:
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper5
+	call	SingleLoadSrc_ReadTmSoundName
 	ld	xbc, xhl
 	ld	xwa, xiz
 SLSrcBankList_FuncBody_Join12:

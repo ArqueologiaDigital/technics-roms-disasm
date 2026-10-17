@@ -555,7 +555,12 @@ SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlyDocTtl_Dispatch_Helper2:
+; DpMdlyDoc_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is
+;   left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyDocTtlFunc_OnTitleOld calls it;
+;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
+;   transport).
+DpMdlyDoc_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
 
@@ -708,7 +713,11 @@ PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlyPdTtl_Dispatch_Helper2:
+; DpMdlyPd_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is
+;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
+;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
+DpMdlyPd_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
 
@@ -770,7 +779,11 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlySmfTtl_Dispatch_Helper2:
+; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
+;   activation arms it again; PlayMode_SendCommand6C starts the transport only while the flag is 1. Basis: callers +
+;   body -- DpMdlySmfTtlFunc_OnTitleOld calls it.
+DpMdlySmf_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PartFormat_StartPlayback_Return3
 	ld	(3380:16), 0
@@ -825,7 +838,11 @@ PlayModeStop_ClearFlagBlock:
 ;   `ret` (this file's X_NullRet convention: PlayMode_NullRet, PartFormat_NullRet).
 DpMdlySmfLyrTtl_NullRet:
 	ret
-DpMdlySmfLyrTtl_Dispatch_Helper2:
+; DpMdlySmfLyr_DisarmStartCountdown: When the TT_DPMDLYSMFLYR title (0x76) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 so the next activation arms the countdown again. Basis:
+;   callers + body -- DpMdlySmfLyrTtlFunc_OnTitleOld calls it; same body as DpMdlySmf_DisarmStartCountdown, the SMF
+;   title's twin, whose arming side is PlayModeStop_InitFlagBlock_Helper.
+DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PlayMode_SendCommand6C_Return
 	ld	(3380:16), 0
@@ -1148,7 +1165,7 @@ SqSngSelTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SqTrAs_CondCheck_Helper2
+	call	SqSngSel_LeaveTitle
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1389,7 +1406,7 @@ SqTrAsPsTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	SqTrAsPsTtl_Dispatch_Helper
+	call	SqTrAsPsTtl_NullRet
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1830,7 +1847,7 @@ DpMdlyDocTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlyDocTtl_Dispatch_Helper2
+	call	DpMdlyDoc_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1924,7 +1941,7 @@ DpMdlyPdTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlyPdTtl_Dispatch_Helper2
+	call	DpMdlyPd_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2022,7 +2039,7 @@ DpMdlySmfTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlySmfTtl_Dispatch_Helper2
+	call	DpMdlySmf_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2138,7 +2155,7 @@ DpMdlySmfLyrTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call	DpMdlySmfLyrTtl_Dispatch_Helper2
+	call	DpMdlySmfLyr_DisarmStartCountdown
 	pop xiz
 	pop xix
 	pop xhl

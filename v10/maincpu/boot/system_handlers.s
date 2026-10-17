@@ -2366,7 +2366,12 @@ Show_ScreenGroup:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	jrl TaskSched_Dispatch
-SndTable_ByteBlock_ReadOps_Helper:
+; TaskSched_ExitCurrentTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
+;   TCB (0x487) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
+;   TaskSched_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
+;   once the stream is read (0x2357E := 0); Show_ScreenGroup is the start side (TCB +9 := 4, linked into queue 0x4C1 +
+;   4 * priority).
+TaskSched_ExitCurrentTask:
 	ei 6
 	ld xsp, 0x1e53a
 	ld ix, (1159:16)

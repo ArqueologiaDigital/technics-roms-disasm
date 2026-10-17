@@ -33,7 +33,7 @@ FDC_ReadDataRegister:
 FDC_Send_Command:
 	ld	(0x110008:24), a
 	ret
-FDC_WaitReady_Helper:
+FDC_RecordDensityCode:
 	ldmm8	0x8b20, 0x8b22
 	ld	(0x8b22:16), a
 	ret
@@ -214,49 +214,49 @@ FDC_CONFIG_VERIFY_On720KMedia:
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case1:
 	ld	(0x8a6c:16), 0
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 192
 	ld	wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_On1024ByteSectorMedia:
 	ld	(0x8a6c:16), 2
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 64
 	ld wa, 0:i3
-	calr FDC_WaitReady_Helper
+	calr FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_On1440KMedia:
 	ld	(0x8a6c:16), 3
 	ldw	(0x8a22:16), 0
 	ldi_erpb 251, 64
 	ld wa, 0:i3
-	calr FDC_WaitReady_Helper
+	calr FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case4:
 	ld	(0x8a6c:16), 4
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_CONFIG_VERIFY_Case5:
 	ld	(0x8a6c:16), 5
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 	jr	FDC_WaitReady_Join
 FDC_WaitReady_Skip11:
 	ld	(0x8a6c:16), 0
 	ldw	(0x8a22:16), 0
 	ldib_erp 251, 0
 	ld wa, 2:i3
-	calr	FDC_WaitReady_Helper
+	calr	FDC_RecordDensityCode
 FDC_WaitReady_Join:
 	ldto_berp a, 251
 	or a, 11

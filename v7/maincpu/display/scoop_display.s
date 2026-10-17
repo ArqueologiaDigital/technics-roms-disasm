@@ -2968,7 +2968,7 @@ Timer_ModeHandler_3:
 	jrl	nz, Timer_ModeHandler_3_Return
 	cp	(0x0def:16), 18
 	jrl	nz, Timer_ModeHandler_3_Skip
-	call	PortConfig_Handler_0_Loop
+	call	TempoRingBuf_DiscardAll
 	jp	Timer_ModeHandler_3_Return
 Timer_ModeHandler_3_Skip:
 	call	TempoRingBuf_DispatchEvents
@@ -6926,14 +6926,14 @@ PerfMode_Handler_EvtB_Helper2:
 	ld (0x3678:16), 0x04
 	ld (0x3679:16), 0x00
 	ld (0x367a:16), 0x01
-	call PerfMode_Handler_EvtB_Helper2_Helper4
+	call SeqNode_SetPoolBaseToEventMemory
 	call SqStep_SetDisplayModeFromTrack
 	ld a, (PART_SELECT:16)
 	ld (0x0d66:16), a
 	call PerfMode_Handler_EvtB_Helper2_Helper3
-	call PerfMode_Handler_EvtB_Helper2_Helper5
+	call SqStep_SetPopupIdForDisplayMode
 	call PerfMode_Handler_EvtB_Helper2_Helper6
-	call ClockConfig_Handler_0_Helper
+	call SqStep_TrackSetupNullRet
 	cpw (0xf231:16), 0x0000
 	jrl nz, .Lc_efa1aa
 	call SqStep_CheckCursorTrackUsed
@@ -6943,7 +6943,7 @@ PerfMode_Handler_EvtB_Helper2:
 	jp SerialPort_ModeHandler_0_Return6
 .Lc_efa1aa:
 	res 7, (0x0d54:16)
-	call PortConfig_Handler_0_Loop
+	call TempoRingBuf_DiscardAll
 	call SeqBuf_Init
 	call PortConfig_Handler_0_Helper
 	call PerfMode_Handler_EvtB_Helper2_Helper9
@@ -7036,7 +7036,7 @@ PerfMode_Handler_EvtB_Helper2_Skip3:
 	jp	SerialPort_ModeHandler_0_Return6
 PerfMode_Handler_EvtB_Helper2_Skip4:
 	call PerfMode_Handler_EvtB_Helper2_Helper6
-	call ClockConfig_Handler_0_Helper
+	call SqStep_TrackSetupNullRet
 	bit 3, (0x0d53:16)
 	jrl z, .Lc_efa2ef
 	call SqStep_SetupScreenForDisplayMode
@@ -7468,18 +7468,18 @@ PortConfig_DataTable_A_Sub_Return:
 PortConfig_DataTable_B:
 	.byte	0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03, 0x0f, 0xff, 0xff, 0xff
 	.byte	0xff, 0x0c, 0x0d, 0x0e
-PerfMode_Handler_EvtB_Helper2_Helper4:
+SeqNode_SetPoolBaseToEventMemory:
 	ld	xhl, 4362
 	ld	xwa, (7514:16)
 	ld	(xhl), xwa
 	ret
-PortConfig_Handler_0_Loop:
+TempoRingBuf_DiscardAll:
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
 	cp	wa, 0xffff
-	jrl	nz, PortConfig_Handler_0_Loop
+	jrl	nz, TempoRingBuf_DiscardAll
 	ret
-PerfMode_Handler_EvtB_Helper2_Helper5:
+SqStep_SetPopupIdForDisplayMode:
 	ld	xhl, PortConfig_Handler_0_Tbl
 	ld	a, (3429:16)
 	and	a, 3
@@ -7506,7 +7506,7 @@ ClockConfig_Handler_1:
 ClockConfig_Handler_0:
 	and	(0xe31c:16), 253
 	ret
-ClockConfig_Handler_0_Helper:
+SqStep_TrackSetupNullRet:
 	ret
 	; Byte data, 4 B.  No reader found: no label, positional or absolute .set
 	; name at this address is loaded anywhere in the image (searched by
@@ -15987,7 +15987,7 @@ ParamPopup_Msa_Skip3:
 	and	a, 240
 	cp	a, 176
 	jrl	nz, Tbl_MsaStates_Loop
-	call	Tbl_MsaStates_Helper
+	call	SqStep_UpdateMsaStateFromEvent
 	jp	Tbl_MsaStates_Loop
 SqStep_FindMsaStateAtCursor_Skip5:
 	ld	a, 5:opc
@@ -16005,7 +16005,7 @@ SqStep_FindMsaStateAtCursor_Skip5:
 	ld	(0x10fd:16), xiz
 	pop	xiz
 	ret
-Tbl_MsaStates_Helper:
+SqStep_UpdateMsaStateFromEvent:
 	call	VoiceSlot_ComputeWordIndex
 	push	xhl
 	ld	xhl, 0x0c9e
@@ -19278,8 +19278,8 @@ Scoop_EventLoop_36Entry_Branch1_Code_Skip10:
 	ld	a, e
 	extz	wa
 	pushw	wa
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@hi16
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@lo16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@hi16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked
@@ -19355,8 +19355,8 @@ Scoop_EventLoop_36Entry_Branch1_Code_Skip12:
 	jr	Scoop_EventLoop_36Entry_Branch1_Code_Join4
 Scoop_EventLoop_36Entry_Branch1_Code_Skip13:
 	pushm	(xbc)
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@hi16
-	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2@lo16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@hi16
+	pushw	Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_3@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

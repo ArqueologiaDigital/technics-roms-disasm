@@ -9406,7 +9406,7 @@ HdaeRom_DataByteMap:
 	.byte 1, 1, 1, 1, 1, 1, 0, 0
 	.byte 1, 2, 3, 1, 1, 1, 1, 1
 ; 426-byte default record (213 words) beginning with the 16-character name
-; "    Initial     ": SendPartDataBlock_Return5_Helper (0xFEF54E) copies it
+; "    Initial     ": SoundRam_FillDefaultRecord (0xFEF54E) copies it
 ; into its frame (`ld xiy,<this>; ld xix,xsp; ldw bc,213; ldirw`).
 SoundRam_DefaultRecord:
 	.byte 0x20, 0x20, 0x20, 0x20, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x20, 0x20, 0x20, 0x20, 0x20

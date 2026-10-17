@@ -211,7 +211,7 @@ SingleLoadSrc_PanelMemDrawBankName:
 	extz	wa
 	div	wa, c
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper12
+	call	SingleLoadSrc_ReadPmtBankName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -291,7 +291,7 @@ SingleLoadSrc_PanelMemDrawMemoryName:
 	lda	xiz, (xwa+64)
 	ld	a, (0x89fc:16)
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper13
+	call	SingleLoadSrc_ReadPmtMemoryName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -692,7 +692,7 @@ SingleLoadSrc_ComposerDrawPatternName:
 	extz	wa
 	div	wa, e
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper15
+	call	SingleLoadSrc_ReadCmpPatternName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -968,7 +968,7 @@ SingleLoadSrc_DrawUserKitName:
 	lda	xwa, (0x894e:16)
 	ld	(xwa+21), 1
 	lda	xiz, (xwa+22)
-	call	SLSrcBankList_FuncBody_Helper17
+	call	SingleLoadSrc_ReadTmUserKitName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	call	FileIO_CopyString
@@ -1071,13 +1071,13 @@ SingleLoadSrc_DrawSoundMemItemName:
 	jr	c, SingleLoadSrc_DrawSoundMemItemName_Skip
 	sub	a, e
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper18
+	call	SingleLoadSrc_ReadTmUserKitEntryName
 	ld	xbc, xhl
 	ld	xwa, xiz
 	jr	SingleLoadSrc_DrawSoundMemItemName_Join11
 SingleLoadSrc_DrawSoundMemItemName_Skip:
 	extz	wa
-	call	SLSrcBankList_FuncBody_Helper16
+	call	SingleLoadSrc_ReadTmSoundName
 	ld	xbc, xhl
 	ld	xwa, xiz
 SingleLoadSrc_DrawSoundMemItemName_Join11:

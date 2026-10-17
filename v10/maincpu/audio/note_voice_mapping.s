@@ -26554,7 +26554,7 @@ SoundRam_ConvertKn1500Record:
 	ld	(xsp+10), xbc
 	ld	xiz, xwa
 	ld	xwa, xiz
-	calr	SendPartDataBlock_Return5_Helper
+	calr	SoundRam_FillDefaultRecord
 	ld	xde, (xsp+10)
 	ld	xiy, xde
 	ld	xix, xiz
@@ -26851,7 +26851,11 @@ SendPartDataBlock_Return5_Loop3:
 	cp	hl, 102
 	jr	lt, SendPartDataBlock_Return5_Loop3
 	ret
-SendPartDataBlock_Return5_Helper:
+; SoundRam_FillDefaultRecord: Fills the sound record at XWA with the 426-byte SoundRam_DefaultRecord (' Initial ',
+;   copied through a stack buffer) and copies its 81-byte block at +102 to +183, +264 and +345. Basis: callers + body
+;   -- SoundRam_ConvertKn1500Record ('fills it with defaults (SoundRam_DefaultRecord)') and
+;   SoundRam_ConvertKn2000Record call it on the destination KN5000 record before moving the converted fields in.
+SoundRam_FillDefaultRecord:
 	lda xsp, (xsp-426)
 	ld	xde, xwa
 	ld	xiy, SoundRam_DefaultRecord
@@ -26882,13 +26886,18 @@ SendPartDataBlock_Return5_Helper:
 	ldi85
 	lda	xsp, (xsp+426)
 	ret
-HdaeRom_DataHandler_Helper2:
+; SoundRam_ConvertKn2000Record: Converts one 144-byte sound record of a KN2000 / MKA / MKB sound-RAM image (XBC) into
+;   a 470-byte KN5000 record at XWA: fills it with defaults (SoundRam_FillDefaultRecord), copies the 16-byte
+;   name, maps the flag bits, packed nibble fields and levels (+0x12 * 127 / 30) to their KN5000 offsets. Basis:
+;   callers + body -- HdaeRom_DataHandler_ConvertKn2000MkaMkb (image ids 1-3) calls it per record with XWA = image +16
+;   + 470 * n and XBC = the record; the KN1500 counterpart is SoundRam_ConvertKn1500Record.
+SoundRam_ConvertKn2000Record:
 	lda	xsp, (xsp-0x1a)
 	push	xiz
 	ld	(xsp+0x16), xbc
 	ld	(xsp+0x1a), xwa
 	ld	xwa, (xsp+0x1a)
-	calr	SendPartDataBlock_Return5_Helper
+	calr	SoundRam_FillDefaultRecord
 	ld	xde, (xsp+0x1a)
 	lda	xhl, (xde+0x10)
 	ld	xwa, (xsp+0x16)
@@ -26898,19 +26907,19 @@ HdaeRom_DataHandler_Helper2:
 	ldirw
 	lda	xwa, (xwa+0x10)
 	bitm	7, (xwa)
-	jr	z, HdaeRom_DataHandler_Helper2_Skip
+	jr	z, SoundRam_ConvertKn2000Record_Skip
 	setm	5, (xhl)
-	jr	HdaeRom_DataHandler_Helper2_Join
-HdaeRom_DataHandler_Helper2_Skip:
+	jr	SoundRam_ConvertKn2000Record_Join
+SoundRam_ConvertKn2000Record_Skip:
 	resm	5, (xhl)
-HdaeRom_DataHandler_Helper2_Join:
+SoundRam_ConvertKn2000Record_Join:
 	bitm	2, (xwa)
-	jr	z, HdaeRom_DataHandler_Helper2_Skip2
+	jr	z, SoundRam_ConvertKn2000Record_Skip2
 	setm	4, (xhl)
-	jr	HdaeRom_DataHandler_Helper2_Join2
-HdaeRom_DataHandler_Helper2_Skip2:
+	jr	SoundRam_ConvertKn2000Record_Join2
+SoundRam_ConvertKn2000Record_Skip2:
 	resm	4, (xhl)
-HdaeRom_DataHandler_Helper2_Join2:
+SoundRam_ConvertKn2000Record_Join2:
 	ld	xhl, (xsp+0x1a)
 	lda	xwa, (xhl+0x29)
 	ld	(xsp+0xe), xwa
@@ -27019,7 +27028,7 @@ SendPartDataBlock_Return5_Join2:
 	ld	(xde+0x5d), a
 	ld	(xsp+0x4), 0
 	ld	de, 0:i3
-HdaeRom_DataHandler_Helper2_Loop:
+SoundRam_ConvertKn2000Record_Loop:
 	ld	ix, de
 	add	ix, 94
 	ld	hl, de
@@ -27031,24 +27040,24 @@ HdaeRom_DataHandler_Helper2_Loop:
 	incm8	1, (xsp+0x4)
 	inc	1, de
 	cp	(xsp+0x4), 8
-	jr	c, HdaeRom_DataHandler_Helper2_Loop
+	jr	c, SoundRam_ConvertKn2000Record_Loop
 	ld	xwa, (xsp+0x6)
 	ld	a, (xwa)
 	and	a, 15
 	cp	a, 10
-	jr	z, HdaeRom_DataHandler_Helper2_Skip3
+	jr	z, SoundRam_ConvertKn2000Record_Skip3
 	cp	a, 11
 	jr	nz, SendPartDataBlock_Return5_Skip4
-HdaeRom_DataHandler_Helper2_Skip3:
+SoundRam_ConvertKn2000Record_Skip3:
 	ld	xwa, (xsp+0x1a)
 	lda	xwa, (xwa+0x60)
 	ld	(xsp+0x12), xwa
 	ld	xwa, (xsp+0x16)
 	cp	(xwa+0x22), 50
-	jr	ule, HdaeRom_DataHandler_Helper2_Skip4
+	jr	ule, SoundRam_ConvertKn2000Record_Skip4
 	ld	xwa, (xsp+0x12)
 	ld	(xwa), 50
-HdaeRom_DataHandler_Helper2_Skip4:
+SoundRam_ConvertKn2000Record_Skip4:
 	ld	xwa, (xsp+0x6)
 	bitm	7, (xwa)
 	jr	z, SendPartDataBlock_Return5_Skip4
@@ -27076,37 +27085,37 @@ SendPartDataBlock_Return5_Skip4:
 	ld	(xsp+4), 0
 SoundRam_ConvertKn1500Record_Loop3:
 	bit	7, (xde)
-	jr	z, HdaeRom_DataHandler_Helper2_Join3
+	jr	z, HdaeRom_DataHandler_Helper2_Entry_Join3
 	cp	(xsp+4), 0
-	jr	nz, HdaeRom_DataHandler_Helper2_Skip5
+	jr	nz, SoundRam_ConvertKn2000Record_Skip5
 	ld	xwa, (xsp+10)
 	set	0, (xwa)
-	jr	HdaeRom_DataHandler_Helper2_Join3
-HdaeRom_DataHandler_Helper2_Skip5:
+	jr	HdaeRom_DataHandler_Helper2_Entry_Join3
+SoundRam_ConvertKn2000Record_Skip5:
 	cp	(xsp+4), 1
 	jr	nz, HdaeRom_DataHandler_Helper2_Entry
 	ld	xwa, (xsp+10)
 	set	2, (xwa)
-	jr	HdaeRom_DataHandler_Helper2_Join3
+	jr	HdaeRom_DataHandler_Helper2_Entry_Join3
 HdaeRom_DataHandler_Helper2_Entry:
 	.byte 0x8f, 0x04
 	push	xsp
 	push	sr
-	jr	nz, HdaeRom_DataHandler_Helper2_Join3
+	jr	nz, HdaeRom_DataHandler_Helper2_Entry_Join3
 	ld	xwa, (xsp+10)
 	set	4, (xwa)
-HdaeRom_DataHandler_Helper2_Join3:
+HdaeRom_DataHandler_Helper2_Entry_Join3:
 	lda	xwa, (xbc+6)
 	ld	(xwa), 0
 	lda	xhl, (xbc+38)
 	ld	(xhl), 0
 	bit	6, (xde)
-	jr	z, HdaeRom_DataHandler_Helper2_Skip6
+	jr	z, HdaeRom_DataHandler_Helper2_Entry_Skip6
 	set	5, (xwa)
 	ld	a, (xhl)
 	set	5, a
 	ld	(xhl), a
-HdaeRom_DataHandler_Helper2_Skip6:
+HdaeRom_DataHandler_Helper2_Entry_Skip6:
 	ld	a, (xde+1)
 	ld	(xbc+2), a
 	ld	a, (xde+2)
@@ -27538,7 +27547,7 @@ HdaeRom_DataHandler_Loop3:
 	add	xhl, (xsp+6)
 	ld	xwa, xhl
 	ld	xbc, (xsp+10)
-	calr	HdaeRom_DataHandler_Helper2
+	calr	SoundRam_ConvertKn2000Record
 	subw	(xsp+4), 1
 	jr	nz, HdaeRom_DataHandler_Loop3
 	jr	HdaeRom_DataHandler_Skip
@@ -27572,7 +27581,7 @@ HdaeRom_DataHandler_Loop:
 	add	xbc, 80
 	add	xbc, (xsp+6)
 	ld	xwa, xhl
-	calr	HdaeRom_DataHandler_Helper2
+	calr	SoundRam_ConvertKn2000Record
 	incw	1, (xsp+4)
 HdaeRom_DataHandler_Join:
 	ld	a, (xsp+440)

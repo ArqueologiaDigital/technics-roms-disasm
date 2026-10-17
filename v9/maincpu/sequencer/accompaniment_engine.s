@@ -24856,10 +24856,10 @@ RhythmFillIn_PatternTable:
 	rcf
 CmpRealTtl_EnterTitle:
 	push	xiz
-	call	RhythmFillIn_PatternTable_Sub_Helper
+	call	CmpRealTtl_EnterTitle_Impl
 	pop	xiz
 	ret
-RhythmFillIn_PatternTable_Sub_Helper:
+CmpRealTtl_EnterTitle_Impl:
 	and	(0x28a7:16), 251
 	and	(0xe3e2:16), 254
 	cp	(PREVIOUS_TITLE:16), 181
@@ -25062,10 +25062,10 @@ RhythmVariation_InlineCode_Code:
 	nop
 CmpStep_MoveRecPartTowardDrums:
 	push	xiz
-	calr	RhythmVariation_InlineCode_Sub_Helper
+	calr	CmpStep_MoveRecPartTowardDrums_Impl
 	pop	xiz
 	ret
-RhythmVariation_InlineCode_Sub_Helper:
+CmpStep_MoveRecPartTowardDrums_Impl:
 	ld	xhl, 0:i3
 	ld	l, (0x379b:16)
 	and	l, 31
@@ -25620,18 +25620,18 @@ CmpNcp_ItemA_HandlerIndex:
 	.short	0, 1, 2
 CmpNcp_StepItemB_Wrap:
 	push	xiz
-	call	DrumVoice_Handler7_Data_3_Helper3
+	call	CmpNcp_StepItemB
 	pop	xiz
 	ret
-DrumVoice_Handler7_Data_3_Helper3:
+CmpNcp_StepItemB:
 	ld	a, (0x39a8:16)
 	bit	7, w
-	jr	z, DrumVoice_Handler7_Data_3_Helper3_Skip
+	jr	z, CmpNcp_StepItemB_Skip
 	cp	a, 1:i3
 	jr	z, DrumVoice_Handler7_Code_Return5
 	inc	1, a
 	jr	DrumVoice_Handler7_Code_Join2
-DrumVoice_Handler7_Data_3_Helper3_Skip:
+CmpNcp_StepItemB_Skip:
 	cp	a, 0:i3
 	jr	z, DrumVoice_Handler7_Code_Return5
 	dec	1, a
@@ -25652,7 +25652,7 @@ CmpNcp_StepItemBValue:
 	call	CmpNcp_CallItemHandler
 	ret
 CmpNcp_ItemB_HandlerIndex:
-	; (0x39A8), stepped between 0 and 1 by DrumVoice_Handler7_Data_3_Helper3 -> the
+	; (0x39A8), stepped between 0 and 1 by CmpNcp_StepItemB -> the
 	; CmpNcp_ItemHandlerTable index that CmpNcp_StepItemBValue dispatches.
 	; Reached through CmpNcp_StepItemBValue_Wrap.
 	.short	3, 4
@@ -26712,7 +26712,7 @@ TimeSig_DisplayStrings_Code_Helper3_Return:
 	ld	xiy, 0x390e
 	ldir85
 	ret
-CmEsyTtl_Dispatch2_Helper:
+CmpEsy_PrepareRealtimeRecording:
 	push	xiz
 	call	TimeSig_DisplayStrings_Helper3
 	pop	xiz
@@ -29184,7 +29184,7 @@ ExtVoice_ProcessList_Data:
 	call	AccWrap_PlayModeStartAccPlay
 DrumParam_ReadMaxCount_Return:
 	ret
-CmpEsy_DeliverEventAndCheck_Helper:
+CmpEsy_ApplyEdit:
 	push	xiz
 	call	ExtVoice_ProcessList_Helper
 	pop	xiz
@@ -31737,7 +31737,7 @@ CmpEsyTtl_Mode2_OnEdit:
 	push xix
 	push xiz
 	call CmEsyTtl_Dispatch2_Helper2
-	call CmEsyTtl_Dispatch2_Helper
+	call CmpEsy_PrepareRealtimeRecording
 	pop xiz
 	pop xix
 	pop xhl
@@ -31788,7 +31788,7 @@ CmpEsyTtl_Mode2_OnSet:
 	push xhl
 	push xix
 	push xiz
-	call CmpEsy_DeliverEventAndCheck_Helper
+	call CmpEsy_ApplyEdit
 	pop xiz
 	pop xix
 	pop xhl
@@ -38661,7 +38661,7 @@ AccStyle_TableDataEntry_Skip6:
 AccStyle_TableDataEntry_Join:
 	call	UI_PostModeChangeEvent
 	ret
-FileIO_ByteBlock_DemoProc1_Helper3:
+SingleLoad_CopyComposerPatternFromFile:
 	lda	xsp, (xsp-34)
 	push	xiz
 	ld	(xsp+34), c

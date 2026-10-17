@@ -1554,7 +1554,7 @@ SeMenu_TransferPartValues_EndData_Skip9:
 SeMenu_TransferPartValues_EndData_Join:
 	ld	(xbc), a
 	ret
-SeMenu_ApplyPartEdit_Helper14:
+SeLfo1_StepSelector:
 	cp	a, 0:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip10
 	lda	xwa, (1677:16)
@@ -2226,7 +2226,7 @@ SeMenu_CopyNameChars_Loop6:
 	cp b, e
 	jr	c, SeMenu_CopyNameChars_Loop6
 	ret
-SeMenu_CopyWriteUpdate_Step3_Helper5:
+SeWrtMem_ChooseInitialSlot:
 	lda	xsp, (xsp-16)
 	push	qiz
 	ld	(xsp+14), xwa
@@ -2560,7 +2560,7 @@ SeLfo1_StepSelectorAndReload:
 	ld	a, (xsp)
 	extz	wa
 	extz	bc
-	calr	SeMenu_ApplyPartEdit_Helper14
+	calr	SeLfo1_StepSelector
 	cp	(xsp), 1
 	jr	nz, SeLfo1_StepSelectorAndReload_Skip29
 	ld	a, 42:opc
@@ -2917,7 +2917,7 @@ SeMenu_ApplyPartEdit_AltStore_Join8:
 	ldw	wa, 55
 	ld	bc, 3:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 1:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue2:
@@ -2956,7 +2956,7 @@ SeMenu_ApplyPartEdit_AltStore_Join9:
 	ldw	wa, 55
 	ld	bc, 4:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 2:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue3:
@@ -3014,7 +3014,7 @@ SeLfo1_StepSelectorAndReload_Join2:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 3:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3053,7 +3053,7 @@ SeMenu_ApplyPartEdit_AltStore_Join11:
 	ldw	wa, 55
 	ld	bc, 6:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 4:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue4:
@@ -3111,7 +3111,7 @@ SeLfo1_StepSelectorAndReload_Join3:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 5:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3150,7 +3150,7 @@ SeMenu_ApplyPartEdit_AltStore_Join13:
 	ldw	wa, 55
 	ldw	bc, 8
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 6:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue5:
@@ -3208,7 +3208,7 @@ SeLfo1_StepSelectorAndReload_Join4:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 7:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3956,7 +3956,7 @@ SeMenu_DrawClippedEnvSegment_Skip16:
 	ld	hl, iz
 	popw	iz
 	retd	2
-SeMenu_ApplyPartEdit_Helper7:
+SeMenu_DrawPitFilEnvGraph:
 	lda	xsp, (xsp-32)
 	push	xiz
 	pushw	144
@@ -4053,14 +4053,14 @@ SeMenu_ApplyPartEdit_Skip17:
 	addiw_da	(xsp+8), 10000
 	ld	wa, (xsp+6)
 	ld	(xsp+10), wa
-	jr	SeMenu_ApplyPartEdit_Helper7_Join
+	jr	SeMenu_DrawPitFilEnvGraph_Join
 SeMenu_ApplyPartEdit_Skip18:
 	extz	bc
 	ld	wa, (xsp+8)
 	exts	xwa
 	divs	xwa, bc
 	ld	(xsp+8), wa
-SeMenu_ApplyPartEdit_Helper7_Join:
+SeMenu_DrawPitFilEnvGraph_Join:
 	lda	xbc, (xsp+24)
 	ld	wa, 6:i3
 	calr	SeMenu_LoadPartParam
@@ -4103,18 +4103,18 @@ SeMenu_ApplyPartEdit_Helper7_Join:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Helper7_Skip
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip
 	addiw_da	(xsp+12), 10000
 	ld	wa, (xsp+10)
 	ld	(xsp+14), wa
-	jr	SeMenu_ApplyPartEdit_Helper7_Join2
-SeMenu_ApplyPartEdit_Helper7_Skip:
+	jr	SeMenu_DrawPitFilEnvGraph_Join2
+SeMenu_DrawPitFilEnvGraph_Skip:
 	extz	bc
 	ld	wa, (xsp+12)
 	exts	xwa
 	divs	xwa, bc
 	ld	(xsp+12), wa
-SeMenu_ApplyPartEdit_Helper7_Join2:
+SeMenu_DrawPitFilEnvGraph_Join2:
 	lda	xbc, (xsp+25)
 	ldw	wa, 8
 	calr	SeMenu_LoadPartParam
@@ -4211,18 +4211,18 @@ SeMenu_ApplyPartEdit_Join12:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Helper7_Skip4
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip4
 	.byte	0xd7, 0xfa, 0xc8, 0x10, 0x27	; add QIZ,0x2710
 	ld	wa, (xsp+18)
 	ld	(xsp+20), wa
-	jr	SeMenu_ApplyPartEdit_Helper7_Join3
-SeMenu_ApplyPartEdit_Helper7_Skip4:
+	jr	SeMenu_DrawPitFilEnvGraph_Join3
+SeMenu_DrawPitFilEnvGraph_Skip4:
 	extz	bc
 	ld wa, qiz
 	exts	xwa
 	divs	xwa, bc
 	ld qiz, wa
-SeMenu_ApplyPartEdit_Helper7_Join3:
+SeMenu_DrawPitFilEnvGraph_Join3:
 	ld	wa, (xsp+8)
 	add	wa, (xsp+12)
 	add	wa, (xsp+16)
@@ -4233,13 +4233,13 @@ SeMenu_ApplyPartEdit_Helper7_Join3:
 	extz	xwa
 	div	wa, 45
 	cp	bc, 5:i3
-	jr	ule, SeMenu_ApplyPartEdit_Helper7_Skip2
+	jr	ule, SeMenu_DrawPitFilEnvGraph_Skip2
 	ld	bc, 5:i3
-SeMenu_ApplyPartEdit_Helper7_Skip2:
+SeMenu_DrawPitFilEnvGraph_Skip2:
 	cp	wa, 5:i3
-	jr	ule, SeMenu_ApplyPartEdit_Helper7_Skip3
+	jr	ule, SeMenu_DrawPitFilEnvGraph_Skip3
 	ld	wa, 5:i3
-SeMenu_ApplyPartEdit_Helper7_Skip3:
+SeMenu_DrawPitFilEnvGraph_Skip3:
 	cp	bc, wa
 	jr	c, SeMenu_ApplyPartEdit_Skip20
 	ld	(xsp+4), c
@@ -4344,18 +4344,18 @@ SeMenu_ApplyPartEdit_Skip21:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Helper7_Skip5
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip5
 	.byte	0xd7, 0xfa, 0xc8, 0x10, 0x27	; add QIZ,0x2710
 	ld	wa, (xsp+18)
 	ld	(xsp+20), wa
-	jr	SeMenu_ApplyPartEdit_Helper7_Join4
-SeMenu_ApplyPartEdit_Helper7_Skip5:
+	jr	SeMenu_DrawPitFilEnvGraph_Join4
+SeMenu_DrawPitFilEnvGraph_Skip5:
 	extz	bc
 	ld wa, qiz
 	exts	xwa
 	divs	xwa, bc
 	ld qiz, wa
-SeMenu_ApplyPartEdit_Helper7_Join4:
+SeMenu_DrawPitFilEnvGraph_Join4:
 	ld	c, (xsp+4)
 	extz	bc
 	ld wa, qiz
@@ -4370,14 +4370,14 @@ SeMenu_ApplyPartEdit_Helper7_Join4:
 	ld	bc, iz
 	calr	SeMenu_DrawClippedEnvSegment
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Helper7_Epilogue
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Epilogue
 	inc 1, qiz
 	ld wa, qiz
 	ld	bc, (xsp+20)
 	pushw	bc
 	ldw	de, 258
 	calr	SeMenu_DrawClippedEnvSegment
-SeMenu_ApplyPartEdit_Helper7_Epilogue:
+SeMenu_DrawPitFilEnvGraph_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+32)
 	ret
