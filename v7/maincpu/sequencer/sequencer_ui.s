@@ -7123,7 +7123,7 @@ NoteEdit_FormatChordNotes:
 	ld	a, (10142:16)
 	add	xwa, xbc
 	ld	xbc, 13
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, (7508:16)
 	push	xhl
 	jrl	NoteEdit_DoStrncpy

@@ -279,7 +279,7 @@ DrawLine_Impl_SteepCheck:
 	jr le, DrawLine_Impl_ShallowSetup
 	ld xwa, (xsp+12)
 	ld xbc, (xsp+24)
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld (xsp+12), xhl
 	lda xwa, (xsp+56)
 	ld (xsp+40), xwa
@@ -327,7 +327,7 @@ DrawLine_Impl_SteepLoop:
 DrawLine_Impl_ShallowSetup:
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+28)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	lda	xwa, (xsp+56)
 	ld	(xsp+40), xwa
@@ -483,7 +483,7 @@ DrawLine_Impl_PatternDiagCheck:
 
 	ld xbc, (xsp + 24)
 
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 
 	ld (xsp + 12), xhl
 
@@ -557,7 +557,7 @@ DrawLine_Impl_PatternSteepLoop:
 DrawLine_Impl_PatternShallowSetup:
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+28)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xwa, (xsp+40)
 	ld	(xsp+32), xwa
@@ -869,7 +869,7 @@ DrawLineEx_DiagSetup:
 
 	ld xbc, xiz
 
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 
 	ld (xsp + 12), xhl
 
@@ -955,7 +955,7 @@ DrawLineEx_ShallowSetup:
 	ld	xiz, xhl
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xbc, (xsp+28)
 	ld	xwa, xbc
@@ -3682,7 +3682,7 @@ DrawBitmapFile_Impl_ParseDimensions:
 	ld (xsp+20), xhl
 	ld xwa, xhl
 	ld xbc, xiz
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	pushw hl
 	call Malloc
 	inc 2, xsp
@@ -3719,7 +3719,7 @@ DrawBitmapFile_Impl_ComputeStride:
 	ld	xbc, (xsp+8)
 	dec	1, xbc
 	ld	xwa, (xsp+32)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+32), xhl
 	add	xhl, OFFSCREEN_BUFFER_2
 	ld	(xsp+28), xhl
@@ -3765,7 +3765,7 @@ DrawBitmapFile_Impl_TileLoop:
 	push xwa
 	ld xwa, xiz
 	ld xbc, (xsp+22)
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp+34)
 	push xhl
 	call Mem_Copy
@@ -3781,7 +3781,7 @@ DrawBitmapFile_Impl_TileRemainder:
 
 	ld xbc, (xsp + 16)
 
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 
 	ld xwa, 0x140
 

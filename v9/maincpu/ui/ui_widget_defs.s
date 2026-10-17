@@ -8816,7 +8816,7 @@ CountObject:
 	ldto_werp WA, 0xfa
 	extz xwa
 	ld xbc, 0xe
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 
 InputDialog_GetText:
 	ld xwa, (xsp + 4)
@@ -9907,7 +9907,7 @@ ObjectEnum_OK_DispatchInline:
 	ld wa, (xsp + 8)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, xiz
 	ldw (xhl + 18), 0xffff
 	ldw (xhl + 20), 0xffff
@@ -10006,7 +10006,7 @@ RegisterTitle:
 	ld (xsp + 4), xde
 	ld xiz, xbc
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xbc, 0x32abc
 	add xbc, xhl
 	ld (xbc), xiz
@@ -10026,7 +10026,7 @@ RegisterTitle:
 
 UnregisteredTitle:
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xbc, 0x32abc
 	add xbc, xhl
 	ld xwa, NAKA_APFUNC_DefaultFunction
@@ -10159,14 +10159,14 @@ EventDispatch_ScanLoop:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	jrl TitleFunc_Epilogue34
 TitleProc_OnGetTitleProc:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xhl)
 	ld xbc, EVT_GET_FUNCTION
@@ -10177,7 +10177,7 @@ TitleProc_OnGetTitleProcId:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xhl, (xhl)
 	jrl TitleFunc_Epilogue34
@@ -10185,7 +10185,7 @@ TitleProc_OnGetStartScreen:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xhl, (xhl + 4)
 	jrl TitleFunc_Epilogue34
@@ -10193,7 +10193,7 @@ TitleProc_OnGetUserId:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld hl, (xhl + 8)
 	exts xhl
@@ -10203,7 +10203,7 @@ EventDispatch_Select:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xhl, (xhl + 10)
 	jrl TitleFunc_Epilogue34
@@ -10239,7 +10239,7 @@ EventDispatch_ConfirmHandler:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xhl + 4)
 	cp xwa, 0xffffffff
@@ -10267,13 +10267,13 @@ EventDispatch_OK:
 	extz xiz
 	ld xwa, xiz
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, xiz
 	cpw (xhl + 18), 0xffff
 	jrl z, EventDispatch_OKDone
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld wa, (xhl + 18)
 	exts xwa
@@ -10303,7 +10303,7 @@ EventDispatch_OK:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xbc, (xsp + 18)
 	ld wa, bc
@@ -10330,7 +10330,7 @@ EventDispatch_OK:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xsp + 8)
 	ld (xhl + 18), wa
@@ -10344,7 +10344,7 @@ EventDispatch_OKDone:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xhl + 4)
 	cp xwa, 0xffffffff
@@ -10379,7 +10379,7 @@ EventDispatch_DefaultProc:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (TITLE_NOW:24)
 	ld (xhl + 20), wa
@@ -10417,7 +10417,7 @@ EventDispatch_Return:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	lda xbc, (xhl + 18)
 	ld wa, (xbc)
@@ -10436,13 +10436,13 @@ EventDispatch_Return:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ldw (xhl + 18), 0xffff
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, xhl
 	add xwa, (xsp + 4)
 	ldw (xwa + 20), 0xffff
@@ -10468,7 +10468,7 @@ EventDispatch_Return:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ldw (xhl + 20), 0xffff
 	ld wa, (0x02bc32:24)
@@ -10483,7 +10483,7 @@ EventDispatch_Return:
 	ld wa, (xsp + 12)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jrl nz, TitleProc_ReturnZero
@@ -10494,7 +10494,7 @@ EnumList_Init:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	lda xbc, (xhl + 14)
 	ld xwa, (xbc)
@@ -10511,7 +10511,7 @@ EnumList_Init_TypeB:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xsp + 30)
 	ld (xhl + 14), xwa
@@ -10521,7 +10521,7 @@ EnumList_Close:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jrl z, TitleProc_ReturnZero
@@ -10540,7 +10540,7 @@ EnumList_ShowHide_A:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jrl z, TitleProc_ReturnZero
@@ -10560,7 +10560,7 @@ EnumList_ShowHide_B:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jrl z, TitleProc_ReturnZero
@@ -10600,7 +10600,7 @@ EnumList_PartChange_B:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jrl z, TitleProc_ReturnZero
@@ -10621,7 +10621,7 @@ EnumList_ValueChange_A:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, EnumList_ValueChange_B
@@ -10643,7 +10643,7 @@ EnumList_ValueChange_Done:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, EnumList_Confirm_Init
@@ -10685,7 +10685,7 @@ EnumList_Paint:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, EnumList_Paint_DrawEntry
@@ -10707,7 +10707,7 @@ EnumList_Paint_Loop:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, EnumList_ReturnZero
@@ -10741,7 +10741,7 @@ EnumList_Return:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, TitleProc_ToggleFlag
@@ -10769,7 +10769,7 @@ EnumList_OK:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	jr z, TitleProc_ToggleFlag
@@ -10798,7 +10798,7 @@ EnumList_OK_Next:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	cpw (xhl + 18), 0xffff
 	scc16 nz, hl
@@ -10906,7 +10906,7 @@ EnumList_HitTest_Match:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xhl)
 	ld xbc, xiz
@@ -10940,7 +10940,7 @@ EnumList_HitTest_NoMatch:
 	ld wa, (xsp + 22)
 	extz xwa
 	ld xbc, 0x16
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, (xsp + 4)
 	ld xwa, (xhl)
 	ld xbc, xiz

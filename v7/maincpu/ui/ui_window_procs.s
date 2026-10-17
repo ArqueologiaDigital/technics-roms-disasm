@@ -4278,7 +4278,7 @@ DrawDottedLine_Impl_Skip12:
 	ld	xiz, xhl
 	ld	xwa, (xsp+12)
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+12), xhl
 	ld	xde, (xsp+30)
 	ld	xwa, xde
@@ -4336,7 +4336,7 @@ ClampColorToRange_Skip15:
 	ld	xiz, xhl
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xde, (xsp+30)
 	ld	xwa, xde
@@ -6378,7 +6378,7 @@ SplashBMP_ReadInfoHeader:
 	ld	(xsp+18), xhl
 	ld	xwa, xhl
 	ld	xbc, (xsp+30)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	pushw	hl
 	call	Malloc
 	inc	2, xsp
@@ -6424,7 +6424,7 @@ SplashBMP_PrepareRowBuffer:
 	ld	xbc, (xsp+2)
 	dec	1, xbc
 	ld	xwa, (xsp+30)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+30), xhl
 	add	xhl, OFFSCREEN_BUFFER_2
 	ld	(xsp+22), xhl
@@ -6482,7 +6482,7 @@ SplashBMP_TileNarrow:
 	push	xwa
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+20)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, (xsp+28)
 	push	xhl
 	call	Mem_Copy
@@ -6499,7 +6499,7 @@ SplashBMP_CopyRemainder:
 
 	ld xbc, (xsp + 14)
 
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 
 	ld xwa, 0x140
 
@@ -6594,7 +6594,7 @@ Gfx_ProcessSplashData:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, (xsp+24)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+18), xhl
 	cpw	(xsp+22), 1
 	jr	z, SplashData_1bppSetup
@@ -6802,7 +6802,7 @@ ImageDecode_CheckNextEntry:
 ImageDecode_PaletteReduceLoop:
 	ld	xwa, xbc
 	ld	xbc, 1000000
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	ld	xbc, 1300000
 	call	Math_DivideSigned32
@@ -6933,7 +6933,7 @@ PaletteReduce_FindClosest:
 	ld XBC,XWA
 	sub XBC,XDE
 	ld XWA,XBC
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld (XSP+0x18),XHL
 	ld XDE,(XSP+0x2c)
 	and XDE,0x000000ff
@@ -6941,7 +6941,7 @@ PaletteReduce_FindClosest:
 	and XBC,0x000000ff
 	sub XBC,XDE
 	ld XWA,XBC
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld (XSP+0x14),XHL
 	ld XWA,(XSP+0x18)
 	add (XSP+0x14),XWA
@@ -6953,7 +6953,7 @@ PaletteReduce_FindClosest:
 	srl XBC, 16
 	sub XBC,XWA
 	ld XWA,XBC
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add XHL,(XSP+0x14)
 	cp (XSP+0x0c),XHL
 	jr le, PaletteReduce_UpdateMinDist
@@ -9129,7 +9129,7 @@ DrawLineWithMode_Impl_Skip13:
 	jrl	le, DrawLineWithMode_Impl_Skip16
 	ld	xwa, (xsp+12)
 	ld	xbc, xhl
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+12), xhl
 	ld	xde, (xsp+42)
 	ld	xwa, xde
@@ -9213,7 +9213,7 @@ DrawLineWithMode_Impl_Join3:
 DrawLineWithMode_Impl_Skip16:
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+34)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xde, (xsp+42)
 	ld	xwa, (xsp+46)
@@ -9367,7 +9367,7 @@ DrawLineWithMode_Impl_Skip22:
 	jr	le, DrawLineWithMode_Impl_Skip24
 	ld	xwa, (xsp+12)
 	ld	xbc, xhl
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+12), xhl
 	ld	xde, (xsp+42)
 	ld	xwa, xde
@@ -9416,7 +9416,7 @@ DrawLineWithMode_Impl_Join7:
 DrawLineWithMode_Impl_Skip24:
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+34)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xhl, (xsp+42)
 	ld	xde, (xsp+46)
@@ -9527,7 +9527,7 @@ DrawLineWithMode_Impl_Skip29:
 	jr	le, DrawLineWithMode_Impl_Skip31
 	ld	xwa, (xsp+12)
 	ld	xbc, xhl
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+12), xhl
 	ld	xde, (xsp+42)
 	ld	xwa, xde
@@ -9576,7 +9576,7 @@ DrawLineWithMode_Impl_Join11:
 DrawLineWithMode_Impl_Skip31:
 	ld	xwa, (xsp+16)
 	ld	xbc, (xsp+34)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xhl, (xsp+42)
 	ld	xde, (xsp+46)
@@ -10040,7 +10040,7 @@ DrawDottedLineWithMode_Impl_Skip21:
 	ld	xiz, xhl
 	ld	xwa, (xsp+12)
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+12), xhl
 	ld	xbc, (xsp+34)
 	ld	xwa, xbc

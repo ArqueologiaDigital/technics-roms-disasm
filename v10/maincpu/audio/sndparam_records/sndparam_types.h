@@ -19,7 +19,7 @@
  *   +0x00 key           `ld xwa, (xbc)` :3145 -- the whole u32 is the lookup
  *                       key; the hash uses its low byte and its second byte
  *                       (:3159-3174, `and xhl,0xff` / `srl xhl,8` / `and 0x1f`,
- *                       then DivMod32 by 0x7FF), and the stored key is compared
+ *                       then Math_RemainderU32 by 0x7FF), and the stored key is compared
  *                       whole at :3196 `cp xiz, xde`.  Byte +0x03 is 0 in all
  *                       972 records, so it is effectively 24-bit.
  *   +0x04 bank_index    `ld c,(xwa+4)` / `extz bc` / `sla bc,2` / `lda_24 xde,

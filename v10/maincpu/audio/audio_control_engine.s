@@ -4233,7 +4233,7 @@ VoiceData_InitAndCopyParams:
 	extz xiz
 	ld xwa, xiz
 	ld xbc, 0x2a2
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x99eca0
 	ld xwa, xiz
 	sll xwa, 4
@@ -4256,7 +4256,7 @@ VoiceData_InitAndCopyParams:
 	ld wa, (xsp + 4)
 	extz xwa
 	ld xbc, 0x2a2
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x99eca0
 	add xhl, 0x7c
 	lda xwa, (xiz+286)
@@ -4306,7 +4306,7 @@ VoiceData_ExtendedParamSetup_Loop3:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 20
 	ld	xbc, xhl
 	add	xbc, (xsp+2)
@@ -4323,7 +4323,7 @@ VoiceData_ExtendedParamSetup_Loop3:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 20
 	add	xhl, (xsp+6)
 	ld	xwa, xhl

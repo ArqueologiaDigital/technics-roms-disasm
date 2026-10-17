@@ -5190,7 +5190,7 @@ SeqStep_FileSectorPopReturn_Entry2:
 	dec	2, wa
 	extz	xwa
 	ld	xbc, (xbc)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, (xsp+12)
 	ld	xwa, (xwa+20)
 	add	xwa, xhl
@@ -5687,7 +5687,7 @@ SeqByteBlock_PathNormalize_Skip44:
 	dec	2, wa
 	extz	xwa
 	ld	xbc, (xbc)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, (xsp+4)
 	ld	xbc, (xwa+20)
 	add	xbc, xhl
@@ -5917,7 +5917,7 @@ SeqByteBlock_PathNormalize_Loop8:
 	dec	2, wa
 	extz	xwa
 	ld	xbc, (xbc)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, (xsp+6)
 	ld	xwa, (xwa+20)
 	add	xwa, xhl
@@ -6486,7 +6486,7 @@ Fat_MountVolume_Skip7:
 	ld	wa, (xwa+38)
 	extz	xwa
 	ld	xbc, (xbc)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, (xsp+4)
 	ld	(xwa+40), hl
 	ld	xwa, (xsp+4)
@@ -6711,7 +6711,7 @@ SeqByteBlock_PathNormalize_Skip19:
 	extz	xbc
 	ld	xwa, (xsp+16)
 	ld	xwa, (xwa+22)
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	xiz, xhl
 	ld	xwa, (xsp+8)
 	ld	bc, (xwa+38)
@@ -6831,7 +6831,7 @@ Fat_MapFilePosToSector_Join:
 	dec	2, wa
 	extz	xwa
 	ld	xbc, (xbc)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, (xsp+22)
 	add	(xwa), xhl
 	ld	xwa, (xsp+16)
@@ -6839,7 +6839,7 @@ Fat_MapFilePosToSector_Join:
 	extz	xwa
 	ld	xbc, (xsp+8)
 	ld	xbc, (xbc+32)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (xsp+6)
 	sub	xhl, xwa
@@ -7908,7 +7908,7 @@ SeqStep_CalcTotalSectors:
 	ld xwa, (xwa + 30)
 	ld wa, (xwa + 40)
 	extz xwa
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ret
 
 SeqStep_SectorCompareBlock:

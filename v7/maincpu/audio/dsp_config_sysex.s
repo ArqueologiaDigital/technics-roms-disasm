@@ -1423,7 +1423,7 @@ CompIface_ScaleValue:
 	ld	w, 0x0:opc
 	extz	xwa
 	ld	xbc, 0x1d4c0
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	ld	xbc, xiz
 	call	Math_DivideU32
@@ -1436,7 +1436,7 @@ CompIface_ScaleAndNormalize:
 	ld	w, 0x0:opc
 	extz	xwa
 	ld	xbc, 0x1ef0
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	ld	xbc, xiz
 	call	Math_DivideU32

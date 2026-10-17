@@ -258,9 +258,9 @@ ADDR24_SYMBOLS = {
     # Strcpy: v9=0xFF0F3F, v10=0xFF0F4D
     (0x3f, 0x0f, 0xff): "Strcpy",
     (0x4d, 0x0f, 0xff): "Strcpy",
-    # Math_MultiplyAccumulate: v9=0xFF0A4E, v10=0xFF0A5C
-    (0x4e, 0x0a, 0xff): "Math_MultiplyAccumulate",
-    (0x5c, 0x0a, 0xff): "Math_MultiplyAccumulate",
+    # Math_Multiply32: v9=0xFF0A4E, v10=0xFF0A5C
+    (0x4e, 0x0a, 0xff): "Math_Multiply32",
+    (0x5c, 0x0a, 0xff): "Math_Multiply32",
     # Malloc: v9=0xFF0E72, v10=0xFF0E80
     (0x72, 0x0e, 0xff): "Malloc",
     (0x80, 0x0e, 0xff): "Malloc",
@@ -448,7 +448,7 @@ def add_addr24_sets():
     addr24_defs = [
         ("_addr24_Free", "Free"),
         ("_addr24_Malloc", "Malloc"),
-        ("_addr24_Math_MultiplyAccumulate", "Math_MultiplyAccumulate"),
+        ("_addr24_Math_MultiplyAccumulate", "Math_Multiply32"),
         ("_addr24_SendPartDataBlock_Return5", "SendPartDataBlock_Return5"),
         ("_addr24_Sprintf_Locked", "Sprintf_Locked"),
         ("_addr24_Strcpy", "Strcpy"),

@@ -32283,7 +32283,7 @@ SoundCtrl_CalcScaledTempo:
 	ld	bc, (13368:16)
 	extz	xbc
 	ld	xwa, xhl
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	ld	xbc, 190
 	call	Math_DivideU32

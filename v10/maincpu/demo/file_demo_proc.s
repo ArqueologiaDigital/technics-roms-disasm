@@ -3149,13 +3149,13 @@ FileIO_ByteBlock_DemoProc1_Skip2:
 	ld	wa, (xsp+38)
 	extz	xwa
 	ld	xbc, (xsp+8)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xiz, xhl
 	add	xiz, 176
 	ld	wa, (xsp+36)
 	extz	xwa
 	ld	xbc, (xsp+8)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+4), xhl
 	ld	xwa, 176
 	add	(xsp+4), xwa
@@ -3264,13 +3264,13 @@ SingleLoad_LoadPanelMemBank_Skip5:
 	ld	wa, (xsp+38)
 	extz	xwa
 	ld	xbc, (xsp+8)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xiz, xhl
 	add	xiz, 176
 	ld	wa, (xsp+36)
 	extz	xwa
 	ld	xbc, (xsp+8)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+4), xhl
 	ld	xwa, 176
 	add	(xsp+4), xwa
@@ -3504,14 +3504,14 @@ SingleLoad_LoadSoundMemEntry_Skip17:
 	ldw	(xsp+10), 470
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+2), xhl
 	ld	xwa, 16
 	add	(xsp+2), xwa
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+6), xhl
 	ld	xwa, 16
 	add	(xsp+6), xwa
@@ -3632,13 +3632,13 @@ SingleLoad_LoadSoundMemBank_Skip22:
 	ld wa, (xsp+38)
 	extz	xwa
 	ld	xbc, 9400
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xiz, xhl
 	add	xiz, 16
 	ld	wa, (xsp+36)
 	extz	xwa
 	ld	xbc, 9400
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+4), xhl
 	ld	xwa, 16
 	add	(xsp+4), xwa
@@ -6162,7 +6162,7 @@ GetRecordPtr_InRange:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	ld xhl, xwa
@@ -6451,7 +6451,7 @@ ProcessFileRecord:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	ld xbc, ProcessFileRecord_Str_rb
@@ -6473,7 +6473,7 @@ ProcessRecord_MatchLoop1:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	setm 5, (xwa + 80)
@@ -6491,7 +6491,7 @@ ProcessRecord_CheckBit5:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025f02:24)
 	add xwa, xhl
 	bitm 5, (xwa)
@@ -6514,7 +6514,7 @@ ProcessRecord_MatchLoop2:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	setm 5, (xwa + 80)
@@ -6529,7 +6529,7 @@ ProcessRecord_Match2Next:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025f02:24)
 	add xwa, xhl
 	resm 5, (xwa)
@@ -6548,7 +6548,7 @@ ProcessRecord_ReadTimeSig:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025f02:24)
 	add xwa, xhl
 	resm 7, (xwa)
@@ -6572,7 +6572,7 @@ ProcessRecord_MatchLoop3:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	setm 5, (xwa + 80)
@@ -6586,7 +6586,7 @@ ProcessRecord_CheckTempo:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025f02:24)
 	add xwa, xhl
 	setm 7, (xwa)
@@ -6596,7 +6596,7 @@ ProcessRecord_DefaultSetBit:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	setm 5, (xwa + 80)
@@ -6631,7 +6631,7 @@ ProcessRecord_NoTrackName:
 	ld wa, (xsp + 10)
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	ld xbc, ProcessRecord_MatchLoop1_Str_Blank5
@@ -6646,7 +6646,7 @@ ProcessRecord_SearchTrackName:
 	extz xwa
 	lda xiz, (0x025eb2:24)
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, xiz
 	add xwa, xhl
 	lda xwa, (xwa + 14)
@@ -6685,7 +6685,7 @@ GetEntry_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	lda xbc, (FileIO_EmptyNameKey:24)
@@ -6702,7 +6702,7 @@ FileEntry_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	ld xhl, xwa
@@ -6724,7 +6724,7 @@ GetFileEntryByIndex_Skip:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 82
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	lda	xwa, (0x25f02:24)
 	add	xwa, xhl
 	ldcf	7, (xwa)	; F8A106 (ldcf 7,(xwa))
@@ -7246,7 +7246,7 @@ GetRecordPtr_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	ld xhl, xwa
@@ -7644,7 +7644,7 @@ GetFileEntry_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, 0x25eb2
 	add xwa, xhl
 	ld xhl, xwa
@@ -7839,7 +7839,7 @@ GetEntryRefresh_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	cp (xwa), 0x0
@@ -7850,7 +7850,7 @@ GetEntryRefresh_ComputeOffset:
 	ld wa, bc
 	extz xwa
 	ld xbc, 0x52
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	lda xwa, (0x025ec0:24)
 	add xwa, xhl
 	ld xhl, xwa

@@ -1409,7 +1409,7 @@ PmemOutLGridCheck_OnRamData_Join3:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1451,7 +1451,7 @@ PmemOutLGridCheck_OnRamData_Join:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1482,7 +1482,7 @@ PmemOutLGridCheck_OnRamData_Join:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1585,7 +1585,7 @@ PmemOutLGridCheck_OnRamData_Skip3:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1626,7 +1626,7 @@ PmemOutLGridCheck_OnRamData_Join5:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1657,7 +1657,7 @@ PmemOutLGridCheck_OnRamData_Join5:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -1701,7 +1701,7 @@ PmemOutLGridCheck_OnRamData_Skip9:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xbc, (xsp+24)
 	add	xbc, xhl
 	ld	xde, xbc
@@ -1980,7 +1980,7 @@ TtMdCtlMsg_EventDispatch:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2016,7 +2016,7 @@ TtMdCtlMsg_EventDispatch_Skip6:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2044,7 +2044,7 @@ TtMdCtlMsg_EventDispatch_Skip7:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2101,7 +2101,7 @@ PmemOutRGridCheck_OnIndexswDown:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2142,7 +2142,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip9:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2172,7 +2172,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip10:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2226,7 +2226,7 @@ PmemOutRGridCheck_OnRamData:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2269,7 +2269,7 @@ PmemOutRGridCheck_OnRamData_Join3:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2301,7 +2301,7 @@ PmemOutRGridCheck_OnRamData_Join3:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2349,7 +2349,7 @@ PmemOutRGridCheck_OnRamData_Skip3:
 	ld	xwa, 0:i3
 	ld	a, (0x024774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x024772:24)
 	ld	xbc, xwa
@@ -2392,7 +2392,7 @@ PmemOutRGridCheck_OnRamData_Join5:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2424,7 +2424,7 @@ PmemOutRGridCheck_OnRamData_Join5:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, 0:i3
 	ld	a, (0x24772:24)
 	ld	xbc, xwa
@@ -2466,7 +2466,7 @@ PmemOutRGridCheck_OnRamData_Skip6:
 	ld	xwa, 0:i3
 	ld	a, (0x24774:24)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xbc, 0:i3
 	ld	c, (0x24772:24)
 	ld	xwa, xbc
@@ -2585,7 +2585,7 @@ CtlMsgGrid_EventHandler:
 	ld xwa, 0:i3
 	ld a, (0x024774:24)
 	ld xbc, 0x1a
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	cp iz, 2:i3
 	jrl z, CtlMsg_ComputeAndCheck
 	ld xbc, 0:i3
@@ -6539,7 +6539,7 @@ AcLswPartPan_Confirm:
 	ld wa, (xwa)
 	exts xwa
 	sla xwa, 12
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xwa, xhl
 	sra xwa, 15
 	sra xwa, 16
@@ -10771,7 +10771,7 @@ LswScalingKeyX:
 	exts xhl
 	ld xwa, xhl
 	ld xbc, 0xc9
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x7f
 	sra xhl, 8
 	sub xhl, 0x64

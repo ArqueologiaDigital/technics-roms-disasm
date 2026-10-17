@@ -2381,7 +2381,7 @@ DrawDottedLineWithMode_Impl_Skip29:
 	ld	xiz, xhl
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xbc, (xsp+34)
 	ld	xwa, xbc
@@ -3580,7 +3580,7 @@ SoundParam_NotifyChange:
 	add xhl, xwa
 	ld xwa, xhl
 	ld xbc, 0x7ff
-	call DivMod32
+	call Math_RemainderU32
 	ld ix, hl
 	jr SndParam_ProbeEntry
 

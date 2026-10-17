@@ -97,7 +97,7 @@ SndParam_ResolveWidgetEx_Data:
 	add	xhl, xwa
 	ld	xwa, xhl
 	ld	xbc, 2047
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	ix, hl
 	jr	SndParam_ResolveWidget_Join2
 SndParam_ResolveWidget_Loop:
@@ -206,7 +206,7 @@ SndParam_ResolveOscEntry_Helper:
 	add	xhl, xwa
 	ld	xwa, xhl
 	ld	xbc, 0x7ff
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	ix, hl
 	jr	SndParam_KeyToLsw_ProbeEntry
 SndParam_KeyToLsw_ProbeCheck:
@@ -317,7 +317,7 @@ SndParam_ResolveWidgetVariant2_Data_Part:
 	add	xhl, xwa
 	ld	xwa, xhl
 	ld	xbc, 2047
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	ix, hl
 	jr	SndParam_ResolveWidgetVariant2_Data_Join2
 SndParam_ResolveWidgetVariant2_Data_Loop:
@@ -2676,7 +2676,7 @@ SndParam_InsertEntry:
 	add	xhl, xwa
 	ld	xwa, xhl
 	ld	xbc, 0x7ff
-	call	DivMod32
+	call	Math_RemainderU32
 SndParam_InsertProbe:
 	ld	wa, hl
 	extz	xwa
@@ -2816,7 +2816,7 @@ SndParam_AllocBuildKey:
 	add	xhl, xbc
 	ld	xwa, xhl
 	ld	xbc, 0x7ff
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	bc, hl
 	sll	hl, 2
 	lda	xde, (0x973c:16)

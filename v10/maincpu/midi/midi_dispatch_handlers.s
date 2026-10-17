@@ -3301,7 +3301,7 @@ FileData_RawDataBlock_Loop2:
 	ld	xiz, xbc
 	add	xiz, (xsp+10)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 52
 	add	xhl, (xsp+6)
 	ld	xwa, xiz
@@ -3352,7 +3352,7 @@ FileData_RawDataBlock_Loop4:
 	ld	xiz, xbc
 	add	xiz, (xsp+10)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 754
 	add	xhl, (xsp+6)
 	ld	xwa, xiz
@@ -3488,7 +3488,7 @@ FileData_ImportM4M6PanelMemories_Loop3:
 	ld	xiz, xbc
 	add	xiz, (xsp+14)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 20
 	add	xhl, (xsp+4)
 	ld	xwa, xiz
@@ -3539,7 +3539,7 @@ FileData_ImportM4M6PanelMemories_Loop5:
 	ld	xiz, xbc
 	add	xiz, (xsp+14)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 722
 	add	xhl, (xsp+4)
 	ld	xwa, xiz
@@ -3648,7 +3648,7 @@ DataBuf_TransferVoiceParams_Loop:
 	ld xiz, xbc
 	add xiz, (xsp + 10)
 	ld xbc, 0x1a
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x34
 	add xhl, (xsp + 14)
 	ld xwa, xiz
@@ -3701,7 +3701,7 @@ DataBuf_TransferAuxParams_Loop:
 	ld xiz, xbc
 	add xiz, (xsp + 10)
 	ld xbc, 0x1a
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x2f2
 	add xhl, (xsp + 14)
 	ld xwa, xiz
@@ -5300,7 +5300,7 @@ DataBuf_CopyBulkBitfields_Large_Loop:
 	ld	xiz, xbc
 	add	xiz, (xsp+10)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 992
 	add	xhl, (xsp+6)
 	ld	xwa, xiz
@@ -5801,7 +5801,7 @@ FileData_ImportNNLivePanel_Loop2:
 	ld	xiz, xbc
 	add	xiz, (xsp+10)
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 52
 	add	xhl, (xsp+6)
 	ld	xwa, xiz
@@ -5825,7 +5825,7 @@ FileData_ImportNNLivePanel_Loop3:
 	lda	xiz, (xwa+de)
 	ld	xwa, xbc
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 52
 	add	xhl, (xsp+6)
 	ld	xwa, xiz
@@ -5943,7 +5943,7 @@ FileData_ImportNNPanelMemories_Loop6:
 	add	(xsp+12), xwa
 	ld	xwa, xbc
 	ld	xbc, 26
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 20
 	add	xhl, (xsp+2)
 	ld	xwa, (xsp+12)
@@ -6057,7 +6057,7 @@ FileData_LoadAndParseType3_Error:
 	ld xiz, xbc
 	add xiz, (xsp + 10)
 	ld xbc, 0x1a
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	add xhl, 0x34
 	add xhl, (xsp + 14)
 	ld xwa, xiz

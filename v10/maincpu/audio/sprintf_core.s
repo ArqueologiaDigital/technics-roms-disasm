@@ -1127,7 +1127,7 @@ Sprintf_IntToStr_DivLoop:
 	ld (xsp + 12), xwa
 	ld xwa, xiz
 	lda	xbc, (P2CR:8)
-	call DivMod32
+	call Math_RemainderU32
 	add xhl, 0x30
 	ld xwa, (xsp + 4)
 	ld (xwa), l
@@ -1155,7 +1155,7 @@ Sprintf_UIntToStr_DivLoop:
 	ld (xsp + 12), xwa
 	ld xwa, xiz
 	lda	xbc, (P2CR:8)
-	call DivMod32
+	call Math_RemainderU32
 	add xhl, 0x30
 	ld xwa, (xsp + 4)
 	ld (xwa), l
@@ -2900,7 +2900,7 @@ Sprintf_DecimalExponent:
 	ld wa, (xsp + 16)
 	exts xwa
 	lda xbc, (301:16)
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld xiz, xhl
 	cp xiz, 0x0
 	jr ge, Sprintf_DecExp_Positive
@@ -2918,7 +2918,7 @@ Sprintf_DecExp_ComputeQuotient:
 	ld xiz, (xsp + 4)
 	ld xwa, xiz
 	lda xbc, (1000:16)
-	call Free_ClearByte2
+	call Math_RemainderSigned32
 	ld (xsp + 8), xhl
 	ld xwa, xiz
 	lda xbc, (1000:16)
@@ -2992,7 +2992,7 @@ Sprintf_ItoaBaseN_DivLoop:
 	ld (xsp + 12), xwa
 	ld xwa, xiz
 	ld xbc, (xsp + 12)
-	call DivMod32
+	call Math_RemainderU32
 	add l, 0x30
 	ld xwa, (xsp + 4)
 	ld (xwa), l

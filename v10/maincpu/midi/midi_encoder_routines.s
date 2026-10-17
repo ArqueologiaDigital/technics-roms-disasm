@@ -121,7 +121,7 @@ Encoder_PerformScaling:
 	ld	bc, (xbc+wa)	; Get index offset
 	extz xbc
 	ld xwa, xhl
-	call Math_MultiplyAccumulate	; Processing routine
+	call Math_Multiply32	; Processing routine
 	ld xwa, xhl
 	ld xbc, 0x14	; Constant
 	call Math_DivideU32	; Division

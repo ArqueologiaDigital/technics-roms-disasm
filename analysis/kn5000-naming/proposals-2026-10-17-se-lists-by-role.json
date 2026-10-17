@@ -1,0 +1,929 @@
+[
+ {
+  "old": "SeScreenData_0x1EF7",
+  "new": "SeTonTon1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1EC3",
+  "new": "SeTonTon1_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E43",
+  "new": "SeTonTon1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E4D",
+  "new": "SeTonTon1_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E58",
+  "new": "SeTonTon1_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E63",
+  "new": "SeTonTon1_Field5_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E6D",
+  "new": "SeTonTon1_Field6_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E78",
+  "new": "SeTonTon1_Field7_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E83",
+  "new": "SeTonTon1_Field8_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E8D",
+  "new": "SeTonTon1_Field9_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E98",
+  "new": "SeTonTon1_Field10_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1EA3",
+  "new": "SeTonTon1_Field11_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1EAD",
+  "new": "SeTonTon1_Field12_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1EB8",
+  "new": "SeTonTon1_Field13_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1DCB",
+  "new": "SeTonTon1_Field14_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1DE9",
+  "new": "SeTonTon1_Field15_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E07",
+  "new": "SeTonTon1_Field16_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1E25",
+  "new": "SeTonTon1_Field17_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x21C0",
+  "new": "SeFilHpq1_SeFilLpq1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2160",
+  "new": "SeFilHpq1_SeFilLpq1_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x216B",
+  "new": "SeFilHpq1_SeFilLpq1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2175",
+  "new": "SeFilHpq1_SeFilLpq1_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2184",
+  "new": "SeFilHpq1_SeFilLpq1_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2193",
+  "new": "SeFilHpq1_SeFilLpq1_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x224F",
+  "new": "SeFilH241_SeFilL241_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x221C",
+  "new": "SeFilH241_SeFilL241_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2227",
+  "new": "SeFilH241_SeFilL241_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2231",
+  "new": "SeFilH241_SeFilL241_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2240",
+  "new": "SeFilH241_SeFilL241_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x22B0",
+  "new": "SeFilBpf1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x226A",
+  "new": "SeFilBpf1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2274",
+  "new": "SeFilBpf1_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2283",
+  "new": "SeFilBpf1_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2292",
+  "new": "SeFilBpf1_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x22A1",
+  "new": "SeFilBpf1_Field5_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x24B8",
+  "new": "SeAmpAmp2_SeFilFil2_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x249A",
+  "new": "SeAmpAmp2_SeFilFil2_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x248B",
+  "new": "SeAmpAmp2_SeFilFil2_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x24A9",
+  "new": "SeAmpAmp2_SeFilFil2_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3AF7",
+  "new": "SeTonRan1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3AEC",
+  "new": "SeTonRan1_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3ABF",
+  "new": "SeTonRan1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3ACE",
+  "new": "SeTonRan1_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3ADD",
+  "new": "SeTonRan1_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B70",
+  "new": "SeTonRan2_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B65",
+  "new": "SeTonRan2_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B47",
+  "new": "SeTonRan2_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B51",
+  "new": "SeTonRan2_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B5B",
+  "new": "SeTonRan2_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3BDB",
+  "new": "SePitFilEnv2_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B84",
+  "new": "SePitFilEnv2_Field0_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B8F",
+  "new": "SePitFilEnv2_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3B9A",
+  "new": "SePitFilEnv2_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3BA9",
+  "new": "SePitFilEnv2_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3BB4",
+  "new": "SePitFilEnv2_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3BBF",
+  "new": "SePitFilEnv2_Field5_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3BCA",
+  "new": "SePitFilEnv2_Field6_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x57DB",
+  "new": "SeAmpAmp1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x57A4",
+  "new": "SeAmpAmp1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x5853",
+  "new": "SeAmpEnv1_FieldRecordPtrs",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x5820",
+  "new": "SeAmpEnv1_Field1_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x582A",
+  "new": "SeAmpEnv1_Field2_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x5834",
+  "new": "SeAmpEnv1_Field3_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x583E",
+  "new": "SeAmpEnv1_Field4_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x587D",
+  "new": "SeAmpEnv1_Field6_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x5848",
+  "new": "SeAmpEnv1_Field7_Record",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x0685",
+  "new": "SeMenu_DrawOriginalEditedBadge_Records2",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x06DB",
+  "new": "SeMenu_DrawPartSelector_Records4",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x086E",
+  "new": "SeMenu_DrawPartSelector_Records5",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x09AA",
+  "new": "SeMenu_DrawToneSelectTitle_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x09D5",
+  "new": "SeMenu_DrawTitleIcon_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x09DA",
+  "new": "SeTonTon1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x0B7E",
+  "new": "SeMenu_DrawPartLabels_Records4",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1043",
+  "new": "SePitEnv1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1466",
+  "new": "SeAmpEnv1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1523",
+  "new": "SeAmpEnv2_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x173B",
+  "new": "SeFil_DrawModeCaption_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x18D8",
+  "new": "SeFilHpq1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x18ED",
+  "new": "SeFilLpq1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1997",
+  "new": "SeFilL241_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x19AB",
+  "new": "SeFilH241_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x19C0",
+  "new": "SeFilBpf1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1ACA",
+  "new": "SeFilBcf1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1AE1",
+  "new": "SeEnv1_DrawEnvelopeLayout_Records3",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1B0B",
+  "new": "SeEnv1_DrawEnvelopeLayout_Records4",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1C2D",
+  "new": "SeFilEnv1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1F75",
+  "new": "SeTonHyb1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x296E",
+  "new": "SeMenu_DrawLfoPartSwitches_Records8",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x29BE",
+  "new": "SeMenu_DrawLfoPartSwitches_Records9",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2C0A",
+  "new": "SeWrtMem_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2E58",
+  "new": "SeWrtSnd_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2E74",
+  "new": "SeWrtSnd_Records2",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2E90",
+  "new": "SeWrtSnd_Records3",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x2EAC",
+  "new": "SeWrtSnd_Records4",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3633",
+  "new": "SeFilFil2_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3660",
+  "new": "SeLfo1_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x38E1",
+  "new": "SeTonTon2_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3D36",
+  "new": "SeCtr3_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x3DD3",
+  "new": "SeCtr2_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x4222",
+  "new": "SeCtr3_Records2",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x5120",
+  "new": "SeMenuTitle_Records",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x53EC",
+  "new": "SeMenuTitle_Records2",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x56CD",
+  "new": "SeAmpEnv1_Records2",
+  "verdict": "name",
+  "basis": "drawing role (field-record table / XIY drawer)",
+  "evidence": [
+   "scripts/renaming/name_se_screen_lists_by_role.py (rule in its docstring)"
+  ]
+ }
+]

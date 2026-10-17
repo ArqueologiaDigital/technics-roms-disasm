@@ -2351,8 +2351,8 @@ DrawDottedLineWithMode_Impl_Skip29:
 	ld	xiz, xhl
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz
-; call Math_MultiplyAccumulate (v7)
-	call	Math_MultiplyAccumulate
+; call Math_Multiply32 (v7)
+	call	Math_Multiply32
 	ld	(xsp+16), xhl
 	ld	xbc, (xsp+34)
 	ld	xwa, xbc

@@ -18978,7 +18978,7 @@ PlayModeStateMachine_Prologue:
 	ld	(0xd008:16), xwa
 	ld	xwa, xiz
 	ld	xbc, 0x60
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	a, l
 	ld	(SEQ_BEAT_TICK:16), a
 	ld	w, 0x0:opc
@@ -18989,7 +18989,7 @@ PlayModeStateMachine_LoadParam:
 	ld	wa, (xsp + 4)
 	extz	xwa
 	ld	xbc, xiz
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	ld	xbc, 0x60
 	call	Math_DivideU32
@@ -21070,7 +21070,7 @@ MidiSysMsg_SetScaledTempo:
 	add	xiz, xwa
 	ld	xwa, xiz
 	ld	xbc, (0xe925:16)
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xiz, xhl
 	ld	xwa, xiz
 	ld	xbc, 1000
@@ -23278,7 +23278,7 @@ Param_SignExtendReturn_Helper3:
 	sub	xbc, 426
 	ld	xwa, xbc
 	ld	xbc, 11
-	call	DivMod32
+	call	Math_RemainderU32
 	cp	xhl, 9
 	jrl	ugt, Param_SignExtendReturn_Skip5
 	add	xhl, xhl
@@ -23300,7 +23300,7 @@ Param_SignExtendReturn_Skip:
 	sub	xbc, 102
 	ld	xwa, xbc
 	ld	xbc, 81
-	call	DivMod32
+	call	Math_RemainderU32
 	cp	xhl, 76
 	jrl	ugt, Param_SignExtendReturn_Skip5
 	add	xhl, ParamSx_CaseMapB
@@ -23467,7 +23467,7 @@ Param_SignExtendReturn_Skip5:
 	sub	xbc, xwa
 	ld	xwa, xbc
 	ld	xbc, 11
-	call	DivMod32
+	call	Math_RemainderU32
 	cp	xhl, 9
 	jrl	ugt, Param_SignExtendReturn_Skip12
 	add	xhl, xhl
@@ -25475,7 +25475,7 @@ HdaeRom_DataDispatch_Loop2:
 	extz	xiz
 	ld	xwa, xiz
 	ld	xbc, 289
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	ld	xiy, xhl
 	add	xiy, (xsp+6)
@@ -25485,7 +25485,7 @@ HdaeRom_DataDispatch_Loop2:
 	ldi85
 	ld	xwa, xiz
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+6)
 	ld	xwa, xhl
@@ -25518,7 +25518,7 @@ HdaeRom_DataHandler_Loop3:
 	ldw	bc, 72
 	ldirw
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+6)
 	ld	xwa, xhl
@@ -25547,7 +25547,7 @@ HdaeRom_DataHandler_Loop:
 	extz	xiz
 	ld	xwa, xiz
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+6)
 	ld	xbc, xiz
@@ -25755,7 +25755,7 @@ PostTmLoadEntry:
 	add	wa, bc
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	ld	xwa, 0x1e0000
 	add	xwa, xhl
@@ -25819,7 +25819,7 @@ TmFlashWrite_ValidateParams_Loop:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	ld	xwa, 0x1e0000
 	add	xwa, xhl
@@ -25882,7 +25882,7 @@ Flash_GetSlotAddressAndSize:
 	extz	xwa
 	ld	(xsp+10), xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	bitm	0, (xsp+20)
 	jr	z, Flash_GetSlotAddressAndSize_RamBlock
@@ -25897,7 +25897,7 @@ Flash_GetSlotAddressAndSize:
 	ld	(xsp+6), xwa
 	ld	xwa, (xsp+10)
 	ld	xbc, 0x2927
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 0x4980
 	add	xhl, xiz
 	ld	xwa, (xsp+6)
@@ -25970,7 +25970,7 @@ TmFlash_BulkTransferToSubCPU_Skip2:
 	ret
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xwa, xhl
 	add	xwa, 16
 	ld	xhl, 0x1e0000
@@ -26002,7 +26002,7 @@ VoiceParam_DispatchTable1:
 TmFlash_BulkTransferToSubCPU_Case5:
 	ld	xbc, 289
 TmFlash_BulkTransferToSubCPU_Join:
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+2)
 	jr	TmFlash_BulkTransferToSubCPU_Epilogue
@@ -26029,7 +26029,7 @@ TmFlash_BulkTransferToSubCPU_Epilogue:
 	ld	xiz, xbc
 	extz	xwa
 	ld	xbc, 470
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	ld	xwa, 0x1e0000
 	add	xwa, xhl
@@ -26067,7 +26067,7 @@ TmFlash_BulkTransferToSubCPU_Epilogue2:
 VoiceParam_DispatchTable1_Code:
 	ld	xwa, xbc
 	ld	xbc, 0x1d6
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+0x6)
 	sub	xhl, (xsp+0x6)
@@ -26078,7 +26078,7 @@ VoiceParam_DispatchTable1_Code:
 TmFlash_BulkTransferToSubCPU_Switch2_Case5:
 	ld	xwa, xbc
 	ld	xbc, 0x121
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	add	xhl, 16
 	add	xhl, (xsp+0x6)
 	sub	xhl, (xsp+0x6)
@@ -26274,7 +26274,9 @@ ParseInt32_Positive:
 	ld	xhl, xiy
 ParseInt32_Return:
 	ret
-Math_MultiplyAccumulate:
+; Math_Multiply32: XHL = XWA * XBC, the low 32 bits, signed and unsigned alike.  Toshiba's C runtime routine
+;   C9H_mulls / C9H_mullu (c900ml.lib, LMULL.ASM), instruction for instruction (scripts/analysis/compiler_id/).
+Math_Multiply32:
 	ldto_werp	HL, 0xe2
 	mul	xhl, bc
 	ldto_werp	DE, 0xe6
@@ -26437,35 +26439,38 @@ Free_LoadReg4:
 Free_InitVal:
 	ld	wa, 1:i3
 	jp	TaskSched_SignalEvent
-Free_ClearByte:
+; Math_DivModSigned32: signed 32/32 divide or modulo of XWA by XBC, result in XHL: D = 1 the quotient, D = 0 the
+;   remainder (with the dividend's sign).  Toshiba's C runtime SDivMod (LDIVL.ASM); entered through
+;   Math_RemainderSigned32 (C9H_remls) and Math_DivideSigned32 (C9H_divls); calls Math_DivideU32.
+Math_DivModSigned32:
 	ld	e, 0x0:opc
 	bit_erpw	0xe2, 0x0f
-	jr	z, Free_Block4
+	jr	z, Math_DivModSigned32_PlusA
 	ld	e, 0x1:opc
 	cplw_erp	0xe2
 	cpl	wa
 	inc	1, xwa
-Free_Block4:
+Math_DivModSigned32_PlusA:
 	bit_erpw	0xe6, 0x0f
-	jr	z, Free_Prologue
+	jr	z, Math_DivModSigned32_PlusB
 	or	e, 0x2
 	cplw_erp	0xe6
 	cpl	bc
 	inc	1, xbc
-Free_Prologue:
+Math_DivModSigned32_PlusB:
 	pushw	de
 	calr	Math_DivideU32
 	popw	wa
 	cp	w, 1:i3
-	jr	z, Free_Compare3
+	jr	z, Math_DivModSigned32_Divi
 	ld	xhl, xde
 	bit	0, a
 	scc8	nz, a
-	jr	Free_OrBits2
-Free_Compare3:
+	jr	Math_DivModSigned32_Fin
+Math_DivModSigned32_Divi:
 	cp	a, 3:i3
 	ret	z
-Free_OrBits2:
+Math_DivModSigned32_Fin:
 	or	xhl, xhl
 	ret	z
 	cp	a, 0:i3
@@ -26474,16 +26479,21 @@ Free_OrBits2:
 	cpl	hl
 	inc	1, xhl
 	ret
-Free_ClearByte2:
+; Math_RemainderSigned32: XHL = XWA mod XBC, signed (Toshiba's C9H_remls).
+Math_RemainderSigned32:
 	ld	d, 0x0:opc
-	jr	Free_ClearByte
+	jr	Math_DivModSigned32
+; Math_DivideSigned32: XHL = XWA / XBC, signed (Toshiba's C9H_divls).
 Math_DivideSigned32:
 	ld	d, 0x1:opc
-	jr	Free_ClearByte
-DivMod32:
+	jr	Math_DivModSigned32
+; Math_RemainderU32: XHL = XWA mod XBC, unsigned (Toshiba's C9H_remlu): Math_DivideU32's remainder.
+Math_RemainderU32:
 	calr	Math_DivideU32
 	ld	xhl, xde
 	ret
+; Math_DivideU32: unsigned 32/32 divide of XWA by XBC, quotient in XHL and remainder in XDE (Toshiba's
+;   C9H_divlu / udiv32, LDIVL.ASM).
 Math_DivideU32:
 	cp	xbc, 0x1
 	jr	z, Math_DivideU32_LoadReg

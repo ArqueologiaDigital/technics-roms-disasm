@@ -66,7 +66,7 @@ SndParam_LookupReadOnly:
 	add	xhl, xwa
 	ld	xwa, xhl
 	ld	xbc, 0x7ff
-	call	DivMod32
+	call	Math_RemainderU32
 	ld	ix, hl
 	jr	SndParam_RO_ProbeEntry
 ; (v7 label .Lc_fcccb4 stood here; dropped, see the file header)
@@ -190,7 +190,7 @@ SndParam_ResolveWidget:
 	add	xhl, xbc
 	ld	xwa, xhl
 	ld	xbc, 0x7ff
-	call	DivMod32
+	call	Math_RemainderU32
 	sll	hl, 2
 	lda	xwa, (0x973c:16)
 	extz	xhl

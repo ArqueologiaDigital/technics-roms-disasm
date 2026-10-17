@@ -7318,7 +7318,7 @@ FDC_SetupSectorParams:
 
 	ld xbc, 0x12
 
-	call	DivMod32
+	call	Math_RemainderU32
 
 	inc 1, xhl
 

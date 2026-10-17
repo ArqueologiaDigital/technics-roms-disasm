@@ -341,7 +341,7 @@ SeEasy_DrawStaticScreen_Records:
 	.byte	0x01, 0x0a, 0x7d, 0x00, 0xe3, 0x00, 0x9a, 0x00, 0xe3, 0x00
 ; static record list (83 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF15FC8
 ; evidence: SeMenuTitle_DrawStaticScreen+0x38 (0xF0F544)
-SeScreenData_0x5120:
+SeMenuTitle_Records:
 ; [v10] F15D26 flags=0x1c len=14
 	.byte	0x1c, 0x0e, 0x70, 0x00, 0x09, 0x00
 	.ascii	"USER KIT"
@@ -369,7 +369,7 @@ SeScreenData_0x5120:
 	.byte	0x17, 0x11, 0x47, 0x00, 0x64, 0x00
 	.ascii	"TONE SELECT"
 ; [v10] F15D89 flags=0x17 len=11
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15D8A-0xF15DA3 (25 B), unreached CODE-territory, was disassembled as 11 plausible-but-dead instruction lines; per=60% dist=14 near SeScreenData_0x5120+100
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15D8A-0xF15DA3 (25 B), unreached CODE-territory, was disassembled as 11 plausible-but-dead instruction lines; per=60% dist=14 near SeMenuTitle_Records+100
 	.byte	0x17, 0x0b, 0xa2, 0x00, 0x64, 0x00
 	.ascii	"LEVEL"
 ; [v10] F15D94 flags=0x17 len=9
@@ -434,7 +434,7 @@ SeScreenData_0x5120:
 	.byte	0x06, 0x05, 0x21, 0x22, 0x8d
 ; [v10] F15E6C flags=0x06 len=5
 	.byte	0x06, 0x05, 0x26, 0x22, 0x8d
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15E71-0xF15E84 (19 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=71% dist=9 near SeScreenData_0x5120+331
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15E71-0xF15E84 (19 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=71% dist=9 near SeMenuTitle_Records+331
 ; [v10] F15E71 flags=0x06 len=5
 	.byte	0x06, 0x05, 0x2b, 0x22, 0x8d
 ; [v10] F15E76 flags=0x06 len=5
@@ -463,7 +463,7 @@ SeScreenData_0x5120:
 	.byte	0x09, 0x0a, 0x12, 0x01, 0x1e, 0x00, 0x35, 0x01, 0x31, 0x00
 ; [v10] F15EBC flags=0x09 len=10
 	.byte	0x09, 0x0a, 0x14, 0x01, 0x20, 0x00, 0x33, 0x01, 0x2f, 0x00
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15EC9-0xF15EDD (20 B), unreached CODE-territory, was disassembled as 13 plausible-but-dead instruction lines; per=60% dist=11 near SeScreenData_0x5120+419
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15EC9-0xF15EDD (20 B), unreached CODE-territory, was disassembled as 13 plausible-but-dead instruction lines; per=60% dist=11 near SeMenuTitle_Records+419
 ; [v10] F15EC6 flags=0x09 len=10
 	.byte	0x09, 0x0a, 0x37, 0x00, 0x2e, 0x00, 0xfd, 0x00, 0x49, 0x00
 ; [v10] F15ED0 flags=0x09 len=10
@@ -482,7 +482,7 @@ SeScreenData_0x5120:
 	.byte	0x09, 0x0a, 0xd2, 0x00, 0xb5, 0x00, 0x35, 0x01, 0xca, 0x00
 ; [v10] F15F16 flags=0x09 len=10
 	.byte	0x09, 0x0a, 0xd4, 0x00, 0xb7, 0x00, 0x33, 0x01, 0xc8, 0x00
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15F25-0xF15F3C (23 B), unreached CODE-territory, was disassembled as 10 plausible-but-dead instruction lines; per=100% dist=10 near SeScreenData_0x5120+511
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15F25-0xF15F3C (23 B), unreached CODE-territory, was disassembled as 10 plausible-but-dead instruction lines; per=100% dist=10 near SeMenuTitle_Records+511
 ; [v10] F15F20 flags=0x22 len=10
 	.byte	0x22, 0x0a, 0x09, 0x00, 0xda, 0x00, 0x1e, 0x00, 0xee, 0x00
 ; [v10] F15F2A flags=0x22 len=10
@@ -505,7 +505,7 @@ SeScreenData_0x5120:
 	.byte	0x01, 0x0a, 0x0b, 0x00, 0x8c, 0x00, 0x19, 0x01, 0x8c, 0x00
 ; [v10] F15F84 flags=0x01 len=10
 	.byte	0x01, 0x0a, 0x09, 0x00, 0xe4, 0x00, 0x1e, 0x00, 0xe4, 0x00
-; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15F8F-0xF15FA0 (17 B), unreached CODE-territory, was disassembled as 6 plausible-but-dead instruction lines; per=71% dist=8 near SeScreenData_0x5120+617
+; [v10] data-as-code (v10_data_as_code_census.py, STRICT rule): 0xF15F8F-0xF15FA0 (17 B), unreached CODE-territory, was disassembled as 6 plausible-but-dead instruction lines; per=71% dist=8 near SeMenuTitle_Records+617
 ; [v10] F15F8E flags=0x01 len=10
 	.byte	0x01, 0x0a, 0x31, 0x00, 0xe4, 0x00, 0x46, 0x00, 0xe4, 0x00
 ; [v10] F15F98 flags=0x01 len=10
@@ -528,7 +528,7 @@ SeScreenData_0x5120:
 	.byte	0x02, 0x0a, 0x19, 0x01, 0x5e, 0x00, 0x19, 0x01, 0xaa, 0x00
 ; static record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF15FDC
 ; evidence: SeMenuTitle_DrawStaticScreen+0x62 (0xF0F56E), SeMenuTitle_DrawField+0x75 (0xF0F653)
-SeScreenData_0x53EC:
+SeMenuTitle_Records2:
 ; [v10] F15FF2 flags=0x1b len=10
 	.byte	0x1b, 0x0a, 0x19, 0x01, 0x71, 0x00, 0x33, 0x01, 0xa8, 0x00
 ; [v10] F15FFC flags=0x05 len=10
@@ -734,7 +734,7 @@ SeDrumKit_TouchCurvePageRecords:
 	.byte	0x05, 0x0a, 0x16, 0x01, 0x43, 0x00, 0x32, 0x01, 0x5c, 0x00
 ; static record list (23 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF16380
 ; evidence: SeAmpEnv1_DrawStaticScreen_Skip+0x18 (0xF0FC77)
-SeScreenData_0x56CD:
+SeAmpEnv1_Records2:
 	.byte	0x06, 0x13, 0x60, 0x1d, 0x10
 	.ascii	"KEY OFF MODE :"
 	.byte	0x17, 0x0b, 0x18, 0x01, 0xc2, 0x00
@@ -770,7 +770,7 @@ SeScreenData_0x56CD:
 ; evidence: SeMenu_CompareAndApply_Apply+0x10 (0xF0FB8A)
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF163B7
-SeScreenData_0x57A4:
+SeAmpAmp1_Field1_Record:
 	.byte	0x05, 0x0b, 0x61, 0x06, 0xff, 0x00, 0x20, 0x50, 0x0d, 0x02, 0x00
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF163B7
@@ -791,9 +791,9 @@ SeApplyConfirm_CursorRec:
 	.long	SeAmpAmp1_DrawField_Records4
 ; table of 5 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
 ; evidence: SeAmpAmp1_DrawField+0x6A (0xF103DE)
-SeScreenData_0x57DB:
+SeAmpAmp1_FieldRecordPtrs:
 	.long	SeApplyConfirm_CursorRec
-	.long	SeScreenData_0x57A4
+	.long	SeAmpAmp1_Field1_Record
 	.long	SeApplyConfirm_ParamR2Rec
 	.long	SeApplyConfirm_FlaggedR1Rec
 	.long	SeApplyConfirm_FlaggedR2Rec
@@ -817,19 +817,19 @@ SeAmpEnv1_DrawStaticScreen_Records2:
 	.byte	0x03, 0x00, 0x70, 0x1d
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
-SeScreenData_0x5820:
+SeAmpEnv1_Field1_Record:
 	.byte	0x00, 0x0a, 0x61, 0x06, 0x7f, 0x00, 0x20, 0x61, 0x22, 0x03
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
-SeScreenData_0x582A:
+SeAmpEnv1_Field2_Record:
 	.byte	0x00, 0x0a, 0x62, 0x06, 0x7f, 0x00, 0x20, 0x65, 0x22, 0x03
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
-SeScreenData_0x5834:
+SeAmpEnv1_Field3_Record:
 	.byte	0x00, 0x0a, 0x63, 0x06, 0x7f, 0x00, 0x20, 0x6a, 0x22, 0x03
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
-SeScreenData_0x583E:
+SeAmpEnv1_Field4_Record:
 	.byte	0x00, 0x0a, 0x64, 0x06, 0x7f, 0x00, 0x20, 0x6f, 0x22, 0x03
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
@@ -837,14 +837,14 @@ SeScreenData_0x5848:
 	.byte	0x05, 0x0b, 0x67, 0x06, 0xff, 0x00, 0x20, 0x84, 0x22, 0x02, 0x00
 ; table of 8 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
 ; evidence: SeAmpEnv1_DrawField+0x1D (0xF10410), SeAmpEnv1_DrawField+0x32 (0xF10425)
-SeScreenData_0x5853:
+SeAmpEnv1_FieldRecordPtrs:
 	.long	SeAmpEnv1_DrawStaticScreen_Records2
-	.long	SeScreenData_0x5820
-	.long	SeScreenData_0x582A
-	.long	SeScreenData_0x5834
-	.long	SeScreenData_0x583E
+	.long	SeAmpEnv1_Field1_Record
+	.long	SeAmpEnv1_Field2_Record
+	.long	SeAmpEnv1_Field3_Record
+	.long	SeAmpEnv1_Field4_Record
 	.long	SeMenu_DrawEnvKeyOffFields_Records2
-	.long	SeScreenData_0x587D
+	.long	SeAmpEnv1_Field6_Record
 	.long	SeScreenData_0x5848
 ; bound record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF16463
 ; evidence: SeMenu_DrawEnvKeyOffFields+0x19 (0xF0FCD0)
@@ -854,7 +854,7 @@ SeMenu_DrawEnvKeyOffFields_Records2:
 	.byte	0x00, 0x0a, 0x65, 0x06, 0x7f, 0x00, 0x20, 0x74, 0x22, 0x03
 ; single bound record (op 0x00, 10 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1642F
-SeScreenData_0x587D:
+SeAmpEnv1_Field6_Record:
 	.byte	0x00, 0x0a, 0x66, 0x06, 0x7f, 0x00, 0x20, 0x7a, 0x22, 0x03
 ; static record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF16471
 ; evidence: SeMenu_DrawEnvKeyOffFields_Skip3+0xA (0xF0FCF4)

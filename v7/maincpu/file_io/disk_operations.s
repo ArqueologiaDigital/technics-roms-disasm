@@ -976,7 +976,7 @@ DiskInfo_ComputePercent:
 	ld	xwa, (xsp + 12)
 	sub	xwa, (xsp + 4)
 	ld	xbc, 0x64
-	call	Math_MultiplyAccumulate
+	call	Math_Multiply32
 	ld	xiz, xhl
 	ld	xbc, (xsp + 12)
 	ld	xwa, xiz

@@ -13912,7 +13912,7 @@ SeqBuf_CalcPageDivision:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0xfb
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	sub xhl, (9922:16)
 	ld a, 0xfb:opc
 	sub a, l
@@ -14733,7 +14733,7 @@ SeqPlay_ComputeOffsets:
 	extz xwa
 	ld (xsp + 4), xwa
 	ld xbc, 0xfb
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld (xsp + 4), xhl
 	ld wa, (xiz + 2)
 	extz xwa
@@ -14743,7 +14743,7 @@ SeqPlay_ComputeOffsets:
 	extz xwa
 	ld (xsp + 8), xwa
 	ld xbc, 0xfb
-	call Math_MultiplyAccumulate
+	call Math_Multiply32
 	ld (xsp + 8), xhl
 	ld wa, (xiz + 2)
 	extz xwa
@@ -14858,7 +14858,7 @@ SeqPlay_HandleSmallerDelta:
 	ld (xsp + 22), hl
 	ld xwa, (xsp + 8)
 	ld xbc, 0xfb
-	call DivMod32
+	call Math_RemainderU32
 	ld xwa, (xsp + 12)
 	ldmw2 (xwa), 0x2955
 	ld c, (0x2957:16)
