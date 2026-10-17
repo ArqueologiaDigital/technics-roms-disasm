@@ -1,26 +1,26 @@
 {
  "date": "2026-10-17",
- "head": "54557923",
+ "head": "2748ddff",
  "dirty": false,
  "rules": 2,
  "entry_snapshot": "docs/coverage/dispatch-census-2026-10-06-31.json",
  "entry_snapshot_head": "8e4b5437",
  "score": {
-  "kn5000": 96.46,
+  "kn5000": 96.51,
   "wsa1": 92.62,
-  "all": 96.05
+  "all": 96.09
  },
  "components": {
   "kn5000": {
    "bytes": {
-    "num": 9947056,
+    "num": 9947070,
     "den": 10289152,
     "pct": 96.68
    },
    "names": {
-    "num": 139587,
-    "den": 147509,
-    "pct": 94.63
+    "num": 139906,
+    "den": 147517,
+    "pct": 94.84
    },
    "entry": {
     "num": 2259,
@@ -57,14 +57,14 @@
   },
   "all": {
    "bytes": {
-    "num": 11934080,
+    "num": 11934094,
     "den": 12386304,
     "pct": 96.35
    },
    "names": {
-    "num": 155370,
-    "den": 166500,
-    "pct": 93.32
+    "num": 155689,
+    "den": 166508,
+    "pct": 93.5
    },
    "entry": {
     "num": 3021,
@@ -81,13 +81,13 @@
  "images": {
   "v10": {
    "names": {
-    "semantic": 42572,
-    "continuation": 8682,
-    "generic": 1945,
-    "positional": 546
+    "semantic": 42677,
+    "continuation": 8683,
+    "generic": 1943,
+    "positional": 442
    },
    "bytes": [
-    2002410,
+    2002416,
     2097152
    ],
    "entry": [
@@ -97,13 +97,13 @@
   },
   "v9": {
    "names": {
-    "semantic": 42570,
-    "continuation": 8677,
-    "generic": 1943,
-    "positional": 547
+    "semantic": 42671,
+    "continuation": 8678,
+    "generic": 1941,
+    "positional": 447
    },
    "bytes": [
-    1992781,
+    1992787,
     2097152
    ],
    "entry": [
@@ -113,13 +113,13 @@
   },
   "v7": {
    "names": {
-    "semantic": 42136,
+    "semantic": 42249,
     "continuation": 8499,
-    "generic": 2319,
-    "positional": 595
+    "generic": 2317,
+    "positional": 494
    },
    "bytes": [
-    1987564,
+    1987566,
     2097152
    ],
    "entry": [
