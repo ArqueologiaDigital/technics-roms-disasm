@@ -314,6 +314,27 @@ CONVERT = {
     "BackupSramTest", "SumU32Words", "BackupSramChecksumVerify",
     "BackupSramValidGet", "BackupSramValidInvalidate",
     "Rec8E0TablePtr", "Rec8E0Field120Ptr",
+    # the graphics layer's blitters and text renderer, DrawBitmap ..
+    # DrawStringCentered, with their queued-draw replays and _Impl bodies
+    # (kn7000_manual.sym); labelled and commented by annotations/gfx_*.ann
+    "DrawBitmap", "DrawBitmap_QueuedExec", "DrawBitmap_Impl",
+    "DrawBitmapFast", "DrawBitmapFast_QueuedExec", "DrawBitmapFast_Impl",
+    "DrawIcons", "DrawIcons_QueuedExec", "DrawIcons_Impl",
+    "DrawFrameSP", "DrawFrameSP_QueuedExec", "DrawFrameSP_Impl",
+    "DrawBitmapSP", "DrawBitmapSP_QueuedExec", "DrawBitmapSP_Impl",
+    "DrawBitmapSPFast", "DrawBitmapSPFast_QueuedExec", "DrawBitmapSPFast_Impl",
+    "DrawBitmapSPFast4", "DrawBitmapSPFast4_QueuedExec", "DrawBitmapSPFast4_Impl",
+    "DrawBitmapSPFast16", "DrawBitmapSPFast16_QueuedExec", "DrawBitmapSPFast16_Impl",
+    "DrawBitmapSPFast256", "DrawBitmapSPFast256_QueuedExec", "DrawBitmapSPFast256_Impl",
+    "DrawBitmapSP2", "DrawBitmapSP2_QueuedExec", "DrawBitmapSP2_Impl",
+    "DrawBitmapFile", "DrawBitmapFile_QueuedExec", "DrawBitmapFile_Impl",
+    "DrawBitmapFileEx", "DrawBitmapFileEx_QueuedExec", "DrawBitmapFileEx_Impl",
+    "DrawJpegFile", "DrawJpegFile_QueuedExec", "JpegDecodeBlit",
+    "DrawJpegFileR", "DrawJpegFileR_QueuedExec", "DrawJpegFileR_Impl",
+    "JpegHeaderParse", "DrawString", "DrawString_QueuedExec", "DrawString_Impl",
+    "SjisGlyphLookup", "DrawStringCentered",
+    # split out of the converted DrawDesignBox block by naming it
+    "IsPointOnScreen",
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -3344,6 +3365,9 @@ def load_annotations(paths):
                 name, addr = f[1], int(f[2], 16)
                 if by_name.setdefault(name, addr) != addr:
                     bad(f"{name} already names {by_name[name]:#x}")
+                other = [nm for nm, (a, _t) in A.equs.items() if a == addr and nm != name]
+                if other:
+                    bad(f"{addr:#x} is already named {other[0]}")
                 A.equs[name] = (addr, f[3] if len(f) > 3 else "")
                 continue
             if len(parts) < 2:
@@ -3435,14 +3459,12 @@ def emit_annotated(d, off, end, name, names, used, A, code_names, data_names,
 
     def rename(ops, mnem):
         def one(m):
-            nm = addr_name(int(m.group(0), 16))
-            return nm if nm else m.group(0)
+            nm = addr_name(int(m.group(1), 16))
+            return nm if nm else m.group(1)
         if mnem in BRANCH_MNEMS:
             m = re.match(r"(0x[0-9a-fA-F]+)(.*)", ops)
-            if m:
-                return one(m) + m.group(2)
-            return ops
-        return re.sub(r"0x[0-9a-fA-F]{8}\b", one, ops)
+            return one(m) + m.group(2) if m else ops
+        return re.sub(r"(0x[0-9a-fA-F]{8})\b", one, ops)
 
     unlabelled = []
     lines = []
@@ -3723,6 +3745,7 @@ def main():
                                    data_names, data_used, labelled)
             if block is None:
                 sys.exit(f"gen_program_s: annotated function {name} does not disassemble")
+            block = block + [""]
         else:
             block = emit_function(d, off, end_conv, name, names, used) if lim is not None else None
         if block is not None:

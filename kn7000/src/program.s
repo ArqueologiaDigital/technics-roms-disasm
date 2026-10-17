@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 970 synthetic labels for internal helpers called by converted code
+# 1000 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -100,22 +100,49 @@ _rom_marker:
 .equ func_48417B27, 0x48417B27
 .equ func_4841C40F, 0x4841C40F
 .equ func_4841D820, 0x4841D820
-.equ func_484219A4, 0x484219A4
-.equ func_48421B5C, 0x48421B5C
-.equ func_48421B97, 0x48421B97
+.equ DrawRing_Post_entry, 0x484219A4
+.equ DrawQueue_Alloc_entry, 0x48421B5C
+.equ DrawQueue_Free, 0x48421B91
+.equ IsDrawTask_entry, 0x48421B97
+.equ GetBitmapInfo_entry, 0x48421DE6
+.equ func_4842201B, 0x4842201B
 .equ func_48422627, 0x48422627
+.equ ModifyPixel_entry, 0x484226C9
 .equ func_48422917, 0x48422917
 .equ func_48423031, 0x48423031
-.equ func_4842309A, 0x4842309A
+.equ DrawBox_Impl_entry, 0x4842309A
 .equ func_4842320D, 0x4842320D
 .equ func_48423A03, 0x48423A03
-.equ func_48423B5B, 0x48423B5B
-.equ func_48423F73, 0x48423F73
-.equ func_48424AA4, 0x48424AA4
-.equ func_48425398, 0x48425398
-.equ func_48425898, 0x48425898
+.equ DrawBitmapFast_entry, 0x48423C8D
+.equ DrawBitmapFast_Impl_entry, 0x48423CF1
+.equ DrawIcons_entry, 0x48423DD2
+.equ DrawIcons_Impl_entry, 0x48423E36
+.equ DrawFrameSP_Impl_entry, 0x48423F73
+.equ DrawBitmapSP_entry, 0x484240A9
+.equ DrawBitmapSP_Impl_entry, 0x48424124
+.equ DrawBitmapSPFast_entry, 0x484242A3
+.equ DrawBitmapSPFast_Impl_entry, 0x4842431E
+.equ DrawBitmapSPFast4_entry, 0x484243D2
+.equ DrawBitmapSPFast4_Impl_entry, 0x48424471
+.equ DrawBitmapSPFast16_entry, 0x484245C1
+.equ DrawBitmapSPFast16_Impl_entry, 0x48424649
+.equ DrawBitmapSPFast256_entry, 0x48424789
+.equ DrawBitmapSPFast256_Impl_entry, 0x48424811
+.equ DrawBitmapSP2_entry, 0x484248E3
+.equ DrawBitmapSP2_Impl_entry, 0x48424986
+.equ DrawBitmapFile_entry, 0x48424AA4
+.equ DrawBitmapFile_Impl_entry, 0x48424B07
+.equ DrawBitmapFileEx_Impl_entry, 0x48424D30
+.equ DrawJpegFile_entry, 0x48424EC2
+.equ DrawJpegFileR_entry, 0x48424F82
+.equ DrawJpegFileR_Impl_entry, 0x48424FE9
+.equ DrawString_entry, 0x48425398
+.equ DrawString_Impl_entry, 0x48425469
+.equ SjisGlyphLookup, 0x48425879
+.equ DrawStringCentered_entry, 0x48425898
 .equ func_484261A6, 0x484261A6
 .equ func_4842621C, 0x4842621C
+.equ IsPointOnScreen, 0x48427980
 .equ func_48427DA6, 0x48427DA6
 .equ func_484282A4, 0x484282A4
 .equ func_48428555, 0x48428555
@@ -144,8 +171,11 @@ _rom_marker:
 .equ func_4842C985, 0x4842C985
 .equ func_4842D366, 0x4842D366
 .equ func_4842D409, 0x4842D409
+.equ SetPaletteRGB_entry, 0x4842D9F6
 .equ func_4842DC8A, 0x4842DC8A
 .equ func_4842DF23, 0x4842DF23
+.equ ConvertStrings_entry, 0x4842DFAD
+.equ CalcTotalWidth_entry, 0x4842E0C0
 .equ func_484317D3, 0x484317D3
 .equ func_48431838, 0x48431838
 .equ StyleBuiltinNameTableInit_entry, 0x484332FE
@@ -998,6 +1028,11 @@ _rom_marker:
 .equ LibIntcEnable, 0x4C03DCC8
 .equ LibIntcDisable, 0x4C03DD3F
 .equ LibTickSleep, 0x4C03DD74
+
+# 3 data addresses named by annotations/*.ann
+.equ DrawEnable, 0x5002A01C   # nonzero: drawing allowed (tested before every DrawXxx_Impl)
+.equ FrameBuffer, 0x500D4080   # 640 x 240 x 8 bpp, stride 0x280
+.equ BitmapTablePtr, 0x50122DAC   # -> bitmap descriptors {u16 w, u16 h, u8 *pixels}
 
 .incbin_range "baserom/kn7000_program.rom", 0x000080, 0x004ff6
 # DspFullReinit  (CPU 0x48404ff6)
@@ -6935,7 +6970,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -6959,7 +6994,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -6983,7 +7018,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     call    GetColorMode, 0, 0
     exthu   d0
@@ -7014,7 +7049,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -7038,7 +7073,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     bra     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -7062,7 +7097,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     clr     d0
     ret     [d2,d3,a2,a3], 0x50
     mov     d3, d0
@@ -7468,7 +7503,15 @@ _rom_marker:
 # InitializeGraphics  (CPU 0x48421804)
 .incbin_range "baserom/kn7000_program.rom", 0x021804, 0x0218ef
 # InitDrawTask  (CPU 0x484218ef)
-.incbin_range "baserom/kn7000_program.rom", 0x0218ef, 0x021bb7
+.incbin_range "baserom/kn7000_program.rom", 0x0218ef, 0x02199f
+# DrawRing_Post  (CPU 0x4842199f)
+.incbin_range "baserom/kn7000_program.rom", 0x02199f, 0x021b5a
+# DrawQueue_Alloc  (CPU 0x48421b5a)
+.incbin_range "baserom/kn7000_program.rom", 0x021b5a, 0x021b91
+# DrawQueue_Free  (CPU 0x48421b91)
+.incbin_range "baserom/kn7000_program.rom", 0x021b91, 0x021b94
+# IsDrawTask  (CPU 0x48421b94)
+.incbin_range "baserom/kn7000_program.rom", 0x021b94, 0x021bb7
 # DrawFunc  (CPU 0x48421bb7)
 .incbin_range "baserom/kn7000_program.rom", 0x021bb7, 0x021c59
 # DrawFuncParam  (CPU 0x48421c59)
@@ -7517,7 +7560,7 @@ _rom_marker:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
-    call    func_48421B97, 0, 0x10
+    call    IsDrawTask_entry, 0, 0x10
     cmp     0, d0
     beq     0x484225f6
     mov     (0x5002a01c), d1
@@ -7527,11 +7570,11 @@ _rom_marker:
     call    func_48422627, 0, 0
     bra     0x4842260c
     mov     8, d0
-    call    func_48421B5C, [d2], 4
+    call    DrawQueue_Alloc_entry, [d2], 4
     mov     0x4842260f, d0
     mov     d0, (a0)
     mov     d2, (4, a0)
-    call    func_484219A4, [d2,a2,a3], 0x28
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
     ret     [d2], 0x10
     add     -0xc, sp
     mov     (0x5002a01c), d1
@@ -7555,7 +7598,9 @@ _rom_marker:
 # DrawLineEx  (CPU 0x48422c8d)
 .incbin_range "baserom/kn7000_program.rom", 0x022c8d, 0x02302c
 # DrawBox  (CPU 0x4842302c)
-.incbin_range "baserom/kn7000_program.rom", 0x02302c, 0x02319f
+.incbin_range "baserom/kn7000_program.rom", 0x02302c, 0x023095
+# DrawBox_Impl  (CPU 0x48423095)
+.incbin_range "baserom/kn7000_program.rom", 0x023095, 0x02319f
 # DrawFrame  (CPU 0x4842319f)
 .incbin_range "baserom/kn7000_program.rom", 0x02319f, 0x0235d5
 # DrawFrameEx  (CPU 0x484235d5)
@@ -7565,43 +7610,3703 @@ _rom_marker:
 # DrawWall  (CPU 0x48423a00)
 .incbin_range "baserom/kn7000_program.rom", 0x023a00, 0x023b56
 # DrawBitmap  (CPU 0x48423b56)
-.incbin_range "baserom/kn7000_program.rom", 0x023b56, 0x023c88
+#   DrawBitmap(a0 = &point {s16 x, s16 y}, d0 = bitmap index): draws entry d0
+#   of the bitmap table (BitmapTablePtr) with its top-left corner at the point,
+#   skipping pixels of value 0xF7 (CL_Transparent). On the draw task it draws
+#   at once (if DrawEnable is set); on any other task it queues a 12-byte
+#   record {DrawBitmap_QueuedExec, x, y, index} for the draw task instead.
+DrawBitmap:
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+
+DrawBitmap_entry:
+    mov     d0, d2                          # d2 = bitmap index
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmap_Deferred             # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmap_Return               # drawing disabled
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30  # draw now
+    bra     DrawBitmap_Return
+
+DrawBitmap_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmap_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     d2, (8, a0)                     # +8: bitmap index
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmap_Return:
+    ret     [d2,a2], 0x18
+
+# DrawBitmap_QueuedExec  (CPU 0x48423b9e)
+#   DrawBitmap_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmap queued; draws it if DrawEnable is still set.
+DrawBitmap_QueuedExec:
+    add     -0x10, sp
+    mov     (DrawEnable), d0
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), d1                     # d1 = record.index
+    cmp     0, d0
+    beq     DrawBitmap_QueuedExec_Return    # drawing disabled meanwhile
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30
+
+DrawBitmap_QueuedExec_Return:
+    ret     0, 0x10
+
+# DrawBitmap_Impl  (CPU 0x48423bba)
+#   DrawBitmap_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
+#   top-left corner off the screen, draws nothing. Rows are copied into
+#   FrameBuffer one byte per pixel, skipping 0xF7; each source row is padded to
+#   an even length. A row at y >= 240 ends the copy, but nothing clips
+#   horizontally: a bitmap wider than 640 - x runs on into the next framebuffer
+#   row. Ends by marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+DrawBitmap_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+
+DrawBitmap_Impl_entry:
+    mov     a0, a3                          # a3 = &point
+    mov     d0, d2                          # d2 = bitmap index
+    cmp     -1, d2
+    bne     DrawBitmap_Impl_HaveIndex
+    ret     [d2,d3,a2,a3], 0x30             # index -1: no bitmap
+
+DrawBitmap_Impl_HaveIndex:
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmap_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x30             # top-left corner off the screen
+
+DrawBitmap_Impl_OnScreen:
+    mov     (BitmapTablePtr), d1
+    asl     3, d2
+    add     d2, d1                          # d1 = &table[index] (8-byte entries)
+    mov     2, d0
+    add     d1, d0
+    mov     d0, a0                          # a0 = &entry.height
+    mov     d1, a2                          # a2 = &entry.width
+    mov     (4, a2), a1                     # a1 = entry.pixels: the source
+    mov     d0, (0xc, sp)
+    movhu   (a0), d0
+    clr     d3                              # d3 = row
+    exth    d0
+    cmp     d3, d0
+    ble     DrawBitmap_Impl_Dirty           # height <= 0
+    mov     2, d0
+    add     a3, d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = &point.y
+
+DrawBitmap_Impl_RowLoop:
+    mov     (0x10, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     d3, d0
+    movhu   d0, (0x16, sp)                  # y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    bge     DrawBitmap_Impl_Dirty           # y >= 240: below the screen, stop
+    movhu   (a3), d2
+    movhu   (0x16, sp), d1
+    exth    d2
+    mov     0x280, d0
+    exth    d1
+    nop
+    nop
+    mul     d0, d1                          # (the compiler puts two nops before every mul)
+    add     FrameBuffer, d1
+    movhu   (a2), d0
+    add     d2, d1
+    mov     d1, a0                          # a0 = FrameBuffer + y*640 + x
+    exth    d0
+    clr     d2                              # d2 = column
+    cmp     d2, d0
+    ble     DrawBitmap_Impl_RowDone         # width <= 0
+    # Copy one row; the hardware loop (setlb .. llt) repeats from the next instruction.
+    setlb
+    movbu   (a1), d0
+    cmp     0xf7, d0
+    beq     DrawBitmap_Impl_NextPixel       # 0xF7: transparent, leave the framebuffer alone
+    movbu   (a1), d0
+    movbu   d0, (a0)                        # opaque: copy
+
+DrawBitmap_Impl_NextPixel:
+    movhu   (a2), d0
+    inc     a1
+    inc     a0
+    inc     d2
+    exthu   d2
+    exth    d0
+    cmp     d0, d2
+    llt                                     # next column while column < width
+
+DrawBitmap_Impl_RowDone:
+    movhu   (a2), d0
+    mov     2, d1
+    exth    d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0                         # d0 = width % 2
+    cmp     0, d0
+    beq     DrawBitmap_Impl_NextRow
+    inc     a1                              # odd width: skip the row's pad byte
+
+DrawBitmap_Impl_NextRow:
+    mov     (0xc, sp), a0
+    inc     d3
+    movhu   (a0), d0
+    exthu   d3
+    exth    d0
+    cmp     d0, d3
+    blt     DrawBitmap_Impl_RowLoop         # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmap_Impl_Dirty:
+    mov     2, a1
+    add     a3, a1
+    movhu   (a1), d0
+    movhu   d0, (0x1a, sp)                  # rect.top = y
+    movhu   (a3), d0
+    movhu   d0, (0x18, sp)                  # rect.left = x
+    movhu   (a3), d1
+    movhu   (a2), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1c, sp)                  # rect.right = x + width - 1
+    mov     (0xc, sp), a0
+    movhu   (a1), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1e, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x18, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
 # DrawBitmapFast  (CPU 0x48423c88)
-.incbin_range "baserom/kn7000_program.rom", 0x023c88, 0x023dcd
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# DrawBitmapFast_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48423cab
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48423ccd
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawBitmapFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+    bra     0x48423ccd
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48423cd0, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     d2, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,a2], 0x18
+# DrawBitmapFast_QueuedExec  (CPU 0x48423cd0)
+    add     -0x10, sp
+    mov     (0x5002a01c), d0
+    mov     a0, a1
+    inc4    a1
+    mov     (8, a0), d1
+    cmp     0, d0
+    beq     0x48423ce9
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawBitmapFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+    ret     0, 0x10
+# DrawBitmapFast_Impl  (CPU 0x48423cec)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+# DrawBitmapFast_Impl_entry:   (register-save `call` entry)
+    mov     a0, (0x44, sp)
+    mov     d0, d3
+    cmp     -1, d3
+    bne     0x48423cfb
+    ret     [d2,d3,a2,a3], 0x3c
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48423d07
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x1c, sp)
+    movhu   (a0), d1
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x1c, sp), a0
+    exth    d0
+    exth    d1
+    asl     3, d3
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     (0x50122dac), d1
+    mov     d0, a3
+    add     d3, d1
+    mov     d1, d0
+    add     2, d0
+    movhu   (a0), d2
+    mov     d1, (0x14, sp)
+    mov     d1, a0
+    mov     (4, a0), d3
+    mov     d0, (0x18, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0, a2
+    exth    d0
+    cmp     0, d0
+    ble     0x48423d96
+    exthu   d2
+    cmp     0xf0, d2
+    bge     0x48423d96
+    mov     (0x14, sp), a0
+    mov     d3, a1
+    movhu   (a0), d0
+    mov     a3, a0
+    exth    d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x14, sp), a0
+    add     0x280, a3
+    movhu   (a0), d1
+    movhu   (a0), d0
+    mov     d2, (0x20, sp)
+    exth    d1
+    exth    d0
+    mov     2, d2
+    ext     d0
+    div     d2, d0
+    mov     mdr, d0
+    mov     (0x20, sp), d2
+    add     d1, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     (0x18, sp), a0
+    add     d0, d0
+    add     d0, d3
+    inc     d2
+    mov     a2, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a2
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, a2
+    blt     0x48423d4c
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)
+    movhu   (a0), d1
+    mov     (0x14, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x28, sp)
+    mov     (0x1c, sp), a0
+    movhu   (a0), d1
+    mov     (0x18, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2a, sp)
+    add     0x24, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
 # DrawIcons  (CPU 0x48423dcd)
-.incbin_range "baserom/kn7000_program.rom", 0x023dcd, 0x023efb
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+# DrawIcons_entry:   (register-save `call` entry)
+    mov     d0, d2
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48423df0
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48423e12
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30
+    bra     0x48423e12
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48423e15, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     d2, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,a2], 0x18
+# DrawIcons_QueuedExec  (CPU 0x48423e15)
+    add     -0x10, sp
+    mov     (0x5002a01c), d0
+    mov     a0, a1
+    inc4    a1
+    mov     (8, a0), d1
+    cmp     0, d0
+    beq     0x48423e2e
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30
+    ret     0, 0x10
+# DrawIcons_Impl  (CPU 0x48423e31)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# DrawIcons_Impl_entry:   (register-save `call` entry)
+    mov     a0, d3
+    mov     d0, d2
+    cmp     0, d2
+    bne     0x48423e40
+    ret     [d2,d3,a2,a3], 0x30
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48423e4c
+    ret     [d2,d3,a2,a3], 0x30
+    mov     (0x50122db4), d1
+    asl     3, d2
+    add     d2, d1
+    mov     d1, (0x10, sp)
+    mov     2, d0
+    add     d3, d0
+    mov     d1, a0
+    mov     (4, a0), a1
+    mov     d0, (0xc, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0x280, d1
+    movhu   d0, (0x16, sp)
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   (a0), d2
+    exth    d0
+    exth    d2
+    nop
+    nop
+    mul     d1, d0
+    add     0x500d4080, d0
+    add     d2, d0
+    mov     d0, a2
+    clr     d2
+    mov     0x485a22b8, a3
+    movhu   (0x16, sp), d0
+    exth    d0
+    cmp     0xf0, d0
+    bge     0x48423ec3
+    mov     a2, a0
+    clr     d1
+    setlb
+    movbu   (a1), d0
+    inc     d1
+    add     d0, d0
+    movhu   (d0, a3), d0
+    exth    d1
+    and     0xff, d0
+    movbu   d0, (a0)
+    movbu   (a1), d0
+    inc     a0
+    add     d0, d0
+    movhu   (d0, a3), d0
+    inc     a1
+    asr     8, d0
+    movbu   d0, (a0)
+    inc     a0
+    cmp     0xc, d1
+    llt
+    movhu   (0x16, sp), d0
+    add     0x280, a2
+    exth    d0
+    inc     d0
+    movhu   d0, (0x16, sp)
+    inc     d2
+    exth    d2
+    cmp     0x18, d2
+    blt     0x48423e88
+    mov     (0xc, sp), a0
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   d0, (0x1a, sp)
+    movhu   (a0), d0
+    movhu   d0, (0x18, sp)
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1c, sp)
+    mov     (0xc, sp), a0
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (2, a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1e, sp)
+    add     0x18, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
 # DrawFrameSP  (CPU 0x48423efb)
-.incbin_range "baserom/kn7000_program.rom", 0x023efb, 0x0240a4
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48423f22
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48423f47
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
+    bra     0x48423f47
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48423f4a, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    movhu   d2, (8, a0)
+    movhu   d3, (0xa, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2], 0x20
+# DrawFrameSP_QueuedExec  (CPU 0x48423f4a)
+    movm    [d2], (sp)
+    add     -0x14, sp
+    mov     (0x5002a01c), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   (8, a0), d1
+    movhu   (0xa, a0), d2
+    cmp     0, d0
+    beq     0x48423f6b
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a1, a0
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
+    ret     [d2], 0x18
+# DrawFrameSP_Impl  (CPU 0x48423f6e)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x30, sp
+# DrawFrameSP_Impl_entry:   (register-save `call` entry)
+    movhu   d1, (0x50, sp)
+    mov     d0, d2
+    mov     a0, (0x48, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48423f85
+    ret     [d2,d3,a2,a3], 0x40
+    mov     (0x50122db0), d1
+    exth    d2
+    mov     d2, d0
+    asl     3, d0
+    add     d0, d1
+    mov     d1, (0x10, sp)
+    mov     d1, d0
+    add     2, d0
+    mov     d1, a0
+    mov     (4, a0), a2
+    mov     d0, (0x18, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0, a3
+    exth    d0
+    cmp     0, d0
+    bgt     0x48423fab
+    jmp     0x4842406d
+    mov     (0x48, sp), d0
+    mov     sp, a0
+    add     2, d0
+    mov     d0, (0x1c, sp)
+    mov     a0, d0
+    add     0x24, d0
+    mov     d0, (0x14, sp)
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     a3, d0
+    movhu   d0, (0x26, sp)
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x48423fcc
+    jmp     0x4842406d
+    mov     (0x10, sp), a0
+    clr     d3
+    movhu   (a0), d0
+    exth    d0
+    cmp     d3, d0
+    ble     0x48424047
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     d3, d0
+    movhu   d0, (0x24, sp)
+    movbu   (a2), d0
+    cmp     0xf6, d0
+    beq     0x48423fee
+    cmp     0xf7, d0
+    beq     0x4842403c
+    bra     0x4842400c
+    movhu   (0x26, sp), d1
+    movhu   (0x24, sp), d0
+    exth    d1
+    exth    d0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d1, d2
+    movhu   (0x50, sp), d1
+    mov     d2, a1
+    add     0x500d4080, a1
+    movbu   d1, (d0, a1)
+    bra     0x4842403c
+    movbu   (a2), d1
+    mov     d1, d0
+    exth    d0
+    cmp     0xf4, d0
+    bne     0x4842401f
+    mov     (0x14, sp), a0
+    call    ModifyPixel_entry, [d2,d3,a2], 0x18
+    bra     0x4842403c
+    movhu   (0x26, sp), d0
+    movhu   (0x24, sp), d2
+    exth    d0
+    exth    d2
+    mov     d3, (0x20, sp)
+    mov     0x280, d3
+    nop
+    nop
+    mul     d3, d0
+    mov     (0x20, sp), d3
+    add     0x500d4080, d0
+    mov     d0, a0
+    movbu   d1, (d2, a0)
+    mov     (0x10, sp), a0
+    inc     a2
+    movhu   (a0), d0
+    inc     d3
+    exth    d3
+    exth    d0
+    cmp     d0, d3
+    blt     0x48423fd5
+    movhu   (a0), d2
+    movhu   (a0), d0
+    exth    d2
+    exth    d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    add     d0, d0
+    cmp     d0, d2
+    beq     0x4842405b
+    inc     a2
+    mov     (0x18, sp), a0
+    mov     a3, d0
+    inc     d0
+    exth    d0
+    mov     d0, a3
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, a3
+    bge     0x4842406d
+    jmp     0x48423fb8
+    mov     (0x48, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2a, sp)
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x28, sp)
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2c, sp)
+    mov     (0x18, sp), a0
+    movhu   (a1), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2e, sp)
+    mov     sp, a0
+    add     0x28, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x40
 # DrawBitmapSP  (CPU 0x484240a4)
-.incbin_range "baserom/kn7000_program.rom", 0x0240a4, 0x02429e
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# DrawBitmapSP_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x484240cd
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x484240f5
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSP_Impl_entry, [d2,d3,a2,a3], 0x44
+    bra     0x484240f5
+    mov     0x10, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x484240f8, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x28
+# DrawBitmapSP_QueuedExec  (CPU 0x484240f8)
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+    mov     (0x5002a01c), d0
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a1
+    movhu   (0xc, a0), d1
+    movhu   (0xe, a0), d2
+    cmp     0, d0
+    beq     0x4842411c
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSP_Impl_entry, [d2,d3,a2,a3], 0x44
+    ret     [d2,a2], 0x20
+# DrawBitmapSP_Impl  (CPU 0x4842411f)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x34, sp
+# DrawBitmapSP_Impl_entry:   (register-save `call` entry)
+    mov     a1, a2
+    movhu   d0, (0x54, sp)
+    mov     d1, d2
+    mov     a0, (0x4c, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48424137
+    ret     [d2,d3,a2,a3], 0x44
+    clr     d0
+    mov     d0, (0x10, sp)
+    exth    d2
+    mov     d2, (0x1c, sp)
+    cmp     0, d2
+    bgt     0x48424144
+    jmp     0x4842426b
+    mov     (0x4c, sp), d0
+    mov     2, d1
+    add     2, d0
+    mov     d0, (0x24, sp)
+    movhu   (0x54, sp), d0
+    exth    d0
+    mov     d0, (0x18, sp)
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    mov     d0, (0x20, sp)
+    mov     (0x24, sp), a0
+    mov     (0x10, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x2a, sp)
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x4842416f
+    jmp     0x4842426b
+    mov     (0x4c, sp), a0
+    movhu   (0x2a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    mov     0x500d4080, d2
+    add     d0, d2
+    add     d1, d2
+    mov     (0x18, sp), d0
+    mov     0, a3
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    cmp     0, d0
+    bgt     0x4842419b
+    jmp     0x48424228
+    movhu   (0x2a, sp), d3
+    movhu   (0x2a, sp), d0
+    exth    d3
+    exth    d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     0x500d4080, d0
+    mov     d0, (0x14, sp)
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     d0, a1
+    mov     0x280, d0
+    nop
+    nop
+    mul     d0, d3
+    add     0x500d4080, d3
+    setlb
+    movhu   (a2), d0
+    asr     8, d0
+    cmp     0xf7, d0
+    beq     0x48424201
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     0x484241e8
+    movhu   (a2), d0
+    mov     d2, a0
+    movhu   d0, (a0)
+    bra     0x4842421c
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    mov     d3, a0
+    exth    d0
+    add     a3, d0
+    add     a3, d0
+    inc     d0
+    movhu   d0, (0x28, sp)
+    movhu   (a2), d1
+    exth    d0
+    asr     8, d1
+    movbu   d1, (d0, a0)
+    bra     0x4842421c
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     0x4842421c
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     a3, d0
+    add     a3, d0
+    movhu   d0, (0x28, sp)
+    movbu   (a2), d1
+    mov     (0x14, sp), a0
+    exth    d0
+    movbu   d1, (d0, a0)
+    add     2, a2
+    add     2, d2
+    mov     a3, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a3
+    cmp     a1, a3
+    llt
+    mov     (0x20, sp), d0
+    cmp     0, d0
+    beq     0x4842425d
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     0x4842425b
+    mov     (0x4c, sp), a0
+    mov     a3, d1
+    movhu   (a0), d0
+    mov     0x280, d2
+    exth    d0
+    add     a3, d0
+    add     d0, d1
+    movhu   d1, (0x28, sp)
+    movbu   (a2), d3
+    movhu   (0x2a, sp), d0
+    exth    d1
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    mov     d0, a0
+    movbu   d3, (d1, a0)
+    add     2, a2
+    mov     (0x10, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    cmp     d1, d0
+    bge     0x4842426b
+    jmp     0x4842415a
+    mov     (0x4c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2e, sp)
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2c, sp)
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x30, sp)
+    movhu   (a1), d0
+    mov     (0x1c, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x32, sp)
+    mov     sp, a0
+    add     0x2c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x44
 # DrawBitmapSPFast  (CPU 0x4842429e)
-.incbin_range "baserom/kn7000_program.rom", 0x02429e, 0x0243cd
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+# DrawBitmapSPFast_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x484242c7
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x484242ef
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+    bra     0x484242ef
+    mov     0x10, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x484242f2, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x28
+# DrawBitmapSPFast_QueuedExec  (CPU 0x484242f2)
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+    mov     (0x5002a01c), d0
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a1
+    movhu   (0xc, a0), d1
+    movhu   (0xe, a0), d2
+    cmp     0, d0
+    beq     0x48424316
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+    ret     [d2,a2], 0x20
+# DrawBitmapSPFast_Impl  (CPU 0x48424319)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+# DrawBitmapSPFast_Impl_entry:   (register-save `call` entry)
+    mov     a1, a3
+    movhu   d0, (0x4c, sp)
+    movhu   d1, (0x50, sp)
+    mov     a0, (0x44, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48424333
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x20, sp)
+    movhu   (a0), d1
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x20, sp), a0
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     d0, a2
+    movhu   (0x50, sp), d0
+    movhu   (a0), d2
+    exth    d0
+    mov     d0, (0x1c, sp)
+    clr     d3
+    cmp     d3, d0
+    ble     0x4842439a
+    movhu   (0x4c, sp), d0
+    mov     2, d1
+    exth    d0
+    mov     d0, (0x18, sp)
+    movhu   (0x4c, sp), d0
+    exth    d0
+    inc     d0
+    call    LibDiv32, 0, 0
+    add     d0, d0
+    mov     d0, (0x14, sp)
+    exthu   d2
+    cmp     0xf0, d2
+    bge     0x4842439a
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x18, sp), d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x14, sp), d0
+    add     0x280, a2
+    add     d0, a3
+    mov     (0x1c, sp), d0
+    inc     d2
+    inc     d3
+    exthu   d3
+    cmp     d0, d3
+    blt     0x48424378
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)
+    movhu   (a0), d1
+    movhu   (0x4c, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x28, sp)
+    mov     (0x20, sp), a0
+    mov     (0x1c, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2a, sp)
+    add     0x24, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
 # DrawBitmapSPFast4  (CPU 0x484243cd)
-.incbin_range "baserom/kn7000_program.rom", 0x0243cd, 0x0245bc
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# DrawBitmapSPFast4_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424400
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424433
+    mov     (0x48, sp), a0
+    exth    d2
+    mov     a0, (0x18, sp)
+    movhu   (0x4c, sp), d0
+    exth    d3
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast4_Impl_entry, [d2,d3,a2,a3], 0x54
+    bra     0x48424433
+    mov     0x18, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424436, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    mov     (0x48, sp), a1
+    mov     a1, (0x10, a0)
+    movhu   (0x4c, sp), d0
+    movhu   d0, (0x14, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x30
+# DrawBitmapSPFast4_QueuedExec  (CPU 0x48424436)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    movhu   (0xe, a0), d0
+    mov     (0x5002a01c), d1
+    mov     a0, a1
+    inc4    a1
+    mov     (8, a0), a2
+    movhu   (0xc, a0), d3
+    mov     d0, a3
+    mov     (0x10, a0), d0
+    movhu   (0x14, a0), d2
+    cmp     0, d1
+    beq     0x48424469
+    mov     d0, (0x18, sp)
+    exth    d2
+    mov     d2, (0x1c, sp)
+    mov     a1, a0
+    exth    d3
+    mov     a3, d1
+    exth    d1
+    mov     d3, d0
+    mov     a2, a1
+    call    DrawBitmapSPFast4_Impl_entry, [d2,d3,a2,a3], 0x54
+    ret     [d2,d3,a2,a3], 0x30
+# DrawBitmapSPFast4_Impl  (CPU 0x4842446c)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x44, sp
+# DrawBitmapSPFast4_Impl_entry:   (register-save `call` entry)
+    movhu   d0, (0x64, sp)
+    mov     d1, d2
+    mov     a1, a2
+    mov     a0, (0x5c, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48424484
+    ret     [d2,d3,a2,a3], 0x54
+    mov     a2, (0x14, sp)
+    clr     d0
+    mov     d0, (0x18, sp)
+    exth    d2
+    mov     d2, (0x30, sp)
+    cmp     0, d2
+    bgt     0x48424493
+    jmp     0x4842454a
+    movhu   (0x64, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)
+    add     3, d0
+    mov     d0, (0x28, sp)
+    mov     (0x5c, sp), d0
+    add     2, d0
+    mov     d0, (0x2c, sp)
+    mov     (0x20, sp), d0
+    add     3, d0
+    mov     d0, (0x34, sp)
+    movhu   (0x70, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    mov     (0x2c, sp), a0
+    mov     (0x18, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x3a, sp)
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x484244c4
+    jmp     0x4842454a
+    mov     (0x5c, sp), a0
+    movhu   (0x3a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     d0, a2
+    mov     (0x34, sp), d0
+    clr     d3
+    mov     4, d1
+    call    LibDiv32, 0, 0
+    cmp     d3, d0
+    ble     0x4842453c
+    mov     (0x28, sp), d0
+    mov     4, d1
+    call    LibDiv32, 0, 0
+    mov     d0, (0x1c, sp)
+    mov     (0x14, sp), a0
+    mov     d3, d0
+    movbu   (a0), d1
+    asl2    d0
+    mov     d0, (0x10, sp)
+    extbu   d1
+    mov     d1, a3
+    clr     d2
+    mov     d2, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     (0x10, sp), d1
+    add     d1, d0
+    mov     (0x20, sp), d1
+    cmp     d1, d0
+    bgt     0x48424530
+    mov     6, d0
+    sub     d2, d0
+    mov     d0, d1
+    add     2, d2
+    exthu   d2
+    mov     a3, d0
+    asr     d1, d0
+    mov     (0x24, sp), d1
+    and     0x03, d0
+    add     d1, d0
+    movbu   d0, (a2)
+    inc     a2
+    cmp     8, d2
+    blt     0x48424505
+    mov     (0x14, sp), d0
+    inc     d3
+    inc     d0
+    mov     d0, (0x14, sp)
+    mov     (0x1c, sp), d0
+    exthu   d3
+    cmp     d0, d3
+    blt     0x484244f9
+    mov     (0x18, sp), d0
+    mov     (0x30, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x18, sp)
+    cmp     d1, d0
+    bge     0x4842454a
+    jmp     0x484244af
+    movhu   (0x70, sp), d2
+    movhu   (0x70, sp), d0
+    mov     d2, d3
+    exthu   d3
+    exth    d0
+    mov     d0, a3
+    mov     4, d1
+    add     d0, d1
+    cmp     d1, d3
+    bge     0x48424589
+    mov     4, d0
+    add     a3, d0
+    mov     d0, (0x10, sp)
+    mov     (0x6c, sp), a0
+    mov     d3, d1
+    sub     a3, d1
+    asl2    d1
+    mov     (d1, a0), a2
+    mov     d2, d0
+    exth    d0
+    call    GetPaletteRGB, 0, 0
+    cmp     d0, a2
+    beq     0x48424581
+    exth    d2
+    mov     a2, d1
+    mov     d2, d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    mov     (0x10, sp), d0
+    inc     d3
+    mov     d3, d2
+    exthu   d3
+    cmp     d0, d3
+    blt     0x48424561
+    mov     (0x5c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x3e, sp)
+    mov     (0x5c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x3c, sp)
+    movhu   (a0), d1
+    movhu   (0x64, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x40, sp)
+    movhu   (a1), d0
+    mov     (0x30, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x42, sp)
+    mov     sp, a0
+    add     0x3c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x54
 # DrawBitmapSPFast16  (CPU 0x484245bc)
-.incbin_range "baserom/kn7000_program.rom", 0x0245bc, 0x024784
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# DrawBitmapSPFast16_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x484245e9
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424616
+    mov     (0x44, sp), a0
+    exth    d2
+    mov     a0, (0x18, sp)
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast16_Impl_entry, [d2,d3,a2,a3], 0x40
+    bra     0x48424616
+    mov     0x14, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424619, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    mov     (0x44, sp), a1
+    mov     a1, (0x10, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x2c
+# DrawBitmapSPFast16_QueuedExec  (CPU 0x48424619)
+    movm    [d2,a2], (sp)
+    add     -0x1c, sp
+    mov     (0x5002a01c), d1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a1
+    movhu   (0xc, a0), d0
+    movhu   (0xe, a0), d2
+    mov     (0x10, a0), a0
+    cmp     0, d1
+    beq     0x48424641
+    mov     a0, (0x18, sp)
+    exth    d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast16_Impl_entry, [d2,d3,a2,a3], 0x40
+    ret     [d2,a2], 0x24
+# DrawBitmapSPFast16_Impl  (CPU 0x48424644)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x30, sp
+# DrawBitmapSPFast16_Impl_entry:   (register-save `call` entry)
+    movhu   d0, (0x50, sp)
+    mov     d1, d2
+    mov     a1, a3
+    mov     a0, (0x48, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x4842465c
+    ret     [d2,d3,a2,a3], 0x40
+    mov     (0x48, sp), d0
+    exth    d2
+    add     2, d0
+    mov     d0, a0
+    mov     d0, (0x20, sp)
+    movhu   (a0), d0
+    mov     0x280, d3
+    movhu   d0, (0x26, sp)
+    movhu   (a0), d0
+    mov     (0x48, sp), a0
+    exth    d0
+    movhu   (a0), d1
+    nop
+    nop
+    mul     d3, d0
+    exth    d1
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     d0, (0x10, sp)
+    mov     d2, (0x1c, sp)
+    clr     d0
+    mov     d0, (0x14, sp)
+    cmp     0, d2
+    bgt     0x4842468e
+    jmp     0x48424726
+    movhu   (0x50, sp), d0
+    exth    d0
+    mov     d0, (0x18, sp)
+    movhu   (0x26, sp), d0
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x484246a1
+    jmp     0x48424726
+    mov     (0x10, sp), a2
+    clr     d2
+    clr     d3
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    cmp     d2, d0
+    ble     0x484246e2
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     d0, d1
+    setlb
+    mov     0x485a24b8, a0
+    movbu   (a3), d0
+    add     d0, d0
+    movhu   (d0, a0), d0
+    inc     d3
+    and     0xff, d0
+    movbu   d0, (a2)
+    movbu   (a3), d0
+    inc     a2
+    add     d0, d0
+    movhu   (d0, a0), d0
+    inc     a3
+    asr     8, d0
+    movbu   d0, (a2)
+    inc     a2
+    mov     d3, d2
+    exth    d3
+    cmp     d1, d3
+    llt
+    mov     (0x18, sp), d0
+    btst    0x01, d0
+    beq     0x48424701
+    movbu   (a3), d0
+    mov     0x485a24b8, a1
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d0
+    movhu   (d0, a1), d1
+    inc     a3
+    and     0xff, d1
+    movbu   d1, (a2)
+    inc     d3
+    mov     d3, d2
+    exth    d2
+    btst    0x01, d2
+    beq     0x48424708
+    inc     a3
+    mov     (0x10, sp), d0
+    mov     (0x1c, sp), d1
+    add     0x280, d0
+    mov     d0, (0x10, sp)
+    movhu   (0x26, sp), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (0x26, sp)
+    mov     (0x14, sp), d0
+    inc     d0
+    exth    d0
+    mov     d0, (0x14, sp)
+    cmp     d1, d0
+    bge     0x48424726
+    jmp     0x48424694
+    mov     0x20, d2
+    mov     d2, d3
+    mov     (0x58, sp), a0
+    mov     d3, d0
+    asl2    d0
+    add     d0, a0
+    mov     (-0x80, a0), a2
+    mov     d2, d0
+    exth    d0
+    call    GetPaletteRGB, 0, 0
+    cmp     d0, a2
+    beq     0x4842474a
+    exth    d2
+    mov     a2, d1
+    mov     d2, d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    inc     d3
+    mov     d3, d2
+    exthu   d3
+    cmp     0x30, d3
+    blt     0x48424729
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2a, sp)
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x28, sp)
+    movhu   (a0), d1
+    movhu   (0x50, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2c, sp)
+    mov     (0x20, sp), a0
+    mov     (0x1c, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2e, sp)
+    add     0x28, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x40
 # DrawBitmapSPFast256  (CPU 0x48424784)
-.incbin_range "baserom/kn7000_program.rom", 0x024784, 0x0248de
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+# DrawBitmapSPFast256_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x484247b1
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x484247de
+    mov     (0x44, sp), a0
+    exth    d2
+    mov     a0, (0x18, sp)
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast256_Impl_entry, [d2,d3,a2,a3], 0x3c
+    bra     0x484247de
+    mov     0x14, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x484247e1, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    mov     (0x44, sp), a1
+    mov     a1, (0x10, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x2c
+# DrawBitmapSPFast256_QueuedExec  (CPU 0x484247e1)
+    movm    [d2,a2], (sp)
+    add     -0x1c, sp
+    mov     (0x5002a01c), d1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a1
+    movhu   (0xc, a0), d0
+    movhu   (0xe, a0), d2
+    mov     (0x10, a0), a0
+    cmp     0, d1
+    beq     0x48424809
+    mov     a0, (0x18, sp)
+    exth    d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast256_Impl_entry, [d2,d3,a2,a3], 0x3c
+    ret     [d2,a2], 0x24
+# DrawBitmapSPFast256_Impl  (CPU 0x4842480c)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+# DrawBitmapSPFast256_Impl_entry:   (register-save `call` entry)
+    mov     a1, a3
+    movhu   d0, (0x4c, sp)
+    movhu   d1, (0x50, sp)
+    mov     a0, (0x44, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x48424826
+    ret     [d2,d3,a2,a3], 0x3c
+    mov     0x20, d0
+    mov     d0, d2
+    mov     (0x54, sp), a0
+    mov     d0, d1
+    exthu   d1
+    asl2    d1
+    mov     (d1, a0), d1
+    exth    d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0xd0, d2
+    blt     0x48424829
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x20, sp)
+    movhu   (a0), d1
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x20, sp), a0
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     d0, a2
+    movhu   (0x50, sp), d0
+    movhu   (a0), d2
+    exth    d0
+    mov     d0, (0x18, sp)
+    clr     d3
+    cmp     d3, d0
+    ble     0x484248ab
+    movhu   (0x4c, sp), d0
+    mov     2, d1
+    exth    d0
+    mov     d0, (0x1c, sp)
+    movhu   (0x4c, sp), d0
+    exth    d0
+    inc     d0
+    call    LibDiv32, 0, 0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, (0x14, sp)
+    exthu   d2
+    cmp     0xf0, d2
+    bge     0x484248ab
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x1c, sp), d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x14, sp), d0
+    add     0x280, a2
+    add     d0, a3
+    mov     (0x18, sp), d0
+    inc     d2
+    inc     d3
+    exthu   d3
+    cmp     d0, d3
+    blt     0x48424889
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)
+    movhu   (a0), d1
+    movhu   (0x4c, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x28, sp)
+    mov     (0x20, sp), a0
+    mov     (0x18, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2a, sp)
+    add     0x24, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
 # DrawBitmapSP2  (CPU 0x484248de)
-.incbin_range "baserom/kn7000_program.rom", 0x0248de, 0x024a9f
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# DrawBitmapSP2_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    mov     d1, d3
+    mov     d0, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424913
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424947
+    movhu   (0x48, sp), d0
+    exth    d2
+    exth    d0
+    mov     d0, (0x18, sp)
+    movhu   (0x4c, sp), d0
+    exth    d3
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44
+    bra     0x48424947
+    mov     0x14, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x4842494a, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    movhu   d2, (0xc, a0)
+    movhu   d3, (0xe, a0)
+    movhu   (0x48, sp), d0
+    movhu   d0, (0x10, a0)
+    movhu   (0x4c, sp), d0
+    movhu   d0, (0x12, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x30
+# DrawBitmapSP2_QueuedExec  (CPU 0x4842494a)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    movhu   (0xe, a0), d0
+    mov     a0, a1
+    inc4    a1
+    mov     (8, a0), a2
+    movhu   (0xc, a0), d3
+    mov     d0, a3
+    mov     (0x5002a01c), d0
+    movhu   (0x10, a0), d1
+    movhu   (0x12, a0), d2
+    cmp     0, d0
+    beq     0x4842497e
+    exth    d1
+    mov     d1, (0x18, sp)
+    exth    d2
+    mov     d2, (0x1c, sp)
+    mov     a1, a0
+    exth    d3
+    mov     a3, d1
+    exth    d1
+    mov     d3, d0
+    mov     a2, a1
+    call    DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44
+    ret     [d2,d3,a2,a3], 0x30
+# DrawBitmapSP2_Impl  (CPU 0x48424981)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x34, sp
+# DrawBitmapSP2_Impl_entry:   (register-save `call` entry)
+    mov     a1, (0x50, sp)
+    movhu   d0, (0x54, sp)
+    mov     d1, d2
+    mov     a0, (0x4c, sp)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     0x4842499a
+    ret     [d2,d3,a2,a3], 0x44
+    clr     d0
+    mov     d0, (0x10, sp)
+    exth    d2
+    mov     d2, (0x18, sp)
+    cmp     0, d2
+    bgt     0x484249a7
+    jmp     0x48424a6c
+    movhu   (0x54, sp), d0
+    exth    d0
+    mov     d0, (0x14, sp)
+    add     0xf, d0
+    mov     d0, (0x1c, sp)
+    mov     (0x4c, sp), d0
+    add     2, d0
+    mov     d0, (0x20, sp)
+    mov     (0x14, sp), d0
+    add     0xf, d0
+    mov     d0, (0x24, sp)
+    mov     (0x20, sp), a0
+    mov     (0x10, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x2a, sp)
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x484249d2
+    jmp     0x48424a6c
+    mov     (0x4c, sp), a0
+    movhu   (0x2a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     0x500d4080, d0
+    add     d1, d0
+    mov     d0, a2
+    mov     (0x24, sp), d0
+    mov     0, a3
+    mov     0x10, d1
+    call    LibDiv32, 0, 0
+    cmp     0, d0
+    ble     0x48424a5e
+    mov     (0x1c, sp), d0
+    mov     0x10, d1
+    call    LibDiv32, 0, 0
+    mov     d0, a1
+    mov     (0x50, sp), a0
+    mov     a3, d0
+    movhu   (a0), d2
+    movhu   (a0), d1
+    asl     4, d0
+    mov     d0, a0
+    asr     8, d2
+    and     0xff, d2
+    exthu   d2
+    and     0xff, d1
+    asl     8, d1
+    add     d1, d2
+    exthu   d2
+    clr     d3
+    setlb
+    mov     (0x14, sp), d1
+    mov     a0, d0
+    add     d3, d0
+    cmp     d1, d0
+    bge     0x48424a4f
+    mov     0xf, d0
+    sub     d3, d0
+    mov     1, d1
+    asl     d0, d1
+    mov     d1, d0
+    exthu   d0
+    and     d2, d0
+    beq     0x48424a44
+    movhu   (0x5c, sp), d0
+    movbu   d0, (a2)
+    bra     0x48424a49
+    movhu   (0x60, sp), d0
+    movbu   d0, (a2)
+    inc     a2
+    inc     d3
+    exthu   d3
+    cmp     0x10, d3
+    llt
+    mov     (0x50, sp), d0
+    add     2, d0
+    mov     d0, (0x50, sp)
+    mov     a3, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a3
+    cmp     a1, a3
+    blt     0x48424a09
+    mov     (0x10, sp), d0
+    mov     (0x18, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    cmp     d1, d0
+    bge     0x48424a6c
+    jmp     0x484249bd
+    mov     (0x4c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2e, sp)
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2c, sp)
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x30, sp)
+    movhu   (a1), d0
+    mov     (0x18, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x32, sp)
+    mov     sp, a0
+    add     0x2c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x44
 # DrawBitmapFile  (CPU 0x48424a9f)
-.incbin_range "baserom/kn7000_program.rom", 0x024a9f, 0x024cc8
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+# DrawBitmapFile_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424ac2
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424ae4
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFile_Impl_entry, [d2,d3,a2,a3], 0x10
+    bra     0x48424ae4
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424ae7, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [a2,a3], 0x18
+# DrawBitmapFile_QueuedExec  (CPU 0x48424ae7)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (0x5002a01c), a1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a3
+    cmp     0, a1
+    beq     0x48424b02
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFile_Impl_entry, [d2,d3,a2,a3], 0x10
+    ret     [a2,a3], 0x18
+# DrawBitmapFile_Impl  (CPU 0x48424b05)
+    movm    [d2,d3,a2,a3], (sp)
+# DrawBitmapFile_Impl_entry:   (register-save `call` entry)
+    add     -0x47c, sp
+    mov     a0, (0x494, sp)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x3c, d0
+    mov     d0, (0x30, sp)
+    mov     a0, d0
+    add     0x38, d0
+    mov     d0, (0x18, sp)
+    mov     a1, a0
+    mov     sp, a1
+    add     0x43c, a1
+    mov     sp, a2
+    mov     a2, d0
+    add     0x44c, d0
+    mov     (0x30, sp), d1
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
+    cmp     0, d0
+    bne     0x48424b37
+    jmp     0x48424cc1
+    mov     (0x450, sp), d0
+    mov     1, d3
+    movhu   d0, (0x36, sp)
+    movhu   (0x454, sp), d0
+    movhu   (0x45a, sp), d1
+    mov     d0, a2
+    mov     8, d0
+    call    LibDiv32, 0, 0
+    mov     d0, d2
+    movhu   (0x36, sp), d0
+    exth    d2
+    exth    d0
+    mov     d0, (0x20, sp)
+    mov     d0, d1
+    mov     d2, d0
+    asl2    d0
+    sub     d3, d0
+    add     d0, d1
+    mov     d2, d0
+    asl2    d0
+    clr     d3
+    mov     d3, mdr
+    divu    d0, d1
+    asl2    d1
+    movhu   d1, (0x34, sp)
+    movhu   (0x34, sp), d0
+    mov     0xf0, d3
+    exth    d0
+    mov     d0, (0x1c, sp)
+    nop
+    nop
+    mul     d2, d0
+    call    func_4841662A, [d2,a2,a3], 0x28
+    mov     (0x494, sp), d0
+    mov     a0, a3
+    add     2, d0
+    mov     d0, (0x2c, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     a2, d2
+    exth    d2
+    exth    d0
+    mov     d3, d1
+    sub     d0, d1
+    cmp     d1, d2
+    ble     0x48424bca
+    movhu   (a0), d0
+    clr     d1
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    mov     a0, d0
+    mov     d2, a0
+    sub     d0, a0
+    cmp     d1, a0
+    ble     0x48424bc1
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    sub     a0, d2
+    setlb
+    mov     (0x1c, sp), a0
+    mov     (0x38, sp), d0
+    inc     d1
+    add     a0, d0
+    mov     d0, (0x38, sp)
+    exth    d1
+    cmp     d2, d1
+    llt
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    sub     d0, d3
+    mov     d3, a2
+    movhu   (a0), d0
+    mov     (0x494, sp), a0
+    exth    d0
+    movhu   (a0), d2
+    mov     a2, d3
+    exth    d3
+    exth    d2
+    add     d3, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     0x500d4080, d0
+    add     -0x280, d0
+    add     d2, d0
+    mov     d0, a2
+    clr     d2
+    cmp     d2, d3
+    ble     0x48424c43
+    movhu   (0x34, sp), d0
+    exth    d0
+    mov     d0, (0x28, sp)
+    movhu   (0x36, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    mov     a3, a0
+    mov     (0x38, sp), a1
+    mov     (0x28, sp), d0
+    call    0x4c003039, [a2,a3], 8
+    movhu   (0x45a, sp), d1
+    mov     a3, a0
+    mov     (0x1c, sp), d0
+    call    func_4842201B, [d2,d3,a2,a3], 0x30
+    mov     (0x20, sp), d0
+    clr     d1
+    cmp     d1, d0
+    ble     0x48424c27
+    setlb
+    movbu   (d1, a3), d0
+    add     0x20, d0
+    movbu   d0, (d1, a3)
+    mov     (0x20, sp), d0
+    inc     d1
+    exth    d1
+    cmp     d0, d1
+    llt
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x24, sp), d0
+    call    0x4c003039, [a2,a3], 8
+    mov     (0x38, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d2
+    add     d1, d0
+    mov     d0, (0x38, sp)
+    exth    d2
+    mov     0x280, d0
+    sub     d0, a2
+    cmp     d3, d2
+    blt     0x48424bfc
+    mov     a3, a0
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    mov     0x20, d3
+    mov     (0x30, sp), d1
+    mov     (0x30, sp), d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (-0x80, a0), d0
+    mov     d3, d1
+    asl2    d1
+    add     d2, d1
+    add     -0x80, d1
+    mov     d1, a0
+    movbu   (1, a0), d2
+    mov     (0x30, sp), d1
+    asl     8, d0
+    add     d0, d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    add     -0x80, d0
+    mov     d0, a0
+    movbu   (2, a0), d1
+    asl     8, d2
+    mov     d3, d0
+    add     d2, d1
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    inc     d3
+    exth    d3
+    cmp     0xd0, d3
+    blt     0x48424c4d
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x476, sp)
+    mov     (0x494, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x474, sp)
+    movhu   (a0), d1
+    mov     (0x450, sp), d0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x478, sp)
+    mov     (0x2c, sp), a0
+    mov     (0x454, sp), d0
+    movhu   (a0), d1
+    mov     sp, a0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x47a, sp)
+    add     0x474, a0
+    call    SetChangeRect, 0, 0
+    add     0x47c, sp
+    ret     [d2,d3,a2,a3], 0x10
 # DrawBitmapFileEx  (CPU 0x48424cc8)
-.incbin_range "baserom/kn7000_program.rom", 0x024cc8, 0x024ebd
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     a1, a3
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424ceb
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424d0d
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFileEx_Impl_entry, [d2,d3,a2,a3], 0x10
+    bra     0x48424d0d
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424d10, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [a2,a3], 0x18
+# DrawBitmapFileEx_QueuedExec  (CPU 0x48424d10)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (0x5002a01c), a1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a3
+    cmp     0, a1
+    beq     0x48424d2b
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFileEx_Impl_entry, [d2,d3,a2,a3], 0x10
+    ret     [a2,a3], 0x18
+# DrawBitmapFileEx_Impl  (CPU 0x48424d2e)
+    movm    [d2,d3,a2,a3], (sp)
+# DrawBitmapFileEx_Impl_entry:   (register-save `call` entry)
+    add     -0x474, sp
+    mov     a0, (0x48c, sp)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x34, d0
+    mov     d0, (0x28, sp)
+    mov     a0, d0
+    add     0x30, d0
+    mov     d0, (0x18, sp)
+    mov     a1, a0
+    mov     sp, a1
+    add     0x434, a1
+    mov     sp, a2
+    mov     a2, d0
+    add     0x444, d0
+    mov     (0x28, sp), d1
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
+    cmp     0, d0
+    bne     0x48424d60
+    jmp     0x48424eb6
+    movhu   (0x448, sp), d2
+    movhu   (0x44c, sp), d0
+    movhu   (0x452, sp), d1
+    exth    d2
+    mov     1, d3
+    mov     d0, a3
+    mov     8, d0
+    call    LibDiv32, 0, 0
+    mov     d2, (0x20, sp)
+    mov     (0x20, sp), d1
+    mov     d0, d2
+    exth    d2
+    mov     d2, d0
+    asl2    d0
+    sub     d3, d0
+    add     d0, d1
+    mov     d2, d0
+    asl2    d0
+    clr     d3
+    mov     d3, mdr
+    divu    d0, d1
+    asl2    d1
+    movhu   d1, (0x2c, sp)
+    movhu   (0x2c, sp), d0
+    mov     0xf0, d3
+    exth    d0
+    mov     d0, (0x1c, sp)
+    nop
+    nop
+    mul     d2, d0
+    call    func_4841662A, [d2,a2,a3], 0x28
+    mov     (0x48c, sp), d0
+    mov     a0, a2
+    add     2, d0
+    mov     d0, (0x24, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     a3, d2
+    exth    d2
+    exth    d0
+    mov     d3, d1
+    sub     d0, d1
+    cmp     d1, d2
+    ble     0x48424dee
+    movhu   (a0), d0
+    clr     d1
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    mov     a0, d0
+    mov     d2, a0
+    sub     d0, a0
+    cmp     d1, a0
+    ble     0x48424de5
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    sub     a0, d2
+    setlb
+    mov     (0x1c, sp), a0
+    mov     (0x30, sp), d0
+    inc     d1
+    add     a0, d0
+    mov     d0, (0x30, sp)
+    exth    d1
+    cmp     d2, d1
+    llt
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    sub     d0, d3
+    mov     d3, a3
+    clr     d2
+    mov     a3, d3
+    exth    d3
+    cmp     d2, d3
+    ble     0x48424e32
+    movhu   (0x2c, sp), d0
+    exth    d0
+    mov     d0, a3
+    mov     a2, a0
+    mov     (0x30, sp), a1
+    mov     a3, d0
+    call    0x4c003039, [a2,a3], 8
+    movhu   (0x452, sp), d1
+    mov     a2, a0
+    mov     (0x1c, sp), d0
+    call    func_4842201B, [d2,d3,a2,a3], 0x30
+    mov     (0x20, sp), d0
+    clr     d1
+    cmp     d1, d0
+    ble     0x48424e26
+    setlb
+    movbu   (d1, a2), d0
+    add     0x20, d0
+    movbu   d0, (d1, a2)
+    mov     (0x20, sp), d0
+    inc     d1
+    exth    d1
+    cmp     d0, d1
+    llt
+    mov     (0x30, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d2
+    add     d1, d0
+    mov     d0, (0x30, sp)
+    exth    d2
+    cmp     d3, d2
+    blt     0x48424dfb
+    mov     a2, a0
+    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    mov     0x20, d3
+    mov     (0x28, sp), d1
+    mov     (0x28, sp), d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    mov     -0x80, d1
+    movbu   (d1, a0), d1
+    mov     d3, d0
+    asl2    d0
+    add     d2, d0
+    add     -0x80, d0
+    mov     d0, a0
+    movbu   (1, a0), d2
+    mov     0xffffff80, a0
+    mov     d1, d0
+    mov     (0x28, sp), d1
+    asl     8, d0
+    add     d0, d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (2, a0), d1
+    asl     8, d2
+    mov     d3, d0
+    add     d2, d1
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    inc     d3
+    exth    d3
+    cmp     0xd0, d3
+    blt     0x48424e3c
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x46e, sp)
+    mov     (0x48c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x46c, sp)
+    movhu   (a0), d1
+    mov     (0x448, sp), d0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x470, sp)
+    mov     (0x24, sp), a0
+    mov     (0x44c, sp), d0
+    movhu   (a0), d1
+    mov     sp, a0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x472, sp)
+    add     0x46c, a0
+    call    SetChangeRect, 0, 0
+    add     0x474, sp
+    ret     [d2,d3,a2,a3], 0x10
 # DrawJpegFile  (CPU 0x48424ebd)
-.incbin_range "baserom/kn7000_program.rom", 0x024ebd, 0x024f28
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+# DrawJpegFile_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424ee0
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424f02
+    mov     a3, a1
+    mov     a2, a0
+    call    JpegDecodeBlit, [d2,a2,a3], 0x2c
+    bra     0x48424f02
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424f05, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [a2,a3], 0x18
+# DrawJpegFile_QueuedExec  (CPU 0x48424f05)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (0x5002a01c), a1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a3
+    cmp     0, a1
+    beq     0x48424f20
+    mov     a3, a1
+    mov     a2, a0
+    call    JpegDecodeBlit, [d2,a2,a3], 0x2c
+    ret     [a2,a3], 0x18
+    movm    [d2,a2,a3], (sp)
+    add     -0x20, sp
 # JpegDecodeBlit  (CPU 0x48424f28)
-.incbin_range "baserom/kn7000_program.rom", 0x024f28, 0x024f7d
+    mov     a0, a3
+    movhu   (a3), d0
+    mov     2, d2
+    add     a3, d2
+    mov     d2, a0
+    movhu   (a0), d1
+    mov     a1, a2
+    exth    d0
+    exth    d1
+    mov     a2, a0
+    call    JpegSetup, 0, 0x4c
+    mov     sp, a1
+    add     0x14, a1
+    mov     sp, a0
+    mov     a0, d0
+    add     0x16, d0
+    mov     a2, a0
+    call    JpegHeaderParse, [d2,d3,a2,a3], 0x10
+    mov     d2, a0
+    movhu   (a0), d0
+    movhu   d0, (0x1a, sp)
+    movhu   (a3), d0
+    movhu   d0, (0x18, sp)
+    movhu   (a3), d1
+    movhu   (0x14, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x1c, sp)
+    movhu   (a0), d1
+    movhu   (0x16, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x1e, sp)
+    mov     sp, a0
+    add     0x18, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,a2,a3], 0x2c
 # DrawJpegFileR  (CPU 0x48424f7d)
-.incbin_range "baserom/kn7000_program.rom", 0x024f7d, 0x025265
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+# DrawJpegFileR_entry:   (register-save `call` entry)
+    mov     a1, a3
+    mov     a0, a2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x48424fa0
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    beq     0x48424fc2
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawJpegFileR_Impl_entry, [d2,d3,a2,a3], 0xb0
+    bra     0x48424fc2
+    mov     0xc, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     0x48424fc5, d0
+    mov     d0, (a0)
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)
+    mov     a3, (8, a0)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [a2,a3], 0x18
+# DrawJpegFileR_QueuedExec  (CPU 0x48424fc5)
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (0x5002a01c), a1
+    mov     a0, a2
+    inc4    a2
+    mov     (8, a0), a3
+    cmp     0, a1
+    beq     0x48424fe0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawJpegFileR_Impl_entry, [d2,d3,a2,a3], 0xb0
+    ret     [a2,a3], 0x18
+# DrawJpegFileR_Impl  (CPU 0x48424fe3)
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa0, sp
+# DrawJpegFileR_Impl_entry:   (register-save `call` entry)
+    mov     sp, a2
+    mov     a0, (0xb8, sp)
+    mov     a1, (0xbc, sp)
+    mov     a1, a0
+    mov     sp, a1
+    add     0x54, a1
+    mov     a2, d0
+    add     0x56, d0
+    call    JpegHeaderParse, [d2,d3,a2,a3], 0x10
+    mov     (0xb8, sp), a1
+    clr     d3
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x5a, sp)
+    mov     (0xb8, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x58, sp)
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x5c, sp)
+    movhu   (a1), d1
+    movhu   (0x56, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x5e, sp)
+    movhu   (0x5a, sp), d0
+    mov     sp, a0
+    exth    d0
+    mov     d0, (0x50, sp)
+    movhu   (0x58, sp), d0
+    mov     0x485a28bc, a1
+    exth    d0
+    mov     d0, (0x4c, sp)
+    mov     a0, d0
+    add     0x60, d0
+    mov     d0, (0x18, sp)
+    add     8, d0
+    mov     d0, (0x40, sp)
+    mov     (0x18, sp), d0
+    mov     0x500d4080, a3
+    add     0x10, d0
+    mov     d0, (0x48, sp)
+    mov     (0x18, sp), d0
+    mov     0x500f9880, a2
+    add     0x18, d0
+    mov     d0, (0x44, sp)
+    mov     a0, d0
+    add     0x80, d0
+    mov     d0, (0x14, sp)
+    add     8, d0
+    mov     d0, (0x24, sp)
+    mov     (0x14, sp), d0
+    add     0x10, d0
+    mov     d0, (0x20, sp)
+    mov     (0x14, sp), d0
+    add     0x18, d0
+    mov     d0, (0x28, sp)
+    movhu   (0x5a, sp), d0
+    exth    d0
+    mov     d0, (0x38, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x34, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x30, sp)
+    movhu   (0x58, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x2c, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    setlb
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d0
+    mov     d3, d1
+    asl2    d1
+    movhu   (d1, a1), d1
+    mov     (0x50, sp), d2
+    exth    d0
+    exth    d1
+    add     d2, d0
+    mov     (0x18, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    mov     (0x4c, sp), d1
+    add     d1, d0
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x14, sp), a0
+    movbu   d0, (d3, a0)
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d1
+    exth    d2
+    asl2    d1
+    movhu   (d1, a1), d1
+    mov     (0x38, sp), d0
+    exth    d1
+    add     d0, d2
+    mov     0x280, d0
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x34, sp), d2
+    mov     (0x40, sp), a0
+    add     d2, d0
+    sub     d1, d0
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x24, sp), a0
+    movbu   d0, (d3, a0)
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d0
+    exth    d2
+    asl2    d0
+    movhu   (d0, a1), d1
+    mov     (0x30, sp), d0
+    exth    d1
+    sub     d2, d0
+    mov     (0x48, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    mov     (0x3c, sp), d1
+    add     d1, d0
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x20, sp), a0
+    movbu   d0, (d3, a0)
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d0
+    exth    d2
+    asl2    d0
+    movhu   (d0, a1), d1
+    mov     (0x2c, sp), d0
+    exth    d1
+    sub     d2, d0
+    mov     (0x44, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x1c, sp), d2
+    add     d2, d0
+    sub     d1, d0
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x28, sp), a0
+    movbu   d0, (d3, a0)
+    inc     d3
+    exth    d3
+    cmp     8, d3
+    llt
+    mov     (0xb8, sp), a0
+    mov     (0xbc, sp), a1
+    call    JpegDecodeBlit, [d2,a2,a3], 0x2c
+    movhu   (0x5a, sp), d0
+    mov     sp, a0
+    exth    d0
+    mov     d0, (0x44, sp)
+    movhu   (0x58, sp), d0
+    clr     d3
+    exth    d0
+    mov     d0, (0x50, sp)
+    mov     a0, d0
+    add     0x60, d0
+    mov     d0, (0x18, sp)
+    add     8, d0
+    mov     d0, (0x48, sp)
+    mov     (0x18, sp), d0
+    mov     0x485a28bc, a1
+    add     0x10, d0
+    mov     d0, (0x4c, sp)
+    mov     (0x18, sp), d0
+    add     0x18, d0
+    mov     d0, (0x40, sp)
+    mov     a0, d0
+    add     0x80, d0
+    mov     d0, (0x14, sp)
+    add     8, d0
+    mov     d0, (0x28, sp)
+    mov     (0x14, sp), d0
+    add     0x10, d0
+    mov     d0, (0x2c, sp)
+    mov     (0x14, sp), d0
+    add     0x18, d0
+    mov     d0, (0x30, sp)
+    movhu   (0x5a, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x34, sp)
+    movhu   (0x58, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x38, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    setlb
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1
+    mov     d3, d0
+    exth    d1
+    mov     (0x18, sp), a0
+    asl2    d0
+    movhu   (d0, a1), d0
+    mov     (0x44, sp), d2
+    exth    d0
+    add     d2, d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d1
+    add     d0, d1
+    mov     (0x50, sp), d0
+    add     d0, d1
+    movbu   (d3, a0), d0
+    movbu   d0, (d1, a3)
+    mov     (0x14, sp), a0
+    movbu   (d3, a0), d0
+    movbu   d0, (d1, a2)
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d0
+    mov     d3, d1
+    asl2    d1
+    movhu   (d1, a1), d1
+    exth    d0
+    mov     (0x20, sp), d2
+    exth    d1
+    add     d2, d0
+    mov     0x280, d2
+    mov     (0x48, sp), a0
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x24, sp), d2
+    add     d2, d0
+    sub     d1, d0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a3)
+    mov     (0x28, sp), a0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a2)
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1
+    mov     d3, d0
+    exth    d1
+    asl2    d0
+    movhu   (d0, a1), d2
+    mov     (0x34, sp), d0
+    exth    d2
+    sub     d1, d0
+    mov     0x280, d1
+    mov     (0x4c, sp), a0
+    nop
+    nop
+    mul     d1, d0
+    mov     (0x3c, sp), d1
+    add     d2, d0
+    add     d1, d0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a3)
+    mov     (0x2c, sp), a0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a2)
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1
+    mov     d3, d0
+    exth    d1
+    mov     (0x40, sp), a0
+    asl2    d0
+    movhu   (d0, a1), d2
+    mov     (0x38, sp), d0
+    exth    d2
+    sub     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     (0x1c, sp), d1
+    add     d1, d0
+    movbu   (d3, a0), d1
+    sub     d2, d0
+    movbu   d1, (d0, a3)
+    mov     (0x30, sp), a0
+    movbu   (d3, a0), d1
+    inc     d3
+    movbu   d1, (d0, a2)
+    exth    d3
+    cmp     8, d3
+    llt
+    ret     [d2,d3,a2,a3], 0xb0
 # GetJpegSize  (CPU 0x48425265)
     movm    [d2,d3,a2,a3], (sp)
 # JpegHeaderParse  (CPU 0x48425267)
-.incbin_range "baserom/kn7000_program.rom", 0x025267, 0x025393
+    mov     d0, (0x20, sp)
+    mov     a1, (0x1c, sp)
+    mov     0xffffffff, a1
+    mov     a1, a2
+    movbu   (a0), d0
+    movbu   (1, a0), d1
+    exthu   d0
+    asl     8, d0
+    add     d1, d0
+    exthu   d0
+    cmp     0xffd8, d0
+    beq     0x48425288
+    jmp     0x4842536a
+    mov     2, d1
+    setlb
+    movbu   (d1, a0), d2
+    inc     d1
+    mov     d1, d0
+    exth    d1
+    movbu   (d1, a0), d1
+    exth    d0
+    inc     d0
+    exthu   d2
+    asl     8, d2
+    add     d1, d2
+    exthu   d2
+    cmp     0xffe0, d2
+    blt     0x484252c1
+    cmp     0xffef, d2
+    bgt     0x484252c1
+    exth    d0
+    movbu   (d0, a0), d1
+    inc     d0
+    mov     d0, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d0
+    inc     d0
+    exth    d0
+    exthu   d1
+    asl     8, d1
+    add     d2, d1
+    exthu   d1
+    add     d0, d1
+    add     -2, d1
+    jmp     0x48425366
+    cmp     0xffc4, d2
+    beq     0x484252fb
+    cmp     0xffdb, d2
+    beq     0x484252fb
+    cmp     0xffdd, d2
+    beq     0x484252fb
+    cmp     0xffdc, d2
+    beq     0x484252fb
+    cmp     0xfffe, d2
+    beq     0x484252fb
+    cmp     0xffc0, d2
+    beq     0x48425312
+    cmp     0xffda, d2
+    beq     0x48425312
+    bra     0x48425364
+    mov     d0, d1
+    exth    d1
+    movbu   (d1, a0), d0
+    inc     d1
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    exth    d1
+    exthu   d0
+    asl     8, d0
+    add     d2, d0
+    exthu   d0
+    add     d0, d1
+    add     -2, d1
+    bra     0x48425366
+    exth    d0
+    movbu   (d0, a0), d3
+    inc     d0
+    mov     d0, d1
+    exth    d1
+    movbu   (d1, a0), d2
+    exth    d0
+    mov     d0, d1
+    inc     d1
+    exthu   d3
+    asl     8, d3
+    mov     d2, d0
+    add     d3, d0
+    exthu   d0
+    cmp     2, d0
+    blt     0x48425366
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    cmp     8, d2
+    bne     0x48425366
+    exth    d1
+    movbu   (d1, a0), d3
+    inc     d1
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    exthu   d3
+    mov     d3, d0
+    asl     8, d0
+    add     d2, d0
+    mov     d0, a1
+    exth    d0
+    cmp     0, d0
+    ble     0x48425366
+    exth    d1
+    movbu   (d1, a0), d2
+    inc     d1
+    mov     d1, d0
+    exth    d0
+    movbu   (d0, a0), d3
+    exth    d1
+    inc     d1
+    exthu   d2
+    asl     8, d2
+    add     d3, d2
+    mov     d2, a2
+    mov     d2, d0
+    exth    d0
+    cmp     0, d0
+    ble     0x48425366
+    mov     -1, d1
+    bra     0x48425366
+    mov     -1, d1
+    exth    d1
+    cmp     -1, d1
+    lne
+    mov     a2, d0
+    exth    d0
+    cmp     0, d0
+    ble     0x48425378
+    mov     a1, d0
+    exth    d0
+    cmp     0, d0
+    bgt     0x48425384
+    mov     (0x1c, sp), a0
+    mov     -1, d0
+    movhu   d0, (a0)
+    mov     (0x20, sp), a0
+    movhu   d0, (a0)
+    bra     0x48425390
+    mov     (0x1c, sp), a0
+    mov     a2, d0
+    movhu   d0, (a0)
+    mov     (0x20, sp), a0
+    mov     a1, d0
+    movhu   d0, (a0)
+    retf    [d2,d3,a2,a3], 0x10
 # DrawString  (CPU 0x48425393)
-.incbin_range "baserom/kn7000_program.rom", 0x025393, 0x025896
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+# DrawString_entry:   (register-save `call` entry)
+    mov     d0, d3
+    mov     a1, (0x3c, sp)
+    mov     a0, (0x38, sp)
+    mov     d1, d2
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     0x484253cc
+    mov     (0x5002a01c), d0
+    cmp     0, d0
+    bne     0x484253b4
+    ret     [d2,d3,a2,a3], 0x30
+    mov     (0x40, sp), a0
+    exth    d2
+    mov     a0, (0x10, sp)
+    movhu   (0x4c, sp), d0
+    mov     d2, d1
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     (0x38, sp), a0
+    mov     (0x3c, sp), a1
+    mov     d3, d0
+    call    DrawString_Impl_entry, [d2,d3,a2,a3], 0x10
+    bra     0x4842542b
+    mov     (0x40, sp), a0
+    call    LibStrlen, 0, 0
+    inc     d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     a0, a3
+    mov     0x1c, d0
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     a0, a2
+    mov     0x4842542e, d0
+    mov     d0, (a2)
+    mov     (0x38, sp), a0
+    mov     a2, a1
+    inc4    a1
+    mov     -4, d1
+    setlb
+    movhu   (a0), d0
+    add     2, a0
+    movhu   d0, (a1)
+    add     2, a1
+    inc     d1
+    lne
+    mov     (0x3c, sp), a1
+    mov     0xc, a0
+    movhu   (a1), d0
+    add     a2, a0
+    movhu   d0, (a0)
+    movhu   (2, a1), d0
+    movhu   d0, (2, a0)
+    mov     a3, (0x10, a2)
+    mov     (0x40, sp), a1
+    mov     a3, a0
+    call    0x4c003051, [a2], 4
+    mov     d3, (0x14, a2)
+    movhu   d2, (0x18, a2)
+    movhu   (0x4c, sp), d0
+    mov     a2, a0
+    movhu   d0, (0x1a, a2)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    ret     [d2,d3,a2,a3], 0x30
+# DrawString_QueuedExec  (CPU 0x4842542e)
+    movm    [d2,d3,a2], (sp)
+    add     -0x20, sp
+    mov     (0x5002a01c), d1
+    mov     a0, a2
+    inc4    a0
+    mov     (0x14, a2), d3
+    movhu   (0x18, a2), d2
+    movhu   (0x1a, a2), d0
+    mov     0xc, a1
+    add     a2, a1
+    cmp     0, d1
+    beq     0x4842545c
+    mov     (0x10, a2), d1
+    exth    d0
+    mov     d1, (0x10, sp)
+    mov     d0, (0x1c, sp)
+    exth    d2
+    mov     d2, d1
+    mov     d3, d0
+    call    DrawString_Impl_entry, [d2,d3,a2,a3], 0x10
+    mov     (0x10, a2), a0
+    call    DrawQueue_Free, 0, 0
+    ret     [d2,d3,a2], 0x2c
+# DrawString_Impl  (CPU 0x48425467)
+    movm    [d2,d3,a2,a3], (sp)
+# DrawString_Impl_entry:   (register-save `call` entry)
+    add     -0x188, sp
+    movhu   d1, (0x1b0, sp)
+    mov     a0, (0x1a0, sp)
+    mov     (0x1a8, sp), a0
+    mov     d0, d2
+    movbu   (a0), d0
+    cmp     0, d0
+    bne     0x48425483
+    jmp     0x48425872
+    mov     (0x1a0, sp), d0
+    add     2, d0
+    mov     d0, (0x38, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x48425497
+    clr     d0
+    movhu   d0, (a0)
+    mov     (0x1a0, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x484254a5
+    clr     d0
+    movhu   d0, (a0)
+    mov     (0x1a0, sp), d0
+    add     4, d0
+    mov     d0, (0x34, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0x280, d0
+    blt     0x484254bd
+    mov     0x27f, d0
+    movhu   d0, (a0)
+    mov     (0x1a0, sp), d0
+    add     6, d0
+    mov     d0, (0x40, sp)
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0xf0, d0
+    blt     0x484254d5
+    mov     0xef, d0
+    movhu   d0, (a0)
+    movhu   (a1), d0
+    mov     sp, a0
+    add     0x78, a0
+    movhu   d0, (a0)
+    movhu   (2, a1), d0
+    movhu   d0, (2, a0)
+    movhu   (0x78, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x484254ee
+    clr     d0
+    movhu   d0, (0x78, sp)
+    movhu   (0x7a, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     0x484254fa
+    clr     d0
+    movhu   d0, (0x7a, sp)
+    mov     (0x50122db8), d1
+    mov     0x14, d0
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d1
+    mov     d1, a2
+    mov     (8, a2), d0
+    mov     d0, (0x4c, sp)
+    mov     0xc, d0
+    add     d1, d0
+    mov     d0, a0
+    mov     d0, (0x54, sp)
+    mov     (a0), d0
+    mov     d0, (0x5c, sp)
+    movhu   (a2), d0
+    movhu   d0, (0x62, sp)
+    movhu   (0x62, sp), d0
+    movhu   d0, (0x70, sp)
+    movhu   (6, a2), d0
+    movhu   d0, (0x64, sp)
+    mov     2, d0
+    add     d1, d0
+    mov     d0, (0x44, sp)
+    mov     d0, a0
+    movhu   (0x64, sp), d0
+    movhu   d0, (0x6c, sp)
+    movhu   (a0), d0
+    mov     sp, a0
+    movhu   d0, (0x66, sp)
+    movhu   (0x66, sp), d0
+    movhu   d0, (0x6a, sp)
+    clr     d0
+    movhu   d0, (0x68, sp)
+    movhu   (4, a2), d1
+    movhu   (0x7a, sp), d0
+    exth    d1
+    movhu   d0, (0x7e, sp)
+    movhu   (0x66, sp), d0
+    sub     d1, d0
+    add     -0xd, d0
+    movhu   d0, (0x6e, sp)
+    movhu   (0x78, sp), d0
+    mov     a0, d1
+    mov     (0x44, sp), a0
+    add     0x7c, d1
+    mov     d1, (0x50, sp)
+    movhu   d0, (0x7c, sp)
+    movhu   (0x78, sp), d0
+    movhu   (0x7a, sp), d1
+    exth    d0
+    add     -1, d0
+    movhu   d0, (0x80, sp)
+    movhu   (a0), d0
+    mov     (0x38, sp), a0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    movhu   d1, (0x82, sp)
+    movhu   (0x7e, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     0x4842558d
+    movhu   (a0), d0
+    movhu   d0, (0x7e, sp)
+    mov     (0x40, sp), a0
+    movhu   (0x82, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x4842559e
+    movhu   (a0), d0
+    movhu   d0, (0x82, sp)
+    mov     sp, a3
+    add     0x84, a3
+    mov     (0x1a8, sp), a0
+    mov     a3, a1
+    mov     d2, d0
+    call    ConvertStrings_entry, [d2,d3,a2,a3], 0x20
+    mov     (0x54, sp), a1
+    mov     a3, a0
+    mov     (a1), d0
+    cmp     0, d0
+    bne     0x484255d0
+    call    LibStrlen, 0, 0
+    movhu   (0x80, sp), d2
+    movhu   (0x62, sp), d1
+    exth    d2
+    nop
+    nop
+    mulu    d0, d1
+    add     d2, d1
+    movhu   d1, (0x80, sp)
+    bra     0x484255f8
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     0x484255ed
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    asl2    d0
+    mov     d0, a1
+    mov     (0x5c, sp), d0
+    add     d0, a1
+    movbu   (-0x80, a1), d0
+    extbu   d0
+    movhu   d0, (0x62, sp)
+    movbu   (a0), d0
+    cmp     0, d0
+    lne
+    movhu   (0x80, sp), d1
+    movhu   (0x62, sp), d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x80, sp)
+    mov     (0x38, sp), a0
+    movhu   (0x7e, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     0x48425609
+    movhu   (a0), d0
+    movhu   d0, (0x7e, sp)
+    mov     (0x1a0, sp), a0
+    movhu   (0x7c, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     0x4842561c
+    movhu   (a0), d0
+    movhu   d0, (0x7c, sp)
+    mov     (0x34, sp), a0
+    movhu   (0x80, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x4842562d
+    movhu   (a0), d0
+    movhu   d0, (0x80, sp)
+    mov     (0x40, sp), a0
+    movhu   (0x82, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     0x4842563e
+    movhu   (a0), d0
+    movhu   d0, (0x82, sp)
+    movhu   (0x1b4, sp), d0
+    exth    d0
+    cmp     0xf7, d0
+    beq     0x48425650
+    mov     (0x50, sp), a0
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
+    mov     a3, (0x14, sp)
+    movbu   (a3), d0
+    cmp     0, d0
+    bne     0x4842565b
+    jmp     0x4842586b
+    movhu   (0x7a, sp), d0
+    add     0x10, a2
+    mov     a2, (0x48, sp)
+    exth    d0
+    mov     d0, (0x58, sp)
+    movhu   (0x7a, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    mov     (0x54, sp), a0
+    mov     (a0), d0
+    cmp     0, d0
+    beq     0x48425675
+    jmp     0x48425726
+    mov     (0x48, sp), a0
+    mov     (a0), d0
+    cmp     0, d0
+    bne     0x48425698
+    mov     (0x14, sp), a0
+    movhu   (0x64, sp), d2
+    movbu   (a0), d0
+    movhu   (0x66, sp), d1
+    mov     (0x4c, sp), a2
+    nop
+    nop
+    mul     d1, d2
+    add     -0x20, d0
+    mov     d2, d1
+    nop
+    nop
+    mul     d0, d1
+    add     d1, a2
+    jmp     0x48425753
+    mov     (0x14, sp), a0
+    movbu   (a0), d0
+    cmp     0x81, d0
+    blt     0x484256aa
+    movbu   (a0), d0
+    cmp     0x9f, d0
+    ble     0x484256ba
+    movbu   (a0), d0
+    cmp     0xe0, d0
+    blt     0x484256f8
+    movbu   (a0), d0
+    cmp     0xfc, d0
+    bgt     0x484256f8
+    movbu   (a0), d1
+    mov     a0, d0
+    inc     d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movbu   (a0), d2
+    mov     (0x48, sp), a0
+    asl     8, d1
+    mov     (a0), d0
+    mov     d0, a0
+    mov     d1, d0
+    exthu   d0
+    add     d2, d0
+    exthu   d0
+    call    SjisGlyphLookup, 0, 0
+    mov     a0, a2
+    cmp     0, a2
+    bne     0x484256e1
+    mov     0x485a28dc, a2
+    movhu   (0x6e, sp), d0
+    movhu   d0, (0x68, sp)
+    mov     0x10, d0
+    movhu   d0, (0x62, sp)
+    mov     2, d0
+    movhu   d0, (0x64, sp)
+    mov     0x10, d0
+    movhu   d0, (0x66, sp)
+    bra     0x48425753
+    movhu   (0x6a, sp), d0
+    mov     (0x4c, sp), a2
+    movhu   d0, (0x66, sp)
+    movhu   (0x6c, sp), d0
+    movhu   d0, (0x64, sp)
+    movhu   (0x70, sp), d0
+    movhu   (0x64, sp), d2
+    movhu   d0, (0x62, sp)
+    movhu   (0x66, sp), d0
+    nop
+    nop
+    mul     d0, d2
+    clr     d0
+    movhu   d0, (0x68, sp)
+    movbu   (a0), d1
+    add     -0x20, d1
+    nop
+    nop
+    mul     d1, d2
+    add     d2, a2
+    bra     0x48425753
+    mov     (0x14, sp), a0
+    mov     (0x5c, sp), d1
+    movbu   (a0), d0
+    mov     0xffffff80, a2
+    asl2    d0
+    add     d1, d0
+    add     d0, a2
+    movbu   (a2), d0
+    mov     8, d1
+    extbu   d0
+    movhu   d0, (0x62, sp)
+    movhu   (0x62, sp), d0
+    call    LibDiv32, 0, 0
+    inc     d0
+    movhu   d0, (0x64, sp)
+    movhu   (2, a2), d0
+    mov     (0x4c, sp), a2
+    add     d0, a2
+    clr     d0
+    mov     d0, (0x18, sp)
+    movhu   (0x64, sp), d0
+    mov     d0, (0x28, sp)
+    cmp     0, d0
+    bgt     0x48425762
+    jmp     0x4842585b
+    movhu   (0x68, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    mov     (0x58, sp), d0
+    mov     (0x24, sp), d1
+    add     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     0x500d4080, d0
+    mov     d0, (0x2c, sp)
+    movhu   (0x62, sp), d0
+    mov     d0, (0x30, sp)
+    mov     (0x18, sp), d0
+    mov     (0x30, sp), d1
+    asl     3, d0
+    sub     d0, d1
+    movhu   d1, (0x60, sp)
+    movhu   (0x60, sp), d0
+    cmp     8, d0
+    blt     0x48425799
+    mov     8, d0
+    movhu   d0, (0x60, sp)
+    mov     (0x44, sp), a0
+    movhu   (0x78, sp), d0
+    mov     (0x2c, sp), a3
+    exth    d0
+    add     d0, a3
+    movhu   (a0), d0
+    clr     d3
+    exth    d0
+    cmp     d3, d0
+    bgt     0x484257ad
+    jmp     0x48425842
+    movhu   (0x60, sp), d0
+    mov     d0, (0x1c, sp)
+    movhu   (0x78, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)
+    movbu   (a2), d0
+    cmp     0, d0
+    beq     0x48425830
+    mov     (0x3c, sp), d0
+    mov     (0x24, sp), d1
+    mov     (0x38, sp), a0
+    add     d3, d0
+    add     d1, d0
+    movhu   d0, (0x186, sp)
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    bge     0x484257d8
+    inc     a2
+    add     0x280, a3
+    bra     0x48425835
+    mov     (0x40, sp), a0
+    movhu   (0x186, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bgt     0x48425830
+    mov     (0x1c, sp), d0
+    mov     a3, a1
+    clr     d2
+    cmp     d2, d0
+    ble     0x48425830
+    setlb
+    mov     (0x20, sp), d0
+    mov     (0x1a0, sp), a0
+    add     d2, d0
+    movhu   d0, (0x184, sp)
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    bge     0x48425802
+    inc     a1
+    bra     0x4842582a
+    mov     (0x34, sp), a0
+    movhu   (0x184, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bgt     0x48425830
+    movbu   (a2), d1
+    mov     7, d0
+    sub     d2, d0
+    mov     d3, (0x74, sp)
+    mov     1, d3
+    asl     d0, d3
+    mov     d3, d0
+    mov     (0x74, sp), d3
+    exthu   d0
+    and     d1, d0
+    beq     0x48425829
+    movhu   (0x1b0, sp), d0
+    movbu   d0, (a1)
+    inc     a1
+    mov     (0x1c, sp), d0
+    inc     d2
+    exth    d2
+    cmp     d0, d2
+    llt
+    inc     a2
+    add     0x280, a3
+    mov     (0x44, sp), a0
+    inc     d3
+    movhu   (a0), d0
+    exth    d3
+    exth    d0
+    cmp     d0, d3
+    bge     0x48425842
+    jmp     0x484257b8
+    movhu   (0x78, sp), d1
+    movhu   (0x60, sp), d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x78, sp)
+    mov     (0x18, sp), d0
+    mov     (0x28, sp), d1
+    inc     d0
+    exth    d0
+    mov     d0, (0x18, sp)
+    cmp     d1, d0
+    bge     0x4842585b
+    jmp     0x48425781
+    mov     (0x14, sp), d0
+    inc     d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     0x4842586b
+    jmp     0x4842566b
+    mov     (0x50, sp), a0
+    call    SetChangeRect, 0, 0
+    add     0x188, sp
+    ret     [d2,d3,a2,a3], 0x10
+# SjisGlyphLookup  (CPU 0x48425879)
+    movhu   (a0), d1
+    cmp     0, d1
+    beq     0x48425891
+    exthu   d0
+    setlb
+    movhu   (a0), d1
+    cmp     d0, d1
+    bne     0x4842588a
+    add     2, a0
+    bra     0x48425893
+    add     0x22, a0
+    movhu   (a0), d1
+    cmp     0, d1
+    lne
+    mov     0, a0
+    retf    0, 0
 # DrawStringCentered  (CPU 0x48425896)
-.incbin_range "baserom/kn7000_program.rom", 0x025896, 0x02597a
+    movm    [d2,d3,a2,a3], (sp)
+# DrawStringCentered_entry:   (register-save `call` entry)
+    add     -0x130, sp
+    mov     a0, (0x148, sp)
+    movhu   d1, (0x158, sp)
+    mov     a1, (0x14c, sp)
+    mov     d0, (0x154, sp)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x2c, d0
+    mov     d0, (0x20, sp)
+    mov     (0x150, sp), a0
+    mov     d0, a1
+    mov     (0x154, sp), d0
+    call    ConvertStrings_entry, [d2,d3,a2,a3], 0x20
+    mov     (0x20, sp), a0
+    mov     (0x154, sp), d0
+    call    CalcTotalWidth_entry, [d2,d3,a2,a3], 0x24
+    mov     d0, a2
+    mov     (0x154, sp), d0
+    call    GetCharHeight, 0, 0
+    movhu   d0, (0x28, sp)
+    mov     (0x154, sp), d0
+    call    GetCharDescent, 0, 0
+    mov     (0x14c, sp), a0
+    mov     sp, a1
+    add     0x12c, a1
+    mov     2, d1
+    mov     d0, a3
+    movhu   (a0), d0
+    movhu   d0, (a1)
+    movhu   (2, a0), d0
+    mov     sp, a0
+    movhu   d0, (2, a1)
+    mov     a0, d0
+    add     0x12c, d0
+    mov     d0, (0x24, sp)
+    movhu   (0x12c, sp), d2
+    mov     a2, d0
+    exth    d2
+    exth    d0
+    call    LibDiv32, 0, 0
+    sub     d0, d2
+    movhu   d2, (0x12c, sp)
+    movhu   (0x12e, sp), d2
+    movhu   (0x28, sp), d0
+    exth    d2
+    exth    d0
+    mov     a3, d1
+    exth    d1
+    sub     d1, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    sub     d0, d2
+    movhu   d2, (0x12e, sp)
+    mov     (0x154, sp), d0
+    call    GetCenteredDelta, 0, 0
+    movhu   (0x12e, sp), d1
+    exth    d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x12e, sp)
+    mov     (0x20, sp), d0
+    mov     d0, (0x10, sp)
+    movhu   (0x15c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    movhu   (0x158, sp), d1
+    mov     (0x148, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x154, sp), d0
+    exth    d1
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
+    add     0x130, sp
+    ret     [d2,d3,a2,a3], 0x10
 # DrawStringLeftJustify  (CPU 0x4842597a)
 .incbin_range "baserom/kn7000_program.rom", 0x02597a, 0x0259f3
 # DrawStringRightJustify  (CPU 0x484259f3)
@@ -7620,7 +11325,7 @@ _rom_marker:
     mov     a0, a2
     mov     d1, d3
     mov     d0, d2
-    call    func_48421B97, 0, 0x10
+    call    IsDrawTask_entry, 0, 0x10
     cmp     0, d0
     beq     0x484261c8
     mov     (0x5002a01c), d0
@@ -7634,7 +11339,7 @@ _rom_marker:
     call    func_4842621C, [d2,d3,a2,a3], 0x7c
     bra     0x484261f0
     mov     0x10, d0
-    call    func_48421B5C, [d2], 4
+    call    DrawQueue_Alloc_entry, [d2], 4
     mov     0x484261f3, d0
     mov     d0, (a0)
     mov     a0, a1
@@ -7649,7 +11354,7 @@ _rom_marker:
     lne
     movhu   d2, (0xc, a0)
     movhu   d3, (0xe, a0)
-    call    func_484219A4, [d2,a2,a3], 0x28
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
     ret     [d2,d3,a2], 0x20
     movm    [d2], (sp)
     add     -0x14, sp
@@ -7718,7 +11423,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x7c
     movhu   (0x50, sp), d0
     exth    d0
@@ -7742,7 +11447,7 @@ _rom_marker:
     add     0x4c, d2
     mov     d2, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     d2, a0
     clr     d0
     call    func_4842320D, [d2,d3,a2,a3], 0x4c
@@ -7894,7 +11599,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x18, sp), d0
     mov     0, a2
     cmp     0, d0
@@ -7977,7 +11682,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x18, sp), d0
     clr     d3
     cmp     d3, d0
@@ -8147,7 +11852,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     exth    d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     mov     (0x20, sp), d0
     cmp     0, d0
     beq     0x48426699
@@ -8189,7 +11894,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     exth    d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4e, sp), d0
     mov     sp, a1
     add     0x4c, a1
@@ -8243,7 +11948,7 @@ _rom_marker:
     movhu   (0x8c, sp), d0
     mov     a1, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x4e, sp), d0
     mov     a3, a0
     exth    d0
@@ -8566,7 +12271,7 @@ _rom_marker:
     mov     d0, (0x1c, sp)
     mov     (0x24, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     exth    d0
     inc     d0
@@ -8580,7 +12285,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x1c, sp), d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a0
     exth    d0
@@ -8635,7 +12340,7 @@ _rom_marker:
     exth    d0
     mov     (0x20, sp), a0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     movhu   (0x38, sp), d1
     exth    d0
@@ -8666,7 +12371,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x28, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -8682,7 +12387,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x2c, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     exth    d0
     add     -1, d0
@@ -8728,7 +12433,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     movhu   (0x38, sp), d1
     exth    d0
@@ -8755,7 +12460,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     (0x30, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     exth    d0
     inc     d0
@@ -8771,7 +12476,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x24, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), d2
     movhu   (0x46, sp), d0
     add     6, d2
@@ -8788,7 +12493,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x24, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x14, sp), d0
     cmp     0, d0
     bne     0x48426b96
@@ -8906,7 +12611,7 @@ _rom_marker:
     mov     sp, a3
     exth    d2
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     add     0x54, a3
     movhu   (a0), d0
@@ -9029,7 +12734,7 @@ _rom_marker:
     exth    d3
     mov     a3, d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x52, sp), d1
     movhu   (0x4a, sp), d0
     exth    d1
@@ -9039,7 +12744,7 @@ _rom_marker:
     mov     a2, a0
     mov     d3, d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x40, sp), d0
     exth    d1
@@ -9053,7 +12758,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x14, sp), d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -9069,7 +12774,7 @@ _rom_marker:
     mov     (0x18, sp), d0
     mov     d3, d1
     mov     a2, a0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4e, sp), d1
     movhu   (0x3e, sp), d0
     exth    d1
@@ -9086,7 +12791,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     (0x1c, sp), a0
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9119,7 +12824,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     a3, a0
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x48, sp), d0
     movhu   (a0), d1
@@ -9148,7 +12853,7 @@ _rom_marker:
     mov     a3, a0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x7c
     mov     (0x1c, sp), d0
     cmp     0xca, d0
@@ -9226,7 +12931,7 @@ _rom_marker:
     mov     a3, d0
     exth    d3
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a2
     movhu   d0, (0x54, sp)
@@ -9240,7 +12945,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     d3, d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     add     0x4c, a2
     exth    d0
@@ -9267,7 +12972,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x1c, sp), a0
     mov     (0x14, sp), d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -9285,7 +12990,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     (0x18, sp), d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a2, a0
     exth    d0
@@ -9310,7 +13015,7 @@ _rom_marker:
     sub     d0, d1
     movhu   d1, (0x52, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     mov     d2, a0
     exth    d0
@@ -9325,7 +13030,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -9338,7 +13043,7 @@ _rom_marker:
     mov     d2, a0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9564,7 +13269,7 @@ _rom_marker:
     mov     0x3c, d0
     exth    d2
     mov     d2, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a3
     exth    d0
@@ -9591,7 +13296,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x1c, sp), a0
     mov     0x3d, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a3, a0
     exth    d0
@@ -9610,7 +13315,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x4e, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     mov     a2, a0
     exth    d0
@@ -9625,7 +13330,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x62, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9862,7 +13567,7 @@ _rom_marker:
     exth    d2
     mov     d2, d1
     mov     0x3f, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a2
     exth    d0
@@ -9894,7 +13599,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     d2, d1
     mov     0x3e, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a2, a0
     exth    d0
@@ -9913,7 +13618,7 @@ _rom_marker:
     sub     d0, d1
     movhu   d1, (0x52, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -9926,7 +13631,7 @@ _rom_marker:
     mov     a3, a0
     movhu   d0, (0x62, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (a0), d0
     mov     a0, d3
@@ -10167,7 +13872,7 @@ _rom_marker:
     mov     d3, a0
     mov     d2, d1
     mov     0x40, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     d3, a0
     movhu   d0, (0x54, sp)
@@ -10180,7 +13885,7 @@ _rom_marker:
     movhu   d1, (0x56, sp)
     mov     d2, d1
     mov     0x43, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a0
     exth    d0
@@ -10207,7 +13912,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     d2, d1
     mov     0x41, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -10225,7 +13930,7 @@ _rom_marker:
     mov     d3, a0
     mov     d2, d1
     mov     0x42, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     sp, a2
     exth    d0
@@ -10252,7 +13957,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     d2, d0
     mov     a2, a0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     exth    d0
     add     2, d0
@@ -10267,7 +13972,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x14, sp), a0
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -10280,7 +13985,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x14, sp), a0
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -10467,6 +14172,7 @@ _rom_marker:
     mov     0xf8, d0
     call    func_48422917, [d2,d3,a2,a3], 0x5c
     ret     [d2,d3,a2,a3], 0x7c
+# IsPointOnScreen  (CPU 0x48427980)
     movhu   (a0), d0
     exth    d0
     cmp     0, d0
@@ -20539,7 +24245,7 @@ _rom_marker:
     mov     d0, (0x1c, sp)
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x2a, sp), d0
     exth    d0
     add     -8, d0
@@ -20940,7 +24646,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     (0x20, sp), a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -20974,7 +24680,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     (0x20, sp), a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -21004,7 +24710,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     0x48487c1e
     mov     0x485d672c, d0
     mov     d0, (0x10, sp)
@@ -21014,7 +24720,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     inc     d3
     exth    d0
@@ -21033,7 +24739,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     clr     d2
     exth    d0
@@ -21063,7 +24769,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     mov     8, d1
     exth    d0
@@ -21087,7 +24793,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     exth    d0
     add     6, d0
@@ -21178,7 +24884,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     (0x2c, sp), a1
     mov     3, d0
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     a2, a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -21223,7 +24929,7 @@ _rom_marker:
     mov     (0x2c, sp), a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x8c
     mov     (0x9c, sp), a2
@@ -21982,11 +25688,11 @@ _rom_marker:
     cmp     0, a1
     beq     0x4849c72e
     mov     a3, a0
-    call    func_48424AA4, [a2,a3], 0x18
+    call    DrawBitmapFile_entry, [a2,a3], 0x18
     bra     0x4849c737
     clr     d0
     mov     a3, a0
-    call    func_48423B5B, [d2,a2], 0x18
+    call    DrawBitmap_entry, [d2,a2], 0x18
     clr     d0
     bra     0x4849c774
     call    GetViewInstance, 0, 0

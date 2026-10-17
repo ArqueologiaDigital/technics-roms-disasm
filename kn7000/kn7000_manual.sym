@@ -2480,3 +2480,85 @@
 0x484D7931  TimeBase2msTick         ; increments the 2 ms time base 0x50151BFC (942: 0x50151C0C; 500 Hz, measured 499.8/s -- NOT a 1 kHz tick), cleared at boot by the timer set-up; 942's GetTimBase returns its low 16 bits
 0x484D7936  TimeBase2msTick_entry
 0x4C03D0C8  cre_tsk                 ; micro-ITRON cre_tsk(d0 = task id, a0 = &T_CTSK {exinf, tskatr, task, itskpri (16-bit) at +0x0C, stksz at +0x10}): takes the TCB from the table 0x50380000[id] (ids 0-10; 0xFFFFFFFF = free) and the stack from the kernel pool; E_NOMEM = -10. 942's plug-in export cre_tsk_X forwards to it
+;
+; ---- GRAPHICS: the draw queue, the blitters and the text renderer (DrawBitmap .. DrawStringCentered) ----
+; Every public DrawXxx works like its KN5000 namesake: on the draw task it calls
+; DrawXxx_Impl at once (if the draw-enable word 0x5002A01C is set); on any other
+; task it copies its arguments into a record from DrawQueue_Alloc whose first
+; word is DrawXxx_QueuedExec, and posts it with DrawRing_Post; the draw task later
+; runs DrawXxx_QueuedExec(record), which re-tests 0x5002A01C and calls the Impl.
+; Framebuffer: 640 x 240 x 8 bpp at 0x500D4080, stride 0x280. Annotated listing:
+; annotations/gfx_*.ann (merged into src/program.s).
+0x4842199F  DrawRing_Post           ; post the queued-draw record at a0 to the draw task's ring (task table 0x5000757C), yielding while the ring is full
+0x484219A4  DrawRing_Post_entry
+0x48421B5A  DrawQueue_Alloc         ; d0 bytes (rounded up to 4) from the 8 KB circular draw-record arena 0x5002A034 (cursor 0x5002C038; wraps to the start when the record would not fit) -> a0
+0x48421B5C  DrawQueue_Alloc_entry
+0x48421B91  DrawQueue_Free          ; empty (retf): a record needs no freeing, the circular arena simply overwrites it
+0x48421B94  IsDrawTask              ; -> 1 if the calling task is the draw task (its id is the u16 at 0x500D3C64): drawing may happen at once; 0 = queue it
+0x48421B97  IsDrawTask_entry
+0x48421DE6  GetBitmapInfo_entry
+0x484226C9  ModifyPixel_entry
+0x48423095  DrawBox_Impl            ; the fill itself (DrawBox queues it when not on the draw task)
+0x4842309A  DrawBox_Impl_entry
+0x48423B5B  DrawBitmap_entry
+0x48423B9E  DrawBitmap_QueuedExec   ; draw-task replay of a queued DrawBitmap record
+0x48423BBA  DrawBitmap_Impl
+0x48423BBF  DrawBitmap_Impl_entry
+0x48423C8D  DrawBitmapFast_entry
+0x48423CD0  DrawBitmapFast_QueuedExec
+0x48423CEC  DrawBitmapFast_Impl
+0x48423CF1  DrawBitmapFast_Impl_entry
+0x48423DD2  DrawIcons_entry
+0x48423E15  DrawIcons_QueuedExec
+0x48423E31  DrawIcons_Impl
+0x48423E36  DrawIcons_Impl_entry
+0x48423F4A  DrawFrameSP_QueuedExec
+0x48423F6E  DrawFrameSP_Impl
+0x48423F73  DrawFrameSP_Impl_entry
+0x484240A9  DrawBitmapSP_entry
+0x484240F8  DrawBitmapSP_QueuedExec
+0x4842411F  DrawBitmapSP_Impl
+0x48424124  DrawBitmapSP_Impl_entry
+0x484242A3  DrawBitmapSPFast_entry
+0x484242F2  DrawBitmapSPFast_QueuedExec
+0x48424319  DrawBitmapSPFast_Impl
+0x4842431E  DrawBitmapSPFast_Impl_entry
+0x484243D2  DrawBitmapSPFast4_entry
+0x48424436  DrawBitmapSPFast4_QueuedExec
+0x4842446C  DrawBitmapSPFast4_Impl
+0x48424471  DrawBitmapSPFast4_Impl_entry
+0x484245C1  DrawBitmapSPFast16_entry
+0x48424619  DrawBitmapSPFast16_QueuedExec
+0x48424644  DrawBitmapSPFast16_Impl
+0x48424649  DrawBitmapSPFast16_Impl_entry
+0x48424789  DrawBitmapSPFast256_entry
+0x484247E1  DrawBitmapSPFast256_QueuedExec
+0x4842480C  DrawBitmapSPFast256_Impl
+0x48424811  DrawBitmapSPFast256_Impl_entry
+0x484248E3  DrawBitmapSP2_entry
+0x4842494A  DrawBitmapSP2_QueuedExec
+0x48424981  DrawBitmapSP2_Impl
+0x48424986  DrawBitmapSP2_Impl_entry
+0x48424AA4  DrawBitmapFile_entry
+0x48424AE7  DrawBitmapFile_QueuedExec
+0x48424B05  DrawBitmapFile_Impl
+0x48424B07  DrawBitmapFile_Impl_entry ; after the movm only: the 0x47C-byte frame is too big for call's frame field, so the add -0x47C,sp is in the body
+0x48424D10  DrawBitmapFileEx_QueuedExec
+0x48424D2E  DrawBitmapFileEx_Impl
+0x48424D30  DrawBitmapFileEx_Impl_entry
+0x48424EC2  DrawJpegFile_entry
+0x48424F05  DrawJpegFile_QueuedExec
+0x48424F82  DrawJpegFileR_entry
+0x48424FC5  DrawJpegFileR_QueuedExec
+0x48424FE3  DrawJpegFileR_Impl
+0x48424FE9  DrawJpegFileR_Impl_entry
+0x48425398  DrawString_entry
+0x4842542E  DrawString_QueuedExec
+0x48425467  DrawString_Impl
+0x48425469  DrawString_Impl_entry
+0x48425879  SjisGlyphLookup         ; d0 = Shift-JIS code, a0 = table of 0x22-byte {u16 code; 16x16 1bpp glyph} records ended by code 0 -> a0 = &glyph, or 0 if absent
+0x48425898  DrawStringCentered_entry
+0x48427980  IsPointOnScreen         ; a0 = &{s16 x, s16 y} -> 1 if 0 <= x < 640 and 0 <= y < 240
+0x4842D9F6  SetPaletteRGB_entry
+0x4842DFAD  ConvertStrings_entry
+0x4842E0C0  CalcTotalWidth_entry
