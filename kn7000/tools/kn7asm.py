@@ -18,7 +18,9 @@
 #
 # Supported syntax (one directive per line; `#` or `;` start a comment):
 #
-#   label:                         define a symbol = current output offset
+#   label:                         define a symbol = the CPU address of the
+#                                  current output offset (.mnbase + offset;
+#                                  with no .mnbase that is the offset itself)
 #   .equ NAME, EXPR                define a constant symbol
 #   .org EXPR                      assert the current output offset equals EXPR
 #   .byte  b [, b ...]             emit 8-bit values
@@ -31,6 +33,14 @@
 #
 # EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ).
 # Numeric byte/word/long args additionally accept the same expressions.
+#
+# An instruction operand may name a label defined LATER in the source (a
+# forward branch to a local label in converted code). The source is then
+# assembled again, with the addresses the previous pass found, until a pass
+# uses only addresses that turn out to be right; that pass's output is the
+# result, and only its errors (layout assertions included) are reported. A
+# label whose name is already an .equ (a function name from symbols.inc) must
+# land on that address, so converted code also cross-checks the symbol tables.
 
 import argparse
 import os
@@ -54,11 +64,25 @@ class AsmError(Exception):
 class Assembler:
     def __init__(self, base_dir):
         self.base_dir = base_dir
+        self.known = {}    # symbol -> value, as found by the previous pass
+        self.start_pass()
+
+    def start_pass(self):
         self.out = bytearray()
         self.symbols = {}
+        self.labels = {}
         self.cur_file = "<none>"
         self.cur_line = 0
         self.mn_base = 0   # CPU address that output offset 0 maps to (.mnbase)
+        self.guessed = {}      # forward name with no address yet -> (file, line) of 1st use
+        self.assumed = {}      # forward names resolved from the previous pass
+        self.problem = None    # first error of this pass; raised only if it is exact
+
+    def fail(self, msg):
+        """An error that may be an artefact of a placeholder address: keep the
+        first one, and raise it once the pass proves to be exact."""
+        if self.problem is None:
+            self.problem = AsmError(msg), self.cur_file, self.cur_line
 
     # -- instruction operand symbol resolution --------------------------------
 
@@ -69,13 +93,22 @@ class Assembler:
     def resolve_operands(self, operands):
         """Substitute known symbol names in an instruction's operand string with
         their numeric value, so `call DispatchEvent` assembles like `call 0x...`.
-        This keeps converted disassembly readable while staying byte-exact."""
+        This keeps converted disassembly readable while staying byte-exact.
+        A name not defined yet is a forward label: it takes the previous pass's
+        address if there was one, else this instruction's own address as a
+        placeholder (which makes the pass inexact)."""
         def repl(m):
-            tok = m.group(0)
-            if tok not in self._REGS and tok in self.symbols:
+            tok = m.group(1)
+            if tok is None or tok in self._REGS:
+                return m.group(0)               # a number, or a register
+            if tok in self.symbols:
                 return hex(self.symbols[tok])
-            return tok
-        return re.sub(r"[A-Za-z_][A-Za-z0-9_]*", repl, operands)
+            if tok in self.known:
+                self.assumed[tok] = self.known[tok]
+                return hex(self.known[tok])
+            self.guessed.setdefault(tok, (self.cur_file, self.cur_line))
+            return hex(self.mn_base + len(self.out))
+        return re.sub(r"0x[0-9A-Fa-f]+|\d+|([A-Za-z_]\w*)", repl, operands)
 
     # -- expression evaluation ------------------------------------------------
 
@@ -136,8 +169,8 @@ class Assembler:
         start = self.evaluate(args[1])
         end = self.evaluate(args[2])
         if len(self.out) != start:
-            raise AsmError(f".incbin_range start {start:#x} != current offset "
-                           f"{len(self.out):#x} (gap or overlap in the layout)")
+            self.fail(f".incbin_range start {start:#x} != current offset "
+                      f"{len(self.out):#x} (gap or overlap in the layout)")
         if end < start:
             raise AsmError(f".incbin_range end {end:#x} < start {start:#x}")
         with open(path, "rb") as f:
@@ -169,7 +202,7 @@ class Assembler:
     def do_org(self, args):
         want = self.evaluate(args[0])
         if len(self.out) != want:
-            raise AsmError(f".org {want:#x} != current offset {len(self.out):#x}")
+            self.fail(f".org {want:#x} != current offset {len(self.out):#x}")
 
     # -- top-level assembly ---------------------------------------------------
 
@@ -186,7 +219,7 @@ class Assembler:
 
             m = re.match(r"([A-Za-z_.][\w.]*):(.*)$", line)
             if m and not line.startswith("."):
-                self.symbols[m.group(1)] = len(self.out)
+                self.define_label(m.group(1))
                 line = m.group(2).strip()
                 if not line:
                     continue
@@ -227,10 +260,43 @@ class Assembler:
                 try:
                     self.out += mn10300_asm.encode(op, self.resolve_operands(rest), pc)
                 except mn10300_asm.EncError as e:
-                    raise AsmError(f"cannot encode '{op} {rest}': {e}")
+                    self.fail(f"cannot encode '{op} {rest}': {e}")
+                    self.out += b"\0\0"   # e.g. a branch whose target has not settled
             else:
                 raise AsmError(f"unknown directive {op!r}")
         self.cur_file, self.cur_line = prev_file, prev_line
+
+    def define_label(self, name):
+        """A label is the CPU address of the current output offset. If the name
+        is already an .equ (a function name from symbols.inc), the two must agree."""
+        addr = self.mn_base + len(self.out)
+        if name in self.labels:
+            raise AsmError(f"label {name!r} defined twice")
+        if name in self.symbols and self.symbols[name] != addr:
+            self.fail(f"label {name!r} is at {addr:#x} but was "
+                      f".equ'd to {self.symbols[name]:#x}")
+        self.labels[name] = self.symbols[name] = addr
+
+    def assemble(self, path):
+        """Assemble `path`, repeating the pass until it is exact: no placeholder
+        was needed and every forward address it took from the previous pass is
+        where that label really landed. Usually one pass, or two with forward
+        labels."""
+        for _ in range(20):
+            self.start_pass()
+            self.assemble_file(path)
+            undefined = [n for n in self.guessed if n not in self.symbols]
+            if undefined:
+                self.cur_file, self.cur_line = self.guessed[undefined[0]]
+                raise AsmError(f"undefined symbol {undefined[0]!r}")
+            if not self.guessed and all(self.symbols.get(n) == a
+                                        for n, a in self.assumed.items()):
+                if self.problem:
+                    err, self.cur_file, self.cur_line = self.problem
+                    raise err
+                return
+            self.known = dict(self.symbols)
+        raise AsmError("labels did not settle after 20 passes")
 
 
 def main():
@@ -245,7 +311,7 @@ def main():
     base = args.include_dir or os.path.dirname(os.path.abspath(args.source)) or "."
     asm = Assembler(base)
     try:
-        asm.assemble_file(args.source)
+        asm.assemble(args.source)
     except AsmError as e:
         sys.stderr.write(f"{asm.cur_file}:{asm.cur_line}: error: {e}\n")
         return 1
