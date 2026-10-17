@@ -797,7 +797,7 @@ ObjectProc_CaseTable:
 	.short	ObjectProc_OnGetPropChar - AcTrkSw_Return
 	.short	ObjectProc_OnAutoFree - AcTrkSw_Return
 ; NakaMode_InitRecord -- 1 x 14-byte struct {u32 mode_proc, s32 start_title, s16 user_id, u32 name}: blank Mode object
-; InitializeObjectTable (ui/ui_widget_defs.s, loop ExitWindow_Confirm) copies it (7 words) into all 32 records at
+; InitializeObjectTable (ui/ui_widget_defs.s, loop InitializeObjectTable_Loop2) copies it (7 words) into all 32 records at
 ; RAM 0x328FC, then registers them as class Mode.  ModeProc reads +0 (GET_MODE_PROC/_ID), +4 (GET_START_TITLE),
 ; +8 (GET_USER_ID, sign-extended), +10 (GET_NAME).  Values: NAKA_APFUNC_DefaultFunction, -1, -1, "".
 NakaMode_InitRecord:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C20, 0xE
@@ -807,7 +807,7 @@ NakaMode_InitName:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C2E, 0
 ; Title_RecordTemplate -- 1 x 22-byte title record: the default copied into each of the 256 Title records at RAM 0x32ABC
 ; {u32 title proc id 0x01200000, u32 start screen 0xFFFFFFFF (none), s16 user id -1 (iduNone), u32 name -> "",
 ; u32 return screen, s16 interrupt prev, s16 interrupt next (title numbers relative to TITLE_PS)}.
-; InitializeObjectTable (ui/ui_widget_defs.s, loop at ExitWindow_OK) copies it 11 words at a time, then registers
+; InitializeObjectTable (ui/ui_widget_defs.s, loop at InitializeObjectTable_Loop3) copies it 11 words at a time, then registers
 ; the table as class Title (TitleProc, 0x100 records, slot 0x1A0); TitleProc reads the fields.
 Title_RecordTemplate:	.incbin "includes/generated/naka_disk_warning.bin", 0x1C30, 0x16
 ; Title_RecordTemplateName -- 2 x char: "" + 0xFF fill, the name (+10) of Title_RecordTemplate

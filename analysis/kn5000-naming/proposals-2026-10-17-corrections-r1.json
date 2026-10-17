@@ -1,0 +1,198 @@
+[
+ {
+  "old": "RHYTHM_PATTERN_SEL_B",
+  "verdict": "name",
+  "kind": "equ",
+  "why_refused": null,
+  "new": "TAP_TEMPO_LAST_TAP_TIME",
+  "header": "RAM word 0x348E (v9 0x348E, v7 0x33F2): the SYSTEM_TIMESTAMP value of the last TAP TEMPO press -- AccProcess_InlinedCode stores it on every press and takes the next interval from it, AccProcess_TimerCompare ends the tap sequence 0x400 ticks after it. It is no pattern selector: its only four uses are these word loads / stores. Basis: readers.",
+  "basis": "readers",
+  "evidence": [
+   "shared/ram_variables.s:16 `.equ RHYTHM_PATTERN_SEL_B, 0x348e ; pattern selector B` -- the .equ (v9 shared/ram_variables.s:17 same value; v7 shared/ram_variables.s:17 0x33f2)",
+   "sequencer/accompaniment_engine.s:10430-10434 `bit 0, (0x3490:16)` / ... / `ld wa, (SYSTEM_TIMESTAMP:16)` / `ld (RHYTHM_PATTERN_SEL_B:16), wa` / `or (0x3490:16), 1` -- first press of AccProcess_InlinedCode (10421) starts a tap sequence",
+   "sequencer/accompaniment_engine.s:10437-10438 `ld wa, (SYSTEM_TIMESTAMP:16)` / `ld bc, (RHYTHM_PATTERN_SEL_B:16)` -- interval since the previous press (clamped 100..750, tempo = 30000 / interval at 10458-10459)",
+   "sequencer/accompaniment_engine.s:10468-10469 `ld wa, (SYSTEM_TIMESTAMP:16)` / `ld (RHYTHM_PATTERN_SEL_B:16), wa` -- remembered for the next press",
+   "sequencer/accompaniment_engine.s:10501-10510 `bit 0, (0x3490:16)` / ... / `ld wa, (SYSTEM_TIMESTAMP:16)` / `ld bc, (RHYTHM_PATTERN_SEL_B:16)` / ... / `cp wa, 0x400` / ... / `and (0x3490:16), 254` -- AccProcess_TimerCompare (10500) timeout",
+   "sequencer/accompaniment_engine.s:10421-10423 `AccProcess_InlinedCode:` / `ld a, (SWBTWR_PAYLOAD_1:16)` / `cp a, 18` -- the TAP press (panel code 0xA8 listener SwbtB3_CodeA8_Listener0, 10408)",
+   "kn5000_v10_program.s:56 `.equ SYSTEM_TIMESTAMP, 0x409`"
+  ]
+ },
+ {
+  "old": "NakaInst_SoundConfig_LookupTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndParam_InitFuncTable",
+  "header": "4 x u32: the sound-parameter subsystem's init-phase handlers -- MIDI_INIT_SEQUENCES (phase 0: builds and re-registers the SndParam hash table, clears 64 bytes at 0x9798) and SndParam_InitPhase1/2/3_NullRet -- list entry 5 of Subsys_HandlerTableList; named like Seq_InitFuncTable / VGA_InitFuncTable. The comment above it describes the whole sound_config_lookup.c blob, of which this label holds only the first 16 bytes. Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s:1228-1232 `; Sound configuration lookup table (6136 bytes)` / ... / `NakaInst_SoundConfig_LookupTable:` / `.long MIDI_INIT_SEQUENCES, SndParam_InitPhase1_NullRet, SndParam_InitPhase2_NullRet, SndParam_InitPhase3_NullRet`",
+   "ui_widgets/widget_dispatch.s:7134-7141 `Subsys_HandlerTableList:` / ... / `.long NakaInst_SoundConfig_LookupTable` -- entry 5; header 7123-7126: the four slots are init phases 0-3",
+   "midi/midi_serial_routines.s:28-32 `MIDI_INIT_SEQUENCES:` / `calr SndParam_InitHashTable` / `calr SndParam_RegisterAllWidgets` / `calr SndParam_ClearHashTable` / `calr SndParam_ReregisterAll`",
+   "boot/system_handlers.s:1069 `Seq_InitFuncTable:` -- naming precedent (also VGA_InitFuncTable, PanelInput_InitFuncTable, FileIO_InitFuncTable)",
+   "ui_widgets/sound_config_lookup.c:2 `* sound_config_lookup.c -- NakaInst_SoundConfig_LookupTable` -- comment to update"
+  ]
+ },
+ {
+  "old": "MIDI_SC0_DISPATCH_TABLE",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SC0_InitFuncTable",
+  "header": "4 x u32: the serial-port (SC0) subsystem's init-phase handlers -- SC0_InitSerialPort for phase 0, SC0Init_PaddingStub (`ret`) for phases 1-3 -- list entry 3 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks per boot phase; it dispatches no MIDI. Its header's 'reader not traced' is answered by that list. Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "midi/midi_serial_routines.s:971-981 `; MIDI_SC0_DISPATCH_TABLE -- 4 handler pointers: SC0_InitSerialPort, then` / ... / `MIDI_SC0_DISPATCH_TABLE:` / `.long SC0_InitSerialPort` / `.long SC0Init_PaddingStub` / `.long SC0Init_PaddingStub` / `.long SC0Init_PaddingStub`",
+   "ui_widgets/widget_dispatch.s:7139 `.long MIDI_SC0_DISPATCH_TABLE` -- entry 3 of Subsys_HandlerTableList (7134)",
+   "ui_widgets/widget_dispatch.s:7123-7124 `; The four slots are init phases (scripts/tools/label_subsys_init_tables.py): the boot code calls` / `; ScreenGroup_Dispatch with WA = 0 after the Sub-CPU payload transfer, then 1 if SubCPU_Payload_GetErrorFlag`",
+   "midi/midi_serial_routines.s:878-884 header of SC0_InitSerialPort -- 'slot 0 of MIDI_SC0_DISPATCH_TABLE ... slots 1-3 are SC0Init_PaddingStub (`ret`)'"
+  ]
+ },
+ {
+  "old": "Naka_DrawbarControl_Table",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Part_CaptionStrPtrs",
+  "header": "Initial image (WorkRamInit_Image + 0x147C, copied to RAM 0x3E9A0 by Boot_InitWorkRAM) of 27 x u32 part-caption pointers indexed by part number -- \"RIGHT 1:\", \"RIGHT 2:\", \"LEFT   :\", \"PART 4 :\" .. \"PART 16:\", \"ACCOMP1:\" .. \"ACCOMP3:\", \"BASS   :\", \"DRUM   :\", \"CHORD  :\", \"R.BASS :\", \"MSP    :\" x2, \"CONTROL:\", \"METRO  :\" -- then 0; the accordion and drawbar part views draw entry [PART_SELECT]. Nothing about drawbar control. Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "the .s block under the label runs past the table's terminating 0 into the next fields (0xFFFFFFFF, 0xFFFF0002, 0, ...; C fields field_0d3c ...)",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:9542-9549 `call GetPartSelect` / `ld (0x02477e:24), hl` / `sla hl, 2` / `lda xwa, (0x03e9a0:24)` / `ld xde, (xwa+hl)` / ... / `ld xwa, NAKA_VIEW_AccordionPart` / `ld xbc, EVT_PARA_DRAW` -- IvAccordion_Refresh (9538)",
+   "ui/drawbar_panel_ui.s:17458-17464 `DrawbarNorm_UpdateCase4:` / `ld wa, (0x02479a:24)` / `sla wa, 2` / `lda xbc, (0x03e9a0:24)` / `ld xde, (xbc+wa)` / ... / `ld xwa, NAKA_VIEW_DrawbarPart` -- (0x2479A) = GetPartSelect at 15394-15395; also IvAccordion_ShowHide_UpdatePart (9345)",
+   "ui/ui_control_panel.s:2883-2885 `GetPartSelect:` / `ld l, (PART_SELECT:16)` / `extz hl`",
+   "boot/system_handlers.s:355-358 `Boot_InitWorkRAM_ROMCopy1_Start:` / `ld xde, 0x3d524` / `ld xhl, WorkRamInit_Image` / `ld xbc, 0x219e` -- WorkRamInit_Image = 0xEED8C8, so 0xEEED44 lands at 0x3D524 + 0x147C = 0x3E9A0",
+   "ui_widgets/naka_sequencer_channels.c:2872-2900 `.Naka_DrawbarControl_Table = {` / `NAKA_ADDR(NakaInst_RIGHT_1_E9D9B0),` / ... / `NAKA_ADDR(NakaInst_METRO),` / `0x00000000,` -- the C mirror's 28 entries (field at 2120 to rename too)",
+   "ui_widgets/sequencer_channel_containers.s:161-176 `Naka_DrawbarControl_Table:` / `.incbin \"includes/generated/naka_sequencer_channels.bin\", 0xCCC, 0x34` / `.long NakaInst_PART_14` / ... / `.long NakaInst_METRO` -- strings at 0xE9D9B0 \"RIGHT 1:\" .. 0xE9D8AC \"METRO  :\""
+  ]
+ },
+ {
+  "old": "TtMdCtlMsg_EventDispatch",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PmemOutRGridCheck_OnIndexswUp",
+  "header": "PmemOutRGridCheck's INDEX UP case (events EVT_INDEXSW_UP and EVT_INDEXSW_UP_AIC; also the base of its 7-entry case table), the twin of PmemOutRGridCheck_OnIndexswDown: for grid rows 0-2 it fills a RAM-edit request (PmemOutRGridCheck_RamRequestInit) for the panel-memory part byte and sends it with MainRamPut / MainRamAdd. Nothing to do with a TT_MDCTLMSG title. Basis: callers + body.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:1923-1937 `sub xhl, EVT_INDEXSW_UP` / ... / `add xhl, PmemOutRGridCheck_CaseTable` / `ld hl, (xhl)` / `lda xix, (TtMdCtlMsg_EventDispatch:24)` / ... / `0x1c00017 -> TtMdCtlMsg_EventDispatch` / `0x1c00018 -> PmemOutRGridCheck_OnIndexswDown` / `0x1c00019 -> TtMdCtlMsg_EventDispatch` -- the dispatch of PmemOutRGridCheck (1896)",
+   "shared/event_codes.s:164-166 `EVT_INDEXSW_UP, 0x1c00017` / `EVT_INDEXSW_DOWN, 0x1c00018` / `EVT_INDEXSW_UP_AIC, 0x1c00019`",
+   "ui_widgets/naka_widget_tables_2.s:3183-3190 `PmemOutRGridCheck_CaseTable:` / `.short TtMdCtlMsg_EventDispatch - TtMdCtlMsg_EventDispatch` / `.short PmemOutRGridCheck_OnIndexswDown - TtMdCtlMsg_EventDispatch` / ...",
+   "ui/drawbar_panel_ui.s:1951-1955 `TtMdCtlMsg_EventDispatch:` / `call GetFocusObject` / `ld xwa, xhl` / `ld xbc, EVT_GET_SELECTED_CEL`",
+   "ui/drawbar_panel_ui.s:1973-1976 `ld xiy, PmemOutRGridCheck_RamRequestInit` / `lda xix, (xsp+56)` / `ldw bc, 11` / `ldirw` -- row 0 of the case",
+   "ui/drawbar_panel_ui.s:1183 `PmemOutLGridCheck_OnIndexswUp:` -- the L grid's twin name"
+  ]
+ },
+ {
+  "old": "StyleGroup_LatinDance_Table",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MstStyle_GenreTable_GroupColumn",
+  "header": "+4 of MstStyle_GenreTable: the style-group-table column of the 10 x {u32 genre name, u32 group table} genre records (stride 8). MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and MstStyle1Page_EventDispatch load the group table of genre (0x340C4) through this label and store it at 0x340D2; entry 0's table is Easy Listening's, not Latin Dance's. Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "a column base inside an .incbin-held record table (label = MstStyle_GenreTable + 4)",
+  "evidence": [
+   "ui/ui_mode_handlers.s:4241-4247 `ld wa, (0x0340c4:24)` / `extz xwa` / `sll xwa, 3` / `lda xbc, (StyleGroup_LatinDance_Table:24)` / `add xbc, xwa` / `ld xde, (xbc)` / `ld (0x0340d2:24), xde` -- MstStyle1_EventDispatch (4201)",
+   "ui/ui_mode_handlers.s:4319-4325 the same in MstStyle1Sub_HandleSubSelect (4312); 4955-4961 in MstStyle1Page_EventDispatch (4909)",
+   "ui_widgets/style_bitmaps.s:3537-3541 header of MstStyle_GenreTable -- 'the group-table column is read through StyleGroup_LatinDance_Table (= this + 4)'; `MstStyle_GenreTable: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x18AE6, 0x4`",
+   "ui_widgets/style_bitmaps.s:3550 `StyleGroup_LatinDance_Table: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x18AEA, 0x4C` -- genre 0 (\"Easy Listening\") group table 0xECE2F0 is its first word",
+   "ui/ui_mode_handlers.s:6050-6057 `sll xwa, 3` / `ld xbc, MstStyle_GenreTable` / `add xbc, xwa` / `ld xwa, (xbc)` -- the name column is read through the table base"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry8_PtrTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_MspBank17FuncHandlers",
+  "header": "6 x u32 handlers PanelButton_MspNumber calls for MSP 1-6 while the MSP bank (parameter 0x28800) is 17, C = PanelButton_MspBank17FuncCodes[button]; each is the foot-pedal function handler of that code (PanelAction_PedalFunctionHandlers 13, 14, 8, 3, 15, 2). Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:1022-1030 `cp hl, 17` / ... / `lda xde, (PanelButton_MspBank17FuncCodes:24)` / `ld c, (xde+bc)` / `lda xde, (FileIO_BytecodeData_Code_Entry8_PtrTable:24)` / `lda xde, (xde+wa)` / `ld xwa, (xsp+2)` / `ld xhl, (xde)` / `call (xhl)` -- PanelButton_MspNumber (998)",
+   "ui_widgets/naka_extension_device.c:6341-6347 `.FileIO_BytecodeData_Code_Entry8_PtrTable = {` / `NAKA_ADDR(ExtDev_SndParam_Block70_Var04),` / `NAKA_ADDR(ExtDev_SndParam_DispatchAndWriteA8),` / `NAKA_ADDR(ExtDev_SndParam_Write98_Block),` / `NAKA_ADDR(FileIO_BytecodeData_Code_Join18),` / `NAKA_ADDR(ExtDev_SndParam_DispatchAndWriteA8_Alt),` / `NAKA_ADDR(FileIO_BytecodeData_Code_Loop3),` (field declared at 1623, rename too)",
+   "ui_widgets/naka_extension_device.c:6394-6398 `.PanelAction_PedalFunctionHandlers = {` / ... -- entries 13, 14, 8, 3, 15, 2 are the same six handlers",
+   "ui_widgets/extension_device_screens.s:1061-1067 `FileIO_BytecodeData_Code_Entry8_PtrTable: .incbin \"includes/generated/naka_extension_device.bin\", 0x3598, 0x18 ; 6 x 32-bit pointer` / ... / `PanelButton_MspBank17FuncCodes: .incbin \"includes/generated/naka_extension_device.bin\", 0x35B0, 0x6`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry8_PtrTable_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_MspBank18FuncHandlers",
+  "header": "6 x u32 handlers PanelButton_MspNumber calls for MSP 1-6 while the MSP bank is 18, C = PanelButton_MspBank18FuncCodes[button]: five are the pedal-function handlers of their codes (PanelAction_PedalFunctionHandlers 4, 6, 5, 7, 1); slot 2 (code 0xB5) is handler 12, ExtDev_SndParam_Block48_Var02, which the pedal map never selects. Basis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:1020-1039 `cp hl, 18` / ... / `PanelButton_MspNumber_Skip:` / `lda xde, (PanelButton_MspBank18FuncCodes:24)` / `ld c, (xde+bc)` / `lda xde, (FileIO_BytecodeData_Code_Entry8_PtrTable_2:24)` / `lda xde, (xde+wa)` / ... / `call (xhl)`",
+   "ui_widgets/naka_extension_device.c:6356-6362 `.FileIO_BytecodeData_Code_Entry8_PtrTable_2 = {` / `NAKA_ADDR(ExtDev_SndParam_Block48_Var40),` / `NAKA_ADDR(ExtDev_SndParam_Block48_Var04),` / `NAKA_ADDR(ExtDev_SndParam_Block48_Var02),` / `NAKA_ADDR(ExtDev_SndParam_Block48_Var80),` / `NAKA_ADDR(ExtDev_SndParam_Block48_Var04_B),` / `NAKA_ADDR(NakaData_WidgetInit1),` (field declared at 1627, rename too)",
+   "ui_widgets/extension_device_screens.s:1089-1092 header of PanelAction_PedalFunctionHandlers -- 'the map never yields 12 (ExtDev_SndParam_Block48_Var02) nor 22'",
+   "ui_widgets/extension_device_screens.s:1068 `FileIO_BytecodeData_Code_Entry8_PtrTable_2: .incbin \"includes/generated/naka_extension_device.bin\", 0x35B6, 0x18 ; 6 x 32-bit pointer`"
+  ]
+ },
+ {
+  "old": "ExitWindow_Paint",
+  "verdict": "name",
+  "kind": "local",
+  "why_refused": null,
+  "new": "InitializeObjectTable_Loop",
+  "header": "Local loop label of InitializeObjectTable (its first loop): clears the 1120 x 14-byte view records from RAM 0x27ED2 (+0 = 0xFFFFFFFF, +4 = 0, +8 word = 0, +10 = 0). Referenced only by its own `jr c` back-branch. Basis: body.",
+  "basis": "body",
+  "evidence": [
+   "ui/ui_widget_defs.s:8669-8680 `InitializeObjectTable:` / ... / `lda xwa, (0x027ed2:24)` / `lda xbc, (xwa + 10)` / `lda xde, (xwa + 8)` / `lda xhl, (xwa + 4)` / `ld xix, xwa` / `lda xiy, (xwa+15680)` / `ExitWindow_Paint:`",
+   "ui/ui_widget_defs.s:8681-8692 `ld xwa, 0xffffffff` / `ld (xix), xwa` / ... / `lda xix, (xix + 14)` / ... / `cp xix, xiy` / `jr c, ExitWindow_Paint` -- the only reference",
+   "v9 ui/ui_widget_defs.s:8671 and v7 ui/ui_widget_defs.s:8767 carry the same label (only their own back-branch refers to it)"
+  ]
+ },
+ {
+  "old": "ExitWindow_Confirm",
+  "verdict": "name",
+  "kind": "local",
+  "why_refused": null,
+  "new": "InitializeObjectTable_Loop2",
+  "header": "Local loop label of InitializeObjectTable (second loop): copies NakaMode_InitRecord (7 words) into each of the 32 x 14-byte mode records at RAM 0x328FC. Referenced only by its own back-branch (a comment in disk_warning_strings.s names it). Basis: body.",
+  "basis": "body",
+  "evidence": [
+   "ui/ui_widget_defs.s:8693-8704 `lda xbc, (0x0328fc:24)` / `ld xwa, xbc` / `lda xde, (xbc+448)` / ... / `ExitWindow_Confirm:` / `ld xiy, NakaMode_InitRecord` / `ld xix, xwa` / `ld bc, 7:i3` / `ldirw` / `lda xwa, (xwa + 14)` / `cp xwa, xde` / `jr c, ExitWindow_Confirm`",
+   "ui_widgets/disk_warning_strings.s:905 `; InitializeObjectTable (ui/ui_widget_defs.s, loop ExitWindow_Confirm) copies it (7 words) into all` -- comment to update",
+   "v9 ui/ui_widget_defs.s:8688 and v7 ui/ui_widget_defs.s:8784 carry the same label"
+  ]
+ },
+ {
+  "old": "ExitWindow_OK",
+  "verdict": "name",
+  "kind": "local",
+  "why_refused": null,
+  "new": "InitializeObjectTable_Loop3",
+  "header": "Local loop label of InitializeObjectTable (third loop): copies Title_RecordTemplate (11 words) into each of the 256 x 22-byte title records at RAM 0x32ABC; the SupportClass registration follows the loop, it is not part of it. Referenced only by its own back-branch (comments elsewhere wrongly say ExitWindow_OK registers SupportClass). Basis: body.",
+  "basis": "body",
+  "evidence": [
+   "ui/ui_widget_defs.s:8705-8716 `lda xbc, (0x032abc:24)` / `ld xwa, xbc` / `lda xde, (xbc+5632)` / ... / `ExitWindow_OK:` / `ld xiy, Title_RecordTemplate` / `ld xix, xwa` / `ldw bc, 0xb` / `ldirw` / `lda xwa, (xwa + 22)` / `cp xwa, xde` / `jr c, ExitWindow_OK`",
+   "ui/ui_widget_defs.s:8717-8726 `lda xbc, (xsp + 2)` / `ld xwa, NAKA_CLASS_SupportClass` / ... / `calr RegisterObjectTable` -- after the loop",
+   "ui_widgets/style_bitmaps.s:107 `; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:` -- one of 7 comments to reword (also debug_naming_panel_sim.s:362, 511, 615, 684, disk_warning_strings.s:915, style_bitmaps.s:339)",
+   "v9 ui/ui_widget_defs.s:8700 and v7 ui/ui_widget_defs.s:8796 carry the same label"
+  ]
+ },
+ {
+  "old": "ExitWindow_Return",
+  "verdict": "name",
+  "kind": "local",
+  "why_refused": null,
+  "new": "InitializeObjectTable_Loop4",
+  "header": "Local loop label of InitializeObjectTable (fourth loop): for IZ = 0..255 registers two Viewable object tables, slot IZ with base 0x276D2 + 4 * IZ and slot IZ + 0x300 with base 0x27AD2 + 4 * IZ (count 0). Referenced only by its own back-branch. Basis: body.",
+  "basis": "body",
+  "evidence": [
+   "ui/ui_widget_defs.s:8747-8763 `ld iz, 0:i3` / `ExitWindow_Return:` / `lda xbc, (xsp + 2)` / `ld xwa, NAKA_CLASS_Viewable` / ... / `ld xde, 0x276d2` / `add xde, xwa` / `ld (xbc + 10), xde` / `ld wa, iz` / `calr RegisterObjectTable`",
+   "ui/ui_widget_defs.s:8762-8776 `lda xbc, (xsp + 2)` / ... / `ld xde, 0x27ad2` / ... / `add wa, 0x300` / `calr RegisterObjectTable` / `inc 1, iz` / `cp iz, 0x100` / `jr c, ExitWindow_Return` -- the only reference",
+   "v9 ui/ui_widget_defs.s:8740 and v7 ui/ui_widget_defs.s:8836 carry the same label"
+  ]
+ },
+ {
+  "old": "PmemOutLGridCheck_CaseTable_Tail",
+  "verdict": "refuse",
+  "why_refused": "ALIAS, not a name problem: this label sits on the same address (0xE801D4) as PmemOutRGridCheck_RamRequestInit, the label directly below it (only comment lines between them), and nothing in code refers to it -- its header's readers are the readers of PmemOutRGridCheck_RamRequestInit. Fix by merging: delete the `PmemOutLGridCheck_CaseTable_Tail:` line and its stale [naka_s_headers] block, and rename the C mirror field `PmemOutLGridCheck_CaseTable_Tail[22]` (naka_widget_tables_2.c) to PmemOutRGridCheck_RamRequestInit. Apply the same in v9/v7.",
+  "new": null,
+  "merge_into": "PmemOutRGridCheck_RamRequestInit",
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "ui_widgets/naka_widget_tables_2.s:3127-3133 `PmemOutLGridCheck_CaseTable_Tail:` / `; PmemOutRGridCheck_RamRequestInit: Initializer of the 22-byte (11-word) RAM-edit request PmemOutRGridCheck's INDEX UP` / ... / `PmemOutRGridCheck_RamRequestInit: .incbin \"includes/generated/naka_widget_tables_2.bin\", 0x25E36, 0x16` -- two labels, one address",
+   "ui_widgets/naka_widget_tables_2.s:3116-3126 `; [naka_s_headers] PmemOutLGridCheck_CaseTable_Tail` / ... / `;   (0xF7935F, 32-bit pointer); PmemOutRGridCheck_OnIndexswDown (0xF79405, 32-bit pointer); and 8 more` -- the stale header (its readers use PmemOutRGridCheck_RamRequestInit)",
+   "ui_widgets/naka_widget_tables_2.c:1957-1961 `* PmemOutLGridCheck_CaseTable_Tail -- 22 bytes after` / ... / `uint8_t PmemOutLGridCheck_CaseTable_Tail[22];` -- the C field to rename",
+   "ui/drawbar_panel_ui.s:1973 `ld xiy, PmemOutRGridCheck_RamRequestInit` -- code uses the semantic name"
+  ]
+ }
+]

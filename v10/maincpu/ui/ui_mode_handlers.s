@@ -4241,7 +4241,7 @@ MstStyle1_EventDispatch:
 	ld wa, (0x0340c4:24)
 	extz xwa
 	sll xwa, 3
-	lda xbc, (StyleGroup_LatinDance_Table:24)
+	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
 	ld (0x0340d2:24), xde
@@ -4319,7 +4319,7 @@ MstStyle1Sub_HandleSubSelect:
 	ld wa, (0x0340c4:24)
 	extz xwa
 	sll xwa, 3
-	lda xbc, (StyleGroup_LatinDance_Table:24)
+	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
 	ld (0x0340d2:24), xde
@@ -4955,7 +4955,7 @@ MstStyle1Page_EventDispatch:
 	ld wa, (0x0340c4:24)
 	extz xwa
 	sll xwa, 3
-	lda xbc, (StyleGroup_LatinDance_Table:24)
+	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
 	ld (0x0340d2:24), xde

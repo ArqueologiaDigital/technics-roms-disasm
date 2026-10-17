@@ -2117,7 +2117,7 @@ typedef struct __attribute__((packed)) {
     /* IvSdpart selected part row (index into IvSdpart_PartNameStrPtrs / IvSdpart_PartNumberByRow) */
     uint16_t IvSdpart_PartRow;
     /* Naka_DrawbarControl_Table: 28 pointers (cut from ptrs_2 by split_naka_pointer_arrays.py) */
-    uint32_t Naka_DrawbarControl_Table[28];
+    uint32_t Part_CaptionStrPtrs[28];
     uint16_t field_0d3c;
     uint16_t field_0d3e;
     uint16_t field_0d40;
@@ -2869,7 +2869,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .IvSdpart_PartRow = 0x0000,
 
-    .Naka_DrawbarControl_Table = {
+    .Part_CaptionStrPtrs = {
         NAKA_ADDR(NakaInst_RIGHT_1_E9D9B0),
         NAKA_ADDR(NakaInst_RIGHT_2_E9D9A6),
         NAKA_ADDR(NakaInst_LEFT_E9D99C),

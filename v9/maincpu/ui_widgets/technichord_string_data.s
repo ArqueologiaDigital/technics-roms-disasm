@@ -2383,152 +2383,152 @@ MsgHeader_BuildLoop_Str_Fmts_Fmt2d:		.incbin "includes/generated/naka_technichor
 ; [nakarest] NakaInst_METRO  +0x1795e..+0x17968 (0xe9d8ac, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8ac), first string "METRO :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_METRO`); 1 data word in
-; [nakarest] Naka_DrawbarControl_Table (at 0xeeedac).
+; [nakarest] Part_CaptionStrPtrs (at 0xeeedac).
 NakaInst_METRO:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1795E, 0xA
 ; [nakarest] NakaInst_CONTROL  +0x17968..+0x17972 (0xe9d8b6, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8b6), first string "CONTROL:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_CONTROL`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeeda8).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeeda8).
 NakaInst_CONTROL:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17968, 0xA
 ; [nakarest] NakaInst_MSP  +0x17972..+0x1797c (0xe9d8c0, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8c0), first string "MSP :"; no registered NAKA table points into
 ; [nakarest] it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_MSP`); 1 data word in
-; [nakarest] Naka_DrawbarControl_Table (at 0xeeeda4).
+; [nakarest] Part_CaptionStrPtrs (at 0xeeeda4).
 NakaInst_MSP:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17972, 0xA
 ; [nakarest] NakaInst_MSP_E9D8CA  +0x1797c..+0x17986 (0xe9d8ca, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8ca), first string "MSP :"; no registered NAKA table points into
 ; [nakarest] it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_MSP_E9D8CA`); 1 data
-; [nakarest] word in Naka_DrawbarControl_Table (at 0xeeeda0).
+; [nakarest] word in Part_CaptionStrPtrs (at 0xeeeda0).
 NakaInst_MSP_E9D8CA:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1797C, 0xA
 ; [nakarest] NakaInst_R_BASS  +0x17986..+0x17990 (0xe9d8d4, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8d4), first string "R.BASS :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_R_BASS`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed9c).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed9c).
 NakaInst_R_BASS:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17986, 0xA
 ; [nakarest] NakaInst_CHORD  +0x17990..+0x1799a (0xe9d8de, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8de), first string "CHORD :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_CHORD`); 1 data word in
-; [nakarest] Naka_DrawbarControl_Table (at 0xeeed98).
+; [nakarest] Part_CaptionStrPtrs (at 0xeeed98).
 NakaInst_CHORD:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17990, 0xA
 ; [nakarest] NakaInst_DRUM  +0x1799a..+0x179a4 (0xe9d8e8, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8e8), first string "DRUM :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_DRUM`); 1 data
-; [nakarest] word in Naka_DrawbarControl_Table (at 0xeeed94).
+; [nakarest] word in Part_CaptionStrPtrs (at 0xeeed94).
 NakaInst_DRUM:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1799A, 0xA
 ; [nakarest] NakaInst_BASS  +0x179a4..+0x179ae (0xe9d8f2, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8f2), first string "BASS :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_BASS`); 1 data
-; [nakarest] word in Naka_DrawbarControl_Table (at 0xeeed90).
+; [nakarest] word in Part_CaptionStrPtrs (at 0xeeed90).
 NakaInst_BASS:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179A4, 0xA
 ; [nakarest] NakaInst_ACCOMP3  +0x179ae..+0x179b8 (0xe9d8fc, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8fc), first string "ACCOMP3:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_ACCOMP3`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed8c).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed8c).
 NakaInst_ACCOMP3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179AE, 0xA
 ; [nakarest] NakaInst_ACCOMP2  +0x179b8..+0x179c2 (0xe9d906, 10 B)
 ; [nakarest] Text (10 B at 0xe9d906), first string "ACCOMP2:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_ACCOMP2`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed88).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed88).
 NakaInst_ACCOMP2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179B8, 0xA
 ; [nakarest] NakaInst_ACCOMP1  +0x179c2..+0x179cc (0xe9d910, 10 B)
 ; [nakarest] Text (10 B at 0xe9d910), first string "ACCOMP1:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_ACCOMP1`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed84).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed84).
 NakaInst_ACCOMP1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179C2, 0xA
 ; [nakarest] NakaInst_PART_16  +0x179cc..+0x179d6 (0xe9d91a, 10 B)
 ; [nakarest] Text (10 B at 0xe9d91a), first string "PART 16:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_PART_16`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed80).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed80).
 NakaInst_PART_16:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179CC, 0xA
 ; [nakarest] NakaInst_PART_15  +0x179d6..+0x179e0 (0xe9d924, 10 B)
 ; [nakarest] Text (10 B at 0xe9d924), first string "PART 15:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_PART_15`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed7c).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed7c).
 NakaInst_PART_15:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179D6, 0xA
 ; [nakarest] NakaInst_PART_14  +0x179e0..+0x179ea (0xe9d92e, 10 B)
 ; [nakarest] Text (10 B at 0xe9d92e), first string "PART 14:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
-; [nakarest] Naka_DrawbarControl_Table
+; [nakarest] Part_CaptionStrPtrs
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_PART_14`); 1 data word
-; [nakarest] in Naka_DrawbarControl_Table (at 0xeeed78).
+; [nakarest] in Part_CaptionStrPtrs (at 0xeeed78).
 NakaInst_PART_14:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179E0, 0xA
 ; [nakarest] NakaInst_PART_13  +0x179ea..+0x179f4 (0xe9d938, 10 B)
 ; [nakarest] Text (10 B at 0xe9d938), first string "PART 13:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed74).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed74).
 NakaInst_PART_13:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179EA, 0xA
 ; [nakarest] NakaInst_PART_12  +0x179f4..+0x179fe (0xe9d942, 10 B)
 ; [nakarest] Text (10 B at 0xe9d942), first string "PART 12:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed70).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed70).
 NakaInst_PART_12:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179F4, 0xA
 ; [nakarest] NakaInst_PART_11  +0x179fe..+0x17a08 (0xe9d94c, 10 B)
 ; [nakarest] Text (10 B at 0xe9d94c), first string "PART 11:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed6c).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed6c).
 NakaInst_PART_11:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179FE, 0xA
 ; [nakarest] NakaInst_PART_10  +0x17a08..+0x17a12 (0xe9d956, 10 B)
 ; [nakarest] Text (10 B at 0xe9d956), first string "PART 10:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed68).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed68).
 NakaInst_PART_10:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A08, 0xA
 ; [nakarest] NakaInst_PART_9  +0x17a12..+0x17a1c (0xe9d960, 10 B)
 ; [nakarest] Text (10 B at 0xe9d960), first string "PART 9 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed64).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed64).
 NakaInst_PART_9:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A12, 0xA
 ; [nakarest] NakaInst_PART_8  +0x17a1c..+0x17a26 (0xe9d96a, 10 B)
 ; [nakarest] Text (10 B at 0xe9d96a), first string "PART 8 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed60).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed60).
 NakaInst_PART_8:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A1C, 0xA
 ; [nakarest] NakaInst_PART_7  +0x17a26..+0x17a30 (0xe9d974, 10 B)
 ; [nakarest] Text (10 B at 0xe9d974), first string "PART 7 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed5c).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed5c).
 NakaInst_PART_7:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A26, 0xA
 ; [nakarest] NakaInst_PART_6  +0x17a30..+0x17a3a (0xe9d97e, 10 B)
 ; [nakarest] Text (10 B at 0xe9d97e), first string "PART 6 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed58).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed58).
 NakaInst_PART_6:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A30, 0xA
 ; [nakarest] NakaInst_PART_5  +0x17a3a..+0x17a44 (0xe9d988, 10 B)
 ; [nakarest] Text (10 B at 0xe9d988), first string "PART 5 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed54).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed54).
 NakaInst_PART_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A3A, 0xA
 ; [nakarest] NakaInst_PART_4  +0x17a44..+0x17a4e (0xe9d992, 10 B)
 ; [nakarest] Text (10 B at 0xe9d992), first string "PART 4 :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed50).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed50).
 NakaInst_PART_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A44, 0xA
 ; [nakarest] NakaInst_LEFT_E9D99C  +0x17a4e..+0x17a58 (0xe9d99c, 10 B)
 ; [nakarest] Text (10 B at 0xe9d99c), first string "LEFT :"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed4c).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed4c).
 NakaInst_LEFT_E9D99C:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A4E, 0xA
 ; [nakarest] NakaInst_RIGHT_2_E9D9A6  +0x17a58..+0x17a62 (0xe9d9a6, 10 B)
 ; [nakarest] Text (10 B at 0xe9d9a6), first string "RIGHT 2:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed48).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed48).
 NakaInst_RIGHT_2_E9D9A6:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A58, 0xA
 ; [nakarest] NakaInst_RIGHT_1_E9D9B0  +0x17a62..+0x17a7e (0xe9d9b0, 28 B)
 ; [nakarest] Text (28 B at 0xe9d9b0), first string "RIGHT 1:"; no registered NAKA table points
-; [nakarest] into it; reached through 1 data word in Naka_DrawbarControl_Table (at 0xeeed44).
+; [nakarest] into it; reached through 1 data word in Part_CaptionStrPtrs (at 0xeeed44).
 NakaInst_RIGHT_1_E9D9B0:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A62, 0xA
 IvAccordion_GetText_Str_Acdn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A6C, 0x6	; "Acdn"
 AccordionX_GetText_Str_Acdn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17A72, 0x6	; "Acdn"

@@ -153,12 +153,12 @@ IvSdpart_CurrentPage:	.incbin "includes/generated/naka_sequencer_channels.bin", 
 ; IvSdpart_PartRow -- 1 x uint16_t: the part row IvSdpart has selected; indexes IvSdpart_PartNameStrPtrs
 ; and IvSdpart_PartNumberByRow; rows >= 18 are not resynchronised from GetPartSelect.
 IvSdpart_PartRow:	.incbin "includes/generated/naka_sequencer_channels.bin", 0xCCA, 0x2
-; [nakarest] Naka_DrawbarControl_Table  +0xccc..+0xd00 (0xeeed44, 52 B)
+; [nakarest] Part_CaptionStrPtrs  +0xccc..+0xd00 (0xeeed44, 52 B)
 ; [nakarest] purpose not established: layout of 52 B at 0xeeed44 not derived; readers below
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
 ; [nakarest] 0x3e9a0..0x3e9d4 (its ld xde/xhl/xbc + ldir blocks); no literal RAM reference into
 ; [nakarest] that copy was found.
-Naka_DrawbarControl_Table:
+Part_CaptionStrPtrs:
 	.incbin "includes/generated/naka_sequencer_channels.bin", 0xCCC, 0x34
 	.long NakaInst_PART_14
 	.long NakaInst_PART_15

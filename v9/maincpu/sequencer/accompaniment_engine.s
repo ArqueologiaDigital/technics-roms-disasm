@@ -10420,12 +10420,12 @@ AccProcess_InlinedCode:
 	bit	0, (0x3490:16)
 	jr	nz, AccProcess_InlinedCode_Skip5
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	(RHYTHM_PATTERN_SEL_B:16), wa
+	ld	(TAP_TEMPO_LAST_TAP_TIME:16), wa
 	or	(0x3490:16), 1
 	jr	AccProcess_InlinedCode_Return
 AccProcess_InlinedCode_Skip5:
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	bc, (RHYTHM_PATTERN_SEL_B:16)
+	ld	bc, (TAP_TEMPO_LAST_TAP_TIME:16)
 	cp	wa, bc
 	jr	c, AccProcess_InlinedCode_Skip6
 	sub	wa, bc
@@ -10456,7 +10456,7 @@ AccProcess_InlinedCode_Skip2:
 	ld	(0x3494:16), hl
 	ld	(0x3492:16), wa
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	(RHYTHM_PATTERN_SEL_B:16), wa
+	ld	(TAP_TEMPO_LAST_TAP_TIME:16), wa
 AccProcess_InlinedCode_Return:
 	ret
 AccProcess_PostAveragedTapTempo:
@@ -10486,7 +10486,7 @@ AccProcess_TimerCompare:
 	bit 0, (0x3490:16)
 	jr z, AccProcess_Timer_Ret
 	ld wa, (SYSTEM_TIMESTAMP:16)
-	ld bc, (RHYTHM_PATTERN_SEL_B:16)
+	ld bc, (TAP_TEMPO_LAST_TAP_TIME:16)
 	cp wa, bc
 	jr c, AccProcess_Timer_WrapCase
 	sub wa, bc

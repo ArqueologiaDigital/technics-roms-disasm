@@ -1020,9 +1020,9 @@ PanelButton_RhythmGroupCodes_LeftSeg0:			.incbin "includes/generated/naka_extens
 PanelButton_RhythmGroupCodes_LeftSeg1:			.incbin "includes/generated/naka_extension_device.bin", 0x358A, 0x2
 PanelButton_RhythmGroupCodes_LeftSeg6:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
 FileIO_BytecodeData_Data_12:			.incbin "includes/generated/naka_extension_device.bin", 0x3594, 0x4
-FileIO_BytecodeData_Code_Entry8_PtrTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
+PanelButton_MspBank17FuncHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
 FileIO_BytecodeData_Data_13:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
-FileIO_BytecodeData_Code_Entry8_PtrTable_2:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
+PanelButton_MspBank18FuncHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
 PanelButton_MspBank18FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6
 PanelButton_VariationCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35D4, 0x4
 ; PanelAction_PedalAssignHandlerIndex -- 256 x uint8_t: handler number per foot-pedal assignment code, 0xff = no action.

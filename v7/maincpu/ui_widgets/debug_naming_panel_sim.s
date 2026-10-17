@@ -359,7 +359,7 @@ NakaInst_ulong_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x
 NakaInst_ulong_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D1A, 0x2
 ; NakaInst_Bool_EnumTable -- 3 x {u32 name, s32 value}: value names of the Bool property type (2 named + "" end entry)
 ; Word +8 of SupportClass record 6 (boolProc, count 2) in SupportClass_PropTypeRecords, the 55 x 12-byte table
-; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
+; InitializeObjectTable registers (after its third loop) as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; True=1, False=0
 NakaInst_Bool_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D1C, 0x18
@@ -508,7 +508,7 @@ NakaInst_ColorID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0
 NakaInst_ColorID_NameStrings:	.incbin "includes/generated/naka_debug_naming.bin", 0x3F9E, 0x134
 ; NakaInst_BorderID_EnumTable -- 21 x {u32 name, s32 value}: value names of the BorderID property type (20 named + "" end entry)
 ; Word +8 of SupportClass record 30 (BorderIDProc, count 20) in SupportClass_PropTypeRecords, the 55 x 12-byte table
-; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
+; InitializeObjectTable registers (after its third loop) as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; BD_None=0, BD_Single1=1, BD_Single2=2, BD_Double1=3, BD_Shadow1=4, BD_Shadow2=5, BD_Round0=6, BD_Round1=7, BD_Round2=8, BD_Round5=9, ... (10 more)
 NakaInst_BorderID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x40D2, 0xA8
@@ -612,7 +612,7 @@ NakaInst_AlignmentID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin
 NakaInst_AlignmentID_NameStrings:	.incbin "includes/generated/naka_debug_naming.bin", 0x42AE, 0x2A
 ; NakaInst_EditSwID_EnumTable -- 21 x {u32 name, s32 value}: value names of the EditSwID property type (20 named + "" end entry)
 ; Word +8 of SupportClass record 36 (EditSwIDProc, count 20) in SupportClass_PropTypeRecords, the 55 x 12-byte table
-; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
+; InitializeObjectTable registers (after its third loop) as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; ES_Bottom1=0, ES_Bottom2=1, ES_Bottom3=2, ES_Bottom4=3, ES_Bottom5=4, ES_Bottom6=5, ES_Bottom7=6, ES_Bottom8=7, ES_Left1=0x88, ES_Left2=0x89, ... (10 more)
 NakaInst_EditSwID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x42D8, 0xA8
@@ -681,7 +681,7 @@ NakaInst_ES_Bottom2_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x4
 NakaInst_ES_Bottom1_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x444A, 0xC
 ; NakaInst_EditSwStyleID_EnumTable -- 18 x {u32 name, s32 value}: value names of the EditSwStyleID property type (17 named + "" end entry)
 ; Word +8 of SupportClass record 37 (EditSwStyleIDProc, count 17) in SupportClass_PropTypeRecords, the 55 x 12-byte table
-; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
+; InitializeObjectTable registers (after its third loop) as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; SS_Special=0, SS_Up=1, SS_Down=2, SS_UpDown=3, SS_On=4, SS_Off=5, SS_OK=6, SS_Left=7, SS_Right=8, SS_Yes=9, SS_No=0x0A, SS_OnOff=0x0B, ... (5 more)
 NakaInst_EditSwStyleID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x4456, 0x90

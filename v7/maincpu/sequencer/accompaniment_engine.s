@@ -10033,14 +10033,14 @@ AccProcess_InlinedCode:
 	; v10 does not spell this byte either
 	jr	nz, AccProcess_Entry_Skip5
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	(RHYTHM_PATTERN_SEL_B:16), wa
+	ld	(TAP_TEMPO_LAST_TAP_TIME:16), wa
 	; v10 does not spell this byte either
 	or	(0x33f4:16), 1
 	; v10 does not spell this byte either
 	jr	AccProcess_Entry_Return
 AccProcess_Entry_Skip5:
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	bc, (RHYTHM_PATTERN_SEL_B:16)
+	ld	bc, (TAP_TEMPO_LAST_TAP_TIME:16)
 	cp	wa, bc
 	jr	c, AccProcess_InlinedCode_Skip6
 	sub	wa, bc
@@ -10071,7 +10071,7 @@ AccProcess_InlinedCode_Skip2:
 	ld	(13304:16), hl
 	ld	(13302:16), wa
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	(RHYTHM_PATTERN_SEL_B:16), wa
+	ld	(TAP_TEMPO_LAST_TAP_TIME:16), wa
 AccProcess_Entry_Return:
 	ret
 AccProcess_Entry_Helper:
@@ -10100,7 +10100,7 @@ AccProcess_TimerCompare:
 	bit	0, (0x33f4:16)
 	jr	z, AccProcess_Timer_Ret
 	ld	wa, (SYSTEM_TIMESTAMP:16)
-	ld	bc, (RHYTHM_PATTERN_SEL_B:16)
+	ld	bc, (TAP_TEMPO_LAST_TAP_TIME:16)
 	cp	wa, bc
 	jr	c, AccProcess_Timer_WrapCase
 	sub	wa, bc

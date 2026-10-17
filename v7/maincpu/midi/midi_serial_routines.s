@@ -874,13 +874,13 @@ SC0Init_EnableRegisters:
 	ret
 SC0Init_PaddingStub:
 	ret
-; MIDI_SC0_DISPATCH_TABLE -- 4 handler pointers: SC0Init_Entry, then
+; SC0_InitFuncTable -- 4 handler pointers: SC0Init_Entry, then
 ; SC0Init_PaddingStub (a bare `ret`) three times.  Nothing in this file reads
 ; it; its only reference is entry 3 of SystemConfig_PointerTable
 ; (ui_widgets/widget_dispatch.s), and the reader of THAT table was not traced
 ; by the midi lane, so the indexing is not pinned here beyond the 4 entries
 ; that fit before MIDI_SC0_TX_DISPATCH.
-MIDI_SC0_DISPATCH_TABLE:
+SC0_InitFuncTable:
 	.long	SC0Init_Entry
 	.long	SC0Init_PaddingStub
 	.long	SC0Init_PaddingStub

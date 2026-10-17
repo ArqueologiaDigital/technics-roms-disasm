@@ -1228,7 +1228,12 @@ SndParam_OutOfMemoryMsg:
 ; Sound configuration lookup table (6136 bytes)
 ; Source: maincpu/ui_widgets/sound_config_lookup.c
 ; Structure: 138-byte header + 25 x 234-byte channel config records + 148-byte trailer
-NakaInst_SoundConfig_LookupTable:
+; SndParam_InitFuncTable: 4 x u32: the sound-parameter subsystem's init-phase handlers -- MIDI_INIT_SEQUENCES (phase
+;   0: builds and re-registers the SndParam hash table, clears 64 bytes at 0x9798) and SndParam_InitPhase1/2/3_NullRet
+;   -- list entry 5 of Subsys_HandlerTableList; named like Seq_InitFuncTable / VGA_InitFuncTable. The comment above it
+;   describes the whole sound_config_lookup.c blob, of which this label holds only the first 16 bytes. Basis: readers
+;   + bytes.
+SndParam_InitFuncTable:
 	.long	MIDI_INIT_SEQUENCES, SndParam_InitPhase1_NullRet, SndParam_InitPhase2_NullRet, SndParam_InitPhase3_NullRet
 ; FileData_NNPartSourceIndex: 24 x u8 for the 'NN' (.LSW class 3) live-panel import: KN5000 part record i (0..23, RAM
 ;   0xF9B4 + 26i) -> index of the 4-byte source record in the file's block at +414 {0x17, 0x14, 0x13, 0x10, 0x11,
@@ -7136,9 +7141,9 @@ Subsys_HandlerTableList:
 	.long Seq_InitFuncTable
 	.long Subsys_HandlerTable01
 	.long WidgetDispatch_FDTestPtrTable
-	.long MIDI_SC0_DISPATCH_TABLE
+	.long SC0_InitFuncTable
 	.long SeqFormat_ReferenceData
-	.long NakaInst_SoundConfig_LookupTable
+	.long SndParam_InitFuncTable
 	.long SoundProgram_ParamPtrTable
 	.long FileIO_InitFuncTable
 	.long VGA_InitFuncTable

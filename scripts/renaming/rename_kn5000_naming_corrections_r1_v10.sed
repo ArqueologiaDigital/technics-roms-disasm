@@ -1,0 +1,12 @@
+# written by scripts/renaming/apply_kn5000_naming_proposals.py
+s/\bNakaInst_SoundConfig_LookupTable\b/SndParam_InitFuncTable/g
+s/\bMIDI_SC0_DISPATCH_TABLE\b/SC0_InitFuncTable/g
+s/\bNaka_DrawbarControl_Table\b/Part_CaptionStrPtrs/g
+s/\bTtMdCtlMsg_EventDispatch\b/PmemOutRGridCheck_OnIndexswUp/g
+s/\bStyleGroup_LatinDance_Table\b/MstStyle_GenreTable_GroupColumn/g
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable\b/PanelButton_MspBank17FuncHandlers/g
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable_2\b/PanelButton_MspBank18FuncHandlers/g
+s/\bExitWindow_Paint\b/InitializeObjectTable_Loop/g
+s/\bExitWindow_Confirm\b/InitializeObjectTable_Loop2/g
+s/\bExitWindow_OK\b/InitializeObjectTable_Loop3/g
+s/\bExitWindow_Return\b/InitializeObjectTable_Loop4/g

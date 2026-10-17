@@ -2250,3 +2250,13 @@ s/\bSeWrtSnd_SetupNamingPage_Skip32\b/SeWrtSnd_SetupNamingPage_Skip5/g
 s/\bSeWrtSnd_SetupNamingPage_Join26\b/SeWrtSnd_SetupNamingPage_Join9/g
 s/\bSeWrtSnd_SetupNamingPage_Join27\b/SeWrtSnd_SetupNamingPage_Join5/g
 s/\bSeWrtSnd_SetupNamingPage_Loop7\b/SeWrtSnd_SetupNamingPage_Loop/g
+# run 2026-10-17
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable_2\b/PanelButton_MspBank18FuncHandlers/g
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable\b/PanelButton_MspBank17FuncHandlers/g
+s/\bNakaInst_SoundConfig_LookupTable\b/SndParam_InitFuncTable/g
+s/\bStyleGroup_LatinDance_Table\b/MstStyle_GenreTable_GroupColumn/g
+s/\bNaka_DrawbarControl_Table\b/Part_CaptionStrPtrs/g
+s/\bTtMdCtlMsg_EventDispatch\b/PmemOutRGridCheck_OnIndexswUp/g
+s/\bMIDI_SC0_DISPATCH_TABLE\b/SC0_InitFuncTable/g
+# run 2026-10-17
+s/\bPmemOutLGridCheck_JumpTable_Code_Join2\b/PmemOutRGridCheck_OnIndexswDown_Join2/g

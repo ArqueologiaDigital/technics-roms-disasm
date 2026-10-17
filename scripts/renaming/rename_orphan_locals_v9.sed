@@ -686,3 +686,9 @@ s/\bSeqPlay_DataBlock_BBE_Helper2_Skip\b/SeqPlay_UpdateStartFromPunchInDown_Skip
 s/\bSeqPlay_DataBlock_BBE_Helper2_Skip2\b/SeqPlay_UpdateStartFromPunchInDown_Skip2/g
 s/\bNoRef_SetWall_SlotMap20x2_Helper_Skip\b/SqTrAs_UpdateOkSwVisibility_Skip/g
 s/\bNoRef_SetWall_SlotMap20x2_Helper_Return\b/SqTrAs_UpdateOkSwVisibility_Return/g
+# run 2026-10-17
+s/\bTtMdCtlMsg_EventDispatch_Skip5\b/PmemOutRGridCheck_OnIndexswUp_Skip5/g
+s/\bTtMdCtlMsg_EventDispatch_Skip6\b/PmemOutRGridCheck_OnIndexswUp_Skip6/g
+s/\bTtMdCtlMsg_EventDispatch_Skip7\b/PmemOutRGridCheck_OnIndexswUp_Skip7/g
+s/\bTtMdCtlMsg_EventDispatch_Skip8\b/PmemOutRGridCheck_OnIndexswUp_Skip8/g
+s/\bTtMdCtlMsg_EventDispatch_Join2\b/PmemOutRGridCheck_OnIndexswDown_Join2/g

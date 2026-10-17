@@ -14,7 +14,7 @@
 ; sequencer.md "Key RAM Addresses"
 	.equ PREVIOUS_TITLE,		0x8d37	; the title before the last EVT_CHANGE_TITLE
 	.equ RHYTHM_VARIATION_INDEX,	0x3476	; variation index, 0..0x1E
-	.equ RHYTHM_PATTERN_SEL_B,	0x348e	; pattern selector B
+	.equ TAP_TEMPO_LAST_TAP_TIME,	0x348e	; SYSTEM_TIMESTAMP of the last TAP TEMPO press: AccProcess_InlinedCode stores it, AccProcess_TimerCompare ends the tap sequence 0x400 ticks later (was RHYTHM_PATTERN_SEL_B)
 	.equ RHYTHM_PATTERN_BUF_A,	0x94800	; pattern buffer A, 1,024 bytes per pattern
 	.equ RHYTHM_PATTERN_BUF_B,	0x95c00	; pattern buffer B (double buffer)
 ; memory-map.md "Medley State Variables"

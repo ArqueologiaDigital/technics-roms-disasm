@@ -1023,7 +1023,7 @@ PanelButton_MspNumber:
 	jr	nz, PanelButton_MspNumber_Skip2
 	lda	xde, (PanelButton_MspBank17FuncCodes:24)
 	ld	c, (xde+bc)
-	lda	xde, (FileIO_BytecodeData_Code_Entry8_PtrTable:24)
+	lda	xde, (PanelButton_MspBank17FuncHandlers:24)
 	lda	xde, (xde+wa)
 	ld	xwa, (xsp+2)
 	ld	xhl, (xde)
@@ -1032,7 +1032,7 @@ PanelButton_MspNumber:
 PanelButton_MspNumber_Skip:
 	lda	xde, (PanelButton_MspBank18FuncCodes:24)
 	ld	c, (xde+bc)
-	lda	xde, (FileIO_BytecodeData_Code_Entry8_PtrTable_2:24)
+	lda	xde, (PanelButton_MspBank18FuncHandlers:24)
 	lda	xde, (xde+wa)
 	ld	xwa, (xsp+2)
 	ld	xhl, (xde)

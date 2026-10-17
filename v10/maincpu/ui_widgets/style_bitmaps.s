@@ -104,7 +104,7 @@ NakaInst_WindowID_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin"
 NakaInst_WindowID_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x86, 0x2
 ; NakaInst_PartID_EnumTable -- 30 x {u32 name, s32 value}: value names of the PartID property type (29 named + "" end entry)
 ; Word +8 of SupportClass record 52 (PartIDProc, count 29) in SupportClass_PropTypeRecords, the 55 x 12-byte table
-; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
+; InitializeObjectTable registers (after its third loop) as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; PT_Part1=0, PT_Part2=1, PT_Part3=2, PT_Part4=3, PT_Part5=4, PT_Part6=5, PT_Part7=6, PT_Part8=7, PT_Part9=8, PT_Part10=9, PT_Part11=0x0A, ... (18 more)
 NakaInst_PartID_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x88, 0xF0
@@ -336,7 +336,7 @@ NakaInst_IT_Default:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4BE,
 NakaInst_IT_Off:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4CA, 0x8
 ; [nakarest] naka_style_bitmaps+0x4d2  +0x4d2..+0x741 (0xeb7690, 623 B)
 ; [nakarest] purpose not established: layout of 623 B at 0xeb7690 not derived; readers below
-; [nakarest] Readers: source references ExitWindow_OK (ui/ui_widget_defs.s: `lda xwa,
+; [nakarest] Readers: source references InitializeObjectTable_Loop3 (ui/ui_widget_defs.s: `lda xwa,
 ; [nakarest] (SupportClass_PropTypeRecords:24)`).
 ; SupportClass_PropTypeRecords: The SupportClass object table: 55 x 12-byte records {u32 proc, u16 count, u16 size,
 ;   u32 prop}, one per property type (boolProc, ObjectIDProc, pFuncProc, ... PartIDProc, TrackIDProc, IntTimeIDProc);
@@ -3531,23 +3531,27 @@ NakaInst_Romantic_Bossa:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x
 ; [nakarest] the root of the MstStyle browser tree (0xecfca4): 10 x {u32 group name, u32 group
 ; [nakarest] table}. MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
 ; [nakarest] MstStyle1Page_EventDispatch load (index*8)+4 -- the group table -- through the
-; [nakarest] label 4 bytes into it (StyleGroup_LatinDance_Table) and store it at 0x0340d2;
+; [nakarest] label 4 bytes into it (MstStyle_GenreTable_GroupColumn) and store it at 0x0340d2;
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
 ; [nakarest] MstStyle_GenreTable (= this address).
 ; MstStyle_GenreTable: Root of the MstStyle music-style browser: 10 x {u32 genre name, u32 genre's style-group table}
 ;   -- Easy Listening, Rock & Pop, Dance Pop, Party Music, Gospel/Blues/R&B, Jazz & Swing, Show/Trad Dance, Trad &
 ;   Folk, Country, Latin / World. MstStyle1Grid_CellSelect and MstStyle2_NameB_Render read the names here (index * 8);
-;   the group-table column is read through StyleGroup_LatinDance_Table (= this + 4). Basis: readers + bytes.
+;   the group-table column is read through MstStyle_GenreTable_GroupColumn (= this + 4). Basis: readers + bytes.
 MstStyle_GenreTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE6, 0x4
-; [nakarest] StyleGroup_LatinDance_Table  +0x18aea..+0x18b36 (0xecfca8, 76 B)
+; [nakarest] MstStyle_GenreTable_GroupColumn  +0x18aea..+0x18b36 (0xecfca8, 76 B)
 ; [nakarest] Continues the root of the MstStyle browser tree (0xecfca4): 10 x {u32 group name,
 ; [nakarest] u32 group table}. MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
 ; [nakarest] MstStyle1Page_EventDispatch load (index*8)+4 -- the group table -- through the
-; [nakarest] label 4 bytes into it (StyleGroup_LatinDance_Table) and store it at 0x0340d2;
+; [nakarest] label 4 bytes into it (MstStyle_GenreTable_GroupColumn) and store it at 0x0340d2;
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
 ; [nakarest] MstStyle_GenreTable (= this address) (starts 0xecfca4, 76 of its
 ; [nakarest] 80 bytes are here or later).
-StyleGroup_LatinDance_Table:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AEA, 0x4C
+; MstStyle_GenreTable_GroupColumn: +4 of MstStyle_GenreTable: the style-group-table column of the 10 x {u32 genre
+;   name, u32 group table} genre records (stride 8). MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
+;   MstStyle1Page_EventDispatch load the group table of genre (0x340C4) through this label and store it at 0x340D2;
+;   entry 0's table is Easy Listening's, not Latin Dance's. Basis: readers + bytes.
+MstStyle_GenreTable_GroupColumn:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AEA, 0x4C
 ; [nakarest] NakaInst_Latin_World  +0x18b36..+0x18b48 (0xecfcf4, 18 B)
 ; [nakarest] group name string (16 characters): "Latin / World".
 NakaInst_Latin_World:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18B36, 0x12

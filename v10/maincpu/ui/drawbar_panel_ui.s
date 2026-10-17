@@ -1928,12 +1928,12 @@ PmemOutRGridCheck:
 	add xhl, xhl
 	add xhl, PmemOutRGridCheck_CaseTable
 	ld hl, (xhl)
-	lda xix, (TtMdCtlMsg_EventDispatch:24)
-; Computed jump: target = TtMdCtlMsg_EventDispatch + PmemOutRGridCheck_CaseTable[i], PmemOutRGridCheck_CaseTable = 16-bit offsets (7 words, read
+	lda xix, (PmemOutRGridCheck_OnIndexswUp:24)
+; Computed jump: target = PmemOutRGridCheck_OnIndexswUp + PmemOutRGridCheck_CaseTable[i], PmemOutRGridCheck_CaseTable = 16-bit offsets (7 words, read
 ;   from the ROM by scripts/analysis/lane_uiproc_dispatch_tables.py); i = event - 0x1c00017:
-;   0x1c00017 -> TtMdCtlMsg_EventDispatch
+;   0x1c00017 -> PmemOutRGridCheck_OnIndexswUp
 ;   0x1c00018 -> PmemOutRGridCheck_OnIndexswDown
-;   0x1c00019 -> TtMdCtlMsg_EventDispatch
+;   0x1c00019 -> PmemOutRGridCheck_OnIndexswUp
 ;   0x1c0001a -> PmemOutRGridCheck_OnIndexswDown
 ;   0x1c0001b -> TtMdCtlMsg_ReturnZero2
 ;   0x1c0001c -> TtMdCtlMsg_ReturnZero2
@@ -1948,7 +1948,11 @@ PmemOutRGridCheck:
 ; event handling, and message routing.
 ; -----------------------------------------------------------------------------
 
-TtMdCtlMsg_EventDispatch:
+; PmemOutRGridCheck_OnIndexswUp: PmemOutRGridCheck's INDEX UP case (events EVT_INDEXSW_UP and EVT_INDEXSW_UP_AIC; also
+;   the base of its 7-entry case table), the twin of PmemOutRGridCheck_OnIndexswDown: for grid rows 0-2 it fills a
+;   RAM-edit request (PmemOutRGridCheck_RamRequestInit) for the panel-memory part byte and sends it with MainRamPut /
+;   MainRamAdd. Nothing to do with a TT_MDCTLMSG title. Basis: callers + body.
+PmemOutRGridCheck_OnIndexswUp:
 	call	GetFocusObject
 	ld	xwa, xhl
 	ld	xbc, EVT_GET_SELECTED_CEL
@@ -1965,9 +1969,9 @@ TtMdCtlMsg_EventDispatch:
 	cpw	(xwa), 1
 	jrl	nz, TtMdCtlMsg_ReturnZero2
 	cp	bc, 2:i3
-	jrl	z, TtMdCtlMsg_EventDispatch_Skip7
+	jrl	z, PmemOutRGridCheck_OnIndexswUp_Skip7
 	cp	bc, 1:i3
-	jr	z, TtMdCtlMsg_EventDispatch_Skip6
+	jr	z, PmemOutRGridCheck_OnIndexswUp_Skip6
 	cp	bc, 0:i3
 	jrl	nz, TtMdCtlMsg_ReturnZero2
 	ld	xiy, PmemOutRGridCheck_RamRequestInit
@@ -1998,14 +2002,14 @@ TtMdCtlMsg_EventDispatch:
 	ld	(xwa+6), xbc
 	ld	xbc, (xwa)
 	bit	7, (xbc)
-	jr	z, TtMdCtlMsg_EventDispatch_Skip5
+	jr	z, PmemOutRGridCheck_OnIndexswUp_Skip5
 	ld	xbc, 0:i3
 	ld	(xwa+14), xbc
 	call	MainRamPut
 	jrl	TtMdCtlMsg_ReturnZero2
-TtMdCtlMsg_EventDispatch_Skip5:
-	jrl	TtMdCtlMsg_EventDispatch_Join2
-TtMdCtlMsg_EventDispatch_Skip6:
+PmemOutRGridCheck_OnIndexswUp_Skip5:
+	jrl	PmemOutRGridCheck_OnIndexswDown_Join2
+PmemOutRGridCheck_OnIndexswUp_Skip6:
 	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
@@ -2032,8 +2036,8 @@ TtMdCtlMsg_EventDispatch_Skip6:
 	ld	(xwa), xbc
 	ld	xbc, 255
 	ld	(xwa+6), xbc
-	jrl	TtMdCtlMsg_EventDispatch_Join2
-TtMdCtlMsg_EventDispatch_Skip7:
+	jrl	PmemOutRGridCheck_OnIndexswDown_Join2
+PmemOutRGridCheck_OnIndexswUp_Skip7:
 	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
@@ -2062,13 +2066,13 @@ TtMdCtlMsg_EventDispatch_Skip7:
 	ld	(xwa+6), xbc
 	ld	xbc, (xwa)
 	bit	7, (xbc)
-	jr	z, TtMdCtlMsg_EventDispatch_Skip8
+	jr	z, PmemOutRGridCheck_OnIndexswUp_Skip8
 	ld	xbc, 0:i3
 	ld	(xwa+14), xbc
 	call	MainRamPut
 	jrl	TtMdCtlMsg_ReturnZero2
-TtMdCtlMsg_EventDispatch_Skip8:
-	jrl	TtMdCtlMsg_EventDispatch_Join2
+PmemOutRGridCheck_OnIndexswUp_Skip8:
+	jrl	PmemOutRGridCheck_OnIndexswDown_Join2
 PmemOutRGridCheck_OnIndexswDown:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -2130,7 +2134,7 @@ PmemOutRGridCheck_OnIndexswDown:
 PmemOutRGridCheck_OnIndexswDown_Skip:
 	ld	xbc, 0xffffffff
 	ld	(xde), xbc
-	jrl	TtMdCtlMsg_EventDispatch_Join2
+	jrl	PmemOutRGridCheck_OnIndexswDown_Join2
 PmemOutRGridCheck_OnIndexswDown_Skip9:
 	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
@@ -2160,7 +2164,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip9:
 	ld	(xwa+6), xbc
 	ld	xbc, 0xffffffff
 	ld	(xwa+14), xbc
-	jr	TtMdCtlMsg_EventDispatch_Join2
+	jr	PmemOutRGridCheck_OnIndexswDown_Join2
 PmemOutRGridCheck_OnIndexswDown_Skip10:
 	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
@@ -2203,7 +2207,7 @@ PmemOutRGridCheck_OnIndexswDown_Join:
 PmemOutRGridCheck_OnIndexswDown_Skip2:
 	ld	xbc, 0xffffffff
 	ld	(xde), xbc
-TtMdCtlMsg_EventDispatch_Join2:
+PmemOutRGridCheck_OnIndexswDown_Join2:
 	call	MainRamAdd
 	jrl	TtMdCtlMsg_ReturnZero2
 PmemOutRGridCheck_OnRamData:

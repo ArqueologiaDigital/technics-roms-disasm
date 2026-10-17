@@ -1274,7 +1274,7 @@ SndParam_OutOfMemoryMsg:
 ; Sound configuration lookup table (6136 bytes)
 ; Source: maincpu/ui_widgets/sound_config_lookup.c
 ; Structure: 138-byte header + 25 x 234-byte channel config records + 148-byte trailer
-NakaInst_SoundConfig_LookupTable:
+SndParam_InitFuncTable:
 	.long	MIDI_INIT_SEQUENCES, SndParam_InitPhase1_NullRet, SndParam_InitPhase2_NullRet, SndParam_InitPhase3_NullRet
 FileData_NNPartSourceIndex:	.incbin "includes/generated/sound_config_lookup.bin", 0x10, 0x18
 FileData_NNDspEffectAlgoMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x28, 0x10
@@ -7133,9 +7133,9 @@ Subsys_HandlerTableList:
 	.long Seq_InitFuncTable
 	.long Subsys_HandlerTable01
 	.long WidgetDispatch_FDTestPtrTable
-	.long MIDI_SC0_DISPATCH_TABLE
+	.long SC0_InitFuncTable
 	.long SeqFormat_ReferenceData
-	.long NakaInst_SoundConfig_LookupTable
+	.long SndParam_InitFuncTable
 	.long SoundProgram_ParamPtrTable
 	.long FileIO_InitFuncTable
 	.long VGA_InitFuncTable

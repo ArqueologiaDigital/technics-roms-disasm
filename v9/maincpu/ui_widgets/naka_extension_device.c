@@ -1620,11 +1620,11 @@ typedef struct __attribute__((packed)) {
     uint16_t field_3592;
     uint16_t field_3594;
     char str_558[2];
-    uint32_t FileIO_BytecodeData_Code_Entry8_PtrTable[6];  /* 6 pointers */
+    uint32_t PanelButton_MspBank17FuncHandlers[6];  /* 6 pointers */
     uint16_t field_35b0;
     uint16_t field_35b2;
     uint16_t field_35b4;
-    uint32_t FileIO_BytecodeData_Code_Entry8_PtrTable_2[6];  /* 6 pointers */
+    uint32_t PanelButton_MspBank18FuncHandlers[6];  /* 6 pointers */
     uint16_t field_35ce;
     uint16_t field_35d0;
     uint16_t field_35d2;
@@ -6338,7 +6338,7 @@ const naka_extension_device_t naka_extension_device_data
 
     .str_558 = ALIGNED_STRING(""),
 
-    .FileIO_BytecodeData_Code_Entry8_PtrTable = {
+    .PanelButton_MspBank17FuncHandlers = {
         NAKA_ADDR(ExtDev_SndParam_Block70_Var04),
         NAKA_ADDR(ExtDev_SndParam_DispatchAndWriteA8),
         NAKA_ADDR(ExtDev_SndParam_Write98_Block),
@@ -6353,7 +6353,7 @@ const naka_extension_device_t naka_extension_device_data
 
     .field_35b4 = 0x90B4,
 
-    .FileIO_BytecodeData_Code_Entry8_PtrTable_2 = {
+    .PanelButton_MspBank18FuncHandlers = {
         NAKA_ADDR(ExtDev_SndParam_Block48_Var40),
         NAKA_ADDR(ExtDev_SndParam_Block48_Var04),
         NAKA_ADDR(ExtDev_SndParam_Block48_Var02),

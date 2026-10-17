@@ -41,20 +41,20 @@ MidiInit_FillLoop:
 	ret
 
 ; SndParam_InitPhase1_NullRet: Empty routine (`ret`): init phase 1 (Sub-CPU payload OK) of the sound-parameter
-;   subsystem -- slot 1 of NakaInst_SoundConfig_LookupTable, list entry 5 of Subsys_HandlerTableList, whose slot 0
+;   subsystem -- slot 1 of SndParam_InitFuncTable, list entry 5 of Subsys_HandlerTableList, whose slot 0
 ;   MIDI_INIT_SEQUENCES builds the SndParam hash table. Basis: callers + body -- ScreenGroup_Dispatch calls slot 1 of
 ;   every subsystem table when SubCPU_Payload_GetErrorFlag is 0; same pattern as Xapr_InitPhase1_NullRet.
 SndParam_InitPhase1_NullRet:
 	ret
 
 ; SndParam_InitPhase2_NullRet: Empty routine (`ret`): init phase 2 (Sub-CPU payload error) of the sound-parameter
-;   subsystem -- slot 2 of NakaInst_SoundConfig_LookupTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
+;   subsystem -- slot 2 of SndParam_InitFuncTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
 ;   + body -- ScreenGroup_Dispatch calls slot 2 when SubCPU_Payload_GetErrorFlag is not 0.
 SndParam_InitPhase2_NullRet:
 	ret
 
 ; SndParam_InitPhase3_NullRet: Empty routine (`ret`): init phase 3 (the last boot phase) of the sound-parameter
-;   subsystem -- slot 3 of NakaInst_SoundConfig_LookupTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
+;   subsystem -- slot 3 of SndParam_InitFuncTable (list entry 5 of Subsys_HandlerTableList). Basis: callers
 ;   + body -- the boot code calls ScreenGroup_Dispatch with WA = 3 once after phase 1/2.
 SndParam_InitPhase3_NullRet:
 	ret
@@ -879,7 +879,7 @@ MIDI_RX_CONTEXT_SAVE:
 ;   interface port) -- clears 0xB7E7 bit 0, 0xB7E1 and the 7 saved-register slots of the RX handler, picks the baud-
 ;   rate table by region (Get_Region_Code = 4 -> alternate), reads the COM SELECT switch, sends the computer-interface
 ;   port byte (0xF5 MAC/PC1, 0xF4 PC2, nothing for MIDI) and programs and enables SC0. Basis: callers + body -- slot 0
-;   of MIDI_SC0_DISPATCH_TABLE (list entry 3 of Subsys_HandlerTableList), which ScreenGroup_Dispatch runs right after
+;   of SC0_InitFuncTable (list entry 3 of Subsys_HandlerTableList), which ScreenGroup_Dispatch runs right after
 ;   the Sub-CPU payload transfer; slots 1-3 are SC0Init_PaddingStub (`ret`).
 SC0_InitSerialPort:
 	res 0, (0xb7e7:16)
@@ -968,13 +968,17 @@ SC0Init_EnableRegisters:
 SC0Init_PaddingStub:
 	ret
 
-; MIDI_SC0_DISPATCH_TABLE -- 4 handler pointers: SC0_InitSerialPort, then
+; SC0_InitFuncTable -- 4 handler pointers: SC0_InitSerialPort, then
 ; SC0Init_PaddingStub (a bare `ret`) three times.  Nothing in this file reads
 ; it; its only reference is entry 3 of SystemConfig_PointerTable
 ; (ui_widgets/widget_dispatch.s), and the reader of THAT table was not traced
 ; by the midi lane, so the indexing is not pinned here beyond the 4 entries
 ; that fit before MIDI_SC0_TX_DISPATCH.
-MIDI_SC0_DISPATCH_TABLE:
+; SC0_InitFuncTable: 4 x u32: the serial-port (SC0) subsystem's init-phase handlers -- SC0_InitSerialPort for phase 0,
+;   SC0Init_PaddingStub (`ret`) for phases 1-3 -- list entry 3 of Subsys_HandlerTableList, which ScreenGroup_Dispatch
+;   walks per boot phase; it dispatches no MIDI. Its header's 'reader not traced' is answered by that list. Basis:
+;   readers + bytes.
+SC0_InitFuncTable:
 	.long SC0_InitSerialPort
 	.long SC0Init_PaddingStub
 	.long SC0Init_PaddingStub

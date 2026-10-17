@@ -3004,3 +3004,11 @@ s/\bCmEsyTtl_Dispatch2_Helper\b/CmpEsy_PrepareRealtimeRecording/g
 s/\bSqTrAs_CondCheck_Helper2\b/SqSngSel_LeaveTitle/g
 s/\bTbl_MsaStates_Helper\b/SqStep_UpdateMsaStateFromEvent/g
 s/\bFDC_WaitReady_Helper\b/FDC_RecordDensityCode/g
+# run 2026-10-17
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable_2\b/PanelButton_MspBank18FuncHandlers/g
+s/\bFileIO_BytecodeData_Code_Entry8_PtrTable\b/PanelButton_MspBank17FuncHandlers/g
+s/\bNakaInst_SoundConfig_LookupTable\b/SndParam_InitFuncTable/g
+s/\bStyleGroup_LatinDance_Table\b/MstStyle_GenreTable_GroupColumn/g
+s/\bNaka_DrawbarControl_Table\b/Part_CaptionStrPtrs/g
+s/\bTtMdCtlMsg_EventDispatch\b/PmemOutRGridCheck_OnIndexswUp/g
+s/\bMIDI_SC0_DISPATCH_TABLE\b/SC0_InitFuncTable/g

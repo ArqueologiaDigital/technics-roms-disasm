@@ -1058,17 +1058,24 @@ PanelButton_RhythmGroupCodes_LeftSeg1:			.incbin "includes/generated/naka_extens
 ;   readers + bytes -- PanelButton_RhythmGroup selects it for event index 6.
 PanelButton_RhythmGroupCodes_LeftSeg6:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
 FileIO_BytecodeData_Data_12:			.incbin "includes/generated/naka_extension_device.bin", 0x3594, 0x4
-FileIO_BytecodeData_Code_Entry8_PtrTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
+; PanelButton_MspBank17FuncHandlers: 6 x u32 handlers PanelButton_MspNumber calls for MSP 1-6 while the MSP bank
+;   (parameter 0x28800) is 17, C = PanelButton_MspBank17FuncCodes[button]; each is the foot-pedal function handler of
+;   that code (PanelAction_PedalFunctionHandlers 13, 14, 8, 3, 15, 2). Basis: readers + bytes.
+PanelButton_MspBank17FuncHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
 ; PanelButton_MspBank17FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank
 ;   (sound parameter 0x28800) is 17: 0xAD, 0xB3, 0x96, 0x91, 0xB4, 0x90. PanelButton_MspNumber puts code [button] in C
-;   and calls handler [button] of FileIO_BytecodeData_Code_Entry8_PtrTable, each the same handler
+;   and calls handler [button] of PanelButton_MspBank17FuncHandlers, each the same handler
 ;   PanelAction_PedalAssignHandlerIndex / PanelAction_PedalFunctionHandlers give for that code. Basis: readers + bytes
 ;   -- `cp hl, 17` on SndParam_LookupReadOnly(0x28800); all six code -> handler pairs match the pedal tables.
 PanelButton_MspBank17FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
-FileIO_BytecodeData_Code_Entry8_PtrTable_2:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
+; PanelButton_MspBank18FuncHandlers: 6 x u32 handlers PanelButton_MspNumber calls for MSP 1-6 while the MSP bank is
+;   18, C = PanelButton_MspBank18FuncCodes[button]: five are the pedal-function handlers of their codes
+;   (PanelAction_PedalFunctionHandlers 4, 6, 5, 7, 1); slot 2 (code 0xB5) is handler 12,
+;   ExtDev_SndParam_Block48_Var02, which the pedal map never selects. Basis: readers + bytes.
+PanelButton_MspBank18FuncHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
 ; PanelButton_MspBank18FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank
 ;   (sound parameter 0x28800) is 18: 0x92, 0x94, 0xB5, 0x93, 0x95, 0x88, with handlers from
-;   FileIO_BytecodeData_Code_Entry8_PtrTable_2. Five match the pedal tables; 0xB5 has no pedal handler and is served
+;   PanelButton_MspBank18FuncHandlers. Five match the pedal tables; 0xB5 has no pedal handler and is served
 ;   by handler 12 (ExtDev_SndParam_Block48_Var02), which the pedal map never selects. Basis: readers + bytes -- `cp
 ;   hl, 18` on SndParam_LookupReadOnly(0x28800).
 PanelButton_MspBank18FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6

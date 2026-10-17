@@ -8677,7 +8677,10 @@ InitializeObjectTable:
 	ld xix, xwa
 	lda xiy, (xwa+15680)
 
-ExitWindow_Paint:
+; InitializeObjectTable_Loop: Local loop label of InitializeObjectTable (its first loop): clears the 1120 x 14-byte
+;   view records from RAM 0x27ED2 (+0 = 0xFFFFFFFF, +4 = 0, +8 word = 0, +10 = 0). Referenced only by its own `jr c`
+;   back-branch. Basis: body.
+InitializeObjectTable_Loop:
 	ld xwa, 0xffffffff
 	ld (xix), xwa
 	ld xwa, 0:i3
@@ -8689,31 +8692,37 @@ ExitWindow_Paint:
 	lda xde, (xde + 14)
 	lda xbc, (xbc + 14)
 	cp xix, xiy
-	jr c, ExitWindow_Paint
+	jr c, InitializeObjectTable_Loop
 	lda xbc, (0x0328fc:24)
 	ld xwa, xbc
 	lda xde, (xbc+448)
 
-ExitWindow_Confirm:
+; InitializeObjectTable_Loop2: Local loop label of InitializeObjectTable (second loop): copies NakaMode_InitRecord (7
+;   words) into each of the 32 x 14-byte mode records at RAM 0x328FC. Referenced only by its own back-branch (a
+;   comment in disk_warning_strings.s names it). Basis: body.
+InitializeObjectTable_Loop2:
 	ld xiy, NakaMode_InitRecord
 	ld xix, xwa
 	ld bc, 7:i3
 	ldirw
 	lda xwa, (xwa + 14)
 	cp xwa, xde
-	jr c, ExitWindow_Confirm
+	jr c, InitializeObjectTable_Loop2
 	lda xbc, (0x032abc:24)
 	ld xwa, xbc
 	lda xde, (xbc+5632)
 
-ExitWindow_OK:
+; InitializeObjectTable_Loop3: Local loop label of InitializeObjectTable (third loop): copies Title_RecordTemplate (11
+;   words) into each of the 256 x 22-byte title records at RAM 0x32ABC; the SupportClass registration follows the
+;   loop, it is not part of it. Referenced only by its own back-branch. Basis: body.
+InitializeObjectTable_Loop3:
 	ld xiy, Title_RecordTemplate
 	ld xix, xwa
 	ldw bc, 0xb
 	ldirw
 	lda xwa, (xwa + 22)
 	cp xwa, xde
-	jr c, ExitWindow_OK
+	jr c, InitializeObjectTable_Loop3
 	lda xbc, (xsp + 2)
 	ld xwa, NAKA_CLASS_SupportClass
 	ld (xbc), xwa
@@ -8746,7 +8755,10 @@ ExitWindow_OK:
 	calr RegisterObjectTable
 	ld iz, 0:i3
 
-ExitWindow_Return:
+; InitializeObjectTable_Loop4: Local loop label of InitializeObjectTable (fourth loop): for IZ = 0..255 registers two
+;   Viewable object tables, slot IZ with base 0x276D2 + 4 * IZ and slot IZ + 0x300 with base 0x27AD2 + 4 * IZ (count
+;   0). Referenced only by its own back-branch. Basis: body.
+InitializeObjectTable_Loop4:
 	lda xbc, (xsp + 2)
 	ld xwa, NAKA_CLASS_Viewable
 	ld (xbc), xwa
@@ -8773,7 +8785,7 @@ ExitWindow_Return:
 	calr RegisterObjectTable
 	inc 1, iz
 	cp iz, 0x100
-	jr c, ExitWindow_Return
+	jr c, InitializeObjectTable_Loop4
 	ld xwa, 0:i3
 	call SetCurrentTarget
 	call InitializeMurai

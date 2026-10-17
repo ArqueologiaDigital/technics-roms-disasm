@@ -3113,8 +3113,8 @@ PmemOutLGridCheck_CaseTable:
 ;
 ; Typed in naka_widget_tables_2.c as uint8_t
 ; PmemOutRGridCheck_RamRequestInit[22].
-; Readers (claims_lint.py unread-claims, 2026-10-02): TtMdCtlMsg_EventDispatch (0xF78E97, 32-bit
-;   pointer); TtMdCtlMsg_EventDispatch (0xF78F02, 32-bit pointer); TtMdCtlMsg_EventDispatch
+; Readers (claims_lint.py unread-claims, 2026-10-02): PmemOutRGridCheck_OnIndexswUp (0xF78E97, 32-bit
+;   pointer); PmemOutRGridCheck_OnIndexswUp (0xF78F02, 32-bit pointer); PmemOutRGridCheck_OnIndexswUp
 ;   (0xF78F5B, 32-bit pointer); PmemOutRGridCheck_OnIndexswDown (0xF79001, 32-bit pointer);
 ;   drawbar_panel_ui.s:1964 (source reference); and 13 more
 ; -----------------------------------------------------------------------------
@@ -3163,19 +3163,19 @@ CtlMsg_SendParamValue_Str_Fmt3d:		.incbin "includes/generated/naka_widget_tables
 ; PmemOutRGridCheck_CaseTable -- jump table of a compiled `switch` in
 ; PmemOutRGridCheck (v10/v9 0xf791e4, v7 0xf78de0) (`add xhl,
 ; PmemOutRGridCheck_CaseTable`): 7 u16 case offsets from
-; TtMdCtlMsg_EventDispatch.
+; PmemOutRGridCheck_OnIndexswUp.
 ;
 ; Typed in naka_widget_tables_2.c as uint16_t
 ; PmemOutRGridCheck_CaseTable[7].
 ; -----------------------------------------------------------------------------
 PmemOutRGridCheck_CaseTable:
-	.short	TtMdCtlMsg_EventDispatch - TtMdCtlMsg_EventDispatch
-	.short	PmemOutRGridCheck_OnIndexswDown - TtMdCtlMsg_EventDispatch
-	.short	TtMdCtlMsg_EventDispatch - TtMdCtlMsg_EventDispatch
-	.short	PmemOutRGridCheck_OnIndexswDown - TtMdCtlMsg_EventDispatch
-	.short	TtMdCtlMsg_ReturnZero2 - TtMdCtlMsg_EventDispatch
-	.short	TtMdCtlMsg_ReturnZero2 - TtMdCtlMsg_EventDispatch
-	.short	PmemOutRGridCheck_OnRamData - TtMdCtlMsg_EventDispatch
+	.short	PmemOutRGridCheck_OnIndexswUp - PmemOutRGridCheck_OnIndexswUp
+	.short	PmemOutRGridCheck_OnIndexswDown - PmemOutRGridCheck_OnIndexswUp
+	.short	PmemOutRGridCheck_OnIndexswUp - PmemOutRGridCheck_OnIndexswUp
+	.short	PmemOutRGridCheck_OnIndexswDown - PmemOutRGridCheck_OnIndexswUp
+	.short	TtMdCtlMsg_ReturnZero2 - PmemOutRGridCheck_OnIndexswUp
+	.short	TtMdCtlMsg_ReturnZero2 - PmemOutRGridCheck_OnIndexswUp
+	.short	PmemOutRGridCheck_OnRamData - PmemOutRGridCheck_OnIndexswUp
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AcCtlMsgGrid_ScrollUp_PageDec_Table
 ; AcCtlMsgGrid_ScrollUp_PageDec_Table -- read by
