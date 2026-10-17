@@ -22,8 +22,8 @@
 # =====================================================
 #
 #   symbols .................. 53,745
-#   semantic names ........... 53,172 (98.9%)
-#   positional names ......... 573
+#   semantic names ........... 53,194 (99.0%)
+#   positional names ......... 551
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -21155,8 +21155,8 @@ SeScreenData_0x086E 00F11474
 SeMenu_DrawPartSelector_Records3 00F1147E
 SeScreenData_0x0883 00F11489
 SeScreenData_0x08AB 00F114B1
-SeScreenData_0x08CB 00F114D1
-SeScreenData_0x08D1 00F114D7
+SeValText_Off_On 00F114D1
+SeValText_Off_On_2 00F114D7
 SeMenu_DrawToneLayerFrame_Records 00F114DD
 SeScreenData_0x09AA 00F115B0
 SeScreenData_0x09D5 00F115DB
@@ -21259,11 +21259,11 @@ SeTonHyb1_Row2Records 00F12BAE
 SeTonHyb1_Row1VelZeroText 00F12C44
 SeTonHyb1_Row2VelDash 00F12C4C
 SeTonHyb1_Row4ClearBoxes 00F12C97
-SeScreenData_0x20C9 00F12CCF
+SeValText_A_B_To_Z 00F12CCF
 SeMenu_BankEdit_SetupPath_Records 00F12D01
 SeMenu_BankEdit_SetupPath_Records2 00F12D0B
 SeMenu_Utility_FormatSigned_Records 00F12D33
-SeScreenData_0x213C 00F12D42
+SeValText_FilterTypes 00F12D42
 SeScreenData_0x2160 00F12D66
 SeScreenData_0x216B 00F12D71
 SeScreenData_0x2175 00F12D7B
@@ -21271,9 +21271,9 @@ SeScreenData_0x2184 00F12D8A
 SeScreenData_0x2193 00F12D99
 SeFilEq_RangeGainRecords 00F12DA8
 SeScreenData_0x21C0 00F12DC6
-SeScreenData_0x21D4 00F12DDA
-SeScreenData_0x21E0 00F12DE6
-SeScreenData_0x21F2 00F12DF8
+SeValText_M6_M3_To_P9 00F12DDA
+SeValText_M12_M6_To_P18 00F12DE6
+SeValText_Dash_M6_To_P6 00F12DF8
 SeScreenData_0x221C 00F12E22
 SeScreenData_0x2227 00F12E2D
 SeScreenData_0x2231 00F12E37
@@ -21359,7 +21359,7 @@ SePitPit1_SplitValueRecords 00F13293
 SePitPit1_PartCursorBox 00F132A9
 SeScreenData_0x26AE 00F132B4
 SeMenu_PresetBrowser_Init_Records 00F132BF
-SeScreenData_0x27B9 00F133BF
+SeValText_Norm_1of2_To_Fix 00F133BF
 SeScreenData_0x27D9 00F133DF
 SeScreenData_0x2801 00F13407
 SeMenu_DrumKit_Dispatch_Records 00F1342F
@@ -21375,10 +21375,10 @@ SeLfo1_DrawStaticScreen_Records 00F134D4
 SeScreenData_0x28DD 00F134E3
 SeScreenData_0x28EC 00F134F2
 SeScreenData_0x28FB 00F13501
-SeScreenData_0x290A 00F13510
+SeValText_Plus_Minus 00F13510
 Data_UnknownBlock_Records4 00F13512
 SeMenu_DrawLfoPartSwitches_Records 00F13526
-SeScreenData_0x2930 00F13536
+SeValText_Sin_Tri_Sqr_Saw 00F13536
 SeScreenData_0x293C 00F13542
 Data_UnknownBlock_Records5 00F1356A
 SeScreenData_0x296E 00F13574
@@ -21419,7 +21419,7 @@ SeScreenData_0x2AFB 00F13701
 SeMenu_DrawLfoPartSwitches_Records7 00F13708
 SeMenu_DataBlock_11_Records 00F13718
 SeScreenData_0x2C0A 00F13810
-SeScreenData_0x2C32 00F13838
+SeValText_Blank_A_B 00F13838
 SeMenu_DataBlock_12_Records 00F1383B
 SeMenu_DataBlock_12_Records2 00F1385D
 SeMenu_DataBlock_12_Records3 00F13889
@@ -21435,8 +21435,8 @@ SeMenu_DataBlock_14_Records2 00F13ABC
 SeMenu_DataBlock_14_Records3 00F13AC6
 SeMenu_NameEditor_HighlightChar_Records 00F13B46
 SeMenu_NameEditor_HighlightChar_Records2 00F13B66
-SeScreenData_0x2F6C 00F13B72
-SeScreenData_0x30EC 00F13CF2
+SeValText_NoteNames 00F13B72
+SeValText_65_4_69_3_To_48K 00F13CF2
 SeMenu_PresetInit_Main_Records 00F13F72
 SeScreenData_0x34E9 00F140EF
 SeTonRan1_KeyLayerFrame 00F140F9
@@ -21467,9 +21467,9 @@ SeScreenData_0x3A0D 00F14613
 SeScreenData_0x3A1C 00F14622
 SeScreenData_0x3A2B 00F14631
 SeMenu_PresetInit_TableLookup1_Records 00F14640
-SeScreenData_0x3A52 00F14658
-SeScreenData_0x3A5B 00F14661
-SeScreenData_0x3A70 00F14676
+SeValText_Ctr_L_R 00F14658
+SeValText_KeyOn_KeyOff_Legato 00F14661
+SeValText_NonLeg_Chord 00F14676
 SeMenu_FilterEdit_Dispatch_Records 00F14684
 SeMenu_FilterEdit_Dispatch_Records2 00F1468E
 SeMenu_FxEdit_Init_Records 00F146B6
@@ -21508,13 +21508,13 @@ SeScreenData_0x3E2D 00F14A33
 SeCtr2_Part1And2Switches 00F14A3D
 SeCtr2_CursorBox 00F14A5B
 SeScreenData_0x3E60 00F14A66
-SeScreenData_0x3E80 00F14A86
-SeScreenData_0x3E8C 00F14A92
+SeValText_Off_On_Dash_Inv 00F14A86
+SeValText_CtrlDestinations 00F14A92
 SeMenu_EqEdit_SetupPath_Records 00F14DD2
 SeMenu_EqEdit_SetupPath_Records2 00F14DF0
 SeScreenData_0x4222 00F14E28
-SeScreenData_0x4240 00F14E46
-SeScreenData_0x4248 00F14E4E
+SeValText_Long_Hold 00F14E46
+SeValText_Disable_Enable 00F14E4E
 SeTonHyb1_DrawStaticScreen_Records 00F14E5C
 SeTonHyb1_DrawStaticScreen_Records2 00F14E67
 SeTonHyb1_DrawStaticScreen_Records3 00F15020
@@ -21563,7 +21563,7 @@ SeScreenData_0x4E68 00F15A6E
 SeScreenData_0x4E8B 00F15A91
 SeMenu_PatchEdit_DataBlock_Records2 00F15AA1
 SeMenu_NameEdit_DataBlock1_Records9 00F15AD1
-SeScreenData_0x4EFB 00F15B01
+SeValText_DigEffTypes 00F15B01
 TuningSys_Param_01_Data 00F15B9D
 SeMenu_NameEdit_DataBlock2_Records 00F15BA9
 SeScreenData_0x5120 00F15D26
@@ -21635,7 +21635,7 @@ EffectParamEdit_Entry_08 00F164EC
 SeScreenData_0x58E6 00F164EC
 SeScreenData_0x58F1 00F164F7
 SeMenu_NameEdit_CheckBit7_Records 00F16506
-SeScreenData_0x590F 00F16515
+SeValText_Off_Off 00F16515
 EffectParam_Edit_Table 00F1652F
 SeScreenData_0x5951 00F16557
 SeMenu_NameEdit_SetupPath_Records 00F1659F

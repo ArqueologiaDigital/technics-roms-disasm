@@ -1,0 +1,23 @@
+# v10: sound-editor value-label string tables named from their entries (scripts/renaming/name_se_value_text_tables.py).
+s/\bSeScreenData_0x08CB\b/SeValText_Off_On/g
+s/\bSeScreenData_0x08D1\b/SeValText_Off_On_2/g
+s/\bSeScreenData_0x20C9\b/SeValText_A_B_To_Z/g
+s/\bSeScreenData_0x213C\b/SeValText_FilterTypes/g
+s/\bSeScreenData_0x21D4\b/SeValText_M6_M3_To_P9/g
+s/\bSeScreenData_0x21E0\b/SeValText_M12_M6_To_P18/g
+s/\bSeScreenData_0x21F2\b/SeValText_Dash_M6_To_P6/g
+s/\bSeScreenData_0x27B9\b/SeValText_Norm_1of2_To_Fix/g
+s/\bSeScreenData_0x290A\b/SeValText_Plus_Minus/g
+s/\bSeScreenData_0x2930\b/SeValText_Sin_Tri_Sqr_Saw/g
+s/\bSeScreenData_0x2C32\b/SeValText_Blank_A_B/g
+s/\bSeScreenData_0x2F6C\b/SeValText_NoteNames/g
+s/\bSeScreenData_0x30EC\b/SeValText_65_4_69_3_To_48K/g
+s/\bSeScreenData_0x3A52\b/SeValText_Ctr_L_R/g
+s/\bSeScreenData_0x3A5B\b/SeValText_KeyOn_KeyOff_Legato/g
+s/\bSeScreenData_0x3A70\b/SeValText_NonLeg_Chord/g
+s/\bSeScreenData_0x3E80\b/SeValText_Off_On_Dash_Inv/g
+s/\bSeScreenData_0x3E8C\b/SeValText_CtrlDestinations/g
+s/\bSeScreenData_0x4240\b/SeValText_Long_Hold/g
+s/\bSeScreenData_0x4248\b/SeValText_Disable_Enable/g
+s/\bSeScreenData_0x4EFB\b/SeValText_DigEffTypes/g
+s/\bSeScreenData_0x590F\b/SeValText_Off_Off/g

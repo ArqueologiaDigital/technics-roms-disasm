@@ -10221,7 +10221,7 @@ SeWrtMem_DrawStaticScreen:
 	ld	xix, SeScreenData_0x2C0A
 	call	SeGfx_DrawStaticList
 	ld	xiy, SeScreenData_0x2C0A
-	ld	xix, SeScreenData_0x2C32
+	ld	xix, SeValText_Blank_A_B
 	call	SeGfx_DrawBoundList
 	call	SeMenu_DrawWriteDestName
 	ret
@@ -10341,7 +10341,7 @@ SeWrtSnd_DrawStaticScreen_Return6:
 ;  (scripts/renaming/name_se_title_methods.py).
 SeWrtMem_DrawField:
 	ld	xiy, SeScreenData_0x2C0A
-	ld	xix, SeScreenData_0x2C32
+	ld	xix, SeValText_Blank_A_B
 	call	SeGfx_DrawBoundList
 	call	SeMenu_DrawWriteDestName
 	ret
@@ -10758,7 +10758,7 @@ SeCtr3_DrawStaticScreen:
 	call SeGfx_DrawStaticList
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, SeScreenData_0x4222
-	ld xix, SeScreenData_0x4240
+	ld xix, SeValText_Long_Hold
 	call SeGfx_DrawBoundList
 	call SeMenu_EqEdit_SetupHelper2
 	ret
@@ -10823,7 +10823,7 @@ SeMenu_EqEdit_Return:
 SeCtr3_DrawField:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeScreenData_0x4222
-	ld	xix, SeScreenData_0x4240
+	ld	xix, SeValText_Long_Hold
 	call	SeGfx_DrawBoundList
 	ret
 ; SeGfx_DrawIndexedBoundRecord: Draws bound ScreenData record number A of the pointer table at XIY: XIY = table[A],
@@ -12767,18 +12767,18 @@ SeScreenData_0x0883:
 ; address in the span, ld xiy/xix/xiz immediates, and the loop bounds of the
 ; tables beside it.
 ; Shape only: printable text. The same 32 bytes also sit at
-; SeScreenData_0x27B9.
+; SeValText_Norm_1of2_To_Fix.
 SeScreenData_0x08AB:
 	.ascii	"NORM 1/2 1/4 1/81/161/321/64 FIX"
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeScreenData_0x28B4, bound op02 record DrumDetailEdit_Menu_Table
-SeScreenData_0x08CB:
+SeValText_Off_On:
 	.ascii	"OFF", " ON"
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeScreenData_0x4C6D
-SeScreenData_0x08D1:
+SeValText_Off_On_2:
 	.ascii	"OFF", "ON "
 ; static record list (25 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x09AA
 ; evidence: SeTonHyb1_DrawStaticScreen
@@ -13603,7 +13603,7 @@ SeTonHyb1_Row4ClearBoxes:		.incbin "includes/generated/se_drumkit_display.bin", 
 ; string table, 2-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 32 by the record's mask; the table holds 25 cells; values >= 25 would read past it)
 ; evidence: bound op07 record DrumDetailEdit_Entry_02, bound op07 record DrumDetailEdit_Entry_06, bound op02 record at SeScreenData_0x1F80, bound op02 record at SeTonHyb1_Row2Records (+2 more)
-SeScreenData_0x20C9:
+SeValText_A_B_To_Z:
 	.ascii	"A:", "B:", "C:", "D:", "E:", "F:", "G:", "H:"
 	.ascii	"I:", "J:", "K:", "L:", "M:", "N:", "O:", "P:"
 	.ascii	"Q:", "R:", "S:", "U:", "V:", "W:", "X:", "Y:"
@@ -13630,7 +13630,7 @@ SeMenu_Utility_FormatSigned_Records:	.incbin "includes/generated/se_screen_f12d3
 ; string table, 6-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 6 cells; values >= 6 would read past it)
 ; evidence: bound op02 record at SeMenu_Utility_FormatSigned_Records
-SeScreenData_0x213C:
+SeValText_FilterTypes:
 	.ascii	"LPF+EQ"
 	.ascii	"HPF+EQ"
 	.ascii	"LPF24 "
@@ -13662,18 +13662,18 @@ SeScreenData_0x21C0:
 ; string table, 2-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 6 cells; values >= 6 would read past it)
 ; evidence: bound op02 record at SeScreenData_0x2184, bound op02 record at SeScreenData_0x2283, bound op02 record at SeScreenData_0x22A1
-SeScreenData_0x21D4:
+SeValText_M6_M3_To_P9:
 	.ascii	"-6", "-3", " 0", "+3", "+6", "+9"
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 6 cells; values >= 6 would read past it)
 ; evidence: bound op02 record at SeScreenData_0x2240
-SeScreenData_0x21E0:
+SeValText_M12_M6_To_P18:
 	.ascii	"-12", "- 6", "  0", "+ 6"
 	.ascii	"+12", "+18"
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 128 by the record's mask; the table holds 14 cells; values >= 14 would read past it)
 ; evidence: bound op02 record at SeScreenData_0x21B1
-SeScreenData_0x21F2:
+SeValText_Dash_M6_To_P6:
 	.ascii	" --", " -6", " -5", " -4"
 	.ascii	" -3", " -2", " -1", "  0"
 	.ascii	" +1", " +2", " +3", " +4"
@@ -13689,11 +13689,11 @@ SeScreenData_0x2227:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x224F
 SeScreenData_0x2231:
-	sdb_str	0x0662, 0x7f, 0, 0x20, SeScreenData_0x30EC, 5, 221*40+10
+	sdb_str	0x0662, 0x7f, 0, 0x20, SeValText_65_4_69_3_To_48K, 5, 221*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x224F
 SeScreenData_0x2240:
-	sdb_str	0x0663, 0x07, 0, 0x20, SeScreenData_0x21E0, 3, 221*40+16
+	sdb_str	0x0663, 0x07, 0, 0x20, SeValText_M12_M6_To_P18, 3, 221*40+16
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (4 entries, LE32)
 ; evidence: SeFilL241_DrawField, SeFilH241_DrawField
 SeScreenData_0x224F:
@@ -13712,19 +13712,19 @@ SeScreenData_0x226A:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x22B0
 SeScreenData_0x2274:
-	sdb_str	0x0662, 0x7f, 0, 0x20, SeScreenData_0x30EC, 5, 221*40+4
+	sdb_str	0x0662, 0x7f, 0, 0x20, SeValText_65_4_69_3_To_48K, 5, 221*40+4
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x22B0
 SeScreenData_0x2283:
-	sdb_str	0x0663, 0x07, 0, 0x20, SeScreenData_0x21D4, 2, 221*40+10
+	sdb_str	0x0663, 0x07, 0, 0x20, SeValText_M6_M3_To_P9, 2, 221*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x22B0
 SeScreenData_0x2292:
-	sdb_str	0x0664, 0x7f, 0, 0x20, SeScreenData_0x30EC, 5, 221*40+16
+	sdb_str	0x0664, 0x7f, 0, 0x20, SeValText_65_4_69_3_To_48K, 5, 221*40+16
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x22B0
 SeScreenData_0x22A1:
-	sdb_str	0x0665, 0x07, 0, 0x20, SeScreenData_0x21D4, 2, 221*40+22
+	sdb_str	0x0665, 0x07, 0, 0x20, SeValText_M6_M3_To_P9, 2, 221*40+22
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (6 entries, LE32)
 ; evidence: SeFilBpf1_DrawField
 SeScreenData_0x22B0:
@@ -13782,7 +13782,7 @@ SeScreenData_0x2332:
 ; address in the span, ld xiy/xix/xiz immediates, and the loop bounds of the
 ; tables beside it.
 ; Shape only: printable text. The same 2 bytes also sit at
-; SeScreenData_0x071D, SeScreenData_0x290A.
+; SeScreenData_0x071D, SeValText_Plus_Minus.
 SeEnv1_DrawEnvelopeLayout_Records2:
 	.ascii	"+-"
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
@@ -13864,15 +13864,15 @@ SeMenu_DrawBreakpointKeyboard_Records:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x24B8
 SeScreenData_0x248B:
-	sdb_str	0x0661, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+16
+	sdb_str	0x0661, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+16
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x24B8
 SeScreenData_0x249A:
-	sdb_str	0x0660, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+21
+	sdb_str	0x0660, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+21
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x24B8
 SeScreenData_0x24A9:
-	sdb_str	0x0662, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+26
+	sdb_str	0x0662, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+26
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (4 entries, LE32)
 ; evidence: SeAmpAmp2_SeFilFil2_DrawField
 SeScreenData_0x24B8:
@@ -13929,15 +13929,15 @@ SeScreenData_0x2535:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DataBlock_04_Records
 SeScreenData_0x2540:
-	sdb_str	0x0662, 0x7f, 0, 0x06, SeScreenData_0x2F6C, 3, 221*40+20
+	sdb_str	0x0662, 0x7f, 0, 0x06, SeValText_NoteNames, 3, 221*40+20
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DataBlock_04_Records
 SeScreenData_0x254F:
-	sdb_str	0x0663, 0x7f, 0, 0x06, SeScreenData_0x2F6C, 3, 221*40+15
+	sdb_str	0x0663, 0x7f, 0, 0x06, SeValText_NoteNames, 3, 221*40+15
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DataBlock_04_Records
 SeScreenData_0x255E:
-	sdb_str	0x0664, 0x7f, 0, 0x06, SeScreenData_0x2F6C, 3, 221*40+25
+	sdb_str	0x0664, 0x7f, 0, 0x06, SeValText_NoteNames, 3, 221*40+25
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DataBlock_04_Records
 SeScreenData_0x256D:
@@ -14041,7 +14041,7 @@ SeMenu_PresetBrowser_Init_Records:
 ; string table, 4-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 8 cells)
 ; evidence: bound op02 record at SeScreenData_0x25F5, bound op02 record at SeScreenData_0x261A, bound op02 record at SeScreenData_0x263F, bound op02 record at SeScreenData_0x2664
-SeScreenData_0x27B9:
+SeValText_Norm_1of2_To_Fix:
 	.ascii	"NORM", " 1/2", " 1/4", " 1/8"
 	.ascii	"1/16", "1/32", "1/64", " FIX"
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
@@ -14093,7 +14093,7 @@ SeMenu_DrumKit_Dispatch_Records3:
 ; bound record list (7 records), read by GraphicsRender_Start; ends Data_UnknownBlock_Records, SeLfo1_DrawStaticScreen_Records
 ; evidence: SePitLfo1_DrawStaticScreen, SePitAmpFilLfo1_DrawField
 SeScreenData_0x287D:
-	sdb_str	0x0664, 0xc0, 6, 0x20, SeScreenData_0x2930, 3, 221*40+12
+	sdb_str	0x0664, 0xc0, 6, 0x20, SeValText_Sin_Tri_Sqr_Saw, 3, 221*40+12
 	sdb_num	0x0664, 0x1f, 0, 0x20, 221*40+16, 3
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at Data_UnknownBlock_Records4
@@ -14107,7 +14107,7 @@ SeScreenData_0x28A0:
 ; evidence: SePitAmpFilLfo1_DrawField
 Data_UnknownBlock_Records2:
 	sdb_num	0x0663, 0x3f, 0, 0x20, 221*40+30, 2
-	sdb_str	0x0663, 0x80, 7, 0x20, SeScreenData_0x08CB, 3, 221*40+35
+	sdb_str	0x0663, 0x80, 7, 0x20, SeValText_Off_On, 3, 221*40+35
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at Data_UnknownBlock_Records4
 Data_UnknownBlock_Records3:
@@ -14115,23 +14115,23 @@ Data_UnknownBlock_Records3:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DrawLfoPartSwitches_Records
 SeLfo1_DrawStaticScreen_Records:
-	sdb_str	0x0665, 0x10, 4, 0x20, SeScreenData_0x290A, 1, 65*40+10
+	sdb_str	0x0665, 0x10, 4, 0x20, SeValText_Plus_Minus, 1, 65*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DrawLfoPartSwitches_Records
 SeScreenData_0x28DD:
-	sdb_str	0x0666, 0x10, 4, 0x20, SeScreenData_0x290A, 1, 96*40+10
+	sdb_str	0x0666, 0x10, 4, 0x20, SeValText_Plus_Minus, 1, 96*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DrawLfoPartSwitches_Records
 SeScreenData_0x28EC:
-	sdb_str	0x0667, 0x10, 4, 0x20, SeScreenData_0x290A, 1, 127*40+10
+	sdb_str	0x0667, 0x10, 4, 0x20, SeValText_Plus_Minus, 1, 127*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_DrawLfoPartSwitches_Records
 SeScreenData_0x28FB:
-	sdb_str	0x0668, 0x10, 4, 0x20, SeScreenData_0x290A, 1, 158*40+10
+	sdb_str	0x0668, 0x10, 4, 0x20, SeValText_Plus_Minus, 1, 158*40+10
 ; string table, 1-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeLfo1_DrawStaticScreen_Records, bound op02 record at SeScreenData_0x28DD, bound op02 record at SeScreenData_0x28EC, bound op02 record at SeScreenData_0x28FB
-SeScreenData_0x290A:
+SeValText_Plus_Minus:
 	.ascii	"+", "-"
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (5 entries, LE32)
 ; evidence: SePitAmpFilLfo1_DrawField
@@ -14151,7 +14151,7 @@ SeMenu_DrawLfoPartSwitches_Records:
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 4 by the record's mask; the table holds 4 cells)
 ; evidence: bound op02 record at SeScreenData_0x287D
-SeScreenData_0x2930:
+SeValText_Sin_Tri_Sqr_Saw:
 	.ascii	"SIN", "TRI", "SQR", "SAW"
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 8 by the record's mask; the table holds 5 cells; values >= 5 would read past it)
@@ -14357,16 +14357,16 @@ SeMenu_DataBlock_11_Records:
 	sd_quad	0x09, 247, 137, 266, 138
 	sd_quad	0x09, 266, 117, 267, 158
 	sd_quad	0x01, 41, 114, 238, 114
-; bound record list (3 records), read by GraphicsRender_Start; end SeScreenData_0x2C32
+; bound record list (3 records), read by GraphicsRender_Start; end SeValText_Blank_A_B
 ; evidence: SeWrtMem_DrawStaticScreen, SeWrtMem_DrawField
 SeScreenData_0x2C0A:
-	sdb_str	0x0660, 0x03, 0, 0x07, SeScreenData_0x2C32, 1, 124*40+20
+	sdb_str	0x0660, 0x03, 0, 0x07, SeValText_Blank_A_B, 1, 124*40+20
 	sdb_num	0x0661, 0xff, 0, 0x07, 124*40+22, 2
 	sdb_str	0x0000, 0x00, 0, 0x07, 0x00020bf3, 16, 92*40+9
 ; string table, 1-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 4 by the record's mask; the table holds 3 cells; values >= 3 would read past it)
 ; evidence: bound op02 record at SeScreenData_0x2C0A
-SeScreenData_0x2C32:
+SeValText_Blank_A_B:
 	.ascii	" ", "A", "B"
 ; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeMenu_DataBlock_12_Records2
 ; evidence: SeWrtSnd_DrawStaticScreen
@@ -14488,7 +14488,7 @@ SeMenu_NameEditor_HighlightChar_Records2:
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 128 by the record's mask; the table holds 128 cells)
 ; evidence: bound op07 record DrumDetailEdit_Entry_01, bound op02 record at SeScreenData_0x248B, bound op02 record at SeScreenData_0x249A, bound op02 record at SeScreenData_0x24A9 (+8 more)
-SeScreenData_0x2F6C:
+SeValText_NoteNames:
 	.ascii	"C-2", "D\210-", "D-2", "E\210-"
 	.ascii	"E-2", "F-2", "F\214-", "G-2"
 	.ascii	"A\210-", "A-2", "B\210-", "B-2"
@@ -14524,7 +14524,7 @@ SeScreenData_0x2F6C:
 ; string table, 5-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 128 by the record's mask; the table holds 128 cells)
 ; evidence: bound op02 record at SeScreenData_0x2175, bound op02 record at SeScreenData_0x2193, bound op02 record at SeScreenData_0x2231, bound op02 record at SeScreenData_0x2274 (+1 more)
-SeScreenData_0x30EC:
+SeValText_65_4_69_3_To_48K:
 	.ascii	" 65.4"
 	.ascii	" 69.3"
 	.ascii	" 73.4"
@@ -14826,19 +14826,19 @@ SeScreenData_0x39BE:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_PresetInit_TableLookup1_Records
 SeScreenData_0x39FE:
-	sdb_str	0x0662, 0x80, 7, 0x20, SeScreenData_0x3A70, 7, 85*40+7
+	sdb_str	0x0662, 0x80, 7, 0x20, SeValText_NonLeg_Chord, 7, 85*40+7
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_PresetInit_TableLookup1_Records
 SeScreenData_0x3A0D:
-	sdb_str	0x0663, 0x80, 7, 0x20, SeScreenData_0x3A70, 7, 118*40+7
+	sdb_str	0x0663, 0x80, 7, 0x20, SeValText_NonLeg_Chord, 7, 118*40+7
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_PresetInit_TableLookup1_Records
 SeScreenData_0x3A1C:
-	sdb_str	0x0664, 0x80, 7, 0x20, SeScreenData_0x3A70, 7, 149*40+7
+	sdb_str	0x0664, 0x80, 7, 0x20, SeValText_NonLeg_Chord, 7, 149*40+7
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeMenu_PresetInit_TableLookup1_Records
 SeScreenData_0x3A2B:
-	sdb_str	0x0665, 0x80, 7, 0x20, SeScreenData_0x3A70, 7, 181*40+7
+	sdb_str	0x0665, 0x80, 7, 0x20, SeValText_NonLeg_Chord, 7, 181*40+7
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (6 entries, LE32)
 ; evidence: SeMenu_PresetInit_TableLookup1
 SeMenu_PresetInit_TableLookup1_Records:
@@ -14851,19 +14851,19 @@ SeMenu_PresetInit_TableLookup1_Records:
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 4 by the record's mask; the table holds 3 cells; values >= 3 would read past it)
 ; evidence: bound op07 record DrumDetailEdit_Entry_09, bound op02 record at SeTonTon2_PanSideFields, bound op02 record at SeScreenData_0x395E, bound op02 record at SeScreenData_0x396D (+1 more)
-SeScreenData_0x3A52:
+SeValText_Ctr_L_R:
 	.ascii	"CTR", "L  ", "R  "
 ; string table, 7-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 4 by the record's mask; the table holds 3 cells; values >= 3 would read past it)
 ; evidence: bound op02 record at SeScreenData_0x38E1, bound op02 record at SeScreenData_0x38F0, bound op02 record at SeScreenData_0x38FF, bound op02 record at SeScreenData_0x390E
-SeScreenData_0x3A5B:
+SeValText_KeyOn_KeyOff_Legato:
 	.ascii	"KEY ON "
 	.ascii	"KEY OFF"
 	.ascii	"LEGATO "
 ; string table, 7-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeScreenData_0x39FE, bound op02 record at SeScreenData_0x3A0D, bound op02 record at SeScreenData_0x3A1C, bound op02 record at SeScreenData_0x3A2B
-SeScreenData_0x3A70:
+SeValText_NonLeg_Chord:
 	.ascii	"NON LEG"
 	.ascii	"CHORD  "
 ; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_FilterEdit_Dispatch_Records2
@@ -14882,19 +14882,19 @@ SeMenu_FilterEdit_Dispatch_Records2:
 ; bound record list (5 records), read by GraphicsRender_Start; end SeScreenData_0x3AF7
 ; evidence: SeTonRan1_DrawStaticScreen
 SeMenu_FxEdit_Init_Records:
-	sdb_str	0x0662, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+10
+	sdb_str	0x0662, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+10
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3AF7
 SeScreenData_0x3ABF:
-	sdb_str	0x0661, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+16
+	sdb_str	0x0661, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+16
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3AF7
 SeScreenData_0x3ACE:
-	sdb_str	0x0663, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+21
+	sdb_str	0x0663, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+21
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3AF7
 SeScreenData_0x3ADD:
-	sdb_str	0x0664, 0x7f, 0, 0x20, SeScreenData_0x2F6C, 3, 221*40+26
+	sdb_str	0x0664, 0x7f, 0, 0x20, SeValText_NoteNames, 3, 221*40+26
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3AF7
 SeScreenData_0x3AEC:
@@ -14959,7 +14959,7 @@ SeScreenData_0x3B8F:
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3BDB
 SeScreenData_0x3B9A:
-	sdb_str	0x0662, 0x7f, 0, 0x06, SeScreenData_0x2F6C, 3, 221*40+21
+	sdb_str	0x0662, 0x7f, 0, 0x06, SeValText_NoteNames, 3, 221*40+21
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
 ; evidence: recptrs at SeScreenData_0x3BDB
 SeScreenData_0x3BA9:
@@ -15068,12 +15068,12 @@ SeScreenData_0x3E60:
 ; string table, 3-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 4 by the record's mask; the table holds 4 cells)
 ; evidence: bound op02 record at SeCtr2_Part1And2Switches, bound op02 record at SeScreenData_0x3E46, bound op02 record at SeScreenData_0x3DD3, bound op02 record at SeScreenData_0x3DE2
-SeScreenData_0x3E80:
+SeValText_Off_On_Dash_Inv:
 	.ascii	"OFF", " ON", "---", "INV"
 ; string table, 13-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 64 by the record's mask; the table holds 64 cells)
 ; evidence: bound op02 record at SeCtr2_FunctionNameFields, bound op02 record at SeScreenData_0x3E00, bound op02 record at SeScreenData_0x3E0F, bound op02 record at SeScreenData_0x3E1E
-SeScreenData_0x3E8C:
+SeValText_CtrlDestinations:
 	.ascii	"-------------"
 	.ascii	"PITCH BEND   "
 	.ascii	"AMP ENV SUST "
@@ -15163,12 +15163,12 @@ SeScreenData_0x4222:	.incbin "includes/generated/se_setup_sel3.bin"
 ; string table, 4-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeScreenData_0x4222
-SeScreenData_0x4240:
+SeValText_Long_Hold:
 	.ascii	"LONG", "HOLD"
 ; string table, 7-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 2 cells)
 ; evidence: bound op02 record at SeScreenData_0x4231
-SeScreenData_0x4248:
+SeValText_Disable_Enable:
 	.ascii	"DISABLE"
 	.ascii	"ENABLE "
 ; static record list (46 records), read by GraphicsRender_ProcessEntries; end SeTonHyb1_DrawStaticScreen_Records3
@@ -15507,11 +15507,11 @@ SeMenu_NameEdit_DataBlock1_Records7:
 ; bound record list (5 records), read by GraphicsRender_Start; ends FlashRead_BlockData_Field7, SeScreenData_End
 ; evidence: SeDigEff_DrawStaticScreen
 SeMenu_NameEdit_DataBlock1_Records8:
-	sdb_str	0x0660, 0x0f, 0, 0x20, SeScreenData_0x4EFB, 13, 51*40+17
+	sdb_str	0x0660, 0x0f, 0, 0x20, SeValText_DigEffTypes, 13, 51*40+17
 ; bound record list (2 records), read by GraphicsRender_Start; end FlashRead_BlockData_Field8
 ; evidence: SeDigEff_DrawField
 SeScreenData_0x4C6D:
-	sdb_str	0x0660, 0x80, 7, 0x20, SeScreenData_0x08D1, 3, 75*40+2
+	sdb_str	0x0660, 0x80, 7, 0x20, SeValText_Off_On_2, 3, 75*40+2
 	sdb_str	0x0660, 0x40, 6, 0x20, TuningSys_Param_01_Data, 6, 113*40+2
 FlashRead_BlockData_Field8:
 	sdb_snum	0x0668, 0xff, 0, 0x20, 175*40+27, 2, 0x00

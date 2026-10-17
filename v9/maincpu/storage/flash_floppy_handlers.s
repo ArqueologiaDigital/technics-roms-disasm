@@ -228,7 +228,7 @@ SeMenu_NameEdit_DataBlock1_Records9:
 	.long	SeMenu_NameEdit_DataBlock1_Records + 0x5a
 ; fixed-width string table, 13 chars per entry, 168 B: the text choices of a bound op02/op07 record (its +7 pointer; +11 = chars per entry)
 ; evidence: bound op02 record 0xF164F7
-SeScreenData_0x4EFB:
+SeValText_DigEffTypes:
 ; F15B01..F15BA9  effect name table, 12 x 13 chars then 2 x 6
 	.ascii	"CELESTE 1    "
 	.ascii	"CELESTE 2    "
@@ -854,17 +854,17 @@ SeScreenData_0x58E6:
 ; evidence: SeMenu_NameEdit_HandleInput (0xF10141)
 SeScreenData_0x58F1:
 	.byte	0x02, 0x0f, 0x6a, 0x06, 0x0f, 0x00, 0x20
-	.long	SeScreenData_0x4EFB
+	.long	SeValText_DigEffTypes
 	.byte	0x0d, 0x00, 0x8e, 0x1e
 ; single bound record (op 0x02, 15 B), read by GraphicsRender_Start
 ; evidence: SeMenu_NameEdit_HandleInput (0xF10141)
 SeMenu_NameEdit_CheckBit7_Records:
 	.byte	0x02, 0x0f, 0x6a, 0x06, 0x80, 0x07, 0x20
-	.long	SeScreenData_0x590F
+	.long	SeValText_Off_Off
 	.byte	0x0d, 0x00, 0x8e, 0x1e
 ; fixed-width string table, 13 chars per entry, 26 B: the text choices of a bound op02/op07 record (its +7 pointer; +11 = chars per entry)
 ; evidence: bound op02 record 0xF16506
-SeScreenData_0x590F:
+SeValText_Off_Off:
 	.ascii	"OFF          "
 	.ascii	"OFF          "
 ; table of 10 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
