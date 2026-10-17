@@ -316,7 +316,7 @@ CONVERT = {
     "Rec8E0TablePtr", "Rec8E0Field120Ptr",
     # the graphics layer's blitters and text renderer, DrawBitmap ..
     # DrawStringCentered, with their queued-draw replays and _Impl bodies
-    # (kn7000_manual.sym); labelled and commented by annotations/gfx_*.ann
+    # (kn7000_manual.sym); labelled and commented by annotations/gfx_draw.ann
     "DrawBitmap", "DrawBitmap_QueuedExec", "DrawBitmap_Impl",
     "DrawBitmapFast", "DrawBitmapFast_QueuedExec", "DrawBitmapFast_Impl",
     "DrawIcons", "DrawIcons_QueuedExec", "DrawIcons_Impl",
@@ -331,7 +331,7 @@ CONVERT = {
     "DrawBitmapFileEx", "DrawBitmapFileEx_QueuedExec", "DrawBitmapFileEx_Impl",
     "DrawJpegFile", "DrawJpegFile_QueuedExec", "JpegDecodeBlit",
     "DrawJpegFileR", "DrawJpegFileR_QueuedExec", "DrawJpegFileR_Impl",
-    "JpegHeaderParse", "DrawString", "DrawString_QueuedExec", "DrawString_Impl",
+    "DrawString", "DrawString_QueuedExec", "DrawString_Impl",
     "SjisGlyphLookup", "DrawStringCentered",
     # split out of the converted DrawDesignBox block by naming it
     "IsPointOnScreen",

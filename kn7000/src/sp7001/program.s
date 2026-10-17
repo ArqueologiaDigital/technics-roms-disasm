@@ -34,7 +34,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 984 synthetic labels for internal helpers called by converted code
+# 989 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -93,8 +93,8 @@ _rom_marker:
 .equ func_4841584C, 0x4841584C
 .equ func_48415AAB, 0x48415AAB
 .equ func_484161C3, 0x484161C3
-.equ func_4841662A, 0x4841662A
-.equ func_484166DE, 0x484166DE
+.equ Malloc_entry, 0x4841662A
+.equ Free_entry, 0x484166DE
 .equ func_4841680C, 0x4841680C
 .equ func_484168D7, 0x484168D7
 .equ func_48416AE5, 0x48416AE5
@@ -107,22 +107,22 @@ _rom_marker:
 .equ func_48417B27, 0x48417B27
 .equ func_4841C40F, 0x4841C40F
 .equ func_4841D820, 0x4841D820
-.equ func_484219A4, 0x484219A4
-.equ func_48421B5C, 0x48421B5C
-.equ func_48421B97, 0x48421B97
+.equ DrawRing_Post_entry, 0x484219A4
+.equ DrawQueue_Alloc_entry, 0x48421B5C
+.equ DrawQueue_Free, 0x48421B91
+.equ IsDrawTask_entry, 0x48421B97
+.equ GetBitmapInfo_entry, 0x48421DE6
+.equ BmpUnpackRow_entry, 0x4842201B
 .equ func_48422627, 0x48422627
+.equ ModifyPixel_entry, 0x484226C9
 .equ func_48422917, 0x48422917
 .equ func_48423031, 0x48423031
-.equ func_4842309A, 0x4842309A
+.equ DrawBox_Impl_entry, 0x4842309A
 .equ func_4842320D, 0x4842320D
 .equ func_48423A03, 0x48423A03
-.equ func_48423B5B, 0x48423B5B
-.equ func_48423F73, 0x48423F73
-.equ func_48424AA4, 0x48424AA4
-.equ func_48425398, 0x48425398
-.equ func_48425898, 0x48425898
 .equ func_484261A6, 0x484261A6
 .equ func_4842621C, 0x4842621C
+.equ IsPointOnScreen, 0x48427980
 .equ func_48427DA6, 0x48427DA6
 .equ func_484282A4, 0x484282A4
 .equ func_48428555, 0x48428555
@@ -151,8 +151,11 @@ _rom_marker:
 .equ func_4842C987, 0x4842C987
 .equ func_4842D368, 0x4842D368
 .equ func_4842D40B, 0x4842D40B
+.equ SetPaletteRGB_entry, 0x4842D9F8
 .equ func_4842DC8C, 0x4842DC8C
 .equ func_4842DF25, 0x4842DF25
+.equ ConvertStrings_entry, 0x4842DFAF
+.equ CalcTotalWidth_entry, 0x4842E0C2
 .equ func_484317D5, 0x484317D5
 .equ func_4843183A, 0x4843183A
 .equ StyleBuiltinNameTableInit_entry, 0x484332ED
@@ -648,6 +651,8 @@ _rom_marker:
 .equ LibI16ToF64, 0x4C0019F2
 .equ LibSprintf, 0x4C001A48
 .equ LibStrncmp, 0x4C00203C
+.equ memcpy_entry, 0x4C003039
+.equ strcpy_entry, 0x4C003051
 .equ LibStrlen, 0x4C0032F7
 .equ SndCmdStreamWrite_entry, 0x4C003ABF
 .equ TgPartGlobalChanRefresh_entry, 0x4C004E43
@@ -1019,6 +1024,18 @@ _rom_marker:
 .equ LibIntcEnable, 0x4C03E1C3
 .equ LibIntcDisable, 0x4C03E265
 .equ LibTickSleep, 0x4C03E29A
+
+# 10 data addresses named by annotations/*.ann
+.equ DrawIcons_PixelPairTable, 0x485A27AC   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)
+.equ Pixel4bppPairTable, 0x485A29AC   # u16[256]: byte -> two pixels {lo: 0x20 + high nibble, hi: 0x20 + low nibble}
+.equ RoundCornerPixels, 0x485A2DB0   # 8 x {u16 dx, u16 dy}: the pixels a DrawJpegFileR corner keeps
+.equ SjisMissingGlyph, 0x485A2DD0   # 16x16 1 bpp column-major glyph: a box with an X in it
+.equ DrawEnable, 0x5002A02C   # nonzero: drawing allowed (tested before every DrawXxx_Impl)
+.equ FrameBuffer, 0x500D4090   # 640 x 240 x 8 bpp, stride 0x280
+.equ BitmapTablePtr, 0x50122DBC   # -> bitmap descriptors {s16 w, s16 h, u8 *pixels}
+.equ FrameTablePtr, 0x50122DC0   # -> frame-piece descriptors {s16 w, s16 h, u8 *pixels}
+.equ IconTablePtr, 0x50122DC4   # -> icon descriptors {s16 w, s16 h, u8 *pixels}
+.equ FontTablePtr, 0x50122DC8   # -> 0x14-byte font descriptors
 
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x000080, 0x004ff6
 # DspFullReinit  (CPU 0x48404ff6)
@@ -3863,7 +3880,7 @@ _rom_marker:
     bra     0x48411ebf
     mov     0x11, d0
     mov     a2, a1
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     ret     [d2,a2], 0x1c
 # SndRecCountGet  (CPU 0x48411ec2)
@@ -5448,7 +5465,7 @@ _rom_marker:
     add     0x2c, a3
     mov     a3, a0
     mov     0x4859e7ec, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     mov     4, d2
     add     a3, d2
     mov     0x00070836, d0
@@ -5464,12 +5481,12 @@ _rom_marker:
     mov     a2, a0
     mov     2, d0
     mov     a3, a1
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     2, a0
     add     a2, a0
     mov     d2, a1
     mov     0xc, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     0xe, d0
     mov     a2, a0
     call    func_48532483, [d2,a2], 0x24
@@ -5507,7 +5524,7 @@ _rom_marker:
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     0x3c00, d0
-    call    func_4841662A, [d2,a2,a3], 0x28
+    call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a3
     cmp     0, a3
     bne     0x484157a4
@@ -5583,7 +5600,7 @@ _rom_marker:
     bge     0x48415834
     jmp     0x484157a7
     mov     a3, a0
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     call    func_485323AE, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x84
@@ -5614,7 +5631,7 @@ _rom_marker:
     add     0x3c, a3
     mov     a3, a0
     mov     0x4859e824, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     mov     4, d2
     add     a3, d2
     mov     0x00012c36, d0
@@ -5630,12 +5647,12 @@ _rom_marker:
     mov     a2, a0
     mov     2, d0
     mov     a3, a1
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     2, a0
     add     a2, a0
     mov     d2, a1
     mov     0xc, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     0xe, d0
     mov     a2, a0
     call    func_48532483, [d2,a2], 0x24
@@ -5730,7 +5747,7 @@ _rom_marker:
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     mov     0xa00, d0
-    call    func_4841662A, [d2,a2,a3], 0x28
+    call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, (0x20, sp)
     cmp     0, a0
     bne     0x484159d7
@@ -5803,7 +5820,7 @@ _rom_marker:
     bge     0x48415a74
     jmp     0x484159da
     mov     (0x20, sp), a0
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     call    func_485323AE, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0xd4
@@ -5900,7 +5917,7 @@ _rom_marker:
     mov     d0, d3
     sub     d2, d3
     mov     0x4859e83c, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     add     0x4c, a2
     mov     a3, a1
     mov     4, d2
@@ -5916,12 +5933,12 @@ _rom_marker:
     mov     0x36, d0
     mov     d0, (0x48, sp)
     mov     2, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     d2, a1
     mov     2, a0
     add     a2, a0
     mov     0xc, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     a2, a0
     mov     0xe, d0
     call    func_48532483, [d2,a2], 0x24
@@ -5957,7 +5974,7 @@ _rom_marker:
     clr     d0
     ret     [d2,d3,a2,a3], 0x94
     mov     (0x20, sp), d0
-    call    func_4841662A, [d2,a2,a3], 0x28
+    call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, (0x14, sp)
     cmp     0, a0
     bne     0x48415c04
@@ -6048,7 +6065,7 @@ _rom_marker:
     beq     0x48415cb4
     call    func_485323AE, 0, 0x14
     mov     (0x14, sp), a0
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     bra     0x48415cd2
     mov     (0x18, sp), d0
@@ -6060,7 +6077,7 @@ _rom_marker:
     bge     0x48415cc2
     jmp     0x48415c10
     mov     (0x14, sp), a0
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     call    func_485323AE, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x94
@@ -6197,7 +6214,11 @@ _rom_marker:
 # CheckDialLED  (CPU 0x48416587)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x016587, 0x016590
 # SetModeLed  (CPU 0x48416590)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x016590, 0x0167e0
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x016590, 0x016625
+# Malloc  (CPU 0x48416625)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x016625, 0x0166d9
+# Free  (CPU 0x484166d9)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0166d9, 0x0167e0
 # SetZeroPoint  (CPU 0x484167e0)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x0167e0, 0x01688b
 # ShiftBox  (CPU 0x4841688b)
@@ -6956,7 +6977,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -6980,7 +7001,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -7004,7 +7025,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     call    GetColorMode, 0, 0
     exthu   d0
@@ -7035,7 +7056,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     jmp     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -7059,7 +7080,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     mov     0xff, d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     bra     0x4841e45f
     mov     d2, a0
     movhu   (0x28, a0), d0
@@ -7083,7 +7104,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x24, sp), d0
     clr     d1
-    call    func_48425898, [d2,d3,a2,a3], 0x10
+    call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     clr     d0
     ret     [d2,d3,a2,a3], 0x50
     mov     d3, d0
@@ -7489,7 +7510,15 @@ _rom_marker:
 # InitializeGraphics  (CPU 0x48421804)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x021804, 0x0218ef
 # InitDrawTask  (CPU 0x484218ef)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0218ef, 0x021bb7
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0218ef, 0x02199f
+# DrawRing_Post  (CPU 0x4842199f)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x02199f, 0x021b5a
+# DrawQueue_Alloc  (CPU 0x48421b5a)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x021b5a, 0x021b91
+# DrawQueue_Free  (CPU 0x48421b91)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x021b91, 0x021b94
+# IsDrawTask  (CPU 0x48421b94)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x021b94, 0x021bb7
 # DrawFunc  (CPU 0x48421bb7)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x021bb7, 0x021c59
 # DrawFuncParam  (CPU 0x48421c59)
@@ -7527,7 +7556,9 @@ _rom_marker:
 # GetBitmapInfo  (CPU 0x48421de1)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x021de1, 0x021e88
 # ConvertBitmapFile  (CPU 0x48421e88)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x021e88, 0x02246a
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x021e88, 0x022016
+# BmpUnpackRow  (CPU 0x48422016)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x022016, 0x02246a
 # LcdOn  (CPU 0x4842246a)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x02246a, 0x0224b3
 # LcdOff  (CPU 0x484224b3)
@@ -7538,7 +7569,7 @@ _rom_marker:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
-    call    func_48421B97, 0, 0x10
+    call    IsDrawTask_entry, 0, 0x10
     cmp     0, d0
     beq     0x484225f6
     mov     (0x5002a02c), d1
@@ -7548,11 +7579,11 @@ _rom_marker:
     call    func_48422627, 0, 0
     bra     0x4842260c
     mov     8, d0
-    call    func_48421B5C, [d2], 4
+    call    DrawQueue_Alloc_entry, [d2], 4
     mov     0x4842260f, d0
     mov     d0, (a0)
     mov     d2, (4, a0)
-    call    func_484219A4, [d2,a2,a3], 0x28
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
     ret     [d2], 0x10
     add     -0xc, sp
     mov     (0x5002a02c), d1
@@ -7576,7 +7607,9 @@ _rom_marker:
 # DrawLineEx  (CPU 0x48422c8d)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x022c8d, 0x02302c
 # DrawBox  (CPU 0x4842302c)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x02302c, 0x02319f
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x02302c, 0x023095
+# DrawBox_Impl  (CPU 0x48423095)
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x023095, 0x02319f
 # DrawFrame  (CPU 0x4842319f)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x02319f, 0x0235d5
 # DrawFrameEx  (CPU 0x484235d5)
@@ -7586,43 +7619,4652 @@ _rom_marker:
 # DrawWall  (CPU 0x48423a00)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x023a00, 0x023b56
 # DrawBitmap  (CPU 0x48423b56)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x023b56, 0x023c88
-# DrawBitmapFast  (CPU 0x48423c88)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x023c88, 0x023dcd
-# DrawIcons  (CPU 0x48423dcd)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x023dcd, 0x023efb
-# DrawFrameSP  (CPU 0x48423efb)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x023efb, 0x0240a4
-# DrawBitmapSP  (CPU 0x484240a4)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0240a4, 0x02429e
-# DrawBitmapSPFast  (CPU 0x4842429e)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x02429e, 0x0243cd
-# DrawBitmapSPFast4  (CPU 0x484243cd)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0243cd, 0x0245bc
-# DrawBitmapSPFast16  (CPU 0x484245bc)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0245bc, 0x024784
-# DrawBitmapSPFast256  (CPU 0x48424784)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024784, 0x0248de
-# DrawBitmapSP2  (CPU 0x484248de)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x0248de, 0x024a9f
-# DrawBitmapFile  (CPU 0x48424a9f)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024a9f, 0x024cc8
-# DrawBitmapFileEx  (CPU 0x48424cc8)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024cc8, 0x024ebd
-# DrawJpegFile  (CPU 0x48424ebd)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024ebd, 0x024f28
-# JpegDecodeBlit  (CPU 0x48424f28)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024f28, 0x024f7d
-# DrawJpegFileR  (CPU 0x48424f7d)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x024f7d, 0x025265
-# GetJpegSize  (CPU 0x48425265)
+#   DrawBitmap(a0 = &point {s16 x, s16 y}, d0 = bitmap index): draws entry d0
+#   of the bitmap table (BitmapTablePtr) with its top-left corner at the point,
+#   skipping pixels of value 0xF7 (CL_Transparent). On the draw task it draws
+#   at once (if DrawEnable is set); on any other task it queues a 12-byte
+#   record {+0 DrawBitmap_QueuedExec, +4 s16 x, +6 s16 y, +8 u32 index} instead.
+DrawBitmap:
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+
+DrawBitmap_entry:
+    mov     d0, d2                          # d2 = bitmap index
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmap_Deferred             # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmap_Return               # drawing disabled
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30  # draw now
+    bra     DrawBitmap_Return
+
+DrawBitmap_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmap_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     d2, (8, a0)                     # +8: bitmap index
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmap_Return:
+    ret     [d2,a2], 0x18
+
+# DrawBitmap_QueuedExec  (CPU 0x48423b9e)
+#   DrawBitmap_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmap queued; draws it if DrawEnable is still set.
+DrawBitmap_QueuedExec:
+    add     -0x10, sp
+    mov     (DrawEnable), d0
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), d1                     # d1 = record.index
+    cmp     0, d0
+    beq     DrawBitmap_QueuedExec_Return    # drawing disabled meanwhile
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30
+
+DrawBitmap_QueuedExec_Return:
+    ret     0, 0x10
+
+# DrawBitmap_Impl  (CPU 0x48423bba)
+#   DrawBitmap_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
+#   top-left corner off the screen (IsPointOnScreen: x outside 0..639 or y
+#   outside 0..239), draws nothing. Rows are copied into FrameBuffer one byte
+#   per pixel, skipping 0xF7; each source row is padded to an even length. A
+#   row at y >= 240 ends the copy, but nothing clips horizontally: a bitmap
+#   wider than 640 - x runs on into the next framebuffer row. Ends by marking
+#   {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+DrawBitmap_Impl:
     movm    [d2,d3,a2,a3], (sp)
-# JpegHeaderParse  (CPU 0x48425267)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x025267, 0x025393
+    add     -0x20, sp
+
+DrawBitmap_Impl_entry:
+    mov     a0, a3                          # a3 = &point
+    mov     d0, d2                          # d2 = bitmap index
+    cmp     -1, d2
+    bne     DrawBitmap_Impl_HaveIndex
+    ret     [d2,d3,a2,a3], 0x30             # index -1: no bitmap
+
+DrawBitmap_Impl_HaveIndex:
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmap_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x30             # top-left corner off the screen
+
+DrawBitmap_Impl_OnScreen:
+    mov     (BitmapTablePtr), d1
+    asl     3, d2
+    add     d2, d1                          # d1 = &table[index] (8-byte entries)
+    mov     2, d0
+    add     d1, d0
+    mov     d0, a0                          # a0 = &entry.height
+    mov     d1, a2                          # a2 = &entry.width
+    mov     (4, a2), a1                     # a1 = entry.pixels: the source
+    mov     d0, (0xc, sp)                   # (0xc,sp) = &entry.height
+    movhu   (a0), d0
+    clr     d3                              # d3 = row
+    exth    d0
+    cmp     d3, d0
+    ble     DrawBitmap_Impl_Dirty           # height <= 0
+    mov     2, d0
+    add     a3, d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = &point.y
+
+DrawBitmap_Impl_RowLoop:
+    mov     (0x10, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     d3, d0
+    movhu   d0, (0x16, sp)                  # (0x16,sp) = y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    bge     DrawBitmap_Impl_Dirty           # y >= 240: below the screen, stop
+    movhu   (a3), d2
+    movhu   (0x16, sp), d1
+    exth    d2
+    mov     0x280, d0
+    exth    d1
+    nop
+    nop
+    mul     d0, d1                          # d1 = y * 640 (the compiler puts two nops before every mul)
+    add     FrameBuffer, d1
+    movhu   (a2), d0
+    add     d2, d1
+    mov     d1, a0                          # a0 = FrameBuffer + y*640 + x
+    exth    d0
+    clr     d2                              # d2 = column
+    cmp     d2, d0
+    ble     DrawBitmap_Impl_RowDone         # width <= 0
+    # Copy one row; the hardware loop (setlb .. llt) repeats from the next instruction.
+    setlb
+    movbu   (a1), d0
+    cmp     0xf7, d0
+    beq     DrawBitmap_Impl_NextPixel       # 0xF7: transparent, leave the framebuffer alone
+    movbu   (a1), d0
+    movbu   d0, (a0)                        # opaque: copy
+
+DrawBitmap_Impl_NextPixel:
+    movhu   (a2), d0
+    inc     a1
+    inc     a0
+    inc     d2
+    exthu   d2
+    exth    d0
+    cmp     d0, d2
+    llt                                     # next column while column < width
+
+DrawBitmap_Impl_RowDone:
+    movhu   (a2), d0
+    mov     2, d1
+    exth    d0
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0                         # d0 = width % 2
+    cmp     0, d0
+    beq     DrawBitmap_Impl_NextRow
+    inc     a1                              # odd width: skip the row's pad byte
+
+DrawBitmap_Impl_NextRow:
+    mov     (0xc, sp), a0
+    inc     d3
+    movhu   (a0), d0
+    exthu   d3
+    exth    d0
+    cmp     d0, d3
+    blt     DrawBitmap_Impl_RowLoop         # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmap_Impl_Dirty:
+    mov     2, a1
+    add     a3, a1
+    movhu   (a1), d0
+    movhu   d0, (0x1a, sp)                  # rect.top = y
+    movhu   (a3), d0
+    movhu   d0, (0x18, sp)                  # rect.left = x
+    movhu   (a3), d1
+    movhu   (a2), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1c, sp)                  # rect.right = x + width - 1
+    mov     (0xc, sp), a0
+    movhu   (a1), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1e, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x18, a0                        # a0 = &rect
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawBitmapFast  (CPU 0x48423c88)
+#   DrawBitmapFast(a0 = &point {s16 x, s16 y}, d0 = bitmap index): draws entry
+#   d0 of the bitmap table (BitmapTablePtr) with its top-left corner at the
+#   point, like DrawBitmap but opaque: rows are copied whole, 0xF7 included. On
+#   the draw task it draws at once (if DrawEnable is set); on any other task it
+#   queues a 12-byte record {+0 DrawBitmapFast_QueuedExec, +4 s16 x, +6 s16 y,
+#   +8 u32 index} instead.
+DrawBitmapFast:
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+
+DrawBitmapFast_entry:
+    mov     d0, d2                          # d2 = bitmap index
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapFast_Deferred         # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapFast_Return           # drawing disabled
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawBitmapFast_Impl_entry, [d2,d3,a2,a3], 0x3c  # draw now
+    bra     DrawBitmapFast_Return
+
+DrawBitmapFast_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapFast_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     d2, (8, a0)                     # +8: bitmap index
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapFast_Return:
+    ret     [d2,a2], 0x18
+
+# DrawBitmapFast_QueuedExec  (CPU 0x48423cd0)
+#   DrawBitmapFast_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmapFast queued; draws it if DrawEnable is still set.
+DrawBitmapFast_QueuedExec:
+    add     -0x10, sp
+    mov     (DrawEnable), d0
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), d1                     # d1 = record.index
+    cmp     0, d0
+    beq     DrawBitmapFast_QueuedExec_Return  # drawing disabled meanwhile
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawBitmapFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+
+DrawBitmapFast_QueuedExec_Return:
+    ret     0, 0x10
+
+# DrawBitmapFast_Impl  (CPU 0x48423cec)
+#   DrawBitmapFast_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
+#   top-left corner off the screen, draws nothing. Each row goes into FrameBuffer
+#   with one memcpy of width bytes (lib 0x4C003039, i.e. LibMemCopy), so there
+#   is no 0xF7 transparency; source rows are padded to an even length, as for
+#   DrawBitmap. A row at y >= 240 ends the copy, but nothing clips horizontally:
+#   a bitmap wider than 640 - x runs on into the next framebuffer row. Ends by
+#   marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+DrawBitmapFast_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+
+DrawBitmapFast_Impl_entry:
+    mov     a0, (0x44, sp)                  # (0x44,sp) = &point, spilled to the caller's argument area
+    mov     d0, d3                          # d3 = bitmap index
+    cmp     -1, d3
+    bne     DrawBitmapFast_Impl_HaveIndex
+    ret     [d2,d3,a2,a3], 0x3c             # index -1: no bitmap
+
+DrawBitmapFast_Impl_HaveIndex:
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapFast_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x3c             # top-left corner off the screen
+
+DrawBitmapFast_Impl_OnScreen:
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = &point.y
+    movhu   (a0), d1
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x1c, sp), a0
+    exth    d0
+    exth    d1
+    asl     3, d3
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     (BitmapTablePtr), d1
+    mov     d0, a3                          # a3 = FrameBuffer + y*640 + x: the destination
+    add     d3, d1                          # d1 = &table[index] (8-byte entries)
+    mov     d1, d0
+    add     2, d0
+    movhu   (a0), d2                        # d2 = y of the current row
+    mov     d1, (0x14, sp)                  # (0x14,sp) = &entry.width
+    mov     d1, a0
+    mov     (4, a0), d3                     # d3 = entry.pixels: the source
+    mov     d0, (0x18, sp)                  # (0x18,sp) = &entry.height
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0, a2                           # a2 = row
+    exth    d0
+    cmp     0, d0
+    ble     DrawBitmapFast_Impl_Dirty       # height <= 0
+
+DrawBitmapFast_Impl_RowLoop:
+    exthu   d2
+    cmp     0xf0, d2
+    bge     DrawBitmapFast_Impl_Dirty       # y >= 240: below the screen, stop
+    mov     (0x14, sp), a0
+    mov     d3, a1
+    movhu   (a0), d0
+    mov     a3, a0
+    exth    d0
+    call    memcpy_entry, [a2,a3], 8        # memcpy(a0 = dest, a1 = src, d0 = width): the whole row, opaque
+    # Advance: framebuffer by one row, source by the width rounded up to even,
+    # computed as (width + width % 2) / 2 * 2.
+    mov     (0x14, sp), a0
+    add     0x280, a3                       # next framebuffer row
+    movhu   (a0), d1
+    movhu   (a0), d0
+    mov     d2, (0x20, sp)                  # save y: d2 is the divisor next
+    exth    d1
+    exth    d0
+    mov     2, d2
+    ext     d0
+    div     d2, d0
+    mov     mdr, d0                         # d0 = width % 2
+    mov     (0x20, sp), d2
+    add     d1, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0                  # d0 = (width + width % 2) / 2
+    mov     (0x18, sp), a0
+    add     d0, d0
+    add     d0, d3                          # source += the padded row length
+    inc     d2                              # next y
+    mov     a2, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a2                          # next row
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, a2
+    blt     DrawBitmapFast_Impl_RowLoop     # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapFast_Impl_Dirty:
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)                  # rect.top = y
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)                  # rect.left = x
+    movhu   (a0), d1
+    mov     (0x14, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x28, sp)                  # rect.right = x + width - 1
+    mov     (0x1c, sp), a0
+    movhu   (a0), d1
+    mov     (0x18, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2a, sp)                  # rect.bottom = y + height - 1
+    add     0x24, a0                        # a0 = &rect
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
+
+# DrawIcons  (CPU 0x48423dcd)
+#   DrawIcons(a0 = &point {s16 x, s16 y}, d0 = icon index): draws one icon,
+#   entry d0 of the icon table (IconTablePtr), with its top-left corner at the
+#   point: a fixed 24 x 24 pixels of 4-bpp data, whatever size the descriptor
+#   gives (see DrawIcons_Impl). Index 0 draws nothing. On the draw task it draws
+#   at once (if DrawEnable is set); on any other task it queues a 12-byte record
+#   {+0 DrawIcons_QueuedExec, +4 s16 x, +6 s16 y, +8 u32 index} instead.
+DrawIcons:
+    movm    [d2,a2], (sp)
+    add     -0x10, sp
+
+DrawIcons_entry:
+    mov     d0, d2                          # d2 = icon index
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawIcons_Deferred              # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawIcons_Return                # drawing disabled
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30  # draw now
+    bra     DrawIcons_Return
+
+DrawIcons_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawIcons_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     d2, (8, a0)                     # +8: icon index
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawIcons_Return:
+    ret     [d2,a2], 0x18
+
+# DrawIcons_QueuedExec  (CPU 0x48423e15)
+#   DrawIcons_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawIcons queued; draws it if DrawEnable is still set.
+DrawIcons_QueuedExec:
+    add     -0x10, sp
+    mov     (DrawEnable), d0
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), d1                     # d1 = record.index
+    cmp     0, d0
+    beq     DrawIcons_QueuedExec_Return     # drawing disabled meanwhile
+    mov     d1, d0
+    mov     a1, a0
+    call    DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30
+
+DrawIcons_QueuedExec_Return:
+    ret     0, 0x10
+
+# DrawIcons_Impl  (CPU 0x48423e31)
+#   DrawIcons_Impl(a0 = &point, d0 = icon index): the blit. Index 0 (not -1 as
+#   for bitmaps), or a top-left corner off the screen, draws nothing. The
+#   geometry is hardcoded, as on the KN5000: 24 rows of 12 source bytes, each
+#   byte two 4-bpp pixels (high nibble on the left); the descriptor's width and
+#   height are not used for the copy. Every pixel is written (no transparency),
+#   its nibble n turned into palette index n (n < 8) or 0xF0 + n (n >= 8) by
+#   DrawIcons_PixelPairTable. A row at y >= 240 ends the copy; nothing clips
+#   horizontally. Ends by marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect,
+#   w and h taken from the descriptor, not 24 x 24.
+DrawIcons_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+
+DrawIcons_Impl_entry:
+    mov     a0, d3                          # d3 = &point
+    mov     d0, d2                          # d2 = icon index
+    cmp     0, d2
+    bne     DrawIcons_Impl_HaveIndex
+    ret     [d2,d3,a2,a3], 0x30             # index 0: no icon
+
+DrawIcons_Impl_HaveIndex:
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawIcons_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x30             # top-left corner off the screen
+
+DrawIcons_Impl_OnScreen:
+    mov     (IconTablePtr), d1
+    asl     3, d2
+    add     d2, d1                          # d1 = &table[index] (8-byte entries)
+    mov     d1, (0x10, sp)                  # (0x10,sp) = &entry: width at +0, height at +2
+    mov     2, d0
+    add     d3, d0
+    mov     d1, a0
+    mov     (4, a0), a1                     # a1 = entry.pixels: the source
+    mov     d0, (0xc, sp)                   # (0xc,sp) = &point.y
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0x280, d1
+    movhu   d0, (0x16, sp)                  # (0x16,sp) = y of the current row
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   (a0), d2                        # d2 = x
+    exth    d0
+    exth    d2
+    nop
+    nop
+    mul     d1, d0
+    add     FrameBuffer, d0
+    add     d2, d0
+    mov     d0, a2                          # a2 = FrameBuffer + y*640 + x: the destination
+    clr     d2                              # d2 = row
+    mov     DrawIcons_PixelPairTable, a3
+
+DrawIcons_Impl_RowLoop:
+    movhu   (0x16, sp), d0
+    exth    d0
+    cmp     0xf0, d0
+    bge     DrawIcons_Impl_Dirty            # y >= 240: below the screen, stop
+    mov     a2, a0                          # a0 = this row's destination
+    clr     d1                              # d1 = bytes of this row done
+    # Expand one row, 12 bytes into 24 pixels; the hardware loop (setlb .. llt)
+    # repeats from the next instruction.
+    setlb
+    movbu   (a1), d0
+    inc     d1
+    add     d0, d0
+    movhu   (d0, a3), d0                    # d0 = DrawIcons_PixelPairTable[byte]
+    exth    d1
+    and     0xff, d0                        # left pixel: the high nibble's colour
+    movbu   d0, (a0)
+    movbu   (a1), d0
+    inc     a0
+    add     d0, d0
+    movhu   (d0, a3), d0
+    inc     a1
+    asr     8, d0                           # right pixel: the low nibble's colour
+    movbu   d0, (a0)
+    inc     a0
+    cmp     0xc, d1
+    llt                                     # until 12 bytes (24 pixels) are done
+    movhu   (0x16, sp), d0
+    add     0x280, a2                       # next framebuffer row
+    exth    d0
+    inc     d0
+    movhu   d0, (0x16, sp)                  # next y
+    inc     d2
+    exth    d2
+    cmp     0x18, d2
+    blt     DrawIcons_Impl_RowLoop          # next row while row < 24
+
+    # Mark the rectangle dirty, sized by the descriptor, not by the 24 x 24 copy.
+DrawIcons_Impl_Dirty:
+    mov     (0xc, sp), a0
+    movhu   (a0), d0
+    mov     d3, a0
+    movhu   d0, (0x1a, sp)                  # rect.top = y
+    movhu   (a0), d0
+    movhu   d0, (0x18, sp)                  # rect.left = x
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1c, sp)                  # rect.right = x + entry.width - 1
+    mov     (0xc, sp), a0
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (2, a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x1e, sp)                  # rect.bottom = y + entry.height - 1
+    add     0x18, a0                        # a0 = &rect
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawFrameSP  (CPU 0x48423efb)
+#   DrawFrameSP(a0 = &point {s16 x, s16 y}, d0 = frame index, d1 = colour):
+#   draws entry d0 of the frame-piece table (FrameTablePtr) with its top-left
+#   corner at the point: 0xF6 pixels take colour d1, 0xF7 pixels are skipped,
+#   0xF4 pixels are copied from the buffer at *0x500D408C (see
+#   DrawFrameSP_Impl). On the draw task it draws at once (if DrawEnable is
+#   set); on any other task it queues a 12-byte record {DrawFrameSP_QueuedExec,
+#   x, y, u16 index, u16 colour} for the draw task instead. No call in the
+#   image (library included) targets it, so it has no _entry; its only
+#   reference is the function-table slot at 0x48728198 (InitBlockTable +
+#   0xC8). The 24 direct frame-piece draws, 0x48426639..0x4842776E, are all in
+#   DrawDesignBox's blit (0x4842621C) and call DrawFrameSP_Impl_entry instead.
+DrawFrameSP:
+    movm    [d2,d3,a2], (sp)
+    add     -0x14, sp
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = colour
+    mov     d0, d2                          # d2 = frame index
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawFrameSP_Deferred            # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawFrameSP_Return              # drawing disabled
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a2, a0
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40  # draw now
+    bra     DrawFrameSP_Return
+
+DrawFrameSP_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawFrameSP_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    movhu   d2, (8, a0)                     # +8: frame index
+    movhu   d3, (0xa, a0)                   # +A: colour
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawFrameSP_Return:
+    ret     [d2,d3,a2], 0x20
+
+# DrawFrameSP_QueuedExec  (CPU 0x48423f4a)
+#   DrawFrameSP_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawFrameSP queued; draws it if DrawEnable is still set.
+DrawFrameSP_QueuedExec:
+    movm    [d2], (sp)
+    add     -0x14, sp
+    mov     (DrawEnable), d0
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    movhu   (8, a0), d1                     # d1 = record.index
+    movhu   (0xa, a0), d2                   # d2 = record.colour
+    cmp     0, d0
+    beq     DrawFrameSP_QueuedExec_Return   # drawing disabled meanwhile
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a1, a0
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
+
+DrawFrameSP_QueuedExec_Return:
+    ret     [d2], 0x18
+
+# DrawFrameSP_Impl  (CPU 0x48423f6e)
+#   DrawFrameSP_Impl(a0 = &point, d0 = frame index, d1 = colour): the blit. A
+#   top-left corner off the screen draws nothing; the index itself is not
+#   checked (no -1 test, unlike DrawBitmap_Impl). Rows of table entry d0 are
+#   copied into FrameBuffer one byte per pixel, except for three source values.
+#   0xF6 is the template colour: it writes the low byte of the colour argument.
+#   0xF7 is transparent: the framebuffer pixel is left alone. 0xF4 calls
+#   ModifyPixel(&pixel, 0xF4), which (for an on-screen pixel) copies the byte
+#   at the same (x, y) of the buffer the pointer at 0x500D408C names; the only
+#   store to that pointer (InitializeGraphics) sets it to PICTURE_PLANE2. Every
+#   other value, 0xF5 included, is copied as it is. Each source row is padded
+#   to an even length. A row at y >= 240 ends the copy. Only the 0xF4 pixels
+#   are clipped horizontally (by ModifyPixel's IsPointOnScreen); 0xF6 and
+#   literal pixels past x = 639 run on into the next framebuffer row. Ends by
+#   marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect. The KN5000
+#   DrawFrameSP_Impl has the 0xF6 and 0xF7 cases but no 0xF4 one.
+DrawFrameSP_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x30, sp
+
+DrawFrameSP_Impl_entry:
+    movhu   d1, (0x50, sp)                  # (0x50,sp) = colour
+    mov     d0, d2                          # d2 = frame index
+    mov     a0, (0x48, sp)                  # (0x48,sp) = &point
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawFrameSP_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x40             # top-left corner off the screen
+
+DrawFrameSP_Impl_OnScreen:
+    mov     (FrameTablePtr), d1
+    exth    d2
+    mov     d2, d0
+    asl     3, d0
+    add     d0, d1
+    mov     d1, (0x10, sp)                  # (0x10,sp) = &table[index] = &entry.width (8-byte entries)
+    mov     d1, d0
+    add     2, d0
+    mov     d1, a0
+    mov     (4, a0), a2                     # a2 = entry.pixels: the source
+    mov     d0, (0x18, sp)                  # (0x18,sp) = &entry.height
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     0, a3                           # a3 = row
+    exth    d0
+    cmp     0, d0
+    bgt     DrawFrameSP_Impl_HasRows
+    jmp     DrawFrameSP_Impl_Dirty          # height <= 0: nothing to draw
+
+DrawFrameSP_Impl_HasRows:
+    mov     (0x48, sp), d0
+    mov     sp, a0
+    add     2, d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = &point.y
+    mov     a0, d0
+    add     0x24, d0
+    mov     d0, (0x14, sp)                  # (0x14,sp) = &pixel {x, y} at (0x24,sp), for ModifyPixel
+
+DrawFrameSP_Impl_RowLoop:
+    mov     (0x1c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     a3, d0
+    movhu   d0, (0x26, sp)                  # pixel.y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawFrameSP_Impl_RowVisible
+    jmp     DrawFrameSP_Impl_Dirty          # y >= 240: below the screen, stop
+
+DrawFrameSP_Impl_RowVisible:
+    mov     (0x10, sp), a0
+    clr     d3                              # d3 = column
+    movhu   (a0), d0
+    exth    d0
+    cmp     d3, d0
+    ble     DrawFrameSP_Impl_RowDone        # width <= 0
+
+DrawFrameSP_Impl_PixelLoop:
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     d3, d0
+    movhu   d0, (0x24, sp)                  # pixel.x = point.x + column
+    movbu   (a2), d0                        # d0 = source pixel
+    cmp     0xf6, d0
+    beq     DrawFrameSP_Impl_TemplateColour  # 0xF6: the template colour
+    cmp     0xf7, d0
+    beq     DrawFrameSP_Impl_NextPixel      # 0xF7: transparent, leave the framebuffer alone
+    bra     DrawFrameSP_Impl_OtherValue
+
+DrawFrameSP_Impl_TemplateColour:
+    movhu   (0x26, sp), d1
+    movhu   (0x24, sp), d0
+    exth    d1
+    exth    d0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d1, d2
+    movhu   (0x50, sp), d1                  # d1 = the colour argument
+    mov     d2, a1
+    add     FrameBuffer, a1
+    movbu   d1, (d0, a1)                    # FrameBuffer[y*640 + x] = colour
+    bra     DrawFrameSP_Impl_NextPixel
+
+DrawFrameSP_Impl_OtherValue:
+    movbu   (a2), d1
+    mov     d1, d0
+    exth    d0
+    cmp     0xf4, d0
+    bne     DrawFrameSP_Impl_CopyPixel      # not 0xF4: copy it
+    mov     (0x14, sp), a0
+    call    ModifyPixel_entry, [d2,d3,a2], 0x18  # 0xF4: ModifyPixel copies (x, y) of the buffer at *0x500D408C, if on screen
+    bra     DrawFrameSP_Impl_NextPixel
+
+DrawFrameSP_Impl_CopyPixel:
+    movhu   (0x26, sp), d0
+    movhu   (0x24, sp), d2
+    exth    d0
+    exth    d2
+    mov     d3, (0x20, sp)
+    mov     0x280, d3
+    nop
+    nop
+    mul     d3, d0
+    mov     (0x20, sp), d3
+    add     FrameBuffer, d0
+    mov     d0, a0
+    movbu   d1, (d2, a0)                    # FrameBuffer[y*640 + x] = source pixel
+
+DrawFrameSP_Impl_NextPixel:
+    mov     (0x10, sp), a0
+    inc     a2
+    movhu   (a0), d0
+    inc     d3
+    exth    d3
+    exth    d0
+    cmp     d0, d3
+    blt     DrawFrameSP_Impl_PixelLoop      # next column while column < width
+
+DrawFrameSP_Impl_RowDone:
+    movhu   (a0), d2
+    movhu   (a0), d0
+    exth    d2
+    exth    d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    add     d0, d0                          # d0 = width / 2 * 2
+    cmp     d0, d2
+    beq     DrawFrameSP_Impl_NextRow
+    inc     a2                              # odd width: skip the row's pad byte
+
+DrawFrameSP_Impl_NextRow:
+    mov     (0x18, sp), a0
+    mov     a3, d0
+    inc     d0
+    exth    d0
+    mov     d0, a3
+    movhu   (a0), d0
+    exth    d0
+    cmp     d0, a3
+    bge     DrawFrameSP_Impl_Dirty
+    jmp     DrawFrameSP_Impl_RowLoop        # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawFrameSP_Impl_Dirty:
+    mov     (0x48, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2a, sp)                  # rect.top = y
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x28, sp)                  # rect.left = x
+    movhu   (a0), d1
+    mov     (0x10, sp), a0
+    exth    d1
+    movhu   (a0), d0
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2c, sp)                  # rect.right = x + width - 1
+    mov     (0x18, sp), a0
+    movhu   (a1), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x2e, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x28, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x40
+
+# DrawBitmapSP  (CPU 0x484240a4)
+#   DrawBitmapSP(a0 = &point {s16 x, s16 y}, d0 = width, d1 = height,
+#   a1 = pixels): draws a bitmap the caller supplies by pointer instead of by
+#   table index -- width x height bytes, one per pixel, each row padded to an
+#   even length -- with its top-left corner at the point, skipping pixels of
+#   value 0xF7. On the draw task it draws at once (if DrawEnable is set); on
+#   any other task it queues a 16-byte record {DrawBitmapSP_QueuedExec, x, y,
+#   pixels, u16 width, u16 height} for the draw task instead. The record holds
+#   only the pointer, so the pixels must outlive the queue. Its one direct
+#   caller, VwSdFolderImageProc, draws the 24 x 24 folder icon at 0x4868DC04;
+#   its address is also in the pointer table at 0x48728568.
+DrawBitmapSP:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+
+DrawBitmapSP_entry:
+    mov     a1, a3                          # a3 = pixels
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSP_Deferred           # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSP_Return             # drawing disabled
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSP_Impl_entry, [d2,d3,a2,a3], 0x44  # draw now
+    bra     DrawBitmapSP_Return
+
+DrawBitmapSP_Deferred:
+    mov     0x10, d0                        # 16-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSP_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: pixels
+    movhu   d2, (0xc, a0)                   # +C: width
+    movhu   d3, (0xe, a0)                   # +E: height
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSP_Return:
+    ret     [d2,d3,a2,a3], 0x28
+
+# DrawBitmapSP_QueuedExec  (CPU 0x484240f8)
+#   DrawBitmapSP_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmapSP queued; draws it if DrawEnable is still set.
+DrawBitmapSP_QueuedExec:
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+    mov     (DrawEnable), d0
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a1                     # a1 = record.pixels
+    movhu   (0xc, a0), d1                   # d1 = record.width
+    movhu   (0xe, a0), d2                   # d2 = record.height
+    cmp     0, d0
+    beq     DrawBitmapSP_QueuedExec_Return  # drawing disabled meanwhile
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSP_Impl_entry, [d2,d3,a2,a3], 0x44
+
+DrawBitmapSP_QueuedExec_Return:
+    ret     [d2,a2], 0x20
+
+# DrawBitmapSP_Impl  (CPU 0x4842411f)
+#   DrawBitmapSP_Impl(a0 = &point, d0 = width, d1 = height, a1 = pixels): the
+#   blit. A top-left corner off the screen draws nothing. Each row is read as
+#   halfwords, two pixels at a time (low byte = the left pixel): both opaque
+#   -> one halfword store into FrameBuffer (unaligned when x is odd); one of
+#   them 0xF7 -> the other is stored alone; both 0xF7 -> nothing. An odd
+#   width's last pixel is the low byte of one more halfword, so each source
+#   row is padded to an even length. A row at y >= 240 ends the copy, but
+#   nothing clips horizontally: a bitmap wider than 640 - x runs on into the
+#   next framebuffer row. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+#   SetChangeRect.
+DrawBitmapSP_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x34, sp
+
+DrawBitmapSP_Impl_entry:
+    mov     a1, a2                          # a2 = pixels: the source
+    movhu   d0, (0x54, sp)                  # (0x54,sp) = width
+    mov     d1, d2                          # d2 = height
+    mov     a0, (0x4c, sp)                  # (0x4c,sp) = &point
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSP_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x44             # top-left corner off the screen
+
+DrawBitmapSP_Impl_OnScreen:
+    clr     d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = row
+    exth    d2
+    mov     d2, (0x1c, sp)                  # (0x1c,sp) = height
+    cmp     0, d2
+    bgt     DrawBitmapSP_Impl_HasRows
+    jmp     DrawBitmapSP_Impl_Dirty         # height <= 0: nothing to draw
+
+DrawBitmapSP_Impl_HasRows:
+    mov     (0x4c, sp), d0
+    mov     2, d1
+    add     2, d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = &point.y
+    movhu   (0x54, sp), d0
+    exth    d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = width
+    ext     d0
+    div     d1, d0
+    mov     mdr, d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = width % 2
+
+DrawBitmapSP_Impl_RowLoop:
+    mov     (0x24, sp), a0
+    mov     (0x10, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x2a, sp)                  # (0x2a,sp) = y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawBitmapSP_Impl_RowVisible
+    jmp     DrawBitmapSP_Impl_Dirty         # y >= 240: below the screen, stop
+
+DrawBitmapSP_Impl_RowVisible:
+    mov     (0x4c, sp), a0
+    movhu   (0x2a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    mov     FrameBuffer, d2
+    add     d0, d2
+    add     d1, d2                          # d2 = FrameBuffer + y*640 + x: where the pair goes
+    mov     (0x18, sp), d0
+    mov     0, a3                           # a3 = pair
+    mov     2, d1
+    call    LibDiv32, 0, 0                  # d0 = width / 2: the number of pairs
+    cmp     0, d0
+    bgt     DrawBitmapSP_Impl_HasPairs
+    jmp     DrawBitmapSP_Impl_OddTail       # no pairs (width < 2)
+
+DrawBitmapSP_Impl_HasPairs:
+    movhu   (0x2a, sp), d3
+    movhu   (0x2a, sp), d0
+    exth    d3
+    exth    d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     FrameBuffer, d0
+    mov     d0, (0x14, sp)                  # (0x14,sp) = FrameBuffer + y*640: the row
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     d0, a1                          # a1 = width / 2
+    mov     0x280, d0
+    nop
+    nop
+    mul     d0, d3
+    add     FrameBuffer, d3                 # d3 = FrameBuffer + y*640 as well
+    # Copy the row a pixel pair per pass; the hardware loop (setlb .. llt)
+    # repeats from the next instruction.
+    setlb
+    movhu   (a2), d0
+    asr     8, d0                           # d0 = right pixel (the high byte)
+    cmp     0xf7, d0
+    beq     DrawBitmapSP_Impl_RightTransparent  # right pixel transparent
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     DrawBitmapSP_Impl_RightOnly     # left pixel transparent
+    movhu   (a2), d0
+    mov     d2, a0
+    movhu   d0, (a0)                        # both opaque: store the pair as one halfword
+    bra     DrawBitmapSP_Impl_NextPair
+
+DrawBitmapSP_Impl_RightOnly:
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    mov     d3, a0
+    exth    d0
+    add     a3, d0
+    add     a3, d0
+    inc     d0                              # d0 = x + 2*pair + 1
+    movhu   d0, (0x28, sp)
+    movhu   (a2), d1
+    exth    d0
+    asr     8, d1
+    movbu   d1, (d0, a0)                    # row[x + 2*pair + 1] = right pixel
+    bra     DrawBitmapSP_Impl_NextPair
+
+DrawBitmapSP_Impl_RightTransparent:
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     DrawBitmapSP_Impl_NextPair      # both transparent
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    add     a3, d0
+    add     a3, d0                          # d0 = x + 2*pair
+    movhu   d0, (0x28, sp)
+    movbu   (a2), d1
+    mov     (0x14, sp), a0
+    exth    d0
+    movbu   d1, (d0, a0)                    # row[x + 2*pair] = left pixel
+
+DrawBitmapSP_Impl_NextPair:
+    add     2, a2
+    add     2, d2
+    mov     a3, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a3
+    cmp     a1, a3
+    llt                                     # next pair while pair < width / 2
+
+    # Odd width: the last pixel is the low byte of one more halfword.
+DrawBitmapSP_Impl_OddTail:
+    mov     (0x20, sp), d0
+    cmp     0, d0
+    beq     DrawBitmapSP_Impl_NextRow       # even width: no last pixel
+    movbu   (a2), d0
+    cmp     0xf7, d0
+    beq     DrawBitmapSP_Impl_OddTailDone   # 0xF7: transparent
+    mov     (0x4c, sp), a0
+    mov     a3, d1
+    movhu   (a0), d0
+    mov     0x280, d2
+    exth    d0
+    add     a3, d0
+    add     d0, d1                          # d1 = x + 2*pairs: the last column
+    movhu   d1, (0x28, sp)
+    movbu   (a2), d3
+    movhu   (0x2a, sp), d0
+    exth    d1
+    exth    d0
+    nop
+    nop
+    mul     d2, d0
+    add     FrameBuffer, d0
+    mov     d0, a0
+    movbu   d3, (d1, a0)                    # FrameBuffer[y*640 + x + 2*pairs] = last pixel
+
+DrawBitmapSP_Impl_OddTailDone:
+    add     2, a2                           # skip the last pixel and its pad byte
+
+DrawBitmapSP_Impl_NextRow:
+    mov     (0x10, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    cmp     d1, d0
+    bge     DrawBitmapSP_Impl_Dirty
+    jmp     DrawBitmapSP_Impl_RowLoop       # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapSP_Impl_Dirty:
+    mov     (0x4c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2e, sp)                  # rect.top = y
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2c, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x30, sp)                  # rect.right = x + width - 1
+    movhu   (a1), d0
+    mov     (0x1c, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x32, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x2c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x44
+
+# DrawBitmapSPFast  (CPU 0x4842429e)
+#   DrawBitmapSPFast(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = s16 width,
+#   d1 = s16 height): draws a caller-supplied 8 bpp bitmap (one framebuffer
+#   byte per pixel, each row padded to an even length) with its top-left
+#   corner at the point. It is opaque: unlike DrawBitmap, 0xF7 is copied like
+#   any other value. On the draw task it draws at once (if DrawEnable is
+#   set); on any other task it queues a 16-byte record
+#   {DrawBitmapSPFast_QueuedExec, x, y, pixels, s16 width, s16 height} for
+#   the draw task instead.
+DrawBitmapSPFast:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x18, sp
+
+DrawBitmapSPFast_entry:
+    mov     a1, a3                          # a3 = pixels
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSPFast_Deferred       # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSPFast_Return         # drawing disabled
+    exth    d2
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast_Impl_entry, [d2,d3,a2,a3], 0x3c  # draw now
+    bra     DrawBitmapSPFast_Return
+
+DrawBitmapSPFast_Deferred:
+    mov     0x10, d0                        # 16-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSPFast_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: pixels
+    movhu   d2, (0xc, a0)                   # +0xC: width
+    movhu   d3, (0xe, a0)                   # +0xE: height
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSPFast_Return:
+    ret     [d2,d3,a2,a3], 0x28
+
+# DrawBitmapSPFast_QueuedExec  (CPU 0x484242f2)
+#   DrawBitmapSPFast_QueuedExec(a0 = record): called by the draw task for a
+#   record DrawBitmapSPFast queued; draws it if DrawEnable is still set.
+DrawBitmapSPFast_QueuedExec:
+    movm    [d2,a2], (sp)
+    add     -0x18, sp
+    mov     (DrawEnable), d0
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a1                     # a1 = record.pixels
+    movhu   (0xc, a0), d1                   # d1 = record.width
+    movhu   (0xe, a0), d2                   # d2 = record.height
+    cmp     0, d0
+    beq     DrawBitmapSPFast_QueuedExec_Return  # drawing disabled meanwhile
+    exth    d1
+    mov     d1, d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast_Impl_entry, [d2,d3,a2,a3], 0x3c
+
+DrawBitmapSPFast_QueuedExec_Return:
+    ret     [d2,a2], 0x20
+
+# DrawBitmapSPFast_Impl  (CPU 0x48424319)
+#   DrawBitmapSPFast_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height):
+#   the blit. A top-left corner off the screen draws nothing. Each row is
+#   copied whole into FrameBuffer with LibMemCopy (lib 0x4C003039), no
+#   transparency; the source advances by the width rounded up to even. A row
+#   at y >= 240 ends the copy, but nothing clips horizontally: a bitmap wider
+#   than 640 - x runs on into the next framebuffer row. Ends by marking
+#   {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+DrawBitmapSPFast_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+
+DrawBitmapSPFast_Impl_entry:
+    mov     a1, a3                          # a3 = pixels: the source
+    movhu   d0, (0x4c, sp)                  # (0x4c,sp) = width (the caller's d0 slot)
+    movhu   d1, (0x50, sp)                  # (0x50,sp) = height (the caller's d1 slot)
+    mov     a0, (0x44, sp)                  # (0x44,sp) = &point (the caller's a0 slot)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSPFast_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x3c             # top-left corner off the screen
+
+DrawBitmapSPFast_Impl_OnScreen:
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &point.y
+    movhu   (a0), d1
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x20, sp), a0
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0                          # (the compiler puts two nops before every mul)
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     d0, a2                          # a2 = FrameBuffer + y*640 + x
+    movhu   (0x50, sp), d0
+    movhu   (a0), d2                        # d2 = y
+    exth    d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = height
+    clr     d3                              # d3 = row
+    cmp     d3, d0
+    ble     DrawBitmapSPFast_Impl_Dirty     # height <= 0
+    movhu   (0x4c, sp), d0
+    mov     2, d1
+    exth    d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = width: bytes to copy per row
+    movhu   (0x4c, sp), d0
+    exth    d0
+    inc     d0
+    call    LibDiv32, 0, 0
+    add     d0, d0
+    mov     d0, (0x14, sp)                  # (0x14,sp) = source stride: width rounded up to even
+
+DrawBitmapSPFast_Impl_RowLoop:
+    exthu   d2
+    cmp     0xf0, d2
+    bge     DrawBitmapSPFast_Impl_Dirty     # y >= 240: below the screen, stop
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x18, sp), d0
+    call    memcpy_entry, [a2,a3], 8        # LibMemCopy(a0 = dest, a1 = src, d0 = width)
+    mov     (0x14, sp), d0
+    add     0x280, a2                       # next framebuffer row
+    add     d0, a3                          # next source row
+    mov     (0x1c, sp), d0
+    inc     d2
+    inc     d3
+    exthu   d3
+    cmp     d0, d3
+    blt     DrawBitmapSPFast_Impl_RowLoop   # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapSPFast_Impl_Dirty:
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)                  # rect.top = y
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x4c, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x28, sp)                  # rect.right = x + width - 1
+    mov     (0x20, sp), a0
+    mov     (0x1c, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2a, sp)                  # rect.bottom = y + height - 1
+    add     0x24, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
+
+# DrawBitmapSPFast4  (CPU 0x484243cd)
+#   DrawBitmapSPFast4(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = s16 width,
+#   d1 = s16 height; stack args at the caller's (0x18,sp) = colours, a pointer
+#   to four u32 colours, and (0x1c,sp) = s16 first palette index): draws a
+#   caller-supplied 2 bpp (4-colour) bitmap with its top-left corner at the
+#   point and loads its four colours into palette entries first..first+3
+#   (see DrawBitmapSPFast4_Impl).
+#   On the draw task it draws at once (if DrawEnable is set); on any other
+#   task it queues a 24-byte record {DrawBitmapSPFast4_QueuedExec, x, y,
+#   pixels, s16 width, s16 height, colours, s16 first} for the draw task
+#   instead (+0x16 unused).
+DrawBitmapSPFast4:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+
+DrawBitmapSPFast4_entry:
+    mov     a1, a3                          # a3 = pixels
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSPFast4_Deferred      # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSPFast4_Return        # drawing disabled
+    mov     (0x48, sp), a0                  # a0 = colours (stack argument)
+    exth    d2
+    mov     a0, (0x18, sp)                  # pass colours on at (0x18,sp)
+    movhu   (0x4c, sp), d0
+    exth    d3
+    exth    d0
+    mov     d0, (0x1c, sp)                  # pass the first palette index on at (0x1c,sp)
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast4_Impl_entry, [d2,d3,a2,a3], 0x54  # draw now
+    bra     DrawBitmapSPFast4_Return
+
+DrawBitmapSPFast4_Deferred:
+    mov     0x18, d0                        # 24-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSPFast4_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: pixels
+    movhu   d2, (0xc, a0)                   # +0xC: width
+    movhu   d3, (0xe, a0)                   # +0xE: height
+    mov     (0x48, sp), a1
+    mov     a1, (0x10, a0)                  # +0x10: colours
+    movhu   (0x4c, sp), d0
+    movhu   d0, (0x14, a0)                  # +0x14: first palette index
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSPFast4_Return:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawBitmapSPFast4_QueuedExec  (CPU 0x48424436)
+#   DrawBitmapSPFast4_QueuedExec(a0 = record): called by the draw task for a
+#   record DrawBitmapSPFast4 queued; draws it if DrawEnable is still set.
+DrawBitmapSPFast4_QueuedExec:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    movhu   (0xe, a0), d0                   # d0 = record.height
+    mov     (DrawEnable), d1
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), a2                     # a2 = record.pixels
+    movhu   (0xc, a0), d3                   # d3 = record.width
+    mov     d0, a3                          # a3 = height
+    mov     (0x10, a0), d0                  # d0 = record.colours
+    movhu   (0x14, a0), d2                  # d2 = record.first (palette index)
+    cmp     0, d1
+    beq     DrawBitmapSPFast4_QueuedExec_Return  # drawing disabled meanwhile
+    mov     d0, (0x18, sp)                  # stack argument: colours
+    exth    d2
+    mov     d2, (0x1c, sp)                  # stack argument: first palette index
+    mov     a1, a0
+    exth    d3
+    mov     a3, d1
+    exth    d1
+    mov     d3, d0
+    mov     a2, a1
+    call    DrawBitmapSPFast4_Impl_entry, [d2,d3,a2,a3], 0x54
+
+DrawBitmapSPFast4_QueuedExec_Return:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawBitmapSPFast4_Impl  (CPU 0x4842446c)
+#   DrawBitmapSPFast4_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+#   the caller's (0x18,sp) = colours (-> u32[4]), (0x1c,sp) = s16 first index):
+#   the blit. A top-left corner off the screen draws nothing and loads no
+#   colours. Each source byte holds four 2-bit pixels, leftmost in bits 7-6;
+#   pixel value p is written to FrameBuffer as palette index first + p, with
+#   no transparency. A source row is (width + 3) / 4 bytes, no further
+#   padding. A row at y >= 240 ends the copy; nothing clips horizontally.
+#   Then palette entries first..first+3 are set to colours[0..3] (SetPaletteRGB,
+#   only where GetPaletteRGB differs; a negative first sets none), and
+#   {x, y, x+w-1, y+h-1} is marked dirty with SetChangeRect.
+#   Bug: the pixel loop ends a byte at column > width, not >= width, so when
+#   width is not a multiple of 4 each row also writes column `width` (x + w,
+#   outside the dirty rectangle) from the row's padding bits.
+DrawBitmapSPFast4_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x44, sp
+
+DrawBitmapSPFast4_Impl_entry:
+    movhu   d0, (0x64, sp)                  # (0x64,sp) = width (the caller's d0 slot)
+    mov     d1, d2                          # d2 = height
+    mov     a1, a2                          # a2 = pixels
+    mov     a0, (0x5c, sp)                  # (0x5c,sp) = &point (the caller's a0 slot)
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSPFast4_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x54             # top-left corner off the screen
+
+DrawBitmapSPFast4_Impl_OnScreen:
+    mov     a2, (0x14, sp)                  # (0x14,sp) = source pointer
+    clr     d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = row
+    exth    d2
+    mov     d2, (0x30, sp)                  # (0x30,sp) = height
+    cmp     0, d2
+    bgt     DrawBitmapSPFast4_Impl_HaveRows
+    jmp     DrawBitmapSPFast4_Impl_LoadColours  # height <= 0: only load the colours
+
+DrawBitmapSPFast4_Impl_HaveRows:
+    movhu   (0x64, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = width
+    add     3, d0
+    mov     d0, (0x28, sp)                  # (0x28,sp) = width + 3
+    mov     (0x5c, sp), d0
+    add     2, d0
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = &point.y
+    mov     (0x20, sp), d0
+    add     3, d0
+    mov     d0, (0x34, sp)                  # (0x34,sp) = width + 3 (again)
+    movhu   (0x70, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = first palette index
+
+DrawBitmapSPFast4_Impl_RowLoop:
+    mov     (0x2c, sp), a0
+    mov     (0x18, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x3a, sp)                  # y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawBitmapSPFast4_Impl_RowOnScreen
+    jmp     DrawBitmapSPFast4_Impl_LoadColours  # y >= 240: below the screen, stop drawing
+
+DrawBitmapSPFast4_Impl_RowOnScreen:
+    mov     (0x5c, sp), a0
+    movhu   (0x3a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     d0, a2                          # a2 = FrameBuffer + y*640 + x
+    mov     (0x34, sp), d0
+    clr     d3                              # d3 = byte in the row
+    mov     4, d1
+    call    LibDiv32, 0, 0                  # d0 = (width + 3) / 4: bytes per source row
+    cmp     d3, d0
+    ble     DrawBitmapSPFast4_Impl_NextRow  # width <= 0: no bytes
+    mov     (0x28, sp), d0
+    mov     4, d1
+    call    LibDiv32, 0, 0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = bytes per source row
+
+    # Unpack one source byte into up to four pixels, most significant pair first.
+DrawBitmapSPFast4_Impl_ByteLoop:
+    mov     (0x14, sp), a0
+    mov     d3, d0
+    movbu   (a0), d1                        # read the source byte
+    asl2    d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = column of the byte's first pixel
+    extbu   d1
+    mov     d1, a3                          # a3 = source byte
+    clr     d2                              # d2 = bit offset below bit 7: 0, 2, 4, 6
+
+DrawBitmapSPFast4_Impl_PixelLoop:
+    mov     d2, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0                  # d0 = pixel within the byte (0..3)
+    mov     (0x10, sp), d1
+    add     d1, d0                          # d0 = column
+    mov     (0x20, sp), d1
+    cmp     d1, d0
+    bgt     DrawBitmapSPFast4_Impl_NextByte  # column > width: padding (BUG: column == width is drawn)
+    mov     6, d0
+    sub     d2, d0
+    mov     d0, d1                          # d1 = shift: 6 - bit offset
+    add     2, d2
+    exthu   d2
+    mov     a3, d0
+    asr     d1, d0
+    mov     (0x24, sp), d1
+    and     0x03, d0                        # p = the 2-bit pixel
+    add     d1, d0                          # palette index first + p
+    movbu   d0, (a2)
+    inc     a2
+    cmp     8, d2
+    blt     DrawBitmapSPFast4_Impl_PixelLoop  # next pixel while bit offset < 8
+
+DrawBitmapSPFast4_Impl_NextByte:
+    mov     (0x14, sp), d0
+    inc     d3
+    inc     d0
+    mov     d0, (0x14, sp)                  # next source byte
+    mov     (0x1c, sp), d0
+    exthu   d3
+    cmp     d0, d3
+    blt     DrawBitmapSPFast4_Impl_ByteLoop  # next byte while byte < bytes per row
+
+DrawBitmapSPFast4_Impl_NextRow:
+    mov     (0x18, sp), d0
+    mov     (0x30, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x18, sp)
+    cmp     d1, d0
+    bge     DrawBitmapSPFast4_Impl_LoadColours  # all rows drawn
+    jmp     DrawBitmapSPFast4_Impl_RowLoop  # next row
+
+    # Set palette entries first..first+3 to colours[0..3], skipping any already equal.
+DrawBitmapSPFast4_Impl_LoadColours:
+    movhu   (0x70, sp), d2                  # d2 = palette index
+    movhu   (0x70, sp), d0
+    mov     d2, d3
+    exthu   d3                              # d3 = palette index (loop counter)
+    exth    d0
+    mov     d0, a3                          # a3 = first palette index
+    mov     4, d1
+    add     d0, d1
+    cmp     d1, d3
+    bge     DrawBitmapSPFast4_Impl_Dirty    # first < 0 (u16 >= 0x8000): nothing to load
+    mov     4, d0
+    add     a3, d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = first + 4: the end
+
+DrawBitmapSPFast4_Impl_ColourLoop:
+    mov     (0x6c, sp), a0
+    mov     d3, d1
+    sub     a3, d1
+    asl2    d1
+    mov     (d1, a0), a2                    # a2 = colours[index - first]
+    mov     d2, d0
+    exth    d0
+    call    GetPaletteRGB, 0, 0             # d0 = the entry's current colour
+    cmp     d0, a2
+    beq     DrawBitmapSPFast4_Impl_NextColour  # unchanged: skip it
+    exth    d2
+    mov     a2, d1
+    mov     d2, d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # palette[index] = colour
+
+DrawBitmapSPFast4_Impl_NextColour:
+    mov     (0x10, sp), d0
+    inc     d3
+    mov     d3, d2
+    exthu   d3
+    cmp     d0, d3
+    blt     DrawBitmapSPFast4_Impl_ColourLoop  # next entry while index < first + 4
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapSPFast4_Impl_Dirty:
+    mov     (0x5c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x3e, sp)                  # rect.top = y
+    mov     (0x5c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x3c, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x64, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x40, sp)                  # rect.right = x + width - 1
+    movhu   (a1), d0
+    mov     (0x30, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x42, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x3c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x54
+
+# DrawBitmapSPFast16  (CPU 0x484245bc)
+#   DrawBitmapSPFast16(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = width,
+#   d1 = height, palette = 5th argument at the caller's (0x18,sp)): draws a
+#   4 bpp bitmap, two pixels per byte, high nibble first, with its top-left
+#   corner at the point, in palette indices 0x20..0x2F, whose colours it
+#   sets from palette[0..15] (sixteen 0x00BBGGRR words). On the draw task it
+#   draws at once (if DrawEnable is set); on any other task it queues a
+#   20-byte record {DrawBitmapSPFast16_QueuedExec, s16 x, s16 y, pixels,
+#   s16 width, s16 height, palette} for the draw task instead. The record
+#   holds the pixel and palette POINTERS, so both are read only when the
+#   draw task runs it. Callers: VwUserBitmapProc (any bit depth but 1 and 8;
+#   for a null palette it passes the VGA-16 table at 0x4859E978) and
+#   AcMonImageProc (0x485F03F8, the same 16 colours).
+DrawBitmapSPFast16:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+
+DrawBitmapSPFast16_entry:
+    mov     a1, a3                          # a3 = pixels
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSPFast16_Deferred     # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSPFast16_Return       # drawing disabled
+    mov     (0x44, sp), a0                  # a0 = palette (our caller's (0x18,sp))
+    exth    d2
+    mov     a0, (0x18, sp)                  # palette: the Impl's 5th argument
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast16_Impl_entry, [d2,d3,a2,a3], 0x40  # draw now
+    bra     DrawBitmapSPFast16_Return
+
+DrawBitmapSPFast16_Deferred:
+    mov     0x14, d0                        # 20-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSPFast16_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: pixels
+    movhu   d2, (0xc, a0)                   # +0xC: width
+    movhu   d3, (0xe, a0)                   # +0xE: height
+    mov     (0x44, sp), a1
+    mov     a1, (0x10, a0)                  # +0x10: palette
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSPFast16_Return:
+    ret     [d2,d3,a2,a3], 0x2c
+
+# DrawBitmapSPFast16_QueuedExec  (CPU 0x48424619)
+#   DrawBitmapSPFast16_QueuedExec(a0 = record): called by the draw task for a
+#   record DrawBitmapSPFast16 queued; draws it if DrawEnable is still set.
+DrawBitmapSPFast16_QueuedExec:
+    movm    [d2,a2], (sp)
+    add     -0x1c, sp
+    mov     (DrawEnable), d1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a1                     # a1 = record.pixels
+    movhu   (0xc, a0), d0                   # d0 = record.width
+    movhu   (0xe, a0), d2                   # d2 = record.height
+    mov     (0x10, a0), a0                  # a0 = record.palette
+    cmp     0, d1
+    beq     DrawBitmapSPFast16_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a0, (0x18, sp)                  # palette: the Impl's 5th argument
+    exth    d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast16_Impl_entry, [d2,d3,a2,a3], 0x40
+
+DrawBitmapSPFast16_QueuedExec_Return:
+    ret     [d2,a2], 0x24
+
+# DrawBitmapSPFast16_Impl  (CPU 0x48424644)
+#   DrawBitmapSPFast16_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+#   palette = 5th argument at the caller's (0x18,sp)): the blit. A top-left
+#   corner off the screen draws nothing (no palette load, no dirty rect).
+#   Each source byte becomes two framebuffer bytes through Pixel4bppPairTable:
+#   0x20 + high nibble (left), then 0x20 + low nibble (right); an odd width
+#   ends the row with the high nibble of one more byte. Source rows are padded
+#   to an even byte count. Every pixel is opaque (no 0xF7 transparency). A row
+#   at y >= 240 ends the copy, but nothing clips horizontally. Afterwards it
+#   sets palette entries 0x20..0x2F to palette[0..15] with SetPaletteRGB,
+#   skipping any whose GetPaletteRGB value already matches -- also when no row
+#   was drawn (height <= 0). The sixteen indices are global, shared by every
+#   SPFast16 bitmap and inside the 0x20..0xCF that SPFast256 reloads.
+#   SetPaletteRGB keeps the word as given (what GetPaletteRGB returns) but
+#   dims indices 0x20..0xDF to 77/100 per component in its RGB565 copy at
+#   0x50122ABC. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+#   SetChangeRect.
+DrawBitmapSPFast16_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x30, sp
+
+DrawBitmapSPFast16_Impl_entry:
+    movhu   d0, (0x50, sp)                  # (0x50,sp) = width
+    mov     d1, d2                          # d2 = height
+    mov     a1, a3                          # a3 = source
+    mov     a0, (0x48, sp)                  # (0x48,sp) = &point
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSPFast16_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x40             # top-left corner off the screen
+
+DrawBitmapSPFast16_Impl_OnScreen:
+    mov     (0x48, sp), d0
+    exth    d2
+    add     2, d0
+    mov     d0, a0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &point.y
+    movhu   (a0), d0
+    mov     0x280, d3
+    movhu   d0, (0x26, sp)                  # (0x26,sp) = y of the current row
+    movhu   (a0), d0
+    mov     (0x48, sp), a0
+    exth    d0
+    movhu   (a0), d1
+    nop
+    nop
+    mul     d3, d0
+    exth    d1
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = dest = FrameBuffer + y*640 + x
+    mov     d2, (0x1c, sp)                  # (0x1c,sp) = height
+    clr     d0
+    mov     d0, (0x14, sp)                  # (0x14,sp) = row
+    cmp     0, d2
+    bgt     DrawBitmapSPFast16_Impl_HaveRows
+    jmp     DrawBitmapSPFast16_Impl_LoadPalette  # height <= 0: no rows, on to the palette load
+
+DrawBitmapSPFast16_Impl_HaveRows:
+    movhu   (0x50, sp), d0
+    exth    d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = width
+
+DrawBitmapSPFast16_Impl_RowLoop:
+    movhu   (0x26, sp), d0
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawBitmapSPFast16_Impl_DrawRow
+    jmp     DrawBitmapSPFast16_Impl_LoadPalette  # y >= 240: below the screen, stop drawing
+
+DrawBitmapSPFast16_Impl_DrawRow:
+    mov     (0x10, sp), a2                  # a2 = dest
+    clr     d2                              # d2 = source bytes used in this row
+    clr     d3                              # d3 = whole bytes (pixel pairs) done
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0                  # d0 = width / 2: whole bytes in the row
+    cmp     d2, d0
+    ble     DrawBitmapSPFast16_Impl_OddPixel  # width < 2: no whole byte
+    mov     (0x18, sp), d0
+    mov     2, d1
+    call    LibDiv32, 0, 0
+    mov     d0, d1                          # d1 = width / 2
+    # One source byte per pass; the hardware loop (setlb .. llt) repeats from the next instruction.
+    setlb
+    mov     Pixel4bppPairTable, a0
+    movbu   (a3), d0
+    add     d0, d0
+    movhu   (d0, a0), d0                    # d0 = Pixel4bppPairTable[byte]
+    inc     d3
+    and     0xff, d0
+    movbu   d0, (a2)                        # left pixel: 0x20 + high nibble
+    movbu   (a3), d0
+    inc     a2
+    add     d0, d0
+    movhu   (d0, a0), d0
+    inc     a3
+    asr     8, d0
+    movbu   d0, (a2)                        # right pixel: 0x20 + low nibble
+    inc     a2
+    mov     d3, d2
+    exth    d3
+    cmp     d1, d3
+    llt                                     # next byte while d3 < width / 2
+
+DrawBitmapSPFast16_Impl_OddPixel:
+    mov     (0x18, sp), d0
+    btst    0x01, d0
+    beq     DrawBitmapSPFast16_Impl_RowPad  # even width: row complete
+    movbu   (a3), d0
+    mov     Pixel4bppPairTable, a1
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, d0
+    movhu   (d0, a1), d1
+    inc     a3
+    and     0xff, d1
+    movbu   d1, (a2)                        # odd width: last pixel = 0x20 + high nibble of one more byte
+    inc     d3
+    mov     d3, d2
+
+DrawBitmapSPFast16_Impl_RowPad:
+    exth    d2
+    btst    0x01, d2                        # odd number of source bytes used?
+    beq     DrawBitmapSPFast16_Impl_NextRow
+    inc     a3                              # skip the pad byte: source rows have an even byte count
+
+DrawBitmapSPFast16_Impl_NextRow:
+    mov     (0x10, sp), d0
+    mov     (0x1c, sp), d1
+    add     0x280, d0                       # dest = next framebuffer row
+    mov     d0, (0x10, sp)
+    movhu   (0x26, sp), d0
+    exth    d0
+    inc     d0
+    movhu   d0, (0x26, sp)                  # y + 1
+    mov     (0x14, sp), d0
+    inc     d0
+    exth    d0
+    mov     d0, (0x14, sp)                  # row + 1
+    cmp     d1, d0
+    bge     DrawBitmapSPFast16_Impl_LoadPalette  # last row done
+    jmp     DrawBitmapSPFast16_Impl_RowLoop  # next row
+
+    # Set palette entries 0x20..0x2F from palette[0..15], writing only the ones that differ.
+DrawBitmapSPFast16_Impl_LoadPalette:
+    mov     0x20, d2
+    mov     d2, d3                          # d2 = d3 = colour index, from 0x20
+
+DrawBitmapSPFast16_Impl_PaletteLoop:
+    mov     (0x58, sp), a0
+    mov     d3, d0
+    asl2    d0
+    add     d0, a0
+    mov     (-0x80, a0), a2                 # a2 = palette[index - 0x20]
+    mov     d2, d0
+    exth    d0
+    call    GetPaletteRGB, 0, 0             # d0 = the index's current colour
+    cmp     d0, a2
+    beq     DrawBitmapSPFast16_Impl_NextColour  # unchanged: skip it
+    exth    d2
+    mov     a2, d1
+    mov     d2, d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # SetPaletteRGB(index, palette[index - 0x20])
+
+DrawBitmapSPFast16_Impl_NextColour:
+    inc     d3
+    mov     d3, d2
+    exthu   d3
+    cmp     0x30, d3
+    blt     DrawBitmapSPFast16_Impl_PaletteLoop  # next while index < 0x30
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2a, sp)                  # rect.top = y
+    mov     (0x48, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x28, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x50, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2c, sp)                  # rect.right = x + width - 1
+    mov     (0x20, sp), a0
+    mov     (0x1c, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2e, sp)                  # rect.bottom = y + height - 1
+    add     0x28, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x40
+
+# DrawBitmapSPFast256  (CPU 0x48424784)
+#   DrawBitmapSPFast256(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = width,
+#   d1 = height, palette = 5th argument at the caller's (0x18,sp)): draws an
+#   8 bpp bitmap, one byte per pixel copied as is, with its top-left corner
+#   at the point, after setting palette entries 0x20..0xCF from the same
+#   entries of palette (0x00BBGGRR words indexed by colour). On the draw
+#   task it draws at once (if DrawEnable is set); on any other task it queues a
+#   20-byte record {DrawBitmapSPFast256_QueuedExec, s16 x, s16 y, pixels,
+#   s16 width, s16 height, palette} for the draw task instead. The record
+#   holds the pixel and palette POINTERS, so both are read only when the
+#   draw task runs it. Caller: VwUserBitmapProc, for bit depth 8 when the
+#   bitmap has a palette (without one it uses DrawBitmapSPFast).
+DrawBitmapSPFast256:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x1c, sp
+
+DrawBitmapSPFast256_entry:
+    mov     a1, a3                          # a3 = pixels
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSPFast256_Deferred    # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSPFast256_Return      # drawing disabled
+    mov     (0x44, sp), a0                  # a0 = palette (our caller's (0x18,sp))
+    exth    d2
+    mov     a0, (0x18, sp)                  # palette: the Impl's 5th argument
+    exth    d3
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSPFast256_Impl_entry, [d2,d3,a2,a3], 0x3c  # draw now
+    bra     DrawBitmapSPFast256_Return
+
+DrawBitmapSPFast256_Deferred:
+    mov     0x14, d0                        # 20-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSPFast256_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: pixels
+    movhu   d2, (0xc, a0)                   # +0xC: width
+    movhu   d3, (0xe, a0)                   # +0xE: height
+    mov     (0x44, sp), a1
+    mov     a1, (0x10, a0)                  # +0x10: palette
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSPFast256_Return:
+    ret     [d2,d3,a2,a3], 0x2c
+
+# DrawBitmapSPFast256_QueuedExec  (CPU 0x484247e1)
+#   DrawBitmapSPFast256_QueuedExec(a0 = record): called by the draw task for
+#   a record DrawBitmapSPFast256 queued; draws it if DrawEnable is still set.
+DrawBitmapSPFast256_QueuedExec:
+    movm    [d2,a2], (sp)
+    add     -0x1c, sp
+    mov     (DrawEnable), d1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a1                     # a1 = record.pixels
+    movhu   (0xc, a0), d0                   # d0 = record.width
+    movhu   (0xe, a0), d2                   # d2 = record.height
+    mov     (0x10, a0), a0                  # a0 = record.palette
+    cmp     0, d1
+    beq     DrawBitmapSPFast256_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a0, (0x18, sp)                  # palette: the Impl's 5th argument
+    exth    d0
+    exth    d2
+    mov     d2, d1
+    mov     a2, a0
+    call    DrawBitmapSPFast256_Impl_entry, [d2,d3,a2,a3], 0x3c
+
+DrawBitmapSPFast256_QueuedExec_Return:
+    ret     [d2,a2], 0x24
+
+# DrawBitmapSPFast256_Impl  (CPU 0x4842480c)
+#   DrawBitmapSPFast256_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+#   palette = 5th argument at the caller's (0x18,sp)): the blit. A top-left
+#   corner off the screen draws nothing (no palette load, no dirty rect).
+#   First it sets palette entries 0x20..0xCF to palette[0x20..0xCF] with
+#   SetPaletteRGB, every one, whether changed or not: palette is indexed by
+#   colour index, so it must span at least 0xD0 words, and entries 0x00..0x1F
+#   and 0xD0..0xFF are left alone. (SetPaletteRGB dims indices 0x20..0xDF to
+#   77/100 per component in its RGB565 copy at 0x50122ABC.) Then it copies
+#   each row into FrameBuffer with LibMemCopy (memcpy, called at its library
+#   address 0x4C003039): pixel values go in unchanged (nothing keeps them
+#   inside 0x20..0xCF) and 0xF7 is not transparent. Source rows are padded to
+#   an even width. A row at y >= 240 ends the copy, but nothing clips
+#   horizontally. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+#   SetChangeRect.
+DrawBitmapSPFast256_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x2c, sp
+
+DrawBitmapSPFast256_Impl_entry:
+    mov     a1, a3                          # a3 = source
+    movhu   d0, (0x4c, sp)                  # (0x4c,sp) = width
+    movhu   d1, (0x50, sp)                  # (0x50,sp) = height
+    mov     a0, (0x44, sp)                  # (0x44,sp) = &point
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSPFast256_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x3c             # top-left corner off the screen
+
+    # Set palette entries 0x20..0xCF from the same entries of palette, unconditionally.
+DrawBitmapSPFast256_Impl_OnScreen:
+    mov     0x20, d0
+    mov     d0, d2                          # d2 = d0 = colour index, from 0x20
+
+DrawBitmapSPFast256_Impl_PaletteLoop:
+    mov     (0x54, sp), a0
+    mov     d0, d1
+    exthu   d1
+    asl2    d1
+    mov     (d1, a0), d1                    # d1 = palette[index]
+    exth    d0
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # SetPaletteRGB(index, palette[index])
+    inc     d2
+    mov     d2, d0
+    exthu   d2
+    cmp     0xd0, d2
+    blt     DrawBitmapSPFast256_Impl_PaletteLoop  # next while index < 0xD0
+    mov     (0x44, sp), d0
+    mov     (0x44, sp), a0
+    add     2, d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &point.y
+    movhu   (a0), d1                        # d1 = x
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     (0x20, sp), a0
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     d0, a2                          # a2 = dest = FrameBuffer + y*640 + x
+    movhu   (0x50, sp), d0
+    movhu   (a0), d2                        # d2 = y of the current row
+    exth    d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = height
+    clr     d3                              # d3 = row
+    cmp     d3, d0
+    ble     DrawBitmapSPFast256_Impl_Dirty  # height <= 0
+    movhu   (0x4c, sp), d0
+    mov     2, d1
+    exth    d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = width: bytes per row
+    movhu   (0x4c, sp), d0
+    exth    d0
+    inc     d0
+    call    LibDiv32, 0, 0
+    mov     d0, a0
+    add     a0, a0
+    mov     a0, (0x14, sp)                  # (0x14,sp) = source stride: width rounded up to even
+
+DrawBitmapSPFast256_Impl_RowLoop:
+    exthu   d2
+    cmp     0xf0, d2
+    bge     DrawBitmapSPFast256_Impl_Dirty  # y >= 240: below the screen, stop
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x1c, sp), d0
+    call    memcpy_entry, [a2,a3], 8        # LibMemCopy(dest, src, width): copy one row
+    mov     (0x14, sp), d0
+    add     0x280, a2                       # next framebuffer row
+    add     d0, a3                          # next source row
+    mov     (0x18, sp), d0
+    inc     d2
+    inc     d3
+    exthu   d3
+    cmp     d0, d3
+    blt     DrawBitmapSPFast256_Impl_RowLoop  # next row while row < height
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapSPFast256_Impl_Dirty:
+    mov     (0x20, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x26, sp)                  # rect.top = y
+    mov     (0x44, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x24, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x4c, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x28, sp)                  # rect.right = x + width - 1
+    mov     (0x20, sp), a0
+    mov     (0x18, sp), d1
+    movhu   (a0), d0
+    mov     sp, a0
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x2a, sp)                  # rect.bottom = y + height - 1
+    add     0x24, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x3c
+
+# DrawBitmapSP2  (CPU 0x484248de)
+#   DrawBitmapSP2(a0 = &point {s16 x, s16 y}, a1 = 1-bpp bits, d0 = width,
+#   d1 = height, fg colour at the caller's (0x18,sp), bg colour at its (0x1c,sp)):
+#   draws a monochrome bitmap with its top-left corner at the point, 1 bits in
+#   fg and 0 bits in bg (nothing is transparent). On the draw task it draws at
+#   once (if DrawEnable is set); on any other task it queues a 20-byte record
+#   {DrawBitmapSP2_QueuedExec, s16 x, s16 y, bits, s16 width, s16 height, u16 fg,
+#   u16 bg} for the draw task instead. Only the pointer to the bits is queued, so
+#   they must stay valid until the draw task runs. Width and height are used as
+#   s16 (sign-extended, compared signed).
+DrawBitmapSP2:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+
+DrawBitmapSP2_entry:
+    mov     a1, a3                          # a3 = bits
+    mov     a0, a2                          # a2 = &point
+    mov     d1, d3                          # d3 = height
+    mov     d0, d2                          # d2 = width
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapSP2_Deferred          # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapSP2_Return            # drawing disabled
+    movhu   (0x48, sp), d0                  # fg: (0x48,sp) is the caller's (0x18,sp)
+    exth    d2
+    exth    d0
+    mov     d0, (0x18, sp)                  # pass fg on in the outgoing (0x18,sp)
+    movhu   (0x4c, sp), d0                  # bg: the caller's (0x1c,sp)
+    exth    d3
+    exth    d0
+    mov     d0, (0x1c, sp)                  # pass bg on in the outgoing (0x1c,sp)
+    mov     d3, d1
+    mov     d2, d0
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44  # draw now
+    bra     DrawBitmapSP2_Return
+
+DrawBitmapSP2_Deferred:
+    mov     0x14, d0                        # 20-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapSP2_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: bits (the pointer only)
+    movhu   d2, (0xc, a0)                   # +0xC: width
+    movhu   d3, (0xe, a0)                   # +0xE: height
+    movhu   (0x48, sp), d0
+    movhu   d0, (0x10, a0)                  # +0x10: fg colour
+    movhu   (0x4c, sp), d0
+    movhu   d0, (0x12, a0)                  # +0x12: bg colour
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapSP2_Return:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawBitmapSP2_QueuedExec  (CPU 0x4842494a)
+#   DrawBitmapSP2_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmapSP2 queued; draws it if DrawEnable is still set.
+DrawBitmapSP2_QueuedExec:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    movhu   (0xe, a0), d0                   # d0 = record.height
+    mov     a0, a1
+    inc4    a1                              # a1 = &record.point
+    mov     (8, a0), a2                     # a2 = record.bits
+    movhu   (0xc, a0), d3                   # d3 = record.width
+    mov     d0, a3                          # a3 = height
+    mov     (DrawEnable), d0
+    movhu   (0x10, a0), d1                  # d1 = record.fg
+    movhu   (0x12, a0), d2                  # d2 = record.bg
+    cmp     0, d0
+    beq     DrawBitmapSP2_QueuedExec_Return  # drawing disabled meanwhile
+    exth    d1
+    mov     d1, (0x18, sp)                  # fg in the outgoing (0x18,sp)
+    exth    d2
+    mov     d2, (0x1c, sp)                  # bg in the outgoing (0x1c,sp)
+    mov     a1, a0
+    exth    d3
+    mov     a3, d1
+    exth    d1
+    mov     d3, d0
+    mov     a2, a1
+    call    DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44
+
+DrawBitmapSP2_QueuedExec_Return:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawBitmapSP2_Impl  (CPU 0x48424981)
+#   DrawBitmapSP2_Impl(a0 = &point, a1 = bits, d0 = width, d1 = height, fg and
+#   bg at the caller's (0x18,sp) and (0x1c,sp)): the blit. A top-left corner off
+#   the screen draws nothing and marks nothing dirty. Rows run top-down, each
+#   (width + 15) / 16 16-bit words; every word is byte-swapped, so in memory a
+#   row is plain MSB-first 1 bpp (bit 7 of the first byte is the leftmost pixel)
+#   padded to an even byte count. A 1 bit stores the low byte of fg, a 0 bit the
+#   low byte of bg. A row at y >= 240 ends the copy, but nothing clips
+#   horizontally: a bitmap wider than 640 - x runs on into the next framebuffer
+#   row. Ends by marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect. (The
+#   KN5000 DrawBitmapSP2_Impl differs: it draws the rows bottom-up and leaves 0
+#   bits transparent.)
+DrawBitmapSP2_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x34, sp
+
+DrawBitmapSP2_Impl_entry:
+    mov     a1, (0x50, sp)                  # (0x50,sp) = bits
+    movhu   d0, (0x54, sp)                  # (0x54,sp) = width
+    mov     d1, d2                          # d2 = height
+    mov     a0, (0x4c, sp)                  # (0x4c,sp) = &point
+    call    IsPointOnScreen, 0, 0
+    cmp     0, d0
+    bne     DrawBitmapSP2_Impl_OnScreen
+    ret     [d2,d3,a2,a3], 0x44             # top-left corner off the screen
+
+DrawBitmapSP2_Impl_OnScreen:
+    clr     d0
+    mov     d0, (0x10, sp)                  # (0x10,sp) = row = 0
+    exth    d2
+    mov     d2, (0x18, sp)                  # (0x18,sp) = height
+    cmp     0, d2
+    bgt     DrawBitmapSP2_Impl_HaveRows
+    jmp     DrawBitmapSP2_Impl_Dirty        # height <= 0
+
+DrawBitmapSP2_Impl_HaveRows:
+    movhu   (0x54, sp), d0
+    exth    d0
+    mov     d0, (0x14, sp)                  # (0x14,sp) = width
+    add     0xf, d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = width + 15
+    mov     (0x4c, sp), d0
+    add     2, d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &point.y
+    mov     (0x14, sp), d0
+    add     0xf, d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = width + 15 (again)
+
+DrawBitmapSP2_Impl_RowLoop:
+    mov     (0x20, sp), a0
+    mov     (0x10, sp), d1
+    movhu   (a0), d0
+    exth    d0
+    add     d1, d0
+    movhu   d0, (0x2a, sp)                  # y = point.y + row
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawBitmapSP2_Impl_RowOnScreen
+    jmp     DrawBitmapSP2_Impl_Dirty        # y >= 240: below the screen, stop
+
+DrawBitmapSP2_Impl_RowOnScreen:
+    mov     (0x4c, sp), a0
+    movhu   (0x2a, sp), d0
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     FrameBuffer, d0
+    add     d1, d0
+    mov     d0, a2                          # a2 = FrameBuffer + y*640 + x
+    mov     (0x24, sp), d0
+    mov     0, a3                           # a3 = word index
+    mov     0x10, d1
+    call    LibDiv32, 0, 0                  # d0 = (width + 15) / 16: words per row
+    cmp     0, d0
+    ble     DrawBitmapSP2_Impl_NextRow      # width <= 0: nothing in this row
+    mov     (0x1c, sp), d0
+    mov     0x10, d1
+    call    LibDiv32, 0, 0
+    mov     d0, a1                          # a1 = words per row (divided again)
+
+DrawBitmapSP2_Impl_WordLoop:
+    mov     (0x50, sp), a0
+    mov     a3, d0
+    movhu   (a0), d2
+    movhu   (a0), d1
+    asl     4, d0
+    mov     d0, a0                          # a0 = column of the word's first pixel
+    asr     8, d2
+    and     0xff, d2
+    exthu   d2
+    and     0xff, d1
+    asl     8, d1
+    add     d1, d2
+    exthu   d2                              # d2 = the word byte-swapped: bit 15 is the first byte's bit 7
+    clr     d3                              # d3 = bit
+    # Draw the word's 16 pixels, leftmost first; hardware loop (setlb .. llt).
+    setlb
+    mov     (0x14, sp), d1
+    mov     a0, d0
+    add     d3, d0
+    cmp     d1, d0
+    bge     DrawBitmapSP2_Impl_NextWord     # column >= width: the rest of the word is padding
+    mov     0xf, d0
+    sub     d3, d0
+    mov     1, d1
+    asl     d0, d1
+    mov     d1, d0
+    exthu   d0
+    and     d2, d0                          # test bit 15 - d3: the leftmost pixel first
+    beq     DrawBitmapSP2_Impl_ZeroBit
+    movhu   (0x5c, sp), d0
+    movbu   d0, (a2)                        # 1: fg colour
+    bra     DrawBitmapSP2_Impl_NextPixel
+
+DrawBitmapSP2_Impl_ZeroBit:
+    movhu   (0x60, sp), d0
+    movbu   d0, (a2)                        # 0: bg colour
+
+DrawBitmapSP2_Impl_NextPixel:
+    inc     a2
+    inc     d3
+    exthu   d3
+    cmp     0x10, d3
+    llt                                     # next bit while bit < 16
+
+DrawBitmapSP2_Impl_NextWord:
+    mov     (0x50, sp), d0
+    add     2, d0
+    mov     d0, (0x50, sp)                  # bits += 2
+    mov     a3, d0
+    inc     d0
+    exthu   d0
+    mov     d0, a3
+    cmp     a1, a3
+    blt     DrawBitmapSP2_Impl_WordLoop     # next word while word < words per row
+
+DrawBitmapSP2_Impl_NextRow:
+    mov     (0x10, sp), d0
+    mov     (0x18, sp), d1
+    inc     d0
+    exthu   d0
+    mov     d0, (0x10, sp)
+    cmp     d1, d0
+    bge     DrawBitmapSP2_Impl_Dirty        # row >= height: done
+    jmp     DrawBitmapSP2_Impl_RowLoop      # next row
+
+    # Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+DrawBitmapSP2_Impl_Dirty:
+    mov     (0x4c, sp), a1
+    add     2, a1
+    movhu   (a1), d0
+    movhu   d0, (0x2e, sp)                  # rect.top = y
+    mov     (0x4c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x2c, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x30, sp)                  # rect.right = x + width - 1
+    movhu   (a1), d0
+    mov     (0x18, sp), d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x32, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x2c, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,d3,a2,a3], 0x44
+
+# DrawBitmapFile  (CPU 0x48424a9f)
+#   DrawBitmapFile(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+#   draws an uncompressed Windows BMP (1, 4 or 8 bpp) with its top-left corner at
+#   the point and loads its colours into palette entries 0x20..0xCF. On the draw
+#   task it draws at once (if DrawEnable is set); on any other task it queues a
+#   12-byte record {DrawBitmapFile_QueuedExec, s16 x, s16 y, file} for the draw
+#   task instead. Only the pointer to the file is queued, so it must stay valid
+#   until the draw task runs.
+DrawBitmapFile:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+
+DrawBitmapFile_entry:
+    mov     a1, a3                          # a3 = BMP file
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapFile_Deferred         # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapFile_Return           # drawing disabled
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFile_Impl_entry, [d2,d3,a2,a3], 0x10  # draw now
+    bra     DrawBitmapFile_Return
+
+DrawBitmapFile_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapFile_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: the file (the pointer only)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapFile_Return:
+    ret     [a2,a3], 0x18
+
+# DrawBitmapFile_QueuedExec  (CPU 0x48424ae7)
+#   DrawBitmapFile_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmapFile queued; draws it if DrawEnable is still set.
+DrawBitmapFile_QueuedExec:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (DrawEnable), a1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a3                     # a3 = record.file
+    cmp     0, a1
+    beq     DrawBitmapFile_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFile_Impl_entry, [d2,d3,a2,a3], 0x10
+
+DrawBitmapFile_QueuedExec_Return:
+    ret     [a2,a3], 0x18
+
+# DrawBitmapFile_Impl  (CPU 0x48424b05)
+#   DrawBitmapFile_Impl(a0 = &point, a1 = BMP file image): the blit.
+#   GetBitmapInfo checks the file ("BM", 40-byte BITMAPINFOHEADER, 1 plane,
+#   1/4/8 bpp, BI_RGB, biClrUsed <= 256) and copies its headers, plus the
+#   bfOffBits - 54 bytes before the pixels (the palette, at most 1 KB), to the
+#   stack; a file it rejects changes nothing. Each file row (bottom-up, padded
+#   to a multiple of 4 bytes) is copied into a malloc'd row buffer (never
+#   checked for NULL), unpacked to one byte per pixel (1 and 4 bpp MSB-first),
+#   offset by +0x20 and memcpy'd into FrameBuffer. Only the low 16 bits of
+#   biWidth/biHeight count; a negative (top-down) height draws no rows. The
+#   height is clipped to 240 - y by dropping the image's bottom rows; nothing
+#   else is: no on-screen test, y < 0 writes above FrameBuffer, and a row wider
+#   than 640 - x runs on into the next framebuffer row. Then palette entries
+#   0x20..0xCF are set from the file's colours 0..0xAF (RGBQUAD {B,G,R,x} ->
+#   0x00BBGGRR). It always sets all 176: a shorter palette fills the rest from
+#   stale stack bytes, and an 8-bpp index above 0xAF lands outside them
+#   (0xD0..0xFF, where 0xDx bytes are picture pixels, or wraps to 0x00..0x1F).
+#   Ends by marking {x, y, x+biWidth-1, y+biHeight-1} dirty (not clipped).
+DrawBitmapFile_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+
+    # Frame: (0x38,sp) = next file row, sp+0x3C = palette copy (1 KB), sp+0x43C = the
+    # file header, sp+0x44C = the BITMAPINFOHEADER (biWidth at 0x450, biHeight at 0x454,
+    # biBitCount at 0x45A), sp+0x474 = the dirty rectangle, (0x494,sp) = &point.
+DrawBitmapFile_Impl_entry:
+    add     -0x47c, sp                      # the frame: too big for call's frame byte
+    mov     a0, (0x494, sp)                 # (0x494,sp) = &point
+    mov     sp, a0
+    mov     a0, d0
+    add     0x3c, d0
+    mov     d0, (0x30, sp)                  # (0x30,sp) = &palette copy
+    mov     a0, d0
+    add     0x38, d0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = sp+0x38: GetBitmapInfo's 5th arg, gets &pixels
+    mov     a1, a0                          # a0 = the file
+    mov     sp, a1
+    add     0x43c, a1                       # a1 = file header out
+    mov     sp, a2
+    mov     a2, d0
+    add     0x44c, d0                       # d0 = BITMAPINFOHEADER out
+    mov     (0x30, sp), d1                  # d1 = palette out
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24  # -> d0 = 0 if the file is not a usable BMP
+    cmp     0, d0
+    bne     DrawBitmapFile_Impl_Valid
+    jmp     DrawBitmapFile_Impl_Return      # rejected: draw nothing
+
+DrawBitmapFile_Impl_Valid:
+    mov     (0x450, sp), d0
+    mov     1, d3
+    movhu   d0, (0x36, sp)                  # (0x36,sp) = biWidth
+    movhu   (0x454, sp), d0
+    movhu   (0x45a, sp), d1
+    mov     d0, a2                          # a2 = biHeight
+    mov     8, d0
+    call    LibDiv32, 0, 0                  # 8 / biBitCount
+    mov     d0, d2                          # d2 = ppb, pixels per byte (1, 2 or 8)
+    movhu   (0x36, sp), d0
+    exth    d2
+    exth    d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = width
+    mov     d0, d1
+    mov     d2, d0
+    asl2    d0
+    sub     d3, d0
+    add     d0, d1                          # d1 = width + 4*ppb - 1
+    mov     d2, d0
+    asl2    d0
+    clr     d3
+    mov     d3, mdr
+    divu    d0, d1                          # / (4*ppb)
+    asl2    d1                              # * 4: the file's row stride in bytes, padded to 4
+    movhu   d1, (0x34, sp)                  # (0x34,sp) = stride
+    movhu   (0x34, sp), d0
+    mov     0xf0, d3                        # d3 = 240, the screen height
+    exth    d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = stride
+    nop
+    nop
+    mul     d2, d0                          # stride * pixels per byte: one unpacked row
+    call    Malloc_entry, [d2,a2,a3], 0x28  # malloc(d0 bytes) -> a0
+    mov     (0x494, sp), d0
+    mov     a0, a3                          # a3 = row buffer (not checked for NULL)
+    add     2, d0
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = &point.y
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     a2, d2
+    exth    d2
+    exth    d0
+    mov     d3, d1
+    sub     d0, d1                          # d1 = 240 - y: rows left on the screen
+    cmp     d1, d2
+    ble     DrawBitmapFile_Impl_RowSetup    # it fits: draw every row
+    # Too tall: skip the first height - (240 - y) file rows, which are the image's
+    # bottom rows, since BMP rows run bottom-up.
+    movhu   (a0), d0
+    clr     d1
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    mov     a0, d0
+    mov     d2, a0
+    sub     d0, a0
+    cmp     d1, a0
+    ble     DrawBitmapFile_Impl_ClipHeight  # never taken: height > 240 - y here
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    sub     a0, d2                          # d2 = rows to skip
+    # Skip them; the hardware loop (setlb .. llt) repeats from the next instruction.
+    setlb
+    mov     (0x1c, sp), a0
+    mov     (0x38, sp), d0
+    inc     d1
+    add     a0, d0
+    mov     d0, (0x38, sp)                  # next file row += stride
+    exth    d1
+    cmp     d2, d1
+    llt                                     # while skipped < rows to skip
+
+DrawBitmapFile_Impl_ClipHeight:
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    sub     d0, d3
+    mov     d3, a2                          # a2 = 240 - y: rows to draw
+
+DrawBitmapFile_Impl_RowSetup:
+    movhu   (a0), d0
+    mov     (0x494, sp), a0
+    exth    d0
+    movhu   (a0), d2
+    mov     a2, d3                          # d3 = rows to draw
+    exth    d3
+    exth    d2
+    add     d3, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     FrameBuffer, d0
+    add     -0x280, d0
+    add     d2, d0
+    mov     d0, a2                          # a2 = FrameBuffer + (y + rows - 1)*640 + x: the bottom row
+    clr     d2                              # d2 = row
+    cmp     d2, d3
+    ble     DrawBitmapFile_Impl_RowsDone    # no rows (y >= 240, or height <= 0)
+    movhu   (0x34, sp), d0
+    exth    d0
+    mov     d0, (0x28, sp)                  # (0x28,sp) = stride
+    movhu   (0x36, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = width
+
+DrawBitmapFile_Impl_RowLoop:
+    mov     a3, a0
+    mov     (0x38, sp), a1
+    mov     (0x28, sp), d0
+    call    memcpy_entry, [a2,a3], 8        # memcpy(row buffer, file row, stride)
+    movhu   (0x45a, sp), d1                 # d1 = biBitCount
+    mov     a3, a0
+    mov     (0x1c, sp), d0
+    call    BmpUnpackRow_entry, [d2,d3,a2,a3], 0x30  # unpack in place to one byte per pixel (8 bpp: left as is)
+    mov     (0x20, sp), d0
+    clr     d1
+    cmp     d1, d0
+    ble     DrawBitmapFile_Impl_CopyRow     # width <= 0
+    # Move every pixel up to the palette entries this bitmap loads; hardware loop.
+    setlb
+    movbu   (d1, a3), d0
+    add     0x20, d0                        # BMP index n -> colour 0x20 + n
+    movbu   d0, (d1, a3)
+    mov     (0x20, sp), d0
+    inc     d1
+    exth    d1
+    cmp     d0, d1
+    llt                                     # next pixel while i < width
+
+DrawBitmapFile_Impl_CopyRow:
+    mov     a2, a0
+    mov     a3, a1
+    mov     (0x24, sp), d0
+    call    memcpy_entry, [a2,a3], 8        # memcpy(dest, row buffer, width): width is not clipped
+    mov     (0x38, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d2
+    add     d1, d0
+    mov     d0, (0x38, sp)                  # next file row += stride
+    exth    d2
+    mov     0x280, d0
+    sub     d0, a2                          # dest one framebuffer row up
+    cmp     d3, d2
+    blt     DrawBitmapFile_Impl_RowLoop     # next row while row < rows to draw
+
+DrawBitmapFile_Impl_RowsDone:
+    mov     a3, a0
+    call    Free_entry, [d2,d3,a2,a3], 0x2c  # free(a0): the row buffer
+    mov     0x20, d3                        # d3 = palette entry, from 0x20
+
+    # Set entries 0x20..0xCF from the file's colours 0..0xAF.
+DrawBitmapFile_Impl_PaletteLoop:
+    mov     (0x30, sp), d1
+    mov     (0x30, sp), d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    movbu   (-0x80, a0), d0                 # blue = palette copy[(d3 - 0x20)*4 + 0]
+    mov     d3, d1
+    asl2    d1
+    add     d2, d1
+    add     -0x80, d1
+    mov     d1, a0
+    movbu   (1, a0), d2                     # green: byte +1
+    mov     (0x30, sp), d1
+    asl     8, d0
+    add     d0, d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    add     -0x80, d0
+    mov     d0, a0
+    movbu   (2, a0), d1                     # red: byte +2
+    asl     8, d2
+    mov     d3, d0
+    add     d2, d1                          # d1 = 0x00BBGGRR
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # SetPaletteRGB(d0 = entry, d1 = colour)
+    inc     d3
+    exth    d3
+    cmp     0xd0, d3
+    blt     DrawBitmapFile_Impl_PaletteLoop  # next entry while < 0xD0: always 176 of them
+    # Mark the rectangle dirty for the LCD update, sized by the header (not clipped).
+    mov     (0x2c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x476, sp)                 # rect.top = y
+    mov     (0x494, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x474, sp)                 # rect.left = x
+    movhu   (a0), d1
+    mov     (0x450, sp), d0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x478, sp)                 # rect.right = x + biWidth - 1
+    mov     (0x2c, sp), a0
+    mov     (0x454, sp), d0
+    movhu   (a0), d1
+    mov     sp, a0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x47a, sp)                 # rect.bottom = y + biHeight - 1
+    add     0x474, a0
+    call    SetChangeRect, 0, 0
+
+DrawBitmapFile_Impl_Return:
+    add     0x47c, sp                       # drop the 0x47C-byte frame
+    ret     [d2,d3,a2,a3], 0x10
+
+# DrawBitmapFileEx  (CPU 0x48424cc8)
+#   DrawBitmapFileEx(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+#   the front end of DrawBitmapFileEx_Impl, the same as DrawBitmapFile's. On the
+#   draw task it runs the Impl at once (if DrawEnable is set); on any other task
+#   it queues a 12-byte record {DrawBitmapFileEx_QueuedExec, s16 x, s16 y, file}.
+#   Only the pointer is queued, so the file must stay in memory until the draw
+#   task runs. Nothing calls it directly (builds 941 and 942): its only reference
+#   is the MILK reflection table entry at 0x4872871C, so no _entry is named.
+DrawBitmapFileEx:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     a1, a3                          # a3 = BMP file image
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawBitmapFileEx_Deferred       # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawBitmapFileEx_Return         # drawing disabled
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFileEx_Impl_entry, [d2,d3,a2,a3], 0x10  # draw now
+    bra     DrawBitmapFileEx_Return
+
+DrawBitmapFileEx_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawBitmapFileEx_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: file image (the pointer only)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawBitmapFileEx_Return:
+    ret     [a2,a3], 0x18
+
+# DrawBitmapFileEx_QueuedExec  (CPU 0x48424d10)
+#   DrawBitmapFileEx_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawBitmapFileEx queued; runs DrawBitmapFileEx_Impl if DrawEnable is still set.
+DrawBitmapFileEx_QueuedExec:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (DrawEnable), a1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a3                     # a3 = record.file
+    cmp     0, a1
+    beq     DrawBitmapFileEx_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawBitmapFileEx_Impl_entry, [d2,d3,a2,a3], 0x10
+
+DrawBitmapFileEx_QueuedExec_Return:
+    ret     [a2,a3], 0x18
+
+# DrawBitmapFileEx_Impl  (CPU 0x48424d2e)
+#   DrawBitmapFileEx_Impl(a0 = &point, a1 = BMP file image): DrawBitmapFile_Impl
+#   without the blit. GetBitmapInfo checks the file ("BM", 40-byte info header,
+#   1 plane, 1/4/8 bpp, uncompressed, <= 256 colours) and copies its headers and
+#   up to 1 KB of colour table to the stack; a bad file returns at once. Rows that
+#   would land at y >= 240 are skipped (BMP rows are stored bottom-up, 4-byte
+#   padded); each remaining row is unpacked to one byte per pixel in a heap buffer
+#   and offset by 0x20 -- and then dropped: unlike DrawBitmapFile_Impl it never
+#   copies a row to FrameBuffer. So the only effects are the palette load and the
+#   dirty mark: CLUT entries 0x20..0xCF are set from colour-table entries 0..0xAF
+#   (SetPaletteRGB, 0x00BBGGRR) -- all 176, even when the file's table is
+#   shorter, in which case the rest come from uninitialised stack -- then
+#   {x, y, x+w-1, y+h-1} (the file's size, unclipped) goes to SetChangeRect.
+#   The row buffer (Malloc) is not checked for NULL.
+DrawBitmapFileEx_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+
+DrawBitmapFileEx_Impl_entry:
+    add     -0x474, sp                      # rest of the 0x484-byte frame (too big for the call's frame byte)
+    mov     a0, (0x48c, sp)                 # (0x48c,sp) = &point
+    mov     sp, a0
+    mov     a0, d0
+    add     0x34, d0
+    mov     d0, (0x28, sp)                  # (0x28,sp) = colour table copy at sp+0x34: 256 x {B, G, R, x}
+    mov     a0, d0
+    add     0x30, d0
+    mov     d0, (0x18, sp)                  # 5th argument: where to put the pixel-data pointer (sp+0x30)
+    mov     a1, a0                          # a0 = file image
+    mov     sp, a1
+    add     0x434, a1                       # a1 = file header copy at sp+0x434
+    mov     sp, a2
+    mov     a2, d0
+    add     0x444, d0                       # d0 = info header copy at sp+0x444 (BITMAPINFOHEADER)
+    mov     (0x28, sp), d1                  # d1 = colour table
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
+    cmp     0, d0
+    bne     DrawBitmapFileEx_Impl_HaveInfo
+    jmp     DrawBitmapFileEx_Impl_Return    # not a usable BMP
+
+DrawBitmapFileEx_Impl_HaveInfo:
+    movhu   (0x448, sp), d2                 # d2 = biWidth
+    movhu   (0x44c, sp), d0                 # d0 = biHeight
+    movhu   (0x452, sp), d1                 # d1 = biBitCount (1, 4 or 8)
+    exth    d2
+    mov     1, d3
+    mov     d0, a3                          # a3 = rows to decode
+    mov     8, d0
+    call    LibDiv32, 0, 0                  # d0 = 8 / bpp: pixels per byte
+    mov     d2, (0x20, sp)                  # (0x20,sp) = width
+    mov     (0x20, sp), d1
+    mov     d0, d2
+    exth    d2
+    mov     d2, d0
+    asl2    d0
+    sub     d3, d0
+    add     d0, d1
+    mov     d2, d0
+    asl2    d0
+    clr     d3
+    mov     d3, mdr
+    divu    d0, d1
+    asl2    d1
+    movhu   d1, (0x2c, sp)                  # (0x2c,sp) = stride: bytes per file row, rounded up to 4
+    movhu   (0x2c, sp), d0
+    mov     0xf0, d3                        # d3 = 240, the screen height
+    exth    d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = stride
+    nop
+    nop
+    mul     d2, d0                          # stride * pixels per byte: a row at one byte per pixel
+    call    Malloc_entry, [d2,a2,a3], 0x28  # a0 = heap row buffer (malloc)
+    mov     (0x48c, sp), d0
+    mov     a0, a2                          # a2 = row buffer
+    add     2, d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = &point.y
+    mov     d0, a0
+    movhu   (a0), d0
+    mov     a3, d2
+    exth    d2
+    exth    d0
+    mov     d3, d1
+    sub     d0, d1                          # d1 = 240 - y: rows left on the screen
+    cmp     d1, d2
+    ble     DrawBitmapFileEx_Impl_Decode    # fits
+    # Too tall: the first rows of pixel data are the picture's bottom rows, the ones
+    # below the screen; skip them and keep 240 - y rows.
+    movhu   (a0), d0
+    clr     d1
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    mov     a0, d0
+    mov     d2, a0
+    sub     d0, a0                          # a0 = rows below the screen
+    cmp     d1, a0
+    ble     DrawBitmapFileEx_Impl_ClipHeight  # never taken: rows > 240 - y here
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    mov     0xf0, a0
+    exth    d0
+    sub     d0, a0
+    sub     a0, d2                          # d2 = rows to skip
+    # setlb .. llt: step the pixel-data pointer over one row per pass.
+    setlb
+    mov     (0x1c, sp), a0
+    mov     (0x30, sp), d0
+    inc     d1
+    add     a0, d0
+    mov     d0, (0x30, sp)
+    exth    d1
+    cmp     d2, d1
+    llt
+
+DrawBitmapFileEx_Impl_ClipHeight:
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    sub     d0, d3
+    mov     d3, a3                          # a3 = 240 - y rows
+
+DrawBitmapFileEx_Impl_Decode:
+    clr     d2                              # d2 = row
+    mov     a3, d3
+    exth    d3
+    cmp     d2, d3
+    ble     DrawBitmapFileEx_Impl_FreeRow   # no rows
+    movhu   (0x2c, sp), d0
+    exth    d0
+    mov     d0, a3                          # a3 = stride
+
+DrawBitmapFileEx_Impl_RowLoop:
+    mov     a2, a0
+    mov     (0x30, sp), a1
+    mov     a3, d0
+    call    memcpy_entry, [a2,a3], 8        # memcpy(row buffer, pixel data, stride)
+    movhu   (0x452, sp), d1                 # d1 = bpp
+    mov     a2, a0
+    mov     (0x1c, sp), d0
+    call    BmpUnpackRow_entry, [d2,d3,a2,a3], 0x30  # unpack 1 or 4 bpp to one byte per pixel, in place
+    mov     (0x20, sp), d0
+    clr     d1
+    cmp     d1, d0
+    ble     DrawBitmapFileEx_Impl_NextRow   # width <= 0
+    # setlb .. llt: add 0x20 to each pixel, so BMP colour i is CLUT index 0x20 + i.
+    setlb
+    movbu   (d1, a2), d0
+    add     0x20, d0
+    movbu   d0, (d1, a2)
+    mov     (0x20, sp), d0
+    inc     d1
+    exth    d1
+    cmp     d0, d1
+    llt
+
+    # DrawBitmapFile_Impl copies the row into FrameBuffer at this point; this variant
+    # just moves on to the next one.
+DrawBitmapFileEx_Impl_NextRow:
+    mov     (0x30, sp), d0
+    mov     (0x1c, sp), d1
+    inc     d2
+    add     d1, d0
+    mov     d0, (0x30, sp)                  # pixel data += stride
+    exth    d2
+    cmp     d3, d2
+    blt     DrawBitmapFileEx_Impl_RowLoop   # next row while row < rows
+
+DrawBitmapFileEx_Impl_FreeRow:
+    mov     a2, a0
+    call    Free_entry, [d2,d3,a2,a3], 0x2c  # free the row buffer
+    mov     0x20, d3                        # d3 = CLUT index, 0x20..0xCF
+
+    # CLUT[d3] = colour table[d3 - 0x20] as 0x00BBGGRR.
+DrawBitmapFileEx_Impl_PaletteLoop:
+    mov     (0x28, sp), d1
+    mov     (0x28, sp), d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    mov     d0, a0
+    mov     -0x80, d1
+    movbu   (d1, a0), d1                    # blue
+    mov     d3, d0
+    asl2    d0
+    add     d2, d0
+    add     -0x80, d0
+    mov     d0, a0
+    movbu   (1, a0), d2                     # green
+    mov     0xffffff80, a0
+    mov     d1, d0
+    mov     (0x28, sp), d1
+    asl     8, d0
+    add     d0, d2
+    mov     d3, d0
+    asl2    d0
+    add     d1, d0
+    add     d0, a0
+    movbu   (2, a0), d1                     # red
+    asl     8, d2
+    mov     d3, d0
+    add     d2, d1
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # SetPaletteRGB(d0 = index, d1 = 0x00BBGGRR)
+    inc     d3
+    exth    d3
+    cmp     0xd0, d3
+    blt     DrawBitmapFileEx_Impl_PaletteLoop  # next index while < 0xD0
+    # Mark {x, y, x+biWidth-1, y+biHeight-1} dirty: the file's size, not the rows kept.
+    mov     (0x24, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x46e, sp)                 # rect.top = y
+    mov     (0x48c, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x46c, sp)                 # rect.left = x
+    movhu   (a0), d1
+    mov     (0x448, sp), d0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x470, sp)                 # rect.right = x + width - 1
+    mov     (0x24, sp), a0
+    mov     (0x44c, sp), d0
+    movhu   (a0), d1
+    mov     sp, a0
+    exth    d1
+    add     d0, d1
+    add     -1, d1
+    movhu   d1, (0x472, sp)                 # rect.bottom = y + height - 1
+    add     0x46c, a0
+    call    SetChangeRect, 0, 0
+
+DrawBitmapFileEx_Impl_Return:
+    add     0x474, sp
+    ret     [d2,d3,a2,a3], 0x10
+
+# DrawJpegFile  (CPU 0x48424ebd)
+#   DrawJpegFile(a0 = &point {s16 x, s16 y}, a1 = JPEG data in memory): draws the
+#   image with its top-left corner at the point, unclipped (see JpegDecodeBlit).
+#   On the draw task it runs JpegDecodeBlit (its Impl) at once if DrawEnable is
+#   set; on any other task it queues a 12-byte record {DrawJpegFile_QueuedExec,
+#   s16 x, s16 y, data}. Only the pointer is queued, so the data must stay in
+#   memory until the draw task runs. Callers: the view procs VwBitmapFileProc and
+#   VwJpegFileProc, OpeningFrameDraw (the boot splash, frames straight from the
+#   table ROM), AcDemoImageProc (0x4854E090), and the unnamed image drawer at
+#   0x4858055B, which tries its data as a BMP (GetBitmapInfo), then as a JPEG.
+DrawJpegFile:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+
+DrawJpegFile_entry:
+    mov     a1, a3                          # a3 = JPEG data
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawJpegFile_Deferred           # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawJpegFile_Return             # drawing disabled
+    mov     a3, a1
+    mov     a2, a0
+    call    JpegDecodeBlit_entry, [d2,a2,a3], 0x2c  # draw now
+    bra     DrawJpegFile_Return
+
+DrawJpegFile_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawJpegFile_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: JPEG data (the pointer only)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawJpegFile_Return:
+    ret     [a2,a3], 0x18
+
+# DrawJpegFile_QueuedExec  (CPU 0x48424f05)
+#   DrawJpegFile_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawJpegFile queued; runs JpegDecodeBlit if DrawEnable is still set.
+DrawJpegFile_QueuedExec:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (DrawEnable), a1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a3                     # a3 = record.data
+    cmp     0, a1
+    beq     DrawJpegFile_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a3, a1
+    mov     a2, a0
+    call    JpegDecodeBlit_entry, [d2,a2,a3], 0x2c
+
+DrawJpegFile_QueuedExec_Return:
+    ret     [a2,a3], 0x18
+
+# JpegDecodeBlit  (CPU 0x48424f23)
+#   JpegDecodeBlit(a0 = &point {s16 x, s16 y}, a1 = JPEG data): DrawJpegFile's
+#   Impl, also called by DrawJpegFileR_Impl. JpegSetup decodes the image straight
+#   into the screen planes with its top-left corner at the point (a negative x or
+#   y is clamped to 0 there); its result is ignored. JpegSetup's pixel writers
+#   (JpegPixelStore and its siblings) store direct-colour picture pixels, 0xD0|red4
+#   in FrameBuffer and green4<<4|blue4 in PICTURE_PLANE2, at (y + row)*640 + x +
+#   col with no clip: a picture wider than 640 - x wraps into the following rows,
+#   one taller than 240 - y runs off the end of each plane. No palette is loaded.
+#   GetJpegSize then reads the size from the SOF0 header,
+#   and {x, y, x+w-1, y+h-1} is marked dirty with the point as given; w = h = -1
+#   when there is no SOI or an unknown marker (e.g. SOF2) comes before SOF0.
+#   Nothing here tests DrawEnable (the callers do).
+#   Every caller enters at JpegDecodeBlit_entry with `call ..., [d2,a2,a3], 0x2c`;
+#   no code or pointer in the image uses the movm prologue here.
+JpegDecodeBlit:
+    movm    [d2,a2,a3], (sp)
+    add     -0x20, sp
+
+JpegDecodeBlit_entry:
+    mov     a0, a3                          # a3 = &point
+    movhu   (a3), d0                        # d0 = x
+    mov     2, d2
+    add     a3, d2
+    mov     d2, a0
+    movhu   (a0), d1                        # d1 = y (d2 = &point.y)
+    mov     a1, a2                          # a2 = JPEG data
+    exth    d0
+    exth    d1
+    mov     a2, a0
+    call    JpegSetup, 0, 0x4c              # decode into the screen at (x, y); the result is ignored
+    mov     sp, a1
+    add     0x14, a1                        # a1 = &width (sp+0x14)
+    mov     sp, a0
+    mov     a0, d0
+    add     0x16, d0                        # d0 = &height (sp+0x16)
+    mov     a2, a0
+    call    GetJpegSize_entry, [d2,d3,a2,a3], 0x10  # GetJpegSize: width, height from SOF0 (-1, -1 if none)
+    # Mark {x, y, x+w-1, y+h-1} dirty (the point as given, not clamped).
+    mov     d2, a0
+    movhu   (a0), d0
+    movhu   d0, (0x1a, sp)                  # rect.top = y
+    movhu   (a3), d0
+    movhu   d0, (0x18, sp)                  # rect.left = x
+    movhu   (a3), d1
+    movhu   (0x14, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x1c, sp)                  # rect.right = x + width - 1
+    movhu   (a0), d1
+    movhu   (0x16, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x1e, sp)                  # rect.bottom = y + height - 1
+    mov     sp, a0
+    add     0x18, a0
+    call    SetChangeRect, 0, 0
+    ret     [d2,a2,a3], 0x2c
+
+# DrawJpegFileR  (CPU 0x48424f7d)
+#   DrawJpegFileR(a0 = &point {s16 x, s16 y}, a1 = JPEG data): DrawJpegFile
+#   with rounded corners (see DrawJpegFileR_Impl). On the draw task it runs
+#   DrawJpegFileR_Impl at once if DrawEnable is set; on any other task it queues
+#   a 12-byte record {DrawJpegFileR_QueuedExec, x, y, data}. Only the pointer is
+#   queued, so the data must stay in memory until the draw task runs. Callers:
+#   AcRhyImageProc and AcSndImageProc, with JPEGs from the table ROM; it is also
+#   in the MILK reflection table (entry at 0x4872872C).
+DrawJpegFileR:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+
+DrawJpegFileR_entry:
+    mov     a1, a3                          # a3 = JPEG data
+    mov     a0, a2                          # a2 = &point
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawJpegFileR_Deferred          # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    beq     DrawJpegFileR_Return            # drawing disabled
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawJpegFileR_Impl_entry, [d2,d3,a2,a3], 0xb0  # draw now
+    bra     DrawJpegFileR_Return
+
+DrawJpegFileR_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     DrawJpegFileR_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
+    movhu   (a2), d0
+    mov     a0, a1
+    inc4    a1
+    movhu   d0, (a1)                        # +4: x
+    movhu   (2, a2), d0
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: JPEG data (the pointer only)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawJpegFileR_Return:
+    ret     [a2,a3], 0x18
+
+# DrawJpegFileR_QueuedExec  (CPU 0x48424fc5)
+#   DrawJpegFileR_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawJpegFileR queued; runs DrawJpegFileR_Impl if DrawEnable is still set.
+DrawJpegFileR_QueuedExec:
+    movm    [a2,a3], (sp)
+    add     -0x10, sp
+    mov     (DrawEnable), a1
+    mov     a0, a2
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a3                     # a3 = record.data
+    cmp     0, a1
+    beq     DrawJpegFileR_QueuedExec_Return  # drawing disabled meanwhile
+    mov     a3, a1
+    mov     a2, a0
+    call    DrawJpegFileR_Impl_entry, [d2,d3,a2,a3], 0xb0
+
+DrawJpegFileR_QueuedExec_Return:
+    ret     [a2,a3], 0x18
+
+# DrawJpegFileR_Impl  (CPU 0x48424fe3)
+#   DrawJpegFileR_Impl(a0 = &point, a1 = JPEG data): JpegDecodeBlit with rounded
+#   corners -- that is all the "R" adds: same arguments, no scaling, no clip
+#   region. From GetJpegSize's width and height it computes the s16 rectangle
+#   {x, y, right = x+w-1, bottom = y+h-1} at sp+0x58. At each of its four
+#   corners the 8 pixels of RoundCornerPixels (4 + 2 + 1 + 1 in the four rows
+#   nearest the corner, mirrored per corner) are saved from FrameBuffer and
+#   PICTURE_PLANE2 alike (both halves of a direct-colour pixel) into a 64-byte
+#   stack buffer at sp+0x60; JpegDecodeBlit then draws the picture and marks it
+#   dirty, and the saved bytes are written back, so the background shows through
+#   each corner. Nothing is clipped at any edge: a corner pixel is addressed as
+#   y*640 + x from the point as given. JpegSetup (inside JpegDecodeBlit) moves a
+#   negative x or y to 0 for the picture; the corners stay at the point as given.
+#   If GetJpegSize finds no size (w = h = -1), right = x-2 and bottom = y-2, so
+#   the top-right, bottom-left and bottom-right corners are saved and restored
+#   left of or above the point. Does not test DrawEnable (the callers do).
+DrawJpegFileR_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0xa0, sp
+
+DrawJpegFileR_Impl_entry:
+    mov     sp, a2
+    mov     a0, (0xb8, sp)                  # (0xb8,sp) = &point
+    mov     a1, (0xbc, sp)                  # (0xbc,sp) = JPEG data
+    mov     a1, a0
+    mov     sp, a1
+    add     0x54, a1                        # a1 = &width (sp+0x54)
+    mov     a2, d0
+    add     0x56, d0                        # d0 = &height (sp+0x56)
+    call    GetJpegSize_entry, [d2,d3,a2,a3], 0x10  # GetJpegSize: width, height from SOF0 (-1, -1 if none)
+    mov     (0xb8, sp), a1
+    clr     d3                              # d3 = mask index
+    add     2, a1                           # a1 = &point.y
+    movhu   (a1), d0
+    movhu   d0, (0x5a, sp)                  # rect.top = y
+    mov     (0xb8, sp), a0
+    movhu   (a0), d0
+    movhu   d0, (0x58, sp)                  # rect.left = x
+    movhu   (a0), d1
+    movhu   (0x54, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x5c, sp)                  # rect.right = x + width - 1
+    movhu   (a1), d1
+    movhu   (0x56, sp), d0
+    exth    d1
+    exth    d0
+    add     d1, d0
+    add     -1, d0
+    movhu   d0, (0x5e, sp)                  # rect.bottom = y + height - 1
+    movhu   (0x5a, sp), d0
+    mov     sp, a0
+    exth    d0
+    mov     d0, (0x50, sp)                  # (0x50,sp) = y
+    movhu   (0x58, sp), d0
+    mov     RoundCornerPixels, a1           # a1 = the corner mask
+    exth    d0
+    mov     d0, (0x4c, sp)                  # (0x4c,sp) = x
+    # Save buffers, 8 bytes each: FrameBuffer bytes at sp+0x60 (top-left), 0x68
+    # (top-right), 0x70 (bottom-left), 0x78 (bottom-right); PICTURE_PLANE2 bytes at
+    # sp+0x80, 0x88, 0x90, 0x98 in the same order. The pointers to them and the
+    # corner coordinates are cached in stack slots for the loop.
+    mov     a0, d0
+    add     0x60, d0
+    mov     d0, (0x18, sp)
+    add     8, d0
+    mov     d0, (0x40, sp)
+    mov     (0x18, sp), d0
+    mov     FrameBuffer, a3
+    add     0x10, d0
+    mov     d0, (0x48, sp)
+    mov     (0x18, sp), d0
+    mov     PICTURE_PLANE2, a2
+    add     0x18, d0
+    mov     d0, (0x44, sp)
+    mov     a0, d0
+    add     0x80, d0
+    mov     d0, (0x14, sp)
+    add     8, d0
+    mov     d0, (0x24, sp)
+    mov     (0x14, sp), d0
+    add     0x10, d0
+    mov     d0, (0x20, sp)
+    mov     (0x14, sp), d0
+    add     0x18, d0
+    mov     d0, (0x28, sp)
+    movhu   (0x5a, sp), d0
+    exth    d0
+    mov     d0, (0x38, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x34, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x30, sp)
+    movhu   (0x58, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x2c, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    # setlb .. llt: for mask entry d3 = 0..7, save the pixel at each corner.
+    setlb
+
+DrawJpegFileR_Impl_SaveCorners:
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d0                     # d0 = dy
+    mov     d3, d1
+    asl2    d1
+    movhu   (d1, a1), d1                    # d1 = dx
+    mov     (0x50, sp), d2
+    exth    d0
+    exth    d1
+    add     d2, d0
+    mov     (0x18, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    mov     (0x4c, sp), d1
+    add     d1, d0                          # top-left: (y + dy)*640 + x + dx
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)                    # save the FrameBuffer byte
+    movbu   (d0, a2), d0
+    mov     (0x14, sp), a0
+    movbu   d0, (d3, a0)                    # save the PICTURE_PLANE2 byte
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d1
+    exth    d2
+    asl2    d1
+    movhu   (d1, a1), d1
+    mov     (0x38, sp), d0
+    exth    d1
+    add     d0, d2
+    mov     0x280, d0
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x34, sp), d2
+    mov     (0x40, sp), a0
+    add     d2, d0
+    sub     d1, d0                          # top-right: (y + dy)*640 + right - dx
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x24, sp), a0
+    movbu   d0, (d3, a0)
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d0
+    exth    d2
+    asl2    d0
+    movhu   (d0, a1), d1
+    mov     (0x30, sp), d0
+    exth    d1
+    sub     d2, d0
+    mov     (0x48, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    add     d1, d0
+    mov     (0x3c, sp), d1
+    add     d1, d0                          # bottom-left: (bottom - dy)*640 + x + dx
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x20, sp), a0
+    movbu   d0, (d3, a0)
+    mov     d3, d0
+    asl2    d0
+    add     a1, d0
+    mov     d0, a0
+    movhu   (2, a0), d2
+    mov     d3, d0
+    exth    d2
+    asl2    d0
+    movhu   (d0, a1), d1
+    mov     (0x2c, sp), d0
+    exth    d1
+    sub     d2, d0
+    mov     (0x44, sp), a0
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x1c, sp), d2
+    add     d2, d0
+    sub     d1, d0                          # bottom-right: (bottom - dy)*640 + right - dx
+    movbu   (d0, a3), d1
+    movbu   d1, (d3, a0)
+    movbu   (d0, a2), d0
+    mov     (0x28, sp), a0
+    movbu   d0, (d3, a0)
+    inc     d3
+    exth    d3
+    cmp     8, d3
+    llt                                     # next mask entry while d3 < 8
+    mov     (0xb8, sp), a0
+    mov     (0xbc, sp), a1
+    call    JpegDecodeBlit_entry, [d2,a2,a3], 0x2c  # draw the picture (marks {x, y, right, bottom} dirty)
+    # The same buffers and coordinates again, cached in other slots for the restore loop.
+    movhu   (0x5a, sp), d0
+    mov     sp, a0
+    exth    d0
+    mov     d0, (0x44, sp)
+    movhu   (0x58, sp), d0
+    clr     d3                              # d3 = mask index
+    exth    d0
+    mov     d0, (0x50, sp)
+    mov     a0, d0
+    add     0x60, d0
+    mov     d0, (0x18, sp)
+    add     8, d0
+    mov     d0, (0x48, sp)
+    mov     (0x18, sp), d0
+    mov     RoundCornerPixels, a1           # a1 = the corner mask
+    add     0x10, d0
+    mov     d0, (0x4c, sp)
+    mov     (0x18, sp), d0
+    add     0x18, d0
+    mov     d0, (0x40, sp)
+    mov     a0, d0
+    add     0x80, d0
+    mov     d0, (0x14, sp)
+    add     8, d0
+    mov     d0, (0x28, sp)
+    mov     (0x14, sp), d0
+    add     0x10, d0
+    mov     d0, (0x2c, sp)
+    mov     (0x14, sp), d0
+    add     0x18, d0
+    mov     d0, (0x30, sp)
+    movhu   (0x5a, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x34, sp)
+    movhu   (0x58, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)
+    movhu   (0x5e, sp), d0
+    exth    d0
+    mov     d0, (0x38, sp)
+    movhu   (0x5c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)
+    # setlb .. llt: for mask entry d3 = 0..7, put the saved bytes back over the picture.
+    setlb
+
+DrawJpegFileR_Impl_RestoreCorners:
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1                     # d1 = dy
+    mov     d3, d0
+    exth    d1
+    mov     (0x18, sp), a0
+    asl2    d0
+    movhu   (d0, a1), d0                    # d0 = dx
+    mov     (0x44, sp), d2
+    exth    d0
+    add     d2, d1
+    mov     0x280, d2
+    nop
+    nop
+    mul     d2, d1
+    add     d0, d1
+    mov     (0x50, sp), d0
+    add     d0, d1                          # top-left: (y + dy)*640 + x + dx
+    movbu   (d3, a0), d0
+    movbu   d0, (d1, a3)                    # restore the FrameBuffer byte
+    mov     (0x14, sp), a0
+    movbu   (d3, a0), d0
+    movbu   d0, (d1, a2)                    # restore the PICTURE_PLANE2 byte
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d0
+    mov     d3, d1
+    asl2    d1
+    movhu   (d1, a1), d1
+    exth    d0
+    mov     (0x20, sp), d2
+    exth    d1
+    add     d2, d0
+    mov     0x280, d2
+    mov     (0x48, sp), a0
+    nop
+    nop
+    mul     d2, d0
+    mov     (0x24, sp), d2
+    add     d2, d0
+    sub     d1, d0                          # top-right: (y + dy)*640 + right - dx
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a3)
+    mov     (0x28, sp), a0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a2)
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1
+    mov     d3, d0
+    exth    d1
+    asl2    d0
+    movhu   (d0, a1), d2
+    mov     (0x34, sp), d0
+    exth    d2
+    sub     d1, d0
+    mov     0x280, d1
+    mov     (0x4c, sp), a0
+    nop
+    nop
+    mul     d1, d0
+    mov     (0x3c, sp), d1
+    add     d2, d0
+    add     d1, d0                          # bottom-left: (bottom - dy)*640 + x + dx
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a3)
+    mov     (0x2c, sp), a0
+    movbu   (d3, a0), d1
+    movbu   d1, (d0, a2)
+    mov     d3, d0
+    asl2    d0
+    mov     d0, a0
+    add     a1, a0
+    movhu   (2, a0), d1
+    mov     d3, d0
+    exth    d1
+    mov     (0x40, sp), a0
+    asl2    d0
+    movhu   (d0, a1), d2
+    mov     (0x38, sp), d0
+    exth    d2
+    sub     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    mov     (0x1c, sp), d1
+    add     d1, d0
+    movbu   (d3, a0), d1
+    sub     d2, d0                          # bottom-right: (bottom - dy)*640 + right - dx
+    movbu   d1, (d0, a3)
+    mov     (0x30, sp), a0
+    movbu   (d3, a0), d1
+    inc     d3
+    movbu   d1, (d0, a2)
+    exth    d3
+    cmp     8, d3
+    llt                                     # next mask entry while d3 < 8
+    ret     [d2,d3,a2,a3], 0xb0
+
+# GetJpegSize  (CPU 0x48425265)
+#   GetJpegSize(a0 = JPEG data, a1 = &s16 width, d0 = &s16 height): callers enter
+#   at GetJpegSize_entry with `call ..., [d2,d3,a2,a3], 0x10` (the name here, on
+#   the movm, is the MILK reflection entry 0x48728700). Reads the picture size from
+#   the SOF0 header without decoding. The data must start with SOI (FF D8); from
+#   offset 2 it walks the marker segments: APP0..APP15, DHT, DQT, DRI, DNL and COM
+#   are skipped by their length field; SOF0 (FF C0) gives height and width if its
+#   precision is 8 and both are 1..0x7FFF, and the scan stops; any other value where
+#   a marker should be (SOF2 progressive, EOI, a non-marker, ...) ends the search
+#   with no size. Writes *width, *height, or -1 to both if either was not found, and
+#   returns with retf (d0 is left = height or -1; no caller reads it). Callers:
+#   JpegDecodeBlit, DrawJpegFileR_Impl, VwBitmapFileProc, VwJpegFileProc, and three
+#   sites in the AcSswImgListProc range. Quirks: SOS (FF DA) is parsed as if it were
+#   SOF0 (it is reached only when no usable SOF0 came first); an SOF0 that fails a
+#   check is not skipped, the scan resumes inside it; the scan offset is a signed
+#   16-bit value, so headers past 32 KB (a large EXIF APP1) make it read before the
+#   data; and nothing bounds the scan by the data's length.
+GetJpegSize:
+    movm    [d2,d3,a2,a3], (sp)
+
+GetJpegSize_entry:
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &height (spilled to the caller's argument area)
+    mov     a1, (0x1c, sp)                  # (0x1c,sp) = &width
+    mov     0xffffffff, a1                  # a1 = height = -1 (not found)
+    mov     a1, a2                          # a2 = width = -1
+    movbu   (a0), d0
+    movbu   (1, a0), d1
+    exthu   d0
+    asl     8, d0
+    add     d1, d0
+    exthu   d0                              # d0 = first two bytes
+    cmp     0xffd8, d0
+    beq     GetJpegSize_HaveSoi             # SOI: scan the segments
+    jmp     GetJpegSize_Done                # not a JPEG: no size
+
+GetJpegSize_HaveSoi:
+    mov     2, d1                           # d1 = scan offset: the first segment
+    # setlb .. lne: one marker segment per pass; d1 = offset of its marker, -1 = stop.
+    setlb
+
+GetJpegSize_ScanLoop:
+    movbu   (d1, a0), d2
+    inc     d1
+    mov     d1, d0
+    exth    d1
+    movbu   (d1, a0), d1
+    exth    d0
+    inc     d0                              # d0 = offset + 2: the length field
+    exthu   d2
+    asl     8, d2
+    add     d1, d2
+    exthu   d2                              # d2 = marker
+    cmp     0xffe0, d2
+    blt     GetJpegSize_NotApp              # below APP0
+    cmp     0xffef, d2
+    bgt     GetJpegSize_NotApp              # above APP15
+    # APPn: skip the segment.
+    exth    d0
+    movbu   (d0, a0), d1
+    inc     d0
+    mov     d0, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d0
+    inc     d0
+    exth    d0
+    exthu   d1
+    asl     8, d1
+    add     d2, d1
+    exthu   d1                              # d1 = segment length (includes its own 2 bytes)
+    add     d0, d1
+    add     -2, d1                          # d1 = offset + 2 + length: the next marker
+    jmp     GetJpegSize_Next
+
+GetJpegSize_NotApp:
+    cmp     0xffc4, d2
+    beq     GetJpegSize_SkipSegment         # DHT
+    cmp     0xffdb, d2
+    beq     GetJpegSize_SkipSegment         # DQT
+    cmp     0xffdd, d2
+    beq     GetJpegSize_SkipSegment         # DRI
+    cmp     0xffdc, d2
+    beq     GetJpegSize_SkipSegment         # DNL
+    cmp     0xfffe, d2
+    beq     GetJpegSize_SkipSegment         # COM
+    cmp     0xffc0, d2
+    beq     GetJpegSize_ReadSof             # SOF0 (baseline): read the size
+    cmp     0xffda, d2
+    beq     GetJpegSize_ReadSof             # SOS: read like SOF0 (quirk)
+    bra     GetJpegSize_UnknownMarker       # any other marker: stop
+
+GetJpegSize_SkipSegment:
+    mov     d0, d1
+    exth    d1
+    movbu   (d1, a0), d0
+    inc     d1
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    exth    d1
+    exthu   d0
+    asl     8, d0
+    add     d2, d0
+    exthu   d0                              # d0 = segment length
+    add     d0, d1
+    add     -2, d1                          # d1 = offset + 2 + length: the next marker
+    bra     GetJpegSize_Next
+
+GetJpegSize_ReadSof:
+    exth    d0
+    movbu   (d0, a0), d3
+    inc     d0
+    mov     d0, d1
+    exth    d1
+    movbu   (d1, a0), d2
+    exth    d0
+    mov     d0, d1
+    inc     d1                              # d1 = offset + 4: past the length field
+    exthu   d3
+    asl     8, d3
+    mov     d2, d0
+    add     d3, d0
+    exthu   d0                              # d0 = segment length
+    cmp     2, d0
+    blt     GetJpegSize_Next                # length < 2: carry on from offset + 4
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    cmp     8, d2
+    bne     GetJpegSize_Next                # precision != 8: carry on inside the segment
+    exth    d1
+    movbu   (d1, a0), d3
+    inc     d1
+    mov     d1, d2
+    exth    d2
+    movbu   (d2, a0), d2
+    exth    d1
+    inc     d1
+    exthu   d3
+    mov     d3, d0
+    asl     8, d0
+    add     d2, d0
+    mov     d0, a1                          # a1 = height
+    exth    d0
+    cmp     0, d0
+    ble     GetJpegSize_Next                # height <= 0 (or >= 0x8000): carry on inside the segment
+    exth    d1
+    movbu   (d1, a0), d2
+    inc     d1
+    mov     d1, d0
+    exth    d0
+    movbu   (d0, a0), d3
+    exth    d1
+    inc     d1
+    exthu   d2
+    asl     8, d2
+    add     d3, d2
+    mov     d2, a2                          # a2 = width
+    mov     d2, d0
+    exth    d0
+    cmp     0, d0
+    ble     GetJpegSize_Next                # width <= 0 (or >= 0x8000): carry on inside the segment
+    mov     -1, d1                          # both found: stop
+    bra     GetJpegSize_Next
+
+GetJpegSize_UnknownMarker:
+    mov     -1, d1                          # stop
+
+GetJpegSize_Next:
+    exth    d1
+    cmp     -1, d1
+    lne                                     # next segment while d1 != -1
+
+GetJpegSize_Done:
+    mov     a2, d0
+    exth    d0
+    cmp     0, d0
+    ble     GetJpegSize_NoSize              # width <= 0: no size
+    mov     a1, d0
+    exth    d0
+    cmp     0, d0
+    bgt     GetJpegSize_StoreSize           # height > 0: store both
+
+GetJpegSize_NoSize:
+    mov     (0x1c, sp), a0
+    mov     -1, d0
+    movhu   d0, (a0)                        # *width = -1
+    mov     (0x20, sp), a0
+    movhu   d0, (a0)                        # *height = -1
+    bra     GetJpegSize_Return
+
+GetJpegSize_StoreSize:
+    mov     (0x1c, sp), a0
+    mov     a2, d0
+    movhu   d0, (a0)                        # *width
+    mov     (0x20, sp), a0
+    mov     a1, d0
+    movhu   d0, (a0)                        # *height
+
+GetJpegSize_Return:
+    retf    [d2,d3,a2,a3], 0x10
+
 # DrawString  (CPU 0x48425393)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x025393, 0x025896
+#   DrawString(a0 = &clip rect {s16 l, t, r, b}, a1 = &pen {s16 x, s16 y},
+#   caller's (0x10,sp) = string, d0 = font index, d1 = fg colour, caller's
+#   (0x1c,sp) = bg colour, 0xF7 = none): draws the NUL-terminated string in
+#   font d0 with its top-left corner at the pen point, clipped to the rect (see
+#   DrawString_Impl). On the draw task it draws at once (if DrawEnable is set);
+#   on any other task it copies the string into a DrawQueue_Alloc block of its
+#   own (strlen + 1) and queues a 28-byte record {DrawString_QueuedExec, +4 rect
+#   (4 x s16), +0xC pen {x, y}, +0x10 string copy, +0x14 u32 font, +0x18 u16 fg,
+#   +0x1A u16 bg} for the draw task instead; rect, pen and string are all copied.
+#   Its callers (109 in code region 1) enter at DrawString_entry; the plain
+#   address appears only in the pointer table at 0x4872819C (beside the other
+#   DrawXxx), so only an indirect 'calls' through it runs the movm here.
+DrawString:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+
+DrawString_entry:
+    mov     d0, d3                          # d3 = font index
+    mov     a1, (0x3c, sp)                  # &pen to its argument slot
+    mov     a0, (0x38, sp)                  # &clip rect to its argument slot
+    mov     d1, d2                          # d2 = fg colour
+    call    IsDrawTask_entry, 0, 0x10
+    cmp     0, d0
+    beq     DrawString_Deferred             # not the draw task: queue it
+    mov     (DrawEnable), d0
+    cmp     0, d0
+    bne     DrawString_DrawNow
+    ret     [d2,d3,a2,a3], 0x30             # drawing disabled
+
+DrawString_DrawNow:
+    mov     (0x40, sp), a0                  # string (caller's (0x10,sp))
+    exth    d2
+    mov     a0, (0x10, sp)
+    movhu   (0x4c, sp), d0                  # bg colour
+    mov     d2, d1
+    exth    d0
+    mov     d0, (0x1c, sp)
+    mov     (0x38, sp), a0
+    mov     (0x3c, sp), a1
+    mov     d3, d0
+    call    DrawString_Impl_entry, [d2,d3,a2,a3], 0x10  # draw now
+    bra     DrawString_Return
+
+DrawString_Deferred:
+    mov     (0x40, sp), a0
+    call    LibStrlen, 0, 0
+    inc     d0                              # + the NUL
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     a0, a3                          # a3 = buffer for the string copy
+    mov     0x1c, d0                        # 28-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4
+    mov     a0, a2                          # a2 = record
+    mov     DrawString_QueuedExec, d0
+    mov     d0, (a2)                        # +0: the function the draw task will call
+    # +4: the clip rect, 4 halfwords (hardware loop, d1 = -4 .. 0).
+    mov     (0x38, sp), a0
+    mov     a2, a1
+    inc4    a1
+    mov     -4, d1
+    setlb
+    movhu   (a0), d0
+    add     2, a0
+    movhu   d0, (a1)
+    add     2, a1
+    inc     d1
+    lne
+    # +0xC: the pen point.
+    mov     (0x3c, sp), a1
+    mov     0xc, a0
+    movhu   (a1), d0
+    add     a2, a0
+    movhu   d0, (a0)
+    movhu   (2, a1), d0
+    movhu   d0, (2, a0)
+    mov     a3, (0x10, a2)                  # +0x10: the string copy
+    mov     (0x40, sp), a1
+    mov     a3, a0
+    call    strcpy_entry, [a2], 4           # strcpy(a0 = copy, a1 = string), lib strcpy past its movm
+    mov     d3, (0x14, a2)                  # +0x14: font index
+    movhu   d2, (0x18, a2)                  # +0x18: fg colour
+    movhu   (0x4c, sp), d0
+    mov     a2, a0
+    movhu   d0, (0x1a, a2)                  # +0x1A: bg colour
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+DrawString_Return:
+    ret     [d2,d3,a2,a3], 0x30
+
+# DrawString_QueuedExec  (CPU 0x4842542e)
+#   DrawString_QueuedExec(a0 = record): called by the draw task for a record
+#   DrawString queued; draws it from the record's rect, pen and string copy if
+#   DrawEnable is still set, then passes the string copy to DrawQueue_Free
+#   (which does nothing: the circular arena reuses the space).
+DrawString_QueuedExec:
+    movm    [d2,d3,a2], (sp)
+    add     -0x20, sp
+    mov     (DrawEnable), d1
+    mov     a0, a2                          # a2 = record
+    inc4    a0                              # a0 = &record.rect
+    mov     (0x14, a2), d3                  # d3 = record.font
+    movhu   (0x18, a2), d2                  # d2 = record.fg
+    movhu   (0x1a, a2), d0                  # d0 = record.bg
+    mov     0xc, a1
+    add     a2, a1                          # a1 = &record.pen
+    cmp     0, d1
+    beq     DrawString_QueuedExec_Free      # drawing disabled meanwhile
+    mov     (0x10, a2), d1                  # record.string
+    exth    d0
+    mov     d1, (0x10, sp)
+    mov     d0, (0x1c, sp)
+    exth    d2
+    mov     d2, d1
+    mov     d3, d0
+    call    DrawString_Impl_entry, [d2,d3,a2,a3], 0x10
+
+DrawString_QueuedExec_Free:
+    mov     (0x10, a2), a0                  # the string copy
+    call    DrawQueue_Free, 0, 0
+    ret     [d2,d3,a2], 0x2c
+
+# DrawString_Impl  (CPU 0x48425467)
+#   DrawString_Impl(a0 = &clip rect, a1 = &pen, caller's (0x10,sp) = string,
+#   d0 = font index, d1 = fg colour, caller's (0x1c,sp) = bg colour): the
+#   renderer. An empty string draws nothing. Otherwise it clamps the clip rect
+#   to the screen IN PLACE (the caller's own rect), raises a negative pen x or y
+#   to 0 (in a local copy), runs the string through ConvertStrings ('~hh'
+#   escapes to bytes, control codes to spaces) into a 256-byte stack buffer with
+#   no length check, fills the box below with DrawBox_Impl in bg unless bg is
+#   0xF7 (bg 0xF4/0xF5 make DrawBox_Impl copy the box from the buffer at
+#   *0x500D408C instead of filling it), draws the glyphs and marks the box
+#   dirty with SetChangeRect.
+#   Font descriptor (*FontTablePtr + font * 0x14): +0 u16 width, +2 u16 height,
+#   +4 s16 descent, +6 u16 byte columns per glyph, +8 glyphs, +0xC kern table
+#   (0 = fixed width; else 4-byte {u8 width, -, u16 glyph offset} entries from
+#   character 0x20), +0x10 double-byte glyph table (0 = none; SjisGlyphLookup).
+#   A glyph is 1 bpp, column-major: 'columns' 8-pixel columns of 'height' bytes,
+#   MSB leftmost; a fixed font's glyph c is at glyphs + (c - 0x20) * columns *
+#   height. Only set bits are drawn, in fg (low byte); every pixel is clipped to
+#   the clip rect. The pen moves right by each glyph's width; y never changes.
+#   Shift-JIS: in a fixed-width font with a double-byte table, a lead byte
+#   (0x81-0x9F, 0xE0-0xFC) and the byte after it select a 16x16 glyph
+#   (SjisMissingGlyph if absent), drawn height - descent - 13 rows down.
+#   Proportional fonts have no double-byte support.
+#   Box: {pen.x, pen.y, pen.x - 1 + text width, pen.y + height} clipped to the
+#   clip rect -- one row taller than the glyph cell. Text width = strlen *
+#   width for a fixed font (a double-byte character counts twice), but only the
+#   LAST character's width for a proportional one (bug, as on the KN5000).
+#   Quirks: the row loop always runs the font's height, so a 16x16 glyph comes
+#   out right only in a font 16 rows high; a lead byte just before the NUL makes
+#   the character loop step over the terminator into stale buffer bytes.
+DrawString_Impl:
+    movm    [d2,d3,a2,a3], (sp)
+
+DrawString_Impl_entry:
+    add     -0x188, sp                      # 0x188 bytes of locals: more than call's frame field takes
+    movhu   d1, (0x1b0, sp)                 # fg colour, kept in its argument slot
+    mov     a0, (0x1a0, sp)                 # (0x1a0,sp) = &clip rect = &rect.l
+    mov     (0x1a8, sp), a0                 # a0 = string (caller's (0x10,sp))
+    mov     d0, d2                          # d2 = font index
+    movbu   (a0), d0
+    cmp     0, d0
+    bne     DrawString_Impl_ClampRect
+    jmp     DrawString_Impl_Return          # empty string: nothing to draw
+
+    # Clamp the caller's clip rect to the screen, in place: t, l >= 0, r <= 639, b <= 239.
+DrawString_Impl_ClampRect:
+    mov     (0x1a0, sp), d0
+    add     2, d0
+    mov     d0, (0x38, sp)                  # (0x38,sp) = &rect.t
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     DrawString_Impl_ClampLeft
+    clr     d0
+    movhu   d0, (a0)
+
+DrawString_Impl_ClampLeft:
+    mov     (0x1a0, sp), a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0, d0
+    bge     DrawString_Impl_ClampRight
+    clr     d0
+    movhu   d0, (a0)
+
+DrawString_Impl_ClampRight:
+    mov     (0x1a0, sp), d0
+    add     4, d0
+    mov     d0, (0x34, sp)                  # (0x34,sp) = &rect.r
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0x280, d0
+    blt     DrawString_Impl_ClampBottom
+    mov     0x27f, d0
+    movhu   d0, (a0)
+
+DrawString_Impl_ClampBottom:
+    mov     (0x1a0, sp), d0
+    add     6, d0
+    mov     d0, (0x40, sp)                  # (0x40,sp) = &rect.b
+    mov     d0, a0
+    movhu   (a0), d0
+    exth    d0
+    cmp     0xf0, d0
+    blt     DrawString_Impl_CopyPen
+    mov     0xef, d0
+    movhu   d0, (a0)
+
+    # pen = *a1, a local copy at (0x78,sp); a negative x or y becomes 0.
+DrawString_Impl_CopyPen:
+    movhu   (a1), d0
+    mov     sp, a0
+    add     0x78, a0
+    movhu   d0, (a0)
+    movhu   (2, a1), d0
+    movhu   d0, (2, a0)
+    movhu   (0x78, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     DrawString_Impl_ClampPenY
+    clr     d0
+    movhu   d0, (0x78, sp)
+
+DrawString_Impl_ClampPenY:
+    movhu   (0x7a, sp), d0
+    exth    d0
+    cmp     0, d0
+    bge     DrawString_Impl_FontSetup
+    clr     d0
+    movhu   d0, (0x7a, sp)
+
+    # Cache the font descriptor's fields. (0x62..0x68,sp) = the current glyph's width,
+    # columns, height and y offset; (0x6a, 0x6c, 0x70,sp) keep the font's own height,
+    # columns and width to restore after a double-byte glyph.
+DrawString_Impl_FontSetup:
+    mov     (FontTablePtr), d1
+    mov     0x14, d0
+    nop
+    nop
+    mul     d2, d0
+    add     d0, d1
+    mov     d1, a2                          # a2 = &font descriptor
+    mov     (8, a2), d0
+    mov     d0, (0x4c, sp)                  # (0x4c,sp) = desc.glyphs
+    mov     0xc, d0
+    add     d1, d0
+    mov     d0, a0
+    mov     d0, (0x54, sp)                  # (0x54,sp) = &desc.kern
+    mov     (a0), d0
+    mov     d0, (0x5c, sp)                  # (0x5c,sp) = desc.kern: 0 = fixed width
+    movhu   (a2), d0
+    movhu   d0, (0x62, sp)                  # glyph width = desc.width
+    movhu   (0x62, sp), d0
+    movhu   d0, (0x70, sp)                  # font width, kept
+    movhu   (6, a2), d0
+    movhu   d0, (0x64, sp)                  # glyph columns = desc.columns
+    mov     2, d0
+    add     d1, d0
+    mov     d0, (0x44, sp)                  # (0x44,sp) = &desc.height
+    mov     d0, a0
+    movhu   (0x64, sp), d0
+    movhu   d0, (0x6c, sp)                  # font columns, kept
+    movhu   (a0), d0
+    mov     sp, a0
+    movhu   d0, (0x66, sp)                  # glyph height = desc.height
+    movhu   (0x66, sp), d0
+    movhu   d0, (0x6a, sp)                  # font height, kept
+    clr     d0
+    movhu   d0, (0x68, sp)                  # glyph y offset = 0
+    movhu   (4, a2), d1                     # d1 = desc.descent
+    movhu   (0x7a, sp), d0
+    exth    d1
+    # The box (dirty rect) at (0x7c,sp) {l, t, r, b}; the text width is added to r below.
+    movhu   d0, (0x7e, sp)                  # box.t = pen.y
+    movhu   (0x66, sp), d0
+    sub     d1, d0
+    add     -0xd, d0
+    movhu   d0, (0x6e, sp)                  # (0x6e,sp) = height - descent - 13: a double-byte glyph's y offset
+    movhu   (0x78, sp), d0
+    mov     a0, d1
+    mov     (0x44, sp), a0
+    add     0x7c, d1
+    mov     d1, (0x50, sp)                  # (0x50,sp) = &box
+    movhu   d0, (0x7c, sp)                  # box.l = pen.x
+    movhu   (0x78, sp), d0
+    movhu   (0x7a, sp), d1
+    exth    d0
+    add     -1, d0
+    movhu   d0, (0x80, sp)                  # box.r = pen.x - 1
+    movhu   (a0), d0
+    mov     (0x38, sp), a0
+    exth    d1
+    exth    d0
+    add     d0, d1
+    movhu   d1, (0x82, sp)                  # box.b = pen.y + height
+    movhu   (0x7e, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     DrawString_Impl_ClampBoxBottom
+    movhu   (a0), d0
+    movhu   d0, (0x7e, sp)                  # box.t < rect.t: raise it
+
+DrawString_Impl_ClampBoxBottom:
+    mov     (0x40, sp), a0
+    movhu   (0x82, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     DrawString_Impl_Convert
+    movhu   (a0), d0
+    movhu   d0, (0x82, sp)                  # box.b > rect.b: lower it
+
+DrawString_Impl_Convert:
+    mov     sp, a3
+    add     0x84, a3                        # a3 = 256-byte buffer at (0x84,sp)
+    mov     (0x1a8, sp), a0
+    mov     a3, a1
+    mov     d2, d0
+    call    ConvertStrings_entry, [d2,d3,a2,a3], 0x20  # d0 = font, a0 = string, a1 = buffer
+    mov     (0x54, sp), a1
+    mov     a3, a0
+    mov     (a1), d0
+    cmp     0, d0
+    bne     DrawString_Impl_PropWidth       # proportional font
+    # Fixed width: box.r += strlen(converted) * width.
+    call    LibStrlen, 0, 0                 # d0 = strlen(converted)
+    movhu   (0x80, sp), d2
+    movhu   (0x62, sp), d1
+    exth    d2
+    nop
+    nop
+    mulu    d0, d1
+    add     d2, d1
+    movhu   d1, (0x80, sp)
+    bra     DrawString_Impl_ClipBox
+
+    # Proportional: each character's kern width overwrites (0x62,sp), so only the last
+    # one is added to box.r (bug, as on the KN5000).
+DrawString_Impl_PropWidth:
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     DrawString_Impl_AddLastWidth
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    asl2    d0
+    mov     d0, a1
+    mov     (0x5c, sp), d0
+    add     d0, a1                          # a1 = kern + c * 4
+    movbu   (-0x80, a1), d0
+    extbu   d0
+    movhu   d0, (0x62, sp)                  # glyph width = kern[c - 0x20] byte 0
+    movbu   (a0), d0
+    cmp     0, d0
+    lne
+
+DrawString_Impl_AddLastWidth:
+    movhu   (0x80, sp), d1
+    movhu   (0x62, sp), d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x80, sp)                  # box.r += last character's width
+
+    # Clip the box to the clip rect (top and bottom once more).
+DrawString_Impl_ClipBox:
+    mov     (0x38, sp), a0
+    movhu   (0x7e, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     DrawString_Impl_ClipBoxLeft
+    movhu   (a0), d0
+    movhu   d0, (0x7e, sp)
+
+DrawString_Impl_ClipBoxLeft:
+    mov     (0x1a0, sp), a0
+    movhu   (0x7c, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bge     DrawString_Impl_ClipBoxRight
+    movhu   (a0), d0
+    movhu   d0, (0x7c, sp)
+
+DrawString_Impl_ClipBoxRight:
+    mov     (0x34, sp), a0
+    movhu   (0x80, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     DrawString_Impl_ClipBoxBottom
+    movhu   (a0), d0
+    movhu   d0, (0x80, sp)
+
+DrawString_Impl_ClipBoxBottom:
+    mov     (0x40, sp), a0
+    movhu   (0x82, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    ble     DrawString_Impl_Background
+    movhu   (a0), d0
+    movhu   d0, (0x82, sp)
+
+DrawString_Impl_Background:
+    movhu   (0x1b4, sp), d0
+    exth    d0
+    cmp     0xf7, d0
+    beq     DrawString_Impl_Text            # bg 0xF7: transparent, no box
+    mov     (0x50, sp), a0
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28  # DrawBox_Impl(a0 = &box, d0 = bg)
+
+DrawString_Impl_Text:
+    mov     a3, (0x14, sp)                  # (0x14,sp) = character pointer
+    movbu   (a3), d0
+    cmp     0, d0
+    bne     DrawString_Impl_TextSetup
+    jmp     DrawString_Impl_MarkDirty       # converted string empty
+
+DrawString_Impl_TextSetup:
+    movhu   (0x7a, sp), d0
+    add     0x10, a2
+    mov     a2, (0x48, sp)                  # (0x48,sp) = &desc.sjis (+0x10)
+    exth    d0
+    mov     d0, (0x58, sp)                  # (0x58,sp) = pen.y
+    movhu   (0x7a, sp), d0
+    exth    d0
+    mov     d0, (0x3c, sp)                  # (0x3c,sp) = pen.y as well
+
+    # Per character: point a2 at its glyph and set the glyph metrics.
+DrawString_Impl_CharLoop:
+    mov     (0x54, sp), a0
+    mov     (a0), d0
+    cmp     0, d0
+    beq     DrawString_Impl_FixedChar
+    jmp     DrawString_Impl_PropChar        # proportional font
+
+DrawString_Impl_FixedChar:
+    mov     (0x48, sp), a0
+    mov     (a0), d0
+    cmp     0, d0
+    bne     DrawString_Impl_CheckLeadByte   # the font has double-byte glyphs
+    # Fixed font, single-byte only: a2 = glyphs + (c - 0x20) * columns * height.
+    mov     (0x14, sp), a0
+    movhu   (0x64, sp), d2
+    movbu   (a0), d0
+    movhu   (0x66, sp), d1
+    mov     (0x4c, sp), a2
+    nop
+    nop
+    mul     d1, d2
+    add     -0x20, d0
+    mov     d2, d1
+    nop
+    nop
+    mul     d0, d1
+    add     d1, a2
+    jmp     DrawString_Impl_DrawGlyph
+
+    # A Shift-JIS lead byte: 0x81-0x9F or 0xE0-0xFC?
+DrawString_Impl_CheckLeadByte:
+    mov     (0x14, sp), a0
+    movbu   (a0), d0
+    cmp     0x81, d0
+    blt     DrawString_Impl_CheckLeadE0
+    movbu   (a0), d0
+    cmp     0x9f, d0
+    ble     DrawString_Impl_SjisChar
+
+DrawString_Impl_CheckLeadE0:
+    movbu   (a0), d0
+    cmp     0xe0, d0
+    blt     DrawString_Impl_SingleByte
+    movbu   (a0), d0
+    cmp     0xfc, d0
+    bgt     DrawString_Impl_SingleByte      # not a lead byte
+
+DrawString_Impl_SjisChar:
+    movbu   (a0), d1
+    mov     a0, d0
+    inc     d0
+    mov     d0, (0x14, sp)                  # step onto the trail byte
+    mov     d0, a0
+    movbu   (a0), d2
+    mov     (0x48, sp), a0
+    asl     8, d1
+    mov     (a0), d0
+    mov     d0, a0
+    mov     d1, d0
+    exthu   d0
+    add     d2, d0
+    exthu   d0                              # d0 = lead << 8 | trail
+    call    SjisGlyphLookup, 0, 0           # a0 = &glyph, or 0
+    mov     a0, a2
+    cmp     0, a2
+    bne     DrawString_Impl_SjisMetrics
+    mov     SjisMissingGlyph, a2            # not in the table: the boxed X
+
+DrawString_Impl_SjisMetrics:
+    movhu   (0x6e, sp), d0
+    movhu   d0, (0x68, sp)                  # y offset = height - descent - 13
+    mov     0x10, d0
+    movhu   d0, (0x62, sp)                  # 16 pixels wide
+    mov     2, d0
+    movhu   d0, (0x64, sp)                  # 2 byte columns
+    mov     0x10, d0
+    movhu   d0, (0x66, sp)                  # 16 high (unused: the row loop reads desc.height)
+    bra     DrawString_Impl_DrawGlyph
+
+    # Single byte in a font with double-byte glyphs: restore the font's width, columns
+    # and height, y offset 0, a2 = glyphs + (c - 0x20) * columns * height.
+DrawString_Impl_SingleByte:
+    movhu   (0x6a, sp), d0
+    mov     (0x4c, sp), a2
+    movhu   d0, (0x66, sp)
+    movhu   (0x6c, sp), d0
+    movhu   d0, (0x64, sp)
+    movhu   (0x70, sp), d0
+    movhu   (0x64, sp), d2
+    movhu   d0, (0x62, sp)
+    movhu   (0x66, sp), d0
+    nop
+    nop
+    mul     d0, d2
+    clr     d0
+    movhu   d0, (0x68, sp)
+    movbu   (a0), d1
+    add     -0x20, d1
+    nop
+    nop
+    mul     d1, d2
+    add     d2, a2
+    bra     DrawString_Impl_DrawGlyph
+
+    # Proportional font: width from kern[c - 0x20], columns = width / 8 + 1 (one empty
+    # column extra when width is a multiple of 8), a2 = glyphs + kern offset.
+DrawString_Impl_PropChar:
+    mov     (0x14, sp), a0
+    mov     (0x5c, sp), d1
+    movbu   (a0), d0
+    mov     0xffffff80, a2
+    asl2    d0
+    add     d1, d0
+    add     d0, a2                          # a2 = &kern[c - 0x20]
+    movbu   (a2), d0
+    mov     8, d1
+    extbu   d0
+    movhu   d0, (0x62, sp)                  # glyph width = kern byte 0
+    movhu   (0x62, sp), d0
+    call    LibDiv32, 0, 0
+    inc     d0                              # columns = width / 8 + 1
+    movhu   d0, (0x64, sp)
+    movhu   (2, a2), d0
+    mov     (0x4c, sp), a2
+    add     d0, a2                          # a2 = glyphs + kern[c - 0x20].offset (+2)
+
+    # Draw the glyph at a2, one 8-pixel column at a time, top to bottom.
+DrawString_Impl_DrawGlyph:
+    clr     d0
+    mov     d0, (0x18, sp)                  # column = 0
+    movhu   (0x64, sp), d0
+    mov     d0, (0x28, sp)                  # (0x28,sp) = columns
+    cmp     0, d0
+    bgt     DrawString_Impl_GlyphSetup
+    jmp     DrawString_Impl_NextChar        # no columns: next character, pen unmoved
+
+DrawString_Impl_GlyphSetup:
+    movhu   (0x68, sp), d0
+    exth    d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = y offset
+    mov     (0x58, sp), d0
+    mov     (0x24, sp), d1
+    add     d1, d0
+    mov     0x280, d1
+    nop
+    nop
+    mul     d1, d0
+    add     FrameBuffer, d0
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = FrameBuffer row of pen.y + y offset
+    movhu   (0x62, sp), d0
+    mov     d0, (0x30, sp)                  # (0x30,sp) = glyph width
+
+DrawString_Impl_ColumnLoop:
+    mov     (0x18, sp), d0
+    mov     (0x30, sp), d1
+    asl     3, d0
+    sub     d0, d1
+    movhu   d1, (0x60, sp)                  # pixels in this column = width - column * 8 ...
+    movhu   (0x60, sp), d0
+    cmp     8, d0
+    blt     DrawString_Impl_ColumnStart
+    mov     8, d0
+    movhu   d0, (0x60, sp)                  # ... at most 8
+
+DrawString_Impl_ColumnStart:
+    mov     (0x44, sp), a0
+    movhu   (0x78, sp), d0
+    mov     (0x2c, sp), a3
+    exth    d0
+    add     d0, a3                          # a3 = framebuffer at (pen.x, first row)
+    movhu   (a0), d0
+    clr     d3                              # d3 = row
+    exth    d0
+    cmp     d3, d0
+    bgt     DrawString_Impl_RowsSetup
+    jmp     DrawString_Impl_NextColumn      # font height <= 0
+
+DrawString_Impl_RowsSetup:
+    movhu   (0x60, sp), d0
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = pixels in this column
+    movhu   (0x78, sp), d0
+    exth    d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = this column's x
+
+DrawString_Impl_RowLoop:
+    movbu   (a2), d0
+    cmp     0, d0
+    beq     DrawString_Impl_NextRow         # blank glyph row
+    mov     (0x3c, sp), d0
+    mov     (0x24, sp), d1
+    mov     (0x38, sp), a0
+    add     d3, d0
+    add     d1, d0
+    movhu   d0, (0x186, sp)                 # y = pen.y + row + y offset
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    bge     DrawString_Impl_CheckRowBottom
+    inc     a2                              # y < rect.t: skip the row
+    add     0x280, a3
+    bra     DrawString_Impl_RowCount
+
+DrawString_Impl_CheckRowBottom:
+    mov     (0x40, sp), a0
+    movhu   (0x186, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bgt     DrawString_Impl_NextRow         # y > rect.b: skip the row
+    mov     (0x1c, sp), d0
+    mov     a3, a1                          # a1 = framebuffer pointer
+    clr     d2                              # d2 = pixel (bit) in the column
+    cmp     d2, d0
+    ble     DrawString_Impl_NextRow
+    # One glyph byte, MSB first; the hardware loop (setlb .. llt) repeats from the next
+    # instruction.
+    setlb
+    mov     (0x20, sp), d0
+    mov     (0x1a0, sp), a0
+    add     d2, d0
+    movhu   d0, (0x184, sp)                 # x = column x + pixel
+    movhu   (a0), d1
+    exth    d0
+    exth    d1
+    cmp     d1, d0
+    bge     DrawString_Impl_CheckPixelRight
+    inc     a1                              # x < rect.l: skip the pixel
+    bra     DrawString_Impl_PixelCount
+
+DrawString_Impl_CheckPixelRight:
+    mov     (0x34, sp), a0
+    movhu   (0x184, sp), d1
+    movhu   (a0), d0
+    exth    d1
+    exth    d0
+    cmp     d0, d1
+    bgt     DrawString_Impl_NextRow         # x > rect.r: the rest of the row is clipped
+    movbu   (a2), d1
+    mov     7, d0
+    sub     d2, d0
+    mov     d3, (0x74, sp)
+    mov     1, d3
+    asl     d0, d3                          # mask = 1 << (7 - pixel)
+    mov     d3, d0
+    mov     (0x74, sp), d3
+    exthu   d0
+    and     d1, d0
+    beq     DrawString_Impl_NextPixel
+    movhu   (0x1b0, sp), d0
+    movbu   d0, (a1)                        # set bit: fg colour
+
+DrawString_Impl_NextPixel:
+    inc     a1
+
+DrawString_Impl_PixelCount:
+    mov     (0x1c, sp), d0
+    inc     d2
+    exth    d2
+    cmp     d0, d2
+    llt                                     # next pixel while pixel < pixels in this column
+
+DrawString_Impl_NextRow:
+    inc     a2                              # next glyph byte ...
+    add     0x280, a3                       # ... and framebuffer row
+
+DrawString_Impl_RowCount:
+    mov     (0x44, sp), a0
+    inc     d3
+    movhu   (a0), d0
+    exth    d3
+    exth    d0
+    cmp     d0, d3
+    bge     DrawString_Impl_NextColumn
+    jmp     DrawString_Impl_RowLoop         # next row while row < desc.height (also for a double-byte glyph)
+
+DrawString_Impl_NextColumn:
+    movhu   (0x78, sp), d1
+    movhu   (0x60, sp), d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x78, sp)                  # pen.x += pixels in this column
+    mov     (0x18, sp), d0
+    mov     (0x28, sp), d1
+    inc     d0
+    exth    d0
+    mov     d0, (0x18, sp)
+    cmp     d1, d0
+    bge     DrawString_Impl_NextChar
+    jmp     DrawString_Impl_ColumnLoop      # next column while column < columns
+
+    # Next character. After a double-byte one the pointer sits on its trail byte; if that
+    # was the NUL, this steps past the end of the string.
+DrawString_Impl_NextChar:
+    mov     (0x14, sp), d0
+    inc     d0
+    mov     d0, (0x14, sp)
+    mov     d0, a0
+    movbu   (a0), d0
+    cmp     0, d0
+    beq     DrawString_Impl_MarkDirty       # end of string
+    jmp     DrawString_Impl_CharLoop
+
+DrawString_Impl_MarkDirty:
+    mov     (0x50, sp), a0
+    call    SetChangeRect, 0, 0             # mark the box dirty for the LCD update
+
+DrawString_Impl_Return:
+    add     0x188, sp
+    ret     [d2,d3,a2,a3], 0x10
+
+# SjisGlyphLookup  (CPU 0x48425879)
+#   SjisGlyphLookup(d0 = Shift-JIS code, lead << 8 | trail, a0 = table) -> a0 =
+#   &glyph, or 0 when the code is not in the table. The table (font descriptor
+#   +0x10) is a list of 0x22-byte records {u16 code; u8 glyph[32]} ended by code
+#   0, searched linearly; the code is little-endian, so the trail byte comes
+#   first. A glyph is 16x16 1 bpp, column-major: 16 bytes for the left 8 pixels
+#   of rows 0-15, then 16 for the right 8. Clobbers d1.
+SjisGlyphLookup:
+    movhu   (a0), d1
+    cmp     0, d1
+    beq     SjisGlyphLookup_NotFound        # empty table
+    exthu   d0                              # compare as u16
+    # Hardware loop over the records (setlb .. lne).
+    setlb
+    movhu   (a0), d1
+    cmp     d0, d1
+    bne     SjisGlyphLookup_Next
+    add     2, a0                           # found: a0 = &record.glyph
+    bra     SjisGlyphLookup_Return
+
+SjisGlyphLookup_Next:
+    add     0x22, a0                        # next record
+    movhu   (a0), d1
+    cmp     0, d1
+    lne                                     # until code 0
+
+SjisGlyphLookup_NotFound:
+    mov     0, a0
+
+SjisGlyphLookup_Return:
+    retf    0, 0
+
 # DrawStringCentered  (CPU 0x48425896)
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x025896, 0x02597a
+#   DrawStringCentered(a0 = &clip rect {s16 l, t, r, b}, a1 = &centre {s16 x, s16 y},
+#   caller's (0x10,sp) = string, d0 = font, d1 = fg colour, caller's (0x1c,sp) =
+#   bg colour, 0xF7 = none): draws the string centred on the point, through
+#   DrawString (which queues it when not on the draw task). The rect plays no part
+#   in the centring: it is passed straight on as DrawString's clip box. The string
+#   is first run through ConvertStrings ('~hh' escapes to bytes, control codes to
+#   spaces) into a 256-byte stack buffer, with no length check; CalcTotalWidth and
+#   DrawString_Impl convert that result again. The centring: x -= width/2
+#   (CalcTotalWidth), y -= (height - descent)/2 (GetCharHeight, GetCharDescent),
+#   y += GetCenteredDelta(font), all signed and truncating. Same as the KN5000's.
+DrawStringCentered:
+    movm    [d2,d3,a2,a3], (sp)
+
+DrawStringCentered_entry:
+    add     -0x130, sp                      # with the call's 0x10: a 0x140-byte frame
+    mov     a0, (0x148, sp)                 # (0x148,sp) = &clip rect
+    movhu   d1, (0x158, sp)                 # (0x158,sp) = fg colour
+    mov     a1, (0x14c, sp)                 # (0x14c,sp) = &centre
+    mov     d0, (0x154, sp)                 # (0x154,sp) = font
+    mov     sp, a0
+    mov     a0, d0
+    add     0x2c, d0
+    mov     d0, (0x20, sp)                  # (0x20,sp) = text buffer at sp+0x2c, 256 bytes
+    mov     (0x150, sp), a0                 # a0 = string (the caller's (0x10,sp))
+    mov     d0, a1
+    mov     (0x154, sp), d0
+    call    ConvertStrings_entry, [d2,d3,a2,a3], 0x20  # convert it into the buffer
+    mov     (0x20, sp), a0
+    mov     (0x154, sp), d0
+    call    CalcTotalWidth_entry, [d2,d3,a2,a3], 0x24  # d0 = text width in pixels
+    mov     d0, a2                          # a2 = width
+    mov     (0x154, sp), d0
+    call    GetCharHeight, 0, 0
+    movhu   d0, (0x28, sp)                  # (0x28,sp) = font height
+    mov     (0x154, sp), d0
+    call    GetCharDescent, 0, 0
+    mov     (0x14c, sp), a0
+    mov     sp, a1
+    add     0x12c, a1
+    mov     2, d1
+    mov     d0, a3                          # a3 = font descent
+    movhu   (a0), d0
+    movhu   d0, (a1)                        # copy the centre to sp+0x12c: the text position
+    movhu   (2, a0), d0
+    mov     sp, a0
+    movhu   d0, (2, a1)
+    mov     a0, d0
+    add     0x12c, d0
+    mov     d0, (0x24, sp)                  # (0x24,sp) = &text position
+    movhu   (0x12c, sp), d2
+    mov     a2, d0
+    exth    d2
+    exth    d0
+    call    LibDiv32, 0, 0                  # d0 = width / 2
+    sub     d0, d2
+    movhu   d2, (0x12c, sp)                 # x = centre.x - width/2
+    movhu   (0x12e, sp), d2
+    movhu   (0x28, sp), d0
+    exth    d2
+    exth    d0
+    mov     a3, d1
+    exth    d1
+    sub     d1, d0
+    mov     2, d1
+    call    LibDiv32, 0, 0                  # d0 = (height - descent) / 2
+    sub     d0, d2
+    movhu   d2, (0x12e, sp)                 # y = centre.y - (height - descent)/2
+    mov     (0x154, sp), d0
+    call    GetCenteredDelta, 0, 0          # d0 = -1 for fonts 0, 5, 7; -3 for 0xA, 0xB; else 0
+    movhu   (0x12e, sp), d1
+    exth    d0
+    exth    d1
+    add     d1, d0
+    movhu   d0, (0x12e, sp)                 # y += that
+    # DrawString(a0 = clip rect, a1 = &position, (0x10,sp) = text, d0 = font,
+    # d1 = fg, (0x1c,sp) = bg).
+    mov     (0x20, sp), d0
+    mov     d0, (0x10, sp)                  # the converted text
+    movhu   (0x15c, sp), d0
+    exth    d0
+    mov     d0, (0x1c, sp)                  # bg colour
+    movhu   (0x158, sp), d1
+    mov     (0x148, sp), a0
+    mov     (0x24, sp), a1
+    mov     (0x154, sp), d0
+    exth    d1
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
+    add     0x130, sp
+    ret     [d2,d3,a2,a3], 0x10
+
 # DrawStringLeftJustify  (CPU 0x4842597a)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x02597a, 0x0259f3
 # DrawStringRightJustify  (CPU 0x484259f3)
@@ -7641,7 +12283,7 @@ _rom_marker:
     mov     a0, a2
     mov     d1, d3
     mov     d0, d2
-    call    func_48421B97, 0, 0x10
+    call    IsDrawTask_entry, 0, 0x10
     cmp     0, d0
     beq     0x484261c8
     mov     (0x5002a02c), d0
@@ -7655,7 +12297,7 @@ _rom_marker:
     call    func_4842621C, [d2,d3,a2,a3], 0x7c
     bra     0x484261f0
     mov     0x10, d0
-    call    func_48421B5C, [d2], 4
+    call    DrawQueue_Alloc_entry, [d2], 4
     mov     0x484261f3, d0
     mov     d0, (a0)
     mov     a0, a1
@@ -7670,7 +12312,7 @@ _rom_marker:
     lne
     movhu   d2, (0xc, a0)
     movhu   d3, (0xe, a0)
-    call    func_484219A4, [d2,a2,a3], 0x28
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
     ret     [d2,d3,a2], 0x20
     movm    [d2], (sp)
     add     -0x14, sp
@@ -7739,7 +12381,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x7c
     movhu   (0x50, sp), d0
     exth    d0
@@ -7763,7 +12405,7 @@ _rom_marker:
     add     0x4c, d2
     mov     d2, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     d2, a0
     clr     d0
     call    func_4842320D, [d2,d3,a2,a3], 0x4c
@@ -7915,7 +12557,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x18, sp), d0
     mov     0, a2
     cmp     0, d0
@@ -7998,7 +12640,7 @@ _rom_marker:
     mov     sp, a0
     add     0x4c, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x18, sp), d0
     clr     d3
     cmp     d3, d0
@@ -8168,7 +12810,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     exth    d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     mov     (0x20, sp), d0
     cmp     0, d0
     beq     0x48426699
@@ -8210,7 +12852,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     exth    d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4e, sp), d0
     mov     sp, a1
     add     0x4c, a1
@@ -8264,7 +12906,7 @@ _rom_marker:
     movhu   (0x8c, sp), d0
     mov     a1, a0
     exth    d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x4e, sp), d0
     mov     a3, a0
     exth    d0
@@ -8587,7 +13229,7 @@ _rom_marker:
     mov     d0, (0x1c, sp)
     mov     (0x24, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     exth    d0
     inc     d0
@@ -8601,7 +13243,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x1c, sp), d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a0
     exth    d0
@@ -8656,7 +13298,7 @@ _rom_marker:
     exth    d0
     mov     (0x20, sp), a0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     movhu   (0x38, sp), d1
     exth    d0
@@ -8687,7 +13329,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x28, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -8703,7 +13345,7 @@ _rom_marker:
     mov     (0x20, sp), a0
     mov     (0x2c, sp), d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     exth    d0
     add     -1, d0
@@ -8749,7 +13391,7 @@ _rom_marker:
     mov     a3, d0
     exth    d0
     mov     (0x1c, sp), d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     movhu   (0x38, sp), d1
     exth    d0
@@ -8776,7 +13418,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     (0x30, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     exth    d0
     inc     d0
@@ -8792,7 +13434,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x24, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), d2
     movhu   (0x46, sp), d0
     add     6, d2
@@ -8809,7 +13451,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x24, sp), a0
     mov     (0x1c, sp), d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x14, sp), d0
     cmp     0, d0
     bne     0x48426b96
@@ -8927,7 +13569,7 @@ _rom_marker:
     mov     sp, a3
     exth    d2
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     add     0x54, a3
     movhu   (a0), d0
@@ -9050,7 +13692,7 @@ _rom_marker:
     exth    d3
     mov     a3, d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x52, sp), d1
     movhu   (0x4a, sp), d0
     exth    d1
@@ -9060,7 +13702,7 @@ _rom_marker:
     mov     a2, a0
     mov     d3, d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x40, sp), d0
     exth    d1
@@ -9074,7 +13716,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x14, sp), d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -9090,7 +13732,7 @@ _rom_marker:
     mov     (0x18, sp), d0
     mov     d3, d1
     mov     a2, a0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4e, sp), d1
     movhu   (0x3e, sp), d0
     exth    d1
@@ -9107,7 +13749,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     (0x1c, sp), a0
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9140,7 +13782,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     a3, a0
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x48, sp), d0
     movhu   (a0), d1
@@ -9169,7 +13811,7 @@ _rom_marker:
     mov     a3, a0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x7c
     mov     (0x1c, sp), d0
     cmp     0xca, d0
@@ -9247,7 +13889,7 @@ _rom_marker:
     mov     a3, d0
     exth    d3
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a2
     movhu   d0, (0x54, sp)
@@ -9261,7 +13903,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     d3, d1
     mov     d2, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     add     0x4c, a2
     exth    d0
@@ -9288,7 +13930,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x1c, sp), a0
     mov     (0x14, sp), d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -9306,7 +13948,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     (0x18, sp), d0
     mov     d3, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a2, a0
     exth    d0
@@ -9331,7 +13973,7 @@ _rom_marker:
     sub     d0, d1
     movhu   d1, (0x52, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     mov     d2, a0
     exth    d0
@@ -9346,7 +13988,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -9359,7 +14001,7 @@ _rom_marker:
     mov     d2, a0
     movhu   d0, (0x62, sp)
     mov     d3, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9585,7 +14227,7 @@ _rom_marker:
     mov     0x3c, d0
     exth    d2
     mov     d2, d1
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a3
     exth    d0
@@ -9612,7 +14254,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     (0x1c, sp), a0
     mov     0x3d, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a3, a0
     exth    d0
@@ -9631,7 +14273,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x4e, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     mov     a2, a0
     exth    d0
@@ -9646,7 +14288,7 @@ _rom_marker:
     add     d1, d0
     movhu   d0, (0x62, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -9883,7 +14525,7 @@ _rom_marker:
     exth    d2
     mov     d2, d1
     mov     0x3f, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a2
     exth    d0
@@ -9915,7 +14557,7 @@ _rom_marker:
     mov     (0x1c, sp), a0
     mov     d2, d1
     mov     0x3e, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     a2, a0
     exth    d0
@@ -9934,7 +14576,7 @@ _rom_marker:
     sub     d0, d1
     movhu   d1, (0x52, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -9947,7 +14589,7 @@ _rom_marker:
     mov     a3, a0
     movhu   d0, (0x62, sp)
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (a0), d0
     mov     a0, d3
@@ -10188,7 +14830,7 @@ _rom_marker:
     mov     d3, a0
     mov     d2, d1
     mov     0x40, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     d3, a0
     movhu   d0, (0x54, sp)
@@ -10201,7 +14843,7 @@ _rom_marker:
     movhu   d1, (0x56, sp)
     mov     d2, d1
     mov     0x43, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x4c, sp), d0
     mov     sp, a0
     exth    d0
@@ -10228,7 +14870,7 @@ _rom_marker:
     movhu   d0, (0x56, sp)
     mov     d2, d1
     mov     0x41, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d1
     movhu   (0x44, sp), d0
     exth    d1
@@ -10246,7 +14888,7 @@ _rom_marker:
     mov     d3, a0
     mov     d2, d1
     mov     0x42, d0
-    call    func_48423F73, [d2,d3,a2,a3], 0x40
+    call    DrawFrameSP_Impl_entry, [d2,d3,a2,a3], 0x40
     movhu   (0x50, sp), d0
     mov     sp, a2
     exth    d0
@@ -10273,7 +14915,7 @@ _rom_marker:
     movhu   d1, (0x52, sp)
     mov     d2, d0
     mov     a2, a0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     movhu   (0x5e, sp), d0
     exth    d0
     add     2, d0
@@ -10288,7 +14930,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x14, sp), a0
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a2
     movhu   (0x46, sp), d0
     add     6, a2
@@ -10301,7 +14943,7 @@ _rom_marker:
     movhu   d0, (0x62, sp)
     mov     (0x14, sp), a0
     mov     d2, d0
-    call    func_4842309A, [d2,d3,a2,a3], 0x28
+    call    DrawBox_Impl_entry, [d2,d3,a2,a3], 0x28
     mov     (0x84, sp), a0
     movhu   (0x3c, sp), d0
     movhu   (a0), d1
@@ -10488,6 +15130,7 @@ _rom_marker:
     mov     0xf8, d0
     call    func_48422917, [d2,d3,a2,a3], 0x5c
     ret     [d2,d3,a2,a3], 0x7c
+# IsPointOnScreen  (CPU 0x48427980)
     movhu   (a0), d0
     exth    d0
     cmp     0, d0
@@ -11862,7 +16505,7 @@ _rom_marker:
     mov     (0x30, sp), a0
     mov     a0, (a2)
     bne     0x48428cba
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     bra     0x48428cc1
     mov     a0, (0x10, sp)
     call    func_48429491, [d2,d3,a2,a3], 0x30
@@ -11929,7 +16572,7 @@ _rom_marker:
     mov     a0, (0x1c, a1)
     cmp     0x60023, a3
     bne     0x48428d56
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     bra     0x48428d74
     mov     a0, (0x10, sp)
     mov     a3, d1
@@ -13195,7 +17838,7 @@ _rom_marker:
     mov     0x50034bac, a0
     mov     a3, a1
     mov     0xd, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     movbu   d0, (0x50034bb9)
     clr     d2
@@ -13249,7 +17892,7 @@ _rom_marker:
     mov     0x50034bac, a0
     mov     a3, a1
     mov     0xd, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     movbu   d0, (0x50034bb9)
     clr     d2
@@ -13280,7 +17923,7 @@ _rom_marker:
     mov     0x50034bac, a0
     mov     a3, a1
     mov     0xd, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     movbu   d0, (0x50034bb9)
     clr     d3
@@ -13778,7 +18421,7 @@ _rom_marker:
 # StyleNameBufCopy  (CPU 0x48433a6f)
     add     -0x10, sp
     mov     0x50034bac, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     mov     1, d0
     ret     0, 0x10
 # StyleBoundRecByteCfGet  (CPU 0x48433a84)
@@ -14135,7 +18778,7 @@ _rom_marker:
     mov     0xe, a1
     add     a3, a1
     mov     2, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d1
     clr     d3
     extbu   d2
@@ -14214,22 +18857,22 @@ _rom_marker:
     mov     a0, a2
     mov     0x4873230c, a1
     mov     4, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     a2, a0
     inc4    a0
     mov     0x48732310, a1
     mov     2, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     0x10, a0
     add     a2, a0
     mov     0x4873231c, a1
     mov     3, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     add     0x16, a2
     mov     0x48732322, a1
     mov     0x1a, d0
     mov     a2, a0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d3
     mov     d3, d0
     call    MemStyleRecPtr, 0, 0
@@ -14452,7 +19095,7 @@ _rom_marker:
     mov     a3, a0
     mov     d2, d0
     mov     a2, a1
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), a0
     mov     (0x18, sp), d1
     add     0x15, a0
@@ -14880,7 +19523,7 @@ _rom_marker:
     mov     (0x14, sp), d0
     mov     a2, a1
     mov     a3, a0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     call    MemStyleAreaChecksumInit_entry, [d2], 0x14
     ret     [a2,a3], 0x20
 # MemStyleAreaValidate  (CPU 0x4843b1a4)
@@ -15062,7 +19705,7 @@ _rom_marker:
     call    MemStyleVarRecPtr, 0, 0
     mov     a2, a1
     mov     0xe0, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     (0x18, sp), d0
     mov     a3, a0
     call    MemStyleVarRecDataSet_entry, [a2], 0x14
@@ -15500,7 +20143,7 @@ _rom_marker:
     mov     a2, a1
     mov     4, d0
     add     d2, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     (0x3c, sp), a0
     mov     a3, a1
     add     d2, a1
@@ -15523,7 +20166,7 @@ _rom_marker:
     add     0x10, a0
     add     0x13, a1
     mov     3, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     ret     [d2,d3,a2,a3], 0x34
 # CustStyleImportToMem  (CPU 0x4843dfef)
     movm    [d2,d3,a2,a3], (sp)
@@ -15652,7 +20295,7 @@ _rom_marker:
     mov     a2, a1
     mov     4, d0
     add     d2, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     mov     a3, a0
     add     d2, a0
     inc4    a0
@@ -20220,7 +24863,7 @@ _rom_marker:
     mov     (4, a0), a1
     mov     a3, a0
     mov     0x10, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     movbu   d0, (0x10, a3)
     mov     0x18, d0
@@ -20558,7 +25201,7 @@ _rom_marker:
     mov     d0, (0x1c, sp)
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x2a, sp), d0
     exth    d0
     add     -8, d0
@@ -20604,7 +25247,7 @@ _rom_marker:
     add     d3, d1
     mov     d1, a1
     mov     0x40, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     inc     d2
     exth    d2
     cmp     0x20, d2
@@ -20621,7 +25264,7 @@ _rom_marker:
     movbu   d0, (0x6c, sp)
     mov     0x5006b4f4, a0
     mov     a3, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     mov     a3, a0
     call    LibStrlen, 0, 0
     cmp     0x40, d0
@@ -20647,10 +25290,10 @@ _rom_marker:
     mov     a0, a3
     call    LibStrlen, 0, 0
     inc     d0
-    call    func_4841662A, [d2,a2,a3], 0x28
+    call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     a3, a1
-    call    0x4c003051, [a2], 4
+    call    strcpy_entry, [a2], 4
     mov     a2, (0x10, sp)
     mov     0x00100026, d0
     mov     0x0005001d, d1
@@ -20959,7 +25602,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     (0x20, sp), a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -20993,7 +25636,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     (0x20, sp), a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -21023,7 +25666,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     0x48487c0d
     mov     0x485d6c20, d0
     mov     d0, (0x10, sp)
@@ -21033,7 +25676,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     inc     d3
     exth    d0
@@ -21052,7 +25695,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     clr     d2
     exth    d0
@@ -21082,7 +25725,7 @@ _rom_marker:
     mov     a3, a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     mov     8, d1
     exth    d0
@@ -21106,7 +25749,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     movhu   (0x38, sp), d0
     exth    d0
     add     6, d0
@@ -21197,7 +25840,7 @@ _rom_marker:
     mov     (0x28, sp), a0
     mov     (0x2c, sp), a1
     mov     3, d0
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     mov     a2, a0
     call    LibStrlen, 0, 0
     movhu   (0x38, sp), d1
@@ -21242,7 +25885,7 @@ _rom_marker:
     mov     (0x2c, sp), a1
     mov     3, d0
     clr     d1
-    call    func_48425398, [d2,d3,a2,a3], 0x30
+    call    DrawString_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x8c
     mov     (0x9c, sp), a2
@@ -22001,11 +26644,11 @@ _rom_marker:
     cmp     0, a1
     beq     0x4849c71d
     mov     a3, a0
-    call    func_48424AA4, [a2,a3], 0x18
+    call    DrawBitmapFile_entry, [a2,a3], 0x18
     bra     0x4849c726
     clr     d0
     mov     a3, a0
-    call    func_48423B5B, [d2,a2], 0x18
+    call    DrawBitmap_entry, [d2,a2], 0x18
     clr     d0
     bra     0x4849c763
     call    GetViewInstance, 0, 0
@@ -27155,7 +31798,7 @@ _rom_marker:
     mov     0x50082738, a0
     mov     0x48759970, a1
     mov     0x10, d0
-    call    0x4c003039, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8
     clr     d0
     ret     0, 0x14
 # SdCardIdentify  (CPU 0x4854b827)
@@ -35835,12 +40478,12 @@ _rom_marker:
 # malloc_X  (CPU 0x48585ca7)
     add     -0xc, sp
     mov     d0, (0x14, sp)
-    call    func_4841662A, [d2,a2,a3], 0x28
+    call    Malloc_entry, [d2,a2,a3], 0x28
     ret     0, 0xc
 # free_X  (CPU 0x48585cb6)
     add     -0xc, sp
     mov     a0, (0x14, sp)
-    call    func_484166DE, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c
     ret     0, 0xc
 # decompInit  (CPU 0x48585cc5)
     add     -0x18, sp

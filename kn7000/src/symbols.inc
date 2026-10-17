@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 62 manually reverse-engineered symbols:
+# 61 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2371,11 +2371,10 @@
 .equ FavItemSetter, 0x48561D8E   # writes FavoritesBankDir[idx].items[slot] (u16)
 .equ FavFormat, 0x4855EC34   # memset the favorites directory (0x550 bytes)
 .equ OpeningFrameDraw, 0x4848A931   # boot opening-screen draw callback; plays the splash JPEG animation
-.equ JpegDecodeBlit, 0x48424F28   # JPEG decode+blit body (called by DrawJpegFile; gated by *0x5002A01C)
+.equ JpegDecodeBlit, 0x48424F23   # DrawJpegFile's Impl: JpegSetup decodes the JPEG into the picture planes at the point, then GetJpegSize + SetChangeRect; also called by DrawJpegFileR_Impl; its callers test DrawEnable 0x5002A01C (call entry JpegDecodeBlit_entry 0x48424F28)
 .equ JpegPixelStore, 0x484870C8   # picture writer: YCbCr->RGB, 4-bit quantize, store 0xD0|red4 to FB + green4/blue4 to companion plane
 .equ JpegSetup, 0x48486341   # JPEG decode setup: installs the output callback, calls JpegEngine
 .equ JpegEngine, 0x4840E721   # JPEG decode engine (Huffman + IDCT, drives the DCT block decode)
-.equ JpegHeaderParse, 0x48425267   # JPEG header parser (SOI/APPn/DHT/DQT markers)
 .equ JpegBitRefill, 0x4840FC3A   # JPEG bit-buffer refill / ensure-N-bits (state @0x501739C4/C8)
 .equ OpeningFrameTable, 0x485E68B8   # 7-entry splash frame sequence {00,10,12,14,16,20,42,FFFF}
 .equ OpeningFrameTarget, 0x5006B5A4   # boot-splash sequencer target counter (++ per OpeningFrameDraw redraw)
@@ -2383,4 +2382,4 @@
 .equ AstHeaderIngest, 0x4848594D   # reads the .AST header, sets install buffer 0x502B8000
 .equ FatSectorRead, 0x485335FF   # FAT sector reader used by the .AST loader
 .equ MilkMethodDict, 0x48726CE4   # MILK method-name dictionary: 241 MT_ name ptrs (0x48726CE4..0x487270A4)
-.equ InitBlockTable, 0x487270AC   # boot init-block func-ptr table: 48 x InitializeBlockNN
+.equ InitBlockTable, 0x487270AC   # func-ptr table: 32 x InitializeBlockNN (0x00..0x7C), then the graphics/object API from +0x80 (InitializeGraphics, UpdateScreen +0x84, SetChangeRect +0x8C, DrawBitmap +0xC0, DrawIcons +0xC4, DrawFrameSP +0xC8, DrawString +0xCC, ...)

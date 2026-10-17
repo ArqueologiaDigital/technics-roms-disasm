@@ -267,11 +267,13 @@
 ; here. Mapping: library address X  ==  program ROM 0x487B8FD1 + (X - 0x4C000000).
 0x487B8FD1  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
 0x487BC022  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
+0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
 0x487F6D71  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
 0x487F6DF7  LibIrqScheduler        ; = lib 0x4C03DE26: RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
 0x487BAA19  LibPrintf              ; = lib 0x4C001A48: printf-like formatter (varargs; a1 = &args on the caller stack)
 0x487BBFF5  LibMemSet              ; = lib 0x4C003024: memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
 0x487BC00A  LibMemCopy             ; = lib 0x4C003039: memcpy(dest=a0, src=a1, len=d0) -- hardware-loop (setlb)
+0x4C003039  memcpy_entry           ; the runtime address callers `call ..., [a2,a3], 8` (after memcpy's movm at 0x4C003037, named by the 942 export table): memcpy(a0 = dest, a1 = src, d0 = len) -> a0 = dest
 0x487F6E43  LibIrqSubDispatch      ; = lib 0x4C03DE72: scans the INTC group's DETECT bits 0-3 to pick the sub-source (called by the IRQ handlers)
 0x487CD919  LibResourceLookup      ; = lib 0x4C014948: resource dispatcher -- masks the resource ID to 24 bits, calls the trie lookup at lib 0x4C01BB0C, returns the resource record (the GUI/style-name resource path; see rhythm-name-list-bug.md)
 
@@ -1983,7 +1985,7 @@
 0x48411D3D  SndRecByteFieldGetA_entry
 0x48411DA0  SndRecTriFieldGet2      ; second packed-24-bit record field, same default-table fallback
 0x48411DA5  SndRecTriFieldGet2_entry
-0x48411E75  SndRecByteFieldGetB     ; record field accessor that falls back to the library object query 0x4C003039 (id 0x11)
+0x48411E75  SndRecByteFieldGetB     ; for d0 kinds 1..12 (jump table 0x4858F4E0); one path finds a record with func_48412C25(d0 >> 8) and copies 0x11 bytes from the caller's a0 INTO it (memcpy_entry 0x4C003039), returning 0, or -1 when there is none -- a store, despite the name (the earlier note read the memcpy as an 'object query', id 0x11 being the length)
 0x48411E7A  SndRecByteFieldGetB_entry
 0x48411EC2  SndRecCountGet          ; (d0) element count of the record's sub-list -- the loop bound used by every apply pass here (19 call sites)
 0x48411EC7  SndRecCountGet_entry
@@ -2488,7 +2490,7 @@
 ; word is DrawXxx_QueuedExec, and posts it with DrawRing_Post; the draw task later
 ; runs DrawXxx_QueuedExec(record), which re-tests 0x5002A01C and calls the Impl.
 ; Framebuffer: 640 x 240 x 8 bpp at 0x500D4080, stride 0x280. Annotated listing:
-; annotations/gfx_*.ann (merged into src/program.s).
+; annotations/gfx_draw.ann (merged into src/program.s).
 0x4842199F  DrawRing_Post           ; post the queued-draw record at a0 to the draw task's ring (task table 0x5000757C), yielding while the ring is full
 0x484219A4  DrawRing_Post_entry
 0x48421B5A  DrawQueue_Alloc         ; d0 bytes (rounded up to 4) from the 8 KB circular draw-record arena 0x5002A034 (cursor 0x5002C038; wraps to the start when the record would not fit) -> a0
@@ -2496,6 +2498,12 @@
 0x48421B91  DrawQueue_Free          ; empty (retf): a record needs no freeing, the circular arena simply overwrites it
 0x48421B94  IsDrawTask              ; -> 1 if the calling task is the draw task (its id is the u16 at 0x500D3C64): drawing may happen at once; 0 = queue it
 0x48421B97  IsDrawTask_entry
+0x48416625  Malloc                  ; d0 bytes (rounded up to 4) -> a0 = block, 0 if none: first fit on the free list 0x500006E8 ({next, size} headers, block = header + 8), splitting when >= 12 bytes remain, else growing the pool (cursor 0x500006E0, remaining 0x500006E4) via 0x484165E6; serialised by the kernel flag whose id is the u16 at 0x5002A004. Build 942's plug-in export malloc_X is a thunk to Malloc_entry
+0x4841662A  Malloc_entry
+0x484166D9  Free                    ; a0 = block from Malloc (0 is ignored): links its header (a0 - 8) back into the address-ordered free list 0x500006E8, merging with the next block when adjacent; same lock as Malloc. Build 942's export free_X is a thunk to Free_entry
+0x484166DE  Free_entry
+0x48422016  BmpUnpackRow            ; (a0 = row, d0 = packed byte count, d1 = bits per pixel): expands a BMP row in place to one byte per pixel -- 8 returns at once, 4 = high nibble first, 1 = bit 7 first, other values return; uses a Malloc'd copy of the packed bytes, so a0 must hold count*8/bpp bytes. Used by the BMP blitters DrawBitmapFile_Impl, DrawBitmapFileEx_Impl and 0x484283EE
+0x4842201B  BmpUnpackRow_entry
 0x48421DE6  GetBitmapInfo_entry
 0x484226C9  ModifyPixel_entry
 0x48423095  DrawBox_Impl            ; the fill itself (DrawBox queues it when not on the draw task)
@@ -2548,10 +2556,12 @@
 0x48424D30  DrawBitmapFileEx_Impl_entry
 0x48424EC2  DrawJpegFile_entry
 0x48424F05  DrawJpegFile_QueuedExec
+0x48424F28  JpegDecodeBlit_entry   ; (JpegDecodeBlit's movm prologue is at 0x48424F23; this is where every caller enters)
 0x48424F82  DrawJpegFileR_entry
 0x48424FC5  DrawJpegFileR_QueuedExec
 0x48424FE3  DrawJpegFileR_Impl
 0x48424FE9  DrawJpegFileR_Impl_entry
+0x48425267  GetJpegSize_entry      ; GetJpegSize's register-save entry (was JpegHeaderParse): a0 = JPEG, a1 = &s16 width, d0 = &s16 height <- the SOF0 size, -1/-1 if none
 0x48425398  DrawString_entry
 0x4842542E  DrawString_QueuedExec
 0x48425467  DrawString_Impl

@@ -8,4 +8,4 @@ date	commit	src_bytes	prog_bytes	pct	insn_lines	escapes	funcs
 # its 598,212 passthrough bytes were counted as SOURCE. The parser now evaluates additive
 # expressions and asserts parsed==occurrences, so the miss cannot recur. Real figures below.
 2026-08-14	3644616	151372	4157185	3.64	59008	71	942
-
+2026-10-17	ebf860e	159086	4157185	3.83	62437	71	990
