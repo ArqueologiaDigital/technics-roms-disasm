@@ -1,0 +1,83 @@
+[
+ {
+  "old": "SeMenu_Utility_FormatSigned_Records",
+  "new": "SeFil_FilterTypeField_Record",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatNumber_Loop",
+  "new": "SeFil_DrawModeCaption",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatNumber_End",
+  "new": "SeFil_DrawFilterTypeField",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatNumber_Data",
+  "new": "SeFil_DrawFilterTypeField_Skip",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatSigned",
+  "new": "SeFil_DrawFilterTypeField_Join",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_SearchByte_End",
+  "new": "SeFil_DrawPageHeader_Skip",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_SearchByte",
+  "new": "SeFil_DrawPageHeader",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatNumber",
+  "new": "SeFil_DrawPageHeader_Join",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ },
+ {
+  "old": "SeScreenData_0x1682",
+  "new": "SeFil_PageHeader_Records",
+  "verdict": "name",
+  "basis": "callers + body + the lists drawn",
+  "evidence": [
+   "scripts/renaming/rename_se_filter_page_helpers_v10.sed (header)"
+  ]
+ }
+]

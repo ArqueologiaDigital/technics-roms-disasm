@@ -6,8 +6,8 @@
 # Do not hand-edit: rename in the sources and regenerate.
 #
 #   symbols .................. 53,549
-#   semantic names ........... 52,954 (98.9%)
-#   positional names ......... 595
+#   semantic names ........... 52,955 (98.9%)
+#   positional names ......... 594
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -20812,13 +20812,13 @@ SeAmpEnv2_DrawStaticScreen 00F0FD0D
 SeFilLpq1_DrawStaticScreen 00F0FD68
 SeFilLpq1_DrawStaticScreen_Loop 00F0FD93
 SeFilLpq1_DrawStaticScreen_End 00F0FDB8
-SeMenu_Utility_SearchByte 00F0FDCB
-SeMenu_Utility_SearchByte_End 00F0FDDF
-SeMenu_Utility_FormatNumber 00F0FDE4
-SeMenu_Utility_FormatNumber_Loop 00F0FDEE
-SeMenu_Utility_FormatNumber_End 00F0FE03
-SeMenu_Utility_FormatNumber_Data 00F0FE24
-SeMenu_Utility_FormatSigned 00F0FE29
+SeFil_DrawPageHeader 00F0FDCB
+SeFil_DrawPageHeader_Skip 00F0FDDF
+SeFil_DrawPageHeader_Join 00F0FDE4
+SeFil_DrawModeCaption 00F0FDEE
+SeFil_DrawFilterTypeField 00F0FE03
+SeFil_DrawFilterTypeField_Skip 00F0FE24
+SeFil_DrawFilterTypeField_Join 00F0FE29
 SeFilHpq1_DrawStaticScreen 00F0FE3D
 SeFilHpq1_DrawStaticScreen_Skip 00F0FE68
 SeFilL241_DrawStaticScreen 00F0FE8D
@@ -21067,7 +21067,7 @@ SeScreenData_0x1466 00F12042
 SeMenu_Utility_CopyBlock_Data 00F1205A
 SeScreenData_0x1523 00F120FF
 SeAmpEnv2_DrawStaticScreen_Records 00F1224A
-SeScreenData_0x1682 00F1225E
+SeFil_PageHeader_Records 00F1225E
 SeMenu_Utility_SearchByte_Data 00F12284
 SeScreenData_0x173B 00F12317
 SeScreenData_0x1740 00F1231C
@@ -21131,7 +21131,7 @@ SeScreenData_0x20BD 00F12C99
 SeValText_A_B_To_Z 00F12CA5
 SeTonHyb1_DrawField_SetupPath_Records 00F12CD7
 SeTonHyb1_DrawField_SetupPath_Records2 00F12CE1
-SeMenu_Utility_FormatSigned_Records 00F12D09
+SeFil_FilterTypeField_Record 00F12D09
 SeValText_FilterTypes 00F12D18
 SeScreenData_0x2160 00F12D3C
 SeScreenData_0x216B 00F12D47

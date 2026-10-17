@@ -2737,3 +2737,9 @@ s/\bSeMenu_NameEdit_SetupPath\b/SeEasy_DrawField_SetupPath/g
 s/\bSeMenu_BankEdit_SetupPath\b/SeTonHyb1_DrawField_SetupPath/g
 s/\bSeMenu_EqEdit_DefaultPath\b/SeCtr2_DrawField_DefaultPath/g
 s/\bSeMenu_EqEdit_SetupPath\b/SeCtr2_DrawField_SetupPath/g
+# run 2026-10-17
+s/\bSeMenu_Utility_FormatSigned_Records\b/SeFil_FilterTypeField_Record/g
+s/\bSeMenu_Utility_FormatNumber_Loop\b/SeFil_DrawModeCaption/g
+s/\bSeMenu_Utility_FormatNumber_End\b/SeFil_DrawFilterTypeField/g
+s/\bSeMenu_Utility_SearchByte\b/SeFil_DrawPageHeader/g
+s/\bSeScreenData_0x1682\b/SeFil_PageHeader_Records/g

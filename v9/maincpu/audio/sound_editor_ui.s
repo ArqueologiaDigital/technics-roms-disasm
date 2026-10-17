@@ -9376,7 +9376,7 @@ SeAmpEnv2_DrawStaticScreen:
 	call	SeGfx_DrawStaticList
 	ld	(COLORBLIT_MODE:24), 2
 	ld	xiy, SeAmpEnv2_DrawStaticScreen_Records
-	ld	xix, SeScreenData_0x1682
+	ld	xix, SeFil_PageHeader_Records
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
 	ldw	(1734:16), 56
@@ -9395,7 +9395,7 @@ SeAmpEnv2_DrawStaticScreen:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilLpq1_DrawStaticScreen:
 	; --- Main: init, 2x XIY/XIX setup, language branch, 3 calls (80 bytes) ---
-	call SeMenu_Utility_SearchByte
+	call SeFil_DrawPageHeader
 	ld xiy, SeMenu_Utility_CompareBlock_Data_2
 	ld xix, SeScreenData_0x18D8
 	call SeGfx_DrawStaticList
@@ -9408,12 +9408,12 @@ SeFilLpq1_DrawStaticScreen:
 SeFilLpq1_DrawStaticScreen_Loop:
 	call SeMenu_DrawSoloButton
 	call SeMenu_DrawPartSelector
-	call SeMenu_Utility_FormatNumber_End
+	call SeFil_DrawFilterTypeField
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, SeScreenData_0x2160
 	ld xix, SeScreenData_0x21C0
 	call SeGfx_DrawBoundList
-	call SeMenu_Utility_FormatNumber_Loop
+	call SeFil_DrawModeCaption
 	ret
 SeFilLpq1_DrawStaticScreen_End:
 	; --- Helper: XIY/XIX setup + call F0EC00, call F0F6F5 (19 bytes) ---
@@ -9422,42 +9422,42 @@ SeFilLpq1_DrawStaticScreen_End:
 	call SeGfx_DrawStaticList
 	call SeMenu_PresetManager_Save
 	ret
-SeMenu_Utility_SearchByte:
+SeFil_DrawPageHeader:
 	; --- Init: language-conditional XIX selection (35 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(1710:16), 1
-	jr z, SeMenu_Utility_SearchByte_End
+	jr z, SeFil_DrawPageHeader_Skip
 	ld xix, SeScreenData_0x173B
-	jr t, SeMenu_Utility_FormatNumber
-SeMenu_Utility_SearchByte_End:
-	ld xix, SeScreenData_0x1682 + 38
-SeMenu_Utility_FormatNumber:
-	ld xiy, SeScreenData_0x1682
+	jr t, SeFil_DrawPageHeader_Join
+SeFil_DrawPageHeader_Skip:
+	ld xix, SeFil_PageHeader_Records + 38
+SeFil_DrawPageHeader_Join:
+	ld xiy, SeFil_PageHeader_Records
 	call SeGfx_DrawStaticList
 	ret
-SeMenu_Utility_FormatNumber_Loop:
+SeFil_DrawModeCaption:
 	; --- Tail: clear flag, XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, SeScreenData_0x173B
 	ld xix, SeScreenData_0x1740
 	call SeGfx_DrawStaticList
 	ret
-SeMenu_Utility_FormatNumber_End:
+SeFil_DrawFilterTypeField:
 	; --- Data setup: load A, store, set flag=2, language-conditional XIX (58 bytes) ---
 	ld	a, (CURRENT_TITLE:16)
 	ld	(1656:16), a
 	ld	(COLORBLIT_MODE:24), 2
 	ld xiy, SeMenu_Utility_FormatNumber_Data_2
 	cp	(1710:16), 1
-	jr z, SeMenu_Utility_FormatNumber_Data
+	jr z, SeFil_DrawFilterTypeField_Skip
 	ld xix, SeMenu_Utility_CompareBlock_Data
-	jr t, SeMenu_Utility_FormatSigned
-SeMenu_Utility_FormatNumber_Data:
+	jr t, SeFil_DrawFilterTypeField_Join
+SeFil_DrawFilterTypeField_Skip:
 	ld xix, SeMenu_Utility_FormatNumber_Data_2 + 24
-SeMenu_Utility_FormatSigned:
+SeFil_DrawFilterTypeField_Join:
 	call SeGfx_DrawStaticList
 	ld	(COLORBLIT_MODE:24), 0
-	ld xiy, SeMenu_Utility_FormatSigned_Records
+	ld xiy, SeFil_FilterTypeField_Record
 	call SeGfx_DrawBoundRecord
 	ret
 
@@ -9466,7 +9466,7 @@ SeMenu_Utility_FormatSigned:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilHpq1_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeMenu_Utility_CompareBlock_Data_2
 	ld	xix, SeScreenData_0x18D8
 	call	SeGfx_DrawStaticList
@@ -9479,18 +9479,18 @@ SeFilHpq1_DrawStaticScreen:
 SeFilHpq1_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
-	call	SeMenu_Utility_FormatNumber_End
+	call	SeFil_DrawFilterTypeField
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeScreenData_0x2160
 	ld	xix, SeScreenData_0x21C0
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilL241_DrawStaticScreen: Static-screen routine of sound-editor title 0x32 TT_SEFILL241 (entry 18 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilL241_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeMenu_Utility_CompareBlock_Data_3
 	ld	xix, SeScreenData_0x1997
 	call	SeGfx_DrawStaticList
@@ -9503,18 +9503,18 @@ SeFilL241_DrawStaticScreen:
 SeFilL241_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
-	call	SeMenu_Utility_FormatNumber_End
+	call	SeFil_DrawFilterTypeField
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeScreenData_0x221C
 	ld	xix, SeScreenData_0x224F
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilH241_DrawStaticScreen: Static-screen routine of sound-editor title 0x33 TT_SEFILH241 (entry 19 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilH241_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeMenu_Utility_CompareBlock_Data_3
 	ld	xix, SeScreenData_0x1997
 	call	SeGfx_DrawStaticList
@@ -9527,18 +9527,18 @@ SeFilH241_DrawStaticScreen:
 SeFilH241_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
-	call	SeMenu_Utility_FormatNumber_End
+	call	SeFil_DrawFilterTypeField
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeScreenData_0x221C
 	ld	xix, SeScreenData_0x224F
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilBpf1_DrawStaticScreen: Static-screen routine of sound-editor title 0x34 TT_SEFILBPF1 (entry 20 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilBpf1_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeScreenData_0x19C0
 	ld	xix, SeScreenData_0x1ACA
 	call	SeGfx_DrawStaticList
@@ -9548,18 +9548,18 @@ SeFilBpf1_DrawStaticScreen:
 SeFilBpf1_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
-	call	SeMenu_Utility_FormatNumber_End
+	call	SeFil_DrawFilterTypeField
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeFilBpf1_DrawStaticScreen_Records
 	ld	xix, SeScreenData_0x22B0
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilBcf1_DrawStaticScreen: Static-screen routine of sound-editor title 0x35 TT_SEFILBCF1 (entry 21 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilBcf1_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeScreenData_0x1ACA
 	ld	xix, SeScreenData_0x1AE1
 	call	SeGfx_DrawStaticList
@@ -9569,14 +9569,14 @@ SeFilBcf1_DrawStaticScreen:
 SeFilBcf1_DrawStaticScreen_Skip:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
-	call	SeMenu_Utility_FormatNumber_End
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawFilterTypeField
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilEnv1_DrawStaticScreen: Static-screen routine of sound-editor title 0x37 TT_SEFILENV1 (entry 23 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilEnv1_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeScreenData_0x1C2D
 	ld	xix, SeScreenData_0x1C7A
 	call	SeGfx_DrawStaticList
@@ -9595,7 +9595,7 @@ SeEnv1_DrawEnvelopeLayout:
 	ld	xiy, SeEnv1_DrawEnvelopeLayout_Records
 	ld	xix, SeEnv1_DrawEnvelopeLayout_Records2
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeDigEff_DrawStaticScreen: Static-screen routine of sound-editor title 0x3A TT_SEDIGEFF (entry 26 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
@@ -10452,7 +10452,7 @@ SePitEnv2_DrawStaticScreen:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilFil2_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	ld	xiy, SeScreenData_0x137D
 	ld	xix, SeScreenData_0x137D + 180
 	call	SeGfx_DrawStaticList
@@ -10466,13 +10466,13 @@ SeFilFil2_DrawStaticScreen:
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
 	call	SeMenu_DrawBreakpointKeyboard
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilEnv2_DrawStaticScreen: Static-screen routine of sound-editor title 0x38 TT_SEFILENV2 (entry 24 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilEnv2_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 SeMenu_FilterEdit_Init_Sub:
 	ld	xiy, SeScreenData_0x1C7A
 	ld	xix, SeScreenData_0x1DB7
@@ -10491,15 +10491,15 @@ SeMenu_FilterEdit_Init_Sub:
 	ld	xiy, SeScreenData_0x3B84
 	ld	xix, SeScreenData_0x3BDB
 	call	SeGfx_DrawBoundList
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeFilLfo1_DrawStaticScreen: Static-screen routine of sound-editor title 0x39 TT_SEFILLFO1 (entry 25 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilLfo1_DrawStaticScreen:
-	call	SeMenu_Utility_SearchByte
+	call	SeFil_DrawPageHeader
 	call	SeLfo1_DrawStaticScreen
-	call	SeMenu_Utility_FormatNumber_Loop
+	call	SeFil_DrawModeCaption
 	ret
 ; SeAmpLfo1_DrawStaticScreen: Static-screen routine of sound-editor title 0x2F TT_SEAMPLFO1 (entry 15 of
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
@@ -13233,14 +13233,14 @@ SeScreenData_0x1523:
 	sd_quad	0x05, 278, 39, 306, 52
 	sd_quad	0x05, 4, 219, 229, 232
 	sd_quad	0x05, 238, 219, 316, 232
-; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x1682
+; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeFil_PageHeader_Records
 ; evidence: SeAmpEnv2_DrawStaticScreen
 SeAmpEnv2_DrawStaticScreen_Records:
 	sd_quad	0x01, 47, 97, 255, 97
 	sd_quad	0x09, 3, 205, 230, 233
 ; static record list (19 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x16A8, SeScreenData_0x173B
-; evidence: SeMenu_Utility_FormatNumber
-SeScreenData_0x1682:
+; evidence: SeFil_DrawPageHeader_Join
+SeFil_PageHeader_Records:
 	sd_ptext	0x1c, 12, 140, 5, "FILTER"
 	sd_ptext	0x17, 16, 6, 7, "SOUND EDIT"
 	sd_quad	0x09, 4, 4, 68, 16
@@ -13261,7 +13261,7 @@ SeScreenData_0x1682:
 	sd_quad	0x09, 291, 54, 292, 65
 	sd_quad	0x09, 291, 94, 292, 105
 ; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeScreenData_0x1740
-; evidence: SeMenu_Utility_FormatNumber
+; evidence: SeFil_DrawPageHeader_Join
 SeScreenData_0x173B:
 	sd_op23	0x21, 3*40+14
 ; NO READER FOUND for these 30 bytes.  Searched: LE32/LE24/LE16 of every
@@ -13274,7 +13274,7 @@ SeScreenData_0x1740:
 	sd_quad	0x05, 270, 67, 306, 92
 	sd_quad	0x05, 278, 107, 306, 120
 ; static record list (4 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x1776, SeMenu_Utility_CompareBlock_Data
-; evidence: SeMenu_Utility_FormatSigned
+; evidence: SeFil_DrawFilterTypeField_Join
 SeMenu_Utility_FormatNumber_Data_2:
 	sd_ctext	0x06, 8, 137*40+32, "M0DE"
 	sd_ctext	0x06, 6, 153*40+38, " \021"
@@ -13657,12 +13657,12 @@ SeTonHyb1_DrawField_SetupPath_Records2:
 	.short	61, 150, 252, 164
 	.short	61, 166, 252, 180
 ; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)
-; evidence: SeMenu_Utility_FormatSigned
-SeMenu_Utility_FormatSigned_Records:
+; evidence: SeFil_DrawFilterTypeField_Join
+SeFil_FilterTypeField_Record:
 	sdb_str	0x0678, 0x07, 0, 0x20, SeValText_FilterTypes, 6, 153*40+32
 ; string table, 6-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 8 by the record's mask; the table holds 6 cells; values >= 6 would read past it)
-; evidence: bound op02 record at SeMenu_Utility_FormatSigned_Records
+; evidence: bound op02 record at SeFil_FilterTypeField_Record
 SeValText_FilterTypes:
 	.ascii	"LPF+EQ"
 	.ascii	"HPF+EQ"
