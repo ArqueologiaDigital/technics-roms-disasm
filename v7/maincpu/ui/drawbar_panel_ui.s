@@ -1528,7 +1528,7 @@ PmemOutLGridCheck_OnRamData_Skip8:
 	ld	xwa, (xwa)
 	bit	1, wa
 	jr	z, PmemOutLGridCheck_OnRamData_Skip9
-	ld	xwa, NakaInst_ON_E80168
+	ld	xwa, NakaInst_ON
 	jr	PmemOutLGridCheck_OnRamData_Join6
 PmemOutLGridCheck_OnRamData_Skip9:
 	ld	xwa, PmemOutLGridCheck_OnRamData_Str_OFF_6

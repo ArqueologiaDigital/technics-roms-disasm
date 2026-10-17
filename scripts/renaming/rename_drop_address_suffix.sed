@@ -1,0 +1,57 @@
+# Names whose last component restated their own address (Name_EC837C at 0xEC837C) and that are unique without it,
+# in v10, v9 and v7 alike: the suffix is dropped (addresses come from the ELF; CLAUDE.md 'No Inline Address
+# Comments').  Kept with their suffix: stems that say nothing by themselves (NakaInst_D_a0, NakaInst_data,
+# NoRef_Bytes, the Naka_Help_<n> index entries).  Generated 2026-10-17.
+s/\bNakaInst_Ady_s_PartyOrgan_125_EC778C\b/NakaInst_Ady_s_PartyOrgan_125/g
+s/\bNakaInst_Barber_Shop_Jazz_196_ECC02C\b/NakaInst_Barber_Shop_Jazz_196/g
+s/\bNakaInst_Bolero_Orchestra_120_ECD424\b/NakaInst_Bolero_Orchestra_120/g
+s/\bNakaInst_Dance_Band_Jive_176_ECAC34\b/NakaInst_Dance_Band_Jive_176/g
+s/\bNakaInst_Deuringer_Swing_190_EC9BDC\b/NakaInst_Deuringer_Swing_190/g
+s/\bNakaInst_Festival_Amigos_116_EC742C\b/NakaInst_Festival_Amigos_116/g
+s/\bNakaInst_Fogerty_s_Stomp_206_ECC72C\b/NakaInst_Fogerty_s_Stomp_206/g
+s/\bNakaInst_Foxy_Squeezebox_154_ECA7CC\b/NakaInst_Foxy_Squeezebox_154/g
+s/\bNakaInst_Full_Brass_Band_115_ECB504\b/NakaInst_Full_Brass_Band_115/g
+s/\bNakaInst_A_Case_Of_Soul_114_EC837C\b/NakaInst_A_Case_Of_Soul_114/g
+s/\bNakaInst_Besame_Strings_120_ECD31C\b/NakaInst_Besame_Strings_120/g
+s/\bNakaInst_Dance_Surround_124_EC74F4\b/NakaInst_Dance_Surround_124/g
+s/\bNakaInst_Dancing_Flutes_125_EC7324\b/NakaInst_Dancing_Flutes_125/g
+s/\bNakaInst_Hard_Sax_Blues_124_EC87E4\b/NakaInst_Hard_Sax_Blues_124/g
+s/\bNakaInst_Heavy_Harmonica_74_EC645C\b/NakaInst_Heavy_Harmonica_74/g
+s/\bNakaInst_I_Got_The_Blues_83_EC88AC\b/NakaInst_I_Got_The_Blues_83/g
+s/\bNakaInst_Ballad_Romance_67_EC49A4\b/NakaInst_Ballad_Romance_67/g
+s/\bNakaInst_Country_Licks_235_ECC624\b/NakaInst_Country_Licks_235/g
+s/\bNakaInst_Hard_Analogue_148_EC6394\b/NakaInst_Hard_Analogue_148/g
+s/\bNakaInst_Alpine_Combo_125_ECB92C\b/NakaInst_Alpine_Combo_125/g
+s/\bNakaInst_Boogie_Dance_160_EC96AC\b/NakaInst_Boogie_Dance_160/g
+s/\bNakaInst_Dance_Island_104_EC7194\b/NakaInst_Dance_Island_104/g
+s/\bNakaInst_Disco_Techni_118_EC6D2C\b/NakaInst_Disco_Techni_118/g
+s/\bNakaInst_Gentle_Ballad_75_EC4A6C\b/NakaInst_Gentle_Ballad_75/g
+s/\bNakaInst_At_The_Eger_120_ECB75C\b/NakaInst_At_The_Eger_120/g
+s/\bNakaInst_Dire_Strats_138_EC5CD4\b/NakaInst_Dire_Strats_138/g
+s/\bNakaInst_Disco_Metal_124_EC6EFC\b/NakaInst_Disco_Metal_124/g
+s/\bNakaInst_Fusion_Tines_98_ECA044\b/NakaInst_Fusion_Tines_98/g
+s/\bNakaInst_Amor_Reed_117_ECD3E4\b/NakaInst_Amor_Reed_117/g
+s/\bData_MainFuncPropSep_EA0E02\b/Data_MainFuncPropSep/g
+s/\bData_PageIconPropSep_EA0E1E\b/Data_PageIconPropSep/g
+s/\bData_PaintokPropSep_EA0ED6\b/Data_PaintokPropSep/g
+s/\bNakaInst_Indonesian_E9D85E\b/NakaInst_Indonesian/g
+s/\bPtrTbl_MsgTypeNames_EA11F8\b/PtrTbl_MsgTypeNames/g
+s/\bNoRef_SemitoneBias_EEC0CA\b/NoRef_SemitoneBias/g
+s/\bData_IndexPropSep_EA0DF2\b/Data_IndexPropSep/g
+s/\bNoRef_HarmonyLike_EEA22E\b/NoRef_HarmonyLike/g
+s/\bPtrTbl_EventNames_EA1188\b/PtrTbl_EventNames/g
+s/\bData_DialPropSep_EA0E92\b/Data_DialPropSep/g
+s/\bData_PasswordSep_EA0B46\b/Data_PasswordSep/g
+s/\bData_TailPropSep_EA0E4A\b/Data_TailPropSep/g
+s/\bData_UiWidgetSep_EA0D72\b/Data_UiWidgetSep/g
+s/\bNakaInst_English_E9D88A\b/NakaInst_English/g
+s/\bNakaInst_Italian_E9D86A\b/NakaInst_Italian/g
+s/\bNakaInst_Spanish_E9D872\b/NakaInst_Spanish/g
+s/\bNakaInst_DIRECT_E7FCE4\b/NakaInst_DIRECT/g
+s/\bNakaInst_French_E9D87A\b/NakaInst_French/g
+s/\bNakaInst_German_E9D882\b/NakaInst_German/g
+s/\bStr_UiProp_FwOn_EA0D7E\b/Str_UiProp_FwOn/g
+s/\bNakaInst_BASS_E9D8F2\b/NakaInst_BASS/g
+s/\bNakaInst_DRUM_E9D8E8\b/NakaInst_DRUM/g
+s/\bData_WinProp_EA0F42\b/Data_WinProp/g
+s/\bNakaInst_ON_E80168\b/NakaInst_ON/g

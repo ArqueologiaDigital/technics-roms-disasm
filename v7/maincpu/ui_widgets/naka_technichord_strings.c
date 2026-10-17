@@ -2715,7 +2715,7 @@ typedef struct __attribute__((packed)) {
     char PsFileNameBox_code[12];
     char PsFileNameBox_name[14];
     uint16_t Cheap_ClassCount_165;
-    uint32_t PtrTbl_EventNames_EA1188[6];  /* 6 pointers */
+    uint32_t PtrTbl_EventNames[6];  /* 6 pointers */
     char EV_WAKEUPPASSWORD_str[18];
     char EV_INDEXSW_DOWN_D_str[18];
     char EV_INDEXSW_UP_D_str[16];
@@ -2724,8 +2724,8 @@ typedef struct __attribute__((packed)) {
     uint16_t Cheap_ResEventCount_1C5;
     /* Cheap_ResMethodTable_1E5: 1 pointers (cut from ptrs_285 by split_naka_pointer_arrays.py) */
     uint32_t Cheap_ResMethodTable_1E5[1];
-    /* PtrTbl_MsgTypeNames_EA11F8: 17 pointers (cut from ptrs_285 by split_naka_pointer_arrays.py) */
-    uint32_t PtrTbl_MsgTypeNames_EA11F8[17];
+    /* PtrTbl_MsgTypeNames: 17 pointers (cut from ptrs_285 by split_naka_pointer_arrays.py) */
+    uint32_t PtrTbl_MsgTypeNames[17];
     char MT_CheckPassword3_str[18];
     char MT_CheckPassword2_str[18];
     char MT_CheckPassword_str[18];
@@ -11152,7 +11152,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .Cheap_ClassCount_165 = 0x000D,
 
-    .PtrTbl_EventNames_EA1188 = {
+    .PtrTbl_EventNames = {
         SELF(EV_NOTPARADRAW_str),
         SELF(EV_NOTPOSTAIC_str),
         SELF(EV_INDEXSW_UP_D_str),
@@ -11177,7 +11177,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
         SELF(MT_GetFileSfx_str),
     },
 
-    .PtrTbl_MsgTypeNames_EA11F8 = {
+    .PtrTbl_MsgTypeNames = {
         SELF(MT_SetFileSfx_str),
         SELF(MT_SetSelectedFileNumber_str),
         SELF(MT_GetSelectedFileNumber_str),

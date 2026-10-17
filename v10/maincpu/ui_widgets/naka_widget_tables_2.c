@@ -1930,10 +1930,10 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     char PmemOutLGridCheck_LocalInit_Strings[52];
     /* ---------------------------------------------------------------------
-     * NakaInst_ON_E80168 -- label kept because other files use it; 82 bytes
+     * NakaInst_ON -- label kept because other files use it; 82 bytes
      * to the next object. Contents not established.
      * --------------------------------------------------------------------- */
-    uint8_t NakaInst_ON_E80168[82];
+    uint8_t NakaInst_ON[82];
     /* ---------------------------------------------------------------------
      * PmemOutL_BitCheckDisplay_Str -- NUL-terminated string(s), 6 bytes,
      * used by PmemOutL_BitCheckDisplay (v10/v9 0xF7916A, v7 0xF78D66) (`ld
@@ -12950,7 +12950,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         " OFF \0"
         " %3d ",
 
-    .NakaInst_ON_E80168 = {
+    .NakaInst_ON = {
         0x20, 0x4F, 0x4E, 0x20, 0x20, 0x00, 0x20, 0x4F, 0x46, 0x46, 0x20, 0x00, 0x20, 0x4F, 0x46, 0x46,
         0x20, 0x00, 0x20, 0x25, 0x33, 0x64, 0x20, 0x00, 0x20, 0x25, 0x33, 0x64, 0x20, 0x00, 0x20, 0x4F,
         0x46, 0x46, 0x20, 0x00, 0x20, 0x25, 0x33, 0x64, 0x20, 0x00, 0x20, 0x4F, 0x46, 0x46, 0x20, 0x00,

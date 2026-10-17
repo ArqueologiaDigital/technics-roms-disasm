@@ -55,7 +55,7 @@ for a, s in TUNE:
         ["12 x u8 semitone table (one byte per pitch class, 0x80 centre): a",
          "SeqVoice_CheckAndRet_Data (0xFEBC56) case returns it (`lda_24 xhl,(<this>)`)."]))
     first = False
-obj(0xEEC0CA, 0xEEC0E2, "NoRef_SemitoneBias_EEC0CA", "byte", [
+obj(0xEEC0CA, 0xEEC0E2, "NoRef_SemitoneBias", "byte", [
     "24 bytes shaped like two more 12-byte semitone tables, but no reader: no",
     "instruction operand and no 32-bit data pointer in the v10 ROM names",
     "0xEEC0CA..0xEEC0E1.  Purpose not established."], per_line=12)

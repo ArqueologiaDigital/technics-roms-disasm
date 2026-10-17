@@ -166,8 +166,8 @@ Naka_DrawbarControl_Table:
 	.long NakaInst_ACCOMP1
 	.long NakaInst_ACCOMP2
 	.long NakaInst_ACCOMP3
-	.long NakaInst_BASS_E9D8F2
-	.long NakaInst_DRUM_E9D8E8
+	.long NakaInst_BASS
+	.long NakaInst_DRUM
 	.long NakaInst_CHORD
 	.long NakaInst_R_BASS
 	.long NakaInst_MSP_E9D8CA

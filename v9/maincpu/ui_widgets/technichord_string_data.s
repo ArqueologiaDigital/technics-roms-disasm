@@ -2342,42 +2342,42 @@ NakaInst_PLEASE_WAIT:	.incbin "includes/generated/naka_technichord_strings.bin",
 ; CheckLanguage (ui/drawbar_panel_ui.s) answers EVT_GET_RAM_STRING with entry [RAM 0x340E4], Strcpy'd to the caller's buffer;
 ; its EVT_SW_IN steps the language up or down and skips 4 (Italian).
 CheckLanguage_LangNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x178F8, 0x18
-; [nakarest] NakaInst_Indonesian_E9D85E  +0x17910..+0x1791c (0xe9d85e, 12 B)
+; [nakarest] NakaInst_Indonesian  +0x17910..+0x1791c (0xe9d85e, 12 B)
 ; [nakarest] Text (12 B at 0xe9d85e), first string "Indonesian"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d85a),
 ; [nakarest] which is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_Indonesian_E9D85E:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17910, 0xC
-; [nakarest] NakaInst_Italian_E9D86A  +0x1791c..+0x17924 (0xe9d86a, 8 B)
+NakaInst_Indonesian:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17910, 0xC
+; [nakarest] NakaInst_Italian  +0x1791c..+0x17924 (0xe9d86a, 8 B)
 ; [nakarest] Text (8 B at 0xe9d86a), first string "Italian"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d856),
 ; [nakarest] which is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_Italian_E9D86A:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1791C, 0x8
-; [nakarest] NakaInst_Spanish_E9D872  +0x17924..+0x1792c (0xe9d872, 8 B)
+NakaInst_Italian:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1791C, 0x8
+; [nakarest] NakaInst_Spanish  +0x17924..+0x1792c (0xe9d872, 8 B)
 ; [nakarest] Text (8 B at 0xe9d872), first string "Spanish"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d852),
 ; [nakarest] which is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_Spanish_E9D872:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17924, 0x8
-; [nakarest] NakaInst_French_E9D87A  +0x1792c..+0x17934 (0xe9d87a, 8 B)
+NakaInst_Spanish:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17924, 0x8
+; [nakarest] NakaInst_French  +0x1792c..+0x17934 (0xe9d87a, 8 B)
 ; [nakarest] Text (8 B at 0xe9d87a), first string "French"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d84e), which
 ; [nakarest] is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_French_E9D87A:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1792C, 0x8
-; [nakarest] NakaInst_German_E9D882  +0x17934..+0x1793c (0xe9d882, 8 B)
+NakaInst_French:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1792C, 0x8
+; [nakarest] NakaInst_German  +0x17934..+0x1793c (0xe9d882, 8 B)
 ; [nakarest] Text (8 B at 0xe9d882), first string "German"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d84a), which
 ; [nakarest] is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_German_E9D882:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17934, 0x8
-; [nakarest] NakaInst_English_E9D88A  +0x1793c..+0x1795e (0xe9d88a, 34 B)
+NakaInst_German:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17934, 0x8
+; [nakarest] NakaInst_English  +0x1793c..+0x1795e (0xe9d88a, 34 B)
 ; [nakarest] Text (34 B at 0xe9d88a), first string "English"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),
 ; [nakarest] which is read by CheckLang_GetTextStr (ui/drawbar_panel_ui.s: `lda xbc,
 ; [nakarest] (CheckLanguage_LangNames:24)`).
-NakaInst_English_E9D88A:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1793C, 0x8
+NakaInst_English:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1793C, 0x8
 CheckMsg_AudioCommand_Str_MessageID_Fmt3d:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17944, 0x10	; "MessageID : %3d"
 MsgHeader_BuildLoop_Str_Fmts_Fmt2d:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17954, 0xA	; "%s %02d!"
 ; [nakarest] NakaInst_METRO  +0x1795e..+0x17968 (0xe9d8ac, 10 B)
@@ -2422,20 +2422,20 @@ NakaInst_R_BASS:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17
 ; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_CHORD`); 1 data word in
 ; [nakarest] Naka_DrawbarControl_Table (at 0xeeed98).
 NakaInst_CHORD:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17990, 0xA
-; [nakarest] NakaInst_DRUM_E9D8E8  +0x1799a..+0x179a4 (0xe9d8e8, 10 B)
+; [nakarest] NakaInst_DRUM  +0x1799a..+0x179a4 (0xe9d8e8, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8e8), first string "DRUM :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
 ; [nakarest] Naka_DrawbarControl_Table
-; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_DRUM_E9D8E8`); 1 data
+; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_DRUM`); 1 data
 ; [nakarest] word in Naka_DrawbarControl_Table (at 0xeeed94).
-NakaInst_DRUM_E9D8E8:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1799A, 0xA
-; [nakarest] NakaInst_BASS_E9D8F2  +0x179a4..+0x179ae (0xe9d8f2, 10 B)
+NakaInst_DRUM:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1799A, 0xA
+; [nakarest] NakaInst_BASS  +0x179a4..+0x179ae (0xe9d8f2, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8f2), first string "BASS :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
 ; [nakarest] Naka_DrawbarControl_Table
-; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_BASS_E9D8F2`); 1 data
+; [nakarest] (ui_widgets/sequencer_channel_containers.s: `.long NakaInst_BASS`); 1 data
 ; [nakarest] word in Naka_DrawbarControl_Table (at 0xeeed90).
-NakaInst_BASS_E9D8F2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179A4, 0xA
+NakaInst_BASS:	.incbin "includes/generated/naka_technichord_strings.bin", 0x179A4, 0xA
 ; [nakarest] NakaInst_ACCOMP3  +0x179ae..+0x179b8 (0xe9d8fc, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8fc), first string "ACCOMP3:"; no registered NAKA table points
 ; [nakarest] into it; reached through source references
@@ -5862,8 +5862,8 @@ Data_DiskFuncPtrTbl_EA0B12:
 	.long Str_CheckPasswordText
 	.long Str_CheckPasswordOk
 	.long Str_CheckPasswordNo
-	.long Data_PasswordSep_EA0B46
-Data_PasswordSep_EA0B46:
+	.long Data_PasswordSep
+Data_PasswordSep:
 	.long 0x6843FF00
 	.long 0x506B6365
 ; [nakarest] naka_technichord_strings+0x1ac00  +0x1ac00..+0x1ac0a (0xea0b4e, 10 B)
@@ -6056,21 +6056,21 @@ Str_UiProp_FontColor:	.incbin "includes/generated/naka_technichord_strings.bin",
 ; [nakarest] class 1 of Class slot 0x165 (table 0xea0f46, 13 entries, InitializeCheap):
 ; [nakarest] PsWindowToggle {onwin, offwin, main_func}.
 Str_UiProp_Font:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE0E, 0x16
-; [nakarest] Data_UiWidgetSep_EA0D72  +0x1ae24..+0x1ae26 (0xea0d72, 2 B)
+; [nakarest] Data_UiWidgetSep  +0x1ae24..+0x1ae26 (0xea0d72, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 1 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): PsWindowToggle {onwin, offwin,
 ; [nakarest] main_func} (starts 0xea0d62, 26 of its 42 bytes are here or later).
-Data_UiWidgetSep_EA0D72:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE24, 0x2
+Data_UiWidgetSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE24, 0x2
 ; [nakarest] Str_UiProp_MainFunc_EA0D74  +0x1ae26..+0x1ae30 (0xea0d74, 10 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 1 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): PsWindowToggle {onwin, offwin,
 ; [nakarest] main_func} (starts 0xea0d62, 24 of its 42 bytes are here or later).
 Str_UiProp_MainFunc_EA0D74:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE26, 0xA
-; [nakarest] Str_UiProp_FwOn_EA0D7E  +0x1ae30..+0x1ae3a (0xea0d7e, 10 B)
+; [nakarest] Str_UiProp_FwOn  +0x1ae30..+0x1ae3a (0xea0d7e, 10 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 1 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): PsWindowToggle {onwin, offwin,
 ; [nakarest] main_func} (starts 0xea0d62, 14 of its 42 bytes are here or later).
-Str_UiProp_FwOn_EA0D7E:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE30, 0xA
+Str_UiProp_FwOn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE30, 0xA
 ; [nakarest] Str_UiProp_Win_EA0D86  +0x1ae3a..+0x1ae46 (0xea0d88, 12 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 1 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): PsWindowToggle {onwin, offwin,
@@ -6131,11 +6131,11 @@ Str_UiProp_MainFunc_EA0DDA:	.incbin "includes/generated/naka_technichord_strings
 ; [nakarest] (the +20 field-name table) of class 5 of Class slot 0x165 (table 0xea0f46, 13
 ; [nakarest] entries, InitializeCheap): AcMonoIndexToggle {index}.
 Str_UiProp_Font_EA0DE4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AE96, 0xE
-; [nakarest] Data_IndexPropSep_EA0DF2  +0x1aea4..+0x1aea6 (0xea0df2, 2 B)
+; [nakarest] Data_IndexPropSep  +0x1aea4..+0x1aea6 (0xea0df2, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 5 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): AcMonoIndexToggle {index} (starts
 ; [nakarest] 0xea0dea, 8 of its 16 bytes are here or later).
-Data_IndexPropSep_EA0DF2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEA4, 0x2
+Data_IndexPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEA4, 0x2
 ; [nakarest] Str_UiProp_Index  +0x1aea6..+0x1aeb4 (0xea0df4, 14 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 5 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): AcMonoIndexToggle {index} (starts
@@ -6143,11 +6143,11 @@ Data_IndexPropSep_EA0DF2:	.incbin "includes/generated/naka_technichord_strings.b
 ; [nakarest] table) of class 6 of Class slot 0x165 (table 0xea0f46, 13 entries,
 ; [nakarest] InitializeCheap): IvOneShotTimer {main_func}.
 Str_UiProp_Index:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEA6, 0xE
-; [nakarest] Data_MainFuncPropSep_EA0E02  +0x1aeb4..+0x1aeb6 (0xea0e02, 2 B)
+; [nakarest] Data_MainFuncPropSep  +0x1aeb4..+0x1aeb6 (0xea0e02, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 6 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvOneShotTimer {main_func} (starts
 ; [nakarest] 0xea0dfa, 12 of its 20 bytes are here or later).
-Data_MainFuncPropSep_EA0E02:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEB4, 0x2
+Data_MainFuncPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEB4, 0x2
 ; [nakarest] Str_UiProp_MainFunc_EA0E04  +0x1aeb6..+0x1aed0 (0xea0e04, 26 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 6 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvOneShotTimer {main_func} (starts
@@ -6155,11 +6155,11 @@ Data_MainFuncPropSep_EA0E02:	.incbin "includes/generated/naka_technichord_string
 ; [nakarest] table) of class 7 of Class slot 0x165 (table 0xea0f46, 13 entries,
 ; [nakarest] InitializeCheap): VwScreenTitle {title, icon, page}.
 Str_UiProp_MainFunc_EA0E04:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEB6, 0x1A
-; [nakarest] Data_PageIconPropSep_EA0E1E  +0x1aed0..+0x1aed2 (0xea0e1e, 2 B)
+; [nakarest] Data_PageIconPropSep  +0x1aed0..+0x1aed2 (0xea0e1e, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 7 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): VwScreenTitle {title, icon, page}
 ; [nakarest] (starts 0xea0e0e, 20 of its 36 bytes are here or later).
-Data_PageIconPropSep_EA0E1E:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AED0, 0x2
+Data_PageIconPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AED0, 0x2
 ; [nakarest] Str_UiProp_Page  +0x1aed2..+0x1aed8 (0xea0e20, 6 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 7 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): VwScreenTitle {title, icon, page}
@@ -6180,11 +6180,11 @@ Str_UiProp_Title:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1
 ; [nakarest] 0xea0f46, 13 entries, InitializeCheap): Arrow {color, frame_only, dir, tail_x_rate,
 ; [nakarest] tail_y_rate}.
 PtrTbl_UiWidgetProps_EA0E32:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEE4, 0x18
-; [nakarest] Data_TailPropSep_EA0E4A  +0x1aefc..+0x1aefe (0xea0e4a, 2 B)
+; [nakarest] Data_TailPropSep  +0x1aefc..+0x1aefe (0xea0e4a, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 8 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): Arrow {color, frame_only, dir,
 ; [nakarest] tail_x_rate, tail_y_rate} (starts 0xea0e32, 48 of its 72 bytes are here or later).
-Data_TailPropSep_EA0E4A:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEFC, 0x2
+Data_TailPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AEFC, 0x2
 ; [nakarest] Str_UiProp_TailYRate  +0x1aefe..+0x1af0a (0xea0e4c, 12 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 8 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): Arrow {color, frame_only, dir,
@@ -6215,11 +6215,11 @@ Str_UiProp_Color:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1
 ; [nakarest] 0xea0f46, 13 entries, InitializeCheap): IvIndexSwCtrl {index_min, index_max, dial,
 ; [nakarest] dial_inv, auto_inc}.
 PtrTbl_UiWidgetProps_EA0E7A:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF2C, 0x18
-; [nakarest] Data_DialPropSep_EA0E92  +0x1af44..+0x1af46 (0xea0e92, 2 B)
+; [nakarest] Data_DialPropSep  +0x1af44..+0x1af46 (0xea0e92, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 9 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvIndexSwCtrl {index_min, index_max,
 ; [nakarest] dial, dial_inv, auto_inc} (starts 0xea0e7a, 48 of its 72 bytes are here or later).
-Data_DialPropSep_EA0E92:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF44, 0x2
+Data_DialPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF44, 0x2
 ; [nakarest] Str_UiProp_AutoInc_EA0E94  +0x1af46..+0x1af50 (0xea0e94, 10 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 9 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvIndexSwCtrl {index_min, index_max,
@@ -6250,11 +6250,11 @@ Str_UiProp_IndexMin:	.incbin "includes/generated/naka_technichord_strings.bin", 
 ; [nakarest] 0xea0f46, 13 entries, InitializeCheap): AcRotStrBox {func, interval, length,
 ; [nakarest] paintok}.
 PtrTbl_UiWidgetProps_EA0EC2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF74, 0x14
-; [nakarest] Data_PaintokPropSep_EA0ED6  +0x1af88..+0x1af8a (0xea0ed6, 2 B)
+; [nakarest] Data_PaintokPropSep  +0x1af88..+0x1af8a (0xea0ed6, 2 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 10 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): AcRotStrBox {func, interval, length,
 ; [nakarest] paintok} (starts 0xea0ec2, 34 of its 54 bytes are here or later).
-Data_PaintokPropSep_EA0ED6:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF88, 0x2
+Data_PaintokPropSep:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AF88, 0x2
 ; [nakarest] Str_UiProp_Paintok_EA0ED8  +0x1af8a..+0x1af92 (0xea0ed8, 8 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 10 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): AcRotStrBox {func, interval, length,
@@ -6316,11 +6316,11 @@ Str_UiProp_IndexMin_EA0F2E:	.incbin "includes/generated/naka_technichord_strings
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvWaitWinCtl {win} (starts 0xea0f38,
 ; [nakarest] 6 of its 14 bytes are here or later).
 Str_UiProp_Empty_EA0F40:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AFF2, 0x2
-; [nakarest] Data_WinProp_EA0F42  +0x1aff4..+0x1aff8 (0xea0f42, 4 B)
+; [nakarest] Data_WinProp  +0x1aff4..+0x1aff8 (0xea0f42, 4 B)
 ; [nakarest] Continues propname block (the +20 field-name table) of class 12 of Class slot 0x165
 ; [nakarest] (table 0xea0f46, 13 entries, InitializeCheap): IvWaitWinCtl {win} (starts 0xea0f38,
 ; [nakarest] 4 of its 14 bytes are here or later).
-Data_WinProp_EA0F42:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AFF4, 0x4
+Data_WinProp:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AFF4, 0x4
 ; [nakarest] naka_technichord_strings+0x1aff8  +0x1aff8..+0x1b148 (0xea0f46, 336 B)
 ; [nakarest] the table itself: Class slot 0x165 (table 0xea0f46, 13 entries, InitializeCheap),
 ; [nakarest] 13 class definitions x 24 bytes. class definition entries 0-12 of Class slot 0x165
@@ -6437,10 +6437,10 @@ Cheap_ClassTable_165:	.incbin "includes/generated/naka_technichord_strings.bin",
 ; InitializeCheap's RegObjTable loads it as a word and stores it as the count (+8) of the registry descriptor; the table holds
 ; 13 24-byte class definitions, then an all-zero one.
 Cheap_ClassCount_165:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B238, 0x2
-; [nakarest] PtrTbl_EventNames_EA1188  +0x1b23a..+0x1b252 (0xea1188, 24 B)
+; [nakarest] PtrTbl_EventNames  +0x1b23a..+0x1b252 (0xea1188, 24 B)
 ; [nakarest] the table itself: ResEvent slot 0x1c5 (table 0xea1188, 5 entries, InitializeCheap),
 ; [nakarest] 5 entry pointers x 4 bytes.
-PtrTbl_EventNames_EA1188:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B23A, 0x18
+PtrTbl_EventNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B23A, 0x18
 ; [nakarest] Str_Ev_WakeUpPassword  +0x1b252..+0x1b264 (0xea11a0, 18 B)
 ; [nakarest] name string, entry 4 of ResEvent slot 0x1c5 (table 0xea1188, 5 entries,
 ; [nakarest] InitializeCheap): "EV_WAKEUPPASSWORD".
@@ -6461,7 +6461,7 @@ Str_Ev_NotPostAic:	.incbin "includes/generated/naka_technichord_strings.bin", 0x
 ; [nakarest] name string, entry 0 of ResEvent slot 0x1c5 (table 0xea1188, 5 entries,
 ; [nakarest] InitializeCheap): "EV_NOTPARADRAW".
 Str_Ev_NotParaDraw:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B294, 0x10
-; Cheap_ResEventCount_1C5 -- 1 x uint16_t = 5: entry count of InitializeCheap's ResEvent table (registry slot 0x1c5, PtrTbl_EventNames_EA1188)
+; Cheap_ResEventCount_1C5 -- 1 x uint16_t = 5: entry count of InitializeCheap's ResEvent table (registry slot 0x1c5, PtrTbl_EventNames)
 ; InitializeCheap `RegObjTable` passes this address as the count; the macro loads it with `ld wa, (count:24)` and
 ; RegisterObjectTable stores it at +8 of the 14-byte registry record (0x27ed2 + 14 * slot).
 ; The table holds 5 event-name pointers "EV_NOTPARADRAW", "EV_NOTPOSTAIC", "EV_INDEXSW_UP_D", "EV_INDEXSW_DOWN_D", "EV_WAKEUPPASSWORD" and a 0 end word.
@@ -6470,12 +6470,12 @@ Cheap_ResEventCount_1C5:	.incbin "includes/generated/naka_technichord_strings.bi
 ; [nakarest] the table itself: ResMethod slot 0x1e5 (table 0xea11f4, 17 entries,
 ; [nakarest] InitializeCheap), 17 entry pointers x 4 bytes.
 Cheap_ResMethodTable_1E5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B2A6, 0x4
-; [nakarest] PtrTbl_MsgTypeNames_EA11F8  +0x1b2aa..+0x1b2ee (0xea11f8, 68 B)
+; [nakarest] PtrTbl_MsgTypeNames  +0x1b2aa..+0x1b2ee (0xea11f8, 68 B)
 ; [nakarest] 4 B at 0xea1238: the end marker of ResMethod slot 0x1e5 (table 0xea11f4, 17 entries, InitializeCheap) -- a zero word after entry 16, the last, as every ResMethod table ends.
 ; [nakarest] Continues the table itself: ResMethod slot 0x1e5 (table 0xea11f4, 17 entries,
 ; [nakarest] InitializeCheap), 17 entry pointers x 4 bytes (starts 0xea11f4, 64 of its 68 bytes
 ; [nakarest] are here or later).
-PtrTbl_MsgTypeNames_EA11F8:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B2AA, 0x44
+PtrTbl_MsgTypeNames:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1B2AA, 0x44
 ; [nakarest] Str_Mt_CheckPassword3  +0x1b2ee..+0x1b300 (0xea123c, 18 B)
 ; [nakarest] name string, entry 16 of ResMethod slot 0x1e5 (table 0xea11f4, 17 entries,
 ; [nakarest] InitializeCheap): "MT_CheckPassword3".

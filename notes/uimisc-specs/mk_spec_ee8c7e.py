@@ -183,7 +183,7 @@ for lo, hi, lab, k, h, ha in HARM:
         "28 x 12 x k up to the next referenced one.  [INFERENCE] harmony notes below",
         "the melody note per chord row; UIParam_CallbackDispatch selects %s." % h),
         per_line=12 * k if k <= 2 else 12)
-obj(0xEEA22E, 0xEEA8BE, "NoRef_HarmonyLike_EEA22E", "byte", H(
+obj(0xEEA22E, 0xEEA8BE, "NoRef_HarmonyLike", "byte", H(
     "1680 bytes that group as 3-byte note offsets like Harmony_Offsets3_A/B, but",
     "1680 is not a multiple of their 36-byte row.  No reader: no instruction",
     "operand, positional name or 32-bit data pointer in the v10 ROM names any",

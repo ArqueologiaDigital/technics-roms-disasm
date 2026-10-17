@@ -3974,7 +3974,7 @@ InitializeCheap:
 	ld (XBC+0x04),XWA
 	ld wa, (Cheap_ResEventCount_1C5:24)
 	ld (XBC+0x08),WA
-	lda xwa, (PtrTbl_EventNames_EA1188:24)
+	lda xwa, (PtrTbl_EventNames:24)
 	ld (XBC+0x0a),XWA
 	ldw WA, 0x01c5
 	call RegisterObjectTable

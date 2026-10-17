@@ -53,7 +53,7 @@ extern const char NakaDbg_LowerCaseChars2;
 extern const char NakaInst_ACCOMP1;
 extern const char NakaInst_ACCOMP2;
 extern const char NakaInst_ACCOMP3;
-extern const char NakaInst_BASS_E9D8F2;
+extern const char NakaInst_BASS;
 extern const char NakaInst_CHARA1;
 extern const char NakaInst_CHARA1P;
 extern const char NakaInst_CHARA1W;
@@ -67,7 +67,7 @@ extern const char NakaInst_CHARA6;
 extern const char NakaInst_CHORD;
 extern const char NakaInst_CONTROL;
 extern const char NakaStr_FontFileBlank;
-extern const char NakaInst_DRUM_E9D8E8;
+extern const char NakaInst_DRUM;
 extern const char NakaInst_FADE_IN_OUT_SETTING;
 extern const char NakaInst_LEFT_E9D99C;
 extern const char NakaInst_METRO;
@@ -2889,8 +2889,8 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(NakaInst_ACCOMP1),
         NAKA_ADDR(NakaInst_ACCOMP2),
         NAKA_ADDR(NakaInst_ACCOMP3),
-        NAKA_ADDR(NakaInst_BASS_E9D8F2),
-        NAKA_ADDR(NakaInst_DRUM_E9D8E8),
+        NAKA_ADDR(NakaInst_BASS),
+        NAKA_ADDR(NakaInst_DRUM),
         NAKA_ADDR(NakaInst_CHORD),
         NAKA_ADDR(NakaInst_R_BASS),
         NAKA_ADDR(NakaInst_MSP_E9D8CA),

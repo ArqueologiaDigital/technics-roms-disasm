@@ -4164,7 +4164,7 @@ InitializeCheap:
 	lda xsp, (xsp - 14)
 
 	RegObjTable NAKA_CLASS_Class, ClassProc, Cheap_ClassCount_165, Cheap_ClassTable_165, 0x165
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Cheap_ResEventCount_1C5, PtrTbl_EventNames_EA1188, 0x1c5
+	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Cheap_ResEventCount_1C5, PtrTbl_EventNames, 0x1c5
 	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Cheap_ResMethodCount_1E5, Cheap_ResMethodTable_1E5, 0x1e5
 	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x1d, Cheap_ApFuncTable_125, 0x125
 	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x1d, PtrTbl_DiskFuncNames, 0x425

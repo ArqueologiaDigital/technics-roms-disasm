@@ -6,8 +6,8 @@
 # Do not hand-edit: rename in the sources and regenerate.
 #
 #   symbols .................. 53,737
-#   semantic names ........... 53,110 (98.8%)
-#   positional names ......... 627
+#   semantic names ........... 53,163 (98.9%)
+#   positional names ......... 574
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -6653,7 +6653,7 @@ Data_InOutGridDispatch_Strings_2 00E7FCB0
 ControlMode_Option_Table 00E7FCBA
 Data_InOutGridDispatch_PtrTable_3 00E7FCC4
 Data_InOutGridDispatch_Strings_3 00E7FCD0
-NakaInst_DIRECT_E7FCE4 00E7FCE4
+NakaInst_DIRECT 00E7FCE4
 InOutGridCheck_LocalInit 00E7FCEE
 InOutGridCheck_LocalInit_Strings 00E7FCFE
 Data_InOutGridDispatch_Str_Blank5 00E7FD04
@@ -6765,7 +6765,7 @@ PmemOutLGridCheck_OnRamData_Str_Fmt3d 00E80150
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_2 00E80156
 PmemOutLGridCheck_OnRamData_Str_OFF 00E8015C
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_3 00E80162
-NakaInst_ON_E80168 00E80168
+NakaInst_ON 00E80168
 PmemOutLGridCheck_OnRamData_Str_OFF_6 00E8016E
 PmemOutLGridCheck_OnRamData_Str_OFF_2 00E80174
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_4 00E8017A
@@ -7859,12 +7859,12 @@ PleaseWait_LangTexts 00E9D7CA
 NakaInst_SILAHKAN_TUNGGU 00E9D7E2
 NakaInst_PLEASE_WAIT 00E9D7F4
 CheckLanguage_LangNames 00E9D846
-NakaInst_Indonesian_E9D85E 00E9D85E
-NakaInst_Italian_E9D86A 00E9D86A
-NakaInst_Spanish_E9D872 00E9D872
-NakaInst_French_E9D87A 00E9D87A
-NakaInst_German_E9D882 00E9D882
-NakaInst_English_E9D88A 00E9D88A
+NakaInst_Indonesian 00E9D85E
+NakaInst_Italian 00E9D86A
+NakaInst_Spanish 00E9D872
+NakaInst_French 00E9D87A
+NakaInst_German 00E9D882
+NakaInst_English 00E9D88A
 CheckMsg_AudioCommand_Str_MessageID_Fmt3d 00E9D892
 MsgHeader_BuildLoop_Str_Fmts_Fmt2d 00E9D8A2
 NakaInst_METRO 00E9D8AC
@@ -7873,8 +7873,8 @@ NakaInst_MSP 00E9D8C0
 NakaInst_MSP_E9D8CA 00E9D8CA
 NakaInst_R_BASS 00E9D8D4
 NakaInst_CHORD 00E9D8DE
-NakaInst_DRUM_E9D8E8 00E9D8E8
-NakaInst_BASS_E9D8F2 00E9D8F2
+NakaInst_DRUM 00E9D8E8
+NakaInst_BASS 00E9D8F2
 NakaInst_ACCOMP3 00E9D8FC
 NakaInst_ACCOMP2 00E9D906
 NakaInst_ACCOMP1 00E9D910
@@ -8499,7 +8499,7 @@ Cheap_ApFuncTable_125 00EA0A56
 PtrTbl_DiskFuncNames 00EA0ACE
 Data_DiskFuncPtrTbl_EA0B00 00EA0B00
 Data_DiskFuncPtrTbl_EA0B12 00EA0B12
-Data_PasswordSep_EA0B46 00EA0B46
+Data_PasswordSep 00EA0B46
 Str_CheckPasswordNo 00EA0B48
 Str_CheckPasswordOk 00EA0B58
 Str_CheckPasswordText 00EA0B68
@@ -8541,9 +8541,9 @@ Str_UiProp_Column 00EA0D40
 Str_UiProp_MainFunc 00EA0D48
 Str_UiProp_FontColor 00EA0D52
 Str_UiProp_Font 00EA0D5C
-Data_UiWidgetSep_EA0D72 00EA0D72
+Data_UiWidgetSep 00EA0D72
 Str_UiProp_MainFunc_EA0D74 00EA0D74
-Str_UiProp_FwOn_EA0D7E 00EA0D7E
+Str_UiProp_FwOn 00EA0D7E
 Str_UiProp_Win_EA0D86 00EA0D88
 Str_UiProp_Empty_EA0D94 00EA0D94
 Str_UiProp_MainFunc_EA0D96 00EA0D96
@@ -8555,30 +8555,30 @@ Str_UiProp_Empty_EA0DD0 00EA0DD0
 Str_UiProp_Paintok_EA0DD2 00EA0DD2
 Str_UiProp_MainFunc_EA0DDA 00EA0DDA
 Str_UiProp_Font_EA0DE4 00EA0DE4
-Data_IndexPropSep_EA0DF2 00EA0DF2
+Data_IndexPropSep 00EA0DF2
 Str_UiProp_Index 00EA0DF4
-Data_MainFuncPropSep_EA0E02 00EA0E02
+Data_MainFuncPropSep 00EA0E02
 Str_UiProp_MainFunc_EA0E04 00EA0E04
-Data_PageIconPropSep_EA0E1E 00EA0E1E
+Data_PageIconPropSep 00EA0E1E
 Str_UiProp_Page 00EA0E20
 Str_UiProp_Icon 00EA0E26
 Str_UiProp_Title 00EA0E2C
 PtrTbl_UiWidgetProps_EA0E32 00EA0E32
-Data_TailPropSep_EA0E4A 00EA0E4A
+Data_TailPropSep 00EA0E4A
 Str_UiProp_TailYRate 00EA0E4C
 Str_UiProp_TailXRate 00EA0E58
 Str_UiProp_Dir 00EA0E64
 Str_UiProp_FrameOnly 00EA0E68
 Str_UiProp_Color 00EA0E74
 PtrTbl_UiWidgetProps_EA0E7A 00EA0E7A
-Data_DialPropSep_EA0E92 00EA0E92
+Data_DialPropSep 00EA0E92
 Str_UiProp_AutoInc_EA0E94 00EA0E94
 Str_UiProp_DialInv 00EA0E9E
 Str_UiProp_Dial_EA0EA8 00EA0EA8
 Str_UiProp_IndexMax 00EA0EAE
 Str_UiProp_IndexMin 00EA0EB8
 PtrTbl_UiWidgetProps_EA0EC2 00EA0EC2
-Data_PaintokPropSep_EA0ED6 00EA0ED6
+Data_PaintokPropSep 00EA0ED6
 Str_UiProp_Paintok_EA0ED8 00EA0ED8
 Str_UiProp_Length 00EA0EE0
 Str_UiProp_Interval 00EA0EE8
@@ -8590,10 +8590,10 @@ Str_UiProp_Interval_EA0F1A 00EA0F1A
 Str_UiProp_IndexMax_EA0F24 00EA0F24
 Str_UiProp_IndexMin_EA0F2E 00EA0F2E
 Str_UiProp_Empty_EA0F40 00EA0F40
-Data_WinProp_EA0F42 00EA0F42
+Data_WinProp 00EA0F42
 Cheap_ClassTable_165 00EA0F46
 Cheap_ClassCount_165 00EA1186
-PtrTbl_EventNames_EA1188 00EA1188
+PtrTbl_EventNames 00EA1188
 Str_Ev_WakeUpPassword 00EA11A0
 Str_Ev_IndexSwDownD 00EA11B2
 Str_Ev_IndexSwUpD 00EA11C4
@@ -8601,7 +8601,7 @@ Str_Ev_NotPostAic 00EA11D4
 Str_Ev_NotParaDraw 00EA11E2
 Cheap_ResEventCount_1C5 00EA11F2
 Cheap_ResMethodTable_1E5 00EA11F4
-PtrTbl_MsgTypeNames_EA11F8 00EA11F8
+PtrTbl_MsgTypeNames 00EA11F8
 Str_Mt_CheckPassword3 00EA123C
 Str_Mt_CheckPassword2 00EA124E
 Str_Mt_CheckPassword 00EA1260
@@ -11064,9 +11064,9 @@ NakaInst_The_Way_It_Is_70 00EC4814
 StyleVar_Gentle16Beat 00EC489C
 NakaInst_Orchestral_16_82 00EC48DC
 StyleVar_Atmospheric16 00EC4942
-NakaInst_Ballad_Romance_67_EC49A4 00EC49A4
+NakaInst_Ballad_Romance_67 00EC49A4
 StyleVar_SynthBallad 00EC49E8
-NakaInst_Gentle_Ballad_75_EC4A6C 00EC4A6C
+NakaInst_Gentle_Ballad_75 00EC4A6C
 StyleVar_GrandsOnStage 00EC4A8E
 NakaInst_Clavier_Francais_80 00EC4AAC
 StyleVar_ModernBallads 00EC4B34
@@ -11124,7 +11124,7 @@ NakaInst_Handbag_Dance_129 00EC5BCC
 StyleVar_GlamrockPiano 00EC5C10
 NakaInst_Elton_s_Piano_136 00EC5C94
 StyleVar_70sHits 00EC5CB6
-NakaInst_Dire_Strats_138_EC5CD4 00EC5CD4
+NakaInst_Dire_Strats_138 00EC5CD4
 StyleVar_70sPowerRock 00EC5D5C
 NakaInst_C_P_On_Stage_145 00EC5D9C
 StyleVar_EuroPopShuffle 00EC5E02
@@ -11144,9 +11144,9 @@ NakaInst_Everybody_Rock_131 00EC6204
 StyleVar_HeavyMetal 00EC628C
 NakaInst_Deep_Hammond_142 00EC62CC
 StyleVar_HeavyShuffle 00EC6332
-NakaInst_Hard_Analogue_148_EC6394 00EC6394
+NakaInst_Hard_Analogue_148 00EC6394
 StyleVar_PowerBallad 00EC63D8
-NakaInst_Heavy_Harmonica_74_EC645C 00EC645C
+NakaInst_Heavy_Harmonica_74 00EC645C
 StyleVar_LAPop 00EC647E
 NakaInst_Digital_Swing_92 00EC649C
 StyleVar_GentleSwingRock 00EC6524
@@ -11177,13 +11177,13 @@ NakaInst_House_Piano_125 00EC6C24
 StyleVar_DanceSquares 00EC6C46
 NakaInst_Techno_Angle_146 00EC6C64
 StyleVar_DiscoTechni 00EC6CEC
-NakaInst_Disco_Techni_118_EC6D2C 00EC6D2C
+NakaInst_Disco_Techni_118 00EC6D2C
 StyleVar_EuroDiscoHit 00EC6D92
 NakaInst_New_York_Disco_115 00EC6DF4
 StyleVar_DiscoTalk 00EC6E38
 NakaInst_Disco_Agogo_121 00EC6EBC
 StyleVar_70sDanceHit 00EC6EDE
-NakaInst_Disco_Metal_124_EC6EFC 00EC6EFC
+NakaInst_Disco_Metal_124 00EC6EFC
 StyleVar_DiscoRanger 00EC6F84
 NakaInst_Hip_Hop_Echoes_108 00EC6FC4
 StyleVar_GloryDisco 00EC702A
@@ -11191,17 +11191,17 @@ NakaInst_Synth_of_The_90s_108 00EC708C
 StyleVar_NYRap 00EC70D0
 NakaInst_Pump_The_Bass_96 00EC7154
 StyleVar_HipHop 00EC7176
-NakaInst_Dance_Island_104_EC7194 00EC7194
+NakaInst_Dance_Island_104 00EC7194
 StyleVar_ReggaeHit 00EC721C
 NakaInst_Rasta_Jambo_101 00EC725C
 StyleVar_RioGosDisco 00EC72C2
-NakaInst_Dancing_Flutes_125_EC7324 00EC7324
+NakaInst_Dancing_Flutes_125 00EC7324
 StyleVar_JamboDance 00EC7368
 NakaInst_Reggae_Dance_Hit_101 00EC73EC
 StyleVar_SambaParty 00EC740E
-NakaInst_Festival_Amigos_116_EC742C 00EC742C
+NakaInst_Festival_Amigos_116 00EC742C
 StyleVar_LatinFestival 00EC74B4
-NakaInst_Dance_Surround_124_EC74F4 00EC74F4
+NakaInst_Dance_Surround_124 00EC74F4
 StyleVar_JLastHitparade 00EC755A
 NakaInst_Last_Starparade_120 00EC75BC
 StyleVar_LastArrangement 00EC7600
@@ -11209,7 +11209,7 @@ NakaInst_Party_Flautist_111 00EC7684
 StyleVar_GermanSchlager_2 00EC76A6
 NakaInst_German_HitParade_120 00EC76C4
 StyleVar_AllNightParty 00EC774C
-NakaInst_Ady_s_PartyOrgan_125_EC778C 00EC778C
+NakaInst_Ady_s_PartyOrgan_125 00EC778C
 StyleVar_PopOrganMarch 00EC77F2
 NakaInst_Pop_Of_The_Bells_125 00EC7854
 StyleVar_EurovisionHits 00EC7898
@@ -11245,7 +11245,7 @@ NakaInst_Bad_Soul_Bars_140 00EC81EC
 StyleVar_DetroitPop 00EC8252
 NakaInst_Ross_Vocals_142 00EC82B4
 StyleVar_SoftSoul 00EC82F8
-NakaInst_A_Case_Of_Soul_114_EC837C 00EC837C
+NakaInst_A_Case_Of_Soul_114 00EC837C
 StyleVar_NewSoulBallad 00EC839E
 NakaInst_Soul_Suitcase_70 00EC83BC
 StyleVar_SoulToSun 00EC8444
@@ -11259,9 +11259,9 @@ NakaInst_Blues_Horns_112 00EC8654
 StyleVar_DownDirtyBlues 00EC86DC
 NakaInst_Solid_Blues_78 00EC871C
 StyleVar_RockBlues 00EC8782
-NakaInst_Hard_Sax_Blues_124_EC87E4 00EC87E4
+NakaInst_Hard_Sax_Blues_124 00EC87E4
 StyleVar_PlayTheBlues 00EC8828
-NakaInst_I_Got_The_Blues_83_EC88AC 00EC88AC
+NakaInst_I_Got_The_Blues_83 00EC88AC
 StyleVar_BluesAlley 00EC88CE
 SoundName_MournfulTenor 00EC88EC
 StyleSound_BluesAlley_Data 00EC8974
@@ -11305,7 +11305,7 @@ NakaInst_Acoustic_Jazz_174 00EC95A4
 StyleVar_SimpleJazz 00EC95C6
 NakaInst_Wild_Side_Organ_200 00EC95E4
 StyleVar_40sBoogie 00EC966C
-NakaInst_Boogie_Dance_160_EC96AC 00EC96AC
+NakaInst_Boogie_Dance_160 00EC96AC
 StyleVar_JazzStandards 00EC9712
 NakaInst_Saxy_Jazz_145 00EC9774
 StyleVar_ComboDrawbars 00EC97B8
@@ -11321,7 +11321,7 @@ NakaInst_Chicago_Piano_184 00EC9AD4
 StyleVar_JazzFrancais 00EC9AF6
 NakaInst_Squeeze_Box_Jazz_190 00EC9B14
 StyleVar_VanDammeJazz 00EC9B9C
-NakaInst_Deuringer_Swing_190_EC9BDC 00EC9BDC
+NakaInst_Deuringer_Swing_190 00EC9BDC
 StyleVar_EuroJazz 00EC9C42
 NakaInst_Duelling_Reeds_147 00EC9CA4
 StyleVar_SmokeyJazzClub 00EC9CE8
@@ -11335,7 +11335,7 @@ NakaInst_Toots_Trick_150 00EC9F3C
 StyleVar_TheGroove 00EC9F80
 NakaInst_Soprano_Groove_180 00ECA004
 StyleVar_LAFusion 00ECA026
-NakaInst_Fusion_Tines_98_ECA044 00ECA044
+NakaInst_Fusion_Tines_98 00ECA044
 StyleVar_MusicalOverture 00ECA0CC
 NakaInst_In_The_Limelight_132 00ECA10C
 StyleVar_Tinseltown 00ECA172
@@ -11357,7 +11357,7 @@ NakaInst_Vegas_Showman_75 00ECA63C
 StyleVar_MagicBallroom 00ECA6A2
 NakaInst_Strasser_More_120 00ECA704
 StyleVar_GentleFoxtrot 00ECA748
-NakaInst_Foxy_Squeezebox_154_ECA7CC 00ECA7CC
+NakaInst_Foxy_Squeezebox_154 00ECA7CC
 StyleVar_OrganistsDance 00ECA7EE
 NakaInst_Old_Wheels_Dance_190 00ECA80C
 StyleVar_UpTempoFoxtrot 00ECA894
@@ -11371,7 +11371,7 @@ NakaInst_Organ_Quickstep_200 00ECAAA4
 StyleVar_LetsTwist 00ECAB2C
 NakaInst_Solid_Twist_168 00ECAB6C
 StyleVar_JiveDance 00ECABD2
-NakaInst_Dance_Band_Jive_176_ECAC34 00ECAC34
+NakaInst_Dance_Band_Jive_176 00ECAC34
 StyleVar_DoTheTwist 00ECAC78
 NakaInst_Bari_Twist_155 00ECACFC
 StyleVar_12ChaChaCha 00ECAD1E
@@ -11399,19 +11399,19 @@ SoundName_BavarianFlutes 00ECB3FC
 StyleVar_PartyVienna 00ECB440
 NakaInst_Ball_Gown_Waltz_171 00ECB4C4
 StyleVar_StadiumEvents 00ECB4E6
-NakaInst_Full_Brass_Band_115_ECB504 00ECB504
+NakaInst_Full_Brass_Band_115 00ECB504
 StyleVar_SousaMarches 00ECB58C
 NakaInst_Alto_Marchpast_115 00ECB5CC
 StyleVar_GermanTradition 00ECB632
 NakaInst_OktoberFest_109 00ECB694
 StyleVar_Musikantenstadl 00ECB6D8
-NakaInst_At_The_Eger_120_ECB75C 00ECB75C
+NakaInst_At_The_Eger_120 00ECB75C
 StyleVar_StandardPolka 00ECB77E
 NakaInst_Marching_Polka_124 00ECB79C
 StyleVar_ModernPolka 00ECB824
 NakaInst_Wedding_Party_135 00ECB864
 StyleVar_GermanPolka 00ECB8CA
-NakaInst_Alpine_Combo_125_ECB92C 00ECB92C
+NakaInst_Alpine_Combo_125 00ECB92C
 StyleVar_CeilidhBand 00ECB970
 NakaInst_Emerald_Flute_120 00ECB9F4
 StyleVar_HighlandDance 00ECBA16
@@ -11433,7 +11433,7 @@ NakaInst_Syncopated_Wood_130 00ECBF24
 StyleVar_RagtimeBand 00ECBF46
 NakaInst_Maple_Leaf_Piano_180 00ECBF64
 StyleVar_NewOrleansJazz 00ECBFEC
-NakaInst_Barber_Shop_Jazz_196_ECC02C 00ECC02C
+NakaInst_Barber_Shop_Jazz_196 00ECC02C
 StyleVar_SoundsOfDixie 00ECC092
 NakaInst_Liquorice_Dixie_185 00ECC0F4
 StyleVar_GreekDance 00ECC138
@@ -11451,11 +11451,11 @@ NakaInst_Solid_Distortion_122 00ECC494
 StyleVar_BluegrassTime 00ECC51C
 NakaInst_Cajun_Hoedown_124 00ECC55C
 StyleVar_ModernHoedown 00ECC5C2
-NakaInst_Country_Licks_235_ECC624 00ECC624
+NakaInst_Country_Licks_235 00ECC624
 StyleVar_KentuckyBlue 00ECC668
 NakaInst_Country_Fiddle_123 00ECC6EC
 StyleVar_TruckerCountry 00ECC70E
-NakaInst_Fogerty_s_Stomp_206_ECC72C 00ECC72C
+NakaInst_Fogerty_s_Stomp_206 00ECC72C
 StyleVar_CountryDance 00ECC7B4
 NakaInst_Nashville_Dance_147 00ECC7F4
 StyleVar_HillbillyBlues 00ECC85A
@@ -11491,11 +11491,11 @@ NakaInst_Modern_Bossa_74 00ECD18C
 StyleVar_RhumbaEspana 00ECD214
 NakaInst_Julio_s_Romance_119 00ECD254
 StyleVar_CocktailPianist 00ECD2BA
-NakaInst_Besame_Strings_120_ECD31C 00ECD31C
+NakaInst_Besame_Strings_120 00ECD31C
 StyleVar_RomanticBeguine 00ECD360
-NakaInst_Amor_Reed_117_ECD3E4 00ECD3E4
+NakaInst_Amor_Reed_117 00ECD3E4
 StyleVar_RomanticDance 00ECD406
-NakaInst_Bolero_Orchestra_120_ECD424 00ECD424
+NakaInst_Bolero_Orchestra_120 00ECD424
 StyleVar_LatinLoungeBar 00ECD4AC
 NakaInst_Holiday_Rhumba_115 00ECD4EC
 StyleVar_TitosChaCha 00ECD552
@@ -15550,7 +15550,7 @@ Harmony_Offsets4_A 00EE93BE
 Harmony_Offsets1_B 00EE98FE
 Harmony_Offsets3_A 00EE9A4E
 Harmony_Offsets3_B 00EE9E3E
-NoRef_HarmonyLike_EEA22E 00EEA22E
+NoRef_HarmonyLike 00EEA22E
 Harmony_Offsets4_B 00EEA8BE
 Harmony_FixedIntervals 00EEADFE
 Harmony_OctaveUpDown_Down 00EEADFF
@@ -15570,7 +15570,7 @@ SemitoneBias_TableA 00EEC09A
 SemitoneBias_TableB 00EEC0A6
 SemitoneBias_TableC 00EEC0B2
 SemitoneBias_TableD 00EEC0BE
-NoRef_SemitoneBias_EEC0CA 00EEC0CA
+NoRef_SemitoneBias 00EEC0CA
 SemitoneBias_TableE 00EEC0E2
 SemitoneBias_TableF 00EEC0EE
 SemitoneBias_TableG 00EEC0FA

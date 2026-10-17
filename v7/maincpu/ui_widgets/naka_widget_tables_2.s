@@ -2139,7 +2139,7 @@ Data_InOutGridDispatch_PtrTable_3:	.incbin "includes/generated/naka_widget_table
 ; Data_InOutGridDispatch_Strings_3[30].
 ; -----------------------------------------------------------------------------
 Data_InOutGridDispatch_Strings_3:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25932, 0x14
-NakaInst_DIRECT_E7FCE4:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25946, 0xA
+NakaInst_DIRECT:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25946, 0xA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] InOutGridCheck_LocalInit
 ; InOutGridCheck_LocalInit -- initializer of a local array:
@@ -3049,13 +3049,13 @@ PmemOutLGridCheck_OnRamData_Str_Fmt3d_2:	.incbin "includes/generated/naka_widget
 PmemOutLGridCheck_OnRamData_Str_OFF:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DBE, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_3:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DC4, 0x6	; " %3d "
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] NakaInst_ON_E80168
-; NakaInst_ON_E80168 -- label kept because other files use it; 82 bytes
+; [naka_s_headers] NakaInst_ON
+; NakaInst_ON -- label kept because other files use it; 82 bytes
 ; to the next object. Contents not established.
 ;
-; Typed in naka_widget_tables_2.c as uint8_t NakaInst_ON_E80168[82].
+; Typed in naka_widget_tables_2.c as uint8_t NakaInst_ON[82].
 ; -----------------------------------------------------------------------------
-NakaInst_ON_E80168:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DCA, 0x6
+NakaInst_ON:			.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DCA, 0x6
 PmemOutLGridCheck_OnRamData_Str_OFF_6:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD0, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_OFF_2:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DD6, 0x6	; " OFF "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_4:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DDC, 0x6	; " %3d "
