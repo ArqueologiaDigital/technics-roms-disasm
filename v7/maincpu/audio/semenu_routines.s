@@ -5779,16 +5779,12 @@ SeMenu_SetMode_Data:
 	ld	(1712:16), wa
 	ret
 SeMenu_SetMode_Data_0x5:
-	.byte 0xb0
-	ex_ff
-	popw	(xwa)
+	ldw	(xwa), (0x6b0)
 	ret
 	ld	(1714:16), wa
 	ret
 SeMenu_SetMode_Data_0xF:
-	.byte 0xb0
-	ex_ff
-	popw	(xde)
+	ldw	(xwa), (0x6b2)
 	ret
 
 SeMenu_LoadSoundBankCfg:

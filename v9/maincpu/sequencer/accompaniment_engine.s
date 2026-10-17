@@ -13892,9 +13892,7 @@ AccPatch_ClearModeFlag:
 
 
 Not_sure_maybe_SOFT_VERSION_related:
-	.byte 0xc1
-	ex_ff
-	ldw	iz, 0xfe3c
+	and	(0x3616:16), 0xfe
 	ld	(0x35d5:16), 0
 	ld	xwa, RHYTHM_PATTERN_BUF_A
 	cp	hl, 0:i3
@@ -13906,9 +13904,8 @@ Not_sure_maybe_SOFT_VERSION_related:
 	ld	(0x35d5:16), 0
 Not_sure_maybe_SOFT_VERSION_related_Code_Return:
 	ret
-	.byte 0xc1, 0x9b, 0x37, 0x04, 0xc1
-	ex_ff
-	ldw	iz, 0xfe3c
+	push	(0x379b:16)
+	and	(0x3616:16), 0xfe
 	ld	(0x35d5:16), 0
 	pushdi_b	(13526)
 	ld	(0x34d6:16), 0
