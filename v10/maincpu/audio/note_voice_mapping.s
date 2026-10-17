@@ -25118,7 +25118,7 @@ Param_SignExtendRetu_Block:
 	ret
 
 ; SoundData_InitPhase0: Init-phase-0 handler of subsystem table 11 (phases 1-3 are bare returns): jumps to the code
-;   that sets the sound-table base 0xE14E to (SoundData_CategoryDescPtr). Basis: callers (Subsys_HandlerTable11 entry
+;   that sets the sound-table base 0xE14E to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry
 ;   0) + body.
 SoundData_InitPhase0:
 	jr Param_SignExtendRetu_Block

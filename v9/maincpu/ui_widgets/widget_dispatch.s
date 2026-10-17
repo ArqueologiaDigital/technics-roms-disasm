@@ -1455,10 +1455,8 @@ MidiChan_ZeroRegTemplate:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 ; 4 x u32 routine pointers (0xFD84F0, 0xFD84F2, 0xFD84F3, 0xFD84F4): entry 4 of
 ; Subsys_HandlerTableList, so VoiceInit_Dispatch (0xFDDB5A) calls entry
-; [xde/4] of it with the other subsystems' tables.  Legacy name
-; SeqFormat_ReferenceData kept (positional_labels.s derives from it).
-SeqFormat_HandlerTable:
-	.set SeqFormat_ReferenceData, SeqFormat_HandlerTable
+; [xde/4] of it with the other subsystems' tables.
+SoundMode_InitFuncTable:
 	.long SoundMode_ResetJump2
 	.long SoundMode_RetStub_A
 	.long SoundMode_RetStub_B
@@ -7131,24 +7129,24 @@ SwbtBank3_PostCallbacks:	.long 0xffffffff	; bank 3 post list: SwbtWr_PostCallbac
 Subsys_HandlerTableList:
 	.set SystemConfig_PointerTable, Subsys_HandlerTableList
 	.long Seq_InitFuncTable
-	.long Subsys_HandlerTable01
-	.long WidgetDispatch_FDTestPtrTable
+	.long COMM_InitFuncTable
+	.long Xapr_InitFuncTable
 	.long SC0_InitFuncTable
-	.long SeqFormat_ReferenceData
+	.long SoundMode_InitFuncTable
 	.long SndParam_InitFuncTable
-	.long SoundProgram_ParamPtrTable
+	.long Audio_InitFuncTable
 	.long FileIO_InitFuncTable
 	.long VGA_InitFuncTable
 	.long PanelInput_InitFuncTable
 	.long PanelEvent_InitPhaseHandlers
-	.long Subsys_HandlerTable11
-	.long WidgetData_CharsetMappingTable
-	.long SeqByteBlock_DispatchJumpTable
+	.long SoundData_InitFuncTable
+	.long SeqInit_InitFuncTable
+	.long SeqDispatch_InitFuncTable
 	.long	AccompSeq_InitFuncTable
 	.long	AccPatch_InitFuncTable
-	.long	SoundRam_HandlerTable
+	.long	SoundRam_InitFuncTable
 	.long	FDemoText_InitFuncTable
-	.long CharMap_Preamble_Table
+	.long CharMap_InitFuncTable
 	.long 0x00000000
 ; 6 bytes 0,1,2,3,4,0xFF after the list's 0 terminator.  No reader: neither an
 ; instruction operand nor a 32-bit data pointer in the v10 ROM names 0xEE8CCE.
@@ -8724,7 +8722,7 @@ Disk_DefaultPath:
 ; Actually 4 x u32 routine pointers (CharMap_NullPreamble_0..2, CharMap_ActivePreamble):
 ; entry 18 of Subsys_HandlerTableList, so VoiceInit_Dispatch (0xFDDB5A) calls one entry
 ; of it with every other subsystem's table.
-CharMap_Preamble_Table:
+CharMap_InitFuncTable:
 	.long CharMap_NullPreamble_0
 	.long CharMap_NullPreamble_1
 	.long CharMap_NullPreamble_2
@@ -9271,9 +9269,9 @@ SndParamOffs_SwitchOffsets:
 	.short	LookupTableConverge_LoadReg2 - SndParam_OffsetDispatch
 ; 4 x u32 routine pointers: entry 11 of Subsys_HandlerTableList, so
 ; VoiceInit_Dispatch calls one entry of it with every subsystem's table.
-; (kn5000_v10_program.s also names this address Subsys_HandlerTable11
+; (kn5000_v10_program.s also names this address SoundData_InitFuncTable
 ; as an absolute .set; it is not a permutation table.)
-Subsys_HandlerTable11:
+SoundData_InitFuncTable:
 	.long SoundData_InitPhase0
 	.long Param_SignExtendRetu_Return
 	.long Param_SignExtendRetu_Return
@@ -9381,9 +9379,9 @@ ParamSx_SwitchF:
 TmFlash_ByteMap:
 	.byte 0, 2, 4, 5, 3, 0, 1, 1, 4, 2, 3
 ; 4 x u32 routine pointers: entry 1 of Subsys_HandlerTableList (see
-; Subsys_HandlerTable11; kn5000_v10_program.s's absolute .set
-; Subsys_HandlerTable01 names the same address).
-Subsys_HandlerTable01:
+; SoundData_InitFuncTable; kn5000_v10_program.s's absolute .set
+; COMM_InitFuncTable names the same address).
+COMM_InitFuncTable:
 	.long COMM_ResetSentValues
 	.long COMM_ResetSentValues_Phase1
 	.long CommParam_SetComplete_Return2
@@ -9414,7 +9412,7 @@ SoundRam_Id_KN5000:
 	.asciz "KN5000 SOUND RAM"
 ; 4 x u32 routine pointers: entry 16 of Subsys_HandlerTableList (VoiceInit_Dispatch
 ; calls one entry of it with every subsystem's table).
-SoundRam_HandlerTable:
+SoundRam_InitFuncTable:
 	.long SendPartDataBlock_ClearByte4
 	.long SendPartDataBlock_Return4
 	.long SendPartDataBlock_DoGetError

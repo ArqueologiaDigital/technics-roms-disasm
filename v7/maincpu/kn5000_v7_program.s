@@ -1429,7 +1429,7 @@ Boot_DisplayScreen:
 	extz	wa
 	calr	Boot_HandleComboDisplay
 	ld	wa, 4:i3
-	call	Show_ScreenGroup
+	call	TaskSched_SpawnTask
 	calr	Boot_SetConfigFlag7
 	jp	MainLoop
 Boot_GetButtonComboCode:

@@ -476,7 +476,7 @@ LoadExtROM_Entry_Str_XAPR:	.ascii	"XAPR"
 LoadExtROM_Entry_Str_Different_ID:
 	aligned_string "Different ID"
 LoadXaprInit_Entry_Str_XAPR:	aligned_string "XAPR"
-WidgetDispatch_FDTestPtrTable:
+Xapr_InitFuncTable:
 	.long	Xapr_DetectOnInit
 	.long	Xapr_InitPhase1_NullRet
 	.long	Xapr_InitPhase2_NullRet

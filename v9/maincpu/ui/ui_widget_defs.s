@@ -19479,7 +19479,7 @@ InitializeGraphics:
 	push xiz
 	calr InitDrawTask
 	ld wa, 5:i3
-	call Show_ScreenGroup
+	call TaskSched_SpawnTask
 	ldw (0x03ef92:24), 0x0001
 	call InitPaletteRGB
 	ld wa, 0:i3

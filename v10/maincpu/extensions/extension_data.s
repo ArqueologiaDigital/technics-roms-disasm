@@ -3328,17 +3328,20 @@ PanelTlv_CompanionByPart:
 	.long 0x0000ff7e, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff	; [0x18]
 ; SoundProgram_DispatchTable + 0x880: four audio (re)initialisation routines.
 ; midi/midi_dispatch_handlers.s calls the third through it (`ld xhl,
-; (SoundProgram_ResetAfterErrorVector:24)` / `call (xhl)`), and entry 6 of
+; (Audio_ResetAfterErrorVector:24)` / `call (xhl)`), and entry 6 of
 ; SystemConfig_PointerTable (ui_widgets/widget_dispatch.s) points at the
-; table's head under the `.set` name SoundProgram_ParamPtrTable
+; table's head under the `.set` name Audio_InitFuncTable
 ; (kn5000_v10_program.s).  Searched for other readers: the positional names
-; SoundProgram_ParamPtrTable..0x88C and the literals 0xEDB2E4-0xEDB2F3.
-SoundProgram_ParamPtrTable:
+; Audio_InitFuncTable..0x88C and the literals 0xEDB2E4-0xEDB2F3.
+; Audio_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis: readers +
+;   bytes -- entry 6 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of
+;   every table; slot 0 is Audio_InitAllDefaults.
+Audio_InitFuncTable:
 	.long Audio_InitAllDefaults
 	.long Audio_ReinitToneGenAndOutput
-; SoundProgram_ResetAfterErrorVector: Slot 2 of SoundProgram_ParamPtrTable, the pointer to
+; Audio_ResetAfterErrorVector: Slot 2 of Audio_InitFuncTable, the pointer to
 ;   Audio_ResetAfterPayloadError; called through it after a received block. Basis: readers + bytes.
-SoundProgram_ResetAfterErrorVector:
+Audio_ResetAfterErrorVector:
 	.long Audio_ResetAfterPayloadError
 	.long Audio_FullReinitWithPreset
 ; SoundProgram_DispatchTable + 0x890..+0x907: seven small tables, each read

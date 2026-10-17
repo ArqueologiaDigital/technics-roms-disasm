@@ -10308,7 +10308,7 @@ SndTable_LookupA_GotFile:
 	ld xwa, (xwa + 71)
 	ld (0x03e3e8:24), xwa
 	ld wa, 2:i3
-	call Show_ScreenGroup
+	call TaskSched_SpawnTask
 	ld hl, 0:i3
 	ret
 
@@ -10413,15 +10413,15 @@ SndTable_LookupD:
 	ld (0x03e3ee:24), xbc
 	calr SndTable_LookupD_CalcAddr
 	cp l, 0:i3
-	jr z, SndTable_LookupD_ShowScreen
+	jr z, SndTable_LookupD_SpawnReaderTask
 	ld (0x02358a:24), 0x02
 	ld (0x03e3ec:24), 0x00
 	ldw hl, 0xffff
 	ret
 
-SndTable_LookupD_ShowScreen:
+SndTable_LookupD_SpawnReaderTask:
 	ld wa, 2:i3
-	call Show_ScreenGroup
+	call TaskSched_SpawnTask
 	ld hl, 0:i3
 	ret
 
@@ -10601,14 +10601,14 @@ FileIO_ReadDir_Return:
 	pop xiz
 	ret
 
-SeqByteBlock_DispatchJumpTable:
-; Four handler pointers, one per screen-group ID 0..3 (stride 4).
+SeqDispatch_InitFuncTable:
+; Four handler pointers, one per init phase 0..3 (stride 4).
 ; Read by ScreenGroup_Dispatch / VoiceInit_Dispatch (0xFDD7A3,
 ; boot/screen_group_dispatch.s): for each entry k of SystemConfig_PointerTable
-; until a zero entry, XHL = long [entry_k + 4*group] and `call (xhl)`.  This
+; until a zero entry, XHL = long [entry_k + 4*phase] and `call (xhl)`.  This
 ; table is SystemConfig_PointerTable's 14th entry (widget_dispatch.s), so
-; when ScreenGroup_Dispatch runs for screen group N the sequencer gets: 0 ->
-; SeqDispatch_ResetAndValidate, group 2 -> SeqDispatch_InitWithPayload, groups
+; when ScreenGroup_Dispatch runs init phase N the sequencer gets: 0 ->
+; SeqDispatch_ResetAndValidate, phase 2 -> SeqDispatch_InitWithPayload, phases
 ; 1 and 3 -> SeqDispatch_ReturnNop.  Written as symbolic .long 2026-09-25
 ; (lane seqeng); it was eight raw .byte.  The table ends where
 ; SeqDispatch_ReturnNop begins.

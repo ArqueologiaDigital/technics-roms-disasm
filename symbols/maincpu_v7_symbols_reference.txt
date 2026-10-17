@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,560
-#   semantic names ........... 53,072 (99.1%)
+#   symbols .................. 53,559
+#   semantic names ........... 53,071 (99.1%)
 #   positional names ......... 488
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -5798,7 +5798,7 @@ SeqEvent_ProcessRhythm4Ch_LocalInit 00E44620
 SeqEvent_ProcessRhythm3Ch_LocalInit 00E44628
 SeqEvt_ProcessBlock_LocalInit 00E4462E
 SeqEvt_ProcessBlock_LocalInit_2 00E44632
-WidgetData_CharsetMappingTable 00E44636
+SeqInit_InitFuncTable 00E44636
 MidiSysEx_ProcessBlock_PtrTable 00E4463E
 Part_InitFromPreset_LocalInit 00E44646
 SeqData_SendVoiceTableBlock_LocalInit 00E44656
@@ -13298,8 +13298,8 @@ CombinedPreset_8 00EDAA34
 SoundProgram_DispatchTable 00EDAA64
 PanelTlv_PayloadByTag 00EDAE64
 PanelTlv_CompanionByPart 00EDB264
-SoundProgram_ParamPtrTable 00EDB2E4
-SoundProgram_ResetAfterErrorVector 00EDB2EC
+Audio_InitFuncTable 00EDB2E4
+Audio_ResetAfterErrorVector 00EDB2EC
 PanelMem_FixupRecords 00EDB2F4
 PanelMem_FixupTagColumn 00EDB2F6
 ExtData_ToneParam_DispatchHandler_CaseTable 00EDB2FA
@@ -14381,8 +14381,7 @@ SeqChan_WriteFieldHandlers 00EE2E60
 MidiSysEx_BlockTemplate 00EE2EB8
 MidiSysEx_BlockHandlers 00EE2EBE
 MidiChan_ZeroRegTemplate 00EE2F16
-SeqFormat_HandlerTable 00EE2F26
-SeqFormat_ReferenceData 00EE2F26
+SoundMode_InitFuncTable 00EE2F26
 VoiceData_RamBlockPtrs 00EE2F36
 VoiceData_SyncCodeList 00EE2F76
 SysExSend_SwitchOffsets 00EE2F7E
@@ -15609,7 +15608,7 @@ SoundParam_DefaultBankMap3 00EEC238
 SoundParam_DefaultBankMap4 00EEC248
 SoundParam_DefaultBankMap5 00EEC258
 Disk_DefaultPath 00EEC268
-CharMap_Preamble_Table 00EEC288
+CharMap_InitFuncTable 00EEC288
 NoRef_FF128_EEC298 00EEC298
 SndParam_ValueMap_Identity 00EEC318
 SndParam_ValueMap_R1P1 00EEC398
@@ -15650,7 +15649,7 @@ NoRef_ExpCurve128 00EED2C6
 SndParam_LogCurve128 00EED346
 SndParamChan_SwitchOffsets 00EED3C6
 SndParamOffs_SwitchOffsets 00EED3D2
-Subsys_HandlerTable11 00EED3DE
+SoundData_InitFuncTable 00EED3DE
 ParamSx_CaseMapA 00EED3EE
 ParamSx_SwitchA 00EED43B
 ParamSx_CaseMapB 00EED449
@@ -15662,14 +15661,14 @@ ParamSx_CaseMapE 00EED4D5
 ParamSx_SwitchE 00EED4FE
 ParamSx_SwitchF 00EED50C
 TmFlash_ByteMap 00EED520
-Subsys_HandlerTable01 00EED52B
+COMM_InitFuncTable 00EED52B
 SoundRam_Id_KN2000 00EED53B
 SoundRam_Id_MKA 00EED542
 SoundRam_Id_MKB 00EED546
 SoundRam_Id_KN3000 00EED54A
 SoundRam_Id_KN1500 00EED55B
 SoundRam_Id_KN5000 00EED56C
-SoundRam_HandlerTable 00EED57D
+SoundRam_InitFuncTable 00EED57D
 HdaeRom_DataByteMap 00EED58D
 SoundRam_DefaultRecord 00EED59D
 HdaeRomData_SwitchOffsets 00EED747
@@ -16074,10 +16073,10 @@ Copy_DE_words_from_XBC_to_XWA 00EF18AD
 Fill_memory_at_XWA_with_DE_words_of_BC_value 00EF18B6
 Checksum_ComputeComplement 00EF18BD
 Checksum_AccumulateLoop 00EF18C3
-TaskSched_ScreenGroupTable 00EF18CD
+TaskSched_TaskTable 00EF18CD
 TaskSched_ExtQueueByteInit 00EF1909
 TaskSched_ExtQueue2ByteInit 00EF1913
-ScreenGroup3_IdleSpin 00EF191F
+TaskSched_IdleTask 00EF191F
 INTT3_PriorityAdjust 00EF1921
 INTT3_PriorityAdjust_Active 00EF192E
 TaskTimer_NullCallback 00EF193A
@@ -16107,7 +16106,7 @@ TaskSched_TimerSlot_Skip 00EF1B1D
 TaskSched_TimerSlot_Fire 00EF1B34
 INTT3_CheckNesting 00EF1B45
 INTT3_EnterScheduler 00EF1B59
-Show_ScreenGroup 00EF1B72
+TaskSched_SpawnTask 00EF1B72
 TaskSched_ExitCurrentTask 00EF1BEC
 TaskSched_GetCurrentGroup 00EF1C1C
 TaskSched_GetCurrentGroup_Nested 00EF1C32
@@ -30995,7 +30994,7 @@ SndTable_LookupB 00F52CAC
 SndTable_LookupC 00F52CAF
 SndTable_LookupD_CalcAddr 00F52CBB
 SndTable_LookupD 00F52CF5
-SndTable_LookupD_ShowScreen 00F52D29
+SndTable_LookupD_SpawnReaderTask 00F52D29
 FDC_DetectDiskFormat 00F52D32
 FDC_DetectFormat_ReturnOne 00F52D4E
 FDC_DetectFormat_ReturnOneB 00F52D51
@@ -31017,7 +31016,7 @@ FileIO_FillRemainingEntries 00F52E69
 FileIO_FillRemaining_Loop 00F52E74
 FileIO_ReadDir_GetRetVal 00F52E98
 FileIO_ReadDir_Return 00F52E9B
-SeqByteBlock_DispatchJumpTable 00F52E9D
+SeqDispatch_InitFuncTable 00F52E9D
 SeqDispatch_ReturnNop 00F52EAD
 SeqDispatch_ResetAndValidate 00F52EAE
 SeqDispatch_InitWithPayload 00F52EB7

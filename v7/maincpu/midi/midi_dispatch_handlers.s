@@ -11359,7 +11359,7 @@ SeqChan_UnhandledCmd_Join:
 	push	xhl
 	push	xix
 	push	xiz
-	ld	xhl, (SoundProgram_ResetAfterErrorVector:24)
+	ld	xhl, (Audio_ResetAfterErrorVector:24)
 	call	(xhl)
 	call	MidiMsg_ParseChannelStream
 	call	SeqTimer_UpdateTempoReg

@@ -2044,7 +2044,7 @@ typedef struct __attribute__((packed)) {
      * 0xFD8137, v7 0xFD7D80) calls entry 2 directly: `ld xhl,(<this>+8);
      * call (xhl)`. The code also points into it at +0x8.
      * --------------------------------------------------------------------- */
-    uint32_t WidgetData_CharsetMappingTable[4];
+    uint32_t SeqInit_InitFuncTable[4];
     /* ---------------------------------------------------------------------
      * Part_InitFromPreset_LocalInit -- initializer of a local array:
      * Part_InitFromPreset (v10/v9 0xF42EA4, v7 0xF42E96) (`ld xiy,
@@ -9362,7 +9362,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .SeqEvt_ProcessBlock_LocalInit_2 = { 0x0000, 0x0000 },
 
-    .WidgetData_CharsetMappingTable = {
+    .SeqInit_InitFuncTable = {
         NAKA_ADDR(SeqInit_SetBaseAddress),
         NAKA_ADDR(SeqInit_ReturnStub),
         NAKA_ADDR(SeqInit_JumpToPartInit),

@@ -3910,19 +3910,22 @@ SeqEvt_ProcessBlock_LocalInit:	.incbin "includes/generated/naka_widget_descripto
 ; -----------------------------------------------------------------------------
 SeqEvt_ProcessBlock_LocalInit_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x137D2, 0x4
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] WidgetData_CharsetMappingTable
-; WidgetData_CharsetMappingTable -- Historical name (it is no charset
+; [naka_s_headers] SeqInit_InitFuncTable
+; SeqInit_InitFuncTable -- Historical name (it is no charset
 ; map). Four u32 code addresses: SeqInit_SetBaseAddress,
 ; SeqInit_ReturnStub, SeqInit_JumpToPartInit, SeqInit_FullReset.
 ; SystemConfig_PointerTable (ui_widgets/widget_dispatch.s) holds `.long
-; WidgetData_CharsetMappingTable`, and MidiSysEx_ProcessBlock (v10/v9
+; SeqInit_InitFuncTable`, and MidiSysEx_ProcessBlock (v10/v9
 ; 0xfd8137, v7 0xfd7d80) calls entry 2 directly: `ld xhl,(<this>+8);
 ; call (xhl)`. The code also points into it at +0x8.
 ;
 ; Typed in naka_widget_descriptors.c as uint32_t
-; WidgetData_CharsetMappingTable[4].
+; SeqInit_InitFuncTable[4].
 ; -----------------------------------------------------------------------------
-WidgetData_CharsetMappingTable:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x137D6, 0x8
+; SeqInit_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis: readers
+;   + bytes -- entry 12 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3)
+;   of every table; slot 0 is SeqInit_SetBaseAddress.
+SeqInit_InitFuncTable:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x137D6, 0x8
 MidiSysEx_ProcessBlock_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x137DE, 0x8	; 2 x 32-bit pointer
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] Part_InitFromPreset_LocalInit

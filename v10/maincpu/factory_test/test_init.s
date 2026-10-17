@@ -498,7 +498,7 @@ Xapr_GetPresentFlag:
 
 ; Xapr_DetectOnInit: Init-phase-0 handler of the extension-ROM subsystem: compares the 4 bytes at 0x280000 with "XAPR"
 ;   and sets XAPR_PRESENT_FLAG = 1 on a match (never clears it). Basis: callers + body -- entry 0 of
-;   WidgetDispatch_FDTestPtrTable, entry 2 of Subsys_HandlerTableList.
+;   Xapr_InitFuncTable, entry 2 of Subsys_HandlerTableList.
 Xapr_DetectOnInit:
 	pushw 0x4	; 4 bytes
 	pushw LoadXaprInit_Entry_Str_XAPR@hi16
@@ -513,19 +513,19 @@ Xapr_DetectOnInit:
 	ret
 
 ; Xapr_InitPhase1_NullRet: Bare `ret`: the init-phase-1 handler of the extension-ROM subsystem (only phase 0,
-;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 1 of WidgetDispatch_FDTestPtrTable (X_NullRet
+;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 1 of Xapr_InitFuncTable (X_NullRet
 ;   convention).
 Xapr_InitPhase1_NullRet:
 	ret
 
 ; Xapr_InitPhase2_NullRet: Bare `ret`: the init-phase-2 handler of the extension-ROM subsystem (only phase 0,
-;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 2 of WidgetDispatch_FDTestPtrTable (X_NullRet
+;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 2 of Xapr_InitFuncTable (X_NullRet
 ;   convention).
 Xapr_InitPhase2_NullRet:
 	ret
 
 ; Xapr_InitPhase3_NullRet: Bare `ret`: the init-phase-3 handler of the extension-ROM subsystem (only phase 0,
-;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 3 of WidgetDispatch_FDTestPtrTable (X_NullRet
+;   Xapr_DetectOnInit, does work). Basis: table + body -- entry 3 of Xapr_InitFuncTable (X_NullRet
 ;   convention).
 Xapr_InitPhase3_NullRet:
 	ret

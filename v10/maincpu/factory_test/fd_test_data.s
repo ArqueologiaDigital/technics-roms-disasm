@@ -516,7 +516,10 @@ LoadExtROM_Entry_Str_XAPR:	.ascii	"XAPR"
 LoadExtROM_Entry_Str_Different_ID:
 	aligned_string "Different ID"
 LoadXaprInit_Entry_Str_XAPR:	aligned_string "XAPR"
-WidgetDispatch_FDTestPtrTable:
+; Xapr_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis: readers +
+;   bytes -- entry 2 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of
+;   every table; slot 0 is Xapr_DetectOnInit.
+Xapr_InitFuncTable:
 	.long	Xapr_DetectOnInit
 	.long	Xapr_InitPhase1_NullRet
 	.long	Xapr_InitPhase2_NullRet

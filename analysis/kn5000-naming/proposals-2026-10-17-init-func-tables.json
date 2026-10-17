@@ -1,0 +1,130 @@
+[
+ {
+  "old": "Subsys_HandlerTable01",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "COMM_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 1 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is COMM_ResetSentValues.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 1 `.long Subsys_HandlerTable01`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "WidgetDispatch_FDTestPtrTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Xapr_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 2 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is Xapr_DetectOnInit.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 2 `.long WidgetDispatch_FDTestPtrTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "SeqFormat_HandlerTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundMode_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 4 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is SoundMode_ResetJump2.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 4 `.long SeqFormat_HandlerTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "SoundProgram_ParamPtrTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Audio_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 6 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is Audio_InitAllDefaults.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 6 `.long SoundProgram_ParamPtrTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "Subsys_HandlerTable11",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundData_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 11 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is SoundData_InitPhase0.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 11 `.long Subsys_HandlerTable11`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "WidgetData_CharsetMappingTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeqInit_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 12 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is SeqInit_SetBaseAddress.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 12 `.long WidgetData_CharsetMappingTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "SeqByteBlock_DispatchJumpTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeqDispatch_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 13 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is SeqDispatch_ResetAndValidate.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 13 `.long SeqByteBlock_DispatchJumpTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "SoundRam_HandlerTable",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundRam_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 16 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is SendPartDataBlock_ClearByte4.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 16 `.long SoundRam_HandlerTable`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "CharMap_Preamble_Table",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CharMap_InitFuncTable",
+  "header": "Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3).\nBasis: readers + bytes -- entry 18 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init phase 0-3) of every table; slot 0 is CharMap_NullPreamble_0.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s Subsys_HandlerTableList entry 18 `.long CharMap_Preamble_Table`",
+   "boot/screen_group_dispatch.s ScreenGroup_Dispatch / VoiceInit_Dispatch: `ld xbc, SystemConfig_PointerTable` / `add xbc, xwa` / `ld xwa, (xbc)` / `add xwa, xde` / `ld xhl, (xwa)` / `call (xhl)`",
+   "technics-docs boot-sequence.md, Subsystem Init Phases (the 19-row table)"
+  ]
+ },
+ {
+  "old": "SoundProgram_ResetAfterErrorVector",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Audio_ResetAfterErrorVector",
+  "header": "",
+  "basis": "readers + bytes",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s `ld xhl, (SoundProgram_ResetAfterErrorVector:24)` then `call (xhl)`"
+  ]
+ }
+]

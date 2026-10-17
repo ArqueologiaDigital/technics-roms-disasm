@@ -1989,32 +1989,32 @@ Checksum_AccumulateLoop:
 	cpl hl
 	ret
 
-; TaskSched_ScreenGroupTable -- the five screen groups (tasks) Show_ScreenGroup starts, numbered from 1 (it adds
+; TaskSched_TaskTable -- the five tasks TaskSched_SpawnTask starts, numbered from 1 (it adds
 ;          A*12 to the table address minus 12).  Each record: the entry point, the initial stack top (it builds
 ;          the first frame 0x22 below it), the initial SR word stored in that frame, the priority byte, 0.
-TaskSched_ScreenGroupTable:
-	.long	Boot_InitPeripherals, 0x0001dc34	; group 1
+TaskSched_TaskTable:
+	.long	Boot_InitPeripherals, 0x0001dc34	; task 1
 	.short	0x8800
 	.byte	3, 0
-	.long	DiskStream_ReaderTask, 0x0001e436	; group 2
+	.long	DiskStream_ReaderTask, 0x0001e436	; task 2
 	.short	0x8800
 	.byte	3, 0
-	.long	ScreenGroup3_IdleSpin, 0x0001e4b8	; group 3
+	.long	TaskSched_IdleTask, 0x0001e4b8	; task 3
 	.short	0x8800
 	.byte	1, 0
-	.long	MainTitle_TeardownAndLoop, 0x0001c030	; group 4
+	.long	MainTitle_TeardownAndLoop, 0x0001c030	; task 4
 	.short	0x8800
 	.byte	3, 0
-	.long	DrawTask_Main, 0x0001d032	; group 5
+	.long	DrawTask_Main, 0x0001d032	; task 5
 	.short	0x8800
 	.byte	3, 0
 ; one byte per queue, all 1: TaskSched_Init copies these 10 next to the 10 queue heads at RAM 0x4D1 (to 0x4F9),
 ; and the next 12 next to the 12 at 0x503 (to 0x533)
 TaskSched_ExtQueueByteInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 TaskSched_ExtQueue2ByteInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-; group 3's entry: spins forever (priority 1)
-ScreenGroup3_IdleSpin:
-	jr	ScreenGroup3_IdleSpin
+; task 3's entry: spins forever (priority 1)
+TaskSched_IdleTask:
+	jr	TaskSched_IdleTask
 
 INTT3_PriorityAdjust:
 	bit 0, (1158:16)
@@ -2172,7 +2172,7 @@ TaskSched_PostInit:
 	ld	(INTET23:8), a
 	calr Start_8bit_Timer_3
 	ld a, 0x1:opc
-	calr Show_ScreenGroup
+	calr TaskSched_SpawnTask
 	ei 6
 	ld (1157:16), 0
 	xor wa, wa
@@ -2304,20 +2304,18 @@ INTT3_EnterScheduler:
 	jrl TaskSched_Dispatch
 
 ; ===========================================================================
-; Show_ScreenGroup - Display a screen group by ID
+; TaskSched_SpawnTask - start task A (1-5) of TaskSched_TaskTable
 ; ===========================================================================
-; Entry: WA = Screen group ID
-; Exit:  Screen group widgets have been initialized for display
-; Notes: Sets up UI state structures and loads widget data from the
-;        screen group table at 0xef18eb (12 bytes per entry).
-;        Screen Group 7 contains the error dialogs including
-;        "ERROR in CPU data transmission".
-;
-; See also:
-;   - ScreenGroup_Dispatch (ScreenGroup_DispatchAlt) - Alternative dispatcher
-;   - ErrorDialog_CPUTransmissionError - Error dialog in Screen Group 7
+; Entry: A = task number (WA from the callers: 2 = DiskStream_ReaderTask, 4 = MainTitle_TeardownAndLoop,
+;        5 = DrawTask_Main)
+; Does:  if the task's TCB (0x47D + 12*A) is idle (+9 = 0), stores the task number at +11, builds the task's
+;        first frame 0x22 below its stack top (initial SR word, entry point), stores the frame pointer at +4 and
+;        the priority at +8, marks it ready (+9 := 4, +10 := 0), links it at the tail of ready queue
+;        0x4C1 + 4*priority, and enters TaskSched_Dispatch; a task that is not idle makes it return at once
+;        (TaskSched_ReturnToDispatch).  Its sub-CPU twin (v142) has the same name: an aligned run of 63 B at +32
+;        (technics-docs cpu-subsystem.md).  Called "Show_ScreenGroup" until 2026-10-17; it draws nothing.
 ; ===========================================================================
-Show_ScreenGroup:
+TaskSched_SpawnTask:
 	push	sr
 	ei 6
 	push xhl
@@ -2331,7 +2329,7 @@ Show_ScreenGroup:
 	ld l, 0xc:opc
 	mul hl, a
 	extz xhl
-	add xhl, TaskSched_ScreenGroupTable - 12	; groups are numbered from 1
+	add xhl, TaskSched_TaskTable - 12	; tasks are numbered from 1
 	ld c, 0xc:opc
 	mul bc, a
 	add bc, 0x47d
