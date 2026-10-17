@@ -7272,7 +7272,7 @@ SqStep_SetupCursorTrack_Skip:
 SerialPort_ModeHandler_0_Skip14:
 	call	MemoryConfig_Handler_Table_Target2_Sub
 SerialPort_ModeHandler_0_Join3:
-	call	ScoopParam_ValueTable_Sub_Helper2
+	call	SqStep_ResetPositionState
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	z, SqStep_SetupCursorTrack_Join
 	call	Demo_PreSetupAndScan
@@ -7868,7 +7868,15 @@ ClockConfig_Handler_0_Tbl:
 	; ScoopParam_ValueTable_Sub_Helper_Skip path, which fills it from 0xFC61.
 ClockConfig_Handler_0_Tbl2:
 	.byte	0xb0, 0x00, 0x48, 0x07, 0x00, 0x30
-ScoopParam_ValueTable_Sub_Helper2:
+; SqStep_ResetPositionState: Resets the step-record screen's position state, as at the start of the cursor track:
+;   clears the clock 0x0D57, the wrap-marker count 0x0D58, the unit counter 0x0D5A, the measure 0x371A and beat copy
+;   0x3719, the grid rows' measure numbers 0x0E4C / 0x0E4E / 0x0E50 and beat counts 0x0E52-0x0E54, the held-note count
+;   0x0DD4 and the bytes 0x0D5E, 0x0D67, 0x0D68, 0x3728; sets 0x0D55 = 0x0DD0 = 0xFF, empties the parked panel-
+;   parameter slots at 0x0D6F (16 words of 0xFFFF) and sets 0x371C = 32. Basis: callers + body --
+;   SqStep_SetupCursorTrack calls it after positioning the cursor track, and MemoryConfig_Handler_Table_Target2_Sub /
+;   MemConfig_Handler_1_Helper4 right after MemConfig_VoiceSlotLookup has put the track's read pointer back on its
+;   first block (offset 5).
+SqStep_ResetPositionState:
 	xor	wa, wa
 	ld	(3660:16), wa
 	ld	(3662:16), wa
@@ -8278,7 +8286,7 @@ MemoryConfig_Handler_Table_Target2_Sub:
 	ld	xiz, 0x0d53
 	andmi8	(xiz), 191
 	call	MemConfig_VoiceSlotLookup
-	call	ScoopParam_ValueTable_Sub_Helper2
+	call	SqStep_ResetPositionState
 MemoryConfig_Handler_Table_Target2_Join:
 	cp	(0x0d65:16), 0
 	jrl	nz, MemoryConfig_Handler_Table_Target2_Join2
@@ -8692,7 +8700,7 @@ MemConfig_Handler_3_Skip:
 	cp	w, 4:i3
 	jrl	c, MemConfig_Handler_3_Loop
 MemConfig_Handler_3_Skip2:
-	call	MemConfig_Handler_3_Helper6
+	call	SqStep_UpdateChordCellCursor
 	call	Display_UpdateRegion2
 	jp	MemConfig_Handler_3_Return
 MemConfig_Handler_3_Loop:
@@ -9127,7 +9135,7 @@ MemConfig_Handler_5_Helper11:
 	call	Display_UpdateRegion1
 	call	Display_UpdateRegion6
 	call	Display_UpdateRegion3
-	call	MemConfig_Handler_3_Helper6
+	call	SqStep_UpdateChordCellCursor
 	call	Display_UpdateRegion2
 	ret
 SndDispatch_ProcessCommand_Helper:
@@ -9246,7 +9254,7 @@ MemConfig_Handler_4_Loop3:
 	cp	w, 255
 	jrl	nz, MemConfig_Handler_4_Skip5
 	call	MemConfig_VoiceSlotLookup
-	call	ScoopParam_ValueTable_Sub_Helper2
+	call	SqStep_ResetPositionState
 	xor	wa, wa
 	ld	(3416:16), wa
 	ld	(3415:16), a
@@ -13389,7 +13397,7 @@ SubCPU_ToneParamRet_Join7:
 	call	VoiceBank_ProcessCommand
 	cp	(0x0eb5:16), 129
 	jrl	nz, PerfMode_ParamHandler_11_Skip24
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	ld	a, (3771:16)
 	cp	a, 130
 	jrl	nz, PerfMode_ParamHandler_11_Skip23
@@ -13526,7 +13534,7 @@ PerfMode_ParamHandler_11_Loop4:
 	jrl	nz, PerfMode_ParamHandler_11_Loop4
 	jp	PerfMode_ParamHandler_11_Loop3
 PerfMode_ParamHandler_11_Skip38:
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	ld	a, (3771:16)
 	cp	a, 130
 	jrl	z, PerfMode_ParamHandler_11_Skip40
@@ -13616,9 +13624,17 @@ PerfMode_ParamHandler_11_Skip50:
 	jp	PerfMode_ParamHandler_11_Loop3
 PerfMode_ParamHandler_11_Skip51:
 	call	SubCPU_ToneParamRet_Helper16
-	call	MemConfig_Handler_3_Helper6
+	call	SqStep_UpdateChordCellCursor
 	ret
-MemConfig_Handler_3_Helper6:
+; SqStep_UpdateChordCellCursor: Computes the step-record screen's chord-cell cursor (0x0EEF, 0..7: two cells per beat
+;   over four beats): unless byte 0x0D6A is set, refreshes the measure/beat position
+;   (SqStep_GetRhythmTrackForMeasures, AccPedal_CheckBitAndUpdate), then cell = 2 * beat (0x0D5C, minus 4 from beat 4
+;   on when the measure has more than 4 beats, 0x0D5D) + 1 when the clock 0x0D57 is past the beat start. Basis:
+;   callers + body -- Display_RedrawSelection copies 0x0EEF to 0x1191, the RAM byte that picks the rectangle of
+;   SqStep_ChordCellCursor (8 cells, x = 8 + 32k); the callers (MemConfig_Handler_3_Helper3,
+;   MemConfig_Handler_5_Helper11, MemConfig_Handler_5_Helper12) run it after moving the position and then redraw
+;   display region 2.
+SqStep_UpdateChordCellCursor:
 	cp	(0x0d6a:16), 0
 	jrl	nz, PerfMode_ParamHandler_11_Return7
 	call	SqStep_GetRhythmTrackForMeasures
@@ -13848,9 +13864,9 @@ PerfMode_ParamHandler_11_Skip61:
 	jrl	z, PerfMode_ParamHandler_11_Return8
 	cp	e, 0:i3
 	jrl	nz, PerfMode_ParamHandler_11_Skip62
-	call	SubCPU_ToneParamRet_Helper14
+	call	SqStep_ClearRow2CellRecords
 PerfMode_ParamHandler_11_Skip62:
-	call	SubCPU_ToneParamRet_Helper15
+	call	SqStep_ClearRow3CellRecords
 PerfMode_ParamHandler_11_Return8:
 	ret
 SubCPU_ToneParamRet_Helper11:
@@ -14116,8 +14132,8 @@ OscScope_RenderBlock_Return2:
 	ret
 SubCPU_ToneParamRet_Helper13:
 	call	OscScope_RenderBlock_Helper
-	call	SubCPU_ToneParamRet_Helper14
-	call	SubCPU_ToneParamRet_Helper15
+	call	SqStep_ClearRow2CellRecords
+	call	SqStep_ClearRow3CellRecords
 	ret
 OscScope_RenderBlock_Helper:
 	ld	xix, 3669
@@ -14126,14 +14142,25 @@ OscScope_RenderBlock_Helper:
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
-SubCPU_ToneParamRet_Helper14:
+; SqStep_ClearRow2CellRecords: Clears the cell records of row 2 of the step-record grid: the 8 x 4 bytes at RAM 0x0E75
+;   (16 words = 0). Basis: callers + body -- Display_RedrawButtonLabels draws row 2's chord cells
+;   (SqStep_Row2ChordCells) from 0x0E75 and Scoop_ButtonLabels_CopySlotData copies byte 0 of each of its records;
+;   SubCPU_ToneParamRet_Helper13 clears rows 1-3 (OscScope_RenderBlock_Helper 0x0E55, this,
+;   SqStep_ClearRow3CellRecords 0x0E95) before MemConfig_Handler_5_Helper12 refills them, and the row-index test at
+;   13832 (0x0EC6 = 0) clears it with row 3.
+SqStep_ClearRow2CellRecords:
 	ld	xix, 3701
 	ldw	bc, 16
 	xor	wa, wa
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
-SubCPU_ToneParamRet_Helper15:
+; SqStep_ClearRow3CellRecords: Clears the cell records of row 3 of the step-record grid: the 8 x 4 bytes at RAM 0x0E95
+;   (16 words = 0). Basis: callers + body -- Display_RedrawButtonLabels draws row 3's chord cells
+;   (SqStep_Row3ChordCells) from 0x0E95; SubCPU_ToneParamRet_Helper13 clears rows 1-3 with it before
+;   MemConfig_Handler_5_Helper12 refills them, and the row-index test at 13832 clears it when the current row (0x0EC6)
+;   is 0 or 1.
+SqStep_ClearRow3CellRecords:
 	ld	xix, 3733
 	ldw	bc, 16
 	xor	wa, wa
@@ -14437,7 +14464,13 @@ DisplayStr_BytecodeBlock_A_Return2:
 	; indexed with stride 4 (`sla hl, 2`), index from `ld l, (3782:16)`
 DisplayStr_BytecodeBlock_A_Tbl:
 	.byte	0x4c, 0x0e, 0x00, 0x00, 0x4e, 0x0e, 0x00, 0x00, 0x50, 0x0e, 0x00, 0x00
-SubCPU_ToneParamRet_Helper18:
+; SqStep_PeekNextEvent: Looks ahead one event at the song-data read cursor without moving it: saves the cursor (block
+;   0x28BF, offset 0x28C1), copies the event at it into 0x0EBB.. -- just the byte when it is a marker 0x81 / 0x82 /
+;   0x84, otherwise the status byte and its data bytes up to the next byte with bit 7 set -- skipping whole events
+;   whose first data byte is 47 or 95, then restores the cursor; registers preserved. Basis: callers + body -- the
+;   chord-grid builders call it and then test 0x0EBB against the markers (129 / 130 / 132) and 0x0EBC against 48 to
+;   decide how to fill the next cells; VoiceBank_LoadLerpState / _UpdateLerpState are the cursor's read and advance.
+SqStep_PeekNextEvent:
 	pushdi_w	(0x28bf)
 	pushdi_w	(0x28c1)
 	push	xhl
@@ -16760,7 +16793,7 @@ ParamPopup_PartPedal_Skip10:
 	jp	Tbl_PedalNames_Join2
 ParamPopup_PartPedal_Skip11:
 	call	OscScope_UpdateDisplay_Helper2
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, ParamPopup_PartPedal_Skip12
 	call	OscScope_UpdateDisplay_Helper
@@ -16803,7 +16836,7 @@ ParamPopup_PartPedal_Skip15:
 	cp	(0x116e:16), 129
 	jrl	z, ParamPopup_PartPedal_Skip16
 	pushw	wa
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	popw	wa
 	cp	w, 48
 	jrl	nz, ParamPopup_PartPedal_Skip16
@@ -16837,7 +16870,7 @@ Tbl_PedalNames_Skip2:
 	jp	ParamPopup_PartPedal_Return
 ParamPopup_PartPedal_Skip19:
 	call	OscScope_UpdateDisplay_Helper2
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, Tbl_PedalNames_Skip3
 	call	DisplayStr_BytecodeBlock_A
@@ -17877,7 +17910,7 @@ Scoop_Scroll_Apply:
 	sub bc, 0x5
 	inc 1, bc
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17891,7 +17924,7 @@ Scoop_EventHandler_CategorySelect:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9872:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_EventHandler_CategorySelect
 	jrl Scoop_ButtonGrid_Data
@@ -17914,7 +17947,7 @@ Scoop_CategorySelect_Amplitude:
 	call Scoop_SpecialMode_Draw
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17927,7 +17960,7 @@ Scoop_CategorySelect_Filter:
 	call Scoop_SpecialMode_Draw
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_CategorySelect_Filter
 	jrl Scoop_ButtonGrid_Data
@@ -17958,7 +17991,7 @@ Scoop_CategorySelect_UpdateDisplay:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9870:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17972,7 +18005,7 @@ Scoop_EventHandler_ButtonGrid:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9870:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_EventHandler_ButtonGrid
 	jr Scoop_ButtonGrid_Data
@@ -18230,7 +18263,13 @@ Scoop_SpecialMode_CheckState:
 	popw wa
 	ret
 
-Scoop_SpecialMode_Data:
+; SeqData_ChainPrevSrcBlock: Moves the source of a chained copy in the sequencer event memory to the previous block:
+;   follows the link at +1 of the block at (0x267E), stores the block number in 0x28BA and the block's address in
+;   (0x267E), and sets the source offset IY = 0xFF (the block's last byte); when the linked block is not in use (bit 7
+;   clear) it sets SEQ_ERROR_CODE = 11. Basis: callers + body -- Scoop_EventHandler_Scroll, the backward (`lddr`,
+;   Scoop_SpecialMode_Setup) chained copy, calls it between pieces; the forward twin is Scoop_SpecialMode_UpdateParams
+;   (link +3, IY = 5), the destination twin Scoop_SpecialMode_Draw (0x267A, 0x289F, IX).
+SeqData_ChainPrevSrcBlock:
 	xor iy, iy
 	ld xiy, (9854:16)
 	ld (4349:16), xiy

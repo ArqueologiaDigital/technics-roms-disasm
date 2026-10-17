@@ -3247,7 +3247,7 @@ SeMenu_CopyWriteUpdate_Join4:
 	extz	bc
 	lda	xde, (xsp+8)
 	ld	wa, 3:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp)
 	extz	wa
 	ld	bc, (xsp+8)
@@ -4019,7 +4019,7 @@ SeMenu_CopyWriteUpdate_Join7:
 	extz	bc
 	lda	xde, (xsp)
 	ld	wa, 0:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp+2)
 	extz	wa
 	ld	bc, (xsp)
@@ -5082,7 +5082,7 @@ SeMenu_CopyWriteUpdate_Join11:
 	extz	bc
 	lda	xde, (xsp)
 	ld	wa, 1:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp+4)
 	extz	wa
 	ld	c, (xsp+2)
@@ -8617,12 +8617,12 @@ SeMenu_DrawSelectedPartEnvCurve:
 	jr	nz, SeMenu_DrawSelectedPartEnvCurve_Skip
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_ShowConfirmDialog_Sub_Data_2
-	ld	xix, SeMenu_ShowConfirmDialog_Sub_Data_3
+	ld	xix, SeTouchCurve_Part1CellRecords
 	call	SeGfx_DrawStaticList
 	jr	SeMenu_DrawSelectedPartEnvCurve_Join
 SeMenu_DrawSelectedPartEnvCurve_Skip:
 	ld	(COLORBLIT_MODE:24), 0
-	ld	xiy, SeMenu_ShowConfirmDialog_Sub_Data
+	ld	xiy, SeTouchCurve_AreaFill4Part
 	ld	xix, SeMenu_ShowConfirmDialog_Sub_Data_2
 	call	SeGfx_DrawStaticList
 SeMenu_DrawSelectedPartEnvCurve_Join:
@@ -9390,7 +9390,7 @@ SeMenu_CompareAndApply_Data4:
 	; --- Tail helper: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, SeScreenData_0x113B
-	ld xix, SeMenu_ShowConfirmDialog_Sub_Data
+	ld xix, SeTouchCurve_AreaFill4Part
 	call SeGfx_DrawStaticList
 	ret
 
@@ -13110,9 +13110,19 @@ SeScreenData_0x1089:
 ; reader (se_screendata_model.py): static record list(s) from here, read by GraphicsRender_ProcessEntries;
 ; evidence: SeMenu_CompareAndApply_Data4
 SeScreenData_0x113B:			.incbin "includes/generated/se_setup_labels.bin", 0x0, 0x5
-SeMenu_ShowConfirmDialog_Sub_Data:	.incbin "includes/generated/se_setup_labels.bin", 0x5, 0xA
+; SeTouchCurve_AreaFill4Part: Sound-editor static record op 1B (ColorBlit_ByteData: fill a rectangle with the colour
+;   at 0x3EFA2) over (214, 70) - (263, 225): the area of the TOUCH CURVE cells in 4-part mode, filled by
+;   SeMenu_DrawSelectedPartEnvCurve before it draws the selected part's cell (in 2-part mode it fills (158, 70) -
+;   (210, 161) from the next record, SeMenu_ShowConfirmDialog_Sub_Data_2, instead); also the end of
+;   SeScreenData_0x113B's one-record list. Basis: readers + bytes.
+SeTouchCurve_AreaFill4Part:	.incbin "includes/generated/se_setup_labels.bin", 0x5, 0xA
 SeMenu_ShowConfirmDialog_Sub_Data_2:	.incbin "includes/generated/se_setup_labels.bin", 0xF, 0xA
-SeMenu_ShowConfirmDialog_Sub_Data_3:	.incbin "includes/generated/se_setup_labels.bin", 0x19, 0x16
+; SeTouchCurve_Part1CellRecords: Sound-editor static record list (42 bytes, up to SeScreenData_0x117E) of part 1's
+;   TOUCH CURVE cell in 4-part mode: pixel-text captions "TOUCH" at (226, 114) and "CURVE" at (232, 123), an op-22
+;   shadow box (224, 70) - (262, 108) for the curve picture and an op-01 line (214, 90) - (224, 90); entries 0 and 1
+;   of SeMenu_DrawSelectedPartEnvCurve_Records (parts 2-4 are SeScreenData_0x117E / _0x11A8 / _0x11D2, 32 pixels lower
+;   each). It is also the end of the 2-part area-fill record list. Basis: readers + bytes.
+SeTouchCurve_Part1CellRecords:	.incbin "includes/generated/se_setup_labels.bin", 0x19, 0x16
 	; head of the next record, split off at se_setup_labels's proven end
 	sd_quad	0x22, 224, 70, 262, 108
 	sd_quad	0x01, 214, 90, 224, 90
@@ -13154,8 +13164,8 @@ SeScreenData_0x1226:
 ; list-start table: entry i -> a list of 42 bytes (5 entries, LE32)
 ; evidence: code 0xF0F42E
 SeMenu_DrawSelectedPartEnvCurve_Records:
-	.long	SeMenu_ShowConfirmDialog_Sub_Data_3
-	.long	SeMenu_ShowConfirmDialog_Sub_Data_3
+	.long	SeTouchCurve_Part1CellRecords
+	.long	SeTouchCurve_Part1CellRecords
 	.long	SeScreenData_0x117E
 	.long	SeScreenData_0x11A8
 	.long	SeScreenData_0x11D2

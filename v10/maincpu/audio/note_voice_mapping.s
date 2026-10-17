@@ -4720,7 +4720,7 @@ CollectAllocVoice_EmitLoop:
 	add	xwa, (xsp+168)
 	ld a, (xwa)
 	cp	a, (xsp+166)
-	jr nz, CollectAllocVoice_Em_Block
+	jr nz, CollectAllocVoice_EmitLoop_Join
 	lda xwa, (xsp + 2)
 	ld xde, xwa
 	ldto_berp A, 0xfb
@@ -4729,7 +4729,7 @@ CollectAllocVoice_EmitLoop:
 	ld xwa, xde
 	call Voice_BuildAndEmitNoteOnEvents
 
-CollectAllocVoice_Em_Block:
+CollectAllocVoice_EmitLoop_Join:
 	inc1b_erp 0xfb
 	cp_erpb 0xfb, 0x10
 	jr c, CollectAllocVoice_EmitLoop
@@ -9138,7 +9138,7 @@ MarkEntriesAboveThre_LoadIdx:
 	xor a, (0xcd2f:16)
 	ldfr_berp A, 0xfb
 	cp e, 0:i3
-	jr z, MarkEntriesAboveThre_Block
+	jr z, MarkEntriesAboveThre_LoadIdx_Join
 	ldto_berp A, 0xfa
 	ld c, a
 	extz bc
@@ -9150,7 +9150,7 @@ MarkEntriesAboveThre_LoadIdx:
 	ldw bc, 0xb
 	call AddswbWr
 
-MarkEntriesAboveThre_Block:
+MarkEntriesAboveThre_LoadIdx_Join:
 	cpib_erp 0xfb, 0
 	jr z, MarkEntriesAboveThre_LoadIdx2
 	ldto_berp A, 0xf9
@@ -13977,7 +13977,7 @@ VoiceMap_AllocateSlot:
 	cpw (0xce66:16), 0
 	jr nz, VoiceMap_AllocateSlo_Block
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF
 	calr UIParam_ScanAndCollect
@@ -14003,7 +14003,7 @@ VoiceMap_AllocateSlo_Block:
 
 VoiceMap_AllocateSlo_Block2:
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF2
 	ld (0xe9bc:16), 10
@@ -14052,7 +14052,7 @@ NoteMap_FindBestMatch:
 
 NoteMap_CheckVoiceReuse:
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, CheckVoiceReuse_SetByteFF
 	calr UIParam_ScanAndCollect
@@ -14080,7 +14080,13 @@ CheckVoiceReuse_Block:
 NoteMap_GetVoiceData_Return:
 	ret
 
-NoteMap_GetVoiceData_Entry:
+; Harmony_FindReferenceNote: Finds the harmony reference note: the lowest note (byte +1 of each 2-byte entry from +4)
+;   of the note list at XWA (word count at +0); kept, with the entry's other byte, in 0xCEAA / 0xCEAB when it lies in
+;   25..102, else both are set to 0xFF; the previous pair is saved in 0xCEAC / 0xCEAD first. Returns L = (0xCEAA).
+;   Basis: callers + body -- VoiceMap_AllocateSlot and NoteMap_FindBestMatch call it on the list at 0xCE22 and, when L
+;   is not 0xFF, run UIParam_ScanAndCollect, whose UIParam_CallbackDispatch calls the Harmony_HandlerTable entry
+;   chosen by 0xE9BE; those handlers subtract their intervals from 0xCEAA ("the reference note").
+Harmony_FindReferenceNote:
 	ld c, (0xceaa:16)
 	ld (0xceac:16), c
 	ld c, (0xceab:16)
@@ -15083,7 +15089,7 @@ Audio_NullRet1:
 	ret
 
 Audio_NullRet1_Data:
-	jp	NullRet2_Block
+	jp	Chord_ClearRecognizedChord
 	ret
 	nop
 	nop
@@ -15243,13 +15249,13 @@ VoiceTiming_CheckBit6:
 VoiceTiming_CheckBit7:
 	bit 7, (0xcede:24)
 	jr z, VoiceTiming_CompareThreshold
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr Voice_AdjustTiming_Return
 
 VoiceTiming_CompareThreshold:
 	cp bc, (0xcf17:16)
 	jr c, VoiceTiming_EqualThreshold
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr Voice_AdjustTiming_Return
 
 VoiceTiming_EqualThreshold:
@@ -15264,7 +15270,15 @@ VoiceTiming_BelowThreshold:
 Voice_AdjustTiming_Return:
 	ret
 
-Voice_UpdateVelocity_Entry:
+; Chord_RecognizeNowOrDelay: Starts chord recognition for a change in the held chord keys, either at once
+;   (Voice_CheckAndResetSlotState) or after a 5-tick delay (0xCEB3 = 5 unless already running): immediate when 0xCEDE
+;   bit 6 is set; when no keys were held before (previous count 0xCF17 = 0) only delayed if 0xC596 bit 1 and 0xCEDE
+;   bit 4 are set and a chord root (0xCEE0) exists; otherwise delayed when 0xCEDE bit 4 is set, unless 0xCEDE bit 7
+;   and 0xC596 bit 1 are both set. Basis: callers + body -- Voice_DispatchByTimingState calls it when keys are held
+;   and the count did not drop (or 0xCEDE bit 7 is set), Voice_MatchVoicePairs when a held note is new; a drop goes to
+;   Voice_SetDecayTimer (0xCEB4 = 6 / 22) instead, and Voice_UpdateNoteState re-runs the recognition when either timer
+;   runs out.
+Chord_RecognizeNowOrDelay:
 	bit 6, (0xcede:24)
 	jr nz, Voice_CheckAndUpdateSlot
 	cpw (0xcf17:16), 0
@@ -15333,7 +15347,7 @@ VoicePair_InnerScan:
 	inc 2, ix
 	dec 1, de
 	jr nz, VoicePair_InnerScan
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr VoicePair_Return
 
 VoicePair_AdvanceOuter:
@@ -15380,13 +15394,20 @@ CheckAndResetSlotSta_LoadDRAM2:
 	jr nz, Voice_NullRet2
 
 CheckAndResetSlotSta_Block2:
-	calr NullRet2_Block
+	calr Chord_ClearRecognizedChord
 	jr Voice_NullRet2
 
 Voice_NullRet2:
 	ret
 
-NullRet2_Block:
+; Chord_ClearRecognizedChord: Clears the recognized chord: held-key count 0xCEFF, chord note count 0xCEE5, 0xCEF1,
+;   root 0xCEE0, type 0xCEDF, bass root 0xCEE1 and 0xCEE4 = 0; sets 0xCEDE bit 7 and clears its bits 1-2 (bit 1 = on-
+;   bass chord); then applies the empty chord with Chord_ApplyCurrentChord (voicing, displayed chord
+;   0x8D40/0x8D42/0x8D44, changed flag 0xCF01). Basis: callers + body -- Voice_CheckAndResetSlotState calls it
+;   (through CheckAndResetSlotSta_Block2) when no chord keys are held and none of the hold conditions (panel record
+;   0x48 +5 / +6 bits 4-5, 0xC598 / 0xC596 / 0xCEDE flags) applies; slot 0 of the unreferenced jump block at 0xFE9413
+;   also jumps here.
+Chord_ClearRecognizedChord:
 	ldw (0x00ceff:24), 0x0000
 	ld (0x00cee5:24), 0x00
 	ld (0x00cef1:24), 0x00
@@ -15396,7 +15417,7 @@ NullRet2_Block:
 	and (0xcede:24), 249
 	ld (0x00cee1:24), 0x00
 	ld (0x00cee4:24), 0x00
-	calr VoiceSlot_Epilogue_Block2
+	calr Chord_ApplyCurrentChord
 	ret
 
 NullRet2_Data:
@@ -15436,13 +15457,13 @@ EffectState_Dispatch_Block:
 	calr VoiceSlot_LoadResult_Block3
 
 EffectState_Dispatch_Block2:
-	calr VoiceSlot_Epilogue_Block2
+	calr Chord_ApplyCurrentChord
 	ret
 
 EffectState_Dispatch_Block3:
 	ld (0x00cee5:24), 0x04
 	ld de, (0x00ceff:24)
-	calr VoiceSlot_StoreParams_Block2
+	calr Chord_CollectHeldNotes
 	calr VoiceSlot_StoreParams_LoadReg3
 	jr VoiceSlot_StoreParams
 VoiceSlot_StoreParams:
@@ -15454,7 +15475,14 @@ VoiceSlot_StoreParams_Block:
 	and (0xcede:24), 249
 	ret
 
-VoiceSlot_StoreParams_Block2:
+; Chord_CollectHeldNotes: Collects the notes for chord recognition from the held chord keys: walks the held-key list
+;   at 0xCEFF (DE entries, note = byte +1 of each 2-byte entry from +4) from the newest entry back, keeps each note
+;   whose pitch class (ChordTables_NoteToPitchClass) is not taken yet (set ChordTables_PitchClassBits in bank register
+;   WA3) until (0xCEE5) notes are kept, then stores the count in 0xCEE5 and the notes, in list order, at 0xCEE6..; DE
+;   = 0 gives 0xCEE5 = 0. Basis: callers + body -- the two recognition paths of Voice_CheckAndResetSlotState
+;   (PitchCalc_Return_Block and EffectState_Dispatch_Block3) set 0xCEE5 = 4 and DE = (0xCEFF), call it, then classify
+;   0xCEE5 / 0xCEE6.. into chord type and root.
+Chord_CollectHeldNotes:
 	ldw (0x00cf2f:24), 0x0000
 	ld xiy, 0xceff
 	ld xix, 0xcf8f
@@ -15718,7 +15746,7 @@ PitchCalc_Return:
 PitchCalc_Return_Block:
 	ld (0x00cee5:24), 0x04
 	ld de, (0x00ceff:24)
-	calr VoiceSlot_StoreParams_Block2
+	calr Chord_CollectHeldNotes
 	cp (0x00cee5:24), 0x02
 	jr ugt, PitchCalcStep_ClearByte_Skip
 	jr PitchCalcStep_ClearByte_Skip2
@@ -16427,7 +16455,14 @@ VoiceSlot_Epilogue_Block:
 	or (0xcede:24), 16
 	ret
 
-VoiceSlot_Epilogue_Block2:
+; Chord_ApplyCurrentChord: Applies the current chord (type 0xCEDF, root 0xCEE0, bass 0xCEE1): rebuilds its voicing and
+;   bass note (Voice_InitPartAllocState, from the chord tables), copies it to 0x8D42 / 0x8D40 / 0x8D44 -- the chord
+;   MainChordPre shows -- and calls BitMapOut_CheckDiskAndApply when that changed (VoiceSlot_IterateAlloc_TestBit24),
+;   sets the changed flag (0xCF01 high byte = 0xFF) and records the chord as the last one (0xCEE2 = type, 0xCEE3 =
+;   root). Basis: callers + body -- Chord_ClearRecognizedChord calls it after clearing the chord and EffectState_Dispatch_Block2
+;   after each recognition; Voice_UpdatePlayModeState reports the 0xCF01 flag, and recognition falls back to 0xCEE2 /
+;   0xCEE3 when it finds no chord.
+Chord_ApplyCurrentChord:
 	calr Voice_InitPartAllocState
 	calr VoiceSlot_IterateAlloc_TestBit24
 	orw (0xcf01:24), 0xff00
@@ -22500,7 +22535,7 @@ MidiSysMsg_Handler_Skip4:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 243
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
 ; MidiSysMsg_Handler_OnF4LongDeltaTime: Song-stream status 0xF4: two-byte (14-bit) delta-time added to the event time
@@ -22526,7 +22561,7 @@ MidiSysMsg_Handler_Skip6:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 244
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
 ; MidiSysMsg_Handler_SkipF9Event: Song-stream status 0xF9: two data bytes, discarded.
@@ -22643,17 +22678,22 @@ Dispatch_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
-Dispatch_Data:
+; MidiSysMsg_DecodeDeltaTime: Decodes the delta time carried by a song-stream status 0xF3 / 0xF4 event: A = the
+;   status, XBC = its data bytes; 0xF3 -> the 7-bit byte, 0xF4 -> the 14-bit value LSB + 128 * MSB of two 7-bit bytes;
+;   returns it in XHL (0 for any other status). Basis: callers + body -- MidiSysMsg_Handler_OnF3ShortDeltaTime /
+;   _OnF4LongDeltaTime read one / two bytes into their frame, call it with WA = 243 / 244 and add XHL to the event
+;   time 0xE9E7.
+MidiSysMsg_DecodeDeltaTime:
 	cp	a, 244
-	jr	z, Dispatch_Data_Skip
+	jr	z, MidiSysMsg_DecodeDeltaTime_Skip
 	cp	a, 243
-	jr	nz, Dispatch_Data_Skip2
+	jr	nz, MidiSysMsg_DecodeDeltaTime_Skip2
 	ld	l, (xbc)
 	res	7, l
 	ld	h, 0:opc
 	extz	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip:
 	ld	l, (xbc)
 	res	7, l
 	ld	e, (xbc+1)
@@ -22670,10 +22710,10 @@ Dispatch_Data_Skip:
 	add	wa, bc
 	ld	hl, wa
 	exts	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip2:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip2:
 	ld	xhl, 0:i3
-Dispatch_Data_Return:
+MidiSysMsg_DecodeDeltaTime_Return:
 	ret
 ; MidiSysMsg_SetScaledTempo: Applies a song-stream tempo event: from the two 7-bit bytes at XWA (LSB, MSB) forms the
 ;   14-bit value, scales it by (0xE9EB) / 1000 (Math_Multiply32, Math_DivideU32; nothing when (0xE9EB) = 0),
@@ -22685,7 +22725,7 @@ MidiSysMsg_SetScaledTempo:
 	push	xiz
 	ld	xbc, (0xe9eb:16)
 	or	xbc, xbc
-	jrl	z, Dispatch_Data_Epilogue
+	jrl	z, MidiSysMsg_SetScaledTempo_Epilogue
 	ld	e, (xwa)
 	ld	c, (xwa+1)
 	ld	a, c
@@ -22724,10 +22764,10 @@ MidiSysMsg_SetScaledTempo_Skip4:
 	cp	xiz, 0x100
 	jr	nc, MidiSysMsg_SetScaledTempo_Skip
 	res	0, (0xfc63:16)
-	jr	Dispatch_Data_Join
+	jr	MidiSysMsg_SetScaledTempo_Join
 MidiSysMsg_SetScaledTempo_Skip:
 	set	0, (0xfc63:16)
-Dispatch_Data_Join:
+MidiSysMsg_SetScaledTempo_Join:
 	ld	wa, iz
 	ld	bc, wa
 	ld	xwa, 4:i3
@@ -22737,7 +22777,7 @@ Dispatch_Data_Join:
 	ld	xwa, xiz
 	set	15, wa
 	ld	(4597:16), wa
-Dispatch_Data_Epilogue:
+MidiSysMsg_SetScaledTempo_Epilogue:
 	pop	xiz
 	ret
 
@@ -23331,7 +23371,7 @@ VoiceReset_Return_LoadIter2:
 	add xbc, xwa
 	ld a, (xbc)
 	extz wa
-	calr InitTrackSlots_Block
+	calr RingBuffer_WriteByte
 	inc 1, iz
 	cpw_erp IZ, 0xfa
 	jr c, VoiceReset_Return_LoadIter2
@@ -23683,7 +23723,12 @@ InitTrackSlots_LoopCheck:
 	jr c, InitTrackSlots_LoopBody
 	ret
 
-InitTrackSlots_Block:
+; RingBuffer_WriteByte: Writes byte A into the 2 KB ring buffer at 0xD0AE (write index 0xD0A8, free count 0xD0AC; the
+;   index wraps after 2047): returns HL = 0, or HL = 0xFFFF without writing when the buffer is full. Basis: callers +
+;   body -- the writer twin of RingBuffer_ReadByte (same buffer, read index 0xD0AA); MidiRingBuf_WriteBytes calls it
+;   for each of its IZ bytes after checking the free count, and VoiceReset_Return_Prologue for each byte of a record
+;   it builds; FileIO_InitTrackSlots empties the buffer.
+RingBuffer_WriteByte:
 	cpw (0xd0ac:16), 0
 	jr nz, InitTrackSlots_LoadDRAM
 	ldw hl, 0xffff
@@ -23800,7 +23845,7 @@ SndParam_NotifyLoop_Body:
 	ld wa, (xsp + 2)
 	ld	a, (xbc+wa)
 	extz wa
-	calr InitTrackSlots_Block
+	calr RingBuffer_WriteByte
 	incw 1, (xsp + 2)
 	ld wa, (xsp + 2)
 	cp wa, iz
@@ -27619,7 +27664,13 @@ HdaeRom_DataHandler_Epilogue:
 	lda	xsp, (xsp+440)
 	ret
 
-HdaeRom_DataDispatch_Block:
+; SoundRam_WriteIdAndChecksum: Stamps the sound-memory image at 0x1E0000 as a KN5000 one: copies the 16-byte id
+;   "KN5000 SOUND RAM" (SoundRam_Id_KN5000) to 0x1E0000..0x1E000F, then SendPartDataBlock_SetWord7 stores the
+;   complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at 0x1E72A8; returns HL = 0. Basis: callers + body --
+;   PostTmLoad, PostTmSave_Success, PostTmLoadEntry and TmFlashWrite_ValidateParams call it right after converting the
+;   loaded data (HdaeRom_DataHandler / HdaeRom_AltHandler) and before bulk-copying the image (0x72AA bytes, checksum
+;   word last) to the sub-CPU.
+SoundRam_WriteIdAndChecksum:
 	lda	xde, (0x1e0000:24)
 	lda	xwa, (SoundRam_Id_KN5000:24)
 	ld	xbc, xwa
@@ -27727,7 +27778,7 @@ PostTmLoad:
 	ldw wa, 0xff
 	ldw bc, 0xff
 	calr HdaeRom_AltHandler
-	calr HdaeRom_DataDispatch_Block
+	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
 	ld xde, 0x7800
@@ -27777,7 +27828,7 @@ PostTmSave_Success:
 	ldw wa, 0xff
 	ldw bc, 0xff
 	calr HdaeRom_AltHandler
-	calr HdaeRom_DataDispatch_Block
+	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
 	ld xde, 0x7800
@@ -27814,7 +27865,7 @@ PostTmLoadEntry:
 	cp	(xsp+2), 0x40
 	jr	nc, PostTmLoadEntry_Skip
 	calr	HdaeRom_DataHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	c, (xsp)
 	extz	bc
 	ld	a, (xsp+2)
@@ -27832,7 +27883,7 @@ PostTmLoadEntry:
 	jr	PostTmLoadEntry_Join
 PostTmLoadEntry_Skip:
 	calr	HdaeRom_AltHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp)
 	extz	wa
 	extz	xwa
@@ -27879,7 +27930,7 @@ TmFlashWrite_ValidateParams_Loop:
 	inc	1, iz
 	cp	iz, 20
 	jr	c, TmFlashWrite_ValidateParams_Loop
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp+4)
 	ldfr_berp	a, 248
 	extz	iz
@@ -27903,7 +27954,7 @@ TmFlashWrite_ValidateParams_Loop2:
 	inc	1, iz
 	cp	iz, 128
 	jr	c, TmFlashWrite_ValidateParams_Loop2
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	lda	xwa, (0x1e4aa7:24)
 	ldw	bc, 0x2800
 	.set	TmFlashWrite_Block2, . + 1	; no instruction starts here: the name points 1 byte(s) into the one below

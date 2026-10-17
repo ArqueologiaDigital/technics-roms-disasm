@@ -7013,7 +7013,7 @@ PerfMode_Handler_EvtB_Helper2:
 PerfMode_Handler_EvtB_Helper2_Skip:
 	call	MemoryConfig_Handler_Table_Target2_Sub
 PerfMode_Handler_EvtB_Helper2_Join:
-	call	MemConfig_Handler_4_Helper5_Helper
+	call	SqStep_ResetPositionState
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	z, PerfMode_Handler_EvtB_Helper2_Skip2
 	call	Demo_PreSetupAndScan
@@ -7577,7 +7577,7 @@ ClockConfig_Handler_0_Tbl:
 	; it from 0xFC61.
 ClockConfig_Handler_0_Tbl2:
 	.byte	0xb0, 0x00, 'H', 0x07, 0x00, '0'
-MemConfig_Handler_4_Helper5_Helper:
+SqStep_ResetPositionState:
 	xor	wa, wa
 	ld	(0x0e4c:16), wa
 	ld	(0x0e4e:16), wa
@@ -7979,7 +7979,7 @@ MemoryConfig_Handler_Table_Target2_Sub:
 	ld	xiz, 0x0d53
 	andmi8	(xiz), 191
 	call	MemConfig_VoiceSlotLookup
-	call	MemConfig_Handler_4_Helper5_Helper
+	call	SqStep_ResetPositionState
 MemoryConfig_Handler_Table_Target2_Join:
 	cp	(0x0d65:16), 0
 	jrl	nz, MemoryConfig_Handler_Table_Target2_Join2
@@ -8927,7 +8927,7 @@ MemConfig_Handler_4_Loop2:
 	cp	w, 255
 	jrl	nz, MemConfig_Handler_4_Skip6
 	call	MemConfig_VoiceSlotLookup
-	call	MemConfig_Handler_4_Helper5_Helper
+	call	SqStep_ResetPositionState
 	xor	wa, wa
 	ld	(3416:16), wa
 	ld	(3415:16), a
@@ -12964,7 +12964,7 @@ SubCPU_ToneParamRet_Join7:
 	call	VoiceBank_ProcessCommand
 	cp	(0x0eb5:16), 129
 	jrl	nz, PerfMode_ParamHandler_11_Skip25
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	ldb_d8	a, (0x0ebb)
 	cp	a, 130
 	jrl	nz, PerfMode_ParamHandler_11_Skip24
@@ -13101,7 +13101,7 @@ PerfMode_ParamHandler_11_Loop3:
 	jrl	nz, PerfMode_ParamHandler_11_Loop3
 	jp	SubCPU_ToneParamRet_Loop
 PerfMode_ParamHandler_11_Skip39:
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	ldb_d8	a, (0x0ebb)
 	cp	a, 130
 	jrl	z, PerfMode_ParamHandler_11_Skip41
@@ -13423,9 +13423,9 @@ PerfMode_ParamHandler_11_Skip58:
 	jrl	z, PerfMode_ParamHandler_11_Return6
 	cp	e, 0:i3
 	jrl	nz, PerfMode_ParamHandler_11_Skip59
-	call	SubCPU_ToneParamRet_Helper14
+	call	SqStep_ClearRow2CellRecords
 PerfMode_ParamHandler_11_Skip59:
-	call	SubCPU_ToneParamRet_Helper15
+	call	SqStep_ClearRow3CellRecords
 PerfMode_ParamHandler_11_Return6:
 	ret
 SubCPU_ToneParamRet_Helper11:
@@ -13689,8 +13689,8 @@ OscScope_RenderBlock_Return2:
 	ret
 SubCPU_ToneParamRet_Helper13:
 	call	OscScope_RenderBlock_Helper
-	call	SubCPU_ToneParamRet_Helper14
-	call	SubCPU_ToneParamRet_Helper15
+	call	SqStep_ClearRow2CellRecords
+	call	SqStep_ClearRow3CellRecords
 	ret
 OscScope_RenderBlock_Helper:
 	ld	xix, 3669
@@ -13699,14 +13699,14 @@ OscScope_RenderBlock_Helper:
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
-SubCPU_ToneParamRet_Helper14:
+SqStep_ClearRow2CellRecords:
 	ld	xix, 3701
 	ldw	bc, 16
 	xor	wa, wa
 	ld	(xix+), wa
 	djnz16	bc, -6
 	ret
-SubCPU_ToneParamRet_Helper15:
+SqStep_ClearRow3CellRecords:
 	ld	xix, 3733
 	ldw	bc, 16
 	xor	wa, wa
@@ -14028,7 +14028,7 @@ DisplayStr_BytecodeBlock_A_Return2:
 	; indexed with stride 4 (`sla hl, 2`), index from `ld l, (3782:16)`
 DisplayStr_BytecodeBlock_A_Tbl:
 	.byte	0x4c, 0x0e, 0x00, 0x00, 0x4e, 0x0e, 0x00, 0x00, 0x50, 0x0e, 0x00, 0x00
-SubCPU_ToneParamRet_Helper18:
+SqStep_PeekNextEvent:
 	pushdi_w	(0x28bf)
 	pushdi_w	(0x28c1)
 	push	xhl
@@ -16203,7 +16203,7 @@ ParamPopup_PartPedal_Skip10:
 	jp	Tbl_PedalNames_Join3
 ParamPopup_PartPedal_Skip11:
 	call	DisplayStr_BytecodeBlock_A_Code_Helper
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, ParamPopup_PartPedal_Skip12
 	call	OscScope_UpdateDisplay_Helper
@@ -16246,7 +16246,7 @@ ParamPopup_PartPedal_Skip16:
 	cp	(0x116e:16), 129
 	jrl	z, ParamPopup_PartPedal_Skip17
 	pushw	wa
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	popw	wa
 	cp	w, 48
 	jrl	nz, ParamPopup_PartPedal_Skip17
@@ -16280,7 +16280,7 @@ ParamPopup_PartPedal_Skip19:
 	jp	Tbl_PedalNames_Return
 ParamPopup_PartPedal_Skip20:
 	call	DisplayStr_BytecodeBlock_A_Code_Helper
-	call	SubCPU_ToneParamRet_Helper18
+	call	SqStep_PeekNextEvent
 	cp	(0x0ebb:16), 129
 	jrl	nz, ParamPopup_PartPedal_Skip21
 	call	DisplayStr_BytecodeBlock_A
@@ -17311,7 +17311,7 @@ Scoop_Scroll_Apply:
 	sub bc, 0x5
 	inc 1, bc
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17325,7 +17325,7 @@ Scoop_EventHandler_CategorySelect:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9872:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_EventHandler_CategorySelect
 	jrl Scoop_ButtonGrid_Data
@@ -17348,7 +17348,7 @@ Scoop_CategorySelect_Amplitude:
 	call Scoop_SpecialMode_Draw
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17361,7 +17361,7 @@ Scoop_CategorySelect_Filter:
 	call Scoop_SpecialMode_Draw
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_CategorySelect_Filter
 	jrl Scoop_ButtonGrid_Data
@@ -17392,7 +17392,7 @@ Scoop_CategorySelect_UpdateDisplay:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9870:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_ButtonGrid_Data
 
@@ -17406,7 +17406,7 @@ Scoop_EventHandler_ButtonGrid:
 	jrl nz, Scoop_ButtonGrid_Data
 	ld bc, (9870:16)
 	call Scoop_SpecialMode_Setup
-	call Scoop_SpecialMode_Data
+	call SeqData_ChainPrevSrcBlock
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, Scoop_EventHandler_ButtonGrid
 	jr Scoop_ButtonGrid_Data
@@ -17664,7 +17664,7 @@ Scoop_SpecialMode_CheckState:
 	popw wa
 	ret
 
-Scoop_SpecialMode_Data:
+SeqData_ChainPrevSrcBlock:
 	xor iy, iy
 	ld xiy, (9854:16)
 	ld (4349:16), xiy

@@ -242,30 +242,30 @@ FileIO_BytecodeData_Code_Skip13:
 FileIO_BytecodeData_Code_Skip14:
 	lda	xwa, (xiz+2)
 	cp	(xwa), 9
-	jr	nz, FileIO_BytecodeData_Code_Entry
+	jr	nz, PanelButton_ModeKey_Skip8
 	cp	(9980:16), 1
-	jr	nz, FileIO_BytecodeData_Code_Entry
+	jr	nz, PanelButton_ModeKey_Skip8
 	ld	(xwa), 8
-	jr	FileIO_BytecodeData_Code_Entry2
-FileIO_BytecodeData_Code_Entry:
+	jr	PanelButton_ModeKey_Join4
+PanelButton_ModeKey_Skip8:
 	cp	(xwa), 8
 	jr	nz, FileIO_BytecodeData_Code_Skip15
-FileIO_BytecodeData_Code_Entry2:
+PanelButton_ModeKey_Join4:
 	bit	0, (0x266a:16)
 	jr	z, FileIO_BytecodeData_Code_Skip15
 	ld	(xwa), 10
 FileIO_BytecodeData_Code_Skip15:
 	cpw	(10408:16), 0
-	jr	z, FileIO_BytecodeData_Code_Entry3
+	jr	z, PanelButton_ModeKey_Skip9
 	ld	a, (xwa)
 	cp	a, 19
 	jr	z, FileIO_BytecodeData_Code_Skip16
 	cp	a, 20
-	jr	nz, FileIO_BytecodeData_Code_Entry3
+	jr	nz, PanelButton_ModeKey_Skip9
 FileIO_BytecodeData_Code_Skip16:
 	ld	(xiz), 255
 	jr	FileIO_BytecodeData_Code_Epilogue4
-FileIO_BytecodeData_Code_Entry3:
+PanelButton_ModeKey_Skip9:
 	res	0, (0x266a:16)
 FileIO_BytecodeData_Code_Epilogue4:
 	pop	xiz
@@ -493,10 +493,10 @@ PanelButton_SoundGroup_Skip6:
 	jr	z, FileIO_BytecodeData_Code_Epilogue9
 PanelButton_SoundGroup_Skip7:
 	cp_erpb	251, 15
-	jr	z, FileIO_BytecodeData_Code_Entry4
+	jr	z, PanelButton_SoundGroup_Join2
 	cp_erpb	251, 20
 	jr	nz, FileIO_BytecodeData_Code_Skip33
-FileIO_BytecodeData_Code_Entry4:
+PanelButton_SoundGroup_Join2:
 	cp	(xwa), 15
 	jr	nz, FileIO_BytecodeData_Code_Epilogue9
 FileIO_BytecodeData_Code_Skip33:
@@ -643,10 +643,10 @@ PanelButton_PanelMemoryNumber_Skip2:
 	ld	xwa, 192
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	nz, FileIO_BytecodeData_Code_Entry5
+	jr	nz, PanelButton_PanelMemoryNumber_Skip4
 PanelButton_PanelMemoryNumber_Skip3:
 	jr	FileIO_BytecodeData_Code_Epilogue11
-FileIO_BytecodeData_Code_Entry5:
+PanelButton_PanelMemoryNumber_Skip4:
 	cp	(xiz+2), 0
 	jr	z, FileIO_BytecodeData_Code_Skip46
 	call	BitMapOut_PrepareRender_CheckBit1
@@ -803,10 +803,10 @@ PanelButton_PartSelect:
 	cp	c, 19
 	jr	z, PanelButton_PartSelect_Skip
 	cp	(CURRENT_TITLE:16), 81
-	jr	nz, FileIO_BytecodeData_Code_Entry6
+	jr	nz, PanelButton_PartSelect_Skip2
 PanelButton_PartSelect_Skip:
 	jr	FileIO_BytecodeData_Code_Epilogue16
-FileIO_BytecodeData_Code_Entry6:
+PanelButton_PartSelect_Skip2:
 	bit	0, (0x26e2:16)
 	jr	nz, FileIO_BytecodeData_Code_Epilogue16
 	ld	w, 0:opc
@@ -887,7 +887,7 @@ PanelButton_DspEffect_Skip2:
 	lda	xbc, (xiz+2)
 	ld	a, (xbc)
 	cp	a, 0:i3
-	jr	z, FileIO_BytecodeData_Code_Entry7
+	jr	z, PanelButton_DspEffect_Skip4
 	set	5, (0x8df6:16)
 	ld	a, (PART_SELECT:16)
 	extz	wa
@@ -911,7 +911,7 @@ PanelButton_DspEffect_Skip3:
 PanelButton_DspEffect_Join:
 	ld	(xde), 127
 	jr	FileIO_BytecodeData_Code_Join11
-FileIO_BytecodeData_Code_Entry7:
+PanelButton_DspEffect_Skip4:
 	res	5, (0x8df6:16)
 	ld	(xbc), 0
 	ld	(xiz+3), 0
@@ -954,10 +954,10 @@ PanelButton_Sustain:
 	jr	z, PanelButton_Sustain_Skip
 	calr	FileIO_BytecodeData_Code_Helper3
 	cp	(xhl), 15
-	jr	nz, FileIO_BytecodeData_Code_Entry8
+	jr	nz, PanelButton_Sustain_Skip2
 PanelButton_Sustain_Skip:
 	jr	FileIO_BytecodeData_Code_Epilogue21
-FileIO_BytecodeData_Code_Entry8:
+PanelButton_Sustain_Skip2:
 	res	1, (0x905d:16)
 	ld	xwa, xiz
 	calr	PanelEvent_FillSelectedPart
@@ -3092,10 +3092,10 @@ SndParamF9A541_ResBit7_Code_Epilogue:
 MidiChanged_ProcessGroup3_Data_Target7:
 	lda_d16	xwa, (ENCODER_STATE_BASE)
 	cp	(0x32f4:16), 0
-	jr	z, ExtData_VoiceParam_DispatchBytecode_Entry
+	jr	z, MidiChanged_ProcessGroup3_Data_Target7_Skip
 	setm	3, (xwa)
 	ret
-ExtData_VoiceParam_DispatchBytecode_Entry:
+MidiChanged_ProcessGroup3_Data_Target7_Skip:
 	res	3, (xwa)
 	ret
 MidiChanged_ProcessGroup3_Data_Target8:
@@ -3143,14 +3143,14 @@ MIDI_ProcessChangedChannels_Data_Target0:
 	call	SndParam_ResolveVoiceEntry
 	lda	xwa, (xsp+8)
 	cp	(xwa), 7
-	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry_Code_Entry
+	jr	ugt, MIDI_ProcessChangedChannels_Data_Target0_Skip
 	ld	a, (xwa)
 	extz	wa
 	ld	xiz, 7:i3
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry_Code_Join
-ExtData_VoiceParam_DispatchBytecode_Entry_Code_Entry:
+MIDI_ProcessChangedChannels_Data_Target0_Skip:
 	cp	(xwa), 15
-	jr	ugt, MIDI_ProcessChangedChannels_Data_Target0_Entry
+	jr	ugt, MIDI_ProcessChangedChannels_Data_Target0_Skip2
 	ld	a, (xwa)
 	dec	8, a
 	extz	wa
@@ -3161,7 +3161,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry_Code_Join:
 	add	xwa, xiz
 	ld	(xwa), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry_Code_Epilogue
-MIDI_ProcessChangedChannels_Data_Target0_Entry:
+MIDI_ProcessChangedChannels_Data_Target0_Skip2:
 	cp	(xwa), 0x11
 	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry_Code_Skip
 	ld	a, (xwa)
@@ -3198,7 +3198,7 @@ MidiChanged_ProcessGroup2_Data_Target0:
 	call	SndParam_ResolveVoiceEntry
 	lda	xwa, (xsp+4)
 	cp	(xwa), 6
-	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry2
+	jr	ugt, MidiChanged_ProcessGroup2_Data_Target0_Skip2
 	ld	a, (xwa)
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
@@ -3206,16 +3206,16 @@ MidiChanged_ProcessGroup2_Data_Target0:
 	and	(xiz+2), 128
 	or	(xiz+2), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue
-ExtData_VoiceParam_DispatchBytecode_Entry2:
+MidiChanged_ProcessGroup2_Data_Target0_Skip2:
 	cp	(xwa), 14
-	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry3
+	jr	ugt, MidiChanged_ProcessGroup2_Data_Target0_Skip3
 	ld	a, (xwa)
 	dec	7, a
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
 	ld	(xiz+1), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue
-ExtData_VoiceParam_DispatchBytecode_Entry3:
+MidiChanged_ProcessGroup2_Data_Target0_Skip3:
 	cp	(xwa), 15
 	jr	nz, MidiChanged_ProcessGroup2_Data_Target0_Skip
 	set	0, (xiz)
@@ -3241,7 +3241,7 @@ MIDI_ProcessChangedChannels_Data_Target1:
 	cp	l, 1:i3
 	jr	z, ExtData_VoiceParam_DispatchBytecode_Skip
 	cp	l, 0:i3
-	jr	nz, ExtData_VoiceParam_DispatchBytecode_Entry4
+	jr	nz, MIDI_ProcessChangedChannels_Data_Target1_Skip
 	and	a, 248
 	set	2, a
 	ld	(xbc), a
@@ -3256,7 +3256,7 @@ ExtData_VoiceParam_DispatchBytecode_Skip2:
 	set	0, a
 	ld	(xbc), a
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue
-ExtData_VoiceParam_DispatchBytecode_Entry4:
+MIDI_ProcessChangedChannels_Data_Target1_Skip:
 	and	(xbc), 0xf8
 ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue:
 	pop	xiz
@@ -5040,7 +5040,7 @@ ExtData_ToneParam_AltBody_Case3:
 ExtData_ToneParam_AltBody_Case4:
 	jrl	ExtData_ToneParam_AltBody_Join3
 ExtData_ToneParam_AltBody_Case5:	; cases 5, 6
-	jrl	ExtData_ToneParam_AltBody_Entry
+	jrl	ExtData_ToneParam_AltBody_OnStyleProgram_Skip
 ExtData_ToneParam_AltBody_Case7:
 	jrl	ExtData_ToneParam_AltBody_Join4
 ExtData_ToneParam_AltBody_Case8:
@@ -5093,7 +5093,7 @@ ExtData_ToneParam_AltBody_Join3:
 	ldw	wa, 80
 	calr	ExtData_ToneParam_DispatchHandler_Helper
 	jrl	SwbtWr_FlushAndAppendParams
-ExtData_ToneParam_AltBody_Entry:
+ExtData_ToneParam_AltBody_OnStyleProgram_Skip:
 	ld	(MIDI_MSG_DATA2), (37012:16)
 	ld	(MIDI_MSG_DATA3), (37013:16)
 	jrl	SwbtWr_FlushAndAppendParams
@@ -5444,11 +5444,11 @@ ExtData_Voice_MixedHandler_Helper:
 	ld	a, c
 	and	a, 255
 	cp	a, 255
-	jr	nz, ExtData_Voice_MixedHandler_Helper_Entry
+	jr	nz, ExtData_Voice_MixedHandler_Skip6
 	ldw	wa, 255
 	calr	ExtData_ToneParam_DispatchHandler_Helper2
 	jr	ExtData_Voice_MixedHandler_Join3
-ExtData_Voice_MixedHandler_Helper_Entry:
+ExtData_Voice_MixedHandler_Skip6:
 	bit	1, (58140:16)
 	jr	nz, ExtData_Voice_MixedHandler_Join3
 	and	c, 3
@@ -5646,7 +5646,7 @@ MidiCh_ConfigVoiceAndParts:
 	ret	z
 	ld	a, (0x28ae:16)
 	bit	7, a
-	jr	z, MidiChannel_ResetAndConfigure_Entry
+	jr	z, MidiCh_ConfigVoiceAndParts_Join2
 	ld	(9828:16), c
 	ld	e, (0x28ae:16)
 	ld	l, e
@@ -5663,7 +5663,7 @@ MidiCh_ConfigVoiceAndParts_Join:
 	jr	c, MidiChannel_ResetAndConfigure_Skip2
 	res	7, e
 	ld	(0x28ae:16), e
-MidiChannel_ResetAndConfigure_Entry:
+MidiCh_ConfigVoiceAndParts_Join2:
 	ld	(MIDI_CC_MODWHEEL_PENDING), (MIDI_CC_MODWHEEL_VALUE:16)
 	set	7, (MIDI_CC_MODWHEEL_VALUE:16)
 MidiChannel_ResetAndConfigure_Skip2:
@@ -9772,12 +9772,12 @@ MidiVoiceNote_LookupMode0:
 	ld	l, (0x911c:16)
 	jr	MidiPart_FindChannelInTable
 MidiVoiceNote_LookupMode1:
-	ld	xiy, MidiVoiceNote_LookupMode1_Data
+	ld	xiy, MidiVoiceNote_PartAssignsD1D2
 	ld	xbc, 0xf
 	ld	l, (0x911c:16)
 	jr	MidiPart_FindChannelInTable
 MidiVoiceNote_LookupMode2:
-	ld	xiy, MidiVoiceNote_LookupMode1_Data
+	ld	xiy, MidiVoiceNote_PartAssignsD1D2
 	ld	xbc, 0xf
 	ld	l, (0x911d:16)
 	jr	MidiPart_FindChannelInTable
@@ -10051,7 +10051,7 @@ VoiceMode_ParamConfigTables:
 SeqTrackAssign_PartTagTable:	.byte	0x00, 0x02, 0x01, 0x07
 	.byte	0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03
 	.byte	0x0f, 0x15, 0x15, 0x00, 0x00, 0x0c, 0x0d, 0x0e
-MidiVoiceNote_LookupMode1_Data:
+MidiVoiceNote_PartAssignsD1D2:
 	.byte	0x00, 0x02, 0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03
 	.byte	0x04, 0x05, 0x06, 0x07, 0x11, 0x12, 0x13
 MidiVoiceNote_LookupMode0_Data:	.byte	0x00
@@ -10752,7 +10752,7 @@ MidiStream_StatusJumpTable:
 MidiStream_HandleNoteCC:
 	ret
 	; --- Indexed dispatch: table lookup, conditional call paths (76 bytes) ---
-MidiStream_HandleNoteCC_Body:
+MidiStream_RunStatus_Mode3:
 	cp	c, 0x48
 	jr	z, MidiStream_HandleNoteCC_Ret
 	extz	hl
@@ -11039,7 +11039,7 @@ MidiStream_ExtendedDispatch_Skip11:
 	ldb_d8	l, (0xfd50)
 	and	l, 3
 	sla	l, 2
-	ld	xix, MidiStream_ExtendedDispatch_Data
+	ld	xix, MidiRx_ProgramChangeModeTable
 	ld	xix, (xix+l)
 	call	(xix)
 MidiStream_ExtDispatch_Mode2Ret:
@@ -11052,10 +11052,10 @@ MidiStream_ExtDispatch_Mode2Ret:
 ;   ld_rr8l xix, xix, l / call (xix)
 ; so the index is bits 0-1 of RAM 0xFD50 and the count, 4, is that mask.
 ; Entry 2 is the `ret` in front of the table: that value does nothing.
-; Also named MidiStream_ExtendedDispatch_Data (a .set in
+; Also named MidiRx_ProgramChangeModeTable (a .set in
 ; shared/positional_labels.s).  Open: what the four values of 0xFD50 bits 0-1
 ; select (0xFD50-0xFD5D is the block BitMapOut_RestoreVoiceChannels restores).
-MidiStream_ExtendedDispatch_Data:
+MidiRx_ProgramChangeModeTable:
 	.long	MidiStream_ExtDispatch_Mode0
 	.long	MidiStream_ExtDispatch_Mode1
 	.long	MidiStream_ExtDispatch_Mode2Ret
@@ -11318,16 +11318,16 @@ MidiCC_ApplyBankSelect_Join2:
 	ldb_d8	b, (0xfd50)
 	and	b, 3
 	sll	b, 2
-	ld	xiy, MidiStream_ExtDispatch_Mode3_Data
+	ld	xiy, MidiCC_BankSelectModeTable
 	ld	xiy, (xiy+b)
 	jp	(xiy)
 ; MIDI-mode jump table: 4 x .long code pointer, indexed by bits 0-1 of RAM
 ; 0xFD50.  Reader: the code just above (v7 0xFCC642) --
 ;   ldb_d8 b, (0xfd50) / and b, 3 / sll b, 2 / ld xiy, <this table> /
 ;   ld_rr8l xiy, xiy, b / jp (xiy)
-; Modes 0 and 2 share one target.  Also named MidiStream_ExtDispatch_Mode3_Data
+; Modes 0 and 2 share one target.  Also named MidiCC_BankSelectModeTable
 ; (a .set in shared/positional_labels.s).
-MidiStream_ExtDispatch_Mode3_Data:
+MidiCC_BankSelectModeTable:
 	.long	MidiStream_ExtDispatch_ModeJump02
 	.long	MidiStream_ExtDispatch_ModeJump1
 	.long	MidiStream_ExtDispatch_ModeJump02
@@ -11386,7 +11386,7 @@ MidiStream_HandleRunningStatus_Data:
 	.long	MidiStream_RunStatus_Mode0
 	.long	MidiStream_RunStatus_Mode1
 	.long	MidiStream_HandleRunningStatus_Return
-	.long	MidiStream_HandleNoteCC_Body
+	.long	MidiStream_RunStatus_Mode3
 MidiStream_RunStatus_Mode0:
 	cp	c, 72
 	jr	nz, MidiStream_HandleRunningStatus_Skip2

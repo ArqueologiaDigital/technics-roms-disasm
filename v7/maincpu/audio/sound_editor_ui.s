@@ -3241,7 +3241,7 @@ SeMenu_CopyWriteUpdate_Join6:
 	extz	bc
 	lda	xde, (xsp+8)
 	ld	wa, 3:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp)
 	extz	wa
 	ld	bc, (xsp+8)
@@ -4018,7 +4018,7 @@ SeMenu_CopyWriteUpdate_Join14:
 	extz	bc
 	lda	xde, (xsp)
 	ld	wa, 0:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp+2)
 	extz	wa
 	ld	bc, (xsp)
@@ -5079,7 +5079,7 @@ SeMenu_CopyWriteUpdate_Join21:
 	extz	bc
 	lda	xde, (xsp)
 	ld	wa, 1:i3
-	call	SeMenu_ApplySynthParam_Data
+	call	SeMenu_GetGroupFirstToneIndex
 	ld	a, (xsp+4)
 	extz	wa
 	ld	c, (xsp+2)
@@ -8555,12 +8555,12 @@ SeMenu_DrawSelectedPartEnvCurve:
 	jr	nz, SeMenu_DrawSelectedPartEnvCurve_Skip
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_ShowConfirmDialog_Sub_Data_2
-	ld	xix, SeMenu_ShowConfirmDialog_Sub_Data_3
+	ld	xix, SeTouchCurve_Part1CellRecords
 	call	SeGfx_DrawStaticList
 	jr	SeMenu_DrawSelectedPartEnvCurve_Join
 SeMenu_DrawSelectedPartEnvCurve_Skip:
 	ld	(COLORBLIT_MODE:24), 0
-	ld	xiy, SeScreenData_0x1140
+	ld	xiy, SeTouchCurve_AreaFill4Part
 	ld	xix, SeMenu_ShowConfirmDialog_Sub_Data_2
 	call	SeGfx_DrawStaticList
 SeMenu_DrawSelectedPartEnvCurve_Join:
@@ -9262,7 +9262,7 @@ SeMenu_CompareAndApply_Data3:
 SeMenu_CompareAndApply_Data4:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeScreenData_0x113B
-	ld	xix, SeScreenData_0x1140
+	ld	xix, SeTouchCurve_AreaFill4Part
 	call	SeGfx_DrawStaticList
 	ret
 ; SeAmpAmp2_DrawStaticScreen: Static-screen routine of sound-editor title 0x2C TT_SEAMPAMP2 (entry 12 of
@@ -12984,21 +12984,21 @@ SeMenu_CompareAndApply_Apply_Data:
 	sd_quad	0x01, 288, 98, 295, 98
 	sd_quad	0x09, 291, 94, 292, 105
 	sd_quad	0x09, 276, 105, 308, 122
-; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeScreenData_0x1140
+; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTouchCurve_AreaFill4Part
 ; evidence: SeMenu_CompareAndApply_Data4
 SeScreenData_0x113B:
 	sd_op23	0x63, 3*40+12
 ; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_ShowConfirmDialog_Sub_Data_2
 ; evidence: code 0xF0F395
-SeScreenData_0x1140:
+SeTouchCurve_AreaFill4Part:
 	sd_quad	0x1b, 214, 70, 263, 225
-; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_ShowConfirmDialog_Sub_Data_3
+; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTouchCurve_Part1CellRecords
 ; evidence: code 0xF0F37F
 SeMenu_ShowConfirmDialog_Sub_Data_2:
 	sd_quad	0x1b, 158, 70, 210, 161
 ; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x117E
 ; evidence: startptrs at SeMenu_DrawSelectedPartEnvCurve_Records
-SeMenu_ShowConfirmDialog_Sub_Data_3:
+SeTouchCurve_Part1CellRecords:
 	sd_ptext	0x17, 11, 226, 114, "TOUCH"
 	sd_ptext	0x17, 11, 232, 123, "CURVE"
 	sd_quad	0x22, 224, 70, 262, 108
@@ -13041,8 +13041,8 @@ SeScreenData_0x1226:
 ; list-start table: entry i -> a list of 42 bytes (5 entries, LE32)
 ; evidence: code 0xF0F404
 SeMenu_DrawSelectedPartEnvCurve_Records:
-	.long	SeMenu_ShowConfirmDialog_Sub_Data_3
-	.long	SeMenu_ShowConfirmDialog_Sub_Data_3
+	.long	SeTouchCurve_Part1CellRecords
+	.long	SeTouchCurve_Part1CellRecords
 	.long	SeScreenData_0x117E
 	.long	SeScreenData_0x11A8
 	.long	SeScreenData_0x11D2

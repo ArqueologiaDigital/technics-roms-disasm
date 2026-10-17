@@ -10973,7 +10973,7 @@ SysEx_SendAllData:
 SysEx_SendStyleImageData:
 	ld	xwa, 0xbcbc
 	call	MidiPkt_SetXferTotal_StyleImage
-	jrl	MidiPkt_ArpConfigChain_Data_Helper7
+	jrl	MidiPkt_SendGroup_StyleImage
 SysEx_SendSequencerData:
 	ld	xwa, 0xbcbc
 	call	MidiPkt_SetXferTotal_SeqData
@@ -11063,7 +11063,7 @@ MidiPkt_ArpConfigChain_Data:
 	calr	MidiPkt_SendGroup_Panel
 	calr	MidiPkt_SendGroup_SoundRam
 	calr	MidiPkt_SendGroup_AccompBlocks
-	calr	MidiPkt_ArpConfigChain_Data_Helper7
+	calr	MidiPkt_SendGroup_StyleImage
 	jrl	MidiPkt_ArpConfigChain_Data_Join
 MidiPkt_SendGroup_Panel:
 	calr	MidiPkt_ArpConfigChain_Data_Helper2
@@ -11146,7 +11146,7 @@ MidiPkt_ArpConfigChain_Data_Helper6:
 	call	SeqBuf_FlushNoteOffs
 	call	ArpQueue_ProcessAndSort_Data
 	ret
-MidiPkt_ArpConfigChain_Data_Helper7:
+MidiPkt_SendGroup_StyleImage:
 	ld	wa, 3:i3
 	call	AccWrap_ReturnZero
 	cp	hl, 0xffff

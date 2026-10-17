@@ -4720,7 +4720,7 @@ CollectAllocVoice_EmitLoop:
 	add	xwa, (xsp+168)
 	ld a, (xwa)
 	cp	a, (xsp+166)
-	jr nz, CollectAllocVoice_Em_Block
+	jr nz, CollectAllocVoice_EmitLoop_Join
 	lda xwa, (xsp + 2)
 	ld xde, xwa
 	ldto_berp A, 0xfb
@@ -4729,7 +4729,7 @@ CollectAllocVoice_EmitLoop:
 	ld xwa, xde
 	call Voice_BuildAndEmitNoteOnEvents
 
-CollectAllocVoice_Em_Block:
+CollectAllocVoice_EmitLoop_Join:
 	inc1b_erp 0xfb
 	cp_erpb 0xfb, 0x10
 	jr c, CollectAllocVoice_EmitLoop
@@ -9135,7 +9135,7 @@ MarkEntriesAboveThre_LoadIdx:
 	xor a, (0xcd2f:16)
 	ldfr_berp A, 0xfb
 	cp e, 0:i3
-	jr z, MarkEntriesAboveThre_Block
+	jr z, MarkEntriesAboveThre_LoadIdx_Join
 	ldto_berp A, 0xfa
 	ld c, a
 	extz bc
@@ -9147,7 +9147,7 @@ MarkEntriesAboveThre_LoadIdx:
 	ldw bc, 0xb
 	call AddswbWr
 
-MarkEntriesAboveThre_Block:
+MarkEntriesAboveThre_LoadIdx_Join:
 	cpib_erp 0xfb, 0
 	jr z, MarkEntriesAboveThre_LoadIdx2
 	ldto_berp A, 0xf9
@@ -13964,7 +13964,7 @@ VoiceMap_AllocateSlot:
 	cpw (0xce66:16), 0
 	jr nz, VoiceMap_AllocateSlo_Block
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF
 	calr UIParam_ScanAndCollect
@@ -13990,7 +13990,7 @@ VoiceMap_AllocateSlo_Block:
 
 VoiceMap_AllocateSlo_Block2:
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF2
 	ld (0xe9bc:16), 10
@@ -14039,7 +14039,7 @@ NoteMap_FindBestMatch:
 
 NoteMap_CheckVoiceReuse:
 	lda xwa, (0xce22:16)
-	calr NoteMap_GetVoiceData_Entry
+	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, CheckVoiceReuse_SetByteFF
 	calr UIParam_ScanAndCollect
@@ -14067,7 +14067,7 @@ CheckVoiceReuse_Block:
 NoteMap_GetVoiceData_Return:
 	ret
 
-NoteMap_GetVoiceData_Entry:
+Harmony_FindReferenceNote:
 	ld c, (0xceaa:16)
 	ld (0xceac:16), c
 	ld c, (0xceab:16)
@@ -15070,7 +15070,7 @@ Audio_NullRet1:
 	ret
 
 Audio_NullRet1_Data:
-	jp	NullRet2_Block
+	jp	Chord_ClearRecognizedChord
 	ret
 	nop
 	nop
@@ -15230,13 +15230,13 @@ VoiceTiming_CheckBit6:
 VoiceTiming_CheckBit7:
 	bit 7, (0xcede:24)
 	jr z, VoiceTiming_CompareThreshold
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr Voice_AdjustTiming_Return
 
 VoiceTiming_CompareThreshold:
 	cp bc, (0xcf17:16)
 	jr c, VoiceTiming_EqualThreshold
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr Voice_AdjustTiming_Return
 
 VoiceTiming_EqualThreshold:
@@ -15251,7 +15251,7 @@ VoiceTiming_BelowThreshold:
 Voice_AdjustTiming_Return:
 	ret
 
-Voice_UpdateVelocity_Entry:
+Chord_RecognizeNowOrDelay:
 	bit 6, (0xcede:24)
 	jr nz, Voice_CheckAndUpdateSlot
 	cpw (0xcf17:16), 0
@@ -15320,7 +15320,7 @@ VoicePair_InnerScan:
 	inc 2, ix
 	dec 1, de
 	jr nz, VoicePair_InnerScan
-	calr Voice_UpdateVelocity_Entry
+	calr Chord_RecognizeNowOrDelay
 	jr VoicePair_Return
 
 VoicePair_AdvanceOuter:
@@ -15367,13 +15367,13 @@ CheckAndResetSlotSta_LoadDRAM2:
 	jr nz, Voice_NullRet2
 
 CheckAndResetSlotSta_Block2:
-	calr NullRet2_Block
+	calr Chord_ClearRecognizedChord
 	jr Voice_NullRet2
 
 Voice_NullRet2:
 	ret
 
-NullRet2_Block:
+Chord_ClearRecognizedChord:
 	ldw (0x00ceff:24), 0x0000
 	ld (0x00cee5:24), 0x00
 	ld (0x00cef1:24), 0x00
@@ -15383,7 +15383,7 @@ NullRet2_Block:
 	and (0xcede:24), 249
 	ld (0x00cee1:24), 0x00
 	ld (0x00cee4:24), 0x00
-	calr VoiceSlot_Epilogue_Block2
+	calr Chord_ApplyCurrentChord
 	ret
 
 NullRet2_Data:
@@ -15423,13 +15423,13 @@ EffectState_Dispatch_Block:
 	calr VoiceSlot_LoadResult_Block3
 
 EffectState_Dispatch_Block2:
-	calr VoiceSlot_Epilogue_Block2
+	calr Chord_ApplyCurrentChord
 	ret
 
 EffectState_Dispatch_Block3:
 	ld (0x00cee5:24), 0x04
 	ld de, (0x00ceff:24)
-	calr VoiceSlot_StoreParams_Block2
+	calr Chord_CollectHeldNotes
 	calr VoiceSlot_StoreParams_LoadReg3
 	jr VoiceSlot_StoreParams
 VoiceSlot_StoreParams:
@@ -15441,7 +15441,7 @@ VoiceSlot_StoreParams_Block:
 	and (0xcede:24), 249
 	ret
 
-VoiceSlot_StoreParams_Block2:
+Chord_CollectHeldNotes:
 	ldw (0x00cf2f:24), 0x0000
 	ld xiy, 0xceff
 	ld xix, 0xcf8f
@@ -15705,7 +15705,7 @@ PitchCalc_Return:
 PitchCalc_Return_Block:
 	ld (0x00cee5:24), 0x04
 	ld de, (0x00ceff:24)
-	calr VoiceSlot_StoreParams_Block2
+	calr Chord_CollectHeldNotes
 	cp (0x00cee5:24), 0x02
 	jr ugt, PitchCalcStep_ClearByte_Skip
 	jr PitchCalcStep_ClearByte_Skip2
@@ -16414,7 +16414,7 @@ VoiceSlot_Epilogue_Block:
 	or (0xcede:24), 16
 	ret
 
-VoiceSlot_Epilogue_Block2:
+Chord_ApplyCurrentChord:
 	calr Voice_InitPartAllocState
 	calr VoiceSlot_IterateAlloc_TestBit24
 	orw (0xcf01:24), 0xff00
@@ -22410,7 +22410,7 @@ MidiSysMsg_Handler_Skip4:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 243
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
 MidiSysMsg_Handler_OnF4LongDeltaTime:
@@ -22434,7 +22434,7 @@ MidiSysMsg_Handler_Skip6:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 244
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
 MidiSysMsg_Handler_SkipF9Event:
@@ -22547,17 +22547,17 @@ Dispatch_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
-Dispatch_Data:
+MidiSysMsg_DecodeDeltaTime:
 	cp	a, 244
-	jr	z, Dispatch_Data_Skip
+	jr	z, MidiSysMsg_DecodeDeltaTime_Skip
 	cp	a, 243
-	jr	nz, Dispatch_Data_Skip2
+	jr	nz, MidiSysMsg_DecodeDeltaTime_Skip2
 	ld	l, (xbc)
 	res	7, l
 	ld	h, 0:opc
 	extz	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip:
 	ld	l, (xbc)
 	res	7, l
 	ld	e, (xbc+1)
@@ -22574,16 +22574,16 @@ Dispatch_Data_Skip:
 	add	wa, bc
 	ld	hl, wa
 	exts	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip2:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip2:
 	ld	xhl, 0:i3
-Dispatch_Data_Return:
+MidiSysMsg_DecodeDeltaTime_Return:
 	ret
 MidiSysMsg_SetScaledTempo:
 	push	xiz
 	ld	xbc, (0xe9eb:16)
 	or	xbc, xbc
-	jrl	z, Dispatch_Data_Epilogue
+	jrl	z, MidiSysMsg_SetScaledTempo_Epilogue
 	ld	e, (xwa)
 	ld	c, (xwa+1)
 	ld	a, c
@@ -22622,10 +22622,10 @@ MidiSysMsg_SetScaledTempo_Skip4:
 	cp	xiz, 0x100
 	jr	nc, MidiSysMsg_SetScaledTempo_Skip
 	res	0, (0xfc63:16)
-	jr	Dispatch_Data_Join
+	jr	MidiSysMsg_SetScaledTempo_Join
 MidiSysMsg_SetScaledTempo_Skip:
 	set	0, (0xfc63:16)
-Dispatch_Data_Join:
+MidiSysMsg_SetScaledTempo_Join:
 	ld	wa, iz
 	ld	bc, wa
 	ld	xwa, 4:i3
@@ -22635,7 +22635,7 @@ Dispatch_Data_Join:
 	ld	xwa, xiz
 	set	15, wa
 	ld	(4597:16), wa
-Dispatch_Data_Epilogue:
+MidiSysMsg_SetScaledTempo_Epilogue:
 	pop	xiz
 	ret
 
@@ -23229,7 +23229,7 @@ VoiceReset_Return_LoadIter2:
 	add xbc, xwa
 	ld a, (xbc)
 	extz wa
-	calr InitTrackSlots_Block
+	calr RingBuffer_WriteByte
 	inc 1, iz
 	cpw_erp IZ, 0xfa
 	jr c, VoiceReset_Return_LoadIter2
@@ -23578,7 +23578,7 @@ InitTrackSlots_LoopCheck:
 	jr c, InitTrackSlots_LoopBody
 	ret
 
-InitTrackSlots_Block:
+RingBuffer_WriteByte:
 	cpw (0xd0ac:16), 0
 	jr nz, InitTrackSlots_LoadDRAM
 	ldw hl, 0xffff
@@ -23695,7 +23695,7 @@ SndParam_NotifyLoop_Body:
 	ld wa, (xsp + 2)
 	ld	a, (xbc+wa)
 	extz wa
-	calr InitTrackSlots_Block
+	calr RingBuffer_WriteByte
 	incw 1, (xsp + 2)
 	ld wa, (xsp + 2)
 	cp wa, iz
@@ -27484,7 +27484,7 @@ HdaeRom_DataHandler_Epilogue:
 	lda	xsp, (xsp+440)
 	ret
 
-HdaeRom_DataDispatch_Block:
+SoundRam_WriteIdAndChecksum:
 	lda	xde, (0x1e0000:24)
 	lda	xwa, (SoundRam_Id_KN5000:24)
 	ld	xbc, xwa
@@ -27588,7 +27588,7 @@ PostTmLoad:
 	ldw wa, 0xff
 	ldw bc, 0xff
 	calr HdaeRom_AltHandler
-	calr HdaeRom_DataDispatch_Block
+	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
 	ld xde, 0x7800
@@ -27638,7 +27638,7 @@ PostTmSave_Success:
 	ldw wa, 0xff
 	ldw bc, 0xff
 	calr HdaeRom_AltHandler
-	calr HdaeRom_DataDispatch_Block
+	calr SoundRam_WriteIdAndChecksum
 	ld xwa, 0x1e0000
 	ldw bc, 0x72aa
 	ld xde, 0x7800
@@ -27670,7 +27670,7 @@ PostTmLoadEntry:
 	cp	(xsp+2), 0x40
 	jr	nc, PostTmLoadEntry_Skip
 	calr	HdaeRom_DataHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	c, (xsp)
 	extz	bc
 	ld	a, (xsp+2)
@@ -27688,7 +27688,7 @@ PostTmLoadEntry:
 	jr	PostTmLoadEntry_Join
 PostTmLoadEntry_Skip:
 	calr	HdaeRom_AltHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp)
 	extz	wa
 	extz	xwa
@@ -27735,7 +27735,7 @@ TmFlashWrite_ValidateParams_Loop:
 	inc	1, iz
 	cp	iz, 20
 	jr	c, TmFlashWrite_ValidateParams_Loop
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp+4)
 	ldfr_berp a, 248
 	extz	iz
@@ -27759,7 +27759,7 @@ TmFlashWrite_ValidateParams_Loop2:
 	inc	1, iz
 	cp	iz, 128
 	jr	c, TmFlashWrite_ValidateParams_Loop2
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	lda	xwa, (0x1e4aa7:24)
 	ldw	bc, 0x2800
 	.set	TmFlashWrite_Block2, . + 1	; no instruction starts here: the name points 1 byte(s) into the one below

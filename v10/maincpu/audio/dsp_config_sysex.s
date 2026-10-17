@@ -18,7 +18,13 @@ SysEx_ClampVoiceIndex8_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
-SysEx_ApplyToSlot4B_Data:
+; SysEx_ApplyGsReverbLevel: Roland GS REVERB LEVEL (40 01 33): maps the data value (field 11 of the active MIDISEQ
+;   buffer) through SysEx4B_LevelCurve128 (0..127 -> 0..94) and writes it to the first parameter 0x4B10 + i of DSP
+;   block 0x4B (the reverb, i below the count read from 0x4B04) for which DSPCfg_ResolveAndExtract returns 1 or 2;
+;   then re-sends the output bank (SwbtWr_ReinitOutputBank). Basis: callers + body -- case 4 (field 1 = 4) of
+;   SysEx_OnRolandGsParam, whose header lists 40 01 30 / 33 / 38 / 3A as reverb macro / level, chorus macro / level;
+;   the reverb-macro case writes the same block (0x4B00, 0x4B10 + i).
+SysEx_ApplyGsReverbLevel:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -78,7 +84,13 @@ SysEx_ClampVoiceIndex128_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
-SysEx_ApplyToSlot49_Data:
+; SysEx_ApplyGsChorusMacro: Roland GS CHORUS MACRO (40 01 38): maps the macro number (field 11 of the active MIDISEQ
+;   buffer, 0..7) through SysEx49_VoiceIndexMap8 and writes it to DSP parameter 0x4900 (block 0x49, the chorus); if
+;   that succeeds it writes the macro's default words, SysEx_DispatchByChannel(macro, i), to 0x4910 + i for i below
+;   the count read from 0x4904 (skipping 0xD8F0 = none), then re-sends the output bank. Basis: callers + body -- case
+;   5 (field 1 = 5) of SysEx_OnRolandGsParam; SysEx_DispatchByChannel's case 0 is already named
+;   SysEx_DispatchByChannel_ChorusMacroChorus1 ("GS chorus macro 0 ... written by the callers to DSP param 0x4910+C").
+SysEx_ApplyGsChorusMacro:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -139,7 +151,12 @@ SysEx_ClampVoiceIndex8_49_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
-SysEx_ApplyToSlot49_Format_Data:
+; SysEx_ApplyGsChorusLevel: Roland GS CHORUS LEVEL (40 01 3A): maps the data value (field 11 of the active MIDISEQ
+;   buffer) through SysEx49_LevelCurve128 (the same 0..127 -> 0..94 curve as the reverb's) and writes it to the first
+;   parameter 0x4910 + i of DSP block 0x49 (the chorus, i below the count read from 0x4904) for which
+;   DSPCfg_ResolveAndExtract returns 1 or 2; then re-sends the output bank. Basis: callers + body -- case 6 (field 1 =
+;   6) of SysEx_OnRolandGsParam; the chorus twin of SysEx_ApplyGsReverbLevel (block 0x4B).
+SysEx_ApplyGsChorusLevel:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -154,36 +171,36 @@ SysEx_ApplyToSlot49_Format_Data:
 	call	DSPCfg_ReadParam_Map0
 	ld qiz, hl
 	cp qiz, 0
-	jr lt, SysEx_ApplyToSlot49_Format_Data_Epilogue
+	jr lt, SysEx_ApplyGsChorusLevel_Epilogue
 	ld	iz, 0:i3
 	cp qiz, 0
-	jr le, SysEx_ApplyToSlot49_Format_Data_Join
-SysEx_ApplyToSlot49_Format_Data_Loop:
+	jr le, SysEx_ApplyGsChorusLevel_Join
+SysEx_ApplyGsChorusLevel_Loop:
 	ld wa, iz
 	exts	xwa
 	add	xwa, 0x4910
 	call	DSPCfg_ResolveAndExtract
 	cp	hl, 1:i3
-	jr	z, SysEx_ApplyToSlot49_Format_Data_Skip
+	jr	z, SysEx_ApplyGsChorusLevel_Skip
 	cp	hl, 2:i3
-	jr	nz, SysEx_ApplyToSlot49_Format_Data_Skip2
-SysEx_ApplyToSlot49_Format_Data_Skip:
+	jr	nz, SysEx_ApplyGsChorusLevel_Skip2
+SysEx_ApplyGsChorusLevel_Skip:
 	ld	wa, iz
 	exts	xwa
 	add	xwa, 0x4910
 	ld	c, (xsp+4)
 	extz	bc
 	call	DSPCfg_WriteParamFull
-	jr	SysEx_ApplyToSlot49_Format_Data_Join
-SysEx_ApplyToSlot49_Format_Data_Skip2:
+	jr	SysEx_ApplyGsChorusLevel_Join
+SysEx_ApplyGsChorusLevel_Skip2:
 	inc	1, iz
 	cp	iz, qiz
-	jr	lt, SysEx_ApplyToSlot49_Format_Data_Loop
-SysEx_ApplyToSlot49_Format_Data_Join:
+	jr	lt, SysEx_ApplyGsChorusLevel_Loop
+SysEx_ApplyGsChorusLevel_Join:
 	push	xiz
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
-SysEx_ApplyToSlot49_Format_Data_Epilogue:
+SysEx_ApplyGsChorusLevel_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -222,42 +239,42 @@ SysEx_DispatchByChannel_ChorusMacroChorus1:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords0
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case1:
 	cp	c, 7:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords1
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case2:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords2
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case3:
 	cp	c, 7:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords3
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case4:
 	cp	c, 8
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords4
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case5:
 	cp	c, 8
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords5
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case6:
 	cp	c, 7:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords6
-	jr	SysEx_DispatchByChannel_Entry
+	jr	SysEx_DispatchByChannel_ChorusMacroChorus1_Join
 SysEx_DispatchByChannel_Case7:
 	cp	c, 7:i3
 	ret	nc
 	ld	xwa, SysEx4B_ChannelWords7
-SysEx_DispatchByChannel_Entry:
+SysEx_DispatchByChannel_ChorusMacroChorus1_Join:
 	ld	hl, (xwa+de)
 	ret
 
@@ -5837,7 +5854,7 @@ PanelTag48_UpdateAudioConfig:
 PanelTag48_UpdateAudioConfig_StyleNumber:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 7
-	jrl	z, UIStateEvt_ParamEdit_Data_Entry
+	jrl	z, PanelTag48_UpdateAudioConfig_StyleNumber_Join2
 	ldw_d16	wa, (0xc598)
 	bit	6, wa
 	jr	z, PanelTag48_UpdateAudioConfig_StyleNumber_Skip
@@ -5894,19 +5911,19 @@ PanelTag48_UpdateAudioConfig_StyleNumber_Skip4:
 	and	wa, 7
 	jr	z, PanelTag48_UpdateAudioConfig_StyleNumber_Skip5
 	ld	(0xc5a0:16), 31
-	jr	UIStateEvt_ParamEdit_Data_Entry
+	jr	PanelTag48_UpdateAudioConfig_StyleNumber_Join2
 PanelTag48_UpdateAudioConfig_StyleNumber_Skip5:
 	ld	(0xc5a0:16), 16
-UIStateEvt_ParamEdit_Data_Entry:
+PanelTag48_UpdateAudioConfig_StyleNumber_Join2:
 	bit	3, (SWBTWR_PAYLOAD_3:16)
 	jrl	z, UIStateEvt_ParamEdit_Data_Case6_Epilogue
 	bit	3, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_ParamEdit_Data_Entry_Skip6
+	jr	z, PanelTag48_UpdateAudioConfig_StyleNumber_Skip6
 	orw	(0xc596:16), 16
-	jr	UIStateEvt_ParamEdit_Data_Entry_Join2
-UIStateEvt_ParamEdit_Data_Entry_Skip6:
+	jr	PanelTag48_UpdateAudioConfig_StyleNumber_Join3
+PanelTag48_UpdateAudioConfig_StyleNumber_Skip6:
 	andw	(0xc596:16), 0xffef
-UIStateEvt_ParamEdit_Data_Entry_Join2:
+PanelTag48_UpdateAudioConfig_StyleNumber_Join3:
 	orw	(0xc59a:16), 0x2000
 	orw	(0xc594:16), 4
 	jrl	UIStateEvt_ParamEdit_Data_Case6_Epilogue
@@ -6088,25 +6105,25 @@ UIStateEvt_VolumeMixer_Data_Case1_Skip3:
 	ret
 UIStateEvt_VolumeMixer_Data_Case3:
 	bit	0, (SWBTWR_PAYLOAD_3:16)
-	jr	z, UIStateEvt_VolumeMixer_Data_Entry2
+	jr	z, PanelTag90_UpdateAudioConfig_Join
 	bit	0, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_VolumeMixer_Data_Entry
+	jr	z, PanelTag90_UpdateAudioConfig_Skip
 	orw	(0xc596:16), 128
-	jr	UIStateEvt_VolumeMixer_Data_Entry_Join3
-UIStateEvt_VolumeMixer_Data_Entry:
+	jr	UIStateEvt_VolumeMixer_Data_Case3_Join3
+PanelTag90_UpdateAudioConfig_Skip:
 	andw	(0xc596:16), 0xff7f
-UIStateEvt_VolumeMixer_Data_Entry_Join3:
+UIStateEvt_VolumeMixer_Data_Case3_Join3:
 	orw	(0xc594:16), 4
-UIStateEvt_VolumeMixer_Data_Entry2:
+PanelTag90_UpdateAudioConfig_Join:
 	bit	1, (SWBTWR_PAYLOAD_3:16)
 	ret	z
 	bit	1, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_VolumeMixer_Data_Entry2_Skip4
+	jr	z, UIStateEvt_VolumeMixer_Data_Case3_Skip4
 	orw	(0xc596:16), 8
-	jr	UIStateEvt_VolumeMixer_Data_Entry2_Join4
-UIStateEvt_VolumeMixer_Data_Entry2_Skip4:
+	jr	UIStateEvt_VolumeMixer_Data_Case3_Join4
+UIStateEvt_VolumeMixer_Data_Case3_Skip4:
 	andw	(0xc596:16), 0xfff7
-UIStateEvt_VolumeMixer_Data_Entry2_Join4:
+UIStateEvt_VolumeMixer_Data_Case3_Join4:
 	orw	(0xc594:16), 4
 	ret
 UIStateEvt_VolumeMixer_Data_Case4:
@@ -6295,32 +6312,32 @@ UIStateEvt_PlayModeGuard_ClearBit:
 PanelTag80_UpdateAudioConfig:
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
 	cp	a, 11
-	jrl	z, UIStateEvt_ChannelConfig_Data_Entry7_Skip5
+	jrl	z, PanelTag80_UpdateAudioConfig_Skip6
 	cp	a, 12
-	jrl	z, UIStateEvt_ChannelConfig_Data_Entry7_Skip5
+	jrl	z, PanelTag80_UpdateAudioConfig_Skip6
 	cp	a, 10
-	jrl	z, UIStateEvt_ChannelConfig_Data_Entry7_Skip5
+	jrl	z, PanelTag80_UpdateAudioConfig_Skip6
 	cp	a, 3:i3
-	jrl	z, UIStateEvt_ChannelConfig_Data_Entry3
+	jrl	z, PanelTag80_UpdateAudioConfig_Skip2
 	cp	a, 2:i3
-	jrl	z, UIStateEvt_ChannelConfig_Data_Entry2
+	jrl	z, PanelTag80_UpdateAudioConfig_Skip
 	cp	a, 1:i3
 	ret	z
 	cp	a, 0:i3
 	ret	nz
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry
+	jr	z, PanelTag80_UpdateAudioConfig_Join
 	orw	(0xc59c:16), 8
 	orw	(0xc594:16), 4
-UIStateEvt_ChannelConfig_Data_Entry:
+PanelTag80_UpdateAudioConfig_Join:
 	bit	5, (SWBTWR_PAYLOAD_3:16)
 	ret	z
 	bit	5, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry_Skip
+	jr	z, PanelTag80_UpdateAudioConfig_Skip4
 	ld	de, 0:i3
 	cp	de, 26
-	jr	nc, UIStateEvt_ChannelConfig_Data_Entry_Join
-UIStateEvt_ChannelConfig_Data_Entry_Loop2:
+	jr	nc, PanelTag80_UpdateAudioConfig_Join5
+PanelTag80_UpdateAudioConfig_Loop2:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 0x124
@@ -6339,13 +6356,13 @@ UIStateEvt_ChannelConfig_Data_Entry_Loop2:
 	or	(xhl), a
 	inc	1, de
 	cp	de, 26
-	jr	c, UIStateEvt_ChannelConfig_Data_Entry_Loop2
-	jr	UIStateEvt_ChannelConfig_Data_Entry_Join
-UIStateEvt_ChannelConfig_Data_Entry_Skip:
+	jr	c, PanelTag80_UpdateAudioConfig_Loop2
+	jr	PanelTag80_UpdateAudioConfig_Join5
+PanelTag80_UpdateAudioConfig_Skip4:
 	ld	de, 0:i3
 	cp	de, 26
-	jr	nc, UIStateEvt_ChannelConfig_Data_Entry_Join
-UIStateEvt_ChannelConfig_Data_Entry_Loop:
+	jr	nc, PanelTag80_UpdateAudioConfig_Join5
+PanelTag80_UpdateAudioConfig_Loop:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 0x124
@@ -6355,39 +6372,39 @@ UIStateEvt_ChannelConfig_Data_Entry_Loop:
 	andmi8	(xwa), 15
 	inc	1, de
 	cp	de, 26
-	jr	c, UIStateEvt_ChannelConfig_Data_Entry_Loop
-UIStateEvt_ChannelConfig_Data_Entry_Join:
+	jr	c, PanelTag80_UpdateAudioConfig_Loop
+PanelTag80_UpdateAudioConfig_Join5:
 	orw	(0xc594:16), 4
 	ret
-UIStateEvt_ChannelConfig_Data_Entry2:
+PanelTag80_UpdateAudioConfig_Skip:
 	orw	(0xc594:16), 4
 	ret
-UIStateEvt_ChannelConfig_Data_Entry3:
+PanelTag80_UpdateAudioConfig_Skip2:
 	bit	0, (SWBTWR_PAYLOAD_3:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry4
+	jr	z, PanelTag80_UpdateAudioConfig_Join2
 	bit	0, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry3_Skip4
+	jr	z, PanelTag80_UpdateAudioConfig_Skip5
 	res	4, (0xc322:16)
 	orw	(0xc59c:16), 8
-	jr	UIStateEvt_ChannelConfig_Data_Entry3_Join2
-UIStateEvt_ChannelConfig_Data_Entry3_Skip4:
+	jr	PanelTag80_UpdateAudioConfig_Join6
+PanelTag80_UpdateAudioConfig_Skip5:
 	set	4, (0xc322:16)
 	orw	(0xc59c:16), 8
-UIStateEvt_ChannelConfig_Data_Entry3_Join2:
+PanelTag80_UpdateAudioConfig_Join6:
 	orw	(0xc594:16), 4
-UIStateEvt_ChannelConfig_Data_Entry4:
+PanelTag80_UpdateAudioConfig_Join2:
 	bit	2, (SWBTWR_PAYLOAD_3:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry6
+	jr	z, PanelTag80_UpdateAudioConfig_Join3
 	bit	2, (SWBTWR_PAYLOAD_2:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry5
+	jr	z, PanelTag80_UpdateAudioConfig_Skip3
 	set	6, (0xc342:16)
 	set	6, (0xc344:16)
 	set	6, (0xc346:16)
 	set	6, (0xc348:16)
 	set	6, (0xc34a:16)
 	set	6, (0xc34c:16)
-	jr	UIStateEvt_ChannelConfig_Data_Entry5_Join3
-UIStateEvt_ChannelConfig_Data_Entry5:
+	jr	PanelTag80_UpdateAudioConfig_Join7
+PanelTag80_UpdateAudioConfig_Skip3:
 	res	6, (0xc342:16)
 	res	6, (0xc344:16)
 	res	6, (0xc346:16)
@@ -6395,38 +6412,38 @@ UIStateEvt_ChannelConfig_Data_Entry5:
 	res	6, (0xc34a:16)
 	res	6, (0xc34c:16)
 	orw	(0xc59c:16), 8
-UIStateEvt_ChannelConfig_Data_Entry5_Join3:
+PanelTag80_UpdateAudioConfig_Join7:
 	orw	(0xc594:16), 4
-UIStateEvt_ChannelConfig_Data_Entry6:
+PanelTag80_UpdateAudioConfig_Join3:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry7
+	jr	z, PanelTag80_UpdateAudioConfig_Join4
 	orw	(0xc59c:16), 8
 	orw	(0xc594:16), 4
-UIStateEvt_ChannelConfig_Data_Entry7:
+PanelTag80_UpdateAudioConfig_Join4:
 	bit	7, (SWBTWR_PAYLOAD_3:16)
 	ret	z
 	orw	(0xc59c:16), 8
 	orw	(0xc594:16), 4
 	ret
-UIStateEvt_ChannelConfig_Data_Entry7_Skip5:
+PanelTag80_UpdateAudioConfig_Skip6:
 	ld	xwa, 0x5000
 	call	SndParam_LookupReadOnly
 	cp	hl, 2:i3
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry7_Skip3
+	jr	z, PanelTag80_UpdateAudioConfig_Skip8
 	cp	hl, 1:i3
-	jr	z, UIStateEvt_ChannelConfig_Data_Entry7_Skip2
+	jr	z, PanelTag80_UpdateAudioConfig_Skip7
 	cp	hl, 0:i3
 	ret	nz
 	ld	(0xc362:16), 0
 	ld	(0xc363:16), 255
 	ret
-UIStateEvt_ChannelConfig_Data_Entry7_Skip2:
+PanelTag80_UpdateAudioConfig_Skip7:
 	ld	xwa, 0x5001
 	call	SndParam_LookupReadOnly
 	stb_d8	(0xc362), l
 	ld	(0xc363:16), 255
 	ret
-UIStateEvt_ChannelConfig_Data_Entry7_Skip3:
+PanelTag80_UpdateAudioConfig_Skip8:
 	ld	(0xc362:16), 0
 	ld	xwa, 0x5002
 	call	SndParam_LookupReadOnly

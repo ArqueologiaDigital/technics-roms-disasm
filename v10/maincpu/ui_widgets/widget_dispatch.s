@@ -86,7 +86,7 @@ SndParam_RegRamPtrs:
 ; two bases: SndParam_CompareShifted (0xFCDA79) / SndParam_RegisterMultiField_Data
 ; (0xFCDD9B) index from +0 (`lda xbc,(<this>); ld xbc, (xbc+a)`, then compare
 ; with (xbc+1)/(xbc+2)); SndParam_ReadRegWord (0xFCDAA6) and
-; SndParam_RegisterBitfield_Data_Skip2 index from +4.  audio/sndparam_routines.s
+; SndParam_SetRegWord_Skip2 index from +4.  audio/sndparam_routines.s
 ; loads this address as Naka_SubDispatch_B_Table (alias kept); index ranges not
 ; traced, so whether either base reads past +8 into SndParam_Registry is open.
 SndParam_ValueTablePtrPair:
@@ -95,7 +95,7 @@ SndParam_ValueTablePtrPair:
 ; SndParam_WordValueListPtrs: Pointer table indexed by a sound-parameter descriptor's +11 byte whose entries point at
 ;   16-bit value lists; the label holds entry 0 = WidgetParam_MidiCC_SysExcl, the list {1, 2, 3, 0x203, 0x201, 0x202}.
 ;   Basis: readers -- SndParam_ReadRegWord returns the position (0..5) of the current word in list [+11];
-;   SndParam_RegisterBitfield_Data writes list[+11][value]. Index range beyond 0 is not traced (entry 1 would be
+;   SndParam_SetRegWord writes list[+11][value]. Index range beyond 0 is not traced (entry 1 would be
 ;   SndParam_Registry).
 SndParam_WordValueListPtrs:
 	.long WidgetParam_MidiCC_SysExcl
@@ -1103,7 +1103,7 @@ SndParam_DispatchCallback_Data:
 	.long SndParam_RegisterEntryAlt_Data
 	.long SndParam_UpdateEntry_Data
 	.long SndParam_RegisterMultiField_Data
-	.long SndParam_RegisterBitfield_Data
+	.long SndParam_SetRegWord
 	.long SndParam_RegisterLinked_Data
 	.long SndParam_RegisterLinked2_Data
 	.long SndParam_RegisterSimple_Data

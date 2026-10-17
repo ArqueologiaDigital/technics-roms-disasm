@@ -4401,7 +4401,7 @@ CollectAllocVoice_EmitLoop:
 	add	xwa, (xsp+168)
 	ld	a, (xwa)
 	cp	a, (xsp+166)
-	jr	nz, CollectAllocVoice_Em_Block
+	jr	nz, CollectAllocVoice_EmitLoop_Join
 	lda	xwa, (xsp + 2)
 	ld	xde, xwa
 	ldto_berp	A, 0xfb
@@ -4409,7 +4409,7 @@ CollectAllocVoice_EmitLoop:
 	extz	bc
 	ld	xwa, xde
 	call	Voice_BuildAndEmitNoteOnEvents
-CollectAllocVoice_Em_Block:
+CollectAllocVoice_EmitLoop_Join:
 	inc1b_erp	0xfb
 	cp_erpb	0xfb, 0x10
 	jr	c, CollectAllocVoice_EmitLoop
@@ -8592,7 +8592,7 @@ MarkEntriesAboveThre_LoadIdx:
 	xor	a, (0xcc93:16)
 	ldfr_berp	A, 0xfb
 	cp	e, 0:i3
-	jr	z, MarkEntriesAboveThre_Block
+	jr	z, MarkEntriesAboveThre_LoadIdx_Join
 	ldto_berp	A, 0xfa
 	ld	c, a
 	extz	bc
@@ -8603,7 +8603,7 @@ MarkEntriesAboveThre_LoadIdx:
 	ldw	wa, 0xa8
 	ldw	bc, 0xb
 	call	AddswbWr
-MarkEntriesAboveThre_Block:
+MarkEntriesAboveThre_LoadIdx_Join:
 	cpib_erp	0xfb, 0
 	jr	z, MarkEntriesAboveThre_LoadIdx2
 	ldto_berp	A, 0xf9
@@ -20904,7 +20904,7 @@ MidiSysMsg_Handler_Skip4:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 243
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe921:16), xhl
 	jrl	Dispatch_InitVal2
 MidiSysMsg_Handler_OnF4LongDeltaTime:
@@ -20928,7 +20928,7 @@ MidiSysMsg_Handler_Skip6:
 	lda	xwa, (xsp+4)
 	ld	xbc, xwa
 	ldw	wa, 244
-	calr	Dispatch_Data
+	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe921:16), xhl
 	jrl	Dispatch_InitVal2
 MidiSysMsg_Handler_SkipF9Event:
@@ -21031,17 +21031,17 @@ Dispatch_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp + 10)
 	ret
-Dispatch_Data:
+MidiSysMsg_DecodeDeltaTime:
 	cp	a, 244
-	jr	z, Dispatch_Data_Skip
+	jr	z, MidiSysMsg_DecodeDeltaTime_Skip
 	cp	a, 243
-	jr	nz, Dispatch_Data_Skip2
+	jr	nz, MidiSysMsg_DecodeDeltaTime_Skip2
 	ld	l, (xbc)
 	res	7, l
 	ld	h, 0:opc
 	extz	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip:
 	ld	l, (xbc)
 	res	7, l
 	ld	e, (xbc+1)
@@ -21058,16 +21058,16 @@ Dispatch_Data_Skip:
 	add	wa, bc
 	ld	hl, wa
 	exts	xhl
-	jr	Dispatch_Data_Return
-Dispatch_Data_Skip2:
+	jr	MidiSysMsg_DecodeDeltaTime_Return
+MidiSysMsg_DecodeDeltaTime_Skip2:
 	ld	xhl, 0:i3
-Dispatch_Data_Return:
+MidiSysMsg_DecodeDeltaTime_Return:
 	ret
 MidiSysMsg_SetScaledTempo:
 	push	xiz
 	ld	xbc, (0xe925:16)
 	or	xbc, xbc
-	jrl	z, Dispatch_Data_Epilogue
+	jrl	z, MidiSysMsg_SetScaledTempo_Epilogue
 	ld	e, (xwa)
 	ld	c, (xwa+1)
 	ld	a, c
@@ -21106,10 +21106,10 @@ MidiSysMsg_SetScaledTempo_Skip4:
 	cp	xiz, 0x100
 	jr	nc, MidiSysMsg_SetScaledTempo_Skip
 	res	0, (0xfc63:16)
-	jr	Dispatch_Data_Join
+	jr	MidiSysMsg_SetScaledTempo_Join
 MidiSysMsg_SetScaledTempo_Skip:
 	set	0, (0xfc63:16)
-Dispatch_Data_Join:
+MidiSysMsg_SetScaledTempo_Join:
 	ld	wa, iz
 	ld	bc, wa
 	ld	xwa, 4:i3
@@ -21119,7 +21119,7 @@ Dispatch_Data_Join:
 	ld	xwa, xiz
 	set	15, wa
 	ld	(4597:16), wa
-Dispatch_Data_Epilogue:
+MidiSysMsg_SetScaledTempo_Epilogue:
 	pop	xiz
 	ret
 Dispatch_Prologue:
@@ -25589,7 +25589,7 @@ HdaeRom_DataHandler_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+440)
 	ret
-HdaeRom_DataDispatch_Block:
+SoundRam_WriteIdAndChecksum:
 	lda	xde, (0x1e0000:24)
 	lda	xwa, (SoundRam_Id_KN5000:24)
 	ld	xbc, xwa
@@ -25687,7 +25687,7 @@ PostTmLoad:
 	ldw	wa, 0xff
 	ldw	bc, 0xff
 	calr	HdaeRom_AltHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	xwa, 0x1e0000
 	ldw	bc, 0x72aa
 	ld	xde, 0x7800
@@ -25731,7 +25731,7 @@ PostTmSave_Success:
 	ldw	wa, 0xff
 	ldw	bc, 0xff
 	calr	HdaeRom_AltHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	xwa, 0x1e0000
 	ldw	bc, 0x72aa
 	ld	xde, 0x7800
@@ -25761,7 +25761,7 @@ PostTmLoadEntry:
 	cp	(xsp+2), 0x40
 	jr	nc, PostTmLoadEntry_Skip
 	calr	HdaeRom_DataHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	c, (xsp)
 	extz	bc
 	ld	a, (xsp+2)
@@ -25779,7 +25779,7 @@ PostTmLoadEntry:
 	jr	PostTmLoadEntry_Join
 PostTmLoadEntry_Skip:
 	calr	HdaeRom_AltHandler
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp)
 	extz	wa
 	extz	xwa
@@ -25826,7 +25826,7 @@ TmFlashWrite_ValidateParams_Loop:
 	inc	1, iz
 	cp	iz, 20
 	jr	c, TmFlashWrite_ValidateParams_Loop
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	ld	a, (xsp+4)
 	ldfr_berp	a, 248
 	extz	iz
@@ -25850,7 +25850,7 @@ TmFlashWrite_ValidateParams_Loop2:
 	inc	1, iz
 	cp	iz, 128
 	jr	c, TmFlashWrite_ValidateParams_Loop2
-	calr	HdaeRom_DataDispatch_Block
+	calr	SoundRam_WriteIdAndChecksum
 	lda	xwa, (0x1e4aa7:24)
 	ldw	bc, 0x2800
 	.set	TmFlashWrite_Block2, . + 1	; no instruction starts here: the name points 1 byte(s) into the one below

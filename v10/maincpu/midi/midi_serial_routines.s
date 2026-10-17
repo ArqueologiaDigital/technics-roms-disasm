@@ -463,7 +463,7 @@ Transport_NoClockSourcePath:
 	bit 2, (0x28a7:16)
 	jr nz, Transport_NoClockReturn
 	cp d, 0xfa
-	jr z, StartPlay_Body
+	jr z, MIDI_SystemMessage_OnStart
 	cp d, 0xfb
 	jrl z, Continue_SetRunning
 
@@ -482,7 +482,13 @@ MIDI_START_PLAYBACK_REQUEST:
 StartPlay_Return:
 	ret
 
-StartPlay_Body:
+; MIDI_SystemMessage_OnStart: MIDI START (0xFA) case of MIDI_SYSTEM_MESSAGE_HANDLER: sets 0x28AC bit 5, so that
+;   SysMsg_ClockTransportDispatch counts every following 0xF8 clock in (1108), clears that count and, unless the word
+;   at 0xF19E is non-zero, falls into MIDI_RESET_PLAYBACK_STATE; with 0xF19E set the reset is left to
+;   MIDI_START_PLAYBACK_REQUEST, whose MIDI_APPLY_STARTUP_TIMING then advances the positions by 4 * (count - 1).
+;   Basis: callers + body -- both clock-source paths of the handler (Transport_NoClockSourcePath, AltClk_StartArmTx)
+;   jump here on D = 0xFA, as they jump to Continue_SetRunning on 0xFB.
+MIDI_SystemMessage_OnStart:
 	set 5, (0x28ac:16)
 	ld (1108:16), 0
 	cpw (0xf19e:16), 0
@@ -624,7 +630,7 @@ AltClk_NoMatchReturn:
 AltClk_StartArmTx:
 	set 1, (1065:16)
 	ld (234:16), 221
-	jrl StartPlay_Body
+	jrl MIDI_SystemMessage_OnStart
 
 AltClk_ContinueArmTx:
 	bit 0, (0x28a7:16)

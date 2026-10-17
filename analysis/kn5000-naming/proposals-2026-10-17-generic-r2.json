@@ -1,0 +1,1440 @@
+[
+ {
+  "old": "AppEvent_PostEvent_Stub",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the shared tail call (`jp ApDeliveryEvent`) of SeqEvent_MainHandler, the EVT_PAINT handler of ApEditSyori that switches on CURRENT_TITLE. All 11 referrers are that switch's own arms (SeqEvent_Dispatch for title 0x90, AppEvent_SubHandler0 for 0x91, the nine SeqEvent_MainHandler_OnTitle* case-table arms) jumping here with XWA/XBC/XDE set for their last EVT_PARA_DRAW, and the default arm AppEvent_PostDefaultEvents falls into it. It should become a local label of SeqEvent_MainHandler (the same verdict as AppEvtHandler_Branch_033 in g4).",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20369-20370 `AppEvent_PostEvent_Stub:` / `jp ApDeliveryEvent` -- the whole body",
+   "sequencer/sequencer_engine.s:20095-20111 `SeqEvent_MainHandler:` / `ld a, (CURRENT_TITLE:16)` / `cp a, 0x91` / `jrl z, AppEvent_SubHandler0` / `cp a, 0x90` / `jr z, SeqEvent_Dispatch` / ... / `jp t, (xix+wa)` -- the owner: a compiled switch on the title",
+   "sequencer/sequencer_engine.s:20131-20134 `ld xwa, (0x2972:16)` / `ld xbc, EVT_PARA_DRAW` / `ld xde, 0x21` / `jrl AppEvent_PostEvent_Stub` -- end of the title-0x90 arm; 20155 ... 20323 the case-table arms end the same way",
+   "sequencer/sequencer_engine.s:20350 `jr AppEvent_PostEvent_Stub` -- end of the title-0x91 arm AppEvent_SubHandler0 (20326); 20365-20369 AppEvent_PostDefaultEvents falls through into it",
+   "sequencer/sequencer_engine.s:20072-20075 `cp xbc, EVT_PAINT` / ... / `calr SeqEvent_MainHandler` -- the only caller of the owner (ApEditSyori)"
+  ]
+ },
+ {
+  "old": "SysEx_DispatchByChannel_49_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the shared tail (`ld hl, (xwa+de)` / `ret`, return word C of the selected list) of the compiled switch in SysEx_DispatchByChannel_49. Its 7 referrers are that switch's own arms (SysEx_DispatchByChannel_49_ReverbMacroRoom1 .. _ReverbMacroDelay, each `ld xwa, SysEx49_ChannelWordsN` / `jr`), and _ReverbMacroPanningDelay falls into it; nothing outside the function reaches it. It should become a local label of SysEx_DispatchByChannel_49.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:335-337 `SysEx_DispatchByChannel_49_Entry:` / `ld hl, (xwa+de)` / `ret` -- the whole body",
+   "audio/dsp_config_sysex.s:264-278 `SysEx_DispatchByChannel_49:` / `ldw hl, 0xd8f0` / `ld e, c` / `extz de` / `add de, de` / ... / `jp t, (xix+wa)` -- the owner: DE = 2*C, switch on WA 0..7 through SysEx49_ChannelSwitch",
+   "audio/dsp_config_sysex.s:286 `jr SysEx_DispatchByChannel_49_Entry` -- end of arm ReverbMacroRoom1; 293, 300, 307, 314, 321, 328 the other arms; 331-334 ReverbMacroPanningDelay falls in",
+   "audio/dsp_config_sysex.s:455 `calr SysEx_DispatchByChannel_49` -- callers reach the owner, never the tail"
+  ]
+ },
+ {
+  "old": "Scoop_ButtonGrid_Data",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the final `ret` of Scoop_EventHandler_Scroll (17802-17987), the backward (`lddr`) chained copy over the sequencer block chain (Scoop_SpecialMode_Setup copies, Scoop_SpecialMode_Draw / Scoop_SpecialMode_Data step the destination / source to the previous block). All 13 referrers are that routine's own exits -- 12 taken when a step sets SEQ_ERROR_CODE (`cp (SEQ_ERROR_CODE:16), 0` / `jrl nz`) and the normal end -- and the Scoop_ButtonGrid_* / Scoop_CategorySelect_* labels around it are that routine's internal branch targets too. It should become a local label (the return) of Scoop_EventHandler_Scroll.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "display/scoop_display.s:17986-17987 `Scoop_ButtonGrid_Data:` / `ret` -- the whole body",
+   "display/scoop_display.s:17802-17803 `Scoop_EventHandler_Scroll:` / `ld (SEQ_ERROR_CODE:16), 0` -- the owner starts after the `ret` at 17800; its callers are outside (10021, 10069 `call Scoop_EventHandler_Scroll`)",
+   "display/scoop_display.s:17854-17857 `call Scoop_SpecialMode_Setup` / `call Scoop_SpecialMode_Data` / `cp (SEQ_ERROR_CODE:16), 0` / `jrl nz, Scoop_ButtonGrid_Data` -- an error exit; 17866, 17891, 17894, 17904, 17933, 17938, 17947, 17981 the same",
+   "display/scoop_display.s:17976-17985 `Scoop_ButtonGrid_End:` ... `call Scoop_SpecialMode_Setup` -- the last piece of the copy falls into it"
+  ]
+ },
+ {
+  "old": "SeMenu_ValueEditor_Data3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: a single `jrl SeMenu_ListSelector_ScrollDown` (the `pop xiz` / `ret` epilogue) shared by the branches of the routine that begins at SeMenu_PopupDialog_Init (7428, `push xiz`) and ends at 7695. All 8 referrers (7537-7619) are that routine's own branches and SeMenu_ValueEditor_Data2 falls into it; it should become a local label (the exit) of that routine.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/sound_editor_ui.s:7624-7625 `SeMenu_ValueEditor_Data3:` / `jrl SeMenu_ListSelector_ScrollDown` -- the whole body",
+   "audio/sound_editor_ui.s:7693-7695 `SeMenu_ListSelector_ScrollDown:` / `pop xiz` / `ret` -- the epilogue it jumps to, matching 7428-7429 `SeMenu_PopupDialog_Init:` / `push xiz`",
+   "audio/sound_editor_ui.s:7536-7539 `cp (ACTIVE_TITLE:16), 32` / `jrl nz, SeMenu_ValueEditor_Data3` / `cp (0x020c38:24), 0x10` / `jrl nz, SeMenu_ValueEditor_Data3` -- two of the 8 internal branches (also 7563, 7583, 7592, 7606, 7608, 7619)",
+   "audio/sound_editor_ui.s:7703 `calr SeMenu_PopupDialog_Init` -- the owner's caller; nothing outside reaches the label"
+  ]
+ },
+ {
+  "old": "Scoop_SpecialMode_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeqData_ChainPrevSrcBlock",
+  "header": "Moves the source of a chained copy in the sequencer event memory to the previous block: follows the link at +1 of the block at (0x267E), stores the block number in 0x28BA and the block's address in (0x267E), and sets the source offset IY = 0xFF (the block's last byte); when the linked block is not in use (bit 7 clear) it sets SEQ_ERROR_CODE = 11.\nBasis: callers + body -- Scoop_EventHandler_Scroll, the backward (`lddr`, Scoop_SpecialMode_Setup) chained copy, calls it between pieces; the forward twin is Scoop_SpecialMode_UpdateParams (link +3, IY = 5), the destination twin Scoop_SpecialMode_Draw (0x267A, 0x289F, IX).",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:17854-17857 `call Scoop_SpecialMode_Setup` / `call Scoop_SpecialMode_Data` / `cp (SEQ_ERROR_CODE:16), 0` / `jrl nz, Scoop_ButtonGrid_Data` -- a caller site in Scoop_EventHandler_Scroll (6 such sites: 17855, 17869, 17892, 17905, 17936, 17950)",
+   "display/scoop_display.s:18209-18213 `xor iy, iy` / `ld xiy, (9854:16)` / `ld (4349:16), xiy` / `ld wa, (xiy + 1)` / `ld (0x28ba:16), wa` -- link word +1 of the source block (9854 = 0x267E)",
+   "display/scoop_display.s:18214-18221 `extz xwa` / `dec 1, xwa` / `sla xwa, 8` / `add xwa, (7514:16)` / ... / `bitm 7, (xwa)` / `jr nz, Scoop_SpecialMode_Toggle` / `ld (SEQ_ERROR_CODE:16), 11` -- 256-byte block (number - 1) from the base (0x1D5A), in-use bit 7",
+   "display/scoop_display.s:18225-18227 `ld xwa, (4349:16)` / `ld (9854:16), xwa` / `ldw iy, 0xff` -- the new source block, offset at its last byte",
+   "display/scoop_display.s:18190-18200 `ld xhl, (9854:16)` / `ld xde, (9850:16)` / ... / `lddr83` / ... / `ld iy, hl` / `ld ix, de` -- Scoop_SpecialMode_Setup, the backward copy whose source offset it resets",
+   "display/scoop_display.s:18258-18276 `ld xiy, (9854:16)` / ... / `ld wa, (xiy+3)` / ... / `ld iy, 5:i3` -- the forward twin (link +3, first data byte 5)",
+   "sequencer/sequencer_engine.s:18457-18458 `lda xwa, (0x0b0000:24)` / `ld (7514:16), xwa` -- SeqInit_SetBaseAddress: the block base (0x1D5A) is 0xB0000"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_004",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1 (EVT_INC_VAL): the shared body of its parameter-1 (from-measure) case after the inner switch on CURRENT_TITLE has picked the word pair -- XIZ = from-measure, XWA = last-measure. It increments the from measure (max 999 = 0x3E7), redraws field 1 and pushes the last measure along. Its 6 referrers are the title arms of that inner switch (AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng and the AppEvtHandler_Branch_002_OnTitle* arms) and the default arm _OnTitleSqadvdly falls into it. It should become a local label of AppEvent_ChainDispatch1 (the IncFromMeasure arms already have names).",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20457-20465 `AppEvtHandler_Branch_004:` / `ld (xsp + 4), xwa` / `cpw (xiz), 0x3e7` / `jr nc, ..._Join` / `incw 1, (xiz)` / ... / `ld xde, 1:i3` / `call ApDeliveryEvent` -- the body",
+   "sequencer/sequencer_engine.s:20411-20423 `AppEvent_ChainDispatch1_IncFromMeasure:` / `ld a, (CURRENT_TITLE:16)` / ... / `jp t, (xix+wa)` -- the inner switch whose arms jump here",
+   "sequencer/sequencer_engine.s:20427-20430 `AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqnotecng:` / `lda xiz, (9744:16)` / `lda xwa, (9746:16)` / `jr AppEvtHandler_Branch_004` -- one arm (also 20434, 20438, 20442, 20446, 20450); 20454-20456 the default arm falls in",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_008",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1 (EVT_INC_VAL): the shared body of its parameter-2 (last-measure) case after the inner switch on CURRENT_TITLE has picked the word pair (XIZ = from, XWA = last): it increments the last measure (max 999), redraws field 2 and pulls the from measure down. Its 6 referrers are that inner switch's title arms (AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqnotecng and the AppEvtHandler_Branch_006_OnTitle* arms); the default arm _OnTitleSqadvdly falls into it. It should become a local label of AppEvent_ChainDispatch1.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20530-20539 `AppEvtHandler_Branch_008:` / `ld (xsp + 4), xwa` / `cpw (xwa), 0x3e7` / ... / `incw 1, (xwa)` / ... / `ld xde, 2:i3` / `call ApDeliveryEvent` -- the body",
+   "sequencer/sequencer_engine.s:20503 `jr AppEvtHandler_Branch_008` -- end of arm IncLastMeasure_OnTitleSqnotecng; 20507, 20511, 20515, 20519, 20523 the other arms; 20527-20529 the default arm falls in",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_024",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1 (EVT_INC_VAL): the common tail of its measure-copy case (parameters 15-20, AppEvent_ChainDispatch1_IncMcpParam) that redraws the six TT_SQMCP fields (EVT_PARA_DRAW 0x0F..0x14) and joins the function's shared exit AppEvtHandler_Branch_033. Its 12 code referrers are that inner switch's range check and its six arms. It should become a local label of AppEvent_ChainDispatch1. (The comments at widget_descriptors.s:4045 / naka_widget_descriptors.c:2115 that call it the owner of the switch would then name AppEvent_ChainDispatch1_IncMcpParam.)",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20794-20798 `AppEvtHandler_Branch_024:` / `ld xwa, (0x2972:16)` / `ld xbc, EVT_PARA_DRAW` / `ld xde, 0xf` / `call ApDeliveryEvent` -- the first of six redraws; 20817-20818 `ld xde, 0x14` / `jrl AppEvtHandler_Branch_033`",
+   "sequencer/sequencer_engine.s:20723-20728 `AppEvent_ChainDispatch1_IncMcpParam:` / `sub xwa, 0xf` / `cp xwa, 0x0` / `jrl c, AppEvtHandler_Branch_024` / `cp xwa, 0x5` / `jrl ugt, AppEvtHandler_Branch_024` -- the inner switch",
+   "sequencer/sequencer_engine.s:20788-20793 `AppEvtHandler_Branch_021_IncMcpRepeat:` ... `ld (9770:16), a` -- the last arm falls in; 20740-20791 the other arms branch to it",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_027",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1 (EVT_INC_VAL): the common tail of its measure-insert case (parameters 21-26, AppEvent_ChainDispatch1_IncMinsParam) that redraws the six TT_SQMINS fields (EVT_PARA_DRAW 0x15..0x1A) and joins AppEvtHandler_Branch_033. Its 12 referrers are that inner switch's range check and arms. It should become a local label of AppEvent_ChainDispatch1.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20893-20897 `AppEvtHandler_Branch_027:` / `ld xwa, (0x2972:16)` / `ld xbc, EVT_PARA_DRAW` / `ld xde, 0x15` / `call ApDeliveryEvent`; 20916-20917 `ld xde, 0x1a` / `jrl AppEvtHandler_Branch_033`",
+   "sequencer/sequencer_engine.s:20822-20827 `AppEvent_ChainDispatch1_IncMinsParam:` / `sub xwa, 0x15` / ... / `jrl c, AppEvtHandler_Branch_027` / ... / `jrl ugt, AppEvtHandler_Branch_027` -- the inner switch",
+   "sequencer/sequencer_engine.s:20887-20892 `AppEvtHandler_Branch_024_IncMinsRepeat:` ... `ld (9776:16), a` -- the last arm falls in; 20839-20890 the other arms branch to it",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "AppEvent_InlineHandler_Entry3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_InlineHandler (EVT_DEC_VAL): the common tail of its measure-insert case (parameters 21-26, AppEvent_InlineHandler_DecMinsParam) that redraws the six TT_SQMINS fields (EVT_PARA_DRAW 21..26) and joins AppEvent_InlineHandler_Join8; the DEC_VAL twin of AppEvtHandler_Branch_027. Its 12 referrers are that inner switch's range check and arms. It should become a local label of AppEvent_InlineHandler.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:21532-21536 `AppEvent_InlineHandler_Entry3:` / `ld xwa, (10610:16)` / `ld xbc, EVT_PARA_DRAW` / `ld xde, 21` / `call ApDeliveryEvent`; 21553-21556 `ld xde, 26` / `jrl AppEvent_InlineHandler_Join8`",
+   "sequencer/sequencer_engine.s:21461-21466 `AppEvent_InlineHandler_DecMinsParam:` / `sub xwa, 21` / ... / `jrl c, AppEvent_InlineHandler_Entry3` / ... / `jrl ugt, AppEvent_InlineHandler_Entry3` -- the inner switch",
+   "sequencer/sequencer_engine.s:21526-21531 `AppEvent_SubDispatch_DecMinsRepeat:` ... `ld (9776:16), a` -- the last arm falls in; 21478-21529 the other arms branch to it",
+   "sequencer/sequencer_engine.s:21021 `AppEvent_InlineHandler:` -- the owner; 20087 `calr AppEvent_InlineHandler` (ApEditSyori, EVT_DEC_VAL) its caller"
+  ]
+ },
+ {
+  "old": "SeqPlay_ReadRecord_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of SongFile_DecodeMidiEvent (21362-21759, one compiled function with a 528-byte frame): the join after an event's bytes have been read into the frame buffer. Unless 0xE9E5 bit 4 is set (the end-of-track meta event sets it at 21459) it reads the next variable-length delta time and adds it to 0xE9F5, then goes on to classify the buffered event. All 5 code referrers (21460, 21506, 21534, 21583, 21626) are that function's own branches and SeqPlay_StoreByte's loop falls into it. It should become a local label of SongFile_DecodeMidiEvent (the comment at ui/char_encoding_naka_state.s:108 that cites it would follow).",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:21648-21670 `SeqPlay_ReadRecord_Entry:` / ... / `ld wa, (0xe9e5:16)` / `bit 4, wa` / `jr nz, SeqPlay_CheckSysExMarker` / ... / `calr FileIO_ReadVariableLengthData` / ... / `add (0xe9f5:16), xwa` -- the body",
+   "audio/note_voice_mapping.s:21362-21364 `SongFile_DecodeMidiEvent:` / `lda xsp, (xsp-528)` / `pushw iz` -- the owner; 21756-21759 `SeqPlay_Epilogue:` / `popw iz` / `lda xsp, (xsp+528)` / `ret` its exit",
+   "audio/note_voice_mapping.s:21454-21460 `DecodeMidiEvent_LoadParam3:` / ... / `orw (0xe9e5:16), 16` / `jrl SeqPlay_ReadRecord_Entry` -- a referrer inside the owner (meta 0x2F)",
+   "audio/note_voice_mapping.s:21622-21626 `SeqPlay_ReadRemainingBytes:` / ... / `jr ge, SeqPlay_ReadRecord_Entry`; 21636-21646 SeqPlay_StoreByte falls in",
+   "audio/note_voice_mapping.s:21268 `calr SongFile_DecodeMidiEvent` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "SqedtFunc_ModeC_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of SqedtFunc (13983, the sequencer-edit title's event function with one frame): the shared tail of its EVT_GET_*_STRING cases that copies the chosen string into the caller's record with Strncpy (the arms push the length and the source first), then returns through SqedtFunc_Epilogue12. Its 5 referrers are SqedtFunc's own cases (SqedtFunc_OnGetMersString, _OnGetQtzValString, _OnGetMinsTrBString, _OnGetSclrNoString, _OnGetScpTtrString) and SqedtFunc_ModeC falls into it. It should become a local label of SqedtFunc.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_ui.s:14621-14630 `SqedtFunc_ModeC_Entry:` / `ld xwa, (xsp + 10)` / `ld xwa, (xwa + 18)` / `push xwa` / `call Strncpy` / `lda xsp, (xsp + 10)` / ... / `jrl SqedtFunc_Epilogue12` -- the body",
+   "sequencer/sequencer_ui.s:14246-14257 `SqedtFunc_OnGetMersString:` / ... / `pushw 9` / ... / `ld xbc, Sqedt_ParamDispatch_Table_3` / ... / `push xwa` / `jrl SqedtFunc_ModeC_Entry` -- one arm (also 14269, 14463, 14518, 14534)",
+   "sequencer/sequencer_ui.s:13983-13985 `SqedtFunc:` / `lda xsp, (xsp - 12)` / `push xiz` -- the owner; 14934 `SqedtFunc_Epilogue12:` its exit",
+   "sequencer/sequencer_ui.s:14617-14618 `SqedtFunc_ModeC:` / `push xwa` -- falls into it"
+  ]
+ },
+ {
+  "old": "HdaeRom_DataDispatch_Block",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SoundRam_WriteIdAndChecksum",
+  "header": "Stamps the sound-memory image at 0x1E0000 as a KN5000 one: copies the 16-byte id \"KN5000 SOUND RAM\" (SoundRam_Id_KN5000) to 0x1E0000..0x1E000F, then SendPartDataBlock_SetWord7 stores the complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at 0x1E72A8; returns HL = 0.\nBasis: callers + body -- PostTmLoad, PostTmSave_Success, PostTmLoadEntry and TmFlashWrite_ValidateParams call it right after converting the loaded data (HdaeRom_DataHandler / HdaeRom_AltHandler) and before bulk-copying the image (0x72AA bytes, checksum word last) to the sub-CPU.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:27698-27706 `calr HdaeRom_DataHandler` / ... / `calr HdaeRom_AltHandler` / `calr HdaeRom_DataDispatch_Block` / `ld xwa, 0x1e0000` / `ldw bc, 0x72aa` / `ld xde, 0x7800` / `call InterCPU_E1_Bulk_Transfer` -- PostTmLoad; also 27752, 27789, 27807, 27854, 27878",
+   "audio/note_voice_mapping.s:27595-27604 `lda xde, (0x1e0000:24)` / `lda xwa, (SoundRam_Id_KN5000:24)` / `ld xbc, xwa` / `lda xhl, (xwa + 16)` / `ld A, (xbc+)` / `ld (xde+), a` / `cp xbc, xhl` / `jr c, ...` -- 16-byte id copy",
+   "audio/note_voice_mapping.s:27605-27607 `calr SendPartDataBlock_SetWord7` / `ld hl, 0:i3` / `ret`",
+   "audio/note_voice_mapping.s:27442-27451 `ldw de, 0x24b8` / `lda xbc, (0x1e0000:24)` / `lda xwa, (xbc + 16)` / ... / `add HL, (xwa+)` / `djnz16 de, ...` / `cpl hl` / `ld (xbc+29352), hl` -- the checksum (29352 = 0x72A8)",
+   "ui_widgets/widget_dispatch.s:9448-9449 `SoundRam_Id_KN5000:` / `.asciz \"KN5000 SOUND RAM\"` -- the id; SendPartDataBlock_ClearByte4 (26502) is the check that compares it"
+  ]
+ },
+ {
+  "old": "SeMenu_ProcessEffect_Data3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the epilogue (`popw_erp 0xfa` / `lda xsp, (xsp + 38)` / `ret`) of SeMenu_ProcessEffect, which opens with `lda xsp, (xsp - 38)` / `pushw_erp 0xfa`. Its 4 referrers are that routine's own branches (the ends of its mode-0, mode-2 and mode-3 paths) and the mode-1 loop falls into it. It should become a local label (the epilogue) of SeMenu_ProcessEffect.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/semenu_routines.s:5737-5740 `SeMenu_ProcessEffect_Data3:` / `popw_erp 0xfa` / `lda xsp, (xsp + 38)` / `ret` -- the whole body",
+   "audio/semenu_routines.s:5611-5613 `SeMenu_ProcessEffect:` / `lda xsp, (xsp - 38)` / `pushw_erp 0xfa` -- the matching prologue",
+   "audio/semenu_routines.s:5651-5652 `SeMenu_ProcessEffect_LoopEnd:` / `jrl SeMenu_ProcessEffect_Data3` -- one referrer (also 5665, 5705, 5728); 5731-5735 the last loop falls in",
+   "audio/sound_editor_ui.s:561 `call SeMenu_ProcessEffect` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "SendEvent_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "DbMemo_SendString",
+  "header": "Prints the string at XWA in the debug memo window at once: SendEvent(XWA = 0xFFFFFFFF broadcast, XBC = EVT_MEMO_DRAW, XDE = the string), the event DbMemoProc draws; no copy is made, so the string must stay valid (the callers pass ROM strings).\nBasis: callers + body -- the HD-AE debug screen (HamaDeb_HdaeDebugScreenFunc and its CheckFDStatusLoad_Entry / LoadExtROM_Entry) reports \"LOAD\", \"LOAD END\", \"GO\", \"Finishd\", \"Media Error\", \"Cannot open\", \"Different ID\" through it; DbMemo_PostString is the posted twin that copies the text.",
+  "basis": "callers + body",
+  "evidence": [
+   "factory_test/test_init.s:393-397 `SendEvent_Entry:` / `ld xde, xwa` / `ld xwa, 0xffffffff` / `ld xbc, EVT_MEMO_DRAW` / `jp SendEvent` -- the whole body",
+   "factory_test/test_init.s:418-422 `lda xwa, (HamaEvtDisp_LifecycleCheck_Str_LOAD:24)` / `calr SendEvent_Entry` / `calr CheckFDStatusLoad_Entry` / `lda xwa, (HamaEvtDisp_LifecycleCheck_Str_LOAD_END:24)` / `calr SendEvent_Entry` -- the LOAD button of the HD-AE debug screen",
+   "factory_test/test_init.s:425-429 `..._Str_GO` / `calr SendEvent_Entry` / `calr LoadExtROM_Entry` / `..._Str_Finishd` / `calr SendEvent_Entry`; 445, 458 (Media Error, Cannot open), 486-487 `lda xwa, (LoadExtROM_Entry_Str_Different_ID:24)` / `jrl SendEvent_Entry`",
+   "factory_test/fd_test_data.s:498-517 `.ascii \"LOAD\"` ... `aligned_string \"Different ID\"` -- the strings passed",
+   "shared/event_codes.s:178 `.equ EVT_MEMO_DRAW, 0x1c00025` -- \"Append/draw a text line in the debug memo window\"",
+   "ui/ui_widget_defs.s:6795-6796 `cp xbc, EVT_MEMO_DRAW` / `jr z, DbMemo_DrawContent` -- DbMemoProc (6790) draws it; 6932 DbMemo_PostString is the PostEvent twin with a Malloc'd copy"
+  ]
+ },
+ {
+  "old": "NoteMap_GetVoiceData_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Harmony_FindReferenceNote",
+  "header": "Finds the harmony reference note: the lowest note (byte +1 of each 2-byte entry from +4) of the note list at XWA (word count at +0); kept, with the entry's other byte, in 0xCEAA / 0xCEAB when it lies in 25..102, else both are set to 0xFF; the previous pair is saved in 0xCEAC / 0xCEAD first. Returns L = (0xCEAA).\nBasis: callers + body -- VoiceMap_AllocateSlot and NoteMap_FindBestMatch call it on the list at 0xCE22 and, when L is not 0xFF, run UIParam_ScanAndCollect, whose UIParam_CallbackDispatch calls the Harmony_HandlerTable entry chosen by 0xE9BE; those handlers subtract their intervals from 0xCEAA (\"the reference note\").",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:13979-13983 `lda xwa, (0xce22:16)` / `calr NoteMap_GetVoiceData_Entry` / `cp l, 0xff` / `jr z, ...` / `calr UIParam_ScanAndCollect` -- VoiceMap_AllocateSlot (13975); also 14006 and 14054-14058 (NoteMap_CheckVoiceReuse, part of NoteMap_FindBestMatch 14036)",
+   "audio/note_voice_mapping.s:14084-14087 `ld c, (0xceaa:16)` / `ld (0xceac:16), c` / `ld c, (0xceab:16)` / `ld (0xcead:16), c` -- the previous result saved",
+   "audio/note_voice_mapping.s:14090-14115 `ld l, (xwa + 5)` / `ld h, (xwa + 4)` / ... / `cp l, (xbc + 1)` / `jr ule, ..._LoopCheck` / ... / `ld l, (xbc + 1)` / ... / `ld h, (xbc)` -- keeps the smallest byte +1 (xbc = list + 4 + 2*i) and its partner byte",
+   "audio/note_voice_mapping.s:14123-14133 `cp l, 0x18` / `jr ule, ..._Skip` / `cp l, 0x67` / `jr nc, ..._Skip` / `ld (0xceaa:16), l` / `ld (0xceab:16), h` / ... / `ld (0xceaa:16), 255` / `ld (0xceab:16), 255` -- range 0x19..0x66",
+   "audio/note_voice_mapping.s:14140-14142 `Voice_ReadSearchResult:` / `ld l, (0xceaa:16)` / `ret` -- the return value",
+   "audio/note_voice_mapping.s:14165-14172 `lda xwa, (xsp + 2)` / `ld c, (0xe9be:16)` / ... / `lda xde, (Harmony_HandlerTable:24)` / ... / `ld xix, (xbc)` -- what the callers run next",
+   "audio/note_voice_mapping.s:14960-14968 `SoundFX_Handler_9:` / `ld e, (Harmony_FixedIntervals:24)` / `ld c, (0xceaa:16)` / `sub c, e` / `ld (xwa + 5), c` / ... -- a harmony handler builds its notes from 0xCEAA",
+   "ui_widgets/widget_dispatch.s:8142-8145 `; Harmony_OctaveUpDown_Down: ... subtracted from the reference note RAM 0xCEAA` -- the established meaning of 0xCEAA"
+  ]
+ },
+ {
+  "old": "Voice_UpdateVelocity_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Chord_RecognizeNowOrDelay",
+  "header": "Starts chord recognition for a change in the held chord keys, either at once (Voice_CheckAndResetSlotState) or after a 5-tick delay (0xCEB3 = 5 unless already running): immediate when 0xCEDE bit 6 is set; when no keys were held before (previous count 0xCF17 = 0) only delayed if 0xC596 bit 1 and 0xCEDE bit 4 are set and a chord root (0xCEE0) exists; otherwise delayed when 0xCEDE bit 4 is set, unless 0xCEDE bit 7 and 0xC596 bit 1 are both set.\nBasis: callers + body -- Voice_DispatchByTimingState calls it when keys are held and the count did not drop (or 0xCEDE bit 7 is set), Voice_MatchVoicePairs when a held note is new; a drop goes to Voice_SetDecayTimer (0xCEB4 = 6 / 22) instead, and Voice_UpdateNoteState re-runs the recognition when either timer runs out.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:15243-15253 `bit 7, (0xcede:24)` / `jr z, VoiceTiming_CompareThreshold` / `calr Voice_UpdateVelocity_Entry` / ... / `cp bc, (0xcf17:16)` / `jr c, VoiceTiming_EqualThreshold` / `calr Voice_UpdateVelocity_Entry` -- in Voice_DispatchByTimingState (15225; BC = held-key count 0xCEFF, 0xCF17 the previous count)",
+   "audio/note_voice_mapping.s:15255-15258 `cp bc, (0xcf17:16)` / ... / `calr Voice_SetDecayTimer` -- fewer keys: the release delay; 15304-15316 Voice_SetDecayTimer sets 0xCEB4 to 6 or 22",
+   "audio/note_voice_mapping.s:15330-15336 `cp w, (xix + 5)` / `jr z, ...` / ... / `calr Voice_UpdateVelocity_Entry` -- Voice_MatchVoicePairs: a note of 0xCEFF not in 0xCF17",
+   "audio/note_voice_mapping.s:15268-15290 `bit 6, (0xcede:24)` / `jr nz, Voice_CheckAndUpdateSlot` / `cpw (0xcf17:16), 0` / ... / `bit 4, (0xcede:24)` / ... / `cp (0x00cee0:24), 0x00` -- the decision",
+   "audio/note_voice_mapping.s:15292-15302 `cp (0xceb3:16), 0` / `jr nz, VelocityUpdate_Return` / `ld (0xceb3:16), 5` / ... / `Voice_CheckAndUpdateSlot:` / `calr Voice_CheckAndResetSlotState` -- delay or recognize now",
+   "audio/note_voice_mapping.s:15346-15352 `Voice_CheckAndResetSlotState:` / `ld bc, (0x00ceff:24)` / `ld (0xceb3:16), 0` / `ld (0xceb4:16), 0` / ... / `calr NullRet2_TestBit24` -- the recognition (cancels both delays)",
+   "audio/note_voice_mapping.s:15116-15131 `cp (0xceb4:16), 0` / ... / `dec 1, (0xceb3:16)` / `jr z, Voice_CheckAndUpdateMode` / ... / `call Voice_UpdatePlayModeState` -- Voice_UpdateNoteState: on expiry the recognition runs (15206 `calr Voice_CheckAndResetSlotState`)"
+  ]
+ },
+ {
+  "old": "SeMenu_ApplySynthParam_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeMenu_GetGroupFirstToneIndex",
+  "header": "Returns in the word at XDE the tone index at which group C of the current tone list starts: the sum of the first C group sizes, page params base.. (RAM 0x660 + base: base 12 for A = 1, 17 for A = 3, else 18), the per-group byte counts SeMenu_ProcessEffect copied there from bytes +3.. of the 25-byte record it loads (group count at +2 -> 0x6AC).\nBasis: callers + body -- SeTonTon1_OnColumn2 (A = 0), SeTonHyb1_OnColumn2 (A = 1) and SeMenuTitleFunc_DispatchSwitch (A = 3) step the group index C within (0x6AC), call it, and send the result as the tone index (SeMenu_SendPartToneIndex / SeMenu_SendToneIndex); SeMenu_ProcessEffect writes the same three bases for modes 0 / 1 / 3.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sound_editor_ui.s:4018-4026 `ld c, (xsp+6)` / `extz bc` / `lda xde, (xsp)` / `ld wa, 0:i3` / `call SeMenu_ApplySynthParam_Data` / ... / `ld bc, (xsp)` / `call SeMenu_SendPartToneIndex` -- SeTonTon1_OnColumn2 (3990)",
+   "audio/sound_editor_ui.s:5081-5085 `... ld wa, 1:i3` / `call SeMenu_ApplySynthParam_Data` -- SeTonHyb1_OnColumn2 (5051), followed by SeMenu_SendToneIndex; 3246-3254 the A = 3 call in SeMenuTitleFunc_DispatchSwitch, followed by SeMenu_SendPartToneIndex",
+   "audio/semenu_routines.s:5854-5862 `cp a, 1:i3` / `jr nz, ..._Skip2` / `ldi_erpb 250, 12` / ... / `ldi_erpb 250, 18` / `cp a, 3:i3` / `jr nz, ..._Join2` / `ldi_erpb 250, 17` -- the base by mode",
+   "audio/semenu_routines.s:5868-5883 `ldto_berp a, 250` / `addb_erp a, 251` / ... / `calr SeMenu_LoadPartParam` / ... / `add iz, wa` / `inc1b_erp 251` / ... / `jr c, ..._Loop` / `ld xwa, (xsp+6)` / `ld (xwa), iz` -- sums C bytes, stores the word",
+   "audio/semenu_routines.s:1197-1203 `SeMenu_LoadPartParam:` / `extz wa` / `lda xde, (1632:16)` / ... / `ld a, (xwa)` / `ld (xbc), a` -- page param WA = RAM 0x660 + WA",
+   "audio/semenu_routines.s:5631-5640 `ldto_berp A, 0xfb` / `add a, 0x12` / ... / `inc 3, c` / ... / `ld c, (xde+bc)` / ... / `calr SeMenu_StorePartParam` -- SeMenu_ProcessEffect mode 0 copies record byte +3+i to page param 0x12+i (5684-5686 mode 3: 0x11, 5717-5719 mode 1: 0xC); 5645-5649 the count is record byte +2",
+   "audio/semenu_routines.s:2092-2096 `SeMenu_FillObjTable:` / ... / `lda xde, (0x020c39:24)` / ... / `lda xde, (xde + 25)` -- the 25-byte record"
+  ]
+ },
+ {
+  "old": "ScoopParam_ValueTable_Sub_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_ResetPositionState",
+  "header": "Resets the step-record screen's position state, as at the start of the cursor track: clears the clock 0x0D57, the wrap-marker count 0x0D58, the unit counter 0x0D5A, the measure 0x371A and beat copy 0x3719, the grid rows' measure numbers 0x0E4C / 0x0E4E / 0x0E50 and beat counts 0x0E52-0x0E54, the held-note count 0x0DD4 and the bytes 0x0D5E, 0x0D67, 0x0D68, 0x3728; sets 0x0D55 = 0x0DD0 = 0xFF, empties the parked panel-parameter slots at 0x0D6F (16 words of 0xFFFF) and sets 0x371C = 32.\nBasis: callers + body -- SqStep_SetupCursorTrack calls it after positioning the cursor track, and MemoryConfig_Handler_Table_Target2_Sub / MemConfig_Handler_1_Helper4 right after MemConfig_VoiceSlotLookup has put the track's read pointer back on its first block (offset 5).",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:7272-7275 `SerialPort_ModeHandler_0_Skip14:` / `call MemoryConfig_Handler_Table_Target2_Sub` / `SerialPort_ModeHandler_0_Join3:` / `call ScoopParam_ValueTable_Sub_Helper2` -- in SqStep_SetupCursorTrack (7184)",
+   "display/scoop_display.s:8266-8267 `call MemConfig_VoiceSlotLookup` / `call ScoopParam_ValueTable_Sub_Helper2`; 9234-9235 the same pair in MemConfig_Handler_1_Helper4 (9160)",
+   "display/scoop_display.s:8287-8305 `ld xde, 0xf250` / `add xde, xiz` / `ld wa, (xde + 1)` / ... / `ld (xix+iz), wa` / ... / `ld xix, 0xcbe` / `ld (xix+iz), 0x05` -- MemConfig_VoiceSlotLookup: the track's first block and data offset 5",
+   "display/scoop_display.s:7858-7874 `xor wa, wa` / `ld (3660:16), wa` / ... / `ld (3416:16), wa` / `ld (3418:16), wa` / `ld (3415:16), a` / `ld (0x371a:16), wa` / `ld (0x3719:16), a` / ... / `ld (3540:16), a` -- the cleared fields (3415 = 0x0D57, 3416 = 0x0D58, 3418 = 0x0D5A, 3660 = 0x0E4C, 3540 = 0x0DD4)",
+   "display/scoop_display.s:7875-7886 `ldw wa, 0xffff` / `ld (3536:16), a` / `ld (3413:16), a` / ... / `ld xix, 3439` / `ldw bc, 16` / `ld (xix+), wa` / `djnz16 bc, -6` / ... / `ld (0x371c:16), 32` -- 0x0DD0 = 0x0D55 = 0xFF, slots 0x0D6F.. emptied",
+   "display/scoop_display.s:7041-7046 `; SqStep_FlushPendingParamEvents: ... for each of the 29 slots at 0x0D6F that is not 0xFF ...` -- what 0x0D6F holds",
+   "display/scoop_display.s:8466-8467 `; ... counts them in (0x0D58) ... clears the clock (0x0D57) and copies the beat to 0x3719` -- the position fields; 5625-5626 0x0E4C / 0x0E52 are the grid row's measure number and beat count; 4648 0x0DD4 the held-note count"
+  ]
+ },
+ {
+  "old": "MemConfig_Handler_3_Helper6",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_UpdateChordCellCursor",
+  "header": "Computes the step-record screen's chord-cell cursor (0x0EEF, 0..7: two cells per beat over four beats): unless byte 0x0D6A is set, refreshes the measure/beat position (SqStep_GetRhythmTrackForMeasures, AccPedal_CheckBitAndUpdate), then cell = 2 * beat (0x0D5C, minus 4 from beat 4 on when the measure has more than 4 beats, 0x0D5D) + 1 when the clock 0x0D57 is past the beat start.\nBasis: callers + body -- Display_RedrawSelection copies 0x0EEF to 0x1191, the RAM byte that picks the rectangle of SqStep_ChordCellCursor (8 cells, x = 8 + 32k); the callers (MemConfig_Handler_3_Helper3, MemConfig_Handler_5_Helper11, MemConfig_Handler_5_Helper12) run it after moving the position and then redraw display region 2.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:8680-8682 `MemConfig_Handler_3_Skip2:` / `call MemConfig_Handler_3_Helper6` / `call Display_UpdateRegion2` -- a caller site (also 9116 in MemConfig_Handler_5_Helper11, 13605)",
+   "display/scoop_display.s:13608-13611 `cp (0x0d6a:16), 0` / `jrl nz, ..._Return7` / `call SqStep_GetRhythmTrackForMeasures` / `call AccPedal_CheckBitAndUpdate`",
+   "display/scoop_display.s:13612-13620 `cp (0x0d5d:16), 4` / `jrl ugt, ..._Skip52` / `ld a, (3420:16)` / ... / `cp a, 4:i3` / `jrl c, ..._Skip53` / `sub a, 4` -- the beat (3420 = 0x0D5C), folded into 0..3 for long measures",
+   "display/scoop_display.s:13622-13627 `sla a, 1` / `cp (0x0d57:16), 0` / `jrl z, ..._Skip54` / `inc 1, a` / ... / `ld (3823:16), a` -- 2 * beat (+1 past the beat start) -> 3823 = 0x0EEF",
+   "display/scoop_display.s:17330-17334 `ld a, (3823:16)` / `ld (4497:16), a` / `popw wa` / `ld xiy, SqStep_ChordCellCursor` / `call UIRender_TwoTableEvtCheck` -- the only reader of 0x0EEF (4497 = 0x1191)",
+   "ui_widgets/style_ui_params.s:274-277 `; SqStep_ChordCellCursor: Bound record op 03: the chord-cell cursor ... 8 rectangles ... picked by RAM byte 0x1191, which Display_RedrawSelection loads from 0x0EEF`",
+   "display/scoop_display.s:4360 `; ... beats left in the measure (0x0DCD = (0x0D5D) - (0x0D5C) ...` -- 0x0D5C is the beat, 0x0D5D the beats per measure"
+  ]
+ },
+ {
+  "old": "AccPatch_CheckAndInitDemo_Helper2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccPatch_GetSlotBeatsAndMeasures",
+  "header": "Returns the measure layout of the current patch slot record (AccPatch_GetCurrentSlotAddr, XIY = RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * (0x34D6)): A = beats per measure, the byte of AccTone_LookupByProgram_Table indexed by the slot's time-signature code (+12), and C = number of measures, the last measure index (+13) + 1.\nBasis: callers + body -- AccPatch_CheckAndInitDemo_Helper loops C - 1 times skipping A beat codes per measure and stores each measure start; Not_sure_maybe_SOFT_VERSION_related_Code_Helper multiplies A * C (the slot's total beats); TimeSig_DisplayStrings_Code_Helper2 takes A for another slot.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:14147-14159 `calr AccPatch_CheckAndInitDemo_Helper2` / `ld e, c` / `ld c, 1:opc` / ... / `cp c, e` / ... / `calr AccPatch_CheckAndInitDemo_Helper3` / ... / `calr AccPatch_StoreMeasureCursor` -- the per-measure loop in AccPatch_CheckAndInitDemo_Helper (14142)",
+   "sequencer/accompaniment_engine.s:14004-14007 `calr AccPatch_InitCurrentSlotPointer` / `calr AccPatch_CheckAndInitDemo_Helper2` / `ld w, 0:opc` / `mul wa, c` -- beats x measures",
+   "sequencer/accompaniment_engine.s:26959-26967 `pushdi_b (13526)` / `ld (0x34d6:16), l` / ... / `call AccPatch_CheckAndInitDemo_Helper2` / ... / `pop (0x34d6:16)` / `ld b, a` -- for another slot (13526 = 0x34D6)",
+   "sequencer/accompaniment_engine.s:14209-14215 `calr AccPatch_GetCurrentSlotAddr` / `ld xwa, 0:i3` / `ld a, (xiy+12)` / `add xwa, AccTone_LookupByProgram_Table` / `ld a, (xwa)` / `ld c, (xiy+13)` / `inc 1, c` -- the body",
+   "sequencer/accompaniment_engine.s:14442-14453 `AccPatch_GetCurrentSlotAddr:` / ... / `mul hl, 0x60` / `add xhl, 0x60` / `ld xiy, RHYTHM_PATTERN_BUF_A` / `add xiy, xhl` -- the slot record",
+   "sequencer/accompaniment_engine.s:30103-30108 `; AccPatch_InitEasySlotHeader: ... +12 = time-signature code (0x34D8), +13 = last measure index (0x34D7)` -- the two header bytes",
+   "ROM 0xE46B8A (AccTone_LookupByProgram_Table, ui_widgets/widget_descriptors.s:5261): 02 04 06 08 01 02 03 04 05 06 07 08 01 02 03 04 05 06 07 08 -- a beat count per time-signature code",
+   "sequencer/accompaniment_engine.s:14234-14236 `; ... the AccPatch_CheckAndInitDemo_Helper loop stores the cursor after skipping each measure (one beats-per-measure run of 0x81 beat codes)`"
+  ]
+ },
+ {
+  "old": "PsMixer_CtlTypeProc8_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PsMixer_CtlTypeProc8 (15197, `lda xsp, (xsp-18)` / `pushw iz`; epilogue 15336-15339): a block of its EVT_INDEXSW cases that calls MainLswPartAdd with the frame's arguments and joins the common return. Its 4 referrers are the function's own arms (_OnIndexswAny, _OnIndexswUpAic, _OnIndexswDownAny) and only the function itself is entered from outside (pointer table at technichord_string_data.s:3271). It should become a local label of PsMixer_CtlTypeProc8.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "ui/drawbar_panel_ui.s:15322-15328 `PsMixer_CtlTypeProc8_Entry:` / `pushw (xsp+6)` / `ld wa, (xsp+4)` / `ld bc, (xsp+14)` / `ld de, (xsp+6)` / `call MainLswPartAdd` / `jr PsMixer_CtlTypeProc8_Loop` -- the body",
+   "ui/drawbar_panel_ui.s:15197-15199 `PsMixer_CtlTypeProc8:` / `lda xsp, (xsp-18)` / `pushw iz` -- the owner; 15336-15339 `PsMixer_CtlTypeProc8_Epilogue:` / `popw iz` / `lda xsp, (xsp+18)` / `ret`",
+   "ui/drawbar_panel_ui.s:15270-15271 `cpw (xsp+14), 0` / `jrl z, PsMixer_CtlTypeProc8_Entry` -- in _OnIndexswAny; also 15280, 15286, 15307",
+   "ui_widgets/technichord_string_data.s:3271 `.long PsMixer_CtlTypeProc8` -- how the function is entered"
+  ]
+ },
+ {
+  "old": "CheckAndResetSlotSta_Block2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of Voice_CheckAndResetSlotState (15346-15387): the branch of its no-keys-held path that calls NullRet2_Block (clear the recognized chord) and returns; reached only from that routine's own two condition tests (15368, 15375), with CheckAndResetSlotSta_LoadDRAM2 falling into it. It should become a local label of Voice_CheckAndResetSlotState.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:15382-15384 `CheckAndResetSlotSta_Block2:` / `calr NullRet2_Block` / `jr Voice_NullRet2` -- the whole body",
+   "audio/note_voice_mapping.s:15355-15368 `Voice_CheckAndResetSlotState_Skip:` / `or (0xcede:24), 128` / ... / `bit 6, (0xcede:24)` / `jr nz, CheckAndResetSlotSta_Block2` -- one of its two referrers (also 15375)",
+   "audio/note_voice_mapping.s:15346 `Voice_CheckAndResetSlotState:` -- the owner; 15386-15387 `Voice_NullRet2:` / `ret` its exit"
+  ]
+ },
+ {
+  "old": "NullRet2_Block",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Chord_ClearRecognizedChord",
+  "header": "Clears the recognized chord: held-key count 0xCEFF, chord note count 0xCEE5, 0xCEF1, root 0xCEE0, type 0xCEDF, bass root 0xCEE1 and 0xCEE4 = 0; sets 0xCEDE bit 7 and clears its bits 1-2 (bit 1 = on-bass chord); then applies the empty chord with VoiceSlot_Epilogue_Block2 (voicing, displayed chord 0x8D40/0x8D42/0x8D44, changed flag 0xCF01).\nBasis: callers + body -- Voice_CheckAndResetSlotState calls it (through CheckAndResetSlotSta_Block2) when no chord keys are held and none of the hold conditions (panel record 0x48 +5 / +6 bits 4-5, 0xC598 / 0xC596 / 0xCEDE flags) applies; slot 0 of the unreferenced jump block at 0xFE9413 also jumps here.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:15355-15368 `Voice_CheckAndResetSlotState_Skip:` / `or (0xcede:24), 128` / `ld (0x00cee4:24), 0x00` / `ld e, (0xfc5f:16)` / `and e, 0x30` / `jr nz, Voice_NullRet2` / `ld e, (0xfc60:16)` / ... -- the no-keys path that leads to it (15350-15351: BC = (0xCEFF) = 0)",
+   "audio/note_voice_mapping.s:15382-15383 `CheckAndResetSlotSta_Block2:` / `calr NullRet2_Block` -- the call site",
+   "audio/note_voice_mapping.s:15390-15400 `ldw (0x00ceff:24), 0x0000` / `ld (0x00cee5:24), 0x00` / `ld (0x00cef1:24), 0x00` / `ld (0x00cee0:24), 0x00` / `ld (0x00cedf:24), 0x00` / `or (0xcede:24), 128` / `and (0xcede:24), 249` / `ld (0x00cee1:24), 0x00` / `ld (0x00cee4:24), 0x00` / `calr VoiceSlot_Epilogue_Block2` / `ret` -- the body",
+   "audio/note_voice_mapping.s:16740-16746 `; ... the chord ROOT is RAM 0xCEE0, the chord TYPE is RAM 0xCEDF ... (0xCEE1) when bit 1 of 0xCEDE is set` -- the CHORD TABLES header",
+   "audio/note_voice_mapping.s:15085-15086 `Audio_NullRet1_Data:` / `jp NullRet2_Block` -- a 4-byte vector slot followed by `ret` slots; no reference to 0xFE9413 exists in the v10 image",
+   "extensions/extension_data.s:1290 `ChordStr_On: ... appends it when byte 0x8D44 != 0 and bit 1 of 0xCEDE is set` -- 0xCEDE bit 1 = on-bass chord"
+  ]
+ },
+ {
+  "old": "VoiceSlot_StoreParams_Block2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Chord_CollectHeldNotes",
+  "header": "Collects the notes for chord recognition from the held chord keys: walks the held-key list at 0xCEFF (DE entries, note = byte +1 of each 2-byte entry from +4) from the newest entry back, keeps each note whose pitch class (ChordTables_NoteToPitchClass) is not taken yet (set ChordTables_PitchClassBits in bank register WA3) until (0xCEE5) notes are kept, then stores the count in 0xCEE5 and the notes, in list order, at 0xCEE6..; DE = 0 gives 0xCEE5 = 0.\nBasis: callers + body -- the two recognition paths of Voice_CheckAndResetSlotState (PitchCalc_Return_Block and EffectState_Dispatch_Block3) set 0xCEE5 = 4 and DE = (0xCEFF), call it, then classify 0xCEE5 / 0xCEE6.. into chord type and root.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:15719-15723 `ld (0x00cee5:24), 0x04` / `ld de, (0x00ceff:24)` / `calr VoiceSlot_StoreParams_Block2` / `cp (0x00cee5:24), 0x02` / `jr ugt, ...` -- PitchCalc_Return_Block (15718), then Voice_UpdateNoteBitmap on more than two notes",
+   "audio/note_voice_mapping.s:15443-15446 `ld (0x00cee5:24), 0x04` / `ld de, (0x00ceff:24)` / `calr VoiceSlot_StoreParams_Block2` / `calr VoiceSlot_StoreParams_LoadReg3` -- EffectState_Dispatch_Block3, the 0xC596 bit 0 path",
+   "audio/note_voice_mapping.s:15458-15468 `ldw (0x00cf2f:24), 0x0000` / `ld xiy, 0xceff` / `ld xix, 0xcf8f` / `ld hl, de` / `dec 1, hl` / `sla hl, 1` / `add iy, hl` / `cp de, 0:i3` / ... / `ld (0x00cee5:24), 0x00` -- start at the last entry",
+   "audio/note_voice_mapping.s:15476-15497 `ld l, (xiy + 5)` / `ld xiz, ChordTables_NoteToPitchClass` / `ld c, (xiz+l)` / ... / `and_sriw_rm WA, 0x03, 0xf8, 0xe4` / `jr nz, ..._Decrement` / `or_sriw_rm ...` / ... / `ld (xix), l` / ... / `cp b, (0xcee5:24)` / ... / `dec 1, iy` / `dec 1, iy` / `dec 1, de` -- distinct pitch classes, newest first, up to (0xCEE5)",
+   "audio/note_voice_mapping.s:15499-15513 `ld (0x00cee5:24), b` / ... / `ld xix, 0xcee6` / `ld xiy, 0xcf8f` / ... / `ld a, (xiy)` / `ld (xix), a` / `dec 1, iy` / `inc 1, ix` / `djnz16 bc, ...` -- copied back reversed to 0xCEE6..",
+   "audio/note_voice_mapping.s:9014-9036 `lda xbc, (0xcf00:16)` / ... / `lda xbc, (0xca7f:16)` / ... / `res 7, a` / `ld (xix), a` / ... -- the builder of the 0xCEFF list stores each held slot's note at +5 + 2k; 9054 `ld (0xceff:16), hl` the count",
+   "audio/note_voice_mapping.s:16872-16879 `; ... WA works as a set of pitch classes seen while collecting the held notes (no duplicates stored)` -- the ChordTables_PitchClassBits note"
+  ]
+ },
+ {
+  "old": "VoiceSlot_Epilogue_Block2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Chord_ApplyCurrentChord",
+  "header": "Applies the current chord (type 0xCEDF, root 0xCEE0, bass 0xCEE1): rebuilds its voicing and bass note (Voice_InitPartAllocState, from the chord tables), copies it to 0x8D42 / 0x8D40 / 0x8D44 -- the chord MainChordPre shows -- and calls BitMapOut_CheckDiskAndApply when that changed (VoiceSlot_IterateAlloc_TestBit24), sets the changed flag (0xCF01 high byte = 0xFF) and records the chord as the last one (0xCEE2 = type, 0xCEE3 = root).\nBasis: callers + body -- NullRet2_Block calls it after clearing the chord and EffectState_Dispatch_Block2 after each recognition; Voice_UpdatePlayModeState reports the 0xCF01 flag, and recognition falls back to 0xCEE2 / 0xCEE3 when it finds no chord.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:15438-15440 `EffectState_Dispatch_Block2:` / `calr VoiceSlot_Epilogue_Block2` / `ret` -- after the recognition paths (15428-15436); 15399 the call in NullRet2_Block",
+   "audio/note_voice_mapping.s:16431-16437 `calr Voice_InitPartAllocState` / `calr VoiceSlot_IterateAlloc_TestBit24` / `orw (0xcf01:24), 0xff00` / `ld a, (0x00cedf:24)` / `ld (0x00cee2:24), a` / `ld a, (0x00cee0:24)` / `ld (0x00cee3:24), a` -- the body",
+   "audio/note_voice_mapping.s:16488-16530 `ld l, (0x00cedf:24)` / ... / `ld xiz, ChordTables_TypeNoteCount` / ... / `ld xiz, ChordTables_TypeIntervals` / ... / `ld xiz, ChordTables_PitchMask` / ... / `ld xiy, 0xcee6` / ... / `ld (xiy), e` -- Voice_InitPartAllocState builds the chord notes from type and root",
+   "audio/note_voice_mapping.s:16700-16719 `ld a, (0x00cedf:24)` / `ld w, (0x00cee0:24)` / `ld l, (0x00cee1:24)` / `cp a, (0x8d42:16)` / ... / `ld (0x8d42:16), a` / `ld (0x8d40:16), w` / ... / `ld (0x8d44:16), l` -- VoiceSlot_IterateAlloc_TestBit24, then 16732 `call BitMapOut_CheckDiskAndApply`",
+   "audio/note_voice_mapping.s:15208-15212 `ld hl, (0x00cf01:24)` / `andw (0xcf01:24), 255` / `cp h, 0xff` / ... -- the changed flag read and cleared by Voice_UpdatePlayModeState",
+   "audio/note_voice_mapping.s:15741-15744 `cp w, 0:i3` / `jr nz, ...` / `ld a, (0x00cee2:24)` / `ld w, (0x00cee3:24)` -- no chord found: the last chord is reused"
+  ]
+ },
+ {
+  "old": "NoteDisplay_StoreAnd_Block",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteDisplay_StoreAndDispatch (17045, frame `lda xsp, (xsp - 20)`; exit 17144-17146): the join of its recognition paths that writes the recognized chord -- type 0xCEDF, root 0xCEE0, bass 0xCEE1, flags 0xCEDE -- to the caller's 4-byte result at XIZ before the common restore (MIDI_FinalizeParamBlock). Its 2 referrers (17092, 17115) are that function's own branches and NoteDisplay_StoreAnd_DoUpdateNo falls into it. It should become a local label of NoteDisplay_StoreAndDispatch.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:17121-17126 `NoteDisplay_StoreAnd_Block:` / `ldmi16 (xiz), 0xcedf` / `ldmi16 (xiz + 1), 0xcee0` / `ldmi16 (xiz + 2), 0xcee1` / `ldmi16 (xiz + 3), 0xcede` / `jr MIDI_FinalizeParamBlock` -- the body",
+   "audio/note_voice_mapping.s:17045-17049 `NoteDisplay_StoreAndDispatch:` / `lda xsp, (xsp - 20)` / `push xiz` / ... / `ld xiz, xwa` -- the owner; 17144-17146 `pop xiz` / `lda xsp, (xsp + 20)` / `ret`",
+   "audio/note_voice_mapping.s:17092 `jr NoteDisplay_StoreAnd_Block`, 17115 `jr NoteDisplay_StoreAnd_Block` -- the referrers; 17117-17119 the third path falls in",
+   "sequencer/sequencer_engine.s:9149 `call NoteDisplay_StoreAndDispatch` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "PlayModeStateMachine_Block3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AccWrap_PlayModeStateMachine (20229, a switch on WA): the end of its WA = 2 path -- after AccWrap_PlayModeDispatch and a bounded wait for SEQ_TRANSPORT_STATE bit 2 it zeroes SEQ_BEAT_COUNT and SEQ_BEAT_TICK with interrupts masked (`ei 6` ... `ei 0`) and returns. Both referrers (20271, 20275) are that path's own branches and the wait loop falls into it. It should become a local label of AccWrap_PlayModeStateMachine.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:20280-20285 `PlayModeStateMachine_Block3:` / `ei 6` / `ldw (SEQ_BEAT_COUNT:16), 0` / `ld (SEQ_BEAT_TICK:16), 0` / `ei 0` / `ret` -- the body",
+   "audio/note_voice_mapping.s:20267-20278 `PlayModeStateMachine_DoPlayMode:` / `call AccWrap_PlayModeDispatch` / `ld xwa, 0:i3` / `cp xwa, 0x7ffe` / `jr ugt, PlayModeStateMachine_Block3` / `bit 2, (SEQ_TRANSPORT_STATE:16)` / `jr nz, PlayModeStateMachine_Block3` / ... / `jr ule, ...` -- its referrers",
+   "audio/note_voice_mapping.s:20229-20231 `AccWrap_PlayModeStateMachine:` / `cp wa, 4:i3` / `jrl z, PlayModeStateMachine_Block4` -- the owner; 19793 `calr AccWrap_PlayModeStateMachine` a caller"
+  ]
+ },
+ {
+  "old": "SendSinglePacket_Block2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of SendSinglePacket_WriteReg (20517, frame `lda xsp, (xsp-142)`, exit SeqFile_Epilogue 20764-20767), the song-file header reader that matches the input against \"MThd\" / \"MTrk\": the join after up to four bytes were compared -- all four matched goes on to SeqFile_SkipPadding_Init, otherwise the rest of the id is skipped. Both referrers (20532, 20548) are that function's own branches and the compare loop falls into it. It should become a local label of SendSinglePacket_WriteReg.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:20553-20560 `SendSinglePacket_Block2:` / `cpw (xsp+142), 0x0004` / `jrl z, SeqFile_SkipPadding_Init` / `ld iz, 0:i3` / `ld wa, 3:i3` / `sub wa, (xsp+142)` / ... -- the body",
+   "audio/note_voice_mapping.s:20517-20532 `SendSinglePacket_WriteReg:` / `lda xsp, (xsp-142)` / `pushw iz` / `ld xiy, Smf_ChunkId_MThd` / ... / `ld xiy, Smf_ChunkId_MTrk` / ... / `ldw (xsp+142), 0x0000` / `cpw (xsp+142), 0x0003` / `jr ugt, SendSinglePacket_Block2` -- the owner and one referrer",
+   "audio/note_voice_mapping.s:20543-20551 `ld wa, (xsp+142)` / ... / `cp l, (xbc)` / `jr nz, SendSinglePacket_Block2` / `incw 1, (xsp+142)` / ... / `jr ule, SendSinglePacket_DoReadNext` -- the compare loop",
+   "audio/note_voice_mapping.s:20764-20767 `SeqFile_Epilogue:` / `popw iz` / `lda xsp, (xsp+142:16)` / `ret` -- the owner's exit; 19922 `calr SendSinglePacket_WriteReg` its caller"
+  ]
+ },
+ {
+  "old": "RecordReadOK_Block10",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of SeqPlay_ReadFileRecord (21761, frame `lda xsp, (xsp - 14)`, exit FileIO_Epilogue 22106-22109), the COM-ESEQ song-file header reader: after a field's bytes have been skipped it reads the next record byte and requires 0xF1 (else returns 0xFFFE). Both referrers (22033, 22040) are that function's own branches and the skip loop falls into it. It should become a local label of SeqPlay_ReadFileRecord.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:22056-22068 `RecordReadOK_Block10:` / `calr FileIO_ReadNextRecord` / ... / `jr ge, RecordReadOK_Compare` / ... / `RecordReadOK_Compare:` / `cp l, 0xf1` / `jr z, RecordReadOK_Compare_Skip` / `ldw hl, 0xfffe` -- the body",
+   "audio/note_voice_mapping.s:22031-22040 `cp xbc, xwa` / `jr c, RecordReadOK_LoopBody6` / `jr RecordReadOK_Block10` / ... / `cp xwa, (xsp + 2)` / `jr nc, RecordReadOK_Block10` -- the referrers; 22049-22054 the loop falls in",
+   "audio/note_voice_mapping.s:21761-21764 `SeqPlay_ReadFileRecord:` / `lda xsp, (xsp - 14)` / `pushw iz` / `ld xiy, ESeq_FileSignature` -- the owner; 22106-22109 its exit",
+   "audio/note_voice_mapping.s:19926 `calr SeqPlay_ReadFileRecord` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "Dispatch_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiSysMsg_DecodeDeltaTime",
+  "header": "Decodes the delta time carried by a song-stream status 0xF3 / 0xF4 event: A = the status, XBC = its data bytes; 0xF3 -> the 7-bit byte, 0xF4 -> the 14-bit value LSB + 128 * MSB of two 7-bit bytes; returns it in XHL (0 for any other status).\nBasis: callers + body -- MidiSysMsg_Handler_OnF3ShortDeltaTime / _OnF4LongDeltaTime read one / two bytes into their frame, call it with WA = 243 / 244 and add XHL to the event time 0xE9E7.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:22481-22485 `lda xwa, (xsp+4)` / `ld xbc, xwa` / `ldw wa, 243` / `calr Dispatch_Data` / `add (0xe9e7:16), xhl` -- MidiSysMsg_Handler_OnF3ShortDeltaTime (22463)",
+   "audio/note_voice_mapping.s:22507-22511 `... ldw wa, 244` / `calr Dispatch_Data` / `add (0xe9e7:16), xhl` -- MidiSysMsg_Handler_OnF4LongDeltaTime",
+   "audio/note_voice_mapping.s:22628-22636 `cp a, 244` / `jr z, Dispatch_Data_Skip` / `cp a, 243` / `jr nz, Dispatch_Data_Skip2` / `ld l, (xbc)` / `res 7, l` / ... / `extz xhl` -- the one-byte form",
+   "audio/note_voice_mapping.s:22638-22653 `ld l, (xbc)` / `res 7, l` / `ld e, (xbc+1)` / `res 7, e` / `ld a, e` / `sll a, 7` / `srl e, 1` / `or l, a` / ... / `sla wa, 8` / `add wa, bc` / `ld hl, wa` / `exts xhl` -- MSB * 128 + LSB",
+   "audio/note_voice_mapping.s:22655-22658 `Dispatch_Data_Skip2:` / `ld xhl, 0:i3` / `Dispatch_Data_Return:` / `ret`"
+  ]
+ },
+ {
+  "old": "InitTrackSlots_Block",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "RingBuffer_WriteByte",
+  "header": "Writes byte A into the 2 KB ring buffer at 0xD0AE (write index 0xD0A8, free count 0xD0AC; the index wraps after 2047): returns HL = 0, or HL = 0xFFFF without writing when the buffer is full.\nBasis: callers + body -- the writer twin of RingBuffer_ReadByte (same buffer, read index 0xD0AA); MidiRingBuf_WriteBytes calls it for each of its IZ bytes after checking the free count, and VoiceReset_Return_Prologue for each byte of a record it builds; FileIO_InitTrackSlots empties the buffer.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/note_voice_mapping.s:23779-23784 `SndParam_NotifyLoop_Body:` / `ld xbc, (xsp + 4)` / `ld wa, (xsp + 2)` / `ld a, (xbc+wa)` / `extz wa` / `calr InitTrackSlots_Block` -- the byte loop of MidiRingBuf_WriteBytes; also 23313-23315 in VoiceReset_Return_Prologue (23205)",
+   "audio/note_voice_mapping.s:23668-23671 `cpw (0xd0ac:16), 0` / `jr nz, InitTrackSlots_LoadDRAM` / `ldw hl, 0xffff` / `jr InitTrackSlots_Return` -- full",
+   "audio/note_voice_mapping.s:23674-23689 `ld bc, (0xd0a8:16)` / `lda xde, (0xd0ae:16)` / `extz xbc` / `add xbc, xde` / `ld (xbc), a` / `decw 1, (0xd0ac:16)` / `cpw (0xd0a8:16), 2047` / ... / `ldw (0xd0a8:16), 0` / ... / `incw 1, (0xd0a8:16)` / ... / `ld hl, 0:i3` -- store, wrap, advance",
+   "audio/note_voice_mapping.s:23694-23715 `RingBuffer_ReadByte:` / `ld wa, (0xd0a8:16)` / `cp wa, (0xd0aa:16)` / ... / `lda xbc, (0xd0ae:16)` / ... / `incw 1, (0xd0ac:16)` / `cpw (0xd0aa:16), 2047` / ... -- the reader of the same buffer",
+   "audio/note_voice_mapping.s:23647-23650 `FileIO_InitTrackSlots:` / `ldw (0xd0a8:16), 0` / `ldw (0xd0aa:16), 0` / `ldw (0xd0ac:16), 2047` -- the initialiser"
+  ]
+ },
+ {
+  "old": "StoreDRAMInit_Block",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of SndParam_StoreDRAMInit (24291, frame `lda xsp, (xsp-304)`, exit 24355-24359 `retd 0x4`): the loop step that advances the record counter at (xsp+2) and leaves when it reaches 0xE00, else tests it against the limit and reads the next record. Both referrers (24305, 24323) are that loop's own branches and the record loop falls into it. It should become a local label of SndParam_StoreDRAMInit.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:24342-24353 `StoreDRAMInit_Block:` / `ld xwa, 1:i3` / `add (xsp + 2), xwa` / `ld xwa, (xsp + 2)` / `cp xwa, 0xe00` / `jr ge, StoreDRAMInit_LoadParam2` / `StoreDRAMInit_Block2:` / ... / `jrl lt, StoreDRAMInit_ReadBuf` -- the body",
+   "audio/note_voice_mapping.s:24302-24305 `StoreDRAMInit_ReadBuf:` / `call SeqBuf_VoiceMap_ReadByte` / `cp hl, 0xffff` / `jr z, StoreDRAMInit_Block` -- a referrer (also 24323)",
+   "audio/note_voice_mapping.s:24291-24300 `SndParam_StoreDRAMInit:` / `lda xsp, (xsp-304)` / `pushw iz` / ... / `jr StoreDRAMInit_Block2` -- the owner; 24355-24359 `ld l, (xsp + 6)` / `popw iz` / `lda xsp, (xsp+304)` / `retd 0x4`",
+   "audio/note_voice_mapping.s:24418 `calr SndParam_StoreDRAMInit` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "CommPacket_WriteMeas_Block",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the common exit of LookupPartIndex_Compare (25829, entered once by `call` from 26252): after building and sending (sendCOMM) the per-part packet, or skipping it, it bumps the packet counter 0xE197 and returns it masked to 7 bits. Its 2 referrers are that routine's own early exits (part number above 4, empty count byte) and the send path falls into it. It should become a local label of LookupPartIndex_Compare.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:25895-25899 `CommPacket_WriteMeas_Block:` / `inc 1, (0xe197:16)` / `ld l, (0xe197:16)` / `res 7, l` / `ret` -- the whole body",
+   "audio/note_voice_mapping.s:25829-25831 `LookupPartIndex_Compare:` / `cp wa, 4:i3` / `jrl ugt, CommPacket_WriteMeas_Block` -- the owner and one referrer",
+   "audio/note_voice_mapping.s:25874-25877 `CommPacket_WriteMeasureCount:` / `ld c, (xhl)` / `cp c, 0:i3` / `jr z, CommPacket_WriteMeas_Block` -- the other referrer; 25893 `call sendCOMM` then falls in",
+   "audio/note_voice_mapping.s:26252 `call LookupPartIndex_Compare` -- the only outside entry"
+  ]
+ },
+ {
+  "old": "StringCenter_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of DrawTitleBar (960, frame `lda xsp, (xsp - 42)`, exit DirmdEmu_CaseA 1128-1131): the centred-title arm that calls DrawStringCentered and joins StringDraw_JoinPoint, beside the left- and right-justify arms. Its 3 referrers (1022, 1049, 1057) are that function's own layout branches and DrawTitleBar_ShrinkFont falls into it. It should become a local label of DrawTitleBar.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/presentation_sound_nav.s:1067-1076 `StringCenter_Entry:` / `lda xwa, (xsp + 24)` / ... / `pushw 0xff` / `pushw 0xf7` / `ld xde, xiz` / `call DrawStringCentered` / `jr StringDraw_JoinPoint` -- the body",
+   "audio/presentation_sound_nav.s:1019-1022 `sub wa, (xsp + 10)` / `dec 4, wa` / `cp ix, wa` / `jr le, StringCenter_Entry` -- a referrer in DrawTitleBar_CalcLayout (also 1049, 1057)",
+   "audio/presentation_sound_nav.s:960-962 `DrawTitleBar:` / `lda xsp, (xsp - 42)` / `push xiz` -- the owner; 1128-1131 `DirmdEmu_CaseA:` / `pop xiz` / `lda xsp, (xsp + 42)` / `retd 0x6`",
+   "audio/presentation_sound_nav.s:952 `calr DrawTitleBar` -- callers reach only the owner"
+  ]
+ },
+ {
+  "old": "SndParam_RegisterBitfield_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndParam_SetRegWord",
+  "header": "Register accessor 5 of the sound-parameter descriptors (word-list parameters): clamps the value BC to the descriptor's +7..+8 and translates it through the 16-bit list SndParam_WordValueListPtrs[+11]; when that word differs from the one in the parameter's slot (block SndParam_BlockRamPtrs[+4], word +5) it stores it there (not in mode DE = 4) and fills the change record at 0x9710 (+2 = 1) with the two byte writes {block, offset, low} and {block, offset + 1, high}. Returns XHL = 0x9710; 0xFFFF at +0 when the block has no RAM.\nBasis: callers + body -- entry 5 of SndParam_RegisterHandlers, picked by descriptor byte +0x0D in SndParam_DispatchCallback; the descriptor that uses it (MidiChParam_Entry_052) reads back with SndParam_ReadRegWord, the index of the stored word in the same list.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/sndparam_routines.s:53-63 `ld c, (xwa + 13)` / `cp c, 0x9` / ... / `lda xde, (SndParam_DispatchCallback_Data:24)` / `lda xhl, (xde+bc)` / `ld bc, (xsp + 12)` / `ld de, (xsp + 10)` / `ld xhl, (xhl)` / `call (xhl)` -- SndParam_DispatchCallback; 65-78 reads the record (+0 = 0xFFFF not found, +2 = 1 -> SndParam_WidgetNotifyType1)",
+   "ui_widgets/widget_dispatch.s:1099-1106 `SndParam_RegisterHandlers:` / ... / `.long SndParam_RegisterBitfield_Data` -- entry 5",
+   "audio/sndparam_records/run_edc2a4.c:215-224 `/* [ 21] 0xEDC41E  MidiChParam_Entry_052 */` ... `.clamp_min = 0x00, .clamp_max = 0x05` ... `.aux_index = 0x00` ... `.read_accessor = 4, /* SndParam_ReadRegWord */` / `.register_accessor = 5` -- the only descriptor with accessor 5",
+   "audio/sndparam_routines.s:1345-1358 `lda xhl, (xwa+4)` / ... / `lda xix, (SndParam_BlockRamPtrs:24)` / `ld xiz, (xix+bc)` / ... / `ld xiy, SndParam_ClearRecordTemplate` / `ld xix, 0x9710` / ... / `ldw (xix+2), 1`",
+   "audio/sndparam_routines.s:1371-1389 `ld c, (xwa+11)` / `sla c, 2` / `lda xiy, (SndParam_WordValueListPtrs:24)` / ... / `ld de, (xde)` / ... / `cp (xbc), de` / `jr z, ..._Join` / `cpw (xsp+4), 4` / `jr z, ..._Skip4` / `ld (xbc), de` -- list lookup and store",
+   "audio/sndparam_routines.s:1391-1408 `ld (xix+4), c` / ... / `ld (xix+6), c` / ... / `ld (xix+9), a` / `srl de, 8` / `ld (xix+10), e` -- the change record",
+   "ui_widgets/widget_dispatch.s:95-101 `; SndParam_WordValueListPtrs: ... entry 0 = WidgetParam_MidiCC_SysExcl, the list {1, 2, 3, 0x203, 0x201, 0x202} ... SndParam_ReadRegWord returns the position (0..5)`"
+  ]
+ },
+ {
+  "old": "SeMenu_ShowConfirmDialog_Sub_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeTouchCurve_AreaFill4Part",
+  "header": "Sound-editor static record op 1B (ColorBlit_ByteData: fill a rectangle with the colour at 0x3EFA2) over (214, 70) - (263, 225): the area of the TOUCH CURVE cells in 4-part mode, filled by SeMenu_DrawSelectedPartEnvCurve before it draws the selected part's cell (in 2-part mode it fills (158, 70) - (210, 161) from the next record, SeMenu_ShowConfirmDialog_Sub_Data_2, instead); also the end of SeScreenData_0x113B's one-record list.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:8617-8621 `SeMenu_DrawSelectedPartEnvCurve_Skip:` / `ld (COLORBLIT_MODE:24), 0` / `ld xiy, SeMenu_ShowConfirmDialog_Sub_Data` / `ld xix, SeMenu_ShowConfirmDialog_Sub_Data_2` / `call SeGfx_DrawStaticList` -- drawn when (0x6AE) != 1 (4-part mode); 8610-8614 the 2-part branch draws SeMenu_ShowConfirmDialog_Sub_Data_2 .. SeMenu_ShowConfirmDialog_Sub_Data_3",
+   "ROM 0xF11D46: 1b 0a d6 00 46 00 07 01 e1 00 -- op 0x1B, length 10, (214, 70) - (263, 225)",
+   "ui_widgets/disk_warning_strings.s:1287-1315 `GraphicsRender_ProcessEntries_PtrTable:` ... entry 0x1B `.long ColorBlit_ByteData` -- the handler of static op 1B; display/graphics_text_vga.s:1133-1147 ColorBlit_ByteData takes the rectangle from +2..+9 and the colour from (0x03EFA2)",
+   "audio/sound_editor_ui.s:9376-9378 `ld xiy, SeScreenData_0x113B` / `ld xix, SeMenu_ShowConfirmDialog_Sub_Data` / `call SeGfx_DrawStaticList` -- SeMenu_CompareAndApply_Data4 uses it as the end of the op-23 record",
+   "audio/sound_editor_ui.s:8335 `; SeMenu_DrawPartSelector: ... for each part (2 or 4, by (0x6AE))` -- (0x6AE) = 1 is 2-part mode"
+  ]
+ },
+ {
+  "old": "SeMenu_ShowConfirmDialog_Sub_Data_3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SeTouchCurve_Part1CellRecords",
+  "header": "Sound-editor static record list (42 bytes, up to SeScreenData_0x117E) of part 1's TOUCH CURVE cell in 4-part mode: pixel-text captions \"TOUCH\" at (226, 114) and \"CURVE\" at (232, 123), an op-22 shadow box (224, 70) - (262, 108) for the curve picture and an op-01 line (214, 90) - (224, 90); entries 0 and 1 of SeMenu_DrawSelectedPartEnvCurve_Records (parts 2-4 are SeScreenData_0x117E / _0x11A8 / _0x11D2, 32 pixels lower each). It is also the end of the 2-part area-fill record list.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:13140-13145 `SeMenu_DrawSelectedPartEnvCurve_Records:` / `.long SeMenu_ShowConfirmDialog_Sub_Data_3` / `.long SeMenu_ShowConfirmDialog_Sub_Data_3` / `.long SeScreenData_0x117E` / `.long SeScreenData_0x11A8` / `.long SeScreenData_0x11D2` -- the per-part list table",
+   "audio/sound_editor_ui.s:8656-8662 `ld xiz, SeMenu_DrawSelectedPartEnvCurve_Records` / ... / `add xiz, xwa` / `ld xiy, (xiz)` / `ld xix, xiy` / `add xix, 42` / `call SeGfx_DrawStaticList` -- the 4-part path draws entry [part] (WA = 4 * (0x65D)), 42 bytes",
+   "ROM 0xF11D5A: 17 0b e2 00 72 00 \"TOUCH\" 17 0b e8 00 7b 00 \"CURVE\" 22 0a e0 00 46 00 06 01 6c 00 01 0a d6 00 5a 00 e0 00 5a 00 -- the four records (op 17 = SeGfx_StaticOp17_PixelTextFont3, op 22 = SeGfx_StaticOp22_ShadowBox1)",
+   "audio/sound_editor_ui.s:13105-13109 `SeScreenData_0x117E:` / `sd_ptext 0x17, 11, 226, 146, \"TOUCH\"` / `sd_ptext 0x17, 11, 232, 155, \"CURVE\"` / `sd_quad 0x22, 224, 102, 262, 140` / `sd_quad 0x01, 214, 122, 224, 122` -- part 2's cell, the same shape 32 pixels lower",
+   "audio/sound_editor_ui.s:8613-8615 `ld xiy, SeMenu_ShowConfirmDialog_Sub_Data_2` / `ld xix, SeMenu_ShowConfirmDialog_Sub_Data_3` / `call SeGfx_DrawStaticList` -- the end of the 2-part area-fill list",
+   "audio/sound_editor_ui.s:13154-13157 `SeMenu_DrawSelectedPartEnvCurve_Records3:` / `.short 224, 70` / `.short 224, 70` / `.short 224, 102` ... -- the picture position per part, inside the op-22 box"
+  ]
+ },
+ {
+  "old": "InterCPU_Send_Data_Block",
+  "verdict": "refuse",
+  "why_refused": "Kept: the name already says what it is -- it sends one data block of C (1..32) bytes to the sub-CPU over the inter-CPU latch (command byte (A << 5) | (C - 1) at 0x140000, SSTAT1 / MSTAT0 handshake on port Z, then the data); sendCOMM calls it once per 32-byte chunk. It matches the _Block suffix rule only by accident (as the g6 PartName6_PartN names did), and it is quoted by that name in CLAUDE.md's subsystem-prefix table and in five technics-docs pages (inter-cpu-protocol, audio-subsystem, sound-parameter-protocol, sound-categories, hdae5000-homebrew), so a rename buys nothing and breaks references. If the suffix rule must win, InterCPU_SendPacket would fit.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "boot/system_handlers.s:5518-5532 `InterCPU_Send_Data_Block:` / `cp c, 0:i3` / `ret z` / ... / `bit 3, (PZ:8)` / ... / `res 0, (PZ:8)` / ... / `sll a, 5` / `or a, l` / `ld (0x140000:24), a` -- the command byte",
+   "boot/system_handlers.s:5473-5491 `sendCOMM_ChunkLoop:` / ... / `ldw bc, 0x20` / ... / `calr InterCPU_Send_Data_Block` / ... / `sendCOMM_FinalChunk:` / ... / `calr InterCPU_Send_Data_Block` -- its only callers, in sendCOMM",
+   "boot/system_handlers.s:5499-5516 `; InterCPU_Send_Data_Block - Send a data packet to Sub-CPU` ... -- the existing header",
+   "CLAUDE.md \"Subsystem prefix conventions\" table: `| InterCPU_ | Inter-CPU communication | InterCPU_Send_Data_Block |`"
+  ]
+ },
+ {
+  "old": "SubCPU_ToneParamRet_Helper14",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_ClearRow2CellRecords",
+  "header": "Clears the cell records of row 2 of the step-record grid: the 8 x 4 bytes at RAM 0x0E75 (16 words = 0).\nBasis: callers + body -- Display_RedrawButtonLabels draws row 2's chord cells (SqStep_Row2ChordCells) from 0x0E75 and Scoop_ButtonLabels_CopySlotData copies byte 0 of each of its records; SubCPU_ToneParamRet_Helper13 clears rows 1-3 (OscScope_RenderBlock_Helper 0x0E55, this, SubCPU_ToneParamRet_Helper15 0x0E95) before MemConfig_Handler_5_Helper12 refills them, and the row-index test at 13832 (0x0EC6 = 0) clears it with row 3.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:14103-14107 `SubCPU_ToneParamRet_Helper13:` / `call OscScope_RenderBlock_Helper` / `call SubCPU_ToneParamRet_Helper14` / `call SubCPU_ToneParamRet_Helper15` / `ret` -- the three rows; called at 13372 in MemConfig_Handler_5_Helper12",
+   "display/scoop_display.s:14116-14121 `ld xix, 3701` / `ldw bc, 16` / `xor wa, wa` / `ld (xix+), wa` / `djnz16 bc, -6` / `ret` -- 3701 = 0x0E75, 32 bytes",
+   "display/scoop_display.s:13832-13839 `ldb_d8 e, (0x0ec6)` / `cp e, 2:i3` / ... / `cp e, 0:i3` / `jrl nz, ..._Skip62` / `call SubCPU_ToneParamRet_Helper14` / `call SubCPU_ToneParamRet_Helper15` -- clears the rows after the current one (this block follows an unconditional `jp` and nothing branches to 0xEFE6C9)",
+   "display/scoop_display.s:17541-17543 `ld xix, 0xe75` / `ld xiy, SqStep_Row2ChordCells` / `calr Scoop_ButtonLabels_DrawCategory` -- Display_RedrawButtonLabels (17523)",
+   "ui_widgets/style_ui_params.s:249-251 `; SqStep_Row2ChordCells: Row 2 of the step-record chord cells ... walked by Scoop_ButtonLabels_DrawCategory with the cell records at RAM 0x0E75`"
+  ]
+ },
+ {
+  "old": "SubCPU_ToneParamRet_Helper15",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_ClearRow3CellRecords",
+  "header": "Clears the cell records of row 3 of the step-record grid: the 8 x 4 bytes at RAM 0x0E95 (16 words = 0).\nBasis: callers + body -- Display_RedrawButtonLabels draws row 3's chord cells (SqStep_Row3ChordCells) from 0x0E95; SubCPU_ToneParamRet_Helper13 clears rows 1-3 with it before MemConfig_Handler_5_Helper12 refills them, and the row-index test at 13832 clears it when the current row (0x0EC6) is 0 or 1.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:14106 `call SubCPU_ToneParamRet_Helper15` -- in SubCPU_ToneParamRet_Helper13 (14103-14107); also 13839",
+   "display/scoop_display.s:14123-14128 `ld xix, 3733` / `ldw bc, 16` / `xor wa, wa` / `ld (xix+), wa` / `djnz16 bc, -6` / `ret` -- 3733 = 0x0E95, 32 bytes",
+   "display/scoop_display.s:17545-17547 `ld xix, 0xe95` / `ld xiy, SqStep_Row3ChordCells` / `calr Scoop_ButtonLabels_DrawCategory` -- Display_RedrawButtonLabels",
+   "ui_widgets/style_ui_params.s:253-256 `; SqStep_Row3ChordCells: Row 3 of the step-record chord cells ... walked by Scoop_ButtonLabels_DrawCategory with the cell records at RAM 0x0E95`",
+   "display/scoop_display.s:17575-17580 `ld xiy, 0xe95` / `ld c, 0x8:opc` / ... / `ld a, (xiy)` / `ld (xix+), a` -- Scoop_ButtonLabels_CopySlotData reads byte 0 of its 4-byte records"
+  ]
+ },
+ {
+  "old": "SubCPU_ToneParamRet_Helper17",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only: it fills the current cell record of the step-record chord grid (row base (0x1114) + 4 * cell index (0x0EC4)) -- flag bits 5-6 of byte 0 := 1 (the '*' mark of SqStep_CellFlagFields) when no flag is set, byte +1 := 4, root/type word +2 := 0 -- and advances one cell (OscScope_UpdateDisplay_Helper2: the next cell, or the next row after 2 * beats cells, 0x0EF6 = 1 past the last row). DisplayStr_BytecodeBlock_A is the same with byte +1 = 3 and a two-cell advance. Its 12 callers, the two grid builders MemConfig_Handler_5_Helper12 and the routine at 16630-16850, use it e.g. when an event falls 48 clocks into the beat, but what byte +1 = 4 (vs 3) and the '*' mark mean for a cell is not established, so a name would only restate the bytes.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "display/scoop_display.s:14353-14366 `ld (3830:16), 0` / `ld c, (3777:16)` / `sla c, 1` / ... / `ld l, (3780:16)` / `sla hl, 2` / ... / `ld xiy, (4372:16)` / `ld a, (xiy+hl)` / `and a, 96` / ... / `ld a, 32:opc` / `ld (xiy+hl), a` -- flag mark (4372 = 0x1114, 3780 = 0x0EC4)",
+   "display/scoop_display.s:14368-14377 `ldfr_lerp xiy, 56` / `lda xiy, (xiy+hl)` / `ld (xiy+1), 4` / `ldto_lerp xiy, 56` / ... / `ld (xiy+2), wa` / ... / `call OscScope_UpdateDisplay_Helper2` -- byte +1 = 4, word +2 = 0, advance (XIY saved in a bank register around the address arithmetic)",
+   "display/scoop_display.s:14282-14307 `DisplayStr_BytecodeBlock_A:` ... `ld (xiy+1), 3` ... `call OscScope_UpdateDisplay_Helper` -- the twin with kind 3",
+   "display/scoop_display.s:13584-13595 `ld a, (3766:16)` / `ld l, (3778:16)` / `add l, (3952:16)` / ... / `sub a, l` / `cp a, 48` / `jrl nz, ...` / `call SubCPU_ToneParamRet_Helper17` -- one of 12 call sites (13487 ... 16844)",
+   "ui_widgets/style_ui_params.s:243-247 `; SqStep_Row1ChordCells: ... the 2-character chord root ... the 5-character chord type ... Scoop_ButtonLabels_DrawCategory walks it with XIX = the row's cell records at RAM 0x0E55 (4 bytes each)` -- the cell records"
+  ]
+ },
+ {
+  "old": "SubCPU_ToneParamRet_Helper18",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_PeekNextEvent",
+  "header": "Looks ahead one event at the song-data read cursor without moving it: saves the cursor (block 0x28BF, offset 0x28C1), copies the event at it into 0x0EBB.. -- just the byte when it is a marker 0x81 / 0x82 / 0x84, otherwise the status byte and its data bytes up to the next byte with bit 7 set -- skipping whole events whose first data byte is 47 or 95, then restores the cursor; registers preserved.\nBasis: callers + body -- the chord-grid builders call it and then test 0x0EBB against the markers (129 / 130 / 132) and 0x0EBC against 48 to decide how to fill the next cells; VoiceBank_LoadLerpState / _UpdateLerpState are the cursor's read and advance.",
+  "basis": "callers + body",
+  "evidence": [
+   "display/scoop_display.s:13515-13522 `call SubCPU_ToneParamRet_Helper18` / `ld a, (3771:16)` / `cp a, 130` / `jrl z, ...` / `cp a, 132` / `jrl z, ...` / `cp a, 129` -- a caller in MemConfig_Handler_5_Helper12 (also 13378, 16738, 16781, 16815)",
+   "display/scoop_display.s:16781-16790 `call SubCPU_ToneParamRet_Helper18` / ... / `cp (0x0ebb:16), 129` / `jrl z, ...` / `cp (0x0ebc:16), 48` -- the status and first data byte tested",
+   "display/scoop_display.s:14427-14431 `pushdi_w (0x28bf)` / `pushdi_w (0x28c1)` / `push xhl` / `push xiy` / `push xix`; 14456-14461 `pop xix` / ... / `popw (0x28c1:16)` / `popw (0x28bf:16)` / `ret` -- the cursor is restored",
+   "display/scoop_display.s:14432-14454 `ld xix, 3771` / `call VoiceBank_LoadLerpState` / `ld (xix), a` / `cp a, 129` / ... / `cp a, 130` / ... / `inc 1, xix` / ... / `call VoiceBank_UpdateLerpState` / `call VoiceBank_LoadLerpState` / ... / `bit 7, a` / `jrl z, ...` / `ld a, (3772:16)` / `cp a, 47` / `jrl z, ..._Loop3` / `cp a, 95` / `jrl z, ..._Loop3` -- copy into 3771 = 0x0EBB, skip 47 / 95",
+   "display/scoop_display.s:14238-14242 `ld hl, (0x28bf:16)` / `call DisplayStr_ComputeTableAddr` / `ld xiy, (4349:16)` / `ld ix, (0x28c1:16)` / `ld a, (xiy+ix)` -- VoiceBank_LoadLerpState reads the byte at the cursor; 14258-14273 VoiceBank_UpdateLerpState advances it (offset 0xFF -> the block's +3 link, offset 5)",
+   "display/scoop_display.s:9569-9573 `; SqStep_WriteClockWrapMarker: ... writes one 0x81 event` -- 0x81 is the 96-clock wrap marker"
+  ]
+ },
+ {
+  "old": "MidiPkt_ArpConfigChain_Data_Helper7",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SendGroup_StyleImage",
+  "header": "Sends the style-image group of a MIDI bulk dump unless AccWrap_ReturnZero(3) returns 0xFFFF: block 1 = the image header (MidiPkt_ArpConfigChain_Data_Helper8, descriptor MidiPkt_ArpPopReturn_Helper5), block 2 = its tables (_Helper9, MidiPkt_ArpPopReturn_Helper6), block 3 = the pattern pool (_Helper10, MidiPkt_SetXferBlock_StyleImagePool), then the group end (_Helper18).\nBasis: callers + body -- MidiPkt_ArpConfigChain_Data (send code 0, ALL) calls it fourth, and the code-1 (STYLE IMAGE) sender SysEx_ResetAndReturn_Helper tail-jumps here after pointing the send total at the style image; the style-image sibling of the groups batch h2 names MidiPkt_SendGroup_Panel / _SoundRam / _AccompBlocks.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:11314-11319 `MidiPkt_ArpConfigChain_Data:` / `calr MidiPkt_ArpConfigChain_Data_Helper` / `calr MidiPkt_ArpConfigChain_Data_Helper4` / `calr MidiPkt_ArpConfigChain_Data_Helper14` / `calr MidiPkt_ArpConfigChain_Data_Helper7` / `jrl MidiPkt_ArpConfigChain_Data_Join` -- the ALL sender (11198 `calr MidiPkt_ArpConfigChain_Data`)",
+   "midi/midi_dispatch_handlers.s:11201-11204 `SysEx_ResetAndReturn_Helper:` / `ld xwa, 0xbcbc` / `call MidiSeq_ClearSyncFlag_Helper4` / `jrl MidiPkt_ArpConfigChain_Data_Helper7` -- the code-1 sender (h2: SysEx_SendStyleImageData, with MidiPkt_SetXferTotal_StyleImage)",
+   "midi/midi_dispatch_handlers.s:11402-11409 `ld wa, 3:i3` / `call AccWrap_ReturnZero` / `cp hl, 0xffff` / `ret z` / `calr MidiPkt_ArpConfigChain_Data_Helper8` / `calr MidiPkt_ArpConfigChain_Data_Helper9` / `calr MidiPkt_ArpConfigChain_Data_Helper10` / `calr MidiPkt_ArpConfigChain_Data_Helper18` -- the body",
+   "midi/midi_dispatch_handlers.s:11417-11425 `ld xwa, (0xbcb4:16)` / ... / `ld de, 7:i3` / `call MIDI_ReadChannelParam` / `ld xwa, 0xbccc` / `call MidiPkt_ArpPopReturn_Helper5` / `ld xwa, SysEx_TechMsg_3612` / `ldw bc, 12` / `call SeqBuf_FlushNoteOffs` -- block 1 (h2: MidiPkt_SetXferBlock_StyleImageHeader); 11439 _Helper6 (StyleImageTables), 11456 `call MidiPkt_SetXferBlock_StyleImagePool`",
+   "midi/midi_dispatch_handlers.s:11358-11366 `MidiPkt_ArpConfigChain_Data_Helper4:` / `ld wa, 1:i3` / `call AccWrap_ReturnZero` / ... / `calr MidiPkt_ArpConfigChain_Data_Helper18` -- the same shape for the sound-RAM group (h2: MidiPkt_SendGroup_SoundRam)"
+  ]
+ },
+ {
+  "old": "StartPlay_Body",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MIDI_SystemMessage_OnStart",
+  "header": "MIDI START (0xFA) case of MIDI_SYSTEM_MESSAGE_HANDLER: sets 0x28AC bit 5, so that SysMsg_ClockTransportDispatch counts every following 0xF8 clock in (1108), clears that count and, unless the word at 0xF19E is non-zero, falls into MIDI_RESET_PLAYBACK_STATE; with 0xF19E set the reset is left to MIDI_START_PLAYBACK_REQUEST, whose MIDI_APPLY_STARTUP_TIMING then advances the positions by 4 * (count - 1).\nBasis: callers + body -- both clock-source paths of the handler (Transport_NoClockSourcePath, AltClk_StartArmTx) jump here on D = 0xFA, as they jump to Continue_SetRunning on 0xFB.",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_serial_routines.s:460-468 `Transport_NoClockSourcePath:` / ... / `cp d, 0xfa` / `jr z, StartPlay_Body` / `cp d, 0xfb` / `jrl z, Continue_SetRunning` -- a caller site",
+   "midi/midi_serial_routines.s:616-627 `cp d, 0xfa` / `jr z, AltClk_StartArmTx` / ... / `AltClk_StartArmTx:` / `set 1, (1065:16)` / `ld (234:16), 221` / `jrl StartPlay_Body` -- the other clock path",
+   "midi/midi_serial_routines.s:485-491 `StartPlay_Body:` / `set 5, (0x28ac:16)` / `ld (1108:16), 0` / `cpw (0xf19e:16), 0` / `jr nz, ResetPlay_Return` / `MIDI_RESET_PLAYBACK_STATE:` -- the body falls into the reset",
+   "midi/midi_serial_routines.s:258-266 `SysMsg_ClockTransportDispatch:` / `ld d, a` / ... / `cp d, 0xf8` / `jr nz, ...` / `bit 5, (0x28ac:16)` / `jr z, ...` / `inc 1, (1108:16)` -- clocks counted while bit 5 is set",
+   "midi/midi_serial_routines.s:473-479 `MIDI_START_PLAYBACK_REQUEST:` / `cpw (0xf19e:16), 0` / ... / `calr MIDI_RESET_PLAYBACK_STATE` / `calr MIDI_APPLY_STARTUP_TIMING`",
+   "midi/midi_serial_routines.s:520-529 `MIDI_APPLY_STARTUP_TIMING:` / `cp (1108:16), 0` / ... / `ld a, (1108:16)` / `dec 1, a` / `sll a, 2` / `add (1047:16), a` -- the counted clocks used",
+   "midi/midi_serial_routines.s:231 `MIDI_SYSTEM_MESSAGE_HANDLER:` -- the owner of both paths (called at 188)"
+  ]
+ },
+ {
+  "old": "AccTone_InlineBytecodeData_Code_Helper3_Helper",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only: clears request bit 1 of 0x32FF and its mirror, bit 3 of panel record 0x48 +5 (0xFC5F), and re-sends +5 with AddswbWr(WA = 0x48, BC = 5, DE = 0). Its callers (AccTone_InlineBytecodeData_Code_Helper3, AccVoice_BarCounterBytecodeData) cancel it when the bar test against AccStyle_ApplyExt_SkipClamp_Table passes. Which accompaniment section request 0x32FF bit 1 is (the three bits select style-data offsets 0x20 / 0x22 / 0x420 in AccVoice_SelectPartOffset) is not established, and record 0x48 +5 is documented only as \"run/pedal flag bytes\" (its bits 2-3 are sound-parameter key 0x28101, range 0..3, unnamed), so no name can be pinned.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/accompaniment_engine.s:12656-12664 `AccTone_InlineBytecodeData_Code_Helper3_Helper:` / `res 1, (0x32ff:16)` / `res 3, (0xfc5f:16)` / `pushw 0` / `ldw wa, 72` / `ld bc, 5:i3` / `ld de, 0:i3` / `call AddswbWr` / `ret` -- the whole body",
+   "sequencer/accompaniment_engine.s:12549-12556 `cp c, 2:i3` / ... / `lda xbc, (AccStyle_ApplyExt_SkipClamp_Table:24)` / `cp (xbc+wa), 0x01` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper` -- a call site (also 13105)",
+   "sequencer/accompaniment_engine.s:12538-12574 `AccTone_InlineBytecodeData_Code_Helper3:` / `ld c, (13055:16)` / `ld a, c` / `and a, 7` / ... / `cp c, 1:i3` / ... / `cp c, 4:i3` / ... / `cp c, 2:i3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper2` -- the caller tests the three request bits of 0x32FF (13055) and cancels one of them",
+   "sequencer/seq_audio_mode.s:132-157 `bit 0, (0x32ff:16)` / ... / `or a, 0x4` / ... / `bit 1, (0x32ff:16)` / ... / `or a, 0x8` / ... / `and (0xfc5f:16), w` / ... / `bit 2, (0x32ff:16)` / ... / `and (0xfc60:16), 251` -- the same mirror: 0x32FF bits 0 / 1 / 2 <-> record 0x48 +5 bit 2, +5 bit 3, +6 bit 2 (0x32FB / 0x32FD feed +5 bits 6-7 / 4-5)",
+   "analysis/disk-format-probes/README-lsw-panel-schema.md:166 `| 0x48 | 0xFC58, len 0x0A | ... +5/+6/+7 are the accompaniment run/pedal flag bytes hammered by AccPedal_*, AccStyle_*, rhythm_routines.` -- the fields are not identified further"
+  ]
+ },
+ {
+  "old": "AccTone_InlineBytecodeData_Code_Helper3_Helper2",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only: clears request bit 0 of 0x32FF and its mirror, bit 2 of panel record 0x48 +5 (0xFC5F), and re-sends +5 with AddswbWr(0x48, 5, 0). Its callers cancel it when (1075) differs from (0x3364). What request bit 0 (style-data offset 0x20 in AccVoice_SelectPartOffset) and +5 bit 2 stand for is not established.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/accompaniment_engine.s:12665-12673 `AccTone_InlineBytecodeData_Code_Helper3_Helper2:` / `res 0, (0x32ff:16)` / `res 2, (0xfc5f:16)` / `pushw 0` / `ldw wa, 72` / `ld bc, 5:i3` / `ld de, 0:i3` / `call AddswbWr` / `ret` -- the whole body",
+   "sequencer/accompaniment_engine.s:12567-12574 `AccTone_InlineBytecodeData_Code_Helper3_Skip2:` / `ld a, (0x433:16)` / `cp a, (0x3364:16)` / `jr nz, ..._Skip4` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper2` -- a call site (also 13157)",
+   "sequencer/accompaniment_engine.s:12538-12574 `AccTone_InlineBytecodeData_Code_Helper3:` / `ld c, (13055:16)` / `ld a, c` / `and a, 7` / ... / `cp c, 1:i3` / ... / `cp c, 4:i3` / ... / `cp c, 2:i3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper2` -- the caller tests the three request bits of 0x32FF (13055) and cancels one of them",
+   "sequencer/seq_audio_mode.s:132-157 `bit 0, (0x32ff:16)` / ... / `or a, 0x4` / ... / `bit 1, (0x32ff:16)` / ... / `or a, 0x8` / ... / `and (0xfc5f:16), w` / ... / `bit 2, (0x32ff:16)` / ... / `and (0xfc60:16), 251` -- the same mirror: 0x32FF bits 0 / 1 / 2 <-> record 0x48 +5 bit 2, +5 bit 3, +6 bit 2 (0x32FB / 0x32FD feed +5 bits 6-7 / 4-5)",
+   "analysis/disk-format-probes/README-lsw-panel-schema.md:166 `| 0x48 | 0xFC58, len 0x0A | ... +5/+6/+7 are the accompaniment run/pedal flag bytes hammered by AccPedal_*, AccStyle_*, rhythm_routines.` -- the fields are not identified further"
+  ]
+ },
+ {
+  "old": "AccTone_InlineBytecodeData_Code_Helper3_Helper3",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only: clears request bit 2 of 0x32FF and its mirror, bit 2 of panel record 0x48 +6 (0xFC60), and re-sends +6 with AddswbWr(0x48, 6, 0). Its callers cancel it when (1075) differs from (0x3366). What request bit 2 and +6 bit 2 stand for is not established.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/accompaniment_engine.s:12674-12682 `AccTone_InlineBytecodeData_Code_Helper3_Helper3:` / `res 2, (0x32ff:16)` / `res 2, (0xfc60:16)` / `pushw 0` / `ldw wa, 72` / `ld bc, 6:i3` / `ld de, 0:i3` / `call AddswbWr` / `ret` -- the whole body",
+   "sequencer/accompaniment_engine.s:12561-12565 `AccVoice_GetMeasureStartBlock_Skip:` / `ld a, (0x433:16)` / `cp a, (0x3366:16)` / `jr z, ...` / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper3` -- a call site (also 13094)",
+   "sequencer/accompaniment_engine.s:12538-12574 `AccTone_InlineBytecodeData_Code_Helper3:` / `ld c, (13055:16)` / `ld a, c` / `and a, 7` / ... / `cp c, 1:i3` / ... / `cp c, 4:i3` / ... / `cp c, 2:i3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper3` / ... / `calr AccTone_InlineBytecodeData_Code_Helper3_Helper2` -- the caller tests the three request bits of 0x32FF (13055) and cancels one of them",
+   "sequencer/seq_audio_mode.s:132-157 `bit 0, (0x32ff:16)` / ... / `or a, 0x4` / ... / `bit 1, (0x32ff:16)` / ... / `or a, 0x8` / ... / `and (0xfc5f:16), w` / ... / `bit 2, (0x32ff:16)` / ... / `and (0xfc60:16), 251` -- the same mirror: 0x32FF bits 0 / 1 / 2 <-> record 0x48 +5 bit 2, +5 bit 3, +6 bit 2 (0x32FB / 0x32FD feed +5 bits 6-7 / 4-5)",
+   "analysis/disk-format-probes/README-lsw-panel-schema.md:166 `| 0x48 | 0xFC58, len 0x0A | ... +5/+6/+7 are the accompaniment run/pedal flag bytes hammered by AccPedal_*, AccStyle_*, rhythm_routines.` -- the fields are not identified further"
+  ]
+ },
+ {
+  "old": "DrumKit_UpdateStatusFlags_Helper2",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only, as in g4's refusal of its XIZ thunk DrumKit_InlineCode1_Sub: when bits 0-2 of panel record 0x48 field 3 (RAM 0xFC5D) are 0 it queues SwbtWr_TrailingBytecode(E = 0x48, D = 3, A = 2, W = 7), sets bit 3 of 0xFC5D and queues SwbtWr_QueuePostEvent(E = 0x48, D = 3, W = 8). Its callers are two Composer titles (CmEsyTtl_Dispatch through the thunk, CmpBkslTtl_Dispatch_Helper through DrumKit_InlineCode1_Data), but what field 3's 3-bit value (sound-parameter key 0x28080, range 0..3) and its bit 3 (key 0x28081) select is not established -- their descriptors are still the address-bucketed SeqMixParam_Entry_225/226 -- so no name can be pinned. Lead for a later pass: the record-0x48 listener's offset-3 arm (entry 3 of ParamEdit_SwitchOffsets, the label PanelTag48_UpdateAudioConfig_StyleNumber, whose \"offset 0 / style number\" header is wrong) maps +3 bits 0-2 through ParamEdit_WordTable {0, 1, 2, 4} onto 0xC596 bits 0-2 and +3 bit 3 onto 0xC596 bit 4; NullRet2_TestBit24 picks the chord-recognition path by 0xC596 bits 0-2 and Voice_CheckAndResetSlotState keeps the chord on key release while 0xC596 bit 4 is set. So +3 looks like the chord fingering mode plus a chord-hold bit; once the mode values are tied to the panel's mode names this routine (mode 0 -> 2, hold on) can be named.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/accompaniment_engine.s:24812-24828 `xor xwa, xwa` / ... / `ld a, (0xfc5d:16)` / `and a, 7` / `cp a, 0:i3` / `jr nz, ..._Return2` / `ld a, 2:opc` / `ld w, 7:opc` / `ld e, 72:opc` / `ld d, 3:opc` / `call SwbtWr_TrailingBytecode` / `ld a, 8:opc` / `or (0xfc5d:16), a` / ... / `call SwbtWr_QueuePostEvent` -- the whole body",
+   "sequencer/accompaniment_engine.s:24806-24808 `DrumKit_InlineCode1_Sub:` / `push xiz` / `call DrumKit_UpdateStatusFlags_Helper2` -- the thunk g4 refused; 24763-24766 DrumKit_InlineCode1_Data (unless PREVIOUS_TITLE = 177) calls it too",
+   "audio/sndparam_records/run_ede9fc.c:3110-3121 `.key = 0x00028080, .bank_index = 0x48, .bank_offset = 0x03, .mask = 0x07, ... .clamp_max = 0x03` / `.key = 0x00028081, ... .mask = 0x08` -- the two fields, unnamed",
+   "ui_widgets/widget_dispatch.s:7271-7275 `ParamEdit_SwitchOffsets:` / `.short UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber` (x3) / `.short PanelTag48_UpdateAudioConfig_StyleNumber - PanelTag48_UpdateAudioConfig_StyleNumber` -- offset 3 is the arm that reads +3",
+   "audio/dsp_config_sysex.s:5864-5885 `ldb_d8 a, (0xfc5d)` / `and a, 15` / ... / `lda xbc, (ParamEdit_WordTable:24)` / `ld iz, (xbc+wa)` / ... / `andw (0xc596:16), 0xffe8` / `or (0xc596:16), iz` -- +3 -> 0xC596 bits 0-2 and 4 (ParamEdit_WordTable at ui_widgets/widget_dispatch.s:7266-7268)",
+   "audio/note_voice_mapping.s:15411-15425 `bit 6, (0xcede:24)` / ... / `ld de, (0xc596:16)` / `and de, 0x1` / `jr nz, NullRet2_TestBit24_Skip` / ... / `and de, 0x2` / ... / `and de, 0x4` / `jr nz, EffectState_Dispatch_Block` -- the recognition path chosen by 0xC596 bits 0-2; 15377-15380 `ld de, (0xc596:16)` / `and de, 0x10` / `jr nz, Voice_NullRet2` -- bit 4 keeps the chord"
+  ]
+ },
+ {
+  "old": "AccPatch_ResolveEntryAddr_Helper5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccPatch_GetMeasureSourceStream",
+  "header": "Returns in XWA the source-stream pointer of the selected accompaniment channel (one-hot 0x37C9, through Rhythm_MapChannelToDrumIndex) for measure (0x38D1): the long at 0x380A + 16 * drum index + 4 * measure, one of the four pointers RegPreset_Load_Loop stores per channel (pattern data + 6, via ChanAssign_Lookup_Found).\nBasis: callers + body -- AccPatch_ResolveEntryAddr_Helper4 (inside the per-measure loop of _Helper3, counter 0x38D1 up to (0x34D7)) and _Helper11 (for channels 1, 2 and 4) store the result as the channel's source stream at 0x3898 + 4 * drum, the slot AccPatch_CopyEventToCursor copies events from.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:29846-29852 `calr AccPatch_ResolveEntryAddr_Helper5` / `push xwa` / `calr Rhythm_MapChannelToDrumIndex` / `pop xwa` / `sll xbc, 2` / `add xbc, 0x3898` / `ld (xbc), xwa` -- AccPatch_ResolveEntryAddr_Helper4; also 30166-30192 in _Helper11 with (0x37C9) = 1, 2, 4",
+   "sequencer/accompaniment_engine.s:29828-29840 `ld c, 0:opc` / `ld (0x38d1:16), c` / `ld c, (0x34d7:16)` / `inc 1, c` / ... / `calr AccPatch_ResolveEntryAddr_Helper4` / ... / `ld a, (0x38d1:16)` / `inc 1, a` / `ld (0x38d1:16), a` -- 0x38D1 counts the measures 0..(0x34D7)",
+   "sequencer/accompaniment_engine.s:29869-29876 `calr Rhythm_MapChannelToDrumIndex` / `sll xbc, 4` / `add xbc, 0x380a` / `ld xwa, 0:i3` / `ld a, (0x38d1:16)` / `sll xwa, 2` / `add xbc, xwa` / `ld xwa, (xbc)` -- the body",
+   "sequencer/accompaniment_engine.s:29207-29215 `ChanAssign_FourSlotLoop:` / `cp c, 4:i3` / ... / `calr ChanAssign_LookupEntry` / ... / `calr ChanAssign_Lookup_Found` -- four entries per channel; 29256-29265 ChanAssign_Lookup_Found stores pattern pointer + 6 at 0x380A + 16 * drum + 4 * C",
+   "sequencer/accompaniment_engine.s:29959-29960 `; AccPatch_CopyEventToCursor: Copies one event from the selected channel's source stream (slot 0x3898 + 4 * Rhythm_MapChannelToDrumIndex) ...` -- the consumer of the stored pointer"
+  ]
+ },
+ {
+  "old": "AccDraw_Secondary_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccGraphics_BoundOp04",
+  "header": "Draws one bound display record of op 04 at XIY: ColorBlit_Variant_ByteData colour-blits the {text cell, width, height} entry of the record's rectangle list that the masked and shifted RAM byte selects (in the current COLORBLIT_MODE); XWA preserved. The Composer screens' copy of the SeGfx_BoundOp0N single-record wrappers, beside AccDraw_Init (op 00), AccDraw_Secondary (op 02) and AccGraphics_DataBlock2 (op 03).\nBasis: callers + body -- the TT_CMSTEP draw functions pass it a single op-04 record: AccScreen_DataBlock_Data_6 (RAM 0x39B9) in AccScreen_DataBlock_Code2 and AccScreen_DataBlock_Data_5 in AccDraw_Secondary_Helper5.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:34427-34429 `ld (COLORBLIT_MODE:24), 1` / `ld xiy, AccScreen_DataBlock_Data_6` / `calr AccDraw_Secondary_Helper` -- in AccScreen_DataBlock_Code2 (34425), the TT_CMSTEP values draw function",
+   "sequencer/accompaniment_engine.s:34693-34695 `AccDraw_Secondary_Skip:` / `ld xiy, AccScreen_DataBlock_Data_5` / `calr AccDraw_Secondary_Helper` -- in AccDraw_Secondary_Helper5",
+   "sequencer/accompaniment_engine.s:34370-34375 `AccDraw_Secondary_Helper:` / `push xwa` / `ld xwa, xiy` / `call ColorBlit_Variant_ByteData` / `pop xwa` / `ret` -- the body",
+   "ui_widgets/disk_warning_strings.s:1327-1332 `GraphicsRender_Start_PtrTable:` / ... / `.long ColorBlit_Variant_ByteData` -- entry 4: the bound op-04 handler",
+   "sequencer/accompaniment_engine.s:34346-34358 `AccDraw_Init:` ... `call DrawFunc_Init` ... `AccDraw_Secondary:` ... `call DrawText_ExtendedLayout` -- the sibling wrappers (ops 00 / 02); audio/sound_editor_ui.s:7914-7941 the SeGfx_BoundOp00/02/03/06 originals",
+   "display/graphics_text_vga.s:1832-1858 `ColorBlit_Variant_ByteData:` / ... / `ld wa, (xbc+2)` / ... / `ld l, (xbc+4)` / `ld e, (xbc+5)` / ... / `mul l, 3` / ... / `ld xbc, (xbc+7)` / ... / `div bc, 40` -- RAM word +2, mask +4, shift +5, list +7 of 6-byte entries"
+  ]
+ },
+ {
+  "old": "AccScreen_DataBlock_Data_3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpStep_NoteEntryFrameRecords",
+  "header": "Static display records of the Composer STEP screen's note-entry row (list up to AccScreen_DataBlock_Data_4): cell text \"NOTE VEL   LENGTH\" at cell 0x1F1E, two rows of 0x8D / 0x8E glyphs (marks the main frame also places above and below its PART and MEAS / CURSOR fields) at cells 0x2127 / 0x232F, four op-0A boxes x = 45..75, 85..115, 125..155, 165..195 (y 210..236) and their op-01 dividers at y = 223. AccDraw_Secondary_Helper5 draws it when the step mode (0x3712) is 4; the label is also the end of the screen's main frame list (AccScreen_DataBlock_Data_2: \"STEP RECORDING\", PATTERN:, PART: ...).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:34686-34691 `ld (COLORBLIT_MODE:24), 2` / `cp (0x3712:16), 4` / `jr nz, AccDraw_Secondary_Skip` / `ld xiy, AccScreen_DataBlock_Data_3` / `ld xix, AccScreen_DataBlock_Data_4` / `calr AccAudio_DataBlock1` -- drawn as a static list (AccAudio_DataBlock1 = GraphicsRender_ProcessEntries) in mode 4",
+   "sequencer/accompaniment_engine.s:34417-34420 `ld (COLORBLIT_MODE:24), 2` / `ld xiy, AccScreen_DataBlock_Data_2` / `ld xix, AccScreen_DataBlock_Data_3` / `calr AccAudio_DataBlock1` -- end of the main frame list in AccScreen_DataBlock_Code",
+   "ROM 0xF6AB31: 06 15 1e 1f \"NOTE VEL   LENGTH\" / 06 14 27 21 8d 20 20 20 20 8d ... / 06 14 2f 23 8e ... / 0a 0a 2d 00 d2 00 4b 00 ec 00 ... / 01 0a 2d 00 df 00 4b 00 df 00 ... -- 3 text, 4 box and 4 line records up to 0xF6ABBE",
+   "ROM 0xF6AA0F: 07 12 84 00 \"STEP RECORDING\" ... 06 05 c4 05 8d / 06 08 e3 08 \"PART\" / 06 05 8c 0b 8e ... 06 08 19 1f \"MEAS\" / 06 0a 38 1f \"CURSOR\" / 06 05 22 21 8d / 06 05 2a 23 8e -- the main frame (AccScreen_DataBlock_Data_2) with the same marks",
+   "sequencer/accompaniment_engine.s:34376-34382 `; CmpStep_DrawScreen: XIZ-preserving body of TT_CMSTEP's draw method ...` -- the screen; 0x3712 = 4 is the step mode in which AccDraw_StepNoteValue steps the note value 0x3714"
+  ]
+ },
+ {
+  "old": "AccScreen_DataBlock_Data_4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpStep_ValueFieldRecords",
+  "header": "Bound display records of the Composer STEP screen's values (list up to AccScreen_DataBlock_Data_5): op-02 text fields for the pattern (RAM 0x39BB through the 7-character table \"A-vari1\" \"A-vari2\" ...), the part (0x39B8, 8-character \"ACCOMP 1\" .. \"ACCOMP 3\" \"BASS\" \"DRUM\") and four 1-digit values (0x39BC..0x39BF, mask 0x0F, table \" 12345678\"), then an op-04 and an op-00 record (0x39C0). AccScreen_DataBlock_Code2 draws them with AccGraphics_RenderStart; the label is also the end of CmpStep_NoteEntryFrameRecords.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:34439-34441 `ld xiy, AccScreen_DataBlock_Data_4` / `ld xix, AccScreen_DataBlock_Data_5` / `calr AccGraphics_RenderStart` -- in AccScreen_DataBlock_Code2 (34425), the values draw function; AccGraphics_RenderStart (34329-34334) calls GraphicsRender_Start",
+   "sequencer/accompaniment_engine.s:34689-34690 `ld xiy, AccScreen_DataBlock_Data_3` / `ld xix, AccScreen_DataBlock_Data_4` -- end of the note-entry frame list",
+   "ROM 0xF6ABBE: 02 0f bb 39 ff 00 20 09 b1 f6 00 07 00 1a 04 / 02 0f b8 39 07 00 20 5c ae f6 00 08 00 28 04 / 02 0f bc 39 0f 00 06 84 ae f6 00 01 00 21 08 ... 02 0f bf 39 ... / 04 0b ... / 00 0a c0 39 ... -- six op-02 records (RAM 0x39BB, 0x39B8, 0x39BC..0x39BF), op 04, op 00",
+   "ROM 0xF6B109: \"A-vari1A-vari2A-vari3A-vari4B-vari1...\" ; ROM 0xF6AE5C: \"ACCOMP 1ACCOMP 2ACCOMP 3BASS    DRUM    \" ; ROM 0xF6AE84: \" 12345678\" -- the string tables the op-02 records point at"
+  ]
+ },
+ {
+  "old": "AccScreen_DataBlock_Data_5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "CmpStep_NoteEntryAreaBand",
+  "header": "One bound op-04 display record of the Composer STEP screen with RAM word 0, mask 0 and shift 0, so it always takes entry 0 of its rectangle list at 0xF6AC38: text cell 0x1F1D, 20 characters by 40 pixels -- the note-entry row's area (its caption starts at cell 0x1F1E). AccDraw_Secondary_Helper5 colour-blits it (COLORBLIT_MODE 2, AccGraphics_BoundOp04) instead of drawing CmpStep_NoteEntryFrameRecords when the step mode (0x3712) is not 4. It is also the end of CmpStep_ValueFieldRecords.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:34686-34695 `ld (COLORBLIT_MODE:24), 2` / `cp (0x3712:16), 4` / `jr nz, AccDraw_Secondary_Skip` / ... / `AccDraw_Secondary_Skip:` / `ld xiy, AccScreen_DataBlock_Data_5` / `calr AccDraw_Secondary_Helper` -- the mode != 4 branch of AccDraw_Secondary_Helper5",
+   "sequencer/accompaniment_engine.s:34439-34440 `ld xiy, AccScreen_DataBlock_Data_4` / `ld xix, AccScreen_DataBlock_Data_5` -- end of the value list",
+   "ROM 0xF6AC2D: 04 0b 00 00 00 00 0e 38 ac f6 00 -- op 04, length 11, RAM word 0x0000, mask 0x00, shift 0x00, list pointer 0xF6AC38",
+   "ROM 0xF6AC38: 1d 1f 14 00 28 00 -- entry 0: cell 0x1F1D, width 0x14, height 0x28",
+   "display/graphics_text_vga.s:1835-1850 `ld wa, (xbc+2)` / ... / `ld l, (xbc+4)` / `ld e, (xbc+5)` / `ld a, (xwa)` / `and a, l` / ... / `mul l, 3` / ... / `ld xbc, (xbc+7)` -- ColorBlit_Variant_ByteData: entry = (RAM byte & mask) >> shift, 6 bytes each"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_023",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1: after the measure-copy from/last measure changed it recomputes the copy length 0xF1EC = (9768) - (0xF1EA) + 1 and jumps to the MCP redraw. Its referrers are only the two arms AppEvtHandler_Branch_021_IncMcpFromMeasure / _IncMcpLastMeasure of the same inner switch. It should become a local label of AppEvent_ChainDispatch1.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20765-20770 `AppEvtHandler_Branch_023:` / `ld wa, (9768:16)` / `sub wa, (0xf1ea:16)` / `inc 1, wa` / `ld (0xf1ec:16), wa` / `jr AppEvtHandler_Branch_024` -- the body",
+   "sequencer/sequencer_engine.s:20754-20758 `ld wa, (0xf1ea:16)` / `cp wa, (9768:16)` / `jr ule, AppEvtHandler_Branch_023` / `ld (9768:16), wa` / `jr AppEvtHandler_Branch_023` -- the from-measure arm's join; 20759-20764 the last-measure arm falls in after 20762 `jr nc`",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "AppEvtHandler_Branch_026",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AppEvent_ChainDispatch1: the measure-insert twin of AppEvtHandler_Branch_023 -- recomputes the insert length 0xF1E4 = (9774) - (0xF1E2) + 1 and jumps to the MINS redraw; reached only from the arms AppEvtHandler_Branch_024_IncMinsFromMeasure / _IncMinsLastMeasure. It should become a local label of AppEvent_ChainDispatch1.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "sequencer/sequencer_engine.s:20864-20869 `AppEvtHandler_Branch_026:` / `ld wa, (9774:16)` / `sub wa, (0xf1e2:16)` / `inc 1, wa` / `ld (0xf1e4:16), wa` / `jr AppEvtHandler_Branch_027`",
+   "sequencer/sequencer_engine.s:20853-20857 `ld wa, (0xf1e2:16)` / `cp wa, (9774:16)` / `jr ule, AppEvtHandler_Branch_026` / ... / `jr AppEvtHandler_Branch_026`; 20861 `jr nc, AppEvtHandler_Branch_026` -- its only referrers",
+   "sequencer/sequencer_engine.s:20373-20383 `AppEvent_ChainDispatch1:` / `dec 4, xsp` / `push xiz` / ... / `jp t, (xix+bc)` -- the owner: the EVT_INC_VAL handler (20081 `calr AppEvent_ChainDispatch1` in ApEditSyori), one compiled switch on the parameter number with inner switches; its common exit is AppEvent_Epilogue (21015)"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_ModeKey_FilterTarget: the test for target mode 8 in the remapping step (9 -> 8 when byte 0x26FC is 1, 8 -> 10 when 0x266A bit 0 is set). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_ModeKey_FilterTarget.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:255-257 `FileIO_BytecodeData_Code_Entry:` / `cp (xwa), 8` / `jr nz, FileIO_BytecodeData_Code_Skip15` -- the body",
+   "audio/audio_control_engine.s:249-252 `cp (xwa), 9` / `jr nz, FileIO_BytecodeData_Code_Entry` / `cp (9980:16), 1` / `jr nz, FileIO_BytecodeData_Code_Entry` -- its two referrers",
+   "audio/audio_control_engine.s:211-213 `PanelButton_ModeKey_FilterTarget:` / `push xiz` / `ld xiz, xwa` -- the owner; 275-277 its epilogue"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_ModeKey_FilterTarget: the step that turns target mode 8 into 10 while 0x266A bit 0 is set. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_ModeKey_FilterTarget.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:258-261 `FileIO_BytecodeData_Code_Entry2:` / `bit 0, (0x266a:16)` / `jr z, FileIO_BytecodeData_Code_Skip15` / `ld (xwa), 10` -- the body",
+   "audio/audio_control_engine.s:253-254 `ld (xwa), 8` / `jr FileIO_BytecodeData_Code_Entry2` -- its only referrer; FileIO_BytecodeData_Code_Entry falls into it",
+   "audio/audio_control_engine.s:211 `PanelButton_ModeKey_FilterTarget:` -- the owner"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_ModeKey_FilterTarget: the accepting exit that clears 0x266A bit 0 before returning. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_ModeKey_FilterTarget.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:273-275 `FileIO_BytecodeData_Code_Entry3:` / `res 0, (0x266a:16)` / `FileIO_BytecodeData_Code_Epilogue4:` -- the body",
+   "audio/audio_control_engine.s:263-269 `cpw (10408:16), 0` / `jr z, FileIO_BytecodeData_Code_Entry3` / ... / `cp a, 20` / `jr nz, FileIO_BytecodeData_Code_Entry3` -- its two referrers",
+   "audio/audio_control_engine.s:211 `PanelButton_ModeKey_FilterTarget:` -- the owner; 276-277 `pop xiz` / `ret`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry4",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_SoundGroup: a value-15 test in its group checks. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_SoundGroup.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:504-506 `FileIO_BytecodeData_Code_Entry4:` / `cp (xwa), 15` / `jr nz, FileIO_BytecodeData_Code_Epilogue9` -- the body",
+   "audio/audio_control_engine.s:500-501 `cp_erpb 251, 15` / `jr z, FileIO_BytecodeData_Code_Entry4` -- its only referrer; 502-503 falls in otherwise",
+   "audio/audio_control_engine.s:436-437 `PanelButton_SoundGroup:` / `dec 4, xsp` -- the owner; 550 `FileIO_BytecodeData_Code_Epilogue9:` its exit"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry5",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_PanelMemoryNumber: the main path taken when panel parameter 0xC0 (SndParam_LookupReadOnly(192)) is not 1. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_PanelMemoryNumber.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:654-657 `FileIO_BytecodeData_Code_Entry5:` / `cp (xiz+2), 0` / `jr z, FileIO_BytecodeData_Code_Skip46` / `call BitMapOut_PrepareRender_CheckBit1` -- the body",
+   "audio/audio_control_engine.s:648-651 `ld xwa, 192` / `call SndParam_LookupReadOnly` / `cp hl, 1:i3` / `jr nz, FileIO_BytecodeData_Code_Entry5` -- its only referrer",
+   "audio/audio_control_engine.s:623-624 `PanelButton_PanelMemoryNumber:` / `dec 2, xsp` -- the owner; 673 `FileIO_BytecodeData_Code_Epilogue11:` its exit"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry6",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_PartSelect: the main path taken when CURRENT_TITLE is not 81. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_PartSelect.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:814-819 `FileIO_BytecodeData_Code_Entry6:` / `bit 0, (0x26e2:16)` / `jr nz, FileIO_BytecodeData_Code_Epilogue16` / ... / `call Util_FindLowestSetBit` -- the body",
+   "audio/audio_control_engine.s:810-811 `cp (CURRENT_TITLE:16), 81` / `jr nz, FileIO_BytecodeData_Code_Entry6` -- its only referrer",
+   "audio/audio_control_engine.s:793-794 `PanelButton_PartSelect:` / `push xiz` -- the owner; 831 `FileIO_BytecodeData_Code_Epilogue16:` its exit"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry7",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_DspEffect: the arm for event byte +2 = 0, which clears 0x8E92 bit 5 and the event's value bytes. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_DspEffect.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:919-925 `FileIO_BytecodeData_Code_Entry7:` / `res 5, (0x8e92:16)` / `ld (xbc), 0` / `ld (xiz+3), 0` / `FileIO_BytecodeData_Code_Join11:` / `ld xwa, xiz` / `calr PanelEvent_FillSelectedPart` -- the body",
+   "audio/audio_control_engine.s:892-896 `lda xbc, (xiz+2)` / `ld a, (xbc)` / `cp a, 0:i3` / `jr z, FileIO_BytecodeData_Code_Entry7` / `set 5, (0x8e92:16)` -- its only referrer; the other arm (byte +2 non-zero) sets the bit",
+   "audio/audio_control_engine.s:876-877 `PanelButton_DspEffect:` / `push xiz` -- the owner"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Code_Entry8",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelButton_Sustain: the main path taken when the selected part's voice byte is not 15. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelButton_Sustain.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:965-970 `FileIO_BytecodeData_Code_Entry8:` / `res 1, (0x90f9:16)` / `ld xwa, xiz` / `calr PanelEvent_FillSelectedPart` / `ld xwa, xiz` / `calr PanelEvent_Post` -- the body",
+   "audio/audio_control_engine.s:960-962 `calr SndParam_ResolveSelectedPartVoice` / `cp (xhl), 15` / `jr nz, FileIO_BytecodeData_Code_Entry8` -- its only referrer",
+   "audio/audio_control_engine.s:950-951 `PanelButton_Sustain:` / `push xiz` -- the owner; 974 `FileIO_BytecodeData_Code_Epilogue21:` its exit"
+  ]
+ },
+ {
+  "old": "ExtData_VoiceParam_DispatchBytecode_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MidiChanged_ProcessGroup3_Data_Target7: the else arm (byte 0x3390 = 0) that clears bit 3 of the first byte of the panel LED image (ENCODER_STATE_BASE) instead of setting it. Its referrers are only that routine's own branches (cited below); it should become a local label of MidiChanged_ProcessGroup3_Data_Target7.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:3227-3229 `ExtData_VoiceParam_DispatchBytecode_Entry:` / `res 3, (xwa)` / `ret` -- the body",
+   "audio/audio_control_engine.s:3224 `jr z, ExtData_VoiceParam_DispatchBytecode_Entry` -- its only referrer",
+   "audio/audio_control_engine.s:3221-3226 `MidiChanged_ProcessGroup3_Data_Target7:` / `lda_d16 xwa, (ENCODER_STATE_BASE)` / `cp (0x3390:16), 0` / `jr z, ExtData_VoiceParam_DispatchBytecode_Entry` / `setm 3, (xwa)` / `ret` -- the owner (an entry of the table at extensions/extension_data.s:2709)"
+  ]
+ },
+ {
+  "old": "ExtData_VoiceParam_DispatchBytecode_Entry_Code_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MIDI_ProcessChangedChannels_Data_Target0 (3248, frame `lda xsp, (xsp-10)`, exit 3310-3313; an entry of the table at extensions/extension_data.s): the arm for a resolved voice index above 7, which for 8..15 looks up the indicator byte (CtrlPanel_LookupIndicatorEntry) for LED-image offset 8 and joins the store, else goes on to the 16+ test. Its only referrer is the routine's own `jr ugt` at 3275; it should become a local label of MIDI_ProcessChangedChannels_Data_Target0.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "spelling": "Nearby misframing in the same routine (not this label): 3294-3296 `.byte 0x80` / `push xsp` / `scf` are the 3 bytes 80 3F 11 = `cp (xwa), 0x11` (MAME unidasm `cp (XWA),0x11`; llvm-mc `cp (xwa), 17` -> [0x80,0x3f,0x11]); the following `jr ugt` is the real branch, so MIDI_ProcessChangedChannels_Data_Target0_Entry tests the index against 17.",
+  "evidence": [
+   "audio/audio_control_engine.s:3280-3286 `ExtData_VoiceParam_DispatchBytecode_Entry_Code_Entry:` / `cp (xwa), 15` / `jr ugt, MIDI_ProcessChangedChannels_Data_Target0_Entry` / `ld a, (xwa)` / `dec 8, a` / `extz wa` / `ld xiz, 8` -- the body",
+   "audio/audio_control_engine.s:3274-3275 `cp (xwa), 7` / `jr ugt, ExtData_VoiceParam_DispatchBytecode_Entry_Code_Entry` -- its only referrer",
+   "audio/audio_control_engine.s:3248-3250 `MIDI_ProcessChangedChannels_Data_Target0:` / `lda xsp, (xsp-10)` / `push xiz` -- the owner; 3310-3313 `pop xiz` / `lda xsp, (xsp+10)` / `ret` its exit",
+   "audio/audio_control_engine.s:3293-3297 `MIDI_ProcessChangedChannels_Data_Target0_Entry:` / `.byte 0x80` / `push xsp` / `scf` / `jr ugt, ...` -- ROM 0xFC765B: 80 3f 11 6b 1a"
+  ]
+ },
+ {
+  "old": "ExtData_VoiceParam_DispatchBytecode_Entry2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MidiChanged_ProcessGroup2_Data_Target0: the arm for a resolved voice index 7..14, which sets LED-image byte +1 from the indicator table. Its referrers are only that routine's own branches (cited below); it should become a local label of MidiChanged_ProcessGroup2_Data_Target0.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:3340-3348 `ExtData_VoiceParam_DispatchBytecode_Entry2:` / `cp (xwa), 14` / `jr ugt, ExtData_VoiceParam_DispatchBytecode_Entry3` / `ld a, (xwa)` / `dec 7, a` / ... / `call CtrlPanel_LookupIndicatorEntry` / `ld (xiz+1), l` -- the body",
+   "audio/audio_control_engine.s:3331-3332 `cp (xwa), 6` / `jr ugt, ExtData_VoiceParam_DispatchBytecode_Entry2` -- its only referrer",
+   "audio/audio_control_engine.s:3314-3316 `MidiChanged_ProcessGroup2_Data_Target0:` / `dec 6, xsp` / `push xiz` -- the owner; 3360-3363 its epilogue"
+  ]
+ },
+ {
+  "old": "ExtData_VoiceParam_DispatchBytecode_Entry3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MidiChanged_ProcessGroup2_Data_Target0: the arm for a resolved voice index above 14 (15 sets bit 0 of the first LED-image byte, larger values bit 0 of byte +2). Its referrers are only that routine's own branches (cited below); it should become a local label of MidiChanged_ProcessGroup2_Data_Target0.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:3349-3353 `ExtData_VoiceParam_DispatchBytecode_Entry3:` / `cp (xwa), 15` / `jr nz, MidiChanged_ProcessGroup2_Data_Target0_Skip` / `set 0, (xiz)` / `jr ExtData_VoiceParam_DispatchBytecode_Epilogue` -- the body",
+   "audio/audio_control_engine.s:3341-3342 `cp (xwa), 14` / `jr ugt, ExtData_VoiceParam_DispatchBytecode_Entry3` -- its only referrer",
+   "audio/audio_control_engine.s:3314 `MidiChanged_ProcessGroup2_Data_Target0:` -- the owner"
+  ]
+ },
+ {
+  "old": "ExtData_VoiceParam_DispatchBytecode_Entry4",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MIDI_ProcessChangedChannels_Data_Target1 (3364; an entry of the table at extensions/extension_data.s:2647): the arm for a current part select other than 0, 1 or 2, which clears bits 0-2 of LED-image byte +10 and returns through the shared `pop xiz` / `ret`. Its only referrer is the routine's own `jr nz` at 3375; it should become a local label of MIDI_ProcessChangedChannels_Data_Target1.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "spelling": "CODE SPELLED AS DATA: 3391-3393 `.byte 0x81` / `push xix` / `swi 0` are the 3 bytes 81 3C F8 of one instruction, `and (xbc), 0xf8` (MAME unidasm `and (XBC),0xf8`; llvm-mc `and (xbc), 248` -> [0x81,0x3c,0xf8]), the store the sibling arms do as `and a, 248` / `set n, a` / `ld (xbc), a`.",
+  "evidence": [
+   "audio/audio_control_engine.s:3390-3396 `ExtData_VoiceParam_DispatchBytecode_Entry4:` / `.byte 0x81` / `push xix` / `swi 0` / `ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue:` / `pop xiz` / `ret` -- the body as spelled",
+   "ROM 0xFC773C: 81 3c f8 5e 0e -- `and (xbc), 0xf8` / `pop xiz` / `ret`",
+   "audio/audio_control_engine.s:3367-3375 `call GetCurrentPartSelect` / `lda xbc, (xiz+10)` / `ld a, (xbc)` / `cp l, 2:i3` / ... / `cp l, 0:i3` / `jr nz, ExtData_VoiceParam_DispatchBytecode_Entry4` -- its only referrer",
+   "audio/audio_control_engine.s:3376-3378 `and a, 248` / `set 2, a` / `ld (xbc), a` -- the part-0 arm (1 and 2 set bits 1 / 0)",
+   "audio/audio_control_engine.s:3364 `MIDI_ProcessChangedChannels_Data_Target1:` -- the owner"
+  ]
+ },
+ {
+  "old": "ExtData_ToneParam_DispatchHandler_Helper4",
+  "verdict": "refuse",
+  "why_refused": "Mechanics only: for a received change at payload offset 22 of a per-part record (tags 0x00-0x19) ExtData_ToneParam_DispatchHandler calls it to toggle bit 0 of that byte (ExtData_ToggleTlvBits, mask 1) and post it (SwbtWr_FlushAndAppendParams). What part-record byte +22 bit 0 means is not established -- analysis/disk-format-probes/README-lsw-part-record-fields.md lists +22 as a declared 1-bit field (mask 0x01 on tags 00..0E) with no code evidence and 0x00 in every saved file -- so a name would only say \"offset 22 bit 0\". Lead: this routine IS code evidence for +22 (an incoming event toggles it), which that README says does not exist.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:4976-4980 `ExtData_ToneParam_DispatchHandler:` / `calr SndParam_WriteLookupAndStore` / `ld a, (0x912f:16)` / `cp a, 22` / `jr z, ExtData_ToneParam_DispatchHandler_Skip` -- offset 22 is handled apart from the 0..11 switch",
+   "audio/audio_control_engine.s:5014-5017 `ExtData_ToneParam_DispatchHandler_Skip:` / `calr ExtData_ToneParam_DispatchHandler_Helper4` / `ExtData_ToneParam_DispatchHandler_Case1:` / `ret` -- the only call",
+   "audio/audio_control_engine.s:5181-5184 `ExtData_ToneParam_DispatchHandler_Helper4:` / `ld wa, 1:i3` / `calr ExtData_ToggleTlvBits` / `jrl SwbtWr_FlushAndAppendParams` -- the whole body",
+   "audio/audio_control_engine.s:6797-6800 `; ExtData_ToggleTlvBits: XORs the panel TLV byte (tag MIDI_MSG_STATUS, offset (0x912F)) with the incoming bits ...`",
+   "analysis/disk-format-probes/README-lsw-part-record-fields.md:114 `| **+22** | t0 mask 0x01 on tags 00..0E; t8 on the rest | **none** | the record's only declared *bit* field that nothing ever touches ...`"
+  ]
+ },
+ {
+  "old": "ExtData_ToneParam_AltBody_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of ExtData_ToneParam_AltBody: the body of its offset 5 / 6 cases, which posts the received value and mask (0x9130 / 0x9131) as they are without writing record 0x48. Its referrers are only that routine's own branches (cited below); it should become a local label of ExtData_ToneParam_AltBody.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:5345-5348 `ExtData_ToneParam_AltBody_Entry:` / `ld (MIDI_MSG_DATA2), (37168:16)` / `ld (MIDI_MSG_DATA3), (37169:16)` / `jrl SwbtWr_FlushAndAppendParams` -- the body (37168 = 0x9130, 37169 = 0x9131)",
+   "audio/audio_control_engine.s:5289-5290 `ExtData_ToneParam_AltBody_Case5: ; cases 5, 6` / `jrl ExtData_ToneParam_AltBody_Entry` -- its only referrer, the switch's case stub",
+   "audio/audio_control_engine.s:5267-5279 `ExtData_ToneParam_AltBody:` / `calr SndParam_WriteLookupAndStore` / `ld a, (0x912f:16)` / ... / `cp wa, 8` / ... / `jp t, (xix+wa)` -- the owner: the record-0x48 event handler switching on the payload offset"
+  ]
+ },
+ {
+  "old": "ExtData_Voice_MixedHandler_Helper_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of ExtData_ApplyTransposeEvent: its step arm (event mask other than 0xFF): unless 0xE3E2 bit 1 is set, value bits 0-1 step the TRANSPOSE byte down / up or reset it to 5. Its referrers are only that routine's own branches (cited below); it should become a local label of ExtData_ApplyTransposeEvent.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:5723-5737 `ExtData_Voice_MixedHandler_Helper_Entry:` / `bit 1, (58338:16)` / `jr nz, ...` / `and c, 3` / ... / `ld a, (0x9130:16)` / `and a, 3` / `cp a, 1:i3` / ... / `ld (0x9153:16), 1` / `ld (0x9154:16), 12` / `ld (0x9155:16), 11` -- the body",
+   "audio/audio_control_engine.s:5707-5713 `; ExtData_ApplyTransposeEvent: ... mask 0xFF sets it from the value; otherwise, unless 0xE3E2 bit 1 is set, value bits 0-1 = 1 step down ...` -- what the arm does",
+   "audio/audio_control_engine.s:5714-5722 `ExtData_ApplyTransposeEvent:` / `ld c, (0x9131:16)` / ... / `cp a, 255` / `jr nz, ExtData_Voice_MixedHandler_Helper_Entry` / `ldw wa, 255` / `calr ExtData_SetTlvField` / `jr ExtData_Voice_MixedHandler_Join3` -- the owner and the referrer"
+  ]
+ },
+ {
+  "old": "MidiChannel_ResetAndConfigure_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of MidiCh_ConfigVoiceAndParts: the branch that accepts the new modulation-wheel value (pending := value, value bit 7 set) before it is sent as CC 1 when 0x28AE bit 7 is clear or the change is 16 or more. Its referrers are only that routine's own branches (cited below); it should become a local label of MidiCh_ConfigVoiceAndParts.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audio_control_engine.s:5938-5943 `MidiChannel_ResetAndConfigure_Entry:` / `ld (MIDI_CC_MODWHEEL_PENDING), (MIDI_CC_MODWHEEL_VALUE:16)` / `set 7, (MIDI_CC_MODWHEEL_VALUE:16)` / `MidiChannel_ResetAndConfigure_Skip2:` / `bit 7, (MIDI_CC_MODWHEEL_VALUE:16)` / `ret z` -- the body",
+   "audio/audio_control_engine.s:5934-5937 `cp c, 16` / `jr c, MidiChannel_ResetAndConfigure_Skip2` / `res 7, e` / `ld (0x28ae:16), e` -- the other path falls into it",
+   "audio/audio_control_engine.s:5912-5921 `MidiCh_ConfigVoiceAndParts:` / `ld a, (MIDI_CC_MODWHEEL_PENDING:16)` / `res 7, a` / ... / `cp c, a` / `ret z` / `ld a, (0x28ae:16)` / `bit 7, a` / `jr z, MidiChannel_ResetAndConfigure_Entry` -- the owner and the referrer"
+  ]
+ },
+ {
+  "old": "ExtData_ToneParam_AltBody_Helper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "ExtData_SetOrClearTlvField",
+  "header": "If mask A is enabled in (0x9131), sets field A of the panel TLV byte (tag MIDI_MSG_STATUS, offset (0x912F)) to the received bits (0x9130), but clears the field instead when that leaves the byte equal to its value before the event (0x9132) -- re-sending the current selection turns it off; always stores the result in the byte, (0x9132) and MIDI_MSG_DATA2 and ORs A into MIDI_MSG_DATA3.\nBasis: callers + body -- the offset-3 arm of the record-0x48 handler ExtData_ToneParam_AltBody calls it for field mask 7 before toggling bit 3 (ExtData_ToggleTlvBits 8) and flushing; it is ExtData_SetTlvField with the equal case turned into a clear.",
+  "basis": "callers + body",
+  "evidence": [
+   "audio/audio_control_engine.s:5328-5332 `ExtData_ToneParam_AltBody_Join2:` / `ld wa, 7:i3` / `calr ExtData_ToneParam_AltBody_Helper` / `ldw wa, 8` / `calr ExtData_ToggleTlvBits` -- the only call (case 3 of ExtData_ToneParam_AltBody, 5285-5286)",
+   "audio/audio_control_engine.s:6939-6951 `dec 2, xsp` / `ld (xsp), a` / `ld a, (0x9131:16)` / `and a, (xsp)` / `jr z, ..._Epilogue2` / ... / `calr PanelTlv_PayloadOfTag` / ... / `ld a, (0x912f:16)` / ... / `lda xhl, (xhl+wa)` -- the gate and the byte",
+   "audio/audio_control_engine.s:6952-6966 `ld c, (xsp)` / `cpl c` / `ld e, c` / `and e, (xhl)` / `or e, (0x9130:16)` / `ld a, (0x9132:16)` / `cp e, a` / `jr nz, ...` / `and e, c` / ... / `ld (xhl), e` / `ld (0x9132:16), e` / `ld (MIDI_MSG_DATA2:16), e` / ... / `or (MIDI_MSG_DATA3:16), a` -- set, or clear when unchanged",
+   "audio/audio_control_engine.s:6870-6900 `; ExtData_SetTlvField: ... replaces the field A ... with (0x9130); if the byte changed ...` / ... / `cp c, a` / `jr z, ExtData_SetTlvField_Epilogue` -- the sibling that leaves an unchanged byte alone",
+   "audio/audio_control_engine.s:6740-6742 `ld a, (0x912f:16)` / `extz wa` / `ld (0x9132), (xhl+wa)` -- SndParam_WriteLookupAndStore (6734) saves the byte before the handler runs"
+  ]
+ },
+ {
+  "old": "MidiVoiceNote_LookupMode1_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiVoiceNote_PartAssignsD1D2",
+  "header": "15 TRACK ASSIGN values (0xF1A0[track]) that MidiVoiceNote_Dispatch accepts for sequencer events 0xD1 and 0xD2 (low status bits 1 and 2): 0, 2, 1, 8, 9, 10, 11, 3, 4, 5, 6, 7, 17, 18, 19 -- the sound parts, without DRUMS 12, CHORD 13, APC 14, CONTROL 15 and RHYTHM 16; a track with another value cancels the event (0x91B5 = 0xFF). Same bytes as MidiVoiceNote_LookupMode0_Data (event 0xD0); MidiVoiceNote_LookupMode3_Data (0xD3) adds 12 and 15.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:10356-10366 `MidiVoiceNote_LookupMode1:` / `ld xiy, MidiVoiceNote_LookupMode1_Data` / `ld xbc, 0xf` / `ld l, (0x91b8:16)` / ... / `MidiVoiceNote_LookupMode2:` / `ld xiy, MidiVoiceNote_LookupMode1_Data` / `ld xbc, 0xf` / `ld l, (0x91b9:16)` -- its two readers, 15 entries",
+   "audio/audio_control_engine.s:10373-10388 `MidiPart_FindChannelInTable:` / ... / `ld xix, 0xf1a0` / `ld w, (xix+hl)` / ... / `ld A, (xiy+)` / `cp a, w` / `jr z, MidiPart_ScanDone` / `djnz16 bc, ...` / `ld (0x91b5:16), 255` -- the track's TRACK ASSIGN value must be in the list",
+   "audio/audio_control_engine.s:10337-10348 `MidiVoiceNote_Dispatch:` / `ld l, (0x91b5:16)` / `and l, 0x3` / ... / `.long MidiVoiceNote_LookupMode0` ... `.long MidiVoiceNote_LookupMode3` -- the mode is the low two bits of the event status 0x91B5",
+   "audio/audio_control_engine.s:10105-10114 `VoiceParam_DispatchByMode:` / `calr MidiVoiceNote_Dispatch` / `cp (0x91b5:16), 255` / ... / `and a, 0x3` -- its only caller, entry 5 (status 0xD0-0xDF) of VoiceMode_ParamDispatch_Table (9488-9494)",
+   "ROM 0xFCBA17: 00 02 01 08 09 0a 0b 03 04 05 06 07 11 12 13 | 00 02 01 ... 13 (LookupMode0) | 00 02 01 ... 13 0c 0f ff (LookupMode3)",
+   "audio/audio_control_engine.s:10664-10668 `; SeqTrackAssign_PartTagTable: 20 bytes: TRACK ASSIGN value (0xF1A0[track]) -> panel part-record tag: RIGHT1 0, LEFT 2, RIGHT2 1, PART4..PART15 3..14, DRUMS 15, CHORD/APC 0x15, CONTROL/RHYTHM 0` -- values 12-16 are DRUMS / CHORD / APC / CONTROL / RHYTHM, 17-19 map to part tags 12-14"
+  ]
+ },
+ {
+  "old": "MidiStream_HandleNoteCC_Body",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiStream_RunStatus_Mode3",
+  "header": "MIDI-mode-3 handler (0xFD50 bits 0-1 = 3) of MidiStream_HandleRunningStatus, entry 3 beside MidiStream_RunStatus_Mode0 / _Mode1: for part C (not 72) it takes word 0 of the part record ((0x90F2)[C]) and the part as the selection at 0x90EA / 0x90EC, resolves it (VoiceMode_ParamHandler_4_Helper) and, unless MIDI_ParamValidate_CheckBit2 objects, dispatches DE = (0x90EE) with B = the part and C = 0x81, then E = (0x90F0) with C = (0x915B) and B = 0, through MIDI_ClearGuardAndDispatchCC.\nBasis: readers (table entry) + body; what the four MIDI modes are is not established, as for its siblings.",
+  "basis": "readers + body",
+  "evidence": [
+   "audio/audio_control_engine.s:12125-12129 `MidiStream_HandleRunningStatus_Data:` / `.long MidiStream_RunStatus_Mode0` / `.long MidiStream_RunStatus_Mode1` / `.long MidiStream_HandleRunningStatus_Return` / `.long MidiStream_HandleNoteCC_Body` -- its only reference, entry 3",
+   "audio/audio_control_engine.s:12110-12115 `ldb_d8 l, (0xfd50)` / `and l, 3` / `sll hl, 2` / `ld xix, MidiStream_HandleRunningStatus_Data` / `ld xix, (xix+l)` / `jp (xix)` -- MidiStream_HandleRunningStatus (12104) picks it by 0xFD50 bits 0-1",
+   "audio/audio_control_engine.s:11475-11486 `cp c, 0x48` / `jr z, MidiStream_HandleNoteCC_Ret` / ... / `ld xix, (0x90f2:16)` / `ld xix, (xix+hl)` / `ld wa, (xix)` / `ld (0x90ea:16), wa` / ... / `ld (0x90ec:16), c` / `call VoiceMode_ParamHandler_4_Helper` -- the body",
+   "audio/audio_control_engine.s:11489-11502 `call MIDI_ParamValidate_CheckBit2` / ... / `ld c, 0x81:opc` / `ld de, (0x90ee:16)` / `call MIDI_ClearGuardAndDispatchCC` / ... / `ld e, (0x90f0:16)` / `ld d, 0xff:opc` / `call MIDI_ClearGuardAndDispatchCC`",
+   "audio/audio_control_engine.s:12118-12124 `; MIDI-mode jump table of MidiStream_HandleRunningStatus: 4 x .long code pointer, indexed by bits 0-1 of RAM 0xFD50 ... entry 3 is the routine that follows the 1-byte ret stub MidiStream_HandleNoteCC`"
+  ]
+ },
+ {
+  "old": "MidiStream_ExtendedDispatch_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiRx_ProgramChangeModeTable",
+  "header": "4 x code pointer: the MIDI-mode handler of a received program change, indexed by 0xFD50 bits 0-1 -- MidiStream_ExtDispatch_Mode0, _Mode1, MidiStream_ExtDispatch_Mode2Ret (`ret`: mode 2 ignores it) and _Mode3, which end in MidiStream_SetPartProgram.\nBasis: readers + bytes -- its only reader is MidiRx_ApplyProgramChange (`call (xix)` on entry (0xFD50) & 3).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:11763-11769 `MidiRx_ApplyProgramChange_Skip11:` / `ldb_d8 l, (0xfd50)` / `and l, 3` / `sla l, 2` / `ld xix, MidiStream_ExtendedDispatch_Data` / `ld xix, (xix+l)` / `call (xix)` -- the reader, in MidiRx_ApplyProgramChange (11729)",
+   "audio/audio_control_engine.s:11783-11787 `MidiStream_ExtendedDispatch_Data:` / `.long MidiStream_ExtDispatch_Mode0` / `.long MidiStream_ExtDispatch_Mode1` / `.long MidiStream_ExtDispatch_Mode2Ret` / `.long MidiStream_ExtDispatch_Mode3` -- the four entries",
+   "audio/audio_control_engine.s:11723-11728 `; MidiRx_ApplyProgramChange: Applies a received program change ... calls the MIDI-mode handler for (0xFD50) bits 0-1 (MidiStream_ExtendedDispatch_Data: Mode0 / Mode1 / nothing / Mode3), which ends in MidiStream_SetPartProgram`",
+   "audio/audio_control_engine.s:11774-11782 the table's existing comment (entry 2 is the `ret` in front of the table)"
+  ]
+ },
+ {
+  "old": "MidiStream_ExtDispatch_Mode3_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiCC_BankSelectModeTable",
+  "header": "4 x code pointer: how a received bank select becomes the part's bank at 0x9412[part], by MIDI mode (0xFD50 bits 0-1): MidiStream_ExtDispatch_ModeJump02 for modes 0 and 2, _ModeJump1 for mode 1, _ModeJump3 for mode 3.\nBasis: readers + bytes -- its only reader is MidiCC_ApplyBankSelect (`jp (xiy)` on entry (0xFD50) & 3), the CC0/CC32 handler whose header gives the modes as 0/2 LSB, 3 MSB, 1 mixed.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:12058-12063 `ldb_d8 b, (0xfd50)` / `and b, 3` / `sll b, 2` / `ld xiy, MidiStream_ExtDispatch_Mode3_Data` / `ld xiy, (xiy+b)` / `jp (xiy)` -- the reader, in MidiCC_ApplyBankSelect (12029)",
+   "audio/audio_control_engine.s:12070-12074 `MidiStream_ExtDispatch_Mode3_Data:` / `.long MidiStream_ExtDispatch_ModeJump02` / `.long MidiStream_ExtDispatch_ModeJump1` / `.long MidiStream_ExtDispatch_ModeJump02` / `.long MidiStream_ExtDispatch_ModeJump3`",
+   "audio/audio_control_engine.s:12025-12028 `; MidiCC_ApplyBankSelect: Records a received bank select for part (0x9644) ... derives the part's bank at 0x9412[p] by the MIDI mode in 0xFD50 bits 0-1 (modes 0/2 LSB, 3 MSB, 1 mixed)`",
+   "audio/audio_control_engine.s:12064-12069 the table's existing comment (\"Modes 0 and 2 share one target\")"
+  ]
+ },
+ {
+  "old": "AudioInit_ChannelLoop_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of Audio_CheckInitStatus: the body of its loop over the 16 sequencer tracks (E), entered by fall-through and by the back edge at 1094. Its referrers are only that routine's own branches (cited below); it should become a local label of Audio_CheckInitStatus.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/audioinit_routines.s:744-757 `AudioInit_ChannelLoop_Body:` / `ld a, e` / ... / `lda xix, (0xf1a0:16)` / ... / `ld d, a` / ... / `lda xix, (Bit16Mask_Table:24)` / `ld wa, (xix+wa)` / `and wa, (0xf290:16)` -- the body (E = track 0..15, D = its TRACK ASSIGN value)",
+   "audio/audioinit_routines.s:1090-1094 `AudioInit_ChannelLoop_Next:` / `orw (0xc59c:16), 192` / `inc 1, e` / `cp e, 0x10` / `jrl c, AudioInit_ChannelLoop_Body` -- the loop's back edge, its only code referrer",
+   "audio/audioinit_routines.s:711-716 `Audio_CheckInitStatus:` / ... / `ld hl, (0xf19e:16)` -- the owner; 739-742 `AudioInit_ChannelLoop_Init:` / `ld e, 0x0:opc` / `cp e, 0x10` / `jrl nc, AudioInit_ChannelLoop_Done` falls into it",
+   "ui_widgets/widget_dispatch.s:7162-7163, 7305 -- comments that cite it by name would follow a local rename"
+  ]
+ },
+ {
+  "old": "SysEx_ApplyToSlot4B_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SysEx_ApplyGsReverbLevel",
+  "header": "Roland GS REVERB LEVEL (40 01 33): maps the data value (field 11 of the active MIDISEQ buffer) through SysEx4B_LevelCurve128 (0..127 -> 0..94) and writes it to the first parameter 0x4B10 + i of DSP block 0x4B (the reverb, i below the count read from 0x4B04) for which DSPCfg_ResolveAndExtract returns 1 or 2; then re-sends the output bank (SwbtWr_ReinitOutputBank).\nBasis: callers + body -- case 4 (field 1 = 4) of SysEx_OnRolandGsParam, whose header lists 40 01 30 / 33 / 38 / 3A as reverb macro / level, chorus macro / level; the reverb-macro case writes the same block (0x4B00, 0x4B10 + i).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midipkt_routines.s:1367-1368 `MidiPkt_SysExBulkTransfer_Data_Case4:` / `jrl SysEx_ApplyToSlot4B_Data` -- entry 3 (field 1 = 4) of SysExBulk_SwitchOffsets (ui_widgets/widget_dispatch.s:1792-1798)",
+   "midi/midipkt_routines.s:1340-1357 `; SysEx_OnRolandGsParam: ... switches on field 1 -- 1 = 40 1x 15 (use for rhythm part), 2 = 40 00 7F 00 41 (GS reset), 3/4/5/6 = 40 01 30/33/38/3A (reverb macro/level, chorus macro/level)` / ... / `dec 1, hl` / ... / `jp t, (xix+hl)`",
+   "audio/dsp_config_sysex.s:24-33 `ld xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)` / `ldw bc, 11` / `call SeqData_ReadFieldByIndex` / ... / `calr SysEx_ClampVoiceIndex128` / ... / `ld xwa, 0x4b04` / `call DSPCfg_ReadParam_Map0` -- value and parameter count",
+   "audio/dsp_config_sysex.s:40-63 `ld wa, iz` / `exts xwa` / `add xwa, 0x4b10` / `call DSPCfg_ResolveAndExtract` / `cp hl, 1:i3` / ... / `call DSPCfg_WriteParamFull` / ... / `call SwbtWr_ReinitOutputBank`",
+   "audio/dsp_config_sysex.s:70-78 `SysEx_ClampVoiceIndex128:` / ... / `lda xbc, (SysEx4B_LevelCurve128:24)` / `ld l, (xbc+wa)`; ui_widgets/widget_dispatch.s:1831-1833 \"128 x u8 monotone curve 0..94\"",
+   "midi/midipkt_routines.s:1517-1553 `MidiPkt_SysExBulkTransfer_Data_Helper2_Join4:` ... `ld xwa, 0x4b00` / ... `calr SysEx_DispatchByChannel_49` ... `add xwa, 0x4b10` -- the reverb-macro case (field 1 = 3) writes the same block",
+   "midi/midipkt_routines.s:1430-1432 `ld xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)` / `ldw bc, 11` / `call SeqData_ReadFieldByIndex` -- USE FOR RHYTHM PART reads its 0..2 value from field 11 too"
+  ]
+ },
+ {
+  "old": "SysEx_ApplyToSlot49_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SysEx_ApplyGsChorusMacro",
+  "header": "Roland GS CHORUS MACRO (40 01 38): maps the macro number (field 11 of the active MIDISEQ buffer, 0..7) through SysEx49_VoiceIndexMap8 and writes it to DSP parameter 0x4900 (block 0x49, the chorus); if that succeeds it writes the macro's default words, SysEx_DispatchByChannel(macro, i), to 0x4910 + i for i below the count read from 0x4904 (skipping 0xD8F0 = none), then re-sends the output bank.\nBasis: callers + body -- case 5 (field 1 = 5) of SysEx_OnRolandGsParam; SysEx_DispatchByChannel's case 0 is already named SysEx_DispatchByChannel_ChorusMacroChorus1 (\"GS chorus macro 0 ... written by the callers to DSP param 0x4910+C\").",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midipkt_routines.s:1369-1370 `MidiPkt_SysExBulkTransfer_Data_Case5:` / `jrl SysEx_ApplyToSlot49_Data` -- entry 4 (field 1 = 5) of SysExBulk_SwitchOffsets",
+   "audio/dsp_config_sysex.s:84-94 `ld xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)` / `ldw bc, 11` / `call SeqData_ReadFieldByIndex` / ... / `calr SysEx_ClampVoiceIndex8_49` / `extz hl` / `ld xwa, 0x4900` / `ld bc, hl` / `call DSPCfg_WriteParamFull`",
+   "audio/dsp_config_sysex.s:97-117 `ld xwa, 0x4904` / `call DSPCfg_ReadParam_Map0` / ... / `ldto_berp c, 248` / ... / `calr SysEx_DispatchByChannel` / `ld bc, hl` / `cp bc, 0xd8f0` / ... / `add xwa, 0x4910` / `call DSPCfg_WriteParamFull` -- the macro's default list",
+   "audio/dsp_config_sysex.s:218-220 `; SysEx_DispatchByChannel_ChorusMacroChorus1: GS chorus macro 0 (Chorus 1; also the switch base) ... written by the callers to DSP param 0x4910+C (DSP EFFECT slot)`",
+   "ui_widgets/widget_dispatch.s:1844-1845 `SysEx49_VoiceIndexMap8:` / `.byte 1, 2, 1, 2, 4, 4, 9, 9` -- the 8 GS chorus macros mapped to DSP chorus types"
+  ]
+ },
+ {
+  "old": "SysEx_ApplyToSlot49_Format_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SysEx_ApplyGsChorusLevel",
+  "header": "Roland GS CHORUS LEVEL (40 01 3A): maps the data value (field 11 of the active MIDISEQ buffer) through SysEx49_LevelCurve128 (the same 0..127 -> 0..94 curve as the reverb's) and writes it to the first parameter 0x4910 + i of DSP block 0x49 (the chorus, i below the count read from 0x4904) for which DSPCfg_ResolveAndExtract returns 1 or 2; then re-sends the output bank.\nBasis: callers + body -- case 6 (field 1 = 6) of SysEx_OnRolandGsParam; the chorus twin of SysEx_ApplyGsReverbLevel (block 0x4B).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midipkt_routines.s:1371-1373 `MidiPkt_SysExBulkTransfer_Data_Case6:` / `calr SysEx_ApplyToSlot49_Format_Data` / `ret` -- entry 5 (field 1 = 6) of SysExBulk_SwitchOffsets",
+   "audio/dsp_config_sysex.s:145-154 `ld xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)` / `ldw bc, 11` / `call SeqData_ReadFieldByIndex` / ... / `calr SysEx_ClampVoiceIndex128_49` / `ld (xsp+4), l` / `ld xwa, 0x4904` / `call DSPCfg_ReadParam_Map0`",
+   "audio/dsp_config_sysex.s:161-176 `ld wa, iz` / `exts xwa` / `add xwa, 0x4910` / `call DSPCfg_ResolveAndExtract` / `cp hl, 1:i3` / ... / `add xwa, 0x4910` / ... / `call DSPCfg_WriteParamFull`",
+   "audio/dsp_config_sysex.s:191-199 `SysEx_ClampVoiceIndex128_49:` / ... / `lda xbc, (SysEx49_LevelCurve128:24)` / `ld l, (xbc+wa)`; ui_widgets/widget_dispatch.s:1846-1848 \"the same curve as SysEx4B_LevelCurve128 in a separate copy\""
+  ]
+ },
+ {
+  "old": "SysEx_DispatchByChannel_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation: the shared tail (`ld hl, (xwa+de)` / `ret`) of the compiled switch in SysEx_DispatchByChannel (the GS chorus-macro twin of SysEx_DispatchByChannel_49). Its 7 referrers are that switch's own arms (SysEx_DispatchByChannel_ChorusMacroChorus1, _Case1 .. _Case6, each `ld xwa, SysEx4B_ChannelWordsN` / `jr`), and _Case7 falls into it. It should become a local label of SysEx_DispatchByChannel.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:260-262 `SysEx_DispatchByChannel_Entry:` / `ld hl, (xwa+de)` / `ret` -- the whole body",
+   "audio/dsp_config_sysex.s:202-206 `SysEx_DispatchByChannel:` / `ldw hl, 0xd8f0` / `ld e, c` / `extz de` / `add de, de` -- the owner (switch on WA 0..7 through SysEx4B_ChannelSwitch)",
+   "audio/dsp_config_sysex.s:225 `jr SysEx_DispatchByChannel_Entry` -- end of arm ChorusMacroChorus1; 230, 235, 240, 245, 250, 255 the other arms; 256-259 _Case7 falls in",
+   "audio/dsp_config_sysex.s:110 `calr SysEx_DispatchByChannel` -- callers reach the owner, never the tail"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ParamEdit_Data_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag48_UpdateAudioConfig: the second half of the offset-3 arm that mirrors the changed bit 3 of record 0x48 +3 into 0xC596 bit 4 (after bits 0-2 went to 0xC596 bits 0-2 through ParamEdit_WordTable). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag48_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:5894-5906 `UIStateEvt_ParamEdit_Data_Entry:` / `bit 3, (SWBTWR_PAYLOAD_3:16)` / `jrl z, ..._Case6_Epilogue` / `bit 3, (SWBTWR_PAYLOAD_2:16)` / ... / `orw (0xc596:16), 16` / ... / `andw (0xc596:16), 0xffef` / ... / `orw (0xc59a:16), 0x2000` / `orw (0xc594:16), 4` -- the body",
+   "audio/dsp_config_sysex.s:5888-5891 `and wa, 7` / `jr z, ..._Skip5` / `ld (0xc5a0:16), 31` / `jr UIStateEvt_ParamEdit_Data_Entry` -- the other referrer; 5892-5893 falls in",
+   "audio/dsp_config_sysex.s:5815-5834 `PanelTag48_UpdateAudioConfig:` / `pushw iz` / ... / `jp t, (xix+wa)` / ... / `PanelTag48_UpdateAudioConfig_StyleNumber:` / `ldb_d8 a, (SWBTWR_PAYLOAD_3)` / `and a, 7` / `jrl z, UIStateEvt_ParamEdit_Data_Entry` -- the owner (the record-0x48 listener) and one referrer"
+  ]
+ },
+ {
+  "old": "UIStateEvt_VolumeMixer_Data_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag90_UpdateAudioConfig: the clear branch of the offset-3 arm's bit-0 mirror (payload bit 0 changed to 0 -> 0xC596 bit 7 cleared). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag90_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6090-6093 `UIStateEvt_VolumeMixer_Data_Entry:` / `andw (0xc596:16), 0xff7f` / `UIStateEvt_VolumeMixer_Data_Entry_Join3:` / `orw (0xc594:16), 4` -- the body",
+   "audio/dsp_config_sysex.s:6083-6087 `UIStateEvt_VolumeMixer_Data_Case3:` / `bit 0, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_VolumeMixer_Data_Entry2` / `bit 0, (SWBTWR_PAYLOAD_2:16)` / `jr z, UIStateEvt_VolumeMixer_Data_Entry` -- its only referrer, in the offset-3 arm",
+   "audio/dsp_config_sysex.s:6027-6038 `PanelTag90_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / ... / `lda xix, (VolumeMixer_SwitchOffsets:24)` / ... / `jp t, (xix+wa)` -- the owner, the record-0x90 listener (ui_widgets/widget_dispatch.s:6558)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_VolumeMixer_Data_Entry2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag90_UpdateAudioConfig: the bit-1 mirror of the offset-3 arm (payload bit 1 -> 0xC596 bit 3). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag90_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6094-6105 `UIStateEvt_VolumeMixer_Data_Entry2:` / `bit 1, (SWBTWR_PAYLOAD_3:16)` / `ret z` / `bit 1, (SWBTWR_PAYLOAD_2:16)` / ... / `orw (0xc596:16), 8` / ... / `andw (0xc596:16), 0xfff7` / ... / `orw (0xc594:16), 4` / `ret` -- the body",
+   "audio/dsp_config_sysex.s:6084-6085 `bit 0, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_VolumeMixer_Data_Entry2` -- its only referrer; the bit-0 path falls into it",
+   "audio/dsp_config_sysex.s:6027 `PanelTag90_UpdateAudioConfig:` -- the owner"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: the bit-5 test of its offset-0 arm. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6309-6355 `UIStateEvt_ChannelConfig_Data_Entry:` / `bit 5, (SWBTWR_PAYLOAD_3:16)` / `ret z` / `bit 5, (SWBTWR_PAYLOAD_2:16)` / ... / `ld de, 0:i3` / ... / `ldb_d8 a, (0xfd04)` / ... / `lda xbc, (EffectSelect_StepTable:24)` / ... / `orw (0xc594:16), 4` / `ret` -- the body: bit 5 of +0 sets or clears the per-part step nibble of 26 parts from record 0x70 +2",
+   "audio/dsp_config_sysex.s:6305-6306 `bit 6, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry` -- its only referrer; 6307-6308 falls in",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry2",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: its offset-2 arm, which only sets 0xC594 bit 2. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6356-6358 `UIStateEvt_ChannelConfig_Data_Entry2:` / `orw (0xc594:16), 4` / `ret` -- the body",
+   "audio/dsp_config_sysex.s:6299-6300 `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` -- its only referrer, the offset-2 test of the compare chain",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry3",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: its offset-3 arm (bit 0 of +3 -> 0xC322 bit 4 inverted, then the bit 2 / 6 / 7 tests that follow). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6359-6371 `UIStateEvt_ChannelConfig_Data_Entry3:` / `bit 0, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry4` / ... / `res 4, (0xc322:16)` / ... / `set 4, (0xc322:16)` / ... / `orw (0xc594:16), 4` -- the body",
+   "audio/dsp_config_sysex.s:6297-6298 `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` -- its only referrer, the offset-3 test of the compare chain",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry4",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: the bit-2 test of its offset-3 arm (bit 6 of 0xC342..0xC34C set when the payload bit is 1). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6372-6383 `UIStateEvt_ChannelConfig_Data_Entry4:` / `bit 2, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry6` / `bit 2, (SWBTWR_PAYLOAD_2:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry5` / `set 6, (0xc342:16)` / ... -- the body",
+   "audio/dsp_config_sysex.s:6360-6361 `bit 0, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry4` -- its only referrer; 6370-6371 falls in",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry5",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: the clear branch of the bit-2 test (bit 6 of 0xC342..0xC34C cleared). Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6384-6393 `UIStateEvt_ChannelConfig_Data_Entry5:` / `res 6, (0xc342:16)` / ... / `res 6, (0xc34c:16)` / `orw (0xc59c:16), 8` / ... / `orw (0xc594:16), 4` -- the body",
+   "audio/dsp_config_sysex.s:6375-6376 `bit 2, (SWBTWR_PAYLOAD_2:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry5` -- its only referrer",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry6",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: the bit-6 test of its offset-3 arm. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6394-6398 `UIStateEvt_ChannelConfig_Data_Entry6:` / `bit 6, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry7` / `orw (0xc59c:16), 8` / `orw (0xc594:16), 4` -- the body",
+   "audio/dsp_config_sysex.s:6373-6374 `bit 2, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry6` -- its only referrer; 6392-6393 falls in",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "UIStateEvt_ChannelConfig_Data_Entry7",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of PanelTag80_UpdateAudioConfig: the bit-7 test of its offset-3 arm. Its referrers are only that routine's own branches (cited below); it should become a local label of PanelTag80_UpdateAudioConfig.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/dsp_config_sysex.s:6399-6404 `UIStateEvt_ChannelConfig_Data_Entry7:` / `bit 7, (SWBTWR_PAYLOAD_3:16)` / `ret z` / `orw (0xc59c:16), 8` / `orw (0xc594:16), 4` / `ret` -- the body",
+   "audio/dsp_config_sysex.s:6395-6396 `bit 6, (SWBTWR_PAYLOAD_3:16)` / `jr z, UIStateEvt_ChannelConfig_Data_Entry7` -- its only referrer; 6397-6398 falls in",
+   "audio/dsp_config_sysex.s:6289-6304 `PanelTag80_UpdateAudioConfig:` / `ldb_d8 a, (SWBTWR_PAYLOAD_1)` / `cp a, 11` / ... / `cp a, 3:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry3` / `cp a, 2:i3` / `jrl z, UIStateEvt_ChannelConfig_Data_Entry2` / ... -- the owner, the record-0x80 listener (a compare chain on the payload offset)"
+  ]
+ },
+ {
+  "old": "NoteOn_ChannelScanCC_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteOn_EntryPoint: the body of its loop over the 26 parts (frame word +6 = 0..25). Its referrers are only that routine's own branches (cited below); it should become a local label of NoteOn_EntryPoint.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:265-276 `NoteOn_ChannelScanLoop_CC:` / `ldw (xsp + 6), 0x0` / `cpw (xsp + 6), 0x1a` / `jrl nc, NoteOnProcess_StoreAndAllocate` / `NoteOn_ChannelScanCC_Body:` / `ld wa, (xsp + 6)` / `add wa, 0x24` / ... -- the loop head and the body",
+   "audio/note_voice_mapping.s:451-454 `NoteOnProcess_NextChannel:` / `incw 1, (xsp + 6)` / `cpw (xsp + 6), 0x1a` / `jrl c, NoteOn_ChannelScanCC_Body` -- the back edge, its only referrer",
+   "audio/note_voice_mapping.s:11-13 `NoteOn_EntryPoint:` / `lda xsp, (xsp-504)` / `pushw iz` -- the owner"
+  ]
+ },
+ {
+  "old": "AccNoteOn_EmitVoiceLoop_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AccNoteOn_ProcessVoiceSetup: the body of its loop over the (0xCC1F) 5-byte entries at 0xCC22 (IZ = index). Its referrers are only that routine's own branches (cited below); it should become a local label of AccNoteOn_ProcessVoiceSetup.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:577-588 `AccNoteOn_EmitVoiceLoop_Init:` / `ld iz, 0:i3` / `ld e, 0x7f:opc` / `jr AccNoteOn_EmitVoiceLoop_Check` / `AccNoteOn_EmitVoiceLoop_Body:` / `ld wa, iz` / `mul wa, 0x5` / `lda xbc, (0xcc22:16)` / ... -- the loop head and the body",
+   "audio/note_voice_mapping.s:604-608 `AccNoteOn_EmitVoiceLoop_Check:` / `ld a, (0xcc1f:16)` / `extz wa` / `cp iz, wa` / `jr c, AccNoteOn_EmitVoiceLoop_Body` -- the back edge, its only referrer",
+   "audio/note_voice_mapping.s:471-473 `AccNoteOn_ProcessVoiceSetup:` / `lda xsp, (xsp - 18)` / `pushw iz` -- the owner"
+  ]
+ },
+ {
+  "old": "AccNoteOn_ChannelLoop_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of AccNoteOn_ChannelDispatch: its status-0xB0 arm, which (for frame byte +15 = 0x7F) runs a loop over 16 channels in bank register 0xFB. Its referrers are only that routine's own branches (cited below); it should become a local label of AccNoteOn_ChannelDispatch.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:807-812 `AccNoteOn_ChannelLoop_Body:` / `cp (xsp + 15), 0x7f` / `jr nz, AccNoteOn_ChannelLoop_Check` / `ldib_erp 0xfb, 0` / `cp_erpb 0xfb, 0x10` / `jrl nc, AccMidi_ReadNextEvent` -- the body",
+   "audio/note_voice_mapping.s:781-784 `AccMidi_DispatchLoop:` / `ld a, (xsp + 12)` / `cp a, 0xb0` / `jr z, AccNoteOn_ChannelLoop_Body` -- its only referrer, the status-0xB0 test of the owner's event loop",
+   "audio/note_voice_mapping.s:765-767 `AccNoteOn_ChannelDispatch:` / `lda xsp, (xsp-174)` / `pushw_erp 0xfa` -- the owner"
+  ]
+ },
+ {
+  "old": "NoteOff_PartLoop_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteMap_SendAllNotesOff: the body of its loop over 16 parts (bank register 0xFB). Its referrers are only that routine's own branches (cited below); it should become a local label of NoteMap_SendAllNotesOff.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:1572-1582 `ldib_erp 0xfb, 0` / `cp_erpb 0xfb, 0x10` / `jr nc, NoteOff_Return` / `NoteOff_PartLoop_Body:` / `ld (xsp + 6), 0x90` / `ld (xsp + 8), 0x2` / `ldto_berp A, 0xfb` / `ld (xsp + 9), a` / ... -- the loop head and the body",
+   "audio/note_voice_mapping.s:1613-1616 `NoteOff_PartLoop_Next:` / `inc1b_erp 0xfb` / `cp_erpb 0xfb, 0x10` / `jr c, NoteOff_PartLoop_Body` -- the back edge, its only referrer",
+   "audio/note_voice_mapping.s:1567-1569 `NoteMap_SendAllNotesOff:` / `lda xsp, (xsp-168)` / `pushw_erp 0xfa` -- the owner"
+  ]
+ },
+ {
+  "old": "CollectAllocVoice_Em_Block",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteMap_CollectAndFindBestVoice: the step of its loop over 16 entries (bank register 0xFB). Its referrers are only that routine's own branches (cited below); it should become a local label of NoteMap_CollectAndFindBestVoice.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:4732-4735 `CollectAllocVoice_Em_Block:` / `inc1b_erp 0xfb` / `cp_erpb 0xfb, 0x10` / `jr c, CollectAllocVoice_EmitLoop` -- the body: the loop step",
+   "audio/note_voice_mapping.s:4715-4723 `CollectAllocVoice_EmitLoop:` / ... / `cp a, (xsp+166)` / `jr nz, CollectAllocVoice_Em_Block` -- its only referrer; 4730 `call Voice_BuildAndEmitNoteOnEvents` falls into it",
+   "audio/note_voice_mapping.s:4533-4535 `NoteMap_CollectAndFindBestVoice:` / `lda xsp, (xsp-174)` / `pushw_erp 0xfa` -- the owner"
+  ]
+ },
+ {
+  "old": "MarkEntriesAboveThre_Block",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteMap_MarkEntriesAboveThreshold: a step of its loop over the bank-register indices 0xFA / 0xF9. Its referrers are only that routine's own branches (cited below); it should become a local label of NoteMap_MarkEntriesAboveThreshold.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:9153-9159 `MarkEntriesAboveThre_Block:` / `cpib_erp 0xfb, 0` / `jr z, MarkEntriesAboveThre_LoadIdx2` / `ldto_berp A, 0xf9` / `ld c, a` / `extz bc` / `ldto_berp A, 0xfb` -- the body",
+   "audio/note_voice_mapping.s:9133-9141 `MarkEntriesAboveThre_LoadIdx:` / `ldto_berp A, 0xfa` / `xor a, (0xcd2e:16)` / ... / `cp e, 0:i3` / `jr z, MarkEntriesAboveThre_Block` -- its only referrer; 9149-9151 `... call AddswbWr` falls into it",
+   "audio/note_voice_mapping.s:9065-9067 `NoteMap_MarkEntriesAboveThreshold:` / `dec 6, xsp` / `push xiz` -- the owner"
+  ]
+ },
+ {
+  "old": "Synth_InitChannelState_Body",
+  "verdict": "refuse",
+  "why_refused": "Internal continuation of NoteMap_ComputePitchOffset: the body of its loop over the 5-byte entries (count at +1 of the list at frame +14). Its referrers are only that routine's own branches (cited below); it should become a local label of NoteMap_ComputePitchOffset.",
+  "new": null,
+  "header": null,
+  "basis": null,
+  "evidence": [
+   "audio/note_voice_mapping.s:10250-10260 `Synth_InitChannelState_Loop:` / `ldw (xsp + 2), 0x0` / `jrl Synth_InitChannelState_Check` / `Synth_InitChannelState_Body:` / `ld wa, (xsp + 2)` / ... / `sll xbc, 2` / `add xbc, xwa` / `inc 4, xbc` -- the loop head and the body",
+   "audio/note_voice_mapping.s:10371-10375 `ld xwa, (xsp + 14)` / `ld a, (xwa + 1)` / `extz wa` / `cp (xsp + 2), wa` / `jrl c, Synth_InitChannelState_Body` -- the back edge, its only referrer",
+   "audio/note_voice_mapping.s:10195-10197 `NoteMap_ComputePitchOffset:` / `lda xsp, (xsp - 16)` / `pushw_erp 0xfa` -- the owner"
+  ]
+ }
+]

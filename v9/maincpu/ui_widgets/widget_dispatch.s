@@ -147,7 +147,7 @@ SndParam_RegRamPtrs:
 ; two bases: SndParam_CompareShifted (0xFCDA79) / SndParam_RegisterMultiField_Data
 ; (0xFCDD9B) index from +0 (`lda xbc,(<this>); ld xbc, (xbc+a)`, then compare
 ; with (xbc+1)/(xbc+2)); SndParam_ReadRegWord (0xFCDAA6) and
-; SndParam_RegisterBitfield_Data_Skip2 index from +4.  audio/sndparam_routines.s
+; SndParam_SetRegWord_Skip2 index from +4.  audio/sndparam_routines.s
 ; loads this address as Naka_SubDispatch_B_Table (alias kept); index ranges not
 ; traced, so whether either base reads past +8 into SndParam_Registry is open.
 SndParam_ValueTablePtrPair:
@@ -1156,7 +1156,7 @@ SndParam_RegisterHandlers:
 	.long SndParam_RegisterEntryAlt_Data
 	.long SndParam_UpdateEntry_Data
 	.long SndParam_RegisterMultiField_Data
-	.long SndParam_RegisterBitfield_Data
+	.long SndParam_SetRegWord
 	.long SndParam_RegisterLinked_Data
 	.long SndParam_RegisterLinked2_Data
 	.long SndParam_RegisterSimple_Data

@@ -5863,26 +5863,33 @@ SeMenu_ApplySynthParam_Alt:
 	lda xsp, (xsp + 38)
 	ret
 
-SeMenu_ApplySynthParam_Data:
+; SeMenu_GetGroupFirstToneIndex: Returns in the word at XDE the tone index at which group C of the current tone list
+;   starts: the sum of the first C group sizes, page params base.. (RAM 0x660 + base: base 12 for A = 1, 17 for A = 3,
+;   else 18), the per-group byte counts SeMenu_ProcessEffect copied there from bytes +3.. of the 25-byte record it
+;   loads (group count at +2 -> 0x6AC). Basis: callers + body -- SeTonTon1_OnColumn2 (A = 0), SeTonHyb1_OnColumn2 (A =
+;   1) and SeMenuTitleFunc_DispatchSwitch (A = 3) step the group index C within (0x6AC), call it, and send the result
+;   as the tone index (SeMenu_SendPartToneIndex / SeMenu_SendToneIndex); SeMenu_ProcessEffect writes the same three
+;   bases for modes 0 / 1 / 3.
+SeMenu_GetGroupFirstToneIndex:
 	dec	8, xsp
 	push	xiz
 	ld	(xsp+6), xde
 	ld	(xsp+10), c
 	cp	a, 1:i3
-	jr	nz, SeMenu_ApplySynthParam_Data_Skip2
+	jr	nz, SeMenu_GetGroupFirstToneIndex_Skip2
 	ldi_erpb 250, 12
-	jr	SeMenu_ApplySynthParam_Data_Join2
-SeMenu_ApplySynthParam_Data_Skip2:
+	jr	SeMenu_GetGroupFirstToneIndex_Join2
+SeMenu_GetGroupFirstToneIndex_Skip2:
 	ldi_erpb 250, 18
 	cp	a, 3:i3
-	jr	nz, SeMenu_ApplySynthParam_Data_Join2
+	jr	nz, SeMenu_GetGroupFirstToneIndex_Join2
 	ldi_erpb 250, 17
-SeMenu_ApplySynthParam_Data_Join2:
+SeMenu_GetGroupFirstToneIndex_Join2:
 	ld	iz, 0:i3
 	ldib_erp	251, 0
 	cp	(xsp+10), 0
-	jr	ule, SeMenu_ApplySynthParam_Data_Skip3
-SeMenu_ApplySynthParam_Data_Loop:
+	jr	ule, SeMenu_GetGroupFirstToneIndex_Skip3
+SeMenu_GetGroupFirstToneIndex_Loop:
 	ldto_berp	a, 250
 	addb_erp	a, 251
 	extz	wa
@@ -5894,8 +5901,8 @@ SeMenu_ApplySynthParam_Data_Loop:
 	inc1b_erp	251
 	ldto_berp	a, 251
 	cp	a, (xsp+10)
-	jr	c, SeMenu_ApplySynthParam_Data_Loop
-SeMenu_ApplySynthParam_Data_Skip3:
+	jr	c, SeMenu_GetGroupFirstToneIndex_Loop
+SeMenu_GetGroupFirstToneIndex_Skip3:
 	ld	xwa, (xsp+6)
 	ld	(xwa), iz
 	pop	xiz
@@ -5907,26 +5914,26 @@ SeMenu_CopyWriteUpdate_Step3_Helper11:
 	ld	xiz, xde
 	lda	xde, (xsp+4)
 	cp	a, 3:i3
-	jr	nz, SeMenu_ApplySynthParam_Data_Skip4
+	jr	nz, SeMenu_CopyWriteUpdate_Step3_Helper11_Skip4
 	add	c, 14
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-	jr	SeMenu_ApplySynthParam_Data_Join
-SeMenu_ApplySynthParam_Data_Skip4:
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper11_Join
+SeMenu_CopyWriteUpdate_Step3_Helper11_Skip4:
 	cp	a, 1:i3
-	jr	nz, SeMenu_ApplySynthParam_Data_Skip
+	jr	nz, SeMenu_CopyWriteUpdate_Step3_Helper11_Skip
 	inc	7, c
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-	jr	SeMenu_ApplySynthParam_Data_Join
-SeMenu_ApplySynthParam_Data_Skip:
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper11_Join
+SeMenu_CopyWriteUpdate_Step3_Helper11_Skip:
 	add	c, 13
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-SeMenu_ApplySynthParam_Data_Join:
+SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	calr	SeMenu_LoadPartParam
 	ld	a, (xsp+4)
 	ld	(xiz), a

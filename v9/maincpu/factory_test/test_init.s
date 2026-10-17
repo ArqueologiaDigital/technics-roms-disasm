@@ -380,7 +380,7 @@ RegHamaTitle2_Entry:
 
 ; SendEventWithParam -- Sends event 0x1c00025 with xwa as parameter via 0xfa9660
 ; Args: xwa = event parameter (moved to xde)
-SendEvent_Entry:
+DbMemo_SendString:
 	ld xde, xwa
 	ld xwa, 0xffffffff
 	ld xbc, EVT_MEMO_DRAW
@@ -402,17 +402,17 @@ HamaEvtDisp_LifecycleCheck:
 	cp xde, 0x8a
 	jr nz, HamaEvtDisp_Return
 	lda xwa, (HamaEvtDisp_LifecycleCheck_Str_LOAD:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 	calr CheckFDStatusLoad_Entry
 	lda xwa, (HamaEvtDisp_LifecycleCheck_Str_LOAD_END:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 	jr HamaEvtDisp_Return
 HamaEvtDisp_ExtBootstrap:
 	lda xwa, (HamaEvtDisp_ExtBootstrap_Str_GO:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 	calr LoadExtROM_Entry
 	lda xwa, (HamaEvtDisp_ExtBootstrap_Str_Finishd:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 HamaEvtDisp_Return:
 	ld xhl, 0:i3
 	ret
@@ -428,7 +428,7 @@ CheckFDStatusLoad_Entry:
 	cp hl, 3:i3
 	jr z, CheckFDStatusLoad_DoLoad
 	lda xwa, (CheckFDStatusLoad_Entry_Str_Media_Error:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 	jr CheckFDStatusLoad_Return
 CheckFDStatusLoad_DoLoad:
 	lda xwa, (CheckFDStatusLoad_DoLoad_Str_rb:24)
@@ -441,7 +441,7 @@ CheckFDStatusLoad_DoLoad:
 	or xiz, xiz
 	jr nz, CheckFDStatusLoad_Transfer
 	lda xwa, (CheckFDStatusLoad_DoLoad_Str_Cannot_open:24)
-	calr SendEvent_Entry
+	calr DbMemo_SendString
 	jr CheckFDStatusLoad_Return
 CheckFDStatusLoad_Transfer:
 	push xiz
@@ -470,7 +470,7 @@ LoadExtROM_Entry:
 	cp hl, 0:i3
 	jr z, LoadExtROM_JumpEntry
 	lda xwa, (LoadExtROM_Entry_Str_Different_ID:24)
-	jrl SendEvent_Entry
+	jrl DbMemo_SendString
 LoadExtROM_JumpEntry:
 	ld xhl, 0x200008
 	lda xwa, (0x027ed2:24)

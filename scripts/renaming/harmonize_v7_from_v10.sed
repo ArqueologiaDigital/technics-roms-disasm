@@ -2270,3 +2270,27 @@ s/\bCharMap_Preamble_Table\b/CharMap_InitFuncTable/g
 s/\bSubsys_HandlerTable11\b/SoundData_InitFuncTable/g
 s/\bSubsys_HandlerTable01\b/COMM_InitFuncTable/g
 s/\bSoundRam_HandlerTable\b/SoundRam_InitFuncTable/g
+# run 2026-10-17
+s/\bSeMenu_ShowConfirmDialog_Sub_Data_3\b/SeTouchCurve_Part1CellRecords/g
+s/\bMidiPkt_ArpConfigChain_Data_Helper7\b/MidiPkt_SendGroup_StyleImage/g
+s/\bMemConfig_Handler_4_Helper5_Helper\b/SqStep_ResetPositionState/g
+s/\bMidiStream_ExtDispatch_Mode3_Data\b/MidiCC_BankSelectModeTable/g
+s/\bMidiStream_ExtendedDispatch_Data\b/MidiRx_ProgramChangeModeTable/g
+s/\bAccPatch_SlotScanByteData_0x38\b/AccPatch_GetSlotBeatsAndMeasures/g
+s/\bMidiVoiceNote_LookupMode1_Data\b/MidiVoiceNote_PartAssignsD1D2/g
+s/\bSndParam_RegisterBitfield_Data\b/SndParam_SetRegWord/g
+s/\bSubCPU_ToneParamRet_Helper14\b/SqStep_ClearRow2CellRecords/g
+s/\bSubCPU_ToneParamRet_Helper15\b/SqStep_ClearRow3CellRecords/g
+s/\bSubCPU_ToneParamRet_Helper18\b/SqStep_PeekNextEvent/g
+s/\bMidiStream_HandleNoteCC_Body\b/MidiStream_RunStatus_Mode3/g
+s/\bSeMenu_ApplySynthParam_Data\b/SeMenu_GetGroupFirstToneIndex/g
+s/\bAccScreen_DataBlock_Data_3\b/CmpStep_NoteEntryFrameRecords/g
+s/\bAccScreen_DataBlock_Data_4\b/CmpStep_ValueFieldRecords/g
+s/\bAccScreen_DataBlock_Data_5\b/CmpStep_NoteEntryAreaBand/g
+s/\bHdaeRom_DataDispatch_Block\b/SoundRam_WriteIdAndChecksum/g
+s/\bAccDraw_Secondary_Helper6\b/AccGraphics_BoundOp04/g
+s/\bScoop_SpecialMode_Data\b/SeqData_ChainPrevSrcBlock/g
+s/\bSeScreenData_0x1140\b/SeTouchCurve_AreaFill4Part/g
+s/\bSendEvent_Entry\b/DbMemo_SendString/g
+s/\bStartPlay_Body\b/MIDI_SystemMessage_OnStart/g
+s/\bDispatch_Data\b/MidiSysMsg_DecodeDeltaTime/g

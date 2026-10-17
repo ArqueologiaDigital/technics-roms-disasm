@@ -13935,7 +13935,7 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Return4:
 	ret
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper:
 	calr	AccPatch_InitCurrentSlotPointer
-	calr	AccPatch_CheckAndInitDemo_Helper2
+	calr	AccPatch_GetSlotBeatsAndMeasures
 	ld	w, 0:opc
 	mul	wa, c
 	calr	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper
@@ -14077,7 +14077,7 @@ AccPatch_CheckAndInitDemo_Helper:
 	jr	nc, AccPatch_CheckAndInitDemo_Return
 	calr	AccPatch_InitCurrentSlotPointer
 	calr	AccPatch_SlotScanByteData
-	calr	AccPatch_CheckAndInitDemo_Helper2
+	calr	AccPatch_GetSlotBeatsAndMeasures
 	ld	e, c
 	ld	c, 1:opc
 AccPatch_CheckAndInitDemo_Join:
@@ -14138,7 +14138,7 @@ AccPatch_SlotScanByteData_Skip:
 	jr	AccPatch_SlotScanByteData_Return2
 AccPatch_SlotScanByteData_Return2:
 	ret
-AccPatch_CheckAndInitDemo_Helper2:
+AccPatch_GetSlotBeatsAndMeasures:
 	calr	AccPatch_GetCurrentSlotAddr
 	ld	xwa, 0:i3
 	ld	a, (xiy+12)
@@ -26636,7 +26636,7 @@ TimeSig_DisplayStrings_Code_Helper2:
 	ld	(0x34d6:16), l
 	push	h
 	push	xix
-	call	AccPatch_CheckAndInitDemo_Helper2
+	call	AccPatch_GetSlotBeatsAndMeasures
 	pop	xix
 	pop	h
 	pop	(0x34d6:16)
@@ -29464,7 +29464,7 @@ AccPatch_ResolveEntryAddr_Skip:
 	calr	AccPatch_AppendPatternEndCode
 	ret
 AccPatch_ResolveEntryAddr_Helper4:
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -29486,7 +29486,7 @@ AccPatch_ResolveEntryAddr_Join2:
 	jr	AccPatch_ResolveEntryAddr_Join2
 AccPatch_ResolveEntryAddr_Return2:
 	ret
-AccPatch_ResolveEntryAddr_Helper5:
+AccPatch_GetMeasureSourceStream:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 4
 	add	xbc, 0x380a
@@ -29756,7 +29756,7 @@ AccVoice_SetupSlots_ForEachSlot_Skip10:
 AccPatch_ResolveEntryAddr_Helper11:
 	ld	a, 1:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -29765,7 +29765,7 @@ AccPatch_ResolveEntryAddr_Helper11:
 	ld	(xbc), xwa
 	ld	a, 2:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -29774,7 +29774,7 @@ AccPatch_ResolveEntryAddr_Helper11:
 	ld	(xbc), xwa
 	ld	a, 4:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -33928,7 +33928,7 @@ AccScreen_DataBlock:
 	call	SeGfx_BoundOp06_PrintWord
 	pop	xwa
 	ret
-AccDraw_Secondary_Helper:
+AccGraphics_BoundOp04:
 	push	xwa
 	ld	xwa, xiy
 	call	ColorBlit_Variant_ByteData
@@ -33964,7 +33964,7 @@ AccScreen_DataBlock_Code:
 	calr	AccScreen_DrawWall
 	ld	(COLORBLIT_MODE:24), 2
 	ld	xiy, AccScreen_DataBlock_Data_2
-	ld	xix, AccScreen_DataBlock_Data_3
+	ld	xix, CmpStep_NoteEntryFrameRecords
 	calr	AccAudio_DataBlock1
 	calr	AccDraw_Secondary_Helper6
 	calr	AccDraw_Secondary_Helper7
@@ -33974,7 +33974,7 @@ AccScreen_DataBlock_Code2:
 	calr	AccDraw_Secondary_Helper5
 	ld	(COLORBLIT_MODE:24), 1
 	ld	xiy, AccScreen_DataBlock_Data_6
-	calr	AccDraw_Secondary_Helper
+	calr	AccGraphics_BoundOp04
 	calr	AccDraw_Secondary_Helper11
 	ld	(COLORBLIT_MODE:24), 0
 	calr	AccScreen_SelectorToWidgetIndex
@@ -33984,8 +33984,8 @@ AccScreen_DataBlock_Code2:
 	ldmm8	14782, 14148
 	ldmm8	14783, 14149
 	ldmm8	14784, 14106
-	ld	xiy, AccScreen_DataBlock_Data_4
-	ld	xix, AccScreen_DataBlock_Data_5
+	ld	xiy, CmpStep_ValueFieldRecords
+	ld	xix, CmpStep_NoteEntryAreaBand
 	calr	AccGraphics_RenderStart
 	ld	(COLORBLIT_MODE:24), 0
 	ldmm8	14779, 14098
@@ -34217,13 +34217,13 @@ AccDraw_Secondary_Helper5:
 	ld	(COLORBLIT_MODE:24), 2
 	cp	(0x3712:16), 4
 	jr	nz, AccDraw_Secondary_Skip
-	ld	xiy, AccScreen_DataBlock_Data_3
-	ld	xix, AccScreen_DataBlock_Data_4
+	ld	xiy, CmpStep_NoteEntryFrameRecords
+	ld	xix, CmpStep_ValueFieldRecords
 	calr	AccAudio_DataBlock1
 	jr	AccDraw_Secondary_Return4
 AccDraw_Secondary_Skip:
-	ld	xiy, AccScreen_DataBlock_Data_5
-	calr	AccDraw_Secondary_Helper
+	ld	xiy, CmpStep_NoteEntryAreaBand
+	calr	AccGraphics_BoundOp04
 AccDraw_Secondary_Return4:
 	ret
 AccDraw_Secondary_Helper6:
@@ -34622,7 +34622,7 @@ AccScreen_DataBlock_Data_2:
 	.byte 0xec, 0x00, 0x0a, 0x0a, 0xf5, 0x00, 0xd2, 0x00, 0x13, 0x01, 0xec, 0x00, 0x0a, 0x0a, 0x1d, 0x01	; |................|
 	.byte 0xd2, 0x00, 0x3b, 0x01, 0xec, 0x00, 0x01, 0x0a, 0x05, 0x00, 0xdf, 0x00, 0x23, 0x00, 0xdf, 0x00	; |..;.........#...|
 	.byte	0x01, 0x0a, 0xcd, 0x00, 0xdf, 0x00, 0xeb, 0x00, 0xdf, 0x00	; |..............NO|
-AccScreen_DataBlock_Data_3:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
+CmpStep_NoteEntryFrameRecords:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
 	.byte 0x54, 0x45, 0x20, 0x56, 0x45, 0x4c, 0x20, 0x20, 0x20, 0x4c, 0x45, 0x4e, 0x47, 0x54, 0x48, 0x06	; |TE VEL   LENGTH.|
 	.byte 0x14, 0x27, 0x21, 0x8d, 0x20, 0x20, 0x20, 0x20, 0x8d, 0x20, 0x20, 0x20, 0x20, 0x8d, 0x20, 0x20	; |.'!.    .    .  |
 	.byte 0x20, 0x20, 0x8d, 0x06, 0x14, 0x2f, 0x23, 0x8e, 0x20, 0x20, 0x20, 0x20, 0x8e, 0x20, 0x20, 0x20	; |  .../#.    .   |
@@ -34632,7 +34632,7 @@ AccScreen_DataBlock_Data_3:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
 	.byte 0x0a, 0x2d, 0x00, 0xdf, 0x00, 0x4b, 0x00, 0xdf, 0x00, 0x01, 0x0a, 0x55, 0x00, 0xdf, 0x00, 0x73	; |.-...K.....U...s|
 	.byte 0x00, 0xdf, 0x00, 0x01, 0x0a, 0x7d, 0x00, 0xdf, 0x00, 0x9b, 0x00, 0xdf, 0x00, 0x01, 0x0a, 0xa5	; |.....}..........|
 	.byte	0x00, 0xdf, 0x00, 0xc3, 0x00, 0xdf, 0x00	; |..........9.. ..|
-AccScreen_DataBlock_Data_4:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09, 0xb1
+CmpStep_ValueFieldRecords:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09, 0xb1
 	.byte 0xf6, 0x00, 0x07, 0x00, 0x1a, 0x04, 0x02, 0x0f, 0xb8, 0x39, 0x07, 0x00, 0x20, 0x5c, 0xae, 0xf6	; |.........9.. \..|
 	.byte 0x00, 0x08, 0x00, 0x28, 0x04, 0x02, 0x0f, 0xbc, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00	; |...(....9.......|
 	.byte 0x01, 0x00, 0x21, 0x08, 0x02, 0x0f, 0xbd, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00, 0x01	; |..!....9........|
@@ -34640,7 +34640,7 @@ AccScreen_DataBlock_Data_4:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09
 	.byte 0x81, 0x11, 0x02, 0x0f, 0xbf, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00, 0x01, 0x00, 0x31	; |.....9.........1|
 	.byte 0x16, 0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x8b, 0xac, 0xf6, 0x00, 0x00, 0x0a, 0xc0, 0x39	; |...............9|
 	.byte	0x0f, 0x00, 0x06, 0x83, 0x1b, 0x01	; |.............8..|
-AccScreen_DataBlock_Data_5:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x38, 0xac, 0xf6
+CmpStep_NoteEntryAreaBand:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x38, 0xac, 0xf6
 	.byte	0x00, 0x1d, 0x1f, 0x14, 0x00, 0x28, 0x00	; |.....(....9...M.|
 AccScreen_DataBlock_Data_7:	.byte	0x02, 0x0f, 0xbb, 0x39, 0x01, 0x00, 0x06, 0x4d, 0xac
 	.byte 0xf6, 0x00, 0x05, 0x00, 0x31, 0x1f, 0x20, 0x50, 0x48, 0x52, 0x53, 0x56, 0x41, 0x4c, 0x55, 0x45	; |....1. PHRSVALUE|

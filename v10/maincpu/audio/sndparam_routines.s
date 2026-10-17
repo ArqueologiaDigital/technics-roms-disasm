@@ -1337,7 +1337,15 @@ SndParam_RegisterMultiField_Data_Join:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
-SndParam_RegisterBitfield_Data:
+; SndParam_SetRegWord: Register accessor 5 of the sound-parameter descriptors (word-list parameters): clamps the value
+;   BC to the descriptor's +7..+8 and translates it through the 16-bit list SndParam_WordValueListPtrs[+11]; when that
+;   word differs from the one in the parameter's slot (block SndParam_BlockRamPtrs[+4], word +5) it stores it there
+;   (not in mode DE = 4) and fills the change record at 0x9710 (+2 = 1) with the two byte writes {block, offset, low}
+;   and {block, offset + 1, high}. Returns XHL = 0x9710; 0xFFFF at +0 when the block has no RAM. Basis: callers + body
+;   -- entry 5 of SndParam_RegisterHandlers, picked by descriptor byte +0x0D in SndParam_DispatchCallback; the
+;   descriptor that uses it (MidiChParam_Entry_052) reads back with SndParam_ReadRegWord, the index of the stored word
+;   in the same list.
+SndParam_SetRegWord:
 	dec	2, xsp
 	push	xiz
 	ld	(xsp+4), de
@@ -1349,7 +1357,7 @@ SndParam_RegisterBitfield_Data:
 	lda	xix, (SndParam_BlockRamPtrs:24)
 	ld	xiz, (xix+bc)
 	or xiz, xiz
-	jrl	z, SndParam_RegisterBitfield_Data_Skip3
+	jrl	z, SndParam_SetRegWord_Skip3
 	ld	xiy, SndParam_ClearRecordTemplate
 	ld	xix, 0x9710
 	ld	bc, 6:i3
@@ -1359,15 +1367,15 @@ SndParam_RegisterBitfield_Data:
 	ld	c, (xwa+7)
 	extz	bc
 	cp	bc, de
-	jr	le, SndParam_RegisterBitfield_Data_Skip
+	jr	le, SndParam_SetRegWord_Skip
 	ld	de, bc
-SndParam_RegisterBitfield_Data_Skip:
+SndParam_SetRegWord_Skip:
 	ld	c, (xwa+8)
 	extz	bc
 	cp	bc, de
-	jr	ge, SndParam_RegisterBitfield_Data_Skip2
+	jr	ge, SndParam_SetRegWord_Skip2
 	ld	de, bc
-SndParam_RegisterBitfield_Data_Skip2:
+SndParam_SetRegWord_Skip2:
 	ld	c, (xwa+11)
 	sla	c, 2
 	lda	xiy, (SndParam_WordValueListPtrs:24)
@@ -1383,11 +1391,11 @@ SndParam_RegisterBitfield_Data_Skip2:
 	exts	xbc
 	add	xbc, xiz
 	cp	(xbc), de
-	jr	z, SndParam_RegisterBitfield_Data_Join
+	jr	z, SndParam_SetRegWord_Join
 	cpw	(xsp+4), 4
-	jr	z, SndParam_RegisterBitfield_Data_Skip4
+	jr	z, SndParam_SetRegWord_Skip4
 	ld	(xbc), de
-SndParam_RegisterBitfield_Data_Skip4:
+SndParam_SetRegWord_Skip4:
 	ld	c, (xhl)
 	ld	(xix+4), c
 	ld	c, (xiy)
@@ -1406,10 +1414,10 @@ SndParam_RegisterBitfield_Data_Skip4:
 	ld	(xix+10), e
 	ld	a, (xbc)
 	ld	(xix+11), a
-	jr	SndParam_RegisterBitfield_Data_Join
-SndParam_RegisterBitfield_Data_Skip3:
+	jr	SndParam_SetRegWord_Join
+SndParam_SetRegWord_Skip3:
 	ldw	(0x9710:16), 0xffff
-SndParam_RegisterBitfield_Data_Join:
+SndParam_SetRegWord_Join:
 	ld	xhl, 0x9710
 	pop	xiz
 	inc	2, xsp
@@ -2139,7 +2147,7 @@ SndParam_NotifyQuick_Data_Skip:
 SndParam_NotifyQuick_Data_Skip2:
 	ld	xwa, xiz
 	ld	de, (xsp+4)
-	calr	SndParam_RegisterBitfield_Data
+	calr	SndParam_SetRegWord
 	ld	(0x9770:16), xhl
 SndParam_NotifyQuick_Data_Skip3:
 	ld	xhl, (0x9770:16)

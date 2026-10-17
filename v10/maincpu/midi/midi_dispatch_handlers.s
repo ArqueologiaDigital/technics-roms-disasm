@@ -11268,13 +11268,13 @@ SysEx_SendAllData:
 	ret
 ; SysEx_SendStyleImageData: Code-1 (STYLE IMAGE) sender of SysEx_InitiateSend: points the send-side total 0xBCBC at
 ;   the style image (MidiPkt_SetXferTotal_StyleImage) and tail-jumps into the style-image group of
-;   MidiPkt_ArpConfigChain_Data (MidiPkt_ArpConfigChain_Data_Helper7: header, tables and pattern pool blocks, then the
+;   MidiPkt_ArpConfigChain_Data (MidiPkt_SendGroup_StyleImage: header, tables and pattern pool blocks, then the
 ;   group end). Basis: callers + body -- only SysEx_InitiateSend_SendStyleImage (entry 1 of SysExSend_SwitchOffsets)
 ;   calls it; same shape as SysEx_SendSequencerData / SysEx_SendSoundMemoryData.
 SysEx_SendStyleImageData:
 	ld	xwa, 0xbcbc
 	call	MidiPkt_SetXferTotal_StyleImage
-	jrl	MidiPkt_ArpConfigChain_Data_Helper7
+	jrl	MidiPkt_SendGroup_StyleImage
 ; SysEx_SendSequencerData: Code-2 (SEQUENCER) sender of SysEx_InitiateSend: points the send-side total descriptor
 ;   0xBCBC at the whole sequencer transfer (MidiPkt_SetXferTotal_SeqData) and tail-jumps into the sequencer group of
 ;   MidiPkt_ArpConfigChain_Data (MidiPkt_ArpConfigChain_Data_Join: current song, song slots, event memory, then F0 50
@@ -11388,7 +11388,7 @@ MidiPkt_ArpConfigChain_Data:
 	calr	MidiPkt_SendGroup_Panel
 	calr	MidiPkt_SendGroup_SoundRam
 	calr	MidiPkt_SendGroup_AccompBlocks
-	calr	MidiPkt_ArpConfigChain_Data_Helper7
+	calr	MidiPkt_SendGroup_StyleImage
 	jrl	MidiPkt_ArpConfigChain_Data_Join
 ; MidiPkt_SendGroup_Panel: Sends the panel group of a MIDI bulk dump: block 1 = the live panel
 ;   (MidiPkt_ArpConfigChain_Data_Helper2: descriptor 0xBCCC from MidiPkt_SetXferBlock_LivePanel), block 2 = the 80
@@ -11481,7 +11481,14 @@ MidiPkt_ArpConfigChain_Data_Helper6:
 	call	SeqBuf_FlushNoteOffs
 	call	ArpQueue_ProcessAndSort_Data
 	ret
-MidiPkt_ArpConfigChain_Data_Helper7:
+; MidiPkt_SendGroup_StyleImage: Sends the style-image group of a MIDI bulk dump unless AccWrap_ReturnZero(3) returns
+;   0xFFFF: block 1 = the image header (MidiPkt_ArpConfigChain_Data_Helper8, descriptor MidiPkt_ArpPopReturn_Helper5),
+;   block 2 = its tables (_Helper9, MidiPkt_ArpPopReturn_Helper6), block 3 = the pattern pool (_Helper10,
+;   MidiPkt_SetXferBlock_StyleImagePool), then the group end (_Helper18). Basis: callers + body --
+;   MidiPkt_ArpConfigChain_Data (send code 0, ALL) calls it fourth, and the code-1 (STYLE IMAGE) sender
+;   SysEx_ResetAndReturn_Helper tail-jumps here after pointing the send total at the style image; the style-image
+;   sibling of the groups batch h2 names MidiPkt_SendGroup_Panel / _SoundRam / _AccompBlocks.
+MidiPkt_SendGroup_StyleImage:
 	ld	wa, 3:i3
 	call	AccWrap_ReturnZero
 	cp	hl, 0xffff

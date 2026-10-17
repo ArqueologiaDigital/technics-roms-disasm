@@ -14002,7 +14002,7 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Return4:
 	ret
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper:
 	calr	AccPatch_InitCurrentSlotPointer
-	calr	AccPatch_CheckAndInitDemo_Helper2
+	calr	AccPatch_GetSlotBeatsAndMeasures
 	ld	w, 0:opc
 	mul	wa, c
 	calr	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper
@@ -14144,7 +14144,7 @@ AccPatch_CheckAndInitDemo_Helper:
 	jr	nc, AccPatch_CheckAndInitDemo_Return
 	calr	AccPatch_InitCurrentSlotPointer
 	calr	AccPatch_SlotScanByteData
-	calr	AccPatch_CheckAndInitDemo_Helper2
+	calr	AccPatch_GetSlotBeatsAndMeasures
 	ld	e, c
 	ld	c, 1:opc
 AccPatch_CheckAndInitDemo_Join:
@@ -14205,7 +14205,13 @@ AccPatch_SlotScanByteData_Skip:
 	jr	AccPatch_SlotScanByteData_Return2
 AccPatch_SlotScanByteData_Return2:
 	ret
-AccPatch_CheckAndInitDemo_Helper2:
+; AccPatch_GetSlotBeatsAndMeasures: Returns the measure layout of the current patch slot record
+;   (AccPatch_GetCurrentSlotAddr, XIY = RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * (0x34D6)): A = beats per measure, the
+;   byte of AccTone_LookupByProgram_Table indexed by the slot's time-signature code (+12), and C = number of measures,
+;   the last measure index (+13) + 1. Basis: callers + body -- AccPatch_CheckAndInitDemo_Helper loops C - 1 times
+;   skipping A beat codes per measure and stores each measure start; Not_sure_maybe_SOFT_VERSION_related_Code_Helper
+;   multiplies A * C (the slot's total beats); TimeSig_DisplayStrings_Code_Helper2 takes A for another slot.
+AccPatch_GetSlotBeatsAndMeasures:
 	calr	AccPatch_GetCurrentSlotAddr
 	ld	xwa, 0:i3
 	ld	a, (xiy+12)
@@ -26973,7 +26979,7 @@ TimeSig_DisplayStrings_Code_Helper2:
 	ld	(0x34d6:16), l
 	push	h
 	push	xix
-	call	AccPatch_CheckAndInitDemo_Helper2
+	call	AccPatch_GetSlotBeatsAndMeasures
 	pop	xix
 	pop	h
 	pop	(0x34d6:16)
@@ -29869,7 +29875,7 @@ AccPatch_ResolveEntryAddr_Skip:
 	calr	AccPatch_AppendPatternEndCode
 	ret
 AccPatch_ResolveEntryAddr_Helper4:
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -29891,7 +29897,13 @@ AccPatch_ResolveEntryAddr_Join2:
 	jr	AccPatch_ResolveEntryAddr_Join2
 AccPatch_ResolveEntryAddr_Return2:
 	ret
-AccPatch_ResolveEntryAddr_Helper5:
+; AccPatch_GetMeasureSourceStream: Returns in XWA the source-stream pointer of the selected accompaniment channel
+;   (one-hot 0x37C9, through Rhythm_MapChannelToDrumIndex) for measure (0x38D1): the long at 0x380A + 16 * drum index
+;   + 4 * measure, one of the four pointers RegPreset_Load_Loop stores per channel (pattern data + 6, via
+;   ChanAssign_Lookup_Found). Basis: callers + body -- AccPatch_ResolveEntryAddr_Helper4 (inside the per-measure loop
+;   of _Helper3, counter 0x38D1 up to (0x34D7)) and _Helper11 (for channels 1, 2 and 4) store the result as the
+;   channel's source stream at 0x3898 + 4 * drum, the slot AccPatch_CopyEventToCursor copies events from.
+AccPatch_GetMeasureSourceStream:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 4
 	add	xbc, 0x380a
@@ -30130,7 +30142,7 @@ AccVoice_SetupSlots_Apply:
 ;   AccPatch_GetCurrentSlotAddrXix): +12 = time-signature code (0x34D8), +13 = last measure index (0x34D7), +14 =
 ;   32, +15 = 0, +16/+17 = bytes from the tables at 0x38D2/0x38D9 for the drum-channel index, and the 16-character
 ;   name "Easy" at +64. Basis: callers + body -- AccVoice_SetupSlots_Apply (the slot setup whose comment lists it)
-;   calls it; AccPatch_CheckAndInitDemo_Helper2 reads +12 as the beats-per-measure index and +13 + 1 as the measure
+;   calls it; AccPatch_GetSlotBeatsAndMeasures reads +12 as the beats-per-measure index and +13 + 1 as the measure
 ;   count.
 AccPatch_InitEasySlotHeader:
 	calr	AccPatch_GetCurrentSlotAddrXix
@@ -30191,7 +30203,7 @@ AccVoice_SetupSlots_ForEachSlot_Skip10:
 AccPatch_ResolveEntryAddr_Helper11:
 	ld	a, 1:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -30200,7 +30212,7 @@ AccPatch_ResolveEntryAddr_Helper11:
 	ld	(xbc), xwa
 	ld	a, 2:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -30209,7 +30221,7 @@ AccPatch_ResolveEntryAddr_Helper11:
 	ld	(xbc), xwa
 	ld	a, 4:opc
 	ld	(0x37c9:16), a
-	calr	AccPatch_ResolveEntryAddr_Helper5
+	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
 	calr	Rhythm_MapChannelToDrumIndex
 	pop	xwa
@@ -34393,7 +34405,13 @@ AccScreen_DataBlock:
 	call	SeGfx_BoundOp06_PrintWord
 	pop	xwa
 	ret
-AccDraw_Secondary_Helper:
+; AccGraphics_BoundOp04: Draws one bound display record of op 04 at XIY: ColorBlit_Variant_ByteData colour-blits the
+;   {text cell, width, height} entry of the record's rectangle list that the masked and shifted RAM byte selects (in
+;   the current COLORBLIT_MODE); XWA preserved. The Composer screens' copy of the SeGfx_BoundOp0N single-record
+;   wrappers, beside AccDraw_Init (op 00), AccDraw_Secondary (op 02) and AccGraphics_DataBlock2 (op 03). Basis:
+;   callers + body -- the TT_CMSTEP draw functions pass it a single op-04 record: AccScreen_DataBlock_Data_6 (RAM
+;   0x39B9) in AccScreen_DataBlock_Code2 and CmpStep_NoteEntryAreaBand in AccDraw_Secondary_Helper5.
+AccGraphics_BoundOp04:
 	push	xwa
 	ld	xwa, xiy
 	call	ColorBlit_Variant_ByteData
@@ -34442,7 +34460,7 @@ AccScreen_DataBlock_Code:
 	calr	AccScreen_DrawWall
 	ld	(COLORBLIT_MODE:24), 2
 	ld	xiy, AccScreen_DataBlock_Data_2
-	ld	xix, AccScreen_DataBlock_Data_3
+	ld	xix, CmpStep_NoteEntryFrameRecords
 	calr	AccAudio_DataBlock1
 	calr	AccDraw_Secondary_Helper6
 	calr	AccDraw_Secondary_Helper7
@@ -34452,7 +34470,7 @@ AccScreen_DataBlock_Code2:
 	calr	AccDraw_Secondary_Helper5
 	ld	(COLORBLIT_MODE:24), 1
 	ld	xiy, AccScreen_DataBlock_Data_6
-	calr	AccDraw_Secondary_Helper
+	calr	AccGraphics_BoundOp04
 	calr	AccDraw_Secondary_Helper11
 	ld	(COLORBLIT_MODE:24), 0
 	calr	AccScreen_SelectorToWidgetIndex
@@ -34462,8 +34480,8 @@ AccScreen_DataBlock_Code2:
 	ldmm8	14782, 14148
 	ldmm8	14783, 14149
 	ldmm8	14784, 14106
-	ld	xiy, AccScreen_DataBlock_Data_4
-	ld	xix, AccScreen_DataBlock_Data_5
+	ld	xiy, CmpStep_ValueFieldRecords
+	ld	xix, CmpStep_NoteEntryAreaBand
 	calr	AccGraphics_RenderStart
 	ld	(COLORBLIT_MODE:24), 0
 	ldmm8	14779, 14098
@@ -34712,13 +34730,13 @@ AccDraw_Secondary_Helper5:
 	ld	(COLORBLIT_MODE:24), 2
 	cp	(0x3712:16), 4
 	jr	nz, AccDraw_Secondary_Skip
-	ld	xiy, AccScreen_DataBlock_Data_3
-	ld	xix, AccScreen_DataBlock_Data_4
+	ld	xiy, CmpStep_NoteEntryFrameRecords
+	ld	xix, CmpStep_ValueFieldRecords
 	calr	AccAudio_DataBlock1
 	jr	AccDraw_Secondary_Return4
 AccDraw_Secondary_Skip:
-	ld	xiy, AccScreen_DataBlock_Data_5
-	calr	AccDraw_Secondary_Helper
+	ld	xiy, CmpStep_NoteEntryAreaBand
+	calr	AccGraphics_BoundOp04
 AccDraw_Secondary_Return4:
 	ret
 AccDraw_Secondary_Helper6:
@@ -35117,7 +35135,13 @@ AccScreen_DataBlock_Data_2:
 	.byte 0xec, 0x00, 0x0a, 0x0a, 0xf5, 0x00, 0xd2, 0x00, 0x13, 0x01, 0xec, 0x00, 0x0a, 0x0a, 0x1d, 0x01	; |................|
 	.byte 0xd2, 0x00, 0x3b, 0x01, 0xec, 0x00, 0x01, 0x0a, 0x05, 0x00, 0xdf, 0x00, 0x23, 0x00, 0xdf, 0x00	; |..;.........#...|
 	.byte	0x01, 0x0a, 0xcd, 0x00, 0xdf, 0x00, 0xeb, 0x00, 0xdf, 0x00	; |..............NO|
-AccScreen_DataBlock_Data_3:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
+; CmpStep_NoteEntryFrameRecords: Static display records of the Composer STEP screen's note-entry row (list up to
+;   CmpStep_ValueFieldRecords): cell text "NOTE VEL LENGTH" at cell 0x1F1E, two rows of 0x8D / 0x8E glyphs (marks the
+;   main frame also places above and below its PART and MEAS / CURSOR fields) at cells 0x2127 / 0x232F, four op-0A
+;   boxes x = 45..75, 85..115, 125..155, 165..195 (y 210..236) and their op-01 dividers at y = 223.
+;   AccDraw_Secondary_Helper5 draws it when the step mode (0x3712) is 4; the label is also the end of the screen's
+;   main frame list (AccScreen_DataBlock_Data_2: "STEP RECORDING", PATTERN:, PART: ...). Basis: readers + bytes.
+CmpStep_NoteEntryFrameRecords:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
 	.byte 0x54, 0x45, 0x20, 0x56, 0x45, 0x4c, 0x20, 0x20, 0x20, 0x4c, 0x45, 0x4e, 0x47, 0x54, 0x48, 0x06	; |TE VEL   LENGTH.|
 	.byte 0x14, 0x27, 0x21, 0x8d, 0x20, 0x20, 0x20, 0x20, 0x8d, 0x20, 0x20, 0x20, 0x20, 0x8d, 0x20, 0x20	; |.'!.    .    .  |
 	.byte 0x20, 0x20, 0x8d, 0x06, 0x14, 0x2f, 0x23, 0x8e, 0x20, 0x20, 0x20, 0x20, 0x8e, 0x20, 0x20, 0x20	; |  .../#.    .   |
@@ -35127,7 +35151,13 @@ AccScreen_DataBlock_Data_3:	.byte	0x06, 0x15, 0x1e, 0x1f, 0x4e, 0x4f
 	.byte 0x0a, 0x2d, 0x00, 0xdf, 0x00, 0x4b, 0x00, 0xdf, 0x00, 0x01, 0x0a, 0x55, 0x00, 0xdf, 0x00, 0x73	; |.-...K.....U...s|
 	.byte 0x00, 0xdf, 0x00, 0x01, 0x0a, 0x7d, 0x00, 0xdf, 0x00, 0x9b, 0x00, 0xdf, 0x00, 0x01, 0x0a, 0xa5	; |.....}..........|
 	.byte	0x00, 0xdf, 0x00, 0xc3, 0x00, 0xdf, 0x00	; |..........9.. ..|
-AccScreen_DataBlock_Data_4:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09, 0xb1
+; CmpStep_ValueFieldRecords: Bound display records of the Composer STEP screen's values (list up to
+;   CmpStep_NoteEntryAreaBand): op-02 text fields for the pattern (RAM 0x39BB through the 7-character table "A-vari1"
+;   "A-vari2" ...), the part (0x39B8, 8-character "ACCOMP 1" .. "ACCOMP 3" "BASS" "DRUM") and four 1-digit values
+;   (0x39BC..0x39BF, mask 0x0F, table " 12345678"), then an op-04 and an op-00 record (0x39C0).
+;   AccScreen_DataBlock_Code2 draws them with AccGraphics_RenderStart; the label is also the end of
+;   CmpStep_NoteEntryFrameRecords. Basis: readers + bytes.
+CmpStep_ValueFieldRecords:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09, 0xb1
 	.byte 0xf6, 0x00, 0x07, 0x00, 0x1a, 0x04, 0x02, 0x0f, 0xb8, 0x39, 0x07, 0x00, 0x20, 0x5c, 0xae, 0xf6	; |.........9.. \..|
 	.byte 0x00, 0x08, 0x00, 0x28, 0x04, 0x02, 0x0f, 0xbc, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00	; |...(....9.......|
 	.byte 0x01, 0x00, 0x21, 0x08, 0x02, 0x0f, 0xbd, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00, 0x01	; |..!....9........|
@@ -35135,7 +35165,12 @@ AccScreen_DataBlock_Data_4:	.byte	0x02, 0x0f, 0xbb, 0x39, 0xff, 0x00, 0x20, 0x09
 	.byte 0x81, 0x11, 0x02, 0x0f, 0xbf, 0x39, 0x0f, 0x00, 0x06, 0x84, 0xae, 0xf6, 0x00, 0x01, 0x00, 0x31	; |.....9.........1|
 	.byte 0x16, 0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x8b, 0xac, 0xf6, 0x00, 0x00, 0x0a, 0xc0, 0x39	; |...............9|
 	.byte	0x0f, 0x00, 0x06, 0x83, 0x1b, 0x01	; |.............8..|
-AccScreen_DataBlock_Data_5:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x38, 0xac, 0xf6
+; CmpStep_NoteEntryAreaBand: One bound op-04 display record of the Composer STEP screen with RAM word 0, mask 0 and
+;   shift 0, so it always takes entry 0 of its rectangle list at 0xF6AC38: text cell 0x1F1D, 20 characters by 40
+;   pixels -- the note-entry row's area (its caption starts at cell 0x1F1E). AccDraw_Secondary_Helper5 colour-blits it
+;   (COLORBLIT_MODE 2, AccGraphics_BoundOp04) instead of drawing CmpStep_NoteEntryFrameRecords when the step mode
+;   (0x3712) is not 4. It is also the end of CmpStep_ValueFieldRecords. Basis: readers + bytes.
+CmpStep_NoteEntryAreaBand:	.byte	0x04, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x38, 0xac, 0xf6
 	.byte	0x00, 0x1d, 0x1f, 0x14, 0x00, 0x28, 0x00	; |.....(....9...M.|
 AccScreen_DataBlock_Data_7:	.byte	0x02, 0x0f, 0xbb, 0x39, 0x01, 0x00, 0x06, 0x4d, 0xac
 	.byte 0xf6, 0x00, 0x05, 0x00, 0x31, 0x1f, 0x20, 0x50, 0x48, 0x52, 0x53, 0x56, 0x41, 0x4c, 0x55, 0x45	; |....1. PHRSVALUE|

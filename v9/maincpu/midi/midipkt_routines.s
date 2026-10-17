@@ -1337,11 +1337,11 @@ MidiPkt_SysExBulkTransfer_Data_Case2:
 MidiPkt_SysExBulkTransfer_Data_Case3:
 	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join4
 MidiPkt_SysExBulkTransfer_Data_Case4:
-	jrl	SysEx_ApplyToSlot4B_Data
+	jrl	SysEx_ApplyGsReverbLevel
 MidiPkt_SysExBulkTransfer_Data_Case5:
-	jrl	SysEx_ApplyToSlot49_Data
+	jrl	SysEx_ApplyGsChorusMacro
 MidiPkt_SysExBulkTransfer_Data_Case6:
-	calr	SysEx_ApplyToSlot49_Format_Data
+	calr	SysEx_ApplyGsChorusLevel
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper:
 	lda	xde, (0x9644:16)

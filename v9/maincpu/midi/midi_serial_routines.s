@@ -453,7 +453,7 @@ Transport_NoClockSourcePath:
 	bit 2, (0x28a7:16)
 	jr nz, Transport_NoClockReturn
 	cp d, 0xfa
-	jr z, StartPlay_Body
+	jr z, MIDI_SystemMessage_OnStart
 	cp d, 0xfb
 	jrl z, Continue_SetRunning
 
@@ -472,7 +472,7 @@ MIDI_START_PLAYBACK_REQUEST:
 StartPlay_Return:
 	ret
 
-StartPlay_Body:
+MIDI_SystemMessage_OnStart:
 	set 5, (0x28ac:16)
 	ld (1108:16), 0
 	cpw (0xf19e:16), 0
@@ -614,7 +614,7 @@ AltClk_NoMatchReturn:
 AltClk_StartArmTx:
 	set 1, (1065:16)
 	ld (234:16), 221
-	jrl StartPlay_Body
+	jrl MIDI_SystemMessage_OnStart
 
 AltClk_ContinueArmTx:
 	bit 0, (0x28a7:16)
