@@ -1347,180 +1347,180 @@ typedef struct __attribute__((packed)) {
     /* "" (+ 0xFF alignment byte): name of icon-table entry 176, one past IconIDProc_EntryCount (176); a NULL pointer follows it */
     /* "" (+ 0xFF alignment byte): name of icon-table entry 176, one past IconIDProc_EntryCount (176); a NULL pointer follows it */
     char IconName_Empty[2];
-    char i173_str[6];
-    char i172_str[6];
-    char i171_str[6];
-    char i170_str[6];
-    char i169_str[6];
-    char i168_str[6];
-    char i167_str[6];
-    char i166_str[6];
-    char i165_str[6];
-    char i164_str[6];
-    char i163_str[6];
-    char i162_str[6];
-    char i161_str[6];
-    char i160_str[6];
-    char i159_str[6];
-    char i158_str[6];
-    char i157_str[6];
-    char i156_str[6];
-    char i155_str[6];
-    char i154_str[6];
-    char i153_str[6];
-    char i152_str[6];
-    char i151_str[6];
-    char i150_str[6];
-    char i149_str[6];
-    char i148_str[6];
-    char i147_str[6];
-    char i146_str[6];
-    char i145_str[6];
-    char i144_str[6];
-    char i143_str[6];
-    char i142_str[6];
-    char i141_str[6];
-    char i140_str[6];
-    char i139_str[6];
-    char i138_str[6];
-    char i137_str[6];
-    char i136_str[6];
-    char i135_str[6];
-    char i134_str[6];
-    char i133_str[6];
-    char i132_str[6];
-    char i131_str[6];
-    char i130_str[6];
-    char i129_str[6];
-    char i128_str[6];
-    char i127_str[6];
-    char i126_str[6];
-    char i125_str[6];
-    char i124_str[6];
-    char i123_str[6];
-    char i122_str[6];
-    char i121_str[6];
-    char i120_str[6];
-    char i119_str[6];
-    char i118_str[6];
-    char i117_str[6];
-    char i116_str[6];
-    char i115_str[6];
-    char i114_str[6];
-    char i113_str[6];
-    char i112_str[6];
-    char i111_str[6];
-    char i110_str[6];
-    char i109_str[6];
-    char i108_str[6];
-    char i107_str[6];
-    char i106_str[6];
-    char i105_str[6];
-    char i104_str[6];
-    char i103_str[6];
-    char i102_str[6];
-    char i101_str[6];
-    char i100_str[6];
-    char i99_str[4];
-    char i98_str[4];
-    char i97_str[4];
-    char i96_str[4];
-    char i95_str[4];
-    char i94_str[4];
-    char i93_str[4];
-    char i92_str[4];
-    char i91_str[4];
-    char i90_str[4];
-    char i89_str[4];
-    char i88_str[4];
-    char i87_str[4];
-    char i86_str[4];
-    char i85_str[4];
-    char i84_str[4];
-    char i83_str[4];
-    char i82_str[4];
-    char i81_str[4];
-    char i80_str[4];
-    char i79_str[4];
-    char i78_str[4];
-    char i77_str[4];
-    char i76_str[4];
-    char i75_str[4];
-    char i74_str[4];
-    char i73_str[4];
-    char i72_str[4];
-    char i71_str[4];
-    char i70_str[4];
-    char i69_str[4];
-    char i68_str[4];
-    char i67_str[4];
-    char i66_str[4];
-    char i65_str[4];
-    char i64_str[4];
-    char i63_str[4];
-    char i62_str[4];
-    char i61_str[4];
-    char i60_str[4];
-    char i59_str[4];
-    char i58_str[4];
-    char i57_str[4];
-    char i56_str[4];
-    char i55_str[4];
-    char i54_str[4];
-    char i53_str[4];
-    char i52_str[4];
-    char i51_str[4];
-    char i50_str[4];
-    char i49_str[4];
-    char i48_str[4];
-    char i47_str[4];
-    char i46_str[4];
-    char i45_str[4];
-    char i44_str[4];
-    char i43_str[4];
-    char i42_str[4];
-    char i41_str[4];
-    char i40_str[4];
-    char i39_str[4];
-    char i38_str[4];
-    char i37_str[4];
-    char i36_str[4];
-    char i35_str[4];
-    char i34_str[4];
-    char i33_str[4];
-    char i32_str[4];
-    char i31_str[4];
-    char i30_str[4];
-    char i29_str[4];
-    char i28_str[4];
-    char i27_str[4];
-    char i26_str[4];
-    char i25_str[4];
-    char i24_str[4];
-    char i23_str[4];
-    char i22_str[4];
-    char i21_str[4];
-    char i20_str[4];
-    char i19_str[4];
-    char i18_str[4];
-    char i17_str[4];
-    char i16_str[4];
-    char i15_str[4];
-    char i14_str[4];
-    char i13_str[4];
-    char i12_str[4];
-    char i11_str[4];
-    char i10_str[4];
-    char i9_str[4];
-    char i8_str[4];
-    char i7_str[4];
-    char i6_str[4];
-    char i5_str[4];
-    char i4_str[4];
-    char i3_str[4];
-    char i2_str[4];
-    char i1_str[4];
-    char I0_code[4];
+    char IconName_i173[6];
+    char IconName_i172[6];
+    char IconName_i171[6];
+    char IconName_i170[6];
+    char IconName_i169[6];
+    char IconName_i168[6];
+    char IconName_i167[6];
+    char IconName_i166[6];
+    char IconName_i165[6];
+    char IconName_i164[6];
+    char IconName_i163[6];
+    char IconName_i162[6];
+    char IconName_i161[6];
+    char IconName_i160[6];
+    char IconName_i159[6];
+    char IconName_i158[6];
+    char IconName_i157[6];
+    char IconName_i156[6];
+    char IconName_i155[6];
+    char IconName_i154[6];
+    char IconName_i153[6];
+    char IconName_i152[6];
+    char IconName_i151[6];
+    char IconName_i150[6];
+    char IconName_i149[6];
+    char IconName_i148[6];
+    char IconName_i147[6];
+    char IconName_i146[6];
+    char IconName_i145[6];
+    char IconName_i144[6];
+    char IconName_i143[6];
+    char IconName_i142[6];
+    char IconName_i141[6];
+    char IconName_i140[6];
+    char IconName_i139[6];
+    char IconName_i138[6];
+    char IconName_i137[6];
+    char IconName_i136[6];
+    char IconName_i135[6];
+    char IconName_i134[6];
+    char IconName_i133[6];
+    char IconName_i132[6];
+    char IconName_i131[6];
+    char IconName_i130[6];
+    char IconName_i129[6];
+    char IconName_i128[6];
+    char IconName_i127[6];
+    char IconName_i126[6];
+    char IconName_i125[6];
+    char IconName_i124[6];
+    char IconName_i123[6];
+    char IconName_i122[6];
+    char IconName_i121[6];
+    char IconName_i120[6];
+    char IconName_i119[6];
+    char IconName_i118[6];
+    char IconName_i117[6];
+    char IconName_i116[6];
+    char IconName_i115[6];
+    char IconName_i114[6];
+    char IconName_i113[6];
+    char IconName_i112[6];
+    char IconName_i111[6];
+    char IconName_i110[6];
+    char IconName_i109[6];
+    char IconName_i108[6];
+    char IconName_i107[6];
+    char IconName_i106[6];
+    char IconName_i105[6];
+    char IconName_i104[6];
+    char IconName_i103[6];
+    char IconName_i102[6];
+    char IconName_i101[6];
+    char IconName_i100[6];
+    char IconName_i99[4];
+    char IconName_i98[4];
+    char IconName_i97[4];
+    char IconName_i96[4];
+    char IconName_i95[4];
+    char IconName_i94[4];
+    char IconName_i93[4];
+    char IconName_i92[4];
+    char IconName_i91[4];
+    char IconName_i90[4];
+    char IconName_i89[4];
+    char IconName_i88[4];
+    char IconName_i87[4];
+    char IconName_i86[4];
+    char IconName_i85[4];
+    char IconName_i84[4];
+    char IconName_i83[4];
+    char IconName_i82[4];
+    char IconName_i81[4];
+    char IconName_i80[4];
+    char IconName_i79[4];
+    char IconName_i78[4];
+    char IconName_i77[4];
+    char IconName_i76[4];
+    char IconName_i75[4];
+    char IconName_i74[4];
+    char IconName_i73[4];
+    char IconName_i72[4];
+    char IconName_i71[4];
+    char IconName_i70[4];
+    char IconName_i69[4];
+    char IconName_i68[4];
+    char IconName_i67[4];
+    char IconName_i66[4];
+    char IconName_i65[4];
+    char IconName_i64[4];
+    char IconName_i63[4];
+    char IconName_i62[4];
+    char IconName_i61[4];
+    char IconName_i60[4];
+    char IconName_i59[4];
+    char IconName_i58[4];
+    char IconName_i57[4];
+    char IconName_i56[4];
+    char IconName_i55[4];
+    char IconName_i54[4];
+    char IconName_i53[4];
+    char IconName_i52[4];
+    char IconName_i51[4];
+    char IconName_i50[4];
+    char IconName_i49[4];
+    char IconName_i48[4];
+    char IconName_i47[4];
+    char IconName_i46[4];
+    char IconName_i45[4];
+    char IconName_i44[4];
+    char IconName_i43[4];
+    char IconName_i42[4];
+    char IconName_i41[4];
+    char IconName_i40[4];
+    char IconName_i39[4];
+    char IconName_i38[4];
+    char IconName_i37[4];
+    char IconName_i36[4];
+    char IconName_i35[4];
+    char IconName_i34[4];
+    char IconName_i33[4];
+    char IconName_i32[4];
+    char IconName_i31[4];
+    char IconName_i30[4];
+    char IconName_i29[4];
+    char IconName_i28[4];
+    char IconName_i27[4];
+    char IconName_i26[4];
+    char IconName_i25[4];
+    char IconName_i24[4];
+    char IconName_i23[4];
+    char IconName_i22[4];
+    char IconName_i21[4];
+    char IconName_i20[4];
+    char IconName_i19[4];
+    char IconName_i18[4];
+    char IconName_i17[4];
+    char IconName_i16[4];
+    char IconName_i15[4];
+    char IconName_i14[4];
+    char IconName_i13[4];
+    char IconName_i12[4];
+    char IconName_i11[4];
+    char IconName_i10[4];
+    char IconName_i9[4];
+    char IconName_i8[4];
+    char IconName_i7[4];
+    char IconName_i6[4];
+    char IconName_i5[4];
+    char IconName_i4[4];
+    char IconName_i3[4];
+    char IconName_i2[4];
+    char IconName_i1[4];
+    char IconName_i0[4];
     char Default_name[8];
     char None_str[6];
     /* IconBitmapNamePtrTable: 256 pointers (cut from ptrs_6 by split_naka_pointer_arrays.py) */
@@ -5118,180 +5118,180 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
     .IconIDProc_NameTable = {
         SELF(None_str),
         SELF(Default_name),
-        SELF(I0_code),
-        SELF(i1_str),
-        SELF(i2_str),
-        SELF(i3_str),
-        SELF(i4_str),
-        SELF(i5_str),
-        SELF(i6_str),
-        SELF(i7_str),
-        SELF(i8_str),
-        SELF(i9_str),
-        SELF(i10_str),
-        SELF(i11_str),
-        SELF(i12_str),
-        SELF(i13_str),
-        SELF(i14_str),
-        SELF(i15_str),
-        SELF(i16_str),
-        SELF(i17_str),
-        SELF(i18_str),
-        SELF(i19_str),
-        SELF(i20_str),
-        SELF(i21_str),
-        SELF(i22_str),
-        SELF(i23_str),
-        SELF(i24_str),
-        SELF(i25_str),
-        SELF(i26_str),
-        SELF(i27_str),
-        SELF(i28_str),
-        SELF(i29_str),
-        SELF(i30_str),
-        SELF(i31_str),
-        SELF(i32_str),
-        SELF(i33_str),
-        SELF(i34_str),
-        SELF(i35_str),
-        SELF(i36_str),
-        SELF(i37_str),
-        SELF(i38_str),
-        SELF(i39_str),
-        SELF(i40_str),
-        SELF(i41_str),
-        SELF(i42_str),
-        SELF(i43_str),
-        SELF(i44_str),
-        SELF(i45_str),
-        SELF(i46_str),
-        SELF(i47_str),
-        SELF(i48_str),
-        SELF(i49_str),
-        SELF(i50_str),
-        SELF(i51_str),
-        SELF(i52_str),
-        SELF(i53_str),
-        SELF(i54_str),
-        SELF(i55_str),
-        SELF(i56_str),
-        SELF(i57_str),
-        SELF(i58_str),
-        SELF(i59_str),
-        SELF(i60_str),
-        SELF(i61_str),
-        SELF(i62_str),
-        SELF(i63_str),
-        SELF(i64_str),
-        SELF(i65_str),
-        SELF(i66_str),
-        SELF(i67_str),
-        SELF(i68_str),
-        SELF(i69_str),
-        SELF(i70_str),
-        SELF(i71_str),
-        SELF(i72_str),
-        SELF(i73_str),
-        SELF(i74_str),
-        SELF(i75_str),
-        SELF(i76_str),
-        SELF(i77_str),
-        SELF(i78_str),
-        SELF(i79_str),
-        SELF(i80_str),
-        SELF(i81_str),
-        SELF(i82_str),
-        SELF(i83_str),
-        SELF(i84_str),
-        SELF(i85_str),
-        SELF(i86_str),
-        SELF(i87_str),
-        SELF(i88_str),
-        SELF(i89_str),
-        SELF(i90_str),
-        SELF(i91_str),
-        SELF(i92_str),
-        SELF(i93_str),
-        SELF(i94_str),
-        SELF(i95_str),
-        SELF(i96_str),
-        SELF(i97_str),
-        SELF(i98_str),
-        SELF(i99_str),
-        SELF(i100_str),
-        SELF(i101_str),
-        SELF(i102_str),
-        SELF(i103_str),
-        SELF(i104_str),
-        SELF(i105_str),
-        SELF(i106_str),
-        SELF(i107_str),
-        SELF(i108_str),
-        SELF(i109_str),
-        SELF(i110_str),
-        SELF(i111_str),
-        SELF(i112_str),
-        SELF(i113_str),
-        SELF(i114_str),
-        SELF(i115_str),
-        SELF(i116_str),
-        SELF(i117_str),
-        SELF(i118_str),
-        SELF(i119_str),
-        SELF(i120_str),
-        SELF(i121_str),
-        SELF(i122_str),
-        SELF(i123_str),
-        SELF(i124_str),
-        SELF(i125_str),
-        SELF(i126_str),
-        SELF(i127_str),
-        SELF(i128_str),
-        SELF(i129_str),
-        SELF(i130_str),
-        SELF(i131_str),
-        SELF(i132_str),
-        SELF(i133_str),
-        SELF(i134_str),
-        SELF(i135_str),
-        SELF(i136_str),
-        SELF(i137_str),
-        SELF(i138_str),
-        SELF(i139_str),
-        SELF(i140_str),
-        SELF(i141_str),
-        SELF(i142_str),
-        SELF(i143_str),
-        SELF(i144_str),
-        SELF(i145_str),
-        SELF(i146_str),
-        SELF(i147_str),
-        SELF(i148_str),
-        SELF(i149_str),
-        SELF(i150_str),
-        SELF(i151_str),
-        SELF(i152_str),
-        SELF(i153_str),
-        SELF(i154_str),
-        SELF(i155_str),
-        SELF(i156_str),
-        SELF(i157_str),
-        SELF(i158_str),
-        SELF(i159_str),
-        SELF(i160_str),
-        SELF(i161_str),
-        SELF(i162_str),
-        SELF(i163_str),
-        SELF(i164_str),
-        SELF(i165_str),
-        SELF(i166_str),
-        SELF(i167_str),
-        SELF(i168_str),
-        SELF(i169_str),
-        SELF(i170_str),
-        SELF(i171_str),
-        SELF(i172_str),
-        SELF(i173_str),
+        SELF(IconName_i0),
+        SELF(IconName_i1),
+        SELF(IconName_i2),
+        SELF(IconName_i3),
+        SELF(IconName_i4),
+        SELF(IconName_i5),
+        SELF(IconName_i6),
+        SELF(IconName_i7),
+        SELF(IconName_i8),
+        SELF(IconName_i9),
+        SELF(IconName_i10),
+        SELF(IconName_i11),
+        SELF(IconName_i12),
+        SELF(IconName_i13),
+        SELF(IconName_i14),
+        SELF(IconName_i15),
+        SELF(IconName_i16),
+        SELF(IconName_i17),
+        SELF(IconName_i18),
+        SELF(IconName_i19),
+        SELF(IconName_i20),
+        SELF(IconName_i21),
+        SELF(IconName_i22),
+        SELF(IconName_i23),
+        SELF(IconName_i24),
+        SELF(IconName_i25),
+        SELF(IconName_i26),
+        SELF(IconName_i27),
+        SELF(IconName_i28),
+        SELF(IconName_i29),
+        SELF(IconName_i30),
+        SELF(IconName_i31),
+        SELF(IconName_i32),
+        SELF(IconName_i33),
+        SELF(IconName_i34),
+        SELF(IconName_i35),
+        SELF(IconName_i36),
+        SELF(IconName_i37),
+        SELF(IconName_i38),
+        SELF(IconName_i39),
+        SELF(IconName_i40),
+        SELF(IconName_i41),
+        SELF(IconName_i42),
+        SELF(IconName_i43),
+        SELF(IconName_i44),
+        SELF(IconName_i45),
+        SELF(IconName_i46),
+        SELF(IconName_i47),
+        SELF(IconName_i48),
+        SELF(IconName_i49),
+        SELF(IconName_i50),
+        SELF(IconName_i51),
+        SELF(IconName_i52),
+        SELF(IconName_i53),
+        SELF(IconName_i54),
+        SELF(IconName_i55),
+        SELF(IconName_i56),
+        SELF(IconName_i57),
+        SELF(IconName_i58),
+        SELF(IconName_i59),
+        SELF(IconName_i60),
+        SELF(IconName_i61),
+        SELF(IconName_i62),
+        SELF(IconName_i63),
+        SELF(IconName_i64),
+        SELF(IconName_i65),
+        SELF(IconName_i66),
+        SELF(IconName_i67),
+        SELF(IconName_i68),
+        SELF(IconName_i69),
+        SELF(IconName_i70),
+        SELF(IconName_i71),
+        SELF(IconName_i72),
+        SELF(IconName_i73),
+        SELF(IconName_i74),
+        SELF(IconName_i75),
+        SELF(IconName_i76),
+        SELF(IconName_i77),
+        SELF(IconName_i78),
+        SELF(IconName_i79),
+        SELF(IconName_i80),
+        SELF(IconName_i81),
+        SELF(IconName_i82),
+        SELF(IconName_i83),
+        SELF(IconName_i84),
+        SELF(IconName_i85),
+        SELF(IconName_i86),
+        SELF(IconName_i87),
+        SELF(IconName_i88),
+        SELF(IconName_i89),
+        SELF(IconName_i90),
+        SELF(IconName_i91),
+        SELF(IconName_i92),
+        SELF(IconName_i93),
+        SELF(IconName_i94),
+        SELF(IconName_i95),
+        SELF(IconName_i96),
+        SELF(IconName_i97),
+        SELF(IconName_i98),
+        SELF(IconName_i99),
+        SELF(IconName_i100),
+        SELF(IconName_i101),
+        SELF(IconName_i102),
+        SELF(IconName_i103),
+        SELF(IconName_i104),
+        SELF(IconName_i105),
+        SELF(IconName_i106),
+        SELF(IconName_i107),
+        SELF(IconName_i108),
+        SELF(IconName_i109),
+        SELF(IconName_i110),
+        SELF(IconName_i111),
+        SELF(IconName_i112),
+        SELF(IconName_i113),
+        SELF(IconName_i114),
+        SELF(IconName_i115),
+        SELF(IconName_i116),
+        SELF(IconName_i117),
+        SELF(IconName_i118),
+        SELF(IconName_i119),
+        SELF(IconName_i120),
+        SELF(IconName_i121),
+        SELF(IconName_i122),
+        SELF(IconName_i123),
+        SELF(IconName_i124),
+        SELF(IconName_i125),
+        SELF(IconName_i126),
+        SELF(IconName_i127),
+        SELF(IconName_i128),
+        SELF(IconName_i129),
+        SELF(IconName_i130),
+        SELF(IconName_i131),
+        SELF(IconName_i132),
+        SELF(IconName_i133),
+        SELF(IconName_i134),
+        SELF(IconName_i135),
+        SELF(IconName_i136),
+        SELF(IconName_i137),
+        SELF(IconName_i138),
+        SELF(IconName_i139),
+        SELF(IconName_i140),
+        SELF(IconName_i141),
+        SELF(IconName_i142),
+        SELF(IconName_i143),
+        SELF(IconName_i144),
+        SELF(IconName_i145),
+        SELF(IconName_i146),
+        SELF(IconName_i147),
+        SELF(IconName_i148),
+        SELF(IconName_i149),
+        SELF(IconName_i150),
+        SELF(IconName_i151),
+        SELF(IconName_i152),
+        SELF(IconName_i153),
+        SELF(IconName_i154),
+        SELF(IconName_i155),
+        SELF(IconName_i156),
+        SELF(IconName_i157),
+        SELF(IconName_i158),
+        SELF(IconName_i159),
+        SELF(IconName_i160),
+        SELF(IconName_i161),
+        SELF(IconName_i162),
+        SELF(IconName_i163),
+        SELF(IconName_i164),
+        SELF(IconName_i165),
+        SELF(IconName_i166),
+        SELF(IconName_i167),
+        SELF(IconName_i168),
+        SELF(IconName_i169),
+        SELF(IconName_i170),
+        SELF(IconName_i171),
+        SELF(IconName_i172),
+        SELF(IconName_i173),
         SELF(IconName_Empty),
         0x00000000,
         0x00000000,
@@ -5376,353 +5376,353 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
 
     .IconName_Empty = "\x00\xFF",
 
-    .i173_str = ALIGNED_STRING("i173"),
+    .IconName_i173 = ALIGNED_STRING("i173"),
 
-    .i172_str = ALIGNED_STRING("i172"),
+    .IconName_i172 = ALIGNED_STRING("i172"),
 
-    .i171_str = ALIGNED_STRING("i171"),
+    .IconName_i171 = ALIGNED_STRING("i171"),
 
-    .i170_str = ALIGNED_STRING("i170"),
+    .IconName_i170 = ALIGNED_STRING("i170"),
 
-    .i169_str = ALIGNED_STRING("i169"),
+    .IconName_i169 = ALIGNED_STRING("i169"),
 
-    .i168_str = ALIGNED_STRING("i168"),
+    .IconName_i168 = ALIGNED_STRING("i168"),
 
-    .i167_str = ALIGNED_STRING("i167"),
+    .IconName_i167 = ALIGNED_STRING("i167"),
 
-    .i166_str = ALIGNED_STRING("i166"),
+    .IconName_i166 = ALIGNED_STRING("i166"),
 
-    .i165_str = ALIGNED_STRING("i165"),
+    .IconName_i165 = ALIGNED_STRING("i165"),
 
-    .i164_str = ALIGNED_STRING("i164"),
+    .IconName_i164 = ALIGNED_STRING("i164"),
 
-    .i163_str = ALIGNED_STRING("i163"),
+    .IconName_i163 = ALIGNED_STRING("i163"),
 
-    .i162_str = ALIGNED_STRING("i162"),
+    .IconName_i162 = ALIGNED_STRING("i162"),
 
-    .i161_str = ALIGNED_STRING("i161"),
+    .IconName_i161 = ALIGNED_STRING("i161"),
 
-    .i160_str = ALIGNED_STRING("i160"),
+    .IconName_i160 = ALIGNED_STRING("i160"),
 
-    .i159_str = ALIGNED_STRING("i159"),
+    .IconName_i159 = ALIGNED_STRING("i159"),
 
-    .i158_str = ALIGNED_STRING("i158"),
+    .IconName_i158 = ALIGNED_STRING("i158"),
 
-    .i157_str = ALIGNED_STRING("i157"),
+    .IconName_i157 = ALIGNED_STRING("i157"),
 
-    .i156_str = ALIGNED_STRING("i156"),
+    .IconName_i156 = ALIGNED_STRING("i156"),
 
-    .i155_str = ALIGNED_STRING("i155"),
+    .IconName_i155 = ALIGNED_STRING("i155"),
 
-    .i154_str = ALIGNED_STRING("i154"),
+    .IconName_i154 = ALIGNED_STRING("i154"),
 
-    .i153_str = ALIGNED_STRING("i153"),
+    .IconName_i153 = ALIGNED_STRING("i153"),
 
-    .i152_str = ALIGNED_STRING("i152"),
+    .IconName_i152 = ALIGNED_STRING("i152"),
 
-    .i151_str = ALIGNED_STRING("i151"),
+    .IconName_i151 = ALIGNED_STRING("i151"),
 
-    .i150_str = ALIGNED_STRING("i150"),
+    .IconName_i150 = ALIGNED_STRING("i150"),
 
-    .i149_str = ALIGNED_STRING("i149"),
+    .IconName_i149 = ALIGNED_STRING("i149"),
 
-    .i148_str = ALIGNED_STRING("i148"),
+    .IconName_i148 = ALIGNED_STRING("i148"),
 
-    .i147_str = ALIGNED_STRING("i147"),
+    .IconName_i147 = ALIGNED_STRING("i147"),
 
-    .i146_str = ALIGNED_STRING("i146"),
+    .IconName_i146 = ALIGNED_STRING("i146"),
 
-    .i145_str = ALIGNED_STRING("i145"),
+    .IconName_i145 = ALIGNED_STRING("i145"),
 
-    .i144_str = ALIGNED_STRING("i144"),
+    .IconName_i144 = ALIGNED_STRING("i144"),
 
-    .i143_str = ALIGNED_STRING("i143"),
+    .IconName_i143 = ALIGNED_STRING("i143"),
 
-    .i142_str = ALIGNED_STRING("i142"),
+    .IconName_i142 = ALIGNED_STRING("i142"),
 
-    .i141_str = ALIGNED_STRING("i141"),
+    .IconName_i141 = ALIGNED_STRING("i141"),
 
-    .i140_str = ALIGNED_STRING("i140"),
+    .IconName_i140 = ALIGNED_STRING("i140"),
 
-    .i139_str = ALIGNED_STRING("i139"),
+    .IconName_i139 = ALIGNED_STRING("i139"),
 
-    .i138_str = ALIGNED_STRING("i138"),
+    .IconName_i138 = ALIGNED_STRING("i138"),
 
-    .i137_str = ALIGNED_STRING("i137"),
+    .IconName_i137 = ALIGNED_STRING("i137"),
 
-    .i136_str = ALIGNED_STRING("i136"),
+    .IconName_i136 = ALIGNED_STRING("i136"),
 
-    .i135_str = ALIGNED_STRING("i135"),
+    .IconName_i135 = ALIGNED_STRING("i135"),
 
-    .i134_str = ALIGNED_STRING("i134"),
+    .IconName_i134 = ALIGNED_STRING("i134"),
 
-    .i133_str = ALIGNED_STRING("i133"),
+    .IconName_i133 = ALIGNED_STRING("i133"),
 
-    .i132_str = ALIGNED_STRING("i132"),
+    .IconName_i132 = ALIGNED_STRING("i132"),
 
-    .i131_str = ALIGNED_STRING("i131"),
+    .IconName_i131 = ALIGNED_STRING("i131"),
 
-    .i130_str = ALIGNED_STRING("i130"),
+    .IconName_i130 = ALIGNED_STRING("i130"),
 
-    .i129_str = ALIGNED_STRING("i129"),
+    .IconName_i129 = ALIGNED_STRING("i129"),
 
-    .i128_str = ALIGNED_STRING("i128"),
+    .IconName_i128 = ALIGNED_STRING("i128"),
 
-    .i127_str = ALIGNED_STRING("i127"),
+    .IconName_i127 = ALIGNED_STRING("i127"),
 
-    .i126_str = ALIGNED_STRING("i126"),
+    .IconName_i126 = ALIGNED_STRING("i126"),
 
-    .i125_str = ALIGNED_STRING("i125"),
+    .IconName_i125 = ALIGNED_STRING("i125"),
 
-    .i124_str = ALIGNED_STRING("i124"),
+    .IconName_i124 = ALIGNED_STRING("i124"),
 
-    .i123_str = ALIGNED_STRING("i123"),
+    .IconName_i123 = ALIGNED_STRING("i123"),
 
-    .i122_str = ALIGNED_STRING("i122"),
+    .IconName_i122 = ALIGNED_STRING("i122"),
 
-    .i121_str = ALIGNED_STRING("i121"),
+    .IconName_i121 = ALIGNED_STRING("i121"),
 
-    .i120_str = ALIGNED_STRING("i120"),
+    .IconName_i120 = ALIGNED_STRING("i120"),
 
-    .i119_str = ALIGNED_STRING("i119"),
+    .IconName_i119 = ALIGNED_STRING("i119"),
 
-    .i118_str = ALIGNED_STRING("i118"),
+    .IconName_i118 = ALIGNED_STRING("i118"),
 
-    .i117_str = ALIGNED_STRING("i117"),
+    .IconName_i117 = ALIGNED_STRING("i117"),
 
-    .i116_str = ALIGNED_STRING("i116"),
+    .IconName_i116 = ALIGNED_STRING("i116"),
 
-    .i115_str = ALIGNED_STRING("i115"),
+    .IconName_i115 = ALIGNED_STRING("i115"),
 
-    .i114_str = ALIGNED_STRING("i114"),
+    .IconName_i114 = ALIGNED_STRING("i114"),
 
-    .i113_str = ALIGNED_STRING("i113"),
+    .IconName_i113 = ALIGNED_STRING("i113"),
 
-    .i112_str = ALIGNED_STRING("i112"),
+    .IconName_i112 = ALIGNED_STRING("i112"),
 
-    .i111_str = ALIGNED_STRING("i111"),
+    .IconName_i111 = ALIGNED_STRING("i111"),
 
-    .i110_str = ALIGNED_STRING("i110"),
+    .IconName_i110 = ALIGNED_STRING("i110"),
 
-    .i109_str = ALIGNED_STRING("i109"),
+    .IconName_i109 = ALIGNED_STRING("i109"),
 
-    .i108_str = ALIGNED_STRING("i108"),
+    .IconName_i108 = ALIGNED_STRING("i108"),
 
-    .i107_str = ALIGNED_STRING("i107"),
+    .IconName_i107 = ALIGNED_STRING("i107"),
 
-    .i106_str = ALIGNED_STRING("i106"),
+    .IconName_i106 = ALIGNED_STRING("i106"),
 
-    .i105_str = ALIGNED_STRING("i105"),
+    .IconName_i105 = ALIGNED_STRING("i105"),
 
-    .i104_str = ALIGNED_STRING("i104"),
+    .IconName_i104 = ALIGNED_STRING("i104"),
 
-    .i103_str = ALIGNED_STRING("i103"),
+    .IconName_i103 = ALIGNED_STRING("i103"),
 
-    .i102_str = ALIGNED_STRING("i102"),
+    .IconName_i102 = ALIGNED_STRING("i102"),
 
-    .i101_str = ALIGNED_STRING("i101"),
+    .IconName_i101 = ALIGNED_STRING("i101"),
 
-    .i100_str = ALIGNED_STRING("i100"),
+    .IconName_i100 = ALIGNED_STRING("i100"),
 
-    .i99_str = "i99",
+    .IconName_i99 = "i99",
 
-    .i98_str = "i98",
+    .IconName_i98 = "i98",
 
-    .i97_str = "i97",
+    .IconName_i97 = "i97",
 
-    .i96_str = "i96",
+    .IconName_i96 = "i96",
 
-    .i95_str = "i95",
+    .IconName_i95 = "i95",
 
-    .i94_str = "i94",
+    .IconName_i94 = "i94",
 
-    .i93_str = "i93",
+    .IconName_i93 = "i93",
 
-    .i92_str = "i92",
+    .IconName_i92 = "i92",
 
-    .i91_str = "i91",
+    .IconName_i91 = "i91",
 
-    .i90_str = "i90",
+    .IconName_i90 = "i90",
 
-    .i89_str = "i89",
+    .IconName_i89 = "i89",
 
-    .i88_str = "i88",
+    .IconName_i88 = "i88",
 
-    .i87_str = "i87",
+    .IconName_i87 = "i87",
 
-    .i86_str = "i86",
+    .IconName_i86 = "i86",
 
-    .i85_str = "i85",
+    .IconName_i85 = "i85",
 
-    .i84_str = "i84",
+    .IconName_i84 = "i84",
 
-    .i83_str = "i83",
+    .IconName_i83 = "i83",
 
-    .i82_str = "i82",
+    .IconName_i82 = "i82",
 
-    .i81_str = "i81",
+    .IconName_i81 = "i81",
 
-    .i80_str = "i80",
+    .IconName_i80 = "i80",
 
-    .i79_str = "i79",
+    .IconName_i79 = "i79",
 
-    .i78_str = "i78",
+    .IconName_i78 = "i78",
 
-    .i77_str = "i77",
+    .IconName_i77 = "i77",
 
-    .i76_str = "i76",
+    .IconName_i76 = "i76",
 
-    .i75_str = "i75",
+    .IconName_i75 = "i75",
 
-    .i74_str = "i74",
+    .IconName_i74 = "i74",
 
-    .i73_str = "i73",
+    .IconName_i73 = "i73",
 
-    .i72_str = "i72",
+    .IconName_i72 = "i72",
 
-    .i71_str = "i71",
+    .IconName_i71 = "i71",
 
-    .i70_str = "i70",
+    .IconName_i70 = "i70",
 
-    .i69_str = "i69",
+    .IconName_i69 = "i69",
 
-    .i68_str = "i68",
+    .IconName_i68 = "i68",
 
-    .i67_str = "i67",
+    .IconName_i67 = "i67",
 
-    .i66_str = "i66",
+    .IconName_i66 = "i66",
 
-    .i65_str = "i65",
+    .IconName_i65 = "i65",
 
-    .i64_str = "i64",
+    .IconName_i64 = "i64",
 
-    .i63_str = "i63",
+    .IconName_i63 = "i63",
 
-    .i62_str = "i62",
+    .IconName_i62 = "i62",
 
-    .i61_str = "i61",
+    .IconName_i61 = "i61",
 
-    .i60_str = "i60",
+    .IconName_i60 = "i60",
 
-    .i59_str = "i59",
+    .IconName_i59 = "i59",
 
-    .i58_str = "i58",
+    .IconName_i58 = "i58",
 
-    .i57_str = "i57",
+    .IconName_i57 = "i57",
 
-    .i56_str = "i56",
+    .IconName_i56 = "i56",
 
-    .i55_str = "i55",
+    .IconName_i55 = "i55",
 
-    .i54_str = "i54",
+    .IconName_i54 = "i54",
 
-    .i53_str = "i53",
+    .IconName_i53 = "i53",
 
-    .i52_str = "i52",
+    .IconName_i52 = "i52",
 
-    .i51_str = "i51",
+    .IconName_i51 = "i51",
 
-    .i50_str = "i50",
+    .IconName_i50 = "i50",
 
-    .i49_str = "i49",
+    .IconName_i49 = "i49",
 
-    .i48_str = "i48",
+    .IconName_i48 = "i48",
 
-    .i47_str = "i47",
+    .IconName_i47 = "i47",
 
-    .i46_str = "i46",
+    .IconName_i46 = "i46",
 
-    .i45_str = "i45",
+    .IconName_i45 = "i45",
 
-    .i44_str = "i44",
+    .IconName_i44 = "i44",
 
-    .i43_str = "i43",
+    .IconName_i43 = "i43",
 
-    .i42_str = "i42",
+    .IconName_i42 = "i42",
 
-    .i41_str = "i41",
+    .IconName_i41 = "i41",
 
-    .i40_str = "i40",
+    .IconName_i40 = "i40",
 
-    .i39_str = "i39",
+    .IconName_i39 = "i39",
 
-    .i38_str = "i38",
+    .IconName_i38 = "i38",
 
-    .i37_str = "i37",
+    .IconName_i37 = "i37",
 
-    .i36_str = "i36",
+    .IconName_i36 = "i36",
 
-    .i35_str = "i35",
+    .IconName_i35 = "i35",
 
-    .i34_str = "i34",
+    .IconName_i34 = "i34",
 
-    .i33_str = "i33",
+    .IconName_i33 = "i33",
 
-    .i32_str = "i32",
+    .IconName_i32 = "i32",
 
-    .i31_str = "i31",
+    .IconName_i31 = "i31",
 
-    .i30_str = "i30",
+    .IconName_i30 = "i30",
 
-    .i29_str = "i29",
+    .IconName_i29 = "i29",
 
-    .i28_str = "i28",
+    .IconName_i28 = "i28",
 
-    .i27_str = "i27",
+    .IconName_i27 = "i27",
 
-    .i26_str = "i26",
+    .IconName_i26 = "i26",
 
-    .i25_str = "i25",
+    .IconName_i25 = "i25",
 
-    .i24_str = "i24",
+    .IconName_i24 = "i24",
 
-    .i23_str = "i23",
+    .IconName_i23 = "i23",
 
-    .i22_str = "i22",
+    .IconName_i22 = "i22",
 
-    .i21_str = "i21",
+    .IconName_i21 = "i21",
 
-    .i20_str = "i20",
+    .IconName_i20 = "i20",
 
-    .i19_str = "i19",
+    .IconName_i19 = "i19",
 
-    .i18_str = "i18",
+    .IconName_i18 = "i18",
 
-    .i17_str = "i17",
+    .IconName_i17 = "i17",
 
-    .i16_str = "i16",
+    .IconName_i16 = "i16",
 
-    .i15_str = "i15",
+    .IconName_i15 = "i15",
 
-    .i14_str = "i14",
+    .IconName_i14 = "i14",
 
-    .i13_str = "i13",
+    .IconName_i13 = "i13",
 
-    .i12_str = "i12",
+    .IconName_i12 = "i12",
 
-    .i11_str = "i11",
+    .IconName_i11 = "i11",
 
-    .i10_str = "i10",
+    .IconName_i10 = "i10",
 
-    .i9_str = ALIGNED_STRING("i9"),
+    .IconName_i9 = ALIGNED_STRING("i9"),
 
-    .i8_str = ALIGNED_STRING("i8"),
+    .IconName_i8 = ALIGNED_STRING("i8"),
 
-    .i7_str = ALIGNED_STRING("i7"),
+    .IconName_i7 = ALIGNED_STRING("i7"),
 
-    .i6_str = ALIGNED_STRING("i6"),
+    .IconName_i6 = ALIGNED_STRING("i6"),
 
-    .i5_str = ALIGNED_STRING("i5"),
+    .IconName_i5 = ALIGNED_STRING("i5"),
 
-    .i4_str = ALIGNED_STRING("i4"),
+    .IconName_i4 = ALIGNED_STRING("i4"),
 
-    .i3_str = ALIGNED_STRING("i3"),
+    .IconName_i3 = ALIGNED_STRING("i3"),
 
-    .i2_str = ALIGNED_STRING("i2"),
+    .IconName_i2 = ALIGNED_STRING("i2"),
 
-    .i1_str = ALIGNED_STRING("i1"),
+    .IconName_i1 = ALIGNED_STRING("i1"),
 
-    .I0_code = ALIGNED_STRING("i0"),
+    .IconName_i0 = ALIGNED_STRING("i0"),
 
     .Default_name = "Default",
 
