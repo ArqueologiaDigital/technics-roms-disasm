@@ -144,6 +144,11 @@ LABEL_RE = re.compile(r'^([A-Za-z_.$][\w.$@]*):')
 COMPACT_RE = re.compile(r'^[A-Za-z_.$][\w.$@]*:\s*\.(incbin|byte|short|long|ascii|asciz|string|word|'
                         r'2byte|4byte|space|zero|fill)\b')
 NUMLABEL_RE = re.compile(r'^(\d+):')
+# An UNLABELLED alignment pad (1-3 bytes) inside a compact block belongs to the record above it, so it does not
+# end the block (2026-10-17).  Longer unlabelled data does end it: an unlabelled `.long` run continues a TABLE
+# whose header describes that table only, and the next labelled table must not inherit it.
+PAD_RE = re.compile(r'^(\.incbin\s+"[^"]*"\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(0x0?[1-3]|[1-3])\s*$'
+                    r'|\.byte\s+[^,]+(,\s*[^,]+)?\s*$|\.(zero|space)\s+[1-3]\s*$)')
 CTRL_RE = re.compile(r'^(call|calr|jp|jr|jrl|djnz)\b', re.I)
 IDENT_RE = re.compile(r'\b([A-Za-z_][\w.$]{2,})\b')
 
@@ -361,14 +366,15 @@ def marker_addresses(elf):
 
 # ------------------------------------------------------- source-text accessors
 class Sources:
-    def __init__(self, srcroot):
+    def __init__(self, srcroot, data_macros=()):
+        self.data_macros = frozenset(data_macros)
         self.root = srcroot
         self.cache = {}
         self.docs = {}
 
     def doc(self, rel):
         if rel not in self.docs:
-            self.docs[rel] = DocIndex(self.lines(rel))
+            self.docs[rel] = DocIndex(self.lines(rel), self.data_macros)
         return self.docs[rel]
 
     def lines(self, rel):
@@ -418,8 +424,12 @@ class DocIndex:
     lines of source per region -- with ~10^5 regions that difference is hours.
     """
 
-    def __init__(self, lines):
+    def __init__(self, lines, data_macros=()):
         n = len(lines)
+        # `Label: aligned_string "..."` is as much a one-line table entry as `Label: .ascii "..."` (2026-10-17):
+        # a data macro (collect_macros' "data" class) counts as a compact entry too.
+        dm = (re.compile(r'^[A-Za-z_.$][\w.$@]*:\s*(%s)\b' % "|".join(sorted(map(re.escape, data_macros))))
+              if data_macros else None)
         self.lines = lines
         self.label = [None] * n          # index -> (line, name) or None
         self.hdr = [None] * n            # index -> (start, end) of a comment run
@@ -455,7 +465,13 @@ class DocIndex:
             # at the first line that is not such an entry, so a banner cannot leak past the block.
             # Added 2026-10-06; v10 strict 90.03% -> 93.35%, and 25 of 25 sampled upgraded regions
             # were described by their block's header.
-            if COMPACT_RE.match(c):
+            # 2026-10-17: a data-macro one-liner (`Label: aligned_string "..."`) is an entry too, and an unlabelled
+            # 1-3 byte alignment pad (PAD_RE) does not end the block; v10 strict +15,234 B (performance_style_screens.s's
+            # widgets after the pad at naka_perf_style+0x1697, the composer and debug name strings), 25 of 25 sampled
+            # upgraded regions described by their block's header.  Unlabelled .long runs still end a block: letting them
+            # continue it credited a Viewable table's header to the next table (2 of 25 in that trial).
+            if (COMPACT_RE.match(c) or (dm is not None and dm.match(c))
+                    or (i > 0 and self.compact[i - 1] is not None and PAD_RE.match(c))):
                 if i > 0 and self.compact[i - 1] is not None:
                     self.compact[i] = self.compact[i - 1]
                 elif cur_hdr is not None and cur_hdr[1] == i:
@@ -672,8 +688,8 @@ def census_image(img, tmp, verbose=True):
     inert = (got == rom)
 
     addrs = marker_addresses(elf)
-    src = Sources(srcroot)
     macros = collect_macros(srcroot)
+    src = Sources(srcroot, [k for k, v in macros.items() if v == "data"])
     off = rom_offset_fn(img)
 
     ent = sorted(((a, i) for i, a in addrs.items()), key=lambda t: (t[0], t[1]))
@@ -1190,6 +1206,15 @@ def selftest():
        "ViewProc" in blk.context(11)[1])
     ck("the inheritance stops at the end of the block",
        blk.context(13)[1] == "")
+    pad = DocIndex(["; ---- widget records of view 7", "; elements 0-9, read by ViewProc"] +
+                   ["E%d:\t.incbin \"x.bin\", %d, 2" % (k, 2 * k) for k in range(8)] +
+                   ["\t.incbin \"x.bin\", 16, 0x1", "E8:\t.incbin \"x.bin\", 17, 2", "E9:\t.incbin \"x.bin\", 19, 2"] +
+                   ["\t.long Foo"] * 8 + ["E10:\t.incbin \"x.bin\", 53, 2"])
+    ck("a 1-3 byte unlabelled pad does not end a compact block", "ViewProc" in pad.context(12)[1])
+    ck("an unlabelled .long run does end it", pad.context(21)[1] == "")
+    mac = DocIndex(["; ---- the names table T points at", "; read by T's reader, entry k -> string k"] +
+                   ["S%d:\taligned_string \"n%d\"" % (k, k) for k in range(9)], {"aligned_string"})
+    ck("a data-macro one-liner is a compact entry", "reader" in mac.context(10)[1])
 
     # the v142 splice map
     v142 = [i for i in IMAGES if i["key"] == "v142"][0]
