@@ -2119,7 +2119,7 @@ DSPCfg_ProcessInput:
 	jrl z, DSPCfg_ScaleFactor_Dispatch
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	cp c, 0x70
-	jrl z, DSPCfg_CompressorDispatch
+	jrl z, DSPCfg_FadeSettingDispatch
 	cp c, 0x98
 	ret nz
 	cp e, 0xb
@@ -2243,13 +2243,13 @@ DSPCfg_CheckChorusMuted:
 	calr CompIface_WriteVolume
 	ret
 
-DSPCfg_CompressorDispatch:
+DSPCfg_FadeSettingDispatch:
 	ld c, a
 	and a, 0xff
 	cp e, 7:i3
-	jr z, DSPCfg_CompParam_SubType7
+	jr z, DSPCfg_FadeSetting_Flags
 	cp e, 6:i3
-	jr z, DSPCfg_CompParam_SubType6
+	jr z, DSPCfg_FadeSetting_OutTime
 	cp e, 5:i3
 	ret nz
 	cp a, 0:i3
@@ -2264,7 +2264,7 @@ DSPCfg_CompressorDispatch:
 	ld (0xc1f8:16), hl
 	ret
 
-DSPCfg_CompParam_SubType6:
+DSPCfg_FadeSetting_OutTime:
 	cp a, 0:i3
 	ret z
 	ld xwa, 0x2a01
@@ -2279,9 +2279,9 @@ DSPCfg_CompParam_SubType6:
 	ld wa, 1:i3
 	jrl DSPCfg_ScaleFactor_StoreResult
 
-DSPCfg_CompParam_SubType7:
+DSPCfg_FadeSetting_Flags:
 	bit 0, c
-	jr z, DSPCfg_CompParam_Bit1
+	jr z, DSPCfg_FadeSetting_SeqAutoStop
 	ld xwa, 0x2a10
 	call SndParam_LookupReadOnly
 	and hl, 0x1
@@ -2289,9 +2289,9 @@ DSPCfg_CompParam_SubType7:
 	and (0xc1f0:16), 239
 	or (0xc1f0:16), hl
 
-DSPCfg_CompParam_Bit1:
+DSPCfg_FadeSetting_SeqAutoStop:
 	bit 1, (SWBTWR_PAYLOAD_3:16)
-	jr z, DSPCfg_CompParam_Bit2
+	jr z, DSPCfg_FadeSetting_AutoReset
 	ld xwa, 0x2a11
 	call SndParam_LookupReadOnly
 	and hl, 0x1
@@ -2299,7 +2299,7 @@ DSPCfg_CompParam_Bit1:
 	and (0xc1f0:16), 223
 	or (0xc1f0:16), hl
 
-DSPCfg_CompParam_Bit2:
+DSPCfg_FadeSetting_AutoReset:
 	bit 2, (SWBTWR_PAYLOAD_3:16)
 	ret z
 	ld xwa, 0x2a12

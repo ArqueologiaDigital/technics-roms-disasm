@@ -16935,9 +16935,15 @@ SndParam_ApplyEventField_Join:
 ; ============================================================================
 ; SndPart_SetParam - Set a sound part parameter by code
 ; ============================================================================
-; Input:  WA = part number, DE = new value, BC = parameter code
+; Input:  WA = part number, DE = new value, BC = the part parameter's Lsw number (the second half of
+;         SndParam_KeyToLswPartNumber's decode; README-lsw-param-namespace-map.md sections 7-9)
 ; Output: None
-; Dispatches on ~20 parameter codes to update part tables or send via MIDI.
+; Dispatches on 20 Lsw numbers: 0x000 Sound and 0x020 Bank and 0x05E DigitalEffect are stored in per-part
+; tables (0xCFD0, 0xD010, 0xD050); the others go to the tone generator as MIDI messages -- 0x001/0x007/0x00A/
+; 0x00B/0x040/0x05B/0x05D as the controller of the same number, 0x078 as All Sound Off, 0x1B0 / 0x1B2 as pitch
+; bend / channel pressure, 0x080/0x081/0x082 as internal controllers 0x80-0x82, 0x600 as controller 0x97, and
+; 0x602 KeyScaling / 0x603 GlidePedal clamped to 0 / 0x7F and sent as controllers 0x9C / 0x95.  Volume sends 0
+; while the part's mute flag (Lsw 0x008) is set.
 ; ============================================================================
 SndPart_SetParam:
 	dec	2, xsp
@@ -16947,27 +16953,27 @@ SndPart_SetParam:
 	cp	bc, 0x78
 	jrl	z, SndPart_SetAllSoundOff
 	cp	bc, 0x1b2
-	jrl	z, SndPart_SetPitchBendSens
+	jrl	z, SndPart_SetChannelPressure
 	cp	bc, 0x603
-	jrl	z, SndPart_SetCoarseTune
+	jrl	z, SndPart_SetGlidePedal
 	cp	bc, 0x602
-	jrl	z, SndPart_SetFineTune
+	jrl	z, SndPart_SetKeyScaling
 	cp	bc, 0x1b0
-	jrl	z, SndPart_SetRPN
+	jrl	z, SndPart_SetPitchBend
 	cp	bc, 0x82
-	jrl	z, SndPart_SetBankSelect
+	jrl	z, SndPart_SetKeyShift
 	cp	bc, 0x81
-	jrl	z, SndPart_SetBankLSB
+	jrl	z, SndPart_SetTuning
 	cp	bc, 0x80
-	jrl	z, SndPart_SetBankMSB
+	jrl	z, SndPart_SetBendRange
 	cp	bc, 0x5e
-	jrl	z, SndPart_SetDelaySend
+	jrl	z, SndPart_SetDigitalEffect
 	cp	bc, 0x5d
-	jrl	z, SndPart_SetChorusSend
+	jrl	z, SndPart_SetDspEffect
 	cp	bc, 0x5b
 	jrl	z, SndPart_SetReverbSend
 	cp	bc, 0x600
-	jrl	z, SndPart_SetPitchBendRange
+	jrl	z, SndPart_SetSustainLength
 	cp	bc, 0x40
 	jrl	z, SndPart_SetDamperPedal
 	cp	bc, 0xb
@@ -16979,7 +16985,7 @@ SndPart_SetParam:
 	cp	bc, 1:i3
 	jr	z, SndPart_SetModWheel
 	cp	bc, 0x20
-	jr	z, SndPart_SetProgramMSB
+	jr	z, SndPart_SetBank
 	cp	bc, 0:i3
 	jrl	nz, MIDI_SendEpilogue
 	ld	wa, (xsp + 2)
@@ -16989,7 +16995,7 @@ SndPart_SetParam:
 	add	xwa, xbc
 	ld	(xwa), iz
 	jrl	MIDI_SendEpilogue
-SndPart_SetProgramMSB:
+SndPart_SetBank:
 	ld	wa, (xsp + 2)
 	add	wa, wa
 	lda	xbc, (0xcf74:16)
@@ -17047,7 +17053,7 @@ SndPart_SetDamperPed_LoadReg:
 	ldw	bc, 0x40
 	calr	MIDI_SendControlChange
 	jrl	MIDI_SendEpilogue
-SndPart_SetPitchBendRange:
+SndPart_SetSustainLength:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	ld	de, bc
@@ -17061,14 +17067,14 @@ SndPart_SetReverbSend:
 	ldw	bc, 0x5b
 	calr	MIDI_SendControlChange
 	jrl	MIDI_SendEpilogue
-SndPart_SetChorusSend:
+SndPart_SetDspEffect:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	ld	de, bc
 	ldw	bc, 0x5d
 	calr	MIDI_SendControlChange
 	jrl	MIDI_SendEpilogue
-SndPart_SetDelaySend:
+SndPart_SetDigitalEffect:
 	ld	wa, (xsp + 2)
 	add	wa, wa
 	lda	xbc, (0xcfb4:16)
@@ -17076,38 +17082,38 @@ SndPart_SetDelaySend:
 	add	xwa, xbc
 	ld	(xwa), iz
 	jrl	MIDI_SendEpilogue
-SndPart_SetBankMSB:
+SndPart_SetBendRange:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	ld	de, bc
 	ldw	bc, 0x80
 	calr	MIDI_SendControlChange
 	jr	MIDI_SendEpilogue
-SndPart_SetBankLSB:
+SndPart_SetTuning:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	ld	de, bc
 	ldw	bc, 0x81
 	calr	MIDI_SendControlChange
 	jr	MIDI_SendEpilogue
-SndPart_SetBankSelect:
+SndPart_SetKeyShift:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	ld	de, bc
 	ldw	bc, 0x82
 	calr	MIDI_SendControlChange
 	jr	MIDI_SendEpilogue
-SndPart_SetRPN:
+SndPart_SetPitchBend:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	calr	MIDI_SendPitchBend
 	jr	MIDI_SendEpilogue
-SndPart_SetFineTune:
+SndPart_SetKeyScaling:
 	ldw	wa, 0x7f
 	cp	iz, 0:i3
-	jr	nz, SndPart_SetFineTune_LoadReg
+	jr	nz, SndPart_SetKeyScaling_LoadReg
 	ld	wa, 0:i3
-SndPart_SetFineTune_LoadReg:
+SndPart_SetKeyScaling_LoadReg:
 	ld	iz, wa
 	ld	bc, iz
 	ld	wa, (xsp + 2)
@@ -17115,12 +17121,12 @@ SndPart_SetFineTune_LoadReg:
 	ldw	bc, 0x9c
 	calr	MIDI_SendControlChange
 	jr	MIDI_SendEpilogue
-SndPart_SetCoarseTune:
+SndPart_SetGlidePedal:
 	ldw	wa, 0x7f
 	cp	iz, 0:i3
-	jr	nz, SndPart_SetCoarseTun_LoadReg
+	jr	nz, SndPart_SetGlidePedal_LoadReg
 	ld	wa, 0:i3
-SndPart_SetCoarseTun_LoadReg:
+SndPart_SetGlidePedal_LoadReg:
 	ld	iz, wa
 	ld	bc, iz
 	ld	wa, (xsp + 2)
@@ -17128,7 +17134,7 @@ SndPart_SetCoarseTun_LoadReg:
 	ldw	bc, 0x95
 	calr	MIDI_SendControlChange
 	jr	MIDI_SendEpilogue
-SndPart_SetPitchBendSens:
+SndPart_SetChannelPressure:
 	ld	bc, iz
 	ld	wa, (xsp + 2)
 	calr	MIDI_SendChannelPressure
