@@ -1,0 +1,506 @@
+[
+ {
+  "old": "SeMenu_PresetManager_SaveApply_Records",
+  "new": "SeTonTon1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_FilterEdit_DataBlock5_Records",
+  "new": "SeCtr2_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_CompareAndApply_Init_Records",
+  "new": "SeAmpAmp1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_FilterEdit_Dispatch_Records2",
+  "new": "SeTonTon2_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records2",
+  "new": "SeDigEff_DrawStaticScreen_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records3",
+  "new": "SeDigEff_DrawStaticScreen_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records4",
+  "new": "SeDigEff_DrawStaticScreen_Records4",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records5",
+  "new": "SeDigEff_DrawStaticScreen_Records5",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records6",
+  "new": "SeDigEff_DrawStaticScreen_Records6",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records7",
+  "new": "SeDigEff_DrawStaticScreen_Records7",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records8",
+  "new": "SeDigEff_DrawStaticScreen_Records8",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records9",
+  "new": "SeDigEff_DrawStaticScreen_Records9",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_DataBlock_Records2",
+  "new": "SeDigEff_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_FilterEdit_Dispatch_Records",
+  "new": "SeTonTon2_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock1_Records",
+  "new": "SeDigEff_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DataBlock2_Records",
+  "new": "SeEasy_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_DataBlock_Records",
+  "new": "SeDigEff_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetManager_Init_Records2",
+  "new": "SeMenuTitle_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetManager_Init_Records3",
+  "new": "SeMenuTitle_DrawField_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetBrowser_Init_Records",
+  "new": "SePitPit1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetManager_Init_Records",
+  "new": "SeMenuTitle_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetManager_Load_Records",
+  "new": "SeCopy_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_CopyBlock_Records2",
+  "new": "SeAmpEnv1_DrawStaticScreen_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FillBlock_Records2",
+  "new": "SeAmpEnv2_DrawStaticScreen_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FillBlock_Records3",
+  "new": "SeAmpEnv2_DrawStaticScreen_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DrumKit_Dispatch_Records2",
+  "new": "SePitPit1_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DrumKit_Dispatch_Records3",
+  "new": "SePitPit1_DrawField_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_FxEdit_DataBlock1_Records",
+  "new": "SeTonRan2_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_CopyBlock_Records",
+  "new": "SeAmpEnv1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FillBlock_Records",
+  "new": "SeAmpEnv2_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_Utility_FormatHex_Records",
+  "new": "SeFilBpf1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DrumKit_Dispatch_Records",
+  "new": "SePitPit1_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_PresetInit_Main_Records",
+  "new": "SeTonTon2_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_01_Records2",
+  "new": "SeAmpAmp1_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_01_Records3",
+  "new": "SeAmpAmp1_DrawField_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_01_Records4",
+  "new": "SeAmpAmp1_DrawField_Records4",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_10_Records2",
+  "new": "SePitFilEnv1_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records2",
+  "new": "SeWrtSnd_DrawStaticScreen_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records3",
+  "new": "SeWrtSnd_DrawStaticScreen_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records4",
+  "new": "SeWrtSnd_DrawStaticScreen_Records4",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records5",
+  "new": "SeWrtSnd_DrawStaticScreen_Records5",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records6",
+  "new": "SeWrtSnd_DrawStaticScreen_Records6",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_14_Records2",
+  "new": "SeWrtSnd_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_14_Records3",
+  "new": "SeWrtSnd_DrawField_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_01_Records",
+  "new": "SeAmpAmp1_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_04_Records",
+  "new": "SeAmpEnv2_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_10_Records",
+  "new": "SePitFilEnv1_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_11_Records",
+  "new": "SeWrtMem_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_12_Records",
+  "new": "SeWrtSnd_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_DataBlock_14_Records",
+  "new": "SeWrtSnd_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "Data_UnknownBlock_Records2",
+  "new": "SePitAmpFilLfo1_DrawField_Records2",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "Data_UnknownBlock_Records3",
+  "new": "SePitAmpFilLfo1_DrawField_Records3",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "Data_UnknownBlock_Records4",
+  "new": "SePitAmpFilLfo1_DrawField_Records4",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "Data_UnknownBlock_Records5",
+  "new": "SePitAmpFilLfo1_DrawField_Records5",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "SeMenu_FxEdit_Init_Records",
+  "new": "SeTonRan1_DrawStaticScreen_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ },
+ {
+  "old": "Data_UnknownBlock_Records",
+  "new": "SePitAmpFilLfo1_DrawField_Records",
+  "verdict": "name",
+  "basis": "reader renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_records_follow_v10.sed: name_se_screen_records.py had named the list after its one reading routine; that routine was renamed by scripts/renaming/rename_se_title_methods_v10.sed (sound-editor title tables, 2026-10-17)"
+  ]
+ }
+]
