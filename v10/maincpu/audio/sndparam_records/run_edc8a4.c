@@ -36,7 +36,7 @@ const sndparam_descriptor_t run_edc8a4[10]
       .codec             = 1, /* SndParam_EncodeFieldSub_Data / SndParam_DecodeFieldAlt_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  3] 0xEDC8DA  MidiChParam_Entry_097 */
+    /* [  3] 0xEDC8DA  SndParam_Part00_AllSoundOff */
     { .key = 0x00008078, .bank_index = 0xAE, .bank_offset = 0x00,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -76,8 +76,8 @@ const sndparam_descriptor_t run_edc8a4[10]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* data-as-code (v10_data_as_code_census.py, STRICT rule): 0xEDC924-0xEDC934 (16 B), unreached CODE-territory, was disassembled as 12 plausible-but-dead instruction lines; per=67% dist=6 near MidiChParam_Entry_101+2 */
-    /* [  7] 0xEDC922  MidiChParam_Entry_101 */
+    /* data-as-code (v10_data_as_code_census.py, STRICT rule): 0xEDC924-0xEDC934 (16 B), unreached CODE-territory, was disassembled as 12 plausible-but-dead instruction lines; per=67% dist=6 near SndParam_Part00_PitchBend+2 */
+    /* [  7] 0xEDC922  SndParam_Part00_PitchBend */
     { .key = 0x000081B0, .bank_index = 0xB1, .bank_offset = 0x00,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0x02,
@@ -87,7 +87,7 @@ const sndparam_descriptor_t run_edc8a4[10]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  8] 0xEDC934  MidiChParam_Entry_102 */
+    /* [  8] 0xEDC934  SndParam_Part00_ChannelPressure */
     { .key = 0x000081B2, .bank_index = 0xB4, .bank_offset = 0x00,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0x04,

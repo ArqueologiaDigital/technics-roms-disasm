@@ -1,0 +1,1598 @@
+[
+ {
+  "snapshot_commit": "429a926d2",
+  "note": "file:line citations are against the git archive of this commit (the working tree was being edited by other agents during the research); every citation was machine-checked to contain its quoted token by build_proposals.py"
+ },
+ {
+  "key": "0x08078 + 0x400*T",
+  "kind": "part",
+  "number": "0x078",
+  "name": "AllSoundOff",
+  "parts": "0x00-0x18 (25)",
+  "record": "0xAE",
+  "byte": "part (= T)",
+  "mask": "0x7F",
+  "range": "0..127",
+  "aliases": [
+   "MidiChParam_Entry_097",
+   "VoiceParamEx_Entry_018",
+   "VoiceParamEx_Entry_051",
+   "VoiceParamEx_Entry_084",
+   "PartParam_Entry_016",
+   "PartParam_Entry_033",
+   "PartParam_Entry_050",
+   "PartParam_Entry_067",
+   "PartParam_Entry_084",
+   "PartParam_Entry_101",
+   "PartParam_Entry_118",
+   "PartParam_Entry_135",
+   "PartParam_Entry_152",
+   "PartParam_Entry_169",
+   "PartParam_Entry_186",
+   "PartParam_Entry_203",
+   "PartParam_Entry_220",
+   "ExtPartParam_Entry_237",
+   "ExtPartParam_Entry_254",
+   "ExtPartParam_Entry_271",
+   "ExtPartParam_Entry_288",
+   "ExtPartParam_Entry_305",
+   "ExtPartParam_Entry_322",
+   "ExtPartParam_Entry_339",
+   "ExtPartParam_Entry_356"
+  ],
+  "meaning": "Per-part MIDI All Sound Off: writing it sends controller 120 with value 0 to the part (the written value is ignored).",
+  "evidence": [
+   "v10/maincpu/audio/note_voice_mapping.s:18077 -- SndParam_ApplyEventField turns a posted (record, byte, value, mask) into its key, splits it with SndParam_KeyToLswPartNumber and calls SndPart_SetParam(part, number, value)",
+   "v10/maincpu/audio/note_voice_mapping.s:18130 -- SndPart_SetParam dispatches Lsw number 0x78 to SndPart_SetAllSoundOff",
+   "v10/maincpu/audio/note_voice_mapping.s:18341 -- SndPart_SetAllSoundOff = MIDI_SendControlChange(part, 0x78, DE = 0)",
+   "v10/maincpu/audio/note_voice_mapping.s:19211 -- MIDI_SendControlChange builds the [4, 0xB0, channel, controller, value] packet",
+   "v10/maincpu/audio/note_voice_mapping.s:19662 -- the existing MIDI_SendAllSoundOff sends the same controller 0x78 / value 0 to parts 0..0x18 -- the parts this descriptor family covers",
+   "v10/maincpu/ui_widgets/widget_dispatch.s:1088 -- the descriptors' read_accessor is 0, which this table maps to SndParam_ReturnNotFound (sndparam_routines.s:820): the key cannot be read back, a trigger; record 0xAE has no RAM block and byte = part"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x081B0 + 0x400*T",
+  "kind": "part",
+  "number": "0x1B0",
+  "name": "PitchBend",
+  "parts": "0x00-0x18 (25)",
+  "record": "0xB1",
+  "byte": "part (= T)",
+  "mask": "0x7F",
+  "range": "0..127",
+  "aliases": [
+   "MidiChParam_Entry_101",
+   "VoiceParamEx_Entry_022",
+   "VoiceParamEx_Entry_055",
+   "PartParam_Entry_003",
+   "PartParam_Entry_020",
+   "PartParam_Entry_037",
+   "PartParam_Entry_054",
+   "PartParam_Entry_071",
+   "PartParam_Entry_088",
+   "PartParam_Entry_105",
+   "PartParam_Entry_122",
+   "PartParam_Entry_139",
+   "PartParam_Entry_156",
+   "PartParam_Entry_173",
+   "PartParam_Entry_190",
+   "PartParam_Entry_207",
+   "PartParam_Entry_224",
+   "ExtPartParam_Entry_241",
+   "ExtPartParam_Entry_258",
+   "ExtPartParam_Entry_275",
+   "ExtPartParam_Entry_292",
+   "ExtPartParam_Entry_309",
+   "ExtPartParam_Entry_326",
+   "ExtPartParam_Entry_343",
+   "ExtPartParam_Entry_360"
+  ],
+  "meaning": "Per-part pitch bend (14-bit, centre 0x2000), sent to the tone generator as a MIDI pitch-bend message.",
+  "evidence": [
+   "v10/maincpu/audio/note_voice_mapping.s:18077 -- SndParam_ApplyEventField turns a posted (record, byte, value, mask) into its key, splits it with SndParam_KeyToLswPartNumber and calls SndPart_SetParam(part, number, value)",
+   "v10/maincpu/audio/note_voice_mapping.s:18138 -- SndPart_SetParam dispatches number 0x1B0 to SndPart_SetRPN (a misleading label)",
+   "v10/maincpu/audio/note_voice_mapping.s:18299 -- which calls MIDI_SendPitchBend(part, value)",
+   "v10/maincpu/audio/note_voice_mapping.s:19224 -- MIDI_SendPitchBend builds [4, 0xE0, channel, value & 0x7F, (value & 0x3FFF) >> 7]",
+   "v10/maincpu/audio/note_voice_mapping.s:13546 -- SeqPart_EmitNoteOn_Full_ResetPartControllers (:13515, \"resets ... pitch bend (0x2000)\") sends (part, 0x1B0, 0x2000) for parts 0x10..0x13",
+   "v10/maincpu/audio/sndparam_routines.s:856 -- SndParam_ReadRegWithLUT (read_accessor 2, SndParam_RO_Dispatch_Data widget_dispatch.s:1088): the 0x81B0 descriptors' aux index 2 selects RAM 0x8EE8 and this branch rebuilds a 14-bit value capped at 0x3FFF"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x081B2 + 0x400*T",
+  "kind": "part",
+  "number": "0x1B2",
+  "name": "ChannelPressure",
+  "parts": "0x00-0x18 (25)",
+  "record": "0xB4",
+  "byte": "part (= T)",
+  "mask": "0x7F",
+  "range": "0..127",
+  "aliases": [
+   "MidiChParam_Entry_102",
+   "VoiceParamEx_Entry_023",
+   "VoiceParamEx_Entry_056",
+   "PartParam_Entry_004",
+   "PartParam_Entry_021",
+   "PartParam_Entry_038",
+   "PartParam_Entry_055",
+   "PartParam_Entry_072",
+   "PartParam_Entry_089",
+   "PartParam_Entry_106",
+   "PartParam_Entry_123",
+   "PartParam_Entry_140",
+   "PartParam_Entry_157",
+   "PartParam_Entry_174",
+   "PartParam_Entry_191",
+   "PartParam_Entry_208",
+   "PartParam_Entry_225",
+   "ExtPartParam_Entry_242",
+   "ExtPartParam_Entry_259",
+   "ExtPartParam_Entry_276",
+   "ExtPartParam_Entry_293",
+   "ExtPartParam_Entry_310",
+   "ExtPartParam_Entry_327",
+   "ExtPartParam_Entry_344",
+   "ExtPartParam_Entry_361"
+  ],
+  "meaning": "Per-part channel pressure (aftertouch), sent to the tone generator as a MIDI channel-pressure message.",
+  "evidence": [
+   "v10/maincpu/audio/note_voice_mapping.s:18077 -- SndParam_ApplyEventField turns a posted (record, byte, value, mask) into its key, splits it with SndParam_KeyToLswPartNumber and calls SndPart_SetParam(part, number, value)",
+   "v10/maincpu/audio/note_voice_mapping.s:18132 -- SndPart_SetParam dispatches number 0x1B2 to SndPart_SetPitchBendSens (a misleading label)",
+   "v10/maincpu/audio/note_voice_mapping.s:18335 -- which calls MIDI_SendChannelPressure(part, value)",
+   "v10/maincpu/audio/note_voice_mapping.s:19242 -- MIDI_SendChannelPressure builds [4, 0xD0, channel, 0, value]",
+   "v10/maincpu/audio/audio_control_engine.s:6673 -- UIState_RenderBitmapData notifies (part, 0x1B2, 0) when the part's AFTER TOUCH switch (record +12 bit 4 = Lsw 0x606) turns off"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x18003 + 0x400*T",
+  "kind": "part",
+  "number": "0x403",
+  "name": "MidiReceiveOn",
+  "parts": "0x00-0x19 (26)",
+  "record": "part (= T)",
+  "byte": 13,
+  "mask": "0x80",
+  "range": "0..1",
+  "aliases": [
+   "ExtPartParam_Entry_367",
+   "ExtPartParam_Entry_379",
+   "ExtPartParam_Entry_391",
+   "ExtPartParam_Entry_403",
+   "ExtPartParam_Entry_415",
+   "ExtPartParam_Entry_427",
+   "ExtPartParam_Entry_439",
+   "ExtPartParam_Entry_451",
+   "SeqMixParam_Entry_009",
+   "SeqMixParam_Entry_021",
+   "SeqMixParam_Entry_033",
+   "SeqMixParam_Entry_045",
+   "SeqMixParam_Entry_057",
+   "SeqMixParam_Entry_069",
+   "SeqMixParam_Entry_081",
+   "SeqMixParam_Entry_093",
+   "SeqMixParam_Entry_105",
+   "SeqMixParam_Entry_117",
+   "SeqMixParam_Entry_129",
+   "SeqMixParam_Entry_141",
+   "SeqMixParam_Entry_153",
+   "SeqMixParam_Entry_165",
+   "SeqMixParam_Entry_177",
+   "SeqMixParam_Entry_189",
+   "SeqMixParam_Entry_201",
+   "SeqMixParam_Entry_213"
+  ],
+  "meaning": "The part receives MIDI on its channel: only parts with this flag set get incoming channel messages (stored inverted in part byte +13 bit 7).",
+  "evidence": [
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1056 -- MidiRx_BuildChannelPartLists, run with selector 0x80, lists per channel the parts whose +13 holds that channel and has bit 7 clear (the test at :1099), into RAM 0x94F4/0x9514",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:155 -- MidiRx_ChannelMsgDispatch delivers each incoming 8x..Ex message only to the parts listed in 0x94F4/0x9514",
+   "v10/maincpu/ui/drawbar_panel_ui.s:15294 -- PsMixer_CtlTypeProc8 puts (part, 0x403) = 1 together with (part, 0x402) = 1 when the channel is stepped up from OFF, and both = 0 when stepped below CH1 (:15315)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:4060 -- the MIDI PART SETTING grid's CHANNEL column does the same: if key+1 (0x402) reads 0 it puts key+1 = 1 and key+2 (0x403) = 1",
+   "v10/maincpu/sequencer/accompaniment_engine.s:7796 -- AccAutoPlay_SplitDetect compares an incoming channel with LEFT's and part 0x15's +13 only when bit 7 is clear",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1151 -- contrast: the TRANSMIT side tests +13 bit 6 (Lsw 0x402) of parts 0-2 instead (PanelEvt_CheckFlag7_Dispatch_A/B/C), e.g. PanelEvt_Handler_0 then sends 0xC0 | channel (:1269) to SeqOut_WriteTimedBytes (:2077)",
+   "(d) descriptor mask 0x80, shift 7, xor 0xFF: value 1 <=> bit 7 clear; LocalControl 0x400 and MidiChannelOn 0x402 are stored inverted the same way"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x18004 + 0x400*T",
+  "kind": "part",
+  "number": "0x404",
+  "name": "MidiOctave",
+  "parts": "0x00-0x19 (26)",
+  "record": "part (= T)",
+  "byte": 12,
+  "mask": "0x07",
+  "range": "0..127",
+  "aliases": [
+   "ExtPartParam_Entry_368",
+   "ExtPartParam_Entry_380",
+   "ExtPartParam_Entry_392",
+   "ExtPartParam_Entry_404",
+   "ExtPartParam_Entry_416",
+   "ExtPartParam_Entry_428",
+   "ExtPartParam_Entry_440",
+   "ExtPartParam_Entry_452",
+   "SeqMixParam_Entry_010",
+   "SeqMixParam_Entry_022",
+   "SeqMixParam_Entry_034",
+   "SeqMixParam_Entry_046",
+   "SeqMixParam_Entry_058",
+   "SeqMixParam_Entry_070",
+   "SeqMixParam_Entry_082",
+   "SeqMixParam_Entry_094",
+   "SeqMixParam_Entry_106",
+   "SeqMixParam_Entry_118",
+   "SeqMixParam_Entry_130",
+   "SeqMixParam_Entry_142",
+   "SeqMixParam_Entry_154",
+   "SeqMixParam_Entry_166",
+   "SeqMixParam_Entry_178",
+   "SeqMixParam_Entry_190",
+   "SeqMixParam_Entry_202",
+   "SeqMixParam_Entry_214"
+  ],
+  "meaning": "The part's OCTAVE setting on the MIDI PART SETTING screen: a 3-bit signed octave shift, -3..+3.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3237 -- MIDI menu screen PART SETTING (title :3205): columns \" PART |CHANNEL|OCTAVE| LOCAL\", rows RIGHT1..PART8 (:3235); grid func 0x01230016 = MidiPartGridCheck",
+   "v10/maincpu/ui/drawbar_panel_ui.s:4060 -- MidiPartGridCheck edits MidiSetup_EventHandler_Table entry 24*page + 3*(row-2) + (col-1); the table (ROM 0xE80520) holds per part T: 0x18001+0x400T (CHANNEL), 0x18004+0x400T (OCTAVE), 0x18000+0x400T (LOCAL)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:4424 -- MidiPart_LookupColumnParam draws the OCTAVE cell as Transpose_ValueDisplay_Table[value]: 0..3 = \"0\"..\"3\", 5..7 = \"-3\"..\"-1\", 4 = \"Error\" (ROM 0xE80680-0xE806AA)",
+   "v10/maincpu/ui/bitmap_out_routines.s:1668 -- under the EXPAND filter row MIDI (0x2905) the recall keeps every part's +12 bits 0-2 together with its +13 (channel/local/on flags) and record 0x80",
+   "(d) mask 0x07 = 3 bits"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x082C0 + 0x400*T",
+  "kind": "part",
+  "number": "0x2C0",
+  "name": "Perc4",
+  "parts": "0x00-0x02 (3)",
+  "record": "0x44 + T",
+  "byte": 7,
+  "mask": "0x10",
+  "range": "0..1",
+  "aliases": [
+   "VoiceParamEx_Entry_005",
+   "VoiceParamEx_Entry_038",
+   "VoiceParamEx_Entry_071"
+  ],
+  "meaning": "DIGITAL DRAWBAR percussion 4' switch of the part (RIGHT1/RIGHT2/LEFT drawbar record).",
+  "evidence": [
+   "v10/maincpu/ui/drawbar_panel_ui.s:15538 -- IvDrawbar_LoadVals reads (part, 0x2C0) into the lower switch value (0x247C4)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:15581 -- IvDrawbar_DrawbarUpdate_Lower shows it on view DrawPerc4",
+   "v10/maincpu/ui/drawbar_panel_ui.s:15681 -- IvDrawbar_Release_Lower writes (part, 0x2C0) with MainLswPartPut",
+   "v10/maincpu/ui_widgets/naka_technichord_part.c:5953 -- DrawPerc4 is the DIGITAL DRAWBAR screen's toggle labelled \" 4'\" (:5972), beside the PERCUSSIVE label (:6038)",
+   "v10/maincpu/shared/event_codes.s:2067 -- view \"DrawPerc4\" = Viewable slot 0xEA entry 2 (firmware view name)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x082C1 + 0x400*T",
+  "kind": "part",
+  "number": "0x2C1",
+  "name": "Perc2_2_3",
+  "parts": "0x00-0x02 (3)",
+  "record": "0x44 + T",
+  "byte": 7,
+  "mask": "0x20",
+  "range": "0..1",
+  "aliases": [
+   "VoiceParamEx_Entry_006",
+   "VoiceParamEx_Entry_039",
+   "VoiceParamEx_Entry_072"
+  ],
+  "meaning": "DIGITAL DRAWBAR percussion 2 2/3' switch of the part.",
+  "evidence": [
+   "v10/maincpu/ui/drawbar_panel_ui.s:15534 -- IvDrawbar_LoadVals reads (part, 0x2C1) into the upper switch value (0x247C2)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:15558 -- IvDrawbar_DrawbarUpdate sets view DrawPerc223 and draws White23/Black23",
+   "v10/maincpu/ui/drawbar_panel_ui.s:15662 -- IvDrawbar_Release_Upper writes (part, 0x2C1)",
+   "v10/maincpu/ui_widgets/naka_technichord_part.c:5974 -- DrawPerc223 is the toggle labelled \"2  '\" (:5993) with the \"2/3\" label (:6008) drawn into it: 2 2/3'",
+   "v10/maincpu/shared/event_codes.s:2068 -- view \"DrawPerc223\" = Viewable slot 0xEA entry 3"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x00003",
+  "kind": "global",
+  "name": "SndParam_Transpose",
+  "record": "0x70",
+  "byte": 2,
+  "mask": "0xFF",
+  "range": "0..11",
+  "alias": "VoiceCtrlR1_Entry_001",
+  "meaning": "TRANSPOSE: 0..11 = -5..+6 semitones, 5 = none.",
+  "evidence": [
+   "v10/maincpu/display/graphics_text_vga.s:5500 -- AcTranspose (the TRANSPOSE box) sets its Lsw filter on key 3",
+   "v10/maincpu/display/graphics_text_vga.s:5518 -- reads key 3 with MainLswGet on show",
+   "v10/maincpu/display/graphics_text_vga.s:5548 -- and draws AcTranspose_KeyNameTable[value] (blank at 5)",
+   "v10/maincpu/audio/audio_control_engine.s:5714 -- ExtData_ApplyTransposeEvent steps record 0x70 +2 within 0..11 and resets it to 5",
+   "v10/maincpu/ui/bitmap_out_routines.s:1587 -- EXPAND filter row TRANSPOSE (0x2903) keeps 0xFD04 = record 0x70 +2"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x00005",
+  "kind": "global",
+  "name": "SndParam_Tempo_Bit8",
+  "record": "0x48",
+  "byte": 9,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_003",
+  "meaning": "Bit 8 of the 9-bit tempo (40..300 BPM); key 0x0004 (SndParam_Tempo) is bits 0-7.",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:8293 -- SeqTimer_UpdateTempoReg reads record 0x48 +8 as a word, keeps 9 bits and accepts 0x28..0x12C (40..300), else resets to 120",
+   "v10/maincpu/audio/audio_control_engine.s:5359 -- ExtData_SetTempoIfChanged stores +8 and +9 and posts field 9 with mask 1 right after field 8",
+   "v10/maincpu/ui/bitmap_out_routines.s:1543 -- EXPAND filter row TEMPO (0x2901) keeps 0x48 +8 and +9 together"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x000C0",
+  "kind": "global",
+  "name": "SndParam_GmOnOff",
+  "record": "0x91",
+  "byte": 3,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_004",
+  "meaning": "GM mode on/off (stored inverted in record 0x91 +3 bit 2).",
+  "evidence": [
+   "v10/maincpu/ui/ui_mode_handlers.s:11845 -- GmOnOffFunc (firmware name) answers EVT_GET_LSW_ADDRESS with 0xC0",
+   "v10/maincpu/sequencer/seq_event_playback.s:4565 -- GMYesFunc (the MIDI menu GM screen's YES) writes 0xC0 with MainLswPut",
+   "v10/maincpu/audio/audio_control_engine.s:982 -- PanelButton_MusicStyleArranger ignores the button while 0xC0 reads 1",
+   "v10/maincpu/ui/drawbar_panel_ui.s:424 -- COMMON SETTING draws PROGRAM CHANGE MODE / DRUMS TYPE as \"  ----  \" and refuses to edit them while 0xC0 reads 1",
+   "v10/maincpu/audio/note_voice_mapping.s:23335 -- SoundParam_InitDefaultBanks mode 1 sets 0xC0 = 1 with its own 16-part channel map; modes 0 and 2 clear it"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x00302",
+  "kind": "global",
+  "name": "SndParam_PanelMemory_Mode",
+  "record": "0x98",
+  "byte": 0,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_012",
+  "meaning": "PANEL MEMORY MODE: 0 = NORMAL, 1 = EXPAND (EXPAND recall keeps the accompaniment and applies the EXPAND MODE FILTER).",
+  "evidence": [
+   "v10/maincpu/ui/ui_mode_handlers.s:11077 -- PmemModeBoxProc, the PANEL MEMORY MODE box (screen title naka_ctrl_menu_body.c:2514)",
+   "v10/maincpu/ui/ui_mode_handlers.s:11108 -- reads key 0x302 on show and redraws on EVT_LSW_DATA for 0x302 (:11121)",
+   "v10/maincpu/ui/ui_mode_handlers.s:11293 -- switch 0x89 puts 0x302 = 0, switch 0x8B puts 0x302 = 1 (:11299)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2605 -- switch 0x89 sits at y 77..93 beside label NORMAL (y 78..96, :2643); switch 0x8B (:2623) at y 161..177 beside EXPAND (y 162..180, :2658)",
+   "v10/maincpu/ui/bitmap_out_routines.s:634 -- PanelMemory_Recall takes PanelMemory_RecallKeepAccompaniment when 0x302 = 1",
+   "v10/maincpu/ui/bitmap_out_routines.s:924 -- whose end applies the EXPAND MODE FILTER"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x00400",
+  "kind": "global",
+  "name": "SndParam_MusicStyleArranger_OnOff",
+  "record": "0x98",
+  "byte": 3,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_013",
+  "meaning": "MUSIC STYLE ARRANGER on/off (drives the panel's MUSIC STYLE ARRANGER LED).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:3083 -- SndParam_SetResBit4_Via0400 copies 0x400 == 1 into LED-image byte 3 bit 4 = row 0xC3 bit 4 = MUSIC STYLE ARRANGER",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)",
+   "v10/maincpu/ui/ui_mode_handlers.s:10857 -- MsaModeScreenProc (MUSIC STYLE ARRANGER MODE screen) puts 0x400 = 1 if it reads 0 when entered from the arranger",
+   "v10/maincpu/ui/ui_mode_handlers.s:161 -- PanelTag48_MsaReapply re-applies the arranger only when 0x400 is non-zero and 0x401 is 2 or 3"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x00401",
+  "kind": "global",
+  "name": "SndParam_MusicStyleArranger_Mode",
+  "record": "0x98",
+  "byte": 3,
+  "mask": "0x70",
+  "range": "1..3",
+  "alias": "VoiceCtrlR1_Entry_014",
+  "meaning": "MUSIC STYLE ARRANGER MODE: 1 = RHYTHM, 2 = SOUND&RHYTHM, 3 = PANEL MEMORY.",
+  "evidence": [
+   "v10/maincpu/ui/ui_mode_handlers.s:11027 -- MsaModeScreenProc: switches 0x89 / 0x8A (:11033) / 0x8B (:11039) put 0x401 = 1 / 2 / 3",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2410 -- switches 0x89/0x8A/0x8B (:2410/:2428/:2446) at y 84/126/168 sit beside labels RHYTHM (:2466, y 86), SOUND&RHYTHM (:2481, y 126) and PANEL MEMORY (y 170)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2231 -- screen title MUSIC STYLE ARRANGER MODE"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02200",
+  "kind": "global",
+  "name": "SndParam_MidiRealtime_Clock",
+  "record": "0x80",
+  "byte": 0,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_021",
+  "meaning": "MIDI CLOCK source: 0 = INTERNAL, 1 = MIDI (external).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3560 -- REALTIME MESSAGES screen (title :3485): ClockBox edits key 0x2200, caption \"CLOCK :\" (:3568), texts \" INTERNAL \" for 0 (:3564) and \"   MIDI   \" for 1 (:3566)",
+   "v10/maincpu/midi/ac_listener_handlers.s:241 -- AcLswFuncEditBoxProc edits the widget's pman_adr key (MainLswPut :302) and draws off_str for 0, on_str for 1"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02281",
+  "kind": "global",
+  "name": "SndParam_MidiRealtime_Commands",
+  "record": "0x80",
+  "byte": 2,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_028",
+  "meaning": "MIDI REALTIME COMMANDS on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3528 -- REALTIME MESSAGES screen: RealtimeCommandBox edits key 0x2281, caption \"REALTIME COMMANDS :\" (:3536), \" OFF \" / \" ON  \"",
+   "v10/maincpu/midi/ac_listener_handlers.s:241 -- same widget class as CLOCK"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02201",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_ProgramChangeMode",
+  "record": "0x80",
+  "byte": 0,
+  "mask": "0x03",
+  "range": "0..3",
+  "alias": "VoiceCtrlR1_Entry_022",
+  "meaning": "MIDI PROGRAM CHANGE MODE: 0 = NORMAL, 1 = TECH, 3 = GM (2 = \"Error!\").",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:424 -- rows 0x2201/0x2205 are drawn NORMAL/TECH/GM for 0/1/3, \"Error!\" otherwise, and \"  ----  \" in GM mode",
+   "v10/maincpu/midi/computer_interface_config.s:194 -- MdPcgModeFunc (firmware name) answers EVT_GET_LSW_ADDRESS with 0x2201 and draws the same strings (no widget uses it in this build)",
+   "v10/maincpu/audio/sndparam_routines.s:2722 -- SndParam_BatchUpdate_Data switches on 0x2201 over 0/1/3"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02205",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_DrumsType",
+  "record": "0x80",
+  "byte": 2,
+  "mask": "0x18",
+  "range": "0..3",
+  "alias": "VoiceCtrlR1_Entry_026",
+  "meaning": "MIDI DRUMS TYPE: 0 = NORMAL, 1 = TECH, 3 = GM.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/midi/computer_interface_config.s:259 -- MdDrumTypeFunc (firmware name) answers EVT_GET_LSW_ADDRESS with 0x2205, strings NORMAL/TECH/GM",
+   "v10/maincpu/audio/note_voice_mapping.s:9622 -- the voice setup switches on 0x2205 over 0/1/3"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02202",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_PrgChangeToPmem",
+  "record": "0x80",
+  "byte": 0,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_024",
+  "meaning": "MIDI COMMON SETTING \"PRG.CHANGE TO P.MEM\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02203",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_NoteOnly",
+  "record": "0x80",
+  "byte": 0,
+  "mask": "0x10",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_025",
+  "meaning": "MIDI COMMON SETTING \"NOTE ONLY\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:7821 -- MidiSysEx_SendAllParams returns at once while 0x2203 is non-zero"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02280",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_SongSelect",
+  "record": "0x80",
+  "byte": 1,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_027",
+  "meaning": "MIDI COMMON SETTING \"SONG SELECT\" on/off (send Song Select).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/demo/file_demo_proc.s:8624 -- FileIO_MidiOutSendByte writes 0xF3 (Song Select, :8633) and the song number to MIDI OUT only when 0x2280 is non-zero"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02282",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_RealtimeSysex",
+  "record": "0x80",
+  "byte": 6,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_029",
+  "meaning": "MIDI COMMON SETTING \"REALTIME SYSEX\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/sequencer/accompaniment_engine.s:6901 -- AccPedal_SendCtrl1 (and _2.._4, MidiPkt_ProcessEventQueue) send the panel-change packet through MidiPkt_DispatchViaTable_4DCE only when record 0x80 +6 bit 3 is set"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0229A",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_FadeInOut",
+  "record": "0x80",
+  "byte": 1,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_043",
+  "meaning": "MIDI COMMON SETTING \"FADE IN/OUT\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228A",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_ProgramChange",
+  "record": "0x80",
+  "byte": 7,
+  "mask": "0x10",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_030",
+  "meaning": "MIDI CONTROL MESSAGES filter \"PRG.CHANGE\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:966 -- MidiRx_ProgramChange is gated on +7 bit 4, as is the program-change sender PanelEvt_Handler_0 (:1257)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228B",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_AfterTouch",
+  "record": "0x80",
+  "byte": 7,
+  "mask": "0x20",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_031",
+  "meaning": "MIDI CONTROL MESSAGES filter \"AFTER TOUCH\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1006 -- MidiRx_ChannelPressure is gated on +7 bit 5, as is the MidiTx_PartTargets_ChannelPressure sender (:1812)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228C",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_PitchBend",
+  "record": "0x80",
+  "byte": 7,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_032",
+  "meaning": "MIDI CONTROL MESSAGES filter \"PITCH BEND\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:986 -- MidiRx_PitchBend is gated on +7 bit 6, as is the MidiTx_PartTargets_PitchBend sender (:1741)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228D",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_BankSelect",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x80",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_033",
+  "meaning": "MIDI CONTROL MESSAGES filter \"BANK SELECT\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:2037 -- MidiCC_ChannelDispatch_DualSend sends CC0/CC32 (bank select) only with +8 bit 7 set"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228E",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Volume",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_034",
+  "meaning": "MIDI CONTROL MESSAGES filter \"VOLUME\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1288 -- PanelEvt_Handler_3 (MidiTx_PartTargets_CC7_Volume) is gated on +8 bit 2"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0228F",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Expression",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_035",
+  "meaning": "MIDI CONTROL MESSAGES filter \"EXPRESSION\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1793 -- MidiCC_ChannelDispatch_Ctrl3 (MidiTx_PartTargets_CC11_Expression) is gated on +8 bit 3"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02290",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Pan",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x10",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_036",
+  "meaning": "MIDI CONTROL MESSAGES filter \"PAN\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1350 -- PanelEvt_Handler_8 (MidiTx_PartTargets_CC10_Pan) is gated on +8 bit 4"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02291",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Sustain",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_037",
+  "meaning": "MIDI CONTROL MESSAGES filter \"SUSTAIN\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1843 -- MidiCC_ChannelDispatch_Ctrl0 (MidiTx_PartTargets_CC64_Sustain) is gated on +8 bit 0"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02294",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_EffectReverb",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x20",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_038",
+  "meaning": "MIDI CONTROL MESSAGES filter \"EFFECT & REVERB\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1574 -- PanelEvt_D3ASlot1_SendCC91 and PanelEvt_Handler_5/_7 (CC93 / CC91 senders) are gated on +8 bit 5"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02295",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Modulation",
+  "record": "0x80",
+  "byte": 8,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_039",
+  "meaning": "MIDI CONTROL MESSAGES filter \"MODULATION\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1774 -- MidiCC_ChannelDispatch_Ctrl1 (MidiTx_PartTargets_CC1_Modulation) is gated on +8 bit 1"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02296",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_Tuning",
+  "record": "0x80",
+  "byte": 7,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_040",
+  "meaning": "MIDI CONTROL MESSAGES filter \"TUNING\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1370 -- PanelEvt_Handler_9 (MidiTx_PartTargets_RpnCoarseTune) and _10 (RpnFineTune, :1391) are gated on +7 bit 1"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02298",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_BendRange",
+  "record": "0x80",
+  "byte": 7,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_041",
+  "meaning": "MIDI CONTROL MESSAGES filter \"BEND RANGE\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1414 -- PanelEvt_Handler_11 (MidiTx_PartTargets_RpnBendRange) is gated on +7 bit 0"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02299",
+  "kind": "global",
+  "name": "SndParam_MidiCtlMsg_ResetAllControllers",
+  "record": "0x80",
+  "byte": 9,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_042",
+  "meaning": "MIDI CONTROL MESSAGES filter \"RESET ALL CONT.\" on/off: gates that message type in both directions.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3342 -- MIDI menu screen CONTROL MESSAGES; its grid box func is 0x01230014 = CtlMsgGridCheck (:3382)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3234 -- CtlMsgGridCheck edits CtlMsgGridCheck_Table[page*9 + row] (ROM 0xE80386): page 1 rows 2-8 = 228A 228D 228C 228E 228F 2290 2291, page 2 rows 2-7 = 2294 2295 2296 2298 228B 2299 (rows 0-1 0xFFFFFFFF); values drawn \" ON  \" / \" OFF \" (MidiSetup_TtlDispatch, :3318)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:3113 -- the row captions are AcCtlMsgGrid_GetRowText_Str (page 1, ROM 0xE80292: \" |-| PRG.CHANGE | BANK SELECT | PITCH BEND | VOLUME | EXPRESSION | PAN | SUSTAIN\") and _Page1_Str (page 2, 0xE8030E: \" |-| EFFECT & REVERB| MODULATION | TUNING | BEND RANGE | AFTER TOUCH | RESET ALL CONT.\")",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1691 -- MidiCC_ChannelDispatch_Ctrl40 (MidiTx_PartTargets_CC121_ResetAll; function 40 = CC121, :2169) is gated on +9 bit 0"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02900",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_RhythmSelection",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_071",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"RHYTHM SELECTION\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- +7 bit 0 keeps record 0x48 +0/+1 (style), the variation bits (+7 & 0x30), +4 bit 4 and +5 bit 1"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02901",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Tempo",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_072",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"TEMPO\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1543 -- +7 bit 1 keeps 0x48 +8/+9 (tempo)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02902",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_SplitPoint",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_073",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"SPLIT POINT\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1563 -- +7 bit 2 keeps 0x70 +0 bits 0-1 (split preset 0x4180) and +1 (split note 0x4181)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02903",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Transpose",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_074",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"TRANSPOSE\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1587 -- +7 bit 3 keeps 0x70 +2 (transpose 0x0003)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02904",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_ApcMemory",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x10",
+  "range": "0..1",
+  "alias": "VoiceCtrlR1_Entry_075",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"APC & MEMORY\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1599 -- +7 bit 4 keeps 0x48 +3 bits 0-3 (APC mode 0x28080, APC MEMORY 0x28081) and 0x90 +3 bits 0-1 (LEFT HOLD 0x28082, ON BASS 0x28083)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02905",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Midi",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x20",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_001",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"MIDI\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1668 -- +7 bit 5 keeps every part's +12 bits 0-2 and +13 and record 0x80"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02906",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_KeyScale",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_002",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"KEY SCALE\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2183 -- +7 bit 6 keeps record 0x92 (scale tune)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02907",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Reverb",
+  "record": "0x98",
+  "byte": 7,
+  "mask": "0x80",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_003",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"REVERB\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1649 -- +7 bit 7 keeps record 0x63 (DIGITAL REVERB slot)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02908",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_DspEffect",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_004",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"DSP EFFECT\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:1628 -- +8 bit 0 keeps record 0x61 (DSP EFFECT slot)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02909",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Part4To16",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_005",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"PART4-16 SETTING\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2111 -- +8 bit 1 keeps the part records from 0xFA04 (part 3) on, 13 parts"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290A",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_FootCtrl",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_006",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"FOOT CONT. SETTING\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2202 -- +8 bit 2 keeps record 0x99 (foot controllers)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290B",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_MicLevelReverb",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_007",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"MIC LEVEL & REVERB\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2221 -- +8 bit 3 keeps record 0x43 +0/+1 (mic) and record 0x66 (mic reverb slot)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290C",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_FadeInOut",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x10",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_008",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"FADE IN/OUT SETTING\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2252 -- +8 bit 4 keeps record 0x70 +5/+6/+7 (fade settings 0x2A00/0x2A01/0x2A10-12)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290D",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_R1R2Octave",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x20",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_009",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"R1/R2 OCTAVE\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2292 -- +8 bit 5 keeps 0xFC6A = record 0x90 +4 (R1/R2 octave 0x40E0)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290E",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Vocalist",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_010",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"VOCALIST\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2304 -- +8 bit 6 keeps record 0x47 (vocalist); PanelMemory_Recall_CheckActive (bitmap_out_routines.s:671) resends the vocalist SysEx when this bit is 0"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x0290F",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_AcousticIllusion",
+  "record": "0x98",
+  "byte": 8,
+  "mask": "0x80",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_011",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"ACOUSTIC ILLUSION\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2323 -- +8 bit 7 keeps record 0x60 +1 bit 6 (0x4004) and record 0x65 (acoustic illusion slot)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02910",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_Equalizer",
+  "record": "0x98",
+  "byte": 9,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_012",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"EQUALIZER\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2353 -- +9 bit 0 keeps record 0x60 +1 bit 5 (0x4006) and record 0x64 (equalizer slot)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02911",
+  "kind": "global",
+  "name": "SndParam_PmemFilter_MspBank",
+  "record": "0x98",
+  "byte": 9,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_013",
+  "meaning": "Panel memory EXPAND MODE FILTER row \"MSP BANK\": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:829 -- PmExpFilter_CellKeys = 2900 2901 2904 2902 2903 290A 290B 290C 290D (rows 2-10 of page 2/3) and PmExpFilter_AltKeys (:833) = 290E 2905 2907 2908 290F 2910 2909 2906 2911 (page 3/3)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8529 -- PmExpFilter_DrawCellBank1 writes caption ParamStr_Table_01[i] into row i+2 on page 2/3 (ParamStr_Table_01, extension_data.s:768: RHYTHM SELECTION, TEMPO, APC & MEMORY, SPLIT POINT, TRANSPOSE, FOOT CONT. SETTING, MIC LEVEL & REVERB, FADE IN/OUT SETTING, R1/R2 OCTAVE)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8597 -- PmExpFilter_DrawCellBank2 does the same on page 3/3 with ParamStr_Table_02 (extension_data.s:787: VOCALIST, MIDI, REVERB, DSP EFFECT, ACOUSTIC ILLUSION, EQUALIZER, PART4-16 SETTING, KEY SCALE, MSP BANK)",
+   "v10/maincpu/ui/ui_mode_handlers.s:8947 -- PmExpFilterGridCheck edits CellKeys[row-2] on page 2/3 and AltKeys[row-2] (:8957) on page 3/3 -- the same row index and page selector (0x340E2) as the captions; value 0 is drawn \"ON\", 1 \"OFF\" (PmExpFilterCheck_CellDecode :9084)",
+   "v10/maincpu/ui_widgets/naka_ctrl_menu_body.c:2796 -- the grid is the PANEL MEMORY screen's EXPAND MODE FILTER",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- BitMapOut_SelectiveFieldRestore reads record 0x98 +7/+8/+9 and, for each set bit, keeps one group of the live panel over the recalled one; it is called at the end of PanelMemory_RecallKeepAccompaniment (:924), the EXPAND-mode recall",
+   "v10/maincpu/ui/bitmap_out_routines.s:2278 -- +9 bit 1 keeps 0xFD12 = record 0x72 +6"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02A00",
+  "kind": "global",
+  "name": "SndParam_FadeIn_Time",
+  "record": "0x70",
+  "byte": 5,
+  "mask": "0xFF",
+  "range": "1..16",
+  "alias": "MidiChParam_Entry_014",
+  "meaning": "FADE IN time in measures (1..16).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:6886 -- FADE IN/OUT SETTING screen (title :6857): rows \" \", \"Time\", \" \", \"Time\", \"Auto reset\", \"Rhythm Auto stop\", \"SEQ Auto stop\"; the FADE IN label (:6890, y 38-56) sits in row 0 and FADE OUT (:6905, y 90-108) in row 2 of the grid at y 30..210 (:6859)",
+   "v10/maincpu/midi/ac_listener_handlers.s:807 -- FadeSetGridCheck edits Data_FadeSetGridDispatch_Table[row] (ROM 0xE7F972 = FFFFFFFF 2A00 FFFFFFFF 2A01 2A12 2A10 2A11); times drawn \" %2d measure \", flags \" ON  \"/\" OFF \"",
+   "v10/maincpu/audio/dsp_config_sysex.s:2257 -- the fade engine scales 0x2A00 by the tempo (key 4) into the fade-in step (CompIface_ScaleAndNormalize; DSPCfg_ScaleFactor_Update :2319 redoes it on tempo change)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02A01",
+  "kind": "global",
+  "name": "SndParam_FadeOut_Time",
+  "record": "0x70",
+  "byte": 6,
+  "mask": "0xFF",
+  "range": "1..16",
+  "alias": "MidiChParam_Entry_015",
+  "meaning": "FADE OUT time in measures (1..16).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:6886 -- FADE IN/OUT SETTING screen (title :6857): rows \" \", \"Time\", \" \", \"Time\", \"Auto reset\", \"Rhythm Auto stop\", \"SEQ Auto stop\"; the FADE IN label (:6890, y 38-56) sits in row 0 and FADE OUT (:6905, y 90-108) in row 2 of the grid at y 30..210 (:6859)",
+   "v10/maincpu/midi/ac_listener_handlers.s:807 -- FadeSetGridCheck edits Data_FadeSetGridDispatch_Table[row] (ROM 0xE7F972 = FFFFFFFF 2A00 FFFFFFFF 2A01 2A12 2A10 2A11); times drawn \" %2d measure \", flags \" ON  \"/\" OFF \"",
+   "v10/maincpu/audio/dsp_config_sysex.s:2267 -- scales 0x2A01 by the tempo into the fade-out step"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02A10",
+  "kind": "global",
+  "name": "SndParam_FadeOut_RhythmAutoStop",
+  "record": "0x70",
+  "byte": 7,
+  "mask": "0x01",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_016",
+  "meaning": "FADE OUT \"Rhythm Auto stop\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:6886 -- FADE IN/OUT SETTING screen (title :6857): rows \" \", \"Time\", \" \", \"Time\", \"Auto reset\", \"Rhythm Auto stop\", \"SEQ Auto stop\"; the FADE IN label (:6890, y 38-56) sits in row 0 and FADE OUT (:6905, y 90-108) in row 2 of the grid at y 30..210 (:6859)",
+   "v10/maincpu/midi/ac_listener_handlers.s:807 -- FadeSetGridCheck edits Data_FadeSetGridDispatch_Table[row] (ROM 0xE7F972 = FFFFFFFF 2A00 FFFFFFFF 2A01 2A12 2A10 2A11); times drawn \" %2d measure \", flags \" ON  \"/\" OFF \"",
+   "v10/maincpu/audio/dsp_config_sysex.s:2285 -- copied into fade control byte 0xC1F0 bit 4"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02A11",
+  "kind": "global",
+  "name": "SndParam_FadeOut_SeqAutoStop",
+  "record": "0x70",
+  "byte": 7,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_017",
+  "meaning": "FADE OUT \"SEQ Auto stop\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:6886 -- FADE IN/OUT SETTING screen (title :6857): rows \" \", \"Time\", \" \", \"Time\", \"Auto reset\", \"Rhythm Auto stop\", \"SEQ Auto stop\"; the FADE IN label (:6890, y 38-56) sits in row 0 and FADE OUT (:6905, y 90-108) in row 2 of the grid at y 30..210 (:6859)",
+   "v10/maincpu/midi/ac_listener_handlers.s:807 -- FadeSetGridCheck edits Data_FadeSetGridDispatch_Table[row] (ROM 0xE7F972 = FFFFFFFF 2A00 FFFFFFFF 2A01 2A12 2A10 2A11); times drawn \" %2d measure \", flags \" ON  \"/\" OFF \"",
+   "v10/maincpu/audio/dsp_config_sysex.s:2295 -- copied into fade control byte 0xC1F0 bit 5"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x02A12",
+  "kind": "global",
+  "name": "SndParam_FadeOut_AutoReset",
+  "record": "0x70",
+  "byte": 7,
+  "mask": "0x04",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_018",
+  "meaning": "FADE OUT \"Auto reset\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:6886 -- FADE IN/OUT SETTING screen (title :6857): rows \" \", \"Time\", \" \", \"Time\", \"Auto reset\", \"Rhythm Auto stop\", \"SEQ Auto stop\"; the FADE IN label (:6890, y 38-56) sits in row 0 and FADE OUT (:6905, y 90-108) in row 2 of the grid at y 30..210 (:6859)",
+   "v10/maincpu/midi/ac_listener_handlers.s:807 -- FadeSetGridCheck edits Data_FadeSetGridDispatch_Table[row] (ROM 0xE7F972 = FFFFFFFF 2A00 FFFFFFFF 2A01 2A12 2A10 2A11); times drawn \" %2d measure \", flags \" ON  \"/\" OFF \"",
+   "v10/maincpu/audio/dsp_config_sysex.s:2305 -- copied into fade control byte 0xC1F0 bit 6"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04005",
+  "kind": "global",
+  "name": "SndParam_Fade_Level",
+  "record": "0xB0",
+  "byte": 3,
+  "mask": "0x7F",
+  "range": "0..127",
+  "alias": "MidiChParam_Entry_045",
+  "meaning": "Current FADE IN/OUT level (0..127), ramped by the fade engine and applied as the output gain's fade stage.",
+  "evidence": [
+   "v10/maincpu/audio/dsp_config_sysex.s:1978 -- the fade-in ramp writes 0x4005 and, at 127, ends the fade and puts 0x40C0 = 0 (:1989)",
+   "v10/maincpu/audio/dsp_config_sysex.s:2009 -- the fade-out ramp writes 0x4005 down to 0",
+   "v10/maincpu/audio/note_voice_mapping.s:26278 -- 0x4005 (SndParam_ApplySystemParam field 5) goes to the sub-CPU as COMM packet 6",
+   "v142/subcpu/kn5000_subprogram_v142.s:44965 -- sub-CPU global sub-command 6 = DSP_Set_FadeLevel: stores it and recomputes the DSP2 output gain (DSP_MixerCoeff_Compute)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x040C0",
+  "kind": "global",
+  "name": "SndParam_FadeIn_OnOff",
+  "record": "0x98",
+  "byte": 11,
+  "mask": "0x80",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_049",
+  "meaning": "FADE IN on/off (the panel FADE IN LED).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:3397 -- sets LED-image byte 0 bit 5 = row 0xC0 bit 5 = FADE IN when 0x40C0 reads 1",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)",
+   "v10/maincpu/audio/dsp_config_sysex.s:1989 -- the fade-in ramp clears 0x40C0 when the level reaches 127"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x040C1",
+  "kind": "global",
+  "name": "SndParam_FadeOut_OnOff",
+  "record": "0x98",
+  "byte": 11,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_050",
+  "meaning": "FADE OUT on/off (the panel FADE OUT LED).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:3411 -- sets LED-image byte 0 bit 6 = row 0xC0 bit 6 = FADE OUT when 0x40C1 reads 1",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x040E0",
+  "kind": "global",
+  "name": "SndParam_R1R2Octave",
+  "record": "0x90",
+  "byte": 4,
+  "mask": "0xFF",
+  "range": "40..88",
+  "alias": "MidiChParam_Entry_051",
+  "meaning": "RIGHT1/RIGHT2 OCTAVE as a note offset: 64 = 0, 52/40 = -1/-2, 76/88 = +1/+2 octaves.",
+  "evidence": [
+   "v10/maincpu/sequencer/seq_event_playback.s:4835 -- R12OctaveFunc (firmware name) answers EVT_GET_LSW_ADDRESS with 0x40E0",
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:2035 -- used by the \"OCTAVE   :\" edit box (:2039) of the RIGHT1/RIGHT2 OCTAVE screen (:2014)",
+   "v10/maincpu/audio/audio_control_engine.s:3426 -- lights row 0x0B bit 1 (R1/R2 OCTAVE -) for 40/52, bit 2 (+) for 76/88, neither for 64",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04100",
+  "kind": "global",
+  "name": "SndParam_Conductor",
+  "record": "0x90",
+  "byte": 0,
+  "mask": "0x1F",
+  "range": "0..5",
+  "alias": "MidiChParam_Entry_052",
+  "meaning": "CONDUCTOR part selection (which of RIGHT1/RIGHT2/LEFT play): 0..5 = R1, R2, R1+R2, all, R1+L, R2+L.",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:2864 -- puts AudioCtl_SmallTables[0x4100] into bits 4-6 of LED-image byte 10 = row 0x04 bits 4-6 = COND: LEFT / RIGHT 2 / RIGHT 1",
+   "v10/maincpu/extensions/extension_data.s:2806 -- the table is {4, 2, 6, 7, 5, 3}",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04140",
+  "kind": "global",
+  "name": "SndParam_Mic_ReverbOnOff",
+  "record": "0x43",
+  "byte": 0,
+  "mask": "0x80",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_053",
+  "meaning": "MIC reverb on/off (enable of DSP slot 3, ROOM/KARAOKE/BATH ROOM/STAGE).",
+  "evidence": [
+   "v10/maincpu/audio/note_voice_mapping.s:18521 -- SndParam_ApplySystemParam queues 0x4140 in RAM 0xCFCE",
+   "v10/maincpu/audio/note_voice_mapping.s:26348 -- which Song_SendPartDataBlocks sends as COMM packet 0x24",
+   "v142/subcpu/kn5000_subprogram_v142.s:45060 -- sub-CPU global sub-command 0x24 links/unlinks EFF slot 3 into the chain",
+   "v10/maincpu/ui/bitmap_out_routines.s:2221 -- the EXPAND filter row captioned MIC LEVEL & REVERB (0x290B) keeps record 0x43 (this byte) with record 0x66 (slot 3)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04180",
+  "kind": "global",
+  "name": "SndParam_SplitPoint_Preset",
+  "record": "0x70",
+  "byte": 0,
+  "mask": "0x03",
+  "range": "0..3",
+  "alias": "MidiChParam_Entry_056",
+  "meaning": "SPLIT POINT preset: 0 = free (key-set), 1 = LEFT, 2 = CENTER, 3 = RIGHT.",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:5698 -- ExtData_Voice_MixedHandler maps (0xFD02 & 3) through SplitPoint_LedMaskByPreset = {0, 1, 2, 4} (extension_data.s:3415) into row 0xC4 bits 4-6 = SPLIT POINT LEFT/CENTER/RIGHT (via SndParam_MaskShiftMerge_8F58, audio_control_engine.s:3053)",
+   "v10/maincpu/sequencer/seq_event_playback.s:4636 -- SplitPointFunc sets 0x4180 = 0 when a key is played on the SPLIT POINT screen",
+   "v10/maincpu/ui/bitmap_out_routines.s:1563 -- EXPAND filter row SPLIT POINT keeps 0x70 +0 bits 0-1 with +1",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04181",
+  "kind": "global",
+  "name": "SndParam_SplitPoint_Note",
+  "record": "0x70",
+  "byte": 1,
+  "mask": "0x7F",
+  "range": "21..108",
+  "alias": "MidiChParam_Entry_057",
+  "meaning": "SPLIT POINT note number (21..108).",
+  "evidence": [
+   "v10/maincpu/sequencer/seq_event_playback.s:4746 -- SplitPointFunc (firmware name) answers EVT_GET_LSW_ADDRESS with 0x4181",
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:7038 -- it drives the AcLswBox of the SPLIT POINT screen (title :6996)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04200",
+  "kind": "global",
+  "name": "SndParam_TechniChord_OnOff",
+  "record": "0x48",
+  "byte": 4,
+  "mask": "0x40",
+  "range": "0..1",
+  "alias": "MidiChParam_Entry_058",
+  "meaning": "TECHNI-CHORD on/off (the panel TECHNI CHORD LED).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:3037 -- sets LED-image byte 10 bit 7 = row 0x04 bit 7 = TECHNI CHORD when 0x4200 reads 1",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)",
+   "v10/maincpu/ui/drawbar_panel_ui.s:9781 -- the TECHNI-CHORD screen puts 0x4200 = 1 when entered"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04202",
+  "kind": "global",
+  "name": "SndParam_TechniChord_Type",
+  "record": "0x70",
+  "byte": 4,
+  "mask": "0x0F",
+  "range": "0..13",
+  "alias": "MidiChParam_Entry_060",
+  "meaning": "TECHNI-CHORD type: 0 CLOSE, 1 OPEN1, 2 OPEN2, 3 DUET2, 4 COUNTRY, 5 THEATRE, 6 HYMN, 7 BLOCK, 8 BIG BAND BRASS, 9 BIG BAND REEDS, 10 OCTAVE, 11 HARD ROCK, 12 FANFARE, 13 DUET1.",
+  "evidence": [
+   "v10/maincpu/ui/drawbar_panel_ui.s:9856 -- IvSdtecd1Proc gives dial focus to Sdtecd1_TypeButtonView[0x4202] and steps 0x4202 with MainLswAdd; the table (ROM 0xE9D9CC) = views 0xD000A 0xD000B 0xD000C 0xD000E 0xD000F 0xD0010 0xD0011 0xD0015 0xD0012 0xD0013 0xD0014 0xD0016 0xD0017 0xD000D",
+   "v10/maincpu/ui_widgets/naka_technichord_part.c:1634 -- Viewable slot 0xD elements 10..23 are TcClose, TcOpen1, TcOpen2, TcDuet1, TcDuet2, TcCountry, TcTheatre, TcHymn, TcBigBandBrass, TcBigBandReeds, TcOctave, TcBlock, TcHardRock, TcFanfare (to :1673)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04C00",
+  "kind": "global",
+  "name": "SndParam_Equalizer_Algorithm",
+  "record": "0x64",
+  "byte": 0,
+  "mask": "0xFF",
+  "range": "0..255",
+  "alias": "MidiChParam_Entry_079",
+  "meaning": "Algorithm byte of the EQUALIZER DSP slot (slot 4; 79 = GEQ).",
+  "evidence": [
+   "v10/maincpu/ui/bitmap_out_routines.s:2221 -- slot record groups kept by the EXPAND filter rows: MIC LEVEL & REVERB -> record 0x66, ACOUSTIC ILLUSION (:2323) -> record 0x65 with the 0x4004 bit, EQUALIZER (:2353) -> record 0x64 with the 0x4006 bit",
+   "analysis/disk-format-probes/README-lsw-leftover-records.md section 1 (prior work, same ROM): SlotToTag 61 63 65 66 64 and DSPCfg_SlotAcceptsAlgorithm give slot 4 = tag 0x64 = EQUALIZER, byte 0 = algorithm; EQPreset_Load writes tag 0x64 then notifies 0x4006"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04D00",
+  "kind": "global",
+  "name": "SndParam_AcousticIllusion_Algorithm",
+  "record": "0x65",
+  "byte": 0,
+  "mask": "0xFF",
+  "range": "0..255",
+  "alias": "MidiChParam_Entry_080",
+  "meaning": "Algorithm byte of the ACOUSTIC ILLUSION DSP slot (slot 2: STANDARD/PERCUSSIVE/SYMPHONIC/DEEP SPACE).",
+  "evidence": [
+   "v10/maincpu/ui/bitmap_out_routines.s:2221 -- slot record groups kept by the EXPAND filter rows: MIC LEVEL & REVERB -> record 0x66, ACOUSTIC ILLUSION (:2323) -> record 0x65 with the 0x4004 bit, EQUALIZER (:2353) -> record 0x64 with the 0x4006 bit",
+   "README-lsw-leftover-records.md section 1: slot 2 = tag 0x65, algorithms 57..60"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04E00",
+  "kind": "global",
+  "name": "SndParam_MicReverb_Algorithm",
+  "record": "0x66",
+  "byte": 0,
+  "mask": "0xFF",
+  "range": "0..255",
+  "alias": "MidiChParam_Entry_081",
+  "meaning": "Algorithm byte of the MIC reverb DSP slot (slot 3: ROOM/KARAOKE/BATH ROOM/STAGE).",
+  "evidence": [
+   "v10/maincpu/ui/bitmap_out_routines.s:2221 -- slot record groups kept by the EXPAND filter rows: MIC LEVEL & REVERB -> record 0x66, ACOUSTIC ILLUSION (:2323) -> record 0x65 with the 0x4004 bit, EQUALIZER (:2353) -> record 0x64 with the 0x4006 bit",
+   "README-lsw-leftover-records.md section 1: slot 3 = tag 0x66, algorithms 88..91; the filter caption MIC LEVEL & REVERB is the title binding that note lacked"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x04001",
+  "kind": "global",
+  "name": "SndParam_TotalExpression",
+  "record": "0xB0",
+  "byte": 1,
+  "mask": "0x7F",
+  "range": "0..127",
+  "alias": "MidiChParam_Entry_041",
+  "meaning": "TOTAL EXPRESSION level (0..127): the expression pedal when assigned to TOTAL EXPRESSION, forced to 127 otherwise; one stage of the master output gain.",
+  "evidence": [
+   "v10/maincpu/extensions/extension_data.s:708 -- foot-controller function code 0xB6 (182) is \"TOTAL EXPRESSION\" and 0xB7 (183) \"PART EXPRESSION\" (FswAssign_FunctionCodes :672 / FswAssign_FunctionNames :675, entries 29/30)",
+   "v10/maincpu/audio/audio_control_engine.s:4150 -- Audio_ReinitToneGenAndOutput writes 0x7F to record 0xB0 +1 (key 0x4001) unless the expression pedal function (0x2880) is 182",
+   "v10/maincpu/audio/audio_control_engine.s:4193 -- and puts 0x4001 = 127 when the pedal function is 183 (PART EXPRESSION), whose events PanelAction_ModWheel (:1236) reroutes to the per-part record 0xB3",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:2316 -- received CC11 for part 25 (0x19, the mixer's CTRL channel) is mapped to record 0xB0 +1 by the receive table MidiCC_PartTargets_CC11_Expression (:2309, entry 25 of 32)",
+   "v142/subcpu/kn5000_subprogram_v142.s:44951 -- sub-CPU global sub-command 2 (0x4001 is ApplySystemParam field 1 -> COMM 2) is the curve index BC of DSP_MixerCoeff_Compute, the DSP2 output gain"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28000",
+  "kind": "global",
+  "name": "SndParam_Style_Number",
+  "record": "0x48",
+  "byte": 0,
+  "mask": "0xFF",
+  "range": "0..255",
+  "alias": "SeqMixParam_Entry_222",
+  "meaning": "Current rhythm style number (low byte; with Style_Bank it selects the style).",
+  "evidence": [
+   "v10/maincpu/sequencer/accompaniment_engine.s:11589 -- AccHelper_ComputeVoiceOffset calls PartCtrl_WriteProgramChange for tag 0x48 with L = record 0x48 +0 and H = +1 & 7, the program/bank pair the part records use",
+   "v10/maincpu/audio/audio_control_engine.s:8087 -- PartCtrl_WriteProgramChange stores L (program) at 0x90EA, H (bank) at 0x90EB",
+   "v10/maincpu/audio/audio_control_engine.s:3314 -- resolves (0x28000, 0x28001) with SndParam_ResolveVoiceEntry and lights the style's rhythm-group LED (rows 0xC1/0xC2)",
+   "v10/maincpu/ui/bitmap_out_routines.s:1478 -- EXPAND filter row RHYTHM SELECTION keeps 0x48 +0/+1"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28001",
+  "kind": "global",
+  "name": "SndParam_Style_Bank",
+  "record": "0x48",
+  "byte": 1,
+  "mask": "0x7F",
+  "range": "0..7",
+  "alias": "SeqMixParam_Entry_223",
+  "meaning": "Current rhythm style bank (0..7); same shape as the part records' Bank field.",
+  "evidence": [
+   "v10/maincpu/sequencer/accompaniment_engine.s:24644 -- DrumKit_PostMidiEvents posts (0x48, +1, & 0x7F) and (0x48, +0) and calls PartCtrl_WriteProgramChange with H = +1, L = +0",
+   "v10/maincpu/sequencer/accompaniment_engine.s:11589 -- H = +1 & 7 is the bank of the style program change",
+   "(d) record 0x48 +1, mask 0x7F, range 0..7: identical to SndParam_PartTT_Bank (+1, 0x7F, 0..7)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28002",
+  "kind": "global",
+  "name": "SndParam_Style_Variation",
+  "record": "0x48",
+  "byte": 7,
+  "mask": "0x30",
+  "range": "0..3",
+  "alias": "SeqMixParam_Entry_224",
+  "meaning": "VARIATION 1-4 of the current style (0..3).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:3003 -- lights VARIATION LED 1 << 0x28002 in row 0xC3 bits 0-3 for ordinary styles",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)",
+   "v10/maincpu/audio/audio_control_engine.s:1091 -- PanelButton_Variation posts the pressed variation with mask 0x30 (this field)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28080",
+  "kind": "global",
+  "name": "SndParam_Apc_Mode",
+  "record": "0x48",
+  "byte": 3,
+  "mask": "0x07",
+  "range": "0..3",
+  "alias": "SeqMixParam_Entry_225",
+  "meaning": "AUTO PLAY CHORD mode: 0 = off, 1 = ONE FINGER, 2 = FINGERED, 3 = PIANIST.",
+  "evidence": [
+   "v10/maincpu/storage/flash_floppy_handlers.s:6782 -- AcApcMdBoxProc puts 0x28080 = its apcdata when selected and highlights when 0x28080 equals it (:6750)",
+   "v10/maincpu/ui_widgets/naka_msp_recording.c:1684 -- AUTO PLAY CHORD screen (title :1663): apcdata 1/2/3 (:1684/:1709/:1734) are the boxes ONE FINGER (:1688), FINGERED (:1713), PIANIST (:1738)",
+   "v10/maincpu/audio/audio_control_engine.s:2985 -- lights row 0xC3 bit 5 = AUTO PLAY CHORD whenever 0x28080 != 0",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28081",
+  "kind": "global",
+  "name": "SndParam_Apc_Memory",
+  "record": "0x48",
+  "byte": 3,
+  "mask": "0x08",
+  "range": "0..1",
+  "alias": "SeqMixParam_Entry_226",
+  "meaning": "AUTO PLAY CHORD \"MEMORY\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_msp_recording.c:1754 -- toggle ApcMem (pman_ad 0) with texts \" MEMORY : OFF\" / \" MEMORY : ON\" (:1757/:1759), func ApcOnOffFunc",
+   "v10/maincpu/storage/flash_floppy_handlers.s:6589 -- AcApcToggle_HandleOpen reads 0x28081 for pman_ad 0",
+   "v10/maincpu/storage/flash_floppy_handlers.s:6676 -- ApcOnOffFunc puts 0x28081 on EVT_SET_PARAM"
+  ],
+  "confidence": "firm"
+ },
+ {
+  "key": "0x28083",
+  "kind": "global",
+  "name": "SndParam_Apc_OnBass",
+  "record": "0x90",
+  "byte": 3,
+  "mask": "0x02",
+  "range": "0..1",
+  "alias": "SeqMixParam_Entry_228",
+  "meaning": "AUTO PLAY CHORD \"ON BASS\" on/off.",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_msp_recording.c:1775 -- toggle ApcOnBass (pman_ad 1) with texts \"ON BASS : OFF\" / \"ON BASS : ON\" (:1778), func ApcOnBasFunc",
+   "v10/maincpu/storage/flash_floppy_handlers.s:6592 -- AcApcToggle_HandleOpen reads 0x28083 for pman_ad 1",
+   "v10/maincpu/storage/flash_floppy_handlers.s:6688 -- ApcOnBasFunc puts 0x28083 on EVT_SET_PARAM"
+  ],
+  "confidence": "firm"
+ }
+]

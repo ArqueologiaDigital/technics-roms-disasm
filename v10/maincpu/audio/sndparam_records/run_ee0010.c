@@ -26,7 +26,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  2] 0xEE0034  NakaInst_Param_Field81A */
+    /* [  2] 0xEE0034  SndParam_Style_FillIn */
     { .key = 0x00028100, .bank_index = 0x48, .bank_offset = 0x05,
       .mask = 0xC0, .clamp_min = 0x00, .clamp_max = 0x02, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -46,7 +46,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  4] 0xEE0058  NakaInst_Param_Field81B */
+    /* [  4] 0xEE0058  SndParam_Style_Ending */
     { .key = 0x00028102, .bank_index = 0x48, .bank_offset = 0x05,
       .mask = 0x30, .clamp_min = 0x00, .clamp_max = 0x02, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -56,7 +56,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  5] 0xEE006A  NakaInst_Param_Field81C, NakaInst_Param_Field48(+4), NakaInst_Param_TermFF(+9) */
+    /* [  5] 0xEE006A  SndParam_Style_SynchroBreak, NakaInst_Param_Field48(+4), NakaInst_Param_TermFF(+9) */
     { .key = 0x00028103, .bank_index = 0x48, .bank_offset = 0x05,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -166,7 +166,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 16] 0xEE0130  NakaInst_Param_IdxA0_00, NakaInst_Param_Size05(+9), NakaInst_Param_EndFF(+11), NakaInst_Param_Flag01(+12), NakaInst_Param_PadEnd(+13) */
+    /* [ 16] 0xEE0130  SndParam_MidiCommon_ApcControl, NakaInst_Param_Size05(+9), NakaInst_Param_EndFF(+11), NakaInst_Param_Flag01(+12), NakaInst_Param_PadEnd(+13) */
     { .key = 0x0002A000, .bank_index = 0x80, .bank_offset = 0x09,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,

@@ -6,7 +6,7 @@
 
 const sndparam_descriptor_t run_edbac0[22]
     __attribute__((section(".text"), used)) = {
-    /* [  0] 0xEDBAC0  VoiceCtrlR1_Entry_001 */
+    /* [  0] 0xEDBAC0  SndParam_Transpose */
     { .key = 0x00000003, .bank_index = 0x70, .bank_offset = 0x02,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0x0B, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -26,7 +26,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 2, /* SndParam_ClampReverbTime / SndParam_ClampDelayTime */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  2] 0xEDBAE4  VoiceCtrlR1_Entry_003 */
+    /* [  2] 0xEDBAE4  SndParam_Tempo_Bit8 */
     { .key = 0x00000005, .bank_index = 0x48, .bank_offset = 0x09,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0x00,
@@ -36,7 +36,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 2, /* SndParam_ClampReverbTime / SndParam_ClampDelayTime */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  3] 0xEDBAF6  VoiceCtrlR1_Entry_004 */
+    /* [  3] 0xEDBAF6  SndParam_GmOnOff */
     { .key = 0x000000C0, .bank_index = 0x91, .bank_offset = 0x03,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -116,7 +116,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 11] 0xEDBB86  VoiceCtrlR1_Entry_012 */
+    /* [ 11] 0xEDBB86  SndParam_PanelMemory_Mode */
     { .key = 0x00000302, .bank_index = 0x98, .bank_offset = 0x00,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -126,7 +126,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 12] 0xEDBB98  VoiceCtrlR1_Entry_013 */
+    /* [ 12] 0xEDBB98  SndParam_MusicStyleArranger_OnOff */
     { .key = 0x00000400, .bank_index = 0x98, .bank_offset = 0x03,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -136,7 +136,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 13] 0xEDBBAA  VoiceCtrlR1_Entry_014 */
+    /* [ 13] 0xEDBBAA  SndParam_MusicStyleArranger_Mode */
     { .key = 0x00000401, .bank_index = 0x98, .bank_offset = 0x03,
       .mask = 0x70, .clamp_min = 0x01, .clamp_max = 0x03, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -206,7 +206,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 20] 0xEDBC28  VoiceCtrlR1_Entry_021 */
+    /* [ 20] 0xEDBC28  SndParam_MidiRealtime_Clock */
     { .key = 0x00002200, .bank_index = 0x80, .bank_offset = 0x00,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -216,7 +216,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 21] 0xEDBC3A  VoiceCtrlR1_Entry_022 */
+    /* [ 21] 0xEDBC3A  SndParam_MidiCommon_ProgramChangeMode */
     { .key = 0x00002201, .bank_index = 0x80, .bank_offset = 0x00,
       .mask = 0x03, .clamp_min = 0x00, .clamp_max = 0x03, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0x01,

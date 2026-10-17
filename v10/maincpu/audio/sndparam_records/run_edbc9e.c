@@ -6,7 +6,7 @@
 
 const sndparam_descriptor_t run_edbc9e[78]
     __attribute__((section(".text"), used)) = {
-    /* [  0] 0xEDBC9E  VoiceCtrlR1_Entry_027 */
+    /* [  0] 0xEDBC9E  SndParam_MidiCommon_SongSelect */
     { .key = 0x00002280, .bank_index = 0x80, .bank_offset = 0x01,
       .mask = 0x08, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x03, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -16,7 +16,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  1] 0xEDBCB0  VoiceCtrlR1_Entry_028 */
+    /* [  1] 0xEDBCB0  SndParam_MidiRealtime_Commands */
     { .key = 0x00002281, .bank_index = 0x80, .bank_offset = 0x02,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -26,7 +26,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  2] 0xEDBCC2  VoiceCtrlR1_Entry_029 */
+    /* [  2] 0xEDBCC2  SndParam_MidiCommon_RealtimeSysex */
     { .key = 0x00002282, .bank_index = 0x80, .bank_offset = 0x06,
       .mask = 0x08, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x03, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -36,7 +36,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  3] 0xEDBCD4  VoiceCtrlR1_Entry_030 */
+    /* [  3] 0xEDBCD4  SndParam_MidiCtlMsg_ProgramChange */
     { .key = 0x0000228A, .bank_index = 0x80, .bank_offset = 0x07,
       .mask = 0x10, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -46,7 +46,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  4] 0xEDBCE6  VoiceCtrlR1_Entry_031 */
+    /* [  4] 0xEDBCE6  SndParam_MidiCtlMsg_AfterTouch */
     { .key = 0x0000228B, .bank_index = 0x80, .bank_offset = 0x07,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -56,7 +56,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  5] 0xEDBCF8  VoiceCtrlR1_Entry_032 */
+    /* [  5] 0xEDBCF8  SndParam_MidiCtlMsg_PitchBend */
     { .key = 0x0000228C, .bank_index = 0x80, .bank_offset = 0x07,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -66,7 +66,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  6] 0xEDBD0A  VoiceCtrlR1_Entry_033 */
+    /* [  6] 0xEDBD0A  SndParam_MidiCtlMsg_BankSelect */
     { .key = 0x0000228D, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -76,7 +76,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  7] 0xEDBD1C  VoiceCtrlR1_Entry_034 */
+    /* [  7] 0xEDBD1C  SndParam_MidiCtlMsg_Volume */
     { .key = 0x0000228E, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -86,7 +86,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  8] 0xEDBD2E  VoiceCtrlR1_Entry_035 */
+    /* [  8] 0xEDBD2E  SndParam_MidiCtlMsg_Expression */
     { .key = 0x0000228F, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x08, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x03, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -96,7 +96,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  9] 0xEDBD40  VoiceCtrlR1_Entry_036 */
+    /* [  9] 0xEDBD40  SndParam_MidiCtlMsg_Pan */
     { .key = 0x00002290, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x10, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -106,7 +106,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 10] 0xEDBD52  VoiceCtrlR1_Entry_037 */
+    /* [ 10] 0xEDBD52  SndParam_MidiCtlMsg_Sustain */
     { .key = 0x00002291, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -116,7 +116,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 11] 0xEDBD64  VoiceCtrlR1_Entry_038 */
+    /* [ 11] 0xEDBD64  SndParam_MidiCtlMsg_EffectReverb */
     { .key = 0x00002294, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -126,7 +126,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 12] 0xEDBD76  VoiceCtrlR1_Entry_039 */
+    /* [ 12] 0xEDBD76  SndParam_MidiCtlMsg_Modulation */
     { .key = 0x00002295, .bank_index = 0x80, .bank_offset = 0x08,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -136,7 +136,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 13] 0xEDBD88  VoiceCtrlR1_Entry_040 */
+    /* [ 13] 0xEDBD88  SndParam_MidiCtlMsg_Tuning */
     { .key = 0x00002296, .bank_index = 0x80, .bank_offset = 0x07,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -146,7 +146,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 14] 0xEDBD9A  VoiceCtrlR1_Entry_041 */
+    /* [ 14] 0xEDBD9A  SndParam_MidiCtlMsg_BendRange */
     { .key = 0x00002298, .bank_index = 0x80, .bank_offset = 0x07,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -156,7 +156,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 15] 0xEDBDAC  VoiceCtrlR1_Entry_042 */
+    /* [ 15] 0xEDBDAC  SndParam_MidiCtlMsg_ResetAllControllers */
     { .key = 0x00002299, .bank_index = 0x80, .bank_offset = 0x09,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -166,7 +166,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 16] 0xEDBDBE  VoiceCtrlR1_Entry_043 */
+    /* [ 16] 0xEDBDBE  SndParam_MidiCommon_FadeInOut */
     { .key = 0x0000229A, .bank_index = 0x80, .bank_offset = 0x01,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -446,7 +446,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 44] 0xEDBFB6  VoiceCtrlR1_Entry_071 */
+    /* [ 44] 0xEDBFB6  SndParam_PmemFilter_RhythmSelection */
     { .key = 0x00002900, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -456,7 +456,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 45] 0xEDBFC8  VoiceCtrlR1_Entry_072 */
+    /* [ 45] 0xEDBFC8  SndParam_PmemFilter_Tempo */
     { .key = 0x00002901, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -466,7 +466,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 46] 0xEDBFDA  VoiceCtrlR1_Entry_073 */
+    /* [ 46] 0xEDBFDA  SndParam_PmemFilter_SplitPoint */
     { .key = 0x00002902, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -476,7 +476,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 47] 0xEDBFEC  VoiceCtrlR1_Entry_074 */
+    /* [ 47] 0xEDBFEC  SndParam_PmemFilter_Transpose */
     { .key = 0x00002903, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x08, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x03, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -486,7 +486,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 48] 0xEDBFFE  VoiceCtrlR1_Entry_075 */
+    /* [ 48] 0xEDBFFE  SndParam_PmemFilter_ApcMemory */
     { .key = 0x00002904, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x10, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -496,7 +496,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 49] 0xEDC010  MidiChParam_Entry_001 */
+    /* [ 49] 0xEDC010  SndParam_PmemFilter_Midi */
     { .key = 0x00002905, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -506,7 +506,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 50] 0xEDC022  MidiChParam_Entry_002 */
+    /* [ 50] 0xEDC022  SndParam_PmemFilter_KeyScale */
     { .key = 0x00002906, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -516,7 +516,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 51] 0xEDC034  MidiChParam_Entry_003 */
+    /* [ 51] 0xEDC034  SndParam_PmemFilter_Reverb */
     { .key = 0x00002907, .bank_index = 0x98, .bank_offset = 0x07,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -526,7 +526,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 52] 0xEDC046  MidiChParam_Entry_004 */
+    /* [ 52] 0xEDC046  SndParam_PmemFilter_DspEffect */
     { .key = 0x00002908, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -536,7 +536,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 53] 0xEDC058  MidiChParam_Entry_005 */
+    /* [ 53] 0xEDC058  SndParam_PmemFilter_Part4To16 */
     { .key = 0x00002909, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -546,7 +546,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 54] 0xEDC06A  MidiChParam_Entry_006 */
+    /* [ 54] 0xEDC06A  SndParam_PmemFilter_FootCtrl */
     { .key = 0x0000290A, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -556,7 +556,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 55] 0xEDC07C  MidiChParam_Entry_007 */
+    /* [ 55] 0xEDC07C  SndParam_PmemFilter_MicLevelReverb */
     { .key = 0x0000290B, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x08, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x03, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -566,7 +566,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 56] 0xEDC08E  MidiChParam_Entry_008 */
+    /* [ 56] 0xEDC08E  SndParam_PmemFilter_FadeInOut */
     { .key = 0x0000290C, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x10, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x04, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -576,7 +576,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 57] 0xEDC0A0  MidiChParam_Entry_009 */
+    /* [ 57] 0xEDC0A0  SndParam_PmemFilter_R1R2Octave */
     { .key = 0x0000290D, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -586,7 +586,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 58] 0xEDC0B2  MidiChParam_Entry_010 */
+    /* [ 58] 0xEDC0B2  SndParam_PmemFilter_Vocalist */
     { .key = 0x0000290E, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -596,7 +596,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 59] 0xEDC0C4  MidiChParam_Entry_011 */
+    /* [ 59] 0xEDC0C4  SndParam_PmemFilter_AcousticIllusion */
     { .key = 0x0000290F, .bank_index = 0x98, .bank_offset = 0x08,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -606,7 +606,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 60] 0xEDC0D6  MidiChParam_Entry_012 */
+    /* [ 60] 0xEDC0D6  SndParam_PmemFilter_Equalizer */
     { .key = 0x00002910, .bank_index = 0x98, .bank_offset = 0x09,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -616,7 +616,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 61] 0xEDC0E8  MidiChParam_Entry_013 */
+    /* [ 61] 0xEDC0E8  SndParam_PmemFilter_MspBank */
     { .key = 0x00002911, .bank_index = 0x98, .bank_offset = 0x09,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -626,7 +626,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 62] 0xEDC0FA  MidiChParam_Entry_014 */
+    /* [ 62] 0xEDC0FA  SndParam_FadeIn_Time */
     { .key = 0x00002A00, .bank_index = 0x70, .bank_offset = 0x05,
       .mask = 0xFF, .clamp_min = 0x01, .clamp_max = 0x10, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -636,7 +636,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 63] 0xEDC10C  MidiChParam_Entry_015 */
+    /* [ 63] 0xEDC10C  SndParam_FadeOut_Time */
     { .key = 0x00002A01, .bank_index = 0x70, .bank_offset = 0x06,
       .mask = 0xFF, .clamp_min = 0x01, .clamp_max = 0x10, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -646,7 +646,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 64] 0xEDC11E  MidiChParam_Entry_016 */
+    /* [ 64] 0xEDC11E  SndParam_FadeOut_RhythmAutoStop */
     { .key = 0x00002A10, .bank_index = 0x70, .bank_offset = 0x07,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -656,7 +656,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 65] 0xEDC130  MidiChParam_Entry_017 */
+    /* [ 65] 0xEDC130  SndParam_FadeOut_SeqAutoStop */
     { .key = 0x00002A11, .bank_index = 0x70, .bank_offset = 0x07,
       .mask = 0x02, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x01, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -666,7 +666,7 @@ const sndparam_descriptor_t run_edbc9e[78]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 66] 0xEDC142  MidiChParam_Entry_018 */
+    /* [ 66] 0xEDC142  SndParam_FadeOut_AutoReset */
     { .key = 0x00002A12, .bank_index = 0x70, .bank_offset = 0x07,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,

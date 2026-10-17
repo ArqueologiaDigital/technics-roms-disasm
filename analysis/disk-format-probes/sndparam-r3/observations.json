@@ -1,0 +1,22 @@
+[
+ {
+  "snapshot_commit": "429a926d2",
+  "note": "file:line citations are against the git archive of this commit (the working tree was being edited by other agents during the research); every citation was machine-checked to contain its quoted token by build_proposals.py"
+ },
+ {
+  "subject": "0x4003, named SndParam_DigitalEffectOnOff in round 2",
+  "finding": "It reaches the sub-CPU as COMM 0x23 (0xCFC8 -> SendPartDataBlock_Block7, note_voice_mapping.s:26332), which is DSP_Set_RotarySpeed (v142 :45049). That routine applies the value only when slot 0's algorithm is 15 ROCK ROTARY or 53 ROTARY SPEAKER. The DIGITAL DRAWBAR screen shows 0x4003 on its DrawTremolo view (DrawbarNorm_Update, drawbar_panel_ui.s:17453), the TREMOLO SLOW/FAST control. It looks like the rotary-speaker speed switch, not a digital-effect on/off."
+ },
+ {
+  "subject": "0x402, named _MidiChannelOn in round 2",
+  "finding": "It is the TRANSMIT gate (+13 bit 6: PanelEvt_CheckFlag7_Dispatch_A/B/C, MidiCC_ChannelDispatch_DualSend, PanelEvt_Handler_0). 0x403 is the RECEIVE gate. The KN5000 UI always sets the two together, so \"MidiChannelOn\" is not wrong, but _MidiTransmitOn would mirror _MidiReceiveOn."
+ },
+ {
+  "subject": "misleading code labels met on the way",
+  "finding": "SndPart_SetRPN sends pitch bend (0x1B0); SndPart_SetPitchBendSens sends channel pressure (0x1B2); SndPart_SetCoarseTune / _SetFineTune / _SetPitchBendRange handle 0x603 GlidePedal / 0x602 KeyScaling / 0x600 SustainLength; SndPart_SetBankMSB / _BankLSB / _BankSelect handle 0x80 BendRange / 0x81 Tuning / 0x82 KeyShift. DSPCfg_Compressor* are the fade-setting handlers (0x2A00..0x2A12). CompIface_* is the fade engine. Timer7_DisableInterrupt clears 0x4080. PanelAction_ModWheel handles the expression-pedal event (0x2880 = 182/183)."
+ },
+ {
+  "subject": "encoder RAM names in midi_encoder_constants.s",
+  "finding": "The virtual-record read accessor (SndParam_ReadRegWithLUT) disagrees with several names. MIDI_CC_MODWHEEL_VALUE 0x8EE4 is the value behind TOTAL EXPRESSION 0x4001. MIDI_CC_BREATH_VALUE 0x8EE8 is decoded as 14-bit part pitch bend. 0x8EEA (FOOT) feeds part Modulation. MIDI_CC_VOLUME_VALUE 0x8EF4 feeds part channel pressure, and Encoder_ProcessVolume clamps it by a threshold (the aftertouch threshold?). The docs' encoder-ID table probably needs re-checking."
+ }
+]

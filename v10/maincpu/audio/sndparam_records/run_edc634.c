@@ -146,7 +146,7 @@ const sndparam_descriptor_t run_edc634[19]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 14] 0xEDC730  MidiChParam_Entry_079 */
+    /* [ 14] 0xEDC730  SndParam_Equalizer_Algorithm */
     { .key = 0x00004C00, .bank_index = 0x64, .bank_offset = 0x00,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -156,7 +156,7 @@ const sndparam_descriptor_t run_edc634[19]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 15] 0xEDC742  MidiChParam_Entry_080 */
+    /* [ 15] 0xEDC742  SndParam_AcousticIllusion_Algorithm */
     { .key = 0x00004D00, .bank_index = 0x65, .bank_offset = 0x00,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -166,7 +166,7 @@ const sndparam_descriptor_t run_edc634[19]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 16] 0xEDC754  MidiChParam_Entry_081 */
+    /* [ 16] 0xEDC754  SndParam_MicReverb_Algorithm */
     { .key = 0x00004E00, .bank_index = 0x66, .bank_offset = 0x00,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,

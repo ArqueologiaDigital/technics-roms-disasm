@@ -1,0 +1,88 @@
+[
+ {
+  "snapshot_commit": "429a926d2",
+  "note": "file:line citations are against the git archive of this commit (the working tree was being edited by other agents during the research); every citation was machine-checked to contain its quoted token by build_proposals.py"
+ },
+ {
+  "key": "0x2A000",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_ApcControl",
+  "record": "0x80",
+  "byte": 9,
+  "mask": "0x20",
+  "range": "0..1",
+  "meaning": "MIDI COMMON SETTING \"APC CONTROL\" on/off (gates CC80 output).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1475 -- PanelEvt_D6Slot3_SendCC80 is gated on record 0x80 +9 bit 5"
+  ],
+  "confidence": "firm",
+  "current_name": "NakaInst_Param_IdxA0_00"
+ },
+ {
+  "key": "0x2A001",
+  "kind": "global",
+  "name": "SndParam_MidiCommon_IntroFillInEnding",
+  "record": "0x80",
+  "byte": 9,
+  "mask": "0x40",
+  "range": "0..1",
+  "meaning": "MIDI COMMON SETTING \"INTRO,FILLIN ENDING\" on/off (gates CC82 output).",
+  "evidence": [
+   "v10/maincpu/ui_widgets/naka_midi_reverb.c:3641 -- MIDI menu screen COMMON SETTING (title :3612; grid func 0x0123000F = ComSetGridCheck, :3638); row captions 0-8: NOTE ONLY / PRG.CHANGE TO P.MEM / REALTIME SYSEX / INTRO,FILLIN ENDING / APC CONTROL / FADE IN/OUT / PROGRAM CHANGE MODE / DRUMS TYPE / SONG SELECT",
+   "v10/maincpu/ui/drawbar_panel_ui.s:218 -- ComSetGridCheck edits ComSetGridCheck_JumpTable_Table[row] (ROM 0xE80016 = 2203 2202 2282 2A001 2A000 229A 2201 2205 2280 for rows 0-8); ON/OFF rows drawn \" ON  \" / \" OFF \" (ComSetGridCheck_ParamDisplay, ComSetGrid_EventHandler :369)",
+   "v10/maincpu/midi/midi_dispatch_handlers.s:1497 -- PanelEvt_D6Slot5_SendCC82 is gated on record 0x80 +9 bit 6"
+  ],
+  "confidence": "firm",
+  "current_name": "NakaInst_Param_IdxA0_01"
+ },
+ {
+  "key": "0x28103",
+  "kind": "global",
+  "name": "SndParam_Style_SynchroBreak",
+  "record": "0x48",
+  "byte": 5,
+  "mask": "0x02",
+  "range": "0..1",
+  "meaning": "SYNCHRO & BREAK state (panel LED).",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:2969 -- lights LED-image byte 13 bit 0 = row 0x0B bit 0 = SYNCHRO & BREAK when 0x28103 reads 1",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm",
+  "current_name": "NakaInst_Param_Field81C"
+ },
+ {
+  "key": "0x28100",
+  "kind": "global",
+  "name": "SndParam_Style_FillIn",
+  "record": "0x48",
+  "byte": 5,
+  "mask": "0xC0",
+  "range": "0..2",
+  "meaning": "FILL IN state: 1 / 2 light FILL IN 1 / FILL IN 2.",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:2752 -- row 0xC4 bit 0 (FILL IN 1) when 0x28100 = 1; bit 1 (FILL IN 2) when 0x28100 = 2 (SndParam_SetResBit1_ViaRegs0100_0101, :2768)",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm",
+  "current_name": "NakaInst_Param_Field81A"
+ },
+ {
+  "key": "0x28102",
+  "kind": "global",
+  "name": "SndParam_Style_Ending",
+  "record": "0x48",
+  "byte": 5,
+  "mask": "0x30",
+  "range": "0..2",
+  "meaning": "ENDING state: 1 / 2 light INTRO & ENDING 1 / 2.",
+  "evidence": [
+   "v10/maincpu/audio/audio_control_engine.s:2788 -- row 0xC4 bit 2 (INTRO & ENDING 1) when 0x28102 = 1 (or 0x28101 = 2); bit 3 (INTRO & ENDING 2) when 0x28102 = 2 (or 0x28101 = 3, :2810)",
+   "v10/maincpu/extensions/extension_data.s:2795 -- Protocol_values_for_LED_rows: LED-image byte n (ENCODER_STATE_BASE+n) is panel LED row 0xC0,0xC1,0xC2,0xC3,0xC4,0xC8,0x00,0x01,0x02,0x03,0x04,0x08,0x0A,0x0B,0x0C for n = 0..14 (row bit names: technics-docs/control-panel-protocol.md, CPR/CPL LED mapping tables)"
+  ],
+  "confidence": "firm",
+  "current_name": "NakaInst_Param_Field81B"
+ }
+]

@@ -1,0 +1,36 @@
+[
+ {
+  "snapshot_commit": "429a926d2",
+  "note": "file:line citations are against the git archive of this commit (the working tree was being edited by other agents during the research); every citation was machine-checked to contain its quoted token by build_proposals.py"
+ },
+ {
+  "keys": "0x18205 + 0x400*T (Lsw 0x605), parts 0x00-0x19",
+  "where": "part byte +22 bit 0",
+  "known": "No reader of number 0x605 (also searched in decimal, 1541) and no access to byte +22; SndPart_SetParam ignores it. README-lsw-part-record-fields.md calls +22 the only declared bit no code touches."
+ },
+ {
+  "keys": "0x08221 / 0x08621 / 0x08A21 (Lsw 0x221)",
+  "where": "drawbar records 0x44-0x46 +8 low nibble, range 0..1",
+  "known": "Not in the drawbar screen's 15-entry control table (MainMemDrawControl) and no reader of byte +8; the screen's TREMOLO SLOW/FAST is the global 0x4003."
+ },
+ {
+  "keys": "0x00C1",
+  "where": "record 0x91 +3 bit 0 (inverted)",
+  "known": "Set to 1 only by SoundParam_InitDefaultBanks mode 2 (note_voice_mapping.s:23449), which clears GM (0xC0) and loads its own channel map. Mode 2 is used by Epilogue_Prologue/_2 (:22111) from a file-kind dispatch (SeqVoice_PopIzReturn_Prologue, :19934 area). Sent as F0 50 99 0/127. A tone-generator mode exclusive with GM, not named."
+ },
+ {
+  "keys": "0x00301",
+  "where": "record 0x98 +1 bit 7 (beside the panel-memory number 0x300)",
+  "known": "BitMapOut_ByteData_PresetCopy (bitmap_out_routines.s:374) does a full PanelMemory_Recall on a panel-memory number change when 0x301 = 0, else BitMapOut_CopyVoicePreset9 (parts 0-2 bytes +14/+15/+17 only)."
+ },
+ {
+  "keys": "0x04080, 0x04081",
+  "where": "record 0x98 +2 bits 7, 6",
+  "known": "0x4080 is sent as F0 50 85 <v> (sub-CPU Voice_SystemMsg 0x85, labelled Voice_SetKeyShiftEnable there, a guessed name) and cleared at demo setup (file_demo_proc.s:933, mislabelled Timer7_DisableInterrupt). FswAsIniFunc clears it. No reader of 0x4081 found."
+ },
+ {
+  "keys": "record 0x99 flags 0x2882, 0x2887, 0x2889, 0x288B, 0x288D, 0x288F, 0x2891, 0x2893, 0x2895, 0x2897, 0x2899, 0x289B, 0x289D; function bytes 0x2881 (+3), 0x2892/0x2894/0x2896/0x2898/0x289A/0x289C (+10..+15)",
+  "where": "record 0x99",
+  "known": "Each odd key is a 1-bit companion of the function byte at key-1. The FOOT CONTROLLERS grid and the PanelAction_FootSwitch*/FootController* handlers read only 0x2880/0x2886..0x2890. No reader of the flag bits or the unshown bytes except the whole-record copy under the FOOT CONT. SETTING filter row."
+ }
+]

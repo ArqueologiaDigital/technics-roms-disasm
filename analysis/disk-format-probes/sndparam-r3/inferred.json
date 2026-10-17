@@ -1,0 +1,40 @@
+[
+ {
+  "snapshot_commit": "429a926d2",
+  "note": "file:line citations are against the git archive of this commit (the working tree was being edited by other agents during the research); every citation was machine-checked to contain its quoted token by build_proposals.py"
+ },
+ {
+  "key": "0x04000",
+  "kind": "global",
+  "name": "SndParam_MainVolume",
+  "record": "0xB0",
+  "byte": 0,
+  "mask": "0x7F",
+  "range": "0..127",
+  "alias": "MidiChParam_Entry_040",
+  "meaning": "Probably the MAIN VOLUME slider level: the other master-gain stage beside TOTAL EXPRESSION and the fade level.",
+  "evidence": [
+   "v142/subcpu/kn5000_subprogram_v142.s:44941 -- sub-CPU global sub-command 1 (0x4000 = ApplySystemParam field 0 -> COMM 1) is index WA of DSP_MixerCoeff_Compute, multiplied with TOTAL EXPRESSION (0x4001) and the fade level (0x4005)",
+   "v10/maincpu/audio/sndparam_routines.s:849 -- the 0x4000 descriptor's aux index 1 reads RAM 0x8EE6 (analog ID 27); the other sources are 0x8EE4 (TOTAL EXPRESSION 0x4001), 0x8EE8 (part pitch bend, 14-bit), 0x8EEA (part modulation), 0x8EF4 (part channel pressure)"
+  ],
+  "confidence": "inferred",
+  "would_confirm": "Show that panel analog ID 27 (Encoder_ProcessExpression, RAM 0x8EE6) is the MAIN VOLUME slider, e.g. a panel capture or the service manual, or find a screen or test routine that labels RAM 0x8EE6 as volume."
+ },
+ {
+  "key": "0x04A00",
+  "kind": "global",
+  "name": "SndParam_DigitalReverbAlt_Algorithm",
+  "record": "0x62",
+  "byte": 0,
+  "mask": "0xFF",
+  "range": "0..255",
+  "alias": "MidiChParam_Entry_077",
+  "meaning": "Algorithm byte of a second DSP namespace (0x4Axx, record 0x62 with no RAM block) that shares slot 1 (DIGITAL REVERB).",
+  "evidence": [
+   "analysis/disk-format-probes/README-lsw-leftover-records.md section 1: DSPCfg_Data_ParamDispatch maps tag -> (namespace, slot) through 0xEE6384; \"0x62 has no panel record and shares slot 1\"",
+   "v10/maincpu/audio/note_voice_mapping.s:18356 -- SndParam_ApplySystemParam handles namespaces 0x49, 0x4B-0x4E but not 0x4A, so this key is never sent from there"
+  ],
+  "confidence": "inferred",
+  "would_confirm": "A reader or writer of key 0x4A00 / record 0x62 (none found by key literal in v10) that says what the alternate slot-1 namespace is used for."
+ }
+]

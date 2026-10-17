@@ -18452,7 +18452,7 @@ SendEpilogue_Data_Case1:
 SndParam_ApplySystemParam_QueueReverbOnOff:
 	ld	(0xcfca:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-SndParam_ApplySystemParam_QueueDigitalEffectSwitch:
+SndParam_ApplySystemParam_QueueRotarySpeed:
 	ld	(0xcfc8:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_QueueAcousticIllusionOnOff:

@@ -18488,9 +18488,12 @@ SendEpilogue_Data_Case1:
 SndParam_ApplySystemParam_QueueReverbOnOff:
 	ld	(0xcfca:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-; SndParam_ApplySystemParam_QueueDigitalEffectSwitch: Id 0x4003 (tag 0x70 digital-effect record +0 bit 2, a 0/1
-;   switch): kept in 0xCFC8 until Song_SendPartDataBlocks sends COMM packet 0x23.
-SndParam_ApplySystemParam_QueueDigitalEffectSwitch:
+; SndParam_ApplySystemParam_QueueRotarySpeed: Id 0x4003 (SndParam_RotarySpeedSwitch, tag 0x70 +0 bit 2, a 0/1
+;   switch): kept in 0xCFC8 until Song_SendPartDataBlocks sends COMM packet 0x23, which the sub CPU's
+;   DSP_Set_RotarySpeed applies to DSP EFFECT slot 0 only for the rotary-speaker algorithms (15 ROCK ROTARY,
+;   53 ROTARY SPEAKER); the DIGITAL DRAWBAR screen shows it on its TREMOLO (SLOW/FAST) view.  Called a
+;   digital-effect switch until 2026-10-17 (analysis/disk-format-probes/sndparam-r3/observations.json).
+SndParam_ApplySystemParam_QueueRotarySpeed:
 	ld	(0xcfc8:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_QueueAcousticIllusionOnOff: Id 0x4004 (tag 0x60 +1 bit 6, acoustic-illusion on/off): kept

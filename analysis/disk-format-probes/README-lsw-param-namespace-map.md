@@ -254,24 +254,26 @@ number space the Lsw functions in section 7 answer with `0x400`, `0x401` and `0x
 
 Each Lsw part-parameter function answers `EVT_GET_LSW_DATA_NO` with one number (section 7 has the first ten). The
 rest are below. `LswMidiChannel`'s `EVT_GET_LSW_STRING` arm prints `"OFF"` instead of `"CH%2d"` when
-`(part, 0x402)` reads 0, so `0x402` is the part's MIDI-channel ON flag. Every field sits on the same (byte, mask)
+`(part, 0x402)` reads 0, so `0x402` is the part's MIDI-channel ON flag. Round 3 (section 9) showed it is the TRANSMIT
+gate (`+13` bit 6, tested by the MIDI senders) beside a RECEIVE gate at `0x403`, so it is now `_MidiTransmitOn`
+(it was `_MidiChannelOn`). Every field sits on the same (byte, mask)
 of its part's own record in all the parts that carry it. The script asserts this.
 
-| Lsw number | key               | name suffix      | parts T        | byte | mask | range | firmware basis            |
-|------------|-------------------|------------------|----------------|------|------|-------|---------------------------|
-| 0x293      | 0x8293 + 0x400*T  | `_DrawRelease`   | 0x00-0x02 (3)  | +2   | 0x0F | 0..15 | LswDrawRelease            |
-| 0x294      | 0x8294 + 0x400*T  | `_DrawAttack`    | 0x00-0x02 (3)  | +2   | 0xF0 | 0..15 | LswDrawAttack             |
-| 0x2CB      | 0x82CB + 0x400*T  | `_PercLevel`     | 0x00-0x02 (3)  | +1   | 0xF0 | 0..15 | LswPercLevel              |
-| 0x2CC      | 0x82CC + 0x400*T  | `_PercDecay`     | 0x00-0x02 (3)  | +1   | 0x0F | 0..15 | LswPercDecay              |
-| 0x400      | 0x18000 + 0x400*T | `_LocalControl`  | 0x00-0x19 (26) | +13  | 0x20 | 0..1  | LswLocalControl           |
-| 0x401      | 0x18001 + 0x400*T | `_MidiChannel`   | 0x00-0x19 (26) | +13  | 0x0F | 0..15 | LswMidiChannel            |
-| 0x402      | 0x18002 + 0x400*T | `_MidiChannelOn` | 0x00-0x19 (26) | +13  | 0x40 | 0..1  | LswMidiChannel (OFF test) |
-| 0x600      | 0x18200 + 0x400*T | `_SustainLength` | 0x00-0x19 (26) | +4   | 0x07 | 0..7  | LswSustainLength          |
-| 0x601      | 0x18201 + 0x400*T | `_SustainPedal`  | 0x00-0x19 (26) | +4   | 0x10 | 0..1  | LswSustainPedal           |
-| 0x602      | 0x18202 + 0x400*T | `_KeyScaling`    | 0x00-0x19 (26) | +12  | 0x08 | 0..1  | LswKeyScaling             |
-| 0x603      | 0x18203 + 0x400*T | `_GlidePedal`    | 0x00-0x19 (26) | +12  | 0x20 | 0..1  | LswGlidePedal             |
-| 0x604      | 0x18204 + 0x400*T | `_PartExp`       | 0x00-0x19 (26) | +4   | 0x20 | 0..1  | LswPartExp                |
-| 0x606      | 0x18206 + 0x400*T | `_AfterTouch`    | 0x00-0x19 (26) | +12  | 0x10 | 0..1  | LswAfterTouch             |
+| Lsw number | key               | name suffix       | parts T        | byte | mask | range | firmware basis            |
+|------------|-------------------|-------------------|----------------|------|------|-------|---------------------------|
+| 0x293      | 0x8293 + 0x400*T  | `_DrawRelease`    | 0x00-0x02 (3)  | +2   | 0x0F | 0..15 | LswDrawRelease            |
+| 0x294      | 0x8294 + 0x400*T  | `_DrawAttack`     | 0x00-0x02 (3)  | +2   | 0xF0 | 0..15 | LswDrawAttack             |
+| 0x2CB      | 0x82CB + 0x400*T  | `_PercLevel`      | 0x00-0x02 (3)  | +1   | 0xF0 | 0..15 | LswPercLevel              |
+| 0x2CC      | 0x82CC + 0x400*T  | `_PercDecay`      | 0x00-0x02 (3)  | +1   | 0x0F | 0..15 | LswPercDecay              |
+| 0x400      | 0x18000 + 0x400*T | `_LocalControl`   | 0x00-0x19 (26) | +13  | 0x20 | 0..1  | LswLocalControl           |
+| 0x401      | 0x18001 + 0x400*T | `_MidiChannel`    | 0x00-0x19 (26) | +13  | 0x0F | 0..15 | LswMidiChannel            |
+| 0x402      | 0x18002 + 0x400*T | `_MidiTransmitOn` | 0x00-0x19 (26) | +13  | 0x40 | 0..1  | LswMidiChannel (OFF test) |
+| 0x600      | 0x18200 + 0x400*T | `_SustainLength`  | 0x00-0x19 (26) | +4   | 0x07 | 0..7  | LswSustainLength          |
+| 0x601      | 0x18201 + 0x400*T | `_SustainPedal`   | 0x00-0x19 (26) | +4   | 0x10 | 0..1  | LswSustainPedal           |
+| 0x602      | 0x18202 + 0x400*T | `_KeyScaling`     | 0x00-0x19 (26) | +12  | 0x08 | 0..1  | LswKeyScaling             |
+| 0x603      | 0x18203 + 0x400*T | `_GlidePedal`     | 0x00-0x19 (26) | +12  | 0x20 | 0..1  | LswGlidePedal             |
+| 0x604      | 0x18204 + 0x400*T | `_PartExp`        | 0x00-0x19 (26) | +4   | 0x20 | 0..1  | LswPartExp                |
+| 0x606      | 0x18206 + 0x400*T | `_AfterTouch`     | 0x00-0x19 (26) | +12  | 0x10 | 0..1  | LswAfterTouch             |
 
 The `+13` byte of a part record therefore holds the MIDI channel (low nibble), LOCAL CONTROL (bit 5) and the
 channel ON flag (bit 6). Bit 7 is `0x403`, which is not identified.
@@ -330,7 +332,7 @@ MSP).
 | 0x02D12 | `SndParam_Vocalist_ChordalKeySplitSide`  | 0x47   | +7   | 0x80 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
 | 0x02D13 | `SndParam_Vocalist_ChordalIgnore`        | 0x47   | +0   | 0x80 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
 | 0x04002 | `SndParam_ReverbOnOff`                   | 0x60   | +1   | 0x80 | 0..127  | SndParam_ApplySystemParam case                                         |
-| 0x04003 | `SndParam_DigitalEffectOnOff`            | 0x70   | +0   | 0x04 | 0..1    | SndParam_ApplySystemParam case                                         |
+| 0x04003 | `SndParam_RotarySpeedSwitch`             | 0x70   | +0   | 0x04 | 0..1    | SndParam_ApplySystemParam case                                         |
 | 0x04004 | `SndParam_AcousticIllusionOnOff`         | 0x60   | +1   | 0x40 | 0..1    | SndParam_ApplySystemParam case                                         |
 | 0x04006 | `SndParam_EqualizerOnOff`                | 0x60   | +1   | 0x20 | 0..1    | SndParam_ApplySystemParam case                                         |
 | 0x04141 | `SndParam_Mic_Volume`                    | 0x43   | +1   | 0x7F | 0..127  | mixer channel 27 MIC (AcMixerVol_Channels)                             |
@@ -367,22 +369,152 @@ The FOOT CONTROLLERS values are function numbers `0..199` (`FswAssign_FunctionCo
 `0x99` carry one flag bit per controller (`0x2887`, `0x2889`, ... `0x289D`), and `+10..+15` six more function
 bytes that the KN5000's grid never shows. Neither is named here.
 
-### Still unnamed (259 per tree)
+### Still unnamed after round 2
 
-| record                 | keys                                                                                          | what is known                                                                                       |
-|------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| parts 0x00-0x19        | `0x18003`, `0x18004`, `0x18205` + 0x400*T                                                     | Lsw 0x403 (`+13` bit 7), 0x404, 0x605 (`+22` bit 0): no Lsw function answers them                   |
-| 0x44 / 0x45 / 0x46     | `0x221`, `0x2C0`, `0x2C1` in each                                                             | drawbar `+8` low nibble, `+7` bits 4/5. `IvDrawbar` reads 0x2C1 / 0x2C0 as its upper / lower switch |
-| 0xAE, 0xB1, 0xB4       | k = `0x78`, `0x1B0`, `0x1B2`, 25 parts each                                                   | virtual records: no RAM block in `SndParam_BlockRamPtrs`, special accessors                         |
-| 0x43                   | `0x4140`                                                                                      | MIC record `+0` bit 7                                                                               |
-| 0x48                   | `0x5`, `0x4200`, `0x28000`-`0x28002`, `0x28080`, `0x28081`                                    | style number (`+0/+1`), run/pedal flags                                                             |
-| 0x62, 0x64, 0x65, 0x66 | `0x4A00`, `0x4C00`, `0x4D00`, `0x4E00`                                                        | algorithm byte of the other effect slots; which slot is which is not settled                        |
-| 0x70                   | `0x3`, `0x2A00`-`0x2A12`, `0x4180`, `0x4181`, `0x4202`                                        | digital-effect record (`README-lsw-nonpart-records.md`)                                             |
-| 0x80                   | 22 keys `0x2200`-`0x229A`                                                                     | sequencer / MIDI-clock control bits                                                                 |
-| 0x90, 0x91             | `0x40E0`, `0x4100`, `0x28083`, `0xC0`, `0xC1`                                                 |                                                                                                     |
-| 0x98                   | 26 keys (`0x301`, `0x302`, `0x400`, `0x401`, `0x2900`-`0x2911`, `0x4080`/`81`, `0x40C0`/`C1`) | `0x302` = 1 keeps the accompaniment on panel-memory recall (`PanelMemory_RecallKeepAccompaniment`)  |
-| 0x99                   | 20 keys                                                                                       | the flag bits and the six unshown function bytes above                                              |
-| 0xB0                   | `0x4000`, `0x4001`, `0x4005`                                                                  | `0x4005` is written by `CompIface_WriteVolume`                                                      |
+Round 2 left 259 descriptors per tree with their aliases.  Section 9 names 204 of them.
+
+## 9. Round 3: the screens, grids, LEDs and MIDI messages behind 204 more keys (2026-10-17)
+
+`scripts/renaming/gen_sndparam_desc_names_r3.py` applies a read-only research pass whose records are in
+[`sndparam-r3/`](sndparam-r3/README.md): `proposals.json` (78 firm proposals covering 204 descriptors per tree),
+the evidence for each as file:line citations machine-checked against a `git archive` of 429a926d2, and
+`crosscheck_trees.py`, which found the same descriptor shape and alias for all 206 proposed keys in v9 and v7.  As in
+round 2, every rule asserts the descriptor's record, byte and mask in each tree's ROM.  The evidence kinds:
+
+- **Screens and grids.**  The MIDI menu's CONTROL MESSAGES grid (`CtlMsgGridCheck_Table`, 13 per-message filters,
+  each gating that message both ways, e.g. `MidiRx_ProgramChange` on record `0x80` `+7` bit 4), COMMON SETTING
+  (`ComSetGridCheck_JumpTable_Table`: NOTE ONLY, PRG.CHANGE TO P.MEM, REALTIME SYSEX, INTRO/FILLIN ENDING, APC CONTROL,
+  FADE IN/OUT, PROGRAM CHANGE MODE, DRUMS TYPE, SONG SELECT), REALTIME MESSAGES (CLOCK, REALTIME COMMANDS), the
+  MIDI PART SETTING grid (" PART |CHANNEL|OCTAVE| LOCAL"), and the panel memory EXPAND MODE FILTER
+  (`PmExpFilter_CellKeys` / `_AltKeys`, whose row captions come from `ParamStr_Table_01` / `_02`).
+- **ApFunctions.**  `MdPcgModeFunc` answers `EVT_GET_LSW_ADDRESS` with `0x2201` and draws NORMAL / TECH / GM,
+  `MdDrumTypeFunc` `0x2205`, `SplitPointFunc` `0x4181`, `R12OctaveFunc` `0x40E0`, `GmOnOffFunc` `0xC0`.
+- **Panel LEDs.**  Seven keys drive one LED each through the LED handler tables: MUSIC STYLE ARRANGER, CONDUCTOR,
+  TECHNI CHORD, FADE IN, FADE OUT, R1/R2 OCTAVE, VARIATION and AUTO PLAY CHORD.
+- **MIDI messages.**  `SndPart_SetParam` sends part numbers `0x078`, `0x1B0` and `0x1B2` as All Sound Off
+  (`MIDI_SendControlChange(part, 0x78, 0)`), pitch bend and channel pressure.
+
+Per-part fields (named `SndParam_Part<TT>_<Field>`):
+
+| Lsw number | key               | name suffix        | parts T        | record     | byte       | mask | meaning                                                                                                                                      |
+|------------|-------------------|--------------------|----------------|------------|------------|------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x078      | 0x08078 + 0x400*T | `_AllSoundOff`     | 0x00-0x18 (25) | 0xAE       | part (= T) | 0x7F | Per-part MIDI All Sound Off: writing it sends controller 120 with value 0 to the part (the written value is ignored).                        |
+| 0x1B0      | 0x081B0 + 0x400*T | `_PitchBend`       | 0x00-0x18 (25) | 0xB1       | part (= T) | 0x7F | Per-part pitch bend (14-bit, centre 0x2000), sent to the tone generator as a MIDI pitch-bend message.                                        |
+| 0x1B2      | 0x081B2 + 0x400*T | `_ChannelPressure` | 0x00-0x18 (25) | 0xB4       | part (= T) | 0x7F | Per-part channel pressure (aftertouch), sent to the tone generator as a MIDI channel-pressure message.                                       |
+| 0x403      | 0x18003 + 0x400*T | `_MidiReceiveOn`   | 0x00-0x19 (26) | part (= T) | 13         | 0x80 | The part receives MIDI on its channel: only parts with this flag set get incoming channel messages (stored inverted in part byte +13 bit 7). |
+| 0x404      | 0x18004 + 0x400*T | `_MidiOctave`      | 0x00-0x19 (26) | part (= T) | 12         | 0x07 | The part's OCTAVE setting on the MIDI PART SETTING screen: a 3-bit signed octave shift, -3..+3.                                              |
+| 0x2C0      | 0x082C0 + 0x400*T | `_Perc4`           | 0x00-0x02 (3)  | 0x44 + T   | 7          | 0x10 | DIGITAL DRAWBAR percussion 4' switch of the part (RIGHT1/RIGHT2/LEFT drawbar record).                                                        |
+| 0x2C1      | 0x082C1 + 0x400*T | `_Perc2_2_3`       | 0x00-0x02 (3)  | 0x44 + T   | 7          | 0x20 | DIGITAL DRAWBAR percussion 2 2/3' switch of the part.                                                                                        |
+
+Global keys:
+
+| key     | name                                      | record | byte | mask | range   | meaning                                                                                                                                                                          |
+|---------|-------------------------------------------|--------|------|------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x00003 | `SndParam_Transpose`                      | 0x70   | +2   | 0xFF | 0..11   | TRANSPOSE: 0..11 = -5..+6 semitones, 5 = none.                                                                                                                                   |
+| 0x00005 | `SndParam_Tempo_Bit8`                     | 0x48   | +9   | 0x01 | 0..1    | Bit 8 of the 9-bit tempo (40..300 BPM); key 0x0004 (SndParam_Tempo) is bits 0-7.                                                                                                 |
+| 0x000C0 | `SndParam_GmOnOff`                        | 0x91   | +3   | 0x04 | 0..1    | GM mode on/off (stored inverted in record 0x91 +3 bit 2).                                                                                                                        |
+| 0x00302 | `SndParam_PanelMemory_Mode`               | 0x98   | +0   | 0x40 | 0..1    | PANEL MEMORY MODE: 0 = NORMAL, 1 = EXPAND (EXPAND recall keeps the accompaniment and applies the EXPAND MODE FILTER).                                                            |
+| 0x00400 | `SndParam_MusicStyleArranger_OnOff`       | 0x98   | +3   | 0x01 | 0..1    | MUSIC STYLE ARRANGER on/off (drives the panel's MUSIC STYLE ARRANGER LED).                                                                                                       |
+| 0x00401 | `SndParam_MusicStyleArranger_Mode`        | 0x98   | +3   | 0x70 | 1..3    | MUSIC STYLE ARRANGER MODE: 1 = RHYTHM, 2 = SOUND&RHYTHM, 3 = PANEL MEMORY.                                                                                                       |
+| 0x02200 | `SndParam_MidiRealtime_Clock`             | 0x80   | +0   | 0x04 | 0..1    | MIDI CLOCK source: 0 = INTERNAL, 1 = MIDI (external).                                                                                                                            |
+| 0x02201 | `SndParam_MidiCommon_ProgramChangeMode`   | 0x80   | +0   | 0x03 | 0..3    | MIDI PROGRAM CHANGE MODE: 0 = NORMAL, 1 = TECH, 3 = GM (2 = "Error!").                                                                                                           |
+| 0x02202 | `SndParam_MidiCommon_PrgChangeToPmem`     | 0x80   | +0   | 0x08 | 0..1    | MIDI COMMON SETTING "PRG.CHANGE TO P.MEM" on/off.                                                                                                                                |
+| 0x02203 | `SndParam_MidiCommon_NoteOnly`            | 0x80   | +0   | 0x10 | 0..1    | MIDI COMMON SETTING "NOTE ONLY" on/off.                                                                                                                                          |
+| 0x02205 | `SndParam_MidiCommon_DrumsType`           | 0x80   | +2   | 0x18 | 0..3    | MIDI DRUMS TYPE: 0 = NORMAL, 1 = TECH, 3 = GM.                                                                                                                                   |
+| 0x02280 | `SndParam_MidiCommon_SongSelect`          | 0x80   | +1   | 0x08 | 0..1    | MIDI COMMON SETTING "SONG SELECT" on/off (send Song Select).                                                                                                                     |
+| 0x02281 | `SndParam_MidiRealtime_Commands`          | 0x80   | +2   | 0x04 | 0..1    | MIDI REALTIME COMMANDS on/off.                                                                                                                                                   |
+| 0x02282 | `SndParam_MidiCommon_RealtimeSysex`       | 0x80   | +6   | 0x08 | 0..1    | MIDI COMMON SETTING "REALTIME SYSEX" on/off.                                                                                                                                     |
+| 0x0228A | `SndParam_MidiCtlMsg_ProgramChange`       | 0x80   | +7   | 0x10 | 0..1    | MIDI CONTROL MESSAGES filter "PRG.CHANGE" on/off: gates that message type in both directions.                                                                                    |
+| 0x0228B | `SndParam_MidiCtlMsg_AfterTouch`          | 0x80   | +7   | 0x20 | 0..1    | MIDI CONTROL MESSAGES filter "AFTER TOUCH" on/off: gates that message type in both directions.                                                                                   |
+| 0x0228C | `SndParam_MidiCtlMsg_PitchBend`           | 0x80   | +7   | 0x40 | 0..1    | MIDI CONTROL MESSAGES filter "PITCH BEND" on/off: gates that message type in both directions.                                                                                    |
+| 0x0228D | `SndParam_MidiCtlMsg_BankSelect`          | 0x80   | +8   | 0x80 | 0..1    | MIDI CONTROL MESSAGES filter "BANK SELECT" on/off: gates that message type in both directions.                                                                                   |
+| 0x0228E | `SndParam_MidiCtlMsg_Volume`              | 0x80   | +8   | 0x04 | 0..1    | MIDI CONTROL MESSAGES filter "VOLUME" on/off: gates that message type in both directions.                                                                                        |
+| 0x0228F | `SndParam_MidiCtlMsg_Expression`          | 0x80   | +8   | 0x08 | 0..1    | MIDI CONTROL MESSAGES filter "EXPRESSION" on/off: gates that message type in both directions.                                                                                    |
+| 0x02290 | `SndParam_MidiCtlMsg_Pan`                 | 0x80   | +8   | 0x10 | 0..1    | MIDI CONTROL MESSAGES filter "PAN" on/off: gates that message type in both directions.                                                                                           |
+| 0x02291 | `SndParam_MidiCtlMsg_Sustain`             | 0x80   | +8   | 0x01 | 0..1    | MIDI CONTROL MESSAGES filter "SUSTAIN" on/off: gates that message type in both directions.                                                                                       |
+| 0x02294 | `SndParam_MidiCtlMsg_EffectReverb`        | 0x80   | +8   | 0x20 | 0..1    | MIDI CONTROL MESSAGES filter "EFFECT & REVERB" on/off: gates that message type in both directions.                                                                               |
+| 0x02295 | `SndParam_MidiCtlMsg_Modulation`          | 0x80   | +8   | 0x02 | 0..1    | MIDI CONTROL MESSAGES filter "MODULATION" on/off: gates that message type in both directions.                                                                                    |
+| 0x02296 | `SndParam_MidiCtlMsg_Tuning`              | 0x80   | +7   | 0x02 | 0..1    | MIDI CONTROL MESSAGES filter "TUNING" on/off: gates that message type in both directions.                                                                                        |
+| 0x02298 | `SndParam_MidiCtlMsg_BendRange`           | 0x80   | +7   | 0x01 | 0..1    | MIDI CONTROL MESSAGES filter "BEND RANGE" on/off: gates that message type in both directions.                                                                                    |
+| 0x02299 | `SndParam_MidiCtlMsg_ResetAllControllers` | 0x80   | +9   | 0x01 | 0..1    | MIDI CONTROL MESSAGES filter "RESET ALL CONT." on/off: gates that message type in both directions.                                                                               |
+| 0x0229A | `SndParam_MidiCommon_FadeInOut`           | 0x80   | +1   | 0x04 | 0..1    | MIDI COMMON SETTING "FADE IN/OUT" on/off.                                                                                                                                        |
+| 0x02900 | `SndParam_PmemFilter_RhythmSelection`     | 0x98   | +7   | 0x01 | 0..1    | Panel memory EXPAND MODE FILTER row "RHYTHM SELECTION": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                             |
+| 0x02901 | `SndParam_PmemFilter_Tempo`               | 0x98   | +7   | 0x02 | 0..1    | Panel memory EXPAND MODE FILTER row "TEMPO": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                        |
+| 0x02902 | `SndParam_PmemFilter_SplitPoint`          | 0x98   | +7   | 0x04 | 0..1    | Panel memory EXPAND MODE FILTER row "SPLIT POINT": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                  |
+| 0x02903 | `SndParam_PmemFilter_Transpose`           | 0x98   | +7   | 0x08 | 0..1    | Panel memory EXPAND MODE FILTER row "TRANSPOSE": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                    |
+| 0x02904 | `SndParam_PmemFilter_ApcMemory`           | 0x98   | +7   | 0x10 | 0..1    | Panel memory EXPAND MODE FILTER row "APC & MEMORY": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                 |
+| 0x02905 | `SndParam_PmemFilter_Midi`                | 0x98   | +7   | 0x20 | 0..1    | Panel memory EXPAND MODE FILTER row "MIDI": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                         |
+| 0x02906 | `SndParam_PmemFilter_KeyScale`            | 0x98   | +7   | 0x40 | 0..1    | Panel memory EXPAND MODE FILTER row "KEY SCALE": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                    |
+| 0x02907 | `SndParam_PmemFilter_Reverb`              | 0x98   | +7   | 0x80 | 0..1    | Panel memory EXPAND MODE FILTER row "REVERB": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                       |
+| 0x02908 | `SndParam_PmemFilter_DspEffect`           | 0x98   | +8   | 0x01 | 0..1    | Panel memory EXPAND MODE FILTER row "DSP EFFECT": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                   |
+| 0x02909 | `SndParam_PmemFilter_Part4To16`           | 0x98   | +8   | 0x02 | 0..1    | Panel memory EXPAND MODE FILTER row "PART4-16 SETTING": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                             |
+| 0x0290A | `SndParam_PmemFilter_FootCtrl`            | 0x98   | +8   | 0x04 | 0..1    | Panel memory EXPAND MODE FILTER row "FOOT CONT. SETTING": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                           |
+| 0x0290B | `SndParam_PmemFilter_MicLevelReverb`      | 0x98   | +8   | 0x08 | 0..1    | Panel memory EXPAND MODE FILTER row "MIC LEVEL & REVERB": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                           |
+| 0x0290C | `SndParam_PmemFilter_FadeInOut`           | 0x98   | +8   | 0x10 | 0..1    | Panel memory EXPAND MODE FILTER row "FADE IN/OUT SETTING": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                          |
+| 0x0290D | `SndParam_PmemFilter_R1R2Octave`          | 0x98   | +8   | 0x20 | 0..1    | Panel memory EXPAND MODE FILTER row "R1/R2 OCTAVE": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                 |
+| 0x0290E | `SndParam_PmemFilter_Vocalist`            | 0x98   | +8   | 0x40 | 0..1    | Panel memory EXPAND MODE FILTER row "VOCALIST": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                     |
+| 0x0290F | `SndParam_PmemFilter_AcousticIllusion`    | 0x98   | +8   | 0x80 | 0..1    | Panel memory EXPAND MODE FILTER row "ACOUSTIC ILLUSION": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                            |
+| 0x02910 | `SndParam_PmemFilter_Equalizer`           | 0x98   | +9   | 0x01 | 0..1    | Panel memory EXPAND MODE FILTER row "EQUALIZER": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                    |
+| 0x02911 | `SndParam_PmemFilter_MspBank`             | 0x98   | +9   | 0x02 | 0..1    | Panel memory EXPAND MODE FILTER row "MSP BANK": 0 (drawn ON) = recalled, 1 (OFF) = the live setting is kept.                                                                     |
+| 0x02A00 | `SndParam_FadeIn_Time`                    | 0x70   | +5   | 0xFF | 1..16   | FADE IN time in measures (1..16).                                                                                                                                                |
+| 0x02A01 | `SndParam_FadeOut_Time`                   | 0x70   | +6   | 0xFF | 1..16   | FADE OUT time in measures (1..16).                                                                                                                                               |
+| 0x02A10 | `SndParam_FadeOut_RhythmAutoStop`         | 0x70   | +7   | 0x01 | 0..1    | FADE OUT "Rhythm Auto stop" on/off.                                                                                                                                              |
+| 0x02A11 | `SndParam_FadeOut_SeqAutoStop`            | 0x70   | +7   | 0x02 | 0..1    | FADE OUT "SEQ Auto stop" on/off.                                                                                                                                                 |
+| 0x02A12 | `SndParam_FadeOut_AutoReset`              | 0x70   | +7   | 0x04 | 0..1    | FADE OUT "Auto reset" on/off.                                                                                                                                                    |
+| 0x04001 | `SndParam_TotalExpression`                | 0xB0   | +1   | 0x7F | 0..127  | TOTAL EXPRESSION level (0..127): the expression pedal when assigned to TOTAL EXPRESSION, forced to 127 otherwise; one stage of the master output gain.                           |
+| 0x04005 | `SndParam_Fade_Level`                     | 0xB0   | +3   | 0x7F | 0..127  | Current FADE IN/OUT level (0..127), ramped by the fade engine and applied as the output gain's fade stage.                                                                       |
+| 0x040C0 | `SndParam_FadeIn_OnOff`                   | 0x98   | +11  | 0x80 | 0..1    | FADE IN on/off (the panel FADE IN LED).                                                                                                                                          |
+| 0x040C1 | `SndParam_FadeOut_OnOff`                  | 0x98   | +11  | 0x40 | 0..1    | FADE OUT on/off (the panel FADE OUT LED).                                                                                                                                        |
+| 0x040E0 | `SndParam_R1R2Octave`                     | 0x90   | +4   | 0xFF | 40..88  | RIGHT1/RIGHT2 OCTAVE as a note offset: 64 = 0, 52/40 = -1/-2, 76/88 = +1/+2 octaves.                                                                                             |
+| 0x04100 | `SndParam_Conductor`                      | 0x90   | +0   | 0x1F | 0..5    | CONDUCTOR part selection (which of RIGHT1/RIGHT2/LEFT play): 0..5 = R1, R2, R1+R2, all, R1+L, R2+L.                                                                              |
+| 0x04140 | `SndParam_Mic_ReverbOnOff`                | 0x43   | +0   | 0x80 | 0..1    | MIC reverb on/off (enable of DSP slot 3, ROOM/KARAOKE/BATH ROOM/STAGE).                                                                                                          |
+| 0x04180 | `SndParam_SplitPoint_Preset`              | 0x70   | +0   | 0x03 | 0..3    | SPLIT POINT preset: 0 = free (key-set), 1 = LEFT, 2 = CENTER, 3 = RIGHT.                                                                                                         |
+| 0x04181 | `SndParam_SplitPoint_Note`                | 0x70   | +1   | 0x7F | 21..108 | SPLIT POINT note number (21..108).                                                                                                                                               |
+| 0x04200 | `SndParam_TechniChord_OnOff`              | 0x48   | +4   | 0x40 | 0..1    | TECHNI-CHORD on/off (the panel TECHNI CHORD LED).                                                                                                                                |
+| 0x04202 | `SndParam_TechniChord_Type`               | 0x70   | +4   | 0x0F | 0..13   | TECHNI-CHORD type: 0 CLOSE, 1 OPEN1, 2 OPEN2, 3 DUET2, 4 COUNTRY, 5 THEATRE, 6 HYMN, 7 BLOCK, 8 BIG BAND BRASS, 9 BIG BAND REEDS, 10 OCTAVE, 11 HARD ROCK, 12 FANFARE, 13 DUET1. |
+| 0x04C00 | `SndParam_Equalizer_Algorithm`            | 0x64   | +0   | 0xFF | 0..255  | Algorithm byte of the EQUALIZER DSP slot (slot 4; 79 = GEQ).                                                                                                                     |
+| 0x04D00 | `SndParam_AcousticIllusion_Algorithm`     | 0x65   | +0   | 0xFF | 0..255  | Algorithm byte of the ACOUSTIC ILLUSION DSP slot (slot 2: STANDARD/PERCUSSIVE/SYMPHONIC/DEEP SPACE).                                                                             |
+| 0x04E00 | `SndParam_MicReverb_Algorithm`            | 0x66   | +0   | 0xFF | 0..255  | Algorithm byte of the MIC reverb DSP slot (slot 3: ROOM/KARAOKE/BATH ROOM/STAGE).                                                                                                |
+| 0x28000 | `SndParam_Style_Number`                   | 0x48   | +0   | 0xFF | 0..255  | Current rhythm style number (low byte; with Style_Bank it selects the style).                                                                                                    |
+| 0x28001 | `SndParam_Style_Bank`                     | 0x48   | +1   | 0x7F | 0..7    | Current rhythm style bank (0..7); same shape as the part records' Bank field.                                                                                                    |
+| 0x28002 | `SndParam_Style_Variation`                | 0x48   | +7   | 0x30 | 0..3    | VARIATION 1-4 of the current style (0..3).                                                                                                                                       |
+| 0x28080 | `SndParam_Apc_Mode`                       | 0x48   | +3   | 0x07 | 0..3    | AUTO PLAY CHORD mode: 0 = off, 1 = ONE FINGER, 2 = FINGERED, 3 = PIANIST.                                                                                                        |
+| 0x28081 | `SndParam_Apc_Memory`                     | 0x48   | +3   | 0x08 | 0..1    | AUTO PLAY CHORD "MEMORY" on/off.                                                                                                                                                 |
+| 0x28083 | `SndParam_Apc_OnBass`                     | 0x90   | +3   | 0x02 | 0..1    | AUTO PLAY CHORD "ON BASS" on/off.                                                                                                                                                |
+
+Two round-2 names are corrected (`sndparam-r3/observations.json`): `_MidiChannelOn` (`0x402`) is now
+`_MidiTransmitOn` (above), and `SndParam_DigitalEffectOnOff` (`0x4003`) is `SndParam_RotarySpeedSwitch`.  `0x4003`
+reaches the sub CPU as COMM `0x23`, which `DSP_Set_RotarySpeed` (v142) applies to DSP EFFECT slot 0 only for the
+rotary-speaker algorithms (15 ROCK ROTARY, 53 ROTARY SPEAKER), and the DIGITAL DRAWBAR screen shows it on its
+TREMOLO (SLOW/FAST) view; `SndParam_ApplySystemParam`'s case for it is now `SndParam_ApplySystemParam_QueueRotarySpeed`.
+
+Five descriptors outside the 259 had names that restated an index (`--weak`, `sndparam-r3/proposals_weak_names.json`):
+
+| key     | name                                    | was                       | meaning                                                               |
+|---------|-----------------------------------------|---------------------------|-----------------------------------------------------------------------|
+| 0x2A000 | `SndParam_MidiCommon_ApcControl`        | `NakaInst_Param_IdxA0_00` | MIDI COMMON SETTING "APC CONTROL" on/off (gates CC80 output).         |
+| 0x2A001 | `SndParam_MidiCommon_IntroFillInEnding` | `NakaInst_Param_IdxA0_01` | MIDI COMMON SETTING "INTRO,FILLIN ENDING" on/off (gates CC82 output). |
+| 0x28103 | `SndParam_Style_SynchroBreak`           | `NakaInst_Param_Field81C` | SYNCHRO & BREAK state (panel LED).                                    |
+| 0x28100 | `SndParam_Style_FillIn`                 | `NakaInst_Param_Field81A` | FILL IN state: 1 / 2 light FILL IN 1 / FILL IN 2.                     |
+| 0x28102 | `SndParam_Style_Ending`                 | `NakaInst_Param_Field81B` | ENDING state: 1 / 2 light INTRO & ENDING 1 / 2.                       |
+
+### Still unnamed (55 per tree)
+
+| keys                                                                                                                                                                                                       | where                                                       | what is known                                                                                                                                                                                                                                                                                                                               |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x18205 + 0x400*T (Lsw 0x605), parts 0x00-0x19                                                                                                                                                             | part byte +22 bit 0                                         | No reader of number 0x605 (also searched in decimal, 1541) and no access to byte +22; SndPart_SetParam ignores it. README-lsw-part-record-fields.md calls +22 the only declared bit no code touches.                                                                                                                                        |
+| 0x08221 / 0x08621 / 0x08A21 (Lsw 0x221)                                                                                                                                                                    | drawbar records 0x44-0x46 +8 low nibble, range 0..1         | Not in the drawbar screen's 15-entry control table (MainMemDrawControl) and no reader of byte +8; the screen's TREMOLO SLOW/FAST is the global 0x4003.                                                                                                                                                                                      |
+| 0x00C1                                                                                                                                                                                                     | record 0x91 +3 bit 0 (inverted)                             | Set to 1 only by SoundParam_InitDefaultBanks mode 2 (note_voice_mapping.s:23449), which clears GM (0xC0) and loads its own channel map. Mode 2 is used by Epilogue_Prologue/_2 (:22111) from a file-kind dispatch (SeqVoice_PopIzReturn_Prologue, :19934 area). Sent as F0 50 99 0/127. A tone-generator mode exclusive with GM, not named. |
+| 0x00301                                                                                                                                                                                                    | record 0x98 +1 bit 7 (beside the panel-memory number 0x300) | BitMapOut_ByteData_PresetCopy (bitmap_out_routines.s:374) does a full PanelMemory_Recall on a panel-memory number change when 0x301 = 0, else BitMapOut_CopyVoicePreset9 (parts 0-2 bytes +14/+15/+17 only).                                                                                                                                |
+| 0x04080, 0x04081                                                                                                                                                                                           | record 0x98 +2 bits 7, 6                                    | 0x4080 is sent as F0 50 85 <v> (sub-CPU Voice_SystemMsg 0x85, labelled Voice_SetKeyShiftEnable there, a guessed name) and cleared at demo setup (file_demo_proc.s:933, mislabelled Timer7_DisableInterrupt). FswAsIniFunc clears it. No reader of 0x4081 found.                                                                             |
+| record 0x99 flags 0x2882, 0x2887, 0x2889, 0x288B, 0x288D, 0x288F, 0x2891, 0x2893, 0x2895, 0x2897, 0x2899, 0x289B, 0x289D; function bytes 0x2881 (+3), 0x2892/0x2894/0x2896/0x2898/0x289A/0x289C (+10..+15) | record 0x99                                                 | Each odd key is a 1-bit companion of the function byte at key-1. The FOOT CONTROLLERS grid and the PanelAction_FootSwitch*/FootController* handlers read only 0x2880/0x2886..0x2890. No reader of the flag bits or the unshown bytes except the whole-record copy under the FOOT CONT. SETTING filter row.                                  |
+
+Two probable names are not applied (`sndparam-r3/inferred.json`):
+
+| key     | probable name                         | record | byte | mask | why it is not named                                                                                                   | would confirm                                                                                                                                                                                                  |
+|---------|---------------------------------------|--------|------|------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x04000 | `SndParam_MainVolume`                 | 0xB0   | +0   | 0x7F | Probably the MAIN VOLUME slider level: the other master-gain stage beside TOTAL EXPRESSION and the fade level.        | Show that panel analog ID 27 (Encoder_ProcessExpression, RAM 0x8EE6) is the MAIN VOLUME slider, e.g. a panel capture or the service manual, or find a screen or test routine that labels RAM 0x8EE6 as volume. |
+| 0x04A00 | `SndParam_DigitalReverbAlt_Algorithm` | 0x62   | +0   | 0xFF | Algorithm byte of a second DSP namespace (0x4Axx, record 0x62 with no RAM block) that shares slot 1 (DIGITAL REVERB). | A reader or writer of key 0x4A00 / record 0x62 (none found by key literal in v10) that says what the alternate slot-1 namespace is used for.                                                                   |
 
 ## PROVEN vs INFERRED
 

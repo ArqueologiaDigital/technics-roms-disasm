@@ -15,12 +15,12 @@ NakaInst_Param_Bitmap80 = SndParamRun_EE0010 + 0
 NakaInst_Param_Field02 = SndParamRun_EE0010 + 2
 NakaInst_Param_Term00 = SndParamRun_EE0010 + 18
 NakaInst_Param_Field88 = SndParamRun_EE0010 + 19
-NakaInst_Param_Field81A = SndParamRun_EE0010 + 36
+SndParam_Style_FillIn = SndParamRun_EE0010 + 36
 NakaInst_Param_Idx01 = SndParamRun_EE0010 + 54
 NakaInst_SKIP = SndParamRun_EE0010 + 55
 NakaInst_Param_Field05A = SndParamRun_EE0010 + 59
-NakaInst_Param_Field81B = SndParamRun_EE0010 + 72
-NakaInst_Param_Field81C = SndParamRun_EE0010 + 90
+SndParam_Style_Ending = SndParamRun_EE0010 + 72
+SndParam_Style_SynchroBreak = SndParamRun_EE0010 + 90
 NakaInst_Param_Field48 = SndParamRun_EE0010 + 94
 NakaInst_Param_TermFF = SndParamRun_EE0010 + 99
 NakaInst_Param_Field84 = SndParamRun_EE0010 + 108
@@ -43,7 +43,7 @@ NakaInst_Param_Idx07_88 = SndParamRun_EE0010 + 252
 NakaInst_Param_Val0C = SndParamRun_EE0010 + 257
 NakaInst_Param_Val00_01 = SndParamRun_EE0010 + 259
 NakaInst_Param_Idx08_88 = SndParamRun_EE0010 + 270
-NakaInst_Param_IdxA0_00 = SndParamRun_EE0010 + 288
+SndParam_MidiCommon_ApcControl = SndParamRun_EE0010 + 288
 NakaInst_Param_Size05 = SndParamRun_EE0010 + 297
 NakaInst_Param_EndFF = SndParamRun_EE0010 + 299
 NakaInst_Param_Flag01 = SndParamRun_EE0010 + 300
@@ -51,7 +51,7 @@ NakaInst_Param_PadEnd = SndParamRun_EE0010 + 301
 ; 18-byte sound-parameter descriptor -- the same record type as the 17 compiled
 ; from audio/sndparam_records/run_ee0010.c just above (0xEE0010-0xEE0141);
 ; SndParam_Registry entry 971 points at it.
-NakaInst_Param_IdxA0_01:
+SndParam_MidiCommon_IntroFillInEnding:
 	.byte 0x01, 0xa0, 0x02, 0x00, 0x80, 0x09, 0x40, 0x00, 0x01
 	.byte 0x06, 0x00, 0xff, 0x01, 0x01, 0x01, 0x00, 0x00, 0xff
 ; 11 x u32 pointers into the 0xEDxxxx sound-parameter value tables.
@@ -111,10 +111,10 @@ SndParam_Registry:
 SndParam_RegisterLoop_Data:
 	.long WidgetParam_TestMode_Entry
 	.long WidgetParam_SineWave_Entry
-	.long VoiceCtrlR1_Entry_001
+	.long SndParam_Transpose
 	.long SndParam_Tempo
-	.long VoiceCtrlR1_Entry_003
-	.long VoiceCtrlR1_Entry_004
+	.long SndParam_Tempo_Bit8
+	.long SndParam_GmOnOff
 	.long VoiceCtrlR1_Entry_005
 	.long SndParam_InitialTouch_VelocitySense
 	.long SndParam_AfterTouch_Curve
@@ -122,58 +122,58 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_AfterTouch_OnOff
 	.long SndParam_PanelMemory_Number
 	.long VoiceCtrlR1_Entry_011
-	.long VoiceCtrlR1_Entry_012
+	.long SndParam_PanelMemory_Mode
 	.long SndParam_MidiIn_Right1Input
 	.long SndParam_MidiIn_AutoPlayChord
 	.long SndParam_MidiOut_TechniChord
 	.long SndParam_MidiOut_DrumPattern
 	.long SndParam_MidiOut_AutoPlayChord
 	.long SndParam_MidiOut_Transpose
-	.long VoiceCtrlR1_Entry_021
-	.long VoiceCtrlR1_Entry_022
-	.long VoiceCtrlR1_Entry_024
-	.long VoiceCtrlR1_Entry_025
-	.long VoiceCtrlR1_Entry_013
-	.long VoiceCtrlR1_Entry_014
-	.long VoiceCtrlR1_Entry_026
-	.long VoiceCtrlR1_Entry_027
-	.long VoiceCtrlR1_Entry_028
-	.long VoiceCtrlR1_Entry_029
-	.long VoiceCtrlR1_Entry_030
-	.long VoiceCtrlR1_Entry_031
-	.long VoiceCtrlR1_Entry_032
-	.long VoiceCtrlR1_Entry_033
-	.long VoiceCtrlR1_Entry_034
-	.long VoiceCtrlR1_Entry_035
-	.long VoiceCtrlR1_Entry_036
-	.long VoiceCtrlR1_Entry_037
-	.long VoiceCtrlR1_Entry_038
-	.long VoiceCtrlR1_Entry_039
-	.long VoiceCtrlR1_Entry_040
-	.long VoiceCtrlR1_Entry_041
-	.long VoiceCtrlR1_Entry_042
-	.long VoiceCtrlR1_Entry_043
+	.long SndParam_MidiRealtime_Clock
+	.long SndParam_MidiCommon_ProgramChangeMode
+	.long SndParam_MidiCommon_PrgChangeToPmem
+	.long SndParam_MidiCommon_NoteOnly
+	.long SndParam_MusicStyleArranger_OnOff
+	.long SndParam_MusicStyleArranger_Mode
+	.long SndParam_MidiCommon_DrumsType
+	.long SndParam_MidiCommon_SongSelect
+	.long SndParam_MidiRealtime_Commands
+	.long SndParam_MidiCommon_RealtimeSysex
+	.long SndParam_MidiCtlMsg_ProgramChange
+	.long SndParam_MidiCtlMsg_AfterTouch
+	.long SndParam_MidiCtlMsg_PitchBend
+	.long SndParam_MidiCtlMsg_BankSelect
+	.long SndParam_MidiCtlMsg_Volume
+	.long SndParam_MidiCtlMsg_Expression
+	.long SndParam_MidiCtlMsg_Pan
+	.long SndParam_MidiCtlMsg_Sustain
+	.long SndParam_MidiCtlMsg_EffectReverb
+	.long SndParam_MidiCtlMsg_Modulation
+	.long SndParam_MidiCtlMsg_Tuning
+	.long SndParam_MidiCtlMsg_BendRange
+	.long SndParam_MidiCtlMsg_ResetAllControllers
+	.long SndParam_MidiCommon_FadeInOut
 	.long MidiChParam_Entry_040
-	.long MidiChParam_Entry_041
+	.long SndParam_TotalExpression
 	.long SndParam_ReverbOnOff
-	.long SndParam_DigitalEffectOnOff
+	.long SndParam_RotarySpeedSwitch
 	.long SndParam_AcousticIllusionOnOff
-	.long MidiChParam_Entry_045
+	.long SndParam_Fade_Level
 	.long SndParam_EqualizerOnOff
 	.long MidiChParam_Entry_047
 	.long MidiChParam_Entry_048
-	.long MidiChParam_Entry_049
-	.long MidiChParam_Entry_050
-	.long MidiChParam_Entry_051
-	.long MidiChParam_Entry_052
-	.long MidiChParam_Entry_053
+	.long SndParam_FadeIn_OnOff
+	.long SndParam_FadeOut_OnOff
+	.long SndParam_R1R2Octave
+	.long SndParam_Conductor
+	.long SndParam_Mic_ReverbOnOff
 	.long SndParam_Mic_Volume
 	.long SndParam_Mic_Mute
-	.long MidiChParam_Entry_056
-	.long MidiChParam_Entry_057
-	.long MidiChParam_Entry_058
+	.long SndParam_SplitPoint_Preset
+	.long SndParam_SplitPoint_Note
+	.long SndParam_TechniChord_OnOff
 	.long SndParam_Orchestrator
-	.long MidiChParam_Entry_060
+	.long SndParam_TechniChord_Type
 	.long SndParam_ScaleTune_OnOff
 	.long SndParam_ScaleTune_Type
 	.long SndParam_ScaleTune_Key
@@ -192,9 +192,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_DspEffect_Algorithm
 	.long MidiChParam_Entry_077
 	.long SndParam_DigitalReverb_Algorithm
-	.long MidiChParam_Entry_079
-	.long MidiChParam_Entry_080
-	.long MidiChParam_Entry_081
+	.long SndParam_Equalizer_Algorithm
+	.long SndParam_AcousticIllusion_Algorithm
+	.long SndParam_MicReverb_Algorithm
 	.long SndParam_MidiIn_VelocityMode
 	.long SndParam_MidiIn_VelocityOffset
 	.long SndParam_MidiIn_VelocityFixed
@@ -225,29 +225,29 @@ SndParam_RegisterLoop_Data:
 	.long VoiceCtrlR1_Entry_068
 	.long VoiceCtrlR1_Entry_069
 	.long VoiceCtrlR1_Entry_070
-	.long VoiceCtrlR1_Entry_071
-	.long VoiceCtrlR1_Entry_072
-	.long VoiceCtrlR1_Entry_073
-	.long VoiceCtrlR1_Entry_074
-	.long VoiceCtrlR1_Entry_075
-	.long MidiChParam_Entry_001
-	.long MidiChParam_Entry_002
-	.long MidiChParam_Entry_003
-	.long MidiChParam_Entry_004
-	.long MidiChParam_Entry_005
-	.long MidiChParam_Entry_006
-	.long MidiChParam_Entry_007
-	.long MidiChParam_Entry_008
-	.long MidiChParam_Entry_009
-	.long MidiChParam_Entry_010
-	.long MidiChParam_Entry_011
-	.long MidiChParam_Entry_012
-	.long MidiChParam_Entry_013
-	.long MidiChParam_Entry_014
-	.long MidiChParam_Entry_015
-	.long MidiChParam_Entry_016
-	.long MidiChParam_Entry_017
-	.long MidiChParam_Entry_018
+	.long SndParam_PmemFilter_RhythmSelection
+	.long SndParam_PmemFilter_Tempo
+	.long SndParam_PmemFilter_SplitPoint
+	.long SndParam_PmemFilter_Transpose
+	.long SndParam_PmemFilter_ApcMemory
+	.long SndParam_PmemFilter_Midi
+	.long SndParam_PmemFilter_KeyScale
+	.long SndParam_PmemFilter_Reverb
+	.long SndParam_PmemFilter_DspEffect
+	.long SndParam_PmemFilter_Part4To16
+	.long SndParam_PmemFilter_FootCtrl
+	.long SndParam_PmemFilter_MicLevelReverb
+	.long SndParam_PmemFilter_FadeInOut
+	.long SndParam_PmemFilter_R1R2Octave
+	.long SndParam_PmemFilter_Vocalist
+	.long SndParam_PmemFilter_AcousticIllusion
+	.long SndParam_PmemFilter_Equalizer
+	.long SndParam_PmemFilter_MspBank
+	.long SndParam_FadeIn_Time
+	.long SndParam_FadeOut_Time
+	.long SndParam_FadeOut_RhythmAutoStop
+	.long SndParam_FadeOut_SeqAutoStop
+	.long SndParam_FadeOut_AutoReset
 	.long SndParam_ComputerConnectMode
 	.long SndParam_Vocalist_MidiChannel
 	.long SndParam_Vocalist_MidiChannelSend
@@ -283,9 +283,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part00_BendRange
 	.long SndParam_Part00_Tuning
 	.long SndParam_Part00_KeyShift
-	.long MidiChParam_Entry_101
-	.long MidiChParam_Entry_102
-	.long MidiChParam_Entry_097
+	.long SndParam_Part00_PitchBend
+	.long SndParam_Part00_ChannelPressure
+	.long SndParam_Part00_AllSoundOff
 	.long MidiChParam_Entry_103
 	.long SndParam_Part00_PercDecay
 	.long SndParam_Part00_PercLevel
@@ -300,8 +300,8 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part00_Drawbar1_3_5
 	.long SndParam_Part00_Drawbar1_1_3
 	.long SndParam_Part00_Drawbar1
-	.long VoiceParamEx_Entry_005
-	.long VoiceParamEx_Entry_006
+	.long SndParam_Part00_Perc4
+	.long SndParam_Part00_Perc2_2_3
 	.long SndParam_Part01_Sound
 	.long SndParam_Part01_Modulation
 	.long SndParam_Part01_Volume
@@ -316,9 +316,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part01_BendRange
 	.long SndParam_Part01_Tuning
 	.long SndParam_Part01_KeyShift
-	.long VoiceParamEx_Entry_022
-	.long VoiceParamEx_Entry_023
-	.long VoiceParamEx_Entry_018
+	.long SndParam_Part01_PitchBend
+	.long SndParam_Part01_ChannelPressure
+	.long SndParam_Part01_AllSoundOff
 	.long VoiceParamEx_Entry_024
 	.long SndParam_Part01_PercDecay
 	.long SndParam_Part01_PercLevel
@@ -333,8 +333,8 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part01_Drawbar1_3_5
 	.long SndParam_Part01_Drawbar1_1_3
 	.long SndParam_Part01_Drawbar1
-	.long VoiceParamEx_Entry_038
-	.long VoiceParamEx_Entry_039
+	.long SndParam_Part01_Perc4
+	.long SndParam_Part01_Perc2_2_3
 	.long SndParam_Part02_Sound
 	.long SndParam_Part02_Modulation
 	.long SndParam_Part02_Volume
@@ -349,9 +349,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part02_BendRange
 	.long SndParam_Part02_Tuning
 	.long SndParam_Part02_KeyShift
-	.long VoiceParamEx_Entry_055
-	.long VoiceParamEx_Entry_056
-	.long VoiceParamEx_Entry_051
+	.long SndParam_Part02_PitchBend
+	.long SndParam_Part02_ChannelPressure
+	.long SndParam_Part02_AllSoundOff
 	.long VoiceParamEx_Entry_057
 	.long SndParam_Part02_PercDecay
 	.long SndParam_Part02_PercLevel
@@ -366,8 +366,8 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part02_Drawbar1_3_5
 	.long SndParam_Part02_Drawbar1_1_3
 	.long SndParam_Part02_Drawbar1
-	.long VoiceParamEx_Entry_071
-	.long VoiceParamEx_Entry_072
+	.long SndParam_Part02_Perc4
+	.long SndParam_Part02_Perc2_2_3
 	.long SndParam_Part03_Sound
 	.long SndParam_Part03_Modulation
 	.long SndParam_Part03_Volume
@@ -382,9 +382,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part03_BendRange
 	.long SndParam_Part03_Tuning
 	.long SndParam_Part03_KeyShift
-	.long PartParam_Entry_003
-	.long PartParam_Entry_004
-	.long VoiceParamEx_Entry_084
+	.long SndParam_Part03_PitchBend
+	.long SndParam_Part03_ChannelPressure
+	.long SndParam_Part03_AllSoundOff
 	.long SndParam_Part04_Sound
 	.long SndParam_Part04_Modulation
 	.long SndParam_Part04_Volume
@@ -399,9 +399,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part04_BendRange
 	.long SndParam_Part04_Tuning
 	.long SndParam_Part04_KeyShift
-	.long PartParam_Entry_020
-	.long PartParam_Entry_021
-	.long PartParam_Entry_016
+	.long SndParam_Part04_PitchBend
+	.long SndParam_Part04_ChannelPressure
+	.long SndParam_Part04_AllSoundOff
 	.long SndParam_Part05_Sound
 	.long SndParam_Part05_Modulation
 	.long SndParam_Part05_Volume
@@ -416,9 +416,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part05_BendRange
 	.long SndParam_Part05_Tuning
 	.long SndParam_Part05_KeyShift
-	.long PartParam_Entry_037
-	.long PartParam_Entry_038
-	.long PartParam_Entry_033
+	.long SndParam_Part05_PitchBend
+	.long SndParam_Part05_ChannelPressure
+	.long SndParam_Part05_AllSoundOff
 	.long SndParam_Part06_Sound
 	.long SndParam_Part06_Modulation
 	.long SndParam_Part06_Volume
@@ -433,9 +433,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part06_BendRange
 	.long SndParam_Part06_Tuning
 	.long SndParam_Part06_KeyShift
-	.long PartParam_Entry_054
-	.long PartParam_Entry_055
-	.long PartParam_Entry_050
+	.long SndParam_Part06_PitchBend
+	.long SndParam_Part06_ChannelPressure
+	.long SndParam_Part06_AllSoundOff
 	.long SndParam_Part07_Sound
 	.long SndParam_Part07_Modulation
 	.long SndParam_Part07_Volume
@@ -450,9 +450,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part07_BendRange
 	.long SndParam_Part07_Tuning
 	.long SndParam_Part07_KeyShift
-	.long PartParam_Entry_071
-	.long PartParam_Entry_072
-	.long PartParam_Entry_067
+	.long SndParam_Part07_PitchBend
+	.long SndParam_Part07_ChannelPressure
+	.long SndParam_Part07_AllSoundOff
 	.long SndParam_Part08_Sound
 	.long SndParam_Part08_Modulation
 	.long SndParam_Part08_Volume
@@ -467,9 +467,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part08_BendRange
 	.long SndParam_Part08_Tuning
 	.long SndParam_Part08_KeyShift
-	.long PartParam_Entry_088
-	.long PartParam_Entry_089
-	.long PartParam_Entry_084
+	.long SndParam_Part08_PitchBend
+	.long SndParam_Part08_ChannelPressure
+	.long SndParam_Part08_AllSoundOff
 	.long SndParam_Part09_Sound
 	.long SndParam_Part09_Modulation
 	.long SndParam_Part09_Volume
@@ -484,9 +484,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part09_BendRange
 	.long SndParam_Part09_Tuning
 	.long SndParam_Part09_KeyShift
-	.long PartParam_Entry_105
-	.long PartParam_Entry_106
-	.long PartParam_Entry_101
+	.long SndParam_Part09_PitchBend
+	.long SndParam_Part09_ChannelPressure
+	.long SndParam_Part09_AllSoundOff
 	.long SndParam_Part0A_Sound
 	.long SndParam_Part0A_Modulation
 	.long SndParam_Part0A_Volume
@@ -501,9 +501,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0A_BendRange
 	.long SndParam_Part0A_Tuning
 	.long SndParam_Part0A_KeyShift
-	.long PartParam_Entry_122
-	.long PartParam_Entry_123
-	.long PartParam_Entry_118
+	.long SndParam_Part0A_PitchBend
+	.long SndParam_Part0A_ChannelPressure
+	.long SndParam_Part0A_AllSoundOff
 	.long SndParam_Part0B_Sound
 	.long SndParam_Part0B_Modulation
 	.long SndParam_Part0B_Volume
@@ -518,9 +518,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0B_BendRange
 	.long SndParam_Part0B_Tuning
 	.long SndParam_Part0B_KeyShift
-	.long PartParam_Entry_139
-	.long PartParam_Entry_140
-	.long PartParam_Entry_135
+	.long SndParam_Part0B_PitchBend
+	.long SndParam_Part0B_ChannelPressure
+	.long SndParam_Part0B_AllSoundOff
 	.long SndParam_Part0C_Sound
 	.long SndParam_Part0C_Modulation
 	.long SndParam_Part0C_Volume
@@ -535,9 +535,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0C_BendRange
 	.long SndParam_Part0C_Tuning
 	.long SndParam_Part0C_KeyShift
-	.long PartParam_Entry_156
-	.long PartParam_Entry_157
-	.long PartParam_Entry_152
+	.long SndParam_Part0C_PitchBend
+	.long SndParam_Part0C_ChannelPressure
+	.long SndParam_Part0C_AllSoundOff
 	.long SndParam_Part0D_Sound
 	.long SndParam_Part0D_Modulation
 	.long SndParam_Part0D_Volume
@@ -552,9 +552,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0D_BendRange
 	.long SndParam_Part0D_Tuning
 	.long SndParam_Part0D_KeyShift
-	.long PartParam_Entry_173
-	.long PartParam_Entry_174
-	.long PartParam_Entry_169
+	.long SndParam_Part0D_PitchBend
+	.long SndParam_Part0D_ChannelPressure
+	.long SndParam_Part0D_AllSoundOff
 	.long SndParam_Part0E_Sound
 	.long SndParam_Part0E_Modulation
 	.long SndParam_Part0E_Volume
@@ -569,9 +569,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0E_BendRange
 	.long SndParam_Part0E_Tuning
 	.long SndParam_Part0E_KeyShift
-	.long PartParam_Entry_190
-	.long PartParam_Entry_191
-	.long PartParam_Entry_186
+	.long SndParam_Part0E_PitchBend
+	.long SndParam_Part0E_ChannelPressure
+	.long SndParam_Part0E_AllSoundOff
 	.long SndParam_Part0F_Sound
 	.long SndParam_Part0F_Modulation
 	.long SndParam_Part0F_Volume
@@ -586,9 +586,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0F_BendRange
 	.long SndParam_Part0F_Tuning
 	.long SndParam_Part0F_KeyShift
-	.long PartParam_Entry_207
-	.long PartParam_Entry_208
-	.long PartParam_Entry_203
+	.long SndParam_Part0F_PitchBend
+	.long SndParam_Part0F_ChannelPressure
+	.long SndParam_Part0F_AllSoundOff
 	.long SndParam_Part10_Sound
 	.long SndParam_Part10_Modulation
 	.long SndParam_Part10_Volume
@@ -603,9 +603,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part10_BendRange
 	.long SndParam_Part10_Tuning
 	.long SndParam_Part10_KeyShift
-	.long PartParam_Entry_224
-	.long PartParam_Entry_225
-	.long PartParam_Entry_220
+	.long SndParam_Part10_PitchBend
+	.long SndParam_Part10_ChannelPressure
+	.long SndParam_Part10_AllSoundOff
 	.long SndParam_Part11_Sound
 	.long SndParam_Part11_Modulation
 	.long SndParam_Part11_Volume
@@ -620,9 +620,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part11_BendRange
 	.long SndParam_Part11_Tuning
 	.long SndParam_Part11_KeyShift
-	.long ExtPartParam_Entry_241
-	.long ExtPartParam_Entry_242
-	.long ExtPartParam_Entry_237
+	.long SndParam_Part11_PitchBend
+	.long SndParam_Part11_ChannelPressure
+	.long SndParam_Part11_AllSoundOff
 	.long SndParam_Part12_Sound
 	.long SndParam_Part12_Modulation
 	.long SndParam_Part12_Volume
@@ -637,9 +637,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part12_BendRange
 	.long SndParam_Part12_Tuning
 	.long SndParam_Part12_KeyShift
-	.long ExtPartParam_Entry_258
-	.long ExtPartParam_Entry_259
-	.long ExtPartParam_Entry_254
+	.long SndParam_Part12_PitchBend
+	.long SndParam_Part12_ChannelPressure
+	.long SndParam_Part12_AllSoundOff
 	.long SndParam_Part13_Sound
 	.long SndParam_Part13_Modulation
 	.long SndParam_Part13_Volume
@@ -654,9 +654,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part13_BendRange
 	.long SndParam_Part13_Tuning
 	.long SndParam_Part13_KeyShift
-	.long ExtPartParam_Entry_275
-	.long ExtPartParam_Entry_276
-	.long ExtPartParam_Entry_271
+	.long SndParam_Part13_PitchBend
+	.long SndParam_Part13_ChannelPressure
+	.long SndParam_Part13_AllSoundOff
 	.long SndParam_Part14_Sound
 	.long SndParam_Part14_Modulation
 	.long SndParam_Part14_Volume
@@ -671,9 +671,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part14_BendRange
 	.long SndParam_Part14_Tuning
 	.long SndParam_Part14_KeyShift
-	.long ExtPartParam_Entry_292
-	.long ExtPartParam_Entry_293
-	.long ExtPartParam_Entry_288
+	.long SndParam_Part14_PitchBend
+	.long SndParam_Part14_ChannelPressure
+	.long SndParam_Part14_AllSoundOff
 	.long SndParam_Part15_Sound
 	.long SndParam_Part15_Modulation
 	.long SndParam_Part15_Volume
@@ -688,9 +688,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part15_BendRange
 	.long SndParam_Part15_Tuning
 	.long SndParam_Part15_KeyShift
-	.long ExtPartParam_Entry_309
-	.long ExtPartParam_Entry_310
-	.long ExtPartParam_Entry_305
+	.long SndParam_Part15_PitchBend
+	.long SndParam_Part15_ChannelPressure
+	.long SndParam_Part15_AllSoundOff
 	.long SndParam_Part16_Sound
 	.long SndParam_Part16_Modulation
 	.long SndParam_Part16_Volume
@@ -705,9 +705,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part16_BendRange
 	.long SndParam_Part16_Tuning
 	.long SndParam_Part16_KeyShift
-	.long ExtPartParam_Entry_326
-	.long ExtPartParam_Entry_327
-	.long ExtPartParam_Entry_322
+	.long SndParam_Part16_PitchBend
+	.long SndParam_Part16_ChannelPressure
+	.long SndParam_Part16_AllSoundOff
 	.long SndParam_Part17_Sound
 	.long SndParam_Part17_Modulation
 	.long SndParam_Part17_Volume
@@ -722,9 +722,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part17_BendRange
 	.long SndParam_Part17_Tuning
 	.long SndParam_Part17_KeyShift
-	.long ExtPartParam_Entry_343
-	.long ExtPartParam_Entry_344
-	.long ExtPartParam_Entry_339
+	.long SndParam_Part17_PitchBend
+	.long SndParam_Part17_ChannelPressure
+	.long SndParam_Part17_AllSoundOff
 	.long SndParam_Part18_Sound
 	.long SndParam_Part18_Modulation
 	.long SndParam_Part18_Volume
@@ -739,16 +739,16 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part18_BendRange
 	.long SndParam_Part18_Tuning
 	.long SndParam_Part18_KeyShift
-	.long ExtPartParam_Entry_360
-	.long ExtPartParam_Entry_361
-	.long ExtPartParam_Entry_356
+	.long SndParam_Part18_PitchBend
+	.long SndParam_Part18_ChannelPressure
+	.long SndParam_Part18_AllSoundOff
 	.long SndParam_Metronome_Volume
 	.long SndParam_Metronome_Mute
 	.long SndParam_Part00_LocalControl
 	.long SndParam_Part00_MidiChannel
-	.long SndParam_Part00_MidiChannelOn
-	.long ExtPartParam_Entry_367
-	.long ExtPartParam_Entry_368
+	.long SndParam_Part00_MidiTransmitOn
+	.long SndParam_Part00_MidiReceiveOn
+	.long SndParam_Part00_MidiOctave
 	.long SndParam_Part00_SustainLength
 	.long SndParam_Part00_SustainPedal
 	.long SndParam_Part00_KeyScaling
@@ -758,9 +758,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part00_AfterTouch
 	.long SndParam_Part01_LocalControl
 	.long SndParam_Part01_MidiChannel
-	.long SndParam_Part01_MidiChannelOn
-	.long ExtPartParam_Entry_379
-	.long ExtPartParam_Entry_380
+	.long SndParam_Part01_MidiTransmitOn
+	.long SndParam_Part01_MidiReceiveOn
+	.long SndParam_Part01_MidiOctave
 	.long SndParam_Part01_SustainLength
 	.long SndParam_Part01_SustainPedal
 	.long SndParam_Part01_KeyScaling
@@ -770,9 +770,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part01_AfterTouch
 	.long SndParam_Part02_LocalControl
 	.long SndParam_Part02_MidiChannel
-	.long SndParam_Part02_MidiChannelOn
-	.long ExtPartParam_Entry_391
-	.long ExtPartParam_Entry_392
+	.long SndParam_Part02_MidiTransmitOn
+	.long SndParam_Part02_MidiReceiveOn
+	.long SndParam_Part02_MidiOctave
 	.long SndParam_Part02_SustainLength
 	.long SndParam_Part02_SustainPedal
 	.long SndParam_Part02_KeyScaling
@@ -782,9 +782,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part02_AfterTouch
 	.long SndParam_Part03_LocalControl
 	.long SndParam_Part03_MidiChannel
-	.long SndParam_Part03_MidiChannelOn
-	.long ExtPartParam_Entry_403
-	.long ExtPartParam_Entry_404
+	.long SndParam_Part03_MidiTransmitOn
+	.long SndParam_Part03_MidiReceiveOn
+	.long SndParam_Part03_MidiOctave
 	.long SndParam_Part03_SustainLength
 	.long SndParam_Part03_SustainPedal
 	.long SndParam_Part03_KeyScaling
@@ -794,9 +794,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part03_AfterTouch
 	.long SndParam_Part04_LocalControl
 	.long SndParam_Part04_MidiChannel
-	.long SndParam_Part04_MidiChannelOn
-	.long ExtPartParam_Entry_415
-	.long ExtPartParam_Entry_416
+	.long SndParam_Part04_MidiTransmitOn
+	.long SndParam_Part04_MidiReceiveOn
+	.long SndParam_Part04_MidiOctave
 	.long SndParam_Part04_SustainLength
 	.long SndParam_Part04_SustainPedal
 	.long SndParam_Part04_KeyScaling
@@ -806,9 +806,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part04_AfterTouch
 	.long SndParam_Part05_LocalControl
 	.long SndParam_Part05_MidiChannel
-	.long SndParam_Part05_MidiChannelOn
-	.long ExtPartParam_Entry_427
-	.long ExtPartParam_Entry_428
+	.long SndParam_Part05_MidiTransmitOn
+	.long SndParam_Part05_MidiReceiveOn
+	.long SndParam_Part05_MidiOctave
 	.long SndParam_Part05_SustainLength
 	.long SndParam_Part05_SustainPedal
 	.long SndParam_Part05_KeyScaling
@@ -818,9 +818,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part05_AfterTouch
 	.long SndParam_Part06_LocalControl
 	.long SndParam_Part06_MidiChannel
-	.long SndParam_Part06_MidiChannelOn
-	.long ExtPartParam_Entry_439
-	.long ExtPartParam_Entry_440
+	.long SndParam_Part06_MidiTransmitOn
+	.long SndParam_Part06_MidiReceiveOn
+	.long SndParam_Part06_MidiOctave
 	.long SndParam_Part06_SustainLength
 	.long SndParam_Part06_SustainPedal
 	.long SndParam_Part06_KeyScaling
@@ -830,9 +830,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part06_AfterTouch
 	.long SndParam_Part07_LocalControl
 	.long SndParam_Part07_MidiChannel
-	.long SndParam_Part07_MidiChannelOn
-	.long ExtPartParam_Entry_451
-	.long ExtPartParam_Entry_452
+	.long SndParam_Part07_MidiTransmitOn
+	.long SndParam_Part07_MidiReceiveOn
+	.long SndParam_Part07_MidiOctave
 	.long SndParam_Part07_SustainLength
 	.long SndParam_Part07_SustainPedal
 	.long SndParam_Part07_KeyScaling
@@ -842,9 +842,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part07_AfterTouch
 	.long SndParam_Part08_LocalControl
 	.long SndParam_Part08_MidiChannel
-	.long SndParam_Part08_MidiChannelOn
-	.long SeqMixParam_Entry_009
-	.long SeqMixParam_Entry_010
+	.long SndParam_Part08_MidiTransmitOn
+	.long SndParam_Part08_MidiReceiveOn
+	.long SndParam_Part08_MidiOctave
 	.long SndParam_Part08_SustainLength
 	.long SndParam_Part08_SustainPedal
 	.long SndParam_Part08_KeyScaling
@@ -854,9 +854,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part08_AfterTouch
 	.long SndParam_Part09_LocalControl
 	.long SndParam_Part09_MidiChannel
-	.long SndParam_Part09_MidiChannelOn
-	.long SeqMixParam_Entry_021
-	.long SeqMixParam_Entry_022
+	.long SndParam_Part09_MidiTransmitOn
+	.long SndParam_Part09_MidiReceiveOn
+	.long SndParam_Part09_MidiOctave
 	.long SndParam_Part09_SustainLength
 	.long SndParam_Part09_SustainPedal
 	.long SndParam_Part09_KeyScaling
@@ -866,9 +866,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part09_AfterTouch
 	.long SndParam_Part0A_LocalControl
 	.long SndParam_Part0A_MidiChannel
-	.long SndParam_Part0A_MidiChannelOn
-	.long SeqMixParam_Entry_033
-	.long SeqMixParam_Entry_034
+	.long SndParam_Part0A_MidiTransmitOn
+	.long SndParam_Part0A_MidiReceiveOn
+	.long SndParam_Part0A_MidiOctave
 	.long SndParam_Part0A_SustainLength
 	.long SndParam_Part0A_SustainPedal
 	.long SndParam_Part0A_KeyScaling
@@ -878,9 +878,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0A_AfterTouch
 	.long SndParam_Part0B_LocalControl
 	.long SndParam_Part0B_MidiChannel
-	.long SndParam_Part0B_MidiChannelOn
-	.long SeqMixParam_Entry_045
-	.long SeqMixParam_Entry_046
+	.long SndParam_Part0B_MidiTransmitOn
+	.long SndParam_Part0B_MidiReceiveOn
+	.long SndParam_Part0B_MidiOctave
 	.long SndParam_Part0B_SustainLength
 	.long SndParam_Part0B_SustainPedal
 	.long SndParam_Part0B_KeyScaling
@@ -890,9 +890,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0B_AfterTouch
 	.long SndParam_Part0C_LocalControl
 	.long SndParam_Part0C_MidiChannel
-	.long SndParam_Part0C_MidiChannelOn
-	.long SeqMixParam_Entry_057
-	.long SeqMixParam_Entry_058
+	.long SndParam_Part0C_MidiTransmitOn
+	.long SndParam_Part0C_MidiReceiveOn
+	.long SndParam_Part0C_MidiOctave
 	.long SndParam_Part0C_SustainLength
 	.long SndParam_Part0C_SustainPedal
 	.long SndParam_Part0C_KeyScaling
@@ -902,9 +902,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0C_AfterTouch
 	.long SndParam_Part0D_LocalControl
 	.long SndParam_Part0D_MidiChannel
-	.long SndParam_Part0D_MidiChannelOn
-	.long SeqMixParam_Entry_069
-	.long SeqMixParam_Entry_070
+	.long SndParam_Part0D_MidiTransmitOn
+	.long SndParam_Part0D_MidiReceiveOn
+	.long SndParam_Part0D_MidiOctave
 	.long SndParam_Part0D_SustainLength
 	.long SndParam_Part0D_SustainPedal
 	.long SndParam_Part0D_KeyScaling
@@ -914,9 +914,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0D_AfterTouch
 	.long SndParam_Part0E_LocalControl
 	.long SndParam_Part0E_MidiChannel
-	.long SndParam_Part0E_MidiChannelOn
-	.long SeqMixParam_Entry_081
-	.long SeqMixParam_Entry_082
+	.long SndParam_Part0E_MidiTransmitOn
+	.long SndParam_Part0E_MidiReceiveOn
+	.long SndParam_Part0E_MidiOctave
 	.long SndParam_Part0E_SustainLength
 	.long SndParam_Part0E_SustainPedal
 	.long SndParam_Part0E_KeyScaling
@@ -926,9 +926,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0E_AfterTouch
 	.long SndParam_Part0F_LocalControl
 	.long SndParam_Part0F_MidiChannel
-	.long SndParam_Part0F_MidiChannelOn
-	.long SeqMixParam_Entry_093
-	.long SeqMixParam_Entry_094
+	.long SndParam_Part0F_MidiTransmitOn
+	.long SndParam_Part0F_MidiReceiveOn
+	.long SndParam_Part0F_MidiOctave
 	.long SndParam_Part0F_SustainLength
 	.long SndParam_Part0F_SustainPedal
 	.long SndParam_Part0F_KeyScaling
@@ -938,9 +938,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part0F_AfterTouch
 	.long SndParam_Part10_LocalControl
 	.long SndParam_Part10_MidiChannel
-	.long SndParam_Part10_MidiChannelOn
-	.long SeqMixParam_Entry_105
-	.long SeqMixParam_Entry_106
+	.long SndParam_Part10_MidiTransmitOn
+	.long SndParam_Part10_MidiReceiveOn
+	.long SndParam_Part10_MidiOctave
 	.long SndParam_Part10_SustainLength
 	.long SndParam_Part10_SustainPedal
 	.long SndParam_Part10_KeyScaling
@@ -950,9 +950,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part10_AfterTouch
 	.long SndParam_Part11_LocalControl
 	.long SndParam_Part11_MidiChannel
-	.long SndParam_Part11_MidiChannelOn
-	.long SeqMixParam_Entry_117
-	.long SeqMixParam_Entry_118
+	.long SndParam_Part11_MidiTransmitOn
+	.long SndParam_Part11_MidiReceiveOn
+	.long SndParam_Part11_MidiOctave
 	.long SndParam_Part11_SustainLength
 	.long SndParam_Part11_SustainPedal
 	.long SndParam_Part11_KeyScaling
@@ -962,9 +962,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part11_AfterTouch
 	.long SndParam_Part12_LocalControl
 	.long SndParam_Part12_MidiChannel
-	.long SndParam_Part12_MidiChannelOn
-	.long SeqMixParam_Entry_129
-	.long SeqMixParam_Entry_130
+	.long SndParam_Part12_MidiTransmitOn
+	.long SndParam_Part12_MidiReceiveOn
+	.long SndParam_Part12_MidiOctave
 	.long SndParam_Part12_SustainLength
 	.long SndParam_Part12_SustainPedal
 	.long SndParam_Part12_KeyScaling
@@ -974,9 +974,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part12_AfterTouch
 	.long SndParam_Part13_LocalControl
 	.long SndParam_Part13_MidiChannel
-	.long SndParam_Part13_MidiChannelOn
-	.long SeqMixParam_Entry_141
-	.long SeqMixParam_Entry_142
+	.long SndParam_Part13_MidiTransmitOn
+	.long SndParam_Part13_MidiReceiveOn
+	.long SndParam_Part13_MidiOctave
 	.long SndParam_Part13_SustainLength
 	.long SndParam_Part13_SustainPedal
 	.long SndParam_Part13_KeyScaling
@@ -986,9 +986,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part13_AfterTouch
 	.long SndParam_Part14_LocalControl
 	.long SndParam_Part14_MidiChannel
-	.long SndParam_Part14_MidiChannelOn
-	.long SeqMixParam_Entry_153
-	.long SeqMixParam_Entry_154
+	.long SndParam_Part14_MidiTransmitOn
+	.long SndParam_Part14_MidiReceiveOn
+	.long SndParam_Part14_MidiOctave
 	.long SndParam_Part14_SustainLength
 	.long SndParam_Part14_SustainPedal
 	.long SndParam_Part14_KeyScaling
@@ -998,9 +998,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part14_AfterTouch
 	.long SndParam_Part15_LocalControl
 	.long SndParam_Part15_MidiChannel
-	.long SndParam_Part15_MidiChannelOn
-	.long SeqMixParam_Entry_165
-	.long SeqMixParam_Entry_166
+	.long SndParam_Part15_MidiTransmitOn
+	.long SndParam_Part15_MidiReceiveOn
+	.long SndParam_Part15_MidiOctave
 	.long SndParam_Part15_SustainLength
 	.long SndParam_Part15_SustainPedal
 	.long SndParam_Part15_KeyScaling
@@ -1010,9 +1010,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part15_AfterTouch
 	.long SndParam_Part16_LocalControl
 	.long SndParam_Part16_MidiChannel
-	.long SndParam_Part16_MidiChannelOn
-	.long SeqMixParam_Entry_177
-	.long SeqMixParam_Entry_178
+	.long SndParam_Part16_MidiTransmitOn
+	.long SndParam_Part16_MidiReceiveOn
+	.long SndParam_Part16_MidiOctave
 	.long SndParam_Part16_SustainLength
 	.long SndParam_Part16_SustainPedal
 	.long SndParam_Part16_KeyScaling
@@ -1022,9 +1022,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part16_AfterTouch
 	.long SndParam_Part17_LocalControl
 	.long SndParam_Part17_MidiChannel
-	.long SndParam_Part17_MidiChannelOn
-	.long SeqMixParam_Entry_189
-	.long SeqMixParam_Entry_190
+	.long SndParam_Part17_MidiTransmitOn
+	.long SndParam_Part17_MidiReceiveOn
+	.long SndParam_Part17_MidiOctave
 	.long SndParam_Part17_SustainLength
 	.long SndParam_Part17_SustainPedal
 	.long SndParam_Part17_KeyScaling
@@ -1034,9 +1034,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part17_AfterTouch
 	.long SndParam_Part18_LocalControl
 	.long SndParam_Part18_MidiChannel
-	.long SndParam_Part18_MidiChannelOn
-	.long SeqMixParam_Entry_201
-	.long SeqMixParam_Entry_202
+	.long SndParam_Part18_MidiTransmitOn
+	.long SndParam_Part18_MidiReceiveOn
+	.long SndParam_Part18_MidiOctave
 	.long SndParam_Part18_SustainLength
 	.long SndParam_Part18_SustainPedal
 	.long SndParam_Part18_KeyScaling
@@ -1046,9 +1046,9 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part18_AfterTouch
 	.long SndParam_Part19_LocalControl
 	.long SndParam_Part19_MidiChannel
-	.long SndParam_Part19_MidiChannelOn
-	.long SeqMixParam_Entry_213
-	.long SeqMixParam_Entry_214
+	.long SndParam_Part19_MidiTransmitOn
+	.long SndParam_Part19_MidiReceiveOn
+	.long SndParam_Part19_MidiOctave
 	.long SndParam_Part19_SustainLength
 	.long SndParam_Part19_SustainPedal
 	.long SndParam_Part19_KeyScaling
@@ -1056,18 +1056,18 @@ SndParam_RegisterLoop_Data:
 	.long SndParam_Part19_PartExp
 	.long SeqMixParam_Entry_220
 	.long SndParam_Part19_AfterTouch
-	.long SeqMixParam_Entry_222
-	.long SeqMixParam_Entry_223
-	.long SeqMixParam_Entry_224
-	.long SeqMixParam_Entry_225
-	.long SeqMixParam_Entry_226
+	.long SndParam_Style_Number
+	.long SndParam_Style_Bank
+	.long SndParam_Style_Variation
+	.long SndParam_Apc_Mode
+	.long SndParam_Apc_Memory
 	.long SndParam_LeftHold
-	.long SeqMixParam_Entry_228
+	.long SndParam_Apc_OnBass
 	.long NakaInst_Param_Bitmap80
-	.long NakaInst_Param_Field81A
+	.long SndParam_Style_FillIn
 	.long NakaInst_Param_Idx01
-	.long NakaInst_Param_Field81B
-	.long NakaInst_Param_Field81C
+	.long SndParam_Style_Ending
+	.long SndParam_Style_SynchroBreak
 	.long NakaInst_Param_Field84
 	.long NakaInst_Param_Term00
 	.long SndParam_Msp_Volume
@@ -1079,8 +1079,8 @@ SndParam_RegisterLoop_Data:
 	.long NakaInst_Param_Idx07_88
 	.long NakaInst_Param_Idx08_88
 	.long SndParam_Msp_Mute
-	.long NakaInst_Param_IdxA0_00
-	.long NakaInst_Param_IdxA0_01
+	.long SndParam_MidiCommon_ApcControl
+	.long SndParam_MidiCommon_IntroFillInEnding
 ; 7 x u32 routine pointers, one per record type; SndParam_RO_Dispatch (0xFCD4C9):
 ; `lda xbc,(<this>); lda xbc, (xbc+wa); ld xhl,(xbc); call (xhl)`.
 ; Extent: up to the next table's base (each base is loaded by its own reader).
@@ -8550,7 +8550,7 @@ SendEpilogueB_SwitchOffsets:
 	.short	MIDI_SendEpilogue_Code - MIDI_SendEpilogue_Code
 	.short	SendEpilogue_Data_Case1 - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_QueueReverbOnOff - MIDI_SendEpilogue_Code
-	.short	SndParam_ApplySystemParam_QueueDigitalEffectSwitch - MIDI_SendEpilogue_Code
+	.short	SndParam_ApplySystemParam_QueueRotarySpeed - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_QueueAcousticIllusionOnOff - MIDI_SendEpilogue_Code
 	.short	SendEpilogue_Data_Case5 - MIDI_SendEpilogue_Code
 	.short	SndParam_ApplySystemParam_SendEqualizerOnOff - MIDI_SendEpilogue_Code
