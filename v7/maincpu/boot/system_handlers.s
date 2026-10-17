@@ -368,7 +368,7 @@ Boot_InitWorkRAM_ROMCopy1_Loop:
 
 Boot_InitWorkRAM_ROMCopy2_Start:
 	ld	xde, 0xe2c2
-	ld	xhl, Boot_InitWorkRAM_ROMCopy2_Start_Data
+	ld	xhl, WorkRamInit_Image2
 	ld	xbc, 0x931
 	or	xbc, xbc
 	jr	z, Boot_InitWorkRAM_Done
