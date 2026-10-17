@@ -1918,3 +1918,20 @@ s/\bData_UnknownBlock_Records4\b/SePitAmpFilLfo1_DrawField_Records4/g
 s/\bData_UnknownBlock_Records5\b/SePitAmpFilLfo1_DrawField_Records5/g
 s/\bSeMenu_FxEdit_Init_Records\b/SeTonRan1_DrawStaticScreen_Records/g
 s/\bData_UnknownBlock_Records\b/SePitAmpFilLfo1_DrawField_Records/g
+# run 2026-10-17
+s/\bSeMenu_PatchEdit_SetupPath_Records2\b/SeTonTon1_DrawField_SetupPath_Records2/g
+s/\bSeMenu_PatchEdit_SetupPath_Records\b/SeTonTon1_DrawField_SetupPath_Records/g
+s/\bSeMenu_BankEdit_SetupPath_Records2\b/SeTonHyb1_DrawField_SetupPath_Records2/g
+s/\bSeMenu_NameEdit_SetupPath_Records2\b/SeEasy_DrawField_SetupPath_Records2/g
+s/\bSeMenu_BankEdit_SetupPath_Records\b/SeTonHyb1_DrawField_SetupPath_Records/g
+s/\bSeMenu_NameEdit_SetupPath_Records\b/SeEasy_DrawField_SetupPath_Records/g
+s/\bSeMenu_EqEdit_SetupPath_Records2\b/SeCtr2_DrawField_SetupPath_Records2/g
+s/\bSeMenu_EqEdit_SetupPath_Records\b/SeCtr2_DrawField_SetupPath_Records/g
+s/\bSeMenu_PatchEdit_DefaultPath\b/SeTonTon1_DrawField_DefaultPath/g
+s/\bSeMenu_NameEdit_DefaultPath\b/SeEasy_DrawField_DefaultPath/g
+s/\bSeMenu_PatchEdit_CallHelper\b/SeTonTon1_DrawField_CallHelper/g
+s/\bSeMenu_PatchEdit_SetupPath\b/SeTonTon1_DrawField_SetupPath/g
+s/\bSeMenu_NameEdit_SetupPath\b/SeEasy_DrawField_SetupPath/g
+s/\bSeMenu_BankEdit_SetupPath\b/SeTonHyb1_DrawField_SetupPath/g
+s/\bSeMenu_EqEdit_DefaultPath\b/SeCtr2_DrawField_DefaultPath/g
+s/\bSeMenu_EqEdit_SetupPath\b/SeCtr2_DrawField_SetupPath/g

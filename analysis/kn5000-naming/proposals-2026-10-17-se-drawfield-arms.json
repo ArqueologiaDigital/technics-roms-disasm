@@ -1,0 +1,182 @@
+[
+ {
+  "old": "SeMenu_BankEdit_Return",
+  "new": "SeTonHyb1_DrawField_Return",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonHyb1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_BankEdit_SetupPath",
+  "new": "SeTonHyb1_DrawField_SetupPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonHyb1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_BankEdit_SetupPath_Records",
+  "new": "SeTonHyb1_DrawField_SetupPath_Records",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonHyb1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_BankEdit_SetupPath_Records2",
+  "new": "SeTonHyb1_DrawField_SetupPath_Records2",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonHyb1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_EqEdit_DefaultPath",
+  "new": "SeCtr2_DrawField_DefaultPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeCtr2; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_EqEdit_Return",
+  "new": "SeCtr2_DrawField_Return",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeCtr2; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_EqEdit_SetupPath",
+  "new": "SeCtr2_DrawField_SetupPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeCtr2; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_EqEdit_SetupPath_Records",
+  "new": "SeCtr2_DrawField_SetupPath_Records",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeCtr2; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_EqEdit_SetupPath_Records2",
+  "new": "SeCtr2_DrawField_SetupPath_Records2",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeCtr2; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_DefaultPath",
+  "new": "SeEasy_DrawField_DefaultPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeEasy; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_Return",
+  "new": "SeEasy_DrawField_Return",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeEasy; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_SetupPath",
+  "new": "SeEasy_DrawField_SetupPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeEasy; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_SetupPath_Records",
+  "new": "SeEasy_DrawField_SetupPath_Records",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeEasy; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_NameEdit_SetupPath_Records2",
+  "new": "SeEasy_DrawField_SetupPath_Records2",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeEasy; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_CallHelper",
+  "new": "SeTonTon1_DrawField_CallHelper",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_DefaultPath",
+  "new": "SeTonTon1_DrawField_DefaultPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_Return",
+  "new": "SeTonTon1_DrawField_Return",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_SetupPath",
+  "new": "SeTonTon1_DrawField_SetupPath",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_SetupPath_Records",
+  "new": "SeTonTon1_DrawField_SetupPath_Records",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ },
+ {
+  "old": "SeMenu_PatchEdit_SetupPath_Records2",
+  "new": "SeTonTon1_DrawField_SetupPath_Records2",
+  "verdict": "name",
+  "basis": "owner routine renamed",
+  "evidence": [
+   "scripts/renaming/rename_se_drawfield_arms_v10.sed: arm of the field-redraw switch of SeTonTon1; referenced only from it_DrawField"
+  ]
+ }
+]

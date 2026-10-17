@@ -828,7 +828,7 @@ SeScreenData_0x5895:
 ; evidence: recptrs table 0xF1652F
 SeScreenData_0x58A0:
 	.byte	0x02, 0x0f, 0x62, 0x06, 0x1f, 0x00, 0x20
-	.long	SeMenu_NameEdit_SetupPath_Records2
+	.long	SeEasy_DrawField_SetupPath_Records2
 	.byte	0x03, 0x00, 0xc8, 0x10
 ; single bound record (op 0x05, 11 B), read by GraphicsRender_Start
 ; evidence: recptrs table 0xF1652F
@@ -873,7 +873,7 @@ SeValText_Off_Off:
 	.ascii	"OFF          "
 	.ascii	"OFF          "
 ; table of 10 pointers to bound records; the code loads it into XIY and SeGfx_DrawIndexedBoundRecord draws entry WA (XIY = (XIY + 4*WA))
-; evidence: SeMenu_NameEdit_DefaultPath+0xB (0xF10121)
+; evidence: SeEasy_DrawField_DefaultPath+0xB (0xF10121)
 ; (name EffectParam_Edit_Table kept: other files use it; the object is ScreenData, see above)
 EffectParam_Edit_Table:
 	.long	SeScreenData_0x58E6
@@ -899,13 +899,13 @@ SeScreenData_0x5951:
 	.short	164, 138, 307, 167
 	.short	164, 179, 307, 208
 ; static record list (1 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; ends 0xF165A9
-; evidence: SeMenu_NameEdit_SetupPath+0x10 (0xF10110)
-SeMenu_NameEdit_SetupPath_Records:
+; evidence: SeEasy_DrawField_SetupPath+0x10 (0xF10110)
+SeEasy_DrawField_SetupPath_Records:
 ; se_setup_sel4: 10 B at 0xF1659F, compiled from audio/sound_editor_screens/se_setup_sel4.c
 	.incbin "includes/generated/se_setup_sel4.bin"
 ; fixed-width string table, 3 chars per entry, 66 B: the text choices of a bound op02/op07 record (its +7 pointer; +11 = chars per entry)
 ; evidence: bound op02 record 0xF164A6
-SeMenu_NameEdit_SetupPath_Records2:
+SeEasy_DrawField_SetupPath_Records2:
 	.ascii	"OFF"
 	.ascii	"-10"
 	.ascii	"- 9"

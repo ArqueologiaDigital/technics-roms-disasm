@@ -9789,22 +9789,22 @@ SeEasy_DrawStaticScreen:
 SeEasy_DrawField:
 	; --- Dispatch on A: XIY/XIX setup, 3 paths (53 bytes) ---
 	cp	a, 0:i3
-	jr z, SeMenu_NameEdit_SetupPath
+	jr z, SeEasy_DrawField_SetupPath
 	cp a, 0x0a
-	jr nz, SeMenu_NameEdit_DefaultPath
+	jr nz, SeEasy_DrawField_DefaultPath
 	call SeMenu_NameEdit_CheckBit7
-	jr t, SeMenu_NameEdit_Return
-SeMenu_NameEdit_SetupPath:
+	jr t, SeEasy_DrawField_Return
+SeEasy_DrawField_SetupPath:
 	ld	(COLORBLIT_MODE:24), 1
-	ld xiy, SeMenu_NameEdit_SetupPath_Records
-	ld xix, SeMenu_NameEdit_SetupPath_Records2
+	ld xiy, SeEasy_DrawField_SetupPath_Records
+	ld xix, SeEasy_DrawField_SetupPath_Records2
 	call SeGfx_DrawStaticList
 	ld a, 0x00:opc
-SeMenu_NameEdit_DefaultPath:
+SeEasy_DrawField_DefaultPath:
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, EffectParam_Edit_Table
 	call SeGfx_DrawIndexedBoundRecord
-SeMenu_NameEdit_Return:
+SeEasy_DrawField_Return:
 	ret
 SeMenu_NameEdit_CheckBit7:
 	; --- Helper: conditional XIY based on bit 7 of (0x066a) (32 bytes) ---
@@ -9853,11 +9853,11 @@ SeDigEff_DrawField_Return:
 SeTonTon1_DrawField:
 	; --- Dispatch on A: table lookup, 4 paths (92 bytes) ---
 	cp	a, 0:i3
-	jr z, SeMenu_PatchEdit_SetupPath
+	jr z, SeTonTon1_DrawField_SetupPath
 	cp	a, 1:i3
-	jr z, SeMenu_PatchEdit_CallHelper
+	jr z, SeTonTon1_DrawField_CallHelper
 	cp a, 0x0e
-	jr c, SeMenu_PatchEdit_DefaultPath
+	jr c, SeTonTon1_DrawField_DefaultPath
 	ld xiy, SeScreenData_0x1EF7
 	extz xwa
 	xor w, w
@@ -9868,22 +9868,22 @@ SeTonTon1_DrawField:
 	ld xix, (xiz+4)
 	ld	(COLORBLIT_MODE:24), 0
 	call SeGfx_DrawBoundList
-	jr t, SeMenu_PatchEdit_Return
-SeMenu_PatchEdit_SetupPath:
+	jr t, SeTonTon1_DrawField_Return
+SeTonTon1_DrawField_SetupPath:
 	ld	(COLORBLIT_MODE:24), 1
-	ld xiy, SeMenu_PatchEdit_SetupPath_Records
-	ld xix, SeMenu_PatchEdit_SetupPath_Records2
+	ld xiy, SeTonTon1_DrawField_SetupPath_Records
+	ld xix, SeTonTon1_DrawField_SetupPath_Records2
 	call SeGfx_DrawStaticList
 	ld a, 0x00:opc
-	jr t, SeMenu_PatchEdit_DefaultPath
-SeMenu_PatchEdit_CallHelper:
+	jr t, SeTonTon1_DrawField_DefaultPath
+SeTonTon1_DrawField_CallHelper:
 	call SeMenu_DrawPartRadioButtons
-	jr t, SeMenu_PatchEdit_Return
-SeMenu_PatchEdit_DefaultPath:
+	jr t, SeTonTon1_DrawField_Return
+SeTonTon1_DrawField_DefaultPath:
 	ld xiy, SeScreenData_0x1EF7
 	ld	(COLORBLIT_MODE:24), 0
 	call SeGfx_DrawIndexedBoundRecord
-SeMenu_PatchEdit_Return:
+SeTonTon1_DrawField_Return:
 	ret
 
 
@@ -9893,17 +9893,17 @@ SeMenu_PatchEdit_Return:
 SeTonHyb1_DrawField:
 	; --- Dispatcher: A==0 path with XIY/XIX setup + loop subroutine (187 bytes) ---
 	cp	a, 0:i3
-	jr z, SeMenu_BankEdit_SetupPath
+	jr z, SeTonHyb1_DrawField_SetupPath
 	call SeMenu_BankEdit_LoopHelper
-	jr t, SeMenu_BankEdit_Return
-SeMenu_BankEdit_SetupPath:
+	jr t, SeTonHyb1_DrawField_Return
+SeTonHyb1_DrawField_SetupPath:
 	ld	(COLORBLIT_MODE:24), 1
-	ld xiy, SeMenu_BankEdit_SetupPath_Records
-	ld xix, SeMenu_BankEdit_SetupPath_Records2
+	ld xiy, SeTonHyb1_DrawField_SetupPath_Records
+	ld xix, SeTonHyb1_DrawField_SetupPath_Records2
 	call SeGfx_DrawStaticList
 	ld xiy, SeScreenData_0x1F75
 	call SeGfx_DrawBoundRecord
-SeMenu_BankEdit_Return:
+SeTonHyb1_DrawField_Return:
 	ret
 SeMenu_BankEdit_LoopHelper:
 	; --- Loop over 3 entries: indexed XIY/XIX pointer table lookups ---
@@ -10784,11 +10784,11 @@ SeMenu_EqEdit_SetupHelper2:
 SeCtr2_DrawField:
 	; --- Dispatch on A: 4 paths with language branching (99 bytes) ---
 	cp	a, 0:i3
-	jr z, SeMenu_EqEdit_SetupPath
+	jr z, SeCtr2_DrawField_SetupPath
 	cp a, 0x0b
 	jr z, SeMenu_EqEdit_SetConstA
 	cp a, 0x0c
-	jr nz, SeMenu_EqEdit_DefaultPath
+	jr nz, SeCtr2_DrawField_DefaultPath
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(1710:16), 1
 	jr z, SeMenu_EqEdit_DrawTable
@@ -10799,21 +10799,21 @@ SeMenu_EqEdit_DrawTable:
 	ld xiy, SeCtr2_Part1And2Switches
 	ld xix, SeCtr2_CursorBox
 	call SeGfx_DrawBoundList
-	jr t, SeMenu_EqEdit_Return
-SeMenu_EqEdit_SetupPath:
+	jr t, SeCtr2_DrawField_Return
+SeCtr2_DrawField_SetupPath:
 	ld	(COLORBLIT_MODE:24), 1
-	ld xiy, SeMenu_EqEdit_SetupPath_Records
-	ld xix, SeMenu_EqEdit_SetupPath_Records2
+	ld xiy, SeCtr2_DrawField_SetupPath_Records
+	ld xix, SeCtr2_DrawField_SetupPath_Records2
 	call SeGfx_DrawStaticList
 	ld a, 0x00:opc
-	jr t, SeMenu_EqEdit_DefaultPath
+	jr t, SeCtr2_DrawField_DefaultPath
 SeMenu_EqEdit_SetConstA:
 	ld a, 0x07:opc
-SeMenu_EqEdit_DefaultPath:
+SeCtr2_DrawField_DefaultPath:
 	ld	(COLORBLIT_MODE:24), 0
 	ld xiy, SeScreenData_0x3E60
 	call SeGfx_DrawIndexedBoundRecord
-SeMenu_EqEdit_Return:
+SeCtr2_DrawField_Return:
 	ret
 
 
@@ -13514,7 +13514,7 @@ SeScreenData_0x1DCB:
 ; part of the record lists that table bounds
 ; evidence: bounds at SeScreenData_0x1EF7
 SeScreenData_0x1EC3:
-	sdb_box	0x03, 0x065d, 0x0f, 0, 0x05, SeMenu_PatchEdit_SetupPath_Records2
+	sdb_box	0x03, 0x065d, 0x0f, 0, 0x05, SeTonTon1_DrawField_SetupPath_Records2
 	; 0xF12AD4: 25 one-character cells (note: no 'T')
 ; string table, 1-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 16 by the record's mask; the table holds 25 cells)
@@ -13533,7 +13533,7 @@ SeScreenData_0x1EE7:
 	.ascii	"LOW ", "HIGH", "MONO", "POLY"
 	; 0xF12AFD: 19 LE32 pointers back into the record stream above
 ; list-boundary table: entry i and i+1 bound list i (19 entries, LE32)
-; evidence: SeTonTon1_DrawField, SeMenu_PatchEdit_DefaultPath
+; evidence: SeTonTon1_DrawField, SeTonTon1_DrawField_DefaultPath
 SeScreenData_0x1EF7:
 	.long	SeScreenData_0x1EC3
 	.long	SeScreenData_0x1E43
@@ -13558,8 +13558,8 @@ SeScreenData_0x1EF7:
 ; se_setup_sel1: 10 bytes -- screen layout data, base 0xF12B49
 ; Compiled from C source (maincpu/audio/sound_editor_screens/se_setup_sel1.c)
 ; reader (se_screendata_model.py): static record list(s) from here, read by GraphicsRender_ProcessEntries;
-; evidence: SeMenu_PatchEdit_SetupPath
-SeMenu_PatchEdit_SetupPath_Records:	.incbin "includes/generated/se_setup_sel1.bin"
+; evidence: SeTonTon1_DrawField_SetupPath
+SeTonTon1_DrawField_SetupPath_Records:	.incbin "includes/generated/se_setup_sel1.bin"
 	; 0xF12B53: five 8-byte cells
 	; |..I.3.e.|
 	; |..I.3.e.|
@@ -13569,7 +13569,7 @@ SeMenu_PatchEdit_SetupPath_Records:	.incbin "includes/generated/se_setup_sel1.bi
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 16 by the record's mask; the table holds 5 cells; values >= 5 would read past it)
 ; evidence: bound op03 record at SeScreenData_0x1EC3
-SeMenu_PatchEdit_SetupPath_Records2:
+SeTonTon1_DrawField_SetupPath_Records2:
 	.short	13, 73, 307, 101
 	.short	13, 73, 307, 101
 	.short	13, 105, 307, 133
@@ -13580,7 +13580,7 @@ SeMenu_PatchEdit_SetupPath_Records2:
 ; bound record list (1 record), read by GraphicsRender_Start; end SeScreenData_0x1F80
 ; evidence: SeTonHyb1_DrawStaticScreen
 SeScreenData_0x1F75:
-	sdb_box	0x03, 0x0660, 0x0f, 0, 0x05, SeMenu_BankEdit_SetupPath_Records2
+	sdb_box	0x03, 0x0660, 0x0f, 0, 0x05, SeTonHyb1_DrawField_SetupPath_Records2
 ; se_drumkit_display: 329 bytes (293 screen data + 36 DrumKit_VariantSelect_Table)
 ; Compiled from C source (maincpu/audio/sound_editor_screens/se_drumkit_display.c)
 ; reader (se_screendata_model.py): bound record list(s) from here, read by GraphicsRender_Start;
@@ -13611,14 +13611,14 @@ SeValText_A_B_To_Z:
 ; se_setup_sel2: 10 bytes -- screen layout data, base 0xF12D01
 ; Compiled from C source (maincpu/audio/sound_editor_screens/se_setup_sel2.c)
 ; reader (se_screendata_model.py): static record list(s) from here, read by GraphicsRender_ProcessEntries;
-; evidence: SeMenu_BankEdit_SetupPath
-SeMenu_BankEdit_SetupPath_Records:	.incbin "includes/generated/se_setup_sel2.bin"
+; evidence: SeTonHyb1_DrawField_SetupPath
+SeTonHyb1_DrawField_SetupPath_Records:	.incbin "includes/generated/se_setup_sel2.bin"
 	; head of the next record, split off at se_setup_sel2's proven end
 	; tail of the record before se_screen_f12d33, split off at its proven boundary
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 16 by the record's mask; the table holds 5 cells; values >= 5 would read past it)
 ; evidence: bound op03 record at SeScreenData_0x1F75
-SeMenu_BankEdit_SetupPath_Records2:
+SeTonHyb1_DrawField_SetupPath_Records2:
 	.short	61, 118, 252, 132
 	.short	61, 118, 252, 132
 	.short	61, 134, 252, 148
@@ -15055,7 +15055,7 @@ SeCtr2_Part1And2Switches:		.incbin "includes/generated/se_transport_display.bin"
 ;   SE_Transport_CursorCoords; entry 0 of the page's record table. Basis: readers + bytes.
 SeCtr2_CursorBox:		.incbin "includes/generated/se_transport_display.bin", 0x82, 0xB
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (8 entries, LE32)
-; evidence: SeMenu_EqEdit_DefaultPath
+; evidence: SeCtr2_DrawField_DefaultPath
 SeScreenData_0x3E60:
 	.long	SeCtr2_CursorBox
 	.long	SeCtr2_FunctionNameFields
@@ -15141,13 +15141,13 @@ SeValText_CtrlDestinations:
 ; se_setup_sel_rects: 30 bytes -- screen layout data, base 0xF14DD2
 ; Compiled from C source (maincpu/audio/sound_editor_screens/se_setup_sel_rects.c)
 ; reader (se_screendata_model.py): static record list(s) from here, read by GraphicsRender_ProcessEntries;
-; evidence: SeMenu_EqEdit_SetupPath
-SeMenu_EqEdit_SetupPath_Records:	.incbin "includes/generated/se_setup_sel_rects.bin"
+; evidence: SeCtr2_DrawField_SetupPath
+SeCtr2_DrawField_SetupPath_Records:	.incbin "includes/generated/se_setup_sel_rects.bin"
 	; head of the next record, split off at se_setup_sel_rects's proven end
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 8 by the record's mask; the table holds 7 cells; values >= 7 would read past it)
 ; evidence: bound op03 record at SeCtr2_CursorBox
-SeMenu_EqEdit_SetupPath_Records2:
+SeCtr2_DrawField_SetupPath_Records2:
 	.short	77, 74, 186, 89
 	.short	77, 74, 186, 89
 	.short	190, 74, 298, 89
