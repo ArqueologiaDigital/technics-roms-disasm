@@ -1057,12 +1057,12 @@ PanelButton_HelpCodeMaps:	.incbin "includes/generated/naka_extension_device.bin"
 ; PanelInput_InitPedalRecords copies them to RAM 0x8EB6/0x8EBA/0x8EBE; PanelInput_ScanPedalPorts feeds PG.3-2, PG.7-4
 ; and PD.6 to PanelInput_UpdatePedalRecord, which queues {index, state, changed bits} when the debounced state changes.
 PanelInput_PedalRecordDefaults:	.incbin "includes/generated/naka_extension_device.bin", 0x3854, 0xC
-; [nakarest] EffectMode_DispatchTable  +0x3860..+0x3870 (0xeda02c, 16 B)
+; [nakarest] PanelInput_InitFuncTable  +0x3860..+0x3870 (0xeda02c, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xeda02c not derived; readers below
 ; [nakarest] Readers: source references SystemConfig_PointerTable (ui_widgets/widget_dispatch.s:
-; [nakarest] `.long EffectMode_DispatchTable`); 1 data word in SystemConfig_PointerTable (at
+; [nakarest] `.long PanelInput_InitFuncTable`); 1 data word in SystemConfig_PointerTable (at
 ; [nakarest] 0xee8ca2).
-EffectMode_DispatchTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3860, 0x10
+PanelInput_InitFuncTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3860, 0x10
 ; PanelInput_EventIndexByHeader -- 128 x u8: [(h & 0xC0) >> 1 | (h & 0x1F)] of a control-panel packet
 ; header h -> the panel event index (0-10 left segments for headers 0xC0-0xCA, 11-21 right for
 ; 0x00-0x0A, 22-24 headers 0xD1-0xD3, 25 the data wheel 0xD7; 0x1F = none).  Read by

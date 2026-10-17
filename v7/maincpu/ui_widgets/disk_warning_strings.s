@@ -292,8 +292,8 @@ IvDirmdScreenProc_Str_K:
 ; [nakarest] A table of 4 pointers (94 B at 0xea9b60), then text; entry 0 points at
 ; [nakarest] "\xC1\x9C\x8C!\xC1\x9D\x8C\xF1f0\xFF"; no registered NAKA table points into it;
 ; [nakarest] reached through source references DirmdTitleFunc (audio/presentation_sound_nav.s:
-; [nakarest] `ld xiy, DirmdTitleFunc_PtrTable`).
-DirmdTitleFunc_PtrTable:			.incbin "includes/generated/naka_disk_warning.bin", 0xEB4, 0x10	; 4 x 32-bit pointer
+; [nakarest] `ld xiy, DirmdTitle_EmulatorMethods`).
+DirmdTitle_EmulatorMethods:			.incbin "includes/generated/naka_disk_warning.bin", 0xEB4, 0x10	; 4 x 32-bit pointer
 DirmdTitleFunc_Str_DirmdTitleNew:		.incbin "includes/generated/naka_disk_warning.bin", 0xEC4, 0x12	; "DirmdTitleNew();"
 DirmdTitleFunc_Str_DirmdTitleOld:		.incbin "includes/generated/naka_disk_warning.bin", 0xED6, 0x12	; "DirmdTitleOld();"
 DirmdTitleFunc_Str_DirmdTitleESw_Fmtd_Fmtd:	.incbin "includes/generated/naka_disk_warning.bin", 0xEE8, 0x18	; "DirmdTitleESw(%d, %d);"

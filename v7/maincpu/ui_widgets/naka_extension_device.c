@@ -1648,7 +1648,7 @@ typedef struct __attribute__((packed)) {
     /* zero padding */
     /* Initial pedal records copied to RAM 0x8EB6: foot switch (event 28), foot controller (29, raw/state 0x0F = none engaged), PD.6 input (30) */
     PanelInput_PedalRecordDefaults_t PanelInput_PedalRecordDefaults[3];
-    uint32_t EffectMode_DispatchTable[4];  /* 4 pointers */
+    uint32_t PanelInput_InitFuncTable[4];  /* 4 pointers */
     /* PanelInput_EventIndexByHeader: [(h & 0xC0) >> 1 | (h & 0x1F)] of a control-panel packet header h -> panel event index (0-10 left segments, 11-21 right, 22-24 headers D1-D3, 25 the data wheel D7, 0x1F none); read by PanelInput_EventIndexOfHeader */
     uint8_t PanelInput_EventIndexByHeader[128];
     uint32_t ENCODER_HANDLER_TABLE[32];  /* 32 pointers */
@@ -6474,7 +6474,7 @@ const naka_extension_device_t naka_extension_device_data
         { 0x1E, 0x00, 0x00, 0x00 },
     },
 
-    .EffectMode_DispatchTable = {
+    .PanelInput_InitFuncTable = {
         NAKA_ADDR(PanelInput_InitPedalRecords),
         NAKA_ADDR(Audio_NullHandler_A),
         NAKA_ADDR(Audio_NullHandler_B),

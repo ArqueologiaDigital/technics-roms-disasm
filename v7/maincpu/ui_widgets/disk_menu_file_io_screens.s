@@ -1155,7 +1155,7 @@ Cheap_ResNameTable_364:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] naka_disk_menu_file_io+0x620c  +0x620c..+0x621e (0xea75d8, 18 B)
 ; [nakarest] the table itself: ResName slot 0x365 (table 0xea75d8, 3 entries, InitializeCheap),
 ; [nakarest] 3 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_2:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x620C, 0x12
+Cheap_ResNameTable_365:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x620C, 0x12
 ; [nakarest] naka_disk_menu_file_io+0x621e  +0x621e..+0x6230 (0xea75ea, 18 B)
 ; [nakarest] name strings, entries 0-2 of ResName slot 0x365 (table 0xea75d8, 3 entries,
 ; [nakarest] InitializeCheap) (names for Viewable slot 0x65): "", "", "DiskSaveMenu".
@@ -1167,7 +1167,7 @@ InitializeCheap_Str_Empty:	.incbin "includes/generated/naka_disk_menu_file_io.bi
 ; [nakarest] naka_disk_menu_file_io+0x6236  +0x6236..+0x6358 (0xea7602, 290 B)
 ; [nakarest] the table itself: ResName slot 0x367 (table 0xea7602, 71 entries, InitializeCheap),
 ; [nakarest] 71 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_3:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x6236, 0x122
+Cheap_ResNameTable_367:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x6236, 0x122
 ; [nakarest] naka_disk_menu_file_io+0x6358  +0x6358..+0x6418 (0xea7724, 192 B)
 ; [nakarest] name strings, entries 0-70 of ResName slot 0x367 (table 0xea7602, 71 entries,
 ; [nakarest] InitializeCheap) (names for Viewable slot 0x67): "", "", "", "", "", "", ....
@@ -1179,7 +1179,7 @@ Cheap_ResNameTable_36A:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] naka_disk_menu_file_io+0x641e  +0x641e..+0x6478 (0xea77ea, 90 B)
 ; [nakarest] the table itself: ResName slot 0x36b (table 0xea77ea, 21 entries, InitializeCheap),
 ; [nakarest] 21 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_4:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x641E, 0x5A
+Cheap_ResNameTable_36B:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x641E, 0x5A
 ; [nakarest] naka_disk_menu_file_io+0x6478  +0x6478..+0x64ac (0xea7844, 52 B)
 ; [nakarest] name strings, entries 0-20 of ResName slot 0x36b (table 0xea77ea, 21 entries,
 ; [nakarest] InitializeCheap) (names for Viewable slot 0x6b): "", "", "", "", "", "", ....
@@ -1187,7 +1187,7 @@ InitializeCheap_PtrTable_4:	.incbin "includes/generated/naka_disk_menu_file_io.b
 ; [nakarest] naka_disk_menu_file_io+0x64ac  +0x64ac..+0x6500 (0xea7878, 84 B)
 ; [nakarest] the table itself: ResName slot 0x36c (table 0xea7878, 83 entries, InitializeCheap),
 ; [nakarest] 83 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_5:
+Cheap_ResNameTable_36C:
 	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x64AC, 0x54
 	.long NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name
 	.long NakaWidget_DiskSmfDirectPlay_22_Label_Name
@@ -1332,7 +1332,7 @@ Cheap_ResNameTable_36E:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] naka_disk_menu_file_io+0x670a  +0x670a..+0x6764 (0xea7ad6, 90 B)
 ; [nakarest] the table itself: ResName slot 0x377 (table 0xea7ad6, 21 entries, InitializeCheap),
 ; [nakarest] 21 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_6:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x670A, 0x5A
+Cheap_ResNameTable_377:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x670A, 0x5A
 ; [nakarest] naka_disk_menu_file_io+0x6764  +0x6764..+0x67c0 (0xea7b30, 92 B)
 ; [nakarest] name strings, entries 0-20 of ResName slot 0x377 (table 0xea7ad6, 21 entries,
 ; [nakarest] InitializeCheap) (names for Viewable slot 0x77): "", "", "", "", "", "", ....
@@ -1344,7 +1344,7 @@ Cheap_ResNameTable_379:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] naka_disk_menu_file_io+0x67c6  +0x67c6..+0x6944 (0xea7b92, 382 B)
 ; [nakarest] the table itself: ResName slot 0x37b (table 0xea7b92, 94 entries, InitializeCheap),
 ; [nakarest] 94 entry pointers x 4 bytes.
-InitializeCheap_PtrTable_7:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x67C6, 0x17E
+Cheap_ResNameTable_37B:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x67C6, 0x17E
 ; [nakarest] naka_disk_menu_file_io+0x6944  +0x6944..+0x6a34 (0xea7d10, 240 B)
 ; [nakarest] name strings, entries 43-93 of ResName slot 0x37b (table 0xea7b92, 94 entries,
 ; [nakarest] InitializeCheap) (names for Viewable slot 0x7b): "", "DiskSaveSureScr", "",

@@ -4191,9 +4191,9 @@ FDemoText_InitFuncTable:	.incbin "includes/generated/naka_technichord_strings.bi
 ; FDemoText_MarkupTagTable -- word 0 (tag-name pointer, "BR") of a 15 x {u32 tag name, u32 handler} table: 14 feature-demo
 ; markup tags (BR, CENTER, /CENTER, FONT, /FONT, IMG, SHOW, EXEC, ACT, /ACT, PRESENTATION, /PRESENTATION, ACTION, /ACTION;
 ; handler 0 = skip the tag), then {0, 0}. FDemoText_ProcessTextMarkup, after a '<', String_Compares entry [i].name (i x 8)
-; with the text and calls entry [i].handler (FDemoText_ProcessMarkup_LookupTag_PtrTable_2 = this + 4); the walk ends at a NULL name.
+; with the text and calls entry [i].handler (FDemoText_MarkupTag_HandlerColumn = this + 4); the walk ends at a NULL name.
 FDemoText_MarkupTagTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19DA4, 0x4
-FDemoText_ProcessMarkup_LookupTag_PtrTable_2:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19DA8, 0xDA	; 20 x 32-bit pointer
+FDemoText_MarkupTag_HandlerColumn:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19DA8, 0xDA	; 20 x 32-bit pointer
 FDemoText_ByteData_DisplayRefresh_Str_NONE:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19E82, 0x6	; "NONE"
 FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19E88, 0x6	; "%s%d"
 ; [nakarest] ErrStr_GetInstanceID  +0x19e8e..+0x19ea6 (0xe9fddc, 24 B)
@@ -5065,12 +5065,12 @@ BankStr_Memory:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A7
 ; Byte 0 = protected-operation mode 0-3 (written by the password mode selector), byte 1 = flags (bits 7 and 6 set by
 ; FmmPasswordFunc). ResetProgressIndication (disk change) and FmmSaveTtl_SlotLoop copy it there with one `ldiw`.
 FmmPassword_StateInit:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A71C, 0x2
-; [nakarest] DiskOp_ChannelCfgTable  +0x1a71e..+0x1a72e (0xea066c, 16 B)
+; [nakarest] FileIO_InitFuncTable  +0x1a71e..+0x1a72e (0xea066c, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xea066c not derived; readers below
 ; [nakarest] Readers: source references SystemConfig_PointerTable (ui_widgets/widget_dispatch.s:
-; [nakarest] `.long DiskOp_ChannelCfgTable`); 1 data word in SystemConfig_PointerTable (at
+; [nakarest] `.long FileIO_InitFuncTable`); 1 data word in SystemConfig_PointerTable (at
 ; [nakarest] 0xee8c9a).
-DiskOp_ChannelCfgTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A71E, 0x10
+FileIO_InitFuncTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A71E, 0x10
 ; FileIO_StatusToErrorCode -- 13 x {s16 status, u8 error_code, u8 pad}: negative file-I/O result -> GLOBAL_ERROR_CODE value.
 ; FileIO_ValidateSignedValue (demo/file_demo_proc.s) scans it with stride 4 while the entry's status is negative; a match
 ; returns error_code; the {0, 0xFF} terminator makes it return the caller's default (register C).  Callers in
@@ -5298,7 +5298,7 @@ SLSrcBankList_FuncBody_Str_Colon:		.incbin "includes/generated/naka_technichord_
 SLSrcBankList_FuncBody_Str_Colon_2:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A9EE, 0x4	; ": "
 SLSrcBankList_FuncBody_Str_ALL:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A9F2, 0x12	; "      ALL       "
 ; SingleLoadSrc_PanelMemBankSize -- 1 x uint8_t = 8 (+ 0xff pad): entries per bank of the PANEL MEMORY (area 0) source list (single load)
-; The list handler (SLSrc_HandleShow_PtrTable[0], the unlabelled routine after SLSrcBankList_FuncBody_Helper3_Epilogue, file_io/single_load.s) loads it as a byte: the step of a bank/page
+; The list handler (SingleLoadSrc_ListProcByMode[0], the unlabelled routine after SLSrcBankList_FuncBody_Helper3_Epilogue, file_io/single_load.s) loads it as a byte: the step of a bank/page
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 80 (the byte after it).
 SingleLoadSrc_PanelMemBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA04, 0x2
@@ -5308,7 +5308,7 @@ SLSrcBankList_FuncBody_Entry_Str_Colon_2:	.incbin "includes/generated/naka_techn
 SLSrcBankList_FuncBody_Entry_Str_Colon_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA10, 0x4	; ": "
 SLSrcBankList_FuncBody_Entry_Str_ALL:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA14, 0x12	; "      ALL       "
 ; SLSrcComposer_RowsPerColumn -- 1 x uint8_t = 10 (+ 0xFF pad): rows per column of the single-load COMPOSER source list
-; The mode-2 routine of SLSrc_HandleShow_PtrTable (the one after SLSrcBankList_FuncBody_Helper6_Epilogue) lays out its 30 items
+; The mode-2 routine of SingleLoadSrc_ListProcByMode (the one after SLSrcBankList_FuncBody_Helper6_Epilogue) lays out its 30 items
 ; (SingleLoadSrc_ComposerEntryCount, the next byte pair) as columns of 10: event parameter 5 moves the cursor (RAM 0x89FE) by +-10,
 ; parameter 6 by +-1 inside a column (index mod 10); the value is also passed in C to the list helpers.
 SLSrcComposer_RowsPerColumn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA26, 0x2
@@ -5316,15 +5316,15 @@ SingleLoadSrc_ComposerEntryCount:			.incbin "includes/generated/naka_technichord
 SLSrcBankList_FuncBody_Entry_Str_Colon_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA2A, 0x4	; ": "
 SLSrcBankList_FuncBody_Entry_Str_Colon_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA2E, 0x4	; ": "
 ; [nakarest] Str_AllOption_EA0980  +0x1aa32..+0x1aa64 (0xea0980, 50 B)
-; [nakarest] 50 B at 0xea0980: split since into the labelled pieces below; code or data uses Str_AllOption_EA0980, SingleLoadSrc_SoundMemPageSize, SLSrc_HandleShow_PtrTable, SLDstBankList_FuncBody_Str_Colon and 1 more.
+; [nakarest] 50 B at 0xea0980: split since into the labelled pieces below; code or data uses Str_AllOption_EA0980, SingleLoadSrc_SoundMemPageSize, SingleLoadSrc_ListProcByMode, SLDstBankList_FuncBody_Str_Colon and 1 more.
 Str_AllOption_EA0980:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA32, 0x12
 ; SingleLoadSrc_SoundMemPageSize -- 1 x uint8_t = 20 (+ 0xff pad): entries per page of the SOUND MEMORY (area 3) source list (single load)
-; The list handler (SLSrc_HandleShow_PtrTable[3], the unlabelled routine after SLSrcBankList_FuncBody_Helper11_Epilogue, file_io/single_load.s) loads it as a byte: the step of a bank/page
+; The list handler (SingleLoadSrc_ListProcByMode[3], the unlabelled routine after SLSrcBankList_FuncBody_Helper11_Epilogue, file_io/single_load.s) loads it as a byte: the step of a bank/page
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 168 (the byte after it).
 SingleLoadSrc_SoundMemPageSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA44, 0x2
 SingleLoadSrc_SoundMemEntryCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA46, 0x2
-SLSrc_HandleShow_PtrTable:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA48, 0x14	; 5 x 32-bit pointer
+SingleLoadSrc_ListProcByMode:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA48, 0x14	; 5 x 32-bit pointer
 SLDstBankList_FuncBody_Str_Colon:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA5C, 0x4	; ": "
 SLDstBankList_FuncBody_Str_Colon_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA60, 0x4	; ": "
 ; [nakarest] Str_AllOption_EA09B2  +0x1aa64..+0x1aaa2 (0xea09b2, 62 B)
@@ -5332,7 +5332,7 @@ SLDstBankList_FuncBody_Str_Colon_2:	.incbin "includes/generated/naka_technichord
 Str_AllOption_EA09B2:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA64, 0x12
 SLDstBankList_FuncBody_Str_Colon_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA76, 0x4	; ": "
 ; SingleLoadDst_PanelMemBankSize -- 1 x uint8_t = 8 (+ 0xff pad): entries per bank of the PANEL MEMORY (area 0) destination list (single load)
-; The list handler (SLDst_HandleShow_PtrTable[0], the unlabelled routine at file_io/single_load.s:1668, file_io/single_load.s) loads it as a byte: the step of a bank/page
+; The list handler (SingleLoadDst_AreaListProcs[0], the unlabelled routine at file_io/single_load.s:1668, file_io/single_load.s) loads it as a byte: the step of a bank/page
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 80 (the byte after it).
 SingleLoadDst_PanelMemBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA7A, 0x2
@@ -5346,7 +5346,7 @@ SLDstBankList_FuncBody_Str_Colon_5:	.incbin "includes/generated/naka_technichord
 SLDstBankList_FuncBody_Str_Colon_6:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA88, 0x4	; ": "
 SLDstBankList_FuncBody_Str_ALL:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA8C, 0x12	; "      ALL       "
 ; SingleLoadDst_ComposerBankSize -- 1 x uint8_t = 10 (+ 0xff pad): entries per bank of the COMPOSER (area 2) destination list (single load)
-; The list handler (SLDst_HandleShow_PtrTable[2], the unlabelled routine at file_io/single_load.s:2088, file_io/single_load.s) loads it as a byte: the step of a bank/page
+; The list handler (SingleLoadDst_AreaListProcs[2], the unlabelled routine at file_io/single_load.s:2088, file_io/single_load.s) loads it as a byte: the step of a bank/page
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 30 (the byte after it).
 SingleLoadDst_ComposerBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA9E, 0x2
@@ -5359,20 +5359,20 @@ SLDstBankList_FuncBody_Str_ALL_2:	.incbin "includes/generated/naka_technichord_s
 SLDstBankList_FuncBody_Str_Colon_8:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AABC, 0x4	; ": "
 SLDstBankList_FuncBody_Str_Colon_9:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC0, 0x4	; ": "
 ; SLDstSoundMem_RowsPerColumn -- 1 x uint8_t = 20 (+ 0xFF pad): rows per column of the single-load SOUND MEMORY destination list
-; The mode-3 routine of SLDst_HandleShow_PtrTable moves the cursor (RAM 0x8A08) by +-20 between the columns 0-19, 20-39 and the
+; The mode-3 routine of SingleLoadDst_AreaListProcs moves the cursor (RAM 0x8A08) by +-20 between the columns 0-19, 20-39 and the
 ; single item 40 on event parameter 7, and passes the value in C to SLDstBankList_FuncBody_Helper5/6.
 SLDstSoundMem_RowsPerColumn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC4, 0x2
 SLDstBankList_FuncBody_Data_7:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC6, 0x2
-SLDst_HandleShow_PtrTable:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC8, 0x14	; 15 x 32-bit pointer
-CmpSrc_HandleShow_PtrTable:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AADC, 0x14	; 10 x 32-bit pointer
+SingleLoadDst_AreaListProcs:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC8, 0x14	; 15 x 32-bit pointer
+CmpSingleLoadSrc_ListProcByMode:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AADC, 0x14	; 10 x 32-bit pointer
 ; [nakarest] naka_technichord_strings+0x1aaf0  +0x1aaf0..+0x1ab00 (0xea0a3e, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xea0a3e not derived; readers below
 ; [nakarest] Readers: source references CmpDst_HandleScroll (file_io/single_load.s: `lda xde,
-; [nakarest] (CmpDst_HandleShow_PtrTable:24)`), CmpDst_ScrollMode5 (file_io/single_load.s: `lda
-; [nakarest] xde, (CmpDst_HandleShow_PtrTable:24)`), CmpDst_ScrollMode6 (file_io/single_load.s:
-; [nakarest] `lda xde, (CmpDst_HandleShow_PtrTable:24)`), CmpDst_ScrollMode7
-; [nakarest] (file_io/single_load.s: `lda xde, (CmpDst_HandleShow_PtrTable:24)`), 3 more.
-CmpDst_HandleShow_PtrTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAF0, 0x10	; 5 x 32-bit pointer
+; [nakarest] (CmpSingleLoadDst_AreaListProcs:24)`), CmpDst_ScrollMode5 (file_io/single_load.s: `lda
+; [nakarest] xde, (CmpSingleLoadDst_AreaListProcs:24)`), CmpDst_ScrollMode6 (file_io/single_load.s:
+; [nakarest] `lda xde, (CmpSingleLoadDst_AreaListProcs:24)`), CmpDst_ScrollMode7
+; [nakarest] (file_io/single_load.s: `lda xde, (CmpSingleLoadDst_AreaListProcs:24)`), 3 more.
+CmpSingleLoadDst_AreaListProcs:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAF0, 0x10	; 5 x 32-bit pointer
 	.long SingleLoadDst_BlankListProc
 ; two empty file names (NUL + 0xFF pad), drawn when there is no file: CmpFile_ShowDefault and
 ; DiskSel_EmptyFileName point XIZ / XBC at them (the second was the positional alias Data_SaveLoadMenuTable + 0x64)

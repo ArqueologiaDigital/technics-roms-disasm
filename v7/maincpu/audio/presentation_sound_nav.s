@@ -1270,7 +1270,7 @@ GetDirmdFlag:
 DirmdTitleFunc:
 	lda xsp, (xsp - 16)
 	ld xhl, xbc
-	ld xiy, DirmdTitleFunc_PtrTable
+	ld xiy, DirmdTitle_EmulatorMethods
 	ld xix, xsp
 	ldw bc, 0x8
 	ldirw

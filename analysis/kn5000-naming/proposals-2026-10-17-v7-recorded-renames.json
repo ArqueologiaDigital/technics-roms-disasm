@@ -1,0 +1,191 @@
+[
+ {
+  "old": "InitializeMurai_PtrTable",
+  "new": "Murai_ResNameTable_304",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeMurai_PtrTable and v10 Murai_ResNameTable_304 are the same address by its byte check; the v10 rename chain InitializeMurai_PtrTable -> Murai_ResNameTable_304 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeMurai_PtrTable_2",
+  "new": "Murai_ResNameTable_305",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeMurai_PtrTable_2 and v10 Murai_ResNameTable_305 are the same address by its byte check; the v10 rename chain InitializeMurai_PtrTable_2 -> Murai_ResNameTable_305 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeMurai_PtrTable_3",
+  "new": "Murai_ResNameTable_307",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeMurai_PtrTable_3 and v10 Murai_ResNameTable_307 are the same address by its byte check; the v10 rename chain InitializeMurai_PtrTable_3 -> Murai_ResNameTable_307 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeMurai_PtrTable_4",
+  "new": "Murai_ResNameTable_308",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeMurai_PtrTable_4 and v10 Murai_ResNameTable_308 are the same address by its byte check; the v10 rename chain InitializeMurai_PtrTable_4 -> Murai_ResNameTable_308 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "FDemoText_ProcessMarkup_LookupTag_PtrTable_2",
+  "new": "FDemoText_MarkupTag_HandlerColumn",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 FDemoText_ProcessMarkup_LookupTag_PtrTable_2 and v10 FDemoText_MarkupTag_HandlerColumn are the same address by its byte check; the v10 rename chain FDemoText_ProcessMarkup_LookupTag_PtrTable_2 -> FDemoText_MarkupTag_HandlerColumn is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "DiskOp_ChannelCfgTable",
+  "new": "FileIO_InitFuncTable",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 DiskOp_ChannelCfgTable and v10 FileIO_InitFuncTable are the same address by its byte check; the v10 rename chain DiskOp_ChannelCfgTable -> FileIO_InitFuncTable is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "SLSrc_HandleShow_PtrTable",
+  "new": "SingleLoadSrc_ListProcByMode",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 SLSrc_HandleShow_PtrTable and v10 SingleLoadSrc_ListProcByMode are the same address by its byte check; the v10 rename chain SLSrc_HandleShow_PtrTable -> SingleLoadSrc_ListProcByMode is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "SLDst_HandleShow_PtrTable",
+  "new": "SingleLoadDst_AreaListProcs",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 SLDst_HandleShow_PtrTable and v10 SingleLoadDst_AreaListProcs are the same address by its byte check; the v10 rename chain SLDst_HandleShow_PtrTable -> SingleLoadDst_AreaListProcs is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "CmpSrc_HandleShow_PtrTable",
+  "new": "CmpSingleLoadSrc_ListProcByMode",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 CmpSrc_HandleShow_PtrTable and v10 CmpSingleLoadSrc_ListProcByMode are the same address by its byte check; the v10 rename chain CmpSrc_HandleShow_PtrTable -> CmpSingleLoadSrc_ListProcByMode is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "CmpDst_HandleShow_PtrTable",
+  "new": "CmpSingleLoadDst_AreaListProcs",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 CmpDst_HandleShow_PtrTable and v10 CmpSingleLoadDst_AreaListProcs are the same address by its byte check; the v10 rename chain CmpDst_HandleShow_PtrTable -> CmpSingleLoadDst_AreaListProcs is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_2",
+  "new": "Cheap_ResNameTable_365",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_2 and v10 Cheap_ResNameTable_365 are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_2 -> Cheap_ResNameTable_365 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_3",
+  "new": "Cheap_ResNameTable_367",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_3 and v10 Cheap_ResNameTable_367 are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_3 -> Cheap_ResNameTable_367 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_4",
+  "new": "Cheap_ResNameTable_36B",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_4 and v10 Cheap_ResNameTable_36B are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_4 -> Cheap_ResNameTable_36B is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_5",
+  "new": "Cheap_ResNameTable_36C",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_5 and v10 Cheap_ResNameTable_36C are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_5 -> Cheap_ResNameTable_36C is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_6",
+  "new": "Cheap_ResNameTable_377",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_6 and v10 Cheap_ResNameTable_377 are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_6 -> Cheap_ResNameTable_377 is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "InitializeCheap_PtrTable_7",
+  "new": "Cheap_ResNameTable_37B",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 InitializeCheap_PtrTable_7 and v10 Cheap_ResNameTable_37B are the same address by its byte check; the v10 rename chain InitializeCheap_PtrTable_7 -> Cheap_ResNameTable_37B is recorded in scripts/renaming/rename_naka_regobj_tables_v10.sed"
+  ]
+ },
+ {
+  "old": "DirmdTitleFunc_PtrTable",
+  "new": "DirmdTitle_EmulatorMethods",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 DirmdTitleFunc_PtrTable and v10 DirmdTitle_EmulatorMethods are the same address by its byte check; the v10 rename chain DirmdTitleFunc_PtrTable -> DirmdTitle_EmulatorMethods is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "NakaInst_WindowID_Cont",
+  "new": "SupportClass_WindowIDPropTopByte",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 NakaInst_WindowID_Cont and v10 SupportClass_WindowIDPropTopByte are the same address by its byte check; the v10 rename chain NakaInst_WindowID_Cont -> SupportClass_WindowIDPropTopByte is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "WidgetStyleDataTable",
+  "new": "VGA_InitFuncTable",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 WidgetStyleDataTable and v10 VGA_InitFuncTable are the same address by its byte check; the v10 rename chain WidgetStyleDataTable -> VGA_InitFuncTable is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "EffectMode_DispatchTable",
+  "new": "PanelInput_InitFuncTable",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 EffectMode_DispatchTable and v10 PanelInput_InitFuncTable are the same address by its byte check; the v10 rename chain EffectMode_DispatchTable -> PanelInput_InitFuncTable is recorded in scripts/renaming/rename_nakarest_reviewed_v10.sed"
+  ]
+ },
+ {
+  "old": "ScoopDisp_DispatchTable_Small_Target11",
+  "new": "UIState_EventTable_Target11",
+  "verdict": "name",
+  "basis": "v10's recorded rename of the same label",
+  "evidence": [
+   "harmonize_version_labels.py: v7 ScoopDisp_DispatchTable_Small_Target11 and v10 UIState_EventTable_Target11 are the same address by its byte check; the v10 rename chain ScoopDisp_DispatchTable_Small_Target11 -> UIState_EventTable_Target11 is recorded in scripts/renaming/sync_names_v9_from_v10.sed"
+  ]
+ }
+]

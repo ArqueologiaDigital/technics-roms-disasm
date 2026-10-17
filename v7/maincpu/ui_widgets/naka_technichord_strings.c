@@ -2079,7 +2079,7 @@ typedef struct __attribute__((packed)) {
     /* FDemoText_ProcessMarkup_LookupTag_PtrTable: 1 pointers (cut from ptrs_256 by split_naka_pointer_arrays.py) */
     uint32_t FDemoText_MarkupTagTable[1];
     /* FDemoText_ProcessMarkup_LookupTag_PtrTable_2: 29 pointers (cut from ptrs_256 by split_naka_pointer_arrays.py) */
-    uint32_t FDemoText_ProcessMarkup_LookupTag_PtrTable_2[29];
+    uint32_t FDemoText_MarkupTag_HandlerColumn[29];
     char Action_str[8];
     char ACTION_str[8];
     char Presentation_str[14];
@@ -2421,7 +2421,7 @@ typedef struct __attribute__((packed)) {
     uint16_t field_1a712;
     char Emory_str_2[8];
     uint8_t FmmPassword_StateInit[2];  /* zero padding */
-    uint32_t DiskOp_ChannelCfgTable[4];  /* 4 pointers */
+    uint32_t FileIO_InitFuncTable[4];  /* 4 pointers */
     /* zero padding */
     /* zero padding */
     /* zero padding */
@@ -2522,7 +2522,7 @@ typedef struct __attribute__((packed)) {
     char All_str_3[18];
     uint16_t SingleLoadSrc_SoundMemPageSize;
     uint16_t SingleLoadSrc_SoundMemEntryCount;
-    uint32_t SLSrc_HandleShow_PtrTable[5];  /* 5 pointers */
+    uint32_t SingleLoadSrc_ListProcByMode[5];  /* 5 pointers */
     char SLDstBankList_FuncBody_Str_Colon[4];
     char SLDstBankList_FuncBody_Str_Colon_2[4];
     char All_str_4[18];
@@ -2544,11 +2544,11 @@ typedef struct __attribute__((packed)) {
     uint16_t SLDstSoundMem_RowsPerColumn;
     uint16_t SLDstBankList_FuncBody_Data_8;
     /* SLDst_HandleShow_PtrTable: 5 pointers (cut from ptrs_273 by split_naka_pointer_arrays.py) */
-    uint32_t SLDst_HandleShow_PtrTable[5];
+    uint32_t SingleLoadDst_AreaListProcs[5];
     /* CmpSrc_HandleShow_PtrTable: 5 pointers (cut from ptrs_273 by split_naka_pointer_arrays.py) */
-    uint32_t CmpSrc_HandleShow_PtrTable[5];
+    uint32_t CmpSingleLoadSrc_ListProcByMode[5];
     /* CmpDst_HandleShow_PtrTable: 5 pointers (cut from ptrs_273 by split_naka_pointer_arrays.py) */
-    uint32_t CmpDst_HandleShow_PtrTable[5];
+    uint32_t CmpSingleLoadDst_AreaListProcs[5];
     char str_1596[2];
     char str_1597[2];
     /* Cheap_ApFuncTable_125: 30 pointers (cut from ptrs_274 by split_naka_pointer_arrays.py) */
@@ -9716,7 +9716,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
         SELF(BR_str),
     },
 
-    .FDemoText_ProcessMarkup_LookupTag_PtrTable_2 = {
+    .FDemoText_MarkupTag_HandlerColumn = {
         0x00F85A28,
         SELF(CENTER_str),
         0x00F85A36,
@@ -10439,7 +10439,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .FmmPassword_StateInit = { 0 },
 
-    .DiskOp_ChannelCfgTable = {
+    .FileIO_InitFuncTable = {
         NAKA_ADDR(FileIO_DiskInserted),
         NAKA_ADDR(FileIO_DiskInserted_Stub1),
         NAKA_ADDR(FileIO_DiskInserted_Stub2),
@@ -10660,7 +10660,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .SingleLoadSrc_SoundMemEntryCount = 0xFFA8,
 
-    .SLSrc_HandleShow_PtrTable = {
+    .SingleLoadSrc_ListProcByMode = {
         NAKA_ADDR(SingleLoadSrc_PanelMemListProc),
         NAKA_ADDR(SingleLoadSrc_SequencerListProc),
         NAKA_ADDR(SingleLoadSrc_ComposerListProc),
@@ -10708,7 +10708,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .SLDstBankList_FuncBody_Data_8 = 0xFFA8,
 
-    .SLDst_HandleShow_PtrTable = {
+    .SingleLoadDst_AreaListProcs = {
         NAKA_ADDR(SingleLoadDst_PanelMemListProc),
         NAKA_ADDR(SingleLoadDst_SequencerListProc),
         NAKA_ADDR(SingleLoadDst_ComposerListProc),
@@ -10716,7 +10716,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
         NAKA_ADDR(SingleLoadDst_BlankListProc),
     },
 
-    .CmpSrc_HandleShow_PtrTable = {
+    .CmpSingleLoadSrc_ListProcByMode = {
         NAKA_ADDR(SingleLoadSrc_PanelMemListProc),
         NAKA_ADDR(SingleLoadSrc_SequencerListProc),
         NAKA_ADDR(SingleLoadSrc_ComposerListProc),
@@ -10724,7 +10724,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
         NAKA_ADDR(SingleLoadSrc_BlankListProc),
     },
 
-    .CmpDst_HandleShow_PtrTable = {
+    .CmpSingleLoadDst_AreaListProcs = {
         NAKA_ADDR(SingleLoadDst_PanelMemListProc),
         NAKA_ADDR(SingleLoadDst_SequencerListProc),
         NAKA_ADDR(SingleLoadDst_ComposerListProc),

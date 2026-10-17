@@ -276,7 +276,7 @@ NakaInst_TR_Track2:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x3DE, 
 NakaInst_TR_Track1:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x3E8, 0xA
 ; NakaInst_IntTimeID_EnumTable -- 14 x {u32 name_ptr, s32 value}: IntTimeID value names, ended by {"", 0}
 ; IT_Off 0, IT_Default 1, IT_Hold 2, IT_1Sec 3 .. IT_10Sec 12 (the strings follow, IT_10Sec first). +8 of the IntTimeIDProc
-; SupportClass record (entry 54, in the bytes of NakaInst_WindowID_Cont, count 13); IntTimeIDProc reads the 16-bit
+; SupportClass record (entry 54, in the bytes of SupportClass_WindowIDPropTopByte, count 13); IntTimeIDProc reads the 16-bit
 ; value and CommonIDProc (ui/ui_widget_defs.s) maps value <-> name through this list.
 NakaInst_IntTimeID_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x3F2, 0x70
 ; NakaInst_IntTimeID_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the {"", 0} terminator of
@@ -339,17 +339,17 @@ NakaInst_IT_Off:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4CA, 0x8
 ; [nakarest] Readers: source references ExitWindow_OK (ui/ui_widget_defs.s: `lda xwa,
 ; [nakarest] (ExitWindow_OK_Data_2:24)`).
 ExitWindow_OK_Data_2:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4D2, 0x26F
-; [nakarest] NakaInst_WindowID_Cont  +0x741..+0x774 (0xeb78ff, 51 B)
+; [nakarest] SupportClass_WindowIDPropTopByte  +0x741..+0x774 (0xeb78ff, 51 B)
 ; [nakarest] purpose not established: 51 B at 0xeb78ff that no registered NAKA table, symbol, 24/32-bit literal or data word points into
-NakaInst_WindowID_Cont:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x31
+SupportClass_WindowIDPropTopByte:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x31
 Softver_ShowHide_Data:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x772, 0x2
-; [nakarest] WidgetStyleDataTable  +0x774..+0x784 (0xeb7932, 16 B)
+; [nakarest] VGA_InitFuncTable  +0x774..+0x784 (0xeb7932, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xeb7932 not derived; readers below
 ; [nakarest] Readers: source references SystemConfig_PointerTable (ui_widgets/widget_dispatch.s:
-; [nakarest] `.long WidgetStyleDataTable`), Test_Video_RAM_IC207 (ui/ui_mode_handlers.s: `ld
-; [nakarest] xhl, (WidgetStyleDataTable:24)`); 1 data word in SystemConfig_PointerTable (at
+; [nakarest] `.long VGA_InitFuncTable`), Test_Video_RAM_IC207 (ui/ui_mode_handlers.s: `ld
+; [nakarest] xhl, (VGA_InitFuncTable:24)`); 1 data word in SystemConfig_PointerTable (at
 ; [nakarest] 0xee8c9e).
-WidgetStyleDataTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x774, 0x10
+VGA_InitFuncTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x774, 0x10
 ; PanelMemory_SlotAddresses -- 81 u32 RAM addresses, one per panel-memory slot: 0..79 = the 80 panel
 ; memories at 0x1ED400 + 960*n, 80 = RAM 0x3C2C4, the Music Stylist record's mirror of the panel stream (slot
 ; code 0x80 is read as 80).  Indexed by slot by PanelMemory_Recall_Slot, PanelMemory_CopySlotToLivePanel,

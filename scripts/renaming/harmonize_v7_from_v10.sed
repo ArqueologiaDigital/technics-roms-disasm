@@ -2041,3 +2041,25 @@ s/\bSeScreenData_0x5834\b/SeAmpEnv1_Field3_Record/g
 s/\bSeScreenData_0x583E\b/SeAmpEnv1_Field4_Record/g
 s/\bSeScreenData_0x5853\b/SeAmpEnv1_FieldRecordPtrs/g
 s/\bSeScreenData_0x587D\b/SeAmpEnv1_Field6_Record/g
+# run 2026-10-17
+s/\bFDemoText_ProcessMarkup_LookupTag_PtrTable_2\b/FDemoText_MarkupTag_HandlerColumn/g
+s/\bScoopDisp_DispatchTable_Small_Target11\b/UIState_EventTable_Target11/g
+s/\bInitializeMurai_PtrTable_2\b/Murai_ResNameTable_305/g
+s/\bInitializeMurai_PtrTable_3\b/Murai_ResNameTable_307/g
+s/\bInitializeMurai_PtrTable_4\b/Murai_ResNameTable_308/g
+s/\bCmpSrc_HandleShow_PtrTable\b/CmpSingleLoadSrc_ListProcByMode/g
+s/\bCmpDst_HandleShow_PtrTable\b/CmpSingleLoadDst_AreaListProcs/g
+s/\bInitializeCheap_PtrTable_2\b/Cheap_ResNameTable_365/g
+s/\bInitializeCheap_PtrTable_3\b/Cheap_ResNameTable_367/g
+s/\bInitializeCheap_PtrTable_4\b/Cheap_ResNameTable_36B/g
+s/\bInitializeCheap_PtrTable_5\b/Cheap_ResNameTable_36C/g
+s/\bInitializeCheap_PtrTable_6\b/Cheap_ResNameTable_377/g
+s/\bInitializeCheap_PtrTable_7\b/Cheap_ResNameTable_37B/g
+s/\bSLSrc_HandleShow_PtrTable\b/SingleLoadSrc_ListProcByMode/g
+s/\bSLDst_HandleShow_PtrTable\b/SingleLoadDst_AreaListProcs/g
+s/\bInitializeMurai_PtrTable\b/Murai_ResNameTable_304/g
+s/\bEffectMode_DispatchTable\b/PanelInput_InitFuncTable/g
+s/\bDirmdTitleFunc_PtrTable\b/DirmdTitle_EmulatorMethods/g
+s/\bDiskOp_ChannelCfgTable\b/FileIO_InitFuncTable/g
+s/\bNakaInst_WindowID_Cont\b/SupportClass_WindowIDPropTopByte/g
+s/\bWidgetStyleDataTable\b/VGA_InitFuncTable/g

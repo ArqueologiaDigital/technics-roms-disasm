@@ -1523,7 +1523,7 @@ LcdTest_Done:
 Test_Video_RAM_IC207:
 	dec 2, xsp
 	ld (xsp), a
-	ld xhl, (WidgetStyleDataTable:24)
+	ld xhl, (VGA_InitFuncTable:24)
 	call (xhl)
 	ldw (0x1a0000:24), 0x5a5a; VRAM self-test pattern 1
 	calr DramTest_Loop

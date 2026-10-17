@@ -997,7 +997,7 @@ ScoopDisp_DispatchTable_Small:
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
-	.long	ScoopDisp_DispatchTable_Small_Target11
+	.long	UIState_EventTable_Target11
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2051,7 +2051,7 @@ UIState_EventTable:
 	.long	DefaultHandler_Ret
 	.long	ToneParam_ShortCallHandler
 	.long	DefaultHandler_Ret
-	.long	ScoopDisp_DispatchTable_Small_Target11
+	.long	UIState_EventTable_Target11
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2621,7 +2621,7 @@ PerfMode_DispatchTable_B:
 	.long	DefaultHandler_Ret
 	.long	ToneParam_ShortCallHandler
 	.long	DefaultHandler_Ret
-	.long	ScoopDisp_DispatchTable_Small_Target11
+	.long	UIState_EventTable_Target11
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -2877,7 +2877,7 @@ ScoopDisp_DispatchTable_Extended:
 PerfMode_Handler_EvtB_Data:
 	.byte	0x00, 0x03, 0x03, 0x03, 0x00, 0x01, 0x03, 0x03, 0x00, 0x03, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00
 	; Entry 11 of ScoopDisp_DispatchTable_Small (a code pointer the table holds).
-ScoopDisp_DispatchTable_Small_Target11:
+UIState_EventTable_Target11:
 	bit	7, w
 	jrl	nz, ScoopDisp_DispatchTable_Small_Target11_Return
 	ld	xiy, 0x0def

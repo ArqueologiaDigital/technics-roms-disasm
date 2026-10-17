@@ -1505,7 +1505,7 @@ FDemoText_ProcessMarkup_LookupTag:
 	jrl	nz, FDemoText_ProcessMarkup_NextTag
 	ld	bc, (xsp + 16)
 	sla	bc, 3
-	lda	xwa, (FDemoText_ProcessMarkup_LookupTag_PtrTable_2:24)
+	lda	xwa, (FDemoText_MarkupTag_HandlerColumn:24)
 	ld	xwa, (xwa+bc)
 	ld	(xsp + 4), xwa
 	or	xwa, xwa

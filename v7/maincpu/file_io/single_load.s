@@ -1435,7 +1435,7 @@ SingleLoadSrcFunc_OnPaint:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -1462,7 +1462,7 @@ SLSrc_ScrollMode5_Dispatch:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -1490,7 +1490,7 @@ SLSrc_ScrollMode6_Dispatch:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -1508,7 +1508,7 @@ SLSrc_ScrollMode7:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -1525,7 +1525,7 @@ SLSrc_ScrollMode8:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -1538,7 +1538,7 @@ SLSrc_ScrollMode40:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLSrc_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+4)
 	ld	xde, xiz
@@ -2833,7 +2833,7 @@ SingleLoadDstFunc_OnPaint:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -2849,7 +2849,7 @@ SLDst_HandleConfirm:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
@@ -2886,7 +2886,7 @@ SLDst_HandleScroll:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
@@ -2948,7 +2948,7 @@ SLDst_ScrollMode4_Dispatch:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
@@ -2976,7 +2976,7 @@ SLDst_ScrollDispatch:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3007,7 +3007,7 @@ SLDst_Scroll_ChildReturn:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3023,7 +3023,7 @@ SLDst_Scroll_SubMode:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3044,7 +3044,7 @@ SLDst_Scroll_SubMode2:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3061,7 +3061,7 @@ SLDst_Scroll_SubMode3:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3076,7 +3076,7 @@ SLDst_Scroll_SubMode4:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3094,7 +3094,7 @@ SLDst_Scroll_SubMode5:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3112,7 +3112,7 @@ SLDst_Scroll_SubMode6:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SLDst_HandleShow_PtrTable:24)
+	lda	xde, (SingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3157,7 +3157,7 @@ CmpSrc_HandleShow:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp+4)
@@ -3176,7 +3176,7 @@ CmpSrc_HandleScroll:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp+4)
@@ -3197,7 +3197,7 @@ CmpSrc_ScrollMode6:
 	ld	c, (0x895c:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp + 4)
@@ -3213,7 +3213,7 @@ CmpSrc_ScrollMode6_NoStep:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp+4)
@@ -3232,7 +3232,7 @@ CmpSrc_ScrollMode7:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp+4)
@@ -3252,7 +3252,7 @@ CmpSrc_ScrollMode8:
 	ld	c, (0x895c:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp + 4)
@@ -3266,7 +3266,7 @@ CmpSrc_ScrollMode40:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpSrc_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadSrc_ListProcByMode:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, xiz
 	ld	xde, (xsp+4)
@@ -3336,7 +3336,7 @@ CmpSingleLoadDstFunc_OnPaint:
 	ld	c, (35164:16)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (CmpDst_HandleShow_PtrTable:24)
+	lda	xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld	xbc, (xsp+8)
 	ld	xde, (xsp+4)
@@ -3371,7 +3371,7 @@ CmpDst_HandleScroll:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,EVT_PAINT
 	ld xde, 0:i3
@@ -3399,7 +3399,7 @@ CmpDst_ScrollModeA:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)
@@ -3429,7 +3429,7 @@ CmpDst_ScrollMode7:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)
@@ -3451,7 +3451,7 @@ CmpDst_ScrollMode8:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)
@@ -3467,7 +3467,7 @@ CmpDst_ScrollMode8_NoStep:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)
@@ -3486,7 +3486,7 @@ CmpDst_ScrollMode5:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)
@@ -3507,7 +3507,7 @@ CmpDst_ScrollMode6:
 	ld c, (0x895c:16)
 	extz BC
 	sla BC, 0x02
-	lda xde, (CmpDst_HandleShow_PtrTable:24)
+	lda xde, (CmpSingleLoadDst_AreaListProcs:24)
 	lda	xhl, (xde+bc)
 	ld XBC,(XSP+0x08)
 	ld XDE,(XSP+0x04)

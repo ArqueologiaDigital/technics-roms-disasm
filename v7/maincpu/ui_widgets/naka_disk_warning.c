@@ -399,7 +399,7 @@ typedef struct __attribute__((packed)) {
     uint16_t SetWallPaper_CaseTable[6];
     /* IvDirmdScreenProc_Str_K: 15 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
     uint16_t IvDirmdScreenProc_Str_K[15];
-    uint32_t DirmdTitleFunc_PtrTable[4];  /* 4 pointers */
+    uint32_t DirmdTitle_EmulatorMethods[4];  /* 4 pointers */
     char DirmdTitleNew_str[18];
     char DirmdTitleOld_str[18];
     char DirmdTitleESw_str[24];
@@ -1955,7 +1955,7 @@ const naka_disk_warning_t naka_disk_warning_data
         0x0125, 0x0071, 0x0125, 0x0125, 0x00D4, 0x00D4, 0x00AD,
     },
 
-    .DirmdTitleFunc_PtrTable = {
+    .DirmdTitle_EmulatorMethods = {
         NAKA_ADDR(DirmdTitle_New),
         NAKA_ADDR(DirmdTitle_Old),
         NAKA_ADDR(DirmdTitle_ESw),

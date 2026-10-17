@@ -756,7 +756,7 @@ typedef struct __attribute__((packed)) {
     uint16_t field_0760;
     uint32_t ptrs_3[4];  /* 4 pointers */
     uint16_t Softver_ShowHide_Data;
-    uint32_t WidgetStyleDataTable[4];  /* 4 pointers */
+    uint32_t VGA_InitFuncTable[4];  /* 4 pointers */
     /* PanelMemory_SlotAddresses: the RAM address of each panel-memory slot, 0x1ED400 + 960*n for n < 80; [80] = the Music Stylist record's mirror (read by PanelMemory_Recall and the other panel-memory routines in ui/bitmap_out_routines.s) */
     uint32_t PanelMemory_SlotAddresses[81];
     /* zero padding */
@@ -3604,7 +3604,7 @@ const naka_style_bitmaps_t naka_style_bitmaps_data
 
     .Softver_ShowHide_Data = 0x0549,
 
-    .WidgetStyleDataTable = {
+    .VGA_InitFuncTable = {
         NAKA_ADDR(VGA_Initialize),
         NAKA_ADDR(VGA_Stub_1),
         NAKA_ADDR(VGA_Stub_2),
