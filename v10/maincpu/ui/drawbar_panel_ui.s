@@ -5489,7 +5489,7 @@ AcLswPartEdit_Match:
 	lda xbc, (xsp + 22)
 	lda xde, (xsp + 20)
 	ld xwa, (xsp + 24)
-	call SndParam_DecodeMidiAddr
+	call SndParam_KeyToLswPartNumber
 	ld xwa, (xiz + 50)
 	cp hl, 0xffff
 	jr z, AcLswPartEdit_Match_Unbounded
@@ -6082,7 +6082,7 @@ AudioCtrl_MidiMatchHandler:
 	lda xbc, (xsp + 28)
 	lda xde, (xsp + 26)
 	ld xwa, (xsp + 30)
-	call SndParam_DecodeMidiAddr
+	call SndParam_KeyToLswPartNumber
 	ld xwa, (xsp + 10)
 	lda xwa, (xwa + 50)
 	cp hl, 0xffff
@@ -6579,7 +6579,7 @@ AcLswPartPan_Match:
 	lda xbc, (xsp + 30)
 	lda xde, (xsp + 28)
 	ld xwa, (xsp + 32)
-	call SndParam_DecodeMidiAddr
+	call SndParam_KeyToLswPartNumber
 	ld de, (0x03e99e:24)
 	exts xde
 	ld xwa, (xiz + 28)
@@ -12281,7 +12281,7 @@ PsMixerControlProc_OnLswData:
 	lda xwa, (xsp + 70)
 	lda xbc, (xsp + 68)
 	lda xde, (xsp + 66)
-	call SndParam_DecodeMidiAddr
+	call SndParam_KeyToLswPartNumber
 	ld wa, (0x024796:24)
 	muls wa, 0x5
 	ld (xsp + 8), wa

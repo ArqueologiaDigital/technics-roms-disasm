@@ -58,7 +58,7 @@ MdCmptCnctFunc:
 	cp xde, EVT_GET_LSW_OUTPUT
 	jrl z, CmptCnctBlockingReturn
 	cp xde, EVT_GET_LSW_ADDRESS
-	jrl z, CmptCnctInvalidInputReturn
+	jrl z, MdCmptCnct_LswAddress
 	cp xde, EVT_GET_LSW_STRING
 	jr z, CmptCnctDrawConnectionDiagram
 	ld xhl, 0:i3
@@ -120,7 +120,7 @@ CmptCnctBitmapDrawComplete:
 	ld xhl, xiz
 	jr MdCmptCnct_Epilogue
 
-CmptCnctInvalidInputReturn:
+MdCmptCnct_LswAddress:
 	ld xhl, 0x2c00
 	jr MdCmptCnct_Epilogue
 

@@ -621,7 +621,7 @@ SndParam_ResolveWidget_Join3:
 	lda	xsp, (xsp+14)
 	ret
 
-SndParam_DecodeMidiAddr:
+SndParam_KeyToLswPartNumber:
 	lda xsp, (xsp - 22)
 	push xiz
 	ld (xsp + 14), xde
@@ -653,32 +653,32 @@ SndParam_DecodeMidiAddr:
 	ld xbc, 0x7ff
 	call DivMod32
 	ld ix, hl
-	jr SndParam_DMA_ProbeEntry
+	jr SndParam_KeyToLsw_ProbeEntry
 
-SndParam_DMA_ProbeCheck:
+SndParam_KeyToLsw_ProbeCheck:
 	ld bc, 0:i3
 	cp (xsp + 6), xde
-	jr z, SndParam_DMA_MatchFound
+	jr z, SndParam_KeyToLsw_MatchFound
 	ldw bc, 0xffff
-	jr SndParam_DMA_ProbeAdvance
+	jr SndParam_KeyToLsw_ProbeAdvance
 
-SndParam_DMA_MatchFound:
+SndParam_KeyToLsw_MatchFound:
 	cp bc, 0xffff
-	jr z, SndParam_DMA_ProbeAdvance
+	jr z, SndParam_KeyToLsw_ProbeAdvance
 	ld xwa, (xwa + 4)
 	ld (xsp + 10), xwa
 
-SndParam_DMA_ProbeAdvance:
+SndParam_KeyToLsw_ProbeAdvance:
 	inc 1, hl
 	cp hl, 0x7ff
-	jr ugt, SndParam_DMA_ExtractFields
+	jr ugt, SndParam_KeyToLsw_ExtractFields
 	ld wa, ix
 	inc 3, wa
 	extz xwa
 	div wa, 0x7ff
 	ldto_werp IX, 0xe2
 
-SndParam_DMA_ProbeEntry:
+SndParam_KeyToLsw_ProbeEntry:
 	ld bc, ix
 	extz xbc
 	sll xbc, 3
@@ -686,19 +686,19 @@ SndParam_DMA_ProbeEntry:
 	add xwa, xbc
 	ld xde, (xwa)
 	cp xde, SNDPARAM_HASH_EMPTY_KEY
-	jr nz, SndParam_DMA_ProbeCheck
+	jr nz, SndParam_KeyToLsw_ProbeCheck
 
-SndParam_DMA_ExtractFields:
+SndParam_KeyToLsw_ExtractFields:
 	ld xwa, (xsp + 10)
 	or xwa, xwa
-	jrl z, SndParam_DMA_Epilogue
+	jrl z, SndParam_KeyToLsw_Epilogue
 	ld xbc, (xsp + 22)
 	ld xwa, (xbc)
 	cp xwa, 0x8000
-	jr c, SndParam_DMA_Zone2Check
+	jr c, SndParam_KeyToLsw_Zone2Check
 	ld xwa, (xbc)
 	cp xwa, 0x17fff
-	jr ugt, SndParam_DMA_Zone2Check
+	jr ugt, SndParam_KeyToLsw_Zone2Check
 	sub xiz, 0x8000
 	ld xwa, xiz
 	srl xwa, 10
@@ -712,14 +712,14 @@ SndParam_DMA_ExtractFields:
 	ld (xwa), bc
 	ldw (xsp + 4), 0x0
 
-SndParam_DMA_Zone2Check:
+SndParam_KeyToLsw_Zone2Check:
 	ld xbc, (xsp + 22)
 	ld xwa, (xbc)
 	cp xwa, 0x18000
-	jr c, SndParam_DMA_Epilogue
+	jr c, SndParam_KeyToLsw_Epilogue
 	ld xwa, (xbc)
 	cp xwa, 0x27fff
-	jr ugt, SndParam_DMA_Epilogue
+	jr ugt, SndParam_KeyToLsw_Epilogue
 	sub xiz, 0x8000
 	ld xwa, xiz
 	srl xwa, 10
@@ -734,7 +734,7 @@ SndParam_DMA_Zone2Check:
 	ld (xwa), bc
 	ldw (xsp + 4), 0x0
 
-SndParam_DMA_Epilogue:
+SndParam_KeyToLsw_Epilogue:
 	ld hl, (xsp + 4)
 	pop xiz
 	lda xsp, (xsp + 22)
@@ -768,28 +768,28 @@ SndParam_ResolveWidgetVariant2_Data:
 	ld	xbc, 2047
 	call	DivMod32
 	ld	ix, hl
-	jr	SndParam_DecodeMidiAddr_Join2
-SndParam_DecodeMidiAddr_Loop:
+	jr	SndParam_ResolveWidgetVariant2_Data_Join2
+SndParam_ResolveWidgetVariant2_Data_Loop:
 	ld	bc, 0:i3
 	cp	xiz, xde
-	jr	z, SndParam_DecodeMidiAddr_Skip
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Skip
 	ldw	bc, 0xffff
-	jr	SndParam_DecodeMidiAddr_Join
-SndParam_DecodeMidiAddr_Skip:
+	jr	SndParam_ResolveWidgetVariant2_Data_Join
+SndParam_ResolveWidgetVariant2_Data_Skip:
 	cp	bc, 0xffff
-	jr	z, SndParam_DecodeMidiAddr_Join
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Join
 	ld	xwa, (xwa+4)
 	ld	(xsp+8), xwa
-SndParam_DecodeMidiAddr_Join:
+SndParam_ResolveWidgetVariant2_Data_Join:
 	inc	1, hl
 	cp	hl, 2047
-	jr	ugt, SndParam_DecodeMidiAddr_Skip2
+	jr	ugt, SndParam_ResolveWidgetVariant2_Data_Skip2
 	ld	wa, ix
 	inc	3, wa
 	extz	xwa
 	div	wa, 2047
 	ld ix, qwa
-SndParam_DecodeMidiAddr_Join2:
+SndParam_ResolveWidgetVariant2_Data_Join2:
 	ld bc, ix
 	extz	xbc
 	sll	xbc, 3
@@ -797,21 +797,21 @@ SndParam_DecodeMidiAddr_Join2:
 	add	xwa, xbc
 	ld	xde, (xwa)
 	cp	xde, SNDPARAM_HASH_EMPTY_KEY
-	jr	nz, SndParam_DecodeMidiAddr_Loop
-SndParam_DecodeMidiAddr_Skip2:
+	jr	nz, SndParam_ResolveWidgetVariant2_Data_Loop
+SndParam_ResolveWidgetVariant2_Data_Skip2:
 	ld	xwa, (xsp+8)
 	or	xwa, xwa
-	jr	z, SndParam_DecodeMidiAddr_Skip3
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Skip3
 	ld	c, (xwa+4)
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xde, (SndParam_BlockRamPtrs:24)
 	ld	l, (xwa+5)
 	extz	hl
 	ld	xwa, (xde+bc)
 	lda	xwa, (xwa+hl)
 	ld	(xsp+4), xwa
-SndParam_DecodeMidiAddr_Skip3:
+SndParam_ResolveWidgetVariant2_Data_Skip3:
 	ld	xhl, (xsp+4)
 	pop	xiz
 	inc	8, xsp
@@ -826,7 +826,7 @@ SndParam_ReadRegField:
 	ld c, (xwa + 4)
 	extz bc
 	sla bc, 2
-	lda xde, (SndParam_DMA_Zone2Check_Data:24)
+	lda xde, (SndParam_BlockRamPtrs:24)
 	ld	xde, (xde+bc)
 	or xde, xde
 	ret z
@@ -883,7 +883,7 @@ SndParam_CompareRegField:
 	ld a, (xbc + 4)
 	extz wa
 	sla wa, 2
-	lda xde, (SndParam_DMA_Zone2Check_Data:24)
+	lda xde, (SndParam_BlockRamPtrs:24)
 	ld	xde, (xde+wa)
 	or xde, xde
 	jr z, SndParam_CompareNotFound
@@ -930,7 +930,7 @@ SndParam_ReadRegWord:
 	ld c, (xwa + 4)
 	extz bc
 	sla bc, 2
-	lda xde, (SndParam_DMA_Zone2Check_Data:24)
+	lda xde, (SndParam_BlockRamPtrs:24)
 	ld	xde, (xde+bc)
 	or xde, xde
 	ret z
@@ -958,7 +958,7 @@ SndParam_ReadRegBitfield:
 	ld c, (xwa + 4)
 	extz bc
 	sla bc, 2
-	lda xde, (SndParam_DMA_Zone2Check_Data:24)
+	lda xde, (SndParam_BlockRamPtrs:24)
 	ld	xix, (xde+bc)
 	or xix, xix
 	jr z, SndParam_BitfieldReturn
@@ -1003,7 +1003,7 @@ SndParam_ReadRegAddress:
 	ld a, (xwa + 4)
 	extz wa
 	sla wa, 2
-	lda xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	or xwa, xwa
 	ret z
@@ -1033,7 +1033,7 @@ SndParam_RegisterEntry_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xhl, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xhl, (SndParam_BlockRamPtrs:24)
 	ld	xhl, (xhl+wa)
 	or xhl, xhl
 	jrl	z, SndParam_RegisterEntry_Data_Skip3
@@ -1131,7 +1131,7 @@ SndParam_RegisterEntryAlt_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xix, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xix, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xix+wa)
 	ld (xsp+2), xwa
 	or xwa, xwa
@@ -1252,7 +1252,7 @@ SndParam_RegisterMultiField_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	ld	(xsp+4), xwa
 	or	xwa, xwa
@@ -1346,7 +1346,7 @@ SndParam_RegisterBitfield_Data:
 	ld	c, (xhl)
 	extz	bc
 	sla	bc, 2
-	lda	xix, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xix, (SndParam_BlockRamPtrs:24)
 	ld	xiz, (xix+bc)
 	or xiz, xiz
 	jrl	z, SndParam_RegisterBitfield_Data_Skip3
@@ -1426,7 +1426,7 @@ SndParam_RegisterLinked_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xix, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xix, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xix+wa)
 	ld (xsp), xwa
 	or xwa, xwa
@@ -1550,7 +1550,7 @@ SndParam_RegisterLinked2_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	ld	(xsp+4), xwa
 	or	xwa, xwa
@@ -1692,7 +1692,7 @@ SndParam_RegisterSimple_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xiz, (xbc+wa)
 	or xiz, xiz
 	jr	z, SndParam_RegisterSimple_Data_Skip3
@@ -1767,7 +1767,7 @@ SndParam_RegisterChained_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xiz, (xbc+wa)
 	or xiz, xiz
 	jrl	z, SndParam_RegisterChained_Data_Skip
@@ -1883,7 +1883,7 @@ SndParam_RegisterChained2_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xiz, (xbc+wa)
 	or xiz, xiz
 	jrl	z, SndParam_RegisterChained2_Data_Skip
@@ -1993,7 +1993,7 @@ SndParam_RegisterComplex_Data:
 	ld	a, (xwa+4)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	ld (xsp), xwa
 	or xwa, xwa
@@ -2117,7 +2117,7 @@ SndParam_NotifyQuick_Data:
 	ld	a, (xiz+4)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	or xwa, xwa
 	jr	z, SndParam_NotifyQuick_Data_Skip3
@@ -2156,7 +2156,7 @@ SndParam_RegisterDual_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	ld (xsp), xwa
 	or xwa, xwa
@@ -2291,7 +2291,7 @@ SndParam_RegisterOffset_Data:
 	ld	a, (xde)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	or xwa, xwa
 	jrl	z, SndParam_RegisterOffset_Data_Skip3
@@ -2367,7 +2367,7 @@ SndParam_RegisterWide_Data:
 	ld	a, (xwa)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_DMA_Zone2Check_Data:24)
+	lda	xbc, (SndParam_BlockRamPtrs:24)
 	ld	xwa, (xbc+wa)
 	ld	(xsp+4), xwa
 	or	xwa, xwa

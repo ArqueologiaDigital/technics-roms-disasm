@@ -76,7 +76,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  7] 0xEE008E  NakaInst_Param_Idx01_88, NakaInst_Param_Val7F(+8), NakaInst_Param_Repeat(+13) */
+    /* [  7] 0xEE008E  SndParam_Msp_Volume, NakaInst_Param_Val7F(+8), NakaInst_Param_Repeat(+13) */
     { .key = 0x00028801, .bank_index = 0x72, .bank_offset = 0x03,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -86,7 +86,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  8] 0xEE00A0  NakaInst_Param_Idx0B_88 */
+    /* [  8] 0xEE00A0  SndParam_Msp_Mute */
     { .key = 0x0002880B, .bank_index = 0x72, .bank_offset = 0x03,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -96,7 +96,7 @@ const sndparam_descriptor_t run_ee0010[17]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  9] 0xEE00B2  NakaInst_Param_Idx02_88, NakaInst_Param_Byte01(+13), NakaInst_NEXT(+17) */
+    /* [  9] 0xEE00B2  SndParam_Msp_Reverb, NakaInst_Param_Byte01(+13), NakaInst_NEXT(+17) */
     { .key = 0x00028802, .bank_index = 0x72, .bank_offset = 0x07,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,

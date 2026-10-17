@@ -1372,15 +1372,15 @@ VocalistGrid_DispatchData_CaseTable:
 	.short	AcVocalist_ReturnZero - VocalistGrid_CheckDispData
 	.short	VocalistGrid_DispatchData_Case11521 - VocalistGrid_CheckDispData
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] MidiPart_ColWidthData
-; MidiPart_ColWidthData -- jump table of a compiled `switch` in
+; [naka_s_headers] VocalistGridCheck_LswCaseTable
+; VocalistGridCheck_LswCaseTable -- jump table of a compiled `switch` in
 ; VocalistGrid_DispatchData (v10/v9 0xf73938, v7 0xf73534) (`.long
-; MidiPart_ColWidthData`): 20 u16 case offsets from
+; VocalistGridCheck_LswCaseTable`): 20 u16 case offsets from
 ; VocalistGrid_DispatchData_Code.
 ;
-; Typed in naka_widget_tables_2.c as uint16_t MidiPart_ColWidthData[20].
+; Typed in naka_widget_tables_2.c as uint16_t VocalistGridCheck_LswCaseTable[20].
 ; -----------------------------------------------------------------------------
-MidiPart_ColWidthData:
+VocalistGridCheck_LswCaseTable:
 	.short	VocalistGrid_DispatchData_Code - VocalistGrid_DispatchData_Code
 	.short	VocalistGridCheck_Switch2_Case11521 - VocalistGrid_DispatchData_Code
 	.short	VocalistGridCheck_Switch2_Case11522 - VocalistGrid_DispatchData_Code

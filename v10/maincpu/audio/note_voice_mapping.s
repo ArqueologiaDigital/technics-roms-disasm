@@ -18071,7 +18071,7 @@ HdaeRom_AltTableEntry9_Epilogue:
 	inc	4, xsp
 	ret
 ; SndParam_ApplyEventField: Applies the 4-byte event at XWA with its byte 3 temporarily set to C:
-;   SndParam_ResolveWidget looks it up; if SndParam_DecodeMidiAddr decodes the result, SndPart_SetParam, else
+;   SndParam_ResolveWidget looks it up; if SndParam_KeyToLswPartNumber decodes the result, SndPart_SetParam, else
 ;   SndParam_ApplySystemParam; byte 3 is restored. Basis: callers + body -- the UIState_ProcessKeyEvent cases copy the SwbtWr
 ;   event to the stack and call this once per masked field of byte 3.
 SndParam_ApplyEventField:
@@ -18096,7 +18096,7 @@ SndParam_ApplyEventField:
 	lda	xwa, (xsp+6)
 	ld	xde, xwa
 	ld	xwa, xhl
-	call	SndParam_DecodeMidiAddr
+	call	SndParam_KeyToLswPartNumber
 	cp	hl, 0xffff
 	jr	z, SndParam_ApplyEventField_Skip
 	ld	wa, (xsp+8)

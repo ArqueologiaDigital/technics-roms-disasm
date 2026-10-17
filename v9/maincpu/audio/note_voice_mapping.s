@@ -18065,7 +18065,7 @@ SndParam_ApplyEventField:
 	lda	xwa, (xsp+6)
 	ld	xde, xwa
 	ld	xwa, xhl
-	call	SndParam_DecodeMidiAddr
+	call	SndParam_KeyToLswPartNumber
 	cp	hl, 0xffff
 	jr	z, SndParam_ApplyEventField_Skip
 	ld	wa, (xsp+8)

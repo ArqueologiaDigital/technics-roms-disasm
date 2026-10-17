@@ -175,7 +175,7 @@ SndParam_ResolveWidget_Join3:
 	pop	xiz
 	lda	xsp, (xsp+14)
 	ret
-SndParam_DecodeMidiAddr:
+SndParam_KeyToLswPartNumber:
 SndParam_ResolveOscEntry_Helper:
 	lda	xsp, (xsp - 22)
 	push	xiz
@@ -208,31 +208,31 @@ SndParam_ResolveOscEntry_Helper:
 	ld	xbc, 0x7ff
 	call	DivMod32
 	ld	ix, hl
-	jr	SndParam_DMA_ProbeEntry
-SndParam_DMA_ProbeCheck:
+	jr	SndParam_KeyToLsw_ProbeEntry
+SndParam_KeyToLsw_ProbeCheck:
 	ld	bc, 0:i3
 	cp	(xsp + 6), xde
-SndParam_DMA_ProbeCheck_Part:
-	jr	z, SndParam_DMA_MatchFound
+SndParam_KeyToLsw_ProbeCheck_Part:
+	jr	z, SndParam_KeyToLsw_MatchFound
 	ldw	bc, 0xffff
-	jr	SndParam_DMA_ProbeAdvance
-SndParam_DMA_MatchFound:
+	jr	SndParam_KeyToLsw_ProbeAdvance
+SndParam_KeyToLsw_MatchFound:
 	cp	bc, 0xffff
-	jr	z, SndParam_DMA_ProbeAdvance
-SndParam_DMA_MatchFound_Part:
+	jr	z, SndParam_KeyToLsw_ProbeAdvance
+SndParam_KeyToLsw_MatchFound_Part:
 	ld	xwa, (xwa + 4)
 	ld	(xsp + 10), xwa
-SndParam_DMA_ProbeAdvance:
+SndParam_KeyToLsw_ProbeAdvance:
 	inc	1, hl
-SndParam_DMA_ProbeAdvance_Part:
+SndParam_KeyToLsw_ProbeAdvance_Part:
 	cp	hl, 0x7ff
-	jr	ugt, SndParam_DMA_ExtractFields
+	jr	ugt, SndParam_KeyToLsw_ExtractFields
 	ld	wa, ix
 	inc	3, wa
 	extz	xwa
 	div	wa, 0x7ff
 	ldto_werp	IX, 0xe2
-SndParam_DMA_ProbeEntry:
+SndParam_KeyToLsw_ProbeEntry:
 	ld	bc, ix
 	extz	xbc
 	sll	xbc, 3
@@ -240,18 +240,18 @@ SndParam_DMA_ProbeEntry:
 	add	xwa, xbc
 	ld	xde, (xwa)
 	cp	xde, SNDPARAM_HASH_EMPTY_KEY
-	jr	nz, SndParam_DMA_ProbeCheck
-SndParam_DMA_ExtractFields:
+	jr	nz, SndParam_KeyToLsw_ProbeCheck
+SndParam_KeyToLsw_ExtractFields:
 	ld	xwa, (xsp + 10)
 	or	xwa, xwa
-	jrl	z, SndParam_DMA_Epilogue
+	jrl	z, SndParam_KeyToLsw_Epilogue
 	ld	xbc, (xsp + 22)
 	ld	xwa, (xbc)
 	cp	xwa, 0x8000
-	jr	c, SndParam_DMA_Zone2Check
+	jr	c, SndParam_KeyToLsw_Zone2Check
 	ld	xwa, (xbc)
 	cp	xwa, 0x17fff
-	jr	ugt, SndParam_DMA_Zone2Check
+	jr	ugt, SndParam_KeyToLsw_Zone2Check
 	sub	xiz, 0x8000
 	ld	xwa, xiz
 	srl	xwa, 10
@@ -264,14 +264,14 @@ SndParam_DMA_ExtractFields:
 	ld	xwa, (xsp + 14)
 	ld	(xwa), bc
 	ldw	(xsp + 4), 0x0
-SndParam_DMA_Zone2Check:
+SndParam_KeyToLsw_Zone2Check:
 	ld	xbc, (xsp + 22)
 	ld	xwa, (xbc)
 	cp	xwa, 0x18000
-	jr	c, SndParam_DMA_Epilogue
+	jr	c, SndParam_KeyToLsw_Epilogue
 	ld	xwa, (xbc)
 	cp	xwa, 0x27fff
-	jr	ugt, SndParam_DMA_Epilogue
+	jr	ugt, SndParam_KeyToLsw_Epilogue
 	sub	xiz, 0x8000
 	ld	xwa, xiz
 	srl	xwa, 10
@@ -285,7 +285,7 @@ SndParam_DMA_Zone2Check:
 	ld	xwa, (xsp + 14)
 	ld	(xwa), bc
 	ldw	(xsp + 4), 0x0
-SndParam_DMA_Epilogue:
+SndParam_KeyToLsw_Epilogue:
 	ld	hl, (xsp + 4)
 	pop	xiz
 	lda	xsp, (xsp + 22)
@@ -319,28 +319,28 @@ SndParam_ResolveWidgetVariant2_Data_Part:
 	ld	xbc, 2047
 	call	DivMod32
 	ld	ix, hl
-	jr	SndParam_DecodeMidiAddr_Join2
-SndParam_DecodeMidiAddr_Loop:
+	jr	SndParam_ResolveWidgetVariant2_Data_Join2
+SndParam_ResolveWidgetVariant2_Data_Loop:
 	ld	bc, 0:i3
 	cp	xiz, xde
-	jr	z, SndParam_DecodeMidiAddr_Skip
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Skip
 	ldw	bc, 0xffff
-	jr	SndParam_DecodeMidiAddr_Join
-SndParam_DecodeMidiAddr_Skip:
+	jr	SndParam_ResolveWidgetVariant2_Data_Join
+SndParam_ResolveWidgetVariant2_Data_Skip:
 	cp	bc, 0xffff
-	jr	z, SndParam_DecodeMidiAddr_Join
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Join
 	ld	xwa, (xwa+4)
 	ld	(xsp+8), xwa
-SndParam_DecodeMidiAddr_Join:
+SndParam_ResolveWidgetVariant2_Data_Join:
 	inc	1, hl
 	cp	hl, 2047
-	jr	ugt, SndParam_DecodeMidiAddr_Skip2
+	jr	ugt, SndParam_ResolveWidgetVariant2_Data_Skip2
 	ld	wa, ix
 	inc	3, wa
 	extz	xwa
 	div	wa, 2047
 	ld	ix, qwa
-SndParam_DecodeMidiAddr_Join2:
+SndParam_ResolveWidgetVariant2_Data_Join2:
 	ld	bc, ix
 	extz	xbc
 	sll	xbc, 3
@@ -348,11 +348,11 @@ SndParam_DecodeMidiAddr_Join2:
 	add	xwa, xbc
 	ld	xde, (xwa)
 	cp	xde, SNDPARAM_HASH_EMPTY_KEY
-	jr	nz, SndParam_DecodeMidiAddr_Loop
-SndParam_DecodeMidiAddr_Skip2:
+	jr	nz, SndParam_ResolveWidgetVariant2_Data_Loop
+SndParam_ResolveWidgetVariant2_Data_Skip2:
 	ld	xwa, (xsp+8)
 	or	xwa, xwa
-	jr	z, SndParam_DecodeMidiAddr_Skip3
+	jr	z, SndParam_ResolveWidgetVariant2_Data_Skip3
 	ld	c, (xwa+4)
 	extz	bc
 	sla	bc, 2
@@ -362,7 +362,7 @@ SndParam_DecodeMidiAddr_Skip2:
 	ld	xwa, (xde+bc)
 	lda	xwa, (xwa+hl)
 	ld	(xsp+4), xwa
-SndParam_DecodeMidiAddr_Skip3:
+SndParam_ResolveWidgetVariant2_Data_Skip3:
 	ld	xhl, (xsp+4)
 	pop	xiz
 	inc	8, xsp

@@ -25,11 +25,11 @@ NakaInst_Param_Field48 = SndParamRun_EE0010 + 94
 NakaInst_Param_TermFF = SndParamRun_EE0010 + 99
 NakaInst_Param_Field84 = SndParamRun_EE0010 + 108
 NakaInst_Param_EmptyStr = SndParamRun_EE0010 + 118
-NakaInst_Param_Idx01_88 = SndParamRun_EE0010 + 126
+SndParam_Msp_Volume = SndParamRun_EE0010 + 126
 NakaInst_Param_Val7F = SndParamRun_EE0010 + 134
 NakaInst_Param_Repeat = SndParamRun_EE0010 + 139
-NakaInst_Param_Idx0B_88 = SndParamRun_EE0010 + 144
-NakaInst_Param_Idx02_88 = SndParamRun_EE0010 + 162
+SndParam_Msp_Mute = SndParamRun_EE0010 + 144
+SndParam_Msp_Reverb = SndParamRun_EE0010 + 162
 NakaInst_Param_Byte01 = SndParamRun_EE0010 + 175
 NakaInst_NEXT = SndParamRun_EE0010 + 179
 NakaInst_Param_Idx03_88 = SndParamRun_EE0010 + 180
@@ -112,23 +112,23 @@ SndParam_RegisterLoop_Data:
 	.long WidgetParam_TestMode_Entry
 	.long WidgetParam_SineWave_Entry
 	.long VoiceCtrlR1_Entry_001
-	.long VoiceCtrlR1_Entry_002
+	.long SndParam_Tempo
 	.long VoiceCtrlR1_Entry_003
 	.long VoiceCtrlR1_Entry_004
 	.long VoiceCtrlR1_Entry_005
-	.long VoiceCtrlR1_Entry_006
-	.long VoiceCtrlR1_Entry_007
-	.long VoiceCtrlR1_Entry_008
-	.long VoiceCtrlR1_Entry_009
-	.long VoiceCtrlR1_Entry_010
+	.long SndParam_InitialTouch_VelocitySense
+	.long SndParam_AfterTouch_Curve
+	.long SndParam_AfterTouch_Threshold
+	.long SndParam_AfterTouch_OnOff
+	.long SndParam_PanelMemory_Number
 	.long VoiceCtrlR1_Entry_011
 	.long VoiceCtrlR1_Entry_012
-	.long VoiceCtrlR1_Entry_015
-	.long VoiceCtrlR1_Entry_016
-	.long VoiceCtrlR1_Entry_017
-	.long VoiceCtrlR1_Entry_018
-	.long VoiceCtrlR1_Entry_019
-	.long VoiceCtrlR1_Entry_020
+	.long SndParam_MidiIn_Right1Input
+	.long SndParam_MidiIn_AutoPlayChord
+	.long SndParam_MidiOut_TechniChord
+	.long SndParam_MidiOut_DrumPattern
+	.long SndParam_MidiOut_AutoPlayChord
+	.long SndParam_MidiOut_Transpose
 	.long VoiceCtrlR1_Entry_021
 	.long VoiceCtrlR1_Entry_022
 	.long VoiceCtrlR1_Entry_024
@@ -155,11 +155,11 @@ SndParam_RegisterLoop_Data:
 	.long VoiceCtrlR1_Entry_043
 	.long MidiChParam_Entry_040
 	.long MidiChParam_Entry_041
-	.long MidiChParam_Entry_042
-	.long MidiChParam_Entry_043
-	.long MidiChParam_Entry_044
+	.long SndParam_ReverbOnOff
+	.long SndParam_DigitalEffectOnOff
+	.long SndParam_AcousticIllusionOnOff
 	.long MidiChParam_Entry_045
-	.long MidiChParam_Entry_046
+	.long SndParam_EqualizerOnOff
 	.long MidiChParam_Entry_047
 	.long MidiChParam_Entry_048
 	.long MidiChParam_Entry_049
@@ -167,51 +167,51 @@ SndParam_RegisterLoop_Data:
 	.long MidiChParam_Entry_051
 	.long MidiChParam_Entry_052
 	.long MidiChParam_Entry_053
-	.long MidiChParam_Entry_054
-	.long MidiChParam_Entry_055
+	.long SndParam_Mic_Volume
+	.long SndParam_Mic_Mute
 	.long MidiChParam_Entry_056
 	.long MidiChParam_Entry_057
 	.long MidiChParam_Entry_058
-	.long MidiChParam_Entry_059
+	.long SndParam_Orchestrator
 	.long MidiChParam_Entry_060
-	.long MidiChParam_Entry_061
-	.long MidiChParam_Entry_062
-	.long MidiChParam_Entry_063
-	.long MidiChParam_Entry_064
-	.long MidiChParam_Entry_065
-	.long MidiChParam_Entry_066
-	.long MidiChParam_Entry_067
-	.long MidiChParam_Entry_068
-	.long MidiChParam_Entry_069
-	.long MidiChParam_Entry_070
-	.long MidiChParam_Entry_071
-	.long MidiChParam_Entry_072
-	.long MidiChParam_Entry_073
-	.long MidiChParam_Entry_074
-	.long MidiChParam_Entry_075
-	.long MidiChParam_Entry_076
+	.long SndParam_ScaleTune_OnOff
+	.long SndParam_ScaleTune_Type
+	.long SndParam_ScaleTune_Key
+	.long SndParam_ScaleTune_UserNote0
+	.long SndParam_ScaleTune_UserNote1
+	.long SndParam_ScaleTune_UserNote2
+	.long SndParam_ScaleTune_UserNote3
+	.long SndParam_ScaleTune_UserNote4
+	.long SndParam_ScaleTune_UserNote5
+	.long SndParam_ScaleTune_UserNote6
+	.long SndParam_ScaleTune_UserNote7
+	.long SndParam_ScaleTune_UserNote8
+	.long SndParam_ScaleTune_UserNote9
+	.long SndParam_ScaleTune_UserNote10
+	.long SndParam_ScaleTune_UserNote11
+	.long SndParam_DspEffect_Algorithm
 	.long MidiChParam_Entry_077
-	.long MidiChParam_Entry_078
+	.long SndParam_DigitalReverb_Algorithm
 	.long MidiChParam_Entry_079
 	.long MidiChParam_Entry_080
 	.long MidiChParam_Entry_081
-	.long MidiChParam_Entry_082
-	.long MidiChParam_Entry_083
-	.long MidiChParam_Entry_085
-	.long VoiceCtrlR1_Entry_044
+	.long SndParam_MidiIn_VelocityMode
+	.long SndParam_MidiIn_VelocityOffset
+	.long SndParam_MidiIn_VelocityFixed
+	.long SndParam_FootCtrl_ExpressionPedal
 	.long VoiceCtrlR1_Entry_045
 	.long VoiceCtrlR1_Entry_046
-	.long VoiceCtrlR1_Entry_047
+	.long SndParam_FootCtrl_FootSwitch1
 	.long VoiceCtrlR1_Entry_048
-	.long VoiceCtrlR1_Entry_049
+	.long SndParam_FootCtrl_FootSwitch2
 	.long VoiceCtrlR1_Entry_050
-	.long VoiceCtrlR1_Entry_051
+	.long SndParam_FootCtrl_FootContSw1
 	.long VoiceCtrlR1_Entry_052
-	.long VoiceCtrlR1_Entry_053
+	.long SndParam_FootCtrl_FootContSw2
 	.long VoiceCtrlR1_Entry_054
-	.long VoiceCtrlR1_Entry_055
+	.long SndParam_FootCtrl_FootContSw3
 	.long VoiceCtrlR1_Entry_056
-	.long VoiceCtrlR1_Entry_057
+	.long SndParam_FootCtrl_FootContSw4
 	.long VoiceCtrlR1_Entry_058
 	.long VoiceCtrlR1_Entry_059
 	.long VoiceCtrlR1_Entry_060
@@ -248,27 +248,27 @@ SndParam_RegisterLoop_Data:
 	.long MidiChParam_Entry_016
 	.long MidiChParam_Entry_017
 	.long MidiChParam_Entry_018
-	.long MidiChParam_Entry_019
-	.long MidiChParam_Entry_020
-	.long MidiChParam_Entry_021
-	.long MidiChParam_Entry_022
-	.long MidiChParam_Entry_023
-	.long MidiChParam_Entry_024
-	.long MidiChParam_Entry_025
-	.long MidiChParam_Entry_026
-	.long MidiChParam_Entry_027
-	.long MidiChParam_Entry_028
-	.long MidiChParam_Entry_029
-	.long MidiChParam_Entry_030
-	.long MidiChParam_Entry_031
-	.long MidiChParam_Entry_032
-	.long MidiChParam_Entry_033
-	.long MidiChParam_Entry_034
-	.long MidiChParam_Entry_035
-	.long MidiChParam_Entry_036
-	.long MidiChParam_Entry_037
-	.long MidiChParam_Entry_038
-	.long MidiChParam_Entry_039
+	.long SndParam_ComputerConnectMode
+	.long SndParam_Vocalist_MidiChannel
+	.long SndParam_Vocalist_MidiChannelSend
+	.long SndParam_Vocalist_Program
+	.long SndParam_Vocalist_ProgramSend
+	.long SndParam_Vocalist_Harmony
+	.long SndParam_Vocalist_HarmonySend
+	.long SndParam_Vocalist_Key
+	.long SndParam_Vocalist_KeySend
+	.long SndParam_Vocalist_ProgChangeOption
+	.long SndParam_Vocalist_ProgChangeOptionSend
+	.long SndParam_Vocalist_ControlVolume
+	.long SndParam_Vocalist_ControlVolumeSend
+	.long SndParam_Vocalist_VocoderKeySplit
+	.long SndParam_Vocalist_VocoderKeySplitNote
+	.long SndParam_Vocalist_VocoderKeySplitSide
+	.long SndParam_Vocalist_VocoderIgnore
+	.long SndParam_Vocalist_ChordalKeySplit
+	.long SndParam_Vocalist_ChordalKeySplitNote
+	.long SndParam_Vocalist_ChordalKeySplitSide
+	.long SndParam_Vocalist_ChordalIgnore
 	.long SndParam_Part00_Sound
 	.long SndParam_Part00_Modulation
 	.long SndParam_Part00_Volume
@@ -287,10 +287,10 @@ SndParam_RegisterLoop_Data:
 	.long MidiChParam_Entry_102
 	.long MidiChParam_Entry_097
 	.long MidiChParam_Entry_103
-	.long MidiChParam_Entry_104
-	.long MidiChParam_Entry_105
-	.long MidiChParam_Entry_106
-	.long MidiChParam_Entry_107
+	.long SndParam_Part00_PercDecay
+	.long SndParam_Part00_PercLevel
+	.long SndParam_Part00_DrawRelease
+	.long SndParam_Part00_DrawAttack
 	.long SndParam_Part00_Drawbar16
 	.long SndParam_Part00_Drawbar8
 	.long SndParam_Part00_Drawbar5_1_3
@@ -320,10 +320,10 @@ SndParam_RegisterLoop_Data:
 	.long VoiceParamEx_Entry_023
 	.long VoiceParamEx_Entry_018
 	.long VoiceParamEx_Entry_024
-	.long VoiceParamEx_Entry_025
-	.long VoiceParamEx_Entry_026
-	.long VoiceParamEx_Entry_027
-	.long VoiceParamEx_Entry_028
+	.long SndParam_Part01_PercDecay
+	.long SndParam_Part01_PercLevel
+	.long SndParam_Part01_DrawRelease
+	.long SndParam_Part01_DrawAttack
 	.long SndParam_Part01_Drawbar16
 	.long SndParam_Part01_Drawbar8
 	.long SndParam_Part01_Drawbar5_1_3
@@ -353,10 +353,10 @@ SndParam_RegisterLoop_Data:
 	.long VoiceParamEx_Entry_056
 	.long VoiceParamEx_Entry_051
 	.long VoiceParamEx_Entry_057
-	.long VoiceParamEx_Entry_058
-	.long VoiceParamEx_Entry_059
-	.long VoiceParamEx_Entry_060
-	.long VoiceParamEx_Entry_061
+	.long SndParam_Part02_PercDecay
+	.long SndParam_Part02_PercLevel
+	.long SndParam_Part02_DrawRelease
+	.long SndParam_Part02_DrawAttack
 	.long SndParam_Part02_Drawbar16
 	.long SndParam_Part02_Drawbar8
 	.long SndParam_Part02_Drawbar5_1_3
@@ -742,326 +742,326 @@ SndParam_RegisterLoop_Data:
 	.long ExtPartParam_Entry_360
 	.long ExtPartParam_Entry_361
 	.long ExtPartParam_Entry_356
-	.long ExtPartParam_Entry_362
-	.long ExtPartParam_Entry_363
-	.long ExtPartParam_Entry_364
-	.long ExtPartParam_Entry_365
-	.long ExtPartParam_Entry_366
+	.long SndParam_Metronome_Volume
+	.long SndParam_Metronome_Mute
+	.long SndParam_Part00_LocalControl
+	.long SndParam_Part00_MidiChannel
+	.long SndParam_Part00_MidiChannelOn
 	.long ExtPartParam_Entry_367
 	.long ExtPartParam_Entry_368
-	.long ExtPartParam_Entry_369
-	.long ExtPartParam_Entry_370
-	.long ExtPartParam_Entry_371
-	.long ExtPartParam_Entry_372
-	.long ExtPartParam_Entry_373
+	.long SndParam_Part00_SustainLength
+	.long SndParam_Part00_SustainPedal
+	.long SndParam_Part00_KeyScaling
+	.long SndParam_Part00_GlidePedal
+	.long SndParam_Part00_PartExp
 	.long ExtPartParam_Entry_374
-	.long ExtPartParam_Entry_375
-	.long ExtPartParam_Entry_376
-	.long ExtPartParam_Entry_377
-	.long ExtPartParam_Entry_378
+	.long SndParam_Part00_AfterTouch
+	.long SndParam_Part01_LocalControl
+	.long SndParam_Part01_MidiChannel
+	.long SndParam_Part01_MidiChannelOn
 	.long ExtPartParam_Entry_379
 	.long ExtPartParam_Entry_380
-	.long ExtPartParam_Entry_381
-	.long ExtPartParam_Entry_382
-	.long ExtPartParam_Entry_383
-	.long ExtPartParam_Entry_384
-	.long ExtPartParam_Entry_385
+	.long SndParam_Part01_SustainLength
+	.long SndParam_Part01_SustainPedal
+	.long SndParam_Part01_KeyScaling
+	.long SndParam_Part01_GlidePedal
+	.long SndParam_Part01_PartExp
 	.long ExtPartParam_Entry_386
-	.long ExtPartParam_Entry_387
-	.long ExtPartParam_Entry_388
-	.long ExtPartParam_Entry_389
-	.long ExtPartParam_Entry_390
+	.long SndParam_Part01_AfterTouch
+	.long SndParam_Part02_LocalControl
+	.long SndParam_Part02_MidiChannel
+	.long SndParam_Part02_MidiChannelOn
 	.long ExtPartParam_Entry_391
 	.long ExtPartParam_Entry_392
-	.long ExtPartParam_Entry_393
-	.long ExtPartParam_Entry_394
-	.long ExtPartParam_Entry_395
-	.long ExtPartParam_Entry_396
-	.long ExtPartParam_Entry_397
+	.long SndParam_Part02_SustainLength
+	.long SndParam_Part02_SustainPedal
+	.long SndParam_Part02_KeyScaling
+	.long SndParam_Part02_GlidePedal
+	.long SndParam_Part02_PartExp
 	.long ExtPartParam_Entry_398
-	.long ExtPartParam_Entry_399
-	.long ExtPartParam_Entry_400
-	.long ExtPartParam_Entry_401
-	.long ExtPartParam_Entry_402
+	.long SndParam_Part02_AfterTouch
+	.long SndParam_Part03_LocalControl
+	.long SndParam_Part03_MidiChannel
+	.long SndParam_Part03_MidiChannelOn
 	.long ExtPartParam_Entry_403
 	.long ExtPartParam_Entry_404
-	.long ExtPartParam_Entry_405
-	.long ExtPartParam_Entry_406
-	.long ExtPartParam_Entry_407
-	.long ExtPartParam_Entry_408
-	.long ExtPartParam_Entry_409
+	.long SndParam_Part03_SustainLength
+	.long SndParam_Part03_SustainPedal
+	.long SndParam_Part03_KeyScaling
+	.long SndParam_Part03_GlidePedal
+	.long SndParam_Part03_PartExp
 	.long ExtPartParam_Entry_410
-	.long ExtPartParam_Entry_411
-	.long ExtPartParam_Entry_412
-	.long ExtPartParam_Entry_413
-	.long ExtPartParam_Entry_414
+	.long SndParam_Part03_AfterTouch
+	.long SndParam_Part04_LocalControl
+	.long SndParam_Part04_MidiChannel
+	.long SndParam_Part04_MidiChannelOn
 	.long ExtPartParam_Entry_415
 	.long ExtPartParam_Entry_416
-	.long ExtPartParam_Entry_417
-	.long ExtPartParam_Entry_418
-	.long ExtPartParam_Entry_419
-	.long ExtPartParam_Entry_420
-	.long ExtPartParam_Entry_421
+	.long SndParam_Part04_SustainLength
+	.long SndParam_Part04_SustainPedal
+	.long SndParam_Part04_KeyScaling
+	.long SndParam_Part04_GlidePedal
+	.long SndParam_Part04_PartExp
 	.long ExtPartParam_Entry_422
-	.long ExtPartParam_Entry_423
-	.long ExtPartParam_Entry_424
-	.long ExtPartParam_Entry_425
-	.long ExtPartParam_Entry_426
+	.long SndParam_Part04_AfterTouch
+	.long SndParam_Part05_LocalControl
+	.long SndParam_Part05_MidiChannel
+	.long SndParam_Part05_MidiChannelOn
 	.long ExtPartParam_Entry_427
 	.long ExtPartParam_Entry_428
-	.long ExtPartParam_Entry_429
-	.long ExtPartParam_Entry_430
-	.long ExtPartParam_Entry_431
-	.long ExtPartParam_Entry_432
-	.long ExtPartParam_Entry_433
+	.long SndParam_Part05_SustainLength
+	.long SndParam_Part05_SustainPedal
+	.long SndParam_Part05_KeyScaling
+	.long SndParam_Part05_GlidePedal
+	.long SndParam_Part05_PartExp
 	.long ExtPartParam_Entry_434
-	.long ExtPartParam_Entry_435
-	.long ExtPartParam_Entry_436
-	.long ExtPartParam_Entry_437
-	.long ExtPartParam_Entry_438
+	.long SndParam_Part05_AfterTouch
+	.long SndParam_Part06_LocalControl
+	.long SndParam_Part06_MidiChannel
+	.long SndParam_Part06_MidiChannelOn
 	.long ExtPartParam_Entry_439
 	.long ExtPartParam_Entry_440
-	.long ExtPartParam_Entry_441
-	.long ExtPartParam_Entry_442
-	.long ExtPartParam_Entry_443
-	.long ExtPartParam_Entry_444
-	.long ExtPartParam_Entry_445
+	.long SndParam_Part06_SustainLength
+	.long SndParam_Part06_SustainPedal
+	.long SndParam_Part06_KeyScaling
+	.long SndParam_Part06_GlidePedal
+	.long SndParam_Part06_PartExp
 	.long ExtPartParam_Entry_446
-	.long ExtPartParam_Entry_447
-	.long ExtPartParam_Entry_448
-	.long ExtPartParam_Entry_449
-	.long ExtPartParam_Entry_450
+	.long SndParam_Part06_AfterTouch
+	.long SndParam_Part07_LocalControl
+	.long SndParam_Part07_MidiChannel
+	.long SndParam_Part07_MidiChannelOn
 	.long ExtPartParam_Entry_451
 	.long ExtPartParam_Entry_452
-	.long ExtPartParam_Entry_453
-	.long ExtPartParam_Entry_454
-	.long SeqMixParam_Entry_001
-	.long SeqMixParam_Entry_002
-	.long SeqMixParam_Entry_003
+	.long SndParam_Part07_SustainLength
+	.long SndParam_Part07_SustainPedal
+	.long SndParam_Part07_KeyScaling
+	.long SndParam_Part07_GlidePedal
+	.long SndParam_Part07_PartExp
 	.long SeqMixParam_Entry_004
-	.long SeqMixParam_Entry_005
-	.long SeqMixParam_Entry_006
-	.long SeqMixParam_Entry_007
-	.long SeqMixParam_Entry_008
+	.long SndParam_Part07_AfterTouch
+	.long SndParam_Part08_LocalControl
+	.long SndParam_Part08_MidiChannel
+	.long SndParam_Part08_MidiChannelOn
 	.long SeqMixParam_Entry_009
 	.long SeqMixParam_Entry_010
-	.long SeqMixParam_Entry_011
-	.long SeqMixParam_Entry_012
-	.long SeqMixParam_Entry_013
-	.long SeqMixParam_Entry_014
-	.long SeqMixParam_Entry_015
+	.long SndParam_Part08_SustainLength
+	.long SndParam_Part08_SustainPedal
+	.long SndParam_Part08_KeyScaling
+	.long SndParam_Part08_GlidePedal
+	.long SndParam_Part08_PartExp
 	.long SeqMixParam_Entry_016
-	.long SeqMixParam_Entry_017
-	.long SeqMixParam_Entry_018
-	.long SeqMixParam_Entry_019
-	.long SeqMixParam_Entry_020
+	.long SndParam_Part08_AfterTouch
+	.long SndParam_Part09_LocalControl
+	.long SndParam_Part09_MidiChannel
+	.long SndParam_Part09_MidiChannelOn
 	.long SeqMixParam_Entry_021
 	.long SeqMixParam_Entry_022
-	.long SeqMixParam_Entry_023
-	.long SeqMixParam_Entry_024
-	.long SeqMixParam_Entry_025
-	.long SeqMixParam_Entry_026
-	.long SeqMixParam_Entry_027
+	.long SndParam_Part09_SustainLength
+	.long SndParam_Part09_SustainPedal
+	.long SndParam_Part09_KeyScaling
+	.long SndParam_Part09_GlidePedal
+	.long SndParam_Part09_PartExp
 	.long SeqMixParam_Entry_028
-	.long SeqMixParam_Entry_029
-	.long SeqMixParam_Entry_030
-	.long SeqMixParam_Entry_031
-	.long SeqMixParam_Entry_032
+	.long SndParam_Part09_AfterTouch
+	.long SndParam_Part0A_LocalControl
+	.long SndParam_Part0A_MidiChannel
+	.long SndParam_Part0A_MidiChannelOn
 	.long SeqMixParam_Entry_033
 	.long SeqMixParam_Entry_034
-	.long SeqMixParam_Entry_035
-	.long SeqMixParam_Entry_036
-	.long SeqMixParam_Entry_037
-	.long SeqMixParam_Entry_038
-	.long SeqMixParam_Entry_039
+	.long SndParam_Part0A_SustainLength
+	.long SndParam_Part0A_SustainPedal
+	.long SndParam_Part0A_KeyScaling
+	.long SndParam_Part0A_GlidePedal
+	.long SndParam_Part0A_PartExp
 	.long SeqMixParam_Entry_040
-	.long SeqMixParam_Entry_041
-	.long SeqMixParam_Entry_042
-	.long SeqMixParam_Entry_043
-	.long SeqMixParam_Entry_044
+	.long SndParam_Part0A_AfterTouch
+	.long SndParam_Part0B_LocalControl
+	.long SndParam_Part0B_MidiChannel
+	.long SndParam_Part0B_MidiChannelOn
 	.long SeqMixParam_Entry_045
 	.long SeqMixParam_Entry_046
-	.long SeqMixParam_Entry_047
-	.long SeqMixParam_Entry_048
-	.long SeqMixParam_Entry_049
-	.long SeqMixParam_Entry_050
-	.long SeqMixParam_Entry_051
+	.long SndParam_Part0B_SustainLength
+	.long SndParam_Part0B_SustainPedal
+	.long SndParam_Part0B_KeyScaling
+	.long SndParam_Part0B_GlidePedal
+	.long SndParam_Part0B_PartExp
 	.long SeqMixParam_Entry_052
-	.long SeqMixParam_Entry_053
-	.long SeqMixParam_Entry_054
-	.long SeqMixParam_Entry_055
-	.long SeqMixParam_Entry_056
+	.long SndParam_Part0B_AfterTouch
+	.long SndParam_Part0C_LocalControl
+	.long SndParam_Part0C_MidiChannel
+	.long SndParam_Part0C_MidiChannelOn
 	.long SeqMixParam_Entry_057
 	.long SeqMixParam_Entry_058
-	.long SeqMixParam_Entry_059
-	.long SeqMixParam_Entry_060
-	.long SeqMixParam_Entry_061
-	.long SeqMixParam_Entry_062
-	.long SeqMixParam_Entry_063
+	.long SndParam_Part0C_SustainLength
+	.long SndParam_Part0C_SustainPedal
+	.long SndParam_Part0C_KeyScaling
+	.long SndParam_Part0C_GlidePedal
+	.long SndParam_Part0C_PartExp
 	.long SeqMixParam_Entry_064
-	.long SeqMixParam_Entry_065
-	.long SeqMixParam_Entry_066
-	.long SeqMixParam_Entry_067
-	.long SeqMixParam_Entry_068
+	.long SndParam_Part0C_AfterTouch
+	.long SndParam_Part0D_LocalControl
+	.long SndParam_Part0D_MidiChannel
+	.long SndParam_Part0D_MidiChannelOn
 	.long SeqMixParam_Entry_069
 	.long SeqMixParam_Entry_070
-	.long SeqMixParam_Entry_071
-	.long SeqMixParam_Entry_072
-	.long SeqMixParam_Entry_073
-	.long SeqMixParam_Entry_074
-	.long SeqMixParam_Entry_075
+	.long SndParam_Part0D_SustainLength
+	.long SndParam_Part0D_SustainPedal
+	.long SndParam_Part0D_KeyScaling
+	.long SndParam_Part0D_GlidePedal
+	.long SndParam_Part0D_PartExp
 	.long SeqMixParam_Entry_076
-	.long SeqMixParam_Entry_077
-	.long SeqMixParam_Entry_078
-	.long SeqMixParam_Entry_079
-	.long SeqMixParam_Entry_080
+	.long SndParam_Part0D_AfterTouch
+	.long SndParam_Part0E_LocalControl
+	.long SndParam_Part0E_MidiChannel
+	.long SndParam_Part0E_MidiChannelOn
 	.long SeqMixParam_Entry_081
 	.long SeqMixParam_Entry_082
-	.long SeqMixParam_Entry_083
-	.long SeqMixParam_Entry_084
-	.long SeqMixParam_Entry_085
-	.long SeqMixParam_Entry_086
-	.long SeqMixParam_Entry_087
+	.long SndParam_Part0E_SustainLength
+	.long SndParam_Part0E_SustainPedal
+	.long SndParam_Part0E_KeyScaling
+	.long SndParam_Part0E_GlidePedal
+	.long SndParam_Part0E_PartExp
 	.long SeqMixParam_Entry_088
-	.long SeqMixParam_Entry_089
-	.long SeqMixParam_Entry_090
-	.long SeqMixParam_Entry_091
-	.long SeqMixParam_Entry_092
+	.long SndParam_Part0E_AfterTouch
+	.long SndParam_Part0F_LocalControl
+	.long SndParam_Part0F_MidiChannel
+	.long SndParam_Part0F_MidiChannelOn
 	.long SeqMixParam_Entry_093
 	.long SeqMixParam_Entry_094
-	.long SeqMixParam_Entry_095
-	.long SeqMixParam_Entry_096
-	.long SeqMixParam_Entry_097
-	.long SeqMixParam_Entry_098
-	.long SeqMixParam_Entry_099
+	.long SndParam_Part0F_SustainLength
+	.long SndParam_Part0F_SustainPedal
+	.long SndParam_Part0F_KeyScaling
+	.long SndParam_Part0F_GlidePedal
+	.long SndParam_Part0F_PartExp
 	.long SeqMixParam_Entry_100
-	.long SeqMixParam_Entry_101
-	.long SeqMixParam_Entry_102
-	.long SeqMixParam_Entry_103
-	.long SeqMixParam_Entry_104
+	.long SndParam_Part0F_AfterTouch
+	.long SndParam_Part10_LocalControl
+	.long SndParam_Part10_MidiChannel
+	.long SndParam_Part10_MidiChannelOn
 	.long SeqMixParam_Entry_105
 	.long SeqMixParam_Entry_106
-	.long SeqMixParam_Entry_107
-	.long SeqMixParam_Entry_108
-	.long SeqMixParam_Entry_109
-	.long SeqMixParam_Entry_110
-	.long SeqMixParam_Entry_111
+	.long SndParam_Part10_SustainLength
+	.long SndParam_Part10_SustainPedal
+	.long SndParam_Part10_KeyScaling
+	.long SndParam_Part10_GlidePedal
+	.long SndParam_Part10_PartExp
 	.long SeqMixParam_Entry_112
-	.long SeqMixParam_Entry_113
-	.long SeqMixParam_Entry_114
-	.long SeqMixParam_Entry_115
-	.long SeqMixParam_Entry_116
+	.long SndParam_Part10_AfterTouch
+	.long SndParam_Part11_LocalControl
+	.long SndParam_Part11_MidiChannel
+	.long SndParam_Part11_MidiChannelOn
 	.long SeqMixParam_Entry_117
 	.long SeqMixParam_Entry_118
-	.long SeqMixParam_Entry_119
-	.long SeqMixParam_Entry_120
-	.long SeqMixParam_Entry_121
-	.long SeqMixParam_Entry_122
-	.long SeqMixParam_Entry_123
+	.long SndParam_Part11_SustainLength
+	.long SndParam_Part11_SustainPedal
+	.long SndParam_Part11_KeyScaling
+	.long SndParam_Part11_GlidePedal
+	.long SndParam_Part11_PartExp
 	.long SeqMixParam_Entry_124
-	.long SeqMixParam_Entry_125
-	.long SeqMixParam_Entry_126
-	.long SeqMixParam_Entry_127
-	.long SeqMixParam_Entry_128
+	.long SndParam_Part11_AfterTouch
+	.long SndParam_Part12_LocalControl
+	.long SndParam_Part12_MidiChannel
+	.long SndParam_Part12_MidiChannelOn
 	.long SeqMixParam_Entry_129
 	.long SeqMixParam_Entry_130
-	.long SeqMixParam_Entry_131
-	.long SeqMixParam_Entry_132
-	.long SeqMixParam_Entry_133
-	.long SeqMixParam_Entry_134
-	.long SeqMixParam_Entry_135
+	.long SndParam_Part12_SustainLength
+	.long SndParam_Part12_SustainPedal
+	.long SndParam_Part12_KeyScaling
+	.long SndParam_Part12_GlidePedal
+	.long SndParam_Part12_PartExp
 	.long SeqMixParam_Entry_136
-	.long SeqMixParam_Entry_137
-	.long SeqMixParam_Entry_138
-	.long SeqMixParam_Entry_139
-	.long SeqMixParam_Entry_140
+	.long SndParam_Part12_AfterTouch
+	.long SndParam_Part13_LocalControl
+	.long SndParam_Part13_MidiChannel
+	.long SndParam_Part13_MidiChannelOn
 	.long SeqMixParam_Entry_141
 	.long SeqMixParam_Entry_142
-	.long SeqMixParam_Entry_143
-	.long SeqMixParam_Entry_144
-	.long SeqMixParam_Entry_145
-	.long SeqMixParam_Entry_146
-	.long SeqMixParam_Entry_147
+	.long SndParam_Part13_SustainLength
+	.long SndParam_Part13_SustainPedal
+	.long SndParam_Part13_KeyScaling
+	.long SndParam_Part13_GlidePedal
+	.long SndParam_Part13_PartExp
 	.long SeqMixParam_Entry_148
-	.long SeqMixParam_Entry_149
-	.long SeqMixParam_Entry_150
-	.long SeqMixParam_Entry_151
-	.long SeqMixParam_Entry_152
+	.long SndParam_Part13_AfterTouch
+	.long SndParam_Part14_LocalControl
+	.long SndParam_Part14_MidiChannel
+	.long SndParam_Part14_MidiChannelOn
 	.long SeqMixParam_Entry_153
 	.long SeqMixParam_Entry_154
-	.long SeqMixParam_Entry_155
-	.long SeqMixParam_Entry_156
-	.long SeqMixParam_Entry_157
-	.long SeqMixParam_Entry_158
-	.long SeqMixParam_Entry_159
+	.long SndParam_Part14_SustainLength
+	.long SndParam_Part14_SustainPedal
+	.long SndParam_Part14_KeyScaling
+	.long SndParam_Part14_GlidePedal
+	.long SndParam_Part14_PartExp
 	.long SeqMixParam_Entry_160
-	.long SeqMixParam_Entry_161
-	.long SeqMixParam_Entry_162
-	.long SeqMixParam_Entry_163
-	.long SeqMixParam_Entry_164
+	.long SndParam_Part14_AfterTouch
+	.long SndParam_Part15_LocalControl
+	.long SndParam_Part15_MidiChannel
+	.long SndParam_Part15_MidiChannelOn
 	.long SeqMixParam_Entry_165
 	.long SeqMixParam_Entry_166
-	.long SeqMixParam_Entry_167
-	.long SeqMixParam_Entry_168
-	.long SeqMixParam_Entry_169
-	.long SeqMixParam_Entry_170
-	.long SeqMixParam_Entry_171
+	.long SndParam_Part15_SustainLength
+	.long SndParam_Part15_SustainPedal
+	.long SndParam_Part15_KeyScaling
+	.long SndParam_Part15_GlidePedal
+	.long SndParam_Part15_PartExp
 	.long SeqMixParam_Entry_172
-	.long SeqMixParam_Entry_173
-	.long SeqMixParam_Entry_174
-	.long SeqMixParam_Entry_175
-	.long SeqMixParam_Entry_176
+	.long SndParam_Part15_AfterTouch
+	.long SndParam_Part16_LocalControl
+	.long SndParam_Part16_MidiChannel
+	.long SndParam_Part16_MidiChannelOn
 	.long SeqMixParam_Entry_177
 	.long SeqMixParam_Entry_178
-	.long SeqMixParam_Entry_179
-	.long SeqMixParam_Entry_180
-	.long SeqMixParam_Entry_181
-	.long SeqMixParam_Entry_182
-	.long SeqMixParam_Entry_183
+	.long SndParam_Part16_SustainLength
+	.long SndParam_Part16_SustainPedal
+	.long SndParam_Part16_KeyScaling
+	.long SndParam_Part16_GlidePedal
+	.long SndParam_Part16_PartExp
 	.long SeqMixParam_Entry_184
-	.long SeqMixParam_Entry_185
-	.long SeqMixParam_Entry_186
-	.long SeqMixParam_Entry_187
-	.long SeqMixParam_Entry_188
+	.long SndParam_Part16_AfterTouch
+	.long SndParam_Part17_LocalControl
+	.long SndParam_Part17_MidiChannel
+	.long SndParam_Part17_MidiChannelOn
 	.long SeqMixParam_Entry_189
 	.long SeqMixParam_Entry_190
-	.long SeqMixParam_Entry_191
-	.long SeqMixParam_Entry_192
-	.long SeqMixParam_Entry_193
-	.long SeqMixParam_Entry_194
-	.long SeqMixParam_Entry_195
+	.long SndParam_Part17_SustainLength
+	.long SndParam_Part17_SustainPedal
+	.long SndParam_Part17_KeyScaling
+	.long SndParam_Part17_GlidePedal
+	.long SndParam_Part17_PartExp
 	.long SeqMixParam_Entry_196
-	.long SeqMixParam_Entry_197
-	.long SeqMixParam_Entry_198
-	.long SeqMixParam_Entry_199
-	.long SeqMixParam_Entry_200
+	.long SndParam_Part17_AfterTouch
+	.long SndParam_Part18_LocalControl
+	.long SndParam_Part18_MidiChannel
+	.long SndParam_Part18_MidiChannelOn
 	.long SeqMixParam_Entry_201
 	.long SeqMixParam_Entry_202
-	.long SeqMixParam_Entry_203
-	.long SeqMixParam_Entry_204
-	.long SeqMixParam_Entry_205
-	.long SeqMixParam_Entry_206
-	.long SeqMixParam_Entry_207
+	.long SndParam_Part18_SustainLength
+	.long SndParam_Part18_SustainPedal
+	.long SndParam_Part18_KeyScaling
+	.long SndParam_Part18_GlidePedal
+	.long SndParam_Part18_PartExp
 	.long SeqMixParam_Entry_208
-	.long SeqMixParam_Entry_209
-	.long SeqMixParam_Entry_210
-	.long SeqMixParam_Entry_211
-	.long SeqMixParam_Entry_212
+	.long SndParam_Part18_AfterTouch
+	.long SndParam_Part19_LocalControl
+	.long SndParam_Part19_MidiChannel
+	.long SndParam_Part19_MidiChannelOn
 	.long SeqMixParam_Entry_213
 	.long SeqMixParam_Entry_214
-	.long SeqMixParam_Entry_215
-	.long SeqMixParam_Entry_216
-	.long SeqMixParam_Entry_217
-	.long SeqMixParam_Entry_218
-	.long SeqMixParam_Entry_219
+	.long SndParam_Part19_SustainLength
+	.long SndParam_Part19_SustainPedal
+	.long SndParam_Part19_KeyScaling
+	.long SndParam_Part19_GlidePedal
+	.long SndParam_Part19_PartExp
 	.long SeqMixParam_Entry_220
-	.long SeqMixParam_Entry_221
+	.long SndParam_Part19_AfterTouch
 	.long SeqMixParam_Entry_222
 	.long SeqMixParam_Entry_223
 	.long SeqMixParam_Entry_224
 	.long SeqMixParam_Entry_225
 	.long SeqMixParam_Entry_226
-	.long SeqMixParam_Entry_227
+	.long SndParam_LeftHold
 	.long SeqMixParam_Entry_228
 	.long NakaInst_Param_Bitmap80
 	.long NakaInst_Param_Field81A
@@ -1070,15 +1070,15 @@ SndParam_RegisterLoop_Data:
 	.long NakaInst_Param_Field81C
 	.long NakaInst_Param_Field84
 	.long NakaInst_Param_Term00
-	.long NakaInst_Param_Idx01_88
-	.long NakaInst_Param_Idx02_88
+	.long SndParam_Msp_Volume
+	.long SndParam_Msp_Reverb
 	.long NakaInst_Param_Idx03_88
 	.long NakaInst_Param_Idx04_88
 	.long NakaInst_Param_Idx05_88
 	.long NakaInst_Param_Idx06_88
 	.long NakaInst_Param_Idx07_88
 	.long NakaInst_Param_Idx08_88
-	.long NakaInst_Param_Idx0B_88
+	.long SndParam_Msp_Mute
 	.long NakaInst_Param_IdxA0_00
 	.long NakaInst_Param_IdxA0_01
 ; 7 x u32 routine pointers, one per record type; SndParam_RO_Dispatch (0xFCD4C9):
@@ -1145,12 +1145,11 @@ SndParam_DispatchTypeDE5_Data:
 ; 256 x u32 RAM block addresses, 0 = no block, indexed by a descriptor's +4 byte:
 ; SndParam_ReadRegField (0xFCD9C1) does `ld c,(xwa+4); sla bc,2; lda xde,(<this>);
 ; ld_rrl xde,xde,bc; or xde,xde; ret z` (20 sites in all, e.g.
-; SndParam_DecodeMidiAddr_Skip2 0xFCD990).  Entry 0x48 is also read directly by
+; SndParam_ResolveWidgetVariant2_Data_Skip2 0xFCD990).  Entry 0x48 is also read directly by
 ; SndParam_ClampReverbTime (0xFCE9B0) and SndParam_ClampDelayTime (0xFCEA43)
 ; (`ldl_da xwa,(<this>+0x120)`).  Entries 0-22 equal PartRecord_RamPtrTable's
 ; (0xF9B6 + 0x1A*i).  256 entries = exactly up to the string that follows.
 SndParam_BlockRamPtrs:
-SndParam_DMA_Zone2Check_Data:
 	.long 0x0000f9b6, 0x0000f9d0, 0x0000f9ea, 0x0000fa04	; 0x00
 	.long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa6c	; 0x04
 	.long 0x0000fa86, 0x0000faa0, 0x0000faba, 0x0000fad4	; 0x08

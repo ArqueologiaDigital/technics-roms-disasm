@@ -231,6 +231,159 @@ Which of these a part may edit is a per-part bit mask, `PartParam_EnableMask[30]
 6 GlidePedal, 5 SustainPedal, 4 KeyScaling, 3 DigitalEffect, 2 AfterTouch, 1 MidiChannel, 0 LocalControl.
 
 
+## 8. Round 2: every key the firmware itself identifies (2026-10-17)
+
+`scripts/renaming/gen_sndparam_desc_names_r2.py` names the descriptors that sections 5-7 left with their
+address-bucketed aliases (`ExtPartParam_Entry_NNN`, `MidiChParam_Entry_NNN`, ...). It finds each descriptor
+through the 972-pointer registry that `SndParam_RegisterLoop` walks and reads its 18 bytes from the ROM, so v10,
+v9 and v7 are handled the same way. Every rule asserts the record, byte and mask it expects. A field moved in one
+tree stops the script. It names **319 descriptors per tree**. 259 keep their aliases (listed below).
+
+### The firmware's own key decode
+
+`SndParam_KeyToLswPartNumber` (v10 `0xFCD7C5`, `audio/sndparam_routines.s`; it was `SndParam_DecodeMidiAddr`)
+looks a key up in the hash table and, when it is found, splits it into the Lsw (part, number) pair:
+
+    0x8000  <= key <= 0x17FFF:  part = ((key - 0x8000) >> 10) & 0x3F,   number = key & 0x3FF
+    0x18000 <= key <= 0x27FFF:  part = ((key - 0x8000) >> 10) & 0x3F,   number = (key & 0x3FF) + 0x400
+
+So section 1's law has a second half. Keys `0x18000 + 0x400*T + k` are part `T`'s Lsw numbers `0x400 + k`, the
+number space the Lsw functions in section 7 answer with `0x400`, `0x401` and `0x600`-`0x606`.
+
+### Per-part fields named from the Lsw functions
+
+Each Lsw part-parameter function answers `EVT_GET_LSW_DATA_NO` with one number (section 7 has the first ten). The
+rest are below. `LswMidiChannel`'s `EVT_GET_LSW_STRING` arm prints `"OFF"` instead of `"CH%2d"` when
+`(part, 0x402)` reads 0, so `0x402` is the part's MIDI-channel ON flag. Every field sits on the same (byte, mask)
+of its part's own record in all the parts that carry it. The script asserts this.
+
+| Lsw number | key               | name suffix      | parts T        | byte | mask | range | firmware basis            |
+|------------|-------------------|------------------|----------------|------|------|-------|---------------------------|
+| 0x293      | 0x8293 + 0x400*T  | `_DrawRelease`   | 0x00-0x02 (3)  | +2   | 0x0F | 0..15 | LswDrawRelease            |
+| 0x294      | 0x8294 + 0x400*T  | `_DrawAttack`    | 0x00-0x02 (3)  | +2   | 0xF0 | 0..15 | LswDrawAttack             |
+| 0x2CB      | 0x82CB + 0x400*T  | `_PercLevel`     | 0x00-0x02 (3)  | +1   | 0xF0 | 0..15 | LswPercLevel              |
+| 0x2CC      | 0x82CC + 0x400*T  | `_PercDecay`     | 0x00-0x02 (3)  | +1   | 0x0F | 0..15 | LswPercDecay              |
+| 0x400      | 0x18000 + 0x400*T | `_LocalControl`  | 0x00-0x19 (26) | +13  | 0x20 | 0..1  | LswLocalControl           |
+| 0x401      | 0x18001 + 0x400*T | `_MidiChannel`   | 0x00-0x19 (26) | +13  | 0x0F | 0..15 | LswMidiChannel            |
+| 0x402      | 0x18002 + 0x400*T | `_MidiChannelOn` | 0x00-0x19 (26) | +13  | 0x40 | 0..1  | LswMidiChannel (OFF test) |
+| 0x600      | 0x18200 + 0x400*T | `_SustainLength` | 0x00-0x19 (26) | +4   | 0x07 | 0..7  | LswSustainLength          |
+| 0x601      | 0x18201 + 0x400*T | `_SustainPedal`  | 0x00-0x19 (26) | +4   | 0x10 | 0..1  | LswSustainPedal           |
+| 0x602      | 0x18202 + 0x400*T | `_KeyScaling`    | 0x00-0x19 (26) | +12  | 0x08 | 0..1  | LswKeyScaling             |
+| 0x603      | 0x18203 + 0x400*T | `_GlidePedal`    | 0x00-0x19 (26) | +12  | 0x20 | 0..1  | LswGlidePedal             |
+| 0x604      | 0x18204 + 0x400*T | `_PartExp`       | 0x00-0x19 (26) | +4   | 0x20 | 0..1  | LswPartExp                |
+| 0x606      | 0x18206 + 0x400*T | `_AfterTouch`    | 0x00-0x19 (26) | +12  | 0x10 | 0..1  | LswAfterTouch             |
+
+The `+13` byte of a part record therefore holds the MIDI channel (low nibble), LOCAL CONTROL (bit 5) and the
+channel ON flag (bit 6). Bit 7 is `0x403`, which is not identified.
+
+### Global keys
+
+Each of these comes from a screen or a dispatcher that already names the value. The grids' row captions are
+the `fixedrow` strings of their widgets: OVERALL TOUCH SENSITIVITY and FOOT CONTROLLERS in
+`naka_ctrl_menu_body.bin` (+0x592, +0x3CE), and the VOCALIST WORKSTATION grid in `naka_midi_reverb.bin`
+(+0x3982). The Vocalist case table, `VocalistGridCheck_LswCaseTable` (it was `MidiPart_ColWidthData`), is indexed
+by `key - 0x2D00`. `MainGetPmemName` reads `0x300` as the current panel-memory number (bank = (n - 1) >> 3). Lsw functions that edit one global value answer `EVT_GET_LSW_ADDRESS` with its key:
+`LswLeftHold` gives `0x28082`, `LswOrchestrator` `0x4201`, the computer-connect screen's `MdCmptCnct` `0x2C00` (its string arm draws the three MIDI connection diagrams for 0/1/2: normal, "KN as master", "KN as slave"), `LswScalingMode` / `Type` / `Shift` `0x4280` / `0x4281` /
+`0x4282`, and `LswVolume` / `LswMute` / `LswReverb` give `0x28801` / `0x2880B` / `0x28802` for part `0x17` (the
+MSP).
+
+| key     | name                                     | record | byte | mask | range   | basis                                                                  |
+|---------|------------------------------------------|--------|------|------|---------|------------------------------------------------------------------------|
+| 0x00004 | `SndParam_Tempo`                         | 0x48   | +8   | 0xFF | 40..255 | record 0x48 +8 (SeqTimer_PostTempoUpdate)                              |
+| 0x00100 | `SndParam_InitialTouch_VelocitySense`    | 0x93   | +0   | 0x0F | 0..9    | OVERALL TOUCH SENSITIVITY grid, row VELOCITY SENSE                     |
+| 0x00102 | `SndParam_AfterTouch_Curve`              | 0x93   | +5   | 0xFF | 1..10   | OVERALL TOUCH SENSITIVITY grid, AFTER TOUCH rows                       |
+| 0x00103 | `SndParam_AfterTouch_Threshold`          | 0x93   | +6   | 0x7F | 1..127  | OVERALL TOUCH SENSITIVITY grid, AFTER TOUCH rows                       |
+| 0x00104 | `SndParam_AfterTouch_OnOff`              | 0x93   | +6   | 0x80 | 0..1    | OVERALL TOUCH SENSITIVITY grid, AFTER TOUCH rows                       |
+| 0x00300 | `SndParam_PanelMemory_Number`            | 0x98   | +1   | 0x7F | 0..80   | MainGetPmemName: bank = (n - 1) >> 3                                   |
+| 0x02100 | `SndParam_MidiIn_Right1Input`            | 0x80   | +3   | 0x01 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02101 | `SndParam_MidiIn_AutoPlayChord`          | 0x80   | +3   | 0x04 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02181 | `SndParam_MidiOut_TechniChord`           | 0x80   | +3   | 0x80 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02182 | `SndParam_MidiOut_DrumPattern`           | 0x80   | +0   | 0x40 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02183 | `SndParam_MidiOut_AutoPlayChord`         | 0x80   | +3   | 0x40 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02184 | `SndParam_MidiOut_Transpose`             | 0x80   | +0   | 0x20 | 0..1    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x02880 | `SndParam_FootCtrl_ExpressionPedal`      | 0x99   | +2   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x02886 | `SndParam_FootCtrl_FootSwitch1`          | 0x99   | +4   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x02888 | `SndParam_FootCtrl_FootSwitch2`          | 0x99   | +5   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x0288A | `SndParam_FootCtrl_FootContSw1`          | 0x99   | +6   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x0288C | `SndParam_FootCtrl_FootContSw2`          | 0x99   | +7   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x0288E | `SndParam_FootCtrl_FootContSw3`          | 0x99   | +8   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x02890 | `SndParam_FootCtrl_FootContSw4`          | 0x99   | +9   | 0xFF | 0..199  | FOOT CONTROLLERS grid (FSWAssGrid)                                     |
+| 0x02C00 | `SndParam_ComputerConnectMode`           | 0x98   | +14  | 0x03 | 0..2    | MdCmptCnct's EVT_GET_LSW_ADDRESS; 0/1/2 pick its 3 connection diagrams |
+| 0x02D00 | `SndParam_Vocalist_MidiChannel`          | 0x47   | +1   | 0x1F | 0..17   | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D01 | `SndParam_Vocalist_MidiChannelSend`      | 0x47   | +0   | 0x01 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D02 | `SndParam_Vocalist_Program`              | 0x47   | +2   | 0x7F | 0..99   | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D03 | `SndParam_Vocalist_ProgramSend`          | 0x47   | +0   | 0x02 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D04 | `SndParam_Vocalist_Harmony`              | 0x47   | +3   | 0x07 | 0..7    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D05 | `SndParam_Vocalist_HarmonySend`          | 0x47   | +0   | 0x04 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D06 | `SndParam_Vocalist_Key`                  | 0x47   | +3   | 0xF0 | 0..11   | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D07 | `SndParam_Vocalist_KeySend`              | 0x47   | +0   | 0x08 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D08 | `SndParam_Vocalist_ProgChangeOption`     | 0x47   | +4   | 0xC0 | 0..3    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D09 | `SndParam_Vocalist_ProgChangeOptionSend` | 0x47   | +0   | 0x10 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0A | `SndParam_Vocalist_ControlVolume`        | 0x47   | +5   | 0x7F | 0..121  | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0B | `SndParam_Vocalist_ControlVolumeSend`    | 0x47   | +0   | 0x20 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0C | `SndParam_Vocalist_VocoderKeySplit`      | 0x47   | +6   | 0xFF | 0..255  | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0D | `SndParam_Vocalist_VocoderKeySplitNote`  | 0x47   | +6   | 0x7F | 0..127  | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0E | `SndParam_Vocalist_VocoderKeySplitSide`  | 0x47   | +6   | 0x80 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D0F | `SndParam_Vocalist_VocoderIgnore`        | 0x47   | +0   | 0x40 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D10 | `SndParam_Vocalist_ChordalKeySplit`      | 0x47   | +7   | 0xFF | 0..255  | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D11 | `SndParam_Vocalist_ChordalKeySplitNote`  | 0x47   | +7   | 0x7F | 0..127  | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D12 | `SndParam_Vocalist_ChordalKeySplitSide`  | 0x47   | +7   | 0x80 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x02D13 | `SndParam_Vocalist_ChordalIgnore`        | 0x47   | +0   | 0x80 | 0..1    | VOCALIST WORKSTATION grid (VocalistGridCheck)                          |
+| 0x04002 | `SndParam_ReverbOnOff`                   | 0x60   | +1   | 0x80 | 0..127  | SndParam_ApplySystemParam case                                         |
+| 0x04003 | `SndParam_DigitalEffectOnOff`            | 0x70   | +0   | 0x04 | 0..1    | SndParam_ApplySystemParam case                                         |
+| 0x04004 | `SndParam_AcousticIllusionOnOff`         | 0x60   | +1   | 0x40 | 0..1    | SndParam_ApplySystemParam case                                         |
+| 0x04006 | `SndParam_EqualizerOnOff`                | 0x60   | +1   | 0x20 | 0..1    | SndParam_ApplySystemParam case                                         |
+| 0x04141 | `SndParam_Mic_Volume`                    | 0x43   | +1   | 0x7F | 0..127  | mixer channel 27 MIC (AcMixerVol_Channels)                             |
+| 0x04142 | `SndParam_Mic_Mute`                      | 0x43   | +1   | 0x80 | 0..1    | mixer channel 27 MIC (AcMixerVol_Channels)                             |
+| 0x04201 | `SndParam_Orchestrator`                  | 0x70   | +3   | 0xFF | 0..255  | LswOrchestrator's EVT_GET_LSW_ADDRESS                                  |
+| 0x04280 | `SndParam_ScaleTune_OnOff`               | 0x92   | +1   | 0x80 | 0..1    | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04281 | `SndParam_ScaleTune_Type`                | 0x92   | +0   | 0xFF | 0..128  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04282 | `SndParam_ScaleTune_Key`                 | 0x92   | +1   | 0x0F | 0..11   | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04283 | `SndParam_ScaleTune_UserNote0`           | 0x92   | +2   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04284 | `SndParam_ScaleTune_UserNote1`           | 0x92   | +3   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04285 | `SndParam_ScaleTune_UserNote2`           | 0x92   | +4   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04286 | `SndParam_ScaleTune_UserNote3`           | 0x92   | +5   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04287 | `SndParam_ScaleTune_UserNote4`           | 0x92   | +6   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04288 | `SndParam_ScaleTune_UserNote5`           | 0x92   | +7   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04289 | `SndParam_ScaleTune_UserNote6`           | 0x92   | +8   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x0428A | `SndParam_ScaleTune_UserNote7`           | 0x92   | +9   | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x0428B | `SndParam_ScaleTune_UserNote8`           | 0x92   | +10  | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x0428C | `SndParam_ScaleTune_UserNote9`           | 0x92   | +11  | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x0428D | `SndParam_ScaleTune_UserNote10`          | 0x92   | +12  | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x0428E | `SndParam_ScaleTune_UserNote11`          | 0x92   | +13  | 0xFF | 0..255  | SndParam_ApplySystemParam cases; LswScaling* addresses                 |
+| 0x04900 | `SndParam_DspEffect_Algorithm`           | 0x61   | +0   | 0xFF | 0..255  | format-3 importer, slot 0 (record 0x61)                                |
+| 0x04B00 | `SndParam_DigitalReverb_Algorithm`       | 0x63   | +0   | 0xFF | 0..255  | format-3 importer, slot 1 (record 0x63)                                |
+| 0x05000 | `SndParam_MidiIn_VelocityMode`           | 0x80   | +10  | 0x03 | 0..2    | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x05001 | `SndParam_MidiIn_VelocityOffset`         | 0x80   | +11  | 0xFF | 0..255  | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x05002 | `SndParam_MidiIn_VelocityFixed`          | 0x80   | +12  | 0xFF | 1..127  | MIDI IN/OUT grid (InOutGridCheck)                                      |
+| 0x0E807 | `SndParam_Metronome_Volume`              | 0x98   | +4   | 0x7F | 0..127  | mixer channel 26 METR (AcMixerVol_Channels)                            |
+| 0x0E808 | `SndParam_Metronome_Mute`                | 0x98   | +4   | 0x80 | 0..1    | mixer channel 26 METR (AcMixerVol_Channels)                            |
+| 0x28082 | `SndParam_LeftHold`                      | 0x90   | +3   | 0x01 | 0..1    | LswLeftHold's EVT_GET_LSW_ADDRESS                                      |
+| 0x28801 | `SndParam_Msp_Volume`                    | 0x72   | +3   | 0x7F | 0..127  | LswVolume / LswMute / LswReverb answer for part 0x17                   |
+| 0x28802 | `SndParam_Msp_Reverb`                    | 0x72   | +7   | 0x7F | 0..127  | LswVolume / LswMute / LswReverb answer for part 0x17                   |
+| 0x2880B | `SndParam_Msp_Mute`                      | 0x72   | +3   | 0x80 | 0..1    | LswVolume / LswMute / LswReverb answer for part 0x17                   |
+
+The FOOT CONTROLLERS values are function numbers `0..199` (`FswAssign_FunctionCodes`). `+0` and `+1` of record
+`0x99` carry one flag bit per controller (`0x2887`, `0x2889`, ... `0x289D`), and `+10..+15` six more function
+bytes that the KN5000's grid never shows. Neither is named here.
+
+### Still unnamed (259 per tree)
+
+| record                 | keys                                                                                          | what is known                                                                                       |
+|------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| parts 0x00-0x19        | `0x18003`, `0x18004`, `0x18205` + 0x400*T                                                     | Lsw 0x403 (`+13` bit 7), 0x404, 0x605 (`+22` bit 0): no Lsw function answers them                   |
+| 0x44 / 0x45 / 0x46     | `0x221`, `0x2C0`, `0x2C1` in each                                                             | drawbar `+8` low nibble, `+7` bits 4/5. `IvDrawbar` reads 0x2C1 / 0x2C0 as its upper / lower switch |
+| 0xAE, 0xB1, 0xB4       | k = `0x78`, `0x1B0`, `0x1B2`, 25 parts each                                                   | virtual records: no RAM block in `SndParam_BlockRamPtrs`, special accessors                         |
+| 0x43                   | `0x4140`                                                                                      | MIC record `+0` bit 7                                                                               |
+| 0x48                   | `0x5`, `0x4200`, `0x28000`-`0x28002`, `0x28080`, `0x28081`                                    | style number (`+0/+1`), run/pedal flags                                                             |
+| 0x62, 0x64, 0x65, 0x66 | `0x4A00`, `0x4C00`, `0x4D00`, `0x4E00`                                                        | algorithm byte of the other effect slots; which slot is which is not settled                        |
+| 0x70                   | `0x3`, `0x2A00`-`0x2A12`, `0x4180`, `0x4181`, `0x4202`                                        | digital-effect record (`README-lsw-nonpart-records.md`)                                             |
+| 0x80                   | 22 keys `0x2200`-`0x229A`                                                                     | sequencer / MIDI-clock control bits                                                                 |
+| 0x90, 0x91             | `0x40E0`, `0x4100`, `0x28083`, `0xC0`, `0xC1`                                                 |                                                                                                     |
+| 0x98                   | 26 keys (`0x301`, `0x302`, `0x400`, `0x401`, `0x2900`-`0x2911`, `0x4080`/`81`, `0x40C0`/`C1`) | `0x302` = 1 keeps the accompaniment on panel-memory recall (`PanelMemory_RecallKeepAccompaniment`)  |
+| 0x99                   | 20 keys                                                                                       | the flag bits and the six unshown function bytes above                                              |
+| 0xB0                   | `0x4000`, `0x4001`, `0x4005`                                                                  | `0x4005` is written by `CompIface_WriteVolume`                                                      |
+
 ## PROVEN vs INFERRED
 
 **PROVEN:** the part namespace law and its ten field constants; that only the three drawbar

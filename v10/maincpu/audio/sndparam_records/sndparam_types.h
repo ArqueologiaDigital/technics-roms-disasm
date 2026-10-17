@@ -23,7 +23,7 @@
  *                       whole at :3196 `cp xiz, xde`.  Byte +0x03 is 0 in all
  *                       972 records, so it is effectively 24-bit.
  *   +0x04 bank_index    `ld c,(xwa+4)` / `extz bc` / `sla bc,2` / `lda_24 xde,
- *                       (SndParam_DMA_Zone2Check_Data)` :813-816 -- x4 index
+ *                       (SndParam_BlockRamPtrs)` :813-816 -- x4 index
  *                       into the RAM-bank pointer table at 0xEE1160, whose
  *                       entries are 26 bytes apart (0xF9B6, 0xF9D0, ...).
  *                       `or xde,xde; ret z` -- a null bank aborts the access.
@@ -91,6 +91,12 @@
  * here only because the pointer table names them.
  *
  * Generated-alongside: scripts/generators/gen_sndparam_records_c.py.
+ */
+/* 2026-10-17: scripts/renaming/gen_sndparam_desc_names_r2.py replaced 319 of those
+ * aliases (and three NakaInst_Param_Idx*_88 names) by the names the firmware gives
+ * the keys -- its Lsw functions, the screens that edit them, SndParam_ApplySystemParam
+ * and the mixer channel table: analysis/disk-format-probes/README-lsw-param-namespace-map.md
+ * section 8.  The aliases still present are address-bucketed as described above.
  */
 #ifndef SNDPARAM_TYPES_H
 #define SNDPARAM_TYPES_H

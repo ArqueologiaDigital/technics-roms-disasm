@@ -6,7 +6,7 @@
 
 const sndparam_descriptor_t run_edc7fa[9]
     __attribute__((section(".text"), used)) = {
-    /* [  0] 0xEDC7FA  MidiChParam_Entry_085 */
+    /* [  0] 0xEDC7FA  SndParam_MidiIn_VelocityFixed */
     { .key = 0x00005002, .bank_index = 0x80, .bank_offset = 0x0C,
       .mask = 0xFF, .clamp_min = 0x01, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,

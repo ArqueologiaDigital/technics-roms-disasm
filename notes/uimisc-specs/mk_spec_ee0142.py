@@ -68,7 +68,7 @@ obj(0xEE1160, 0xEE1560, "SndParam_BlockRamPtrs", "long", [
     "256 x u32 RAM block addresses, 0 = no block, indexed by a descriptor's +4 byte:",
     "SndParam_ReadRegField (0xFCD9C1) does `ld c,(xwa+4); sla bc,2; lda xde,(<this>);",
     "ld_rrl xde,xde,bc; or xde,xde; ret z` (20 sites in all, e.g.",
-    "SndParam_DecodeMidiAddr_Skip2 0xFCD990).  Entry 0x48 is also read directly by",
+    "SndParam_ResolveWidgetVariant2_Data_Skip2 0xFCD990).  Entry 0x48 is also read directly by",
     "SndParam_ClampReverbTime (0xFCE9B0) and SndParam_ClampDelayTime (0xFCEA43)",
     "(`ldl_da xwa,(<this>+0x120)`).  Entries 0-22 equal PartRecord_RamPtrTable's",
     "(0xF9B6 + 0x1A*i).  256 entries = exactly up to the string that follows."],

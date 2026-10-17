@@ -3743,7 +3743,7 @@ VocalistGridCheck_Join4:
 	cp	xwa, 19
 	jrl	ugt, AcVocalist_ReturnZero
 	add	xwa, xwa
-	add	xwa, MidiPart_ColWidthData
+	add	xwa, VocalistGridCheck_LswCaseTable
 	ld	wa, (xwa)
 	lda	xix, (VocalistGrid_DispatchData_Code:24)
 	jp	t, (xix+wa)

@@ -1068,12 +1068,12 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint16_t VocalistGrid_DispatchData_CaseTable[20];
     /* ---------------------------------------------------------------------
-     * MidiPart_ColWidthData -- jump table of a compiled `switch` in
+     * VocalistGridCheck_LswCaseTable -- jump table of a compiled `switch` in
      * VocalistGrid_DispatchData (v10/v9 0xF73938, v7 0xF73534) (`.long
-     * MidiPart_ColWidthData`): 20 u16 case offsets from
+     * VocalistGridCheck_LswCaseTable`): 20 u16 case offsets from
      * VocalistGrid_DispatchData_Code.
      * --------------------------------------------------------------------- */
-    uint16_t MidiPart_ColWidthData[20];
+    uint16_t VocalistGridCheck_LswCaseTable[20];
     /* ---------------------------------------------------------------------
      * VocalistGridCheck_CaseTable -- jump table of a compiled `switch` in
      * VocalistGridCheck (v10/v9 0xF738D2, v7 0xF734CE) (`add xwa,
@@ -12404,7 +12404,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         0x0210, 0x02C5, 0x02C5, 0x0285,
     },
 
-    .MidiPart_ColWidthData = {
+    .VocalistGridCheck_LswCaseTable = {
         0x0000, 0x01CA, 0x004C, 0x01CA, 0x0073, 0x01CA, 0x009A, 0x01CA,
         0x00CC, 0x01CA, 0x0114, 0x01CA, 0x015E, 0x0516, 0x0516, 0x01CA,
         0x015E, 0x0516, 0x0516, 0x01CA,

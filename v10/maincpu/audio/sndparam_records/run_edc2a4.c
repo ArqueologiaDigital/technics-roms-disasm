@@ -6,7 +6,7 @@
 
 const sndparam_descriptor_t run_edc2a4[22]
     __attribute__((section(".text"), used)) = {
-    /* [  0] 0xEDC2A4  MidiChParam_Entry_031 */
+    /* [  0] 0xEDC2A4  SndParam_Vocalist_ControlVolumeSend */
     { .key = 0x00002D0B, .bank_index = 0x47, .bank_offset = 0x00,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -16,7 +16,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  1] 0xEDC2B6  MidiChParam_Entry_032 */
+    /* [  1] 0xEDC2B6  SndParam_Vocalist_VocoderKeySplit */
     { .key = 0x00002D0C, .bank_index = 0x47, .bank_offset = 0x06,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -26,7 +26,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  2] 0xEDC2C8  MidiChParam_Entry_033 */
+    /* [  2] 0xEDC2C8  SndParam_Vocalist_VocoderKeySplitNote */
     { .key = 0x00002D0D, .bank_index = 0x47, .bank_offset = 0x06,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -36,7 +36,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  3] 0xEDC2DA  MidiChParam_Entry_034 */
+    /* [  3] 0xEDC2DA  SndParam_Vocalist_VocoderKeySplitSide */
     { .key = 0x00002D0E, .bank_index = 0x47, .bank_offset = 0x06,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -46,7 +46,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  4] 0xEDC2EC  MidiChParam_Entry_035 */
+    /* [  4] 0xEDC2EC  SndParam_Vocalist_VocoderIgnore */
     { .key = 0x00002D0F, .bank_index = 0x47, .bank_offset = 0x00,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -56,7 +56,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  5] 0xEDC2FE  MidiChParam_Entry_036 */
+    /* [  5] 0xEDC2FE  SndParam_Vocalist_ChordalKeySplit */
     { .key = 0x00002D10, .bank_index = 0x47, .bank_offset = 0x07,
       .mask = 0xFF, .clamp_min = 0x00, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -66,7 +66,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  6] 0xEDC310  MidiChParam_Entry_037 */
+    /* [  6] 0xEDC310  SndParam_Vocalist_ChordalKeySplitNote */
     { .key = 0x00002D11, .bank_index = 0x47, .bank_offset = 0x07,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -76,7 +76,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  7] 0xEDC322  MidiChParam_Entry_038 */
+    /* [  7] 0xEDC322  SndParam_Vocalist_ChordalKeySplitSide */
     { .key = 0x00002D12, .bank_index = 0x47, .bank_offset = 0x07,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -86,7 +86,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  8] 0xEDC334  MidiChParam_Entry_039 */
+    /* [  8] 0xEDC334  SndParam_Vocalist_ChordalIgnore */
     { .key = 0x00002D13, .bank_index = 0x47, .bank_offset = 0x00,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -116,7 +116,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 11] 0xEDC36A  MidiChParam_Entry_042 */
+    /* [ 11] 0xEDC36A  SndParam_ReverbOnOff */
     { .key = 0x00004002, .bank_index = 0x60, .bank_offset = 0x01,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x7F, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0x00,
@@ -126,7 +126,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 1, /* SndParam_EncodeFieldSub_Data / SndParam_DecodeFieldAlt_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 12] 0xEDC37C  MidiChParam_Entry_043 */
+    /* [ 12] 0xEDC37C  SndParam_DigitalEffectOnOff */
     { .key = 0x00004003, .bank_index = 0x70, .bank_offset = 0x00,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -136,7 +136,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 13] 0xEDC38E  MidiChParam_Entry_044 */
+    /* [ 13] 0xEDC38E  SndParam_AcousticIllusionOnOff */
     { .key = 0x00004004, .bank_index = 0x60, .bank_offset = 0x01,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -156,7 +156,7 @@ const sndparam_descriptor_t run_edc2a4[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 15] 0xEDC3B2  MidiChParam_Entry_046 */
+    /* [ 15] 0xEDC3B2  SndParam_EqualizerOnOff */
     { .key = 0x00004006, .bank_index = 0x60, .bank_offset = 0x01,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,

@@ -16,7 +16,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  1] 0xEDBAD2  VoiceCtrlR1_Entry_002 */
+    /* [  1] 0xEDBAD2  SndParam_Tempo */
     { .key = 0x00000004, .bank_index = 0x48, .bank_offset = 0x08,
       .mask = 0xFF, .clamp_min = 0x28, .clamp_max = 0xFF, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0x00,
@@ -56,7 +56,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  5] 0xEDBB1A  VoiceCtrlR1_Entry_006 */
+    /* [  5] 0xEDBB1A  SndParam_InitialTouch_VelocitySense */
     { .key = 0x00000100, .bank_index = 0x93, .bank_offset = 0x00,
       .mask = 0x0F, .clamp_min = 0x00, .clamp_max = 0x09, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -66,7 +66,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  6] 0xEDBB2C  VoiceCtrlR1_Entry_007 */
+    /* [  6] 0xEDBB2C  SndParam_AfterTouch_Curve */
     { .key = 0x00000102, .bank_index = 0x93, .bank_offset = 0x05,
       .mask = 0xFF, .clamp_min = 0x01, .clamp_max = 0x0A, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -76,7 +76,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  7] 0xEDBB3E  VoiceCtrlR1_Entry_008 */
+    /* [  7] 0xEDBB3E  SndParam_AfterTouch_Threshold */
     { .key = 0x00000103, .bank_index = 0x93, .bank_offset = 0x06,
       .mask = 0x7F, .clamp_min = 0x01, .clamp_max = 0x7F, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -86,7 +86,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  8] 0xEDBB50  VoiceCtrlR1_Entry_009 */
+    /* [  8] 0xEDBB50  SndParam_AfterTouch_OnOff */
     { .key = 0x00000104, .bank_index = 0x93, .bank_offset = 0x06,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -96,7 +96,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [  9] 0xEDBB62  VoiceCtrlR1_Entry_010 */
+    /* [  9] 0xEDBB62  SndParam_PanelMemory_Number */
     { .key = 0x00000300, .bank_index = 0x98, .bank_offset = 0x01,
       .mask = 0x7F, .clamp_min = 0x00, .clamp_max = 0x50, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -146,7 +146,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 14] 0xEDBBBC  VoiceCtrlR1_Entry_015 */
+    /* [ 14] 0xEDBBBC  SndParam_MidiIn_Right1Input */
     { .key = 0x00002100, .bank_index = 0x80, .bank_offset = 0x03,
       .mask = 0x01, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x00, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -156,7 +156,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 15] 0xEDBBCE  VoiceCtrlR1_Entry_016 */
+    /* [ 15] 0xEDBBCE  SndParam_MidiIn_AutoPlayChord */
     { .key = 0x00002101, .bank_index = 0x80, .bank_offset = 0x03,
       .mask = 0x04, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x02, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -166,7 +166,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 16] 0xEDBBE0  VoiceCtrlR1_Entry_017 */
+    /* [ 16] 0xEDBBE0  SndParam_MidiOut_TechniChord */
     { .key = 0x00002181, .bank_index = 0x80, .bank_offset = 0x03,
       .mask = 0x80, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x07, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -176,7 +176,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 17] 0xEDBBF2  VoiceCtrlR1_Entry_018 */
+    /* [ 17] 0xEDBBF2  SndParam_MidiOut_DrumPattern */
     { .key = 0x00002182, .bank_index = 0x80, .bank_offset = 0x00,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -186,7 +186,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 18] 0xEDBC04  VoiceCtrlR1_Entry_019 */
+    /* [ 18] 0xEDBC04  SndParam_MidiOut_AutoPlayChord */
     { .key = 0x00002183, .bank_index = 0x80, .bank_offset = 0x03,
       .mask = 0x40, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x06, .xor_value = 0x00,
       .aux_index = 0xFF,
@@ -196,7 +196,7 @@ const sndparam_descriptor_t run_edbac0[22]
       .codec             = 0, /* SndParam_EncodeFieldDirect_Data / SndParam_DecodeField_Data */
       .write_accessor    = 0, /* SndParam_ReturnInvalid */
       .unknown_0x11 = 0xFF },
-    /* [ 19] 0xEDBC16  VoiceCtrlR1_Entry_020 */
+    /* [ 19] 0xEDBC16  SndParam_MidiOut_Transpose */
     { .key = 0x00002184, .bank_index = 0x80, .bank_offset = 0x00,
       .mask = 0x20, .clamp_min = 0x00, .clamp_max = 0x01, .shift = 0x05, .xor_value = 0x00,
       .aux_index = 0xFF,
