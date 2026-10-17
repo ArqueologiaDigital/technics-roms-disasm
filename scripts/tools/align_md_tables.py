@@ -4,7 +4,8 @@
 QUESTION IT ANSWERS / WHAT IT DOES
   The owner reads .md files raw, so every table must use aligned columns (`| cell   |`, separator dashes the full
   padded width), never the compact `|a|b|` form.  This rewrites every table that starts inside a line range of a
-  file: each column is padded to its widest cell, left-aligned, one space either side.  A `|` inside backticks is
+  file: each column is padded to its widest cell, left-aligned, one space either side; a separator
+  row keeps its `:` alignment markers.  A `|` inside backticks is
   kept as cell text.  Lines outside tables are not touched.
 
 RUN
@@ -46,7 +47,12 @@ def align(rows):
     out = []
     for c in cells:
         if is_sep(c):
-            out.append("|" + "|".join("-" * (w[i] + 2) for i in range(n)) + "|")
+            # keep each column's alignment markers (:--- left, ---: right, :---: centre)
+            def dash(i):
+                s = c[i]
+                lead, tail = s.startswith(":"), s.endswith(":") and len(s) > 1
+                return (":" if lead else "-") + "-" * w[i] + (":" if tail else "-")
+            out.append("|" + "|".join(dash(i) for i in range(n)) + "|")
         else:
             out.append("| " + " | ".join(c[i].ljust(w[i]) for i in range(n)) + " |")
     return out
