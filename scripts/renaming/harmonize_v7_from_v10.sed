@@ -1813,3 +1813,25 @@ s/\bSndParam_Dispatch_Skip2\b/EntertainerGridCheck_LswRowDown_Skip2/g
 s/\bSndParam_Dispatch_Join2\b/EntertainerGridCheck_LswRowDown_Join2/g
 s/\bSndParam_Dispatch_Skip\b/EntertainerGridCheck_LswRowUp_Skip/g
 s/\bSndParam_Dispatch_Join\b/EntertainerGridCheck_LswRowUp_Join/g
+# run 2026-10-17
+s/\bSeWrtSnd_DrawStaticScreen_Return5\b/SeWrtSnd_DrawStaticScreen_Return6/g
+s/\bSePitFilEnv1_DrawField_Skip13\b/SePitFilEnv1_DrawField_Skip5/g
+s/\bSeAmpEnv1_DrawField_Return2\b/SeAmpEnv1_DrawField_Return5/g
+s/\bSeFilLpq1_DrawField_Return3\b/SeFilLpq1_DrawField_Return2/g
+s/\bSeFilHpq1_DrawField_Return4\b/SeFilHpq1_DrawField_Return3/g
+s/\bSeAmpEnv1_DrawField_Skip10\b/SeAmpEnv1_DrawField_Skip15/g
+s/\bSeFilLpq1_DrawField_Skip11\b/SeFilLpq1_DrawField_Skip3/g
+s/\bSeFilHpq1_DrawField_Skip12\b/SeFilHpq1_DrawField_Skip4/g
+s/\bSeAmpEnv1_DrawField_Join6\b/SeAmpEnv1_DrawField_Join7/g
+s/\bSeScreenData_0x1250\b/SeMenu_DrawSelectedPartEnvCurve_Records/g
+s/\bSeScreenData_0x1264\b/SeMenu_DrawSelectedPartEnvCurve_Records2/g
+s/\bSeScreenData_0x1270\b/SeMenu_DrawSelectedPartEnvCurve_Records3/g
+s/\bSeScreenData_0x1284\b/SeMenu_DrawSelectedPartEnvCurve_Records4/g
+s/\bSeScreenData_0x22C8\b/SeEnv1_DrawEnvelopeLayout_Records/g
+s/\bSeScreenData_0x233D\b/SeEnv1_DrawEnvelopeLayout_Records2/g
+s/\bSeScreenData_0x2480\b/SeMenu_DrawBreakpointKeyboard_Records/g
+s/\bSeScreenData_0x28CE\b/SeLfo1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x3805\b/SeLfo1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x4256\b/SeTonHyb1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x4261\b/SeTonHyb1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x441A\b/SeTonHyb1_DrawStaticScreen_Records3/g

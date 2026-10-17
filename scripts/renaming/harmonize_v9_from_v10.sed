@@ -2621,3 +2621,16 @@ s/\bSeMenu_AltUpdate_Loop\b/SeTonTon2_DrawPage_Loop/g
 s/\bSeMenu_AltUpdate_Skip\b/SeTonTon2_DrawPage_Skip/g
 s/\bHdaeRom_Entry_Skip2\b/PanelTag60_ApplyEffectOnOff_Skip2/g
 s/\bHdaeRom_Entry_Skip\b/PanelTag60_ApplyEffectOnOff_Skip/g
+# run 2026-10-17
+s/\bSeScreenData_0x1250\b/SeMenu_DrawSelectedPartEnvCurve_Records/g
+s/\bSeScreenData_0x1264\b/SeMenu_DrawSelectedPartEnvCurve_Records2/g
+s/\bSeScreenData_0x1270\b/SeMenu_DrawSelectedPartEnvCurve_Records3/g
+s/\bSeScreenData_0x1284\b/SeMenu_DrawSelectedPartEnvCurve_Records4/g
+s/\bSeScreenData_0x22C8\b/SeEnv1_DrawEnvelopeLayout_Records/g
+s/\bSeScreenData_0x233D\b/SeEnv1_DrawEnvelopeLayout_Records2/g
+s/\bSeScreenData_0x2480\b/SeMenu_DrawBreakpointKeyboard_Records/g
+s/\bSeScreenData_0x28CE\b/SeLfo1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x3805\b/SeLfo1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x4256\b/SeTonHyb1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x4261\b/SeTonHyb1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x441A\b/SeTonHyb1_DrawStaticScreen_Records3/g

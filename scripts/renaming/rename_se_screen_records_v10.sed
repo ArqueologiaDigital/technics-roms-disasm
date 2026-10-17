@@ -102,3 +102,16 @@ s/\bSeScreenData_0x2A22\b/SeMenu_DrawLfoSelectedPartLine_Records2/g
 s/\bSeScreenData_0x2AD6\b/SeMenu_DrawLfoPartSwitches_Records6/g
 s/\bSeScreenData_0x2B02\b/SeMenu_DrawLfoPartSwitches_Records7/g
 s/\bSeScreenData_0x2EC0\b/SeMenu_DataBlock_14_Records3/g
+# run 2026-10-17
+s/\bSeScreenData_0x1250\b/SeMenu_DrawSelectedPartEnvCurve_Records/g
+s/\bSeScreenData_0x1264\b/SeMenu_DrawSelectedPartEnvCurve_Records2/g
+s/\bSeScreenData_0x1270\b/SeMenu_DrawSelectedPartEnvCurve_Records3/g
+s/\bSeScreenData_0x1284\b/SeMenu_DrawSelectedPartEnvCurve_Records4/g
+s/\bSeScreenData_0x22C8\b/SeEnv1_DrawEnvelopeLayout_Records/g
+s/\bSeScreenData_0x233D\b/SeEnv1_DrawEnvelopeLayout_Records2/g
+s/\bSeScreenData_0x2480\b/SeMenu_DrawBreakpointKeyboard_Records/g
+s/\bSeScreenData_0x28CE\b/SeLfo1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x3805\b/SeLfo1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x4256\b/SeTonHyb1_DrawStaticScreen_Records/g
+s/\bSeScreenData_0x4261\b/SeTonHyb1_DrawStaticScreen_Records2/g
+s/\bSeScreenData_0x441A\b/SeTonHyb1_DrawStaticScreen_Records3/g

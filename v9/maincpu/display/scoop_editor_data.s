@@ -508,7 +508,7 @@ SeAmpAmp2_OnColumn4:
 	call	SeMenu_RegisterElement_Extended
 	pushw	1
 	pushw	44
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
@@ -553,7 +553,7 @@ SeAmpAmp2_OnColumn5:
 	call	SeMenu_RegisterElement_Extended
 	pushw	0
 	pushw	44
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
@@ -592,7 +592,7 @@ SeAmpAmp2_OnColumn6:
 	call	SeMenu_RegisterElement_Extended
 	pushw	2
 	pushw	44
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
@@ -1216,7 +1216,7 @@ SeAmpEnv1_OnSideRow5_Join17:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	45
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	lda	xde, (xsp)
 	pushw	32
@@ -1309,7 +1309,7 @@ SeAmpEnv2_OnColumn1:
 	call	SeMenu_StorePartParam
 	pushw	9
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeAmpEnv2_OnColumn1_Skip61:
 	ld	wa, 1:i3
@@ -1361,7 +1361,7 @@ SeAmpEnv2_OnColumn2:
 	call	SeMenu_StorePartParam
 	pushw	9
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeAmpEnv2_OnColumn2_Skip62:
 	ld	wa, 2:i3
@@ -1413,7 +1413,7 @@ SeAmpEnv2_OnColumn3:
 	call	SeMenu_StorePartParam
 	pushw	9
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeAmpEnv2_OnColumn3_Skip63:
 	ld	wa, 3:i3
@@ -1450,7 +1450,7 @@ SeAmpEnv2_OnColumn4:
 	call	SeMenu_RegisterElement_Extended
 	pushw	3
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
@@ -1495,7 +1495,7 @@ SeAmpEnv2_OnColumn5:
 	call	SeMenu_RegisterElement_Extended
 	pushw	2
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
@@ -1534,7 +1534,7 @@ SeAmpEnv2_OnColumn6:
 	call	SeMenu_RegisterElement_Extended
 	pushw	4
 	pushw	46
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
@@ -3397,7 +3397,7 @@ SeFilFil2_OnColumn4:
 	call	SeMenu_RegisterElement_Extended
 	pushw	1
 	pushw	54
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
@@ -3442,7 +3442,7 @@ SeFilFil2_OnColumn5:
 	call	SeMenu_RegisterElement_Extended
 	pushw	0
 	pushw	54
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
@@ -3481,7 +3481,7 @@ SeFilFil2_OnColumn6:
 	call	SeMenu_RegisterElement_Extended
 	pushw	2
 	pushw	54
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3

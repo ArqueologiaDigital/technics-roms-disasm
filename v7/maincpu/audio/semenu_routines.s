@@ -1695,7 +1695,7 @@ SeMenu_TransferPartValues_EndData_Join3:
 	calr	SeMenu_StorePartParam
 	pushw	11
 	pushw	59
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeMenu_TransferPartValues_EndData_Epilogue:
 	pop qiz
@@ -1751,7 +1751,7 @@ SeMenu_StepParamFieldAndSend_Join4:
 	ld	a, (xsp+12)
 	extz	wa
 	pushw	wa
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	l, 1:opc
 SeMenu_StepParamFieldAndSend_Epilogue2:
@@ -1847,7 +1847,7 @@ SeMenu_CyclePartLfoState_Join6:
 	extz	wa
 	pushw	wa
 	pushw	42
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeMenu_CyclePartLfoState_Epilogue4:
 	lda	xsp, (xsp+14)
@@ -1948,7 +1948,7 @@ SeCtr2_StepPartField_Join8:
 	calr	SeMenu_StorePartParam
 	pushw	12
 	pushw	59
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeCtr2_StepPartField_Epilogue5:
 	pop qiz
@@ -2898,7 +2898,7 @@ SeLfo1_StepSelectorAndReload_Join19:
 	calr	SeMenu_StorePartParam
 	pushw 0
 	pushw 40
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeLfo1_StepSelectorAndReload_Epilogue8:
 	inc	4, xsp
@@ -3281,7 +3281,7 @@ SeMenu_ApplyPartEdit_AltStore_Join15:
 	calr	SeMenu_StorePartParam
 	pushw 9
 	pushw 41
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeLfo1_StepSelectorAndReload_Skip36:
 	ld	wa, 2:i3
@@ -3336,7 +3336,7 @@ SeMenu_ApplyPartEdit_AltStore_Join16:
 	calr	SeMenu_StorePartParam
 	pushw 9
 	pushw 41
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeLfo1_StepSelectorAndReload_Skip4:
 	ld	wa, 3:i3
@@ -3391,7 +3391,7 @@ SeMenu_ApplyPartEdit_AltStore_Join17:
 	calr	SeMenu_StorePartParam
 	pushw 9
 	pushw 41
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeLfo1_StepSelectorAndReload_Skip37:
 	ld	wa, 4:i3
@@ -3422,7 +3422,7 @@ SeMenu_ApplyPartEdit_AltStore_Join18:
 	calr	SeMenu_RegisterElement_Extended
 	pushw 2
 	pushw 41
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 1:i3
@@ -3551,7 +3551,7 @@ SeMenu_ApplyPartEdit_Entry4:
 	pushw	wa
 	pushw 60
 SeMenu_ApplyPartEdit_Join8:
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 SeMenu_ApplyPartEdit_Skip13:
 	lda	xbc, (xsp+16)
@@ -4997,7 +4997,7 @@ SeMenu_ApplyPartEdit_Skip52:
 	ld	a, (xsp+8)
 	extz	wa
 	pushw	wa
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	ld	wa, 1:i3
 	calr	SeMenu_SetupMenuDisplay
@@ -6662,7 +6662,7 @@ SePitPit1_OnColumn6:
 	call SeMenu_RegisterElement_Extended
 	pushw 0x000e
 	pushw 0x0027
-	call SeMenu_ShowConfirmDialog
+	call SeTitle_DrawField
 	inc 4,XSP
 .Lc_f09d35:
 SePitPit1_OnColumn6_Skip:
@@ -6767,7 +6767,7 @@ SePitPit1_OnSideRow4:
 	call	SeMenu_StorePartParam
 	pushw	13
 	pushw	39
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	jr	SePitPit1_OnSideRow4_Epilogue5
 SePitPit1_OnSideRow4_Skip13:
@@ -6794,7 +6794,7 @@ SePitPit1_OnSideRow5:
 	call	SeMenu_StorePartParam
 	pushw	13
 	pushw	39
-	call	SeMenu_ShowConfirmDialog
+	call	SeTitle_DrawField
 	inc	4, xsp
 	jr	SeMenu_RefreshPartDisplay_Epilogue2
 SePitPit1_OnSideRow5_Skip14:
