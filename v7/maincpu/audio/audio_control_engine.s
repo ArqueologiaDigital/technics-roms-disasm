@@ -3162,9 +3162,7 @@ ExtData_VoiceParam_DispatchBytecode_Entry_Code_Join:
 	ld	(xwa), l
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry_Code_Epilogue
 MIDI_ProcessChangedChannels_Data_Target0_Entry:
-	.byte	0x80
-	push	xsp
-	scf
+	cp	(xwa), 0x11
 	jr	ugt, ExtData_VoiceParam_DispatchBytecode_Entry_Code_Skip
 	ld	a, (xwa)
 	sub	a, 16
@@ -3259,9 +3257,7 @@ ExtData_VoiceParam_DispatchBytecode_Skip2:
 	ld	(xbc), a
 	jr	ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue
 ExtData_VoiceParam_DispatchBytecode_Entry4:
-	.byte	0x81
-	push	xix
-	swi	0
+	and	(xbc), 0xf8
 ExtData_VoiceParam_DispatchBytecode_Entry4_Code_Epilogue:
 	pop	xiz
 	ret

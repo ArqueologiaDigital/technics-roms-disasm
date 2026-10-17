@@ -19098,23 +19098,32 @@ SendSinglePacket_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp + 34)
 	ret
-SendSinglePacket_Data:
-	.asciz	"¿Þ7>éŽ¿$PØ©E¨Áî"
+; MIDI_SendSinglePacket_Unused: an unreferenced copy of MIDI_SendSinglePacket without its play-state tail
+;   (SendSinglePacket_DoGetPlayS); it copies SendPacket_BitMaskTemplateB instead of TemplateA.  Its prologue was
+;   spelled as an .asciz string until 2026-10-17.  Basis: body -- byte-for-byte the same instructions as
+;   MIDI_SendSinglePacket up to the tail.
+MIDI_SendSinglePacket_Unused:
+	lda	xsp, (xsp-34)
+	push	xiz
+	ld	xiz, xbc
+	ld	(xsp+36), wa
+	ld	wa, 1:i3
+	ld	xiy, SendPacket_BitMaskTemplateB
 	lda	xix, (xsp+4)
 	ldw	bc, 16
 	ldirw
 	cp	(xiz), 240
-	jr	c, SendSinglePacket_Data_Code_Skip
+	jr	c, MIDI_SendSinglePacket_Unused_Skip
 	cp	(xiz), 247
-	jr	ugt, SendSinglePacket_Data_Code_Skip
+	jr	ugt, MIDI_SendSinglePacket_Unused_Skip
 	ei	0x06
 	push	xiz
 	pushm	(xsp+40)
 	call	SeqBuf2_WriteBytes
 	inc	6, xsp
 	ei	0x00
-	jr	SendSinglePacket_Data_Code_Epilogue
-SendSinglePacket_Data_Code_Skip:
+	jr	MIDI_SendSinglePacket_Unused_Epilogue
+MIDI_SendSinglePacket_Unused_Skip:
 	ld	a, (xiz)
 	and	a, 15
 	extz	wa
@@ -19122,14 +19131,14 @@ SendSinglePacket_Data_Code_Skip:
 	lda	xbc, (xsp+4)
 	ld	de, (0xe92d:16)
 	and	de, (xbc+wa)
-	jr	nz, SendSinglePacket_Data_Code_Epilogue
+	jr	nz, MIDI_SendSinglePacket_Unused_Epilogue
 	ei	0x06
 	push	xiz
 	pushm	(xsp+40)
 	call	SeqMain_WriteBytes
 	inc	6, xsp
 	ei	0x00
-SendSinglePacket_Data_Code_Epilogue:
+MIDI_SendSinglePacket_Unused_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+34)
 	ret

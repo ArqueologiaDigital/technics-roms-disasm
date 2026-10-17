@@ -8626,7 +8626,7 @@ ChannelData_SwitchOffsets:
 SendPacket_BitMaskTemplateA:
 	.short 0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080
 	.short 0x0100, 0x0200, 0x0400, 0x0800, 0x1000, 0x2000, 0x4000, 0x8000
-; Same 16 x u16 1<<i contents, a separate copy: SendSinglePacket_Data (0xFEBDAB)
+; Same 16 x u16 1<<i contents, a separate copy: MIDI_SendSinglePacket_Unused (0xFEBDAB)
 ; copies it the same way (`ldw bc,16; ldirw`).
 SendPacket_BitMaskTemplateB:
 	.short 0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080
