@@ -297,10 +297,12 @@ def enc_ldst(mnem, m, r, store):
             if store:                        # movbu/movhu dD,(disp8,sp) -> F8 0x92/0x93
                 return b"\xf8" + u8(0x90 | (ri << 2) | size) + u8(disp)
             return b"\xf8" + u8(0xB8 | ((size & 1) << 2) | ri) + u8(disp)  # load
-        # 16-bit (disp,sp) forms via FA (word: B0/B4, byte:B8, half:BC ; store 0x1x)
+        # 16-bit (disp,sp) forms via FA. Loads: word B0/B4, byte B8, half BC.
+        # Stores: 0x90 | reg<<2 | {0: mov aR, 1: mov dR, 2: movbu dR, 3: movhu dR}
         if fits_u16(disp):
-            if store and size == 0:
-                return b"\xfa" + u8(0x10 | (ri << 2) | (0 if rc == "a" else 1)) + le16(disp)
+            if store and (size == 0 or rc == "d"):
+                typ = {0: (0 if rc == "a" else 1), 2: 2, 3: 3}[size]
+                return b"\xfa" + u8(0x90 | (ri << 2) | typ) + le16(disp)
             if not store:
                 typ = {0: (0 if rc == "a" else 1), 2: 2, 3: 3}[size]
                 return b"\xfa" + u8(0xB0 | (typ << 2) | ri) + le16(disp)

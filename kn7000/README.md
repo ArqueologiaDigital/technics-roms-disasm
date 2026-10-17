@@ -159,6 +159,14 @@ re-encodes every printed mnemonic with `tools/mn10300_asm.py`. Today it reports
 2321 bytes verified with 0 mismatches, 0 unexplained gaps and 803/803
 instructions re-encoding byte-identically.
 
+Converted code in `src/program.s` itself can carry the same kind of
+interpretation: [`annotations/*.ann`](annotations/README.md) give a converted
+function semantic local labels (every branch inside it then names its target),
+named data addresses, and header, block and end-of-line comments, all keyed by
+CPU address and merged in by `tools/gen_program_s.py`. Since those functions are
+part of the build, `make verify` checks them byte for byte, and `kn7asm` checks
+each function label against its `.equ` in `src/symbols.inc`.
+
 ## Status
 
 100% byte-match achieved; boot header (0x0–0x80) hand-annotated. **`src/program.s`

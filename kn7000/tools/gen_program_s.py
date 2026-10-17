@@ -9,7 +9,9 @@
 # encoder); every other function stays a raw .incbin_range block. Instructions
 # the encoder can't reproduce (a handful of compiler non-minimal encodings and
 # udf* coprocessor ops) fall back to a .byte escape, so the rebuild is always
-# byte-identical.  Run:  make program-src   (or python3 tools/gen_program_s.py)
+# byte-identical. Converted functions that annotations/*.ann covers come out as
+# labelled, commented listings (annotations/README.md).
+# Run:  make program-src   (or python3 tools/gen_program_s.py)
 
 import os
 import re
@@ -3204,7 +3206,8 @@ def disasm_function(d, off, end, delta=BASE):
     re-decodes the postbyte as a phantom instruction. When a bare-F4 line
     appears, take the true 2 bytes from the ROM and restart unidasm past them
     (the byte-exact enc==b check in emit_function still guards the result
-    either way)."""
+    either way). It also misprints the register of FA 9x stores to (d16,sp),
+    which are rebuilt from the opcode byte below."""
     insns = []
     cur = off
     while cur < end:
@@ -3226,7 +3229,15 @@ def disasm_function(d, off, end, delta=BASE):
                 cur += 2
                 restart = True
                 break
-            insns.append((addr, b, m.group(3), m.group(4).strip()))
+            mnem, ops = m.group(3), m.group(4).strip()
+            if len(b) == 4 and b[0] == 0xFA and 0x90 <= b[1] <= 0x9F:
+                # FA 9x = store to (d16,sp). unidasm's format string prints the
+                # register class letter as a number ("d97" for a, "d100" for d)
+                # and drops the register: rebuild both from the opcode byte.
+                op = b[1] & 3
+                mnem = ("mov", "mov", "movbu", "movhu")[op]
+                ops = re.sub(r"^d\d+", f"{'a' if op == 0 else 'd'}{(b[1] >> 2) & 3}", ops)
+            insns.append((addr, b, mnem, ops))
             cur += len(b)
             if cur >= end:
                 break
@@ -3283,6 +3294,194 @@ def emit_function(d, off, end, name, names, used, delta=BASE):
 
 
 # ---------------------------------------------------------------------------
+# Annotation files (annotations/*.ann): hand-written labels and comments for
+# converted functions, keyed by build-941 CPU address (format in
+# annotations/README.md). A converted function with any annotation in it is
+# emitted as a labelled listing: its name and its register-save `_entry` points
+# become real labels, every branch that lands inside it must land on a named
+# label, and an address operand that equals a named code or data address prints
+# the name. Functions without annotations are emitted exactly as before.
+# ---------------------------------------------------------------------------
+ANN_GLOB = "annotations/*.ann"
+ANN_FILES = None      # None = every ANN_GLOB file; --ann narrows the set
+ANN_PORT = None       # another build: (code_addr_map, data_addr_map) from 941
+BRANCH_MNEMS = {"bra", "jmp", "call", "calls", "beq", "bne", "bgt", "bge", "ble",
+                "blt", "bhi", "bcc", "bls", "bcs", "bvc", "bvs", "bnc", "bns"}
+EOL_COL = 44          # end-of-line comments start in this column when they fit
+IDENT = re.compile(r"[A-Za-z_]\w*$")
+
+
+class Annotations:
+    def __init__(self):
+        self.docs, self.notes = {}, {}     # addr -> [text, ...] (in file order)
+        self.labels, self.eol = {}, {}     # addr -> name / text
+        self.equs = {}                     # data name -> (addr, text)
+        self.at = {}                       # (kind, addr) -> "file:line", for errors
+
+    def __bool__(self):
+        return bool(self.docs or self.notes or self.labels or self.eol or self.equs)
+
+    def code_addrs(self):
+        return set(self.docs) | set(self.notes) | set(self.labels) | set(self.eol)
+
+
+def load_annotations(paths):
+    import glob
+    A = Annotations()
+    by_name = {}
+    for path in (sorted(glob.glob(ANN_GLOB)) if paths is None else paths):
+        for n, raw in enumerate(open(path), 1):
+            text = raw.strip()
+            if not text or text.startswith(";"):
+                continue
+            where = f"{path}:{n}"
+            bad = lambda why: sys.exit(f"gen_program_s: {where}: {why}: {text}")
+            parts = text.split(None, 2)
+            if parts[0] == "equ":
+                f = text.split(None, 3)
+                if len(f) < 3 or not IDENT.match(f[1]):
+                    bad("expected `equ NAME ADDR [comment]`")
+                name, addr = f[1], int(f[2], 16)
+                if by_name.setdefault(name, addr) != addr:
+                    bad(f"{name} already names {by_name[name]:#x}")
+                A.equs[name] = (addr, f[3] if len(f) > 3 else "")
+                continue
+            if len(parts) < 2:
+                bad("expected `ADDR KIND TEXT`")
+            try:
+                addr = int(parts[0], 16)
+            except ValueError:
+                bad("bad address")
+            kind, arg = parts[1], (parts[2] if len(parts) > 2 else "")
+            if kind == "label":
+                if not IDENT.match(arg):
+                    bad("a label must be an identifier")
+                if addr in A.labels:
+                    bad(f"{addr:#x} already has the label {A.labels[addr]}")
+                if by_name.setdefault(arg, addr) != addr:
+                    bad(f"{arg} already names {by_name[arg]:#x}")
+                A.labels[addr] = arg
+            elif kind == "eol":
+                if addr in A.eol:
+                    bad(f"{addr:#x} already has an end-of-line comment")
+                A.eol[addr] = arg
+            elif kind in ("doc", "note"):
+                (A.docs if kind == "doc" else A.notes).setdefault(addr, []).append(arg)
+            else:
+                bad(f"unknown kind {kind!r} (doc, label, note, eol, equ)")
+            A.at.setdefault((kind, addr), where)
+    if ANN_PORT:
+        A = port_annotations(A)
+    return A
+
+
+def port_annotations(A):
+    """Carry 941 annotations to another build: code addresses through the exact
+    offset map, data addresses through the symbol porter (a data name that has
+    no counterpart is dropped), and addresses quoted in the text by DOC_XLATE."""
+    code, data = ANN_PORT
+    tx = DOC_XLATE or (lambda t: t)
+    B = Annotations()
+    for src, dst in ((A.docs, B.docs), (A.notes, B.notes)):
+        for a, texts in src.items():
+            dst[code(a)] = [tx(t) for t in texts]
+    B.labels = {code(a): nm for a, nm in A.labels.items()}
+    B.eol = {code(a): tx(t) for a, t in A.eol.items()}
+    for nm, (a, t) in A.equs.items():
+        n = data(a)
+        if n is not None:
+            B.equs[nm] = (n, tx(t))
+    B.at = {(k, code(a)): w for (k, a), w in A.at.items()}
+    return B
+
+
+def emit_annotated(d, off, end, name, names, used, A, code_names, data_names,
+                   data_used, labelled, delta=BASE):
+    """Like emit_function, but as a labelled, commented listing (see above).
+    `code_names` maps the code addresses that are labels anywhere in the output
+    (local labels of every annotated function); `labelled` collects the
+    addresses this function defines as labels, so no .equ repeats them."""
+    insns = disasm_function(d, off, end, delta)
+    if insns is None:
+        return None
+    lo, hi = delta + off, delta + end
+    starts = {delta + a for a, *_ in insns}
+    for (kind, a), where in sorted(A.at.items(), key=lambda kv: kv[0][1]):
+        if lo <= a < hi and a not in starts:
+            sys.exit(f"gen_program_s: {where}: {kind} at {a:#x} is not an instruction "
+                     f"start in {name}")
+
+    def label_at(cpu):
+        if cpu == lo:
+            return name
+        if cpu in A.labels:
+            return A.labels[cpu]
+        nm = names.get(cpu)
+        return nm if nm and nm.endswith("_entry") else None
+
+    def addr_name(a):
+        """The name an operand equal to `a` prints as, or None."""
+        if lo <= a < hi:
+            return label_at(a)
+        if a in code_names:
+            return code_names[a]
+        if a in data_names:
+            data_used.add(a)
+            return data_names[a]
+        if a in names:
+            used.add(a)
+            return names[a]
+        return None
+
+    def rename(ops, mnem):
+        def one(m):
+            nm = addr_name(int(m.group(0), 16))
+            return nm if nm else m.group(0)
+        if mnem in BRANCH_MNEMS:
+            m = re.match(r"(0x[0-9a-fA-F]+)(.*)", ops)
+            if m:
+                return one(m) + m.group(2)
+            return ops
+        return re.sub(r"0x[0-9a-fA-F]{8}\b", one, ops)
+
+    unlabelled = []
+    lines = []
+    for addr, b, mnem, ops in insns:
+        cpu = delta + addr
+        lab = label_at(cpu)
+        if lab and cpu != lo:
+            lines.append("")
+        for t in A.notes.get(cpu, ()):
+            lines.append(f"    # {t}".rstrip())
+        if lab:
+            lines.append(f"{lab}:")
+            labelled.add(cpu)
+        if mnem in BRANCH_MNEMS and mnem not in ("call", "calls"):
+            m = re.match(r"0x([0-9a-fA-F]+)", ops)
+            if m and lo <= int(m.group(1), 16) < hi and not label_at(int(m.group(1), 16)):
+                unlabelled.append(f"{cpu:#x}: {mnem} {ops}")
+        try:
+            enc = ASM.encode(mnem, ops, cpu)
+        except ASM.EncError:
+            enc = None
+        eol = A.eol.get(cpu)
+        if enc == b:
+            text = f"    {mnem:8s}{rename(ops, mnem)}".rstrip()
+        else:
+            hexb = ", ".join(f"0x{x:02X}" for x in b)
+            text = f"    .byte {hexb}   # {mnem} {ops}".rstrip()
+            eol = f"-- {eol}" if eol else None
+        if eol:
+            text = f"{text:<{EOL_COL - 1}} # {eol}" if len(text) < EOL_COL - 1 \
+                else f"{text}  # {eol}"
+        lines.append(text)
+    if unlabelled:
+        sys.exit(f"gen_program_s: {name}: branch targets inside an annotated function "
+                 "need a label:\n  " + "\n  ".join(unlabelled))
+    return lines
+
+
+# ---------------------------------------------------------------------------
 # Build profiles. "941" is the default above. "sp7001" generates the SP7001
 # firmware's program build 942 by PORTING everything recovered for 941 through
 # the exact 941->942 offset map (tools/offset_map.py, tools/port_symbols.py):
@@ -3302,7 +3501,7 @@ NEW_CODE_942 = (0x18598B, 0x185E8F)
 def select_profile(name):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
     global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
-    global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS
+    global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS, ANN_PORT
     if name == "941":
         return
     if name != "sp7001":
@@ -3365,6 +3564,7 @@ def select_profile(name):
             return f"0x{n:08X}" if n is not None else mo.group(0)
         return tok.sub(one, text)
     DOC_XLATE = xlate
+    ANN_PORT = (lambda cpu: BASE + fmap(cpu - BASE), lambda a: P.port(a)[0])
 
     TITLE = [
         '# KN7000 SP7001 "Program" flash image (build 942) - byte-exact.',
@@ -3471,6 +3671,38 @@ def main():
          '# Code region 1 -- organised by recovered function.',
          '# ============================================================================']
 
+    # annotation files: which converted blocks they label, checked up front
+    A = load_annotations(ANN_FILES)
+    blocks = []                       # (cpu lo, cpu hi, name) of each converted block
+    for i, (off, name) in enumerate(r1):
+        end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
+        if limit[off] is not None:
+            blocks.append((BASE + off, BASE + min(end, limit[off]), name))
+    starts = {BASE + off for off, _ in r1}
+    annotated = set()
+    for (kind, a), where in A.at.items():
+        if kind == "doc":
+            if a not in starts:
+                sys.exit(f"gen_program_s: {where}: doc at {a:#x} is not a function start")
+            continue
+        hit = [b for b in blocks if b[0] <= a < b[1]]
+        if not hit:
+            sys.exit(f"gen_program_s: {where}: {kind} at {a:#x} is not in a converted function")
+        annotated.add(hit[0][0])
+    annotated |= {a for a in A.docs if any(b[0] == a for b in blocks)}
+    code_names = dict(A.labels)
+    data_names = {a: nm for nm, (a, _t) in A.equs.items()}
+    taken = set(names.values())
+    for a, nm in A.labels.items():
+        if a in names or nm in taken:
+            sys.exit(f"gen_program_s: {A.at[('label', a)]}: label {nm} at {a:#x}: "
+                     f"{'the address is already ' + names[a] if a in names else 'the name is taken'}"
+                     " (symbol files win; drop or rename the label)")
+    for nm in A.equs:
+        if nm in taken or nm in A.labels.values():
+            sys.exit(f"gen_program_s: equ {nm}: the name is already a code symbol")
+    data_used, labelled = set(), set()
+
     ROMQ = f'"{ROM}"'
     body = []
     if r1[0][0] > 0x80:
@@ -3482,9 +3714,17 @@ def main():
         body.append(f"# {name}  (CPU {BASE + off:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
+        for doc in A.docs.get(BASE + off, ()):
+            body.append(f"#   {doc}".rstrip())
         lim = limit[off]
         end_conv = min(end, lim) if lim is not None else end
-        block = emit_function(d, off, end_conv, name, names, used) if lim is not None else None
+        if lim is not None and BASE + off in annotated:
+            block = emit_annotated(d, off, end_conv, name, names, used, A, code_names,
+                                   data_names, data_used, labelled)
+            if block is None:
+                sys.exit(f"gen_program_s: annotated function {name} does not disassemble")
+        else:
+            block = emit_function(d, off, end_conv, name, names, used) if lim is not None else None
         if block is not None:
             body.extend(block)
             if name in inherit:
@@ -3534,12 +3774,20 @@ def main():
                      f'.org 0x{PAD_TO:06X}']
 
     # equates for the synthetic helper labels actually referenced by converted code
-    auto = sorted(a for a in used if a not in sym_by_addr)
+    # (a name the body defines as a label needs none: the label is the definition)
+    auto = sorted(a for a in used if a not in sym_by_addr and a not in labelled)
     if auto:
         L.append(f"# {len(auto)} synthetic labels for internal helpers called by "
                  "converted code")
         for a in auto:
             L.append(f".equ {names[a]}, 0x{a:08X}")
+        L.append("")
+    if data_used:
+        L.append(f"# {len(data_used)} data addresses named by annotations/*.ann")
+        for a in sorted(data_used):
+            nm = data_names[a]
+            note = A.equs[nm][1]
+            L.append(f".equ {nm}, 0x{a:08X}" + (f"   # {note}" if note else ""))
         L.append("")
     L.extend(body)
 
@@ -3568,8 +3816,12 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="generate a byte-exact program .s")
     ap.add_argument("--profile", default="941", help="941 (default) or sp7001")
     ap.add_argument("--out", help="override the output path")
+    ap.add_argument("--ann", action="append", metavar="FILE",
+                    help=f"use only this annotation file (repeatable; default: all {ANN_GLOB})")
     a = ap.parse_args()
     select_profile(a.profile)
     if a.out:
         OUT = a.out
+    if a.ann:
+        ANN_FILES = a.ann
     main()

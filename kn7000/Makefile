@@ -75,7 +75,7 @@ constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
 
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
-		kn7000_exports_from_942.sym baserom/kn7000_program.rom
+		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
 build/kn7000_table.rom: src/table.s tools/kn7asm.py baserom/kn7000_table.rom
@@ -335,7 +335,7 @@ table-src-sp7001: tools/gen_table_s.py tools/gen_program_s.py tools/gen_symbols.
 
 program-src-sp7001: tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py \
 		kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
-		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
+		kn7000_sp7001_exports.sym $(wildcard annotations/*.ann) $(REFS) $(SP7001_REFS)
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py --profile sp7001
 
 verify-sp7001: $(SP7001_TARGETS)
