@@ -5,7 +5,7 @@ QUESTION IT ANSWERS / WHAT IT DOES
   The owner reads .md files raw, so every table must use aligned columns (`| cell   |`, separator dashes the full
   padded width), never the compact `|a|b|` form.  This rewrites every table that starts inside a line range of a
   file: each column is padded to its widest cell, left-aligned, one space either side; a separator
-  row keeps its `:` alignment markers.  A `|` inside backticks is
+  row keeps its `:` alignment markers, and an indented table (inside a list item) keeps its indent.  A `|` inside backticks is
   kept as cell text.  Lines outside tables are not touched.
 
 RUN
@@ -73,7 +73,8 @@ def main():
             j = i
             while j < len(L) and L[j].lstrip().startswith("|") and L[j].rstrip().endswith("|"):
                 j += 1
-            new = align(L[i:j])
+            ind = L[i][:len(L[i]) - len(L[i].lstrip())]      # a table inside a list item keeps its indent
+            new = [ind + r for r in align(L[i:j])]
             changed += sum(1 for x, y in zip(L[i:j], new) if x != y)
             out += new
             i = j
