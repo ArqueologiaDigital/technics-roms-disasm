@@ -9894,7 +9894,7 @@ DrawDottedLineWithMode_Impl_Skip13:
 	ld	xwa, (xsp+4)
 	cp	xwa, 0
 	jrl	lt, DrawDottedLineWithMode_Impl_Join11
-DrawDottedLineWithMode_Impl_Entry:
+DrawDottedLineWithMode_Impl_Loop3:
 	cp	(xsp+24), 3
 	jr	ule, DrawDottedLineWithMode_Impl_Skip14
 	ld	(xsp+24), 0
@@ -10010,7 +10010,7 @@ DrawDottedLineWithMode_Impl_Join6:
 	add	(xsp+20), xwa
 	ld	xwa, (xsp+20)
 	cp	xwa, (xsp+4)
-	jrl	le, DrawDottedLineWithMode_Impl_Entry
+	jrl	le, DrawDottedLineWithMode_Impl_Loop3
 	jrl	DrawDottedLineWithMode_Impl_Join11
 DrawDottedLineWithMode_Impl_Skip21:
 	lda	xwa, (xsp+46)

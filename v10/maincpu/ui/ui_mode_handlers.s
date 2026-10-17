@@ -225,30 +225,30 @@ PanelTag48_MsaReapply_Skip5:
 ;   Basis: callers + body.
 PanelTag98_MsaReapply:
 	cp	(SWBTWR_PAYLOAD_1:16), 3
-	jr	nz, EffectMode_ByteData_Block4_Code_Entry
+	jr	nz, PanelTag98_MsaReapply_Join
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	and	a, 7
-	jr	z, EffectMode_ByteData_Block4_Code_Entry
+	jr	z, PanelTag98_MsaReapply_Join
 	ld	a, (0x8d52:16)
 	and	a, 40
-	jr	z, EffectMode_ByteData_Block4_Code_Entry
+	jr	z, PanelTag98_MsaReapply_Join
 	ld	xwa, 1025
 	call	SndParam_LookupReadOnly
 	cp	hl, 3:i3
 	jr	z, EffectMode_ByteData_Block4_Code_Skip
 	cp	hl, 2:i3
-	jr	nz, EffectMode_ByteData_Block4_Code_Entry
+	jr	nz, PanelTag98_MsaReapply_Join
 EffectMode_ByteData_Block4_Code_Skip:
 	ld	xwa, 1024
 	call	SndParam_LookupReadOnly
 	cp	hl, 0:i3
-	jr	z, EffectMode_ByteData_Block4_Code_Entry
+	jr	z, PanelTag98_MsaReapply_Join
 	ld	xwa, 0x28002
 	call	SndParam_LookupReadOnly
 	ld	(0x8d54:16), l
 	set	7, (0xb7e2:16)
 	calr	EffectMode_CheckModeAndReinit
-EffectMode_ByteData_Block4_Code_Entry:
+PanelTag98_MsaReapply_Join:
 	and	(0x8d52:16), 0xd7
 	ret
 
@@ -7769,7 +7769,7 @@ FSWAssGridCheck_OnLswData:
 	lda	xiy, (xsp+4)
 	ld	xwa, (xde)
 	cp	xwa, 0x2886
-	jr	nz, FSWAssGrid_EventDispatch_Entry
+	jr	nz, FSWAssGridCheck_OnLswData_Skip
 	lda	xwa, (xsp+260)
 	ldw	(xwa), 1
 	ldw (xwa+2), 2
@@ -7793,12 +7793,12 @@ FSWAssGridCheck_OnLswData:
 	lda	xde, (xsp+260)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	AudioTable_SendEventAndContinue
-FSWAssGrid_EventDispatch_Entry:
+FSWAssGridCheck_OnLswData_Skip:
 	lda	xhl, (xsp+260)
 	lda	xbc, (xhl+4)
 	ld	xwa, (xde)
 	cp	xwa, 10376
-	jr	nz, FSWAssGrid_EventDispatch_Entry_Skip
+	jr	nz, FSWAssGridCheck_OnLswData_Skip2
 	ldw	(xhl), 1
 	ldw (xhl+2), 3
 	ld	(xbc), xiy
@@ -7821,7 +7821,7 @@ FSWAssGrid_EventDispatch_Entry:
 	lda	xde, (xsp+260)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	AudioTable_SendEventAndContinue
-FSWAssGrid_EventDispatch_Entry_Skip:
+FSWAssGridCheck_OnLswData_Skip2:
 	ld	xwa, (xde)
 	cp	xwa, 0x288a
 	jr	nz, FSWAssGrid_EventDispatch_Skip
@@ -9497,9 +9497,9 @@ DispTimeSet_EventDispatch:
 	jrl	FSWAss_RefreshAllVoices_Join2
 DispTimeSet_EventDispatch_Skip3:
 	cpw	(xwa), 1
-	jr	nz, FSWAss_RefreshAllVoices_Entry
+	jr	nz, DispTimeSet_EventDispatch_Skip
 	cp	de, 3:i3
-	jr	nz, FSWAss_RefreshAllVoices_Entry
+	jr	nz, DispTimeSet_EventDispatch_Skip
 	lda	xwa, (xsp+8)
 	lda	xbc, (0x0340e8:24)
 	ld	(xwa), xbc
@@ -9511,7 +9511,7 @@ DispTimeSet_EventDispatch_Skip3:
 	ld	xbc, 0:i3
 	ld	(xwa+10), xbc
 	jrl	FSWAss_RefreshAllVoices_Join2
-FSWAss_RefreshAllVoices_Entry:
+DispTimeSet_EventDispatch_Skip:
 	cpw	(xwa), 1
 	jr	nz, FSWAss_RefreshAllVoices_Skip14
 	cp	de, 4:i3

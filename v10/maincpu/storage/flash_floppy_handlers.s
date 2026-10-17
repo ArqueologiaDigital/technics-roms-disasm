@@ -1269,10 +1269,10 @@ NoteEvent_WriteRegOffsets_Loop:
 
 NoteEvent_CopySlotData_Loop:
 	cp de, 0x96
-	jr c, NoteEvent_CopySlotData_Body
+	jr c, NoteEvent_CopyExtParamsInner_Join
 	ld (xsp + 16), 0x0
 
-NoteEvent_CopySlotData_Body:
+NoteEvent_CopyExtParamsInner_Join:
 	ld xix, xwa
 	add xix, (3186:16)
 	lda xiy, (xsp + 16)
@@ -1411,10 +1411,10 @@ Flash_InitBytecodeBlock_Join4:
 	cpw	(xwa), 0xffff
 	jr	nz, Flash_InitBytecodeBlock_Skip4
 	cpw	(xwa+0x2), 0xffff
-	jrl	z, Flash_InitBytecodeBlock_Entry
+	jrl	z, Flash_InitBytecodeBlock_Join3
 Flash_InitBytecodeBlock_Skip4:
 	calr	Flash_WriteBackSlotTable
-	jrl	Flash_InitBytecodeBlock_Entry
+	jrl	Flash_InitBytecodeBlock_Join3
 Flash_InitBytecodeBlock_Skip5:
 	ld	a, (xsp+10)
 	extz	wa
@@ -1438,7 +1438,7 @@ Flash_InitBytecodeBlock_Skip5:
 	calr	Flash_WriteSlotOwnerMap
 	calr	Flash_CopyBlocksToSlots
 	call	TmFlash_CopyToExtMem
-	jrl	Flash_InitBytecodeBlock_Entry
+	jrl	Flash_InitBytecodeBlock_Join3
 Flash_InitBytecodeBlock_Skip6:
 	calr	Flash_InitBytecodeBlock_Helper4
 	calr	Flash_InitBytecodeBlock_Helper5
@@ -1528,7 +1528,7 @@ Flash_InitBytecodeBlock_Join5:
 	ld	xiy, (3186:16)
 	ldw	bc, 0xb400
 	ldirw
-Flash_InitBytecodeBlock_Entry:
+Flash_InitBytecodeBlock_Join3:
 	cp	(xsp+0x2), 2
 	jr	nz, Flash_InitBytecodeBlock_Join
 	ld	(0xc68), (xsp+0xc)
@@ -1550,7 +1550,7 @@ Flash_InitBytecodeBlock_Join2:
 	ld	(0xc68), (xsp+0xc)
 	ld	(0xc6a), (xsp+0xa)
 	ld	(0xc6c), (xsp+0x6)
-	jr	Flash_InitBytecodeBlock_Entry
+	jr	Flash_InitBytecodeBlock_Join3
 ; CstmCpTtl_ResolvePendingCopy: Settles the custom-rhythm copy (FROM 0x39B6 -> TO 0x39B7) that Flash_InitBytecodeBlock
 ;   left pending with result 2 -- it saved FROM, TO and the group in 0x0C68 / 0x0C6A / 0x0C6C and the caller opened
 ;   the memory-full / function-select window: re-runs Flash_InitExtMemAddrs, then with A = 0 (EXECUTE) completes the
@@ -1798,19 +1798,19 @@ PartGrid_OperationsBlock_Join:
 	cp	(xsp+8), 3
 	jr	z, PartGrid_OperationsBlock_Skip2
 	cp	(xsp+8), 2
-	jr	z, PartGrid_OperationsBlock_Entry2
+	jr	z, PartGrid_OperationsBlock_Skip4
 	cp	(xsp+8), 1
-	jr	z, PartGrid_OperationsBlock_Entry
+	jr	z, PartGrid_OperationsBlock_Skip3
 	cp	(xsp+8), 0
 	jr	nz, PartGrid_OperationsBlock_Epilogue
 	ld	(xbc+24), e
 	ld	xwa, 25
 	jr	PartGrid_OperationsBlock_Join2
-PartGrid_OperationsBlock_Entry:
+PartGrid_OperationsBlock_Skip3:
 	ld	(xbc+32), e
 	ld	xwa, 33
 	jr	PartGrid_OperationsBlock_Join2
-PartGrid_OperationsBlock_Entry2:
+PartGrid_OperationsBlock_Skip4:
 	ld	(xbc+40), e
 	ld	xwa, 41
 	jr	PartGrid_OperationsBlock_Join2
@@ -7049,18 +7049,18 @@ PsS2cTrans_HandleScroll:
 	lda xwa, (xiz + 22)
 	lda xbc, (xiz + 32)
 	cp (0x3a77:16), 2
-	jr nz, SndArg_GridBnk_Case0
+	jr nz, PsS2cTrans_HandleScroll_Skip
 	ldw (xbc), 0x0
 	ldw (xwa), 0xff
-	jr SndArg_GridBnk_Case1
+	jr PsS2cTrans_HandleScroll_Join
 
 ; SndArgGridBnk case 0
-SndArg_GridBnk_Case0:
+PsS2cTrans_HandleScroll_Skip:
 	ldw (xbc), 0xff
 	ldw (xwa), 0xf5
 
 ; SndArgGridBnk case 1
-SndArg_GridBnk_Case1:
+PsS2cTrans_HandleScroll_Join:
 	ld XWA, (xsp + 0x0104)
 	ld xbc, EVT_DRAW
 	ld xde, 0:i3

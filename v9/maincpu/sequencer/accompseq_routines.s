@@ -1702,12 +1702,12 @@ AccompSeq_MidiFilterCodeBlock_Step_Join:
 	; No reference found.  Was `.byte 0xc1 / jrl 16254 / nop`: `cp (0x7e78:16), 0`.
 AccompSeq_MidiFilterCodeBlock_Step2:
 	cp	(0x7e78:16), 0
-	jr	nz, AccompSeq_MidiFilterCodeBlock_Code_Entry
+	jr	nz, AccompSeq_MidiFilterCodeBlock_Step2_Skip
 	ld	(0x7e79:16), a
 	ld	(0x7e78:16), 1
 	or	(0xe3de:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
-AccompSeq_MidiFilterCodeBlock_Code_Entry:
+AccompSeq_MidiFilterCodeBlock_Step2_Skip:
 	ld	a, (0x7e79:16)
 	ld	w, 10:opc
 	add	a, w

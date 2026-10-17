@@ -1388,12 +1388,12 @@ SeGfx_BoundOp06_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x
 DrawFunc_Init_Entry_Str_Fmt1d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B4, 0x4	; "%1d"
 ; [nakarest] naka_disk_warning+0x24b8  +0x24b8..+0x24bc (0xeab164, 4 B)
 ; [nakarest] Text (4 B at 0xeab164), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references DrawFunc_Init_Entry2
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord_Skip
 ; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry2_Str_Fmt2d`).
 DrawFunc_Init_Entry2_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B8, 0x4	; "%2d"
 ; [nakarest] naka_disk_warning+0x24bc  +0x24bc..+0x24c0 (0xeab168, 4 B)
 ; [nakarest] Text (4 B at 0xeab168), first string "%3d"; no registered NAKA table points into
-; [nakarest] it; reached through source references DrawFunc_Init_Entry3
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord_Skip2
 ; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry3_Str_Fmt3d`).
 DrawFunc_Init_Entry3_Str_Fmt3d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24BC, 0x4	; "%3d"
 ; SeGfx_BoundOp09_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
@@ -1426,7 +1426,7 @@ SeGfx_BoundOp0B_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x
 DrawFunc_Init_Entry3_Str_Fmt1d_2:	.incbin "includes/generated/naka_disk_warning.bin", 0x24DC, 0x4	; "%1d"
 ; [nakarest] naka_disk_warning+0x24e0  +0x24e0..+0x24e4 (0xeab18c, 4 B)
 ; [nakarest] Text (4 B at 0xeab18c), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references DrawFunc_Init_Entry4
+; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Skip
 ; [nakarest] (display/graphics_text_vga.s: `.long FmtStr_pct2d`).
 FmtStr_pct2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24E0, 0x4
 ; [nakarest] naka_disk_warning+0x24e4  +0x24e4..+0x24e8 (0xeab190, 4 B)
@@ -1436,7 +1436,7 @@ FmtStr_pct2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24E0, 0x4
 DrawFunc_Init_Entry4_Str_Fmt3d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24E4, 0x4	; "%3d"
 ; [nakarest] naka_disk_warning+0x24e8  +0x24e8..+0x24ec (0xeab194, 4 B)
 ; [nakarest] Text (4 B at 0xeab194), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references DrawFunc_Init_Entry5
+; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Join
 ; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt2d`).
 DrawFunc_Init_Entry5_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24E8, 0x4	; "%2d"
 ; [nakarest] naka_disk_warning+0x24ec  +0x24ec..+0x24f0 (0xeab198, 4 B)

@@ -865,10 +865,10 @@ FadeSetGridCheck_Skip:
 	cp	xhl, 0x2a10
 	jr	z, FadeSetGridCheck_Skip2
 	cp	xhl, 0x2a01
-	jr	z, FadeSetGridCheck_Entry
+	jr	z, FadeSetGridCheck_OnLswData_Join
 	cp	xhl, 0x2a00
 	jrl	nz, SndParam_ReturnZero2
-FadeSetGridCheck_Entry:
+FadeSetGridCheck_OnLswData_Join:
 	pushm	(xde)
 	pushw	FadeSetGridCheck_LocalInit_Strings@hi16
 	pushw	FadeSetGridCheck_LocalInit_Strings@lo16
@@ -1469,7 +1469,7 @@ InOutGridCheck_OnLswData:
 	lda	xbc, (xwa+2)
 	lda	xhl, (Data_InOutGridDispatch_PtrTable:24)
 	cp	xix, 0x2183
-	jrl	z, InOutGridCheck_Entry
+	jrl	z, InOutGridCheck_OnLswData_Skip
 	cp	xix, 0x2182
 	jrl	z, InOutGridCheck_Skip13
 	cp	xix, 0x2184
@@ -1682,7 +1682,7 @@ InOutGridCheck_Skip13:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
-InOutGridCheck_Entry:
+InOutGridCheck_OnLswData_Skip:
 	; v10 does not spell this byte either
 	ldw	(xbc), 8
 	ld	bc, (xiz+4)

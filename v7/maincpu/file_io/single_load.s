@@ -280,7 +280,7 @@ SLSrcBankList_FuncBody_Helper10:
 	push	xiz
 	ld	(xsp+4), xwa
 	cp	(35166:16), 0
-	jr	nz, SLSrcBankList_FuncBody_Helper3_Epilogue
+	jr	nz, SLSrcBankList_FuncBody_Helper10_Epilogue
 	lda	xwa, (34994:16)
 	ld	(xwa+63), 3
 	lda	xiz, (xwa+64)
@@ -297,7 +297,7 @@ SLSrcBankList_FuncBody_Helper10:
 	ld	xwa, (xsp+4)
 	ld	xbc, EVT_PARA_DRAW
 	call	ApPostEvent
-SLSrcBankList_FuncBody_Helper3_Epilogue:
+SLSrcBankList_FuncBody_Helper10_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
@@ -647,7 +647,7 @@ SLSrcBankList_FuncBody_Skip14:
 	lda	xbc, (34994:16)
 	lda	xwa, (xbc+63)
 	cp	(35166:16), 0
-	jr	z, SLSrcBankList_FuncBody_Entry
+	jr	z, SingleLoadSrc_SequencerListProc_Skip
 	ld	(xwa), 3
 	lda	xwa, (xbc+64)
 	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_ALL
@@ -656,7 +656,7 @@ SLSrcBankList_FuncBody_Skip14:
 	ld	xwa, (xsp+8)
 	ld	xbc, EVT_PARA_DRAW
 	jr	SLSrcBankList_FuncBody_Join5
-SLSrcBankList_FuncBody_Entry:
+SingleLoadSrc_SequencerListProc_Skip:
 	cpw	(xsp+0x4), 4
 	jr	c, SLSrcBankList_FuncBody_Epilogue3
 	ld	c, (35170:16)

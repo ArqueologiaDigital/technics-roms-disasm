@@ -1651,12 +1651,12 @@ AccompSeq_MidiFilterCodeBlock_Step_Join:
 AccompSeq_MidiFilterCodeBlock_Step2:
 	; No reference found.
 	cp	(0x7ddc:16), 0
-	jr	nz, AccompSeq_MidiFilterCodeBlock_Code_Entry
+	jr	nz, AccompSeq_MidiFilterCodeBlock_Step2_Skip
 	ld	(0x7ddd:16), a
 	ld	(0x7ddc:16), 1
 	or	(0xe318:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
-AccompSeq_MidiFilterCodeBlock_Code_Entry:
+AccompSeq_MidiFilterCodeBlock_Step2_Skip:
 	ld	a, (0x7ddd:16)
 	ld	w, 10:opc
 	add	a, w

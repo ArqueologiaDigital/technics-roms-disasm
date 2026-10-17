@@ -6071,7 +6071,7 @@ INTTC0_HANDLER_Join2:
 	inc	1, (58050:16)
 	ret
 	ld	de, (SYSTEM_TIMESTAMP:16)
-INTTC0_HANDLER_Entry:
+E1DMA_ISR_BytecodeBlock_Loop:
 	bit	7, (0x620:16)
 	jr	nz, INTTC0_HANDLER_Skip4
 	ld	hl, 0:i3
@@ -6081,7 +6081,7 @@ INTTC0_HANDLER_Skip4:
 	ld	bc, (SYSTEM_TIMESTAMP:16)
 	sub	bc, wa
 	cp	bc, 250
-	jr	le, INTTC0_HANDLER_Entry
+	jr	le, E1DMA_ISR_BytecodeBlock_Loop
 	ld	(256:16), 0
 	ld	(1506:16), 0
 	set	1, (PZ:8)

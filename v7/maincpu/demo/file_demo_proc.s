@@ -682,10 +682,10 @@ Demo_SelectEntry_ByteTable:
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	ret	z
 	cpw	(SEQ_ACTIVE_PARTS:16), 0
-	jr	nz, Demo_SelectEntry_ByteTable_Code_Entry
+	jr	nz, Demo_SelectEntry_ByteTable_Join2
 	bit	0, (0x31e7:16)
-	jr	z, Demo_SelectEntry_ByteTable_Code_Entry2
-Demo_SelectEntry_ByteTable_Code_Entry:
+	jr	z, Demo_SelectEntry_ByteTable_Skip
+Demo_SelectEntry_ByteTable_Join2:
 	res	3, (DEMO_CONTROL_FLAGS:16)
 	cp	(ACTIVE_TITLE:16), 228
 	call	nz, (SeqInit_PostEventSequence:24)
@@ -698,7 +698,7 @@ Demo_SelectEntry_ByteTable_Code_Entry:
 	ld	a, (DEMO_ACTIVE_ENTRY:16)
 	extz	wa
 	jp	Seq_DispatchEventType6
-Demo_SelectEntry_ByteTable_Code_Entry2:
+Demo_SelectEntry_ByteTable_Skip:
 	set	3, (DEMO_CONTROL_FLAGS:16)
 	cp	(ACTIVE_TITLE:16), 228
 	jr	z, Demo_SelectEntry_ByteTable_Skip3
@@ -8728,10 +8728,10 @@ FileIO_ErrorCodeByteBlock:
 	ret	z
 	ld	c, (CURRENT_TITLE:16)
 	cp	c, 16
-	jr	c, FileIO_ErrorCodeByteBlock_Entry
+	jr	c, FileIO_ErrorCodeByteBlock_Join4
 	cp	c, 22
 	ret	ule
-FileIO_ErrorCodeByteBlock_Entry:
+FileIO_ErrorCodeByteBlock_Join4:
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	jr	z, FileIO_ErrorCodeByteBlock_Skip5
 	cp	(CURRENT_MODE:16), 6

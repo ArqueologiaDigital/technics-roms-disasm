@@ -1209,7 +1209,7 @@ PmemOutLGridCheck_OnIndexswUp:
 	ld	(xwa), xbc
 	ld	xbc, 79
 	ld	(xwa+6), xbc
-	jrl	PmemOutLGridCheck_JumpTable_Entry_Join2
+	jrl	PmemOutLGridCheck_OnIndexswDown_Join2
 PmemOutLGridCheck_OnIndexswUp_Skip:
 	ld	xiy, NakaData_PartFlags
 	lda	xix, (xsp+60)
@@ -1237,7 +1237,7 @@ PmemOutLGridCheck_OnIndexswUp_Skip:
 	ld	b, 0:opc
 	extz	xbc
 	ld	(xwa+14), xbc
-	jrl	PmemOutLGridCheck_JumpTable_Entry_Join
+	jrl	PmemOutLGridCheck_OnIndexswDown_Join
 PmemOutLGridCheck_OnIndexswUp_Skip2:
 	ld	xiy, NakaData_PartFlags
 	lda	xix, (xsp+60)
@@ -1248,7 +1248,7 @@ PmemOutLGridCheck_OnIndexswUp_Skip2:
 	ld	(xwa), xbc
 	ld	xbc, 2:i3
 	ld	(xwa+6), xbc
-	jrl	PmemOutLGridCheck_JumpTable_Entry_Join2
+	jrl	PmemOutLGridCheck_OnIndexswDown_Join2
 PmemOutLGridCheck_OnIndexswDown:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -1264,9 +1264,9 @@ PmemOutLGridCheck_OnIndexswDown:
 	cpw	(xwa), 1
 	jrl	nz, PmemOutGrid_ReturnZero
 	cp	hl, 3:i3
-	jrl	z, PmemOutLGridCheck_JumpTable_Entry_Skip3
+	jrl	z, PmemOutLGridCheck_OnIndexswDown_Skip3
 	cp	hl, 1:i3
-	jr	z, PmemOutLGridCheck_JumpTable_Entry
+	jr	z, PmemOutLGridCheck_OnIndexswDown_Skip
 	cp	hl, 0:i3
 	jrl	nz, PmemOutGrid_ReturnZero
 	ld	xiy, NakaData_PartFlags
@@ -1280,8 +1280,8 @@ PmemOutLGridCheck_OnIndexswDown:
 	ld	(xwa+6), xbc
 	ld	xbc, 0xffffffff
 	ld	(xwa+14), xbc
-	jr	PmemOutLGridCheck_JumpTable_Entry_Join2
-PmemOutLGridCheck_JumpTable_Entry:
+	jr	PmemOutLGridCheck_OnIndexswDown_Join2
+PmemOutLGridCheck_OnIndexswDown_Skip:
 	ld	xiy, NakaData_PartFlags
 	lda	xix, (xsp+60)
 	ldw	bc, 11
@@ -1308,10 +1308,10 @@ PmemOutLGridCheck_JumpTable_Entry:
 	ld	b, 0:opc
 	extz	xbc
 	ld	(xwa+14), xbc
-PmemOutLGridCheck_JumpTable_Entry_Join:
+PmemOutLGridCheck_OnIndexswDown_Join:
 	call	MainRamPut
 	jrl	PmemOutGrid_ReturnZero
-PmemOutLGridCheck_JumpTable_Entry_Skip3:
+PmemOutLGridCheck_OnIndexswDown_Skip3:
 	ld	xiy, NakaData_PartFlags
 	lda	xix, (xsp+60)
 	ldw	bc, 11
@@ -1323,7 +1323,7 @@ PmemOutLGridCheck_JumpTable_Entry_Skip3:
 	ld	(xwa+6), xbc
 	ld	xbc, 0xffffffff
 	ld	(xwa+14), xbc
-PmemOutLGridCheck_JumpTable_Entry_Join2:
+PmemOutLGridCheck_OnIndexswDown_Join2:
 	call	MainRamAdd
 	jrl	PmemOutGrid_ReturnZero
 PmemOutLGridCheck_OnRamData:
@@ -14592,7 +14592,7 @@ PsMixer_CtlTypeProc2:
 	ld	bc, (xsp+14)
 	call	SndParam_LookupViaEncode
 	ld	(xsp+16), hl
-	jr	PsMixer_CtlTypeProc2_Entry
+	jr	PsMixer_CtlTypeProc2_Join2
 PsMixer_CtlTypeProc2_Skip:
 	ld	de, (xsp+6)
 	exts	xde
@@ -14603,7 +14603,7 @@ PsMixer_CtlTypeProc2_Skip:
 	ld	xwa, xiz
 	call	SndParam_LookupReadOnly
 	ld	(xsp+16), hl
-PsMixer_CtlTypeProc2_Entry:
+PsMixer_CtlTypeProc2_Join2:
 	cpw	(xsp+16), 0
 	jr	z, PsMixer_CtlTypeProc2_Loop
 	lda	xwa, (xsp+22)

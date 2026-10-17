@@ -578,7 +578,7 @@ SndParam_ResolveWidget_Join2:
 SndParam_ResolveWidget_Skip2:
 	ld	xwa, (xsp+6)
 	or	xwa, xwa
-	jr	z, SndParam_ResolveWidget_Entry
+	jr	z, SndParam_RW_Fail_Skip
 	ld	xhl, (xsp+14)
 	ld	c, (xwa+4)
 	ld	(xhl), c
@@ -613,7 +613,7 @@ SndParam_ResolveWidget_Skip3:
 	and	wa, 127
 	ld	(xde), a
 	jr	SndParam_ResolveWidget_Join3
-SndParam_ResolveWidget_Entry:
+SndParam_RW_Fail_Skip:
 	ldw	(xsp+4), 65535
 SndParam_ResolveWidget_Join3:
 	ld	hl, (xsp+4)

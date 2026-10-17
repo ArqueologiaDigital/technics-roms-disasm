@@ -1120,10 +1120,10 @@ SeMenu_SetPartEnabled_Skip2:
 	ld	a, l
 	cpl	a
 	and	(1630:16), a
-	jr	SeMenu_PartMask_Data_Code_Entry
+	jr	SeMenu_SetPartEnabled_Join
 SeMenu_PartMask_Data_Code_Skip:
 	or	(1630:16), l
-SeMenu_PartMask_Data_Code_Entry:
+SeMenu_SetPartEnabled_Join:
 	ld	(xsp+2), (0x65e)
 	extz	hl
 	lda	xde, (xsp+2)
@@ -1426,7 +1426,7 @@ SeMenu_SetFilterType:
 	pushw	7
 	ldw	bc, 54
 	calr	SeMenu_RegisterElement_Extended
-	jr	SeMenu_BitShiftMask_End_Entry
+	jr	SeMenu_SetFilterType_Join
 SeMenu_SetFilterType_Skip8:
 	ld	a, (xsp+2)
 	dec	1, a
@@ -1439,7 +1439,7 @@ SeMenu_SetFilterType_Skip8:
 	pushw	7
 	ld	wa, 0:i3
 	calr	SeMenu_SetupDisplayObject_Alt1
-SeMenu_BitShiftMask_End_Entry:
+SeMenu_SetFilterType_Join:
 	ld	(0x68c), (xsp+4)
 	ld	hl, 0:i3
 	inc	6, xsp
@@ -1562,7 +1562,7 @@ SeMenu_TransferPartValues_EndData_Join9:
 	cp	c, 0:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip12
 	decm8	1, (xwa)
-	jr	SeMenu_TransferPartValues_EndData_Entry
+	jr	SeMenu_TransferPartValues_EndData_Join4
 SeMenu_TransferPartValues_EndData_Skip10:
 	cp	a, 1:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip11
@@ -1575,7 +1575,7 @@ SeMenu_TransferPartValues_EndData_Skip11:
 	jr	SeMenu_TransferPartValues_EndData_Join9
 SeMenu_TransferPartValues_EndData_Skip12:
 	incm8	1, (xwa)
-SeMenu_TransferPartValues_EndData_Entry:
+SeMenu_TransferPartValues_EndData_Join4:
 	cp	(xwa), 0
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip27
 	ld	(xwa), 4
@@ -3522,11 +3522,11 @@ SeLfo1_StepSelectorAndReload_Join5:
 	ldto_berp a, 251
 	extz	wa
 	cp	(xsp+22), 2
-	jr	nz, SeMenu_ApplyPartEdit_Entry
+	jr	nz, SeLfo1_StepSelectorAndReload_Skip7
 	pushw	wa
 	pushw	59
 	jr	SeMenu_ApplyPartEdit_Join6
-SeMenu_ApplyPartEdit_Entry:
+SeLfo1_StepSelectorAndReload_Skip7:
 	cp	(xsp+22), 3
 	jr	nz, SeMenu_ApplyPartEdit_Skip7
 	pushw	wa
@@ -4467,30 +4467,30 @@ SeMenu_DrawEnvGraphLine_Skip23:
 	jrl	SeMenu_ApplyPartEdit_Join16
 SeMenu_DrawEnvGraphLine_Skip2:
 	cpw	(xsp+8), 59
-	jr	c, SeMenu_ApplyPartEdit_Entry2
+	jr	c, SeMenu_DrawEnvGraphLine_Join
 	cpw	(xsp+8), 146
-	jr	ugt, SeMenu_ApplyPartEdit_Entry2
+	jr	ugt, SeMenu_DrawEnvGraphLine_Join
 	cp	iz, 59
-	jr	c, SeMenu_ApplyPartEdit_Entry2
+	jr	c, SeMenu_DrawEnvGraphLine_Join
 	cp	iz, 146
 	jrl	ule, SeMenu_ApplyPartEdit_Join16
-SeMenu_ApplyPartEdit_Entry2:
+SeMenu_DrawEnvGraphLine_Join:
 	cpw	(xsp+8), 59
-	jr	nc, SeMenu_ApplyPartEdit_Helper9_Skip3
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip3
 	cp	iz, 59
-	jrl	c, SeMenu_ApplyPartEdit_Helper9_Epilogue
-SeMenu_ApplyPartEdit_Helper9_Skip3:
+	jrl	c, SeMenu_DrawEnvGraphLine_Epilogue
+SeMenu_DrawEnvGraphLine_Skip3:
 	cpw	(xsp+8), 146
-	jr	ule, SeMenu_ApplyPartEdit_Helper9_Skip4
+	jr	ule, SeMenu_DrawEnvGraphLine_Skip4
 	cp	iz, 146
-	jrl	ugt, SeMenu_ApplyPartEdit_Helper9_Epilogue
-SeMenu_ApplyPartEdit_Helper9_Skip4:
+	jrl	ugt, SeMenu_DrawEnvGraphLine_Epilogue
+SeMenu_DrawEnvGraphLine_Skip4:
 	ld	wa, (xsp+6)
 	sub	wa, (xsp+10)
 	cp	(xsp+8), iz
-	jr	nc, SeMenu_ApplyPartEdit_Helper9_Skip6
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip6
 	cp	iz, 146
-	jr	ule, SeMenu_ApplyPartEdit_Helper9_Skip5
+	jr	ule, SeMenu_DrawEnvGraphLine_Skip5
 	ldw	bc, 146
 	sub	bc, (xsp+8)
 	ld	de, iz
@@ -4500,7 +4500,7 @@ SeMenu_ApplyPartEdit_Helper9_Skip4:
 	add	wa, hl
 	ld	(xsp+6), wa
 	ldw	iz, 146
-SeMenu_ApplyPartEdit_Helper9_Skip5:
+SeMenu_DrawEnvGraphLine_Skip5:
 	cpw	(xsp+8), 59
 	jr	nc, SeMenu_ApplyPartEdit_Join16
 	ld	wa, (xsp+6)
@@ -4513,9 +4513,9 @@ SeMenu_ApplyPartEdit_Helper9_Skip5:
 	add	(xsp+10), hl
 	ldw (xsp+8), 59
 	jr	SeMenu_ApplyPartEdit_Join16
-SeMenu_ApplyPartEdit_Helper9_Skip6:
+SeMenu_DrawEnvGraphLine_Skip6:
 	cp	iz, 59
-	jr	nc, SeMenu_ApplyPartEdit_Helper9_Skip7
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip7
 	ld	bc, (xsp+8)
 	sub	bc, 59
 	ld	de, (xsp+8)
@@ -4525,7 +4525,7 @@ SeMenu_ApplyPartEdit_Helper9_Skip6:
 	add	wa, hl
 	ld	(xsp+6), wa
 	ldw	iz, 59
-SeMenu_ApplyPartEdit_Helper9_Skip7:
+SeMenu_DrawEnvGraphLine_Skip7:
 	cpw	(xsp+8), 146
 	jr	ule, SeMenu_ApplyPartEdit_Join16
 	ld	wa, (xsp+6)
@@ -4544,7 +4544,7 @@ SeMenu_ApplyPartEdit_Join16:
 	pushm	(xsp+16)
 	call	SeGfx_DrawLine
 	inc	8, xsp
-SeMenu_ApplyPartEdit_Helper9_Epilogue:
+SeMenu_DrawEnvGraphLine_Epilogue:
 	popw	iz
 	lda	xsp, (xsp+10)
 	retd	2
@@ -4691,7 +4691,7 @@ SeMenu_DrawKeyScaleGraph_Join:
 	pushw	121
 	pushm	(xsp+8)
 	pushw	97
-	jrl	SeMenu_ApplyPartEdit_Entry3_Join4
+	jrl	SeMenu_DrawKeyScaleGraph_Join4
 SeMenu_DrawKeyScaleGraph_Skip25:
 	ld	a, (xsp+18)
 	exts	wa
@@ -4715,7 +4715,7 @@ SeMenu_DrawKeyScaleGraph_Skip25:
 	ldw qiz, 97
 	ld	bc, hl
 	cp	(xsp+8), bc
-	jr	ule, SeMenu_ApplyPartEdit_Entry3
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip4
 	ldw	iz, 72
 	cp	(xsp+18), 0
 	jr	lt, SeMenu_DrawKeyScaleGraph_Skip26
@@ -4724,38 +4724,38 @@ SeMenu_DrawKeyScaleGraph_Skip26:
 	ld	wa, (xsp+14)
 	sub	wa, hl
 	ld	(xsp+16), wa
-	jr	SeMenu_ApplyPartEdit_Entry3_Join2
-SeMenu_ApplyPartEdit_Entry3:
+	jr	SeMenu_DrawKeyScaleGraph_Join2
+SeMenu_DrawKeyScaleGraph_Skip4:
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Entry3_Skip4
+	jr	lt, SeMenu_DrawKeyScaleGraph_Skip5
 	add	iz, ix
-	jr	SeMenu_ApplyPartEdit_Entry3_Join2
-SeMenu_ApplyPartEdit_Entry3_Skip4:
+	jr	SeMenu_DrawKeyScaleGraph_Join2
+SeMenu_DrawKeyScaleGraph_Skip5:
 	sub	iz, ix
-SeMenu_ApplyPartEdit_Entry3_Join2:
+SeMenu_DrawKeyScaleGraph_Join2:
 	cp	(xsp+10), bc
-	jr	ule, SeMenu_ApplyPartEdit_Entry3_Skip6
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip7
 	ldw	qiz, 122
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Entry3_Skip5
+	jr	lt, SeMenu_DrawKeyScaleGraph_Skip6
 	ldw qiz, 72
-SeMenu_ApplyPartEdit_Entry3_Skip5:
+SeMenu_DrawKeyScaleGraph_Skip6:
 	ld	wa, (xsp+14)
 	add	wa, hl
 	ld	(xsp+12), wa
-	jr	SeMenu_ApplyPartEdit_Entry3_Join3
-SeMenu_ApplyPartEdit_Entry3_Skip6:
+	jr	SeMenu_DrawKeyScaleGraph_Join3
+SeMenu_DrawKeyScaleGraph_Skip7:
 	cp	(xsp+18), 0
 	jr	lt, SeMenu_ApplyPartEdit_Skip27
 	ld wa, qiz
 	sub	wa, de
 	ld qiz, wa
-	jr	SeMenu_ApplyPartEdit_Entry3_Join3
+	jr	SeMenu_DrawKeyScaleGraph_Join3
 SeMenu_ApplyPartEdit_Skip27:
 	ld wa, qiz
 	add	wa, de
 	ld qiz, wa
-SeMenu_ApplyPartEdit_Entry3_Join3:
+SeMenu_DrawKeyScaleGraph_Join3:
 	pushw	iz
 	pushm	(xsp+18)
 	pushw	iz
@@ -4786,7 +4786,7 @@ SeMenu_ApplyPartEdit_Entry3_Join3:
 	pushw	121
 	pushm	(xsp+8)
 	push	qiz
-SeMenu_ApplyPartEdit_Entry3_Join4:
+SeMenu_DrawKeyScaleGraph_Join4:
 	pushm	(xsp+12)
 	call	SeMenu_DrawDottedLine
 	inc	8, xsp
@@ -4818,14 +4818,14 @@ SeMenu_DrawPartRangeGraph:
 	ld (xsp), wa
 	ldw (xsp+2), 20
 	cp	(xsp+26), 0
-	jr	nz, SeMenu_ApplyPartEdit_Entry4
+	jr	nz, SeMenu_DrawPartRangeGraph_Skip
 	ldw	(xsp+4), 39
 	ldw	wa, 247
-	jr	SeMenu_ApplyPartEdit_Entry5
-SeMenu_ApplyPartEdit_Entry4:
+	jr	SeMenu_DrawPartRangeGraph_Join
+SeMenu_DrawPartRangeGraph_Skip:
 	ldw	(xsp+4), 48
 	ldw	wa, 241
-SeMenu_ApplyPartEdit_Entry5:
+SeMenu_DrawPartRangeGraph_Join:
 	pushw	(xsp)
 	pushw	wa
 	ld	wa, (xsp+4)
@@ -6070,17 +6070,17 @@ SeMenu_StepNoteParamInRange_Skip2:
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_PatchBank_Data_Entry_Skip6
+	jr	nz, SeMenu_StepNoteParamInRange_Skip7
 	cp	(xsp+4), 127
-	jr	nc, SeMenu_PatchBank_Data_Skip2
+	jr	nc, SeMenu_StepNoteParamInRange_Skip8
 	ld	a, (xsp+4)
 	cp	a, (xsp+16)
-	jr	nc, SeMenu_PatchBank_Data_Skip2
-SeMenu_PatchBank_Data_Entry:
+	jr	nc, SeMenu_StepNoteParamInRange_Skip8
+SeMenu_StepNoteParamInRange_Loop:
 	cp	(xsp+4), 0
-	jr	nz, SeMenu_PatchBank_Data_Entry_Skip3
+	jr	nz, SeMenu_StepNoteParamInRange_Skip3
 	ld	(xsp+4), 11
-SeMenu_PatchBank_Data_Entry_Skip3:
+SeMenu_StepNoteParamInRange_Skip3:
 	ld	a, (xsp+10)
 	extz	wa
 	lda	xbc, (xsp+2)
@@ -6089,26 +6089,26 @@ SeMenu_PatchBank_Data_Entry_Skip3:
 	add	a, (xsp+2)
 	ld	(xsp+4), a
 	cp	(xsp+4), 12
-	jr	nc, SeMenu_PatchBank_Data_Entry_Skip4
+	jr	nc, SeMenu_StepNoteParamInRange_Skip4
 	ld	(xsp+4), 0
-	jr	SeMenu_PatchBank_Data_Entry_Join
-SeMenu_PatchBank_Data_Entry_Skip4:
+	jr	SeMenu_StepNoteParamInRange_Join
+SeMenu_StepNoteParamInRange_Skip4:
 	cp	(xsp+4), 127
-	jr	ule, SeMenu_PatchBank_Data_Entry_Join
+	jr	ule, SeMenu_StepNoteParamInRange_Join
 	ld	(xsp+4), 127
-SeMenu_PatchBank_Data_Entry_Join:
+SeMenu_StepNoteParamInRange_Join:
 	ld	a, (xsp+4)
 	cp	a, (xsp+6)
-	jr	nc, SeMenu_PatchBank_Data_Entry_Skip5
+	jr	nc, SeMenu_StepNoteParamInRange_Skip5
 	ld	a, (xsp+6)
 	ld	(xsp+4), a
-SeMenu_PatchBank_Data_Entry_Skip5:
+SeMenu_StepNoteParamInRange_Skip5:
 	ld	a, (xsp+4)
 	cp	a, (xsp+16)
-	jr	ule, SeMenu_PatchBank_Data_Skip
+	jr	ule, SeMenu_StepNoteParamInRange_Skip6
 	ld	a, (xsp+16)
 	ld	(xsp+4), a
-SeMenu_PatchBank_Data_Skip:
+SeMenu_StepNoteParamInRange_Skip6:
 	ld	a, (xsp)
 	or	(xsp+4), a
 	ld	a, (xsp+8)
@@ -6117,16 +6117,16 @@ SeMenu_PatchBank_Data_Skip:
 	extz	bc
 	calr	SeMenu_StorePartParam
 	ld	l, 1:opc
-	jr	SeMenu_PatchBank_Data_Epilogue
-SeMenu_PatchBank_Data_Entry_Skip6:
+	jr	SeMenu_StepNoteParamInRange_Epilogue
+SeMenu_StepNoteParamInRange_Skip7:
 	cp	(xsp+4), 0
-	jr	z, SeMenu_PatchBank_Data_Skip2
+	jr	z, SeMenu_StepNoteParamInRange_Skip8
 	ld	a, (xsp+4)
 	cp	a, (xsp+6)
-	jr	ugt, SeMenu_PatchBank_Data_Entry
-SeMenu_PatchBank_Data_Skip2:
+	jr	ugt, SeMenu_StepNoteParamInRange_Loop
+SeMenu_StepNoteParamInRange_Skip8:
 	ld	l, 0:opc
-SeMenu_PatchBank_Data_Epilogue:
+SeMenu_StepNoteParamInRange_Epilogue:
 	lda	xsp, (xsp+12)
 	retd	2
 

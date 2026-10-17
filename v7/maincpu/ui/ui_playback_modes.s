@@ -19,23 +19,23 @@ UIStateEvt_VoiceParamHandler_Join:
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	ld	w, (SWBTWR_PAYLOAD_3:16)
 	cp	w, 255
-	jr	nz, UIStateEvt_VoiceParamHandler_Skip2
+	jr	nz, UIStateEvt_VoiceParamHandler_Skip4
 	and (4330:16), 254
 	jrl	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Skip2:
+UIStateEvt_VoiceParamHandler_Skip4:
 	bit	2, w
-	jr	nz, UIStateEvt_VoiceParamHandler_Entry
+	jr	nz, UIStateEvt_VoiceParamHandler_Skip5
 	jr	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Entry:
+UIStateEvt_VoiceParamHandler_Skip5:
 	bit	0, (0x10ea:16)
-	jr	z, UIStateEvt_VoiceParamHandler_Skip3
+	jr	z, UIStateEvt_VoiceParamHandler_Skip6
 	and	(0x10ea:16), 0xfe
 	jr	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Skip3:
+UIStateEvt_VoiceParamHandler_Skip6:
 	and	a, w
 	and	a, 4
 	bit	2, a
-	jr	z, UIStateEvt_VoiceParamHandler_Skip4
+	jr	z, UIStateEvt_VoiceParamHandler_Skip7
 	pushw	wa
 	xor	a, a
 	call	Part_WriteAllVoiceSubBlocks_B
@@ -51,7 +51,7 @@ UIStateEvt_VoiceParamHandler_Skip3:
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
 	jr	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Skip4:
+UIStateEvt_VoiceParamHandler_Skip7:
 	pushw	wa
 	xor	a, a
 	call	Part_WriteAllVoiceSubBlocks_A

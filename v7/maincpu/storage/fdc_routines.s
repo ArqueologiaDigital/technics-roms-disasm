@@ -1174,35 +1174,35 @@ FDC_HardwareSetup_Skip17:
 	ret
 FDC_DETECT_CHECK:
 	cpw	(0x89aa:16), 0
-	jr	z, FDC_HardwareSetup_Entry
+	jr	z, FDC_DETECT_CHECK_Skip
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry:
+FDC_DETECT_CHECK_Skip:
 	cpw	(0x89a8:16), 0
-	jr	z, FDC_HardwareSetup_Entry_Skip
+	jr	z, FDC_DETECT_CHECK_Skip2
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip:
+FDC_DETECT_CHECK_Skip2:
 	cpw	(FDC_COMMAND_INDEX:16), 3
-	jr	z, FDC_HardwareSetup_Entry_Skip2
+	jr	z, FDC_DETECT_CHECK_Skip3
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip2:
+FDC_DETECT_CHECK_Skip3:
 	cpw	(0x89ae:16), 1
-	jr	z, FDC_HardwareSetup_Entry_Skip3
+	jr	z, FDC_DETECT_CHECK_Skip4
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip3:
+FDC_DETECT_CHECK_Skip4:
 	cpw	(0x8974:16), 0xffff
-	jr	z, FDC_HardwareSetup_Entry_Skip4
+	jr	z, FDC_DETECT_CHECK_Skip5
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip4:
+FDC_DETECT_CHECK_Skip5:
 	cpw	(0x89ac:16), 1
-	jr	z, FDC_HardwareSetup_Entry_Skip5
+	jr	z, FDC_DETECT_CHECK_Skip6
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip5:
+FDC_DETECT_CHECK_Skip6:
 	ldw HL, 0xffff
 	ret
 FDC_DRIVE_DETECT:
@@ -1453,18 +1453,18 @@ FDC_CMD_EXEC_Loop:
 FDC_CMD_EXEC_Skip3:
 	ldw_d16	wa, (0x89ac)
 	cp	wa, (0x8a70:16)
-	jr	ule, FDC_CMD_EXEC_Entry3
+	jr	ule, FDC_CMD_EXEC_Join
 	ldw	(0x89ac:16), 1
-FDC_CMD_EXEC_Entry3:
+FDC_CMD_EXEC_Join:
 	ldmm16	0x8a74, 0x89ac
 	ldw	(FDC_SECTOR_COUNT:16), 0
 	cp	(0x89d0:16), 2
 	jr	nz, FDC_CMD_EXEC_Skip5
 	ldw	(0x8982:16), 1024
-	jr	FDC_CMD_EXEC_Entry4
+	jr	FDC_CMD_EXEC_Join3
 FDC_CMD_EXEC_Skip5:
 	ldw	(0x8982:16), 512
-FDC_CMD_EXEC_Entry4:
+FDC_CMD_EXEC_Join3:
 	ldmm16	0x8a76, 0x89ae
 	ld	iz, 1:i3
 FDC_CMD_EXEC_Join2:
@@ -1495,11 +1495,11 @@ FDC_CMD_EXEC_Skip6:
 FDC_CMD_EXEC_Skip7:
 	calr	FDC_DRIVE_DETECT
 	cp	hl, 0xffff
-	jr	z, FDC_CMD_EXEC_Entry
+	jr	z, FDC_CMD_EXEC_Join6
 	calr	FDC_CONFIG_VERIFY
 	ld	(0x8a68:16), 255
 	calr	FDC_CmdSeek
-FDC_CMD_EXEC_Entry:
+FDC_CMD_EXEC_Join6:
 	ldmm16	0x89ae, 0x8a76
 	dec	1, (0x89cc:16)
 	ldb_d8	a, (0x89cc)
@@ -1555,18 +1555,18 @@ FDC_CMD_EXEC_Loop2:
 FDC_CMD_EXEC_Skip9:
 	ldw_d16	wa, (0x89ac)
 	cp	wa, (0x8a70:16)
-	jr	ule, FDC_CMD_EXEC_Entry5
+	jr	ule, FDC_SECTOR_XFER_Join
 	ldw	(0x89ac:16), 1
-FDC_CMD_EXEC_Entry5:
+FDC_SECTOR_XFER_Join:
 	ldmm16	0x8a74, 0x89ac
 	ldw	(FDC_SECTOR_COUNT:16), 0
 	cp	(0x89d0:16), 2
 	jr	nz, FDC_CMD_EXEC_Skip11
 	ldw	(0x8982:16), 1024
-	jr	FDC_CMD_EXEC_Entry6
+	jr	FDC_SECTOR_XFER_Join2
 FDC_CMD_EXEC_Skip11:
 	ldw	(0x8982:16), 512
-FDC_CMD_EXEC_Entry6:
+FDC_SECTOR_XFER_Join2:
 	ldmm16	0x8a76, 0x89ae
 	ld	iz, 1:i3
 FDC_CMD_EXEC_Join4:
@@ -1695,7 +1695,7 @@ FDC_MODE_CONFIG_Join:
 	ld	(0x8990:16), 0
 	ld	(0x898d:16), 0
 	jr	FDC_MODE_CONFIG_Join2
-FDC_MODE_CONFIG_Entry:
+FDC_MODE_CONFIG_Loop:
 	ldmm8	0x8976, FDC_TARGET_TRACK
 	calr	FDC_MODE_CONFIG_Helper2
 	cp	(FDC_ERROR_CODE:16), 0
@@ -1715,7 +1715,7 @@ FDC_MODE_CONFIG_Join2:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	cp	wa, (0x8a6c:16)
-	jr	ule, FDC_MODE_CONFIG_Entry
+	jr	ule, FDC_MODE_CONFIG_Loop
 ; (was .incbin "includes/romslices/v7_transplant_FDC_MC_EXIT.bin")
 FDC_MC_EXIT:
 ; [v10] --- FDC_MC_EXIT: FORMAT command execution and sector fill ---

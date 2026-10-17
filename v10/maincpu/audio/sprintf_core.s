@@ -1696,14 +1696,14 @@ Sprintf_FFixed_Return:
 
 Sprintf_FFixed_DataTable:
 	ld	xwa, (xsp+4)
-Sprintf_FormatFFixed_Entry:
+Sprintf_FFixed_DataTable_Loop:
 	cp	(xwa), 0
 	jr	nz, Sprintf_FormatFFixed_Skip
 	ld	hl, 1:i3
 	ret
 Sprintf_FormatFFixed_Skip:
 	cp	(xwa+), 48
-	jr	z, Sprintf_FormatFFixed_Entry
+	jr	z, Sprintf_FFixed_DataTable_Loop
 	ld	hl, 0:i3
 	ret
 

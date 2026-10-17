@@ -1458,7 +1458,7 @@ DrawFunc_Init_Join:
 	cp	hl, 1:i3
 	jr	nz, DrawFunc_Init_Skip13
 	ld	xwa, DrawFunc_Init_Variant1_Str_Fmt1d
-	jr	DrawFunc_Init_Entry
+	jr	DrawFunc_Init_Variant1_Join
 DrawFunc_Init_Skip3:
 	pushw	bc
 	pushw	DrawFunc_Init_Variant1_Str_Fmt2d@hi16
@@ -1467,7 +1467,7 @@ DrawFunc_Init_Skip3:
 	jr	DrawFunc_Init_Join8
 DrawFunc_Init_Skip13:
 	ld	xwa, DrawFunc_Init_Variant1_Str_Fmt3d
-DrawFunc_Init_Entry:
+DrawFunc_Init_Variant1_Join:
 	push	xwa
 	push	xde
 	jr	DrawFunc_Init_Join8
@@ -1536,17 +1536,17 @@ SeGfx_BoundOp06_PrintWord:
 	ld	(xbc), de
 	lda	xbc, (xsp+4)
 	cp	hl, 2:i3
-	jr	z, DrawFunc_Init_Entry2
+	jr	z, SeGfx_BoundOp06_PrintWord_Skip
 	cp	hl, 1:i3
-	jr	nz, DrawFunc_Init_Entry3
+	jr	nz, SeGfx_BoundOp06_PrintWord_Skip2
 	pushm	(xix)
 	ld	xwa, DrawFunc_Init_Entry_Str_Fmt1d
 	jr	DrawFunc_Init_Join3
-DrawFunc_Init_Entry2:
+SeGfx_BoundOp06_PrintWord_Skip:
 	pushm	(xix)
 	ld	xwa, DrawFunc_Init_Entry2_Str_Fmt2d
 	jr	DrawFunc_Init_Join3
-DrawFunc_Init_Entry3:
+SeGfx_BoundOp06_PrintWord_Skip2:
 	pushm	(xix)
 	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt3d
 DrawFunc_Init_Join3:
@@ -1681,17 +1681,17 @@ SeGfx_BoundOp0B_FormatNumber_Join5:
 	lda	xbc, (xsp+5)
 	pushw	de
 	cp	l, 2:i3
-	jr	z, DrawFunc_Init_Entry4
+	jr	z, SeGfx_BoundOp0B_FormatNumber_Skip
 	cp	l, 1:i3
 	jr	nz, DrawFunc_Init_Skip9
 	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt1d_2
-	jr	DrawFunc_Init_Entry5
-DrawFunc_Init_Entry4:
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
+SeGfx_BoundOp0B_FormatNumber_Skip:
 	ld	xwa, FmtStr_pct2d
-	jr	DrawFunc_Init_Entry5
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
 DrawFunc_Init_Skip9:
 	ld	xwa, DrawFunc_Init_Entry4_Str_Fmt3d
-DrawFunc_Init_Entry5:
+SeGfx_BoundOp0B_FormatNumber_Join:
 	push	xwa
 	push	xbc
 	jr	DrawFunc_Init_Join9

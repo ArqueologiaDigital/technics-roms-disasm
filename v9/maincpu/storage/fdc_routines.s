@@ -1166,35 +1166,35 @@ FDC_SendParams_ReadWrite_Skip17:
 	ret
 FDC_DETECT_CHECK:
 	cpw	(0x8a46:16), 0
-	jr	z, FDC_HardwareSetup_Entry
+	jr	z, FDC_DETECT_CHECK_Skip
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry:
+FDC_DETECT_CHECK_Skip:
 	cpw	(0x8a44:16), 0
-	jr	z, FDC_HardwareSetup_Entry_Skip
+	jr	z, FDC_DETECT_CHECK_Skip2
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip:
+FDC_DETECT_CHECK_Skip2:
 	cpw	(FDC_COMMAND_INDEX:16), 3
-	jr	z, FDC_HardwareSetup_Entry_Skip2
+	jr	z, FDC_DETECT_CHECK_Skip3
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip2:
+FDC_DETECT_CHECK_Skip3:
 	cpw	(0x8a4a:16), 1
-	jr	z, FDC_HardwareSetup_Entry_Skip3
+	jr	z, FDC_DETECT_CHECK_Skip4
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip3:
+FDC_DETECT_CHECK_Skip4:
 	cpw	(0x8a10:16), 0xffff
-	jr	z, FDC_HardwareSetup_Entry_Skip4
+	jr	z, FDC_DETECT_CHECK_Skip5
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip4:
+FDC_DETECT_CHECK_Skip5:
 	cpw	(0x8a48:16), 1
-	jr	z, FDC_HardwareSetup_Entry_Skip5
+	jr	z, FDC_DETECT_CHECK_Skip6
 	ld	hl, 0:i3
 	ret
-FDC_HardwareSetup_Entry_Skip5:
+FDC_DETECT_CHECK_Skip6:
 	ldw	hl, 0xffff
 	ret
 FDC_DRIVE_DETECT:
@@ -1495,11 +1495,11 @@ FDC_CMD_EXEC_Skip6:
 FDC_CMD_EXEC_Skip7:
 	calr	FDC_DRIVE_DETECT
 	cp	hl, 0xffff
-	jr	z, FDC_CMD_EXEC_Entry
+	jr	z, FDC_CMD_EXEC_Join3
 	calr	FDC_CONFIG_VERIFY
 	ld	(0x8b04:16), 255
 	calr	FDC_CmdSeek
-FDC_CMD_EXEC_Entry:
+FDC_CMD_EXEC_Join3:
 	ldmm16	0x8a4a, 0x8b12
 	dec	1, (0x8a68:16)
 	ldb_d8	a, (0x8a68)
@@ -1695,7 +1695,7 @@ FDC_MODE_CONFIG_Join:
 	ld	(0x8a2c:16), 0
 	ld	(0x8a29:16), 0
 	jr	FDC_MODE_CONFIG_Join2
-FDC_MODE_CONFIG_Entry:
+FDC_MODE_CONFIG_Loop:
 	ldmm8	0x8a12, FDC_TARGET_TRACK
 	calr	FDC_MODE_CONFIG_Helper2
 	cp	(FDC_ERROR_CODE:16), 0
@@ -1715,7 +1715,7 @@ FDC_MODE_CONFIG_Join2:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	cp wa, (35592:16)
-	jr	ule, FDC_MODE_CONFIG_Entry
+	jr	ule, FDC_MODE_CONFIG_Loop
 ; --- FDC_MC_EXIT: FORMAT command execution and sector fill ---
 ; Calls cleanup, sets up FORMAT command (command byte 0x4d).
 ; Loads format buffer address from 35440, stores to DMA source (35404).

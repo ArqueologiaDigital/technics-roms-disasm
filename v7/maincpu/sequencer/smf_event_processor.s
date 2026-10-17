@@ -4025,7 +4025,7 @@ SeqStep_FileTellFinal_Skip2:
 	lda	xsp, (xsp+12)
 	cp	hl, 1:i3
 	jr	nz, SeqStep_FileSeekCleanup_Skip4
-SeqStep_FileSeekCleanup_Entry:
+SeqStep_FileTellFinal_Loop:
 	cp	(xsp+8), 0
 	jr	z, SeqStep_FileSeekCleanup_Skip4
 	cp	(xsp+8), 229
@@ -4046,7 +4046,7 @@ SeqStep_FileSeekCleanup_Skip3:
 	call	FileRead
 	lda	xsp, (xsp+12)
 	cp	hl, 1:i3
-	jr	z, SeqStep_FileSeekCleanup_Entry
+	jr	z, SeqStep_FileTellFinal_Loop
 SeqStep_FileSeekCleanup_Skip4:
 	ld	xwa, (xsp+4)
 	push	xwa
@@ -5151,10 +5151,10 @@ Fat_AllocateClusters_Join2:
 	jr	nz, Fat_AllocateClusters_Skip7
 	ld	xwa, (xsp+20)
 	incm	1, (xwa+44)
-	jr	Fat_AllocateClusters_Join3
+	jr	Fat_AllocateClusters_Join
 Fat_AllocateClusters_Skip7:
 	ldw	(xsp+10), 0
-Fat_AllocateClusters_Join3:
+Fat_AllocateClusters_Join:
 	cpw	(xsp+8), 0
 	jr	nz, Fat_AllocateClusters_Skip9
 	ld	xwa, (xsp+20)
@@ -5342,39 +5342,39 @@ Fat_LookupPath:
 	call	(xwa)
 	inc	4, xsp
 	cp	hl, 0:i3
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip22
+	jr	z, Fat_LookupPath_Skip22
 	lda	xwa, (135706:24)
 	ld	(xsp+16), xwa
 	ld	iz, 0:i3
 	cp	iz, 10
-	jr	ge, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip21
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop8:
+	jr	ge, Fat_LookupPath_Skip21
+Fat_LookupPath_Loop8:
 	ld	xwa, (xsp+38)
 	ld	xbc, (xwa+18)
 	ld	xwa, (xsp+16)
 	cp	xbc, (xwa)
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip20
+	jr	nz, Fat_LookupPath_Skip20
 	ld	xwa, (xsp+16)
 	ld	a, (xwa+22)
 	and	a, 3
 	cp	a, 3:i3
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip19
+	jr	nz, Fat_LookupPath_Skip19
 	ld	hl, 6:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip19:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip19:
 	ld	xwa, (xsp+16)
 	andmi8	(xwa+22), 246
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip20:
+Fat_LookupPath_Skip20:
 	inc	1, iz
 	ld	xwa, 538
 	add	(xsp+16), xwa
 	cp	iz, 10
-	jr	lt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop8
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip21:
+	jr	lt, Fat_LookupPath_Loop8
+Fat_LookupPath_Skip21:
 	ld	xwa, (xsp+38)
 	ld	xwa, (xwa+18)
 	setm	1, (xwa+2)
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip22:
+Fat_LookupPath_Skip22:
 	ld	xwa, (xsp+38)
 	ld	xwa, (xwa+18)
 	ld	xwa, (xwa+26)
@@ -5387,16 +5387,16 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip22:
 	inc	8, xsp
 	ld	(xsp+20), hl
 	cpw	(xsp+20), 65535
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip23
+	jr	nz, Fat_LookupPath_Skip23
 	ldw	hl, 11
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip23:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip23:
 	cp	(xsp+22), 32
-	jrl	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip29
+	jrl	nz, Fat_LookupPath_Skip29
 	ld	xwa, (xsp+38)
 	bitm	6, (xwa+3)
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip29
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join8:
+	jrl	z, Fat_LookupPath_Skip29
+Fat_LookupPath_Join8:
 	ld	xwa, (xsp+4)
 	ld	bc, (xwa+44)
 	sll	bc, 5
@@ -5409,24 +5409,24 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join8:
 	ld	xbc, 0:i3
 	ld	(xwa+26), xbc
 	ld	hl, 0:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop9:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Loop9:
 	ld	xwa, (xsp+16)
 	cpw	(xwa+20), 0
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip24
+	jr	z, Fat_LookupPath_Skip24
 	ld	xwa, (xsp+16)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip24:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip24:
 	ld	xwa, (xsp+16)
 	lda	xwa, (xwa+26)
 	ld	(xsp+8), xwa
 	ld	iz, 0:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join9
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop10:
+	jrl	Fat_LookupPath_Join9
+Fat_LookupPath_Loop10:
 	ld	xwa, (xsp+8)
 	cp	(xwa), 0
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip33
+	jrl	z, Fat_LookupPath_Join
 	pushw	11
 	ld	xwa, (xsp+10)
 	push	xwa
@@ -5435,7 +5435,7 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop10:
 	call	String_Compare
 	add	xsp, 10
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip25
+	jr	nz, Fat_LookupPath_Skip25
 	ldto_berp	c, 248
 	ld	xwa, (xsp+38)
 	ld	(xwa+51), c
@@ -5463,11 +5463,11 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop10:
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	cpw	(xsp+20), 0
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip40
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop11:
+	jrl	z, Fat_LookupPath_Skip40
+Fat_LookupPath_Loop11:
 	ld	xwa, (xsp+38)
 	bitm	4, (xwa+64)
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip37
+	jrl	z, Fat_LookupPath_Skip37
 	lda	xwa, (xsp+42)
 	push	xwa
 	lda	xwa, (xsp+26)
@@ -5476,41 +5476,41 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop11:
 	inc	8, xsp
 	ld	(xsp+20), hl
 	cpw	(xsp+20), 65535
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip28
+	jr	nz, Fat_LookupPath_Skip28
 	ldw	hl, 11
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip25:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip25:
 	inc	1, iz
 	ld	xwa, 32
 	add	(xsp+8), xwa
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join9:
+Fat_LookupPath_Join9:
 	ldw	wa, 16
 	cpw	(xsp+2), 16
-	jr	gt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip26
+	jr	gt, Fat_LookupPath_Skip26
 	ld	wa, (xsp+2)
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip26:
+Fat_LookupPath_Skip26:
 	cp	iz, wa
-	jrl	lt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop10
+	jrl	lt, Fat_LookupPath_Loop10
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	ld	xwa, (xsp+12)
 	ld	xbc, 1:i3
 	add	(xwa), xbc
 	submi16	(xsp+2), 16
-	jr	gt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip30
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop12:
+	jr	gt, Fat_LookupPath_Skip30
+Fat_LookupPath_Loop12:
 	cpw	(xsp+20), 0
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip27
+	jr	z, Fat_LookupPath_Skip27
 	ld	hl, 7:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip27:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip27:
 	ld	hl, 5:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip28:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip28:
 	ldw	(xsp+12), 1
 	cpw	(xsp+14), 0
-	jrl	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip36
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip29:
+	jrl	nz, Fat_LookupPath_Skip36
+Fat_LookupPath_Skip29:
 	ld	xwa, (xsp+38)
 	ldw	(xwa+48), 0
 	ld	xwa, (xsp+38)
@@ -5524,8 +5524,8 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip29:
 	ld	wa, (xwa+44)
 	ld	(xsp+2), wa
 	cpw	(xsp+2), 0
-	jr	le, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop12
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip30:
+	jr	le, Fat_LookupPath_Loop12
+Fat_LookupPath_Skip30:
 	pushw	8
 	ld	xwa, 0:i3
 	push	xwa
@@ -5539,11 +5539,11 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip30:
 	ld	(xsp+16), xhl
 	ld	xwa, (xsp+16)
 	or	xwa, xwa
-	jrl	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop9
+	jrl	nz, Fat_LookupPath_Loop9
 	ld	xwa, (xsp+38)
 	ld	hl, (xwa+6)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop13:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Loop13:
 	pushw	8
 	ld	xwa, 0:i3
 	push	xwa
@@ -5557,18 +5557,18 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop13:
 	ld	(xsp+16), xhl
 	ld	xwa, (xsp+16)
 	or	xwa, xwa
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip31
+	jr	nz, Fat_LookupPath_Skip31
 	ld	xwa, (xsp+38)
 	ld	hl, (xwa+6)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip31:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip31:
 	ld	xwa, (xsp+16)
 	cpw	(xwa+20), 0
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip32
+	jr	z, Fat_LookupPath_Skip32
 	ld	xwa, (xsp+16)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip32:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip32:
 	ld	xwa, (xsp+16)
 	lda	xwa, (xwa+26)
 	ld	(xsp+8), xwa
@@ -5576,11 +5576,11 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip32:
 	ld	(xwa+51), 0
 	ld	xwa, (xsp+38)
 	cp	(xwa+51), 16
-	jrl	nc, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip35
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop14:
+	jrl	nc, Fat_LookupPath_Skip35
+Fat_LookupPath_Loop14:
 	ld	xwa, (xsp+8)
 	cp	(xwa), 0
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip33
+	jr	z, Fat_LookupPath_Join
 	pushw	11
 	ld	xwa, (xsp+10)
 	push	xwa
@@ -5589,7 +5589,7 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop14:
 	call	String_Compare
 	add	xsp, 10
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip34
+	jr	nz, Fat_LookupPath_Skip34
 	ldw	(xsp+12), 0
 	ld	xwa, (xsp+8)
 	push	xwa
@@ -5613,46 +5613,46 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop14:
 	ld	xwa, (xsp+38)
 	ld	xbc, 0:i3
 	ld	(xwa+34), xbc
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop15:
+Fat_LookupPath_Loop:
 	cpw	(xsp+12), 0
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip39
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip33:
+	jrl	z, Fat_LookupPath_Skip39
+Fat_LookupPath_Join:
 	cpw	(xsp+20), 0
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip38
+	jrl	z, Fat_LookupPath_Skip38
 	ld	hl, 7:i3
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip34:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip34:
 	ld	xwa, (xsp+38)
 	incm8	1, (xwa+51)
 	ld	xwa, 32
 	add	(xsp+8), xwa
 	ld	xwa, (xsp+38)
 	cp	(xwa+51), 16
-	jrl	c, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop14
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip35:
+	jrl	c, Fat_LookupPath_Loop14
+Fat_LookupPath_Skip35:
 	ld	xwa, (xsp+16)
 	resm	3, (xwa+22)
 	ld	xwa, (xsp+38)
 	ld	xbc, 1:i3
 	add	(xwa+26), xbc
 	incm	1, (xsp+2)
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join10:
+Fat_LookupPath_Join10:
 	ld	xwa, (xsp+4)
 	ld	xwa, (xwa+32)
 	cp	(xsp+2), wa
-	jrl	lt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop13
+	jrl	lt, Fat_LookupPath_Loop13
 	pushm	(xsp+14)
 	ld	xwa, (xsp+40)
 	push	xwa
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xsp+14), hl
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip36:
+Fat_LookupPath_Skip36:
 	ld	xwa, (xsp+4)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	(xsp+14), wa
-	jr	ugt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop15
+	jr	ugt, Fat_LookupPath_Loop
 	ld	xwa, (xsp+4)
 	lda	xbc, (xwa+32)
 	ld	wa, (xsp+14)
@@ -5666,30 +5666,30 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip36:
 	ld	xwa, (xsp+38)
 	ld	(xwa+26), xbc
 	ldw	(xsp+2), 0
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join10
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip37:
+	jr	Fat_LookupPath_Join10
+Fat_LookupPath_Skip37:
 	ldw	hl, 12
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip38:
+	jrl	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip38:
 	ld	hl, 5:i3
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip39:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip39:
 	cpw	(xsp+20), 0
-	jrl	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop11
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip40:
+	jrl	nz, Fat_LookupPath_Loop11
+Fat_LookupPath_Skip40:
 	ld	xwa, (xsp+38)
 	bitm	6, (xwa+3)
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip43
+	jr	z, Fat_LookupPath_Skip43
 	ld	xwa, (xsp+38)
 	bitm	4, (xwa+64)
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip41
+	jr	nz, Fat_LookupPath_Skip41
 	ldw	hl, 13
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip41:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip41:
 	cpw	(xsp+14), 0
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip42
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Join8
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop16:
+	jr	nz, Fat_LookupPath_Skip42
+	jrl	Fat_LookupPath_Join8
+Fat_LookupPath_Loop16:
 	ld	xwa, (xsp+4)
 	ld	bc, (xwa+40)
 	extz	xbc
@@ -5701,33 +5701,33 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop16:
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xsp+14), hl
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip42:
+Fat_LookupPath_Skip42:
 	ld	xwa, (xsp+4)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	(xsp+14), wa
-	jr	ule, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Loop16
+	jr	ule, Fat_LookupPath_Loop16
 	ld	hl, 0:i3
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip43:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip43:
 	ld	xwa, (xsp+38)
 	ld	a, (xwa+64)
 	and	a, 24
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip44
+	jr	z, Fat_LookupPath_Skip44
 	ldw	hl, 13
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip44:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip44:
 	ld	xwa, (xsp+38)
 	bitm	0, (xwa+64)
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip45
+	jr	z, Fat_LookupPath_Skip45
 	ld	xwa, (xsp+38)
 	bitm	1, (xwa+3)
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip45
+	jr	z, Fat_LookupPath_Skip45
 	ldw	hl, 14
-	jr	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Skip45:
+	jr	Fat_LookupPath_Epilogue4
+Fat_LookupPath_Skip45:
 	ld	hl, 0:i3
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper_Epilogue4:
+Fat_LookupPath_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+32)
 	ret
@@ -5772,27 +5772,27 @@ Fat_CreateDirEntry_Loop:
 	or	xwa, xwa
 	jr	nz, Fat_CreateDirEntry_Skip
 	ld	hl, (xiz+6)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip:
 	ld	xwa, (xsp+18)
 	cpw	(xwa+20), 0
 	jr	z, Fat_CreateDirEntry_Skip2
 	ld	xwa, (xsp+18)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip2:
 	ld	xwa, (xsp+18)
 	lda	xwa, (xwa+26)
 	ld	(xsp+10), xwa
 	ld	hl, 0:i3
 	jr	Fat_CreateDirEntry_Join
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop18:
+Fat_CreateDirEntry_Loop18:
 	ld	xwa, (xsp+10)
 	cp	(xwa), 229
 	jr	z, Fat_CreateDirEntry_Skip3
 	ld	xwa, (xsp+10)
 	cp	(xwa), 0
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Skip49
+	jr	nz, Fat_CreateDirEntry_Skip49
 Fat_CreateDirEntry_Skip3:
 	ld	(xiz+51), l
 Fat_CreateDirEntry_Loop2:
@@ -5829,19 +5829,19 @@ Fat_CreateDirEntry_Loop2:
 	push	xwa
 	calr	SeqStep_FileBufferSetup
 	lda	xsp, (xsp+26)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Skip49:
+	jrl	Fat_CreateDirEntry_Epilogue5
+Fat_CreateDirEntry_Skip49:
 	inc	1, hl
 	ld	xwa, 32
 	add	(xsp+10), xwa
 Fat_CreateDirEntry_Join:
 	ldw	wa, 16
 	cpw	(xsp+4), 16
-	jr	gt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Skip50
+	jr	gt, Fat_CreateDirEntry_Skip50
 	ld	wa, (xsp+4)
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Skip50:
+Fat_CreateDirEntry_Skip50:
 	cp	hl, wa
-	jrl	lt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop18
+	jrl	lt, Fat_CreateDirEntry_Loop18
 	ld	xwa, (xsp+18)
 	andmi8	(xwa+22), 231
 	submi16	(xsp+4), 16
@@ -5852,7 +5852,7 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Skip50:
 	jrl	ge, Fat_CreateDirEntry_Loop
 Fat_CreateDirEntry_Skip4:
 	ldw	hl, 16
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip5:
 	ld	wa, (xiz+69)
 	ld	(xiz+48), wa
@@ -5863,8 +5863,8 @@ Fat_CreateDirEntry_Skip5:
 	calr	FatPath_Next83Component
 	inc	8, xsp
 	cp	hl, 0:i3
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Join13
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop20:
+	jrl	z, Fat_CreateDirEntry_Join13
+Fat_CreateDirEntry_Loop20:
 	lda	xwa, (xsp+42)
 	push	xwa
 	lda	xwa, (xsp+26)
@@ -5872,9 +5872,9 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop20:
 	calr	FatPath_Next83Component
 	inc	8, xsp
 	cp	hl, 0:i3
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop20
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Join13
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop21:
+	jr	nz, Fat_CreateDirEntry_Loop20
+	jrl	Fat_CreateDirEntry_Join13
+Fat_CreateDirEntry_Loop21:
 	ld	xwa, (xsp+6)
 	lda	xbc, (xwa+32)
 	ld	wa, (xiz+42)
@@ -5888,7 +5888,7 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop21:
 	ld	(xiz+26), xwa
 	ldw	(xsp+4), 0
 	jr	Fat_CreateDirEntry_Join2
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop22:
+Fat_CreateDirEntry_Loop22:
 	pushw	24
 	ld	xwa, 0:i3
 	push	xwa
@@ -5902,14 +5902,14 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop22:
 	or	xwa, xwa
 	jr	nz, Fat_CreateDirEntry_Skip6
 	ld	hl, (xiz+6)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip6:
 	ld	xwa, (xsp+18)
 	cpw	(xwa+20), 0
 	jr	z, Fat_CreateDirEntry_Skip7
 	ld	xwa, (xsp+18)
 	ld	hl, (xwa+20)
-	jrl	SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5
+	jrl	Fat_CreateDirEntry_Epilogue5
 Fat_CreateDirEntry_Skip7:
 	ld	xwa, (xsp+18)
 	lda	xwa, (xwa+26)
@@ -5939,7 +5939,7 @@ Fat_CreateDirEntry_Join2:
 	ld	xwa, (xsp+6)
 	ld	xwa, (xwa+32)
 	cp	(xsp+4), wa
-	jrl	lt, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop22
+	jrl	lt, Fat_CreateDirEntry_Loop22
 	ld	wa, (xiz+42)
 	ld	(xsp+20), wa
 	pushm	(xiz+42)
@@ -5947,12 +5947,12 @@ Fat_CreateDirEntry_Join2:
 	calr	Fat_ReadEntry
 	inc	6, xsp
 	ld	(xiz+42), hl
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Join13:
+Fat_CreateDirEntry_Join13:
 	ld	xwa, (xsp+6)
 	ld	wa, (xwa+36)
 	dec	8, wa
 	cp	(xiz+42), wa
-	jrl	ule, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop21
+	jrl	ule, Fat_CreateDirEntry_Loop21
 	ld	(xiz+51), 0
 	ld	wa, (xsp+20)
 	ld	(xiz+42), wa
@@ -5963,8 +5963,8 @@ SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Join13:
 	inc	8, xsp
 	ld	wa, hl
 	cp	wa, 0:i3
-	jrl	z, SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Loop21
-SeqByteBlock_StyleBitmapRef_Code_Helper3_Helper2_Epilogue5:
+	jrl	z, Fat_CreateDirEntry_Loop21
+Fat_CreateDirEntry_Epilogue5:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
@@ -7507,18 +7507,18 @@ SeqChan_ValidateAndDispatch:
 	resm	3, (xwa+22)
 SeqChan_ValidateAndDispatch_Skip15:
 	cp	(254690:24), 0
-	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Entry
+	jr	nz, SeqChan_ValidateAndDispatch_Skip
 	ld	hl, 0:i3
 	jr	SeqByteBlock_StyleBitmapRef_Code_Epilogue7
-SeqByteBlock_StyleBitmapRef_Code_Entry:
+SeqChan_ValidateAndDispatch_Skip:
 	bitm	7, (xiz+3)
-	jr	z, SeqByteBlock_StyleBitmapRef_Code_Entry_Skip16
+	jr	z, SeqChan_ValidateAndDispatch_Skip16
 	push	xiz
 	calr	Fat_WriteDirEntry
 	inc	4, xsp
 	cp	hl, 0:i3
 	jr	nz, SeqByteBlock_StyleBitmapRef_Code_Epilogue7
-SeqByteBlock_StyleBitmapRef_Code_Entry_Skip16:
+SeqChan_ValidateAndDispatch_Skip16:
 	ld	xwa, (xiz+18)
 	decm8	1, (xwa+3)
 	ld	(xiz+4), 0
@@ -7855,10 +7855,10 @@ SeqStep_SectorCompareBlock_Skip4:
 	inc	8, xsp
 	ld	xiz, xhl
 	or	xiz, xiz
-	jr	nz, SeqStep_SectorCompareBlock_Entry
+	jr	nz, SeqStep_SectorCompareBlock_Skip5
 	ldw	hl, 0xffff
 	jr	SeqStep_SectorCompareBlock_Epilogue
-SeqStep_SectorCompareBlock_Entry:
+SeqStep_SectorCompareBlock_Skip5:
 	pushm	(xsp+14)
 	pushw	1
 	push	xiz
@@ -8027,11 +8027,11 @@ Fat_HandleDiskIoError_Skip:
 	incw	1, (0x2271e:24)
 	ld	wa, (xbc)
 	cp	wa, 49
-	jr	z, SeqChan_ByteBlockD_Entry2_Skip3
+	jr	z, Fat_HandleDiskIoError_Skip6
 	cp	wa, 48
-	jr	z, SeqChan_ByteBlockD_Entry2_Skip3
+	jr	z, Fat_HandleDiskIoError_Skip6
 	cp	wa, 6:i3
-	jr	z, SeqChan_ByteBlockD_Entry_Skip2
+	jr	z, Fat_HandleDiskIoError_Skip5
 	cp	wa, 51
 	jr	z, Fat_HandleDiskIoError_Skip2
 	cp	wa, 53
@@ -8053,13 +8053,13 @@ Fat_HandleDiskIoError_Skip2:
 	call	Fat_MountVolume
 	inc	8, xsp
 	cp	hl, 0:i3
-	jr	z, SeqChan_ByteBlockD_Entry
+	jr	z, Fat_HandleDiskIoError_Skip3
 	ld	(xiz+20), hl
-	jr	SeqChan_ByteBlockD_Entry3
-SeqChan_ByteBlockD_Entry:
+	jr	Fat_HandleDiskIoError_Join
+Fat_HandleDiskIoError_Skip3:
 	ldw	(xsp+4), 1
-	jr	SeqChan_ByteBlockD_Entry3
-SeqChan_ByteBlockD_Entry_Skip2:
+	jr	Fat_HandleDiskIoError_Join
+Fat_HandleDiskIoError_Skip5:
 	ld	xwa, (xiz)
 	resm	3, (xwa+2)
 	ldw	(xbc), 6
@@ -8070,13 +8070,13 @@ SeqChan_ByteBlockD_Entry_Skip2:
 	call	Fat_MountVolume
 	inc	4, xsp
 	cp	hl, 0:i3
-	jr	z, SeqChan_ByteBlockD_Entry2
+	jr	z, Fat_HandleDiskIoError_Skip4
 	ld	(xiz+20), hl
-	jr	SeqChan_ByteBlockD_Entry3
-SeqChan_ByteBlockD_Entry2:
+	jr	Fat_HandleDiskIoError_Join
+Fat_HandleDiskIoError_Skip4:
 	ldw	(xsp+4), 1
-	jr	SeqChan_ByteBlockD_Entry3
-SeqChan_ByteBlockD_Entry2_Skip3:
+	jr	Fat_HandleDiskIoError_Join
+Fat_HandleDiskIoError_Skip6:
 	ld	xwa, (xiz)
 	resm	3, (xwa+2)
 	ldw	(xbc), 32
@@ -8090,7 +8090,7 @@ SeqChan_ByteBlockD_Entry2_Skip3:
 	cp	hl, 0:i3
 	jr	z, SeqChan_ByteBlockD_Skip2
 	ld	(xiz+20), hl
-	jr	SeqChan_ByteBlockD_Entry3
+	jr	Fat_HandleDiskIoError_Join
 SeqChan_ByteBlockD_Skip2:
 	ld	hl, 0:i3
 	jr	SeqChan_ByteBlockD_Epilogue
@@ -8106,17 +8106,17 @@ SeqChan_ByteBlockD_Skip3:
 	call	Fat_MountVolume
 	inc	8, xsp
 	cp	hl, 0:i3
-	jr	z, SeqChan_ByteBlockD_Entry2_Skip4
+	jr	z, Fat_HandleDiskIoError_Skip7
 	ld	(xiz+20), hl
-	jr	SeqChan_ByteBlockD_Entry3
-SeqChan_ByteBlockD_Entry2_Skip4:
+	jr	Fat_HandleDiskIoError_Join
+Fat_HandleDiskIoError_Skip7:
 	ldw	(xsp+4), 1
-SeqChan_ByteBlockD_Entry3:
+Fat_HandleDiskIoError_Join:
 	cpw	(141086:24), 1
-	jr	lt, SeqChan_ByteBlockD_Entry3_Skip5
+	jr	lt, Fat_HandleDiskIoError_Skip8
 	ld	hl, 0:i3
 	jr	SeqChan_ByteBlockD_Epilogue
-SeqChan_ByteBlockD_Entry3_Skip5:
+Fat_HandleDiskIoError_Skip8:
 	ld	hl, (xsp+4)
 SeqChan_ByteBlockD_Epilogue:
 	pop	xiz
@@ -9996,11 +9996,11 @@ FileIO_ReadNextDirEntry:
 	ld (xsp + 4), xbc
 	ld xbc, xwa
 	or xbc, xbc
-	jr nz, FileIO_ReadDirEntry_Body
+	jr nz, FileIO_ReadNextDirEntry_Skip
 	ldw hl, 0xffff
 	jr FileIO_ReadDirEntry_Return
 
-FileIO_ReadDirEntry_Body:
+FileIO_ReadNextDirEntry_Skip:
 	ld	xiz, xwa
 	cpw	(xiz), 80
 	jr	ge, FileIO_ReadDirEntry_End
@@ -10043,7 +10043,7 @@ FileIO_ReadDirEntry_Return:
 
 SndTable_ByteBlock_ReadOps:
 	cp	(254956:24), 0
-	jr	nz, SndTable_ByteBlock_ReadOps_Code_Entry
+	jr	nz, SndTable_ByteBlock_ReadOps_Skip3
 	ld	xbc, (0x2357a:24)
 	push	xbc
 	pushw	1024
@@ -10065,7 +10065,7 @@ SndTable_ByteBlock_ReadOps_Code_Skip:
 SndTable_ByteBlock_ReadOps_Skip:
 	ldw	hl, 0xffff
 	ret
-SndTable_ByteBlock_ReadOps_Code_Entry:
+SndTable_ByteBlock_ReadOps_Skip3:
 	cp	(254956:24), 1
 	jr	nz, SndTable_ByteBlock_ReadOps_Skip2
 	calr	FDC_SectorCmd_ByteBlock

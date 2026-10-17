@@ -3517,7 +3517,7 @@ VocalistGrid_DispatchData_DrawPcngOption:
 	ld	xwa, 0x2d08
 	call	SndParam_LookupReadOnly
 	cp	hl, 3:i3
-	jr	z, VocalistGridCheck_Entry
+	jr	z, VocalistGrid_DispatchData_DrawPcngOption_Skip
 	cp	hl, 2:i3
 	jr	z, VocalistGrid_DispatchData_DrawPcngOption_Skip12
 	cp	hl, 1:i3
@@ -3532,7 +3532,7 @@ VocalistGrid_DispatchData_DrawPcngOption_Skip11:
 VocalistGrid_DispatchData_DrawPcngOption_Skip12:
 	ld	xwa, VocalistGrid_DispatchData_Str_14
 	jr	VocalistGridCheck_Join9
-VocalistGridCheck_Entry:
+VocalistGrid_DispatchData_DrawPcngOption_Skip:
 	ld	xwa, MidiPart_RecvTransStr
 VocalistGridCheck_Join9:
 	push	xwa
@@ -3552,12 +3552,12 @@ VocalistGrid_DispatchData_DrawControlVol:
 	call	SndParam_LookupReadOnly
 	lda	xbc, (xsp+20)
 	cp	hl, 120
-	jr	z, VocalistGridCheck_Entry2
+	jr	z, VocalistGrid_DispatchData_DrawControlVol_Skip
 	cp	hl, 121
 	jr	nz, VocalistGridCheck_Skip14
 	ld	xwa, VocalistGrid_DispatchData_Str_15
 	jr	VocalistGridCheck_Join10
-VocalistGridCheck_Entry2:
+VocalistGrid_DispatchData_DrawControlVol_Skip:
 	ld	xwa, MidiPart_AfterStr
 VocalistGridCheck_Join10:
 	push	xwa
@@ -3900,7 +3900,7 @@ VocalistPage1OKFunc:
 	push xiz
 	ld xhl, xde
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistP1OK_Case0
+	jr nz, VocalistPage1OKFunc_Join
 	ld xwa, 0xd7000a
 	ld xbc, EVT_GET_SELECTED
 	ld xde, 0:i3
@@ -3920,21 +3920,21 @@ VocalistPage1OKFunc:
 	call MainFuncCall
 
 ; VocalistPage1OK case 0
-VocalistP1OK_Case0:
+VocalistPage1OKFunc_Join:
 	ld xhl, 0:i3
 	pop xiz
 	ret
 
 VocalistPage2OKFunc:
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistP1OK_Case1
+	jr nz, VocalistPage2OKFunc_Join2
 	ld xwa, NAKA_MAINFUNC_MainVocalistPage2OKFunc
 	ld xbc, EVT_VST_SEND_OK
 	ld xde, 0:i3
 	call MainFuncCall
 
 ; VocalistPage1OK case 1
-VocalistP1OK_Case1:
+VocalistPage2OKFunc_Join2:
 	ld xhl, 0:i3
 	ret
 

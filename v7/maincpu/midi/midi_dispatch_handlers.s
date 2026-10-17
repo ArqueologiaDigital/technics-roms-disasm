@@ -6990,7 +6990,7 @@ SndParam_UpdateAll_Loop:
 	cp a, 0xa
 	jr	nz, SndParam_UpdateChannels_Done
 	ld iz, 0:i3
-SndParam_UpdateAll_Body:
+SndParam_UpdateChannels_Loop:
 	ldto_berp A, 0xf8
 	extz wa
 	ld c, (xsp + 2)
@@ -6998,7 +6998,7 @@ SndParam_UpdateAll_Body:
 	calr	SndParam_UpdateSingleChannel
 	inc 1, iz
 	cp iz, 0xa
-	jr	c, SndParam_UpdateAll_Body
+	jr	c, SndParam_UpdateChannels_Loop
 SndParam_UpdateChannels_Done:
 	popw iz
 	inc 2, xsp
@@ -10081,13 +10081,13 @@ MidiSeq_PartLookup_Data:
 	cp	l, 0:i3
 	jr	nz, MidiSeq_PartLookup_Data_Skip2
 	calr	MidiSeq_PartLookup_Data_Helper
-	jr	MidiSeq_PartLookup_Data_Entry
+	jr	DSP_Init_ErrorFlagSet_Join
 MidiSeq_PartLookup_Data_Skip:
 	calr	MidiSeq_PartLookup_Data_Helper2
-	jr	MidiSeq_PartLookup_Data_Entry
+	jr	DSP_Init_ErrorFlagSet_Join
 MidiSeq_PartLookup_Data_Skip2:
 	calr	MidiSeq_PartLookup_Data_Helper3
-MidiSeq_PartLookup_Data_Entry:
+DSP_Init_ErrorFlagSet_Join:
 	bit	1, (0xbc7c:16)
 	ret	z
 	call	SeqStep_PlaybackNop

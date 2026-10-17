@@ -4432,7 +4432,7 @@ VocalistPage1OKFunc:
 	push xiz
 	ld xhl, xde
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistP1OK_Case0
+	jr nz, VocalistPage1OKFunc_Join
 	ld xwa, 0xd7000a
 	ld xbc, EVT_GET_SELECTED
 	ld xde, 0:i3
@@ -4452,21 +4452,21 @@ VocalistPage1OKFunc:
 	call MainFuncCall
 
 ; VocalistPage1OK case 0
-VocalistP1OK_Case0:
+VocalistPage1OKFunc_Join:
 	ld xhl, 0:i3
 	pop xiz
 	ret
 
 VocalistPage2OKFunc:
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistP1OK_Case1
+	jr nz, VocalistPage2OKFunc_Join5
 	ld xwa, NAKA_MAINFUNC_MainVocalistPage2OKFunc
 	ld xbc, EVT_VST_SEND_OK
 	ld xde, 0:i3
 	call MainFuncCall
 
 ; VocalistPage1OK case 1
-VocalistP1OK_Case1:
+VocalistPage2OKFunc_Join5:
 	ld xhl, 0:i3
 	ret
 

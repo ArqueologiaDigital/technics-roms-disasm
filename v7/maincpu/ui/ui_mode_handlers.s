@@ -7734,7 +7734,7 @@ FSWAssGridCheck_OnLswData:
 	lda	xiy, (xsp+4)
 	ld	xwa, (xde)
 	cp	xwa, 10374
-	jr	nz, FSWAssGridCheck_Skip
+	jr	nz, FSWAssGridCheck_OnLswData_Skip
 	lda	xwa, (xsp+260)
 	ldw	(xwa), 1
 	ldw	(xwa+2), 2
@@ -7758,12 +7758,12 @@ FSWAssGridCheck_OnLswData:
 	lda	xde, (xsp+260)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	AudioTable_SendEventAndContinue
-FSWAssGridCheck_Skip:
+FSWAssGridCheck_OnLswData_Skip:
 	lda	xhl, (xsp+260)
 	lda	xbc, (xhl+4)
 	ld	xwa, (xde)
 	cp	xwa, 10376
-	jr	nz, FSWAssGridCheck_Skip2
+	jr	nz, FSWAssGridCheck_OnLswData_Skip2
 	ldw	(xhl), 1
 	ldw	(xhl+2), 3
 	ld	(xbc), xiy
@@ -7786,7 +7786,7 @@ FSWAssGridCheck_Skip:
 	lda	xde, (xsp+260)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	AudioTable_SendEventAndContinue
-FSWAssGridCheck_Skip2:
+FSWAssGridCheck_OnLswData_Skip2:
 	ld	xwa, (xde)
 	cp	xwa, 10378
 	jr	nz, FSWAssGridCheck_Skip3
@@ -9481,9 +9481,9 @@ DispTimeSet_EventDispatch:
 	jrl	DispTimeSetGridCheck_Join
 DispTimeSet_EventDispatch_Skip3:
 	cpw	(xwa), 1
-	jr	nz, DispTimeSetGridCheck_Entry2
+	jr	nz, DispTimeSet_EventDispatch_Skip
 	cp	de, 3:i3
-	jr	nz, DispTimeSetGridCheck_Entry2
+	jr	nz, DispTimeSet_EventDispatch_Skip
 	lda	xwa, (xsp+8)
 	lda	xbc, (213224:24)
 	ld	(xwa), xbc
@@ -9495,11 +9495,11 @@ DispTimeSet_EventDispatch_Skip3:
 	ld	xbc, 0:i3
 	ld	(xwa+10), xbc
 	jrl	DispTimeSetGridCheck_Join
-DispTimeSetGridCheck_Entry2:
+DispTimeSet_EventDispatch_Skip:
 	cpw	(xwa), 1
-	jr	nz, DispTimeSetGridCheck_Entry3
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	cp	de, 4:i3
-	jr	nz, DispTimeSetGridCheck_Entry3
+	jr	nz, DispTimeSet_EventDispatch_Skip2
 	lda	xwa, (xsp+8)
 	lda	xbc, (213226:24)
 	ld	(xwa), xbc
@@ -9511,11 +9511,11 @@ DispTimeSetGridCheck_Entry2:
 	ld	xbc, 0:i3
 	ld	(xwa+10), xbc
 	jrl	DispTimeSetGridCheck_Join
-DispTimeSetGridCheck_Entry3:
+DispTimeSet_EventDispatch_Skip2:
 	cpw	(xwa), 1
-	jr	nz, DispTimeSetGridCheck_Entry4
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	cp	de, 5:i3
-	jr	nz, DispTimeSetGridCheck_Entry4
+	jr	nz, DispTimeSet_EventDispatch_Skip4
 	lda	xwa, (xsp+8)
 	lda	xbc, (213228:24)
 	ld	(xwa), xbc
@@ -9527,11 +9527,11 @@ DispTimeSetGridCheck_Entry3:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	DispTimeSetGridCheck_Join
-DispTimeSetGridCheck_Entry4:
+DispTimeSet_EventDispatch_Skip4:
 	cpw	(xwa), 1
-	jr	nz, DispTimeSetGridCheck_Entry5
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	cp	de, 6:i3
-	jr	nz, DispTimeSetGridCheck_Entry5
+	jr	nz, DispTimeSet_EventDispatch_Skip5
 	lda	xwa, (xsp+8)
 	lda	xbc, (213230:24)
 	ld	(xwa), xbc
@@ -9543,7 +9543,7 @@ DispTimeSetGridCheck_Entry4:
 	ld	xbc, 1:i3
 	ld	(xwa+10), xbc
 	jrl	DispTimeSetGridCheck_Join
-DispTimeSetGridCheck_Entry5:
+DispTimeSet_EventDispatch_Skip5:
 	cpw	(xwa), 1
 	jrl	nz, DispTimeSet_ReturnZero
 	cp	de, 7:i3

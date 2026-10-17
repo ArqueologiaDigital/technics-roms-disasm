@@ -1655,17 +1655,17 @@ SeGfx_BoundOp0B_FormatNumber_Join5:
 	lda	xbc, (xsp+5)
 	pushw	de
 	cp	l, 2:i3
-	jr	z, AccDraw_Secondary_Helper20_Skip7
+	jr	z, SeGfx_BoundOp0B_FormatNumber_Skip
 	cp	l, 1:i3
 	jr	nz, AccDraw_Secondary_Helper20_Skip8
 	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt1d_2
-	jr	AccDraw_Secondary_Helper20_Join3
-AccDraw_Secondary_Helper20_Skip7:
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
+SeGfx_BoundOp0B_FormatNumber_Skip:
 	ld	xwa, FmtStr_pct2d
-	jr	AccDraw_Secondary_Helper20_Join3
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
 AccDraw_Secondary_Helper20_Skip8:
 	ld	xwa, DrawFunc_Init_Entry4_Str_Fmt3d
-AccDraw_Secondary_Helper20_Join3:
+SeGfx_BoundOp0B_FormatNumber_Join:
 	push	xwa
 	push	xbc
 	jr	AccDraw_Secondary_Helper20_Join5

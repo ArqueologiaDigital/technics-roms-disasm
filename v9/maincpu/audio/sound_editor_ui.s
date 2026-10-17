@@ -960,10 +960,10 @@ SeEasy_DrawPage_Loop14:
 	jr	UpdSeSel_DetailedUpdate_Epilogue5
 SeEasy_DrawPage_Skip19:
 	cp	(xsp+14), 47
-	jr	nz, UpdSeSel_DetailedUpdate_Entry
+	jr	nz, SeEasy_DrawPage_Skip2
 	ldib_erp 251, 0
 	jrl	UpdSeSel_DetailedUpdate_Join3
-UpdSeSel_DetailedUpdate_Entry:
+SeEasy_DrawPage_Skip2:
 	cp	(xsp+14), 57
 	jr	nz, UpdSeSel_DetailedUpdate_Epilogue5
 	ldib_erp 251, 2
@@ -2665,14 +2665,14 @@ SeWrtMem_DrawPage_Skip2:
 	lda	xbc, (xsp)
 	ld	xwa, xbc
 	lda	xde, (xbc+13)
-SeMenu_CopyWriteUpdate_Entry:
+SeWrtMem_DrawPage_Loop3:
 	cp	(xwa), 127
 	jr	ule, SeMenu_CopyWriteUpdate_Skip46
 	ld	(xwa), 32
 SeMenu_CopyWriteUpdate_Skip46:
 	inc	1, xwa
 	cp	xwa, xde
-	jr	c, SeMenu_CopyWriteUpdate_Entry
+	jr	c, SeWrtMem_DrawPage_Loop3
 	ld	wa, 1:i3
 	ldw	de, 13
 	call	SeMenu_SetupPartDisplay
@@ -3225,14 +3225,14 @@ SeMenuTitleFunc_DispatchSwitch_Epilogue7:
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry2
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip
 	ld	a, (xsp+2)
 	dec	1, a
 	cp	(xsp+4), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue8
 	incm8	1, (xsp+4)
 	jr	SeMenu_CopyWriteUpdate_Join4
-SeMenu_CopyWriteUpdate_Entry2:
+SeMenuTitleFunc_DispatchSwitch_Skip:
 	cp	(xsp+4), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue8
 	decm8	1, (xsp+4)
@@ -3997,14 +3997,14 @@ SeTonTon1_OnColumn2:
 	ld	a, (xsp+8)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry3
+	jr	nz, SeTonTon1_OnColumn2_Skip
 	ld	a, (xsp+4)
 	dec	1, a
 	cp	(xsp+6), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue19
 	incm8	1, (xsp+6)
 	jr	SeMenu_CopyWriteUpdate_Join7
-SeMenu_CopyWriteUpdate_Entry3:
+SeTonTon1_OnColumn2_Skip:
 	cp	(xsp+6), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue19
 	decm8	1, (xsp+6)
@@ -5060,14 +5060,14 @@ SeTonHyb1_OnColumn2:
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry4
+	jr	nz, SeTonHyb1_OnColumn2_Skip
 	ld	a, (xsp+6)
 	dec	1, a
 	cp	(xsp+8), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue22
 	incm8	1, (xsp+8)
 	jr	SeMenu_CopyWriteUpdate_Join11
-SeMenu_CopyWriteUpdate_Entry4:
+SeTonHyb1_OnColumn2_Skip:
 	cp	(xsp+8), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue22
 	decm8	1, (xsp+8)
@@ -5868,13 +5868,13 @@ SeEasy_OnSideRow3:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+2), 0
-	jr	nz, SeMenu_CopyWriteUpdate_Entry5
+	jr	nz, SeEasy_OnSideRow3_Skip
 	cp	(xsp), 6
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue32
 	ld	wa, 0:i3
 	ld	bc, 6:i3
 	jr	SeMenu_CopyWriteUpdate_Join20
-SeMenu_CopyWriteUpdate_Entry5:
+SeEasy_OnSideRow3_Skip:
 	cp	(xsp), 2
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue32
 	ld	wa, 0:i3
@@ -6454,9 +6454,9 @@ SeDigEff_OnSideRow3:
 	call	SeMenu_LoadPartParam
 	ld	a, (xsp)
 	and	a, 15
-	jr	z, SeMenu_CopyWriteUpdate_Data_Epilogue
+	jr	z, SeDigEff_OnSideRow3_Epilogue
 	cp	a, 11
-	jr	ugt, SeMenu_CopyWriteUpdate_Data_Epilogue
+	jr	ugt, SeDigEff_OnSideRow3_Epilogue
 	dec	1, a
 	andmi8	(xsp), 240
 	or	(xsp), a
@@ -6473,17 +6473,17 @@ SeDigEff_OnSideRow3:
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
-	jr	SeMenu_CopyWriteUpdate_Data_Epilogue
+	jr	SeDigEff_OnSideRow3_Epilogue
 SeDigEff_OnSideRow3_Skip:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	bitm	6, (xsp)
-	jr	z, SeMenu_CopyWriteUpdate_Entry6
+	jr	z, SeDigEff_OnSideRow3_Skip2
 	resm	6, (xsp)
-	jr	SeMenu_CopyWriteUpdate_Data_Join
-SeMenu_CopyWriteUpdate_Entry6:
+	jr	SeDigEff_OnSideRow3_Join
+SeDigEff_OnSideRow3_Skip2:
 	set	6, (xsp)
-SeMenu_CopyWriteUpdate_Data_Join:
+SeDigEff_OnSideRow3_Join:
 	ld	c, (xsp)
 	extz	bc
 	ld	wa, 0:i3
@@ -6497,7 +6497,7 @@ SeMenu_CopyWriteUpdate_Data_Join:
 	pushw	58
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Data_Epilogue:
+SeDigEff_OnSideRow3_Epilogue:
 	inc	2, xsp
 	ret
 SeDigEff_OnSwitch15:
@@ -6636,17 +6636,17 @@ SeWrtMem_OnSwitch15:
 	call	SeMenu_SendEvent
 	ret
 SeWrtSnd_OnColumn1:
-	jrl	SeMenu_CopyWriteUpdate_Data_Join3
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join3
 SeWrtSnd_OnColumn2:
-	jrl	SeMenu_CopyWriteUpdate_Data_Join4
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join4
 SeWrtSnd_OnColumn3:
-	jrl	SeMenu_CopyWriteUpdate_Data_Join5
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join5
 SeWrtSnd_OnColumn4:
-	jrl	SeMenu_CopyWriteUpdate_Data_Epilogue4_Join
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join
 SeWrtSnd_OnColumn5:
-	jrl	SeMenu_CopyWriteUpdate_Data_Epilogue4_Join2
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join2
 SeWrtSnd_OnColumn6:
-	jrl	SeMenu_CopyWriteUpdate_Data_Epilogue4_Join3
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join6
 SeWrtSnd_OnColumn7:
 	ld	c, a
 	res	7, c
@@ -6655,9 +6655,9 @@ SeWrtSnd_OnColumn7:
 	jr	nz, SeWrtSnd_OnColumn7_Skip81
 	ld	wa, 0:i3
 SeWrtSnd_OnColumn7_Skip81:
-	jrl	SeMenu_CopyWriteUpdate_Data_Epilogue4_Join4
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join7
 SeWrtSnd_OnColumn8:
-	jrl	SeMenu_CopyWriteUpdate_Data_Epilogue4_Join5
+	jrl	SeMenu_CopyWriteUpdate_Step3_Helper17_Join9
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -6766,9 +6766,9 @@ SeMenu_CopyWriteUpdate_Step3_Helper17:
 	ld	c, a
 	and	c, 31
 	cp	c, 16
-	jr	ule, SeMenu_CopyWriteUpdate_Data_Skip2
+	jr	ule, SeMenu_CopyWriteUpdate_Step3_Helper17_Skip2
 	ld	c, 16:opc
-SeMenu_CopyWriteUpdate_Data_Skip2:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Skip2:
 	extz	bc
 	ld	wa, 2:i3
 	call	SeMenu_StorePartParam
@@ -6801,13 +6801,13 @@ SeMenu_CopyWriteUpdate_Data_Skip2:
 	call	SeMenu_PostEditUpDownSet
 	inc	4, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Join3:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join3:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+4), 0
-	jr	z, SeMenu_CopyWriteUpdate_Data_Epilogue5
+	jr	z, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue5
 	decm8	1, (xsp+4)
 	ld	c, (xsp+4)
 	extz	bc
@@ -6832,10 +6832,10 @@ SeMenu_CopyWriteUpdate_Data_Join3:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-SeMenu_CopyWriteUpdate_Data_Epilogue5:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue5:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Join4:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join4:
 	dec	8, xsp
 	lda	xbc, (xsp+6)
 	ld	wa, 0:i3
@@ -6846,7 +6846,7 @@ SeMenu_CopyWriteUpdate_Data_Join4:
 	ld	a, (xsp)
 	dec	1, a
 	cp	(xsp+6), a
-	jr	nc, SeMenu_CopyWriteUpdate_Data_Epilogue6
+	jr	nc, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue6
 	incm8	1, (xsp+6)
 	ld	c, (xsp+6)
 	extz	bc
@@ -6871,10 +6871,10 @@ SeMenu_CopyWriteUpdate_Data_Join4:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-SeMenu_CopyWriteUpdate_Data_Epilogue6:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue6:
 	inc	8, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Join5:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join5:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
@@ -6914,7 +6914,7 @@ SeMenu_CopyWriteUpdate_Entry6_Code_Loop:
 	extz	hl
 	ldto_berp a, 251
 	cpb_erp a, 226
-	jr	nc, SeMenu_CopyWriteUpdate_Data_Skip3
+	jr	nc, SeMenu_CopyWriteUpdate_Step3_Helper17_Skip3
 SeMenu_CopyWriteUpdate_Entry6_Code_Loop2:
 	ld	iy, hl
 	ld	wa, de
@@ -6926,7 +6926,7 @@ SeMenu_CopyWriteUpdate_Entry6_Code_Loop2:
 	ldto_berp a, 251
 	cpb_erp a, 226
 	jr c, SeMenu_CopyWriteUpdate_Entry6_Code_Loop2
-SeMenu_CopyWriteUpdate_Data_Skip3:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Skip3:
 	ld a, (xsp+24)
 	extz wa
 	ld	(xbc+wa), 0x20
@@ -6952,7 +6952,7 @@ SeMenu_CopyWriteUpdate_Entry6_Code_Epilogue:
 	pop qiz
 	lda	xsp, (xsp+24)
 	ret
-SeMenu_CopyWriteUpdate_Data_Epilogue4_Join:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
@@ -7023,7 +7023,7 @@ SeMenu_CopyWriteUpdate_Data_Skip3_Skip:
 	pop qiz
 	lda	xsp, (xsp+24)
 	ret
-SeMenu_CopyWriteUpdate_Data_Epilogue4_Join2:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join2:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
@@ -7035,9 +7035,9 @@ SeMenu_CopyWriteUpdate_Data_Epilogue4_Join2:
 	lda	xde, (xsp+2)
 	ld	a, (xde)
 	cp	a, 65
-	jr	c, SeMenu_CopyWriteUpdate_Data_Skip4
+	jr	c, SeMenu_CopyWriteUpdate_Step3_Helper17_Skip4
 	cp	a, 90
-	jr	ugt, SeMenu_CopyWriteUpdate_Data_Skip4
+	jr	ugt, SeMenu_CopyWriteUpdate_Step3_Helper17_Skip4
 	sub	a, 65
 	ld	c, 97:opc
 SeMenu_CopyWriteUpdate_Data_Skip3_Join:
@@ -7060,25 +7060,25 @@ SeMenu_CopyWriteUpdate_Data_Skip3_Join:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-	jr	SeMenu_CopyWriteUpdate_Data_Epilogue7
-SeMenu_CopyWriteUpdate_Data_Skip4:
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue7
+SeMenu_CopyWriteUpdate_Step3_Helper17_Skip4:
 	cp	a, 97
-	jr	c, SeMenu_CopyWriteUpdate_Data_Epilogue7
+	jr	c, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue7
 	cp	a, 122
-	jr	ugt, SeMenu_CopyWriteUpdate_Data_Epilogue7
+	jr	ugt, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue7
 	sub	a, 97
 	ld	c, 65:opc
 	jr	SeMenu_CopyWriteUpdate_Data_Skip3_Join
-SeMenu_CopyWriteUpdate_Data_Epilogue7:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue7:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Epilogue4_Join3:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join6:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 0
-	jr	z, SeMenu_CopyWriteUpdate_Data_Epilogue8
+	jr	z, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue8
 	decm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -7100,10 +7100,10 @@ SeMenu_CopyWriteUpdate_Data_Epilogue4_Join3:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Data_Epilogue8:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue8:
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Epilogue4_Join4:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join7:
 	dec	6, xsp
 	push	qiz
 	and	wa, 0x8000
@@ -7116,16 +7116,16 @@ SeMenu_CopyWriteUpdate_Data_Epilogue4_Join4:
 	cpib_erp 251, 0
 	jr nz, SeMenu_CopyWriteUpdate_Data_Epilogue8_Skip
 	cp	(xsp+4), 16
-	jr	c, SeMenu_CopyWriteUpdate_Data_Epilogue9
+	jr	c, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue9
 	submi8	(xsp+4), 16
-	jr	SeMenu_CopyWriteUpdate_Data_Join6
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper17_Join8
 SeMenu_CopyWriteUpdate_Data_Epilogue8_Skip:
 	ld	a, (xsp+4)
 	add	a, 16
 	cp	a, 95
-	jr	ugt, SeMenu_CopyWriteUpdate_Data_Epilogue9
+	jr	ugt, SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue9
 	addmi8	(xsp+4), 16
-SeMenu_CopyWriteUpdate_Data_Join6:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join8:
 	ld	c, (xsp+4)
 	extz	bc
 	ld	wa, 1:i3
@@ -7146,11 +7146,11 @@ SeMenu_CopyWriteUpdate_Data_Join6:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_CopyWriteUpdate_Data_Epilogue9:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Epilogue9:
 	pop qiz
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Data_Epilogue4_Join5:
+SeMenu_CopyWriteUpdate_Step3_Helper17_Join9:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
@@ -8746,13 +8746,13 @@ SeMenu_DrawOriginalEditedBadge_Return2:
 SeMenu_WaveformSelect_Apply_Helper2:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	a, 13:opc
-SeMenu_WaveformSelect_Data_Loop:
+SeMenu_WaveformSelect_Apply_Helper2_Loop:
 	push_a
 	call	SeMenu_WaveformSelect_Apply_Helper3
 	pop_a
 	inc	1, a
 	cp	a, 15
-	jr	c, SeMenu_WaveformSelect_Data_Loop
+	jr	c, SeMenu_WaveformSelect_Apply_Helper2_Loop
 	ret
 SeMenu_WaveformSelect_Apply_Helper3:
 	xor	xbc, xbc
@@ -8762,11 +8762,11 @@ SeMenu_WaveformSelect_Apply_Helper3:
 	add	xbc, xwa
 	ld	d, (xbc)
 	cp	d, 0:i3
-	jr	z, SeMenu_WaveformSelect_Data_Return3
+	jr	z, SeMenu_WaveformSelect_Apply_Helper3_Return3
 	ld	xiy, SeScreenData_0x5525
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_DrawIndexedBoundRecord
-SeMenu_WaveformSelect_Data_Return3:
+SeMenu_WaveformSelect_Apply_Helper3_Return3:
 	ret
 ; SeMenuTitle_DrawField: Field-redraw routine of sound-editor title 0x20 TT_SEMENU (entry 0 of SeTitle_FieldDrawTable,
 ;  indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the table index and RegTitle
@@ -9143,7 +9143,7 @@ SeMenu_DrawLfoPartSwitches:
 SeMenu_DrawLfoPartSwitches_Loop:
 	ld	w, (xiy)
 	and	w, 32
-	jrl	z, SeMenu_PresetBrowser_Data_Join
+	jrl	z, SeMenu_DrawLfoPartSwitches_Join
 	push	w
 	push	c
 	push	xiy
@@ -9211,8 +9211,8 @@ SeMenu_DrawLfoPartSwitches_Loop:
 	call	SeGfx_DrawStaticList
 	pop	xiy
 	pop	c
-	jr	SeMenu_PresetBrowser_Data_Join
-SeMenu_PresetBrowser_Data_Join:
+	jr	SeMenu_DrawLfoPartSwitches_Join
+SeMenu_DrawLfoPartSwitches_Join:
 	add	xiy, 1
 	dec	1, c
 	jrl	nz, SeMenu_DrawLfoPartSwitches_Loop
@@ -19729,7 +19729,7 @@ PaintArrow_DrawFilled:
 	cp	bc, 3:i3
 	jr	z, StylCnvStorOkFunc_DataBlock_Skip2
 	cp	bc, 2:i3
-	jr	z, StylCnvStorOkFunc_DataBlock_Entry
+	jr	z, PaintArrow_DrawFilled_Skip
 	cp	bc, 1:i3
 	scc16	nz, bc
 	ld	(xsp+8), bc
@@ -19766,12 +19766,12 @@ StylCnvStorOkFunc_DataBlock_Join2:
 	ld	(xsp+20), bc
 	ldw (xsp+6), 65535
 	jr	StylCnvStorOkFunc_DataBlock_Join3
-StylCnvStorOkFunc_DataBlock_Entry:
+PaintArrow_DrawFilled_Skip:
 	ldw	(xsp+8), 1
-	jr	StylCnvStorOkFunc_DataBlock_Entry2
+	jr	PaintArrow_DrawFilled_Join
 StylCnvStorOkFunc_DataBlock_Skip2:
 	ldw (xsp+8), 0
-StylCnvStorOkFunc_DataBlock_Entry2:
+PaintArrow_DrawFilled_Join:
 	ldw	(xsp+10), 1
 	lda	xhl, (xsp+24)
 	ld	bc, (xwa+2)
@@ -19916,7 +19916,7 @@ PaintArrow_DrawOutline:
 	cp	bc, 3:i3
 	jr	z, StylCnvStorOkFunc_DataBlock_Skip4
 	cp	bc, 2:i3
-	jr	z, StylCnvStorOkFunc_DataBlock_Entry3
+	jr	z, PaintArrow_DrawOutline_Skip
 	cp	bc, 1:i3
 	scc16	nz, bc
 	ld	(xsp+6), bc
@@ -19957,7 +19957,7 @@ StylCnvStorOkFunc_DataBlock_Join5:
 	sub wa, qiz
 	ld	(xsp+18), wa
 	jr	StylCnvStorOkFunc_DataBlock_Join7
-StylCnvStorOkFunc_DataBlock_Entry3:
+PaintArrow_DrawOutline_Skip:
 	ldw	(xsp+6), 1
 	jr	StylCnvStorOkFunc_DataBlock_Join6
 StylCnvStorOkFunc_DataBlock_Skip4:

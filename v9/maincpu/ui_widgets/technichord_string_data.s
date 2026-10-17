@@ -4054,7 +4054,7 @@ TrackMixer_PartCodeToItem:	.incbin "includes/generated/naka_technichord_strings.
 PsMixer_KnobPointerOffsets:	.incbin "includes/generated/naka_technichord_strings.bin", 0x198DE, 0x40
 ; [nakarest] naka_technichord_strings+0x1991e  +0x1991e..+0x1992c (0xe9f86c, 14 B)
 ; [nakarest] Text (14 B at 0xe9f86c), first string "MUTE"; no registered NAKA table points into
-; [nakarest] it; reached through source references PsMixer_CtlTypeProc2_Entry
+; [nakarest] it; reached through source references PsMixer_CtlTypeProc2_Join2
 ; [nakarest] (ui/drawbar_panel_ui.s: `ld xde, PsMixer_CtlTypeProc2_Entry_Data`).
 PsMixer_CtlTypeProc2_Entry_Data:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1991E, 0x6
 PsMixer_CtlTypeProc1_Str_Fmts:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19924, 0x4

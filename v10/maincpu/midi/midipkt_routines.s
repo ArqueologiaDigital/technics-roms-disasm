@@ -686,13 +686,13 @@ MidiPkt_SendCtlWordValueSysEx:
 	ld	xwa, (xiz+4)
 	calr	MidiPkt_CheckGateCondition
 	cp	hl, 0xffff
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	lda	xwa, (MidiCtl_NullRecord:24)
 	cp	xwa, (xiz+4)
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	ld	xwa, (xiz)
 	cpw	(xwa+4), 0
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	ld	xwa, SysEx_Msg_35DC
 	ld	bc, 6:i3
 	call	ArpQueue_Enqueue
@@ -706,9 +706,9 @@ MidiPkt_SendCtlWordValueSysEx:
 	ld	xwa, (xiz+4)
 	ld	a, (xwa+11)
 	and	a, 15
-	jr	z, MidiPkt_EnqueueExtended_Data_Skip
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Skip
 	.byte 0xd9, 0xff	; srl a,bc -- the backend cannot spell this form
-MidiPkt_EnqueueExtended_Data_Skip:
+MidiPkt_SendCtlWordValueSysEx_Skip:
 	lda	xwa, (xsp+4)
 	ld	(xwa), c
 	and	c, 15
@@ -722,7 +722,7 @@ MidiPkt_EnqueueExtended_Data_Skip:
 	ld	xwa, (0xbc5c:16)
 	call	SeqOut_FlushTimedBuffer
 	call	ArpQueue_SwapBuffers
-MidiPkt_EnqueueExtended_Data_Epilogue:
+MidiPkt_SendCtlWordValueSysEx_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret

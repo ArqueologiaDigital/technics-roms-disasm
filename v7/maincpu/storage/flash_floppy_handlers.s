@@ -1363,10 +1363,10 @@ NoteEvent_WriteRegOffsets_Loop:
 
 NoteEvent_CopySlotData_Loop:
 	cp de, 0x96
-	jr c, NoteEvent_CopySlotData_Body
+	jr c, NoteEvent_CopyExtParamsInner_Join
 	ld (xsp + 16), 0x0
 
-NoteEvent_CopySlotData_Body:
+NoteEvent_CopyExtParamsInner_Join:
 	ld xix, xwa
 	add xix, (3186:16)
 	lda xiy, (xsp + 16)
@@ -1604,12 +1604,12 @@ Flash_InitBytecodeBlock_Loop5:
 	ld	(14610:16), xwa
 	ldmm8	0x3910, 0x3911
 	call	AccPatch_InitFromSlotIndex
-	jr	Flash_InitBytecodeBlock_Entry
+	jr	Flash_InitBytecodeBlock_Join6
 Flash_InitBytecodeBlock_Skip6:
 	inc1b_erp	251
 	cp_erpb	251, 10
 	jr	c, Flash_InitBytecodeBlock_Loop5
-Flash_InitBytecodeBlock_Entry:
+Flash_InitBytecodeBlock_Join6:
 	cp	(xsp+0x8), 0
 	jrl	nz, Flash_InitBytecodeBlock_Loop3
 	lda	xwa, (1748:16)
@@ -1879,19 +1879,19 @@ PartGrid_OperationsBlock_Join:
 	cp	(xsp+8), 3
 	jr	z, PartGrid_OperationsBlock_Skip3
 	cp	(xsp+8), 2
-	jr	z, PartGrid_OperationsBlock_Entry2
+	jr	z, PartGrid_OperationsBlock_Skip5
 	cp	(xsp+8), 1
-	jr	z, PartGrid_OperationsBlock_Entry
+	jr	z, PartGrid_OperationsBlock_Skip4
 	cp	(xsp+8), 0
 	jr	nz, PartGrid_OperationsBlock_Epilogue
 	ld	(xbc+24), e
 	ld	xwa, 25
 	jr	PartGrid_OperationsBlock_Join2
-PartGrid_OperationsBlock_Entry:
+PartGrid_OperationsBlock_Skip4:
 	ld	(xbc+32), e
 	ld	xwa, 33
 	jr	PartGrid_OperationsBlock_Join2
-PartGrid_OperationsBlock_Entry2:
+PartGrid_OperationsBlock_Skip5:
 	ld	(xbc+40), e
 	ld	xwa, 41
 	jr	PartGrid_OperationsBlock_Join2
@@ -2388,18 +2388,18 @@ Flash_InitBytecodeBlock_Helper2:
 	calr	SlotTable_ExtendedOpsBlock
 	lda	xwa, (1748:16)
 	cpw	(xwa), 0xffff
-	jr	z, Flash_InitBytecodeBlock_Helper_Skip5
+	jr	z, Flash_InitBytecodeBlock_Helper2_Skip5
 	lda	xbc, (1952:16)
 	ld	wa, (xwa)
 	ld	(xbc), wa
 	ldw	(xbc+2), 1536
-Flash_InitBytecodeBlock_Helper_Skip5:
+Flash_InitBytecodeBlock_Helper2_Skip5:
 	ld	a, (xsp+4)
 	extz	wa
 	calr	Flash_InitBytecodeBlock_Helper_Helper
 	ld	(xsp+2), 0
 	ld	(xsp), 0
-Flash_InitBytecodeBlock_Helper_Loop4:
+Flash_InitBytecodeBlock_Helper2_Loop4:
 	ld	a, (xsp)
 	extz	wa
 	add	wa, wa
@@ -2407,7 +2407,7 @@ Flash_InitBytecodeBlock_Helper_Loop4:
 	lda	xbc, (1748:16)
 	ld	bc, (xbc+wa)
 	cp	bc, 65535
-	jrl	z, Flash_InitBytecodeBlock_Helper_Epilogue2
+	jrl	z, Flash_InitBytecodeBlock_Helper2_Epilogue2
 	ld	l, 0:opc
 Flash_StoreBaseAndInitAccPatch_Loop3:
 	ld	h, 39:opc
@@ -2443,7 +2443,7 @@ Flash_StoreBaseAndInitAccPatch_Skip3:
 	jr	c, Flash_StoreBaseAndInitAccPatch_Loop3
 	ld	l, 0:opc
 	ld	iy, wa
-Flash_InitBytecodeBlock_Helper_Loop5:
+Flash_InitBytecodeBlock_Helper2_Loop5:
 	ld	h, 39:opc
 	sub	h, l
 	ld	a, h
@@ -2470,16 +2470,16 @@ Flash_InitBytecodeBlock_Helper_Loop5:
 	ldw	(xde), 2
 Flash_StoreBaseAndInitAccPatch_Join2:
 	incm8	1, (xsp+2)
-	jr	Flash_InitBytecodeBlock_Helper_Join2
+	jr	Flash_InitBytecodeBlock_Helper2_Join2
 Flash_StoreBaseAndInitAccPatch_Skip4:
 	inc	1, l
 	cp	l, 40
-	jr	c, Flash_InitBytecodeBlock_Helper_Loop5
-Flash_InitBytecodeBlock_Helper_Join2:
+	jr	c, Flash_InitBytecodeBlock_Helper2_Loop5
+Flash_InitBytecodeBlock_Helper2_Join2:
 	incm8	1, (xsp)
 	cp	(xsp), 50
-	jrl	c, Flash_InitBytecodeBlock_Helper_Loop4
-Flash_InitBytecodeBlock_Helper_Epilogue2:
+	jrl	c, Flash_InitBytecodeBlock_Helper2_Loop4
+Flash_InitBytecodeBlock_Helper2_Epilogue2:
 	inc	6, xsp
 	ret
 Flash_InitBytecodeBlock_Helper3:
@@ -7849,16 +7849,16 @@ PsS2cTrans_HandleScroll:
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
 	cp	(14811:16), 2
-	jr	nz, SndArg_GridBnk_Case0
+	jr	nz, PsS2cTrans_HandleScroll_Skip
 	ldw	(xbc), 0
 	ldw	(xwa), 255
-	jr	SndArg_GridBnk_Case1
-SndArg_GridBnk_Case0:
+	jr	PsS2cTrans_HandleScroll_Join
+PsS2cTrans_HandleScroll_Skip:
 	ldw (xbc), 0xff
 	ldw (xwa), 0xf5
 
 ; SndArgGridBnk case 1
-SndArg_GridBnk_Case1:
+PsS2cTrans_HandleScroll_Join:
 	ld XWA, (xsp + 0x0104)
 	ld xbc, EVT_DRAW
 	ld xde, 0:i3

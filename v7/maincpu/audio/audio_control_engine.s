@@ -3271,10 +3271,10 @@ MidiChanged_ProcessGroup3_Data_Target9:
 	ld	xwa, 0x40c0
 	call	SndParam_LookupReadOnly
 	cp	hl, 1:i3
-	jr	nz, MidiChanged_ProcessGroup3_Data_Target9_Entry
+	jr	nz, MidiChanged_ProcessGroup3_Data_Target9_Skip
 	set	5, (xiz)
 	jr	MidiChanged_ProcessGroup3_Data_Target9_Epilogue
-MidiChanged_ProcessGroup3_Data_Target9_Entry:
+MidiChanged_ProcessGroup3_Data_Target9_Skip:
 	res	5, (xiz)
 MidiChanged_ProcessGroup3_Data_Target9_Epilogue:
 	pop	xiz
@@ -3729,17 +3729,17 @@ MidiScan_PopIzRet:
 UIState_UpdateControlBits:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 5:i3
-	jr	z, UIState_UpdateControlBits_Entry2
+	jr	z, UIState_UpdateControlBits_Skip2
 	cp	a, 4:i3
-	jr	z, UIState_UpdateControlBits_Entry
+	jr	z, UIState_UpdateControlBits_Skip
 	cp	a, 0:i3
 	ret	nz
 	orw	(0x8e9e:16), 0x69
 	ret
-UIState_UpdateControlBits_Entry:
+UIState_UpdateControlBits_Skip:
 	orw	(0x8e9e:16), 0x28
 	ret
-UIState_UpdateControlBits_Entry2:
+UIState_UpdateControlBits_Skip2:
 	orw	(0x8e9e:16), 0x40
 	ret
 UIState_SwitchOnDisplayMode:
@@ -3832,17 +3832,17 @@ UIState_NullReturn:
 UIState_ProcessAltMode:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 11
-	jr	z, UIState_ProcessAltMode_Entry2
+	jr	z, UIState_ProcessAltMode_Skip2
 	cp	a, 3:i3
-	jr	z, UIState_ProcessAltMode_Entry
+	jr	z, UIState_ProcessAltMode_Skip
 	cp	a, 1:i3
 	ret	nz
 	orw	(0x8ea6:16), 0x3
 	ret
-UIState_ProcessAltMode_Entry:
+UIState_ProcessAltMode_Skip:
 	orw	(0x8ea6:16), 0x8
 	ret
-UIState_ProcessAltMode_Entry2:
+UIState_ProcessAltMode_Skip2:
 	orw	(0x8ea6:16), 0x6000
 	ret
 UIState_ProcessSimpleMode:
@@ -5509,7 +5509,7 @@ ExtData_Voice_FullHandler:
 	cp	a, 11
 	jr	z, ExtData_Voice_FullHandler_Skip
 	cp	a, 2:i3
-	jr	z, ExtData_Voice_FullHandler_Entry
+	jr	z, ExtData_Voice_FullHandler_Skip3
 	cp	a, 4:i3
 	jrl	z, ExtData_Voice_CheckMode3_Helper
 	cp	a, 3:i3
@@ -5535,7 +5535,7 @@ ExtData_Voice_FullHandler_Skip2:
 	calr	ExtData_ToneParam_DispatchHandler_Helper
 	calr	SwbtWr_FlushAndAppendParams
 	ret
-ExtData_Voice_FullHandler_Entry:
+ExtData_Voice_FullHandler_Skip3:
 	res	1, (36957:16)
 	ldw	wa, 64
 	calr	ExtData_Voice_FullHandler_Helper2
@@ -5558,7 +5558,7 @@ ExtData_Voice_FullHandler_Helper:
 	ld	a, c
 	and	a, 192
 	cp	a, 192
-	jr	nz, ExtData_Voice_FullHandler_Helper_Code_Entry
+	jr	nz, ExtData_Voice_FullHandler_Join2
 	bit	7, (MIDI_MSG_DATA3:16)
 	jr	z, ExtData_Voice_FullHandler_Helper_Code_Skip
 	res	6, c
@@ -5567,7 +5567,7 @@ ExtData_Voice_FullHandler_Helper_Code_Skip:
 	res	7, c
 ExtData_Voice_FullHandler_Helper_Code_Join:
 	ld	(xde), c
-ExtData_Voice_FullHandler_Helper_Code_Entry:
+ExtData_Voice_FullHandler_Join2:
 	ld	(MIDI_MSG_DATA2), (xde)
 	ld	c, 0:opc
 	ld	(MIDI_MSG_DATA3:16), 0
@@ -6473,7 +6473,7 @@ SwbtWr_FlushAndAppendParams_Skip:
 	jrl	SwbtWr_AppendFixedParamBlock
 SwbtWr_WriteParamBlock:
 	cpw	(0x9042:16), 508
-	jr	c, SwbtWr_WriteParamBlock_Body
+	jr	c, SwbtWr_WriteParamBlock_Join2
 	push	xde
 	push	xhl
 	push	xix
@@ -6484,7 +6484,7 @@ SwbtWr_WriteParamBlock:
 	pop	xhl
 	pop	xde
 	ldw	(0x9042:16), 0
-SwbtWr_WriteParamBlock_Body:
+SwbtWr_WriteParamBlock_Join2:
 	jrl	SwbtWr_AppendFixedParamBlock
 ExtData_ToneParam_DispatchHandler_Helper:
 	dec	2, xsp

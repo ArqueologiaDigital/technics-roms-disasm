@@ -678,13 +678,13 @@ MidiPkt_SendCtlWordValueSysEx:
 	ld	xwa, (xiz+4)
 	calr	MidiPkt_CheckGateCondition
 	cp	hl, 0xffff
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	lda	xwa, (MidiCtl_NullRecord:24)
 	cp	xwa, (xiz+4)
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	ld	xwa, (xiz)
 	cpw	(xwa+4), 0
-	jr	z, MidiPkt_EnqueueExtended_Data_Epilogue
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Epilogue
 	ld	xwa, SysEx_Msg_35DC
 	ld	bc, 6:i3
 	call	ArpQueue_Enqueue
@@ -698,9 +698,9 @@ MidiPkt_SendCtlWordValueSysEx:
 	ld	xwa, (xiz+4)
 	ld	a, (xwa+11)
 	and	a, 15
-	jr	z, MidiPkt_EnqueueExtended_Data_Skip
+	jr	z, MidiPkt_SendCtlWordValueSysEx_Skip
 	.byte 0xd9, 0xff	; srl a,bc -- the backend cannot spell this form
-MidiPkt_EnqueueExtended_Data_Skip:
+MidiPkt_SendCtlWordValueSysEx_Skip:
 	lda	xwa, (xsp+4)
 	ld	(xwa), c
 	and	c, 15
@@ -714,7 +714,7 @@ MidiPkt_EnqueueExtended_Data_Skip:
 	ld	xwa, (0xbc5c:16)
 	call	SeqOut_FlushTimedBuffer
 	call	ArpQueue_SwapBuffers
-MidiPkt_EnqueueExtended_Data_Epilogue:
+MidiPkt_SendCtlWordValueSysEx_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
@@ -1331,11 +1331,11 @@ SysEx_OnRolandGsParam:
 	lda xix, (SysEx_OnRolandGs_UseForRhythmPart:24)
 	jp	t, (xix+hl)
 SysEx_OnRolandGs_UseForRhythmPart:
-	jr	MidiPkt_SysExBulkTransfer_Data_Join
+	jr	MidiPkt_SysExBulkTransfer_Data_Helper2_Join
 MidiPkt_SysExBulkTransfer_Data_Case2:
-	jrl	MidiPkt_SysExBulkTransfer_Data_Join3
+	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join3
 MidiPkt_SysExBulkTransfer_Data_Case3:
-	jrl	MidiPkt_SysExBulkTransfer_Data_Join4
+	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join4
 MidiPkt_SysExBulkTransfer_Data_Case4:
 	jrl	SysEx_ApplyToSlot4B_Data
 MidiPkt_SysExBulkTransfer_Data_Case5:
@@ -1384,7 +1384,7 @@ MidiPkt_SysExBulkTransfer_Data_Helper2:
 	pop	xhl
 	pop	xde
 	ret
-MidiPkt_SysExBulkTransfer_Data_Join:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join:
 	lda	xsp, (xsp-12)
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1443,7 +1443,7 @@ MidiPkt_SysExBulkTransfer_Data_Join:
 	lda	xwa, (xsp+2)
 	ldto_berp	c, 251
 	ld	(xwa), c
-	jr	MidiPkt_SysExBulkTransfer_Data_Join2
+	jr	MidiPkt_SysExBulkTransfer_Data_Helper2_Join2
 MidiPkt_SysExBulkTransfer_Data_Helper2_Skip:
 	pushw	0
 	ld	bc, 0:i3
@@ -1478,15 +1478,15 @@ MidiPkt_SysExBulkTransfer_Data_Helper2_Skip:
 	lda	xwa, (xsp+2)
 	ldto_berp	c, 251
 	ld	(xwa), c
-MidiPkt_SysExBulkTransfer_Data_Join2:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join2:
 	calr	MidiPkt_SysExBulkTransfer_Data_Helper2
 MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue:
 	pop	qiz
 	lda	xsp, (xsp+12)
 	ret
-MidiPkt_SysExBulkTransfer_Data_Join3:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join3:
 	jrl	SysEx_OnGmSystemOn
-MidiPkt_SysExBulkTransfer_Data_Join4:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join4:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1501,16 +1501,16 @@ MidiPkt_SysExBulkTransfer_Data_Join4:
 	ld	bc, hl
 	call	DSPCfg_WriteParamFull
 	cp	hl, 0:i3
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Epilogue
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2
 	ld	xwa, 0x4b04
 	call	DSPCfg_ReadParam_Map0
 	ld	qiz, hl
 	cp	qiz, 0
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Epilogue
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2
 	ld	iz, 0:i3
 	cp	qiz, 0
-	jr	le, MidiPkt_SysExBulkTransfer_Data_Skip2
-MidiPkt_SysExBulkTransfer_Data_Loop:
+	jr	le, MidiPkt_SysExBulkTransfer_Data_Helper2_Skip3
+MidiPkt_SysExBulkTransfer_Data_Helper2_Loop:
 	ld	a, (xsp+4)
 	extz	wa
 	ldto_berp	c, 248
@@ -1518,20 +1518,20 @@ MidiPkt_SysExBulkTransfer_Data_Loop:
 	calr	SysEx_DispatchByChannel_49
 	ld	bc, hl
 	cp	bc, 0xd8f0
-	jr	z, MidiPkt_SysExBulkTransfer_Data_Skip
+	jr	z, MidiPkt_SysExBulkTransfer_Data_Helper2_Skip2
 	ld	wa, iz
 	exts	xwa
 	add	xwa, 0x4b10
 	call	DSPCfg_WriteParamFull
-MidiPkt_SysExBulkTransfer_Data_Skip:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Skip2:
 	inc	1, iz
 	cp	iz, qiz
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Loop
-MidiPkt_SysExBulkTransfer_Data_Skip2:
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Loop
+MidiPkt_SysExBulkTransfer_Data_Helper2_Skip3:
 	push	xiz
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
-MidiPkt_SysExBulkTransfer_Data_Epilogue:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2:
 	pop	xiz
 	inc	2, xsp
 	ret

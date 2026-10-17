@@ -7603,7 +7603,7 @@ SndParam_UpdateAll_Loop:
 	jr nz, SndParam_UpdateChannels_Done
 	ld iz, 0:i3
 
-SndParam_UpdateAll_Body:
+SndParam_UpdateChannels_Loop:
 	ldto_berp A, 0xf8
 	extz wa
 	ld c, (xsp + 2)
@@ -7611,7 +7611,7 @@ SndParam_UpdateAll_Body:
 	calr SndParam_UpdateSingleChannel
 	inc 1, iz
 	cp iz, 0xa
-	jr c, SndParam_UpdateAll_Body
+	jr c, SndParam_UpdateChannels_Loop
 
 SndParam_UpdateChannels_Done:
 	popw iz
@@ -10899,13 +10899,13 @@ MidiPkt_XferShowResult:
 	cp	l, 0:i3
 	jr	nz, MidiPkt_XferShowResult_Skip2
 	calr	MidiSeq_PartLookup_Data_Helper
-	jr	MidiSeq_PartLookup_Data_Entry
+	jr	MidiPkt_XferShowResult_Join
 MidiPkt_XferShowResult_Skip:
 	calr	MidiSeq_PartLookup_Data_Helper2
-	jr	MidiSeq_PartLookup_Data_Entry
+	jr	MidiPkt_XferShowResult_Join
 MidiPkt_XferShowResult_Skip2:
 	calr	MidiSeq_PartLookup_Data_Helper3
-MidiSeq_PartLookup_Data_Entry:
+MidiPkt_XferShowResult_Join:
 	bit	1, (0xbd18:16)
 	ret	z
 	call	SeqStep_PlaybackNop
@@ -14851,21 +14851,21 @@ SysEx_OnTechnicsParamRequest:
 	lda xix, (SysEx_OnTechnicsParamRequest_Addr00:24)
 	jp	t, (xix+hl)
 SysEx_OnTechnicsParamRequest_Addr00:
-	jr	VoiceParam_AssSwb_MultiBlock_Data_Join
+	jr	VoiceParam_AssSwb_MultiBlock_Data_Case7_Join
 VoiceParam_AssSwb_MultiBlock_Data_Case2:
-	jr	VoiceParam_AssSwb_MultiBlock_Data_Join2
+	jr	VoiceParam_AssSwb_MultiBlock_Data_Case7_Join2
 VoiceParam_AssSwb_MultiBlock_Data_Case3:
-	jrl	VoiceParam_AssSwb_MultiBlock_Data_Join3
+	jrl	VoiceParam_AssSwb_MultiBlock_Data_Case7_Join3
 VoiceParam_AssSwb_MultiBlock_Data_Case4:
-	jrl	VoiceParam_AssSwb_MultiBlock_Data_Return
+	jrl	VoiceParam_AssSwb_MultiBlock_Data_Case7_Return
 VoiceParam_AssSwb_MultiBlock_Data_Case5:
-	jrl	VoiceParam_AssSwb_MultiBlock_Data_Join4
+	jrl	VoiceParam_AssSwb_MultiBlock_Data_Case7_Join4
 VoiceParam_AssSwb_MultiBlock_Data_Case6:
-	jrl	VoiceParam_AssSwb_MultiBlock_Data_Join5
+	jrl	VoiceParam_AssSwb_MultiBlock_Data_Case7_Join5
 VoiceParam_AssSwb_MultiBlock_Data_Case7:
 	calr	VoiceParam_AssSwb_MultiBlock_Data_Helper
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Join:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Join:
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 2:i3
@@ -14898,7 +14898,7 @@ VoiceParam_AssSwb_MultiBlock_Data_Join:
 VoiceParam_AssSwb_MultiBlock_Data_Code_Epilogue:
 	pop	qiz
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Join2:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Join2:
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 2:i3
@@ -14931,7 +14931,7 @@ VoiceParam_AssSwb_MultiBlock_Data_Join2:
 VoiceParam_AssSwb_MultiBlock_Data_Code_Epilogue2:
 	pop	qiz
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Join3:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Join3:
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 2:i3
@@ -14964,9 +14964,9 @@ VoiceParam_AssSwb_MultiBlock_Data_Join3:
 VoiceParam_AssSwb_MultiBlock_Data_Code_Epilogue3:
 	pop	qiz
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Return:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Return:
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Join4:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Join4:
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 2:i3
@@ -14999,7 +14999,7 @@ VoiceParam_AssSwb_MultiBlock_Data_Join4:
 VoiceParam_AssSwb_MultiBlock_Data_Code_Epilogue4:
 	pop	qiz
 	ret
-VoiceParam_AssSwb_MultiBlock_Data_Join5:
+VoiceParam_AssSwb_MultiBlock_Data_Case7_Join5:
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 2:i3
@@ -15073,7 +15073,7 @@ VoiceParam_MultiBlock_Epilogue_Data:
 	lda	xsp, (xsp-12)
 	ld	c, (xwa+14)
 	cp	c, 1:i3
-	jr	nc, VoiceParam_AssSwb_MultiBlock_Data_Epilogue
+	jr	nc, VoiceParam_MultiBlock_Epilogue_Data_Epilogue
 	extz	bc
 	muls	bc, 6
 	lda	xde, (SeqAlt_PopIzSkip4Ret2_Data:24)
@@ -15092,7 +15092,7 @@ VoiceParam_MultiBlock_Epilogue_Data:
 	ld	(xbc+4), xwa
 	ld	xwa, xbc
 	calr	MidiPkt_EnqueueControl_3354
-VoiceParam_AssSwb_MultiBlock_Data_Epilogue:
+VoiceParam_MultiBlock_Epilogue_Data_Epilogue:
 	lda	xsp, (xsp+12)
 	ret
 

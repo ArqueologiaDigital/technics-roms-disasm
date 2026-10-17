@@ -2085,16 +2085,16 @@ SqSngSel_CalcSongUsagePercent_Skip:
 	jr	c, SqSngSel_CalcSongUsagePercent_Loop
 	ld	xde, xbc
 	cp	xbc, 0
-	jr	z, SetWall_MiscDataAndCode_Entry
+	jr	z, SqSngSel_CalcSongUsagePercent_Join2
 	ld	xde, xbc
 	mul	bc, 100
 	ld	hl, (10349:16)
 	div	xbc, hl
 	inc	1, bc
 	cp	bc, 100
-	jr	c, SetWall_MiscDataAndCode_Entry
+	jr	c, SqSngSel_CalcSongUsagePercent_Join2
 	ldw	bc, 99
-SetWall_MiscDataAndCode_Entry:
+SqSngSel_CalcSongUsagePercent_Join2:
 	ld	(10348:16), c
 	pop	xwa
 	ld	(4349:16), xwa

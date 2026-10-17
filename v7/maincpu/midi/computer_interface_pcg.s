@@ -317,7 +317,7 @@ PcgOutGridCheckJumpTable:
 	cp	bc, 3:i3
 	jrl	z, PcgOutGridCheckJumpTable_Skip5
 	cp	bc, 2:i3
-	jr	z, PcgOutGridCheckJumpTable_Entry
+	jr	z, PcgOutGridCheckJumpTable_Skip7
 	cp	bc, 1:i3
 	jr	z, PcgOutGridCheckJumpTable_Skip2
 	cp	bc, 0:i3
@@ -353,7 +353,7 @@ PcgOutGridCheckJumpTable_Skip2:
 	ld	(xwa+14), xbc
 PcgOutGridCheckJumpTable_Skip3:
 	jrl	PcgOutGridCheckJumpTable_Join4
-PcgOutGridCheckJumpTable_Entry:
+PcgOutGridCheckJumpTable_Skip7:
 	cp	(0x24770:24), 255
 	jrl	z, PcgOutGridCheckComplete
 	ld	xiy, UserMemory_FormatStrings
@@ -409,7 +409,7 @@ PcgOutGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	cp	bc, 3:i3
 	jrl	z, PcgOutGridCheckJumpTable_Skip11
 	cp	bc, 2:i3
-	jrl	z, PcgOutGridCheckJumpTable_Entry2
+	jrl	z, PcgOutGridCheck_OnIndexswDown_Skip
 	cp	bc, 1:i3
 	jr	z, PcgOutGridCheck_OnIndexswDown_Skip8
 	cp	bc, 0:i3
@@ -455,7 +455,7 @@ PcgOutGridCheck_OnIndexswDown_Skip9:
 	ld	(xhl), xbc
 PcgOutGridCheck_OnIndexswDown_Join2:
 	jrl	PcgOutGridCheckJumpTable_Join4
-PcgOutGridCheckJumpTable_Entry2:
+PcgOutGridCheck_OnIndexswDown_Skip:
 	cp	(0x24770:24), 255
 	jrl	z, PcgOutGridCheckComplete
 	ld	xiy, UserMemory_FormatStrings

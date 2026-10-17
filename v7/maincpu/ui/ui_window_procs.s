@@ -2106,21 +2106,21 @@ DrawDesignFrame_Skip3:
 	divs	wa, 2
 	lda	xix, (xsp+22)
 	cpw	(xbc), 0
-	jr	nz, DrawDesignFrame_Entry
+	jr	nz, EditSw_ByteData_Join
 	ldw	(xix), 65534
 	ld	de, (xbc+2)
 	sub	de, wa
 	ld	(xix+2), de
-DrawDesignFrame_Entry:
+EditSw_ByteData_Join:
 	cpw	(xbc), 319
-	jr	nz, DrawDesignFrame_Entry2
+	jr	nz, EditSw_ByteData_Join2
 	ldw	de, 318
 	sub	de, (xsp+6)
 	ld	(xix), de
 	ld	de, (xbc+2)
 	sub	de, wa
 	ld	(xix+2), de
-DrawDesignFrame_Entry2:
+EditSw_ByteData_Join2:
 	cpw	(xbc+2), 239
 	jr	nz, DrawDesignFrame_Skip4
 	ld	wa, (xsp+6)
@@ -9909,7 +9909,7 @@ DrawDottedLineWithMode_Impl_Skip13:
 	ld	xwa, (xsp+4)
 	cp	xwa, 0
 	jrl	lt, DrawDottedLineWithMode_Impl_Join11
-DrawDottedLineWithMode_Impl_Entry:
+DrawDottedLineWithMode_Impl_Loop4:
 	cp	(xsp+24), 3
 	jr	ule, DrawDottedLineWithMode_Impl_Skip14
 	ld	(xsp+24), 0
@@ -10025,7 +10025,7 @@ DrawDottedLineWithMode_Impl_Join6:
 	add	(xsp+20), xwa
 	ld	xwa, (xsp+20)
 	cp	xwa, (xsp+4)
-	jrl	le, DrawDottedLineWithMode_Impl_Entry
+	jrl	le, DrawDottedLineWithMode_Impl_Loop4
 	jrl	DrawDottedLineWithMode_Impl_Join11
 DrawDottedLineWithMode_Impl_Skip21:
 	lda	xwa, (xsp+46)

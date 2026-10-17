@@ -501,12 +501,12 @@ SingleLoadSrc_PanelMemListProc_Skip10:
 	cp	xwa, 40
 	jr	nz, SLSrcBankList_FuncBody_Join4
 	cp	(0x81d0:16), 0
-	jr	z, SLSrcBankList_FuncBody_Entry
+	jr	z, SingleLoadSrc_PanelMemListProc_Join4
 	ld	c, (SingleLoadSrc_PanelMemBankSize:24)
 	ld	xwa, xiz
 	calr	SingleLoadSrc_PanelMemDrawBankName
 	ld	(0x81d0:16), 0
-SLSrcBankList_FuncBody_Entry:
+SingleLoadSrc_PanelMemListProc_Join4:
 	cp	(0x81ce:16), 0
 	jr	z, SLSrcBankList_FuncBody_Join4
 	ld	c, (SingleLoadSrc_PanelMemBankSize:24)
@@ -1414,12 +1414,12 @@ SingleLoadSrc_SoundMemListProc_Skip37:
 	cp	xwa, 40
 	jr	nz, SLSrcBankList_FuncBody_Join17
 	cp	(0x81de:16), 0
-	jr	z, SLSrcBankList_FuncBody_Entry2
+	jr	z, SingleLoadSrc_SoundMemListProc_Join
 	ld	xwa, xiz
 	ld	c, e
 	calr	SingleLoadSrc_DrawUserKitName
 	ld	(0x81de:16), 0
-SLSrcBankList_FuncBody_Entry2:
+SingleLoadSrc_SoundMemListProc_Join:
 	cp	(0x81dc:16), 0
 	jr	z, SLSrcBankList_FuncBody_Join17
 	ld	c, (SingleLoadSrc_SoundMemPageSize:24)

@@ -12254,10 +12254,10 @@ SeqVoice_InitEntryForCurrentBank:
 	ld	bc, hl
 	calr	SeqVoice_SeekToBar
 	cp	(SEQ_ERROR_CODE:16), 0
-	jr	z, SeqPos_DataBlock_Code_Entry
+	jr	z, SeqVoice_InitEntryForCurrentBank_Skip
 	ldmm8	9818, 1075
 	ret
-SeqPos_DataBlock_Code_Entry:
+SeqVoice_InitEntryForCurrentBank_Skip:
 	ldmm8	9818, 10382
 	ret
 
@@ -13687,7 +13687,7 @@ SeqPart_PositionUpdateBlock_Skip:
 	calr	SeqVoice_SeekToBar
 	ld	a, (SEQ_ERROR_CODE:16)
 	cp	a, 0:i3
-	jr	z, SeqPart_PositionUpdateBlock_Code_Entry
+	jr	z, SeqPart_PositionUpdateBlock_Skip2
 	cp	a, 8
 	jr	z, SeqPart_PositionUpdateBlock_Code_Loop2
 	cp	a, 1:i3
@@ -13695,7 +13695,7 @@ SeqPart_PositionUpdateBlock_Skip:
 SeqPart_PositionUpdateBlock_Code_Loop2:
 	ld	(SEQ_ERROR_CODE:16), 0
 	jr	SeqPart_PositionUpdateBlock_Code_Join
-SeqPart_PositionUpdateBlock_Code_Entry:
+SeqPart_PositionUpdateBlock_Skip2:
 	ldmm16	10367, 9778
 	ldb_d8	l, (10381)
 	ld	a, (9780:16)
@@ -17581,7 +17581,7 @@ Part_CheckAndReallocVoices_Join:
 	jr	nz, Part_CheckAndReallocVoices_Skip2
 	ld	(xsp+8), iz
 	incw	1, (xsp+4)
-Part_CheckAndReallocVoices_Entry:
+PartCtrl_SwapAndRelinkBlock_Loop:
 	cpw	(xsp+6), 0
 	jr	z, Part_CheckAndReallocVoices_Skip
 	ld	wa, (xsp+6)
@@ -17625,7 +17625,7 @@ Part_CheckAndReallocVoices_Skip2:
 	ld wa, qiz
 	ld	bc, (xsp+6)
 	calr	PartCtrl_WriteWord_Off1
-	jr	Part_CheckAndReallocVoices_Entry
+	jr	PartCtrl_SwapAndRelinkBlock_Loop
 Part_CheckAndReallocVoices_Skip3:
 	ld iz, qiz
 	jrl	Part_CheckAndReallocVoices_Join
@@ -20389,10 +20389,10 @@ APP_EVENT_HANDLER_TABLE:
 	extz wa
 	sub wa, 0x9c
 	cp wa, 0:i3
-	jr lt, AppEvtHandler_Branch_001
+	jr lt, APP_EVENT_HANDLER_TABLE_Join
 	cp wa, 7:i3
 	jr le, AppEvtHandler_Branch_002
-AppEvtHandler_Branch_001:
+APP_EVENT_HANDLER_TABLE_Join:
 	ldw wa, 0x8
 AppEvtHandler_Branch_002:
 	sll wa, 2
@@ -20457,13 +20457,13 @@ AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly:
 AppEvtHandler_Branch_004:
 	ld (xsp + 4), xwa
 	cpw (xiz), 0x3e7
-	jr nc, AppEvtHandler_Branch_005
+	jr nc, AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly_Join
 	incw 1, (xiz)
 	ld xwa, (0x2972:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 1:i3
 	call ApDeliveryEvent
-AppEvtHandler_Branch_005:
+AppEvent_ChainDispatch1_IncFromMeasure_OnTitleSqadvdly_Join:
 	ld bc, (xiz)
 	ld xwa, (xsp + 4)
 	cp bc, (xwa)
@@ -20530,35 +20530,35 @@ AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly:
 AppEvtHandler_Branch_008:
 	ld (xsp + 4), xwa
 	cpw (xwa), 0x3e7
-	jr nc, AppEvtHandler_Branch_009
+	jr nc, AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Join
 	ld xwa, (xsp + 4)
 	incw 1, (xwa)
 	ld xwa, (0x2972:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 2:i3
 	call ApDeliveryEvent
-AppEvtHandler_Branch_009:
+AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Join:
 	ld bc, (xiz)
 	ld xwa, (xsp + 4)
 	cp bc, (xwa)
-	jr ule, AppEvtHandler_Branch_010
+	jr ule, AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Join2
 	ld wa, (xwa)
 	ld (xiz), wa
 	ld xwa, (0x2972:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 1:i3
 	call ApDeliveryEvent
-AppEvtHandler_Branch_010:
+AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Join2:
 	ld a, (CURRENT_TITLE:16)
 	cp a, 0xa3
-	jr nz, AppEvtHandler_Branch_012
+	jr nz, AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Skip
 AppEvtHandler_Branch_011:
 	ld wa, (9772:16)
 	sub wa, (0xf1d7:16)
 	inc 1, wa
 	ld (0xf1d9:16), wa
 	jrl AppEvent_Epilogue
-AppEvtHandler_Branch_012:
+AppEvent_ChainDispatch1_IncLastMeasure_OnTitleSqadvdly_Skip:
 	cp a, 0xa1
 	jrl nz, AppEvent_Epilogue
 AppEvtHandler_Branch_013:
@@ -20660,24 +20660,24 @@ AppEvent_ChainDispatch1_IncCnNote:
 AppEvent_ChainDispatch1_IncMrgTrackA:
 	ld a, (0xf1d3:16)
 	cp a, 0x10
-	jr nc, AppEvtHandler_Branch_014
+	jr nc, AppEvent_ChainDispatch1_IncMrgTrackA_Skip
 	inc 1, a
 	ld (0xf1d3:16), a
-	jr AppEvtHandler_Branch_015
-AppEvtHandler_Branch_014:
+	jr AppEvent_ChainDispatch1_IncMrgTrackA_Join
+AppEvent_ChainDispatch1_IncMrgTrackA_Skip:
 	ld (0xf1d3:16), 1
 	ld a, (0xf1d3:16)
-AppEvtHandler_Branch_015:
+AppEvent_ChainDispatch1_IncMrgTrackA_Join:
 	cp a, (0xf1d4:16)
-	jr nz, AppEvtHandler_Branch_017
+	jr nz, AppEvent_ChainDispatch1_IncMrgTrackA_Join2
 	cp a, 0x10
-	jr nc, AppEvtHandler_Branch_016
+	jr nc, AppEvent_ChainDispatch1_IncMrgTrackA_Skip2
 	inc 1, a
 	ld (0xf1d3:16), a
-	jr AppEvtHandler_Branch_017
-AppEvtHandler_Branch_016:
+	jr AppEvent_ChainDispatch1_IncMrgTrackA_Join2
+AppEvent_ChainDispatch1_IncMrgTrackA_Skip2:
 	ld (0xf1d3:16), 1
-AppEvtHandler_Branch_017:
+AppEvent_ChainDispatch1_IncMrgTrackA_Join2:
 	ld xwa, (0x2972:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xc
@@ -20685,22 +20685,22 @@ AppEvtHandler_Branch_017:
 AppEvent_ChainDispatch1_IncMrgTrackB:
 	ld a, (0xf1d4:16)
 	cp a, 0x10
-	jr nc, AppEvtHandler_Branch_018
+	jr nc, AppEvent_ChainDispatch1_IncMrgTrackB_Skip
 	inc 1, a
 	ld (0xf1d4:16), a
-	jr AppEvtHandler_Branch_019
-AppEvtHandler_Branch_018:
+	jr AppEvent_ChainDispatch1_IncMrgTrackB_Join
+AppEvent_ChainDispatch1_IncMrgTrackB_Skip:
 	ld (0xf1d4:16), 1
 	ld a, (0xf1d4:16)
-AppEvtHandler_Branch_019:
+AppEvent_ChainDispatch1_IncMrgTrackB_Join:
 	cp a, (0xf1d3:16)
 	jr nz, AppEvtHandler_Branch_021
 	cp a, 0x10
-	jr nc, AppEvtHandler_Branch_020
+	jr nc, AppEvent_ChainDispatch1_IncMrgTrackB_Skip2
 	inc 1, a
 	ld (0xf1d4:16), a
 	jr AppEvtHandler_Branch_021
-AppEvtHandler_Branch_020:
+AppEvent_ChainDispatch1_IncMrgTrackB_Skip2:
 	ld (0xf1d4:16), 1
 AppEvtHandler_Branch_021:
 	ld xwa, (0x2972:16)
@@ -20747,10 +20747,10 @@ AppEvent_ChainDispatch1_IncMcpTrackA:
 AppEvtHandler_Branch_021_IncMcpFromMeasure:
 	ld wa, (0xf1ea:16)
 	cp wa, 0x3e7
-	jr nc, AppEvtHandler_Branch_022
+	jr nc, AppEvtHandler_Branch_021_IncMcpFromMeasure_Join
 	inc 1, wa
 	ld (0xf1ea:16), wa
-AppEvtHandler_Branch_022:
+AppEvtHandler_Branch_021_IncMcpFromMeasure_Join:
 	ld wa, (0xf1ea:16)
 	cp wa, (9768:16)
 	jr ule, AppEvtHandler_Branch_023
@@ -20846,10 +20846,10 @@ AppEvent_ChainDispatch1_IncMinsTrackA:
 AppEvtHandler_Branch_024_IncMinsFromMeasure:
 	ld wa, (0xf1e2:16)
 	cp wa, 0x3e7
-	jr nc, AppEvtHandler_Branch_025
+	jr nc, AppEvtHandler_Branch_024_IncMinsFromMeasure_Join
 	inc 1, wa
 	ld (0xf1e2:16), wa
-AppEvtHandler_Branch_025:
+AppEvtHandler_Branch_024_IncMinsFromMeasure_Join:
 	ld wa, (0xf1e2:16)
 	cp wa, (9774:16)
 	jr ule, AppEvtHandler_Branch_026
@@ -20920,52 +20920,52 @@ AppEvtHandler_Branch_027:
 ;   0x2852) through SeqData_CopyBlock2K.
 AppEvent_ChainDispatch1_IncScpParam:	; cases 27, 28, 29, 30
 	cp xwa, 0x1e
-	jr z, AppEvtHandler_Branch_031
+	jr z, AppEvent_ChainDispatch1_IncScpParam_Skip3
 	cp xwa, 0x1d
-	jr z, AppEvtHandler_Branch_029
+	jr z, AppEvent_ChainDispatch1_IncScpParam_Skip2
 	cp xwa, 0x1c
-	jr z, AppEvtHandler_Branch_028
+	jr z, AppEvent_ChainDispatch1_IncScpParam_Skip
 	cp xwa, 0x1b
-	jr nz, AppEvtHandler_Branch_032
+	jr nz, AppEvent_ChainDispatch1_IncScpParam_Join2
 	ld a, (9992:16)
 	cp a, 0xa
-	jr nc, AppEvtHandler_Branch_032
+	jr nc, AppEvent_ChainDispatch1_IncScpParam_Join2
 	inc 1, a
 	ld (9992:16), a
 	extz wa
 	ld xbc, 0x2842
-	jr AppEvtHandler_Branch_030
-AppEvtHandler_Branch_028:
+	jr AppEvent_ChainDispatch1_IncScpParam_Join
+AppEvent_ChainDispatch1_IncScpParam_Skip:
 	ld a, (9996:16)
 	cp a, 0x11
-	jr nc, AppEvtHandler_Branch_032
+	jr nc, AppEvent_ChainDispatch1_IncScpParam_Join2
 	inc 1, a
 	ld (9996:16), a
 	cp a, 0x11
-	jr nz, AppEvtHandler_Branch_032
+	jr nz, AppEvent_ChainDispatch1_IncScpParam_Join2
 	ld (9998:16), 17
-	jr AppEvtHandler_Branch_032
-AppEvtHandler_Branch_029:
+	jr AppEvent_ChainDispatch1_IncScpParam_Join2
+AppEvent_ChainDispatch1_IncScpParam_Skip2:
 	ld a, (9994:16)
 	cp a, 0xa
-	jr nc, AppEvtHandler_Branch_032
+	jr nc, AppEvent_ChainDispatch1_IncScpParam_Join2
 	inc 1, a
 	ld (9994:16), a
 	extz wa
 	ld xbc, 0x2852
-AppEvtHandler_Branch_030:
+AppEvent_ChainDispatch1_IncScpParam_Join:
 	call SeqData_CopyBlock2K
-	jr AppEvtHandler_Branch_032
-AppEvtHandler_Branch_031:
+	jr AppEvent_ChainDispatch1_IncScpParam_Join2
+AppEvent_ChainDispatch1_IncScpParam_Skip3:
 	ld a, (9998:16)
 	cp a, 0x11
-	jr nc, AppEvtHandler_Branch_032
+	jr nc, AppEvent_ChainDispatch1_IncScpParam_Join2
 	inc 1, a
 	ld (9998:16), a
 	cp a, 0x11
-	jr nz, AppEvtHandler_Branch_032
+	jr nz, AppEvent_ChainDispatch1_IncScpParam_Join2
 	ld (9996:16), 17
-AppEvtHandler_Branch_032:
+AppEvent_ChainDispatch1_IncScpParam_Join2:
 	ld xwa, (0x2972:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x1b
@@ -21308,15 +21308,15 @@ AppEvent_InlineHandler_Skip6:
 	ld a, (61907:16)
 AppEvent_InlineHandler_Join2:
 	cp a, (61908:16)
-	jr	nz, AppEvent_InlineHandler_Entry
+	jr	nz, AppEvent_InlineHandler_DecMrgTrackA_Join
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip7
 	dec	1, a
 	ld	(0xf1d3:16), a
-	jr	AppEvent_InlineHandler_Entry
+	jr	AppEvent_InlineHandler_DecMrgTrackA_Join
 AppEvent_InlineHandler_Skip7:
 	ld	(0xf1d3:16), 16
-AppEvent_InlineHandler_Entry:
+AppEvent_InlineHandler_DecMrgTrackA_Join:
 	ld	xwa, (10610:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 12
@@ -21333,15 +21333,15 @@ AppEvent_InlineHandler_Skip8:
 	ld	a, (0xf1d4:16)
 AppEvent_InlineHandler_Join3:
 	cp a, (61907:16)
-	jr	nz, AppEvent_InlineHandler_Entry2
+	jr	nz, AppEvent_InlineHandler_DecMrgTrackB_Join
 	cp	a, 1:i3
 	jr	ule, AppEvent_InlineHandler_Skip9
 	dec	1, a
 	ld	(0xf1d4:16), a
-	jr	AppEvent_InlineHandler_Entry2
+	jr	AppEvent_InlineHandler_DecMrgTrackB_Join
 AppEvent_InlineHandler_Skip9:
 	ld	(0xf1d4:16), 16
-AppEvent_InlineHandler_Entry2:
+AppEvent_InlineHandler_DecMrgTrackB_Join:
 	ld	xwa, (10610:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 13
@@ -21565,10 +21565,10 @@ AppEvent_InlineHandler_DecScpParam:	; cases 27, 28, 29, 30
 	cp	xwa, 28
 	jr	z, AppEvent_InlineHandler_Skip12
 	cp	xwa, 27
-	jr	nz, AppEvent_InlineHandler_Entry4
+	jr	nz, AppEvent_InlineHandler_DecScpParam_Join
 	ld	a, (9992:16)
 	cp	a, 1:i3
-	jr	ule, AppEvent_InlineHandler_Entry4
+	jr	ule, AppEvent_InlineHandler_DecScpParam_Join
 	dec	1, a
 	ld	(9992:16), a
 	extz	wa
@@ -21577,34 +21577,34 @@ AppEvent_InlineHandler_DecScpParam:	; cases 27, 28, 29, 30
 AppEvent_InlineHandler_Skip12:
 	ld	a, (9996:16)
 	cp	a, 1:i3
-	jr	ule, AppEvent_InlineHandler_Entry4
+	jr	ule, AppEvent_InlineHandler_DecScpParam_Join
 	dec	1, a
 	ld	(9996:16), a
 	cp	a, 16
-	jr	nz, AppEvent_InlineHandler_Entry4
+	jr	nz, AppEvent_InlineHandler_DecScpParam_Join
 	ld	(9998:16), 16
-	jr	AppEvent_InlineHandler_Entry4
+	jr	AppEvent_InlineHandler_DecScpParam_Join
 AppEvent_InlineHandler_Skip13:
 	ld	a, (9994:16)
 	cp	a, 1:i3
-	jr	ule, AppEvent_InlineHandler_Entry4
+	jr	ule, AppEvent_InlineHandler_DecScpParam_Join
 	dec	1, a
 	ld	(9994:16), a
 	extz	wa
 	ld	xbc, 0x2852
 AppEvent_InlineHandler_Join7:
 	call	SeqData_CopyBlock2K
-	jr	AppEvent_InlineHandler_Entry4
+	jr	AppEvent_InlineHandler_DecScpParam_Join
 AppEvent_InlineHandler_Skip14:
 	ld	a, (9998:16)
 	cp	a, 1:i3
-	jr	ule, AppEvent_InlineHandler_Entry4
+	jr	ule, AppEvent_InlineHandler_DecScpParam_Join
 	dec	1, a
 	ld	(9998:16), a
 	cp	a, 16
-	jr	nz, AppEvent_InlineHandler_Entry4
+	jr	nz, AppEvent_InlineHandler_DecScpParam_Join
 	ld	(9996:16), 16
-AppEvent_InlineHandler_Entry4:
+AppEvent_InlineHandler_DecScpParam_Join:
 	ld	xwa, (10610:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 27
@@ -21852,36 +21852,36 @@ AppEvent_HandleStateChange:
 	call SeqPlay_HandleChannelState
 	ld bc, (0xf19e:16)
 	cpw_erp BC, 0xfa
-	jr nz, SeqState_Case0
+	jr nz, AppEvent_HandleStateChange_Join
 	cp (0x28a8:16), iz
 	jrl z, AppEvent_PopIzSkip2Ret
 
 ; Sequencer state case 0
-SeqState_Case0:
+AppEvent_HandleStateChange_Join:
 	ld de, 1:i3
 	ld a, (xsp + 4)
 	and a, 0xf
-	jr z, SeqState_Case1
+	jr z, AppEvent_HandleStateChange_Join2
 	slaa de
 
 ; Sequencer state case 1
-SeqState_Case1:
+AppEvent_HandleStateChange_Join2:
 	ld wa, de
 	and de, (0x28a8:16)
-	jr z, SeqState_Case2
+	jr z, AppEvent_HandleStateChange_Skip
 	ld l, 0x1:opc
-	jr SeqState_Case3
+	jr AppEvent_HandleStateChange_Join3
 
 ; Sequencer state case 2
-SeqState_Case2:
+AppEvent_HandleStateChange_Skip:
 	and wa, bc
 	ld l, 0x0:opc
 	cp wa, 0:i3
-	jr z, SeqState_Case3
+	jr z, AppEvent_HandleStateChange_Join3
 	ld l, 0x2:opc
 
 ; Sequencer state case 3
-SeqState_Case3:
+AppEvent_HandleStateChange_Join3:
 	ld h, 0x0:opc
 	extz xhl
 	ld xwa, 0:i3
@@ -23326,13 +23326,13 @@ SeqAccomp_SubChain_DecCycleEndMeasure:
 	dec	1, wa
 	ld	(9506:16), wa
 	cp (9504:16), wa
-	jr	ule, SeqAccomp_SubHandlerB_Code_Entry
+	jr	ule, SeqAccomp_SubChain_DecCycleEndMeasure_Join
 	ldmm16	9504, 9506
 	ld	xwa, (10610:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 5:i3
 	call	ApDeliveryEvent
-SeqAccomp_SubHandlerB_Code_Entry:
+SeqAccomp_SubChain_DecCycleEndMeasure_Join:
 	ldmm16	9832, 9504
 	jr	ApPlaySyori_Join7
 ApPlaySyori_Skip9:
@@ -23342,13 +23342,13 @@ ApPlaySyori_Skip9:
 	dec	1, wa
 	ld	(9502:16), wa
 	cp (9500:16), wa
-	jr	ule, SeqAccomp_SubHandlerB_Code_Entry2
+	jr	ule, SeqAccomp_SubChain_DecCycleEndMeasure_Join2
 	ldmm16	9500, 9502
 	ld	xwa, (10610:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 5:i3
 	call	ApDeliveryEvent
-SeqAccomp_SubHandlerB_Code_Entry2:
+SeqAccomp_SubChain_DecCycleEndMeasure_Join2:
 	ldmm16	9832, 9500
 ApPlaySyori_Join7:
 	calr	NoteEditSy_SendModeScrollReset
@@ -25551,7 +25551,7 @@ HelpLang_DispatchDataBlock:
 	ld	c, (0x296e:16)
 	extz	bc
 	cp	e, 5:i3
-	jr	z, HelpLang_DispatchDataBlock_Entry
+	jr	z, HelpLang_DispatchDataBlock_Skip7
 	cp	e, 3:i3
 	jr	z, HelpLang_DispatchDataBlock_Skip2
 	cp	e, 2:i3
@@ -25566,7 +25566,7 @@ HelpLang_DispatchDataBlock_Skip:
 HelpLang_DispatchDataBlock_Skip2:
 	ld	xwa, HelpLang_ByteTable3
 	jr	HelpLang_DispatchDataBlock_Join
-HelpLang_DispatchDataBlock_Entry:
+HelpLang_DispatchDataBlock_Skip7:
 	ld	xwa, FontPalette_Gradient7
 	jr	HelpLang_DispatchDataBlock_Join
 HelpLang_DispatchDataBlock_Skip3:
@@ -26443,10 +26443,10 @@ SeqLoad_ProcessDataBlock_Helper2:
 	cp	de, 0xffff
 	jr	z, SeqBar_DataBlock_Code_Skip
 	cp	de, 0:i3
-	jr	nz, SeqBar_DataBlock_Code_Entry
+	jr	nz, SeqBar_DataBlock_Skip
 SeqBar_DataBlock_Code_Skip:
 	jr	SeqBar_DataBlock_Code_Epilogue
-SeqBar_DataBlock_Code_Entry:
+SeqBar_DataBlock_Skip:
 	add	de, (xsp)
 	ld	c, (xsp+2)
 	extz	bc
@@ -30288,7 +30288,7 @@ SeqPart_ByteBlockA207_Skip:
 	cp_erpb 251, 13
 	jr	z, SeqPart_ByteBlockA207_Code_Skip
 	cp_erpb 251, 16
-	jr	nz, SeqPart_ByteBlockA207_Code_Entry
+	jr	nz, SeqPart_ByteBlockA207_Join2
 SeqPart_ByteBlockA207_Code_Skip:
 	cp_erpb 251, 16
 	jr	nz, SeqPart_ByteBlockA207_Code_Skip2
@@ -30300,7 +30300,7 @@ SeqPart_ByteBlockA207_Code_Skip2:
 	call	Part_ValidateAndSetupVoiceChannel
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, SeqPart_ByteBlockA207_Join
-SeqPart_ByteBlockA207_Code_Entry:
+SeqPart_ByteBlockA207_Join2:
 	ldmm8	9780, 10359
 	bit	6, (10363:16)
 	jr	z, SeqPart_ByteBlockA207_Skip2
@@ -30308,7 +30308,7 @@ SeqPart_ByteBlockA207_Code_Entry:
 	call	z, (15993425:24)
 SeqPart_ByteBlockA207_Skip2:
 	calr	SeqPart_ByteBlockA207_Code_Helper
-	jrl	SeqPart_ByteBlockA207_Code_Entry2
+	jrl	SeqPart_ByteBlockA207_Join3
 SeqPart_ByteBlockA207_Code_Skip3:
 	ldib_erp 250, 1
 SeqPart_ByteBlockA207_Loop:
@@ -30344,7 +30344,7 @@ SeqPart_ByteBlockA207_Code_Skip6:
 	ld	(9782:16), 0
 	ldib_erp	250, 1
 	cp	(10401:16), 1
-	jr	c, SeqPart_ByteBlockA207_Code_Entry2
+	jr	c, SeqPart_ByteBlockA207_Join3
 SeqPart_ByteBlockA207_Loop2:
 	ldto_berp a, 250
 	ld	(9780:16), a
@@ -30385,7 +30385,7 @@ SeqPart_ByteBlockA207_Code_Skip9:
 	ldto_berp a, 250
 	cp a, (10401:16)
 	jr	ule, SeqPart_ByteBlockA207_Loop2
-SeqPart_ByteBlockA207_Code_Entry2:
+SeqPart_ByteBlockA207_Join3:
 	ldmm8	SEQ_ERROR_CODE, 9782
 SeqPart_ByteBlockA207_Join:
 	call	SeqVoice_ApplyTableEntry
@@ -30432,12 +30432,12 @@ SeqPart_ByteBlockA207_Code_Helper:
 	cp	a, 8
 	ret	nz
 	ld	(SEQ_ERROR_CODE:16), 0
-	jr	SeqPart_ByteBlockA207_Code_Entry3
+	jr	SeqPart_ByteBlockA207_Join4
 SeqPart_ByteBlockA207_Code_Skip10:
 	call	SeqData_ReadNextByte
 	cp	l, 130
 	jr	nz, SeqPart_ByteBlockA207_Code_Skip11
-SeqPart_ByteBlockA207_Code_Entry3:
+SeqPart_ByteBlockA207_Join4:
 	ldmm8	10359, 9780
 	calr	SeqPart_InitClear
 	ld	a, (0x2877:16)
@@ -31003,10 +31003,10 @@ SeqPart_ByteBlockA95A_Code_Skip:
 	jr	SeqPart_ByteBlockA95A_Code_Join2
 SeqPart_ByteBlockA95A_Code_Skip2:
 	cp	e, 12
-	jr	nz, SeqPart_ByteBlockA95A_Code_Entry
+	jr	nz, SeqPart_ByteBlockA95A_Skip5
 	set	1, (10361:16)
 	jr	SeqPart_ByteBlockA95A_Code_Join
-SeqPart_ByteBlockA95A_Code_Entry:
+SeqPart_ByteBlockA95A_Skip5:
 	res	1, (10361:16)
 SeqPart_ByteBlockA95A_Code_Join:
 	ld	a, (9858:16)
@@ -31028,12 +31028,12 @@ SeqPart_ByteBlockA95A_Code_Skip3:
 	jr	SeqPart_ByteBlockA95A_Code_Join2
 SeqPart_ByteBlockA95A_Code_Skip4:
 	cp	e, 12
-	jr	nz, SeqPart_ByteBlockA95A_Code_Entry2
+	jr	nz, SeqPart_ByteBlockA95A_Skip6
 	set	0, (10361:16)
-	jr	SeqPart_ByteBlockA95A_Code_Entry3
-SeqPart_ByteBlockA95A_Code_Entry2:
+	jr	SeqPart_ByteBlockA95A_Join2
+SeqPart_ByteBlockA95A_Skip6:
 	res	0, (10361:16)
-SeqPart_ByteBlockA95A_Code_Entry3:
+SeqPart_ByteBlockA95A_Join2:
 	ldmm8	9780, 10359
 	ldmm8	9810, 9858
 	calr	SeqPart_DualCopySetup_Loop
@@ -31381,12 +31381,12 @@ SeqPart_ByteBlockAD92:
 	call	SeqData_ScanAllTracks
 	ld	a, (SEQ_ERROR_CODE:16)
 	cp	a, 0:i3
-	jr	z, SeqPart_ByteBlockAD92_Entry
+	jr	z, SeqPart_ByteBlockAD92_Join2
 	cp	a, 7:i3
 	ret	nz
 	set	3, (0x287b:16)
 	ld	(SEQ_ERROR_CODE:16), 0
-SeqPart_ByteBlockAD92_Entry:
+SeqPart_ByteBlockAD92_Join2:
 	ldmm16	9898, 9830
 	ldmm16	9896, 10415
 	ldmm16	9884, 9820
@@ -31672,7 +31672,7 @@ SeqPart_ByteBlockB0DE:
 	jr	nz, SeqPart_ByteBlockB0DE_Skip
 	ld	wa, (9862:16)
 	cp (9778:16), wa
-	jr	z, SeqPart_ByteBlockB0DE_Entry
+	jr	z, SeqPart_ByteBlockB0DE_Join
 	ld	l, (0x2740:16)
 	ld	(0x287f:16), wa
 	extz	hl
@@ -31683,7 +31683,7 @@ SeqPart_ByteBlockB0DE:
 	jr	nz, SeqPart_ByteBlockB0DE_Skip
 	call	SeqData_ReadNextByte
 	cp	l, 130
-	jr	z, SeqPart_ByteBlockB0DE_Entry
+	jr	z, SeqPart_ByteBlockB0DE_Join
 	ldmm16	9942, 9830
 	ldmm16	9944, 10415
 	ldw	(9946:16), 1
@@ -31694,7 +31694,7 @@ SeqPart_ByteBlockB0DE:
 	call	SeqVoice_SeekAndScanTracks
 	cp	(SEQ_ERROR_CODE:16), 0
 	jr	nz, SeqPart_ByteBlockB0DE_Skip
-SeqPart_ByteBlockB0DE_Entry:
+SeqPart_ByteBlockB0DE_Join:
 	ldmm16	9950, 9778
 	ldmm16	9952, 9862
 	call	SeqBufInit_MainSetup

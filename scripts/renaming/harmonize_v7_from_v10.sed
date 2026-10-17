@@ -2153,3 +2153,32 @@ s/\bMidiInit_Stub1\b/SndParam_InitPhase1_NullRet/g
 s/\bMidiInit_Stub2\b/SndParam_InitPhase2_NullRet/g
 s/\bMidiInit_Stub3\b/SndParam_InitPhase3_NullRet/g
 s/\bAccDir_Entry\b/AccDir_TickVector/g
+# run 2026-10-17
+s/\bPmemOutLGridCheck_OnIndexswDown_Skip3\b/PmemOutLGridCheck_OnIndexswDown_Skip/g
+s/\bVoiceCtrl_ParamSetupBytecode_Skip23\b/TempoRingBuf_OnProgramChangeEvent_Skip/g
+s/\bSeMenu_ApplyPartEdit_Helper14_Entry\b/SeMenu_StepNoteParamInRange_Skip7/g
+s/\bStylCnvStorOkFunc_DataBlock_Entry2\b/PaintArrow_DrawFilled_Join/g
+s/\bStylCnvStorOkFunc_DataBlock_Entry3\b/PaintArrow_DrawOutline_Skip/g
+s/\bUIStateEvt_VoiceParamHandler_Skip3\b/UIStateEvt_VoiceParamHandler_Skip6/g
+s/\bUIStateEvt_VoiceParamHandler_Skip4\b/UIStateEvt_VoiceParamHandler_Skip7/g
+s/\bStylCnvStorOkFunc_DataBlock_Entry\b/PaintArrow_DrawFilled_Skip/g
+s/\bAccDraw_Secondary_Helper20_Skip7\b/SeGfx_BoundOp0B_FormatNumber_Skip/g
+s/\bAccDraw_Secondary_Helper20_Join3\b/SeGfx_BoundOp0B_FormatNumber_Join/g
+s/\bSerialPort_ModeHandler_0_Skip12\b/SqStep_FlushPendingParamEvents_Skip/g
+s/\bPerfMode_ParamHandler_11_Skip61\b/SwbtB3_CodeA9_Listener3_Skip/g
+s/\bSeDigEff_OnSideRow3_Epilogue16\b/SeDigEff_OnSideRow3_Epilogue/g
+s/\bSeMenu_SetPatchBank_Epilogue\b/SeMenu_StepNoteParamInRange_Epilogue/g
+s/\bSeDigEff_OnSideRow3_Skip24\b/SeDigEff_OnSideRow3_Skip2/g
+s/\bSeDigEff_OnSideRow3_Join16\b/SeDigEff_OnSideRow3_Join/g
+s/\bFat_AllocateClusters_Join3\b/Fat_AllocateClusters_Join/g
+s/\bSeMenu_SetPatchBank_Skip2\b/SeMenu_StepNoteParamInRange_Skip8/g
+s/\bSeMenu_SetPatchBank_Skip\b/SeMenu_StepNoteParamInRange_Skip6/g
+s/\bTempo_EditParam92_Join\b/Tempo_EditParam92_Join2/g
+s/\bFat_LookupPath_Loop15\b/Fat_LookupPath_Loop/g
+s/\bFat_LookupPath_Skip33\b/Fat_LookupPath_Join/g
+s/\bFSWAssGridCheck_Skip2\b/FSWAssGridCheck_OnLswData_Skip2/g
+s/\bFSWAssGridCheck_Skip\b/FSWAssGridCheck_OnLswData_Skip/g
+s/\bTbl_PedalNames_Skip\b/Tbl_PedalNames_Skip5/g
+# run 2026-10-17
+s/\bPmemOutLGridCheck_OnIndexswDown_Skip4\b/PmemOutLGridCheck_OnIndexswDown_Skip3/g
+s/\bUIStateEvt_VoiceParamHandler_Skip2\b/UIStateEvt_VoiceParamHandler_Skip4/g

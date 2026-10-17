@@ -1488,7 +1488,7 @@ InOutGridCheck_OnLswData:
 	lda	xbc, (xwa+2)
 	lda	xhl, (Data_InOutGridDispatch_PtrTable:24)
 	cp	xix, 0x2183
-	jrl	z, InOutGridCheck_Entry
+	jrl	z, InOutGridCheck_OnLswData_Skip
 	cp	xix, 0x2182
 	jrl	z, InOutGridCheck_Skip13
 	cp	xix, 0x2184
@@ -1698,7 +1698,7 @@ InOutGridCheck_Skip13:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
-InOutGridCheck_Entry:
+InOutGridCheck_OnLswData_Skip:
 	ldw	(xbc), 8
 	ld	bc, (xiz+4)
 	sla	bc, 2

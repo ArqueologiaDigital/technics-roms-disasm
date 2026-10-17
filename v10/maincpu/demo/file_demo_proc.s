@@ -8851,10 +8851,10 @@ FileIO_ErrorCodeByteBlock:
 	ret	z
 	ld	c, (CURRENT_TITLE:16)
 	cp	c, 16
-	jr	c, FileIO_ErrorCodeByteBlock_Entry
+	jr	c, FileIO_ErrorCodeByteBlock_Join4
 	cp	c, 22
 	ret	ule
-FileIO_ErrorCodeByteBlock_Entry:
+FileIO_ErrorCodeByteBlock_Join4:
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	jr	z, FileIO_ErrorCodeByteBlock_Skip4
 	cp	(CURRENT_MODE:16), 6

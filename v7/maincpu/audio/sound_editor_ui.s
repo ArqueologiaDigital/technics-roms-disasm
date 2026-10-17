@@ -3225,14 +3225,14 @@ SeMenu_CopyWriteUpdate_Epilogue8:
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry3
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip
 	ld	a, (xsp+2)
 	dec	1, a
 	cp	(xsp+4), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue9
 	incm8	1, (xsp+4)
 	jr	SeMenu_CopyWriteUpdate_Join6
-SeMenu_CopyWriteUpdate_Entry3:
+SeMenuTitleFunc_DispatchSwitch_Skip:
 	cp	(xsp+4), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue9
 	decm8	1, (xsp+4)
@@ -3277,14 +3277,14 @@ SeMenu_CopyWriteUpdate_Epilogue9:
 	ld	a, (xsp+8)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry4
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip2
 	ld	wa, (xsp)
 	dec	1, wa
 	cp	(xsp+2), wa
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue10
 	incw	1, (xsp+2)
 	jr	SeMenu_CopyWriteUpdate_Join7
-SeMenu_CopyWriteUpdate_Entry4:
+SeMenuTitleFunc_DispatchSwitch_Skip2:
 	cpw	(xsp+2), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue10
 	decm	1, (xsp+2)
@@ -3493,7 +3493,7 @@ SeMenu_CopyWriteUpdate_Epilogue13:
 	call	SeMenu_LoadPartParam
 	res	7, (xsp+6)
 	cpib_erp	251, 0
-	jr	nz, SeMenu_CopyWriteUpdate_Entry5
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip3
 	cp	(xsp+6), 127
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue14
 	ld	a, (xsp+2)
@@ -3502,7 +3502,7 @@ SeMenu_CopyWriteUpdate_Epilogue13:
 	jr	c, SeMenu_CopyWriteUpdate_Join8
 	ld	(xsp+6), 127
 	jr	SeMenu_CopyWriteUpdate_Join8
-SeMenu_CopyWriteUpdate_Entry5:
+SeMenuTitleFunc_DispatchSwitch_Skip3:
 	cp	(xsp+6), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue14
 	ld	a, (xsp+6)
@@ -3648,7 +3648,7 @@ SeMenu_CopyWriteUpdate_Skip10:
 	lda	xwa, (xsp)
 	call	SeMenu_LoadPatchStatus
 	cp	(xsp), 1
-	jr	nz, SeMenu_CopyWriteUpdate_Entry6
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip4
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip11
 	ld	wa, 0:i3
@@ -3659,7 +3659,7 @@ SeMenu_CopyWriteUpdate_Join9:
 	call	SeMenu_SendEvent
 SeMenu_CopyWriteUpdate_Skip11:
 	jr	SeMenu_CopyWriteUpdate_Epilogue17
-SeMenu_CopyWriteUpdate_Entry6:
+SeMenuTitleFunc_DispatchSwitch_Skip4:
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Epilogue17
 	lda	xwa, (xsp+2)
@@ -3697,7 +3697,7 @@ SeMenu_CopyWriteUpdate_Skip13:
 	lda	xwa, (xsp+2)
 	call	SeMenu_LoadPatchStatus
 	cp	(xsp+2), 1
-	jr	nz, SeMenu_CopyWriteUpdate_Entry7
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip5
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip14
 	ld	wa, 0:i3
@@ -3708,7 +3708,7 @@ SeMenu_CopyWriteUpdate_Skip13:
 	call	SeMenu_ClearNotification
 SeMenu_CopyWriteUpdate_Skip14:
 	jr	SeMenu_CopyWriteUpdate_Epilogue18
-SeMenu_CopyWriteUpdate_Entry7:
+SeMenuTitleFunc_DispatchSwitch_Skip5:
 	cp	(xsp+4), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue18
 	lda	xbc, (xsp)
@@ -3775,7 +3775,7 @@ SeMenu_CopyWriteUpdate_Epilogue19:
 	call	SeMenu_LoadObjEntries
 	lda	xwa, (xsp+2)
 	cp	(xsp+4), 0
-	jr	nz, SeMenu_CopyWriteUpdate_Entry8
+	jr	nz, SeMenuTitleFunc_DispatchSwitch_Skip6
 	cp	(xsp+2), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip17
 	ldw	wa, 59
@@ -3788,7 +3788,7 @@ SeMenu_CopyWriteUpdate_Skip17:
 	ldw	wa, 61
 	call	SeMenu_GoToPageOnEnabledPart
 	jr	SeMenu_CopyWriteUpdate_Epilogue20
-SeMenu_CopyWriteUpdate_Entry8:
+SeMenuTitleFunc_DispatchSwitch_Skip6:
 	cp	(xsp+2), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip18
 	ldw	wa, 48
@@ -4002,14 +4002,14 @@ SeTonTon1_OnColumn2:
 	ld	a, (xsp+8)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry9
+	jr	nz, SeTonTon1_OnColumn2_Skip
 	ld	a, (xsp+4)
 	dec	1, a
 	cp	(xsp+6), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue22
 	incm8	1, (xsp+6)
 	jr	SeMenu_CopyWriteUpdate_Join14
-SeMenu_CopyWriteUpdate_Entry9:
+SeTonTon1_OnColumn2_Skip:
 	cp	(xsp+6), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue22
 	decm8	1, (xsp+6)
@@ -5063,14 +5063,14 @@ SeTonHyb1_OnColumn2:
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Entry14
+	jr	nz, SeTonHyb1_OnColumn2_Skip
 	ld	a, (xsp+6)
 	dec	1, a
 	cp	(xsp+8), a
 	jr	nc, SeMenu_CopyWriteUpdate_Epilogue27
 	incm8	1, (xsp+8)
 	jr	SeMenu_CopyWriteUpdate_Join21
-SeMenu_CopyWriteUpdate_Entry14:
+SeTonHyb1_OnColumn2_Skip:
 	cp	(xsp+8), 0
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue27
 	decm8	1, (xsp+8)
@@ -5769,7 +5769,7 @@ SeEasy_OnColumn4_Skip73:
 	pushw	64
 	ld	bc, 4:i3
 	ldw	de, 64
-	jr	Scoop_SoundEditorData_Helper_Join4
+	jr	SeEasy_OnColumn4_Join4
 SeEasy_OnColumn4_Skip74:
 	ld	(xwa+10), 1
 	call	SeMenu_RefreshPartDisplay_Data_2
@@ -5819,7 +5819,7 @@ SeEasy_OnColumn4_Skip76:
 	pushw	64
 	ld	bc, 4:i3
 	ld	de, 0:i3
-Scoop_SoundEditorData_Helper_Join4:
+SeEasy_OnColumn4_Join4:
 	call	AddswbWr
 	jr	SeEasy_OnColumn4_Join17
 SeEasy_OnColumn4_Skip33:
@@ -5847,18 +5847,18 @@ SeEasy_OnSideRow2:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+2), 0
-	jr	nz, Scoop_SoundEditorData_Helper_Skip10
+	jr	nz, SeEasy_OnSideRow2_Skip10
 	cp	(xsp), 5
 	jr	z, SeEasy_OnSideRow2_Epilogue59
 	ld	wa, 0:i3
 	ld	bc, 5:i3
-	jr	Scoop_SoundEditorData_Helper_Join5
-Scoop_SoundEditorData_Helper_Skip10:
+	jr	SeEasy_OnSideRow2_Join5
+SeEasy_OnSideRow2_Skip10:
 	cp	(xsp), 1
 	jr	z, SeEasy_OnSideRow2_Epilogue59
 	ld	wa, 0:i3
 	ld	bc, 1:i3
-Scoop_SoundEditorData_Helper_Join5:
+SeEasy_OnSideRow2_Join5:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	33
@@ -5874,24 +5874,24 @@ SeEasy_OnSideRow3:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+2), 0
-	jr	nz, Scoop_SoundEditorData_Helper_Skip11
+	jr	nz, SeEasy_OnSideRow3_Skip11
 	cp	(xsp), 6
-	jr	z, Scoop_SoundEditorData_Helper_Epilogue4
+	jr	z, SeEasy_OnSideRow3_Epilogue4
 	ld	wa, 0:i3
 	ld	bc, 6:i3
-	jr	Scoop_SoundEditorData_Helper_Join6
-Scoop_SoundEditorData_Helper_Skip11:
+	jr	SeEasy_OnSideRow3_Join6
+SeEasy_OnSideRow3_Skip11:
 	cp	(xsp), 2
-	jr	z, Scoop_SoundEditorData_Helper_Epilogue4
+	jr	z, SeEasy_OnSideRow3_Epilogue4
 	ld	wa, 0:i3
 	ld	bc, 2:i3
-Scoop_SoundEditorData_Helper_Join6:
+SeEasy_OnSideRow3_Join6:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	33
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue4:
+SeEasy_OnSideRow3_Epilogue4:
 	inc	4, xsp
 	ret
 SeEasy_OnSideRow4:
@@ -5901,18 +5901,18 @@ SeEasy_OnSideRow4:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+2), 0
-	jr	nz, Scoop_SoundEditorData_Helper_Skip12
+	jr	nz, SeEasy_OnSideRow4_Skip12
 	cp	(xsp), 7
 	jr	z, SeEasy_OnSideRow4_Epilogue60
 	ld	wa, 0:i3
 	ld	bc, 7:i3
-	jr	Scoop_SoundEditorData_Helper_Join7
-Scoop_SoundEditorData_Helper_Skip12:
+	jr	SeEasy_OnSideRow4_Join7
+SeEasy_OnSideRow4_Skip12:
 	cp	(xsp), 3
 	jr	z, SeEasy_OnSideRow4_Epilogue60
 	ld	wa, 0:i3
 	ld	bc, 3:i3
-Scoop_SoundEditorData_Helper_Join7:
+SeEasy_OnSideRow4_Join7:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	33
@@ -5928,18 +5928,18 @@ SeEasy_OnSideRow5:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+2), 0
-	jr	nz, Scoop_SoundEditorData_Helper_Skip13
+	jr	nz, SeEasy_OnSideRow5_Skip13
 	cp	(xsp), 8
 	jr	z, SeEasy_OnSideRow5_Epilogue61
 	ld	wa, 0:i3
 	ldw	bc, 8
-	jr	Scoop_SoundEditorData_Helper_Join8
-Scoop_SoundEditorData_Helper_Skip13:
+	jr	SeEasy_OnSideRow5_Join8
+SeEasy_OnSideRow5_Skip13:
 	cp	(xsp), 4
 	jr	z, SeEasy_OnSideRow5_Epilogue61
 	ld	wa, 0:i3
 	ld	bc, 4:i3
-Scoop_SoundEditorData_Helper_Join8:
+SeEasy_OnSideRow5_Join8:
 	call	SeMenu_StorePartParam
 	pushw	0
 	pushw	33
@@ -6092,9 +6092,9 @@ SeDigEff_OnColumn3:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, Scoop_SoundEditorData_Helper_Epilogue9
+	jr	mi, SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 	cp	wa, 11
-	jr	gt, Scoop_SoundEditorData_Helper_Epilogue9
+	jr	gt, SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x2EE:24)
 	ld	wa, (xix+wa)
@@ -6104,7 +6104,7 @@ SeDigEff_OnColumn3_CelesteChorusDetune:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
 	ld	(xwa+9), 206
-Scoop_SoundEditorData_Helper_Join11:
+SeDigEff_OnColumn3_CelesteChorusDetune_Join11:
 	ld	xwa, 2:i3
 	lda	xwa, (xwa+94)
 	extz	wa
@@ -6117,27 +6117,27 @@ Scoop_SoundEditorData_Helper_Join11:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 3:i3
 	call	SeMenu_BindDialToColumn
-	jr	Scoop_SoundEditorData_Helper_Epilogue9
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9
 SeDigEff_OnColumn3_Depth:	; cases 4, 5, 7, 10, 11
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
-	jr	Scoop_SoundEditorData_Helper_Join12
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
 SeDigEff_OnColumn3_TremoloWave:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 3
-	jr	Scoop_SoundEditorData_Helper_Join12
+	jr	SeDigEff_OnColumn3_RepeatDelaySustain_Join12
 SeDigEff_OnColumn3_SingleDelayKey:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 24
 	ld	(xwa+9), 232
-	jr	Scoop_SoundEditorData_Helper_Join11
+	jr	SeDigEff_OnColumn3_CelesteChorusDetune_Join11
 SeDigEff_OnColumn3_RepeatDelaySustain:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
-Scoop_SoundEditorData_Helper_Join12:
+SeDigEff_OnColumn3_RepeatDelaySustain_Join12:
 	ld	(xwa+9), 0
-	jr	Scoop_SoundEditorData_Helper_Join11
-Scoop_SoundEditorData_Helper_Epilogue9:
+	jr	SeDigEff_OnColumn3_CelesteChorusDetune_Join11
+SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn4:
@@ -6160,9 +6160,9 @@ SeDigEff_OnColumn4:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, Scoop_SoundEditorData_Helper_Epilogue10
+	jr	mi, SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 	cp	wa, 9
-	jr	gt, Scoop_SoundEditorData_Helper_Epilogue10
+	jr	gt, SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x306:24)
 	ld	wa, (xix+wa)
@@ -6171,7 +6171,7 @@ SeDigEff_OnColumn4:
 SeDigEff_OnColumn4_DelaySpeed2:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
-Scoop_SoundEditorData_Helper_Join13:
+SeDigEff_OnColumn4_DelaySpeed2_Join13:
 	ld	(xwa+9), 0
 	ld	xwa, 3:i3
 	lda	xwa, (xwa+94)
@@ -6185,16 +6185,16 @@ Scoop_SoundEditorData_Helper_Join13:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
-	jr	Scoop_SoundEditorData_Helper_Epilogue10
+	jr	SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10
 SeDigEff_OnColumn4_Balance:	; cases 6, 8
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
-	jr	Scoop_SoundEditorData_Helper_Join13
+	jr	SeDigEff_OnColumn4_DelaySpeed2_Join13
 SeDigEff_OnColumn4_RepeatDelayRelease:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
-	jr	Scoop_SoundEditorData_Helper_Join13
-Scoop_SoundEditorData_Helper_Epilogue10:
+	jr	SeDigEff_OnColumn4_DelaySpeed2_Join13
+SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn5:
@@ -6217,9 +6217,9 @@ SeDigEff_OnColumn5:
 	ld	a, (xsp+12)
 	extz	wa
 	cp	wa, 0:i3
-	jr	mi, Scoop_SoundEditorData_Helper_Epilogue11
+	jr	mi, SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 	cp	wa, 5:i3
-	jr	gt, Scoop_SoundEditorData_Helper_Epilogue11
+	jr	gt, SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 	add	wa, wa
 	lda	xix, (ToneGen_ParamTable_0x31A:24)
 	ld	wa, (xix+wa)
@@ -6229,7 +6229,7 @@ SeDigEff_OnColumn5_CelesteChorusBalance:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
 	ld	(xwa+9), 0
-Scoop_SoundEditorData_Helper_Join14:
+SeDigEff_OnColumn5_CelesteChorusBalance_Join14:
 	ld	xwa, 4:i3
 	lda	xwa, (xwa+94)
 	extz	wa
@@ -6242,13 +6242,13 @@ Scoop_SoundEditorData_Helper_Join14:
 	call	SeMenu_StepParamFieldAndSend
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
-	jr	Scoop_SoundEditorData_Helper_Epilogue11
+	jr	SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
 SeDigEff_OnColumn5_EnsembleDetune:	; cases 4, 5
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
 	ld	(xwa+9), 206
-	jr	Scoop_SoundEditorData_Helper_Join14
-Scoop_SoundEditorData_Helper_Epilogue11:
+	jr	SeDigEff_OnColumn5_CelesteChorusBalance_Join14
+SeDigEff_OnColumn5_EnsembleDetune_Epilogue11:
 	lda	xsp, (xsp+16)
 	ret
 SeDigEff_OnColumn6:
@@ -6410,7 +6410,7 @@ SeDigEff_OnSideRow2_Skip41:
 	lda	xwa, (xsp)
 	call	SeMenu_LoadMasterPtr
 	bitm	7, (xsp+2)
-	jr	z, Scoop_SoundEditorData_Helper_Skip22
+	jr	z, SeDigEff_OnSideRow2_Skip22
 	resm	7, (xsp+2)
 	ld	wa, 4:i3
 	ldw	bc, 64
@@ -6422,7 +6422,7 @@ SeDigEff_OnSideRow2_Skip41:
 	ld	bc, 4:i3
 	ld	de, 0:i3
 	jr	SeDigEff_OnSideRow2_Join22
-Scoop_SoundEditorData_Helper_Skip22:
+SeDigEff_OnSideRow2_Skip22:
 	setm	7, (xsp+2)
 	ld	wa, 4:i3
 	ldw	bc, 64
@@ -6460,9 +6460,9 @@ SeDigEff_OnSideRow3:
 	call	SeMenu_LoadPartParam
 	ld	a, (xsp)
 	and	a, 15
-	jr	z, Scoop_SoundEditorData_Helper_Epilogue16
+	jr	z, SeDigEff_OnSideRow3_Epilogue
 	cp	a, 11
-	jr	ugt, Scoop_SoundEditorData_Helper_Epilogue16
+	jr	ugt, SeDigEff_OnSideRow3_Epilogue
 	dec	1, a
 	andmi8	(xsp), 240
 	or	(xsp), a
@@ -6479,17 +6479,17 @@ SeDigEff_OnSideRow3:
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
-	jr	Scoop_SoundEditorData_Helper_Epilogue16
+	jr	SeDigEff_OnSideRow3_Epilogue
 SeDigEff_OnSideRow3_Skip:
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	bitm	6, (xsp)
-	jr	z, Scoop_SoundEditorData_Helper_Skip24
+	jr	z, SeDigEff_OnSideRow3_Skip2
 	resm	6, (xsp)
-	jr	Scoop_SoundEditorData_Helper_Join16
-Scoop_SoundEditorData_Helper_Skip24:
+	jr	SeDigEff_OnSideRow3_Join
+SeDigEff_OnSideRow3_Skip2:
 	setm	6, (xsp)
-Scoop_SoundEditorData_Helper_Join16:
+SeDigEff_OnSideRow3_Join:
 	ld	c, (xsp)
 	extz	bc
 	ld	wa, 0:i3
@@ -6503,7 +6503,7 @@ Scoop_SoundEditorData_Helper_Join16:
 	pushw	58
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue16:
+SeDigEff_OnSideRow3_Epilogue:
 	inc	2, xsp
 	ret
 SeDigEff_OnSwitch15:
@@ -6642,17 +6642,17 @@ SeWrtMem_OnSwitch15:
 	call	SeMenu_SendEvent
 	ret
 SeWrtSnd_OnColumn1:
-	jrl	Scoop_SoundEditorData_Helper_Join18
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join18
 SeWrtSnd_OnColumn2:
-	jrl	Scoop_SoundEditorData_Helper_Join19
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join19
 SeWrtSnd_OnColumn3:
-	jrl	Scoop_SoundEditorData_Helper_Join20
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join20
 SeWrtSnd_OnColumn4:
-	jrl	Scoop_SoundEditorData_Helper_Join21
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join21
 SeWrtSnd_OnColumn5:
-	jrl	Scoop_SoundEditorData_Helper_Join22
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join22
 SeWrtSnd_OnColumn6:
-	jrl	Scoop_SoundEditorData_Helper_Join24
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join24
 SeWrtSnd_OnColumn7:
 	ld	c, a
 	res	7, c
@@ -6661,9 +6661,9 @@ SeWrtSnd_OnColumn7:
 	jr	nz, SeWrtSnd_OnColumn7_Skip81
 	ld	wa, 0:i3
 SeWrtSnd_OnColumn7_Skip81:
-	jrl	Scoop_SoundEditorData_Helper_Join25
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join25
 SeWrtSnd_OnColumn8:
-	jrl	Scoop_SoundEditorData_Helper_Join27
+	jrl	SeMenu_CopyWriteUpdate_Helper18_Join27
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -6772,9 +6772,9 @@ SeMenu_CopyWriteUpdate_Helper18:
 	ld	c, a
 	and	c, 31
 	cp	c, 16
-	jr	ule, Scoop_SoundEditorData_Helper_Skip28
+	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Skip28
 	ld	c, 16:opc
-Scoop_SoundEditorData_Helper_Skip28:
+SeMenu_CopyWriteUpdate_Helper18_Skip28:
 	extz	bc
 	ld	wa, 2:i3
 	call	SeMenu_StorePartParam
@@ -6807,13 +6807,13 @@ Scoop_SoundEditorData_Helper_Skip28:
 	call	SeMenu_PostEditUpDownSet
 	inc	4, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join18:
+SeMenu_CopyWriteUpdate_Helper18_Join18:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp+4), 0
-	jr	z, Scoop_SoundEditorData_Helper_Epilogue22
+	jr	z, SeMenu_CopyWriteUpdate_Helper18_Epilogue22
 	decm8	1, (xsp+4)
 	ld	c, (xsp+4)
 	extz	bc
@@ -6838,10 +6838,10 @@ Scoop_SoundEditorData_Helper_Join18:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-Scoop_SoundEditorData_Helper_Epilogue22:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue22:
 	inc	6, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join19:
+SeMenu_CopyWriteUpdate_Helper18_Join19:
 	dec	8, xsp
 	lda	xbc, (xsp+6)
 	ld	wa, 0:i3
@@ -6852,7 +6852,7 @@ Scoop_SoundEditorData_Helper_Join19:
 	ld	a, (xsp)
 	dec	1, a
 	cp	(xsp+6), a
-	jr	nc, Scoop_SoundEditorData_Helper_Epilogue23
+	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Epilogue23
 	incm8	1, (xsp+6)
 	ld	c, (xsp+6)
 	extz	bc
@@ -6877,17 +6877,17 @@ Scoop_SoundEditorData_Helper_Join19:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	8, xsp
-Scoop_SoundEditorData_Helper_Epilogue23:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue23:
 	inc	8, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join20:
+SeMenu_CopyWriteUpdate_Helper18_Join20:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
 	ld	wa, 2:i3
 	call	SeMenu_LoadPartParam
 	ldib_erp	251, 0
-Scoop_SoundEditorData_Helper_Loop5:
+SeMenu_CopyWriteUpdate_Helper18_Loop5:
 	ldto_berp	a, 251
 	extz	wa
 	lda	xbc, (xsp+6)
@@ -6895,13 +6895,13 @@ Scoop_SoundEditorData_Helper_Loop5:
 	call	SeMenu_GetNameBufferChar
 	inc1b_erp	251
 	cp_erpb	251, 15
-	jr	ule, Scoop_SoundEditorData_Helper_Loop5
+	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Loop5
 	ld	c, (xsp+2)
 	dec	1, c
 	extz	bc
 	lda	xwa, (xsp+6)
 	.byte	0xc3,	0x07, 0xe0, 0xe4, 0x3f, 0x20
-	jrl	nz, Scoop_SoundEditorData_Helper_Epilogue24
+	jrl	nz, SeMenu_CopyWriteUpdate_Helper18_Epilogue24
 	lda	xbc, (xsp+24)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
@@ -6920,8 +6920,8 @@ Scoop_SoundEditorData_Helper_Loop5:
 	extz	hl
 	ldto_berp	a, 251
 	cpb_erp	a, 226
-	jr	nc, Scoop_SoundEditorData_Helper_Skip29
-Scoop_SoundEditorData_Helper_Loop6:
+	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Skip29
+SeMenu_CopyWriteUpdate_Helper18_Loop6:
 	ld	iy, hl
 	ld	wa, de
 	ld	a, (xix+wa)
@@ -6931,8 +6931,8 @@ Scoop_SoundEditorData_Helper_Loop6:
 	dec	1, de
 	ldto_berp	a, 251
 	cpb_erp	a, 226
-	jr	c, Scoop_SoundEditorData_Helper_Loop6
-Scoop_SoundEditorData_Helper_Skip29:
+	jr	c, SeMenu_CopyWriteUpdate_Helper18_Loop6
+SeMenu_CopyWriteUpdate_Helper18_Skip29:
 	ld	a, (xsp+24)
 	extz	wa
 	.byte	0xf3,	0x07, 0xe4, 0xe0, 0x00, 0x20
@@ -6954,18 +6954,18 @@ Scoop_SoundEditorData_Helper_Skip29:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue24:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue24:
 	pop	qiz
 	lda	xsp, (xsp+24)
 	ret
-Scoop_SoundEditorData_Helper_Join21:
+SeMenu_CopyWriteUpdate_Helper18_Join21:
 	lda	xsp, (xsp-24)
 	push	qiz
 	lda	xbc, (xsp+2)
 	ld	wa, 2:i3
 	call	SeMenu_LoadPartParam
 	ldib_erp	251, 0
-Scoop_SoundEditorData_Helper_Loop7:
+SeMenu_CopyWriteUpdate_Helper18_Loop7:
 	ldto_berp	a, 251
 	extz	wa
 	lda	xbc, (xsp+6)
@@ -6973,7 +6973,7 @@ Scoop_SoundEditorData_Helper_Loop7:
 	call	SeMenu_GetNameBufferChar
 	inc1b_erp	251
 	cp_erpb	251, 15
-	jr	ule, Scoop_SoundEditorData_Helper_Loop7
+	jr	ule, SeMenu_CopyWriteUpdate_Helper18_Loop7
 	lda	xbc, (xsp+24)
 	ld	wa, 0:i3
 	call	SeMenu_LoadPartParam
@@ -6984,13 +6984,13 @@ Scoop_SoundEditorData_Helper_Loop7:
 	ld	l, c
 	ldto_berp	a, 251
 	cp	a, l
-	jr	nc, Scoop_SoundEditorData_Helper_Skip30
+	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Skip30
 	lda	xde, (xsp+6)
 	ldto_berp	c, 251
 	extz	bc
 	ld	wa, 1:i3
 	add	bc, wa
-Scoop_SoundEditorData_Helper_Loop8:
+SeMenu_CopyWriteUpdate_Helper18_Loop8:
 	ld	ix, bc
 	ldw	wa, 65535
 	add	ix, wa
@@ -7001,8 +7001,8 @@ Scoop_SoundEditorData_Helper_Loop8:
 	inc	1, bc
 	ldto_berp	a, 251
 	cp	a, l
-	jr	c, Scoop_SoundEditorData_Helper_Loop8
-Scoop_SoundEditorData_Helper_Skip30:
+	jr	c, SeMenu_CopyWriteUpdate_Helper18_Loop8
+SeMenu_CopyWriteUpdate_Helper18_Skip30:
 	ld	a, (xsp+2)
 	dec	1, a
 	extz	wa
@@ -7029,7 +7029,7 @@ Scoop_SoundEditorData_Helper_Skip30:
 	pop	qiz
 	lda	xsp, (xsp+24)
 	ret
-Scoop_SoundEditorData_Helper_Join22:
+SeMenu_CopyWriteUpdate_Helper18_Join22:
 	dec	6, xsp
 	lda	xbc, (xsp+4)
 	ld	wa, 0:i3
@@ -7041,12 +7041,12 @@ Scoop_SoundEditorData_Helper_Join22:
 	lda	xde, (xsp+2)
 	ld	a, (xde)
 	cp	a, 65
-	jr	c, Scoop_SoundEditorData_Helper_Skip31
+	jr	c, SeMenu_CopyWriteUpdate_Helper18_Skip31
 	cp	a, 90
-	jr	ugt, Scoop_SoundEditorData_Helper_Skip31
+	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Skip31
 	sub	a, 65
 	ld	c, 97:opc
-Scoop_SoundEditorData_Helper_Join23:
+SeMenu_CopyWriteUpdate_Helper18_Join23:
 	add	a, c
 	ld	(xde), a
 	ld	a, (xsp+4)
@@ -7066,25 +7066,25 @@ Scoop_SoundEditorData_Helper_Join23:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-	jr	Scoop_SoundEditorData_Helper_Epilogue25
-Scoop_SoundEditorData_Helper_Skip31:
+	jr	SeMenu_CopyWriteUpdate_Helper18_Epilogue25
+SeMenu_CopyWriteUpdate_Helper18_Skip31:
 	cp	a, 97
-	jr	c, Scoop_SoundEditorData_Helper_Epilogue25
+	jr	c, SeMenu_CopyWriteUpdate_Helper18_Epilogue25
 	cp	a, 122
-	jr	ugt, Scoop_SoundEditorData_Helper_Epilogue25
+	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Epilogue25
 	sub	a, 97
 	ld	c, 65:opc
-	jr	Scoop_SoundEditorData_Helper_Join23
-Scoop_SoundEditorData_Helper_Epilogue25:
+	jr	SeMenu_CopyWriteUpdate_Helper18_Join23
+SeMenu_CopyWriteUpdate_Helper18_Epilogue25:
 	inc	6, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join24:
+SeMenu_CopyWriteUpdate_Helper18_Join24:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 0
-	jr	z, Scoop_SoundEditorData_Helper_Epilogue26
+	jr	z, SeMenu_CopyWriteUpdate_Helper18_Epilogue26
 	decm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -7106,10 +7106,10 @@ Scoop_SoundEditorData_Helper_Join24:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue26:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue26:
 	inc	6, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join25:
+SeMenu_CopyWriteUpdate_Helper18_Join25:
 	dec	6, xsp
 	push	qiz
 	and	wa, 32768
@@ -7120,18 +7120,18 @@ Scoop_SoundEditorData_Helper_Join25:
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cpib_erp	251, 0
-	jr	nz, Scoop_SoundEditorData_Helper_Skip32
+	jr	nz, SeMenu_CopyWriteUpdate_Helper18_Skip32
 	cp	(xsp+4), 16
-	jr	c, Scoop_SoundEditorData_Helper_Epilogue27
+	jr	c, SeMenu_CopyWriteUpdate_Helper18_Epilogue27
 	submi8	(xsp+4), 16
-	jr	Scoop_SoundEditorData_Helper_Join26
-Scoop_SoundEditorData_Helper_Skip32:
+	jr	SeMenu_CopyWriteUpdate_Helper18_Join26
+SeMenu_CopyWriteUpdate_Helper18_Skip32:
 	ld	a, (xsp+4)
 	add	a, 16
 	cp	a, 95
-	jr	ugt, Scoop_SoundEditorData_Helper_Epilogue27
+	jr	ugt, SeMenu_CopyWriteUpdate_Helper18_Epilogue27
 	addmi8	(xsp+4), 16
-Scoop_SoundEditorData_Helper_Join26:
+SeMenu_CopyWriteUpdate_Helper18_Join26:
 	ld	c, (xsp+4)
 	extz	bc
 	ld	wa, 1:i3
@@ -7152,17 +7152,17 @@ Scoop_SoundEditorData_Helper_Join26:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue27:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue27:
 	pop	qiz
 	inc	6, xsp
 	ret
-Scoop_SoundEditorData_Helper_Join27:
+SeMenu_CopyWriteUpdate_Helper18_Join27:
 	dec	6, xsp
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 95
-	jr	nc, Scoop_SoundEditorData_Helper_Epilogue28
+	jr	nc, SeMenu_CopyWriteUpdate_Helper18_Epilogue28
 	incm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -7184,7 +7184,7 @@ Scoop_SoundEditorData_Helper_Join27:
 	pushw	63
 	call	SeTitle_DrawField
 	inc	4, xsp
-Scoop_SoundEditorData_Helper_Epilogue28:
+SeMenu_CopyWriteUpdate_Helper18_Epilogue28:
 	inc	6, xsp
 	ret
 SeWrtSnd_ClearName:
@@ -8708,13 +8708,13 @@ SeMenuTitle_DrawStaticScreen:
 SeMenuTitle_DrawStaticScreen_Skip:
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(0x6ae:16), 1
-	jr	z, SeMenu_WaveformSelect_Data_Skip2
+	jr	z, SeMenuTitle_DrawStaticScreen_Skip2
 	ld	xiy, SeMenuTitle_StaticRecords
 	ld	xix, SeMenu_DrawOriginalEditedBadge_Records2
 	call	SeGfx_DrawStaticList
 	call	SeMenu_DrawOriginalEditedBadge
 	jr	SeMenuTitle_DrawStaticScreen_Return
-SeMenu_WaveformSelect_Data_Skip2:
+SeMenuTitle_DrawStaticScreen_Skip2:
 	ld	xiy, SeMenuTitle_Records
 	ld	xix, SeMenuTitle_Records2
 	call	SeGfx_DrawStaticList
@@ -8747,13 +8747,13 @@ SeMenu_DrawOriginalEditedBadge:
 SeMenu_WaveformSelect_Apply_Helper2:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	a, 13:opc
-SeMenu_WaveformSelect_Data_Loop:
+SeMenu_WaveformSelect_Apply_Helper2_Loop:
 	push_a
 	call	SeMenu_WaveformSelect_Apply_Helper3
 	pop_a
 	inc	1, a
 	cp	a, 15
-	jr	c, SeMenu_WaveformSelect_Data_Loop
+	jr	c, SeMenu_WaveformSelect_Apply_Helper2_Loop
 	ret
 SeMenu_WaveformSelect_Apply_Helper3:
 	xor	xbc, xbc
@@ -8763,11 +8763,11 @@ SeMenu_WaveformSelect_Apply_Helper3:
 	add	xbc, xwa
 	ld	d, (xbc)
 	cp	d, 0:i3
-	jr	z, SeMenu_WaveformSelect_Data_Return2
+	jr	z, SeMenu_WaveformSelect_Apply_Helper3_Return2
 	ld	xiy, SeScreenData_0x5525
 	ld	(COLORBLIT_MODE:24), 0
 	call	SeGfx_DrawIndexedBoundRecord
-SeMenu_WaveformSelect_Data_Return2:
+SeMenu_WaveformSelect_Apply_Helper3_Return2:
 	ret
 ; SeMenuTitle_DrawField: Field-redraw routine of sound-editor title 0x20 TT_SEMENU (entry 0 of SeTitle_FieldDrawTable,
 ;  indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the table index and RegTitle
@@ -8878,13 +8878,13 @@ SeTonTon1_DrawStaticScreen:
 SeTonHyb1_DrawStaticScreen:
 	call	SeMenu_DrawToneSelectTitle
 	cp	(1710:16), 1
-	jr	z, SeMenu_PresetManager_Data_Skip
+	jr	z, SeTonHyb1_DrawStaticScreen_Skip
 	ld	xiy, SeTonHyb1_DrawStaticScreen_Records
 	ld	xix, SeTonHyb1_DrawStaticScreen_Records3
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
 	jr	SeTonHyb1_DrawStaticScreen_Join
-SeMenu_PresetManager_Data_Skip:
+SeTonHyb1_DrawStaticScreen_Skip:
 	ld	xiy, SeTonHyb1_DrawStaticScreen_Records3
 	ld	xix, SeMenu_DrumKitCopyConfirm_YesNo_Records
 	call	SeGfx_DrawStaticList
@@ -9006,7 +9006,7 @@ SeMenu_DrawTwoPartRadioButtons:
 	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop c
-	jr	SeMenu_PresetManager_Data_Join4
+	jr	SeMenu_DrawTwoPartRadioButtons_Join4
 SeMenu_DrawTwoPartRadioButtons_Skip:
 	.byte 0xcb, 0x04
 	xor	b, b
@@ -9017,7 +9017,7 @@ SeMenu_DrawTwoPartRadioButtons_Skip:
 	ld	xix, (xiz+bc)
 	call	SeGfx_DrawStaticList
 	pop c
-SeMenu_PresetManager_Data_Join4:
+SeMenu_DrawTwoPartRadioButtons_Join4:
 	djnz8	c, -84
 	ret
 SeMenu_DrawToneSelectTitle:
@@ -17437,7 +17437,7 @@ EasyCmp_GridCheck_EventEnc:
 	dec 2,A
 	extz WA
 	cp bc, 2:i3
-	jr z, EasyCmp_GridEvtEnc_Case2
+	jr z, EasyCmp_GridCheck_EventEnc_Join
 	cp bc, 1:i3
 	jr nz, EasyCmp_GridCheck_EventCase3
 	lda xbc, (0x370f:16)
@@ -17450,7 +17450,7 @@ EasyCmp_GridCheck_EventEnc:
 	ld	xwa, (xbc+wa)
 	push XWA
 	jr t, EasyCmp_GridCheck_EventCase1
-EasyCmp_GridEvtEnc_Case2:
+EasyCmp_GridCheck_EventEnc_Join:
 	lda	xbc, (14102:16)
 	extz	xwa
 	add	xwa, xbc
@@ -19872,7 +19872,7 @@ PaintArrow_DrawFilled:
 	cp	bc, 3:i3
 	jr	z, StylCnvStorOkFunc_DataBlock_Skip2
 	cp	bc, 2:i3
-	jr	z, StylCnvStorOkFunc_DataBlock_Entry
+	jr	z, PaintArrow_DrawFilled_Skip
 	cp	bc, 1:i3
 	scc16	nz, bc
 	ld	(xsp+8), bc
@@ -19909,14 +19909,14 @@ StylCnvStorOkFunc_DataBlock_Join2:
 	ld	(xsp+20), bc
 	ldw (xsp+6), 65535
 	jr	StylCnvStorOkFunc_DataBlock_Join3
-StylCnvStorOkFunc_DataBlock_Entry:
+PaintArrow_DrawFilled_Skip:
 	.byte 0xbf
 	ld	(P0CR:8), 1:io
 	nop
-	jr	StylCnvStorOkFunc_DataBlock_Entry2
+	jr	PaintArrow_DrawFilled_Join
 StylCnvStorOkFunc_DataBlock_Skip2:
 	ldw (xsp+8), 0
-StylCnvStorOkFunc_DataBlock_Entry2:
+PaintArrow_DrawFilled_Join:
 	.byte 0xbf
 	ldw	(P0CR:8), 1:io
 	lda	xhl, (xsp+24)
@@ -20064,7 +20064,7 @@ PaintArrow_DrawOutline:
 	cp	bc, 3:i3
 	jr	z, StylCnvStorOkFunc_DataBlock_Skip4
 	cp	bc, 2:i3
-	jr	z, StylCnvStorOkFunc_DataBlock_Entry3
+	jr	z, PaintArrow_DrawOutline_Skip
 	cp	bc, 1:i3
 	scc16	nz, bc
 	ld	(xsp+6), bc
@@ -20105,7 +20105,7 @@ StylCnvStorOkFunc_DataBlock_Join5:
 	sub wa, qiz
 	ld	(xsp+18), wa
 	jr	StylCnvStorOkFunc_DataBlock_Join7
-StylCnvStorOkFunc_DataBlock_Entry3:
+PaintArrow_DrawOutline_Skip:
 	.byte 0xbf
 	ei	2
 	.byte 0x01

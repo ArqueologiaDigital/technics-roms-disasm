@@ -1801,31 +1801,31 @@ SysExBulk_SwitchOffsets:
 	.short	MidiPkt_SysExBulkTransfer_Data_Case4 - SysEx_OnRolandGs_UseForRhythmPart
 	.short	MidiPkt_SysExBulkTransfer_Data_Case5 - SysEx_OnRolandGs_UseForRhythmPart
 	.short	MidiPkt_SysExBulkTransfer_Data_Case6 - SysEx_OnRolandGs_UseForRhythmPart
-; 16 x u8 (15, 0..8, 10..14, 9).  MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1):
+; 16 x u8 (15, 0..8, 10..14, 9).  MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1):
 ; `lda xbc,(<this>); ld a, (xbc+wa)`.
 SysExBulk_SlotMap:
 	.byte 0x0f, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate0:
 	.byte 0x00, 0x00, 0xff, 0x00
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate1:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate2:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate3:
 	.byte 0x00, 0x00, 0xff, 0x00
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate4:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA9B1) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate5:
 	.byte 0x00, 0x00, 0x00, 0xff
@@ -7206,7 +7206,7 @@ AudioVoiceHandler_Table:
 ; 32 x u32 RAM addresses of 26-byte (0x1A) part records: 0xF9B6 + 0x1A*i for
 ; i = 0..22, then 0xFD62, 0xFD7C, then 0xF9B6 again.  UIState_ProcessMidiEvent
 ; (0xFDE084), UIStateEvt_DrumAssign_Set (0xFDE20A: `ld a,(xwa+13)`) and
-; UIStateEvt_VolumeMixer_Data_Loop (0xFDE616: `bitm 0,(xwa+22)`) load an entry
+; UIStateEvt_VolumeMixer_Data_Case4_Loop (0xFDE616: `bitm 0,(xwa+22)`) load an entry
 ; with `ld xwa, (xbc+wa)` and read record fields.
 PartRecord_RamPtrTable:
 	.long 0x0000f9b6
@@ -7266,9 +7266,9 @@ ParamEdit_WordTable:
 ; 7 x u16 switch offsets.  PanelTag48_UpdateAudioConfig (0xFDE2A8): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFDE2CF); jp_rr 8,xix,wa` -- targets 0xFDE2CF + offset (no labels yet).
 ParamEdit_SwitchOffsets:
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
 	.short	PanelTag48_UpdateAudioConfig_StyleNumber - PanelTag48_UpdateAudioConfig_StyleNumber
 	.short	UIStateEvt_ParamEdit_Data_Case4 - PanelTag48_UpdateAudioConfig_StyleNumber
 	.short	UIStateEvt_ParamEdit_Data_Case5 - PanelTag48_UpdateAudioConfig_StyleNumber
@@ -9205,7 +9205,7 @@ NoteMap_ConvergeMapB:
 	.byte 0x38, 0x39, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-; Text "WRONG SW NUMBER!" (16 bytes, no NUL): StoreDRAMInit_Block4 (0xFEE635)
+; Text "WRONG SW NUMBER!" (16 bytes, no NUL): StoreDRAMInit_LoadDRAM_Skip (0xFEE635)
 ; copies from <this> to <this>+16 (`lda xwa,(<this>); lda xhl,(xwa+16)`).
 Msg_WrongSwNumber:
 	.byte 0x57, 0x52, 0x4f, 0x4e, 0x47, 0x20, 0x53, 0x57, 0x20, 0x4e, 0x55, 0x4d, 0x42, 0x45, 0x52, 0x21
