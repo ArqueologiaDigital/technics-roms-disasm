@@ -18903,16 +18903,16 @@ VoiceCC_SetSustain_ClearBit:
 	andw	(xbc+wa), 0xfffe
 	ret
 
-; WA = part, C = value.  Stores the byte at 0x041377 + part*0x11F (part+0x0F).
-Voice_CC_SetSostenuto:
+; WA = part, C = the part's reverb send level.  Stores the byte at 0x041377 + part*0x11F (part+0x0F).
+Voice_CC_SetReverbSend:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (0x041377:24)
 	ld	(xde+wa), c
 	ret
 
-; WA = part, C = value.  Stores the byte at 0x04137A + part*0x11F (part+0x12).
-Voice_CC_SetSoftPedal:
+; WA = part, C = the part's DSP-effect send level.  Stores the byte at 0x04137A + part*0x11F (part+0x12).
+Voice_CC_SetDspEffectSend:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (0x04137a:24)
@@ -18937,18 +18937,18 @@ VoiceCC_SetSostenuto_ClearFlag:
 	andw	(xbc+wa), 0xbfff
 	ret
 
-; WA = part, C = rate.  Stores the byte at 0x04137B + part*0x11F (part+0x13).  This is the
-; byte AudioMod_Apply_Porta_Curve falls back to.
-Voice_CC_SetPortamentoRate:
+; WA = part, C = the part's BEND RANGE (main-CPU Lsw 0x080, 0..12; was read as a portamento rate).  Stores the
+; byte at 0x04137B + part*0x11F (part+0x13).  This is the byte AudioMod_Apply_Porta_Curve falls back to.
+Voice_CC_SetBendRange:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (0x04137b:24)
 	ld	(xde+wa), c
 	ret
 
-; WA = part, C = value.  Stores the word ((C - 0x80) * 2) at 0x04137C + part*0x11F
-; (part+0x14) -- a bipolar depth centred on 0x80.
-Voice_CC_SetPortamentoDepth:
+; WA = part, C = the part's TUNING (main-CPU Lsw 0x081, 0..255 centred on 0x80).  Stores the word
+; ((C - 0x80) * 2) at 0x04137C + part*0x11F (part+0x14); Voice_CC_Tuning then refreshes the sounding pitches.
+Voice_CC_SetTuning:
 	ld e, c
 	extz de
 	sub de, 0x80
@@ -18959,9 +18959,9 @@ Voice_CC_SetPortamentoDepth:
 	ld	(xbc+wa), de
 	ret
 
-; WA = part, C = value.  Stores (C - 0x40) at 0x04137E + part*0x11F (part+0x16), bipolar
-; around 0x40.
-Voice_CC_SetPortamentoTime:
+; WA = part, C = the part's KEY SHIFT (main-CPU Lsw 0x082, 52..76 = 64 +- 12 semitones).  Stores (C - 0x40) at
+; 0x04137E + part*0x11F (part+0x16).
+Voice_CC_SetKeyShift:
 	ld e, c
 	sub e, 0x40
 	extz wa
@@ -18998,11 +18998,11 @@ Voice_CC_SetReverbDepth:
 	ld	(xde+wa), c
 	ret
 
-; Voice_CC_SetChorusEnable -- CC 0x95: Set/clear chorus bit 2 at voice+0x0A
+; Voice_CC_SetGlidePedal -- CC 0x95 (GLIDE PEDAL, called chorus enable until 2026-10-17): set/clear bit 2 at voice+0x0A
 ; WA = part, BC = CC 0x95 value.  Sets/clears bit 2 (0x0004) of part flags word 2.
-Voice_CC_SetChorusEnable:
+Voice_CC_SetGlidePedal:
 	cp c, 0:i3
-	jr z, VoiceCC_SetChorus_ClearBit
+	jr z, VoiceCC_SetGlidePedal_ClearBit
 	extz wa
 	muls wa, 0x11F
 	lda xbc, (0x041372:24)
@@ -19010,16 +19010,16 @@ Voice_CC_SetChorusEnable:
 	ret
 
 ; ClearBit of VoiceCC_SetChorus.
-VoiceCC_SetChorus_ClearBit:
+VoiceCC_SetGlidePedal_ClearBit:
 	extz wa
 	muls wa, 0x11F
 	lda xbc, (0x041372:24)
 	andw	(xbc+wa), 0xfffb
 	ret
 
-; Voice_CC_SetChorusDepth -- CC 0x97: Store chorus depth at voice+0x18
+; Voice_CC_SetSustainLength -- CC 0x97 (SUSTAIN LENGTH, called chorus depth until 2026-10-17): store at voice+0x18
 ; WA = part, C = CC 0x97 value.  Stores the byte at 0x041380 + part*0x11F (part+0x18).
-Voice_CC_SetChorusDepth:
+Voice_CC_SetSustainLength:
 	extz wa
 	muls wa, 0x11F
 	lda xde, (0x041380:24)
@@ -19035,12 +19035,12 @@ Voice_CC_SetDelayDepth:
 	ld	(xde+wa), c
 	ret
 
-; Voice_CC_SetDelayEnable -- CC 0x9C: Set/clear delay bit 8 at voice+0x02
+; Voice_CC_SetKeyScaling -- CC 0x9C (KEY SCALING, called delay enable until 2026-10-17): set/clear bit 8 at voice+0x02
 ; WA = part, BC = CC 0x9C value.  Sets/clears bit 0 of the part flags word at
 ; 0x04136A + part*0x11F (part+0x02).
-Voice_CC_SetDelayEnable:
+Voice_CC_SetKeyScaling:
 	cp c, 0:i3
-	jr z, VoiceCC_SetDelay_ClearBit
+	jr z, VoiceCC_SetKeyScaling_ClearBit
 	extz wa
 	muls wa, 0x11F
 	lda xbc, (Part_PresentWord:24)
@@ -19048,7 +19048,7 @@ Voice_CC_SetDelayEnable:
 	ret
 
 ; ClearBit of VoiceCC_SetDelay.
-VoiceCC_SetDelay_ClearBit:
+VoiceCC_SetKeyScaling_ClearBit:
 	extz wa
 	muls wa, 0x11F
 	lda xbc, (Part_PresentWord:24)
@@ -21781,8 +21781,10 @@ Voice_PortamentoSlots_WriteHW_Exit:
 ;        +3 = controller value
 ; Exit:  Voice parameters updated based on CC number
 ; Notes: Handles standard MIDI CCs: Mod Wheel(1), Volume(7), Pan(10),
-;        Expression(11), Sustain(64), Sostenuto(91), Soft(93), Portamento(94)
-;        Plus proprietary CCs in 0x91-0x9D range for effects depth
+;        Expression(11), Sustain(64), and the KN5000 part parameters the main CPU's SndPart_SetParam sends
+;        as the controller of their Lsw number: 0x5B reverb send, 0x5D DSP-effect send, 0x80 bend range,
+;        0x81 tuning, 0x82 key shift, 0x95 glide pedal, 0x97 sustain length, 0x9C key scaling (0x5E, 0x91,
+;        0x9B and 0x9D are not sent by SndPart_SetParam; their meaning is not established)
 ; ===========================================================================
 ; MIDI Control Change entry point, called from MIDI_Dispatch (0x034D93 family).
 ; XWA -> 4-byte message: +0 status, +1 part 0..0x19, +2 controller, +3 value.
@@ -21802,21 +21804,21 @@ Voice_CtrlChange:
 	cp a, 0x9D
 	jrl z, Voice_CC_9D
 	cp a, 0x9C
-	jrl z, Voice_CC_9C
+	jrl z, Voice_CC_KeyScaling
 	cp a, 0x9B
 	jrl z, Voice_CC_9B
 	cp a, 0x97
-	jrl z, Voice_CC_97
+	jrl z, Voice_CC_SustainLength
 	cp a, 0x95
-	jrl z, Voice_CC_95
+	jrl z, Voice_CC_GlidePedal
 	cp a, 0x91
 	jrl z, Voice_CC_91
 	cp a, 0x5E
 	jrl z, Voice_CC_Portamento
 	cp a, 0x5D
-	jrl z, Voice_CC_Soft
+	jrl z, Voice_CC_DspEffectSend
 	cp a, 0x5B
-	jrl z, Voice_CC_Sostenuto
+	jrl z, Voice_CC_ReverbSend
 	cp a, 0x40
 	jrl z, Voice_CC_Sustain
 	cp a, 0xB
@@ -21920,8 +21922,8 @@ Voice_CC_Sustain:
 	calr Voice_AllNotes_SustainRetrigger
 	jrl Voice_CC_Exit
 
-; CC 0x5B.  Voice_CC_SetSostenuto.
-Voice_CC_Sostenuto:
+; CC 0x5B: the part's REVERB send (main-CPU Lsw 0x05B) -> Voice_CC_SetReverbSend.
+Voice_CC_ReverbSend:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -21929,11 +21931,11 @@ Voice_CC_Sostenuto:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetSostenuto
+	calr Voice_CC_SetReverbSend
 	jrl Voice_CC_Exit
 
-; CC 0x5D.  Voice_CC_SetSoftPedal.
-Voice_CC_Soft:
+; CC 0x5D: the part's DSP EFFECT send (main-CPU Lsw 0x05D) -> Voice_CC_SetDspEffectSend.
+Voice_CC_DspEffectSend:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -21941,7 +21943,7 @@ Voice_CC_Soft:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetSoftPedal
+	calr Voice_CC_SetDspEffectSend
 	jrl Voice_CC_Exit
 
 ; CC 0x5E.  Voice_Portamento_OnHandler + Voice_PortamentoSlots_WriteHW.
@@ -21975,7 +21977,7 @@ Voice_CC_Num123:
 	ld xwa, xhl
 	call Voice_ParamInit
 	jrl Voice_CC_Exit
-Voice_CC_Num128:
+Voice_CC_BendRange:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -21983,9 +21985,9 @@ Voice_CC_Num128:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetPortamentoRate
+	calr Voice_CC_SetBendRange
 	jrl Voice_CC_Exit
-Voice_CC_Num129:
+Voice_CC_Tuning:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -21993,14 +21995,14 @@ Voice_CC_Num129:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetPortamentoDepth
+	calr Voice_CC_SetTuning
 	ld a, (xiz + 1)
 	extz wa
 	call Voice_Query_PartVoices
 	ld xwa, xhl
 	calr Pitch_Refresh_Sounding_Voices
 	jrl Voice_CC_Exit
-Voice_CC_Num130:
+Voice_CC_KeyShift:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22008,7 +22010,7 @@ Voice_CC_Num130:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetPortamentoTime
+	calr Voice_CC_SetKeyShift
 	jr Voice_CC_Exit
 
 ; CC 0x91 (proprietary): reverb depth -> Voice_CC_SetReverbDepth.
@@ -22023,8 +22025,8 @@ Voice_CC_91:
 	calr Voice_CC_SetReverbDepth
 	jr Voice_CC_Exit
 
-; CC 0x95: chorus on/off -> Voice_CC_SetChorusEnable.
-Voice_CC_95:
+; CC 0x95: the part's GLIDE PEDAL switch (main-CPU Lsw 0x603, sent as 0 / 0x7F) -> Voice_CC_SetGlidePedal.
+Voice_CC_GlidePedal:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22032,11 +22034,11 @@ Voice_CC_95:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetChorusEnable
+	calr Voice_CC_SetGlidePedal
 	jr Voice_CC_Exit
 
-; CC 0x97: chorus depth -> Voice_CC_SetChorusDepth.
-Voice_CC_97:
+; CC 0x97: the part's SUSTAIN LENGTH (main-CPU Lsw 0x600, 0..7) -> Voice_CC_SetSustainLength.
+Voice_CC_SustainLength:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22044,7 +22046,7 @@ Voice_CC_97:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetChorusDepth
+	calr Voice_CC_SetSustainLength
 	jr Voice_CC_Exit
 
 ; CC 0x9B: delay depth -> Voice_CC_SetDelayDepth.
@@ -22059,8 +22061,8 @@ Voice_CC_9B:
 	calr Voice_CC_SetDelayDepth
 	jr Voice_CC_Exit
 
-; CC 0x9C: delay on/off -> Voice_CC_SetDelayEnable.
-Voice_CC_9C:
+; CC 0x9C: the part's KEY SCALING switch (main-CPU Lsw 0x602, sent as 0 / 0x7F) -> Voice_CC_SetKeyScaling.
+Voice_CC_KeyScaling:
 	ld a, (xiz + 1)
 	ld e, a
 	extz de
@@ -22068,7 +22070,7 @@ Voice_CC_9C:
 	ld c, a
 	extz bc
 	ld wa, de
-	calr Voice_CC_SetDelayEnable
+	calr Voice_CC_SetKeyScaling
 	jr Voice_CC_Exit
 
 ; CC 0x9D: delay feedback -> Voice_CC_SetDelayFeedback.
@@ -22689,11 +22691,11 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetSostenuto
+	calr Voice_CC_SetReverbSend
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetSoftPedal
+	calr Voice_CC_SetDspEffectSend
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22710,15 +22712,15 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 2:i3
-	calr Voice_CC_SetPortamentoRate
+	calr Voice_CC_SetBendRange
 	ldto_berp A, 0xFB
 	extz wa
 	ldw bc, 0x80
-	calr Voice_CC_SetPortamentoDepth
+	calr Voice_CC_SetTuning
 	ldto_berp A, 0xFB
 	extz wa
 	ldw bc, 0x40
-	calr Voice_CC_SetPortamentoTime
+	calr Voice_CC_SetKeyShift
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
@@ -22726,11 +22728,11 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetChorusEnable
+	calr Voice_CC_SetGlidePedal
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 6:i3
-	calr Voice_CC_SetChorusDepth
+	calr Voice_CC_SetSustainLength
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 1:i3
@@ -22738,7 +22740,7 @@ Voice_ResetAllControllers_LoopBody:
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3
-	calr Voice_CC_SetDelayEnable
+	calr Voice_CC_SetKeyScaling
 	ldto_berp A, 0xFB
 	extz wa
 	ld bc, 0:i3

@@ -725,9 +725,9 @@ Voice_CC_Mode_CaseOffsets:
 	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 125 -> Voice_CC_Exit (ignored)
 	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 126 -> Voice_CC_Exit (ignored)
 	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 127 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_Num128 - Voice_CC_ModWheel							; CC 128 -> Voice_CC_SetPortamentoRate(part, value)
-	.short Voice_CC_Num129 - Voice_CC_ModWheel							; CC 129 -> Voice_CC_SetPortamentoDepth, then Pitch_Refresh_Sounding_Voices
-	.short Voice_CC_Num130 - Voice_CC_ModWheel							; CC 130 -> Voice_CC_SetPortamentoTime(part, value)
+	.short Voice_CC_BendRange - Voice_CC_ModWheel							; CC 128 -> Voice_CC_SetBendRange(part, value)
+	.short Voice_CC_Tuning - Voice_CC_ModWheel							; CC 129 -> Voice_CC_SetTuning, then Pitch_Refresh_Sounding_Voices
+	.short Voice_CC_KeyShift - Voice_CC_ModWheel							; CC 130 -> Voice_CC_SetKeyShift(part, value)
 ; --- 0x00F74F-0x00F77C  23 x u16 case offsets from Voice_SystemMsg_DispatchTable (0x02A7FC).
 ; Read by Voice_SystemMsg (0x02A7AF, the jump at Voice_SystemMsg_DispatchJump):
 ; sub-command C - 0x80 in 0..7 is used directly; otherwise C - 0x80 - 0x1B must be
