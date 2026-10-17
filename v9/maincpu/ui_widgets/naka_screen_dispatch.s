@@ -1332,11 +1332,11 @@ NumStr_1:
 NumStr_0:
 	aligned_string "  0"
 CmpBndRng_DefaultString_Str_ERR:	aligned_string "ERR"
-CmpSetP1_DialGrid_Data:
+AcCmpSetGridBox_RowUpSteps:
 	.byte 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte 0x02, 0x00, 0x03, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte	0x01, 0x00
-CmpSetP1_SendAndApplyFunc_Data:	.byte	0x01, 0x00, 0x01, 0x00, 0x03, 0x00
+AcCmpSetGridBox_RowDownSteps:	.byte	0x01, 0x00, 0x01, 0x00, 0x03, 0x00
 	.byte 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00
 	.byte	0x01, 0x00, 0x01, 0x00
 AcCmpSetGridBoxProc_CaseTable:
@@ -1564,7 +1564,7 @@ CmpSetGridCheck_CaseTable:
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
-S2cMemNoBox_HandleScroll_Data:	.byte	0x7c, 0xd5, 0xe1, 0x00
+S2cMemNoBox_SectionNameStrPtrs:	.byte	0x7c, 0xd5, 0xe1, 0x00
 PtrTbl_StyleSectShortNames:
 	.long StrStyleSect_A_Vari2
 	.long StrStyleSect_A_Vari3
@@ -1787,7 +1787,7 @@ S2cGridBoxProc_CaseTable:
 	.short	S2cGridBoxProc_DefaultInherited - FdcFormat_DialGrid
 	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
 	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
-S2c_GridCheck_Dispatch_Data:	.byte	0x91, 0x39
+S2cGridCheck_PartTrackAddrs:	.byte	0x91, 0x39
 	.byte 0x00, 0x00, 0x92, 0x39, 0x00, 0x00, 0x93, 0x39
 	.byte 0x00, 0x00, 0x94, 0x39, 0x00, 0x00, 0x95, 0x39
 	.byte 0x00, 0x00
@@ -1825,7 +1825,7 @@ S2cGridCheck_CaseTable:
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
-PsCmpCpFPtnBox_HandleEvtBC_Data:	.byte	0xa8, 0xd9, 0xe1, 0x00
+PsCmpCpFPtnBox_PatternNameStrPtrs:	.byte	0xa8, 0xd9, 0xe1, 0x00
 PtrTbl_StylePatternLongNames:
 	.long StrStylePatt_Vari2b
 	.long StrStylePatt_Vari3b
@@ -1953,7 +1953,7 @@ PsCstmCpSwBox_ReadParam2_Str_CUSTOM:
 	.byte 0x43, 0x55, 0x53, 0x54, 0x4f, 0x4d
 	.byte 0x00			; padding
 	.byte 0xff			; padding
-AcMemNoBox_HandleEvtBC_Data:
+AcMemNoBox_SectionNameStrPtrs:
 	.byte 0x00			; padding
 	.byte 0xdd, 0xe1
 	.byte 0x00			; padding
@@ -2023,7 +2023,7 @@ StrStyleSect2_A_Vari4:	aligned_string "A-vari4"
 StrStyleSect2_A_Vari3:	aligned_string "A-vari3"
 StrStyleSect2_A_Vari2:	aligned_string "A-vari2"
 StrStyleSect2_A_Vari1:	aligned_string "A-vari1"
-AcCmpRecBox_HandleEvtBC_Data:
+AcCmpRecBox_TrackStateStrPtrs:
 	.long StrTrackBlank
 	.long StrTrackRec
 	.long StrTrackMute
@@ -2187,7 +2187,7 @@ EasyCmpGridCheck_CaseTable:
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
-MspNameBnkFunc_Data:	.byte	0x52, 0xdf, 0xe1, 0x00
+MspNameBnkFunc_BankNamesInit:	.byte	0x52, 0xdf, 0xe1, 0x00
 	.long StrBankShort_User2
 	.long StrBankShort_Compile1
 	.long StrBankShort_Compile2
@@ -2295,7 +2295,7 @@ MspRGrpSetGridCheck_CaseTable:
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
-RgpSetBnkBox_HandleEvtBC_Data:
+PsRgpSetBnkBox_CompileBankStrPtrs:
 	.long StrCompileBank1
 	.long StrCompileBank2
 StrCompileBank2:				aligned_string "COMPILE BANK:2"
@@ -2305,7 +2305,7 @@ MspMemBox_ClampValue_Str_MEMORY_Fmt2d:		aligned_string "MEMORY = %2d"
 AcSndArgGrid_BnkDispatch_Str_Fmtd:		.byte 0x25, 0x64
 	.byte 0x00			; padding
 	.byte 0xff			; padding
-MspPlayModeFunc_Data:
+MspPlayModeFunc_ModeNamesInit:
 	.long StrInstantStart
 	.long StrSyncToRhythm
 StrSyncToRhythm:	aligned_string "SYNC TO RHYTHM   "
@@ -2321,7 +2321,7 @@ MspPlayModeFunc_CaseTable:
 	.short	MspPlayModeFunc_OnGetRamAddress - MspPlayModeFunc_DataBlock
 	.short	MspPlayModeFunc_OnGetMax - MspPlayModeFunc_DataBlock
 	.short	MspPlayModeFunc_DataBlock - MspPlayModeFunc_DataBlock
-AcSndArgGridBoxProc_Data:
+AcSndArgGridBox_RowPartBitsInit:
 	.byte	0x01, 0x02, 0x04, 0x08, 0x10, 0xff
 AcSndArgGridBoxProc_CaseTable:
 	.short	AcSndArgGridBoxProc_OnIndexswUp - AcSndArgGrid_Init
@@ -2416,7 +2416,7 @@ MSG_ATTENTION_ES:
 MSG_ATTENTION_EN2:	aligned_string "ATTENTION!"	; Duplicate (12 bytes)
 MSG_ATTENTION_ID:	.asciz "Perhatian !"	; Indonesian (12 bytes)
 	; Pointer table at 0xe1e516
-AttLangCheck_Data:
+AttLangCheck_PtrTable:
 	.long MSG_ATTENTION_EN
 	.long MSG_ATTENTION_DE
 	.long MSG_ATTENTION_FR
@@ -2437,7 +2437,7 @@ MSG_ARE_YOU_SURE_ES:
 MSG_ARE_YOU_SURE_EN2:	.asciz "Are You Sure?"	; Duplicate (14 bytes)
 MSG_ARE_YOU_SURE_ID:	.asciz "Apakah yakin akan dihapus ?"	; Indonesian (28 bytes)
 	; Pointer table at 0xe1e596
-SureLangCheck_Data:
+SureLangCheck_PtrTable:
 	.long MSG_ARE_YOU_SURE_EN
 	.long MSG_ARE_YOU_SURE_DE
 	.long MSG_ARE_YOU_SURE_FR
@@ -2458,7 +2458,7 @@ MSG_CUSTOM_SOUND_COPY_ES:
 MSG_CUSTOM_SOUND_COPY_EN2:	.asciz "The Custom sound memories included with this pattern will be copied into the Sound Group memories. Some of the Sound Group memories will be replaced by them. OK?"	; Duplicate (162 bytes)
 MSG_CUSTOM_SOUND_COPY_ID:	.asciz "Custom Sound Memory termasuk dengan Pattern yang akan digandakan kedalam SOUND GROUP MEMORIES. Beberapa Sound Group Memory dikembalikan. OK ?"	; Indonesian (142 bytes)
 	; Pointer table at 0xe1e994
-SndMemLangCheck_Data:
+SndMemLangCheck_PtrTable:
 	.long MSG_CUSTOM_SOUND_COPY_EN
 	.long MSG_CUSTOM_SOUND_COPY_DE
 	.long MSG_CUSTOM_SOUND_COPY_FR
@@ -2476,7 +2476,7 @@ MSG_SOUND_GROUP_AFFECTED_ES:	.asciz "Las memorias de los grupos de sonido afecta
 MSG_SOUND_GROUP_AFFECTED_EN2:	aligned_string "Sound Group memories affected:"	; Duplicate (32 bytes)
 MSG_SOUND_GROUP_AFFECTED_ID:	aligned_string "Sound Group memory sudah bekerja :"	; Indonesian (36 bytes)
 	; Pointer table at 0xe1ea88
-SndMem1LangCheck_Data:
+SndMem1LangCheck_PtrTable:
 	.long MSG_SOUND_GROUP_AFFECTED_EN
 	.long MSG_SOUND_GROUP_AFFECTED_DE
 	.long MSG_SOUND_GROUP_AFFECTED_FR
@@ -2497,7 +2497,7 @@ MSG_CUSTOM_SOUND_FULL_ES:
 MSG_CUSTOM_SOUND_FULL_EN2:	.asciz "The Custom sound memory is full.Some sounds which are used by current Custom Rhythms will be deleted. OK?"	; Duplicate (106 bytes)
 MSG_CUSTOM_SOUND_FULL_ID:	.asciz "Custom Sound memory sudah penuh.Beberapa suara (Sounds) yang digunakan dengan Custom Rhythms sekarang akan dihapus. Benar ?"	; Indonesian (124 bytes)
 	; Pointer table at 0xe1ed64
-MemfulLangCheck_Data:
+MemfulLangCheck_PtrTable:
 	.long MSG_CUSTOM_SOUND_FULL_EN
 	.long MSG_CUSTOM_SOUND_FULL_DE
 	.long MSG_CUSTOM_SOUND_FULL_FR
@@ -2516,7 +2516,7 @@ MSG_CUSTOM_RHYTHMS_AFFECTED_ES:		aligned_string "Los ritmos personalizados afect
 MSG_CUSTOM_RHYTHMS_AFFECTED_EN2:	aligned_string "Custom Rhythms affected:"	; Duplicate (26 bytes)
 MSG_CUSTOM_RHYTHMS_AFFECTED_ID:		.asciz "Custom Rhythm sudah bekerja :"	; Indonesian (30 bytes)
 	; Pointer table at 0xe1ee2c
-Memful2LangCheck_Data:
+Memful2LangCheck_PtrTable:
 	.long MSG_CUSTOM_RHYTHMS_AFFECTED_EN
 	.long MSG_CUSTOM_RHYTHMS_AFFECTED_DE
 	.long MSG_CUSTOM_RHYTHMS_AFFECTED_FR
@@ -2533,7 +2533,7 @@ MSG_INSERT_STYLE_CONVERT_ES:	.asciz "Please Insert the Style Convert Disk!"	; Sp
 MSG_INSERT_STYLE_CONVERT_EN2:	.asciz "Please Insert the Style Convert Disk!"	; Duplicate (38 bytes)
 MSG_INSERT_STYLE_CONVERT_ID:	.asciz "Please Insert the Style Convert Disk!"	; Indonesian (38 bytes)
 	; Pointer table at 0xe1ef42
-StylCnvLangCheck_Data:
+StylCnvLangCheck_PtrTable:
 	.long MSG_INSERT_STYLE_CONVERT_EN
 	.long MSG_INSERT_STYLE_CONVERT_DE
 	.long MSG_INSERT_STYLE_CONVERT_FR

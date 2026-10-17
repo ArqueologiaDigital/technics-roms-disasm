@@ -1277,7 +1277,7 @@ SndParam_OutOfMemoryMsg:
 ; (header ported from v10, where the same C layout compiles the v10 bytes; the
 ;  v7 copy is v7/maincpu/ui_widgets/sound_config_lookup.c)
 NakaInst_SoundConfig_LookupTable:
-	.long	MIDI_INIT_SEQUENCES, MidiInit_Stub1, MidiInit_Stub2, MidiInit_Stub3
+	.long	MIDI_INIT_SEQUENCES, SndParam_InitPhase1_NullRet, SndParam_InitPhase2_NullRet, SndParam_InitPhase3_NullRet
 FileData_NNPartSourceIndex:	.incbin "includes/generated/sound_config_lookup.bin", 0x10, 0x18
 FileData_NNDspEffectAlgoMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x28, 0x10
 FileData_NNDigitalReverbAlgoMap:	.incbin "includes/generated/sound_config_lookup.bin", 0x38, 0x10
@@ -1766,7 +1766,7 @@ MidiPkt_EventType_Table:
 ; Trailing 0xFF (if any) is padding the copy does not take.
 MidiPkt_MsgTemplate_334C:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_EnqueueExtended_Data (0xFD9B31) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+4); ldi85; ldiw` -- 3 bytes).
+; 4-byte template: MidiPkt_SendCtlWordValueSysEx (0xFD9B31) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+4); ldi85; ldiw` -- 3 bytes).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 MidiPkt_MsgTemplate_3350:
 	.byte 0x00, 0x00, 0x00, 0xff

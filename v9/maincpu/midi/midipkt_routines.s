@@ -42,7 +42,7 @@ MidiPkt_ExtractAndPack_StoreShifted:
 	lda	xwa, (xsp+6)
 	ld	(xwa), xbc
 	ld	(xwa+4), xiz
-	calr	MidiPkt_EnqueueExtended_Data
+	calr	MidiPkt_SendCtlWordValueSysEx
 	pop	xiz
 	lda	xsp, (xsp+16)
 	ret
@@ -667,7 +667,7 @@ MidiPkt_EnqueueControl_3354_Return:
 	inc 4, xsp
 	ret
 
-MidiPkt_EnqueueExtended_Data:
+MidiPkt_SendCtlWordValueSysEx:
 	dec	4, xsp
 	push	xiz
 	ld	xiz, xwa

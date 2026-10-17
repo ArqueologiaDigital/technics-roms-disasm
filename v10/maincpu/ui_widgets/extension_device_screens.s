@@ -1005,26 +1005,77 @@ PanelButton_HelpModeActionLists:	.incbin "includes/generated/naka_extension_devi
 PanelEvent_InitPhaseHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x3552, 0x10
 ; PanelButton_ModeKeyCodes -- 2 x u8 (0x0E, 0x11): start of the byte map PanelButton_ModeKey (audio/audio_control_engine.s)
 ; reads. For panel event index 1 (RAM 0x8E90) it loads this address (an instruction now spelled as .ascii there:
-; 40 2E 9D ED 00 = ld xwa, 0x00ED9D2E), for indices 3, 10, 15, 16, 21 FileIO_BytecodeData_Data.._5 (2 bytes apart),
+; 40 2E 9D ED 00 = ld xwa, 0x00ED9D2E), for indices 3, 10, 15, 16, 21 PanelButton_ModeKeyCodes_LeftSeg3.._5 (2 bytes apart),
 ; and replaces the event's button byte with map[lowest set bit] (`ld a, (xwa+hl)`). The windows overlap.
 PanelButton_ModeKeyCodes:	.incbin "includes/generated/naka_extension_device.bin", 0x3562, 0x2
-FileIO_BytecodeData_Data:			.incbin "includes/generated/naka_extension_device.bin", 0x3564, 0x2
-FileIO_BytecodeData_Data_2:			.incbin "includes/generated/naka_extension_device.bin", 0x3566, 0x2
-FileIO_BytecodeData_Data_3:			.incbin "includes/generated/naka_extension_device.bin", 0x3568, 0x2
-FileIO_BytecodeData_Data_4:			.incbin "includes/generated/naka_extension_device.bin", 0x356A, 0x2
-FileIO_BytecodeData_Data_5:			.incbin "includes/generated/naka_extension_device.bin", 0x356C, 0x4
-FileIO_BytecodeData_Data_6:			.incbin "includes/generated/naka_extension_device.bin", 0x3570, 0x8
-FileIO_BytecodeData_Data_7:			.incbin "includes/generated/naka_extension_device.bin", 0x3578, 0x8
-FileIO_BytecodeData_Data_8:			.incbin "includes/generated/naka_extension_device.bin", 0x3580, 0x2
-FileIO_BytecodeData_Data_9:			.incbin "includes/generated/naka_extension_device.bin", 0x3582, 0x8
-FileIO_BytecodeData_Data_10:			.incbin "includes/generated/naka_extension_device.bin", 0x358A, 0x2
-FileIO_BytecodeData_Data_11:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
+; PanelButton_ModeKeyCodes_LeftSeg3: Mode-key map of left-panel segment 3 (panel event index 3), indexed by the lowest
+;   set bit of the shifted button bits: bit 0 DEMO -> 0x13 (19, MD_DEMO), bit 1 MSP MENU -> 0x0F (15, MD_MSP).
+;   PanelButton_ModeKey puts the mode in byte +2 of the event before posting it. The 2-byte slices of these maps
+;   overlap the next one's window. Basis: readers + bytes -- PanelButton_ModeKey selects this map for event index 3;
+;   the segment's action list sends DEMO (mask 0x01, shift 0) and MSP MENU (mask 0x04, shift 1) to it.
+PanelButton_ModeKeyCodes_LeftSeg3:			.incbin "includes/generated/naka_extension_device.bin", 0x3564, 0x2
+; PanelButton_ModeKeyCodes_LeftSeg10: Mode-key map of left-panel segment 10 (panel event index 10): bit 0 HELP -> 0x14
+;   (20, MD_HELP); 0xFF = no mode. Basis: readers + bytes -- PanelButton_ModeKey selects it for event index 10; the
+;   segment sends HELP (mask 0x04, shift 2) to it.
+PanelButton_ModeKeyCodes_LeftSeg10:			.incbin "includes/generated/naka_extension_device.bin", 0x3566, 0x2
+; PanelButton_ModeKeyCodes_RightSeg4: Mode-key map of right-panel segment 4 (panel event index 15): bit 0 ENTERTAINER
+;   -> 7 (MD_ENTERTAINER); 0xFF = no mode. Basis: readers + bytes -- PanelButton_ModeKey selects it for event index
+;   15; the segment sends ENTERTAINER (mask 0x08, shift 3) to it.
+PanelButton_ModeKeyCodes_RightSeg4:			.incbin "includes/generated/naka_extension_device.bin", 0x3568, 0x2
+; PanelButton_ModeKeyCodes_RightSeg5: Mode-key map of right-panel segment 5 (panel event index 16): bit 0 SEQUENCER
+;   EASY REC -> 9 (MD_SEQ_EREC), bit 1 SEQUENCER MENU -> 8 (MD_SEQ). Basis: readers + bytes -- PanelButton_ModeKey
+;   selects it for event index 16; the segment sends EASY REC (mask 0x10) and MENU (mask 0x20), shift 4, to it.
+PanelButton_ModeKeyCodes_RightSeg5:			.incbin "includes/generated/naka_extension_device.bin", 0x356A, 0x2
+; PanelButton_ModeKeyCodes_RightSeg10: Mode-key map of right-panel segment 10 (panel event index 21): bits 0-3 MENU
+;   SOUND / CONTROL / MIDI / DISK -> 2 (MD_SOUND), 4 (MD_CONTROL), 5 (MD_MIDI), 6 (MD_DISK). Basis: readers + bytes --
+;   PanelButton_ModeKey selects it for event index 21; the segment sends the four MENU buttons (masks 0x04-0x20, shift
+;   2) to it.
+PanelButton_ModeKeyCodes_RightSeg10:			.incbin "includes/generated/naka_extension_device.bin", 0x356C, 0x4
+; PanelButton_SoundGroupCodes_RightSeg1: Sound-group map of right-panel segment 1 (panel event index 12), indexed by
+;   the lowest set button bit: ORGAN & ACCORDION, ORCHESTRAL PAD, SYNTH, BASS, DIGITAL DRAWBAR, ACCORDION REGISTER, GM
+;   SPECIAL, DRUM KITS -> sound groups 8..15. Basis: readers + bytes -- PanelButton_SoundGroup selects it for event
+;   index 12 and accepts a group <= 17.
+PanelButton_SoundGroupCodes_RightSeg1:			.incbin "includes/generated/naka_extension_device.bin", 0x3570, 0x8
+; PanelButton_SoundGroupCodes_RightSeg2: Sound-group map of right-panel segment 2 (panel event index 13): PIANO,
+;   GUITAR, STRINGS & VOCAL, BRASS, FLUTE, SAX & REED, MALLET & ORCH PERC, WORLD PERC -> sound groups 0..7. Basis:
+;   readers + bytes -- PanelButton_SoundGroup selects it for event index 13.
+PanelButton_SoundGroupCodes_RightSeg2:			.incbin "includes/generated/naka_extension_device.bin", 0x3578, 0x8
+; PanelButton_SoundGroupCodes_RightSeg9: Sound-group map of right-panel segment 9 (panel event index 20): MEMORY A,
+;   MEMORY B -> sound groups 16, 17. Basis: readers + bytes -- PanelButton_SoundGroup selects it for event index 20;
+;   the segment sends MEMORY A / B (mask 0xC0, shift 6 -> bits 0, 1).
+PanelButton_SoundGroupCodes_RightSeg9:			.incbin "includes/generated/naka_extension_device.bin", 0x3580, 0x2
+; PanelButton_RhythmGroupCodes_LeftSeg0: Rhythm-group map of left-panel segment 0 (panel event index 0), indexed by
+;   the lowest set button bit: STANDARD ROCK, R & ROLL & BLUES, POP & BALLAD, FUNK & FUSION, SOUL & MODERN DANCE, BIG
+;   BAND & SWING, JAZZ COMBO -> rhythm groups 0..6 (bit 7: 0xFF). Basis: readers + bytes -- PanelButton_RhythmGroup
+;   selects it for event index 0 and accepts a group <= 15.
+PanelButton_RhythmGroupCodes_LeftSeg0:			.incbin "includes/generated/naka_extension_device.bin", 0x3582, 0x8
+; PanelButton_RhythmGroupCodes_LeftSeg1: Rhythm-group map of left-panel segment 1 (panel event index 1): bit 0 MEMORY
+;   -> rhythm group 15. Basis: readers + bytes -- PanelButton_RhythmGroup selects it for event index 1; the segment
+;   sends MEMORY (mask 0x01) to it.
+PanelButton_RhythmGroupCodes_LeftSeg1:			.incbin "includes/generated/naka_extension_device.bin", 0x358A, 0x2
+; PanelButton_RhythmGroupCodes_LeftSeg6: Rhythm-group map of left-panel segment 6 (panel event index 6): U.S. TRAD,
+;   COUNTRY, LATIN, MARCH & WALTZ, PARTY TIME, SHOWTIME & TRAD DANCE, WORLD, CUSTOM -> rhythm groups 7..14. Basis:
+;   readers + bytes -- PanelButton_RhythmGroup selects it for event index 6.
+PanelButton_RhythmGroupCodes_LeftSeg6:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
 FileIO_BytecodeData_Data_12:			.incbin "includes/generated/naka_extension_device.bin", 0x3594, 0x4
 FileIO_BytecodeData_Code_Entry8_PtrTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
-FileIO_BytecodeData_Data_13:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
+; PanelButton_MspBank17FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank
+;   (sound parameter 0x28800) is 17: 0xAD, 0xB3, 0x96, 0x91, 0xB4, 0x90. PanelButton_MspNumber puts code [button] in C
+;   and calls handler [button] of FileIO_BytecodeData_Code_Entry8_PtrTable, each the same handler
+;   PanelAction_PedalAssignHandlerIndex / PanelAction_PedalFunctionHandlers give for that code. Basis: readers + bytes
+;   -- `cp hl, 17` on SndParam_LookupReadOnly(0x28800); all six code -> handler pairs match the pedal tables.
+PanelButton_MspBank17FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
 FileIO_BytecodeData_Code_Entry8_PtrTable_2:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
-FileIO_BytecodeData_Data_14:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6
-FileIO_BytecodeData_Data_15:			.incbin "includes/generated/naka_extension_device.bin", 0x35D4, 0x4
+; PanelButton_MspBank18FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank
+;   (sound parameter 0x28800) is 18: 0x92, 0x94, 0xB5, 0x93, 0x95, 0x88, with handlers from
+;   FileIO_BytecodeData_Code_Entry8_PtrTable_2. Five match the pedal tables; 0xB5 has no pedal handler and is served
+;   by handler 12 (ExtDev_SndParam_Block48_Var02), which the pedal map never selects. Basis: readers + bytes -- `cp
+;   hl, 18` on SndParam_LookupReadOnly(0x28800).
+PanelButton_MspBank18FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6
+; PanelButton_VariationCodes: 4 x u8 {0x00, 0x10, 0x20, 0x30}: the VARIATION 1-4 buttons' values for record 0x48 +7
+;   bits 4-5 (the style variation, RAM 0xFC61). PanelButton_Variation puts entry [lowest set bit] in the event's state
+;   byte with change mask 0x30 when the style's category byte is below 14. Basis: readers + bytes.
+PanelButton_VariationCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35D4, 0x4
 ; PanelAction_PedalAssignHandlerIndex -- 256 x uint8_t: handler number per foot-pedal assignment code, 0xff = no action.
 ; PanelAction_FootSwitch1/2 and PanelAction_FootController1-4 read their assignment (panel parameters 0x2886-0x2890) and
 ; PanelAction_DispatchPedalFunction (audio/audio_control_engine.s) maps it here; a number <= 22 indexes

@@ -3792,8 +3792,8 @@ AcCurSongName_HandleFocusGained:
 	inc	1, a
 	extz	wa
 	pushw	wa
-	pushw	AcCurSongName_HandleFocusGained_Data@hi16
-	pushw	AcCurSongName_HandleFocusGained_Data@lo16
+	pushw	AcCurrentSongBox_Str_SONG_Fmt2d@hi16
+	pushw	AcCurrentSongBox_Str_SONG_Fmt2d@lo16
 	lda	xwa, (xsp+10)
 	push	xwa
 	call	Sprintf_Locked

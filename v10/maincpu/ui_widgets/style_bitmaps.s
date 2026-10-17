@@ -50,7 +50,7 @@ NakaInst_iduMurai:	.incbin "includes/generated/naka_style_bitmaps.bin", 0xA, 0xA
 ; [nakarest] into it; reached through 1 data word in NakaInst_MainFuncID_EnumTable (at 0xeb70f8).
 NakaInst_iduRoot:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x14, 0x8
 ; NakaInst_pBool_EnumTable -- 3 x {u32 name_ptr, s32 value}: pBool value names {"True", 1}, {"False", 0}, end {"", 0}
-; +8 of the pBoolProc SupportClass record (entry 44 of ExitWindow_OK_Data_2, count 2); pBoolProc reads the word through
+; +8 of the pBoolProc SupportClass record (entry 44 of SupportClass_PropTypeRecords, count 2); pBoolProc reads the word through
 ; the property pointer and CommonIDProc (ui/ui_widget_defs.s) maps value <-> name through this list.
 NakaInst_pBool_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x1C, 0x18
 ; NakaInst_pBool_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the end entry of NakaInst_pBool_EnumTable
@@ -59,51 +59,51 @@ NakaInst_pBool_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x
 ; the names of pBool values 0 and 1 in NakaInst_pBool_EnumTable.
 NakaInst_pBool_NameStrings:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x36, 0xC
 ; NakaInst_pSword_EnumTable -- 1 x {u32 name_ptr, s32 value}: the pSword value-name list, only its {"", 0} end entry
-; (name = NakaInst_pSword_EmptyStr, next). +8 of the pSwordProc SupportClass record (entry 45 of ExitWindow_OK_Data_2,
+; (name = NakaInst_pSword_EmptyStr, next). +8 of the pSwordProc SupportClass record (entry 45 of SupportClass_PropTypeRecords,
 ; count 0); CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_pSword_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x42, 0x8
 ; NakaInst_pSword_EmptyStr -- 2 x char: "" + 0xFF fill, name of the {"", 0} end entry of the pSword enum table
 ; That table (0xEB7200, inside NakaInst_pBool_EnumTable) is +8 of the pSwordProc SupportClass record in
-; ExitWindow_OK_Data_2 (count 0); CommonIDProc (ui/ui_widget_defs.s) stops on this empty name.
+; SupportClass_PropTypeRecords (count 0); CommonIDProc (ui/ui_widget_defs.s) stops on this empty name.
 NakaInst_pSword_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4A, 0x2
 ; NakaInst_pUword_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "pUword", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 46 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 46 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_pUword_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4C, 0x8
 ; NakaInst_pUword_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the pUword enum table's terminator.
 NakaInst_pUword_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x54, 0x2
 ; NakaInst_pSchar_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "pSchar", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 47 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 47 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_pSchar_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x56, 0x8
 ; NakaInst_pSchar_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the pSchar enum table's terminator.
 NakaInst_pSchar_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x5E, 0x2
 ; SupportClass_PUcharValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the pUcharProc property type
-; +8 of SupportClass record 48 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 48 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_PUcharValueNames:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x60, 0xA
 ; SupportClass_PSlongValueNames -- 1 x {u32 end_name, s32 end_value}: end entry of the pSlong property type's value-name list
-; +8 of SupportClass record 49 (ExitWindow_OK_Data_2) points here; name -> the "" right after (next slice)
+; +8 of SupportClass record 49 (SupportClass_PropTypeRecords) points here; name -> the "" right after (next slice)
 ; list format read by CommonIDProc (ui/ui_widget_defs.s)
 SupportClass_PSlongValueNames:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x6A, 0x8
 ; SupportClass_PSlongValueNamesEndText -- 1 x char[2]: "" + 0xFF pad, the end-entry name of pSlongProc's
 ; empty value-name list (the 8-byte entry just before points here); CommonIDProc stops at an empty name
 SupportClass_PSlongValueNamesEndText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x72, 0x2
 ; NakaInst_pUlong_EnumTable -- 1 x {char *name; int32 value}: empty pUlong enum, only the {"", 0} end entry
-; +8 of the pUlongProc SupportClass record (0xEB78E8) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the pUlongProc SupportClass record (0xEB78E8) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_pUlong_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x74, 0x8
 ; NakaInst_pUlong_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_pUlong_EnumTable
 NakaInst_pUlong_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x7C, 0x2
 ; NakaInst_WindowID_EnumTable -- 1 x {char *name; int32 value}: empty WindowID enum, only the {"", 0} end entry
-; +8 of the WindowIDProc SupportClass record (0xEB78F4) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the WindowIDProc SupportClass record (0xEB78F4) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_WindowID_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x7E, 0x8
 ; NakaInst_WindowID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_WindowID_EnumTable
 NakaInst_WindowID_EmptyStr:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x86, 0x2
 ; NakaInst_PartID_EnumTable -- 30 x {u32 name, s32 value}: value names of the PartID property type (29 named + "" end entry)
-; Word +8 of SupportClass record 52 (PartIDProc, count 29) in ExitWindow_OK_Data_2, the 55 x 12-byte table
+; Word +8 of SupportClass record 52 (PartIDProc, count 29) in SupportClass_PropTypeRecords, the 55 x 12-byte table
 ; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; PT_Part1=0, PT_Part2=1, PT_Part3=2, PT_Part4=3, PT_Part5=4, PT_Part6=5, PT_Part7=6, PT_Part8=7, PT_Part9=8, PT_Part10=9, PT_Part11=0x0A, ... (18 more)
@@ -199,7 +199,7 @@ NakaInst_PT_Part2_Str:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x29
 ; Entry 0 of NakaInst_PartID_EnumTable points here.
 NakaInst_PT_Part1_Str:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A0, 0xA
 ; NakaInst_TrackID_EnumTable -- 18 x {u32 name, s32 value}: value names of the TrackID property type (17 named + "" end entry)
-; Word +8 of SupportClass record 53 (TrackIDProc, count 17) in ExitWindow_OK_Data_2; read by CommonIDProc
+; Word +8 of SupportClass record 53 (TrackIDProc, count 17) in SupportClass_PropTypeRecords; read by CommonIDProc
 ; (ui/ui_widget_defs.s) like every value-name list.  TR_Track1..TR_Track16 = 0..15, TR_All = 0xFF; the names
 ; follow this slice (TrackIDProc_NameListEnd is the "" of the end entry, then NakaInst_TR_All .. NakaInst_TR_Track1).
 NakaInst_TrackID_EnumTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2AA, 0x90
@@ -337,13 +337,18 @@ NakaInst_IT_Off:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4CA, 0x8
 ; [nakarest] naka_style_bitmaps+0x4d2  +0x4d2..+0x741 (0xeb7690, 623 B)
 ; [nakarest] purpose not established: layout of 623 B at 0xeb7690 not derived; readers below
 ; [nakarest] Readers: source references ExitWindow_OK (ui/ui_widget_defs.s: `lda xwa,
-; [nakarest] (ExitWindow_OK_Data_2:24)`).
-ExitWindow_OK_Data_2:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4D2, 0x26F
+; [nakarest] (SupportClass_PropTypeRecords:24)`).
+; SupportClass_PropTypeRecords: The SupportClass object table: 55 x 12-byte records {u32 proc, u16 count, u16 size,
+;   u32 prop}, one per property type (boolProc, ObjectIDProc, pFuncProc, ... PartIDProc, TrackIDProc, IntTimeIDProc);
+;   record k is object 0x2600000 + k, the type of propdata letter 'A' + k. InitializeObjectTable registers it at slot
+;   0x260 with SupportClassProc and count 0x37. This slice holds records 0-51 but their last byte;
+;   SupportClass_WindowIDPropTopByte and SupportClass_PartTrackIntTimeRecords hold the rest. Basis: readers + bytes.
+SupportClass_PropTypeRecords:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4D2, 0x26F
 ; SupportClass_WindowIDPropTopByte -- 1 x uint8_t: the top byte (0) of record 51's prop pointer (WindowIDProc ->
-; NakaInst_WindowID_EnumTable) in the SupportClass table ExitWindow_OK_Data_2; the record's other 11 bytes end that label.
+; NakaInst_WindowID_EnumTable) in the SupportClass table SupportClass_PropTypeRecords; the record's other 11 bytes end that label.
 SupportClass_WindowIDPropTopByte:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x1
 ; SupportClass_PartTrackIntTimeRecords -- 3 x {u32 proc, u16 count, u16 size, u32 prop}: the last three records (52-54) of
-; the 55-record SupportClass table ExitWindow_OK_Data_2 (slot 0x260): PartIDProc, 29 values of 2 B, NakaInst_PartID_EnumTable;
+; the 55-record SupportClass table SupportClass_PropTypeRecords (slot 0x260): PartIDProc, 29 values of 2 B, NakaInst_PartID_EnumTable;
 ; TrackIDProc, 17, 2 B, NakaInst_TrackID_EnumTable; IntTimeIDProc, 13, 2 B, NakaInst_IntTimeID_EnumTable. Record k is
 ; object 0x2600000 + k, the type of propdata letter 'A' + k: these serve the letters u (part), v (track), w (time);
 ; ClassProc sends EVT_CHECK_PROP_STRING / EVT_GET_PROP_MEMBER to 0x2600000 + letter - 0x41 (ui/ui_widget_defs.s).
@@ -629,11 +634,11 @@ Bitmap_FadeOutText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A66,
 ; MasterSetup_DialDown_*) index it with 6*k (`muls wa, 0x6`), load +0
 ; and Strcpy the title into the view, and search it with String_Compare;
 ; their bounds are 0x3e8 (1000) -- an index of 1000 wraps to 0 and an
-; underflow reads entry 999 through MasterSetup_DialTurn_Underflow_Data (=
+; underflow reads entry 999 through StyleSong_MasterTable_LastEntry (=
 ; +999*6, .set in shared/positional_labels.s), which is how the count is
 ; pinned. The cell-select paths of MasterSetup and
 ; MstStyleAlp_EventDispatch load the u16 at +4 of entry 9*(page-1) +
-; scroll + row (MasterSetup_EventDispatch_Data, 9 rows per page) and hand it
+; scroll + row (StyleSong_MasterTable_IdColumn, 9 rows per page) and hand it
 ; to MainFuncCall with 0x142000d / 0x1e20018. Checked here: the 1000
 ; title pointers are exactly the 1000 entries of StyleSong_Titles (entry
 ; k of this table -> title 999-k), and the ids are 0..999, each once.
@@ -643,8 +648,15 @@ Bitmap_FadeOutText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A66,
 ; StyleSong_MasterTable[1000] (a local typedef).
 ; -----------------------------------------------------------------------------
 StyleSong_MasterTable:			.incbin "includes/generated/naka_style_bitmaps.bin", 0x32D6, 0x4
-MasterSetup_EventDispatch_Data:		.incbin "includes/generated/naka_style_bitmaps.bin", 0x32DA, 0x1766
-MasterSetup_DialTurn_Underflow_Data:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4A40, 0x6
+; StyleSong_MasterTable_IdColumn: +4 of StyleSong_MasterTable: the u16 id column of its 1000 x 6-byte {u32 title, u16
+;   id} records (stride 6). The MasterSetup and MstStyleAlp cell-select paths load the id of entry 9 * (page - 1) +
+;   scroll + row through this label and pass it to MainMssSetUp as EVT_OTP_CNT_SET. Basis: readers + bytes -- `muls
+;   ..., 6` / `lda xbc, (<this>:24)` / `ld de, (xbc+wa)`.
+StyleSong_MasterTable_IdColumn:		.incbin "includes/generated/naka_style_bitmaps.bin", 0x32DA, 0x1766
+; StyleSong_MasterTable_LastEntry: Entry 999, the last {u32 title, u16 id} record of StyleSong_MasterTable (table +
+;   999 * 6): when the MasterSetup dial steps below entry 0, MasterSetup_DialTurn_Underflow Strcpy's this record's
+;   title into the view and sets the index to 999. Basis: readers + bytes.
+StyleSong_MasterTable_LastEntry:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4A40, 0x6
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] StyleSong_Titles
 ; StyleSong_Titles  --  1000 title strings x 34 bytes = 34000 bytes
@@ -3521,15 +3533,19 @@ NakaInst_Romantic_Bossa:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x
 ; [nakarest] MstStyle1Page_EventDispatch load (index*8)+4 -- the group table -- through the
 ; [nakarest] label 4 bytes into it (StyleGroup_LatinDance_Table) and store it at 0x0340d2;
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
-; [nakarest] MstStyle1Grid_CellSelect_Data (= this address).
-MstStyle1Grid_CellSelect_Data:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE6, 0x4
+; [nakarest] MstStyle_GenreTable (= this address).
+; MstStyle_GenreTable: Root of the MstStyle music-style browser: 10 x {u32 genre name, u32 genre's style-group table}
+;   -- Easy Listening, Rock & Pop, Dance Pop, Party Music, Gospel/Blues/R&B, Jazz & Swing, Show/Trad Dance, Trad &
+;   Folk, Country, Latin / World. MstStyle1Grid_CellSelect and MstStyle2_NameB_Render read the names here (index * 8);
+;   the group-table column is read through StyleGroup_LatinDance_Table (= this + 4). Basis: readers + bytes.
+MstStyle_GenreTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE6, 0x4
 ; [nakarest] StyleGroup_LatinDance_Table  +0x18aea..+0x18b36 (0xecfca8, 76 B)
 ; [nakarest] Continues the root of the MstStyle browser tree (0xecfca4): 10 x {u32 group name,
 ; [nakarest] u32 group table}. MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
 ; [nakarest] MstStyle1Page_EventDispatch load (index*8)+4 -- the group table -- through the
 ; [nakarest] label 4 bytes into it (StyleGroup_LatinDance_Table) and store it at 0x0340d2;
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
-; [nakarest] MstStyle1Grid_CellSelect_Data (= this address) (starts 0xecfca4, 76 of its
+; [nakarest] MstStyle_GenreTable (= this address) (starts 0xecfca4, 76 of its
 ; [nakarest] 80 bytes are here or later).
 StyleGroup_LatinDance_Table:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AEA, 0x4C
 ; [nakarest] NakaInst_Latin_World  +0x18b36..+0x18b48 (0xecfcf4, 18 B)
@@ -3631,8 +3647,12 @@ NakaInst_MEMORY_A_ECFDF4:	.incbin "includes/generated/naka_style_bitmaps.bin", 0
 ; [nakarest] Text (226 B at 0xecfdfe), first string "RIGHT1 RIGHT2 LEFT PART4 PART5 PART6 PART7
 ; [nakarest] "; no registered NAKA table points into it; reached through source references
 ; [nakarest] VariScreenProc_OnDraw (ui/ui_mode_handlers.s: `lda xhl,
-; [nakarest] (VariScreen_HandlePaint_Data:24)`).
-VariScreen_HandlePaint_Data:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18C40, 0xE2
+; [nakarest] (VariScreen_PartNames:24)`).
+; VariScreen_PartNames: 32 fixed-width 7-character part names, not NUL-separated (one NUL + 0xFF at the end): "RIGHT1
+;   ", "RIGHT2 ", "LEFT ", "PART4 " .. "PART16 ", "ACCOMP1", "ACCOMP2", "ACCOMP3", "BASS ", "DRUMS ", "CHORD ",
+;   "R.BASS ", "MSP " x2, "CONTROL", "PART27 " .. "PART32 ". VariScreenProc_OnDraw draws the name at part index * 7 in
+;   a 56-pixel-wide cell. Basis: readers + bytes.
+VariScreen_PartNames:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18C40, 0xE2
 ; MainChordPre_RootNames -- 16 x pointer: chord-root display name by root code (RAM byte 0x8D40): 0 "  ", 1 "C ", 2 "D~a0" (Db),
 ; 3 "D ", 4 "E~a0", 5 "E ", 6 "F ", 7 "F~9e" (F#), 8 "G ", 9 "A~a0", 10 "A ", 11 "B~a0", 12 "B ", 13-15 "  "
 ; MainChordPre (EVT_CHORD_PRE) Strcats entry [0x8D40], then the chord-type name of RAM 0x8D42 (MainChordPre_ChordTypeNames), into a

@@ -1422,8 +1422,8 @@ PmemOutLGridCheck_OnRamData_Join3:
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
 	jr	z, PmemOutLGridCheck_OnRamData_Skip
-	pushw	PmemOutLGridCheck_LocalInit_Strings_Tail@hi16
-	pushw	PmemOutLGridCheck_LocalInit_Strings_Tail@lo16
+	pushw	PmemOutLGridCheck_Row0_Str_OFF@hi16
+	pushw	PmemOutLGridCheck_Row0_Str_OFF@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
@@ -1970,7 +1970,7 @@ TtMdCtlMsg_EventDispatch:
 	jr	z, TtMdCtlMsg_EventDispatch_Skip6
 	cp	bc, 0:i3
 	jrl	nz, TtMdCtlMsg_ReturnZero2
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2006,7 +2006,7 @@ TtMdCtlMsg_EventDispatch:
 TtMdCtlMsg_EventDispatch_Skip5:
 	jrl	TtMdCtlMsg_EventDispatch_Join2
 TtMdCtlMsg_EventDispatch_Skip6:
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2034,7 +2034,7 @@ TtMdCtlMsg_EventDispatch_Skip6:
 	ld	(xwa+6), xbc
 	jrl	TtMdCtlMsg_EventDispatch_Join2
 TtMdCtlMsg_EventDispatch_Skip7:
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2091,7 +2091,7 @@ PmemOutRGridCheck_OnIndexswDown:
 	jrl	z, PmemOutRGridCheck_OnIndexswDown_Skip9
 	cp	bc, 0:i3
 	jrl	nz, TtMdCtlMsg_ReturnZero2
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2132,7 +2132,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip:
 	ld	(xde), xbc
 	jrl	TtMdCtlMsg_EventDispatch_Join2
 PmemOutRGridCheck_OnIndexswDown_Skip9:
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2162,7 +2162,7 @@ PmemOutRGridCheck_OnIndexswDown_Skip9:
 	ld	(xwa+14), xbc
 	jr	TtMdCtlMsg_EventDispatch_Join2
 PmemOutRGridCheck_OnIndexswDown_Skip10:
-	ld	xiy, TtMdCtlMsg_EventDispatch_Data
+	ld	xiy, PmemOutRGridCheck_RamRequestInit
 	lda	xix, (xsp+56)
 	ldw	bc, 11
 	ldirw
@@ -2820,7 +2820,7 @@ AcCtlMsgGrid_Show:
 	ld xwa, (xsp + 32)
 	call GetViewInstance
 	ld xiz, xhl
-	ld xwa, MidiPart_PageDisplay_Data
+	ld xwa, MidiSetup_PageIndicatorRect
 	ldw bc, 0xc1
 	ldw de, 0xf3
 	call DrawDesignBox
@@ -2839,7 +2839,7 @@ AcCtlMsgGrid_Show:
 	push xwa
 	pushw 0x0
 	pushw 0xf7
-	ld xwa, MidiPart_PageDisplay_Data
+	ld xwa, MidiSetup_PageIndicatorRect
 	ld xbc, AcCtlMsgGrid_Show_Table
 	call DrawStringCentered
 	jrl AcCtlMsgGrid_ReturnHandled
@@ -3499,7 +3499,7 @@ MidiSetup_TtlCase4:
 	ld xwa, (xsp + 32)
 	call GetViewInstance
 	ld xiz, xhl
-	ld xwa, MidiPart_PageDisplay_Data
+	ld xwa, MidiSetup_PageIndicatorRect
 	ldw bc, 0xc1
 	ldw de, 0xf3
 	call DrawDesignBox
@@ -3518,7 +3518,7 @@ MidiSetup_TtlCase4:
 	push xwa
 	pushw 0x0
 	pushw 0xf7
-	ld xwa, MidiPart_PageDisplay_Data
+	ld xwa, MidiSetup_PageIndicatorRect
 	ld xbc, AcCtlMsgGrid_Show_Table
 	call DrawStringCentered
 	jrl MidiPart_ReturnZeroJmp
@@ -4104,7 +4104,7 @@ MidiPartGridCheck_Skip3:
 	call	SndParam_LookupReadOnly
 	ld	wa, hl
 	add	wa, wa
-	lda	xbc, (MidiPartGridCheck_OnIndexswUp_Data:24)
+	lda	xbc, (MidiPartGridCheck_OctaveUpMap:24)
 	ld	bc, (xbc+wa)
 	cp	bc, hl
 	jrl	z, MidiSetup_ReturnZero
@@ -4192,7 +4192,7 @@ MidiPartGridCheck_Skip7:
 	call	SndParam_LookupReadOnly
 	ld	wa, hl
 	add	wa, wa
-	lda	xbc, (MidiPartGridCheck_OnIndexswDown_Data:24)
+	lda	xbc, (MidiPartGridCheck_OctaveDownMap:24)
 	ld	bc, (xbc+wa)
 	cp	bc, hl
 	jrl	z, MidiSetup_ReturnZero
@@ -4867,8 +4867,8 @@ LswLeftHold_OnGetLswString:
 	jr LswLeftHold_CopyAndReturn
 
 LswLeftHold_DefaultStr:
-	pushw LswLeftHold_DefaultStr_Data@hi16
-	pushw LswLeftHold_DefaultStr_Data@lo16
+	pushw LswLeftHold_Str_ERR@hi16
+	pushw LswLeftHold_Str_ERR@lo16
 
 LswLeftHold_CopyAndReturn:
 	push xwa
@@ -5230,8 +5230,8 @@ IvSdpart_DispatchEvent:
 	jr IvSdpart_ReturnHandled
 
 IvSdpart_GetText:
-	pushw IvSdpart_GetText_Data@hi16
-	pushw IvSdpart_GetText_Data@lo16
+	pushw IvSdpart_GetText_Str_SdPT@hi16
+	pushw IvSdpart_GetText_Str_SdPT@lo16
 	ld xwa, (xsp + 8)
 	push xwa
 	call Strcpy
@@ -8757,7 +8757,7 @@ IvMesageProc:
 	call InheritedProc
 	ld wa, (0x02478c:24)
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	ld	wa, (xbc+wa)
 	sla wa, 2
 	lda xbc, (IvMesageProc_PtrTable:24)
@@ -8767,7 +8767,7 @@ IvMesageProc:
 	call SendEvent
 	ld wa, (0x02478c:24)
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	cpw	(xbc+wa), 0x0005
 	jrl nz, IvMessageStrcpyReturn
 	ld xwa, 0xffffffff
@@ -8791,7 +8791,7 @@ IvMessage_Paint:
 	call InheritedProc
 	ld wa, (0x02478c:24)
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	cpw	(xbc+wa), 0x0005
 	call nz, (DrawWall:24)
 	ld xwa, xiz
@@ -8805,7 +8805,7 @@ IvMessage_SendEvent:
 IvMessage_SelectionChange:
 	ld (0x02478c:24), wa
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	ld	wa, (xbc+wa)
 	sla wa, 2
 	lda xbc, (IvMesageProc_PtrTable:24)
@@ -9060,7 +9060,7 @@ CheckMessage:
 	jrl nz, CheckMsg_ReturnZero
 	ld wa, (0x02478c:24)
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	ld	wa, (xbc+wa)
 	sla wa, 2
 	lda xbc, (IvMesageProc_PtrTable:24)
@@ -9092,7 +9092,7 @@ CheckMsg_IncrementCheck:
 LanguageCheckReturn:
 	ld wa, (0x02478c:24)
 	muls wa, 0xe
-	lda xbc, (IvMesageProc_Data:24)
+	lda xbc, (IvMessage_Catalog:24)
 	ld	wa, (xbc+wa)
 	sla wa, 2
 	lda xbc, (IvMesageProc_PtrTable:24)
@@ -9177,7 +9177,7 @@ MessageHeader:
 MsgHeader_BuildHeader:
 	ld bc, (0x02478c:24)
 	muls bc, 0xe
-	lda xwa, (IvMesageProc_Data:24)
+	lda xwa, (IvMessage_Catalog:24)
 	lda	xwa, (xwa+bc)
 	cpw (xwa), 0x3
 	jrl nz, MsgHeader_SingleEntry
@@ -9208,7 +9208,7 @@ MsgHeader_BuildLoop:
 	ld xiz, xhl
 	ld bc, (0x02478c:24)
 	muls bc, 0xe
-	lda xwa, (IvMesageProc_Data:24)
+	lda xwa, (IvMessage_Catalog:24)
 	lda	xwa, (xwa+bc)
 	pushw	(xwa+4)
 	ld bc, (xsp + 16)

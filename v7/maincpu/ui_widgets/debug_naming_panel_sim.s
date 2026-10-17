@@ -326,39 +326,39 @@ NakaColor_Palette10:	.incbin "includes/generated/naka_debug_naming.bin", 0x34E0,
 ; [nakarest] reader shown only reads entries 0..15.
 NakaColor_PaletteBlank:	.incbin "includes/generated/naka_debug_naming.bin", 0x38E0, 0x400
 ; SupportClass_SwordValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the swordProc property type
-; +8 of SupportClass record 0 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 0 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_SwordValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3CE0, 0xA
 ; SupportClass_UwordValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the uwordProc property type
-; +8 of SupportClass record 1 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 1 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_UwordValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3CEA, 0xA
 ; SupportClass_UcharValueNames -- 1 x 10-byte struct: the empty value-name list of ucharProc (SupportClass object 2)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 2 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 2 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_UcharValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3CF4, 0xA
 ; SupportClass_ScharValueNames -- 1 x 10-byte struct: the empty value-name list of scharProc (SupportClass object 3)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 3 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 3 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_ScharValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3CFE, 0xA
 ; NakaInst_slong_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "slong", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 4 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 4 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_slong_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D08, 0x8
 ; NakaInst_slong_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the slong enum table's terminator.
 NakaInst_slong_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D10, 0x2
 ; NakaInst_ulong_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "ulong", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 5 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 5 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_ulong_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D12, 0x8
 ; NakaInst_ulong_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the ulong enum table's terminator.
 NakaInst_ulong_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D1A, 0x2
 ; NakaInst_Bool_EnumTable -- 3 x {u32 name, s32 value}: value names of the Bool property type (2 named + "" end entry)
-; Word +8 of SupportClass record 6 (boolProc, count 2) in ExitWindow_OK_Data_2, the 55 x 12-byte table
+; Word +8 of SupportClass record 6 (boolProc, count 2) in SupportClass_PropTypeRecords, the 55 x 12-byte table
 ; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; True=1, False=0
@@ -373,102 +373,102 @@ NakaInst_Bool_False_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x3
 ; Entry 0 of NakaInst_Bool_EnumTable points here.
 NakaInst_Bool_True_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D3C, 0x6
 ; NakaInst_ObjectID_EnumTable -- 1 x {u32 name, s32 value}: empty value-name list of the ObjectID property type, only the "" end entry
-; Word +8 of SupportClass record 7 (ObjectIDProc) in ExitWindow_OK_Data_2; its count word (+4) is 0, so
+; Word +8 of SupportClass record 7 (ObjectIDProc) in SupportClass_PropTypeRecords; its count word (+4) is 0, so
 ; CommonIDProc (ui/ui_widget_defs.s) does not search it, and its SET_PROPERTY_EX falls back to ParseInt32.
 NakaInst_ObjectID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D42, 0x8
 ; NakaInst_ObjectID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_ObjectID_EnumTable
 ; NakaInst_ObjectID_EnumTable's only entry {"", 0} points here.
 NakaInst_ObjectID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D4A, 0x2
 ; NakaInst_pFunc_EnumTable -- 1 x {char *name; int32 value}: empty pFunc enum, only the {"", 0} end entry
-; +8 of the pFuncProc SupportClass record (0xEB76F0) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the pFuncProc SupportClass record (0xEB76F0) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_pFunc_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D4C, 0x8
 ; NakaInst_pFunc_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_pFunc_EnumTable
 NakaInst_pFunc_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D54, 0x2
 ; NakaInst_pProc_EnumTable -- 1 x {char *name; int32 value}: empty pProc enum, only the {"", 0} end entry
-; +8 of the pProcProc SupportClass record (0xEB76FC) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the pProcProc SupportClass record (0xEB76FC) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_pProc_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D56, 0x8
 ; NakaInst_pProc_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_pProc_EnumTable
 NakaInst_pProc_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D5E, 0x2
 ; SupportClass_PPropValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the pPropProc property type
-; +8 of SupportClass record 10 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 10 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_PPropValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D60, 0xA
 ; SupportClass_PStringValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the pStringProc property type
-; +8 of SupportClass record 11 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 11 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_PStringValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D6A, 0xA
 ; SupportClass_ClassIDValueNames -- 1 x 10-byte struct: the empty value-name list of ClassIDProc (SupportClass object 12)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 12 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 12 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_ClassIDValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D74, 0xA
 ; SupportClass_ScreenIDValueNames -- 1 x 10-byte struct: the empty value-name list of ScreenIDProc (SupportClass object 13)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 13 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 13 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_ScreenIDValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D7E, 0xA
 ; NakaInst_EventID_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "EventID", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 14 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 14 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_EventID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D88, 0x8
 ; NakaInst_EventID_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the EventID enum table's terminator.
 NakaInst_EventID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D90, 0x2
 ; NakaInst_RECTW_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "RECTW", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 15 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 15 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_RECTW_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D92, 0x8
 ; NakaInst_RECTW_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the RECTW enum table's terminator.
 NakaInst_RECTW_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D9A, 0x2
 ; NakaInst_RectX1_EnumTable -- 1 x {char *name; int32 value}: empty RectX1 enum, only the {"", 0} end entry
-; +8 of the RectX1Proc SupportClass record (0xEB7750) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the RectX1Proc SupportClass record (0xEB7750) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_RectX1_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3D9C, 0x8
 ; NakaInst_RectX1_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_RectX1_EnumTable
 NakaInst_RectX1_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DA4, 0x2
 ; NakaInst_RectY1_EnumTable -- 1 x {char *name; int32 value}: empty RectY1 enum, only the {"", 0} end entry
-; +8 of the RectY1Proc SupportClass record (0xEB775C) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the RectY1Proc SupportClass record (0xEB775C) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_RectY1_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DA6, 0x8
 ; NakaInst_RectY1_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_RectY1_EnumTable
 NakaInst_RectY1_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DAE, 0x2
 ; SupportClass_RectX2ValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the RectX2Proc property type
-; +8 of SupportClass record 18 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 18 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_RectX2ValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DB0, 0xA
 ; SupportClass_RectY2ValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the RectY2Proc property type
-; +8 of SupportClass record 19 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 19 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_RectY2ValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DBA, 0xA
 ; SupportClass_POINTWValueNames -- 1 x 10-byte struct: the empty value-name list of POINTWProc (SupportClass object 20)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 20 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 20 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_POINTWValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DC4, 0xA
 ; SupportClass_PointXValueNames -- 1 x 10-byte struct: the empty value-name list of PointXProc (SupportClass object 21)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 21 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 21 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_PointXValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DCE, 0xA
 ; NakaInst_PointY_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "PointY", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 22 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 22 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_PointY_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DD8, 0x8
 ; NakaInst_PointY_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the PointY enum table's terminator.
 NakaInst_PointY_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DE0, 0x2
 ; NakaInst_String_EnumTable -- 1 x {char *name, u32 value}: the enum table of property type "String", holding only its {"", 0} terminator.
-; Pointed to by word +8 of SupportClass descriptor 23 (ExitWindow_OK_Data_2, slot 0x260); CommonIDProc
+; Pointed to by word +8 of SupportClass descriptor 23 (SupportClass_PropTypeRecords, slot 0x260); CommonIDProc
 ; (ui/ui_widget_defs.s) walks such tables in 8-byte steps until name[0] == 0, but this type's count word (+4) is 0.
 NakaInst_String_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DE2, 0x8
 ; NakaInst_String_EmptyStr -- 2 x char: "" plus a 0xFF alignment pad, the name of the String enum table's terminator.
 NakaInst_String_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DEA, 0x2
 ; SupportClass_NameValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the NameProc property type
-; +8 of SupportClass record 24 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 24 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_NameValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DEC, 0xA
@@ -479,12 +479,12 @@ SupportClass_NameValueNames:	.incbin "includes/generated/naka_debug_naming.bin",
 SupportClass_ConstFlagValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3DF6, 0x2E
 ; SupportClass_ViewIDValueNames -- 1 x 10-byte struct: the empty value-name list of ViewIDProc (SupportClass object 26)
 ; {name pointer, value} terminator (8 B, name points 8 bytes on) + that name, "" with a 0xFF alignment byte (2 B).
-; Entry 26 of ExitWindow_OK_Data_2 (the SupportClass table) points here with value count 0;
+; Entry 26 of SupportClass_PropTypeRecords (the SupportClass table) points here with value count 0;
 ; CommonIDProc walks such lists 8 bytes at a time until a name's first byte is 0.
 SupportClass_ViewIDValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x3E24, 0xA
 ; NakaInst_ViewFlag_EnumTable -- 7 x {u32 name_ptr, s32 value}: ViewFlag property value names, ended by {"", 0}
 ; VF_None 0, VF_Invisible 1, VF_Fixed 2, VF_Change 4, VF_Const 8, VF_InvisibleBox 0x10. +8 of the ViewFlagProc
-; SupportClass record (entry 28 of ExitWindow_OK_Data_2, count 6). CommonIDProc (ui/ui_widget_defs.s) walks it in
+; SupportClass record (entry 28 of SupportClass_PropTypeRecords, count 6). CommonIDProc (ui/ui_widget_defs.s) walks it in
 ; 8-byte steps until the name is "": value -> name for DUMP_PROPERTY_EX, name -> value for SET_PROPERTY_EX.
 NakaInst_ViewFlag_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3E2E, 0x38
 ; NakaInst_ViewFlag_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the {"", 0} end entry of NakaInst_ViewFlag_EnumTable;
@@ -498,7 +498,7 @@ NakaInst_ViewFlag_NameStrings:	.incbin "includes/generated/naka_debug_naming.bin
 ; CL_Black 0, CL_Maroon 1 .. CL_Teal 6, CL_Silver 7, CL_DarkGray 8, CL_Orange 9, CL_FireRed 10, CL_HairLine 11, CL_DarkYellow 12,
 ; CL_LightGreen 13, CL_IconBack 0xF0, CL_Text 0xF1, CL_Selected 0xF2, CL_PageBack 0xF3, CL_EditSw 0xF4, CL_WallPattern 0xF5,
 ; CL_Transparent 0xF7, CL_Gray 0xF8, CL_Red 0xF9 .. CL_Aqua 0xFE, CL_White 0xFF. +8 of the ColorIDProc SupportClass record
-; (entry 29 of ExitWindow_OK_Data_2, count 29); CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps.
+; (entry 29 of SupportClass_PropTypeRecords, count 29); CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps.
 NakaInst_ColorID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x3EAC, 0xF0
 ; NakaInst_ColorID_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the {"", 0} end entry of NakaInst_ColorID_EnumTable;
 ; CommonIDProc (ui/ui_widget_defs.s) stops its walk at this empty name.
@@ -507,7 +507,7 @@ NakaInst_ColorID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0
 ; (NUL-terminated, 0xFF-padded to even length); the name_ptr fields of NakaInst_ColorID_EnumTable point at them.
 NakaInst_ColorID_NameStrings:	.incbin "includes/generated/naka_debug_naming.bin", 0x3F9E, 0x134
 ; NakaInst_BorderID_EnumTable -- 21 x {u32 name, s32 value}: value names of the BorderID property type (20 named + "" end entry)
-; Word +8 of SupportClass record 30 (BorderIDProc, count 20) in ExitWindow_OK_Data_2, the 55 x 12-byte table
+; Word +8 of SupportClass record 30 (BorderIDProc, count 20) in SupportClass_PropTypeRecords, the 55 x 12-byte table
 ; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; BD_None=0, BD_Single1=1, BD_Single2=2, BD_Double1=3, BD_Shadow1=4, BD_Shadow2=5, BD_Round0=6, BD_Round1=7, BD_Round2=8, BD_Round5=9, ... (10 more)
@@ -576,33 +576,33 @@ NakaInst_BD_Single1_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x4
 ; Entry 0 of NakaInst_BorderID_EnumTable points here.
 NakaInst_BD_None_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x425C, 0x8
 ; NakaInst_ModeID_EnumTable -- 1 x {u32 name, s32 value}: empty value-name list of the ModeID property type, only the "" end entry
-; Word +8 of SupportClass record 31 (ModeIDProc) in ExitWindow_OK_Data_2; its count word (+4) is 0, so
+; Word +8 of SupportClass record 31 (ModeIDProc) in SupportClass_PropTypeRecords; its count word (+4) is 0, so
 ; CommonIDProc (ui/ui_widget_defs.s) does not search it, and its SET_PROPERTY_EX falls back to ParseInt32.
 NakaInst_ModeID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x4264, 0x8
 ; NakaInst_ModeID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_ModeID_EnumTable
 ; NakaInst_ModeID_EnumTable's only entry {"", 0} points here.
 NakaInst_ModeID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x426C, 0x2
 ; NakaInst_TitleID_EnumTable -- 1 x {char *name; int32 value}: empty TitleID enum, only the {"", 0} end entry
-; +8 of the TitleIDProc SupportClass record (0xEB7810) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the TitleIDProc SupportClass record (0xEB7810) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_TitleID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x426E, 0x8
 ; NakaInst_TitleID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_TitleID_EnumTable
 NakaInst_TitleID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x4276, 0x2
 ; NakaInst_IconID_EnumTable -- 1 x {char *name; int32 value}: empty IconID enum, only the {"", 0} end entry
-; +8 of the IconIDProc SupportClass record (0xEB781C) in ExitWindow_OK_Data_2, whose count is 0;
+; +8 of the IconIDProc SupportClass record (0xEB781C) in SupportClass_PropTypeRecords, whose count is 0;
 ; CommonIDProc (ui/ui_widget_defs.s) stops at once on the empty name.
 NakaInst_IconID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x4278, 0x8
 ; NakaInst_IconID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_IconID_EnumTable
 NakaInst_IconID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x4280, 0x2
 ; NakaInst_FontID_EnumTable -- 1 x {u32 name_ptr, s32 value}: the FontID value-name list, only its {"", 0} end entry
-; +8 of the FontIDProc SupportClass record (entry 34 of ExitWindow_OK_Data_2, count 0); FontIDProc handles font names
+; +8 of the FontIDProc SupportClass record (entry 34 of SupportClass_PropTypeRecords, count 0); FontIDProc handles font names
 ; itself and passes other events to CommonIDProc (ui/ui_widget_defs.s), which stops at once on the empty name.
 NakaInst_FontID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x4282, 0x8
 ; NakaInst_FontID_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the end entry of NakaInst_FontID_EnumTable
 NakaInst_FontID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x428A, 0x2
 ; NakaInst_AlignmentID_EnumTable -- 4 x {u32 name_ptr, s32 value}: AlignmentID value names, ended by {"", 0}
 ; AL_Center 0, AL_LeftJustify 1, AL_RightJustify 2. +8 of the AlignmentIDProc SupportClass record (entry 35 of
-; ExitWindow_OK_Data_2, count 3, 1-byte data); AlignmentIDProc reads the byte and CommonIDProc (ui/ui_widget_defs.s)
+; SupportClass_PropTypeRecords, count 3, 1-byte data); AlignmentIDProc reads the byte and CommonIDProc (ui/ui_widget_defs.s)
 ; maps value <-> name through this list.
 NakaInst_AlignmentID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x428C, 0x20
 ; NakaInst_AlignmentID_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the end entry of NakaInst_AlignmentID_EnumTable
@@ -611,7 +611,7 @@ NakaInst_AlignmentID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin
 ; (NUL-terminated, 0xFF-padded to even length); the name_ptr fields of NakaInst_AlignmentID_EnumTable point at them.
 NakaInst_AlignmentID_NameStrings:	.incbin "includes/generated/naka_debug_naming.bin", 0x42AE, 0x2A
 ; NakaInst_EditSwID_EnumTable -- 21 x {u32 name, s32 value}: value names of the EditSwID property type (20 named + "" end entry)
-; Word +8 of SupportClass record 36 (EditSwIDProc, count 20) in ExitWindow_OK_Data_2, the 55 x 12-byte table
+; Word +8 of SupportClass record 36 (EditSwIDProc, count 20) in SupportClass_PropTypeRecords, the 55 x 12-byte table
 ; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; ES_Bottom1=0, ES_Bottom2=1, ES_Bottom3=2, ES_Bottom4=3, ES_Bottom5=4, ES_Bottom6=5, ES_Bottom7=6, ES_Bottom8=7, ES_Left1=0x88, ES_Left2=0x89, ... (10 more)
@@ -680,7 +680,7 @@ NakaInst_ES_Bottom2_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x4
 ; Entry 0 of NakaInst_EditSwID_EnumTable points here.
 NakaInst_ES_Bottom1_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x444A, 0xC
 ; NakaInst_EditSwStyleID_EnumTable -- 18 x {u32 name, s32 value}: value names of the EditSwStyleID property type (17 named + "" end entry)
-; Word +8 of SupportClass record 37 (EditSwStyleIDProc, count 17) in ExitWindow_OK_Data_2, the 55 x 12-byte table
+; Word +8 of SupportClass record 37 (EditSwStyleIDProc, count 17) in SupportClass_PropTypeRecords, the 55 x 12-byte table
 ; ExitWindow_OK registers as class SupportClass.  CommonIDProc (ui/ui_widget_defs.s) walks it in 8-byte steps:
 ; DUMP_PROPERTY_EX matches the 32-bit value and Strcpy's the name, SET_PROPERTY_EX Strcmp's the names; "" ends it.
 ; SS_Special=0, SS_Up=1, SS_Down=2, SS_UpDown=3, SS_On=4, SS_Off=5, SS_OK=6, SS_Left=7, SS_Right=8, SS_Yes=9, SS_No=0x0A, SS_OnOff=0x0B, ... (5 more)
@@ -741,7 +741,7 @@ NakaInst_SS_Up_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x456A, 
 NakaInst_SS_Special_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0x4570, 0xC
 ; NakaInst_LineModeID_EnumTable -- 3 x {char *name; int32 value}: LineModeID enum, ""-terminated
 ; {"LM_RightUp", 0}, {"LM_RightDown", 1}, {"", 0}. +8 of the LineModeIDProc SupportClass record in
-; ExitWindow_OK_Data_2 (count 2); CommonIDProc (ui/ui_widget_defs.s) maps value <-> name through it.
+; SupportClass_PropTypeRecords (count 2); CommonIDProc (ui/ui_widget_defs.s) maps value <-> name through it.
 NakaInst_LineModeID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x457C, 0x18
 ; NakaInst_LineModeID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_LineModeID_EnumTable
 NakaInst_LineModeID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x4594, 0x2
@@ -751,7 +751,7 @@ NakaInst_LM_RightDown_Str:	.incbin "includes/generated/naka_debug_naming.bin", 0
 NakaInst_LM_RightUp:	.incbin "includes/generated/naka_debug_naming.bin", 0x45A4, 0xC
 ; NakaInst_FrameID_EnumTable -- 3 x {char *name; int32 value}: FrameID enum, ""-terminated
 ; {"FR_None", 0}, {"FR_Single", 1}, {"", 0}. +8 of the FrameIDProc SupportClass record in
-; ExitWindow_OK_Data_2 (count 2); read by CommonIDProc (ui/ui_widget_defs.s).
+; SupportClass_PropTypeRecords (count 2); read by CommonIDProc (ui/ui_widget_defs.s).
 NakaInst_FrameID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x45B0, 0x18
 ; NakaInst_FrameID_EmptyStr -- 2 x char: "" + 0xFF fill, name of the end entry of NakaInst_FrameID_EnumTable
 NakaInst_FrameID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin", 0x45C8, 0x2
@@ -760,17 +760,17 @@ NakaInst_FR_Single:	.incbin "includes/generated/naka_debug_naming.bin", 0x45CA, 
 ; NakaInst_FR_None -- 8 x char: "FR_None", name of FrameID value 0
 NakaInst_FR_None:	.incbin "includes/generated/naka_debug_naming.bin", 0x45D4, 0x8
 ; SupportClass_BitmapIDValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the BitmapIDProc property type
-; +8 of SupportClass record 40 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 40 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_BitmapIDValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x45DC, 0xA
 ; SupportClass_ApFuncIDValueNames -- 1 x {u32 end_name, s32 end_value, char end_text[2]}: empty value-name list of the ApFuncIDProc property type
-; +8 of SupportClass record 41 (ExitWindow_OK_Data_2, 12 B/record) points here; its count (+4) is 0
+; +8 of SupportClass record 41 (SupportClass_PropTypeRecords, 12 B/record) points here; its count (+4) is 0
 ; list format read by CommonIDProc (ui/ui_widget_defs.s): 8-byte {name ptr, s32 value} entries ended
 ; by an entry whose name is "" -- here only that end entry, then the "" it points at (00 FF)
 SupportClass_ApFuncIDValueNames:	.incbin "includes/generated/naka_debug_naming.bin", 0x45E6, 0xA
 ; NakaInst_MainFuncID_EnumTable -- 1 x {u32 name_ptr, s32 value}: the MainFuncID value-name list, only its {"", 0} end entry
-; +8 of the MainFuncIDProc SupportClass record (entry 42 of ExitWindow_OK_Data_2, count 0); MainFuncIDProc names main
+; +8 of the MainFuncIDProc SupportClass record (entry 42 of SupportClass_PropTypeRecords, count 0); MainFuncIDProc names main
 ; functions itself and passes other events to CommonIDProc (ui/ui_widget_defs.s), which stops at the empty name.
 NakaInst_MainFuncID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x45F0, 0x8
 ; NakaInst_MainFuncID_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the end entry of NakaInst_MainFuncID_EnumTable
@@ -778,7 +778,7 @@ NakaInst_MainFuncID_EmptyStr:	.incbin "includes/generated/naka_debug_naming.bin"
 ; NakaInst_UserID_EnumTable -- 14 x {u32 name_ptr, s32 value}: UserID value names, ended by {"", 0}: iduRoot 0, iduMurai 1,
 ; iduToshi 2, iduEast 3, iduSuna 4, iduCheap 5, iduScoop 6, iduYoko 7, iduKubo 8, iduHama 9, iduKSS 10, iduNaka 11, iduNone -1
 ; (the first three names are in naka_style_bitmaps). +8 of the UserIDProc SupportClass record (entry 43 of
-; ExitWindow_OK_Data_2, count 13); UserIDProc sign-extends the 16-bit value (-1 = iduNone) and CommonIDProc maps it.
+; SupportClass_PropTypeRecords, count 13); UserIDProc sign-extends the 16-bit value (-1 = iduNone) and CommonIDProc maps it.
 ; A title record's +8 is such a user id (TitleProc_OnGetUserId; Title_RecordTemplate holds -1).
 NakaInst_UserID_EnumTable:	.incbin "includes/generated/naka_debug_naming.bin", 0x45FA, 0x70
 ; NakaInst_UserID_EmptyStr -- 2 x char: "" + 0xFF fill, the name of the end entry of NakaInst_UserID_EnumTable

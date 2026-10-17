@@ -15612,7 +15612,7 @@ S2c_GridCheck_Dispatch:
 	dec 2, a
 	extz wa
 	sla wa, 2
-	lda xbc, (S2c_GridCheck_Dispatch_Data:24)
+	lda xbc, (S2cGridCheck_PartTrackAddrs:24)
 	ld	xwa, (xbc+wa)
 	ld a, (xwa)
 	extz wa
@@ -15913,7 +15913,7 @@ PsCmpCpFPtnBoxProc_OnPaintOrRepaint:
 	ld a, (0x34ef:16)
 	extz wa
 	sla wa, 2
-	lda xbc, (PsCmpCpFPtnBox_HandleEvtBC_Data:24)
+	lda xbc, (PsCmpCpFPtnBox_PatternNameStrPtrs:24)
 	ld	xwa, (xbc+wa)
 	push xwa
 	lda xwa, (xsp + 16)
@@ -16297,7 +16297,7 @@ AcMemNoBoxProc_OnPaintOrRepaint:
 	ld a, (0x34d6:16)
 	extz wa
 	sla wa, 2
-	lda xbc, (AcMemNoBox_HandleEvtBC_Data:24)
+	lda xbc, (AcMemNoBox_SectionNameStrPtrs:24)
 	ld	xwa, (xbc+wa)
 	push xwa
 	lda xwa, (xsp + 16)
@@ -16412,7 +16412,7 @@ AcCmpRecBoxProc_OnPaintOrRepaint:
 	ld e, (xiz + 36)
 	ld a, (0x379b:16)
 	and a, e
-	lda xhl, (AcCmpRecBox_HandleEvtBC_Data:24)
+	lda xhl, (AcCmpRecBox_TrackStateStrPtrs:24)
 	lda xbc, (xsp + 16)
 	cp a, e
 	jr nz, AcCmpRecBox_CheckParam2
@@ -17266,7 +17266,7 @@ MspNameBnkFunc:
 	push xiz
 	ld xhl, xbc
 	ld xiz, xwa
-	ld xiy, MspNameBnkFunc_Data
+	ld xiy, MspNameBnkFunc_BankNamesInit
 	lda xix, (xsp + 4)
 	ldw bc, 0x8
 	ldirw
@@ -18327,7 +18327,7 @@ PsRgpSetBnkBoxProc_OnPaintOrRepaint:
 	ld a, (0x7f3d:16)
 	extz wa
 	sla wa, 2
-	lda xbc, (RgpSetBnkBox_HandleEvtBC_Data:24)
+	lda xbc, (PsRgpSetBnkBox_CompileBankStrPtrs:24)
 	ld	xwa, (xbc+wa)
 	push xwa
 	lda xwa, (xsp + 8)
@@ -18680,7 +18680,7 @@ MspPlayModeFunc:
 	ld xiz, xde
 	ld xde, xbc
 	ld (xsp + 12), xwa
-	ld xiy, MspPlayModeFunc_Data
+	ld xiy, MspPlayModeFunc_ModeNamesInit
 	lda xix, (xsp + 4)
 	ld bc, 4:i3
 	ldirw
@@ -18749,7 +18749,7 @@ AcSndArgGridBoxProc:
 	ld (xsp + 18), xde
 	ld xiz, xbc
 	ld (xsp + 22), xwa
-	ld xiy, AcSndArgGridBoxProc_Data
+	ld xiy, AcSndArgGridBox_RowPartBitsInit
 	lda xix, (xsp + 12)
 	ld bc, 2:i3
 	ldirw
@@ -20147,7 +20147,7 @@ CmpNameMenu_Epilogue:
 AttLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, AttLangCheck_ReturnZero
-	lda xhl, (AttLangCheck_Data:24)
+	lda xhl, (AttLangCheck_PtrTable:24)
 	ret
 
 AttLangCheck_ReturnZero:
@@ -20157,7 +20157,7 @@ AttLangCheck_ReturnZero:
 SureLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, SureLangCheck_ReturnZero
-	lda xhl, (SureLangCheck_Data:24)
+	lda xhl, (SureLangCheck_PtrTable:24)
 	ret
 
 SureLangCheck_ReturnZero:
@@ -20167,7 +20167,7 @@ SureLangCheck_ReturnZero:
 SndMemLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, SndMemLangCheck_ReturnZero
-	lda xhl, (SndMemLangCheck_Data:24)
+	lda xhl, (SndMemLangCheck_PtrTable:24)
 	ret
 
 SndMemLangCheck_ReturnZero:
@@ -20177,7 +20177,7 @@ SndMemLangCheck_ReturnZero:
 SndMem1LangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, SndMem1LangCheck_ReturnZero
-	lda xhl, (SndMem1LangCheck_Data:24)
+	lda xhl, (SndMem1LangCheck_PtrTable:24)
 	ret
 
 SndMem1LangCheck_ReturnZero:
@@ -20187,7 +20187,7 @@ SndMem1LangCheck_ReturnZero:
 MemfulLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, MemfulLangCheck_ReturnZero
-	lda xhl, (MemfulLangCheck_Data:24)
+	lda xhl, (MemfulLangCheck_PtrTable:24)
 	ret
 
 MemfulLangCheck_ReturnZero:
@@ -20197,7 +20197,7 @@ MemfulLangCheck_ReturnZero:
 Memful2LangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, Memful2LangCheck_ReturnZero
-	lda xhl, (Memful2LangCheck_Data:24)
+	lda xhl, (Memful2LangCheck_PtrTable:24)
 	ret
 
 Memful2LangCheck_ReturnZero:
@@ -20207,7 +20207,7 @@ Memful2LangCheck_ReturnZero:
 StylCnvLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, StylCnvLangCheck_ReturnZero
-	lda xhl, (StylCnvLangCheck_Data:24)
+	lda xhl, (StylCnvLangCheck_PtrTable:24)
 	ret
 
 StylCnvLangCheck_ReturnZero:

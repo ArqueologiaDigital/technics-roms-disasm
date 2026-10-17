@@ -9789,7 +9789,7 @@ AccTiming_SlotOffsetTables:
 ; forms.  The first table steps by 6 and the second by 9 -- consistent with
 ; the per-slot stride the two free-slot scans add (`add iz, (0x337c:16)`).
 ; Size: the +0x20 reader pins the first table at 8 entries; the second is
-; the 32 bytes up to AccDir_Entry.
+; the 32 bytes up to AccDir_TickVector.
 ; readers in v7 (address from the linked ELF): AccKbdTiming_SlotOverflow 0xF5B2CD,
 ;     AccAccTiming_SlotOverflow 0xF5B6B6
 ; (v7 copy: the RAM addresses and ROM values quoted above are the v9/v10
@@ -9802,7 +9802,7 @@ AccAccTiming_SlotOverflow_Data:
 	.long 0x00000000, 0x00000009, 0x00000012, 0x0000001b
 	.long 0x00000024, 0x0000002d, 0x00000036, 0x0000003f
 
-AccDir_Entry:
+AccDir_TickVector:
 	jp AccDir_Main
 
 AccDir_PeriodicEntry:
@@ -10501,7 +10501,7 @@ AccVoice_CopyFromROM_DataBlock_Data_2:
 	.byte 0xff, 0xff, 0x00	; key 0xffff -> 0
 	.byte 0xff, 0xff, 0x00	; key 0xffff -> 0
 
-AccStyle_Entry:
+SndArg_TickVector:
 	jp AccStyle_Process
 AccStyle_JumpTable:
 	jp	AccStyle_ToggleBit0
@@ -10555,11 +10555,11 @@ AccStyle_Process_DoChain:
 	calr AccHelper_ComputeVoiceOffset
 	ld xiy, xhl
 	add xiy, 0x1e7810
-	calr AccVoiceDelta_Part1
-	calr AccVoiceDelta_Part2
-	calr AccVoiceDelta_Part3
-	calr AccVoiceDelta_Part4
-	calr AccVoiceDelta_Part5
+	calr SndArg_StoreDrumSound
+	calr SndArg_StoreBassSound
+	calr SndArg_StoreAccomp1Sound
+	calr SndArg_StoreAccomp2Sound
+	calr SndArg_StoreAccomp3Sound
 
 AccStyle_Process_SaveState:
 	ld	a, (13042:16)
@@ -11093,7 +11093,7 @@ AccVoiceState_DispatchChange_Data:
 	.byte 0x42, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.zero 56
 
-AccVoiceDelta_Part1:
+SndArg_StoreDrumSound:
 	ld a, (0xfbbe:16)
 	ld w, (0xfbbf:16)
 	and W,0x7f
@@ -11108,7 +11108,7 @@ AccVoiceDelta_Part1:
 AccVoiceDelta_Part1_Store:
 	ld	(13049:16), wa
 	ret
-AccVoiceDelta_Part2:
+SndArg_StoreBassSound:
 	ld a, (0xfba4:16)
 	ld w, (0xfba5:16)
 	and W,0x7f
@@ -11125,7 +11125,7 @@ AccVoiceDelta_Part2:
 AccVoiceDelta_Part2_Store:
 	ld	(13051:16), wa
 	ret
-AccVoiceDelta_Part3:
+SndArg_StoreAccomp1Sound:
 	ld a, (0xfb56:16)
 	ld w, (0xfb57:16)
 	and W,0x7f
@@ -11142,7 +11142,7 @@ AccVoiceDelta_Part3:
 AccVoiceDelta_Part3_Store:
 	ld	(13053:16), wa
 	ret
-AccVoiceDelta_Part4:
+SndArg_StoreAccomp2Sound:
 	ld a, (0xfb70:16)
 	ld w, (0xfb71:16)
 	and W,0x7f
@@ -11159,7 +11159,7 @@ AccVoiceDelta_Part4:
 AccVoiceDelta_Part4_Store:
 	ld	(13055:16), wa
 	ret
-AccVoiceDelta_Part5:
+SndArg_StoreAccomp3Sound:
 	ld a, (0xfb8a:16)
 	ld w, (0xfb8b:16)
 	and W,0x7f
@@ -13167,7 +13167,7 @@ AccTone_StubReturn_A:
 AccTone_StubReturn_B:
 	ret
 
-AccPatch_CountSlots_Wrapper:
+AccPatch_RecountFreeSlots:
 	calr AccPatch_CountAvailableSlots
 	ret
 
@@ -23308,7 +23308,7 @@ DrumKitInit_CheckExtAssign:
 	xor	wa, wa
 	call	SwbtWr_QueuePostEvent
 DrumKitInit_FinalSetup:
-	call	AccPatch_CountSlots_Wrapper
+	call	AccPatch_RecountFreeSlots
 	ld	(0x3470:16), 0
 	call	SeqAcc_SetIndicator_PB
 	ldw	(0xf19e:16), 0

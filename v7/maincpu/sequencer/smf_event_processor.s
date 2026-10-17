@@ -10713,8 +10713,8 @@ Seq_DispatcherTick_Process:
 	call Rhythm_SaveState
 	call Seq_RhythmProcessor
 	call Rhythm_AdvanceTick
-	call AccDir_Entry
-	call AccStyle_Entry
+	call AccDir_TickVector
+	call SndArg_TickVector
 	call AccProcess_Entry
 Seq_DispatcherTickReturn:
 	ret

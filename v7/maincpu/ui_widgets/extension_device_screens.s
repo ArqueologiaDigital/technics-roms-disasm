@@ -1005,26 +1005,26 @@ PanelButton_HelpModeActionLists:	.incbin "includes/generated/naka_extension_devi
 PanelEvent_InitPhaseHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x3552, 0x10
 ; PanelButton_ModeKeyCodes -- 2 x u8 (0x0E, 0x11): start of the byte map PanelButton_ModeKey (audio/audio_control_engine.s)
 ; reads. For panel event index 1 (RAM 0x8E90) it loads this address (an instruction now spelled as .ascii there:
-; 40 2E 9D ED 00 = ld xwa, 0x00ED9D2E), for indices 3, 10, 15, 16, 21 FileIO_BytecodeData_Data.._5 (2 bytes apart),
+; 40 2E 9D ED 00 = ld xwa, 0x00ED9D2E), for indices 3, 10, 15, 16, 21 PanelButton_ModeKeyCodes_LeftSeg3.._5 (2 bytes apart),
 ; and replaces the event's button byte with map[lowest set bit] (`ld a, (xwa+hl)`). The windows overlap.
 PanelButton_ModeKeyCodes:	.incbin "includes/generated/naka_extension_device.bin", 0x3562, 0x2
-FileIO_BytecodeData_Data:			.incbin "includes/generated/naka_extension_device.bin", 0x3564, 0x2
-FileIO_BytecodeData_Data_2:			.incbin "includes/generated/naka_extension_device.bin", 0x3566, 0x2
-FileIO_BytecodeData_Data_3:			.incbin "includes/generated/naka_extension_device.bin", 0x3568, 0x2
-FileIO_BytecodeData_Data_4:			.incbin "includes/generated/naka_extension_device.bin", 0x356A, 0x2
-FileIO_BytecodeData_Data_5:			.incbin "includes/generated/naka_extension_device.bin", 0x356C, 0x4
-FileIO_BytecodeData_Data_6:			.incbin "includes/generated/naka_extension_device.bin", 0x3570, 0x8
-FileIO_BytecodeData_Data_7:			.incbin "includes/generated/naka_extension_device.bin", 0x3578, 0x8
-FileIO_BytecodeData_Data_8:			.incbin "includes/generated/naka_extension_device.bin", 0x3580, 0x2
-FileIO_BytecodeData_Data_9:			.incbin "includes/generated/naka_extension_device.bin", 0x3582, 0x8
-FileIO_BytecodeData_Data_10:			.incbin "includes/generated/naka_extension_device.bin", 0x358A, 0x2
-FileIO_BytecodeData_Data_11:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
+PanelButton_ModeKeyCodes_LeftSeg3:			.incbin "includes/generated/naka_extension_device.bin", 0x3564, 0x2
+PanelButton_ModeKeyCodes_LeftSeg10:			.incbin "includes/generated/naka_extension_device.bin", 0x3566, 0x2
+PanelButton_ModeKeyCodes_RightSeg4:			.incbin "includes/generated/naka_extension_device.bin", 0x3568, 0x2
+PanelButton_ModeKeyCodes_RightSeg5:			.incbin "includes/generated/naka_extension_device.bin", 0x356A, 0x2
+PanelButton_ModeKeyCodes_RightSeg10:			.incbin "includes/generated/naka_extension_device.bin", 0x356C, 0x4
+PanelButton_SoundGroupCodes_RightSeg1:			.incbin "includes/generated/naka_extension_device.bin", 0x3570, 0x8
+PanelButton_SoundGroupCodes_RightSeg2:			.incbin "includes/generated/naka_extension_device.bin", 0x3578, 0x8
+PanelButton_SoundGroupCodes_RightSeg9:			.incbin "includes/generated/naka_extension_device.bin", 0x3580, 0x2
+PanelButton_RhythmGroupCodes_LeftSeg0:			.incbin "includes/generated/naka_extension_device.bin", 0x3582, 0x8
+PanelButton_RhythmGroupCodes_LeftSeg1:			.incbin "includes/generated/naka_extension_device.bin", 0x358A, 0x2
+PanelButton_RhythmGroupCodes_LeftSeg6:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
 FileIO_BytecodeData_Data_12:			.incbin "includes/generated/naka_extension_device.bin", 0x3594, 0x4
 FileIO_BytecodeData_Code_Entry8_PtrTable:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
 FileIO_BytecodeData_Data_13:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
 FileIO_BytecodeData_Code_Entry8_PtrTable_2:	.incbin "includes/generated/naka_extension_device.bin", 0x35B6, 0x18	; 6 x 32-bit pointer
-FileIO_BytecodeData_Data_14:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6
-FileIO_BytecodeData_Data_15:			.incbin "includes/generated/naka_extension_device.bin", 0x35D4, 0x4
+PanelButton_MspBank18FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35CE, 0x6
+PanelButton_VariationCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35D4, 0x4
 ; PanelAction_PedalAssignHandlerIndex -- 256 x uint8_t: handler number per foot-pedal assignment code, 0xff = no action.
 ; PanelAction_FootSwitch1/2 and PanelAction_FootController1-4 read their assignment (panel parameters 0x2886-0x2890) and
 ; PanelAction_DispatchPedalFunction (audio/audio_control_engine.s) maps it here; a number <= 22 indexes

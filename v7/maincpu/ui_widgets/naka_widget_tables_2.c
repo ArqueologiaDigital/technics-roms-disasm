@@ -822,7 +822,7 @@ typedef struct __attribute__((packed)) {
      * MidiPart_PageDisplay_Data`). 8 bytes to the next object; the layout
      * beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t MidiPart_PageDisplay_Data[8];
+    uint8_t MidiSetup_PageIndicatorRect[8];
     /* ---------------------------------------------------------------------
      * AcCtlMsgGrid_Show_Table -- read by AcCtlMsgGrid_Show (v10/v9 0xF79BD8,
      * v7 0xF797D4) (`ld xbc, AcCtlMsgGrid_Show_Table`),
@@ -1958,7 +1958,7 @@ typedef struct __attribute__((packed)) {
      * PmemOutLGridCheck_CaseTable that code DOES reach (readers: the .s header)
      * Contents not established.
      * --------------------------------------------------------------------- */
-    uint8_t PmemOutLGridCheck_CaseTable_Tail[22];
+    uint8_t PmemOutRGridCheck_RamRequestInit[22];
     /* ---------------------------------------------------------------------
      * PmemOutRGridCheck_LocalInit -- initializer of a local array:
      * PmemOutRGridCheck (v10/v9 0xF791E4, v7 0xF78DE0) (`ld xiy,
@@ -12234,7 +12234,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         },
     },
 
-    .MidiPart_PageDisplay_Data = { 0xF5, 0x00, 0x06, 0x00, 0x3A, 0x01, 0x17, 0x00 },
+    .MidiSetup_PageIndicatorRect = { 0xF5, 0x00, 0x06, 0x00, 0x3A, 0x01, 0x17, 0x00 },
 
     .AcCtlMsgGrid_Show_Table = { 0x18, 0x01, 0x0F, 0x00 },
 
@@ -12965,7 +12965,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .PmemOutLGridCheck_CaseTable = { 0x0000, 0x00C7, 0x0000, 0x00C7, 0x07CC, 0x07CC, 0x01A6 },
 
-    .PmemOutLGridCheck_CaseTable_Tail = {
+    .PmemOutRGridCheck_RamRequestInit = {
         0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     },

@@ -922,7 +922,11 @@ Str_Mixer_ON:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF350,
 ; [nakarest] Text (8 B at 0xe952a2), first string "OFF"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in LswLeftHold_OnOffStrPtrs (at 0xeeecc0).
 MixerPartTable_Start:		.incbin "includes/generated/naka_technichord_strings.bin", 0xF354, 0x4
-LswLeftHold_DefaultStr_Data:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF358, 0x4
+; LswLeftHold_Str_ERR: "ERR" (NUL-terminated): the text LswLeftHold (the LEFT HOLD Lsw function) copies out on
+;   EVT_GET_LSW_STRING when the value is outside 0..1; values 0 / 1 give "OFF" / "ON " from the work-RAM copy
+;   (0x3E91C) of LswLeftHold_OnOffStrPtrs. Basis: readers + bytes -- the only reader is that Strcpy; bytes 45 52 52
+;   00.
+LswLeftHold_Str_ERR:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF358, 0x4
 ; PartParam_EnableMask -- 30 x u32, one mask per part index: which part parameters may be edited.  Every Lsw*
 ; part-parameter function loads it, adds 4 * part and tests one bit (`bit N, wa` in <Lsw>_CheckEnabled): 15
 ; Volume / Mute, 14 Pan, 13 Reverb, 12 DSPEffect, 11 Sustain, 10 SustainLength, 9 KeyShift, 8 Tuning,
@@ -1075,7 +1079,10 @@ Str_PartName_Right2:	.incbin "includes/generated/naka_technichord_strings.bin", 
 ; [nakarest] Text (16 B at 0xe95540), first string " RIGHT 1 "; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in LswLeftHold_OnOffStrPtrs (at 0xeeecc8).
 Str_PartName_Right1:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5F2, 0xA
-IvSdpart_GetText_Data:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5FC, 0x6
+; IvSdpart_GetText_Str_SdPT: "SdPT" (NUL + 0xFF pad): the class-name string IvSdpartProc copies into the caller's
+;   buffer on EVT_GET_STRING. Basis: readers + bytes -- the only reader is IvSdpart_GetText's Strcpy; bytes 53 64 50
+;   54 00 FF; siblings Sdtecd_GetText_Str_TeCd, IvMessage_GetText_Str_Msg.
+IvSdpart_GetText_Str_SdPT:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5FC, 0x6
 ; IvSdpartProc_CaseTable -- 10 x int16: the case offsets of IvSdpartProc's compiled switch, relative to IvSdpart_Init
 IvSdpartProc_CaseTable:
 	.short	IvSdpartProc_OnIndexswUp - IvSdpart_Init
@@ -2309,7 +2316,13 @@ NakaInst_Por_favor_seleccione_el_Panel_Memory_al_que_desea:	.incbin "includes/ge
 ; [nakarest] 0x00ee0014 NoMessage, 0x00ee0002 Completed, 0x00ee0005 Reminder, 0x00ee0009 Error,
 ; [nakarest] 0x00ee000d Other, 0x00ee0016 PleaseWait -- elements of Viewable slot 0xee
 ; [nakarest] (InitializeMurai), all class Window.
-IvMesageProc_Data:		.incbin "includes/generated/naka_technichord_strings.bin", 0x173F2, 0x6
+; IvMessage_Catalog: The IvMesage message catalog (record 0 at this label): 80 x 14-byte records {u16 kind, u32 code
+;   0x00NNFFFF (NN = the error number shown), u32 header table, u32 text table} + a zero terminator. Readers index it
+;   with the message number (word 0x2478C) * 14: the kind picks the window from IvMesageProc_PtrTable, is compared
+;   with 5 (paint) and 3 (header), and +4 is the error number pushed to the header Sprintf.
+;   MsgHeader_BuildLoop_PtrTable and IvMessage_Catalog_TextTableCol are the +6 / +10 columns of record 0. Basis:
+;   readers + bytes.
+IvMessage_Catalog:		.incbin "includes/generated/naka_technichord_strings.bin", 0x173F2, 0x6
 MsgHeader_BuildLoop_PtrTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x173F8, 0x4	; 2 x 32-bit pointer
 ; IvMessage_Catalog_TextTableCol: Text-table column of the IvMesage message catalog: the u32 at +10 of catalog record
 ;   0 (80 records x 14 bytes {u16 kind, u32 code, u32 header table, u32 text table} + a zero terminator); readers add

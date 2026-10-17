@@ -929,17 +929,17 @@ Bitmap_MIDIConnections_3:	.incbin "includes/generated/naka_widget_tables_2.bin",
 ; -----------------------------------------------------------------------------
 Bitmap_Bmphk:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x21A74, 0x2EE0
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] MidiPart_PageDisplay_Data
-; MidiPart_PageDisplay_Data -- read by AcCtlMsgGrid_Show (v10/v9
-; 0xf79bd8, v7 0xf797d4) (`ld xwa, MidiPart_PageDisplay_Data`),
+; [naka_s_headers] MidiSetup_PageIndicatorRect
+; MidiSetup_PageIndicatorRect -- read by AcCtlMsgGrid_Show (v10/v9
+; 0xf79bd8, v7 0xf797d4) (`ld xwa, MidiSetup_PageIndicatorRect`),
 ; MidiSetup_TtlCase4 (v10/v9 0xf7a2f0, v7 0xf79eec) (`ld xwa,
-; MidiPart_PageDisplay_Data`). 8 bytes to the next object; the layout
+; MidiSetup_PageIndicatorRect`). 8 bytes to the next object; the layout
 ; beyond that access is not established.
 ;
 ; Typed in naka_widget_tables_2.c as uint8_t
-; MidiPart_PageDisplay_Data[8].
+; MidiSetup_PageIndicatorRect[8].
 ; -----------------------------------------------------------------------------
-MidiPart_PageDisplay_Data:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x24954, 0x8
+MidiSetup_PageIndicatorRect:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x24954, 0x8
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] AcCtlMsgGrid_Show_Table
 ; AcCtlMsgGrid_Show_Table -- read by AcCtlMsgGrid_Show (v10/v9 0xf79bd8,
@@ -3043,7 +3043,7 @@ PmemOutLGridCheck_LocalInit_Strings:		.incbin "includes/generated/naka_widget_ta
 AlignedStr_ON:					.incbin "includes/generated/naka_widget_tables_2.bin", 0x25D9E, 0x2
 PmemOutLGrid_Str_ON:				.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DA0, 0x06
 PmemOutLGrid_Str_OFF:				.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DA6, 0x06
-PmemOutLGridCheck_LocalInit_Strings_Tail:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DAC, 0x6
+PmemOutLGridCheck_Row0_Str_OFF:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DAC, 0x6
 PmemOutLGridCheck_OnRamData_Str_Fmt3d:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_2:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB8, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_OFF:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DBE, 0x6	; " OFF "
@@ -3106,19 +3106,19 @@ PmemOutLGridCheck_CaseTable:
 	.short	PmemOutGrid_ReturnZero - PmemOutLGridCheck_OnIndexswUp
 	.short	PmemOutLGridCheck_OnRamData - PmemOutLGridCheck_OnIndexswUp
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] PmemOutLGridCheck_CaseTable_Tail
-; PmemOutLGridCheck_CaseTable_Tail -- 22 bytes after
+; [naka_s_headers] PmemOutRGridCheck_RamRequestInit
+; PmemOutRGridCheck_RamRequestInit -- 22 bytes after
 ; PmemOutLGridCheck_CaseTable that code DOES reach (Readers below) (searched: RegObjTabl tables, slice and positional labels).
 ; Contents not established.
 ;
 ; Typed in naka_widget_tables_2.c as uint8_t
-; PmemOutLGridCheck_CaseTable_Tail[22].
+; PmemOutRGridCheck_RamRequestInit[22].
 ; Readers (claims_lint.py unread-claims, 2026-10-02): TtMdCtlMsg_EventDispatch (0xF78E97, 32-bit
 ;   pointer); TtMdCtlMsg_EventDispatch (0xF78F02, 32-bit pointer); TtMdCtlMsg_EventDispatch
 ;   (0xF78F5B, 32-bit pointer); PmemOutRGridCheck_OnIndexswDown (0xF79001, 32-bit pointer);
 ;   drawbar_panel_ui.s:1964 (source reference); and 13 more
 ; -----------------------------------------------------------------------------
-PmemOutLGridCheck_CaseTable_Tail:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25E36, 0x16
+PmemOutRGridCheck_RamRequestInit:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25E36, 0x16
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PmemOutRGridCheck_LocalInit
 ; PmemOutRGridCheck_LocalInit -- initializer of a local array:
@@ -3454,8 +3454,8 @@ MidiSetup_EventHandler_Table:	.incbin "includes/generated/naka_widget_tables_2.b
 ; MidiPart_LookupFromTable_Table[312].
 ; -----------------------------------------------------------------------------
 MidiPart_LookupFromTable_Table:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x2618A, 0x118
-MidiPartGridCheck_OnIndexswUp_Data:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262A2, 0x10
-MidiPartGridCheck_OnIndexswDown_Data:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262B2, 0x10
+MidiPartGridCheck_OctaveUpMap:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262A2, 0x10
+MidiPartGridCheck_OctaveDownMap:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262B2, 0x10
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] Transpose_ValueDisplay_Table
 ; Transpose_ValueDisplay_Table -- 8 u32 addresses, read by

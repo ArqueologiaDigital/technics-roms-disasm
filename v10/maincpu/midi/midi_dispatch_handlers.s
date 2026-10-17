@@ -3575,7 +3575,7 @@ FileData_ImportM4M6PanelMemories_Loop5:
 	calr	DataBuf_CopyMixerBlock12
 	ld	xwa, (xsp+14)
 	ld	xbc, (xsp+4)
-	calr	DataBuf_CopyBulkBitfields_Stub
+	calr	FileData_ImportM4M6_NullRet
 	ld	xwa, 0xf980
 	ld	xbc, (xsp+4)
 	calr	DataBuf_CopyBulkBitfields_960
@@ -4944,7 +4944,12 @@ DataBuf_CopyMixerBlock12:
 DataBuf_CopyBulkBitfields_Nop:
 	ret
 
-DataBuf_CopyBulkBitfields_Stub:
+; FileData_ImportM4M6_NullRet: Empty routine (`ret`): the block converter FileData_ImportM4M6PanelMemories calls with
+;   (XWA = source record, XBC = panel memory) after DataBuf_CopyMixerBlock12, at the place where stage 1
+;   (FileData_RawDataBlock) and DataBuf_AllocAndLoadFormatted call the equally empty DataBuf_CopyBulkBitfields_Nop --
+;   the M4/M6 formats convert nothing there. Basis: callers + body -- one caller; body is a single `ret` (the tree's
+;   X_NullRet convention).
+FileData_ImportM4M6_NullRet:
 	; --- Stub (1 byte) ---
 	ret
 DataBuf_CopyBulkBitfields_944:

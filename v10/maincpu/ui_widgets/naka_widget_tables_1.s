@@ -1321,7 +1321,10 @@ VoiceConfig_LoadTableA_Table:	.incbin "includes/generated/naka_widget_tables_1.b
 ; VoiceConfig_LoadTableB_Table[38].
 ; -----------------------------------------------------------------------------
 VoiceConfig_LoadTableB_Table:		.incbin "includes/generated/naka_widget_tables_1.bin", 0x2494, 0x6
-AcCurSongName_HandleFocusGained_Data:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x249A, 0x8
+; AcCurrentSongBox_Str_SONG_Fmt2d: "SONG%2d" (NUL-terminated): the format AcCurrentSongBoxProc's paint case Sprintf's
+;   with the song number (RAM byte 0xFFE3) + 1 and draws with EVT_PARA_DRAW. Basis: readers + bytes -- the only reader
+;   pushes it as a far pointer to Sprintf_Locked; bytes 53 4F 4E 47 25 32 64 00.
+AcCurrentSongBox_Str_SONG_Fmt2d:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x249A, 0x8
 AcCurSongName_HandleEventF_Str_Blank22:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x24A2, 0x18	; "                      "
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] MuteChSel_Dispatch_PtrTable

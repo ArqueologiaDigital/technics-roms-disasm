@@ -1,0 +1,1419 @@
+[
+ {
+  "old": "DataBuf_CopyBulkBitfields_Stub",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "FileData_ImportM4M6_NullRet",
+  "header": "Empty routine (`ret`): the block converter FileData_ImportM4M6PanelMemories calls with (XWA = source record, XBC = panel memory) after DataBuf_CopyMixerBlock12, at the place where stage 1 (FileData_RawDataBlock) and DataBuf_AllocAndLoadFormatted call the equally empty DataBuf_CopyBulkBitfields_Nop -- the M4/M6 formats convert nothing there.\nBasis: callers + body -- one caller; body is a single `ret` (the tree's X_NullRet convention).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_dispatch_handlers.s:3575-3581 `calr DataBuf_CopyMixerBlock12` / `ld xwa, (xsp+14)` / `ld xbc, (xsp+4)` / `calr DataBuf_CopyBulkBitfields_Stub` / ... / `calr DataBuf_CopyBulkBitfields_960` -- the only reference, inside FileData_ImportM4M6PanelMemories (3414)",
+   "midi/midi_dispatch_handlers.s:3388-3391 `calr DataBuf_CopyMixerBlock12` / ... / `calr DataBuf_CopyBulkBitfields_Nop` -- the same slot in FileData_RawDataBlock (3263) holds the other empty routine; also 3737-3740 in DataBuf_AllocAndLoadFormatted",
+   "midi/midi_dispatch_handlers.s:4947-4949 `DataBuf_CopyBulkBitfields_Stub:` / `ret` -- whole body (1 byte); 4944-4945 DataBuf_CopyBulkBitfields_Nop is a second, separate `ret`",
+   "midi/midi_dispatch_handlers.s:3409 header of FileData_ImportM4M6PanelMemories -- '.LSW import, stage 2 for header classes 1 (M4) and 2 (M6)'"
+  ]
+ },
+ {
+  "old": "MidiInit_Stub1",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndParam_InitPhase1_NullRet",
+  "header": "Empty routine (`ret`): init phase 1 (Sub-CPU payload OK) of the sound-parameter subsystem -- slot 1 of NakaInst_SoundConfig_LookupTable, list entry 5 of Subsys_HandlerTableList, whose slot 0 MIDI_INIT_SEQUENCES builds the SndParam hash table.\nBasis: callers + body -- ScreenGroup_Dispatch calls slot 1 of every subsystem table when SubCPU_Payload_GetErrorFlag is 0; same pattern as Xapr_InitPhase1_NullRet.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s:1232 `.long MIDI_INIT_SEQUENCES, MidiInit_Stub1, MidiInit_Stub2, MidiInit_Stub3` -- the only reference: slot 1 of the 4-slot init-phase table",
+   "ui_widgets/widget_dispatch.s:7134-7141 `Subsys_HandlerTableList:` ... `.long NakaInst_SoundConfig_LookupTable` -- list entry 5; header 7123-7126: slot = init phase (0 after the payload transfer, 1 if SubCPU_Payload_GetErrorFlag is 0, 2 if not, then 3)",
+   "kn5000_v10_program.s:1413-1424 `calr SubCPU_Payload_GetErrorFlag` / `jr nz, Boot_PayloadError` / `ld wa, 1:i3` / ... / `call ScreenGroup_Dispatch` -- phase 1 on success",
+   "midi/midi_serial_routines.s:28-32 `MIDI_INIT_SEQUENCES: calr SndParam_InitHashTable` / `calr SndParam_RegisterAllWidgets` / `calr SndParam_ClearHashTable` / `calr SndParam_ReregisterAll` -- phase 0 of the same table is the SndParam registry init",
+   "midi/midi_serial_routines.s:43-44 `MidiInit_Stub1:` / `ret` -- whole body",
+   "factory_test/fd_test_data.s:521 `.long Xapr_InitPhase1_NullRet` -- naming precedent for an empty phase slot"
+  ]
+ },
+ {
+  "old": "MidiInit_Stub2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndParam_InitPhase2_NullRet",
+  "header": "Empty routine (`ret`): init phase 2 (Sub-CPU payload error) of the sound-parameter subsystem -- slot 2 of NakaInst_SoundConfig_LookupTable (list entry 5 of Subsys_HandlerTableList).\nBasis: callers + body -- ScreenGroup_Dispatch calls slot 2 when SubCPU_Payload_GetErrorFlag is not 0.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s:1232 `.long MIDI_INIT_SEQUENCES, MidiInit_Stub1, MidiInit_Stub2, MidiInit_Stub3` -- slot 2, the only reference",
+   "kn5000_v10_program.s:1420-1424 `Boot_PayloadError: ld wa, 2:i3` / `call ScreenGroup_Dispatch` -- phase 2",
+   "ui_widgets/widget_dispatch.s:7123-7126 header of Subsys_HandlerTableList -- the four slots are init phases",
+   "midi/midi_serial_routines.s:46-47 `MidiInit_Stub2:` / `ret` -- whole body"
+  ]
+ },
+ {
+  "old": "MidiInit_Stub3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndParam_InitPhase3_NullRet",
+  "header": "Empty routine (`ret`): init phase 3 (the last boot phase) of the sound-parameter subsystem -- slot 3 of NakaInst_SoundConfig_LookupTable (list entry 5 of Subsys_HandlerTableList).\nBasis: callers + body -- the boot code calls ScreenGroup_Dispatch with WA = 3 once after phase 1/2.",
+  "basis": "callers + body",
+  "evidence": [
+   "ui_widgets/widget_dispatch.s:1232 `.long MIDI_INIT_SEQUENCES, MidiInit_Stub1, MidiInit_Stub2, MidiInit_Stub3` -- slot 3, the only reference",
+   "kn5000_v10_program.s:1425-1427 `ld (1024:16), 6` / `ld wa, 3:i3` / `call ScreenGroup_Dispatch` -- phase 3",
+   "midi/midi_serial_routines.s:49-50 `MidiInit_Stub3:` / `ret` -- whole body"
+  ]
+ },
+ {
+  "old": "SC0Init_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SC0_InitSerialPort",
+  "header": "Init phase 0 of the serial-port subsystem: sets up serial channel 0 (the MIDI / computer-interface port) -- clears 0xB7E7 bit 0, 0xB7E1 and the 7 saved-register slots of the RX handler, picks the baud-rate table by region (Get_Region_Code = 4 -> alternate), reads the COM SELECT switch, sends the computer-interface port byte (0xF5 MAC/PC1, 0xF4 PC2, nothing for MIDI) and programs and enables SC0.\nBasis: callers + body -- slot 0 of MIDI_SC0_DISPATCH_TABLE (list entry 3 of Subsys_HandlerTableList), which ScreenGroup_Dispatch runs right after the Sub-CPU payload transfer; slots 1-3 are SC0Init_PaddingStub (`ret`).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midi_serial_routines.s:961-965 `MIDI_SC0_DISPATCH_TABLE: .long SC0Init_Entry` / `.long SC0Init_PaddingStub` x3 -- the only reference",
+   "ui_widgets/widget_dispatch.s:7139 `.long MIDI_SC0_DISPATCH_TABLE` -- entry 3 of Subsys_HandlerTableList (7134); slot 0 = init phase 0 (header 7123-7126)",
+   "kn5000_v10_program.s:1409-1410 `ld wa, 0:i3` / `call ScreenGroup_Dispatch` -- phase 0, right after SubCPU_Send_Payload / SubCPU_Payload_Verify",
+   "midi/midi_serial_routines.s:868-875 `res 0, (0xb7e7:16)` / `ld (0xb7e1:16), 0` / `calr SC0Init_ClearContextSlots` / `calr SC0Init_StandardBaudTable` / `calr READ_COM_SELECT_SWITCH` / `call CompIface_SendActiveSensing` / `calr SC0Init_EnableRegisters` -- body",
+   "midi/midi_serial_routines.s:879-881 `call Get_Region_Code` / `cp l, 4:i3` / `jr z, SC0Init_AlternateBaudTable` -- region-dependent baud table",
+   "midi/midi_serial_routines.s:940-948 SC0Init_EnableRegisters: `ld (210:16), 41` / `ld (209:16), 0` / `ld (211:16), a` (SC0MOD/SC0CR/BR0CR) / `ld (208:16), 254` -- enables SC0",
+   "audio/dsp_config_sysex.s:1730-1745 CompIface_SendActiveSensing: returns for COM_SELECT 0 (MIDI), sends 0xF5 for MAC/PC1, 0xF4 for PC2"
+  ]
+ },
+ {
+  "old": "MidiPkt_EnqueueExtended_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPkt_SendCtlWordValueSysEx",
+  "header": "16-bit variant of MidiPkt_SendCtlValueSysEx: given XWA -> {packet, record}, returns on MidiPkt_CheckGateCondition = 0xFFFF, on MidiCtl_NullRecord or when the packet's mask word (+4) is 0; else queues SysEx_Msg_35DC (F0 50 2C 01 28 12) and the record's first 6 bytes, then the low byte of (value word +2 & mask word +4) >> (record+11 & 15) as two nibbles, high first, plus a zero byte, and closes and sends the message. No live caller in this build.\nBasis: callers + body -- its only caller MidiPkt_ExtractAndPack builds the packet {record+6, record+7, u16 value from two consecutive part-table bytes (record+7, record+7+1), u16 mask record+8 << (record+11 & 15)}; MidiPkt_ExtractAndPack itself has no referrer (no call/calr/jp to 0xFD9D04, no 24-bit pointer to it in any ROM image).",
+  "basis": "callers + body",
+  "evidence": [
+   "midi/midipkt_routines.s:45 `calr MidiPkt_EnqueueExtended_Data` -- the only caller, MidiPkt_ExtractAndPack (10), which nothing references",
+   "midi/midipkt_routines.s:14-45 `call Part_LookupTableEntry` (rec+6, rec+7) / `inc 1, c` / `sll hl, 8` / `or (xsp+4), hl` / `ld (xbc+2), wa` / `.byte 0xda, 0xfe` (sll a,de) / `ld (xbc+4), de` / `calr MidiPkt_EnqueueExtended_Data` -- the 16-bit value and shifted mask it passes",
+   "midi/midipkt_routines.s:674-687 `ld xiy, MidiPkt_MsgTemplate_3350` ... `calr MidiPkt_CheckGateCondition` / `lda xwa, (MidiCtl_NullRecord:24)` / `cpw (xwa+4), 0` -- early exits",
+   "midi/midipkt_routines.s:688-702 `ld xwa, SysEx_Msg_35DC` / `ld bc, 6:i3` / `call ArpQueue_Enqueue` / `ld xwa, (xiz+4)` / `call ArpQueue_Enqueue` / `ld bc, (xbc+4)` / `and bc, (xwa+2)` / `.byte 0xd9, 0xff` (srl a,bc)",
+   "midi/midipkt_routines.s:704-717 nibble split, `ld bc, 3:i3` / `call ArpQueue_Enqueue` / `call ArpQueue_ComputeAndEnqueue` / `call SeqOut_FlushTimedBuffer` / `call ArpQueue_SwapBuffers`",
+   "midi/midipkt_routines.s:1061-1068 header of MidiPkt_SendCtlValueSysEx -- the 8-bit twin (same header bytes, byte value instead of word)",
+   "ui_widgets/widget_dispatch.s:2009-2010 `SysEx_Msg_35DC: .byte 0xf0, 0x50, 0x2c, 0x01, 0x28, 0x12`"
+  ]
+ },
+ {
+  "old": "AccPos_ClearOnStart_Padding_Sub",
+  "verdict": "refuse",
+  "why_refused": "No live caller establishes the purpose. Its only caller is the XIZ-saving veneer AccWrap_PositionSaveData (push xiz; call; pop xiz; ret), and that veneer has no referrer: no call/calr/jp to 0xF59AFA and no 24-bit pointer to it in the v10 ROM (the only hit, 0xF59AFC, is the veneer's own call operand). Body only: if CURRENT_MODE = 19 (MD_DEMO) clears 0x347A bit 1 and 0x28A6 bit 0; otherwise, when 0x347A bit 1 is set and (0x3283) & 3 = 0, zeroes 0x3479, calls AccReplay_FullStop and clears 0x347A bit 1. It is a separate routine (not internal flow of AccPos_ClearOnStart, which returns before it).",
+  "new": null,
+  "header": "Mode-19 / replay-stop flag routine reached only from the unreferenced veneer AccWrap_PositionSaveData. Basis: refused (no live caller).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:6281 `call AccPos_ClearOnStart_Padding_Sub` -- the only reference, inside AccWrap_PositionSaveData (6279), which has 0 references",
+   "sequencer/accompaniment_engine.s:9215-9232 `cp (CURRENT_MODE:16), 19` / `and (0x347a:16), 253` / `and (0x28a6:16), 254` ... `bit 1, (0x347a:16)` / `ld a, (0x3283:16)` / `and a, 3` / `ld (0x3479:16), 0` / `calr AccReplay_FullStop` -- body",
+   "ROM search (scratch xrefs.py over llvm-objdump of the v10 ELF + 24-bit pattern search): nothing branches to or points at 0xF59AFA"
+  ]
+ },
+ {
+  "old": "AccDir_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccDir_TickVector",
+  "header": "Slot 0 of the AccDir jump-vector block (`jp AccDir_Main`; AccDir_PeriodicEntry's `jp AccDir_PeriodicCheck` follows): Seq_DispatcherTick calls it on every sequencer tick, before the Sound Arranger and tap-tempo vectors. AccDir_Main steps the VARIATION field (record 0x48 +7 bits 4-5, RAM 0xFC61) down or up when the low 6 bits of RAM 0x3312 / 0x3313 drop to 0 (only while 0xFD99 bit 0 is set and the style number is below 128) and posts it as panel event 0x48/7.\nBasis: callers + body -- same shape as AccPlay_TickVector.",
+  "basis": "callers + body",
+  "spelling": "a 4-byte `jp` vector slot, not a routine body",
+  "evidence": [
+   "sequencer/smf_event_processor.s:10813-10815 `call AccDir_Entry` / `call AccStyle_Entry` / `call AccProcess_Entry` -- the only caller, Seq_DispatcherTick_Process (10798), run each sequencer tick",
+   "sequencer/accompaniment_engine.s:10196-10200 `AccDir_Entry: jp AccDir_Main` / `AccDir_PeriodicEntry: jp AccDir_PeriodicCheck` -- a block of jp vectors",
+   "sequencer/accompaniment_engine.s:10202-10229 AccDir_Main: `calr AccDir_ReadState` ... `or (0x349f:16), 1` / `or (0x349f:16), 8` / `calr AccDir_AdjustDirection` / `calr AccDir_SavePrevState`",
+   "sequencer/accompaniment_engine.s:10285-10311 AccDir_AdjustDirection: `ld a, (0xfc61:16)` / `and a, 0x30` / `srl a, 4` / `dec 1, a` / `or (0xfc61:16), a` / `calr AccDir_DispatchEvent` (the bit-3 path increments, 10321-10335); AccDir_DispatchEvent posts E = 0x48, D = 7, W = 0x30",
+   "audio/audio_control_engine.s:1085-1092 PanelButton_Variation writes the same field: FileIO_BytecodeData_Data_15 {0x00, 0x10, 0x20, 0x30} with change mask 48",
+   "sequencer/seq_event_playback.s:1099-1100 `AccPlay_TickVector: jp AccPlay_MainDispatch` -- naming precedent"
+  ]
+ },
+ {
+  "old": "AccProcess_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccProcess_TapTempoTick",
+  "header": "Per-tick entry of the tap-tempo timer (`call AccProcess_TimerCompare; ret`): Seq_DispatcherTick calls it on every sequencer tick; AccProcess_TimerCompare ends a tap sequence -- clears 0x3490 bit 0 and the three stored intervals 0x3492/0x3494/0x3496 -- once 0x400 SYSTEM_TIMESTAMP units pass after the last tap (word 0x348E).\nBasis: callers + body -- the tap handler AccProcess_InlinedCode (panel code 0xA8 listener) sets 0x3490 bit 0 and 0x348E on each press and posts 30000 / interval as the tempo.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/smf_event_processor.s:10815 `call AccProcess_Entry` -- the only caller, Seq_DispatcherTick_Process",
+   "sequencer/accompaniment_engine.s:10407-10409 `AccProcess_Entry: call AccProcess_TimerCompare` / `ret` -- whole body",
+   "sequencer/accompaniment_engine.s:10490-10504 AccProcess_TimerCompare: `bit 0, (0x3490:16)` / `ld wa, (SYSTEM_TIMESTAMP:16)` / `ld bc, (RHYTHM_PATTERN_SEL_B:16)` / `sub wa, bc` / `cp wa, 0x400` / `and (0x3490:16), 254` / `ld (0x3492:16), wa` ... -- timeout reset",
+   "sequencer/accompaniment_engine.s:10420-10459 AccProcess_InlinedCode: first press stores SYSTEM_TIMESTAMP in RHYTHM_PATTERN_SEL_B (0x348E) and sets 0x3490 bit 0; later presses clamp the interval to 100..750, `ld xwa, 0x7530` / `div xwa, bc` and call AccProcess_PostAveragedTapTempo",
+   "sequencer/accompaniment_engine.s:10462-10466 header of AccProcess_PostAveragedTapTempo -- 'Averages the new tap tempo'",
+   "sequencer/accompaniment_engine.s:10403-10405 `SwbtB3_CodeA8_Listener0: call AccProcess_InlinedCode` -- the press path"
+  ]
+ },
+ {
+  "old": "AccStyle_Entry",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_TickVector",
+  "header": "Slot 0 of the Sound Arranger engine's jump-vector block (`jp AccStyle_Process`; AccStyle_JumpTable's ToggleBit0 / ModeEnter / ModeExit / InlinedBlock_Helper slots follow): Seq_DispatcherTick calls it on every sequencer tick. While a Sound Arranger part is selected ((0x338E) & 0x1F != 0) AccStyle_Process copies changed accompaniment-part sounds into the current style's 10-byte arrangement record at 0x1E7810 + 10 * index.\nBasis: callers + body -- 0x338E is cleared on entering / leaving mode 17 (MD_SND_ARG) and set from the Sound Arranger grid (AcSndArgGridBoxProc).",
+  "basis": "callers + body",
+  "spelling": "a 4-byte `jp` vector slot, not a routine body",
+  "evidence": [
+   "sequencer/smf_event_processor.s:10814 `call AccStyle_Entry` -- the only caller, Seq_DispatcherTick_Process",
+   "sequencer/accompaniment_engine.s:10868-10874 `AccStyle_Entry: jp AccStyle_Process` / `AccStyle_JumpTable: jp AccStyle_ToggleBit0` / `jp AccStyle_ModeEnter` / `jp AccStyle_ModeExit` / `jp AccStyle_InlinedBlock_Helper`",
+   "sequencer/accompaniment_engine.s:10910-10932 AccStyle_Process: `ld a, (0x338e:16)` / `and a, 0x1f` / ... `add xiy, 0x1e7810` / `calr AccVoiceDelta_Part1` .. `calr AccVoiceDelta_Part5` / `ld (0x338f:16), a`",
+   "sequencer/accompaniment_engine.s:10986-10989 AccStyle_ModeEnter: `cp (PREVIOUS_MODE:16), 17` / ... / `ld (0x338e:16), 0`",
+   "sequencer/accompaniment_engine.s:11015-11018 AccStyle_ModeExit: `cp (CURRENT_MODE:16), 17` / ... / `ld (0x338e:16), 0`",
+   "shared/event_codes.s:86 `TITLE_SNDARG` -- 'the Sound Arranger page ... home title of mode 0x11, MD_SND_ARG'",
+   "audio/sound_editor_ui.s:18852-18854 AcSndArgGridBoxProc: `lda xbc, (xsp + 12)` / `ld (0x338e:16), (xbc+wa)` -- the grid sets the part selector"
+  ]
+ },
+ {
+  "old": "AccVoiceDelta_Part1",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_StoreDrumSound",
+  "header": "Sound Arranger: compares the DRUM part's sound (part record 20 at RAM 0xFBBE: program, bank & 0x7F) with its last value (word 0x3395); when it changed, writes it into the current style's arrangement record at XIY -- +0 = program & 0x0F, +1 = bank (bit 7 kept) -- and sets 0x3393 bit 0; then saves the new value.\nBasis: callers + body -- AccStyle_Process (the per-tick Sound Arranger step) calls the five AccVoiceDelta_PartN with XIY = 0x1E7810 + 10 * index; one-hot selector 1 = part 0x14, the DRUM entry of the part-name table.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:10920-10923 `calr AccHelper_ComputeVoiceOffset` / `ld xiy, xhl` / `add xiy, 0x1e7810` / `calr AccVoiceDelta_Part1` -- the only caller, AccStyle_Process (10910)",
+   "sequencer/accompaniment_engine.s:11442-11457 `ld a, (0xfbbe:16)` / `ld w, (0xfbbf:16)` / `and w, 0x7f` / `cp (0x3395:16), wa` / `and a, 0xf` / `ld (xiy + 0:8), a` / `andmi8 (xiy + 1), 0x80` / `or (xiy + 1), w` / `or (0x3393:16), 1` / `ld (0x3395:16), wa` -- body",
+   "ui_widgets/widget_dispatch.s:1158 `.long 0x0000fbbe, 0x0000fbd8, 0x0000fbf2, 0x0000fd62 ; 0x14` -- 0xFBBE is part record 0x14 (20)",
+   "ui_widgets/sequencer_channel_containers.s:170 `.long NakaInst_DRUM` -- entry 20 of the part-name pointer table (entries 16-20 = ACCOMP1, ACCOMP2, ACCOMP3, BASS, DRUM; RAM image 0x3E9A0)",
+   "audio/audio_control_engine.s:11948 `It then sets bit 1 (refuse) when part 15 or 20 gets a category` (11949: 'other than 15 (drum kits)') -- header of MidiStream_CheckPartProgramAllowed: part 20 is a drum part",
+   "sequencer/accompaniment_engine.s:11176 `1 -> 0x14, 2 -> 0x13, 4 -> 0x10, 8 -> 0x11, 16 -> 0x12, else 0` -- the Sound Arranger selector (0x338E) codes"
+  ]
+ },
+ {
+  "old": "AccVoiceDelta_Part2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_StoreBassSound",
+  "header": "Sound Arranger: compares the BASS part's sound (part record 19 at RAM 0xFBA4: program, bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x3397); when it changed, writes program / bank into +2 / +3 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new value.\nBasis: callers + body -- second of AccStyle_Process's five per-part steps; selector code 2 = part 0x13, the BASS entry of the part-name table.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:10924 `calr AccVoiceDelta_Part2` -- the only caller, AccStyle_Process",
+   "sequencer/accompaniment_engine.s:11459-11476 `ld a, (0xfba4:16)` / `ld w, (0xfba5:16)` / `ld l, (0xfba8:16)` / `and l, 0x40` / `sla l, 1` / `or w, l` / `cp (0x3397:16), wa` / `ld (xiy + 2), a` / `or (xiy + 3), w` / `or (0x3393:16), 1` -- body",
+   "ui_widgets/widget_dispatch.s:1157 `.long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4 ; 0x10` -- 0xFBA4 is part record 0x13 (19)",
+   "ui_widgets/sequencer_channel_containers.s:169 `.long NakaInst_BASS` -- entry 19 of the part-name pointer table",
+   "sequencer/accompaniment_engine.s:11176 `1 -> 0x14, 2 -> 0x13, 4 -> 0x10, 8 -> 0x11, 16 -> 0x12, else 0` -- selector codes"
+  ]
+ },
+ {
+  "old": "AccVoiceDelta_Part3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_StoreAccomp1Sound",
+  "header": "Sound Arranger: compares the ACCOMP1 part's sound (part record 16 at RAM 0xFB56: program, bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x3399); when it changed, writes program / bank into +4 / +5 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new value.\nBasis: callers + body -- third of AccStyle_Process's five per-part steps; selector code 4 = part 0x10, the ACCOMP1 entry of the part-name table.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:10925 `calr AccVoiceDelta_Part3` -- the only caller, AccStyle_Process",
+   "sequencer/accompaniment_engine.s:11478-11495 `ld a, (0xfb56:16)` / `ld w, (0xfb57:16)` / `ld l, (0xfb5a:16)` / `cp (0x3399:16), wa` / `ld (xiy + 4), a` / `or (xiy + 5), w` / `or (0x3393:16), 1` -- body",
+   "ui_widgets/widget_dispatch.s:1157 `.long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4 ; 0x10` -- 0xFB56 is part record 0x10 (16)",
+   "ui_widgets/sequencer_channel_containers.s:166 `.long NakaInst_ACCOMP1` -- entry 16 of the part-name pointer table",
+   "sequencer/accompaniment_engine.s:11176 `1 -> 0x14, 2 -> 0x13, 4 -> 0x10, 8 -> 0x11, 16 -> 0x12, else 0` -- selector codes"
+  ]
+ },
+ {
+  "old": "AccVoiceDelta_Part4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_StoreAccomp2Sound",
+  "header": "Sound Arranger: compares the ACCOMP2 part's sound (part record 17 at RAM 0xFB70: program, bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x339B); when it changed, writes program / bank into +6 / +7 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new value.\nBasis: callers + body -- fourth of AccStyle_Process's five per-part steps; selector code 8 = part 0x11, the ACCOMP2 entry of the part-name table.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:10926 `calr AccVoiceDelta_Part4` -- the only caller, AccStyle_Process",
+   "sequencer/accompaniment_engine.s:11497-11514 `ld a, (0xfb70:16)` / `ld w, (0xfb71:16)` / `ld l, (0xfb74:16)` / `cp (0x339b:16), wa` / `ld (xiy + 6), a` / `or (xiy + 7), w` / `or (0x3393:16), 1` -- body",
+   "ui_widgets/widget_dispatch.s:1157 `.long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4 ; 0x10` -- 0xFB70 is part record 0x11 (17)",
+   "ui_widgets/sequencer_channel_containers.s:167 `.long NakaInst_ACCOMP2` -- entry 17 of the part-name pointer table"
+  ]
+ },
+ {
+  "old": "AccVoiceDelta_Part5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndArg_StoreAccomp3Sound",
+  "header": "Sound Arranger: compares the ACCOMP3 part's sound (part record 18 at RAM 0xFB8A: program, bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x339D); when it changed, writes program / bank into +8 / +9 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new value.\nBasis: callers + body -- last of AccStyle_Process's five per-part steps; selector code 16 = part 0x12, the ACCOMP3 entry of the part-name table.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:10927 `calr AccVoiceDelta_Part5` -- the only caller, AccStyle_Process",
+   "sequencer/accompaniment_engine.s:11516-11533 `ld a, (0xfb8a:16)` / `ld w, (0xfb8b:16)` / `ld l, (0xfb8e:16)` / `cp (0x339d:16), wa` / `ld (xiy + 8), a` / `or (xiy + 9), w` / `or (0x3393:16), 1` -- body",
+   "ui_widgets/widget_dispatch.s:1157 `.long 0x0000fb56, 0x0000fb70, 0x0000fb8a, 0x0000fba4 ; 0x10` -- 0xFB8A is part record 0x12 (18)",
+   "ui_widgets/sequencer_channel_containers.s:168 `.long NakaInst_ACCOMP3` -- entry 18 of the part-name pointer table"
+  ]
+ },
+ {
+  "old": "AccTone_JumpTableData_Data",
+  "verdict": "refuse",
+  "why_refused": "No live caller establishes the purpose. Its only caller is slot 4 (`call AccTone_JumpTableData_Data; ret`) of the five call veneers at AccTone_JumpTableData (0xF5E8E7), and none of the five slots is referenced: no symbolic reference, no call/calr/jp into 0xF5E8E7..0xF5E8FB in the disassembly, and no 24-bit pointer to any slot in the v10, HD-AE5000, custom-data or table-data images. The other four veneer targets (AccTone_InlineBytecodeData, AccTone_JumpTableData_Helper3/2/Helper) are likewise reached only from these veneers. Body only: when 0x341F bit 0 is set, Rhythm_SendChanPressure_Wrap, AccBuf_ResetAll4_Wrap, (0x3426) := 0x94860 + RhythmTiming_OffsetTable[(0x3421)], AccTuning_CopyAllPartsFromStyle_Wrap on it, sets 0x332C bits 0-5 and 7, AccTone_InlineBytecodeData_Code_Helper2, copies 0x32D8..DA to 0x32DF..E1 and clears 0x341F bit 0.",
+  "new": null,
+  "header": "Pattern-reload step reached only from an unreferenced call-veneer block. Basis: refused (no live caller).",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:13815-13825 `AccTone_JumpTableData: call AccTone_InlineBytecodeData` / `ret` / ... / `call AccTone_JumpTableData_Data` / `ret` -- the veneer block, 0 references",
+   "sequencer/accompaniment_engine.s:12256-12277 `bit 0, (0x341f:16)` / `call Rhythm_SendChanPressure_Wrap` / `call AccBuf_ResetAll4_Wrap` / `lda xde, (RhythmTiming_OffsetTable:24)` / `ld xbc, 608352` / `call AccTuning_CopyAllPartsFromStyle_Wrap` / `res 0, (0x341f:16)` -- body",
+   "ROM search (scratch xrefs.py over llvm-objdump of the v10 ELF + 24-bit pattern search of all images): nothing branches to or points at 0xF5E8E7, 0xF5E8EC, 0xF5E8F1, 0xF5E8F6 or 0xF5E8FB"
+  ]
+ },
+ {
+  "old": "AccPatch_CountSlots_Wrapper",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AccPatch_RecountFreeSlots",
+  "header": "Far-callable thunk (`calr AccPatch_CountAvailableSlots; ret`): recounts the free patch entries 0x96..0x153 (bit 7 of byte 0 clear) of the current style image and stores 190 minus the used ones in word 0x34D4.\nBasis: callers + body -- called from other modules after style data was loaded or copied (DrumKitInit_FinalSetup, Flash_InitBytecodeBlock twice, CstmCpTtl_ResolvePendingCopy); its twin AccPatch_CountSlotsAlt does the same for the image at 0x69800.",
+  "basis": "callers + body",
+  "evidence": [
+   "sequencer/accompaniment_engine.s:24481-24482 `DrumKitInit_FinalSetup:` / `call AccPatch_CountSlots_Wrapper`",
+   "storage/flash_floppy_handlers.s:1398 `call AccPatch_CountSlots_Wrapper` and 1538 -- Flash_InitBytecodeBlock (1320)",
+   "storage/flash_floppy_handlers.s:1602 `call AccPatch_CountSlots_Wrapper` -- CstmCpTtl_ResolvePendingCopy (1562)",
+   "sequencer/accompaniment_engine.s:13843-13849 `AccPatch_CountSlots_Wrapper: calr AccPatch_CountAvailableSlots` / `ret` / `AccPatch_CountSlotsAlt: calr AccPatch_CountAvailableSlotsInAltImage` / `ret` -- the thunk pair",
+   "sequencer/accompaniment_engine.s:15157-15175 AccPatch_CountAvailableSlots: `ldw wa, 0xbe` / `ldw de, 0x153` / `bitm 7, (xix)` / `dec 1, wa` / `cp de, 0x95` / `ld (0x34d4:16), wa`",
+   "sequencer/accompaniment_engine.s:15181-15185 header of AccPatch_CountAvailableSlotsInAltImage -- 'Counts the free patch entries 0x96..0x153 ... stores 190 minus the used entries in 0x34D4'"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_ModeKeyCodes_LeftSeg3",
+  "header": "Mode-key map of left-panel segment 3 (panel event index 3), indexed by the lowest set bit of the shifted button bits: bit 0 DEMO -> 0x13 (19, MD_DEMO), bit 1 MSP MENU -> 0x0F (15, MD_MSP). PanelButton_ModeKey puts the mode in byte +2 of the event before posting it. The 2-byte slices of these maps overlap the next one's window.\nBasis: readers + bytes -- PanelButton_ModeKey selects this map for event index 3; the segment's action list sends DEMO (mask 0x01, shift 0) and MSP MENU (mask 0x04, shift 1) to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:162-172 `ld a, (36496:16)` / `cp a, 21` / ... / `cp a, 3:i3` -- PanelButton_ModeKey (140) switches on the panel event index at RAM 0x8E90",
+   "audio/audio_control_engine.s:159-193 `call Util_FindLowestSetBit` / ... / `ld xwa, FileIO_BytecodeData_Data` (179, the map for index 3) / ... / `ld a, (xwa+hl)` (193) -- takes map[lowest set bit]",
+   "ui_widgets/naka_extension_device.c:5907-5910 `.PanelActions_LeftSeg3 = {` / `{ 0xA9, 0x20, 0x00, 0x01, NAKA_ADDR(PanelButton_ModeKey) }, /* DEMO */` / ... / `/* MSP MENU */` (shift 1, mask 0x04)",
+   "includes/generated/naka_extension_device.bin +0x3564 `13 0f` -- 19, 15",
+   "shared/event_codes.s:472 `NAKA_MODE_MD_DEMO, 0x1800013` (19); 1858 NAKA_MODE_MD_MSP = 0x180000F (15)",
+   "ui_widgets/extension_device_screens.s:994-995 `PanelButton_ActionLists -- 32 list pointers, one per panel event index: 0..10 = left-panel segments` -- 11..21 = right-panel segments 0..10; 1006-1010 header of PanelButton_ModeKeyCodes, the index-1 map of the same reader"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_ModeKeyCodes_LeftSeg10",
+  "header": "Mode-key map of left-panel segment 10 (panel event index 10): bit 0 HELP -> 0x14 (20, MD_HELP); 0xFF = no mode.\nBasis: readers + bytes -- PanelButton_ModeKey selects it for event index 10; the segment sends HELP (mask 0x04, shift 2) to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:170-182 `cp a, 10` / ... / `ld xwa, FileIO_BytecodeData_Data_2` -- PanelButton_ModeKey's map for index 10",
+   "ui_widgets/naka_extension_device.c:5999-6002 `.PanelActions_LeftSeg10 = {` / `{ 0xA9, 0x20, 0x02, 0x04, NAKA_ADDR(PanelButton_ModeKey) }, /* HELP */`",
+   "includes/generated/naka_extension_device.bin +0x3566 `14 ff` -- 20",
+   "shared/event_codes.s:1862 `NAKA_MODE_MD_HELP, 0x1800014`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_ModeKeyCodes_RightSeg4",
+  "header": "Mode-key map of right-panel segment 4 (panel event index 15): bit 0 ENTERTAINER -> 7 (MD_ENTERTAINER); 0xFF = no mode.\nBasis: readers + bytes -- PanelButton_ModeKey selects it for event index 15; the segment sends ENTERTAINER (mask 0x08, shift 3) to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:168-185 `cp a, 15` / ... / `ld xwa, FileIO_BytecodeData_Data_3` -- PanelButton_ModeKey's map for index 15 (= right segment 4; indexes 11..21 are right segments 0..10)",
+   "ui_widgets/naka_extension_device.c:6068-6070 `.PanelActions_RightSeg4 = {` / `{ 0xA9, 0x20, 0x03, 0x08, NAKA_ADDR(PanelButton_ModeKey) }, /* ENTERTAINER */`",
+   "includes/generated/naka_extension_device.bin +0x3568 `07 ff` -- 7",
+   "shared/event_codes.s:470 `NAKA_MODE_MD_ENTERTAINER, 0x1800007`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_ModeKeyCodes_RightSeg5",
+  "header": "Mode-key map of right-panel segment 5 (panel event index 16): bit 0 SEQUENCER EASY REC -> 9 (MD_SEQ_EREC), bit 1 SEQUENCER MENU -> 8 (MD_SEQ).\nBasis: readers + bytes -- PanelButton_ModeKey selects it for event index 16; the segment sends EASY REC (mask 0x10) and MENU (mask 0x20), shift 4, to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:166-188 `cp a, 16` / ... / `ld xwa, FileIO_BytecodeData_Data_4` -- PanelButton_ModeKey's map for index 16",
+   "ui_widgets/naka_extension_device.c:6083-6086 `.PanelActions_RightSeg5 = {` / `/* SEQUENCER: EASY REC */` / `{ 0xA9, 0x20, 0x04, 0x20, NAKA_ADDR(PanelButton_ModeKey) }, /* SEQUENCER: MENU */`",
+   "includes/generated/naka_extension_device.bin +0x356A `09 08` -- 9, 8",
+   "shared/event_codes.s:1852 `NAKA_MODE_MD_SEQ_EREC, 0x1800009` (9); 471 NAKA_MODE_MD_SEQ = 0x1800008 (8)"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_ModeKeyCodes_RightSeg10",
+  "header": "Mode-key map of right-panel segment 10 (panel event index 21): bits 0-3 MENU SOUND / CONTROL / MIDI / DISK -> 2 (MD_SOUND), 4 (MD_CONTROL), 5 (MD_MIDI), 6 (MD_DISK).\nBasis: readers + bytes -- PanelButton_ModeKey selects it for event index 21; the segment sends the four MENU buttons (masks 0x04-0x20, shift 2) to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:164-191 `cp a, 21` / ... / `ld xwa, FileIO_BytecodeData_Data_5` -- PanelButton_ModeKey's map for index 21",
+   "ui_widgets/naka_extension_device.c:6140-6144 `.PanelActions_RightSeg10 = {` / `/* MENU: SOUND */` / `/* MENU: CONTROL */` / `/* MENU: MIDI */` / `{ 0xA9, 0x20, 0x02, 0x20, NAKA_ADDR(PanelButton_ModeKey) }, /* MENU: DISK */`",
+   "includes/generated/naka_extension_device.bin +0x356C `02 04 05 06` -- 2, 4, 5, 6",
+   "shared/event_codes.s:468 `NAKA_MODE_MD_SOUND, 0x1800002`; 1849-1851 MD_CONTROL / MD_MIDI / MD_DISK = 4 / 5 / 6"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_6",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_SoundGroupCodes_RightSeg1",
+  "header": "Sound-group map of right-panel segment 1 (panel event index 12), indexed by the lowest set button bit: ORGAN & ACCORDION, ORCHESTRAL PAD, SYNTH, BASS, DIGITAL DRAWBAR, ACCORDION REGISTER, GM SPECIAL, DRUM KITS -> sound groups 8..15.\nBasis: readers + bytes -- PanelButton_SoundGroup selects it for event index 12 and accepts a group <= 17.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:465-473 `ld a, (36496:16)` / `cp a, 20` / `cp a, 13` / `cp a, 12` / `ld xwa, FileIO_BytecodeData_Data_6` -- PanelButton_SoundGroup (436), map for index 12",
+   "audio/audio_control_engine.s:475-477 `ld a, (xwa+hl)` / `ld (xde), a` / `cp a, 17` -- group number into the event, <= 17 accepted",
+   "ui_widgets/naka_extension_device.c:6034-6035 `.PanelActions_RightSeg1 = {` / `{ 0x00, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelButton_SoundGroup) }, /* ORGAN & ACCORDION, ORCHESTRAL PAD, SYNTH, BASS, DIGITAL DRAWBAR, ACCORDION REGISTER, GM SPECIAL, DRUM KITS */`",
+   "includes/generated/naka_extension_device.bin +0x3570 `08 09 0a 0b 0c 0d 0e 0f`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_7",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_SoundGroupCodes_RightSeg2",
+  "header": "Sound-group map of right-panel segment 2 (panel event index 13): PIANO, GUITAR, STRINGS & VOCAL, BRASS, FLUTE, SAX & REED, MALLET & ORCH PERC, WORLD PERC -> sound groups 0..7.\nBasis: readers + bytes -- PanelButton_SoundGroup selects it for event index 13.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:469-481 `cp a, 13` / ... / `ld xwa, FileIO_BytecodeData_Data_7` -- PanelButton_SoundGroup's map for index 13",
+   "ui_widgets/naka_extension_device.c:6044-6045 `.PanelActions_RightSeg2 = {` / `{ 0x00, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelButton_SoundGroup) }, /* PIANO, GUITAR, STRINGS & VOCAL, BRASS, FLUTE, SAX & REED, MALLET & ORCH PERC, WORLD PERC */`",
+   "includes/generated/naka_extension_device.bin +0x3578 `00 01 02 03 04 05 06 07`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_8",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_SoundGroupCodes_RightSeg9",
+  "header": "Sound-group map of right-panel segment 9 (panel event index 20): MEMORY A, MEMORY B -> sound groups 16, 17.\nBasis: readers + bytes -- PanelButton_SoundGroup selects it for event index 20; the segment sends MEMORY A / B (mask 0xC0, shift 6 -> bits 0, 1).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:467-484 `cp a, 20` / ... / `ld xwa, FileIO_BytecodeData_Data_8` -- PanelButton_SoundGroup's map for index 20",
+   "ui_widgets/naka_extension_device.c:6130-6131 `.PanelActions_RightSeg9 = {` / `{ 0x00, 0x00, 0x06, 0xC0, NAKA_ADDR(PanelButton_SoundGroup) }, /* MEMORY A, MEMORY B */`",
+   "includes/generated/naka_extension_device.bin +0x3580 `10 11` -- 16, 17"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_9",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_RhythmGroupCodes_LeftSeg0",
+  "header": "Rhythm-group map of left-panel segment 0 (panel event index 0), indexed by the lowest set button bit: STANDARD ROCK, R & ROLL & BLUES, POP & BALLAD, FUNK & FUSION, SOUL & MODERN DANCE, BIG BAND & SWING, JAZZ COMBO -> rhythm groups 0..6 (bit 7: 0xFF).\nBasis: readers + bytes -- PanelButton_RhythmGroup selects it for event index 0 and accepts a group <= 15.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:583-591 `ld a, (36496:16)` / `cp a, 6:i3` / `cp a, 1:i3` / `cp a, 0:i3` / `ld xwa, FileIO_BytecodeData_Data_9` -- PanelButton_RhythmGroup (554), map for index 0",
+   "audio/audio_control_engine.s:593-596 `ld a, (xwa+hl)` / `ld (xde), a` / `ld c, a` / `cp c, 15`",
+   "ui_widgets/naka_extension_device.c:5864-5865 `.PanelActions_LeftSeg0 = {` / `{ 0x48, 0x00, 0x00, 0x7F, NAKA_ADDR(PanelButton_RhythmGroup) }, /* STANDARD ROCK, R & ROLL & BLUES, POP & BALLAD, FUNK & FUSION, SOUL & MODERN DANCE, BIG BAND & SWING, JAZZ COMBO */`",
+   "includes/generated/naka_extension_device.bin +0x3582 `00 01 02 03 04 05 06 ff`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_10",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_RhythmGroupCodes_LeftSeg1",
+  "header": "Rhythm-group map of left-panel segment 1 (panel event index 1): bit 0 MEMORY -> rhythm group 15.\nBasis: readers + bytes -- PanelButton_RhythmGroup selects it for event index 1; the segment sends MEMORY (mask 0x01) to it.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:587-600 `cp a, 1:i3` / ... / `ld xwa, FileIO_BytecodeData_Data_10` -- PanelButton_RhythmGroup's map for index 1",
+   "ui_widgets/naka_extension_device.c:5874-5875 `.PanelActions_LeftSeg1 = {` / `{ 0x48, 0x00, 0x00, 0x01, NAKA_ADDR(PanelButton_RhythmGroup) }, /* MEMORY */`",
+   "includes/generated/naka_extension_device.bin +0x358A `0f ff` -- 15"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_11",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_RhythmGroupCodes_LeftSeg6",
+  "header": "Rhythm-group map of left-panel segment 6 (panel event index 6): U.S. TRAD, COUNTRY, LATIN, MARCH & WALTZ, PARTY TIME, SHOWTIME & TRAD DANCE, WORLD, CUSTOM -> rhythm groups 7..14.\nBasis: readers + bytes -- PanelButton_RhythmGroup selects it for event index 6.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:585-603 `cp a, 6:i3` / ... / `ld xwa, FileIO_BytecodeData_Data_11` -- PanelButton_RhythmGroup's map for index 6",
+   "ui_widgets/naka_extension_device.c:5943-5944 `.PanelActions_LeftSeg6 = {` / `{ 0x48, 0x00, 0x00, 0xFF, NAKA_ADDR(PanelButton_RhythmGroup) }, /* U.S. TRAD, COUNTRY, LATIN, MARCH & WALTZ, PARTY TIME, SHOWTIME & TRAD DANCE, WORLD, CUSTOM */`",
+   "includes/generated/naka_extension_device.bin +0x358C `07 08 09 0a 0b 0c 0d 0e`"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_13",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_MspBank17FuncCodes",
+  "header": "6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank (sound parameter 0x28800) is 17: 0xAD, 0xB3, 0x96, 0x91, 0xB4, 0x90. PanelButton_MspNumber puts code [button] in C and calls handler [button] of FileIO_BytecodeData_Code_Entry8_PtrTable, each the same handler PanelAction_PedalAssignHandlerIndex / PanelAction_PedalFunctionHandlers give for that code.\nBasis: readers + bytes -- `cp hl, 17` on SndParam_LookupReadOnly(0x28800); all six code -> handler pairs match the pedal tables.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:1014-1030 `ld xwa, 165888` / `call SndParam_LookupReadOnly` / ... / `cp hl, 17` / `lda xde, (FileIO_BytecodeData_Data_13:24)` / `ld c, (xde+bc)` / `lda xde, (FileIO_BytecodeData_Code_Entry8_PtrTable:24)` / `call (xhl)` -- PanelButton_MspNumber (998)",
+   "ui_widgets/naka_extension_device.c:5934 `{ 0xA8, 0x09, 0x00, 0x3F, NAKA_ADDR(PanelButton_MspNumber) }, /* MSP 1, MSP 2, MSP 3, MSP 4, MSP 5, MSP 6 */`",
+   "includes/generated/naka_extension_device.bin +0x35B0 `ad b3 96 91 b4 90`; PanelAction_PedalAssignHandlerIndex[code] = 13, 14, 8, 3, 15, 2 and PanelAction_PedalFunctionHandlers[those] = 0xFC6797, 0xFC67BC, 0xFC65E8, 0xFC64EA, 0xFC6815, 0xFC647F = the six entries of FileIO_BytecodeData_Code_Entry8_PtrTable (+0x3598)",
+   "audio/sound_editor_ui.s:17832 `MspBnkShow_SelectPage2: MSP bank >= 10` -- key 0x28800 is the MSP bank (VwVariBox / MspBnkShow read it)"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_14",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_MspBank18FuncCodes",
+  "header": "6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank (sound parameter 0x28800) is 18: 0x92, 0x94, 0xB5, 0x93, 0x95, 0x88, with handlers from FileIO_BytecodeData_Code_Entry8_PtrTable_2. Five match the pedal tables; 0xB5 has no pedal handler and is served by handler 12 (ExtDev_SndParam_Block48_Var02), which the pedal map never selects.\nBasis: readers + bytes -- `cp hl, 18` on SndParam_LookupReadOnly(0x28800).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:1020-1039 `cp hl, 18` / ... / `lda xde, (FileIO_BytecodeData_Data_14:24)` / `ld c, (xde+bc)` / `lda xde, (FileIO_BytecodeData_Code_Entry8_PtrTable_2:24)` / ... / `call (xhl)` -- PanelButton_MspNumber",
+   "includes/generated/naka_extension_device.bin +0x35CE `92 94 b5 93 95 88`; handler indexes 4, 6, -, 5, 7, 1 -> 0xFC6554, 0xFC659E, (0xFC676B), 0xFC6579, 0xFC65C3, 0xFC645A = FileIO_BytecodeData_Code_Entry8_PtrTable_2 (+0x35B6)",
+   "ui_widgets/extension_device_screens.s:1035-1039 header of PanelAction_PedalFunctionHandlers -- 'the map never yields 12 (ExtDev_SndParam_Block48_Var02)'"
+  ]
+ },
+ {
+  "old": "FileIO_BytecodeData_Data_15",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PanelButton_VariationCodes",
+  "header": "4 x u8 {0x00, 0x10, 0x20, 0x30}: the VARIATION 1-4 buttons' values for record 0x48 +7 bits 4-5 (the style variation, RAM 0xFC61). PanelButton_Variation puts entry [lowest set bit] in the event's state byte with change mask 0x30 when the style's category byte is below 14.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/audio_control_engine.s:1084-1091 `cp (xhl), 14` / ... / `lda xhl, (FileIO_BytecodeData_Data_15:24)` / `ld a, (xhl+wa)` / `ld (xbc), a` / `ld (xde), 48` -- PanelButton_Variation (1053)",
+   "ui_widgets/naka_extension_device.c:5921 `{ 0x48, 0x07, 0x00, 0x0F, NAKA_ADDR(PanelButton_Variation) }, /* VARIATION 1, VARIATION 2, VARIATION 3, VARIATION 4 */` -- event 0x48 / field 7",
+   "includes/generated/naka_extension_device.bin +0x35D4 `00 10 20 30`",
+   "sequencer/accompaniment_engine.s:10297-10311 AccDir_AdjustDirection steps the same field: `ld a, (0xfc61:16)` / `and a, 0x30` / ... / `or (0xfc61:16), a`"
+  ]
+ },
+ {
+  "old": "CmpSetP1_DialGrid_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcCmpSetGridBox_RowUpSteps",
+  "header": "9 x u16 {1, 1, 1, 1, 2, 3, 1, 1, 1}: how many rows INDEX UP moves the selection of the Composer SET grid (AcCmpSetGridBoxProc) from each row; the new row is row - step[row].\nBasis: readers + bytes -- AcCmpSetGridBoxProc's EVT_INDEXSW_UP case indexes it with the selected row and sends EVT_SELE_DRAW with the result.",
+  "basis": "readers + bytes",
+  "spelling": "9 x u16 spelled as .byte pairs",
+  "evidence": [
+   "storage/flash_floppy_handlers.s:5996 `AcCmpSetGridBoxProc_OnIndexswUp: ; cases 29360151, 29360153` -- the INDEX UP case of AcCmpSetGridBoxProc (5931, switch on xbc - EVT_INDEXSW_UP at 5947)",
+   "storage/flash_floppy_handlers.s:6008-6019 `ld xbc, EVT_GET_SELECTED_CEL` / ... / `lda xbc, (CmpSetP1_DialGrid_Data:24)` / `ld wa, (xbc+wa)` / `sub hl, wa` / `extz xhl` / `add xhl, 0xffff0000` / ... / `ld xbc, EVT_SELE_DRAW` -- row minus step",
+   "ui_widgets/naka_screen_dispatch.s:1333-1334 `CmpSetP1_DialGrid_Data: .byte 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00` / `.byte 0x02, 0x00, 0x03, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00` -- 1,1,1,1,2,3,1,1,1",
+   "storage/flash_floppy_handlers.s:6072 `lda xbc, (CmpSetP1_SendAndApplyFunc_Data:24)` -- the matching down-step table"
+  ]
+ },
+ {
+  "old": "CmpSetP1_SendAndApplyFunc_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcCmpSetGridBox_RowDownSteps",
+  "header": "9 x u16 {1, 1, 3, 2, 1, 1, 1, 1, 1}: how many rows INDEX DOWN moves the selection of the Composer SET grid from each row; the new row is row + step[row] (rows 3 and 4 are skipped from row 2, as INDEX UP skips them from 5).\nBasis: readers + bytes -- AcCmpSetGridBoxProc's EVT_INDEXSW_DOWN case.",
+  "basis": "readers + bytes",
+  "spelling": "9 x u16 spelled as .byte pairs",
+  "evidence": [
+   "storage/flash_floppy_handlers.s:6055 `AcCmpSetGridBoxProc_OnIndexswDown: ; cases 29360152, 29360154`",
+   "storage/flash_floppy_handlers.s:6067-6079 `ld xbc, EVT_GET_SELECTED_CEL` / ... / `lda xbc, (CmpSetP1_SendAndApplyFunc_Data:24)` / `ld wa, (xbc+wa)` / `add wa, hl` / ... / `add xde, 0xffff0000` / `ld xbc, EVT_SELE_DRAW` -- row plus step",
+   "ui_widgets/naka_screen_dispatch.s:1335-1336 `CmpSetP1_SendAndApplyFunc_Data: .byte 0x01, 0x00, 0x01, 0x00, 0x03, 0x00` / `.byte 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00` -- 1,1,3,2,1,1,1,1,1"
+  ]
+ },
+ {
+  "old": "S2cMemNoBox_HandleScroll_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "S2cMemNoBox_SectionNameStrPtrs",
+  "header": "30 x u32 string pointers, the style-section names \"A-vari1\" .. \"C-vari4\", \"A-INT1\" .. \"C-END2\": AcS2cMemNoBoxProc (style-to-Composer convert screen) Sprintf's entry [(0x398F)] on EVT_PAINT / EVT_REPAINT and draws it. Entry 0 is the label; PtrTbl_StyleSectShortNames (entry 1) has no reader.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "entry 0 spelled as `.byte 0x7c, 0xd5, 0xe1, 0x00` (= `.long StrStyleSect_A_Vari1`)",
+  "evidence": [
+   "storage/flash_floppy_handlers.s:6849-6864 `S2cMemNoBox_HandleScroll:` / ... / `ld a, (0x398f:16)` / `sla wa, 2` / `lda xbc, (S2cMemNoBox_HandleScroll_Data:24)` / `ld xwa, (xbc+wa)` / ... / `call Sprintf_Locked` / ... / `ld xbc, EVT_PARA_DRAW` -- AcS2cMemNoBoxProc (6822) paint case",
+   "ui_widgets/naka_screen_dispatch.s:1562-1563 `S2cMemNoBox_HandleScroll_Data: .byte 0x7c, 0xd5, 0xe1, 0x00` / `PtrTbl_StyleSectShortNames:` -- entry 0 = 0xE1D57C = StrStyleSect_A_Vari1 (\"A-vari1\"), then 29 .long StrStyleSect_* entries",
+   "ROM 0xE1D57C `41 2d 76 61 72 69 31 00` -- \"A-vari1\"",
+   "sequencer/accompaniment_engine.s:27342-27346 `ld a, (0x398f:16)` / `cp a, 0x1d` / `ret nc` / `inc 1, a` / `ld (0x398f:16), a` -- the index runs 0..29"
+  ]
+ },
+ {
+  "old": "S2c_GridCheck_Dispatch_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "S2cGridCheck_PartTrackAddrs",
+  "header": "5 x u32 RAM addresses 0x3991..0x3995: the TRACK setting (0 = OFF, 1..16) of rows DRUMS, BASS, ACCOMP1, ACCOMP2, ACCOMP3 of the style-to-Composer grid. S2c_GridCheck_Dispatch reads the byte for row - 2 and draws StrBeatOff / StrBeat01..16 (pointer table in RAM 0x3DC4E) in column 1.\nBasis: readers + bytes -- Tempo_AdjustEffect_Table holds the same five addresses for the MT_S2cTrUp / MT_S2cTrDn value steps (0..16); the grid's fixedrow / fixedcol strings name the rows and the TRACK column.",
+  "basis": "readers + bytes",
+  "spelling": "5 x u32 spelled as .byte",
+  "evidence": [
+   "audio/sound_editor_ui.s:15609-15624 `cpw (xbc), 0x1` / ... / `dec 2, a` / `sla wa, 2` / `lda xbc, (S2c_GridCheck_Dispatch_Data:24)` / `ld xwa, (xbc+wa)` / `ld a, (xwa)` / ... / `lda xbc, (0x03dc4e:24)` / ... / `call Sprintf_Locked` -- S2c_GridCheck_Dispatch (15599)",
+   "ui_widgets/naka_screen_dispatch.s:1785-1788 `S2c_GridCheck_Dispatch_Data: .byte 0x91, 0x39` / `.byte 0x00, 0x00, 0x92, 0x39, 0x00, 0x00, 0x93, 0x39` / ... -- 0x3991, 0x3992, 0x3993, 0x3994, 0x3995",
+   "ui_widgets/composer_style_convert_screens.s:653-654 `\"|-|DRUMS|BASS|ACCOMP1|ACCOMP2|ACCOMP3\" (S2cGridBox.fixedrow of element 33)` / `|TRACK\" (S2cGridBox.fixedcol of element 33)`",
+   "ui_widgets/widget_dispatch.s:9874 `Initial value of RAM 0x3DC4E: 17 x u32 pointers to StrBeatOff, StrBeat01 .. StrBeat16.`",
+   "sequencer/accompaniment_engine.s:27310-27321 `ld a, (0x3990:16)` / ... / `lda xbc, (Tempo_AdjustEffect_Table:24)` / `ld xbc, (xbc+wa)` / `ld a, (xbc)` / ... / `cp a, 0x10` / `inc 1, a` -- MT_S2cTrUp/Dn step; Tempo_AdjustEffect_Table = {0x3991 .. 0x3995} (naka_widget_descriptors.bin +0x19244)",
+   "shared/event_codes.s:538 `EVT_S2C_TR_UP, 0x1e40010` -- 'S2c grid: value up for row XDE ((0x3990) := row, Tempo_AdjustEffect(0))'"
+  ]
+ },
+ {
+  "old": "PsCmpCpFPtnBox_HandleEvtBC_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PsCmpCpFPtnBox_PatternNameStrPtrs",
+  "header": "27 x u32 string pointers, the accompaniment-pattern names (\"    Vari1     \", Vari2-4, Intro1/2, Ending1/2, V1-V4 FillIn1/2, Vari1-4, Intro1/2, FillIn1/2, Ending1/2, All): PsCmpCpFPtnBoxProc (Composer copy, source pattern box) Sprintf's entry [(0x34EF)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label; PtrTbl_StylePatternLongNames (entry 1) has no reader.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "entry 0 spelled as `.byte 0xa8, 0xd9, 0xe1, 0x00` (= `.long StrStylePatt_Vari1b`)",
+  "evidence": [
+   "audio/sound_editor_ui.s:15913-15921 `ld a, (0x34ef:16)` / `extz wa` / `sla wa, 2` / `lda xbc, (PsCmpCpFPtnBox_HandleEvtBC_Data:24)` / `ld xwa, (xbc+wa)` / ... / `call Sprintf_Locked` -- PsCmpCpFPtnBoxProc (15880) paint case",
+   "ui_widgets/naka_screen_dispatch.s:1823-1824 `PsCmpCpFPtnBox_HandleEvtBC_Data: .byte 0xa8, 0xd9, 0xe1, 0x00` / `PtrTbl_StylePatternLongNames:` -- entry 0 = 0xE1D9A8 = StrStylePatt_Vari1b, then 26 .long StrStylePatt_* entries",
+   "ROM 0xE1D9A8 `20 20 20 20 56 61 72 69 31` -- \"    Vari1\""
+  ]
+ },
+ {
+  "old": "AcMemNoBox_HandleEvtBC_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcMemNoBox_SectionNameStrPtrs",
+  "header": "33 x u32 string pointers, the style-section names \"A-vari1\" .. \"C-END2\" plus \"A-ALL\", \"B-ALL\", \"C-ALL\": AcMemNoBoxProc Sprintf's entry [(0x34D6)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label; PtrTbl_StyleSectShortNames2 (entry 1) has no reader.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "entry 0 spelled as `.byte 0x00, 0xdd, 0xe1, 0x00` with a wrong `; padding` comment (= `.long StrStyleSect2_A_Vari1`)",
+  "evidence": [
+   "audio/sound_editor_ui.s:16297-16305 `ld a, (0x34d6:16)` / `extz wa` / `sla wa, 2` / `lda xbc, (AcMemNoBox_HandleEvtBC_Data:24)` / `ld xwa, (xbc+wa)` / ... / `call Sprintf_Locked` -- AcMemNoBoxProc (16264) paint case",
+   "ui_widgets/naka_screen_dispatch.s:1946-1948 `AcMemNoBox_HandleEvtBC_Data:` / `.byte 0x00, 0xdd, 0xe1, 0x00 ; padding` / `PtrTbl_StyleSectShortNames2:` -- entry 0 = 0xE1DD00 = StrStyleSect2_A_Vari1, then 32 .long StrStyleSect2_* entries ending A_All / B_All / C_All",
+   "ROM 0xE1DD00 `41 2d 76 61 72 69 31 00` -- \"A-vari1\""
+  ]
+ },
+ {
+  "old": "AcCmpRecBox_HandleEvtBC_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcCmpRecBox_TrackStateStrPtrs",
+  "header": "3 x u32 string pointers {\"    \", \"REC \", \"MUTE\"}: AcCmpRecBoxProc shows entry 1 (in colour 0xF2) when the box's part bit (+36) is set in the Composer record-part byte 0x379B, else entry 2 when its bit (+37) is set in 0x34F1, else entry 0.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:16412-16425 `ld e, (xiz + 36)` / `ld a, (0x379b:16)` / `and a, e` / `lda xhl, (AcCmpRecBox_HandleEvtBC_Data:24)` / ... / `ld xwa, (xhl + 4)` / ... / `ldw (xwa + 22), 0xf2` -- AcCmpRecBoxProc (16366): REC",
+   "audio/sound_editor_ui.s:16430-16438 `ld e, (xwa + 37)` / `ld a, (0x34f1:16)` / ... / `inc 8, xhl` / `ld xwa, (xhl)` -- MUTE, else blank",
+   "ui_widgets/naka_screen_dispatch.s:2014-2020 `AcCmpRecBox_HandleEvtBC_Data:` / `.long StrTrackBlank` / `.long StrTrackRec` / `.long StrTrackMute` / `StrTrackMute: aligned_string \"MUTE\"` / `StrTrackRec: aligned_string \"REC \"` / `StrTrackBlank: aligned_string \"    \"`"
+  ]
+ },
+ {
+  "old": "MspNameBnkFunc_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MspNameBnkFunc_BankNamesInit",
+  "header": "Initializer of MspNameBnkFunc's local array: 4 x u32 string pointers {\"User1\", \"User2\", \"COMPILE1\", \"COMPILE2\"}, the MSP naming screen's bank-value captions. MspNameBnkFunc copies the 16 bytes into its frame and Strcpy's entry [value] for the caption; EVT_GET_MAX answers 3, the value lives at RAM 0x7F3E.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "entry 0 spelled as `.byte 0x52, 0xdf, 0xe1, 0x00` (= `.long StrBankShort_User1`)",
+  "evidence": [
+   "audio/sound_editor_ui.s:17264-17272 `MspNameBnkFunc:` / ... / `ld xiy, MspNameBnkFunc_Data` / `lda xix, (xsp + 4)` / `ldw bc, 0x8` / `ldirw` -- copies 16 bytes into the frame",
+   "audio/sound_editor_ui.s:17287-17296 `EasyCmp_GridEvtCase_Default:` / `ld xwa, (xde+14)` / `sll xwa, 2` / `lda xbc, (xsp+4)` / ... / `call Strcpy` -- caption = local[value]",
+   "audio/sound_editor_ui.s:17303-17304 `MspNameBnkFunc_OnGetMax:` / `ld xhl, 3:i3`",
+   "ui_widgets/naka_screen_dispatch.s:2178-2185 `MspNameBnkFunc_Data: .byte 0x52, 0xdf, 0xe1, 0x00` / `.long StrBankShort_User2` / `.long StrBankShort_Compile1` / `.long StrBankShort_Compile2` / ... / `StrBankShort_User1: aligned_string \"User1   \"` -- entry 0 = 0xE1DF52 = StrBankShort_User1"
+  ]
+ },
+ {
+  "old": "RgpSetBnkBox_HandleEvtBC_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PsRgpSetBnkBox_CompileBankStrPtrs",
+  "header": "2 x u32 string pointers {\"COMPILE BANK:1\", \"COMPILE BANK:2\"}: PsRgpSetBnkBoxProc Sprintf's entry [(0x7F3D)] on EVT_PAINT / EVT_REPAINT and draws it.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:18327-18339 `ld a, (0x7f3d:16)` / `extz wa` / `sla wa, 2` / `lda xbc, (RgpSetBnkBox_HandleEvtBC_Data:24)` / `ld xwa, (xbc+wa)` / ... / `call Sprintf_Locked` / ... / `ld xbc, EVT_PARA_DRAW` -- PsRgpSetBnkBoxProc (18297) paint case",
+   "ui_widgets/naka_screen_dispatch.s:2286-2290 `RgpSetBnkBox_HandleEvtBC_Data:` / `.long StrCompileBank1` / `.long StrCompileBank2` / `StrCompileBank2: aligned_string \"COMPILE BANK:2\"` / `StrCompileBank1: aligned_string \"COMPILE BANK:1\"`"
+  ]
+ },
+ {
+  "old": "MspPlayModeFunc_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MspPlayModeFunc_ModeNamesInit",
+  "header": "Initializer of MspPlayModeFunc's local array: 2 x u32 string pointers {\"INSTANT START\", \"SYNC TO RHYTHM\"}, the MSP play-mode captions. MspPlayModeFunc copies the 8 bytes into its frame and Strcpy's entry [value]; EVT_GET_MAX answers 1, the value lives at RAM 0x7F3F, and a change is sent as EVT_MSP_PLY_MD_SET.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:18677-18686 `MspPlayModeFunc:` / ... / `ld xiy, MspPlayModeFunc_Data` / `lda xix, (xsp + 4)` / `ld bc, 4:i3` / `ldirw` -- copies 8 bytes into the frame",
+   "audio/sound_editor_ui.s:18701-18712 `MspPlayModeFunc_DataBlock:` / ... / `ld xwa, (xiz+14)` / `sll xwa, 2` / `lda xbc, (xsp+4)` / ... / `call Strcpy` -- caption = local[value]",
+   "audio/sound_editor_ui.s:18724-18733 `ld xhl, 1:i3` / ... / `lda xhl, (0x7f3f:16)` / ... / `ld xbc, EVT_MSP_PLY_MD_SET`",
+   "ui_widgets/naka_screen_dispatch.s:2294-2298 `MspPlayModeFunc_Data:` / `.long StrInstantStart` / `.long StrSyncToRhythm` / `StrSyncToRhythm: aligned_string \"SYNC TO RHYTHM   \"` / `StrInstantStart: aligned_string \"INSTANT START    \"`"
+  ]
+ },
+ {
+  "old": "AcSndArgGridBoxProc_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcSndArgGridBox_RowPartBitsInit",
+  "header": "Initializer of AcSndArgGridBoxProc's local array: 5 x u8 {0x01, 0x02, 0x04, 0x08, 0x10} (+ 0xFF pad), the Sound Arranger part-select bit for grid rows 2..6. On INDEX UP / DOWN the proc stores entry [row - 2] in the selector 0x338E (1 = DRUM part 0x14, 2 = BASS 0x13, 4 / 8 / 16 = ACCOMP1-3 0x10-0x12) and sends EVT_SET_PT_SEL.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:18746-18756 `AcSndArgGridBoxProc:` / ... / `ld xiy, AcSndArgGridBoxProc_Data` / `lda xix, (xsp + 12)` / `ld bc, 2:i3` / `ldirw` / `ldi85` -- copies 5 bytes into the frame",
+   "audio/sound_editor_ui.s:18851-18858 `dec 2, a` / `extz wa` / `lda xbc, (xsp + 12)` / `ld (0x338e:16), (xbc+wa)` / ... / `ld xbc, EVT_SET_PT_SEL` -- INDEX UP case (18820); same at 18920-18927 for INDEX DOWN (18889)",
+   "ui_widgets/naka_screen_dispatch.s:2310-2311 `AcSndArgGridBoxProc_Data:` / `.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0xff`",
+   "sequencer/accompaniment_engine.s:11176 `1 -> 0x14, 2 -> 0x13, 4 -> 0x10, 8 -> 0x11, 16 -> 0x12, else 0` -- AccStyle_IndexedLookup_Data maps the selector to part codes"
+  ]
+ },
+ {
+  "old": "AttLangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AttLangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"ATTENTION!\" / \"ACHTUNG !\" / ... / \"Perhatian !\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table AttLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20147-20150 `AttLangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, AttLangCheck_ReturnZero` / `lda xhl, (AttLangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2405-2411 `AttLangCheck_Data:` / `.long MSG_ATTENTION_EN` / `.long MSG_ATTENTION_DE` / `.long MSG_ATTENTION_FR` / `.long MSG_ATTENTION_ES` / `.long MSG_ATTENTION_EN2` / `.long MSG_ATTENTION_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2395 `MSG_ATTENTION_EN:` -- \"ATTENTION!\" (English); the other five follow",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "SureLangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SureLangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"Are You Sure?\" / \"Sind Sie sicher ?\" / ... / \"Apakah yakin akan dihapus ?\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table SureLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20157-20160 `SureLangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, SureLangCheck_ReturnZero` / `lda xhl, (SureLangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2426-2432 `SureLangCheck_Data:` / `.long MSG_ARE_YOU_SURE_EN` / `.long MSG_ARE_YOU_SURE_DE` / `.long MSG_ARE_YOU_SURE_FR` / `.long MSG_ARE_YOU_SURE_ES` / `.long MSG_ARE_YOU_SURE_EN2` / `.long MSG_ARE_YOU_SURE_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2415 `MSG_ARE_YOU_SURE_EN:` -- \"Are You Sure?\" (English); the other five follow",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "SndMemLangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndMemLangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"The Custom sound memories included with this pattern will be copied into the Sound Group memories. ... OK?\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table SndMemLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20167-20170 `SndMemLangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, SndMemLangCheck_ReturnZero` / `lda xhl, (SndMemLangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2447-2453 `SndMemLangCheck_Data:` / `.long MSG_CUSTOM_SOUND_COPY_EN` / `.long MSG_CUSTOM_SOUND_COPY_DE` / `.long MSG_CUSTOM_SOUND_COPY_FR` / `.long MSG_CUSTOM_SOUND_COPY_ES` / `.long MSG_CUSTOM_SOUND_COPY_EN2` / `.long MSG_CUSTOM_SOUND_COPY_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2436 `MSG_CUSTOM_SOUND_COPY_EN:` -- the English text follows on the next line; the other five languages after it",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "SndMem1LangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SndMem1LangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"Sound Group memories affected:\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table SndMem1LangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20177-20180 `SndMem1LangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, SndMem1LangCheck_ReturnZero` / `lda xhl, (SndMem1LangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2465-2471 `SndMem1LangCheck_Data:` / `.long MSG_SOUND_GROUP_AFFECTED_EN` / `.long MSG_SOUND_GROUP_AFFECTED_DE` / `.long MSG_SOUND_GROUP_AFFECTED_FR` / `.long MSG_SOUND_GROUP_AFFECTED_ES` / `.long MSG_SOUND_GROUP_AFFECTED_EN2` / `.long MSG_SOUND_GROUP_AFFECTED_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2457 `MSG_SOUND_GROUP_AFFECTED_EN:` -- \"Sound Group memories affected:\" (English); the other five follow",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "MemfulLangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MemfulLangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"The Custom sound memory is full.Some sounds which are used by current Custom Rhythms will be deleted. OK?\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table MemfulLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20187-20190 `MemfulLangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, MemfulLangCheck_ReturnZero` / `lda xhl, (MemfulLangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2486-2492 `MemfulLangCheck_Data:` / `.long MSG_CUSTOM_SOUND_FULL_EN` / `.long MSG_CUSTOM_SOUND_FULL_DE` / `.long MSG_CUSTOM_SOUND_FULL_FR` / `.long MSG_CUSTOM_SOUND_FULL_ES` / `.long MSG_CUSTOM_SOUND_FULL_EN2` / `.long MSG_CUSTOM_SOUND_FULL_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2475 `MSG_CUSTOM_SOUND_FULL_EN:` -- the English text follows on the next line; the other five languages after it",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "Memful2LangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Memful2LangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"Custom Rhythms affected:\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table Memful2LangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20197-20200 `Memful2LangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, Memful2LangCheck_ReturnZero` / `lda xhl, (Memful2LangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2505-2511 `Memful2LangCheck_Data:` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_EN` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_DE` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_FR` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_ES` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_EN2` / `.long MSG_CUSTOM_RHYTHMS_AFFECTED_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2496 `MSG_CUSTOM_RHYTHMS_AFFECTED_EN:` -- \"Custom Rhythms affected:\" (English); the other five follow",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "StylCnvLangCheck_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StylCnvLangCheck_PtrTable",
+  "header": "6 x u32 pointers to the \"Please Insert the Style Convert Disk!\" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language table StylCnvLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).",
+  "basis": "readers + bytes",
+  "evidence": [
+   "audio/sound_editor_ui.s:20207-20210 `StylCnvLangCheck:` / `cp xbc, EVT_GET_LANGUAGE_PTR` / `jr nz, StylCnvLangCheck_ReturnZero` / `lda xhl, (StylCnvLangCheck_Data:24)` -- the only reader",
+   "ui_widgets/naka_screen_dispatch.s:2522-2528 `StylCnvLangCheck_Data:` / `.long MSG_INSERT_STYLE_CONVERT_EN` / `.long MSG_INSERT_STYLE_CONVERT_DE` / `.long MSG_INSERT_STYLE_CONVERT_FR` / `.long MSG_INSERT_STYLE_CONVERT_ES` / `.long MSG_INSERT_STYLE_CONVERT_EN2` / `.long MSG_INSERT_STYLE_CONVERT_ID`",
+   "ui_widgets/naka_screen_dispatch.s:2515 `MSG_INSERT_STYLE_CONVERT_EN:` -- \"Please Insert the Style Convert Disk!\" (English); the other five follow",
+   "shared/event_codes.s:345 `EVT_GET_LANGUAGE_PTR, 0x1e0009f` -- 'A language-text view asks its function for its table of per-language strings'",
+   "sequencer/sequencer_ui.s:138 `AreYouSureLangCheck:` -- sibling proc whose table is AreYouSureLangCheck_PtrTable",
+   "ui_widgets/technichord_string_data.s:2384-2386 `into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846),` -- CheckLanguage_LangNames lists the slots English, German, French, Spanish, Italian, Indonesian (ROM 0xE9D846: pointers to \"English\" .. \"Indonesian\")"
+  ]
+ },
+ {
+  "old": "AcCurSongName_HandleFocusGained_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "AcCurrentSongBox_Str_SONG_Fmt2d",
+  "header": "\"SONG%2d\" (NUL-terminated): the format AcCurrentSongBoxProc's paint case Sprintf's with the song number (RAM byte 0xFFE3) + 1 and draws with EVT_PARA_DRAW.\nBasis: readers + bytes -- the only reader pushes it as a far pointer to Sprintf_Locked; bytes 53 4F 4E 47 25 32 64 00.",
+  "basis": "readers + bytes",
+  "spelling": "string held as an .incbin slice",
+  "evidence": [
+   "sequencer/sequencer_ui.s:3454-3460 `AcCurrentSongBoxProc:` / ... / `cp xbc, EVT_REPAINT` / `jr z, AcCurSongName_HandleFocusGained` / `cp xbc, EVT_PAINT` -- the label below is AcCurrentSongBoxProc's paint case",
+   "sequencer/sequencer_ui.s:3484-3492 `ld a, (0x00ffe3:24)` / `inc 1, a` / ... / `pushw AcCurSongName_HandleFocusGained_Data@hi16` / `pushw AcCurSongName_HandleFocusGained_Data@lo16` / ... / `call Sprintf_Locked`",
+   "ui_widgets/naka_widget_tables_1.s:1324 `AcCurSongName_HandleFocusGained_Data: .incbin \"includes/generated/naka_widget_tables_1.bin\", 0x249A, 0x8`",
+   "includes/generated/naka_widget_tables_1.bin +0x249A `53 4f 4e 47 25 32 64 00` -- \"SONG%2d\"",
+   "ui_widgets/naka_widget_tables_1.s:1325 `AcCurSongName_HandleEventF_Str_Blank22:` -- sibling naming pattern <owner>_Str_<text>"
+  ]
+ },
+ {
+  "old": "MidiPart_PageDisplay_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiSetup_PageIndicatorRect",
+  "header": "Rectangle {x0 245, y0 6, x1 314, y1 23} (4 x u16): the top-right page-indicator box that AcCtlMsgGrid_Show and MidiSetup_TtlCase4 frame with DrawDesignBox (style 0xC1, colour 0xF3) and centre their \"PAGE n/2\" / \"PAGE n/3\" caption in (DrawStringCentered, XWA = bounding rectangle).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "4 x u16 held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:2823-2826 `ld xwa, MidiPart_PageDisplay_Data` / `ldw bc, 0xc1` / `ldw de, 0xf3` / `call DrawDesignBox` -- AcCtlMsgGrid_Show (2815)",
+   "ui/drawbar_panel_ui.s:2842-2844 `ld xwa, MidiPart_PageDisplay_Data` / `ld xbc, AcCtlMsgGrid_Show_Table` / `call DrawStringCentered` -- caption = AcCtlMsgGrid_Show_PtrTable[page]",
+   "ui/drawbar_panel_ui.s:3502-3523 the same pair in MidiSetup_TtlCase4 (3494) with MidiSetup_TtlCase4_PtrTable",
+   "ui/drawing_primitives.s:4293-4302 header of DrawStringCentered -- 'XWA = pointer to bounding rectangle'",
+   "includes/generated/naka_widget_tables_2.bin +0x24954 `f5 00 06 00 3a 01 17 00` -- 245, 6, 314, 23; captions at +0x24968 \"PAGE 2/2\", \"PAGE 1/2\" and +0x24988 \"PAGE 3/3\" .. \"PAGE 1/3\""
+  ]
+ },
+ {
+  "old": "NakaToggle_OnOff_Data",
+  "verdict": "refuse",
+  "why_refused": "Not an object of its own. Its 4 bytes (all 0) are words 3-4 of the 10-byte local-array initializer that ComSetGridCheck copies from ComSetGridCheck_LocalInit_2 (0xE8003A: `ld xiy, ComSetGridCheck_LocalInit_2` / `ld bc, 5:i3` / `ldirw` = 5 words, i.e. through 0xE80043); no code addresses 0xE80040 itself. The label's other referrer, FDTest_Group_OnOff's `.long NakaToggle_OnOff_Data`, is not a pointer: it is x1 = 64, y1 = 232 of that group record's rectangle (preceding words 0x36 = 54, 0xDE = 222), a coordinate pair whose bytes 40 00 E8 00 happen to equal the address. The label should be removed (LocalInit_2 widened to 10 bytes) rather than renamed.",
+  "new": null,
+  "header": "Tail (words 3-4) of ComSetGridCheck's local-array initializer; the FDTest reference is a coordinate pair. Basis: refused (no reader of its own).",
+  "basis": "readers + bytes",
+  "spelling": "FDTest_Group_OnOff's `.long NakaToggle_OnOff_Data` should be `.short 64, 232`",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:160-168 `ComSetGridCheck:` / ... / `ld xiy, ComSetGridCheck_LocalInit_2` / `lda xix, (xsp + 12)` / `ld bc, 5:i3` / `ldirw` -- copies 10 bytes from 0xE8003A",
+   "ui_widgets/naka_widget_tables_2.s:2755 `ComSetGridCheck_LocalInit_2: .incbin \"includes/generated/naka_widget_tables_2.bin\", 0x25C9C, 0x6` -- 6 bytes; the next 4 bytes are this label",
+   "ui_widgets/naka_widget_tables_2.s:2764 `NakaToggle_OnOff_Data: .incbin \"includes/generated/naka_widget_tables_2.bin\", 0x25CA2, 0x4` -- contiguous with LocalInit_2",
+   "factory_test/fd_test_data.s:79-84 `naka_header NAKA_TYPE_GROUP` / ... / `0x08, 0x00, 0x36, 0x00` / `0xde, 0x00` / `.long NakaToggle_OnOff_Data` / `.zero 4` -- rectangle 54,222 then 0x00E80040 = 64,232",
+   "ROM 0xE8003A `00 00 00 00 00 00 00 00 00 00` then 0xE80044 \" ON  \""
+  ]
+ },
+ {
+  "old": "PmemOutLGridCheck_LocalInit_Strings_Tail",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PmemOutLGridCheck_Row0_Str_OFF",
+  "header": "\" OFF \" (NUL-terminated): the text PmemOutLGridCheck_OnRamData puts in grid row 0 when bit 7 of the panel-memory part byte (part-record offset of RAM 0xF9C4) is set; otherwise it prints the value with \" %3d \".\nBasis: readers + bytes -- the only reader is that Strcpy; row 2 has its own \" OFF \" (PmemOutLGridCheck_OnRamData_Str_OFF).",
+  "basis": "readers + bytes",
+  "spelling": "string held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:1405-1430 `ldw (xsp+38), 0` / `lda xwa, (0xf9c4:16)` / ... / `bit 7, (xwa)` / `jr z, PmemOutLGridCheck_OnRamData_Skip` / `pushw PmemOutLGridCheck_LocalInit_Strings_Tail@hi16` / `pushw PmemOutLGridCheck_LocalInit_Strings_Tail@lo16` / ... / `call Strcpy` -- PmemOutLGridCheck_OnRamData (1329), row 0",
+   "ui/drawbar_panel_ui.s:1432-1440 `PmemOutLGridCheck_OnRamData_Skip:` / ... / `pushw PmemOutLGridCheck_OnRamData_Str_Fmt3d@hi16` / ... / `call Sprintf_Locked` -- the value branch",
+   "ui_widgets/naka_widget_tables_2.s:3046 `PmemOutLGridCheck_LocalInit_Strings_Tail: .incbin \"includes/generated/naka_widget_tables_2.bin\", 0x25DAC, 0x6`",
+   "includes/generated/naka_widget_tables_2.bin +0x25DAC `20 4f 46 46 20 00` -- \" OFF \""
+  ]
+ },
+ {
+  "old": "TtMdCtlMsg_EventDispatch_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "PmemOutRGridCheck_RamRequestInit",
+  "header": "Initializer of the 22-byte (11-word) RAM-edit request PmemOutRGridCheck's INDEX UP and INDEX DOWN cases copy into their frame: {u32 address 0, u16 size 1, u32 limit 1, u32 0, u32 value/delta 1, u32 0}; they fill the address of the panel-memory part byte, the limit (127 or 255) and the value (0, 128, -1) and pass it to MainRamPut / MainRamAdd (EVT_RAM_PUT / EVT_RAM_ADD to MainRamControl, which copy 11 words).\nBasis: readers + bytes -- six `ld xiy, <this>` / `ldw bc, 11` / `ldirw` sites.",
+  "basis": "readers + bytes",
+  "spelling": "alias PmemOutLGridCheck_CaseTable_Tail sits on the same address (merge into the new name)",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:1931-1935 `lda xix, (TtMdCtlMsg_EventDispatch:24)` / ... / `0x1c00017 -> TtMdCtlMsg_EventDispatch` / `0x1c00018 -> PmemOutRGridCheck_OnIndexswDown` -- the two readers are PmemOutRGridCheck's (1896) INDEX UP / DOWN cases",
+   "ui/drawbar_panel_ui.s:1973-2004 `ld xiy, TtMdCtlMsg_EventDispatch_Data` / `lda xix, (xsp+56)` / `ldw bc, 11` / `ldirw` / ... / `ld (xwa), xbc` / `ld xbc, 127` / `ld (xwa+6), xbc` / ... / `ld (xwa+14), xbc` / `call MainRamPut`",
+   "ui/drawbar_panel_ui.s:2094-2096 `ld xiy, TtMdCtlMsg_EventDispatch_Data` / `lda xix, (xsp+56)` / `ldw bc, 11` -- in PmemOutRGridCheck_OnIndexswDown (2072); also 2009, 2037, 2135, 2165",
+   "ui/ui_widget_defs.s:1984-2000 `MainRamPut:` / ... / `pushw 0x16` / `call Malloc` / ... / `ldw bc, 0xb` / `ldirw` / `ld xwa, NAKA_MAINFUNC_MainRamControl` / `ld xbc, EVT_RAM_PUT`",
+   "ui_widgets/naka_widget_tables_2.s:3120-3121 `PmemOutLGridCheck_CaseTable_Tail:` / `TtMdCtlMsg_EventDispatch_Data: .incbin \"includes/generated/naka_widget_tables_2.bin\", 0x25E36, 0x16` -- two labels on one address",
+   "includes/generated/naka_widget_tables_2.bin +0x25E36 `00 00 00 00 01 00 01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00`"
+  ]
+ },
+ {
+  "old": "MidiPartGridCheck_OnIndexswUp_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPartGridCheck_OctaveUpMap",
+  "header": "8 x u16 {1, 2, 3, 3, 0, 6, 7, 0}: INDEX UP step of the OCTAVE column of the MIDI part grid (AcMidiPartGridBox), indexed by the current 3-bit two's-complement octave code: 5 (-3) -> 6 -> 7 -> 0 -> 1 -> 2 -> 3 (+3, stays); 4 is unused. MidiPartGridCheck writes the result with MainLswPut unless it equals the current value.\nBasis: readers + bytes -- column 2 of the grid, whose fixedcol is \" PART |CHANNEL|OCTAVE| LOCAL\".",
+  "basis": "readers + bytes",
+  "spelling": "8 x u16 held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:4063-4067 `ld wa, (xbc)` / `cp wa, 3:i3` / `jr z, MidiPartGridCheck_Skip4` / `cp wa, 2:i3` / `jr z, MidiPartGridCheck_Skip3` -- column dispatch in MidiPartGridCheck_OnIndexswUp (4033)",
+   "ui/drawbar_panel_ui.s:4102-4113 `MidiPartGridCheck_Skip3:` / `ld xwa, (xsp+12)` / `call SndParam_LookupReadOnly` / `ld wa, hl` / `add wa, wa` / `lda xbc, (MidiPartGridCheck_OnIndexswUp_Data:24)` / `ld bc, (xbc+wa)` / `cp bc, hl` / `jrl z, MidiSetup_ReturnZero` / ... / `jrl MidiPartGridCheck_Join2` (4206-4207: MidiPartGridCheck_Join2 calls MainLswPut)",
+   "ui_widgets/midi_reverb_presets_screens.s:386 `(AcMidiPartGridBox.fixedrow of element 1); \" PART |CHANNEL|OCTAVE| LOCAL\"` (next line: fixedcol)",
+   "includes/generated/naka_widget_tables_2.bin +0x262A2 `01 00 02 00 03 00 03 00 00 00 06 00 07 00 00 00`"
+  ]
+ },
+ {
+  "old": "MidiPartGridCheck_OnIndexswDown_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MidiPartGridCheck_OctaveDownMap",
+  "header": "8 x u16 {7, 0, 1, 2, 0, 5, 5, 6}: INDEX DOWN step of the OCTAVE column of the MIDI part grid, indexed by the current 3-bit two's-complement octave code: 3 (+3) -> 2 -> 1 -> 0 -> 7 -> 6 -> 5 (-3, stays); 4 is unused.\nBasis: readers + bytes -- MidiPartGridCheck_OnIndexswDown's column-2 branch.",
+  "basis": "readers + bytes",
+  "spelling": "8 x u16 held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:4149-4153 `ld wa, (xbc)` / `cp wa, 3:i3` / `jr z, MidiPartGridCheck_Skip8` / `cp wa, 2:i3` / `jr z, MidiPartGridCheck_Skip7` -- MidiPartGridCheck_OnIndexswDown (4119)",
+   "ui/drawbar_panel_ui.s:4190-4198 `MidiPartGridCheck_Skip7:` / ... / `lda xbc, (MidiPartGridCheck_OnIndexswDown_Data:24)` / `ld bc, (xbc+wa)` / `cp bc, hl` / `jrl z, MidiSetup_ReturnZero`",
+   "includes/generated/naka_widget_tables_2.bin +0x262B2 `07 00 00 00 01 00 02 00 00 00 05 00 05 00 06 00`"
+  ]
+ },
+ {
+  "old": "ExitWindow_OK_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SupportClass_PropTypeRecords",
+  "header": "The SupportClass object table: 55 x 12-byte records {u32 proc, u16 count, u16 size, u32 prop}, one per property type (boolProc, ObjectIDProc, pFuncProc, ... PartIDProc, TrackIDProc, IntTimeIDProc); record k is object 0x2600000 + k, the type of propdata letter 'A' + k. InitializeObjectTable registers it at slot 0x260 with SupportClassProc and count 0x37. This slice holds records 0-51 but their last byte; SupportClass_WindowIDPropTopByte and SupportClass_PartTrackIntTimeRecords hold the rest.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice cut one byte before record 51 ends",
+  "evidence": [
+   "ui/ui_widget_defs.s:8717-8726 `lda xbc, (xsp + 2)` / `ld xwa, NAKA_CLASS_SupportClass` / `ld (xbc), xwa` / `lda xwa, (SupportClassProc:24)` / `ld (xbc + 4), xwa` / `ldw (xbc + 8), 0x37` / `lda xwa, (ExitWindow_OK_Data_2:24)` / `ld (xbc + 10), xwa` / `ldw wa, 0x260` -- InitializeObjectTable (8669), then `calr RegisterObjectTable`",
+   "ui/ui_widget_defs.s:9484-9485 `SupportClassProc_OnGetPropSize:` / `ld hl, (xhl + 6)` -- the record's size word",
+   "ui_widgets/style_bitmaps.s:345-348 `SupportClass_PartTrackIntTimeRecords -- 3 x {u32 proc, u16 count, u16 size, u32 prop}: the last three records (52-54) of` / ... / `object 0x2600000 + k, the type of propdata letter 'A' + k`",
+   "ui_widgets/style_bitmaps.s:341 `ExitWindow_OK_Data_2: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x4D2, 0x26F` -- 623 = 52 x 12 - 1 bytes",
+   "ui_widgets/debug_naming_panel_sim.s:361 `Word +8 of SupportClass record 6 (boolProc, count 2) in ExitWindow_OK_Data_2, the 55 x 12-byte table`"
+  ]
+ },
+ {
+  "old": "MasterSetup_EventDispatch_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StyleSong_MasterTable_IdColumn",
+  "header": "+4 of StyleSong_MasterTable: the u16 id column of its 1000 x 6-byte {u32 title, u16 id} records (stride 6). The MasterSetup and MstStyleAlp cell-select paths load the id of entry 9 * (page - 1) + scroll + row through this label and pass it to MainMssSetUp as EVT_OTP_CNT_SET.\nBasis: readers + bytes -- `muls ..., 6` / `lda xbc, (<this>:24)` / `ld de, (xbc+wa)`.",
+  "basis": "readers + bytes",
+  "spelling": "a column base inside an .incbin-held record table (label = table + 4)",
+  "evidence": [
+   "ui/ui_mode_handlers.s:2676-2688 `muls wa, 0x9` / `sub wa, 0x9` / `add wa, (xde)` / `add bc, wa` / `muls bc, 0x6` / `ld wa, bc` / `lda xbc, (MasterSetup_EventDispatch_Data:24)` / `ld de, (xbc+wa)` / `extz xde` / `ld xwa, NAKA_MAINFUNC_MainMssSetUp` / `ld xbc, EVT_OTP_CNT_SET`",
+   "ui/ui_mode_handlers.s:3478-3487 the same in the MstStyleAlp path: `muls de, 6` / `lda xbc, (MasterSetup_EventDispatch_Data:24)` / `ld de, (xbc+de)` / ... / `ld xbc, EVT_OTP_CNT_SET`",
+   "ui_widgets/style_bitmaps.s:634-637 `MstStyleAlp_EventDispatch load the u16 at +4 of entry 9*(page-1) +` / `scroll + row (MasterSetup_EventDispatch_Data, 9 rows per page) and hand it` -- header of StyleSong_MasterTable",
+   "ui_widgets/style_bitmaps.s:645-646 `StyleSong_MasterTable: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x32D6, 0x4` / `MasterSetup_EventDispatch_Data: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x32DA, 0x1766`"
+  ]
+ },
+ {
+  "old": "MasterSetup_DialTurn_Underflow_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StyleSong_MasterTable_LastEntry",
+  "header": "Entry 999, the last {u32 title, u16 id} record of StyleSong_MasterTable (table + 999 * 6): when the MasterSetup dial steps below entry 0, MasterSetup_DialTurn_Underflow Strcpy's this record's title into the view and sets the index to 999.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "ui/ui_mode_handlers.s:2720-2725 `cpw (xbc), 0x0` / `jr z, MasterSetup_DialTurn_Underflow` / ... / `muls wa, 0x6` -- index 0 steps to the underflow path",
+   "ui/ui_mode_handlers.s:2735-2744 `MasterSetup_DialTurn_Underflow:` / `ld xwa, (MasterSetup_DialTurn_Underflow_Data:24)` / `push xwa` / ... / `call Strcpy` / ... / `ldw (xwa), 0x3e7`",
+   "ui_widgets/style_bitmaps.s:631-633 `underflow reads entry 999 through MasterSetup_DialTurn_Underflow_Data (=` / `+999*6, .set in shared/positional_labels.s)` -- header of StyleSong_MasterTable",
+   "ui_widgets/style_bitmaps.s:647 `MasterSetup_DialTurn_Underflow_Data: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x4A40, 0x6` -- 0x4A40 = 0x32D6 + 999 * 6"
+  ]
+ },
+ {
+  "old": "MstStyle1Grid_CellSelect_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "MstStyle_GenreTable",
+  "header": "Root of the MstStyle music-style browser: 10 x {u32 genre name, u32 genre's style-group table} -- Easy Listening, Rock & Pop, Dance Pop, Party Music, Gospel/Blues/R&B, Jazz & Swing, Show/Trad Dance, Trad & Folk, Country, Latin / World. MstStyle1Grid_CellSelect and MstStyle2_NameB_Render read the names here (index * 8); the group-table column is read through StyleGroup_LatinDance_Table (= this + 4).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "10 x {u32, u32} split across two .incbin slices at +4",
+  "evidence": [
+   "ui/ui_mode_handlers.s:4073-4083 `muls wa, 0xa` / `sub wa, 0xa` / `add wa, (xsp + 32)` / `sla wa, 3` / `lda xbc, (MstStyle1Grid_CellSelect_Data:24)` / `ld xwa, (xbc+wa)` / `push xwa` / `call Strlen` -- genre name of the row",
+   "ui/ui_mode_handlers.s:6052-6057 `sll xwa, 3` / `ld xbc, MstStyle1Grid_CellSelect_Data` / `add xbc, xwa` / `ld xwa, (xbc)` / `push xwa` / `pushw MstStyle2_NameB_Render_Str_Fmts@hi16`",
+   "ui_widgets/style_bitmaps.s:3519-3524 `the root of the MstStyle browser tree (0xecfca4): 10 x {u32 group name, u32 group` / ... / `MstStyle1Grid_CellSelect_Data (= this address).`",
+   "includes/generated/naka_style_bitmaps.bin +0x18AE6: names at 0xECFD96 \"Easy Listening\", 0xECFD84 \"Rock & Pop\", ... 0xECFCF4 \"Latin / World\"; tables 0xECE2F0 .. 0xECF9AA"
+  ]
+ },
+ {
+  "old": "VariScreen_HandlePaint_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "VariScreen_PartNames",
+  "header": "32 fixed-width 7-character part names, not NUL-separated (one NUL + 0xFF at the end): \"RIGHT1 \", \"RIGHT2 \", \"LEFT   \", \"PART4  \" .. \"PART16 \", \"ACCOMP1\", \"ACCOMP2\", \"ACCOMP3\", \"BASS   \", \"DRUMS  \", \"CHORD  \", \"R.BASS \", \"MSP    \" x2, \"CONTROL\", \"PART27 \" .. \"PART32 \". VariScreenProc_OnDraw draws the name at part index * 7 in a 56-pixel-wide cell.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "string table held as an .incbin slice",
+  "evidence": [
+   "ui/ui_mode_handlers.s:12109-12121 `ld xde, (xsp + 24)` / `ld xde, (xde + 48)` / `ld de, (xde)` / `muls de, 0x7` / `lda xhl, (VariScreen_HandlePaint_Data:24)` / `exts xde` / `add xde, xhl` / ... / `call DrawString`",
+   "ui/ui_mode_handlers.s:12101-12102 `ld de, (xbc)` / `add de, 0x38` -- the cell is 56 pixels wide",
+   "ui_widgets/style_bitmaps.s:3630-3635 `Text (226 B at 0xecfdfe), first string \"RIGHT1 RIGHT2 LEFT PART4 PART5 PART6 PART7` / ... / `VariScreen_HandlePaint_Data: .incbin \"includes/generated/naka_style_bitmaps.bin\", 0x18C40, 0xE2`",
+   "includes/generated/naka_style_bitmaps.bin +0x18C40 \"RIGHT1 RIGHT2 LEFT   PART4  ... ACCOMP1ACCOMP2ACCOMP3BASS   DRUMS  CHORD  R.BASS MSP    MSP    CONTROLPART27 ... PART32 \\0\\xff\" (32 x 7 + 2 = 226 bytes)"
+  ]
+ },
+ {
+  "old": "Scoop_SelectModeTable_2Part_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StyleUI_ParamBlockEndPtrTable",
+  "header": "19 x u32: the END pointers of the display lists that StyleUI_ParamBlockPtrTable's entries start (the second of the 4 x 19 tables): Scoop_InitPartDisplay loads xiy = StyleUI_ParamBlockPtrTable[k] and xix = this[k] and draws [xiy, xix) with the Scoop static interpreter (UIRender_TwoTableGeneral) on the step-record screen, unless the display mode (0x0D65) is 2 (CONTROL track).\nBasis: readers + bytes -- each entry is the object that follows (or the one after) the matching start block, as in Scoop_InitDisplayFull's AltE / StyleUI_ParamBlockPtrTable pair.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "display/scoop_display.s:17014-17030 `sla hl, 2` / `ld xiy, StyleUI_ParamBlockPtrTable` / `cp (3429:16), 2` / ... / `ld xiy, (xiy+hl)` / `ld xix, Scoop_SelectModeTable_2Part_Data` / `cp (3429:16), 2` / ... / `ld xix, (xix+hl)` / `call UIRender_TwoTableGeneral` -- Scoop_InitPartDisplay (17006)",
+   "display/scoop_display.s:298-308 `UIRender_TwoTableGeneral:` / ... / `ld xwa, xiy` / `ld xbc, xix` / `call Scoop_EventLoop_12Entry` -- the interpreter walks records from XWA up to XBC",
+   "display/scoop_display.s:17148-17150 `ld xiy, StyleUI_ParamBlock_AltE` / `ld xix, StyleUI_ParamBlockPtrTable` / `call UIRender_TwoTableGeneral` -- xix is an end address: the object right after AltE",
+   "ui_widgets/style_ui_params.s:92-95 `StyleUI_ParamBlockPtrTable: 4 tables x 19 pointers (76 entries).` / ... / `load xiy from +0x00 and xix from +0x4c -- or from +0x98 and +0xe4 when the` / `byte at 0x0d65 is 2`",
+   "ui_widgets/style_ui_params.s:118-121 `Scoop_SelectModeTable_2Part_Data:` / `.long StyleUI_ParamBlock_VALUE` / `.long StyleUI_ScreenData_YesCtl` / `.long StyleUI_ParamBlock_Medium` -- entry 0 VALUE ends BAL, entry 1 YesCtl ends MeasCursor, entry 2 Medium ends Extended",
+   "display/scoop_display.s:7692 `PortConfig_DataTable_A: assignments 0-12 and 17-23 -> 1, 13-14 -> 0, 15 -> 2, 16 -> 3.` -- display mode 2 = TRACK ASSIGN 15 (CONTROL)"
+  ]
+ },
+ {
+  "old": "Scoop_InitPartDisplay_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StyleUI_ControlTrackParamBlockPtrTable",
+  "header": "19 x u32: the START pointers Scoop_InitPartDisplay uses instead of StyleUI_ParamBlockPtrTable when the step-record display mode (0x0D65) is 2, the CONTROL track (third of the 4 x 19 tables); identical to it except entry 1 (ParamBlock_Common instead of ScreenData_MeasCursor).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "display/scoop_display.s:17015-17021 `ld xiy, StyleUI_ParamBlockPtrTable` / `cp (3429:16), 2` / `jr nz, Scoop_SelectModeTable_2Part` / `ld xiy, Scoop_InitPartDisplay_Data` / `Scoop_SelectModeTable_2Part:` / `ld xiy, (xiy+hl)`",
+   "ui_widgets/style_ui_params.s:138-140 `Scoop_InitPartDisplay_Data:` / `.long StyleUI_ParamBlock_BAL` / `.long StyleUI_ParamBlock_Common`",
+   "ui_widgets/style_ui_params.s:98-100 `StyleUI_ParamBlockPtrTable:` / `.long StyleUI_ParamBlock_BAL` / `.long StyleUI_ScreenData_MeasCursor` -- the default start table differs only in entry 1",
+   "display/scoop_display.s:7692 `PortConfig_DataTable_A: assignments 0-12 and 17-23 -> 1, 13-14 -> 0, 15 -> 2, 16 -> 3.` -- mode 2 = TRACK ASSIGN 15, the CONTROL track (TRACK ASSIGN 12-16 = DRUMS / CHORD / APC / CONTROL / RHYTHM)",
+   "ui_widgets/style_ui_params.s:94-95 `load xiy from +0x00 and xix from +0x4c -- or from +0x98 and +0xe4 when the` / `byte at 0x0d65 is 2`"
+  ]
+ },
+ {
+  "old": "Scoop_SelectModeTable_2Part_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "StyleUI_ControlTrackParamBlockEndPtrTable",
+  "header": "19 x u32: the END pointers paired with StyleUI_ControlTrackParamBlockPtrTable (fourth of the 4 x 19 tables), used when the step-record display mode (0x0D65) is 2 (CONTROL track); entry 1 is ParamBlock_Short where the default end table has ScreenData_YesCtl.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "display/scoop_display.s:17022-17028 `ld xix, Scoop_SelectModeTable_2Part_Data` / `cp (3429:16), 2` / `jr nz, Scoop_SelectModeTable_2Part_XIX` / `ld xix, Scoop_SelectModeTable_2Part_Data_2` / `Scoop_SelectModeTable_2Part_XIX:` / `ld xix, (xix+hl)`",
+   "ui_widgets/style_ui_params.s:158-160 `Scoop_SelectModeTable_2Part_Data_2:` / `.long StyleUI_ParamBlock_VALUE` / `.long StyleUI_ParamBlock_Short` -- entry 1 Short ends Common (entry 1 of the CONTROL start table)",
+   "display/scoop_display.s:17029 `call UIRender_TwoTableGeneral` -- draws [start, end)"
+  ]
+ },
+ {
+  "old": "Scoop_TitleBar_GetPartConfig_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_RowSegmentLines",
+  "header": "Static display records of the step-record screen (TT_SQSTEP): three 90-byte blocks, one per row, each a vertical tick then 4 x {64-px horizontal line, tick} -- the segment rulers at y = 75-80, 120-125, 165-170. Scoop_TitleBar_GetPartConfig draws block [row] up to 10 + 20 * count bytes, count = byte 0x0E52 / 0x0E53 / 0x0E54 (row's segment count).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17280-17311 `Scoop_TitleBar_GetPartConfig:` / `ld xiy, Scoop_TitleBar_GetPartConfig_Data` / ... / `ld a, (3666:16)` / ... / `add xiy, 0x5a` / `ld a, (3667:16)` / ... / `add xiy, 0xb4` / `ld a, (3668:16)` / ... / `add xix, 0xa` / ... / `muls wa, 0x14` / `add xix, xwa` / `call UIRender_SingleTable`",
+   "display/scoop_display.s:17201-17203 `Display_RedrawTitleBar:` / `cp (ACTIVE_TITLE:16), 138` -- the caller runs only on title 138",
+   "shared/event_codes.s:1965 `TITLE_SQSTEP, 0x1a0008a` -- title 0x8A = TT_SQSTEP",
+   "includes/generated/style_ui_screendata_main.bin +0xB4: `02 0a 05 00 4b 00 05 00 4f 00` (tick x=5, y 75-79), `01 0a 05 00 50 00 49 00 50 00` (line x 5-73, y 80), ... 3 blocks at y 75/120/165"
+  ]
+ },
+ {
+  "old": "Display_RedrawTitleBar_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row1NumberDash",
+  "header": "Static record op 06 (cell text, font 0) \"-\" at (8, 40): Display_RedrawTitleBar draws it in place of row 1's number (word 0x0E4C) when that is 1000 or more; below 1000 it prints the number with Scoop_TitleBar_ShowBPM_Part0_Data (bound op 06, 3 digits, same cell).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17207-17221 `cpw (3660:16), 0` / ... / `cpw (3660:16), 1000` / `jr c, Scoop_TitleBar_ShowBPM_Part0` / `ld xiy, Display_RedrawTitleBar_Data` / `call Scoop_ConditionalGlideSetup` / ... / `ld xiy, Scoop_TitleBar_ShowBPM_Part0_Data` / `call GraphicsRender_EventCheck`",
+   "display/scoop_display.s:394-402 `Scoop_ConditionalGlideSetup:` / ... / `call Scoop_GlideParam_Setup` -- the Scoop static op 06 handler (entry 6 of Scoop_EventLoop_12Entry_Data)",
+   "includes/generated/style_ui_screendata_main.bin +0x1E0 `06 05 41 06 2d` -- op 06, cell 0x0641 = 40 * 40 + 1 (x 8, y 40), \"-\"; +0x1C2 `06 0a 87 11 00 00 06 41 06 03` prints RAM word 0x1187 at the same cell"
+  ]
+ },
+ {
+  "old": "Scoop_TitleBar_Part1Check_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row2NumberDash",
+  "header": "Static record op 06 \"-\" at (8, 85): drawn in place of row 2's number (word 0x0E4E) when it is 1000 or more (otherwise Scoop_TitleBar_ShowBPM_Part1_Data prints it).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17224-17238 `cpw (3662:16), 0` / ... / `cpw (3662:16), 1000` / `jr c, Scoop_TitleBar_ShowBPM_Part1` / `ld xiy, Scoop_TitleBar_Part1Check_Data` / `call Scoop_ConditionalGlideSetup` / ... / `call GraphicsRender_EventCheck`",
+   "includes/generated/style_ui_screendata_main.bin +0x1E5 `06 05 49 0d 2d` -- cell 0x0D49 = 85 * 40 + 1, \"-\""
+  ]
+ },
+ {
+  "old": "Scoop_TitleBar_Part2Check_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row3NumberDash",
+  "header": "Static record op 06 \"-\" at (8, 130): drawn in place of row 3's number (word 0x0E50) when it is 1000 or more (otherwise Scoop_TitleBar_ShowBPM_Part2_Data prints it).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17241-17255 `cpw (3664:16), 0` / ... / `cpw (3664:16), 1000` / `jr c, Scoop_TitleBar_ShowBPM_Part2` / `ld xiy, Scoop_TitleBar_Part2Check_Data` / `call Scoop_ConditionalGlideSetup` / ... / `call GraphicsRender_EventCheck`",
+   "includes/generated/style_ui_screendata_main.bin +0x1EA `06 05 51 14 2d` -- cell 0x1451 = 130 * 40 + 1, \"-\""
+  ]
+ },
+ {
+  "old": "Scoop_InitPartDisplay_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_TrackNumberField",
+  "header": "Bound record op 00 (print a RAM byte with %Nd): byte 0x118E, mask 0xFF, 2 digits at (168, 16) -- the step-record screen's track number; Scoop_InitPartDisplay and Scoop_InitDisplayFull copy the selected track (0x0D60, 1..16) to 0x118E and draw it with DrawFunc_Init.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17007-17011 `ld a, (3424:16)` / `ld (4494:16), a` / `ld xiy, Scoop_InitPartDisplay_Data_2` / `push xhl` / `call UIRender_ConditionalDrawInit` -- Scoop_InitPartDisplay; same at 17151-17154 in Scoop_InitDisplayFull",
+   "display/scoop_display.s:363-371 `UIRender_ConditionalDrawInit:` / ... / `call DrawFunc_Init` -- entry 0 of GraphicsRender_Start_PtrTable (bound op 00)",
+   "display/graphics_text_vga.s:1336-1348 `ld wa, (xiz + 2)` / ... / `ld e, (xiz + 4)` / `ld c, (xiz + 5)` / `ld l, (xwa)` / `and l, e` / ... / `ld de, (xiz + 7)` -- DrawFunc_Init: RAM address, mask, shift, cell",
+   "display/scoop_display.s:7690 `SqStep_SetDisplayModeFromTrack: Makes the selected track (0x0D60, 1..16) the cursor track (0x0EEE) and sets the`",
+   "includes/generated/style_ui_screendata_main.bin +0x1EF `00 0a 8e 11 ff 00 06 95 02 02` -- RAM 0x118E, cell 0x0295 = 16 * 40 + 21 (x 168, y 16), 2 digits"
+  ]
+ },
+ {
+  "old": "Display_RedrawMainContent_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_PopupLineField",
+  "header": "Bound record op 02 (string from a table by a RAM byte): mask 0, so always entry 0 of the 30-character line buffer at RAM 0x0ECA, drawn at (8, 180) -- the step-record screen's pop-up text line. The slice's last 20 bytes are a separate unlabelled table, 5 x 4-character end/repeat marks (\"    \", \"END \", \"REP \", 0x1B, 0x1C), which SqStep_EndRepMarkFields points at (0xE0BD98).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record plus an unlabelled 20-byte string table in one .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17164-17169 `Display_RedrawMainContent:` / `cp (ACTIVE_TITLE:16), 138` / ... / `ld xiy, Display_RedrawMainContent_Data` / `call Scoop_CurveUpdate_Direct`",
+   "display/scoop_display.s:18486-18502 Scoop_CurveUpdate_SegmentEnd: `ld iz, (xbc + 2)` / `ld l, (xbc + 4)` / `ld e, (xbc + 5)` / `ld a, (xiz)` / `and a, l` / ... / `ld hl, (xbc + 13)` / `ld de, (xbc + 11)` -- RAM address, mask, shift, table (+7), width (+11), cell (+13)",
+   "display/scoop_display.s:14724 `DisplayStr_ShowBlankLine: Blanks the TT_SQSTEP pop-up text line 0x0ECA (30 bytes, then 25 spaces) and marks regions`",
+   "includes/generated/style_ui_screendata_main.bin +0x1F9 `02 0f 9b 11 00 00 06 ca 0e 00 00 1e 00 21 1c` -- mask 0, table 0x00000ECA, width 30, cell 0x1C21 = 180 * 40 + 1; then +0x208 `20 20 20 20 45 4e 44 20 52 45 50 20 1b 20 20 20 1c 20 20 20`"
+  ]
+ },
+ {
+  "old": "Display_RedrawFooter_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Rows1To2LineFields",
+  "header": "4 bound op-02 records for rows 1-2 of the step-record screen: row 1's 30-character line buffer RAM 0x0EF8 at (8, 52) and a 1-character mark (SqStep_CellFlagGlyphs entry (0x1191) & 3) at (8, 66); row 2's buffer 0x0F16 at (8, 97) and the mark of ((0x1192) & 0x0C) >> 2 at (8, 111). Display_RedrawFooter draws them with GraphicsRender_Start, followed by row 3's pair when word 0x0E50 is not 0.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17174-17193 `Display_RedrawFooter:` / `cp (ACTIVE_TITLE:16), 138` / ... / `ld a, (3922:16)` / `ld (4497:16), a` / `ld (4498:16), a` / `ld xiy, Display_RedrawFooter_Data` / `cpw (3664:16), 0` / ... / `ld xix, Display_RedrawFooter_Data_2` / ... / `call GraphicsRender_TwoTable`",
+   "display/scoop_display.s:321-331 `GraphicsRender_TwoTable:` / ... / `call GraphicsRender_Start` -- the bound-record interpreter (GraphicsRender_Start_PtrTable: op 02 = DrawText_ExtendedLayout)",
+   "includes/generated/style_ui_screendata_main.bin +0x21C `02 0f 00 00 00 00 06 f8 0e 00 00 1e 00 21 08` (0x0EF8, cell 0x0821 = y 52) / `02 0f 91 11 03 00 06 cc c8 e0 00 01 00 51 0a` (0x1191 & 3, table 0xE0C8CC, cell 0x0A51 = y 66) / `... 16 0f ... 29 0f` / `02 0f 92 11 0c 82 ... 59 11`"
+  ]
+ },
+ {
+  "old": "Display_RedrawFooter_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row3LineFields",
+  "header": "2 bound op-02 records for row 3 of the step-record screen: the 30-character line buffer RAM 0x0F34 at (8, 142) and the mark ((0x1193) & 0x30) >> 4 from SqStep_CellFlagGlyphs at (8, 156). Display_RedrawFooter draws them only when row 3's word 0x0E50 is not 0 (the end of its first range otherwise).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17182-17193 `cpw (3664:16), 0` / `jr nz, Scoop_FooterShowPartValue` / `ld xix, Display_RedrawFooter_Data_2` / `jr Scoop_FooterCallDisplay` / `Scoop_FooterShowPartValue:` / `ld a, (3922:16)` / `ld (4499:16), a` / `ld xix, Scoop_FooterShowPartValue_Data` / `Scoop_FooterCallDisplay:` / `call GraphicsRender_TwoTable`",
+   "includes/generated/style_ui_screendata_main.bin +0x258 `02 0f 00 00 00 00 06 34 0f 00 00 1e 00 31 16` (0x0F34, cell 0x1631 = y 142) / `02 0f 93 11 30 84 06 cc c8 e0 00 01 00 61 18` (0x1193 & 0x30 >> 4, cell 0x1861 = y 156)"
+  ]
+ },
+ {
+  "old": "Scoop_FooterShowPartValue_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_EndRepMarkFields",
+  "header": "24 bound op-02 records, 3 rows x 8 cells: the 4-character end/repeat mark of each cell (\"    \", \"END \", \"REP \" or the 0x1B / 0x1C symbol, from the table at 0xE0BD98) selected by RAM bytes 0x119B..0x11B2, at x = 8 + 32k on y = 52 / 97 / 142. Display_RedrawButtonLabels draws them as [this, Display_RedrawButtonLabels_Data); Display_RedrawFooter uses this address as the end of its row records.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17533-17535 `ld xiy, Scoop_FooterShowPartValue_Data` / `ld xix, Display_RedrawButtonLabels_Data` / `call GraphicsRender_TwoTable` -- Display_RedrawButtonLabels (17523)",
+   "display/scoop_display.s:17190 `ld xix, Scoop_FooterShowPartValue_Data` -- end pointer in Display_RedrawFooter",
+   "includes/generated/style_ui_screendata_main.bin +0x276 `02 0f 9b 11 ff 00 06 98 bd e0 00 04 00 21 08` ... `02 0f b2 11 ff 00 06 98 bd e0 00 04 00 4d 16` -- RAM 0x119B..0x11B2, table 0xE0BD98, width 4, cells 0x0821 + 4k / 0x0F29 + 4k / 0x1631 + 4k",
+   "includes/generated/style_ui_screendata_main.bin +0x208 (= 0xE0BD98) `20 20 20 20 45 4e 44 20 52 45 50 20 1b 20 20 20 1c 20 20 20` -- the mark strings"
+  ]
+ },
+ {
+  "old": "Display_RedrawButtonLabels_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row1ChordCells",
+  "header": "Row 1 of the step-record chord cells: 8 cells x 3 bound op-02 records (45 bytes each) -- the 2-character chord root (RAM 0x11A3 + 2k, root table \"C \", \"D(flat)\" ...), the 5-character chord type (0x11A4 + 2k, \"7\", \"Maj7\", \"aug\" ...) and the alternative 2-character suffix (\"_ \", \"7 \", \"6 \" by 0x11B3) -- at x = 8 + 32k, y = 52. Scoop_ButtonLabels_DrawCategory walks it with XIX = the row's cell records at RAM 0x0E55 (4 bytes each), drawing the type or, when cell bit 7 is set, the suffix record.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice; the 8th record's length byte is 0x0D instead of 0x0F (ignored: the walker uses fixed 15-byte strides)",
+  "evidence": [
+   "display/scoop_display.s:17537-17539 `ld xix, 0xe55` / `ld xiy, Display_RedrawButtonLabels_Data` / `calr Scoop_ButtonLabels_DrawCategory`",
+   "display/scoop_display.s:17685-17699 `Scoop_ButtonLabels_DrawCategory:` / `cp (ACTIVE_TITLE:16), 138` / ... / `call Scoop_ConditionalCurveUpdate` -- root record when cell +2 is not 0",
+   "display/scoop_display.s:17731-17741 `bit 7, a` / `jr nz, Scoop_EventHandler_ValueChange` / `add xiy, 0xf` / ... / `add xiy, 0x1e` / ... / `call Scoop_ConditionalCurveUpdate` -- type (+15) or suffix (+30) record",
+   "includes/generated/style_ui_screendata_main.bin +0x3DE `02 0f a3 11 ff 00 06 a6 c3 e0 00 02 00 21 08` / `02 0f a4 11 ff 00 06 c6 c3 e0 00 05 00 23 08` / `02 0f b3 11 03 00 06 06 c5 e0 00 02 00 23 08` -- root table 0xE0C3A6 (\"  \", \"C \", \"D\\x88\" ...), type table 0xE0C3C6 (\"7    \", \"Maj7 \", \"aug  \" ...)",
+   "display/scoop_display.s:7524 `PortConfig_Select_Table[(0x0D65) & 3] -- PortConfig_Handler_0 for mode 0 (CHORD/APC tracks), PortConfig_Handler_1`"
+  ]
+ },
+ {
+  "old": "Display_RedrawButtonLabels_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row2ChordCells",
+  "header": "Row 2 of the step-record chord cells: 8 cells x 3 bound op-02 records (root / type / suffix, as SqStep_Row1ChordCells) at x = 8 + 32k, y = 97, walked by Scoop_ButtonLabels_DrawCategory with the cell records at RAM 0x0E75.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17541-17543 `ld xix, 0xe75` / `ld xiy, Display_RedrawButtonLabels_Data_2` / `calr Scoop_ButtonLabels_DrawCategory`",
+   "includes/generated/style_ui_screendata_main.bin +0x546 `02 0f a3 11 ff 00 06 a6 c3 e0 00 02 00 29 0f` / `02 0f a4 11 ff 00 06 c6 c3 e0 00 05 00 2b 0f` -- same tables, cells 0x0F29 + 4k (y 97)"
+  ]
+ },
+ {
+  "old": "Display_RedrawButtonLabels_Data_3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_Row3ChordCells",
+  "header": "Row 3 of the step-record chord cells: 8 cells x 3 bound op-02 records at x = 8 + 32k, y = 142, walked by Scoop_ButtonLabels_DrawCategory with the cell records at RAM 0x0E95. The slice continues with the unlabelled tables the chord records point at: 16 x 2-character roots (0xE0C3A6), 64 x 5-character types (0xE0C3C6) and 4 x 2-character suffixes (0xE0C506).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records plus three unlabelled name tables in one .incbin slice (0x2D0 bytes)",
+  "evidence": [
+   "display/scoop_display.s:17545-17547 `ld xix, 0xe95` / `ld xiy, Display_RedrawButtonLabels_Data_3` / `calr Scoop_ButtonLabels_DrawCategory`",
+   "includes/generated/style_ui_screendata_main.bin +0x6AE `02 0f a3 11 ff 00 06 a6 c3 e0 00 02 00 31 16` ... -- cells 0x1631 + 4k (y 142); +0x816 roots \"  \", \"C \", \"D\\x88\", \"D \" ...; +0x836 types \"     \", \"     \", \"7    \", \"Maj7 \" ...; +0x976 \"  _ 7 6 \""
+  ]
+ },
+ {
+  "old": "Scoop_Selection_RedrawActive_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_CursorRowBlitBand",
+  "header": "Static record op 0E (colour-blit a band from a text cell): cell 0x1159 = (8, 111), 33 characters wide, 11 pixels high -- the band of the step-record screen's cursor row. Display_RedrawSelection draws it (COLORBLIT_MODE 1, GraphicsRender_ProcessEntries) before the cursor highlight in display mode 0 (CHORD/APC track) and mode 3 (RHYTHM track).\nBasis: readers + bytes -- entry 14 of GraphicsRender_ProcessEntries_PtrTable is ColorBlit_ComputeRectAndBlit; Scoop_AltContent_ClearOneRegion builds the same 8-byte record shape at RAM 0x11EA.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17322-17334 `ld (COLORBLIT_MODE:24), 0x01` / `ld a, (3429:16)` / `cp a, 0:i3` / ... / `ld xiy, Scoop_Selection_RedrawActive_Data` / `ld xix, Scoop_Selection_RedrawActive_Data_2` / `call UIRender_SingleTable` / ... / `ld xiy, Scoop_Selection_RedrawActive_Data_3` / `call UIRender_TwoTableEvtCheck` -- mode 0",
+   "display/scoop_display.s:17356-17364 `ld xiy, Scoop_Selection_RedrawActive_Data` / `ld xix, Scoop_Selection_RedrawActive_Data_2` / `call UIRender_SingleTable` / ... / `ld xiy, Scoop_Selection_DrawMode1_Data` / `call UIRender_TwoTableEvtCheck` -- mode 3",
+   "display/graphics_text_vga.s:1104-1129 `ColorBlit_ComputeRectAndBlit:` / ... / `div de, 0x28` / ... / `add de, (xbc + 6)` / ... / `ld bc, (xbc + 4)` / `sll bc, 3` / ... / `calr ColorBlit2` -- rect from cell (+2), width in characters (+4), height (+6)",
+   "display/scoop_display.s:7524-7525 `PortConfig_Handler_0 for mode 0 (CHORD/APC tracks), PortConfig_Handler_1` / `for modes 1-2 (note and CONTROL tracks), PortConfig_Handler_3 for mode 3 (RHYTHM track).`",
+   "includes/generated/style_ui_screendata_main.bin +0x97E `0e 08 59 11 21 00 0b 00` -- op 0E, cell 0x1159 = 111 * 40 + 1, width 33, height 11"
+  ]
+ },
+ {
+  "old": "Scoop_Selection_RedrawActive_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_CursorRowEndBar",
+  "header": "Static record op 1B (DrawBox, colour 0xF5) from (264, 111) to (264, 121): a vertical bar at the right end of the step-record cursor row, drawn by the Scoop static interpreter in display modes 1-2 (note and CONTROL tracks) before the step-cursor highlight; it is also the end address of SqStep_CursorRowBlitBand's one-record list.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17337-17350 `Scoop_Selection_CheckMode1:` / `cp a, 1:i3` / ... / `Scoop_Selection_DrawMode1:` / `ld xiy, Scoop_Selection_RedrawActive_Data_2` / `ld xix, Scoop_Selection_DrawMode1_Data` / `call UIRender_TwoTableGeneral` / `cp (0x370f:16), 0` / ... / `ld xiy, Scoop_Selection_DrawMode1_Data_2` / `call UIRender_TwoTableEvtCheck`",
+   "display/scoop_display.s:19242-19256 `Scoop_Dispatch_CallFAB273:` / ... / `ldw bc, 0x00f5` / `call DrawBox` -- entry 27 (op 0x1B) of Scoop_EventLoop_12Entry_Data copies x1, y1, x2, y2 and draws the box",
+   "includes/generated/style_ui_screendata_main.bin +0x986 `1b 0a 08 01 6f 00 08 01 79 00` -- (264, 111) - (264, 121)"
+  ]
+ },
+ {
+  "old": "Scoop_Selection_DrawMode1_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_RhythmCursor",
+  "header": "Bound record op 03 (colour-blit the rectangle picked by a RAM value): RAM 0x1192, mask 0x0C, shift 2, list of 4 rectangles that are all (8, 111) - (16, 121) -- the fixed one-character highlight Display_RedrawSelection draws in display mode 3 (RHYTHM track). It is also the end address of SqStep_CursorRowEndBar's list in modes 1-2.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17352-17364 `Scoop_Selection_DrawMode2:` / `cp a, 2:i3` / `jr z, Scoop_Selection_DrawMode1` / ... / `ld a, (3922:16)` / `ld (4500:16), a` / ... / `ld xiy, Scoop_Selection_DrawMode1_Data` / `call UIRender_TwoTableEvtCheck` -- mode 3",
+   "display/scoop_display.s:351-359 `UIRender_TwoTableEvtCheck:` / ... / `call ColorBlit_WithPaletteSave` -- bound op 03 (entry 3 of GraphicsRender_Start_PtrTable)",
+   "display/scoop_display.s:17343 `ld xix, Scoop_Selection_DrawMode1_Data` -- end pointer in the mode 1-2 path",
+   "includes/generated/style_ui_screendata_main.bin +0x990 `03 0b 92 11 0c 82 05 2b c5 e0 00` then 4 x `08 00 6f 00 10 00 79 00` -- RAM 0x1192, mask 0x0C, list at 0xE0C52B"
+  ]
+ },
+ {
+  "old": "Scoop_Selection_RedrawActive_Data_3",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_ChordCellCursor",
+  "header": "Bound record op 03: the chord-cell cursor of the step-record screen -- 8 rectangles (8 + 32k, 111) - (16 + 32k, 121), one per chord cell, picked by RAM byte 0x1191, which Display_RedrawSelection loads from 0x0EEF before drawing it in display mode 0 (CHORD/APC track).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17330-17334 `ld a, (3823:16)` / `ld (4497:16), a` / `popw wa` / `ld xiy, Scoop_Selection_RedrawActive_Data_3` / `call UIRender_TwoTableEvtCheck` -- mode 0 path of Display_RedrawSelection (17316)",
+   "includes/generated/style_ui_screendata_main.bin +0x9BB `03 0b 91 11 ff 00 05 56 c5 e0 00` then `08 00 6f 00 10 00 79 00` `28 00 6f 00 30 00 79 00` ... `e8 00 6f 00 f0 00 79 00` -- RAM 0x1191, 8 rectangles 32 px apart",
+   "includes/generated/style_ui_screendata_main.bin +0x3DE chord-cell records at x = 8 + 32k (SqStep_Row1ChordCells) -- the cursor columns match the cells"
+  ]
+ },
+ {
+  "old": "Scoop_Selection_DrawMode1_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_StepCursor",
+  "header": "Bound record op 03: the step-cursor highlight of the step-record screen -- 33 rectangles, entry 0 empty and entry n = (8n, 111) - (8n + 8, 121), picked by RAM byte 0x118F, which Display_RedrawSelection loads from the step-cursor position 0x370F (1..32, 0 = off) in display modes 1-2 (note and CONTROL tracks).\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "record held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17345-17350 `cp (0x370f:16), 0` / `jr z, Scoop_Selection_End` / `ld a, (0x370f:16)` / `ld (4495:16), a` / `ld xiy, Scoop_Selection_DrawMode1_Data_2` / `call UIRender_TwoTableEvtCheck`",
+   "display/scoop_display.s:7888 `SqStep_RestoreOnLeave: TT_SQSTEP hide-method body: always clears the step-cursor highlight (0x370F = 0, region 2)`",
+   "display/scoop_display.s:12334-12346 `sla a, 3` / ... / `div wa, l` / `add h, a` / `inc 1, h` / `cp h, 32` / ... / `ld (0x370f:16), h` -- position 1..32",
+   "includes/generated/style_ui_screendata_main.bin +0xA06 `03 0b 8f 11 ff 00 05 a1 c5 e0 00` then `00 00 00 00 00 00 00 00` `08 00 6f 00 10 00 79 00` ... `00 01 6f 00 08 01 79 00` -- RAM 0x118F, 33 rectangles"
+  ]
+ },
+ {
+  "old": "Scoop_SidePanel_StoreAndDraw_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_RowCountBoxRecords",
+  "header": "3 Scoop bound records op 04, one per row of the step-record screen: RAM 0x119B / 0x119C / 0x119D (the rows' segment counts 0x0E52-0x0E54, copied by Display_RedrawSidePanel) select an entry of the row's table in SqStep_RowCountBoxTables, and op 04 draws that box (DrawBox colour 245) from the entry's cell, width and height.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17420-17433 `ld a, (3666:16)` / ... / `ld (4507:16), a` / `ld a, (3667:16)` / `ld (4508:16), a` / `ld a, (3668:16)` / `ld (4509:16), a` / `ld xiy, Scoop_SidePanel_StoreAndDraw_Data` / `ld xix, Scoop_SidePanel_StoreAndDraw_Data_2` / `call GraphicsRender_TwoTable_Alt` -- Display_RedrawSidePanel (17369)",
+   "display/scoop_display.s:336-346 `GraphicsRender_TwoTable_Alt:` / ... / `call Scoop_EventLoop_12Entry_Alt` -- Scoop bound interpreter; op 04 = Scoop_EventLoop_12Entry_Alt_Data_Target4 (includes/gui_format_strings.s Scoop_BoundOpHandlerTable)",
+   "includes/generated/style_ui_screendata_main.bin +0xB19 `04 0b 9b 11 ff 00 0e ca c6 e0 00` / `04 0b 9c 11 ff 00 0e e8 c6 e0 00` / `04 0b 9d 11 ff 00 0e 06 c7 e0 00` -- tables 0xE0C6CA / 0xE0C6E8 / 0xE0C706 (= +0xB3A / +0xB58 / +0xB76)"
+  ]
+ },
+ {
+  "old": "Scoop_SidePanel_StoreAndDraw_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_RowCountBoxTables",
+  "header": "3 x 5 x {u16 text cell, u16 width in characters, u16 height}: the boxes Scoop bound op 04 draws for row segment count 0..4 -- for row 1 (8, 66) 32 x 10, (72, 66) 24, (136, 66) 16, (200, 66) 8, then {0, 1, 1}; rows 2 and 3 the same at y = 111 / 156 shifted by one cell -- each ending at x = 264, i.e. the part of the row beyond its count.\nBasis: readers + bytes -- SqStep_RowCountBoxRecords point at the three tables; op 04 takes entry 3 * value words in.",
+  "basis": "readers + bytes",
+  "spelling": "table held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17432 `ld xix, Scoop_SidePanel_StoreAndDraw_Data_2` -- end of the op-04 records' list",
+   "display/scoop_display.s:18700-18727 Scoop_EventLoop_12Entry_Alt_Data_Target4 (18684): `mul a, 3` / ... / `ld xbc, (xbc+7)` / `lda xbc, (xbc+wa)` / ... / `div wa, 40` / ... / `add wa, (xbc+4)` / ... / `ld wa, (xbc+2)` / ... / `ldw bc, 245` / `call DrawBox`",
+   "includes/generated/style_ui_screendata_main.bin +0xB3A `51 0a 20 00 0a 00 59 0a 18 00 0a 00 61 0a 10 00 0a 00 69 0a 08 00 0a 00 00 00 01 00 01 00` -- row 1; +0xB58 / +0xB76 rows 2 and 3"
+  ]
+ },
+ {
+  "old": "Scoop_SidePanel_DrawOneSlot_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_NibbleMarkPatterns",
+  "header": "16 x 4 characters: a 4-bit value drawn as 4 marks, bit i -> '*' when set, glyph 0x91 when clear (entry 0 = 4 x 0x91 ... entry 15 = \"****\"). Scoop_SidePanel_DrawOneSlot copies entry [nibble] into a static op-06 text record at RAM 0x11D4 and draws it; Display_RedrawSidePanel runs it for both nibbles of each byte of the rows' bit maps at RAM 0x372E.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "string table held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17439-17464 `Scoop_SidePanel_DrawOneSlot:` / ... / `ld xiy, Scoop_SidePanel_DrawOneSlot_Data` / ... / `ld xwa, 0x11d4` / `ld (xwa), 0x6` / `ld (xwa + 1), 0x8` / `ld (xwa + 2), ix` / ... / `sll xhl, 2` / `add xiy, xhl` / ... / `call Scoop_ConditionalGlideSetup`",
+   "display/scoop_display.s:17389-17400 `ld l, (xiy+hl)` / `and l, 0xf` / `calr Scoop_SidePanel_DrawOneSlot` / ... / `and l, 0xf0` / `srl l, 4` / `calr Scoop_SidePanel_DrawOneSlot` -- Display_RedrawSidePanel, XIY = 0x372E",
+   "includes/generated/style_ui_screendata_main.bin +0xB94 `91 91 91 91 2a 91 91 91 91 2a 91 91 2a 2a 91 91` ... `2a 2a 2a 2a`"
+  ]
+ },
+ {
+  "old": "Display_RedrawButtonLabels_Data_4",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_CellFlagFields",
+  "header": "24 bound op-02 records, 3 rows x 8 cells: a 1-character flag mark (SqStep_CellFlagGlyphs entry (byte & 0x60) >> 5: blank, '*' or glyph 0x91) under each cell at x = 8 + 32k, y = 66 / 111 / 156, from RAM bytes 0x11B3.., 0x1192.., 0x119A.., which Scoop_ButtonLabels_CopySlotData fills with byte 0 of each cell record (RAM 0x0E55 / 0x0E75 / 0x0E95 + 4k). Display_RedrawButtonLabels draws them with GraphicsRender_Start.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17523-17530 `Display_RedrawButtonLabels:` / `cp (ACTIVE_TITLE:16), 138` / ... / `call Scoop_ButtonLabels_CopySlotData` / `ld xiy, Display_RedrawButtonLabels_Data_4` / `ld xix, Display_RedrawButtonLabels_Data_5` / `call GraphicsRender_TwoTable`",
+   "display/scoop_display.s:17551-17575 Scoop_ButtonLabels_CopySlotData: `ld xix, 0x11b3` / `ld xiy, 0xe55` / ... / `ld xix, 0x1192` / `ld xiy, 0xe75` / ... / `ld xiy, 0xe95`",
+   "includes/generated/style_ui_screendata_main.bin +0xBD4 `02 0f b3 11 60 85 06 cc c8 e0 00 01 00 51 0a` ... `02 0f a1 11 60 85 06 cc c8 e0 00 01 00 7d 18` -- mask 0x60, shift 5, table 0xE0C8CC (= +0xD3C), width 1"
+  ]
+ },
+ {
+  "old": "Display_RedrawButtonLabels_Data_5",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_CellFlagGlyphs",
+  "header": "3 x 1 character {' ', '*', 0x91}: the flag-mark table at 0xE0C8CC that SqStep_CellFlagFields and the row-mark records of SqStep_Rows1To2LineFields / SqStep_Row3LineFields index (width 1); also the end address of the SqStep_CellFlagFields list.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "string table held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17529 `ld xix, Display_RedrawButtonLabels_Data_5` -- end of the flag-field list",
+   "includes/generated/style_ui_screendata_main.bin +0xD3C `20 2a 91` -- 0xE0BB90 + 0xD3C = 0xE0C8CC, the table pointer (`cc c8 e0 00`) of the op-02 records at +0xBD4 and +0x22B / +0x249 / +0x267"
+  ]
+ },
+ {
+  "old": "Scoop_SelectModeTable_2Part_XIX_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "SqStep_BottomBarBoxes",
+  "header": "Static records of the step-record screen's bottom bar: 8 op-0A boxes, 30 pixels wide at x = 5 + 40k, y = 210-236, then 6 op-01 lines at y = 223 inside the first six; Scoop_InitPartDisplay draws [this, StyleUI_ScreenData_MeasCursor) with the Scoop static interpreter after the parameter block when the block index is 0.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "records held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:17030-17036 `call Scoop_CheckPartStatus` / `pop xhl` / `cp l, 0:i3` / `jr nz, Scoop_SetPartIndexAndDisplay` / `ld xiy, Scoop_SelectModeTable_2Part_XIX_Data` / `ld xix, StyleUI_ScreenData_MeasCursor` / `call UIRender_TwoTableGeneral`",
+   "includes/generated/style_ui_screendata_main.bin +0xD3F `0a 0a 05 00 d2 00 23 00 ec 00` ... `0a 0a 1d 01 d2 00 3b 01 ec 00` (8 boxes) then `01 0a 05 00 df 00 23 00 df 00` ... (6 lines at y 223)",
+   "style_ui/main.c:16 `24 track status widgets + bottom bar (8 FILLED_RECT + 6 HLINE)`"
+  ]
+ },
+ {
+  "old": "Scoop_CurveUpdate_Finalize_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_CharGlyphMap",
+  "header": "256 x u8 character code -> font glyph code, byte-identical to Text_CharGlyphMap (ASCII to itself except '\\' -> 0xA5, 0x10-0x1F to UI symbols, 0x80-0xAB to the accent page): the Scoop text records (static ops 06 and 20, the table-string op of Scoop_CurveUpdate_SegmentEnd) map every character through it before DrawString.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "table held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:18820-18823 `ld c, (xbc)` / `extz bc` / `lda xiy, (Scoop_CurveUpdate_Finalize_Data:24)` / `ld c, (xiy+bc)` -- Scoop_EnvCalc_Handler1 (static op 0x20)",
+   "display/scoop_display.s:18529-18533 `ld a, (xhl)` / `extz wa` / `lda xhl, (Scoop_CurveUpdate_Finalize_Data:24)` / `ld a, (xhl+wa)` / `ld (xix), a` -- Scoop_CurveUpdate_SegmentEnd; also 18630, 18943, 19026",
+   "ui_widgets/disk_warning_strings.s:1520-1524 `Text_CharGlyphMap -- 256 x u8, character code -> font glyph code: ASCII to itself except '\\' -> 0xA5,` / ... / `Text_CharGlyphMap: .incbin \"includes/generated/naka_disk_warning.bin\", 0x2508, 0x100`",
+   "ROM 0xE0CB1A..0xE0CC19 = ROM 0xEAB1B4..0xEAB2B3 (256 bytes, byte-identical)"
+  ]
+ },
+ {
+  "old": "Scoop_EnvCalc_Handler1_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_StaticOp20_ClipBox",
+  "header": "4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop static display op 0x20 (cell text, font 6): Scoop_EnvCalc_Handler1 copies it with ldirw into its frame and passes the copy to DrawString as the clip rectangle.\nBasis: readers + bytes (cf. SeGfx_StaticOp20_ClipBox).",
+  "basis": "readers + bytes",
+  "spelling": "4 x u16 held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:18788-18793 `Scoop_EnvCalc_Handler1:` / `lda xsp, (xsp-268)` / `ld xiy, Scoop_EnvCalc_Handler1_Data` / `lda xix, (xsp+260)` / `ld bc, 4:i3` / `ldirw`",
+   "display/scoop_display.s:18834-18846 `lda xwa, (xsp+260)` / `ld xhl, xwa` / ... / `ld xwa, 6:i3` / `push xwa` / ... / `ld xwa, xhl` / `call DrawString` -- font 6, XWA = the clip box",
+   "ui_widgets/style_ui_params.s:269 `.long Scoop_EnvCalc_Handler1` -- entry 32 (op 0x20) of Scoop_EventLoop_12Entry_Data",
+   "ui_widgets/disk_warning_strings.s:1364-1368 `SeGfx_StaticOp20_ClipBox -- 4 x int16_t {x1, y1, x2, y2} = {0, 0, 319, 239}` -- the SeGfx twin",
+   "includes/generated/style_ui_screendata_ctlonly.bin +0x123 `00 00 00 00 3f 01 ef 00`"
+  ]
+ },
+ {
+  "old": "Scoop_GlideCalc_Handler0_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_StaticOp08_ClipBox",
+  "header": "4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop static display op 08 (cell text, font 2): Scoop_GlideCalc_Handler0 copies it with ldirw into its frame and passes the copy to DrawString.\nBasis: readers + bytes (cf. SeGfx_StaticOp08_ClipBox).",
+  "basis": "readers + bytes",
+  "spelling": "4 x u16 held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:19052-19057 `Scoop_GlideCalc_Handler0:` / `lda xsp, (xsp-268)` / `ld xiy, Scoop_GlideCalc_Handler0_Data` / `lda xix, (xsp+260)` / `ld bc, 4:i3` / `ldirw`",
+   "display/scoop_display.s:19095-19106 `lda xwa, (xsp+260)` / `ld xhl, xwa` / ... / `ld xwa, 2:i3` / `push xwa` / ... / `ld xwa, xhl` / `call DrawString` -- font 2",
+   "ui_widgets/style_ui_params.s:245 `.long Scoop_GlideCalc_Handler0` -- entry 8 (op 08) of Scoop_EventLoop_12Entry_Data",
+   "ui_widgets/disk_warning_strings.s:1349 `SeGfx_StaticOp08_ClipBox -- 4 x uint16_t {x1, y1, x2, y2} = {0, 0, 319, 239}: text clip box of static display op 08 (the whole 320 x 240 screen)`",
+   "includes/generated/style_ui_screendata_ctlonly.bin +0x133 `00 00 00 00 3f 01 ef 00`"
+  ]
+ },
+ {
+  "old": "Scoop_EventLoop_12Entry_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_StaticOpHandlerTable",
+  "header": "36 x u32: the handler of each Scoop static display-record op 0x00..0x23 ({u8 op, u8 len, payload}); Scoop_EventLoop_12Entry copies the 0x48 words into its frame and calls [op] with XWA = the record for every record from XWA up to XBC, stopping at an op above 0x23. Cell text 06 / 07 / 08 / 20, op 1B DrawBox, op 0E Scoop_EnvCalc_Handler0, 01 / 02 / 09 / 0A / 23 drawing handlers, the rest Scoop_Dispatch_Nop.\nBasis: readers + bytes -- the static twin of Scoop_BoundOpHandlerTable.",
+  "basis": "readers + bytes",
+  "evidence": [
+   "display/scoop_display.s:19260-19285 `Scoop_EventLoop_12Entry:` / ... / `ld xiy, Scoop_EventLoop_12Entry_Data` / `lda xix, (xsp + 6)` / `ldw bc, 0x48` / `ldirw` / ... / `ld c, (xiz)` / ... / `cp c, 0x23` / ... / `sla bc, 2` / ... / `call (xhl)`",
+   "ui_widgets/style_ui_params.s:236-272 `Scoop_EventLoop_12Entry_Data:` / `.long Scoop_Dispatch_Nop` / `.long Scoop_EnvCalc_Handler2` / ... / `.long Scoop_EnvCalc_Handler3` -- 36 entries",
+   "includes/gui_format_strings.s:35-39 `Scoop_BoundOpHandlerTable: 12 x u32: handler of each op (record byte 0, 0..11) of a Scoop bound display list (values` / ... / `Scoop_BoundOpHandlerTable:` -- the bound twin",
+   "display/scoop_display.s:298-308 `UIRender_TwoTableGeneral:` / ... / `call Scoop_EventLoop_12Entry`"
+  ]
+ },
+ {
+  "old": "Scoop_EventLoop_12Entry_Alt_Data_Target5_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_BoundOp05_ClipBox",
+  "header": "4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display op 05: Scoop_EventLoop_12Entry_Alt_Data_Target5 copies it with ldirw into its frame and passes the copy to DrawString.\nBasis: readers + bytes (cf. Scoop_BoundOp07_ClipBox, Scoop_BoundOp0A_ClipBox).",
+  "basis": "readers + bytes",
+  "spelling": "4 x u16 held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:19387-19394 `Scoop_EventLoop_12Entry_Alt_Data_Target5:` / ... / `ld xiy, Scoop_EventLoop_12Entry_Alt_Data_Target5_Data` / `lda xix, (xsp+264)` / `ld bc, 4:i3` / `ldirw`",
+   "display/scoop_display.s:19522-19532 `lda xwa, (xsp+264)` / `ld xhl, xwa` / ... / `ld xwa, xhl` / `call DrawString`",
+   "includes/gui_format_strings.s:45 `.long Scoop_EventLoop_12Entry_Alt_Data_Target5` -- entry 5 of Scoop_BoundOpHandlerTable (39)",
+   "includes/gui_format_strings.s:30-33 `Scoop_BoundOp07_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (whole 320 x 240 screen) of Scoop bound display op` / ... / `Scoop_BoundOp07_ClipBox:` -- naming precedent",
+   "includes/generated/style_ui_screendata_ctlonly.bin +0x1DF `00 00 00 00 3f 01 ef 00`"
+  ]
+ },
+ {
+  "old": "Scoop_EventLoop_36Entry_Data_2",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "Scoop_BoundOp06_ClipBox",
+  "header": "4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display op 06, which prints a RAM word with %1d / %2d / %3d: Scoop_EventLoop_36Entry copies it with ldirw into its frame and passes the copy to DrawString.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "4 x u16 held as an .incbin slice",
+  "evidence": [
+   "display/scoop_display.s:19537-19544 `Scoop_EventLoop_36Entry:` / ... / `ld xiy, Scoop_EventLoop_36Entry_Data_2` / `lda xix, (xsp+266)` / `ld bc, 4:i3` / `ldirw`",
+   "display/scoop_display.s:19626-19637 `lda xwa, (xsp+266)` / `ld xhl, xwa` / ... / `ld xwa, xhl` / `call DrawString`",
+   "includes/gui_format_strings.s:46 `.long Scoop_EventLoop_36Entry` -- entry 6 of Scoop_BoundOpHandlerTable",
+   "includes/generated/style_ui_screendata_ctlonly.bin +0x1FF `00 00 00 00 3f 01 ef 00`; the formats \"%1d\" / \"%2d\" / \"%3d\" follow (+0x207..)"
+  ]
+ },
+ {
+  "old": "LswLeftHold_DefaultStr_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "LswLeftHold_Str_ERR",
+  "header": "\"ERR\" (NUL-terminated): the text LswLeftHold (the LEFT HOLD Lsw function) copies out on EVT_GET_LSW_STRING when the value is outside 0..1; values 0 / 1 give \"OFF\" / \"ON \" from the work-RAM copy (0x3E91C) of LswLeftHold_OnOffStrPtrs.\nBasis: readers + bytes -- the only reader is that Strcpy; bytes 45 52 52 00.",
+  "basis": "readers + bytes",
+  "spelling": "string held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:4856-4867 `LswLeftHold_OnGetLswString:` / `ld bc, (xde + 4)` / ... / `cp bc, 0:i3` / `jr lt, LswLeftHold_DefaultStr` / `cp bc, 1:i3` / `jr gt, LswLeftHold_DefaultStr` / `sla bc, 2` / `lda xde, (0x03e91c:24)`",
+   "ui/drawbar_panel_ui.s:4869-4875 `LswLeftHold_DefaultStr:` / `pushw LswLeftHold_DefaultStr_Data@hi16` / `pushw LswLeftHold_DefaultStr_Data@lo16` / `LswLeftHold_CopyAndReturn:` / `push xwa` / `call Strcpy`",
+   "ui_widgets/technichord_string_data.s:925 `LswLeftHold_DefaultStr_Data: .incbin \"includes/generated/naka_technichord_strings.bin\", 0xF358, 0x4`",
+   "includes/generated/naka_technichord_strings.bin +0xF358 `45 52 52 00` -- \"ERR\"",
+   "ui_widgets/sequencer_channel_containers.s:143 `LswLeftHold_OnOffStrPtrs -- 2 x uint32_t: string pointers \"OFF\" / \"ON \" that LswLeftHold copies out for`",
+   "ui_widgets/naka_screen_dispatch.s:1332 `CmpBndRng_DefaultString_Str_ERR:` -- sibling naming pattern"
+  ]
+ },
+ {
+  "old": "IvSdpart_GetText_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "IvSdpart_GetText_Str_SdPT",
+  "header": "\"SdPT\" (NUL + 0xFF pad): the class-name string IvSdpartProc copies into the caller's buffer on EVT_GET_STRING.\nBasis: readers + bytes -- the only reader is IvSdpart_GetText's Strcpy; bytes 53 64 50 54 00 FF; siblings Sdtecd_GetText_Str_TeCd, IvMessage_GetText_Str_Msg.",
+  "basis": "readers + bytes",
+  "spelling": "string held as an .incbin slice",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:4898-4906 `IvSdpartProc:` / ... / `cp xiz, EVT_GET_STRING` / `jrl z, IvSdpart_GetText`",
+   "ui/drawbar_panel_ui.s:5232-5237 `IvSdpart_GetText:` / `pushw IvSdpart_GetText_Data@hi16` / `pushw IvSdpart_GetText_Data@lo16` / `ld xwa, (xsp + 8)` / `push xwa` / `call Strcpy`",
+   "includes/generated/naka_technichord_strings.bin +0xF5FC `53 64 50 54 00 ff` -- \"SdPT\"",
+   "ui_widgets/technichord_string_data.s:2542 `Sdtecd_GetText_Str_TeCd:` -- sibling naming pattern"
+  ]
+ },
+ {
+  "old": "IvMesageProc_Data",
+  "verdict": "name",
+  "why_refused": null,
+  "new": "IvMessage_Catalog",
+  "header": "The IvMesage message catalog (record 0 at this label): 80 x 14-byte records {u16 kind, u32 code 0x00NNFFFF (NN = the error number shown), u32 header table, u32 text table} + a zero terminator. Readers index it with the message number (word 0x2478C) * 14: the kind picks the window from IvMesageProc_PtrTable, is compared with 5 (paint) and 3 (header), and +4 is the error number pushed to the header Sprintf. MsgHeader_BuildLoop_PtrTable and IvMessage_Catalog_TextTableCol are the +6 / +10 columns of record 0.\nBasis: readers + bytes.",
+  "basis": "readers + bytes",
+  "spelling": "the catalog is split into three .incbin slices at +6 and +10 of record 0",
+  "evidence": [
+   "ui/drawbar_panel_ui.s:8758-8764 `ld wa, (0x02478c:24)` / `muls wa, 0xe` / `lda xbc, (IvMesageProc_Data:24)` / `ld wa, (xbc+wa)` / `sla wa, 2` / `lda xbc, (IvMesageProc_PtrTable:24)` -- kind -> window",
+   "ui/drawbar_panel_ui.s:8792-8795 `ld wa, (0x02478c:24)` / `muls wa, 0xe` / `lda xbc, (IvMesageProc_Data:24)` / `cpw (xbc+wa), 0x0005`",
+   "ui/drawbar_panel_ui.s:9178-9182 `ld bc, (0x02478c:24)` / `muls bc, 0xe` / `lda xwa, (IvMesageProc_Data:24)` / `lda xwa, (xwa+bc)` / `cpw (xwa), 0x3` -- MsgHeader_BuildHeader",
+   "ui/drawbar_panel_ui.s:9209-9213 `ld bc, (0x02478c:24)` / `muls bc, 0xe` / `lda xwa, (IvMesageProc_Data:24)` / `lda xwa, (xwa+bc)` / `pushw (xwa+4)`",
+   "ui_widgets/technichord_string_data.s:2300-2302 `the IvMesage message catalog itself (0xe9d340): 80 records x 14 bytes {u16 kind,` / ... -- record layout",
+   "ui_widgets/technichord_string_data.s:2312-2318 `IvMesageProc_Data:` (0x173F2, 6 bytes) / `MsgHeader_BuildLoop_PtrTable:` (0x173F8, 4) / ... / `IvMessage_Catalog_TextTableCol:` (0x173FC) -- +0, +6, +10 of record 0",
+   "includes/generated/naka_technichord_strings.bin +0x173F2 `03 00 ff ff 00 00 4e 57 e9 00 42 5f e9 00` -- record 0: kind 3, code 0x0000FFFF, header 0xE9574E, text 0xE95F42"
+  ]
+ }
+]

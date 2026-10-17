@@ -221,7 +221,7 @@ MidiPkt_EnqueueControl_3354_Return:
 	pop xiz
 	inc 4, xsp
 	ret
-MidiPkt_EnqueueExtended_Data:
+MidiPkt_SendCtlWordValueSysEx:
 	dec	4, xsp
 	push	xiz
 	ld	xiz, xwa

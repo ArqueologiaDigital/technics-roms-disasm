@@ -1594,10 +1594,10 @@ typedef struct __attribute__((packed)) {
     uint32_t PanelEvent_InitPhaseHandlers[4];
     /* first bytes of the byte map PanelButton_ModeKey reads: base for panel event index 1, indexed by the lowest set button bit */
     uint8_t PanelButton_ModeKeyCodes[2];
-    uint16_t FileIO_BytecodeData_Data;
-    uint16_t FileIO_BytecodeData_Data_2;
-    uint16_t FileIO_BytecodeData_Data_3;
-    uint16_t FileIO_BytecodeData_Data_4;
+    uint16_t PanelButton_ModeKeyCodes_LeftSeg3;
+    uint16_t PanelButton_ModeKeyCodes_LeftSeg10;
+    uint16_t PanelButton_ModeKeyCodes_RightSeg4;
+    uint16_t PanelButton_ModeKeyCodes_RightSeg5;
     uint16_t field_356c;
     uint16_t field_356e;
     uint16_t field_3570;
@@ -1608,12 +1608,12 @@ typedef struct __attribute__((packed)) {
     uint16_t field_357a;
     uint16_t field_357c;
     uint16_t field_357e;
-    uint16_t FileIO_BytecodeData_Data_8;
+    uint16_t PanelButton_SoundGroupCodes_RightSeg9;
     uint16_t field_3582;
     uint16_t field_3584;
     uint16_t field_3586;
     uint16_t field_3588;
-    uint16_t FileIO_BytecodeData_Data_10;
+    uint16_t PanelButton_RhythmGroupCodes_LeftSeg1;
     uint16_t field_358c;
     uint16_t field_358e;
     uint16_t field_3590;
@@ -6286,13 +6286,13 @@ const naka_extension_device_t naka_extension_device_data
         0x0E, 0x11,
     },
 
-    .FileIO_BytecodeData_Data = 0x0F13,
+    .PanelButton_ModeKeyCodes_LeftSeg3 = 0x0F13,
 
-    .FileIO_BytecodeData_Data_2 = 0xFF14,
+    .PanelButton_ModeKeyCodes_LeftSeg10 = 0xFF14,
 
-    .FileIO_BytecodeData_Data_3 = 0xFF07,
+    .PanelButton_ModeKeyCodes_RightSeg4 = 0xFF07,
 
-    .FileIO_BytecodeData_Data_4 = 0x0809,
+    .PanelButton_ModeKeyCodes_RightSeg5 = 0x0809,
 
     .field_356c = 0x0402,
 
@@ -6314,7 +6314,7 @@ const naka_extension_device_t naka_extension_device_data
 
     .field_357e = 0x0706,
 
-    .FileIO_BytecodeData_Data_8 = 0x1110,
+    .PanelButton_SoundGroupCodes_RightSeg9 = 0x1110,
 
     .field_3582 = 0x0100,
 
@@ -6324,7 +6324,7 @@ const naka_extension_device_t naka_extension_device_data
 
     .field_3588 = 0xFF06,
 
-    .FileIO_BytecodeData_Data_10 = 0xFF0F,
+    .PanelButton_RhythmGroupCodes_LeftSeg1 = 0xFF0F,
 
     .field_358c = 0x0807,
 

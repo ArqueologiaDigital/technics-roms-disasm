@@ -56,11 +56,11 @@ MidiInit_FillLoop_Part:
 	cp	xwa, xbc
 	jr	c, MidiInit_FillLoop
 	ret
-MidiInit_Stub1:
+SndParam_InitPhase1_NullRet:
 	ret
-MidiInit_Stub2:
+SndParam_InitPhase2_NullRet:
 	ret
-MidiInit_Stub3:
+SndParam_InitPhase3_NullRet:
 	ret
 INTRX0_CLEAR_ERROR_STATE:
 	pushw	wa

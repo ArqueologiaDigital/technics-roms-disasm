@@ -3470,7 +3470,7 @@ FileData_ImportM4M6PanelMemories_Loop5:
 	calr	DataBuf_CopyMixerBlock12
 	ld	xwa, (xsp+14)
 	ld	xbc, (xsp+4)
-	calr	DataBuf_CopyBulkBitfields_Stub
+	calr	FileData_ImportM4M6_NullRet
 	ld	xwa, 0xf980
 	ld	xbc, (xsp+4)
 	calr	DataBuf_CopyBulkBitfields_960
@@ -4839,7 +4839,7 @@ DataBuf_CopyMixerBlock12:
 DataBuf_CopyBulkBitfields_Nop:
 	ret
 
-DataBuf_CopyBulkBitfields_Stub:
+FileData_ImportM4M6_NullRet:
 	; --- Stub (1 byte) ---
 	ret
 DataBuf_CopyBulkBitfields_944:

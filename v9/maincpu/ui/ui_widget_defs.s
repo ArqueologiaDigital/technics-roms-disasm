@@ -8711,7 +8711,7 @@ ExitWindow_OK:
 	lda xwa, (SupportClassProc:24)
 	ld (xbc + 4), xwa
 	ldw (xbc + 8), 0x37
-	lda xwa, (ExitWindow_OK_Data_2:24)
+	lda xwa, (SupportClass_PropTypeRecords:24)
 	ld (xbc + 10), xwa
 	ldw wa, 0x260
 	calr RegisterObjectTable

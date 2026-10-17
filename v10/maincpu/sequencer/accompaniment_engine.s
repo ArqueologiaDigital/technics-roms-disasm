@@ -10180,7 +10180,7 @@ AccTiming_SlotOffsetTables:
 ; forms.  The first table steps by 6 and the second by 9 -- consistent with
 ; the per-slot stride the two free-slot scans add (`add iz, (0x337c:16)`).
 ; Size: the +0x20 reader pins the first table at 8 entries; the second is
-; the 32 bytes up to AccDir_Entry.
+; the 32 bytes up to AccDir_TickVector.
 ; readers in v9/v10 (address from the linked ELF): AccKbdTiming_SlotOverflow 0xF5B6D1,
 ;     AccAccTiming_SlotOverflow 0xF5BABA
 ; -- comments that sat inside this range before the re-type, in order:
@@ -10193,7 +10193,12 @@ AccAccTiming_SlotOverflow_Data:
 	.long 0x00000000, 0x00000009, 0x00000012, 0x0000001b
 	.long 0x00000024, 0x0000002d, 0x00000036, 0x0000003f
 
-AccDir_Entry:
+; AccDir_TickVector: Slot 0 of the AccDir jump-vector block (`jp AccDir_Main`; AccDir_PeriodicEntry's `jp
+;   AccDir_PeriodicCheck` follows): Seq_DispatcherTick calls it on every sequencer tick, before the Sound Arranger and
+;   tap-tempo vectors. AccDir_Main steps the VARIATION field (record 0x48 +7 bits 4-5, RAM 0xFC61) down or up when the
+;   low 6 bits of RAM 0x3312 / 0x3313 drop to 0 (only while 0xFD99 bit 0 is set and the style number is below 128) and
+;   posts it as panel event 0x48/7. Basis: callers + body -- same shape as AccPlay_TickVector.
+AccDir_TickVector:
 	jp AccDir_Main
 
 AccDir_PeriodicEntry:
@@ -10404,7 +10409,12 @@ SwbtB3_CodeA8_Listener0:
 	call	AccProcess_InlinedCode
 	ret
 
-AccProcess_Entry:
+; AccProcess_TapTempoTick: Per-tick entry of the tap-tempo timer (`call AccProcess_TimerCompare; ret`):
+;   Seq_DispatcherTick calls it on every sequencer tick; AccProcess_TimerCompare ends a tap sequence -- clears 0x3490
+;   bit 0 and the three stored intervals 0x3492/0x3494/0x3496 -- once 0x400 SYSTEM_TIMESTAMP units pass after the last
+;   tap (word 0x348E). Basis: callers + body -- the tap handler AccProcess_InlinedCode (panel code 0xA8 listener) sets
+;   0x3490 bit 0 and 0x348E on each press and posts 30000 / interval as the tempo.
+AccProcess_TapTempoTick:
 	call AccProcess_TimerCompare
 	ret
 
@@ -10865,7 +10875,13 @@ AccVoice_CopyFromROM_DataBlock_Data_2:
 	.byte 0xff, 0xff, 0x00	; key 0xffff -> 0
 	.byte 0xff, 0xff, 0x00	; key 0xffff -> 0
 
-AccStyle_Entry:
+; SndArg_TickVector: Slot 0 of the Sound Arranger engine's jump-vector block (`jp AccStyle_Process`;
+;   AccStyle_JumpTable's ToggleBit0 / ModeEnter / ModeExit / InlinedBlock_Helper slots follow): Seq_DispatcherTick
+;   calls it on every sequencer tick. While a Sound Arranger part is selected ((0x338E) & 0x1F != 0) AccStyle_Process
+;   copies changed accompaniment-part sounds into the current style's 10-byte arrangement record at 0x1E7810 + 10 *
+;   index. Basis: callers + body -- 0x338E is cleared on entering / leaving mode 17 (MD_SND_ARG) and set from the
+;   Sound Arranger grid (AcSndArgGridBoxProc).
+SndArg_TickVector:
 	jp AccStyle_Process
 AccStyle_JumpTable:
 	jp	AccStyle_ToggleBit0
@@ -10920,11 +10936,11 @@ AccStyle_Process_DoChain:
 	calr AccHelper_ComputeVoiceOffset
 	ld xiy, xhl
 	add xiy, 0x1e7810
-	calr AccVoiceDelta_Part1
-	calr AccVoiceDelta_Part2
-	calr AccVoiceDelta_Part3
-	calr AccVoiceDelta_Part4
-	calr AccVoiceDelta_Part5
+	calr SndArg_StoreDrumSound
+	calr SndArg_StoreBassSound
+	calr SndArg_StoreAccomp1Sound
+	calr SndArg_StoreAccomp2Sound
+	calr SndArg_StoreAccomp3Sound
 
 AccStyle_Process_SaveState:
 	ld a, (0x338e:16)
@@ -11439,7 +11455,12 @@ AccVoiceState_DispatchChange_Data:
 	.byte 0x42, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.zero 56
 
-AccVoiceDelta_Part1:
+; SndArg_StoreDrumSound: Sound Arranger: compares the DRUM part's sound (part record 20 at RAM 0xFBBE: program, bank &
+;   0x7F) with its last value (word 0x3395); when it changed, writes it into the current style's arrangement record at
+;   XIY -- +0 = program & 0x0F, +1 = bank (bit 7 kept) -- and sets 0x3393 bit 0; then saves the new value. Basis:
+;   callers + body -- AccStyle_Process (the per-tick Sound Arranger step) calls the five AccVoiceDelta_PartN with XIY
+;   = 0x1E7810 + 10 * index; one-hot selector 1 = part 0x14, the DRUM entry of the part-name table.
+SndArg_StoreDrumSound:
 	ld a, (0xfbbe:16)
 	ld w, (0xfbbf:16)
 	and w, 0x7f
@@ -11456,7 +11477,12 @@ AccVoiceDelta_Part1_Store:
 	ld (0x3395:16), wa
 	ret
 
-AccVoiceDelta_Part2:
+; SndArg_StoreBassSound: Sound Arranger: compares the BASS part's sound (part record 19 at RAM 0xFBA4: program, bank &
+;   0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x3397); when it changed, writes program / bank
+;   into +2 / +3 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new value.
+;   Basis: callers + body -- second of AccStyle_Process's five per-part steps; selector code 2 = part 0x13, the BASS
+;   entry of the part-name table.
+SndArg_StoreBassSound:
 	ld a, (0xfba4:16)
 	ld w, (0xfba5:16)
 	and w, 0x7f
@@ -11475,7 +11501,12 @@ AccVoiceDelta_Part2_Store:
 	ld (0x3397:16), wa
 	ret
 
-AccVoiceDelta_Part3:
+; SndArg_StoreAccomp1Sound: Sound Arranger: compares the ACCOMP1 part's sound (part record 16 at RAM 0xFB56: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x3399); when it changed, writes program /
+;   bank into +4 / +5 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new
+;   value. Basis: callers + body -- third of AccStyle_Process's five per-part steps; selector code 4 = part 0x10, the
+;   ACCOMP1 entry of the part-name table.
+SndArg_StoreAccomp1Sound:
 	ld a, (0xfb56:16)
 	ld w, (0xfb57:16)
 	and w, 0x7f
@@ -11494,7 +11525,12 @@ AccVoiceDelta_Part3_Store:
 	ld (0x3399:16), wa
 	ret
 
-AccVoiceDelta_Part4:
+; SndArg_StoreAccomp2Sound: Sound Arranger: compares the ACCOMP2 part's sound (part record 17 at RAM 0xFB70: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x339B); when it changed, writes program /
+;   bank into +6 / +7 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new
+;   value. Basis: callers + body -- fourth of AccStyle_Process's five per-part steps; selector code 8 = part 0x11, the
+;   ACCOMP2 entry of the part-name table.
+SndArg_StoreAccomp2Sound:
 	ld a, (0xfb70:16)
 	ld w, (0xfb71:16)
 	and w, 0x7f
@@ -11513,7 +11549,12 @@ AccVoiceDelta_Part4_Store:
 	ld (0x339b:16), wa
 	ret
 
-AccVoiceDelta_Part5:
+; SndArg_StoreAccomp3Sound: Sound Arranger: compares the ACCOMP3 part's sound (part record 18 at RAM 0xFB8A: program,
+;   bank & 0x7F with bit 6 of record +4 as bit 7) with its last value (word 0x339D); when it changed, writes program /
+;   bank into +8 / +9 of the current style's arrangement record at XIY and sets 0x3393 bit 0; then saves the new
+;   value. Basis: callers + body -- last of AccStyle_Process's five per-part steps; selector code 16 = part 0x12, the
+;   ACCOMP3 entry of the part-name table.
+SndArg_StoreAccomp3Sound:
 	ld a, (0xfb8a:16)
 	ld w, (0xfb8b:16)
 	and w, 0x7f
@@ -13840,7 +13881,12 @@ AccTone_StubReturn_A:
 AccTone_StubReturn_B:
 	ret
 
-AccPatch_CountSlots_Wrapper:
+; AccPatch_RecountFreeSlots: Far-callable thunk (`calr AccPatch_CountAvailableSlots; ret`): recounts the free patch
+;   entries 0x96..0x153 (bit 7 of byte 0 clear) of the current style image and stores 190 minus the used ones in word
+;   0x34D4. Basis: callers + body -- called from other modules after style data was loaded or copied
+;   (DrumKitInit_FinalSetup, Flash_InitBytecodeBlock twice, CstmCpTtl_ResolvePendingCopy); its twin
+;   AccPatch_CountSlotsAlt does the same for the image at 0x69800.
+AccPatch_RecountFreeSlots:
 	calr AccPatch_CountAvailableSlots
 	ret
 
@@ -24479,7 +24525,7 @@ DrumKitInit_CheckExtAssign:
 	call SwbtWr_QueuePostEvent
 
 DrumKitInit_FinalSetup:
-	call AccPatch_CountSlots_Wrapper
+	call AccPatch_RecountFreeSlots
 	ld (0x350c:16), 0
 	call SeqAcc_SetIndicator_PB
 	ldw (0xf19e:16), 0

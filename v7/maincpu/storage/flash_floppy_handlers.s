@@ -1488,7 +1488,7 @@ Flash_InitBytecodeBlock_Skip:
 	cp_erpb	251, 10
 	jr	c, Flash_InitBytecodeBlock_Loop2
 Flash_InitBytecodeBlock_Join:
-	call	AccPatch_CountSlots_Wrapper
+	call	AccPatch_RecountFreeSlots
 	cp	(xsp+0x8), 0
 	jrl	nz, Flash_InitBytecodeBlock_Loop3
 	lda	xwa, (1748:16)
@@ -1628,7 +1628,7 @@ Flash_InitBytecodeBlock_Join5:
 	ld	(0xc6a), (xsp+0xa)
 	ld	(0xc6c), (xsp+0x6)
 Flash_InitBytecodeBlock_Join2:
-	call	AccPatch_CountSlots_Wrapper
+	call	AccPatch_RecountFreeSlots
 	ld	l, (xsp+2)
 	pop qiz
 	lda	xsp, (xsp+12)
@@ -1684,7 +1684,7 @@ Flash_InitBytecodeBlock_Join4:
 	extz	de
 	calr	Flash_InitBytecodeBlock_Helper9
 Flash_InitBytecodeBlock_Skip9:
-	call	AccPatch_CountSlots_Wrapper
+	call	AccPatch_RecountFreeSlots
 	ld	l, 0:opc
 	inc	2, xsp
 	ret
@@ -6816,7 +6816,7 @@ AcCmpSetGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
 	call SendEvent
 	ld wa, hl
 	add wa, wa
-	lda xbc, (CmpSetP1_DialGrid_Data:24)
+	lda xbc, (AcCmpSetGridBox_RowUpSteps:24)
 	ld	wa, (xbc+wa)
 	sub hl, wa
 	extz xhl
@@ -6875,7 +6875,7 @@ AcCmpSetGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
 	call SendEvent
 	ld wa, hl
 	add wa, wa
-	lda xbc, (CmpSetP1_SendAndApplyFunc_Data:24)
+	lda xbc, (AcCmpSetGridBox_RowDownSteps:24)
 	ld	wa, (xbc+wa)
 	add wa, hl
 	ld de, wa
@@ -7659,7 +7659,7 @@ S2cMemNoBox_HandleScroll:
 	ld	a, (14579:16)
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (S2cMemNoBox_HandleScroll_Data:24)
+	lda	xbc, (S2cMemNoBox_SectionNameStrPtrs:24)
 	ld	xwa, (xbc+wa)
 	push	xwa
 	lda	xwa, (xsp+8)

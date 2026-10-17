@@ -2680,7 +2680,7 @@ MasterSetup_EventDispatch:
 	add bc, wa
 	muls bc, 0x6
 	ld wa, bc
-	lda xbc, (MasterSetup_EventDispatch_Data:24)
+	lda xbc, (StyleSong_MasterTable_IdColumn:24)
 	ld	de, (xbc+wa)
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainMssSetUp
@@ -2733,7 +2733,7 @@ MasterSetup_HandleDialTurn:
 	jr MasterSetup_DialTurn_UpdateView
 
 MasterSetup_DialTurn_Underflow:
-	ld xwa, (MasterSetup_DialTurn_Underflow_Data:24)
+	ld xwa, (StyleSong_MasterTable_LastEntry:24)
 	push xwa
 	lda xwa, (xsp + 16)
 	push xwa
@@ -3480,7 +3480,7 @@ MstStyleAlp_EventDispatch:
 	add	wa, (xbc)
 	add	de, wa
 	muls	de, 6
-	lda	xbc, (MasterSetup_EventDispatch_Data:24)
+	lda	xbc, (StyleSong_MasterTable_IdColumn:24)
 	ld	de, (xbc+de)
 	extz	xde
 	ld	xwa, NAKA_MAINFUNC_MainMssSetUp
@@ -4027,7 +4027,7 @@ MstStyle1Grid_CellSelect:
 	ld xiy, (xix)
 	lda xhl, (xwa + 78)
 	ld xiz, (xhl)
-	lda xwa, (MstStyle1Grid_CellSelect_Data:24)
+	lda xwa, (MstStyle_GenreTable:24)
 	ld (xsp + 8), xwa
 	ld xwa, (xix)
 	ld ix, (xwa)
@@ -4076,7 +4076,7 @@ MstStyle1Grid_PadLeft_Check:
 	sub wa, 0xa
 	add wa, (xsp + 32)
 	sla wa, 3
-	lda xbc, (MstStyle1Grid_CellSelect_Data:24)
+	lda xbc, (MstStyle_GenreTable:24)
 	ld	xwa, (xbc+wa)
 	push xwa
 	call Strlen
@@ -4127,7 +4127,7 @@ MstStyle1Grid_PadLeft_CheckB:
 	sub wa, 0xa
 	add wa, (xsp + 32)
 	sla wa, 3
-	lda xbc, (MstStyle1Grid_CellSelect_Data:24)
+	lda xbc, (MstStyle_GenreTable:24)
 	ld	xwa, (xbc+wa)
 	push xwa
 	call Strlen
@@ -6050,7 +6050,7 @@ MstStyle2_NameB_Render:
 	ld wa, (0x0340c4:24)
 	extz xwa
 	sll xwa, 3
-	ld xbc, MstStyle1Grid_CellSelect_Data
+	ld xbc, MstStyle_GenreTable
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
@@ -12110,7 +12110,7 @@ VariScreenProc_OnDraw:
 	ld xde, (xde + 48)
 	ld de, (xde)
 	muls de, 0x7
-	lda xhl, (VariScreen_HandlePaint_Data:24)
+	lda xhl, (VariScreen_PartNames:24)
 	exts xde
 	add xde, xhl
 	ld xhl, 0:i3

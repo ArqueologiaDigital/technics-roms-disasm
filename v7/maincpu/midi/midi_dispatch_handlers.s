@@ -2973,7 +2973,7 @@ FileData_RawDataBlock_Loop:
 	calr	DataBuf_CopyMixerBlock12
 	ld	xwa, (xsp+14)
 	ld	xbc, (xsp+4)
-	calr	DataBuf_CopyBulkBitfields_Stub
+	calr	FileData_ImportM4M6_NullRet
 	ld	xwa, 0xf980
 	ld	xbc, (xsp+4)
 	calr	DataBuf_CopyBulkBitfields_960
@@ -4310,7 +4310,7 @@ DataBuf_CopyMixerBlock12:
 DataBuf_CopyBulkBitfields_Nop:
 	ret
 	; --- Stub (1 byte) ---
-DataBuf_CopyBulkBitfields_Stub:
+FileData_ImportM4M6_NullRet:
 	ret
 	; --- Bit-field + byte copy subroutine 1 (FD38FF-FD3A7B) ---
 DataBuf_CopyBulkBitfields_944:
@@ -14134,7 +14134,7 @@ MidiPkt_ExtractAndPack_StoreShifted:
 	lda	xwa, (xsp+6)
 	ld	(xwa), xbc
 	ld	(xwa+4), xiz
-	calr	MidiPkt_EnqueueExtended_Data
+	calr	MidiPkt_SendCtlWordValueSysEx
 	pop	xiz
 	lda	xsp, (xsp+16)
 	ret

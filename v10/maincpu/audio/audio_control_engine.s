@@ -176,19 +176,19 @@ PanelButton_ModeKey_Skip:
 	ld	xwa, PanelButton_ModeKeyCodes
 	jr	PanelButton_ModeKey_Join2
 PanelButton_ModeKey_Skip2:
-	ld	xwa, FileIO_BytecodeData_Data
+	ld	xwa, PanelButton_ModeKeyCodes_LeftSeg3
 	jr	PanelButton_ModeKey_Join2
 PanelButton_ModeKey_Skip3:
-	ld	xwa, FileIO_BytecodeData_Data_2
+	ld	xwa, PanelButton_ModeKeyCodes_LeftSeg10
 	jr	PanelButton_ModeKey_Join2
 PanelButton_ModeKey_Skip4:
-	ld	xwa, FileIO_BytecodeData_Data_3
+	ld	xwa, PanelButton_ModeKeyCodes_RightSeg4
 	jr	PanelButton_ModeKey_Join2
 PanelButton_ModeKey_Skip5:
-	ld	xwa, FileIO_BytecodeData_Data_4
+	ld	xwa, PanelButton_ModeKeyCodes_RightSeg5
 	jr	PanelButton_ModeKey_Join2
 PanelButton_ModeKey_Skip6:
-	ld	xwa, FileIO_BytecodeData_Data_5
+	ld	xwa, PanelButton_ModeKeyCodes_RightSeg10
 PanelButton_ModeKey_Join2:
 	ld	a, (xwa+hl)
 	ld	(xde), a
@@ -470,7 +470,7 @@ PanelButton_SoundGroup_Skip3:
 	jr	z, PanelButton_SoundGroup_Skip4
 	cp	a, 12
 	jrl	nz, FileIO_BytecodeData_Code_Epilogue9
-	ld	xwa, FileIO_BytecodeData_Data_6
+	ld	xwa, PanelButton_SoundGroupCodes_RightSeg1
 PanelButton_SoundGroup_Join:
 	ld	a, (xwa+hl)
 	ld	(xde), a
@@ -478,10 +478,10 @@ PanelButton_SoundGroup_Join:
 	jr	ule, PanelButton_SoundGroup_Skip6
 	jrl	FileIO_BytecodeData_Code_Epilogue9
 PanelButton_SoundGroup_Skip4:
-	ld	xwa, FileIO_BytecodeData_Data_7
+	ld	xwa, PanelButton_SoundGroupCodes_RightSeg2
 	jr	PanelButton_SoundGroup_Join
 PanelButton_SoundGroup_Skip5:
-	ld	xwa, FileIO_BytecodeData_Data_8
+	ld	xwa, PanelButton_SoundGroupCodes_RightSeg9
 	jr	PanelButton_SoundGroup_Join
 PanelButton_SoundGroup_Skip6:
 	extz	wa
@@ -588,7 +588,7 @@ PanelButton_RhythmGroup_Skip:
 	jr	z, PanelButton_RhythmGroup_Skip2
 	cp	a, 0:i3
 	jr	nz, PanelButton_RhythmGroup_Epilogue
-	ld	xwa, FileIO_BytecodeData_Data_9
+	ld	xwa, PanelButton_RhythmGroupCodes_LeftSeg0
 PanelButton_RhythmGroup_Join:
 	ld	a, (xwa+hl)
 	ld	(xde), a
@@ -597,10 +597,10 @@ PanelButton_RhythmGroup_Join:
 	jr	ule, PanelButton_RhythmGroup_Skip4
 	jr	PanelButton_RhythmGroup_Epilogue
 PanelButton_RhythmGroup_Skip2:
-	ld	xwa, FileIO_BytecodeData_Data_10
+	ld	xwa, PanelButton_RhythmGroupCodes_LeftSeg1
 	jr	PanelButton_RhythmGroup_Join
 PanelButton_RhythmGroup_Skip3:
-	ld	xwa, FileIO_BytecodeData_Data_11
+	ld	xwa, PanelButton_RhythmGroupCodes_LeftSeg6
 	jr	PanelButton_RhythmGroup_Join
 PanelButton_RhythmGroup_Skip4:
 	cp	(CURRENT_TITLE:16), 184
@@ -1021,7 +1021,7 @@ PanelButton_MspNumber:
 	jr	z, PanelButton_MspNumber_Skip
 	cp	hl, 17
 	jr	nz, PanelButton_MspNumber_Skip2
-	lda	xde, (FileIO_BytecodeData_Data_13:24)
+	lda	xde, (PanelButton_MspBank17FuncCodes:24)
 	ld	c, (xde+bc)
 	lda	xde, (FileIO_BytecodeData_Code_Entry8_PtrTable:24)
 	lda	xde, (xde+wa)
@@ -1030,7 +1030,7 @@ PanelButton_MspNumber:
 	call	(xhl)
 	jr	PanelButton_MspNumber_Join
 PanelButton_MspNumber_Skip:
-	lda	xde, (FileIO_BytecodeData_Data_14:24)
+	lda	xde, (PanelButton_MspBank18FuncCodes:24)
 	ld	c, (xde+bc)
 	lda	xde, (FileIO_BytecodeData_Code_Entry8_PtrTable_2:24)
 	lda	xde, (xde+wa)
@@ -1085,7 +1085,7 @@ PanelButton_Variation:
 	jr	nc, PanelButton_Variation_Skip2
 	ldto_berp	a, 251
 	extz	wa
-	lda	xhl, (FileIO_BytecodeData_Data_15:24)
+	lda	xhl, (PanelButton_VariationCodes:24)
 	ld	a, (xhl+wa)
 	ld	(xbc), a
 	ld	(xde), 48

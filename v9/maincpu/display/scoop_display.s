@@ -16459,7 +16459,7 @@ Scoop_SetupDisplayTables:
 Scoop_InitPartDisplay:
 	ld a, (3424:16)
 	ld (4494:16), a
-	ld xiy, Scoop_InitPartDisplay_Data_2
+	ld xiy, SqStep_TrackNumberField
 	push xhl
 	call UIRender_ConditionalDrawInit
 	pop xhl
@@ -16468,14 +16468,14 @@ Scoop_InitPartDisplay:
 	ld xiy, StyleUI_ParamBlockPtrTable
 	cp (3429:16), 2
 	jr nz, Scoop_SelectModeTable_2Part
-	ld xiy, Scoop_InitPartDisplay_Data
+	ld xiy, StyleUI_ControlTrackParamBlockPtrTable
 
 Scoop_SelectModeTable_2Part:
 	ld	xiy, (xiy+hl)
-	ld xix, Scoop_SelectModeTable_2Part_Data
+	ld xix, StyleUI_ParamBlockEndPtrTable
 	cp (3429:16), 2
 	jr nz, Scoop_SelectModeTable_2Part_XIX
-	ld xix, Scoop_SelectModeTable_2Part_Data_2
+	ld xix, StyleUI_ControlTrackParamBlockEndPtrTable
 
 Scoop_SelectModeTable_2Part_XIX:
 	ld	xix, (xix+hl)
@@ -16484,7 +16484,7 @@ Scoop_SelectModeTable_2Part_XIX:
 	pop xhl
 	cp l, 0:i3
 	jr nz, Scoop_SetPartIndexAndDisplay
-	ld xiy, Scoop_SelectModeTable_2Part_XIX_Data
+	ld xiy, SqStep_BottomBarBoxes
 	ld xix, StyleUI_ScreenData_MeasCursor
 	call UIRender_TwoTableGeneral
 
@@ -16599,7 +16599,7 @@ Scoop_InitDisplayFull:
 	call UIRender_TwoTableGeneral
 	ld a, (3424:16)
 	ld (4494:16), a
-	ld xiy, Scoop_InitPartDisplay_Data_2
+	ld xiy, SqStep_TrackNumberField
 	call UIRender_ConditionalDrawInit
 	ld a, (3424:16)
 	dec 1, a
@@ -16614,7 +16614,7 @@ Display_RedrawMainContent:
 	cp (ACTIVE_TITLE:16), 138
 	jr nz, Scoop_RedrawMainContent_End
 	ld (COLORBLIT_MODE:24), 0x00
-	ld xiy, Display_RedrawMainContent_Data
+	ld xiy, SqStep_PopupLineField
 	call Scoop_CurveUpdate_Direct
 
 Scoop_RedrawMainContent_End:
@@ -16627,16 +16627,16 @@ Display_RedrawFooter:
 	ld a, (3922:16)
 	ld (4497:16), a
 	ld (4498:16), a
-	ld xiy, Display_RedrawFooter_Data
+	ld xiy, SqStep_Rows1To2LineFields
 	cpw (3664:16), 0
 	jr nz, Scoop_FooterShowPartValue
-	ld xix, Display_RedrawFooter_Data_2
+	ld xix, SqStep_Row3LineFields
 	jr Scoop_FooterCallDisplay
 
 Scoop_FooterShowPartValue:
 	ld a, (3922:16)
 	ld (4499:16), a
-	ld xix, Scoop_FooterShowPartValue_Data
+	ld xix, SqStep_EndRepMarkFields
 
 Scoop_FooterCallDisplay:
 	call GraphicsRender_TwoTable
@@ -16659,7 +16659,7 @@ Display_RedrawTitleBar:
 	calr Scoop_TitleBar_GetPartConfig
 	cpw (3660:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part0
-	ld xiy, Display_RedrawTitleBar_Data
+	ld xiy, SqStep_Row1NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr Scoop_TitleBar_Part1Check
 
@@ -16676,7 +16676,7 @@ Scoop_TitleBar_Part1Check:
 	calr Scoop_TitleBar_GetPartConfig
 	cpw (3662:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part1
-	ld xiy, Scoop_TitleBar_Part1Check_Data
+	ld xiy, SqStep_Row2NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr Scoop_TitleBar_Part2Check
 
@@ -16693,7 +16693,7 @@ Scoop_TitleBar_Part2Check:
 	calr Scoop_TitleBar_GetPartConfig
 	cpw (3664:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part2
-	ld xiy, Scoop_TitleBar_Part2Check_Data
+	ld xiy, SqStep_Row3NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr Scoop_TitleBar_End
 
@@ -16727,7 +16727,7 @@ Scoop_TitleBar_DisplayPartTable:
 	ret
 
 Scoop_TitleBar_GetPartConfig:
-	ld xiy, Scoop_TitleBar_GetPartConfig_Data
+	ld xiy, SqStep_RowSegmentLines
 	cp bc, 1:i3
 	jr ge, Scoop_TitleBar_Part1Config
 	ld a, (3666:16)
@@ -16773,13 +16773,13 @@ Scoop_Selection_RedrawActive:
 	cp a, 0:i3
 	jr nz, Scoop_Selection_CheckMode1
 	pushw wa
-	ld xiy, Scoop_Selection_RedrawActive_Data
-	ld xix, Scoop_Selection_RedrawActive_Data_2
+	ld xiy, SqStep_CursorRowBlitBand
+	ld xix, SqStep_CursorRowEndBar
 	call UIRender_SingleTable
 	ld a, (3823:16)
 	ld (4497:16), a
 	popw wa
-	ld xiy, Scoop_Selection_RedrawActive_Data_3
+	ld xiy, SqStep_ChordCellCursor
 	call UIRender_TwoTableEvtCheck
 	jp Scoop_Selection_End
 
@@ -16788,28 +16788,28 @@ Scoop_Selection_CheckMode1:
 	jr nz, Scoop_Selection_DrawMode2
 
 Scoop_Selection_DrawMode1:
-	ld xiy, Scoop_Selection_RedrawActive_Data_2
-	ld xix, Scoop_Selection_DrawMode1_Data
+	ld xiy, SqStep_CursorRowEndBar
+	ld xix, SqStep_RhythmCursor
 	call UIRender_TwoTableGeneral
 	cp (0x370f:16), 0
 	jr z, Scoop_Selection_End
 	ld a, (0x370f:16)
 	ld (4495:16), a
-	ld xiy, Scoop_Selection_DrawMode1_Data_2
+	ld xiy, SqStep_StepCursor
 	call UIRender_TwoTableEvtCheck
 	jr Scoop_Selection_End
 
 Scoop_Selection_DrawMode2:
 	cp a, 2:i3
 	jr z, Scoop_Selection_DrawMode1
-	ld xiy, Scoop_Selection_RedrawActive_Data
-	ld xix, Scoop_Selection_RedrawActive_Data_2
+	ld xiy, SqStep_CursorRowBlitBand
+	ld xix, SqStep_CursorRowEndBar
 	call UIRender_SingleTable
 	pushw wa
 	ld a, (3922:16)
 	ld (4500:16), a
 	popw wa
-	ld xiy, Scoop_Selection_DrawMode1_Data
+	ld xiy, SqStep_RhythmCursor
 	call UIRender_TwoTableEvtCheck
 
 Scoop_Selection_End:
@@ -16877,8 +16877,8 @@ Scoop_SidePanel_StoreAndDraw:
 	ld (4508:16), a
 	ld a, (3668:16)
 	ld (4509:16), a
-	ld xiy, Scoop_SidePanel_StoreAndDraw_Data
-	ld xix, Scoop_SidePanel_StoreAndDraw_Data_2
+	ld xiy, SqStep_RowCountBoxRecords
+	ld xix, SqStep_RowCountBoxTables
 	call GraphicsRender_TwoTable_Alt
 	call Display_UpdateRegion1_Alt
 
@@ -16890,7 +16890,7 @@ Scoop_SidePanel_DrawOneSlot:
 	push xix
 	pushw de
 	pushw bc
-	ld xiy, Scoop_SidePanel_DrawOneSlot_Data
+	ld xiy, SqStep_NibbleMarkPatterns
 	ld bc, 4:i3
 	ld (COLORBLIT_MODE:24), 0x00
 	ld xwa, 0x11d4
@@ -16974,25 +16974,25 @@ Display_RedrawButtonLabels:
 	jr nz, Scoop_ButtonLabels_End
 	ld (COLORBLIT_MODE:24), 0x00
 	call Scoop_ButtonLabels_CopySlotData
-	ld xiy, Display_RedrawButtonLabels_Data_4
-	ld xix, Display_RedrawButtonLabels_Data_5
+	ld xiy, SqStep_CellFlagFields
+	ld xix, SqStep_CellFlagGlyphs
 	call GraphicsRender_TwoTable
 	call Scoop_ButtonLabels_SetupPartButtons
 	ld (COLORBLIT_MODE:24), 0x02
-	ld xiy, Scoop_FooterShowPartValue_Data
-	ld xix, Display_RedrawButtonLabels_Data
+	ld xiy, SqStep_EndRepMarkFields
+	ld xix, SqStep_Row1ChordCells
 	call GraphicsRender_TwoTable
 	call Scoop_ButtonLabels_DrawPitchLabels
 	ld xix, 0xe55
-	ld xiy, Display_RedrawButtonLabels_Data
+	ld xiy, SqStep_Row1ChordCells
 	calr Scoop_ButtonLabels_DrawCategory
 	call Scoop_ButtonLabels_DrawAmpLabels
 	ld xix, 0xe75
-	ld xiy, Display_RedrawButtonLabels_Data_2
+	ld xiy, SqStep_Row2ChordCells
 	calr Scoop_ButtonLabels_DrawCategory
 	call Scoop_ButtonLabels_DrawFilterLabels
 	ld xix, 0xe95
-	ld xiy, Display_RedrawButtonLabels_Data_3
+	ld xiy, SqStep_Row3ChordCells
 	calr Scoop_ButtonLabels_DrawCategory
 
 Scoop_ButtonLabels_End:
@@ -17965,7 +17965,7 @@ Scoop_CurveUpdate_End:
 	add xhl, xiz
 	ld a, (xhl)
 	extz wa
-	lda xhl, (Scoop_CurveUpdate_Finalize_Data:24)
+	lda xhl, (Scoop_CharGlyphMap:24)
 	ld	a, (xhl+wa)
 	ld (xix), a
 	inc 1, iy
@@ -18064,7 +18064,7 @@ Scoop_CurveUpdate_SegmentEnd_Loop:
 	add	xhl, xiz
 	ld	a, (xhl)
 	extz	wa
-	lda	xhl, (Scoop_CurveUpdate_Finalize_Data:24)
+	lda	xhl, (Scoop_CharGlyphMap:24)
 	ld	a, (xhl+wa)
 	ld (xix), a
 	inc 1, iy
@@ -18223,7 +18223,7 @@ Scoop_EnvCalc_Handler0:
 	ret
 Scoop_EnvCalc_Handler1:
 	lda xsp, (xsp-268)
-	ld	xiy, Scoop_EnvCalc_Handler1_Data
+	ld	xiy, Scoop_StaticOp20_ClipBox
 	lda	xix, (xsp+260)
 	ld	bc, 4:i3
 	ldirw
@@ -18255,7 +18255,7 @@ Scoop_EnvCalc_Handler1_Loop2:
 	add	xbc, xwa
 	ld	c, (xbc)
 	extz	bc
-	lda	xiy, (Scoop_CurveUpdate_Finalize_Data:24)
+	lda	xiy, (Scoop_CharGlyphMap:24)
 	ld	c, (xiy+bc)
 	ld (xhl), c
 	inc 1, ix
@@ -18376,7 +18376,7 @@ Scoop_GlideParam_Configure:
 	add xbc, xwa
 	ld c, (xbc)
 	extz bc
-	lda xiy, (Scoop_CurveUpdate_Finalize_Data:24)
+	lda xiy, (Scoop_CharGlyphMap:24)
 	ld	c, (xiy+bc)
 	ld (xhl), c
 	inc 1, ix
@@ -18459,7 +18459,7 @@ Scoop_GlideParam_Setup_Loop:
 	add	xbc, xwa
 	ld	c, (xbc)
 	extz	bc
-	lda	xiy, (Scoop_CurveUpdate_Finalize_Data:24)
+	lda	xiy, (Scoop_CharGlyphMap:24)
 	ld	c, (xiy+bc)
 	ld (xhl), c
 	inc 1, ix
@@ -18487,7 +18487,7 @@ Scoop_GlideParam_Setup_Skip:
 	ret
 Scoop_GlideCalc_Handler0:
 	lda xsp, (xsp-268)
-	ld	xiy, Scoop_GlideCalc_Handler0_Data
+	ld	xiy, Scoop_StaticOp08_ClipBox
 	lda	xix, (xsp+260)
 	ld	bc, 4:i3
 	ldirw
@@ -18698,7 +18698,7 @@ Scoop_EventLoop_12Entry:
 	push xiz
 	ld	(xsp+150), xbc
 	ld xiz, xwa
-	ld xiy, Scoop_EventLoop_12Entry_Data
+	ld xiy, Scoop_StaticOpHandlerTable
 	lda xix, (xsp + 6)
 	ldw bc, 0x48
 	ldirw
@@ -18824,7 +18824,7 @@ Scoop_EventLoop_12Entry_Alt_Data_Target5:
 	lda	xsp, (xsp-268)
 	push	xiz
 	ld	xiz, xwa
-	ld	xiy, Scoop_EventLoop_12Entry_Alt_Data_Target5_Data
+	ld	xiy, Scoop_BoundOp05_ClipBox
 	lda	xix, (xsp+264)
 	ld	bc, 4:i3
 	ldirw
@@ -18974,7 +18974,7 @@ Scoop_EventLoop_36Entry:
 	lda xsp, (xsp-276)
 	pushw iz
 	ld	(xsp+274), xwa
-	ld xiy, Scoop_EventLoop_36Entry_Data_2
+	ld xiy, Scoop_BoundOp06_ClipBox
 	lda xix, (xsp+266)
 	ld bc, 4:i3
 	ldirw
