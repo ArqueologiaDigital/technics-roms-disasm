@@ -1,7 +1,7 @@
 {
  "date": "2026-10-17",
- "head": "9a89bbfe",
- "dirty": true,
+ "head": "54557923",
+ "dirty": false,
  "rules": 2,
  "entry_snapshot": "docs/coverage/dispatch-census-2026-10-06-31.json",
  "entry_snapshot_head": "8e4b5437",
