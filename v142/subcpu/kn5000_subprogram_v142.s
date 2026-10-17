@@ -7247,7 +7247,7 @@ NoteState_ClearRecord:
 	ret
 
 ; CAP AN ENVELOPE DEPTH BY A NORMALISED (0x7F - x) FACTOR.
-; In: XWA = value, C and E = two 0..0x7F parameters. Uses FP_MulAccum64 (0x03D8CA)
+; In: XWA = value, C and E = two 0..0x7F parameters. Uses Math_Multiply32 (0x03D8CA)
 ; twice: t = (0x7F - C) * E, then result = (value * t) >> 12, finally capped at the
 ; original value. Out: XHL. Called by every EG/frequency computation in this region
 ; (0x022E85, 0x022F97, 0x0230A8, 0x023127).
@@ -7261,11 +7261,11 @@ EnvDepth_Cap:
 	sub xbc, xwa
 	ld xwa, 0:i3
 	ld a, e
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	ld xbc, (xsp + 4)
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 12
 	cp xhl, (xsp + 4)
 	jr ule, EnvDepth_Cap_Return
@@ -7280,7 +7280,7 @@ EnvDepth_Cap_Return:
 ; COMPUTE ENVELOPE VALUE A FOR ONE VOICE (rate/level pair, formatted for the TG).
 ; In: WA = index. Record = 0x04424E + index*0x1B.
 ;   (rec+0x01) indexes the u16 table at 0x010A64 -> base value;
-;   base is multiplied by (rec+0x02) through FP_MulAccum64;
+;   base is multiplied by (rec+0x02) through Math_Multiply32;
 ;   if (rec+0x05) != 0 the EnvDepth_Cap of ((rec+0x05),(rec+0x06)) is subtracted;
 ;   the accumulator is >> 7 and clamped to 0x1FFF;
 ;   finally (rec+0x00) & 3 indexes the u16 table at 0x011511 and those bits are OR'ed
@@ -7307,7 +7307,7 @@ EGEnv_Compute_A:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	ld xwa, (xsp + 4)
 	cp (xwa + 5), 0x0
@@ -7365,7 +7365,7 @@ EGEnv_Compute_A_Simple:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 7
 	cp xhl, 0x3FFF
 	ret ule
@@ -7393,7 +7393,7 @@ EGEnv_Compute_A_Simple_Dup:
 	ld	xbc, 0:i3
 	ld	c, a
 	ld	xwa, xhl
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	srl	xhl, 7
 	cp	xhl, 0x3fff
 	ret	ule
@@ -7424,7 +7424,7 @@ EGEnv_Compute_B:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	ld xwa, (xsp + 4)
 	cp (xwa + 5), 0x0
@@ -7483,7 +7483,7 @@ EGEnv_Compute_B_Simple:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 7
 	cp xhl, 0x3FFF
 	ret ule
@@ -7492,7 +7492,7 @@ EGEnv_Compute_B_Simple:
 
 ; RAW FREQUENCY/CUTOFF VALUE FROM SUB-RECORD B, without clamping or a register write.
 ; In: WA = index; record 0x044257 + index*0x1B; (rec+0x03) indexes the u16 table at
-; 0x010964, multiplied by (rec+0x04) via FP_MulAccum64, >> 7. Out: XHL.
+; 0x010964, multiplied by (rec+0x04) via Math_Multiply32, >> 7. Out: XHL.
 ; No caller found by a call/calr scan.
 ; 2026-09-25: CODE, converted from a .byte run (scripts/converters/convert_v142_byte_block.py:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
@@ -7514,7 +7514,7 @@ Voice_Freq_ComputeLeft_Raw:
 	ld	xbc, 0:i3
 	ld	c, a
 	ld	xwa, xhl
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	srl	xhl, 7
 	ret
 
@@ -7550,7 +7550,7 @@ Voice_Freq_WriteLeft:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	ld xwa, (xsp + 4)
 	cp (xwa + 5), 0x0
@@ -7603,7 +7603,7 @@ Voice_Freq_WriteLeft_HiRange:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	ld xwa, (xsp + 4)
 	cp (xwa + 5), 0x0
@@ -7673,7 +7673,7 @@ Voice_Freq_WriteRight:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 7
 	cp (xsp + 4), 0x40
 	jr nc, Voice_Freq_WriteRight_HiRange
@@ -7739,7 +7739,7 @@ Voice_Freq_ComputeRight_Raw:
 	ld	xbc, 0:i3
 	ld	c, a
 	ld	xwa, xhl
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	srl	xhl, 7
 	cp	(xsp), 64
 	jr	nc, Voice_Freq_ComputeRight_Raw_HiRange
@@ -9148,14 +9148,14 @@ WaveSel_StageB_Store_Reg040_Return:
 	ret
 
 ; SCALE THE MASTER TICK BY A FACTOR AND PUBLISH IT AS THE GLOBAL PITCH OFFSET.
-; In: XWA = multiplier. XBC = the 32-bit master tick at 0x1040; FP_MulAccum64 multiplies
+; In: XWA = multiplier. XBC = the 32-bit master tick at 0x1040; Math_Multiply32 multiplies
 ; them, the product is >> 2, truncated to 8 bits, multiplied by 0x0D and >> 7, and the
 ; signed result is stored in the global word at 0x041366 that
 ; Voice_Pitch_BendType_Fixed reads. Single caller 0x02C940.
 Voice_Vol_ScaleVelocityWord:
 	ld xbc, (4160:16)
 	ld xwa, xbc
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 2
 	and xhl, 0xFF
 	ld a, l
@@ -11433,7 +11433,7 @@ ExtVoice_Store_SlotNumber:
 	ld wa, (xsp + 14)
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xiz, (0x04424e:24)
 	add xiz, xhl
 	ld xwa, (xsp + 22)
@@ -11778,13 +11778,13 @@ Voice_SubVoice_Compute_NoAlgoSelect:
 	ldib_erp 0xF9, 0
 
 ; XIZ = slot number (high byte force-zeroed). Slot record = 0x044257 + slot*0x1B via
-; FP_MulAccum64; stores the note number to slotrec+6 and THEN bounds-checks
+; Math_Multiply32; stores the note number to slotrec+6 and THEN bounds-checks
 ; `cp iz,0x40 / jr nc` -- see [UNCERTAIN], the store precedes the check.
 Voice_SubVoice_ResolveSlot:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (0x044257:24)
 	add xwa, xhl
 	ld (xsp + 10), xwa
@@ -12091,7 +12091,7 @@ Voice2_UpdatePitch_ChanEntry:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (0x044260:24)
 	add xwa, xhl
 	ld (xsp + 10), xwa
@@ -15411,7 +15411,7 @@ Voice_AdvanceLFOPhase_Done:
 ; Walks the LFO record array at 0x04424E, 27 (0x1B) bytes per slot, as THREE interleaved
 ; 9-byte sub-records: base 0x04424E (128 slots), base 0x044257 (64 slots) and base
 ; 0x044260 (128 slots) -- 320 iterations per call, each doing a 64-bit multiply
-; (FP_MulAccum64) for the index scaling and, when the LFO is running, a full tone-
+; (Math_Multiply32) for the index scaling and, when the LFO is running, a full tone-
 ; generator register write.
 ;
 ; Per slot: skip unless (flags & 0x18); call Voice_AdvanceLFOPhase; skip if the phase
@@ -15435,7 +15435,7 @@ Voice_UpdateAllLFO_Loop1:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xbc, (0x04424e:24)
 	add xbc, xhl
 	ld a, (xbc)
@@ -15458,7 +15458,7 @@ Voice_UpdateAllLFO_Loop1:
 	ldto_werp BC, 0xFA
 	extz xbc
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	andw (283148:24), 57344
 	srl xhl, 8
 	or (283148:24), hl
@@ -15486,7 +15486,7 @@ Voice_UpdateAllLFO_Loop2_ProcessSlot:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (0x044257:24)
 	add xwa, xhl
 	ld xbc, xwa
@@ -15510,7 +15510,7 @@ Voice_UpdateAllLFO_Loop2_ProcessSlot:
 	ldto_werp BC, 0xFA
 	extz xbc
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	andw (283140:24), 57344
 	srl xhl, 8
 	or (283140:24), hl
@@ -15538,7 +15538,7 @@ Voice_UpdateAllLFO_Loop3_ProcessSlot:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1B
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (0x044260:24)
 	add xwa, xhl
 	ld xbc, xwa
@@ -15563,7 +15563,7 @@ Voice_UpdateAllLFO_Loop3_ProcessSlot:
 	ldto_werp BC, 0xFA
 	extz xbc
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	andw (283140:24), 57344
 	srl xhl, 8
 	or (283140:24), hl
@@ -15578,7 +15578,7 @@ Voice_UpdateAllLFO_DispatchGroup3_High:
 	ldto_werp BC, 0xFA
 	extz xbc
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	andw (283150:24), 57344
 	srl xhl, 8
 	or (283150:24), hl
@@ -16251,7 +16251,7 @@ Voice_LoadPitchTable_Ch:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 8
 	cp xhl, 0x2C
 	jr nc, Voice_LoadPitchTable_Ch_NoClamp
@@ -16287,7 +16287,7 @@ Voice_LoadPitchTable_Ch_ScanLoop:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 8
 	ld wa, hl
 	ld (0x04520c:24), wa
@@ -16403,7 +16403,7 @@ Voice_LoadFilterTable_Ch:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 8
 	cp xhl, 0x1C
 	jr nc, Voice_LoadFilterTable_Ch_NoClamp
@@ -16439,7 +16439,7 @@ Voice_LoadFilterTable_Ch_ScanFilter:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 8
 	ld wa, hl
 	ld (0x04520e:24), wa
@@ -16550,7 +16550,7 @@ Voice_LoadToneTable_Ch:
 	ld xbc, 0:i3
 	ld c, a
 	ld xwa, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 8
 	cp xhl, 0x1C
 	jr nc, Voice_LoadToneTable_Ch_NoClamp
@@ -18339,7 +18339,7 @@ AudioMod_Scale_To_Part_1B_Common:
 	ret
 ; A = part index (saved on the stack), BC = value, XDE = routing descriptor.
 ; Bipolar branch subtracts 0x2000 from the sign-extended value, unipolar branch halves it;
-; scales by descriptor+2 via FP_MulAccum64 (0x03D8CA), then, for A-0x10 in 0..9, takes a
+; scales by descriptor+2 via Math_Multiply32 (0x03D8CA), then, for A-0x10 in 0..9, takes a
 ; 10-way jump through the word table at 0x00F6DF with base 0x028500 to apply a per-curve
 ; shaping step.  The default path (index out of range) instead scales by the part's
 ; portamento-rate byte at 0x04137B.  Result is clamped to +/-0x4000 through
@@ -18363,7 +18363,7 @@ AudioMod_Apply_Porta_Curve_Join:
 	ld	xbc, 0:i3
 	ld	c, a
 	ld	xwa, xhl
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	sra	xhl, 6
 	ld	a, (xsp)
 	extz	wa
@@ -18394,7 +18394,7 @@ AudioMod_Apply_Porta_Curve_Skip:
 	ld	xbc, 0:i3
 	ld	c, a
 	ld	xwa, xhl
-	call	FP_MulAccum64
+	call	Math_Multiply32
 AudioMod_Apply_Porta_Curve_Join2:
 	sla	xhl, 9
 	cp	xhl, 0
@@ -22795,7 +22795,7 @@ Voice_ResetAllControllers_ChanModeExit:
 	ret
 
 ; A = part index.  For each of the 4 output slots i = 0..3: computes the slot address
-; part_base + 0x6E + i*0x25 via FP_MulAccum64 (0x03D8CA), dereferences the long pointer at
+; part_base + 0x6E + i*0x25 via Math_Multiply32 (0x03D8CA), dereferences the long pointer at
 ; slot+0x00, takes bytes +2 and +3 of that record, assembles them as (b3 << 8) | b2, masks
 ; to 12 bits and stores the word at part_base + 0x102 + i*2.
 ; So the portamento target for each slot is a 12-bit pitch value copied out of the slot's
@@ -22813,7 +22813,7 @@ Voice_PortamentoTargets_SetAll_LoopBody:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	ld a, (xsp + 4)
 	extz wa
@@ -22829,7 +22829,7 @@ Voice_PortamentoTargets_SetAll_LoopBody:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	ld a, (xsp + 4)
 	extz wa
@@ -23875,7 +23875,7 @@ Voice_Slot_LoadPitchOffset_B:
 ;   elapsed = counter - part+0x114, clamped (unsigned) to 0x7FFF;
 ;   rate = (i8)part+0x10B + zero_extend((slot+0x17)->+0x29), clamped to 0..0x64 and then to
 ;          >= 0 (0x02B37C..0x02B386);
-;   product = FP_MulAccum64(u16 [0x00F7E6 + rate*2], elapsed) >> 10;
+;   product = Math_Multiply32(u16 [0x00F7E6 + rate*2], elapsed) >> 10;
 ;   if product > 0x0FFF then slot+0x0D = 0xC000 (the "swept out" sentinel) else
 ;   slot+0x0D -= product.
 ; Only caller: Voice_Release_Type4_BranchA (0x02BD6B). Touches no hardware other than the
@@ -23945,7 +23945,7 @@ Voice_Slot_ApplyPortamentoDelta_BranchD:
 	ld	wa, (xbc+wa)
 	extz xwa
 	ld xbc, (xsp + 4)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	srl xwa, 10
 	cp xwa, 0xFFF
@@ -29635,7 +29635,7 @@ ToneGen_SelfTest_ProbeVoice0_Next6:
 ;   (0x0000 + ch) <- the word at 0x0430BB + ch*0x47 (voice struct +0x2D) with bit15 CLEARED
 ; The second write is performed by loading the constant 0x00100002 into a register and storing
 ; through it, which is why an automatic pass could mistake it for a read. The channel-to-struct
-; index multiply uses FP_MulAccum64 (0x03D8CA) with XBC = 0x47.
+; index multiply uses Math_Multiply32 (0x03D8CA) with XBC = 0x47.
 ; The LLVM name ToneGen_ReadPitch_AndScale is wrong on both counts; see [UNCERTAIN].
 ; Called from 0x028D14.
 ToneGen_ReadPitch_AndScale:
@@ -29668,7 +29668,7 @@ ToneGen_ReadPitch_Compute:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x47
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (0x0430bb:24)
 	add xwa, xhl
 	ld bc, (xwa)
@@ -29688,13 +29688,13 @@ ToneGen_ReadPitch_Return:
 ; --- CheckStatusBits_Zero: Check if status bits [7:6] are zero ---
 ; Entry: WA = index
 ; Exit: HL = 1 if status bits are 0b00, else HL = 0
-; WA = part index. Computes 0x04136E + part*0x11F via FP_MulAccum64(0x11F), dereferences the
+; WA = part index. Computes 0x04136E + part*0x11F via Math_Multiply32(0x11F), dereferences the
 ; long stored there (the tone-header pointer), reads header byte +0x10, masks 0xC0 and returns
 ; HL = 1 when the part mode is 0x00, else 0 (scc Z,HL). Unreferenced in v142.
 CheckStatusBits_Zero:
 	extz	xwa
 	ld	xbc, 0x11f
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	lda	xwa, (Part_PatchRecord_Ptr:24)
 	add	xwa, xhl
 	ld	xwa, (xwa)
@@ -29709,7 +29709,7 @@ CheckStatusBits_Zero:
 CheckStatusBits_40:
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (Part_PatchRecord_Ptr:24)
 	add xwa, xhl
 	ld xwa, (xwa)
@@ -29726,7 +29726,7 @@ CheckStatusBits_40:
 CheckStatusBits_80:
 	extz	xwa
 	ld	xbc, 287
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	lda	xwa, (Part_PatchRecord_Ptr:24)
 	add	xwa, xhl
 	ld	xwa, (xwa)
@@ -29742,7 +29742,7 @@ CheckStatusBits_80:
 Voice_Part_Mode_Is_C0:
 	extz	xwa
 	ld	xbc, 287
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	lda	xwa, (Part_PatchRecord_Ptr:24)
 	add	xwa, xhl
 	ld	xwa, (xwa)
@@ -30508,7 +30508,7 @@ VoiceParam_CustomTone_Select_Loop:
 	ld	wa, qiz
 	extz	xwa
 	ld	xbc, 21
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	lda	xhl, (xhl+iz)
 	add	xhl, (283420:24)
 	lda	xhl, (xhl+19127)
@@ -33787,7 +33787,7 @@ DSP_EffectStateQuery_SetResult:
 ;                     reads 0xF5, the "unset" sentinel)
 ;   0x0451A8 << 1  -> patch+0x2C and patch+0x3C, clamped 0..0x7F
 ;   0x0451A9 << 1  -> the low 6 bits of patch+0x2E and patch+0x3E, clamped 0..0x1E
-; Slot addressing is FP_MulAccum64(index, 0x25) + 0x6E + PART, then a long pointer fetch.
+; Slot addressing is Math_Multiply32(index, 0x25) + 0x6E + PART, then a long pointer fetch.
 ; Called only from DSP_AlgoSelect_AlreadyAllocated (0x0309BD).
 DSP_AdjustVoiceParams:
 	lda xsp, (xsp - 10)
@@ -33814,7 +33814,7 @@ DSP_AdjustVoiceParams_SlotLoop:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33836,7 +33836,7 @@ DSP_AdjustVoiceParams_Type1to4:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33848,7 +33848,7 @@ DSP_AdjustVoiceParams_Type1to4:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33861,7 +33861,7 @@ DSP_AdjustVoiceParams_Type5:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33873,7 +33873,7 @@ DSP_AdjustVoiceParams_Type5:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33882,7 +33882,7 @@ DSP_AdjustVoiceParams_Type5:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33894,7 +33894,7 @@ DSP_AdjustVoiceParams_Type5:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33907,7 +33907,7 @@ DSP_AdjustVoiceParams_ReverbChorus:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33921,7 +33921,7 @@ DSP_AdjustVoiceParams_ReverbChorus:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33930,7 +33930,7 @@ DSP_AdjustVoiceParams_ReverbChorus:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -33944,7 +33944,7 @@ DSP_AdjustVoiceParams_ReverbChorus:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6E
 	add xhl, (xsp + 10)
 	ld xwa, (xhl)
@@ -34895,7 +34895,7 @@ DSP_VoiceParamReadWrite:
 	ld wa, (xsp + 16)
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, 0x41368
 	add xwa, xhl
 	ld wa, (xwa)
@@ -34923,13 +34923,13 @@ DSP_VoiceParam_MultiSlot_LoopBody:
 	ld wa, (xsp + 6)
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	add xiz, 0x6E
 	ld wa, (xsp + 16)
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, 0x41368
 	add xwa, xhl
 	add xwa, xiz
@@ -34940,13 +34940,13 @@ DSP_VoiceParam_MultiSlot_LoopBody:
 	ld wa, (xsp + 6)
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xiz, xhl
 	add xiz, 0x6E
 	ld wa, (xsp + 16)
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, 0x41368
 	add xwa, xhl
 	add xwa, xiz
@@ -36708,7 +36708,7 @@ VoiceParamFinalize_Return:
 ; Gate: A = patchrec[+0x10] & 0xC0.  0x00 and 0x80 copy; 0x40 and 0xC0 return 0.
 ; Sole caller: DSP_Cmd2B_VoiceParamWrite 0x035D46, whose caller
 ; DSP_Cmd2B_PostProcess (0x035D4A) DROPS the reply entirely when HL == 0 --
-; see findings.  Uses FP_MulAccum64 0x03D8CA as a plain 32-bit multiply for
+; see findings.  Uses Math_Multiply32 0x03D8CA as a plain 32-bit multiply for
 ; part*0x11F.
 DSP_WriteVoiceParam:
 	dec 4, xsp
@@ -36719,7 +36719,7 @@ DSP_WriteVoiceParam:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (Part_PatchRecord_Ptr:24)
 	add xwa, xhl
 	ld xwa, (xwa)
@@ -36736,7 +36736,7 @@ DSP_WriteVoiceParam:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (Part_PatchRecord_Ptr:24)
 	add xwa, xhl
 	ld xbc, (xwa)
@@ -36759,7 +36759,7 @@ DSP_WriteVoiceParam_Mode80:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x11F
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda xwa, (Part_PatchRecord_Ptr:24)
 	add xwa, xhl
 	ld xbc, (xwa)
@@ -36889,7 +36889,7 @@ ToneDB_Find_PatchRecord_UserA:
 	jr nz, ToneDB_Find_PatchRecord_UserB
 	extz xwa
 	ld xbc, 0x1D6
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x10
 	add xhl, (283420:24)
 	jr ToneDB_Find_PatchRecord_Return
@@ -36899,7 +36899,7 @@ ToneDB_Find_PatchRecord_UserB:
 	jr nz, ToneDB_Find_PatchRecord_KitA
 	extz xwa
 	ld xbc, 0x1D6
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x10
 	add xhl, (283416:24)
 	jr ToneDB_Find_PatchRecord_Return
@@ -36917,7 +36917,7 @@ ToneDB_Find_PatchRecord_KitB:
 	and wa, 0x3
 	extz xwa
 	ld xbc, 0x2927
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x4980
 	add xhl, (283416:24)
 	jr ToneDB_Find_PatchRecord_Return
@@ -37517,7 +37517,7 @@ SlotParam_WriteType6:
 	jr WaveSel_StageA1_Return
 
 ; XHL = ToneDB_RamBankB + 0x2927*Part_UserToneIndex[part] + 0x50*utidx
-; + 0x4AE1 + 0x0B*p.  Uses FP_MulAccum64 for the 0x2927 multiply.
+; + 0x4AE1 + 0x0B*p.  Uses Math_Multiply32 for the 0x2927 multiply.
 SlotParam_WriteType7:
 	ld c, w
 	extz bc
@@ -37530,7 +37530,7 @@ SlotParam_WriteType7:
 	extz wa
 	extz xwa
 	ld xbc, 0x2927
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda	xwa, (xhl+iz)
 	ld xbc, xwa
 	add xbc, (283416:24)
@@ -38070,7 +38070,7 @@ VoiceBuf_Lookup_Common:
 	extz wa
 	extz xwa
 	ld xbc, 0x2927
-	call FP_MulAccum64
+	call Math_Multiply32
 	lda	xix, (xhl+iz)
 	add xix, (283416:24)
 	lda xix, (xix+19111)
@@ -41017,7 +41017,7 @@ Voice_Part_ResetSlotRouting_Loop:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 37
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	add	xhl, 110
 	ld	a, (xsp+2)
 	extz	wa
@@ -41031,7 +41031,7 @@ Voice_Part_ResetSlotRouting_Loop:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 37
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	add	xhl, 110
 	ld	a, (xsp+2)
 	extz	wa
@@ -41065,7 +41065,7 @@ Voice_Part_ResetSlotRouting_Loop2:
 	ld	wa, iz
 	extz	xwa
 	ld	xbc, 37
-	call	FP_MulAccum64
+	call	Math_Multiply32
 	add	xhl, 110
 	ld	a, (xsp+2)
 	extz	wa
@@ -41773,7 +41773,7 @@ VoiceSlot_ClearAll_InnerLoop:
 	ld wa, (xsp + 4)
 	extz xwa
 	ld xbc, 0x25
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, xiz
 	ld a, (xsp + 8)
 	extz wa
@@ -42824,7 +42824,7 @@ DSP_Reinit_VoiceSlots:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x1D6
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x10
 	add xhl, (283420:24)
 	ld xwa, (xsp + 4)
@@ -42856,7 +42856,7 @@ DSP_Reinit_VoiceSlots_Loop1Next:
 	ldto_werp WA, 0xFA
 	extz xwa
 	ld xbc, 0x1D6
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x10
 	add xhl, (283420:24)
 	ld xwa, (xsp + 4)
@@ -42928,7 +42928,7 @@ DSP_Reinit_VoiceSlots_Loop3Next:
 	ld wa, iz
 	extz xwa
 	ld xbc, 0x1D6
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x10
 	add xhl, (283420:24)
 	ld xwa, (xsp + 4)
@@ -51910,13 +51910,13 @@ DSP_VolScale_Algo1_Seg3:
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
-; family 1, 64 < x <= 87: ((400x-24800)<<15) / 44100, then <<8.  Uses FP_MulAccum64 for 400*x.
+; family 1, 64 < x <= 87: ((400x-24800)<<15) / 44100, then <<8.  Uses Math_Multiply32 for 400*x.
 DSP_VolScale_Algo1_Seg4:
 	cp xbc, 0x57
 	jr gt, DSP_VolScale_Algo1_Seg5
 	ld xwa, xbc
 	ld xbc, 0x190
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x60E0
 	sla xhl, 15
 	ld xwa, xhl
@@ -51929,7 +51929,7 @@ DSP_VolScale_Algo1_Seg4:
 DSP_VolScale_Algo1_Seg5:
 	ld xwa, xbc
 	ld xbc, 0x320
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0xE8D0
 	sla xhl, 15
 	ld xwa, xhl
@@ -52046,7 +52046,7 @@ DSP_ParamInterp_2Point:
 	sub xwa, (xsp + 8)
 	sra xwa, 8
 	ld xbc, (xsp + 12)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
 	call Int_SignedDiv_AltEntry
@@ -52084,7 +52084,7 @@ DSP_ParamInterp_FPScale:
 	ld (xsp + 4), xwa
 	ld xwa, (xsp + 8)
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
 	call Int_SignedDiv_AltEntry
@@ -52117,7 +52117,7 @@ DSP_ParamInterp_Div0xB4:
 	and_erpw 0xE2, 0xFF, 0x00
 	ld (xsp + 4), xwa
 	ld xbc, (xsp + 8)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0xB4
 	call Int_SignedDiv_AltEntry
@@ -52289,18 +52289,18 @@ DSP_FreqCurve_FP_Seg2:
 	call Int_SignedDiv_AltEntry
 	jr DSP_FreqCurve_FP_Return
 
-; x > 50 segment; the only one that needs FP_MulAccum64 (22*x and 11*x) and a two-part shift.
+; x > 50 segment; the only one that needs Math_Multiply32 (22*x and 11*x) and a two-part shift.
 DSP_FreqCurve_FP_Seg3:
 	ld xwa, xiz
 	ld xbc, 0x16
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x462
 	ld xwa, 0x1DEA
 	sub xwa, xhl
 	ld (xsp + 4), xwa
 	ld xwa, xiz
 	ld xbc, 0xB
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x186
 	sla xhl, 15
 	ld xwa, xhl
@@ -52339,7 +52339,7 @@ DSP_FreqInterp_2Point:
 	sub xwa, (xsp + 8)
 	sra xwa, 8
 	ld xbc, (xsp + 12)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
 	call Int_SignedDiv_AltEntry
@@ -52387,7 +52387,7 @@ DSP_ParamInterp_3Point_WithOffset:
 	ld (xsp + 4), xwa
 	sub xwa, (xsp + 8)
 	ld xbc, (xsp + 16)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
 	call Int_SignedDiv_AltEntry
@@ -52644,7 +52644,7 @@ DSP_PanCurve_PiecewiseLin:
 	add xbc, xbc
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	add xhl, 0x6BAA8
 	ld xwa, xhl
 	ld xbc, 0x3E8
@@ -52659,7 +52659,7 @@ DSP_PanCurve_Seg2:
 	sla xwa, 2
 	add xwa, xbc
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x21A548
 	ld xwa, xhl
 	ld xbc, 0x3E8
@@ -52675,7 +52675,7 @@ DSP_PanCurve_Seg3:
 	add xwa, xbc
 	add xwa, xwa
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x869520
 	ld xwa, xhl
 	ld xbc, 0x3E8
@@ -52688,10 +52688,10 @@ DSP_PanCurve_Seg4:
 	jr gt, DSP_PanCurve_Seg5
 	ld xwa, xbc
 	ld xbc, 0x32
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x7E2BCE0
 	ld xwa, xhl
 	ld xbc, 0x3E8
@@ -52702,10 +52702,10 @@ DSP_PanCurve_Seg4:
 DSP_PanCurve_Seg5:
 	ld xwa, xbc
 	ld xbc, 0x64
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x12666360
 	ld xwa, xhl
 	ld xbc, 0x3E8
@@ -53231,7 +53231,7 @@ DSP_ParamInterp_Div0xC6:
 	ld xiz, xhl
 	ld xbc, (xsp + 8)
 	ld xwa, xiz
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xhl, (xsp + 16)
 	sra xhl, 8
@@ -53670,7 +53670,7 @@ DSP_ParamInterp_2Point_B:
 	sub xwa, (xsp + 8)
 	sra xwa, 8
 	ld xbc, (xsp + 12)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
 	call Int_SignedDiv_AltEntry
@@ -53793,7 +53793,7 @@ DSP_VolScale_B_Algo1_Seg4:
 	jr gt, DSP_VolScale_B_Algo1_Seg5
 	ld xwa, xbc
 	ld xbc, 0x190
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0x60E0
 	sla xhl, 15
 	ld xwa, xhl
@@ -53806,7 +53806,7 @@ DSP_VolScale_B_Algo1_Seg4:
 DSP_VolScale_B_Algo1_Seg5:
 	ld xwa, xbc
 	ld xbc, 0x320
-	call FP_MulAccum64
+	call Math_Multiply32
 	sub xhl, 0xE8D0
 	sla xhl, 15
 	ld xwa, xhl
@@ -53899,7 +53899,7 @@ DSP_VolScale_B_Return:
 DSP_PanScale_Simple:
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
 	call Int_SignedDiv_AltEntry
@@ -54069,7 +54069,7 @@ DSP_ParamInterp_MultiStep_Compute:
 	sub xwa, (xsp + 8)
 	sra xwa, 8
 	ld xbc, (xsp + 16)
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
 	call Int_SignedDiv_AltEntry
@@ -56209,7 +56209,7 @@ DSP_SOS_Coeff_Epilogue:
 ; In:  WA = index A, BC = curve index, DE = index B.  32 bytes of locals + `push XIZ`, `ret`
 ;      (no stack args).
 ; Body: g = long[0x000131CF + 4*BC] >> 15;  g = MulAccum64(g, long[0x00F140 + 4*WA] >> 16);
-;       g = MulAccum64(g, long[0x00F140 + 4*DE] >> 15)  -- FP_MulAccum64 at 0x03D8CA is a
+;       g = MulAccum64(g, long[0x00F140 + 4*DE] >> 15)  -- Math_Multiply32 at 0x03D8CA is a
 ;       32x32 -> 64 fixed-point multiply-accumulate, so this is Q15/Q16 arithmetic.
 ;       ⚠ CORRECTED 2026-08-21: 0x00F140 is NOT a "live per-slot volume array". The payload
 ;       image supplies a 128-entry u32 GAIN CURVE there (0x00F140-0x00F33F, strictly increasing,
@@ -56248,7 +56248,7 @@ DSP_MixerCoeff_Compute:
 	ld xwa, (xwa)
 	sra xwa, 16
 	ld xbc, xde
-	call FP_MulAccum64
+	call Math_Multiply32
 	srl xhl, 16
 	ld wa, (xsp + 20)
 	sll wa, 2
@@ -56258,7 +56258,7 @@ DSP_MixerCoeff_Compute:
 	ld xwa, (xwa)
 	sra xwa, 15
 	ld xbc, xhl
-	call FP_MulAccum64
+	call Math_Multiply32
 	ld (xsp + 8), xhl
 	ld wa, (xsp + 22)
 	sll wa, 2
@@ -58600,6 +58600,7 @@ FP_dcmp_AlignPad:	; 03D2ABh
 ;   returns byte table 0x03D97E[kind] for "less" or 0x03D984[kind] for "greater" (each XORed
 ;   into L, which is how a single table serves <, <=, >, >=, ==, !=).
 ; ★ Renamed 2026-09-25 from ToneGen_Compare_Voice (FP library compare; see the headers).
+; Toshiba C runtime ._fcmp_d (c900ml.lib, CMP_D.MAC, 1996): 34 of 34 instructions (scripts/analysis/compiler_id/).
 FP_dcmp:	; 03D2ACh
 	ld xix, (xwa + 4)	; Compare high 4 bytes
 	cp xix, (xbc + 4)
@@ -58666,6 +58667,7 @@ FP_dcmp_Greater:	; 03D2FBh - voice 1 > voice 2
 ; the same predicate; same three result tables at 0x03D978 / 0x03D97E / 0x03D984.
 ; Exactly one call site, at 0x03AD0C inside DSP_BiquadCoeff_Algo0_Assembly, testing a0 == 1.0.
 ; ★ Renamed 2026-09-25 from ToneGen_Compare_Voice_32 (FP library compare; see the headers).
+; Toshiba C runtime ._fcmp_f (c900ml.lib, CMP_F.MAC, 1996): 26 of 26 instructions (scripts/analysis/compiler_id/).
 FP_fcmp:	; 03D306h
 	ld hl, 0:i3
 	ld xwa, (xwa)	; Load 32-bit value from voice 1

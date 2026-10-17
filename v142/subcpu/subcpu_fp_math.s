@@ -652,11 +652,11 @@ FP_sin_Epilog:
 	lda xsp, (xsp + 48)
 	ret
 
-; 64x64 -> 64 unsigned integer multiply used by the C runtime for `long long`.
-; Inputs XWA:QWA and XBC:QBC (each a 32-bit value plus its high extension register),
-; result in XHL. Three `mul` instructions plus the cross-term adds; no rounding, no
-; exponent handling - this is an integer helper, not floating point.
-FP_MulAccum64:
+; Math_Multiply32: XHL = XWA * XBC, the low 32 bits of the product, signed and unsigned alike (QWA / QBC are the
+; upper halves of XWA / XBC: (QWA*BC + QBC*WA) << 16 + WA*BC).  Toshiba's C runtime routine C9H_mulls / C9H_mullu
+; (c900ml.lib, LMULL.ASM), instruction for instruction; the main CPU links the same routine
+; (scripts/analysis/compiler_id/).  It was described here as a 64x64 `long long` multiply.
+Math_Multiply32:
 	ldto_werp HL, 0xE2
 	mul xhl, bc
 	ldto_werp DE, 0xE6

@@ -848,7 +848,7 @@ Voice_Part_Trim_Base:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x02, 0x00
 	.byte 0x04, 0x00, 0x06, 0x00, 0x08, 0x00, 0x0a, 0x00
 	.byte 0x0c, 0x00, 0x0e, 0x00, 0x10, 0x00
-; u16 table indexed by a clamped delta*2, feeding FP_MulAccum64 and then `srl xwa,10` with a
+; u16 table indexed by a clamped delta*2, feeding Math_Multiply32 and then `srl xwa,10` with a
 ; 0xFFF clamp, inside Voice_Slot_ApplyPortamentoDelta (0x02B301; the table load is in its
 ; BranchD arm, Voice_Slot_ApplyPortamentoDelta_BranchD 0x02B386). The scaling
 ; (>>10, 12-bit clamp) is a pitch-slew rate, hence the name.
@@ -1714,7 +1714,7 @@ Voice_OutputLevel_Table:
 ; --- 0x010964-0x010A63  EGEnv_ValueCurve_Simple -- 128 u16
 ; EGEnv_Compute_A_Simple / EGEnv_Compute_B_Simple: (rec+0x03) indexes this "simple
 ; envelope value" curve (documented clamp 0x3FFF); the value is scaled by
-; (rec+0x04) via FP_MulAccum64 >> 7. Also read by Voice_Freq_WriteRight as its
+; (rec+0x04) via Math_Multiply32 >> 7. Also read by Voice_Freq_WriteRight as its
 ; base curve. Exponential start (0,1,2,4,8...), linear tail to 0x3FFF.
 EGEnv_ValueCurve_Simple:
 	.short 0x0000, 0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0030
@@ -1736,7 +1736,7 @@ EGEnv_ValueCurve_Simple:
 
 ; --- 0x010A64-0x010B63  EGEnv_BaseCurve_A -- 128 u16
 ; EGEnv_Compute_A: (rec+0x01) indexes this base-value curve (0x0000..0x1FFF),
-; then the same FP_MulAccum64 pipeline as the simple variant.
+; then the same Math_Multiply32 pipeline as the simple variant.
 EGEnv_BaseCurve_A:
 	.short 0x0000, 0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0060, 0x0070
 	.short 0x0080, 0x0090, 0x00a0, 0x00b0, 0x00c0, 0x00d0, 0x00e0, 0x00f0
