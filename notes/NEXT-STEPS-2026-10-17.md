@@ -6,16 +6,16 @@ are saved in the repository, so a later session can pick them up without redoing
 
 ## Where things stand
 
-| measure (`make semantic-score`) | 2748ddff (start) | b85f1c53 (mid-session) |
-|---------------------------------|------------------|------------------------|
-| all, score                      | 96.09            | 96.38                  |
-| KN5000, score                   | 96.51            | 96.84                  |
-| KN5000, names                   | 94.8%            | 96.1%                  |
-| WSA1, score                     | 92.62            | 92.62                  |
+| measure (`make semantic-score`) | 2748ddff (start) | b85f1c53 (mid-session) | f38b7c30 (end) |
+|---------------------------------|------------------|------------------------|----------------|
+| all, score                      | 96.09            | 96.38                  | 96.47          |
+| KN5000, score                   | 96.51            | 96.84                  | 96.95          |
+| KN5000, names                   | 94.8%            | 96.1%                  | 96.3%          |
+| WSA1, score                     | 92.62            | 92.62                  | 92.62          |
 
-The last score run of the session is in `docs/badges/semantic-score-history.csv` (its commit says which
-tree it measured). The data census rule change of 1b6c7965e (data-macro one-liners and 1-3 byte pads in
-compact blocks) adds 15,234 B of KNOWN-A to v10 and is not in the b85f1c53 figure.
+KN5000 bytes went from 96.7% to 97.0% between b85f1c53 and f38b7c30. Most of that is the data census
+rule change of 1b6c7965e (data-macro one-liners and 1-3 byte pads in compact blocks), which adds 15,234 B
+of KNOWN-A to v10.
 
 ## What this session added (tools worth reusing)
 
@@ -44,8 +44,9 @@ records and mark the rest "not reviewed". Their outputs are copied into `analysi
 
 1. `proposals_hbatch_h3.json`: names for 47 `_Helper` routines with named callers. These were the last
    helpers with a named caller that no earlier batch had proposed.
-2. `proposals_sebatch_se3.json`: names for the 159 `SeScreenData_0x<offset>` sound-editor record lists.
-   Most are entries of record-pointer tables, named after the index the table's reader uses.
+2. `proposals_sebatch_se3.json`: 193 names. 158 cover the 159 `SeScreenData_0x<offset>` sound-editor record
+   lists and 35 cover misnamed tables and records. The agent re-checked that none of the names is in use
+   and that every old label is still defined.
 3. `proposals_corrections_c2.json`: corrections for misleading names. These cover the `CompIface_*`
    routines (the claim is that they are the fade engine), `PanelAction_ModWheel`,
    `Timer7_DisableInterrupt`, and the encoder RAM names in `shared/midi_encoder_constants.s`.
