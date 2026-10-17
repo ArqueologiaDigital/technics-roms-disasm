@@ -1845,7 +1845,9 @@ EntGridCheck_Handle4140_Str:	.incbin "includes/generated/naka_widget_descriptors
 ; Typed in naka_widget_descriptors.c as char
 ; EntGridCheck_Handle4140_Str_2[30].
 ; -----------------------------------------------------------------------------
-EntGridCheck_Handle4140_Str_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3950, 0x1E
+EntGridCheck_Handle4140_Str_2:			.incbin "includes/generated/naka_widget_descriptors.bin", 0x3950, 0xA
+EntGridCheck_Handle4E13_Str_Fmt3d:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x395A, 0xA
+EntGridCheck_SendAudioCommand_Str_Fmt3d:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x3964, 0xA
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SndParam_Dispatch_PtrTable
 ; SndParam_Dispatch_PtrTable -- 2 u32 ROM addresses (or 0), read by

@@ -220,6 +220,7 @@ def main():
             sp = start_of.get(B)
             if not sp:
                 stats["insert-mid-line"] += 1
+                rows.append({"addr_to": hex(B), "from": nf, "result": "insert-mid-line"})
                 continue
             ins_at[sp[2]].append((sp[3], nf))
             stats["insert"] += 1

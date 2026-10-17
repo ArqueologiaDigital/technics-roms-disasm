@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,549
-#   semantic names ........... 53,055 (99.1%)
+#   symbols .................. 53,559
+#   semantic names ........... 53,065 (99.1%)
 #   positional names ......... 494
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -640,6 +640,7 @@ Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d 00E0CCF2
 Scoop_EventLoop_36Entry_Data_2 00E0CCF6
 Scoop_EventLoop_36Entry_Str_Fmt1d 00E0CCFE
 Scoop_EventLoop_36Entry_Branch1_Str_Fmt2d 00E0CD02
+Scoop_EventLoop_36Entry_Branch2_Str_Fmt3d 00E0CD06
 Scoop_EventLoop_36Entry_Branch3_Data_4 00E0CD0A
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_3 00E0CD12
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_4 00E0CD16
@@ -5626,6 +5627,8 @@ SndParam_Dispatch_Str_2 00E34792
 EntGridCheck_Handler_Str_Fmt3d 00E3479C
 EntGridCheck_Handle4140_Str 00E347A6
 EntGridCheck_Handle4140_Str_2 00E347B0
+EntGridCheck_Handle4E13_Str_Fmt3d 00E347BA
+EntGridCheck_SendAudioCommand_Str_Fmt3d 00E347C4
 SndParam_Dispatch_PtrTable 00E347CE
 SndParam_Dispatch_PtrTable_2 00E347E0
 EntertainerGridCheck_CaseTable 00E347F2
@@ -7873,6 +7876,7 @@ NakaInst_Spanish 00E9D872
 NakaInst_French 00E9D87A
 NakaInst_German 00E9D882
 NakaInst_English 00E9D88A
+CheckMsg_AudioCommand_Str_MessageID_Fmt3d 00E9D892
 MsgHeader_BuildLoop_Str_Fmts_Fmt2d 00E9D8A2
 NakaInst_METRO 00E9D8AC
 NakaInst_CONTROL 00E9D8B6
@@ -11011,6 +11015,8 @@ NakaInst_IT_Default 00EB767C
 NakaInst_IT_Off 00EB7688
 ExitWindow_OK_Data_2 00EB7690
 SupportClass_WindowIDPropTopByte 00EB78FF
+SupportClass_PartTrackIntTimeRecords 00EB7900
+SupportClass_ZeroEndRecord 00EB7924
 Softver_ShowHide_Data 00EB7930
 VGA_InitFuncTable 00EB7932
 PanelMemory_SlotAddresses 00EB7942
@@ -35228,6 +35234,10 @@ SndArgNm_CheckChannelDone_OnSetPtSel 00F69EB3
 SndArgNm_ReturnZero 00F69ED5
 CmpStepTitleFunc 00F69EDE
 CmpStep_DataBlock 00F69EFB
+CmpStepTitle_OnPaint_Draw 00F69F1B
+CmpStepTitle_OnHide 00F69F28
+CmpStepTitle_OnSwitchIn 00F69F35
+CmpStepTitle_Method3Nop 00F69F42
 AccAudio_LockAcquire 00F69F43
 AccAudio_LockRelease 00F69F4A
 AccAudio_DataBlock1 00F69F51

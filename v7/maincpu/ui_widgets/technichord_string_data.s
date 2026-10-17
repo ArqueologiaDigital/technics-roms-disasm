@@ -2365,8 +2365,9 @@ NakaInst_German:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17
 ; [nakarest] NakaInst_English  +0x1793c..+0x1795e (0xe9d88a, 34 B)
 ; [nakarest] Text (34 B at 0xe9d88a), first string "English"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846).
-NakaInst_English:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1793C, 0x18
-MsgHeader_BuildLoop_Str_Fmts_Fmt2d:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17954, 0xA	; "%s %02d!"
+NakaInst_English:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1793C, 0x8
+CheckMsg_AudioCommand_Str_MessageID_Fmt3d:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17944, 0x10
+MsgHeader_BuildLoop_Str_Fmts_Fmt2d:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17954, 0xA	; "%s %02d!"
 ; [nakarest] NakaInst_METRO  +0x1795e..+0x17968 (0xe9d8ac, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8ac), first string "METRO :"; no registered NAKA table points
 ; [nakarest] into it; reached through source references

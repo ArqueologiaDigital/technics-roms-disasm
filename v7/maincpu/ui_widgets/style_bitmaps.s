@@ -341,8 +341,10 @@ NakaInst_IT_Off:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4CA, 0x8
 ExitWindow_OK_Data_2:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4D2, 0x26F
 ; [nakarest] SupportClass_WindowIDPropTopByte  +0x741..+0x774 (0xeb78ff, 51 B)
 ; [nakarest] purpose not established: 51 B at 0xeb78ff that no registered NAKA table, symbol, 24/32-bit literal or data word points into
-SupportClass_WindowIDPropTopByte:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x31
-Softver_ShowHide_Data:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x772, 0x2
+SupportClass_WindowIDPropTopByte:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x1
+SupportClass_PartTrackIntTimeRecords:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x742, 0x24
+SupportClass_ZeroEndRecord:		.incbin "includes/generated/naka_style_bitmaps.bin", 0x766, 0xC
+Softver_ShowHide_Data:			.incbin "includes/generated/naka_style_bitmaps.bin", 0x772, 0x2
 ; [nakarest] VGA_InitFuncTable  +0x774..+0x784 (0xeb7932, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xeb7932 not derived; readers below
 ; [nakarest] Readers: source references SystemConfig_PointerTable (ui_widgets/widget_dispatch.s:

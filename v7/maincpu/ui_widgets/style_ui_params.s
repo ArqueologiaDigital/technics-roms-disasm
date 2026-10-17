@@ -270,10 +270,10 @@ Scoop_EventLoop_12Entry_Data:
 	.long	Scoop_Dispatch_Nop
 	.long	Scoop_Dispatch_Nop
 	.long	Scoop_EnvCalc_Handler3
-Scoop_EventLoop_12Entry_Process_Data:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1CB, 0x8
-Scoop_EventLoop_12Entry_Process_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D3, 0x4
-Scoop_EventLoop_12Entry_Process_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D7, 0x4
-Scoop_EventLoop_12Entry_Process_Str_Fmt3d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DB, 0x4
+Scoop_EventLoop_12Entry_Process_Data:			.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1CB, 0x8
+Scoop_EventLoop_12Entry_Process_Str_Fmt1d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D3, 0x4
+Scoop_EventLoop_12Entry_Process_Str_Fmt2d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1D7, 0x4
+Scoop_EventLoop_12Entry_Process_Str_Fmt3d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DB, 0x4
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Data:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1DF, 0x8
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt1d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1E7, 0x4
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1EB, 0x4
@@ -281,11 +281,12 @@ Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d:	.incbin "includes/generated/
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt2d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F3, 0x4
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt3d_2:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1F7, 0x4
 Scoop_EventLoop_12Entry_Alt_Data_Target5_Str_Fmt4d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FB, 0x4
-Scoop_EventLoop_36Entry_Data_2:			.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FF, 0x8
-Scoop_EventLoop_36Entry_Str_Fmt1d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x207, 0x4
-Scoop_EventLoop_36Entry_Branch1_Str_Fmt2d:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x20B, 0x8
-Scoop_EventLoop_36Entry_Branch3_Data_4:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x213, 0x8
-Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_3:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x21B, 0x4
-Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_4:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x21F, 0x4
-Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_4:	.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x223, 0x4
+Scoop_EventLoop_36Entry_Data_2:				.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x1FF, 0x8
+Scoop_EventLoop_36Entry_Str_Fmt1d:			.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x207, 0x4
+Scoop_EventLoop_36Entry_Branch1_Str_Fmt2d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x20B, 0x4
+Scoop_EventLoop_36Entry_Branch2_Str_Fmt3d:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x20F, 0x4
+Scoop_EventLoop_36Entry_Branch3_Data_4:			.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x213, 0x8
+Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_3:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x21B, 0x4
+Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_4:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x21F, 0x4
+Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_4:		.incbin "includes/generated/style_ui_screendata_ctlonly.bin", 0x223, 0x4
 

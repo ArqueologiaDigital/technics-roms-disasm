@@ -33041,7 +33041,11 @@ CmpStepTitleFunc:
 	lda xsp, (xsp + 16)
 	ret
 
-CmpStep_DataBlock:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin"
+CmpStep_DataBlock:		.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x0, 0x20
+CmpStepTitle_OnPaint_Draw:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x20, 0xD
+CmpStepTitle_OnHide:		.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x2D, 0xD
+CmpStepTitle_OnSwitchIn:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x3A, 0xD
+CmpStepTitle_Method3Nop:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x47, 0x1
 AccAudio_LockAcquire:
 	ldw wa, 0x8
 	jp Audio_Lock_Acquire
