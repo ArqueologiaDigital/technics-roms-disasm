@@ -104,10 +104,17 @@ def encode(mnem, ops_str, pc):
     if mnem == "nop":
         return b"\xcb"
     if mnem == "clr":
-        _, d = reg(ops[0]); return u8(0x00 | (d << 2))
+        # clr exists for data registers only; "clr a3" used to assemble as "clr d3"
+        c, d = reg(ops[0])
+        if c != "d":
+            raise EncError(f"clr takes a data register, not {ops[0]} (use mov 0, {ops[0]})")
+        return u8(0x00 | (d << 2))
     if mnem in ("extb", "extbu", "exth", "exthu"):
         base = {"extb": 0x10, "extbu": 0x14, "exth": 0x18, "exthu": 0x1C}[mnem]
-        _, d = reg(ops[0]); return u8(base | d)
+        c, d = reg(ops[0])
+        if c != "d":
+            raise EncError(f"{mnem} takes a data register, not {ops[0]}")
+        return u8(base | d)
     if mnem == "inc":
         c, d = reg(ops[0]); return u8((0x40 if c == "d" else 0x41) | (d << 2))
     if mnem == "inc4":
