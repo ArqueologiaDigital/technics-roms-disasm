@@ -92,6 +92,27 @@ the following. Sources, command files and results are in that repository's `kn70
   `0x44000000`–`0x4403FFFF` and nothing above it (`ram44.cmd`). That is exactly the 256 KB
   backup SRAM of `kn7000_manual.sym`.
 
+## From the floppy only, not the SD card (2026-10-18)
+
+A converter has to be on the floppy. That holds for program 941 and, by the code, for 942 (SP7001).
+- **The code.** The fmm layer reads whichever medium its drive byte names (941 `0x5007125A`:
+  0 floppy, 1 SD). The STYLE CONVERT code never sets it: its listing (`0x48478D6D`, through
+  `0x48531BEF`/`0x48531D9A`), its load (`0x48531ACB`, `fmmread`, `fmmclose`) and its mailbox loop
+  make no call to the setter `0x48532346`. The 44 callers are the SD screens' code
+  (`0x4855xxxx`), each followed by the reset to floppy `0x48532355`, plus one in `0x4848xxxx` and
+  one in `0x4858xxxx`. 942 is laid out the same way (`drive_callers.py`).
+- **The SD screen has no STYLE CONVERT.** The SD MENU that SD CARD LOAD opens lists only SD
+  TOOLS, SD PREFERENCES, FAVORITE SONGS, CUSTOM STYLE LOAD/SAVE, LOAD, SAVE, SD SONG MEDLEY,
+  SD-AUDIO PLAY and SD-SOUND PLAY.
+- **In MAME (941).** With converters in three SD folders (the root, `PRIVATE\TECHNICS\KN7000` and
+  its `TFLD001`), STYLE CONVERT shows title 0x46 ("Please Insert the Style Convert Disk!"). That
+  happens with an empty floppy and with no floppy, from the menus and right after the SD MENU.
+  OK calls nothing. The drive byte reads 0 at every step, the SD MENU included. The same
+  converter on the floppy is listed (title 0x47) and runs (`sd_cnv.sh`).
+- **The data a converter reads.** A converter is called with the drive byte at 0, so AW.CNV's
+  `open` in the current folder reads the floppy. Calling the setter itself to read data from the
+  SD card is conceivable but untried.
+
 ## Not established
 
 - The layout of each request's arguments in the mailbox, beyond the bytes listed.

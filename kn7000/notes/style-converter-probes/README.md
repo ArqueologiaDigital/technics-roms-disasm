@@ -28,3 +28,36 @@ Results on 2026-10-18 (all six converters of both disks, PROGRAM 941):
 
 The counts include bytes in data areas that decode as instructions; the check that matters is
 that none of them leaves the file.
+
+## Can STYLE CONVERT load a converter from the SD card? (2026-10-18)
+
+| file               | question it answers                                                                                            | command                                                                                                        |
+|--------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `sdmark.s`         | (the marker converter) did the firmware load and call this copy, from which drive?                             | assembled by `sd_cnv.sh`                                                                                       |
+| `sd_cnv.sh`        | with copies of the marker on the SD card, does STYLE CONVERT list or run one, from the menus or the SD screen? | `notes/style-converter-probes/sd_cnv.sh FLOPPY ROUTE OUTDIR` (FLOPPY none, blank or flop; ROUTE menu or sd)    |
+| `drive_callers.py` | does the STYLE CONVERT code ever set the fmm drive byte?                                                       | `python3 -I drive_callers.py UNIDASM ../../baserom/kn7000_program.rom ../../baserom/kn7000_program_sp7001.rom` |
+
+`sd_cnv.sh` puts the marker as `AW.CNV` on a copy of the real KN7000's SD card in three folders:
+`\` (tag ROOT), `\PRIVATE\TECHNICS\KN7000` (KN7K) and its `TFLD001` (TFLD). It boots program 941
+(the published overlay build) and prints the fmm drive byte `0x5007125A`, the marker's call count
+`0x502E0000`, the tag of the copy that ran (`0x502E0008`) and the main task's title
+(`0x500009A0`, `0xF0000` + title). Results, 2026-10-18:
+
+| floppy                     | route                        | STYLE CONVERT screen        | after OK                      | drive byte throughout                  |
+|----------------------------|------------------------------|-----------------------------|-------------------------------|----------------------------------------|
+| blank + `AW.CNV` (control) | DISK MENU                    | `0x47` (the converter list) | 162 calls, tag `FLOP`, `0x4A` | 0                                      |
+| blank, no converter        | DISK MENU                    | `0x46` "insert the disk"    | 0 calls                       | 0                                      |
+| none                       | DISK MENU                    | `0x46`                      | 0 calls                       | 0                                      |
+| blank, no converter        | SD CARD LOAD, then DISK MENU | `0x46`                      | 0 calls                       | 0, also on the SD MENU (title `0x104`) |
+| none                       | SD CARD LOAD, then DISK MENU | `0x46`                      | 0 calls                       | 0, also on the SD MENU                 |
+
+The SD MENU (SD CARD LOAD) lists SD TOOLS, SD PREFERENCES, FAVORITE SONGS, CUSTOM STYLE LOAD/SAVE,
+LOAD, SAVE, SD SONG MEDLEY, SD-AUDIO PLAY and SD-SOUND PLAY: no STYLE CONVERT.
+
+`drive_callers.py` output (both builds alike):
+
+    kn7000_program.rom: drive byte 0x5007125A, set 0x48532346, set-0 0x48532355, '*.CNV' pattern 0x485CD534
+      set     44 callers {'0x4848xxxx': 1, '0x4855xxxx': 42, '0x4858xxxx': 1}; inside STYLE CONVERT: 0
+      set-0   46 callers {'0x4848xxxx': 1, '0x4851xxxx': 2, '0x4855xxxx': 42, '0x4858xxxx': 1}; inside STYLE CONVERT: 0
+    kn7000_program_sp7001.rom: drive byte 0x5007126A, set 0x48532335, set-0 0x48532344, '*.CNV' pattern 0x485CDA28
+      (the same counts)
