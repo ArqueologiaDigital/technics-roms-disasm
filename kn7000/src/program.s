@@ -27,7 +27,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 972 synthetic labels for internal helpers called by converted code
+# 971 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -989,13 +989,12 @@ _rom_marker:
 .equ TgSlotReleaseKick_entry, 0x4C03B2FC
 .equ TgNodeRingReleaseWalk_entry, 0x4C03B347
 .equ TgVoiceListBuild_entry, 0x4C03B3B5
-.equ del_sem, 0x4C03C5AF
 .equ set_flg, 0x4C03CD7F
 .equ cre_tsk, 0x4C03D0C8
 .equ LibMsgSend, 0x4C03D219
 .equ LibMsgReceive, 0x4C03D36D
 .equ unl_cpu, 0x4C03D6BC
-.equ ext_tsk, 0x4C03D8AB
+.equ sta_tsk, 0x4C03D8AB
 .equ rot_rdq, 0x4C03D968
 .equ LibIntcEnable, 0x4C03DCC8
 .equ LibIntcDisable, 0x4C03DD3F
@@ -17073,7 +17072,7 @@ Draw2BpFile_Impl_Return:
     exth    d0
     mov     d1, (0x14, sp)
     mov     (0x18, sp), a0
-    call    del_sem, 0, 0
+    call    0x4c03c5af, 0, 0
     mov     a2, d1
     mov     0x38, d0
     nop
@@ -17143,7 +17142,7 @@ Draw2BpFile_Impl_Return:
     exth    d0
     mov     d1, (0x14, sp)
     mov     (0x18, sp), a0
-    call    del_sem, 0, 0
+    call    0x4c03c5af, 0, 0
     mov     a2, d0
     mov     0x38, d1
     nop
@@ -17286,7 +17285,7 @@ Draw2BpFile_Impl_Return:
     exth    d0
     mov     sp, a0
     add     0x18, a0
-    call    del_sem, 0, 0
+    call    0x4c03c5af, 0, 0
     mov     0x38, d0
     nop
     nop
@@ -17438,7 +17437,7 @@ Draw2BpFile_Impl_Return:
     add     0x40, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    del_sem, 0, 0
+    call    0x4c03c5af, 0, 0
     mov     a3, d0
     mov     0x38, d1
     nop
@@ -17662,7 +17661,7 @@ Draw2BpFile_Impl_Return:
     add     0x44, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    del_sem, 0, 0
+    call    0x4c03c5af, 0, 0
     mov     a3, d1
     mov     0x38, d0
     nop
@@ -32374,7 +32373,7 @@ Draw2BpFile_Impl_Return:
     call    cre_tsk, 0, 0
     mov     8, d0
     clr     d1
-    call    ext_tsk, 0, 0
+    call    sta_tsk, 0, 0
     mov     0x4867b9b8, a2
     mov     9, d0
     mov     a2, a0

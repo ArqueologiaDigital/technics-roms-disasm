@@ -73,16 +73,16 @@ shifted:
 
 The edit sites, with what each one is:
 
-| site (942)                           | size           | what it is                                                                                |
-|--------------------------------------|----------------|-------------------------------------------------------------------------------------------|
-| `InitializeObjectTable` (0x4842A5xx) | net +2 B       | four small instruction rewrites                                                           |
-| `InitializeBlock30..47` stub run     | -3, -16 B      | the 3-byte `InitializeBlock46` stub removed; its name now points at new code              |
-| `0x4858598B..0x48585E90`             | **+1285 B**    | **new code**: `InitializeBlock46`, the XAPR plug-in host, 35 export forwarders/accessors  |
-| `0x486BD3B8..0x486BDEE8`             | **+2864 B**    | **export name block**: 'loc_cpu', 'unl_cpu', ... 'PlugHome'                               |
-| `0x487B1B9D..0x487B231D` (+8 B)      | **+1928 B**    | `InitializeBlock46`'s object records + the **export table**                               |
-| just before `DspTypeRecordTable`     | +8 B           | the table itself is unchanged (compared as relocated pointers)                            |
-| library `0x4C0036EA`                 | **+87 B**      | new C-library `rand` / `srand` (both exported)                                            |
-| library tail `0x4C03C507..`          | +1,289 / -61 B | uITRON kernel growth: `preq_sem`, `del_tsk`, `sta_tsk`, `get_tid`, `clr_flg` are new code |
+| site (942)                           | size           | what it is                                                                                                                                                                                                                               |
+|--------------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `InitializeObjectTable` (0x4842A5xx) | net +2 B       | four small instruction rewrites                                                                                                                                                                                                          |
+| `InitializeBlock30..47` stub run     | -3, -16 B      | the 3-byte `InitializeBlock46` stub removed; its name now points at new code                                                                                                                                                             |
+| `0x4858598B..0x48585E90`             | **+1285 B**    | **new code**: `InitializeBlock46`, the XAPR plug-in host, 35 export forwarders/accessors                                                                                                                                                 |
+| `0x486BD3B8..0x486BDEE8`             | **+2864 B**    | **export name block**: 'loc_cpu', 'unl_cpu', ... 'PlugHome'                                                                                                                                                                              |
+| `0x487B1B9D..0x487B231D` (+8 B)      | **+1928 B**    | `InitializeBlock46`'s object records + the **export table**                                                                                                                                                                              |
+| just before `DspTypeRecordTable`     | +8 B           | the table itself is unchanged (compared as relocated pointers)                                                                                                                                                                           |
+| library `0x4C0036EA`                 | **+87 B**      | new C-library `rand` / `srand` (both exported)                                                                                                                                                                                           |
+| library tail `0x4C03C507..`          | +1,289 / -61 B | uITRON kernel growth: `del_tsk`, `get_tid`, `clr_flg` are new code; `del_mbx`, `del_sem`, `del_flg`, `ext_tsk` enter service routines no 941 stub has; `preq_sem` and `sta_tsk` were already in 941 (`tools/itron_stubs.py`, 2026-10-18) |
 
 (The byte-level edit list also shows ~30 tiny edits inside `DspTypeRecordTable`; those are
 difflib aligning relocated pointers differently, not record changes -- compared word by word with
@@ -235,9 +235,18 @@ routines and take their names (`LibStrncmp`, `LibDiv32`, `LibF64Unpack`, ...).
   callers pass n = `LibStrlen(...)`), now in `kn7000_manual.sym`; BASEEXT.XAP's own copy is
   byte-identical to it.
 - The plug-in export table's names are ported back to 941 (`make exports-941`,
-  `kn7000_exports_from_942.sym`): **186 land**; the 42 that don't are exactly the code only 942
-  has (the 35 new routines, `rand`/`srand`, five new uITRON services). The interrupt services
+  `kn7000_exports_from_942.sym`): **184 land**; the 44 that don't are exactly the code only 942
+  has (the 35 new routines, `rand`/`srand`, seven uITRON services). The interrupt services
   still check out in 941 (`loc_cpu`/`dis_int` clear PSW.IE, `ena_int` sets it).
+- **Correction (2026-10-18).** This list said 186 / 42 until `tools/itron_stubs.py` checked the
+  kernel entry stubs. They are near-identical byte runs, and the offset map had put four 942
+  names on the wrong 941 stub. 941 `0x4C03D8AB` was named `ext_tsk` but is **`sta_tsk`**: it
+  takes two arguments and enters the same service routine as 942's `sta_tsk`, and 941's program
+  calls it from the call site where 942 calls `sta_tsk`. A style converter that starts its own
+  task depends on it (kn5000-anotherworld `kn7000/README-CNV.md`). `0x4C03C959` was `del_flg`
+  but is `preq_sem`. `0x4C03C470` and `0x4C03C5AF` were `del_mbx` and `del_sem`, but take
+  three arguments where those take one; 942 leaves their twins unnamed. `make exports-941` now
+  runs the check after porting.
 - Names recovered after the function split no longer shrink the converted source: a boundary
   from such a file (`INHERIT_SYMS` in `gen_program_s.py`) inherits the converted state of the
   function it splits. 941 keeps exactly its converted bytes; 942's regained the ~2.4 KB the

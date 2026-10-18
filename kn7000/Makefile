@@ -273,13 +273,18 @@ SP7001_LIB_FILE := 0x3BA785
 # Build 941 names carried BACK from 942's plug-in export table (the functions
 # they name exist in 941 too). Needs both builds' baserom; the committed
 # kn7000_exports_from_942.sym is the result, so the default build doesn't.
+# The library's micro-ITRON entry stubs are near-identical byte runs the offset map can
+# misalign, so tools/itron_stubs.py then re-places each exported kernel name on the 941 stub
+# that enters the same service routine (needs unidasm, $UNIDASM).
 .PHONY: exports-941
-exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.py \
+exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.py tools/itron_stubs.py \
 		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
 	$(PYTHON) tools/port_symbols.py baserom/kn7000_program_sp7001.rom baserom/kn7000_program.rom \
 	    baserom/kn7000_table_sp7001.rom baserom/kn7000_table.rom \
 	    kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --old-lib-base $(SP7001_LIB_FILE) \
 	    --title "KN7000 build 941: names from the SP7001 (build 942) plug-in export table, ported back"
+	$(PYTHON) tools/itron_stubs.py baserom/kn7000_program_sp7001.rom $(SP7001_LIB_FILE) \
+	    baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --fix
 
 .PHONY: symbols-sp7001 program-src-sp7001
 symbols-sp7001 kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
