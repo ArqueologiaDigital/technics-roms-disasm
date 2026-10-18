@@ -206,9 +206,9 @@ custom-flash directory edit buffer 0x5037A000..0x5037FFFF.
 - The block loader 0x484D7A40 copies only the library image to 0x4C000000 and 3 bytes to 0x4C03FFF0. Nothing else is copied into work RAM.
 - The kernel then switches SP to 0x50381408 (0x487B8FA4). Task stacks come from the RTOS pool 0x50388000..0x503BBFFF (lib 0x4C03D1DC -> 0x4C03CC89).
 
-**Retention.** 0x50180000..0x50298000 is never cleared. Its owners validate their data and load factory data only when the check fails (pads: 0x48437C70 chooses 0x484321D4 or 0x4843217A). The service manual lists SEQUENCER, COMPOSER (MEMORY contents) and PERFORMANCE PADS as kept "about 80 minutes" (sm.txt ~9476-9497). That matches song records and pages, 'TCMP' and 'TPAD'; the DRAM mechanism is inferred. RAM is 4 MB: the clear ends at 0x50400000, and the parts list has IC12/IC13 as two 16-Mbit DRAMs (sm.txt line 1627).
+**Retention.** 0x50180000..0x50298000 is never cleared. Its owners validate their data and load factory data only when the check fails (pads: 0x48437C70 chooses 0x484321D4 or 0x4843217A). The service manual lists SEQUENCER, COMPOSER (MEMORY contents) and PERFORMANCE PADS as kept "about 80 minutes" (service manual, memory-backup table). That matches song records and pages, 'TCMP' and 'TPAD'; the DRAM mechanism is inferred. RAM is 4 MB: the clear ends at 0x50400000, and the parts list has IC12/IC13 as two 16-Mbit DRAMs (service manual parts list).
 
-**2. `.data` contents** (ROM image 0x487B0B78; values read by rom_facts.py):
+**2. `.data` contents** (ROM image 0x487B0B78; values printed by `notes/work-ram-map-probes/rom_facts.py`):
 - Malloc control 0x500006E0..0x500006EB: cursor 0x50022004, remaining 0x8000, free list.
 - The 4 GUI-task queue slots at 0x5000757C (0x38 bytes each). Their buffer pointers run from 0x5002C044 to 0x50031474.
 - The demo-song stream tables 0x50000C20, 0x50000C50 and 0x50000C80.

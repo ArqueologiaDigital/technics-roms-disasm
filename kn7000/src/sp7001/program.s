@@ -5426,7 +5426,10 @@ _rom_marker:
 #   CaptureLcd passes a bare filename.
 #   DEAD on PROGRAM 941: its chord branch at 0x48414926 requires
 #   GetRomConfigByte() == 0xFF and ours reads 0x16 -- the exact INVERSE of
-#   the gate that opens the MEMORY DUMP hex viewer.
+#   the gate that opens the MEMORY DUMP hex viewer. The byte is the release
+#   number (0x13 = v1.3 ... 0x16 = v1.6); only the unnumbered SP7001 build
+#   942 has 0xFF. Two triggers: the four corner LCD soft keys (chord
+#   0x110000) and DISPLAY HOLD + PAD 1 + PAD 2 (gate at 0x48414A27).
     add     -8, sp
 # CaptureLcd_entry:   (register-save `call` entry)
     call    GetLcdMode, 0, 0

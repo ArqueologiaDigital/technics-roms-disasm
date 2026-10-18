@@ -971,7 +971,10 @@ FUNC_DOC = {
         "CaptureLcd passes a bare filename.",
         "DEAD on PROGRAM 941: its chord branch at 0x48414926 requires",
         "GetRomConfigByte() == 0xFF and ours reads 0x16 -- the exact INVERSE of",
-        "the gate that opens the MEMORY DUMP hex viewer.",
+        "the gate that opens the MEMORY DUMP hex viewer. The byte is the release",
+        "number (0x13 = v1.3 ... 0x16 = v1.6); only the unnumbered SP7001 build",
+        "942 has 0xFF. Two triggers: the four corner LCD soft keys (chord",
+        "0x110000) and DISPLAY HOLD + PAD 1 + PAD 2 (gate at 0x48414A27).",
     ),
     "BackupSramTest": (
         "Service RAM DEVICE TEST: from 0x44000000, 0x20000 iterations x 2",

@@ -2393,8 +2393,14 @@
 ;               title _TT_MEMDUMP (0xF2) = the MEMORY DUMP hex viewer;
 ;               == 0xFF calls ChangeMode(0,0) (Panel Simulator) instead
 ;   0x000000A1  columns 1,6,8   -> ungated: title _TT_SOFTVER (0xF0)
-;   0x00110000  LCD soft keys   -> INVERSE gate: runs CaptureLcd only when the
-;               config byte IS 0xFF, so LCD capture is DEAD on PROGRAM 941
+;   0x00110000  the four corner LCD soft keys LCDL1+LCDL5+LCDR1+LCDR5 (index
+;               switches 0x10/0x14, both halves) -> INVERSE gate: runs CaptureLcd
+;               only when the config byte IS 0xFF, so LCD capture is DEAD on
+;               PROGRAM 941 (0x16) and every released build; live on SP7001 942
+; The config byte at 0x4840000F is the release number in hex digits (AcMPVer
+; prints "Ver%1X.%1X"): 893 = 0x13, 935 = 0x15, 941 = 0x16, 942 = 0xFF. A second
+; capture trigger with the same gate (0x48414A27): DISPLAY HOLD + PAD 1 + PAD 2
+; (accumulator 0x50021FF0 == 7, handlers 0x484149BB / 0x484149F1).
 ; A byte scan finds exactly five references to 0x50021FE0 in the whole image:
 ; 0x48414844 / 0x4841485A (the rebuild), 0x484148C2 (the chord read) and two
 ; plain zero-stores at 0x48414C05 / 0x48414CA8. There is no second chord site.
