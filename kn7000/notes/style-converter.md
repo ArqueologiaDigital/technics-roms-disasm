@@ -63,6 +63,35 @@ on both firmwares.
 Title numbers: `title_pool.py` (title = pool index + 1, checked on `_TT_DEBUG` 0xFF,
 `_TT_MEMDUMP` 0xF2 and `_TT_SOFTVER` 0xF0).
 
+## A converter of one's own (measured 2026-10-18)
+
+Another World now runs on 941 as a converter, `AW.CNV`
+(kn5000-anotherworld `kn7000/README-CNV.md`). It and three probe converters, in MAME, established
+the following. Sources, command files and results are in that repository's `kn7000/probes/cnv/`.
+
+- **The converter runs on the main task** (TCB `0x50381470`), the task that also decodes the
+  panel (`PanelFrameDecode`) and passes keybed notes to the MIDI OUT 1 ring
+  (`taskprobe.cmd`: the current TCB at `0x48479929` and at `0x484AD116`).
+- **So it must return.** A converter that loops, even yielding with `dly_tsk`, keeps running,
+  but no button reaches the switch bitmap and no keybed note reaches MIDI OUT (`probe1_noreturn`).
+- **Request 5 parks the UI.** Answered on every call, it keeps the firmware on title 0x4A. The
+  firmware calls back about 20 times a second, and EXIT does not leave. Panel decoding and
+  keybed-to-MIDI-OUT keep running. A task the converter started (`cre_tsk` `0x4C03D0C8`,
+  `sta_tsk` `0x4C03D8AB`, priority 3) runs alongside and sees both (`probe2_task`).
+  `0x4C03D8AB` is `sta_tsk`, not `ext_tsk` as the ported symbols had it; see
+  `tools/itron_stubs.py`.
+- **Request 0xFE ends it.** The firmware stops calling and shows its message box (title 0x4C).
+  EXIT then brings up "Continue Next?" with YES and NO. **YES calls the converter again**, the
+  loaded file and its variables intact (it is not reloaded). **NO returns to the main screen.**
+  A task that ends itself with `exd_tsk` (`0x4C03D5A1`) frees its slot for the next `cre_tsk`
+  (`probe3_quit`, AW.CNV's session probe).
+- **Firmware routines are callable.** A converter may call them directly, from the first call
+  on. AW.CNV reads 16 files from the floppy with `open` in the current folder (`0x48531AC5`),
+  `fmmread` and `fmmclose`.
+- **The `0x44000000` window.** Through boot and a converter run, the firmware writes
+  `0x44000000`–`0x4403FFFF` and nothing above it (`ram44.cmd`). That is exactly the 256 KB
+  backup SRAM of `kn7000_manual.sym`.
+
 ## Not established
 
 - The layout of each request's arguments in the mailbox, beyond the bytes listed.
