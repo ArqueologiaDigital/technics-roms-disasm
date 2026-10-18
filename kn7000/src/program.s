@@ -81,7 +81,7 @@ _rom_marker:
 .equ func_48414AFD, 0x48414AFD
 .equ func_48414B90, 0x48414B90
 .equ func_48414BAA, 0x48414BAA
-.equ func_48415680, 0x48415680
+.equ CaptureLcd_entry, 0x48415680
 .equ func_484156A0, 0x484156A0
 .equ func_4841584C, 0x4841584C
 .equ func_48415AAB, 0x48415AAB
@@ -413,9 +413,9 @@ _rom_marker:
 .equ func_4851AD68, 0x4851AD68
 .equ func_4852FDCD, 0x4852FDCD
 .equ func_48530216, 0x48530216
-.equ func_48532395, 0x48532395
-.equ func_485323BF, 0x485323BF
-.equ func_48532468, 0x48532468
+.equ fmmopen_entry, 0x48532395
+.equ fmmclose_entry, 0x485323BF
+.equ fmmread_entry, 0x48532468
 .equ func_48532494, 0x48532494
 .equ DiskInit_entry, 0x4854ACF2
 .equ DiskWorkerStatusClear, 0x4854AD89
@@ -4197,7 +4197,7 @@ _rom_marker:
     extbu   d0
     cmp     0xff, d0
     bne     0x48414939
-    call    func_48415680, 0, 8
+    call    CaptureLcd_entry, 0, 8
     ret     [d2,d3,a2,a3], 0x28
 # (unnamed code follows to the next boundary)
 .incbin_range "baserom/kn7000_program.rom", 0x01493c, 0x014a74
@@ -5407,6 +5407,7 @@ _rom_marker:
 #   GetRomConfigByte() == 0xFF and ours reads 0x16 -- the exact INVERSE of
 #   the gate that opens the MEMORY DUMP hex viewer.
     add     -8, sp
+# CaptureLcd_entry:   (register-save `call` entry)
     call    GetLcdMode, 0, 0
     exthu   d0
     cmp     2, d0
@@ -5432,7 +5433,7 @@ _rom_marker:
     call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e2f4, a1
-    call    func_48532395, [a2,a3], 0x24
+    call    fmmopen_entry, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x484156ee
@@ -5469,7 +5470,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x4841574d
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     0x28, d0
@@ -5497,7 +5498,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415794
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     0x3c00, d0
@@ -5566,7 +5567,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0x3c00, d0
     beq     0x48415824
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     bra     0x48415843
     mov     (0x14, sp), d0
@@ -5578,7 +5579,7 @@ _rom_marker:
     jmp     0x484157a7
     mov     a3, a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x84
     movm    [d2,d3,a2,a3], (sp)
@@ -5598,7 +5599,7 @@ _rom_marker:
     call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e32c, a1
-    call    func_48532395, [a2,a3], 0x24
+    call    fmmopen_entry, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x4841589a
@@ -5635,7 +5636,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x484158f9
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     mov     0x28, d0
@@ -5663,7 +5664,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415940
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     clr     d3
@@ -5720,7 +5721,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0x40, d0
     beq     0x484159c6
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0xd4
     mov     0xa00, d0
@@ -5786,7 +5787,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0xa00, d0
     beq     0x48415a64
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     bra     0x48415a84
     mov     (0x1c, sp), d0
@@ -5798,7 +5799,7 @@ _rom_marker:
     jmp     0x484159da
     mov     (0x20, sp), a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0xd4
 # CaptureLcdArea  (CPU 0x48415a87)
@@ -5832,7 +5833,7 @@ _rom_marker:
     call    func_48530216, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x4859e344, a1
-    call    func_48532395, [a2,a3], 0x24
+    call    fmmopen_entry, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     0x48415afa
@@ -5921,7 +5922,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0xe, d0
     beq     0x48415bb6
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x94
     mov     0x28, d0
@@ -5947,7 +5948,7 @@ _rom_marker:
     call    func_48532494, [d2,a2], 0x24
     cmp     0x28, d0
     beq     0x48415bf4
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     clr     d0
     ret     [d2,d3,a2,a3], 0x94
     mov     (0x20, sp), d0
@@ -6040,7 +6041,7 @@ _rom_marker:
     mov     (0x20, sp), d1
     cmp     d1, d0
     beq     0x48415cb4
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     mov     (0x14, sp), a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
@@ -6055,7 +6056,7 @@ _rom_marker:
     jmp     0x48415c10
     mov     (0x14, sp), a0
     call    Free_entry, [d2,d3,a2,a3], 0x2c
-    call    func_485323BF, 0, 0x14
+    call    fmmclose_entry, 0, 0x14
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x94
 # MainAutoFree  (CPU 0x48415cd5)
@@ -18832,7 +18833,9 @@ Draw2BpFile_Impl_Return:
 # GetPaletteRGB  (CPU 0x4842db23)
 .incbin_range "baserom/kn7000_program.rom", 0x02db23, 0x02db30
 # GetPaletteRGB4  (CPU 0x4842db30)
-.incbin_range "baserom/kn7000_program.rom", 0x02db30, 0x02dc88
+.incbin_range "baserom/kn7000_program.rom", 0x02db30, 0x02db3c
+# ColorToMono4Level  (CPU 0x4842db3c)
+.incbin_range "baserom/kn7000_program.rom", 0x02db3c, 0x02dc88
 # ConvPaletteMono4  (CPU 0x4842dc88)
     movm    [d2,d3,a2,a3], (sp)
     mov     d0, d2
@@ -24843,7 +24846,9 @@ Draw2BpFile_Impl_Return:
     mov     0x501a60e0, d0
     rets
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x056e67, 0x056ebb
+.incbin_range "baserom/kn7000_program.rom", 0x056e67, 0x056e8b
+# SongPageStorePtr  (CPU 0x48456e8b)
+.incbin_range "baserom/kn7000_program.rom", 0x056e8b, 0x056ebb
 # Rec8E0Field120Ptr  (CPU 0x48456ebb)
 #   -> Rec8E0TablePtr(index) + 0x120, fallback 0x501A5920. This is where
 #   the MEMORY DUMP viewer's fourth power-on address comes from: its
@@ -24865,7 +24870,9 @@ Draw2BpFile_Impl_Return:
     mov     0x501a5920, a0
     rets
 # (unnamed code follows to the next boundary)
-.incbin_range "baserom/kn7000_program.rom", 0x056ede, 0x057beb
+.incbin_range "baserom/kn7000_program.rom", 0x056ede, 0x057177
+# InstallScratchPtr  (CPU 0x48457177)
+.incbin_range "baserom/kn7000_program.rom", 0x057177, 0x057beb
 # CurSongSet_NoPlayDisp  (CPU 0x48457beb)
 .incbin_range "baserom/kn7000_program.rom", 0x057beb, 0x057c06
 # CurSongSet_PlayDisp  (CPU 0x48457c06)
@@ -26515,7 +26522,11 @@ Draw2BpFile_Impl_Return:
 # (unnamed code follows to the next boundary)
 .incbin_range "baserom/kn7000_program.rom", 0x08463a, 0x08594d
 # AstHeaderIngest  (CPU 0x4848594d)
-.incbin_range "baserom/kn7000_program.rom", 0x08594d, 0x086341
+.incbin_range "baserom/kn7000_program.rom", 0x08594d, 0x085e85
+# JpegEncode  (CPU 0x48485e85)
+.incbin_range "baserom/kn7000_program.rom", 0x085e85, 0x086061
+# JpegDecodeCrop  (CPU 0x48486061)
+.incbin_range "baserom/kn7000_program.rom", 0x086061, 0x086341
 # JpegSetup  (CPU 0x48486341)
 .incbin_range "baserom/kn7000_program.rom", 0x086341, 0x0870c8
 # JpegPixelStore  (CPU 0x484870c8)
@@ -27544,14 +27555,14 @@ Draw2BpFile_Impl_Return:
     call    func_48414B90, 0, 0x14
     mov     0x5006b52e, a0
     mov     0x485d67cc, a1
-    call    func_48532395, [a2,a3], 0x24
+    call    fmmopen_entry, [a2,a3], 0x24
     exth    d0
     cmp     0, d0
     blt     0x4848874d
     mov     0x502b8000, a0
     mov     0x00018000, d0
-    call    func_48532468, [d2,a2], 0x24
-    call    func_485323BF, 0, 0x14
+    call    fmmread_entry, [d2,a2], 0x24
+    call    fmmclose_entry, 0, 0x14
     call    func_48414BAA, 0, 0x14
     clr     d0
     bra     0x484887c8
@@ -27589,7 +27600,9 @@ Draw2BpFile_Impl_Return:
     call    func_48429569, [d2,d3,a2,a3], 0x28
     ret     [d2], 0x1c
 # IvMpVerWinProc  (CPU 0x484887cb)
-.incbin_range "baserom/kn7000_program.rom", 0x0887cb, 0x088897
+.incbin_range "baserom/kn7000_program.rom", 0x0887cb, 0x08886e
+# CaptureLcdCheck  (CPU 0x4848886e)
+.incbin_range "baserom/kn7000_program.rom", 0x08886e, 0x088897
 # AcProgVerBoxProc  (CPU 0x48488897)
 .incbin_range "baserom/kn7000_program.rom", 0x088897, 0x0888fb
 # AcTableVerBoxProc  (CPU 0x484888fb)
@@ -27813,7 +27826,23 @@ Draw2BpFile_Impl_Return:
 # AcHpPartsSetProc  (CPU 0x484967b2)
 .incbin_range "baserom/kn7000_program.rom", 0x0967b2, 0x09681e
 # AcUserHpMenuProc  (CPU 0x4849681e)
-.incbin_range "baserom/kn7000_program.rom", 0x09681e, 0x097133
+.incbin_range "baserom/kn7000_program.rom", 0x09681e, 0x096f51
+# HpFlashCheck  (CPU 0x48496f51)
+.incbin_range "baserom/kn7000_program.rom", 0x096f51, 0x096f93
+# HpFlashWriteDefaults  (CPU 0x48496f93)
+.incbin_range "baserom/kn7000_program.rom", 0x096f93, 0x096fb8
+# HpBmpResetDefault  (CPU 0x48496fb8)
+.incbin_range "baserom/kn7000_program.rom", 0x096fb8, 0x09701c
+# HpRecordProgram  (CPU 0x4849701c)
+.incbin_range "baserom/kn7000_program.rom", 0x09701c, 0x097044
+# HpRecordLoad  (CPU 0x48497044)
+.incbin_range "baserom/kn7000_program.rom", 0x097044, 0x09709a
+# HmpBufferAlloc  (CPU 0x4849709a)
+.incbin_range "baserom/kn7000_program.rom", 0x09709a, 0x0970c1
+# HmpInstall  (CPU 0x484970c1)
+.incbin_range "baserom/kn7000_program.rom", 0x0970c1, 0x097122
+# HmpBlobGet  (CPU 0x48497122)
+.incbin_range "baserom/kn7000_program.rom", 0x097122, 0x097133
 # LoadHpBmp  (CPU 0x48497133)
 .incbin_range "baserom/kn7000_program.rom", 0x097133, 0x0971f1
 # InitializeBlock06  (CPU 0x484971f1)
@@ -31646,7 +31675,11 @@ Draw2BpFile_Impl_Return:
 # DocDiskNameFunc  (CPU 0x4852a9e7)
 .incbin_range "baserom/kn7000_program.rom", 0x12a9e7, 0x12ab8b
 # FmmDocFileNameFunc  (CPU 0x4852ab8b)
-.incbin_range "baserom/kn7000_program.rom", 0x12ab8b, 0x12cc9e
+.incbin_range "baserom/kn7000_program.rom", 0x12ab8b, 0x12c10c
+# SeqActFileLoad  (CPU 0x4852c10c)
+.incbin_range "baserom/kn7000_program.rom", 0x12c10c, 0x12cc3a
+# HmpFileLoad  (CPU 0x4852cc3a)
+.incbin_range "baserom/kn7000_program.rom", 0x12cc3a, 0x12cc9e
 # AstLoadHandler  (CPU 0x4852cc9e)
 .incbin_range "baserom/kn7000_program.rom", 0x12cc9e, 0x12ce44
 # LoadCst  (CPU 0x4852ce44)
@@ -31654,7 +31687,9 @@ Draw2BpFile_Impl_Return:
 # DiskLoadDispatch  (CPU 0x4852cfe4)
 .incbin_range "baserom/kn7000_program.rom", 0x12cfe4, 0x12da68
 # SaveCst  (CPU 0x4852da68)
-.incbin_range "baserom/kn7000_program.rom", 0x12da68, 0x12f5dd
+.incbin_range "baserom/kn7000_program.rom", 0x12da68, 0x12ec49
+# LoadHpBmpFile  (CPU 0x4852ec49)
+.incbin_range "baserom/kn7000_program.rom", 0x12ec49, 0x12f5dd
 # LoadLsw_HD  (CPU 0x4852f5dd)
 .incbin_range "baserom/kn7000_program.rom", 0x12f5dd, 0x12f5e8
 # LoadPmt_HD  (CPU 0x4852f5e8)
@@ -31712,13 +31747,23 @@ Draw2BpFile_Impl_Return:
 # ResetExtMode  (CPU 0x48532355)
 .incbin_range "baserom/kn7000_program.rom", 0x132355, 0x13235f
 # CheckExtMode  (CPU 0x4853235f)
-.incbin_range "baserom/kn7000_program.rom", 0x13235f, 0x132390
+.incbin_range "baserom/kn7000_program.rom", 0x13235f, 0x132368
+# fmmerror  (CPU 0x48532368)
+.incbin_range "baserom/kn7000_program.rom", 0x132368, 0x132390
 # fmmopen  (CPU 0x48532390)
 .incbin_range "baserom/kn7000_program.rom", 0x132390, 0x1323bc
 # fmmclose  (CPU 0x485323bc)
 .incbin_range "baserom/kn7000_program.rom", 0x1323bc, 0x1323e4
 # fmmremove  (CPU 0x485323e4)
-.incbin_range "baserom/kn7000_program.rom", 0x1323e4, 0x132630
+.incbin_range "baserom/kn7000_program.rom", 0x1323e4, 0x132463
+# fmmread  (CPU 0x48532463)
+.incbin_range "baserom/kn7000_program.rom", 0x132463, 0x1324bb
+# fmmseek  (CPU 0x485324bb)
+.incbin_range "baserom/kn7000_program.rom", 0x1324bb, 0x1324ea
+# fmmrewind  (CPU 0x485324ea)
+.incbin_range "baserom/kn7000_program.rom", 0x1324ea, 0x132512
+# fmmtell  (CPU 0x48532512)
+.incbin_range "baserom/kn7000_program.rom", 0x132512, 0x132630
 # fmmerror_init  (CPU 0x48532630)
 .incbin_range "baserom/kn7000_program.rom", 0x132630, 0x132736
 # fmmrename  (CPU 0x48532736)
@@ -31732,7 +31777,15 @@ Draw2BpFile_Impl_Return:
 # FmmSlideComp  (CPU 0x48533cba)
 .incbin_range "baserom/kn7000_program.rom", 0x133cba, 0x133f5c
 # FmmSlideDecomp  (CPU 0x48533f5c)
-.incbin_range "baserom/kn7000_program.rom", 0x133f5c, 0x134200
+.incbin_range "baserom/kn7000_program.rom", 0x133f5c, 0x1340be
+# ZArenaReset  (CPU 0x485340be)
+.incbin_range "baserom/kn7000_program.rom", 0x1340be, 0x13411a
+# ZArenaAlloc  (CPU 0x4853411a)
+.incbin_range "baserom/kn7000_program.rom", 0x13411a, 0x13418e
+# ZArenaAllocArray  (CPU 0x4853418e)
+.incbin_range "baserom/kn7000_program.rom", 0x13418e, 0x13419d
+# ZArenaFree  (CPU 0x4853419d)
+.incbin_range "baserom/kn7000_program.rom", 0x13419d, 0x134200
 # InitializeBlock14  (CPU 0x48534200)
 .incbin_range "baserom/kn7000_program.rom", 0x134200, 0x134bac
 # FE_SeqMenuSongSel  (CPU 0x48534bac)
@@ -35061,7 +35114,13 @@ Draw2BpFile_Impl_Return:
 # AcDemoFdSelectProc  (CPU 0x4854de17)
 .incbin_range "baserom/kn7000_program.rom", 0x14de17, 0x14dfaf
 # AcDemoImageProc  (CPU 0x4854dfaf)
-.incbin_range "baserom/kn7000_program.rom", 0x14dfaf, 0x14e35e
+.incbin_range "baserom/kn7000_program.rom", 0x14dfaf, 0x14e143
+# FeatureDemoSqtLoad  (CPU 0x4854e143)
+.incbin_range "baserom/kn7000_program.rom", 0x14e143, 0x14e1ca
+# FeatureDemoActLoad  (CPU 0x4854e1ca)
+.incbin_range "baserom/kn7000_program.rom", 0x14e1ca, 0x14e20c
+# FeaturePreLoad  (CPU 0x4854e20c)
+.incbin_range "baserom/kn7000_program.rom", 0x14e20c, 0x14e35e
 # InitFeatureDemo  (CPU 0x4854e35e)
 .incbin_range "baserom/kn7000_program.rom", 0x14e35e, 0x14e361
 # ExitFeatureDemo  (CPU 0x4854e361)
@@ -41305,7 +41364,57 @@ Draw2BpFile_Impl_Return:
 # AcSswImgRenameProc  (CPU 0x4857e942)
 .incbin_range "baserom/kn7000_program.rom", 0x17e942, 0x17e987
 # AcSswImgListProc  (CPU 0x4857e987)
-.incbin_range "baserom/kn7000_program.rom", 0x17e987, 0x181ec1
+.incbin_range "baserom/kn7000_program.rom", 0x17e987, 0x17ee8d
+# SswSongActLoad  (CPU 0x4857ee8d)
+.incbin_range "baserom/kn7000_program.rom", 0x17ee8d, 0x17ef6f
+# SswPoolAlloc  (CPU 0x4857ef6f)
+.incbin_range "baserom/kn7000_program.rom", 0x17ef6f, 0x17efac
+# SswPoolFree  (CPU 0x4857efac)
+.incbin_range "baserom/kn7000_program.rom", 0x17efac, 0x17f0af
+# SswPoolSelectMain  (CPU 0x4857f0af)
+.incbin_range "baserom/kn7000_program.rom", 0x17f0af, 0x17f0be
+# SswPoolMainInit  (CPU 0x4857f0be)
+.incbin_range "baserom/kn7000_program.rom", 0x17f0be, 0x17f114
+# SswPoolInit  (CPU 0x4857f114)
+.incbin_range "baserom/kn7000_program.rom", 0x17f114, 0x17f14a
+# SswPoolSelect  (CPU 0x4857f14a)
+.incbin_range "baserom/kn7000_program.rom", 0x17f14a, 0x17f174
+# SswPoolUsage  (CPU 0x4857f174)
+.incbin_range "baserom/kn7000_program.rom", 0x17f174, 0x18056a
+# SswDrawImage  (CPU 0x4858056a)
+.incbin_range "baserom/kn7000_program.rom", 0x18056a, 0x18070a
+# SswActOpen  (CPU 0x4858070a)
+.incbin_range "baserom/kn7000_program.rom", 0x18070a, 0x1807e8
+# SswActScriptLoad  (CPU 0x485807e8)
+.incbin_range "baserom/kn7000_program.rom", 0x1807e8, 0x180886
+# SswSlideshowSectionCut  (CPU 0x48580886)
+.incbin_range "baserom/kn7000_program.rom", 0x180886, 0x1808e8
+# SswSlideshowRun  (CPU 0x485808e8)
+.incbin_range "baserom/kn7000_program.rom", 0x1808e8, 0x18090e
+# SswActionSectionCut  (CPU 0x4858090e)
+.incbin_range "baserom/kn7000_program.rom", 0x18090e, 0x180970
+# SswActionRun  (CPU 0x48580970)
+.incbin_range "baserom/kn7000_program.rom", 0x180970, 0x180f98
+# SswImageFileLoad  (CPU 0x48580f98)
+.incbin_range "baserom/kn7000_program.rom", 0x180f98, 0x181124
+# SswNamedImageFind  (CPU 0x48581124)
+.incbin_range "baserom/kn7000_program.rom", 0x181124, 0x18116b
+# SswNamedImageAdd  (CPU 0x4858116b)
+.incbin_range "baserom/kn7000_program.rom", 0x18116b, 0x1811b3
+# SswRecordClear  (CPU 0x485811b3)
+.incbin_range "baserom/kn7000_program.rom", 0x1811b3, 0x181248
+# SswSlotRecordGet  (CPU 0x48581248)
+.incbin_range "baserom/kn7000_program.rom", 0x181248, 0x181271
+# SswSlotRecordSet  (CPU 0x48581271)
+.incbin_range "baserom/kn7000_program.rom", 0x181271, 0x1812a9
+# SswSlotFree  (CPU 0x485812a9)
+.incbin_range "baserom/kn7000_program.rom", 0x1812a9, 0x1812e8
+# PictureImport  (CPU 0x485812e8)
+.incbin_range "baserom/kn7000_program.rom", 0x1812e8, 0x18163d
+# SswImageSizeCheck  (CPU 0x4858163d)
+.incbin_range "baserom/kn7000_program.rom", 0x18163d, 0x1816b8
+# SswBmpCropRows  (CPU 0x485816b8)
+.incbin_range "baserom/kn7000_program.rom", 0x1816b8, 0x181ec1
 # InitializeBlock15  (CPU 0x48581ec1)
 .incbin_range "baserom/kn7000_program.rom", 0x181ec1, 0x1822a5
 # RhyStopFunc  (CPU 0x485822a5)

@@ -2593,3 +2593,114 @@
 0x484282E7  Draw2BpFile_QueuedExec
 0x48428305  Draw2BpFile_Impl
 0x48428307  Draw2BpFile_Impl_entry
+;
+; ---- FILES, PICTURES, SLIDE SHOW: where image files are read into work RAM ----
+; The fmm file layer every disk/SD screen uses (dispatching on the drive byte
+; 0x5007125A), the PICTURE LOAD import and the slide-show picture pool, the FEATURE
+; demo loader, the homepage .HMP/.BMP loaders and the zlib arena their buffer comes
+; from, and the JPEG crop helpers. Names checked by an adversarial review against the
+; code; the RAM map and buffer addresses are in notes/work-ram-map.md.
+0x48415680  CaptureLcd_entry
+0x4842DB3E  ColorToMono4Level       ; (d0 = 0x00BBGGRR) -> d0 = 0xFF0000 / 0xFF6060 / 0xFFA0A0 / 0xFFFFFF for the grey 0x00 / 0x80 / 0xC0 / 0xFF at the least squared RGB distance; those four values pass through unchanged. The distances are truncated to 16 bits, so about 30% of colours (e.g. 0x000076 -> 0xFFA0A0) get a level that is not the nearest. Only caller: SetPaletteRGB in colour mode 2
+0x4842DB43  ColorToMono4Level_entry
+0x48456E7A  SongPageStorePtr        ; -> d0 = 0x501AB9A0, the 0x4D800-byte song memory: 0x4D8 pages of 0x100 bytes (page n at base + (n-1)*0x100, func_48456E94; SongCapacity_Per divides used pages by 0x4D8, SongCapacity_KB by 4). Nine song-file sites (0x4852C1E9..0x4852C777) pass it with length 0x4D800
+0x48457166  InstallScratchPtr       ; -> a0 = 0x502B8000 (INSTALL_SCRATCH), the shared scratch area (0x502B8000..0x50380000 going by its users; inferred)
+0x48485E74  JpegEncode              ; (a0 = output, a1 = 640x240 3-byte-per-pixel bottom-up source, d0/d1 = x/y, two stack words = width/height; the rectangle is clipped to 640x240) encodes the rectangle as a JPEG (0x4840D2A1 + 0x4840D402) -> d0 = output length from 0x501739B8, or a negative error; output limit 0x7FFFF (0x501739C0). Only caller: PictureImport's re-encode of the cropped picture (0x485814F1). No movm; callers enter at JpegEncode_entry past add -0x50,sp
+0x48485E77  JpegEncode_entry
+0x48486050  JpegDecodeCrop          ; (a0 = JPEG, a1 = destination, d0 = x offset, d1 = y offset) decodes through JpegEngine 0x4840E721 (input limit 0x7FFFF) into a 640x240, 3-byte-per-pixel, bottom-up buffer: each pixel lands at its position plus the offsets, pixels outside 640x240 are dropped -> d0 = JpegEngine's result. Only caller: PictureImport's JPEG crop (0x485814C2). No movm; callers enter at JpegDecodeCrop_entry past add -0x4c,sp
+0x48486053  JpegDecodeCrop_entry
+0x4848885D  CaptureLcdCheck         ; the firmware's own name (string 0x485D5AC0; ApFunction table 0x48742674, registered by InitializeBlock01 at 0x484874FC): (d1 = message) 0x50005 -> CaptureLcd, returns 0; 0x50000 -> returns d0 + a stack argument; anything else -> 0
+0x48496F40  HpFlashCheck            ; init (called from func_4854AC2B; runs at boot): when the custom flash answers and its record 0x96811000 differs from the ROM template 0x485F9584 (strcmp of the 'JK ' string, then the u32 at +4), calls HpFlashWriteDefaults; then always HpRecordLoad
+0x48496F43  HpFlashCheck_entry
+0x48496F82  HpFlashWriteDefaults    ; copies the ROM template 0x485F9584 (0x18C bytes) to 0x5006B5F8, then HpRecordProgram and HpBmpResetDefault
+0x48496F85  HpFlashWriteDefaults_entry
+0x48496FA7  HpBmpResetDefault       ; when the custom flash answers (FlashReadAutoselect >= 0): copies the ROM default homepage BMP 0x48745718 (0x42B6 bytes) into a zlib-arena buffer, programs it to custom flash 0x9681118C and sets the pointer 0x500022F4 = 0x9681118C; otherwise sets 0x500022F4 = 0x48745718
+0x48496FAC  HpBmpResetDefault_entry
+0x4849700B  HpRecordProgram         ; when the custom flash answers (FlashReadAutoselect >= 0), programs the homepage record 0x5006B5F8 (0x18C bytes) to custom flash 0x96811000
+0x4849700E  HpRecordProgram_entry
+0x48497033  HpRecordLoad            ; copies the 0x18C-byte homepage record into RAM 0x5006B5F8 from custom flash 0x96811000 (and 0x500022F4 = 0x9681118C) when the chip answers (FlashReadAutoselect >= 0), else from the ROM template 0x485F9584 (and 0x500022F4 = 0x48745718)
+0x48497036  HpRecordLoad_entry
+0x48497089  HmpBufferAlloc          ; (a0 = &buffer, a1 = &size) resets the zlib arena and allocates the 0x4442-byte .HMP buffer, which is therefore always 0x503BB810; stores the pointer to 0x5006B798 and to (a0), and 0x4442 to (a1)
+0x4849708E  HmpBufferAlloc_entry
+0x484970B0  HmpInstall              ; (d0 = fmm error after the .HMP read) if d0 >= 0: copies the first 0x18C bytes of the buffer *(0x5006B798), the 'JK' record, to 0x5006B5F8, programs it with HpRecordProgram, calls TtNormal(0x330001, 0x600B5) (which re-reads the record word at 0x5006B600), and programs buffer+0x18C (0x42B6 bytes, the BMP) to custom flash 0x9681118C with no chip check. Always frees the buffer
+0x484970B3  HmpInstall_entry
+0x48497111  HmpBlobGet              ; (a0, a1 = out pointers) stores 0x96811000 to (a0) and 0x4442 to (a1): the custom-flash homepage blob (record + BMP) that the .HMP save func_4852D59E (from SaveHmp_HD) writes to the file
+0x48497124  LoadHpBmp_entry
+0x4852C0FB  SeqActFileLoad          ; (a0 = song file base name, d0 = song-load result) builds '<a0>.ACT' (func_4852F887, extension 0xD) and calls SswSongActLoad with d0, or with -0x68 when that file does not exist (func_485325E4) -> d0 = its result, -0x68 turned into 0. Called after a sequencer song load: 0x4852C20F, 0x4852C29A, 0x4852C2F4, 0x4852E443
+0x4852C100  SeqActFileLoad_entry
+0x4852CC29  HmpFileLoad             ; (a0 = base name) .HMP load (file type 9; LoadHmp_HD, load-handler table 0x486642FC): builds "<name>.HMP", fmmopen "rb" (failure: returns the fmm error), 'JK ' signature check func_4852B74B(9) (failure: -0x66), HmpBufferAlloc, fmmread 0x4442 bytes (count ignored, no size check), HmpInstall(fmm error), fmmclose; returns the fmm error
+0x4852CC2E  HmpFileLoad_entry
+0x4852EC38  LoadHpBmpFile           ; homepage picture load, called by FmmWallpaperLoadFunc: opens the current file-list entry (func_48531F10 / func_48532236) with fmmopen "rb", runs LoadHpBmp (reads up to 0x42B6 bytes into the zlib-arena buffer 0x503BB810, accepts a BMP of at most 160x100 at <= 8 bpp, programs it to custom flash 0x9681118C) and closes it. Returns LoadHpBmp's result, the fmm error if the open fails, or -0x68 if func_48531F10 fails
+0x4852EC3D  LoadHpBmpFile_entry
+0x48532357  fmmerror                ; -> d0 = the fmm layer's sticky error (u16; callers sign-extend, < 0 = error): a backend records an error only when none is recorded; table 0x486646A8 {0x4853263A floppy 0x50071258, 0x48565805 SD 0x50092584, 0x485840EA third 0x5017316C}. Name inferred
+0x4853235A  fmmerror_entry
+0x48532384  fmmopen_entry
+0x485323AE  fmmclose_entry
+0x485323D8  fmmremove_entry
+0x48532452  fmmread                 ; (a0 = buffer, d0 = max bytes) -> d0 = bytes read, or < 0 on error (-0x64 when no file is open), from the open fmm file: dispatches on the drive byte 0x5007125A through table 0x486646F0 {0x4853282E floppy, 0x48565AF6 SD, 0x48584212 third backend}; the floppy and SD backends read in chunks of at most 0x7FFF and stop early on a short read when the FILE's 0x8000 flag (EOF, inferred) is set. Name inferred (942 does not export it)
+0x48532457  fmmread_entry
+0x485324AA  fmmseek                 ; (d0 = offset, d1 = whence: 0 start, 1 current, 2 end, as the third backend 0x485843F7 decodes it) -> d0 = 0, or < 0 on error; table 0x48664708. PictureImport and SswImageFileLoad call it with (0, 2) and then fmmtell to get the file size
+0x485324AF  fmmseek_entry
+0x485324D9  fmmrewind               ; back to the start of the open fmm file -> d0 = 0, or -0x64 when no file is open; table 0x48664714
+0x485324DC  fmmrewind_entry
+0x48532501  fmmtell                 ; -> d0 = position in the open fmm file, or < 0 on error (after fmmseek(0, 2): the file size); table 0x48664720
+0x48532504  fmmtell_entry
+0x485340AD  ZArenaReset             ; empties the zlib arena: writes the sentinel header 0x501605F8 (size 0x10, in use) and one free block of 0x445C0 bytes at 0x503BB800 (to 0x503FFDC0); headers only, the data is not cleared. Called before each zlib stream init in the fmm layer (5 sites) and by the 3 homepage routines right before they allocate
+0x48534109  ZArenaAlloc             ; (d0 = n) -> a0 = data pointer from the zlib arena, or 0 if nothing fits: first fit, block = 16-byte header {u32 size, u8 0xA5, u8 in-use, u32 next, u32 prev} + n rounded up to 4, split (low part kept) when more than 0x14 bytes would remain. Callers: zlib's zalloc hook (via 0x48534191) and the 3 homepage routines
+0x4853410B  ZArenaAlloc_entry
+0x4853417D  ZArenaAllocArray        ; (d0, d1) -> a0 = ZArenaAlloc(d0 * d1), not zero-filled; only caller zlib's zalloc hook 0x48478C47
+0x48534180  ZArenaAllocArray_entry
+0x4853418C  ZArenaFree              ; frees a zlib-arena block (checks the 0xA5 magic) and merges it with free neighbours
+0x4853418E  ZArenaFree_entry
+0x4854E132  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F487, read by func_4852F4CD) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
+0x4854E137  FeatureDemoSqtLoad_entry
+0x4854E1B9  FeatureDemoActLoad      ; (a0 = .ACT name) SswPoolInit + SswPoolSelect on the demo pool FeatureDemoSqtLoad recorded (0x50082954 base, 0x50082958 size), then SswActOpen(a0) -> its result
+0x4854E1BE  FeatureDemoActLoad_entry
+0x4854E1FB  FeaturePreLoad          ; (a0 -> .SQT name, a1 -> .ACT name, d0 -> 16-char buffer) reads 'FEATURE .PRE': first line (up to 8 characters kept) + '.SQT' / '.ACT'; next non-empty line (up to 16 characters) into d0's buffer, else a copy of the .SQT name (shown by func_4854E2E0: a title, inferred); all three left empty if the file does not open -> d0 = 0 always
+0x4854E200  FeaturePreLoad_entry
+0x4857EE7C  SswSongActLoad          ; (a0 = .ACT name, d0 = status) always re-creates (SswPoolMainInit) and selects the main picture pool, wiping it; then SswActOpen(a0) only when d0 >= 0, else returns d0. Only caller: SeqActFileLoad, which passes -0x68 when the .ACT does not exist
+0x4857EE81  SswSongActLoad_entry
+0x4857EF5E  SswPoolAlloc            ; (d0 = n) -> a0 = n-byte block from the selected slide-show pool *(0x50172C90): bump allocator, round4(n)+4 bytes with the length word in front; 0 when it does not fit
+0x4857EF9B  SswPoolFree             ; (a0 = block, 0 is ignored) frees a pool block and compacts the selected pool: every later block moves down, the pointers above it at +0x20/+0x24/+0x28 and in the slot and named-image records are lowered (the +0x30 table is not), and +0x18/+0x1C get the bytes back
+0x4857EF9D  SswPoolFree_entry
+0x4857F09E  SswPoolSelectMain       ; selects the main pool 0x502031A0 (*(0x50172C90)) without initialising it
+0x4857F0AD  SswPoolMainInit         ; initialises (SswPoolInit) the main slide-show pool at 0x502031A0: 0x94E5C bytes (to 0x50297FFC) when TgStrapProbe() == 1, else 0x54E5C (to 0x50257FFC); a constant test on 0x4C03FFF0 that never passes would also shrink it. Does not select it
+0x4857F0B0  SswPoolMainInit_entry
+0x4857F103  SswPoolInit             ; (a0 = base, d0 = size) zero-fills the pool and writes its header: +8 base, +0xC size, +0x10 heap start and +0x18 bump pointer = base + 0xDF0, +0x14 heap size and +0x1C free bytes = size - 0xDF0. Below the heap: 30 slot records at +0x230 and 64 named-image records at +0x5F0, 0x20 bytes each {name[16], +0x10 ptr, +0x14 size}
+0x4857F105  SswPoolInit_entry
+0x4857F139  SswPoolSelect           ; (a0 = pool, 0 = the main pool 0x502031A0) makes it the pool *(0x50172C90) that SswPoolAlloc/SswPoolFree and the slot and named-image functions use
+0x4857F163  SswPoolUsage            ; (a0 = u16 *free KB, a1 = u16 *percent used) for the selected pool's heap: +0x1C >> 10 and (+0x14 - +0x1C) * 100 / +0x14
+0x4857F165  SswPoolUsage_entry
+0x48580559  SswDrawImage            ; (a0 = picture) draws one slide-show picture at the cursor 0x5009E284/86 (top = cursor y minus font 0x5009E288's height-minus-descent; x aligned by 0x5009E28E: 0 centre, 2 right, else left): BMP via GetBitmapInfo + ConvertBitmapFile + DrawBitmapFile (DrawBitmap 0 if the convert fails), JPEG via GetJpegSize + DrawJpegFile, anything else DrawBitmap 0; then advances the cursor x by the picture width (24 for a non-image)
+0x4858055B  SswDrawImage_entry
+0x485806F9  SswActOpen              ; (a0 = .ACT file name) fmmopen 'rb', SswActScriptLoad, fmmclose, cuts out the <SLIDESHOW> (pool+0x24) and <ACTION> (pool+0x28) sections, then runs both once in interpreter mode 1, which loads the pictures their tags name (SswImageFileLoad); 0x5000643C = the file name during the <SLIDESHOW> pass, '' for <ACTION> -> d0 = 0 or the first open/read/cut error (the section runs return 0)
+0x485806FE  SswActOpen_entry
+0x485807D7  SswActScriptLoad        ; reads the file the caller has open (SswActOpen's fmmopen) whole into a NUL-terminated block of the selected pool, pointer at pool+0x20 -> d0 = 0; -0xC8 (block freed, +0x20 cleared) unless it starts 'SSW-ACT-V01'; the read count on a short read; -0x6B on no pool room (the signature test then runs on a null pointer, so likely -0xC8, inferred); 0 without reading if the seek fails. Does not split the sections (SswActOpen does)
+0x485807DC  SswActScriptLoad_entry
+0x48580875  SswSlideshowSectionCut  ; measures, then copies, the text between '<SLIDESHOW>' and '</SLIDESHOW>' of the script at pool+0x20 into a new pool block kept at pool+0x24 -> d0 = 0 or < 0
+0x4858087A  SswSlideshowSectionCut_entry
+0x485808D7  SswSlideshowRun         ; (d0 = interpreter mode: 1 load, 2 show) runs func_4857F300(mode) over the <SLIDESHOW> text at pool+0x24 until its NUL (one tag per call, inferred); returns 0
+0x485808DC  SswSlideshowRun_entry
+0x485808FD  SswActionSectionCut     ; the same for '<ACTION>' .. '</ACTION>', block kept at pool+0x28
+0x48580902  SswActionSectionCut_entry
+0x4858095F  SswActionRun            ; the same over the <ACTION> text at pool+0x28
+0x48580964  SswActionRun_entry
+0x48580F87  SswImageFileLoad        ; (a0 = file name, a1 = 0x20-byte record) reads an image file whole into a new block of the selected pool (size from fmmseek(0, 2) + fmmtell, fmmread at 0x48580FDD; no cap but the pool's free space, -0x6B), fills the record {name = file name, +0x10 block, +0x14 size}, and frees the block again if SswImageSizeCheck refuses it -> d0 = 0 or < 0. Used by the slide-show named-image (0x485810D5) and slot (0x485811D2) loaders
+0x48580F8C  SswImageFileLoad_entry
+0x48581113  SswNamedImageFind       ; name -> its record in the pool's 64-entry named-image table, or 0
+0x48581118  SswNamedImageFind_entry
+0x4858115A  SswNamedImageAdd        ; (a0 = record) copies the 0x20-byte {name, ptr, size} record into the first named-image entry whose pointer (+0x10) is 0 -> d0 = 1, or 0 when all 64 are in use
+0x4858115C  SswNamedImageAdd_entry
+0x485811A2  SswRecordClear          ; (a0 = record) zeroes a 0x20-byte slot/named-image record: name[16], +0x10, +0x14, +0x18, +0x1C
+0x48581237  SswSlotRecordGet        ; (d0 = slot k) -> a0 = its 0x20-byte record at pool + 0x230 + k*0x20, or 0 when the slot is empty (data pointer +0x10 == 0)
+0x48581239  SswSlotRecordGet_entry
+0x48581260  SswSlotRecordSet        ; (a0 = record, d0 = slot k) frees the slot's current picture (SswSlotFree) and copies the 0x20-byte {name, ptr, size} record into slot k -> d0 = 1
+0x48581265  SswSlotRecordSet_entry
+0x48581298  SswSlotFree             ; (d0 = slot k) if the slot holds a picture, frees its pool block (SswPoolFree) and clears the record (SswRecordClear)
+0x4858129D  SswSlotFree_entry
+0x485812D7  PictureImport           ; (a0 = file name, d0 = picture slot 0..29, d1 = trimming: 0 none, 1..3 top/centre/bottom, inferred) imports a .BMP/.JPG into the selected slide-show pool; called by the floppy, SD and third-backend loaders. Rejects unreadable pictures, files over 0x4D800 bytes and pictures over 640x480 (-0x6D) and other extensions (-0xC8); reads the file whole into INSTALL_SCRATCH 0x502B8000; if d1 != 0, crops a picture taller than 240 rows (BMP in place; JPEG decoded into 0x50305800 and re-encoded); frees the slot's old picture, copies the result into a new pool block (memcpy at 0x4858154C; -0x6B when it does not fit) and records it in the slot as BMnn/JPnn -> d0 = 0
+0x485812D9  PictureImport_entry
+0x4858162C  SswImageSizeCheck       ; (a0 = image) -> d0 = -0x6D when GetJpegSize (or GetBitmapInfo, if GetJpegSize gives -1) reports a width outside 1..640 or a height outside 1..240, else 0; also 0 for data that is neither. Only caller: SswImageFileLoad (0x4858101C)
+0x4858162E  SswImageSizeCheck_entry
+0x485816A7  SswBmpCropRows          ; (a0 = BMP, d0 = 0 or minus the picture rows to drop at the top, d1 = new height) rewrites bfSize = bfOffBits + stride*d1 and biHeight = d1 in place, then moves the kept rows to the start of the pixel data (bottom-up: skips oldH+d0-240 rows, copies at most 240; the 0xF0 is hard-coded) -> d0 = new bfSize, 0 if GetBitmapInfo refuses it. Only caller: PictureImport's crop to 240 rows (0x4858149A)
+0x485816A9  SswBmpCropRows_entry
