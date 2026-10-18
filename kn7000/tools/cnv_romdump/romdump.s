@@ -42,7 +42,22 @@ AppEntry:
     beq     en_dump
     cmp     2, d0
     beq     en_finish
-    bra     en_end                  # done or failed: end the conversion (again)
+    mov     (SVC+SV_MSCOUNT), a0    # done or failed: show the result a while, then end the conversion
+    cmp     0, a0
+    beq     en_hold_calls
+    mov     (a0), d0
+    mov     (V_HOLD), d1
+    sub     d1, d0
+    cmp     HOLD_MS, d0
+    bcc     en_end
+    bra     en_park
+en_hold_calls:
+    mov     (V_HOLD), d0
+    inc     d0
+    mov     d0, (V_HOLD)
+    cmp     HOLD_CALLS, d0
+    bcc     en_end
+    bra     en_park
 
 en_first:
     call    InitCrc, 0, 0
@@ -77,7 +92,8 @@ en_finish:
     mov     3, d0
     mov     d0, (V_STATE)
     call    DrawDone, 0, 0
-    bra     en_end
+    call    HoldStart, 0, 0
+    bra     en_park
 
 en_fail:
     mov     (V_FILEOPEN), d0
@@ -93,7 +109,8 @@ en_fail_draw:
     mov     4, d0
     mov     d0, (V_STATE)
     call    DrawFail, 0, 0
-    bra     en_end
+    call    HoldStart, 0, 0
+    bra     en_park
 
 en_park:                            # request 1, argument 0: call again, leave the screen alone
     mov     MAILBOX, a0
@@ -111,6 +128,16 @@ en_end:
     movbu   d0, (a0)
 en_ret:
     ret     [d2,d3,a2,a3], 0x30
+
+HoldStart:                          # leaf: V_HOLD = now (kernel ms), or call 0
+    clr     d0
+    mov     (SVC+SV_MSCOUNT), a0
+    cmp     0, a0
+    beq     hs_set
+    mov     (a0), d0
+hs_set:
+    mov     d0, (V_HOLD)
+    rets
 
 # ================================================================================================
 # Services from the loader's table.
@@ -1511,7 +1538,7 @@ str_l_ok:       .asciz  "[ OK ] "
 str_l_bad:      .asciz  "[SUM?] "
 str_l_crc:      .asciz  "CRC32 "
 str_done:       .asciz  "Done: every ROM is in C:\KN7DUMP. DUMPLIST.TXT has sizes and checksums."
-str_leave:      .asciz  "Press EXIT, then NO, to leave STYLE CONVERT (YES dumps again)."
+str_leave:      .asciz  "In 15 s the firmware asks 'Continue Next?': NO leaves, YES dumps again."
 str_f_code:     .asciz  " (code 0x"
 str_err_open:   .asciz  "Could not create a file on the SD card"
 str_err_write:  .asciz  "Writing to the SD card failed"

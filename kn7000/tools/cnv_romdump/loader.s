@@ -30,6 +30,9 @@
 .equ LV_FAIL,       LOADER_VARS+0x18    # pointer to the failure message
 .equ LV_STR,        LOADER_VARS+0x20    # 64 bytes: a line being formatted
 .equ LV_SAVEDPATH,  LOADER_VARS+0x80    # 0x80 bytes: the SD current folder while the application runs
+.equ LV_HOLD,       LOADER_VARS+0x1C    # calls spent showing a failure before ending the conversion
+.equ HOLD_MS,       15000               # show a failure this long (kernel milliseconds) ...
+.equ HOLD_CALLS,    3000                # ... or this many calls when the counter was not found
 .equ C_BG,          0x0010
 .equ C_TEXT,        0xFFFF
 .equ C_DIM,         0x8410
@@ -42,7 +45,7 @@ Entry:
     cmp     1, d0
     beq     en_run
     cmp     2, d0
-    beq     en_end                  # failed before: end the conversion again
+    beq     en_hold                 # failed: show why a while, then end the conversion
     # 0 (first call) or 3 (the application ended and the firmware called again): load it
     mov     (LV_FOUND), d0
     cmp     0, d0
@@ -82,6 +85,39 @@ en_fail:
     mov     2, d0
     mov     d0, (LV_STATE)
     call    DrawFail, 0, 0
+    clr     d0                      # start of the hold: now, or call 0
+    mov     (SVC+SV_MSCOUNT), a0
+    cmp     0, a0
+    beq     en_hold0
+    mov     (a0), d0
+en_hold0:
+    mov     d0, (LV_HOLD)
+en_hold:
+    mov     (SVC+SV_MSCOUNT), a0
+    cmp     0, a0
+    beq     en_hold_calls
+    mov     (a0), d0
+    mov     (LV_HOLD), d1
+    sub     d1, d0
+    cmp     HOLD_MS, d0
+    bcc     en_end
+    bra     en_hold_park
+en_hold_calls:
+    mov     (LV_HOLD), d0
+    inc     d0
+    mov     d0, (LV_HOLD)
+    cmp     HOLD_CALLS, d0
+    bcc     en_end
+en_hold_park:
+    mov     MAILBOX, a0             # request 1, argument 0: call again, leave the screen alone
+    mov     RQ_PARK, d0
+    movbu   d0, (a0)
+    clr     d0
+    movbu   d0, (1, a0)
+    movbu   d0, (2, a0)
+    movbu   d0, (3, a0)
+    movbu   d0, (4, a0)
+    bra     en_ret
 en_end:
     mov     MAILBOX, a0
     mov     RQ_END, d0
@@ -394,6 +430,30 @@ Discover:
     movbu   (a0), d0
     mov     d0, (SVC+SV_RELEASE)
     call    TableBuild, 0, 0
+    mov     sig_tick, a0            # optional: the kernel's millisecond counter, from its tick handler
+    mov     0x48400000, d0
+    mov     0x487FFF00, d1
+    call    CountSig, 0, 0
+    cmp     1, d0
+    bne     di_no_tick
+    mov     (LV_LASTHIT), a2
+    mov     a2, a0
+    add     7, a0
+    call    Read32U, 0, 0
+    mov     d0, d2
+    mov     a2, a0
+    add     14, a0
+    call    Read32U, 0, 0
+    cmp     d2, d0
+    bne     di_no_tick
+    mov     0x50000000, d1
+    cmp     d1, d0
+    bcs     di_no_tick
+    mov     0x503FFFFC, d1
+    cmp     d1, d0
+    bhi     di_no_tick
+    mov     d0, (SVC+SV_MSCOUNT)
+di_no_tick:
     mov     0x53374E4B, d0          # "KN7S"
     mov     d0, (SVC+SV_MAGIC)
     mov     LOADER_ABI, d0
@@ -881,6 +941,12 @@ sig_sdfolder:   # sdfmmkdir and sdfmpath, back to back (941: 0x48565D45)
     .word   0x00, 0x2d, 0x80, 0x00, 0xdd, 0x100, 0x100, 0x100, 0x100, 0x20, 0x04, 0x00, 0xca, 0x10
     .word   0xfc, 0xdc, 0x100, 0x100, 0x100, 0x100, 0xdd, 0x100, 0x100, 0x100, 0x100, 0x00, 0x00
     .word   0x00, 0xdf, 0x00, 0x14, 0xFFFF
+sig_tick:       # the kernel's 1 kHz tick handler: mov (MS), d0; inc d0; mov d0, (MS) (941 lib 0x4C02BB05)
+    .word   0xcf, 0x80, 0xf8, 0xfe, 0xf0, 0xfc, 0xa4, 0x100, 0x100, 0x100, 0x100, 0x40
+    .word   0xfc, 0x81, 0x100, 0x100, 0x100, 0x100, 0xf8, 0xec, 0x01, 0xc8, 0x09
+    .word   0xdd, 0x100, 0x100, 0x100, 0x100, 0x80, 0x0c, 0xfa, 0xfc, 0xff, 0xf7, 0xcb, 0xcb
+    .word   0xfc, 0xac, 0x18, 0x01, 0x00, 0x34, 0xfa, 0xe0, 0x00, 0xff, 0xf8, 0xe4, 0x01
+    .word   0xfc, 0x83, 0x18, 0x01, 0x00, 0x34, 0xFFFF
 sig_build:      # SOFT VERSION: mov (B), d0; clr d3; movhu d0, (x); mov (0x4800001C), d2; add 0x48000000, d2
     .word   0xfc, 0xa4, 0x100, 0x100, 0x100, 0x100, 0x0c, 0xfc, 0x83, 0x100, 0x100, 0x100, 0x100
     .word   0xfc, 0xa6, 0x1c, 0x00, 0x00, 0x48, 0xfc, 0xc2, 0x00, 0x00, 0x00, 0x48, 0xFFFF
@@ -893,7 +959,7 @@ str_f_prog:     .asciz  "PROGRAM "
 str_f_table:    .asciz  "  TABLE "
 str_f_rel:      .asciz  "  release "
 str_code:       .asciz  "code 0x"
-str_leave:      .asciz  "Press EXIT, then NO, to leave STYLE CONVERT."
+str_leave:      .asciz  "In 15 s the firmware asks 'Continue Next?': NO leaves the converter."
 str_no_ext:     .asciz  "Unsupported firmware: the file layer's drive switch was not found."
 str_no_file:    .asciz  "Unsupported firmware: fmmopen/fmmclose/fmmread/fmmwrite not found."
 str_no_sd:      .asciz  "Unsupported firmware: the SD sector or folder routines not found."

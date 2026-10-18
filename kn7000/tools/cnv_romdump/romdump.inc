@@ -36,6 +36,9 @@
 .equ V_DIRLBA,      VARS+0x40       # the dump folder's first cluster
 .equ V_CLBYTES,     VARS+0x44       # bytes per cluster
 .equ V_OUT,         VARS+0x48       # long-name pass: write pointer into BUF2
+.equ V_HOLD,        VARS+0x4C       # when the result appeared (kernel ms), or calls since then
+.equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
+.equ HOLD_CALLS,    3000            # ... or this many calls when the loader found no ms counter
 .equ V_RESULTS,     VARS+0x100      # per ROM: +0 CRC-32, +4 byte sum, +8 bytes written, +12 status
 .equ ST_PENDING,    0
 .equ ST_OK,         1

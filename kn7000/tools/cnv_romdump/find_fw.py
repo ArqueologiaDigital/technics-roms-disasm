@@ -28,6 +28,9 @@ SIGS = {
     'fmmclose': sig('f8 fe ec fc dd T 3c 20 08 85 f4 db f0 41 45 f0 50 41 44 d9 fc a8 D 3c 54 20 08 f3 80 f0 f0 df 00 14'),
     'fmmwrite': sig('cf a0 f8 fe e4 82 fc de T 3d 21 10 85 f4 db f0 42 49 f0 51 45 44 d9 fc a8 D 3d 54 21 10 f3 91 88 f0 f1 df a0 24'),
     'build':    sig('fc a4 X 0c fc 83 X fc a6 1c 00 00 48 fc c2 00 00 00 48'),
+    # the kernel's 1 kHz tick handler (in the library image): mov (MS), d0; inc d0; mov d0, (MS) (941 lib 0x4C02BB05)
+    'tick':     sig('cf 80 f8 fe f0 fc a4 X 40 fc 81 X f8 ec 01 c8 09 dd X 80 0c fa fc ff f7 cb cb '
+                    'fc ac 18 01 00 34 fa e0 00 ff f8 e4 01 fc 83 18 01 00 34'),
     # raw SD sector read (d0 = sector, d1 = count, a1 = buffer) and write, back to back (941 0x48470348)
     'raw':      sig('cf 80 f8 fe e8 82 fc a8 X 10 a0 00 c8 15 80 01 fc 82 X 00 fc 82 X 80 06 ca 0e '
                     '1d 46 10 80 03 94 89 cd ?? ?? 00 1c df 80 1c cf 80 f8 fe e8 1d 46 10 81 94 80 04 '
@@ -83,6 +86,9 @@ def analyse(name, img, base=0x48400000):
     if len(r['sdfolder']) == 1:
         h = r['sdfolder'][0]
         print(f"   sdfmmkdir {base + h:#x}, sdfmpath {base + h + 0x3f:#x}, folder buffer {u32(img, h + 0x3f + 10):#x}")
+    if len(r['tick']) == 1:
+        h = r['tick'][0]
+        print(f"   kernel ms counter {u32(img, h + 7):#x} (twice: {u32(img, h + 7) == u32(img, h + 14)})")
     if len(r['build']) == 1:
         a = u32(img, r['build'][0] + 2)
         o = a - base

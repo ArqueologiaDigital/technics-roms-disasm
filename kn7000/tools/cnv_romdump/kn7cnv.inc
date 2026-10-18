@@ -49,6 +49,7 @@
 .equ SV_SCALE,      0x54            # 1 or 2
 .equ SV_CALLS,      0x58            # calls since the application was loaded
 .equ SV_APPSIZE,    0x5C            # bytes loaded
+.equ SV_MSCOUNT,    0x60            # address of the kernel's 1 kHz millisecond counter (u32), or 0 if not found
 .equ LOADER_ABI,    1
 
 # ---- the application header, at APP_BASE ---------------------------------------------------------
