@@ -2507,7 +2507,7 @@
 0x4841662A  Malloc_entry
 0x484166D9  Free                    ; a0 = block from Malloc (0 is ignored): links its header (a0 - 8) back into the address-ordered free list 0x500006E8, merging with the next block when adjacent; same lock as Malloc. Build 942's export free_X is a thunk to Free_entry
 0x484166DE  Free_entry
-0x48422016  BmpUnpackRow            ; (a0 = row, d0 = packed byte count, d1 = bits per pixel): expands a BMP row in place to one byte per pixel -- 8 returns at once, 4 = high nibble first, 1 = bit 7 first, other values return; uses a Malloc'd copy of the packed bytes, so a0 must hold count*8/bpp bytes. Used by the BMP blitters DrawBitmapFile_Impl, DrawBitmapFileEx_Impl and 0x484283EE
+0x48422016  BmpUnpackRow            ; (a0 = row, d0 = packed byte count, d1 = bits per pixel): expands a BMP row in place to one byte per pixel -- 8 returns at once, 4 = high nibble first, 1 = bit 7 first, other values return; copies count*8/bpp bytes (the expanded length, not count) to a Malloc'd buffer it never NULL-checks; a0 must hold count*8/bpp bytes for the output anyway. Used by the BMP blitters DrawBitmapFile_Impl, DrawBitmapFileEx_Impl and Draw2BpFile_Impl
 0x4842201B  BmpUnpackRow_entry
 0x48421DE6  GetBitmapInfo_entry
 0x484226C9  ModifyPixel_entry
@@ -2578,14 +2578,16 @@
 0x4842DFAF  ConvertStrings_entry
 0x4842E0C2  CalcTotalWidth_entry
 ;
-; ---- GRAPHICS: the BMP file helpers (BfFile2Struct .. BmpReduceColors) and the 2-bpp blitter Draw2BpFile ----
-; The helpers parse and rewrite a whole BMP file held in memory; Draw2BpFile is the
-; DrawBitmapFile twin used only by the debug BITMAP LOAD screen. Annotated listing:
+; ---- GRAPHICS: the BMP file helpers (BfFile2Struct .. BmpReduceColors) and Draw2BpFile ----
+; The helpers parse and rewrite a whole BMP file held in memory. Draw2BpFile is the
+; DrawBitmapFile twin (1/4/8-bpp BMP -> 8-bpp FrameBuffer) used only by the debug
+; BITMAP LOAD screen; nothing in it is 2 bits per pixel -- "2Bp" probably names the
+; 2-bit (4-level) LCD colour mode (Check2BitLcd). Annotated listing:
 ; annotations/gfx_bmpfile.ann (merged into src/program.s).
 0x48421D99  BfFile2Struct_entry
 0x48421DC3  BfStruct2File_entry
 0x48421E8A  ConvertBitmapFile_entry
-0x4842215B  BmpReduceColors
+0x4842215B  BmpReduceColors         ; (a0 = BMP image packed by ConvertBitmapFile, d0 = colours to keep, 0xB0 from ConvertBitmapFile): counts each 8-bpp index, comb-sorts the palette most used first, maps every dropped colour to the kept one at the least squared RGB distance, rewrites palette and pixels in place
 0x4842215D  BmpReduceColors_entry
 0x484282A4  Draw2BpFile_entry
 0x484282E7  Draw2BpFile_QueuedExec

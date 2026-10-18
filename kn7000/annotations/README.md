@@ -63,6 +63,7 @@ break anyone else's run.
 
 ## Files
 
-| file           | covers                                                                  |
-|----------------|-------------------------------------------------------------------------|
-| `gfx_draw.ann` | the blitters and text renderer, `DrawBitmap` .. `DrawStringCentered`    |
+| file              | covers                                                                       |
+|-------------------|------------------------------------------------------------------------------|
+| `gfx_draw.ann`    | the blitters and text renderer, `DrawBitmap` .. `DrawStringCentered`         |
+| `gfx_bmpfile.ann` | the BMP file helpers `BfFile2Struct` .. `BmpReduceColors`, and `Draw2BpFile` |

@@ -34,7 +34,7 @@ _rom_marker:
 # ============================================================================
 # Code region 1 -- organised by recovered function.
 # ============================================================================
-# 994 synthetic labels for internal helpers called by converted code
+# 986 synthetic labels for internal helpers called by converted code
 .equ func_484057D9, 0x484057D9
 .equ DspEffectSelect, 0x48405815
 .equ func_48405859, 0x48405859
@@ -111,12 +111,6 @@ _rom_marker:
 .equ DrawQueue_Alloc_entry, 0x48421B5C
 .equ DrawQueue_Free, 0x48421B91
 .equ IsDrawTask_entry, 0x48421B97
-.equ BfFile2Struct_entry, 0x48421D99
-.equ BfStruct2File_entry, 0x48421DC3
-.equ GetBitmapInfo_entry, 0x48421DE6
-.equ ConvertBitmapFile_entry, 0x48421E8A
-.equ BmpUnpackRow_entry, 0x4842201B
-.equ BmpReduceColors_entry, 0x4842215D
 .equ func_48422627, 0x48422627
 .equ ModifyPixel_entry, 0x484226C9
 .equ func_48422917, 0x48422917
@@ -128,8 +122,6 @@ _rom_marker:
 .equ func_4842621C, 0x4842621C
 .equ IsPointOnScreen, 0x48427980
 .equ func_48427DA6, 0x48427DA6
-.equ Draw2BpFile_entry, 0x484282A4
-.equ Draw2BpFile_Impl_entry, 0x48428307
 .equ func_48428555, 0x48428555
 .equ func_484285E4, 0x484285E4
 .equ func_48428792, 0x48428792
@@ -1030,9 +1022,10 @@ _rom_marker:
 .equ LibIntcDisable, 0x4C03E265
 .equ LibTickSleep, 0x4C03E29A
 
-# 10 data addresses named by annotations/*.ann
+# 11 data addresses named by annotations/*.ann
 .equ DrawIcons_PixelPairTable, 0x485A27AC   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)
 .equ Pixel4bppPairTable, 0x485A29AC   # u16[256]: byte -> two pixels {lo: 0x20 + high nibble, hi: 0x20 + low nibble}
+.equ BmpSignature, 0x485A2DAC   # "BM", NUL-terminated: the BMP bfType GetBitmapInfo compares
 .equ RoundCornerPixels, 0x485A2DB0   # 8 x {u16 dx, u16 dy}: the pixels a DrawJpegFileR corner keeps
 .equ SjisMissingGlyph, 0x485A2DD0   # 16x16 1 bpp column-major glyph: a box with an X in it
 .equ DrawEnable, 0x5002A02C   # nonzero: drawing allowed (tested before every DrawXxx_Impl)
@@ -7555,224 +7548,395 @@ _rom_marker:
     clr     d0
     retf    0, 0
 # BfFile2Struct  (CPU 0x48421d94)
+#   BfFile2Struct(a0 = BMP file image, a1 = &struct, 16 bytes): copies the
+#   packed 14-byte BITMAPFILEHEADER into the compiler's aligned layout {+0 u8
+#   bfType[2], +2 2 pad bytes = 0, +4 u32 bfSize, +8 u16 bfReserved1, +0xA u16
+#   bfReserved2, +0xC u32 bfOffBits}: memcpy of bfType, then of the 12 bytes at
+#   file + 2 to struct + 4. Byte copies, so the file may sit at any address.
+#   Checks nothing and returns no value. Its one caller is GetBitmapInfo; the
+#   plain address is in the MILK reflection table at 0x48728720.
+BfFile2Struct:
     movm    [a2,a3], (sp)
     add     -0x14, sp
-# BfFile2Struct_entry:   (register-save `call` entry)
-    mov     a1, a2
-    mov     a0, a3
+
+BfFile2Struct_entry:
+    mov     a1, a2                          # a2 = struct
+    mov     a0, a3                          # a3 = file
     mov     a1, a0
     mov     a3, a1
-    mov     2, d0
-    call    memcpy_entry, [a2,a3], 8
+    mov     2, d0                           # 2 bytes: bfType
+    call    memcpy_entry, [a2,a3], 8        # memcpy(struct, file, 2)
     clr     d0
-    movbu   d0, (2, a2)
+    movbu   d0, (2, a2)                     # +2, +3: the pad, zeroed
     movbu   d0, (3, a2)
-    inc4    a2
-    add     2, a3
-    mov     0xc, d0
+    inc4    a2                              # a2 = &struct.bfSize
+    add     2, a3                           # a3 = &file.bfSize (file + 2)
+    mov     0xc, d0                         # 12 bytes: bfSize, bfReserved1, bfReserved2, bfOffBits
     mov     a3, a1
     mov     a2, a0
-    call    memcpy_entry, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8        # memcpy(struct + 4, file + 2, 12)
     ret     [a2,a3], 0x1c
+
 # BfStruct2File  (CPU 0x48421dbe)
+#   BfStruct2File(a0 = &struct (16 bytes, BfFile2Struct's layout), a1 = BMP file
+#   image): the inverse of BfFile2Struct. Writes the packed 14-byte BITMAPFILEHEADER
+#   back over the start of the file: bfType from struct + 0, then the 12 bytes at
+#   struct + 4 to file + 2; the pad is skipped. Returns no value. Callers:
+#   ConvertBitmapFile (0x48421FEF), after it has moved the pixels, set a new bfSize
+#   and bfOffBits and cleared bfReserved1/2, and 0x485816A9 (0x4858170F), which sets
+#   bfSize to bfOffBits + stride * rows for a new row count before rewriting
+#   biHeight. The plain address is in the MILK reflection table at 0x48728724.
+BfStruct2File:
     movm    [a2,a3], (sp)
     add     -0x14, sp
-# BfStruct2File_entry:   (register-save `call` entry)
-    mov     a0, a3
-    mov     a1, a2
+
+BfStruct2File_entry:
+    mov     a0, a3                          # a3 = struct
+    mov     a1, a2                          # a2 = file
     mov     a2, a0
     mov     a3, a1
-    mov     2, d0
-    call    memcpy_entry, [a2,a3], 8
-    add     2, a2
-    inc4    a3
-    mov     0xc, d0
+    mov     2, d0                           # 2 bytes: bfType
+    call    memcpy_entry, [a2,a3], 8        # memcpy(file, struct, 2)
+    add     2, a2                           # a2 = &file.bfSize (file + 2)
+    inc4    a3                              # a3 = &struct.bfSize: skip the pad
+    mov     0xc, d0                         # 12 bytes: bfSize, bfReserved1, bfReserved2, bfOffBits
     mov     a3, a1
     mov     a2, a0
-    call    memcpy_entry, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8        # memcpy(file + 2, struct + 4, 12)
     ret     [a2,a3], 0x1c
+
 # GetBitmapInfo  (CPU 0x48421de1)
+#   GetBitmapInfo(a0 = BMP file image, a1 = &file header (16-byte struct, see
+#   BfFile2Struct), d0 = &BITMAPINFOHEADER copy (40 bytes), d1 = colour-table buffer
+#   (1 KB), 5th argument at the caller's (0x18,sp) = &u8 *pixels) -> d0 = 1 if the
+#   file passes every check below, else 0. In order: BfFile2Struct fills *a1,
+#   always; bfType must be "BM" (LibStrncmp against BmpSignature; exact, since it
+#   compares a byte before testing it for NUL); the 40 bytes at file + 14 are copied
+#   to *d0; then biSize must be 40, biPlanes 1, biBitCount 1, 4 or 8,
+#   biClrUsed <= 256 (unsigned) and biCompression 0 (BI_RGB). Each failed check
+#   returns 0 at once: *a1 is written, *d0 too unless "BM" failed, the colour buffer
+#   and *pixels are not. On success it copies the colour table raw (RGBQUAD
+#   {B, G, R, x}) from file + 54: n = (s16)(bfOffBits - 54) bytes if that is
+#   0..0x400, else 0x400, so a bfOffBits below 54 copies 1 KB of what follows the
+#   headers; the rest of the buffer keeps its old bytes. Then *pixels = file +
+#   bfOffBits (all 32 bits), and it returns 1. Not checked: biWidth and biHeight (0,
+#   negative or larger than the screen all pass), bfSize, and whether the colour
+#   table and pixels lie inside the file; biClrUsed is range-checked but sizes
+#   nothing. Callers, each with a 1 KB colour buffer on its stack: the blitters
+#   DrawBitmapFile_Impl, DrawBitmapFileEx_Impl and Draw2BpFile_Impl (0: draw
+#   nothing); ConvertBitmapFile (0: returns 0) and BmpReduceColors, which ignores
+#   the result (ConvertBitmapFile has checked it); and for the picture size:
+#   VwBitmapFileProc (0x484188EB), VwJpegFileProc (0x48418EE9), AcHpBmpProc
+#   (0x48495926), LoadHpBmp (0x48497161, which then wants biWidth <= 160 and
+#   biHeight <= 100), and in the AcSswImgListProc range the image drawer 0x4858055B
+#   (a BMP, else a JPEG), the file loader 0x485812D9 (0: error -0x6D), the size
+#   check 0x4858162E (after GetJpegSize finds no size; 0: it returns 0, the value
+#   that means the size fits) and the row-count rewriter 0x485816A9 (0: returns 0).
+#   The plain address is in the MILK reflection table at 0x48728728.
+GetBitmapInfo:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-# GetBitmapInfo_entry:   (register-save `call` entry)
-    mov     d1, d3
-    mov     d0, a2
-    mov     a1, a3
-    mov     a0, d2
-    call    BfFile2Struct_entry, [a2,a3], 0x1c
-    mov     a3, a0
-    mov     0x485a2dac, a1
+
+GetBitmapInfo_entry:
+    mov     d1, d3                          # d3 = colour-table buffer
+    mov     d0, a2                          # a2 = &info header copy
+    mov     a1, a3                          # a3 = &file header struct
+    mov     a0, d2                          # d2 = the file
+    call    BfFile2Struct_entry, [a2,a3], 0x1c  # BfFile2Struct(a0 = file, a1 = struct), before any check
+    mov     a3, a0                          # a0 = &struct.bfType
+    mov     BmpSignature, a1
     mov     2, d0
-    call    LibStrncmp, [a2], 4
+    call    LibStrncmp, [a2], 4             # LibStrncmp(bfType, "BM", 2)
     cmp     0, d0
-    beq     0x48421e09
-    clr     d0
+    beq     GetBitmapInfo_IsBM
+    clr     d0                              # not "BM": return 0
     ret     [d2,d3,a2,a3], 0x24
+
+GetBitmapInfo_IsBM:
     mov     a2, a0
-    mov     0xe, a1
+    mov     0xe, a1                         # a1 = file + 14: the BITMAPINFOHEADER
     add     d2, a1
     mov     0x28, d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     (a2), d0
+    call    memcpy_entry, [a2,a3], 8        # memcpy(info, file + 14, 40), before biSize is known
+    mov     (a2), d0                        # d0 = biSize
     cmp     0x28, d0
-    beq     0x48421e20
-    clr     d0
+    beq     GetBitmapInfo_HeaderSizeOk
+    clr     d0                              # not a 40-byte BITMAPINFOHEADER (OS/2 12, V4 108, V5 124): return 0
     ret     [d2,d3,a2,a3], 0x24
-    movhu   (0xc, a2), d0
+
+GetBitmapInfo_HeaderSizeOk:
+    movhu   (0xc, a2), d0                   # d0 = biPlanes
     cmp     1, d0
-    beq     0x48421e2b
-    clr     d0
+    beq     GetBitmapInfo_OnePlane
+    clr     d0                              # biPlanes != 1: return 0
     ret     [d2,d3,a2,a3], 0x24
-    mov     0xe, a0
+
+GetBitmapInfo_OnePlane:
+    mov     0xe, a0                         # a0 = &biBitCount
     add     a2, a0
-    movhu   (a0), d0
+    movhu   (a0), d0                        # biBitCount: 1, 4 or 8 only
     cmp     1, d0
-    beq     0x48421e44
+    beq     GetBitmapInfo_DepthOk
     movhu   (a0), d0
     cmp     4, d0
-    beq     0x48421e44
+    beq     GetBitmapInfo_DepthOk
     movhu   (a0), d0
     cmp     8, d0
-    beq     0x48421e44
-    clr     d0
-    bra     0x48421e85
-    mov     (0x20, a2), d0
+    beq     GetBitmapInfo_DepthOk
+    clr     d0                              # 2, 16, 24, 32 ...: return 0
+    bra     GetBitmapInfo_Return
+
+GetBitmapInfo_DepthOk:
+    mov     (0x20, a2), d0                  # d0 = biClrUsed
     cmp     0x100, d0
-    bls     0x48421e50
-    clr     d0
-    bra     0x48421e85
-    mov     (0x10, a2), d0
+    bls     GetBitmapInfo_ColoursOk
+    clr     d0                              # biClrUsed > 256: return 0
+    bra     GetBitmapInfo_Return
+
+GetBitmapInfo_ColoursOk:
+    mov     (0x10, a2), d0                  # d0 = biCompression
     cmp     0, d0
-    beq     0x48421e5a
-    clr     d0
-    bra     0x48421e85
-    add     0xc, a3
+    beq     GetBitmapInfo_Uncompressed
+    clr     d0                              # not BI_RGB (RLE8, RLE4, bitfields, ...): return 0
+    bra     GetBitmapInfo_Return
+
+    # Copy the colour table: every byte between the headers and the pixels, sized by
+    # bfOffBits alone (not by biClrUsed or biBitCount), at most 1 KB.
+GetBitmapInfo_Uncompressed:
+    add     0xc, a3                         # a3 = &struct.bfOffBits
     mov     (a3), d0
     mov     0xe, d1
     sub     d1, d0
     mov     0x28, d1
-    sub     d1, d0
+    sub     d1, d0                          # d0 = bfOffBits - 14 - 40: the colour-table bytes
     mov     d0, d1
-    exth    d1
-    cmp     0x400, d1
-    bls     0x48421e70
-    mov     0x400, d0
-    mov     d3, a0
-    mov     0x36, a1
+    exth    d1                              # as s16: bfOffBits < 54 gives a negative length
+    cmp     0x400, d1                       # unsigned compare: a negative length counts as too big
+    bls     GetBitmapInfo_CopyColours
+    mov     0x400, d0                       # over 1 KB or negative: copy 1 KB (256 RGBQUADs)
+
+GetBitmapInfo_CopyColours:
+    mov     d3, a0                          # a0 = colour-table buffer
+    mov     0x36, a1                        # a1 = file + 54: the colour table
     add     d2, a1
-    exth    d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     (a3), d0
-    mov     (0x3c, sp), a0
-    add     d0, d2
-    mov     d2, (a0)
-    mov     1, d0
+    exth    d0                              # n: 0..0x400
+    call    memcpy_entry, [a2,a3], 8        # memcpy(colours, file + 54, n)
+    mov     (a3), d0                        # d0 = bfOffBits
+    mov     (0x3c, sp), a0                  # a0 = the 5th argument: &pixels
+    add     d0, d2                          # d2 = file + bfOffBits: the pixel rows (bottom row first if biHeight > 0)
+    mov     d2, (a0)                        # *pixels (not checked against bfSize)
+    mov     1, d0                           # 1: accepted
+
+GetBitmapInfo_Return:
     ret     [d2,d3,a2,a3], 0x24
+
 # ConvertBitmapFile  (CPU 0x48421e88)
+#   ConvertBitmapFile(a0 = BMP file image in memory, d0 = size, the most bytes
+#   the rewritten file may take; 0 = the header's bfSize) -> d0 = 1 if it
+#   rewrote the file, 0 if it left it untouched. It repacks the file in place
+#   as the 54 header bytes, n RGBQUADs at +0x36 and the pixel array with no
+#   gap (the layout BmpReduceColors assumes), and cuts an 8-bpp file with more
+#   than 176 colours to the 176 DrawBitmapFile loads (entries 0x20..0xCF).
+#   GetBitmapInfo checks the file ("BM", biSize 40, 1 plane, 1/4/8 bpp, BI_RGB,
+#   biClrUsed <= 256; else return 0) and copies its headers and
+#   min(bfOffBits - 0x36, 0x400) colour bytes to the stack. P, the pixel array's
+#   size, is the 4-byte-padded row stride * biHeight (its low 16 bits, signed);
+#   room = size - 0x36 - P; under 4 bytes returns 0. n = min(room / 4,
+#   2^biBitCount). The P pixel bytes move (memmove) from image + bfOffBits to
+#   image + 0x36 + 4n, the n colours are written back at +0x36, then the headers
+#   with biClrUsed = n, bfOffBits = 0x36 + 4n, bfSize = 0x36 + 4n + P and
+#   bfReserved1/2 = 0 (biSizeImage and the rest kept). If biBitCount is 8 and
+#   n > 0xB0, BmpReduceColors(image, 0xB0) then remaps the pixels onto the 0xB0
+#   most used colours (its u16 use counts can wrap: see its doc).
+#   So n comes from the room, not from biClrUsed or bfOffBits: all the room
+#   becomes colour table, up to 2^bpp entries. A gap before the pixels turns
+#   into colours; room past them moves the pixels up and adds entries of stale
+#   stack bytes (no valid pixel uses them); room past a full table, 1..3 bytes
+#   over a multiple of 4, and entries a size short of bfOffBits + P cannot hold
+#   are dropped, which moves the pixels down if they lay before them. With
+#   size = bfSize a well-formed file keeps its layout: only biClrUsed (set to
+#   the table's length) and bfReserved change. Run again with the same size or
+#   the new bfSize it moves nothing (BmpReduceColors still runs if n > 0xB0).
+#   Callers: LoadHpBmp (call at 0x484971A1) passes its read buffer's size,
+#   0x42B6 = 0x36 + 0x400 + 160*100, and on 1 writes all of it to flash at
+#   0x9681118C; it refuses biWidth > 160 or biHeight > 100 (signed), so every
+#   file there gets 2^bpp colours and every 8-bpp one is reduced. The
+#   slide-show image drawer at 0x4858055B (call at 0x485806A5) passes the
+#   header's bfSize, then draws with DrawBitmapFile on 1 and with
+#   DrawBitmap(point, 0) on 0, so a file whose bfSize is 0 or too small shows
+#   bitmap 0. Also in the InitBlockTable function table at 0x48728730
+#   (InitBlockTable + 0x660).
+#   Bugs: bfOffBits + P is not checked against the size, so a large bfOffBits
+#   reads past the buffer; with d0 = 0 or bfSize only the header bounds the
+#   writes. A top-down file (biHeight negative as s16) makes P < 0: nothing
+#   moves, the 4n colour bytes overwrite the first pixel bytes when
+#   4n > bfOffBits - 0x36, and bfSize comes out too small.
+ConvertBitmapFile:
     movm    [d2,d3,a2,a3], (sp)
-# ConvertBitmapFile_entry:   (register-save `call` entry)
-    add     -0x46c, sp
-    mov     a0, (0x484, sp)
-    mov     d0, a3
+
+    # Frame: (0x1c,sp) = the new bfSize, (0x20,sp) = the result, (0x30,sp) = &pixels
+    # (image + bfOffBits), sp+0x34 = the file header {+0 bfType, +4 bfSize, +8 r1, +0xA r2,
+    # +0xC bfOffBits}, sp+0x44 = the BITMAPINFOHEADER (biWidth at 0x48, biHeight at 0x4C,
+    # biBitCount at 0x52, biClrUsed at 0x64), sp+0x6C = the colour table copy (1 KB).
+ConvertBitmapFile_entry:
+    add     -0x46c, sp                      # the frame: too big for call's frame byte
+    mov     a0, (0x484, sp)                 # (0x484,sp) = image (spilled to the caller's argument area)
+    mov     d0, a3                          # a3 = size
     mov     sp, a0
     mov     a0, d0
     add     0x34, d0
-    mov     d0, (0x2c, sp)
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = &file header copy
     mov     a0, d0
     add     0x44, d0
-    mov     d0, (0x28, sp)
+    mov     d0, (0x28, sp)                  # (0x28,sp) = &BITMAPINFOHEADER copy
     mov     a0, d0
     add     0x6c, d0
-    mov     d0, (0x24, sp)
+    mov     d0, (0x24, sp)                  # (0x24,sp) = &colour table copy
     mov     a0, d0
     add     0x30, d0
-    mov     d0, (0x18, sp)
-    mov     (0x484, sp), a0
-    mov     (0x2c, sp), a1
-    mov     (0x28, sp), d0
-    mov     (0x24, sp), d1
-    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
-    mov     d0, (0x20, sp)
+    mov     d0, (0x18, sp)                  # (0x18,sp) = sp+0x30: GetBitmapInfo's 5th arg, gets &pixels
+    mov     (0x484, sp), a0                 # a0 = the file
+    mov     (0x2c, sp), a1                  # a1 = file header out
+    mov     (0x28, sp), d0                  # d0 = BITMAPINFOHEADER out
+    mov     (0x24, sp), d1                  # d1 = colour table out
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24  # -> d0 = 1, or 0 if the file is not a usable BMP
+    mov     d0, (0x20, sp)                  # (0x20,sp) = result
     cmp     0, d0
-    beq     0x48421f34
+    beq     ConvertBitmapFile_TestResult    # rejected: return 0, file untouched
     cmp     0, a3
-    bne     0x48421ec8
-    mov     (0x38, sp), a3
-    mov     (0x48, sp), a2
-    movhu   (0x52, sp), d1
+    bne     ConvertBitmapFile_HaveSize      # size given
+    mov     (0x38, sp), a3                  # size 0: a3 = the header's bfSize
+
+    # P = stride * height, as DrawBitmapFile_Impl computes the stride.
+ConvertBitmapFile_HaveSize:
+    mov     (0x48, sp), a2                  # a2 = biWidth
+    movhu   (0x52, sp), d1                  # d1 = biBitCount
     movhu   (0x52, sp), d3
     mov     8, d0
-    call    LibDiv32, 0, 0
-    mov     d0, d2
+    call    LibDiv32, 0, 0                  # 8 / biBitCount
+    mov     d0, d2                          # d2 = ppb, pixels per byte (1, 2 or 8)
     mov     8, d0
     mov     d3, d1
     call    LibDiv32, 0, 0
-    mov     d0, d1
+    mov     d0, d1                          # d1 = ppb
     asl2    d2
     mov     a2, d0
     add     d2, d0
-    add     -1, d0
+    add     -1, d0                          # d0 = width + 4*ppb - 1
     asl2    d1
-    call    LibDiv32, 0, 0
-    movhu   (0x4c, sp), d1
-    asl2    d0
+    call    LibDiv32, 0, 0                  # / (4*ppb)
+    movhu   (0x4c, sp), d1                  # d1 = biHeight, low 16 bits
+    asl2    d0                              # * 4: the row stride in bytes, padded to 4
     exth    d0
-    exth    d1
+    exth    d1                              # signed: a top-down (negative) height stays negative
     nop
     nop
     mul     d1, d0
-    mov     d0, a2
+    mov     d0, a2                          # a2 = P, the pixel array's size
     mov     a2, a0
     add     0x36, a0
-    mov     a0, (0x1c, sp)
-    sub     a0, a3
+    mov     a0, (0x1c, sp)                  # (0x1c,sp) = 0x36 + P: the new bfSize, before the colours
+    sub     a0, a3                          # a3 = size - 0x36 - P: the room for the colour table
     cmp     4, a3
-    blt     0x48421f31
+    blt     ConvertBitmapFile_NoRoom        # not one RGBQUAD: return 0, file untouched
     movhu   (0x52, sp), d0
     mov     a3, d2
-    lsr     2, d2
+    lsr     2, d2                           # d2 = room / 4: the colours that fit
+    # a1 = 2^biBitCount: doubled once per bit in the hardware loop (setlb .. llt).
     mov     1, a1
     clr     d1
     cmp     d1, d0
-    ble     0x48421f21
+    ble     ConvertBitmapFile_ClampCount    # never taken: biBitCount is 1, 4 or 8
     movhu   (0x52, sp), d0
     setlb
     add     a1, a1
     inc     d1
     cmp     d0, d1
-    llt
+    llt                                     # while i < biBitCount
+
+ConvertBitmapFile_ClampCount:
     cmp     a1, d2
-    bls     0x48421f27
-    mov     a1, d2
-    mov     d2, d0
+    bls     ConvertBitmapFile_HaveCount     # room / 4 <= 2^bpp: keep it
+    mov     a1, d2                          # d2 = 2^bpp, the most the depth can index
+
+ConvertBitmapFile_HaveCount:
+    mov     d2, d0                          # d2 = n = min(room / 4, 2^bpp), the colour count
     asl2    d0
-    mov     d0, d3
+    mov     d0, d3                          # d3 = 4n: the colour table's bytes
     mov     (0x1c, sp), d0
     add     d3, d0
-    mov     d0, (0x1c, sp)
-    bra     0x48421f34
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = 0x36 + 4n + P: the new bfSize
+    bra     ConvertBitmapFile_TestResult
+
+ConvertBitmapFile_NoRoom:
     clr     d0
-    mov     d0, (0x20, sp)
+    mov     d0, (0x20, sp)                  # result = 0
+
+ConvertBitmapFile_TestResult:
     mov     (0x20, sp), d0
     cmp     0, d0
-    bne     0x48421f3d
-    jmp     0x4842200d
+    bne     ConvertBitmapFile_Rewrite
+    jmp     ConvertBitmapFile_Return        # return 0
+
+    # Move the P pixel bytes from image + bfOffBits to just after the n colours, byte by
+    # byte as memmove does. The 8-bpp branch and the other one are the same code twice.
+ConvertBitmapFile_Rewrite:
     mov     (0x484, sp), a3
     mov     0x36, d0
     add     d3, d0
-    add     d0, a3
+    add     d0, a3                          # a3 = image + 0x36 + 4n: where the pixels go
     movhu   (0x52, sp), d0
     cmp     8, d0
-    bne     0x48421f83
-    mov     (0x30, sp), a0
+    bne     ConvertBitmapFile_NotBpp8       # 1 or 4 bpp: the same move, duplicated
+    mov     (0x30, sp), a0                  # a0 = image + bfOffBits: where they are
     cmp     a0, a3
-    bls     0x48421f6c
+    bls     ConvertBitmapFile_Bpp8_MoveDown  # dest <= src: they move down, or stay
+    add     -1, a2                          # a2 = P - 1
+    cmp     0, a2
+    blt     ConvertBitmapFile_WritePalette  # P <= 0: nothing to move
+    mov     a2, a1
+    add     a0, a1                          # a1 = the last source byte
+    add     a2, a3                          # a3 = the last destination byte
+    # Dest above src (the table grew): copy backwards from the last byte; hardware loop.
+    setlb
+    movbu   (a1), d0
+    movbu   d0, (a3)
+    mov     1, d0
+    sub     d0, a3
+    sub     d0, a1
+    cmp     a0, a1
+    lcc                                     # while a1 >= the first source byte
+    bra     ConvertBitmapFile_WritePalette
+
+ConvertBitmapFile_Bpp8_MoveDown:
+    cmp     a0, a3
+    bcc     ConvertBitmapFile_WritePalette  # dest == src: already in place
+    cmp     0, a2
+    ble     ConvertBitmapFile_WritePalette  # P <= 0: nothing to move
+    mov     a0, d1
+    add     a2, d1                          # d1 = the end of the source
+    # Dest below src (more space before the pixels than 4n): copy forwards.
+    setlb
+    movbu   (a0), d0
+    inc     a0
+    movbu   d0, (a3)
+    inc     a3
+    cmp     d1, a0
+    lcs                                     # while a0 < the end
+    bra     ConvertBitmapFile_WritePalette
+
+    # 1 and 4 bpp: a copy of the move above, instruction for instruction.
+ConvertBitmapFile_NotBpp8:
+    mov     (0x30, sp), a0                  # a0 = image + bfOffBits: where they are
+    cmp     a0, a3
+    bls     ConvertBitmapFile_NotBpp8_MoveDown  # dest <= src: they move down, or stay
     add     -1, a2
     cmp     0, a2
-    blt     0x48421fb7
+    blt     ConvertBitmapFile_WritePalette  # P <= 0: nothing to move
     mov     a2, a1
     add     a0, a1
     add     a2, a3
+    # Dest above src: copy backwards.
     setlb
     movbu   (a1), d0
     movbu   d0, (a3)
@@ -7781,13 +7945,16 @@ _rom_marker:
     sub     d0, a1
     cmp     a0, a1
     lcc
-    bra     0x48421fb7
+    bra     ConvertBitmapFile_WritePalette
+
+ConvertBitmapFile_NotBpp8_MoveDown:
     cmp     a0, a3
-    bcc     0x48421fb7
+    bcc     ConvertBitmapFile_WritePalette  # dest == src: already in place
     cmp     0, a2
-    ble     0x48421fb7
+    ble     ConvertBitmapFile_WritePalette  # P <= 0: nothing to move
     mov     a0, d1
     add     a2, d1
+    # Dest below src: copy forwards.
     setlb
     movbu   (a0), d0
     inc     a0
@@ -7795,152 +7962,159 @@ _rom_marker:
     inc     a3
     cmp     d1, a0
     lcs
-    bra     0x48421fb7
-    mov     (0x30, sp), a0
-    cmp     a0, a3
-    bls     0x48421fa2
-    add     -1, a2
-    cmp     0, a2
-    blt     0x48421fb7
-    mov     a2, a1
-    add     a0, a1
-    add     a2, a3
-    setlb
-    movbu   (a1), d0
-    movbu   d0, (a3)
-    mov     1, d0
-    sub     d0, a3
-    sub     d0, a1
-    cmp     a0, a1
-    lcc
-    bra     0x48421fb7
-    cmp     a0, a3
-    bcc     0x48421fb7
-    cmp     0, a2
-    ble     0x48421fb7
-    mov     a0, d1
-    add     a2, d1
-    setlb
-    movbu   (a0), d0
-    inc     a0
-    movbu   d0, (a3)
-    inc     a3
-    cmp     d1, a0
-    lcs
+
+    # Write the colour table, then the two headers, back from the stack copies.
+ConvertBitmapFile_WritePalette:
     mov     (0x484, sp), a0
     mov     (0x24, sp), a1
-    add     0x36, a0
-    mov     d3, d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     d2, (0x64, sp)
+    add     0x36, a0                        # a0 = image + 0x36: right after the headers
+    mov     d3, d0                          # d0 = 4n
+    call    memcpy_entry, [a2,a3], 8        # memcpy(image + 0x36, colour copy, 4n); beyond bfOffBits - 0x36: stale
+    mov     d2, (0x64, sp)                  # biClrUsed = n
     mov     (0x484, sp), a0
     mov     (0x28, sp), a1
-    add     0xe, a0
-    add     0x36, d3
+    add     0xe, a0                         # a0 = image + 0xE: the BITMAPINFOHEADER
+    add     0x36, d3                        # d3 = 0x36 + 4n
     mov     0x28, d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     d3, (0x40, sp)
+    call    memcpy_entry, [a2,a3], 8        # memcpy(image + 0xE, header copy, 0x28)
+    # Update the file header copy, then write it out.
+    mov     d3, (0x40, sp)                  # bfOffBits = 0x36 + 4n
     mov     (0x1c, sp), d0
-    mov     d0, (0x38, sp)
+    mov     d0, (0x38, sp)                  # bfSize = 0x36 + 4n + P
     clr     d0
-    movhu   d0, (0x3c, sp)
-    movhu   d0, (0x3e, sp)
+    movhu   d0, (0x3c, sp)                  # bfReserved1 = 0
+    movhu   d0, (0x3e, sp)                  # bfReserved2 = 0
     mov     (0x2c, sp), a0
     mov     (0x484, sp), a1
-    call    BfStruct2File_entry, [a2,a3], 0x1c
+    call    BfStruct2File_entry, [a2,a3], 0x1c  # BfStruct2File(a0 = header copy, a1 = image): 14 bytes
     movhu   (0x52, sp), d0
     cmp     8, d0
-    bne     0x4842200d
+    bne     ConvertBitmapFile_Return        # 1 or 4 bpp: done
     cmp     0xb0, d2
-    ble     0x4842200d
+    ble     ConvertBitmapFile_Return        # n <= 0xB0: all n colours fit DrawBitmapFile's 176 entries
+    # More than 176 colours: DrawBitmapFile loads only 176 (entries 0x20..0xCF).
     mov     (0x484, sp), a0
     mov     0xb0, d0
-    call    BmpReduceColors_entry, [d2,d3,a2,a3], 0x10
-    mov     (0x20, sp), d0
-    add     0x46c, sp
+    call    BmpReduceColors_entry, [d2,d3,a2,a3], 0x10  # BmpReduceColors(a0 = image, d0 = 0xB0); its d0 is not used
+
+ConvertBitmapFile_Return:
+    mov     (0x20, sp), d0                  # d0 = 1 rewritten, 0 not
+    add     0x46c, sp                       # drop the 0x46C-byte frame
     ret     [d2,d3,a2,a3], 0x10
+
 # BmpUnpackRow  (CPU 0x48422016)
+#   BmpUnpackRow(a0 = row, d0 = packed bytes in the row, d1 = biBitCount): expands a
+#   1- or 4-bpp BMP row in place to one byte per pixel, leftmost pixel first. 4 bpp:
+#   two bytes per packed byte, high nibble then low nibble (values 0..15); 1 bpp:
+#   eight, bit 7 first (values 0 and 1). 8 bpp, and any other depth (d1 is taken as
+#   u16), return at once with the row as it was. The 1- and 4-bpp paths work from a
+#   Malloc'd copy of the first count * 8 / bpp bytes of the row, the whole expanded
+#   length (only count of them are packed pixels; the row must hold that many bytes
+#   anyway, for the output), and Free it at the end. Malloc is not checked for NULL.
+#   A count of 0 still calls Malloc and Free and changes nothing. A negative count
+#   (a caller's stride for a negative s16 biWidth) is not rejected: Malloc reads
+#   count * 8 / bpp as a huge unsigned size and returns NULL (or, for a few small
+#   values, a block with a corrupt header), and memcpy to NULL then copies on from
+#   address 0. Callers: DrawBitmapFile_Impl (0x48424C0F), DrawBitmapFileEx_Impl
+#   (0x48424E0E) and Draw2BpFile_Impl (0x484283EE), each passing the file row's
+#   padded stride as the count, so the pad bits are expanded too, past biWidth. No
+#   table holds its address (it is not a MILK-named function; the name is ours).
+BmpUnpackRow:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
-# BmpUnpackRow_entry:   (register-save `call` entry)
-    mov     a0, (0x38, sp)
-    mov     d0, d2
-    exthu   d1
+
+BmpUnpackRow_entry:
+    mov     a0, (0x38, sp)                  # (0x38,sp) = row, kept in the caller's argument area
+    mov     d0, d2                          # d2 = packed byte count
+    exthu   d1                              # depth as u16
     cmp     8, d1
-    bne     0x48422026
-    ret     [d2,d3,a2,a3], 0x30
+    bne     BmpUnpackRow_Not8bpp
+    ret     [d2,d3,a2,a3], 0x30             # 8 bpp: one byte per pixel already
+
+BmpUnpackRow_Not8bpp:
     cmp     4, d1
-    beq     0x48422031
+    beq     BmpUnpackRow_4bpp
     cmp     1, d1
-    beq     0x48422087
-    ret     [d2,d3,a2,a3], 0x30
+    beq     BmpUnpackRow_1bpp
+    ret     [d2,d3,a2,a3], 0x30             # any other depth: row unchanged
+
+BmpUnpackRow_4bpp:
     mov     8, d0
-    call    LibDiv32, 0, 0
+    call    LibDiv32, 0, 0                  # LibDiv32(8, 4) = 2 pixels per byte
     mov     d0, d3
     exthu   d3
     nop
     nop
-    mul     d3, d2
+    mul     d3, d2                          # d2 = count * 2: the expanded length
     mov     d2, d0
-    call    Malloc_entry, [d2,a2,a3], 0x28
-    mov     a0, (0x14, sp)
-    mov     a0, a2
+    call    Malloc_entry, [d2,a2,a3], 0x28  # Malloc(count * 2) -> a0 (not checked for NULL)
+    mov     a0, (0x14, sp)                  # (0x14,sp) = the copy
+    mov     a0, a2                          # a2 = the copy: the packed source
     mov     (0x38, sp), a1
     mov     d2, d0
-    call    memcpy_entry, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8        # memcpy(copy, row, count * 2): the expanded length, not count
     cmp     0, d2
-    ble     0x4842207b
-    mov     (0x38, sp), a0
+    ble     BmpUnpackRow_4bppDone           # count <= 0: nothing to expand
+    mov     (0x38, sp), a0                  # a0 = row: the left pixel of each pair
     mov     a0, d1
-    inc     d1
+    inc     d1                              # d1 = row + 1: the right pixel
     mov     a0, a1
-    add     d2, a1
+    add     d2, a1                          # a1 = row + count * 2: the end
+    # setlb .. lcs: one packed byte per pass, two pixels out.
     setlb
     movbu   (a2), d0
     mov     d1, a3
     and     0xf0, d0
-    asr     4, d0
-    movbu   d0, (a0)
+    asr     4, d0                           # high nibble
+    movbu   d0, (a0)                        # -> left pixel
     movbu   (a2), d0
     inc     a2
-    and     0x0f, d0
-    movbu   d0, (a3)
+    and     0x0f, d0                        # low nibble
+    movbu   d0, (a3)                        # -> right pixel
     add     d3, d1
-    add     d3, a0
+    add     d3, a0                          # next pair (d1 too)
     cmp     a1, a0
-    lcs
+    lcs                                     # while a0 < end (unsigned)
+
+BmpUnpackRow_4bppDone:
     mov     (0x14, sp), a0
-    call    Free_entry, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c  # Free(copy)
     ret     [d2,d3,a2,a3], 0x30
+
+BmpUnpackRow_1bpp:
     mov     8, d0
-    call    LibDiv32, 0, 0
+    call    LibDiv32, 0, 0                  # LibDiv32(8, 1) = 8 pixels per byte
     exthu   d0
-    mov     d0, (0x14, sp)
+    mov     d0, (0x14, sp)                  # (0x14,sp) = 8
     nop
     nop
-    mul     d0, d2
-    mov     d2, (0x18, sp)
+    mul     d0, d2                          # d2 = count * 8: the expanded length
+    mov     d2, (0x18, sp)                  # (0x18,sp) = count * 8
     mov     d2, d0
-    call    Malloc_entry, [d2,a2,a3], 0x28
-    mov     a0, (0x1c, sp)
+    call    Malloc_entry, [d2,a2,a3], 0x28  # Malloc(count * 8) -> a0 (not checked for NULL)
+    mov     a0, (0x1c, sp)                  # (0x1c,sp) = the copy
     mov     (0x38, sp), a1
     mov     d2, d0
-    mov     a0, a3
-    call    memcpy_entry, [a2,a3], 8
+    mov     a0, a3                          # a3 = the copy: the packed source
+    call    memcpy_entry, [a2,a3], 8        # memcpy(copy, row, count * 8): the expanded length, not count
     mov     (0x18, sp), d0
-    mov     0, a0
+    mov     0, a0                           # a0 = output index
     cmp     0, d0
-    bgt     0x484220b9
-    jmp     0x4842214f
+    bgt     BmpUnpackRow_1bppExpand
+    jmp     BmpUnpackRow_1bppDone           # count <= 0: nothing to expand
+
+BmpUnpackRow_1bppExpand:
     mov     (0x38, sp), d3
-    add     7, d3
+    add     7, d3                           # d3 = &row[7]: the first byte's rightmost pixel
+    # setlb .. llt: one packed byte per pass, eight pixels out, written right to
+    # left: bit 0 to row[i+7] .. bit 7 to row[i], the leftmost.
     setlb
-    movbu   (a3), d1
+    movbu   (a3), d1                        # d1 = packed byte
     mov     d3, a1
     mov     d1, d0
     extbu   d0
     and     0x01, d0
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 0 -> pixel 7
     extbu   d1
     asr     1, d1
     mov     d1, d0
@@ -7951,7 +8125,7 @@ _rom_marker:
     mov     d0, d1
     extbu   d1
     and     0x01, d1
-    movbu   d1, (a1)
+    movbu   d1, (a1)                        # bit 1 -> pixel 6
     mov     d0, d1
     extbu   d1
     asr     1, d1
@@ -7963,14 +8137,14 @@ _rom_marker:
     mov     d1, d0
     extbu   d0
     and     0x01, d0
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 2 -> pixel 5
     extbu   d1
     asr     1, d1
     mov     d1, d0
     extbu   d0
     and     0x01, d0
     mov     d2, a1
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 3 -> pixel 4
     extbu   d1
     asr     1, d1
     mov     1, d0
@@ -7979,7 +8153,7 @@ _rom_marker:
     mov     d1, d0
     extbu   d0
     and     0x01, d0
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 4 -> pixel 3
     extbu   d1
     asr     1, d1
     mov     d1, d0
@@ -7989,7 +8163,7 @@ _rom_marker:
     mov     d0, d1
     extbu   d1
     and     0x01, d1
-    movbu   d1, (a1)
+    movbu   d1, (a1)                        # bit 5 -> pixel 2
     mov     d0, d1
     extbu   d1
     asr     1, d1
@@ -7999,7 +8173,7 @@ _rom_marker:
     mov     d1, d0
     extbu   d0
     and     0x01, d0
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 6 -> pixel 1
     extbu   d1
     mov     1, d0
     sub     d0, d2
@@ -8008,38 +8182,84 @@ _rom_marker:
     extbu   d0
     and     0x01, d0
     mov     d2, a1
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # bit 7 -> pixel 0, the leftmost
     mov     (0x14, sp), d0
-    inc     a3
-    add     d0, a0
-    add     d0, d3
+    inc     a3                              # next packed byte
+    add     d0, a0                          # output index += 8
+    add     d0, d3                          # d3 += 8: the next byte's rightmost pixel
     mov     (0x18, sp), d0
     cmp     d0, a0
-    llt
+    llt                                     # while index < count * 8 (signed)
+
+BmpUnpackRow_1bppDone:
     mov     (0x1c, sp), a0
-    call    Free_entry, [d2,d3,a2,a3], 0x2c
+    call    Free_entry, [d2,d3,a2,a3], 0x2c  # Free(copy)
     ret     [d2,d3,a2,a3], 0x30
+
 # BmpReduceColors  (CPU 0x4842215b)
+#   BmpReduceColors(a0 = BMP file image, d0 = s16 colour budget): makes an 8-bpp
+#   BMP use at most d0 colours, the first d0 of its palette, rewriting palette and
+#   pixels in place. It re-reads the file with GetBitmapInfo (the result is not
+#   checked), counts each palette index over the pixel array (u16 counts),
+#   comb-sorts the 256 palette slots by count, most used first, and gives every
+#   index its rank as new index, so the colours in use always move to the front.
+#   If more than d0 indices are in use, each colour at rank d0 or beyond (the less
+#   used ones) is mapped to the kept colour (rank < d0) nearest it in RGB: least
+#   dR^2 + dG^2 + dB^2, the more used one on a tie; no kept colour is changed.
+#   Then it copies the sorted palette (biClrUsed entries) back over the colour
+#   table at image + 0x36 and rewrites every pixel byte through the index map. The
+#   headers are not touched: biClrUsed stays as it was and the dropped colours stay
+#   in the table after the kept ones, but no pixel refers to them any more.
+#   Everything is in a 0x8A0-byte stack frame; nothing is Malloc'd. Returns nothing
+#   (the caller ignores d0). Only caller: ConvertBitmapFile, once it has packed the
+#   file (colour table at +0x36, biClrUsed = its n entries), for 8 bpp with
+#   n > 0xB0, with d0 = 0xB0: the 176 entries 0x20..0xCF that DrawBitmapFile_Impl
+#   loads from a file. From LoadHpBmp that is every 8-bpp file (its 0x42B6-byte
+#   buffer gives n = 256); from the slide-show drawer 0x4858055B, which passes
+#   bfSize, a file whose colour table has more than 0xB0 entries. Limits: 8 bpp
+#   only (every byte is taken as one pixel); it relies on ConvertBitmapFile's
+#   layout, as it writes the palette to image + 0x36 for biClrUsed entries; the
+#   count covers biHeight x stride bytes, so row padding counts too. Bugs: the
+#   counts are u16 and wrap, so a colour on more than 65535 pixels can rank low and
+#   be merged away, and one on an exact multiple of 65536 counts as unused, is never
+#   merged and may keep an index of d0 or more. LoadHpBmp's files (at most
+#   160 x 100) cannot wrap; the slide-show drawer sets no size limit of its own.
+#   biHeight is read as 32 bits here but as s16 by ConvertBitmapFile's room check,
+#   so a malformed height (e.g. 0x10010, which that check takes as 16 rows) can make
+#   both pixel loops run past the file, the second one writing. Palette slots past
+#   biClrUsed hold stale stack (GetBitmapInfo copies only bfOffBits - 54 bytes); no
+#   valid pixel uses them, so they sort among the unused colours, and some may be
+#   copied back into unused table entries below biClrUsed.
+BmpReduceColors:
     movm    [d2,d3,a2,a3], (sp)
-# BmpReduceColors_entry:   (register-save `call` entry)
-    add     -0x8a0, sp
-    movhu   d0, (0x8bc, sp)
-    mov     a0, (0x8b8, sp)
+
+    # Frame: (0x4c,sp) = &palette copy, (0x58,sp) = row stride (s16, kept as a word),
+    # (0x5c,sp) = u16 colours in use, (0x60,sp) = &pixels; sp+0x68 = palette copy
+    # (256 x RGBQUAD), sp+0x468 = the file header (BfFile2Struct's 16 bytes),
+    # sp+0x478 = the BITMAPINFOHEADER (biWidth at 0x47C, biHeight at 0x480,
+    # biBitCount at 0x486, biClrUsed at 0x498), sp+0x4A0 = count[256] (u16),
+    # sp+0x6A0 = order[256] (u8, rank -> original index), sp+0x7A0 = map[256] (u8,
+    # original index -> new index).
+BmpReduceColors_entry:
+    add     -0x8a0, sp                      # the frame: too big for call's frame byte
+    movhu   d0, (0x8bc, sp)                 # (0x8bc,sp) = budget (spilled to the caller's argument area)
+    mov     a0, (0x8b8, sp)                 # (0x8b8,sp) = the image
     mov     sp, a0
     mov     a0, d0
     add     0x68, d0
-    mov     d0, (0x4c, sp)
+    mov     d0, (0x4c, sp)                  # (0x4c,sp) = &palette copy (sp+0x68)
     mov     a0, d0
     add     0x60, d0
-    mov     d0, (0x18, sp)
-    mov     (0x8b8, sp), a0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = sp+0x60: GetBitmapInfo's 5th arg, gets &pixels
+    mov     (0x8b8, sp), a0                 # a0 = the image
     mov     sp, a1
-    add     0x468, a1
+    add     0x468, a1                       # a1 = file header out
     mov     sp, a2
     mov     a2, d0
-    add     0x478, d0
-    mov     (0x4c, sp), d1
-    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
+    add     0x478, d0                       # d0 = BITMAPINFOHEADER out
+    mov     (0x4c, sp), d1                  # d1 = palette out
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24  # result not checked: ConvertBitmapFile has just validated the file
+    # Clear count[0..255] at sp+0x4A0; hardware loop (setlb .. lcs).
     mov     sp, a0
     mov     a0, d0
     add     0x4a0, d0
@@ -8048,68 +8268,75 @@ _rom_marker:
     add     d0, a1
     setlb
     clr     d0
-    movhu   d0, (a0)
+    movhu   d0, (a0)                        # count[i] = 0
     add     2, a0
     cmp     a1, a0
     lcs
-    mov     (0x60, sp), a2
-    mov     (0x47c, sp), a3
-    movhu   (0x486, sp), d1
+    mov     (0x60, sp), a2                  # a2 = pixels (image + bfOffBits)
+    mov     (0x47c, sp), a3                 # a3 = biWidth
+    movhu   (0x486, sp), d1                 # biBitCount
     movhu   (0x486, sp), d3
     mov     8, d0
-    call    LibDiv32, 0, 0
-    mov     d0, d2
+    call    LibDiv32, 0, 0                  # 8 / biBitCount
+    mov     d0, d2                          # d2 = ppb, pixels per byte (1: only 8 bpp comes here)
     mov     8, d0
     mov     d3, d1
     call    LibDiv32, 0, 0
     mov     d0, d1
-    asl2    d2
+    asl2    d2                              # d2 = 4*ppb
     mov     a3, d0
     add     d2, d0
-    add     -1, d0
-    asl2    d1
-    call    LibDiv32, 0, 0
+    add     -1, d0                          # d0 = width + 4*ppb - 1
+    asl2    d1                              # d1 = 4*ppb
+    call    LibDiv32, 0, 0                  # / (4*ppb)
     clr     d2
-    mov     (0x480, sp), d1
-    asl2    d0
+    mov     (0x480, sp), d1                 # d1 = biHeight, all 32 bits (ConvertBitmapFile checked the low 16)
+    asl2    d0                              # * 4: the file's row stride in bytes, padded to 4
     exth    d0
-    mov     d0, (0x58, sp)
+    mov     d0, (0x58, sp)                  # (0x58,sp) = stride
     nop
     nop
-    mul     d0, d1
+    mul     d0, d1                          # d1 = biHeight * stride: bytes in the pixel array
     cmp     d2, d1
-    ble     0x48422206
+    ble     BmpReduceColors_InitOrder       # none (top-down or empty): count nothing
+    # Count each index over every byte of the pixel array, row padding included;
+    # hardware loop (setlb .. llt).
     mov     (0x480, sp), d1
     mov     sp, a1
-    add     0x4a0, a1
+    add     0x4a0, a1                       # a1 = count[]
     nop
     nop
-    mul     d0, d1
+    mul     d0, d1                          # d1 = biHeight * stride
     setlb
-    movbu   (a2), d0
+    movbu   (a2), d0                        # pixel byte = palette index
     inc     d2
     mov     d0, a0
     movbu   (a2), d0
     add     a0, a0
     add     d0, d0
-    movhu   (d0, a1), d0
+    movhu   (d0, a1), d0                    # d0 = count[index]
     mov     a0, d3
     inc     d0
-    movhu   d0, (d3, a1)
+    movhu   d0, (d3, a1)                    # count[index] + 1, stored as u16: 65535 + 1 wraps to 0
     inc     a2
     cmp     d1, d2
-    llt
+    llt                                     # next byte while < biHeight * stride
+
+    # order[r] = r for r = 0..255: order[r] is the original index of the colour that
+    # ends up at rank r. Hardware loop.
+BmpReduceColors_InitOrder:
     clr     d0
     mov     sp, a0
     add     0x6a0, a0
     setlb
-    movbu   d0, (a0)
+    movbu   d0, (a0)                        # order[i] = i
     inc     d0
     inc     a0
     cmp     0x100, d0
     llt
+    # Count the indices in use (count != 0); hardware loop.
     clr     d0
-    movhu   d0, (0x5c, sp)
+    movhu   d0, (0x5c, sp)                  # (0x5c,sp) = colours in use, 0
     mov     sp, a0
     mov     a0, d1
     add     0x4a0, d1
@@ -8119,105 +8346,130 @@ _rom_marker:
     setlb
     movhu   (a0), d0
     cmp     0, d0
-    beq     0x48422237
+    beq     BmpReduceColors_InUseNext       # unused index
     movhu   (0x5c, sp), d0
     exth    d0
     inc     d0
-    movhu   d0, (0x5c, sp)
+    movhu   d0, (0x5c, sp)                  # colours in use + 1
+
+BmpReduceColors_InUseNext:
     add     2, a0
     cmp     a1, a0
-    lcs
+    lcs                                     # next count while < &count[256]
+    # Comb sort the 256 counts, largest first, moving order[] and the palette along
+    # with them: each pass shrinks the gap to gap * 10 / 13, with 0 -> 1 and 9 or
+    # 10 -> 11 (Combsort11); it stops after a pass at gap 1 with no swap.
     mov     (0x4c, sp), d0
     mov     sp, a0
-    mov     d0, (0x30, sp)
+    mov     d0, (0x30, sp)                  # (0x30,sp) = &palette[0]
     mov     a0, d0
     add     0x4a0, d0
-    mov     d0, (0x24, sp)
-    mov     d0, (0x2c, sp)
+    mov     d0, (0x24, sp)                  # (0x24,sp) = &count[0]
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = &count[0]
     mov     a0, d0
     add     0x6a0, d0
-    mov     d0, (0x28, sp)
-    mov     0x100, d2
+    mov     d0, (0x28, sp)                  # (0x28,sp) = &order[0]
+    mov     0x100, d2                       # gap = 256 (196 for the first pass)
+
+BmpReduceColors_SortPass:
     mov     0x000f4240, d0
     nop
     nop
-    mul     d0, d2
+    mul     d0, d2                          # gap * 1000000
     mov     0x0013d620, d1
     mov     d2, d0
-    call    LibDiv32, 0, 0
+    call    LibDiv32, 0, 0                  # / 1300000: gap / 1.3
     mov     d0, d2
     cmp     0, d0
-    beq     0x4842227c
+    beq     BmpReduceColors_GapOne          # gap 0 -> 1
     cmp     9, d0
-    beq     0x48422280
+    beq     BmpReduceColors_Gap11           # gap 9 -> 11
     cmp     0xa, d0
-    beq     0x48422280
-    bra     0x48422282
+    beq     BmpReduceColors_Gap11           # gap 10 -> 11
+    bra     BmpReduceColors_PassStart
+
+BmpReduceColors_GapOne:
     mov     1, d2
-    bra     0x48422282
+    bra     BmpReduceColors_PassStart
+
+BmpReduceColors_Gap11:
     mov     0xb, d2
+
+BmpReduceColors_PassStart:
     clr     d0
-    mov     d0, (0x1c, sp)
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = swaps this pass, 0
     mov     0x100, a0
-    sub     d2, a0
+    sub     d2, a0                          # a0 = 256 - gap: pairs to compare
     cmp     0, a0
-    ble     0x484222e3
+    ble     BmpReduceColors_PassDone        # never taken: gap <= 196
     mov     (0x24, sp), d0
-    mov     d2, a2
-    mov     (0x2c, sp), a1
-    mov     (0x28, sp), d3
-    mov     (0x30, sp), a3
+    mov     d2, a2                          # a2 = i + gap, for i = 0
+    mov     (0x2c, sp), a1                  # a1 = &count[i]
+    mov     (0x28, sp), d3                  # d3 = &order[i]
+    mov     (0x30, sp), a3                  # a3 = &palette[i]
     add     a0, a0
     add     a0, d0
-    mov     d0, (0x20, sp)
+    mov     d0, (0x20, sp)                  # (0x20,sp) = &count[256 - gap]: end of the pass
+    # One pair (i, i + gap) per turn of the hardware loop (setlb .. lcs),
+    # for i = 0 .. 255 - gap.
     setlb
     mov     (0x24, sp), d0
-    movhu   (a1), d1
+    movhu   (a1), d1                        # d1 = count[i]
     mov     a2, a0
     add     a0, a0
     add     d0, a0
-    movhu   (a0), d0
+    movhu   (a0), d0                        # d0 = count[i + gap]
     cmp     d0, d1
-    bge     0x484222d9
+    bge     BmpReduceColors_SortNext        # count[i] >= count[i + gap]: in order
+    # Out of order: swap the pair in count[], order[] and the palette.
     movhu   (a1), d1
     movhu   (a0), d0
-    movhu   d0, (a1)
+    movhu   d0, (a1)                        # swap the counts
     movhu   d1, (a0)
     mov     d3, a0
-    movbu   (a0), d1
+    movbu   (a0), d1                        # d1 = order[i]
     mov     (0x28, sp), a0
     add     a2, a0
-    movbu   (a0), d0
-    mov     a1, (0x64, sp)
+    movbu   (a0), d0                        # d0 = order[i + gap]
+    mov     a1, (0x64, sp)                  # a1 kept while d3 is used as a pointer
     mov     d3, a1
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # order[i] = order[i + gap]
     mov     (0x64, sp), a1
-    movbu   d1, (a0)
+    movbu   d1, (a0)                        # order[i + gap] = the old order[i]
     mov     (0x4c, sp), a0
-    mov     (a3), d1
+    mov     (a3), d1                        # d1 = palette[i]
     mov     a2, d0
     asl2    d0
     add     d0, a0
-    mov     (a0), d0
-    mov     d0, (a3)
+    mov     (a0), d0                        # d0 = palette[i + gap]
+    mov     d0, (a3)                        # swap the RGBQUADs
     mov     d1, (a0)
     mov     (0x1c, sp), d0
     inc     d0
-    mov     d0, (0x1c, sp)
+    mov     d0, (0x1c, sp)                  # swaps + 1
+
+BmpReduceColors_SortNext:
     mov     (0x20, sp), d0
     inc4    a3
     inc     d3
     add     2, a1
     inc     a2
     cmp     d0, a1
-    lcs
+    lcs                                     # next i while &count[i] < &count[256 - gap]
+
+BmpReduceColors_PassDone:
     mov     (0x1c, sp), d0
     cmp     0, d0
-    beq     0x484222ec
-    jmp     0x48422255
+    beq     BmpReduceColors_NoSwaps
+    jmp     BmpReduceColors_SortPass        # something swapped: another pass
+
+BmpReduceColors_NoSwaps:
     cmp     1, d2
-    ble     0x484222f3
-    jmp     0x48422255
+    ble     BmpReduceColors_Sorted          # gap <= 1 and nothing swapped: sorted
+    jmp     BmpReduceColors_SortPass        # gap > 1: another pass
+
+    # map[order[r]] = r: each original index gets its rank as new index. Hardware loop.
+BmpReduceColors_Sorted:
     clr     d1
     mov     sp, a1
     add     0x6a0, a1
@@ -8225,47 +8477,59 @@ _rom_marker:
     movbu   (a1), d0
     mov     sp, a0
     add     0x7a0, a0
-    movbu   d1, (d0, a0)
+    movbu   d1, (d0, a0)                    # map[order[r]] = r
     inc     d1
     inc     a1
     cmp     0x100, d1
     llt
-    movhu   (0x5c, sp), d0
-    movhu   (0x8bc, sp), d1
+    movhu   (0x5c, sp), d0                  # d0 = colours in use
+    movhu   (0x8bc, sp), d1                 # d1 = budget
     exth    d0
     exth    d1
-    mov     d1, (0x30, sp)
+    mov     d1, (0x30, sp)                  # (0x30,sp) = budget
     cmp     d1, d0
-    bgt     0x4842231b
-    jmp     0x48422425
+    bgt     BmpReduceColors_TooMany         # more colours than the budget: merge
+    jmp     BmpReduceColors_Rewrite         # they all fit: only reorder
+
+BmpReduceColors_TooMany:
     cmp     d0, d1
-    blt     0x48422321
-    jmp     0x48422425
+    blt     BmpReduceColors_Merge           # always taken: the same test again
+    jmp     BmpReduceColors_Rewrite
+
+    # Map each colour ranked budget .. in use - 1 to the nearest kept colour (rank
+    # < budget): least dR^2 + dG^2 + dB^2, the first (most used) one on a tie.
+BmpReduceColors_Merge:
     mov     (0x4c, sp), d1
     mov     (0x4c, sp), a2
     mov     (0x30, sp), d2
-    mov     d1, (0x54, sp)
+    mov     d1, (0x54, sp)                  # (0x54,sp) = &palette[0]: the kept colours
     mov     (0x30, sp), d1
     mov     sp, a0
     asl2    d1
-    add     d1, a2
+    add     d1, a2                          # a2 = &palette[budget]: the first colour to drop
     mov     (0x4c, sp), d1
     asl2    d0
     add     d0, d1
-    mov     d1, (0x50, sp)
+    mov     d1, (0x50, sp)                  # (0x50,sp) = &palette[in use]: past the last one
     mov     a0, d1
     add     0x6a0, d1
     add     d2, d1
-    mov     d1, (0x28, sp)
+    mov     d1, (0x28, sp)                  # (0x28,sp) = &order[budget]
+
+BmpReduceColors_MergeLoop:
     clr     d0
-    mov     d0, (0x2c, sp)
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = best rank, 0
     mov     (0x30, sp), d0
-    mov     0, a3
+    mov     0, a3                           # a3 = j, the kept rank tried
     cmp     0, d0
     mov     0x7fffffff, d0
-    mov     d0, (0x24, sp)
-    bgt     0x48422354
-    jmp     0x48422409
+    mov     d0, (0x24, sp)                  # (0x24,sp) = best distance, 0x7FFFFFFF
+    bgt     BmpReduceColors_Nearest
+    jmp     BmpReduceColors_MapDropped      # budget <= 0: map to rank 0
+
+    # Split the dropped colour (the RGBQUAD read as u32 0xxxRRGGBB) into blue,
+    # green and red, each kept twice.
+BmpReduceColors_Nearest:
     mov     (a2), d0
     mov     (a2), d3
     mov     (a2), d2
@@ -8273,27 +8537,28 @@ _rom_marker:
     mov     (a2), a0
     mov     (a2), d1
     and     0xff, d0
-    mov     d0, (0x48, sp)
+    mov     d0, (0x48, sp)                  # (0x48,sp) = blue
     and     0xff, d1
-    mov     d1, (0x44, sp)
+    mov     d1, (0x44, sp)                  # (0x44,sp) = blue
     and     0xff00, d2
     lsr     8, d2
-    mov     d2, (0x40, sp)
+    mov     d2, (0x40, sp)                  # (0x40,sp) = green
     and     0xff00, d3
     mov     d3, d2
     lsr     8, d2
-    mov     d2, (0x3c, sp)
+    mov     d2, (0x3c, sp)                  # (0x3c,sp) = green
     mov     a0, d0
     and     0x00ff0000, d0
     lsr     16, d0
-    mov     d0, (0x38, sp)
+    mov     d0, (0x38, sp)                  # (0x38,sp) = red
     mov     a1, d0
     and     0x00ff0000, d0
     lsr     16, d0
-    mov     d0, (0x34, sp)
-    mov     (0x54, sp), a1
+    mov     d0, (0x34, sp)                  # (0x34,sp) = red
+    mov     (0x54, sp), a1                  # a1 = &palette[0]
+    # Try each kept colour j = 0 .. budget-1; hardware loop (setlb .. llt).
     setlb
-    mov     (a1), a0
+    mov     (a1), a0                        # palette[j], into five registers and two slots
     mov     (a1), d1
     mov     (a1), d0
     mov     (a1), d2
@@ -8304,88 +8569,97 @@ _rom_marker:
     mov     a0, (0x20, sp)
     mov     (0x48, sp), a0
     and     0xff, d0
-    sub     d0, a0
+    sub     d0, a0                          # a0 = blue - blue[j]
     mov     a0, d0
     mov     d1, a0
     mov     (0x44, sp), d1
     and     0xff00, d2
-    sub     a0, d1
+    sub     a0, d1                          # d1 = blue - blue[j]
     nop
     nop
-    mul     d0, d1
+    mul     d0, d1                          # d1 = dB^2
     mov     (0x40, sp), d0
     lsr     8, d2
     mov     d2, a0
     mov     (0x3c, sp), d2
     and     0xff00, d3
-    sub     a0, d2
+    sub     a0, d2                          # d2 = green - green[j]
     lsr     8, d3
-    sub     d3, d0
+    sub     d3, d0                          # d0 = green - green[j]
     mov     d2, d3
     mov     (0x34, sp), d2
     nop
     nop
-    mul     d0, d3
+    mul     d0, d3                          # d3 = dG^2
     mov     (0x1c, sp), d0
-    add     d1, d3
+    add     d1, d3                          # d3 = dB^2 + dG^2
     mov     (0x38, sp), d1
     and     0x00ff0000, d0
     lsr     16, d0
-    sub     d0, d2
+    sub     d0, d2                          # d2 = red - red[j]
     mov     (0x20, sp), d0
     and     0x00ff0000, d0
     lsr     16, d0
-    sub     d0, d1
-    mov     (0x24, sp), d0
+    sub     d0, d1                          # d1 = red - red[j]
+    mov     (0x24, sp), d0                  # d0 = best distance so far
     nop
     nop
-    mul     d1, d2
-    add     d2, d3
+    mul     d1, d2                          # d2 = dR^2
+    add     d2, d3                          # d3 = the squared RGB distance
     cmp     d3, d0
-    ble     0x48422402
-    mov     d3, (0x24, sp)
-    mov     a3, (0x2c, sp)
+    ble     BmpReduceColors_NearestNext     # not closer: keep the earlier, more used one
+    mov     d3, (0x24, sp)                  # new best distance
+    mov     a3, (0x2c, sp)                  # new best rank: j
+
+BmpReduceColors_NearestNext:
     mov     (0x30, sp), d0
     inc     a3
     inc4    a1
     cmp     d0, a3
-    llt
+    llt                                     # next j while < budget
+
+BmpReduceColors_MapDropped:
     mov     (0x28, sp), a0
     mov     (0x2c, sp), d1
-    movbu   (a0), d0
+    movbu   (a0), d0                        # d0 = order[k]: the dropped colour's original index
     mov     sp, a0
     add     0x7a0, a0
-    movbu   d1, (d0, a0)
+    movbu   d1, (d0, a0)                    # map[original index] = best rank
     mov     (0x28, sp), d0
-    inc4    a2
+    inc4    a2                              # next dropped colour's palette entry
     inc     d0
-    mov     d0, (0x28, sp)
+    mov     d0, (0x28, sp)                  # (0x28,sp) = &order[k + 1]
     mov     (0x50, sp), d0
     cmp     d0, a2
-    bcc     0x48422425
-    jmp     0x4842233e
-    mov     (0x498, sp), d0
+    bcc     BmpReduceColors_Rewrite         # past the last colour in use: done
+    jmp     BmpReduceColors_MergeLoop       # next dropped colour
+
+    # Write the sorted palette back over the file's (ConvertBitmapFile has put it at
+    # image + 0x36), then pass every pixel byte through map[].
+BmpReduceColors_Rewrite:
+    mov     (0x498, sp), d0                 # d0 = biClrUsed (ConvertBitmapFile's palette size)
     mov     (0x8b8, sp), a0
     mov     (0x4c, sp), a1
-    add     0x36, a0
+    add     0x36, a0                        # a0 = image + 0x36: the colour table
     asl2    d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     (0x480, sp), d0
-    mov     (0x58, sp), d2
-    mov     (0x60, sp), a1
+    call    memcpy_entry, [a2,a3], 8        # memcpy(image + 0x36, sorted palette, biClrUsed * 4)
+    mov     (0x480, sp), d0                 # d0 = biHeight
+    mov     (0x58, sp), d2                  # d2 = stride
+    mov     (0x60, sp), a1                  # a1 = pixels
     nop
     nop
-    mul     d2, d0
+    mul     d2, d0                          # d0 = biHeight * stride: bytes in the pixel array
     clr     d1
     cmp     d1, d0
-    ble     0x48422463
+    ble     BmpReduceColors_Return          # none: done
+    # One byte per turn of the hardware loop (setlb .. llt).
     setlb
-    movbu   (a1), d0
+    movbu   (a1), d0                        # d0 = old index
     mov     sp, a0
     add     0x7a0, a0
-    movbu   (d0, a0), d0
+    movbu   (d0, a0), d0                    # d0 = map[old index]: the new index
     inc     d1
-    movbu   d0, (a1)
+    movbu   d0, (a1)                        # pixel = new index
     mov     (0x480, sp), d0
     mov     (0x58, sp), d2
     inc     a1
@@ -8393,9 +8667,12 @@ _rom_marker:
     nop
     mul     d2, d0
     cmp     d0, d1
-    llt
-    add     0x8a0, sp
+    llt                                     # next byte while < biHeight * stride (recomputed each pass)
+
+BmpReduceColors_Return:
+    add     0x8a0, sp                       # drop the 0x8A0-byte frame
     ret     [d2,d3,a2,a3], 0x10
+
 # LcdOn  (CPU 0x4842246a)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x02246a, 0x0224b3
 # LcdOff  (CPU 0x484224b3)
@@ -16315,133 +16592,211 @@ DrawStringCentered_entry:
 # DrawWallPreview  (CPU 0x48427fff)
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x027fff, 0x02829f
 # Draw2BpFile  (CPU 0x4842829f)
+#   Draw2BpFile(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+#   draws an uncompressed Windows BMP (1, 4 or 8 bpp) with its top-left corner
+#   at the point and loads its colours into palette entries 0x20..0xCF, as
+#   DrawBitmapFile does (the Impls differ only in the height clip). On the draw
+#   task it draws at once (if DrawEnable is set); on any other task it queues a
+#   12-byte record {+0 Draw2BpFile_QueuedExec, +4 s16 x, +6 s16 y, +8 file} for
+#   the draw task instead. Only the pointer to the file is queued, so it must
+#   stay valid until the draw task runs. One direct caller: DbBitmapLoadProc
+#   (0x4848877C), the hidden debug BITMAP LOAD screen, which on MT_Draw draws at
+#   {0, 0} (0x485D6CBC) the file its EV_SHOW handler read to 0x502B8000
+#   (fmmopen "rb", then the fmm read 0x48532457 of at most 0x18000 bytes, its
+#   count unchecked: an 8-bpp 640 x 240 BMP, 0x25C36 bytes with 256 colours,
+#   gets its top rows from whatever lies past the bytes read). The address is
+#   also in the MILK reflection table (0x48728740). There, and in the
+#   firmware's name strings (0x485B5352), it sits in one run with
+#   GetPaletteRGB4, Check2BitLcd, SetLcdMode, GetColorMode and SetColorMode:
+#   colour mode 2 is a 4-level panel whose per-entry levels GetPaletteRGB4
+#   reads. So "2Bp" probably names that 2-bit panel, not a pixel format; no
+#   code here or in the Impl tests the mode.
+Draw2BpFile:
     movm    [a2,a3], (sp)
     add     -0x10, sp
-# Draw2BpFile_entry:   (register-save `call` entry)
-    mov     a1, a3
-    mov     a0, a2
+
+Draw2BpFile_entry:
+    mov     a1, a3                          # a3 = BMP file
+    mov     a0, a2                          # a2 = &point
     call    IsDrawTask_entry, 0, 0x10
     cmp     0, d0
-    beq     0x484282c2
-    mov     (0x5002a02c), d0
+    beq     Draw2BpFile_Deferred            # not the draw task: queue it
+    mov     (DrawEnable), d0
     cmp     0, d0
-    beq     0x484282e4
+    beq     Draw2BpFile_Return              # drawing disabled
     mov     a3, a1
     mov     a2, a0
-    call    Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10
-    bra     0x484282e4
-    mov     0xc, d0
-    call    DrawQueue_Alloc_entry, [d2], 4
-    mov     0x484282e7, d0
-    mov     d0, (a0)
+    call    Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10  # draw now
+    bra     Draw2BpFile_Return
+
+Draw2BpFile_Deferred:
+    mov     0xc, d0                         # 12-byte record
+    call    DrawQueue_Alloc_entry, [d2], 4  # a0 = record
+    mov     Draw2BpFile_QueuedExec, d0
+    mov     d0, (a0)                        # +0: the function the draw task will call
     movhu   (a2), d0
     mov     a0, a1
     inc4    a1
-    movhu   d0, (a1)
+    movhu   d0, (a1)                        # +4: x
     movhu   (2, a2), d0
-    movhu   d0, (2, a1)
-    mov     a3, (8, a0)
-    call    DrawRing_Post_entry, [d2,a2,a3], 0x28
+    movhu   d0, (2, a1)                     # +6: y
+    mov     a3, (8, a0)                     # +8: the file (the pointer only)
+    call    DrawRing_Post_entry, [d2,a2,a3], 0x28  # hand it to the draw task
+
+Draw2BpFile_Return:
     ret     [a2,a3], 0x18
+
 # Draw2BpFile_QueuedExec  (CPU 0x484282e7)
+#   Draw2BpFile_QueuedExec(a0 = record): called by the draw task for a record
+#   Draw2BpFile queued; draws it if DrawEnable is still set.
+Draw2BpFile_QueuedExec:
     movm    [a2,a3], (sp)
     add     -0x10, sp
-    mov     (0x5002a02c), a1
+    mov     (DrawEnable), a1
     mov     a0, a2
-    inc4    a2
-    mov     (8, a0), a3
+    inc4    a2                              # a2 = &record.point
+    mov     (8, a0), a3                     # a3 = record.file
     cmp     0, a1
-    beq     0x48428302
+    beq     Draw2BpFile_QueuedExec_Return   # drawing disabled meanwhile
     mov     a3, a1
     mov     a2, a0
     call    Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10
+
+Draw2BpFile_QueuedExec_Return:
     ret     [a2,a3], 0x18
+
 # Draw2BpFile_Impl  (CPU 0x48428305)
+#   Draw2BpFile_Impl(a0 = &point, a1 = BMP file image): the blit, entered at
+#   Draw2BpFile_Impl_entry from Draw2BpFile and its QueuedExec only. It is
+#   DrawBitmapFile_Impl's code except for the height clip. GetBitmapInfo checks
+#   the file ("BM", 40-byte BITMAPINFOHEADER, 1 plane, 1/4/8 bpp, BI_RGB,
+#   biClrUsed <= 256) and copies its headers, plus the bfOffBits - 54 bytes before
+#   the pixels (the palette, at most 1 KB), to the stack; a file it rejects
+#   changes nothing. Each file row (bottom-up, padded to a multiple of 4 bytes) is
+#   copied into a malloc'd row buffer (never checked for NULL), unpacked to one
+#   byte per pixel (BmpUnpackRow, 1 and 4 bpp MSB-first), offset by +0x20 and
+#   memcpy'd into FrameBuffer. Only the low 16 bits of biWidth/biHeight count; a
+#   negative (top-down) height draws no rows. The clip: a height over 240 is cut
+#   to 240 rows by dropping the image's bottom rows, whatever y is
+#   (DrawBitmapFile_Impl cuts to 240 - y). So whenever y + rows > 240, the rows
+#   that fall below screen row 239 are written past the end of FrameBuffer, into
+#   PICTURE_PLANE2 (0x500F9890) and on; with the only caller's y = 0 the two
+#   Impls behave alike. Nothing else is clipped: no on-screen test, y < 0 writes
+#   above FrameBuffer, and a row wider than 640 - x runs on into the next
+#   framebuffer row. Then palette entries 0x20..0xCF are set from the file's
+#   colours 0..0xAF (RGBQUAD {B,G,R,x} -> 0x00BBGGRR). It always sets all 176: a
+#   shorter palette fills the rest from stale stack bytes, and an 8-bpp index
+#   above 0xAF lands outside them (0xD0..0xFF, where 0xDx bytes are picture
+#   pixels, or wraps to 0x00..0x1F). Ends by marking {x, y, x+biWidth-1,
+#   y+biHeight-1} dirty with SetChangeRect (not clipped). Nothing is 2 bpp:
+#   GetBitmapInfo rejects a 2-bpp file, and the output is one byte per pixel in
+#   FrameBuffer. The only 2-bit step on the path is inside SetPaletteRGB, the
+#   same for DrawBitmapFile_Impl: in colour mode 2 it also keeps a level 0..3 per
+#   entry at 0x50122CBC, which GetPaletteRGB4 reads back.
+Draw2BpFile_Impl:
     movm    [d2,d3,a2,a3], (sp)
-# Draw2BpFile_Impl_entry:   (register-save `call` entry)
-    add     -0x47c, sp
-    mov     a0, (0x494, sp)
+
+    # Frame: DrawBitmapFile_Impl's, with (0x24,sp)/(0x28,sp) and (0x2c,sp)/(0x30,sp)
+    # swapped. (0x1c,sp) and (0x24,sp) = stride, (0x20,sp) and (0x28,sp) = width,
+    # (0x2c,sp) = &palette copy, (0x30,sp) = &point.y, (0x34,sp)/(0x36,sp) = u16
+    # stride/width, (0x38,sp) = next file row, sp+0x3C = palette copy (1 KB),
+    # sp+0x43C = the file header, sp+0x44C = the BITMAPINFOHEADER (biWidth at 0x450,
+    # biHeight at 0x454, biBitCount at 0x45A), sp+0x474 = the dirty rectangle,
+    # (0x494,sp) = &point.
+Draw2BpFile_Impl_entry:
+    add     -0x47c, sp                      # the frame: too big for call's frame byte
+    mov     a0, (0x494, sp)                 # (0x494,sp) = &point
     mov     sp, a0
     mov     a0, d0
     add     0x3c, d0
-    mov     d0, (0x2c, sp)
+    mov     d0, (0x2c, sp)                  # (0x2c,sp) = &palette copy
     mov     a0, d0
     add     0x38, d0
-    mov     d0, (0x18, sp)
-    mov     a1, a0
+    mov     d0, (0x18, sp)                  # (0x18,sp) = sp+0x38: GetBitmapInfo's 5th arg, gets &pixels
+    mov     a1, a0                          # a0 = the file
     mov     sp, a1
-    add     0x43c, a1
+    add     0x43c, a1                       # a1 = file header out
     mov     sp, a2
     mov     a2, d0
-    add     0x44c, d0
-    mov     (0x2c, sp), d1
-    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24
+    add     0x44c, d0                       # d0 = BITMAPINFOHEADER out
+    mov     (0x2c, sp), d1                  # d1 = palette out
+    call    GetBitmapInfo_entry, [d2,d3,a2,a3], 0x24  # -> d0 = 0 if the file is not a usable BMP
     cmp     0, d0
-    bne     0x48428337
-    jmp     0x484284a3
+    bne     Draw2BpFile_Impl_Valid
+    jmp     Draw2BpFile_Impl_Return         # rejected: draw nothing
+
+Draw2BpFile_Impl_Valid:
     mov     (0x450, sp), d0
     mov     1, d3
-    movhu   d0, (0x36, sp)
+    movhu   d0, (0x36, sp)                  # (0x36,sp) = biWidth
     movhu   (0x454, sp), d0
     movhu   (0x45a, sp), d1
-    mov     d0, a2
+    mov     d0, a2                          # a2 = biHeight
     mov     8, d0
-    call    LibDiv32, 0, 0
-    mov     d0, d2
+    call    LibDiv32, 0, 0                  # 8 / biBitCount
+    mov     d0, d2                          # d2 = ppb, pixels per byte (1, 2 or 8)
     movhu   (0x36, sp), d0
     exth    d2
     exth    d0
-    mov     d0, (0x20, sp)
+    mov     d0, (0x20, sp)                  # (0x20,sp) = width
     mov     d0, d1
     mov     d2, d0
     asl2    d0
     sub     d3, d0
-    add     d0, d1
+    add     d0, d1                          # d1 = width + 4*ppb - 1
     mov     d2, d0
     asl2    d0
     clr     d3
     mov     d3, mdr
-    divu    d0, d1
-    asl2    d1
-    movhu   d1, (0x34, sp)
+    divu    d0, d1                          # / (4*ppb)
+    asl2    d1                              # * 4: the file's row stride in bytes, padded to 4
+    movhu   d1, (0x34, sp)                  # (0x34,sp) = stride
     movhu   (0x34, sp), d0
-    mov     a2, d3
+    mov     a2, d3                          # d3 = biHeight (DrawBitmapFile_Impl loads 240 here)
     exth    d0
-    mov     d0, (0x1c, sp)
+    mov     d0, (0x1c, sp)                  # (0x1c,sp) = stride
     nop
     nop
-    mul     d0, d2
+    mul     d0, d2                          # stride * pixels per byte: one unpacked row
     mov     d2, d0
-    call    Malloc_entry, [d2,a2,a3], 0x28
-    mov     a0, a3
+    call    Malloc_entry, [d2,a2,a3], 0x28  # malloc(d0 bytes) -> a0
+    mov     a0, a3                          # a3 = row buffer (not checked for NULL)
     exth    d3
-    mov     0xf0, d2
+    mov     0xf0, d2                        # d2 = 240, the screen height
     cmp     d2, d3
-    ble     0x4842839f
+    ble     Draw2BpFile_Impl_RowSetup       # height <= 240: draw every row, wherever y is
+    # Too tall: skip the first height - 240 file rows, which are the image's
+    # bottom rows, since BMP rows run bottom-up. y plays no part: DrawBitmapFile_Impl
+    # skips height - (240 - y) rows here.
     clr     d1
     mov     d3, d0
     sub     d2, d0
     cmp     d1, d0
-    ble     0x4842839d
-    sub     d2, d3
+    ble     Draw2BpFile_Impl_ClipHeight     # never taken: height > 240 here
+    sub     d2, d3                          # d3 = rows to skip
+    # Skip them; the hardware loop (setlb .. llt) repeats from the next instruction.
     setlb
     mov     (0x1c, sp), d2
     mov     (0x38, sp), d0
     inc     d1
     add     d2, d0
-    mov     d0, (0x38, sp)
+    mov     d0, (0x38, sp)                  # next file row += stride
     exth    d1
     cmp     d3, d1
-    llt
-    mov     0xf0, a2
+    llt                                     # while skipped < rows to skip
+
+Draw2BpFile_Impl_ClipHeight:
+    mov     0xf0, a2                        # a2 = 240 rows to draw
+
+Draw2BpFile_Impl_RowSetup:
     mov     (0x494, sp), d0
     mov     (0x494, sp), a0
     add     2, d0
-    mov     d0, (0x30, sp)
-    movhu   (a0), d2
+    mov     d0, (0x30, sp)                  # (0x30,sp) = &point.y
+    movhu   (a0), d2                        # d2 = x
     mov     d0, a0
-    movhu   (a0), d0
-    mov     a2, d3
+    movhu   (a0), d0                        # d0 = y
+    mov     a2, d3                          # d3 = rows to draw
     exth    d0
     exth    d3
     exth    d2
@@ -16450,57 +16805,67 @@ DrawStringCentered_entry:
     nop
     nop
     mul     d1, d0
-    add     0x500d4090, d0
+    add     FrameBuffer, d0
     add     -0x280, d0
     add     d2, d0
-    mov     d0, a2
-    clr     d2
+    mov     d0, a2                          # a2 = FrameBuffer + (y + rows - 1)*640 + x: the bottom row
+    clr     d2                              # d2 = row
     cmp     d2, d3
-    ble     0x48428422
+    ble     Draw2BpFile_Impl_RowsDone       # no rows: only when height <= 0 (y is not tested)
     movhu   (0x34, sp), d0
     exth    d0
-    mov     d0, (0x24, sp)
+    mov     d0, (0x24, sp)                  # (0x24,sp) = stride
     movhu   (0x36, sp), d0
     exth    d0
-    mov     d0, (0x28, sp)
+    mov     d0, (0x28, sp)                  # (0x28,sp) = width
+
+Draw2BpFile_Impl_RowLoop:
     mov     a3, a0
     mov     (0x38, sp), a1
     mov     (0x24, sp), d0
-    call    memcpy_entry, [a2,a3], 8
-    movhu   (0x45a, sp), d1
+    call    memcpy_entry, [a2,a3], 8        # memcpy(row buffer, file row, stride)
+    movhu   (0x45a, sp), d1                 # d1 = biBitCount
     mov     a3, a0
     mov     (0x1c, sp), d0
-    call    BmpUnpackRow_entry, [d2,d3,a2,a3], 0x30
+    call    BmpUnpackRow_entry, [d2,d3,a2,a3], 0x30  # unpack in place to one byte per pixel (8 bpp: left as is)
     mov     (0x20, sp), d1
     clr     d0
     cmp     d0, d1
-    ble     0x48428406
+    ble     Draw2BpFile_Impl_CopyRow        # width <= 0
+    # Move every pixel up to the palette entries this bitmap loads; hardware loop.
     setlb
     movbu   (d0, a3), d1
-    add     0x20, d1
+    add     0x20, d1                        # BMP index n -> colour 0x20 + n
     movbu   d1, (d0, a3)
     mov     (0x20, sp), d1
     inc     d0
     exth    d0
     cmp     d1, d0
-    llt
+    llt                                     # next pixel while i < width
+
+Draw2BpFile_Impl_CopyRow:
     mov     a2, a0
     mov     a3, a1
     mov     (0x28, sp), d0
-    call    memcpy_entry, [a2,a3], 8
+    call    memcpy_entry, [a2,a3], 8        # memcpy(dest, row buffer, width): width is not clipped
     mov     (0x38, sp), d0
     mov     (0x1c, sp), d1
     inc     d2
     add     d1, d0
-    mov     d0, (0x38, sp)
+    mov     d0, (0x38, sp)                  # next file row += stride
     exth    d2
     mov     0x280, d0
-    sub     d0, a2
+    sub     d0, a2                          # dest one framebuffer row up
     cmp     d3, d2
-    blt     0x484283db
+    blt     Draw2BpFile_Impl_RowLoop        # next row while row < rows to draw
+
+Draw2BpFile_Impl_RowsDone:
     mov     a3, a0
-    call    Free_entry, [d2,d3,a2,a3], 0x2c
-    mov     0x20, d2
+    call    Free_entry, [d2,d3,a2,a3], 0x2c  # free(a0): the row buffer
+    mov     0x20, d2                        # d2 = palette entry, from 0x20
+
+    # Set entries 0x20..0xCF from the file's colours 0..0xAF.
+Draw2BpFile_Impl_PaletteLoop:
     mov     (0x2c, sp), d0
     mov     0xffffff80, a0
     mov     d2, d1
@@ -16509,11 +16874,11 @@ DrawStringCentered_entry:
     mov     d2, d0
     asl2    d0
     add     d1, a0
-    movbu   (1, a0), d1
+    movbu   (1, a0), d1                     # green = palette copy[(d2 - 0x20)*4 + 1]
     mov     d0, a0
     mov     (0x2c, sp), d0
     add     d0, a0
-    movbu   (-0x80, a0), d3
+    movbu   (-0x80, a0), d3                 # blue: byte +0
     mov     d2, d0
     asl2    d0
     asl     8, d3
@@ -16523,26 +16888,27 @@ DrawStringCentered_entry:
     add     d1, d0
     add     -0x80, d0
     mov     d0, a0
-    movbu   (2, a0), d1
+    movbu   (2, a0), d1                     # red: byte +2
     mov     d2, d0
-    add     d3, d1
-    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20
+    add     d3, d1                          # d1 = 0x00BBGGRR
+    call    SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20  # SetPaletteRGB(d0 = entry, d1 = colour)
     inc     d2
     exth    d2
     cmp     0xd0, d2
-    blt     0x4842842c
+    blt     Draw2BpFile_Impl_PaletteLoop    # next entry while < 0xD0: always 176 of them
+    # Mark the rectangle dirty for the LCD update, sized by the header (not clipped).
     mov     (0x30, sp), a0
     movhu   (a0), d0
-    movhu   d0, (0x476, sp)
+    movhu   d0, (0x476, sp)                 # rect.top = y
     mov     (0x494, sp), a0
     movhu   (a0), d0
-    movhu   d0, (0x474, sp)
+    movhu   d0, (0x474, sp)                 # rect.left = x
     movhu   (a0), d1
     mov     (0x450, sp), d0
     exth    d1
     add     d0, d1
     add     -1, d1
-    movhu   d1, (0x478, sp)
+    movhu   d1, (0x478, sp)                 # rect.right = x + biWidth - 1
     mov     (0x30, sp), a0
     mov     (0x454, sp), d0
     movhu   (a0), d1
@@ -16550,15 +16916,22 @@ DrawStringCentered_entry:
     exth    d1
     add     d0, d1
     add     -1, d1
-    movhu   d1, (0x47a, sp)
-    add     0x474, a0
+    movhu   d1, (0x47a, sp)                 # rect.bottom = y + biHeight - 1
+    add     0x474, a0                       # a0 = &rect
     call    SetChangeRect, 0, 0
-    add     0x47c, sp
+
+Draw2BpFile_Impl_Return:
+    add     0x47c, sp                       # drop the 0x47C-byte frame
     ret     [d2,d3,a2,a3], 0x10
+    # Not part of Draw2BpFile_Impl: three stub functions (two bare retf, one
+    # that returns 0) before InitializeEventQueue (0x484284B4). No call, calls,
+    # jump, branch or pointer in the build-941 image (library included) reaches
+    # any of them.
+    retf    0, 0                            # stub: returns
+    retf    0, 0                            # stub: returns
+    clr     d0                              # stub: returns 0
     retf    0, 0
-    retf    0, 0
-    clr     d0
-    retf    0, 0
+
 # InitializeEventQueue  (CPU 0x484284b4)
     movm    [d2,d3], (sp)
     add     -8, sp

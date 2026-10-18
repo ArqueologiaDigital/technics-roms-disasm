@@ -1,0 +1,736 @@
+; gfx_bmpfile.ann -- the BMP file helpers BfFile2Struct .. BmpReduceColors
+; (CPU 0x48421D94..0x4842246A) and Draw2BpFile (0x4842829F..0x484284B4), merged
+; into src/program.s by tools/gen_program_s.py. Format: annotations/README.md.
+; Addresses: build 941. Data names DrawEnable, FrameBuffer etc. come from
+; gfx_draw.ann.
+;
+; A BMP file image in memory: the packed 14-byte BITMAPFILEHEADER {"BM", u32 bfSize,
+; u16 bfReserved1, u16 bfReserved2, u32 bfOffBits}, the 40-byte BITMAPINFOHEADER
+; {biSize, s32 biWidth, s32 biHeight, u16 biPlanes, u16 biBitCount, biCompression,
+; biSizeImage, biXPelsPerMeter, biYPelsPerMeter, biClrUsed, biClrImportant} at +14,
+; the RGBQUAD {B, G, R, x} colour table at +54, and the pixel rows at +bfOffBits,
+; bottom row first (biHeight > 0), each padded to a multiple of 4 bytes. The names
+; BfFile2Struct, BfStruct2File, GetBitmapInfo, ConvertBitmapFile and Draw2BpFile
+; are the firmware's own (MILK reflection table); BmpUnpackRow and BmpReduceColors
+; are ours.
+;
+; GetBitmapInfo is the one parser: every BMP user calls it (the blitters, the
+; slide show, the homepage loader, the view objects). ConvertBitmapFile repacks a
+; file in place and cuts an 8-bpp palette to the 176 entries the blitters load
+; (0x20..0xCF), through BmpReduceColors.
+
+; ---- data -------------------------------------------------------------------------
+
+; Read only by GetBitmapInfo (0x48421DF2); the byte after the NUL is 0xFF.
+equ BmpSignature  485A28B8  "BM", NUL-terminated: the BMP bfType GetBitmapInfo compares
+
+; ---- BfFile2Struct ------------------------------------------------------------
+48421D94 doc   BfFile2Struct(a0 = BMP file image, a1 = &struct, 16 bytes): copies the
+48421D94 doc   packed 14-byte BITMAPFILEHEADER into the compiler's aligned layout {+0 u8
+48421D94 doc   bfType[2], +2 2 pad bytes = 0, +4 u32 bfSize, +8 u16 bfReserved1, +0xA u16
+48421D94 doc   bfReserved2, +0xC u32 bfOffBits}: memcpy of bfType, then of the 12 bytes at
+48421D94 doc   file + 2 to struct + 4. Byte copies, so the file may sit at any address.
+48421D94 doc   Checks nothing and returns no value. Its one caller is GetBitmapInfo; the
+48421D94 doc   plain address is in the MILK reflection table at 0x487276FC.
+48421D99 eol   a2 = struct
+48421D9A eol   a3 = file
+48421D9D eol   2 bytes: bfType
+48421D9F eol   memcpy(struct, file, 2)
+48421DA7 eol   +2, +3: the pad, zeroed
+48421DAD eol   a2 = &struct.bfSize
+48421DAE eol   a3 = &file.bfSize (file + 2)
+48421DB0 eol   12 bytes: bfSize, bfReserved1, bfReserved2, bfOffBits
+48421DB4 eol   memcpy(struct + 4, file + 2, 12)
+
+; ---- BfStruct2File ------------------------------------------------------------
+48421DBE doc   BfStruct2File(a0 = &struct (16 bytes, BfFile2Struct's layout), a1 = BMP file
+48421DBE doc   image): the inverse of BfFile2Struct. Writes the packed 14-byte BITMAPFILEHEADER
+48421DBE doc   back over the start of the file: bfType from struct + 0, then the 12 bytes at
+48421DBE doc   struct + 4 to file + 2; the pad is skipped. Returns no value. Callers:
+48421DBE doc   ConvertBitmapFile (0x48421FEF), after it has moved the pixels, set a new bfSize
+48421DBE doc   and bfOffBits and cleared bfReserved1/2, and 0x485816BA (0x48581720), which sets
+48421DBE doc   bfSize to bfOffBits + stride * rows for a new row count before rewriting
+48421DBE doc   biHeight. The plain address is in the MILK reflection table at 0x48727700.
+48421DC3 eol   a3 = struct
+48421DC4 eol   a2 = file
+48421DC7 eol   2 bytes: bfType
+48421DC9 eol   memcpy(file, struct, 2)
+48421DD0 eol   a2 = &file.bfSize (file + 2)
+48421DD2 eol   a3 = &struct.bfSize: skip the pad
+48421DD3 eol   12 bytes: bfSize, bfReserved1, bfReserved2, bfOffBits
+48421DD7 eol   memcpy(file + 2, struct + 4, 12)
+
+; ---- GetBitmapInfo ------------------------------------------------------------
+48421DE1 doc   GetBitmapInfo(a0 = BMP file image, a1 = &file header (16-byte struct, see
+48421DE1 doc   BfFile2Struct), d0 = &BITMAPINFOHEADER copy (40 bytes), d1 = colour-table buffer
+48421DE1 doc   (1 KB), 5th argument at the caller's (0x18,sp) = &u8 *pixels) -> d0 = 1 if the
+48421DE1 doc   file passes every check below, else 0. In order: BfFile2Struct fills *a1,
+48421DE1 doc   always; bfType must be "BM" (LibStrncmp against BmpSignature; exact, since it
+48421DE1 doc   compares a byte before testing it for NUL); the 40 bytes at file + 14 are copied
+48421DE1 doc   to *d0; then biSize must be 40, biPlanes 1, biBitCount 1, 4 or 8,
+48421DE1 doc   biClrUsed <= 256 (unsigned) and biCompression 0 (BI_RGB). Each failed check
+48421DE1 doc   returns 0 at once: *a1 is written, *d0 too unless "BM" failed, the colour buffer
+48421DE1 doc   and *pixels are not. On success it copies the colour table raw (RGBQUAD
+48421DE1 doc   {B, G, R, x}) from file + 54: n = (s16)(bfOffBits - 54) bytes if that is
+48421DE1 doc   0..0x400, else 0x400, so a bfOffBits below 54 copies 1 KB of what follows the
+48421DE1 doc   headers; the rest of the buffer keeps its old bytes. Then *pixels = file +
+48421DE1 doc   bfOffBits (all 32 bits), and it returns 1. Not checked: biWidth and biHeight (0,
+48421DE1 doc   negative or larger than the screen all pass), bfSize, and whether the colour
+48421DE1 doc   table and pixels lie inside the file; biClrUsed is range-checked but sizes
+48421DE1 doc   nothing. Callers, each with a 1 KB colour buffer on its stack: the blitters
+48421DE1 doc   DrawBitmapFile_Impl, DrawBitmapFileEx_Impl and Draw2BpFile_Impl (0: draw
+48421DE1 doc   nothing); ConvertBitmapFile (0: returns 0) and BmpReduceColors, which ignores
+48421DE1 doc   the result (ConvertBitmapFile has checked it); and for the picture size:
+48421DE1 doc   VwBitmapFileProc (0x484188EB), VwJpegFileProc (0x48418EE9), AcHpBmpProc
+48421DE1 doc   (0x48495937), LoadHpBmp (0x48497172, which then wants biWidth <= 160 and
+48421DE1 doc   biHeight <= 100), and in the AcSswImgListProc range the image drawer 0x4858056C
+48421DE1 doc   (a BMP, else a JPEG), the file loader 0x485812EA (0: error -0x6D), the size
+48421DE1 doc   check 0x4858163F (after GetJpegSize finds no size; 0: it returns 0, the value
+48421DE1 doc   that means the size fits) and the row-count rewriter 0x485816BA (0: returns 0).
+48421DE1 doc   The plain address is in the MILK reflection table at 0x48727704.
+48421DE6 eol   d3 = colour-table buffer
+48421DE7 eol   a2 = &info header copy
+48421DE9 eol   a3 = &file header struct
+48421DEA eol   d2 = the file
+48421DEC eol   BfFile2Struct(a0 = file, a1 = struct), before any check
+48421DF1 eol   a0 = &struct.bfType
+48421DFA eol   LibStrncmp(bfType, "BM", 2)
+48421E05 eol   not "BM": return 0
+48421E09 label GetBitmapInfo_IsBM
+48421E0A eol   a1 = file + 14: the BITMAPINFOHEADER
+48421E10 eol   memcpy(info, file + 14, 40), before biSize is known
+48421E17 eol   d0 = biSize
+48421E1C eol   not a 40-byte BITMAPINFOHEADER (OS/2 12, V4 108, V5 124): return 0
+48421E20 label GetBitmapInfo_HeaderSizeOk
+48421E20 eol   d0 = biPlanes
+48421E27 eol   biPlanes != 1: return 0
+48421E2B label GetBitmapInfo_OnePlane
+48421E2B eol   a0 = &biBitCount
+48421E2F eol   biBitCount: 1, 4 or 8 only
+48421E41 eol   2, 16, 24, 32 ...: return 0
+48421E44 label GetBitmapInfo_DepthOk
+48421E44 eol   d0 = biClrUsed
+48421E4D eol   biClrUsed > 256: return 0
+48421E50 label GetBitmapInfo_ColoursOk
+48421E50 eol   d0 = biCompression
+48421E57 eol   not BI_RGB (RLE8, RLE4, bitfields, ...): return 0
+48421E5A label GetBitmapInfo_Uncompressed
+48421E5A note  Copy the colour table: every byte between the headers and the pixels, sized by
+48421E5A note  bfOffBits alone (not by biClrUsed or biBitCount), at most 1 KB.
+48421E5A eol   a3 = &struct.bfOffBits
+48421E63 eol   d0 = bfOffBits - 14 - 40: the colour-table bytes
+48421E66 eol   as s16: bfOffBits < 54 gives a negative length
+48421E67 eol   unsigned compare: a negative length counts as too big
+48421E6D eol   over 1 KB or negative: copy 1 KB (256 RGBQUADs)
+48421E70 label GetBitmapInfo_CopyColours
+48421E70 eol   a0 = colour-table buffer
+48421E72 eol   a1 = file + 54: the colour table
+48421E76 eol   n: 0..0x400
+48421E77 eol   memcpy(colours, file + 54, n)
+48421E7E eol   d0 = bfOffBits
+48421E7F eol   a0 = the 5th argument: &pixels
+48421E81 eol   d2 = file + bfOffBits: the pixel rows (bottom row first if biHeight > 0)
+48421E82 eol   *pixels (not checked against bfSize)
+48421E83 eol   1: accepted
+48421E85 label GetBitmapInfo_Return
+
+; ---- ConvertBitmapFile --------------------------------------------------------
+48421E88 doc   ConvertBitmapFile(a0 = BMP file image in memory, d0 = size, the most bytes
+48421E88 doc   the rewritten file may take; 0 = the header's bfSize) -> d0 = 1 if it
+48421E88 doc   rewrote the file, 0 if it left it untouched. It repacks the file in place
+48421E88 doc   as the 54 header bytes, n RGBQUADs at +0x36 and the pixel array with no
+48421E88 doc   gap (the layout BmpReduceColors assumes), and cuts an 8-bpp file with more
+48421E88 doc   than 176 colours to the 176 DrawBitmapFile loads (entries 0x20..0xCF).
+48421E88 doc   GetBitmapInfo checks the file ("BM", biSize 40, 1 plane, 1/4/8 bpp, BI_RGB,
+48421E88 doc   biClrUsed <= 256; else return 0) and copies its headers and
+48421E88 doc   min(bfOffBits - 0x36, 0x400) colour bytes to the stack. P, the pixel array's
+48421E88 doc   size, is the 4-byte-padded row stride * biHeight (its low 16 bits, signed);
+48421E88 doc   room = size - 0x36 - P; under 4 bytes returns 0. n = min(room / 4,
+48421E88 doc   2^biBitCount). The P pixel bytes move (memmove) from image + bfOffBits to
+48421E88 doc   image + 0x36 + 4n, the n colours are written back at +0x36, then the headers
+48421E88 doc   with biClrUsed = n, bfOffBits = 0x36 + 4n, bfSize = 0x36 + 4n + P and
+48421E88 doc   bfReserved1/2 = 0 (biSizeImage and the rest kept). If biBitCount is 8 and
+48421E88 doc   n > 0xB0, BmpReduceColors(image, 0xB0) then remaps the pixels onto the 0xB0
+48421E88 doc   most used colours (its u16 use counts can wrap: see its doc).
+48421E88 doc   So n comes from the room, not from biClrUsed or bfOffBits: all the room
+48421E88 doc   becomes colour table, up to 2^bpp entries. A gap before the pixels turns
+48421E88 doc   into colours; room past them moves the pixels up and adds entries of stale
+48421E88 doc   stack bytes (no valid pixel uses them); room past a full table, 1..3 bytes
+48421E88 doc   over a multiple of 4, and entries a size short of bfOffBits + P cannot hold
+48421E88 doc   are dropped, which moves the pixels down if they lay before them. With
+48421E88 doc   size = bfSize a well-formed file keeps its layout: only biClrUsed (set to
+48421E88 doc   the table's length) and bfReserved change. Run again with the same size or
+48421E88 doc   the new bfSize it moves nothing (BmpReduceColors still runs if n > 0xB0).
+48421E88 doc   Callers: LoadHpBmp (call at 0x484971B2) passes its read buffer's size,
+48421E88 doc   0x42B6 = 0x36 + 0x400 + 160*100, and on 1 writes all of it to flash at
+48421E88 doc   0x9681118C; it refuses biWidth > 160 or biHeight > 100 (signed), so every
+48421E88 doc   file there gets 2^bpp colours and every 8-bpp one is reduced. The
+48421E88 doc   slide-show image drawer at 0x4858056C (call at 0x485806B6) passes the
+48421E88 doc   header's bfSize, then draws with DrawBitmapFile on 1 and with
+48421E88 doc   DrawBitmap(point, 0) on 0, so a file whose bfSize is 0 or too small shows
+48421E88 doc   bitmap 0. Also in the InitBlockTable function table at 0x4872770C
+48421E88 doc   (InitBlockTable + 0x660).
+48421E88 doc   Bugs: bfOffBits + P is not checked against the size, so a large bfOffBits
+48421E88 doc   reads past the buffer; with d0 = 0 or bfSize only the header bounds the
+48421E88 doc   writes. A top-down file (biHeight negative as s16) makes P < 0: nothing
+48421E88 doc   moves, the 4n colour bytes overwrite the first pixel bytes when
+48421E88 doc   4n > bfOffBits - 0x36, and bfSize comes out too small.
+48421E8A note  Frame: (0x1c,sp) = the new bfSize, (0x20,sp) = the result, (0x30,sp) = &pixels
+48421E8A note  (image + bfOffBits), sp+0x34 = the file header {+0 bfType, +4 bfSize, +8 r1, +0xA r2,
+48421E8A note  +0xC bfOffBits}, sp+0x44 = the BITMAPINFOHEADER (biWidth at 0x48, biHeight at 0x4C,
+48421E8A note  biBitCount at 0x52, biClrUsed at 0x64), sp+0x6C = the colour table copy (1 KB).
+48421E8A eol   the frame: too big for call's frame byte
+48421E8E eol   (0x484,sp) = image (spilled to the caller's argument area)
+48421E92 eol   a3 = size
+48421E99 eol   (0x2c,sp) = &file header copy
+48421E9F eol   (0x28,sp) = &BITMAPINFOHEADER copy
+48421EA5 eol   (0x24,sp) = &colour table copy
+48421EAB eol   (0x18,sp) = sp+0x30: GetBitmapInfo's 5th arg, gets &pixels
+48421EAD eol   a0 = the file
+48421EB1 eol   a1 = file header out
+48421EB3 eol   d0 = BITMAPINFOHEADER out
+48421EB5 eol   d1 = colour table out
+48421EB7 eol   -> d0 = 1, or 0 if the file is not a usable BMP
+48421EBC eol   (0x20,sp) = result
+48421EC0 eol   rejected: return 0, file untouched
+48421EC4 eol   size given
+48421EC6 eol   size 0: a3 = the header's bfSize
+48421EC8 label ConvertBitmapFile_HaveSize
+48421EC8 note  P = stride * height, as DrawBitmapFile_Impl computes the stride.
+48421EC8 eol   a2 = biWidth
+48421ECA eol   d1 = biBitCount
+48421ED2 eol   8 / biBitCount
+48421ED9 eol   d2 = ppb, pixels per byte (1, 2 or 8)
+48421EE4 eol   d1 = ppb
+48421EE9 eol   d0 = width + 4*ppb - 1
+48421EEC eol   / (4*ppb)
+48421EF3 eol   d1 = biHeight, low 16 bits
+48421EF6 eol   * 4: the row stride in bytes, padded to 4
+48421EF8 eol   signed: a top-down (negative) height stays negative
+48421EFD eol   a2 = P, the pixel array's size
+48421F02 eol   (0x1c,sp) = 0x36 + P: the new bfSize, before the colours
+48421F04 eol   a3 = size - 0x36 - P: the room for the colour table
+48421F08 eol   not one RGBQUAD: return 0, file untouched
+48421F0F eol   d2 = room / 4: the colours that fit
+48421F12 note  a1 = 2^biBitCount: doubled once per bit in the hardware loop (setlb .. llt).
+48421F16 eol   never taken: biBitCount is 1, 4 or 8
+48421F20 eol   while i < biBitCount
+48421F21 label ConvertBitmapFile_ClampCount
+48421F23 eol   room / 4 <= 2^bpp: keep it
+48421F25 eol   d2 = 2^bpp, the most the depth can index
+48421F27 label ConvertBitmapFile_HaveCount
+48421F27 eol   d2 = n = min(room / 4, 2^bpp), the colour count
+48421F29 eol   d3 = 4n: the colour table's bytes
+48421F2D eol   (0x1c,sp) = 0x36 + 4n + P: the new bfSize
+48421F31 label ConvertBitmapFile_NoRoom
+48421F32 eol   result = 0
+48421F34 label ConvertBitmapFile_TestResult
+48421F3A eol   return 0
+48421F3D label ConvertBitmapFile_Rewrite
+48421F3D note  Move the P pixel bytes from image + bfOffBits to just after the n colours, byte by
+48421F3D note  byte as memmove does. The 8-bpp branch and the other one are the same code twice.
+48421F44 eol   a3 = image + 0x36 + 4n: where the pixels go
+48421F4B eol   1 or 4 bpp: the same move, duplicated
+48421F4D eol   a0 = image + bfOffBits: where they are
+48421F50 eol   dest <= src: they move down, or stay
+48421F52 eol   a2 = P - 1
+48421F56 eol   P <= 0: nothing to move
+48421F59 eol   a1 = the last source byte
+48421F5B eol   a3 = the last destination byte
+48421F5D note  Dest above src (the table grew): copy backwards from the last byte; hardware loop.
+48421F69 eol   while a1 >= the first source byte
+48421F6C label ConvertBitmapFile_Bpp8_MoveDown
+48421F6D eol   dest == src: already in place
+48421F71 eol   P <= 0: nothing to move
+48421F75 eol   d1 = the end of the source
+48421F77 note  Dest below src (more space before the pixels than 4n): copy forwards.
+48421F80 eol   while a0 < the end
+48421F83 label ConvertBitmapFile_NotBpp8
+48421F83 note  1 and 4 bpp: a copy of the move above, instruction for instruction.
+48421F83 eol   a0 = image + bfOffBits: where they are
+48421F86 eol   dest <= src: they move down, or stay
+48421F8C eol   P <= 0: nothing to move
+48421F93 note  Dest above src: copy backwards.
+48421FA2 label ConvertBitmapFile_NotBpp8_MoveDown
+48421FA3 eol   dest == src: already in place
+48421FA7 eol   P <= 0: nothing to move
+48421FAD note  Dest below src: copy forwards.
+48421FB7 label ConvertBitmapFile_WritePalette
+48421FB7 note  Write the colour table, then the two headers, back from the stack copies.
+48421FBD eol   a0 = image + 0x36: right after the headers
+48421FBF eol   d0 = 4n
+48421FC0 eol   memcpy(image + 0x36, colour copy, 4n); beyond bfOffBits - 0x36: stale
+48421FC7 eol   biClrUsed = n
+48421FCF eol   a0 = image + 0xE: the BITMAPINFOHEADER
+48421FD1 eol   d3 = 0x36 + 4n
+48421FD5 eol   memcpy(image + 0xE, header copy, 0x28)
+48421FDC note  Update the file header copy, then write it out.
+48421FDC eol   bfOffBits = 0x36 + 4n
+48421FE0 eol   bfSize = 0x36 + 4n + P
+48421FE3 eol   bfReserved1 = 0
+48421FE6 eol   bfReserved2 = 0
+48421FEF eol   BfStruct2File(a0 = header copy, a1 = image): 14 bytes
+48421FF9 eol   1 or 4 bpp: done
+48421FFF eol   n <= 0xB0: all n colours fit DrawBitmapFile's 176 entries
+48422001 note  More than 176 colours: DrawBitmapFile loads only 176 (entries 0x20..0xCF).
+48422008 eol   BmpReduceColors(a0 = image, d0 = 0xB0); its d0 is not used
+4842200D label ConvertBitmapFile_Return
+4842200D eol   d0 = 1 rewritten, 0 not
+4842200F eol   drop the 0x46C-byte frame
+
+; ---- BmpUnpackRow -------------------------------------------------------------
+48422016 doc   BmpUnpackRow(a0 = row, d0 = packed bytes in the row, d1 = biBitCount): expands a
+48422016 doc   1- or 4-bpp BMP row in place to one byte per pixel, leftmost pixel first. 4 bpp:
+48422016 doc   two bytes per packed byte, high nibble then low nibble (values 0..15); 1 bpp:
+48422016 doc   eight, bit 7 first (values 0 and 1). 8 bpp, and any other depth (d1 is taken as
+48422016 doc   u16), return at once with the row as it was. The 1- and 4-bpp paths work from a
+48422016 doc   Malloc'd copy of the first count * 8 / bpp bytes of the row, the whole expanded
+48422016 doc   length (only count of them are packed pixels; the row must hold that many bytes
+48422016 doc   anyway, for the output), and Free it at the end. Malloc is not checked for NULL.
+48422016 doc   A count of 0 still calls Malloc and Free and changes nothing. A negative count
+48422016 doc   (a caller's stride for a negative s16 biWidth) is not rejected: Malloc reads
+48422016 doc   count * 8 / bpp as a huge unsigned size and returns NULL (or, for a few small
+48422016 doc   values, a block with a corrupt header), and memcpy to NULL then copies on from
+48422016 doc   address 0. Callers: DrawBitmapFile_Impl (0x48424C0F), DrawBitmapFileEx_Impl
+48422016 doc   (0x48424E0E) and Draw2BpFile_Impl (0x484283EE), each passing the file row's
+48422016 doc   padded stride as the count, so the pad bits are expanded too, past biWidth. No
+48422016 doc   table holds its address (it is not a MILK-named function; the name is ours).
+4842201B eol   (0x38,sp) = row, kept in the caller's argument area
+4842201D eol   d2 = packed byte count
+4842201E eol   depth as u16
+48422023 eol   8 bpp: one byte per pixel already
+48422026 label BmpUnpackRow_Not8bpp
+4842202E eol   any other depth: row unchanged
+48422031 label BmpUnpackRow_4bpp
+48422033 eol   LibDiv32(8, 4) = 2 pixels per byte
+4842203E eol   d2 = count * 2: the expanded length
+48422041 eol   Malloc(count * 2) -> a0 (not checked for NULL)
+48422048 eol   (0x14,sp) = the copy
+4842204A eol   a2 = the copy: the packed source
+4842204E eol   memcpy(copy, row, count * 2): the expanded length, not count
+48422057 eol   count <= 0: nothing to expand
+48422059 eol   a0 = row: the left pixel of each pair
+4842205D eol   d1 = row + 1: the right pixel
+4842205F eol   a1 = row + count * 2: the end
+48422061 note  setlb .. lcs: one packed byte per pass, two pixels out.
+48422069 eol   high nibble
+4842206C eol   -> left pixel
+48422071 eol   low nibble
+48422074 eol   -> right pixel
+48422077 eol   next pair (d1 too)
+4842207A eol   while a0 < end (unsigned)
+4842207B label BmpUnpackRow_4bppDone
+4842207D eol   Free(copy)
+48422087 label BmpUnpackRow_1bpp
+48422089 eol   LibDiv32(8, 1) = 8 pixels per byte
+48422091 eol   (0x14,sp) = 8
+48422095 eol   d2 = count * 8: the expanded length
+48422097 eol   (0x18,sp) = count * 8
+4842209A eol   Malloc(count * 8) -> a0 (not checked for NULL)
+484220A1 eol   (0x1c,sp) = the copy
+484220A6 eol   a3 = the copy: the packed source
+484220A7 eol   memcpy(copy, row, count * 8): the expanded length, not count
+484220B0 eol   a0 = output index
+484220B6 eol   count <= 0: nothing to expand
+484220B9 label BmpUnpackRow_1bppExpand
+484220BB eol   d3 = &row[7]: the first byte's rightmost pixel
+484220BD note  setlb .. llt: one packed byte per pass, eight pixels out, written right to
+484220BD note  left: bit 0 to row[i+7] .. bit 7 to row[i], the leftmost.
+484220BE eol   d1 = packed byte
+484220C7 eol   bit 0 -> pixel 7
+484220DA eol   bit 1 -> pixel 6
+484220F0 eol   bit 2 -> pixel 5
+484220FD eol   bit 3 -> pixel 4
+4842210E eol   bit 4 -> pixel 3
+48422120 eol   bit 5 -> pixel 2
+48422132 eol   bit 6 -> pixel 1
+48422142 eol   bit 7 -> pixel 0, the leftmost
+48422146 eol   next packed byte
+48422147 eol   output index += 8
+48422149 eol   d3 += 8: the next byte's rightmost pixel
+4842214E eol   while index < count * 8 (signed)
+4842214F label BmpUnpackRow_1bppDone
+48422151 eol   Free(copy)
+
+; ---- BmpReduceColors -----------------------------------------------------------
+4842215B doc   BmpReduceColors(a0 = BMP file image, d0 = s16 colour budget): makes an 8-bpp
+4842215B doc   BMP use at most d0 colours, the first d0 of its palette, rewriting palette and
+4842215B doc   pixels in place. It re-reads the file with GetBitmapInfo (the result is not
+4842215B doc   checked), counts each palette index over the pixel array (u16 counts),
+4842215B doc   comb-sorts the 256 palette slots by count, most used first, and gives every
+4842215B doc   index its rank as new index, so the colours in use always move to the front.
+4842215B doc   If more than d0 indices are in use, each colour at rank d0 or beyond (the less
+4842215B doc   used ones) is mapped to the kept colour (rank < d0) nearest it in RGB: least
+4842215B doc   dR^2 + dG^2 + dB^2, the more used one on a tie; no kept colour is changed.
+4842215B doc   Then it copies the sorted palette (biClrUsed entries) back over the colour
+4842215B doc   table at image + 0x36 and rewrites every pixel byte through the index map. The
+4842215B doc   headers are not touched: biClrUsed stays as it was and the dropped colours stay
+4842215B doc   in the table after the kept ones, but no pixel refers to them any more.
+4842215B doc   Everything is in a 0x8A0-byte stack frame; nothing is Malloc'd. Returns nothing
+4842215B doc   (the caller ignores d0). Only caller: ConvertBitmapFile, once it has packed the
+4842215B doc   file (colour table at +0x36, biClrUsed = its n entries), for 8 bpp with
+4842215B doc   n > 0xB0, with d0 = 0xB0: the 176 entries 0x20..0xCF that DrawBitmapFile_Impl
+4842215B doc   loads from a file. From LoadHpBmp that is every 8-bpp file (its 0x42B6-byte
+4842215B doc   buffer gives n = 256); from the slide-show drawer 0x4858056C, which passes
+4842215B doc   bfSize, a file whose colour table has more than 0xB0 entries. Limits: 8 bpp
+4842215B doc   only (every byte is taken as one pixel); it relies on ConvertBitmapFile's
+4842215B doc   layout, as it writes the palette to image + 0x36 for biClrUsed entries; the
+4842215B doc   count covers biHeight x stride bytes, so row padding counts too. Bugs: the
+4842215B doc   counts are u16 and wrap, so a colour on more than 65535 pixels can rank low and
+4842215B doc   be merged away, and one on an exact multiple of 65536 counts as unused, is never
+4842215B doc   merged and may keep an index of d0 or more. LoadHpBmp's files (at most
+4842215B doc   160 x 100) cannot wrap; the slide-show drawer sets no size limit of its own.
+4842215B doc   biHeight is read as 32 bits here but as s16 by ConvertBitmapFile's room check,
+4842215B doc   so a malformed height (e.g. 0x10010, which that check takes as 16 rows) can make
+4842215B doc   both pixel loops run past the file, the second one writing. Palette slots past
+4842215B doc   biClrUsed hold stale stack (GetBitmapInfo copies only bfOffBits - 54 bytes); no
+4842215B doc   valid pixel uses them, so they sort among the unused colours, and some may be
+4842215B doc   copied back into unused table entries below biClrUsed.
+4842215D note  Frame: (0x4c,sp) = &palette copy, (0x58,sp) = row stride (s16, kept as a word),
+4842215D note  (0x5c,sp) = u16 colours in use, (0x60,sp) = &pixels; sp+0x68 = palette copy
+4842215D note  (256 x RGBQUAD), sp+0x468 = the file header (BfFile2Struct's 16 bytes),
+4842215D note  sp+0x478 = the BITMAPINFOHEADER (biWidth at 0x47C, biHeight at 0x480,
+4842215D note  biBitCount at 0x486, biClrUsed at 0x498), sp+0x4A0 = count[256] (u16),
+4842215D note  sp+0x6A0 = order[256] (u8, rank -> original index), sp+0x7A0 = map[256] (u8,
+4842215D note  original index -> new index).
+4842215D eol   the frame: too big for call's frame byte
+48422161 eol   (0x8bc,sp) = budget (spilled to the caller's argument area)
+48422165 eol   (0x8b8,sp) = the image
+4842216E eol   (0x4c,sp) = &palette copy (sp+0x68)
+48422174 eol   (0x18,sp) = sp+0x60: GetBitmapInfo's 5th arg, gets &pixels
+48422176 eol   a0 = the image
+4842217B eol   a1 = file header out
+48422182 eol   d0 = BITMAPINFOHEADER out
+48422186 eol   d1 = palette out
+48422188 eol   result not checked: ConvertBitmapFile has just validated the file
+4842218D note  Clear count[0..255] at sp+0x4A0; hardware loop (setlb .. lcs).
+4842219D eol   count[i] = 0
+484221A3 eol   a2 = pixels (image + bfOffBits)
+484221A5 eol   a3 = biWidth
+484221A9 eol   biBitCount
+484221B3 eol   8 / biBitCount
+484221BA eol   d2 = ppb, pixels per byte (1: only 8 bpp comes here)
+484221C6 eol   d2 = 4*ppb
+484221CA eol   d0 = width + 4*ppb - 1
+484221CC eol   d1 = 4*ppb
+484221CD eol   / (4*ppb)
+484221D5 eol   d1 = biHeight, all 32 bits (ConvertBitmapFile checked the low 16)
+484221D9 eol   * 4: the file's row stride in bytes, padded to 4
+484221DB eol   (0x58,sp) = stride
+484221DF eol   d1 = biHeight * stride: bytes in the pixel array
+484221E2 eol   none (top-down or empty): count nothing
+484221E4 note  Count each index over every byte of the pixel array, row padding included;
+484221E4 note  hardware loop (setlb .. llt).
+484221E9 eol   a1 = count[]
+484221EF eol   d1 = biHeight * stride
+484221F2 eol   pixel byte = palette index
+484221FC eol   d0 = count[index]
+48422201 eol   count[index] + 1, stored as u16: 65535 + 1 wraps to 0
+48422205 eol   next byte while < biHeight * stride
+48422206 label BmpReduceColors_InitOrder
+48422206 note  order[r] = r for r = 0..255: order[r] is the original index of the colour that
+48422206 note  ends up at rank r. Hardware loop.
+4842220D eol   order[i] = i
+48422216 note  Count the indices in use (count != 0); hardware loop.
+48422217 eol   (0x5c,sp) = colours in use, 0
+4842222D eol   unused index
+48422234 eol   colours in use + 1
+48422237 label BmpReduceColors_InUseNext
+4842223A eol   next count while < &count[256]
+4842223B note  Comb sort the 256 counts, largest first, moving order[] and the palette along
+4842223B note  with them: each pass shrinks the gap to gap * 10 / 13, with 0 -> 1 and 9 or
+4842223B note  10 -> 11 (Combsort11); it stops after a pass at gap 1 with no swap.
+4842223E eol   (0x30,sp) = &palette[0]
+48422246 eol   (0x24,sp) = &count[0]
+48422248 eol   (0x2c,sp) = &count[0]
+48422250 eol   (0x28,sp) = &order[0]
+48422252 eol   gap = 256 (196 for the first pass)
+48422255 label BmpReduceColors_SortPass
+4842225D eol   gap * 1000000
+48422266 eol   / 1300000: gap / 1.3
+48422270 eol   gap 0 -> 1
+48422274 eol   gap 9 -> 11
+48422278 eol   gap 10 -> 11
+4842227C label BmpReduceColors_GapOne
+48422280 label BmpReduceColors_Gap11
+48422282 label BmpReduceColors_PassStart
+48422283 eol   (0x1c,sp) = swaps this pass, 0
+48422288 eol   a0 = 256 - gap: pairs to compare
+4842228C eol   never taken: gap <= 196
+48422290 eol   a2 = i + gap, for i = 0
+48422292 eol   a1 = &count[i]
+48422294 eol   d3 = &order[i]
+48422296 eol   a3 = &palette[i]
+4842229C eol   (0x20,sp) = &count[256 - gap]: end of the pass
+4842229E note  One pair (i, i + gap) per turn of the hardware loop (setlb .. lcs),
+4842229E note  for i = 0 .. 255 - gap.
+484222A1 eol   d1 = count[i]
+484222A8 eol   d0 = count[i + gap]
+484222AB eol   count[i] >= count[i + gap]: in order
+484222AD note  Out of order: swap the pair in count[], order[] and the palette.
+484222B1 eol   swap the counts
+484222B7 eol   d1 = order[i]
+484222BD eol   d0 = order[i + gap]
+484222BF eol   a1 kept while d3 is used as a pointer
+484222C3 eol   order[i] = order[i + gap]
+484222C7 eol   order[i + gap] = the old order[i]
+484222CB eol   d1 = palette[i]
+484222D1 eol   d0 = palette[i + gap]
+484222D2 eol   swap the RGBQUADs
+484222D7 eol   swaps + 1
+484222D9 label BmpReduceColors_SortNext
+484222E2 eol   next i while &count[i] < &count[256 - gap]
+484222E3 label BmpReduceColors_PassDone
+484222E9 eol   something swapped: another pass
+484222EC label BmpReduceColors_NoSwaps
+484222EE eol   gap <= 1 and nothing swapped: sorted
+484222F0 eol   gap > 1: another pass
+484222F3 label BmpReduceColors_Sorted
+484222F3 note  map[order[r]] = r: each original index gets its rank as new index. Hardware loop.
+48422301 eol   map[order[r]] = r
+4842230A eol   d0 = colours in use
+4842230D eol   d1 = budget
+48422313 eol   (0x30,sp) = budget
+48422316 eol   more colours than the budget: merge
+48422318 eol   they all fit: only reorder
+4842231B label BmpReduceColors_TooMany
+4842231C eol   always taken: the same test again
+48422321 label BmpReduceColors_Merge
+48422321 note  Map each colour ranked budget .. in use - 1 to the nearest kept colour (rank
+48422321 note  < budget): least dR^2 + dG^2 + dB^2, the first (most used) one on a tie.
+48422327 eol   (0x54,sp) = &palette[0]: the kept colours
+4842232D eol   a2 = &palette[budget]: the first colour to drop
+48422333 eol   (0x50,sp) = &palette[in use]: past the last one
+4842233C eol   (0x28,sp) = &order[budget]
+4842233E label BmpReduceColors_MergeLoop
+4842233F eol   (0x2c,sp) = best rank, 0
+48422343 eol   a3 = j, the kept rank tried
+4842234D eol   (0x24,sp) = best distance, 0x7FFFFFFF
+48422351 eol   budget <= 0: map to rank 0
+48422354 label BmpReduceColors_Nearest
+48422354 note  Split the dropped colour (the RGBQUAD read as u32 0xxxRRGGBB) into blue,
+48422354 note  green and red, each kept twice.
+4842235F eol   (0x48,sp) = blue
+48422364 eol   (0x44,sp) = blue
+4842236D eol   (0x40,sp) = green
+48422377 eol   (0x3c,sp) = green
+48422384 eol   (0x38,sp) = red
+48422391 eol   (0x34,sp) = red
+48422393 eol   a1 = &palette[0]
+48422395 note  Try each kept colour j = 0 .. budget-1; hardware loop (setlb .. llt).
+48422396 eol   palette[j], into five registers and two slots
+484223AA eol   a0 = blue - blue[j]
+484223B6 eol   d1 = blue - blue[j]
+484223BA eol   d1 = dB^2
+484223C9 eol   d2 = green - green[j]
+484223CE eol   d0 = green - green[j]
+484223D5 eol   d3 = dG^2
+484223D9 eol   d3 = dB^2 + dG^2
+484223E5 eol   d2 = red - red[j]
+484223F2 eol   d1 = red - red[j]
+484223F4 eol   d0 = best distance so far
+484223F8 eol   d2 = dR^2
+484223FA eol   d3 = the squared RGB distance
+484223FC eol   not closer: keep the earlier, more used one
+484223FE eol   new best distance
+48422400 eol   new best rank: j
+48422402 label BmpReduceColors_NearestNext
+48422408 eol   next j while < budget
+48422409 label BmpReduceColors_MapDropped
+4842240D eol   d0 = order[k]: the dropped colour's original index
+48422414 eol   map[original index] = best rank
+48422418 eol   next dropped colour's palette entry
+4842241A eol   (0x28,sp) = &order[k + 1]
+48422420 eol   past the last colour in use: done
+48422422 eol   next dropped colour
+48422425 label BmpReduceColors_Rewrite
+48422425 note  Write the sorted palette back over the file's (ConvertBitmapFile has put it at
+48422425 note  image + 0x36), then pass every pixel byte through map[].
+48422425 eol   d0 = biClrUsed (ConvertBitmapFile's palette size)
+4842242F eol   a0 = image + 0x36: the colour table
+48422432 eol   memcpy(image + 0x36, sorted palette, biClrUsed * 4)
+48422439 eol   d0 = biHeight
+4842243D eol   d2 = stride
+4842243F eol   a1 = pixels
+48422443 eol   d0 = biHeight * stride: bytes in the pixel array
+48422447 eol   none: done
+48422449 note  One byte per turn of the hardware loop (setlb .. llt).
+4842244A eol   d0 = old index
+48422451 eol   d0 = map[old index]: the new index
+48422454 eol   pixel = new index
+48422462 eol   next byte while < biHeight * stride (recomputed each pass)
+48422463 label BmpReduceColors_Return
+48422463 eol   drop the 0x8A0-byte frame
+
+; ---- Draw2BpFile ---------------------------------------------------------------
+; Draw2BpFile is a second copy of DrawBitmapFile (see gfx_draw.ann): the same
+; front end and record, and an Impl whose code differs only in register and
+; stack-slot allocation and in one behaviour, the height clip (see
+; Draw2BpFile_Impl). Despite the name, nothing in it is 2 bits per pixel. The
+; names DrawEnable and FrameBuffer come from gfx_draw.ann; this file declares no
+; data names.
+
+;
+4842829F doc   Draw2BpFile(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+4842829F doc   draws an uncompressed Windows BMP (1, 4 or 8 bpp) with its top-left corner
+4842829F doc   at the point and loads its colours into palette entries 0x20..0xCF, as
+4842829F doc   DrawBitmapFile does (the Impls differ only in the height clip). On the draw
+4842829F doc   task it draws at once (if DrawEnable is set); on any other task it queues a
+4842829F doc   12-byte record {+0 Draw2BpFile_QueuedExec, +4 s16 x, +6 s16 y, +8 file} for
+4842829F doc   the draw task instead. Only the pointer to the file is queued, so it must
+4842829F doc   stay valid until the draw task runs. One direct caller: DbBitmapLoadProc
+4842829F doc   (0x4848878D), the hidden debug BITMAP LOAD screen, which on MT_Draw draws at
+4842829F doc   {0, 0} (0x485D67C8) the file its EV_SHOW handler read to 0x502B8000
+4842829F doc   (fmmopen "rb", then the fmm read 0x48532468 of at most 0x18000 bytes, its
+4842829F doc   count unchecked: an 8-bpp 640 x 240 BMP, 0x25C36 bytes with 256 colours,
+4842829F doc   gets its top rows from whatever lies past the bytes read). The address is
+4842829F doc   also in the MILK reflection table (0x4872771C). There, and in the
+4842829F doc   firmware's name strings (0x485B4E5E), it sits in one run with
+4842829F doc   GetPaletteRGB4, Check2BitLcd, SetLcdMode, GetColorMode and SetColorMode:
+4842829F doc   colour mode 2 is a 4-level panel whose per-entry levels GetPaletteRGB4
+4842829F doc   reads. So "2Bp" probably names that 2-bit panel, not a pixel format; no
+4842829F doc   code here or in the Impl tests the mode.
+484282A4 eol   a3 = BMP file
+484282A5 eol   a2 = &point
+484282AD eol   not the draw task: queue it
+484282B7 eol   drawing disabled
+484282BB eol   draw now
+484282C2 label Draw2BpFile_Deferred
+484282C2 eol   12-byte record
+484282C4 eol   a0 = record
+484282CF eol   +0: the function the draw task will call
+484282D4 eol   +4: x
+484282D9 eol   +6: y
+484282DC eol   +8: the file (the pointer only)
+484282DF eol   hand it to the draw task
+484282E4 label Draw2BpFile_Return
+
+; ---- Draw2BpFile_QueuedExec ----------------------------------------------------
+484282E7 doc   Draw2BpFile_QueuedExec(a0 = record): called by the draw task for a record
+484282E7 doc   Draw2BpFile queued; draws it if DrawEnable is still set.
+484282F3 eol   a2 = &record.point
+484282F4 eol   a3 = record.file
+484282F9 eol   drawing disabled meanwhile
+48428302 label Draw2BpFile_QueuedExec_Return
+
+; ---- Draw2BpFile_Impl ----------------------------------------------------------
+48428305 doc   Draw2BpFile_Impl(a0 = &point, a1 = BMP file image): the blit, entered at
+48428305 doc   Draw2BpFile_Impl_entry from Draw2BpFile and its QueuedExec only. It is
+48428305 doc   DrawBitmapFile_Impl's code except for the height clip. GetBitmapInfo checks
+48428305 doc   the file ("BM", 40-byte BITMAPINFOHEADER, 1 plane, 1/4/8 bpp, BI_RGB,
+48428305 doc   biClrUsed <= 256) and copies its headers, plus the bfOffBits - 54 bytes before
+48428305 doc   the pixels (the palette, at most 1 KB), to the stack; a file it rejects
+48428305 doc   changes nothing. Each file row (bottom-up, padded to a multiple of 4 bytes) is
+48428305 doc   copied into a malloc'd row buffer (never checked for NULL), unpacked to one
+48428305 doc   byte per pixel (BmpUnpackRow, 1 and 4 bpp MSB-first), offset by +0x20 and
+48428305 doc   memcpy'd into FrameBuffer. Only the low 16 bits of biWidth/biHeight count; a
+48428305 doc   negative (top-down) height draws no rows. The clip: a height over 240 is cut
+48428305 doc   to 240 rows by dropping the image's bottom rows, whatever y is
+48428305 doc   (DrawBitmapFile_Impl cuts to 240 - y). So whenever y + rows > 240, the rows
+48428305 doc   that fall below screen row 239 are written past the end of FrameBuffer, into
+48428305 doc   PICTURE_PLANE2 (0x500F9880) and on; with the only caller's y = 0 the two
+48428305 doc   Impls behave alike. Nothing else is clipped: no on-screen test, y < 0 writes
+48428305 doc   above FrameBuffer, and a row wider than 640 - x runs on into the next
+48428305 doc   framebuffer row. Then palette entries 0x20..0xCF are set from the file's
+48428305 doc   colours 0..0xAF (RGBQUAD {B,G,R,x} -> 0x00BBGGRR). It always sets all 176: a
+48428305 doc   shorter palette fills the rest from stale stack bytes, and an 8-bpp index
+48428305 doc   above 0xAF lands outside them (0xD0..0xFF, where 0xDx bytes are picture
+48428305 doc   pixels, or wraps to 0x00..0x1F). Ends by marking {x, y, x+biWidth-1,
+48428305 doc   y+biHeight-1} dirty with SetChangeRect (not clipped). Nothing is 2 bpp:
+48428305 doc   GetBitmapInfo rejects a 2-bpp file, and the output is one byte per pixel in
+48428305 doc   FrameBuffer. The only 2-bit step on the path is inside SetPaletteRGB, the
+48428305 doc   same for DrawBitmapFile_Impl: in colour mode 2 it also keeps a level 0..3 per
+48428305 doc   entry at 0x50122CAC, which GetPaletteRGB4 reads back.
+48428307 note  Frame: DrawBitmapFile_Impl's, with (0x24,sp)/(0x28,sp) and (0x2c,sp)/(0x30,sp)
+48428307 note  swapped. (0x1c,sp) and (0x24,sp) = stride, (0x20,sp) and (0x28,sp) = width,
+48428307 note  (0x2c,sp) = &palette copy, (0x30,sp) = &point.y, (0x34,sp)/(0x36,sp) = u16
+48428307 note  stride/width, (0x38,sp) = next file row, sp+0x3C = palette copy (1 KB),
+48428307 note  sp+0x43C = the file header, sp+0x44C = the BITMAPINFOHEADER (biWidth at 0x450,
+48428307 note  biHeight at 0x454, biBitCount at 0x45A), sp+0x474 = the dirty rectangle,
+48428307 note  (0x494,sp) = &point.
+48428307 eol   the frame: too big for call's frame byte
+4842830B eol   (0x494,sp) = &point
+48428314 eol   (0x2c,sp) = &palette copy
+4842831A eol   (0x18,sp) = sp+0x38: GetBitmapInfo's 5th arg, gets &pixels
+4842831C eol   a0 = the file
+4842831E eol   a1 = file header out
+48428325 eol   d0 = BITMAPINFOHEADER out
+48428329 eol   d1 = palette out
+4842832B eol   -> d0 = 0 if the file is not a usable BMP
+48428334 eol   rejected: draw nothing
+48428337 label Draw2BpFile_Impl_Valid
+4842833D eol   (0x36,sp) = biWidth
+48428348 eol   a2 = biHeight
+4842834C eol   8 / biBitCount
+48428353 eol   d2 = ppb, pixels per byte (1, 2 or 8)
+48428359 eol   (0x20,sp) = width
+48428360 eol   d1 = width + 4*ppb - 1
+48428366 eol   / (4*ppb)
+48428368 eol   * 4: the file's row stride in bytes, padded to 4
+48428369 eol   (0x34,sp) = stride
+4842836F eol   d3 = biHeight (DrawBitmapFile_Impl loads 240 here)
+48428372 eol   (0x1c,sp) = stride
+48428376 eol   stride * pixels per byte: one unpacked row
+48428379 eol   malloc(d0 bytes) -> a0
+48428380 eol   a3 = row buffer (not checked for NULL)
+48428382 eol   d2 = 240, the screen height
+48428386 eol   height <= 240: draw every row, wherever y is
+48428388 note  Too tall: skip the first height - 240 file rows, which are the image's
+48428388 note  bottom rows, since BMP rows run bottom-up. y plays no part: DrawBitmapFile_Impl
+48428388 note  skips height - (240 - y) rows here.
+4842838D eol   never taken: height > 240 here
+4842838F eol   d3 = rows to skip
+48428391 note  Skip them; the hardware loop (setlb .. llt) repeats from the next instruction.
+48428398 eol   next file row += stride
+4842839C eol   while skipped < rows to skip
+4842839D label Draw2BpFile_Impl_ClipHeight
+4842839D eol   a2 = 240 rows to draw
+4842839F label Draw2BpFile_Impl_RowSetup
+484283A9 eol   (0x30,sp) = &point.y
+484283AB eol   d2 = x
+484283AF eol   d0 = y
+484283B1 eol   d3 = rows to draw
+484283C9 eol   a2 = FrameBuffer + (y + rows - 1)*640 + x: the bottom row
+484283CB eol   d2 = row
+484283CD eol   no rows: only when height <= 0 (y is not tested)
+484283D3 eol   (0x24,sp) = stride
+484283D9 eol   (0x28,sp) = width
+484283DB label Draw2BpFile_Impl_RowLoop
+484283E0 eol   memcpy(row buffer, file row, stride)
+484283E7 eol   d1 = biBitCount
+484283EE eol   unpack in place to one byte per pixel (8 bpp: left as is)
+484283F7 eol   width <= 0
+484283F9 note  Move every pixel up to the palette entries this bitmap loads; hardware loop.
+484283FC eol   BMP index n -> colour 0x20 + n
+48428405 eol   next pixel while i < width
+48428406 label Draw2BpFile_Impl_CopyRow
+4842840A eol   memcpy(dest, row buffer, width): width is not clipped
+48428417 eol   next file row += stride
+4842841D eol   dest one framebuffer row up
+48428420 eol   next row while row < rows to draw
+48428422 label Draw2BpFile_Impl_RowsDone
+48428423 eol   free(a0): the row buffer
+4842842A eol   d2 = palette entry, from 0x20
+4842842C label Draw2BpFile_Impl_PaletteLoop
+4842842C note  Set entries 0x20..0xCF from the file's colours 0..0xAF.
+4842843B eol   green = palette copy[(d2 - 0x20)*4 + 1]
+48428444 eol   blue: byte +0
+48428457 eol   red: byte +2
+4842845B eol   d1 = 0x00BBGGRR
+4842845C eol   SetPaletteRGB(d0 = entry, d1 = colour)
+48428467 eol   next entry while < 0xD0: always 176 of them
+48428469 note  Mark the rectangle dirty for the LCD update, sized by the header (not clipped).
+4842846D eol   rect.top = y
+48428477 eol   rect.left = x
+48428485 eol   rect.right = x + biWidth - 1
+48428496 eol   rect.bottom = y + biHeight - 1
+4842849A eol   a0 = &rect
+484284A3 label Draw2BpFile_Impl_Return
+484284A3 eol   drop the 0x47C-byte frame
+484284AA note  Not part of Draw2BpFile_Impl: three stub functions (two bare retf, one
+484284AA note  that returns 0) before InitializeEventQueue (0x484284B4). No call, calls,
+484284AA note  jump, branch or pointer in the build-941 image (library included) reaches
+484284AA note  any of them.
+484284AA eol   stub: returns
+484284AD eol   stub: returns
+484284B0 eol   stub: returns 0
