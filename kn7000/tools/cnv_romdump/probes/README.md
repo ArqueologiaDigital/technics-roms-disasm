@@ -12,8 +12,10 @@ KN7000 SD card. They were run on 2026-10-18.
 | `sdraw_probe`         | Can a converter read and write raw SD sectors, find a new folder's directory sector, and put long-name entries there that the FAT library keeps?                                                                                                        | **Yes.** `sdfmmkdir("C:\SDRAWDIR")` 0; `fmmopen("SDRAWDIR\FILE1.BIN")` 0, write 16, close 0. Raw read of the root directory (LBA 160, 32 sectors in one call) 0; `SDRAWDIR` at root index 2, cluster `0x12`, LBA `0x2C0` (= 192 + 16 × 32). Raw read of that sector 0: `.`, `..`, `FILE1   BIN`. Raw write of `.`, `..`, three long-name entries, `FILE1`'s 8.3 entry: 0. Then `FILE2.BIN` created through fmm in the same folder: the library put it at entry 6, after the long-name entries. `fatls.py` on the image: `C:\SDRAWDIR\FILE1.BIN [long name: kn7000_program_even_v1.6_b941.ic17]` and `FILE2.BIN`. |
 | `sdpath_probe`        | Can the converter read the MBR and boot sector raw before any fmm call? Is the volume record filled then? What does `sdfmmkdir` return for an existing folder? Does `sdfmpath` put `fmmopen`'s file in a folder, and does `sdfmpath(0)` clear it again? | **Yes**, raw read of sector 0 returns 0 and the MBR; its partition starts at LBA `0x61`; the boot sector read from there returns 0. Both are byte-identical to the image. The volume record at `0x50149730` was already filled in when the converter was entered, and it is the same after `sdfmmkdir`. `sdfmmkdir` is 0 the first time and -3 (`0xFFFFFFFD`) the second. After `sdfmpath("C:\SDRAWDIR")`, byte `0x50092504` reads `0x43` (`C`), and `fmmopen("FILE3.BIN")` creates `C:\SDRAWDIR\FILE3.BIN`. After `sdfmpath(0)` the byte reads 0.                                                               |
 
-`lfn_probe.s`, an earlier probe in this directory, is not part of this commit. It showed that
-`fmmopen` refuses a 34-character name with -3, and that it creates `C:\SHORT.BIN`.
+`lfn_probe.s` + `lfn.cmd` came first: can a converter create a file on the SD card at all, and does the
+FAT library keep a long name? `fmmopen("kn7000_program_even_v1.6_b941.ic17", "wb")` returns -3 (nothing
+is written, the write after it -100); `fmmopen("SHORT.BIN", "wb")`, a 16-byte write and the close return
+0, 16, 0, and `fatls.py` finds `C:\SHORT.BIN` with the marker. Hence the 8.3 files plus the long-name pass.
 
 ## How to run them
 
