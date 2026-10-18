@@ -13,7 +13,7 @@ applied here), and the doubts each one left open. The open doubts are the natura
 next questions; none of them is stated as fact in the annotations. Probes behind
 the caller lists and the simulated behaviour: notes/gfx-bmpfile-probes/. Rendered
 from the workflow's reports by
-`research-scratch/sessions/2026-10-18_kn7000-bmpann/merge/review_notes_bmpfile.py`.
+`research-scratch/sessions/2026-10-18_tmp/review_notes_bmpfile.py`.
 
 ## parse
 
