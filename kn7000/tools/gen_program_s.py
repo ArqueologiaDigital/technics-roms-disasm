@@ -335,6 +335,11 @@ CONVERT = {
     "SjisGlyphLookup", "DrawStringCentered",
     # split out of the converted DrawDesignBox block by naming it
     "IsPointOnScreen",
+    # the BMP file helpers next to them, and the debug screen's 2-bpp blitter
+    # (kn7000_manual.sym); labelled and commented by annotations/gfx_bmpfile.ann
+    "BfFile2Struct", "BfStruct2File", "GetBitmapInfo", "ConvertBitmapFile",
+    "BmpUnpackRow", "BmpReduceColors",
+    "Draw2BpFile", "Draw2BpFile_QueuedExec", "Draw2BpFile_Impl",
 }
 
 # A converted function whose named block extends past its real end (because the

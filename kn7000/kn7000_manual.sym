@@ -2572,3 +2572,17 @@
 0x4842D9F6  SetPaletteRGB_entry
 0x4842DFAD  ConvertStrings_entry
 0x4842E0C0  CalcTotalWidth_entry
+;
+; ---- GRAPHICS: the BMP file helpers (BfFile2Struct .. BmpReduceColors) and the 2-bpp blitter Draw2BpFile ----
+; The helpers parse and rewrite a whole BMP file held in memory; Draw2BpFile is the
+; DrawBitmapFile twin used only by the debug BITMAP LOAD screen. Annotated listing:
+; annotations/gfx_bmpfile.ann (merged into src/program.s).
+0x48421D99  BfFile2Struct_entry
+0x48421DC3  BfStruct2File_entry
+0x48421E8A  ConvertBitmapFile_entry
+0x4842215B  BmpReduceColors
+0x4842215D  BmpReduceColors_entry
+0x484282A4  Draw2BpFile_entry
+0x484282E7  Draw2BpFile_QueuedExec
+0x48428305  Draw2BpFile_Impl
+0x48428307  Draw2BpFile_Impl_entry
