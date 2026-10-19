@@ -76,9 +76,14 @@ The driver declares `c3cbmd000098.ic19` as `0x800000` `NO_DUMP` in region `pictu
 (`map(0x57800000, 0x579fffff).mirror(0x600000).rom().region("picture", 0)`), noting that the chip's
 other half is unreachable.
 
+## Read twice
+
+A second read on the same instrument, later the same day, was byte-identical to the first: the 8 MB
+file and the instrument's `DUMPLIST.TXT` both (`check_real_dump.py first second`: "identical"; kept as
+`pass2-run2/` beside the first in the private ROM repository).
+
 ## Open
 
-- A second read, to show the reads are stable (the JPEGs all decoding cleanly already argues for it).
 - Whether that instrument's SOFT VERSION screen shows `PICTURE : 7`, as the chip says it should.
 - Whether IC19 differs between production runs; this read is from an early (PROGRAM 893) instrument.
 
