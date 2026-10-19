@@ -1,0 +1,394 @@
+# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
+# Licensed under the terms of the GNU General Public License v3 or later
+#
+# Rebuild the Technics SX-KN7000 flash images from disassembly source and verify
+# that the result is 100% byte-identical to the images extracted from the
+# original system-update floppy disks.
+
+PYTHON      ?= python3
+ASM         := $(PYTHON) tools/kn7asm.py
+
+# Sibling repo that extracts the reference images from the update disks, and the
+# original disk contents it reads. Override on the command line if they live
+# elsewhere, e.g.  make EXTRACT_DIR=/path/to/kn7000_extraction
+EXTRACT_DIR ?= ../kn7000_extraction
+DISKS_DIR   ?= ../KN7000
+
+# SP7001 variant: its reference images come from the raw EPROM-half dumps in the
+# (private) MAME romset, de-interleaved by tools/rom_from_eproms.py — not from
+# the update disks. Override if the romset lives elsewhere.
+ROMSET_DIR  ?= ../technics_romsets/kn7000
+# ...and the SP7001 update itself: four self-extracting ZIP "disks" (program 1/2,
+# 2/2, table 1/2, 2/2), read with tools/sfx_extract.py (never executed).
+SP7001_UPDATES ?= ../nonfree/kn7000-sp7001/sp7001-kn7000-updates
+SP7001_TB1  := $(SP7001_UPDATES)/table1_2.exe
+SP7001_TB2  := $(SP7001_UPDATES)/table2_2PLUG-iN.exe
+SP7001_PR1  := $(SP7001_UPDATES)/PROGR1_2v1.6PLUG-iN.exe
+SP7001_PR2  := $(SP7001_UPDATES)/PROGR2_2v1.6PLUG-iN.exe
+
+# MAME's unidasm, used only by `make disasm` to (re)generate the reference
+# listings. Point this at your MAME build's unidasm binary.
+UNIDASM     ?= ../mame-sony-video/unidasm
+
+TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
+REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
+
+.PHONY: all verify verify-listings disasm disasm-dsp symbols program-src constants clean distclean baserom
+
+# Default: build then verify byte-for-byte.
+all: verify
+
+# ---- reference images (extracted from the update disks) --------------------
+# Produced by the sibling kn7000_extraction repo. Kept out of git (see
+# .gitignore); regenerated on demand from the original disks.
+baserom: $(REFS)
+
+baserom/kn7000_program.rom baserom/kn7000_table.rom &:
+	@echo "==> extracting reference images via $(EXTRACT_DIR)"
+	@if [ -x "$(EXTRACT_DIR)/venv/bin/python" ]; then \
+	    PY="$(EXTRACT_DIR)/venv/bin/python"; \
+	 else \
+	    PY="$(PYTHON)"; \
+	 fi; \
+	 "$$PY" "$(EXTRACT_DIR)/kn7000_extract.py" "$(DISKS_DIR)" "$(EXTRACT_DIR)/output"
+	@mkdir -p baserom
+	@cp "$(EXTRACT_DIR)/output/kn7000_program.rom" baserom/kn7000_program.rom
+	@cp "$(EXTRACT_DIR)/output/kn7000_table.rom"   baserom/kn7000_table.rom
+
+# ---- build -----------------------------------------------------------------
+build/kn7000_program.rom: src/program.s src/symbols.inc tools/kn7asm.py baserom/kn7000_program.rom
+	@mkdir -p build
+	$(ASM) src/program.s -I . -o $@
+
+# ---- recover symbols from the firmware's MILK-toolkit reflection tables -----
+# Names 444 functions (shared with the KN5000). Regenerates kn7000.sym and the
+# src/symbols.inc that src/program.s includes.
+symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.rom
+	$(PYTHON) tools/gen_symbols.py baserom/kn7000_program.rom
+
+# Regenerate src/program.s, converting the CONVERT function set (in
+# tools/gen_program_s.py) into real MN10300 assembly (needs unidasm). The
+# committed src/program.s is the byte-exact result; the build does not need this.
+# Recover the MILK framework's named-constant tables (colours, view flags, ...)
+# into a reference listing + an assembler include.
+constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
+	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
+
+program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
+		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
+
+build/kn7000_table.rom: src/table.s tools/kn7asm.py baserom/kn7000_table.rom
+	@mkdir -p build
+	$(ASM) src/table.s -I . -o $@
+
+build: $(TARGETS)
+
+# ---- verify (the whole point: 100% byte-match) -----------------------------
+verify: $(TARGETS)
+	@ok=1; \
+	for name in kn7000_program.rom kn7000_table.rom; do \
+	  if cmp -s "build/$$name" "baserom/$$name"; then \
+	    echo "OK    $$name is 100% byte-identical to the original"; \
+	  else \
+	    echo "FAIL  $$name differs from the original:"; \
+	    cmp "build/$$name" "baserom/$$name" || true; \
+	    ok=0; \
+	  fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "byte-match FAILED"; exit 1; }
+	@echo; echo "All images reproduced byte-for-byte."
+
+# ---- check the CURATED listings under disasm/ ------------------------------
+# The hand-annotated listings are not part of the byte-exact build, so nothing
+# else would catch a typo in them. verify_listing.py re-reads every byte column
+# straight out of baserom/ and re-encodes every mnemonic with the repo's own
+# MN10300 encoder, so a wrong byte or a wrong operand fails here.
+CURATED_LISTINGS := disasm/debugger_memdump.asm
+
+verify-listings: baserom/kn7000_program.rom tools/verify_listing.py tools/mn10300_asm.py
+	$(PYTHON) tools/verify_listing.py $(CURATED_LISTINGS)
+
+# ---- (re)generate the reference disassembly listings -----------------------
+disasm: disasm/program.asm disasm/program_region2.asm disasm/program_named.asm disasm/table_directory.asm disasm-dsp
+
+# ---- effects-DSP (IC306 ADSP-21065L) host-download record pool --------------
+# 80 SHARC programs embedded in the program image at file 0x2BCEC4..0x2CE68D.
+# Extract + disassemble (unidasm -arch sharc), merging curated annotation from
+# dsp/records.tsv and dsp/sym/*.sym. The listings under disasm/dsp/ are tracked;
+# build/dsp/*.bin raw extracts are not (see .gitignore /build/). See dsp/README.md.
+DSP_POOL := 0x2BCEC4 0x2CE68D
+
+.PHONY: disasm-dsp
+disasm-dsp: baserom/kn7000_program.rom tools/gen_dsp_records.py \
+            dsp/records.tsv $(wildcard dsp/sym/*.sym)
+	@mkdir -p disasm/dsp build/dsp
+	@echo "==> extracting + disassembling the SHARC record pool ($(DSP_POOL))"
+	@$(PYTHON) tools/gen_dsp_records.py --rom $< --pool $(DSP_POOL) \
+	    --unidasm $(UNIDASM) --manifest dsp/records.tsv --symdir dsp/sym \
+	    --bindir build/dsp --out disasm/dsp
+	@echo "wrote disasm/dsp/"
+
+disasm/program.asm: baserom/kn7000_program.rom
+	@mkdir -p disasm
+	@echo "==> disassembling program code region 1 (0x80..0x186000) with unidasm"
+	@$(UNIDASM) $< -arch mn10300 -basepc 0x48400080 -skip 0x80 \
+	    -count $$((0x186000 - 0x80)) > $@
+	@echo "wrote $@"
+
+# Code region 2 (the MILK kernel + late drivers) lives high in the image and was
+# never in the region-1 sweep above. CPU 0x487B8D00..0x487F6F01, file 0x3B8D00.
+disasm/program_region2.asm: baserom/kn7000_program.rom
+	@mkdir -p disasm
+	@echo "==> disassembling program code region 2 (0x487B8D00..0x487F6F01) with unidasm"
+	@$(UNIDASM) $< -arch mn10300 -basepc 0x487B8D00 -skip 0x3B8D00 \
+	    -count $$((0x3F6F01 - 0x3B8D00)) > $@
+	@echo "wrote $@"
+
+# Named, function-by-function disassembly using the recovered symbols.
+disasm/program_named.asm: baserom/kn7000_program.rom kn7000.sym kn7000_manual.sym \
+		kn7000_exports_from_942.sym tools/disasm_functions.py
+	@mkdir -p disasm build
+	@echo "==> named function disassembly with unidasm (generated + manual symbols)"
+	@cat kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym > build/kn7000_merged.sym
+	@$(PYTHON) tools/disasm_functions.py --rom $< --sym build/kn7000_merged.sym \
+	    --unidasm $(UNIDASM) > $@
+	@echo "wrote $@"
+
+# The table image is data, not code; provide its directory as a listing.
+disasm/table_directory.asm: baserom/kn7000_table.rom tools/dump_table_dir.py
+	@mkdir -p disasm
+	$(PYTHON) tools/dump_table_dir.py $< > $@
+	@echo "wrote $@"
+
+# ---- IC19, the picture ROM (the 100 Slide Show PRESET pictures) -------------
+# Unlike the flash images, this source carries its data: src/picture.s includes the
+# 100 JPEGs in src/picture/ (tools/gen_picture_s.py wrote both from a read of the
+# chip). So it builds and checks without any reference image: the result must have
+# the SHA-1 of the 2 MB the CPU sees at 0x57800000 on the real instrument. With the
+# read itself at hand (PICTURE_REF, the 8 MB the ROM dumper wrote, private), it is
+# also compared byte for byte, all four 2 MB copies of the window.
+# See notes/ic19-picture-rom.md.
+PICTURE_SHA1 := 9631dedfc501b8c11bb93efa2d99750e3c84465a
+PICTURE_REF  ?= ../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
+
+.PHONY: verify-picture picture-src
+build/kn7000_picture.rom: src/picture.s $(wildcard src/picture/*.jpg) tools/kn7asm.py
+	@mkdir -p build
+	$(ASM) src/picture.s -I . -o $@
+
+verify-picture: build/kn7000_picture.rom
+	@if [ "$$(sha1sum < $< | cut -d' ' -f1)" = "$(PICTURE_SHA1)" ]; then \
+	    echo "OK    kn7000_picture.rom has the SHA-1 of the instrument's IC19 ($(PICTURE_SHA1))"; \
+	 else echo "FAIL  kn7000_picture.rom: SHA-1 is not $(PICTURE_SHA1)"; exit 1; fi
+	@if [ -f "$(PICTURE_REF)" ]; then \
+	    for k in 0 1 2 3; do \
+	      cmp -s -n 2097152 -i 0:$$((k * 2097152)) $< "$(PICTURE_REF)" || { echo "FAIL  copy $$k of $(PICTURE_REF) differs"; exit 1; }; \
+	    done; echo "OK    and it equals all four 2 MB copies in $(PICTURE_REF)"; \
+	 else echo "(no $(PICTURE_REF): only the SHA-1 was checked)"; fi
+
+# Regenerate src/picture.s and src/picture/*.jpg from a read of IC19.
+picture-src: tools/gen_picture_s.py
+	$(PYTHON) tools/gen_picture_s.py "$(PICTURE_REF)"
+
+# ---- SP7001 variant (program build 942 / table build 83) -------------------
+# A second byte-exact target. Its reference images are the de-interleaved raw
+# EPROM dumps; the source currently passes them through verbatim and is refined
+# only on the SP7001-unique code. See notes/sp7001-build-diff.md.
+SP7001_TARGETS := build/kn7000_program_sp7001.rom build/kn7000_table_sp7001.rom \
+                  build/sp7001_baseext.xap
+
+.PHONY: baserom-sp7001 build-sp7001 verify-sp7001
+baserom-sp7001: baserom/kn7000_program_sp7001.rom baserom/kn7000_table_sp7001.rom
+
+baserom/kn7000_program_sp7001.rom: tools/rom_from_eproms.py
+	@mkdir -p baserom
+	$(PYTHON) tools/rom_from_eproms.py \
+	    "$(ROMSET_DIR)/kn7000_program_even_sp7001_b942.ic17" \
+	    "$(ROMSET_DIR)/kn7000_program_odd_sp7001_b942.ic16" $@
+
+baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
+	@mkdir -p baserom
+	$(PYTHON) tools/rom_from_eproms.py \
+	    "$(ROMSET_DIR)/kn7000_table_even_sp7001_b83.ic17" \
+	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
+
+build/kn7000_program_sp7001.rom: src/sp7001/program.s src/sp7001/symbols.inc tools/kn7asm.py baserom/kn7000_program_sp7001.rom
+	@mkdir -p build
+	$(ASM) src/sp7001/program.s -I . -o $@
+
+build/kn7000_table_sp7001.rom: src/sp7001/table.s tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+	@mkdir -p build
+	$(ASM) src/sp7001/table.s -I . -o $@
+
+build/sp7001_baseext.xap: src/sp7001/baseext.s tools/kn7asm.py baserom/sp7001_baseext.xap
+	@mkdir -p build
+	$(ASM) src/sp7001/baseext.s -I . -o $@
+
+build-sp7001: $(SP7001_TARGETS)
+
+# ---- the SP7001 table update disks -----------------------------------------
+baserom/sp7001_baseext.xap: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) BASEEXT.XAP $@
+baserom/sp7001_tb1_smck.inf: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB1) SMCKTB1.INF $@
+baserom/sp7001_tb2_smck.inf: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) SMCKTB2.INF $@
+baserom/sp7001_tb1_jkt1.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB1) JKT1.SLD $@
+baserom/sp7001_tb2_jktbl2.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_TB2) JKTBL2.SLD $@
+baserom/sp7001_pr1_hama1.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_PR1) HAMA1.SLD $@
+baserom/sp7001_pr2_hama2.sld: tools/sfx_extract.py
+	@mkdir -p baserom
+	$(PYTHON) tools/sfx_extract.py $(SP7001_PR2) HAMA2.SLD $@
+# decompressed with the extraction repo's lzss module (its venv)
+baserom/sp7001_tb%.bin: baserom/sp7001_tb%.sld tools/sld_decompress.py
+	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
+baserom/sp7001_pr%.bin: baserom/sp7001_pr%.sld tools/sld_decompress.py
+	$(EXTRACT_DIR)/venv/bin/python tools/sld_decompress.py $< $@
+
+# Provenance of table 83 (notes/sp7001-build-diff.md): (1) the two table disks'
+# payloads are byte-identical to the dump's two halves, plug-in included; (2) the
+# disks' (identical) SMCKTB1/2.INF describe the directory image (0x3E0660 bytes, no
+# plug-in) with the seg68-70 markers reading '83' -- they match exactly that, and the
+# dump as shipped ('80') does NOT match (the checksum file predates the final payload).
+.PHONY: verify-sp7001-floppy
+verify-sp7001-floppy: baserom/sp7001_tb1_jkt1.bin baserom/sp7001_tb2_jktbl2.bin \
+		baserom/sp7001_tb1_smck.inf baserom/sp7001_tb2_smck.inf \
+		baserom/kn7000_table_sp7001.rom tools/smck_check.py
+	@cmp -n 2097152 baserom/sp7001_tb1_jkt1.bin baserom/kn7000_table_sp7001.rom \
+	    && echo "OK    disk 1 JKT1.SLD (decompressed) == table 83 [0x000000:0x200000]"
+	@cmp -i 0:2097152 baserom/sp7001_tb2_jktbl2.bin baserom/kn7000_table_sp7001.rom \
+	    && echo "OK    disk 2 JKTBL2.SLD (decompressed) == table 83 [0x200000:0x400000], plug-in included"
+	@cmp baserom/sp7001_tb1_smck.inf baserom/sp7001_tb2_smck.inf \
+	    && echo "OK    SMCKTB1.INF == SMCKTB2.INF (both describe the whole image)"
+	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
+	    --length 0x3E0660 --patch 0x3B7508:83 --patch 0x3B750C:83 --patch 0x3B7510:83 --expect match
+	@$(PYTHON) tools/smck_check.py baserom/kn7000_table_sp7001.rom baserom/sp7001_tb2_smck.inf \
+	    --length 0x3E0660 --expect mismatch
+
+# The program update's two disks reconstruct program 942 the same way; its shipped
+# SMCKPR*.INF predates the build and matches none of the images we hold, so there
+# is nothing to patch it back to -- just the byte-identity.
+.PHONY: verify-sp7001-progdisks
+verify-sp7001-progdisks: baserom/sp7001_pr1_hama1.bin baserom/sp7001_pr2_hama2.bin \
+		baserom/kn7000_program_sp7001.rom
+	@cat baserom/sp7001_pr1_hama1.bin baserom/sp7001_pr2_hama2.bin > baserom/sp7001_prog_disks.bin
+	@cmp -n 4164571 baserom/sp7001_prog_disks.bin baserom/kn7000_program_sp7001.rom \
+	    && echo "OK    HAMA1.SLD + HAMA2.SLD (decompressed) == program 942 [0:0x3F8BDB]"
+
+# ---- SP7001 symbols: PORTED from build 941/84, not re-derived ---------------
+# tools/port_symbols.py translates every recovered name through the exact
+# 941->942 / 84->83 offset maps (tools/offset_map.py) and cross-checks the
+# 2302 reflection names against 942's own tables. The plug-in blob in table
+# flash carries its own MILK reflection tables (35 KSS functions). Code ranges:
+# 941's region bounds 0x186000 / 0x3B8000 mapped to 942 (0x1864F4 / 0x3B97B4).
+SP7001_REFS := baserom/kn7000_program_sp7001.rom baserom/kn7000_table_sp7001.rom
+SP7001_PORT := $(PYTHON) tools/port_symbols.py \
+    baserom/kn7000_program.rom baserom/kn7000_program_sp7001.rom \
+    baserom/kn7000_table.rom   baserom/kn7000_table_sp7001.rom
+SP7001_PLUGIN := 0x3E8000:0x3FB5A0
+# library image in program-flash 942 (941's 0x3B8FD1 through the offset map;
+# tools/port_symbols.py prints it)
+SP7001_LIB_FILE := 0x3BA785
+
+# Build 941 names carried BACK from 942's plug-in export table (the functions
+# they name exist in 941 too). Needs both builds' baserom; the committed
+# kn7000_exports_from_942.sym is the result, so the default build doesn't.
+# The library's micro-ITRON entry stubs are near-identical byte runs the offset map can
+# misalign, so tools/itron_stubs.py then re-places each exported kernel name on the 941 stub
+# that enters the same service routine (needs unidasm, $UNIDASM).
+.PHONY: exports-941
+exports-941 kn7000_exports_from_942.sym: tools/port_symbols.py tools/offset_map.py tools/itron_stubs.py \
+		kn7000_sp7001_exports.sym $(REFS) $(SP7001_REFS)
+	$(PYTHON) tools/port_symbols.py baserom/kn7000_program_sp7001.rom baserom/kn7000_program.rom \
+	    baserom/kn7000_table_sp7001.rom baserom/kn7000_table.rom \
+	    kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --old-lib-base $(SP7001_LIB_FILE) \
+	    --title "KN7000 build 941: names from the SP7001 (build 942) plug-in export table, ported back"
+	$(PYTHON) tools/itron_stubs.py baserom/kn7000_program_sp7001.rom $(SP7001_LIB_FILE) \
+	    baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym kn7000_exports_from_942.sym --fix
+
+.PHONY: symbols-sp7001 program-src-sp7001
+symbols-sp7001 kn7000_sp7001.sym src/sp7001/symbols.inc kn7000_sp7001_manual.sym \
+kn7000_sp7001_exports.sym kn7000_sp7001_table.sym src/sp7001/table_symbols.inc &: \
+		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py tools/sp7001_exports.py \
+		kn7000.sym kn7000_manual.sym kn7000_sp7001_new.sym $(REFS) $(SP7001_REFS)
+	$(SP7001_PORT) kn7000.sym kn7000_sp7001.sym --inc src/sp7001/symbols.inc \
+	    --title "KN7000 SP7001 (program 942 / table 83) symbols" \
+	    --check-recovered 0x80:0x1864F4 0x3B97B4:0x3F8BDB
+	$(SP7001_PORT) kn7000_manual.sym kn7000_sp7001_manual.sym \
+	    --title "KN7000 SP7001 manual symbol supplement"
+	LIB_FILE_BASE=$(SP7001_LIB_FILE) UNIDASM=$(UNIDASM) $(PYTHON) tools/sp7001_exports.py \
+	    baserom/kn7000_program_sp7001.rom kn7000_sp7001_exports.sym \
+	    kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym
+	$(PYTHON) tools/gen_symbols.py baserom/kn7000_table_sp7001.rom --program-base 0x48000000 \
+	    --code-range $(SP7001_PLUGIN) --no-manual \
+	    --title "KN7000 SP7001 table-flash XAPR plug-in: names from its own MILK reflection tables" \
+	    --sym kn7000_sp7001_table.sym --inc src/sp7001/table_symbols.inc
+
+# Regenerate src/sp7001/program.s from build 942 by porting build 941's split,
+# conversions and notes (needs unidasm). The committed file is the result.
+# Regenerate src/sp7001/table.s: the 84-segment directory image (each segment
+# compared against build 84) plus the XAPR plug-in appended after it, whose code
+# is emitted as real MN10300 assembly (needs unidasm). The committed file is the
+# result.
+SP7001_PLUGIN_CODE := 0x3E803C:0x3EF6C5
+SP7001_TABLE_SYMS  := kn7000_sp7001_table.sym kn7000_sp7001_table_manual.sym \
+                      kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
+                      kn7000_sp7001_exports.sym
+# Regenerate src/sp7001/baseext.s: BASEEXT.XAP as linked for 0x5029B000 (needs
+# unidasm). Routines byte-identical to named program-942 routines take their names.
+.PHONY: xap-src-sp7001
+xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
+		kn7000_sp7001_baseext.sym kn7000_sp7001.sym kn7000_sp7001_manual.sym \
+		kn7000_sp7001_exports.sym kn7000_sp7001_new.sym \
+		baserom/sp7001_baseext.xap baserom/kn7000_program_sp7001.rom
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_xap_s.py --xap baserom/sp7001_baseext.xap \
+	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E \
+	    --title 'SP7001 BASEEXT.XAP (Key Soft Service base extension) - byte-exact.' \
+	    --sym kn7000_sp7001_baseext.sym \
+	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
+	    --fw-sym kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_exports.sym kn7000_sp7001_new.sym
+
+.PHONY: table-src-sp7001
+table-src-sp7001: tools/gen_table_s.py tools/gen_program_s.py tools/gen_symbols.py \
+		$(SP7001_TABLE_SYMS) baserom/kn7000_table.rom baserom/kn7000_table_sp7001.rom
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table_sp7001.rom \
+	    --out src/sp7001/table.s \
+	    --title 'KN7000 SP7001 "Table" flash image (build 83) - byte-exact.' \
+	    --compare baserom/kn7000_table.rom --compare-label "build 84" \
+	    --plugin $(SP7001_PLUGIN) --plugin-code $(SP7001_PLUGIN_CODE) \
+	    --sym $(SP7001_TABLE_SYMS)
+
+program-src-sp7001: tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py \
+		kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \
+		kn7000_sp7001_exports.sym $(wildcard annotations/*.ann) $(REFS) $(SP7001_REFS)
+	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py --profile sp7001
+
+verify-sp7001: $(SP7001_TARGETS)
+	@ok=1; \
+	for name in kn7000_program_sp7001.rom kn7000_table_sp7001.rom sp7001_baseext.xap; do \
+	  if cmp -s "build/$$name" "baserom/$$name"; then \
+	    echo "OK    $$name is 100% byte-identical to the SP7001 dump"; \
+	  else \
+	    echo "FAIL  $$name differs from the SP7001 dump:"; \
+	    cmp "build/$$name" "baserom/$$name" || true; \
+	    ok=0; \
+	  fi; \
+	done; \
+	[ $$ok -eq 1 ] || { echo; echo "SP7001 byte-match FAILED"; exit 1; }
+	@echo; echo "SP7001 images reproduced byte-for-byte."
+
+clean:
+	rm -rf build
+
+distclean: clean
+	rm -f baserom/*.rom disasm/program.asm

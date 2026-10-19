@@ -1,0 +1,9 @@
+; BASEEXT.XAP -- the Key Soft Service "base extension" plug-in shipped on the SP7001 table
+; floppy ('SP7001 TB2'), copied to the SD card by the setup and loaded from there. Linked for
+; and loaded to CPU 0x5029B000: the table-flash plug-in's KssPluginLoad (0x483EEAA9) reads the
+; whole 0x1D000-byte file there and calls its first byte. Hand-curated (tools/gen_xap_s.py
+; adds func_<ADDR> labels and names byte-identical copies of firmware routines).
+;
+0x5029B000  XapEntry                ; entry, called by KssPluginLoad with a0 = framework object (*0x50299298), a1 = 0x502992E4, d0 = &compile id, d1 = &plug-in id: saves a0/a1, calls 0x5029D4E1, then returns a0 = 0x502B1E50 (the plug-in object), *d0 = (0x502B2090) (compile id, checked against the base plug-in's 0x502992DC), *d1 = 3 (the plug-in id)
+0x502B4044  XapFrameworkObj         ; the framework object the loader passed in a0
+0x502B4048  XapContext              ; the a1 the loader passed (0x502992E4)

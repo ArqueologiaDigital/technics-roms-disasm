@@ -1,0 +1,53 @@
+; rec16 — EFFECT: ROTARY SPEAKER simulator, Rock Rotary build (GUI
+; "Rock Rotary" Standard / Single Rotor / Distorted, type 0x0F — names =
+; ROM fact via the preset-descriptor table). SAME ALGORITHM as the
+; rec30 family: PM identical except the two output scalings use ASHIFT -8
+; (vs rec30's LSHIFT -8 + NOP — same low 24 bits, cleaner rebuild; 72 vs
+; 74 words). Voicing: drive 1.0 (always overdriven — "Rock"), makeup 0.5,
+; horn bandpass 2369 Hz r=0.946 (= rec35/36), horn level 0.125, drum
+; level 0.245. Rotors/glide identical: drum 5.512 Hz, horn 6.431 Hz (7:6),
+; glide tau = 93 ms. Full doc dsp/tremolo-rotary-family.md §4; per-line
+; labels: see rec30 (addresses shift by -2 after 0x8440).
+pm:0x8400  ReadInL                 ; R0 = DM(0x20,I4)
+pm:0x8401  ReadInR                 ; R8 = DM(0x21,I4)
+pm:0x8402  MonoSum                 ; (L+R)/2; R3 = c004 drive = 1.0
+pm:0x8404  Drive                   ; F8 = in * 1.0 (hot)
+pm:0x8408  Shaper_TableBase        ; MODIFY(I5,0x34) -> saturation table c038
+pm:0x8412  Smooth_Load             ; 0.2/0.8 unity-DC smoother (state c007)
+pm:0x8416  CallCrossover           ; CALL 0x8300: drum 500 Hz -> F6, horn 2369 Hz BP -> F10
+pm:0x8419  CallRotors              ; CALL 0x830B: rate glide + dual magic-circle rotors
+pm:0x841c  HornDelayWrite          ; horn band -> ring @P (stride 0x140)
+pm:0x841d  HornTapSin_Off          ; sin(horn) * 29.0 Doppler tap
+pm:0x8425  HornTapCos_Off          ; cos(horn) * 29.0 quadrature tap
+pm:0x842e  DrumArenaHop            ; MODIFY(I2,0xC8) -> drum sub-arena @P+520
+pm:0x842f  DrumDelayWrite          ; drum band -> ring (stride 0xA0)
+pm:0x8430  DrumTap_Off             ; sin(drum) * 40.0
+pm:0x8437  Mix_HornDirect          ; 0.125*hornBP (Rock: horn pulled way down)
+pm:0x843b  Mix_L_Done              ; L = 0.125(hornBP+tapSin) + 0.245(drumLP+drumTap)
+pm:0x843d  Mix_R_Done              ; R = 0.125(hornBP+tapCos) + 0.245(drumLP-drumTap)
+pm:0x843e  OutFixL                 ; FIX; * c01e level
+pm:0x8440  OutShiftL               ; ASHIFT -8 (the build variant vs rec30)
+pm:0x8444  OutR                    ; DM(I4,M2) = out R
+pm:0x8445  Return                  ; RTS (delayed)
+pm:0x8447  PMStateRewind           ; MODIFY(I8,0x44): 12 state words
+dm:0x9800  SmootherK               ; 0.2 (9801 = 0.8) — NOT "0.10/0.40"
+dm:0x9806  DrumRotor_Target        ; 0x19BC65 = 5.512 Hz
+dm:0x9807  DrumRotor_Current       ; glide tau = 93 ms
+dm:0x9808  Const_MinusOne          ; -1.0
+dm:0x9809  HornRotor_Target        ; 0x1E0676 = 6.431 Hz (7:6)
+dm:0x980a  HornRotor_Current       ; glide
+dm:0x980b  Const_MinusOne2         ; -1.0
+dm:0xc004  Drive                   ; 1.0f — Rock voicing
+dm:0xc008  CrossoverMakeup         ; 0.5f
+dm:0xc009  DrumFilt_a1             ; 500.5 Hz resonator (= all family members)
+dm:0xc00c  HornFilt_a1             ; 1.784482f — bandpass 2369 Hz r=0.946
+dm:0xc00f  HornDopplerDepth        ; 29.0 samples
+dm:0xc010  GlideK1                 ; 2^-12
+dm:0xc012  DrumRotor_Cos           ; oscillator state (0.95)
+dm:0xc016  HornRotor_Cos           ; oscillator state (0.95)
+dm:0xc01a  DrumDopplerDepth        ; 40.0 samples
+dm:0xc01c  HornLevel               ; 0.125f
+dm:0xc01d  DrumLevel               ; 0.245f
+dm:0xc01e  OutLevel                ; 1.0
+dm:0xc028  SatTable_NegRail        ; saturation curve (identical across family)
+dm:0xc038  SatTable_Zero           ; centre

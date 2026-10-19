@@ -1,0 +1,16 @@
+# dump.cmd.in -- the dumper end to end: test data first (prefill.lua, when @PREFILL@ is set), then DISK MENU >
+# STYLE CONVERT > OK on the floppy's KN7LOAD.CNV; snapshots and progress every 60 s; MAME exits 5 s after the
+# application has finished (state 3 done at 0x502E0000) or the loader has failed (2 at 0x502B9D00). The end line
+# also gives the converter calls in the first emulated second after that (the loader's SV_CALLS, 0x502B9E58): the
+# rate of parked calls, which sets HOLD_CALLS for firmware where the millisecond counter is not found.
+# Before exiting it saves what the CPU reads at 0x96800000-0x969FFFFF (the IC21 flash, which the firmware
+# itself writes at boot) to @OUT@/ref_ic21.bin: the reference for the dump of that chip.
+@PREFILL@
+wait 30
+press CPR_SEG1 04
+wait 4
+press CPL_SEG0 20
+wait 6
+press CPR_SEG6 01
+lua _G.UD={t=0}; _G.UD.h=emu.register_periodic(function() local m=manager.machine; local sp=m.devices[":maincpu"].spaces["program"]; local t=m.time:as_double(); local app=sp:read_u32(0x502E0000); local ld=sp:read_u32(0x502B9D00); if t-_G.UD.t>60 then _G.UD.t=t; m.video:snapshot(); emu.print_error(string.format("PROBE t=%.0f loader=%d app=%d rom=%d pos=%X calls=%d", t, ld, app, sp:read_u32(0x502E0004), sp:read_u32(0x502E0008), sp:read_u32(0x502B9E58))) end; if (app==3 or ld==2) and not _G.UD.done then _G.UD.done=t; _G.UD.c0=sp:read_u32(0x502B9E58) end; if _G.UD.done and not _G.UD.rate and t>_G.UD.done+1 then _G.UD.rate=sp:read_u32(0x502B9E58)-_G.UD.c0 end; if _G.UD.done and t>_G.UD.done+5 then m.video:snapshot(); local f=io.open("@OUT@/ref_ic21.bin","wb"); local b={} for a=0x96800000,0x969FFFFE,2 do b[#b+1]=string.pack("<I2", sp:read_u16(a)) if #b==4096 then f:write(table.concat(b)); b={} end end; f:write(table.concat(b)); f:close(); emu.print_error(string.format("PROBE end t=%.0f loader=%d app=%d lfn=%d err=%X fails=%d nofolder=%d found=%X calls_in_1s_after_done=%d", t, ld, app, sp:read_u32(0x502E0024), sp:read_u32(0x502E0014), sp:read_u32(0x502E0054), sp:read_u32(0x502E0050), sp:read_u32(0x502B9E64), _G.UD.rate or -1)); m:exit() end end)
+wait 7200

@@ -1,0 +1,43 @@
+; KN7000 SP7001 table-flash XAPR plug-in: names from its own MILK reflection tables
+; reflection tables (tools/gen_symbols.py). cpu_addr  name
+;
+; Verified memory map:
+;
+; 35 recovered function symbols:
+0x483E850F  ApTestProc
+0x483E85AD  AcKssScreenMenuProc
+0x483E85CB  AcKssEditBoxProc
+0x483E85E9  AcKssListProc
+0x483E8607  AcKssNamingWindowProc
+0x483E8625  IvKssNamingProc
+0x483E8643  AcKssNamingEditSwProc
+0x483E8661  Ap_Ce_WinNamingHistory
+0x483E867F  Ap_Ce_SelDir
+0x483E869D  Ap_Lst_SelDir
+0x483E86BB  Ap_Ce_WinSelSong
+0x483E86D9  Ap_Lst_WinSelSong
+0x483E86F7  Ap_Ce_WinSfxSelect
+0x483E8715  Ap_Ce_WinLoadSave
+0x483E8733  Ap_Ce_JukeBox
+0x483E8751  KssXLyricsBoxProc
+0x483E8770  Ap_Ce_Fd2Sd
+0x483E878F  Ap_Lst_Fd2Sd
+0x483E87AE  Ap_Ce_WinAlphaSort
+0x483E87CD  Ap_Lst_WinAlphaSort
+0x483E87EC  Ap_Ce_WinLbn
+0x483E880B  Ap_Ce_WinSettings1
+0x483E882A  Ap_Ce_WinSettings2
+0x483E8849  Ap_Eb_WinSettings
+0x483E8868  Ap_Ce_ClsDir
+0x483E8887  Ap_Lst_ClsDir
+0x483E88A6  Ap_Ce_Cls
+0x483E88C5  Ap_Lst_Cls
+0x483E8A08  DbKssMemoProc
+0x483E9060  KssBgScreenProc
+0x483E9611  PsKssTextBoxProc
+0x483E9B62  Ap_CE_Main
+0x483EA0A6  Ap_Ce_StartUp
+0x483EB336  Ap_Ce_Debug
+0x483EB528  Ap_Ce_Dialog
+;
+; 0 manually reverse-engineered symbols (RE, not from reflection tables):

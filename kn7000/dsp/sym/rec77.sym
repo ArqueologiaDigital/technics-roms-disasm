@@ -1,0 +1,18 @@
+; rec77 [DATA] — DM-only parameter push, no PM code.
+; DM 0xC028 = kernel LFO / modulation-waveform table (the same slot an effect
+; microprogram fills with its default sine, e.g. rec07 c028..c040). The host
+; streams this record to swap the modulation waveshape live without reloading
+; the effect code. Values are 1.31 fixed-point in [-1.0,+1.0].
+; rec77 = SINE waveshape (one full cycle over 16 samples, c028..c038, plus an
+; 8-sample positive-half guard/overlap region c039..c040 for interpolated reads).
+dm:0xc028  LFO_Sine_Table          ; table base = 0.0 (start of cycle)
+dm:0xc029  LFO_Sine_p1             ; +0.3827  (sin 22.5°)
+dm:0xc02a  LFO_Sine_p2             ; +0.7071  (sin 45°)
+dm:0xc02b  LFO_Sine_p3             ; +0.9239  (sin 67.5°)
+dm:0xc02c  LFO_Sine_Peak           ; +1.0     (0x7FFFFFFF, sin 90°)
+dm:0xc030  LFO_Sine_ZeroCross      ; 0.0      (sin 180°, mid-cycle)
+dm:0xc034  LFO_Sine_Trough         ; -1.0     (0x80000000, sin 270°)
+dm:0xc038  LFO_Sine_CycleEnd       ; 0.0      (sin 360°, end of one full cycle)
+dm:0xc039  LFO_Sine_GuardStart     ; +0.3827  guard/overlap copy of positive half
+dm:0xc040  LFO_Sine_GuardEnd       ; 0.0      end of guard region (last active entry)
+dm:0xc041  LFO_Table_PadStart      ; 0.0      c041..c04c zero pad (37 entries total)

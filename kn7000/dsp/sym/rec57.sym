@@ -1,0 +1,51 @@
+; rec57 — EFFECT: GUI VOICE CHANGER1/2 (type 0x78; group Vocal Effect)
+; Dual-saw granular pitch shifter (detune) with an EXACT equal-gain triangular
+; crossfade. Per channel: two phase accumulators in the 31-bit wrap domain
+; (FDEP 0:31 SE; one cycle = 2^31), half a cycle apart (phase B template
+; 0x40000000); windows = |phase| — antiphase triangles whose sum is the
+; CONSTANT 2^30 (0.5 Q31) and each of which is ZERO exactly when the OTHER
+; tap's saw wraps: out = tapA*|phaseB| + tapB*|phaseA| is jump-free by
+; construction. Tap offset = phase*depth -> 250+-120 smp; grain cycle =
+; 2^31/inc = 32768 smp = 0.743 s at template. L inc = +0x10000 -> delay grows
+; -> -12.7 cents; R inc = -0x10000 -> +12.7 cents: a stereo detune pair.
+; Gain: x2 in, x0.5 crossfade sum, x level (c007), x2 out = net x2.
+; ANOMALY (fact, in the KN7000 AND KN6000 builds): the right channel's input
+; read is DM(0x1F,I4) — the PREVIOUS unit slot's R input, not this unit's
+; own +0x21. Meaning open (copy bug vs deliberate cross-slot mono tap);
+; depends on host-side slot routing (PROVISIONAL).
+; The DM sine table (c029..) is the generator template — UNUSED by this PM.
+; vs rec66 Vocal Harmonizer: different engine, same idiom family (rec66 =
+; reflected ping-pong ramps, 3 voices, cent-slope hosts, gate/AGC/telemetry;
+; rec57 = wrapped saws, 2 taps, symmetric detune, bare).
+; Full doc: dsp/modulation-pitch-family.md #8.
+dm:0x9800  ps_incr_L            ; +0x00010000: left-channel phase increment (-12.7 cents templ)
+dm:0x9801  ps_incr_R            ; -0x00010000: right-channel increment (+12.7 cents templ)
+dm:0xc004  ps_phaseA_L          ; left phase A (templ 0)
+dm:0xc005  ps_phaseB_L          ; left phase B (templ 0x40000000 = half a cycle — antiphase window)
+dm:0xc006  ps_depth_L           ; 0x00F00000: offset = phase*depth -> +-120 smp
+dm:0xc007  ps_level             ; 0x7FFFFFFF output level (shared L/R via R14)
+dm:0xc008  ps_phaseA_R          ; right phase A
+dm:0xc009  ps_phaseB_R          ; right phase B (templ 0x40000000)
+dm:0xc00a  ps_depth_R           ; 0x00F00000 right depth
+dm:0xc029  ps_sine_tab          ; template sine table — UNUSED by this PM (no LFO here)
+pm:0x8400  ps_entry             ; I0=I1
+pm:0x8401  ps_phaseA_acc        ; phase A += inc (PM state), FDEP 31-bit wrap
+pm:0x8405  ps_windowA           ; R6 = |phaseA| — window for TAP B
+pm:0x8406  ps_phaseB_acc        ; phase B += same inc, wrap
+pm:0x840a  ps_windowB           ; R13 = |phaseB| — window for TAP A
+pm:0x840b  ps_save_i2           ; R15 = I2
+pm:0x840c  ps_read_inL          ; R0 = DM(0x20,I4); x2
+pm:0x840e  ps_write_delay       ; write at P, stride 250 -> read base P+250
+pm:0x8411  ps_indexA            ; offset A = phaseA * depth (16.16)
+pm:0x8415  ps_interpA           ; fractional lerp -> R3 = tap A
+pm:0x841a  ps_indexB            ; offset B = phaseB * depth
+pm:0x8421  ps_interpB           ; fractional lerp -> R8 = tap B
+pm:0x8424  ps_crossfade         ; out = tapA*|phaseB| + tapB*|phaseA| (equal-gain, jump-free)
+pm:0x8427  ps_outscaleL         ; x level, x2, CLIP
+pm:0x842b  ps_out_L             ; DM(I4,M2) = out L
+pm:0x842c  ps_chanR             ; right channel: same machine, inc = -0x10000 (pitch UP)
+pm:0x8436  ps_read_in0x1F       ; R0 = DM(0x1F,I4) — the PREVIOUS slot's R input (anomaly, fact)
+pm:0x8452  ps_out_R             ; DM(I4,M2) = out R
+pm:0x8453  ps_restore_i2        ; I2 = R15
+pm:0x8454  ps_rts               ; RTS (delayed)
+pm:0x8456  ps_state_rewind      ; MODIFY(I8,0x4E) — 2 state reads

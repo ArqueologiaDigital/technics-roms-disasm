@@ -1,0 +1,33 @@
+; rec25 — EFFECT: the GUI LIMITER1-4 (type 0x29) — PM byte-identical to rec21
+; (the Comp.1-4 bank of the same program); the two GUI groups differ only in the
+; DM/state banks written at select time. Template gain law: gain = 1/3 +
+; (2^31/6)/env clamped at 2.0 below env=0.1 (exact continuity); detector atk
+; 1/32 / rel 1/2048; stereo-linked; CLIP +-0x7FFFFF = the limiter's final rail.
+; Full annotation (labels identical): sym/rec21.sym + dsp/dynamics-eq-exciter.md #2.
+pm:0x8400  Entry_SetInPtr          ; I0=I1
+pm:0x8401  LoadInputL_R            ; R13=inL, R8=inR
+pm:0x8403  SumLR                   ; R8=R13+R8
+pm:0x8404  ScaleEnvInput           ; <<9
+pm:0x8405  RectifyEnv              ; ABS; R4=c004 attack 1/32; R7=env PM9800
+pm:0x8407  ReleaseSelect           ; IF LT R4=c005 release 1/2048
+pm:0x8409  EnvOnePoleUpdate        ; env += k*(det-env)
+pm:0x840a  StoreEnvState           ; PM(I8,M8)=env
+pm:0x840b  Env_ToFloat             ; F12=FLOAT env; R3=c006=1/3
+pm:0x8410  RecipSeed               ; F0=RECIPS F12
+pm:0x8411  RecipNR_Iter            ; 3x Newton => 1/env full precision
+pm:0x8418  ComputeGain             ; F15 = 1/3 + (2^31/6)/env
+pm:0x841a  ThreshCompare           ; COMP(c008=0.1, env)
+pm:0x841b  GainClamp               ; IF GE F15=c009=2.0 (+6 dB below threshold)
+pm:0x841c  ApplyGain_L             ; FLOAT, x F15, FIX, x c00a makeup, CLIP 24-bit
+pm:0x8422  OutL                    ; DM(I4,M2)=R0
+pm:0x8423  ApplyGain_R             ; same gain — stereo-linked
+pm:0x8429  OutR                    ; DM(I4,M2)=R0
+pm:0x842a  Return                  ; RTS (delayed)
+pm:0x842c  PMStateRewind           ; MODIFY(I8,0x4F)
+dm:0xc004  AttackRate              ; 0x04000000 = 1/32
+dm:0xc005  ReleaseRate             ; 0x00100000 = 1/2048
+dm:0xc006  GainBase                ; float 1/3
+dm:0xc007  GainRecipScale          ; float ~2^31/6
+dm:0xc008  Threshold               ; Q31 0.100
+dm:0xc009  GainBelowThresh         ; float 2.0
+dm:0xc00a  Makeup                  ; Q31 ~1.0

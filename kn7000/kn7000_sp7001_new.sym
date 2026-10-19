@@ -1,0 +1,25 @@
+; KN7000 SP7001 (program build 942) -- names for code/data that exist ONLY in this build and
+; that the firmware does not name itself. Hand-curated from the disassembly (see
+; notes/sp7001-build-diff.md). The forwarders and accessors new in 942 are named by the
+; firmware's own plug-in export table instead (kn7000_sp7001_exports.sym, generated).
+; *_entry = the register-save `call` entry 3 bytes in (after the `add -N,sp` frame setup).
+;
+; ---- plug-in host data ----
+0x500066D0  PlugInPresent           ; RAM byte: 1 when the table-flash XAPR plug-in validated
+0x486BDECC  XaprMagicHead           ; 'XAPR' compared against the plug-in header (0x483E8000)
+0x486BDED1  XaprMagicTail           ; 'XAPR' compared against the plug-in footer (*(0x483E8004))
+;
+; ---- plug-in export table (names: kn7000_sp7001_exports.sym) ----
+0x486BD3B8  Sp7001ExportNameBlock   ; NUL-terminated names of the exported services ('loc_cpu', ...)
+0x487B1BB8  Sp7001ExportCodeArray   ; u32 code pointers; code[0] = 0; name[k] names code[k+1]
+0x487B1F5C  Sp7001ExportNameArray   ; u32 pointers into Sp7001ExportNameBlock (after a NUL word)
+;
+; ---- plug-in host code ----
+0x48585B95  PlugInProbe             ; validate the table-flash plug-in: 4-byte 'XAPR' at 0x483E8000 and at *(0x483E8004) (the footer); sets PlugInPresent 0x500066D0 = 1/0 and returns it
+0x48585B98  PlugInProbe_entry
+0x48585BE8  PlugInCallSlot0C        ; if PlugInPresent: call the plug-in header slot *(0x483E800C); called once per pass of the library main loop (call site 0x4C02BE74)
+0x48585BEB  PlugInCallSlot0C_entry
+0x48585C02  PlugInProbeCallSlot08   ; re-run PlugInProbe; if present call header slot *(0x483E8008) with a0 = 0x5011FABC; called from 0x4854AC83
+0x48585C05  PlugInProbeCallSlot08_entry
+0x48585C27  PlugInCallSlot10        ; if PlugInPresent: call header slot *(0x483E8010) with d0/d1 passed through, else return -1; reached via the pointer at 0x48732EA0
+0x48585C2A  PlugInCallSlot10_entry

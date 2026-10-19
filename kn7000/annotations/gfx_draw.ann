@@ -1,0 +1,1784 @@
+; gfx_draw.ann -- the graphics layer's blitters and text renderer, DrawBitmap ..
+; DrawStringCentered (CPU 0x48423B56..0x4842597A), merged into src/program.s by
+; tools/gen_program_s.py. Format: annotations/README.md. Addresses: build 941.
+;
+; Every public DrawXxx works like its KN5000 namesake. On the draw task
+; (IsDrawTask) it calls DrawXxx_Impl at once, if DrawEnable is set. On any other
+; task it copies its arguments into a record from DrawQueue_Alloc whose first word
+; is DrawXxx_QueuedExec, and posts it with DrawRing_Post; the draw task later calls
+; DrawXxx_QueuedExec(a0 = record), which tests DrawEnable again and calls the Impl.
+; Each public function's doc gives its record layout. A record holds pointers, not
+; copies, of pixel data, palettes and files (DrawString copies its string), so
+; those must stay valid until the draw task runs. The Impls write FrameBuffer
+; (640 x 240, one byte per pixel) and finish with SetChangeRect.
+;
+; Most bitmap blitters share these limits (each doc gives its exceptions): a
+; top-left corner off the screen (IsPointOnScreen) draws nothing; a row at
+; y >= 240 ends the copy; nothing clips horizontally, so an image wider than
+; 640 - x runs on into the next framebuffer row; the dirty rectangle
+; {x, y, x+w-1, y+h-1} is not clipped.
+
+; ---- data -------------------------------------------------------------------------
+
+; The draw-enable word: every DrawXxx_Impl call, direct or replayed from the
+; draw queue, is skipped while it is 0 (the KN5000 tests the word at 0x3044E
+; the same way).
+equ DrawEnable      5002A01C  nonzero: drawing allowed (tested before every DrawXxx_Impl)
+; The 8 bpp plane every blitter writes: 640 x 240, stride 0x280. A byte whose high
+; nibble is 0xD is a picture pixel (0xD0|red4, green/blue in PICTURE_PLANE2);
+; anything else is a palette index (kn7000_mame notes/display-dual-plane-direct-color.md).
+equ FrameBuffer     500D4080  640 x 240 x 8 bpp, stride 0x280
+; Pointers to the resource tables (set up from the table flash). The bitmap, frame
+; and icon tables are 8-byte {s16 width; s16 height; u8 *pixels} entries (DrawBitmap_Impl
+; reads width and height with exth: 0x8000 and up act as negative); the font
+; table holds 0x14-byte descriptors (GetCharHeight reads +2, GetCharDescent +4).
+equ BitmapTablePtr  50122DAC  -> bitmap descriptors {s16 w, s16 h, u8 *pixels}
+equ FrameTablePtr   50122DB0  -> frame-piece descriptors {s16 w, s16 h, u8 *pixels}
+equ IconTablePtr    50122DB4  -> icon descriptors {s16 w, s16 h, u8 *pixels}
+equ FontTablePtr    50122DB8  -> 0x14-byte font descriptors
+
+; 256 x {u8 left, u8 right}, read as u16 words: entry [b] holds the colours of the two
+; 4-bpp pixels in icon byte b, high nibble = left pixel (low byte). Nibble n maps to
+; palette index n for n < 8 and 0xF0 + n for n >= 8. Same table as the KN5000's.
+equ DrawIcons_PixelPairTable  485A22B8  256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)
+
+; SPFast16 turns each source byte into two 8 bpp pixels through this table:
+; entry b = (0x20 + (b & 0xF)) << 8 | (0x20 + (b >> 4)), so the low byte is the
+; left pixel (high nibble) and the high byte the right pixel (low nibble). Also
+; read by DrawWallPreview (0x484281F0, 0x48428218).
+equ Pixel4bppPairTable  485A24B8  u16[256]: byte -> two pixels {lo: 0x20 + high nibble, hi: 0x20 + low nibble}
+
+; The corner mask of DrawJpegFileR_Impl, read by nothing else: 8 {u16 dx, u16 dy}
+; offsets from a corner of the picture, mirrored per corner -- (0..3, 0), (0..1, 1),
+; (0, 2), (0, 3): 4 + 2 + 1 + 1 pixels that keep the background.
+equ RoundCornerPixels 485A28BC  8 x {u16 dx, u16 dy}: the pixels a DrawJpegFileR corner keeps
+
+; The glyph DrawString_Impl draws for a Shift-JIS code its font's table lacks.
+equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X in it
+
+; ---- DrawBitmap ---------------------------------------------------------------
+48423B56 doc   DrawBitmap(a0 = &point {s16 x, s16 y}, d0 = bitmap index): draws entry d0
+48423B56 doc   of the bitmap table (BitmapTablePtr) with its top-left corner at the point,
+48423B56 doc   skipping pixels of value 0xF7 (CL_Transparent). On the draw task it draws
+48423B56 doc   at once (if DrawEnable is set); on any other task it queues a 12-byte
+48423B56 doc   record {+0 DrawBitmap_QueuedExec, +4 s16 x, +6 s16 y, +8 u32 index} instead.
+48423B5B eol   d2 = bitmap index
+48423B5C eol   a2 = &point
+48423B64 eol   not the draw task: queue it
+48423B6E eol   drawing disabled
+48423B72 eol   draw now
+48423B79 label DrawBitmap_Deferred
+48423B79 eol   12-byte record
+48423B7B eol   a0 = record
+48423B86 eol   +0: the function the draw task will call
+48423B8B eol   +4: x
+48423B90 eol   +6: y
+48423B93 eol   +8: bitmap index
+48423B96 eol   hand it to the draw task
+48423B9B label DrawBitmap_Return
+
+; ---- DrawBitmap_QueuedExec ----------------------------------------------------
+48423B9E doc   DrawBitmap_QueuedExec(a0 = record): called by the draw task for a record
+48423B9E doc   DrawBitmap queued; draws it if DrawEnable is still set.
+48423BA8 eol   a1 = &record.point
+48423BA9 eol   d1 = record.index
+48423BAE eol   drawing disabled meanwhile
+48423BB7 label DrawBitmap_QueuedExec_Return
+
+; ---- DrawBitmap_Impl ----------------------------------------------------------
+48423BBA doc   DrawBitmap_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
+48423BBA doc   top-left corner off the screen (IsPointOnScreen: x outside 0..639 or y
+48423BBA doc   outside 0..239), draws nothing. Rows are copied into FrameBuffer one byte
+48423BBA doc   per pixel, skipping 0xF7; each source row is padded to an even length. A
+48423BBA doc   row at y >= 240 ends the copy, but nothing clips horizontally: a bitmap
+48423BBA doc   wider than 640 - x runs on into the next framebuffer row. Ends by marking
+48423BBA doc   {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+48423BBF eol   a3 = &point
+48423BC0 eol   d2 = bitmap index
+48423BC5 eol   index -1: no bitmap
+48423BC8 label DrawBitmap_Impl_HaveIndex
+48423BD1 eol   top-left corner off the screen
+48423BD4 label DrawBitmap_Impl_OnScreen
+48423BDD eol   d1 = &table[index] (8-byte entries)
+48423BE1 eol   a0 = &entry.height
+48423BE3 eol   a2 = &entry.width
+48423BE5 eol   a1 = entry.pixels: the source
+48423BE8 eol   (0xc,sp) = &entry.height
+48423BEC eol   d3 = row
+48423BEF eol   height <= 0
+48423BF5 eol   (0x10,sp) = &point.y
+48423BF7 label DrawBitmap_Impl_RowLoop
+48423BFD eol   (0x16,sp) = y = point.y + row
+48423C05 eol   y >= 240: below the screen, stop
+48423C13 eol   d1 = y * 640 (the compiler puts two nops before every mul)
+48423C1E eol   a0 = FrameBuffer + y*640 + x
+48423C21 eol   d2 = column
+48423C23 eol   width <= 0
+48423C25 note  Copy one row; the hardware loop (setlb .. llt) repeats from the next instruction.
+48423C2C eol   0xF7: transparent, leave the framebuffer alone
+48423C30 eol   opaque: copy
+48423C32 label DrawBitmap_Impl_NextPixel
+48423C3A eol   next column while column < width
+48423C3B label DrawBitmap_Impl_RowDone
+48423C44 eol   d0 = width % 2
+48423C4A eol   odd width: skip the row's pad byte
+48423C4B label DrawBitmap_Impl_NextRow
+48423C53 eol   next row while row < height
+48423C55 label DrawBitmap_Impl_Dirty
+48423C55 note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48423C5B eol   rect.top = y
+48423C60 eol   rect.left = x
+48423C6C eol   rect.right = x + width - 1
+48423C7A eol   rect.bottom = y + height - 1
+48423C7E eol   a0 = &rect
+
+; ---- DrawBitmapFast -----------------------------------------------------------
+48423C88 doc   DrawBitmapFast(a0 = &point {s16 x, s16 y}, d0 = bitmap index): draws entry
+48423C88 doc   d0 of the bitmap table (BitmapTablePtr) with its top-left corner at the
+48423C88 doc   point, like DrawBitmap but opaque: rows are copied whole, 0xF7 included. On
+48423C88 doc   the draw task it draws at once (if DrawEnable is set); on any other task it
+48423C88 doc   queues a 12-byte record {+0 DrawBitmapFast_QueuedExec, +4 s16 x, +6 s16 y,
+48423C88 doc   +8 u32 index} instead.
+48423C8D eol   d2 = bitmap index
+48423C8E eol   a2 = &point
+48423C96 eol   not the draw task: queue it
+48423CA0 eol   drawing disabled
+48423CA4 eol   draw now
+48423CAB label DrawBitmapFast_Deferred
+48423CAB eol   12-byte record
+48423CAD eol   a0 = record
+48423CB8 eol   +0: the function the draw task will call
+48423CBD eol   +4: x
+48423CC2 eol   +6: y
+48423CC5 eol   +8: bitmap index
+48423CC8 eol   hand it to the draw task
+48423CCD label DrawBitmapFast_Return
+
+; ---- DrawBitmapFast_QueuedExec ------------------------------------------------
+48423CD0 doc   DrawBitmapFast_QueuedExec(a0 = record): called by the draw task for a record
+48423CD0 doc   DrawBitmapFast queued; draws it if DrawEnable is still set.
+48423CDA eol   a1 = &record.point
+48423CDB eol   d1 = record.index
+48423CE0 eol   drawing disabled meanwhile
+48423CE9 label DrawBitmapFast_QueuedExec_Return
+
+; ---- DrawBitmapFast_Impl ------------------------------------------------------
+48423CEC doc   DrawBitmapFast_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
+48423CEC doc   top-left corner off the screen, draws nothing. Each row goes into FrameBuffer
+48423CEC doc   with one memcpy of width bytes (lib 0x4C003039, i.e. LibMemCopy), so there
+48423CEC doc   is no 0xF7 transparency; source rows are padded to an even length, as for
+48423CEC doc   DrawBitmap. A row at y >= 240 ends the copy, but nothing clips horizontally:
+48423CEC doc   a bitmap wider than 640 - x runs on into the next framebuffer row. Ends by
+48423CEC doc   marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+48423CF1 eol   (0x44,sp) = &point, spilled to the caller's argument area
+48423CF3 eol   d3 = bitmap index
+48423CF8 eol   index -1: no bitmap
+48423CFB label DrawBitmapFast_Impl_HaveIndex
+48423D04 eol   top-left corner off the screen
+48423D07 label DrawBitmapFast_Impl_OnScreen
+48423D0D eol   (0x1c,sp) = &point.y
+48423D30 eol   a3 = FrameBuffer + y*640 + x: the destination
+48423D32 eol   d1 = &table[index] (8-byte entries)
+48423D36 eol   d2 = y of the current row
+48423D38 eol   (0x14,sp) = &entry.width
+48423D3C eol   d3 = entry.pixels: the source
+48423D3F eol   (0x18,sp) = &entry.height
+48423D45 eol   a2 = row
+48423D4A eol   height <= 0
+48423D4C label DrawBitmapFast_Impl_RowLoop
+48423D51 eol   y >= 240: below the screen, stop
+48423D5B eol   memcpy(a0 = dest, a1 = src, d0 = width): the whole row, opaque
+48423D62 note  Advance: framebuffer by one row, source by the width rounded up to even,
+48423D62 note  computed as (width + width % 2) / 2 * 2.
+48423D64 eol   next framebuffer row
+48423D6C eol   save y: d2 is the divisor next
+48423D76 eol   d0 = width % 2
+48423D7D eol   d0 = (width + width % 2) / 2
+48423D87 eol   source += the padded row length
+48423D88 eol   next y
+48423D8D eol   next row
+48423D94 eol   next row while row < height
+48423D96 label DrawBitmapFast_Impl_Dirty
+48423D96 note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48423D9A eol   rect.top = y
+48423DA1 eol   rect.left = x
+48423DAF eol   rect.right = x + width - 1
+48423DC0 eol   rect.bottom = y + height - 1
+48423DC3 eol   a0 = &rect
+
+; ---- DrawIcons ----------------------------------------------------------------
+48423DCD doc   DrawIcons(a0 = &point {s16 x, s16 y}, d0 = icon index): draws one icon,
+48423DCD doc   entry d0 of the icon table (IconTablePtr), with its top-left corner at the
+48423DCD doc   point: a fixed 24 x 24 pixels of 4-bpp data, whatever size the descriptor
+48423DCD doc   gives (see DrawIcons_Impl). Index 0 draws nothing. On the draw task it draws
+48423DCD doc   at once (if DrawEnable is set); on any other task it queues a 12-byte record
+48423DCD doc   {+0 DrawIcons_QueuedExec, +4 s16 x, +6 s16 y, +8 u32 index} instead.
+48423DD2 eol   d2 = icon index
+48423DD3 eol   a2 = &point
+48423DDB eol   not the draw task: queue it
+48423DE5 eol   drawing disabled
+48423DE9 eol   draw now
+48423DF0 label DrawIcons_Deferred
+48423DF0 eol   12-byte record
+48423DF2 eol   a0 = record
+48423DFD eol   +0: the function the draw task will call
+48423E02 eol   +4: x
+48423E07 eol   +6: y
+48423E0A eol   +8: icon index
+48423E0D eol   hand it to the draw task
+48423E12 label DrawIcons_Return
+
+; ---- DrawIcons_QueuedExec -----------------------------------------------------
+48423E15 doc   DrawIcons_QueuedExec(a0 = record): called by the draw task for a record
+48423E15 doc   DrawIcons queued; draws it if DrawEnable is still set.
+48423E1F eol   a1 = &record.point
+48423E20 eol   d1 = record.index
+48423E25 eol   drawing disabled meanwhile
+48423E2E label DrawIcons_QueuedExec_Return
+
+; ---- DrawIcons_Impl -----------------------------------------------------------
+48423E31 doc   DrawIcons_Impl(a0 = &point, d0 = icon index): the blit. Index 0 (not -1 as
+48423E31 doc   for bitmaps), or a top-left corner off the screen, draws nothing. The
+48423E31 doc   geometry is hardcoded, as on the KN5000: 24 rows of 12 source bytes, each
+48423E31 doc   byte two 4-bpp pixels (high nibble on the left); the descriptor's width and
+48423E31 doc   height are not used for the copy. Every pixel is written (no transparency),
+48423E31 doc   its nibble n turned into palette index n (n < 8) or 0xF0 + n (n >= 8) by
+48423E31 doc   DrawIcons_PixelPairTable. A row at y >= 240 ends the copy; nothing clips
+48423E31 doc   horizontally. Ends by marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect,
+48423E31 doc   w and h taken from the descriptor, not 24 x 24.
+48423E36 eol   d3 = &point
+48423E38 eol   d2 = icon index
+48423E3D eol   index 0: no icon
+48423E40 label DrawIcons_Impl_HaveIndex
+48423E49 eol   top-left corner off the screen
+48423E4C label DrawIcons_Impl_OnScreen
+48423E55 eol   d1 = &table[index] (8-byte entries)
+48423E56 eol   (0x10,sp) = &entry: width at +0, height at +2
+48423E5D eol   a1 = entry.pixels: the source
+48423E60 eol   (0xc,sp) = &point.y
+48423E69 eol   (0x16,sp) = y of the current row
+48423E70 eol   d2 = x
+48423E7F eol   a2 = FrameBuffer + y*640 + x: the destination
+48423E81 eol   d2 = row
+48423E88 label DrawIcons_Impl_RowLoop
+48423E90 eol   y >= 240: below the screen, stop
+48423E92 eol   a0 = this row's destination
+48423E93 eol   d1 = bytes of this row done
+48423E94 note  Expand one row, 12 bytes into 24 pixels; the hardware loop (setlb .. llt)
+48423E94 note  repeats from the next instruction.
+48423E99 eol   d0 = DrawIcons_PixelPairTable[byte]
+48423E9C eol   left pixel: the high nibble's colour
+48423EA8 eol   right pixel: the low nibble's colour
+48423EB0 eol   until 12 bytes (24 pixels) are done
+48423EB4 eol   next framebuffer row
+48423EBA eol   next y
+48423EC1 eol   next row while row < 24
+48423EC3 label DrawIcons_Impl_Dirty
+48423EC3 note  Mark the rectangle dirty, sized by the descriptor, not by the 24 x 24 copy.
+48423EC9 eol   rect.top = y
+48423ECE eol   rect.left = x
+48423EDC eol   rect.right = x + entry.width - 1
+48423EEE eol   rect.bottom = y + entry.height - 1
+48423EF1 eol   a0 = &rect
+
+; ---- DrawFrameSP --------------------------------------------------------------
+48423EFB doc   DrawFrameSP(a0 = &point {s16 x, s16 y}, d0 = frame index, d1 = colour):
+48423EFB doc   draws entry d0 of the frame-piece table (FrameTablePtr) with its top-left
+48423EFB doc   corner at the point: 0xF6 pixels take colour d1, 0xF7 pixels are skipped,
+48423EFB doc   0xF4 pixels are copied from the buffer at *0x500D407C (see
+48423EFB doc   DrawFrameSP_Impl). On the draw task it draws at once (if DrawEnable is
+48423EFB doc   set); on any other task it queues a 12-byte record {DrawFrameSP_QueuedExec,
+48423EFB doc   x, y, u16 index, u16 colour} for the draw task instead. No call in the
+48423EFB doc   image (library included) targets it, so it has no _entry; its only
+48423EFB doc   reference is the function-table slot at 0x48727174 (InitBlockTable +
+48423EFB doc   0xC8). The 24 direct frame-piece draws, 0x48426639..0x4842776E, are all in
+48423EFB doc   DrawDesignBox's blit (0x4842621C) and call DrawFrameSP_Impl_entry instead.
+48423F00 eol   a2 = &point
+48423F01 eol   d3 = colour
+48423F02 eol   d2 = frame index
+48423F0A eol   not the draw task: queue it
+48423F14 eol   drawing disabled
+48423F1B eol   draw now
+48423F22 label DrawFrameSP_Deferred
+48423F22 eol   12-byte record
+48423F24 eol   a0 = record
+48423F2F eol   +0: the function the draw task will call
+48423F34 eol   +4: x
+48423F39 eol   +6: y
+48423F3C eol   +8: frame index
+48423F3F eol   +A: colour
+48423F42 eol   hand it to the draw task
+48423F47 label DrawFrameSP_Return
+
+; ---- DrawFrameSP_QueuedExec ---------------------------------------------------
+48423F4A doc   DrawFrameSP_QueuedExec(a0 = record): called by the draw task for a record
+48423F4A doc   DrawFrameSP queued; draws it if DrawEnable is still set.
+48423F56 eol   a1 = &record.point
+48423F57 eol   d1 = record.index
+48423F5A eol   d2 = record.colour
+48423F5F eol   drawing disabled meanwhile
+48423F6B label DrawFrameSP_QueuedExec_Return
+
+; ---- DrawFrameSP_Impl ---------------------------------------------------------
+48423F6E doc   DrawFrameSP_Impl(a0 = &point, d0 = frame index, d1 = colour): the blit. A
+48423F6E doc   top-left corner off the screen draws nothing; the index itself is not
+48423F6E doc   checked (no -1 test, unlike DrawBitmap_Impl). Rows of table entry d0 are
+48423F6E doc   copied into FrameBuffer one byte per pixel, except for three source values.
+48423F6E doc   0xF6 is the template colour: it writes the low byte of the colour argument.
+48423F6E doc   0xF7 is transparent: the framebuffer pixel is left alone. 0xF4 calls
+48423F6E doc   ModifyPixel(&pixel, 0xF4), which (for an on-screen pixel) copies the byte
+48423F6E doc   at the same (x, y) of the buffer the pointer at 0x500D407C names; the only
+48423F6E doc   store to that pointer (InitializeGraphics) sets it to PICTURE_PLANE2. Every
+48423F6E doc   other value, 0xF5 included, is copied as it is. Each source row is padded
+48423F6E doc   to an even length. A row at y >= 240 ends the copy. Only the 0xF4 pixels
+48423F6E doc   are clipped horizontally (by ModifyPixel's IsPointOnScreen); 0xF6 and
+48423F6E doc   literal pixels past x = 639 run on into the next framebuffer row. Ends by
+48423F6E doc   marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect. The KN5000
+48423F6E doc   DrawFrameSP_Impl has the 0xF6 and 0xF7 cases but no 0xF4 one.
+48423F73 eol   (0x50,sp) = colour
+48423F76 eol   d2 = frame index
+48423F77 eol   (0x48,sp) = &point
+48423F82 eol   top-left corner off the screen
+48423F85 label DrawFrameSP_Impl_OnScreen
+48423F91 eol   (0x10,sp) = &table[index] = &entry.width (8-byte entries)
+48423F98 eol   a2 = entry.pixels: the source
+48423F9B eol   (0x18,sp) = &entry.height
+48423FA1 eol   a3 = row
+48423FA8 eol   height <= 0: nothing to draw
+48423FAB label DrawFrameSP_Impl_HasRows
+48423FB0 eol   (0x1c,sp) = &point.y
+48423FB6 eol   (0x14,sp) = &pixel {x, y} at (0x24,sp), for ModifyPixel
+48423FB8 label DrawFrameSP_Impl_RowLoop
+48423FBF eol   pixel.y = point.y + row
+48423FC9 eol   y >= 240: below the screen, stop
+48423FCC label DrawFrameSP_Impl_RowVisible
+48423FCE eol   d3 = column
+48423FD3 eol   width <= 0
+48423FD5 label DrawFrameSP_Impl_PixelLoop
+48423FDB eol   pixel.x = point.x + column
+48423FDE eol   d0 = source pixel
+48423FE4 eol   0xF6: the template colour
+48423FEA eol   0xF7: transparent, leave the framebuffer alone
+48423FEE label DrawFrameSP_Impl_TemplateColour
+48423FFD eol   d1 = the colour argument
+48424008 eol   FrameBuffer[y*640 + x] = colour
+4842400C label DrawFrameSP_Impl_OtherValue
+48424014 eol   not 0xF4: copy it
+48424018 eol   0xF4: ModifyPixel copies (x, y) of the buffer at *0x500D407C, if on screen
+4842401F label DrawFrameSP_Impl_CopyPixel
+4842403A eol   FrameBuffer[y*640 + x] = source pixel
+4842403C label DrawFrameSP_Impl_NextPixel
+48424045 eol   next column while column < width
+48424047 label DrawFrameSP_Impl_RowDone
+48424056 eol   d0 = width / 2 * 2
+4842405A eol   odd width: skip the row's pad byte
+4842405B label DrawFrameSP_Impl_NextRow
+4842406A eol   next row while row < height
+4842406D label DrawFrameSP_Impl_Dirty
+4842406D note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48424073 eol   rect.top = y
+4842407A eol   rect.left = x
+48424088 eol   rect.right = x + width - 1
+48424096 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSP -------------------------------------------------------------
+484240A4 doc   DrawBitmapSP(a0 = &point {s16 x, s16 y}, d0 = width, d1 = height,
+484240A4 doc   a1 = pixels): draws a bitmap the caller supplies by pointer instead of by
+484240A4 doc   table index -- width x height bytes, one per pixel, each row padded to an
+484240A4 doc   even length -- with its top-left corner at the point, skipping pixels of
+484240A4 doc   value 0xF7. On the draw task it draws at once (if DrawEnable is set); on
+484240A4 doc   any other task it queues a 16-byte record {DrawBitmapSP_QueuedExec, x, y,
+484240A4 doc   pixels, u16 width, u16 height} for the draw task instead. The record holds
+484240A4 doc   only the pointer, so the pixels must outlive the queue. Its one direct
+484240A4 doc   caller, VwSdFolderImageProc, draws the 24 x 24 folder icon at 0x4868D710;
+484240A4 doc   its address is also in the pointer table at 0x48727544.
+484240A9 eol   a3 = pixels
+484240AA eol   a2 = &point
+484240AB eol   d3 = height
+484240AC eol   d2 = width
+484240B4 eol   not the draw task: queue it
+484240BE eol   drawing disabled
+484240C6 eol   draw now
+484240CD label DrawBitmapSP_Deferred
+484240CD eol   16-byte record
+484240CF eol   a0 = record
+484240DA eol   +0: the function the draw task will call
+484240DF eol   +4: x
+484240E4 eol   +6: y
+484240E7 eol   +8: pixels
+484240EA eol   +C: width
+484240ED eol   +E: height
+484240F0 eol   hand it to the draw task
+484240F5 label DrawBitmapSP_Return
+
+; ---- DrawBitmapSP_QueuedExec --------------------------------------------------
+484240F8 doc   DrawBitmapSP_QueuedExec(a0 = record): called by the draw task for a record
+484240F8 doc   DrawBitmapSP queued; draws it if DrawEnable is still set.
+48424104 eol   a2 = &record.point
+48424105 eol   a1 = record.pixels
+48424108 eol   d1 = record.width
+4842410B eol   d2 = record.height
+48424110 eol   drawing disabled meanwhile
+4842411C label DrawBitmapSP_QueuedExec_Return
+
+; ---- DrawBitmapSP_Impl --------------------------------------------------------
+4842411F doc   DrawBitmapSP_Impl(a0 = &point, d0 = width, d1 = height, a1 = pixels): the
+4842411F doc   blit. A top-left corner off the screen draws nothing. Each row is read as
+4842411F doc   halfwords, two pixels at a time (low byte = the left pixel): both opaque
+4842411F doc   -> one halfword store into FrameBuffer (unaligned when x is odd); one of
+4842411F doc   them 0xF7 -> the other is stored alone; both 0xF7 -> nothing. An odd
+4842411F doc   width's last pixel is the low byte of one more halfword, so each source
+4842411F doc   row is padded to an even length. A row at y >= 240 ends the copy, but
+4842411F doc   nothing clips horizontally: a bitmap wider than 640 - x runs on into the
+4842411F doc   next framebuffer row. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+4842411F doc   SetChangeRect.
+48424124 eol   a2 = pixels: the source
+48424125 eol   (0x54,sp) = width
+48424128 eol   d2 = height
+48424129 eol   (0x4c,sp) = &point
+48424134 eol   top-left corner off the screen
+48424137 label DrawBitmapSP_Impl_OnScreen
+48424138 eol   (0x10,sp) = row
+4842413B eol   (0x1c,sp) = height
+48424141 eol   height <= 0: nothing to draw
+48424144 label DrawBitmapSP_Impl_HasRows
+4842414A eol   (0x24,sp) = &point.y
+48424150 eol   (0x18,sp) = width
+48424158 eol   (0x20,sp) = width % 2
+4842415A label DrawBitmapSP_Impl_RowLoop
+48424162 eol   (0x2a,sp) = y = point.y + row
+4842416C eol   y >= 240: below the screen, stop
+4842416F label DrawBitmapSP_Impl_RowVisible
+48424186 eol   d2 = FrameBuffer + y*640 + x: where the pair goes
+48424189 eol   a3 = pair
+4842418D eol   d0 = width / 2: the number of pairs
+48424198 eol   no pairs (width < 2)
+4842419B label DrawBitmapSP_Impl_HasPairs
+484241B0 eol   (0x14,sp) = FrameBuffer + y*640: the row
+484241BD eol   a1 = width / 2
+484241C6 eol   d3 = FrameBuffer + y*640 as well
+484241CC note  Copy the row a pixel pair per pass; the hardware loop (setlb .. llt)
+484241CC note  repeats from the next instruction.
+484241CF eol   d0 = right pixel (the high byte)
+484241D6 eol   right pixel transparent
+484241DE eol   left pixel transparent
+484241E4 eol   both opaque: store the pair as one halfword
+484241E8 label DrawBitmapSP_Impl_RightOnly
+484241F3 eol   d0 = x + 2*pair + 1
+484241FD eol   row[x + 2*pair + 1] = right pixel
+48424201 label DrawBitmapSP_Impl_RightTransparent
+48424207 eol   both transparent
+48424210 eol   d0 = x + 2*pair
+4842421A eol   row[x + 2*pair] = left pixel
+4842421C label DrawBitmapSP_Impl_NextPair
+48424227 eol   next pair while pair < width / 2
+48424228 label DrawBitmapSP_Impl_OddTail
+48424228 note  Odd width: the last pixel is the low byte of one more halfword.
+4842422C eol   even width: no last pixel
+48424234 eol   0xF7: transparent
+48424242 eol   d1 = x + 2*pairs: the last column
+48424259 eol   FrameBuffer[y*640 + x + 2*pairs] = last pixel
+4842425B label DrawBitmapSP_Impl_OddTailDone
+4842425B eol   skip the last pixel and its pad byte
+4842425D label DrawBitmapSP_Impl_NextRow
+48424268 eol   next row while row < height
+4842426B label DrawBitmapSP_Impl_Dirty
+4842426B note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48424271 eol   rect.top = y
+48424278 eol   rect.left = x
+48424285 eol   rect.right = x + width - 1
+48424290 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSPFast ---------------------------------------------------------
+4842429E doc   DrawBitmapSPFast(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = s16 width,
+4842429E doc   d1 = s16 height): draws a caller-supplied 8 bpp bitmap (one framebuffer
+4842429E doc   byte per pixel, each row padded to an even length) with its top-left
+4842429E doc   corner at the point. It is opaque: unlike DrawBitmap, 0xF7 is copied like
+4842429E doc   any other value. On the draw task it draws at once (if DrawEnable is
+4842429E doc   set); on any other task it queues a 16-byte record
+4842429E doc   {DrawBitmapSPFast_QueuedExec, x, y, pixels, s16 width, s16 height} for
+4842429E doc   the draw task instead.
+484242A3 eol   a3 = pixels
+484242A4 eol   a2 = &point
+484242A5 eol   d3 = height
+484242A6 eol   d2 = width
+484242AE eol   not the draw task: queue it
+484242B8 eol   drawing disabled
+484242C0 eol   draw now
+484242C7 label DrawBitmapSPFast_Deferred
+484242C7 eol   16-byte record
+484242C9 eol   a0 = record
+484242D4 eol   +0: the function the draw task will call
+484242D9 eol   +4: x
+484242DE eol   +6: y
+484242E1 eol   +8: pixels
+484242E4 eol   +0xC: width
+484242E7 eol   +0xE: height
+484242EA eol   hand it to the draw task
+484242EF label DrawBitmapSPFast_Return
+
+; ---- DrawBitmapSPFast_QueuedExec ----------------------------------------------
+484242F2 doc   DrawBitmapSPFast_QueuedExec(a0 = record): called by the draw task for a
+484242F2 doc   record DrawBitmapSPFast queued; draws it if DrawEnable is still set.
+484242FE eol   a2 = &record.point
+484242FF eol   a1 = record.pixels
+48424302 eol   d1 = record.width
+48424305 eol   d2 = record.height
+4842430A eol   drawing disabled meanwhile
+48424316 label DrawBitmapSPFast_QueuedExec_Return
+
+; ---- DrawBitmapSPFast_Impl ----------------------------------------------------
+48424319 doc   DrawBitmapSPFast_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height):
+48424319 doc   the blit. A top-left corner off the screen draws nothing. Each row is
+48424319 doc   copied whole into FrameBuffer with LibMemCopy (lib 0x4C003039), no
+48424319 doc   transparency; the source advances by the width rounded up to even. A row
+48424319 doc   at y >= 240 ends the copy, but nothing clips horizontally: a bitmap wider
+48424319 doc   than 640 - x runs on into the next framebuffer row. Ends by marking
+48424319 doc   {x, y, x+w-1, y+h-1} dirty with SetChangeRect.
+4842431E eol   a3 = pixels: the source
+4842431F eol   (0x4c,sp) = width (the caller's d0 slot)
+48424322 eol   (0x50,sp) = height (the caller's d1 slot)
+48424325 eol   (0x44,sp) = &point (the caller's a0 slot)
+48424330 eol   top-left corner off the screen
+48424333 label DrawBitmapSPFast_Impl_OnScreen
+48424339 eol   (0x20,sp) = &point.y
+4842434A eol   (the compiler puts two nops before every mul)
+48424353 eol   a2 = FrameBuffer + y*640 + x
+48424358 eol   d2 = y
+4842435B eol   (0x1c,sp) = height
+4842435D eol   d3 = row
+4842435F eol   height <= 0
+48424367 eol   (0x18,sp) = width: bytes to copy per row
+48424376 eol   (0x14,sp) = source stride: width rounded up to even
+48424378 label DrawBitmapSPFast_Impl_RowLoop
+4842437D eol   y >= 240: below the screen, stop
+48424383 eol   LibMemCopy(a0 = dest, a1 = src, d0 = width)
+4842438C eol   next framebuffer row
+48424390 eol   next source row
+48424398 eol   next row while row < height
+4842439A label DrawBitmapSPFast_Impl_Dirty
+4842439A note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+4842439E eol   rect.top = y
+484243A5 eol   rect.left = x
+484243B2 eol   rect.right = x + width - 1
+484243C0 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSPFast4 --------------------------------------------------------
+484243CD doc   DrawBitmapSPFast4(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = s16 width,
+484243CD doc   d1 = s16 height; stack args at the caller's (0x18,sp) = colours, a pointer
+484243CD doc   to four u32 colours, and (0x1c,sp) = s16 first palette index): draws a
+484243CD doc   caller-supplied 2 bpp (4-colour) bitmap with its top-left corner at the
+484243CD doc   point and loads its four colours into palette entries first..first+3
+484243CD doc   (see DrawBitmapSPFast4_Impl).
+484243CD doc   On the draw task it draws at once (if DrawEnable is set); on any other
+484243CD doc   task it queues a 24-byte record {DrawBitmapSPFast4_QueuedExec, x, y,
+484243CD doc   pixels, s16 width, s16 height, colours, s16 first} for the draw task
+484243CD doc   instead (+0x16 unused).
+484243D2 eol   a3 = pixels
+484243D3 eol   a2 = &point
+484243D4 eol   d3 = height
+484243D5 eol   d2 = width
+484243DD eol   not the draw task: queue it
+484243E7 eol   drawing disabled
+484243E9 eol   a0 = colours (stack argument)
+484243EC eol   pass colours on at (0x18,sp)
+484243F3 eol   pass the first palette index on at (0x1c,sp)
+484243F9 eol   draw now
+48424400 label DrawBitmapSPFast4_Deferred
+48424400 eol   24-byte record
+48424402 eol   a0 = record
+4842440D eol   +0: the function the draw task will call
+48424412 eol   +4: x
+48424417 eol   +6: y
+4842441A eol   +8: pixels
+4842441D eol   +0xC: width
+48424420 eol   +0xE: height
+48424425 eol   +0x10: colours
+4842442B eol   +0x14: first palette index
+4842442E eol   hand it to the draw task
+48424433 label DrawBitmapSPFast4_Return
+
+; ---- DrawBitmapSPFast4_QueuedExec ---------------------------------------------
+48424436 doc   DrawBitmapSPFast4_QueuedExec(a0 = record): called by the draw task for a
+48424436 doc   record DrawBitmapSPFast4 queued; draws it if DrawEnable is still set.
+4842443B eol   d0 = record.height
+48424445 eol   a1 = &record.point
+48424446 eol   a2 = record.pixels
+48424449 eol   d3 = record.width
+4842444C eol   a3 = height
+4842444E eol   d0 = record.colours
+48424451 eol   d2 = record.first (palette index)
+48424456 eol   drawing disabled meanwhile
+48424458 eol   stack argument: colours
+4842445B eol   stack argument: first palette index
+48424469 label DrawBitmapSPFast4_QueuedExec_Return
+
+; ---- DrawBitmapSPFast4_Impl ---------------------------------------------------
+4842446C doc   DrawBitmapSPFast4_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+4842446C doc   the caller's (0x18,sp) = colours (-> u32[4]), (0x1c,sp) = s16 first index):
+4842446C doc   the blit. A top-left corner off the screen draws nothing and loads no
+4842446C doc   colours. Each source byte holds four 2-bit pixels, leftmost in bits 7-6;
+4842446C doc   pixel value p is written to FrameBuffer as palette index first + p, with
+4842446C doc   no transparency. A source row is (width + 3) / 4 bytes, no further
+4842446C doc   padding. A row at y >= 240 ends the copy; nothing clips horizontally.
+4842446C doc   Then palette entries first..first+3 are set to colours[0..3] (SetPaletteRGB,
+4842446C doc   only where GetPaletteRGB differs; a negative first sets none), and
+4842446C doc   {x, y, x+w-1, y+h-1} is marked dirty with SetChangeRect.
+4842446C doc   Bug: the pixel loop ends a byte at column > width, not >= width, so when
+4842446C doc   width is not a multiple of 4 each row also writes column `width` (x + w,
+4842446C doc   outside the dirty rectangle) from the row's padding bits.
+48424471 eol   (0x64,sp) = width (the caller's d0 slot)
+48424474 eol   d2 = height
+48424475 eol   a2 = pixels
+48424476 eol   (0x5c,sp) = &point (the caller's a0 slot)
+48424481 eol   top-left corner off the screen
+48424484 label DrawBitmapSPFast4_Impl_OnScreen
+48424484 eol   (0x14,sp) = source pointer
+48424487 eol   (0x18,sp) = row
+4842448A eol   (0x30,sp) = height
+48424490 eol   height <= 0: only load the colours
+48424493 label DrawBitmapSPFast4_Impl_HaveRows
+48424497 eol   (0x20,sp) = width
+4842449B eol   (0x28,sp) = width + 3
+484244A1 eol   (0x2c,sp) = &point.y
+484244A7 eol   (0x34,sp) = width + 3 (again)
+484244AD eol   (0x24,sp) = first palette index
+484244AF label DrawBitmapSPFast4_Impl_RowLoop
+484244B7 eol   y = point.y + row
+484244C1 eol   y >= 240: below the screen, stop drawing
+484244C4 label DrawBitmapSPFast4_Impl_RowOnScreen
+484244DB eol   a2 = FrameBuffer + y*640 + x
+484244DF eol   d3 = byte in the row
+484244E2 eol   d0 = (width + 3) / 4: bytes per source row
+484244EA eol   width <= 0: no bytes
+484244F7 eol   (0x1c,sp) = bytes per source row
+484244F9 label DrawBitmapSPFast4_Impl_ByteLoop
+484244F9 note  Unpack one source byte into up to four pixels, most significant pair first.
+484244FC eol   read the source byte
+484244FF eol   (0x10,sp) = column of the byte's first pixel
+48424502 eol   a3 = source byte
+48424504 eol   d2 = bit offset below bit 7: 0, 2, 4, 6
+48424505 label DrawBitmapSPFast4_Impl_PixelLoop
+48424508 eol   d0 = pixel within the byte (0..3)
+48424511 eol   d0 = column
+48424515 eol   column > width: padding (BUG: column == width is drawn)
+4842451B eol   d1 = shift: 6 - bit offset
+48424525 eol   p = the 2-bit pixel
+48424528 eol   palette index first + p
+4842452E eol   next pixel while bit offset < 8
+48424530 label DrawBitmapSPFast4_Impl_NextByte
+48424534 eol   next source byte
+4842453A eol   next byte while byte < bytes per row
+4842453C label DrawBitmapSPFast4_Impl_NextRow
+48424545 eol   all rows drawn
+48424547 eol   next row
+4842454A label DrawBitmapSPFast4_Impl_LoadColours
+4842454A note  Set palette entries first..first+3 to colours[0..3], skipping any already equal.
+4842454A eol   d2 = palette index
+48424551 eol   d3 = palette index (loop counter)
+48424553 eol   a3 = first palette index
+48424559 eol   first < 0 (u16 >= 0x8000): nothing to load
+4842455F eol   (0x10,sp) = first + 4: the end
+48424561 label DrawBitmapSPFast4_Impl_ColourLoop
+48424567 eol   a2 = colours[index - first]
+4842456B eol   d0 = the entry's current colour
+48424574 eol   unchanged: skip it
+4842457A eol   palette[index] = colour
+48424581 label DrawBitmapSPFast4_Impl_NextColour
+48424587 eol   next entry while index < first + 4
+48424589 label DrawBitmapSPFast4_Impl_Dirty
+48424589 note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+4842458F eol   rect.top = y
+48424596 eol   rect.left = x
+484245A3 eol   rect.right = x + width - 1
+484245AE eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSPFast16 -------------------------------------------------------
+; Arguments of all four entry points (public and _Impl), from the code and the
+; callers VwUserBitmapProc / AcMonImageProc: a0 = &point {s16 x, s16 y},
+; a1 = pixels, d0 = width, d1 = height, and a fifth argument on the stack at the
+; caller's (0x18,sp) = palette (0x00BBGGRR words). The callee finds it at
+; (frame + 0x18, sp); the _Impl entries spill a0 to (frame + 8, sp) and d0 to
+; (frame + 0x10, sp), the slots of a C prototype (point, pixels, width, height,
+; palette).
+484245BC doc   DrawBitmapSPFast16(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = width,
+484245BC doc   d1 = height, palette = 5th argument at the caller's (0x18,sp)): draws a
+484245BC doc   4 bpp bitmap, two pixels per byte, high nibble first, with its top-left
+484245BC doc   corner at the point, in palette indices 0x20..0x2F, whose colours it
+484245BC doc   sets from palette[0..15] (sixteen 0x00BBGGRR words). On the draw task it
+484245BC doc   draws at once (if DrawEnable is set); on any other task it queues a
+484245BC doc   20-byte record {DrawBitmapSPFast16_QueuedExec, s16 x, s16 y, pixels,
+484245BC doc   s16 width, s16 height, palette} for the draw task instead. The record
+484245BC doc   holds the pixel and palette POINTERS, so both are read only when the
+484245BC doc   draw task runs it. Callers: VwUserBitmapProc (any bit depth but 1 and 8;
+484245BC doc   for a null palette it passes the VGA-16 table at 0x4859E484) and
+484245BC doc   AcMonImageProc (0x485EFF04, the same 16 colours).
+484245C1 eol   a3 = pixels
+484245C2 eol   a2 = &point
+484245C3 eol   d3 = height
+484245C4 eol   d2 = width
+484245CC eol   not the draw task: queue it
+484245D6 eol   drawing disabled
+484245D8 eol   a0 = palette (our caller's (0x18,sp))
+484245DB eol   palette: the Impl's 5th argument
+484245E2 eol   draw now
+484245E9 label DrawBitmapSPFast16_Deferred
+484245E9 eol   20-byte record
+484245EB eol   a0 = record
+484245F6 eol   +0: the function the draw task will call
+484245FB eol   +4: x
+48424600 eol   +6: y
+48424603 eol   +8: pixels
+48424606 eol   +0xC: width
+48424609 eol   +0xE: height
+4842460E eol   +0x10: palette
+48424611 eol   hand it to the draw task
+48424616 label DrawBitmapSPFast16_Return
+
+; ---- DrawBitmapSPFast16_QueuedExec --------------------------------------------
+48424619 doc   DrawBitmapSPFast16_QueuedExec(a0 = record): called by the draw task for a
+48424619 doc   record DrawBitmapSPFast16 queued; draws it if DrawEnable is still set.
+48424625 eol   a2 = &record.point
+48424626 eol   a1 = record.pixels
+48424629 eol   d0 = record.width
+4842462C eol   d2 = record.height
+4842462F eol   a0 = record.palette
+48424634 eol   drawing disabled meanwhile
+48424636 eol   palette: the Impl's 5th argument
+48424641 label DrawBitmapSPFast16_QueuedExec_Return
+
+; ---- DrawBitmapSPFast16_Impl --------------------------------------------------
+48424644 doc   DrawBitmapSPFast16_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+48424644 doc   palette = 5th argument at the caller's (0x18,sp)): the blit. A top-left
+48424644 doc   corner off the screen draws nothing (no palette load, no dirty rect).
+48424644 doc   Each source byte becomes two framebuffer bytes through Pixel4bppPairTable:
+48424644 doc   0x20 + high nibble (left), then 0x20 + low nibble (right); an odd width
+48424644 doc   ends the row with the high nibble of one more byte. Source rows are padded
+48424644 doc   to an even byte count. Every pixel is opaque (no 0xF7 transparency). A row
+48424644 doc   at y >= 240 ends the copy, but nothing clips horizontally. Afterwards it
+48424644 doc   sets palette entries 0x20..0x2F to palette[0..15] with SetPaletteRGB,
+48424644 doc   skipping any whose GetPaletteRGB value already matches -- also when no row
+48424644 doc   was drawn (height <= 0). The sixteen indices are global, shared by every
+48424644 doc   SPFast16 bitmap and inside the 0x20..0xCF that SPFast256 reloads.
+48424644 doc   SetPaletteRGB keeps the word as given (what GetPaletteRGB returns) but
+48424644 doc   dims indices 0x20..0xDF to 77/100 per component in its RGB565 copy at
+48424644 doc   0x50122AAC. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+48424644 doc   SetChangeRect.
+48424649 eol   (0x50,sp) = width
+4842464C eol   d2 = height
+4842464D eol   a3 = source
+4842464E eol   (0x48,sp) = &point
+48424659 eol   top-left corner off the screen
+4842465C label DrawBitmapSPFast16_Impl_OnScreen
+48424663 eol   (0x20,sp) = &point.y
+4842466A eol   (0x26,sp) = y of the current row
+48424680 eol   (0x10,sp) = dest = FrameBuffer + y*640 + x
+48424682 eol   (0x1c,sp) = height
+48424685 eol   (0x14,sp) = row
+4842468B eol   height <= 0: no rows, on to the palette load
+4842468E label DrawBitmapSPFast16_Impl_HaveRows
+48424692 eol   (0x18,sp) = width
+48424694 label DrawBitmapSPFast16_Impl_RowLoop
+4842469E eol   y >= 240: below the screen, stop drawing
+484246A1 label DrawBitmapSPFast16_Impl_DrawRow
+484246A1 eol   a2 = dest
+484246A3 eol   d2 = source bytes used in this row
+484246A4 eol   d3 = whole bytes (pixel pairs) done
+484246A9 eol   d0 = width / 2: whole bytes in the row
+484246B1 eol   width < 2: no whole byte
+484246BE eol   d1 = width / 2
+484246BF note  One source byte per pass; the hardware loop (setlb .. llt) repeats from the next instruction.
+484246C9 eol   d0 = Pixel4bppPairTable[byte]
+484246CF eol   left pixel: 0x20 + high nibble
+484246DB eol   right pixel: 0x20 + low nibble
+484246E1 eol   next byte while d3 < width / 2
+484246E2 label DrawBitmapSPFast16_Impl_OddPixel
+484246E7 eol   even width: row complete
+484246FD eol   odd width: last pixel = 0x20 + high nibble of one more byte
+48424701 label DrawBitmapSPFast16_Impl_RowPad
+48424702 eol   odd number of source bytes used?
+48424707 eol   skip the pad byte: source rows have an even byte count
+48424708 label DrawBitmapSPFast16_Impl_NextRow
+4842470C eol   dest = next framebuffer row
+48424717 eol   y + 1
+4842471E eol   row + 1
+48424721 eol   last row done
+48424723 eol   next row
+48424726 label DrawBitmapSPFast16_Impl_LoadPalette
+48424726 note  Set palette entries 0x20..0x2F from palette[0..15], writing only the ones that differ.
+48424728 eol   d2 = d3 = colour index, from 0x20
+48424729 label DrawBitmapSPFast16_Impl_PaletteLoop
+4842472F eol   a2 = palette[index - 0x20]
+48424734 eol   d0 = the index's current colour
+4842473D eol   unchanged: skip it
+48424743 eol   SetPaletteRGB(index, palette[index - 0x20])
+4842474A label DrawBitmapSPFast16_Impl_NextColour
+4842474F eol   next while index < 0x30
+48424751 note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48424755 eol   rect.top = y
+4842475C eol   rect.left = x
+48424769 eol   rect.right = x + width - 1
+48424777 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSPFast256 ------------------------------------------------------
+48424784 doc   DrawBitmapSPFast256(a0 = &point {s16 x, s16 y}, a1 = pixels, d0 = width,
+48424784 doc   d1 = height, palette = 5th argument at the caller's (0x18,sp)): draws an
+48424784 doc   8 bpp bitmap, one byte per pixel copied as is, with its top-left corner
+48424784 doc   at the point, after setting palette entries 0x20..0xCF from the same
+48424784 doc   entries of palette (0x00BBGGRR words indexed by colour). On the draw
+48424784 doc   task it draws at once (if DrawEnable is set); on any other task it queues a
+48424784 doc   20-byte record {DrawBitmapSPFast256_QueuedExec, s16 x, s16 y, pixels,
+48424784 doc   s16 width, s16 height, palette} for the draw task instead. The record
+48424784 doc   holds the pixel and palette POINTERS, so both are read only when the
+48424784 doc   draw task runs it. Caller: VwUserBitmapProc, for bit depth 8 when the
+48424784 doc   bitmap has a palette (without one it uses DrawBitmapSPFast).
+48424789 eol   a3 = pixels
+4842478A eol   a2 = &point
+4842478B eol   d3 = height
+4842478C eol   d2 = width
+48424794 eol   not the draw task: queue it
+4842479E eol   drawing disabled
+484247A0 eol   a0 = palette (our caller's (0x18,sp))
+484247A3 eol   palette: the Impl's 5th argument
+484247AA eol   draw now
+484247B1 label DrawBitmapSPFast256_Deferred
+484247B1 eol   20-byte record
+484247B3 eol   a0 = record
+484247BE eol   +0: the function the draw task will call
+484247C3 eol   +4: x
+484247C8 eol   +6: y
+484247CB eol   +8: pixels
+484247CE eol   +0xC: width
+484247D1 eol   +0xE: height
+484247D6 eol   +0x10: palette
+484247D9 eol   hand it to the draw task
+484247DE label DrawBitmapSPFast256_Return
+
+; ---- DrawBitmapSPFast256_QueuedExec -------------------------------------------
+484247E1 doc   DrawBitmapSPFast256_QueuedExec(a0 = record): called by the draw task for
+484247E1 doc   a record DrawBitmapSPFast256 queued; draws it if DrawEnable is still set.
+484247ED eol   a2 = &record.point
+484247EE eol   a1 = record.pixels
+484247F1 eol   d0 = record.width
+484247F4 eol   d2 = record.height
+484247F7 eol   a0 = record.palette
+484247FC eol   drawing disabled meanwhile
+484247FE eol   palette: the Impl's 5th argument
+48424809 label DrawBitmapSPFast256_QueuedExec_Return
+
+; ---- DrawBitmapSPFast256_Impl -------------------------------------------------
+4842480C doc   DrawBitmapSPFast256_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height,
+4842480C doc   palette = 5th argument at the caller's (0x18,sp)): the blit. A top-left
+4842480C doc   corner off the screen draws nothing (no palette load, no dirty rect).
+4842480C doc   First it sets palette entries 0x20..0xCF to palette[0x20..0xCF] with
+4842480C doc   SetPaletteRGB, every one, whether changed or not: palette is indexed by
+4842480C doc   colour index, so it must span at least 0xD0 words, and entries 0x00..0x1F
+4842480C doc   and 0xD0..0xFF are left alone. (SetPaletteRGB dims indices 0x20..0xDF to
+4842480C doc   77/100 per component in its RGB565 copy at 0x50122AAC.) Then it copies
+4842480C doc   each row into FrameBuffer with LibMemCopy (memcpy, called at its library
+4842480C doc   address 0x4C003039): pixel values go in unchanged (nothing keeps them
+4842480C doc   inside 0x20..0xCF) and 0xF7 is not transparent. Source rows are padded to
+4842480C doc   an even width. A row at y >= 240 ends the copy, but nothing clips
+4842480C doc   horizontally. Ends by marking {x, y, x+w-1, y+h-1} dirty with
+4842480C doc   SetChangeRect.
+48424811 eol   a3 = source
+48424812 eol   (0x4c,sp) = width
+48424815 eol   (0x50,sp) = height
+48424818 eol   (0x44,sp) = &point
+48424823 eol   top-left corner off the screen
+48424826 label DrawBitmapSPFast256_Impl_OnScreen
+48424826 note  Set palette entries 0x20..0xCF from the same entries of palette, unconditionally.
+48424828 eol   d2 = d0 = colour index, from 0x20
+48424829 label DrawBitmapSPFast256_Impl_PaletteLoop
+4842482E eol   d1 = palette[index]
+48424831 eol   SetPaletteRGB(index, palette[index])
+4842483F eol   next while index < 0xD0
+48424847 eol   (0x20,sp) = &point.y
+48424849 eol   d1 = x
+48424861 eol   a2 = dest = FrameBuffer + y*640 + x
+48424866 eol   d2 = y of the current row
+48424869 eol   (0x18,sp) = height
+4842486B eol   d3 = row
+4842486D eol   height <= 0
+48424875 eol   (0x1c,sp) = width: bytes per row
+48424887 eol   (0x14,sp) = source stride: width rounded up to even
+48424889 label DrawBitmapSPFast256_Impl_RowLoop
+4842488E eol   y >= 240: below the screen, stop
+48424894 eol   LibMemCopy(dest, src, width): copy one row
+4842489D eol   next framebuffer row
+484248A1 eol   next source row
+484248A9 eol   next row while row < height
+484248AB label DrawBitmapSPFast256_Impl_Dirty
+484248AB note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+484248AF eol   rect.top = y
+484248B6 eol   rect.left = x
+484248C3 eol   rect.right = x + width - 1
+484248D1 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapSP2 ------------------------------------------------------------
+484248DE doc   DrawBitmapSP2(a0 = &point {s16 x, s16 y}, a1 = 1-bpp bits, d0 = width,
+484248DE doc   d1 = height, fg colour at the caller's (0x18,sp), bg colour at its (0x1c,sp)):
+484248DE doc   draws a monochrome bitmap with its top-left corner at the point, 1 bits in
+484248DE doc   fg and 0 bits in bg (nothing is transparent). On the draw task it draws at
+484248DE doc   once (if DrawEnable is set); on any other task it queues a 20-byte record
+484248DE doc   {DrawBitmapSP2_QueuedExec, s16 x, s16 y, bits, s16 width, s16 height, u16 fg,
+484248DE doc   u16 bg} for the draw task instead. Only the pointer to the bits is queued, so
+484248DE doc   they must stay valid until the draw task runs. Width and height are used as
+484248DE doc   s16 (sign-extended, compared signed).
+484248E3 eol   a3 = bits
+484248E4 eol   a2 = &point
+484248E5 eol   d3 = height
+484248E6 eol   d2 = width
+484248EE eol   not the draw task: queue it
+484248F8 eol   drawing disabled
+484248FA eol   fg: (0x48,sp) is the caller's (0x18,sp)
+484248FF eol   pass fg on in the outgoing (0x18,sp)
+48424901 eol   bg: the caller's (0x1c,sp)
+48424906 eol   pass bg on in the outgoing (0x1c,sp)
+4842490C eol   draw now
+48424913 label DrawBitmapSP2_Deferred
+48424913 eol   20-byte record
+48424915 eol   a0 = record
+48424920 eol   +0: the function the draw task will call
+48424925 eol   +4: x
+4842492A eol   +6: y
+4842492D eol   +8: bits (the pointer only)
+48424930 eol   +0xC: width
+48424933 eol   +0xE: height
+48424939 eol   +0x10: fg colour
+4842493F eol   +0x12: bg colour
+48424942 eol   hand it to the draw task
+48424947 label DrawBitmapSP2_Return
+
+; ---- DrawBitmapSP2_QueuedExec -------------------------------------------------
+4842494A doc   DrawBitmapSP2_QueuedExec(a0 = record): called by the draw task for a record
+4842494A doc   DrawBitmapSP2 queued; draws it if DrawEnable is still set.
+4842494F eol   d0 = record.height
+48424953 eol   a1 = &record.point
+48424954 eol   a2 = record.bits
+48424957 eol   d3 = record.width
+4842495A eol   a3 = height
+48424962 eol   d1 = record.fg
+48424965 eol   d2 = record.bg
+4842496A eol   drawing disabled meanwhile
+4842496D eol   fg in the outgoing (0x18,sp)
+48424970 eol   bg in the outgoing (0x1c,sp)
+4842497E label DrawBitmapSP2_QueuedExec_Return
+
+; ---- DrawBitmapSP2_Impl -------------------------------------------------------
+48424981 doc   DrawBitmapSP2_Impl(a0 = &point, a1 = bits, d0 = width, d1 = height, fg and
+48424981 doc   bg at the caller's (0x18,sp) and (0x1c,sp)): the blit. A top-left corner off
+48424981 doc   the screen draws nothing and marks nothing dirty. Rows run top-down, each
+48424981 doc   (width + 15) / 16 16-bit words; every word is byte-swapped, so in memory a
+48424981 doc   row is plain MSB-first 1 bpp (bit 7 of the first byte is the leftmost pixel)
+48424981 doc   padded to an even byte count. A 1 bit stores the low byte of fg, a 0 bit the
+48424981 doc   low byte of bg. A row at y >= 240 ends the copy, but nothing clips
+48424981 doc   horizontally: a bitmap wider than 640 - x runs on into the next framebuffer
+48424981 doc   row. Ends by marking {x, y, x+w-1, y+h-1} dirty with SetChangeRect. (The
+48424981 doc   KN5000 DrawBitmapSP2_Impl differs: it draws the rows bottom-up and leaves 0
+48424981 doc   bits transparent.)
+48424986 eol   (0x50,sp) = bits
+48424988 eol   (0x54,sp) = width
+4842498B eol   d2 = height
+4842498C eol   (0x4c,sp) = &point
+48424997 eol   top-left corner off the screen
+4842499A label DrawBitmapSP2_Impl_OnScreen
+4842499B eol   (0x10,sp) = row = 0
+4842499E eol   (0x18,sp) = height
+484249A4 eol   height <= 0
+484249A7 label DrawBitmapSP2_Impl_HaveRows
+484249AB eol   (0x14,sp) = width
+484249AF eol   (0x1c,sp) = width + 15
+484249B5 eol   (0x20,sp) = &point.y
+484249BB eol   (0x24,sp) = width + 15 (again)
+484249BD label DrawBitmapSP2_Impl_RowLoop
+484249C5 eol   y = point.y + row
+484249CF eol   y >= 240: below the screen, stop
+484249D2 label DrawBitmapSP2_Impl_RowOnScreen
+484249E9 eol   a2 = FrameBuffer + y*640 + x
+484249ED eol   a3 = word index
+484249F1 eol   d0 = (width + 15) / 16: words per row
+484249FA eol   width <= 0: nothing in this row
+48424A07 eol   a1 = words per row (divided again)
+48424A09 label DrawBitmapSP2_Impl_WordLoop
+48424A14 eol   a0 = column of the word's first pixel
+48424A24 eol   d2 = the word byte-swapped: bit 15 is the first byte's bit 7
+48424A25 eol   d3 = bit
+48424A26 note  Draw the word's 16 pixels, leftmost first; hardware loop (setlb .. llt).
+48424A2D eol   column >= width: the rest of the word is padding
+48424A39 eol   test bit 15 - d3: the leftmost pixel first
+48424A40 eol   1: fg colour
+48424A44 label DrawBitmapSP2_Impl_ZeroBit
+48424A47 eol   0: bg colour
+48424A49 label DrawBitmapSP2_Impl_NextPixel
+48424A4E eol   next bit while bit < 16
+48424A4F label DrawBitmapSP2_Impl_NextWord
+48424A53 eol   bits += 2
+48424A5C eol   next word while word < words per row
+48424A5E label DrawBitmapSP2_Impl_NextRow
+48424A67 eol   row >= height: done
+48424A69 eol   next row
+48424A6C label DrawBitmapSP2_Impl_Dirty
+48424A6C note  Mark the drawn rectangle dirty for the LCD update (as given, not clipped).
+48424A72 eol   rect.top = y
+48424A79 eol   rect.left = x
+48424A86 eol   rect.right = x + width - 1
+48424A91 eol   rect.bottom = y + height - 1
+
+; ---- DrawBitmapFile -----------------------------------------------------------
+48424A9F doc   DrawBitmapFile(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+48424A9F doc   draws an uncompressed Windows BMP (1, 4 or 8 bpp) with its top-left corner at
+48424A9F doc   the point and loads its colours into palette entries 0x20..0xCF. On the draw
+48424A9F doc   task it draws at once (if DrawEnable is set); on any other task it queues a
+48424A9F doc   12-byte record {DrawBitmapFile_QueuedExec, s16 x, s16 y, file} for the draw
+48424A9F doc   task instead. Only the pointer to the file is queued, so it must stay valid
+48424A9F doc   until the draw task runs.
+48424AA4 eol   a3 = BMP file
+48424AA5 eol   a2 = &point
+48424AAD eol   not the draw task: queue it
+48424AB7 eol   drawing disabled
+48424ABB eol   draw now
+48424AC2 label DrawBitmapFile_Deferred
+48424AC2 eol   12-byte record
+48424AC4 eol   a0 = record
+48424ACF eol   +0: the function the draw task will call
+48424AD4 eol   +4: x
+48424AD9 eol   +6: y
+48424ADC eol   +8: the file (the pointer only)
+48424ADF eol   hand it to the draw task
+48424AE4 label DrawBitmapFile_Return
+
+; ---- DrawBitmapFile_QueuedExec ------------------------------------------------
+48424AE7 doc   DrawBitmapFile_QueuedExec(a0 = record): called by the draw task for a record
+48424AE7 doc   DrawBitmapFile queued; draws it if DrawEnable is still set.
+48424AF3 eol   a2 = &record.point
+48424AF4 eol   a3 = record.file
+48424AF9 eol   drawing disabled meanwhile
+48424B02 label DrawBitmapFile_QueuedExec_Return
+
+; ---- DrawBitmapFile_Impl ------------------------------------------------------
+48424B05 doc   DrawBitmapFile_Impl(a0 = &point, a1 = BMP file image): the blit.
+48424B05 doc   GetBitmapInfo checks the file ("BM", 40-byte BITMAPINFOHEADER, 1 plane,
+48424B05 doc   1/4/8 bpp, BI_RGB, biClrUsed <= 256) and copies its headers, plus the
+48424B05 doc   bfOffBits - 54 bytes before the pixels (the palette, at most 1 KB), to the
+48424B05 doc   stack; a file it rejects changes nothing. Each file row (bottom-up, padded
+48424B05 doc   to a multiple of 4 bytes) is copied into a malloc'd row buffer (never
+48424B05 doc   checked for NULL), unpacked to one byte per pixel (1 and 4 bpp MSB-first),
+48424B05 doc   offset by +0x20 and memcpy'd into FrameBuffer. Only the low 16 bits of
+48424B05 doc   biWidth/biHeight count; a negative (top-down) height draws no rows. The
+48424B05 doc   height is clipped to 240 - y by dropping the image's bottom rows; nothing
+48424B05 doc   else is: no on-screen test, y < 0 writes above FrameBuffer, and a row wider
+48424B05 doc   than 640 - x runs on into the next framebuffer row. Then palette entries
+48424B05 doc   0x20..0xCF are set from the file's colours 0..0xAF (RGBQUAD {B,G,R,x} ->
+48424B05 doc   0x00BBGGRR). It always sets all 176: a shorter palette fills the rest from
+48424B05 doc   stale stack bytes, and an 8-bpp index above 0xAF lands outside them
+48424B05 doc   (0xD0..0xFF, where 0xDx bytes are picture pixels, or wraps to 0x00..0x1F).
+48424B05 doc   Ends by marking {x, y, x+biWidth-1, y+biHeight-1} dirty (not clipped).
+48424B07 note  Frame: (0x38,sp) = next file row, sp+0x3C = palette copy (1 KB), sp+0x43C = the
+48424B07 note  file header, sp+0x44C = the BITMAPINFOHEADER (biWidth at 0x450, biHeight at 0x454,
+48424B07 note  biBitCount at 0x45A), sp+0x474 = the dirty rectangle, (0x494,sp) = &point.
+48424B07 eol   the frame: too big for call's frame byte
+48424B0B eol   (0x494,sp) = &point
+48424B14 eol   (0x30,sp) = &palette copy
+48424B1A eol   (0x18,sp) = sp+0x38: GetBitmapInfo's 5th arg, gets &pixels
+48424B1C eol   a0 = the file
+48424B1E eol   a1 = file header out
+48424B25 eol   d0 = BITMAPINFOHEADER out
+48424B29 eol   d1 = palette out
+48424B2B eol   -> d0 = 0 if the file is not a usable BMP
+48424B34 eol   rejected: draw nothing
+48424B37 label DrawBitmapFile_Impl_Valid
+48424B3D eol   (0x36,sp) = biWidth
+48424B48 eol   a2 = biHeight
+48424B4C eol   8 / biBitCount
+48424B53 eol   d2 = ppb, pixels per byte (1, 2 or 8)
+48424B59 eol   (0x20,sp) = width
+48424B60 eol   d1 = width + 4*ppb - 1
+48424B66 eol   / (4*ppb)
+48424B68 eol   * 4: the file's row stride in bytes, padded to 4
+48424B69 eol   (0x34,sp) = stride
+48424B6F eol   d3 = 240, the screen height
+48424B73 eol   (0x1c,sp) = stride
+48424B77 eol   stride * pixels per byte: one unpacked row
+48424B79 eol   malloc(d0 bytes) -> a0
+48424B84 eol   a3 = row buffer (not checked for NULL)
+48424B87 eol   (0x2c,sp) = &point.y
+48424B92 eol   d1 = 240 - y: rows left on the screen
+48424B95 eol   it fits: draw every row
+48424B97 note  Too tall: skip the first height - (240 - y) file rows, which are the image's
+48424B97 note  bottom rows, since BMP rows run bottom-up.
+48424BA7 eol   never taken: height > 240 - y here
+48424BB2 eol   d2 = rows to skip
+48424BB4 note  Skip them; the hardware loop (setlb .. llt) repeats from the next instruction.
+48424BBC eol   next file row += stride
+48424BC0 eol   while skipped < rows to skip
+48424BC1 label DrawBitmapFile_Impl_ClipHeight
+48424BC8 eol   a2 = 240 - y: rows to draw
+48424BCA label DrawBitmapFile_Impl_RowSetup
+48424BD3 eol   d3 = rows to draw
+48424BEA eol   a2 = FrameBuffer + (y + rows - 1)*640 + x: the bottom row
+48424BEC eol   d2 = row
+48424BEE eol   no rows (y >= 240, or height <= 0)
+48424BF4 eol   (0x28,sp) = stride
+48424BFA eol   (0x24,sp) = width
+48424BFC label DrawBitmapFile_Impl_RowLoop
+48424C01 eol   memcpy(row buffer, file row, stride)
+48424C08 eol   d1 = biBitCount
+48424C0F eol   unpack in place to one byte per pixel (8 bpp: left as is)
+48424C18 eol   width <= 0
+48424C1A note  Move every pixel up to the palette entries this bitmap loads; hardware loop.
+48424C1D eol   BMP index n -> colour 0x20 + n
+48424C26 eol   next pixel while i < width
+48424C27 label DrawBitmapFile_Impl_CopyRow
+48424C2B eol   memcpy(dest, row buffer, width): width is not clipped
+48424C38 eol   next file row += stride
+48424C3E eol   dest one framebuffer row up
+48424C41 eol   next row while row < rows to draw
+48424C43 label DrawBitmapFile_Impl_RowsDone
+48424C44 eol   free(a0): the row buffer
+48424C4B eol   d3 = palette entry, from 0x20
+48424C4D label DrawBitmapFile_Impl_PaletteLoop
+48424C4D note  Set entries 0x20..0xCF from the file's colours 0..0xAF.
+48424C56 eol   blue = palette copy[(d3 - 0x20)*4 + 0]
+48424C60 eol   green: byte +1
+48424C70 eol   red: byte +2
+48424C77 eol   d1 = 0x00BBGGRR
+48424C78 eol   SetPaletteRGB(d0 = entry, d1 = colour)
+48424C85 eol   next entry while < 0xD0: always 176 of them
+48424C87 note  Mark the rectangle dirty for the LCD update, sized by the header (not clipped).
+48424C8B eol   rect.top = y
+48424C95 eol   rect.left = x
+48424CA3 eol   rect.right = x + biWidth - 1
+48424CB4 eol   rect.bottom = y + biHeight - 1
+48424CC1 label DrawBitmapFile_Impl_Return
+48424CC1 eol   drop the 0x47C-byte frame
+
+; ---- DrawBitmapFileEx ---------------------------------------------------------
+48424CC8 doc   DrawBitmapFileEx(a0 = &point {s16 x, s16 y}, a1 = BMP file image in memory):
+48424CC8 doc   the front end of DrawBitmapFileEx_Impl, the same as DrawBitmapFile's. On the
+48424CC8 doc   draw task it runs the Impl at once (if DrawEnable is set); on any other task
+48424CC8 doc   it queues a 12-byte record {DrawBitmapFileEx_QueuedExec, s16 x, s16 y, file}.
+48424CC8 doc   Only the pointer is queued, so the file must stay in memory until the draw
+48424CC8 doc   task runs. Nothing calls it directly (builds 941 and 942): its only reference
+48424CC8 doc   is the MILK reflection table entry at 0x487276F8, so no _entry is named.
+48424CCD eol   a3 = BMP file image
+48424CCE eol   a2 = &point
+48424CD6 eol   not the draw task: queue it
+48424CE0 eol   drawing disabled
+48424CE4 eol   draw now
+48424CEB label DrawBitmapFileEx_Deferred
+48424CEB eol   12-byte record
+48424CED eol   a0 = record
+48424CF8 eol   +0: the function the draw task will call
+48424CFD eol   +4: x
+48424D02 eol   +6: y
+48424D05 eol   +8: file image (the pointer only)
+48424D08 eol   hand it to the draw task
+48424D0D label DrawBitmapFileEx_Return
+
+; ---- DrawBitmapFileEx_QueuedExec ----------------------------------------------
+48424D10 doc   DrawBitmapFileEx_QueuedExec(a0 = record): called by the draw task for a record
+48424D10 doc   DrawBitmapFileEx queued; runs DrawBitmapFileEx_Impl if DrawEnable is still set.
+48424D1C eol   a2 = &record.point
+48424D1D eol   a3 = record.file
+48424D22 eol   drawing disabled meanwhile
+48424D2B label DrawBitmapFileEx_QueuedExec_Return
+
+; ---- DrawBitmapFileEx_Impl ----------------------------------------------------
+48424D2E doc   DrawBitmapFileEx_Impl(a0 = &point, a1 = BMP file image): DrawBitmapFile_Impl
+48424D2E doc   without the blit. GetBitmapInfo checks the file ("BM", 40-byte info header,
+48424D2E doc   1 plane, 1/4/8 bpp, uncompressed, <= 256 colours) and copies its headers and
+48424D2E doc   up to 1 KB of colour table to the stack; a bad file returns at once. Rows that
+48424D2E doc   would land at y >= 240 are skipped (BMP rows are stored bottom-up, 4-byte
+48424D2E doc   padded); each remaining row is unpacked to one byte per pixel in a heap buffer
+48424D2E doc   and offset by 0x20 -- and then dropped: unlike DrawBitmapFile_Impl it never
+48424D2E doc   copies a row to FrameBuffer. So the only effects are the palette load and the
+48424D2E doc   dirty mark: CLUT entries 0x20..0xCF are set from colour-table entries 0..0xAF
+48424D2E doc   (SetPaletteRGB, 0x00BBGGRR) -- all 176, even when the file's table is
+48424D2E doc   shorter, in which case the rest come from uninitialised stack -- then
+48424D2E doc   {x, y, x+w-1, y+h-1} (the file's size, unclipped) goes to SetChangeRect.
+48424D2E doc   The row buffer (Malloc) is not checked for NULL.
+48424D30 eol   rest of the 0x484-byte frame (too big for the call's frame byte)
+48424D34 eol   (0x48c,sp) = &point
+48424D3D eol   (0x28,sp) = colour table copy at sp+0x34: 256 x {B, G, R, x}
+48424D43 eol   5th argument: where to put the pixel-data pointer (sp+0x30)
+48424D45 eol   a0 = file image
+48424D47 eol   a1 = file header copy at sp+0x434
+48424D4E eol   d0 = info header copy at sp+0x444 (BITMAPINFOHEADER)
+48424D52 eol   d1 = colour table
+48424D5D eol   not a usable BMP
+48424D60 label DrawBitmapFileEx_Impl_HaveInfo
+48424D60 eol   d2 = biWidth
+48424D64 eol   d0 = biHeight
+48424D68 eol   d1 = biBitCount (1, 4 or 8)
+48424D6F eol   a3 = rows to decode
+48424D73 eol   d0 = 8 / bpp: pixels per byte
+48424D7A eol   (0x20,sp) = width
+48424D8D eol   (0x2c,sp) = stride: bytes per file row, rounded up to 4
+48424D93 eol   d3 = 240, the screen height
+48424D97 eol   (0x1c,sp) = stride
+48424D9B eol   stride * pixels per byte: a row at one byte per pixel
+48424D9D eol   a0 = heap row buffer (malloc)
+48424DA8 eol   a2 = row buffer
+48424DAB eol   (0x24,sp) = &point.y
+48424DB6 eol   d1 = 240 - y: rows left on the screen
+48424DB9 eol   fits
+48424DBB note  Too tall: the first rows of pixel data are the picture's bottom rows, the ones
+48424DBB note  below the screen; skip them and keep 240 - y rows.
+48424DC7 eol   a0 = rows below the screen
+48424DCB eol   never taken: rows > 240 - y here
+48424DD6 eol   d2 = rows to skip
+48424DD8 note  setlb .. llt: step the pixel-data pointer over one row per pass.
+48424DE5 label DrawBitmapFileEx_Impl_ClipHeight
+48424DEC eol   a3 = 240 - y rows
+48424DEE label DrawBitmapFileEx_Impl_Decode
+48424DEE eol   d2 = row
+48424DF3 eol   no rows
+48424DF9 eol   a3 = stride
+48424DFB label DrawBitmapFileEx_Impl_RowLoop
+48424E00 eol   memcpy(row buffer, pixel data, stride)
+48424E07 eol   d1 = bpp
+48424E0E eol   unpack 1 or 4 bpp to one byte per pixel, in place
+48424E17 eol   width <= 0
+48424E19 note  setlb .. llt: add 0x20 to each pixel, so BMP colour i is CLUT index 0x20 + i.
+48424E26 label DrawBitmapFileEx_Impl_NextRow
+48424E26 note  DrawBitmapFile_Impl copies the row into FrameBuffer at this point; this variant
+48424E26 note  just moves on to the next one.
+48424E2C eol   pixel data += stride
+48424E30 eol   next row while row < rows
+48424E32 label DrawBitmapFileEx_Impl_FreeRow
+48424E33 eol   free the row buffer
+48424E3A eol   d3 = CLUT index, 0x20..0xCF
+48424E3C label DrawBitmapFileEx_Impl_PaletteLoop
+48424E3C note  CLUT[d3] = colour table[d3 - 0x20] as 0x00BBGGRR.
+48424E47 eol   blue
+48424E50 eol   green
+48424E65 eol   red
+48424E6D eol   SetPaletteRGB(d0 = index, d1 = 0x00BBGGRR)
+48424E7A eol   next index while < 0xD0
+48424E7C note  Mark {x, y, x+biWidth-1, y+biHeight-1} dirty: the file's size, not the rows kept.
+48424E80 eol   rect.top = y
+48424E8A eol   rect.left = x
+48424E98 eol   rect.right = x + width - 1
+48424EA9 eol   rect.bottom = y + height - 1
+48424EB6 label DrawBitmapFileEx_Impl_Return
+
+; ---- DrawJpegFile -------------------------------------------------------------
+48424EBD doc   DrawJpegFile(a0 = &point {s16 x, s16 y}, a1 = JPEG data in memory): draws the
+48424EBD doc   image with its top-left corner at the point, unclipped (see JpegDecodeBlit).
+48424EBD doc   On the draw task it runs JpegDecodeBlit (its Impl) at once if DrawEnable is
+48424EBD doc   set; on any other task it queues a 12-byte record {DrawJpegFile_QueuedExec,
+48424EBD doc   s16 x, s16 y, data}. Only the pointer is queued, so the data must stay in
+48424EBD doc   memory until the draw task runs. Callers: the view procs VwBitmapFileProc and
+48424EBD doc   VwJpegFileProc, OpeningFrameDraw (the boot splash, frames straight from the
+48424EBD doc   table ROM), AcDemoImageProc (0x4854E0A1), and the unnamed image drawer at
+48424EBD doc   0x4858056C, which tries its data as a BMP (GetBitmapInfo), then as a JPEG.
+48424EC2 eol   a3 = JPEG data
+48424EC3 eol   a2 = &point
+48424ECB eol   not the draw task: queue it
+48424ED5 eol   drawing disabled
+48424ED9 eol   draw now
+48424EE0 label DrawJpegFile_Deferred
+48424EE0 eol   12-byte record
+48424EE2 eol   a0 = record
+48424EED eol   +0: the function the draw task will call
+48424EF2 eol   +4: x
+48424EF7 eol   +6: y
+48424EFA eol   +8: JPEG data (the pointer only)
+48424EFD eol   hand it to the draw task
+48424F02 label DrawJpegFile_Return
+
+; ---- DrawJpegFile_QueuedExec --------------------------------------------------
+48424F05 doc   DrawJpegFile_QueuedExec(a0 = record): called by the draw task for a record
+48424F05 doc   DrawJpegFile queued; runs JpegDecodeBlit if DrawEnable is still set.
+48424F11 eol   a2 = &record.point
+48424F12 eol   a3 = record.data
+48424F17 eol   drawing disabled meanwhile
+48424F20 label DrawJpegFile_QueuedExec_Return
+
+; ---- JpegDecodeBlit -----------------------------------------------------------
+48424F23 doc   JpegDecodeBlit(a0 = &point {s16 x, s16 y}, a1 = JPEG data): DrawJpegFile's
+48424F23 doc   Impl, also called by DrawJpegFileR_Impl. JpegSetup decodes the image straight
+48424F23 doc   into the screen planes with its top-left corner at the point (a negative x or
+48424F23 doc   y is clamped to 0 there); its result is ignored. JpegSetup's pixel writers
+48424F23 doc   (JpegPixelStore and its siblings) store direct-colour picture pixels, 0xD0|red4
+48424F23 doc   in FrameBuffer and green4<<4|blue4 in PICTURE_PLANE2, at (y + row)*640 + x +
+48424F23 doc   col with no clip: a picture wider than 640 - x wraps into the following rows,
+48424F23 doc   one taller than 240 - y runs off the end of each plane. No palette is loaded.
+48424F23 doc   GetJpegSize then reads the size from the SOF0 header,
+48424F23 doc   and {x, y, x+w-1, y+h-1} is marked dirty with the point as given; w = h = -1
+48424F23 doc   when there is no SOI or an unknown marker (e.g. SOF2) comes before SOF0.
+48424F23 doc   Nothing here tests DrawEnable (the callers do).
+48424F23 doc   Every caller enters at JpegDecodeBlit_entry with `call ..., [d2,a2,a3], 0x2c`;
+48424F23 doc   no code or pointer in the image uses the movm prologue here.
+48424F28 eol   a3 = &point
+48424F29 eol   d0 = x
+48424F31 eol   d1 = y (d2 = &point.y)
+48424F33 eol   a2 = JPEG data
+48424F37 eol   decode into the screen at (x, y); the result is ignored
+48424F3F eol   a1 = &width (sp+0x14)
+48424F44 eol   d0 = &height (sp+0x16)
+48424F47 eol   GetJpegSize: width, height from SOF0 (-1, -1 if none)
+48424F4C note  Mark {x, y, x+w-1, y+h-1} dirty (the point as given, not clamped).
+48424F50 eol   rect.top = y
+48424F55 eol   rect.left = x
+48424F62 eol   rect.right = x + width - 1
+48424F6F eol   rect.bottom = y + height - 1
+
+; ---- DrawJpegFileR ------------------------------------------------------------
+48424F7D doc   DrawJpegFileR(a0 = &point {s16 x, s16 y}, a1 = JPEG data): DrawJpegFile
+48424F7D doc   with rounded corners (see DrawJpegFileR_Impl). On the draw task it runs
+48424F7D doc   DrawJpegFileR_Impl at once if DrawEnable is set; on any other task it queues
+48424F7D doc   a 12-byte record {DrawJpegFileR_QueuedExec, x, y, data}. Only the pointer is
+48424F7D doc   queued, so the data must stay in memory until the draw task runs. Callers:
+48424F7D doc   AcRhyImageProc and AcSndImageProc, with JPEGs from the table ROM; it is also
+48424F7D doc   in the MILK reflection table (entry at 0x48727708).
+48424F82 eol   a3 = JPEG data
+48424F83 eol   a2 = &point
+48424F8B eol   not the draw task: queue it
+48424F95 eol   drawing disabled
+48424F99 eol   draw now
+48424FA0 label DrawJpegFileR_Deferred
+48424FA0 eol   12-byte record
+48424FA2 eol   a0 = record
+48424FAD eol   +0: the function the draw task will call
+48424FB2 eol   +4: x
+48424FB7 eol   +6: y
+48424FBA eol   +8: JPEG data (the pointer only)
+48424FBD eol   hand it to the draw task
+48424FC2 label DrawJpegFileR_Return
+
+; ---- DrawJpegFileR_QueuedExec -------------------------------------------------
+48424FC5 doc   DrawJpegFileR_QueuedExec(a0 = record): called by the draw task for a record
+48424FC5 doc   DrawJpegFileR queued; runs DrawJpegFileR_Impl if DrawEnable is still set.
+48424FD1 eol   a2 = &record.point
+48424FD2 eol   a3 = record.data
+48424FD7 eol   drawing disabled meanwhile
+48424FE0 label DrawJpegFileR_QueuedExec_Return
+
+; ---- DrawJpegFileR_Impl -------------------------------------------------------
+48424FE3 doc   DrawJpegFileR_Impl(a0 = &point, a1 = JPEG data): JpegDecodeBlit with rounded
+48424FE3 doc   corners -- that is all the "R" adds: same arguments, no scaling, no clip
+48424FE3 doc   region. From GetJpegSize's width and height it computes the s16 rectangle
+48424FE3 doc   {x, y, right = x+w-1, bottom = y+h-1} at sp+0x58. At each of its four
+48424FE3 doc   corners the 8 pixels of RoundCornerPixels (4 + 2 + 1 + 1 in the four rows
+48424FE3 doc   nearest the corner, mirrored per corner) are saved from FrameBuffer and
+48424FE3 doc   PICTURE_PLANE2 alike (both halves of a direct-colour pixel) into a 64-byte
+48424FE3 doc   stack buffer at sp+0x60; JpegDecodeBlit then draws the picture and marks it
+48424FE3 doc   dirty, and the saved bytes are written back, so the background shows through
+48424FE3 doc   each corner. Nothing is clipped at any edge: a corner pixel is addressed as
+48424FE3 doc   y*640 + x from the point as given. JpegSetup (inside JpegDecodeBlit) moves a
+48424FE3 doc   negative x or y to 0 for the picture; the corners stay at the point as given.
+48424FE3 doc   If GetJpegSize finds no size (w = h = -1), right = x-2 and bottom = y-2, so
+48424FE3 doc   the top-right, bottom-left and bottom-right corners are saved and restored
+48424FE3 doc   left of or above the point. Does not test DrawEnable (the callers do).
+48424FEA eol   (0xb8,sp) = &point
+48424FEC eol   (0xbc,sp) = JPEG data
+48424FF0 eol   a1 = &width (sp+0x54)
+48424FF4 eol   d0 = &height (sp+0x56)
+48424FF6 eol   GetJpegSize: width, height from SOF0 (-1, -1 if none)
+48424FFD eol   d3 = mask index
+48424FFE eol   a1 = &point.y
+48425002 eol   rect.top = y
+48425009 eol   rect.left = x
+48425016 eol   rect.right = x + width - 1
+48425023 eol   rect.bottom = y + height - 1
+4842502B eol   (0x50,sp) = y
+48425030 eol   a1 = the corner mask
+48425037 eol   (0x4c,sp) = x
+48425039 note  Save buffers, 8 bytes each: FrameBuffer bytes at sp+0x60 (top-left), 0x68
+48425039 note  (top-right), 0x70 (bottom-left), 0x78 (bottom-right); PICTURE_PLANE2 bytes at
+48425039 note  sp+0x80, 0x88, 0x90, 0x98 in the same order. The pointers to them and the
+48425039 note  corner coordinates are cached in stack slots for the loop.
+48425097 note  setlb .. llt: for mask entry d3 = 0..7, save the pixel at each corner.
+48425098 label DrawJpegFileR_Impl_SaveCorners
+4842509E eol   d0 = dy
+484250A3 eol   d1 = dx
+484250B6 eol   top-left: (y + dy)*640 + x + dx
+484250B9 eol   save the FrameBuffer byte
+484250BF eol   save the PICTURE_PLANE2 byte
+484250DF eol   top-right: (y + dy)*640 + right - dx
+4842510A eol   bottom-left: (bottom - dy)*640 + x + dx
+48425134 eol   bottom-right: (bottom - dy)*640 + right - dx
+48425144 eol   next mask entry while d3 < 8
+48425149 eol   draw the picture (marks {x, y, right, bottom} dirty)
+4842514E note  The same buffers and coordinates again, cached in other slots for the restore loop.
+48425158 eol   d3 = mask index
+48425168 eol   a1 = the corner mask
+484251B4 note  setlb .. llt: for mask entry d3 = 0..7, put the saved bytes back over the picture.
+484251B5 label DrawJpegFileR_Impl_RestoreCorners
+484251BB eol   d1 = dy
+484251C3 eol   d0 = dx
+484251D3 eol   top-left: (y + dy)*640 + x + dx
+484251D6 eol   restore the FrameBuffer byte
+484251DC eol   restore the PICTURE_PLANE2 byte
+484251FC eol   top-right: (y + dy)*640 + right - dx
+48425227 eol   bottom-left: (bottom - dy)*640 + x + dx
+48425253 eol   bottom-right: (bottom - dy)*640 + right - dx
+48425261 eol   next mask entry while d3 < 8
+
+; ---- GetJpegSize --------------------------------------------------------------
+48425265 doc   GetJpegSize(a0 = JPEG data, a1 = &s16 width, d0 = &s16 height): callers enter
+48425265 doc   at GetJpegSize_entry with `call ..., [d2,d3,a2,a3], 0x10` (the name here, on
+48425265 doc   the movm, is the MILK reflection entry 0x487276DC). Reads the picture size from
+48425265 doc   the SOF0 header without decoding. The data must start with SOI (FF D8); from
+48425265 doc   offset 2 it walks the marker segments: APP0..APP15, DHT, DQT, DRI, DNL and COM
+48425265 doc   are skipped by their length field; SOF0 (FF C0) gives height and width if its
+48425265 doc   precision is 8 and both are 1..0x7FFF, and the scan stops; any other value where
+48425265 doc   a marker should be (SOF2 progressive, EOI, a non-marker, ...) ends the search
+48425265 doc   with no size. Writes *width, *height, or -1 to both if either was not found, and
+48425265 doc   returns with retf (d0 is left = height or -1; no caller reads it). Callers:
+48425265 doc   JpegDecodeBlit, DrawJpegFileR_Impl, VwBitmapFileProc, VwJpegFileProc, and three
+48425265 doc   sites in the AcSswImgListProc range. Quirks: SOS (FF DA) is parsed as if it were
+48425265 doc   SOF0 (it is reached only when no usable SOF0 came first); an SOF0 that fails a
+48425265 doc   check is not skipped, the scan resumes inside it; the scan offset is a signed
+48425265 doc   16-bit value, so headers past 32 KB (a large EXIF APP1) make it read before the
+48425265 doc   data; and nothing bounds the scan by the data's length.
+48425267 eol   (0x20,sp) = &height (spilled to the caller's argument area)
+48425269 eol   (0x1c,sp) = &width
+4842526B eol   a1 = height = -1 (not found)
+48425271 eol   a2 = width = -1
+4842527C eol   d0 = first two bytes
+48425283 eol   SOI: scan the segments
+48425285 eol   not a JPEG: no size
+48425288 label GetJpegSize_HaveSoi
+48425288 eol   d1 = scan offset: the first segment
+4842528A note  setlb .. lne: one marker segment per pass; d1 = offset of its marker, -1 = stop.
+4842528B label GetJpegSize_ScanLoop
+48425293 eol   d0 = offset + 2: the length field
+48425299 eol   d2 = marker
+484252A0 eol   below APP0
+484252A8 eol   above APP15
+484252AA note  APPn: skip the segment.
+484252BA eol   d1 = segment length (includes its own 2 bytes)
+484252BC eol   d1 = offset + 2 + length: the next marker
+484252C1 label GetJpegSize_NotApp
+484252C7 eol   DHT
+484252CF eol   DQT
+484252D7 eol   DRI
+484252DF eol   DNL
+484252E7 eol   COM
+484252EF eol   SOF0 (baseline): read the size
+484252F7 eol   SOS: read like SOF0 (quirk)
+484252F9 eol   any other marker: stop
+484252FB label GetJpegSize_SkipSegment
+4842530C eol   d0 = segment length
+4842530E eol   d1 = offset + 2 + length: the next marker
+48425312 label GetJpegSize_ReadSof
+4842531C eol   d1 = offset + 4: past the length field
+48425323 eol   d0 = segment length
+48425326 eol   length < 2: carry on from offset + 4
+48425330 eol   precision != 8: carry on inside the segment
+48425342 eol   a1 = height
+48425347 eol   height <= 0 (or >= 0x8000): carry on inside the segment
+48425358 eol   a2 = width
+4842535E eol   width <= 0 (or >= 0x8000): carry on inside the segment
+48425360 eol   both found: stop
+48425364 label GetJpegSize_UnknownMarker
+48425364 eol   stop
+48425366 label GetJpegSize_Next
+48425369 eol   next segment while d1 != -1
+4842536A label GetJpegSize_Done
+4842536F eol   width <= 0: no size
+48425376 eol   height > 0: store both
+48425378 label GetJpegSize_NoSize
+4842537C eol   *width = -1
+48425380 eol   *height = -1
+48425384 label GetJpegSize_StoreSize
+48425388 eol   *width
+4842538E eol   *height
+48425390 label GetJpegSize_Return
+
+; ---- DrawString ---------------------------------------------------------------
+48425393 doc   DrawString(a0 = &clip rect {s16 l, t, r, b}, a1 = &pen {s16 x, s16 y},
+48425393 doc   caller's (0x10,sp) = string, d0 = font index, d1 = fg colour, caller's
+48425393 doc   (0x1c,sp) = bg colour, 0xF7 = none): draws the NUL-terminated string in
+48425393 doc   font d0 with its top-left corner at the pen point, clipped to the rect (see
+48425393 doc   DrawString_Impl). On the draw task it draws at once (if DrawEnable is set);
+48425393 doc   on any other task it copies the string into a DrawQueue_Alloc block of its
+48425393 doc   own (strlen + 1) and queues a 28-byte record {DrawString_QueuedExec, +4 rect
+48425393 doc   (4 x s16), +0xC pen {x, y}, +0x10 string copy, +0x14 u32 font, +0x18 u16 fg,
+48425393 doc   +0x1A u16 bg} for the draw task instead; rect, pen and string are all copied.
+48425393 doc   Its callers (109 in code region 1) enter at DrawString_entry; the plain
+48425393 doc   address appears only in the pointer table at 0x48727178 (beside the other
+48425393 doc   DrawXxx), so only an indirect 'calls' through it runs the movm here.
+48425398 eol   d3 = font index
+48425399 eol   &pen to its argument slot
+4842539B eol   &clip rect to its argument slot
+4842539D eol   d2 = fg colour
+484253A5 eol   not the draw task: queue it
+484253B1 eol   drawing disabled
+484253B4 label DrawString_DrawNow
+484253B4 eol   string (caller's (0x10,sp))
+484253B9 eol   bg colour
+484253C5 eol   draw now
+484253CC label DrawString_Deferred
+484253D5 eol   + the NUL
+484253DB eol   a3 = buffer for the string copy
+484253DC eol   28-byte record
+484253E3 eol   a2 = record
+484253EA eol   +0: the function the draw task will call
+484253EB note  +4: the clip rect, 4 halfwords (hardware loop, d1 = -4 .. 0).
+484253FC note  +0xC: the pen point.
+4842540C eol   +0x10: the string copy
+48425412 eol   strcpy(a0 = copy, a1 = string), lib strcpy past its movm
+48425419 eol   +0x14: font index
+4842541C eol   +0x18: fg colour
+48425423 eol   +0x1A: bg colour
+48425426 eol   hand it to the draw task
+4842542B label DrawString_Return
+
+; ---- DrawString_QueuedExec ----------------------------------------------------
+4842542E doc   DrawString_QueuedExec(a0 = record): called by the draw task for a record
+4842542E doc   DrawString queued; draws it from the record's rect, pen and string copy if
+4842542E doc   DrawEnable is still set, then passes the string copy to DrawQueue_Free
+4842542E doc   (which does nothing: the circular arena reuses the space).
+48425439 eol   a2 = record
+4842543A eol   a0 = &record.rect
+4842543B eol   d3 = record.font
+4842543E eol   d2 = record.fg
+48425441 eol   d0 = record.bg
+48425446 eol   a1 = &record.pen
+4842544A eol   drawing disabled meanwhile
+4842544C eol   record.string
+4842545C label DrawString_QueuedExec_Free
+4842545C eol   the string copy
+
+; ---- DrawString_Impl ----------------------------------------------------------
+48425467 doc   DrawString_Impl(a0 = &clip rect, a1 = &pen, caller's (0x10,sp) = string,
+48425467 doc   d0 = font index, d1 = fg colour, caller's (0x1c,sp) = bg colour): the
+48425467 doc   renderer. An empty string draws nothing. Otherwise it clamps the clip rect
+48425467 doc   to the screen IN PLACE (the caller's own rect), raises a negative pen x or y
+48425467 doc   to 0 (in a local copy), runs the string through ConvertStrings ('~hh'
+48425467 doc   escapes to bytes, control codes to spaces) into a 256-byte stack buffer with
+48425467 doc   no length check, fills the box below with DrawBox_Impl in bg unless bg is
+48425467 doc   0xF7 (bg 0xF4/0xF5 make DrawBox_Impl copy the box from the buffer at
+48425467 doc   *0x500D407C instead of filling it), draws the glyphs and marks the box
+48425467 doc   dirty with SetChangeRect.
+48425467 doc   Font descriptor (*FontTablePtr + font * 0x14): +0 u16 width, +2 u16 height,
+48425467 doc   +4 s16 descent, +6 u16 byte columns per glyph, +8 glyphs, +0xC kern table
+48425467 doc   (0 = fixed width; else 4-byte {u8 width, -, u16 glyph offset} entries from
+48425467 doc   character 0x20), +0x10 double-byte glyph table (0 = none; SjisGlyphLookup).
+48425467 doc   A glyph is 1 bpp, column-major: 'columns' 8-pixel columns of 'height' bytes,
+48425467 doc   MSB leftmost; a fixed font's glyph c is at glyphs + (c - 0x20) * columns *
+48425467 doc   height. Only set bits are drawn, in fg (low byte); every pixel is clipped to
+48425467 doc   the clip rect. The pen moves right by each glyph's width; y never changes.
+48425467 doc   Shift-JIS: in a fixed-width font with a double-byte table, a lead byte
+48425467 doc   (0x81-0x9F, 0xE0-0xFC) and the byte after it select a 16x16 glyph
+48425467 doc   (SjisMissingGlyph if absent), drawn height - descent - 13 rows down.
+48425467 doc   Proportional fonts have no double-byte support.
+48425467 doc   Box: {pen.x, pen.y, pen.x - 1 + text width, pen.y + height} clipped to the
+48425467 doc   clip rect -- one row taller than the glyph cell. Text width = strlen *
+48425467 doc   width for a fixed font (a double-byte character counts twice), but only the
+48425467 doc   LAST character's width for a proportional one (bug, as on the KN5000).
+48425467 doc   Quirks: the row loop always runs the font's height, so a 16x16 glyph comes
+48425467 doc   out right only in a font 16 rows high; a lead byte just before the NUL makes
+48425467 doc   the character loop step over the terminator into stale buffer bytes.
+48425469 eol   0x188 bytes of locals: more than call's frame field takes
+4842546D eol   fg colour, kept in its argument slot
+48425471 eol   (0x1a0,sp) = &clip rect = &rect.l
+48425475 eol   a0 = string (caller's (0x10,sp))
+48425479 eol   d2 = font index
+48425480 eol   empty string: nothing to draw
+48425483 label DrawString_Impl_ClampRect
+48425483 note  Clamp the caller's clip rect to the screen, in place: t, l >= 0, r <= 639, b <= 239.
+48425489 eol   (0x38,sp) = &rect.t
+48425497 label DrawString_Impl_ClampLeft
+484254A5 label DrawString_Impl_ClampRight
+484254AB eol   (0x34,sp) = &rect.r
+484254BD label DrawString_Impl_ClampBottom
+484254C3 eol   (0x40,sp) = &rect.b
+484254D5 label DrawString_Impl_CopyPen
+484254D5 note  pen = *a1, a local copy at (0x78,sp); a negative x or y becomes 0.
+484254EE label DrawString_Impl_ClampPenY
+484254FA label DrawString_Impl_FontSetup
+484254FA note  Cache the font descriptor's fields. (0x62..0x68,sp) = the current glyph's width,
+484254FA note  columns, height and y offset; (0x6a, 0x6c, 0x70,sp) keep the font's own height,
+484254FA note  columns and width to restore after a double-byte glyph.
+48425507 eol   a2 = &font descriptor
+4842550C eol   (0x4c,sp) = desc.glyphs
+48425513 eol   (0x54,sp) = &desc.kern
+48425516 eol   (0x5c,sp) = desc.kern: 0 = fixed width
+4842551A eol   glyph width = desc.width
+48425520 eol   font width, kept
+48425526 eol   glyph columns = desc.columns
+4842552C eol   (0x44,sp) = &desc.height
+48425533 eol   font columns, kept
+48425539 eol   glyph height = desc.height
+4842553F eol   font height, kept
+48425543 eol   glyph y offset = 0
+48425546 eol   d1 = desc.descent
+4842554D note  The box (dirty rect) at (0x7c,sp) {l, t, r, b}; the text width is added to r below.
+4842554D eol   box.t = pen.y
+48425557 eol   (0x6e,sp) = height - descent - 13: a double-byte glyph's y offset
+48425563 eol   (0x50,sp) = &box
+48425565 eol   box.l = pen.x
+48425571 eol   box.r = pen.x - 1
+4842557B eol   box.b = pen.y + height
+4842558A eol   box.t < rect.t: raise it
+4842558D label DrawString_Impl_ClampBoxBottom
+4842559B eol   box.b > rect.b: lower it
+4842559E label DrawString_Impl_Convert
+4842559F eol   a3 = 256-byte buffer at (0x84,sp)
+484255A9 eol   d0 = font, a0 = string, a1 = buffer
+484255B6 eol   proportional font
+484255B8 note  Fixed width: box.r += strlen(converted) * width.
+484255B8 eol   d0 = strlen(converted)
+484255D0 label DrawString_Impl_PropWidth
+484255D0 note  Proportional: each character's kern width overwrites (0x62,sp), so only the last
+484255D0 note  one is added to box.r (bug, as on the KN5000).
+484255DF eol   a1 = kern + c * 4
+484255E5 eol   glyph width = kern[c - 0x20] byte 0
+484255ED label DrawString_Impl_AddLastWidth
+484255F5 eol   box.r += last character's width
+484255F8 label DrawString_Impl_ClipBox
+484255F8 note  Clip the box to the clip rect (top and bottom once more).
+48425609 label DrawString_Impl_ClipBoxLeft
+4842561C label DrawString_Impl_ClipBoxRight
+4842562D label DrawString_Impl_ClipBoxBottom
+4842563E label DrawString_Impl_Background
+48425647 eol   bg 0xF7: transparent, no box
+4842564B eol   DrawBox_Impl(a0 = &box, d0 = bg)
+48425650 label DrawString_Impl_Text
+48425650 eol   (0x14,sp) = character pointer
+48425658 eol   converted string empty
+4842565B label DrawString_Impl_TextSetup
+48425660 eol   (0x48,sp) = &desc.sjis (+0x10)
+48425663 eol   (0x58,sp) = pen.y
+48425669 eol   (0x3c,sp) = pen.y as well
+4842566B label DrawString_Impl_CharLoop
+4842566B note  Per character: point a2 at its glyph and set the glyph metrics.
+48425672 eol   proportional font
+48425675 label DrawString_Impl_FixedChar
+4842567A eol   the font has double-byte glyphs
+4842567C note  Fixed font, single-byte only: a2 = glyphs + (c - 0x20) * columns * height.
+48425698 label DrawString_Impl_CheckLeadByte
+48425698 note  A Shift-JIS lead byte: 0x81-0x9F or 0xE0-0xFC?
+484256AA label DrawString_Impl_CheckLeadE0
+484256B8 eol   not a lead byte
+484256BA label DrawString_Impl_SjisChar
+484256BF eol   step onto the trail byte
+484256D0 eol   d0 = lead << 8 | trail
+484256D1 eol   a0 = &glyph, or 0
+484256DB eol   not in the table: the boxed X
+484256E1 label DrawString_Impl_SjisMetrics
+484256E4 eol   y offset = height - descent - 13
+484256E9 eol   16 pixels wide
+484256EE eol   2 byte columns
+484256F3 eol   16 high (unused: the row loop reads desc.height)
+484256F8 label DrawString_Impl_SingleByte
+484256F8 note  Single byte in a font with double-byte glyphs: restore the font's width, columns
+484256F8 note  and height, y offset 0, a2 = glyphs + (c - 0x20) * columns * height.
+48425726 label DrawString_Impl_PropChar
+48425726 note  Proportional font: width from kern[c - 0x20], columns = width / 8 + 1 (one empty
+48425726 note  column extra when width is a multiple of 8), a2 = glyphs + kern offset.
+48425734 eol   a2 = &kern[c - 0x20]
+4842573B eol   glyph width = kern byte 0
+48425748 eol   columns = width / 8 + 1
+48425751 eol   a2 = glyphs + kern[c - 0x20].offset (+2)
+48425753 label DrawString_Impl_DrawGlyph
+48425753 note  Draw the glyph at a2, one 8-pixel column at a time, top to bottom.
+48425754 eol   column = 0
+48425759 eol   (0x28,sp) = columns
+4842575F eol   no columns: next character, pen unmoved
+48425762 label DrawString_Impl_GlyphSetup
+48425766 eol   (0x24,sp) = y offset
+4842577A eol   (0x2c,sp) = FrameBuffer row of pen.y + y offset
+4842577F eol   (0x30,sp) = glyph width
+48425781 label DrawString_Impl_ColumnLoop
+4842578A eol   pixels in this column = width - column * 8 ...
+48425796 eol   ... at most 8
+48425799 label DrawString_Impl_ColumnStart
+484257A1 eol   a3 = framebuffer at (pen.x, first row)
+484257A5 eol   d3 = row
+484257AA eol   font height <= 0
+484257AD label DrawString_Impl_RowsSetup
+484257B0 eol   (0x1c,sp) = pixels in this column
+484257B6 eol   (0x20,sp) = this column's x
+484257B8 label DrawString_Impl_RowLoop
+484257BC eol   blank glyph row
+484257C6 eol   y = pen.y + row + y offset
+484257D1 eol   y < rect.t: skip the row
+484257D8 label DrawString_Impl_CheckRowBottom
+484257E3 eol   y > rect.b: skip the row
+484257E7 eol   a1 = framebuffer pointer
+484257E8 eol   d2 = pixel (bit) in the column
+484257EC note  One glyph byte, MSB first; the hardware loop (setlb .. llt) repeats from the next
+484257EC note  instruction.
+484257F4 eol   x = column x + pixel
+484257FF eol   x < rect.l: skip the pixel
+48425802 label DrawString_Impl_CheckPixelRight
+4842580D eol   x > rect.r: the rest of the row is clipped
+48425819 eol   mask = 1 << (7 - pixel)
+48425827 eol   set bit: fg colour
+48425829 label DrawString_Impl_NextPixel
+4842582A label DrawString_Impl_PixelCount
+4842582F eol   next pixel while pixel < pixels in this column
+48425830 label DrawString_Impl_NextRow
+48425830 eol   next glyph byte ...
+48425831 eol   ... and framebuffer row
+48425835 label DrawString_Impl_RowCount
+4842583F eol   next row while row < desc.height (also for a double-byte glyph)
+48425842 label DrawString_Impl_NextColumn
+4842584A eol   pen.x += pixels in this column
+48425858 eol   next column while column < columns
+4842585B label DrawString_Impl_NextChar
+4842585B note  Next character. After a double-byte one the pointer sits on its trail byte; if that
+4842585B note  was the NUL, this steps past the end of the string.
+48425866 eol   end of string
+4842586B label DrawString_Impl_MarkDirty
+4842586D eol   mark the box dirty for the LCD update
+48425872 label DrawString_Impl_Return
+
+; ---- SjisGlyphLookup ----------------------------------------------------------
+48425879 doc   SjisGlyphLookup(d0 = Shift-JIS code, lead << 8 | trail, a0 = table) -> a0 =
+48425879 doc   &glyph, or 0 when the code is not in the table. The table (font descriptor
+48425879 doc   +0x10) is a list of 0x22-byte records {u16 code; u8 glyph[32]} ended by code
+48425879 doc   0, searched linearly; the code is little-endian, so the trail byte comes
+48425879 doc   first. A glyph is 16x16 1 bpp, column-major: 16 bytes for the left 8 pixels
+48425879 doc   of rows 0-15, then 16 for the right 8. Clobbers d1.
+4842587D eol   empty table
+4842587F eol   compare as u16
+48425880 note  Hardware loop over the records (setlb .. lne).
+48425886 eol   found: a0 = &record.glyph
+4842588A label SjisGlyphLookup_Next
+4842588A eol   next record
+48425890 eol   until code 0
+48425891 label SjisGlyphLookup_NotFound
+48425893 label SjisGlyphLookup_Return
+
+; ---- DrawStringCentered -------------------------------------------------------
+48425896 doc   DrawStringCentered(a0 = &clip rect {s16 l, t, r, b}, a1 = &centre {s16 x, s16 y},
+48425896 doc   caller's (0x10,sp) = string, d0 = font, d1 = fg colour, caller's (0x1c,sp) =
+48425896 doc   bg colour, 0xF7 = none): draws the string centred on the point, through
+48425896 doc   DrawString (which queues it when not on the draw task). The rect plays no part
+48425896 doc   in the centring: it is passed straight on as DrawString's clip box. The string
+48425896 doc   is first run through ConvertStrings ('~hh' escapes to bytes, control codes to
+48425896 doc   spaces) into a 256-byte stack buffer, with no length check; CalcTotalWidth and
+48425896 doc   DrawString_Impl convert that result again. The centring: x -= width/2
+48425896 doc   (CalcTotalWidth), y -= (height - descent)/2 (GetCharHeight, GetCharDescent),
+48425896 doc   y += GetCenteredDelta(font), all signed and truncating. Same as the KN5000's.
+48425898 eol   with the call's 0x10: a 0x140-byte frame
+4842589C eol   (0x148,sp) = &clip rect
+484258A0 eol   (0x158,sp) = fg colour
+484258A4 eol   (0x14c,sp) = &centre
+484258A8 eol   (0x154,sp) = font
+484258B1 eol   (0x20,sp) = text buffer at sp+0x2c, 256 bytes
+484258B3 eol   a0 = string (the caller's (0x10,sp))
+484258BD eol   convert it into the buffer
+484258CA eol   d0 = text width in pixels
+484258D1 eol   a2 = width
+484258DE eol   (0x28,sp) = font height
+484258F7 eol   a3 = font descent
+484258FB eol   copy the centre to sp+0x12c: the text position
+4842590A eol   (0x24,sp) = &text position
+48425914 eol   d0 = width / 2
+4842591D eol   x = centre.x - width/2
+48425931 eol   d0 = (height - descent) / 2
+4842593A eol   y = centre.y - (height - descent)/2
+48425942 eol   d0 = -1 for fonts 0, 5, 7; -3 for 0xA, 0xB; else 0
+48425950 eol   y += that
+48425954 note  DrawString(a0 = clip rect, a1 = &position, (0x10,sp) = text, d0 = font,
+48425954 note  d1 = fg, (0x1c,sp) = bg).
+48425956 eol   the converted text
+4842595D eol   bg colour

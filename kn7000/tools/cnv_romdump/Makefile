@@ -1,0 +1,43 @@
+# KN7LOAD.CNV (the floppy loader) and KN7APP.BIN (the ROM dumper, for the SD card). README.md.
+PYTHON      ?= python3
+XAPASM      := $(PYTHON) ../xapasm.py
+FLOPPY_TOOLS ?= ../../../kn7000_mame/tools/floppy-images
+OUT         ?= build
+
+all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/kn7load_floppy.img
+
+$(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
+	@mkdir -p $(OUT)
+	$(XAPASM) loader.s -o $@ -m $(OUT)/loader.map
+	@test $$(stat -c%s $@) -le 7168 || { echo "loader.s: the image reaches LV_STR (0x502B9C00)"; rm -f -- $@; false; }
+
+$(OUT)/romdump.bin: romdump.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm.py
+	@mkdir -p $(OUT)
+	$(XAPASM) romdump.s -o $@ -m $(OUT)/romdump.map
+
+$(OUT)/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	$(PYTHON) -I mkapp.py $< $@
+
+# the SAFE build (romdump.inc OPTS_SAFE): program, table and IC21 only; plain files in the root, through
+# the firmware's own file routines only: no folder, no long-name pass, no raw SD sectors
+$(OUT)/safe/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/safe
+	$(PYTHON) -I mkapp.py $< $@ --options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE"
+
+# the IC19 build (OPTS_PICTURE): the picture flash window 0x57800000 alone, the same way as SAFE; a pass of
+# its own, because that window's extent is not confirmed
+$(OUT)/ic19/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/ic19
+	$(PYTHON) -I mkapp.py $< $@ --options 0x301FF --name "KN7000 ROM DUMPER 1.0 IC19"
+
+# the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
+$(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py
+	$(PYTHON) -I mkfloppy.py $@ KN7LOADER $(FLOPPY_TOOLS) $<
+
+font8x13.inc: gen_font.py
+	$(PYTHON) -I gen_font.py /usr/share/fonts/X11/misc/8x13-ISO8859-1.pcf.gz $@
+
+clean:
+	rm -rf -- $(OUT)
+
+.PHONY: all clean

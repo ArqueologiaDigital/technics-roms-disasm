@@ -1,0 +1,10 @@
+; rec05 — EFFECT: silence/clear stub (mutes the effect return)
+; PM@8400, 6 words. No DM coefficients of its own (only the shared kernel blocks).
+; Writes zero to both effect-output slots and returns — the "no effect / effect OFF"
+; microprogram that leaves the effect bus silent.
+pm:0x8400  eff05_entry          ; R0 = 0  (build a zero sample)
+pm:0x8401  eff05_out_L          ; DM(I4,M2)=R0  clear left output slot
+pm:0x8402  eff05_out_R          ; DM(I4,M2)=R0  clear right output slot
+pm:0x8403  eff05_rts            ; RTS(DB) return to kernel scheduler
+pm:0x8404  eff05_epi0           ; delay-slot: R4=DM(I1,M5),R7=PM(I12,M8) kernel epilogue
+pm:0x8405  eff05_epi1           ; delay-slot: MODIFY(I8,0x50) advance PM coeff ptr
