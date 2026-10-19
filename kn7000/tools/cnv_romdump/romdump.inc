@@ -40,8 +40,8 @@
 .equ V_NOFOLDER,    VARS+0x50       # 1: files are written without the KN7DUMP folder (current folder)
 .equ V_FAILS,       VARS+0x54       # ROMs whose file could not be written
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
-.equ HOLD_CALLS,    300000          # ... or this many calls when the loader found no ms counter (parked with
-                                    # request 1, the firmware calls about 20000 times a second: 941 in MAME)
+.equ HOLD_CALLS,    23000           # ... or this many calls when the loader found no ms counter, each made
+.equ HOLD_SPIN,     10000           # to last about 0.65 ms by a delay loop (loader.s HOLD_SPIN)
 .equ V_RESULTS,     VARS+0x100      # per ROM: +0 CRC-32, +4 byte sum, +8 bytes written, +12 status
 .equ ST_PENDING,    0
 .equ ST_OK,         1

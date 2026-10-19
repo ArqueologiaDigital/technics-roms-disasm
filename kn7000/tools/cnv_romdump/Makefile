@@ -9,6 +9,7 @@ all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
 	$(XAPASM) loader.s -o $@ -m $(OUT)/loader.map
+	@test $$(stat -c%s $@) -le 7168 || { echo "loader.s: the image reaches LV_STR (0x502B9C00)"; rm -f -- $@; false; }
 
 $(OUT)/romdump.bin: romdump.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)

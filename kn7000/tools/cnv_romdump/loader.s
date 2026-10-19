@@ -28,7 +28,8 @@
 .equ LV_HITS,       LOADER_VARS+0x10
 .equ LV_LASTHIT,    LOADER_VARS+0x14
 .equ LV_FAIL,       LOADER_VARS+0x18    # pointer to the failure message
-.equ LV_STR,        LOADER_VARS+0x20    # 64 bytes: a line being formatted
+.equ LV_STR,        LOADER_VARS-0x100   # 128 bytes: a line being formatted (PutDec builds its digits at the
+                                        # end), in the zeroed gap after the loader's image (Makefile: < 0x1C00)
 .equ LV_SAVEDPATH,  LOADER_VARS+0x80    # 0x80 bytes: the SD current folder while the application runs
 .equ LV_HOLD,       LOADER_VARS+0x1C    # calls spent showing a failure before ending the conversion
 .equ LV_A_SETEXT,   LOADER_VARS+0x60    # what FindFileSig found (used when the tables are not)
@@ -40,8 +41,11 @@
 .equ LV_SIGSTEP,    LOADER_VARS+0x78    # how far FindFileSig got: 0 drive switch, 1 open, 2 close, 3 read, 4 write, 5 all
 .equ LV_NTAB,       LOADER_VARS+0x7C    # places with the dispatch tables' shape (1 is a find)
 .equ HOLD_MS,       15000               # show a failure this long (kernel milliseconds) ...
-.equ HOLD_CALLS,    300000              # ... or this many calls when the counter was not found: parked with
-                                        # request 1 the firmware calls about 20000 times a second (941 in MAME)
+.equ HOLD_CALLS,    23000               # ... or this many calls when the counter was not found, each made to
+.equ HOLD_SPIN,     10000               # last about 0.65 ms by a delay loop (1531 calls a second in MAME). Parked
+                                        # with request 1 the firmware calls again at once, 20000 to 300000 times
+                                        # a second in MAME (941) depending on the work per call: bare calls are no
+                                        # clock (test/dump.cmd.in, calls_in_1s_after_done)
 .equ C_BG,          0x0010
 .equ C_TEXT,        0xFFFF
 .equ C_DIM,         0x8410
@@ -116,6 +120,10 @@ en_hold:
     bcc     en_end
     bra     en_hold_park
 en_hold_calls:
+    mov     HOLD_SPIN, d0
+eh_spin:
+    add     -1, d0
+    bne     eh_spin
     mov     (LV_HOLD), d0
     inc     d0
     mov     d0, (LV_HOLD)
@@ -1151,7 +1159,7 @@ ph_num:
     rets
 
 PutDec:
-    mov     LV_STR+0x3F, a1         # digits built backwards at the end of LV_STR
+    mov     LV_STR+0x7F, a1         # digits built backwards at the end of LV_STR
     clr     d1
     movbu   d1, (a1)
 pdc_dig:
@@ -1354,8 +1362,8 @@ str_k_tables:   .asciz  "by tables"
 str_k_raw:      .asciz  "  sectors: "
 str_k_folder:   .asciz  "  folders: "
 str_k_clock:    .asciz  "  clock: "
-str_s_tab:      .asciz  "search: places shaped like the fmm tables "
-str_s_code:     .asciz  ", file code steps found "
+str_s_tab:      .asciz  "search: fmm table shapes found "
+str_s_code:     .asciz  ", file code steps "
 str_s_steps:    .asciz  " of 5"
 str_yes:        .asciz  "yes"
 str_no:         .asciz  "no"

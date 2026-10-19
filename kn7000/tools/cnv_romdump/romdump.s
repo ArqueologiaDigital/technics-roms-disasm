@@ -53,6 +53,10 @@ AppEntry:
     bcc     en_end
     bra     en_park
 en_hold_calls:
+    mov     HOLD_SPIN, d0
+eh_spin:
+    add     -1, d0
+    bne     eh_spin
     mov     (V_HOLD), d0
     inc     d0
     mov     d0, (V_HOLD)

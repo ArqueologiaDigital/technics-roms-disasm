@@ -110,7 +110,8 @@ back from the card:
 
   | range                     | what                                             |
   |---------------------------|--------------------------------------------------|
-  | `0x502B8000`              | loader                                           |
+  | `0x502B8000`              | loader (less than 0x1C00 bytes, `make` checks)   |
+  | `0x502B9C00`              | the loader's 128-byte line buffer                |
   | `0x502B9D00`              | loader variables                                 |
   | `0x502B9E00`              | service table                                    |
   | `0x502BA000`              | application                                      |
@@ -131,7 +132,7 @@ back from the card:
   | `sdfmmkdir`, `sdfmpath`          | code signature                                                        | no `KN7DUMP` folder: the files go to the card's current folder          |
   | PROGRAM build number             | the SOFT VERSION code's signature                                     | `_bunknown` in the file names, `?` on the screen                        |
   | TABLE build number               | the ASCII build string the table header points to, range-checked      | the same                                                                |
-  | kernel millisecond counter       | the tick handler's signature                                          | the result screen is held 3000 calls instead of 15 s                    |
+  | kernel millisecond counter       | the tick handler's signature                                          | 15 s become 23,000 calls slowed by a delay loop (15 s in MAME)          |
 
   - **The dispatch tables** are eleven 12-byte records of three code pointers (floppy, SD, a third
     backend). The search asks only for that shape: every pointer in the program flash, the floppy
@@ -193,7 +194,7 @@ back from the card:
 
 Results are in the next section. Command:
 
-    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe]
+    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19]
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
@@ -215,9 +216,30 @@ compares the IC203 file with `waveform_sub_y`, and so on. That is a driver issue
 
 ## Results (2026-10-19)
 
-The full run used upstream MAME `kn7000` from the `technics-kn-flop-rebuild` worktree (binary
-`knfl-tip`). Its build was `KN7LOAD.CNV` SHA-1 `4fa225578d95…` and `KN7APP.BIN` SHA-1
-`5de28284c5be…`; `make` rebuilds both byte for byte from these sources.
+All runs used upstream MAME `kn7000` from the `technics-kn-flop-rebuild` worktree (binary
+`knfl-tip`). The final runs tested exactly the files handed over for the real instrument; `make`
+rebuilds them byte for byte from these sources:
+
+| file                       | SHA-1                                      |
+|----------------------------|--------------------------------------------|
+| `KN7LOAD.CNV`              | `6b81f382fd29b9bc5a025854af0e20a194e68bec` |
+| `kn7load_floppy.img`       | `b7a67de602694fd2257d59ce4509ca154b0b3064` |
+| `KN7APP.BIN` (everything)  | `60de66c68727a10ada0db8fccd0ff70ef40f5dd2` |
+| `safe/KN7APP.BIN` (SAFE)   | `83f579ce0a1b05d8dcd71b6745a015a3a543aa4b` |
+| `ic19/KN7APP.BIN` (IC19)   | `0a82abcfbc73a42d2f59f6c734eff483aa309b88` |
+
+| run              | `run_test.sh` options       | what it exercises                                                    | ends at | outcome                                                                                |
+|------------------|-----------------------------|----------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
+| `safe_full`      | `--safe`                    | the SAFE build, every ROM full size                                  | 124 s   | 11 of 11: the five files and `DUMPLIST.TXT` match, the five left out are absent        |
+| `safe_lt`        | `--safe --loader-test 0x3D` | the same with only the fmm tables found: no code, sectors, clock     | 119 s   | 11 of 11; held by the delay loop (1,533 calls a second)                                |
+| `ic19_full`      | `--ic19`                    | the IC19 build: the picture window alone, 8 MB                       | 110 s   | 11 of 11                                                                               |
+| `nofile_noclock` | `--safe --loader-test 0x23` | no file routines and no clock                                        | 50 s    | the loader's failure screen, held; nothing written (the verifier exits 1: all missing) |
+| `all_full`       | (none)                      | everything, wave ROMs and picture window included                    | 655 s   | 11 of 11, the table below                                                              |
+
+"Ends at" is the emulated time of `dump.cmd.in`'s end line. The failure screen of `nofile_noclock`
+reads `file routines: none  sectors: yes  folders: yes  clock: no` and `search: fmm table shapes
+found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN7LOAD.CNV`
+`4fa225578d95…`, `KN7APP.BIN` `5de28284c5be…`), gave the same files at 653 s.
 
 | file (long name on the card)         | 8.3 name    | bytes    | CRC-32     | checked against                                                      |
 |--------------------------------------|-------------|----------|------------|----------------------------------------------------------------------|
@@ -232,8 +254,14 @@ The full run used upstream MAME `kn7000` from the `technics-kn-flop-rebuild` wor
 | `c3cbqd000003.ic208`                 | IC208.BIN   | 16777216 | `7d57f5a9` | the test data in `waveform_main_x`                                   |
 | `c3cbmd000098.ic19`                  | IC19.BIN    | 8388608  | `768969e1` | the test data served at `0x57800000`                                 |
 
-- **The full run.** All 11 files are as expected, `DUMPLIST.TXT` included. It finished at 653 s of
+- **The full run.** All 11 files are as expected, `DUMPLIST.TXT` included. It finished at 655 s of
   emulated time, about 4 converter calls a second at 32 KB each; the SD writes set the pace.
+- **The hold without a clock.** Parked with request 1 after the end, the firmware calls the
+  converter 20,187 to 20,411 times in the first emulated second (`calls_in_1s_after_done`), and up
+  to about 300,000 on lighter paths, so bare calls are no clock. With the 10,000-iteration delay loop
+  per call (`HOLD_SPIN`) it is 1,531 to 1,533 calls a second, so `HOLD_CALLS` 23,000 holds the screen
+  about 15 s. On the instrument the loop's speed may differ; it only matters when the counter is not
+  found.
 - **Long names.** The pass wrote them and read them back. `fsck.fat -n` on the partition reports
   only the volume label being in the root directory and the dirty bit, both already true of the
   instrument's own card.

@@ -5,7 +5,8 @@
 # loads from the SD card (README.md). Everything lives in the style converter area: the firmware
 # zeroes 0x30000 bytes at 0x502B8000, reads the .CNV there and calls its first byte, on its main task.
 #
-#   0x502B8000  the loader (code, font, signatures)
+#   0x502B8000  the loader (code, font, signatures), less than 0x1C00 bytes
+#   0x502B9C00  the loader's 128-byte line buffer
 #   0x502B9D00  the loader's variables
 #   0x502B9E00  the service table (below), filled by the loader before the application runs
 #   0x502BA000  the application: KN7APP.BIN from the SD card's root folder, linked to run here, then
