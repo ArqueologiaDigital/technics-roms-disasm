@@ -6,7 +6,10 @@
 # their 8.3 or their long names). Per file:
 #   * size and CRC-32 must be what the instrument computed while it wrote the file (DUMPLIST.TXT): a mismatch
 #     means the copy from the card went wrong, not the dump;
-#   * whether the bytes equal a ROM we already have (technics_romsets/kn7000), or are new.
+#   * whether the bytes equal a ROM we already have (technics_romsets/kn7000), or are new;
+#   * for a wave ROM, whether its byte sum is the one the firmware's own WAVE ROM test expects of that chip
+#     (DUMPLIST.TXT's "expected"; the same four values in every program build). That shows every byte of the
+#     chip was read, though not their order.
 # For the program and table flash it joins the even/odd halves and reads, from the image itself, the release
 # byte, the build numbers (as the loader does) and runs find_fw.py's firmware search over the program.
 # With DIR2 (a second run, copied off separately) every file must be byte-identical in both: two reads that
@@ -42,10 +45,12 @@ def load_dir(d):
             continue
         name, short = f[0], f[1].split('\\')[-1]
         m = re.search(r'\s(\d+) crc32 ([0-9A-F]{8}) bytesum ([0-9A-F]{8})', line)
+        g = re.search(r'expected ([0-9A-F]{8})', line)
+        golden = int(g.group(1), 16) if g else None
         if m:
-            rows.append((name, short, int(m.group(1)), int(m.group(2), 16), int(m.group(3), 16), None))
+            rows.append((name, short, int(m.group(1)), int(m.group(2), 16), int(m.group(3), 16), None, golden))
         else:
-            rows.append((name, short, None, None, None, 'left out' if 'not dumped' in line else 'NOT WRITTEN'))
+            rows.append((name, short, None, None, None, 'left out' if 'not dumped' in line else 'NOT WRITTEN', golden))
     return files, rows, man.decode('latin1').splitlines()[:2]
 
 
@@ -81,14 +86,14 @@ print('\n'.join(header))
 print()
 known = known_roms()
 out, bad, data = [], 0, {}
-for name, short, size, crc, bsum, why in rows:
+for name, short, size, crc, bsum, why, golden in rows:
     if why:
-        out.append((name, short, '-', '-', why, '-', '-'))
+        out.append((name, short, '-', '-', why, '-', '-', '-'))
         bad += why != 'left out'
         continue
     b = files.get(short) or files.get(short.upper()) or files.get(name)
     if b is None:
-        out.append((name, short, size, f'{crc:08x}', 'NOT FOUND in ' + d1, '-', '-'))
+        out.append((name, short, size, f'{crc:08x}', 'NOT FOUND in ' + d1, '-', '-', '-'))
         bad += 1
         continue
     whole = len(b) == size and zlib.crc32(b) & 0xffffffff == crc and sum(b) & 0xffffffff == bsum
@@ -101,9 +106,14 @@ for name, short, size, crc, bsum, why in rows:
         bad += again != 'identical'
     data[short] = b
     what = known.get(sha) or (ic21_part(b) if short == 'IC21.BIN' else 'new: not in our set')
+    fw = '-'
+    if golden is not None:
+        fw = f'= {golden:08x}' if sum(b) & 0xffffffff == golden else f'DIFFERS ({sum(b) & 0xffffffff:08x} != {golden:08x})'
+        bad += not fw.startswith('=')
     out.append((name, short, len(b), f'{zlib.crc32(b) & 0xffffffff:08x}',
-                'whole (= DUMPLIST.TXT)' if whole else 'DAMAGED IN TRANSFER', what, again))
-table(('MAME name (from DUMPLIST.TXT)', '8.3', 'bytes', 'crc32', 'copy off the card', 'known as', 'second run'), out)
+                'whole (= DUMPLIST.TXT)' if whole else 'DAMAGED IN TRANSFER', what, again, fw))
+table(('MAME name (from DUMPLIST.TXT)', '8.3', 'bytes', 'crc32', 'copy off the card', 'known as', 'second run',
+       "firmware's expected sum"), out)
 print()
 
 if 'PRGEVEN.BIN' in data and 'PRGODD.BIN' in data:

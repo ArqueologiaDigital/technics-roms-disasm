@@ -51,7 +51,19 @@ About 10 MB in all.
 is the second pass, the same way: the picture flash window alone, 8 MB. The firmware's own picture
 code addresses `0x57800000` (941: `mov 0x57800000, a0` at `0x48580A38`), but the window's 8 MB
 extent is an assumption, so it gets a pass of its own after the first one is safe on the computer.
-The wave ROMs wait for a better-understood approach (`notes/wave-rom-port.md`).
+
+`build/wave/KN7APP.BIN` (`--options 0x3021F`, `OPTS_WAVE`, shown as "KN7000 ROM DUMPER 1.0 WAVE") is
+the third pass: the four wave ROMs alone, 16 MB each, in plain files in the root as before. They are
+off the CPU's bus, so it reads them through the tone generators' test latches, repeating the
+firmware's own WAVE ROM test (`notes/wave-rom-port.md`). It does this bank by bank, entering test mode
+for each 32 KB bank and leaving it again, with a settle after each switch: about 10 ms in MAME,
+where the firmware sleeps one 1 ms tick.
+- **Why this can be trusted.** PROGRAM 893's checksum routine is the same instruction stream as
+  941's, and every build carries the same four expected sums: `0x8164C77C`, `0x815CFC83`,
+  `0x8331EF0B` and `0x83254F9D`, at 893 `0x485CE974`.
+- **What the sums show.** A dumped chip whose byte sum equals the firmware's has had every byte
+  read. The sum cannot show the byte or word order. `check_real_dump.py` reports the sum check in
+  its last column.
 
 Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
 back from the card:
@@ -274,6 +286,11 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
 - **Long names.** The pass wrote them and read them back. `fsck.fat -n` on the partition reports
   only the volume label being in the root directory and the dirty bit, both already true of the
   instrument's own card.
+- **The WAVE build** (`run_test.sh --wave`, binary SHA-1 `fdcce57a...`, `releases/2026-10-19-wave/`):
+  the four wave files, 16 MB each, match the test data in MAME; the run ends at 555 s of emulated
+  time (12 min real). The test data cannot have the firmware's sums, so all four show `[SUM?]`.
+  `check_real_dump.py` reports them as DIFFERS and exits 1. With the expected sums set to the
+  files' own sums, it reports "=" and exits 0, so both of its paths have been exercised.
 - **Shorter checks.** `--fast` cuts every ROM to 64 KB and gives 11 of 11. An SD card without
   `KN7APP.BIN` gets the loader's "No C:\KN7APP.BIN" screen, held 15 s. The dumper's done screen is
   also still up 5 s after the end.

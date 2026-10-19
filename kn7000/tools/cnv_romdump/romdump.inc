@@ -56,6 +56,7 @@
 .equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
+.equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)
@@ -91,4 +92,5 @@
 .equ WAVE_BANK,     6               # 0x8000 | bank (bank = file offset >> 15)
 .equ WAVE_ADDR,     8               # 0x8000 | (file offset & 0x7FFE) | select
 .equ WAVE_DATA,     0xA             # 16 bits: file[offset] = low byte, file[offset + 1] = high byte
-.equ SETTLE_LOOPS,  40000           # the firmware sleeps one tick after entering and leaving test mode
+.equ SETTLE_LOOPS,  160000          # the firmware sleeps one tick (1 ms, the kernel's 1 kHz tick) after entering
+                                    # and leaving test mode; this is about 10 ms in MAME, margin for a faster CPU
