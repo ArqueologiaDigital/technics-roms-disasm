@@ -183,7 +183,7 @@ back from the card:
   five files came off the card intact (`check_real_dump.py`: size, CRC-32 and byte sum equal what
   the instrument computed). The table flash is byte-identical to SP7001's table 83 apart from the
   build digit and the SP7001's added data at the end. The IC19 build read the picture ROM intact
-  too. Each build was run a second time the same day, and both reads were byte-identical, files
+  too, and the WAVE build the four wave ROMs, each one's byte sum the firmware's expected sum. Each build was run a second time the same day, and both reads were byte-identical, files
   and manifests alike. The dump is kept privately, with those checks, in the private ROM
   repository (`roms/kn7000/real_dump_v1.3_b893/`, `pass1-run1/2`, `pass2-run1/2`).
 - **A firmware without file access** is the one case where nothing is written: if neither the

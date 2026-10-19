@@ -75,3 +75,18 @@ either latch, so neither catches a dumper that forgets it. Upstream's port-to-ch
 the opposite of the firmware's labels (its KN6000/KN2600 single TG at `0x98050000` is "main",
 consistent with the firmware), so with real dumps loaded the 8.9 test would compare IC207's sum
 against IC203's golden value. In the overlay the four chips are indistinguishable.
+
+## Read on a real instrument (2026-10-19)
+
+The ROM dumper's WAVE build ran this protocol on a KN7000 with PROGRAM 893, whose checksum routine is
+the same instruction stream as 941's. Two runs were byte-identical. Each (port, select) pair gave
+exactly the sum the firmware expects for its index: `0x98050000`/0 `0x8164C77C`, `0x98050000`/1
+`0x815CFC83`, `0x98040000`/0 `0x8331EF0B`, `0x98040000`/1 `0x83254F9D`. So the table above holds on
+real hardware, and upstream MAME's port assignment was the swapped one. The chip names are the
+firmware's labels; the board has not been traced.
+
+The data (checks in the private ROM repository, `real_dump_v1.3_b893/wave-analysis/`):
+- 16-bit samples, low byte first, in sample order.
+- Each tone generator's Y and X ROMs are the even and odd samples of one stream, word *i* of Y
+  followed by word *i* of X. The tone generator fetches two neighbouring samples at once.
+
