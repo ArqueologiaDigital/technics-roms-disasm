@@ -15,15 +15,20 @@ of the read are byte-identical. The 2 MB:
 |-----------------------|-------------------------------------------------------------------------------------------------|
 | `0x000000`-`0x000197` | 102 u32 offsets from `0x57800000`, ascending                                                    |
 | `0x000198`-`0x0003FF` | zero                                                                                            |
-| `0x000400`            | entry 0: the u32 `0x00000A37` (2615); not a picture, never read by the picture code             |
+| `0x000400`            | entry 0: the version string `"7\n"` (`37 0A 00 00`), shown as `PICTURE : 7` on SOFT VERSION     |
 | `0x000404`-`0x1FF49B` | entries 1-100: PRESET 0-99, each a JFIF JPEG, 640x240, then 0-3 zero bytes to a 4-byte boundary |
 | `0x1FF49C`            | entry 101: the end of the data                                                                  |
 | `0x1FF49C`-`0x1FFFFF` | `0xFF`                                                                                          |
 
 All 100 decode cleanly, all 640x240. The smallest is 6,308 bytes (PRESET 13), the largest 46,959
-(PRESET 84, "Starring The KN7000!"), 2,093,050 in all. The value in entry 0 is not a 16-bit byte or
-word sum, nor the XOR, of the pictures, and not their size; its meaning is open.
-(`ic19-picture-rom-probes/probe.py` prints each of these from the rebuilt image.)
+(PRESET 84, "Starring The KN7000!"), 2,093,050 in all (`ic19-picture-rom-probes/probe.py`).
+
+Entry 0 is the chip's version, in the table flash's form: ASCII digits ended by a line feed. The
+SOFT VERSION screen's `AcAromVerBoxProc` (`0x48488A0B` in 941) loads the u32 at `0x57800000` (`0x400`),
+adds the base and accumulates decimal digits from `0x57800400` while they are `'0'`-`'9'`, storing
+the result at `0x50007DD0` for the `PICTURE : %4d` row: 7 for this chip. (Before that routine was
+read, a 16-bit byte sum, word sum, XOR and the pictures' size were tried for `0x00000A37`; none fits,
+and the probe still prints them.)
 
 | PRESET | pictures                                                                                          |
 |--------|---------------------------------------------------------------------------------------------------|
@@ -74,7 +79,7 @@ other half is unreachable.
 ## Open
 
 - A second read, to show the reads are stable (the JPEGs all decoding cleanly already argues for it).
-- Entry 0's meaning.
+- Whether that instrument's SOFT VERSION screen shows `PICTURE : 7`, as the chip says it should.
 - Whether IC19 differs between production runs; this read is from an early (PROGRAM 893) instrument.
 
 ## Reproduce

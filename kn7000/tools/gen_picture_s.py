@@ -10,7 +10,7 @@
 # Every assumption the source makes is checked here first, and `make verify-picture` checks the rebuilt
 # image byte for byte:
 #   * 0x000: 102 ascending u32 offsets: entry 0, the 100 pictures, and the end of the data;
-#   * then zeros up to 0x400, where entry 0 points: one u32 that is not a picture;
+#   * then zeros up to 0x400, where entry 0 points: the chip's version, ASCII digits ended by a line feed;
 #   * each picture is a JPEG (FF D8 .. FF D9) followed only by 0-3 zero bytes, to a 4-byte boundary;
 #   * after the end of the data, 0xFF up to 2 MB.
 #
@@ -36,7 +36,9 @@ offs = list(struct.unpack_from(f'<{NPIC + 2}I', img, 0))
 assert offs == sorted(offs) and offs[0] == 0x400, 'directory not ascending from 0x400'
 assert img[4 * len(offs):0x400] == bytes(0x400 - 4 * len(offs)), 'directory not zero-filled to 0x400'
 assert offs[1] - offs[0] == 4, 'entry 0 is not one u32'
-entry0 = struct.unpack_from('<I', img, offs[0])[0]
+version = img[offs[0]:offs[1]]
+digits = version[:version.index(b'\n')]
+assert digits.isdigit() and version[len(digits) + 1:] == bytes(len(version) - len(digits) - 1), 'entry 0 is not "<digits>\\n"'
 end = offs[-1]
 assert img[end:] == b'\xff' * (SIZE - end), 'not 0xFF after the end of the data'
 
@@ -79,16 +81,17 @@ with open(os.path.join(SRC, 'picture.s'), 'w') as f:
 # The directory: u32 offsets from 0x{BASE:08X}. The firmware shows PRESET n from entry n+1
 # (0x48580A38 in PROGRAM 941), and accepts n < {NPIC} (0x48580ABE).
 PictureDirectory:
-    .long PictureEntry0 - PictureDirectory
+    .long PictureVersion - PictureDirectory
 ''')
     for n in range(NPIC):
         f.write(f'    .long PicturePreset{n:02d} - PictureDirectory\n')
     f.write(f'''    .long PictureEnd - PictureDirectory          # where the data ends
     .space 0x400 - .                             # zeros up to entry 0
 
-# Entry 0 is one u32, not a picture; the picture code never reads it. Meaning unknown.
-PictureEntry0:
-    .long 0x{entry0:08X}
+# Entry 0: the chip's version, ASCII digits and a line feed ("{digits.decode()}\\n"), padded to 4 bytes.
+# The SOFT VERSION screen shows it as PICTURE (AcAromVerBoxProc, 0x48488A0B in PROGRAM 941).
+PictureVersion:
+    .byte {', '.join(f'0x{c:02X}' for c in version)}
 
 ''')
     f.write('\n'.join(lines))

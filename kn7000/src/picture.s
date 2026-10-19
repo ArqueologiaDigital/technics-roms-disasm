@@ -16,7 +16,7 @@
 # The directory: u32 offsets from 0x57800000. The firmware shows PRESET n from entry n+1
 # (0x48580A38 in PROGRAM 941), and accepts n < 100 (0x48580ABE).
 PictureDirectory:
-    .long PictureEntry0 - PictureDirectory
+    .long PictureVersion - PictureDirectory
     .long PicturePreset00 - PictureDirectory
     .long PicturePreset01 - PictureDirectory
     .long PicturePreset02 - PictureDirectory
@@ -120,9 +120,10 @@ PictureDirectory:
     .long PictureEnd - PictureDirectory          # where the data ends
     .space 0x400 - .                             # zeros up to entry 0
 
-# Entry 0 is one u32, not a picture; the picture code never reads it. Meaning unknown.
-PictureEntry0:
-    .long 0x00000A37
+# Entry 0: the chip's version, ASCII digits and a line feed ("7\n"), padded to 4 bytes.
+# The SOFT VERSION screen shows it as PICTURE (AcAromVerBoxProc, 0x48488A0B in PROGRAM 941).
+PictureVersion:
+    .byte 0x37, 0x0A, 0x00, 0x00
 
 PicturePreset00:
     .incbin "src/picture/preset_00.jpg" # 640x240, 12514 bytes

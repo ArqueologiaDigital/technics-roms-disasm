@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # probe.py [build/kn7000_picture.rom] -- the numbers notes/ic19-picture-rom.md quotes, from the rebuilt image
-# (make verify-picture first): picture sizes (smallest, largest, total), every picture's frame size, and the
-# hypotheses tried for entry 0 (u32 at 0x400 = 0x00000A37), each printed with its value.
+# (make verify-picture first): picture sizes (smallest, largest, total), every picture's frame size, entry 0
+# parsed the way the SOFT VERSION screen does (decimal digits from 0x57800400), and the hypotheses tried for
+# entry 0 before that routine was read (none fits), each printed with its value.
 import os, struct, sys
 p = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), '..', '..', 'build', 'kn7000_picture.rom')
 b = open(p, 'rb').read()
@@ -33,6 +34,10 @@ tries = {
     'size of the pictures area': len(data),
     'size of the pictures area in KB': len(data) // 1024,
 }
-print(f'entry 0 = {e0:#x} ({e0})')
+v = 0
+for c in b[0x400:0x404]:
+    if not 0x30 <= c <= 0x39: break
+    v = v * 10 + c - 0x30
+print(f'entry 0 = {e0:#x}; as the SOFT VERSION screen reads it (AcAromVerBoxProc 0x48488A0B): PICTURE : {v}')
 for k, v in tries.items():
     print(f'   {k:48s} {v:#x}{"   <== equal" if v == e0 else ""}')
