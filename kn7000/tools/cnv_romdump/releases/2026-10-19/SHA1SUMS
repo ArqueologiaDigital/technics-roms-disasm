@@ -1,0 +1,7 @@
+6b81f382fd29b9bc5a025854af0e20a194e68bec  floppy/KN7LOAD.CNV
+b7a67de602694fd2257d59ce4509ca154b0b3064  floppy/kn7load_floppy.img
+83f579ce0a1b05d8dcd71b6745a015a3a543aa4b  sdcard-pass1-SAFE/KN7APP.BIN
+0a82abcfbc73a42d2f59f6c734eff483aa309b88  sdcard-pass2-IC19/KN7APP.BIN
+60de66c68727a10ada0db8fccd0ff70ef40f5dd2  sdcard-FULL-not-yet/KN7APP.BIN
+3556f7dff88b2299e3c52da2453854368a65ceee  check_real_dump.py
+84a25e294c13b9ac0b016547da3405fc142ce6c9  find_fw.py

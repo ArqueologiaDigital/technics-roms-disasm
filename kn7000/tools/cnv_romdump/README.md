@@ -4,10 +4,10 @@ A way to dump a KN7000's ROMs with nothing but the instrument, one floppy and an
 the stock firmware through **STYLE CONVERT**, the instrument's own way of running a program from a
 floppy (`notes/style-converter.md`). No SP7001, no opened case.
 
-| file on      | name          | what                                                                                       |
-|--------------|---------------|--------------------------------------------------------------------------------------------|
-| the floppy   | `KN7LOAD.CNV` | a loader (`loader.s`): finds the firmware's routines, loads and starts the application     |
-| the SD card  | `KN7APP.BIN`  | the application, in the card's root folder; here the ROM dumper (`romdump.s`)              |
+| file on     | name          | what                                                                                   |
+|-------------|---------------|----------------------------------------------------------------------------------------|
+| the floppy  | `KN7LOAD.CNV` | a loader (`loader.s`): finds the firmware's routines, loads and starts the application |
+| the SD card | `KN7APP.BIN`  | the application, in the card's root folder; here the ROM dumper (`romdump.s`)          |
 
 The floppy is made once. After that, a new version of the dumper (or any other application) is just a
 new `KN7APP.BIN` copied onto the SD card from a computer.
@@ -195,6 +195,7 @@ back from the card:
 | `test/prefill.lua`            | test data for the undumped ROMs (the wave ROM regions, the picture window)                |
 | `test/verify_dump.py`         | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
 | `probes/`                     | the probes behind the design (SD write, long names, raw sectors, folders)                 |
+| `releases/2026-10-19/`        | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
 
 ## How it was tested
 
@@ -226,13 +227,13 @@ All runs used upstream MAME `kn7000` from the `technics-kn-flop-rebuild` worktre
 `knfl-tip`). The final runs tested exactly the files handed over for the real instrument; `make`
 rebuilds them byte for byte from these sources:
 
-| file                       | SHA-1                                      |
-|----------------------------|--------------------------------------------|
-| `KN7LOAD.CNV`              | `6b81f382fd29b9bc5a025854af0e20a194e68bec` |
-| `kn7load_floppy.img`       | `b7a67de602694fd2257d59ce4509ca154b0b3064` |
-| `KN7APP.BIN` (everything)  | `60de66c68727a10ada0db8fccd0ff70ef40f5dd2` |
-| `safe/KN7APP.BIN` (SAFE)   | `83f579ce0a1b05d8dcd71b6745a015a3a543aa4b` |
-| `ic19/KN7APP.BIN` (IC19)   | `0a82abcfbc73a42d2f59f6c734eff483aa309b88` |
+| file                      | SHA-1                                      |
+|---------------------------|--------------------------------------------|
+| `KN7LOAD.CNV`             | `6b81f382fd29b9bc5a025854af0e20a194e68bec` |
+| `kn7load_floppy.img`      | `b7a67de602694fd2257d59ce4509ca154b0b3064` |
+| `KN7APP.BIN` (everything) | `60de66c68727a10ada0db8fccd0ff70ef40f5dd2` |
+| `safe/KN7APP.BIN` (SAFE)  | `83f579ce0a1b05d8dcd71b6745a015a3a543aa4b` |
+| `ic19/KN7APP.BIN` (IC19)  | `0a82abcfbc73a42d2f59f6c734eff483aa309b88` |
 
 | run              | `run_test.sh` options       | what it exercises                                                    | ends at | outcome                                                                                |
 |------------------|-----------------------------|----------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
