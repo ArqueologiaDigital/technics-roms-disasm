@@ -38,6 +38,8 @@ src/program.s   MN10300 firmware image. Boot header is hand-disassembled;
                 the rest is raw .incbin_range awaiting disassembly.
 src/symbols.inc  2302 recovered function names + memory map (see "Symbols").
 src/table.s     Resource archive: 85-entry offset directory + 84 asset segments.
+src/picture.s   IC19, the picture ROM: a directory + the 100 Slide Show PRESET
+                pictures, included from src/picture/preset_NN.jpg (see "IC19").
 kn7000.sym      Portable "0xADDR  name" symbol table.
 tools/kn7asm.py Self-contained assembler/linker (see "Toolchain" below).
 tools/mn10300_asm.py      MN10300 instruction ENCODER (99.9% round-trip; see below).
@@ -60,6 +62,7 @@ make verify     # assert 100% byte-match
 make verify-listings  # byte-check + re-encode the curated disasm/*.asm listings
 make symbols    # regenerate kn7000.sym + src/symbols.inc from the ROM
 make disasm     # (re)generate disassembly listings (raw + named) via MAME unidasm
+make verify-picture    # IC19 from src/picture.s + its 100 JPEGs: assert the instrument's SHA-1
 make verify-sp7001     # SP7001 firmware (942 / 83) + BASEEXT.XAP: assert 100% byte-match
 make verify-sp7001-floppy  # table 83 vs the SP7001 update's two table disks (+ SMCKTB*.INF)
 make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own names)
@@ -215,6 +218,16 @@ names; the activation gate named from the earlier reverse-engineering). That plu
 update, is disassembled too (`tools/gen_xap_s.py`), and the update's two table disks prove
 table 83 byte-for-byte. Full measurements and
 the edit-site catalogue: [`notes/sp7001-build-diff.md`](notes/sp7001-build-diff.md).
+
+## IC19, the picture ROM
+
+`src/picture.s` rebuilds the 2 MB the CPU sees at `0x57800000` from the chip's own pictures:
+a directory of 102 offsets, then the 100 PRESET pictures of the Slide Show, each a 640x240
+JPEG in `src/picture/` brought in with `.incbin` and padded with `.align 4`. The read it
+reproduces was made on a real KN7000 (PROGRAM 893) on 2026-10-19 with `tools/cnv_romdump`;
+`make verify-picture` checks the rebuild against that read's SHA-1, and against the read
+itself when it is at hand. Why only 2 MB of a 64 Mbit chip, how the firmware reads it, and
+what the pictures are for: [`notes/ic19-picture-rom.md`](notes/ic19-picture-rom.md).
 
 ## License
 

@@ -161,6 +161,36 @@ disasm/table_directory.asm: baserom/kn7000_table.rom tools/dump_table_dir.py
 	$(PYTHON) tools/dump_table_dir.py $< > $@
 	@echo "wrote $@"
 
+# ---- IC19, the picture ROM (the 100 Slide Show PRESET pictures) -------------
+# Unlike the flash images, this source carries its data: src/picture.s includes the
+# 100 JPEGs in src/picture/ (tools/gen_picture_s.py wrote both from a read of the
+# chip). So it builds and checks without any reference image: the result must have
+# the SHA-1 of the 2 MB the CPU sees at 0x57800000 on the real instrument. With the
+# read itself at hand (PICTURE_REF, the 8 MB the ROM dumper wrote, private), it is
+# also compared byte for byte, all four 2 MB copies of the window.
+# See notes/ic19-picture-rom.md.
+PICTURE_SHA1 := 9631dedfc501b8c11bb93efa2d99750e3c84465a
+PICTURE_REF  ?= ../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
+
+.PHONY: verify-picture picture-src
+build/kn7000_picture.rom: src/picture.s $(wildcard src/picture/*.jpg) tools/kn7asm.py
+	@mkdir -p build
+	$(ASM) src/picture.s -I . -o $@
+
+verify-picture: build/kn7000_picture.rom
+	@if [ "$$(sha1sum < $< | cut -d' ' -f1)" = "$(PICTURE_SHA1)" ]; then \
+	    echo "OK    kn7000_picture.rom has the SHA-1 of the instrument's IC19 ($(PICTURE_SHA1))"; \
+	 else echo "FAIL  kn7000_picture.rom: SHA-1 is not $(PICTURE_SHA1)"; exit 1; fi
+	@if [ -f "$(PICTURE_REF)" ]; then \
+	    for k in 0 1 2 3; do \
+	      cmp -s -n 2097152 -i 0:$$((k * 2097152)) $< "$(PICTURE_REF)" || { echo "FAIL  copy $$k of $(PICTURE_REF) differs"; exit 1; }; \
+	    done; echo "OK    and it equals all four 2 MB copies in $(PICTURE_REF)"; \
+	 else echo "(no $(PICTURE_REF): only the SHA-1 was checked)"; fi
+
+# Regenerate src/picture.s and src/picture/*.jpg from a read of IC19.
+picture-src: tools/gen_picture_s.py
+	$(PYTHON) tools/gen_picture_s.py "$(PICTURE_REF)"
+
 # ---- SP7001 variant (program build 942 / table build 83) -------------------
 # A second byte-exact target. Its reference images are the de-interleaved raw
 # EPROM dumps; the source currently passes them through verbatim and is refined

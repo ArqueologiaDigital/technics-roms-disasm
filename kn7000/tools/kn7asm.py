@@ -27,6 +27,7 @@
 #   .word  w [, w ...]             emit 16-bit little-endian values
 #   .long  l [, l ...]             emit 32-bit little-endian values
 #   .space N [, FILL]              emit N fill bytes (FILL default 0x00)
+#   .align N [, FILL]              emit FILL bytes up to the next multiple of N
 #   .incbin "path" [, START [, LEN]]           append bytes from a file
 #   .incbin_range "path", START, END           append path[START:END] and
 #                                              assert the current offset == START
@@ -34,8 +35,9 @@
 # EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ).
 # Numeric byte/word/long args additionally accept the same expressions.
 #
-# An instruction operand may name a label defined LATER in the source (a
-# forward branch to a local label in converted code). The source is then
+# An instruction operand or an EXPR may name a label defined LATER in the source
+# (a forward branch to a local label in converted code, or a table of offsets
+# that comes before the data it points into). The source is then
 # assembled again, with the addresses the previous pass found, until a pass
 # uses only addresses that turn out to be right; that pass's output is the
 # result, and only its errors (layout assertions included) are reported. A
@@ -127,8 +129,12 @@ class Assembler:
                     py.append(str(len(self.out)))  # current offset
                 elif tok in self.symbols:
                     py.append(str(self.symbols[tok]))
-                else:
-                    raise AsmError(f"undefined symbol {tok!r}")
+                elif tok in self.known:        # a forward label: the previous pass's address
+                    self.assumed[tok] = self.known[tok]
+                    py.append(str(self.known[tok]))
+                else:                          # not defined yet: a placeholder, so this pass is inexact
+                    self.guessed.setdefault(tok, (self.cur_file, self.cur_line))
+                    py.append(str(self.mn_base + len(self.out)))
         try:
             return int(eval(" ".join(py), {"__builtins__": {}}, {}))
         except AsmError:
@@ -199,6 +205,11 @@ class Assembler:
         fill = self.evaluate(args[1]) & 0xFF if len(args) >= 2 else 0x00
         self.out += bytes([fill]) * n
 
+    def do_align(self, args):
+        n = self.evaluate(args[0])
+        fill = self.evaluate(args[1]) & 0xFF if len(args) >= 2 else 0x00
+        self.out += bytes([fill]) * (-len(self.out) % n)
+
     def do_org(self, args):
         want = self.evaluate(args[0])
         if len(self.out) != want:
@@ -242,6 +253,8 @@ class Assembler:
                 self.do_byte(args, 4)
             elif op == ".space":
                 self.do_space(args)
+            elif op == ".align":
+                self.do_align(args)
             elif op == ".incbin":
                 self.do_incbin(args)
             elif op == ".incbin_range":
