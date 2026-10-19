@@ -3,7 +3,7 @@ by tracking constant register values and stack stores in program.asm."""
 import re, sys
 sys.path.insert(0, __import__('os').path.dirname(__import__('os').path.abspath(__file__)))
 from rom import *
-L = '/home/fsanches/compartilhado/kn7000_disassembly/disasm/program.asm'
+L = '/home/fsanches/compartilhado/technics-roms-disasm/kn7000/disasm/program.asm'
 lines = []
 for ln in open(L):
     m = re.match(r'^([0-9a-f]{8}): ((?:[0-9a-f]{2} )+)\s*(\S+)\s*(.*)$', ln.rstrip())

@@ -3,7 +3,7 @@
 Scans disasm/program.asm for 'mov <id>, dN' (both 0x0000XXXX and short forms) and reports the
 enclosing named symbol (nearest lower address in kn7000.sym / kn7000_manual.sym / exports)."""
 import re, sys, bisect
-D = "/home/fsanches/compartilhado/kn7000_disassembly/"
+D = "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/"
 syms = {}
 for f in ("kn7000.sym", "kn7000_manual.sym", "kn7000_exports_from_942.sym"):
     for ln in open(D + f):

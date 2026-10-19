@@ -2,7 +2,7 @@
 """callrefs.py -- question: who calls a given address? Lists call sites in disasm/program.asm with the
 nearest preceding named symbol (kn7000.sym, kn7000_manual.sym, kn7000_exports_from_942.sym)."""
 import re, sys, bisect
-D = "/home/fsanches/compartilhado/kn7000_disassembly/"
+D = "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/"
 syms = {}
 for f in ("kn7000.sym", "kn7000_manual.sym", "kn7000_exports_from_942.sym"):
     for ln in open(D + f):

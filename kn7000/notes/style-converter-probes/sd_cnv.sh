@@ -18,7 +18,7 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$HERE/../.."
-MAME_REPO="${MAME_REPO:-$REPO/../kn7000_mame}"
+MAME_REPO="${MAME_REPO:-$REPO/../../kn7000_mame}"
 SD_MASTER="${SD_MASTER:-$REPO/../kn7000-emulator/sdcard_from_real_kn7000.img}"
 FLOP="$1"; ROUTE="$2"; D="$(mkdir -p "$3" && cd "$3" && pwd)"; mkdir -p "$D/snap"
 python3 "$REPO/tools/xapasm.py" "$HERE/sdmark.s" -o "$D/sdmark.bin" -m "$D/sdmark.map" >/dev/null

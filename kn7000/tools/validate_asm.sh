@@ -8,7 +8,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 ROM="${ROM:-../baserom/kn7000_program.rom}"
-UNIDASM="${UNIDASM:-../../mame-sony-video/unidasm}"
+UNIDASM="${UNIDASM:-../../../mame-sony-video/unidasm}"
 BASE=0x48400000
 START=0x80
 END=0x186000

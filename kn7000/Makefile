@@ -11,16 +11,16 @@ ASM         := $(PYTHON) tools/kn7asm.py
 # Sibling repo that extracts the reference images from the update disks, and the
 # original disk contents it reads. Override on the command line if they live
 # elsewhere, e.g.  make EXTRACT_DIR=/path/to/kn7000_extraction
-EXTRACT_DIR ?= ../kn7000_extraction
-DISKS_DIR   ?= ../KN7000
+EXTRACT_DIR ?= ../../kn7000_extraction
+DISKS_DIR   ?= ../../KN7000
 
 # SP7001 variant: its reference images come from the raw EPROM-half dumps in the
 # (private) MAME romset, de-interleaved by tools/rom_from_eproms.py — not from
 # the update disks. Override if the romset lives elsewhere.
-ROMSET_DIR  ?= ../technics_romsets/kn7000
+ROMSET_DIR  ?= ../../technics_romsets/kn7000
 # ...and the SP7001 update itself: four self-extracting ZIP "disks" (program 1/2,
 # 2/2, table 1/2, 2/2), read with tools/sfx_extract.py (never executed).
-SP7001_UPDATES ?= ../nonfree/kn7000-sp7001/sp7001-kn7000-updates
+SP7001_UPDATES ?= ../../nonfree/kn7000-sp7001/sp7001-kn7000-updates
 SP7001_TB1  := $(SP7001_UPDATES)/table1_2.exe
 SP7001_TB2  := $(SP7001_UPDATES)/table2_2PLUG-iN.exe
 SP7001_PR1  := $(SP7001_UPDATES)/PROGR1_2v1.6PLUG-iN.exe
@@ -28,7 +28,7 @@ SP7001_PR2  := $(SP7001_UPDATES)/PROGR2_2v1.6PLUG-iN.exe
 
 # MAME's unidasm, used only by `make disasm` to (re)generate the reference
 # listings. Point this at your MAME build's unidasm binary.
-UNIDASM     ?= ../mame-sony-video/unidasm
+UNIDASM     ?= ../../mame-sony-video/unidasm
 
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
@@ -170,7 +170,7 @@ disasm/table_directory.asm: baserom/kn7000_table.rom tools/dump_table_dir.py
 # also compared byte for byte, all four 2 MB copies of the window.
 # See notes/ic19-picture-rom.md.
 PICTURE_SHA1 := 9631dedfc501b8c11bb93efa2d99750e3c84465a
-PICTURE_REF  ?= ../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
+PICTURE_REF  ?= ../../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
 
 .PHONY: verify-picture picture-src
 build/kn7000_picture.rom: src/picture.s $(wildcard src/picture/*.jpg) tools/kn7asm.py

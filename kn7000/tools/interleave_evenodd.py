@@ -10,8 +10,8 @@
 # gen_dsp_records.py (see dsp/cross-model/README.md).  E.g.:
 #
 #   python3 tools/interleave_evenodd.py \
-#       ../kn7000_mame_build/roms/kn6500/kn6500_program_even.rom \
-#       ../kn7000_mame_build/roms/kn6500/kn6500_program_odd.rom \
+#       ../../kn7000_mame_build/roms/kn6500/kn6500_program_even.rom \
+#       ../../kn7000_mame_build/roms/kn6500/kn6500_program_odd.rom \
 #       kn6500_program_full.bin
 
 import sys

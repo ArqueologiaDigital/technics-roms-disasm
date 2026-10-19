@@ -1,7 +1,7 @@
 # KN7LOAD.CNV (the floppy loader) and KN7APP.BIN (the ROM dumper, for the SD card). README.md.
 PYTHON      ?= python3
 XAPASM      := $(PYTHON) ../xapasm.py
-FLOPPY_TOOLS ?= ../../../kn7000_mame/tools/floppy-images
+FLOPPY_TOOLS ?= ../../../../kn7000_mame/tools/floppy-images
 OUT         ?= build
 
 all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/kn7load_floppy.img

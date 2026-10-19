@@ -9,7 +9,7 @@ Prints (all addresses = program ROM, base 0x48400000):
   * encoder class hash 0x485B9228 (0x484582D5) and value-size hash 0x485B92A8 (0x48458AC7)
 usage: python3 -I song_tables.py [ROM]"""
 import sys, struct
-ROMP = sys.argv[1] if len(sys.argv) > 1 else "/home/fsanches/compartilhado/kn7000_disassembly/baserom/kn7000_program.rom"
+ROMP = sys.argv[1] if len(sys.argv) > 1 else "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/baserom/kn7000_program.rom"
 rom = open(ROMP, "rb").read(); B = 0x48400000
 u8 = lambda a: rom[a - B]; s8 = lambda a: struct.unpack_from("<b", rom, a - B)[0]
 u32 = lambda a: struct.unpack_from("<I", rom, a - B)[0]

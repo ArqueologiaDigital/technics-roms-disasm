@@ -91,7 +91,7 @@ def main():
     ap.add_argument("--fw-lib-file", type=lambda v: int(v, 0), help="its library image (file)")
     ap.add_argument("--fw-sym", nargs="*", default=[], help="its symbol files")
     ap.add_argument("--title", default="SP7001 .XAP plug-in - byte-exact.")
-    ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../mame-sony-video/unidasm"))
+    ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../mame-sony-video/unidasm"))
     a = ap.parse_args()
 
     d = open(a.xap, "rb").read()

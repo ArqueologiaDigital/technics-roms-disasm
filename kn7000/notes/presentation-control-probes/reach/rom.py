@@ -1,5 +1,5 @@
 import struct
-ROM_PATH = '/home/fsanches/compartilhado/kn7000_disassembly/baserom/kn7000_program.rom'
+ROM_PATH = '/home/fsanches/compartilhado/technics-roms-disasm/kn7000/baserom/kn7000_program.rom'
 BASE = 0x48400000
 LIB_SRC = 0x487B8FD1
 LIB_BASE = 0x4C000000

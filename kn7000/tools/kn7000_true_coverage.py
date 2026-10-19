@@ -21,13 +21,13 @@ Cross-check that settles it without reading the regex at all: src/program.s has
 instruction, which is impossible (max encoding is 7). 151,372 / 59,008 = 2.57,
 which is right.
 
-Run from the kn7000_disassembly checkout:  python3 kn7000_true_coverage.py
+Run from technics-roms-disasm/kn7000:  python3 kn7000_true_coverage.py
 """
 import os
 import re
 import sys
 
-REPO = sys.argv[1] if len(sys.argv) > 1 else "/home/fsanches/compartilhado/kn7000_disassembly"
+REPO = sys.argv[1] if len(sys.argv) > 1 else "/home/fsanches/compartilhado/technics-roms-disasm/kn7000"
 prog_s = os.path.join(REPO, "src", "program.s")
 table_s = os.path.join(REPO, "src", "table.s")
 PROG_SIZE = 0x3F6F01   # 4,157,185

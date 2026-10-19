@@ -151,8 +151,8 @@ order of `kernel-architecture.md` §8 in one session.
 The CPU-side downloader/driver lives at program-flash `0x48404D10..0x48408000`;
 its functions and the effect-type → record-index mapping (runtime table
 `0x500066E0`) are named in `../kn7000_manual.sym` and documented in
-`../../kn7000_mame/notes/dsp-host-interface.md` and
-`../../kn7000_mame/notes/dsp-effect-catalog.md`.
+`../../../kn7000_mame/notes/dsp-host-interface.md` and
+`../../../kn7000_mame/notes/dsp-effect-catalog.md`.
 
 ## Same DSP in the KN6000 / KN6500
 
@@ -161,4 +161,4 @@ record pool (their pool matches each other; vs the KN7000 the kernel's DM tables
 match while the PM code is an older build). `gen_dsp_records.py` takes the pool
 bounds as CLI arguments so the same tool serves those models when their
 disassembly repos exist. See
-`../../kn7000_mame/notes/sound-cross-model-kn6000-kn6500.md`.
+`../../../kn7000_mame/notes/sound-cross-model-kn6000-kn6500.md`.

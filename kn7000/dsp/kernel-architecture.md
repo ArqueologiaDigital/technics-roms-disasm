@@ -7,7 +7,7 @@ whole effects subsystem**. Everything below is read off the committed listing
 throughout), the ADSP-21065L Technical Reference (register/bit tables cited as
 "TRM"; PDF in the project root), the KN7000 service manual schematic (IC306
 sheet), and the MN10300 host-driver RE in
-`../../kn7000_mame/notes/dsp-host-interface.md`. Live-emulation evidence is
+`../../../kn7000_mame/notes/dsp-host-interface.md`. Live-emulation evidence is
 cited from `kn7000_mame/notes/` where it corroborates. Claims not pinned by
 one of those are marked **PROVISIONAL**.
 

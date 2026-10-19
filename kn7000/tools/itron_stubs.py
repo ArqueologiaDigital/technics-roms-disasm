@@ -31,7 +31,7 @@ import subprocess
 LIB = 0x4C000000
 LIB_LEN = 0x40000
 PAT = re.compile(r"^([0-9a-f]{8}):\s(?:[0-9a-f]{2} )+\s*(\S.*)$")
-UNIDASM = os.environ.get("UNIDASM", "../mame-sony-video/unidasm")
+UNIDASM = os.environ.get("UNIDASM", "../../mame-sony-video/unidasm")
 
 
 def listing(rom, base):

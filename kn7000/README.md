@@ -5,7 +5,7 @@ A byte-exact disassembly project for the **Technics SX-KN7000** firmware.
 The keyboard's main CPU is a **Panasonic MN10300/AM33** (it embeds the kernel
 banner `MILK MN10300 Ver1.0R1`) — *not* the Toshiba TLCS-900 used by the KN5000.
 The two flash images reverse-engineered here are produced by the sibling
-[`kn7000_extraction`](../kn7000_extraction) repo from the original system-update
+[`kn7000_extraction`](../../kn7000_extraction) repo from the original system-update
 floppy disks:
 
 * `kn7000_program.rom` — 0x3F6F01 bytes, main firmware, mapped at CPU `0x48400000`
@@ -196,7 +196,7 @@ bug (movbu register-indexed ops printed as one byte) from the ROM bytes. Growing
 running `make program-src` converts more; the remaining functions stay raw
 `.incbin_range` until then. The **display palette** (256-entry `0x00BBGGRR`
 CLUT at `0x32573C`) is lifted into typed `.long` source.
-See [`kn7000_extraction/NOTES.md`](../kn7000_extraction/NOTES.md) for the memory
+See [`kn7000_extraction/NOTES.md`](../../kn7000_extraction/NOTES.md) for the memory
 map, region map and other findings that guide the work.
 
 ## SP7001 firmware (program 942 / table 83)

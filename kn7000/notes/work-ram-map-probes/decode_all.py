@@ -4,7 +4,7 @@ F4 length-bug fix used by tools/gen_program_s.py (F4 xx is 2 bytes; unidasm
 consumes only 1).  Output: TSV  cpu \t hexbytes \t mnem \t ops  per instruction.
 Regions: R1 = file 0x80..0x186000 at CPU 0x48400080;
          LIB = file 0x3B8FD1..0x3F6F01 at CPU 0x4C000000.
-usage (from the kn7000_disassembly root):
+usage (from technics-roms-disasm/kn7000):
   python3 decode_all.py OUT.tsv
 """
 import os, re, subprocess, sys

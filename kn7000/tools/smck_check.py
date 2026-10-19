@@ -5,7 +5,7 @@
 # Check a KN7000 flash image against a Panasonic SMCK*.INF checksum file from
 # an update floppy: '@XXXXXXXX ; TOTAL SUM CHECK' = 32-bit sum of every byte of
 # the image, then 16 x '@XXXX ; BLOCK n' = 16-bit byte sum of flash block n
-# (0x40000 bytes each; the last one partial). See ../kn7000_extraction/FORMAT.md.
+# (0x40000 bytes each; the last one partial). See ../../kn7000_extraction/FORMAT.md.
 #
 # Question it answers: "is this image the one the checksum file describes -- and
 # if not, which blocks differ?" --length cuts the image (an update ships only up

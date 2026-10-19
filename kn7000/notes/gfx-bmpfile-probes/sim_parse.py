@@ -5,7 +5,7 @@
 # colour-table copy length. Library calls (memcpy 0x4C003039, LibStrncmp
 # 0x4C00203C, LibDiv32 0x4C0019D5) and Malloc_entry/Free_entry are modelled in
 # Python (high-level emulation); everything else is the ROM's own instructions.
-# usage (from the kn7000_disassembly root): python3 sim_parse.py
+# usage (from technics-roms-disasm/kn7000): python3 sim_parse.py
 import struct, sys
 sys.path.insert(0, "tools")
 import mn10300_sim as S

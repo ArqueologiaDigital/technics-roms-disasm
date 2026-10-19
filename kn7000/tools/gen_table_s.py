@@ -94,7 +94,7 @@ def main():
     ap.add_argument("--plugin-code", help="file range LO:HI of the plug-in's code")
     ap.add_argument("--sym", nargs="*", default=[],
                     help=".sym files: the plug-in's own names first, then everything it calls")
-    ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../mame-sony-video/unidasm"))
+    ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../mame-sony-video/unidasm"))
     a = ap.parse_args()
 
     d = open(a.rom, "rb").read()

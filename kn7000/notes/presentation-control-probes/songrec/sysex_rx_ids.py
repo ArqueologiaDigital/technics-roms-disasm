@@ -5,7 +5,7 @@ in disasm/program.asm) and prints each descriptor's id/type/subtype/template (la
 import re, sys
 sys.path.insert(0, '.')
 from romread import *
-D = "/home/fsanches/compartilhado/kn7000_disassembly/disasm/program.asm"
+D = "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/disasm/program.asm"
 ptrs = []
 for ln in open(D):
     m = re.match(r"^([0-9a-f]{8}): .*\bmov +0x(486[0-9a-f]{5}), d0", ln)

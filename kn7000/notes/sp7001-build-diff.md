@@ -183,7 +183,7 @@ members for the emulator, `research-scratch/kn7000-sp7001/make_sp7001_tb2_floppy
   what this update installs. (Disk 1 differs from the standard table-84 disk 1 in 57 bytes, from
   the directory entries on.)
 - **`SMCKTB1.INF` = `SMCKTB2.INF`** (32-bit total + 16 x 16-bit block sums over 0x40000-byte
-  blocks, format in `../kn7000_extraction/FORMAT.md`) and they do **not** describe that payload.
+  blocks, format in `../../kn7000_extraction/FORMAT.md`) and they do **not** describe that payload.
   They match -- the total and all 16 blocks -- the 0x3E0660-byte directory image (no plug-in)
   **with seg68..70 reading '83' instead of '80'**. As shipped those three markers read '80'
   (block 14 off by exactly -9 = 3 x ('0' - '3')) and the plug-in is appended. That is what the

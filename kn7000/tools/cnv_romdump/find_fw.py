@@ -16,7 +16,7 @@ import struct
 import zipfile
 
 R = os.path.expanduser('~/compartilhado/technics_romsets')
-B = os.path.expanduser('~/compartilhado/kn7000_disassembly/baserom')
+B = os.path.expanduser('~/compartilhado/technics-roms-disasm/kn7000/baserom')
 
 # signatures: bytes, with None for a masked byte. 'D' = drive byte address, 'T' = table address
 def sig(text):

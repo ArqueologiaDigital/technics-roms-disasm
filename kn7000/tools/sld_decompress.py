@@ -4,8 +4,8 @@
 #
 # Decompress a KN7000 update-floppy .SLD payload (8-byte magic, 24-bit big-endian
 # size, LZSS with a 4 KiB window pre-filled with 0x00) -- the format documented in
-# ../kn7000_extraction/FORMAT.md. Uses that repo's `lzss` module, so run it with
-# its interpreter:  ../kn7000_extraction/venv/bin/python tools/sld_decompress.py IN OUT
+# ../../kn7000_extraction/FORMAT.md. Uses that repo's `lzss` module, so run it with
+# its interpreter:  ../../kn7000_extraction/venv/bin/python tools/sld_decompress.py IN OUT
 import sys
 
 import lzss

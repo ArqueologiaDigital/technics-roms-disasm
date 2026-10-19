@@ -4,7 +4,7 @@ same F4-length-bug-aware decoding as gen_program_s.py (unidasm's mn10300 F4 page
 consumes 1 byte instead of 2).  usage:
     python3 tools/dis_view.py 0x4C00FB1B 0x4C00FD4C [lib|r1]"""
 import os, re, subprocess, sys
-sys.path.insert(0, "/home/fsanches/compartilhado/kn7000_disassembly/tools"); os.chdir("/home/fsanches/compartilhado/kn7000_disassembly")
+sys.path.insert(0, "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/tools"); os.chdir("/home/fsanches/compartilhado/technics-roms-disasm/kn7000")
 import gen_program_s as G
 
 def walk(d, a, b, delta):

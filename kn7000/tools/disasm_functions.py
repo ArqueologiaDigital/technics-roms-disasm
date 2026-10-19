@@ -34,7 +34,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--rom", default="baserom/kn7000_program.rom")
     ap.add_argument("--sym", default="kn7000.sym")
-    ap.add_argument("--unidasm", default="../mame-sony-video/unidasm")
+    ap.add_argument("--unidasm", default="../../mame-sony-video/unidasm")
     ap.add_argument("--from-addr", type=lambda s: int(s, 0), default=PROGRAM_BASE)
     ap.add_argument("--to-addr", type=lambda s: int(s, 0), default=0x487F6F01)
     ap.add_argument("--cap", type=lambda s: int(s, 0), default=0x400,

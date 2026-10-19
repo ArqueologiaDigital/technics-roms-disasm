@@ -334,7 +334,7 @@ c3_next:
 # When both are found they must agree (fmmopen's table = the tables + 12); the tables are used then.
 # Signatures with only build-dependent operands masked, each of which must match exactly once:
 # raw SD sector read/write, sdfmmkdir/sdfmpath, the SOFT VERSION build number, the kernel tick.
-# kn7000_disassembly tools/cnv_romdump/find_fw.py runs the same searches over every program image
+# technics-roms-disasm kn7000/tools/cnv_romdump/find_fw.py runs the same searches over every program image
 # we have. LoaderTest (test builds only) switches searches off, to exercise the fallbacks.
 Discover:
     movm    [d2,d3,a2,a3], (sp)

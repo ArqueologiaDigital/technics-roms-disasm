@@ -46,7 +46,7 @@ Makefile rule; regenerate with an explicit `--rom`:
 ```
 python3 tools/gen_dsp_records.py \
   --rom /path/to/kn6000_program_full.bin --pool 0x387064 0x398809 \
-  --unidasm ../mame-sony-video/unidasm \
+  --unidasm ../../mame-sony-video/unidasm \
   --manifest /dev/null --symdir /nonexistent \
   --bindir build/dsp-kn6000 --out dsp/cross-model/kn6000
 ```

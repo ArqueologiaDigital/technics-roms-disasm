@@ -14,7 +14,7 @@
 #   * each picture is a JPEG (FF D8 .. FF D9) followed only by 0-3 zero bytes, to a 4-byte boundary;
 #   * after the end of the data, 0xFF up to 2 MB.
 #
-#   python3 tools/gen_picture_s.py ../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
+#   python3 tools/gen_picture_s.py ../../technics_roms/roms/kn7000/real_dump_v1.3_b893/pass2-run1/IC19.BIN
 import hashlib
 import os
 import struct

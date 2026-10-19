@@ -34,7 +34,7 @@ LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE   # cpu addr = file offset + delta
 ROM = "baserom/kn7000_program.rom"
 SYM = "kn7000.sym"
 MANUAL_SYM = ["kn7000_manual.sym", "kn7000_exports_from_942.sym"]
-UNIDASM = os.environ.get("UNIDASM", "../mame-sony-video/unidasm")
+UNIDASM = os.environ.get("UNIDASM", "../../mame-sony-video/unidasm")
 OUT = "src/program.s"
 
 # Image layout of the build being generated. The defaults describe program build

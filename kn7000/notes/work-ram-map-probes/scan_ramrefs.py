@@ -22,7 +22,7 @@ Outputs (into OUTDIR):
   raw_hits.tsv      every 4-byte LE value in range anywhere in the program ROM
                     that is NOT an operand of a decoded instruction (data tables,
                     or desync), with region tag and alignment
-usage (from the kn7000_disassembly root):
+usage (from technics-roms-disasm/kn7000):
   python3 scan_ramrefs.py DECODE.tsv OUTDIR
 """
 import bisect, collections, os, re, sys

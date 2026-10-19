@@ -8,7 +8,7 @@
 #  - the reset-time clear loops of program 941 and program 942 (SP7001).
 # usage (any cwd): python3 rom_facts.py
 import struct, re
-R = "/home/fsanches/compartilhado/kn7000_disassembly/baserom/"
+R = "/home/fsanches/compartilhado/technics-roms-disasm/kn7000/baserom/"
 d = open(R + "kn7000_program.rom", "rb").read()
 B = 0x48400000
 def rom(a, n=4): return d[a - B:a - B + n]

@@ -36,7 +36,7 @@ def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
     rom, out = sys.argv[1], sys.argv[2]
-    unidasm = os.environ.get("UNIDASM", "../mame-sony-video/unidasm")
+    unidasm = os.environ.get("UNIDASM", "../../mame-sony-video/unidasm")
     P = open(rom, "rb").read()
     u = lambda o: struct.unpack_from("<I", P, o)[0]
 

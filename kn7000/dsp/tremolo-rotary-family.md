@@ -85,7 +85,7 @@ Limiter1–4 = rec25; Delay+Chorus/Flanger/Vibrato/Phaser = rec70–73;
 Autowah+Delay = rec74 — confirming the touch-wah reading; Voice Changer =
 rec57; Brass simulator1–3 = rec67–69; mic Room/Karaoke/Stage/Cave =
 rec58–61; Spreader = rec33) is recorded in `records.tsv` per row and in
-`../../kn7000_mame/notes/dsp-effect-catalog.md`.
+`../../../kn7000_mame/notes/dsp-effect-catalog.md`.
 
 > **UPGRADE (2026-07-19, group-table walk)**: the *group* tables' true entry
 > layout is `{u16 count, char name[16], u16 0, u32 preset_list_ptr}` (24

@@ -277,7 +277,7 @@ def main():
     ap.add_argument("--rom", required=True)
     ap.add_argument("--pool", nargs=2, required=True, metavar=("START", "END"),
                     help="file offsets, e.g. 0x2BCEC4 0x2CE68D")
-    ap.add_argument("--unidasm", default="../mame-sony-video/unidasm")
+    ap.add_argument("--unidasm", default="../../mame-sony-video/unidasm")
     ap.add_argument("--out", default="disasm/dsp")
     ap.add_argument("--bindir", default="build/dsp")
     ap.add_argument("--symdir", default="dsp/sym")
