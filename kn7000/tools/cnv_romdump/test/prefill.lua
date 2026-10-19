@@ -6,7 +6,9 @@
 --   * each wave ROM region (waveform_main_y/_x, waveform_sub_y/_x; NO_DUMP, so zero-filled) gets
 --     u32 i = H(seed, i), written little-endian with write_u32;
 --   * the picture window 0x57800000-0x57FFFFFF, which the driver does not map, answers every read
---     with the u32 H(seed, (address - 0x57800000) >> 2), through a read tap.
+--     with the u32 H(seed, (address - 0x57800000) >> 2), through a read tap;
+--   * so does each of the SURVEY build's six 8 MB windows (CS0 0x40000000, 0x40800000; CS5 0x54000000,
+--     0x54800000, 0x55000000, 0x55800000), with seed = its base >> 16. None is mapped by the driver.
 -- H(seed, i) = lowbias32((i * 0x9E3779B9 + seed) mod 2^32).
 local function h32(x)
   x = x & 0xffffffff
@@ -32,3 +34,12 @@ _G.PREFILL_TAP = sp:install_read_tap(0x57800000, 0x57ffffff, "picture_test", fun
   return h32(((offset - 0x57800000) >> 2) * 0x9E3779B9 + PICTURE_SEED)
 end)
 emu.print_error("PREFILL picture tap 0x57800000-0x57FFFFFF seed 0x19")
+_G.PREFILL_SURVEY = {}
+for _, base in ipairs({ 0x40000000, 0x40800000, 0x54000000, 0x54800000, 0x55000000, 0x55800000 }) do
+  local seed = base >> 16
+  _G.PREFILL_SURVEY[#_G.PREFILL_SURVEY + 1] = sp:install_read_tap(base, base + 0x7fffff,
+    string.format("survey_%08x", base), function(offset, data, mask)
+      return h32(((offset - base) >> 2) * 0x9E3779B9 + seed)
+    end)
+end
+emu.print_error("PREFILL survey taps: 6 x 8 MB at 0x40000000, 0x40800000, 0x54000000-0x55800000, seed base >> 16")

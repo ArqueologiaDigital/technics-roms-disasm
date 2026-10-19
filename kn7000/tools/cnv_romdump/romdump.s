@@ -65,6 +65,14 @@ eh_spin:
     bra     en_park
 
 en_first:
+    mov     RomTable, a0            # the table this build reads: the ROMs, or the survey's windows
+    mov     (APP_OPTIONS), d0
+    mov     OPT_SURVEY, d1
+    and     d1, d0
+    beq     en_table
+    mov     SurveyTable, a0
+en_table:
+    mov     a0, (V_TABLE)
     call    InitCrc, 0, 0
     call    MakeNames, 0, 0
     mov     (APP_OPTIONS), d0       # C:\KN7DUMP (-3 when it is already there); without sdfmmkdir, or
@@ -424,7 +432,11 @@ RomPtr:                             # leaf -> a0 = this ROM's record, a1 = its r
     mov     (V_ROM), d0
     mov     d0, d1
     asl     R_SHIFT, d0
+    mov     (V_TABLE), a0       # the table in use (leaves: no call, which would reuse (sp))
+    cmp     0, a0
+    bne     rp_tbl
     mov     RomTable, a0
+rp_tbl:
     add     d0, a0
     asl     4, d1
     mov     V_RESULTS, a1
@@ -1117,7 +1129,11 @@ File83:
     rets
 f83_rom:
     asl     R_SHIFT, d0
+    mov     (V_TABLE), a0       # the table in use (leaves: no call, which would reuse (sp))
+    cmp     0, a0
+    bne     f83_tbl
     mov     RomTable, a0
+f83_tbl:
     add     d0, a0
     mov     (R_83, a0), a0
     rets
@@ -1129,7 +1145,11 @@ FileName:
     rets
 fn_rom:
     asl     R_SHIFT, d0
+    mov     (V_TABLE), a0       # the table in use (leaves: no call, which would reuse (sp))
+    cmp     0, a0
+    bne     fn_tbl
     mov     RomTable, a0
+fn_tbl:
     add     d0, a0
     mov     (R_NAME, a0), a0
     rets
@@ -1729,6 +1749,35 @@ RomTable:
     .long   nm_ic19, path_ic19, K_LINEAR, 0x57800000, 0x800000, 0, 0, rg_ic19, dir_ic19
     .long   0, 0, 0, 0, 0, 0, 0
 
+# The SURVEY build (OPT_SURVEY): where is the rhythm ROM (IC18, or IC20 on early units)? The firmware
+# looks for its "Technics Rhythms" header at 0x48010000, 0x40610000, 0x40010000, 0x54E10000 and
+# 0x40810000, else uses 0x54E00000 (StyleResourceWindowProbe 0x4843D6DC in 941), so these windows,
+# 8 MB each, cover every candidate: CS0 0x40000000-0x40FFFFFF and CS5 0x54000000-0x55FFFFFF. The
+# firmware reads in both chip selects on every boot, and by the service manual (p.79, p.100, p.102)
+# they hold memory chips only, no I/O registers. Entries 6-9 are unused (left out by the build's
+# skip bits).
+SurveyTable:
+    .long   nm_s40000000, path_s40000000, K_LINEAR, 0x40000000, 0x800000, 0, 0, rg_s40000000, dir_s40000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s40800000, path_s40800000, K_LINEAR, 0x40800000, 0x800000, 0, 0, rg_s40800000, dir_s40800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s54000000, path_s54000000, K_LINEAR, 0x54000000, 0x800000, 0, 0, rg_s54000000, dir_s54000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s54800000, path_s54800000, K_LINEAR, 0x54800000, 0x800000, 0, 0, rg_s54800000, dir_s54800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s55000000, path_s55000000, K_LINEAR, 0x55000000, 0x800000, 0, 0, rg_s55000000, dir_s55000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s55800000, path_s55800000, K_LINEAR, 0x55800000, 0x800000, 0, 0, rg_s55800000, dir_s55800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_unused, path_unused, K_LINEAR, 0x48000000, 0x800000, 0, 0, rg_unused, dir_unused
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_unused, path_unused, K_LINEAR, 0x48000000, 0x800000, 0, 0, rg_unused, dir_unused
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_unused, path_unused, K_LINEAR, 0x48000000, 0x800000, 0, 0, rg_unused, dir_unused
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_unused, path_unused, K_LINEAR, 0x48000000, 0x800000, 0, 0, rg_unused, dir_unused
+    .long   0, 0, 0, 0, 0, 0, 0
+
 str_title:      .asciz  "KN7000 ROM DUMPER"
 str_target:     .asciz  "To the SD card, folder C:\KN7DUMP; file names as in MAME's kn7000 driver."
 str_target_nf:  .asciz  "To the SD card's root folder, 8.3 names; DUMPLIST.TXT gives MAME's names."
@@ -1832,3 +1881,32 @@ rg_ic204:       .asciz  "main TG 0x98050000 wave port, select 1, banks 0x000-0x1
 rg_ic207:       .asciz  "sub TG 0x98040000 wave port, select 0, banks 0x000-0x1FF"
 rg_ic208:       .asciz  "sub TG 0x98040000 wave port, select 1, banks 0x000-0x1FF"
 rg_ic19:        .asciz  "CPU 0x57800000-0x57FFFFFF (picture flash; window unconfirmed)"
+
+nm_unused:      .asciz  "unused"
+path_unused:    .asciz  "KN7DUMP\UNUSED.BIN"
+dir_unused:     .ascii  "UNUSED  BIN"
+rg_unused:      .asciz  "(an unused survey slot)"
+nm_s40000000:   .asciz  "survey_40000000.bin"
+path_s40000000: .asciz  "KN7DUMP\R4000000.BIN"
+dir_s40000000:  .ascii  "R4000000BIN"
+rg_s40000000:   .asciz  "CPU 0x40000000-0x407FFFFF, CS0: rhythm probes 0x40010000, 0x40610000"
+nm_s40800000:   .asciz  "survey_40800000.bin"
+path_s40800000: .asciz  "KN7DUMP\R4080000.BIN"
+dir_s40800000:  .ascii  "R4080000BIN"
+rg_s40800000:   .asciz  "CPU 0x40800000-0x40FFFFFF, CS0: rhythm probe 0x40810000"
+nm_s54000000:   .asciz  "survey_54000000.bin"
+path_s54000000: .asciz  "KN7DUMP\R5400000.BIN"
+dir_s54000000:  .ascii  "R5400000BIN"
+rg_s54000000:   .asciz  "CPU 0x54000000-0x547FFFFF, CS5"
+nm_s54800000:   .asciz  "survey_54800000.bin"
+path_s54800000: .asciz  "KN7DUMP\R5480000.BIN"
+dir_s54800000:  .ascii  "R5480000BIN"
+rg_s54800000:   .asciz  "CPU 0x54800000-0x54FFFFFF, CS5: rhythm fallback 0x54E00000"
+nm_s55000000:   .asciz  "survey_55000000.bin"
+path_s55000000: .asciz  "KN7DUMP\R5500000.BIN"
+dir_s55000000:  .ascii  "R5500000BIN"
+rg_s55000000:   .asciz  "CPU 0x55000000-0x557FFFFF, CS5"
+nm_s55800000:   .asciz  "survey_55800000.bin"
+path_s55800000: .asciz  "KN7DUMP\R5580000.BIN"
+dir_s55800000:  .ascii  "R5580000BIN"
+rg_s55800000:   .asciz  "CPU 0x55800000-0x55FFFFFF, CS5"

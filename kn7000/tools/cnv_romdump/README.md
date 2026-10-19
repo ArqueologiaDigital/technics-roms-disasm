@@ -65,6 +65,36 @@ where the firmware sleeps one 1 ms tick.
   read. The sum cannot show the byte or word order. `check_real_dump.py` reports the sum check in
   its last column.
 
+`build/survey/KN7APP.BIN` (`--options 0x703C0`, `OPTS_SURVEY`, shown as "KN7000 ROM DUMPER 1.0
+SURVEY") is the fourth pass. It looks for the rhythm ROM, whose CPU address nobody knows. Option bit
+`OPT_SURVEY` swaps `RomTable` for `SurveyTable`. That table holds six plain CPU windows of 8 MB
+each, written to the root as `R4000000.BIN` and so on, with MAME-style names
+`survey_40000000.bin` in `DUMPLIST.TXT`:
+- CS0, `0x40000000`-`0x40FFFFFF`;
+- CS5, `0x54000000`-`0x55FFFFFF`.
+
+These cover every address where the firmware looks for the rhythm resource:
+- the firmware compares 16 bytes against "Technics Rhythms" at `0x48010000`, `0x40610000`,
+  `0x40010000`, `0x54E10000` and `0x40810000`, and otherwise uses `0x54E00000` unchecked
+  (`StyleResourceWindowProbe`, 941 `0x4843D6DC`, 893 `0x4843D69A`, same list);
+- `0x48010000` is the table flash, already dumped. Table 80 has no signature anywhere, and its
+  rhythm entry `*(0x4800014C)` points at a `"DMY\n"` stub;
+- a 4 MB device at `0x54E00000` runs on to `0x551FFFFF`. That is why CS5 is surveyed up to
+  `0x55FFFFFF`.
+
+The firmware's windows `0x56000000`, `0x57000000`, `0x41000000` and `0x41800000` are the expansion
+boards' (`VoiceArchiveScanBoot`) and are not surveyed. `find_rhythm.py` analyses the windows
+afterwards; `check_real_dump.py` runs it on any `R*.BIN` it is given. It:
+- joins adjacent windows;
+- maps mirrors and blank areas;
+- finds each signature and repeats the firmware's own check on it, `StyleResourceVerify` (941
+  `0x484338B4`). That check is a 16-bit sum of big-endian words; the header declares the expected
+  sum (u16 at +0x10), the offset (u24 at +0x12) and the word count (u24 at +0x15);
+- reads the RHYTHM number SOFT VERSION would show;
+- compares the data with the truncated copy of the header that table 84 carries at `0x483E828C`.
+
+`find_rhythm.py --self-test` exercises all of this on a made-up device split across two windows.
+
 Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
 back from the card:
 - each file's size and CRC-32 against the ones the instrument computed while writing it;
@@ -104,9 +134,8 @@ back from the card:
 
 **Other parts worth dumping, from what is known so far** (survey: `notes/wave-rom-port.md`):
 
-- **IC18, rhythm data** (`c3cbnd000046.ic18`, 8 MB) is not dumped yet. No CPU window for it is
-  confirmed (`0x54E00000` is a software fallback, not the chip). A candidate window would have to
-  be identified first.
+- **IC18, rhythm data** (`c3cbnd000046.ic18`, 8 MB) is not dumped yet, because no CPU window for
+  it is confirmed. The SURVEY build reads every window where the firmware looks for it (above).
 - **IC23, the 256 KB battery-backed SRAM** at `0x44000000` holds the panel memories and settings.
   It is user data, not a ROM, and MAME has no file for it. It could be added easily if wanted.
 - **Not readable from the main CPU:**
@@ -204,18 +233,21 @@ back from the card:
 | `gen_font.py`, `font8x13.inc` | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
 | `find_fw.py`                  | the loader's firmware search, in Python, over every program image we have                 |
 | `check_real_dump.py`          | after a real run: files whole, known or new, build numbers, two runs identical            |
+| `find_rhythm.py`              | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
 | `fatls.py`                    | lists or extracts the files on an SD card image, showing long names                       |
 | `test/run_test.sh`            | the dumper end to end in MAME, then `verify_dump.py`                                      |
-| `test/prefill.lua`            | test data for the undumped ROMs (the wave ROM regions, the picture window)                |
+| `test/prefill.lua`            | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
 | `test/verify_dump.py`         | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
 | `probes/`                     | the probes behind the design (SD write, long names, raw sectors, folders)                 |
 | `releases/2026-10-19/`        | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
+| `releases/2026-10-19-wave/`   | the same for the WAVE build (pass 3)                                                      |
+| `releases/2026-10-19-survey/` | the same for the SURVEY build (pass 4)                                                    |
 
 ## How it was tested
 
 Results are in the next section. Command:
 
-    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19]
+    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19|--wave|--survey]
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
@@ -290,7 +322,19 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
   the four wave files, 16 MB each, match the test data in MAME; the run ends at 555 s of emulated
   time (12 min real). The test data cannot have the firmware's sums, so all four show `[SUM?]`.
   `check_real_dump.py` reports them as DIFFERS and exits 1. With the expected sums set to the
-  files' own sums, it reports "=" and exits 0, so both of its paths have been exercised.
+  files' own sums, it reports "=" and exits 0, so both of its paths have been exercised. It was
+  built from `1822dbbcc`. The SURVEY change adds code to the application every build shares, so
+  from then on `make` gives every build a new SHA-1. Each release folder keeps its own binaries.
+- **The SURVEY build** (`run_test.sh --survey`, binary SHA-1 `cb20763e...`,
+  `releases/2026-10-19-survey/`):
+  - `prefill.lua` answers each window with its own seeded stream. All six 8 MB files match it
+    (7 of 7 with `DUMPLIST.TXT`); no `UNUSED.BIN` is written. The run ends at 396 s of emulated
+    time (15 min real).
+  - The files taken off the card image with `fatls.py` pass `check_real_dump.py`. It passes them
+    to `find_rhythm.py`, which joins the windows into the two spans and finds no signature in
+    the test data, as it should.
+  - `find_rhythm.py --self-test` covers the case of a signature being there.
+  - `--fast` gives 7 of 7, and the default build still 11 of 11.
 - **Shorter checks.** `--fast` cuts every ROM to 64 KB and gives 11 of 11. An SD card without
   `KN7APP.BIN` gets the loader's "No C:\KN7APP.BIN" screen, held 15 s. The dumper's done screen is
   also still up 5 s after the end.

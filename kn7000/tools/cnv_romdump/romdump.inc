@@ -39,6 +39,7 @@
 .equ V_HOLD,        VARS+0x4C       # when the result appeared (kernel ms), or calls since then
 .equ V_NOFOLDER,    VARS+0x50       # 1: files are written without the KN7DUMP folder (current folder)
 .equ V_FAILS,       VARS+0x54       # ROMs whose file could not be written
+.equ V_TABLE,       VARS+0x58       # the ROM table in use: RomTable, or SurveyTable (OPT_SURVEY)
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
 .equ HOLD_CALLS,    23000           # ... or this many calls when the loader found no ms counter, each made
 .equ HOLD_SPIN,     10000           # to last about 0.65 ms by a delay loop (loader.s HOLD_SPIN)
@@ -54,9 +55,11 @@
 .equ OPT_SKIP,      0x3FF           # bit n set: leave ROM n of RomTable out
 .equ OPT_NOFOLDER,  0x10000         # no sdfmmkdir: the files go to the current folder (the root)
 .equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
+.equ OPT_SURVEY,    0x40000         # read SurveyTable's windows instead of RomTable's ROMs (the rhythm ROM search)
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 .equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
+.equ OPTS_SURVEY,   0x703C0         # the SURVEY build: SurveyTable's six windows, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)

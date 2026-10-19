@@ -12,6 +12,8 @@
 #     chip was read, though not their order.
 # For the program and table flash it joins the even/odd halves and reads, from the image itself, the release
 # byte, the build numbers (as the loader does) and runs find_fw.py's firmware search over the program.
+# For the SURVEY build's address windows (R*.BIN) it runs find_rhythm.py on them: where the rhythm ROM is, and
+# whether it passes the firmware's own check.
 # With DIR2 (a second run, copied off separately) every file must be byte-identical in both: two reads that
 # agree are the usual evidence that a dump read stably.
 #   python3 -I check_real_dump.py ~/kn7000-dump-run1 ~/kn7000-dump-run2
@@ -24,6 +26,7 @@ import zlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import find_fw  # noqa: E402
+import find_rhythm  # noqa: E402
 
 KNOWN = os.path.expanduser('~/compartilhado/technics_romsets/kn7000')
 
@@ -127,6 +130,9 @@ if 'TBLEVEN.BIN' in data and 'TBLODD.BIN' in data:
     build = re.match(rb'[0-9A-Za-z .]*', img[off:off + 16]).group(0) if off < len(img) - 16 else b''
     print(f'table flash (even + odd, {len(img)} bytes), sha1 {hashlib.sha1(img).hexdigest()}; '
           f'build string at {off:#x}: {build.decode("latin1")!r}')
+survey = sorted(n for n in os.listdir(d1) if re.fullmatch(r'R[0-9A-F]{7}\.BIN', n, re.I))
+if survey:
+    find_rhythm.main([os.path.join(d1, n) for n in survey])
 print()
 print('everything checks out' if bad == 0 else f'{bad} problem(s): see above')
 sys.exit(1 if bad else 0)

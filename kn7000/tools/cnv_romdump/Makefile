@@ -5,6 +5,7 @@ FLOPPY_TOOLS ?= ../../../../kn7000_mame/tools/floppy-images
 OUT         ?= build
 
 all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/wave/KN7APP.BIN \
+     $(OUT)/survey/KN7APP.BIN \
      $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
@@ -37,6 +38,13 @@ $(OUT)/ic19/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 $(OUT)/wave/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	@mkdir -p $(OUT)/wave
 	$(PYTHON) -I mkapp.py $< $@ --options 0x3021F --name "KN7000 ROM DUMPER 1.0 WAVE"
+
+# the SURVEY build (OPTS_SURVEY): not ROMs but six 8 MB windows, CS0 0x40000000-0x40FFFFFF and CS5
+# 0x54000000-0x55FFFFFF, which cover every place the firmware looks for the rhythm ROM's header
+# (SurveyTable in romdump.s); plain files in the root as in SAFE
+$(OUT)/survey/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/survey
+	$(PYTHON) -I mkapp.py $< $@ --options 0x703C0 --name "KN7000 ROM DUMPER 1.0 SURVEY"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py

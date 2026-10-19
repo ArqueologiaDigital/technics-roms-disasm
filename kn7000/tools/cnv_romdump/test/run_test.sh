@@ -1,7 +1,7 @@
 #!/bin/bash
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>; GPL v3+
 #
-# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] [--loader-test N] [--safe|--ic19|--wave] -- the dumper end to end in
+# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] [--loader-test N] [--safe|--ic19|--wave|--survey] -- end to end in
 # MAME, then verify_dump.py.
 #   Builds KN7LOAD.CNV (on a floppy the KN7000 formatted) and KN7APP.BIN (put in the root of a copy of the
 #   real KN7000's SD card), boots the kn7000 with both, fills the undumped ROMs with test data (prefill.lua),
@@ -13,6 +13,7 @@
 #   --safe: the SAFE build (build/safe/KN7APP.BIN: program, table, IC21; 8.3 files in the root, nothing else).
 #   --ic19: the IC19 build (build/ic19/KN7APP.BIN: the picture window alone, the same way).
 #   --wave: the WAVE build (build/wave/KN7APP.BIN: the four wave ROMs alone, the same way).
+#   --survey: the SURVEY build (build/survey/KN7APP.BIN: six 8 MB CPU windows, where the rhythm ROM may be).
 #   MAME_BINARY: a build of upstream MAME with the kn7000 driver (e.g. the technics-kn-flop-rebuild worktree's).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"; SRC="$HERE/.."
@@ -20,12 +21,13 @@ BIN="$(readlink -f "$1")"; O="$(mkdir -p "$2" && cd "$2" && pwd)"; shift 2
 FAST=0; PREFILL=1; LTEST=0; SAFE=0
 while [ $# -gt 0 ]; do
   case "$1" in --fast) FAST=1;; --no-prefill) PREFILL=0;; --loader-test) LTEST="$2"; shift;; --safe) SAFE=1;;
-    --ic19) SAFE=2;; --wave) SAFE=3;; esac
+    --ic19) SAFE=2;; --wave) SAFE=3;; --survey) SAFE=4;; esac
   shift
 done
 MKAPP=(); [ "$SAFE" = 1 ] && MKAPP=(--options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE")
 [ "$SAFE" = 2 ] && MKAPP=(--options 0x301FF --name "KN7000 ROM DUMPER 1.0 IC19")
 [ "$SAFE" = 3 ] && MKAPP=(--options 0x3021F --name "KN7000 ROM DUMPER 1.0 WAVE")
+[ "$SAFE" = 4 ] && MKAPP=(--options 0x703C0 --name "KN7000 ROM DUMPER 1.0 SURVEY")
 TOOLS="$HOME/compartilhado/kn7000_mame/tools/floppy-images"
 make -s -C "$SRC" OUT="$O/build" FLOPPY_TOOLS="$TOOLS"
 FLOPPY="$O/build/kn7load_floppy.img"
@@ -44,6 +46,7 @@ fi
 APP="$O/build/KN7APP.BIN"; [ "$SAFE" = 1 ] && APP="$O/build/safe/KN7APP.BIN"
 [ "$SAFE" = 2 ] && APP="$O/build/ic19/KN7APP.BIN"
 [ "$SAFE" = 3 ] && APP="$O/build/wave/KN7APP.BIN"
+[ "$SAFE" = 4 ] && APP="$O/build/survey/KN7APP.BIN"
 if [ "$FAST" = 1 ]; then
   sed -e 's/, 0x200000, /, 0x10000, /' -e 's/, 0x1000000, /, 0x10000, /' -e 's/, 0x800000, /, 0x10000, /' \
       "$SRC/romdump.s" > "$O/build/romdump_fast.s"
@@ -69,4 +72,5 @@ ARGS=(); [ "$FAST" = 1 ] && ARGS=(--prefix 65536); [ "$PREFILL" = 0 ] && ARGS+=(
 [ "$SAFE" = 1 ] && ARGS+=(--degraded --skip-mask 0x3E0)
 [ "$SAFE" = 2 ] && ARGS+=(--degraded --skip-mask 0x1FF)
 [ "$SAFE" = 3 ] && ARGS+=(--degraded --skip-mask 0x21F)
+[ "$SAFE" = 4 ] && ARGS+=(--degraded --survey)
 python3 -I "$HERE/verify_dump.py" "$O/sd.img" --ic21-ref "$O/ref_ic21.bin" "${ARGS[@]}"

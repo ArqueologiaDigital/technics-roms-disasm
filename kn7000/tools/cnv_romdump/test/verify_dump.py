@@ -33,6 +33,7 @@ img = args[0]
 prefix = int(args[args.index('--prefix') + 1]) if '--prefix' in args else None
 prefill = '--no-prefill' not in args
 degraded = '--degraded' in args
+survey = '--survey' in args             # the SURVEY build: six CPU windows (romdump.s SurveyTable), not ROMs
 skip = int(args[args.index('--skip-mask') + 1], 0) if '--skip-mask' in args else 0
 ic21_ref = args[args.index('--ic21-ref') + 1] if '--ic21-ref' in args else None
 driver = args[args.index('--driver') + 1] if '--driver' in args else \
@@ -69,6 +70,10 @@ ROLE = {'PRGEVEN.BIN': 'kn7000_program_even_', 'PRGODD.BIN': 'kn7000_program_odd
         'TBLEVEN.BIN': 'kn7000_table_even_', 'TBLODD.BIN': 'kn7000_table_odd_', 'IC21.BIN': 'custom_data.ic21',
         'IC203.BIN': 'c3cbqd000002.ic203', 'IC204.BIN': 'c3cbqd000001.ic204', 'IC207.BIN': 'c3cbqd000004.ic207',
         'IC208.BIN': 'c3cbqd000003.ic208', 'IC19.BIN': 'c3cbmd000098.ic19', 'DUMPLIST.TXT': 'DUMPLIST.TXT'}
+SURVEY = (0x40000000, 0x40800000, 0x54000000, 0x54800000, 0x55000000, 0x55800000)
+if survey:                              # their 8.3 names are R + the base's top seven hex digits
+    ROLE = {f'R{b:08X}'[:8] + '.BIN': f'survey_{b:08x}.bin' for b in SURVEY}
+    ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
 
 fat = Fat(img)
 folder = next((cl for n, lng, attr, cl, size in fat.entries(0) if n == 'KN7DUMP' and attr & 0x10), None)
@@ -114,6 +119,9 @@ for short, lng, attr, cl, size in fat.entries(folder):
         ok, how = data[:n] == stream(seed, n), f'test data in {region} (seed {seed:#x})'
     elif role == 'c3cbmd000098.ic19' and prefill:
         ok, how = data[:n] == stream(0x19, n), 'test data at 0x57800000 (seed 0x19)'
+    elif role.startswith('survey_') and prefill:
+        base = int(role[7:15], 16)
+        ok, how = data[:n] == stream(base >> 16, n), f'test data at {base:#010x} (seed {base >> 16:#x})'
     else:
         ok, how = False, 'no reference'
     if lng is None and degraded:
@@ -124,6 +132,9 @@ for short, lng, attr, cl, size in fat.entries(folder):
     bad += not ok
     rows.append((name, short, size, f'{crc:08x}', how, 'MATCH' if ok else 'DIFFERENT'))
 seen = {r[1] for r in rows}
+if survey and any(e[0] == 'UNUSED.BIN' for e in fat.entries(folder)):
+    bad += 1
+    rows.append(('unused', 'UNUSED.BIN', 0, '-', 'an unused survey slot was written', 'UNEXPECTED'))
 for i, short in enumerate(ROLE):        # every file the build writes must be there, and only those
     left_out = i < 10 and skip >> i & 1
     if left_out and short in seen:
