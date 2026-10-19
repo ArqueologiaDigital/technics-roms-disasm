@@ -165,10 +165,16 @@ back from the card:
   it then says why it skipped. A ROM whose file could not be written is simply left out.
   `DUMPLIST.TXT` lists both names in either case. `fsck.fat -n` reports no errors on a card written
   this way.
-- **Not tried on a real instrument yet.** The owner's KN7000 runs **PROGRAM 893 / TABLE 80**,
-  release v1.3, which nobody has dumped. If neither the tables nor the dispatchers are found in 893,
-  the loader cannot even read `KN7APP.BIN`, and says so. That is the one case where nothing is
-  written. The way past it would be an SD driver of our own (SPI at `0x9805000C`, chip select at
+- **On a real instrument (2026-10-19).** The owner's KN7000 runs **PROGRAM 893 / TABLE 80**,
+  release v1.3, which nobody had dumped. The SAFE build ran there on the first try. The loader found
+  all seven services (`0x7F`): the fmm tables at `0x48662E6C` and SD `open` at `0x48564A88`. All
+  five files came off the card intact (`check_real_dump.py`: size, CRC-32 and byte sum equal what
+  the instrument computed). The table flash is byte-identical to SP7001's table 83 apart from the
+  build digit and the SP7001's added data at the end. The dump is kept privately, with those
+  checks, in the private ROM repository (`roms/kn7000/real_dump_v1.3_b893/`).
+- **A firmware without file access** is the one case where nothing is written: if neither the
+  tables nor the dispatchers are found, the loader cannot even read `KN7APP.BIN`, and says so.
+  The way past it would be an SD driver of our own (SPI at `0x9805000C`, chip select at
   `0x36008004` bit 1). That is not written: each byte sent raises IRQ5, which the firmware's own
   handler answers, and that handshake and its timing cannot be checked in MAME first.
 
