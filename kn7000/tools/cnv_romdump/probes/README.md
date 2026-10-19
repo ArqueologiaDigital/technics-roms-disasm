@@ -110,3 +110,35 @@ To be sure, also clear bit 0 at +0x18 of any buffer whose +0 is `0x50007A20` and
 sector being written. Raw writes to FAT sectors are not safe, because their cached copies stay
 valid. The card-removal handler's VFS hook `0x48565F64` is an empty `retf` in 941, so it does not clear
 the cache either.
+
+## CS1 is IC23 alone: the schematic behind the SURVEY2 build's 2 MB at 0x44000000
+
+`cs1_trace.py` (2026-10-20) answers one question: what does the CPU's chip select CS1 drive? It
+follows the line from MN103002A pin 52 (`RAS1/CS1`) across the two pages of the MAIN 1/5
+schematic in the service manual (`KN7000/service_manual/technics_sx-kn7000_keyboard.pdf`: p.100,
+sheet 1/2, the CPU; p.102, sheet 2/2, the memories). The two pages join edge to edge. The script
+renders a thin strip through the chip-select lines on each page at 400 dpi and lists what touches
+each line: crossings (narrow, above and below), junction dots (6 px or more), and wires that end
+on it.
+
+    python3 -I cs1_trace.py ~/compartilhado/KN7000/service_manual/technics_sx-kn7000_keyboard.pdf $T
+
+| page | line (400 dpi)                  | touches                                                         | reading                                                         |
+|------|---------------------------------|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| 100  | y 3591-3592, x 3321 to the edge | 28 crossings; one dot, x 3322-3329                              | the dot is on pin 52's column: CS1 leaves the CPU here          |
+| 102  | y 3582-3583, x 9-4688           | 15 crossings; one wire down at x 4687-4688, where the line ends | that wire is Q3's emitter; Q3's collector is IC23's /CE (pin 6) |
+
+- **The labels are not read by the script.** It also writes `cpu_pins.png` (pins 51-54 `CS0`,
+  `RAS1/CS1`, `RAS2/CS2`, `RAS3/CS3`) and `q3_ic23.png` (Q3 UN5216, R38 4.7K to `+3.3D`,
+  IC23 `CE` pin 6), to check those by eye.
+- **What this means for the dumper.** Nothing else hangs on CS1. Q3 only lets the CPU select
+  IC23 while powered (R38 holds `/CE` high otherwise). IC23 (C3BBJG000011, 2 Mbit x16) has its
+  address pins on A1-A17, so wherever CS1 is active IC23 answers, its 256 KB repeated (the
+  SURVEY2 read will show whether it does), and there is no I/O register there to disturb. That is
+  why the SURVEY2 build reads 2 MB at `0x44000000` and not 512 KB.
+- **A neighbour that is not on CS1.** The output latch IC25 (74VHC174, D16-D21 to `DAC.MDI`,
+  `DAC.MC`, `DAC.ML`, `SDMODE`, `SPSW`, `USB.WAITM`) sits next to IC23 on p.102. It is clocked by
+  IC26 (an OR gate) from two other lines, so it is not on CS1. It has no read path either.
+- **The CPU side.** That CS1 covers `0x44000000` (and `0x84000000`) is the firmware's own
+  addressing: `0x44000000` is the BackupSramTest window, and `0x84000000` the alias it writes the
+  panel memories through.
