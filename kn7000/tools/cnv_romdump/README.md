@@ -133,7 +133,7 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
 
 ## How it was tested
 
-See "Results" below. Command:
+Results are in the next section. Command:
 
     test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast]
 
@@ -152,3 +152,36 @@ finish. `verify_dump.py` then checks every file in `C:\KN7DUMP`:
 Upstream maps port `0x98050000` to `waveform_sub_*` and `0x98040000` to `waveform_main_*`. The
 firmware's test screen says the opposite (`MAIN TG` = `0x98050000` = IC203/IC204), so the verifier
 compares the IC203 file with `waveform_sub_y`, and so on. That is a driver issue, not a dumper one.
+
+## Results (2026-10-19)
+
+The full run used upstream MAME `kn7000` from the `technics-kn-flop-rebuild` worktree (binary
+`knfl-tip`). Its build was `KN7LOAD.CNV` SHA-1 `4fa225578d95…` and `KN7APP.BIN` SHA-1
+`5de28284c5be…`; `make` rebuilds both byte for byte from these sources.
+
+| file (long name on the card)         | 8.3 name    | bytes    | CRC-32     | checked against                                                      |
+|--------------------------------------|-------------|----------|------------|----------------------------------------------------------------------|
+| `kn7000_program_even_v1.6_b941.ic17` | PRGEVEN.BIN | 2097152  | `529b87ce` | MAME's CRC-32 and SHA-1 for that name                                |
+| `kn7000_program_odd_v1.6_b941.ic16`  | PRGODD.BIN  | 2097152  | `a36e6222` | the same                                                             |
+| `kn7000_table_even_b84.ic17`         | TBLEVEN.BIN | 2097152  | `005a6db2` | the same                                                             |
+| `kn7000_table_odd_b84.ic16`          | TBLODD.BIN  | 2097152  | `7e1a312e` | the same                                                             |
+| `custom_data.ic21`                   | IC21.BIN    | 2097152  | `ddea6b9b` | what the CPU reads at `0x96800000`; from `0x20000` = `01ctmini.ic21` |
+| `c3cbqd000002.ic203`                 | IC203.BIN   | 16777216 | `f777fbfd` | the test data in upstream's `waveform_sub_y`                         |
+| `c3cbqd000001.ic204`                 | IC204.BIN   | 16777216 | `24ee0c01` | the test data in `waveform_sub_x`                                    |
+| `c3cbqd000004.ic207`                 | IC207.BIN   | 16777216 | `db8a87e9` | the test data in `waveform_main_y`                                   |
+| `c3cbqd000003.ic208`                 | IC208.BIN   | 16777216 | `7d57f5a9` | the test data in `waveform_main_x`                                   |
+| `c3cbmd000098.ic19`                  | IC19.BIN    | 8388608  | `768969e1` | the test data served at `0x57800000`                                 |
+
+- **The full run.** All 11 files are as expected, `DUMPLIST.TXT` included. It finished at 653 s of
+  emulated time, about 4 converter calls a second at 32 KB each; the SD writes set the pace.
+- **Long names.** The pass wrote them and read them back. `fsck.fat -n` on the partition reports
+  only the volume label being in the root directory and the dirty bit, both already true of the
+  instrument's own card.
+- **Shorter checks.** `--fast` cuts every ROM to 64 KB and gives 11 of 11. An SD card without
+  `KN7APP.BIN` gets the loader's "No C:\KN7APP.BIN" screen, held 15 s. The dumper's done screen is
+  also still up 5 s after the end.
+- **Overlay build.** On the kn7000_mame overlay (`kn7000-emulator`) the same path works, including
+  the long names. Its four wave ports all read one synthetic pack, so it cannot tell the chips apart.
+
+The bulk outputs (the card image, about 74 MB of dumps, the snapshots) are not kept. `run_test.sh`
+regenerates them.
