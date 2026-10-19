@@ -16,6 +16,24 @@ This is a ROM disassembly project for the Technics KN5000 music keyboard. The go
 **Assembler:** Custom LLVM backend (`llvm-mc -triple=tlcs900`) — LLVM assembly is the authoritative source
 **Legacy assembler:** Alfred Arnold's ASL Macro Assembler 1.42 Beta (archived in `archive/asl/`)
 
+### Other models in this tree (technics-roms-disasm)
+
+This repository was `kn5000-roms-disasm`; since 2026-10-19 it is `technics-roms-disasm`
+(`~/compartilhado/kn5000-roms-disasm` is a symlink to it). The KN5000 stays at the root; other models
+live in their own folders, each migrated with its full history rewritten to its prefix:
+
+- **`wsa1/`**: Technics SX-WSA1R (2026-09-01). Own Makefile; `make wsa1`, `make gate-wsa1`.
+- **`kn7000/`**: Technics SX-KN7000 (2026-10-19, from `kn7000_disassembly`, now decommissioned;
+  `kn7000/notes/migration-commit-map.txt` maps its old commit hashes). CPU: Panasonic MN10300
+  (MN103002A), so it has its own assembler, `kn7000/tools/kn7asm.py` (Python, no LLVM), and its own
+  `kn7000/README.md`. `make kn7000`, and `make gate-kn7000` = `make -C kn7000 verify verify-sp7001
+  verify-picture`. Its reference images (`kn7000/baserom/`) are git-ignored; its Makefile regenerates
+  them from the update disks and the private romset beside this tree.
+
+`make everything` and `make gate-all` cover all three. The TLCS-900 rules below (LLVM, ASL, label
+naming) are about the KN5000 and WSA1R trees; the `LLVM:` trailer is still required on every commit
+to this repository, `kn7000/` commits included.
+
 ### Documentation Website
 
 Detailed documentation is at `../technics-docs/`. Key pages:

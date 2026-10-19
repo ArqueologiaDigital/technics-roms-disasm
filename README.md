@@ -40,7 +40,10 @@ badges above measure understanding instead, over every ROM of both models. They 
 The score is the mean of these components, per model and overall. Every number behind it, with its
 commit, is in `docs/badges/semantic-score.json`; the trend is in `docs/badges/semantic-score-history.csv`.
 
-## This repository now holds two disassemblies
+## This repository now holds three disassemblies
+
+This was `kn5000-roms-disasm`. Since 2026-10-19 it is **technics-roms-disasm**: one tree for
+every Technics ROM disassembly, the KN5000 at the root and each other model in its own folder.
 
 Since 2026-09-01 this tree also contains the **Technics SX-WSA1R** disassembly,
 under `wsa1/`, migrated here from its own repository so that both products build
@@ -62,6 +65,19 @@ There is a real connection between the two machines, not just a shared
 repository: the multitasking kernel that the WSA1R's two processors run is also
 present in **both** of the KN5000's — one kernel, four processors, two products.
 See `wsa1/notes/FINDINGS-kernel-in-the-kn5000.md`.
+
+Since 2026-10-19 it also contains the **Technics SX-KN7000** disassembly, under `kn7000/`, migrated
+from its own (never published) repository, `kn7000_disassembly`, which is now decommissioned. All
+163 of its commits were rewritten to the `kn7000/` prefix, and
+`kn7000/notes/migration-commit-map.txt` maps the old commit hashes to the new ones.
+
+    make kn7000        the KN7000's program + table (941/84) and IC19 picture images
+    make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83)
+
+`make everything` and `make gate-all` include it. The KN7000 runs on a Panasonic MN10300, not the
+TLCS-900, so `kn7000/` has its own assembler (`kn7000/tools/kn7asm.py`) and its own
+`kn7000/README.md`. It also holds the [ROM dumper](kn7000/tools/cnv_romdump/README.md) that read a
+real KN7000's program, table and picture ROMs through its own Style Convert function.
 
 **Note:** I am using Alfred Arnold's **Macro assembler 1.42 Beta (Build 298)**.
 

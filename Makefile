@@ -32,6 +32,7 @@ CLANG=$(LLVM_BIN)/clang
 
 .PHONY: all llvm-all paramblocks screendata naka clean clean-asl clean-all
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
+.PHONY: kn7000 kn7000-clean gate-kn7000
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score
 .SECONDARY:
 
@@ -62,7 +63,25 @@ wsa1:
 wsa1-clean:
 	$(MAKE) -C wsa1 clean
 
-everything: all wsa1
+# ---------------------------------------------------------------- SX-KN7000
+# The KN7000 disassembly was migrated into this tree on 2026-10-19 and lives in
+# kn7000/.  It has its own toolchain (kn7000/tools/kn7asm.py, an MN10300
+# assembler in Python; no LLVM) and its own Makefile, which these targets call.
+# Its reference images (kn7000/baserom/, git-ignored) come from the update disks
+# and the private romset next to this tree; see kn7000/README.md.
+#
+#   make kn7000        build the KN7000 images: program + table 941/84, IC19
+#   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83)
+kn7000:
+	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom
+
+kn7000-clean:
+	$(MAKE) -C kn7000 clean
+
+gate-kn7000:
+	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture
+
+everything: all wsa1 kn7000
 
 # ⚠ assert_images_assemble.py runs FIRST and asks the assembler directly, from
 # each root source.  The byte gate reads `make`'s answer and therefore inherits
@@ -91,7 +110,7 @@ gate: all
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
 
-gate-all: gate gate-wsa1
+gate-all: gate gate-wsa1 gate-kn7000
 	@# A stale object compares green forever: assert the assembler is a
 	@# prerequisite of every image before believing either byte gate.
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
