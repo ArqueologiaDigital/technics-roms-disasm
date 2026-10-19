@@ -76,6 +76,10 @@ The driver declares `c3cbmd000098.ic19` as `0x800000` `NO_DUMP` in region `pictu
 (`map(0x57800000, 0x579fffff).mirror(0x600000).rom().region("picture", 0)`), noting that the chip's
 other half is unreachable.
 
+Done on 2026-10-19 as branch `technics-kn7000-picrom` (`bca52650007`; KN7000
+`tools/mame-pr-planning/kn7000-picrom-pr/`). There `picture_check.sh` reads `0x57800000`-`0x57FFFFFF` through
+the emulated CPU after boot, and the result is byte-identical to the instrument's 8 MB read.
+
 ## Read twice
 
 A second read on the same instrument, later the same day, was byte-identical to the first: the 8 MB
