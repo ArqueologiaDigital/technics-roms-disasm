@@ -17,6 +17,11 @@
 #     (with --prefix: against the first N bytes of those ROM files in technics_romsets);
 #   * --skip-mask M: bit n set = ROM n (RomTable order) was left out of the build (run_test.sh --safe) and must
 #     not be on the card;
+#   * --survey / --survey2: the SURVEY or SURVEY2 build's windows (romdump.s SurveyTable, Survey2Table), R<base>.BIN.
+#     A window with test data (prefill.lua, prefill_survey2.lua) must hold it. Each of SURVEY2's three RAM windows
+#     (0x44000000, 0x50180000, 0x4C000000) must equal what the CPU read there at the end (--refdir: ref_<base>.bin),
+#     except at words the firmware wrote during the run (writes_<base>.txt); with 0x44000000 as plain RAM
+#     ("model plain"), 0x44040000 on must also hold the test data (seed 0x4404).
 # --prefix N compares only the first N bytes (run_test.sh --fast). Exit status 0 = everything matches.
 import hashlib
 import os
@@ -34,6 +39,8 @@ prefix = int(args[args.index('--prefix') + 1]) if '--prefix' in args else None
 prefill = '--no-prefill' not in args
 degraded = '--degraded' in args
 survey = '--survey' in args             # the SURVEY build: six CPU windows (romdump.s SurveyTable), not ROMs
+survey2 = '--survey2' in args           # the SURVEY2 build: 14 CPU windows (romdump.s Survey2Table)
+refdir = args[args.index('--refdir') + 1] if '--refdir' in args else None
 skip = int(args[args.index('--skip-mask') + 1], 0) if '--skip-mask' in args else 0
 ic21_ref = args[args.index('--ic21-ref') + 1] if '--ic21-ref' in args else None
 driver = args[args.index('--driver') + 1] if '--driver' in args else \
@@ -71,9 +78,47 @@ ROLE = {'PRGEVEN.BIN': 'kn7000_program_even_', 'PRGODD.BIN': 'kn7000_program_odd
         'IC203.BIN': 'c3cbqd000002.ic203', 'IC204.BIN': 'c3cbqd000001.ic204', 'IC207.BIN': 'c3cbqd000004.ic207',
         'IC208.BIN': 'c3cbqd000003.ic208', 'IC19.BIN': 'c3cbmd000098.ic19', 'DUMPLIST.TXT': 'DUMPLIST.TXT'}
 SURVEY = (0x40000000, 0x40800000, 0x54000000, 0x54800000, 0x55000000, 0x55800000)
-if survey:                              # their 8.3 names are R + the base's top seven hex digits
-    ROLE = {f'R{b:08X}'[:8] + '.BIN': f'survey_{b:08x}.bin' for b in SURVEY}
+# Survey2Table: SurveyTable's six, then the RAM windows, then 0x56800000 and the expansion slots (base, bytes)
+SURVEY2 = [(b, 0x800000) for b in SURVEY] + [(0x44000000, 0x200000), (0x50180000, 0x118000), (0x4C000000, 0x40000),
+                                              (0x56800000, 0x200000), (0x41000000, 0x10000), (0x41800000, 0x10000),
+                                              (0x56000000, 0x10000), (0x57000000, 0x10000)]
+RAMWIN = (0x44000000, 0x50180000, 0x4C000000)       # no test data: compared with what the CPU read at the end
+if survey or survey2:                   # their 8.3 names are R + the base's top seven hex digits
+    ROLE = {f'R{b:08X}'[:8] + '.BIN': f'survey_{b:08x}.bin' for b in (dict(SURVEY2) if survey2 else SURVEY)}
     ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
+
+
+def ram_window(base, data, n):
+    """SURVEY2's RAM windows: the file against what the CPU read there at the end (ref_<base>.bin), word by word;
+    a word that differs must have been written during the run (writes_<base>.txt, word offsets in hex; for
+    0x44000000 also modulo 256 KB when the driver mirrors IC23)."""
+    if not refdir:
+        return False, 'no --refdir'
+    ref = open(os.path.join(refdir, f'ref_{base:08x}.bin'), 'rb').read()
+    lines = open(os.path.join(refdir, f'writes_{base:08x}.txt')).read().split()
+    model = None
+    if lines[:1] == ['model']:
+        model, lines = lines[1], lines[2:]
+    written = {int(x, 16) for x in lines}
+    mirror = model == 'mirrored'
+    if mirror:
+        written |= {w % 0x40000 for w in written}
+    diff = [o for o in range(0, n, 4) if data[o:o + 4] != ref[o:o + 4]]
+    unexplained = [o for o in diff if o not in written and not (mirror and o % 0x40000 in written)]
+    how = f'what the CPU read at the end (ref_{base:08x}.bin); {len(written)} words written during the run'
+    if diff:
+        how += f', {len(diff)} words differ, {len(unexplained)} of them not written'
+    ok = not unexplained
+    if base == 0x44000000:
+        how += f'; driver model: {model}'
+        if model == 'plain' and n > 0x40000:
+            hi = data[0x40000:n] == stream(0x4404, n - 0x40000)
+            how += '; from 0x44040000 the test data (seed 0x4404)' if hi else '; from 0x44040000 NOT the test data'
+            ok = ok and hi
+        elif mirror and n >= 0x80000:
+            reps = sum(data[k:k + 0x40000] == data[:0x40000] for k in range(0x40000, n, 0x40000))
+            how += f'; {reps} of {n // 0x40000 - 1} copies after the first equal it'
+    return ok, how
 
 fat = Fat(img)
 folder = next((cl for n, lng, attr, cl, size in fat.entries(0) if n == 'KN7DUMP' and attr & 0x10), None)
@@ -119,6 +164,8 @@ for short, lng, attr, cl, size in fat.entries(folder):
         ok, how = data[:n] == stream(seed, n), f'test data in {region} (seed {seed:#x})'
     elif role == 'c3cbmd000098.ic19' and prefill:
         ok, how = data[:n] == stream(0x19, n), 'test data at 0x57800000 (seed 0x19)'
+    elif role.startswith('survey_') and survey2 and int(role[7:15], 16) in RAMWIN:
+        ok, how = ram_window(int(role[7:15], 16), data, n)
     elif role.startswith('survey_') and prefill:
         base = int(role[7:15], 16)
         ok, how = data[:n] == stream(base >> 16, n), f'test data at {base:#010x} (seed {base >> 16:#x})'
@@ -132,11 +179,11 @@ for short, lng, attr, cl, size in fat.entries(folder):
     bad += not ok
     rows.append((name, short, size, f'{crc:08x}', how, 'MATCH' if ok else 'DIFFERENT'))
 seen = {r[1] for r in rows}
-if survey and any(e[0] == 'UNUSED.BIN' for e in fat.entries(folder)):
+if (survey or survey2) and any(e[0] == 'UNUSED.BIN' for e in fat.entries(folder)):
     bad += 1
     rows.append(('unused', 'UNUSED.BIN', 0, '-', 'an unused survey slot was written', 'UNEXPECTED'))
 for i, short in enumerate(ROLE):        # every file the build writes must be there, and only those
-    left_out = i < 10 and skip >> i & 1
+    left_out = i < len(ROLE) - 1 and skip >> i & 1
     if left_out and short in seen:
         bad += 1
         rows = [r[:5] + ('LEFT OUT, YET WRITTEN',) if r[1] == short else r for r in rows]
