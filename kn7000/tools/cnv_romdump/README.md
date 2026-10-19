@@ -90,7 +90,8 @@ afterwards; `check_real_dump.py` runs it on any `R*.BIN` it is given. It:
 - finds each signature and repeats the firmware's own check on it, `StyleResourceVerify` (941
   `0x484338B4`). That check is a 16-bit sum of big-endian words; the header declares the expected
   sum (u16 at +0x10), the offset (u24 at +0x12) and the word count (u24 at +0x15);
-- reads the RHYTHM number SOFT VERSION would show;
+- reads the RHYTHM number the firmware's version code computes (a row of the SP7001 DEBUG TOOLS screen; the
+  SOFT VERSION screen shows only PROGRAM and TABLE);
 - compares the data with the truncated copy of the header that table 84 carries at `0x483E828C`.
 
 `find_rhythm.py --self-test` exercises all of this on a made-up device split across two windows.

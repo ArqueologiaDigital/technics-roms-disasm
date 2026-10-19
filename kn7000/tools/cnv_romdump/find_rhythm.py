@@ -18,9 +18,10 @@
 #         offset at +0x12 and u24 BE word count at +0x15; the 16-bit sum of that many big-endian words from
 #         the signature + offset must equal the checksum. All three zero (as in the table ROM's truncated
 #         copy) declares no checksum, and is reported as such, not as a pass;
-#       - the RHYTHM version SOFT VERSION would show for it: ASCII digits at signature - 0x10000 + 0x3FFFEC
+#       - the RHYTHM version the firmware reads from it: ASCII digits at signature - 0x10000 + 0x3FFFEC
 #         (AcRhythmVerBoxProc 0x4848895F), i.e. 0x14 bytes below the top of a 4 MB device that starts
-#         0x10000 below the signature;
+#         0x10000 below the signature. The row is on the SP7001 build's DEBUG TOOLS screen; the SOFT
+#         VERSION screen shows only PROGRAM and TABLE;
 #       - how many of its first bytes equal the truncated copy the table ROM carries (directory entry
 #         *(0x4800014C), 0x483E828C in build 80/84, the last 0x17D74 bytes of the table). A real rhythm ROM
 #         should agree with it over all of them.
