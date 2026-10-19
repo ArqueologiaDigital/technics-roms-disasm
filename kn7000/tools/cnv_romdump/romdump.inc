@@ -55,6 +55,7 @@
 .equ OPT_NOFOLDER,  0x10000         # no sdfmmkdir: the files go to the current folder (the root)
 .equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
+.equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)

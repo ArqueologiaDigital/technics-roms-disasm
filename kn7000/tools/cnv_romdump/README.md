@@ -45,7 +45,15 @@ close, the same routines the loader uses to read `KN7APP.BIN`:
 - no long-name pass, so no raw sector access at all; `DUMPLIST.TXT` gives each 8.3 file its MAME
   name.
 
-About 10 MB in all. Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
+About 10 MB in all.
+
+`build/ic19/KN7APP.BIN` (`--options 0x301FF`, `OPTS_PICTURE`, shown as "KN7000 ROM DUMPER 1.0 IC19")
+is the second pass, the same way: the picture flash window alone, 8 MB. The firmware's own picture
+code addresses `0x57800000` (941: `mov 0x57800000, a0` at `0x48580A38`), but the window's 8 MB
+extent is an assumption, so it gets a pass of its own after the first one is safe on the computer.
+The wave ROMs wait for a better-understood approach (`notes/wave-rom-port.md`).
+
+Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
 back from the card:
 - each file's size and CRC-32 against the ones the instrument computed while writing it;
 - whether each file is a ROM we already have;

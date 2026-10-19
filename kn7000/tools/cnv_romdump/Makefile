@@ -4,7 +4,7 @@ XAPASM      := $(PYTHON) ../xapasm.py
 FLOPPY_TOOLS ?= ../../../kn7000_mame/tools/floppy-images
 OUT         ?= build
 
-all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/kn7load_floppy.img
+all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
@@ -22,6 +22,12 @@ $(OUT)/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 $(OUT)/safe/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	@mkdir -p $(OUT)/safe
 	$(PYTHON) -I mkapp.py $< $@ --options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE"
+
+# the IC19 build (OPTS_PICTURE): the picture flash window 0x57800000 alone, the same way as SAFE; a pass of
+# its own, because that window's extent is not confirmed
+$(OUT)/ic19/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/ic19
+	$(PYTHON) -I mkapp.py $< $@ --options 0x301FF --name "KN7000 ROM DUMPER 1.0 IC19"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py

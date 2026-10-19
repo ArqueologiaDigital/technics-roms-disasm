@@ -1,7 +1,7 @@
 #!/bin/bash
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>; GPL v3+
 #
-# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] [--loader-test N] [--safe] -- the dumper end to end in
+# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] [--loader-test N] [--safe|--ic19] -- the dumper end to end in
 # MAME, then verify_dump.py.
 #   Builds KN7LOAD.CNV (on a floppy the KN7000 formatted) and KN7APP.BIN (put in the root of a copy of the
 #   real KN7000's SD card), boots the kn7000 with both, fills the undumped ROMs with test data (prefill.lua),
@@ -11,16 +11,19 @@
 #     signatures, 2 fmm tables, 4 raw sectors, 8 SD folders, 0x10 build number, 0x20 ms counter), to run the
 #     fallbacks a firmware we have never seen might need; the verifier then allows missing long names/builds.
 #   --safe: the SAFE build (build/safe/KN7APP.BIN: program, table, IC21; 8.3 files in the root, nothing else).
+#   --ic19: the IC19 build (build/ic19/KN7APP.BIN: the picture window alone, the same way).
 #   MAME_BINARY: a build of upstream MAME with the kn7000 driver (e.g. the technics-kn-flop-rebuild worktree's).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"; SRC="$HERE/.."
 BIN="$(readlink -f "$1")"; O="$(mkdir -p "$2" && cd "$2" && pwd)"; shift 2
 FAST=0; PREFILL=1; LTEST=0; SAFE=0
 while [ $# -gt 0 ]; do
-  case "$1" in --fast) FAST=1;; --no-prefill) PREFILL=0;; --loader-test) LTEST="$2"; shift;; --safe) SAFE=1;; esac
+  case "$1" in --fast) FAST=1;; --no-prefill) PREFILL=0;; --loader-test) LTEST="$2"; shift;; --safe) SAFE=1;;
+    --ic19) SAFE=2;; esac
   shift
 done
 MKAPP=(); [ "$SAFE" = 1 ] && MKAPP=(--options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE")
+[ "$SAFE" = 2 ] && MKAPP=(--options 0x301FF --name "KN7000 ROM DUMPER 1.0 IC19")
 TOOLS="$HOME/compartilhado/kn7000_mame/tools/floppy-images"
 make -s -C "$SRC" OUT="$O/build" FLOPPY_TOOLS="$TOOLS"
 FLOPPY="$O/build/kn7load_floppy.img"
@@ -37,6 +40,7 @@ EOF
   FLOPPY="$O/build/kn7load_test_floppy.img"
 fi
 APP="$O/build/KN7APP.BIN"; [ "$SAFE" = 1 ] && APP="$O/build/safe/KN7APP.BIN"
+[ "$SAFE" = 2 ] && APP="$O/build/ic19/KN7APP.BIN"
 if [ "$FAST" = 1 ]; then
   sed -e 's/, 0x200000, /, 0x10000, /' -e 's/, 0x1000000, /, 0x10000, /' -e 's/, 0x800000, /, 0x10000, /' \
       "$SRC/romdump.s" > "$O/build/romdump_fast.s"
@@ -60,4 +64,5 @@ grep -E '^(PROBE|PREFILL)' "$O/run.log" | tail -4
 ARGS=(); [ "$FAST" = 1 ] && ARGS=(--prefix 65536); [ "$PREFILL" = 0 ] && ARGS+=(--no-prefill)
 [ "$LTEST" != 0 ] && ARGS+=(--degraded)
 [ "$SAFE" = 1 ] && ARGS+=(--degraded --skip-mask 0x3E0)
+[ "$SAFE" = 2 ] && ARGS+=(--degraded --skip-mask 0x1FF)
 python3 -I "$HERE/verify_dump.py" "$O/sd.img" --ic21-ref "$O/ref_ic21.bin" "${ARGS[@]}"
