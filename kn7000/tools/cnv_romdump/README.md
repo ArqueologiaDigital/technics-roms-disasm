@@ -134,8 +134,17 @@ back from the card:
 
 **Other parts worth dumping, from what is known so far** (survey: `notes/wave-rom-port.md`):
 
-- **IC18, rhythm data** (`c3cbnd000046.ic18`, 8 MB) is not dumped yet, because no CPU window for
-  it is confirmed. The SURVEY build reads every window where the firmware looks for it (above).
+- **IC18, rhythm data** (`c3cbnd000046.ic18`): found by the SURVEY build on the owner's instrument
+  (2026-10-19), at `0x40000000`-`0x403FFFFF`, repeating at `0x40400000`. Its address pins take
+  A1-A21, and JP7 sets its top pin, so the CPU sees 4 MB of the 64 Mbit chip.
+  - **Checks.** `find_rhythm.py` finds the header at `0x40010000`, the firmware's third probe; its
+    checksum passes; 220 styles; RHYTHM 33 (`"jkr_33.ssf"`).
+  - **The first 64 KB is the boot ROM.** It is the CPU's reset code (`jmp 0x40000594`, and finally
+    `jmp 0x48400000`) and the flash updater.
+  - **The rest of the survey.** It also shows IC21 at `0x54800000` and IC19 at `0x55800000`,
+    byte for byte; the rest is open bus.
+  - **Not yet in the default build.** `RomTable` has no IC18 entry: adding one means an eleventh
+    skip bit for every build.
 - **IC23, the 256 KB battery-backed SRAM** at `0x44000000` holds the panel memories and settings.
   It is user data, not a ROM, and MAME has no file for it. It could be added easily if wanted.
 - **Not readable from the main CPU:**
