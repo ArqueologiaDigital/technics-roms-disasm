@@ -5,7 +5,7 @@ FLOPPY_TOOLS ?= ../../../../kn7000_mame/tools/floppy-images
 OUT         ?= build
 
 all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/wave/KN7APP.BIN \
-     $(OUT)/survey/KN7APP.BIN \
+     $(OUT)/survey/KN7APP.BIN $(OUT)/survey2/KN7APP.BIN \
      $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
@@ -16,6 +16,7 @@ $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm
 $(OUT)/romdump.bin: romdump.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
 	$(XAPASM) romdump.s -o $@ -m $(OUT)/romdump.map
+	@test $$(stat -c%s $@) -le 24576 || { echo "romdump.s: the image reaches BUF (0x502C0000)"; rm -f -- $@; false; }
 
 $(OUT)/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	$(PYTHON) -I mkapp.py $< $@
@@ -45,6 +46,14 @@ $(OUT)/wave/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 $(OUT)/survey/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	@mkdir -p $(OUT)/survey
 	$(PYTHON) -I mkapp.py $< $@ --options 0x703C0 --name "KN7000 ROM DUMPER 1.0 SURVEY"
+
+# the SURVEY2 build (OPTS_SURVEY2): Survey2Table's 14 windows in one run -- SurveyTable's six again (the same
+# files, to compare with the first read), IC23 0x44000000 (2 MB), the kept work RAM 0x50180000-0x50297FFF, the
+# library RAM 0x4C000000 (256 KB), 0x56800000 (2 MB, IC21 again?) and the four expansion slot windows (64 KB
+# each); plain files in the root as in SAFE
+$(OUT)/survey2/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/survey2
+	$(PYTHON) -I mkapp.py $< $@ --options 0xB0000 --name "KN7000 ROM DUMPER 1.0 SURVEY2"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py

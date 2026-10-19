@@ -13,7 +13,7 @@
 .equ STR,           0x502E2000      # 256 bytes: a line being formatted
 .equ NAMES,         0x502E2100      # 4 x 64 bytes: program/table ROM names built from the build numbers
 .equ SECBUF,        0x502E3000      # 512 bytes: one SD sector
-.equ SHORTS,        0x502E3200      # 12 x 32 bytes: the files' 8.3 directory entries, as found
+.equ SHORTS,        0x502E3200      # MAX_ROMS+1 x 32 bytes: the files' 8.3 directory entries, as found
 .equ TEXT,          0x502E4000      # 4 KB: manifest text
 
 # ---- variables ---------------------------------------------------------------------------------
@@ -39,7 +39,8 @@
 .equ V_HOLD,        VARS+0x4C       # when the result appeared (kernel ms), or calls since then
 .equ V_NOFOLDER,    VARS+0x50       # 1: files are written without the KN7DUMP folder (current folder)
 .equ V_FAILS,       VARS+0x54       # ROMs whose file could not be written
-.equ V_TABLE,       VARS+0x58       # the ROM table in use: RomTable, or SurveyTable (OPT_SURVEY)
+.equ V_TABLE,       VARS+0x58       # the ROM table in use: RomTable, SurveyTable (OPT_SURVEY) or Survey2Table
+.equ V_NROMS,       VARS+0x5C       # its number of entries: NUM_ROMS, or NUM_SURVEY2 (OPT_SURVEY2)
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
 .equ HOLD_CALLS,    23000           # ... or this many calls when the loader found no ms counter, each made
 .equ HOLD_SPIN,     10000           # to last about 0.65 ms by a delay loop (loader.s HOLD_SPIN)
@@ -52,14 +53,17 @@
 
 # ---- build options: the word after the header, set by mkapp.py --options (0 = the full dumper) ----
 .equ APP_OPTIONS,   APP_BASE+0x40
-.equ OPT_SKIP,      0x3FF           # bit n set: leave ROM n of RomTable out
+.equ OPT_SKIP,      0xFFFF          # bit n set: leave ROM n of the table out (bits 10-15 only matter to a
+                                    # table longer than 10 entries, so MAX_ROMS is 16)
 .equ OPT_NOFOLDER,  0x10000         # no sdfmmkdir: the files go to the current folder (the root)
 .equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
 .equ OPT_SURVEY,    0x40000         # read SurveyTable's windows instead of RomTable's ROMs (the rhythm ROM search)
+.equ OPT_SURVEY2,   0x80000         # read Survey2Table's 14 windows instead (takes precedence over OPT_SURVEY)
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 .equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
 .equ OPTS_SURVEY,   0x703C0         # the SURVEY build: SurveyTable's six windows, ordinary files only
+.equ OPTS_SURVEY2,  0xB0000         # the SURVEY2 build: Survey2Table's 14 windows, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)
@@ -76,8 +80,10 @@
 .equ K_LANE1,       1               # bytes 2-3 (the .ic16 half)
 .equ K_LINEAR,      2               # plain bytes, read 16 bits at a time
 .equ K_WAVE,        3               # a wave ROM through the tone generator's test latches
-.equ NUM_ROMS,      10
-.equ NUM_FILES,     11              # the ROMs and DUMPLIST.TXT
+.equ NUM_ROMS,      10              # entries in RomTable and SurveyTable
+.equ NUM_SURVEY2,   14              # entries in Survey2Table
+.equ MAX_ROMS,      16              # the most any table may have (16 skip bits; V_RESULTS, SHORTS sized for it)
+                                    # the files: V_NROMS dump files, then DUMPLIST.TXT
 
 # ---- colours (RGB565) ----------------------------------------------------------------------------
 .equ C_BG,          0x0010

@@ -65,14 +65,25 @@ eh_spin:
     bra     en_park
 
 en_first:
-    mov     RomTable, a0            # the table this build reads: the ROMs, or the survey's windows
+    mov     (APP_OPTIONS), d0       # the table this build reads, and its length: the ROMs, or a survey's
+    mov     OPT_SURVEY2, d1         # windows
+    and     d1, d0
+    beq     en_notsurvey2
+    mov     Survey2Table, a0
+    mov     NUM_SURVEY2, d0
+    bra     en_table
+en_notsurvey2:
+    mov     RomTable, a0
     mov     (APP_OPTIONS), d0
     mov     OPT_SURVEY, d1
     and     d1, d0
-    beq     en_table
+    beq     en_count
     mov     SurveyTable, a0
+en_count:
+    mov     NUM_ROMS, d0
 en_table:
     mov     a0, (V_TABLE)
+    mov     d0, (V_NROMS)
     call    InitCrc, 0, 0
     call    MakeNames, 0, 0
     mov     (APP_OPTIONS), d0       # C:\KN7DUMP (-3 when it is already there); without sdfmmkdir, or
@@ -421,7 +432,8 @@ NextRom:                            # leaf: on to the next ROM; after the last, 
     mov     d0, (V_ROM)
     clr     d1
     mov     d1, (V_POS)
-    cmp     NUM_ROMS, d0
+    mov     (V_NROMS), d1
+    cmp     d1, d0
     bne     nr_ret
     mov     2, d0
     mov     d0, (V_STATE)
@@ -733,7 +745,8 @@ wm_src:
     call    StrCpy, 0, 0
     call    PutCrLf, 0, 0
     inc     d2
-    cmp     NUM_ROMS, d2
+    mov     (V_NROMS), d1
+    cmp     d1, d2
     bne     wm_rom
     mov     TEXT, d0
     mov     a0, d1
@@ -916,7 +929,7 @@ ln_found:
     bne     ln_ioerr
 
     mov     SHORTS, a0              # no file's entry found yet
-    mov     NUM_FILES*8, d1
+    mov     8*(MAX_ROMS+1), d1
     clr     d0
 ln_clr:
     mov     d0, (a0)
@@ -1018,8 +1031,9 @@ ln_copy:
     mov     a1, (V_OUT)
 ln_fnext:
     inc     d2
-    cmp     NUM_FILES, d2
-    bne     ln_file
+    mov     (V_NROMS), d0           # the dump files and DUMPLIST.TXT
+    cmp     d0, d2
+    bls     ln_file
     mov     (V_DIRLBA), d0          # write the cluster, read it back, compare
     mov     (V_SPC), d1
     mov     BUF2, a1
@@ -1096,7 +1110,7 @@ s11_no:
     clr     d0
     rets
 
-# WhichFile(a0 = 8.3 directory entry) -> d0 = the file it is (0..NUM_FILES-1), or -1.
+# WhichFile(a0 = 8.3 directory entry) -> d0 = the file it is (0..V_NROMS; V_NROMS is DUMPLIST.TXT), or -1.
 WhichFile:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -1111,8 +1125,9 @@ wf_next:
     cmp     0, d0
     bne     wf_hit
     inc     d2
-    cmp     NUM_FILES, d2
-    bne     wf_next
+    mov     (V_NROMS), d0           # the dump files and DUMPLIST.TXT
+    cmp     d0, d2
+    bls     wf_next
     mov     -1, d0
     bra     wf_ret
 wf_hit:
@@ -1123,7 +1138,8 @@ wf_ret:
 # File83(d0 = file) -> a0 = its 11-character directory name. FileName(d0 = file) -> a0 = its long
 # (MAME) name, or 0 for the manifest. Leaves.
 File83:
-    cmp     NUM_ROMS, d0
+    mov     (V_NROMS), d1
+    cmp     d1, d0
     bcs     f83_rom
     mov     dir_manifest, a0
     rets
@@ -1139,7 +1155,8 @@ f83_tbl:
     rets
 
 FileName:
-    cmp     NUM_ROMS, d0
+    mov     (V_NROMS), d1
+    cmp     d1, d0
     bcs     fn_rom
     mov     0, a0
     rets
@@ -1394,6 +1411,9 @@ pdc_end:
 .equ BAR_W,         520
 .equ Y_LIST,        114
 .equ LIST_STEP,     12
+.equ LIST_ROWS2,    7               # a table of more than 10 entries: two columns of this many lines,
+.equ COL2_W,        320             # each this wide,
+.equ COL2_CRC,      216             # the hex this far right of the column's x ("[ OK ] " + a 19-character name)
 
 SetColours:                         # leaf: d0 = foreground; background C_BG, scale 1
     mov     d0, (SVC+SV_FG)
@@ -1467,11 +1487,16 @@ df_list:
     mov     d2, d0
     call    DrawListLine, 0, 0
     inc     d2
-    cmp     NUM_ROMS, d2
+    mov     (V_NROMS), d0
+    cmp     d0, d2
     bne     df_list
     ret     [d2,d3,a2,a3], 0x30
 
-DrawListLine:                       # d0 = ROM index: "[ OK ] name ... CRC32 xxxxxxxx"
+# DrawListLine(d0 = ROM index): "[ OK ] name ... CRC32 xxxxxxxx", from x 8, the CRC-32 at x 480. That is
+# one column of up to 10 entries. A longer table (Survey2Table) does not fit the 240 lines in one: it gets
+# two columns of LIST_ROWS2 lines, from x 8 and x 8 + COL2_W, each line "[ OK ] name xxxxxxxx", the
+# hex at x + COL2_CRC (the CRC-32, or after [FAIL] the error code).
+DrawListLine:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
     mov     d0, d2
@@ -1481,7 +1506,18 @@ DrawListLine:                       # d0 = ROM index: "[ OK ] name ... CRC32 xxx
     mov     d3, (V_ROM)
     mov     a0, a2
     mov     a1, a3
-    mov     d2, d1
+    mov     8, d0                   # (0x1C, sp) = the line's x
+    mov     d0, (0x1C, sp)
+    mov     d2, d1                  # d1 = its row
+    mov     (V_NROMS), d0
+    cmp     NUM_ROMS, d0
+    bls     dl_row
+    cmp     LIST_ROWS2, d1          # two columns
+    bcs     dl_row
+    add     -LIST_ROWS2, d1
+    mov     8+COL2_W, d0
+    mov     d0, (0x1C, sp)
+dl_row:
     mov     LIST_STEP, d0
     mulu    d0, d1
     add     Y_LIST, d1
@@ -1512,7 +1548,7 @@ dl_col:
     mov     a0, (0x18, sp)
     call    SetColours, 0, 0
     mov     (0x18, sp), a0
-    mov     8, d0
+    mov     (0x1C, sp), d0
     mov     (0x14, sp), d1
     call    DrawText, 0, 0
     mov     (R_NAME, a2), a0
@@ -1524,6 +1560,9 @@ dl_col:
     cmp     ST_SKIP, d0
     beq     dl_ret
     mov     STR, a0
+    mov     (V_NROMS), d0           # two columns: the hex alone
+    cmp     NUM_ROMS, d0
+    bhi     dl_hex
     mov     str_l_crc, a1
     mov     (12, a3), d0
     cmp     ST_ERROR, d0
@@ -1531,6 +1570,7 @@ dl_col:
     mov     str_l_ferr, a1
 dl_crc:
     call    StrCpy, 0, 0
+dl_hex:
     mov     (0, a3), d0
     mov     (12, a3), d1
     cmp     ST_ERROR, d1
@@ -1539,8 +1579,14 @@ dl_crc:
 dl_crcv:
     mov     8, d1
     call    PutHex, 0, 0
+    mov     480, d0                 # one column: x 480; two: the line's x + COL2_CRC
+    mov     (V_NROMS), d1
+    cmp     NUM_ROMS, d1
+    bls     dl_crcx
+    mov     (0x1C, sp), d0
+    add     COL2_CRC, d0
+dl_crcx:
     mov     STR, a0
-    mov     480, d0
     mov     (0x14, sp), d1
     call    DrawText, 0, 0
 dl_ret:
@@ -1564,7 +1610,11 @@ DrawCurrent:                        # the ROM being dumped: number and name, wha
     mov     (V_ROM), d0
     inc     d0
     call    PutDec, 0, 0
-    mov     str_c_of, a1
+    mov     str_c_of, a1            # "/", the table's length, ": "
+    call    StrCpy, 0, 0
+    mov     (V_NROMS), d0
+    call    PutDec, 0, 0
+    mov     str_c_sep, a1
     call    StrCpy, 0, 0
     mov     (R_NAME, a2), a1
     call    StrCpy, 0, 0
@@ -1778,6 +1828,52 @@ SurveyTable:
     .long   nm_unused, path_unused, K_LINEAR, 0x48000000, 0x800000, 0, 0, rg_unused, dir_unused
     .long   0, 0, 0, 0, 0, 0, 0
 
+# The SURVEY2 build (OPT_SURVEY2): everything still to read from the owner's KN7000 in one run, 14 plain CPU
+# windows of memory, no I/O window among them:
+#   0-5   SurveyTable's six windows again, the same addresses, sizes and file names: a second read of
+#         IC18 (CS0), IC21 and IC19 (CS5), to compare byte for byte with the first;
+#   6     IC23, the battery-backed SRAM (C3BBJG000011, x16 on A1-A17: 256 KB) on CS1. By the service
+#         manual (p.100, p.102) CPU pin 52 RAS1/CS1 goes to nothing but IC23's /CE (through the
+#         power-fail switch Q3), so all of CS1 is IC23 and its mirrors. 2 MB: the chip eight times if it
+#         repeats every 256 KB, and all the addresses up to 0x4413FFFF;
+#   7     the work RAM the firmware never clears (0x50180000-0x50297FFF: COMPOSER styles, songs, pads,
+#         slideshow pool; notes/work-ram-map.md);
+#   8     the library RAM at 0x4C000000 (CS3), 256 KB: the firmware's boot copies its library there from
+#         the program flash, so it should equal that copy;
+#   9     0x56800000, 2 MB: IC21 again, if CS5 ignores A25 (IC21 answered at 0x54800000);
+#   10-13 the four expansion slot windows the firmware probes at boot (VoiceArchiveScanBoot), 64 KB
+#         each: what an empty slot reads. Last, so that everything else is on the card first.
+# MAME names: survey_<base>.bin; 8.3 names: R + the base's top seven hex digits, as in SurveyTable.
+Survey2Table:
+    .long   nm_s40000000, path_s40000000, K_LINEAR, 0x40000000, 0x800000, 0, 0, rg_s40000000, dir_s40000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s40800000, path_s40800000, K_LINEAR, 0x40800000, 0x800000, 0, 0, rg_s40800000, dir_s40800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s54000000, path_s54000000, K_LINEAR, 0x54000000, 0x800000, 0, 0, rg_s54000000, dir_s54000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s54800000, path_s54800000, K_LINEAR, 0x54800000, 0x800000, 0, 0, rg_s54800000, dir_s54800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s55000000, path_s55000000, K_LINEAR, 0x55000000, 0x800000, 0, 0, rg_s55000000, dir_s55000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s55800000, path_s55800000, K_LINEAR, 0x55800000, 0x800000, 0, 0, rg_s55800000, dir_s55800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s44000000, path_s44000000, K_LINEAR, 0x44000000, 0x200000, 0, 0, rg_s44000000, dir_s44000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s50180000, path_s50180000, K_LINEAR, 0x50180000, 0x118000, 0, 0, rg_s50180000, dir_s50180000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s4c000000, path_s4c000000, K_LINEAR, 0x4C000000, 0x40000, 0, 0, rg_s4c000000, dir_s4c000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s56800000, path_s56800000, K_LINEAR, 0x56800000, 0x200000, 0, 0, rg_s56800000, dir_s56800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s41000000, path_s41000000, K_LINEAR, 0x41000000, 0x10000, 0, 0, rg_s41000000, dir_s41000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s41800000, path_s41800000, K_LINEAR, 0x41800000, 0x10000, 0, 0, rg_s41800000, dir_s41800000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s56000000, path_s56000000, K_LINEAR, 0x56000000, 0x10000, 0, 0, rg_s56000000, dir_s56000000
+    .long   0, 0, 0, 0, 0, 0, 0
+    .long   nm_s57000000, path_s57000000, K_LINEAR, 0x57000000, 0x10000, 0, 0, rg_s57000000, dir_s57000000
+    .long   0, 0, 0, 0, 0, 0, 0
+
 str_title:      .asciz  "KN7000 ROM DUMPER"
 str_target:     .asciz  "To the SD card, folder C:\KN7DUMP; file names as in MAME's kn7000 driver."
 str_target_nf:  .asciz  "To the SD card's root folder, 8.3 names; DUMPLIST.TXT gives MAME's names."
@@ -1785,7 +1881,8 @@ str_f_prog:     .asciz  "PROGRAM "
 str_f_table:    .asciz  "  TABLE "
 str_f_rel:      .asciz  "  release "
 str_c_rom:      .asciz  "ROM "
-str_c_of:       .asciz  "/10: "
+str_c_of:       .asciz  "/"
+str_c_sep:      .asciz  ": "
 str_c_read:     .asciz  "Reading "
 str_pct:        .asciz  "%  "
 str_l_wait:     .asciz  "[    ] "
@@ -1910,3 +2007,35 @@ nm_s55800000:   .asciz  "survey_55800000.bin"
 path_s55800000: .asciz  "KN7DUMP\R5580000.BIN"
 dir_s55800000:  .ascii  "R5580000BIN"
 rg_s55800000:   .asciz  "CPU 0x55800000-0x55FFFFFF, CS5"
+nm_s44000000:   .asciz  "survey_44000000.bin"
+path_s44000000: .asciz  "KN7DUMP\R4400000.BIN"
+dir_s44000000:  .ascii  "R4400000BIN"
+rg_s44000000:   .asciz  "CPU 0x44000000-0x441FFFFF, CS1: IC23 battery-backed SRAM (256 KB)"
+nm_s50180000:   .asciz  "survey_50180000.bin"
+path_s50180000: .asciz  "KN7DUMP\R5018000.BIN"
+dir_s50180000:  .ascii  "R5018000BIN"
+rg_s50180000:   .asciz  "CPU 0x50180000-0x50297FFF, work RAM kept at power-off (songs, pads)"
+nm_s4c000000:   .asciz  "survey_4c000000.bin"
+path_s4c000000: .asciz  "KN7DUMP\R4C00000.BIN"
+dir_s4c000000:  .ascii  "R4C00000BIN"
+rg_s4c000000:   .asciz  "CPU 0x4C000000-0x4C03FFFF, CS3: library RAM, copied from the program"
+nm_s56800000:   .asciz  "survey_56800000.bin"
+path_s56800000: .asciz  "KN7DUMP\R5680000.BIN"
+dir_s56800000:  .ascii  "R5680000BIN"
+rg_s56800000:   .asciz  "CPU 0x56800000-0x569FFFFF, CS5: IC21 (pass 1 read it at 0x96800000)?"
+nm_s41000000:   .asciz  "survey_41000000.bin"
+path_s41000000: .asciz  "KN7DUMP\R4100000.BIN"
+dir_s41000000:  .ascii  "R4100000BIN"
+rg_s41000000:   .asciz  "CPU 0x41000000-0x4100FFFF, CS0: expansion slot the firmware probes"
+nm_s41800000:   .asciz  "survey_41800000.bin"
+path_s41800000: .asciz  "KN7DUMP\R4180000.BIN"
+dir_s41800000:  .ascii  "R4180000BIN"
+rg_s41800000:   .asciz  "CPU 0x41800000-0x4180FFFF, CS0: expansion slot the firmware probes"
+nm_s56000000:   .asciz  "survey_56000000.bin"
+path_s56000000: .asciz  "KN7DUMP\R5600000.BIN"
+dir_s56000000:  .ascii  "R5600000BIN"
+rg_s56000000:   .asciz  "CPU 0x56000000-0x5600FFFF, CS5: expansion slot the firmware probes"
+nm_s57000000:   .asciz  "survey_57000000.bin"
+path_s57000000: .asciz  "KN7DUMP\R5700000.BIN"
+dir_s57000000:  .ascii  "R5700000BIN"
+rg_s57000000:   .asciz  "CPU 0x57000000-0x5700FFFF, CS5: expansion slot the firmware probes"
