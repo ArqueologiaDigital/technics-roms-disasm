@@ -23,12 +23,34 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
    or port being read, and a progress bar. Below them is the list of all ROMs with their CRC-32 once
    done. Dumping everything takes about 74 MB of writing. In MAME that is roughly 10 minutes of
    emulated time; on the instrument it depends on the card.
-5. When it says **Done**, press **EXIT**, then **NO**. (**YES** loads `KN7APP.BIN` again and dumps
-   again.)
+5. When it says **Done**, the results stay on screen for 15 seconds. Then the firmware asks
+   "Continue Next?": **NO** leaves, **YES** loads `KN7APP.BIN` again and dumps again.
 6. On a computer, `C:\KN7DUMP` holds the files under MAME's names, plus `DUMPLIST.TXT`. That file
-   lists each one's size, CRC-32 and byte sum. For the wave ROMs it also gives the byte sum the
-   firmware's own WAVE ROM test expects, so a bad wave dump shows up on the instrument already
-   (`[SUM?]`).
+   lists each one's size, CRC-32 and byte sum, and what the loader found in the firmware. For the
+   wave ROMs it also gives the byte sum the firmware's own WAVE ROM test expects, so a bad wave dump
+   shows up on the instrument already (`[SUM?]`).
+
+## The SAFE build: the first run on a real instrument
+
+`make` also writes `build/safe/KN7APP.BIN`, the same program built with `mkapp.py --options 0x303E0`
+(`romdump.inc` `OPTS_SAFE`). The dumper shows its name, "KN7000 ROM DUMPER 1.0 SAFE", in yellow at
+the top right. It dumps only what is fully understood: the program flash, the table flash and IC21, all plain CPU reads of memory
+the firmware itself reads. The wave ROMs and the picture window are listed as `[SKIP]`.
+
+On the card it touches nothing but ordinary files. Its only firmware calls are file open, write and
+close, the same routines the loader uses to read `KN7APP.BIN`:
+
+- no `KN7DUMP` folder: `PRGEVEN.BIN`, `PRGODD.BIN`, `TBLEVEN.BIN`, `TBLODD.BIN`, `IC21.BIN` and
+  `DUMPLIST.TXT` go to the root folder;
+- no long-name pass, so no raw sector access at all; `DUMPLIST.TXT` gives each 8.3 file its MAME
+  name.
+
+About 10 MB in all. Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
+back from the card:
+- each file's size and CRC-32 against the ones the instrument computed while writing it;
+- whether each file is a ROM we already have;
+- the program's release byte, build numbers and firmware search, read from the image itself;
+- given a second run, that both runs are byte-identical.
 
 ## What it dumps
 
@@ -87,17 +109,41 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
   | `0x502C0000`-`0x502CFFFF` | two 32 KB buffers                                |
   | `0x502E0000`              | the application's variables and tables           |
 
-- **It never runs on unknown code.** The firmware routines it calls are not taken from a table of
-  941 addresses. The loader finds them in the program flash by their code, with only the operands
-  that move between builds masked:
-  - the fmm file layer's drive switch, `fmmopen`, `fmmclose`, `fmmread` and `fmmwrite`;
-  - raw SD sector read and write;
-  - `sdfmmkdir` and `sdfmpath`;
-  - the SOFT VERSION code that holds the build number.
+- **No firmware addresses are built in.** The firmware routines it calls are not taken from a table
+  of 941 addresses: the loader finds them in the program flash. A signature masks only the operands
+  that move between builds, and must match exactly once, or that service counts as not found.
+- **The point is firmware nobody has dumped, so it gets as far as it can.** Only file access on the
+  SD card is required, and it has two independent sources. Every other service is optional, and the
+  dumper works around a missing one:
 
-  Each must be found exactly once. If one is not, it stops with "Unsupported firmware" before
-  touching anything. `find_fw.py` runs the same search on every program image we have: 941, 942
-  (SP7001) and 935 each give one hit for every routine. The surviving half of 929 lacks that code.
+  | service                          | found by                                                              | without it                                                              |
+  |----------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------|
+  | SD file open, close, read, write | the fmm dispatch tables, by their shape; or the fmm dispatchers' code | nothing can be read or written: the loader says so (15 s) and ends      |
+  | raw SD sector read and write     | code signature                                                        | no long names: the files keep their 8.3 names, `DUMPLIST.TXT` maps them |
+  | `sdfmmkdir`, `sdfmpath`          | code signature                                                        | no `KN7DUMP` folder: the files go to the card's current folder          |
+  | PROGRAM build number             | the SOFT VERSION code's signature                                     | `_bunknown` in the file names, `?` on the screen                        |
+  | TABLE build number               | the ASCII build string the table header points to, range-checked      | the same                                                                |
+  | kernel millisecond counter       | the tick handler's signature                                          | the result screen is held 3000 calls instead of 15 s                    |
+
+  - **The dispatch tables** are eleven 12-byte records of three code pointers (floppy, SD, a third
+    backend). The search asks only for that shape: every pointer in the program flash, the floppy
+    and SD columns each strictly ascending within 64 KB, the three columns in disjoint ranges. That
+    holds exactly once in 941, 942, 935, and even in the surviving upper half of 929, which has
+    none of the dispatchers' code. With the tables the SD backends are called directly, and the
+    drive byte is never touched. When the dispatchers are found too, they must point at the same
+    tables (`fmmopen`'s table = the tables + 12), or the tables are not used.
+  - **What is read is never judged.** Each ROM is read whatever it holds and written as it comes.
+    The wave ROMs' byte sums are compared with the sums the firmware's own test expects, but only to
+    mark a file `[SUM?]`. The release byte at `0x4840000F` goes into the names as it is.
+  - **A file that cannot be written** (open or write failed, card full) is marked `[FAIL]` on the
+    screen and `NOT WRITTEN` with its error code in `DUMPLIST.TXT`, and the dump goes on with the
+    next ROM. If opening a file in `KN7DUMP` fails, that file and the rest go to the current folder.
+  - **The loader's screen** says what it found: the build numbers, or `?`, and a line
+    `file routines: by tables | by code  sectors: yes/no  folders: yes/no  clock: yes/no`.
+    `DUMPLIST.TXT` repeats it as a bit mask, with the tables' and `open`'s addresses.
+
+  `find_fw.py` runs the same searches over every program image we have; `run_test.sh --loader-test`
+  switches searches off in MAME, to run each fallback (see the results).
 - **One step per call.** Each converter call writes one 32 KB chunk and returns. It parks the
   firmware with request 1, which calls again without repainting the screen; request 5 would repaint
   it over the dumper's own. The file layer is switched to the SD card only during a call. The SD
@@ -107,12 +153,15 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
   rewrites `C:\KN7DUMP`'s directory cluster with VFAT long-name entries in front of the unchanged
   8.3 entries, then reads it back to check. Every probe for this is in `probes/README.md`. The pass
   leaves the card alone unless the folder holds only the dump files and fits in its first cluster;
-  it then says why it skipped. `DUMPLIST.TXT` lists both names in either case. `fsck.fat -n`
-  reports no errors on a card written this way.
+  it then says why it skipped. A ROM whose file could not be written is simply left out.
+  `DUMPLIST.TXT` lists both names in either case. `fsck.fat -n` reports no errors on a card written
+  this way.
 - **Not tried on a real instrument yet.** The owner's KN7000 runs **PROGRAM 893 / TABLE 80**,
-  release v1.3, which nobody has dumped. The loader looks for its routines by their code, so it may
-  well find them. If it does not, it says so and writes nothing. Either way, the first run on 893
-  tells us.
+  release v1.3, which nobody has dumped. If neither the tables nor the dispatchers are found in 893,
+  the loader cannot even read `KN7APP.BIN`, and says so. That is the one case where nothing is
+  written. The way past it would be an SD driver of our own (SPI at `0x9805000C`, chip select at
+  `0x36008004` bit 1). That is not written: each byte sent raises IRQ5, which the firmware's own
+  handler answers, and that handshake and its timing cannot be checked in MAME first.
 
 ## Files
 
@@ -125,6 +174,7 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
 | `mkfloppy.py`                 | files onto a blank disk the KN7000 formatted                                              |
 | `gen_font.py`, `font8x13.inc` | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
 | `find_fw.py`                  | the loader's firmware search, in Python, over every program image we have                 |
+| `check_real_dump.py`          | after a real run: files whole, known or new, build numbers, two runs identical            |
 | `fatls.py`                    | lists or extracts the files on an SD card image, showing long names                       |
 | `test/run_test.sh`            | the dumper end to end in MAME, then `verify_dump.py`                                      |
 | `test/prefill.lua`            | test data for the undumped ROMs (the wave ROM regions, the picture window)                |
@@ -135,16 +185,18 @@ new `KN7APP.BIN` copied onto the SD card from a computer.
 
 Results are in the next section. Command:
 
-    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast]
+    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe]
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
 `prefill.lua` fills the four wave ROM regions with seeded pseudo-random data and answers reads of
 the picture window with more of it. The script runs STYLE CONVERT > OK and waits for the dumper to
-finish. `verify_dump.py` then checks every file in `C:\KN7DUMP`:
+finish. `verify_dump.py` then checks every file in `C:\KN7DUMP` (or in the root, when the dumper
+had no folder), by its 8.3 name:
 
-- its long name is one of the driver's ROM names;
-- the program and table files match the driver's CRC-32 and SHA-1;
+- all 11 files are there;
+- its long name is one of the driver's ROM names (with `--loader-test`: or 8.3 only, or `_bunknown`);
+- the program and table files match the driver's CRC-32 and SHA-1 for that half;
 - `custom_data.ic21` matches what the CPU reads at `0x96800000` when the dump ends. The firmware
   writes its homepage record there at boot, so the chip is not factory-blank below `0x20000`;
 - the wave and picture files match the test data.

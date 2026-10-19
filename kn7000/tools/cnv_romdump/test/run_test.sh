@@ -1,31 +1,53 @@
 #!/bin/bash
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>; GPL v3+
 #
-# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] -- the dumper end to end in MAME, then verify_dump.py.
+# run_test.sh MAME_BINARY OUTDIR [--fast] [--no-prefill] [--loader-test N] [--safe] -- the dumper end to end in
+# MAME, then verify_dump.py.
 #   Builds KN7LOAD.CNV (on a floppy the KN7000 formatted) and KN7APP.BIN (put in the root of a copy of the
 #   real KN7000's SD card), boots the kn7000 with both, fills the undumped ROMs with test data (prefill.lua),
 #   runs DISK MENU > STYLE CONVERT > OK, waits until the dumper has finished and checks every file it wrote.
 #   --fast: every ROM cut to 64 KB (a quick check of the whole path; the verifier then checks prefixes).
+#   --loader-test N: the loader with its LoaderTest word set to N, which switches searches off (1 file code
+#     signatures, 2 fmm tables, 4 raw sectors, 8 SD folders, 0x10 build number, 0x20 ms counter), to run the
+#     fallbacks a firmware we have never seen might need; the verifier then allows missing long names/builds.
+#   --safe: the SAFE build (build/safe/KN7APP.BIN: program, table, IC21; 8.3 files in the root, nothing else).
 #   MAME_BINARY: a build of upstream MAME with the kn7000 driver (e.g. the technics-kn-flop-rebuild worktree's).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"; SRC="$HERE/.."
 BIN="$(readlink -f "$1")"; O="$(mkdir -p "$2" && cd "$2" && pwd)"; shift 2
-FAST=0; PREFILL=1
-for a in "$@"; do case "$a" in --fast) FAST=1;; --no-prefill) PREFILL=0;; esac; done
+FAST=0; PREFILL=1; LTEST=0; SAFE=0
+while [ $# -gt 0 ]; do
+  case "$1" in --fast) FAST=1;; --no-prefill) PREFILL=0;; --loader-test) LTEST="$2"; shift;; --safe) SAFE=1;; esac
+  shift
+done
+MKAPP=(); [ "$SAFE" = 1 ] && MKAPP=(--options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE")
 TOOLS="$HOME/compartilhado/kn7000_mame/tools/floppy-images"
 make -s -C "$SRC" OUT="$O/build" FLOPPY_TOOLS="$TOOLS"
-APP="$O/build/KN7APP.BIN"
+FLOPPY="$O/build/kn7load_floppy.img"
+if [ "$LTEST" != 0 ]; then              # patch LoaderTest (its address from the map) and make a floppy of that
+  python3 -I - "$O/build/loader.map" "$O/build/KN7LOAD.CNV" "$O/build/KN7LOAD_TEST.CNV" "$LTEST" <<'EOF'
+import re, struct, sys
+m, src, dst, n = sys.argv[1:]
+a = int(re.search(r'0x([0-9A-Fa-f]+)\s+LoaderTest\b', open(m).read()).group(1), 16) - 0x502B8000
+b = bytearray(open(src, 'rb').read()); assert b[a:a + 4] == bytes(4)
+b[a:a + 4] = struct.pack('<I', int(n, 0)); open(dst, 'wb').write(b)
+EOF
+  mkdir -p "$O/build/ltest" && cp "$O/build/KN7LOAD_TEST.CNV" "$O/build/ltest/KN7LOAD.CNV"
+  python3 -I "$SRC/mkfloppy.py" "$O/build/kn7load_test_floppy.img" KN7LOADER "$TOOLS" "$O/build/ltest/KN7LOAD.CNV"
+  FLOPPY="$O/build/kn7load_test_floppy.img"
+fi
+APP="$O/build/KN7APP.BIN"; [ "$SAFE" = 1 ] && APP="$O/build/safe/KN7APP.BIN"
 if [ "$FAST" = 1 ]; then
   sed -e 's/, 0x200000, /, 0x10000, /' -e 's/, 0x1000000, /, 0x10000, /' -e 's/, 0x800000, /, 0x10000, /' \
       "$SRC/romdump.s" > "$O/build/romdump_fast.s"
   cp "$SRC/kn7cnv.inc" "$SRC/romdump.inc" "$O/build/"
   python3 "$SRC/../xapasm.py" "$O/build/romdump_fast.s" -o "$O/build/fast.bin" -m "$O/build/fast.map" > /dev/null
-  python3 -I "$SRC/mkapp.py" "$O/build/fast.bin" "$O/build/KN7APP_FAST.BIN" > /dev/null
+  python3 -I "$SRC/mkapp.py" "$O/build/fast.bin" "$O/build/KN7APP_FAST.BIN" "${MKAPP[@]}" > /dev/null
   APP="$O/build/KN7APP_FAST.BIN"
 fi
 cp "$HOME/compartilhado/kn7000-emulator/sdcard_from_real_kn7000.img" "$O/sd.img"; chmod u+w "$O/sd.img"
 python3 "$SRC/../sd_addfile.py" "$O/sd.img" 'KN7APP.BIN' "$APP" > /dev/null
-cp "$O/build/kn7load_floppy.img" "$O/floppy.img"
+cp "$FLOPPY" "$O/floppy.img"
 P=""; [ "$PREFILL" = 1 ] && P="lua dofile(\"$HERE/prefill.lua\")"
 sed -e "s|@PREFILL@|$P|" -e "s|@OUT@|$O|g" "$HERE/dump.cmd.in" > "$O/cmd.txt"; echo exit >> "$O/cmd.txt"; rm -f -- "$O/cmd.txt.log"
 mkdir -p "$O/snap" "$O/cfg" "$O/nv"
@@ -36,4 +58,6 @@ cd "$(dirname "$BIN")" && REMOTE_CMD="$O/cmd.txt" DISPLAY="${DISPLAY:-:0}" timeo
   -flop "$O/floppy.img" -harddisk "$O/sd.img" > "$O/run.log" 2>&1 || true
 grep -E '^(PROBE|PREFILL)' "$O/run.log" | tail -4
 ARGS=(); [ "$FAST" = 1 ] && ARGS=(--prefix 65536); [ "$PREFILL" = 0 ] && ARGS+=(--no-prefill)
+[ "$LTEST" != 0 ] && ARGS+=(--degraded)
+[ "$SAFE" = 1 ] && ARGS+=(--degraded --skip-mask 0x3E0)
 python3 -I "$HERE/verify_dump.py" "$O/sd.img" --ic21-ref "$O/ref_ic21.bin" "${ARGS[@]}"

@@ -4,7 +4,7 @@ XAPASM      := $(PYTHON) ../xapasm.py
 FLOPPY_TOOLS ?= ../../../kn7000_mame/tools/floppy-images
 OUT         ?= build
 
-all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/kn7load_floppy.img
+all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
@@ -16,6 +16,12 @@ $(OUT)/romdump.bin: romdump.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm
 
 $(OUT)/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	$(PYTHON) -I mkapp.py $< $@
+
+# the SAFE build (romdump.inc OPTS_SAFE): program, table and IC21 only; plain files in the root, through
+# the firmware's own file routines only: no folder, no long-name pass, no raw SD sectors
+$(OUT)/safe/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
+	@mkdir -p $(OUT)/safe
+	$(PYTHON) -I mkapp.py $< $@ --options 0x303E0 --name "KN7000 ROM DUMPER 1.0 SAFE"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py

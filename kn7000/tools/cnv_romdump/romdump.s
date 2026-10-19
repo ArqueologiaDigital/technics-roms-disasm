@@ -29,7 +29,8 @@ AppHeader:
     .long   APP_BASE
     .long   0, 0
     .ascii  "KN7000 ROM DUMPER 1.0"
-    .space  11                      # the name is 32 bytes
+    .space  11                      # the name is 32 bytes (mkapp.py --name may change it)
+    .long   0                       # APP_OPTIONS (mkapp.py --options), covered by the CRC
 
 # ================================================================================================
 AppEntry:
@@ -62,11 +63,24 @@ en_hold_calls:
 en_first:
     call    InitCrc, 0, 0
     call    MakeNames, 0, 0
+    mov     (APP_OPTIONS), d0       # C:\KN7DUMP (-3 when it is already there); without sdfmmkdir, or
+    mov     OPT_NOFOLDER, d1        # in a build without the folder, the files go to the current folder
+    and     d1, d0
+    bne     en_nofolder
+    mov     (SVC+SV_MKDIR), a1
+    cmp     0, a1
+    bne     en_mkdir
+en_nofolder:
+    mov     1, d0
+    mov     d0, (V_NOFOLDER)
+    bra     en_frame
+en_mkdir:
     call    SdOn, 0, 0
-    mov     str_folder_c, a0        # C:\KN7DUMP (-3 when it is already there)
+    mov     str_folder_c, a0
     mov     (SVC+SV_MKDIR), a1
     calls   (a1)
     call    SdOff, 0, 0
+en_frame:
     call    DrawFrame, 0, 0
     mov     1, d0
     mov     d0, (V_STATE)
@@ -74,41 +88,18 @@ en_first:
 
 en_dump:
     call    SdOn, 0, 0
-    call    DumpStep, 0, 0          # d0 < 0: a file error
-    mov     d0, d2
+    call    DumpStep, 0, 0          # a file error marks that ROM and goes on with the next
     call    SdOff, 0, 0
-    cmp     0, d2
-    blt     en_fail
     bra     en_park
 
 en_finish:
     call    SdOn, 0, 0
-    call    WriteManifest, 0, 0
-    mov     d0, d2
+    call    WriteManifest, 0, 0     # (a failure is shown; the dump files are already written)
     call    SdOff, 0, 0
-    cmp     0, d2
-    blt     en_fail
     call    LongNames, 0, 0         # after the last close: no file open, no cached directory sector
     mov     3, d0
     mov     d0, (V_STATE)
     call    DrawDone, 0, 0
-    call    HoldStart, 0, 0
-    bra     en_park
-
-en_fail:
-    mov     (V_FILEOPEN), d0
-    cmp     0, d0
-    beq     en_fail_draw
-    call    SdOn, 0, 0
-    mov     (SVC+SV_CLOSE), a0
-    calls   (a0)
-    call    SdOff, 0, 0
-    clr     d0
-    mov     d0, (V_FILEOPEN)
-en_fail_draw:
-    mov     4, d0
-    mov     d0, (V_STATE)
-    call    DrawFail, 0, 0
     call    HoldStart, 0, 0
     bra     en_park
 
@@ -260,11 +251,23 @@ mn_build:
     mov     str_n_b, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_BUILD), d0
+    mov     FOUND_BUILD, d1
     cmp     2, d2
     bcs     mn_num
     mov     (SVC+SV_TBUILD), d0
+    mov     FOUND_TBUILD, d1
 mn_num:
+    mov     d0, mdr                 # a build number not found is named "unknown"
+    mov     (SVC+SV_FOUND), d0
+    and     d1, d0
+    bne     mn_known
+    mov     str_n_unknown, a1
+    call    StrCpy, 0, 0
+    bra     mn_ext
+mn_known:
+    mov     mdr, d0
     call    PutDec, 0, 0
+mn_ext:
     mov     str_n_ic17, a1
     btst    1, d2
     beq     mn_ic
@@ -298,9 +301,21 @@ DumpStep:
     mov     (V_FILEOPEN), d0
     cmp     0, d0
     bne     ds_have
+    call    Skipped, 0, 0           # d0 = 1: this build leaves the ROM out
+    cmp     0, d0
+    beq     ds_open
+    call    RomSkip, 0, 0
+    clr     d0
+    bra     ds_ret
+ds_open:
     call    OpenRom, 0, 0
     cmp     0, d0
-    blt     ds_ret
+    blt     ds_skip
+    bra     ds_have
+ds_skip:                            # this ROM's file failed: record it and go on
+    call    RomFailed, 0, 0
+    clr     d0
+    bra     ds_ret
 ds_have:
     call    RomPtr, 0, 0
     mov     a0, a2
@@ -325,10 +340,11 @@ ds_n:
     cmp     d2, d0
     beq     ds_written
     mov     d0, (V_ERR)
-    mov     str_err_write, a0
-    mov     a0, (V_FAIL)
-    mov     -1, d0
-    bra     ds_ret
+    mov     (SVC+SV_CLOSE), a0
+    calls   (a0)
+    clr     d0
+    mov     d0, (V_FILEOPEN)
+    bra     ds_skip
 ds_written:
     mov     (V_POS), d0
     add     d2, d0
@@ -339,17 +355,66 @@ ds_written:
     cmp     d1, d0
     bne     ds_ok
     call    CloseRom, 0, 0
-    mov     (V_ROM), d0
-    inc     d0
-    mov     d0, (V_ROM)
-    cmp     NUM_ROMS, d0
-    bne     ds_ok
-    mov     2, d0
-    mov     d0, (V_STATE)
+    call    NextRom, 0, 0
 ds_ok:
     clr     d0
 ds_ret:
     ret     [d2,d3,a2,a3], 0x30
+
+# RomFailed: this ROM's file could not be created or written (V_ERR): mark it, show it, next ROM.
+RomFailed:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    call    RomPtr, 0, 0
+    mov     ST_ERROR, d0
+    mov     d0, (12, a1)
+    mov     (V_ERR), d0
+    mov     d0, (8, a1)
+    mov     (V_FAILS), d0
+    inc     d0
+    mov     d0, (V_FAILS)
+    mov     (V_ROM), d0
+    call    DrawListLine, 0, 0
+    call    NextRom, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+# RomSkip: this build does not dump this ROM (APP_OPTIONS): mark it, show it, next ROM.
+RomSkip:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    call    RomPtr, 0, 0
+    mov     ST_SKIP, d0
+    mov     d0, (12, a1)
+    mov     (V_ROM), d0
+    call    DrawListLine, 0, 0
+    call    NextRom, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+Skipped:                            # leaf -> d0 = bit V_ROM of APP_OPTIONS
+    mov     (APP_OPTIONS), d0
+    mov     (V_ROM), d1
+sk_shift:
+    cmp     0, d1
+    beq     sk_bit
+    lsr     1, d0
+    add     -1, d1
+    bra     sk_shift
+sk_bit:
+    and     1, d0
+    rets
+
+NextRom:                            # leaf: on to the next ROM; after the last, the finishing step
+    mov     (V_ROM), d0
+    inc     d0
+    mov     d0, (V_ROM)
+    clr     d1
+    mov     d1, (V_POS)
+    cmp     NUM_ROMS, d0
+    bne     nr_ret
+    mov     2, d0
+    mov     d0, (V_STATE)
+nr_ret:
+    rets
 
 RomPtr:                             # leaf -> a0 = this ROM's record, a1 = its result slot
     mov     (V_ROM), d0
@@ -367,7 +432,21 @@ OpenRom:                            # -> d0 = 0, or < 0
     add     -0x20, sp
     call    RomPtr, 0, 0
     mov     a0, a2
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    bne     or_bare
+    mov     (R_PATH, a2), a0        # "KN7DUMP\NAME.BIN"
+    mov     mode_wb, a1
+    mov     (SVC+SV_OPEN), a3
+    calls   (a3)
+    exth    d0
+    cmp     0, d0
+    bge     or_ok
+    mov     1, d0                   # no folder after all: from now on, the current folder
+    mov     d0, (V_NOFOLDER)
+or_bare:
     mov     (R_PATH, a2), a0
+    add     8, a0                   # past "KN7DUMP\"
     mov     mode_wb, a1
     mov     (SVC+SV_OPEN), a3
     calls   (a3)
@@ -375,8 +454,6 @@ OpenRom:                            # -> d0 = 0, or < 0
     cmp     0, d0
     bge     or_ok
     mov     d0, (V_ERR)
-    mov     str_err_open, a0
-    mov     a0, (V_FAIL)
     bra     or_ret
 or_ok:
     mov     1, d0
@@ -535,15 +612,38 @@ WriteManifest:
     mov     str_m_head, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_BUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_BUILD, d1
+    call    PutBuild, 0, 0
     mov     str_m_table, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_TBUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_TBUILD, d1
+    call    PutBuild, 0, 0
     mov     str_m_release, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_RELEASE), d0
     mov     2, d1
+    call    PutHex, 0, 0
+    mov     str_m_options, a1
+    call    StrCpy, 0, 0
+    mov     (APP_OPTIONS), d0
+    mov     8, d1
+    call    PutHex, 0, 0
+    call    PutCrLf, 0, 0
+    mov     str_m_found, a1         # what the loader found in this firmware
+    call    StrCpy, 0, 0
+    mov     (SVC+SV_FOUND), d0
+    mov     2, d1
+    call    PutHex, 0, 0
+    mov     str_m_found2, a1
+    call    StrCpy, 0, 0
+    mov     (SVC+SV_TABLES), d0
+    mov     8, d1
+    call    PutHex, 0, 0
+    mov     str_m_found3, a1
+    call    StrCpy, 0, 0
+    mov     (SVC+SV_OPEN), d0
+    mov     8, d1
     call    PutHex, 0, 0
     call    PutCrLf, 0, 0
     clr     d2
@@ -559,9 +659,30 @@ wm_rom:
     mov     str_sp, a1
     call    StrCpy, 0, 0
     mov     (R_PATH, a2), a1
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    beq     wm_path
+    add     8, a1                   # past "KN7DUMP\"
+wm_path:
     call    StrCpy, 0, 0
     mov     str_sp, a1
     call    StrCpy, 0, 0
+    mov     (12, a3), d0
+    cmp     ST_SKIP, d0
+    bne     wm_notskip
+    mov     str_m_skip, a1          # left out by this build
+    call    StrCpy, 0, 0
+    bra     wm_src
+wm_notskip:
+    cmp     ST_ERROR, d0
+    bne     wm_size
+    mov     str_m_error, a1         # no file: the error code instead
+    call    StrCpy, 0, 0
+    mov     (8, a3), d0
+    mov     8, d1
+    call    PutHex, 0, 0
+    bra     wm_src
+wm_size:
     mov     (8, a3), d0
     call    PutDec, 0, 0
     mov     str_m_crc, a1
@@ -603,6 +724,11 @@ wm_src:
     sub     d0, d1
     mov     d1, (V_TEXTLEN)
     mov     path_manifest, a0
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    beq     wm_open
+    add     8, a0
+wm_open:
     mov     mode_wb, a1
     mov     (SVC+SV_OPEN), a3
     calls   (a3)
@@ -644,6 +770,22 @@ LongNames:
     add     -0x20, sp
     mov     2, d0                   # until it succeeds, "skipped"
     mov     d0, (V_LFN)
+    mov     str_lfn_off, a0         # a build without the pass
+    mov     (APP_OPTIONS), d0
+    mov     OPT_NOLFN, d1
+    and     d1, d0
+    bne     ln_skip
+    mov     str_lfn_noraw, a0       # the loader found no sector access in this firmware
+    mov     (SVC+SV_RAWREAD), d0
+    cmp     0, d0
+    beq     ln_skip
+    mov     (SVC+SV_RAWWRITE), d0
+    cmp     0, d0
+    beq     ln_skip
+    mov     str_lfn_notinfolder, a0 # the files are not in KN7DUMP
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    bne     ln_skip
     clr     d0                      # sector 0: an MBR, or a boot sector (a card without partitions)
     mov     1, d1
     mov     SECBUF, a1
@@ -831,7 +973,7 @@ ln_file:
     add     d0, a2                  # its 8.3 entry, as found
     movbu   (a2), d0
     cmp     0, d0
-    beq     ln_missing
+    beq     ln_fnext                # not on the card (its ROM failed): nothing to name
     mov     d2, d0
     call    FileName, 0, 0          # a0 = its long name, or 0
     cmp     0, a0
@@ -858,6 +1000,7 @@ ln_copy:
     add     -1, d1
     bne     ln_copy
     mov     a1, (V_OUT)
+ln_fnext:
     inc     d2
     cmp     NUM_FILES, d2
     bne     ln_file
@@ -902,9 +1045,6 @@ ln_noend:
     bra     ln_skip
 ln_foreign:
     mov     str_lfn_foreign, a0
-    bra     ln_skip
-ln_missing:
-    mov     str_lfn_missing, a0
     bra     ln_skip
 ln_full:
     mov     str_lfn_big, a0
@@ -1142,6 +1282,21 @@ StrCpy:                             # a1 = source
 sc_end:
     rets
 
+PutBuild:                           # a0 = out, d0 = number, d1 = its FOUND_ bit: the number or "?"
+    mov     d0, mdr
+    mov     (SVC+SV_FOUND), d0
+    and     d1, d0
+    beq     pb_unknown
+    mov     mdr, d0
+    bra     PutDec
+pb_unknown:
+    mov     0x3F, d0
+    movbu   d0, (a0)
+    inc     a0
+    clr     d0
+    movbu   d0, (a0)
+    rets
+
 PutCrLf:
     mov     13, d0
     movbu   d0, (a0)
@@ -1246,11 +1401,13 @@ DrawFrame:
     mov     str_f_prog, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_BUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_BUILD, d1
+    call    PutBuild, 0, 0
     mov     str_f_table, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_TBUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_TBUILD, d1
+    call    PutBuild, 0, 0
     mov     str_f_rel, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_RELEASE), d0
@@ -1262,7 +1419,22 @@ DrawFrame:
     mov     310, d0
     mov     10, d1
     call    DrawText, 0, 0
+    mov     (APP_OPTIONS), d0       # a build with options shows its name ("... SAFE") under that
+    cmp     0, d0
+    beq     df_noname
+    mov     C_WARN, d0
+    call    SetColours, 0, 0
+    mov     APP_BASE+AH_NAME, a0
+    mov     310, d0
+    mov     23, d1
+    call    DrawText, 0, 0
+df_noname:
     mov     str_target, a0
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    beq     df_target
+    mov     str_target_nf, a0
+df_target:
     mov     8, d0
     mov     36, d1
     call    DrawText, 0, 0
@@ -1299,9 +1471,19 @@ DrawListLine:                       # d0 = ROM index: "[ OK ] name ... CRC32 xxx
     mov     str_l_ok, a0
 dl_notok:
     cmp     ST_FAIL, d1
-    bne     dl_col
+    bne     dl_noterr
     mov     C_BAD, d0
     mov     str_l_bad, a0
+dl_noterr:
+    cmp     ST_ERROR, d1
+    bne     dl_notskip
+    mov     C_BAD, d0
+    mov     str_l_err, a0
+dl_notskip:
+    cmp     ST_SKIP, d1
+    bne     dl_col
+    mov     C_DIM, d0
+    mov     str_l_skip, a0
 dl_col:
     mov     a0, (0x18, sp)
     call    SetColours, 0, 0
@@ -1315,10 +1497,22 @@ dl_col:
     mov     (12, a3), d0
     cmp     ST_PENDING, d0
     beq     dl_ret
+    cmp     ST_SKIP, d0
+    beq     dl_ret
     mov     STR, a0
     mov     str_l_crc, a1
+    mov     (12, a3), d0
+    cmp     ST_ERROR, d0
+    bne     dl_crc
+    mov     str_l_ferr, a1
+dl_crc:
     call    StrCpy, 0, 0
     mov     (0, a3), d0
+    mov     (12, a3), d1
+    cmp     ST_ERROR, d1
+    bne     dl_crcv
+    mov     (8, a3), d0             # the error code
+dl_crcv:
     mov     8, d1
     call    PutHex, 0, 0
     mov     STR, a0
@@ -1442,13 +1636,50 @@ DrawDone:
     mov     640, a0
     mov     54, a1
     call    FillRect, 0, 0
+    mov     (V_FAILS), d0           # first line: done, and where the files are
+    cmp     0, d0
+    bne     dd_errors
     mov     C_GOOD, d0
     call    SetColours, 0, 0
     mov     str_done, a0
+    mov     (V_NOFOLDER), d0
+    cmp     0, d0
+    beq     dd_line1
+    mov     str_done_nf, a0
+    bra     dd_line1
+dd_errors:
+    mov     C_BAD, d0
+    call    SetColours, 0, 0
+    mov     STR, a0
+    mov     str_done_err, a1
+    call    StrCpy, 0, 0
+    mov     (V_FAILS), d0
+    call    PutDec, 0, 0
+    mov     str_done_err2, a1
+    call    StrCpy, 0, 0
+    mov     STR, a0
+dd_line1:
     mov     8, d0
     mov     Y_CUR, d1
     call    DrawText, 0, 0
-    mov     C_GOOD, d0              # the long-name pass
+    mov     (V_FAIL), a1            # second line: DUMPLIST.TXT's error, else the long-name pass
+    cmp     0, a1
+    beq     dd_lfnline
+    mov     STR, a0
+    call    StrCpy, 0, 0
+    mov     str_f_code, a1
+    call    StrCpy, 0, 0
+    mov     (V_ERR), d0
+    mov     8, d1
+    call    PutHex, 0, 0
+    mov     str_f_close, a1
+    call    StrCpy, 0, 0
+    mov     C_BAD, d0
+    call    SetColours, 0, 0
+    mov     STR, a0
+    bra     dd_line2
+dd_lfnline:
+    mov     C_GOOD, d0
     mov     (V_LFN), d1
     cmp     1, d1
     beq     dd_lfn
@@ -1456,6 +1687,7 @@ DrawDone:
 dd_lfn:
     call    SetColours, 0, 0
     mov     (V_LFNMSG), a0
+dd_line2:
     mov     8, d0
     mov     Y_RANGE, d1
     call    DrawText, 0, 0
@@ -1467,37 +1699,6 @@ dd_lfn:
     call    DrawText, 0, 0
     ret     [d2,d3,a2,a3], 0x30
 
-DrawFail:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x20, sp
-    mov     C_BG, d0
-    call    SetColours, 0, 0
-    clr     d0
-    mov     Y_CUR, d1
-    mov     640, a0
-    mov     54, a1
-    call    FillRect, 0, 0
-    mov     STR, a0
-    mov     (V_FAIL), a1
-    call    StrCpy, 0, 0
-    mov     str_f_code, a1
-    call    StrCpy, 0, 0
-    mov     (V_ERR), d0
-    mov     8, d1
-    call    PutHex, 0, 0
-    mov     C_BAD, d0
-    call    SetColours, 0, 0
-    mov     STR, a0
-    mov     8, d0
-    mov     Y_CUR, d1
-    call    DrawText, 0, 0
-    mov     C_TEXT, d0
-    call    SetColours, 0, 0
-    mov     str_leave, a0
-    mov     8, d0
-    mov     Y_RANGE, d1
-    call    DrawText, 0, 0
-    ret     [d2,d3,a2,a3], 0x30
 
 # ================================================================================================
 # The ROMs, in dump order; MAME names as in the kn7000 driver (MakeNames builds the first four).
@@ -1526,6 +1727,7 @@ RomTable:
 
 str_title:      .asciz  "KN7000 ROM DUMPER"
 str_target:     .asciz  "To the SD card, folder C:\KN7DUMP; file names as in MAME's kn7000 driver."
+str_target_nf:  .asciz  "To the SD card's root folder, 8.3 names; DUMPLIST.TXT gives MAME's names."
 str_f_prog:     .asciz  "PROGRAM "
 str_f_table:    .asciz  "  TABLE "
 str_f_rel:      .asciz  "  release "
@@ -1537,18 +1739,34 @@ str_l_wait:     .asciz  "[    ] "
 str_l_ok:       .asciz  "[ OK ] "
 str_l_bad:      .asciz  "[SUM?] "
 str_l_crc:      .asciz  "CRC32 "
+str_l_err:      .asciz  "[FAIL] "
+str_l_ferr:     .asciz  "error "
+str_l_skip:     .asciz  "[SKIP] "
+str_m_skip:     .asciz  "not dumped (left out of this build)"
+str_m_options:  .asciz  "  build options 0x"
+str_lfn_off:    .asciz  "Long names off in this build; DUMPLIST.TXT maps the 8.3 names to MAME's."
+str_n_unknown:  .asciz  "unknown"
+str_m_found:    .asciz  "loader found: 0x"
+str_m_found2:   .asciz  " (1 file code, 2 file tables, 4 sectors, 8 folders, 0x10 build, 0x20 table build, 0x40 clock)  fmm tables 0x"
+str_m_found3:   .asciz  "  SD open 0x"
+str_m_error:    .asciz  "NOT WRITTEN, error 0x"
 str_done:       .asciz  "Done: every ROM is in C:\KN7DUMP. DUMPLIST.TXT has sizes and checksums."
+str_done_nf:    .asciz  "Done: the files are in the SD card's root folder, with DUMPLIST.TXT."
+str_done_err:   .asciz  "Done, but "
+str_done_err2:  .asciz  " ROM file(s) could not be written: [FAIL] above."
+str_f_close:    .asciz  ")"
 str_leave:      .asciz  "In 15 s the firmware asks 'Continue Next?': NO leaves, YES dumps again."
 str_f_code:     .asciz  " (code 0x"
-str_err_open:   .asciz  "Could not create a file on the SD card"
-str_err_write:  .asciz  "Writing to the SD card failed"
+str_err_open:   .asciz  "DUMPLIST.TXT could not be created"
+str_err_write:  .asciz  "DUMPLIST.TXT could not be written"
 str_lfn_ok:     .asciz  "Long file names written: a PC shows MAME's names."
 str_lfn_geom:   .asciz  "Long names skipped: unexpected card layout; 8.3 names, see DUMPLIST.TXT."
 str_lfn_io:     .asciz  "Long names skipped: a card sector access failed; see DUMPLIST.TXT."
 str_lfn_nofolder: .asciz "Long names skipped: KN7DUMP not found in the root; see DUMPLIST.TXT."
 str_lfn_big:    .asciz  "Long names skipped: the folder is too big; empty it; see DUMPLIST.TXT."
 str_lfn_foreign: .asciz "Long names skipped: KN7DUMP holds other files; see DUMPLIST.TXT."
-str_lfn_missing: .asciz "Long names skipped: a dump file is missing from KN7DUMP."
+str_lfn_noraw:  .asciz  "Long names skipped: no SD sector access found; 8.3 names, see DUMPLIST.TXT."
+str_lfn_notinfolder: .asciz "Long names skipped: the files are not in KN7DUMP; see DUMPLIST.TXT."
 str_lfn_verify: .asciz  "Long names: the folder did not read back as written!"
 mode_wb:        .asciz  "wb"
 str_folder_c:   .asciz  "C:\KN7DUMP"

@@ -4,14 +4,24 @@
 # mkapp.py -- turn an assembled application into the file KN7LOAD.CNV loads from the SD card: fills
 # the header's size (AH_SIZE, +8) and CRC-32 of the bytes from AH_NAME (+0x20) to the end (AH_CRC,
 # +0x10), after checking the magic "KN7A", the loader ABI and the link address (kn7cnv.inc).
-#   python3 -I mkapp.py app.bin KN7APP.BIN
+#   python3 -I mkapp.py app.bin KN7APP.BIN [--options N] [--name TEXT]
+# --options N writes N into the word after the header (+0x40; romdump.inc APP_OPTIONS), --name replaces
+# the 32-byte name the loader shows; both are inside the CRC.
 import struct
 import sys
 import zlib
 
 APP_BASE, APP_MAX, ABI = 0x502BA000, 0x502E8000 - 0x502BA000, 1
 src, out = sys.argv[1:3]
+args = sys.argv[3:]
 img = bytearray(open(src, 'rb').read())
+if '--options' in args:
+    assert struct.unpack_from('<I', img, 0x40)[0] == 0, 'no options word at +0x40'
+    struct.pack_into('<I', img, 0x40, int(args[args.index('--options') + 1], 0))
+if '--name' in args:
+    name = args[args.index('--name') + 1].encode('latin1')
+    assert len(name) < 32, 'name longer than 31 bytes'
+    img[0x20:0x40] = name.ljust(32, bytes(1))
 magic, abi, _, entry, _, base = struct.unpack_from('<4sIIIII', img, 0)
 assert magic == b'KN7A', 'not an application (magic)'
 assert abi == ABI and base == APP_BASE, f'ABI {abi} / base {base:#x}'

@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>; GPL v3+
 #
-# find_fw.py -- does the dumper's run-time firmware search find the right routines in every KN7000 program
-# build we have? The same search as Discover in romdump.s, in Python: masked byte signatures of the fmm
-# file layer (the drive switch SetExtMode/ResetExtMode and the fmmopen/fmmclose/fmmwrite dispatchers, whose
-# only build-dependent bytes are the drive byte and dispatch-table addresses) and of the SOFT VERSION code
-# that loads the PROGRAM build number. Prints what it finds per image; compare with the known addresses.
+# find_fw.py -- does the loader's run-time firmware search find the right routines in every KN7000 program
+# build we have? The same searches as Discover in loader.s, in Python:
+#   * masked byte signatures of the fmm file layer (the drive switch SetExtMode/ResetExtMode and the
+#     fmmopen/fmmclose/fmmread/fmmwrite dispatchers, whose only build-dependent bytes are the drive byte and
+#     dispatch-table addresses), of raw SD sector read/write, sdfmmkdir/sdfmpath, the SOFT VERSION code that
+#     loads the PROGRAM build number, and the kernel's millisecond tick;
+#   * the fmm dispatch tables, found by their shape alone (find_tables), which give the SD backends without
+#     any code signature -- the loader's way in when the dispatchers' code differs from every build we know.
+# Prints what it finds per image, and whether the tables agree with fmmopen's table operand.
 #   python3 -I find_fw.py                  # the images under ~/compartilhado/technics_romsets and baserom
 import os
 import struct
@@ -62,6 +66,36 @@ def interleave(even, odd):
     out[0::4], out[1::4], out[2::4], out[3::4] = even[0::2], even[1::2], odd[0::2], odd[1::2]
     return bytes(out)
 
+def find_tables(img, base=0x48400000):
+    """The fmm dispatch tables, found by their shape alone: eleven 12-byte records (error, open, close,
+    remove, two more, read, write, seek, rewind, tell), each three code pointers (floppy, SD, third
+    backend) into the program flash, the floppy and SD columns each in ascending order and each
+    within 64 KB. Returns the offsets of every place that fits."""
+    lo, hi = base, base + 0x400000
+    hits = []
+    for o in range(0, len(img) - 11 * 12, 4):
+        rec = [struct.unpack_from('<3I', img, o + 12 * k) for k in range(11)]
+        if not all(lo <= p < hi for r in rec for p in r):
+            continue
+        ok = True
+        for col in (0, 1):
+            c = [r[col] for r in rec]
+            if any(c[k + 1] <= c[k] for k in range(10)) or c[-1] - c[0] > 0x10000:
+                ok = False
+                break
+        if not ok:
+            continue
+        c0, c1, c2 = ([r[i] for r in rec] for i in range(3))
+        # the three backends are three separate pieces of code: the columns' ranges do not overlap
+        if not (max(c0) < min(c1) or max(c1) < min(c0)):
+            continue
+        if max(c2) - min(c2) > 0x10000 or not (max(c2) < min(c0) or min(c2) > max(c0)) \
+                or not (max(c2) < min(c1) or min(c2) > max(c1)):
+            continue
+        hits.append(o)
+    return hits
+
+
 def analyse(name, img, base=0x48400000):
     print(f'== {name}: release byte {img[0xf]:#04x}')
     r = {}
@@ -86,6 +120,15 @@ def analyse(name, img, base=0x48400000):
     if len(r['sdfolder']) == 1:
         h = r['sdfolder'][0]
         print(f"   sdfmmkdir {base + h:#x}, sdfmpath {base + h + 0x3f:#x}, folder buffer {u32(img, h + 0x3f + 10):#x}")
+    t = find_tables(img, base)
+    print(f"   fmm tables by shape: {len(t)} hit(s) " + ', '.join(f'{base + x:#x}' for x in t[:3]))
+    if len(t) == 1:
+        rec = [struct.unpack_from('<3I', img, t[0] + 12 * k) for k in range(11)]
+        print(f"   SD backends: open {rec[1][1]:#x}, close {rec[2][1]:#x}, read {rec[6][1]:#x}, write {rec[7][1]:#x}")
+        print(f"   floppy backends: open {rec[1][0]:#x}, close {rec[2][0]:#x}, read {rec[6][0]:#x}")
+        if len(r['fmmopen']) == 1:   # the loader uses the tables only when fmmopen's table = the tables + 12
+            topen = u32(img, r['fmmopen'][0] + 8)
+            print(f"   fmmopen's table operand {topen:#x}: {'agrees' if topen == base + t[0] + 12 else 'DISAGREES'}")
     if len(r['tick']) == 1:
         h = r['tick'][0]
         print(f"   kernel ms counter {u32(img, h + 7):#x} (twice: {u32(img, h + 7) == u32(img, h + 14)})")
@@ -94,11 +137,12 @@ def analyse(name, img, base=0x48400000):
         o = a - base
         print(f'   build number u16 at {a:#010x} = {struct.unpack_from("<H", img, o)[0] if 0 <= o < len(img) else "?"}')
 
-z = zipfile.ZipFile(f'{R}/kn7000.zip')
-analyse('941 (kn7000.zip)', interleave(z.read('kn7000_program_even.ic17'), z.read('kn7000_program_odd.ic16')))
-analyse('942 (baserom)', open(f'{B}/kn7000_program_sp7001.rom', 'rb').read())
-analyse('935', interleave(open(f'{R}/kn7000/kn7000_program_even_v1.5_b935.ic17', 'rb').read(),
-                          open(f'{R}/kn7000/kn7000_program_odd_v1.5_b935.ic16', 'rb').read()))
-up = interleave(open(f'{R}/kn7000/kn7000_program_even_v1.4_b929_upper.ic17', 'rb').read(),
-                open(f'{R}/kn7000/kn7000_program_odd_v1.4_b929_upper.ic16', 'rb').read())
-analyse('929 (upper half only)', bytes(0x200000) + up)
+if __name__ == '__main__':
+    z = zipfile.ZipFile(f'{R}/kn7000.zip')
+    analyse('941 (kn7000.zip)', interleave(z.read('kn7000_program_even.ic17'), z.read('kn7000_program_odd.ic16')))
+    analyse('942 (baserom)', open(f'{B}/kn7000_program_sp7001.rom', 'rb').read())
+    analyse('935', interleave(open(f'{R}/kn7000/kn7000_program_even_v1.5_b935.ic17', 'rb').read(),
+                              open(f'{R}/kn7000/kn7000_program_odd_v1.5_b935.ic16', 'rb').read()))
+    up = interleave(open(f'{R}/kn7000/kn7000_program_even_v1.4_b929_upper.ic17', 'rb').read(),
+                    open(f'{R}/kn7000/kn7000_program_odd_v1.4_b929_upper.ic16', 'rb').read())
+    analyse('929 (upper half only)', bytes(0x200000) + up)

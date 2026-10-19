@@ -31,8 +31,17 @@
 .equ LV_STR,        LOADER_VARS+0x20    # 64 bytes: a line being formatted
 .equ LV_SAVEDPATH,  LOADER_VARS+0x80    # 0x80 bytes: the SD current folder while the application runs
 .equ LV_HOLD,       LOADER_VARS+0x1C    # calls spent showing a failure before ending the conversion
+.equ LV_A_SETEXT,   LOADER_VARS+0x60    # what FindFileSig found (used when the tables are not)
+.equ LV_A_RESETEXT, LOADER_VARS+0x64
+.equ LV_A_OPEN,     LOADER_VARS+0x68
+.equ LV_A_CLOSE,    LOADER_VARS+0x6C
+.equ LV_A_READ,     LOADER_VARS+0x70
+.equ LV_A_WRITE,    LOADER_VARS+0x74
+.equ LV_SIGSTEP,    LOADER_VARS+0x78    # how far FindFileSig got: 0 drive switch, 1 open, 2 close, 3 read, 4 write, 5 all
+.equ LV_NTAB,       LOADER_VARS+0x7C    # places with the dispatch tables' shape (1 is a find)
 .equ HOLD_MS,       15000               # show a failure this long (kernel milliseconds) ...
-.equ HOLD_CALLS,    3000                # ... or this many calls when the counter was not found
+.equ HOLD_CALLS,    300000              # ... or this many calls when the counter was not found: parked with
+                                        # request 1 the firmware calls about 20000 times a second (941 in MAME)
 .equ C_BG,          0x0010
 .equ C_TEXT,        0xFFFF
 .equ C_DIM,         0x8410
@@ -53,7 +62,11 @@ Entry:
     call    InitScreen, 0, 0
     call    Discover, 0, 0
     cmp     0, d0
-    bne     en_fail
+    beq     en_found
+    call    DrawFirmware, 0, 0      # what was found, and how far the file searches got
+    call    DrawSearch, 0, 0
+    bra     en_fail
+en_found:
     mov     1, d0
     mov     d0, (LV_FOUND)
 en_load:
@@ -131,6 +144,9 @@ en_ret:
 PathSave:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    mov     (SVC+SV_SETPATH), a1    # without sdfmpath, file names stay relative to the current folder
+    cmp     0, a1
+    beq     ps_ret
     mov     (SVC+SV_PATHBUF), a0
     mov     LV_SAVEDPATH, a1
     mov     0x80, d1
@@ -144,11 +160,15 @@ ps_copy:
     mov     0, a0
     mov     (SVC+SV_SETPATH), a1
     calls   (a1)
+ps_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 PathRestore:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    mov     (SVC+SV_SETPATH), a1
+    cmp     0, a1
+    beq     pr_ret
     mov     LV_SAVEDPATH, a0
     movbu   (a0), d0
     cmp     0, d0
@@ -294,148 +314,174 @@ c3_next:
     ret     [d2,d3,a2,a3], 0x30
 
 # ================================================================================================
-# Discover -> d0 = 0, or 1 with LV_FAIL set. Finds in the program flash 0x48400000-0x487FFFFF, by
-# masked code signatures (only operands that move between builds are masked), each exactly once:
-# the fmm drive switch, fmmopen, fmmclose, fmmread, fmmwrite (dispatchers told apart by their
-# table's distance from fmmopen's), raw SD sector read/write, sdfmmkdir/sdfmpath, and the SOFT
-# VERSION code that loads the PROGRAM build number. kn7000_disassembly tools/cnv_romdump/find_fw.py
-# runs the same search on every program image we have.
+# Discover -> d0 = 0, or 1 with LV_FAIL set when no way to read and write files was found.
+#
+# Every search is independent, and only file access is required; whatever else is missing is left 0
+# in the service table (SV_FOUND says what was found) and the application carries on without it.
+# File access comes from either of two places, so that a firmware whose code differs from the builds
+# we know is still usable:
+#   - the fmm dispatch tables, found by their shape alone (FindTables): the SD backends are then
+#     called directly, and the drive byte is never touched;
+#   - the fmm dispatchers and the drive switch, found by masked code signatures (FindFileSig).
+# When both are found they must agree (fmmopen's table = the tables + 12); the tables are used then.
+# Signatures with only build-dependent operands masked, each of which must match exactly once:
+# raw SD sector read/write, sdfmmkdir/sdfmpath, the SOFT VERSION build number, the kernel tick.
+# kn7000_disassembly tools/cnv_romdump/find_fw.py runs the same searches over every program image
+# we have. LoaderTest (test builds only) switches searches off, to exercise the fallbacks.
 Discover:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
-    mov     sig_ext, a0
-    mov     0x48400000, d0
-    mov     0x487FFF00, d1
-    call    CountSig, 0, 0
-    cmp     1, d0
-    bne     di_no_ext
-    mov     (LV_LASTHIT), a2
-    mov     a2, (SVC+SV_SETEXT)
-    mov     a2, d0
-    add     0x0F, d0
-    mov     d0, (SVC+SV_RESETEXT)
-    mov     a2, a0
-    add     8, a0
-    call    Read32U, 0, 0
-    mov     d0, d2                  # the drive byte address, three times in the signature
-    mov     d0, (SVC+SV_DRIVE)
-    mov     a2, a0
-    add     18, a0
-    call    Read32U, 0, 0
-    cmp     d2, d0
-    bne     di_no_ext
-    mov     a2, a0
-    add     27, a0
-    call    Read32U, 0, 0
-    cmp     d2, d0
-    bne     di_no_ext
-
-    mov     sig_open, a0            # fmmopen, within 4 KB after the drive switch
-    mov     a2, d0
-    mov     a2, d1
-    add     0x1000, d1
-    call    CountSig, 0, 0
-    cmp     1, d0
-    bne     di_no_file
-    mov     (LV_LASTHIT), a3
-    mov     a3, (SVC+SV_OPEN)
-    mov     a3, a0
-    add     8, a0
-    call    Read32U, 0, 0
-    mov     d0, (LV_TOPEN)
-    mov     a3, a0
-    add     28, a0
-    call    Read32U, 0, 0
-    cmp     d2, d0
-    bne     di_no_file
-
-    mov     sig_close, a0           # fmmclose: table 12 bytes after fmmopen's
-    mov     5, d0
-    mov     12, d1
-    mov     25, a1
-    call    FindDispatcher, 0, 0
+    clr     d0
+    mov     d0, (SVC+SV_FOUND)
+    mov     (LoaderTest), d0
+    btst    0x01, d0
+    bne     di_nosig
+    call    FindFileSig, 0, 0       # d0 = 1 when the dispatchers were found
     cmp     0, d0
-    beq     di_no_file
+    beq     di_nosig
+    mov     FOUND_FILESIG, d0
+    call    Found, 0, 0
+di_nosig:
+    mov     (LoaderTest), d0
+    btst    0x02, d0
+    bne     di_notab
+    call    FindTables, 0, 0        # d0 = the tables, or 0
+    cmp     0, d0
+    beq     di_notab
+    mov     d0, (SVC+SV_TABLES)
+    mov     FOUND_TABLES, d0
+    call    Found, 0, 0
+di_notab:
+    mov     (SVC+SV_FOUND), d2      # choose: the tables (when the signatures agree or are absent) ...
+    btst    FOUND_TABLES, d2
+    beq     di_use_sig
+    btst    FOUND_FILESIG, d2
+    beq     di_use_tab
+    mov     (SVC+SV_TABLES), d0
+    add     12, d0
+    mov     (LV_TOPEN), d1
+    cmp     d1, d0
+    beq     di_use_tab
+    mov     (SVC+SV_FOUND), d0      # they disagree: trust neither table address, use the code found
+    and     0xFFFFFFFF-FOUND_TABLES, d0
+    mov     d0, (SVC+SV_FOUND)
+    clr     d0
+    mov     d0, (SVC+SV_TABLES)
+    bra     di_use_sig
+di_use_tab:
+    mov     (SVC+SV_TABLES), a2     # record k, column 1 (SD): error 0, open 1, close 2, read 6, write 7
+    mov     (16, a2), d0
+    mov     d0, (SVC+SV_OPEN)
+    mov     (28, a2), d0
     mov     d0, (SVC+SV_CLOSE)
-    mov     sig_rw, a0              # fmmread: table 0x3C bytes after fmmopen's
-    mov     8, d0
-    mov     0x3C, d1
-    mov     28, a1
-    call    FindDispatcher, 0, 0
-    cmp     0, d0
-    beq     di_no_file
+    mov     (76, a2), d0
     mov     d0, (SVC+SV_READ)
-    mov     sig_rw, a0              # fmmwrite: 0x48 bytes after
-    mov     8, d0
-    mov     0x48, d1
-    mov     28, a1
-    call    FindDispatcher, 0, 0
-    cmp     0, d0
-    beq     di_no_file
+    mov     (88, a2), d0
+    mov     d0, (SVC+SV_WRITE)
+    mov     NoOp, d0
+    mov     d0, (SVC+SV_SETEXT)
+    mov     d0, (SVC+SV_RESETEXT)
+    bra     di_optional
+di_use_sig:                         # ... or the dispatchers, with the drive switch
+    btst    FOUND_FILESIG, d2
+    beq     di_optional             # neither (SV_OPEN stays 0): the rest is still looked for, for the screen
+    mov     (LV_A_SETEXT), d0
+    mov     d0, (SVC+SV_SETEXT)
+    mov     (LV_A_RESETEXT), d0
+    mov     d0, (SVC+SV_RESETEXT)
+    mov     (LV_A_OPEN), d0
+    mov     d0, (SVC+SV_OPEN)
+    mov     (LV_A_CLOSE), d0
+    mov     d0, (SVC+SV_CLOSE)
+    mov     (LV_A_READ), d0
+    mov     d0, (SVC+SV_READ)
+    mov     (LV_A_WRITE), d0
     mov     d0, (SVC+SV_WRITE)
 
-    mov     sig_raw, a0             # raw SD sector read, and write 0x33 bytes after it
+di_optional:
+    mov     (LoaderTest), d0        # raw SD sector read, and write 0x33 bytes after it
+    btst    0x04, d0
+    bne     di_noraw
+    mov     sig_raw, a0
     mov     0x48400000, d0
     mov     0x487FFF00, d1
     call    CountSig, 0, 0
     cmp     1, d0
-    bne     di_no_sd
+    bne     di_noraw
     mov     (LV_LASTHIT), d0
     mov     d0, (SVC+SV_RAWREAD)
     add     0x33, d0
     mov     d0, (SVC+SV_RAWWRITE)
-    mov     sig_sdfolder, a0        # sdfmmkdir, and sdfmpath 0x3F bytes after it
+    mov     FOUND_RAW, d0
+    call    Found, 0, 0
+di_noraw:
+    mov     (LoaderTest), d0        # sdfmmkdir, and sdfmpath 0x3F bytes after it
+    btst    0x08, d0
+    bne     di_nofolder
+    mov     sig_sdfolder, a0
     mov     0x48400000, d0
     mov     0x487FFF00, d1
     call    CountSig, 0, 0
     cmp     1, d0
-    bne     di_no_sd
+    bne     di_nofolder
     mov     (LV_LASTHIT), a2
-    mov     a2, (SVC+SV_MKDIR)
     mov     a2, a0
-    add     0x3F, a0
-    mov     a0, (SVC+SV_SETPATH)
-    add     10, a0                  # sdfmpath: mov FOLDERBUF, a0
+    add     0x3F+10, a0             # sdfmpath: mov FOLDERBUF, a0
     call    Read32U, 0, 0
-    mov     d0, (SVC+SV_PATHBUF)
-    mov     0x50000000, d1          # it must lie in work RAM
+    mov     0x50000000, d1          # the buffer must lie in work RAM
     cmp     d1, d0
-    bcs     di_no_sd
+    bcs     di_nofolder
     mov     0x503FFF80, d1
     cmp     d1, d0
-    bhi     di_no_sd
-
-    mov     sig_build, a0           # SOFT VERSION: mov (B), d0 ... -> the PROGRAM build number
+    bhi     di_nofolder
+    mov     d0, (SVC+SV_PATHBUF)
+    mov     a2, (SVC+SV_MKDIR)
+    mov     a2, d0
+    add     0x3F, d0
+    mov     d0, (SVC+SV_SETPATH)
+    mov     FOUND_FOLDER, d0
+    call    Found, 0, 0
+di_nofolder:
+    mov     (LoaderTest), d0        # SOFT VERSION: mov (B), d0 ... -> the PROGRAM build number
+    btst    0x10, d0
+    bne     di_nobuild
+    mov     sig_build, a0
     mov     0x48400000, d0
     mov     0x487FFF00, d1
     call    CountSig, 0, 0
     cmp     1, d0
-    bne     di_no_build
+    bne     di_nobuild
     mov     (LV_LASTHIT), a0
     add     2, a0
     call    Read32U, 0, 0
     mov     d0, a0
     mov     0x48400000, d1
     cmp     d1, d0
-    bcs     di_no_build
+    bcs     di_nobuild
     mov     0x487FFFFE, d1
     cmp     d1, d0
-    bhi     di_no_build
+    bhi     di_nobuild
     movbu   (a0), d0
     movbu   (1, a0), d1
     asl     8, d1
     or      d1, d0
     mov     d0, (SVC+SV_BUILD)
-    mov     0x4840000F, a0
+    mov     FOUND_BUILD, d0
+    call    Found, 0, 0
+di_nobuild:
+    mov     0x4840000F, a0          # the release byte: always there
     movbu   (a0), d0
     mov     d0, (SVC+SV_RELEASE)
     call    TableBuild, 0, 0
-    mov     sig_tick, a0            # optional: the kernel's millisecond counter, from its tick handler
+    mov     (LoaderTest), d0        # the kernel's millisecond counter, from its tick handler
+    btst    0x20, d0
+    bne     di_notick
+    mov     sig_tick, a0
     mov     0x48400000, d0
     mov     0x487FFF00, d1
     call    CountSig, 0, 0
     cmp     1, d0
-    bne     di_no_tick
+    bne     di_notick
     mov     (LV_LASTHIT), a2
     mov     a2, a0
     add     7, a0
@@ -445,15 +491,17 @@ Discover:
     add     14, a0
     call    Read32U, 0, 0
     cmp     d2, d0
-    bne     di_no_tick
+    bne     di_notick
     mov     0x50000000, d1
     cmp     d1, d0
-    bcs     di_no_tick
+    bcs     di_notick
     mov     0x503FFFFC, d1
     cmp     d1, d0
-    bhi     di_no_tick
+    bhi     di_notick
     mov     d0, (SVC+SV_MSCOUNT)
-di_no_tick:
+    mov     FOUND_TICK, d0
+    call    Found, 0, 0
+di_notick:
     mov     0x53374E4B, d0          # "KN7S"
     mov     d0, (SVC+SV_MAGIC)
     mov     LOADER_ABI, d0
@@ -463,22 +511,261 @@ di_no_tick:
     mov     FillRect, d0
     mov     d0, (SVC+SV_FILLRECT)
     clr     d0
-    bra     di_ret
-di_no_ext:
-    mov     str_no_ext, a0
-    bra     di_fail
-di_no_file:
+    mov     (SVC+SV_OPEN), d1
+    cmp     0, d1
+    bne     di_ret
     mov     str_no_file, a0
-    bra     di_fail
-di_no_sd:
-    mov     str_no_sd, a0
-    bra     di_fail
-di_no_build:
-    mov     str_no_build, a0
-di_fail:
     mov     a0, (LV_FAIL)
     mov     1, d0
 di_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+Found:                              # leaf: SV_FOUND |= d0
+    mov     (SVC+SV_FOUND), d1
+    or      d0, d1
+    mov     d1, (SVC+SV_FOUND)
+    rets
+
+NoOp:                               # the drive switch when the SD backends are called directly
+    rets
+
+# FindFileSig -> d0 = 1 when the drive switch and the fmmopen/fmmclose/fmmread/fmmwrite dispatchers
+# were each found exactly once (into LV_A_*, LV_TOPEN, SV_DRIVE), else 0.
+FindFileSig:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    clr     d0
+    mov     d0, (LV_SIGSTEP)
+    mov     sig_ext, a0
+    mov     0x48400000, d0
+    mov     0x487FFF00, d1
+    call    CountSig, 0, 0
+    cmp     1, d0
+    bne     ff_no
+    mov     (LV_LASTHIT), a2
+    mov     a2, (LV_A_SETEXT)
+    mov     a2, d0
+    add     0x0F, d0
+    mov     d0, (LV_A_RESETEXT)
+    mov     a2, a0
+    add     8, a0
+    call    Read32U, 0, 0
+    mov     d0, d2                  # the drive byte address, three times in the signature
+    mov     d0, (SVC+SV_DRIVE)
+    mov     a2, a0
+    add     18, a0
+    call    Read32U, 0, 0
+    cmp     d2, d0
+    bne     ff_no
+    mov     a2, a0
+    add     27, a0
+    call    Read32U, 0, 0
+    cmp     d2, d0
+    bne     ff_no
+    mov     1, d0
+    mov     d0, (LV_SIGSTEP)
+    mov     sig_open, a0            # fmmopen, within 4 KB after the drive switch
+    mov     a2, d0
+    mov     a2, d1
+    add     0x1000, d1
+    call    CountSig, 0, 0
+    cmp     1, d0
+    bne     ff_no
+    mov     (LV_LASTHIT), a3
+    mov     a3, (LV_A_OPEN)
+    mov     a3, a0
+    add     8, a0
+    call    Read32U, 0, 0
+    mov     d0, (LV_TOPEN)
+    mov     a3, a0
+    add     28, a0
+    call    Read32U, 0, 0
+    cmp     d2, d0
+    bne     ff_no
+    mov     2, d0
+    mov     d0, (LV_SIGSTEP)
+    mov     sig_close, a0           # fmmclose: table 12 bytes after fmmopen's
+    mov     5, d0
+    mov     12, d1
+    mov     25, a1
+    call    FindDispatcher, 0, 0
+    cmp     0, d0
+    beq     ff_no
+    mov     d0, (LV_A_CLOSE)
+    mov     3, d0
+    mov     d0, (LV_SIGSTEP)
+    mov     sig_rw, a0              # fmmread: 0x3C bytes after
+    mov     8, d0
+    mov     0x3C, d1
+    mov     28, a1
+    call    FindDispatcher, 0, 0
+    cmp     0, d0
+    beq     ff_no
+    mov     d0, (LV_A_READ)
+    mov     4, d0
+    mov     d0, (LV_SIGSTEP)
+    mov     sig_rw, a0              # fmmwrite: 0x48 bytes after
+    mov     8, d0
+    mov     0x48, d1
+    mov     28, a1
+    call    FindDispatcher, 0, 0
+    cmp     0, d0
+    beq     ff_no
+    mov     d0, (LV_A_WRITE)
+    mov     5, d0
+    mov     d0, (LV_SIGSTEP)
+    mov     1, d0
+    bra     ff_ret
+ff_no:
+    clr     d0
+ff_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# FindTables -> d0 = the fmm dispatch tables, or 0 unless exactly one place fits. Found by their shape
+# alone: eleven 12-byte records (error, open, close, remove, two more, read, write, seek, rewind, tell)
+# of three code pointers into the program flash, the floppy and SD columns each ascending and within
+# 64 KB, the three columns in separate stretches of code.
+.equ TB_RECS,       11
+FindTables:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     0x48400000, a2
+    clr     d2                      # hits
+    mov     0, a3                   # the last one
+ft_next:
+    mov     0x487FFF00, d0
+    cmp     d0, a2
+    bcc     ft_done
+    mov     (a2), d0                # quick reject: the first word must point into the program flash
+    mov     0x48400000, d1
+    cmp     d1, d0
+    bcs     ft_skip
+    mov     0x48800000, d1
+    cmp     d1, d0
+    bcc     ft_skip
+    mov     a2, a0
+    call    CheckTables, 0, 0
+    cmp     0, d0
+    beq     ft_skip
+    inc     d2
+    mov     a2, a3
+ft_skip:
+    add     4, a2
+    bra     ft_next
+ft_done:
+    mov     d2, (LV_NTAB)
+    clr     d0
+    cmp     1, d2
+    bne     ft_ret
+    mov     a3, d0
+ft_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# CheckTables(a0 = candidate) -> d0 = 1 when the 33 words there have the dispatch tables' shape.
+CheckTables:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     a0, a2
+    mov     a2, a0                  # every word a program flash address
+    mov     TB_RECS*3, d2
+ct_flash:
+    mov     (a0), d0
+    mov     0x48400000, d1
+    cmp     d1, d0
+    bcs     ct_no
+    mov     0x48800000, d1
+    cmp     d1, d0
+    bcc     ct_no
+    add     4, a0
+    add     -1, d2
+    bne     ct_flash
+    clr     d3                      # columns 0 (floppy) and 1 (SD): ascending, within 64 KB
+ct_col:
+    mov     a2, a0
+    mov     d3, d0
+    asl     2, d0
+    add     d0, a0
+    mov     TB_RECS-1, d2
+ct_asc:
+    mov     (a0), d0
+    mov     (12, a0), d1
+    cmp     d0, d1
+    bls     ct_no                   # not strictly ascending
+    add     12, a0
+    add     -1, d2
+    bne     ct_asc
+    mov     d3, d0                  # last - first <= 0x10000
+    asl     2, d0
+    mov     a2, a1
+    add     d0, a1
+    mov     (a1), d0
+    mov     ((TB_RECS-1)*12, a1), d1
+    sub     d0, d1
+    mov     0x10000, d0
+    cmp     d0, d1
+    bhi     ct_no
+    inc     d3
+    cmp     2, d3
+    bne     ct_col
+    # column ranges: floppy [first0, last0], SD [first1, last1] must not overlap
+    mov     (a2), d0                # first0
+    mov     ((TB_RECS-1)*12, a2), d1    # last0
+    mov     (4, a2), d2             # first1
+    mov     ((TB_RECS-1)*12+4, a2), d3  # last1
+    cmp     d2, d1                  # last0 < first1 ?
+    bcs     ct_c2
+    cmp     d0, d3                  # last1 < first0 ?
+    bcs     ct_c2
+    bra     ct_no
+ct_c2:                              # column 2: within 64 KB, and clear of both other ranges
+    mov     d0, (0x14, sp)          # first0
+    mov     d1, (0x18, sp)          # last0
+    mov     a2, a0
+    add     8, a0
+    mov     (a0), d0                # min2 = max2 = the first
+    mov     d0, a3                  # min2
+    mov     d0, a1                  # max2
+    mov     TB_RECS-1, d1
+ct_mm:
+    add     12, a0
+    mov     (a0), d0
+    cmp     a3, d0
+    bcc     ct_mm1
+    mov     d0, a3
+ct_mm1:
+    cmp     a1, d0
+    bls     ct_mm2
+    mov     d0, a1
+ct_mm2:
+    add     -1, d1
+    bne     ct_mm
+    mov     a1, d0                  # max2 - min2 <= 0x10000
+    mov     a3, d1
+    sub     d1, d0
+    mov     0x10000, d1
+    cmp     d1, d0
+    bhi     ct_no
+    mov     a1, d0                  # clear of the SD range [d2, d3]: max2 < first1 or min2 > last1
+    cmp     d2, d0
+    bcs     ct_c2b
+    mov     a3, d0
+    cmp     d3, d0
+    bls     ct_no
+ct_c2b:
+    mov     a1, d0                  # clear of the floppy range
+    mov     (0x14, sp), d1
+    cmp     d1, d0
+    bcs     ct_yes
+    mov     a3, d0
+    mov     (0x18, sp), d1
+    cmp     d1, d0
+    bls     ct_no
+ct_yes:
+    mov     1, d0
+    bra     ct_ret
+ct_no:
+    clr     d0
+ct_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # FindDispatcher(a0 = signature, d0 = table operand offset, d1 = table distance from fmmopen's,
@@ -492,7 +779,7 @@ FindDispatcher:
     mov     (LV_TOPEN), d2
     add     d1, d2
     mov     a1, (0x1C, sp)
-    mov     (SVC+SV_SETEXT), a2
+    mov     (LV_A_SETEXT), a2
     mov     a2, d3
     add     0x1000, d3
     mov     0, a3
@@ -538,16 +825,26 @@ fd_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # TableBuild: the TABLE build number, as the SOFT VERSION screen reads it: the decimal digits at
-# 0x48000000 + u32(0x4800001C), up to a non-digit (at most 6). Leaf.
+# 0x48000000 + u32(0x4800001C), up to a non-digit (at most 6). Sets FOUND_TBUILD when the pointer lies
+# in the table flash and at least one digit is there; otherwise SV_TBUILD stays 0. Leaf.
 TableBuild:
+    clr     d1
+    mov     d1, (SVC+SV_TBUILD)
     mov     0x4800001C, a0
     mov     (a0), d0
+    mov     0x003FFFF0, d1          # an offset inside the 4 MB table flash
+    cmp     d1, d0
+    bhi     tb_ret
     mov     0x48000000, d1
     add     d1, d0
     mov     d0, a0
+    movbu   (a0), d0                # at least one digit
+    add     -0x30, d0
+    cmp     9, d0
+    bhi     tb_ret
     clr     d1
     mov     6, d0
-    mov     d0, (SVC+SV_TBUILD)
+    mov     d0, mdr                 # digit count, kept in mdr
 tb_dig:
     movbu   (a0), d0
     add     -0x30, d0
@@ -559,12 +856,17 @@ tb_dig:
     add     d1, d1
     add     d0, d1
     inc     a0
-    mov     (SVC+SV_TBUILD), d0
+    mov     mdr, d0
     add     -1, d0
-    mov     d0, (SVC+SV_TBUILD)
+    mov     d0, mdr
+    cmp     0, d0
     bne     tb_dig
 tb_done:
     mov     d1, (SVC+SV_TBUILD)
+    mov     (SVC+SV_FOUND), d0
+    or      FOUND_TBUILD, d0
+    mov     d0, (SVC+SV_FOUND)
+tb_ret:
     rets
 
 # CountSig(a0 = signature, d0 = start, d1 = end) -> d0 = hits; LV_LASTHIT = the first.
@@ -686,11 +988,13 @@ DrawFirmware:                       # "PROGRAM 941  TABLE 84  release 16"
     mov     str_f_prog, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_BUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_BUILD, d1
+    call    PutBuild, 0, 0
     mov     str_f_table, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_TBUILD), d0
-    call    PutDec, 0, 0
+    mov     FOUND_TBUILD, d1
+    call    PutBuild, 0, 0
     mov     str_f_rel, a1
     call    StrCpy, 0, 0
     mov     (SVC+SV_RELEASE), d0
@@ -703,7 +1007,83 @@ DrawFirmware:                       # "PROGRAM 941  TABLE 84  release 16"
     mov     8, d0
     mov     60, d1
     call    DrawText, 0, 0
+    mov     LV_STR, a0              # what the search found
+    mov     str_k_file, a1
+    call    StrCpy, 0, 0
+    mov     str_k_none, a1
+    mov     (SVC+SV_FOUND), d2
+    btst    FOUND_FILESIG, d2
+    beq     dfw_tab
+    mov     str_k_code, a1
+dfw_tab:
+    btst    FOUND_TABLES, d2
+    beq     dfw_file
+    mov     str_k_tables, a1
+dfw_file:
+    call    StrCpy, 0, 0
+    mov     str_k_raw, a1
+    call    StrCpy, 0, 0
+    mov     FOUND_RAW, d0
+    call    PutYesNo, 0, 0
+    mov     str_k_folder, a1
+    call    StrCpy, 0, 0
+    mov     FOUND_FOLDER, d0
+    call    PutYesNo, 0, 0
+    mov     str_k_clock, a1
+    call    StrCpy, 0, 0
+    mov     FOUND_TICK, d0
+    call    PutYesNo, 0, 0
+    mov     LV_STR, a0
+    mov     8, d0
+    mov     72, d1
+    call    DrawText, 0, 0
     ret     [d2,d3,a2,a3], 0x30
+
+PutBuild:                           # leaf: a0 = out, d0 = number, d1 = its FOUND_ bit: the number or "?"
+    mov     d0, mdr                 # keep the number
+    mov     (SVC+SV_FOUND), d0
+    and     d1, d0
+    beq     pb_unknown
+    mov     mdr, d0
+    bra     PutDec
+pb_unknown:
+    mov     0x3F, d0
+    movbu   d0, (a0)
+    inc     a0
+    clr     d0
+    movbu   d0, (a0)
+    rets
+
+DrawSearch:                         # "search: fmm tables 0 places, file code 2 of 5 steps"
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     LV_STR, a0
+    mov     str_s_tab, a1
+    call    StrCpy, 0, 0
+    mov     (LV_NTAB), d0
+    call    PutDec, 0, 0
+    mov     str_s_code, a1
+    call    StrCpy, 0, 0
+    mov     (LV_SIGSTEP), d0
+    call    PutDec, 0, 0
+    mov     str_s_steps, a1
+    call    StrCpy, 0, 0
+    mov     C_DIM, d0
+    mov     d0, (SVC+SV_FG)
+    mov     LV_STR, a0
+    mov     8, d0
+    mov     148, d1
+    call    DrawText, 0, 0
+    ret     [d2,d3,a2,a3], 0x30
+
+PutYesNo:                           # leaf: a0 = out, d0 = a FOUND_ bit: "yes" or "no"
+    mov     (SVC+SV_FOUND), d1
+    and     d0, d1
+    mov     str_yes, a1
+    bne     pyn_copy
+    mov     str_no, a1
+pyn_copy:
+    bra     StrCpy
 
 DrawFail:                           # the reason, and the code involved
     movm    [d2,d3,a2,a3], (sp)
@@ -714,18 +1094,22 @@ DrawFail:                           # the reason, and the code involved
     mov     8, d0
     mov     84, d1
     call    DrawText, 0, 0
+    mov     C_TEXT, d0
+    mov     d0, (SVC+SV_FG)
+    mov     (LV_ERR), d0
+    cmp     0, d0
+    beq     dfl_leave
     mov     LV_STR, a0
     mov     str_code, a1
     call    StrCpy, 0, 0
     mov     (LV_ERR), d0
     mov     8, d1
     call    PutHex, 0, 0
-    mov     C_TEXT, d0
-    mov     d0, (SVC+SV_FG)
     mov     LV_STR, a0
     mov     8, d0
     mov     100, d1
     call    DrawText, 0, 0
+dfl_leave:
     mov     str_leave, a0
     mov     8, d0
     mov     124, d1
@@ -951,6 +1335,10 @@ sig_build:      # SOFT VERSION: mov (B), d0; clr d3; movhu d0, (x); mov (0x48000
     .word   0xfc, 0xa4, 0x100, 0x100, 0x100, 0x100, 0x0c, 0xfc, 0x83, 0x100, 0x100, 0x100, 0x100
     .word   0xfc, 0xa6, 0x1c, 0x00, 0x00, 0x48, 0xfc, 0xc2, 0x00, 0x00, 0x00, 0x48, 0xFFFF
 
+    .align  4
+LoaderTest:                         # test builds only (run_test.sh --loader-test N): switch searches off
+    .long   0                       # 1 file signatures, 2 fmm tables, 4 raw sectors, 8 SD folders,
+                                    # 0x10 build number, 0x20 ms counter
 str_title:      .asciz  "KN7000 SD APP LOADER"
 str_loading:    .asciz  "Looking for the firmware's file routines, then loading C:\KN7APP.BIN"
 str_appname:    .asciz  "KN7APP.BIN"
@@ -959,11 +1347,20 @@ str_f_prog:     .asciz  "PROGRAM "
 str_f_table:    .asciz  "  TABLE "
 str_f_rel:      .asciz  "  release "
 str_code:       .asciz  "code 0x"
+str_k_file:     .asciz  "file routines: "
+str_k_none:     .asciz  "none"
+str_k_code:     .asciz  "by code"
+str_k_tables:   .asciz  "by tables"
+str_k_raw:      .asciz  "  sectors: "
+str_k_folder:   .asciz  "  folders: "
+str_k_clock:    .asciz  "  clock: "
+str_s_tab:      .asciz  "search: places shaped like the fmm tables "
+str_s_code:     .asciz  ", file code steps found "
+str_s_steps:    .asciz  " of 5"
+str_yes:        .asciz  "yes"
+str_no:         .asciz  "no"
 str_leave:      .asciz  "In 15 s the firmware asks 'Continue Next?': NO leaves the converter."
-str_no_ext:     .asciz  "Unsupported firmware: the file layer's drive switch was not found."
-str_no_file:    .asciz  "Unsupported firmware: fmmopen/fmmclose/fmmread/fmmwrite not found."
-str_no_sd:      .asciz  "Unsupported firmware: the SD sector or folder routines not found."
-str_no_build:   .asciz  "Unsupported firmware: its build number was not found."
+str_no_file:    .asciz  "No file routines found (neither fmm tables nor code): cannot use the SD card."
 str_no_app:     .asciz  "No C:\KN7APP.BIN on the SD card (or no card): copy an application there."
 str_bad_app:    .asciz  "C:\KN7APP.BIN is not an application for this loader (bad header)."
 str_old_app:    .asciz  "C:\KN7APP.BIN was built for another loader version."

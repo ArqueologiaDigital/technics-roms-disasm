@@ -10,20 +10,20 @@
 .equ BUF2,          0x502C8000      # 32 KB: the folder's cluster as rewritten with long names
 .equ VARS,          0x502E0000
 .equ CRCTAB,        0x502E1000      # 1 KB: CRC-32 table
-.equ TEXT,          0x502E1800      # 2 KB: manifest text
 .equ STR,           0x502E2000      # 256 bytes: a line being formatted
 .equ NAMES,         0x502E2100      # 4 x 64 bytes: program/table ROM names built from the build numbers
 .equ SECBUF,        0x502E3000      # 512 bytes: one SD sector
 .equ SHORTS,        0x502E3200      # 12 x 32 bytes: the files' 8.3 directory entries, as found
+.equ TEXT,          0x502E4000      # 4 KB: manifest text
 
 # ---- variables ---------------------------------------------------------------------------------
-.equ V_STATE,       VARS+0x00       # 0 = first call, 1 = dumping, 2 = finishing, 3 = done, 4 = failed
+.equ V_STATE,       VARS+0x00       # 0 = first call, 1 = dumping, 2 = finishing, 3 = done
 .equ V_ROM,         VARS+0x04       # index of the ROM being dumped
 .equ V_POS,         VARS+0x08       # bytes of it written so far
 .equ V_CRC,         VARS+0x0C       # running CRC-32 (pre-inverted)
 .equ V_SUM,         VARS+0x10       # running byte sum (the wave ROM test's checksum)
 .equ V_ERR,         VARS+0x14       # last error code
-.equ V_FAIL,        VARS+0x18       # pointer to the failure message
+.equ V_FAIL,        VARS+0x18       # DUMPLIST.TXT's failure message (pointer), or 0
 .equ V_TEXTLEN,     VARS+0x1C
 .equ V_FILEOPEN,    VARS+0x20       # 1 while a dump file is open
 .equ V_LFN,         VARS+0x24       # long-name pass: 0 not run, 1 done, 2 skipped
@@ -37,12 +37,24 @@
 .equ V_CLBYTES,     VARS+0x44       # bytes per cluster
 .equ V_OUT,         VARS+0x48       # long-name pass: write pointer into BUF2
 .equ V_HOLD,        VARS+0x4C       # when the result appeared (kernel ms), or calls since then
+.equ V_NOFOLDER,    VARS+0x50       # 1: files are written without the KN7DUMP folder (current folder)
+.equ V_FAILS,       VARS+0x54       # ROMs whose file could not be written
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
-.equ HOLD_CALLS,    3000            # ... or this many calls when the loader found no ms counter
+.equ HOLD_CALLS,    300000          # ... or this many calls when the loader found no ms counter (parked with
+                                    # request 1, the firmware calls about 20000 times a second: 941 in MAME)
 .equ V_RESULTS,     VARS+0x100      # per ROM: +0 CRC-32, +4 byte sum, +8 bytes written, +12 status
 .equ ST_PENDING,    0
 .equ ST_OK,         1
-.equ ST_FAIL,       2
+.equ ST_FAIL,       2               # written, but the wave ROM's byte sum is not the firmware's
+.equ ST_ERROR,      3               # the file could not be created or written (error in +8)
+.equ ST_SKIP,       4               # not dumped: this build leaves it out (APP_OPTIONS)
+
+# ---- build options: the word after the header, set by mkapp.py --options (0 = the full dumper) ----
+.equ APP_OPTIONS,   APP_BASE+0x40
+.equ OPT_SKIP,      0x3FF           # bit n set: leave ROM n of RomTable out
+.equ OPT_NOFOLDER,  0x10000         # no sdfmmkdir: the files go to the current folder (the root)
+.equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
+.equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)

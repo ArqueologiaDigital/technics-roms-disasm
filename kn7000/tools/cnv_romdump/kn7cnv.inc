@@ -27,8 +27,8 @@
 # `calls (aN)`. All of them may change d0, d1, a0, a1 and store into 4..0x10(sp) of the caller's frame.
 .equ SV_MAGIC,      0x00            # "KN7S"
 .equ SV_ABI,        0x04            # LOADER_ABI
-.equ SV_SETEXT,     0x08            # SetExtMode(d0 = 1): the fmm file layer -> SD card
-.equ SV_RESETEXT,   0x0C            # ResetExtMode: -> floppy (as the firmware expects between calls)
+.equ SV_SETEXT,     0x08            # SetExtMode(d0 = 1): the fmm file layer -> SD card (or a no-op, see FOUND_TABLES)
+.equ SV_RESETEXT,   0x0C            # ResetExtMode: -> floppy (as the firmware expects between calls), or a no-op
 .equ SV_OPEN,       0x10            # fmmopen(a0 = name, a1 = mode "rb"/"wb") -> d0 (16-bit, < 0 = error)
 .equ SV_CLOSE,      0x14            # fmmclose
 .equ SV_READ,       0x18            # fmmread(a0 = buffer, d0 = bytes) -> d0 = bytes read
@@ -50,6 +50,19 @@
 .equ SV_CALLS,      0x58            # calls since the application was loaded
 .equ SV_APPSIZE,    0x5C            # bytes loaded
 .equ SV_MSCOUNT,    0x60            # address of the kernel's 1 kHz millisecond counter (u32), or 0 if not found
+.equ SV_FOUND,      0x64            # what the loader found, FOUND_* bits below
+.equ SV_TABLES,     0x68            # the fmm dispatch tables (found by their shape), or 0
+.equ FOUND_FILESIG, 0x01            # the fmm dispatchers and drive switch, by code signature
+.equ FOUND_TABLES,  0x02            # the fmm dispatch tables, by shape: SV_OPEN.. are then the SD backends
+                                    #   themselves, and SV_SETEXT/SV_RESETEXT do nothing
+.equ FOUND_RAW,     0x04            # raw SD sector read/write
+.equ FOUND_FOLDER,  0x08            # sdfmmkdir, sdfmpath and its folder buffer
+.equ FOUND_BUILD,   0x10            # the PROGRAM build number (SV_BUILD)
+.equ FOUND_TBUILD,  0x20            # the TABLE build number (SV_TBUILD)
+.equ FOUND_TICK,    0x40            # the kernel millisecond counter (SV_MSCOUNT)
+# Only file access is required (FOUND_FILESIG or FOUND_TABLES); without it the loader cannot read the
+# application. Every other service is optional: a 0 address means "not found", and applications must
+# carry on without it.
 .equ LOADER_ABI,    1
 
 # ---- the application header, at APP_BASE ---------------------------------------------------------
@@ -59,7 +72,7 @@
 .equ AH_ENTRY,      0x0C            # entered with `calls` on every converter call; sets the request
 .equ AH_CRC,        0x10            # CRC-32 of the file from AH_NAME to its end (mkapp.py fills it)
 .equ AH_BASE,       0x14            # APP_BASE, as linked
-.equ AH_NAME,       0x20            # 32 bytes, NUL-padded: shown by the loader
+.equ AH_NAME,       0x20            # 32 bytes, NUL-padded: the application's name (mkapp.py prints it)
 
 # ---- the LCD: 640 x 240, RGB565 ------------------------------------------------------------------
 .equ FB,            0x9CE00000

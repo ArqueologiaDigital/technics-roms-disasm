@@ -80,6 +80,13 @@ the following. Sources, command files and results are in that repository's `kn70
   `sta_tsk` `0x4C03D8AB`, priority 3) runs alongside and sees both (`probe2_task`).
   `0x4C03D8AB` is `sta_tsk`, not `ext_tsk` as the ported symbols had it; see
   `tools/itron_stubs.py`.
+- **Request 1 parks without a repaint** (the ROM dumper, `tools/cnv_romdump/`, 2026-10-19).
+  Answered on every call, it leaves the converter's own drawing on the LCD, where request 5 would
+  paint the firmware's text screen over it. The firmware calls again at once: about 20,000 calls
+  per emulated second on 941 in MAME, with almost nothing done per call (`calls_in_1s_after_done`
+  = 20252 in `tools/cnv_romdump/test/dump.cmd.in`'s end line). Counting calls is therefore no clock;
+  the dumper reads the kernel's millisecond counter instead (`0x500D3C58` on 941), found through
+  its tick handler's code.
 - **Request 0xFE ends it.** The firmware stops calling and shows its message box (title 0x4C).
   EXIT then brings up "Continue Next?" with YES and NO. **YES calls the converter again**, the
   loaded file and its variables intact (it is not reloaded). **NO returns to the main screen.**
