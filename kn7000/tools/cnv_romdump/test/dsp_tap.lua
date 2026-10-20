@@ -10,10 +10,12 @@
 --   W <index> <value> <count>      data-port writes of <value> while <index> was latched
 -- With DSP_FAKE_SYSCON=1 in the environment, reads of register 0 (SYSCON) answer 0x0410 for the first half and 0
 -- for the second, as the firmware sets it up, so phase 2's pre-check passes on an emulator whose host port keeps
--- the boot protocol's answer 0x0020 there (every overlay build so far).
+-- the boot protocol's answer 0x0020 there (overlay builds before kn7000_mame 70aa725; from it on the emulator
+-- answers 0x410 itself, and neither stand-in is needed).
 -- With DSP_FAKE_FS=1, reads of DMAC0's low half (register 0x1C) while a readback is armed (the last DMAC0 low
 -- half written had DEN and TRAN set) carry FS = 11, "EPB0 full": the chip sets those bits when its DMA has put
--- data in EPB0 (TRM Table E-16); an emulator that does not model them would leave phase 2 waiting.
+-- data in EPB0 (TRM Table E-16); an emulator that does not model them would leave phase 2 waiting (overlay
+-- builds before kn7000_mame 70aa725).
 -- PREFILL_END also saves, for the verifier, the IOP registers as the port answers them after the run
 -- (OUT/ref_iop.bin) and what the DSP itself holds: OUT/ref_pm.bin (PM 0x8000-0x8DFF, 6 bytes per word, low first,
 -- as DSPPM.BIN) and OUT/ref_dm.bin (DM 0x9800-0x9FFF and 0xC000-0xC4FF, 4 bytes each).

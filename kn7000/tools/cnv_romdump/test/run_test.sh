@@ -22,6 +22,7 @@
 #     after the boot, counts the probe's host-port accesses (dsp_traffic.txt) for the verifier; --fake-syscon makes
 #     register 0 read 0x410, the value the firmware programs, where the emulator keeps the boot answer 0x20 there;
 #     --fake-fs makes DMAC0 show EPB0 full (FS) while a readback is armed, where the emulator does not model FS.
+#     Both are for overlay builds before kn7000_mame 70aa725, which answers SYSCON and FS itself.
 #   --bios NAME: passed to MAME as -bios NAME (the overlay's v13 is program 893, the owner's instrument).
 #   --rompath DIR: MAME's ROM path (default ~/compartilhado/technics_romsets; the overlay binary needs its own
 #     roms/ folder, ~/compartilhado/kn7000-emulator/roms).

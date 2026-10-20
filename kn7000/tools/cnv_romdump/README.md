@@ -639,10 +639,22 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
       - `0x8000` is equal but for the unit CALL slots `0x8080`-`0x80A0`, which the firmware patches;
       - `0x8400` and `0x8D00` hold effect programs.
     - The TCBs show `CP`, `C` 8, `IM` 1 and `II` `0xC342` ...: each SPORT channel runs an 8-word ring.
-  - **The emulator side is a stand-in for two bits.** On the chip, SYSCON reads `0x410` after the
-    firmware's set-up, and FS shows `EPB0`'s data (TRM Table E-16). In the overlay neither does, and
+  - **The emulator side was a stand-in for two bits.** On the chip, SYSCON reads `0x410` after the
+    firmware's set-up, and FS shows `EPB0`'s data (TRM Table E-16). In that overlay neither did, and
     phase 2 would wait out its 1,000 polls and stop without these stand-ins (the earlier run on the
     2026-10-19 overlay did exactly that, and wrote the four registers back).
+  - **Without stand-ins** (the same day, kn7000_mame `70aa725`, binary md5 `97d2f383...`). That overlay
+    answers SYSCON from the register file, packed per its HBW bits (`0x410` after boot), and shows FS
+    full while a readback has words. With `-bios v13` and the same release binaries:
+
+    | run     | options    | outcome                                                                                       |
+    |---------|------------|-----------------------------------------------------------------------------------------------|
+    | phase 1 | `--dsp`    | 5 of 5; SYSCON `0x00000410`, decoded as a 16-bit host bus, LSW first                          |
+    | phase 2 | `--dspmem` | 4 of 4; PM 3584 of 3584 words and DM 3317 of 3328 = the DSP's memory; registers left as found |
+
+    `check_dsp_probe.py` says "everything checks out" for both, phase 2 with `--program` and the
+    v1.3 `pass1-run1`; the kernel comparison is the same as with the stand-ins. Phase 2 found FS full
+    at the first look for every word (0 repeat polls), as that emulator fills `EPB0` at once.
   - **The older builds, with the DSP code in.** On the same overlay, all with `--fast`:
     - the default build (`--no-prefill --bios v16`) wrote its long names (`lfn=1`), and its
       program, table and IC21 files match. Without prefill its five wave and picture files have
