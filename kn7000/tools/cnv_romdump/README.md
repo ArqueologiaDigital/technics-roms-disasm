@@ -338,11 +338,39 @@ memory to `EPB0` to the host.
 - G17ICR and the flags;
 - every register by name, with SYSCON, `DMACx`, `DMASTAT`, `STCTLx`/`SRCTLx` and the divisors decoded;
 - the timer and SPORT rates, with the arithmetic and what it assumes;
+- the rate of the firmware's own DSP accesses (the burst's time stamps) and the movement of MSGR2,
+  which mirrors the kernel's ring-3 pointer I3;
 - the readback, against the kernel the firmware uploads (its download record, found in the program
   flash).
 
 `--self-test` runs the decoders on made-up files; `--mask-asm` prints the read mask `romdump_dsp.s`
 carries, from the same register list.
+
+### Phase 1 on the owner's KN7000 (pass 6, 2026-10-20)
+
+Felipe ran the phase-1 release the same day. The files are private, in `technics_roms`
+`roms/kn7000/real_dump_v1.3_b893/pass6-run1/`, with the checker's whole output beside them. All three
+came back whole; the routines were found at the 893 addresses MAME found; the DSP stayed alive (dead
+flag 0 before and after every file). What it showed:
+
+- **The set-up matches the emulator's** where both have a value: SYSCON `0x410`, the eight chain
+  pointers, `DMAC0` `0xA0`, `WAIT`, `SDRDIV`, and the control bits of `STCTLx`/`SRCTLx`.
+- **The chip has state the emulator does not model**: `DMASTAT` `0x33F` (all eight SPORT DMA channels
+  active), SYSTAT `0x13`, IOSTAT `0x80000000`, the `STCTLx` status bits (`0xF9`/`0xD9` in the top
+  byte), `IOCTL` reading `0x0852205B` where the kernel wrote `0x8852A05B` (bits 31 and 15 read 0),
+  MSGR3 `0` (the emulator answers `0x1065`), and the rings' positions: every receive channel at its
+  base + 3 with a count of 5, every transmit channel at base + 5 with a count of 3.
+- **The timers are not used** (TPERIOD0/1 0), so they give no clock.
+- **The SPORT counts do not move between reads, though the DMA runs.** Every firmware data-port
+  access first waits for the DSP's handshake, so every read lands at the same point of the DSP's
+  frame.
+- **What does give a rate:** the firmware's accesses run at 24.15 us each, 41.4 per ms. MSGR2,
+  the ring-3 pointer, moved 111 words in about 4.93 ms, 22.5 per ms. Two readings fit, and
+  pass 6 cannot tell them apart:
+  - frames at about 22.5 kHz, with FLAG3 always high;
+  - or frames at 41.4 kHz or more, with FLAG3 high on about half of them (44.1 kHz would fit).
+- **Phase 2's pre-checks hold** on the chip: SYSCON `0x410`, `DMAC0` DEN and CHEN clear, channel 8
+  neither active nor chaining.
 
 ## How it stays out of the firmware's way
 

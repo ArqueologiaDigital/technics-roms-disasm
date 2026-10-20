@@ -232,6 +232,8 @@ def iop(b):
             note = f"TCB at {0x8000 | a[r] & 0x7FFF:#06x} (taken as 0x8000 | CP & 0x7FFF)"
         rows.append((f'{r:#04x}', name, f'{a[r]:#010x}', 'same' if a[r] == p[r] else f'{p[r]:#010x}', note))
     table(('reg', 'name', 'pass A', 'pass B', 'decoded (pass A)'), rows)
+    if any(IOP.get(r) for r in READ if a[r] != p[r]):
+        print(f'   moved between the passes: {", ".join(IOP[r] for r in READ if a[r] != p[r])}')
     print(f'   not read: {", ".join(f"{k:#04x} {v}" for k, v in sorted(SIDE_EFFECT.items()))}; and every reserved address')
     if st & 1 and not st & 6:
         expect = a[0] & 0x70 == 0x10
@@ -250,7 +252,7 @@ def iop(b):
                         print(f'   SPORT{n} {nm}: clock {"internal" if bits(ctl, 10) else "external"}, frame sync '
                               f'{"internal" if bits(ctl, 14) else "external"}: the rate comes from outside the DSP'
                               ' (the tone generator); DSPTIME.BIN measures it')
-    return bad, a
+    return bad, (a, p, ms0, ms1)
 
 
 # ---- DSPTIME.BIN ------------------------------------------------------------------------------------------
@@ -258,6 +260,11 @@ SLOW = ['TCOUNT0', 'TCOUNT1', 'DMASTAT', 'CR0A', 'CR0B', 'CR1A', 'CR1B', 'CT0A',
         'CPR0A', 'CPR0B', 'CPR1A', 'CPR1B', 'CPT0A', 'CPT0B', 'CPT1A', 'CPT1B']
 BURST = ['TCOUNT0', 'TCOUNT1', 'CT0A', 'CR0A']
 PERIOD = {'TCOUNT0': 0x28, 'TCOUNT1': 0x2B}
+# The kernel's ring 3 (rec04, 0x8D11/0x8D21): B3 0x656F0, L3 0x4650, in the external SDRAM. Its pointer I3 steps by
+# M3 = -1 once per main-loop frame while the FLAG3 input pin is high (0x8098); the kernel's init (0x8D92) and effects
+# 58-61 at their entry (0x8403) copy I3 into MSGR2 (IOP 0x0A).
+RING3 = (0x656F0, 0x4650)
+SPORT_DMA = 0x033F          # DMASTAT bits 0-5, 8, 9: the eight SPORT DMA channels (Table E-18)
 
 
 def rate(ts, vs, period=None):
@@ -296,21 +303,35 @@ def series(b):
     return 0, (slow, burst)
 
 
+def access_time(burst):
+    """us per data-port access: the least-squares slope of the burst's ms stamps over its samples, each sample
+    being len(BURST) register reads, two data-port accesses each (the index write does not wait)."""
+    t = [s[0] for s in burst]
+    n = len(t)
+    if n < 8:
+        return None, None
+    mx, my = (n - 1) / 2, sum(t) / n
+    slope = sum((i - mx) * (y - my) for i, y in enumerate(t)) / sum((i - mx) ** 2 for i in range(n))
+    return 1000 * slope / (2 * len(BURST)), 1000 * slope
+
+
 def rates(data, iopv):
     slow, burst = data
+    a, p, ms0, ms1 = iopv if iopv else (None, None, None, None)
     if len(slow) < 2:
         print('   too few samples to measure anything'); return
     span = (slow[-1][0] - slow[0][0]) & 0xFFFFFFFF
-    took = sorted((s[1] - s[0]) & 0xFFFFFFFF for s in slow)
-    print(f'   {len(slow)} samples over {span} ms; one sample (19 register reads) took {took[len(took) // 2]} ms (median)')
+    crossed = sum(1 for s in slow if (s[1] - s[0]) & 0xFFFFFFFF)
+    print(f'   {len(slow)} samples over {span} ms; {crossed} of them saw the ms counter change while they ran (each starts'
+          ' just after a tick, so this is not their length: the burst below gives that)')
     rows = []
     for k, nm in enumerate(SLOW):
         vs = [s[2 + k] for s in slow]
         ts = [s[0] for s in slow]
         distinct = len(set(vs))
         per = None
-        if iopv and nm in PERIOD and iopv[PERIOD[nm]]:
-            per = iopv[PERIOD[nm]] + 1
+        if a and nm in PERIOD and a[PERIOD[nm]]:
+            per = a[PERIOD[nm]] + 1
         if distinct == 1:
             rows.append((nm, f'{vs[0]:#010x}', 'constant', '-', '-'))
             continue
@@ -318,10 +339,39 @@ def rates(data, iopv):
         rows.append((nm, f'{min(vs):#x}..{max(vs):#x}', f'{distinct} values, counts {dirn}', f'{r:.1f}/ms',
                      f'{used} pairs' + (f', {skip} skipped' if skip else '') + (f', period {per}' if per else '')))
     table(('register', 'range', 'moves', 'rate (5 ms series)', 'from'), rows)
-    if all(r[2] == 'constant' for r in rows):
-        print('   NOTHING MOVED over the series. On the instrument that would mean both timers are off and the SPORT DMA')
-        print('   idle (no audio frames). In MAME it is expected: the kn7000_mame overlay of 2026-10-20 (45a1459) keeps')
-        print('   the IOP registers but does not run the timers or the SPORT DMA counts.')
+    still = {r[0] for r in rows if r[2] == 'constant'}
+    dmastat = slow[0][2 + SLOW.index('DMASTAT')]
+    if a and {'TCOUNT0', 'TCOUNT1'} <= still and not a[0x28] and not a[0x2B]:
+        print('   * the timers: TPERIOD0 and TPERIOD1 are 0 and TCOUNT does not move: the kernel does not use them, so they')
+        print('     cannot give the DSP clock.')
+    counts = {n for n in SLOW if n[:2] in ('CR', 'CT')}
+    if counts <= still and dmastat & SPORT_DMA:
+        print(f'   * the SPORT DMA runs (DMASTAT {dmastat:#x}: {d_dmastat(dmastat & SPORT_DMA)}), yet every count reads the')
+        print('     same: each firmware access waits for the DSP\'s handshake (G17), which comes at one point of its frame,')
+        print('     so every read lands at the same place in the rings. The counts cannot give the frame rate this way.')
+    elif len(still) == len(rows):
+        print('   NOTHING MOVED over the series, and DMASTAT shows no SPORT DMA: on the instrument that means no audio')
+        print('   frames. In MAME it is expected: the kn7000_mame overlay keeps the IOP registers but does not run the')
+        print('   timers, the SPORT DMA or DMASTAT.')
+    us, _ = access_time(burst)
+    if us:
+        print(f'   * the firmware\'s DSP accesses: {us:.2f} us each, {1000 / us:.1f} per ms (the burst\'s ms stamps, least')
+        print(f'     squares over {len(burst)} samples of {2 * len(BURST)} data-port accesses). Each one first clears G17ICR\'s')
+        print('     request and waits for the DSP to raise it again (893 0x4840AE77, 941 0x48404D25): so this is the')
+        print('     rate at which the DSP answers, at most one access per handshake.')
+    if a and a[0x0A] != p[0x0A] and all(RING3[0] <= v < RING3[0] + RING3[1] for v in (a[0x0A], p[0x0A])):
+        moved = (a[0x0A] - p[0x0A]) % RING3[1]
+        between = 2 * sum(1 for r in READ)
+        dt = between * us / 1000 if us else (ms1 - ms0) / 2
+        how = f'{between} data-port accesses at {us:.2f} us' if us else 'half of DSPIOP.BIN\'s span'
+        print(f'   * MSGR2 is I3, the pointer into the kernel\'s ring 3 ({RING3[0]:#x}, {RING3[1]} words): {a[0x0A]:#x} in')
+        print(f'     pass A, {p[0x0A]:#x} in pass B, {moved} words down in about {dt:.2f} ms ({how}):')
+        print(f'     {moved / dt:.1f} steps per ms. I3 steps once per frame while the FLAG3 pin is high (kernel 0x8098).')
+        if us:
+            print(f'     Two readings fit: frames at about {moved / dt:.1f} kHz with FLAG3 always high and about')
+            print(f'     {1000 / us / (moved / dt):.1f} handshakes per frame; or one handshake per frame, frames at')
+            print(f'     {1000 / us:.1f} kHz or more, with FLAG3 high on {100 * (moved / dt) * us / 1000:.0f}% of them or fewer')
+            print('     (44.1 kHz with FLAG3 high every other frame would fit).')
     if len(burst) >= 2:
         bspan = (burst[-1][0] - burst[0][0]) & 0xFFFFFFFF
         print(f'   burst: {len(burst)} back-to-back samples of {", ".join(BURST)} in {bspan} ms '
