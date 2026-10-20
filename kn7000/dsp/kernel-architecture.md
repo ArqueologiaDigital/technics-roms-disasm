@@ -332,7 +332,17 @@ in `c002/c003`, rec51 saves I6 in `c003`), `I8` = state (`0x9800+unit*0x50`,
 PM bus), `I12` = the `0x9C40` word, `I4` = I/O cursor, `I0` = coefficient
 stream for helper-based programs. Modify-register contract (init `0x8D00`):
 `M1=2, M2=+1, M3=−1, M4=−2, M5=0x4D, M6=0` (DM); `M8=+1, M9=+2, M10=+3,
-M11=−1, M12=−2, M13=0x50, M14=0` (PM). Every program ends
+M11=−1, M12=−2, M13=0x50, M14=0` (PM).
+
+**The DM modify registers differ between program builds** (2026-10-20,
+`../tools/dsptone/kernel_mregs.py`, which reads each build's kernel record;
+found when DSPTONE, written to this 941 listing, ran on 893 in MAME). The
+kernels of 941 and 942 (this listing) set `M2=+1` (and no M0), and their
+effects step the I/O cursor with `DM(I4, M2)`. Those of 893 (the owner's
+unit) and 935 set `M0=+1, M1=+2, M2=+3` at `0x8D00..0x8D02`, and their
+effects and stubs use `DM(I4, M0)` (893's copy stub `0x80FC`: `DM(I4, M0) =
+R0`). M1 and M3-M14 are the same in all four. A program loaded into these
+kernels from outside should not rely on M0 or M2. Every program ends
 `RTS(DB); R4=DM(I1,M5), R7=PM(I12,M8); MODIFY(I8,0x50)` — the delay slots
 advance the next unit's cursors.
 

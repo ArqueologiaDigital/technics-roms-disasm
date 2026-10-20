@@ -16,7 +16,10 @@
 # kernel's unit-0 CALL slot (PM 0x8080, "CALL (0x8400) (DB)", the panel REVERB unit) is pointed at it with the
 # same single-word PM poke the firmware uses to load an effect. Per frame it reads unit 0's input pair
 # DM(I4+0x20/0x21), adds a sample of its own, clips to 24 bits, writes unit 0's return pair DM(I4++), and leaves
-# the cursors as every effect does (RTS (DB); R4 = DM(I1,M5), R7 = PM(I12,M8); MODIFY (I8, 0x50)).
+# the cursors as every effect does (RTS (DB); R4 = DM(I1,M5), R7 = PM(I12,M8); MODIFY (I8, 0x50)). It addresses
+# memory only with immediate offsets and MODIFY by immediates, never through M0-M7: the kernels of program builds
+# 893 and 941 set them differently (893: M0 = +1, M2 = +3; 941: M2 = +1; effects write their outputs with
+# DM(I4, M0) in 893 and DM(I4, M2) in 941). M5 and M8, which the epilogue uses, are 0x4D and +1 in both.
 #
 # Host <-> DSP: four message registers (IOP 0x0C-0x0F), which the kernel zeroes at boot and nothing else uses
 # (MSGR2 is the mic reverbs' I3 cell, MSGR3 the boot probes' answer):
@@ -24,7 +27,7 @@
 #   MSGR5 (0x0D)  where they go: a sample offset into the PCM area
 #   MSGR6 (0x0E)  mode: 0 = input only (silence), 1 = sine, 2 = the PCM, looped
 #   MSGR7 (0x0F)  heartbeat: +1 every frame the program runs (the host reads it to see that it does)
-# Memory it uses: DM 0x9D00-0x9F05 (internal; never written by the firmware: power-on contents on the unit,
+# Memory it uses: DM 0x9D00-0x9F06 (internal; never written by the firmware: power-on contents on the unit,
 # pass 7) and SDRAM 0x70000-0x7FFFF (above the kernel's three delay rings, which end at 0x69D3F).
 #
 # --check runs MAME's SHARC disassembler over the encoded words and compares each line with the text it was
@@ -39,7 +42,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sharc_enc import (Program, alu, compute, shift_imm, ureg_move, ureg_imm, dm_read_abs,  # noqa: E402
-                       dm_write_abs, dm_read_off, dm_post, rts, modify_imm)
+                       dm_write_abs, dm_read_off, dm_write_off, rts, modify_imm)
 
 FS = 44100
 PM_CODE = 0x8200          # our code: PM 0x8102-0x82FF is never written by the firmware (pass 7)
@@ -48,8 +51,8 @@ CALL_DB = 0x06BE04000000  # "CALL (addr) (DB)", unconditional, absolute: the slo
 TABLE = 0x9D00            # 256 words: one cycle of sine, 24-bit, pre-scaled
 STAGE = 0x9E00            # 256 words: the host's PCM staging buffer, two 16-bit samples per word
 STAGE_WORDS = 256
-V_PHASE, V_INC, V_POS, V_LEN, V_CPY, V_SAVEI5 = 0x9F00, 0x9F01, 0x9F02, 0x9F03, 0x9F04, 0x9F05
-NVARS = 6
+V_PHASE, V_INC, V_POS, V_LEN, V_CPY, V_SAVEI5, V_SAVEI7 = 0x9F00, 0x9F01, 0x9F02, 0x9F03, 0x9F04, 0x9F05, 0x9F06
+NVARS = 7
 PCMBASE = 0x70000         # SDRAM: the unpacked PCM, one 24-bit sample per word
 PCM_MAX = 0x10000         # samples (0x70000-0x7FFFF)
 MSGR4, MSGR5, MSGR6, MSGR7 = 0x0C, 0x0D, 0x0E, 0x0F
@@ -65,6 +68,7 @@ CHIRP_F0, CHIRP_F1, CHIRP_S, GAP_S, FADE_S = 220.0, 3520.0, 0.75, 0.25, 0.015
 def program():
     p = Program(PM_CODE)
     e = p.emit
+    e(dm_write_abs(V_SAVEI7, "I7"), f"DM(0x{V_SAVEI7:08X}) = I7")       # I7 is put back at the end
     e(dm_read_off("R0", 0x20, "I4"), "R0 = DM(0x00000020, I4)")          # unit 0's input, left
     e(dm_read_off("R1", 0x21, "I4"), "R1 = DM(0x00000021, I4)")          # and right
     e(dm_read_abs("R2", MSGR7), "R2 = DM(0x0000000F)")                   # heartbeat
@@ -121,14 +125,14 @@ def program():
     e(compute(alu("ADD", "R10", "R10", "R8")), "R10 = R10 + R8")
     e(ureg_move("I7", "R10"), "I7 = R10")                                # STAGE source
     e(0, "NOP")
-    for _ in range(2):
-        e(dm_post("R10", "I7", "M2", False), "R10 = DM(I7, M2)")
+    for k in range(2):                       # immediate offsets: no M register (their values differ by build)
+        e(dm_read_off("R10", k, "I7"), f"R10 = DM(0x{k:08X}, I7)")
         e(shift_imm("LSHIFT", "R11", "R10", 16), "R11 = LSHIFT R10 BY 16")
         e(shift_imm("ASHIFT", "R11", "R11", -8), "R11 = ASHIFT R11 BY -8")   # the low half: the earlier sample
-        e(dm_post("R11", "I5", "M2", True), "DM(I5, M2) = R11")
+        e(dm_write_off(2 * k, "I5", "R11"), f"DM(0x{2 * k:08X}, I5) = R11")
         e(shift_imm("ASHIFT", "R10", "R10", -16), "R10 = ASHIFT R10 BY -16")
         e(shift_imm("LSHIFT", "R10", "R10", 8), "R10 = LSHIFT R10 BY 8")     # the high half: the later one
-        e(dm_post("R10", "I5", "M2", True), "DM(I5, M2) = R10")
+        e(dm_write_off(2 * k + 1, "I5", "R10"), f"DM(0x{2 * k + 1:08X}, I5) = R10")
     e(compute(alu("INC", "R8", "R8")), "R8 = R8 + 1")
     e(compute(alu("INC", "R8", "R8")), "R8 = R8 + 1")
     e(compute(alu("COMP", "R0", "R8", "R7")), "COMP(R8, R7)")
@@ -151,9 +155,12 @@ def program():
     e(ureg_imm("R14", CLIP24), f"R14 = 0x{CLIP24:08X}")
     e(compute(alu("CLIP", "R0", "R0", "R14")), "R0 = CLIP R0 BY R14")
     e(compute(alu("CLIP", "R1", "R1", "R14")), "R1 = CLIP R1 BY R14")
-    e(dm_post("R0", "I4", "M2", True), "DM(I4, M2) = R0")
-    e(dm_post("R1", "I4", "M2", True), "DM(I4, M2) = R1")
-    # the kernel's effect epilogue, word for word (rec05 0x8403-0x8405): the next unit's cursors
+    e(dm_write_off(0, "I4", "R0"), "DM(0x00000000, I4) = R0")           # unit 0's return pair; I4 on by two,
+    e(dm_write_off(1, "I4", "R1"), "DM(0x00000001, I4) = R1")           #   as two DM(I4, Mx) writes leave it (Mx =
+    e(modify_imm("I4", 2), "MODIFY (I4, 0x00000002)")                   #   M2 in 941, M0 in 893: not used here)
+    e(dm_read_abs("I7", V_SAVEI7), f"I7 = DM(0x{V_SAVEI7:08X})")
+    # the kernel's effect epilogue, word for word (rec05 0x8403-0x8405; the same in 893: M5 = 0x4D, M8 = 1 in both
+    # builds' kernel init): the next unit's cursors
     e(rts(db=True), "RTS (DB)")
     e(0x234903800000, "R4 = DM(I1, M5),  R7 = PM(I12, M8)")
     e(modify_imm("I8", 0x50), "MODIFY (I8, 0x00000050)")
@@ -203,7 +210,7 @@ def check(words, unidasm):
 
 
 def write_inc(build, words, table, pcm):
-    v = [0, TONE_INC, 0, 0, 0, 0]
+    v = [0, TONE_INC, 0, 0, 0, 0, 0]
     with open(os.path.join(build, "dsp_equ.inc"), "w") as f:
         f.write("# Generated by dsp_prog.py -- the DSP side of DSPTONE (do not edit; see dsp_prog.py)\n")
         for name, val in (("DSP_CODE_ADDR", PM_CODE), ("DSP_CODE_WORDS", len(words)), ("DSP_SLOT0", PM_SLOT0),
@@ -223,7 +230,7 @@ def write_inc(build, words, table, pcm):
         f.write("\n# DM 0x%04X: one cycle of sine, 24-bit, peak 0x%X\n    .align  4\nDspTable:\n" % (TABLE, TONE_PEAK))
         for k in range(0, 256, 8):
             f.write("    .long   " + ", ".join(f"0x{x:08X}" for x in table[k:k + 8]) + "\n")
-        f.write("\n# DM 0x%04X: PHASE, INC (%.1f Hz), PCMPOS, PCMLEN, CPYIDX, SAVEI5\nDspVars:\n" % (V_PHASE, TONE_HZ))
+        f.write("\n# DM 0x%04X: PHASE, INC (%.1f Hz), PCMPOS, PCMLEN, CPYIDX, SAVEI5, SAVEI7\nDspVars:\n" % (V_PHASE, TONE_HZ))
         f.write("    .long   " + ", ".join(f"0x{x:08X}" for x in v) + "\n")
         f.write(f"\n# the PCM: {len(pcm)} 16-bit samples, a {CHIRP_F0:g}-{CHIRP_F1:g} Hz sweep over {CHIRP_S} s, "
                 f"then {GAP_S} s of silence\n    .align  4\nDspPcm:\n")
