@@ -14,6 +14,8 @@
 --   lcd_fw, lcd_ours  stores into the LCD frame (0x9CE00000-0x9CE257FF) so far, by the firmware's code and by
 --            DSPTONE's (PC in 0x502BA000-0x502E7FFF); the firmware's full repaint of its STYLE CONVERT screen is
 --            76,160 stores (893 0x48414F92)
+-- The first time MSGR6 reads 2 (the PCM plays), it also saves SDRAM 0x70000 on, PCMLEN words (DM 0x9F03), to
+-- $TT_OUT/sdram_pcm.bin (u32 little-endian): analyze.py compares it with the sweep dsp_prog.py made.
 local mac = manager.machine
 local sp = mac.devices[":maincpu"].spaces["program"]
 local dsp = mac.devices[":dsp"]
@@ -34,6 +36,14 @@ _G.TT.h = emu.register_periodic(function()
   local t = now()
   local dead = sp:read_u8(DEAD)
   if dead > _G.TT.deadmax then _G.TT.deadmax = dead end
+  if not _G.TT.pcmdump and dm:read_u32(0x0E) == 2 then
+    _G.TT.pcmdump = true
+    local n, b = dm:read_u32(0x9F03), {}
+    for a = 0, n - 1 do b[#b + 1] = string.pack("<I4", dm:read_u32(0x70000 + a)) end
+    local g = assert(io.open(OUT .. "/sdram_pcm.bin", "wb"))
+    g:write(table.concat(b))
+    g:close()
+  end
   if t < _G.TT.next then return end
   _G.TT.next = t + 0.25
   _G.TT.n = _G.TT.n + 1

@@ -12,6 +12,8 @@
 #              runs, and moves again after the restore: the firmware's effect program runs again
 #   sine       wav: from the hook (+0.5 s) to the CHIRP press, the spectrum's peak is 440 Hz (+-3 Hz) and the level
 #              is at least 30 dB over the 10 s before the first note (the instrument idle)
+#   sdram      tap: SDRAM 0x70000 on, as the DSP holds it once the PCM plays, against dsp_prog.py's sweep: every
+#              sample equal (each a 16-bit sample shifted to 24 bits)
 #   chirp      wav: after the PCM starts (tap: MSGR6 = 2), the peak frequencies of the loud 40 ms frames span
 #              300-3000 Hz and >= 90 % of them lie within 10 % of the sweep dsp_prog.py made, looped every second
 #   mute       wav: after MUTE, the level is at least 30 dB under the sine's
@@ -139,6 +141,19 @@ l_note = rms_db(seg(n1, n1 + 1))
 check("sine", abs(f_sine - 440) < 3 and l_sine - l_quiet > 30,
       f"{t_hook + 0.5:.2f}-{t_chirp - 0.2:.2f} s: peak {f_sine:.1f} Hz, {l_sine:.1f} dBFS; the 10 s before the first "
       f"note {l_quiet:.1f} dBFS; the first note's first second (C4, the firmware's reverb) {l_note:.1f} dBFS")
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+import dsp_prog  # noqa: E402
+want = dsp_prog.chirp()
+sd = os.path.join(O, "sdram_pcm.bin")
+if os.path.exists(sd):
+    raw = open(sd, "rb").read()
+    got = struct.unpack(f"<{len(raw) // 4}I", raw)
+    diff = sum(1 for g, w in zip(got, want) if g != ((w << 8) & 0xFFFFFFFF))
+    check("sdram", len(got) == len(want) and diff == 0, f"{len(got)} of {len(want)} samples read back from SDRAM "
+          f"0x70000, {diff} differ from the sweep")
+else:
+    check("sdram", False, "no SDRAM dump (the PCM never started)")
 
 pcm_on = [r["t"] for r in T if r["m6"] == 2]
 t_mute = every(r"press CPR_SEG7 01")[0]
