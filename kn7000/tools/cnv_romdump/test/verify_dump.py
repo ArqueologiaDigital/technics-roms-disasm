@@ -40,6 +40,8 @@ prefill = '--no-prefill' not in args
 degraded = '--degraded' in args
 survey = '--survey' in args             # the SURVEY build: six CPU windows (romdump.s SurveyTable), not ROMs
 survey2 = '--survey2' in args           # the SURVEY2 build: 14 CPU windows (romdump.s Survey2Table)
+dsp1 = '--dsp' in args                  # the DSP probe, phase 1 (romdump_dsp.s DspTable)
+dsp2 = '--dspmem' in args               # phase 2 (DspMemTable)
 refdir = args[args.index('--refdir') + 1] if '--refdir' in args else None
 skip = int(args[args.index('--skip-mask') + 1], 0) if '--skip-mask' in args else 0
 ic21_ref = args[args.index('--ic21-ref') + 1] if '--ic21-ref' in args else None
@@ -83,6 +85,77 @@ SURVEY2 = [(b, 0x800000) for b in SURVEY] + [(0x84000000, 0x200000), (0x50180000
                                               (0x56800000, 0x200000), (0x41000000, 0x10000), (0x41800000, 0x10000),
                                               (0x56000000, 0x10000), (0x57000000, 0x10000)]
 RAMWIN = (0x84000000, 0x50180000, 0x4C000000)       # no test data: compared with what the CPU read at the end
+DSPFILES = {'DSPHOST.BIN': ('dsp_host.bin', 0x650, b'DSPHOST1'), 'DSPIOP.BIN': ('dsp_iop.bin', 0x870, b'DSPIOP01'),
+            'DSPTIME.BIN': ('dsp_time.bin', 0x55F0, b'DSPTIME1'), 'DSPPM.BIN': ('dsp_pm.bin', 0x5480, b'DSPPM001'),
+            'DSPDM.BIN': ('dsp_dm.bin', 0x36A0, b'DSPDM001')}
+if dsp1 or dsp2:
+    ROLE = {k: v[0] for k, v in DSPFILES.items() if (k in ('DSPPM.BIN', 'DSPDM.BIN')) == dsp2}
+    ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
+
+
+def dsp_expected(build):
+    """what DspFind should find in that program build (find_dsp.py, the same search in Python)"""
+    import find_dsp
+    tags = {893: '893', 941: '941', 942: '942', 935: '935'}
+    return find_dsp.find(find_dsp.images()[tags[build]]) if build in tags else None
+
+
+def dsp_traffic():
+    """dsp_traffic.txt (dsp_tap.lua): index writes, data reads and data writes by index"""
+    t = {'I': {}, 'R': {}, 'W': {}}
+    for ln in open(os.path.join(refdir, 'dsp_traffic.txt')).read().split('\n'):
+        f = ln.split()
+        if f and f[0] == 'W':
+            t['W'][(int(f[1], 16), int(f[2], 16))] = int(f[3])
+        elif f:
+            t[f[0]][int(f[1], 16)] = int(f[2])
+    return t
+
+
+def dsp_file(short, data, build):
+    _, size, magic = DSPFILES[short]
+    if len(data) != size or data[:8] != magic:
+        return False, f'size {len(data)} / magic {data[:8]!r}: not the probe\'s format'
+    st = struct.unpack_from('<I', data, 8)[0]
+    f = struct.unpack_from('<8I', data, 0x30)
+    want = dsp_expected(build)
+    names = ('regwr', 'regrd', 'idxwr', 'datard', 'dead', 'downloaded')
+    got = dict(zip(('found', 'wait', 'regwr', 'regrd', 'idxwr', 'datard', 'dead', 'downloaded'), f))
+    if not isinstance(want, dict):
+        return False, f'no expectation for program {build}'
+    same = all(got[n] == want[n] for n in names) and got['wait'] == want['wait'] and got['found'] == 15
+    how = (f'found {got["found"]:#x}, register read {got["regrd"]:#010x}, dead flag {got["dead"]:#010x}: '
+           + ('as find_dsp.py finds them' if same else 'NOT what find_dsp.py finds') + f'; status {st:#x}')
+    ok = same and st & 1
+    if refdir and short == 'DSPIOP.BIN' and os.path.exists(os.path.join(refdir, 'ref_iop.bin')):
+        import check_dsp_probe
+        ref = struct.unpack('<256I', open(os.path.join(refdir, 'ref_iop.bin'), 'rb').read())
+        a = struct.unpack_from('<256I', data, 0x70)
+        b = struct.unpack_from('<256I', data, 0x470)
+        # registers that move by themselves: status, counters, pin states, the SPORT channels' index and count
+        live = {0x03, 0x19, 0x2A, 0x2D, 0x2F, 0x37} | {c + k for c in (0x30, 0x38, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78)
+                                                      for k in (0, 2)}
+        diff = [r for r in check_dsp_probe.READ if not a[r] == b[r] == ref[r]]
+        hard = [r for r in diff if r not in live]
+        how += (f'; {len(check_dsp_probe.READ) - len(diff)} of {len(check_dsp_probe.READ)} registers, both passes, = '
+                'what the port answers after the run')
+        if diff:
+            how += '; differ: ' + ', '.join(f'{check_dsp_probe.IOP[r]} {a[r]:#x}/{b[r]:#x}/after {ref[r]:#x}'
+                                            + ('' if r in hard else ' (live)') for r in diff)
+        ok = ok and not hard
+    for name, ref_name, off, n, wb in (('DSPPM.BIN', 'ref_pm.bin', 0x80, 0xE00, 6), ('DSPDM.BIN', 'ref_dm.bin', 0x80, 0xD00, 4)):
+        if refdir and short == name and os.path.exists(os.path.join(refdir, ref_name)):
+            ref = open(os.path.join(refdir, ref_name), 'rb').read()
+            words_read = struct.unpack_from('<I', data, 0x70)[0]
+            eq = sum(data[off + wb * i:off + wb * (i + 1)] == ref[wb * i:wb * (i + 1)] for i in range(n))
+            how += f'; {words_read} words read; {eq} of {n} equal to what the DSP holds at the end'
+            if st & 0x20:                     # the pre-check refused: nothing may have been read
+                ok = ok and words_read == 0
+            elif name == 'DSPPM.BIN':         # program memory does not change while the kernel runs
+                ok = ok and words_read == n and eq == n
+    return ok, how
+
+
 if survey or survey2:                   # their 8.3 names are R + the base's top seven hex digits
     ROLE = {f'R{b:08X}'[:8] + '.BIN': f'survey_{b:08x}.bin' for b in (dict(SURVEY2) if survey2 else SURVEY)}
     ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
@@ -164,6 +237,10 @@ for short, lng, attr, cl, size in fat.entries(folder):
         ok, how = data[:n] == stream(seed, n), f'test data in {region} (seed {seed:#x})'
     elif role == 'c3cbmd000098.ic19' and prefill:
         ok, how = data[:n] == stream(0x19, n), 'test data at 0x57800000 (seed 0x19)'
+    elif short in DSPFILES and (dsp1 or dsp2):
+        m = re.search(rb'PROGRAM (\d+)', fat.read_file(*next((cl, sz) for sh, lg, at, cl, sz in fat.entries(folder)
+                                                             if sh == 'DUMPLIST.TXT')))
+        ok, how = dsp_file(short, data, int(m.group(1)) if m else None)
     elif role.startswith('survey_') and survey2 and int(role[7:15], 16) in RAMWIN:
         ok, how = ram_window(int(role[7:15], 16), data, n)
     elif role.startswith('survey_') and prefill:
@@ -192,6 +269,21 @@ for i, short in enumerate(ROLE):        # every file the build writes must be th
     elif short not in seen:
         rows.append((ROLE[short], short, 0, '-', 'not on the card', 'MISSING'))
         bad += 1
+if (dsp1 or dsp2) and refdir and os.path.exists(os.path.join(refdir, 'dsp_traffic.txt')):
+    t = dsp_traffic()
+    writes = sorted(t['W'])
+    allowed = {0x1C, 0x40, 0x41, 0x42} if dsp2 else set()
+    wrong = [w for w in writes if w[0] not in allowed]
+    import check_dsp_probe
+    idx_bad = [i for i in t['I'] if i not in check_dsp_probe.READ and not (dsp2 and i in (0x04, 0x1C, 0x40, 0x41, 0x42))]
+    ok = not wrong and not idx_bad
+    bad += not ok
+    how = (f"index writes {sum(t['I'].values())} to {len(t['I'])} registers, data reads {sum(t['R'].values())}, "
+           f"data writes {sum(t['W'].values())}: " + (', '.join(f'{i:#04x}={v:#06x} x{t["W"][(i, v)]}' for i, v in writes)
+                                                    or 'none'))
+    if wrong or idx_bad:
+        how += f'; NOT ALLOWED: writes {wrong}, indexes {idx_bad}'
+    rows.append(('host port traffic', '-', '-', '-', how, 'ok' if ok else 'WRONG'))
 w = [max(len(str(r[i])) for r in rows + [('file (long name)', '8.3', 'bytes', 'crc32', 'expected', 'result')])
      for i in range(6)]
 head = ('file (long name)', '8.3', 'bytes', 'crc32', 'expected', 'result')
