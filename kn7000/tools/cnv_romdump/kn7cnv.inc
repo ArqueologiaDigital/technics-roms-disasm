@@ -78,3 +78,29 @@
 # ---- the LCD: 640 x 240, RGB565 ------------------------------------------------------------------
 .equ FB,            0x9CE00000
 .equ FB_STRIDE,     1280
+
+# ---- the launch block: how an application started by the program menu learns its folder ----------
+# The program menu (kn7000/tools/kn7menu, KN7MENU: the root KN7APP.BIN) lists the programs on the card,
+# one per folder, and starts the chosen folder's KN7APP.BIN by putting it at APP_BASE itself, exactly as
+# the loader would have (the same header and CRC-32 checks, the rest of the application area zeroed).
+# It then writes this block. The loader zeroes the whole application area, the block included, before it
+# loads anything, so an application the loader started directly (C:\KN7APP.BIN, no menu) finds zeros
+# here and keeps to the root folder. A block is valid when LB_MAGIC and LB_CHECK both hold. No
+# application may keep data of its own in [LB_ADDR, LB_ADDR + LB_LEN).
+.equ LB_ADDR,       0x502E7F00      # the last 256 bytes of the area the loader zeroes (CNV_END - 0x100)
+.equ LB_LEN,        0x100
+.equ LB_MAGIC,      0x00            # LAUNCH_MAGIC, "KN7L"
+.equ LB_ABI,        0x04            # LAUNCH_ABI
+.equ LB_SIZE,       0x08            # bytes of KN7APP.BIN the menu put at APP_BASE (= AH_SIZE)
+.equ LB_CRC,        0x0C            # its AH_CRC
+.equ LB_DIR,        0x10            # 16 bytes: the folder's 8.3 name as the card's FAT holds it ("AW"), NUL-ended
+.equ LB_PREFIX,     0x20            # 16 bytes: the same and a backslash ("AW\"): put it in front of a file
+                                    #   name for SV_OPEN, which the loader keeps relative to C:\ (never more
+                                    #   than 10 characters, so prefix + an 8.3 name fit in 23 bytes and a NUL)
+.equ LB_PATH,       0x30            # 32 bytes: "C:\AW", the form SV_SETPATH (sdfmpath) takes
+.equ LB_NAME,       0x50            # 64 bytes: the name the menu showed (MANIFEST.TXT NAME=, else the long
+                                    #   name, else the 8.3 name), NUL-ended
+.equ LB_CHECK,      0xFC            # LAUNCH_CHECK, the bitwise NOT of LAUNCH_MAGIC
+.equ LAUNCH_MAGIC,  0x4C374E4B
+.equ LAUNCH_CHECK,  0xB3C8B1B4
+.equ LAUNCH_ABI,    1
