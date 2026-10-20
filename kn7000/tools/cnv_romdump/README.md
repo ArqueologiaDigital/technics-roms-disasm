@@ -222,7 +222,7 @@ For the SURVEY2 files it adds:
 
 ## The DSP probe: the effects DSP, read through the firmware's own routines
 
-Two more builds of the same application look at the effects DSP, IC306, an ADSP-21065L that the main CPU
+Three more builds of the same application look at the effects DSP, IC306, an ADSP-21065L that the main CPU
 host-boots at every power-up (`kn7000_mame/notes/dsp-host-interface.md`). The DSP's host port is 16 bits
 wide and register-indirect:
 - the IOP register address goes to `0x98000000`;
@@ -234,6 +234,7 @@ The title reads "KN7000 DSP PROBE". The files are plain 8.3 files in the root, a
 |-------------------|------------|--------------------------------|--------------------------------------------|
 | `build/dspprobe/` | `0x130000` | "KN7000 DSP PROBE 1.0 PHASE 1" | `DSPHOST.BIN`, `DSPIOP.BIN`, `DSPTIME.BIN` |
 | `build/dspmem/`   | `0x230000` | "KN7000 DSP PROBE 1.0 PHASE 2" | `DSPPM.BIN`, `DSPDM.BIN`                   |
+| `build/dsprate/`  | `0x430000` | "KN7000 DSP PROBE 1.0 RATE"    | `DSPRATE.BIN` (pass 8, below)              |
 
 **It drives no port itself.** `DspFind` (`romdump_dsp.s`) finds the firmware's own host-port routines by
 masked signatures, the way the loader finds its file routines, and the probe `calls` them. They keep the
@@ -372,6 +373,105 @@ flag 0 before and after every file). What it showed:
 - **Phase 2's pre-checks hold** on the chip: SYSCON `0x410`, `DMAC0` DEN and CHEN clear, channel 8
   neither active nor chaining.
 
+### Pass 8: the frame rate (`build/dsprate/`, `romdump_dsprate.s`)
+
+Pass 6 left two readings open (above): frames at about 22.5 kHz with nearly two handshakes each, or one
+handshake per frame at 41.4 kHz or more. Its clock, the firmware's millisecond counter, is too coarse to
+tell them apart. Pass 8 times the same handshakes with the clock behind that counter.
+
+- **The fine clock.** The firmware's 1 kHz tick is the MN10300's 16-bit timer 4. Every build sets
+  `TM4BR` (`0x34001090`) to `0x7D0` and `TM4MD` (`0x34001080`, 8 bits) to `0x81`, and nothing in the
+  firmware names the counter `TM4BC` (`0x340010A0`): `find_tm4.py`, 893 at `0x484D7082`/`0x484D708B`, 941 at
+  `0x484D728F`/`0x484D7298`. `TM4BC` counts down from 2000 to 0 at 2 MHz and the millisecond counter steps
+  at each reload, so `ms x 2001 + (2000 - BC)` is a time in counts of 1/2001 ms. The probe reads the timer
+  (`TM4BR`, `TM4MD` into its header, `TM4BC` in every stamp) and never writes it.
+- **A stamp** is `(ms - the chunk's base) << 16 | TM4BC`, read ms, `BC`, ms again until ms holds (8 tries).
+  A stamp read after the reload but before the tick handler steps the counter comes out one tick early;
+  the decoder puts those right, as a step back of at most one tick.
+- **No tick inside an access.** The firmware's data-port accessor takes the library's lock before the
+  handshake wait (893 `0x4C03DCE7`: `and 0xf7ff, psw`, interrupts off) and releases it after the port read
+  (`find_tm4.py`). The tick handler runs as the access ends, before the probe's next stamp.
+- **The stamps lie on a lattice.** Each access waits for the DSP's handshake, so the stamp after it comes
+  a fixed time after the DSP event that released it. Numbered by the events between them, those stamps fit
+  `t = a + n T`. One kind of event per period (reading b) leaves one tight cluster of residuals; two kinds a
+  fixed offset apart (reading a: two handshakes per frame, unevenly spaced) leave two clusters.
+
+`DSPRATE.BIN` is four 32 KB chunks (131,072 bytes). Each chunk is measured in a converter call of its own,
+at most about 1 s (pass 6's longest call, `DSPTIME.BIN`, was about 1.05 s), and written by the dumper's own
+writer (`DumpStep`).
+
+| chunk | offset   | bytes  | what                                                                                                   |
+|-------|----------|--------|--------------------------------------------------------------------------------------------------------|
+| 0     | `0x0000` | 0x100  | header: "DSPRATE1", status, ms at start and end, dead flag, `TM4BR`, `TM4MD`, `TM4BC`, `G17ICR`, found |
+| 0     | `0x0100` | 0x1000 | calibration: 1024 stamps, 64 delay-loop turns apart, no DSP access                                     |
+| 0     | `0x1100` | 0x6000 | access timing: 2048 pairs of re-latch `MSGR2`, stamp, low half, stamp, high half (12 bytes each)       |
+| 0     | `0x7100` | 0xF00  | phase check: 240 samples of stamp, `CR0A`, stamp, `IIR0A`, after `(k & 31) x 24 + 1` delay-loop turns  |
+| 1-3   | `0x0000` | 0x40   | segment header: "DSPRSEGn", status, ms at start and end, dead flag, samples taken                      |
+| 1-3   | `0x0040` | 0x2EE0 | the I3 series: 1000 samples, one per millisecond tick: stamp, `MSGR2`, stamp                           |
+
+- **What it writes:** only what the firmware's routines write for any access, as in pass 6: the index
+  latch and, before each wait, `0x0001` to `G17ICR`. It never calls the handshake wait without the read
+  that follows (it calls only the data read, which waits and then reads). It reads `MSGR2`, `CR0A` and
+  `IIR0A`, all read in pass 6: 11,056 data reads in all (pass 6: 10,056).
+- **Stops:** the dead flag is checked before every block, pair and sample; once it is set, or a wait for
+  the millisecond counter runs out (2,000,000 polls), nothing more is read, in that chunk or the later
+  ones (status `0x100` there). Every loop is bounded.
+- **A build of its own.** `romdump.s` includes `romdump_dsprate.s` and its two hooks (`en_first`,
+  `FillChunk`) only under `.ifdef DSPRATE`, and the Makefile assembles it a second time with `-D DSPRATE`
+  (`xapasm.py`'s conditionals). Every other build keeps its bytes: `make` still gives `dspprobe`
+  `ddc23b53...`, `dspmem` `9a5077d3...`, `KN7LOAD.CNV` `6b81f382...` and the floppy `b7a67de6...`.
+
+**`check_dsp_probe.py`** decodes it:
+- the calibration (counting down, the range of `BC`, a reload at every ms step, stale stamps put right);
+- the intervals between successive stamps, as an aligned histogram in 1 us bins: after each low half,
+  after each high half (with the re-latch), and whole pairs;
+- the lattice of every stamp series: the access timing, the phase check and the I3 series, its period
+  and uncertainty, and one kind of event or two. The I3 series decides: each of its samples starts at a
+  tick, anywhere in the frame, so it meets every kind of event, where the access timing keeps step with
+  the frame and meets one;
+- events per pair and per access (single, or more when one was missed);
+- I3 over the three segments, unwrapped modulo 18,000 (across the gaps between chunks by the rate so far),
+  its least-squares rate, and FLAG3's share: I3 steps per event (b) or per frame (a);
+- the verdict: **a**, **b**, **neither**, or **none** (no fine clock). A register read that takes the same
+  short time wherever it starts means the DSP answers at once (the emulator's self-ack): neither. Exactly
+  half a step per event fits (b), and also frames of two evenly spaced handshakes with FLAG3 always high;
+  the decoder says so.
+- `--self-test` runs it on simulated runs: the probe's steps against a DSP of reading (a) (44.44 us
+  frames, handshakes 24.0 and 20.44 us apart, I3 every frame), reading (b) (one handshake per 22.68 us
+  frame, I3 every other frame), a DSP that answers at once, and a stopped `TM4`, with stale stamps and
+  6 us tick handlers. It finds (a) at 22,511 Hz, (b) at 44,122 Hz (with the tick taken as 1 ms; the
+  simulated tick is 2001 counts of 0.5 us), neither, and none.
+
+#### Pass 8 in MAME (2026-10-20)
+
+The release binary (SHA-1 `c8334f68c9e3450312db35052cd96bc5fd94a13a`, `releases/2026-10-20-dsprate/`) on the
+published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70aa725`), `-bios v13`:
+
+| run          | options                | outcome                                                                                                |
+|--------------|------------------------|--------------------------------------------------------------------------------------------------------|
+| plain        | `--dsprate`            | 3 of 3; `TM4BR`, `TM4MD` and `TM4BC` read 0: "TM4 DOES NOT RUN", verdict none                          |
+| TM4 stand-in | `--dsprate --fake-tm4` | 3 of 3; `check_dsprate_mame.py`: every stamp between the reads it brackets; verdict neither (self-ack) |
+
+- **The overlay has no timer 4.** Its MN10300 core models `TM5` (the tempo timer) only; `TM4`'s registers
+  read 0 and writes are dropped, and the driver raises the 1 kHz tick (group 6) from a timer of its own
+  at whole milliseconds. So in plain MAME the stamps carry whole milliseconds only, and the decoder says
+  so. `--fake-tm4` (`dsp_tap.lua`) makes `TM4` read as the firmware set it up, counting down at 2 MHz
+  from each whole millisecond.
+- **Both runs:** `DSPRATE.BIN` whole (131,072 bytes), the routines found at the 893 addresses, status
+  `0x1` in every chunk, dead flag 0 throughout. Host-port traffic: 5,528 index writes, all to `MSGR2`,
+  `IIR0A` and `CR0A`; 11,056 data reads; no data writes. The measuring ran from ms 50165 to 53843 (3.7 s):
+  chunk 0, then three segments of 1,000 samples over 1.0 s each, about 215 ms apart (writing a chunk).
+- **The stand-in run, decoded:** the calibration counts down (1018 steps down, none up), `BC` 1..1982,
+  a reload at all 5 ms steps, no stale stamp. The access timing: 2048 pairs in 24.28 ms, 5.93 us per access.
+  `MSGR2` reads `0x656F0` (B3) throughout: no effect 58-61 runs there, I3 does not move. `CR0A` and `IIR0A`
+  read 0. A register read takes 10.5 us wherever it starts: the decoder says the DSP answers at once.
+- **`check_dsprate_mame.py`:** all 11,056 reads came in the probe's order, and no stamp is out of place in
+  any block. A median 2.03 us from a stamp to the low-half read, 4.25 us from the read to the next stamp,
+  in MAME's timing of the MN10300 (not the chip's). The tick handler writes the counter 1.4 to 10.6 us after
+  the whole millisecond (median 1.4).
+- **The timings mean nothing there:** the overlay answers the handshake at once ("self-ack"). On the
+  instrument each access should wait about 24 us (pass 6).
+
 ## How it stays out of the firmware's way
 
 - **Memory.** Everything it writes is in the 192 KB the firmware sets aside for a style converter
@@ -458,33 +558,37 @@ flag 0 before and after every file). What it showed:
 
 ## Files
 
-| file                            | what                                                                                      |
-|---------------------------------|-------------------------------------------------------------------------------------------|
-| `loader.s`                      | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing |
-| `kn7cnv.inc`                    | the contract between loader and application: memory layout, service table, header         |
-| `romdump.s`, `romdump.inc`      | the ROM dumper application                                                                |
-| `romdump_dsp.s`                 | the DSP probe: the firmware's DSP routines found and called, the five DSP files           |
-| `mkapp.py`                      | fills the application header's size and CRC-32                                            |
-| `mkfloppy.py`                   | files onto a blank disk the KN7000 formatted                                              |
-| `gen_font.py`, `font8x13.inc`   | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
-| `find_fw.py`                    | the loader's firmware search, in Python, over every program image we have                 |
-| `check_real_dump.py`            | after a real run: files whole, known or new, builds, two runs identical; SURVEY2 checks   |
-| `find_rhythm.py`                | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
-| `find_dsp.py`                   | the DSP probe's search in Python over every program image, and the same-code check        |
-| `check_dsp_probe.py`            | decodes the DSP probe's files: registers, rates, the readback against the kernel          |
-| `fatls.py`                      | lists or extracts the files on an SD card image, showing long names                       |
-| `test/run_test.sh`              | the dumper end to end in MAME, then `verify_dump.py`                                      |
-| `test/prefill.lua`              | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
-| `test/prefill_survey2.lua`      | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows     |
-| `test/dsp_tap.lua`              | the DSP probe's host-port traffic, and the emulator's IOP registers and DSP memory        |
-| `test/verify_dump.py`           | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
-| `probes/`                       | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)     |
-| `releases/2026-10-19/`          | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
-| `releases/2026-10-19-wave/`     | the same for the WAVE build (pass 3)                                                      |
-| `releases/2026-10-19-survey/`   | the same for the SURVEY build (pass 4)                                                    |
-| `releases/2026-10-20-survey2/`  | the same for the SURVEY2 build (pass 5)                                                   |
-| `releases/2026-10-20-dspprobe/` | the same for the DSP probe, phase 1 (pass 6)                                              |
-| `releases/2026-10-20-dspmem/`   | the same for the DSP probe, phase 2 (pass 7)                                              |
+| file                            | what                                                                                                          |
+|---------------------------------|---------------------------------------------------------------------------------------------------------------|
+| `loader.s`                      | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing                     |
+| `kn7cnv.inc`                    | the contract between loader and application: memory layout, service table, header                             |
+| `romdump.s`, `romdump.inc`      | the ROM dumper application                                                                                    |
+| `romdump_dsp.s`                 | the DSP probe: the firmware's DSP routines found and called, the five DSP files                               |
+| `romdump_dsprate.s`             | the DSP probe's pass 8: the frame rate, timed by timer 4 (only with `-D DSPRATE`)                             |
+| `mkapp.py`                      | fills the application header's size and CRC-32                                                                |
+| `mkfloppy.py`                   | files onto a blank disk the KN7000 formatted                                                                  |
+| `gen_font.py`, `font8x13.inc`   | the 8x13 text font, from the X11 misc-fixed font (public domain)                                              |
+| `find_fw.py`                    | the loader's firmware search, in Python, over every program image we have                                     |
+| `check_real_dump.py`            | after a real run: files whole, known or new, builds, two runs identical; SURVEY2 checks                       |
+| `find_rhythm.py`                | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version                       |
+| `find_dsp.py`                   | the DSP probe's search in Python over every program image, and the same-code check                            |
+| `find_tm4.py`                   | pass 8's clock: where each build sets up timer 4; the data read's lock turns interrupts off                   |
+| `check_dsp_probe.py`            | decodes the DSP probe's files: registers, rates, the readback against the kernel; pass 8's verdict            |
+| `fatls.py`                      | lists or extracts the files on an SD card image, showing long names                                           |
+| `test/run_test.sh`              | the dumper end to end in MAME, then `verify_dump.py`                                                          |
+| `test/prefill.lua`              | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)                            |
+| `test/prefill_survey2.lua`      | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows                         |
+| `test/dsp_tap.lua`              | the DSP probe's host-port traffic and read times, the emulator's IOP registers and DSP memory; `TM4` stand-in |
+| `test/check_dsprate_mame.py`    | pass 8 in MAME: every stamp against the emulated times of the reads it brackets                               |
+| `test/verify_dump.py`           | checks every file: MAME name, and bytes against MAME's hashes or the test data                                |
+| `probes/`                       | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)                         |
+| `releases/2026-10-19/`          | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)                           |
+| `releases/2026-10-19-wave/`     | the same for the WAVE build (pass 3)                                                                          |
+| `releases/2026-10-19-survey/`   | the same for the SURVEY build (pass 4)                                                                        |
+| `releases/2026-10-20-survey2/`  | the same for the SURVEY2 build (pass 5)                                                                       |
+| `releases/2026-10-20-dspprobe/` | the same for the DSP probe, phase 1 (pass 6)                                                                  |
+| `releases/2026-10-20-dspmem/`   | the same for the DSP probe, phase 2 (pass 7)                                                                  |
+| `releases/2026-10-20-dsprate/`  | the same for the DSP probe, pass 8 (the frame rate)                                                           |
 
 ## How it was tested
 
@@ -494,6 +598,8 @@ Results are in the next section. Command:
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --survey2 --bios v13 --rompath ~/compartilhado/kn7000-emulator/roms
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dsp --bios v13 --rompath ~/compartilhado/kn7000-emulator/roms
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dspmem [--fake-syscon --fake-fs] --bios v13 --rompath ...
+    test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dsprate [--fake-tm4] --bios v13 --rompath ...
+    test/check_dsprate_mame.py $T/run                                  # after --dsprate --fake-tm4
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
