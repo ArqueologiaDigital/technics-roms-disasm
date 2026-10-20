@@ -67,6 +67,16 @@ eh_spin:
 en_first:
     mov     str_title, a0
     mov     a0, (V_TITLE)
+.ifdef DSPRATE
+    mov     (APP_OPTIONS), d0       # the DSP probe's pass 8 (romdump_dsprate.s; assembled with -D DSPRATE)
+    mov     OPT_DSPRATE, d1
+    and     d1, d0
+    beq     en_notrate
+    mov     DspRateTable, a0
+    mov     NUM_DSPRATE, d0
+    bra     en_dsp
+en_notrate:
+.endif
     mov     (APP_OPTIONS), d0       # the table this build reads, and its length: the ROMs, a survey's
     mov     OPT_DSP, d1             # windows, or the DSP probe's files
     and     d1, d0
@@ -562,6 +572,14 @@ FillChunk:
     mov     (R_KIND, a2), d0
     cmp     K_DSPHOST, d0           # the DSP probe's files: built whole in BUF (each fits one chunk)
     bcs     fc_notdsp
+.ifdef DSPRATE
+    cmp     K_DSPRATE, d0           # pass 8: each chunk measured as it is written (romdump_dsprate.s)
+    bne     fc_dspfill
+    mov     a2, a0
+    call    DspRateFill, 0, 0
+    bra     fc_ret
+fc_dspfill:
+.endif
     mov     a2, a0
     call    DspFill, 0, 0
     bra     fc_ret
@@ -1806,6 +1824,9 @@ dd_line2:
 
 
 .include "romdump_dsp.s"
+.ifdef DSPRATE
+.include "romdump_dsprate.s"
+.endif
 
 # ================================================================================================
 # The ROMs, in dump order; MAME names as in the kn7000 driver (MakeNames builds the first four).

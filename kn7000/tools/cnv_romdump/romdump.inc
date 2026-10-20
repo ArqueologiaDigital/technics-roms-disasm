@@ -69,6 +69,7 @@
 .equ DS_PRECHECK,   0x20            #   phase 2: a check before the readback failed, nothing was written
 .equ DS_FSTIMEOUT,  0x40            #   phase 2: EPB0 stayed empty (DMAC0 FS) for too long: stopped
 .equ DS_RESTORED,   0x80            #   phase 2: DMAC0, IIEP0, IMEP0, CEP0 written back
+.equ DS_SKIPPED,    0x100           #   pass 8: an earlier block stopped (V_RSTOP), so this chunk read nothing
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
 .equ HOLD_CALLS,    23000           # ... or this many calls when the loader found no ms counter, each made
 .equ HOLD_SPIN,     10000           # to last about 0.65 ms by a delay loop (loader.s HOLD_SPIN)
@@ -89,6 +90,8 @@
 .equ OPT_SURVEY2,   0x80000         # read Survey2Table's 14 windows instead (takes precedence over OPT_SURVEY)
 .equ OPT_DSP,       0x100000        # the DSP probe, phase 1 (DspTable: read-only, IOP registers and host side)
 .equ OPT_DSPMEM,    0x200000        # the DSP probe, phase 2 (DspMemTable: DSP memory through EPB0 DMA)
+.equ OPT_DSPRATE,   0x400000        # the DSP probe, pass 8 (DspRateTable: the frame rate); only in a build assembled
+                                    # with -D DSPRATE (romdump_dsprate.s), which the other builds leave out
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 .equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
@@ -96,6 +99,7 @@
 .equ OPTS_SURVEY2,  0xB0000         # the SURVEY2 build: Survey2Table's 14 windows, ordinary files only
 .equ OPTS_DSPPROBE, 0x130000        # the DSP probe, phase 1, ordinary files only
 .equ OPTS_DSPMEM,   0x230000        # the DSP probe, phase 2, ordinary files only
+.equ OPTS_DSPRATE,  0x430000        # the DSP probe, pass 8 (frame rate), ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)
@@ -117,10 +121,12 @@
 .equ K_DSPTIME,     6               # DSP probe: timers, DMA status and SPORT DMA counts over time
 .equ K_DSPPM,       7               # DSP probe phase 2: program memory through EPB0
 .equ K_DSPDM,       8               # DSP probe phase 2: data memory through EPB0, and the SPORT TCBs
+.equ K_DSPRATE,     9               # DSP probe pass 8: the frame rate, four 32 KB chunks (romdump_dsprate.s)
 .equ NUM_ROMS,      10              # entries in RomTable and SurveyTable
 .equ NUM_SURVEY2,   14              # entries in Survey2Table
 .equ NUM_DSP,       3               # entries in DspTable
 .equ NUM_DSPMEM,    2               # entries in DspMemTable
+.equ NUM_DSPRATE,   1               # entries in DspRateTable
 .equ MAX_ROMS,      16              # the most any table may have (16 skip bits; V_RESULTS, SHORTS sized for it)
                                     # the files: V_NROMS dump files, then DUMPLIST.TXT
 

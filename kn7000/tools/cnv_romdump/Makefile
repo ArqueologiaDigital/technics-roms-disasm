@@ -6,7 +6,7 @@ OUT         ?= build
 
 all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/wave/KN7APP.BIN \
      $(OUT)/survey/KN7APP.BIN $(OUT)/survey2/KN7APP.BIN $(OUT)/dspprobe/KN7APP.BIN $(OUT)/dspmem/KN7APP.BIN \
-     $(OUT)/kn7load_floppy.img
+     $(OUT)/dsprate/KN7APP.BIN $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
@@ -67,6 +67,18 @@ $(OUT)/dspprobe/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 $(OUT)/dspmem/KN7APP.BIN: $(OUT)/romdump.bin mkapp.py
 	@mkdir -p $(OUT)/dspmem
 	$(PYTHON) -I mkapp.py $< $@ --options 0x230000 --name "KN7000 DSP PROBE 1.0 PHASE 2"
+
+# the DSP probe, pass 8 (OPTS_DSPRATE): the effects DSP's frame rate, read only, timed by the MN10300's timer 4
+# (romdump_dsprate.s). Its code goes into an image of its own, assembled with -D DSPRATE, so that romdump.bin, and
+# every build above, keeps its bytes.
+$(OUT)/romdump_rate.bin: romdump.s romdump_dsp.s romdump_dsprate.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm.py
+	@mkdir -p $(OUT)
+	$(XAPASM) romdump.s -D DSPRATE -o $@ -m $(OUT)/romdump_rate.map
+	@test $$(stat -c%s $@) -le 24576 || { echo "romdump.s -D DSPRATE: the image reaches BUF (0x502C0000)"; rm -f -- $@; false; }
+
+$(OUT)/dsprate/KN7APP.BIN: $(OUT)/romdump_rate.bin mkapp.py
+	@mkdir -p $(OUT)/dsprate
+	$(PYTHON) -I mkapp.py $< $@ --options 0x430000 --name "KN7000 DSP PROBE 1.0 RATE"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py
