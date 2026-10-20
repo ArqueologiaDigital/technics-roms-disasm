@@ -17,3 +17,4 @@ __pycache__/
 
 # The program menu's build: build/card/ holds Another World's game files (made from your own copy of the game)
 /tools/kn7menu/build/
+/tools/dsptone/build/
