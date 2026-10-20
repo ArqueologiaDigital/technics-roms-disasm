@@ -83,13 +83,13 @@ TESTS = [
     ('DVU1', 8, 'DREF', 'muldiv', 'divu by 7, dividend 0x7F', 14, None),
     ('DVU4', 8, 'DREF', 'muldiv', 'divu by 7, dividend 0x12345678', 38, None),
     ('CRET', 4, 'LOOP', 'fetch', 'mov a0, d0 + calls (a1) to a bare retf: per call', 6, None),
+    ('FL1L', 1, None, 'single', 'one call of the FLASH routine, long path (whole run less the null test)', None, None),
+    ('TW1L', 1, None, 'single', 'one call of the RAM copy, long path', None, None),
     ('FLLG', 4, 'CRET', 'fetch', 'the firmware routine in FLASH, long path (24 instructions): per call, less a bare call',
      None, None),
     ('TWLG', 4, 'CRET', 'fetch', 'its copy in work RAM, long path: per call, less a bare call', None, None),
     ('FLSH', 4, 'CRET', 'fetch', 'the firmware routine in FLASH, short path (6 instructions)', None, None),
     ('TWSH', 4, 'CRET', 'fetch', 'its copy in work RAM, short path', None, None),
-    ('FL1L', 1, None, 'single', 'one call of the FLASH routine, long path (whole run less the null test)', None, None),
-    ('TW1L', 1, None, 'single', 'one call of the RAM copy, long path', None, None),
 ]
 # the memory tests: tag -> (region, view, kind, width); kinds L load same address, W load walk (64 bytes apart,
 # every one a new cache line), Q load sequential, S store same (the value there), X store walk, Y store sequential,
@@ -136,7 +136,7 @@ REGNAMES = {0x32000010: 'bus 0x32000010', 0x32000020: 'MEMCTR0', 0x32000022: 'ME
             0x3200002E: 'MEMCTR7', 0x32000040: 'DRAM 0x32000040', 0x32000042: 'DRAM 0x32000042',
             0x20000070: 'CHCTR', 0x34001080: 'TM4MD', 0x34001090: 'TM4BR', 0x98070000: 'board strap',
             0x3400015C: 'G17ICR'}
-# the firmware's bus set-up (941 0x484D710E, 893 0x484D6F04; find_cpu.py): MEMCTR1-4 by the board class
+# the firmware's bus set-up (941 0x484D710E, 893 0x484D6F01; find_cpu.py): MEMCTR1-4 by the board class
 SETUP = {1: {0x32000022: 0x804, 0x32000024: 0x824, 0x32000026: 0x424, 0x32000028: 0x865},
          'other': {0x32000022: 0xB24, 0x32000024: 0x924, 0x32000026: 0x704, 0x32000028: 0x765}}
 STATUS = {1: 'TM4 DID NOT MOVE: nothing timed', 2: 'the firmware routine was not found: its tests skipped',
@@ -370,8 +370,9 @@ def report(chunks, res, out=print):
         rows.append((tag, NAMES[tag][4], fmt(warm, 0), fmt(first, 0),
                      fmt(None if first is None else first - warm, 0)))
     out(table(('test', 'what', 'warm ns', 'first run ns', 'first - warm'), rows))
-    out('(The first run of chunk 0 is the routine\'s first call since the probe started; its excess is the fetch of '
-        'its cache lines, if the firmware had not run it just before, plus whatever else was cold.)')
+    out('(FL1L and TW1L come before every other call of the routine and of its copy, so the first run of chunk 0 is '
+        'their first execution since the probe started: its excess is the fetch of their cache lines, from the flash '
+        'and from work RAM, plus whatever else was cold.)')
     out('')
     out('### Memory, per access (loads and stores; pairs for read + write back)')
     hit = ns.get('RAL4')

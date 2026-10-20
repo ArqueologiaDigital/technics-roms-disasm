@@ -46,6 +46,7 @@
 .equ CT_RES,        CT_TAB+CT_MAXT*CT_ENT
 .equ CT_CAP,        3000            # ms: a chunk that takes longer stops measuring (CT_CAPPED)
 .equ CT_CLKSPIN,    2000            # delay-loop turns between the two reads of the clock check (about 250 us)
+.equ CT_SETTLE,     40              # ms of pause at the start of a chunk (a frame-polling test rig arms its taps)
 .equ CT_LEAF,       1               # a1 = CT_LEAF in a test entry: the firmware routine CtFind found
 .equ CT_SCR,        0x502D0000      # 64 KB of the converter area nothing else uses: the stores' scratch
 .equ CT_UNC,        0x40000000      # the uncached view of external memory is 0x40000000 higher
@@ -209,6 +210,8 @@ cf_zero:
     bne     cf_zero
     mov     d0, (V_CTSTAT)
     mov     d0, (V_CTDONE)
+    mov     1, d0                   # measuring (test/cpu_tap.lua watches it)
+    mov     d0, (V_CTBUSY)
     mov     BUF, a2
     mov     0x54555043, d0          # "CPUT"
     mov     d0, (a2)
@@ -275,6 +278,21 @@ cf_ms:
     mov     CpuTimeFill, d0
     mov     d0, (0x7C, a2)
     call    CtRegs, 0, 0            # the register snapshot: plain reads
+    mov     (SVC+SV_MSCOUNT), d0
+    cmp     0, d0
+    beq     cf_clock
+    call    MsNow, 0, 0             # a pause of CT_SETTLE ms before the tests, so that a test rig polling once
+    add     CT_SETTLE, d0           # per video frame (test/cpu_tap.lua) sees V_CTBUSY first; bounded
+    mov     d0, d2
+    mov     WAIT_SPINS, d3
+cf_settle:
+    call    MsNow, 0, 0
+    sub     d2, d0
+    cmp     0, d0
+    bge     cf_clock
+    add     -1, d3
+    bne     cf_settle
+cf_clock:
     movhu   (TM4BC), d0             # the clock check: does TM4BC move?
     mov     d0, (0x34, a2)
     mov     CT_CLKSPIN, d0
@@ -290,8 +308,6 @@ cf_spin:
     call    CtStat, 0, 0
     bra     cf_end
 cf_tests:
-    mov     1, d0
-    mov     d0, (V_CTBUSY)
     mov     BUF+CT_RES, d0
     mov     d0, (V_CTRES)
     mov     CtTests, a2             # the entry
@@ -333,8 +349,6 @@ cf_more:
     cmp     d0, d2
     bcs     cf_test
 cf_stop:
-    clr     d0
-    mov     d0, (V_CTBUSY)
 cf_end:
     mov     BUF, a2
     call    MsNow, 0, 0
@@ -343,6 +357,8 @@ cf_end:
     mov     d0, (0x5C, a2)
     mov     (V_CTSTAT), d0
     mov     d0, (8, a2)
+    clr     d0
+    mov     d0, (V_CTBUSY)
     ret     [d2,d3,a2,a3], 0x30
 
 # CtRegs (leaf): BUF+0x100.. = (address, width, value) for every CtRegTable entry, read with its width.
@@ -1696,6 +1712,10 @@ CtTests:
     .long   ct_divu, 32, 7, 0x12345678
     .ascii  "CRET"                  # the bare call: calls (a1) to a retf, 4 per turn
     .long   ct_fcall, 128, 0, ct_rf
+    .ascii  "FL1L"                  # one call, the long path, before any other call of it: run 0 of chunk 0 is
+    .long   ct_fone, 1, 0x3FFFFF, CT_LEAF   # its first execution since the probe started (a cold I-cache)
+    .ascii  "TW1L"
+    .long   ct_fone, 1, 0x3FFFFF, CtTwin
     .ascii  "FLLG"                  # the firmware routine in flash, the long path (d0 = 0x3FFFFF: 24 instructions)
     .long   ct_fcall, 32, 0x3FFFFF, CT_LEAF
     .ascii  "TWLG"                  # its copy in RAM, the long path
@@ -1704,10 +1724,6 @@ CtTests:
     .long   ct_fcall, 64, 0, CT_LEAF
     .ascii  "TWSH"
     .long   ct_fcall, 64, 0, CtTwin
-    .ascii  "FL1L"                  # one call, the long path: run 0 of chunk 0 is the cold one
-    .long   ct_fone, 1, 0x3FFFFF, CT_LEAF
-    .ascii  "TW1L"
-    .long   ct_fone, 1, 0x3FFFFF, CtTwin
     .ascii  "RAL4"                  # work RAM, cached view
     .long   ct_ld4, 128, CT_SCR, 0
     .ascii  "RAL2"
