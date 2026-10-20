@@ -22,9 +22,13 @@
 #   .align N [, FILL]            pad to a multiple of N (FILL default 0)
 #   .ascii "text" / .asciz "text"
 #   .include "file"              relative to the including file, then the -I dirs
+#   .ifdef NAME / .ifndef NAME   assemble what follows, up to the matching .else or .endif, only when NAME is
+#   .else / .endif               (is not) defined: by -D, or by an .equ before this line (not by a label);
+#                                they nest, and the lines skipped are not looked at (labels, .equ, .include)
 #   mnemonic operands            MN10300, MAME unidasm operand syntax (mn10300_asm.py)
 #
-# Usage:  xapasm.py SRC.s -o OUT.bin [-m OUT.map] [-I DIR ...]
+# Usage:  xapasm.py SRC.s -o OUT.bin [-m OUT.map] [-I DIR ...] [-D NAME[=VALUE] ...]
+#   -D NAME[=VALUE] defines NAME (as .equ, VALUE default 1) before the first line of every pass.
 import argparse
 import os
 import re
@@ -41,8 +45,9 @@ class AsmError(Exception):
 
 
 class XapAsm:
-    def __init__(self, incdirs=()):
+    def __init__(self, incdirs=(), defines=None):
         self.incdirs = list(incdirs)
+        self.defines = dict(defines or {})  # -D NAME=VALUE
         self.known = {}          # labels settled by the previous pass
 
     # -- expressions ----------------------------------------------------------
@@ -100,9 +105,13 @@ class XapAsm:
         raise AsmError(f"cannot find include {name!r}")
 
     def run_pass(self, path, final):
-        self.final, self.out, self.syms, self.base = final, bytearray(), {}, 0
+        self.final, self.out, self.syms, self.base = final, bytearray(), dict(self.defines), 0
         self.labels = {}
+        self.equs = set(self.defines)   # what .ifdef sees: -D names and .equ names so far
+        self.cond = []           # .ifdef/.ifndef nesting: per level, whether its lines are assembled
         self._file(path)
+        if self.cond:
+            raise AsmError(f"{path}: {len(self.cond)} .ifdef/.ifndef without .endif")
         return self.out, self.labels
 
     @property
@@ -126,6 +135,23 @@ class XapAsm:
                 break
             line += ch
         line = line.strip()
+        op, _, rest = line.partition(" ")
+        if op in (".ifdef", ".ifndef"):
+            name = rest.strip()
+            if not re.fullmatch(r"[A-Za-z_][\w.]*", name):
+                raise AsmError(f"{op} needs a symbol name")
+            self.cond.append(all(self.cond) and ((name in self.equs) == (op == ".ifdef")))
+            return
+        if op in (".else", ".endif"):
+            if not self.cond or rest.strip():
+                raise AsmError(f"{op} without .ifdef/.ifndef" if not self.cond else f"{op} takes no operand")
+            if op == ".endif":
+                self.cond.pop()
+            else:
+                self.cond[-1] = all(self.cond[:-1]) and not self.cond[-1]
+            return
+        if not all(self.cond):
+            return
         m = re.match(r"([A-Za-z_][\w.]*):(.*)$", line)
         if m:
             if m.group(1) in self.labels:
@@ -139,6 +165,7 @@ class XapAsm:
         if op == ".equ":
             name, expr = rest.split(",", 1)
             self.syms[name.strip()] = self.eval(expr)
+            self.equs.add(name.strip())
         elif op == ".mnbase":
             if self.out:
                 raise AsmError(".mnbase must come before any output")
@@ -199,9 +226,16 @@ def main():
     ap.add_argument("-o", "--out", required=True)
     ap.add_argument("-m", "--map")
     ap.add_argument("-I", dest="incdirs", action="append", default=[])
+    ap.add_argument("-D", dest="defines", action="append", default=[], metavar="NAME[=VALUE]")
     a = ap.parse_args()
+    defines = {}
+    for d in a.defines:
+        name, _, val = d.partition("=")
+        if not re.fullmatch(r"[A-Za-z_][\w.]*", name):
+            sys.exit(f"xapasm: -D {d!r}: not a symbol name")
+        defines[name] = int(val, 0) if val else 1
     try:
-        out, labels = XapAsm(a.incdirs).assemble(a.src)
+        out, labels = XapAsm(a.incdirs, defines).assemble(a.src)
     except AsmError as e:
         sys.exit(f"xapasm: {e}")
     open(a.out, "wb").write(out)
