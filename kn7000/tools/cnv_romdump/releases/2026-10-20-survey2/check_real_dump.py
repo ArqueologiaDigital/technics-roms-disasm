@@ -24,8 +24,9 @@
 #   * --pass1 P1DIR (pass 1, the SAFE build's run): R5680000.BIN (0x56800000) is compared with its IC21.BIN
 #     (read at 0x96800000), and R4C00000.BIN (the library RAM at 0x4C000000) with the program flash joined
 #     from its PRGEVEN.BIN and PRGODD.BIN: where in the flash the copy comes from, and how much of it agrees;
-#   * R4400000.BIN (IC23, 0x44000000-0x441FFFFF): does it repeat every 256 KB? Each 256 KB copy is compared
-#     with the first; the first is also checked for a shorter period (128 KB, 64 KB);
+#   * R8400000.BIN (IC23, 0x84000000-0x841FFFFF, the uncached view of 0x44000000): does it repeat every 256 KB?
+#     Each 256 KB copy is compared with the first; the first is also checked for a shorter period (128 KB,
+#     64 KB);
 #   * the expansion slot windows (R4100000, R4180000, R5600000, R5700000) and the work RAM (R5018000): what
 #     they hold (FF/00 share, distinct values; the 'TCMP' and 'TPAD' containers in the work RAM).
 # These are findings; only a damaged copy, a missing file, a second run (DIR2) that differs, or a pass-4 data
@@ -49,7 +50,7 @@ KNOWN = os.path.expanduser('~/compartilhado/technics_romsets/kn7000')
 MB = 0x100000
 SURVEY = (0x40000000, 0x40800000, 0x54000000, 0x54800000, 0x55000000, 0x55800000)     # romdump.s SurveyTable
 SLOTS = (0x41000000, 0x41800000, 0x56000000, 0x57000000)                               # the expansion slots
-IC23, IC23_SIZE = 0x44000000, 0x40000
+IC23, IC23_SIZE = 0x84000000, 0x40000                  # CS1 through the uncached view
 PROGRAM_BASE = 0x48400000
 
 
@@ -197,7 +198,7 @@ def compare_pass4(data, p4dir):
 
 
 def ic23_repeat(b):
-    print(f'IC23 (R4400000.BIN, CPU {IC23:#010x}-{IC23 + len(b) - 1:#010x}): does it repeat every 256 KB?')
+    print(f'IC23 (R8400000.BIN, CPU {IC23:#010x}-{IC23 + len(b) - 1:#010x}): does it repeat every 256 KB?')
     first = b[:IC23_SIZE]
     rows = []
     for k in range(0, len(b), IC23_SIZE):
@@ -219,7 +220,7 @@ def ic23_repeat(b):
               + (': IC23 repeats every 256 KB through the window.' if equal == len(rows) - 1 else '.'))
         if len(rows) - 1 - equal - other:
             print('   A copy that differs in a few bytes: the firmware may have written them between the two reads'
-                  ' (it runs while the dumper reads), or a cache line was stale (0x44000000 is the cached view).')
+                  ' (it runs while the dumper reads; 0x84000000 is uncached, so no cache line stands in between).')
         if other:
             print(f'   {other} window(s) of 256 KB hold something other than the first: there, the window is not'
                   ' IC23 repeating.')
@@ -266,8 +267,8 @@ def findings(data, args):
     bad = 0
     if args.get('pass4'):
         bad += compare_pass4(data, args['pass4'])
-    if 'R4400000.BIN' in data:
-        ic23_repeat(data['R4400000.BIN'])
+    if 'R8400000.BIN' in data:
+        ic23_repeat(data['R8400000.BIN'])
     p1 = args.get('pass1')
     if p1 and 'R5680000.BIN' in data and os.path.exists(os.path.join(p1, 'IC21.BIN')):
         ic21 = open(os.path.join(p1, 'IC21.BIN'), 'rb').read()
@@ -389,7 +390,7 @@ def self_test():
     last = bytearray(ic23)
     last[0x100] ^= 0xFF
     last[0x101] ^= 0xFF                                     # two bytes the firmware changed meanwhile
-    run['R4400000.BIN'] = bytes(ic23) * 7 + bytes(last)
+    run['R8400000.BIN'] = bytes(ic23) * 7 + bytes(last)
     run['R4C00000.BIN'] = lib
     run['R5680000.BIN'] = ic21
     run['R5018000.BIN'] = b'TCMP' + bytes(r.randbytes(0x117FFC))
@@ -432,7 +433,7 @@ def self_test():
         n_bad, bad = check()
     assert n_ok == 0 and 'everything checks out' in ok, ok
     assert 'differs only where pass 4 read open bus' in ok and '| .n ' in ok, ok
-    assert '6 of 7 copies after the first equal it' in ok and 'differs from the first in 2 bytes: 0x441c0100-0x441c0101' in ok, ok
+    assert '6 of 7 copies after the first equal it' in ok and 'differs from the first in 2 bytes: 0x841c0100-0x841c0101' in ok, ok
     assert 'is byte for byte IC21.BIN' in ok, ok
     assert 'its first 0x3df18 bytes (to 0x4C03DF17) are the program flash from 0x487B8FD1 on' in ok, ok
     assert "'TCMP' at 0x50180000" in ok and 'FF 100.0%' in ok, ok

@@ -20,7 +20,7 @@ What this run reads. Fourteen windows, one file each, in this order:
   R5480000.BIN  8,388,608  0x54800000-0x54FFFFFF   byte with pass4-run1
   R5500000.BIN  8,388,608  0x55000000-0x557FFFFF
   R5580000.BIN  8,388,608  0x55800000-0x55FFFFFF
-  R4400000.BIN  2,097,152  0x44000000-0x441FFFFF   IC23, the battery-backed memory with your panel
+  R8400000.BIN  2,097,152  0x84000000-0x841FFFFF   IC23, the battery-backed memory with your panel
                                                    memories and settings (256 KB; 2 MB shows whether
                                                    it repeats)
   R5018000.BIN  1,146,880  0x50180000-0x50297FFF   the work memory the instrument keeps: songs,
@@ -37,8 +37,11 @@ What this run reads. Fourteen windows, one file each, in this order:
 What it does to the instrument. It only reads, with ordinary CPU reads of memory, like the earlier
 passes; no I/O register is read or written, and the tone generators are not touched. Nothing is
 written anywhere except the files on the card. In particular IC23 (your panel memories) is only
-read. The service manual's schematic shows that the chip select of the 0x44000000 window goes to
-IC23 and nothing else, so reading 2 MB there reads IC23 and its mirrors only.
+read. The service manual's schematic shows that IC23's chip select (CS1, the window the firmware
+calls 0x44000000) goes to IC23 and nothing else, so reading 2 MB there reads IC23 and its mirrors
+only. The dumper reads it at 0x84000000, the uncached view of the same window, which is the one the
+firmware itself reads and writes IC23 through: the copy is what is in the chip, with no cache in
+between.
 
 Before
   1. Back up the SD card on the computer, the whole card as an image, as before pass 1:
