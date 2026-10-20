@@ -19,9 +19,9 @@
 #     not be on the card;
 #   * --survey / --survey2: the SURVEY or SURVEY2 build's windows (romdump.s SurveyTable, Survey2Table), R<base>.BIN.
 #     A window with test data (prefill.lua, prefill_survey2.lua) must hold it. Each of SURVEY2's three RAM windows
-#     (0x44000000, 0x50180000, 0x4C000000) must equal what the CPU read there at the end (--refdir: ref_<base>.bin),
-#     except at words the firmware wrote during the run (writes_<base>.txt); with 0x44000000 as plain RAM
-#     ("model plain"), 0x44040000 on must also hold the test data (seed 0x4404).
+#     (IC23 at 0x84000000, 0x50180000, 0x4C000000) must equal what the CPU read there at the end (--refdir:
+#     ref_<base>.bin), except at words the firmware wrote during the run (writes_<base>.txt); with CS1 as plain RAM
+#     ("model plain"), 0x84040000 on must also hold the test data (seed 0x8404).
 # --prefix N compares only the first N bytes (run_test.sh --fast). Exit status 0 = everything matches.
 import hashlib
 import os
@@ -79,10 +79,10 @@ ROLE = {'PRGEVEN.BIN': 'kn7000_program_even_', 'PRGODD.BIN': 'kn7000_program_odd
         'IC208.BIN': 'c3cbqd000003.ic208', 'IC19.BIN': 'c3cbmd000098.ic19', 'DUMPLIST.TXT': 'DUMPLIST.TXT'}
 SURVEY = (0x40000000, 0x40800000, 0x54000000, 0x54800000, 0x55000000, 0x55800000)
 # Survey2Table: SurveyTable's six, then the RAM windows, then 0x56800000 and the expansion slots (base, bytes)
-SURVEY2 = [(b, 0x800000) for b in SURVEY] + [(0x44000000, 0x200000), (0x50180000, 0x118000), (0x4C000000, 0x40000),
+SURVEY2 = [(b, 0x800000) for b in SURVEY] + [(0x84000000, 0x200000), (0x50180000, 0x118000), (0x4C000000, 0x40000),
                                               (0x56800000, 0x200000), (0x41000000, 0x10000), (0x41800000, 0x10000),
                                               (0x56000000, 0x10000), (0x57000000, 0x10000)]
-RAMWIN = (0x44000000, 0x50180000, 0x4C000000)       # no test data: compared with what the CPU read at the end
+RAMWIN = (0x84000000, 0x50180000, 0x4C000000)       # no test data: compared with what the CPU read at the end
 if survey or survey2:                   # their 8.3 names are R + the base's top seven hex digits
     ROLE = {f'R{b:08X}'[:8] + '.BIN': f'survey_{b:08x}.bin' for b in (dict(SURVEY2) if survey2 else SURVEY)}
     ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
@@ -91,7 +91,7 @@ if survey or survey2:                   # their 8.3 names are R + the base's top
 def ram_window(base, data, n):
     """SURVEY2's RAM windows: the file against what the CPU read there at the end (ref_<base>.bin), word by word;
     a word that differs must have been written during the run (writes_<base>.txt, word offsets in hex; for
-    0x44000000 also modulo 256 KB when the driver mirrors IC23)."""
+    IC23 at 0x84000000 also modulo 256 KB when the driver mirrors it)."""
     if not refdir:
         return False, 'no --refdir'
     ref = open(os.path.join(refdir, f'ref_{base:08x}.bin'), 'rb').read()
@@ -109,11 +109,11 @@ def ram_window(base, data, n):
     if diff:
         how += f', {len(diff)} words differ, {len(unexplained)} of them not written'
     ok = not unexplained
-    if base == 0x44000000:
+    if base == 0x84000000:
         how += f'; driver model: {model}'
         if model == 'plain' and n > 0x40000:
-            hi = data[0x40000:n] == stream(0x4404, n - 0x40000)
-            how += '; from 0x44040000 the test data (seed 0x4404)' if hi else '; from 0x44040000 NOT the test data'
+            hi = data[0x40000:n] == stream(0x8404, n - 0x40000)
+            how += '; from 0x84040000 the test data (seed 0x8404)' if hi else '; from 0x84040000 NOT the test data'
             ok = ok and hi
         elif mirror and n >= 0x80000:
             reps = sum(data[k:k + 0x40000] == data[:0x40000] for k in range(0x40000, n, 0x40000))

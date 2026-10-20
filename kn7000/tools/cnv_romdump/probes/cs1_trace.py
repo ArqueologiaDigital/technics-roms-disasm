@@ -2,7 +2,7 @@
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>; GPL v3+
 #
 # cs1_trace.py SERVICE_MANUAL.pdf SCRATCH_DIR -- what does the MN103002A's chip select CS1 (pin 52, RAS1/CS1)
-# drive on the KN7000 main board? The SURVEY2 build reads 2 MB at 0x44000000 (CS1) on the strength of the
+# drive on the KN7000 main board? The SURVEY2 build reads 2 MB of CS1 (at 0x84000000) on the strength of the
 # answer: nothing but IC23, so the whole window is memory. Service manual (technics_sx-kn7000_keyboard.pdf):
 # p.100 is MAIN 1/5 sheet 1/2 (the CPU), p.102 sheet 2/2 (the memories); the two pages join edge to edge.
 #

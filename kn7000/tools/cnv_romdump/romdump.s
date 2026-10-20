@@ -1834,8 +1834,10 @@ SurveyTable:
 #         IC18 (CS0), IC21 and IC19 (CS5), to compare byte for byte with the first;
 #   6     IC23, the battery-backed SRAM (C3BBJG000011, x16 on A1-A17: 256 KB) on CS1. By the service
 #         manual (p.100, p.102) CPU pin 52 RAS1/CS1 goes to nothing but IC23's /CE (through the
-#         power-fail switch Q3), so all of CS1 is IC23 and its mirrors. 2 MB: the chip eight times if it
-#         repeats every 256 KB, and all the addresses up to 0x4413FFFF;
+#         power-fail switch Q3), so all of CS1 is IC23 and its mirrors. Read at 0x84000000, the uncached
+#         view of 0x44000000, through which the firmware itself reads and writes IC23: what is in the
+#         chip, no cache line in between. 2 MB: the chip eight times if it repeats every 256 KB, and
+#         every offset the Another World port would touch (0x44000000-0x4413FFFF);
 #   7     the work RAM the firmware never clears (0x50180000-0x50297FFF: COMPOSER styles, songs, pads,
 #         slideshow pool; notes/work-ram-map.md);
 #   8     the library RAM at 0x4C000000 (CS3), 256 KB: the firmware's boot copies its library there from
@@ -1857,7 +1859,7 @@ Survey2Table:
     .long   0, 0, 0, 0, 0, 0, 0
     .long   nm_s55800000, path_s55800000, K_LINEAR, 0x55800000, 0x800000, 0, 0, rg_s55800000, dir_s55800000
     .long   0, 0, 0, 0, 0, 0, 0
-    .long   nm_s44000000, path_s44000000, K_LINEAR, 0x44000000, 0x200000, 0, 0, rg_s44000000, dir_s44000000
+    .long   nm_s84000000, path_s84000000, K_LINEAR, 0x84000000, 0x200000, 0, 0, rg_s84000000, dir_s84000000
     .long   0, 0, 0, 0, 0, 0, 0
     .long   nm_s50180000, path_s50180000, K_LINEAR, 0x50180000, 0x118000, 0, 0, rg_s50180000, dir_s50180000
     .long   0, 0, 0, 0, 0, 0, 0
@@ -2007,10 +2009,10 @@ nm_s55800000:   .asciz  "survey_55800000.bin"
 path_s55800000: .asciz  "KN7DUMP\R5580000.BIN"
 dir_s55800000:  .ascii  "R5580000BIN"
 rg_s55800000:   .asciz  "CPU 0x55800000-0x55FFFFFF, CS5"
-nm_s44000000:   .asciz  "survey_44000000.bin"
-path_s44000000: .asciz  "KN7DUMP\R4400000.BIN"
-dir_s44000000:  .ascii  "R4400000BIN"
-rg_s44000000:   .asciz  "CPU 0x44000000-0x441FFFFF, CS1: IC23 battery-backed SRAM (256 KB)"
+nm_s84000000:   .asciz  "survey_84000000.bin"
+path_s84000000: .asciz  "KN7DUMP\R8400000.BIN"
+dir_s84000000:  .ascii  "R8400000BIN"
+rg_s84000000:   .asciz  "CPU 0x84000000-0x841FFFFF, CS1 uncached: IC23 battery-backed SRAM"
 nm_s50180000:   .asciz  "survey_50180000.bin"
 path_s50180000: .asciz  "KN7DUMP\R5018000.BIN"
 dir_s50180000:  .ascii  "R5018000BIN"

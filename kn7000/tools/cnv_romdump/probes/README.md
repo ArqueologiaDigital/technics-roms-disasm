@@ -111,7 +111,7 @@ sector being written. Raw writes to FAT sectors are not safe, because their cach
 valid. The card-removal handler's VFS hook `0x48565F64` is an empty `retf` in 941, so it does not clear
 the cache either.
 
-## CS1 is IC23 alone: the schematic behind the SURVEY2 build's 2 MB at 0x44000000
+## CS1 is IC23 alone: the schematic behind the SURVEY2 build's 2 MB at 0x84000000
 
 `cs1_trace.py` (2026-10-20) answers one question: what does the CPU's chip select CS1 drive? It
 follows the line from MN103002A pin 52 (`RAS1/CS1`) across the two pages of the MAIN 1/5
@@ -135,7 +135,8 @@ on it.
   IC23 while powered (R38 holds `/CE` high otherwise). IC23 (C3BBJG000011, 2 Mbit x16) has its
   address pins on A1-A17, so wherever CS1 is active IC23 answers, its 256 KB repeated (the
   SURVEY2 read will show whether it does), and there is no I/O register there to disturb. That is
-  why the SURVEY2 build reads 2 MB at `0x44000000` and not 512 KB.
+  why the SURVEY2 build reads 2 MB of CS1 and not 512 KB. It reads them at `0x84000000`, the
+  uncached view, as the firmware does.
 - **A neighbour that is not on CS1.** The output latch IC25 (74VHC174, D16-D21 to `DAC.MDI`,
   `DAC.MC`, `DAC.ML`, `SDMODE`, `SPSW`, `USB.WAITM`) sits next to IC23 on p.102. It is clocked by
   IC26 (an OR gate) from two other lines, so it is not on CS1. It has no read path either.
