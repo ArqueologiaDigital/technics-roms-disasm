@@ -54,15 +54,15 @@ EXIT on "Continue Next?" cancels to the STYLE CONVERT screen). **YES** makes the
 `make card` lays it out as follows (`mkcard.py`; every folder name is a plain 8.3 name, so nothing
 depends on how a computer makes short names):
 
-| on the card  | what                                                               | its `KN7APP.BIN`: from, bytes, SHA-1                                                                                       |
-|--------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| `KN7APP.BIN` | the menu                                                           | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                                     |
-| `AW\`        | Another World: `KN7APP.BIN` and its 43 game files                  | kn5000-anotherworld `kn7000/build/sdcard/` (branch `launcher-folders`), 15,416, `b80b0205f2e6e52dcc876528115ff31680b090b7` |
-| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows) | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                          |
-| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                     | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                         |
-| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                     | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                           |
-| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                 | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                          |
-| `CPUTIME\`   | pass 9, the CPU timing probe                                       | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                          |
+| on the card  | what                                                               | its `KN7APP.BIN`: from, bytes, SHA-1                                                                              |
+|--------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `KN7APP.BIN` | the menu                                                           | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                            |
+| `AW\`        | Another World: `KN7APP.BIN` and its 46 game files (with sound)     | kn5000-anotherworld `kn7000/build/sdcard/` (`main` `1cdb809`), 24,540, `97fbd9e67fc165310c244a4a1ef1c13fc8d6c8fe` |
+| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows) | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                 |
+| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                     | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                |
+| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                     | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                  |
+| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                 | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                 |
+| `CPUTIME\`   | pass 9, the CPU timing probe                                       | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                 |
 
 Each folder also holds a `MANIFEST.TXT` (its name in the list) and an `ICON.BMP` (drawn by
 `gen_icons.py`, converted by `png2icon.py`); `build/card.txt` lists every file with its SHA-1 (the game
