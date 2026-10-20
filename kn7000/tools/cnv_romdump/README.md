@@ -96,12 +96,77 @@ afterwards; `check_real_dump.py` runs it on any `R*.BIN` it is given. It:
 
 `find_rhythm.py --self-test` exercises all of this on a made-up device split across two windows.
 
-Afterwards, `check_real_dump.py DIR [DIR2]` checks on the computer what came
-back from the card:
+`build/survey2/KN7APP.BIN` (`--options 0xB0000`, `OPTS_SURVEY2`, shown as "KN7000 ROM DUMPER 1.0
+SURVEY2") is the fifth pass: everything still to read from the owner's instrument, in one run.
+Option bit `OPT_SURVEY2` swaps in `Survey2Table`. It holds 14 plain CPU windows, all of them memory;
+no I/O window (`0x98xxxxxx`, `0x9Cxxxxxx`, `0x34xxxxxx`, `0x36xxxxxx`) is among them. The files go
+to the root, 8.3 names `R` + the base's top seven hex digits, MAME-style names `survey_<base>.bin`:
+
+| entry | file           | CPU window                | bytes     | what                                          |
+|-------|----------------|---------------------------|-----------|-----------------------------------------------|
+| 0     | `R4000000.BIN` | `0x40000000`-`0x407FFFFF` | 8 MB      | pass 4's window again: IC18, twice (CS0)      |
+| 1     | `R4080000.BIN` | `0x40800000`-`0x40FFFFFF` | 8 MB      | pass 4's window again: open bus               |
+| 2     | `R5400000.BIN` | `0x54000000`-`0x547FFFFF` | 8 MB      | pass 4's window again: open bus               |
+| 3     | `R5480000.BIN` | `0x54800000`-`0x54FFFFFF` | 8 MB      | pass 4's window again: IC21, four times (CS5) |
+| 4     | `R5500000.BIN` | `0x55000000`-`0x557FFFFF` | 8 MB      | pass 4's window again: open bus               |
+| 5     | `R5580000.BIN` | `0x55800000`-`0x55FFFFFF` | 8 MB      | pass 4's window again: IC19, four times (CS5) |
+| 6     | `R4400000.BIN` | `0x44000000`-`0x441FFFFF` | 2 MB      | IC23, the battery-backed SRAM (CS1)           |
+| 7     | `R5018000.BIN` | `0x50180000`-`0x50297FFF` | 1,146,880 | the work RAM the firmware never clears        |
+| 8     | `R4C00000.BIN` | `0x4C000000`-`0x4C03FFFF` | 256 KB    | the library RAM (CS3)                         |
+| 9     | `R5680000.BIN` | `0x56800000`-`0x569FFFFF` | 2 MB      | IC21 again, if CS5 ignores A25                |
+| 10    | `R4100000.BIN` | `0x41000000`-`0x4100FFFF` | 64 KB     | an expansion slot (CS0)                       |
+| 11    | `R4180000.BIN` | `0x41800000`-`0x4180FFFF` | 64 KB     | an expansion slot (CS0)                       |
+| 12    | `R5600000.BIN` | `0x56000000`-`0x5600FFFF` | 64 KB     | an expansion slot (CS5)                       |
+| 13    | `R5700000.BIN` | `0x57000000`-`0x5700FFFF` | 64 KB     | an expansion slot (CS5)                       |
+
+- **Entries 0-5** are `SurveyTable`'s six windows: the same addresses, sizes, file names and
+  manifest lines as pass 4. They are the second read of IC18, and of IC21 and IC19 through CS5.
+  `check_real_dump.py --pass4` compares them with pass 4 byte for byte.
+- **Entry 6**, IC23: eight copies if the chip repeats every 256 KB. It covers everything the
+  Another World port would touch, up to `0x4413FFFF`.
+- **Entry 7** holds the COMPOSER styles, songs, pads and the slideshow pool
+  (`notes/work-ram-map.md`).
+- **Entry 8** is a cross-check: the boot copies the library there from the program flash.
+- **Entry 9**: pass 1 read IC21 at `0x96800000`, and pass 4 found it at `0x54800000`.
+- **Entries 10-13** are the four windows the firmware probes at boot for expansion boards
+  (`VoiceArchiveScanBoot`). They show what an empty slot reads. They come last, so that everything
+  else is on the card first.
+- **Size.** 56,197,120 bytes (53.6 MiB) and `DUMPLIST.TXT`: about 1.12 times pass 4. The card
+  needs about 60 MB free. The image of the owner's card (`sdcard_from_real_kn7000.img`) is a
+  128 MB FAT16 volume, 16 KB clusters, 126.5 MB free; every window is a whole number of clusters.
+- **Why 2 MB at `0x44000000`.** By the service manual, CPU pin 52 (`RAS1/CS1`) goes to nothing but
+  IC23's `/CE`, through the power-fail switch Q3 (`probes/cs1_trace.py`, `probes/README.md`).
+  IC23 (2 Mbit x16) has address pins A1-A17. So all of CS1 is IC23 and its mirrors, with no
+  register to disturb. The firmware itself writes only `0x44000000`-`0x4403FFFF`
+  (`notes/style-converter.md`).
+- **Live memory.** The firmware keeps running between the dumper's 32 KB steps, so IC23 and the work
+  RAM are read as they are at each step. A word the firmware changes between the reads of two
+  IC23 copies makes the copies differ there. So can a stale cache line: `0x44000000` is the cached
+  view, and the firmware writes the panel memories through the uncached `0x84000000`. Those are
+  findings to read, not read errors.
+- **The table's length.** `V_NROMS` holds it: 10 for `RomTable` and `SurveyTable`, 14 for
+  `Survey2Table`. Skip bits 0-15 can cover up to `MAX_ROMS` = 16 entries. Every loop over the
+  ROMs, the files (`DUMPLIST.TXT` comes after them) and the screen list now reads `V_NROMS`.
+  The counter reads "ROM n/14". The list of more than 10 entries is drawn in two columns of seven,
+  each line `[ OK ] name crc32`. The older builds still show 10 entries in one column and "ROM n/10".
+
+Afterwards, `check_real_dump.py DIR [DIR2] [--pass4 P4DIR] [--pass1 P1DIR]` checks on the computer
+what came back from the card:
 - each file's size and CRC-32 against the ones the instrument computed while writing it;
-- whether each file is a ROM we already have;
+- whether each file is a ROM we already have, or a window holding copies of one
+  (`c3cbnd000046.ic18 x2`);
 - the program's release byte, build numbers and firmware search, read from the image itself;
 - given a second run, that both runs are byte-identical.
+
+For the SURVEY2 files it adds:
+- `--pass4`: every window compared with pass 4's, per 1 MB slice. A difference where pass 4
+  read open bus (FF with a few residue values) is not counted;
+- `--pass1`: `0x56800000` against pass 1's `IC21.BIN`, and the library RAM against the program
+  flash (where the copy comes from, how much agrees);
+- IC23: each 256 KB copy against the first, and the first checked for a shorter period;
+- the expansion slots and the work RAM: what they hold.
+
+`check_real_dump.py --self-test` runs these on made-up files.
 
 ## What it dumps
 
@@ -147,7 +212,8 @@ back from the card:
   - **Not yet in the default build.** `RomTable` has no IC18 entry: adding one means an eleventh
     skip bit for every build.
 - **IC23, the 256 KB battery-backed SRAM** at `0x44000000` holds the panel memories and settings.
-  It is user data, not a ROM, and MAME has no file for it. It could be added easily if wanted.
+  It is user data, not a ROM, and MAME has no file for it. The SURVEY2 build reads it, with its
+  mirrors: 2 MB at `0x44000000`.
 - **Not readable from the main CPU:**
   - the SD sub-CPU's flash IC414 (`c3fbkd000162.ic414`), private to the MN102H60;
   - the panel MCUs' mask ROMs (M37471);
@@ -233,31 +299,34 @@ back from the card:
 
 ## Files
 
-| file                          | what                                                                                      |
-|-------------------------------|-------------------------------------------------------------------------------------------|
-| `loader.s`                    | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing |
-| `kn7cnv.inc`                  | the contract between loader and application: memory layout, service table, header         |
-| `romdump.s`, `romdump.inc`    | the ROM dumper application                                                                |
-| `mkapp.py`                    | fills the application header's size and CRC-32                                            |
-| `mkfloppy.py`                 | files onto a blank disk the KN7000 formatted                                              |
-| `gen_font.py`, `font8x13.inc` | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
-| `find_fw.py`                  | the loader's firmware search, in Python, over every program image we have                 |
-| `check_real_dump.py`          | after a real run: files whole, known or new, build numbers, two runs identical            |
-| `find_rhythm.py`              | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
-| `fatls.py`                    | lists or extracts the files on an SD card image, showing long names                       |
-| `test/run_test.sh`            | the dumper end to end in MAME, then `verify_dump.py`                                      |
-| `test/prefill.lua`            | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
-| `test/verify_dump.py`         | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
-| `probes/`                     | the probes behind the design (SD write, long names, raw sectors, folders)                 |
-| `releases/2026-10-19/`        | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
-| `releases/2026-10-19-wave/`   | the same for the WAVE build (pass 3)                                                      |
-| `releases/2026-10-19-survey/` | the same for the SURVEY build (pass 4)                                                    |
+| file                           | what                                                                                      |
+|--------------------------------|-------------------------------------------------------------------------------------------|
+| `loader.s`                     | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing |
+| `kn7cnv.inc`                   | the contract between loader and application: memory layout, service table, header         |
+| `romdump.s`, `romdump.inc`     | the ROM dumper application                                                                |
+| `mkapp.py`                     | fills the application header's size and CRC-32                                            |
+| `mkfloppy.py`                  | files onto a blank disk the KN7000 formatted                                              |
+| `gen_font.py`, `font8x13.inc`  | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
+| `find_fw.py`                   | the loader's firmware search, in Python, over every program image we have                 |
+| `check_real_dump.py`           | after a real run: files whole, known or new, builds, two runs identical; SURVEY2 checks   |
+| `find_rhythm.py`               | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
+| `fatls.py`                     | lists or extracts the files on an SD card image, showing long names                       |
+| `test/run_test.sh`             | the dumper end to end in MAME, then `verify_dump.py`                                      |
+| `test/prefill.lua`             | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
+| `test/prefill_survey2.lua`     | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows     |
+| `test/verify_dump.py`          | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
+| `probes/`                      | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)     |
+| `releases/2026-10-19/`         | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
+| `releases/2026-10-19-wave/`    | the same for the WAVE build (pass 3)                                                      |
+| `releases/2026-10-19-survey/`  | the same for the SURVEY build (pass 4)                                                    |
+| `releases/2026-10-20-survey2/` | the same for the SURVEY2 build (pass 5)                                                   |
 
 ## How it was tested
 
 Results are in the next section. Command:
 
-    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19|--wave|--survey]
+    test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19|--wave|--survey|--survey2]
+    test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --survey2 --bios v13 --rompath ~/compartilhado/kn7000-emulator/roms
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
@@ -291,13 +360,13 @@ rebuilds them byte for byte from these sources:
 | `safe/KN7APP.BIN` (SAFE)  | `83f579ce0a1b05d8dcd71b6745a015a3a543aa4b` |
 | `ic19/KN7APP.BIN` (IC19)  | `0a82abcfbc73a42d2f59f6c734eff483aa309b88` |
 
-| run              | `run_test.sh` options       | what it exercises                                                    | ends at | outcome                                                                                |
-|------------------|-----------------------------|----------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
-| `safe_full`      | `--safe`                    | the SAFE build, every ROM full size                                  | 124 s   | 11 of 11: the five files and `DUMPLIST.TXT` match, the five left out are absent        |
-| `safe_lt`        | `--safe --loader-test 0x3D` | the same with only the fmm tables found: no code, sectors, clock     | 119 s   | 11 of 11; held by the delay loop (1,533 calls a second)                                |
-| `ic19_full`      | `--ic19`                    | the IC19 build: the picture window alone, 8 MB                       | 110 s   | 11 of 11                                                                               |
-| `nofile_noclock` | `--safe --loader-test 0x23` | no file routines and no clock                                        | 50 s    | the loader's failure screen, held; nothing written (the verifier exits 1: all missing) |
-| `all_full`       | (none)                      | everything, wave ROMs and picture window included                    | 655 s   | 11 of 11, the table below                                                              |
+| run              | `run_test.sh` options       | what it exercises                                                | ends at | outcome                                                                                |
+|------------------|-----------------------------|------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
+| `safe_full`      | `--safe`                    | the SAFE build, every ROM full size                              | 124 s   | 11 of 11: the five files and `DUMPLIST.TXT` match, the five left out are absent        |
+| `safe_lt`        | `--safe --loader-test 0x3D` | the same with only the fmm tables found: no code, sectors, clock | 119 s   | 11 of 11; held by the delay loop (1,533 calls a second)                                |
+| `ic19_full`      | `--ic19`                    | the IC19 build: the picture window alone, 8 MB                   | 110 s   | 11 of 11                                                                               |
+| `nofile_noclock` | `--safe --loader-test 0x23` | no file routines and no clock                                    | 50 s    | the loader's failure screen, held; nothing written (the verifier exits 1: all missing) |
+| `all_full`       | (none)                      | everything, wave ROMs and picture window included                | 655 s   | 11 of 11, the table below                                                              |
 
 "Ends at" is the emulated time of `dump.cmd.in`'s end line. The failure screen of `nofile_noclock`
 reads `file routines: none  sectors: yes  folders: yes  clock: no` and `search: fmm table shapes
@@ -350,6 +419,41 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
   also still up 5 s after the end.
 - **Overlay build.** On the kn7000_mame overlay (`kn7000-emulator`) the same path works, including
   the long names. Its four wave ports all read one synthetic pack, so it cannot tell the chips apart.
+- **The SURVEY2 build** (2026-10-20, binary SHA-1 `8cb48691...`, `releases/2026-10-20-survey2/`).
+  It ran on the published overlay binary (`kn7000-emulator/kn7000`, 2026-10-19 23:47) with
+  `-bios v13`, the owner's program 893 / table 80:
+
+      test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --survey2 --bios v13 \
+          --rompath ~/compartilhado/kn7000-emulator/roms
+
+  - **All 15 files** (14 windows and `DUMPLIST.TXT`) are as expected. The eleven tapped windows
+    hold their seeded streams. Each RAM window equals what the CPU read there at the end. The
+    write taps logged no word written into any of them while the dumper ran, so those comparisons
+    are exact.
+  - **IC23 in that binary is plain RAM.** `0x44000000` is still the 16 MB placeholder, so
+    `0x44040000`-`0x441FFFFF` held the test data (seed `0x4404`), and the dump has it.
+  - **The end.** The run ends at 433 s of emulated time; pass 4's SURVEY test ended at 396 s.
+  - **The checker.** `check_real_dump.py` on the files taken off the card image with `fatls.py`
+    exits 0. Pass 1 was stood in for by MAME's v1.3 program halves and the IC21 it held, and pass 4
+    by copies of the run's own six windows.
+    - It finds all six windows identical, and 0x56800000 not IC21 (a tap serves it here).
+    - It finds the library RAM to be the program flash from `0x487B76B1`, `0x3DF02` bytes, then
+      zeroes but for `0xDE` at `0x4C03FFF0`. In 941 the copy is from `0x487B8FD1`, `0x3DF18` bytes.
+    - It finds 'TCMP' at `0x50180000` and 'TPAD' at `0x501F91A0`, where `notes/work-ram-map.md`
+      puts them.
+  - **IC23 as a mirrored chip.** A `--fast` run on a snapshot of the overlay build that models IC23 as
+    256 KB mirrored (`kn7000_mame_build/kn7000` of 2026-10-20 00:48, SHA-1 `b38ce4e1...`) gives 15
+    of 15. The prefill finds the mirror (it writes `0x44040100`, sees `0x44000100` follow, puts the
+    word back) and leaves the window alone.
+  - **Self-test.** `check_real_dump.py --self-test` covers the paths the emulator cannot produce:
+    open-bus noise in a pass-4 slice (not a problem), a changed data byte (one problem), IC23
+    copies equal but for two bytes, and IC21 found at `0x56800000`.
+  - **The older builds are unchanged.** `--fast` on upstream `knfl-tip` gives 11 of 11 for the
+    default build, its long-name pass included (`lfn=1`), 11 of 11 for `--safe` and 7 of 7 for
+    `--survey`. The SURVEY run's end screen still shows one column, with the four `[SKIP]` lines;
+    the counter prints `V_NROMS`, which is 10 for these builds. Those runs used a ROM path
+    without the 4 MB IC18 and 2 MB IC19 images that `technics_romsets` gained on 2026-10-19, as the
+    earlier runs had; upstream's driver declares both as 8 MB.
 
 The bulk outputs (the card image, about 74 MB of dumps, the snapshots) are not kept. `run_test.sh`
 regenerates them.
