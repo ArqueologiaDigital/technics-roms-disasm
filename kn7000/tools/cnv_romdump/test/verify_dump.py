@@ -25,6 +25,9 @@
 #   * --dsp / --dspmem / --dsprate: the DSP probe's files (romdump_dsp.s, romdump_dsprate.s): format, the routines
 #     found (= find_dsp.py), and the host-port traffic dsp_tap.lua counted (--refdir); pass 8 (--dsprate) may latch
 #     only MSGR2, IIR0A and CR0A, and writes no data.
+#   * --cputime: pass 9's CPUTIME.BIN (romdump_cputime.s): every chunk whole, its status clean, every test run, the
+#     firmware routine found where find_cpu.py finds it for that PROGRAM build; with --refdir, cpu_tap.lua's account
+#     of the probe's own reads and writes (cpu_tap.txt) must show no access outside what it is allowed.
 # --prefix N compares only the first N bytes (run_test.sh --fast). Exit status 0 = everything matches.
 import hashlib
 import os
@@ -46,6 +49,7 @@ survey2 = '--survey2' in args           # the SURVEY2 build: 14 CPU windows (rom
 dsp1 = '--dsp' in args                  # the DSP probe, phase 1 (romdump_dsp.s DspTable)
 dsp2 = '--dspmem' in args               # phase 2 (DspMemTable)
 dsp3 = '--dsprate' in args              # pass 8, the frame rate (romdump_dsprate.s DspRateTable)
+cput = '--cputime' in args              # pass 9, the CPU timing probe (romdump_cputime.s CpuTimeTable)
 refdir = args[args.index('--refdir') + 1] if '--refdir' in args else None
 skip = int(args[args.index('--skip-mask') + 1], 0) if '--skip-mask' in args else 0
 ic21_ref = args[args.index('--ic21-ref') + 1] if '--ic21-ref' in args else None
@@ -97,6 +101,47 @@ if dsp3:
 elif dsp1 or dsp2:
     ROLE = {k: v[0] for k, v in DSPFILES.items() if (k in ('DSPPM.BIN', 'DSPDM.BIN')) == dsp2 and k != 'DSPRATE.BIN'}
     ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
+if cput:
+    ROLE = {'CPUTIME.BIN': 'cpu_time.bin', 'DUMPLIST.TXT': 'DUMPLIST.TXT'}
+CPU_LEAF = {893: 0x48471D35, 935: 0x48471E22, 941: 0x48471E64, 942: 0x48471E53}   # find_cpu.py
+
+
+def cpu_file(data, build):
+    """pass 9: chunks whole, status clean, every test run, the firmware routine found where find_cpu.py finds it"""
+    import check_cpu_probe
+    if len(data) != 0x20000:
+        return False, f'{len(data)} bytes, not 0x20000'
+    chunks = check_cpu_probe.parse(data)
+    bad = [c['chunk'] for c in chunks if 'h' not in c]
+    if bad:
+        return False, f'chunk(s) {bad} without the header'
+    st = [c['h']['status'] for c in chunks]
+    done = [c['h']['done'] for c in chunks]
+    tags = [t[0] for t in chunks[0]['tests']]
+    leaf = chunks[0]['h']['leaf']
+    ok = all(x == 0 for x in st) and all(d == len(tags) for d in done) and tags == check_cpu_probe.ASM_ORDER
+    ok = ok and leaf == CPU_LEAF.get(build)
+    how = (f'status {", ".join(hex(x) for x in st)}; tests run {"/".join(map(str, done))} of {len(tags)}'
+           f'{"" if tags == check_cpu_probe.ASM_ORDER else " (NOT the decoder table)"}; routine {leaf:#010x}'
+           f'{" = find_cpu.py" if leaf == CPU_LEAF.get(build) else " (find_cpu.py: " + hex(CPU_LEAF.get(build, 0)) + ")"}')
+    res = check_cpu_probe.analyse(chunks)
+    if res and res.get('mhz'):
+        how += f'; ADD implies {res["mhz"]:.2f} MHz'
+    if refdir and os.path.exists(os.path.join(refdir, 'cpu_tap.txt')):
+        tap = open(os.path.join(refdir, 'cpu_tap.txt')).read().split('\n')
+        tot = next((ln for ln in tap if ln.startswith('TOTAL')), '')
+        f = tot.split()
+        nbad = int(f[f.index('bad') + 1]) if 'bad' in f else -1
+        nch = int(f[f.index('chunks') + 1]) if 'chunks' in f else -1
+        blocks = {int(ln.split()[1], 16) for ln in tap if ln.startswith('R ')}
+        want = {0x84000000, 0x84010000, 0x96800000, 0x96810000, 0x9CE40000, 0x48400000, 0x48600000, 0x48000000,
+                0x40000000, 0x4C000000, 0x56800000, 0x57800000, 0x902D0000, 0x90180000, 0x34000000, 0x32000000,
+                0x20000000, 0x98070000}
+        missing = sorted(want - blocks)
+        ok = ok and nbad == 0 and nch == 4 and not missing
+        how += (f'; cpu_tap: {tot[6:]}' + (f', no read seen in {", ".join(hex(x) for x in missing)}' if missing else
+                                          ', every region read'))
+    return ok, how
 
 
 def dsp_expected(build):
@@ -245,6 +290,10 @@ for short, lng, attr, cl, size in fat.entries(folder):
         ok, how = data[:n] == stream(seed, n), f'test data in {region} (seed {seed:#x})'
     elif role == 'c3cbmd000098.ic19' and prefill:
         ok, how = data[:n] == stream(0x19, n), 'test data at 0x57800000 (seed 0x19)'
+    elif short == 'CPUTIME.BIN' and cput:
+        m = re.search(rb'PROGRAM (\d+)', fat.read_file(*next((cl, sz) for sh, lg, at, cl, sz in fat.entries(folder)
+                                                             if sh == 'DUMPLIST.TXT')))
+        ok, how = cpu_file(data, int(m.group(1)) if m else None)
     elif short in DSPFILES and (dsp1 or dsp2 or dsp3):
         m = re.search(rb'PROGRAM (\d+)', fat.read_file(*next((cl, sz) for sh, lg, at, cl, sz in fat.entries(folder)
                                                              if sh == 'DUMPLIST.TXT')))
