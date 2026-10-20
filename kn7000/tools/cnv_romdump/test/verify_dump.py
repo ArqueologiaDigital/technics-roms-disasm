@@ -138,9 +138,11 @@ def dsp_file(short, data, build):
         ref = struct.unpack('<256I', open(os.path.join(refdir, 'ref_iop.bin'), 'rb').read())
         a = struct.unpack_from('<256I', data, 0x70)
         b = struct.unpack_from('<256I', data, 0x470)
-        # registers that move by themselves: status, counters, pin states, the SPORT channels' index and count
-        live = {0x03, 0x19, 0x2A, 0x2D, 0x2F, 0x37} | {c + k for c in (0x30, 0x38, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78)
-                                                      for k in (0, 2)}
+        # registers that move by themselves: status, counters, pin states, the SPORT channels' index and count, and
+        # MSGR2, where the kernel's effects 58-61 park the ring-3 pointer I3 (it moves on the unit, pass 6, and in
+        # the overlay since it reads MSGR back and drives FLAG3, kn7000_mame e04a567 and 5dd2c40)
+        live = {0x03, 0x0A, 0x19, 0x2A, 0x2D, 0x2F, 0x37} | {c + k for c in (0x30, 0x38, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78)
+                                                            for k in (0, 2)}
         diff = [r for r in check_dsp_probe.READ if not a[r] == b[r] == ref[r]]
         hard = [r for r in diff if r not in live]
         how += (f'; {len(check_dsp_probe.READ) - len(diff)} of {len(check_dsp_probe.READ)} registers, both passes, = '
