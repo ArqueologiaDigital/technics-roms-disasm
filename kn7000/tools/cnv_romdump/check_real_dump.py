@@ -208,15 +208,21 @@ def ic23_repeat(b):
             what = '= the first copy'
         else:
             rs, total, more = ranges(first, c)
-            what = f'differs from the first in {total} bytes: {fmt_ranges(rs, IC23 + k, more)}'
+            what = (f'differs from the first in {total} bytes: {fmt_ranges(rs, IC23 + k, more)}' if total <= 0x1000
+                    else f'not a copy of the first ({total} bytes differ): {stats(c)}')
         rows.append((f'{IC23 + k:#010x}', what))
     table(('copy at', 'what it holds'), rows)
     equal = sum(r[1] == '= the first copy' for r in rows[1:])
+    other = sum(r[1].startswith('not a copy') for r in rows[1:])
     if len(rows) > 1:
         print(f'   {equal} of {len(rows) - 1} copies after the first equal it'
-              + (': IC23 repeats every 256 KB through the window.' if equal == len(rows) - 1 else
-                 '. Words that differ by a few bytes may be ones the firmware wrote between the two reads (it'
-                 ' runs while the dumper reads), or a stale cache line (0x44000000 is the cached view).'))
+              + (': IC23 repeats every 256 KB through the window.' if equal == len(rows) - 1 else '.'))
+        if len(rows) - 1 - equal - other:
+            print('   A copy that differs in a few bytes: the firmware may have written them between the two reads'
+                  ' (it runs while the dumper reads), or a cache line was stale (0x44000000 is the cached view).')
+        if other:
+            print(f'   {other} window(s) of 256 KB hold something other than the first: there, the window is not'
+                  ' IC23 repeating.')
     for p in (0x20000, 0x10000):
         if first[:p] * (IC23_SIZE // p) == first:
             print(f'   the first copy itself repeats every {p // 1024} KB: the chip, or its decoding, is smaller')
@@ -227,7 +233,8 @@ def ic23_repeat(b):
 
 
 def library_check(lib, prog):
-    """Where in the program flash the library RAM's bytes come from, and over how much they agree."""
+    """Where in the program flash the library RAM's bytes come from, how far the copy reaches, and what the RAM
+    holds after it (the boot also stores 3 bytes at 0x4C03FFF0)."""
     deltas = Counter()
     for off in range(0, len(lib) - 0x100, 0x2000):
         probe = lib[off:off + 0x100]
@@ -240,20 +247,18 @@ def library_check(lib, prog):
         print('library RAM (R4C00000.BIN): none of its 256-byte pieces occurs once in the program flash')
         return
     d, votes = deltas.most_common(1)[0]
-    src = prog[d:d + len(lib)] if d >= 0 else b''
-    n = len(src)
-    run = next((i for i in range(n) if lib[i] != src[i]), n) if d >= 0 else 0
-    rs, total, more = ranges(lib[:n], src)
-    print(f'library RAM (R4C00000.BIN, 0x4C000000) against the program flash: it is the copy from '
-          f'{PROGRAM_BASE + d:#010x} ({votes} pieces agree on that); the first {run:#x} bytes are identical'
-          f' (to 0x{0x4C000000 + run - 1:08X}); over the {n:#x} bytes both have, {total} differ'
-          + (f': {fmt_ranges(rs, 0x4C000000, more)}' if total else ''))
-    rest = lib[n:]
+    src = prog[max(d, 0):max(d, 0) + len(lib)]
+    run = next((i for i in range(min(len(lib), len(src))) if lib[i] != src[i]), min(len(lib), len(src))) \
+        if d >= 0 else 0
+    print(f'library RAM (R4C00000.BIN, 0x4C000000): its first {run:#x} bytes (to 0x{0x4C000000 + run - 1:08X}) are'
+          f' the program flash from 0x{PROGRAM_BASE + d:08X} on ({votes} of its 256-byte pieces were found at that'
+          f' distance)')
+    rest = lib[run:]
     if rest:
-        print(f'   past the end of the program flash: {len(rest):#x} bytes, {stats(rest)}')
-    tail = lib[run:]
-    if run < len(lib):
-        print(f'   from 0x{0x4C000000 + run:08X} on: {stats(tail)}')
+        nz = [(i, x) for i, x in enumerate(rest) if x]
+        print(f'   after that, 0x{0x4C000000 + run:08X}-0x{0x4C000000 + len(lib) - 1:08X}: {stats(rest)}'
+              + ('; the bytes that are not 00: ' + ', '.join(f'0x{0x4C000000 + run + i:08X}={x:02X}' for i, x in nz)
+                 if 0 < len(nz) <= 16 else ''))
 
 
 def findings(data, args):
@@ -429,7 +434,7 @@ def self_test():
     assert 'differs only where pass 4 read open bus' in ok and '| .n ' in ok, ok
     assert '6 of 7 copies after the first equal it' in ok and 'differs from the first in 2 bytes: 0x441c0100-0x441c0101' in ok, ok
     assert 'is byte for byte IC21.BIN' in ok, ok
-    assert 'copy from 0x487b8fd1' in ok and 'the first 0x3df18 bytes are identical' in ok, ok
+    assert 'its first 0x3df18 bytes (to 0x4C03DF17) are the program flash from 0x487B8FD1 on' in ok, ok
     assert "'TCMP' at 0x50180000" in ok and 'FF 100.0%' in ok, ok
     assert n_bad == 1 and '| D. ' in bad and 'DIFFERS' in bad, bad
     print('self-test passed: open-bus noise is not a problem, a changed data byte is; IC23 copies compared;'
