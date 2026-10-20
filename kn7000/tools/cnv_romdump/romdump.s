@@ -65,8 +65,32 @@ eh_spin:
     bra     en_park
 
 en_first:
-    mov     (APP_OPTIONS), d0       # the table this build reads, and its length: the ROMs, or a survey's
-    mov     OPT_SURVEY2, d1         # windows
+    mov     str_title, a0
+    mov     a0, (V_TITLE)
+    mov     (APP_OPTIONS), d0       # the table this build reads, and its length: the ROMs, a survey's
+    mov     OPT_DSP, d1             # windows, or the DSP probe's files
+    and     d1, d0
+    beq     en_notdsp
+    mov     DspTable, a0
+    mov     NUM_DSP, d0
+    bra     en_dsp
+en_notdsp:
+    mov     (APP_OPTIONS), d0
+    mov     OPT_DSPMEM, d1
+    and     d1, d0
+    beq     en_notdspmem
+    mov     DspMemTable, a0
+    mov     NUM_DSPMEM, d0
+en_dsp:
+    mov     a0, (V_TABLE)
+    mov     d0, (V_NROMS)
+    mov     str_title_dsp, a0
+    mov     a0, (V_TITLE)
+    call    DspFind, 0, 0           # the firmware's own DSP host-port routines, by signature
+    bra     en_init
+en_notdspmem:
+    mov     (APP_OPTIONS), d0
+    mov     OPT_SURVEY2, d1
     and     d1, d0
     beq     en_notsurvey2
     mov     Survey2Table, a0
@@ -84,6 +108,7 @@ en_count:
 en_table:
     mov     a0, (V_TABLE)
     mov     d0, (V_NROMS)
+en_init:
     call    InitCrc, 0, 0
     call    MakeNames, 0, 0
     mov     (APP_OPTIONS), d0       # C:\KN7DUMP (-3 when it is already there); without sdfmmkdir, or
@@ -535,6 +560,12 @@ FillChunk:
     mov     d0, d3
     mov     BUF, a1
     mov     (R_KIND, a2), d0
+    cmp     K_DSPHOST, d0           # the DSP probe's files: built whole in BUF (each fits one chunk)
+    bcs     fc_notdsp
+    mov     a2, a0
+    call    DspFill, 0, 0
+    bra     fc_ret
+fc_notdsp:
     cmp     K_WAVE, d0
     beq     fc_wave
     cmp     K_LINEAR, d0
@@ -1437,7 +1468,7 @@ DrawFrame:
     call    SetColours, 0, 0
     mov     2, d0
     mov     d0, (SVC+SV_SCALE)
-    mov     str_title, a0
+    mov     (V_TITLE), a0
     mov     8, d0
     mov     4, d1
     call    DrawText, 0, 0
@@ -1773,6 +1804,8 @@ dd_line2:
     call    DrawText, 0, 0
     ret     [d2,d3,a2,a3], 0x30
 
+
+.include "romdump_dsp.s"
 
 # ================================================================================================
 # The ROMs, in dump order; MAME names as in the kn7000 driver (MakeNames builds the first four).

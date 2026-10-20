@@ -41,6 +41,34 @@
 .equ V_FAILS,       VARS+0x54       # ROMs whose file could not be written
 .equ V_TABLE,       VARS+0x58       # the ROM table in use: RomTable, SurveyTable (OPT_SURVEY) or Survey2Table
 .equ V_NROMS,       VARS+0x5C       # its number of entries: NUM_ROMS, or NUM_SURVEY2 (OPT_SURVEY2)
+.equ V_TITLE,       VARS+0x60       # the screen title: str_title, or str_title_dsp (OPT_DSP, OPT_DSPMEM)
+.equ V_LASTHIT,     VARS+0x64       # CountSig: the first hit
+# the effects DSP's host port, through the firmware's own routines (romdump_dsp.s DspFind); 0 = not found
+.equ V_DSPOK,       VARS+0x68       # 1 when every routine below was found and cross-checked
+.equ V_DFOUND,      VARS+0x6C       # what DspFind got: DF_* bits
+.equ V_DWAIT,       VARS+0x70       # the handshake wait (calls entry; only its flag operands are used)
+.equ V_DREGWR,      VARS+0x74       # register write: d0 = IOP register, d1 = high half, (0x10, sp) = low half
+.equ V_DREGRD,      VARS+0x78       # register read: d0 = IOP register -> d0 = (high << 16) + sign-extended low
+.equ V_DIDXWR,      VARS+0x7C       # the index write (0x98000000), guarded by the dead flag: d0 = index
+.equ V_DDATARD,     VARS+0x80       # one 16-bit data-port read (0x9C000000), guarded -> d0 (-1 when dead)
+.equ V_DDEAD,       VARS+0x84       # the firmware's "DSP dead" flag (byte; 941 0x500066CC, 893 0x500066D8)
+.equ V_DDOWN,       VARS+0x88       # its "kernel downloaded" flag (byte; 941 0x500066CD, 893 0x500066D9)
+.equ V_DSTAT,       VARS+0x8C       # the current DSP file's status bits (DS_*)
+.equ V_DPOLLS,      VARS+0x90       # phase 2: FIFO status polls, in all and the most for one word
+.equ V_DPOLLMAX,    VARS+0x94
+.equ V_DWORDS,      VARS+0x98       # phase 2: words read
+.equ DF_WAIT,       1               # DspFind: the handshake wait found once
+.equ DF_REGS,       2               #   the register read/write block found once
+.equ DF_IDX,        4               #   its index-write call leads to a calls entry of the right frame
+.equ DF_DATA,       8               #   its data-read call does too, and tests the same dead flag
+.equ DS_FOUND,      1               # DSP file status: the routines were found (else nothing was read)
+.equ DS_DEADBEFORE, 2               #   the firmware's dead flag was set before: nothing was read
+.equ DS_DEADDURING, 4               #   it became set during the reads: the rest is left 0
+.equ DS_NOCLOCK,    8               #   no millisecond counter: the time stamps are 0, the spacing a delay loop
+.equ DS_WAITOUT,    0x10            #   a wait for the millisecond counter timed out
+.equ DS_PRECHECK,   0x20            #   phase 2: a check before the readback failed, nothing was written
+.equ DS_FSTIMEOUT,  0x40            #   phase 2: EPB0 stayed empty (DMAC0 FS) for too long: stopped
+.equ DS_RESTORED,   0x80            #   phase 2: DMAC0, IIEP0, IMEP0, CEP0 written back
 .equ HOLD_MS,       15000           # show the result this long before ending the conversion ...
 .equ HOLD_CALLS,    23000           # ... or this many calls when the loader found no ms counter, each made
 .equ HOLD_SPIN,     10000           # to last about 0.65 ms by a delay loop (loader.s HOLD_SPIN)
@@ -59,11 +87,15 @@
 .equ OPT_NOLFN,     0x20000         # no long-name pass: no raw SD sector access at all
 .equ OPT_SURVEY,    0x40000         # read SurveyTable's windows instead of RomTable's ROMs (the rhythm ROM search)
 .equ OPT_SURVEY2,   0x80000         # read Survey2Table's 14 windows instead (takes precedence over OPT_SURVEY)
+.equ OPT_DSP,       0x100000        # the DSP probe, phase 1 (DspTable: read-only, IOP registers and host side)
+.equ OPT_DSPMEM,    0x200000        # the DSP probe, phase 2 (DspMemTable: DSP memory through EPB0 DMA)
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 .equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
 .equ OPTS_SURVEY,   0x703C0         # the SURVEY build: SurveyTable's six windows, ordinary files only
 .equ OPTS_SURVEY2,  0xB0000         # the SURVEY2 build: Survey2Table's 14 windows, ordinary files only
+.equ OPTS_DSPPROBE, 0x130000        # the DSP probe, phase 1, ordinary files only
+.equ OPTS_DSPMEM,   0x230000        # the DSP probe, phase 2, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)
@@ -80,8 +112,15 @@
 .equ K_LANE1,       1               # bytes 2-3 (the .ic16 half)
 .equ K_LINEAR,      2               # plain bytes, read 16 bits at a time
 .equ K_WAVE,        3               # a wave ROM through the tone generator's test latches
+.equ K_DSPHOST,     4               # DSP probe: the host side (INTC GxICR block, the firmware's DSP variables)
+.equ K_DSPIOP,      5               # DSP probe: one snapshot of the IOP registers, twice
+.equ K_DSPTIME,     6               # DSP probe: timers, DMA status and SPORT DMA counts over time
+.equ K_DSPPM,       7               # DSP probe phase 2: program memory through EPB0
+.equ K_DSPDM,       8               # DSP probe phase 2: data memory through EPB0, and the SPORT TCBs
 .equ NUM_ROMS,      10              # entries in RomTable and SurveyTable
 .equ NUM_SURVEY2,   14              # entries in Survey2Table
+.equ NUM_DSP,       3               # entries in DspTable
+.equ NUM_DSPMEM,    2               # entries in DspMemTable
 .equ MAX_ROMS,      16              # the most any table may have (16 skip bits; V_RESULTS, SHORTS sized for it)
                                     # the files: V_NROMS dump files, then DUMPLIST.TXT
 
