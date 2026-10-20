@@ -8,7 +8,8 @@
 # with its KN7APP.BIN, a MANIFEST.TXT and an ICON.BMP (gen_icons.py -> PNG -> png2icon.py, into ICONDIR,
 # default OUTDIR/../icons). Another World's folder takes everything its own build wrote (AW_SDCARD_DIR:
 # kn5000-anotherworld kn7000/build/sdcard, KN7APP.BIN and its 43 game files). The probes' KN7APP.BINs are
-# the released ones (RELEASES_DIR: ../cnv_romdump/releases), checked against each release's SHA1SUMS.
+# the released ones (RELEASES_DIR: ../cnv_romdump/releases), checked against each release's SHA1SUMS; DSPTONE's
+# comes from ../dsptone/releases the same way.
 # Writes OUTDIR.txt: every file, its size and SHA-1, as an aligned Markdown table.
 import hashlib
 import os
@@ -25,7 +26,9 @@ PROGRAMS = [
     ("DSPMEM", "2026-10-20-dspmem/sdcard-pass7-DSPMEM", "Pass 7: DSP probe, phase 2 (DSP memory)", "dspmem"),
     ("DSPRATE", "2026-10-20-dsprate/sdcard-pass8-DSPRATE", "Pass 8: DSP probe, frame rate", "dsprate"),
     ("CPUTIME", "2026-10-20-cputime/sdcard-pass9-CPUTIME", "Pass 9: CPU timing probe", "cputime"),
+    ("DSPTONE", "dsptone:2026-10-20-iter1/sdcard-DSPTONE", "DSP tone: our own effects-DSP program", "dsptone"),
 ]
+DSPTONE_RELEASES = os.path.join(HERE, '..', 'dsptone', 'releases')   # ../dsptone (its own releases)
 
 
 def sha1(p):
@@ -69,6 +72,8 @@ def main():
                 sys.exit(f'mkcard: no KN7APP.BIN in {aw} (make -C kn5000-anotherworld/kn7000 sdcard)')
             for f in files:
                 shutil.copyfile(os.path.join(aw, f), os.path.join(d, f))
+        elif src.startswith('dsptone:'):
+            shutil.copyfile(released(DSPTONE_RELEASES, src.split(':', 1)[1]), os.path.join(d, 'KN7APP.BIN'))
         else:
             shutil.copyfile(released(releases, src), os.path.join(d, 'KN7APP.BIN'))
         with open(os.path.join(d, 'MANIFEST.TXT'), 'w', newline='\r\n') as f:

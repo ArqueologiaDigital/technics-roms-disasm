@@ -20,7 +20,7 @@ Contents: [Using it](#using-it) · [The card](#the-card) · [Adding a program](#
 1. `make card` writes `build/card/`, everything for the SD card, and `build/card.txt`, every file
    with its size and SHA-1 (it builds Another World from `AW_DIR` first; its data comes from
    `~/compartilhado/MSDOS/`, as that game's own Makefile takes it).
-2. Copy **the contents of** `build/card/` to the SD card's root: `KN7APP.BIN` and the six folders.
+2. Copy **the contents of** `build/card/` to the SD card's root: `KN7APP.BIN` and the seven folders.
 3. On the KN7000: **DISK MENU**, **STYLE CONVERT** (left button 3), `KN7LOAD.CNV`, **OK** (right
    button 4), as for every pass so far.
 4. The loader's screen flashes by, then "Looking for the panel's buttons in the firmware...", then
@@ -63,6 +63,7 @@ depends on how a computer makes short names):
 | `DSPMEM\`    | pass 7, the DSP probe, phase 2                                     | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                  |
 | `DSPRATE\`   | pass 8, the DSP probe's frame rate                                 | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                 |
 | `CPUTIME\`   | pass 9, the CPU timing probe                                       | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                 |
+| `DSPTONE\`   | our own program on the effects DSP, iteration 1 (`../dsptone`)     | `../dsptone/releases/2026-10-20-iter1/`, 99,596, `5d7d5df5b59494effed0cdc32256d59b425ae994`                       |
 
 Each folder also holds a `MANIFEST.TXT` (its name in the list) and an `ICON.BMP` (drawn by
 `gen_icons.py`, converted by `png2icon.py`); `build/card.txt` lists every file with its SHA-1 (the game
@@ -260,17 +261,17 @@ converter. `run_menu_tests.sh buttons` measures all fifteen the same way, with a
 reads no button at all (`-D BUTTONS_USED=0`), so that only the firmware's own reaction shows: each button
 pressed in turn on the menu's screen, 2.5 s apart, on the card `make card` builds.
 
-| button                            | in the firmware's bitmap | IC23 (all 256 KB) | firmware LCD stores | converter calls in the 3.3 s after |
-|-----------------------------------|--------------------------|-------------------|---------------------|------------------------------------|
-| LCDL 1, 2, 3, 5                   | seen                     | unchanged         | 0                   | 66                                 |
-| LCDL 4                            | seen                     | unchanged         | 0                   | 67                                 |
-| LCDR 1, 3, 4                      | seen                     | unchanged         | 0                   | 67                                 |
-| LCDR 2, 5                         | seen                     | unchanged         | 0                   | 66                                 |
-| PART SELECT LEFT                  | seen                     | unchanged         | 0                   | 67                                 |
-| PART SELECT RIGHT 1               | seen                     | unchanged         | 0                   | 66                                 |
-| PAGE UP                           | seen                     | unchanged         | 0                   | 66                                 |
-| PAGE DOWN                         | seen                     | unchanged         | 0                   | 67                                 |
-| EXIT                              | seen                     | unchanged         | 0                   | 65                                 |
+| button              | in the firmware's bitmap | IC23 (all 256 KB) | firmware LCD stores | converter calls in the 3.3 s after |
+|---------------------|--------------------------|-------------------|---------------------|------------------------------------|
+| LCDL 1, 2, 3, 5     | seen                     | unchanged         | 0                   | 66                                 |
+| LCDL 4              | seen                     | unchanged         | 0                   | 67                                 |
+| LCDR 1, 3, 4        | seen                     | unchanged         | 0                   | 67                                 |
+| LCDR 2, 5           | seen                     | unchanged         | 0                   | 66                                 |
+| PART SELECT LEFT    | seen                     | unchanged         | 0                   | 67                                 |
+| PART SELECT RIGHT 1 | seen                     | unchanged         | 0                   | 66                                 |
+| PAGE UP             | seen                     | unchanged         | 0                   | 66                                 |
+| PAGE DOWN           | seen                     | unchanged         | 0                   | 67                                 |
+| EXIT                | seen                     | unchanged         | 0                   | 65                                 |
 
 So none of them changes a setting, none makes the firmware draw, and the firmware goes on calling the menu
 about 20 times a second through each. The menu uses all but LCDR 3, which it has no use for
