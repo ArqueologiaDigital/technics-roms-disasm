@@ -220,6 +220,130 @@ For the SURVEY2 files it adds:
   - the panel MCUs' mask ROMs (M37471);
   - the effects DSP, which has no ROM.
 
+## The DSP probe: the effects DSP, read through the firmware's own routines
+
+Two more builds of the same application look at the effects DSP, IC306, an ADSP-21065L that the main CPU
+host-boots at every power-up (`kn7000_mame/notes/dsp-host-interface.md`). The DSP's host port is 16 bits
+wide and register-indirect:
+- the IOP register address goes to `0x98000000`;
+- the contents move through `0x9C000000`, two 16-bit halves per 32-bit register, low half first.
+
+The title reads "KN7000 DSP PROBE". The files are plain 8.3 files in the root, as in SAFE.
+
+| build             | options    | name on screen                 | files                                      |
+|-------------------|------------|--------------------------------|--------------------------------------------|
+| `build/dspprobe/` | `0x130000` | "KN7000 DSP PROBE 1.0 PHASE 1" | `DSPHOST.BIN`, `DSPIOP.BIN`, `DSPTIME.BIN` |
+| `build/dspmem/`   | `0x230000` | "KN7000 DSP PROBE 1.0 PHASE 2" | `DSPPM.BIN`, `DSPDM.BIN`                   |
+
+**It drives no port itself.** `DspFind` (`romdump_dsp.s`) finds the firmware's own host-port routines by
+masked signatures, the way the loader finds its file routines, and the probe `calls` them. They keep the
+firmware's lock, its handshake wait (INTC group 0x17) and its "DSP dead" guard.
+
+| routine                             | 893          | 941          | how it is found                                      |
+|-------------------------------------|--------------|--------------|------------------------------------------------------|
+| register read, 2x16 (`calls` entry) | `0x4840B433` | `0x4840531B` | `sig_dspregs` + 0x3E                                 |
+| register write, 2x16                | `0x4840B3F5` | `0x484052DD` | `sig_dspregs` + 0                                    |
+| index write (guarded)               | `0x4840B19B` | `0x48405083` | the read's call at body + 6                          |
+| data-port read, 16 bits (guarded)   | `0x4840B090` | `0x48404F78` | the read's call at body + 0xE                        |
+| handshake wait                      | `0x4840AE77` | `0x48404D25` | `sig_dspwait`                                        |
+| "DSP dead" flag                     | `0x500066D8` | `0x500066CC` | the wait's operand at +0x36, and the data read's own |
+| "kernel downloaded" flag            | `0x500066D9` | `0x500066CD` | the wait's operand at +0x0F                          |
+
+- **The checks.** Each signature must match once in `0x48400000`-`0x487FFFFF`. Each call target must
+  be preceded by the `add -frame, sp` its call allocates. The data read must test the same dead flag
+  as the wait. Short of all of that the probe leaves the DSP alone and says so in every file's
+  status word.
+- **`find_dsp.py`** repeats the search over every program image we have. It finds the same routines in
+  941, 942, 935 and 893; 929's lower half is not dumped.
+- **Same code.** `find_dsp.py` disassembles the routines and everything they call (unidasm) and
+  compares them with 941's, stack slots and frame sizes aside. In 893 nine of the eleven routines
+  are the same code. The two data-port accessors lack 941's bus-timing bracket around the port access
+  (save `0x32000026`, write `0x924`, restore); their logic is otherwise the same.
+- **The firmware's register read** returns `(high << 16) +` the low half sign-extended, `0x10000` short
+  when bit 15 of the low half is set. The probe adds it back, so the files hold the registers as they
+  are.
+
+**Phase 1 only reads.**
+- **`DSPHOST.BIN`, the main CPU's side.**
+  - The interrupt control registers G0ICR-G63ICR, `0x34000100`-`0x340001FF`; G17ICR (`0x3400015C`) is
+    the DSP handshake group. No other I/O bank is read.
+  - The firmware's DSP variables, `0x500` bytes from the dead flag's 256-byte page minus `0x100`
+    (893: `0x50006500`-`0x500069FF`, which holds both flags and the 146-entry effect pointer table at
+    `0x500066DC`; 941 has the table at `0x500066E0`).
+  - The addresses the probe found.
+- **`DSPIOP.BIN`, the IOP registers.** A snapshot of every register Table E-15 of the ADSP-21065L
+  Technical Reference defines, read twice (pass A, pass B), 102 of them. Not read, and marked in a
+  bitmap in the file:
+  - `EPB0`/`EPB1` (`0x04`/`0x05`): the external port FIFOs; a read pops a word (Table E-12);
+  - the SPORT data buffers `TX0_A`, `RX0_A`, `TX0_B`, `RX0_B`, `TX1_A`, `RX1_A`, `TX1_B`, `RX1_B`
+    (`0xE2`, `0xE3`, `0xEE`, `0xEF`, `0xF2`, `0xF3`, `0xFE`, `0xFF`); a receive read takes the word
+    away (Table E-13);
+  - every address Table E-15 lists as reserved.
+- **`DSPTIME.BIN`, a time series.**
+  - 200 samples 5 ms apart by the firmware's millisecond counter (the loader finds it).
+  - Each sample has the time at start and end, `TCOUNT0`, `TCOUNT1`, `DMASTAT`, the eight SPORT DMA
+    counts `CR0A`-`CT1B` and their chain pointers.
+  - Then 256 samples back to back of `TCOUNT0`, `TCOUNT1`, `CT0A` and `CR0A`, for counts that reload
+    faster than 5 ms.
+- **What phase 1 writes.** Only what the firmware writes for any DSP access:
+  - the index latch `0x98000000`;
+  - inside its data-port routine, `0x0001` to G17ICR before it waits for the DSP's answer.
+
+  If the DSP did not answer within the routine's `0x3FFFF` polls, the firmware's own routine would set
+  its dead flag; it would then send the DSP nothing until the next power-up. The probe checks the flag
+  before every read and stops.
+
+**Phase 2 reads DSP memory back** through external-port DMA channel 8 in transmit direction: internal
+memory to `EPB0` to the host.
+- **`DMAC0`** is `0xA5` for program memory and `0x45` for data memory (Table E-16):
+  - DEN (bit 0);
+  - TRAN (bit 2, transmit, internal to external);
+  - DTYPE (bit 5, 48-bit instructions, PM only);
+  - PMODE (bits 6-7: 10 = 16 to 48 bits for PM, 01 = 16 to 32 bits for DM);
+  - MSWF 0 (least significant 16 bits first);
+  - MASTER, HSHAKE and EXTERN 0: slave mode, the host reads.
+
+  These are the firmware's own upload values, `0xA1` and `0x41`, with TRAN added. Its uploads run the
+  same channel in receive direction.
+- **The sequence, per range.**
+  1. `DMAC0` = `0x2000` (FLSH: flush `EPB0` and the packing state; DEN 0).
+  2. `IIEP0` = first address, `IMEP0` = 1, `CEP0` = words.
+  3. `DMAC0` = `0xA5` or `0x45`.
+  4. Per word, read `DMAC0` until its FS bits say `EPB0` holds data, at most 1000 times. With SYSCON's
+     BHD clear, a host read of an empty `EPB0` would hold the bus until data came.
+  5. Latch index 4 (`EPB0`) and read three (PM) or two (DM) 16-bit halves, least significant first.
+  6. At the end, `DMAC0` = `0x2000` again.
+- **What it reads.**
+  - `DSPPM.BIN`: PM `0x8000`-`0x8DFF`.
+  - `DSPDM.BIN`: DM `0x9800`-`0x9FFF` and `0xC000`-`0xC4FF`, then for each SPORT DMA chain pointer its
+    value and the 16 DM words around it (the TCBs).
+- **Before.** It reads SYSCON and the channel's registers (`DMAC0`, `IIEP0`, `IMEP0`, `CEP0`, `CPEP0`,
+  `DMASTAT`). It goes ahead only if:
+  - SYSCON is the firmware's 16-bit, LSW-first set-up;
+  - `DMAC0` has DEN and CHEN clear;
+  - `DMASTAT` shows channel 8 neither active nor chaining.
+- **After.** It writes back `IIEP0`, `IMEP0`, `CEP0` and `DMAC0`'s control bits as they were, then
+  reads them again into the file.
+- **What phase 2 writes.** `DMAC0`, `IIEP0`, `IMEP0` and `CEP0`, nothing else:
+  - no SYSCON, SPORT or timer register;
+  - no DSP memory.
+- **A power cycle undoes it all.** At every power-up the firmware resets the DSP and boots it again:
+  - it pulses `0x36008004` bit 7;
+  - it writes SYSCON's software reset;
+  - it downloads the kernel, and with it `IIEP0`, `IMEP0`, `CEP0` and `DMAC0` are written anew.
+
+**`check_dsp_probe.py DIR [--program P1DIR]`** decodes all of it:
+- the files' integrity;
+- the found routines;
+- G17ICR and the flags;
+- every register by name, with SYSCON, `DMACx`, `DMASTAT`, `STCTLx`/`SRCTLx` and the divisors decoded;
+- the timer and SPORT rates, with the arithmetic and what it assumes;
+- the readback, against the kernel the firmware uploads (its download record, found in the program
+  flash).
+
+`--self-test` runs the decoders on made-up files; `--mask-asm` prints the read mask `romdump_dsp.s`
+carries, from the same register list.
+
 ## How it stays out of the firmware's way
 
 - **Memory.** Everything it writes is in the 192 KB the firmware sets aside for a style converter
@@ -306,27 +430,33 @@ For the SURVEY2 files it adds:
 
 ## Files
 
-| file                           | what                                                                                      |
-|--------------------------------|-------------------------------------------------------------------------------------------|
-| `loader.s`                     | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing |
-| `kn7cnv.inc`                   | the contract between loader and application: memory layout, service table, header         |
-| `romdump.s`, `romdump.inc`     | the ROM dumper application                                                                |
-| `mkapp.py`                     | fills the application header's size and CRC-32                                            |
-| `mkfloppy.py`                  | files onto a blank disk the KN7000 formatted                                              |
-| `gen_font.py`, `font8x13.inc`  | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
-| `find_fw.py`                   | the loader's firmware search, in Python, over every program image we have                 |
-| `check_real_dump.py`           | after a real run: files whole, known or new, builds, two runs identical; SURVEY2 checks   |
-| `find_rhythm.py`               | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
-| `fatls.py`                     | lists or extracts the files on an SD card image, showing long names                       |
-| `test/run_test.sh`             | the dumper end to end in MAME, then `verify_dump.py`                                      |
-| `test/prefill.lua`             | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
-| `test/prefill_survey2.lua`     | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows     |
-| `test/verify_dump.py`          | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
-| `probes/`                      | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)     |
-| `releases/2026-10-19/`         | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
-| `releases/2026-10-19-wave/`    | the same for the WAVE build (pass 3)                                                      |
-| `releases/2026-10-19-survey/`  | the same for the SURVEY build (pass 4)                                                    |
-| `releases/2026-10-20-survey2/` | the same for the SURVEY2 build (pass 5)                                                   |
+| file                            | what                                                                                      |
+|---------------------------------|-------------------------------------------------------------------------------------------|
+| `loader.s`                      | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing |
+| `kn7cnv.inc`                    | the contract between loader and application: memory layout, service table, header         |
+| `romdump.s`, `romdump.inc`      | the ROM dumper application                                                                |
+| `romdump_dsp.s`                 | the DSP probe: the firmware's DSP routines found and called, the five DSP files           |
+| `mkapp.py`                      | fills the application header's size and CRC-32                                            |
+| `mkfloppy.py`                   | files onto a blank disk the KN7000 formatted                                              |
+| `gen_font.py`, `font8x13.inc`   | the 8x13 text font, from the X11 misc-fixed font (public domain)                          |
+| `find_fw.py`                    | the loader's firmware search, in Python, over every program image we have                 |
+| `check_real_dump.py`            | after a real run: files whole, known or new, builds, two runs identical; SURVEY2 checks   |
+| `find_rhythm.py`                | the SURVEY windows: where the rhythm ROM is, the firmware's checksum on it, its version   |
+| `find_dsp.py`                   | the DSP probe's search in Python over every program image, and the same-code check        |
+| `check_dsp_probe.py`            | decodes the DSP probe's files: registers, rates, the readback against the kernel          |
+| `fatls.py`                      | lists or extracts the files on an SD card image, showing long names                       |
+| `test/run_test.sh`              | the dumper end to end in MAME, then `verify_dump.py`                                      |
+| `test/prefill.lua`              | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)        |
+| `test/prefill_survey2.lua`      | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows     |
+| `test/dsp_tap.lua`              | the DSP probe's host-port traffic, and the emulator's IOP registers and DSP memory        |
+| `test/verify_dump.py`           | checks every file: MAME name, and bytes against MAME's hashes or the test data            |
+| `probes/`                       | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)     |
+| `releases/2026-10-19/`          | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)       |
+| `releases/2026-10-19-wave/`     | the same for the WAVE build (pass 3)                                                      |
+| `releases/2026-10-19-survey/`   | the same for the SURVEY build (pass 4)                                                    |
+| `releases/2026-10-20-survey2/`  | the same for the SURVEY2 build (pass 5)                                                   |
+| `releases/2026-10-20-dspprobe/` | the same for the DSP probe, phase 1 (pass 6)                                              |
+| `releases/2026-10-20-dspmem/`   | the same for the DSP probe, phase 2 (pass 7)                                              |
 
 ## How it was tested
 
@@ -334,6 +464,8 @@ Results are in the next section. Command:
 
     test/run_test.sh ~/compartilhado/mame-pr-kn-flop-rebuild/knfl-tip $T/run   # [--fast] [--loader-test N] [--safe|--ic19|--wave|--survey|--survey2]
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --survey2 --bios v13 --rompath ~/compartilhado/kn7000-emulator/roms
+    test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dsp --bios v13 --rompath ~/compartilhado/kn7000-emulator/roms
+    test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dspmem [--fake-syscon --fake-fs] --bios v13 --rompath ...
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
@@ -465,6 +597,52 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
     the counter prints `V_NROMS`, which is 10 for these builds. Those runs used a ROM path
     without the 4 MB IC18 and 2 MB IC19 images that `technics_romsets` gained on 2026-10-19, as the
     earlier runs had; upstream's driver declares both as 8 MB.
+
+- **The DSP probe** (2026-10-20; phase 1 SHA-1 `ddc23b53...`, phase 2 `9a5077d3...`,
+  `releases/2026-10-20-dspprobe/`, `-dspmem/`). It ran on the kn7000_mame overlay published
+  2026-10-20 (`kn7000-emulator/kn7000`, md5 `889b6f48...`, kn7000_mame `45a1459`) with `-bios v13`.
+  That overlay keeps the 21065L's IOP registers and hands back internal memory through `EPB0`; it
+  does not run the timers or the SPORT DMA. `dsp_tap.lua` counted every host-port access.
+
+  | run                    | options                                | outcome                                                          |
+  |------------------------|----------------------------------------|------------------------------------------------------------------|
+  | phase 1                | `--dsp`                                | 5 of 5; 101 of 102 registers as the port answers after the run   |
+  | phase 2                | `--dspmem`                             | 4 of 4; refused at the pre-check, nothing written                |
+  | phase 2, stand-ins     | `--dspmem --fake-syscon --fake-fs`     | 4 of 4; PM 3584 of 3584 words = the DSP's own memory             |
+
+  - **Phase 1.**
+    - It found the 893 routines (read `0x4840B433` ... as `find_dsp.py` finds them).
+    - It wrote the index latch 5,028 times, only for the 102 registers it reads, and never wrote
+      the data port.
+    - All 102 registers read the same in both passes. They equal what the port answers after the
+      run, but for IOSTAT, the DSP's flag pins (0, then 1).
+    - Values (v13):
+      - the SPORT chain pointers read `0x4309`/`0x4311`/`0x4319`/`0x4321`/`0x4329`/`0x4331`/`0x4339`/`0x4341`
+        at `0x73`/`0x53`/`0x7B`/`0x5B`/`0x63`/`0x33`/`0x6B`/`0x3B`, as on v16;
+      - `STCTLx` `0x013CB173` and `SRCTLx` `0x013C3173`: both channels on, 24-bit sign-extended
+        words, external clock and frame sync, DMA chained on A and B;
+      - `WAIT` `0x200D0001`, `IOCTL` `0x8852A05B`, `DMAC0` `0xA0` (the firmware's idle value).
+    - SYSCON reads `0x00200020` and MSGR3 `0x10651065`: there the overlay keeps the boot protocol's
+      answers on every read.
+    - The time series is flat, as expected there, and the decoder says so.
+  - **Phase 2.**
+    - SYSCON reads `0x20` in MAME, so the pre-check refused, as it should on anything but the
+      firmware's 16-bit set-up.
+    - With SYSCON faked to `0x410` and `DMAC0` FS to "full" while armed (the overlay leaves FS 0), it
+      read everything.
+    - PM equals the DSP's memory word for word.
+    - DM equals it at 3,317 of 3,328 words; the kernel's variables move.
+    - It wrote only `DMAC0` (`0x2000`, `0xA5`, `0x45`, `0xA0`), `IIEP0`, `IMEP0` and `CEP0`, and left
+      them as found (`DMAC0` `0xA0`, `IIEP0` `0x8093`, `IMEP0` 1, `CEP0` 1).
+    - Against the kernel record in the v1.3 program flash:
+      - PM `0x8300` is equal throughout;
+      - `0x8000` is equal but for the unit CALL slots `0x8080`-`0x80A0`, which the firmware patches;
+      - `0x8400` and `0x8D00` hold effect programs.
+    - The TCBs show `CP`, `C` 8, `IM` 1 and `II` `0xC342` ...: each SPORT channel runs an 8-word ring.
+  - **The emulator side is a stand-in for two bits.** On the chip, SYSCON reads `0x410` after the
+    firmware's set-up, and FS shows `EPB0`'s data (TRM Table E-16). In the overlay neither does, and
+    phase 2 would wait out its 1,000 polls and stop without these stand-ins (the earlier run on the
+    2026-10-19 overlay did exactly that, and wrote the four registers back).
 
 The bulk outputs (the card image, about 74 MB of dumps, the snapshots) are not kept. `run_test.sh`
 regenerates them.

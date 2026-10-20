@@ -1,0 +1,6 @@
+ddc23b5328c22c73fdef45f409ec4dabe63af374  sdcard-pass6-DSPPROBE/KN7APP.BIN
+7e138b3dbd170b3ee408303e156dc1dd42e3d4c6  check_dsp_probe.py
+889e8eaddd75a2c8a47c7e0b6a2d2cfd2e6d2445  check_real_dump.py
+44f018cb818f4df14b30abcf9ad330845ab525bf  find_fw.py
+fb78e9149bf9fa73f5a5b1b03cc9134a22a3e9ff  find_rhythm.py
+e2ccc64153c186c8bfa426eecfb8320ee5695e25  README.txt
