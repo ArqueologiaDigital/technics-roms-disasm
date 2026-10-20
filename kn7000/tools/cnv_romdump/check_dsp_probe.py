@@ -229,7 +229,7 @@ def iop(b):
         elif name.startswith(('TDIV', 'RDIV')):
             note = d_div(a[r])
         elif name.startswith('CP') and a[r]:
-            note = f"TCB at {a[r] & 0xFFFF:#06x}" + (', PCI' if a[r] & 0x20000 else '')
+            note = f"TCB at {0x8000 | a[r] & 0x7FFF:#06x} (taken as 0x8000 | CP & 0x7FFF)"
         rows.append((f'{r:#04x}', name, f'{a[r]:#010x}', 'same' if a[r] == p[r] else f'{p[r]:#010x}', note))
     table(('reg', 'name', 'pass A', 'pass B', 'decoded (pass A)'), rows)
     print(f'   not read: {", ".join(f"{k:#04x} {v}" for k, v in sorted(SIDE_EFFECT.items()))}; and every reserved address')
@@ -318,6 +318,10 @@ def rates(data, iopv):
         rows.append((nm, f'{min(vs):#x}..{max(vs):#x}', f'{distinct} values, counts {dirn}', f'{r:.1f}/ms',
                      f'{used} pairs' + (f', {skip} skipped' if skip else '') + (f', period {per}' if per else '')))
     table(('register', 'range', 'moves', 'rate (5 ms series)', 'from'), rows)
+    if all(r[2] == 'constant' for r in rows):
+        print('   NOTHING MOVED over the series. On the instrument that would mean both timers are off and the SPORT DMA')
+        print('   idle (no audio frames). In MAME it is expected: the kn7000_mame overlay of 2026-10-20 (45a1459) keeps')
+        print('   the IOP registers but does not run the timers or the SPORT DMA counts.')
     if len(burst) >= 2:
         bspan = (burst[-1][0] - burst[0][0]) & 0xFFFFFFFF
         print(f'   burst: {len(burst)} back-to-back samples of {", ".join(BURST)} in {bspan} ms '
@@ -455,7 +459,7 @@ def dm(b, prog):
     for k in range(8):
         rec = u32s(b, 0x3480 + 68 * k, 17)
         nm = ['CPR0A', 'CPR0B', 'CPR1A', 'CPR1B', 'CPT0A', 'CPT0B', 'CPT1A', 'CPT1B'][k]
-        a = rec[0] & 0xFFFF
+        a = 0x8000 | rec[0] & 0x7FFF
         if 0x8008 <= a <= 0xFFF7:
             print(f'   {nm} = {rec[0]:#010x}: DM {a - 8:#06x}-{a + 7:#06x}: ' + ' '.join(f'{w:08x}' for w in rec[1:]))
         else:

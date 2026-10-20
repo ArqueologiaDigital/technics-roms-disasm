@@ -940,8 +940,10 @@ dpm_end:
     ret     [d2,d3,a2,a3], 0x30
 
 # ---- DSPDM.BIN (0x36A0 bytes): the header; DM 0x9800-0x9FFF (0x80), DM 0xC000-0xC4FF (0x2080), 4 bytes per
-# word; then for each SPORT DMA chain pointer in CpRegs (0x3480): its value, and the 16 DM words around it
-# (CP & 0xFFFF minus 8 up to plus 7; zeros when the pointer is outside 0x8008-0xFFF7), 17 words each. -------
+# word; then for each SPORT DMA chain pointer in CpRegs (0x3480): its value, and the 16 DM words around the TCB
+# it points to, 17 words each. The TCB is taken to be at 0x8000 | (CP & 0x7FFF): internal memory starts at 0x8000,
+# and the emulated kernel's pointers (0x4309 ...) are its DM 0xC309 ... less 0x8000; a full address maps the same.
+# The window runs from 8 below to 7 above; zeros when it would leave 0x8000-0xFFFF. -------
 DspDm:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -980,14 +982,15 @@ ddm_cp:
     movbu   (a0), d0
     call    DspRead, 0, 0
     mov     d0, (a3)
-    mov     0xFFFF, d1
+    mov     0x7FFF, d1
     and     d1, d0
-    mov     0x8008, d1
-    cmp     d1, d0
+    cmp     8, d0
     bcs     ddm_next
-    mov     0xFFF7, d1
+    mov     0x7FF7, d1
     cmp     d1, d0
     bhi     ddm_next
+    mov     0x8000, d1
+    or      d1, d0
     add     -8, d0
     mov     16, d1
     mov     a3, a0
