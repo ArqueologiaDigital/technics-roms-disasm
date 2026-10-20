@@ -11,9 +11,8 @@ LOADER  := ../cnv_romdump
 XAPASM  := $(PYTHON) $(TOOLS)/xapasm.py
 OUT     ?= build
 INC     := -I . -I $(OUT) -I $(LOADER)
-# Another World with the launch block support (kn5000-anotherworld, branch launcher-folders, in its worktree
-# until it is merged; then AW_DIR=../../../../kn5000-anotherworld/kn7000)
-AW_DIR  ?= ../../../../kn5000-anotherworld-menu/kn7000
+# Another World with the launch block support (kn5000-anotherworld; branch launcher-folders merged as 2d74cb9)
+AW_DIR  ?= ../../../../kn5000-anotherworld/kn7000
 
 all: $(OUT)/KN7APP.BIN
 
