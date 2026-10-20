@@ -154,6 +154,8 @@
 .equ V_TRUNC,       M_VARS+0xE4
 .equ V_ENTRYSP,     M_VARS+0xE8     # the stack pointer the loader called the menu with (the trampoline returns there)
 .equ V_REC,         M_VARS+0xEC     # the record the scan step works on
+.equ V_EXITARMED,   M_VARS+0xF0     # 1 once EXIT has been held QUIT_MS: the menu ends when it is let go
+.equ V_LEAVEREQ,    M_VARS+0xF4     # 1 once LEAVE went down: the menu ends when it is let go
 .equ V_DIRBUF,      M_VARS+0x100    # 16 bytes: an 11-byte name being compared
 .equ V_LCDSUM2,     M_VARS+0x110    # the sum read this call (for the tests)
 

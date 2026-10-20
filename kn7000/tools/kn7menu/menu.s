@@ -338,17 +338,26 @@ dm_run:
     call    StartRead, 0, 0
     bra     dm_ret
 dm_leave:
-    mov     d3, d0                  # LCDR 4, LEAVE
-    and     1<<B_R4, d0
+    mov     d3, d0                  # LCDR 4, LEAVE: the menu ends when it is let go (so that the firmware's
+    and     1<<B_R4, d0             # message, which comes next, never sees this press)
     beq     dm_hold
-    bra     dm_end
+    mov     1, d0
+    mov     d0, (V_LEAVEREQ)
+    bra     dm_ret
 dm_moved:
     call    ClearMsg, 0, 0
     mov     RD_ALL, d0
     mov     d0, (V_REDRAW)
     bra     dm_ret
 dm_hold:
-    call    ExitHeld, 0, 0          # EXIT held QUIT_MS: leave
+    mov     (V_LEAVEREQ), d0        # LEAVE went down, and is up again: leave
+    cmp     0, d0
+    beq     dm_exit
+    mov     (V_BTN), d0
+    and     1<<B_R4, d0
+    beq     dm_end
+dm_exit:
+    call    ExitHeld, 0, 0          # EXIT held QUIT_MS, and let go: leave
     cmp     0, d0
     beq     dm_ret
 dm_end:
@@ -357,7 +366,9 @@ dm_end:
 dm_ret:
     ret     [d2,d3,a2,a3], 0x30
 
-# ExitHeld -> d0 = 1 once EXIT (V_BTN) has been down for QUIT_MS, else 0 (V_EXIT_T0 times it).
+# ExitHeld -> d0 = 1 once EXIT (V_BTN), after being down for QUIT_MS, has been let go, else 0 (V_EXIT_T0
+# times it, V_EXITARMED remembers it). Ending on the release keeps the press from reaching the firmware's
+# message, which comes up as soon as the menu answers 0xFE.
 ExitHeld:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -366,6 +377,7 @@ ExitHeld:
     bne     eh_down
     clr     d0
     mov     d0, (V_EXIT_T0)
+    mov     (V_EXITARMED), d0       # let go after the hold: leave
     bra     eh_ret
 eh_down:
     call    Now, 0, 0
@@ -374,15 +386,14 @@ eh_down:
     bne     eh_held
     or      1, d0
     mov     d0, (V_EXIT_T0)
-    clr     d0
-    bra     eh_ret
+    bra     eh_no
 eh_held:
     sub     d1, d0
     mov     QUIT_MS, d1
     cmp     d1, d0
     bcs     eh_no
     mov     1, d0
-    bra     eh_ret
+    mov     d0, (V_EXITARMED)
 eh_no:
     clr     d0
 eh_ret:

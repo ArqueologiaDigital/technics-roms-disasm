@@ -77,7 +77,7 @@ str_f_noraw:    .asciz  "the loader found no SD sector read here: the folders ca
 str_f_nopanel:  .asciz  "the panel's button bitmaps are not found in this firmware."
 str_f_io:       .asciz  "the SD card could not be read (is it in?)."
 str_f_format:   .asciz  "the SD card is not FAT16 with 512-byte sectors (the instrument's format)."
-str_f_exit:     .asciz  "Hold EXIT to leave; then the firmware asks 'Continue Next?'."
+str_f_exit:     .asciz  "Hold EXIT for 1.5 s and let go to leave; then 'Continue Next?'."
 str_f_wait:     .asciz  "In 15 s the firmware asks 'Continue Next?': NO leaves."
 str_t_failed:   .asciz  "PROGRAM NOT STARTED: YES = MENU"
 
