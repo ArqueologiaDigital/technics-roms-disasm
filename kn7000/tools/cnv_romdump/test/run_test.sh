@@ -72,7 +72,7 @@ cp "$FLOPPY" "$O/floppy.img"
 P=""; [ "$PREFILL" = 1 ] && [ "$SAFE" != 5 ] && P="lua dofile(\"$HERE/prefill.lua\")"
 PL=""; [ "$PREFILL" = 1 ] && [ "$SAFE" = 5 ] && PL="lua dofile(\"$HERE/prefill_survey2.lua\")"
 sed -e "s|@PREFILL@|$P|" -e "s|@PREFILL_LATE@|$PL|" -e "s|@OUT@|$O|g" "$HERE/dump.cmd.in" > "$O/cmd.txt"
-echo exit >> "$O/cmd.txt"; rm -f -- "$O/cmd.txt.log"
+echo exit >> "$O/cmd.txt"; rm -f -- "${O:?}/cmd.txt.log"
 mkdir -p "$O/snap" "$O/cfg" "$O/nv"
 cd "$(dirname "$BIN")" && REMOTE_CMD="$O/cmd.txt" DISPLAY="${DISPLAY:-:0}" timeout 10800 "$BIN" kn7000 "${BIOS[@]}" \
   -rompath "$ROMPATH" -window -nothrottle -skip_gameinfo \
