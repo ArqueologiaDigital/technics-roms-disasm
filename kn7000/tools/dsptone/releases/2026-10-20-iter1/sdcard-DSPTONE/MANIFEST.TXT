@@ -1,0 +1,3 @@
+# DSPTONE: the KN7000 program menu shows this name and icon (kn7menu/README.md)
+NAME=DSP tone: our own effects-DSP program
+ICON=ICON.BMP
