@@ -292,6 +292,12 @@ For the SURVEY2 files it adds:
   too, and the WAVE build the four wave ROMs, each one's byte sum the firmware's expected sum. Each build was run a second time the same day, and both reads were byte-identical, files
   and manifests alike. The dump is kept privately, with those checks, in the private ROM
   repository (`roms/kn7000/real_dump_v1.3_b893/`, `pass1-run1/2`, `pass2-run1/2`).
+- **SURVEY2 on the instrument (2026-10-20).** One run, every file whole; `check_real_dump.py
+  pass5-run1 --pass4 pass4-run1 --pass1 pass1-run1` says "everything checks out". IC18 is identical to
+  pass 4 (its second read). **IC23 repeats every 256 KB through its window** (7 of 7 copies equal the
+  first, no shorter period), and its header checksum is valid. `0x56800000` is IC21 byte for byte. The
+  library at `0x4C000000` is program flash from `0x487B76B1`, `0x3DF02` bytes. The four empty expansion
+  slots read 99.9% `FF`. Kept privately as `pass5-run1/`, with the checker's output.
 - **A firmware without file access** is the one case where nothing is written: if neither the
   tables nor the dispatchers are found, the loader cannot even read `KN7APP.BIN`, and says so.
   The way past it would be an SD driver of our own (SPI at `0x9805000C`, chip select at
