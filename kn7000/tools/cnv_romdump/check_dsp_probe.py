@@ -826,6 +826,7 @@ def rate_report(b):
             print(f'   I3 in the access timing: {sum(dI)} steps over {ev} events ({sum(dI) / ev if ev else 0:.4f} per event); '
                   'over a two-event pair it stepped ' + ', '.join(f'{k}: {v} times' for k, v in sorted(per2.items())))
     # -- the phase check ---------------------------------------------------------------------------------------------
+    one_position = False                        # every phase sample found the ring at the same place (SPORT DMA running)
     if h['ph']:
         cr = {}
         ii = {}
@@ -836,6 +837,7 @@ def rate_report(b):
               'loop turns): CR0A ' + ', '.join(f'{k:#x} x{v}' for k, v in sorted(cr.items(), key=lambda kv: -kv[1])[:6]) +
               '; IIR0A ' + ', '.join(f'{k:#x} x{v}' for k, v in sorted(ii.items(), key=lambda kv: -kv[1])[:6]))
         if len(cr) == 1 and len(ii) == 1 and not (set(cr) | set(ii)) <= {0}:
+            one_position = True
             print('   * every read saw the same ring position, whatever the delay before it: with the SPORT DMA running (pass 6:'
                   ' DMASTAT 0x33F), the handshake locks the reads to one point of the frame')
         elif (set(cr) | set(ii)) <= {0}:
@@ -877,9 +879,15 @@ def rate_report(b):
             if FRAME_B[0] <= T <= FRAME_B[1] and SHARE_B[0] <= share <= SHARE_B[1]:
                 verdict = 'b'
                 print(f'   * (b): one handshake per frame, frames at {1e6 / T:.1f} Hz, FLAG3 high on {100 * share:.1f}% of them.')
-                if abs(share - 0.5) < 0.01:
+                if abs(share - 0.5) < 0.01 and one_position:
                     print('     (exactly half: frames of two evenly spaced handshakes at half that rate, FLAG3 always high, would'
-                          ' give the same stamps; only that symmetric form of (a) is left, and nothing here tells it apart)')
+                          ' give the same stamps, but not the same phase check: the second handshake of each frame would find'
+                          ' the 8-word rings half a frame on, at another position, and every read found one. So that form of'
+                          ' (a) is ruled out too.)')
+                elif abs(share - 0.5) < 0.01:
+                    print('     (exactly half: frames of two evenly spaced handshakes at half that rate, FLAG3 always high, would'
+                          ' give the same stamps; only that symmetric form of (a) is left: the phase check, which could tell'
+                          ' them apart, did not find one ring position)')
             else:
                 verdict = 'neither'
                 print('   * NEITHER (a) nor (b): the period or FLAG3\'s share is outside both readings.')
@@ -1306,6 +1314,7 @@ def self_test():
         assert n == 0, got[model]
     o = got['b']
     assert 'verdict: b' in o and re.search(r'frames at 441\d\d\.\d Hz, FLAG3 high on 50\.0%', o), o
+    assert 'So that form of (a) is ruled out too' in o, o
     assert '| I3 series, after MSGR2' in o and re.search(r'\| I3 series, after MSGR2 +\| 3000 \| 22\.66\d+ ', o), o
     assert 'stale stamps put right' in o and 'TM4 counts down from 2000 to 0' in o, o
     o = got['a']

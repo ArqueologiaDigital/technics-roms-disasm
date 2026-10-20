@@ -373,6 +373,21 @@ flag 0 before and after every file). What it showed:
 - **Phase 2's pre-checks hold** on the chip: SYSCON `0x410`, `DMAC0` DEN and CHEN clear, channel 8
   neither active nor chaining.
 
+### Phase 2 on the owner's KN7000 (pass 7, 2026-10-20)
+
+Felipe ran the phase-2 release the same day. The files hold the DSP program the firmware loads, so they are
+private, in `technics_roms` `roms/kn7000/real_dump_v1.3_b893/pass7-run1/`, with the checker's output beside them.
+- **The run:**
+  - all 3,584 PM and 3,456 DM words were read;
+  - FS showed data at the first look for every word;
+  - `DMAC0`, `IIEP0`, `IMEP0` and `CEP0` were left as found;
+  - the dead flag stayed 0.
+- **Against the kernel record:** PM `0x8300` is equal, `0x8000` is equal except the patched CALL slots, and the DM
+  `0xC302` block is equal, 152 of 152.
+- **Against the overlay emulator, booted with the unit's IC23:** every downloaded word is identical
+  (kn7000_mame `notes/dsp-probe-2026-10-20/compare_dspmem.py`). The comparison found one emulator bug, the DSP
+  reading MSGR2 back as 0, fixed in kn7000_mame `e04a567`.
+
 ### Pass 8: the frame rate (`build/dsprate/`, `romdump_dsprate.s`)
 
 Pass 6 left two readings open (above): frames at about 22.5 kHz with nearly two handshakes each, or one
