@@ -505,6 +505,188 @@ published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70a
 - **The timings mean nothing there:** the overlay answers the handshake at once ("self-ack"). On the
   instrument each access should wait about 24 us (pass 6).
 
+## Pass 9: the CPU timing probe (`build/cputime/`, `romdump_cputime.s`)
+
+The overlay emulator runs the MN10300 at one cycle per instruction, 32 MHz, with no wait states, so homebrew runs
+faster in MAME than on the unit. Pass 9 measures the unit: what each class of instruction costs, and what each kind
+of memory access costs, region by region, timed with the clock behind the firmware's millisecond tick. Another
+agent builds the emulator's timing model from it.
+
+The title reads "KN7000 CPU TIMING PROBE", the name on screen "KN7000 CPU TIMING PROBE 1.0" (`--options
+0x830000`, `OPTS_CPUTIME`). One file, `CPUTIME.BIN` (`cpu_time.bin`), plain 8.3 in the root, as in SAFE.
+
+### What the manual and the firmware say
+
+**The manual** (`mn103s_manual.pdf`, the MN1030/MN103S Series Instruction Manual; PDF page = printed page + 14)
+covers the core only. The MN103002A is an **AM31** core (p.16/2). Its cycle counts assume "no pipeline
+installation" and, on cache parts, "when accessing cachable area, cache is always hit" (p.39/25); "cycle changes
+in memory space" are in each chip's LSI manual (p.39/25, p.196/182), which we do not have. So the manual says
+nothing about wait states, the bus controller, chip selects, or the cache's size and line. What it gives:
+
+| class                                          | cycles (AM31)     | page (PDF/printed) |
+|------------------------------------------------|-------------------|--------------------|
+| register ALU, mov reg, inc, shifts, ext, nop   | 1                 | 174-182 / 160-168  |
+| mov imm8 / imm16 / imm32                       | 1 / 1 / 2         | 175 / 161          |
+| Bcc taken / not taken; bra                     | 3 / 1; 3          | 95 / 81            |
+| jmp d16 / d32 / (An)                           | 2 / 3 / 3         | 98 / 84            |
+| Lcc taken / not taken; setlb                   | 1 / 2; 1          | 96-97 / 82-83      |
+| call d16 with 0 / 4 registers                  | 2 / 6             | 100 / 86           |
+| ret with 0-3 / 4 registers; retf 0             | 5 / 5; 2          | 103-104 / 89-90    |
+| calls (An); rets                               | 3; 5              | 101, 105 / 87, 91  |
+| movm pop / push, 1 register; 4 registers       | 2 / 1; 5 / 4      | 52-53 / 38-39      |
+| loads and stores, (Am), (d8/d16, Am), (d8, SP) | 1                 | 41 / 27            |
+| loads and stores with d32 or abs32             | 2                 | 41 / 27            |
+| mul, mulu: Dn of 0, 1, 2, 3, 4 bytes           | 3, 13, 21, 29, 34 | 66-67 / 52-53      |
+| div, divu: MDR:Dn of 0, 1, 2, 3, 4+ bytes      | 4, 14, 22, 30, 38 | 68-69 / 54-55      |
+
+- **The pipeline** (p.117/103): IF, DEC, EX, MEM, WB. A load from cachable memory takes MEM and WB; the
+  instruction after a load that uses its result waits 1 cycle (p.122-123/108-109), 2 for cachable external memory
+  with MEMCTRC's DCBYPS = 0 (p.134-135/120-121, p.142/128). MEMCTRC is named, without an address.
+- **Fetch** works in 8-byte aligned blocks (p.139-141/125-127); a taken branch refetches.
+- **The memory map** (AM31 with cache, p.25/11): external memory cachable at `0x40000000`-`0x7FFFFFFF`, the same
+  uncachable at `0x80000000`-`0xBFFFFFFF`, on-chip peripherals `0x20000000`-`0x3FFFFFFF`.
+
+**The firmware** (`find_cpu.py`; 941 addresses, 893 in brackets):
+- **Caches.** At boot it writes CHCTR (`0x20000070`) 0x30 then 3, and later ORs in 0x80 (941 `0x4840FFA0`,
+  `0x48410098`). Its cache routines (941 `0x4841015B`-`0x4841021A`) disable a cache with bit 0 or 1, wait on
+  bit 2 or 3, invalidate with bit 4 or 5, and flush the data cache by reading `0x28400000` and `0x28401000`,
+  0x80 lines of 16 bytes each: two ways of 2 KB, so a 4 KB data cache with 16-byte lines, by the look of it.
+- **The bus set-up** (941 `0x484D710E` [893 `0x484D6F01`]) writes `0x32000010` = 0x400, MEMCTR0 (`0x32000020`)
+  = its bit 15 | 0x904 (with the boot code), then MEMCTR1-4 (`0x32000022`-`28`) one of two ways, `0x32000040`/`42` (DRAM control and
+  refresh, by the look of it), MEMCTR5 = 4, MEMCTR6 = 0, MEMCTR7 = 2:
+
+  | register       | board class 1 | board class 2, 3 |
+  |----------------|---------------|------------------|
+  | MEMCTR1 `0x22` | 0x804         | 0xB24            |
+  | MEMCTR2 `0x24` | 0x824         | 0x924            |
+  | MEMCTR3 `0x26` | 0x424         | 0x704            |
+  | MEMCTR4 `0x28` | 0x865         | 0x765            |
+  | `0x32000040`   | 0x287 / 0x3BF | 0x287 / 0x297    |
+
+  The class comes from the strap at `0x98070000` (941 `0x484D7713` [893 `0x484D7506`]: bit 1 clear = 3, else bit
+  2 clear = 2, else 1). Bits 8-12 of a MEMCTR look like its wait count: 941's DSP data accessors (`0x48404E59`,
+  `0x48404EC7`) write MEMCTR3 = 0x924 around the port access and put it back, and the outer accessors (941
+  `0x48404F22`, `0x48404F9A`; 893 writes at `0x4840B05A`, `0x4840B0D2`) set those bits to 0x0F and clear MEMCTR7
+  bit 1.
+  Which chip select serves which window is not in any document we have.
+- **The hardware subtype** (the coordinator's question): 941 `0x484D774E` [893 `0x484D7541`], a `calls` entry,
+  returns 5, 1, 2 or 3 for strap bits 11:10 = 00, 01, 10, 11 (class 3 boards read `0x9CC00021` bits 3:2
+  instead). It is called 21 times and **its result is not stored**: every caller asks again, so there is no
+  variable to read. The probe reads the strap itself and the decoder applies the same rule.
+
+### The probe
+
+- **The clock.** TM4BC (`0x340010A0`) counts down from 2000 at 2 MHz (pass 8). A run of a test reads TM4BC, enters
+  the test routine with `calls`, and reads TM4BC again; its time is the difference modulo 2001 counts of 500 ns.
+  The millisecond counter, read just before and after, shows that no run is longer than one period.
+- **A test** repeats its body N times: K copies of what it measures, then `add -1, d0; bne`. Each loop starts on an
+  8-byte boundary. The null test (a bare `rets`) times the harness, the empty loop the loop; the decoder subtracts
+  them, or a reference with the same body less what is measured. Each test runs 16 times in a row per chunk;
+  the decoder keeps the runs no interrupt fell into (within a count of the shortest) and averages them, which
+  resolves below a count, since the runs start at random phases of the 2 MHz count.
+- **The tests**, 119 of them, in `CtTests` (`romdump_cputime.s`) and `TESTS` (`check_cpu_probe.py`):
+
+  | group                | tests                                                                                    |
+  |----------------------|------------------------------------------------------------------------------------------|
+  | harness and loops    | NULL, LOOP, LPW5 (`add 512, a0` too), LPS6 (`add 64, a0` too), LBUF (setlb/lne)          |
+  | ALU and moves        | NOP, ADD, AND, MOVR, INC, ASL2, LSRI, EXTB, MI8, MI16, MI32                              |
+  | branches             | BRA, BNE (taken), BEQ (not taken), JMP (d16)                                             |
+  | stack and load-use   | LDSP, STSP, LDAB (abs32), LUDP (load + dependent add), LUIN (load + independent add)     |
+  | movm, call, return   | MVM1, MVM4, CAL0, CAL4, CALF (call/retf), CALS (calls (a1)/rets)                         |
+  | multiply, divide     | MREF, MUL0/1/2/4, MUU1/4 (by the multiplicand's bytes); DREF, DIV1/4/N, DVU1/4           |
+  | fetch from flash     | CRET (a bare call), FL1L/TW1L (one call, first cold), FLLG/TWLG, FLSH/TWSH               |
+  | loads, cached view   | 32/16/8-bit same address, and a new cache line each (64 bytes apart over 16 KB), from    |
+  |                      | work RAM, program flash, table flash, IC18, the library RAM, IC21 (0x568), IC19          |
+  | loads, uncached view | 32/16/8-bit same address, 32/16-bit sequential, from work RAM (0x90), IC21 (0x968), IC23 |
+  |                      | (0x840), the LCD (row 232)                                                               |
+  | on-chip and strap    | TM4BC, TM4MD, G17ICR, MEMCTR0, CHCTR, the strap at `0x98070000`                          |
+  | stores               | the scratch (`0x502D0000`, both views: same address, a new line each, sequential); the   |
+  |                      | LCD: store of the value there, read + write back (same address, sequential)              |
+
+- **Fetch from flash.** FLLG/FLSH call a firmware routine that only computes, 941 `0x48471E64` [893
+  `0x48471D35`]: `d0 = f(d0)`, a chain of `cmp imm32; bhi` (24 instructions on the long path, d0 = 0x3FFFFF; 6
+  on the short one, d0 = 0). `CtTwin` is the same routine, assembled from its instructions; its bytes, with the
+  4 before it, are the signature `CtFind` looks for in `0x48400000`-`0x487FFFFF` (exactly once in 893, 935, 941
+  and 942, `find_cpu.py`), and TWLG/TWSH call it in work RAM, placed 5 bytes into an 8-byte block like 893's. The
+  routine runs from the I-cache once fetched; FL1L and TW1L, one call each and before any other call of it, catch
+  the first fetch. Code cannot be timed from the flash's uncached view (`0x88xxxxxx`) without executing there,
+  which nothing has done, so the probe does not.
+- **`CPUTIME.BIN`**, four 32 KB chunks (131,072 bytes), each one pass over the 119 tests in a converter call of its
+  own, written by the dumper's writer (`DumpStep`):
+
+  | offset   | bytes  | what                                                                                      |
+  |----------|--------|-------------------------------------------------------------------------------------------|
+  | `0x0000` | 0x100  | header: "CPUTIME" + the chunk's digit, status, ms at start and end, the layout, the clock |
+  |          |        | check, the routine found and its hits, CtTwin, the scratch, the LCD address, builds       |
+  | `0x0100` | 0x100  | the register snapshot: address, width, value (16 registers)                               |
+  | `0x0200` | 0xA00  | the tests as run, 20 bytes each: tag, routine, N, a0, a1                                  |
+  | `0x0C00` | 0x3B80 | the runs, 8 bytes each: TM4BC before, after, ms before, after (low 16 bits)               |
+
+- **What it reads**: the bus controller registers the firmware sets (`0x32000010`, `0x32000020`-`2E`,
+  `0x32000040`/`42`; it never reads `0x10`, `0x40` and `0x42` itself), CHCTR, TM4MD/BR/BC, G17ICR, the strap, and
+  memory every earlier pass read. **What it writes**: its 64 KB scratch at `0x502D0000` (inside the converter
+  area, through both views), the stack, and LCD pixels on row 232 with the value already there. No IC23, no
+  DSP/TG/FDC/SD/GPIO port, no flash, no timer, bus or cache register.
+- **Stops.** Every loop is bounded. Each chunk first pauses 40 ms (by the millisecond counter, bounded), so that
+  the MAME test's tap, which looks once per video frame, is in place before the first test. If TM4BC does not move
+  over a 2,000-turn delay, nothing is timed (status 1).
+  A chunk that runs past 3 s stops its remaining tests (status 4). Without the routine, its three tests are
+  skipped (status 2). Each chunk keeps interrupts on, and lasts well under a second.
+- **A build of its own**, as pass 8's: `romdump.s` includes `romdump_cputime.s` and its two hooks only under
+  `.ifdef CPUTIME`. Every other build keeps its bytes: `KN7LOAD.CNV` `6b81f382...`, the floppy `b7a67de6...`,
+  `dspprobe` `ddc23b53...`, `dspmem` `9a5077d3...`, `dsprate` `c8334f68...`.
+
+**`check_cpu_probe.py DIR [--json OUT]`** decodes it: per test the clean runs, their mean, the spread, the time per
+turn and per operation, in ns and in cycles at the clock ADD implies (16 `add d1, d2` per turn, 1 cycle each)
+and at 32 MHz, with the manual's count beside; for memory, the cycles beyond a D-cache hit. It decodes the
+registers: MEMCTR1-4 against the two board set-ups, CHCTR, TM4, and the strap (class, subtype). `--self-test`
+simulates the probe on machines of known costs at 32 and 16 MHz, with interrupts in 15% of the runs, and gets all
+116 per-operation costs back within 2%; then a stopped TM4, a routine not found, and strap 0x0406 (class 1,
+subtype 1).
+
+`test/run_test.sh ... --cputime` runs it in MAME with `test/cpu_tap.lua`, which, while a chunk is measured,
+checks every read and write the probe's own code makes: writes only to the converter area (both views), the
+stack, or the LCD with the value already there; reads in no I/O window but the ones above.
+
+#### Pass 9 in MAME (2026-10-20)
+
+The release binary (SHA-1 `91022a0f7239bd85049a56ecd914202673475847`, `releases/2026-10-20-cputime/`) on a copy of
+the published overlay (`kn7000-emulator/kn7000` as republished at 15:51, md5 `5dfebca3...`, kn7000_mame
+`58175d5`), with its `roms/` and `plugins/`, `-bios v13`:
+
+    test/run_test.sh $T/emu/kn7000 $T/run --cputime --bios v13 --rompath $T/emu/roms
+
+- **The run.** 2 of 2 files: `CPUTIME.BIN` (131,072 bytes) with status 0 in all four chunks, 119 of 119 tests in
+  each, the routine found once at `0x48471D35` (893, as `find_cpu.py` finds it), and `DUMPLIST.TXT`.
+  `check_cpu_probe.py`: "everything checks out". A chunk took 145-146 ms of emulated time, 40 of them the pause.
+  The whole test took 6 minutes of real time.
+- **`cpu_tap.lua`:** 4 chunks watched; 41,390,294 reads (instruction fetches included) and 1,728,568 writes by the
+  probe's own code; none outside its rules; no LCD pixel changed. Writes went to `0x502C`, `0x502D`, `0x502E`
+  (the converter area), `0x902D` (the scratch, uncached), `0x9CE4` (LCD row 232) and `0x5038` (the stack).
+- **The registers.** TM4 reads as the firmware set it (BR `0x7D0`, MD `0x81`): this overlay models it. The bus
+  controller and CHCTR read 0: the overlay keeps neither, so the firmware's set-up is not visible there. The
+  strap reads `0x9406`: board class 1, hardware subtype 1 (bits 11:10 = 01, the G13 change).
+- **The timing is flat, as expected.** ADD implies 32.01 MHz. Every test below costs one cycle per instruction,
+  whatever the manual says:
+
+  | test                                                    | MAME, cycles  | manual (AM31), cycles |
+  |---------------------------------------------------------|---------------|-----------------------|
+  | the loop, `add -1, d0; bne` (per turn)                  | 2.00          | 4                     |
+  | bra, bne taken / beq not taken / jmp d16                | 1.00 each     | 3 / 1 / 2             |
+  | mov imm32 / mov (abs32), d1                             | 1.00 / 1.00   | 2 / 2                 |
+  | load + add that uses it (per pair)                      | 2.00          | 4                     |
+  | movm push + pop, 1 / 4 registers (per pair)             | 2.00 / 2.00   | 3 / 9                 |
+  | call + ret, with 4 registers, call + retf, calls + rets | 2.01 to 2.02  | 7, 11, 4, 8           |
+  | mul, multiplicand of 0 to 4 bytes                       | 1.02 to 1.03  | 3 to 34               |
+  | div and divu, dividend of 1 to 4 bytes                  | 1.01 to 1.04  | 14 to 38              |
+  | the firmware routine's long path, flash and RAM         | 23.0 and 23.0 | -                     |
+  | every load and store, every region, both views          | 1.00 to 1.03  | (the LSI manual)      |
+
+- **The runs.** 2,756 of 3,072 (90%) were clean; the others had an interrupt in them, up to +215 us.
+
+So in MAME a cached work-RAM load, an uncached LCD store and a read of IC23 all take one cycle, and a 32-bit
+divide takes one cycle: the unit's file will show by how much each is off.
+
 ## How it stays out of the firmware's way
 
 - **Memory.** Everything it writes is in the 192 KB the firmware sets aside for a style converter
@@ -519,6 +701,7 @@ published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70a
   | `0x502B9E00`              | service table                                    |
   | `0x502BA000`              | application                                      |
   | `0x502C0000`-`0x502CFFFF` | two 32 KB buffers                                |
+  | `0x502D0000`-`0x502DFFFF` | pass 9's scratch for its store tests             |
   | `0x502E0000`              | the application's variables and tables           |
 
 - **No firmware addresses are built in.** The firmware routines it calls are not taken from a table
@@ -598,6 +781,7 @@ published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70a
 | `romdump.s`, `romdump.inc`      | the ROM dumper application                                                                                    |
 | `romdump_dsp.s`                 | the DSP probe: the firmware's DSP routines found and called, the five DSP files                               |
 | `romdump_dsprate.s`             | the DSP probe's pass 8: the frame rate, timed by timer 4 (only with `-D DSPRATE`)                             |
+| `romdump_cputime.s`             | pass 9: the CPU timing probe, instruction classes and memory accesses by timer 4 (only with `-D CPUTIME`)     |
 | `mkapp.py`                      | fills the application header's size and CRC-32                                                                |
 | `mkfloppy.py`                   | files onto a blank disk the KN7000 formatted                                                                  |
 | `gen_font.py`, `font8x13.inc`   | the 8x13 text font, from the X11 misc-fixed font (public domain)                                              |
@@ -607,12 +791,15 @@ published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70a
 | `find_dsp.py`                   | the DSP probe's search in Python over every program image, and the same-code check                            |
 | `find_tm4.py`                   | pass 8's clock: where each build sets up timer 4; the data read's lock turns interrupts off                   |
 | `check_dsp_probe.py`            | decodes the DSP probe's files: registers, rates, the readback against the kernel; pass 8's verdict            |
+| `find_cpu.py`                   | pass 9's firmware facts: bus set-up, CHCTR, the strap's routines, the fetch tests' routine in every build     |
+| `check_cpu_probe.py`            | decodes pass 9's `CPUTIME.BIN`: ns and cycles per instruction class and per access, registers, strap          |
 | `fatls.py`                      | lists or extracts the files on an SD card image, showing long names                                           |
 | `test/run_test.sh`              | the dumper end to end in MAME, then `verify_dump.py`                                                          |
 | `test/prefill.lua`              | test data for the undumped ROMs (wave ROM regions, picture window, survey windows)                            |
 | `test/prefill_survey2.lua`      | the SURVEY2 test's data, after the boot; references and write logs of the RAM windows                         |
 | `test/dsp_tap.lua`              | the DSP probe's host-port traffic and read times, the emulator's IOP registers and DSP memory; `TM4` stand-in |
 | `test/check_dsprate_mame.py`    | pass 8 in MAME: every stamp against the emulated times of the reads it brackets                               |
+| `test/cpu_tap.lua`              | pass 9 in MAME: every read and write the probe's own code makes while it measures, checked against its rules  |
 | `test/verify_dump.py`           | checks every file: MAME name, and bytes against MAME's hashes or the test data                                |
 | `probes/`                       | the probes behind the design (SD write, long names, raw sectors, folders; CS1 = IC23)                         |
 | `releases/2026-10-19/`          | exactly what went to the real KN7000 (binaries of `f673f55`, procedure, `SHA1SUMS`)                           |
@@ -622,6 +809,7 @@ published overlay (`kn7000-emulator/kn7000`, md5 `97d2f383...`, kn7000_mame `70a
 | `releases/2026-10-20-dspprobe/` | the same for the DSP probe, phase 1 (pass 6)                                                                  |
 | `releases/2026-10-20-dspmem/`   | the same for the DSP probe, phase 2 (pass 7)                                                                  |
 | `releases/2026-10-20-dsprate/`  | the same for the DSP probe, pass 8 (the frame rate)                                                           |
+| `releases/2026-10-20-cputime/`  | the same for pass 9, the CPU timing probe                                                                     |
 
 ## How it was tested
 
@@ -633,6 +821,7 @@ Results are in the next section. Command:
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dspmem [--fake-syscon --fake-fs] --bios v13 --rompath ...
     test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --dsprate [--fake-tm4] --bios v13 --rompath ...
     test/check_dsprate_mame.py $T/run                                  # after --dsprate --fake-tm4
+    test/run_test.sh ~/compartilhado/kn7000-emulator/kn7000 $T/run --cputime --bios v13 --rompath ...
 
 The test runs upstream MAME's `kn7000`, built from the `technics-kn-flop-rebuild` worktree. It boots
 with the loader floppy and a copy of the real KN7000's SD card with `KN7APP.BIN` added.
