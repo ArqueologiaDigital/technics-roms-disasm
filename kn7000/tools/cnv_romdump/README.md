@@ -12,12 +12,25 @@ floppy (`notes/style-converter.md`). No SP7001, no opened case.
 The floppy is made once. After that, a new version of the dumper (or any other application) is just a
 new `KN7APP.BIN` copied onto the SD card from a computer.
 
+**Several programs on one card: the program menu (`../kn7menu`, 2026-10-20).** The root's `KN7APP.BIN`
+can be the menu instead of an application. It lists the card's folders that hold a `KN7APP.BIN` (each
+with a name and an icon from its `MANIFEST.TXT`), and starts the one picked as the loader would have:
+the same checks, the same bytes at `APP_BASE`, the rest of the area zeroed; "Continue Next?" YES then
+brings the menu back. The loader is unchanged. Its card (`make card` there) puts passes 5 to 9 in
+folders of their own (`SURVEY2\`, `DSPPROBE\`, `DSPMEM\`, `DSPRATE\`, `CPUTIME\`, the released binaries
+byte for byte) beside Another World (`AW\`). Started from a folder, a pass writes its files where it
+always has: the loader keeps the SD card's current folder empty around every call, so `R*.BIN`,
+`DSP*.BIN`, `CPUTIME.BIN` and `DUMPLIST.TXT` go to the card's root. An application that wants its own
+folder reads the menu's launch block (`kn7cnv.inc` `LB_*`, 256 bytes at `0x502E7F00`, the last of the
+area the loader zeroes; zero when the loader started it directly). No application may keep data there.
+
 ## Using it
 
 1. `make` writes `build/KN7LOAD.CNV`, `build/KN7APP.BIN` and `build/kn7load_floppy.img`. The floppy
    image is the loader alone, on a blank disk the KN7000 formatted (kn7000_mame
    `tools/floppy-images`). Write it to a 1.44 MB disk.
-2. Copy `build/KN7APP.BIN` to the root folder of the SD card. Put the card in.
+2. Copy `build/KN7APP.BIN` to the root folder of the SD card (or, with the program menu in the root,
+   into a folder of its own: `../kn7menu/README.md`). Put the card in.
 3. On the KN7000: **DISK MENU**, **STYLE CONVERT**, choose `KN7LOAD.CNV`, **OK**.
 4. The loader's screen appears, then the dumper's. It shows each ROM's MAME name, the address range
    or port being read, and a progress bar. Below them is the list of all ROMs with their CRC-32 once
@@ -777,7 +790,7 @@ divide takes one cycle: the unit's file will show by how much each is off.
 | file                            | what                                                                                                          |
 |---------------------------------|---------------------------------------------------------------------------------------------------------------|
 | `loader.s`                      | `KN7LOAD.CNV`: firmware search, service table, loading and checking `KN7APP.BIN`, drawing                     |
-| `kn7cnv.inc`                    | the contract between loader and application: memory layout, service table, header                             |
+| `kn7cnv.inc`                    | the contract between loader and application: memory layout, service table, header; the menu's launch block    |
 | `romdump.s`, `romdump.inc`      | the ROM dumper application                                                                                    |
 | `romdump_dsp.s`                 | the DSP probe: the firmware's DSP routines found and called, the five DSP files                               |
 | `romdump_dsprate.s`             | the DSP probe's pass 8: the frame rate, timed by timer 4 (only with `-D DSPRATE`)                             |
