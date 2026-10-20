@@ -22,6 +22,9 @@
 #     (IC23 at 0x84000000, 0x50180000, 0x4C000000) must equal what the CPU read there at the end (--refdir:
 #     ref_<base>.bin), except at words the firmware wrote during the run (writes_<base>.txt); with CS1 as plain RAM
 #     ("model plain"), 0x84040000 on must also hold the test data (seed 0x8404).
+#   * --dsp / --dspmem / --dsprate: the DSP probe's files (romdump_dsp.s, romdump_dsprate.s): format, the routines
+#     found (= find_dsp.py), and the host-port traffic dsp_tap.lua counted (--refdir); pass 8 (--dsprate) may latch
+#     only MSGR2, IIR0A and CR0A, and writes no data.
 # --prefix N compares only the first N bytes (run_test.sh --fast). Exit status 0 = everything matches.
 import hashlib
 import os
@@ -42,6 +45,7 @@ survey = '--survey' in args             # the SURVEY build: six CPU windows (rom
 survey2 = '--survey2' in args           # the SURVEY2 build: 14 CPU windows (romdump.s Survey2Table)
 dsp1 = '--dsp' in args                  # the DSP probe, phase 1 (romdump_dsp.s DspTable)
 dsp2 = '--dspmem' in args               # phase 2 (DspMemTable)
+dsp3 = '--dsprate' in args              # pass 8, the frame rate (romdump_dsprate.s DspRateTable)
 refdir = args[args.index('--refdir') + 1] if '--refdir' in args else None
 skip = int(args[args.index('--skip-mask') + 1], 0) if '--skip-mask' in args else 0
 ic21_ref = args[args.index('--ic21-ref') + 1] if '--ic21-ref' in args else None
@@ -87,9 +91,11 @@ SURVEY2 = [(b, 0x800000) for b in SURVEY] + [(0x84000000, 0x200000), (0x50180000
 RAMWIN = (0x84000000, 0x50180000, 0x4C000000)       # no test data: compared with what the CPU read at the end
 DSPFILES = {'DSPHOST.BIN': ('dsp_host.bin', 0x650, b'DSPHOST1'), 'DSPIOP.BIN': ('dsp_iop.bin', 0x870, b'DSPIOP01'),
             'DSPTIME.BIN': ('dsp_time.bin', 0x55F0, b'DSPTIME1'), 'DSPPM.BIN': ('dsp_pm.bin', 0x5480, b'DSPPM001'),
-            'DSPDM.BIN': ('dsp_dm.bin', 0x36A0, b'DSPDM001')}
-if dsp1 or dsp2:
-    ROLE = {k: v[0] for k, v in DSPFILES.items() if (k in ('DSPPM.BIN', 'DSPDM.BIN')) == dsp2}
+            'DSPDM.BIN': ('dsp_dm.bin', 0x36A0, b'DSPDM001'), 'DSPRATE.BIN': ('dsp_rate.bin', 0x20000, b'DSPRATE1')}
+if dsp3:
+    ROLE = {'DSPRATE.BIN': 'dsp_rate.bin', 'DUMPLIST.TXT': 'DUMPLIST.TXT'}
+elif dsp1 or dsp2:
+    ROLE = {k: v[0] for k, v in DSPFILES.items() if (k in ('DSPPM.BIN', 'DSPDM.BIN')) == dsp2 and k != 'DSPRATE.BIN'}
     ROLE['DUMPLIST.TXT'] = 'DUMPLIST.TXT'
 
 
@@ -237,7 +243,7 @@ for short, lng, attr, cl, size in fat.entries(folder):
         ok, how = data[:n] == stream(seed, n), f'test data in {region} (seed {seed:#x})'
     elif role == 'c3cbmd000098.ic19' and prefill:
         ok, how = data[:n] == stream(0x19, n), 'test data at 0x57800000 (seed 0x19)'
-    elif short in DSPFILES and (dsp1 or dsp2):
+    elif short in DSPFILES and (dsp1 or dsp2 or dsp3):
         m = re.search(rb'PROGRAM (\d+)', fat.read_file(*next((cl, sz) for sh, lg, at, cl, sz in fat.entries(folder)
                                                              if sh == 'DUMPLIST.TXT')))
         ok, how = dsp_file(short, data, int(m.group(1)) if m else None)
@@ -269,13 +275,15 @@ for i, short in enumerate(ROLE):        # every file the build writes must be th
     elif short not in seen:
         rows.append((ROLE[short], short, 0, '-', 'not on the card', 'MISSING'))
         bad += 1
-if (dsp1 or dsp2) and refdir and os.path.exists(os.path.join(refdir, 'dsp_traffic.txt')):
+if (dsp1 or dsp2 or dsp3) and refdir and os.path.exists(os.path.join(refdir, 'dsp_traffic.txt')):
     t = dsp_traffic()
     writes = sorted(t['W'])
     allowed = {0x1C, 0x40, 0x41, 0x42} if dsp2 else set()
     wrong = [w for w in writes if w[0] not in allowed]
     import check_dsp_probe
     idx_bad = [i for i in t['I'] if i not in check_dsp_probe.READ and not (dsp2 and i in (0x04, 0x1C, 0x40, 0x41, 0x42))]
+    if dsp3:
+        idx_bad += [i for i in t['I'] if i not in (0x0A, 0x60, 0x62) and i not in idx_bad]
     ok = not wrong and not idx_bad
     bad += not ok
     how = (f"index writes {sum(t['I'].values())} to {len(t['I'])} registers, data reads {sum(t['R'].values())}, "
