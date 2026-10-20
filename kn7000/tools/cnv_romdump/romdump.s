@@ -67,6 +67,21 @@ eh_spin:
 en_first:
     mov     str_title, a0
     mov     a0, (V_TITLE)
+.ifdef CPUTIME
+    mov     (APP_OPTIONS), d0       # pass 9, the CPU timing probe (romdump_cputime.s; assembled with -D CPUTIME)
+    mov     OPT_CPUTIME, d1
+    and     d1, d0
+    beq     en_notcpu
+    mov     CpuTimeTable, a0
+    mov     a0, (V_TABLE)
+    mov     NUM_CPUTIME, d0
+    mov     d0, (V_NROMS)
+    mov     str_title_cpu, a0
+    mov     a0, (V_TITLE)
+    call    CtFind, 0, 0            # the firmware routine its fetch tests call, by its bytes
+    bra     en_init
+en_notcpu:
+.endif
 .ifdef DSPRATE
     mov     (APP_OPTIONS), d0       # the DSP probe's pass 8 (romdump_dsprate.s; assembled with -D DSPRATE)
     mov     OPT_DSPRATE, d1
@@ -572,6 +587,14 @@ FillChunk:
     mov     (R_KIND, a2), d0
     cmp     K_DSPHOST, d0           # the DSP probe's files: built whole in BUF (each fits one chunk)
     bcs     fc_notdsp
+.ifdef CPUTIME
+    cmp     K_CPUTIME, d0           # pass 9: each chunk measured as it is written (romdump_cputime.s)
+    bne     fc_notcpu
+    mov     a2, a0
+    call    CpuTimeFill, 0, 0
+    bra     fc_ret
+fc_notcpu:
+.endif
 .ifdef DSPRATE
     cmp     K_DSPRATE, d0           # pass 8: each chunk measured as it is written (romdump_dsprate.s)
     bne     fc_dspfill
@@ -1826,6 +1849,9 @@ dd_line2:
 .include "romdump_dsp.s"
 .ifdef DSPRATE
 .include "romdump_dsprate.s"
+.endif
+.ifdef CPUTIME
+.include "romdump_cputime.s"
 .endif
 
 # ================================================================================================

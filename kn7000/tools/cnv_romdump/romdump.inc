@@ -92,6 +92,8 @@
 .equ OPT_DSPMEM,    0x200000        # the DSP probe, phase 2 (DspMemTable: DSP memory through EPB0 DMA)
 .equ OPT_DSPRATE,   0x400000        # the DSP probe, pass 8 (DspRateTable: the frame rate); only in a build assembled
                                     # with -D DSPRATE (romdump_dsprate.s), which the other builds leave out
+.equ OPT_CPUTIME,   0x800000        # pass 9, the CPU timing probe (CpuTimeTable); only in a build assembled with
+                                    # -D CPUTIME (romdump_cputime.s), which the other builds leave out
 .equ OPTS_SAFE,     0x303E0         # the SAFE build: program, table and IC21 only, ordinary files only
 .equ OPTS_PICTURE,  0x301FF         # the IC19 build: the picture flash window only, ordinary files only
 .equ OPTS_WAVE,     0x3021F         # the WAVE build: the four wave ROMs only, ordinary files only
@@ -100,6 +102,7 @@
 .equ OPTS_DSPPROBE, 0x130000        # the DSP probe, phase 1, ordinary files only
 .equ OPTS_DSPMEM,   0x230000        # the DSP probe, phase 2, ordinary files only
 .equ OPTS_DSPRATE,  0x430000        # the DSP probe, pass 8 (frame rate), ordinary files only
+.equ OPTS_CPUTIME,  0x830000        # pass 9, the CPU timing probe, ordinary files only
 
 # ---- ROM table records (RomTable in romdump.s) ---------------------------------------------------
 .equ R_NAME,        0               # MAME name (pointer)
@@ -122,11 +125,13 @@
 .equ K_DSPPM,       7               # DSP probe phase 2: program memory through EPB0
 .equ K_DSPDM,       8               # DSP probe phase 2: data memory through EPB0, and the SPORT TCBs
 .equ K_DSPRATE,     9               # DSP probe pass 8: the frame rate, four 32 KB chunks (romdump_dsprate.s)
+.equ K_CPUTIME,     10              # pass 9: CPU and bus timing, CT_CHUNKS 32 KB chunks (romdump_cputime.s)
 .equ NUM_ROMS,      10              # entries in RomTable and SurveyTable
 .equ NUM_SURVEY2,   14              # entries in Survey2Table
 .equ NUM_DSP,       3               # entries in DspTable
 .equ NUM_DSPMEM,    2               # entries in DspMemTable
 .equ NUM_DSPRATE,   1               # entries in DspRateTable
+.equ NUM_CPUTIME,   1               # entries in CpuTimeTable
 .equ MAX_ROMS,      16              # the most any table may have (16 skip bits; V_RESULTS, SHORTS sized for it)
                                     # the files: V_NROMS dump files, then DUMPLIST.TXT
 

@@ -6,7 +6,7 @@ OUT         ?= build
 
 all: $(OUT)/KN7LOAD.CNV $(OUT)/KN7APP.BIN $(OUT)/safe/KN7APP.BIN $(OUT)/ic19/KN7APP.BIN $(OUT)/wave/KN7APP.BIN \
      $(OUT)/survey/KN7APP.BIN $(OUT)/survey2/KN7APP.BIN $(OUT)/dspprobe/KN7APP.BIN $(OUT)/dspmem/KN7APP.BIN \
-     $(OUT)/dsprate/KN7APP.BIN $(OUT)/kn7load_floppy.img
+     $(OUT)/dsprate/KN7APP.BIN $(OUT)/cputime/KN7APP.BIN $(OUT)/kn7load_floppy.img
 
 $(OUT)/KN7LOAD.CNV: loader.s kn7cnv.inc font8x13.inc ../xapasm.py ../mn10300_asm.py
 	@mkdir -p $(OUT)
@@ -79,6 +79,18 @@ $(OUT)/romdump_rate.bin: romdump.s romdump_dsp.s romdump_dsprate.s romdump.inc k
 $(OUT)/dsprate/KN7APP.BIN: $(OUT)/romdump_rate.bin mkapp.py
 	@mkdir -p $(OUT)/dsprate
 	$(PYTHON) -I mkapp.py $< $@ --options 0x430000 --name "KN7000 DSP PROBE 1.0 RATE"
+
+# pass 9, the CPU timing probe (OPTS_CPUTIME): how fast the MN10300 runs each class of instruction and each kind of
+# memory access, timed by timer 4 (romdump_cputime.s); read only but for its own scratch RAM and LCD pixels written
+# with their own value. An image of its own, assembled with -D CPUTIME, as pass 8's.
+$(OUT)/romdump_cpu.bin: romdump.s romdump_dsp.s romdump_cputime.s romdump.inc kn7cnv.inc ../xapasm.py ../mn10300_asm.py
+	@mkdir -p $(OUT)
+	$(XAPASM) romdump.s -D CPUTIME -o $@ -m $(OUT)/romdump_cpu.map
+	@test $$(stat -c%s $@) -le 24576 || { echo "romdump.s -D CPUTIME: the image reaches BUF (0x502C0000)"; rm -f -- $@; false; }
+
+$(OUT)/cputime/KN7APP.BIN: $(OUT)/romdump_cpu.bin mkapp.py
+	@mkdir -p $(OUT)/cputime
+	$(PYTHON) -I mkapp.py $< $@ --options 0x830000 --name "KN7000 CPU TIMING PROBE 1.0"
 
 # the loader alone on a blank disk the KN7000 formatted (the base every KN7000 image starts from)
 $(OUT)/kn7load_floppy.img: $(OUT)/KN7LOAD.CNV mkfloppy.py
