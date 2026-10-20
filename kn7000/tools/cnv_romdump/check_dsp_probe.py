@@ -906,8 +906,9 @@ def rate_report(b):
                 verdict = 'neither'
                 print('   * NEITHER (a) nor (b): two kinds of handshake, but the frame or FLAG3\'s share is outside reading (a).')
     if verdict in ('a', 'b'):
-        print(f'   (rates with the tick taken as 1 ms; were the count clock exactly 2 MHz, they would be {clk.K / 2000:.5f} times'
-              ' these; the instrument\'s crystals\' tolerance aside)')
+        print(f'   (rates with the tick taken as 1 ms; were the count clock exactly 2 MHz, the tick would be {clk.K} counts of'
+              f' 0.5 us, {clk.K / 2000:.5f} ms, and the rates {2000 / clk.K:.5f} times these;'
+              ' the instrument\'s crystals\' tolerance aside)')
     print(f'   verdict: {verdict or "none"}')
     return bad
 

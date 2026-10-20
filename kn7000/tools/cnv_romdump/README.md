@@ -388,6 +388,24 @@ private, in `technics_roms` `roms/kn7000/real_dump_v1.3_b893/pass7-run1/`, with 
   (kn7000_mame `notes/dsp-probe-2026-10-20/compare_dspmem.py`). The comparison found one emulator bug, the DSP
   reading MSGR2 back as 0, fixed in kn7000_mame `e04a567`.
 
+### Pass 8 on the owner's KN7000: the frame rate (2026-10-20)
+
+Felipe ran the pass 8 release the same day (files private, `technics_roms` `real_dump_v1.3_b893/pass8-run1/`, with
+the checker's output). Every block completed, the dead flag stayed 0, and no stamp failed. `check_dsp_probe.py`
+gives **verdict (b)**:
+
+| measurement                                              | result                                                                           |
+|----------------------------------------------------------|----------------------------------------------------------------------------------|
+| TM4                                                      | BR 2000, MD 0x81, counts down; the ms counter steps at each reload               |
+| handshake lattice (2,048 access stamps, 3,000 I3 stamps) | one kind of event, every 22.68231 us                                             |
+| frame rate, one handshake per frame                      | 44,087.2 Hz with the tick taken as 1 ms; 44,065.2 Hz if TM4 counts exactly 2 MHz |
+| firmware accesses taking one frame each                  | 96.8%                                                                            |
+| I3 (MSGR2), 3 x 1,000 samples over 3.9 s                 | 22.04361 steps per ms: on 0.5000 of the frames                                   |
+| phase check, 240 samples over a delay of 0-745 turns     | CR0A 5 and IIR0A 0xC365 every time                                               |
+
+So the DSP runs one frame per handshake at the nominal 44.1 kHz. FLAG3 is high on alternate frames, so ring 3 runs at
+half rate. The firmware gets exactly one host access per frame, and every read lands at the same point of it.
+
 ### Pass 8: the frame rate (`build/dsprate/`, `romdump_dsprate.s`)
 
 Pass 6 left two readings open (above): frames at about 22.5 kHz with nearly two handshakes each, or one
