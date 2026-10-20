@@ -11,7 +11,8 @@
 #   * the cache control register CHCTR (0x20000070): every place that loads its address;
 #   * the board strap's two routines, by signature: the classifier (bits 1, 2 -> 1, 2, 3) and the hardware subtype
 #     (941 0x484D774E, `calls` entry; bits 11:10 -> 5, 1, 2, 3, or 0x9CC00021 bits 3:2 when the class is 3), and
-#     the calls to the subtype routine. Its result is not kept in RAM: every caller calls it again;
+#     the calls to the subtype routine, and how many of them store d0 to memory right after (none: its result is not
+#     kept in RAM, every caller calls it again);
 #   * the routine pass 9's fetch tests call (941 0x48471E64), found by the bytes of the probe's own copy (CtTwinPre..
 #     CtTwinEnd in --build DIR's romdump_cpu.bin and .map, default build/): exactly once in each build?
 #   python3 -I find_cpu.py [--build DIR]
@@ -61,17 +62,35 @@ def bus_writes(img):
 
 
 def calls_to(img, target):
-    """`call target` instructions (cd d16 or dd d32) anywhere in the image"""
-    n = 0
+    """offsets just after every `call target` (cd d16 or dd d32) anywhere in the image"""
+    out = []
     for m in re.finditer(rb'\xcd', img):
         o = m.start()
         if o + 5 <= len(img) and BASE + o + struct.unpack_from('<h', img, o + 1)[0] == target:
-            n += 1
+            out.append(o + 5)
     for m in re.finditer(rb'\xdd', img):
         o = m.start()
         if o + 7 <= len(img) and (BASE + o + struct.unpack_from('<i', img, o + 1)[0]) & 0xFFFFFFFF == target:
-            n += 1
-    return n
+            out.append(o + 7)
+    return out
+
+
+def stores_result(img, after):
+    """does the code right after a call keep d0 in memory: past an `extbu/exth/extb d0`, a store of d0 to an
+    absolute address (fc 80-83 with d0) or through a register (mov/movbu/movhu d0, (aN) or (d8, aN))?"""
+    o = after
+    if img[o] in (0x10, 0x14, 0x18, 0x1C):          # extb/extbu/exth/exthu d0
+        o += 1
+    b0, b1 = img[o], img[o + 1]
+    if b0 == 0xFC and 0x80 <= b1 <= 0x83:            # mov/movbu/movhu d0, (abs32)
+        return True
+    if 0x60 <= b0 <= 0x63:                           # mov d0, (aN)
+        return True
+    if b0 == 0xF0 and (0x50 <= b1 <= 0x53 or 0x70 <= b1 <= 0x73):   # movbu/movhu d0, (aN)
+        return True
+    if b0 == 0xF8 and b1 in (0x10, 0x11, 0x12, 0x13, 0x50, 0x51, 0x52, 0x53, 0x70, 0x71, 0x72, 0x73, 0x92, 0x93):
+        return True                                  # (d8, aN) and (d8, sp) forms
+    return False
 
 
 def twin(build):
@@ -98,10 +117,14 @@ def main():
         print(f'   CHCTR (0x20000070) loaded into a0 at: {", ".join(hex(x) for x in ch) or "nowhere"}')
         c = find_fw.find(img, SIG_CLASS)
         s = find_fw.find(img, SIG_SUBTYPE)
+        cs = calls_to(img, BASE + s[0] + 3) if len(s) == 1 else []
         print(f'   strap classifier: {", ".join(hex(BASE + x) for x in c) or "not found"}; subtype routine (calls entry): '
               f'{", ".join(hex(BASE + x) for x in s) or "not found"}' +
-              (f', called {calls_to(img, BASE + s[0] + 3)} times (body {BASE + s[0] + 3:#x}); its result is not stored'
-               if len(s) == 1 else ''))
+              (f', called {len(cs)} times (body {BASE + s[0] + 3:#x}); d0 stored to memory right after '
+               f'{sum(stores_result(img, o) for o in cs)} of those calls' if len(s) == 1 else ''))
+        if len(s) == 1:
+            ptr = sum(img.count(struct.pack('<I', BASE + s[0] + d)) for d in (0, 3))
+            print(f'   the subtype routine\'s address as a 32-bit constant (a function pointer): {ptr} time(s)')
         nstrap = len(re.findall(rb'\x00\x00\x07\x98', img))
         print(f'   0x98070000 appears as an operand {nstrap} times')
         if tw:
