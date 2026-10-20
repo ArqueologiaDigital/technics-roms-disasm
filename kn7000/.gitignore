@@ -14,3 +14,6 @@ __pycache__/
 /disasm/program.asm
 /disasm/program_named.asm
 /disasm/program_region2.asm
+
+# The program menu's build: build/card/ holds Another World's game files (made from your own copy of the game)
+/tools/kn7menu/build/
