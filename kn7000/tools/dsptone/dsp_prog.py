@@ -56,9 +56,9 @@ MSGR4, MSGR5, MSGR6, MSGR7 = 0x0C, 0x0D, 0x0E, 0x0F
 CLIP24 = 0x7FFFFF
 
 TONE_HZ = 440.0
-TONE_PEAK = 0x200000      # a quarter of 24-bit full scale (-12 dBFS)
+TONE_PEAK = 0xCCCCD       # a tenth of 24-bit full scale (-20 dBFS): in MAME about 7 dB over a C4 note
 TONE_INC = round(TONE_HZ * (1 << 24) / FS)
-PCM_PEAK = 8192           # the chirp, 16-bit: a quarter of full scale, the same level as the sine
+PCM_PEAK = 3277           # the chirp, 16-bit: a tenth of full scale, the same level as the sine
 CHIRP_F0, CHIRP_F1, CHIRP_S, GAP_S, FADE_S = 220.0, 3520.0, 0.75, 0.25, 0.015
 
 

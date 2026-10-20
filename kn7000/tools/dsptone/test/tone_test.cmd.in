@@ -1,0 +1,35 @@
+# tone_test.cmd.in -- DSPTONE end to end in MAME (run_mame.sh fills @TAP@ and @OUT@), for the remote rig
+# (kn7000_mame tools/rigs/remote.lua). The card holds the program menu (root KN7APP.BIN) and DSPTONE\ only.
+# A note before (the firmware's reverb), then DISK MENU > STYLE CONVERT > OK (the loader loads the menu),
+# LCDL 1 (DSPTONE, the only program) and RUN; DSPTONE hooks itself in and plays the sine; CHIRP uploads the PCM
+# and plays it; MUTE; STOP (puts the firmware's slot back); LEAVE; a note after (the firmware's reverb again).
+wait 25
+@TAP@
+press KEYS1 0100 1.0
+wait 5
+press CPR_SEG1 04
+wait 4
+press CPL_SEG0 20
+wait 6
+press CPR_SEG6 01
+wait 25
+snap
+press CPL_SEG0 02
+wait 1
+press CPR_SEG5 01
+wait 12
+snap
+press CPR_SEG5 20
+wait 10
+snap
+press CPR_SEG7 01
+wait 3
+press CPR_SEG5 01
+wait 3
+snap
+press CPR_SEG6 01
+wait 10
+snap
+press KEYS1 0100 1.0
+wait 5
+exit

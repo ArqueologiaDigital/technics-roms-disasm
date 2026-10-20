@@ -6,7 +6,8 @@
 #   python3 -I gen_icons.py --png NAME OUT.png          one card icon as a 32x32 PNG, for png2icon.py
 #   python3 -I gen_icons.py --list                      the names
 # NAME: default, aw (Another World), survey2, dspprobe, dspmem, dsprate, cputime (the ROM dumper's passes
-# 5 to 9). The PNGs go through png2icon.py on their way to the card, as anyone's own icon would.
+# 5 to 9), dsptone (../dsptone). The PNGs go through png2icon.py on their way to the card, as anyone's own icon would.
+import math
 import struct
 import sys
 import zlib
@@ -97,6 +98,17 @@ def icon(name):
         cv.rect(9, 15, 4, 1, (10, 8, 12))
         cv.text('AW', 1, 26, (250, 250, 250))
         return cv
+    if name == 'dsptone':                       # DSPTONE: the DSP chip with a sine across it, and a speaker
+        cv = Canvas((0, 0, 0))
+        chip(cv, (40, 40, 44), (190, 190, 190))
+        cv.rect(8, 8, 16, 16, (20, 70, 130))
+        for x in range(8, 24):
+            cv.put(x, 16 - round(5 * math.sin((x - 8) * 2 * math.pi / 16)), (255, 255, 120))
+        cv.rect(24, 22, 3, 5, (250, 250, 250))  # a speaker at the corner
+        cv.line(27, 21, 30, 18, (250, 250, 250))
+        cv.line(27, 27, 30, 30, (250, 250, 250))
+        cv.line(30, 18, 30, 30, (250, 250, 250))
+        return cv
     passes = {'survey2': ('5', (40, 90, 170)), 'dspprobe': ('6', (150, 60, 160)),
               'dspmem': ('7', (160, 90, 40)), 'dsprate': ('8', (40, 140, 90)),
               'cputime': ('9', (170, 50, 50))}
@@ -118,7 +130,7 @@ def icon(name):
     raise SystemExit(f'gen_icons: no icon named {name!r}')
 
 
-NAMES = ['default', 'aw', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime']
+NAMES = ['default', 'aw', 'survey2', 'dspprobe', 'dspmem', 'dsprate', 'cputime', 'dsptone']
 
 
 def png_bytes(cv):
