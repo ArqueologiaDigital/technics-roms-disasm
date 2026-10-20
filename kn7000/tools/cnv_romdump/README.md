@@ -643,6 +643,15 @@ found 0, file code steps 0 of 5`. The first full run, with an earlier build (`KN
     firmware's set-up, and FS shows `EPB0`'s data (TRM Table E-16). In the overlay neither does, and
     phase 2 would wait out its 1,000 polls and stop without these stand-ins (the earlier run on the
     2026-10-19 overlay did exactly that, and wrote the four registers back).
+  - **The older builds, with the DSP code in.** On the same overlay, all with `--fast`:
+    - the default build (`--no-prefill --bios v16`) wrote its long names (`lfn=1`), and its
+      program, table and IC21 files match. Without prefill its five wave and picture files have
+      no test data to compare;
+    - `--safe --no-prefill --bios v16` gives 11 of 11;
+    - `--survey2 --bios v13` gives 15 of 15.
+
+    Upstream `knfl-tip` would not start on 2026-10-20: even a three-line autoboot script never ran
+    in four minutes. So the upstream runs were not repeated.
 
 The bulk outputs (the card image, about 74 MB of dumps, the snapshots) are not kept. `run_test.sh`
 regenerates them.
