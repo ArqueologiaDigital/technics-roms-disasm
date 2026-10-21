@@ -21,6 +21,15 @@ Contents: [On the instrument](#on-the-instrument) · [How the firmware runs the 
 
 ## On the instrument
 
+**It works on Felipe's KN7000 (2026-10-21, program 893, `KN7APP.BIN` `5d7d5df5...`).** Every line came up as in
+MAME: the host-port routines found at the same addresses (reg read `4840B433`, write `4840B3F5`, data
+`4840B090`/`4840B00D`), SYSCON `00000410`, DMAC0 `000000A0`, DMASTAT `0000033F`; 91 words loaded at PM `8200` and
+read back equal; the slot hooked (`06BE04008200`) and restored (`06BE04008400`), both read back; the heartbeat at
+**44,087 frames a second**; the PCM sent whole (PCMLEN read back 44,100). He heard the 440 Hz tone and the
+220-3520 Hz sweep, and the firmware's reverb came back after STOP. His ten photos of the screens are kept
+privately with the dumps (technics_roms `real_dump_v1.3_b893/dsptone-iter1-run1/`). Not measured: the tone's
+level against a played note.
+
 **What goes on the card.** The folder `DSPTONE\` from `make card-dir` (or from the release,
 `releases/2026-10-20-iter1/`), copied into the SD card's root beside the menu's other folders:
 
@@ -265,8 +274,8 @@ What it would need, on top of what this iteration establishes:
    generator always mixes in needs checking on the unit, or the app sets REVERB on itself.
 5. **Integration** into Another World's `audio.s`, which today plays its sounds on the tone generator over MIDI;
    and the restore on every way out of the game.
-6. **The unit's numbers from this iteration first**: the heartbeat rate, whether the tone was heard, its level
-   against a note, and that STOP brought the reverb back.
+6. **The unit's numbers from this iteration** (2026-10-21, above): heartbeat 44,087/s, tone and sweep heard, the
+   reverb back after STOP. Still open: the level against a note.
 
 ## Files
 
