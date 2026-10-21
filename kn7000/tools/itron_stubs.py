@@ -8,7 +8,7 @@
 # Question it answers: "is the address tools/port_symbols.py gave a kernel service in 941 the
 # same service?" The library's entry stubs are near-identical runs of bytes, so the offset map
 # can align a name with the wrong stub. On 2026-10-18 it had put ext_tsk on 941's sta_tsk, which
-# a style converter starting a task depends on (kn5000-anotherworld kn7000/README-CNV.md).
+# a style converter starting a task depends on (technics-anotherworld kn7000/README-CNV.md).
 #
 # Every stub has one shape: `add -4, sp`, `mov d1, (0, sp)`, `movhu (0x50380d0c), d1`, ...,
 # `mov N, d2` (N = 4 + 4 x the argument count), `mov RESUME, a2`, `jmp DISPATCH`; at RESUME a

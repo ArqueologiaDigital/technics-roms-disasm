@@ -13,7 +13,7 @@
 #      cannot even name a routine that writes the card (SV_WRITE, SV_RAWWRITE, SV_MKDIR, SV_SETPATH) or opens a
 #      file, nor write the loader's variables or table.
 #   2. Does any routine entered with `call X, 0, 0` call another before it has made a frame? (The return
-#      address sits at (sp): a nested call would overwrite it. kn5000-anotherworld tools/leafcheck.py.)
+#      address sits at (sp): a nested call would overwrite it. technics-anotherworld tools/leafcheck.py.)
 #   3. Does the memory map (dsptone.inc) keep to the application area 0x502BA000-0x502E7EFF, below the launch
 #      block, without overlaps, and does the image end below IMAGE_MAX?
 #   python3 -I guard.py TOOLS_DIR LOADER_DIR BUILD_DIR

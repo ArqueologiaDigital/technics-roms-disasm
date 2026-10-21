@@ -259,7 +259,7 @@ snapshots (`OUT/snap/`) show the screen in RUN and after STOP.
 
 ## Iteration 2: Another World's samples through the DSP
 
-**Done (2026-10-21), in kn5000-anotherworld** (`kn7000/src/dsp.s`, `kn7000/tools/dsp_mixer.py`, README-CNV.md
+**Done (2026-10-21), in technics-anotherworld** (`kn7000/src/dsp.s`, `kn7000/tools/dsp_mixer.py`, README-CNV.md
 "Sound"; branch `main`): Another World plays its own samples through this route, with its MIDI sound kept as a
 second mode (PART SELECT RIGHT 2: DSP, tone generator, off). How each point below was answered:
 

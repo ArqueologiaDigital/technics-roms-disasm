@@ -54,16 +54,16 @@ EXIT on "Continue Next?" cancels to the STYLE CONVERT screen). **YES** makes the
 `make card` lays it out as follows (`mkcard.py`; every folder name is a plain 8.3 name, so nothing
 depends on how a computer makes short names):
 
-| on the card  | what                                                               | its `KN7APP.BIN`: from, bytes, SHA-1                                                                              |
-|--------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| `KN7APP.BIN` | the menu                                                           | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                            |
-| `AW\`        | Another World: `KN7APP.BIN` and its 140 game files (DSP sound)     | kn5000-anotherworld `kn7000/build/sdcard/` (`main` `f87fc55`), 31,756, `a2fbbaa6c660020757b543878fc2a6cdc46ba3f2` |
-| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows) | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                 |
-| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                     | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                |
-| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                     | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                  |
-| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                 | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                 |
-| `CPUTIME\`   | pass 9, the CPU timing probe                                       | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                 |
-| `DSPTONE\`   | our own program on the effects DSP, iteration 1 (`../dsptone`)     | `../dsptone/releases/2026-10-20-iter1/`, 99,596, `5d7d5df5b59494effed0cdc32256d59b425ae994`                       |
+| on the card  | what                                                               | its `KN7APP.BIN`: from, bytes, SHA-1                                                                                |
+|--------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `KN7APP.BIN` | the menu                                                           | `build/KN7APP.BIN`, 12,739, `0566fba32f5588761de0cbbb34e3f84c2ae1c16d`                                              |
+| `AW\`        | Another World: `KN7APP.BIN` and its 140 game files (DSP sound)     | technics-anotherworld `kn7000/build/sdcard/` (`main` `f87fc55`), 31,756, `a2fbbaa6c660020757b543878fc2a6cdc46ba3f2` |
+| `SURVEY2\`   | pass 5, the ROM dumper's SURVEY2 (IC23, the work RAM, the windows) | `../cnv_romdump/releases/2026-10-20-survey2/`, 11,412, `24bdc35ded21b1a5742bd8c77320b471bf302b2e`                   |
+| `DSPPROBE\`  | pass 6, the DSP probe, phase 1                                     | `../cnv_romdump/releases/2026-10-20-dspprobe/`, 15,440, `ddc23b5328c22c73fdef45f409ec4dabe63af374`                  |
+| `DSPMEM\`    | pass 7, the DSP probe, phase 2                                     | `../cnv_romdump/releases/2026-10-20-dspmem/`, 15,440, `9a5077d387cb73cd36331a616ca35cb3e1e85c57`                    |
+| `DSPRATE\`   | pass 8, the DSP probe's frame rate                                 | `../cnv_romdump/releases/2026-10-20-dsprate/`, 16,640, `c8334f68c9e3450312db35052cd96bc5fd94a13a`                   |
+| `CPUTIME\`   | pass 9, the CPU timing probe                                       | `../cnv_romdump/releases/2026-10-20-cputime/`, 21,496, `91022a0f7239bd85049a56ecd914202673475847`                   |
+| `DSPTONE\`   | our own program on the effects DSP, iteration 1 (`../dsptone`)     | `../dsptone/releases/2026-10-20-iter1/`, 99,596, `5d7d5df5b59494effed0cdc32256d59b425ae994`                         |
 
 Each folder also holds a `MANIFEST.TXT` (its name in the list) and an `ICON.BMP` (drawn by
 `gen_icons.py`, converted by `png2icon.py`); `build/card.txt` lists every file with its SHA-1 (the game
@@ -212,7 +212,7 @@ its own in these 256 bytes.
 | `0x50` | `LB_NAME`   | 64   | the name the menu showed, NUL-ended                                        |
 | `0xFC` | `LB_CHECK`  | 4    | `LAUNCH_CHECK` `0xB3C8B1B4`, the bitwise NOT of the magic                  |
 
-How Another World uses it (kn5000-anotherworld `kn7000/src/cnv_main.s`, `LaunchFolder` and `AppPath`):
+How Another World uses it (technics-anotherworld `kn7000/src/cnv_main.s`, `LaunchFolder` and `AppPath`):
 on its first call it copies `LB_PREFIX` into a variable of its own when the block is valid (else it
 leaves it empty); every file it opens is then that prefix and the file's 8.3 name (`AW\AWR11.AW`),
 opened with the loader's `SV_OPEN` as before. In the root, with no menu, the prefix is empty and the
@@ -276,7 +276,7 @@ pressed in turn on the menu's screen, 2.5 s apart, on the card `make card` build
 So none of them changes a setting, none makes the firmware draw, and the firmware goes on calling the menu
 about 20 times a second through each. The menu uses all but LCDR 3, which it has no use for
 (`BUTTONS_USED`). R1/R2 OCTAVE + / - and SUSTAIN, which do change settings while a converter runs
-(kn5000-anotherworld `probes/cnv/README.md`), and DISPLAY HOLD, which repaints and once stopped the calls,
+(technics-anotherworld `probes/cnv/README.md`), and DISPLAY HOLD, which repaints and once stopped the calls,
 are not read. On the unit, other firmware might act on a button where MAME's does not: the IC23 record
 before and after (SURVEY2, now on the menu) would show it.
 
@@ -288,7 +288,7 @@ Two things the tests taught about ending: the menu answers 0xFE only when EXIT (
 
 Everything the menu writes is in the RAM a converter may use, `0x502BA000`-`0x50379FFF`, off the
 firmware's mailbox page and clear of the loader's resident area below `APP_BASE`: the range Another
-World measured untouched by the firmware on programs 893 and 941 (kn5000-anotherworld
+World measured untouched by the firmware on programs 893 and 941 (technics-anotherworld
 `kn7000/README-CNV.md`, "Memory"). `guard.py` checks the map at every build (`menu.inc`):
 
 | range                     | what                                                                    |
@@ -398,7 +398,7 @@ trampoline, again and again (research-scratch `sessions/2026-10-20_kn7menu`). `g
 caught the overlap; the sled now ends inside its 32 KB. Second, the menu answered 0xFE while EXIT (or
 LEAVE) was still held; now it ends on the release (Buttons).
 
-**Another World through the menu** (kn5000-anotherworld `probes/cnv/run_menu_route.sh`, its own
+**Another World through the menu** (technics-anotherworld `probes/cnv/run_menu_route.sh`, its own
 acceptance tests with the menu in front, on this card): on `-bios v13`, with a blank IC23 and with a copy
 of the owner's (deleted afterwards), 20 of 20 session checks each (the menu lists the six programs, RUN
 starts the game from `AW\` with the launch block's prefix, the game's 16 checks, "Continue Next?" YES
@@ -432,6 +432,6 @@ The same branch's game from the root without the menu, `run_cnv_tests.sh` unchan
 | `test/mkfallback.py`     | the fallback test card: malformed and missing manifests and icons, damaged binaries                    |
 | `test/guard_selftest.s`  | twelve references `guard.py` must find, three it must allow                                            |
 
-Another World's side is on kn5000-anotherworld branch `launcher-folders`: `src/cnv_main.s` (`LaunchFolder`,
+Another World's side is on technics-anotherworld branch `launcher-folders`: `src/cnv_main.s` (`LaunchFolder`,
 `AppPath`), `src/platformcnv.inc` (`AW_PATHS`), `tools/cnv_layout.py`, and its tests through the menu,
 `probes/cnv/run_menu_route.sh` and `probes/cnv/awmenu_test.lua`.

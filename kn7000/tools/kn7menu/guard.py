@@ -11,10 +11,10 @@
 #      `mov (SVC + SV_x), REG` from the service table is allowed, and only of the services the menu needs:
 #      SV_MAGIC, SV_ABI, SV_FOUND, SV_MSCOUNT and SV_RAWREAD. So the menu cannot even name a routine that
 #      writes the card (SV_WRITE, SV_RAWWRITE, SV_MKDIR) or changes its folder (SV_SETPATH), nor write the
-#      loader's variables or table. (As kn5000-anotherworld tools/ic23_guard.py, from which this is
+#      loader's variables or table. (As technics-anotherworld tools/ic23_guard.py, from which this is
 #      adapted: it assembles with the toolchain's own xapasm and records every value an expression gives.)
 #   2. Does any routine entered with `call X, 0, 0` call another before it has made a frame? (The return
-#      address sits at (sp): a nested call would overwrite it. kn5000-anotherworld tools/leafcheck.py.)
+#      address sits at (sp): a nested call would overwrite it. technics-anotherworld tools/leafcheck.py.)
 #   3. Does the memory map (menu.inc) keep to the RAM a converter may use, 0x502BA000-0x50379FFF, off the
 #      firmware's mailbox page and the loader's area, without overlaps? Does the menu's image end below
 #      IMAGE_MAX, the trampoline's below T_CODE_MAX, the menu's variables and buffers below the launch
@@ -147,7 +147,7 @@ n_tramp = scan(os.path.join(here, "tramp.s"))
 n_leaf = leafcheck(["menu.s", "menu_card.s", "menu_draw.s", "tramp.s"])
 
 # 3. the memory map
-lo, hi = C["APP_BASE"], 0x5037A000          # the converter's RAM (kn5000-anotherworld README-CNV.md, "Memory")
+lo, hi = C["APP_BASE"], 0x5037A000          # the converter's RAM (technics-anotherworld README-CNV.md, "Memory")
 mb, mbe = 0x5031B000, 0x5031C000             # the firmware's mailbox page (MAILBOX = 0x5031BC00)
 size = os.path.getsize(os.path.join(build, "menu.bin"))
 tsize = os.path.getsize(os.path.join(build, "tramp.bin"))

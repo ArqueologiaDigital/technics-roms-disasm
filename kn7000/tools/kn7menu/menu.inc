@@ -6,7 +6,7 @@
 #
 # Everything it writes lies in the RAM a style converter may use, 0x502BA000-0x50379FFF, off the
 # firmware's mailbox page 0x5031B000-0x5031BFFF and clear of the loader's resident area below APP_BASE
-# (the range Another World measured untouched by the firmware on programs 893 and 941: kn5000-anotherworld
+# (the range Another World measured untouched by the firmware on programs 893 and 941: technics-anotherworld
 # kn7000/README-CNV.md, "Memory"). layout.py checks this map at every build.
 
 # ---- in the application area (zeroed by the loader before it loads the menu) -----------------------

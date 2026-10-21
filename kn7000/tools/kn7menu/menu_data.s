@@ -5,7 +5,7 @@
 
 # The buttons, in B_* order (menu.inc): the offset of the segment's byte from the CPR bitmap (CPL/CPC
 # segments at +0x30) and the switch's bit (the MAME driver's :cpanel field masks, which follow the
-# firmware's bitmaps: kn5000-anotherworld kn7000/probes/awpanelmap.lua).
+# firmware's bitmaps: technics-anotherworld kn7000/probes/awpanelmap.lua).
 ButtonTab:
     .byte   0x30, 0x02              # B_L1   LCDL 1           CPL_SEG0 SW1
     .byte   0x30, 0x08              #        LCDL 2           CPL_SEG0 SW3
@@ -23,7 +23,7 @@ ButtonTab:
     .byte   0x02, 0x01              # B_PREV PART SELECT LEFT CPR_SEG2 SW0
     .byte   0x01, 0x02              # B_NEXT PART SELECT RIGHT 1 CPR_SEG1 SW1
 
-# The panel decoder's two sites (kn5000-anotherworld src/fwfind.s: 941 0x484AD22F and 0x484AD3DD).
+# The panel decoder's two sites (technics-anotherworld src/fwfind.s: 941 0x484AD22F and 0x484AD3DD).
     .align  2
 sig_panel1:     # PanelFrameDecode: mov CPR, a0; mov a2, d0; and 0xc0, d0; beq; mov CPL, a0; ...
     .word   0xfc, 0xdc, 0x100, 0x100, 0x100, 0x100, 0xf1, 0xd8, 0xf8, 0xe0, 0xc0, 0xc8, 0x08

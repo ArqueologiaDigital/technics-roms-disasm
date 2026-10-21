@@ -19,7 +19,7 @@ is written, the write after it -100); `fmmopen("SHORT.BIN", "wb")`, a 16-byte wr
 
 ## How to run them
 
-`B` is `~/compartilhado/kn5000-anotherworld/kn7000/probes/cnv`; `T` is any scratch directory.
+`B` is `~/compartilhado/technics-anotherworld/kn7000/probes/cnv`; `T` is any scratch directory.
 
     P=~/compartilhado/technics-roms-disasm/kn7000/tools/cnv_romdump/probes
     $B/build_probe.sh $P/sdraw_probe.s $T/sdraw.img

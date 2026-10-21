@@ -782,7 +782,7 @@ RecAddr:
 
 # ================================================================================================
 # The panel: the firmware's debounced switch bitmaps, one byte per segment, a bit per switch, set while
-# the button is down (kn5000-anotherworld kn7000/probes/PANEL-INPUT.md): CPR segments at V_PANEL + n,
+# the button is down (technics-anotherworld kn7000/probes/PANEL-INPUT.md): CPR segments at V_PANEL + n,
 # CPL/CPC segments at V_PANEL + 0x30 + n.
 
 # ReadButtons -> d0 = the B_* bits of the buttons down now (0 without the bitmaps), less the ones
@@ -819,7 +819,7 @@ rb_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # FindPanel: V_PANEL = CPR from the panel decoder's two sites (one hit each, the same CPR in both, CPL =
-# CPR + 0x30 in both, CPR in work RAM), as kn5000-anotherworld src/fwfind.s step 0 finds it; else 0.
+# CPR + 0x30 in both, CPR in work RAM), as technics-anotherworld src/fwfind.s step 0 finds it; else 0.
 FindPanel:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
