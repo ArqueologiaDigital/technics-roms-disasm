@@ -259,7 +259,27 @@ snapshots (`OUT/snap/`) show the screen in RUN and after STOP.
 
 ## Iteration 2: Another World's samples through the DSP
 
-What it would need, on top of what this iteration establishes:
+**Done (2026-10-21), in kn5000-anotherworld** (`kn7000/src/dsp.s`, `kn7000/tools/dsp_mixer.py`, README-CNV.md
+"Sound"; branch `main`): Another World plays its own samples through this route, with its MIDI sound kept as a
+second mode (PART SELECT RIGHT 2: DSP, tone generator, off). How each point below was answered:
+
+1. **The bank**: all 93 sounds the game plays (684,980 samples), four to an SDRAM word from `0x70000` (171,576
+   words, to `0x99E37`), sent once per power-on at the game's start through this staging route (256 words at a
+   time, copied 8 a frame by the mixer); a marker in DM (`0x9D00`: "AWSB" and the bank's CRC-32) lets a later run
+   skip it. In MAME the whole bank took 25.9 s.
+2. **The mixer**: eight voices (the original's four sound-effect channels and the module player's four), 16.16
+   step, volume 0..63, start/end/loop, no interpolation; 162 instructions at PM `0x8200`, checked against unidasm
+   as here (`sharc_enc.py` copied there, with the multiply, the shifts by a register and XOR added).
+3. **The commands**: not a ring but a five-word record per voice in DM and a mask in MSGR6 (start, change rate
+   and volume, stop), which the mixer applies and clears at its next frame; the host waits for MSGR6 = 0 first.
+   MSGR4/MSGR5 keep this iteration's copy request, MSGR7 the heartbeat.
+4. **The return**: both unit 0's (heard with REVERB on, as here) and unit 9's (the CHORUS unit, which has no
+   return register in the tone generator, so its return should be mixed whatever REVERB is). Unit 9's path has
+   not been heard on the unit yet; MAME mixes it only while CHORUS is on.
+5. **Integration and restore**: in the game's `audio.s`; the slots put back (read back) on quit, on leaving the
+   DSP mode, on any failure, and from the game task when the firmware stops calling the converter for 5 s.
+
+What this iteration's plan said it would need:
 
 1. **A sample bank in SDRAM.** Another World's sound resources (8-bit signed PCM, loop points) uploaded at game
    start through the same staging route. The host port moves one 16-bit half per DSP frame, about 88 KB a second,

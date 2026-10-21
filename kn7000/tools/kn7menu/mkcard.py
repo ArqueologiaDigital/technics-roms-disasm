@@ -7,7 +7,7 @@
 # OUTDIR is made afresh: the menu as the root KN7APP.BIN, and a folder per program (PROGRAMS below), each
 # with its KN7APP.BIN, a MANIFEST.TXT and an ICON.BMP (gen_icons.py -> PNG -> png2icon.py, into ICONDIR,
 # default OUTDIR/../icons). Another World's folder takes everything its own build wrote (AW_SDCARD_DIR:
-# kn5000-anotherworld kn7000/build/sdcard, KN7APP.BIN and its 43 game files). The probes' KN7APP.BINs are
+# kn5000-anotherworld kn7000/build/sdcard, KN7APP.BIN and all its game files). The probes' KN7APP.BINs are
 # the released ones (RELEASES_DIR: ../cnv_romdump/releases), checked against each release's SHA1SUMS; DSPTONE's
 # comes from ../dsptone/releases the same way.
 # Writes OUTDIR.txt: every file, its size and SHA-1, as an aligned Markdown table.
