@@ -293,6 +293,10 @@ def enc_move(mnem, ops, pc):
 def enc_ldst(mnem, m, r, store):
     rc, ri = r
     size = {"mov": 0, "movbu": 2, "movhu": 3}[mnem]  # 0=word(a/d),2=byte,3=half
+    if size and rc != "d":
+        # movbu/movhu move data registers only: an address register here used to be encoded as the data
+        # register of the same number, silently (KN7FM's diagram strokes, 2026-10-23)
+        raise EncError(f"{mnem} takes a data register, not {'a' if rc == 'a' else rc}{ri}")
 
     if m["kind"] == "sp":
         disp = m["disp"]
