@@ -34,6 +34,8 @@ CLANG=$(LLVM_BIN)/clang
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
 .PHONY: verify-v8-reference verify-subprogram-update-images
 .PHONY: kn7000 kn7000-clean gate-kn7000
+.PHONY: kn2400 kn6000 kn6500 hdsx3 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
+.PHONY: mn10300-siblings-clean
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score doc-quality
 .SECONDARY:
 
@@ -85,7 +87,42 @@ kn7000-clean:
 gate-kn7000:
 	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18
 
-everything: all wsa1 kn7000
+# ------------------------------------------- the other MN10300 "MILK" firmwares
+# Added 2026-10-24, one folder each, made like kn7000/ and using its tools by
+# relative path: kn2400/ (SX-KN2400 = SX-KN2600 program, v1.1), kn6000/ (v7.1),
+# kn6500/ (v1.3), hdsx3/ (the KN6000/KN6500 expansion board's XAPR plug-in,
+# update sx6-113). Their reference images (*/baserom/, not committed) are
+# regenerated from the manufacturer's update installers in the private
+# ../../ca-software-mirror/files (CA_MIRROR=...), and each Makefile records the SHA-1.
+#
+#   make kn2400 ...       assemble the image
+#   make gate-kn2400 ...  its byte-identity gate (gate-kn2400 also checks that the
+#                         KN2600 package ships the same image)
+kn2400:
+	$(MAKE) -C kn2400 build
+kn6000:
+	$(MAKE) -C kn6000 build
+kn6500:
+	$(MAKE) -C kn6500 build
+hdsx3:
+	$(MAKE) -C hdsx3 build
+
+gate-kn2400:
+	$(MAKE) -C kn2400 verify verify-kn2600
+gate-kn6000:
+	$(MAKE) -C kn6000 verify
+gate-kn6500:
+	$(MAKE) -C kn6500 verify
+gate-hdsx3:
+	$(MAKE) -C hdsx3 verify
+
+mn10300-siblings-clean:
+	$(MAKE) -C kn2400 clean
+	$(MAKE) -C kn6000 clean
+	$(MAKE) -C kn6500 clean
+	$(MAKE) -C hdsx3 clean
+
+everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3
 
 # ⚠ assert_images_assemble.py runs FIRST and asks the assembler directly, from
 # each root source.  The byte gate reads `make`'s answer and therefore inherits
@@ -127,7 +164,7 @@ verify-subprogram-update-images:
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
 
-gate-all: gate gate-wsa1 gate-kn7000
+gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
 	@# A stale object compares green forever: assert the assembler is a
 	@# prerequisite of every image before believing either byte gate.
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py

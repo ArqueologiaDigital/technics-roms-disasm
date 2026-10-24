@@ -1,0 +1,9 @@
+; XAPR plug-in manual symbol supplement: entry points and data recovered by hand,
+; which its MILK reflection tables (hdsx3.sym, generated) do not name.
+; Format as in kn7000/kn7000_manual.sym: "0xCPUADDR  name  ; note".
+;
+; ---- XAPR header slots ------------------------------------------------------
+0x97800080  XaprEmptySlot   ; a bare rets: the ten header words at +0x58..+0x7C all point here
+;
+; ---- end of the image --------------------------------------------------------
+0x978B655C  XaprTrailerSignature ; the second "XAPR", the image's last bytes before the erased tail (file 0xb655c); header word +0x04 holds its address. No code in the image reads it; the firmware's use of it is not traced

@@ -1,0 +1,12 @@
+; KN2400/KN2600 manual symbol supplement: entry points recovered by hand, which
+; the firmware's MILK reflection tables (kn2400.sym, generated) do not name.
+; Format as in kn7000/kn7000_manual.sym: "0xCPUADDR  name  ; note".
+; Names ending in _entry mark a register-save `call` entry a few bytes into a
+; function (after its movm prologue); they are labels, not function boundaries.
+;
+; ---- boot header (file 0x0..0x10), laid out as the KN7000's ----------------
+0x48400000  _reset          ; jmp to the crt0, the image's first instruction
+0x4840000A  _vector_0a      ; second vector jmp, at the same offset as the KN7000's
+;
+; ---- start-up ----------------------------------------------------------------
+0x48705BDF  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5006908C, clears 0x50006E88 (+0x189178) and 0x502B8000 (+0x148000), copies .data 0x485DD334 -> 0x50000010 (0x6E78 bytes), writes the jmp vectors at 0x90000000/0x90000006, then calls func_4870587E_entry and jumps to func_48728591

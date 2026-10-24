@@ -1,0 +1,10 @@
+; KN6000 manual symbol supplement: entry points recovered by hand, which the
+; firmware's MILK reflection tables (kn6000.sym, generated) do not name.
+; Format as in kn7000/kn7000_manual.sym: "0xCPUADDR  name  ; note".
+;
+; ---- boot header (file 0x0..0x10) -------------------------------------------
+0x4C000000  _reset          ; jmp to crt0_start, the image's first instruction
+0x4C000008  _vector_08      ; second vector jmp
+;
+; ---- start-up ----------------------------------------------------------------
+0x4C0002E3  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5000778C, clears 0x50006F8C (+0xCCCE4) and 0x50200000 (+0xB8000), copies .data 0x4C3ED870 -> 0x50000010 (0x6F7C bytes), writes the jmp vectors at 0x90000000
