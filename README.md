@@ -1,6 +1,7 @@
 [![semantic disasm](docs/badges/semantic-score.svg)](#how-semantic-is-it)
 [![KN5000 semantic](docs/badges/semantic-score-kn5000.svg)](#how-semantic-is-it)
 [![SX-WSA1R semantic](docs/badges/semantic-score-wsa1.svg)](#how-semantic-is-it)
+[![SX-KN7000 semantic](docs/badges/semantic-score-kn7000.svg)](#how-semantic-is-it)
 [![bytes understood](docs/badges/semantic-bytes.svg)](#how-semantic-is-it)
 [![semantic names](docs/badges/semantic-names.svg)](#how-semantic-is-it)
 [![jump tables resolved](docs/badges/semantic-entry.svg)](#how-semantic-is-it)
@@ -24,7 +25,7 @@ Felipe Sanches
 ## How semantic is it?
 
 Every image already rebuilds byte-identical to its dump, so byte-match says nothing about progress. The
-badges above measure understanding instead, over every ROM of both models. They are produced by
+badges above measure understanding instead, over every rated image of all three models. They are produced by
 `make semantic-score`, i.e. `scripts/analysis/semantic_score.py`, whose docstring defines each part:
 
 - **bytes understood**: bytes whose purpose the source states with evidence: code, documented data and
@@ -36,6 +37,11 @@ badges above measure understanding instead, over every ROM of both models. They 
   symbolically (the committed dispatch census, `docs/coverage/`).
 - **C fields named**: C struct members with a meaningful name rather than an index (`str_3`,
   `field_0a38`).
+
+The SX-KN7000 has no ELF, no dispatch census and no C. Its score is the mean of two parts, both read from the
+sources: **bytes** is the share emitted as source rather than `.incbin_range` passthrough
+(`kn7000/tools/coverage_score.py`'s source coverage), and **names** is named routines among the recovered
+functions and converter routines. Its images are program 941, table 84 and the seven Style Convert converters.
 
 The score is the mean of these components, per model and overall. Every number behind it, with its
 commit, is in `docs/badges/semantic-score.json`; the trend is in `docs/badges/semantic-score-history.csv`.

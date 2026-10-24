@@ -954,7 +954,9 @@ component). It writes `docs/badges/*.svg`, `semantic-score.json` and appends a r
 `semantic-score-history.csv`. Re-run it after a change that moves the semantics noticeably, and always after
 committing a new dispatch-census snapshot. Commit `docs/badges/` in the same commit as the change, and quote the
 figures from the script's output, never by hand. The score is a summary for the badge; claims about coverage
-still go through the ledger above.
+still go through the ledger above. Since rules 3 (2026-10-24) it rates all three models: the SX-KN7000's
+program, table and Style Convert converters have their own bytes and names definitions, read from the sources
+(the docstring's "THE SX-KN7000 MODEL"), and need `make kn7000` built first.
 
 ### Binary Include Splitting (MANDATORY)
 

@@ -70,11 +70,12 @@ wsa1-clean:
 # Its reference images (kn7000/baserom/, git-ignored) come from the update disks
 # and the private romset next to this tree; see kn7000/README.md.
 #
-#   make kn7000        build the KN7000 images: program + table 941/84, IC19
-#   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83) and
-#                      the seven Style Convert Disk converters (src/cnv/*.s)
+#   make kn7000        build the KN7000 images: program + table 941/84, IC19, and the
+#                      seven Style Convert Disk converters (src/cnv/*.s; semantic_score.py
+#                      reads their sizes)
+#   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83)
 kn7000:
-	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom
+	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom build-cnv
 
 kn7000-clean:
 	$(MAKE) -C kn7000 clean
