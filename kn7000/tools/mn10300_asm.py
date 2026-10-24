@@ -48,6 +48,16 @@ def imm(tok):
         raise EncError(f"not an immediate: {tok!r}")
 
 
+def target_op(tok):
+    """A jmp/call/calls target, optionally suffixed `:32` to force the d32 form
+    where the d16 one would reach (a linker that did not relax the call left it
+    long; the Style Convert .CNV files have eight such calls)."""
+    tok = tok.strip()
+    if tok.endswith(":32"):
+        return imm(tok[:-3]), True
+    return imm(tok), False
+
+
 def split_ops(s):
     """Split operands on commas not inside [] or ()."""
     out, buf, depth = [], "", 0
@@ -154,20 +164,20 @@ def encode(mnem, ops_str, pc):
     if mnem == "jmp":
         if ops[0].startswith("("):                # jmp (aM) -> F0 F4-F7
             return b"\xf0" + u8(0xF4 | mem(ops[0])["a"])
-        target = imm(ops[0]); d = target - pc
-        if fits_s16(d):
+        target, wide = target_op(ops[0]); d = target - pc
+        if fits_s16(d) and not wide:
             return b"\xcc" + le16(d)
         return b"\xdc" + le32(d & 0xFFFFFFFF)
     if mnem == "calls" and ops[0].startswith("("):  # calls (aM) -> F0 F0-F3
         return b"\xf0" + u8(0xF0 | mem(ops[0])["a"])
     if mnem in ("call", "calls"):
-        target = imm(ops[0]); d = (target - pc) & 0xFFFFFFFF
+        target, wide = target_op(ops[0]); d = (target - pc) & 0xFFFFFFFF
         if mnem == "calls":
-            if fits_s16(target - pc):
+            if fits_s16(target - pc) and not wide:
                 return b"\xfa\xff" + le16(target - pc)
             return b"\xfc\xff" + le32(d)
         regs = encode_reglist(ops[1]); adj = imm(ops[2]) & 0xFF
-        if fits_s16(target - pc):
+        if fits_s16(target - pc) and not wide:
             return b"\xcd" + le16(target - pc) + u8(regs) + u8(adj)
         return b"\xdd" + le32(d) + u8(regs) + u8(adj)
     if mnem in ("ret", "retf"):

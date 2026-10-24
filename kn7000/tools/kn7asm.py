@@ -26,6 +26,11 @@
 #   .byte  b [, b ...]             emit 8-bit values
 #   .word  w [, w ...]             emit 16-bit little-endian values
 #   .long  l [, l ...]             emit 32-bit little-endian values
+#   .ascii "text" [, "text" ...]   emit the bytes of each string
+#   .asciz "text" [, "text" ...]   the same, each followed by a NUL
+#                                  (escapes: \\ \" \n \r \t \0 and \xHH,
+#                                  exactly two hex digits; `#` and `;` inside
+#                                  quotes are text, not a comment)
 #   .space N [, FILL]              emit N fill bytes (FILL default 0x00)
 #   .align N [, FILL]              emit FILL bytes up to the next multiple of N
 #   .incbin "path" [, START [, LEN]]           append bytes from a file
@@ -61,6 +66,21 @@ except ImportError:
 
 class AsmError(Exception):
     pass
+
+
+def strip_comment(raw):
+    """`raw` up to the first `#` or `;` that is not inside a double-quoted string."""
+    in_str = esc = False
+    for i, ch in enumerate(raw):
+        if esc:
+            esc = False
+        elif in_str and ch == "\\":
+            esc = True
+        elif ch == '"':
+            in_str = not in_str
+        elif ch in "#;" and not in_str:
+            return raw[:i]
+    return raw
 
 
 class Assembler:
@@ -144,9 +164,15 @@ class Assembler:
 
     def split_args(self, rest):
         """Split a directive's argument list on commas outside quotes."""
-        args, buf, in_str = [], "", False
+        args, buf, in_str, esc = [], "", False, False
         for ch in rest:
-            if ch == '"':
+            if esc:
+                esc = False
+                buf += ch
+            elif ch == "\\" and in_str:
+                esc = True
+                buf += ch
+            elif ch == '"':
                 in_str = not in_str
                 buf += ch
             elif ch == "," and not in_str:
@@ -162,6 +188,33 @@ class Assembler:
         if not (arg.startswith('"') and arg.endswith('"')):
             raise AsmError(f"expected quoted string, got {arg!r}")
         return arg[1:-1]
+
+    _ESC = {"\\": 0x5C, '"': 0x22, "n": 0x0A, "r": 0x0D, "t": 0x09, "0": 0x00}
+
+    def string_bytes(self, arg):
+        """The bytes of a quoted .ascii/.asciz string, escapes decoded."""
+        body = self.unquote(arg)
+        out, i = bytearray(), 0
+        while i < len(body):
+            ch = body[i]
+            if ch != "\\":
+                if ord(ch) > 0x7E:
+                    raise AsmError(f"non-ASCII character in string (write \\x{ord(ch):02X})")
+                out.append(ord(ch))
+                i += 1
+            elif body[i + 1:i + 2] == "x" and re.fullmatch(r"[0-9A-Fa-f]{2}", body[i + 2:i + 4]):
+                out.append(int(body[i + 2:i + 4], 16))
+                i += 4
+            elif body[i + 1:i + 2] in self._ESC:
+                out.append(self._ESC[body[i + 1]])
+                i += 2
+            else:
+                raise AsmError(f"bad escape in string: {body[i:i + 4]!r}")
+        return bytes(out)
+
+    def do_ascii(self, args, nul):
+        for a in args:
+            self.out += self.string_bytes(a) + (b"\0" if nul else b"")
 
     def resolve_path(self, path):
         return path if os.path.isabs(path) else os.path.join(self.base_dir, path)
@@ -224,7 +277,7 @@ class Assembler:
             lines = f.readlines()
         for i, raw in enumerate(lines, 1):
             self.cur_line = i
-            line = raw.split("#", 1)[0].split(";", 1)[0].strip()
+            line = strip_comment(raw).strip()
             if not line:
                 continue
 
@@ -251,6 +304,10 @@ class Assembler:
                 self.do_byte(args, 2)
             elif op == ".long":
                 self.do_byte(args, 4)
+            elif op == ".ascii":
+                self.do_ascii(args, False)
+            elif op == ".asciz":
+                self.do_ascii(args, True)
             elif op == ".space":
                 self.do_space(args)
             elif op == ".align":
