@@ -120,34 +120,46 @@ rebuild was at about 85% byte-match on 23 Dec 2025. It now assembles with its ow
 `TOOLCHAIN_VERSION`). The LLVM `.s` sources are authoritative. The ASL sources are kept, unbuilt, in
 `archive/asl/`.
 
-**Every image of all three models rebuilds byte-identical to its dump:**
+**Every image of every model rebuilds byte-identical to its dump:**
 
-| model    | images                                                                                                                                                    | gate               |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-| KN5000   | main CPU v10, v9 and v7; sub-CPU payload v1.42 and its compressed update image; sub-CPU boot (IC30); table data; custom data (IC19); HD-AE5000 v2.06i (9) | `make gate`        |
-| SX-WSA1R | prom_a (IC12), prom_b (IC13), prom_c (IC28), prom_d (4)                                                                                                   | `make gate-wsa1`   |
-| KN7000   | program 941 and table 84; IC19 picture ROM; SP7001 program 942, table 83 and BASEEXT.XAP; the seven Style Convert Disk converters                         | `make gate-kn7000` |
+| model                               | images                                                                                                                                                                                                                             | gate                                                  |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| KN5000                              | main CPU v10, v9, v8 and v7; sub-CPU payload v1.42 and v1.41, each with its compressed update image; sub-CPU boot (IC30); table data; custom data (IC19); HD-AE5000 v2.06i (12), plus the v1.40 update image's decompression check | `make gate`                                           |
+| SX-WSA1R                            | prom_a (IC12), prom_b (IC13), prom_c (IC28), prom_d (4)                                                                                                                                                                            | `make gate-wsa1`                                      |
+| KN7000                              | program 941 and table 84; IC19 picture ROM; SP7001 program 942, table 83 and BASEEXT.XAP; table build 80; the IC18 boot ROM (first 64 KB); the seven Style Convert Disk converters                                                 | `make gate-kn7000`                                    |
+| KN2400/2600, KN6000, KN6500, HD-SX3 | one program image each                                                                                                                                                                                                             | `make gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3` |
 
-    make everything    build all three models
+    make everything    build every model
     make gate-all      run every byte-identity gate
+
+v8 is built from the v9 sources with `--defsym FW_VERSION_BYTE=0x08` (the two dumps differ in that one
+byte), and its reference dump is regenerated from the private romset rather than committed. The v1.41
+sub-CPU tree is generated from v1.42 plus recorded edits (`scripts/generators/create_v141_subcpu_source.py`;
+`make gate` fails if the two drift apart).
 
 The gates are the only thing that certify a disassembly. A green gate says nothing about how much of an
 image is real source rather than a passed-through blob, so that is measured separately:
 
-| model    | how much of the image is source                                                                                                                                            | command                                                  |
-|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
-| KN5000   | 96.8% over its 8 measured images (the compressed v1.42 update image is not measured on its own); every image 100% except v7 (99.7%) and table data (84.8%, 318,468 B blob) | `python3 scripts/analysis/kn5000_source_coverage.py`     |
-| SX-WSA1R | 100% (no `.incbin` left); 78.0% substantive, the rest verified filler                                                                                                      | `cd wsa1 && python3 scripts/analysis/source_coverage.py` |
-| KN7000   | 3.88% of the program ROM is real assembly; the rest is still `.incbin` of the git-ignored reference image                                                                  | `cd kn7000 && python3 tools/coverage_score.py`           |
+| model    | how much of the image is source                                                                                                         | command                                                        |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| KN5000   | 99.9% over its 8 measured images; every image 100% except v7 (99.7%, 6,591 B blob). v8 = v9; v1.41 is not measured on its own           | `python3 scripts/analysis/kn5000_source_coverage.py`           |
+| SX-WSA1R | 100% (no `.incbin` left); 78.0% substantive, the rest verified filler                                                                   | `cd wsa1 && python3 scripts/analysis/source_coverage.py`       |
+| KN7000   | 44.58% of the program ROM is real assembly: all 3,658 function blocks are instructions; the 2.3 MB data region is still `.incbin_range` | `cd kn7000 && python3 tools/coverage_score.py`                 |
+| KN2400   | 98.91% of the code range emitted as instructions                                                                                        | `kn2400/notes/conversion-stats.txt` (written by the generator) |
+| KN6000   | 98.72% of the code range                                                                                                                | `kn6000/notes/conversion-stats.txt`                            |
+| KN6500   | 98.96% of the code range                                                                                                                | `kn6500/notes/conversion-stats.txt`                            |
+| HD-SX3   | 99.53% of the code range                                                                                                                | `hdsx3/notes/conversion-stats.txt`                             |
 
-The two TLCS-900 models together (the 12 images that script measures, KN5000 and SX-WSA1R) are 97.4% source.
+The two TLCS-900 models together (the 12 images `kn5000_source_coverage.py` measures, KN5000 and SX-WSA1R)
+are 99.9% source.
 
 How much of that source is *understood* (named, explained) is what the badges at the top measure; see
 [How semantic is it?](#how-semantic-is-it).
 
-Copyrighted dumps for the newer targets are not committed: the KN7000's reference images are git-ignored
-and regenerated by `kn7000/Makefile` from the update disks and private romsets beside this tree (the IC19
-picture ROM's SHA-1 is recorded in that Makefile, so its gate is checkable without the dump).
+Copyrighted dumps for the newer targets are not committed: the KN7000's, the MN10300 siblings' and the
+KN5000 v8 reference images are git-ignored and regenerated by their Makefiles from the update disks,
+installers and private romsets beside this tree, and each regenerated dump is checked against a SHA-1
+recorded in its Makefile.
 
 ## Homebrew
 
