@@ -83,8 +83,8 @@ real KN7000's program, table and picture ROMs through its own Style Convert func
 
 ## Current state (measured 2026-10-24)
 
-The project began with Alfred Arnold's ASL, which only knows the TMP96C141 instruction set, and stalled at
-about 85% byte-match in December 2025. It now assembles with its own TLCS-900 backend for LLVM
+The project began with Alfred Arnold's ASL, which only knows the TMP96C141 instruction set; with it, the
+rebuild was at about 85% byte-match on 23 Dec 2025. It now assembles with its own TLCS-900 backend for LLVM
 (`llvm-mc -triple=tlcs900`, branch `tlcs900_backend`; the exact commit and binary hash are in
 `TOOLCHAIN_VERSION`). The LLVM `.s` sources are authoritative. The ASL sources are kept, unbuilt, in
 `archive/asl/`.
@@ -103,11 +103,13 @@ about 85% byte-match in December 2025. It now assembles with its own TLCS-900 ba
 The gates are the only thing that certify a disassembly. A green gate says nothing about how much of an
 image is real source rather than a passed-through blob, so that is measured separately:
 
-| model    | how much of the image is source                                                                                     | command                                                  |
-|----------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
-| KN5000   | 97.4% over all 13 TLCS-900 images; every KN5000 image 100% except v7 (99.7%) and table data (84.8%, 318,468 B blob) | `python3 scripts/analysis/kn5000_source_coverage.py`     |
-| SX-WSA1R | 100% (no `.incbin` left); 78.0% substantive, the rest verified filler                                               | `cd wsa1 && python3 scripts/analysis/source_coverage.py` |
-| KN7000   | 3.88% of the program ROM is real assembly; the rest is still `.incbin` of the git-ignored reference image           | `cd kn7000 && python3 tools/coverage_score.py`           |
+| model    | how much of the image is source                                                                                                                                            | command                                                  |
+|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
+| KN5000   | 96.8% over its 8 measured images (the compressed v1.42 update image is not measured on its own); every image 100% except v7 (99.7%) and table data (84.8%, 318,468 B blob) | `python3 scripts/analysis/kn5000_source_coverage.py`     |
+| SX-WSA1R | 100% (no `.incbin` left); 78.0% substantive, the rest verified filler                                                                                                      | `cd wsa1 && python3 scripts/analysis/source_coverage.py` |
+| KN7000   | 3.88% of the program ROM is real assembly; the rest is still `.incbin` of the git-ignored reference image                                                                  | `cd kn7000 && python3 tools/coverage_score.py`           |
+
+The two TLCS-900 models together (the 12 images that script measures, KN5000 and SX-WSA1R) are 97.4% source.
 
 How much of that source is *understood* (named, explained) is what the badges at the top measure; see
 [How semantic is it?](#how-semantic-is-it).
