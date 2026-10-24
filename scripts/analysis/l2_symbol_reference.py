@@ -61,6 +61,7 @@ PAIRS = {
     "maincpu":     "kn5000_v10_program.llvm.elf",
     "subcpu":      "kn5000_subprogram_v142.llvm.elf",
     "subcpu_v141": "kn5000_subprogram_v141.llvm.elf",
+    "subcpu_v140": "kn5000_subprogram_v140.llvm.elf",
     "subcpu_boot": "kn5000_subcpu_boot.llvm.elf",
     "table_data":  "kn5000_table_data.llvm.elf",
     "hdae5000":    "hd-ae5000_v2_06i.llvm.elf",

@@ -52,6 +52,7 @@ TARGETS = {
     'v10': ('original_ROMs/kn5000_v10_program.rom', 'rebuilt_ROMs/kn5000_v10_program.llvm.rom'),
     'subcpu':    ('original_ROMs/kn5000_subprogram_v142.rom', 'rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom'),
     'subcpu_v141': ('original_ROMs/kn5000_subprogram_v141.rom', 'rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom'),
+    'subcpu_v140': ('original_ROMs/kn5000_subprogram_v140.rom', 'rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom'),
     'table':     ('original_ROMs/kn5000_table_data.rom',      'rebuilt_ROMs/kn5000_table_data.llvm.rom'),
     'custom':    ('original_ROMs/kn5000_custom_data.ic19',    'rebuilt_ROMs/kn5000_custom_data.llvm.rom'),
     'hdae5000':  ('original_ROMs/hd-ae5000_v2_06i.rom',       'rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom'),

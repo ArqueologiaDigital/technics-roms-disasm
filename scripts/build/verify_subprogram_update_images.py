@@ -5,10 +5,12 @@ QUESTION ANSWERED
     original_ROMs/ tracks the v1.40, v1.41 and v1.42 Sub-CPU payloads twice: as
     the plain 196,608-byte image (kn5000_subprogram_v14N.rom) and as the
     whole-file SLIDE4K image shipped on the update disks
-    (kn5000_subprogram_v14N_compressed.rom, File Type 007).  Only v1.42 has a
-    source build, and the Makefile already proves its compressed image by
-    recompressing the build output.  Nothing checked that the two v1.40 and
-    v1.41 files are the same firmware.  This does: each compressed image must
+    (kn5000_subprogram_v14N_compressed.rom, File Type 007).  Since 2026-10-24
+    all three have a source build (v142/, v141/, v140/subcpu) and the Makefile
+    proves each compressed image by recompressing the build output.  Before
+    that, only v1.42 had one, and nothing checked that the two v1.40 and v1.41
+    files were the same firmware.  This still does, independently of any
+    source build: each compressed image must
     carry a valid header, and decompressing it must yield EXACTLY the plain
     image (no byte short, no byte different, no stray output past the size the
     header declares).  v1.42 is checked too, because it costs nothing.
