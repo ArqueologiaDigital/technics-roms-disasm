@@ -5,6 +5,11 @@
 ; Rhythm note dispatch, accompaniment voice selection, timing,
 ; patch management, drum configuration, and style conversion.
 ; One of the largest files in the ROM.
+;
+; Part numbering in the routine headers: the six accompaniment parts are named by
+; their one-hot selector value in 0x33d4, which is how the code tells them apart --
+; parts 1 and 2 are AccKbd1 / AccKbd2, parts 4, 8, 16 and 32 are AccCh1..AccCh4.
+; "Part 8" therefore means AccCh2, not the eighth part.
 ; =============================================================================
 
 Rhythm_DispatchNote:
@@ -39,6 +44,8 @@ AccStyle_TempoLookupData:
 	pop	xiz
 	ret
 ; Calls AccStyle_TempoLookupData_Helper.
+; Reached from AccStyle_TempoLookupData, Rhythm_StoreDispatchHelperResult and
+; Rhythm_TransposeTrampBlock.
 Rhythm_DispatchNote_Helper:
 	call	AccStyle_TempoLookupData_Helper
 	ret
@@ -757,6 +764,7 @@ AccBuf_InitKbd1WithMarkers:
 	ret
 
 ; Sends the three-byte rhythm message 0xd8 0x10 0x00.
+; Called from AccStyle_DetectChanges_Init.
 Rhythm_SendResetMsg:
 	ld a, 0xd8:opc
 	ld w, 0x10:opc
@@ -2988,7 +2996,7 @@ AccCh1_NoteOnEntry:
 AccCh1_NoteOnReturn:
 	ret
 
-; Decides whether accompaniment part 1 (ring buffer 0x2c94) may take a new event: bit 0 of
+; Decides whether part 4 (AccCh1, ring buffer 0x2c94) may take a new event: bit 0 of
 ; 0x33e1 is set only when bit 2 of 0x3362 is clear, bit 1 of 0x3307 and bit 3 of 0xc5a0 are set,
 ; AccCh_CheckOverlap returns 0, bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 are clear
 ; and more than 16 bytes are waiting (AccBuf_ComputeFillLevel); with 16 or fewer the buffer is
@@ -3386,7 +3394,7 @@ AccCh2_NoteOnEntry:
 AccCh2_NoteOnReturn:
 	ret
 
-; As AccCh1_CheckEligible for part 2 (ring buffer 0x2d94): additionally requires bit 3 of 0x33de
+; As AccCh1_CheckEligible for part 8 (ring buffer 0x2d94): additionally requires bit 3 of 0x33de
 ; and bit 0 of 0x3310; uses bit 3 of 0x3362, bit 2 of 0x3307, bit 0 of 0xc5a0 and
 ; AccCh2_CheckOverlap.
 AccCh2_CheckEligible:
@@ -3581,7 +3589,7 @@ AccCh3_NoteOnEntry:
 AccCh3_NoteOnReturn:
 	ret
 
-; As AccCh1_CheckEligible for part 3 (ring buffer 0x2e94): requires bit 4 of 0x33de and bit 1 of
+; As AccCh1_CheckEligible for part 16 (ring buffer 0x2e94): requires bit 4 of 0x33de and bit 1 of
 ; 0x3310; uses bit 4 of 0x3362, bit 3 of 0x3307, bit 1 of 0xc5a0 and AccCh3_CheckOverlap.
 AccCh3_CheckEligible:
 	and (0x33e1:16), 254
@@ -3775,7 +3783,7 @@ AccCh4_NoteOnEntry:
 AccCh4_NoteOnReturn:
 	ret
 
-; As AccCh1_CheckEligible for part 4 (ring buffer 0x2f94): requires bit 5 of 0x33de and bit 2 of
+; As AccCh1_CheckEligible for part 32 (ring buffer 0x2f94): requires bit 5 of 0x33de and bit 2 of
 ; 0x3310; uses bit 5 of 0x3362, bit 4 of 0x3307, bit 2 of 0xc5a0 and AccCh4_CheckOverlap.
 AccCh4_CheckEligible:
 	and (0x33e1:16), 254
@@ -5638,8 +5646,9 @@ AccWave_BankResolve_Short_Return:
 	ret
 
 ; Converts a 16-bit pattern-page handle into an address.
-;   In:  IZ = handle: bits 12..15 select the long in AccWave_BankTable (bank 0 is RAM 0x95c00,
-;   banks 1..7 lie in the custom data flash window from 0x301400), bits 0..11 the 256-byte page.
+;   In:  IZ = handle: bits 12..15 select the long in AccWave_BankTable (bank 0 is RAM
+;   RHYTHM_PATTERN_BUF_B, banks 1..7 lie in the custom data flash window from 0x301400), bits
+;   0..11 the 256-byte page.
 ;   Out: XHL = bank + page * 256; handle 0xfffe gives 0x95bc0.  Preserves XWA, XIX, XIZ.
 AccWave_BankResolve:
 	push xwa
@@ -6283,6 +6292,7 @@ AccInit_ResetSong_Store:
 	ret
 
 ; Calls SeqVoice_SendNoteOffAndFlush.
+; Called from AccState_Apply.
 AccInit_SendNoteOffAndFlush:
 	call SeqVoice_SendNoteOffAndFlush
 	ret
@@ -6642,6 +6652,7 @@ AccWrap_ReplayStopAlt:
 	jp	AccPedal_RawHandler_Join
 
 ; Calls AccAutoPlay_NoteDispatch with XIZ preserved (called on each note-on).
+; Called from NoteOn_AutoPlayVoiceLoop and AccNoteOn_AutoPlayLoop.
 AccWrap_AutoPlayCheck:
 	push xiz
 	call AccAutoPlay_NoteDispatch
@@ -6657,6 +6668,7 @@ AccWrap_DeferredAction:
 	jp AccAutoPlay_DeferredAction
 
 ; Calls AccAutoPlay_StateMachine with XIZ preserved (called on each note-on).
+; Called from NoteOn_PostAutoPlay and AccNoteOn_Return.
 AccWrap_AutoPlayStateMachine:
 	push xiz
 	call AccAutoPlay_StateMachine
@@ -6672,6 +6684,8 @@ AccWrap_PlayModeDispatch:
 	ret
 
 ; Calls AccPlayMode_StartPlayFull with XIZ preserved.
+; Reached from AccWrap_PlayModeStateMachine_Skip, PlayModeStateMachine_DoPlayMode2 and
+; SeqPlay_CheckAndStartPlayback.
 AccWrap_PlayModeStart:
 	push xiz
 	call AccPlayMode_StartPlayFull
@@ -6690,6 +6704,7 @@ AccWrap_PlayModeStopSync:
 	jp AccPlayMode_StopToSync2
 
 ; Calls AccPlayMode_StopExprD with XIZ preserved.
+; Called from CompIface_RampDown_Start, SeqPlay_StopReset_NotPlaying and SeqPlay_DeactClearBit.
 AccWrap_PlayModeStopExpr:
 	push xiz
 	call AccPlayMode_StopExprD
@@ -6697,6 +6712,8 @@ AccWrap_PlayModeStopExpr:
 	ret
 
 ; Calls AccPlayMode_StartPlay2 with XIZ preserved.
+; Reached from CompIface_CheckUpDown, AccState_CollectAcc4_Active, SeqNote_HandleMasterChannel and
+; SeqCh_ClearActive_DrumShiftDone.
 AccWrap_PlayModeStartPlay:
 	push xiz
 	call AccPlayMode_StartPlay2
@@ -6704,6 +6721,7 @@ AccWrap_PlayModeStartPlay:
 	ret
 
 ; Calls AccReplay_SavedPedal with XIZ preserved.
+; Called from AccPedalConfig_ReplayAndReturnOK and SeqAccVoice_ReplaySavedPedal.
 AccWrap_ReplaySavedPedal:
 	push xiz
 	call AccReplay_SavedPedal
@@ -6715,6 +6733,7 @@ AccWrap_ReplaySavedExpr:
 	jp AccReplay_SavedExpression
 
 ; Calls AccReplay_FullStop with XIZ preserved.
+; Called from SeqPlay_CheckSilentAndStop and Portamento_ComputeAndStore.
 AccWrap_FullStop:
 	push xiz
 	call AccReplay_FullStop
@@ -6722,6 +6741,9 @@ AccWrap_FullStop:
 	ret
 
 ; Calls AccPos_ClearOnStart with XIZ preserved (sequencer start / stop, step-record entry).
+; Called from SqStep_InitOnEnter, SeqAcc_InitPlayback_FreshStart, SeqPlay_InitFromDemoRecord,
+; SeqPlay_EmergencyStopAll, AccWrap_ClearPositionAndReset, SeqModeTransit_SetRepeatBit and 1 more
+; site.
 AccWrap_PositionClear:
 	push xiz
 	call AccPos_ClearOnStart
@@ -6741,6 +6763,7 @@ AccWrap_PlayModeStopData2:
 	jp	AccTempo_WriteMarker_Padding_Return
 
 ; Calls AccAutoPlay_ZoneTrack with XIZ preserved.
+; Called from FindEntry_AdvanceSlo_StoreDRAM.
 AccWrap_AutoPlayZoneTrack:
 	push xiz
 	call AccAutoPlay_ZoneTrack
@@ -9023,6 +9046,7 @@ AccPlayMode_Router_Padding:
 	nop
 
 ; Calls AccPlayMode_StartPlay unless the accompaniment runs (bit 2 of 0x420).
+; Called from AccPlayMode_TransitionRouter.
 AccPlayMode_Router_Alt:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_Router_AltPadding
@@ -9585,6 +9609,7 @@ AccReplay_SavedPedal_Return:
 	nop
 
 ; Calls AccReplay_SendPedalType6 with XIZ preserved.
+; Called from EffectMode_CheckPedalType and EffectMode_SendPedalType_Bank1.
 AccReplay_SendPedalType5:
 	push xiz
 	calr AccReplay_SendPedalType6
@@ -11196,6 +11221,7 @@ AccVoice_DispatchWithChannel:
 	ret
 
 ; Calls AccVoice_GetChannelCount with L = A, preserving XIZ.
+; Called from MainRvariIni, SndArgNm_ChannelLoop, BitMapOut_ApplyPatch_Loop and RVariScreenProc.
 AccVoice_GetChannelCount_Wrap:
 	push xiz
 	ld l, a
@@ -11204,11 +11230,14 @@ AccVoice_GetChannelCount_Wrap:
 	ret
 
 ; Calls AccVoice_GetChannelCount.
+; Called from MidiStream_ExtDispatch_Mode0_Skip, AccHelper_VoiceOffset_Loop, CmpSet_StepRhythmBank,
+; CmpNcp_ItemStep1 and CmpNcp_ItemStep2.
 AccVoice_GetChannelCount_Direct:
 	call AccVoice_GetChannelCount
 	ret
 
 ; Calls AccVoice_CopyFromROM with L = A and returns its XIY result in XHL, preserving XIZ.
+; Called from MainGetRhyGrpName, MainCmpCpFunc and RVari_Paint.
 AccVoice_CopyFromROM_Wrap:
 	push xiz
 	ld l, a
@@ -11555,6 +11584,7 @@ AccStyle_JumpTable:
 	jp	AccStyle_InlinedBlock_Helper
 
 ; Calls AccStyle_InitVRAM with XIZ preserved.
+; Called from AccBuf_ResetAndReload.
 AccStyle_InitVRAM_Wrap:
 	push xiz
 	call AccStyle_InitVRAM
@@ -11660,6 +11690,7 @@ AccStyle_IndexedLookup_Ret:
 
 
 ; Calls AccStyle_ModeEnter with XIZ preserved.
+; Called from SndArgModeFunc.
 AccStyle_ModeEnter_Wrap:
 	push xiz
 	calr AccStyle_ModeEnter
@@ -11693,6 +11724,7 @@ AccStyle_ModeEnter_Ret:
 	ret
 
 ; Calls AccStyle_ModeExit with XIZ preserved.
+; Called from SndArgTtl_SubB.
 AccStyle_ModeExit_Wrap:
 	push xiz
 	calr AccStyle_ModeExit
@@ -11723,6 +11755,7 @@ AccStyle_ModeExit_Ret:
 	ret
 
 ; Calls AccStyle_InlinedBlock_Helper with XIZ preserved.
+; Called from SndArgTtl_Dispatch_Skip.
 AccStyle_InlinedBlock:
 	push	xiz
 	calr	AccStyle_InlinedBlock_Helper
@@ -12353,6 +12386,9 @@ AccHelper_VoiceOffset_Done:
 	ret
 
 ; Calls AccDemo_Init.
+; Called from AccDemo_InitDone, AccPatch_InitByteData, AccDemo_InitWithFlag,
+; AccPatch_CheckAndInitDemo, AccPatch_EnsureStyleImageHeader_Skip2, AccPatch_CallParamLookup_Skip5
+; and 2 more sites.
 AccDemo_Init_Wrap:
 	calr AccDemo_Init
 	ret
@@ -12996,9 +13032,10 @@ AccTone_InlineBytecodeData_Skip2:
 	ldmm8	13345, 13354
 	ldmm8	13344, 13355
 	ret
-; Looks up two per-style values for style number n = (0x32d8): 0x342b = byte n of
-; AccTuning_ReadAndApplyOffset_Table and 0x342a = byte n of the table at (0x32ce).  When the
-; second is 0xff, 0x342a gets the table's first byte instead and 0x342b is cleared.
+; Two-step lookup for style number n = (0x32d8): 0x342b = byte n of
+; AccTuning_ReadAndApplyOffset_Table, then 0x342a = byte (0x342b) of the table at (0x32ce) --
+; the second lookup is indexed by the first one's result, not by n.  When that byte is 0xff,
+; 0x342a gets the table's first byte instead and 0x342b is cleared.
 AccTone_InlineBytecodeData_Code_Helper:
 	ld	a, (13016:16)
 	extz	wa
@@ -14281,6 +14318,7 @@ AccTone_LookupByProgram_Dispatch:
 	pop	xiz
 	ret
 ; Calls Rhythm_UpdateTuningConfig with XIY = XWA, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Skip and AccTone_InlineBytecodeData_Code_Skip2.
 Rhythm_UpdateTuningConfig_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14288,6 +14326,7 @@ Rhythm_UpdateTuningConfig_Wrap:
 	pop	xiz
 	ret
 ; Calls AccPatch_SetByChordIndex with W = A, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Skip and AccTone_InlineBytecodeData_Code_Skip2.
 AccPatch_SetByChordIndex_Wrap:
 	push	xiz
 	ld	w, a
@@ -14295,6 +14334,9 @@ AccPatch_SetByChordIndex_Wrap:
 	pop	xiz
 	ret
 ; Calls AccTuning_CopyAllPartsFromStyle with XIY = XWA (the style header), preserving XIZ.
+; Called from AccTone_JumpTableData_Data, AccTone_InlineBytecodeData_Code_Skip,
+; AccTone_InlineBytecodeData_Code_Helper3_Join, AccTone_InlineBytecodeData_Code_Helper3_Skip7,
+; AccVoice_BarCounterBytecodeData_Join2, AccVoice_BarCounterBytecodeData_Join3 and 1 more site.
 AccTuning_CopyAllPartsFromStyle_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14302,6 +14344,7 @@ AccTuning_CopyAllPartsFromStyle_Wrap:
 	pop	xiz
 	ret
 ; Calls AccVoice_LoadTuningBlock with XIY = XWA and XHL = BC zero-extended, preserving XIZ.
+; Called from AccVoice_BarCounterBytecodeData_Skip20.
 AccVoice_LoadTuningBlock_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14319,6 +14362,7 @@ AccVoice_ComputeParamAddr_Wrap:
 	pop	xiz
 	ret
 ; Calls AccPart_InitPositionsAndBase with XIY = XWA, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Helper3_Join.
 AccPart_InitPositionsAndBase_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14326,6 +14370,9 @@ AccPart_InitPositionsAndBase_Wrap:
 	pop	xiz
 	ret
 ; Calls AccInit_AllPartPositions with XIY = XWA (the style header) and XIZ preserved.
+; Called from AccVoice_IncrementBarWithSave_Helper, AccVoice_BarCounterBytecodeData_Skip6,
+; AccVoice_BarCounterBytecodeData_Skip7, AccVoice_BarCounterBytecodeData_Skip8,
+; AccVoice_IncrementBarWithSave_Helper2, AccVoice_BarCounterBytecodeData_Skip12 and 7 more sites.
 AccInit_AllPartPositions_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14333,12 +14380,14 @@ AccInit_AllPartPositions_Wrap:
 	pop	xiz
 	ret
 ; Calls AccPedal_ProcessAllChanges with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Skip2.
 AccPedal_ProcessAllChanges_Wrap:
 	push	xiz
 	call	AccPedal_ProcessAllChanges
 	pop	xiz
 	ret
 ; Calls AccStyle_SetupPartAddressesByHL with XIY = XWA and XHL = BC zero-extended, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Helper3_Skip7.
 AccStyle_SetupPartAddressesByHL_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14348,6 +14397,8 @@ AccStyle_SetupPartAddressesByHL_Wrap:
 	pop	xiz
 	ret
 ; Calls AccVoice_LoadAllParts with XIY = XWA and HL = BC, preserving XIZ.
+; Called from AccVoice_BarCounterBytecodeData_Join, AccVoice_BarCounterBytecodeData_Skip16,
+; AccVoice_BarCounterBytecodeData_Skip20 and AccVoice_BarCounterBytecodeData_Join4.
 AccVoice_LoadAllParts_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -14373,30 +14424,35 @@ AccVoice_LoadAllParts_Wrap:
 	pop	xiz
 	ret
 ; Calls Rhythm_SendChanPressure with XIZ preserved.
+; Called from AccTone_JumpTableData_Data.
 Rhythm_SendChanPressure_Wrap:
 	push	xiz
 	call	Rhythm_SendChanPressure
 	pop	xiz
 	ret
 ; Calls AccBuf_ResetAll4 with XIZ preserved.
+; Called from AccTone_JumpTableData_Data.
 AccBuf_ResetAll4_Wrap:
 	push	xiz
 	call	AccBuf_ResetAll4
 	pop	xiz
 	ret
 ; Calls AccSeq_DualPartScan with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Helper2.
 AccSeq_DualPartScan_Wrap:
 	push	xiz
 	call	AccSeq_DualPartScan
 	pop	xiz
 	ret
 ; Calls AccSeq_FourChannelScan with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Helper2.
 AccSeq_FourChannelScan_Wrap:
 	push	xiz
 	call	AccSeq_FourChannelScan
 	pop	xiz
 	ret
 ; Calls AccPedal_DirectionA and returns XHL zero-extended from HL, preserving XIZ.
+; Called from AccTuning_ComplexBytecodeData_Code_Skip.
 AccPedal_DirectionA_Wrap:
 	push	xiz
 	call	AccPedal_DirectionA
@@ -14455,6 +14511,7 @@ AccPart_GetParamAddr_Wrap:
 	ret
 
 ; Calls AccVoice_ClearChannelStates with every register preserved.
+; Called from AccStyle_ResetAllVoiceState and AccInit_ClearAllFlags.
 AccTone_CallWithSaveAll:
 	push xix
 	push xiy
@@ -14474,6 +14531,7 @@ AccTone_CallWithSaveAll:
 	ret
 
 ; Calls AccVoice_IncrementBarCounter with every register preserved.
+; Called from AccVoice_BarEnd_NextPage.
 AccVoice_IncrementBarWithSave:
 	push xix
 	push xiy
@@ -14579,6 +14637,7 @@ AccStyle_TempoLookupData_Helper:
 	ret
 
 ; Calls AccTuning_ReadAndApplyOffset with every register preserved.
+; Called from RhythmEvt_ProcessNote and Rhythm_ValidateAndSend.
 AccTuning_CallWithSaveRestore:
 	push xix
 	push xiy
@@ -14669,6 +14728,7 @@ AccPatch_RecountFreeSlots:
 	ret
 
 ; Calls AccPatch_CountAvailableSlotsInAltImage.
+; Called from AccBankData_CopyLoop_NonZero, Flash_InitBytecodeBlock and DualVoice_LoadAndScan.
 AccPatch_CountSlotsAlt:
 	calr AccPatch_CountAvailableSlotsInAltImage
 	ret
@@ -14732,6 +14792,7 @@ AccPatch_ClearModeAndInitSlotChain_Wrap:
 	pop	xiz
 	ret
 ; Calls AccPatch_ClearModeFlag with XIZ preserved.
+; Called from AccStyle_TableDataEntry_Skip22.
 AccStyle_TableDataEntry_Helper2:
 	push	xiz
 	calr	AccPatch_ClearModeFlag
@@ -15085,6 +15146,7 @@ AccPatch_StoreMeasureCursor:
 AccPatch_ChannelBitToIndex:	.byte 2, 3, 4, 0, 1, 0, 0, 0, 0
 
 ; Calls AccPatch_RefreshSlotOffset with XIZ preserved.
+; Called from Tempo_DisplayBPMReturn.
 AccPatch_RefreshSlotOffset_Wrap:
 	push xiz
 	call AccPatch_RefreshSlotOffset
@@ -15213,6 +15275,7 @@ AccPatch_CopySlotsExit:
 	ret
 
 ; Calls AccPlayback_InitOrUpdate.
+; Called from Seq_RhythmProcessor.
 RhythmProc_CallDispatch:
 	call AccPlayback_InitOrUpdate
 	ret
@@ -15222,6 +15285,7 @@ RhythmProc_NullStub:
 	ret
 
 ; Calls RhythmProc_CopySlotData with XIZ preserved.
+; Called from MiddleNameFunc.
 RhythmProc_CopySlotData_Wrap:
 	push xiz
 	call RhythmProc_CopySlotData
@@ -15311,7 +15375,7 @@ AccPatch_GetSlotAddr_Preserve_Skip:
 ; AccPatch_GetEntryAddr - Get address of an accompaniment patch entry by index
 ; ============================================================================
 ; Input:  HL = patch entry index (0xffff = return immediately)
-; Output: XIX = pointer to patch entry (at 0x95c00 + index*256)
+; Output: XIX = pointer to patch entry (at RHYTHM_PATTERN_BUF_B + index*256)
 ; Converts a patch index to a memory address in the patch data table.
 ; Each entry is 256 bytes. Returns immediately if index is 0xffff (invalid).
 ; ============================================================================
@@ -15343,6 +15407,9 @@ AccPatch_InitCurrentSlot:
 	ret
 
 ; Calls AccPatch_InitFromIndex with XIZ preserved (entry used by the file and flash loaders).
+; Called from AccBankData_ProcessSlot, AccBankData_ReInit_Loop, AccBankData_SlotScan_Loop,
+; AccBankData_ReInit_ScanLoop, AccStyle_TableDataEntry_Join2, AccStyle_TableDataEntry_Skip17 and 7
+; more sites.
 AccPatch_InitFromSlotIndex:
 	push xiz
 	calr AccPatch_InitFromIndex
@@ -19940,6 +20007,9 @@ TempoRingBuf_ReadByteToA:
 	ret
 
 ; Calls TempoRingBuf_Init.
+; Called from AccPatch_SeqDispatch_CheckPlaying, AccPatch_InitSeq_ClearLoop,
+; AccPatch_ScanForActiveNote, AccPatch_ScanForNoteOff, AccPlay_InitAndStartLoop,
+; AccPlay_ToggleCodeFragment and 1 more site.
 TempoRingBuf_ReInitAndRet:
 	call TempoRingBuf_Init
 	ret
@@ -20072,7 +20142,7 @@ AccPlayback_Finalize_Code:
 ; ToneGen_CalcBufferAddr - Compute tone generator buffer address
 ; ============================================================================
 ; Input:  HL = buffer index
-; Output: XHL = 0x95c00 + (HL & 0xffff) * 256
+; Output: XHL = RHYTHM_PATTERN_BUF_B + (HL & 0xffff) * 256
 ; Calculates address into tone generator hardware buffer memory.
 ; Called from MIDI voice processing code (handles status bytes 0x81-0x91).
 ; ============================================================================
@@ -23559,6 +23629,7 @@ AccPat_InlineFunctions_DataBlock_Code:
 	pop	xix
 	push	0
 ; Calls AccPat_DispatchNoteChange with XIZ preserved.
+; Called from AccPatch_LoadSectionFromRhythm.
 AccPat_IndexToAddress_Sub:
 	push	xiz
 	calr	AccPat_DispatchNoteChange
@@ -24135,7 +24206,7 @@ RhythmROM_PatternDisp_Handle91:
 
 ; Computes the address of a 64 KB bank of rhythm pattern data.
 ;   In:  W = bank number (the rest of XWA is ignored).
-;   Out: XIX = 0x400000 + (RHYTHM_ROM_BASE) + W * 0x10000.  XWA is clobbered.
+;   Out: XIX = RHYTHM_DATA_ROM__BASE_ADDR + (RHYTHM_ROM_BASE) + W * 0x10000.  XWA is clobbered.
 RhythmROM_CalcPatternAddr:
 	and xwa, 0xff00
 	sla xwa, 8
@@ -24848,7 +24919,7 @@ AccSection_Finalize:
 ; RhythmBuf_LoadPattern - Load rhythm pattern from ROM to DRAM buffer
 ; ============================================================================
 ; Input:  XIY = source ROM pointer, XIZ = write offset, XDE = dest base
-; Output: Pattern data at 0x95c00 + index*256
+; Output: Pattern data at RHYTHM_PATTERN_BUF_B + index*256
 ; Copies bytes until end marker (0x83) or buffer full (0xfe). Chains buffers.
 ; ============================================================================
 RhythmBuf_LoadPattern:
@@ -26075,6 +26146,7 @@ DrumKit_InlineCode1:
 DrumKit_InlineCode1_Helper:
 	ret
 ; Calls DrumKit_InlineCode1_Data with XIZ preserved.
+; Called from CmpBkslTtl_Dispatch and CmpBkslTtlFunc_OnTitleActivate.
 CmpBkslTtl_Dispatch_Helper:
 	push	xiz
 	call	DrumKit_InlineCode1_Data
@@ -26128,6 +26200,7 @@ DrumKit_SlotClassBits:	.byte 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x20, 0x20, 0x1
 			.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
 			.byte 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
 ; Calls DrumKit_UpdateStatusFlags_Helper2 with XIZ preserved.
+; Called from CmEsyTtl_Dispatch_Skip.
 DrumKit_InlineCode1_Sub:
 	push	xiz
 	call	DrumKit_UpdateStatusFlags_Helper2
@@ -26158,6 +26231,8 @@ DrumKit_UpdateStatusFlags_Return2:
 	ret
 
 ; Calls DrumSlot_Dispatch with XIZ preserved (used by CmpBkslTtl_Dispatch).
+; Called from CmpBkslTtl_Mode1, DrumSlot_Dispatch_Slot0, DrumSlot_Dispatch_Slot3_WithMode,
+; DrumSlot_Dispatch_Slot2, DrumSlot_Dispatch_Slot5, DrumSlot_Dispatch_Slot4 and 4 more sites.
 DrumSlot_DispatchWrapper:
 	push xiz
 	call DrumSlot_Dispatch
@@ -26591,6 +26666,7 @@ CmpStep_ClearSustainBlockFlag_Impl:
 	and	(0x34cd:16), 247
 	ret
 ; Calls RhythmVariation_Select_Helper6 with XIZ preserved.
+; Called from AccDraw_SecondarySub_Handler08.
 AccScreen_DataBlock_Helper3:
 	push	xiz
 	calr	RhythmVariation_Select_Helper6
@@ -26796,6 +26872,7 @@ AccDraw_StepArticulation_Skip:
 RhythmVariation_Select_Return3:
 	ret
 ; Calls RhythmVariation_Select_Entry_Data with XIZ preserved.
+; Called from CmpSetTtl_Dispatch.
 CmpSetTtl_Dispatch_Helper:
 	push	xiz
 	call	RhythmVariation_Select_Entry_Data
@@ -26824,6 +26901,7 @@ RhythmConfig_ReturnStub:
 	ret
 
 ; Calls RhythmConfig_InlineCode2_Data with XIZ preserved.
+; Called from CmpSetTtlFunc_OnTitleOld.
 RhythmConfig_InlineCode2:
 	push	xiz
 	call	RhythmConfig_InlineCode2_Data
@@ -26875,6 +26953,8 @@ DrumTempo_Done:
 	ret
 
 ; Calls DrumVoice_Dispatch with L = (0x3540) - 1 (at least 0), preserving XIZ.
+; Called from CmpSetTtl_DrumVoice0, CmpSetTtl_DrumVoice1, MainCmpSetFunc_Skip and
+; MainCmpSetFunc_Skip2.
 DrumVoice_Select:
 	push xiz
 	xor hl, hl
@@ -27149,6 +27229,7 @@ DrumVoice_Handler7_Code_Return:
 	and	(0xe3e2:16), 254
 	ret
 ; Calls DrumVoice_Handler7_Data with XIZ preserved.
+; Called from CmpNcpTtl_Dispatch and CmpNcpTtlFunc_OnTitleActivate.
 CmpNcpTtl_Dispatch_Helper:
 	push	xiz
 	call	DrumVoice_Handler7_Data
@@ -27505,7 +27586,7 @@ DrumVoice_Handler7_Code_Join3:
 	ld	(0xfc5b:16), h
 	ret
 ; Rhythm_LoadCurrentTimeSig: Locates the current rhythm's header in the Rhythm Data ROM
-;   (RhythmROM_BankProgramLocators[bank 0xFC5B & 0x7F][program 0xFC5A], 0x400000 + (hi & 0xFF) << 16 + lo) and copies
+;   (RhythmROM_BankProgramLocators[bank 0xFC5B & 0x7F][program 0xFC5A], RHYTHM_DATA_ROM__BASE_ADDR + (hi & 0xff) << 16 + lo) and copies
 ;   its byte +976 (0x3D0), the time-signature index into TimeSig_DisplayStrings, to RAM 0x34F0. Basis: callers + body
 ;   + ROM data -- every rhythm-selection path (DrumVoice_Handler6/7, RhythmVariation_Select_Entry_Data,
 ;   AccPatch_CallParamLookup_Helper) calls it after the selection.
@@ -27695,6 +27776,7 @@ TimeSig_DisplayStrings:
 	.ascii "(16/8)+0 "
 	.byte 8
 ; Calls VoiceParam_ClampAndValidate_Tramp, then falls into TimeSig_DisplayStrings_Code_Sub2.
+; Called from DrumVoice_Handler7_Data.
 DrumVoice_Handler7_Data_Code_Helper:
 	call	VoiceParam_ClampAndValidate_Tramp
 ; In: L = kit program, H = bank.  0xfc5a = L, bits 0-6 of 0xfc5b = H & 0x7f, 0x90f7 = 72;
@@ -30309,6 +30391,7 @@ VoiceSlot_Dispatch_D0Type:
 	ret
 
 ; Calls CmpEsy_StepVariPattern with XIZ preserved (A = 0 steps up, 0x80 down).
+; Called from CmpEsyTtl_Mode2_OnMemoryNumberInc and CmpEsyTtl_Mode2_OnMemoryNumberDec.
 VoiceSlot_Dispatch_Return:
 	push	xiz
 	call	CmpEsy_StepVariPattern
@@ -30386,8 +30469,9 @@ DrumParam_LookupChannelBit:
 	ret
 
 DrumParam_ChannelBitTable:
-	; One-hot part bit per easy-composer channel index (0x39b8); DrumParam_LookupChannelBit stores
-	; entry (0x39b8) in 0x37c9.  Was spelled as normal / push sr / max / ld (P4:8),32:io.
+	; One-hot part bit per easy-composer channel index 0..6; DrumParam_LookupChannelBit indexes it
+	; with the selected channel and stores the entry.  Was spelled as normal / push sr / max /
+	; ld (P4:8),32:io.
 	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
 
 ; DrumParam_StepChannelStyle: Steps the easy-composer style index of the selected channel (0x37AB +
@@ -30599,8 +30683,8 @@ VoiceAssign_Process_Loop:
 
 ; In: L = program, H = bank of the current part's drum entry.  0x90f6 = 72 and the program change
 ; (SndParam_ApplyProgramChange_Safe, VoiceParam_ClampAndValidate_Tramp); L and H go to 0x38d2 +
-; part and 0x38d9 + part.  Out: XIX = 0x400000 + (RHYTHM_ROM_BASE) + (low byte of locator word 0)
-; << 16 + locator word 1, from RhythmROM_BankProgramLocators[H][L].
+; part and 0x38d9 + part.  Out: XIX = RHYTHM_DATA_ROM__BASE_ADDR + (RHYTHM_ROM_BASE) + (low byte
+; of locator word 0) << 16 + locator word 1, from RhythmROM_BankProgramLocators[H][L].
 VoiceAssign_Process_Return:
 	ld (0x90f6:16), 72
 	call SndParam_ApplyProgramChange_Safe
@@ -30773,8 +30857,8 @@ ChanAssign_Lookup_Found:
 	ld (xwa), xde
 	ret
 
-; Despite the name, no dispatch: XIY = 0x400000 + (byte at XIX + 0x3d1) << 16, then XIX +=
-; (RHYTHM_ROM_BASE).
+; Despite the name, no dispatch: XIY = RHYTHM_DATA_ROM__BASE_ADDR + (byte at XIX + 0x3d1) << 16,
+; then XIX += (RHYTHM_ROM_BASE).
 MIDIChan_DispatchTable:
 	ldw bc, 0x3d1
 	ld xwa, 0:i3
@@ -31067,6 +31151,7 @@ DrumParam_ReadMaxCount:
 ExtVoice_ProcessList:
 	ret
 ; Calls ExtVoice_ProcessList_Data with XIZ preserved.
+; Called from CmpEsyTtl_Mode2_OnEdit and CmpEsyTtl_SubModeC.
 CmEsyTtl_Dispatch2_Helper2:
 	push	xiz
 	call	ExtVoice_ProcessList_Data
@@ -31128,6 +31213,7 @@ DrumParam_ReadMaxCount_Skip2:
 DrumParam_ReadMaxCount_Return2:
 	ret
 ; Calls DrumVoice_NotifyEE.
+; Called from DrumParam_ReadMaxCount_Skip2.
 DrumParam_ReadMaxCount_Helper:
 	call	DrumVoice_NotifyEE
 	ret
@@ -32046,6 +32132,7 @@ AccPatch_ResolveEntryAddr_Helper18_Helper:
 	ret
 
 ; Calls VoiceSlot_Init_CheckType with XIZ preserved.
+; Called from Part_LoadAndIndexVoiceTable.
 VoiceSlot_InitFromTable:
 	push xiz
 	call VoiceSlot_Init_CheckType
@@ -35933,6 +36020,8 @@ AccAudio_LockRelease:
 	ldw wa, 0x8
 	jp Audio_Lock_Release
 ; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX.
+; Called from AccScreen_DataBlock_Code, AccDraw_Secondary_Helper5, AccDraw_Secondary_Helper6 and
+; AccDraw_Secondary_Helper8.
 AccAudio_DataBlock1:
 	ld	xwa, xiy
 	ld	xbc, xix
@@ -35940,6 +36029,7 @@ AccAudio_DataBlock1:
 	ret
 
 ; Calls GraphicsRender_Start with XWA = XIY and XBC = XIX, preserving XWA and XBC.
+; Called from AccScreen_DataBlock_Code2, AccScreen_DrawTempoDisplay and AccScreen_BeatDataBlock.
 AccGraphics_RenderStart:
 	push xwa
 	push xbc
@@ -35958,6 +36048,7 @@ AccGraphics_DataBlock2:
 	ret
 
 ; Calls DrawFunc_Init with XWA = XIY, preserving XWA.
+; Called from AccScreen_BeatDisplay_Draw and AccScreen_DrawMeas_Other.
 AccDraw_Init:
 	push xwa
 	ld xwa, xiy
@@ -35966,6 +36057,8 @@ AccDraw_Init:
 	ret
 
 ; Calls DrawText_ExtendedLayout with XWA = XIY, preserving XWA.
+; Called from AccScreen_DataBlock_Code2, AccScreen_DataBlock_Code6, AccDraw_Secondary_Skip4,
+; AccScreen_DrawMeasureDetail and AccScreen_DrawMeas_Variant3.
 AccDraw_Secondary:
 	push xwa
 	ld xwa, xiy
@@ -37953,6 +38046,7 @@ cmp_ld_mae:
 	ret
 
 ; Calls AccDemo_InitWithFlag.
+; Called from cmp_ld_mae.
 CmpLoad_InitWithFlag:
 	call AccDemo_InitWithFlag
 	ret
@@ -38016,6 +38110,7 @@ msp_ld_mae:
 	ret
 
 ; Calls AccompSeq_InitBankTables.
+; Called from msp_ld_mae.
 MspLoad_InitVoice:
 	call AccompSeq_InitBankTables
 	ret

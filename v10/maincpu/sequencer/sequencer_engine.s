@@ -11642,6 +11642,9 @@ SeqVoice_ScanParts_Return:
 	ret
 
 ; Calls Part_ReinitAllActive with XIZ preserved.
+; Called from SeqAcc_ProcessTempo_ReadComplete, SeqPlay_HandleEvent_StopAndClean,
+; SeqPlay_StopAndCleanup, SeqPlay_EmergencyStopAll, SeqPlay_StopReset_CleanupAll,
+; SeqPlay_ReallocateAndReconfig and 3 more sites.
 VoiceAlloc_ProcessAll:
 	push xiz
 	call Part_ReinitAllActive

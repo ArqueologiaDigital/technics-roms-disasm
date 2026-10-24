@@ -10,10 +10,12 @@ AccompSeq_PeriodicEntry:
 	jp AccompSeq_PeriodicMain
 
 ; Jumps to AccompSeq_ManualMidiMode2.
+; Called from VoiceMode_ParamHandler_4.
 AccompSeq_ManualMidiEntry2:
 	jp AccompSeq_ManualMidiMode2
 
 ; Jumps to AccompSeq_ManualMidiMode1.
+; Called from MidiStream_RefreshDisplay.
 AccompSeq_ManualMidiEntry1:
 	jp AccompSeq_ManualMidiMode1
 
@@ -1134,10 +1136,12 @@ AccompSeq_SendMidiEvent:
 	jp AccompSeq_WriteMidiToBuffer
 
 ; Jumps to AccompSeq_AllNotesOffImpl.
+; Called from AccompSeq_ManualMidi_CheckAllNotes.
 AccompSeq_AllNotesOff:
 	jp AccompSeq_AllNotesOffImpl
 
 ; Jumps to AccompSeq_PostNoteProcess.
+; Called from AccompSeq_ManualMidi_SetChannel.
 AccompSeq_ProcessAfterNote:
 	jp AccompSeq_PostNoteProcess
 AccompSeq_LargeCodeBlock2:
@@ -1233,13 +1237,16 @@ AccompSeq_InitPartFull:
 	ret
 
 ; Calls Voice_DecodeNoteParam.
+; Called from AccompSeq_InitPartFull, AccompSeq_ReinitPart, AccompSeq_HandleSpecialMode_Skip2 and
+; AccompSeq_CompareChord.
 AccompSeq_ResetMidiState:
 	call Voice_DecodeNoteParam
 	ret
 
 ; Resolves the address of a voice's style data into 0x7e2a (low word) / 0x7e28 (high word,
-; from QWA (upper word of XWA, code 0xe2)): voices 0x80 and up from Voice_DecodeBankIndex(L & 15) + 0x1e8800,
-; the others from AccompSeq_StyleDataTable + 32 * Voice_DecodeNoteChannel2().
+; from QWA (upper word of XWA, code 0xe2)): voices 0x80 and up from Voice_DecodeBankIndex(L & 15)
+; + MSP_SETTINGS__BASE_ADDR, the others from AccompSeq_StyleDataTable + 32 *
+; Voice_DecodeNoteChannel2().
 AccompSeq_LookupStyleData:
 	cp l, 0x80
 	jr c, AccompSeq_LookupStyle_Internal
@@ -2256,6 +2263,7 @@ AccompSeq_BankTablePtr:
 	jp	Voice_ResetToFactoryBanks
 
 ; Jumps to Voice_InitBankTables.
+; Called from MspLoad_InitVoice.
 AccompSeq_InitBankTables:
 	jp Voice_InitBankTables
 

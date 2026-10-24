@@ -28925,8 +28925,9 @@ DrumParam_LookupChannelBit:
 	ret
 
 DrumParam_ChannelBitTable:
-	; One-hot part bit per easy-composer channel index (0x39b8); DrumParam_LookupChannelBit stores
-	; entry (0x39b8) in 0x37c9.  Was spelled as normal / push sr / max / ld (P4:8),32:io.
+	; One-hot part bit per easy-composer channel index 0..6; DrumParam_LookupChannelBit indexes it
+	; with the selected channel and stores the entry.  Was spelled as normal / push sr / max /
+	; ld (P4:8),32:io.
 	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
 
 ; DrumParam_StepChannelStyle: Steps the easy-composer style index of the selected channel (0x37AB +

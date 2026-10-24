@@ -10914,6 +10914,8 @@ RhythmPart_CopyData_Tramp:
 	jp RhythmPart_CopyData
 
 ; Calls AccStyle_LookupTempoAndVelocity with XIZ preserved.
+; Called from ExtData_ToneParam_AltBody_Join, SndParam_CheckRhythm and
+; SndParam_ApplyFromPointer_Skip.
 Rhythm_LookupTempoVelocity_Wrap:
 	push xiz
 	call AccStyle_LookupTempoAndVelocity
@@ -10921,6 +10923,8 @@ Rhythm_LookupTempoVelocity_Wrap:
 	ret
 
 ; Calls AccStyle_LookupVelocityTable with XIZ preserved.
+; Called from SndParam_FetchCheckRhythm, SndParamResolve_CheckRhythm, SndBuf_WriteParamEntries_Skip,
+; MainGetRhythmName, RhythmROM_PatternDisp_Check91, BitMapOut_ApplyPatch_Return and 1 more site.
 Rhythm_DispatchNote_Finalize:
 	push xiz
 	call AccStyle_LookupVelocityTable

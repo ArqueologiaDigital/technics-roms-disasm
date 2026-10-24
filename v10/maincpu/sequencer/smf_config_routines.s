@@ -947,6 +947,7 @@ SMF_SendChannelConfig:
 	ret
 
 ; Calls SMF_FileWrite.
+; Called from SMF_EndMarker_CheckPlayback and SMF_WriteByte_SectorCheck.
 SMF_FlushToFile:
 	call SMF_FileWrite
 	ret

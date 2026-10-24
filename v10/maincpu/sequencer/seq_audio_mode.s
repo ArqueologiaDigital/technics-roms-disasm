@@ -1409,6 +1409,8 @@ BulkRead_Loop6_9Byte:
 	ret
 
 ; Sends the three-byte rhythm message 0x90 0x7f 0x7f (Rhythm_Send3ByteMsg).
+; Called from AccStyle_DetectChanges_Init, AccTick_ByteData, AccInit_FullReInit and
+; AccVoice_LoadAllParts_Wrap.
 Rhythm_SendNoteOnMax:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc

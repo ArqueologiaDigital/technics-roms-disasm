@@ -1059,6 +1059,7 @@ Rhythm_MismatchOther_Return:
 	ret
 
 ; Sends the three-byte rhythm message 0x90 0x7f 0x7e.
+; Called from AccFlags_Handler9_Join and Rhythm_NoteOnAfterSetup_A.
 Rhythm_Send_Ch90_7F_7E:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
