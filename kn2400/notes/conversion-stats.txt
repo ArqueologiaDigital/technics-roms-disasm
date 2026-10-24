@@ -1,0 +1,13 @@
+image bytes                 3761619
+code-range bytes            1779147
+entries                     15797 (2553 named, 13244 func_)
+bytes emitted as code       1759156 (46.77% of image, 98.88% of code ranges)
+instructions                657260 (+389 .byte escapes)
+nop padding bytes           5
+code-range bytes left binary 19986 (in 376 .incbin_range pieces)
+local labels                54871
+movm pointer targets rejected (paths do not end) 0
+entries found right after reached code          1989 (0 rejected, with jmp targets)
+entries found as a jmp target                   26
+prologues found in front of a call target       8008
+entries whose code runs into undecodable bytes   0

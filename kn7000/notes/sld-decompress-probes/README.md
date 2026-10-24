@@ -5,9 +5,9 @@ when it can import it, and otherwise a pure-Python decoder of its own. With that
 MN10300 sibling trees (`kn2400/`, `kn6000/`, `kn6500/`, `hdsx3/`) can regenerate their
 reference images with nothing outside the standard library.
 
-| script                 | question it answers                                                            |
-|------------------------|--------------------------------------------------------------------------------|
-| `lzss_equivalence.py`  | Does the pure-Python decoder give the same bytes as pylzss on every payload?  |
+| script                | question it answers                                                          |
+|-----------------------|------------------------------------------------------------------------------|
+| `lzss_equivalence.py` | Does the pure-Python decoder give the same bytes as pylzss on every payload? |
 
 Run it from `kn7000/` with the venv interpreter:
 
