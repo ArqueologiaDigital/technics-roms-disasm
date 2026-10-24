@@ -118,3 +118,33 @@ MN10300 siblings KN2400/KN6000/KN6500/HD-SX3) therefore follow the kn7000/ conve
 image is git-ignored and regenerated from the manufacturer's update installers or the private romset,
 and the repo records its SHA-1. The KN5000 and WSA1R dumps that were already committed stay as they
 are. The owner can revisit this.
+
+## Progress: wave 1 (merged 2026-10-24)
+
+Twelve lanes, each implemented in its own worktree, reviewed adversarially and fixed, then merged into
+main (merge commits `Merge wave1/<lane>`, 7dc379217..921314742). `make -j6 gate-all` passed on a clean
+build of the merged tree: every image byte-identical. The figures below come from the scripts named in
+each row, run on the merged tree.
+
+| package     | lane              | outcome                                                                                                                                          |
+|-------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| WP01, WP19  | hygiene           | `.gitattributes` merge driver removed; `llvm-convert*` guarded; `make rom-status` rebuilt on the census; `make issues` retired; 15 issues closed |
+| WP02        | metrics           | `doc_quality_census.py` + `make doc-quality` ledger; KN7000 added to `semantic_score.py`                                                         |
+| WP03        | headers-propagate | v10 headers carried to v9/v7 (v9 routines without a header 7,969 -> 7,276, v7 8,154 -> 7,814: `doc-quality-2026-10-24-03`)                       |
+| WP05        | kn5000-v8         | v8 gated (v9 source, `--defsym FW_VERSION_BYTE=0x08`; dump not committed); v5/v6 delta sizing in `notes/kn5000-version-deltas-2026-10-24/`       |
+| WP06        | tabledata-ftbmp   | the six FTBMP bitmaps round-trip; table data verbatim debt 318,468 B -> 0 (`kn5000_source_coverage.py`)                                          |
+| WP08        | kn7000-convert    | all 3,658 KN7000 program function blocks emitted as instructions; program source 3.88% -> 44.58% (`kn7000/tools/coverage_score.py`)              |
+| WP09        | kn7000-table      | table 84 directory typed, 84 named segments, 159 JPEG/BMP segments as `kn7000/src/table/` files                                                  |
+| WP11        | wsa1-respell      | 12,527 byte-emitter macro calls respelled natively; 9 left (3 backend gaps)                                                                      |
+| WP14 (a, b) | kn7000-ic18-b80   | IC18 boot ROM (first 64 KB) and table build 80 gated                                                                                             |
+| WP15        | mn10300-siblings  | `kn2400/`, `kn6000/`, `kn6500/`, `hdsx3/` gated, about 99% of each code range as instructions                                                    |
+| WP17 (b)    | hdae5000-locals   | HD-AE5000 `.L<hex>` locals 1,164 -> 0; call targets without a header 297 -> 0                                                                    |
+| WP18 (v141) | kn5000-v141       | sub-CPU v1.41 gated, generated as v1.42 + EDITS, with a drift check in `make gate`                                                               |
+
+Semantic score (`make semantic-score`, `docs/badges/semantic-score-history.csv`) went from 87.26% to
+91.10% overall; KN7000 45.67% -> 65.29%. The dispatch census (`dispatch-census-2026-10-24-02`) shows
+nothing rose. Each lane's open follow-ups are in its notes and in the wave's merge commits.
+
+Wave 2, started the same day, takes WP07, WP12, WP14 (c), WP16, WP17 (a), WP18 (v1.40, HD-AE5000
+v2.01i and the KN5000 v6/v5 programs), KN7000 function naming, measurement coverage for the new images,
+and a website sync.
