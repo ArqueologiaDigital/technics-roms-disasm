@@ -80,6 +80,49 @@ DEMO = [
 ]
 
 
+# Segments that open with a table of u32 offsets from the segment start, one per slot
+# (0 = empty slot), to their items. Per segment: the label prefix of an item (+ the
+# number of the first slot that points at it), the subdirectory of src/table/ its JPEG
+# or BMP items are kept in (None: the items stay .incbin_range), and {slot: what the
+# picture shows} for those files.
+GROUPS = {
+    5: ("OpeningFrame", "opening", {
+        0: "notes_over_earth_1", 1: "notes_over_earth_2", 2: "metal_drops",
+        3: "metal_drops_dark", 4: "logo_chrome_1", 5: "logo_chrome_2"}),
+    55: ("RhythmImage", "rhythm", {
+        0: "band_silhouettes", 1: "female_singer", 2: "sunset_couple", 3: "big_band",
+        4: "ballroom_dancers", 5: "film_camera", 6: "synth_player", 7: "organist",
+        8: "cartoon_band", 9: "dancer_silhouette", 10: "soul_singer",
+        11: "country_guitarists", 12: "marching_band", 13: "world_instruments",
+        14: "music_chest", 15: "bank_box"}),
+    56: ("SoundImage", "sound", {
+        1: "grand_piano", 2: "electric_piano", 3: "stage_piano", 4: "harpsichord",
+        5: "acoustic_guitar", 6: "electric_guitar", 7: "string_section", 8: "violin",
+        9: "lips", 10: "trombone_trumpet", 11: "trumpet", 12: "xylophone",
+        13: "harp_timpani", 14: "steel_drum", 15: "banjo_koto", 16: "recorder",
+        17: "pipe_organ", 18: "home_organ", 19: "accordion_red_1", 20: "harmonica",
+        21: "saxophone", 22: "flute", 23: "oboe_bassoon", 24: "clarinet",
+        25: "keyboard_notes", 26: "instruments_notes", 27: "synthesizer",
+        28: "double_bass", 29: "electric_bass", 30: "analog_synth", 31: "drum_kit",
+        32: "sound_effects", 33: "snare_drum", 34: "percussion", 35: "accordion_red_2",
+        37: "bank_box", 38: "accordion_purple", 39: "accordion_green"}),
+    57: ("UserHpMenuEntry", None, {}),
+    58: ("TcdImage", None, {}),
+    72: ("OrganTab", "organ_tab", {
+        0: "16_flu", 1: "8_flu", 2: "4_flu", 3: "2_2-3_flu", 4: "2_flu", 5: "1_flu",
+        6: "16_tb", 7: "8_kn", 8: "8_cl", 9: "8_vn",
+        10: "16_flu_italic", 11: "8_flu_italic", 12: "4_flu_italic", 13: "2_2-3_flu_italic",
+        14: "2_flu_italic", 15: "1_flu_italic", 16: "16_tb_italic", 17: "8_kn_italic",
+        18: "8_cl_italic", 19: "8_vn_italic",
+        20: "16_tib", 21: "8_tib", 22: "4_tib", 23: "2_2-3_tib", 24: "2_tib", 25: "1_tib",
+        30: "16_tib_italic", 31: "8_tib_italic", 32: "4_tib_italic", 33: "2_2-3_tib_italic",
+        34: "2_tib_italic", 35: "1_tib_italic",
+        45: "1_3-5_tib", 46: "8_vox", 47: "8_tp", 48: "8_eh", 49: "8_str",
+        55: "1_3-5_tib_italic", 56: "8_vox_italic", 57: "8_tp_italic", 58: "8_eh_italic",
+        59: "8_str_italic"}),
+}
+
+
 def _segments():
     s = {}
     s[0] = ("GuiResourceTables", "gui", None, [
@@ -109,7 +152,7 @@ def _segments():
         "The routine at 0x484342B4 stores its address (TableRomSeg04Ptr) in 0x50007760 and,",
         "when 0x48433F4F rejects it, uses the program ROM's own \"Technics Pads\" copy",
         "instead. Same header shape as TechnicsRhythmsTable (segment 83)."])
-    s[5] = ("OpeningAnimationFrames", "raw", None, [
+    s[5] = ("OpeningAnimationFrames", "offtab", None, [
         "The boot opening screen's animation: OpeningFrameDraw draws frame n from u32",
         "offset n of this segment; 0 = no frame (it then stores -2 in the u16 at",
         "0x5006B5A8)."])
@@ -131,16 +174,16 @@ def _segments():
         else:
             s[slot] = (f"DemoJpg{xn}", "jpeg", f"demo_{xn.lower()}_{stem}.jpg", [
                 f"Feature Demo picture {xn}, returned by DemoJpgData{xn}: {what}."])
-    s[55] = ("RhythmImages", "raw", None, [
+    s[55] = ("RhythmImages", "offtab", None, [
         "AcRhyImageProc's pictures: u32 offsets from the segment start, indexed by the u16",
         "at 0x5006B7D8; 0 = none."])
-    s[56] = ("SoundImages", "raw", None, [
+    s[56] = ("SoundImages", "offtab", None, [
         "AcSndImageProc's pictures: u32 offsets from the segment start, indexed by the u16",
         "at 0x5006B80E; 0 = none."])
-    s[57] = ("UserHpMenuData", "raw", None, [
+    s[57] = ("UserHpMenuData", "offtab", None, [
         "Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.",
         "TODO: the format of the entries."])
-    s[58] = ("TcdImages", "raw", None, [
+    s[58] = ("TcdImages", "offtab", None, [
         "Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.",
         "TODO: the format of the 2400-byte entries."])
     s[59] = ("BuiltinStyleSubTable", "raw", None, [
@@ -158,9 +201,9 @@ def _segments():
             "notes/sp7001-build-diff.md compares it across builds."])
     s[71] = ("UnreadMarker71", "marker", None, [
         "'27' and a line feed, like the demo placeholders. No program code reads this slot."])
-    s[72] = ("OrganTabImages", "raw", None, [
-        "AcOrganTabProc's pictures: u32 offsets from the segment start; each entry is a",
-        "Windows BMP ('BM')."])
+    s[72] = ("OrganTabImages", "offtab", None, [
+        "AcOrganTabProc's drawbar tab pictures: u32 offsets from the segment start; each",
+        "entry is a whole Windows BMP ('BM'), and 18 slots reuse another slot's picture."])
     s[83] = ("TechnicsRhythmsTable", "raw", None, [
         "A truncated in-flash copy of the built-in \"Technics Rhythms\" style resource.",
         "TableRomStyleResourcePtr returns it; StyleBuiltinNameTableInit re-points the",

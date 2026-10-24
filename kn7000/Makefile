@@ -78,15 +78,16 @@ program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manua
 		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
-# The table image's 57 JPEG segments live in src/table/ (the same files serve the SP7001
-# table, whose JPEG segments are identical); the rest still comes from baserom/.
-TABLE_JPGS := $(wildcard src/table/*.jpg)
+# The table image's pictures live in src/table/: the 57 JPEG segments, and in
+# subdirectories the JPEG/BMP items of the picture-group segments. The same files
+# serve the SP7001 table, whose copies are identical; the rest comes from baserom/.
+TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 
 build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
 
-# Regenerate src/table.s and src/table/*.jpg from build 84's image: the directory as
+# Regenerate src/table.s and src/table/ from build 84's image: the directory as
 # offsets to labelled segments, names and comments from tools/table_segments.py. The
 # committed files are the result; the build does not need this.
 .PHONY: table-src

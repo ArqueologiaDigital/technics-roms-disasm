@@ -113,7 +113,7 @@ def put_jpeg(jpg_dir, name, jpeg):
         if open(path, "rb").read() != jpeg:
             sys.exit(f"gen_table_s: {path} exists with other bytes than this build's segment")
         return
-    os.makedirs(jpg_dir, exist_ok=True)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     open(path, "wb").write(jpeg)
 
 
@@ -130,6 +130,76 @@ def gui_resource_tables(d, s, e, ROMQ):
     for k, (nm, o) in enumerate(zip(names, offs)):
         end = offs[k + 1] if k + 1 < len(offs) else e
         B += [f"{nm}:", f"    .incbin_range\t{ROMQ}, 0x{o:06x}, 0x{end:06x}"]
+    return B
+
+
+def bmp_dims(bmp):
+    """-> (width, height, bits per pixel) of a Windows BMP."""
+    w, h = struct.unpack_from("<ii", bmp, 18)
+    return w, h, struct.unpack_from("<H", bmp, 28)[0]
+
+
+def item_file(it):
+    """-> (kind, file bytes, zero padding after them) when the item is one JPEG
+    (FF D8 .. FF D9) or one Windows BMP (by its size field) followed only by zeros."""
+    if it[:2] == b"\xff\xd8":
+        kind, n = "jpg", it.rfind(b"\xff\xd9") + 2
+    elif it[:2] == b"BM":
+        kind, n = "bmp", u32(it, 2)
+    else:
+        return None
+    if not 4 <= n <= len(it) or it[n:] != bytes(len(it) - n):
+        return None
+    return kind, it[:n], len(it) - n
+
+
+def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
+    """A segment that opens with u32 offsets (from its start; 0 = empty slot) to its
+    items: the table as .long <item> - <segment>, then each item once, under the label
+    of the first slot that points at it; JPEG and BMP items as files in
+    <jpg_dir>/<subdir>/."""
+    prefix, subdir, stems = group
+    seg = d[s:e]
+    first, k = len(seg), 0               # the table ends where its lowest item starts
+    while 4 * k < first:
+        first = min(first, u32(seg, 4 * k) or first)
+        k += 1
+    assert first % 4 == 0, f"{label}: table end not word-aligned"
+    slots = [u32(seg, 4 * k) for k in range(first // 4)]
+    items = sorted(set(o for o in slots if o))
+    assert items[0] == first and items[-1] < len(seg), f"{label}: offsets out of the segment"
+    name = {}
+    for k, o in enumerate(slots):
+        if o:
+            name.setdefault(o, f"{prefix}{k:02d}")
+    B = [f"    .long\t{name[o]} - {label}" if o else "    .long\t0" for o in slots]
+    for n, o in enumerate(items):
+        end = items[n + 1] if n + 1 < len(items) else len(seg)
+        it = seg[o:end]
+        lab = name[o]
+        users = [k for k, v in enumerate(slots) if v == o]
+        B.append("")
+        if len(users) > 1:
+            B.append(f"# slots {', '.join(map(str, users))}")
+        B.append(f"{lab}:")
+        f = item_file(it) if subdir else None
+        if f:
+            kind, data, pad = f
+            slot = int(lab[len(prefix):])
+            fn = f"{subdir}/{slot:02d}_{stems[slot]}.{kind}"
+            put_jpeg(jpg_dir, fn, data)
+            if kind == "jpg":
+                w, h = jpeg_dims(data)
+                what = f"{w}x{h} JPEG"
+            else:
+                w, h, bpp = bmp_dims(data)
+                what = f"{w}x{h} {bpp}-bpp BMP"
+            B.append(f'    .incbin\t"{jpg_dir}/{fn}"   # {what}, {len(data)} bytes')
+            if pad:
+                B.append(f"    .space\t{pad}, 0x00")
+        else:
+            assert not subdir, f"{lab}: item is neither a JPEG nor a BMP"
+            B.append(f"    .incbin_range\t{ROMQ}, 0x{s + o:06x}, 0x{s + end:06x}")
     return B
 
 
@@ -183,6 +253,8 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
             B.append(f'    .byte\t{", ".join(f"0x{b:02x}" for b in seg)}   # "{shown}"')
         elif kind == "gui":
             B += gui_resource_tables(d, s, e, ROMQ)
+        elif kind == "offtab":
+            B += offset_group(d, s, e, label, ROMQ, jpg_dir, TS.GROUPS[i])
         else:
             B.append(f"    .incbin_range\t{ROMQ}, 0x{s:06x}, 0x{e:06x}")
     B += ["", "TableRomImageEnd:"]

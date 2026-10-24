@@ -316,7 +316,52 @@ TechnicsPadsResource:
 # offset n of this segment; 0 = no frame (it then stores -2 in the u16 at
 # 0x5006b5a8).
 OpeningAnimationFrames:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x05667c, 0x06ea98
+    .long	OpeningFrame00 - OpeningAnimationFrames
+    .long	OpeningFrame01 - OpeningAnimationFrames
+    .long	OpeningFrame02 - OpeningAnimationFrames
+    .long	OpeningFrame03 - OpeningAnimationFrames
+    .long	OpeningFrame04 - OpeningAnimationFrames
+    .long	OpeningFrame05 - OpeningAnimationFrames
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+
+OpeningFrame00:
+    .incbin	"src/table/opening/00_notes_over_earth_1.jpg"   # 640x240 JPEG, 15430 bytes
+
+OpeningFrame01:
+    .incbin	"src/table/opening/01_notes_over_earth_2.jpg"   # 640x240 JPEG, 14469 bytes
+
+OpeningFrame02:
+    .incbin	"src/table/opening/02_metal_drops.jpg"   # 640x240 JPEG, 16616 bytes
+
+OpeningFrame03:
+    .incbin	"src/table/opening/03_metal_drops_dark.jpg"   # 640x240 JPEG, 18556 bytes
+
+OpeningFrame04:
+    .incbin	"src/table/opening/04_logo_chrome_1.jpg"   # 640x240 JPEG, 21565 bytes
+
+OpeningFrame05:
+    .incbin	"src/table/opening/05_logo_chrome_2.jpg"   # 640x240 JPEG, 12609 bytes
+    .space	3, 0x00
 
 # dir[6], 0xcb450 bytes; unchanged vs build 84.
 # 'JK': the INTERNAL (class 0) voice archive. VoiceArchiveScanBoot puts it in slot 0
@@ -608,25 +653,571 @@ DemoJpgL4Placeholder:
 # AcRhyImageProc's pictures: u32 offsets from the segment start, indexed by the u16
 # at 0x5006b7d8; 0 = none.
 RhythmImages:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x1fd46c, 0x211694
+    .long	RhythmImage00 - RhythmImages
+    .long	RhythmImage01 - RhythmImages
+    .long	RhythmImage02 - RhythmImages
+    .long	RhythmImage03 - RhythmImages
+    .long	RhythmImage04 - RhythmImages
+    .long	RhythmImage05 - RhythmImages
+    .long	RhythmImage06 - RhythmImages
+    .long	RhythmImage07 - RhythmImages
+    .long	RhythmImage08 - RhythmImages
+    .long	RhythmImage09 - RhythmImages
+    .long	RhythmImage10 - RhythmImages
+    .long	RhythmImage11 - RhythmImages
+    .long	RhythmImage12 - RhythmImages
+    .long	RhythmImage13 - RhythmImages
+    .long	RhythmImage14 - RhythmImages
+    .long	RhythmImage15 - RhythmImages
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+
+RhythmImage00:
+    .incbin	"src/table/rhythm/00_band_silhouettes.jpg"   # 160x120 JPEG, 2857 bytes
+
+RhythmImage01:
+    .incbin	"src/table/rhythm/01_female_singer.jpg"   # 160x120 JPEG, 4169 bytes
+
+RhythmImage02:
+    .incbin	"src/table/rhythm/02_sunset_couple.jpg"   # 160x120 JPEG, 4768 bytes
+
+RhythmImage03:
+    .incbin	"src/table/rhythm/03_big_band.jpg"   # 160x120 JPEG, 4077 bytes
+
+RhythmImage04:
+    .incbin	"src/table/rhythm/04_ballroom_dancers.jpg"   # 160x120 JPEG, 3083 bytes
+
+RhythmImage05:
+    .incbin	"src/table/rhythm/05_film_camera.jpg"   # 160x120 JPEG, 4626 bytes
+
+RhythmImage06:
+    .incbin	"src/table/rhythm/06_synth_player.jpg"   # 160x120 JPEG, 3390 bytes
+
+RhythmImage07:
+    .incbin	"src/table/rhythm/07_organist.jpg"   # 160x120 JPEG, 12607 bytes
+
+RhythmImage08:
+    .incbin	"src/table/rhythm/08_cartoon_band.jpg"   # 160x120 JPEG, 13600 bytes
+
+RhythmImage09:
+    .incbin	"src/table/rhythm/09_dancer_silhouette.jpg"   # 160x120 JPEG, 4714 bytes
+
+RhythmImage10:
+    .incbin	"src/table/rhythm/10_soul_singer.jpg"   # 160x120 JPEG, 3397 bytes
+
+RhythmImage11:
+    .incbin	"src/table/rhythm/11_country_guitarists.jpg"   # 160x120 JPEG, 4322 bytes
+
+RhythmImage12:
+    .incbin	"src/table/rhythm/12_marching_band.jpg"   # 160x120 JPEG, 4577 bytes
+
+RhythmImage13:
+    .incbin	"src/table/rhythm/13_world_instruments.jpg"   # 160x120 JPEG, 4602 bytes
+
+RhythmImage14:
+    .incbin	"src/table/rhythm/14_music_chest.jpg"   # 160x120 JPEG, 3459 bytes
+
+RhythmImage15:
+    .incbin	"src/table/rhythm/15_bank_box.jpg"   # 160x120 JPEG, 4094 bytes
+    .space	2, 0x00
 
 # dir[56], 0x1db2c bytes; unchanged vs build 84.
 # AcSndImageProc's pictures: u32 offsets from the segment start, indexed by the u16
 # at 0x5006b80e; 0 = none.
 SoundImages:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x211694, 0x22f1c0
+    .long	0
+    .long	SoundImage01 - SoundImages
+    .long	SoundImage02 - SoundImages
+    .long	SoundImage03 - SoundImages
+    .long	SoundImage04 - SoundImages
+    .long	SoundImage05 - SoundImages
+    .long	SoundImage06 - SoundImages
+    .long	SoundImage07 - SoundImages
+    .long	SoundImage08 - SoundImages
+    .long	SoundImage09 - SoundImages
+    .long	SoundImage10 - SoundImages
+    .long	SoundImage11 - SoundImages
+    .long	SoundImage12 - SoundImages
+    .long	SoundImage13 - SoundImages
+    .long	SoundImage14 - SoundImages
+    .long	SoundImage15 - SoundImages
+    .long	SoundImage16 - SoundImages
+    .long	SoundImage17 - SoundImages
+    .long	SoundImage18 - SoundImages
+    .long	SoundImage19 - SoundImages
+    .long	SoundImage20 - SoundImages
+    .long	SoundImage21 - SoundImages
+    .long	SoundImage22 - SoundImages
+    .long	SoundImage23 - SoundImages
+    .long	SoundImage24 - SoundImages
+    .long	SoundImage25 - SoundImages
+    .long	SoundImage26 - SoundImages
+    .long	SoundImage27 - SoundImages
+    .long	SoundImage28 - SoundImages
+    .long	SoundImage29 - SoundImages
+    .long	SoundImage30 - SoundImages
+    .long	SoundImage31 - SoundImages
+    .long	SoundImage32 - SoundImages
+    .long	SoundImage33 - SoundImages
+    .long	SoundImage34 - SoundImages
+    .long	SoundImage35 - SoundImages
+    .long	0
+    .long	SoundImage37 - SoundImages
+    .long	SoundImage38 - SoundImages
+    .long	SoundImage39 - SoundImages
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+
+SoundImage01:
+    .incbin	"src/table/sound/01_grand_piano.jpg"   # 160x120 JPEG, 3151 bytes
+
+SoundImage05:
+    .incbin	"src/table/sound/05_acoustic_guitar.jpg"   # 160x120 JPEG, 2606 bytes
+
+SoundImage08:
+    .incbin	"src/table/sound/08_violin.jpg"   # 160x120 JPEG, 3416 bytes
+
+SoundImage10:
+    .incbin	"src/table/sound/10_trombone_trumpet.jpg"   # 160x120 JPEG, 2953 bytes
+
+SoundImage13:
+    .incbin	"src/table/sound/13_harp_timpani.jpg"   # 160x120 JPEG, 3422 bytes
+
+SoundImage15:
+    .incbin	"src/table/sound/15_banjo_koto.jpg"   # 160x120 JPEG, 2869 bytes
+
+SoundImage18:
+    .incbin	"src/table/sound/18_home_organ.jpg"   # 160x120 JPEG, 3499 bytes
+
+SoundImage21:
+    .incbin	"src/table/sound/21_saxophone.jpg"   # 160x120 JPEG, 2217 bytes
+
+SoundImage25:
+    .incbin	"src/table/sound/25_keyboard_notes.jpg"   # 160x120 JPEG, 3888 bytes
+
+SoundImage27:
+    .incbin	"src/table/sound/27_synthesizer.jpg"   # 160x120 JPEG, 3486 bytes
+
+SoundImage28:
+    .incbin	"src/table/sound/28_double_bass.jpg"   # 160x120 JPEG, 2142 bytes
+
+SoundImage31:
+    .incbin	"src/table/sound/31_drum_kit.jpg"   # 160x120 JPEG, 3231 bytes
+
+SoundImage35:
+    .incbin	"src/table/sound/35_accordion_red_2.jpg"   # 160x120 JPEG, 4497 bytes
+
+SoundImage37:
+    .incbin	"src/table/sound/37_bank_box.jpg"   # 160x120 JPEG, 4134 bytes
+
+SoundImage19:
+    .incbin	"src/table/sound/19_accordion_red_1.jpg"   # 160x120 JPEG, 4013 bytes
+
+SoundImage38:
+    .incbin	"src/table/sound/38_accordion_purple.jpg"   # 160x120 JPEG, 4210 bytes
+
+SoundImage32:
+    .incbin	"src/table/sound/32_sound_effects.jpg"   # 160x120 JPEG, 4747 bytes
+
+SoundImage24:
+    .incbin	"src/table/sound/24_clarinet.jpg"   # 160x120 JPEG, 1801 bytes
+
+SoundImage23:
+    .incbin	"src/table/sound/23_oboe_bassoon.jpg"   # 160x120 JPEG, 2637 bytes
+
+SoundImage29:
+    .incbin	"src/table/sound/29_electric_bass.jpg"   # 160x120 JPEG, 2448 bytes
+
+SoundImage06:
+    .incbin	"src/table/sound/06_electric_guitar.jpg"   # 160x120 JPEG, 2360 bytes
+
+SoundImage03:
+    .incbin	"src/table/sound/03_stage_piano.jpg"   # 160x120 JPEG, 3221 bytes
+
+SoundImage02:
+    .incbin	"src/table/sound/02_electric_piano.jpg"   # 160x120 JPEG, 3537 bytes
+
+SoundImage07:
+    .incbin	"src/table/sound/07_string_section.jpg"   # 160x120 JPEG, 4085 bytes
+
+SoundImage22:
+    .incbin	"src/table/sound/22_flute.jpg"   # 160x120 JPEG, 1918 bytes
+
+SoundImage20:
+    .incbin	"src/table/sound/20_harmonica.jpg"   # 160x120 JPEG, 2344 bytes
+
+SoundImage04:
+    .incbin	"src/table/sound/04_harpsichord.jpg"   # 160x120 JPEG, 3291 bytes
+
+SoundImage26:
+    .incbin	"src/table/sound/26_instruments_notes.jpg"   # 160x120 JPEG, 4508 bytes
+
+SoundImage34:
+    .incbin	"src/table/sound/34_percussion.jpg"   # 160x120 JPEG, 3274 bytes
+
+SoundImage17:
+    .incbin	"src/table/sound/17_pipe_organ.jpg"   # 160x120 JPEG, 2950 bytes
+
+SoundImage33:
+    .incbin	"src/table/sound/33_snare_drum.jpg"   # 160x120 JPEG, 1962 bytes
+
+SoundImage14:
+    .incbin	"src/table/sound/14_steel_drum.jpg"   # 160x120 JPEG, 2833 bytes
+
+SoundImage16:
+    .incbin	"src/table/sound/16_recorder.jpg"   # 160x120 JPEG, 1743 bytes
+
+SoundImage30:
+    .incbin	"src/table/sound/30_analog_synth.jpg"   # 160x120 JPEG, 4227 bytes
+
+SoundImage11:
+    .incbin	"src/table/sound/11_trumpet.jpg"   # 160x120 JPEG, 2932 bytes
+
+SoundImage09:
+    .incbin	"src/table/sound/09_lips.jpg"   # 160x120 JPEG, 3640 bytes
+
+SoundImage12:
+    .incbin	"src/table/sound/12_xylophone.jpg"   # 160x120 JPEG, 3095 bytes
+
+SoundImage39:
+    .incbin	"src/table/sound/39_accordion_green.jpg"   # 160x120 JPEG, 4135 bytes
+    .space	2, 0x00
 
 # dir[57], 0xd9ec bytes; unchanged vs build 84.
 # Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.
 # TODO: the format of the entries.
 UserHpMenuData:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x22f1c0, 0x23cbac
+    .long	UserHpMenuEntry00 - UserHpMenuData
+    .long	UserHpMenuEntry01 - UserHpMenuData
+    .long	UserHpMenuEntry02 - UserHpMenuData
+    .long	UserHpMenuEntry03 - UserHpMenuData
+    .long	UserHpMenuEntry04 - UserHpMenuData
+    .long	UserHpMenuEntry05 - UserHpMenuData
+    .long	UserHpMenuEntry06 - UserHpMenuData
+    .long	UserHpMenuEntry07 - UserHpMenuData
+    .long	UserHpMenuEntry08 - UserHpMenuData
+    .long	UserHpMenuEntry09 - UserHpMenuData
+    .long	UserHpMenuEntry10 - UserHpMenuData
+    .long	UserHpMenuEntry11 - UserHpMenuData
+    .long	UserHpMenuEntry12 - UserHpMenuData
+    .long	UserHpMenuEntry11 - UserHpMenuData
+    .long	UserHpMenuEntry12 - UserHpMenuData
+    .long	UserHpMenuEntry15 - UserHpMenuData
+    .long	UserHpMenuEntry16 - UserHpMenuData
+    .long	UserHpMenuEntry17 - UserHpMenuData
+    .long	UserHpMenuEntry18 - UserHpMenuData
+    .long	UserHpMenuEntry19 - UserHpMenuData
+    .long	UserHpMenuEntry20 - UserHpMenuData
+    .long	UserHpMenuEntry21 - UserHpMenuData
+    .long	UserHpMenuEntry22 - UserHpMenuData
+    .long	UserHpMenuEntry23 - UserHpMenuData
+    .long	UserHpMenuEntry24 - UserHpMenuData
+    .long	UserHpMenuEntry25 - UserHpMenuData
+    .long	UserHpMenuEntry26 - UserHpMenuData
+    .long	UserHpMenuEntry27 - UserHpMenuData
+    .long	UserHpMenuEntry28 - UserHpMenuData
+    .long	UserHpMenuEntry29 - UserHpMenuData
+    .long	UserHpMenuEntry30 - UserHpMenuData
+    .long	UserHpMenuEntry31 - UserHpMenuData
+    .long	UserHpMenuEntry32 - UserHpMenuData
+    .long	UserHpMenuEntry33 - UserHpMenuData
+    .long	UserHpMenuEntry34 - UserHpMenuData
+    .long	UserHpMenuEntry35 - UserHpMenuData
+    .long	UserHpMenuEntry36 - UserHpMenuData
+    .long	UserHpMenuEntry37 - UserHpMenuData
+    .long	UserHpMenuEntry38 - UserHpMenuData
+    .long	UserHpMenuEntry39 - UserHpMenuData
+    .long	UserHpMenuEntry40 - UserHpMenuData
+    .long	UserHpMenuEntry41 - UserHpMenuData
+    .long	UserHpMenuEntry42 - UserHpMenuData
+    .long	UserHpMenuEntry43 - UserHpMenuData
+    .long	UserHpMenuEntry44 - UserHpMenuData
+    .long	UserHpMenuEntry45 - UserHpMenuData
+    .long	UserHpMenuEntry46 - UserHpMenuData
+    .long	UserHpMenuEntry47 - UserHpMenuData
+    .long	UserHpMenuEntry48 - UserHpMenuData
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+
+UserHpMenuEntry00:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x22f2fc, 0x22f75c
+
+UserHpMenuEntry01:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x22f75c, 0x22fbbc
+
+UserHpMenuEntry02:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x22fbbc, 0x23001c
+
+UserHpMenuEntry03:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23001c, 0x23047c
+
+UserHpMenuEntry04:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23047c, 0x2308dc
+
+UserHpMenuEntry05:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2308dc, 0x230d3c
+
+UserHpMenuEntry29:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x230d3c, 0x230f44
+
+UserHpMenuEntry30:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x230f44, 0x231007
+
+UserHpMenuEntry48:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x231007, 0x231417
+
+UserHpMenuEntry47:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x231417, 0x231827
+
+UserHpMenuEntry43:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x231827, 0x231a2f
+
+UserHpMenuEntry44:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x231a2f, 0x231e3f
+
+UserHpMenuEntry23:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x231e3f, 0x232088
+
+UserHpMenuEntry24:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x232088, 0x23224f
+
+UserHpMenuEntry35:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23224f, 0x232312
+
+UserHpMenuEntry17:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x232312, 0x232b32
+
+UserHpMenuEntry18:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x232b32, 0x23314a
+
+UserHpMenuEntry15:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23314a, 0x23396a
+
+UserHpMenuEntry16:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23396a, 0x233f82
+
+UserHpMenuEntry34:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x233f82, 0x23418a
+
+UserHpMenuEntry39:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23418a, 0x234392
+
+UserHpMenuEntry40:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x234392, 0x2349aa
+
+UserHpMenuEntry36:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2349aa, 0x234bb2
+
+UserHpMenuEntry38:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x234bb2, 0x234dba
+
+UserHpMenuEntry37:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x234dba, 0x2353d2
+
+UserHpMenuEntry19:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2353d2, 0x23561b
+
+UserHpMenuEntry20:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23561b, 0x2357e2
+
+UserHpMenuEntry21:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2357e2, 0x235a2b
+
+UserHpMenuEntry22:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x235a2b, 0x235bf2
+
+UserHpMenuEntry25:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x235bf2, 0x235e3b
+
+UserHpMenuEntry26:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x235e3b, 0x236002
+
+UserHpMenuEntry32:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x236002, 0x2360c5
+
+UserHpMenuEntry46:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2360c5, 0x2364d5
+
+UserHpMenuEntry45:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2364d5, 0x2368e5
+
+UserHpMenuEntry42:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2368e5, 0x236cf5
+
+UserHpMenuEntry31:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x236cf5, 0x236d77
+
+UserHpMenuEntry27:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x236d77, 0x236efd
+
+UserHpMenuEntry28:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x236efd, 0x236f7f
+
+UserHpMenuEntry33:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x236f7f, 0x237042
+
+UserHpMenuEntry41:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x237042, 0x237452
+
+UserHpMenuEntry06:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x237452, 0x238492
+
+UserHpMenuEntry07:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x238492, 0x2390c2
+
+UserHpMenuEntry08:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2390c2, 0x23a102
+
+UserHpMenuEntry09:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23a102, 0x23ad32
+
+UserHpMenuEntry10:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23ad32, 0x23bd72
+
+# slots 11, 13
+UserHpMenuEntry11:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23bd72, 0x23c592
+
+# slots 12, 14
+UserHpMenuEntry12:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23c592, 0x23cbac
 
 # dir[58], 0x83cc bytes; unchanged vs build 84.
 # Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.
 # TODO: the format of the 2400-byte entries.
 TcdImages:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23cbac, 0x244f78
+    .long	TcdImage00 - TcdImages
+    .long	TcdImage01 - TcdImages
+    .long	TcdImage02 - TcdImages
+    .long	TcdImage03 - TcdImages
+    .long	TcdImage04 - TcdImages
+    .long	TcdImage05 - TcdImages
+    .long	TcdImage06 - TcdImages
+    .long	TcdImage07 - TcdImages
+    .long	TcdImage08 - TcdImages
+    .long	TcdImage09 - TcdImages
+    .long	TcdImage10 - TcdImages
+    .long	TcdImage11 - TcdImages
+    .long	TcdImage12 - TcdImages
+    .long	TcdImage13 - TcdImages
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+    .long	0
+
+TcdImage00:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23cc38, 0x23d598
+
+TcdImage01:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23d598, 0x23def8
+
+TcdImage02:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23def8, 0x23e858
+
+TcdImage03:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23e858, 0x23f1b8
+
+TcdImage04:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23f1b8, 0x23fb18
+
+TcdImage05:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23fb18, 0x240478
+
+TcdImage06:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x240478, 0x240dd8
+
+TcdImage07:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x240dd8, 0x241738
+
+TcdImage08:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x241738, 0x242098
+
+TcdImage09:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x242098, 0x2429f8
+
+TcdImage10:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x2429f8, 0x243358
+
+TcdImage11:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x243358, 0x243cb8
+
+TcdImage12:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x243cb8, 0x244618
+
+TcdImage13:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x244618, 0x244f78
 
 # dir[59], 0x131bdc bytes; CHANGED vs build 84 (was 0x13980c bytes).
 # The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and
@@ -707,10 +1298,213 @@ UnreadMarker71:
     .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
 
 # dir[72], 0x11acc bytes; unchanged vs build 84.
-# AcOrganTabProc's pictures: u32 offsets from the segment start; each entry is a
-# Windows BMP ('BM').
+# AcOrganTabProc's drawbar tab pictures: u32 offsets from the segment start; each
+# entry is a whole Windows BMP ('BM'), and 18 slots reuse another slot's picture.
 OrganTabImages:
-    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x3b7518, 0x3c8fe4
+    .long	OrganTab00 - OrganTabImages
+    .long	OrganTab01 - OrganTabImages
+    .long	OrganTab02 - OrganTabImages
+    .long	OrganTab03 - OrganTabImages
+    .long	OrganTab04 - OrganTabImages
+    .long	OrganTab05 - OrganTabImages
+    .long	OrganTab06 - OrganTabImages
+    .long	OrganTab07 - OrganTabImages
+    .long	OrganTab08 - OrganTabImages
+    .long	OrganTab09 - OrganTabImages
+    .long	OrganTab10 - OrganTabImages
+    .long	OrganTab11 - OrganTabImages
+    .long	OrganTab12 - OrganTabImages
+    .long	OrganTab13 - OrganTabImages
+    .long	OrganTab14 - OrganTabImages
+    .long	OrganTab15 - OrganTabImages
+    .long	OrganTab16 - OrganTabImages
+    .long	OrganTab17 - OrganTabImages
+    .long	OrganTab18 - OrganTabImages
+    .long	OrganTab19 - OrganTabImages
+    .long	OrganTab20 - OrganTabImages
+    .long	OrganTab21 - OrganTabImages
+    .long	OrganTab22 - OrganTabImages
+    .long	OrganTab23 - OrganTabImages
+    .long	OrganTab24 - OrganTabImages
+    .long	OrganTab25 - OrganTabImages
+    .long	OrganTab06 - OrganTabImages
+    .long	OrganTab07 - OrganTabImages
+    .long	OrganTab08 - OrganTabImages
+    .long	OrganTab09 - OrganTabImages
+    .long	OrganTab30 - OrganTabImages
+    .long	OrganTab31 - OrganTabImages
+    .long	OrganTab32 - OrganTabImages
+    .long	OrganTab33 - OrganTabImages
+    .long	OrganTab34 - OrganTabImages
+    .long	OrganTab35 - OrganTabImages
+    .long	OrganTab16 - OrganTabImages
+    .long	OrganTab17 - OrganTabImages
+    .long	OrganTab18 - OrganTabImages
+    .long	OrganTab19 - OrganTabImages
+    .long	OrganTab20 - OrganTabImages
+    .long	OrganTab21 - OrganTabImages
+    .long	OrganTab22 - OrganTabImages
+    .long	OrganTab23 - OrganTabImages
+    .long	OrganTab24 - OrganTabImages
+    .long	OrganTab45 - OrganTabImages
+    .long	OrganTab46 - OrganTabImages
+    .long	OrganTab47 - OrganTabImages
+    .long	OrganTab48 - OrganTabImages
+    .long	OrganTab49 - OrganTabImages
+    .long	OrganTab30 - OrganTabImages
+    .long	OrganTab31 - OrganTabImages
+    .long	OrganTab32 - OrganTabImages
+    .long	OrganTab33 - OrganTabImages
+    .long	OrganTab34 - OrganTabImages
+    .long	OrganTab55 - OrganTabImages
+    .long	OrganTab56 - OrganTabImages
+    .long	OrganTab57 - OrganTabImages
+    .long	OrganTab58 - OrganTabImages
+    .long	OrganTab59 - OrganTabImages
+
+OrganTab00:
+    .incbin	"src/table/organ_tab/00_16_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab01:
+    .incbin	"src/table/organ_tab/01_8_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab02:
+    .incbin	"src/table/organ_tab/02_4_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab03:
+    .incbin	"src/table/organ_tab/03_2_2-3_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab04:
+    .incbin	"src/table/organ_tab/04_2_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab05:
+    .incbin	"src/table/organ_tab/05_1_flu.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 6, 26
+OrganTab06:
+    .incbin	"src/table/organ_tab/06_16_tb.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 7, 27
+OrganTab07:
+    .incbin	"src/table/organ_tab/07_8_kn.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 8, 28
+OrganTab08:
+    .incbin	"src/table/organ_tab/08_8_cl.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 9, 29
+OrganTab09:
+    .incbin	"src/table/organ_tab/09_8_vn.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab10:
+    .incbin	"src/table/organ_tab/10_16_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab11:
+    .incbin	"src/table/organ_tab/11_8_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab12:
+    .incbin	"src/table/organ_tab/12_4_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab13:
+    .incbin	"src/table/organ_tab/13_2_2-3_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab14:
+    .incbin	"src/table/organ_tab/14_2_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab15:
+    .incbin	"src/table/organ_tab/15_1_flu_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 16, 36
+OrganTab16:
+    .incbin	"src/table/organ_tab/16_16_tb_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 17, 37
+OrganTab17:
+    .incbin	"src/table/organ_tab/17_8_kn_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 18, 38
+OrganTab18:
+    .incbin	"src/table/organ_tab/18_8_cl_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 19, 39
+OrganTab19:
+    .incbin	"src/table/organ_tab/19_8_vn_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab25:
+    .incbin	"src/table/organ_tab/25_1_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab35:
+    .incbin	"src/table/organ_tab/35_1_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 20, 40
+OrganTab20:
+    .incbin	"src/table/organ_tab/20_16_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 21, 41
+OrganTab21:
+    .incbin	"src/table/organ_tab/21_8_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 22, 42
+OrganTab22:
+    .incbin	"src/table/organ_tab/22_4_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 23, 43
+OrganTab23:
+    .incbin	"src/table/organ_tab/23_2_2-3_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 24, 44
+OrganTab24:
+    .incbin	"src/table/organ_tab/24_2_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab45:
+    .incbin	"src/table/organ_tab/45_1_3-5_tib.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab46:
+    .incbin	"src/table/organ_tab/46_8_vox.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab47:
+    .incbin	"src/table/organ_tab/47_8_tp.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab48:
+    .incbin	"src/table/organ_tab/48_8_eh.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab49:
+    .incbin	"src/table/organ_tab/49_8_str.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 30, 50
+OrganTab30:
+    .incbin	"src/table/organ_tab/30_16_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 31, 51
+OrganTab31:
+    .incbin	"src/table/organ_tab/31_8_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 32, 52
+OrganTab32:
+    .incbin	"src/table/organ_tab/32_4_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 33, 53
+OrganTab33:
+    .incbin	"src/table/organ_tab/33_2_2-3_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+# slots 34, 54
+OrganTab34:
+    .incbin	"src/table/organ_tab/34_2_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab55:
+    .incbin	"src/table/organ_tab/55_1_3-5_tib_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab56:
+    .incbin	"src/table/organ_tab/56_8_vox_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab57:
+    .incbin	"src/table/organ_tab/57_8_tp_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab58:
+    .incbin	"src/table/organ_tab/58_8_eh_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
+
+OrganTab59:
+    .incbin	"src/table/organ_tab/59_8_str_italic.bmp"   # 38x80 4-bpp BMP, 1718 bytes
 
 # dir[73], 0x5fbc bytes; unchanged vs build 84.
 # Feature Demo picture A7, returned by DemoJpgDataA7: 'Future Keyboard!' and 'KN7000' over a night peak.
