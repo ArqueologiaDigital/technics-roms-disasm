@@ -12,6 +12,10 @@
 # kn7000_manual.sym, kn7000_exports_from_942.sym).
 #
 #   python3 notes/table-rom-probes/dir_slot_readers.py [baserom/kn7000_program.rom] [baserom/kn7000_table.rom]
+#   python3 notes/table-rom-probes/dir_slot_readers.py baserom/kn7000_program_sp7001.rom \
+#       baserom/kn7000_table_sp7001.rom 0x80:0x1864F4,0x3B97B4:0x3F8BDB      # program 942
+# (the third argument gives the code regions; names are still looked up in the 941 .sym files,
+# so for 942 only the reader counts are meaningful)
 #
 # Run from kn7000/.  This is a byte scan of the code regions, not a decode: a hit is the
 # instruction only if it lies on the instruction stream, which the script does not check.
@@ -26,6 +30,8 @@ PROG = sys.argv[1] if len(sys.argv) > 1 else "baserom/kn7000_program.rom"
 TABLE = sys.argv[2] if len(sys.argv) > 2 else "baserom/kn7000_table.rom"
 PBASE, TBASE = 0x48400000, 0x48000000
 REGIONS = [(0x80, 0x186000), (0x3B8D00, 0x3F6F01)]       # Makefile: disasm region 1 and 2
+if len(sys.argv) > 3:
+    REGIONS = [tuple(int(x, 0) for x in r.split(":")) for r in sys.argv[3].split(",")]
 
 p = open(PROG, "rb").read()
 t = open(TABLE, "rb").read()

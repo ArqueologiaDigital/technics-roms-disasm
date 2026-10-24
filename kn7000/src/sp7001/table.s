@@ -6,7 +6,9 @@
 #
 # Layout: a 85-entry uint32 offset directory at 0x0 (dir[0] = 0x200,
 # dir[84] = 0x3E0660 = end of the directory image), zero padding to
-# 0x200, then 84 asset segments.
+# 0x200, then 84 asset segments. Segment names and comments come from
+# tools/table_segments.py; the JPEG segments are files in src/table/.
+# Reference image: kn7000_table_sp7001.rom, SHA-1 482e73af2c84a257ebc835292943cb159b6d1d07.
 # Plug-in: 141 code chunks converted to MN10300 assembly.
 
 .equ TABLE_ROM_BASE, 0x48000000
@@ -165,110 +167,617 @@
 .equ KssKeystreamRecords, 0x483F8B74
 .equ XaprFooter, 0x483FB59C
 
-# ---- offset directory ----
-    .long 0x00000200, 0x00034858, 0x00035D08, 0x00040674, 0x0004238C, 0x0005667C   # dir[0..5]
-    .long 0x0006EA98, 0x00139EE8, 0x00139EEC, 0x00139EF0, 0x00143690, 0x0014E4D8   # dir[6..11]
-    .long 0x001523F8, 0x0015AC60, 0x00162C14, 0x0016C128, 0x0016DE00, 0x00171768   # dir[12..17]
-    .long 0x00174698, 0x00176480, 0x0017A590, 0x0017B394, 0x0017C14C, 0x0017CF58   # dir[18..23]
-    .long 0x0017D5FC, 0x0017F4FC, 0x0019027C, 0x001A3D78, 0x001A649C, 0x001A7F60   # dir[24..29]
-    .long 0x001B5974, 0x001BAD20, 0x001C0D28, 0x001C4DD8, 0x001C6EA8, 0x001C9298   # dir[30..35]
-    .long 0x001CA0B8, 0x001CD2D4, 0x001CF39C, 0x001D0DDC, 0x001D8ABC, 0x001DA9E0   # dir[36..41]
-    .long 0x001DCBC0, 0x001DF50C, 0x001E0BF0, 0x001E4098, 0x001E7418, 0x001EA850   # dir[42..47]
-    .long 0x001EBF48, 0x001F07FC, 0x001FB438, 0x001FD45C, 0x001FD460, 0x001FD464   # dir[48..53]
-    .long 0x001FD468, 0x001FD46C, 0x00211694, 0x0022F1C0, 0x0023CBAC, 0x00244F78   # dir[54..59]
-    .long 0x00376B54, 0x00377384, 0x0037A48C, 0x0037C2CC, 0x0037EFB8, 0x00381C20   # dir[60..65]
-    .long 0x00381C24, 0x00381C28, 0x003B7508, 0x003B750C, 0x003B7510, 0x003B7514   # dir[66..71]
-    .long 0x003B7518, 0x003C8FE4, 0x003CEFA0, 0x003CF9D8, 0x003D0954, 0x003D1890   # dir[72..77]
-    .long 0x003D2874, 0x003D2EE4, 0x003D3914, 0x003D4984, 0x003D7358, 0x003E065C   # dir[78..83]
-    .long 0x003E0660   # dir[84..84]
-    .space 0x200 - 85 * 4, 0x00
-    .org 0x000200
+# ---- the offset directory ----
+# Segment i starts at TableRomDirectory + dir[i]; the last entry is the end of the
+# directory image. The firmware reaches segment i with
+# `mov (TableRomDirectory + 4 * i), Rn` then `add TABLE_ROM_BASE, Rn`.
+TableRomDirectory:
+    .long	GuiResourceTables - TableRomDirectory
+    .long	SramRecordDefaultsZZZJ - TableRomDirectory
+    .long	FactoryMemStyleContainer - TableRomDirectory
+    .long	FactoryMemPadContainer - TableRomDirectory
+    .long	TechnicsPadsResource - TableRomDirectory
+    .long	OpeningAnimationFrames - TableRomDirectory
+    .long	InternalVoiceArchive - TableRomDirectory
+    .long	TableVersion - TableRomDirectory
+    .long	SeparatorZZZ - TableRomDirectory
+    .long	DemoJpgA1 - TableRomDirectory
+    .long	DemoJpgA2 - TableRomDirectory
+    .long	DemoJpgA3 - TableRomDirectory
+    .long	DemoJpgA4 - TableRomDirectory
+    .long	DemoJpgA5 - TableRomDirectory
+    .long	DemoJpgA6 - TableRomDirectory
+    .long	DemoJpgB1 - TableRomDirectory
+    .long	DemoJpgB2 - TableRomDirectory
+    .long	DemoJpgB3 - TableRomDirectory
+    .long	DemoJpgB4 - TableRomDirectory
+    .long	DemoJpgC1 - TableRomDirectory
+    .long	DemoJpgD1 - TableRomDirectory
+    .long	DemoJpgD2 - TableRomDirectory
+    .long	DemoJpgD3 - TableRomDirectory
+    .long	DemoJpgD4 - TableRomDirectory
+    .long	DemoJpgE1 - TableRomDirectory
+    .long	DemoJpgE2 - TableRomDirectory
+    .long	DemoJpgE3 - TableRomDirectory
+    .long	DemoJpgF1 - TableRomDirectory
+    .long	DemoJpgF2 - TableRomDirectory
+    .long	DemoJpgF3 - TableRomDirectory
+    .long	DemoJpgF4 - TableRomDirectory
+    .long	DemoJpgG1 - TableRomDirectory
+    .long	DemoJpgG2 - TableRomDirectory
+    .long	DemoJpgG3 - TableRomDirectory
+    .long	DemoJpgG4 - TableRomDirectory
+    .long	DemoJpgH1 - TableRomDirectory
+    .long	DemoJpgH2 - TableRomDirectory
+    .long	DemoJpgI1 - TableRomDirectory
+    .long	DemoJpgI2 - TableRomDirectory
+    .long	DemoJpgI3 - TableRomDirectory
+    .long	DemoJpgJ2 - TableRomDirectory
+    .long	DemoJpgJ3 - TableRomDirectory
+    .long	DemoJpgJ4 - TableRomDirectory
+    .long	DemoJpgJ5 - TableRomDirectory
+    .long	DemoJpgC2 - TableRomDirectory
+    .long	DemoJpgC3 - TableRomDirectory
+    .long	DemoJpgC4 - TableRomDirectory
+    .long	DemoJpgK1 - TableRomDirectory
+    .long	DemoJpgK2 - TableRomDirectory
+    .long	DemoJpgK3 - TableRomDirectory
+    .long	DemoJpgK4 - TableRomDirectory
+    .long	DemoJpgL1Placeholder - TableRomDirectory
+    .long	DemoJpgL2Placeholder - TableRomDirectory
+    .long	DemoJpgL3Placeholder - TableRomDirectory
+    .long	DemoJpgL4Placeholder - TableRomDirectory
+    .long	RhythmImages - TableRomDirectory
+    .long	SoundImages - TableRomDirectory
+    .long	UserHpMenuData - TableRomDirectory
+    .long	TcdImages - TableRomDirectory
+    .long	BuiltinStyleSubTable - TableRomDirectory
+    .long	DemoJpgD5 - TableRomDirectory
+    .long	DemoJpgH3 - TableRomDirectory
+    .long	DemoJpgH4 - TableRomDirectory
+    .long	DemoJpgL5 - TableRomDirectory
+    .long	DemoJpgL6 - TableRomDirectory
+    .long	DemoJpgL7Placeholder - TableRomDirectory
+    .long	DemoJpgL8Placeholder - TableRomDirectory
+    .long	HelpTexts - TableRomDirectory
+    .long	UnreadBuildMarker68 - TableRomDirectory
+    .long	UnreadBuildMarker69 - TableRomDirectory
+    .long	UnreadBuildMarker70 - TableRomDirectory
+    .long	UnreadMarker71 - TableRomDirectory
+    .long	OrganTabImages - TableRomDirectory
+    .long	DemoJpgA7 - TableRomDirectory
+    .long	DemoJpgD6 - TableRomDirectory
+    .long	DemoJpgD7 - TableRomDirectory
+    .long	DemoJpgD8 - TableRomDirectory
+    .long	DemoJpgD9 - TableRomDirectory
+    .long	DemoJpgD10 - TableRomDirectory
+    .long	DemoJpgD11 - TableRomDirectory
+    .long	DemoJpgD12 - TableRomDirectory
+    .long	DemoJpgD13 - TableRomDirectory
+    .long	DemoJpgD14 - TableRomDirectory
+    .long	TechnicsRhythmsStub - TableRomDirectory
+    .long	TableRomImageEnd - TableRomDirectory
+    .space	0x200 - 85 * 4, 0x00
+    .org	0x000200
 
-# ---- 84 asset segments ----
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x000200, 0x034858   # seg00 @ (0x34658 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x034858, 0x035D08   # seg01 ZZZJ (0x14b0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x035D08, 0x040674   # seg02 TCMP (0xa96c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x040674, 0x04238C   # seg03 TPAD (0x1d18 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x04238C, 0x05667C   # seg04 Tech (0x142f0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x05667C, 0x06EA98   # seg05 l (0x1841c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x06EA98, 0x139EE8   # seg06 JK (0xcb450 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x139EE8, 0x139EEC   # seg07 83 (0x4 bytes)  CHANGED vs build 84 (was 0x4 bytes)
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x139EEC, 0x139EF0   # seg08 ZZZ (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x139EF0, 0x143690   # seg09 JPEG (0x97a0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x143690, 0x14E4D8   # seg10 JPEG (0xae48 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x14E4D8, 0x1523F8   # seg11 JPEG (0x3f20 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1523F8, 0x15AC60   # seg12 JPEG (0x8868 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x15AC60, 0x162C14   # seg13 JPEG (0x7fb4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x162C14, 0x16C128   # seg14 JPEG (0x9514 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x16C128, 0x16DE00   # seg15 JPEG (0x1cd8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x16DE00, 0x171768   # seg16 JPEG (0x3968 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x171768, 0x174698   # seg17 JPEG (0x2f30 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x174698, 0x176480   # seg18 JPEG (0x1de8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x176480, 0x17A590   # seg19 JPEG (0x4110 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17A590, 0x17B394   # seg20 JPEG (0xe04 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17B394, 0x17C14C   # seg21 JPEG (0xdb8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17C14C, 0x17CF58   # seg22 JPEG (0xe0c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17CF58, 0x17D5FC   # seg23 JPEG (0x6a4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17D5FC, 0x17F4FC   # seg24 JPEG (0x1f00 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x17F4FC, 0x19027C   # seg25 JPEG (0x10d80 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x19027C, 0x1A3D78   # seg26 JPEG (0x13afc bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1A3D78, 0x1A649C   # seg27 JPEG (0x2724 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1A649C, 0x1A7F60   # seg28 JPEG (0x1ac4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1A7F60, 0x1B5974   # seg29 JPEG (0xda14 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1B5974, 0x1BAD20   # seg30 JPEG (0x53ac bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1BAD20, 0x1C0D28   # seg31 JPEG (0x6008 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1C0D28, 0x1C4DD8   # seg32 JPEG (0x40b0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1C4DD8, 0x1C6EA8   # seg33 JPEG (0x20d0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1C6EA8, 0x1C9298   # seg34 JPEG (0x23f0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1C9298, 0x1CA0B8   # seg35 JPEG (0xe20 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1CA0B8, 0x1CD2D4   # seg36 JPEG (0x321c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1CD2D4, 0x1CF39C   # seg37 JPEG (0x20c8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1CF39C, 0x1D0DDC   # seg38 JPEG (0x1a40 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1D0DDC, 0x1D8ABC   # seg39 JPEG (0x7ce0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1D8ABC, 0x1DA9E0   # seg40 JPEG (0x1f24 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1DA9E0, 0x1DCBC0   # seg41 JPEG (0x21e0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1DCBC0, 0x1DF50C   # seg42 JPEG (0x294c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1DF50C, 0x1E0BF0   # seg43 JPEG (0x16e4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1E0BF0, 0x1E4098   # seg44 JPEG (0x34a8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1E4098, 0x1E7418   # seg45 JPEG (0x3380 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1E7418, 0x1EA850   # seg46 JPEG (0x3438 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1EA850, 0x1EBF48   # seg47 JPEG (0x16f8 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1EBF48, 0x1F07FC   # seg48 JPEG (0x48b4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1F07FC, 0x1FB438   # seg49 JPEG (0xac3c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FB438, 0x1FD45C   # seg50 JPEG (0x2024 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FD45C, 0x1FD460   # seg51 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FD460, 0x1FD464   # seg52 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FD464, 0x1FD468   # seg53 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FD468, 0x1FD46C   # seg54 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x1FD46C, 0x211694   # seg55 data (0x14228 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x211694, 0x22F1C0   # seg56 data (0x1db2c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x22F1C0, 0x23CBAC   # seg57 < (0xd9ec bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x23CBAC, 0x244F78   # seg58 data (0x83cc bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x244F78, 0x376B54   # seg59 data (0x131bdc bytes)  CHANGED vs build 84 (was 0x13980c bytes)
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x376B54, 0x377384   # seg60 JPEG (0x830 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x377384, 0x37A48C   # seg61 JPEG (0x3108 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x37A48C, 0x37C2CC   # seg62 JPEG (0x1e40 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x37C2CC, 0x37EFB8   # seg63 JPEG (0x2cec bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x37EFB8, 0x381C20   # seg64 JPEG (0x2c68 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x381C20, 0x381C24   # seg65 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x381C24, 0x381C28   # seg66 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x381C28, 0x3B7508   # seg67  F (0x358e0 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3B7508, 0x3B750C   # seg68 80 (0x4 bytes)  CHANGED vs build 84 (was 0x4 bytes)
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3B750C, 0x3B7510   # seg69 80 (0x4 bytes)  CHANGED vs build 84 (was 0x4 bytes)
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3B7510, 0x3B7514   # seg70 80 (0x4 bytes)  CHANGED vs build 84 (was 0x4 bytes)
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3B7514, 0x3B7518   # seg71 27 (0x4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3B7518, 0x3C8FE4   # seg72 data (0x11acc bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3C8FE4, 0x3CEFA0   # seg73 JPEG (0x5fbc bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3CEFA0, 0x3CF9D8   # seg74 JPEG (0xa38 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3CF9D8, 0x3D0954   # seg75 JPEG (0xf7c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D0954, 0x3D1890   # seg76 JPEG (0xf3c bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D1890, 0x3D2874   # seg77 JPEG (0xfe4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D2874, 0x3D2EE4   # seg78 JPEG (0x670 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D2EE4, 0x3D3914   # seg79 JPEG (0xa30 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D3914, 0x3D4984   # seg80 JPEG (0x1070 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D4984, 0x3D7358   # seg81 JPEG (0x29d4 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3D7358, 0x3E065C   # seg82 JPEG (0x9304 bytes)  unchanged vs build 84
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3E065C, 0x3E0660   # seg83 DMY (0x4 bytes)  CHANGED vs build 84 (was 0x1248 bytes)
+# dir[0], 0x34658 bytes; unchanged vs build 84.
+# The GUI's drawing resources. InitializeResource copies the five header words to
+# BitmapTablePtr, FrameTablePtr, IconTablePtr, FontTablePtr and 0x50122dbc
+# (annotations/gfx_draw.ann): the bitmap, frame-piece and icon tables hold
+# {s16 width, s16 height, u8 *pixels} entries, the font table 0x14-byte descriptors;
+# the fifth word is 0. The pointers are CPU addresses, not offsets.
+GuiResourceTables:
+    .long	ResBitmapTable, ResFrameTable, ResIconTable, ResFontTable, 0
+    .space	0x2c, 0x00
+ResBitmapTable:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x000240, 0x00e880
+ResFrameTable:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x00e880, 0x01221c
+ResIconTable:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x01221c, 0x0237a4
+ResFontTable:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x0237a4, 0x034858
+
+# dir[1], 0x14b0 bytes; unchanged vs build 84.
+# 'ZZZJ', 0x00, 'K', 0x00, 0xdc (the 8-byte signature the reader compares with the
+# program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.
+# Read through TableRomSeg01PtrSize by the unnamed routine at 0x4843fb65: it copies
+# records lo..hi over the battery-SRAM table at 0x84030ff8 (same stride), or a
+# program-ROM default record when the signature does not match.
+# TODO: what the 220 records configure.
+SramRecordDefaultsZZZJ:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x034858, 0x035d08
+
+# dir[2], 0xa96c bytes; unchanged vs build 84.
+# The factory MEMORY-style container ('TCMP'): MemStyleAreaLoadFactory copies it
+# whole (through TableRomSeg02PtrSize) to MEM_STYLE_AREA 0x50180000 when it starts
+# with 'TCMP'. Format: notes/tcmp-container-synthesis.md.
+FactoryMemStyleContainer:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x035d08, 0x040674
+
+# dir[3], 0x1d18 bytes; unchanged vs build 84.
+# The factory PERFORMANCE PAD user memory ('TPAD'): the routine at 0x48432175 clears the
+# 0xa000 bytes at 0x501f91a0 and, when this segment (TableRomSeg03PtrSize) starts
+# with 'TPAD', copies it in; otherwise it builds an empty container
+# (notes/work-ram-map.md, 0x501f91a0).
+FactoryMemPadContainer:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x040674, 0x04238c
+
+# dir[4], 0x142f0 bytes; unchanged vs build 84.
+# The built-in "Technics Pads" bank resource (16-byte space-padded name first).
+# The routine at 0x484342b4 stores its address (TableRomSeg04Ptr) in 0x50007760 and,
+# when 0x48433f4f rejects it, uses the program ROM's own "Technics Pads" copy
+# instead. Same header shape as TechnicsRhythmsTable (segment 83).
+TechnicsPadsResource:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x04238c, 0x05667c
+
+# dir[5], 0x1841c bytes; unchanged vs build 84.
+# The boot opening screen's animation: OpeningFrameDraw draws frame n from u32
+# offset n of this segment; 0 = no frame (it then stores -2 in the u16 at
+# 0x5006b5a8).
+OpeningAnimationFrames:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x05667c, 0x06ea98
+
+# dir[6], 0xcb450 bytes; unchanged vs build 84.
+# 'JK': the INTERNAL (class 0) voice archive. VoiceArchiveScanBoot puts it in slot 0
+# of the bank-source arrays, and the Voice*LookupInternal routines hash into it
+# (kn7000_manual.sym, the five bank sources).
+InternalVoiceArchive:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x06ea98, 0x139ee8
+
+# dir[7], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
+# The table build number, ASCII digits and a line feed. The boot code parses the
+# digits into the u16 at 0x50007dc8, which AcTableVerBoxProc shows as TABLE on the
+# SOFT VERSION screen.
+TableVersion:
+    .byte	0x38, 0x33, 0x0a, 0x00   # "83\n"
+
+# dir[8], 0x4 bytes; unchanged vs build 84.
+# 'ZZZ' and a line feed. No program code reads this slot.
+SeparatorZZZ:
+    .byte	0x5a, 0x5a, 0x5a, 0x0a   # "ZZZ\n"
+
+# dir[9], 0x97a0 bytes; unchanged vs build 84.
+# Feature Demo picture A1, returned by DemoJpgDataA1: 'Welcome to SX-KN7000' over a glass hall.
+DemoJpgA1:
+    .incbin	"src/table/demo_a1_welcome.jpg"   # 640x240 JPEG, 38815 bytes
+    .align	4
+
+# dir[10], 0xae48 bytes; unchanged vs build 84.
+# Feature Demo picture A2, returned by DemoJpgDataA2: a crowded city street, 'SX-KN7000' top right.
+DemoJpgA2:
+    .incbin	"src/table/demo_a2_city_street.jpg"   # 600x170 JPEG, 44615 bytes
+    .align	4
+
+# dir[11], 0x3f20 bytes; unchanged vs build 84.
+# Feature Demo picture A3, returned by DemoJpgDataA3: the KN7000 logo flying past the Earth.
+DemoJpgA3:
+    .incbin	"src/table/demo_a3_logo_globe.jpg"   # 600x170 JPEG, 16159 bytes
+    .align	4
+
+# dir[12], 0x8868 bytes; unchanged vs build 84.
+# Feature Demo picture A4, returned by DemoJpgDataA4: the KN7000 logo in pink light rays.
+DemoJpgA4:
+    .incbin	"src/table/demo_a4_logo_light_rays.jpg"   # 600x170 JPEG, 34918 bytes
+    .align	4
+
+# dir[13], 0x7fb4 bytes; unchanged vs build 84.
+# Feature Demo picture A5, returned by DemoJpgDataA5: 'KN7000' over a pride of lions.
+DemoJpgA5:
+    .incbin	"src/table/demo_a5_logo_lions.jpg"   # 600x170 JPEG, 32692 bytes
+
+# dir[14], 0x9514 bytes; unchanged vs build 84.
+# Feature Demo picture A6, returned by DemoJpgDataA6: the KN7000 logo over pink mountains.
+DemoJpgA6:
+    .incbin	"src/table/demo_a6_logo_mountains.jpg"   # 640x240 JPEG, 38163 bytes
+    .align	4
+
+# dir[15], 0x1cd8 bytes; unchanged vs build 84.
+# Feature Demo picture B1, returned by DemoJpgDataB1: the SD logo and an SD card held in two fingers.
+DemoJpgB1:
+    .incbin	"src/table/demo_b1_sd_card.jpg"   # 320x120 JPEG, 7384 bytes
+
+# dir[16], 0x3968 bytes; unchanged vs build 84.
+# Feature Demo picture B2, returned by DemoJpgDataB2: a laptop showing a lake.
+DemoJpgB2:
+    .incbin	"src/table/demo_b2_laptop.jpg"   # 237x225 JPEG, 14693 bytes
+    .align	4
+
+# dir[17], 0x2f30 bytes; unchanged vs build 84.
+# Feature Demo picture B3, returned by DemoJpgDataB3: a Panasonic SD audio player and a listener.
+DemoJpgB3:
+    .incbin	"src/table/demo_b3_sd_audio_player.jpg"   # 240x160 JPEG, 12078 bytes
+    .align	4
+
+# dir[18], 0x1de8 bytes; unchanged vs build 84.
+# Feature Demo picture B4, returned by DemoJpgDataB4: a compact digital camera in a hand.
+DemoJpgB4:
+    .incbin	"src/table/demo_b4_digital_camera.jpg"   # 240x160 JPEG, 7654 bytes
+    .align	4
+
+# dir[19], 0x4110 bytes; unchanged vs build 84.
+# Feature Demo picture C1, returned by DemoJpgDataC1: a church interior with a pipe organ.
+DemoJpgC1:
+    .incbin	"src/table/demo_c1_church_organ.jpg"   # 280x200 JPEG, 16656 bytes
+
+# dir[20], 0xe04 bytes; unchanged vs build 84.
+# Feature Demo picture D1, returned by DemoJpgDataD1: the word ORGAN, letters set one way.
+DemoJpgD1:
+    .incbin	"src/table/demo_d1_organ_title_1.jpg"   # 160x80 JPEG, 3587 bytes
+    .align	4
+
+# dir[21], 0xdb8 bytes; unchanged vs build 84.
+# Feature Demo picture D2, returned by DemoJpgDataD2: the word ORGAN, letters set another way.
+DemoJpgD2:
+    .incbin	"src/table/demo_d2_organ_title_2.jpg"   # 160x80 JPEG, 3512 bytes
+
+# dir[22], 0xe0c bytes; unchanged vs build 84.
+# Feature Demo picture D3, returned by DemoJpgDataD3: the word ORGAN, a third letter setting.
+DemoJpgD3:
+    .incbin	"src/table/demo_d3_organ_title_3.jpg"   # 160x80 JPEG, 3594 bytes
+    .align	4
+
+# dir[23], 0x6a4 bytes; unchanged vs build 84.
+# Feature Demo picture D4, returned by DemoJpgDataD4: 'Accordion', small red lettering.
+DemoJpgD4:
+    .incbin	"src/table/demo_d4_accordion_title_1.jpg"   # 160x80 JPEG, 1700 bytes
+
+# dir[24], 0x1f00 bytes; unchanged vs build 84.
+# Feature Demo picture E1, returned by DemoJpgDataE1: a drum with musical notes rising from it.
+DemoJpgE1:
+    .incbin	"src/table/demo_e1_drum_notes.jpg"   # 320x120 JPEG, 7933 bytes
+    .align	4
+
+# dir[25], 0x10d80 bytes; unchanged vs build 84.
+# Feature Demo picture E2, returned by DemoJpgDataE2: the FAVORITES screen.
+DemoJpgE2:
+    .incbin	"src/table/demo_e2_favorites_screen.jpg"   # 640x240 JPEG, 68989 bytes
+    .align	4
+
+# dir[26], 0x13afc bytes; unchanged vs build 84.
+# Feature Demo picture E3, returned by DemoJpgDataE3: the RHYTHM screen, style 8 Beat Rock.
+DemoJpgE3:
+    .incbin	"src/table/demo_e3_rhythm_screen.jpg"   # 640x240 JPEG, 80634 bytes
+    .align	4
+
+# dir[27], 0x2724 bytes; unchanged vs build 84.
+# Feature Demo picture F1, returned by DemoJpgDataF1: a cartoon four-piece band.
+DemoJpgF1:
+    .incbin	"src/table/demo_f1_cartoon_band.jpg"   # 240x160 JPEG, 10019 bytes
+    .align	4
+
+# dir[28], 0x1ac4 bytes; unchanged vs build 84.
+# Feature Demo picture F2, returned by DemoJpgDataF2: a sketch of rows of panel buttons.
+DemoJpgF2:
+    .incbin	"src/table/demo_f2_panel_buttons_sketch.jpg"   # 240x160 JPEG, 6850 bytes
+    .align	4
+
+# dir[29], 0xda14 bytes; unchanged vs build 84.
+# Feature Demo picture F3, returned by DemoJpgDataF3: the MUSICAL CATEGORY screen, style Disco Hustling.
+DemoJpgF3:
+    .incbin	"src/table/demo_f3_musical_category_screen.jpg"   # 640x214 JPEG, 55827 bytes
+    .align	4
+
+# dir[30], 0x53ac bytes; unchanged vs build 84.
+# Feature Demo picture F4, returned by DemoJpgDataF4: a collage of singers and players.
+DemoJpgF4:
+    .incbin	"src/table/demo_f4_musicians_collage.jpg"   # 480x180 JPEG, 21417 bytes
+    .align	4
+
+# dir[31], 0x6008 bytes; unchanged vs build 84.
+# Feature Demo picture G1, returned by DemoJpgDataG1: Intro / Theme A / Theme B / Ending with cue points.
+DemoJpgG1:
+    .incbin	"src/table/demo_g1_song_cue_diagram.jpg"   # 420x146 JPEG, 24581 bytes
+    .align	4
+
+# dir[32], 0x40b0 bytes; unchanged vs build 84.
+# Feature Demo picture G2, returned by DemoJpgDataG2: a laptop running PC software.
+DemoJpgG2:
+    .incbin	"src/table/demo_g2_laptop_software.jpg"   # 299x220 JPEG, 16557 bytes
+    .align	4
+
+# dir[33], 0x20d0 bytes; unchanged vs build 84.
+# Feature Demo picture G3, returned by DemoJpgDataG3: a digital camera held in a hand.
+DemoJpgG3:
+    .incbin	"src/table/demo_g3_camera.jpg"   # 240x160 JPEG, 8399 bytes
+    .align	4
+
+# dir[34], 0x23f0 bytes; unchanged vs build 84.
+# Feature Demo picture G4, returned by DemoJpgDataG4: hands on a keyboard and a dreaming face.
+DemoJpgG4:
+    .incbin	"src/table/demo_g4_player_dream.jpg"   # 320x120 JPEG, 9199 bytes
+    .align	4
+
+# dir[35], 0xe20 bytes; unchanged vs build 84.
+# Feature Demo picture H1, returned by DemoJpgDataH1: a USB plug.
+DemoJpgH1:
+    .incbin	"src/table/demo_h1_usb_plug.jpg"   # 240x160 JPEG, 3615 bytes
+    .align	4
+
+# dir[36], 0x321c bytes; unchanged vs build 84.
+# Feature Demo picture H2, returned by DemoJpgDataH2: the 'Song Manager' PC program window.
+DemoJpgH2:
+    .incbin	"src/table/demo_h2_song_manager.jpg"   # 320x135 JPEG, 12825 bytes
+    .align	4
+
+# dir[37], 0x20c8 bytes; unchanged vs build 84.
+# Feature Demo picture I1, returned by DemoJpgDataI1: a cartoon big band.
+DemoJpgI1:
+    .incbin	"src/table/demo_i1_cartoon_big_band.jpg"   # 320x120 JPEG, 8392 bytes
+
+# dir[38], 0x1a40 bytes; unchanged vs build 84.
+# Feature Demo picture I2, returned by DemoJpgDataI2: a sketch of a hand on the keys.
+DemoJpgI2:
+    .incbin	"src/table/demo_i2_hand_on_keys.jpg"   # 240x160 JPEG, 6719 bytes
+    .align	4
+
+# dir[39], 0x7ce0 bytes; unchanged vs build 84.
+# Feature Demo picture I3, returned by DemoJpgDataI3: the SMF DIRECT PLAY screen with lyrics, 'When The Saints'.
+DemoJpgI3:
+    .incbin	"src/table/demo_i3_smf_lyrics_screen.jpg"   # 640x192 JPEG, 31967 bytes
+    .align	4
+
+# dir[40], 0x1f24 bytes; unchanged vs build 84.
+# Feature Demo picture J2, returned by DemoJpgDataJ2: a sketch of the instrument's display.
+DemoJpgJ2:
+    .incbin	"src/table/demo_j2_display_sketch.jpg"   # 320x120 JPEG, 7970 bytes
+    .align	4
+
+# dir[41], 0x21e0 bytes; unchanged vs build 84.
+# Feature Demo picture J3, returned by DemoJpgDataJ3: a hand pressing panel buttons.
+DemoJpgJ3:
+    .incbin	"src/table/demo_j3_hand_on_panel.jpg"   # 240x160 JPEG, 8672 bytes
+
+# dir[42], 0x294c bytes; unchanged vs build 84.
+# Feature Demo picture J4, returned by DemoJpgDataJ4: chord names, a hand on the keys and a question mark.
+DemoJpgJ4:
+    .incbin	"src/table/demo_j4_chord_question.jpg"   # 240x160 JPEG, 10571 bytes
+    .align	4
+
+# dir[43], 0x16e4 bytes; unchanged vs build 84.
+# Feature Demo picture J5, returned by DemoJpgDataJ5: a book with a question mark.
+DemoJpgJ5:
+    .incbin	"src/table/demo_j5_help_book.jpg"   # 240x160 JPEG, 5857 bytes
+    .align	4
+
+# dir[44], 0x34a8 bytes; unchanged vs build 84.
+# Feature Demo picture C2, returned by DemoJpgDataC2: the keyboards of a drawbar organ.
+DemoJpgC2:
+    .incbin	"src/table/demo_c2_organ_manuals.jpg"   # 400x125 JPEG, 13477 bytes
+    .align	4
+
+# dir[45], 0x3380 bytes; unchanged vs build 84.
+# Feature Demo picture C3, returned by DemoJpgDataC3: organ stop tabs 16' Flu .. 8' Vn.
+DemoJpgC3:
+    .incbin	"src/table/demo_c3_organ_tabs.jpg"   # 449x88 JPEG, 13181 bytes
+    .align	4
+
+# dir[46], 0x3438 bytes; unchanged vs build 84.
+# Feature Demo picture C4, returned by DemoJpgDataC4: the same stop tabs, italic captions.
+DemoJpgC4:
+    .incbin	"src/table/demo_c4_organ_tabs_italic.jpg"   # 449x88 JPEG, 13368 bytes
+
+# dir[47], 0x16f8 bytes; unchanged vs build 84.
+# Feature Demo picture K1, returned by DemoJpgDataK1: the SD logo.
+DemoJpgK1:
+    .incbin	"src/table/demo_k1_sd_logo.jpg"   # 320x120 JPEG, 5877 bytes
+    .align	4
+
+# dir[48], 0x48b4 bytes; unchanged vs build 84.
+# Feature Demo picture K2, returned by DemoJpgDataK2: a theatre-organ console.
+DemoJpgK2:
+    .incbin	"src/table/demo_k2_theatre_organ.jpg"   # 240x203 JPEG, 18611 bytes
+    .align	4
+
+# dir[49], 0xac3c bytes; unchanged vs build 84.
+# Feature Demo picture K3, returned by DemoJpgDataK3: the ORGAN STYLIST screen, style Swing Tonewheels.
+DemoJpgK3:
+    .incbin	"src/table/demo_k3_organ_stylist_screen.jpg"   # 640x240 JPEG, 44092 bytes
+
+# dir[50], 0x2024 bytes; unchanged vs build 84.
+# Feature Demo picture K4, returned by DemoJpgDataK4: a keyboard with notes streaming out.
+DemoJpgK4:
+    .incbin	"src/table/demo_k4_keyboard_notes.jpg"   # 240x160 JPEG, 8225 bytes
+    .align	4
+
+# dir[51], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL1 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL1Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[52], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL2 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL2Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[53], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL3 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL3Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[54], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL4 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL4Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[55], 0x14228 bytes; unchanged vs build 84.
+# AcRhyImageProc's pictures: u32 offsets from the segment start, indexed by the u16
+# at 0x5006b7d8; 0 = none.
+RhythmImages:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x1fd46c, 0x211694
+
+# dir[56], 0x1db2c bytes; unchanged vs build 84.
+# AcSndImageProc's pictures: u32 offsets from the segment start, indexed by the u16
+# at 0x5006b80e; 0 = none.
+SoundImages:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x211694, 0x22f1c0
+
+# dir[57], 0xd9ec bytes; unchanged vs build 84.
+# Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.
+# TODO: the format of the entries.
+UserHpMenuData:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x22f1c0, 0x23cbac
+
+# dir[58], 0x83cc bytes; unchanged vs build 84.
+# Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.
+# TODO: the format of the 2400-byte entries.
+TcdImages:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x23cbac, 0x244f78
+
+# dir[59], 0x131bdc bytes; CHANGED vs build 84 (was 0x13980c bytes).
+# The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and
+# StyleBuiltinNameTableInit caches it in 0x50034b90 (kn7000_manual.sym, style-name
+# module). TODO: its record format.
+BuiltinStyleSubTable:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x244f78, 0x376b54
+
+# dir[60], 0x830 bytes; unchanged vs build 84.
+# Feature Demo picture D5, returned by DemoJpgDataD5: 'Accordion', larger red lettering.
+DemoJpgD5:
+    .incbin	"src/table/demo_d5_accordion_title_2.jpg"   # 160x80 JPEG, 2094 bytes
+    .align	4
+
+# dir[61], 0x3108 bytes; unchanged vs build 84.
+# Feature Demo picture H3, returned by DemoJpgDataH3: an 'Audio Recorder' Windows XP program window.
+DemoJpgH3:
+    .incbin	"src/table/demo_h3_audio_recorder.jpg"   # 240x187 JPEG, 12552 bytes
+
+# dir[62], 0x1e40 bytes; unchanged vs build 84.
+# Feature Demo picture H4, returned by DemoJpgDataH4: a singer at a keyboard.
+DemoJpgH4:
+    .incbin	"src/table/demo_h4_singer_keyboard.jpg"   # 240x160 JPEG, 7744 bytes
+
+# dir[63], 0x2cec bytes; unchanged vs build 84.
+# Feature Demo picture L5, returned by DemoJpgDataL5: a laptop showing a flower photo.
+DemoJpgL5:
+    .incbin	"src/table/demo_l5_laptop_flower_picture.jpg"   # 240x160 JPEG, 11498 bytes
+    .align	4
+
+# dir[64], 0x2c68 bytes; unchanged vs build 84.
+# Feature Demo picture L6, returned by DemoJpgDataL6: handwritten Composer, Memory, Sound, PerPads, MSA, Style.
+DemoJpgL6:
+    .incbin	"src/table/demo_l6_feature_words.jpg"   # 320x120 JPEG, 11366 bytes
+    .align	4
+
+# dir[65], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL7 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL7Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[66], 0x4 bytes; unchanged vs build 84.
+# Not a picture: the 4-byte '27' + line feed that DemoJpgDataL8 returns in
+# place of a JPEG. TODO: whether the demo ever asks for it.
+DemoJpgL8Placeholder:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[67], 0x358e0 bytes; unchanged vs build 84.
+# The HELP function's texts in four languages, English first ('After pressing the
+# HELP button, ...'). InitializeBlock15 takes the u32 at +4 * (u16 at 0x500d3584)
+# as the offset of a language's index of 12-byte entries; the four indexes sit at
+# the end of the segment.
+HelpTexts:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x381c28, 0x3b7508
+
+# dir[68], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
+# A build number, ASCII digits and a line feed. No program code reads this slot;
+# notes/sp7001-build-diff.md compares it across builds.
+UnreadBuildMarker68:
+    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+
+# dir[69], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
+# A build number, ASCII digits and a line feed. No program code reads this slot;
+# notes/sp7001-build-diff.md compares it across builds.
+UnreadBuildMarker69:
+    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+
+# dir[70], 0x4 bytes; CHANGED vs build 84 (was 0x4 bytes).
+# A build number, ASCII digits and a line feed. No program code reads this slot;
+# notes/sp7001-build-diff.md compares it across builds.
+UnreadBuildMarker70:
+    .byte	0x38, 0x30, 0x0a, 0x00   # "80\n"
+
+# dir[71], 0x4 bytes; unchanged vs build 84.
+# '27' and a line feed, like the demo placeholders. No program code reads this slot.
+UnreadMarker71:
+    .byte	0x32, 0x37, 0x0a, 0x00   # "27\n"
+
+# dir[72], 0x11acc bytes; unchanged vs build 84.
+# AcOrganTabProc's pictures: u32 offsets from the segment start; each entry is a
+# Windows BMP ('BM').
+OrganTabImages:
+    .incbin_range	"baserom/kn7000_table_sp7001.rom", 0x3b7518, 0x3c8fe4
+
+# dir[73], 0x5fbc bytes; unchanged vs build 84.
+# Feature Demo picture A7, returned by DemoJpgDataA7: 'Future Keyboard!' and 'KN7000' over a night peak.
+DemoJpgA7:
+    .incbin	"src/table/demo_a7_future_keyboard.jpg"   # 640x240 JPEG, 24507 bytes
+    .align	4
+
+# dir[74], 0xa38 bytes; unchanged vs build 84.
+# Feature Demo picture D6, returned by DemoJpgDataD6: 'Accordion', red lettering on an arc.
+DemoJpgD6:
+    .incbin	"src/table/demo_d6_accordion_title_3.jpg"   # 160x80 JPEG, 2613 bytes
+    .align	4
+
+# dir[75], 0xf7c bytes; unchanged vs build 84.
+# Feature Demo picture D7, returned by DemoJpgDataD7: 'Harmonica', script lettering.
+DemoJpgD7:
+    .incbin	"src/table/demo_d7_harmonica_title_1.jpg"   # 160x80 JPEG, 3961 bytes
+    .align	4
+
+# dir[76], 0xf3c bytes; unchanged vs build 84.
+# Feature Demo picture D8, returned by DemoJpgDataD8: 'Harmonica', script lettering.
+DemoJpgD8:
+    .incbin	"src/table/demo_d8_harmonica_title_2.jpg"   # 160x80 JPEG, 3900 bytes
+
+# dir[77], 0xfe4 bytes; unchanged vs build 84.
+# Feature Demo picture D9, returned by DemoJpgDataD9: 'Harmonica', script lettering.
+DemoJpgD9:
+    .incbin	"src/table/demo_d9_harmonica_title_3.jpg"   # 160x80 JPEG, 4067 bytes
+    .align	4
+
+# dir[78], 0x670 bytes; unchanged vs build 84.
+# Feature Demo picture D10, returned by DemoJpgDataD10: 'Vocal', small, bottom right.
+DemoJpgD10:
+    .incbin	"src/table/demo_d10_vocal_title_1.jpg"   # 160x80 JPEG, 1645 bytes
+    .align	4
+
+# dir[79], 0xa30 bytes; unchanged vs build 84.
+# Feature Demo picture D11, returned by DemoJpgDataD11: 'Vocal', medium.
+DemoJpgD11:
+    .incbin	"src/table/demo_d11_vocal_title_2.jpg"   # 160x80 JPEG, 2606 bytes
+    .align	4
+
+# dir[80], 0x1070 bytes; unchanged vs build 84.
+# Feature Demo picture D12, returned by DemoJpgDataD12: 'Vocal', large.
+DemoJpgD12:
+    .incbin	"src/table/demo_d12_vocal_title_3.jpg"   # 160x80 JPEG, 4207 bytes
+    .align	4
+
+# dir[81], 0x29d4 bytes; unchanged vs build 84.
+# Feature Demo picture D13, returned by DemoJpgDataD13: two boxed Technics products.
+DemoJpgD13:
+    .incbin	"src/table/demo_d13_technics_packages.jpg"   # 240x158 JPEG, 10705 bytes
+    .align	4
+
+# dir[82], 0x9304 bytes; unchanged vs build 84.
+# Feature Demo picture D14, returned by DemoJpgDataD14: 'Technics Sound Excellence!' in four languages.
+DemoJpgD14:
+    .incbin	"src/table/demo_d14_sound_excellence.jpg"   # 600x200 JPEG, 37635 bytes
+    .align	4
+
+# dir[83], 0x4 bytes; CHANGED vs build 84 (was 0x1248 bytes).
+# 'DMY' and a NUL in place of the "Technics Rhythms" copy of build 84
+# (notes/sp7001-build-diff.md).
+TechnicsRhythmsStub:
+    .byte	0x44, 0x4d, 0x59, 0x0a   # "DMY\n"
+
+TableRomImageEnd:
 
 # ---- erased flash (0xFF) between the directory image and the plug-in ----
     .space 0x3E8000 - 0x3E0660, 0xFF

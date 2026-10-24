@@ -37,7 +37,10 @@ byte-match invariant is held at 100% the whole way.
 src/program.s   MN10300 firmware image. Boot header is hand-disassembled;
                 the rest is raw .incbin_range awaiting disassembly.
 src/symbols.inc  2302 recovered function names + memory map (see "Symbols").
-src/table.s     Resource archive: 85-entry offset directory + 84 asset segments.
+src/table.s     Resource archive: 85-entry offset directory + 84 asset segments,
+                GENERATED (make table-src): the directory as offsets to labelled
+                segments (tools/table_segments.py names them), the 57 JPEG
+                segments included from src/table/*.jpg, the rest .incbin_range.
 src/picture.s   IC19, the picture ROM: a directory + the 100 Slide Show PRESET
                 pictures, included from src/picture/preset_NN.jpg (see "IC19").
 kn7000.sym      Portable "0xADDR  name" symbol table.
@@ -72,6 +75,7 @@ make symbols-sp7001    # port the 941/84 symbols to 942/83 (+ the plug-in's own 
 make program-src-sp7001 table-src-sp7001   # regenerate src/sp7001/*.s (needs unidasm)
 make verify-cnv        # the 7 Style Convert Disk converters from src/cnv/: assert 100% byte-match
 make cnv-src           # regenerate src/cnv/*.s (needs unidasm and baserom/kn7000_program.rom)
+make table-src         # regenerate src/table.s + src/table/*.jpg from build 84's table image
 make clean      # remove build/
 make distclean  # also remove regenerated baserom/ and listings
 ```

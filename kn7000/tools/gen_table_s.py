@@ -4,8 +4,12 @@
 #
 # Generates a byte-exact source for a KN7000 table-flash image (CPU 0x48000000).
 #
-#   * the uint32 offset directory at 0x0 as typed .long rows;
-#   * every asset segment as .incbin_range, tagged, and -- with --compare -- marked
+#   * the uint32 offset directory at 0x0 as .long <segment> - TableRomDirectory rows;
+#   * every asset segment under the label and header comment tools/table_segments.py
+#     gives it: a JPEG segment as .incbin of its file in src/table/ (written there
+#     with --jpg-dir; a file already there must hold the same bytes, so two builds
+#     share one copy), a 4-byte marker as .byte, the GUI resource header as .long
+#     <table> rows, the rest as .incbin_range; with --compare each segment is marked
 #     "unchanged" or "CHANGED" against the same segment of another build;
 #   * with --plugin: the SP7001 XAPR plug-in appended after the directory image,
 #     as real MN10300 assembly for its code (unidasm mnemonics re-encoded by the
@@ -17,9 +21,11 @@
 # byte-identical to the dump.
 #
 # Usage:
-#   gen_table_s.py --rom T.rom --out T.s [--compare OTHER.rom --compare-label NAME]
+#   gen_table_s.py --rom T.rom --out T.s [--jpg-dir src/table]
+#                  [--compare OTHER.rom --compare-label NAME]
 #                  [--plugin LO:HI --plugin-code LO:HI] [--sym F.sym ...] [--title ...]
 import argparse
+import hashlib
 import os
 import re
 import struct
@@ -28,6 +34,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_program_s as G     # noqa: E402  (disasm_function, encoder, name_target)
 import gen_symbols as GS      # noqa: E402  (find_tables)
+import table_segments as TS   # noqa: E402  (what each directory segment is)
 
 BASE = 0x48000000
 
@@ -45,18 +52,6 @@ def directory(d):
             break
         ents.append(v)
     return ents                      # segment i = [ents[i], ents[i+1])
-
-
-def tag(seg):
-    if seg[:2] == b"\xff\xd8":
-        return "JPEG"
-    t = ""
-    for b in seg[:4]:
-        if 0x20 <= b < 0x7F:
-            t += chr(b)
-        else:
-            break
-    return t or "data"
 
 
 def load_syms(paths):
@@ -82,12 +77,126 @@ def text(bs):
     return "".join(c if 32 <= ord(c) < 127 and c not in "#;" else f"\\x{ord(c):02X}" for c in s)
 
 
+
+def lowhex(line):
+    """Hex numbers in a comment line in lowercase (the tree's notation rule)."""
+    return re.sub(r"0x[0-9A-Fa-f]+", lambda m: m.group(0).lower(), line)
+
+
+def jpeg_split(seg, start):
+    """-> (jpeg, pad) when `seg` (at file offset `start`) is one JPEG (FF D8 .. FF D9)
+    followed only by the zero bytes that pad it to a 4-byte boundary, else None."""
+    end = seg.rfind(b"\xff\xd9") + 2
+    if seg[:2] != b"\xff\xd8" or end < 4:
+        return None
+    jpeg, pad = seg[:end], seg[end:]
+    if pad != bytes(len(pad)) or len(pad) != -(start + end) % 4:
+        return None
+    return jpeg, pad
+
+
+def jpeg_dims(jpeg):
+    i = 2
+    while i + 9 <= len(jpeg):
+        mark, ln = jpeg[i + 1], struct.unpack_from(">H", jpeg, i + 2)[0]
+        if mark in (0xC0, 0xC1, 0xC2):
+            h, w = struct.unpack_from(">HH", jpeg, i + 5)
+            return w, h
+        i += 2 + ln
+    return None
+
+
+def put_jpeg(jpg_dir, name, jpeg):
+    """Write <jpg_dir>/<name> unless it is already there; it must hold these bytes."""
+    path = os.path.join(jpg_dir, name)
+    if os.path.exists(path):
+        if open(path, "rb").read() != jpeg:
+            sys.exit(f"gen_table_s: {path} exists with other bytes than this build's segment")
+        return
+    os.makedirs(jpg_dir, exist_ok=True)
+    open(path, "wb").write(jpeg)
+
+
+def gui_resource_tables(d, s, e, ROMQ):
+    """Segment 0: five header words (four table pointers and a 0) copied out by
+    InitializeResource, zeros, then the four tables the pointers name."""
+    names = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
+    ptrs = [u32(d, s + 4 * k) for k in range(5)]
+    offs = [p - BASE for p in ptrs[:4]]
+    assert ptrs[4] == 0 and offs == sorted(offs) and s + 20 <= offs[0] and offs[-1] < e, "GUI header"
+    assert d[s + 20:offs[0]] == bytes(offs[0] - s - 20), "GUI header padding"
+    B = [f"    .long\t{', '.join(names)}, 0",
+         f"    .space\t0x{offs[0] - s - 20:x}, 0x00"]
+    for k, (nm, o) in enumerate(zip(names, offs)):
+        end = offs[k + 1] if k + 1 < len(offs) else e
+        B += [f"{nm}:", f"    .incbin_range\t{ROMQ}, 0x{o:06x}, 0x{end:06x}"]
+    return B
+
+
+def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
+    """-> (body lines, segments changed vs `other`) for the directory and its segments."""
+    nseg = len(dirents) - 1
+    build = d[dirents[7]:dirents[8]].split(b"\n")[0].decode("ascii")
+    segs = TS.segment_table(build)
+    B = ["", "# ---- the offset directory ----",
+         "# Segment i starts at TableRomDirectory + dir[i]; the last entry is the end of the",
+         "# directory image. The firmware reaches segment i with",
+         "# `mov (TableRomDirectory + 4 * i), Rn` then `add TABLE_ROM_BASE, Rn`.",
+         "TableRomDirectory:"]
+    for i in range(nseg):
+        B.append(f"    .long\t{segs[i][0]} - TableRomDirectory")
+    B.append("    .long\tTableRomImageEnd - TableRomDirectory")
+    pad = d[4 * len(dirents):dirents[0]]
+    assert set(pad) <= {0}, "directory padding is not zero"
+    B += [f"    .space\t0x{dirents[0]:x} - {len(dirents)} * 4, 0x00",
+          f"    .org\t0x{dirents[0]:06x}"]
+
+    changed = 0
+    for i in range(nseg):
+        s, e = dirents[i], dirents[i + 1]
+        seg = d[s:e]
+        label, kind, jpg, notes = segs[i]
+        note = ""
+        if other:
+            od, oe = other
+            if i + 1 < len(oe):
+                same = od[oe[i]:oe[i + 1]] == seg
+                note = (f"; unchanged vs {compare_label}" if same else
+                        f"; CHANGED vs {compare_label} (was 0x{oe[i + 1] - oe[i]:x} bytes)")
+                changed += not same
+            else:
+                note = f"; not in {compare_label}"
+                changed += 1
+        B += ["", f"# dir[{i}], 0x{e - s:x} bytes{note}."] + [f"# {lowhex(n)}" for n in notes] + [f"{label}:"]
+        if kind == "jpeg":
+            jp = jpeg_split(seg, s)
+            assert jp, f"segment {i} ({label}) is not a padded JPEG"
+            jpeg, pad = jp
+            w, h = jpeg_dims(jpeg)
+            put_jpeg(jpg_dir, jpg, jpeg)
+            B.append(f'    .incbin\t"{jpg_dir}/{jpg}"   # {w}x{h} JPEG, {len(jpeg)} bytes')
+            if pad:
+                B.append("    .align\t4")
+        elif kind == "marker":
+            assert len(seg) == 4, f"segment {i} ({label}) is not a 4-byte marker"
+            shown = seg.rstrip(b"\0").decode("latin1").replace("\n", "\\n")
+            B.append(f'    .byte\t{", ".join(f"0x{b:02x}" for b in seg)}   # "{shown}"')
+        elif kind == "gui":
+            B += gui_resource_tables(d, s, e, ROMQ)
+        else:
+            B.append(f"    .incbin_range\t{ROMQ}, 0x{s:06x}, 0x{e:06x}")
+    B += ["", "TableRomImageEnd:"]
+    return B, changed
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--rom", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--title", default="KN7000 table flash image - byte-exact.")
+    ap.add_argument("--jpg-dir", default="src/table",
+                    help="where the JPEG segments are kept (as the source's .incbin paths name them)")
     ap.add_argument("--compare", help="another build's table image (per-segment equality)")
     ap.add_argument("--compare-label", default="the other build")
     ap.add_argument("--plugin", help="file range LO:HI of an appended XAPR plug-in")
@@ -115,39 +224,10 @@ def main():
          "#",
          f"# Layout: a {len(dirents)}-entry uint32 offset directory at 0x0 (dir[0] = 0x{dirents[0]:X},",
          f"# dir[{nseg}] = 0x{dirents[-1]:X} = end of the directory image), zero padding to",
-         f"# 0x{dirents[0]:X}, then {nseg} asset segments."]
-    body = []
-
-    # ---- directory --------------------------------------------------------
-    body += ["", "# ---- offset directory ----"]
-    for i in range(0, len(dirents), 6):
-        row = dirents[i:i + 6]
-        body.append(f"    .long {', '.join(f'0x{v:08X}' for v in row)}   # dir[{i}..{i + len(row) - 1}]")
-    pad = d[4 * len(dirents):dirents[0]]
-    if set(pad) <= {0}:
-        body.append(f"    .space 0x{dirents[0]:X} - {len(dirents)} * 4, 0x00")
-    else:
-        body.append(f".incbin_range {ROMQ}, 0x{4 * len(dirents):06X}, 0x{dirents[0]:06X}")
-    body.append(f"    .org 0x{dirents[0]:06X}")
-
-    # ---- segments ---------------------------------------------------------
-    body += ["", f"# ---- {nseg} asset segments ----"]
-    changed = 0
-    for i in range(nseg):
-        s, e = dirents[i], dirents[i + 1]
-        note = ""
-        if other:
-            od, oe = other
-            if i + 1 < len(oe):
-                same = od[oe[i]:oe[i + 1]] == d[s:e]
-                note = (f"  unchanged vs {a.compare_label}" if same else
-                        f"  CHANGED vs {a.compare_label} (was 0x{oe[i + 1] - oe[i]:x} bytes)")
-                changed += not same
-            else:
-                note = f"  not in {a.compare_label}"
-                changed += 1
-        body.append(f".incbin_range {ROMQ}, 0x{s:06X}, 0x{e:06X}   "
-                    f"# seg{i:02d} {tag(d[s:e])} (0x{e - s:x} bytes){note}")
+         f"# 0x{dirents[0]:X}, then {nseg} asset segments. Segment names and comments come from",
+         "# tools/table_segments.py; the JPEG segments are files in src/table/.",
+         f"# Reference image: {os.path.basename(a.rom)}, SHA-1 {hashlib.sha1(d).hexdigest()}."]
+    body, changed = directory_image(d, dirents, ROMQ, a.jpg_dir, other, a.compare_label)
     cur = dirents[-1]
 
     used, equ = set(), {}
@@ -167,7 +247,7 @@ def main():
                  f"    .space 0x{len(d):06X} - 0x{cur:06X}, 0xFF"]
     elif cur < len(d):
         body.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{len(d):06X}")
-    body.append(f".org 0x{len(d):06X}   # end of image")
+    body.append(f".org 0x{len(d):06x}   # end of image")
 
     L += ["", ".equ TABLE_ROM_BASE, 0x48000000",
           ".mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)"]

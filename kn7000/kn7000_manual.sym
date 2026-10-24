@@ -307,7 +307,7 @@
 
 ; ---- Table ROM (0x48000000) — directory-based resource archive (notes/table-rom-structure.md) ----
 0x48000000  TableRomDirectory      ; directory of LE u32 chunk offsets (rel to 0x48000000); first chunk @0x48000200
-0x48040674  TableChunkTPAD         ; 'TPAD' chunk (0x1d18): performance-pad index/params
+0x48040674  FactoryMemPadContainer ; table ROM segment 3 (0x1d18): the factory 'TPAD' PERFORMANCE PAD user memory; copied to 0x501F91A0 (0xA000 area) by the routine at 0x48432175 when it starts with 'TPAD' (src/table.s)
 0x4804238C  TechnicsPadsResource   ; "Technics Pads" resource (0x142f0): accompaniment pad patterns
 0x483E828C  TechnicsRhythmsTable   ; "Technics Rhythms" resource in the table ROM (style/rhythm index)
 
