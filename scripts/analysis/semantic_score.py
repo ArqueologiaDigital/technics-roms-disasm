@@ -164,6 +164,17 @@ def kn7000_files(pattern):
     return sorted(glob.glob(os.path.join(ROOT, pattern)))
 
 
+def kn7000_text(p):
+    """A kn7000 source with every `.include`d .s file inlined, as kn7000/tools/coverage_score.py reads it:
+    src/program.s holds only `.include "src/program/<part>.s"` lines since the full conversion, and paths
+    are relative to kn7000/."""
+    out = []
+    for line in open(p, "rb").read().decode("latin-1").split("\n"):
+        m = re.match(r'\s*\.include\s+"([^"]+\.s)"', line)
+        out.append(kn7000_text(os.path.join(ROOT, "kn7000", m.group(1))) if m else line)
+    return "\n".join(out)
+
+
 def kn7000_val(expr):
     """An .incbin_range operand: hex / decimal terms joined by + and - (coverage_score.py's rule)."""
     total, sign = 0, 1
@@ -183,9 +194,14 @@ def kn7000_bytes(key):
                  % (key, len(srcs), len(imgs), KN7000[key][1]))
     raw = 0
     for p in srcs:
-        text = open(p, "rb").read().decode("latin-1")
-        if re.search(r'^\s*\.incbin\s', text, re.M):
-            sys.exit("%s: a plain .incbin; kn7000_bytes() only reads .incbin_range" % p)
+        text = kn7000_text(p)
+        # A plain .incbin is allowed only for a tracked asset under src/ (the table's JPEG/BMP segments,
+        # extracted by tools/gen_table_s.py, like src/picture/): typed data, counted as source exactly as
+        # coverage_score.py counts it. Passthrough of the git-ignored reference image must be .incbin_range.
+        for inc in re.findall(r'^\s*\.incbin\s+"([^"]+)"', text, re.M):
+            if not inc.startswith("src/") or not os.path.isfile(os.path.join(ROOT, "kn7000", inc)):
+                sys.exit("%s: .incbin \"%s\" is not a tracked src/ asset; passthrough must be .incbin_range"
+                         % (p, inc))
         hits = re.findall(r'^\s*\.incbin_range\s+"[^"]+",\s*([^,]+?),\s*([^\n#;]+?)\s*(?:[#;]|$)', text, re.M)
         if len(hits) != len(re.findall(r'^\s*\.incbin_range\b', text, re.M)):
             sys.exit("%s: an .incbin_range this parser cannot read would count as source" % p)
@@ -208,7 +224,7 @@ def kn7000_names(key):
     """kn7000 routine names, classified like names(): see the docstring (THE SX-KN7000 MODEL)."""
     rated = []
     for p in kn7000_files(KN7000[key][0]):
-        lines = open(p, "rb").read().decode("latin-1").split("\n")
+        lines = kn7000_text(p).split("\n")
         if key == "program":
             got = set()
             for i, ln in enumerate(lines):
