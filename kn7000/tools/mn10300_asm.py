@@ -41,7 +41,11 @@ def reg(tok):
 
 
 def imm(tok):
+    """A number, or a sum of numbers: `REG+0x0d`, once the caller has put the
+    value of REG in, reaches here as `0x9cc00000+0x0d`."""
     tok = tok.strip()
+    if "+" in tok[1:]:
+        return sum(imm(t) for t in tok.split("+"))
     try:
         return int(tok, 16) if tok.startswith(("0x", "-0x")) else int(tok, 0)
     except ValueError:
@@ -65,7 +69,10 @@ def imm_width(tok):
     tok = tok.strip()
     m = re.fullmatch(r"(.+):(16|32)", tok)
     if m:
-        return imm(m.group(1)), int(m.group(2))
+        v, w = imm(m.group(1)), int(m.group(2))
+        if w == 16 and not (fits_s16(v) or fits_u16(v)):
+            raise EncError(f"{tok!r}: the value does not fit 16 bits")
+        return v, w
     return imm(tok), None
 
 
@@ -302,6 +309,8 @@ def enc_move(mnem, ops, pc):
     # imm -> reg
     if mnem == "mov" and not is_reg_tok(src):
         v, w = imm_width(src); dc, di = reg(dst)
+        if w == 16 and not (fits_s16(v) if dc == "d" else fits_u16(v)):
+            raise EncError(f"mov {src}: no 16-bit form holds the value")
         if dc == "d":
             if fits_s8(v) and not w:  return u8(0x80 | (di << 2) | di) + u8(v)
             if fits_s16(v) and w != 32: return u8(0x2C | di) + le16(v)
@@ -419,6 +428,8 @@ def enc_alu(mnem, ops):
     v, w = imm_width(src)
 
     if mnem == "add" and dc == "sp":                       # add imm,sp
+        if w == 16 and not fits_s16(v):
+            raise EncError(f"add {src}, sp: no 16-bit form holds the value")
         if fits_s8(v) and not w:  return b"\xf8\xfe" + u8(v)
         if fits_s16(v) and w != 32: return b"\xfa\xfe" + le16(v)
         return b"\xfc\xfe" + le32(v)
@@ -435,6 +446,8 @@ def enc_alu(mnem, ops):
     signed = mnem in ("add", "sub") or (mnem == "cmp" and dc == "d")
     small = (fits_s8(v) if signed else fits_u8(v)) and not w
     mid = (fits_s16(v) if signed else fits_u16(v)) and w != 32
+    if w == 16 and not (mid and key in FA):
+        raise EncError(f"{mnem} {src}: no 16-bit form holds the value")
 
     # imm8 short forms (each op has a distinct encoding)
     if small:
