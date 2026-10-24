@@ -9,7 +9,8 @@ operation, `(0x23a092:24)` for the selected directory.  This tool gives a
 curated set of those addresses a name -- only variables whose role the code
 shows, each with the evidence in its `.equ` comment -- and rewrites every
 operand that is exactly that address (`(N)`, `(N:24)`, `N` immediates, hex or
-decimal).  The values are unchanged, so the encodings are too.
+decimal).  The values are unchanged, so the encodings are too.  For the arrays
+and records listed in EXTENT, an operand inside one becomes NAME+offset.
 
 The `.equ` block is written right after the `.include "shared/event_codes.s"`
 line of hd-ae5000_v2_06i.s, before any code, so every use is a backward
@@ -117,7 +118,284 @@ RAM = {
                                 " (HDAE5000_FdLyricList_Scan)"),
     0x23A19E: ("LyricBoxObj", "the open lyric box's object id, 0xFFFFFFFF when closed"
                               " (HDAE5000_LyricBoxProc); redraw events go to it"),
+    # fifth run (2026-10-24): the PC-link coroutine's mailbox (layout block above
+    # HDAE5000_PPORT_ServicePending) and the printf engine's state
+    0x239000: ("PportLinkActive", "1 while the PC-link context exists (HDAE5000_PPORT_StartLink sets it;"
+                                  " _ReturnToLink / _Reset clear it); HDAE5000_PPORT_ServicePending tests it"),
+    0x239002: ("PportLinkSp", "the PC-link context's saved XSP (HDAE5000_PPORT_YieldToMain stores,"
+                              " HDAE5000_PPORT_SwitchToLink loads)"),
+    0x239006: ("PportMainSp", "the main context's saved XSP (HDAE5000_PPORT_SwitchToLink stores,"
+                              " HDAE5000_PPORT_YieldToMain loads)"),
+    0x23900A: ("PportService", "word: service number posted by HDAE5000_PPORT_CallService (its WA); the"
+                               " service's HL result after HDAE5000_PPORT_ServiceDispatch; 0xFFFF once the"
+                               " link has ended"),
+    0x23900C: ("PportServiceArgBc", "XBC argument of the posted service (HDAE5000_PPORT_CallService)"),
+    0x239010: ("PportServiceArgDe", "XDE argument of the posted service (HDAE5000_PPORT_CallService)"),
+    0x239014: ("PportServiceRequested", "1 while a posted service waits: HDAE5000_PPORT_CallService sets it"
+                                        " before yielding and clears it on return; a yield with it clear"
+                                        " means the link program ended"),
+    0x23FFFC: ("PportLinkStackTop", "top of the PC-link context's stack; HDAE5000_PPORT_StartLink plants"
+                                    " HDAE5000_PPORT_LinkEntry there as its first return address"),
+    0x239482: ("SPrintfCursor", "output pointer of HDAE5000_SPrintf / _VSPrintf; HDAE5000_SPrintf_PutChar"
+                                " stores a byte there, advances it and keeps the string terminated"),
+    0x239486: ("PrintfPadChar", "word: the padding character of the conversion in progress, 32 (' ') or"
+                                " 48 ('0' after a 0 flag) (HDAE5000_DoPrintf; HDAE5000_FormatFloat pads with it)"),
+    0x239488: ("PrintfFloatCount", "word: characters HDAE5000_FormatFloat has emitted; cleared at its start,"
+                                   " added to HDAE5000_DoPrintf's count after it"),
+    0x23948A: ("FltDecDigits", "32-byte decimal digit string of HDAE5000_FltDec_Convert / _AddDigit"),
+    0x2394AA: ("FltDecMantissa", "the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)"),
+    0x2394EA: ("FltDecFraction", "10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)"),
+    # seventh run: the HD file-system driver's working variables (HDAE5000_HD_WriteFile / _AppendFile /
+    # _ReadFile / _ReadFileNext and the cluster and FAT routines they call)
+    0x229D40: ("HdXferPtr", "buffer pointer of the file transfer in progress (XWA of HD_WriteFile / _AppendFile /"
+                            " _ReadFile / _ReadFileNext); HD_WriteCluster / _ReadClusterFrom advance it 512"
+                            " per sector"),
+    0x229D38: ("HdXferBytes", "byte count of the transfer (XBC); HD_ReadClusterFrom counts it down"),
+    0x229D2C: ("HdXferSlotPtr", "pointer to the file's first-cluster slot (XDE of the four transfer routines)"),
+    0x229C98: ("HdXferClusters", "clusters a write needs: ceil(HdXferBytes / ClusterBytes)"),
+    0x229CA4: ("HdXferClustersDone", "clusters written so far (HD_WriteFile / _AppendFile)"),
+    0x229D94: ("HdXferLinkFromPrev", "0 for a write's first new cluster, then 1: from the second on, each"
+                                     " cluster is linked from HdFatSetCluster (HD_WriteFile / _AppendFile)"),
+    0x229D95: ("HdXferSlotSet", "1 once HD_WriteFile has stored the first cluster in *HdXferSlotPtr"),
+    0x229DBC: ("HdDiskFull", "1 when HD_FindFreeCluster found no free cluster during a write"),
+    0x229C9C: ("HdFatSetCluster", "the cluster whose FAT entry HD_FatSetEntry writes: the chain's last cluster"),
+    0x229CA0: ("HdFatSetValue", "the value HD_FatSetEntry stores: the next cluster, 0xFFFFFFFE (end of chain)"
+                                " or 0xFFFFFFFF (after a failed cluster write)"),
+    0x229CA8: ("HdFreeCluster", "HD_FindFreeCluster's result, 1-based, 0xFFFFFFFD = none; the cluster"
+                                " HD_WriteCluster writes"),
+    0x229CAC: ("HdFreeScanOffset", "byte offset of HD_FindFreeCluster's scan in HdFreeScanBuffer; 512 = load"
+                                   " the next FAT sector"),
+    0x229CB0: ("HdFreeScanFatSector", "FAT sector index of HD_FindFreeCluster's scan"),
+    0x229CB4: ("HdFreeScanDiskSector", "disk sector of HdFreeScanFatSector (FatStartSector + index)"),
+    0x229D96: ("HdFreeScanStarted", "0 until HD_FindFreeCluster loaded its first FAT sector, then 1 (the step"
+                                    " it adds to HdFreeScanFatSector / _DiskSector)"),
+    0x200898: ("HdFreeScanBuffer", "512-byte FAT sector buffer of HD_FindFreeCluster"),
+    0x229CBC: ("HdWriteClusterPtr0", "HdXferPtr at HD_WriteCluster's entry, put back when a sector write fails"),
+    0x229CC0: ("HdWriteClusterSector", "sector index within the cluster HD_WriteCluster is writing"),
+    0x229D97: ("HdWriteClusterError", "1 when a sector write of HD_WriteCluster failed"),
+    0x229D28: ("HdFatCacheSector", "index of the FAT sector held in HdFatCache, 0xFFFFFFFF = none"),
+    0x200A98: ("HdFatCache", "512-byte cache of one FAT sector (HD_FatSetEntry / _FatNextCluster / _FreeChain)"),
+    0x229D48: ("HdFatSector", "FAT sector index of the entry HD_FatSetEntry / _FatNextCluster address:"
+                              " (cluster - 1) / 128"),
+    0x229D4C: ("HdFatEntryOffset", "byte offset of that entry in its sector: ((cluster - 1) % 128) * 4"),
+    0x229D30: ("HdChainCluster", "current cluster of the chain being read (HD_ReadFile / _ReadFileNext) or"
+                                 " released (HD_FreeChain_Worker)"),
+    0x229D34: ("HdChainSector", "sector within HdChainCluster where reading continues (HD_ReadClusterFrom)"),
+    0x229D3C: ("HdSectorBytes", "bytes HD_ReadClusterFrom reads from the current sector: 512, or the rest"
+                                " of HdXferBytes in the last one"),
+    0x229DBE: ("HdReadClusterError", "1 when a sector read of HD_ReadClusterFrom failed"),
+    0x229DBF: ("HdReadLastSector", "1 when HdXferBytes ran out inside the sector just read"),
+    0x229CB8: ("HdFreeChainStart", "first cluster of the chain HD_FreeChain_Worker releases"),
+    0x229D24: ("HdFreeChainCount", "clusters HD_FreeChain_Worker has released, added to FreeClusters"),
+    # eighth run: the ATA layer (HDAE5000_ATA_* and HDAE5000_HD_ParseIdentify)
+    0x200000: ("AtaIdentifyBuffer", "the 512-byte IDENTIFY DEVICE answer (HDAE5000_ATA_IdentifyDevice);"
+                                    " HDAE5000_HD_ParseIdentify reads words 27-46 and 54-58"),
+    0x200200: ("HdSectorsPerHead", "cylinders x sectors per track: the head stride of the CHS split in"
+                                   " HDAE5000_ATA_ReadSector / _WriteSector (HD_ParseIdentify)"),
+    0x200204: ("AtaWriteSectorNo", "1-based sector number of HDAE5000_ATA_WriteSector (its XHL)"),
+    0x200208: ("AtaWriteData", "data pointer of HDAE5000_ATA_WriteSector (its XIX)"),
+    0x20020C: ("AtaReadSectorNo", "1-based sector number of HDAE5000_ATA_ReadSector (its XHL)"),
+    0x200210: ("AtaReadData", "buffer pointer of HDAE5000_ATA_ReadSector (its XIX)"),
+    0x200214: ("AtaReadKeepBytes", "bytes of the sector HDAE5000_ATA_ReadSector stores (its XDE)"),
+    0x200218: ("AtaWriteHeadBase", "head * HdSectorsPerHead in HDAE5000_ATA_WriteSector's CHS split"),
+    0x20021C: ("AtaReadHeadBase", "head * HdSectorsPerHead in HDAE5000_ATA_ReadSector's CHS split"),
+    0x200220: ("HdSectorsPerTrack", "word: IDENTIFY word 56, current sectors per track (HD_ParseIdentify)"),
+    0x200223: ("HdUsableSectors", "long at an odd address: IDENTIFY words 57-58 (current capacity) - 2"
+                                  " (HD_ParseIdentify)"),
+    0x229C32: ("HdCylinders", "word: IDENTIFY word 54, current cylinders (HD_ParseIdentify)"),
+    0x229C34: ("HdHeads", "word: IDENTIFY word 55, current heads (HD_ParseIdentify)"),
+    0x20083C: ("HdModelString", "40 bytes: IDENTIFY words 27-46 (model number), byte-swapped"
+                                " (HD_ParseIdentify; HDAE5000_HD_GetGeometry copies it out)"),
+    0x200628: ("HdSettingsSector", "512-byte image of disk sector 1: AA55AA55 F4F1F2F3 signature"
+                                   " (HDAE5000_HD_CheckSignature) and the settings (HDAE5000_HD_SaveSettings)"),
+    # ninth run: table, format and usage bookkeeping of the HD driver
+    0x200228: ("HdSectorBuffer", "512-byte sector buffer: read-back of HD_WriteTables / _ReadTables, the FAT"
+                                 " sectors HD_CountFreeClusters scans, HD_Format's zero sector"),
+    0x200428: ("HdVerifyBuffer", "512-byte read-back buffer of HD_Format's verify pass"),
+    0x229C60: ("HdVersionKeyWord", "0x0000FFEE after HD_ResetVersionKeyWord; HD_CheckVersionKey compares it"
+                                   " with HDAE5000_Version_Key"),
+    0x229C74: ("HdTablesSector", "disk sector of HD_WriteTables / _ReadTables' current table sector"),
+    0x229C78: ("HdTablesPtr", "RAM pointer of that sector within the tables (from DirNames on)"),
+    0x229C7C: ("HdTablesCount", "table sectors transferred so far, of 323"),
+    0x229C84: ("HdCountSector", "FAT sector HD_CountFreeClusters is scanning"),
+    0x229C88: ("HdCountEntries", "FAT entries HD_CountFreeClusters has scanned"),
+    0x229C8C: ("HdFormatSector", "disk sector HD_Format_Worker is clearing or verifying"),
+    0x229C90: ("HdFormatCount", "sectors done in that pass, of 3906"),
+    0x229D93: ("HdRetries", "retries left: 7 for HD_WriteTables / _ReadTables, 5 for HD_CountFreeClusters"),
+    0x229D10: ("HdUsageData", "data area in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D14: ("HdUsageFree", "free space in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D18: ("HdUsageDrive", "the drive in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D1C: ("HdUsageSystem", "the system area (sectors before the data area) in units of 10,000 bytes"),
+    0x229DAF: ("HdStatusBytes", "ten bytes HD_ClearStatusBytes zeroes; no reader found"),
+    # tenth run: the PC-link services' shared block (its address is what service 1, GetInfoBlockPointer,
+    # hands to the PC; the trace strings of services 3-6, 13 and 19 name its fields)
+    0x238F2E: ("PportInfoBlock", "the PC-link info block, 0xD2 bytes: +0 part mask, +2 song name (26),"
+                                 " +0x1C directory name (16), +0x2C/+0x34/+0x3C the FGB/FEB/FLS block"
+                                 " descriptors (HDAE5000_HD_GetBlockInfo), +0x46 nine-byte part records"
+                                 " (service 13), +0x97 drive model (30), +0xB5.. geometry (service 3),"
+                                 " +0xCA work buffer address (service 19), +0xCE the slot of the open read"),
+    0x23A1A6: ("PportReadState", "0 no read open, 1 opened by service 24 (ReadOpenHD), 2 reading (service"
+                                 " 25 continues with HD_ReadFileNext)"),
+    0x2390D6: ("PportArg1", "byte 1 of the command packet, latched by HDAE5000_PPORT_LatchPacketArgs"
+                            " (stored in a word slot, as are Arg2..4)"),
+    0x2390D8: ("PportArg2", "byte 2 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x2390DA: ("PportArg3", "byte 3 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x2390DC: ("PportArg4", "byte 4 of the command packet (HDAE5000_PPORT_LatchPacketArgs)"),
+    0x239100: ("PportInfoPtr", "XIX of service 1 (the address of PportInfoBlock), kept by"
+                               " HDAE5000_PPORT_GetInfoBlock / _CopyInfoToPacket"),
+    0x239158: ("PportBlockPtr", "start of the block HDAE5000_PPORT_SendBlock / _RecvBlock moves; a retry"
+                                " restarts from it"),
+    0x23915C: ("PportBlockLen", "byte count of that block"),
+    0x239268: ("PportSectorBuffer", "512 bytes: a sector received by HDAE5000_PPORT_RecvSector, or read for"
+                                    " HDAE5000_PPORT_InitRegionDescriptors_Lookup"),
+    0x2390E2: ("PportPartMask", "the parts (bits 0-7) a link command works on; InitRegionDescriptors"
+                                " sizes one region per set bit"),
+    0x2390E4: ("PportPartMaskHi", "bit 0: the ninth part (TLX), with PportPartMask"),
+    0x2390E6: ("PportStepError", "1 when a service call of InitRegionDescriptors_Lookup / SendRegionToPc"
+                                 " (or a command handler) failed"),
+    0x2390EC: ("PportSizeFieldOffset", "byte offset of the size field in a part file's first sector"
+                                       " (InitRegionDescriptors -> _Lookup)"),
+    0x2390EE: ("PportSizeFieldWidth", "0x20: that field is a long; 0x10: a word counting 16-byte units"),
+    0x2390F0: ("PportSendMaskLo", "low byte of the part mask SendRegionToPc puts in PportInfoBlock+0 before"
+                                  " opening the read (service 24)"),
+    0x2390F2: ("PportSendMaskHi", "its high byte"),
+    0x2390F8: ("PportSectorOffset", "word: byte offset into PportSectorBuffer while SendRegionToPc sends it;"
+                                    " 512 = read the next sector"),
+    0x239164: ("PportBytesLeft", "bytes SendRegionToPc still has to send"),
+    0x239108: ("PportRegions", "(address, size) long pairs: SendTwoRegions sends pairs 0 and 1;"
+                               " InitRegionDescriptors stores part sizes in the slots"),
+    0x22ABC4: ("PcLinkStatusText", "the text of the PC-link page's PP_STATUS object; the status string goes"
+                                   " in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)"),
+    # eleventh run: the C library's error state
+    0x230ECA: ("Errno", "word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow"),
+    0x23A1A8: ("MathErrorHook", "routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting"
+                                " Errno, when it is non-zero"),
+    # twelfth run: the lyric file's length and the RCM stream (the main CPU pulls / pushes the RCM part through
+    # HDAE5000_RcmStream_Read / _Write; its state word is the long at HdStreamBufferEnd)
+    0x2304F2: ("LyricFileLength", "the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22;"
+                                  " 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk,"
+                                  " TlxPart_Describe)"),
+    0x230430: ("LyricEvent", "the lyric event just parsed, right after LyricBuffer: +0 word meta type"
+                             " (HDAE5000_Lyrics_ParseEvent stores it, 0x2F = end of track; FindEvent compares"
+                             " it), +4 end-of-track flag, +6 its data (Lyrics_ParseEvent, _FindEvent,"
+                             " _PlayToPosition, _ReadSongInfo)"),
+    0x238F1E: ("RcmStreamDir", "directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm /"
+                               " _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)"),
+    0x238F20: ("RcmStreamSong", "song of that RCM stream"),
+    0x238F22: ("RcmStreamResult", "word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult"
+                                  " returns it)"),
+    # thirteenth run: name histories and the (unreachable) browser library's state
+    0x22ABF2: ("DirNameHistory", "5-entry history of directory names: {u8 count, u8 recall index, u8 next"
+                                 " slot, pad, 5 x 27 bytes} (HDAE5000_NameHistory_Push / _Recall)"),
+    0x22AD0A: ("FlsNameHistory", "5-entry history of FLS names, same layout as DirNameHistory"),
+    0x229D9F: ("DirBrowserPage", "page of the directory browser (unreachable library; HD_Init sets it)"),
+    0x229DDA: ("DirBrowserCursors", "5 cursor bytes, one per directory-browser page (unreachable library)"),
+    0x229DDF: ("DirBrowserRowBytes", "120 bytes, one per directory row (unreachable library)"),
+    0x229DA0: ("FlsBrowserPage", "page of the FLS browser (unreachable library; HD_Init sets it)"),
+    0x229E57: ("FlsBrowserCursors", "5 cursor bytes, one per FLS-browser page (unreachable library)"),
+    0x229E5C: ("FlsBrowserRowBytes", "120 bytes, one per FLS row (unreachable library)"),
+    # fourteenth run: the floppy song list, the SMF header check and the VGA ports
+    0x22AA9C: ("FdList", "the floppy song list: +0 title text (14), +14 the 20 row texts, +0x100 20"
+                         " present flags (HDAE5000_FdList_Scan), +0x114 20 selected flags (the copy screen"
+                         " toggles them; HDAE5000_FdList_Redisplay marks those rows \"*\")"),
+    0x230EAC: ("SmfHeader", "14 bytes: the header HDAE5000_Smf_ReadHeader reads from a floppy file"),
+    0x230EBA: ("SmfFormat", "word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)"),
+    0x230EBC: ("SmfTrackCount", "word: its track count"),
+    0x230EBE: ("SmfDivision", "word: its division; bit 15 (SMPTE) must be clear"),
+    # fifteenth run: more screen texts
+    0x22A2CA: ("FlsListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte FLS name at +4"
+                              " (HDAE5000_FlsList_BuildPage)"),
+    0x22AE3E: ("SongListText", "the 16 song rows of the song screen, 30 bytes each"
+                               " (HDAE5000_SongScreen_Refresh)"),
+    0x22A038: ("SongScreenTitle", "\"DIRECTORY NN:<name>\" of the song screen (HDAE5000_SongScreen_Refresh)"),
+    0x22ADA6: ("TitleInfoText", "the settings / free-space text of the HD title screen"
+                                " (HDAE5000_TitleInfo_Build)"),
+    0x22AA62: ("LbnEntryText", "the load-by-number entry: digits, directory and song name"
+                               " (HDAE5000_Lbn_ShowEntry)"),
+    0x22AD9E: ("FormatCodeDigits", "the six digits typed on the HD-format attention dialog"
+                                   " (HDAE5000_FormatDialog_CodeDigit)"),
+    # sixteenth run: the naming window (HDAE5000_AcHddNamingWindowProc and its On* arms) and the FLS screens
+    0x22A000: ("NamingText", "the name being edited in the naming window, up to 32 characters + NUL"
+                             " (OnSetString / OnGetString hand it over)"),
+    0x22A022: ("NamingApFunction", "the application function of the naming window, NAKA_APFUNC_NamingCheck"
+                                   " unless OnSetApFunction set another; asked for the length and fill character"),
+    0x22A026: ("NamingLength", "word: length of the edited name, at most 32"),
+    0x22A028: ("NamingCursor", "word: cursor position in the name (OnPositionLeft / OnPositionRight)"),
+    0x22A02E: ("NamingSelChar", "word: the selected character of the character table (OnPrevCharacter /"
+                                " OnNextCharacter +-1, OnCharacterRowUpDown +-13)"),
+    0x22A030: ("NamingSelCharDrawn", "word: the selection last drawn, 0xFFFF = none (OnSeleDraw redraws on a"
+                                     " change)"),
+    0x22A034: ("NamingFillCharPtr", "pointer to the character the name is padded with (OnClear, OnInsert,"
+                                    " OnDelete, OnCenterName)"),
+    0x23A06E: ("NameEditBuffer", "16-byte name the naming checks exchange with the naming window"
+                                 " (EVT_GET_STRING into it, then HDAE5000_FlsName_StoreWithUi / DirName_...)"),
+    0x23A098: ("CurFlsItem", "the selected item of the current FLS: FlsItemPageBase + the list selection"),
+    0x22B272: ("FlsItemPageBase", "word: first item of the FLS item page shown, 0 or 16 (the list's"
+                                  " overflow / underflow events switch it)"),
+    # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
+    0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
+    0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
+                              " (HDAE5000_DirList_BuildPage)"),
 }
+# arrays and records whose interior the code addresses directly: an operand inside one is written
+# NAME+offset (decimal), e.g. the fourth 14-byte field of PartListText is HDAE5000_RAM_PartListText+42
+EXTENT = {
+    0x22B274: 0x7F,
+    0x22A0D0: 0x1F9,
+    0x200000: 0x200,
+    0x200628: 0x200,
+    0x229DAF: 10,
+    0x238F2E: 0xD2,
+    0x239268: 0x200,
+    0x239108: 0x50,
+    0x22ABC4: 0x21,
+    0x22B430: 0x5000,
+    0x2257B2: 0x4380,
+    0x22ABF2: 0x8B,
+    0x22AD0A: 0x8B,
+    0x22AA9C: 0x128,
+    0x230EAC: 14,
+    0x22A2CA: 0x1F9,
+    0x22AE3E: 0x1E0,
+    0x22A000: 0x21,
+    0x23A06E: 0x10,
+    0x22AA4C: 12,
+    0x22ABE6: 12,
+}
+# I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
+# ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
+# 0x94 STANDBY IMMEDIATE, 0xEC IDENTIFY DEVICE, 0x20 READ SECTORS and 0x30 WRITE SECTORS to index 7 and
+# polls BSY / DRDY / DRQ (0x80 / 0x40 / 0x08) there, and moves sector data through index 0 as words.
+IO = {
+    0x160000: ("HDAE5000_IO_PpiPortA", "8255 port A: the PC-link data byte (HDAE5000_PPORT_SendByte writes,"
+                                       " _RecvByte reads; HDAE5000_PPI_LoopbackByte reads it back)"),
+    0x160002: ("HDAE5000_IO_PpiPortB", "8255 port B: PC-link strobe in bit 3 (HDAE5000_PPORT_SendByte)"),
+    0x160004: ("HDAE5000_IO_PpiPortC", "8255 port C: PC-link handshake inputs, bit 0 ready, bit 1 ack, bit 2"
+                                       " link present (HDAE5000_PPORT_SendByte)"),
+    0x160006: ("HDAE5000_IO_PpiControl", "8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init);"
+                                         " 0x89 = port A output, port C low nibble input"
+                                         " (HDAE5000_PPORT_InitPort / _CommandLoop)"),
+    0x130010: ("HDAE5000_IO_AtaData", "ATA data register (16-bit sector data, HDAE5000_ATA_ReadSector /"
+                                      " _WriteSector / _Identify)"),
+    0x130012: ("HDAE5000_IO_AtaFeatures", "ATA features / error register; 0xFF before STANDBY IMMEDIATE and"
+                                          " IDENTIFY DEVICE"),
+    0x130014: ("HDAE5000_IO_AtaSectorCount", "ATA sector count; 1 for every read and write"),
+    0x130016: ("HDAE5000_IO_AtaSectorNumber", "ATA sector number (CHS) of HDAE5000_ATA_ReadSector / _WriteSector"),
+    0x130018: ("HDAE5000_IO_AtaCylinderLow", "ATA cylinder, low byte"),
+    0x13001A: ("HDAE5000_IO_AtaCylinderHigh", "ATA cylinder, high byte"),
+    0x13001C: ("HDAE5000_IO_AtaDriveHead", "ATA drive/head; 0xA0 = master + head 0"),
+    0x13001E: ("HDAE5000_IO_AtaStatusCommand", "ATA status (read) / command (write)"),
+    0x130020: ("HDAE5000_IO_AtaDeviceControl", "ATA device control: 0x0E (SRST + nIEN) then 0x0A (nIEN)"
+                                               " is HDAE5000_ATA_SoftReset"),
+    0x170000: ("HDAE5000_IO_VgaPorts", "the display controller's I/O ports: port N is at this + N"
+                                       " (HDAE5000_VGA_Port_Write; 0x3C8 palette index, 0x3C9 palette data)"),
+}
+# The compiled C addresses a field of a song record as DirNames + field + (0x780 + dir*0x4C0 + song*0x4C) and
+# a field of an FLS record as DirNames + field + (0x24180 + fls*0x90): the constant it loads is the table base
+# MINUS what it adds back.  Those constants are written that way.
+FORMS = {v: "HDAE5000_RAM_SongRecords-0x780+%d" % (v - 0x201632) for v in range(0x20164C, 0x20167E)}
+FORMS.update({v: "HDAE5000_RAM_FlsRecords-0x24180+%d" % (v - 0x201632)
+              for v in (0x201661, 0x201681, 0x2016A1, 0x2016C1)})
 FILE_MAIN = "hd-ae5000_v2_06i.s"
 NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
 
@@ -125,6 +403,8 @@ NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
 def main(apply):
     src = {rel: open(os.path.join(hlm.HDAE, rel), encoding="latin-1").read().split("\n") for rel in hlm.FILES}
     sym = {a: "HDAE5000_RAM_" + n for a, (n, ev) in RAM.items()}
+    sym.update({a: n for a, (n, ev) in IO.items()})
+    evidence = {a: ev for a, (n, ev) in list(RAM.items()) + list(IO.items())}
     counts = collections.Counter()
     for rel in ("hd-ae5000_v2_06i.s", "hdae5000_hd_driver.s", "hdae5000_filesystem.s",
                 "hdae5000_ui_display.s", "hdae5000_utilities.s"):
@@ -145,6 +425,13 @@ def main(apply):
                 if v in sym:
                     counts[sym[v]] += 1
                     return sym[v]
+                if v in FORMS:
+                    counts["FORMS"] += 1
+                    return FORMS[v]
+                for base, size in EXTENT.items():
+                    if base < v < base + size:
+                        counts["%s+N" % sym[base]] += 1
+                        return "%s+%d" % (sym[base], v - base)
                 return m.group(0)
             new = NUM.sub(sub, code)
             if new != code:
@@ -155,12 +442,13 @@ def main(apply):
     if not apply:
         return
     L = src[FILE_MAIN]
-    have = [i for i, ln in enumerate(L) if ln.startswith("\t.equ HDAE5000_RAM_")]
+    have = [i for i, ln in enumerate(L) if ln.startswith(("\t.equ HDAE5000_RAM_", "\t.equ HDAE5000_IO_"))]
     if have:
         # a block from an earlier run exists: add only the missing names, in
         # address order, after its last line (re-running is idempotent)
         present = {re.match(r"\t\.equ (\w+),", L[i]).group(1) for i in have}
-        new = ["\t.equ %s, 0x%06x\t; %s" % (sym[a], a, RAM[a][1]) for a in sorted(RAM) if sym[a] not in present]
+        new = ["\t.equ %s, 0x%06x\t; %s" % (sym[a], a, evidence[a]) for a in sorted(evidence)
+               if sym[a] not in present]
         L[have[-1] + 1:have[-1] + 1] = new
         print("added %d .equ lines to the existing block" % len(new))
         for rel, L2 in src.items():
