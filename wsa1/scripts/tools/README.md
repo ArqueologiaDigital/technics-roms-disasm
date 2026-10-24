@@ -54,6 +54,9 @@ rule of `notes/gen_prom_b_f067a6_module.py`), or by a hand-written name whose ev
 header; refuses addresses only a stale or dead table copy points at. Then the prom_a symboliser
 writes the names.
 
+Only that direction: prom_b's 391 operands into unlabelled prom_a addresses (dry run of
+`../scripts/converters/symbolize_wsa1_rom_addresses.py`) were not attempted.
+
     python3 scripts/tools/label_cross_image_targets.py [--apply]
     python3 ../notes/proma-2026-09-25/symbolize_prom_a_addresses.py --apply
     make gate-wsa1

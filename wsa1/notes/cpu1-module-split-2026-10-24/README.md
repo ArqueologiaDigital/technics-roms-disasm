@@ -75,6 +75,16 @@ targets in prom_b are now branched to from another file, so they count as routin
 prom_b, another image, so nothing moves there.  The prom_a fall-through run that left (d) is at a
 file start now.  The `data_range_census.py` shift is a header lookback that now stops at a file start
 ("descriptive name + header" 74,313 -> 74,289 B, "section header only" 7,642 -> 7,666 B).
+The next `make doc-quality` snapshot will show the prom_b step; it comes from the file boundary, not
+from any header written or lost, and should be read as such.
+
+## Cross-image references: one direction only
+
+The same lane labelled prom_b targets that prom_a spelled as numbers
+(`scripts/tools/label_cross_image_targets.py`: 10 labels, 21 prom_a operands now symbolic).  The
+reverse direction -- prom_b operands that point at prom_a addresses with no label -- was **not
+attempted**.  A dry run of `../scripts/converters/symbolize_wsa1_rom_addresses.py` (no arguments)
+still reports 391 of them: `no-label call->a 48`, `no-label jp->a 5`, `no-label long->a 338`.
 
 ## Every tool that read the old files
 
