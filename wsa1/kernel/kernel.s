@@ -2244,7 +2244,7 @@ MsgQueue_Send__common:
 	m_ld_rm MWD+r4, 0x00, r5                     ; F85B45/F986AA  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85B48/F986AD  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send__no_node                ; F85B4A/F986AF  76 39 00   jrl Z,0xf986eb
-	m_ld_mi16 MDD+r7, 0x14, 0x0000               ; F85B4D/F986B2  bf 14 02 00 00   ld (XSP+0x14),0x0000
+	ldw	(xsp+20), 0x0000                     ; F85B4D/F986B2  bf 14 02 00 00   ld (XSP+0x14),0x0000
 	extz XIX                                     ; F85B52/F986B7  ec 12   extz XIX
 	extz XWA                                     ; F85B54/F986B9  e8 12   extz XWA
 	extz XHL                                     ; F85B56/F986BB  eb 12   extz XHL
@@ -2267,11 +2267,11 @@ MsgQueue_Send__common:
 	jrl Kernel_ResumeTask                        ; F85B83/F986E8  78 dd fb   jrl T,0xf982c8
 MsgQueue_Send__no_node:
 .LF85B86:   ; <- prom_a's name for this address.
-	m_ld_mi16 MDD+r7, 0x14, 0xffff               ; F85B86/F986EB  bf 14 02 ff ff   ld (XSP+0x14),0xffff
+	ldw	(xsp+20), 0xffff                     ; F85B86/F986EB  bf 14 02 ff ff   ld (XSP+0x14),0xffff
 	jrl Kernel_ResumeTask                        ; F85B8B/F986F0  78 d5 fb   jrl T,0xf982c8
 MsgQueue_Send__wake:
 .LF85B8E:   ; <- prom_a's name for this address.
-	m_ld_mi16 MDD+r7, 0x14, 0x0000               ; F85B8E/F986F3  bf 14 02 00 00   ld (XSP+0x14),0x0000
+	ldw	(xsp+20), 0x0000                     ; F85B8E/F986F3  bf 14 02 00 00   ld (XSP+0x14),0x0000
 	extz XIX                                     ; F85B93/F986F8  ec 12   extz XIX
 	extz XWA                                     ; F85B95/F986FA  e8 12   extz XWA
 	extz XHL                                     ; F85B97/F986FC  eb 12   extz XHL
@@ -2346,7 +2346,7 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	m_ld_rm MWD+r4, 0x00, r5                     ; F85BF8/F9875D  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85BFB/F98760  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send_NoDispatch__no_node     ; F85BFD/F98762  76 3d 00   jrl Z,0xf987a2
-	m_ld_mi16 MDD+r7, 0x0e, 0x0000               ; F85C00/F98765  bf 0e 02 00 00   ld (XSP+0x0e),0x0000
+	ldw	(xsp+14), 0x0000                     ; F85C00/F98765  bf 0e 02 00 00   ld (XSP+0x0e),0x0000
 	extz XIX                                     ; F85C05/F9876A  ec 12   extz XIX
 	extz XWA                                     ; F85C07/F9876C  e8 12   extz XWA
 	extz XHL                                     ; F85C09/F9876E  eb 12   extz XHL
