@@ -48,6 +48,7 @@ RUN (inside wsa1/, after `make all` so the ELFs are current)
     python3 scripts/tools/fix_stale_doc_symbols.py                 # dry run over every tracked note
     python3 scripts/tools/fix_stale_doc_symbols.py --why notes/FINDINGS-prom_c-dev10c-producers.md
     python3 scripts/tools/fix_stale_doc_symbols.py --apply
+    python3 scripts/tools/fix_stale_doc_symbols.py --audit 764bd7124~1   # tables kept, addresses agree
     python3 scripts/analysis/doc_symbol_check.py $(git ls-files '*.md')   # the count it moves
 The rename history is cached under $TMPDIR keyed by HEAD, so a second run takes seconds.
 """
@@ -406,17 +407,63 @@ def selftest():
     return 1 if fails else 0
 
 
+def audit(rev, notes, names, at):
+    """Check the notes against their text at REV: (1) every table keeps its column counts; (2) every
+    backticked name changed between REV and now whose OLD spelling is address-derived names an object
+    AT that address (SUFFIX_IS_NOT_OWN_ADDRESS excepted).  Prints each failure and the totals."""
+    import difflib
+    addr_of = collections.defaultdict(set)
+    for k in at:
+        for a, ls in at[k].items():
+            for n in ls:
+                addr_of[n].add(a)
+    tick = re.compile(r'`([^`]+)`')
+    tbl_bad = checked = addr_bad = 0
+    for md in notes:
+        try:
+            old = git("show", "%s:./%s" % (rev, os.path.relpath(os.path.abspath(md), ROOT)))
+        except subprocess.CalledProcessError:
+            continue
+        new = open(md, encoding="utf-8").read()
+        oc = [len(c) for c in map(table_cells, old.split("\n")) if c]
+        nc = [len(c) for c in map(table_cells, new.split("\n")) if c]
+        if oc != nc:
+            tbl_bad += 1
+            print("%s: table column counts differ from %s" % (md, rev))
+        ol, nl = old.split("\n"), new.split("\n")
+        for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, ol, nl, autojunk=False).get_opcodes():
+            if op != "replace":
+                continue
+            for a_line, b_line in zip(ol[i1:i2], nl[j1:j2]):
+                for o, n in zip(tick.findall(a_line), tick.findall(b_line)):
+                    m = ADDR_NAME.search(o)
+                    if o == n or not m or n not in names:
+                        continue
+                    checked += 1
+                    if o not in SUFFIX_IS_NOT_OWN_ADDRESS and int(m.group(1), 16) not in addr_of[n]:
+                        addr_bad += 1
+                        print("%s: `%s` -> `%s`, which is not at 0x%s" % (md, o, n, m.group(1).upper()))
+    print("audit against %s: %d note(s), %d with changed table column counts; %d address-derived "
+          "respell(s), %d naming another address" % (rev, len(notes), tbl_bad, checked, addr_bad))
+    return 1 if tbl_bad or addr_bad else 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("notes", nargs="*", help="Markdown files (default: every tracked .md under wsa1/)")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--why", action="store_true", help="print the evidence for every change")
     ap.add_argument("--selftest", action="store_true", help="check the table reader and re-padder, then exit")
+    ap.add_argument("--audit", metavar="REV", help="check the notes' tables and address-derived respells "
+                    "against their text at REV, then exit")
     a = ap.parse_args()
     if a.selftest:
         sys.exit(selftest())
     os.chdir(ROOT)
     notes = a.notes or [p for p in git("ls-files", "*.md").split("\n") if p]
+    if a.audit:
+        names, at = current_labels()
+        sys.exit(audit(a.audit, notes, names, at))
     renames, defined_in = history()
     names, at = current_labels()
     total, sk = 0, collections.Counter()

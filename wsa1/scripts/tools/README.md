@@ -9,11 +9,16 @@ before it is run with `--apply`. One entry per script: what question it answers,
 defines; this tool resolves the renamed ones from the git rename history of the sources (or, for an
 address-derived name, from the label now at that address in the image that defined it) and writes
 the current name. Rename-mapping tables, names written as history ("was `X`") and fenced output are
-left alone; a table with a changed row is re-padded.
+left alone; a table with a changed row is re-padded (cells split outside `code spans` and `\|`
+escapes; a table whose column count would change is refused). An address-derived old name is
+respelled only to a name at that address. `--audit REV` checks the notes against REV: tables keep
+their column counts, and every address-derived respell names an object at that address.
 
     make all                                                    # the ELFs it reads
+    python3 scripts/tools/fix_stale_doc_symbols.py --selftest   # table reader and re-padder
     python3 scripts/tools/fix_stale_doc_symbols.py --why        # dry run, with evidence
     python3 scripts/tools/fix_stale_doc_symbols.py --apply
+    python3 scripts/tools/fix_stale_doc_symbols.py --audit 764bd7124~1 <the notes 764bd7124 changed>
     python3 scripts/analysis/doc_symbol_check.py $(git ls-files '*.md')
 
 ## `split_cpu1_images.py`
