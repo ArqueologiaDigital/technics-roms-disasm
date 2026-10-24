@@ -80,9 +80,30 @@ shrink elsewhere, because every image is 2 MiB, so code growth is paid for by fi
 Both ports were done along the route this note recommends, v7 -> v6 -> v5, by
 `scripts/converters/port_maincpu_version.py` and `scripts/converters/disassemble_port_todo.py`
 (`v6/maincpu/README.md`, `v5/maincpu/README.md`).  Both trees are byte-identical and in
-`make gate`.  `python3 scripts/analysis/kn5000_source_coverage.py` at the end of the lane:
-v6 98.8% source, 25,632 B verbatim debt; v5 98.7%, 28,041 B (TODO(port) rows, the raw bytes of
-the C divergence json, and the v7 romslices both trees still include).
+`make gate`.  `python3 scripts/analysis/kn5000_source_coverage.py` after the review fixes:
+v6 98.9% source, 22,289 B verbatim debt; v5 98.8%, 24,927 B.  The debt is the TODO(port) rows,
+the raw bytes of the C divergence json, and the v7 romslices both trees still include.  (The first
+port measured v6 98.8% / 25,632 B and v5 98.7% / 28,041 B.  Its TODO(port) count stopped at the
+first label inside a block, and the review found its labels wrong in places.)
+
+The review found that the byte gate cannot see label placement.  The first v6 port had put
+SndParam_* names on the wrong records: it had aligned v7's pointer table with shifted copies of
+its own raw values (490 of the 660 labels counted as misplaced below are SndParam_*; 15 after
+the fix, code labels in changed routines).  It had also left the labels of v7-only code on the
+next, unrelated line.
+`python3 scripts/analysis/check_ported_labels.py` now checks every carried label against the bytes.
+The figures below compare the first port (807eb53fe, built in a scratch worktree) with the
+review-fixed trees:
+
+| port     | misplaced | collapsed | dropped labels (`port_dropped_labels.txt`) |
+|----------|-----------|-----------|--------------------------------------------|
+| v7 -> v6 | 660 -> 61 | 313 -> 0  | 0 -> 161                                   |
+| v6 -> v5 | 47 -> 20  | 73 -> 0   | 0 -> 55                                    |
+
+"Misplaced" means that the label's bytes are not at its target address but occur once within
+8 KB of it.  It is an upper bound: short repetitive code, and pointers to unlabelled strings,
+match elsewhere too.  The remaining 61 are listed by `--list`.  Most are of those two kinds, plus
+code labels inside changed routines.
 
 ## Not measured yet
 

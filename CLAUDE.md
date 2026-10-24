@@ -188,8 +188,8 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`  | Main CPU v6                                       | 53,744  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`  | Main CPU v5                                       | 53,786  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`  | Main CPU v6                                       | 53,581  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`  | Main CPU v5                                       | 53,544  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt` | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
@@ -881,7 +881,11 @@ that we can have strong evidence whenever we reach true full code-coverage"*.
 
 1. **What it tracks.** For every image of both models (KN5000 v10/v9/v7, v142, subboot, table data,
    custom data, HD-AE5000; WSA1 prom_a/b/c), each jump/call table is tracked: `.long` tables, jump-vector
-   runs, offset tables, the prom_b directory, and unframed pointer runs. For each table the ledger records:
+   runs, offset tables, the prom_b directory, and unframed pointer runs. **Not yet covered:** KN5000 maincpu
+   v6 and v5 (trees ported from v7 and v6, added 2026-10-24), v8 (v9's source) and sub-CPU v1.41 (generated
+   from v1.42). Adding them changes the image set of `data_range_census.py`, and so the semantic score's
+   totals, so it is left to a commit of its own. Until then no coverage claim covers those images.
+   For each table the ledger records:
    - whether every entry that points into code lands on a labelled, disassembled instruction and is
      spelled symbolically;
    - if not, what blocks it: a hidden routine with no label, mid-instruction, `.incbin`, data, text, or a
@@ -1286,8 +1290,8 @@ When encountering disputed interpretations:
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 99.7%                 | 6,591 B       |
-| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 98.8%                 | 25,632 B      |
-| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 98.7%                 | 28,041 B      |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 98.9%                 | 22,289 B      |
+| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 98.8%                 | 24,927 B      |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`                               | 100.00%    | 100.0%                | 0 B           |
@@ -1321,7 +1325,11 @@ assemble to the v6 bytes, v7's lines with operands read from the v6 bytes where 
 differs, and `.byte` rows under `; TODO(port): ...` where no v7 line maps (counted as verbatim
 debt). Its C data is v7's, patched by `v6/maincpu/includes/v6_c_divergence.json`
 (`scripts/build/apply_c_divergence.py v6`); `kn5000_source_coverage.py` counts that json's raw
-bytes as verbatim debt too (its pointer relocations are not debt). Like v8's, its reference image is not committed:
+bytes as verbatim debt too. Its pointer relocations are not counted as debt, but they are numeric moves of
+v7's compiled pointers that no v6 label checks yet, so they are not "explained" either. A v7 label for
+something v6 lacks is dropped, not carried onto unrelated bytes: `v6/maincpu/port_dropped_labels.txt` lists
+each one, and `scripts/analysis/check_ported_labels.py --src v7 --dst v6` checks every label that was carried
+over against the bytes. Like v8's, its reference image is not committed:
 `KN5000_V6_REF` (SHA-1 `51108e2d75b180a034395e90bd40ca2bd2a0adfb`), checked by `verify-v6-reference`
 in `make gate`. **maincpu v5** was made the same way from `v6/maincpu`
 (`v5/maincpu/README.md`; `KN5000_V5_REF`, SHA-1 `7b69a8aaa84ee3d337acc0c29c34154c5da2df32`,
