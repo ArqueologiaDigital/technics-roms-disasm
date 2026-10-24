@@ -49,6 +49,15 @@ import re
 import sys
 import types
 
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 TOOL = os.path.join(ROOT, "scripts", "converters", "symbolize_numeric_branches.py")
@@ -112,7 +121,8 @@ def _entries():
     """[(address, label)] of every non-structural label of prom_b's source, sorted."""
     global _ENTRIES
     if _ENTRIES is None:
-        src = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+        _src_PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+        src = _wsa1_image(_src_PATH)
         L = open(src, "rb").read().decode("latin-1").split("\n")
         out, pend = [], None
         for t in L:

@@ -1,0 +1,1235 @@
+{
+ "prom_a": {
+  "rows": [
+   {
+    "argv": [
+     "notes/wave7_round9_review_wb_prom_b.py"
+    ],
+    "grade": "VACUOUS",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/lane_promA_gate_perturbation.py"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/prom_a_understanding_round7.py",
+     "--apply-strings"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/verify_a1_independent_check.py"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/census_stale_markers.py"
+    ],
+    "grade": "SPLIT-FRAGILE",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/kn5000_twin_routines.py",
+     "--min",
+     "0"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_exact_copy_names.py"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_exact_copy_names.py",
+     "--args"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/frame_disk_switch_tables.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_cover_round2.py",
+     "--closure"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f0033f_f0199e.py",
+     "--evidence"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f0033f_f0199e.py",
+     "--evidence",
+     "--render"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f78028_icon_sheet.py",
+     "--evidence"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f78028_icon_sheet.py",
+     "--evidence",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/maincpu_join_probe.py",
+     "--collisions",
+     "--callers",
+     "--nearest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/overlay-review/hang_trap_reachability.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_a_disk_cmd_layer_checks.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_a_disk_cmd_layer_checks.py",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_dl_stage_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_read_names_2026_10_04.py",
+     "--place"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_read_names_2026_10_04.py",
+     "--relabel"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_screen_stage_and_flags_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_b_entrypoints_round7.py",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/prom_b_orphan_cluster_offset_scan.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/sysex-probes/sysex_model_variant.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/sysex-probes/sysex_unreachable_commands.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/sysex-probes/sysex_user_settings.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_601f_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wsa1_panel_state_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wsa1_screen_field_list_names.py",
+     "--args"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wsa1_screen_field_list_names.py",
+     "--list"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   }
+  ],
+  "was": {
+   "notes/maincpu_join_probe.py --collisions --callers --nearest": "VACUOUS",
+   "notes/wave7_round9_review_wb_prom_b.py": "VACUOUS",
+   "notes/wsa1_601f_census.py": "VACUOUS",
+   "notes/lane_promA_gate_perturbation.py": "LOUD",
+   "notes/prom_a_understanding_round7.py --apply-strings": "LOUD",
+   "notes/verify_a1_independent_check.py": "LOUD",
+   "notes/census_stale_markers.py": "SPLIT-FRAGILE",
+   "notes/frame_disk_switch_tables.py": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_cover_round2.py --closure": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f0033f_f0199e.py --evidence": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f0033f_f0199e.py --evidence --render": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f78028_icon_sheet.py --evidence": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest": "SPLIT-FRAGILE",
+   "notes/overlay-review/hang_trap_reachability.py": "SPLIT-FRAGILE",
+   "notes/prom_a_disk_cmd_layer_checks.py": "SPLIT-FRAGILE",
+   "notes/prom_a_disk_cmd_layer_checks.py --selftest": "SPLIT-FRAGILE",
+   "notes/prom_ab_dl_stage_census.py": "SPLIT-FRAGILE",
+   "notes/prom_ab_read_names_2026_10_04.py --place": "SPLIT-FRAGILE",
+   "notes/prom_ab_read_names_2026_10_04.py --relabel": "SPLIT-FRAGILE",
+   "notes/prom_ab_screen_stage_and_flags_census.py": "SPLIT-FRAGILE",
+   "notes/prom_b_entrypoints_round7.py --selftest": "SPLIT-FRAGILE",
+   "notes/prom_b_orphan_cluster_offset_scan.py": "SPLIT-FRAGILE",
+   "notes/sysex-probes/sysex_model_variant.py": "SPLIT-FRAGILE",
+   "notes/sysex-probes/sysex_unreachable_commands.py": "SPLIT-FRAGILE",
+   "notes/sysex-probes/sysex_user_settings.py": "SPLIT-FRAGILE",
+   "notes/wsa1_panel_state_census.py": "SPLIT-FRAGILE",
+   "notes/wsa1_screen_field_list_names.py --args": "SPLIT-FRAGILE",
+   "notes/wsa1_screen_field_list_names.py --list": "SPLIT-FRAGILE",
+   "notes/kn5000_twin_routines.py --min 0": "NONDET",
+   "notes/wsa1_exact_copy_names.py": "NONDET",
+   "notes/wsa1_exact_copy_names.py --args": "NONDET",
+   "notes/asm_source.py": "BY-DESIGN",
+   "notes/asm_source.py --selftest": "BY-DESIGN",
+   "notes/migrate_listing_readers.py --list": "BY-DESIGN",
+   "notes/migrate_listing_readers.py --selftest": "BY-DESIGN",
+   "notes/audit_wave5_checks.py": "UNAFFECTED",
+   "notes/audit_wave5_checks.py --coverage": "UNAFFECTED",
+   "notes/audit_wave6_round2_probes.py": "UNAFFECTED",
+   "notes/audit_wave6_round2_probes.py --selftest": "UNAFFECTED",
+   "notes/audit_wave6_round3_probes.py": "UNAFFECTED",
+   "notes/audit_wave6_round3_probes.py --selftest": "UNAFFECTED",
+   "notes/cs1_sram_extent.py": "UNAFFECTED",
+   "notes/cs1_sram_extent.py --selftest": "UNAFFECTED",
+   "notes/data_as_code_audit.py": "UNAFFECTED",
+   "notes/data_as_code_audit.py --null": "UNAFFECTED",
+   "notes/driver_insight/driver_insight_probes.py": "UNAFFECTED",
+   "notes/gen_prom_a_cover_round1.py --after": "UNAFFECTED",
+   "notes/gen_prom_a_cover_round1.py --layout": "UNAFFECTED",
+   "notes/gen_prom_a_cover_round2.py --after": "UNAFFECTED",
+   "notes/gen_prom_a_cover_round2.py --dropped": "UNAFFECTED",
+   "notes/gen_prom_a_ctrl_module.py --out-dir": "UNAFFECTED",
+   "notes/gen_prom_a_display_list_text.py": "UNAFFECTED",
+   "notes/gen_prom_a_f85ff9_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_f85ff9_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_f8a000_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_f8a000_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_f8c000_cluster.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_f8c000_cluster.py --emit-": "UNAFFECTED",
+   "notes/gen_prom_a_f8e77c_tables.py": "UNAFFECTED",
+   "notes/gen_prom_a_f8e77c_tables.py --audit": "UNAFFECTED",
+   "notes/gen_prom_a_f90989_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_f90989_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_f96504_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_f96504_module.py --audit": "UNAFFECTED",
+   "notes/gen_prom_a_f98de5_table.py": "UNAFFECTED",
+   "notes/gen_prom_a_f98de5_table.py --audit": "UNAFFECTED",
+   "notes/gen_prom_a_fa5aeb_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_fa5aeb_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_fad800_module.py": "UNAFFECTED",
+   "notes/gen_prom_a_fad800_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_fdc_module.py --out-dir": "UNAFFECTED",
+   "notes/gen_prom_a_fdffdf_fragment.py": "UNAFFECTED",
+   "notes/gen_prom_a_fdffdf_fragment.py --audit": "UNAFFECTED",
+   "notes/gen_prom_a_ringbuf_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_cover_round2.py": "UNAFFECTED",
+   "notes/gen_prom_b_f00c4d_module.py --layout": "UNAFFECTED",
+   "notes/gen_prom_b_f00c4d_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f17559_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f17559_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f4f000_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f4f000_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f58000_module.py --asm": "UNAFFECTED",
+   "notes/gen_prom_b_f58000_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f6d002_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f6d002_module.py --checks": "UNAFFECTED",
+   "notes/git_path_audit.py": "UNAFFECTED",
+   "notes/git_path_audit.py --trace --json": "UNAFFECTED",
+   "notes/kernel_join_probe.py --pairs": "UNAFFECTED",
+   "notes/kernel_join_probe.py --symbols": "UNAFFECTED",
+   "notes/lane_promA_debt.py": "UNAFFECTED",
+   "notes/lcd_layer_census.py": "UNAFFECTED",
+   "notes/lcd_layer_census.py --check": "UNAFFECTED",
+   "notes/maincpu_join_probe.py --callers --nearest": "UNAFFECTED",
+   "notes/midi_parser_check.py": "UNAFFECTED",
+   "notes/midi_parser_check.py -v": "UNAFFECTED",
+   "notes/prom_a_audit_callsites.py": "UNAFFECTED",
+   "notes/prom_a_audit_callsites.py --selftest": "UNAFFECTED",
+   "notes/prom_a_bare_byte_debt_scan.py": "UNAFFECTED",
+   "notes/prom_a_bare_byte_debt_scan.py --min 30": "UNAFFECTED",
+   "notes/prom_a_boot_checks.py": "UNAFFECTED",
+   "notes/prom_a_boot_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_button_handler_names.py": "UNAFFECTED",
+   "notes/prom_a_byte_checks.py": "UNAFFECTED",
+   "notes/prom_a_byte_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_c930_selfptr_check.py": "UNAFFECTED",
+   "notes/prom_a_call_graph.py --module": "UNAFFECTED",
+   "notes/prom_a_call_graph.py --modules": "UNAFFECTED",
+   "notes/prom_a_census_round8.py --applied": "UNAFFECTED",
+   "notes/prom_a_census_round8.py --ata": "UNAFFECTED",
+   "notes/prom_a_combi_mixer_cells.py": "UNAFFECTED",
+   "notes/prom_a_combi_mixer_cells.py --args": "UNAFFECTED",
+   "notes/prom_a_converted_callers.py --checks": "UNAFFECTED",
+   "notes/prom_a_converted_callers.py 0xF4123C": "UNAFFECTED",
+   "notes/prom_a_ctrl_checks.py": "UNAFFECTED",
+   "notes/prom_a_ctrl_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_disk_format_checks.py": "UNAFFECTED",
+   "notes/prom_a_dl_text_names.py": "UNAFFECTED",
+   "notes/prom_a_dl_text_names.py --args": "UNAFFECTED",
+   "notes/prom_a_drumnames_checks.py": "UNAFFECTED",
+   "notes/prom_a_edit_screen_button_names.py": "UNAFFECTED",
+   "notes/prom_a_edit_screen_button_names.py --args": "UNAFFECTED",
+   "notes/prom_a_edit_screen_measure_numbers.py": "UNAFFECTED",
+   "notes/prom_a_edit_screen_measure_numbers.py --args": "UNAFFECTED",
+   "notes/prom_a_evidence_census.py": "UNAFFECTED",
+   "notes/prom_a_evidence_census.py --all": "UNAFFECTED",
+   "notes/prom_a_f85ff9_layout.py": "UNAFFECTED",
+   "notes/prom_a_f85ff9_layout.py --null": "UNAFFECTED",
+   "notes/prom_a_f85ff9_verify.py --all": "UNAFFECTED",
+   "notes/prom_a_f85ff9_verify.py --anchors": "UNAFFECTED",
+   "notes/prom_a_fa1404_identify.py": "UNAFFECTED",
+   "notes/prom_a_fa1404_identify.py --census": "UNAFFECTED",
+   "notes/prom_a_fa5aeb_layout.py": "UNAFFECTED",
+   "notes/prom_a_fa5aeb_layout.py --barrier": "UNAFFECTED",
+   "notes/prom_a_fad800_layout.py": "UNAFFECTED",
+   "notes/prom_a_fad800_layout.py --accepted": "UNAFFECTED",
+   "notes/prom_a_fb2000_checks.py": "UNAFFECTED",
+   "notes/prom_a_fb2000_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_fc0000_module_check.py": "UNAFFECTED",
+   "notes/prom_a_fc0000_module_check.py --selftest": "UNAFFECTED",
+   "notes/prom_a_fc8000_module_check.py": "UNAFFECTED",
+   "notes/prom_a_fc8000_module_check.py --selftest": "UNAFFECTED",
+   "notes/prom_a_fcf000_checks.py": "UNAFFECTED",
+   "notes/prom_a_fcf000_checks.py --fast": "UNAFFECTED",
+   "notes/prom_a_fdc_callgraph.py": "UNAFFECTED",
+   "notes/prom_a_fdc_callgraph.py --edges": "UNAFFECTED",
+   "notes/prom_a_fdc_checks.py": "UNAFFECTED",
+   "notes/prom_a_fdc_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_fdc_operation_census.py": "UNAFFECTED",
+   "notes/prom_a_fdc_operation_census.py --quiet": "UNAFFECTED",
+   "notes/prom_a_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_a_frontier_delta.py --rev": "UNAFFECTED",
+   "notes/prom_a_handlertable23_convert.py": "UNAFFECTED",
+   "notes/prom_a_header_depth.py": "UNAFFECTED",
+   "notes/prom_a_header_depth.py --missing": "UNAFFECTED",
+   "notes/prom_a_module18_phase_vector.py": "UNAFFECTED",
+   "notes/prom_a_module_boot_phase_names.py": "UNAFFECTED",
+   "notes/prom_a_module_boot_phase_names.py --args": "UNAFFECTED",
+   "notes/prom_a_module_frontier.py": "UNAFFECTED",
+   "notes/prom_a_module_frontier.py --at 0xF4088C": "UNAFFECTED",
+   "notes/prom_a_msg0716_message_names.py": "UNAFFECTED",
+   "notes/prom_a_msg0716_message_names.py --args": "UNAFFECTED",
+   "notes/prom_a_naming_round3.py": "UNAFFECTED",
+   "notes/prom_a_naming_round3.py --gaps": "UNAFFECTED",
+   "notes/prom_a_naming_wave8.py --dev": "UNAFFECTED",
+   "notes/prom_a_naming_wave8.py --selftest": "UNAFFECTED",
+   "notes/prom_a_naming_wave8_apply.py --plan": "UNAFFECTED",
+   "notes/prom_a_naming_wave8_apply.py --screens": "UNAFFECTED",
+   "notes/prom_a_note_edit_keyboard_ruler.py": "UNAFFECTED",
+   "notes/prom_a_note_edit_keyboard_ruler.py --args": "UNAFFECTED",
+   "notes/prom_a_pa3_census.py": "UNAFFECTED",
+   "notes/prom_a_pa3_census.py --quiet": "UNAFFECTED",
+   "notes/prom_a_page_enter_names.py": "UNAFFECTED",
+   "notes/prom_a_page_enter_names.py --args": "UNAFFECTED",
+   "notes/prom_a_panel_control_map.py --checks": "UNAFFECTED",
+   "notes/prom_a_panel_control_map.py --map": "UNAFFECTED",
+   "notes/prom_a_panel_names_round11.py --apply12": "UNAFFECTED",
+   "notes/prom_a_panel_names_round11.py --census": "UNAFFECTED",
+   "notes/prom_a_panelop_handler_names.py": "UNAFFECTED",
+   "notes/prom_a_panelop_handler_names.py --args": "UNAFFECTED",
+   "notes/prom_a_portb_and_blockdev_census.py": "UNAFFECTED",
+   "notes/prom_a_portb_and_blockdev_census.py --selftest": "UNAFFECTED",
+   "notes/prom_a_preservation_check.py": "UNAFFECTED",
+   "notes/prom_a_preservation_check.py --list": "UNAFFECTED",
+   "notes/prom_a_ring_slots.py": "UNAFFECTED",
+   "notes/prom_a_ring_slots.py --checks": "UNAFFECTED",
+   "notes/prom_a_round3_checks.py": "UNAFFECTED",
+   "notes/prom_a_round3_checks.py --selftest": "UNAFFECTED",
+   "notes/prom_a_round3_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_a_screen_key_actions.py": "UNAFFECTED",
+   "notes/prom_a_screen_key_actions.py --args": "UNAFFECTED",
+   "notes/prom_a_screen_titles_probe.py --calibrate": "UNAFFECTED",
+   "notes/prom_a_screen_titles_probe.py --titles": "UNAFFECTED",
+   "notes/prom_a_sibling_short_runs.py": "UNAFFECTED",
+   "notes/prom_a_sibling_short_runs.py --selftest": "UNAFFECTED",
+   "notes/prom_a_span_survey.py": "UNAFFECTED",
+   "notes/prom_a_span_survey.py 0xF96018 0xF99021": "UNAFFECTED",
+   "notes/prom_a_splash_checks.py": "UNAFFECTED",
+   "notes/prom_a_stale_twins.py": "UNAFFECTED",
+   "notes/prom_a_stray_label_removal.py": "UNAFFECTED",
+   "notes/prom_a_system_menu_screens.py": "UNAFFECTED",
+   "notes/prom_a_system_menu_screens.py --args": "UNAFFECTED",
+   "notes/prom_a_uiblock_checks.py": "UNAFFECTED",
+   "notes/prom_a_uiblock_checks.py -v": "UNAFFECTED",
+   "notes/prom_a_uiscreen_checks.py": "UNAFFECTED",
+   "notes/prom_a_understanding_round4.py": "UNAFFECTED",
+   "notes/prom_a_understanding_round4.py --controllers": "UNAFFECTED",
+   "notes/prom_a_understanding_round5.py --accessors": "UNAFFECTED",
+   "notes/prom_a_understanding_round5.py --dups": "UNAFFECTED",
+   "notes/prom_a_understanding_round6.py --callshape": "UNAFFECTED",
+   "notes/prom_a_understanding_round6.py --calr": "UNAFFECTED",
+   "notes/prom_a_understanding_round7.py --census": "UNAFFECTED",
+   "notes/prom_a_unit1_backend_check.py": "UNAFFECTED",
+   "notes/prom_ab_part_param_fields.py": "UNAFFECTED",
+   "notes/prom_ab_part_param_fields.py --place": "UNAFFECTED",
+   "notes/prom_ab_part_param_switches.py": "UNAFFECTED",
+   "notes/prom_ab_part_param_switches.py --place": "UNAFFECTED",
+   "notes/prom_ab_promb_slot23_targets.py": "UNAFFECTED",
+   "notes/prom_ab_promb_slot23_targets.py --args": "UNAFFECTED",
+   "notes/prom_ab_ram_operand_shapes.py": "UNAFFECTED",
+   "notes/prom_ab_screen_vtable_methods.py": "UNAFFECTED",
+   "notes/prom_ab_screen_vtable_methods.py --args": "UNAFFECTED",
+   "notes/prom_ab_sound_edit_screen_names.py": "UNAFFECTED",
+   "notes/prom_ab_sound_edit_screen_names.py --args": "UNAFFECTED",
+   "notes/prom_ab_step_record_screen_names.py": "UNAFFECTED",
+   "notes/prom_ab_step_record_screen_names.py --args": "UNAFFECTED",
+   "notes/prom_b_digital_effect_key_ranges.py": "UNAFFECTED",
+   "notes/prom_b_digital_effect_key_ranges.py --args": "UNAFFECTED",
+   "notes/prom_b_dl_stack_sites.py": "UNAFFECTED",
+   "notes/prom_b_dl_stack_sites.py --selftest": "UNAFFECTED",
+   "notes/prom_b_dsp_effect_section_arms.py": "UNAFFECTED",
+   "notes/prom_b_dsp_effect_section_arms.py --args": "UNAFFECTED",
+   "notes/prom_b_entrypoints_round7.py": "UNAFFECTED",
+   "notes/prom_b_f00c4d_xrefs.py": "UNAFFECTED",
+   "notes/prom_b_f00c4d_xrefs.py --selftest": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_layout.py --null-accept": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_layout.py --null-ptr": "UNAFFECTED",
+   "notes/prom_b_f4f000_layout.py": "UNAFFECTED",
+   "notes/prom_b_f4f000_layout.py --all": "UNAFFECTED",
+   "notes/prom_b_f4f000_verify.py": "UNAFFECTED",
+   "notes/prom_b_f4f000_verify.py --claims": "UNAFFECTED",
+   "notes/prom_b_naming_evidence.py": "UNAFFECTED",
+   "notes/prom_b_naming_evidence.py --class": "UNAFFECTED",
+   "notes/prom_b_panel_names_round12.py --0x0d": "UNAFFECTED",
+   "notes/prom_b_panel_names_round12.py --audit": "UNAFFECTED",
+   "notes/prom_b_param_range_arm_names.py": "UNAFFECTED",
+   "notes/prom_b_param_range_arm_names.py --args": "UNAFFECTED",
+   "notes/prom_b_ram_and_device_census.py --devices": "UNAFFECTED",
+   "notes/prom_b_ram_and_device_census.py --lowram": "UNAFFECTED",
+   "notes/prom_b_sc1_serial_regs.py": "UNAFFECTED",
+   "notes/prom_b_sc1_serial_regs.py --sites": "UNAFFECTED",
+   "notes/prom_b_screens_round8.py --calibrate": "UNAFFECTED",
+   "notes/prom_b_screens_round8.py --layer2": "UNAFFECTED",
+   "notes/prom_b_select_field_names.py": "UNAFFECTED",
+   "notes/prom_b_select_field_names.py --args": "UNAFFECTED",
+   "notes/prom_b_seqjob_field_names.py": "UNAFFECTED",
+   "notes/prom_b_seqjob_field_names.py --args": "UNAFFECTED",
+   "notes/prom_b_sequencer_screen_buttons.py": "UNAFFECTED",
+   "notes/prom_b_sequencer_screen_buttons.py --args": "UNAFFECTED",
+   "notes/prom_b_span_frontier.py": "UNAFFECTED",
+   "notes/prom_b_span_frontier.py --by": "UNAFFECTED",
+   "notes/prom_b_thunks_round6.py": "UNAFFECTED",
+   "notes/prom_b_thunks_round6.py --unnamed": "UNAFFECTED",
+   "notes/prom_c_frontier.py": "UNAFFECTED",
+   "notes/prom_c_frontier.py --spans": "UNAFFECTED",
+   "notes/prom_c_inventory_round8.py --cites": "UNAFFECTED",
+   "notes/prom_c_inventory_round8.py --record": "UNAFFECTED",
+   "notes/prom_c_naming_round3.py --regaudit": "UNAFFECTED",
+   "notes/prom_c_naming_round3.py --struct": "UNAFFECTED",
+   "notes/prom_c_record68_round10.py": "UNAFFECTED",
+   "notes/prom_c_record68_round10.py --claims10": "UNAFFECTED",
+   "notes/prom_c_understanding_round4.py": "UNAFFECTED",
+   "notes/prom_c_understanding_round4.py --names": "UNAFFECTED",
+   "notes/promb_macro_rewrite.py --census": "UNAFFECTED",
+   "notes/promb_macro_rewrite.py --unused": "UNAFFECTED",
+   "notes/reachability.py --evidence": "UNAFFECTED",
+   "notes/reachability.py --targets": "UNAFFECTED",
+   "notes/round2_audit_probes.py": "UNAFFECTED",
+   "notes/round2_audit_probes.py --selftest": "UNAFFECTED",
+   "notes/sound/erp_srirr_decoder_reflatten.py": "UNAFFECTED",
+   "notes/sound/wsa1_dev104_vs_kn5000.py": "UNAFFECTED",
+   "notes/sound/wsa1_dev104_vs_kn5000.py --control": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_driver_shared.py": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_driver_shared.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_join_probe.py --pairs": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_join_probe.py --verify": "UNAFFECTED",
+   "notes/sound/wsa1_sound_boundary.py": "UNAFFECTED",
+   "notes/sound/wsa1_sound_boundary.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_sound_in_unconverted.py": "UNAFFECTED",
+   "notes/sound/wsa1_sound_in_unconverted.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_unspellable_forms.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_unspellable_forms.py --sites": "UNAFFECTED",
+   "notes/swi7_service_table.py": "UNAFFECTED",
+   "notes/swi7_service_table.py --slots": "UNAFFECTED",
+   "notes/sysex-probes/sysex_third_region_wire.py": "UNAFFECTED",
+   "notes/vector_map.py": "UNAFFECTED",
+   "notes/vector_map.py --unconverted": "UNAFFECTED",
+   "notes/w21_lsi_gate_and_keyscaling.py": "UNAFFECTED",
+   "notes/w21_lsi_gate_and_keyscaling.py --selftest": "UNAFFECTED",
+   "notes/w23_reso_scale_and_group_chain.py": "UNAFFECTED",
+   "notes/w23_reso_scale_and_group_chain.py --census": "UNAFFECTED",
+   "notes/w24_e093_coupling_solver.py": "UNAFFECTED",
+   "notes/w24_e093_coupling_solver.py --census": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_null_corpus_independent.py": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_pa_write_census.py": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_pa_write_census.py --selftest": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_r3_citation_check.py": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_r5_prom_a_painter_scope.py": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_r9_proma_citation_check.py": "UNAFFECTED",
+   "notes/wave7_documentation_metrics.py": "UNAFFECTED",
+   "notes/wave7_documentation_metrics.py --range": "UNAFFECTED",
+   "notes/wave7_frontier_table.py": "UNAFFECTED",
+   "notes/wave7_frontier_table.py --sums": "UNAFFECTED",
+   "notes/wave7_panel_names_round11.py": "UNAFFECTED",
+   "notes/wave7_panel_names_round11.py --appenders": "UNAFFECTED",
+   "notes/wave7_review_wa3_prom_a_names.py": "UNAFFECTED",
+   "notes/wave7_review_wa3_prom_a_names.py --selftest": "UNAFFECTED",
+   "notes/wave7_round3_review_wd3_prom_d.py": "UNAFFECTED",
+   "notes/wave7_round6_review_wb_prom_b.py": "UNAFFECTED",
+   "notes/wave7_round6_review_wb_prom_b.py --suffix": "UNAFFECTED",
+   "notes/wave7_round8_review_wd3_prom_d.py": "UNAFFECTED",
+   "notes/wave7_round9_review_wb_prom_b.py --zeros": "UNAFFECTED",
+   "notes/wave7_xref_tlcs900_family.py": "UNAFFECTED",
+   "notes/wave7_xref_tlcs900_family.py --chips": "UNAFFECTED",
+   "notes/wsa1_wrapper_names.py": "UNAFFECTED",
+   "prom_a/insert_region.py": "UNAFFECTED",
+   "prom_a/roundtrip.py": "UNAFFECTED",
+   "scripts/analysis/sizing_defect_hunt.py": "UNAFFECTED",
+   "scripts/build/wsa1_bitmaps.py": "UNAFFECTED"
+  }
+ },
+ "prom_b": {
+  "rows": [
+   {
+    "argv": [
+     "notes/wave7_round6_review_wb_prom_b.py"
+    ],
+    "grade": "VACUOUS",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wave7_round9_review_wb_prom_b.py"
+    ],
+    "grade": "VACUOUS",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_promB4_operand_arrays.py",
+     "--falsify"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wave7_round5_review_wb_prom_b.py"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "scripts/analysis/prom_b_small_span_gate_visibility.py"
+    ],
+    "grade": "LOUD",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/census_stale_markers.py"
+    ],
+    "grade": "SPLIT-FRAGILE",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_res02f_spans.py",
+     "--falsify"
+    ],
+    "grade": "WRITER",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/prom_b_res05x_gate_perturbation.py"
+    ],
+    "grade": "WRITER",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_smf_writer_module.py",
+     "--selftest"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/kn5000_twin_routines.py",
+     "--min",
+     "0"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/prom_b_f00c4d_oldcopy_names.py"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/prom_b_f00c4d_oldcopy_names.py",
+     "--args"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_exact_copy_names.py"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_exact_copy_names.py",
+     "--args"
+    ],
+    "grade": "NONDET",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f036c2_module.py",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f039ed_selector_blocks.py",
+     "--check"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f3b3da_module.py",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f78028_icon_sheet.py",
+     "--evidence"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_f78028_icon_sheet.py",
+     "--evidence",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/gen_prom_b_res3xx_spans.py",
+     "--selftest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/maincpu_join_probe.py",
+     "--collisions",
+     "--callers",
+     "--nearest"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/overlay-review/hang_trap_reachability.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_dl_stage_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_read_names_2026_10_04.py",
+     "--place"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_read_names_2026_10_04.py",
+     "--relabel"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_ab_screen_stage_and_flags_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/prom_b_orphan_cluster_offset_scan.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/sysex-probes/sysex_user_settings.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 1,
+    "asis_fails": true
+   },
+   {
+    "argv": [
+     "notes/wsa1_panel_state_census.py"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wsa1_screen_field_list_names.py",
+     "--args"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   },
+   {
+    "argv": [
+     "notes/wsa1_screen_field_list_names.py",
+     "--list"
+    ],
+    "grade": "UNAFFECTED",
+    "asis_rc": 0,
+    "asis_fails": false
+   }
+  ],
+  "was": {
+   "notes/maincpu_join_probe.py --collisions --callers --nearest": "VACUOUS",
+   "notes/wave7_round6_review_wb_prom_b.py": "VACUOUS",
+   "notes/wave7_round9_review_wb_prom_b.py": "VACUOUS",
+   "notes/gen_prom_b_promB4_operand_arrays.py --falsify": "LOUD",
+   "notes/wave7_round5_review_wb_prom_b.py": "LOUD",
+   "scripts/analysis/prom_b_small_span_gate_visibility.py": "LOUD",
+   "notes/census_stale_markers.py": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f036c2_module.py --selftest": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f039ed_selector_blocks.py --check": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f3b3da_module.py --selftest": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f78028_icon_sheet.py --evidence": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest": "SPLIT-FRAGILE",
+   "notes/gen_prom_b_res3xx_spans.py --selftest": "SPLIT-FRAGILE",
+   "notes/overlay-review/hang_trap_reachability.py": "SPLIT-FRAGILE",
+   "notes/prom_ab_dl_stage_census.py": "SPLIT-FRAGILE",
+   "notes/prom_ab_read_names_2026_10_04.py --place": "SPLIT-FRAGILE",
+   "notes/prom_ab_read_names_2026_10_04.py --relabel": "SPLIT-FRAGILE",
+   "notes/prom_ab_screen_stage_and_flags_census.py": "SPLIT-FRAGILE",
+   "notes/prom_b_orphan_cluster_offset_scan.py": "SPLIT-FRAGILE",
+   "notes/sysex-probes/sysex_user_settings.py": "SPLIT-FRAGILE",
+   "notes/wsa1_panel_state_census.py": "SPLIT-FRAGILE",
+   "notes/wsa1_screen_field_list_names.py --args": "SPLIT-FRAGILE",
+   "notes/wsa1_screen_field_list_names.py --list": "SPLIT-FRAGILE",
+   "notes/gen_res02f_spans.py --falsify": "WRITER",
+   "notes/prom_b_res05x_gate_perturbation.py": "WRITER",
+   "notes/gen_prom_b_smf_writer_module.py --selftest": "NONDET",
+   "notes/kn5000_twin_routines.py --min 0": "NONDET",
+   "notes/prom_b_f00c4d_oldcopy_names.py": "NONDET",
+   "notes/prom_b_f00c4d_oldcopy_names.py --args": "NONDET",
+   "notes/wsa1_exact_copy_names.py": "NONDET",
+   "notes/wsa1_exact_copy_names.py --args": "NONDET",
+   "notes/asm_source.py": "BY-DESIGN",
+   "notes/asm_source.py --selftest": "BY-DESIGN",
+   "notes/probe_health.py": "BY-DESIGN",
+   "notes/probe_health.py --image": "BY-DESIGN",
+   "notes/audit_round3_probes.py": "UNAFFECTED",
+   "notes/audit_round3_probes.py --selftest": "UNAFFECTED",
+   "notes/audit_wave6_round3_probes.py": "UNAFFECTED",
+   "notes/audit_wave6_round3_probes.py --selftest": "UNAFFECTED",
+   "notes/cs1_sram_extent.py": "UNAFFECTED",
+   "notes/cs1_sram_extent.py --selftest": "UNAFFECTED",
+   "notes/data_as_code_audit.py": "UNAFFECTED",
+   "notes/data_as_code_audit.py --null": "UNAFFECTED",
+   "notes/gen_promB5_spans.py --census": "UNAFFECTED",
+   "notes/gen_promB5_spans.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_a_f98de5_table.py": "UNAFFECTED",
+   "notes/gen_prom_a_f98de5_table.py --audit": "UNAFFECTED",
+   "notes/gen_prom_a_fde74c_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_a_fde74c_module.py --emit-body": "UNAFFECTED",
+   "notes/gen_prom_b_blockstore_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_blockstore_module.py --layout": "UNAFFECTED",
+   "notes/gen_prom_b_cover_round1.py": "UNAFFECTED",
+   "notes/gen_prom_b_cover_round1.py --derive": "UNAFFECTED",
+   "notes/gen_prom_b_cover_round2.py": "UNAFFECTED",
+   "notes/gen_prom_b_cover_round2.py --closure": "UNAFFECTED",
+   "notes/gen_prom_b_dl_closure_gaps_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_dl_closure_gaps_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_dl_named_tables_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_dl_named_tables_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_dl_shape1_gap_f286f9.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_dl_shape23_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_dl_shape23_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f0033f_f0199e.py --evidence": "UNAFFECTED",
+   "notes/gen_prom_b_f0033f_f0199e.py --evidence --render": "UNAFFECTED",
+   "notes/gen_prom_b_f00c4d_module.py --layout": "UNAFFECTED",
+   "notes/gen_prom_b_f00c4d_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f02f52_fix_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_f036c2_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f039ed_selector_blocks.py --evidence": "UNAFFECTED",
+   "notes/gen_prom_b_f05621_fix_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f05621_fix_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f067a6_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f067a6_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f0d081_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f0d081_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f0db18_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f0db18_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f0ea9f_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f0ea9f_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f17559_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f17559_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f29bc6_module.py --asm": "UNAFFECTED",
+   "notes/gen_prom_b_f29bc6_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f2b8f9_fix_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f2b8f9_fix_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f3281c_fix_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_f33f01_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f33f01_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f34968_fix_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_f34ca2_fix_module.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_f353ab_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f353ab_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f3b3da_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f3b7d4_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f3b7d4_module.py --show": "UNAFFECTED",
+   "notes/gen_prom_b_f3c947_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f3c947_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f3d5e5_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f3d5e5_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f3f400_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f3f400_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f44018_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f44018_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f47800_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f47800_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f4f000_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f4f000_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f5553f_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f5553f_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_f5bbe7_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f5bbe7_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f65000_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f65000_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f6d002_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f6d002_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_f78029_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_f78029_module.py --cost": "UNAFFECTED",
+   "notes/gen_prom_b_oversized_round2_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_oversized_round3_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_oversized_round4_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_promB4_operand_arrays.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_sc1_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_sc1_module.py --layout": "UNAFFECTED",
+   "notes/gen_prom_b_selfframing_incbin_module.py --scan": "UNAFFECTED",
+   "notes/gen_prom_b_selfframing_incbin_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_smf_writer_module.py --layout": "UNAFFECTED",
+   "notes/gen_prom_b_songstore_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_songstore_module.py --checks": "UNAFFECTED",
+   "notes/gen_prom_b_stepselect_module.py --asm": "UNAFFECTED",
+   "notes/gen_prom_b_stepselect_module.py --selftest": "UNAFFECTED",
+   "notes/gen_prom_b_tiny_records_batch.py --check": "UNAFFECTED",
+   "notes/gen_prom_b_untouched_pool_module.py": "UNAFFECTED",
+   "notes/gen_prom_b_untouched_pool_module.py --selftest": "UNAFFECTED",
+   "notes/gen_res02f_spans.py --census": "UNAFFECTED",
+   "notes/lane_promB3/gen_promB3_spans.py --render": "UNAFFECTED",
+   "notes/lane_promB3/gen_promB3_spans.py --selftest": "UNAFFECTED",
+   "notes/maincpu_join_probe.py --callers --nearest": "UNAFFECTED",
+   "notes/prom_a_census_round8.py --applied": "UNAFFECTED",
+   "notes/prom_a_census_round8.py --ata": "UNAFFECTED",
+   "notes/prom_a_dl_text_names.py": "UNAFFECTED",
+   "notes/prom_a_dl_text_names.py --args": "UNAFFECTED",
+   "notes/prom_a_f85ff9_layout.py": "UNAFFECTED",
+   "notes/prom_a_f85ff9_layout.py --null": "UNAFFECTED",
+   "notes/prom_a_f85ff9_verify.py --all": "UNAFFECTED",
+   "notes/prom_a_f85ff9_verify.py --anchors": "UNAFFECTED",
+   "notes/prom_a_fa1404_identify.py": "UNAFFECTED",
+   "notes/prom_a_fa1404_identify.py --census": "UNAFFECTED",
+   "notes/prom_a_fad800_layout.py": "UNAFFECTED",
+   "notes/prom_a_fad800_layout.py --accepted": "UNAFFECTED",
+   "notes/prom_a_handlertable23_convert.py": "UNAFFECTED",
+   "notes/prom_a_module_boot_phase_names.py": "UNAFFECTED",
+   "notes/prom_a_module_boot_phase_names.py --args": "UNAFFECTED",
+   "notes/prom_a_naming_round3.py": "UNAFFECTED",
+   "notes/prom_a_naming_round3.py --gaps": "UNAFFECTED",
+   "notes/prom_a_page_enter_names.py": "UNAFFECTED",
+   "notes/prom_a_page_enter_names.py --args": "UNAFFECTED",
+   "notes/prom_a_panelop_handler_names.py": "UNAFFECTED",
+   "notes/prom_a_panelop_handler_names.py --args": "UNAFFECTED",
+   "notes/prom_a_screen_key_actions.py": "UNAFFECTED",
+   "notes/prom_a_screen_key_actions.py --args": "UNAFFECTED",
+   "notes/prom_a_stray_label_removal.py": "UNAFFECTED",
+   "notes/prom_a_understanding_round4.py": "UNAFFECTED",
+   "notes/prom_a_understanding_round4.py --controllers": "UNAFFECTED",
+   "notes/prom_a_understanding_round5.py --accessors": "UNAFFECTED",
+   "notes/prom_a_understanding_round5.py --dups": "UNAFFECTED",
+   "notes/prom_a_understanding_round6.py --callshape": "UNAFFECTED",
+   "notes/prom_a_understanding_round6.py --calr": "UNAFFECTED",
+   "notes/prom_a_understanding_round7.py --apply-strings": "UNAFFECTED",
+   "notes/prom_a_understanding_round7.py --census": "UNAFFECTED",
+   "notes/prom_ab_part_param_fields.py": "UNAFFECTED",
+   "notes/prom_ab_part_param_fields.py --place": "UNAFFECTED",
+   "notes/prom_ab_part_param_switches.py": "UNAFFECTED",
+   "notes/prom_ab_part_param_switches.py --place": "UNAFFECTED",
+   "notes/prom_ab_promb_slot23_targets.py": "UNAFFECTED",
+   "notes/prom_ab_promb_slot23_targets.py --args": "UNAFFECTED",
+   "notes/prom_ab_ram_operand_shapes.py": "UNAFFECTED",
+   "notes/prom_ab_screen_vtable_methods.py": "UNAFFECTED",
+   "notes/prom_ab_screen_vtable_methods.py --args": "UNAFFECTED",
+   "notes/prom_ab_sound_edit_screen_names.py": "UNAFFECTED",
+   "notes/prom_ab_sound_edit_screen_names.py --args": "UNAFFECTED",
+   "notes/prom_ab_step_record_screen_names.py": "UNAFFECTED",
+   "notes/prom_ab_step_record_screen_names.py --args": "UNAFFECTED",
+   "notes/prom_b_apply_chordnote_names.py": "UNAFFECTED",
+   "notes/prom_b_apply_diskfile_name.py": "UNAFFECTED",
+   "notes/prom_b_apply_effect_editor_name.py": "UNAFFECTED",
+   "notes/prom_b_apply_effect_names.py": "UNAFFECTED",
+   "notes/prom_b_apply_msgline_names.py": "UNAFFECTED",
+   "notes/prom_b_apply_msgline_names.py --check": "UNAFFECTED",
+   "notes/prom_b_apply_smf_names.py": "UNAFFECTED",
+   "notes/prom_b_audit_callsites.py": "UNAFFECTED",
+   "notes/prom_b_audit_callsites.py --quiet": "UNAFFECTED",
+   "notes/prom_b_byte_run_audit.py": "UNAFFECTED",
+   "notes/prom_b_byte_run_audit.py --selftest": "UNAFFECTED",
+   "notes/prom_b_call_graph.py": "UNAFFECTED",
+   "notes/prom_b_call_graph.py --covered": "UNAFFECTED",
+   "notes/prom_b_digital_effect_key_ranges.py": "UNAFFECTED",
+   "notes/prom_b_digital_effect_key_ranges.py --args": "UNAFFECTED",
+   "notes/prom_b_dl_call_shapes.py": "UNAFFECTED",
+   "notes/prom_b_dl_call_shapes.py --selftest": "UNAFFECTED",
+   "notes/prom_b_dl_screens_round5.py": "UNAFFECTED",
+   "notes/prom_b_dl_screens_round5.py --census": "UNAFFECTED",
+   "notes/prom_b_dlb_record_arrays.py": "UNAFFECTED",
+   "notes/prom_b_dsp_effect_section_arms.py": "UNAFFECTED",
+   "notes/prom_b_dsp_effect_section_arms.py --args": "UNAFFECTED",
+   "notes/prom_b_entrypoints_round7.py": "UNAFFECTED",
+   "notes/prom_b_entrypoints_round7.py --selftest": "UNAFFECTED",
+   "notes/prom_b_evidence_audit.py --all": "UNAFFECTED",
+   "notes/prom_b_evidence_audit.py --scopes": "UNAFFECTED",
+   "notes/prom_b_f00c4d_xrefs.py": "UNAFFECTED",
+   "notes/prom_b_f00c4d_xrefs.py --selftest": "UNAFFECTED",
+   "notes/prom_b_f067a6_layout.py": "UNAFFECTED",
+   "notes/prom_b_f067a6_layout.py --conflicts": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_header_audit.py": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_header_audit.py --last": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_layout.py --null-accept": "UNAFFECTED",
+   "notes/prom_b_f0ea9f_layout.py --null-ptr": "UNAFFECTED",
+   "notes/prom_b_f17559_layout.py": "UNAFFECTED",
+   "notes/prom_b_f17559_layout.py --anchors": "UNAFFECTED",
+   "notes/prom_b_f17559_reaudit.py": "UNAFFECTED",
+   "notes/prom_b_f17559_reaudit.py --ambig": "UNAFFECTED",
+   "notes/prom_b_f4f000_layout.py": "UNAFFECTED",
+   "notes/prom_b_f4f000_layout.py --all": "UNAFFECTED",
+   "notes/prom_b_f4f000_verify.py": "UNAFFECTED",
+   "notes/prom_b_f4f000_verify.py --claims": "UNAFFECTED",
+   "notes/prom_b_f5b800_checks.py": "UNAFFECTED",
+   "notes/prom_b_f5b800_checks.py --verbose": "UNAFFECTED",
+   "notes/prom_b_f65000_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_b_f65000_frontier_delta.py --runs": "UNAFFECTED",
+   "notes/prom_b_f65000_header_audit.py": "UNAFFECTED",
+   "notes/prom_b_f65000_header_audit.py --last": "UNAFFECTED",
+   "notes/prom_b_f65000_layout.py": "UNAFFECTED",
+   "notes/prom_b_f65000_layout.py --null --rev 2707125": "UNAFFECTED",
+   "notes/prom_b_f6d002_touches.py": "UNAFFECTED",
+   "notes/prom_b_f6d002_touches.py --list": "UNAFFECTED",
+   "notes/prom_b_incbin_debt.py": "UNAFFECTED",
+   "notes/prom_b_instr_census.py --last": "UNAFFECTED",
+   "notes/prom_b_instr_census.py --module": "UNAFFECTED",
+   "notes/prom_b_module_frontier.py": "UNAFFECTED",
+   "notes/prom_b_module_frontier.py --selftest": "UNAFFECTED",
+   "notes/prom_b_msgline.py": "UNAFFECTED",
+   "notes/prom_b_msgline.py --selftest": "UNAFFECTED",
+   "notes/prom_b_naming_evidence.py": "UNAFFECTED",
+   "notes/prom_b_naming_evidence.py --class": "UNAFFECTED",
+   "notes/prom_b_naming_preservation.py": "UNAFFECTED",
+   "notes/prom_b_naming_preservation.py --base": "UNAFFECTED",
+   "notes/prom_b_oldcopy_follow.py": "UNAFFECTED",
+   "notes/prom_b_oldcopy_follow.py --args": "UNAFFECTED",
+   "notes/prom_b_panel_names_round11.py": "UNAFFECTED",
+   "notes/prom_b_panel_names_round11.py --chain": "UNAFFECTED",
+   "notes/prom_b_panel_names_round12.py --0x0d": "UNAFFECTED",
+   "notes/prom_b_panel_names_round12.py --audit": "UNAFFECTED",
+   "notes/prom_b_param_edit_pair.py": "UNAFFECTED",
+   "notes/prom_b_param_range_arm_names.py": "UNAFFECTED",
+   "notes/prom_b_param_range_arm_names.py --args": "UNAFFECTED",
+   "notes/prom_b_probe_answer_diff.py --base": "UNAFFECTED",
+   "notes/prom_b_ram_and_device_census.py --devices": "UNAFFECTED",
+   "notes/prom_b_ram_and_device_census.py --lowram": "UNAFFECTED",
+   "notes/prom_b_real_coverage.py": "UNAFFECTED",
+   "notes/prom_b_repaint_table_names.py": "UNAFFECTED",
+   "notes/prom_b_repaint_table_names.py --args": "UNAFFECTED",
+   "notes/prom_b_res05x_spans.py": "UNAFFECTED",
+   "notes/prom_b_res05x_spans.py --selftest": "UNAFFECTED",
+   "notes/prom_b_residue_481.py": "UNAFFECTED",
+   "notes/prom_b_residue_481.py --selftest": "UNAFFECTED",
+   "notes/prom_b_round2_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_b_round3_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_b_round5_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_b_round5_frontier_delta.py --runs": "UNAFFECTED",
+   "notes/prom_b_round6_frontier_delta.py": "UNAFFECTED",
+   "notes/prom_b_round6_frontier_delta.py --runs": "UNAFFECTED",
+   "notes/prom_b_sc1_census.py": "UNAFFECTED",
+   "notes/prom_b_sc1_census.py --selftest": "UNAFFECTED",
+   "notes/prom_b_sc1_serial_regs.py": "UNAFFECTED",
+   "notes/prom_b_sc1_serial_regs.py --sites": "UNAFFECTED",
+   "notes/prom_b_sc1_states.py": "UNAFFECTED",
+   "notes/prom_b_sc1_states.py --exits": "UNAFFECTED",
+   "notes/prom_b_screen0e_button_names.py": "UNAFFECTED",
+   "notes/prom_b_screen0e_button_names.py --args": "UNAFFECTED",
+   "notes/prom_b_screen_arrays.py": "UNAFFECTED",
+   "notes/prom_b_screens_round8.py --calibrate": "UNAFFECTED",
+   "notes/prom_b_screens_round8.py --layer2": "UNAFFECTED",
+   "notes/prom_b_select_field_names.py": "UNAFFECTED",
+   "notes/prom_b_select_field_names.py --args": "UNAFFECTED",
+   "notes/prom_b_seqjob_field_names.py": "UNAFFECTED",
+   "notes/prom_b_seqjob_field_names.py --args": "UNAFFECTED",
+   "notes/prom_b_sequencer_screen_buttons.py": "UNAFFECTED",
+   "notes/prom_b_sequencer_screen_buttons.py --args": "UNAFFECTED",
+   "notes/prom_b_smf_writer_names.py": "UNAFFECTED",
+   "notes/prom_b_smf_writer_names.py --args": "UNAFFECTED",
+   "notes/prom_b_span_frontier.py": "UNAFFECTED",
+   "notes/prom_b_span_frontier.py --by": "UNAFFECTED",
+   "notes/prom_b_string_refs.py": "UNAFFECTED",
+   "notes/prom_b_string_refs.py --unnamed": "UNAFFECTED",
+   "notes/prom_b_sysex_param_descriptors.py": "UNAFFECTED",
+   "notes/prom_b_thunks_round6.py": "UNAFFECTED",
+   "notes/prom_b_thunks_round6.py --unnamed": "UNAFFECTED",
+   "notes/prom_c_frontier.py": "UNAFFECTED",
+   "notes/prom_c_frontier.py --spans": "UNAFFECTED",
+   "notes/prom_c_naming_round3.py --regaudit": "UNAFFECTED",
+   "notes/prom_c_naming_round3.py --struct": "UNAFFECTED",
+   "notes/prom_c_p7_program_is_effect.py": "UNAFFECTED",
+   "notes/prom_c_p7_program_is_effect.py --selftest": "UNAFFECTED",
+   "notes/prom_c_record68_round10.py": "UNAFFECTED",
+   "notes/prom_c_record68_round10.py --claims10": "UNAFFECTED",
+   "notes/prom_c_understanding_round4.py": "UNAFFECTED",
+   "notes/prom_c_understanding_round4.py --names": "UNAFFECTED",
+   "notes/promb_macro_preservation.py": "UNAFFECTED",
+   "notes/promb_macro_preservation.py --selftest": "UNAFFECTED",
+   "notes/promb_macro_rewrite.py --census": "UNAFFECTED",
+   "notes/promb_macro_rewrite.py --unused": "UNAFFECTED",
+   "notes/reachability.py --evidence": "UNAFFECTED",
+   "notes/reachability.py --targets": "UNAFFECTED",
+   "notes/sound/wsa1_dev104_vs_kn5000.py": "UNAFFECTED",
+   "notes/sound/wsa1_dev104_vs_kn5000.py --control": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_join_probe.py --pairs": "UNAFFECTED",
+   "notes/sound/wsa1_dsp_join_probe.py --verify": "UNAFFECTED",
+   "notes/sound/wsa1_sound_boundary.py": "UNAFFECTED",
+   "notes/sound/wsa1_sound_boundary.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_sound_in_unconverted.py": "UNAFFECTED",
+   "notes/sound/wsa1_sound_in_unconverted.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_unspellable_forms.py --selftest": "UNAFFECTED",
+   "notes/sound/wsa1_unspellable_forms.py --sites": "UNAFFECTED",
+   "notes/sysex-probes/sysex_third_region_wire.py": "UNAFFECTED",
+   "notes/vector_map.py": "UNAFFECTED",
+   "notes/vector_map.py --unconverted": "UNAFFECTED",
+   "notes/w21_lsi_gate_and_keyscaling.py": "UNAFFECTED",
+   "notes/w21_lsi_gate_and_keyscaling.py --selftest": "UNAFFECTED",
+   "notes/w23_reso_scale_and_group_chain.py": "UNAFFECTED",
+   "notes/w23_reso_scale_and_group_chain.py --census": "UNAFFECTED",
+   "notes/w24_e093_coupling_solver.py": "UNAFFECTED",
+   "notes/w24_e093_coupling_solver.py --census": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_pa_write_census.py": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_pa_write_census.py --selftest": "UNAFFECTED",
+   "notes/wave7-verify-probes/wave7_r10_promb_review.py": "UNAFFECTED",
+   "notes/wave7_documentation_metrics.py": "UNAFFECTED",
+   "notes/wave7_documentation_metrics.py --range": "UNAFFECTED",
+   "notes/wave7_frontier_table.py": "UNAFFECTED",
+   "notes/wave7_frontier_table.py --sums": "UNAFFECTED",
+   "notes/wave7_panel_button_codes.py": "UNAFFECTED",
+   "notes/wave7_panel_button_codes.py --physical": "UNAFFECTED",
+   "notes/wave7_panel_names_round11.py": "UNAFFECTED",
+   "notes/wave7_panel_names_round11.py --appenders": "UNAFFECTED",
+   "notes/wave7_review_wa3_prom_a_names.py": "UNAFFECTED",
+   "notes/wave7_review_wa3_prom_a_names.py --selftest": "UNAFFECTED",
+   "notes/wave7_review_wb_dl_name_audit.py": "UNAFFECTED",
+   "notes/wave7_review_wb_dl_name_audit.py --selftest": "UNAFFECTED",
+   "notes/wave7_round3_review_wd3_prom_d.py": "UNAFFECTED",
+   "notes/wave7_round6_review_wb_prom_b.py --suffix": "UNAFFECTED",
+   "notes/wave7_round9_review_wb_prom_b.py --zeros": "UNAFFECTED",
+   "notes/wsa1_wrapper_names.py": "UNAFFECTED",
+   "scripts/analysis/prom_b_small_span_classify.py": "UNAFFECTED",
+   "scripts/analysis/prom_b_small_span_classify.py --all": "UNAFFECTED",
+   "scripts/analysis/prom_b_small_span_convert.py": "UNAFFECTED",
+   "scripts/analysis/prom_b_small_span_convert.py --check": "UNAFFECTED",
+   "scripts/analysis/sizing_defect_hunt.py": "UNAFFECTED",
+   "scripts/build/wsa1_bitmaps.py": "UNAFFECTED"
+  }
+ }
+}

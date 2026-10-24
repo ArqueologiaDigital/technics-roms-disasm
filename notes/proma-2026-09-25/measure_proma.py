@@ -63,7 +63,12 @@ def census(root, load):
 
 
 def source_counts(path):
-    L = open(path, encoding="latin-1").read().split("\n")
+    # `path` is the image's root file; since the CPU 1 module split its text is in the module files
+    # it .includes, so the IMAGE is read (wsa1/notes/asm_source.py, from the tree `path` is in)
+    wsa1 = os.path.dirname(os.path.dirname(path))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_lines
+    L = image_lines(wsa1, os.path.relpath(path, wsa1))
     prev, nabs = "", 0
     br = collections.Counter()
     imm = collections.Counter()
@@ -106,7 +111,7 @@ def main():
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         root = tmp
     try:
-        regs = [r for r in census(root, a.load) if r["image"] == "prom_a" and r["rel"] == REL]
+        regs = [r for r in census(root, a.load) if r["image"] == "prom_a" and (r["rel"] == REL or r["rel"].startswith("prom_a/modules/"))]   # the image's own files
         tot = collections.Counter()
         for r in regs:
             tot[r["grade"]] += r["size"]

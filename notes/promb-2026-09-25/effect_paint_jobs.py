@@ -51,10 +51,20 @@ import subprocess
 import sys
 import tempfile
 
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 WSA1 = os.path.join(ROOT, "wsa1")
-SRC = os.path.join(WSA1, "prom_b", "wsa1_prom_b.s")
+_SRC_PATH = os.path.join(WSA1, "prom_b", "wsa1_prom_b.s")
+SRC = _wsa1_image(_SRC_PATH)
 ROMB = os.path.join(WSA1, "original_ROMs", "wsa1_prom_b.ic13")
 AUTOFORCE = os.path.join(WSA1, "notes", "llvm_roundtrip_autoforce.py")
 LLVM_MC = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-mc")
@@ -321,7 +331,7 @@ def apply(d, rom):
         assert k == 1, job_name(n)
     txt = re.sub(r'OLD<<(\w+)@(\w+)>>', r'\1_\2', txt)   # old names, kept out of the renames
     data = txt.encode("latin-1")
-    open(SRC, "wb").write(data)
+    raise SystemExit("REFUSING to write %s: since the CPU 1 module split it names the IMAGE (wsa1/scripts/tools/migrate_lane_readers.py).  Port this one-shot write to asm_source.own_lines()/write_own_lines() before re-running it." % 'SRC')
     print("wrote", SRC)
 
 
@@ -349,7 +359,7 @@ def post():
     for o, n in POST_RENAMES:
         t, k = re.subn(r'\b%s\b' % o, n, t)
         print("  %-20s -> %-34s %d" % (o, n, k))
-    open(SRC, "wb").write(t.encode("latin-1"))
+    raise SystemExit("REFUSING to write %s: since the CPU 1 module split it names the IMAGE (wsa1/scripts/tools/migrate_lane_readers.py).  Port this one-shot write to asm_source.own_lines()/write_own_lines() before re-running it." % 'SRC')
 
 
 def main():

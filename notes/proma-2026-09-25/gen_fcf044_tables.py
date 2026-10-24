@@ -40,9 +40,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import srcmap  # noqa: E402
 
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
 ROOT = os.path.dirname(os.path.dirname(HERE))
 WSA1 = os.path.join(ROOT, "wsa1")
-PB_SRC = os.path.join(WSA1, "prom_b", "wsa1_prom_b.s")
+_PB_SRC_PATH = os.path.join(WSA1, "prom_b", "wsa1_prom_b.s")
+PB_SRC = _wsa1_image(_PB_SRC_PATH)
 PB_ELF = os.path.join(WSA1, "rebuilt_ROMs", "wsa1_prom_b.llvm.elf")
 LO, HI = 0xFCF044, 0xFCFDA7
 PANEL_OP_PRODUCER = 0xFD7905

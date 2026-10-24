@@ -44,9 +44,19 @@ import os
 import re
 import sys
 
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-SRC = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+_SRC_PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+SRC = _wsa1_image(_SRC_PATH)
 ROMB = os.path.join(ROOT, "wsa1", "original_ROMs", "wsa1_prom_b.ic13")
 ROMA = os.path.join(ROOT, "wsa1", "original_ROMs", "wsa1_prom_a.ic12")
 BASE, BASE_A = 0xF00000, 0xF80000
@@ -195,7 +205,7 @@ def apply(d):
     txt = "\n".join(L)
     for o, nn in ren.items():
         txt = re.sub(r'\b%s\b' % o, nn, txt)
-    open(SRC, "wb").write(txt.encode("latin-1"))
+    raise SystemExit("REFUSING to write %s: since the CPU 1 module split it names the IMAGE (wsa1/scripts/tools/migrate_lane_readers.py).  Port this one-shot write to asm_source.own_lines()/write_own_lines() before re-running it." % 'SRC')
     with open(os.path.join(HERE, "factory_default_records.map"), "w") as f:
         f.write("".join("%s=%s\n" % kv for kv in ren.items()))
     print("wrote", SRC, "and factory_default_records.map (%d renames)" % len(ren))
