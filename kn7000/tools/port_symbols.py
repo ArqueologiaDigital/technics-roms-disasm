@@ -87,11 +87,13 @@ def ram_map(pmap, A, B):
 
 
 class Porter:
-    def __init__(self, old_prog, new_prog, old_tab, new_tab, old_lib_base=OLD_LIB_FILE_BASE):
+    def __init__(self, old_prog, new_prog, old_tab, new_tab, old_lib_base=OLD_LIB_FILE_BASE,
+                 min_run=1):
         self.A, self.B = _trim(old_prog), _trim(new_prog)
         self.pmap = OffsetMap(old_prog, new_prog)
         self.tmap = OffsetMap(old_tab, new_tab)
         self.old_lib_base = old_lib_base
+        self.min_run = min_run
         self.new_lib_base = self.pmap.map(old_lib_base)
         self.ram = ram_map(self.pmap, self.A, self.B)
         self._ram_keys = sorted(self.ram)
@@ -108,17 +110,34 @@ class Porter:
         return None, (f"RAM delta ambiguous (0x{lo:08X} moved {self.ram[lo]:+d}, "
                       f"0x{hi:08X} moved {self.ram[hi]:+d})")
 
+    def _pmap(self, off):
+        """Program-image offset map, refusing a 1:1 run shorter than min_run bytes:
+        between two anchored segments difflib can align a few equal bytes of code
+        that was rewritten (program 935: a 6-byte run put 941's DspFullReinit
+        inside 935's ResetEntry)."""
+        if self.min_run > 1:
+            i = bisect.bisect_right(self.pmap._los, off) - 1
+            if i < 0 or not self.pmap.blocks[i][0] <= off < self.pmap.blocks[i][1] \
+                    or self.pmap.blocks[i][1] - self.pmap.blocks[i][0] < self.min_run:
+                return None
+        return self.pmap.map(off)
+
     def port(self, a):
         """-> (new_addr, None) or (None, reason)"""
         sp = space(a)
+        if a in (PROG, TABLE, LIB, RAM):
+            return a, None          # a region's base is the base in every build, even
+                                    # where its first bytes were rewritten (935's boot jmp)
         if sp == "prog":
-            n = self.pmap.map(a - PROG)
+            n = self._pmap(a - PROG)
+            if n is None and self.pmap.map(a - PROG) is not None:
+                return None, f"only a 1:1 run shorter than {self.min_run} bytes holds it"
             return (PROG + n, None) if n is not None else (None, "program bytes deleted in new build")
         if sp == "table":
             n = self.tmap.map(a - TABLE)
             return (TABLE + n, None) if n is not None else (None, "table bytes not present in new build")
         if sp == "lib":
-            n = self.pmap.map(a - LIB + self.old_lib_base)
+            n = self._pmap(a - LIB + self.old_lib_base)
             if n is None:
                 return None, "library bytes deleted in new build"
             return LIB + n - self.new_lib_base, None
@@ -144,13 +163,17 @@ def main():
     ap.add_argument("--old-lib-base", type=lambda v: int(v, 0), default=OLD_LIB_FILE_BASE,
                     help="program-flash file offset of the OLD build's library image "
                          "(default: build 941's 0x3B8FD1; 0x3BA785 when porting from 942)")
+    ap.add_argument("--min-run", type=int, default=1,
+                    help="port a program/library address only when the 1:1 run of the "
+                         "offset map that holds it is at least this many bytes (default 1: "
+                         "any run; 16 for the older builds 935/893, see Porter._pmap)")
     ap.add_argument("--check-recovered", nargs="+", metavar="LO:HI",
                     help="new-build code file ranges for gen_symbols' reflection scan")
     args = ap.parse_args()
 
     P = Porter(*(open(p, "rb").read() for p in
                  (args.old_prog, args.new_prog, args.old_table, args.new_table)),
-               old_lib_base=args.old_lib_base)
+               old_lib_base=args.old_lib_base, min_run=args.min_run)
 
     # The new build's own reflection tables are authoritative for the names they
     # carry. Where they disagree with the offset map, accept the build's address
