@@ -49,7 +49,8 @@ import port_maincpu_version as P  # noqa: E402
 BASE = P.BASE
 MC = P.MC
 TODO = re.compile(r'^\s*;\s*TODO\(port\)')
-BYTE_ROW = re.compile(r'^\s*\.byte\s+(.*)$')
+# a row in the porter's own form; a source tree's `.byte` data after a block is not one
+BYTE_ROW = re.compile(r'^\t\.byte\t(0x[0-9a-f]{2}(?:, 0x[0-9a-f]{2}){0,7})\s*$')
 DATA_MACROS = {"naka_header", "addr24", "aligned_string", "desc_entry", "naka_node",
                "sndparam_descriptor"}
 REL = P.REL
@@ -78,6 +79,9 @@ def mc_decode(bs):
     return out
 
 
+Block = collections.namedtuple("Block", "first last a e start bs kind inner comments")
+
+
 class Tree:
     def __init__(self, tree, rom):
         self.tree = tree
@@ -101,35 +105,88 @@ class Tree:
             if self.size[i] > 0 and e[0] is not None:
                 self.starts.setdefault(e[0], i)
         self.used = set(self.syms) | {lab for labs, b, c in self.parsed for lab in labs}
+        # the source tree's labels the porter dropped stay reserved: a new name must not
+        # reuse one for another thing (the tree says where each one was)
+        dl = os.path.join(self.dir, "port_dropped_labels.txt")
+        if os.path.exists(dl):
+            self.used |= {ln.split("\t")[0] for ln in open(dl) if ln.strip() and not ln.startswith("#")}
         self.sorted_labels = sorted((a, sorted(ns)[0]) for a, ns in self.labels.items())
         self.keys = [a for a, n in self.sorted_labels]
 
+    def _inside(self, j):
+        """a line a TODO(port) block runs on through: a `.byte` row, a line with only labels
+        (a target named by an earlier run), a comment or a blank line"""
+        labs, body, com = self.parsed[j]
+        return bool(BYTE_ROW.match(self.order[j][3])) or not body
+
     def blocks(self):
-        """-> [(first order index, last order index, address, bytes, kind)]"""
+        """-> [Block].  A TODO(port) block runs from its marker through `.byte` rows and the
+        label-only, comment and blank lines between them, up to its last row."""
         out = []
         n = len(self.order)
         self.todo_rows = set()            # every row of every block: context looks past them
-        for i in range(n):
-            if TODO.match(self.order[i][3]):
-                j = i + 1
-                while j < n and BYTE_ROW.match(P.code_part(self.order[j][3])):
-                    self.todo_rows.add(j)
-                    j += 1
+        spans = []
         i = 0
         while i < n:
             if not TODO.match(self.order[i][3]):
                 i += 1
                 continue
             j = i + 1
-            rows = []
-            while j < n and BYTE_ROW.match(P.code_part(self.order[j][3])):
-                rows.append(j)
+            while j < n and self._inside(j) and not TODO.match(self.order[j][3]):
                 j += 1
+            while j > i + 1 and not BYTE_ROW.match(self.order[j - 1][3]):
+                j -= 1                    # trailing labels and comments belong to what follows
+            rows = [k for k in range(i + 1, j) if BYTE_ROW.match(self.order[k][3])]
             if rows:
-                a = self.order[rows[0]][0]
-                end = self.order[rows[-1]][0] + self.size[rows[-1]]
-                out.append((i, rows[-1], a, self.rom[a - BASE:end - BASE], self.context(i, rows[-1])))
-            i = j
+                spans.append((i, j - 1, rows))
+                self.todo_rows.update(rows)
+            i = max(j, i + 1)
+        targets = self.branch_targets()
+        for first, last, rows in spans:
+            a = self.order[rows[0]][0]
+            e = self.order[rows[-1]][0] + self.size[rows[-1]]
+            inner, comments = collections.defaultdict(list), []
+            for k in range(first + 1, last + 1):
+                labs, body, com = self.parsed[k]
+                if k in self.todo_rows:
+                    continue
+                for lab in labs:
+                    inner[self.order[k][0]].append(lab)
+                if not labs and self.order[k][3].strip():
+                    comments.append(self.order[k][3])
+            ctx = self.context(first, last)
+            start = a
+            if ctx != "code":
+                # reachable bytes are code whatever surrounds them: decode from the first
+                # address the tree's code branches, calls or jumps to
+                hit = sorted(t for t in targets if a <= t < e)
+                if hit:
+                    ctx, start = "code", hit[0]
+            out.append(Block(first, last, a, e, start, self.rom[start - BASE:e - BASE], ctx, inner, comments))
+        return out
+
+    def branch_targets(self):
+        """addresses the tree's instructions branch, call or jump to (a relative branch read
+        from its bytes; call / jp through a symbol or a number)"""
+        out = set()
+        for i, (labs, body, com) in enumerate(self.parsed):
+            if not body or self.size[i] <= 0 or i in self.todo_rows:
+                continue
+            p = body.split(None, 1)
+            if len(p) != 2:
+                continue
+            mn, ops = p[0].lower(), p[1]
+            a, n = self.order[i][0], self.size[i]
+            if mn in REL:
+                w = P.REL_W.get(mn, 1)
+                bs = self.rom[a - BASE:a - BASE + n]
+                out.add(a + n + P.sval(P.le(bs, n - w, w), w))
+            elif mn in ("call", "jp"):
+                last = P.split_commas(ops)[-1].strip()
+                if re.fullmatch(r'0x[0-9a-f]+', last):
+                    out.add(int(last, 16))
+                elif re.fullmatch(r'[A-Za-z_.$][\w.$]*', last) and last in self.syms:
+                    out.add(self.syms[last])
         return out
 
     def context(self, first, last):
@@ -230,21 +287,26 @@ def main():
     args = ap.parse_args()
     T = Tree(args.tree, args.rom)
     blocks = T.blocks()
-    kinds = collections.Counter(b[4] for b in blocks)
-    print("TODO(port) blocks: %d (%s), %d bytes" % (len(blocks), dict(kinds), sum(len(b[3]) for b in blocks)))
+    kinds = collections.Counter(b.kind for b in blocks)
+    reach = sum(1 for b in blocks if b.start > b.a)
+    print("TODO(port) blocks: %d (%s; %d of the code ones only because code branches into them), %d bytes"
+          % (len(blocks), dict(kinds), reach, sum(b.e - b.a for b in blocks)))
     # decode every code block; collect instruction starts first (for new labels)
     good = {}
     inst_starts = set()
-    for k, (first, last, a, bs, kind) in enumerate(blocks):
-        if kind != "code":
+    for k, b in enumerate(blocks):
+        if b.kind != "code":
             continue
-        items = P.decode_region(bs)
+        items = P.decode_region(b.bs)
         if any(t is None for o, l, t in items):
             continue                        # a byte that starts no instruction: not clean code
-        good[k] = [(a + o, l, t) for o, l, t in items]
-        inst_starts.update(a + o for o, l, t in items)
+        starts = {b.start + o for o, l, t in items}
+        if any(ad >= b.start and ad not in starts for ad in b.inner):
+            continue                        # a label inside would split an instruction
+        good[k] = [(b.start + o, l, t) for o, l, t in items]
+        inst_starts.update(starts)
     print("code blocks decoded and round-tripped: %d of %d (%d bytes)" % (
-        len(good), kinds["code"], sum(len(blocks[k][3]) for k in good)))
+        len(good), kinds["code"], sum(len(blocks[k].bs) for k in good)))
     newlabels = {}
     rewritten = {}
     for k, seq in good.items():
@@ -289,17 +351,30 @@ def main():
     inserts = collections.defaultdict(lambda: collections.defaultdict(list))
     block_of_addr = {}
     for k, seq in rewritten.items():
-        first, last, a, bs, kind = blocks[k]
-        rel = T.order[first][1]
-        for idx in range(first, last + 1):
+        b = blocks[k]
+        rel = T.order[b.first][1]
+        for idx in range(b.first, b.last + 1):
             edits[rel][T.order[idx][2]] = None
-        lines = []
-        for ad, n, t in seq:
-            for nm in [newlabels[ad]] if ad in newlabels else []:
-                lines.append(nm + ":")
+        names = collections.defaultdict(list)          # address -> labels to write there
+        for ad, labs in b.inner.items():
+            names[ad].extend(labs)
+        for ad, nm in newlabels.items():
+            if b.a <= ad < b.e and nm not in names[ad]:
+                names[ad].append(nm)
                 block_of_addr[ad] = k
+        lines = list(b.comments)
+        if b.start > b.a:
+            # the bytes before the first reachable address stay rows, under the marker
+            lines.append(T.order[b.first][3])
+            cuts = sorted({b.a, b.start} | {ad for ad in names if b.a < ad < b.start})
+            for x, y in zip(cuts, cuts[1:]):
+                lines.extend(nm + ":" for nm in names.get(x, []))
+                for z in range(x, y, 8):
+                    lines.append("\t.byte\t" + ", ".join("0x%02x" % v for v in T.rom[z - BASE:min(y, z + 8) - BASE]))
+        for ad, n, t in seq:
+            lines.extend(nm + ":" for nm in names.get(ad, []))
             lines.append("\t" + t)
-        edits[rel][T.order[first][2]] = lines
+        edits[rel][T.order[b.first][2]] = lines
     for ad, nm in newlabels.items():
         if ad in block_of_addr:
             continue

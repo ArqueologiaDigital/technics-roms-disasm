@@ -373,10 +373,16 @@ def tagged_debt(root):
 # bytes that no line of the source tree maps to as `.byte` rows under a
 # `; TODO(port): ...` line.  Those rows are ROM bytes copied, unexplained, into
 # the source -- the same thing as an `.incbin` of a committed blob -- so they are
-# moved from "typed data" to verbatim debt.  A block ends at the first line that
-# is not a `.byte` row (a label, an instruction, a blank line).
+# moved from "typed data" to verbatim debt.  A block runs on through blank,
+# comment-only and label-only lines (a label the porter or disassemble_port_todo.py
+# put on a branch target inside the rows) and ends at the first other line: an
+# instruction or any directive that is not one of the porter's rows.  Only rows in
+# the porter's own form (`\t.byte\t0x..` with up to 8 values, no comment) count, so
+# a source tree's own `.byte` data after a label is not taken for port debt.
 # --------------------------------------------------------------------------
 PORT_TODO = re.compile(r';\s*TODO\(port\)')
+PORT_ROW = re.compile(r'^\t\.byte\t0x[0-9a-f]{2}(, 0x[0-9a-f]{2}){0,7}\s*$')
+LABELS_ONLY = re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)+$')
 
 
 def port_todo_bytes(path):
@@ -388,9 +394,11 @@ def port_todo_bytes(path):
             continue
         if not inblock:
             continue
-        m = DIRECTIVE_RE.match(strip_comment(raw))
-        if m and m.group(1) == "byte" and not re.match(r'^\s*[A-Za-z_.$][\w.$]*\s*:', raw):
-            n += directive_bytes("byte", m.group(2))
+        code = strip_comment(raw)
+        if PORT_ROW.match(raw):
+            n += directive_bytes("byte", DIRECTIVE_RE.match(code).group(2))
+        elif not code.strip() or LABELS_ONLY.match(code):
+            continue
         else:
             inblock = False
     return n

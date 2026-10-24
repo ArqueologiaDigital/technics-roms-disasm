@@ -19,11 +19,17 @@ HOW
   2. Byte alignment source ROM -> target ROM: unique 16-byte anchors chained
      monotonically and extended (scripts/analysis/kn5000_version_delta.py), then
      difflib inside every gap whose two sides differ in size.  Equal-size gaps
-     between matched blocks map byte for byte (a substitution).  Result: a delta
+     between matched blocks map byte for byte (a substitution).  The alignment runs
+     twice: the second time every ROM pointer of a source `.long` line is first
+     replaced by the target address the first pass maps its target to, so a pointer
+     table is matched by what it points at.  (Raw pointer values recur shifted: v7's
+     SndParam_Registry values reappear 12 slots further on in v6's registry because
+     the records moved by 252 B, and the first pass paired those.)  Result: a delta
      for every mapped source byte.  A size-changing gap whose source lines are mostly
      instructions is then re-aligned by instruction: both sides are decoded with
      llvm-mc and the two sequences matched by shape (numbers ignored); that mapping
-     replaces the byte one when it pairs more lines.
+     replaces the byte one when it pairs more lines.  A gap of data lines is matched
+     again with its untranslated pointers masked.
   3. A source line whose bytes all map with ONE delta is PORTED to address+delta.
      Equal bytes: the text is kept.  Different bytes: every number / symbol
      operand whose source value sits little-endian in the line's bytes at an
@@ -33,19 +39,36 @@ HOW
      symbol replaced by its required value, and must reproduce the target bytes;
      else the line becomes `.byte`.
   4. Unmapped source lines and target bytes with no source line become `.byte`
-     rows.  Labels of unmapped lines are placed by finding the bytes that follow
-     them in the source inside the target gap (unique match), else dropped when
-     nothing references them; a referenced label that cannot be placed stops
-     the tool.
+     rows.  The labels of unmapped lines are placed by their uses (step 6), else by
+     the bytes that follow them in the source found once inside the target gap.  A
+     label that neither places names source bytes the target dropped or changed
+     (Port.settle_tentative): its uses as a pointer anywhere in the image, the compiled
+     C data included, are added to the votes; if that does not place it, it is DROPPED
+     unless the target's assembly still has to spell it (an expression such as
+     `.short Case - Base`, a `.set` line, a macro body).  A dropped label is not
+     emitted -- a `; port:` comment marks where it was and DST/maincpu/
+     port_dropped_labels.txt lists it -- and its uses are written with the label of
+     the address their bytes name.  A dropped label whose uses agree on an address no
+     label holds is placed there instead (Port.new_labels).  A label of dropped bytes
+     that lands where another label stands is treated the same way, so two names never
+     share one address.
   5. A symbol defined by `.equ`/`.set` to a number (a RAM variable), or to
      `Label +/- K`, whose uses require one new value gets it at its definition.  Uses
-     that disagree get the number written at the use instead.
+     that disagree get the number written at the use instead.  Two exceptions:
+     a `Label + K` name whose record is in the target unchanged where it now resolves
+     stays on that record (a use pointing elsewhere is written with the name of the
+     record it points to), and a numeric constant whose new value another constant of
+     its family keeps is not re-valued (its uses are written with that constant:
+     v6 has no NAKA_VIEW_MPVersion view, and its uses hold NAKA_VIEW_AllInitial).
   6. Labels go where their uses say: every mapped use votes for the target address
      its bytes name, and a label moves into the inserted bytes before its line when
      three fifths of the votes put it there.  A target address no label names gets a
-     new one when it starts an emitted line (see Port.new_labels for the names).
+     new one when it starts an emitted line or lies in a raw run (see Port.new_labels
+     for the names).
   Afterwards scripts/converters/disassemble_port_todo.py turns the TODO(port) rows
-  that sit between instructions into instructions.
+  that are code into instructions, and scripts/tools/port_hand_edits.py redoes the
+  edits a generated tree carries.  scripts/analysis/check_ported_labels.py checks the
+  result: for every carried label, does the target hold its source bytes?
 
 RUN
     python3 scripts/converters/port_maincpu_version.py --src v7 --dst v6 \
@@ -380,8 +403,45 @@ def load(args):
     else:
         dm, gaps = align(rom, tgt)
         json.dump({"dm": dm, "gaps": gaps}, open(g, "w"))
+    # second pass: the source's `.long` pointers written as the target addresses the first
+    # pass maps their targets to, so a pointer table is matched by what it points at and
+    # not by its raw values (which can recur shifted: v7's SndParam_Registry values sit
+    # 12 slots further on in v6's registry, because the records they name moved by 252 B)
+    trom, args.tptr = translate_pointers(order, rom, dm)
+    key3 = hashlib.sha1(trom + tgt).hexdigest()[:16]
+    g3 = os.path.join(cache, "dm3_%s.json" % key3)
+    if os.path.exists(g3):
+        d = json.load(open(g3))
+        dm, gaps = d["dm"], d["gaps"]
+    else:
+        dm, gaps = align(trom, tgt)
+        json.dump({"dm": dm, "gaps": gaps}, open(g3, "w"))
     args.gaps = gaps
+    args.trom = trom
     return order, syms, rom, tgt, dm
+
+
+def translate_pointers(order, rom, dm):
+    """the source image with every ROM pointer of a `.long` line replaced by the target
+    address dm maps it to (left as it is where dm does not map it)"""
+    order = [list(e) for e in order]
+    size = fill_sizes(order)
+    out = bytearray(rom)
+    at = set()
+    for i, e in enumerate(order):
+        if not size[i] or e[0] is None:
+            continue
+        body = split_line(e[3])[1]
+        if not body.lower().startswith(".long") or size[i] % 4:
+            continue
+        o = e[0] - BASE
+        for k in range(o, o + size[i], 4):
+            v = le(rom, k, 4)
+            if BASE <= v < BASE + len(rom) and dm[v - BASE] is not None:
+                out[k:k + 4] = (v + dm[v - BASE]).to_bytes(4, "little")
+                at.add(k)
+    print("pointers of .long lines translated for the second alignment pass:", len(at))
+    return bytes(out), at
 
 
 def classify(order, size, rom, tgt, dm):
@@ -719,13 +779,22 @@ class Port:
         is a ROM address) masked, so that records which differ only in where they point
         line up; a line inside one matched run (or in an equal-size stretch between two)
         maps.  Kept when it maps more lines than the byte mapping did."""
-        def masked(bs, base):
+        # a `.long` pointer the second alignment pass translated stays as its target value
+        # (a table is matched by what it points at); every other pointer is masked, on
+        # both sides, unless the target's value is one of those translated pointers
+        tr, tp = self.args.trom, self.args.tptr
+        keep = {le(tr, o, 4) for o in range(a0, a1 - 3) if o in tp}
+
+        def masked(bs, base, src):
             m = bytearray(bs)
             for o in range(len(bs) - 3):
                 if (base + o) % 2 == 0 and BASE <= le(bs, o, 4) < BASE + len(self.rom):
-                    m[o:o + 4] = b"\xfe\xfe\xfe\xfe"
+                    if src and base + o in tp:
+                        m[o:o + 4] = tr[base + o:base + o + 4]
+                    elif src or le(bs, o, 4) not in keep:
+                        m[o:o + 4] = b"\xfe\xfe\xfe\xfe"
             return bytes(m)
-        ms, mt = masked(self.rom[a0:a1], a0), masked(self.tgt[b0:b1], b0)
+        ms, mt = masked(self.rom[a0:a1], a0, True), masked(self.tgt[b0:b1], b0, False)
         sm = difflib.SequenceMatcher(None, ms, mt, autojunk=False)
         runs = []
         qi = qj = 0
@@ -790,16 +859,53 @@ class Port:
     # ---- skeleton: where every line goes in the target
     def label_votes(self):
         """target offsets every mapped use of a label requires (absolute operands found
-        in the bytes, relative branch targets): where the target ROM says the label is"""
+        in the bytes, relative branch targets): where the target ROM says the label is;
+        plus self.extra_votes (settle_tentative's pointer scan)"""
+        if not hasattr(self, "_lvotes_lines"):
+            lv = collections.defaultdict(collections.Counter)
+            for i, (k, d) in enumerate(self.cls):
+                if k not in ("same", "diff") or self.parsed[i][1].startswith((".incbin", ".org")):
+                    continue
+                t = self.order[i][0] - BASE + d
+                mn, ops, reqs = self.line_requirements(i, t)
+                for tk, req, v, w in reqs:
+                    if tk[2] == "sym" and req is not None and tk[3] in self.labels_src:
+                        lv[tk[3]][req - BASE] += 1
+            self._lvotes_lines = lv
         self.lvotes = collections.defaultdict(collections.Counter)
-        for i, (k, d) in enumerate(self.cls):
-            if k not in ("same", "diff") or self.parsed[i][1].startswith((".incbin", ".org")):
+        for lab, c in self._lvotes_lines.items():
+            self.lvotes[lab].update(c)
+        for lab, c in getattr(self, "extra_votes", {}).items():
+            self.lvotes[lab].update(c)
+
+    def pointer_votes(self, labs):
+        """for each label in labs: the target values of every 32-bit little-endian word at an
+        even, mapped source address that holds the label's source address -- its uses as a
+        pointer anywhere, the compiled C data included, which line_requirements does not see"""
+        want = collections.defaultdict(list)
+        for lab in labs:
+            v = self.sv.get(lab)
+            if v is not None and BASE <= v < BASE + len(self.rom):
+                want[v].append(lab)
+        out = collections.defaultdict(collections.Counter)
+        if not want:
+            return out
+        rom, tgt, dm = self.rom, self.tgt, self.dm
+        keys = set(want)
+        for o in range(0, len(rom) - 3, 2):
+            if rom[o + 3] != 0 or rom[o + 2] < 0xE0:
                 continue
-            t = self.order[i][0] - BASE + d
-            mn, ops, reqs = self.line_requirements(i, t)
-            for tk, req, v, w in reqs:
-                if tk[2] == "sym" and req is not None and tk[3] in self.labels_src:
-                    self.lvotes[tk[3]][req - BASE] += 1
+            v = le(rom, o, 4)
+            if v not in keys:
+                continue
+            d = dm[o]
+            if d is None or dm[o + 3] != d:
+                continue
+            tv = le(tgt, o + d, 4)
+            if BASE <= tv < BASE + len(tgt):
+                for lab in want[v]:
+                    out[lab][tv - BASE] += 1
+        return out
 
     def voted(self, labs, lo, hi):
         """the target offset in [lo, hi] that the uses of `labs` agree on, or None"""
@@ -819,6 +925,8 @@ class Port:
         self.place = {}                 # label -> target offset
         self.moved = {}                 # line index -> labels emitted apart from the line
         self.guessed = set()
+        self.tentative = set()          # labels placed by no evidence (gap)
+        self.names_dropped = set()      # labels of source bytes the target dropped
         self.label_votes()
         tc = 0
         pend = []
@@ -857,6 +965,60 @@ class Port:
                 pend.append(i)
         self.gap(ev, pend, tc, len(self.tgt))
         self.events = ev
+        # a label of source bytes the target dropped that lands where a label of something
+        # the target kept also stands names nothing of its own there (a branch that went to
+        # it now goes to that next thing): it is kept only where the tree needs it
+        at = collections.defaultdict(list)
+        for lab, p in self.place.items():
+            at[p].append(lab)
+        for p, labs in at.items():
+            if len(labs) > 1 and any(lab not in self.names_dropped for lab in labs):
+                self.tentative.update(lab for lab in labs if lab in self.names_dropped)
+
+    def settle_tentative(self):
+        """Labels gap() placed by no evidence name source bytes the target dropped or
+        changed.  One that nothing in the target tree needs is DROPPED: it is not emitted (a
+        comment says where it was) and is listed in the tree's port_dropped_labels.txt.  A
+        label is needed when the target tree's assembly will still spell it: a mapped line
+        whose bytes do not hold its value (an expression such as `.short Case - Base`), a
+        `.set` / `.equ` line, or a macro body.  A needed label keeps its placement
+        and is listed in self.needed_tentative.
+
+        First the tentative labels' uses as pointers anywhere in the image (pointer_votes)
+        are added to the votes and the skeleton is laid out again, so a label the compiled
+        C data points at is placed where the target's C data points."""
+        self.extra_votes = self.pointer_votes(self.tentative)
+        self.cvote = {}
+        if self.extra_votes:
+            self.skeleton()
+        for lab, c in self.extra_votes.items():
+            v, n = c.most_common(1)[0]
+            if n * 5 >= sum(c.values()) * 3:
+                self.cvote[lab] = v
+        need = collections.Counter()
+        for kind, i, t in self.events:
+            if kind == "line" and not self.parsed[i][1].startswith((".incbin", ".org")):
+                mn, ops, reqs = self.line_requirements(i, t)
+                for tk, req, v, w in reqs:
+                    if tk[2] == "sym" and req is None:
+                        need[tk[3]] += 1
+            elif kind == "zero":
+                p = self.parsed[i][1].split(None, 1)
+                if len(p) == 2:
+                    for tk in tokens(p[1]):
+                        if tk[2] == "sym":
+                            need[tk[3]] += 1
+        for m in IDENT.finditer(macro_prelude(self.args.src)):
+            need[m.group(1)] += 1
+        # the C sources do not need the assembly label: they are compiled against their own
+        # link scripts, whose addresses emit() writes (self.cvote where the label is dropped)
+        self.dropped = {lab for lab in self.tentative if not need.get(lab)}
+        self.needed_tentative = sorted(self.tentative - self.dropped)
+        for lab in self.dropped:
+            self.place.pop(lab, None)
+        for cached in ("_byaddr", "_exprat"):
+            if hasattr(self, cached):
+                delattr(self, cached)
 
     def _content_end(self, tc, end):
         """target offset where the code before a `.org` stops: the start of the 0xff
@@ -905,9 +1067,18 @@ class Port:
                         p = t1
                     else:
                         p = max(last, min(t1, t0 + (a - u0)))
+                    if U and a < u1 and not (p == t0 < t1 and self.rom[a:a + 4] == self.tgt[t0:t0 + 4]):
+                        # the label names source bytes the target dropped or changed, and
+                        # nothing places it: neither a use, nor its bytes, nor (at the start
+                        # of the gap) the target's first bytes.  It is kept only where the
+                        # target tree still needs the name (see settle_tentative)
+                        if not isinstance(i, tuple):
+                            self.tentative.update(labs)
                     if any(self.refcount.get(lb) for lb in labs):
                         self.guessed.update(labs)
                 p = max(p, last)
+                if U and a < u1 and not isinstance(i, tuple):
+                    self.names_dropped.update(labs)     # see the end of skeleton()
                 for lab in labs:
                     self.place[lab] = p
             else:
@@ -1045,13 +1216,71 @@ class Port:
                     vt[tk[3]][req] += 1
         self.equ_votes = vt
         self.newexpr = {}
+        self.kept_on_record = []
         for sym, c in vt.items():
             best, nb = c.most_common(1)[0]
             if sym in self.equ_lines:
                 if best != self.sv.get(sym):
                     self.newequ[sym] = best
             elif best != self.tval(sym):
+                if self.unchanged_record(sym):
+                    # the record the name stood on is in the target unchanged: the name stays
+                    # on it, and a use that points elsewhere is written with the name of the
+                    # record it points to (subst, label_at)
+                    self.kept_on_record.append(sym)
+                    continue
                 self.newexpr[sym] = best
+        # a constant whose uses now hold the value another constant of its family keeps
+        # (NAKA_VIEW_MPVersion's uses hold 0xef0004 = NAKA_VIEW_AllInitial in v6, which has no
+        # MPVersion view) is not re-valued: its uses are written with that constant (subst)
+        self.equ_redirect = {}
+        for sym in list(self.newequ):
+            o = self.const_at(self.newequ[sym], sym)
+            if o:
+                self.equ_redirect[sym] = o
+                del self.newequ[sym]
+        for cached in ("_byaddr", "_exprat"):
+            if hasattr(self, cached):
+                delattr(self, cached)
+
+    def const_at(self, value, like):
+        """a numeric constant of `like`'s family (the same first name component) that has
+        `value` and keeps it, or None.  Below 0x400000 (RAM and I/O addresses, which a new
+        layout moves) its own mapped uses must say it keeps the value; above, the values are
+        identifiers (a view id such as NAKA_VIEW_AllInitial = 0xef0004) and the definition is
+        taken as it stands"""
+        if not hasattr(self, "_constidx"):
+            self._constidx = collections.defaultdict(list)
+            for sym in sorted(self.equ_lines, key=lambda x: self.equ_lines[x]):
+                self._constidx[self.sv.get(sym)].append(sym)
+        fam = like.split("_")[0]
+        for sym in self._constidx.get(value, ()):
+            c = self.equ_votes.get(sym)
+            if sym != like and sym not in self.newequ and sym.split("_")[0] == fam \
+                    and (value >= 0x400000 or (c and c.most_common(1)[0][0] == value)):
+                return sym
+        return None
+
+    def record_len(self, v):
+        """bytes from source address v to the next source symbol (labels and `.set` names),
+        at most 16"""
+        if not hasattr(self, "_symaddrs"):
+            self._symaddrs = sorted({x for x in self.sv.values()
+                                     if x is not None and BASE <= x < BASE + len(self.rom)})
+        k = bisect.bisect_right(self._symaddrs, v)
+        nxt = self._symaddrs[k] if k < len(self._symaddrs) else BASE + len(self.rom)
+        return min(16, nxt - v)
+
+    def unchanged_record(self, sym):
+        """does the target hold, where the name now resolves, the bytes the source holds at
+        the name (at least 4 of them)?"""
+        v, t = self.sv.get(sym), self.tval(sym)
+        if v is None or t is None or not (BASE <= v < BASE + len(self.rom)):
+            return False
+        n = self.record_len(v)
+        if n < 4:
+            return False
+        return self.rom[v - BASE:v - BASE + n] == self.tgt[t - BASE:t - BASE + n]
 
     def new_labels(self):
         """labels for target addresses that mapped lines reach but no ported label names:
@@ -1059,14 +1288,43 @@ class Port:
         start of an emitted line or raw run (an instruction start); named after the
         label before them -- `_Skip`/`_Loop` for a branch target ahead of / behind every
         branch that reaches it, `_Body` where a source label whose uses moved it away
-        stood, `_Entry` for a call or jump target, `_Data` otherwise."""
+        stood, `_Entry` for a call or jump target, `_Data` otherwise.  A raw run may be
+        labelled inside (emit() splits it there).
+
+        First, a label settle_tentative dropped whose target uses agree on one address
+        (three fifths of the votes) that no label holds and that starts a line or lies in a
+        raw run is placed there under its own name: the thing it named moved out of its
+        gap, and its uses say where (self.relocated)."""
         starts = {}
+        raws = []
         for ev in self.events:
             if ev[0] == "line":
                 starts.setdefault(ev[2], ev)
             elif ev[0] == "raw":
                 starts.setdefault(ev[1], ev)
+                raws.append((ev[1], ev[2]))
+        raws.sort()
+        rkeys = [a for a, b in raws]
+
+        def labellable(off):
+            if off in starts:
+                return True
+            j = bisect.bisect_right(rkeys, off) - 1
+            return j >= 0 and raws[j][0] < off < raws[j][1]
         held = {p for p in self.place.values()}
+        self.newlab = {}
+        self.relocated = []
+        for lab in sorted(self.dropped):
+            c = self.lvotes.get(lab)
+            if not c:
+                continue
+            v, n = c.most_common(1)[0]
+            if n * 5 >= sum(c.values()) * 3 and v not in held and v not in self.newlab and labellable(v):
+                self.newlab[v] = lab
+                self.place[lab] = v
+                held.add(v)
+                self.relocated.append(lab)
+        self.dropped -= set(self.relocated)
         want = collections.defaultdict(list)       # offset -> [(kind, site offset)]
         for kind, i, t in self.events:
             if kind != "line" or self.parsed[i][1].startswith((".incbin", ".org")):
@@ -1089,9 +1347,8 @@ class Port:
         placed = sorted((p, lab) for lab, p in self.place.items())
         keys = [p for p, lab in placed]
         used = set(self.sv) | set(self.place)
-        self.newlab = {}
         for off in sorted(want):
-            if off in held or off not in starts:
+            if off in held or not labellable(off):
                 continue
             kinds = {k for k, t in want[off]}
             if off in body_of:
@@ -1111,8 +1368,9 @@ class Port:
             used.add(name)
             self.newlab[off] = name
             self.place[name] = off
-        if hasattr(self, "_byaddr"):
-            del self._byaddr
+        for cached in ("_byaddr", "_exprat"):
+            if hasattr(self, cached):
+                delattr(self, cached)
 
     def resolve(self):
         """final text of every mapped line; a line that cannot be shown to reproduce the
@@ -1208,6 +1466,10 @@ class Port:
                     continue
                 if self.tval(txt) == req:
                     out.append(txt)
+                elif txt in self.equ_expr and self.expr_at(req):
+                    out.append(self.expr_at(req))     # a record pointer: the record's own name
+                elif txt in self.equ_lines and self.const_at(req, txt):
+                    out.append(self.const_at(req, txt))
                 elif txt not in self.equ_lines and self.label_at(req):
                     out.append(self.label_at(req))
                 else:
@@ -1251,7 +1513,10 @@ class Port:
         files = collections.OrderedDict()
         rawbuf = []                      # pending target byte ranges
         self.relinked = 0
+        self.relink_unplaced = 0
         self.rawbytes = 0
+        dropped_rows = []
+        relocated = set(self.relocated)          # emitted where their uses point (newlab)
 
         def out(rel, line):
             files.setdefault(rel, []).append(line)
@@ -1266,6 +1531,19 @@ class Port:
                 out(rel, "\t.byte\t" + ", ".join("0x%02x" % x for x in bs[k:k + 8]))
             rawbuf.clear()
 
+        # a raw run with a label inside is split there
+        cuts = sorted(self.newlab)
+        events = []
+        for ev in self.events:
+            if ev[0] == "raw":
+                a, b = ev[1], ev[2]
+                for c in cuts[bisect.bisect_right(cuts, a):bisect.bisect_left(cuts, b)]:
+                    events.append(("raw", a, c))
+                    a = c
+                events.append(("raw", a, b))
+            else:
+                events.append(ev)
+        self.events = events
         nxtfile = [None] * len(self.events)          # file of the next event that is not raw
         f = self.order[-1][1]
         for k in range(len(self.events) - 1, -1, -1):
@@ -1284,6 +1562,20 @@ class Port:
             rel = self.order[i][1]
             text = self.order[i][3]
             labs, body, com = self.parsed[i]
+            gone = [lab for lab in labs if lab in self.dropped] if kind in ("zero", "drop") else []
+            away = [lab for lab in labs if lab in relocated] if kind in ("zero", "drop") else []
+            if gone or away:
+                flush(rel)
+                for lab in gone:
+                    out(rel, "; port: %s's label %s is not in %s -- no %s bytes correspond to what it named"
+                        % (src, lab, dst, dst))
+                    dropped_rows.append("%s\t0x%06x\t%s" % (lab, self.order[i][0], rel))
+                labs = [lab for lab in labs if lab not in self.dropped and lab not in relocated]
+                if kind == "zero":
+                    if not body and not com:
+                        continue
+                    text = "".join(lab + ":" for lab in labs) + ("\t" + body if body else "") + \
+                        ("\t" + com if com else "")
             if kind == "zero":
                 m = re.match(r'^\.(?:equ|set)\s+([A-Za-z_.$][\w.$]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*$', body)
                 if m and m.group(1) in self.newequ:
@@ -1352,7 +1644,11 @@ class Port:
         readme = os.path.join(ddir, "README.md")
         keep = open(readme, encoding="utf-8").read() if os.path.exists(readme) else None
         if os.path.exists(ddir):
-            shutil.rmtree(ddir)
+            # the tree is regenerated whole; refuse anything but ROOT/v<N>/maincpu
+            real, root = os.path.realpath(ddir), os.path.realpath(ROOT)
+            assert re.fullmatch(r'v\d+', dst), dst
+            assert real == os.path.join(root, dst, "maincpu") and real.startswith(root + os.sep), real
+            shutil.rmtree(real)
         for dp, dn, fn in os.walk(sdir):
             rel = os.path.relpath(dp, sdir)
             os.makedirs(os.path.join(ddir, rel), exist_ok=True)
@@ -1364,7 +1660,7 @@ class Port:
                     continue                 # written below if the build includes it
                 if r.endswith(".bin") and r not in used:
                     continue
-                if r in ("transplant_manifest.txt", "README.md"):
+                if r in ("transplant_manifest.txt", "README.md", "port_dropped_labels.txt"):
                     continue                 # describes the source tree's own history
                 dr = r.replace(root_s, "kn5000_%s_program.s" % dst)
                 if r.endswith("_link.ld"):
@@ -1374,8 +1670,13 @@ class Port:
                     def relink(m):
                         v = self.tval(m.group(1))
                         old = int(m.group(2), 16)
-                        if v is None or not (BASE <= old < BASE + len(self.rom)):
+                        if not (BASE <= old < BASE + len(self.rom)):
                             return m.group(0)
+                        if v is None and m.group(1) in self.cvote:
+                            v = BASE + self.cvote[m.group(1)]   # dropped: where the C data points
+                        if v is None:
+                            self.relink_unplaced += 1
+                            return m.group(0) + " /* %s's address: nothing in %s places it */" % (src, dst)
                         self.relinked += v != old
                         return "%s = 0x%08X;" % (m.group(1), v)
                     txt = open(os.path.join(sdir, r), encoding="latin-1").read()
@@ -1389,6 +1690,13 @@ class Port:
                 fh.write("\n".join(lines))
         if keep is not None:
             open(readme, "w", encoding="utf-8").write(keep)
+        with open(os.path.join(ddir, "port_dropped_labels.txt"), "w") as fh:
+            fh.write("# %s labels that %s/maincpu does not define: the bytes they named have no\n"
+                     "# counterpart in the %s ROM and no line of the %s tree needs the name\n"
+                     "# (scripts/converters/port_maincpu_version.py, Port.settle_tentative).\n"
+                     "# label\t%s address\t%s file\n" % (src, dst, dst, dst, src, src))
+            fh.write("".join(r + "\n" for r in dropped_rows))
+        self.dropped_rows = dropped_rows
         json.dump({k: {str(o): b for o, b in sorted(v.items())} for k, v in self.cpatch.items()},
                   open(os.path.join(self.cache, "c_target_%s.json" % dst), "w"))
 
@@ -1410,6 +1718,16 @@ class Port:
             if v is not None and not nm.startswith("."):
                 defs.append(".set %s, %d" % (nm, v))
         return text + "\n" + "\n".join(defs)
+
+    def expr_at(self, addr):
+        """the `.set NAME, Label +/- K` name (first in source order) that resolves to addr"""
+        if not hasattr(self, "_exprat"):
+            self._exprat = {}
+            for sym, (i, base, sign, k) in sorted(self.equ_expr.items(), key=lambda x: x[1][0]):
+                v = self.tval(sym)
+                if v is not None:
+                    self._exprat.setdefault(v, sym)
+        return self._exprat.get(addr)
 
     def label_at(self, addr):
         if not hasattr(self, "_byaddr"):
@@ -1472,7 +1790,7 @@ def c_divergence(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", default="v7")
-    ap.add_argument("--dst", default="v6")
+    ap.add_argument("--dst", default="v6", help="v<N>: writes ROOT/v<N>/maincpu")
     ap.add_argument("--rom", required=True)
     ap.add_argument("--cache")
     ap.add_argument("--emit", action="store_true")
@@ -1480,6 +1798,8 @@ def main():
     ap.add_argument("--dump-failed", metavar="FILE", help="write the lines that became raw rows, with "
                     "their source and target bytes")
     args = ap.parse_args()
+    if not re.fullmatch(r'v\d+', args.dst) or not re.fullmatch(r'v\d+', args.src):
+        sys.exit("--src and --dst are tree names such as v7 and v6")
     if args.cdiv:
         return c_divergence(args)
     P = Port(args)
@@ -1499,9 +1819,18 @@ def main():
     ek = collections.Counter(e[0] for e in P.events)
     raw = sum(e[2] - e[1] for e in P.events if e[0] == "raw")
     print("events:", dict(ek), " raw target bytes:", raw, " guessed referenced labels:", len(P.guessed))
+    P.settle_tentative()
+    print("labels no evidence places: %d; dropped (nothing in the target needs them) %d, kept because needed %d"
+          % (len(P.tentative), len(P.dropped), len(P.needed_tentative)))
+    if P.needed_tentative:
+        print("needed:", " ".join(P.needed_tentative))
     P.votes()
+    print("record names kept on an unchanged record against their uses:", len(P.kept_on_record))
+    print("constants not re-valued, their uses written with the constant of that value:",
+          " ".join("%s->%s" % kv for kv in sorted(P.equ_redirect.items())))
     P.new_labels()
-    print("labels added at target addresses no ported label names:", len(P.newlab))
+    print("dropped labels placed where their uses point instead:", len(P.relocated))
+    print("labels added at target addresses no ported label names:", len(P.newlab) - len(P.relocated))
     print("numeric symbols given a new value:", len(P.newequ),
           " with disagreeing uses:", sum(1 for c in P.equ_votes.values() if len(c) > 1))
     P.resolve()
@@ -1518,6 +1847,8 @@ def main():
         P.emit()
         print("wrote %s/maincpu: %d raw target bytes in TODO(port) rows; %d link-script addresses moved"
               % (args.dst, P.rawbytes, P.relinked))
+        print("labels dropped: %d (listed in %s/maincpu/port_dropped_labels.txt); link-script addresses "
+              "nothing places: %d" % (len(P.dropped_rows), args.dst, P.relink_unplaced))
 
 
 if __name__ == "__main__":
