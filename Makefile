@@ -103,9 +103,12 @@ everything: all wsa1 kn7000
 # round-trip sound images, which only `all` produces. Depending on `all` is
 # also the honest statement of what the gate needs: assert_byte_identical.py
 # compares rebuilt_ROMs/*, so the gate could never have run without it.
+# The v141 sub-CPU tree is generated as "v142 + EDITS"; a comment-only v142 change keeps both
+# images byte-identical, so only this check notices that v141 was not regenerated.
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
+	python3 scripts/generators/create_v141_subcpu_source.py --check
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
