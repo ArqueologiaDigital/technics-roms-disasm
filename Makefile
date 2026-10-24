@@ -32,7 +32,7 @@ CLANG=$(LLVM_BIN)/clang
 
 .PHONY: all llvm-all paramblocks screendata naka clean clean-asl clean-all
 .PHONY: wsa1 wsa1-clean everything gate gate-wsa1 gate-all
-.PHONY: verify-v8-reference
+.PHONY: verify-v8-reference verify-subprogram-update-images
 .PHONY: kn7000 kn7000-clean gate-kn7000
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score
 .SECONDARY:
@@ -107,7 +107,12 @@ everything: all wsa1 kn7000
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) --no-print-directory verify-v8-reference
+	$(MAKE) --no-print-directory verify-v8-reference verify-subprogram-update-images
+
+# The v1.40 and v1.41 Sub-CPU update images (File Type 007) have no source build;
+# this proves each decompresses to exactly its tracked plain payload ROM (under 1 s).
+verify-subprogram-update-images:
+	python3 scripts/build/verify_subprogram_update_images.py
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
