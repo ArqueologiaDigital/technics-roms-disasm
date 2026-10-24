@@ -1,0 +1,6 @@
+; XAPR plug-in manual symbol supplement: entry points recovered by hand, which
+; its MILK reflection tables (hdsx3.sym, generated) do not name.
+; Format as in kn7000/kn7000_manual.sym: "0xCPUADDR  name  ; note".
+;
+; ---- XAPR header slots ------------------------------------------------------
+0x97800080  XaprEmptySlot   ; a bare rets: the ten header words at +0x58..+0x7C all point here
