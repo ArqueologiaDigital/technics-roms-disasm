@@ -26,6 +26,7 @@ import argparse
 import json
 import os
 import re
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -38,7 +39,10 @@ ADDR = re.compile(r';\s*([0-9A-F]{6})\b')
 def refs():
     out = []
     for img, p in SRCS.items():
-        for i, l in enumerate(open(p, encoding="latin-1").read().split("\n")):
+        # the IMAGE (root + its module files, wsa1/scripts/tools/split_cpu1_images.py), not the root file
+        sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
+        from asm_source import image_lines
+        for i, l in enumerate(image_lines(os.path.join(ROOT, "wsa1"), os.path.relpath(p, os.path.join(ROOT, "wsa1")))):
             code = l.split(";")[0]
             s = code.strip()
             if not s or s.startswith((".byte", ".ascii", ".fill", ".zero", ".space", ".short", ".word")):
@@ -58,7 +62,7 @@ def main():
     ap.add_argument("--min", type=int, default=0)
     a = ap.parse_args()
     regs = json.load(open(a.census))["regions"]
-    tg = [r for r in regs if r["image"] == "prom_a" and r["rel"] == "prom_a/wsa1_prom_a.s"
+    tg = [r for r in regs if r["image"] == "prom_a" and (r["rel"] == "prom_a/wsa1_prom_a.s" or r["rel"].startswith("prom_a/modules/"))
           and r["grade"] != "CODE" and (r["grade"] == "UNKNOWN" or r.get("admits")
                                         or r.get("embedded_in_code")) and r["size"] >= a.min]
     tg.sort(key=lambda r: -r["size"])

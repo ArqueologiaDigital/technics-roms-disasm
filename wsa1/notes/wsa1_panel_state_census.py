@@ -10,11 +10,15 @@ USAGE (from the repository's wsa1/ directory)
   python3 notes/wsa1_panel_state_census.py
 """
 import collections
+import os
 import re
+import sys
+sys.path.insert(0, "notes")
+from asm_source import image_lines  # noqa: E402  (run from wsa1/)
 
 WANT = set(range(0x2076, 0x209D))
 for f in ["prom_a/wsa1_prom_a.s", "prom_b/wsa1_prom_b.s"]:
-    L = open(f, "rb").read().decode("latin-1").split("\n")
+    L = image_lines(os.getcwd(), f)              # run from wsa1/; the image, not its root
     cur = "?"
     d = collections.defaultdict(lambda: collections.defaultdict(set))
     for l in L:

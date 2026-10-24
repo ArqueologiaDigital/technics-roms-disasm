@@ -22,7 +22,16 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from prom_b_effect_param_map import records, ROM, B, txt  # noqa: E402
 
@@ -173,8 +182,7 @@ def apply():
     assert NAMES_OLD in s
     s = s.replace(NAMES_OLD, NAMES_NEW, 1)
 
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print("converted 0x78 bytes, renamed 2 labels, closed 2 Unknowns")
     return 0
 

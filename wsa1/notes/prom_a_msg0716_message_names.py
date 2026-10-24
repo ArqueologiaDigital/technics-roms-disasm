@@ -37,7 +37,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 CC = {0x01: "Modulation", 0x02: "Breath", 0x04: "Foot", 0x07: "Volume", 0x0B: "Expression",
       0x10: "GeneralPurpose1", 0x11: "GeneralPurpose2", 0x12: "GeneralPurpose3", 0x13: "GeneralPurpose4",
       0x40: "Sustain", 0x5B: "Effect1Depth", 0x5D: "Effect3Depth"}

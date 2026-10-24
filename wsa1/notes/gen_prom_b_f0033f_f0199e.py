@@ -205,7 +205,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
-from asm_source import image_path, write_part  # noqa: E402
+from asm_source import image_path, image_text, write_part  # noqa: E402
 
 B_BASE, A_BASE = 0xF00000, 0xF80000
 R1 = (0xF0033F, 0xF00800)
@@ -372,7 +372,7 @@ def word_refs(lo, hi):
 
 
 def prom_a_boundaries():
-    txt = open(os.path.join(ROOT, "prom_a/wsa1_prom_a.s"), encoding="utf-8").read()
+    txt = image_text(ROOT, "prom_a/wsa1_prom_a.s")      # the image, not its root file
     return set(int(m, 16) for m in re.findall(r"; ([0-9A-F]{6})  ", txt))
 
 

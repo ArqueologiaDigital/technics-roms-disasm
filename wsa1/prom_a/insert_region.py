@@ -30,7 +30,21 @@ def main():
     lo, hi, path = int(sys.argv[1], 16), int(sys.argv[2], 16), sys.argv[3]
     flo, fhi = lo - BASE, hi - BASE
     body = open(path).read().rstrip("\n")
-    lines = open(SRC).read().split("\n")
+    # ⚠ SRC is the image's ROOT file; since the module split the `.incbin` lines
+    # live in the module files it .includes.  Each candidate file is spliced on
+    # its own, and only the one holding the covering `.incbin` is written.
+    sys.path.insert(0, os.path.join(ROOT, "notes"))
+    from asm_source import image_writable_files
+    for f in image_writable_files(ROOT, "prom_a/wsa1_prom_a.s"):
+        if splice(f, flo, fhi, body):
+            print("spliced 0x%06X-0x%06X (%d bytes) into %s"
+                  % (lo, hi, hi - lo, os.path.relpath(f, ROOT)))
+            return
+    sys.exit("no .incbin covers 0x%06X-0x%06X" % (lo, hi))
+
+
+def splice(src, flo, fhi, body):
+    lines = open(src).read().split("\n")
     out, done = [], False
     for line in lines:
         m = INCBIN.match(line)
@@ -49,10 +63,9 @@ def main():
             out.append('\t.incbin "original_ROMs/wsa1_prom_a.ic12", '
                        '0x%06X, 0x%06X' % (fhi, off + ln - fhi))
         done = True
-    if not done:
-        sys.exit("no .incbin covers 0x%06X-0x%06X" % (lo, hi))
-    open(SRC, "w").write("\n".join(out))
-    print("spliced 0x%06X-0x%06X (%d bytes)" % (lo, hi, hi - lo))
+    if done:
+        open(src, "w").write("\n".join(out))
+    return done
 
 
 if __name__ == "__main__":

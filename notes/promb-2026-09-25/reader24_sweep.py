@@ -40,8 +40,19 @@ sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import data_range_census as drc              # noqa: E402
 import symbolize_numeric_branches as snb     # noqa: E402
 
-PB = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
-PA = os.path.join(ROOT, "wsa1", "prom_a", "wsa1_prom_a.s")
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
+_PB_PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+PB = _wsa1_image(_PB_PATH)
+_PA_PATH = os.path.join(ROOT, "wsa1", "prom_a", "wsa1_prom_a.s")
+PA = _wsa1_image(_PA_PATH)
 ROMB = open(os.path.join(ROOT, "wsa1", "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
 ROMA = open(os.path.join(ROOT, "wsa1", "original_ROMs", "wsa1_prom_a.ic12"), "rb").read()
 PHRASE = "spells this address as a 32-bit word"
@@ -69,7 +80,15 @@ def main():
     marks, addrs, spans, ok, src, macros = snb.build_map(img, os.path.join(ROOT, "wsa1"))
     assert ok
     bstarts = [s[0] for s in spans]
-    L = src.lines("prom_b/wsa1_prom_b.s")
+    # the IMAGE as one list, with the map's spans re-keyed onto it: since the CPU 1 module split
+    # the text is in prom_b/modules/*.s (wsa1/scripts/tools/split_cpu1_images.py)
+    sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
+    import asm_source
+    W = os.path.join(ROOT, "wsa1")
+    L, origin = asm_source.own_lines(W, "prom_b/wsa1_prom_b.s")
+    gi = {(os.path.relpath(p, W), k): i for i, (p, k) in enumerate(origin)}
+    spans = [(a, e, "prom_b/wsa1_prom_b.s", gi[(r, li)]) if (r, li) in gi else (a, e, r, li)
+             for (a, e, r, li) in spans]
     line_addr = {}
     for a, e, rel, li in spans:
         if rel == "prom_b/wsa1_prom_b.s":

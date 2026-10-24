@@ -70,7 +70,16 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 ROM = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
 AUTOFORCE = os.path.join(ROOT, "notes", "llvm_roundtrip_autoforce.py")
 B = 0xF00000
@@ -493,7 +502,7 @@ def splice():
         skipped = len(todo)
         print("skipped %d span(s) whose .incbin is already gone: %s"
               % (skipped, " ".join("0x%06X" % (B + k[0]) for k in sorted(todo))))
-    open(SRC, "w", encoding="latin-1").write("\n".join(out))
+    write_part(SRC_MASTER, "\n".join(out))
     print("spliced %d spans, %d bytes" % (done, done_bytes))
 
 

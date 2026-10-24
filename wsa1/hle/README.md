@@ -28,7 +28,7 @@ names itself (`STRING, CYLINDER, CONE, FLARE, PLATE, MEMB`):
   the one genuinely unknown number (§8.1), exposed as `position_scale`;
 - **FITTING** (regs 0x0140+0x01C0 …) → the excitation shaping (rise/decay);
 - **SUB GAIN** (reg 0x0280) → the MAIN/SUB mix; coupling is a **tuning detune** (the firmware's
-  `sub_FC4269` solver), not a register (§ correction 2026-09-04). `coupled_detune()` implements
+  `Pack104_SolveCoupledDetune` solver), not a register (§ correction 2026-09-04). `coupled_detune()` implements
   this as coupled-oscillator **normal-mode splitting** driven by INTERACTION GAIN (faithful to
   the model; the exact 1087-byte fixed-point solver is `notes/w24_e093_coupling_solver.py`).
 

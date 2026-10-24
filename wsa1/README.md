@@ -25,6 +25,25 @@ Every commit must keep the gate green, and every commit message must carry the
 | `prom_c/` | `wsa1_prom_c.ic28` | `0xF80000` **established** | program, boot image of CPU 2 |
 | `prom_d/` | `wsa1_prom_d.bin` | `0x00F00000` (CPU 2) | the tone database; data only |
 
+### How each image's source is laid out
+
+`prom_X/wsa1_prom_X.s` is the file the Makefile assembles, but for every image it is a ROOT:
+a header, the definitions, and `.include` lines that pull in the rest in address order.
+
+| image    | root file              | body                                                                         |
+|----------|------------------------|------------------------------------------------------------------------------|
+| `prom_a` | `prom_a/wsa1_prom_a.s` | 37 module files, `prom_a/modules/<start>_<end>_<subject>.s`                  |
+| `prom_b` | `prom_b/wsa1_prom_b.s` | 42 module files, `prom_b/modules/<start>_<end>_<subject>.s`                  |
+| `prom_c` | `prom_c/wsa1_prom_c.s` | 27 subject files under `prom_c/` (`notes/prom_c_split.py`)                   |
+| `prom_d` | `prom_d/wsa1_prom_d.s` | the tone database's directory, records and aux data, three files             |
+
+The CPU 1 modules are the firmware's own link units -- each one ends where its 0x0E (`ret`) pad
+reaches an aligned address -- cut by `scripts/tools/split_cpu1_images.py`, which also says where the
+rule has exceptions and proves the cut changes no byte
+(`notes/cpu1-module-split-2026-10-24/README.md`).  Edit the module files; the root's include block
+is generated.  ⚠ A tool that opens `prom_X/wsa1_prom_X.s` by path reads the root, not the image:
+read through `notes/asm_source.py` (`image_lines`, `image_text`, `own_lines`) instead.
+
 ## The sources that are not images
 
 | source | included by | contents |

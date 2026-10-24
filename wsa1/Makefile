@@ -45,6 +45,13 @@ MAINCPU_SHARED = maincpu/shared/indexed_table.s maincpu/shared/lcd_screen_redraw
 PROM_C_SRC = prom_c/wsa1_prom_c.s \
              $(filter-out prom_c/wsa1_prom_c.s,$(wildcard prom_c/*.s prom_c/*/*.s))
 
+# prom_a and prom_b are split the same way, one source per FIRMWARE MODULE: each
+# root `.include`s prom_X/modules/*.s in address order (where a module ends, and
+# the proof that the cut changes no byte: scripts/tools/split_cpu1_images.py).
+# A wildcard again, for the reason above.  ⚠ THE ROOT MUST STAY FIRST: `$<`.
+PROM_A_SRC = prom_a/wsa1_prom_a.s $(wildcard prom_a/modules/*.s)
+PROM_B_SRC = prom_b/wsa1_prom_b.s $(wildcard prom_b/modules/*.s)
+
 .PHONY: all clean images-check images-export images-rewrite
 
 # ---------------------------------------------------------------- images
@@ -72,7 +79,7 @@ images-rewrite:
 
 all: rebuilt_ROMs/wsa1_prom_a.llvm.rom rebuilt_ROMs/wsa1_prom_b.llvm.rom rebuilt_ROMs/wsa1_prom_c.llvm.rom rebuilt_ROMs/wsa1_prom_d.llvm.rom
 
-rebuilt_ROMs/wsa1_prom_a.llvm.o: prom_a/wsa1_prom_a.s $(COMMON_INC) $(KERNEL_SRC) $(MAINCPU_SHARED) $(DSP_SRC) $(LLVM_MC)
+rebuilt_ROMs/wsa1_prom_a.llvm.o: $(PROM_A_SRC) $(COMMON_INC) $(KERNEL_SRC) $(MAINCPU_SHARED) $(DSP_SRC) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_a -o $@ $<
 
@@ -82,7 +89,7 @@ rebuilt_ROMs/wsa1_prom_a.llvm.elf: rebuilt_ROMs/wsa1_prom_a.llvm.o prom_a/prom_a
 rebuilt_ROMs/wsa1_prom_a.llvm.rom: rebuilt_ROMs/wsa1_prom_a.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
-rebuilt_ROMs/wsa1_prom_b.llvm.o: prom_b/wsa1_prom_b.s $(COMMON_INC) $(MAINCPU_SHARED) $(LLVM_MC)
+rebuilt_ROMs/wsa1_prom_b.llvm.o: $(PROM_B_SRC) $(COMMON_INC) $(MAINCPU_SHARED) $(LLVM_MC)
 	@mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I . -I prom_b -o $@ $<
 

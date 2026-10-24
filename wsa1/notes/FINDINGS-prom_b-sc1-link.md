@@ -18,12 +18,12 @@ re-checks all 4,145 converted bytes on every build.
 `FINDINGS-interrupt-vectors.md` listed four CPU-1 vectors as "in prom_b — not
 this lane". **All four are now converted, and three of them are one device.**
 
-| slot | vector | thunk | body | what it is |
-|---|---|---|---|---|
-| `0x34` | INT6 | `T_F40F0C` | `0xF5AC0A` | `INT6_SC1_PeerRequest` |
-| `0x48` | INTT2 | `T_F40EE0` | `0xF57D45` | `INTT2_Reti` — one byte, `07` |
-| `0x68` | INTRX1 | `T_F40F10` | `0xF5ACBB` | `INTRX1_SC1_Dispatch` |
-| `0x6C` | INTTX1 | `T_F40F14` | `0xF5AC93` | `INTTX1_SC1_Dispatch` |
+| slot   | vector | thunk                    | body       | what it is                    |
+|--------|--------|--------------------------|------------|-------------------------------|
+| `0x34` | INT6   | `T_INT6_SC1_PeerRequest` | `0xF5AC0A` | `INT6_SC1_PeerRequest`        |
+| `0x48` | INTT2  | `T_INTT2_Reti`           | `0xF57D45` | `INTT2_Reti` — one byte, `07` |
+| `0x68` | INTRX1 | `T_INTRX1_SC1_Dispatch`  | `0xF5ACBB` | `INTRX1_SC1_Dispatch`         |
+| `0x6C` | INTTX1 | `T_INTTX1_SC1_Dispatch`  | `0xF5AC93` | `INTTX1_SC1_Dispatch`         |
 
 Every link of every chain was re-read from the images, not copied from the map.
 
@@ -39,7 +39,7 @@ Three independent arguments give the same block, `0xF5A800-0xF5B44D` code plus
    the same bytes; see `FINDINGS-prom_b-disk-and-file-menus.md`.
    (`ret`, this image's fill convention) run to `0xF5B7FF`. 3,150 + 946 = 4,096:
    **the module is exactly one 4 KiB block.**
-2. **The thunk table.** Slots `T_F40F00`-`T_F40F24` are one run bracketed by
+2. **The thunk table.** Slots `T_SC1_Vtable`-`T_F40F24` are one run bracketed by
    `0E 0E 0E 0E` fill on both sides, and all ten targets are inside the block.
    The first slot is a *pointer*, naming the six-`jp` vtable at `0xF5A800`.
 3. **Peripheral ownership.** Over the twelve prefix-group address spellings,
@@ -220,7 +220,7 @@ established is the duplicate, the six bad targets, and the unreachability.
   i.e. a **change mask over 32 groups of 8 bits**; the link is half duplex with
   a peer request line and an outbound queue. That is the shape of a scanner with
   a small return channel. It is not evidence of *what* is scanned, and this note
-  does not name it. What would settle it: a caller of `T_F40F08` in prom_a whose
+  does not name it. What would settle it: a caller of `T_SC1_TxFlush` in prom_a whose
   surroundings are identified, or `0xF89800`.
 
 ## Round 2 — three exit stubs are dead, and the dispatch has no bounds check

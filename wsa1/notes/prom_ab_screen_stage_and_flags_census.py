@@ -25,6 +25,9 @@ import subprocess
 
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
+import sys  # noqa: E402
+sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+from asm_source import image_lines  # noqa: E402  (the images, not their root files)
 FILES = ["wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"]
 STAGE = r'(?:0x207e|8318|UI_ScreenStage)'
 FLAGS = r'(?:0x2095|8341|UI_ScreenFlags)'
@@ -36,7 +39,7 @@ CONFIRM = re.compile(r'\bld\s+xiy,\s*DL_(?:AreYouSure|\w*Attent?i0?o?n\w*)\b', r
 
 
 def load(f):
-    return [l.split(";")[0].rstrip() for l in open(os.path.join(REPO, f), "rb").read().decode("latin-1").split("\n")]
+    return [l.split(";")[0].rstrip() for l in image_lines(os.path.join(REPO, "wsa1"), f[len("wsa1/"):])]
 
 
 def nxt(L, i):

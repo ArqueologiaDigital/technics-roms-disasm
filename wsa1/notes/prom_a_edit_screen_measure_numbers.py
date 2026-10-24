@@ -24,7 +24,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 L = A.split("\n")
 IDX = {m.group(1): i for i, l in enumerate(L) for m in [re.match(r'^([A-Za-z_][\w$]*):', l)] if m}
 SHAPE = [r'cpw \(0x26b0:16\), 0x03e7',     # `m_cp_mi16 MW16, 0x26b0, 0x03e7` until the 2026-10-24 respelling

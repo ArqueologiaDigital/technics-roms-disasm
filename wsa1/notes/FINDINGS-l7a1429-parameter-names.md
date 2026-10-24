@@ -69,7 +69,7 @@ not owed to a file this lane owns, so it stays open.
 with offsets `+0x10..+0x28`. **Q is `WaveSelRec`**, the 43-byte record prom_d's
 own converted source already documents (`u8 tail[30]` at `+0x0D..+0x2A`).
 
-* `sub_FC6803` stores its third argument into `P[+0x03]` (`0xFC6834`). All 40 of
+* `Pack104_LoadElementWaveSelRec` stores its third argument into `P[+0x03]` (`0xFC6834`). All 40 of
   its call sites pass a 43-byte object: 15 from the part record's `+0x8C+41*n`
   slot, written only by `Part_GetWaveSelectRecord`'s return (`0xFB486B`; stride
   `ld A,0x2b` = 43) or the literal `0xFE14A0` (`0xFC294D`); 16 from the staging
@@ -78,7 +78,7 @@ own converted source already documents (`u8 tail[30]` at `+0x0D..+0x2A`).
   (`ld C,0x2b` at `0xFB458C` / `0xFB455A`).
 * The **element-block** pointer is a *different* field of the same record,
   `+0x88`, written by `Part_GetElementBlock`'s return (`0xFB484E`, `0xFB48C1`).
-  **No caller of `sub_FC6803` reads `+0x88`.**
+  **No caller of `Pack104_LoadElementWaveSelRec` reads `+0x88`.**
 * The hard bound: on the drawbar arm Q *is* `Table_FE14A0`, and `0xFE14CB`
   begins the ASCII `"WSA SOUND RAM S0"`. Reading that object at `+0x51` would
   land six bytes inside a bank-name string.
@@ -214,7 +214,7 @@ anywhere in either image, and an exhaustive search for one failed. That is why
   name table at `0xF03241`: `ORIGINAL STRING CYLINDER CONE FLARE PLATE L PLATE H
   MEMB L MEMB H THROUGH MELLOW MUTE BRIGHT MOVE RANDOM OCTAVE HARMONIC METAL
   BOTTLE … SPECIAL1 SPECIAL2`.
-* On the CPU 2 side, `+0x0B` is the byte `sub_FC7481` reads for its bits 7:6, and
+* On the CPU 2 side, `+0x0B` is the byte `Pack104_DispatchByResoMode_ForPart` reads for its bits 7:6, and
   it is the ONE parameter whose arm-4 case does work: `0xFBCA17` calls
   `ToneStage_ApplyWaveSelTailPreset`, which **overwrites bytes 13..42** — every
   coefficient in §4.
@@ -223,7 +223,7 @@ anywhere in either image, and an exhaustive search for one failed. That is why
 preset.** That is what a resonator-type control does, and it is measured.
 
 ⚠ prom_a `0xFD434D` sends the same parameter `0x0B` with mask `0xC0` — the top
-two bits, which is the field `sub_FC7481` reads and which PAGE3/3 draws as two
+two bits, which is the field `Pack104_DispatchByResoMode_ForPart` reads and which PAGE3/3 draws as two
 bit-7 flags. `+0x0B` bits 7:6 = **`RESO MODE`**, grade STRONG.
 
 
@@ -282,8 +282,8 @@ whole chain reads correctly.
 ## 4. THE TABLE
 
 `p<N>` = arm-4 tone-edit parameter N = wave-select byte `+0x0N` in hex
-(`p21` = `+0x15`, `p42` = `+0x2A`). The P/R arithmetic is `sub_FC47EE` /
-`sub_FC6803`; the register arithmetic is the wave-17 map.
+(`p21` = `+0x15`, `p42` = `+0x2A`). The P/R arithmetic is `Pack104_UnpackWaveSelRec_ToSubRecord` /
+`Pack104_LoadElementWaveSelRec`; the register arithmetic is the wave-17 map.
 
 | reg | P/R inputs | ← wave-select parameters | proposed NAME | grade |
 |---|---|---|---|---|
@@ -433,7 +433,7 @@ nothing in the image (`p20` is the constant 100 in all 392 factory records), and
 `P0SITI0N M0VEMENT` (§2a). Seven for seven.
 
 Register `0x00C0` consumes four of the seven: `p13`, `p16` (its touch depth via
-`LinCoef_FE0096`), and `p17`/`p18`, which are the whole of the movement term
+`LinCoef_Position_TouchRamp_Q5_128`), and `p17`/`p18`, which are the whole of the movement term
 `R[+0x21] = P[+0x28] * sine / 50`, where `P[+0x28] = clamp(p17 ± PART[+0x07],
 0..50)` (`0xFC6AC2`) and `P[+0x29] = Table_FE0296[...p18...]`. `p17`'s factory
 values are `{0,10,15,16,20,30,40,50}` — the code's own 0..50 range — and `p18`
@@ -501,7 +501,7 @@ that **p15 has no editor field at all**, so the ROM cannot name them.  And `0x00
    bits 6:4. They name `0x0000` and, through its gate, `0x0300`.
 3. **Print `Table_FE0296` and `LinCoef_FE0096/0116/0196/0216` as numbers.** A
    curve whose output is a time in ms, a gain in dB or a frequency ratio is a
-   far narrower claim than "a curve". `Curve_Exp2Decay_101`'s 101 entries against
+   far narrower claim than "a curve". `Curve_Exp2Gain_Percent_101`'s 101 entries against
    `SUB GAIN`'s 0..100 is the strongest instance of that argument so far; the
    others have not been made.
 4. **A MAME trace of `0x0040` and `0x0080` against a played note.** They are

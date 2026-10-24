@@ -30,18 +30,18 @@ touch, newest last, in this tree's usual way.  Read this table first, then the s
 names.  The register table's NAME column is superseded by §5.3, which is the table
 `notes/l7a1429_crosscheck.py` reads.
 
-| what this note says | where | what is true now | authority |
-|---|---|---|---|
-| `0x0240` / `0x0300` / `0x03C0` / `0x0480` are a `3!` six-way choice between `DEPTH`, `FORMANT` and `INTERACTION GAIN` | §0, §3, §5, §8.3 | **a false dilemma.**  `DEPTH` = p14 bits 0-6 → `0x0240`.  `FORMANT` = p14 **bit 7**, `FIX`/`MOVE`, and it is not a register of its own: the packer tests that exact bit at `0xFC4A09` to switch `0x00C0`'s key-follow term on or off.  `INTERACTION GAIN` = p19 → `0x0300`.  `0x03C0`/`0x0480` are RESOLVED **NEGATIVELY**: their only input `p15` is never an editor parameter — 1 of 258 sender call sites passes `0x0F`, and that one is arm 1, not the wave-select record | `FINDINGS-l7a1429-editor-pages.md` §3a, §4, §4a, §4d |
-| `INTERACTION GAIN` is "a caption looking for a register" | §3, §8.2 | it has one: register `0x0300`, grade **STRONG**.  Two independent arguments: the caption sits on p19's own drawn row (five of five values on a caption's row, against a null mean of 0.19 of 5), and `0x0300` is a **MODE-GATED** gain — which `DEPTH` and `FORMANT` have no reason to be | editor-pages §3a, §4c; `FINDINGS-l7a1429-gate-and-keyscaling.md` §1.9 |
-| register `0x0000` bits 6..4 have an UNLOCATED producer; `0xFC4D27`/`0xFC7DE9` are undecoded | §5 row `0x0000`, §8.5 | **located.**  Fifteen sites in seven routines write `P[+0x07]` bits 6..4 with one idiom, all downstream of one test, and the census that says nothing else does enumerates the forms it searched.  `0xFC4D27`/`0xFC7DE9` write `R[+0x07]` — the OTHER half of the same word — and wave 20 decoded them as the slot allocator's store | gate-and-keyscaling §1.3, §1.6; `FINDINGS-l7a1429-packer-routines.md` §1.5, §4.1 |
-| the field that gates `0x0300` is the tone editor's `RESO MODE` | inherited by §5's `0x0000` row | `Q[+0x0B]` bits 7:6 are the MODELING top page's **`GROUP`**, the second column of its own `ON/OFF GROUP DRIVER RESONATOR INTERACTION` legend.  ★ **The MECHANISM is unchanged** — those bits still gate `0x0300`; only the name was wrong.  The real `RESO MODE` is **p21/p31 bit 7**, which sets `0x0000` bits 15/14 *and* adds `0x0C00` = one octave to that resonator's tuning | editor-pages §1a, §4e |
-| how the MAIN and SUB resonators INTERACT is not described | §0, §3 | ★★ **they interact through their TUNINGS, in the firmware.**  When the part is `GROUP`ed, `sub_FC4269` solves the group's `2 × elements` coupled resonators and returns a per-resonator detune in 1/256 semitone, which is added to registers `chan+0x0040` and `chan+0x0080`.  There is no coupling REGISTER and none is needed — an emulator that implements the two tuning registers faithfully already implements the interaction.  `INTERACTION GAIN` (p19) sets the solver's pole radius as well as making register `0x0300` | `FINDINGS-l7a1429-e093-block.md` §3, §4, §7 |
-| the two single points of failure in §3.3 | §3.3, §8.9 | **both corroborated by a second, independent route.**  MAIN/SUB: on `PAGE1/3` the two value rows sit `+4` display rows under the `MAIN RESONATOR` and `SUB RESONATOR` labels the *same* paint routine draws, with equal offsets; `SUB GAIN`, p33 and p36 play no part in that argument.  `FITTING`/`MUTING`: `PAGE1/3`'s own column headers stand over their own fields, without the `0xF02DFB` caption block the old argument rested on | editor-pages §3c, §5.4 |
-| `SCALE` is not located | §8.8 | **found.**  It is `RESO SCALE`, the fifth column of `PAGE1/3`, drawn `OFF`/`ON`, and it is **bit 7 of p22 (MAIN) / p32 (SUB)**.  ⚠ What the packer does with that bit is still not traced — it reaches `R[+0x1A]`, whose writer was not found | editor-pages §5.3 |
-| §5.2 calls `(0x00E088)` "the 0..127 LinCoef index" from `voice[+0x0C]`, and grades `LinCoef_FE0196` a **key**-follow ramp | §5.2 | `voice[+0x0C]` is the **VELOCITY**; the note is at `voice[+0x05]` as `note\|0x80`.  So all four `LinCoef_*` tables are **TOUCH** ramps — renamed `*_TouchRamp_Q5_128` in `prom_c/data_tables/tail_data_zone.s`.  The `ks(Q, o)` stage in the same expression **is** keyed on the note, so the two stages differ in their VARIABLE as well as in their scaling | editor-pages §1b; `prom_c/devices/dev10c_dev104_drivers.s` §7.2 |
-| "84 is the value of `p15` in 123 of 133 factory records"; "`ORIGINAL` in 133 of 133" | §2.3, §3.4 | both are rates over `dev104_topology_probe.py`'s **filtered** 133-record set, which selects on a property of ELEMENT BLOCKS and so drops every tone that uses the mode field.  Over the 392 melodic wave-select records `p15` takes six values, `{51, 53, 65, 67, 70, 84}`; over the whole factory set `ORIGINAL` is 455 of 459.  ★ §3.4's conclusion — *implement the coefficients, not the families* — is **untouched**: it rests on the packer, not on the count | editor-pages §4a, §4b; gate-and-keyscaling §4.3 |
-| "the cheapest thing that would close most of §8 is one hop on the CPU 1 side" | §8, closing | ★ **that hop was made**, by lane `w21/cpu1-hop`, and it did not need the screen id in `(0x207C)`: each page's read-back order *is* the map, pinned by eight editor bindings.  It resolved all four WEAK rows and found `SCALE`.  What it did **not** close is §8.1 (the absolute scale of `P0SITI0N`) and §8.2 (the internal signal path) | editor-pages, whole |
+| what this note says                                                                                                                        | where                          | what is true now                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | authority                                                                        |
+|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `0x0240` / `0x0300` / `0x03C0` / `0x0480` are a `3!` six-way choice between `DEPTH`, `FORMANT` and `INTERACTION GAIN`                      | §0, §3, §5, §8.3               | **a false dilemma.**  `DEPTH` = p14 bits 0-6 → `0x0240`.  `FORMANT` = p14 **bit 7**, `FIX`/`MOVE`, and it is not a register of its own: the packer tests that exact bit at `0xFC4A09` to switch `0x00C0`'s key-follow term on or off.  `INTERACTION GAIN` = p19 → `0x0300`.  `0x03C0`/`0x0480` are RESOLVED **NEGATIVELY**: their only input `p15` is never an editor parameter — 1 of 258 sender call sites passes `0x0F`, and that one is arm 1, not the wave-select record                                                                      | `FINDINGS-l7a1429-editor-pages.md` §3a, §4, §4a, §4d                             |
+| `INTERACTION GAIN` is "a caption looking for a register"                                                                                   | §3, §8.2                       | it has one: register `0x0300`, grade **STRONG**.  Two independent arguments: the caption sits on p19's own drawn row (five of five values on a caption's row, against a null mean of 0.19 of 5), and `0x0300` is a **MODE-GATED** gain — which `DEPTH` and `FORMANT` have no reason to be                                                                                                                                                                                                                                                          | editor-pages §3a, §4c; `FINDINGS-l7a1429-gate-and-keyscaling.md` §1.9            |
+| register `0x0000` bits 6..4 have an UNLOCATED producer; `0xFC4D27`/`0xFC7DE9` are undecoded                                                | §5 row `0x0000`, §8.5          | **located.**  Fifteen sites in seven routines write `P[+0x07]` bits 6..4 with one idiom, all downstream of one test, and the census that says nothing else does enumerates the forms it searched.  `0xFC4D27`/`0xFC7DE9` write `R[+0x07]` — the OTHER half of the same word — and wave 20 decoded them as the slot allocator's store                                                                                                                                                                                                               | gate-and-keyscaling §1.3, §1.6; `FINDINGS-l7a1429-packer-routines.md` §1.5, §4.1 |
+| the field that gates `0x0300` is the tone editor's `RESO MODE`                                                                             | inherited by §5's `0x0000` row | `Q[+0x0B]` bits 7:6 are the MODELING top page's **`GROUP`**, the second column of its own `ON/OFF GROUP DRIVER RESONATOR INTERACTION` legend.  ★ **The MECHANISM is unchanged** — those bits still gate `0x0300`; only the name was wrong.  The real `RESO MODE` is **p21/p31 bit 7**, which sets `0x0000` bits 15/14 *and* adds `0x0C00` = one octave to that resonator's tuning                                                                                                                                                                  | editor-pages §1a, §4e                                                            |
+| how the MAIN and SUB resonators INTERACT is not described                                                                                  | §0, §3                         | ★★ **they interact through their TUNINGS, in the firmware.**  When the part is `GROUP`ed, `Pack104_SolveCoupledDetune` solves the group's `2 × elements` coupled resonators and returns a per-resonator detune in 1/256 semitone, which is added to registers `chan+0x0040` and `chan+0x0080`.  There is no coupling REGISTER and none is needed — an emulator that implements the two tuning registers faithfully already implements the interaction.  `INTERACTION GAIN` (p19) sets the solver's pole radius as well as making register `0x0300` | `FINDINGS-l7a1429-e093-block.md` §3, §4, §7                                      |
+| the two single points of failure in §3.3                                                                                                   | §3.3, §8.9                     | **both corroborated by a second, independent route.**  MAIN/SUB: on `PAGE1/3` the two value rows sit `+4` display rows under the `MAIN RESONATOR` and `SUB RESONATOR` labels the *same* paint routine draws, with equal offsets; `SUB GAIN`, p33 and p36 play no part in that argument.  `FITTING`/`MUTING`: `PAGE1/3`'s own column headers stand over their own fields, without the `0xF02DFB` caption block the old argument rested on                                                                                                           | editor-pages §3c, §5.4                                                           |
+| `SCALE` is not located                                                                                                                     | §8.8                           | **found.**  It is `RESO SCALE`, the fifth column of `PAGE1/3`, drawn `OFF`/`ON`, and it is **bit 7 of p22 (MAIN) / p32 (SUB)**.  ⚠ What the packer does with that bit is still not traced — it reaches `R[+0x1A]`, whose writer was not found                                                                                                                                                                                                                                                                                                      | editor-pages §5.3                                                                |
+| §5.2 calls `(0x00E088)` "the 0..127 LinCoef index" from `voice[+0x0C]`, and grades `LinCoef_Muting_TouchRamp_Q5_128` a **key**-follow ramp | §5.2                           | `voice[+0x0C]` is the **VELOCITY**; the note is at `voice[+0x05]` as `note\|0x80`.  So all four `LinCoef_*` tables are **TOUCH** ramps — renamed `*_TouchRamp_Q5_128` in `prom_c/data_tables/tail_data_zone.s`.  The `ks(Q, o)` stage in the same expression **is** keyed on the note, so the two stages differ in their VARIABLE as well as in their scaling                                                                                                                                                                                      | editor-pages §1b; `prom_c/devices/dev10c_dev104_drivers.s` §7.2                  |
+| "84 is the value of `p15` in 123 of 133 factory records"; "`ORIGINAL` in 133 of 133"                                                       | §2.3, §3.4                     | both are rates over `dev104_topology_probe.py`'s **filtered** 133-record set, which selects on a property of ELEMENT BLOCKS and so drops every tone that uses the mode field.  Over the 392 melodic wave-select records `p15` takes six values, `{51, 53, 65, 67, 70, 84}`; over the whole factory set `ORIGINAL` is 455 of 459.  ★ §3.4's conclusion — *implement the coefficients, not the families* — is **untouched**: it rests on the packer, not on the count                                                                                | editor-pages §4a, §4b; gate-and-keyscaling §4.3                                  |
+| "the cheapest thing that would close most of §8 is one hop on the CPU 1 side"                                                              | §8, closing                    | ★ **that hop was made**, by lane `w21/cpu1-hop`, and it did not need the screen id in `(0x207C)`: each page's read-back order *is* the map, pinned by eight editor bindings.  It resolved all four WEAK rows and found `SCALE`.  What it did **not** close is §8.1 (the absolute scale of `P0SITI0N`) and §8.2 (the internal signal path)                                                                                                                                                                                                          | editor-pages, whole                                                              |
 
 ---
 
@@ -185,24 +185,24 @@ entry, `(1 − G/8192)·g = 1/128`.  So registers `0x0340`/`0x0380`/`0x03C0` are
 `0x0400`/`0x0440`/`0x0480`.  **An emulator has one degree of freedom per section there.**
 
 > ⚠ **A RETRACTION FROM THIS LANE, kept visible.**  An earlier revision of this note and of the
-> probe read `Curve_FE05C9` with the `g/(1+g)` formula too and reported "a second cutoff
+> probe read `Curve_Muting_Cutoff_Q13_128` with the `g/(1+g)` formula too and reported "a second cutoff
 > saturating at 0.045142·fs = 1990.8 Hz".  That number is an artefact of forcing the wrong
 > formula on the right bytes.  The correct reading is the curve lane's, reproduced above.
 
 ### 2.3  ★★ THREE sections, by an exhaustive census — PROVEN, and this lane's own result
 
-`Curve_FE04C9`, `Curve_FE05C9` and `Curve_Exp2Rise_128` are each cited **exactly three times in
+`Curve_Muting_Cutoff_Q16_128`, `Curve_Muting_Cutoff_Q13_128` and `Curve_Fitting_Exp2Rise_128` are each cited **exactly three times in
 the whole 512 KB image** (probe §9; the census is over every byte):
 
-| index | built by | `FE04C9` → | `FE05C9` → | the Rise multiply → |
-|---|---|---|---|---|
-| `i3` (key-scaled) | `Dev104_PackStagingStruct` 0xFC52E3 / 0xFC52F0 | reg **0x0400** | reg **0x0340** | reg **0x01C0** (0xFC5361) |
-| `i4` (key-scaled) | the same, 0xFC5459 / 0xFC5466 | reg **0x0440** | reg **0x0380** | reg **0x0200** (0xFC54D7) |
-| `i5` = `clamp(Q[+0x0F], 44..96)` | `sub_FC47EE` 0xFC4989 / 0xFC4997 | `P[+0x26]` → reg **0x0480** | `P[+0x24]` → reg **0x03C0** | reg **0x0240** (0xFC4ACC) |
+| index                            | built by                                                   | `FE04C9` →                  | `FE05C9` →                  | the Rise multiply →       |
+|----------------------------------|------------------------------------------------------------|-----------------------------|-----------------------------|---------------------------|
+| `i3` (key-scaled)                | `Dev104_PackStagingStruct` 0xFC52E3 / 0xFC52F0             | reg **0x0400**              | reg **0x0340**              | reg **0x01C0** (0xFC5361) |
+| `i4` (key-scaled)                | the same, 0xFC5459 / 0xFC5466                              | reg **0x0440**              | reg **0x0380**              | reg **0x0200** (0xFC54D7) |
+| `i5` = `clamp(Q[+0x0F], 44..96)` | `Pack104_UnpackWaveSelRec_ToSubRecord` 0xFC4989 / 0xFC4997 | `P[+0x26]` → reg **0x0480** | `P[+0x24]` → reg **0x03C0** | reg **0x0240** (0xFC4ACC) |
 
 ★ **This closes two of the four registers the curve lane had no lever on.**  Registers `0x03C0`
 and `0x0480` are not "P[+0x24]/P[+0x26] copied straight through" — they are **the same two curve
-tables at a third index**, computed earlier by `sub_FC47EE` (`ld (XBC+0x24),HL` at 0xFC49A4 and
+tables at a third index**, computed earlier by `Pack104_UnpackWaveSelRec_ToSubRecord` (`ld (XBC+0x24),HL` at 0xFC49A4 and
 `ld (XBC+0x26),HL` at 0xFC4993) and cached in the sub-record.  So they carry the curve lane's
 unit: a one-pole cutoff, clamped 44..96 = **831 Hz .. 16.7 kHz**.  And `0x0240` is that section's
 Rise-scaled copy, exactly as `0x01C0` is section A's.
@@ -399,7 +399,7 @@ the product's **HIGH** half; otherwise its **LOW** half.
 
 `Dev104_StagingStruct_ResetImage` at **0xFE133B** is the 19-word constant the power-on sweep
 copies into the same staging struct the packer otherwise computes.  Its words 7, 8 and 9 are the
-three `srl` products.  Solving each for the `Curve_Exp2Rise_128` index that reproduces it, under
+three `srl` products.  Solving each for the `Curve_Fitting_Exp2Rise_128` index that reproduces it, under
 both readings (probe §11):
 
 | word | register | value | HIGH half | LOW half |
@@ -427,7 +427,7 @@ LOW is what a wrong model predicts.
 * **Range.**  Over the full 128 × 128 table cross-product, every pair except the 128 with
   `Rise[0] = 0` gives a product wider than 16 bits (max `0x775A0A66`).
 * **Commensurability.**  The eight bytes `d9 cc f8 ff d9 ce 07 00` — `and BC,0xFFF8 / or
-  BC,0x0007` — appear at **0xFC50E5**, applied to a **raw `Curve_Exp2Decay_256` entry**, and again
+  BC,0x0007` — appear at **0xFC50E5**, applied to a **raw `Curve_Fitting_Exp2Decay_256` entry**, and again
   at **0xFC4AD9**, applied to **the product**.  The same normalisation on two quantities means
   they share a numeric range.  A raw Decay entry is 0..0x8000; the high half is 0..0x775A; the
   low half is uniform over 0..0xFFFF.
@@ -520,7 +520,7 @@ the device to either.
        cutoff(i) = 440 * 2^((i + 36 - 69)/12) Hz  at fs = 44100
 ```
 
-★ **`LinCoef_FE0196` gives the cutoff key-follow an exact unit**: its slope is 1/64 of a Q5 unit
+★ **`LinCoef_Muting_TouchRamp_Q5_128` gives the cutoff key-follow an exact unit**: its slope is 1/64 of a Q5 unit
 per key and its destination is in semitones of cutoff, so **a depth byte of 64 is exactly 100%
 key follow** and the signed range is ±198%.
 
@@ -591,7 +591,7 @@ value forty times a second is not what a parameter register looks like".  Probe 
   0xFE1315 word 4) — and `0x0000` exactly where `0x00C0` is also `0x0000`.
 * **(b) a LATCH / COMMIT — DISFAVOURED**, on four counts.  (i) Its producer is
   `lda XBC,0xFDFCD6 / add XBC,XIX` at 0xFC49ED — an **indexed read of a 251-entry table**, sharing
-  the index register `XIX` with the `Curve_Log2_251` read one instruction earlier.  A commit
+  the index register `XIX` with the `Curve_Position_Log2Period_251` read one instruction earlier.  A commit
   register is not sourced from a table indexed by a synthesis parameter.  (ii) The other refresh
   arm, `Dev104_SetChanRegs_00C0_0100`, ships `{0x00C0, 0x0100}` **without** `0x0240`, so `0x0100`
   travels with `0x00C0`, not with "whatever was written before it".  (iii) In
@@ -697,7 +697,7 @@ time constants* of an internal process.  Registers `0x00C0` and `0x0240` are the
 sounding voice ever receives again, at 40.69 Hz — and they are `P0SITI0N` and section C's scaled
 coefficient, i.e. exactly the `P0SITI0N M0VEMENT` modulation.
 
-**7.6  ⚠ CARRY THIS WARNING, do not resolve it.**  `Curve_Exp2Decay_256` **cannot** be a
+**7.6  ⚠ CARRY THIS WARNING, do not resolve it.**  `Curve_Fitting_Exp2Decay_256` **cannot** be a
 per-sample pole: its two largest entries are 1.0 and 0.957520 with nothing between, so the
 longest representable finite time constant is **0.522 ms** and even 1 ms is unrepresentable
 (`FINDINGS-l7a1429-curve-tables.md` §5).  Stepped instead at the measured 40.69 Hz refresh the

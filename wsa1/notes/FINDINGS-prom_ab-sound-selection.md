@@ -58,9 +58,9 @@ routine:
 ## 3. Corrections
 
 Two prom_b tables and one prom_a routine were named after (group, member) indexing:
-- `SoundCodeByGroupMember_ByteGroup`;
-- `SoundCodeByGroupMember_SevenBitGroup`;
-- `SoundCode_FromGroupMember_ByteGroup`.
+- `PanelSoundSel_ByProgramAndBank`;
+- `ProgramChangeOut_ByProgramAndBank`;
+- `SoundSel_FromPresetProgramAndBank`.
 
 All three are indexed by (program, bank). They are now `PanelSoundSel_ByProgramAndBank`,
 `ProgramChangeOut_ByProgramAndBank` and `SoundSel_FromPresetProgramAndBank`. Their old headers stay, with a

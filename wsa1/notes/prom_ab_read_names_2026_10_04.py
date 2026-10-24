@@ -2710,8 +2710,9 @@ RELABEL = [
 
 def main():
     here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    src = "".join(open(os.path.join(here, p), "rb").read().decode("latin-1")
-                  for p in ("prom_a/wsa1_prom_a.s", "prom_b/wsa1_prom_b.s"))
+    sys.path.insert(0, os.path.join(here, "notes"))
+    from asm_source import image_text            # the images, not their root files
+    src = "".join(image_text(here, p) for p in ("prom_a/wsa1_prom_a.s", "prom_b/wsa1_prom_b.s"))
     labels = set(re.findall(r'^([A-Za-z_][\w$]*):', src, re.M))   # one pass: a regex per row took a minute
     if "--relabel" in sys.argv:
         L = src.split("\n")

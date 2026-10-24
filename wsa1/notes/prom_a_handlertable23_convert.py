@@ -28,8 +28,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PA = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
-PB = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+PA = image_path(ROOT, "prom_a/wsa1_prom_a.s")
+PB = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 G = re.compile(r'^([A-Za-z_][\w$]*):')
 LOC = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop)\d*$')
 CONTROL = {**{k: "SoftKeyCol%d" % (k + 1) for k in range(8)}, **{8 + k: "LcdKeyRow%d" % (k + 1) for k in range(5)},
@@ -181,9 +183,7 @@ def apply(L, tabs, place, at, label_at):
     for lo, hi, new in sorted(edits, key=lambda e: e[0], reverse=True):
         L[lo:hi + 1] = new
     data = "\n".join(L).encode("latin-1")
-    with open(PA + ".tmp", "wb") as fh:
-        fh.write(data)
-    os.replace(PA + ".tmp", PA)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'PA')
     return len(place)
 
 

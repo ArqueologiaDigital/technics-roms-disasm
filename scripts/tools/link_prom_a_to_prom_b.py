@@ -33,6 +33,12 @@ REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=Tr
                       text=True).stdout.strip() or "."
 NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 SRC = os.path.join(REPO, "wsa1/prom_a/wsa1_prom_a.s")
+# ⚠ wsa1_prom_X.s is the image's ROOT file since the CPU 1 module split
+# (wsa1/scripts/tools/split_cpu1_images.py); its text is in prom_X/modules/*.s.
+# asm_source.own_lines() gives the whole image as the one list this tool indexes, and
+# write_own_lines()/edit_image() write each line back into the file that holds it.
+sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+import asm_source  # noqa: E402
 LD = os.path.join(REPO, "wsa1/prom_a/prom_a.ld")
 RX = re.compile(r'^(?P<pre>\s*(?:\w+:)?\s*(?P<mn>call|calr|jp|jr|jrl)\s+(?:(?P<cc>[a-z]+)\s*,\s*)?)(?P<num>0x[0-9a-fA-F]+|[0-9]+)(?P<post>\s*;\s*(?P<site>[0-9A-F]{6})\s+(?P<by>(?:[0-9a-f]{2}\s?)+).*)$')
 
@@ -54,7 +60,8 @@ def main():
     a = ap.parse_args()
     B, _ = syms("wsa1/rebuilt_ROMs/wsa1_prom_b.llvm.elf")
     _, Ak = syms("wsa1/rebuilt_ROMs/wsa1_prom_a.llvm.elf")
-    L = open(SRC, "rb").read().decode("latin-1").split("\n")
+    L, origin = asm_source.own_lines(os.path.join(REPO, "wsa1"), "prom_a/wsa1_prom_a.s")
+    before = list(L)
     sets = {}
     for i, l in enumerate(L):
         m = re.match(r'^\s*\.set\s+(\w+)\s*,\s*(0x[0-9a-fA-F]+)\s*$', l)
@@ -88,7 +95,8 @@ def main():
         L[i] = m.group("pre") + nm + m.group("post")
     for nm in moved:
         L[sets[nm][0]] = None
-    open(SRC, "wb").write("\n".join(x for x in L if x is not None).encode("latin-1"))
+    asm_source.write_own_lines(os.path.join(REPO, "wsa1"), origin,
+                               {i: x for i, x in enumerate(L) if x != before[i]})
     ld = open(LD, encoding="latin-1").read()
     block = ["", "/* Cross-ROM: prom_b routines prom_a reaches by number, several PC-relatively (calr / jr).",
              " * A `.set` constant would be folded into the 16-bit displacement and rejected; a symbol",

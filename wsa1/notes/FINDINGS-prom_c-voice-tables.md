@@ -189,8 +189,8 @@ into denormal garbage, so the decode is its own proof.
 
 ## Where zone 2 came from (2026-08-24)
 
-The first 131 bytes of zone 2 — `Handler_PtrTable_FCC53F`, `unexplained_FCC55F`,
-`Packet_PtrTable_FCC576` and the four leading zeros of `unexplained_FCC5BE` — are the TAIL OF
+The first 131 bytes of zone 2 — `Link_ClassHandlerTable`, `P7Module_RamStateImage`,
+`P7Unit_StreamPtrsByGroupAndUnit` and the four leading zeros of `unexplained_FCC5BE` — are the TAIL OF
 THE BOOT RAM IMAGE. `RESET` copies ROM `0xFCB4EA-0xFCC5C1` to RAM `0x00E2DF-0x00F3B6`
 (`notes/FINDINGS-prom_c-ram-image.md`). That **explains** the "⚠ NOT ESTABLISHED: nothing in
 prom_c references 0xFCC53F as a literal" flag in the zone-2 headers: nothing reads those

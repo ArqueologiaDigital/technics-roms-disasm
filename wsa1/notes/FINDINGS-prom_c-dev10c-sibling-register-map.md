@@ -54,26 +54,26 @@ it was *"assembled from this file's own scattered annotations … plus a capture
 the chip receives over 1705 note-ons of the built-in demo, which agrees register by
 register."*
 
-| register | the sibling's name for it | this image, independently |
-|---|---|---|
-| `0x000` | control / gate | written with the literal `0x8100` on update, `0x7E00` on stop |
-| `0x040` | recording selector, `(class << 12) \| entry` | key-zone record word 0; **bits 15..12 a field, 11..0 a payload** |
-| `0x080` | output level + the 3-bit descriptor field | **OUTPUT LEVEL** bits 11..0 log2, **bits 14..12 a 3-bit field**, bit 15 the gate |
-| `0x0C0` | coarse level + expression | — (only its stopped value, `0x0000`) |
-| `0x100` | **TVF cutoff** | **a pair with `0x140`; bits 6..0 clamped to 36..120** (§3) |
-| `0x140` | **TVF depth / bias** | the other half of that pair |
-| `0x180` | **pan, `0x0040` = centre** | write side: a 0..0x7F value, `0x80` selects a random one (§4) |
-| `0x400` | absolute log pitch | **PITCH**, 1/256 semitone, saturated to notes 0..127.996 |
-| `0x440` | *(unnamed there too)* | — |
-| `0x480` | *(unnamed there too)* | — |
-| `0x4C0` | oscillator config + slot | — |
-| `0x500` | detune / bend pair | **byte pair; high byte through `DetuneCurve_LookupSigned`** (§4b) |
-| `0x800` | amplitude envelope segment 0 | **(envelope level << 8) \| envelope rate** |
-| `0x840` | amplitude envelope segment 1 | byte pair; quiescent `0xFF00` |
-| `0x880` | amplitude envelope segment 2 | byte pair |
-| `0x8C0` | amplitude envelope segment 3 | byte pair |
-| `0x900` `0x940` `0x980` | second envelope, segments 0-2 | **byte pairs, all three from one routine** (`sub_FA842D`) |
-| `0x9C0` `0xA00` `0xA40` | third envelope, segments 0-2 | **byte pairs, all three from one routine** (`sub_FA93AF`) |
+| register                | the sibling's name for it                    | this image, independently                                                        |
+|-------------------------|----------------------------------------------|----------------------------------------------------------------------------------|
+| `0x000`                 | control / gate                               | written with the literal `0x8100` on update, `0x7E00` on stop                    |
+| `0x040`                 | recording selector, `(class << 12) \| entry` | key-zone record word 0; **bits 15..12 a field, 11..0 a payload**                 |
+| `0x080`                 | output level + the 3-bit descriptor field    | **OUTPUT LEVEL** bits 11..0 log2, **bits 14..12 a 3-bit field**, bit 15 the gate |
+| `0x0C0`                 | coarse level + expression                    | — (only its stopped value, `0x0000`)                                             |
+| `0x100`                 | **TVF cutoff**                               | **a pair with `0x140`; bits 6..0 clamped to 36..120** (§3)                       |
+| `0x140`                 | **TVF depth / bias**                         | the other half of that pair                                                      |
+| `0x180`                 | **pan, `0x0040` = centre**                   | write side: a 0..0x7F value, `0x80` selects a random one (§4)                    |
+| `0x400`                 | absolute log pitch                           | **PITCH**, 1/256 semitone, saturated to notes 0..127.996                         |
+| `0x440`                 | *(unnamed there too)*                        | —                                                                                |
+| `0x480`                 | *(unnamed there too)*                        | —                                                                                |
+| `0x4C0`                 | oscillator config + slot                     | —                                                                                |
+| `0x500`                 | detune / bend pair                           | **byte pair; high byte through `DetuneCurve_LookupSigned`** (§4b)                |
+| `0x800`                 | amplitude envelope segment 0                 | **(envelope level << 8) \| envelope rate**                                       |
+| `0x840`                 | amplitude envelope segment 1                 | byte pair; quiescent `0xFF00`                                                    |
+| `0x880`                 | amplitude envelope segment 2                 | byte pair                                                                        |
+| `0x8C0`                 | amplitude envelope segment 3                 | byte pair                                                                        |
+| `0x900` `0x940` `0x980` | second envelope, segments 0-2                | **byte pairs, all three from one routine** (`Voice_StageRegs_0900_0940_0980_AB`) |
+| `0x9C0` `0xA00` `0xA40` | third envelope, segments 0-2                 | **byte pairs, all three from one routine** (`Voice_StageRegs_09C0_0A00_0A40_AB`) |
 
 ---
 
@@ -83,13 +83,13 @@ The right question about a borrowed map is not "is it plausible" but "where this
 its own answer, does the sibling agree?" It has five such answers, all from earlier rounds
 and all derived without reference to the KN5000:
 
-| # | this image's own finding | the sibling's name | verdict |
-|---|---|---|---|
-| 1 | `0x040` splits **4 bits over 12** (`Voice_SelectKeyZone_Reg0040`'s own `(word & 0xF000) < 0x6000` fix-up) | `(class << 12) \| entry` | **same split** |
-| 2 | `0x080` = log2 level in bits 11..0 **plus a 3-bit field in 14..12** plus a bit-15 gate | "output level + **the 3-bit** descriptor field" | **same, including the odd 3-bit field** |
-| 3 | `0x400` = pitch, 1/256 semitone | "absolute log pitch" | same |
-| 4 | `0x800` = `(level << 8) \| rate` (from the four readers of `Voice_LevelPair_AttackCurve`) | "amplitude envelope segment 0" | same |
-| 5 | the six curve-reading producers group **three and three**: `sub_FA842D` writes `0x900/0x940/0x980`, `sub_FA93AF` writes `0x9C0/0xA00/0xA40` | "second envelope, segments 0-2" / "third envelope, segments 0-2" | **same grouping** |
+| #   | this image's own finding                                                                                                                                                                  | the sibling's name                                               | verdict                                 |
+|-----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|-----------------------------------------|
+| 1   | `0x040` splits **4 bits over 12** (`Voice_SelectKeyZone_Reg0040`'s own `(word & 0xF000) < 0x6000` fix-up)                                                                                 | `(class << 12) \| entry`                                         | **same split**                          |
+| 2   | `0x080` = log2 level in bits 11..0 **plus a 3-bit field in 14..12** plus a bit-15 gate                                                                                                    | "output level + **the 3-bit** descriptor field"                  | **same, including the odd 3-bit field** |
+| 3   | `0x400` = pitch, 1/256 semitone                                                                                                                                                           | "absolute log pitch"                                             | same                                    |
+| 4   | `0x800` = `(level << 8) \| rate` (from the four readers of `Voice_LevelPair_AttackCurve`)                                                                                                 | "amplitude envelope segment 0"                                   | same                                    |
+| 5   | the six curve-reading producers group **three and three**: `Voice_StageRegs_0900_0940_0980_AB` writes `0x900/0x940/0x980`, `Voice_StageRegs_09C0_0A00_0A40_AB` writes `0x9C0/0xA00/0xA40` | "second envelope, segments 0-2" / "third envelope, segments 0-2" | **same grouping**                       |
 
 ⚠ Row 5's grouping is about the two routines that read `Voice_EnvelopeLevel_Curve`. A
 third writer, `sub_FC7FCA`, also fills `0x900/0x940/0x980` — all three with the *same*
@@ -172,8 +172,8 @@ in `prom_c/wsa1_prom_c.s` state the **register numbers**, not the quantity.
 
 ## 4. `0x0180`: the sibling says PAN, and it explains an idiom this tree had already measured
 
-The write side of `0x0180 + chan` is `voice[+0x27]`, staged by `sub_FA96F7` on the C/D path
-(`0xFA9809`) and by `sub_FA9C60` on the A/B path (`0xFA9F0E`). **Both test the same tone-record
+The write side of `0x0180 + chan` is `voice[+0x27]`, staged by `Voice_StageRegs_CD` on the C/D path
+(`0xFA9809`) and by `Voice_StageRegs_0180_AB` on the A/B path (`0xFA9F0E`). **Both test the same tone-record
 byte against the same sentinel, and both answer `0x80` with a random 0..0x7F**:
 
 ```
@@ -192,7 +192,7 @@ byte against the same sentinel, and both answer `0x80` with a random 0..0x7F**:
 ```
 
 where `Rand` is `Rand_FromTickSquared` with bit 7 cleared (`res 7,A` at `0xFA978F` and
-`0xFA9EDF`), and the "high-byte flags" are the word `sub_FA9C60` accumulates in `(XIZ+0xfa)`.
+`0xFA9EDF`), and the "high-byte flags" are the word `Voice_StageRegs_0180_AB` accumulates in `(XIZ+0xfa)`.
 
 A parameter whose range is **0..0x7F** (the `hi = 0x7F, lo = 0` pair pushed at `0xFA97BD`
 /`0xFA97C0`), whose **`0x80` encoding means "choose one at random"**, and which is offset
@@ -203,7 +203,7 @@ either way about its middle by a per-part byte, is what a pan control is — and
 ⚠ **The READ at block `0x0180` is a different quantity from the write** — this tree measured
 that before it had a name for either: the read is masked `& 0x3FFF`, shifted right 5 and
 truncated, i.e. **bits 12..5**, and the firmware retires nothing on it but hands the record to
-`sub_FA65BD` when it falls below `0x80` (`notes/FINDINGS-prom_c-voice-readback.md` §3). A
+`ChanRec_ToPoolQueue6_SetFlag1` when it falls below `0x80` (`notes/FINDINGS-prom_c-voice-readback.md` §3). A
 7-bit pan write and a 14-bit falling read do not line up, and this note does **not** reconcile
 them. Gap F's stub should keep answering the read side on its own terms.
 
@@ -224,7 +224,7 @@ The sibling calls `0x500` the *detune / bend pair*. In this image the only produ
 
 It is one of only four routines in the image that call `DetuneCurve_LookupSigned` (here at
 `0xFA961F` and `0xFA9676`), and **the low byte is cached per voice**: `0xFA960D` hands it to
-`sub_FC810C`, which stores it at RAM `0x00E1DD + voice[+0x00]`; `sub_FA96F7` clears that slot
+`sub_FC810C`, which stores it at RAM `0x00E1DD + voice[+0x00]`; `Voice_StageRegs_CD` clears that slot
 on the C/D path and `sub_FC7FCA` reads it back and ORs it into the same register field
 (`0xFC80D6`). So: **a byte pair, high byte through the detune curve** — which is what "detune
 pair" predicts. "Bend" is not asserted. Checker section 6.
@@ -233,14 +233,14 @@ That makes the calibration **six of six**.
 
 ## 5. The twelve still open, ranked by what would settle them
 
-| register | the sibling says | the test this image can run |
-|---|---|---|
-| `0x4C0` | oscillator config + slot | `sub_FA9F19` writes it with the literal `0x4400` and then ORs bits in (`0xFA9F20`, `0xFA9FEE`) — a config word's shape |
-| `0x0C0` | coarse level + expression | two producers, `sub_FAA0BC` / `sub_FAA1A5`; expression is MIDI CC 11, whose part field `+0x0E` is already named |
-| `0x440` `0x480` | *unnamed in both* | four and three producers; nobody has a name for these |
-| `0x840` `0x880` `0x8C0` | amplitude envelope segments 1-3 | already known to be byte pairs; check the low byte against `Voice_EnvelopeRate_Table` as segment 0's was |
-| `0x900`…`0xA40` | second / third envelope | already known to be two groups of three byte pairs from one routine each |
-| `0x000` | control / gate | write-only here; `0x8100` and `0x7E00` are its only two values |
+| register                | the sibling says                | the test this image can run                                                                                                               |
+|-------------------------|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `0x4C0`                 | oscillator config + slot        | `Voice_StageChanSel_Reg04C0` writes it with the literal `0x4400` and then ORs bits in (`0xFA9F20`, `0xFA9FEE`) — a config word's shape    |
+| `0x0C0`                 | coarse level + expression       | two producers, `Voice_StageRegs_00C0_AB` / `Voice_StageRegs_00C0_CD`; expression is MIDI CC 11, whose part field `+0x0E` is already named |
+| `0x440` `0x480`         | *unnamed in both*               | four and three producers; nobody has a name for these                                                                                     |
+| `0x840` `0x880` `0x8C0` | amplitude envelope segments 1-3 | already known to be byte pairs; check the low byte against `Voice_EnvelopeRate_Table` as segment 0's was                                  |
+| `0x900`…`0xA40`         | second / third envelope         | already known to be two groups of three byte pairs from one routine each                                                                  |
+| `0x000`                 | control / gate                  | write-only here; `0x8100` and `0x7E00` are its only two values                                                                            |
 
 ---
 

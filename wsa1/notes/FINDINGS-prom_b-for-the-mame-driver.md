@@ -258,13 +258,13 @@ said so since it was converted, and this round re-checked it. The three
 128-entry tables in the `0xF0EA9F` block are indexed from `(0x2796)` and their
 correspondence with the name table is a correspondence, not a decode. The
 neighbouring `EffectParamNames_F15024` **is** named by an operand
-(`sub_F10FF1`), and that is a different table.
+(`DspEffect_LoadParamNames`), and that is a different table.
 
 ## 9. A standing check that came out of this round
 
 Two routines in prom_b had **no label at all** because the object before them
 was data and the emitter never opened a new one: the SMF reader at `0xF6F530`
-(881 bytes, under `Data_F6F528`) and the accompaniment-volume line at
+(881 bytes, under `SmfChunkTags`) and the accompaniment-volume line at
 `0xF6E4F2` (80 bytes, under a 64-byte `.ascii`). Both are labelled now, and
 
 ```

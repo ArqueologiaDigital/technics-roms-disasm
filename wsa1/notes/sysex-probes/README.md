@@ -98,7 +98,7 @@ Both load bases are asserted first: prom_b must hold `F0 50 23 7E F7` at
 
 * **Menu row -> job.** `0xF99AE3` is a 5-byte table the screen-0x79 button
   handler at `0xF99A8F` indexes with `(0x2720) & 7`; the value becomes
-  `(0x60F802) | 0x80` and prom_b thunk `T_F408E4` runs `0xFB2049`, which
+  `(0x60F802) | 0x80` and prom_b thunk `T_SysExDump_RunSendJob` runs `0xFB2049`, which
   jumps through `SysExDump_JobTable` (6 entries, bound `cp BC,5 / jr ugt`).
 * **Templates.** Nine fixed messages at `0xF4FEB4`-`0xF4FEE2` and ten data
   headers at `0xF4FEF2`-`0xF4FF60`, each named by exactly one `lda xbc,(imm24)`

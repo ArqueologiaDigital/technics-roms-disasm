@@ -40,11 +40,11 @@ family was read as a change of grid, and the span was refused on it.
    (opcode, length) framing -- not by "looks like an address". The local values
    are `0x00F98D20` (31x), `0x00F98D21` (3x) and `0x00F98C85` (1x).
 
-4. **A converted sibling with the same shape.** `PtrTable_F99121` is already in
+4. **A converted sibling with the same shape.** `MessageScreen_ListPairs` is already in
    `prom_a/wsa1_prom_a.s`: 169 LE32 pointers of exactly this kind, converted on
    exactly this class of evidence -- its own header says the entry count came
    from `prom_a_ptr_tables.py`, "NOT from a reader's bound, because no reader
-   bound was found". Align this table's entry 0 with `PtrTable_F99121`'s entry
+   bound was found". Align this table's entry 0 with `MessageScreen_ListPairs`'s entry
    49 (0xF991E5) and 28 of 120 entries are byte-identical, including unbroken
    runs of 10 (indices 0-9) and 12 (indices 23-34). Both tails have the same
    shape -- many copies of a local default, one outlier, then three copies of a
@@ -79,7 +79,7 @@ exist and inventing one would change the image.
 
 What indexes the table. No literal `0x00F98DE5`, nor any base inside
 0xF98D00-0xF99010, exists in any of the four images -- re-checked this pass with
-a whole-image LE24 and LE32 scan. `PtrTable_F99121` has the same gap and was
+a whole-image LE24 and LE32 scan. `MessageScreen_ListPairs` has the same gap and was
 converted anyway; so is this.
 
 ---

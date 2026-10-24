@@ -184,7 +184,7 @@ evidence available this task runs **exactly one pass and then blocks for ever**.
 Recorded as a searched negative: `prom_c_xrefs.py` cannot see a target computed at
 run time.
 
-### 3.4 `sub_F98112` is the boot software timer's callback
+### 3.4 `SoftTimer_RotateLevel2` is the boot software timer's callback
 
 Three instructions: `ldb a,2` / `calr Kernel_YieldRotate` / `ret`. Its address is
 the +4 field of the eight-byte `SoftTimer_Request_Boot` block `Kernel_InitRam`

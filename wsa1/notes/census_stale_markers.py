@@ -70,9 +70,28 @@ MARKERS = [
 ]
 
 
+def owner(rel, anchor):
+    """The file that holds `anchor`.  A MARKERS row names its IMAGE by the image's root
+    file; since the CPU 1 module split (scripts/tools/split_cpu1_images.py) the line
+    itself is in one of the module files that root .includes, so it is looked up
+    there -- in exactly one file, or this raises."""
+    if not rel.startswith(("prom_a/wsa1_", "prom_b/wsa1_")):
+        return rel
+    sys.path.insert(0, os.path.join(ROOT, "notes"))
+    from asm_source import image_writable_files
+    hits = []
+    for f in image_writable_files(ROOT, rel):
+        L = open(f, "rb").read().decode("latin-1").split("\n")
+        if any(x.startswith(anchor) for x in L):
+            hits.append(os.path.relpath(f, ROOT))
+    assert len(hits) == 1, (rel, anchor, hits)
+    return hits[0]
+
+
 def main():
     files = {}
-    for rel, anchor, text in MARKERS:
+    for img_rel, anchor, text in MARKERS:
+        rel = owner(img_rel, anchor)       # printed as the IMAGE: which part holds it is layout
         L = files.setdefault(rel, open(os.path.join(ROOT, rel), "rb").read().decode("latin-1").split("\n"))
         hits = [i for i, x in enumerate(L) if x.startswith(anchor)]
         assert len(hits) == 1, (rel, anchor, len(hits))
@@ -82,9 +101,9 @@ def main():
         while L[j - 1].lstrip().startswith(";"):
             j -= 1
         if text in L[j:k]:
-            print("present  %-32s %s" % (rel, anchor.strip()[:50]))
+            print("present  %-32s %s" % (img_rel, anchor.strip()[:50]))
             continue
-        print("insert   %-32s above line %d  %s" % (rel, k + 1, anchor.strip()[:50]))
+        print("insert   %-32s above %s:%d  %s" % (img_rel, rel, k + 1, anchor.strip()[:50]))
         if "--apply" in sys.argv:
             L[k:k] = [text]
     if "--apply" in sys.argv:

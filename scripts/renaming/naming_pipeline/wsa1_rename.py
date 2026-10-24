@@ -10,7 +10,7 @@ os.chdir(ROOT)
 sedname=sys.argv[1]; items=[]
 for a in sys.argv[2:]:
     pair,_,hdr=a.partition("|"); old,new=pair.split("="); items.append((old,new,hdr.replace(chr(10),"\\n")))  # a real newline becomes the separator too
-srcs=["wsa1/prom_a/wsa1_prom_a.s","wsa1/prom_b/wsa1_prom_b.s"]+sorted(glob.glob("wsa1/prom_c/**/*.s",recursive=True))
+srcs=(["wsa1/prom_a/wsa1_prom_a.s"] + sorted(glob.glob("wsa1/prom_a/modules/*.s")) + ["wsa1/prom_b/wsa1_prom_b.s"] + sorted(glob.glob("wsa1/prom_b/modules/*.s")))+sorted(glob.glob("wsa1/prom_c/**/*.s",recursive=True))
 alltext="\n".join(open(p,"rb").read().decode("latin-1") for p in srcs)
 LABELS=set(re.findall(r'^([A-Za-z_][\w$]*):',alltext,re.M))
 TOKENS=set(re.findall(r'[A-Za-z_][\w$]*',"\n".join(l.split(";")[0] for l in alltext.split("\n"))))   # code only: a comment may name what this run defines (2026-10-04)

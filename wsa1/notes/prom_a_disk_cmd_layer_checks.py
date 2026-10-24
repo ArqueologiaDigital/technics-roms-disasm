@@ -33,7 +33,10 @@ SRC = pathlib.Path(__file__).resolve().parents[1] / "prom_a" / "wsa1_prom_a.s"
 LO, HI = 0xFE0000, 0xFE54B6            # the module extent (module header)
 
 def load():
-    return SRC.read_text(encoding="latin-1").split("\n")
+    import sys
+    sys.path.insert(0, str(SRC.parents[1] / "notes"))
+    from asm_source import image_lines
+    return image_lines(str(SRC.parents[1]), "prom_a/wsa1_prom_a.s")   # the image, not its root
 
 ADDR = re.compile(r';\s+([0-9A-Fa-f]{6})\s+([0-9a-f]{2}(?:\s+[0-9a-f]{2})*)\s*$')
 

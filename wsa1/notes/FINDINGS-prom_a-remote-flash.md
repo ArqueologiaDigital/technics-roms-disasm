@@ -76,10 +76,10 @@ without any directory being consulted on CPU 1's side.
 
 Both link entries resolve into prom_a's already-converted link block:
 
-| prom_b slot | target | what it is |
-|---|---|---|
-| `T_F40EF0` | `0xF8E0FE` | the remote-read packet builder (gap D names it) |
-| `T_F4123C` | `0xF8E66D` | `Link_WaitBlockDone` |
+| prom_b slot            | target     | what it is                                      |
+|------------------------|------------|-------------------------------------------------|
+| `T_Link_SendCommandE2` | `0xF8E0FE` | the remote-read packet builder (gap D names it) |
+| `T_Link_WaitBlockDone` | `0xF8E66D` | `Link_WaitBlockDone`                            |
 
 ⚠ **What the blocks CONTAIN is still not established.** The two routines that
 consume each block, `0xFB7649` and `0xFB6FB2`, are converted by this round and
@@ -107,7 +107,7 @@ wait whose expiry would release the line within ~5 s?"*, naming the two deadline
 loops at `0xF8E23C` and `0xF8E671`.
 
 `Link_WaitBlockDone` (`0xF8E66D`) is the second of those, and it is published as
-prom_b slot `T_F4123C`. `notes/prom_a_converted_callers.py 0xF4123C` — exact for
+prom_b slot `T_Link_WaitBlockDone`. `notes/prom_a_converted_callers.py 0xF4123C` — exact for
 converted code, because the source rebuilds the ROM byte-identically — finds
 **fifteen** call sites, in five separate regions:
 
@@ -130,7 +130,7 @@ converted code, because the source rebuilds the ROM byte-identically — finds
 | `0xFE2BC6` | `call 0xf40ef0` | src `XBC = XIX` |
 
 **What survives.** Fourteen of the fifteen wait *after a link packet has been
-queued through `T_F40EF0`* — nine with the builder as the immediately preceding
+queued through `T_Link_SendCommandE2`* — nine with the builder as the immediately preceding
 call, two with it two calls back in the same basic block, three one call deeper
 inside a helper. So the ~1 s deadline that ends in `set 1,(0x13)` is on the
 **link block-transfer path in general**.

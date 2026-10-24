@@ -1,0 +1,337 @@
+
+=== prom_a  (prom_a/wsa1_prom_a.s)  187 script(s), 328 invocation(s) ===
+    ... 25/1312 runs
+    ... 50/1312 runs
+    ... 75/1312 runs
+    ... 100/1312 runs
+    ... 125/1312 runs
+    ... 150/1312 runs
+    ... 175/1312 runs
+    ... 200/1312 runs
+    ... 225/1312 runs
+    ... 250/1312 runs
+    ... 275/1312 runs
+    ... 300/1312 runs
+    ... 325/1312 runs
+    ... 350/1312 runs
+    ... 375/1312 runs
+    ... 400/1312 runs
+    ... 425/1312 runs
+    ... 450/1312 runs
+    ... 475/1312 runs
+    ... 500/1312 runs
+    ... 525/1312 runs
+    ... 550/1312 runs
+    ... 575/1312 runs
+    ... 600/1312 runs
+    ... 625/1312 runs
+    ... 650/1312 runs
+    ... 675/1312 runs
+    ... 700/1312 runs
+    ... 725/1312 runs
+    ... 750/1312 runs
+    ... 775/1312 runs
+    ... 800/1312 runs
+    ... 825/1312 runs
+    ... 850/1312 runs
+    ... 875/1312 runs
+    ... 900/1312 runs
+    ... 925/1312 runs
+    ... 950/1312 runs
+    ... 975/1312 runs
+    ... 1000/1312 runs
+    ... 1025/1312 runs
+    ... 1050/1312 runs
+    ... 1075/1312 runs
+    ... 1100/1312 runs
+    ... 1125/1312 runs
+    ... 1150/1312 runs
+    ... 1175/1312 runs
+    ... 1200/1312 runs
+    ... 1225/1312 runs
+    ... 1250/1312 runs
+    ... 1275/1312 runs
+    ... 1300/1312 runs
+    ... 1312/1312 runs
+  VACUOUS       notes/maincpu_join_probe.py --collisions --callers --nearest
+  VACUOUS       notes/wave7_round9_review_wb_prom_b.py
+  VACUOUS       notes/wsa1_601f_census.py
+  LOUD          notes/lane_promA_gate_perturbation.py
+  LOUD          notes/prom_a_understanding_round7.py --apply-strings
+  LOUD          notes/verify_a1_independent_check.py
+  SPLIT-FRAGILE notes/census_stale_markers.py
+  SPLIT-FRAGILE notes/frame_disk_switch_tables.py
+  SPLIT-FRAGILE notes/gen_prom_b_cover_round2.py --closure
+  SPLIT-FRAGILE notes/gen_prom_b_f0033f_f0199e.py --evidence
+  SPLIT-FRAGILE notes/gen_prom_b_f0033f_f0199e.py --evidence --render
+  SPLIT-FRAGILE notes/gen_prom_b_f78028_icon_sheet.py --evidence
+  SPLIT-FRAGILE notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest
+  SPLIT-FRAGILE notes/overlay-review/hang_trap_reachability.py
+  SPLIT-FRAGILE notes/prom_a_disk_cmd_layer_checks.py
+  SPLIT-FRAGILE notes/prom_a_disk_cmd_layer_checks.py --selftest
+  SPLIT-FRAGILE notes/prom_ab_dl_stage_census.py
+  SPLIT-FRAGILE notes/prom_ab_read_names_2026_10_04.py --place
+  SPLIT-FRAGILE notes/prom_ab_read_names_2026_10_04.py --relabel
+  SPLIT-FRAGILE notes/prom_ab_screen_stage_and_flags_census.py
+  SPLIT-FRAGILE notes/prom_b_entrypoints_round7.py --selftest
+  SPLIT-FRAGILE notes/prom_b_orphan_cluster_offset_scan.py
+  SPLIT-FRAGILE notes/sysex-probes/sysex_model_variant.py
+  SPLIT-FRAGILE notes/sysex-probes/sysex_unreachable_commands.py
+  SPLIT-FRAGILE notes/sysex-probes/sysex_user_settings.py
+  SPLIT-FRAGILE notes/wsa1_panel_state_census.py
+  SPLIT-FRAGILE notes/wsa1_screen_field_list_names.py --args
+  SPLIT-FRAGILE notes/wsa1_screen_field_list_names.py --list
+  NONDET        notes/kn5000_twin_routines.py --min 0
+  NONDET        notes/wsa1_exact_copy_names.py
+  NONDET        notes/wsa1_exact_copy_names.py --args
+  BY-DESIGN     notes/asm_source.py
+  BY-DESIGN     notes/asm_source.py --selftest
+  BY-DESIGN     notes/migrate_listing_readers.py --list
+  BY-DESIGN     notes/migrate_listing_readers.py --selftest
+  VACUOUS 3   LOUD 3   SPLIT-FRAGILE 22   WRITER 0   TIMEOUT 0   NONDET 3   BY-DESIGN 4   UNAFFECTED 293
+  not run (write mode); the write path must move FIRST -- python3 notes/migrate_listing_readers.py --list:
+      notes/census_stale_markers.py --apply
+      notes/frame_disk_switch_tables.py --apply
+      notes/gen_prom_a_cover_round1.py --emit 0xF85B0D
+      notes/gen_prom_a_cover_round1.py --splice
+      notes/gen_prom_a_cover_round2.py --emit 0xF96432
+      notes/gen_prom_a_cover_round2.py --splice
+      notes/gen_prom_a_display_list_text.py --apply
+      notes/gen_prom_a_f8e77c_tables.py --splice
+      notes/gen_prom_a_f96504_module.py --splice
+      notes/gen_prom_a_f98de5_table.py --splice
+      notes/gen_prom_a_fdffdf_fragment.py --splice
+      notes/gen_prom_b_cover_round2.py --emit
+      notes/gen_prom_b_cover_round2.py --splice
+      notes/gen_prom_b_cover_round2.py --splice --anyway
+      notes/gen_prom_b_f0033f_f0199e.py --splice
+      notes/gen_prom_b_f00c4d_module.py --apply
+      notes/gen_prom_b_f78028_icon_sheet.py --emit
+      notes/kernel_join_probe.py --emit
+      notes/migrate_listing_readers.py --apply
+      notes/migrate_listing_readers.py --apply --only
+      notes/prom_a_button_handler_names.py --apply
+      notes/prom_a_census_round8.py --apply
+      notes/prom_a_handlertable23_convert.py --apply
+      notes/prom_a_module18_phase_vector.py --apply
+      notes/prom_a_naming_round3.py --apply
+      notes/prom_a_naming_wave8_apply.py --apply
+      notes/prom_a_panel_names_round11.py --apply
+      notes/prom_a_panel_names_round11.py --emit
+      notes/prom_a_stray_label_removal.py --apply
+      notes/prom_a_understanding_round4.py --apply
+      notes/prom_a_understanding_round5.py --apply
+      notes/prom_a_understanding_round6.py --apply
+      notes/prom_a_understanding_round7.py --apply
+      notes/prom_b_entrypoints_round7.py --apply
+      notes/prom_b_panel_names_round12.py --apply
+      notes/prom_b_screens_round8.py --promote --apply
+      notes/prom_b_thunks_round6.py --apply
+      notes/prom_c_inventory_round8.py --emit68
+      notes/prom_c_naming_round3.py --apply
+      notes/prom_c_record68_round10.py --apply
+      notes/prom_c_record68_round10.py --emit68
+      notes/promb_macro_rewrite.py --apply --only
+      notes/sound/wsa1_dsp_join_probe.py --emit
+  ★ WORKING-TREE DIFF -- compares the tree with HEAD, so it MUST differ between trees that differ; not gradable here:
+      notes/verify_a1_independent_check.py
+      notes/wave7_round9_review_wb_prom_b.py
+  ★ GIT-BLIND -- reads the listing through `git show`, where the tree flip cannot reach it; classify by hand:
+      notes/asm_source.py
+      notes/audit_wave5_checks.py
+      notes/gen_prom_a_cover_round1.py
+      notes/gen_prom_a_cover_round2.py
+      notes/gen_prom_b_cover_round2.py
+      notes/git_path_audit.py
+      notes/prom_a_naming_wave8_apply.py
+      notes/prom_a_preservation_check.py
+
+=== prom_b  (prom_b/wsa1_prom_b.s)  200 script(s), 356 invocation(s) ===
+    ... 25/1424 runs
+    ... 50/1424 runs
+    ... 75/1424 runs
+    ... 100/1424 runs
+    ... 125/1424 runs
+    ... 150/1424 runs
+    ... 175/1424 runs
+    ... 200/1424 runs
+    ... 225/1424 runs
+    ... 250/1424 runs
+    ... 275/1424 runs
+    ... 300/1424 runs
+    ... 325/1424 runs
+    ... 350/1424 runs
+    ... 375/1424 runs
+    ... 400/1424 runs
+    ... 425/1424 runs
+    ... 450/1424 runs
+    ... 475/1424 runs
+    ... 500/1424 runs
+    ... 525/1424 runs
+    ... 550/1424 runs
+    ... 575/1424 runs
+    ... 600/1424 runs
+    ... 625/1424 runs
+    ... 650/1424 runs
+    ... 675/1424 runs
+    ... 700/1424 runs
+    ... 725/1424 runs
+    ... 750/1424 runs
+    ... 775/1424 runs
+    ... 800/1424 runs
+    ... 825/1424 runs
+    ... 850/1424 runs
+    ... 875/1424 runs
+    ... 900/1424 runs
+    ... 925/1424 runs
+    ... 950/1424 runs
+    ... 975/1424 runs
+    ... 1000/1424 runs
+    ... 1025/1424 runs
+    ... 1050/1424 runs
+    ... 1075/1424 runs
+    ... 1100/1424 runs
+    ... 1125/1424 runs
+    ... 1150/1424 runs
+    ... 1175/1424 runs
+    ... 1200/1424 runs
+    ... 1225/1424 runs
+    ... 1250/1424 runs
+    ... 1275/1424 runs
+    ... 1300/1424 runs
+    ... 1325/1424 runs
+    ... 1350/1424 runs
+    ... 1375/1424 runs
+    ... 1400/1424 runs
+    ... 1424/1424 runs
+  VACUOUS       notes/maincpu_join_probe.py --collisions --callers --nearest
+  VACUOUS       notes/wave7_round6_review_wb_prom_b.py
+  VACUOUS       notes/wave7_round9_review_wb_prom_b.py
+  LOUD          notes/gen_prom_b_promB4_operand_arrays.py --falsify
+  LOUD          notes/wave7_round5_review_wb_prom_b.py
+  LOUD          scripts/analysis/prom_b_small_span_gate_visibility.py
+  SPLIT-FRAGILE notes/census_stale_markers.py
+  SPLIT-FRAGILE notes/gen_prom_b_f036c2_module.py --selftest
+  SPLIT-FRAGILE notes/gen_prom_b_f039ed_selector_blocks.py --check
+  SPLIT-FRAGILE notes/gen_prom_b_f3b3da_module.py --selftest
+  SPLIT-FRAGILE notes/gen_prom_b_f78028_icon_sheet.py --evidence
+  SPLIT-FRAGILE notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest
+  SPLIT-FRAGILE notes/gen_prom_b_res3xx_spans.py --selftest
+  SPLIT-FRAGILE notes/overlay-review/hang_trap_reachability.py
+  SPLIT-FRAGILE notes/prom_ab_dl_stage_census.py
+  SPLIT-FRAGILE notes/prom_ab_read_names_2026_10_04.py --place
+  SPLIT-FRAGILE notes/prom_ab_read_names_2026_10_04.py --relabel
+  SPLIT-FRAGILE notes/prom_ab_screen_stage_and_flags_census.py
+  SPLIT-FRAGILE notes/prom_b_orphan_cluster_offset_scan.py
+  SPLIT-FRAGILE notes/sysex-probes/sysex_user_settings.py
+  SPLIT-FRAGILE notes/wsa1_panel_state_census.py
+  SPLIT-FRAGILE notes/wsa1_screen_field_list_names.py --args
+  SPLIT-FRAGILE notes/wsa1_screen_field_list_names.py --list
+  WRITER        notes/gen_res02f_spans.py --falsify
+  WRITER        notes/prom_b_res05x_gate_perturbation.py
+  NONDET        notes/gen_prom_b_smf_writer_module.py --selftest
+  NONDET        notes/kn5000_twin_routines.py --min 0
+  NONDET        notes/prom_b_f00c4d_oldcopy_names.py
+  NONDET        notes/prom_b_f00c4d_oldcopy_names.py --args
+  NONDET        notes/wsa1_exact_copy_names.py
+  NONDET        notes/wsa1_exact_copy_names.py --args
+  BY-DESIGN     notes/asm_source.py
+  BY-DESIGN     notes/asm_source.py --selftest
+  BY-DESIGN     notes/probe_health.py
+  BY-DESIGN     notes/probe_health.py --image
+  VACUOUS 3   LOUD 3   SPLIT-FRAGILE 17   WRITER 2   TIMEOUT 0   NONDET 6   BY-DESIGN 4   UNAFFECTED 321
+  not run (write mode); the write path must move FIRST -- python3 notes/migrate_listing_readers.py --list:
+      notes/census_stale_markers.py --apply
+      notes/gen_promB5_spans.py --splice
+      notes/gen_prom_a_f98de5_table.py --splice
+      notes/gen_prom_b_cover_round1.py --splice
+      notes/gen_prom_b_cover_round2.py --emit
+      notes/gen_prom_b_cover_round2.py --splice
+      notes/gen_prom_b_cover_round2.py --splice --anyway
+      notes/gen_prom_b_dl_closure_gaps_module.py --splice
+      notes/gen_prom_b_dl_named_tables_module.py --splice
+      notes/gen_prom_b_dl_shape1_gap_f286f9.py --splice
+      notes/gen_prom_b_dl_shape23_module.py --splice
+      notes/gen_prom_b_f0033f_f0199e.py --splice
+      notes/gen_prom_b_f00c4d_module.py --apply
+      notes/gen_prom_b_f02f52_fix_module.py --apply
+      notes/gen_prom_b_f036c2_module.py --splice
+      notes/gen_prom_b_f039ed_selector_blocks.py --splice
+      notes/gen_prom_b_f05621_fix_module.py --splice
+      notes/gen_prom_b_f067a6_module.py --dl-names --apply
+      notes/gen_prom_b_f067a6_module.py --splice
+      notes/gen_prom_b_f0d081_module.py --splice
+      notes/gen_prom_b_f0db18_module.py --splice
+      notes/gen_prom_b_f29bc6_module.py --splice
+      notes/gen_prom_b_f2b8f9_fix_module.py --splice
+      notes/gen_prom_b_f3281c_fix_module.py --apply
+      notes/gen_prom_b_f33f01_module.py --splice
+      notes/gen_prom_b_f34968_fix_module.py --apply
+      notes/gen_prom_b_f34ca2_fix_module.py --apply
+      notes/gen_prom_b_f353ab_module.py --splice
+      notes/gen_prom_b_f3b3da_module.py --splice
+      notes/gen_prom_b_f3b7d4_module.py --splice
+      notes/gen_prom_b_f3c947_module.py --apply
+      notes/gen_prom_b_f3d5e5_module.py --apply
+      notes/gen_prom_b_f3f400_module.py --apply
+      notes/gen_prom_b_f5553f_module.py --splice
+      notes/gen_prom_b_f78028_icon_sheet.py --emit
+      notes/gen_prom_b_f78029_module.py --splice
+      notes/gen_prom_b_oversized_round2_module.py --splice
+      notes/gen_prom_b_oversized_round3_module.py --splice
+      notes/gen_prom_b_oversized_round4_module.py --splice
+      notes/gen_prom_b_promB4_operand_arrays.py --apply
+      notes/gen_prom_b_res3xx_spans.py --emit
+      notes/gen_prom_b_res3xx_spans.py --splice
+      notes/gen_prom_b_selfframing_incbin_module.py --splice
+      notes/gen_prom_b_smf_writer_module.py --splice
+      notes/gen_prom_b_stepselect_module.py --apply
+      notes/gen_prom_b_tiny_records_batch.py --apply
+      notes/gen_prom_b_untouched_pool_module.py --splice
+      notes/gen_res02f_spans.py --splice
+      notes/lane_promB3/gen_promB3_spans.py --splice
+      notes/prom_a_census_round8.py --apply
+      notes/prom_a_handlertable23_convert.py --apply
+      notes/prom_a_naming_round3.py --apply
+      notes/prom_a_stray_label_removal.py --apply
+      notes/prom_a_understanding_round4.py --apply
+      notes/prom_a_understanding_round5.py --apply
+      notes/prom_a_understanding_round6.py --apply
+      notes/prom_a_understanding_round7.py --apply
+      notes/prom_b_apply_chordnote_names.py --apply
+      notes/prom_b_apply_diskfile_name.py --apply
+      notes/prom_b_apply_effect_editor_name.py --apply
+      notes/prom_b_apply_effect_names.py --apply
+      notes/prom_b_apply_msgline_names.py --apply
+      notes/prom_b_apply_smf_names.py --apply
+      notes/prom_b_dl_screens_round5.py --apply
+      notes/prom_b_dl_screens_round5.py --tables --apply
+      notes/prom_b_entrypoints_round7.py --apply
+      notes/prom_b_panel_names_round11.py --apply
+      notes/prom_b_panel_names_round11.py --rewrite
+      notes/prom_b_panel_names_round12.py --apply
+      notes/prom_b_res05x_spans.py --emit
+      notes/prom_b_res05x_spans.py --splice
+      notes/prom_b_screens_round8.py --promote --apply
+      notes/prom_b_sysex_param_descriptors.py --apply
+      notes/prom_b_thunks_round6.py --apply
+      notes/prom_c_naming_round3.py --apply
+      notes/prom_c_record68_round10.py --apply
+      notes/prom_c_record68_round10.py --emit68
+      notes/promb_macro_rewrite.py --apply --only
+      notes/sound/wsa1_dsp_join_probe.py --emit
+      scripts/analysis/prom_b_small_span_convert.py --splice
+  ★ WORKING-TREE DIFF -- compares the tree with HEAD, so it MUST differ between trees that differ; not gradable here:
+      notes/wave7_round5_review_wb_prom_b.py
+      notes/wave7_round6_review_wb_prom_b.py
+      notes/wave7_round9_review_wb_prom_b.py
+  ★ GIT-BLIND -- reads the listing through `git show`, where the tree flip cannot reach it; classify by hand:
+      notes/gen_promB5_spans.py
+      notes/gen_prom_b_smf_writer_module.py
+      notes/prom_b_evidence_audit.py
+      notes/prom_b_f65000_layout.py
+      notes/promb_macro_rewrite.py
+
+wrote /home/fsanches/compartilhado/tmp/technics-wave2-wsa1-structure/ph-before-split.json
+
+VACUOUS+LOUD across the images measured: 12

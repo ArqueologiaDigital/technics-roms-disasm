@@ -260,7 +260,7 @@ then, if (0x0014FF) & 4 and (word & 0xF000) < 0x6000:
 
 So the firmware itself reads this register as **a 4-bit top field plus a 12-bit payload**, and a
 global configuration bit **doubles the top field** while the payload passes through unchanged.
-The identical fix-up appears a second time, in `sub_FA826C` at `0xFA82F0`-`0xFA8318`.
+The identical fix-up appears a second time, in `Voice_StageRegs_0040_B` at `0xFA82F0`-`0xFA8318`.
 
 ⚠ **[INFERENCE, stated as such]** a small top field that a configuration bit doubles, sitting
 over a 12-bit index, is the shape of a **memory-bank selector over a wave number** — and the

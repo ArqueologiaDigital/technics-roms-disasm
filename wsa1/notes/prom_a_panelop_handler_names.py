@@ -46,9 +46,11 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import prom_a_screen_key_actions as KA  # noqa: E402  group()
-PROM_A = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+PROM_A = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 OPNAME = {k: "SoftKeyCol%d" % (k + 1) for k in range(8)}
 OPNAME.update({8 + k: "LcdKeyRow%d" % (k + 1) for k in range(5)})
 OPNAME.update({15: "ExitKey", 16: "PageKey"})
@@ -88,7 +90,7 @@ def readers(L):
     """{table: [reader routine]} from `add XBC,<table>` lines, in prom_a AND prom_b: nine of the
     tables are read by prom_b screen objects' BUTTON methods (ScreenButton_SoundEditPitchTune ...)."""
     out = collections.defaultdict(list)
-    LB = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1").split("\n")
+    LB = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1").split("\n")
     for src in (L, LB):
         cur = None
         for l in src:

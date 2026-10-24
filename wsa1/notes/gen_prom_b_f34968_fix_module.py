@@ -33,7 +33,16 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+from asm_source import image_path, write_part  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 ROM = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
 BASE = 0xF00000
 
@@ -99,7 +108,7 @@ def cmd_apply():
     before = len(src)
     assert src.count(OLD_BLOCK) == 1, "old block not found or not unique"
     src = src.replace(OLD_BLOCK, NEW_BLOCK, 1)
-    open(SRC, "w", encoding="latin-1").write(src)
+    write_part(SRC_MASTER, src)
     print("applied: %d -> %d chars (%+d)" % (before, len(src), len(src) - before))
 
 

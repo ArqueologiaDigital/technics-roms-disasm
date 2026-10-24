@@ -138,7 +138,7 @@ in the table above is an extent divided by the width the record itself passes as
 ## 3. ⚠⚠ CORRECTION: `0xF131E4` is FOUR arrays of 32, not one table of 128
 
 `prom_b/wsa1_prom_b.s` carried `0xF131E4-0xF133E3` as a single
-`DispatchTable_F131E4` of 128 entries, headed:
+`ScreenTable_F131E4` of 128 entries, headed:
 
 > *"the code that indexes it fetches an entry and then TRANSFERS to it, so the
 > entries are ENTRY POINTS and they seed this block's code walk"*

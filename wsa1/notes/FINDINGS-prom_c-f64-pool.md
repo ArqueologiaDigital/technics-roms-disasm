@@ -76,24 +76,24 @@ number.
 every one of them sits immediately after a loaded entry, in seven runs — the shape of a
 coefficient ARRAY walked with a pointer from its first element.
 
-| array | entries | head loaded by |
-|---|---:|---|
-| `0xFCB2CE` | 8 | `sub_FC8C45__FC8DDF` |
-| `0xFCB376` | 3 | `sub_FBB793__FBBE57`, `sub_FC9140__FC93E4` |
-| `0xFCB38E` | 5 | `sub_FC9140__FC9411` |
-| `0xFCB436` | 3 | `sub_FC9844__FC9A68` |
-| `0xFCB44E` | 4 | `sub_FC9ACB` |
-| `0xFCB4A6` | 3 | `sub_FC9D12__FC9DD5` |
-| `0xFCB4BE` | 4 | `sub_FC9D12__FC9E5E` |
+| array      | entries | head loaded by                             |
+|------------|--------:|--------------------------------------------|
+| `0xFCB2CE` | 8       | `Double_Sin__FC8DDF`                       |
+| `0xFCB376` | 3       | `sub_FBB793__FBBE57`, `Double_Tan__FC93E4` |
+| `0xFCB38E` | 5       | `Double_Tan__FC9411`                       |
+| `0xFCB436` | 3       | `Double_Exp__FC9A68`                       |
+| `0xFCB44E` | 4       | `sub_FC9ACB`                               |
+| `0xFCB4A6` | 3       | `Double_Log__FC9DD5`                       |
+| `0xFCB4BE` | 4       | `Double_Log__FC9E5E`                       |
 
 The arrays at `0xFCB38E` and `0xFCB4BE` both END on exactly 1.0 — the shape of the
 denominator of a rational approximation with a monic leading term.
 
 ## 4. ⚠ No routine is renamed on the strength of this
 
-It is very tempting.  `sub_FC9844` loads ln 2, 1/ln 2, DBL_MIN, DBL_MAX/2 and both
-±709.78 bounds; `sub_FC9D12` loads ln 2, 1/sqrt 2, DBL_MAX/2 and two rational-approximation
-arrays; `sub_FC8C45` loads pi, pi/2, 1/pi and the eight-term odd polynomial; `sub_FC9140`
+It is very tempting.  `Double_Exp` loads ln 2, 1/ln 2, DBL_MIN, DBL_MAX/2 and both
+±709.78 bounds; `Double_Log` loads ln 2, 1/sqrt 2, DBL_MAX/2 and two rational-approximation
+arrays; `Double_Sin` loads pi, pi/2, 1/pi and the eight-term odd polynomial; `Double_Tan`
 loads 2/pi, the Cody-Waite pi/2 pair and a 3+5 rational pair.  Those are the constant sets
 of `exp`, `log`, a sine and a tangent respectively.
 

@@ -27,6 +27,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import kernel_structural_match as K  # noqa: E402
 
@@ -36,7 +38,7 @@ BR = re.compile(r'^((?:jr|jrl|jp|call|calr|djnz)\b.*?)0x[0-9a-f]+\s*$')
 
 
 def labels():
-    txt = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1")
+    txt = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
     out = {}
     L = txt.split("\n")
     for i, l in enumerate(L):
@@ -99,7 +101,7 @@ def plan():
 
 def main():
     rows, refused = plan()
-    txt = open(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"), "rb").read().decode("latin-1")
+    txt = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
     taken = set(re.findall(r'[A-Za-z_][\w$]*', txt))
     for o, n, h in rows:
         if "--args" in sys.argv:

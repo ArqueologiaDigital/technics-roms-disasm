@@ -235,7 +235,7 @@ Round 7 refused to name `sub_FF4ACB` and `sub_FF4D5D`:
 
 Nothing in their lists does. The **dispatch slot** does: they are
 `Dispatch_FF3900` entries **[11]** and **[12]** — LCD row 4 and LCD row 5 of one
-screen. They are now `LcdKeyRow4_FF3900` and `LcdKeyRow5_FF3900`, and round 7's
+screen. They are now `LcdKeyRow4_DiskL0adFile` and `LcdKeyRow5_DiskL0adFile`, and round 7's
 block is left below the new one verbatim, refusal included, as the record of how
 the gap closed.
 

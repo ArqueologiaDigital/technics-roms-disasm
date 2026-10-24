@@ -86,6 +86,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 ROMS = os.path.join(ROOT, "original_ROMs")
 
 A_BASE, B_BASE, C_BASE = 0xF80000, 0xF00000, 0xF80000
@@ -607,8 +609,8 @@ def census(img, base, bounds):
     return sorted(hits)
 
 
-BND_A = boundaries(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"))
-BND_B = boundaries(os.path.join(ROOT, "prom_b", "wsa1_prom_b.s"))
+BND_A = boundaries(image_path(ROOT, "prom_a/wsa1_prom_a.s"))
+BND_B = boundaries(image_path(ROOT, "prom_b/wsa1_prom_b.s"))
 assert len(BND_A) > 100000 and len(BND_B) > 5000
 HITS_A = census(A, A_BASE, BND_A)
 HITS_B = census(B, B_BASE, BND_B)

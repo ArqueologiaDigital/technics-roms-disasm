@@ -87,7 +87,7 @@ through `"9 "`, twelve octaves, the range a 128-note MIDI keyboard spans when
 C-2 is note 0. 0x88 is the flat glyph and 0x8C the sharp one; both are custom
 font cells, not ASCII.
 
-**`Data_FF17E2` is honest ignorance.** It is data because a disassembly of it is
+**`KeyboardRuler_Strip0` is honest ignorance.** It is data because a disassembly of it is
 nonsense and because the byte pattern repeats on an 8-byte period
 (`FF 00 00 00 00 00 FC FC`, `FF 01 01 01 01 01 01 01`, …). Nothing in either
 image names any address inside it; what names its START is that it is the `end`
@@ -206,7 +206,7 @@ machine between two screen layouts. Every routine in the module is
    and it selects between two whole screen layouts. It is a good candidate for
    the SX-WSA1 / SX-WSA1R variant strap the emulation notes describe, and that
    would be checkable rather than assumed.
-3. **`Data_FF17E2`.** 2,695 bytes with an 8-byte period and no reader.
+3. **`KeyboardRuler_Strip0`.** 2,695 bytes with an 8-byte period and no reader.
 
 ## 8. The NOTE / DRUM EDIT state in work DRAM (2026-10-03)
 

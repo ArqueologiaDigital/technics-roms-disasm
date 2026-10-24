@@ -140,7 +140,7 @@ it is not changed.
 
 ## K5 — WEAK — DSP1 `0x130000` latch drops the high byte of a 32-bit store
 
-* **Firmware.** `DSP_Init_Channels` writes the 32-bit value `0x0101001F` to `0x130000`
+* **Firmware.** `DSP_ChannelRegs_Init` writes the 32-bit value `0x0101001F` to `0x130000`
   as **one store** (driver's own comment cites subcpu `0x01FC95`; note `finding 10` cites
   `v142 :396-427`), i.e. address `0x1F + ch*0x20`, data `0x0101`. `DSP_Write_Channel`
   writes 8 consecutive registers per channel (`channel*32 + 0x10`).

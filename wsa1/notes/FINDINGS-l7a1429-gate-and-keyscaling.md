@@ -37,15 +37,15 @@ proposes measuring the instrument, and §5 says where that costs us an answer.
 overturned two of its **names**.  Nothing below this heading is edited; the corrections are
 ADDED here and beside the sections they touch.  ★ **No measurement in this note changes.**
 
-| this note says | where | what is true now |
-|---|---|---|
-| `Q[+0x0B]` bits 7:6 are the tone editor's **`RESO MODE`** | §0, §1.4, §1.7, §1.9, §3, §5.3 | they are the MODELING top page's **`GROUP`** — a five-state control whose own editor at `0xFD422B` can emit only `0x00`, `0x40` and `0x80`, whose bracket graphic changes with it, and which is the second column of that page's own `ON/OFF GROUP DRIVER RESONATOR INTERACTION` legend.  ★ **The MECHANISM in §1 is untouched**: those bits are still the selector, the fifteen writers are still the writers, and `0x0300` is still gated by them.  Read every `RESO MODE` in §1 and §3 as **`GROUP`** |
-| the real `RESO MODE` | — | is **p21/p31 bit 7**, a different field on a different page (`PAGE3/3`).  It sets register `0x0000` bits 15/14 **and** adds `0x0C00` = one octave to that resonator's tuning (`Pack104_UnpackWaveSelRec_ToSubRecord`, `0xFC4884`/`0xFC4897`).  ⚠ So §1.7's factory count — eight tones, all pads — is a count of **`GROUP`** users, not of `RESO MODE` users |
-| register `0x0300` is `INTERACTION GAIN`: **still WEAK** | §1.9, §3 | **STRONG.**  Two independent arguments now stand: the caption `INTERACTION` / `GAIN` is drawn on p19's own row on `PAGE1/2` (five of five values on a caption's row against a null mean of 0.19 of 5), and this note's own result — the gain is MODE-GATED, and `DEPTH` and `FORMANT` have no reason to be.  ★ §1.9's *"a mode-gated gain ... a reason rather than a position"* is exactly the argument that carried; what it lacked was the caption, and the caption is now measured |
-| `DEPTH` and `FORMANT` are the rival candidates for `0x0300`, and `FORMANT` has "a better candidate in the `i5` chain" | §1.9 | both are placed elsewhere and neither was ever a candidate.  `DEPTH` = p14 bits 0-6 → register `0x0240`; `FORMANT` = p14 **bit 7**, `FIX`/`MOVE`, which gates `0x00C0`'s key-follow term at `0xFC4A09` and is not a register.  The `i5` chain's registers `0x03C0`/`0x0480` are **refused a name**: p15 is written by the RESONATOR TYPE preset and by no editor field |
-| §2 is "the four **KEY**-scaling ramps", indexed by "the key, 0..127" | §2, throughout | the index `(0x00E088)` is `voice[+0x0C] & 0x7F`, and `voice[+0x0C]` is the **VELOCITY** — see the ⚠ note at the head of §2 |
-| **`0x00E093` has no located reader**, grade UNIDENTIFIED | §1.8 | ★★ **it has one.**  All three arms end with `lda XBC,0x00e093 / push XBC / calr 0xFC4269`, so the block is `sub_FC4269`'s ARGUMENT and no instruction ever names it as an operand.  The block is a coupled-resonator DETUNE SOLVER; its result lands in `P[+0x12]`/`P[+0x14]` and thence in registers `chan+0x0040`/`0x0080`.  ★ Every clause of §1.8 is TRUE — there are no reads — and the conclusion still fell, because a census over ACCESS SHAPE cannot see a shared worker handed the address.  See `FINDINGS-l7a1429-e093-block.md` |
-| §5.3: "one hop on the CPU 1 side ... would turn `INTERACTION GAIN` from WEAK to PROVEN" | §5.3 | the hop was made.  It turned the name **STRONG**, not PROVEN, and it did not need `(0x207C)`; and it answered the second half of that item — the values 1 and 2 are `GROUP` codes, drawn as bracket graphics rather than as words |
+| this note says                                                                                                        | where                          | what is true now                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|-----------------------------------------------------------------------------------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Q[+0x0B]` bits 7:6 are the tone editor's **`RESO MODE`**                                                             | §0, §1.4, §1.7, §1.9, §3, §5.3 | they are the MODELING top page's **`GROUP`** — a five-state control whose own editor at `0xFD422B` can emit only `0x00`, `0x40` and `0x80`, whose bracket graphic changes with it, and which is the second column of that page's own `ON/OFF GROUP DRIVER RESONATOR INTERACTION` legend.  ★ **The MECHANISM in §1 is untouched**: those bits are still the selector, the fifteen writers are still the writers, and `0x0300` is still gated by them.  Read every `RESO MODE` in §1 and §3 as **`GROUP`**                                                    |
+| the real `RESO MODE`                                                                                                  | —                              | is **p21/p31 bit 7**, a different field on a different page (`PAGE3/3`).  It sets register `0x0000` bits 15/14 **and** adds `0x0C00` = one octave to that resonator's tuning (`Pack104_UnpackWaveSelRec_ToSubRecord`, `0xFC4884`/`0xFC4897`).  ⚠ So §1.7's factory count — eight tones, all pads — is a count of **`GROUP`** users, not of `RESO MODE` users                                                                                                                                                                                                |
+| register `0x0300` is `INTERACTION GAIN`: **still WEAK**                                                               | §1.9, §3                       | **STRONG.**  Two independent arguments now stand: the caption `INTERACTION` / `GAIN` is drawn on p19's own row on `PAGE1/2` (five of five values on a caption's row against a null mean of 0.19 of 5), and this note's own result — the gain is MODE-GATED, and `DEPTH` and `FORMANT` have no reason to be.  ★ §1.9's *"a mode-gated gain ... a reason rather than a position"* is exactly the argument that carried; what it lacked was the caption, and the caption is now measured                                                                       |
+| `DEPTH` and `FORMANT` are the rival candidates for `0x0300`, and `FORMANT` has "a better candidate in the `i5` chain" | §1.9                           | both are placed elsewhere and neither was ever a candidate.  `DEPTH` = p14 bits 0-6 → register `0x0240`; `FORMANT` = p14 **bit 7**, `FIX`/`MOVE`, which gates `0x00C0`'s key-follow term at `0xFC4A09` and is not a register.  The `i5` chain's registers `0x03C0`/`0x0480` are **refused a name**: p15 is written by the RESONATOR TYPE preset and by no editor field                                                                                                                                                                                      |
+| §2 is "the four **KEY**-scaling ramps", indexed by "the key, 0..127"                                                  | §2, throughout                 | the index `(0x00E088)` is `voice[+0x0C] & 0x7F`, and `voice[+0x0C]` is the **VELOCITY** — see the ⚠ note at the head of §2                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **`0x00E093` has no located reader**, grade UNIDENTIFIED                                                              | §1.8                           | ★★ **it has one.**  All three arms end with `lda XBC,0x00e093 / push XBC / calr 0xFC4269`, so the block is `Pack104_SolveCoupledDetune`'s ARGUMENT and no instruction ever names it as an operand.  The block is a coupled-resonator DETUNE SOLVER; its result lands in `P[+0x12]`/`P[+0x14]` and thence in registers `chan+0x0040`/`0x0080`.  ★ Every clause of §1.8 is TRUE — there are no reads — and the conclusion still fell, because a census over ACCESS SHAPE cannot see a shared worker handed the address.  See `FINDINGS-l7a1429-e093-block.md` |
+| §5.3: "one hop on the CPU 1 side ... would turn `INTERACTION GAIN` from WEAK to PROVEN"                               | §5.3                           | the hop was made.  It turned the name **STRONG**, not PROVEN, and it did not need `(0x207C)`; and it answered the second half of that item — the values 1 and 2 are `GROUP` codes, drawn as bracket graphics rather than as words                                                                                                                                                                                                                                                                                                                           |
 
 ---
 
@@ -259,7 +259,7 @@ cheapest remaining item in `field_accessors.s`; this lane agrees and adds the co
 **Recorded as a lead, grade UNIDENTIFIED.**
 
 ⚠ **CORRECTED 2026-09-04, lane `w24/e093-block`.**  The lead is closed and the grade is wrong.
-`0x00E093` **has** a reader: `sub_FC4269`, which all three arms call four instructions after
+`0x00E093` **has** a reader: `Pack104_SolveCoupledDetune`, which all three arms call four instructions after
 the last fill, passing the block's address on the stack —
 
 ```
@@ -270,14 +270,14 @@ the last fill, passing the block's address on the stack —
 
 so the address is never an operand at the reader, and the sentence above is TRUE as written
 while its conclusion is not.  ★ **The block is a 68-byte argument struct** — `MODE`, `N`, and
-four parallel eight-slot arrays (gain, level, tuning in, result) — and `sub_FC4269` is a
+four parallel eight-slot arrays (gain, level, tuning in, result) — and `Pack104_SolveCoupledDetune` is a
 fixed-point **coupled-resonator detune solver**: it evaluates the loop characteristic function
 of the group's `2 × elements` resonators at each one's own nominal frequency and returns a
 pitch offset in 1/256 semitone, which the arms read back into `P[+0x12]` and `P[+0x14]` and
 `Dev104_PackStagingStruct` adds to registers `chan+0x0040` and `chan+0x0080`.  ★ So this
 section's own observation — *"both gains plus both tunings, per element, is the shape of a mix
 or coupling matrix"* — was right about the shape and right to refuse to name it.  Full decode,
-nulls and factory evaluation: `FINDINGS-l7a1429-e093-block.md`, which also RENAMES `sub_FC4269` to
+nulls and factory evaluation: `FINDINGS-l7a1429-e093-block.md`, which also RENAMES `Pack104_SolveCoupledDetune` to
 `Pack104_SolveCoupledDetune`.
 
 ### 1.9 ★ What register `0x0300`'s ROLE becomes
@@ -386,20 +386,20 @@ to one index step downward.  It is not `round`.
 
 ### 2.2 The four, side by side
 
-| | `LinCoef_Position_KeyRamp_Q5_128` | `LinCoef_Fitting_KeyRamp_Q5_128` | `LinCoef_Muting_KeyRamp_Q5_128` | `LinCoef_SubGain_KeyRamp_Q5_128` |
-|---|---|---|---|---|
-| address | `0xFE0096` | `0xFE0116` | `0xFE0196` | `0xFE0216` |
-| closed form | `2k - 128` | `65k//128 - 32` | `k//2 - 64`, `T[127] = 0` | byte-identical to MUTING |
-| exact on | 128/128 | 128/128 | 128/128 | 128/128 |
-| Q5 range | `-4.000 .. +3.938` | `-1.000 .. +1.000` | `-2.000 .. 0.000` | `-2.000 .. 0.000` |
-| law slope | **2** counts/key | **65/128** = 0.507812 | **1/2** | **1/2** |
-| => index steps per key | `depth/16` | `depth/63.02` | `depth/64` | `depth/64` |
-| pivot (where `r = 0`) | `k = 64` | `k = 64` | `k = 127` (`+`) / `k = 0` (`-`) | as MUTING |
-| full-keyboard excursion | `7.9375 x |depth|` | `2 x |depth|` | `2 x |depth|` | `2 x |depth|` |
-| depth byte | `Q[+0x10]` (p16) | `Q[+0x17]` / `Q[+0x22]` | `Q[+0x18]` / `Q[+0x23]` | `Q[+0x24]` (p36) |
-| destination | `R[+0x12]` -> `Curve_Position_Log2Period_251` | `v1` / `v2` -> `Curve_Fitting_Exp2Decay_256` and `_Exp2Rise_128` | `i3` / `i4` -> `Curve_Muting_Cutoff_Q16_128` and `_Q13_128` | `R[+0x10]` -> `clamp(+ R[+0x23], 0..100)` -> `Curve_Exp2Gain_Percent_101` |
-| **register** | **`chan+0x00C0`** (and `abs(r)>>2` in `R[+0x14]` -> part of **`chan+0x0240`**'s index) | **`chan+0x0140`, `0x01C0`** (MAIN) and **`0x0180`, `0x0200`** (SUB) | **`chan+0x0400`, `0x0340`** (MAIN) and **`0x0440`, `0x0380`** (SUB) | **`chan+0x0280`** |
-| grade | fit PROVEN, unit STRONG | fit PROVEN, unit STRONG | fit PROVEN, unit STRONG | fit PROVEN, destination STRONG |
+|                         | `LinCoef_Position_TouchRamp_Q5_128`                                                    | `LinCoef_Fitting_TouchRamp_Q5_128`                                  | `LinCoef_Muting_TouchRamp_Q5_128`                                   | `LinCoef_SubGain_TouchRamp_Q5_128`                                        |
+|-------------------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------------|
+| address                 | `0xFE0096`                                                                             | `0xFE0116`                                                          | `0xFE0196`                                                          | `0xFE0216`                                                                |
+| closed form             | `2k - 128`                                                                             | `65k//128 - 32`                                                     | `k//2 - 64`, `T[127] = 0`                                           | byte-identical to MUTING                                                  |
+| exact on                | 128/128                                                                                | 128/128                                                             | 128/128                                                             | 128/128                                                                   |
+| Q5 range                | `-4.000 .. +3.938`                                                                     | `-1.000 .. +1.000`                                                  | `-2.000 .. 0.000`                                                   | `-2.000 .. 0.000`                                                         |
+| law slope               | **2** counts/key                                                                       | **65/128** = 0.507812                                               | **1/2**                                                             | **1/2**                                                                   |
+| => index steps per key  | `depth/16`                                                                             | `depth/63.02`                                                       | `depth/64`                                                          | `depth/64`                                                                |
+| pivot (where `r = 0`)   | `k = 64`                                                                               | `k = 64`                                                            | `k = 127` (`+`) / `k = 0` (`-`)                                     | as MUTING                                                                 |
+| full-keyboard excursion | `7.9375 x |depth|`                                                                     | `2 x |depth|`                                                       | `2 x |depth|`                                                       | `2 x |depth|`                                                             |
+| depth byte              | `Q[+0x10]` (p16)                                                                       | `Q[+0x17]` / `Q[+0x22]`                                             | `Q[+0x18]` / `Q[+0x23]`                                             | `Q[+0x24]` (p36)                                                          |
+| destination             | `R[+0x12]` -> `Curve_Position_Log2Period_251`                                          | `v1` / `v2` -> `Curve_Fitting_Exp2Decay_256` and `_Exp2Rise_128`    | `i3` / `i4` -> `Curve_Muting_Cutoff_Q16_128` and `_Q13_128`         | `R[+0x10]` -> `clamp(+ R[+0x23], 0..100)` -> `Curve_Exp2Gain_Percent_101` |
+| **register**            | **`chan+0x00C0`** (and `abs(r)>>2` in `R[+0x14]` -> part of **`chan+0x0240`**'s index) | **`chan+0x0140`, `0x01C0`** (MAIN) and **`0x0180`, `0x0200`** (SUB) | **`chan+0x0400`, `0x0340`** (MAIN) and **`0x0440`, `0x0380`** (SUB) | **`chan+0x0280`**                                                         |
+| grade                   | fit PROVEN, unit STRONG                                                                | fit PROVEN, unit STRONG                                             | fit PROVEN, unit STRONG                                             | fit PROVEN, destination STRONG                                            |
 
 ★ **The `Position` ramp's second destination is new here.**  `R[+0x14] = abs(R[+0x12]) >> 2`
 (0xFC5643/0xFC564D), and `R[+0x14]` is the first term of register `chan+0x0240`'s
@@ -558,8 +558,8 @@ Reported, not edited.
    eight tones pass two of that lane's own invariants.  The guide's conclusion -- *"implement
    the COEFFICIENTS, not the FAMILIES"* -- is untouched; what changes is that `RESO MODE`, the
    other field of the same byte, **is** used, by eight factory pads.
-4. **`FINDINGS-l7a1429-curve-tables.md` §6** gives `LinCoef_FE0196`'s slope as "1/64 of a Q5
-   unit per key" and `LinCoef_FE0116`'s as "1/63"; both are right as laws.  The *measured*
+4. **`FINDINGS-l7a1429-curve-tables.md` §6** gives `LinCoef_Muting_TouchRamp_Q5_128`'s slope as "1/64 of a Q5
+   unit per key" and `LinCoef_Fitting_TouchRamp_Q5_128`'s as "1/63"; both are right as laws.  The *measured*
    end-to-end slopes are 64/127 for both, because Fitting's extra `k/128` shows up only in the
    last entry.  §2.4 above is the detail; no number there is wrong.
 
@@ -584,7 +584,7 @@ until it is found, `RESO SCALE` is a named control with no traced effect.
    has been caught by three times.
 2. **The three big arms' arithmetic.**  `sub_FC6D6E`, `sub_FC6FFD` and `sub_FC723F` are now
    known to (a) set the gate, (b) compute register `0x0300`'s own value, (c) fill the
-   `0x00E093` block, and (d) call `sub_FC4269`'s trigonometry.  (d) is the only part still
+   `0x00E093` block, and (d) call `Pack104_SolveCoupledDetune`'s trigonometry.  (d) is the only part still
    opaque.  A routine that takes sines and cosines of a mode parameter is worth reading.
 3. **One hop on the CPU 1 side**, unchanged from wave 19 §7: correlate `ToneMsg_SendParam`'s 29 call
    sites with the screen id in `(0x207C)` through prom_a's `DispatchTable_FCF000`.  That is

@@ -73,8 +73,17 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
 ROM = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 B_BASE = 0xF00000
 
 SPAN_START, SPAN_END = 0xF3F400, 0xF40000    # END exclusive; this is also the
@@ -201,7 +210,7 @@ def apply():
     src = open(SRC).read()
     assert src.count(OLD_INCBIN) == 1, "expected exactly one copy of the old incbin block"
     src = src.replace(OLD_INCBIN, asm)
-    open(SRC, "w").write(src)
+    write_part(SRC_MASTER, src)
     print("applied: replaced 3072-byte .incbin at 0x%06X with %d lines of assembly"
           % (SPAN_START, asm.count("\n")))
     return 0

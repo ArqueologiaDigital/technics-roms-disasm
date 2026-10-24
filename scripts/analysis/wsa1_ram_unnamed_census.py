@@ -26,7 +26,14 @@ MAC = re.compile(r'\bM[BWDL](?:8|16|24),\s*(0x[0-9a-fA-F]+|\d+)\b')
 LAB = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 def ram(v): return 0x400 <= v < 0x10000 or 0x600000 <= v < 0x700000
 cnt = collections.Counter(); users = collections.defaultdict(collections.Counter)
-for f in ["wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"]:
+# each image is its root file plus the module files it .includes (wsa1/scripts/tools/
+# split_cpu1_images.py); module names start with their address, so sorted = include order
+import glob  # noqa: E402
+FILES = []
+for img in ("prom_a", "prom_b"):
+    FILES.append("wsa1/%s/wsa1_%s.s" % (img, img))
+    FILES += sorted(os.path.relpath(p, REPO) for p in glob.glob(os.path.join(REPO, "wsa1", img, "modules", "*.s")))
+for f in FILES:
     cur = "?"
     for l in open(os.path.join(REPO, f), "rb").read().decode("latin-1").split("\n"):
         m = LAB.match(l)

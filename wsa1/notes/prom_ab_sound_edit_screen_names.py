@@ -27,6 +27,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 # code -> (name, the strings that name it)
 SCREENS = {
     0x80: ("SoundEditMenu", "SOUND EDIT / WRITE COPY; TONE LAYER, DSP EFFECT, PITCH, DIGITAL EFFECT, FILTER, CONTROLLER, AMPLITUDE"),
@@ -86,7 +88,7 @@ EXPLICIT = {
     "SoundEditDrumMenu_Paint": "SoundEditDrumMenu_Paint",
     "SoundEditDrumMenu_RepaintField": "SoundEditDrumMenu_RepaintField",
 }
-FILES = [os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")]
+FILES = [image_path(ROOT, "prom_a/wsa1_prom_a.s"), image_path(ROOT, "prom_b/wsa1_prom_b.s")]
 
 
 def plan():

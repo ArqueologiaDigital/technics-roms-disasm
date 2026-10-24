@@ -36,10 +36,12 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, HERE)
 import wave7_panel_names_round11 as R11  # noqa: E402
 
-PROM_A = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+PROM_A = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 A_LO, A_HI = 0xF80000, 0x1000000
 SPELL = {"Exit": "ExitKey", "NumberPad": "NumberPadKey", "Page": "PageKey"}
 
@@ -120,9 +122,7 @@ def apply_(rows):
     for j, block in sorted(ins, reverse=True):
         L[j:j] = block
     out = "\n".join(L).encode("latin-1")
-    with open(PROM_A + ".tmp", "wb") as fh:
-        fh.write(out)
-    os.replace(PROM_A + ".tmp", PROM_A)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'PROM_A')
     return len(ins), skipped
 
 

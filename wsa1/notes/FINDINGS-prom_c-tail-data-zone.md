@@ -161,7 +161,7 @@ reading of the constant plus its reciprocals, not a statement any instruction ma
 
 ## 4. Two `0x00104000` registers, from the tables that feed them
 
-`sub_FC49AD`, a helper of the `0x00104000` packer `sub_FC4DBD`
+`Pack104_StageRegs_00C0_0100_0240`, a helper of the `0x00104000` packer `Dev104_PackStagingStruct`
 (`notes/FINDINGS-prom_c-dev10c-producers.md` §3), reads two parallel 251-entry tables with one
 clamped index and stores both results into the staging struct:
 
@@ -172,10 +172,10 @@ cp HL,0      / else HL = 0           ; 0xFC49D7 -- lower clamp
 index = HL                            ; 0..250, and BOTH tables are 251 entries
 ```
 
-| table | contents | goes to |
-|---|---|---|
-| `Curve_Log2_251` (`0xFDFAE0`) | `round(27543 − 3072·log₂k)`, `T[0] = 0x6C00` | struct +0x06 → register **`0x00C0 + chan`** |
-| `Const_0100_251` (`0xFDFCD6`) | `0x0100` in **all 251 entries** | struct +0x08 → register **`0x0100 + chan`** |
+| table                                        | contents                                     | goes to                                     |
+|----------------------------------------------|----------------------------------------------|---------------------------------------------|
+| `Curve_Position_Log2Period_251` (`0xFDFAE0`) | `round(27543 − 3072·log₂k)`, `T[0] = 0x6C00` | struct +0x06 → register **`0x00C0 + chan`** |
+| `Dev104_Reg0100_Const_251` (`0xFDFCD6`)      | `0x0100` in **all 251 entries**              | struct +0x08 → register **`0x0100 + chan`** |
 
 So on this firmware, `0x00104000` register `0x0100 + chan` is fed a **constant** `0x0100` from
 this path, and register `0x00C0 + chan` is fed a **logarithmic** quantity — 3072 counts per
@@ -191,8 +191,8 @@ already had to retract once over exactly that.
 
 ## 5. Four linear coefficient tables, and the idiom that reads them
 
-`LinCoef_FE0096`, `LinCoef_FE0116`, `LinCoef_FE0196` and `LinCoef_FE0216` are 128 signed bytes
-each, read by one idiom that appears four times in `sub_FC4DBD`:
+`LinCoef_Position_TouchRamp_Q5_128`, `LinCoef_Fitting_TouchRamp_Q5_128`, `LinCoef_Muting_TouchRamp_Q5_128` and `LinCoef_SubGain_TouchRamp_Q5_128` are 128 signed bytes
+each, read by one idiom that appears four times in `Dev104_PackStagingStruct`:
 
 ```
 lda XIX,<table> ; A = record[+0x10] (signed) ; if A == 0 -> result 0
@@ -202,14 +202,14 @@ result = (T[D] * A) >> 5
 ```
 
 `>> 5` makes the table a **Q5 coefficient** (32 = 1.0), and the four spans are
-`−4.0 … +3.94`, `−1.0 … +1.0`, and `−2.0 … 0.0` twice — `LinCoef_FE0216` is byte-identical to
-`LinCoef_FE0196`, all 128 entries. The count 128 is fixed by the index: `0x00E088` is
-`voice_record[+0x0C]` **with bit 7 cleared** (`sub_FC4D63`), so `0..127`, and `0x7F − D` stays in
+`−4.0 … +3.94`, `−1.0 … +1.0`, and `−2.0 … 0.0` twice — `LinCoef_SubGain_TouchRamp_Q5_128` is byte-identical to
+`LinCoef_Muting_TouchRamp_Q5_128`, all 128 entries. The count 128 is fixed by the index: `0x00E088` is
+`voice_record[+0x0C]` **with bit 7 cleared** (`Pack104_SetInputs_E088_E089_E08A`), so `0..127`, and `0x7F − D` stays in
 range.
 
-★ **The last entry is what picks the law**, in two of the four. `LinCoef_FE0116` is
+★ **The last entry is what picks the law**, in two of the four. `LinCoef_Fitting_TouchRamp_Q5_128` is
 `(k·65)//128 − 32` and *not* `floor(k/2) − 32`, which the entries above k = 64 disprove;
-`LinCoef_FE0196` is `k//2 − 64` for k = 0..126 **and then breaks its own rule**: `T[127]` is 0
+`LinCoef_Muting_TouchRamp_Q5_128` is `k//2 − 64` for k = 0..126 **and then breaks its own rule**: `T[127]` is 0
 where the ramp gives −1. Both were checked entry by entry, which is how the exception surfaced.
 
 ---
@@ -240,7 +240,7 @@ anywhere in the image. Literals only; a pointer built at run time would be invis
   `0xFC6263`). Nothing in the reader bounds it to 50; the object's end rests on the next cited
   base, `0xFE02C9`, whose own closed form (a full 512-entry sine period) is independent.
   Recorded as a tension rather than resolved.
-* `Curve_FE04C9` and `Curve_FE13D6` have no located upper clamp; their counts rest on the next
+* `Curve_Muting_Cutoff_Q16_128` and `Curve_FE13D6` have no located upper clamp; their counts rest on the next
   cited base alone.
 * That the `0..127` key of the `LinCoef` tables is a NOTE NUMBER. It is `voice_record[+0x0C]`
   with bit 7 cleared, and nothing here says what that field is.

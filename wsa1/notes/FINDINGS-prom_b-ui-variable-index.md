@@ -31,14 +31,14 @@ distinct RAM variables displayed: 92
 
 The 92 fall into five neighbourhoods:
 
-| range | n | the screen its captions name |
-|---|--:|---|
-| `0x12F6-0x1309` | 19 | `SEQUENCER PLAY` / `S0NG` / `CYCLE:` / `MEASURE = ` / `TIME SIG.= ` / `REC0RD` / `MASTER:` / `MIXER` |
-| `0x216A` | 1 | — |
-| `0x2640-0x2674` | 16 | `SOUND MODE`, parts 1-6, columns `OCT LVL PAN EFF1 EFF2 REV INT MIDI DRAWBAR` |
-| `0x27A3-0x27B7` | 19 | the sound-edit parameter pages |
-| `0x2808-0x280B` | 4 | the four resonator selectors — they index `DLTable_F03241`, the 64 resonator names already decoded in the .s |
-| `0x76A5-0x789F` | 32 | `C0MBINATI0N M0DE` / `PAGE1/2`, parts 1-6, `OCT VOL PAN EFF1 EFF2 REV` |
+| range           | n   | the screen its captions name                                                                                                 |
+|-----------------|----:|------------------------------------------------------------------------------------------------------------------------------|
+| `0x12F6-0x1309` | 19  | `SEQUENCER PLAY` / `S0NG` / `CYCLE:` / `MEASURE = ` / `TIME SIG.= ` / `REC0RD` / `MASTER:` / `MIXER`                         |
+| `0x216A`        | 1   | —                                                                                                                            |
+| `0x2640-0x2674` | 16  | `SOUND MODE`, parts 1-6, columns `OCT LVL PAN EFF1 EFF2 REV INT MIDI DRAWBAR`                                                |
+| `0x27A3-0x27B7` | 19  | the sound-edit parameter pages                                                                                               |
+| `0x2808-0x280B` | 4   | the four resonator selectors — they index `DLTable_OriginalStringCylinder`, the 64 resonator names already decoded in the .s |
+| `0x76A5-0x789F` | 32  | `C0MBINATI0N M0DE` / `PAGE1/2`, parts 1-6, `OCT VOL PAN EFF1 EFF2 REV`                                                       |
 
 (`0x0000` is the 92nd; it appears in 21 records whose `+2` field is zero.
 1 + 19 + 1 + 16 + 19 + 4 + 32 = 92, and the six row counts are the script's,

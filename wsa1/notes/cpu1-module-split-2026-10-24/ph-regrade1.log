@@ -1,0 +1,80 @@
+
+=== prom_a  REGRADE 31 invocation(s) that were not green ===
+    ... 25/124 runs
+    ... 50/124 runs
+    ... 75/124 runs
+    ... 100/124 runs
+    ... 124/124 runs
+    VACUOUS       (was VACUOUS      ) notes/wave7_round9_review_wb_prom_b.py
+    LOUD          (was LOUD         ) notes/lane_promA_gate_perturbation.py
+    LOUD          (was LOUD         ) notes/prom_a_understanding_round7.py --apply-strings
+    LOUD          (was LOUD         ) notes/verify_a1_independent_check.py
+    SPLIT-FRAGILE (was SPLIT-FRAGILE) notes/census_stale_markers.py
+    NONDET        (was NONDET       ) notes/kn5000_twin_routines.py --min 0
+    NONDET        (was NONDET       ) notes/wsa1_exact_copy_names.py
+    NONDET        (was NONDET       ) notes/wsa1_exact_copy_names.py --args
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/frame_disk_switch_tables.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_cover_round2.py --closure
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f0033f_f0199e.py --evidence
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f0033f_f0199e.py --evidence --render
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f78028_icon_sheet.py --evidence
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest
+  ✔ UNAFFECTED    (was VACUOUS      ) notes/maincpu_join_probe.py --collisions --callers --nearest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/overlay-review/hang_trap_reachability.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_a_disk_cmd_layer_checks.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_a_disk_cmd_layer_checks.py --selftest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_dl_stage_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_read_names_2026_10_04.py --place
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_read_names_2026_10_04.py --relabel
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_screen_stage_and_flags_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_b_entrypoints_round7.py --selftest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_b_orphan_cluster_offset_scan.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/sysex-probes/sysex_model_variant.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/sysex-probes/sysex_unreachable_commands.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/sysex-probes/sysex_user_settings.py
+  ✔ UNAFFECTED    (was VACUOUS      ) notes/wsa1_601f_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_panel_state_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_screen_field_list_names.py --args
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_screen_field_list_names.py --list
+  23 of 31 came back green
+
+=== prom_b  REGRADE 31 invocation(s) that were not green ===
+    ... 25/124 runs
+    ... 50/124 runs
+    ... 75/124 runs
+    ... 100/124 runs
+    ... 124/124 runs
+    VACUOUS       (was VACUOUS      ) notes/wave7_round6_review_wb_prom_b.py
+    VACUOUS       (was VACUOUS      ) notes/wave7_round9_review_wb_prom_b.py
+    LOUD          (was LOUD         ) notes/gen_prom_b_promB4_operand_arrays.py --falsify
+    LOUD          (was LOUD         ) notes/wave7_round5_review_wb_prom_b.py
+    LOUD          (was LOUD         ) scripts/analysis/prom_b_small_span_gate_visibility.py
+    SPLIT-FRAGILE (was SPLIT-FRAGILE) notes/census_stale_markers.py
+    WRITER        (was WRITER       ) notes/gen_res02f_spans.py --falsify
+    WRITER        (was WRITER       ) notes/prom_b_res05x_gate_perturbation.py
+    NONDET        (was NONDET       ) notes/gen_prom_b_smf_writer_module.py --selftest
+    NONDET        (was NONDET       ) notes/kn5000_twin_routines.py --min 0
+    NONDET        (was NONDET       ) notes/prom_b_f00c4d_oldcopy_names.py
+    NONDET        (was NONDET       ) notes/prom_b_f00c4d_oldcopy_names.py --args
+    NONDET        (was NONDET       ) notes/wsa1_exact_copy_names.py
+    NONDET        (was NONDET       ) notes/wsa1_exact_copy_names.py --args
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f036c2_module.py --selftest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f039ed_selector_blocks.py --check
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f3b3da_module.py --selftest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f78028_icon_sheet.py --evidence
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_f78028_icon_sheet.py --evidence --selftest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/gen_prom_b_res3xx_spans.py --selftest
+  ✔ UNAFFECTED    (was VACUOUS      ) notes/maincpu_join_probe.py --collisions --callers --nearest
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/overlay-review/hang_trap_reachability.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_dl_stage_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_read_names_2026_10_04.py --place
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_read_names_2026_10_04.py --relabel
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_ab_screen_stage_and_flags_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/prom_b_orphan_cluster_offset_scan.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/sysex-probes/sysex_user_settings.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_panel_state_census.py
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_screen_field_list_names.py --args
+  ✔ UNAFFECTED    (was SPLIT-FRAGILE) notes/wsa1_screen_field_list_names.py --list
+  17 of 31 came back green
+
+wrote /home/fsanches/compartilhado/tmp/technics-wave2-wsa1-structure/ph-regrade1.json

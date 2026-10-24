@@ -134,7 +134,7 @@ gap stays `.incbin`. Example of the difference: the record at `0xF030E6` has mas
 The largest is the gap `0xF031C9-0xF03440`, 632 bytes, which partitions with no
 slack at all into three 5×8-byte parameter arrays and then
 
-**`DLTable_F03241` — 64 names of 8 characters, the WSA1's resonator list:**
+**`DLTable_OriginalStringCylinder` — 64 names of 8 characters, the WSA1's resonator list:**
 
 ```
 ORIGINAL  STRING  CYLINDER   CONE     FLARE   PLATE L  PLATE H   MEMB L
@@ -152,7 +152,7 @@ record that reads it (`0xF0302A`, opcode 07) carries mask `0x3F`, i.e. exactly 6
 indices. Two independent numbers, same answer.
 
 The other gap that tiles with text in it is `0xF04CBD-0xF04CDD`, 33 bytes:
-`DLTable_F04CBD` is 25 one-character entries and `DLTable_F04CD6` is two
+`DLTable_ABCDEFGHIJKLMNOPQRSU` is 25 one-character entries and `DLTable_LowHigh` is two
 four-character entries, `"LOW "` and `"HIGH"`. The 25 characters are
 
     A B C D E F G H I J K L M N O P Q R S U V W X Y Z
@@ -172,7 +172,7 @@ the three tables around `0xF286A2`—`0xF286F8` — are no longer `.incbin`.
 Lane res3xx framed them together with the three opcode-07 records that
 name them (`notes/gen_prom_b_res3xx_spans.py`). The gap did tile exactly
 after all; what did not fit was the 426-byte extent the reachability walk
-had given `Data_F28522`, which had swallowed the first record. The rest of
+had given `DLText_PanL64CtrR63`, which had swallowed the first record. The rest of
 the sentence still stands.
 
 ## The five call sites whose lists do not frame
@@ -305,8 +305,8 @@ Reproduce: `python3 notes/gen_promB5_spans.py --selftest`.
 `0xF32A00`+9, `0xF34350`+17, `0xF3A443`+30 and `0xF3B656`+5. All five are
 interpreter-B records plus the operand tables their `+0x07` pointers name, and
 in four of the five the span had been cut mid-record by a neighbouring `Data_`
-object declared too long: `Data_F28522` 426 → 384 B, `Data_F32992` 110 → 104 B,
-`Data_F3434C` and `Data_F3A43E` absorbed whole.
+object declared too long: `DLText_PanL64CtrR63` 426 → 384 B, `Data_F32992` 110 → 104 B,
+`Data_F3434C` and `TrackAssignPresets_MoveFieldHighlight_DL` absorbed whole.
 
 The boundaries come from outside the bytes in every case — a `ld XIY`/`ld XIX`
 immediate in converted code, a framed neighbour's own `(pointer, width, mask)`

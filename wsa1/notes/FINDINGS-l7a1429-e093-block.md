@@ -38,7 +38,7 @@ proposes measuring the instrument, and §8 says where that costs us the last ans
 ## 0. THE ANSWER, IN ONE PARAGRAPH
 
 ★ **`Pack104_SolveCoupledDetune` and `Divide16_Signed_Shl11_Sat` are this lane's renames** of
-`sub_FC4269` and `sub_FC4140`; the rename map is `notes/w24-e093-rename.map`, and earlier
+`Pack104_SolveCoupledDetune` and `Divide16_Signed_Shl11_Sat`; the rename map is `notes/w24-e093-rename.map`, and earlier
 notes in this set still spell them as addresses.
 
 **The block has a reader, and the block is an argument struct.**  All three routines that

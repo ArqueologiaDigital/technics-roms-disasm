@@ -72,7 +72,9 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 ROM = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
 BASE = 0xF00000
 HTBL_A, HTBL_B = 0x31D21, 0x31DB1
@@ -305,10 +307,7 @@ def read_src():
 def write_src(t):
     """Byte-preserving, and ATOMIC: an encode failure must never truncate the
     source (it did, once, before the tmp+rename)."""
-    tmp = SRC + ".tmp"
-    with open(tmp, "wb") as f:
-        f.write(t.encode("latin-1"))
-    os.replace(tmp, SRC)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC')
 
 
 def byte_line(b, addr, n, indent="\t.byte\t"):

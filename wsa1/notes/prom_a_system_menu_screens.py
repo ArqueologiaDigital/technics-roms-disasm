@@ -30,9 +30,11 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 ROM = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_a.ic12"), "rb").read()
 BASE = 0xF80000
-A = open(os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), "rb").read().decode("latin-1")
+A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 SCREENS = {0x6A: ("Initial", "INITIAL"), 0x65: ("ControllerAssign", "C0NTR0LLER ASSIGN"),
            0x64: ("TouchSensitivityOrTest", "0VERALL T0UCH SENSITIVITY (variant 1, SX-WSA1) / TEST (variant 2, SX-WSA1R)")}
 

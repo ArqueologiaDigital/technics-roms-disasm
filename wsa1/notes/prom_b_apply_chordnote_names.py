@@ -29,7 +29,16 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 B = 0xF00000
 RENAMES = [("sub_F6E463", "MsgLine_NoteName"), ("sub_F6DAA6", "Format_ChordName")]
 
@@ -114,8 +123,7 @@ def apply():
         blk = blk.replace(OLD_UNKNOWN, NOTES[old]).replace(f"; {old}\n", f"; {new} -- 0x{old[4:]}\n", 1)
         s = s[:h] + blk + s[i:]
         s = re.sub(r"\b" + old + r"\b", new, s)
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print(f"renamed {len(RENAMES)}")
     return 0
 

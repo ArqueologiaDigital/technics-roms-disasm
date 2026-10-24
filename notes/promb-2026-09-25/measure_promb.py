@@ -33,9 +33,20 @@ import collections
 import json
 import os
 import re
+import sys
+
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SRC = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+_SRC_PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+SRC = _wsa1_image(_SRC_PATH)
 OWN_REL = ("prom_b/",)          # census `rel` is relative to wsa1/
 ABS = re.compile(r'^(halt|incf|decf|ldf|normal|max|min|swi)\b|^(jr|jrl)\s+[a-z]+\s*,\s*(0x)?0+$'
                  r'|^(jr|jrl)\s+f\s*,')

@@ -121,6 +121,8 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_lines  # noqa: E402  (the image, not its root file)
 ROMS = os.path.join(ROOT, "original_ROMs")
 
 PROM_A_BASE = 0xF80000
@@ -169,7 +171,7 @@ assert a(0xF99AE3, 5) == bytes([0, 3, 5, 4, 2]), "prom_a base wrong"
 BOUNDARY = {}
 for key, name in (("a", "prom_a/wsa1_prom_a.s"), ("b", "prom_b/wsa1_prom_b.s")):
     s = set()
-    for line in open(os.path.join(ROOT, name), encoding="utf-8", errors="replace"):
+    for line in image_lines(ROOT, name):         # the image, not its root file
         m = re.search(r"; (F[0-9A-F]{5})  [0-9a-f]{2}", line)
         if m:
             s.add(int(m.group(1), 16))

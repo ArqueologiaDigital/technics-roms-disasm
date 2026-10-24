@@ -28,7 +28,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+SRC = image_path(ROOT, "prom_a/wsa1_prom_a.s")
 
 # the lane's four spans, as they stood at the start of 2026-09-02
 SPANS = [(0xF96504, 1889, "script interpreter: 8 handlers + 3 tables"),

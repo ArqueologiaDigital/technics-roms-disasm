@@ -36,34 +36,34 @@ count, and must never be quoted as one.
 
 ## Layout — eight code modules, each closed by `ret` padding
 
-| range | kind | bytes |
-|---|---|---:|
-| 0xF47800-0xF487E9 | code | 4,074 |
-| 0xF487EA-0xF48BFF | `.fill` 0x0E | 1,046 |
-| 0xF48C00-0xF48C19 | `Table_F48C00` | 26 |
-| 0xF48C1A-0xF494B7 | code | 2,206 |
-| 0xF494B8-0xF497FF | `.fill` 0x0E | 840 |
-| 0xF49800-0xF4B7AC | code | 8,109 |
-| 0xF4B7AD-0xF4B7CC | `IdentityMap_F4B7AD` | 32 |
-| 0xF4B7CD-0xF4BFFF | `.fill` 0x0E | 2,099 |
-| 0xF4C000-0xF4C38C | `DL_F4C000` | 909 |
-| 0xF4C38D-0xF4C3E8 | `ScreenButtonHandlers_CreatorSelectController` | 92 |
-| 0xF4C3E9-0xF4C3F1 | `BitMask_F4C3E9` | 9 |
-| 0xF4C3F2-0xF4C735 | code | 836 |
-| 0xF4C736-0xF4C7FF | `.fill` 0x0E | 202 |
-| 0xF4C800-0xF4CB5A | code | 859 |
-| 0xF4CB5B-0xF4CFFF | `.fill` 0x0E | 1,189 |
-| 0xF4D000-0xF4D949 | code | 2,378 |
-| 0xF4D94A-0xF4DFFF | `.fill` 0x0E | 1,718 |
-| 0xF4E000-0xF4E5DB | code | 1,500 |
-| 0xF4E5DC-0xF4E5FB | `IdentityMap_F4E5DC` | 32 |
-| 0xF4E5FC-0xF4E61B | `BitWeight_F4E5FC` | 32 |
-| 0xF4E61C-0xF4EBFF | `.fill` 0x0E | 1,508 |
-| 0xF4EC00-0xF4EF2E | code | 815 |
-| 0xF4EF2F-0xF4EF37 | `Table_F4EF2F` | 9 |
-| 0xF4EF38-0xF4EF3F | `Table_F4EF38` | 8 |
-| 0xF4EF40-0xF4EF63 | `Table_F4EF40` | 36 |
-| 0xF4EF64-0xF4EFFF | `.fill` 0x0E | 156 |
+| range             | kind                                           | bytes |
+|-------------------|------------------------------------------------|------:|
+| 0xF47800-0xF487E9 | code                                           | 4,074 |
+| 0xF487EA-0xF48BFF | `.fill` 0x0E                                   | 1,046 |
+| 0xF48C00-0xF48C19 | `Table_WsaSoundRamS0Wsa1`                      | 26    |
+| 0xF48C1A-0xF494B7 | code                                           | 2,206 |
+| 0xF494B8-0xF497FF | `.fill` 0x0E                                   | 840   |
+| 0xF49800-0xF4B7AC | code                                           | 8,109 |
+| 0xF4B7AD-0xF4B7CC | `IdentityMap_F4B7AD`                           | 32    |
+| 0xF4B7CD-0xF4BFFF | `.fill` 0x0E                                   | 2,099 |
+| 0xF4C000-0xF4C38C | `DL_CreatorSelectController`                   | 909   |
+| 0xF4C38D-0xF4C3E8 | `ScreenButtonHandlers_CreatorSelectController` | 92    |
+| 0xF4C3E9-0xF4C3F1 | `BitMask_F4C3E9`                               | 9     |
+| 0xF4C3F2-0xF4C735 | code                                           | 836   |
+| 0xF4C736-0xF4C7FF | `.fill` 0x0E                                   | 202   |
+| 0xF4C800-0xF4CB5A | code                                           | 859   |
+| 0xF4CB5B-0xF4CFFF | `.fill` 0x0E                                   | 1,189 |
+| 0xF4D000-0xF4D949 | code                                           | 2,378 |
+| 0xF4D94A-0xF4DFFF | `.fill` 0x0E                                   | 1,718 |
+| 0xF4E000-0xF4E5DB | code                                           | 1,500 |
+| 0xF4E5DC-0xF4E5FB | `IdentityMap_F4E5DC`                           | 32    |
+| 0xF4E5FC-0xF4E61B | `BitWeight_F4E5FC`                             | 32    |
+| 0xF4E61C-0xF4EBFF | `.fill` 0x0E                                   | 1,508 |
+| 0xF4EC00-0xF4EF2E | code                                           | 815   |
+| 0xF4EF2F-0xF4EF37 | `Table_F4EF2F`                                 | 9     |
+| 0xF4EF38-0xF4EF3F | `Table_F4EF38`                                 | 8     |
+| 0xF4EF40-0xF4EF63 | `Table_F4EF40`                                 | 36    |
+| 0xF4EF64-0xF4EFFF | `.fill` 0x0E                                   | 156   |
 
 Every edge is one of: the `.incbin`'s own start; the first byte of a maximal
 0x0E run whose purity is re-read on every emit; a **thunk target**; or an
@@ -79,7 +79,7 @@ caveat `notes/prom_b_songstore_checks.py` records for 0xF7CE67.
 
 ## The ten data islands
 
-**`Table_F48C00`** — the sixteen ASCII bytes `WSA SOUND RAM S0`, then the four
+**`Table_WsaSoundRamS0Wsa1`** — the sixteen ASCII bytes `WSA SOUND RAM S0`, then the four
 ASCII bytes `WSA1`, then `88 00 18 00 00 00`. The routine that starts at the
 very next byte copies the first sixteen into its stack frame (`lda
 XIY,0xf48c00` at 0xF48C24, then `ldirw` with BC = 8) and the next four with `ld
@@ -108,7 +108,7 @@ in the ROM explains why one exists at all, let alone three.
 0x00, entry k is 1 << (k−1). One reader, `add XBC,0x00f4c3e9` at 0xF4C6D4. Its
 end is thunk target 0xF4C3F2.
 
-**`DL_F4C000`** — a UI display list, **81 records**, in the format
+**`DL_CreatorSelectController`** — a UI display list, **81 records**, in the format
 `scripts/analysis/prom_b_display_lists.py` documents (+0 opcode, +1 length of
 the whole record, +2 operands and, for the text opcodes, characters). The count
 is self-checking rather than measured: advancing from 0xF4C000 by each record's

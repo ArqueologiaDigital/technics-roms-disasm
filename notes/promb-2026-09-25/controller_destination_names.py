@@ -32,9 +32,19 @@ import os
 import re
 import sys
 
+def _wsa1_image(path):
+    """The IMAGE whose root file is `path` (wsa1/prom_X/wsa1_prom_X.s), materialised by
+    wsa1/notes/asm_source.py -- added by wsa1/scripts/tools/migrate_lane_readers.py."""
+    wsa1 = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+    sys.path.insert(0, os.path.join(wsa1, "notes"))
+    from asm_source import image_path
+    return image_path(wsa1, os.path.relpath(os.path.abspath(path), wsa1))
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-SRC = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+_SRC_PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+SRC = _wsa1_image(_SRC_PATH)
 ROMB = os.path.join(ROOT, "wsa1", "original_ROMs", "wsa1_prom_b.ic13")
 BASE = 0xF00000
 PTRS, ONOFF, NAMES, END = 0xF32FE6, 0xF33016, 0xF33022, 0xF33362
@@ -156,7 +166,7 @@ def apply(d):
     txt = re.sub(r'\bData_F32FE6 \+ 0x30\b', "ControllerSwitchStateText", txt)
     txt = re.sub(r'\bData_F32FE6\b', "SoundEditController_HeaderRecords", txt)
     txt = txt.replace("@@BLOCK@@", emit(*d).encode("utf-8").decode("latin-1").rstrip("\n"))
-    open(SRC, "wb").write(txt.encode("latin-1"))
+    raise SystemExit("REFUSING to write %s: since the CPU 1 module split it names the IMAGE (wsa1/scripts/tools/migrate_lane_readers.py).  Port this one-shot write to asm_source.own_lines()/write_own_lines() before re-running it." % 'SRC')
     print("wrote", SRC)
 
 

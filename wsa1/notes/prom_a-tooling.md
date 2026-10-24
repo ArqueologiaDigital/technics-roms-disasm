@@ -445,7 +445,7 @@ python3 notes/prom_a_audit_callsites.py --selftest
 
 Result 2026-08-25, after this round's headers: **301 cited sites — 179 CALL,
 9 CALL-ALT, 37 POINTER, 8 THUNK, 68 unclassified, and ZERO off by one or two.**
-The 68 are a list to READ: most are module bases (`T_F41CD0`), RAM addresses, or
+The 68 are a list to READ: most are module bases (`T_Ring608A0A_Get`), RAM addresses, or
 addresses a header cites in a *searched-negative* sentence ("0xF830C5 is the
 `ret` before, so it is not reached by fall-through").
 
@@ -569,7 +569,7 @@ What they are for, beyond re-checking numbers:
 
 They caught real defects in headers written minutes earlier, and those are worth
 naming because they are the kinds this tree keeps making: a slot cited as
-`T_MidiInA_ProcessRing` that is actually `T_F413D0`; a module-total reference bound (52)
+`T_MidiInA_ProcessRing` that is actually `T_Ram3800_InitDataImage`; a module-total reference bound (52)
 quoted as one entry's; `MIDI_PostSendWork` given prom_a 0xF8590F when it is at
 0xFA590F; "24 published targets are a bare `ret`" when it is 34; "12 times in a
 row" when it is 20.

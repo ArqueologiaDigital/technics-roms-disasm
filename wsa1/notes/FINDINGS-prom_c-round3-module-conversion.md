@@ -125,7 +125,7 @@ It earned its keep three times:
   `notes/prom_c_voiceparam_checks.py` sections 2 and 5.
 * **An open question elsewhere in the file is closed.** `MidiIn_ParseRingAndDispatch`'s
   header listed as Unknown *"the call to 0xFA5949 at 0xFB061F, made with the byte count
-  pushed, before any parsing happens"*. `sub_FA5949` is fifteen bytes:
+  pushed, before any parsing happens"*. `MidiIn_StoreRingBacklog` is fifteen bytes:
   `ld BC,(XIZ+0x08) / ld (0x008678),BC / ret`. What 0x008678 is *for* is still not
   established; what the call does is. The header now says so.
 

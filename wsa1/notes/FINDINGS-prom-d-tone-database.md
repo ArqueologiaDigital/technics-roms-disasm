@@ -503,7 +503,7 @@ because they pin which array each map can possibly address:
   name" mechanism has nothing to work with here.
   ⚠ **SUPERSEDED IN WAVE 7 ROUND 6 — this block is not "purpose unknown" and it
   was never nameless, only unnamed by its CONTENT.** It is named by its READER.
-  `sub_FA72E9`, its only reader, is called from one place, `Voice_ComputePitch`,
+  `Voice_GetOctaveShift`, its only reader, is called from one place, `Voice_ComputePitch`,
   and its other arm reads a 16-entry table at prom_c `0xFDF22A` holding
   −96,−84,…,+84 — every entry a multiple of 12, entry 8 = 0, an octave select.
   Both arms return the value `sll 8`, so the two encodings are the same, and this
@@ -575,7 +575,7 @@ correct output, and the gaps are not empty:
 
 Every wave-select banner ended `⚠ NOT established: what any of the 43 bytes
 means, or what the head/tail split is FOR`. Both halves are now wrong, and the
-text is corrected rather than left standing. prom_c's `sub_FBC725`:
+text is corrected rather than left standing. prom_c's `ToneStage_ApplyWaveSelTailPreset`:
 
     0xFBC741  ld A,(XBC+0x0b)       the record's field +0x0B
     0xFBC744  and A,0x3f            its LOW 6 BITS

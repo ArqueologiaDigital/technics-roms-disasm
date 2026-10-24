@@ -17,7 +17,7 @@ placeholders):
 > 0xF0EA9F-0xF13D33 has three 128-entry tables indexed from (0x2796);
 > **128 and 128 is a CORRESPONDENCE, not a decoded fact.**
 
-`DataPtrTable_F12F24` (128 `.long`, 57 distinct):
+`EffectParamDescriptors_F12F24` (128 `.long`, 57 distinct):
 
 > Unknown: what indexes it, and what the entries mean.
 

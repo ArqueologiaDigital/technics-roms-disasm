@@ -95,7 +95,10 @@ def main():
 
     if not os.path.exists(SRC):
         sys.exit("run me from wsa1/ -- %s not found" % SRC)
-    lines = open(SRC, encoding="latin-1").read().split("\n")
+    # the IMAGE (root file + every module it .includes), not the root file alone
+    sys.path.insert(0, "notes")
+    from asm_source import image_lines
+    lines = image_lines(os.getcwd(), SRC)
     rom = open(ROM, "rb").read()
 
     spans = []

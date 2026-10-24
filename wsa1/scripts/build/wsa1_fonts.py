@@ -203,9 +203,7 @@ def _rewrite(apply_):
                                   sheet_to_bytes(name, base, pitch, w, cells),
                                   data, base_b, name, apply_)
     if apply_ and changed:
-        tmp = WB.SOURCES['b'].with_suffix('.s.tmp')
-        tmp.write_text('\n'.join(lines), encoding='latin-1')
-        os.replace(tmp, WB.SOURCES['b'])
+        WB.write_back('b', lines)          # into the module file that holds each line
     print(f"prom_b fonts: {changed} `.byte` value(s) "
           f"{'rewritten' if apply_ else 'would change'}"
           f"   (map guard discarded {dropped:,} unconfirmed slots)")

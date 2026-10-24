@@ -67,7 +67,7 @@ opcode 0x00) despite the two 0x00 bytes.
 ## 3. `0xF02FD9` is a display-list ENTRY, and half of a draw/erase pair
 
 The display-list census had `0xF02FD9` only as an **end** ("ends used" for
-`DL_F02FB2`) and its ten bytes sat in an `.incbin`. `UiPaint_Solo` loads
+`DL_Solo`) and its ten bytes sat in an `.incbin`. `UiPaint_Solo` loads
 `ld XIY,0x00F02FD9 / ld XIX,0x00F02FE3` and calls `DisplayList_Run`, so it is
 also a **start**. Those ten bytes are now converted as `UiPaint_Solo_DL1`.
 
@@ -128,7 +128,7 @@ Rows `C = 1, 2, 3, 4` therefore test bits **0, 2, 4, 6** of `(0x27A4)`.
 `(0x27A4)` are never tested here, which is a consequence of the reading offered
 as a check on it — not as separate evidence for it.
 
-## 5. `T_F41EDC` has no caller anywhere
+## 5. `T_UiPaint_Ordinals` has no caller anywhere
 
 The byte scan for `1D`/`1B` + `0xF41EDC` finds **0** hits in prom_a and **0** in
 prom_b. That scan runs at every byte offset and can only over-count, so zero is
@@ -158,7 +158,7 @@ that width. Which record reads it is not traced.
 ## 7. Still open
 
 * **`0xF86AC7`** (prom_a, unconverted): `List2030_PostSoundSelection`'s callee through thunk
-  `T_F40F40`. Disassembled from the thunk target, so the instruction boundary is
+  `T_List2030_AppendRegs`. Disassembled from the thunk target, so the instruction boundary is
   certain: it appends a 4-byte record `{DE, WA}` to a `0xFF`-terminated list of
   at most **fifteen** slots, `0x2030-0x206B`. ⚠ That is read out of another
   image's unconverted bytes — evidence for the shape of the call, not a
@@ -192,7 +192,7 @@ Re-verify the whole block with
 
 ## A trap worth recording: ranking thunk slots by their annotated counts
 
-The banner on `0xF5BAB8` says `T_F417F0` carries the highest reference count of
+The banner on `0xF5BAB8` says `T_DisplayList_Run` carries the highest reference count of
 any annotated thunk slot. Checking that sentence, a first pass reported it as
 **false** — with a top-six of counts in the 76,000s. That was wrong, and the
 bug is worth writing down because the same regex will be reached for again:
@@ -207,8 +207,8 @@ T_F417F0:  jp DisplayList_Run  ; -> prom_b 0x31A09   x392  THE UI ENGINE
 happens to contain `x<digits>` gets a fabricated count, and the ranking is
 garbage. Take the **last** `x<digits>` token on the line.
 
-Re-measured correctly: 818 slots carry a count, and `T_F417F0` is **rank 1 with
-392**, ahead of `T_F417F4` (269) — the two display-list interpreters, which is
+Re-measured correctly: 818 slots carry a count, and `T_DisplayList_Run` is **rank 1 with
+392**, ahead of `T_DisplayListB_Run` (269) — the two display-list interpreters, which is
 what the thunk table's own comment two lines above them already says.
 
 The claim was right; the first check was broken. Both facts are in the banner.

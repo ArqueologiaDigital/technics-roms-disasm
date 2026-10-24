@@ -80,6 +80,7 @@ PASS
 import argparse
 import os
 import re
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROMS = os.path.normpath(os.path.join(HERE, "..", "..", "original_ROMs"))
@@ -186,7 +187,9 @@ for t in (TBL_V1, TBL_V2):
 LISTING = os.path.normpath(os.path.join(HERE, "..", "..", "prom_a",
                                         "wsa1_prom_a.s"))
 BOUNDARY = set()
-for line in open(LISTING, encoding="utf-8", errors="replace"):
+sys.path.insert(0, os.path.join(HERE, "..", "..", "notes"))
+from asm_source import image_lines  # noqa: E402  (the image, not its root file)
+for line in image_lines(os.path.normpath(os.path.join(HERE, "..", "..")), "prom_a/wsa1_prom_a.s"):
     m = re.search(r"; (F[0-9A-F]{5})  [0-9a-f]{2}", line)
     if m:
         BOUNDARY.add(int(m.group(1), 16))

@@ -111,7 +111,7 @@ why a DRUM EDIT row audition sounds the row's drum.
   source 0's notes on the single channel +0x292. Bits 6-7 are the MIDI IN mode. +0x292 and +0x293 are now
   `NoteRouting_SingleChannel` and `NoteRouting_MidiFlags`.
 
-Step 4 below also said `NoteRouting_RebuildOutputs` "rebuilds the output tables `NoteRouting_RebuildFlags`
+Step 4 below also said `NoteRouting_CommitChanges` "rebuilds the output tables `NoteRouting_RebuildFlags`
 (0x4C04) selects" and that "the output rebuilders read that previous copy". There are no output tables. The
 routine queues and applies note releases (section 7). It is now `NoteRouting_CommitChanges`, and 0x4C04 is
 `NoteRouting_ChangeFlags`.

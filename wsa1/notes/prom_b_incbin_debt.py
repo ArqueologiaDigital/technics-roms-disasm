@@ -23,6 +23,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 INCBIN_RE = re.compile(r'\.incbin\s+"[^"]+"\s*,\s*0x([0-9A-Fa-f]+)\s*,\s*0x([0-9A-Fa-f]+)')
 
 
@@ -33,7 +35,7 @@ def measure(path):
 
 
 def main():
-    path = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+    path = image_path(ROOT, "prom_b/wsa1_prom_b.s")
     spans = measure(path)
     total = sum(ln for _off, ln in spans)
     print("prom_b .incbin debt: %d bytes across %d spans" % (total, len(spans)))

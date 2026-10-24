@@ -20,7 +20,9 @@ import os
 import re
 import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FILES = [os.path.join(ROOT, "prom_a", "wsa1_prom_a.s"), os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")]
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
+FILES = [image_path(ROOT, "prom_a/wsa1_prom_a.s"), image_path(ROOT, "prom_b/wsa1_prom_b.s")]
 TXT = {f: open(f, "rb").read().decode("latin-1") for f in FILES}
 ALL = "\n".join(TXT.values())
 TOK = set(re.findall(r'[A-Za-z_][\w$]*', ALL))

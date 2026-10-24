@@ -248,7 +248,7 @@ than 12.3 ms coalesces two settings.  It can be slower, never faster.
 ### What the refresh does
 
 `sub_FACAB7` walks the active-voice list (terminator `cp H,0x40`), and for each voice calls
-`sub_FC7C0D(voice, &0x00D7A2)`, which recomputes staging words through `sub_FC49AD` and returns
+`sub_FC7C0D(voice, &0x00D7A2)`, which recomputes staging words through `Pack104_StageRegs_00C0_0100_0240` and returns
 1, 2 or neither:
 
 * **1** → `Dev104_SetChanRegs_00C0_0100_0240(voice, &0x00D7A2)` — registers 0x00C0, 0x0100, 0x0240
@@ -256,30 +256,30 @@ than 12.3 ms coalesces two settings.  It can be slower, never faster.
 * otherwise → no write
 
 ★ **PRODUCER AND SHIPPER MATCH, REGISTER FOR REGISTER** (probe section 8).  The register map's
-producer index says `sub_FC49AD` writes staging words `{+0x06, +0x08, +0x12}` and `sub_FC4AED`
+producer index says `Pack104_StageRegs_00C0_0100_0240` writes staging words `{+0x06, +0x08, +0x12}` and `Pack104_StageReg_0280`
 writes `{+0x14}`.  `Dev104_SetChanRegs_00C0_0100_0240` ships exactly `+0x06, +0x08, +0x12`
 (→ 0x00C0, 0x0100, 0x0240) and `Dev104_SetChanReg_0280` ships exactly `+0x14` (→ 0x0280).  Each
 of the two sub-packers has exactly the callers that pairing predicts:
 
-| sub-packer | callers |
-|---|---|
-| `sub_FC49AD` | 0xFC56AA (inside the full packer) · 0xFC5EE9 (`sub_FC5D5B`, parameter edit) · 0xFC7CE9 (`sub_FC7C0D`, the tick) |
-| `sub_FC4AED` | 0xFC51A7 (inside the full packer) · 0xFC67E9 (`sub_FC6712`, parameter edit) |
+| sub-packer                         | callers                                                                                                                                                                     |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Pack104_StageRegs_00C0_0100_0240` | 0xFC56AA (inside the full packer) · 0xFC5EE9 (`Pack104_RestageRegs_00C0_0100_0240_ForVoice`, parameter edit) · 0xFC7CE9 (`Pack104_TickPositionMovement_ForVoice`, the tick) |
+| `Pack104_StageReg_0280`            | 0xFC51A7 (inside the full packer) · 0xFC67E9 (`Pack104_RestageReg_0280_ForVoice`, parameter edit)                                                                           |
 
 Three producers, three consumers, no leftovers.  This is the strongest structural signal in the
 timing picture and it is what separates the modulation destinations from the voice parameters.
 
 ### The classification
 
-| register | class | rate / trigger |
-|---|---|---|
-| chan+0x00C0 | **PERIODIC — model as a stream** | 40.69 Hz per sounding voice (both arms), + parameter edit, + every full write |
-| chan+0x0100 | **PERIODIC — but a constant on this firmware** | as above; the value is always 0x0100 (`Const_0100_251`) |
-| chan+0x0240 | **PERIODIC** | 40.69 Hz per sounding voice, arm 1 only; + parameter edit; + every full write |
-| chan+0x0280 | ONE-SHOT + parameter edit | full writes; plus `sub_FAECC7` on a param change |
-| chan+0x0140, chan+0x0180 | ONE-SHOT, with a conditional extra write at note time | full writes; plus `Dev104_SetChanRegs_0140_0180` at all 5 `MidiNote_*` sites when `sub_FC56C4` returns non-zero |
-| chan+0x0000 | ONE-SHOT, but written **twice** per note event and twice per channel at power-on | see §7 |
-| chan+0x0040, 0x0080, 0x01C0, 0x0200, 0x02C0, 0x0300, 0x0340, 0x0380, 0x03C0, 0x0400, 0x0440, 0x0480 | ONE-SHOT — voice parameters | only ever inside a full 19-register write |
+| register                                                                                            | class                                                                            | rate / trigger                                                                                                  |
+|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| chan+0x00C0                                                                                         | **PERIODIC — model as a stream**                                                 | 40.69 Hz per sounding voice (both arms), + parameter edit, + every full write                                   |
+| chan+0x0100                                                                                         | **PERIODIC — but a constant on this firmware**                                   | as above; the value is always 0x0100 (`Dev104_Reg0100_Const_251`)                                               |
+| chan+0x0240                                                                                         | **PERIODIC**                                                                     | 40.69 Hz per sounding voice, arm 1 only; + parameter edit; + every full write                                   |
+| chan+0x0280                                                                                         | ONE-SHOT + parameter edit                                                        | full writes; plus `sub_FAECC7` on a param change                                                                |
+| chan+0x0140, chan+0x0180                                                                            | ONE-SHOT, with a conditional extra write at note time                            | full writes; plus `Dev104_SetChanRegs_0140_0180` at all 5 `MidiNote_*` sites when `sub_FC56C4` returns non-zero |
+| chan+0x0000                                                                                         | ONE-SHOT, but written **twice** per note event and twice per channel at power-on | see §7                                                                                                          |
+| chan+0x0040, 0x0080, 0x01C0, 0x0200, 0x02C0, 0x0300, 0x0340, 0x0380, 0x03C0, 0x0400, 0x0440, 0x0480 | ONE-SHOT — voice parameters                                                      | only ever inside a full 19-register write                                                                       |
 
 **Population: 19 registers.  3 periodic, 1 param-edit-only, 2 note-time extras, 1 block 0,
 12 full-write-only.**  ⚠ Register 0x0100 is periodic *in traffic* and constant *in value* on
@@ -296,11 +296,11 @@ back to hardware: a 6-bit target code selects one of 49 arms through the table a
 
 ★ **Three arms of 49 reach 0x00104000** (probe section 10):
 
-| table index | target code | arm | what it recomputes and ships |
-|---|---|---|---|
-| 28 | 29 | 0xFAF246 → `sub_FAEAF9` | `sub_FC5D5B` → `sub_FC49AD` → registers **0x00C0, 0x0100, 0x0240** |
-| 29 | 30 | 0xFAF254 → `sub_FAEB65` | `sub_FC5BA2` / `sub_FC5D5B` → same three registers |
-| 36 | 37 | 0xFAF29A → `sub_FAECC7` | `sub_FC6712` → `sub_FC4AED` → register **0x0280** |
+| table index | target code | arm                     | what it recomputes and ships                                           |
+|-------------|-------------|-------------------------|------------------------------------------------------------------------|
+| 28          | 29          | 0xFAF246 → `sub_FAEAF9` | `sub_FC5D5B` → `sub_FC49AD` → registers **0x00C0, 0x0100, 0x0240**     |
+| 29          | 30          | 0xFAF254 → `sub_FAEB65` | `PartRec_SetPositionOffset_0005` / `sub_FC5D5B` → same three registers |
+| 36          | 37          | 0xFAF29A → `sub_FAECC7` | `sub_FC6712` → `sub_FC4AED` → register **0x0280**                      |
 
 All three go through `VoiceQuery_Tag00_Part` first, i.e. they act on the voices of one part.
 ⚠ What the target codes 29, 30 and 37 *mean* is UNIDENTIFIED — the dispatcher's own header
@@ -411,7 +411,7 @@ word writes to the port pair.**
 
 ### While the note sounds
 
-Every **24.6 ms** (40.69 Hz), for this voice, `sub_FACAB7` → `sub_FC7C0D` recomputes and ships
+Every **24.6 ms** (40.69 Hz), for this voice, `sub_FACAB7` → `Pack104_TickPositionMovement_ForVoice` recomputes and ships
 either `{chan+0x00C0, chan+0x0100, chan+0x0240}` or `{chan+0x00C0, chan+0x0100}` — §5.  Nothing
 else in the image writes the device while a note is held.
 
@@ -467,7 +467,7 @@ programs once and then stops talking to.
 
 * **`NotePool8_NoteOnOff`** (0xFC3E02) — a private eight-slot pool driven by link packets whose
   byte [1] is ≥ 0xF0.  Its note-on programs 0x00104000 in the order
-  `sub_FC7DAF` (0xFC3E91) → `Dev104_WriteChanReg0` (0xFC3EA1) →
+  `Pack104_StageReg_0000_ForVoice` (0xFC3E91) → `Dev104_WriteChanReg0` (0xFC3EA1) →
   `Dev104_LoadStageBImage` (0xFC3EA9) → `Dev104_WriteAllChanRegs` (0xFC3ECD).  ★ Its **note-off
   does not touch this device at all** — it writes 0xA200/0xA280 to the companion's 0x0840/0x0800
   and nothing else.
@@ -476,7 +476,7 @@ programs once and then stops talking to.
   with the literal **4** at 0xFAC422 — reaches zero, so at most **40.69 / 4 = 10.17 Hz** (98 ms
   per note).  Both counters are set by arm 0x87 of `GlobalSetup_Dispatch`
   (`VoiceDefaults_StoreFromPackedByte`), i.e. by a global-setup message from CPU 1.  Its device
-  order is identical to `NotePool8_NoteOnOff`'s: `sub_FC7DAF` (0xFAC3CC) →
+  order is identical to `NotePool8_NoteOnOff`'s: `Pack104_StageReg_0000_ForVoice` (0xFAC3CC) →
   `Dev104_WriteChanReg0` (0xFAC3D7) → `Dev104_LoadStageBImage` (0xFAC3E1) →
   `Dev104_WriteAllChanRegs` (0xFAC3EC).
 

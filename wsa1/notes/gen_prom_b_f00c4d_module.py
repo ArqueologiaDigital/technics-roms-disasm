@@ -190,9 +190,18 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path, write_part  # noqa: E402
 ROM_B = os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13")
 ROM_A = os.path.join(ROOT, "original_ROMs", "wsa1_prom_a.ic12")
-SRC_B = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+# ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
+# it is handed is the whole image: write_part() sees the master's
+# .include lines disappear.  That refusal is correct and is not the fix.
+# The fix for a RENAME is asm_source.edit_image(ROOT, <primary>, fn),
+# which applies the transform to every constituent file; for a SPLICE it
+# is asm_source.locate() on the block's anchor.  See notes/asm_source.py.
+SRC_B_MASTER = os.path.join(ROOT, "prom_b/wsa1_prom_b.s")   # the WRITE path: write_part() guards it
+SRC_B = image_path(ROOT, "prom_b/wsa1_prom_b.s")  # the READ path: the image, not the master
 SRC_A = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
 UNIDASM = os.path.expanduser("~/compartilhado/kn7000_mame_build/unidasm")
 LLVM = os.path.expanduser("~/compartilhado/llvm-project/build/bin")
@@ -700,7 +709,7 @@ def apply_():
         return 1
     before = len(src)
     src = src.replace(old, text.encode("utf-8"))
-    open(SRC_B, "wb").write(src)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC_B')
     print("spliced: %s grew by %d bytes" % (SRC_B, len(src) - before))
     return 0
 

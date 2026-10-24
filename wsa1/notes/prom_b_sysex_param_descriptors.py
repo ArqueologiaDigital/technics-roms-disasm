@@ -33,8 +33,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_path  # noqa: E402  (the image, not the master)
 sys.path.insert(0, os.path.join(ROOT, "notes", "sysex-probes"))
-PB = os.path.join(ROOT, "prom_b", "wsa1_prom_b.s")
+PB = image_path(ROOT, "prom_b/wsa1_prom_b.s")
 LO, HI = 0xF511DD, 0xF51E20
 BASE = 0xF00000
 ROM = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
@@ -170,9 +172,7 @@ def main():
     for d in ds:
         s = re.sub(r'\bRecordArray_F511DD \+ 0x%X\b' % (d - LO), nm[d][0], s)
     data = s.encode("latin-1")
-    with open(PB + ".tmp", "wb") as fh:
-        fh.write(data)
-    os.replace(PB + ".tmp", PB)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'PB')
     print("laid out %d descriptors" % len(ds))
 
 

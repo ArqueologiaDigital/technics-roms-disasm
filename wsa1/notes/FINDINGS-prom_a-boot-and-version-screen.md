@@ -198,7 +198,7 @@ arm.
 `ExtBoard_Identify` (`0xF8288F`) reads **10 bytes from remote `0x00C00000`** into
 RAM `0x2640` — `push 0x2640 / push 0x000A / push 0x00C00000 / call T_F40EF0`,
 then `call T_F4123C` (`Link_WaitBlockDone`) — and compares them byte by byte
-with `ExtBoardMagic_F828C7`, which is the ASCII `WSA1 EXTBD`. On a full match it
+with `ExtBoardMagic_Wsa1Extbd`, which is the ASCII `WSA1 EXTBD`. On a full match it
 writes `0x5A` to `(0x00C5)`; otherwise `(0x00C5)` stays 0.
 
 So `(0x00C5)` is the expansion-board-present flag and `0x00C00000` is the
@@ -249,7 +249,7 @@ push XIY / call T_F42E20           ; -> prom_b 0xF0E9CF Blink_Command
 ```
 
 with `<var>` = `(0x0DE5)`, `(0x0DED)`, `(0x0DBC)`, `(0x0DDA)`, `(0x0C0F)` in that
-order. `T_F42E20` is `Blink_Command`, which takes one pushed pointer
+order. `T_Blink_Command` is `Blink_Command`, which takes one pushed pointer
 (`FINDINGS-prom_b-field-blink.md`).
 
 **Entry counts** are read LE32 word by LE32 word until one is neither 0 nor an
@@ -283,7 +283,7 @@ storing the table, so a single changed byte fails it.
 
 It is read twice, with `C = (0xFFFFF8) & 0x0F` and `C = (0x2648) & 0x0F` — the
 ninth byte of prom_a's own tag and of the tag read from remote `0x00FFFFF0`, i.e.
-each ROM's revision nibble — and the byte goes to `T_F40678` with `W = 0` and
+each ROM's revision nibble — and the byte goes to `T_PanelLed_SendByte` with `W = 0` and
 `W = 1`, two LED wires. On variant 2 it is first `srl 0x04,A`, moving the pattern
 into the low nibble.
 
