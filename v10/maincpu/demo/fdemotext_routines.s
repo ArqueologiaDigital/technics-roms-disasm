@@ -16,6 +16,8 @@ FDemoText_ReturnNull:
 	ld xhl, 0:i3
 	ret
 
+; Returns in XHL entry WA (zero-extended index) of the u32 table the pointer at 0x90f2 points
+; to.
 FDemoText_LookupTableEntry:
 	extz wa
 	sla wa, 2

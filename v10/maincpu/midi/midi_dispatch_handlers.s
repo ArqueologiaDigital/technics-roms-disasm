@@ -10901,6 +10901,8 @@ AssSwb_ProcessLoop_Data_Join:
 	inc	6, xsp
 	ret
 
+; Returns in L byte BC of the record that entry WA of the pointer table at (0x90f2) points to,
+; or 0 when that entry is 0xffffffff.
 Part_LookupTableEntry:
 	ld xde, (0x90f2:16)
 	extz wa

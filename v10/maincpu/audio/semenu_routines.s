@@ -1187,6 +1187,8 @@ SeMenu_PartMask_Data_Code_Epilogue:
 	inc	8, xsp
 	ret
 
+; Returns HL = 1 when sound-editor part A (1..4) is enabled in the mask byte at 0x65e (bit
+; 2*(A-1)), else 0; parts outside 1..4 return 0.
 SeMenu_IsPartEnabled:
 	cp a, 1:i3
 	jr c, SeMenu_IsPartEnabled_OutOfRange
@@ -2106,8 +2108,8 @@ SeMenu_CheckObjValid:
 	ld hl, 0:i3
 	ret
 
-; Copies the entries of the record the u32 at 0x20c33 points to into the array at XWA: byte +3
-; of the record is the count, and that many bytes from record+6 go to XWA[0..].
+; Copies the entries of the record at 0x20c33 into the array at XWA: byte +3 of the record is
+; the count, and that many bytes from record+6 go to XWA[0..].
 SeMenu_FillEntryTable:
 	lda xhl, (0x020c33:24)
 	ld c, (xhl + 3)
@@ -6408,6 +6410,8 @@ SeMenu_StoreParamByte:
 	ld (xwa), c
 	ret
 
+; Copies byte A - 1 of the per-part block at 0x6ba to (XBC).
+;   In:  A = part (1..4), XBC = destination.
 SeMenu_LoadParamByte:
 	dec 1, a
 	extz wa

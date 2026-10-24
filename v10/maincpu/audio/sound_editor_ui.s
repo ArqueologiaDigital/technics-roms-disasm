@@ -9559,6 +9559,9 @@ SeFilLpq1_DrawStaticScreen_End:
 	call SeGfx_DrawStaticList
 	call SeMenu_PresetManager_Save
 	ret
+; Draws the filter pages' header list (SeGfx_DrawStaticList with SeFil_PageHeader_Records),
+; ending it at SeFil_DrawModeCaption_Records when the state byte 0x6ae is not 1 and at
+; SeFil_PageHeader_Records + 38 when it is.  Clears COLORBLIT_MODE first.
 SeFil_DrawPageHeader:
 	; --- Init: language-conditional XIX selection (35 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9572,6 +9575,8 @@ SeFil_DrawPageHeader_Join:
 	ld xiy, SeFil_PageHeader_Records
 	call SeGfx_DrawStaticList
 	ret
+; Draws the filter pages' mode caption: SeGfx_DrawStaticList over
+; SeFil_DrawModeCaption_Records .. +5, with COLORBLIT_MODE cleared first.
 SeFil_DrawModeCaption:
 	; --- Tail: clear flag, XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -19688,6 +19693,9 @@ StylCnvStorOkFunc_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Draws a line for PaintArrow_DrawFilled, optionally with x and y swapped.
+;   In:  XWA, XBC = the two points, stack word = non-zero to swap x and y of both (popped on
+;   return, RETD 2).  The swapped points go through local copies; DrawLine draws.
 StylCnvStorOkFunc_DataBlock:
 	dec	8, xsp
 	ld	xhl, xbc

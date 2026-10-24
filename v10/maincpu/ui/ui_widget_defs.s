@@ -1659,11 +1659,14 @@ MainLswPartGet:
 	inc 6, xsp
 	ret
 
+; Stores XWA + XBC in LSW_FILTER.
 SetLswFilter:
 	add xwa, xbc
 	ld (LSW_FILTER:24), xwa
 	ret
 
+; Stores XWA + XBC in LSW_FILTER (the same code as SetLswFilter; callers pass the values that
+; clear the filter).
 ResetLswFilter:
 	add xwa, xbc
 	ld (LSW_FILTER:24), xwa
@@ -8853,6 +8856,8 @@ InitializeObjectTable_Loop4:
 	lda xsp, (xsp + 14)
 	ret
 
+; Returns in HL the sum of the count words (+8) of object table entries WA..BC (14-byte entries
+; at 0x27ed2); 0 when WA > BC.
 CountObject:
 	dec 6, xsp
 	push xiz
@@ -11043,6 +11048,7 @@ GetTitleNow:
 	ld xhl, (TITLE_NOW:24)
 	ret
 
+; Returns in XHL the previous title as an object id (TITLE_OLD).
 GetTitleOld:
 	ld xhl, (TITLE_OLD:24)
 	ret
@@ -11661,6 +11667,7 @@ Viewable_Return:
 	lda xsp, (xsp + 20)
 	ret
 
+; Sets bit 2 of view XWA's instance flag word (+12) when XBC is non-zero, clears it when XBC = 0.
 SetChange:
 	pushw iz
 	ld iz, bc
@@ -11948,6 +11955,8 @@ DrawWidget_Hline_10_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's superview: the same object table with the index in the
+; instance's +6 word, or 0xffffffff when that word is 0xffff (no superview).
 View_GetSuperViewInstance:
 	push xiz
 	ld xiz, xwa
@@ -18380,6 +18389,8 @@ GetCurrentTarget:
 	ld xhl, (CURRENT_TARGET:24)
 	ret
 
+; Makes XWA the object that events addressed to 0xffffffff go to (CURRENT_TARGET); 0xffffffff
+; itself is ignored.
 SetCurrentTarget:
 	cp xwa, 0xffffffff
 	ret z

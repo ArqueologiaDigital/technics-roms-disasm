@@ -2037,6 +2037,8 @@ CtrlPanel_HandleKey10:
 	call ApPostEvent				; dispatch event
 	ret
 
+; Sets PART_SELECT from bit 0 of the word at 0xfc66 (bit clear: 1, set: 0) and appends switch
+; command {0x90, 0x10, PART_SELECT, 0xff} (AddswbWr).
 PartSelect_UpdateDisplayState:
 	ld a, (0xfc66:16)
 	and a, 0x1
@@ -2122,6 +2124,8 @@ SleepMainTask:
 	ld xde, 0:i3
 	jrl ApTaskControl
 
+; Sends EVT_WAKE_UP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
+; ApTaskControl).
 WakeUpMainTask:
 	ld xwa, NAKA_APFUNC_ApTaskControl
 	ld xbc, EVT_WAKE_UP_MAIN_TASK
@@ -2886,6 +2890,7 @@ GetPartSelect:
 	extz hl
 	ret
 
+; Returns the selected part (PART_SELECT) in L; H is not cleared (GetPartSelect zero-extends).
 GetCurrentPartSelect:
 	ld l, (PART_SELECT:16)
 	ret
@@ -2967,6 +2972,7 @@ UI_PostTimerResetEvent:
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Returns HL = 1 when CURRENT_TITLE differs from ACTIVE_TITLE, else 0.
 SeqState_HasModeChanged:
 	ld a, (CURRENT_TITLE:16)
 	cp a, (ACTIVE_TITLE:16)

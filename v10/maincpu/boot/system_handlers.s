@@ -1638,6 +1638,9 @@ SeqEvt_ProcessTimedEvents_Idle:
 	call SeqPlay_HandleVoiceReassign
 	ret
 
+; Hands every byte collected in the buffer at 0x477 (count word 0x475) to
+; TempoRingBuf_DequeueOne, then empties it and clears bit 0 of 0x459; runs at interrupt
+; level 6.  Preserves XIX and HL.
 TempoRingBuf_Consume:
 	push xix
 	pushw hl
@@ -2403,6 +2406,10 @@ TaskSched_GetCurrentGroup_Nested:
 	xor hl, hl
 	ret
 
+; Kernel: rotates ready queue A (rot_rdq_X, the ITRON rot_rdq call, jumps here): when more
+; than one task is ready at priority A (queue at 0x4c1 + 4*A), the first is moved to the end
+; and the scheduler runs (TaskSched_Dispatch); otherwise it returns.  Interrupts at level 6,
+; registers preserved.
 TaskSched_YieldToQueue:
 	push	sr
 	ei 6
@@ -3555,6 +3562,8 @@ TempoRingBuf_BytecodeSnippet2:
 	ld	hl, (0x1e751:24)
 	ret
 
+; Resets the tempo event buffer: Seq_RingBuf_Init_2048 on the ring descriptor ending at
+; 0x1e753.  Preserves IX and XDE.
 TempoRingBuf_Init:
 	pushw ix
 	push xde
@@ -3849,6 +3858,8 @@ SeqEvtBuf_SaveReadPos:
 	popw hl
 	ret
 
+; Seq_RingBuf_ReadByte_Large on the sequencer event buffer whose descriptor ends at 0x1f271.
+; Preserves IX and XDE.
 SeqEvtBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -6624,6 +6635,11 @@ Flash_WriteFromMemory_Delay:
 	lda xsp, (xsp + 10)
 	ret
 
+; Erases a flash sector and rewrites it.
+;   In:  A = chip / bank, XDE = sector address, XBC = the other argument of
+;        Flash_WriteFromMemory.
+;   Flash_IdentifyChip, Flash_EraseSectorWithBankSelect (XBC = XDE), wait for Flash_CheckReady
+;   to stop returning 0xffff, then Flash_WriteFromMemory with the original XBC / XDE.
 Flash_EraseSectorAndWrite:
 	lda xsp, (xsp - 10)
 	ld (xsp), xde
@@ -7380,6 +7396,10 @@ FDC_SetupSectorParams:
 	lda xsp, (xsp + 14)
 	ret
 
+; Reads sectors from the floppy, retrying until it succeeds.
+;   In:  XWA, BC, XDE = the parameters FDC_SetupSectorParams puts in the command block at 0x62e.
+;   Issues command 3 through FDC_CommandEntry; on any error it recalibrates (FDC_InitRecalibrate)
+;   and tries again, with no retry limit.
 FDC_ReadSectors:
 	dec 6, xsp
 	push xiz

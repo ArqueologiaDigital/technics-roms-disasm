@@ -3675,6 +3675,7 @@ Debug_SWI_JumpTable_Code:
 	jp	BOOT_ENTRY_POINT
 	ret
 
+; Returns in L the firmware version byte (FIRMWARE_VERSION).
 Get_Firmware_Version:
 	ld l, (FIRMWARE_VERSION:24)
 	ret

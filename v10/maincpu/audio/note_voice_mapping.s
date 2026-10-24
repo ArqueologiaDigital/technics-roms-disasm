@@ -25967,6 +25967,10 @@ CommPacket_WriteMeas_Block:
 	res 7, l
 	ret
 
+; Sends a packet on the inter-CPU link: an 8-byte header {0x2c, 0, 8, C, 0, 0, E, sequence}
+; followed by E bytes from XWA, built in the buffer at 0xe320 and passed to sendCOMM (WA = 3,
+; BC = E + 8).  The sequence number at 0xe197 is incremented first; its low 7 bits are sent and
+; returned in L.
 SendCOMM_VariableLengthPacket:
 	push xiz
 	lda xhl, (0xe320:16)
@@ -28748,6 +28752,8 @@ Math_DivideU32_Shift2:
 	ld xde, xwa
 	ret
 
+; C strncat(dst, src, n): appends at most n characters of src to dst and always terminates.
+;   In:  stack +4 = dst, +8 = src, +12 = n (u16).  Out: XHL = dst.
 Strncat:
 	ld xix, (xsp + 4)
 	ld xhl, xix

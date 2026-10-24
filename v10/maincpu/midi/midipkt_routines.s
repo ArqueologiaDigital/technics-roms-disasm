@@ -592,6 +592,11 @@ MidiPkt_DispatchSpecialType_Return:
 	inc 8, xsp
 	ret
 
+; Searches a pointer list for a MIDI control record matching a parameter.
+;   In:  XWA = parameter (+1 = id, +3 = flag mask), XBC = list of record pointers ending with
+;        MidiCtl_NullRecord.
+;   Out: XHL = the first record whose byte +7 equals the id and whose byte +8 shares a bit with
+;        the mask; the end marker MidiCtl_NullRecord when none does.
 MidiPkt_MatchParamInTable:
 	ld xde, xbc
 	lda xix, (MidiCtl_NullRecord:24)

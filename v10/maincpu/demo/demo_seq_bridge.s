@@ -484,6 +484,7 @@ CDlikeSwTtl_SendStartEvtArg1:
 	ld	xde, 1:i3
 	jp	ApPostEvent
 
+; Posts EVT_SET_VISIBLE with parameter 0 to view 0x8b0003 (ApPostEvent), which hides it.
 CDlikeSwTtl_SendStartEvt:
 	ld xwa, 0x8b0003
 	ld xbc, EVT_SET_VISIBLE
@@ -598,6 +599,8 @@ SeqRecPlay_EnablePlayOnly:
 	ld xbc, EVT_REFRESH_PARA_DRAW
 	jp ApPostEvent
 
+; Clears the bytes at 0x21092 and 0x21094 and posts EVT_REFRESH_PARA_DRAW to views 0x6f0025
+; (parameter 0) and 0x6f0024 (parameter = the byte at 0x21094, now 0) so both redraw.
 SeqRecPlay_DisableBoth:
 	ld (0x021092:24), 0x00
 	ld (0x021094:24), 0x00

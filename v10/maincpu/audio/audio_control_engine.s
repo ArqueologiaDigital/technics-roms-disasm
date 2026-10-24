@@ -2660,6 +2660,9 @@ AudioChange_SetChannelFlag:
 	ld (0x8f60:16), l
 	ret
 
+; Calls every handler of a table whose mask shares a bit with WA.
+;   In:  WA = bits, XBC = table of 6-byte {mask word, handler u32} entries ending with a 0xffff
+;        mask.
 DispatchBitmaskHandlers:
 	dec 2, xsp
 	push xiz
@@ -6755,6 +6758,9 @@ SndParam_FetchSequencerParams:
 	ld (MIDI_MSG_DATA3:16), 0
 	ret
 
+; Copies one byte of a panel TLV payload to 0x9132: the payload of tag MIDI_MSG_STATUS
+; (PanelTlv_PayloadOfTag), at the offset in the byte 0x912f.  Does nothing when the tag is
+; absent.
 SndParam_WriteLookupAndStore:
 	ld	a, (MIDI_MSG_STATUS:16)
 	extz	wa
@@ -6802,6 +6808,9 @@ SwbtWr_CheckBufferOverflow:
 SwbtWr_CheckBufferOverflow_Skip:
 	jrl	SwbtWr_AppendFixedParamBlock
 
+; Appends a fixed parameter block to the switch-write buffer (SwbtWr_AppendFixedParamBlock),
+; first sending and emptying the buffer (SwbtWr_ReinitOutputBank, offset word 0x90de = 0) when
+; the offset has reached 508.
 SwbtWr_WriteParamBlock:
 	cpw (0x90de:16), 508
 	jr c, SwbtWr_WriteParamBlock_Join
@@ -8175,6 +8184,7 @@ SndParam_UpdateVoiceEntry_Safe:
 	pop xwa
 	ret
 
+; Loads BC and DE from 0x917e / 0x9180 and runs MIDI_ClearGuardAndDispatchCC.
 MIDI_LoadParamsAndDispatchCC:
 	ld bc, (0x917e:16)
 	ld de, (0x9180:16)
@@ -8211,6 +8221,12 @@ MIDI_DispatchCC_Guarded:
 MidiGuarded_Return:
 	ret
 
+; Writes bits of a voice parameter byte and records the change.
+;   In:  C = record index into the pointer table at (0x90f2), B = byte offset, D = bit mask,
+;        E = new bits.
+;   Nothing happens when D = 0 or the record pointer is the dummy 0x9166.  Otherwise the masked
+;   bits of the byte are replaced by E's and BC / DE are stored in MIDI_MSG_STATUS /
+;   MIDI_MSG_DATA2.  Registers are preserved.
 MIDI_WriteVoiceParamCC:
 	push xix
 	pushw wa
@@ -8393,6 +8409,9 @@ SeqTimer_ClearFlag:
 SeqTimer_Return:
 	ret
 
+; Tail-jumps to entry (byte 0xfc5d & 7) of RegisterBit_Manipulate_Table with A = the low bits of
+; the word at 0xfc66 masked with 0x203 (1 when they are 0), WA, HL and XIX pushed for the
+; handler to restore.
 ToneGen_DispatchByMode:
 	pushw wa
 	pushw hl

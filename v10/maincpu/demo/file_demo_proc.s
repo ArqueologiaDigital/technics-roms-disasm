@@ -5074,6 +5074,9 @@ FileIO_GetRecordType_Standard:
 	popw iz
 	retd 0x4
 
+; Makes a file name displayable in place: '~' becomes '_' and control characters become spaces,
+; up to the terminator.
+;   In:  XWA = string.
 FileIO_GetRecordType_Extended:
 	cp (xwa), 0x0
 	ret z
@@ -5152,6 +5155,7 @@ FileIO_FormatRecordName:
 	scc8 z, l
 	ret
 
+; Sets bit A (0..9) of the word at 0x272cc; A >= 10 does nothing.
 FileIO_FormatName_Loop:
 	cp a, 0xa
 	ret nc
@@ -5425,9 +5429,9 @@ GetDiskSize_Return:
 	ld l, (0x025db6:24)
 	ret
 
-; Returns in XHL the disk-information record pointer stored at 0x25d6c, first refreshing the
-; free-space field (+4) with GetDiskFreeSpace when the record still holds FileIO_DiskInfoInit's
-; value.
+; Returns in XHL the u32 at 0x25d6c, the cached result of GetDiskFreeSpace, first calling
+; GetDiskFreeSpace (XWA = 0x25d6c, XBC = 0x25d70) when it still holds FileIO_DiskInfoInit's
+; initial value.
 GetEncodedFreeSpaceData:
 	lda xwa, (0x025d6c:24)
 	ld xbc, (FileIO_DiskInfoInit:24)
@@ -5440,6 +5444,9 @@ GetEncoded_Return:
 	ld xhl, (0x025d6c:24)
 	ret
 
+; Refreshes the cached disk free-space value at 0x25d6c (GetDiskFreeSpace with XWA = 0x25d6c,
+; XBC = 0x25d70) and returns it in XHL.  GetEncodedFreeSpaceData does the same only when the
+; cache is invalid.
 FileIO_GetDiskFreeSpace:
 	lda xwa, (0x025d6c:24)
 	lda xbc, (xwa + 4)
@@ -5447,7 +5454,8 @@ FileIO_GetDiskFreeSpace:
 	ld xhl, (0x025d6c:24)
 	ret
 
-; Resets the disk-information record pointer at 0x25d6c to FileIO_DiskInfoInit's value.
+; Invalidates the cached disk free-space value: stores FileIO_DiskInfoInit's initial value at
+; 0x25d6c, so the next GetEncodedFreeSpaceData asks GetDiskFreeSpace again.
 FileIO_ResetCurrentRecord:
 	ld xwa, (FileIO_DiskInfoInit:24)
 	ld (0x025d6c:24), xwa
@@ -5532,6 +5540,9 @@ GetCurrentFile_ReturnIndex:
 	ld hl, (0x025ea8:24)
 	ret
 
+; Selects file WA: stores it as the selected index (word at 0x25ea8) when
+; ValidateFileSelectionIndex accepts it.  Out: HL = the selected index (unchanged when WA is
+; rejected).
 NotifyUIOfSelectionChange:
 	pushw iz
 	ld iz, wa
@@ -6215,6 +6226,8 @@ NavToFileIdx_Return:
 	popw iz
 	ret
 
+; Returns in XHL the 82-byte record of file WA on the current page (0x25eb2 + 82 * (WA - first
+; index word 0x271ee)), or FileIO_EmptyEntryName when ValidateFileRange rejects WA.
 GetRecordPtrForFile:
 	pushw iz
 	ld iz, wa
@@ -6277,6 +6290,9 @@ ValidateAndSearch_Return:
 	ret
 
 
+; Rebuilds the second page of file records (BuildSecondPageRecords) and records its range: first
+; index word 0x271ee = 0, last index word 0x271ec = count - 1 (0 when there are none), and the
+; word at 0x271f0 (initially 0x3b) is lowered to that last index.
 GetFileCountEncoded:
 	ldw (0x0271ee:24), 0x0000
 	ldw (0x0271f0:24), 0x003b

@@ -882,6 +882,7 @@ SwbtWr_CheckSpace:
 SwbtWr_Done:
 	retd 0x2
 
+; SwbtWr_ProcessAll with XIZ preserved.
 SwbtWr_CallProcessAll:
 	push xiz
 	calr SwbtWr_ProcessAll
@@ -1216,6 +1217,8 @@ VoiceParam_RestoreReverbChorus_Loop:
 	inc 4, xsp
 	ret
 
+; Copies the RAM block 0xf980..0xfda1 (0x422 bytes) to 0xf460 (Mem_Copy).  The name does not
+; describe it.
 BitMapOut_ComputeRegionDelta:
 	lda xwa, (0xfda2:16)
 	lda xbc, (0xf980:16)
@@ -2059,6 +2062,8 @@ CompIface_RampDown_Clamp:
 	call CtrlPanel_IndicatorDispatch
 	ret
 
+; When bit 2 of 0xc1f0 is set: clears it, sets bit 0, and turns on indicator 0x4d
+; (CtrlPanel_SetIndicatorLED).
 CompIface_ResetPedal:
 	bit 2, (0xc1f0:16)
 	ret z
@@ -2808,6 +2813,8 @@ DSPCfg_ReadMultiField_Final:
 	lda xsp, (xsp + 12)
 	ret
 
+; Returns in HL the byte at (XWA) zero-extended: the count byte that heads a DSP parameter
+; record.
 DSPCfg_GetParamCount:
 	ld l, (xwa)
 	extz hl

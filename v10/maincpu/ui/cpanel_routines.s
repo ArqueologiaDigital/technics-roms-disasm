@@ -600,6 +600,11 @@ CPanel_InitButtonState:	; do that
 	ret
 
 
+; Waits until the control-panel link is idle, then prepares it for reception.
+;   Polls (up to 200 times, DELAY_1500_LOOPS between polls) until SCLK1 (PF.6) is high, INTA
+;   (PE.5) is low, bits 0-1 of CPANEL_TX_RX_FLAGS are clear and the LED transmit buffer is
+;   empty.  Then, on success or timeout alike, clears the INTRX1 / INTTX1 requests, sets INTES1,
+;   disables reception (SC1MOD.RXE = 0) and sets bit 7 of CPANEL_PROTOCOL_FLAGS.
 CPanel_WaitTXReady:
 	ld (CPANEL_COUNTER_DOWN_FROM_200:16), 200; =200
 
@@ -1525,6 +1530,7 @@ LEDs_Return:
 	ret
 
 
+; Advances the control-panel receive index IY, wrapping from 92 to 0.
 CPanel_IncRXPtr:
 	inc 1, iy
 	cp iy, 0x5c
@@ -1545,6 +1551,7 @@ IncLED_NoWrap:
 	ret
 
 
+; Advances the control-panel event index IX, wrapping from 128 to 0.
 CPanel_IncEventPtr:
 	inc 1, ix
 	cp ix, 0x80

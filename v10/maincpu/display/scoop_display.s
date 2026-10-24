@@ -9137,6 +9137,8 @@ MemConfig_Handler_3_Helper5:
 	call	Interrupt_SetFlagBytecode
 SndDispatch_ProcessCommand_Return3:
 	ret
+; Redraws the display regions in order: Display_UpdateRegion0, 1, 6 and 3,
+; SqStep_UpdateChordCellCursor, then Display_UpdateRegion2.
 MemConfig_Handler_5_Helper11:
 	call	Display_UpdateRegion0
 	call	Display_UpdateRegion1
@@ -10335,6 +10337,10 @@ VoiceSlot_RetZ_Join3:
 VoiceSlot_RetZ_Return:
 	ret
 
+; Checks the event at the current part's read position and handles it.
+;   Out: W = 0xff when the next byte is past the end of the block chain (VoiceSlot_FlagCheck),
+;        when it is 0x82, or when the current byte is 0x84; otherwise W = 0 and
+;        VoiceSlot_CompareRet is called.
 VoiceSlot_LoadAndDispatch:
 	call VoiceSlot_FlagCheck
 	cp w, 0xff
@@ -11778,9 +11784,9 @@ VoiceSlot_StatusRet_Tbl2:
 	.byte	0x00, 0x06, 0x04, 0x05, 0x03, 0x07, 0x02, 0x07, 0x01, 0x07, 0x07, 0x07
 
 ; Saves the current part's voice selection into save slot A (0..7, 8 bytes each at 0xdff).
-;   Slot = {word at 0xc9e + 2*(part-1), byte +32 of the record at 0xcbe + (part-1),
-;   byte 0xd57, word 0xd58, word 0xd5a}; the part number is the byte at 0xeee.  Registers are
-;   preserved.  VoiceSlot_RestoreState writes the same fields back.
+;   Slot = {word at 0xc9e + 2*(part-1), byte at 0xcbe + (part-1), byte 0xd57, word 0xd58,
+;   word 0xd5a}; the part number is the byte at 0xeee.  Registers are preserved.
+;   VoiceSlot_RestoreState writes the same fields back.
 VoiceSlot_SaveState:
 	pushw wa
 	push xhl
@@ -18271,6 +18277,10 @@ Scoop_EventHandler_SpecialMode_Skip13:
 Scoop_EventHandler_SpecialMode_Return:
 	ret
 
+; Copies BC bytes downwards (LDDR) from source offset IY in the block at (0x267e) to destination
+; offset IX in the block at (0x267a): one piece of the backward chained copy in the sequencer
+; event memory.  Out: IY and IX = the offsets after the copy.  BC = 0 copies nothing.  Preserves
+; WA, XDE and XHL.
 Scoop_SpecialMode_Setup:
 	pushw wa
 	push xde
