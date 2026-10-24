@@ -64,7 +64,11 @@ item that has no 1:1 counterpart is dropped and counted instead of aborting the 
 - **Notes.** FUNC_DOC and annotation text have their 941 CPU addresses translated. An address
   without a counterpart is printed `build-941 0x...`, so it never reads as a 935 address. Two
   addresses are the same in every build: `0x4840000F` and the library loader's sentinel
-  destination `0x4C03FFF0` (the latter checked in the build's own descriptor).
+  destination `0x4C03FFF0` (the latter checked in the build's own descriptor). A note is
+  written for 941's routine, so when the build's routine under the same name is different code
+  (the test `make check-names-<N>` applies), `mark_edited_docs()` puts a first line on the note
+  saying so. In 935 no noted routine is edited; in 893 two are, `TechniChordCompute` and
+  `SdCardDetectDebounce` (the generator prints the list when it runs).
 - **Boot header.** 935 links the reset `jmp` in its 3-byte form, so its second vector is at
   `0x8`, not `0xA`. `boot_header()` now spells that layout too (`_reset`, `_vector_08`,
   `_rom_marker` = the release byte).
@@ -102,7 +106,8 @@ The `func_` count is the number of function labels that no symbol file names:
 
 - Name, by reading the code, 935's and 893's own versions of the DSP host-port routines that
   941 rewrote. They are at the front of region 1, `0x48404D10` to `0x48407CA8`, where the
-  two builds agree. The four 941 names that found no place would name them if the code were
+  two builds have the same code apart from relocated absolute addresses (so they are not
+  byte-identical there). The four 941 names that found no place would name them if the code were
   the same.
 - 893's `func_` labels and the SD-card code that 941 reworked (the `SdSnd*` index accessors
   that have no counterpart) are named only where 941's names port.

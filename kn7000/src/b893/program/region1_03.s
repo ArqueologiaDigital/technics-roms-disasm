@@ -3591,6 +3591,8 @@ loc_48472D6B:
     mov     d2, d0
     ret     [d2,d3], 0x18
 # TechniChordCompute  (CPU 0x48472d6f)
+#   (This note was written for build 941. This build's routine is different
+#    code -- make check-names-893 lists it -- so check the note against it.)
 #   the Techni-Chord harmony engine (pure software -- no TG registers):
 #    1. GetCurrentChord copies {type, root, ...} from RAM 0x50000B18
 #    2. chord-type normalise via jump table build-941 0x485BC3EC (types 29..41 are

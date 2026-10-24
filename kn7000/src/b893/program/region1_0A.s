@@ -18818,6 +18818,8 @@ loc_4854B65A:
 loc_4854B65C:
     ret     0, 0xc
 # SdCardDetectDebounce  (CPU 0x4854b65f)
+#   (This note was written for build 941. This build's routine is different
+#    code -- make check-names-893 lists it -- so check the note against it.)
 #   100-tick (counter 0x50151BD8) insertion debounce over the raw read;
 #   last-raw shadow 0x50005204, edge timestamp 0x50005208; removal is
 #   reported immediately

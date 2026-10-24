@@ -3610,8 +3610,9 @@ MAP_CACHE = "build/offset-maps"     # offset_map.cached(): the maps the Makefile
 def select_ported_build(key):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
     global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
-    global FUNC_END, LIB_CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS
+    global FUNC_END, LIB_CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS, FUNC_DOC
     cfg = PORTED_BUILDS[key]
+    code941 = [(0x80, R1_END, BASE), (LIB_FILE_BASE, IMAGE_END, LIB_CPU_BASE - LIB_FILE_BASE)]
     from port_symbols import Porter
     rd = lambda path: open(path, "rb").read()
     P = Porter(rd("baserom/kn7000_program.rom"), rd(cfg["rom"]),
@@ -3705,10 +3706,54 @@ def select_ported_build(key):
     DOC_XLATE = xlate
 
     ANN_PORT = (lambda cpu: P.port(cpu)[0], lambda a: P.port(a)[0])
+    FUNC_DOC = mark_edited_docs(key, start941, code941, [
+        (0x80, R1_END, BASE), (LIB_FILE_BASE, IMAGE_END, LIB_DELTA)])
     TITLE = cfg["title"]
     for what, items in dropped.items():
         print(f"gen_program_s: {key}: {len(items)} build-941 {what} without a 1:1 counterpart "
               f"dropped: {', '.join(items)}")
+
+
+def mark_edited_docs(key, start941, code941, code_new):
+    """FUNC_DOC with a first line added to each note whose routine is different
+    code in build `key`: the notes describe 941's routine, and a ported name can
+    sit on a routine that was edited between the builds. "Different" is the test
+    make check-names-<N> applies (tools/check_ported_names.py): the
+    relocation-masked signature of tools/port_names_by_code.py, entry to first
+    return, differs. A routine that has no return in range is left unmarked, as
+    check-names leaves it unclassified."""
+    import gen_image_s as GI
+    import port_names_by_code as PN
+
+    def image(rom, code):           # decoded on demand: only the noted routines are read
+        img = GI.Image.__new__(GI.Image)
+        img.rom, img.base, img.code, img.unidasm = rom, BASE, sorted(code), UNIDASM
+        img.d, img.ix = open(rom, "rb").read(), {}
+        return img
+    a, b = image("baserom/kn7000_program.rom", code941), image(ROM, code_new)
+    here = {}
+    for path in [SYM] + MANUAL_SYM:
+        for line in open(path):
+            m = re.match(r"0x([0-9A-Fa-f]{8})\s+(\S+)", line)
+            if m and not line.lstrip().startswith(";"):
+                here.setdefault(m.group(2), int(m.group(1), 16))
+    build = key.lstrip("b")
+    note = ("(This note was written for build 941. This build's routine is different",
+            f" code -- make check-names-{build} lists it -- so check the note against it.)")
+    out, marked = dict(FUNC_DOC), []
+    for name in sorted(FUNC_DOC):
+        if name not in here or name not in start941:
+            continue
+        oa, ob = a.off(BASE + start941[name]), b.off(here[name])
+        if oa is None or ob is None:
+            continue
+        sa, sb = PN.signature(a, oa), PN.signature(b, ob)
+        if sa is not None and sb is not None and sa != sb:
+            out[name] = note + tuple(FUNC_DOC[name])
+            marked.append(name)
+    print(f"gen_program_s: {key}: {len(marked)} FUNC_DOC notes on routines that are different"
+          f" code in this build marked: {', '.join(marked) or '-'}")
+    return out
 
 
 BOOT = "\0boot header"            # where main() puts boot_header's lines
