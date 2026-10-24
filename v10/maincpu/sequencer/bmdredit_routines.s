@@ -339,6 +339,8 @@ BmDrEdit_CalcNotePos_ClampSize:
 	popw_erp 0xfa
 	ret
 
+; Note box for the horizontal editor: x1 0x27ba = (0x2808) / 4 + 0x16, x2 0x27bc = (0x280a) / 4 +
+; x1, y1 0x27be = BmDrEdit_RenderHorizontal_Table[(0x2806)], y2 0x27c0 = y1 + 3.
 BmDrEdit_RenderHorizontal:
 	ld wa, (0x2808:16)
 	srl wa, 2
@@ -358,6 +360,7 @@ BmDrEdit_RenderHorizontal:
 	ld (0x27c0:16), wa
 	ret
 
+; BmDrEdit_RenderHorizontal with x1 = (0x2808) / 4 + 0x5b and BmDrEdit_RenderVertical_Table.
 BmDrEdit_RenderVertical:
 	ld wa, (0x2808:16)
 	srl wa, 2
@@ -377,6 +380,10 @@ BmDrEdit_RenderVertical:
 	ld (0x27c0:16), wa
 	ret
 
+; Copies byte 0x281c to 0x210b0 and word 0x2820 to 0x210b2, places the box
+; (BmDrEdit_CalcSecondaryPosition, then BmDrEdit_RenderSecondaryHoriz on TITLE_SQNOTEEDT, else
+; BmDrEdit_RenderSecondaryVert) and draws it with DrawDesignBox from an 8-byte stack record (words
+; 0x27c2, 0x27c6, 0x27c4, 0x27c8 at +0, +2, +4, +6), BC = DE = 0.
 BmDrEdit_RenderSecondaryBlock:
 	dec 8, xsp
 	ldmmb_dd24 0xb0, 0x10, 0x02, 0x1c, 0x28
@@ -403,6 +410,8 @@ BmDrEdit_RenderSecondary_StoreCoords:
 	inc 8, xsp
 	ret
 
+; 0x27c2 = (0x281e) / 4 + 0x16, 0x27c4 = (0x210b2) / 4 + (0x27c2), 0x27c6 =
+; BmDrEdit_RenderHorizontal_Table[(0x210b0)], 0x27c8 = (0x27c6) + 3.
 BmDrEdit_RenderSecondaryHoriz:
 	ld wa, (0x281e:16)
 	srl wa, 2
@@ -422,6 +431,8 @@ BmDrEdit_RenderSecondaryHoriz:
 	ld (0x27c8:16), wa
 	ret
 
+; BmDrEdit_RenderSecondaryHoriz with + 0x5b and BmDrEdit_RenderVertical_Table, then 0x27c6 - 2
+; and 0x27c8 + 2.
 BmDrEdit_RenderSecondaryVert:
 	ld wa, (0x281e:16)
 	srl wa, 2
@@ -443,6 +454,9 @@ BmDrEdit_RenderSecondaryVert:
 	incw 2, (0x27c8:16)
 	ret
 
+; 0x281e = ((0x2814) * 96 + (0x2816)) - ((0x280c) * 96 + (0x280e)); byte 0x210b0 - (0x2826), then +
+; 3 on TITLE_SQNOTEEDT when 0x2798 is 0, or 11 minus it on the other title.  The length 0x210b2 is
+; cut so that (0x281e) + length stays within (0x2774) * 96 - 1.
 BmDrEdit_CalcSecondaryPosition:
 	ld bc, (0x2814:16)
 	mul bc, 0x60
@@ -575,6 +589,7 @@ BmDrEdit_TempoEventLoop:
 	jr nz, BmDrEdit_ProcessTempoEvent
 	ret
 
+; Counts the editor timer 0x295c down while bit 7 is set, stopping at 0x80.
 BmDrEdit_DecrementDelayA:
 	ld a, (0x295c:16)
 	bit 7, a
@@ -585,6 +600,9 @@ BmDrEdit_DecrementDelayA:
 	ld (0x295c:16), a
 	ret
 
+; When the timer 0x295c has reached 0x80: clears it and tail-jumps by action 0x295d: 5 ->
+; BmDrEdit_DelayAction_WalkAndUpdateAlt, 4 -> _UpdateScrollAlt, 3 -> _CheckCountError, 2 ->
+; _WalkAndUpdate, 1 -> _SetupAndWalk, others -> BmDrEdit_HandleDelayExpired_Rescan.
 BmDrEdit_DelayAExpired:
 	cp (0x295c:16), 128
 	ret nz
@@ -602,6 +620,7 @@ BmDrEdit_DelayAExpired:
 	jrl nz, BmDrEdit_HandleDelayExpired_Rescan
 	jrl BmDrEdit_DelayAction_SetupAndWalk
 
+; Counts the timer 0x295e down while bit 7 is set, stopping at 0x80.
 BmDrEdit_DecrementDelayB:
 	ld a, (0x295e:16)
 	bit 7, a
@@ -612,6 +631,8 @@ BmDrEdit_DecrementDelayB:
 	ld (0x295e:16), a
 	ret
 
+; When the timer 0x295e has reached 0x80: clears it and tail-jumps to
+; BmDrEdit_DelayAction_PlayClick.
 BmDrEdit_DelayBExpired:
 	cp (0x295e:16), 128
 	ret nz
@@ -621,6 +642,8 @@ BmDrEdit_DelayBExpired:
 BmDrEdit_DelayReturn:
 	ret
 
+; Takes the first free 3-byte slot at 0x2746 (8 slots, 1 in drum mode, bit 0 of 0x2742): sets bit 7
+; of byte 0 and copies bytes 0x2960 / 0x2961 to +1 / +2.  Nothing when all are taken.
 BmDrEdit_AllocateNoteSlot:
 	ldw ix, 0x8
 	bit 0, (0x2742:16)
@@ -671,6 +694,8 @@ BmDrEdit_RefreshDisplayState:
 	set 4, (DEMO_CONTROL_FLAGS:16)
 	ret
 
+; HL = 0xffff when entry A of the song slot's type table (Part_ReadVoiceByte, WA = 0) is 0x0d, 0x0f
+; or 0x10, else 0.
 BmDrEdit_CheckNoteType:
 	ld c, a
 	extz bc
@@ -691,6 +716,8 @@ BmDrEdit_CheckNoteType_NotDrum:
 	ld hl, 0:i3
 	ret
 
+; UI_PostModeChangeEvent with WA = 0x98 in drum mode (bit 0 of 0x2742), else 0x95; then word 0xd4f
+; -> 0x2963, SeqVoice_FindSingleActive, and PART_SELECT -> 0x1d58.
 BmDrEdit_SaveSequencerState:
 	bit 0, (0x2742:16)
 	jr z, BmDrEdit_SaveSeqState_SetMode95
@@ -707,6 +734,8 @@ BmDrEdit_SaveSeqState_Apply:
 	ldmm8 7512, PART_SELECT
 	ret
 
+; HL = 0xffff while the editor timer runs (bit 7 of 0x295c) with action 0x295d non-zero.  Otherwise
+; moves the measure 0x2744 one on (at most 999) with BmDrEdit_ScrollReset, HL = 0.
 BmDrEdit_CheckScrollBusy:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ScrollRight
@@ -727,6 +756,8 @@ BmDrEdit_ScrollRight_Done:
 	ld hl, 0:i3
 	ret
 
+; HL = 0xffff while the editor timer runs (bit 7 of 0x295c) with action 0x295d non-zero.  Otherwise
+; moves the measure 0x2744 one back (at least 1) with BmDrEdit_ScrollReset, HL = 0.
 BmDrEdit_CheckScrollBusyAlt:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ScrollLeft
@@ -758,6 +789,9 @@ BmDrEdit_ScrollReset:
 	ld (0x295d:16), 0
 	ret
 
+; Unless the timer runs with an action other than 1: the cursor tick 0x2784 + 1 (at 0x5f
+; BmDrEdit_PitchScrollOverflow instead), NoteEditSy_SendScrollCmd2, NoteEditSy_CallFarRoutine,
+; BmDrEdit_BuildVoice_NullReturn and BmDrEdit_SetFeedbackTimer.
 BmDrEdit_PitchScrollUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_PitchScrollUp
@@ -775,6 +809,9 @@ BmDrEdit_PitchScrollUp:
 	calr BmDrEdit_BuildVoice_NullReturn
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Unless the timer runs with an action other than 1: the cursor tick 0x2784 - 1 (at 0
+; BmDrEdit_PitchWrapToEnd instead), NoteEditSy_SendScrollCmd2, NoteEditSy_CallFarRoutine,
+; BmDrEdit_BuildVoice_NullReturn and BmDrEdit_SetFeedbackTimer.
 BmDrEdit_PitchScrollDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_PitchScrollDown
@@ -792,6 +829,9 @@ BmDrEdit_PitchScrollDown:
 	calr BmDrEdit_BuildVoice_NullReturn
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Unless the timer runs with an action other than 2, and only with bit 0 of 0x295f set: moves the
+; note 0x2786 down in drum mode (bit 0 of 0x2742), up otherwise (BmDrEdit_DecrementVelocity /
+; BmDrEdit_IncrementVelocity, in BmDrEdit_VelocityDown_Check).
 BmDrEdit_VelocityUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_VelocityUp_Dispatch
@@ -805,6 +845,10 @@ BmDrEdit_VelocityUp_Dispatch:
 	jr nz, BmDrEdit_DecrementVelocity
 	jr BmDrEdit_IncrementVelocity
 
+; The reverse of BmDrEdit_VelocityUp_Check.  The two bodies after it step the note 0x2786 within
+; 1..0x7f (in drum mode through BmDrEdit_DrumVoiceUp / _DrumVoiceDown), write and play it
+; (BmDrEdit_UpdateVelocityDisplay), redraw (NoteEditSy_SendScrollCmd3) and set the timer 0x295c =
+; 131, 0x295d = 2.
 BmDrEdit_VelocityDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_VelocityDown_Dispatch
@@ -848,6 +892,8 @@ BmDrEdit_DecrementVelocity:
 	ld (0x295d:16), 2
 	ret
 
+; Only while the timer is idle: with bit 0 of 0x295f the gate 0x2788 + 1 (BmDrEdit_IncrementGateTime,
+; in BmDrEdit_GateOrVelocityDown); otherwise, in drum mode, BmDrEdit_IncrementVelocityValue.
 BmDrEdit_GateOrVelocityUp:
 	bit 7, (0x295c:16)
 	ret nz
@@ -858,6 +904,8 @@ BmDrEdit_GateOrVelocityUp:
 	calr BmDrEdit_IncrementVelocityValue
 	ret
 
+; The reverse of BmDrEdit_GateOrVelocityUp.  The two bodies after it step the gate 0x2788 within
+; 1..0x7f, then NoteEditSy_SendGateCmd and BmDrEdit_UpdateGateDisplay.
 BmDrEdit_GateOrVelocityDown:
 	bit 7, (0x295c:16)
 	ret nz
@@ -886,6 +934,7 @@ BmDrEdit_DecrementGateTime:
 	call NoteEditSy_SendGateCmd
 	jrl BmDrEdit_UpdateGateDisplay
 
+; Velocity 0x278a + 1, at most 0x7f, then NoteEditSy_SendVelocityCmd (tail jump).
 BmDrEdit_IncrementVelocityValue:
 	ld a, (0x278a:16)
 	cp a, 0x7f
@@ -894,6 +943,7 @@ BmDrEdit_IncrementVelocityValue:
 	ld (0x278a:16), a
 	jp NoteEditSy_SendVelocityCmd
 
+; Velocity 0x278a - 1, at least 1, then NoteEditSy_SendVelocityCmd (tail jump).
 BmDrEdit_DecrementVelocityValue:
 	ld a, (0x278a:16)
 	cp a, 1:i3
@@ -902,6 +952,7 @@ BmDrEdit_DecrementVelocityValue:
 	ld (0x278a:16), a
 	jp NoteEditSy_SendVelocityCmd
 
+; Unless the timer runs with an action other than 3: BmDrEdit_IncrementDuration.
 BmDrEdit_DurationUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_DurationUp_Dispatch
@@ -982,6 +1033,7 @@ BmDrEdit_DecrementDuration_GlobalClamp:
 BmDrEdit_DecrementDuration_Send:
 	jp NoteEditSy_SendScrollCmd8
 
+; Only while the timer is idle: 0x2792 + 1, at most 0x60, then NoteEditSy_SendModeScrollCmd.
 BmDrEdit_ModeScrollUp:
 	bit 7, (0x295c:16)
 	ret nz
@@ -992,6 +1044,8 @@ BmDrEdit_ModeScrollUp:
 	ld (0x2792:16), wa
 	jp NoteEditSy_SendModeScrollCmd
 
+; Only while the timer is idle: 0x2792 - 1, at least 1, or 48 when it was 0; then
+; NoteEditSy_SendModeScrollCmd.
 BmDrEdit_ModeScrollDown:
 	bit 7, (0x295c:16)
 	ret nz
@@ -1076,6 +1130,9 @@ BmDrEdit_LoadAlternateState:
 	ld (9830:16), wa
 	ret
 
+; Restores the saved cursor (BmDrEdit_LoadAlternateState) and counts beat markers 0x81 in 0x2772
+; while reading events (SeqData_ReadNextByte, SeqData_SkipToNextEvent), until 0x82 or 0x84 or the
+; count passes (0x2774).
 BmDrEdit_LoadAlternateAndCountNotes:
 	calr BmDrEdit_LoadAlternateState
 	ldw (0x2772:16), 0
@@ -1450,6 +1507,7 @@ BmDrEdit_FindNote_SkipNonNote:
 	call SeqData_SkipToNextEvent
 	jr BmDrEdit_FindNote_Loop
 
+; Clears byte 0 of the eight 3-byte slots at 0x2746.  BmDrEdit_CleanupMelodicMode also jumps here.
 BmDrEdit_ClearAllSlots:
 	lda xbc, (0x2746:16)
 	ld xwa, xbc
@@ -1527,6 +1585,7 @@ BmDrEdit_ClearSlotsAlt_Loop:
 	jr c, BmDrEdit_ClearSlotsAlt_Loop
 	ret
 
+; HL = 0xff when any of the eight 3-byte slots at 0x2746 is in use (bit 7 of byte 0), else 0.
 BmDrEdit_CheckSlotsAvailable:
 	ld de, 0:i3
 	lda xbc, (0x2746:16)
@@ -1548,6 +1607,8 @@ BmDrEdit_CheckSlots_Next:
 	ld hl, 0:i3
 	ret
 
+; From the grid tick 0x279a: 0x2760 = tick mod 96 and 0x275e = tick / 96 + (0x276a).
+; BmDrEdit_WalkEventsOrSetError also jumps here.
 BmDrEdit_CalcBeatFromGridPos:
 	ld wa, (0x279a:16)
 	extz xwa
@@ -1617,6 +1678,8 @@ BmDrEdit_ModeScrollDown_Dup_Send:
 	call	NoteEditSy_SendModeScrollCmd
 	ret
 
+; Unless the timer runs with an action other than 4: 0x2798 + 1, at most 9,
+; NoteEditSy_UpdateChordDisplay, and the timer 0x295c = 129, 0x295d = 4.
 BmDrEdit_ChordScrollUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ChordScrollUp

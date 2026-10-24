@@ -9,9 +9,11 @@
 AccompSeq_PeriodicEntry:
 	jp AccompSeq_PeriodicMain
 
+; Jumps to AccompSeq_ManualMidiMode2.
 AccompSeq_ManualMidiEntry2:
 	jp AccompSeq_ManualMidiMode2
 
+; Jumps to AccompSeq_ManualMidiMode1.
 AccompSeq_ManualMidiEntry1:
 	jp AccompSeq_ManualMidiMode1
 
@@ -28,6 +30,8 @@ AccompSeq_PeriodicMain:
 AccompSeq_PeriodicReturn:
 	ret
 
+; With interrupts masked to level 6: clears byte 0x46b and copies the word 0x468 to 0x7e1c, byte
+; 0x46a to 0x7e1e and byte 0x41f to 0x7e1f.
 AccompSeq_CaptureTimerState:
 	jr AccompSeq_ReadTimerRegisters
 
@@ -44,6 +48,7 @@ AccompSeq_ReadTimerRegisters:
 	ei 0
 	ret
 
+; Copies the snapshot 0x7e1c (word), 0x7e1e, 0x7e1f to 0x7e20, 0x7e22, 0x7e23.
 AccompSeq_SaveTimerSnapshot:
 	ld wa, (0x7e1c:16)
 	ld (0x7e20:16), wa
@@ -273,6 +278,8 @@ AccompSeq_AdvanceCheckPattern:
 AccompSeq_AdvanceDone:
 	ret
 
+; Out: in pool mode ((0x7e25) 128 or more) XIY = the current block's base (AccompSeq_GetBlockBase);
+; otherwise IY = (0x7e42).
 AccompSeq_VRAMHelperData:
 	cp	(0x7e25:16), 128
 	jr	c, AccompSeq_VRAMHelperData_Skip
@@ -359,6 +366,10 @@ AccompSeq_ReadPatternTimeSig:
 	ld	wa, (xwa)
 	ret
 
+; End of the current channel's part (0x7e52 = 0 or 1).  With bit 3 of 0x7e27 set it restarts:
+; position 0x7e42 / 0x7e44 = 0x7e34 / 0x7e36 (channel 0) or 0x7e38 / 0x7e3a (channel 1).
+; Otherwise it clears the channel's bit (0 or 1) of 0x7e24 and sets bit 0 of 0x7e53; when both
+; bits are then clear, sets bit 0 of 0x7e24 and AccompSeq_StopSequence.
 AccompSeq_HandlePartTransition:
 	bit 3, (0x7e27:16)
 	jr z, AccompSeq_StopPart
@@ -623,6 +634,10 @@ AccompSeq_InlineCodeBlock:
 AccompSeq_InlineCodeBlock_Return:
 	ret
 
+; Appends a record to the ring buffer XHL at IY (AccompSeq_AdvanceBufferPtr after each byte):
+; status (0x7e54), timing byte (AccompSeq_ResolveChannel), (0x7e56) passed through
+; AccompSeq_CheckVelocityFlags, (0x7e57), (0x7e58) (0 written as 1), (0x7e59) and the unconverted
+; (0x7e56); the write position goes to header +4.
 AccompSeq_ProcessNoteOn6:
 	ld a, (0x7e54:16)
 	ld	(xhl+iy), a
@@ -652,6 +667,8 @@ AccompSeq_NoteOn6_VelClamp:
 	ld (xhl + 4), iy
 	ret
 
+; AccompSeq_ProcessNoteOn6 with AccompSeq_CheckVelFlagsExtended, and (0x7e5a), (0x7e5b) written
+; before the last byte.
 AccompSeq_ProcessNoteOn8:
 	ld a, (0x7e54:16)
 	ld	(xhl+iy), a
@@ -687,6 +704,9 @@ AccompSeq_NoteOn8_VelClamp:
 	ld (xhl + 4), iy
 	ret
 
+; Appends status (0x7e54), timing byte, (0x7e56) and (0x7e57) passed through AccompSeq_PortaFadeOut
+; to the ring buffer XHL at IY (write position to header +4).  For status 0xd0 with (0x7e55) = 5,
+; also stores (0x7e57) at the byte that (0x7e74) points to.
 AccompSeq_ProcessNotePorta:
 	ld a, (0x7e54:16)
 	ld	(xhl+iy), a
@@ -715,6 +735,9 @@ AccompSeq_ProcessNotePorta:
 AccompSeq_NotePorta_Done:
 	ret
 
+; Appends status (0x7e54), timing byte and (0x7e56) .. (0x7e59) to the ring buffer XHL at IY (write
+; position to header +4).  For status 0xc0, also stores (0x7e56) & 0x7f, with bit 7 = bit 0 of
+; (0x7e57), at the byte that (0x7e48) points to.
 AccompSeq_ProcessNoteOn5:
 	ld a, (0x7e54:16)
 	ld	(xhl+iy), a
@@ -783,6 +806,8 @@ AccompSeq_ResolveCh_Done:
 	ei 0
 	ret
 
+; Clears bits 1 and 2 of 0x33e5, sets bit 2 when A is 0x78 or more or the byte at (0x7e48) is 0xf0
+; or more, then Rhythm_TransposeWithMod_Tramp (XDE, XHL, XIY preserved).
 AccompSeq_CheckVelocityFlags:
 	and (0x33e5:16), 253
 	and (0x33e5:16), 251
@@ -809,6 +834,8 @@ AccompSeq_VelFlags_CallDispatch:
 	pop xde
 	ret
 
+; Sets bit 1 of 0x33e5 and copies 0x7e5a / 0x7e5b to 0x33e6 / 0x33e7; bit 2 of 0x33e5 as in
+; AccompSeq_CheckVelocityFlags; then Rhythm_TransposeWithMod_Tramp (XDE, XHL, XIY preserved).
 AccompSeq_CheckVelFlagsExtended:
 	or (0x33e5:16), 2
 	pushw wa
@@ -853,6 +880,9 @@ AccompSeq_AdvanceBufferPtr:
 AccompSeq_AdvanceBuf_Return:
 	ret
 
+; While fading (bit 2 of 0x7e1f and bit 7 of 0x7e24): counts 0x7e70 down; past 0 it clears bit 7 of
+; 0x7e24 and stops the sequence (AccompSeq_StopSequence), otherwise every 8th count
+; AccompSeq_FadeOutApplyVol.
 AccompSeq_FadeOutTick:
 	bit 2, (0x7e1f:16)
 	jr nz, AccompSeq_FadeOut_Active
@@ -879,6 +909,8 @@ AccompSeq_FadeOut_Periodic:
 AccompSeq_FadeOut_Return:
 	ret
 
+; For each active channel (bit 0 / bit 1 of 0x7e24) sends A = 0xd1 / 0xd2, W = 5, E = (0x7e72) /
+; (0x7e73) * (0x7e70) / 0x800 (AccompSeq_SendMidiEvent).
 AccompSeq_FadeOutApplyVol:
 	bit 0, (0x7e24:16)
 	jr z, AccompSeq_FadeOut_Ch2Volume
@@ -993,6 +1025,8 @@ AccompSeq_LargeCodeBlock1:
 	ld	(xhl+4), a
 	calr	AccompSeq_PortaFadeOut_Helper
 	ret
+; When bit 7 of E is set: sets bit 4 of D and clears bit 7 of E.  Unreferenced code follows (two
+; AccompSeq_PortaFadeOut_Helper_Helper calls with A = 0x9f and 0xdf).
 AccompSeq_PortaFadeOut_Helper:
 	bit	7, e
 	jr	z, AccompSeq_PortaFadeOut_Return
@@ -1062,6 +1096,8 @@ AccompSeq_PortaFadeOut_Join:
 AccompSeq_PortaFadeOut_Return2:
 	ret
 
+; Loads the channel's start position (0x7e52 = 0: the long at 0x7e65, else at 0x7e69): 0x7e44 =
+; low word, 0x7e42 = high word; clears bit 0 of 0x7e6d.
 AccompSeq_UpdatePosition:
 	cp (0x7e52:16), 0
 	jr nz, AccompSeq_UpdatePos_Part2
@@ -1097,9 +1133,11 @@ AccompSeq_StopSequence:
 AccompSeq_SendMidiEvent:
 	jp AccompSeq_WriteMidiToBuffer
 
+; Jumps to AccompSeq_AllNotesOffImpl.
 AccompSeq_AllNotesOff:
 	jp AccompSeq_AllNotesOffImpl
 
+; Jumps to AccompSeq_PostNoteProcess.
 AccompSeq_ProcessAfterNote:
 	jp AccompSeq_PostNoteProcess
 AccompSeq_LargeCodeBlock2:
@@ -1459,6 +1497,11 @@ AccompSeq_ReinitPart:
 	calr AccompSeq_InitPlayState
 	ret
 
+; With channel bits 0-1 of 0x7e24 set, clears them and silences the sequence (AccompSeq_SendAllOff,
+; HL preserved).  When 0xfd12 is 13 or 14: 0x7f0b = 1, 0x7f14 = low nibble of
+; AccompSeq_ResetMidiState's L, and A = 1, 2 or 4 for bit 0, bit 1 or neither of
+; SWBTWR_PAYLOAD_2.  Otherwise GLOBAL_ERROR_CODE = 57, DrumVoice_NotifyEE and MIDI_SendSysExCmd with
+; A = 8.
 AccompSeq_HandleSpecialMode:
 	ld	a, (0x7e24:16)
 	and	a, 3
@@ -1854,6 +1897,10 @@ AccompSeq_ChordChange_ApplyOverride:
 AccompSeq_ChordChange_Return:
 	ret
 
+; Only when bit 0 of 0x3283 is set and bit 2 of 0x28b2 clear: 0x7e60 / 0x7e61 = L / H; looks up the
+; voice's style data (AccompSeq_ResetMidiState, AccompSeq_LookupStyleData) and, when bit 4 of its
+; first byte is set, sets bit 0 of 0x7e5f if byte 0x433 equals (0x416) + 1, else bit 1.  0x7e28 /
+; 0x7e2a are saved and restored.
 AccompSeq_CompareChord:
 	bit 0, (0x3283:16)
 	jr z, AccompSeq_CompareChord_Return
@@ -2208,6 +2255,7 @@ AccompSeq_InitBankDone:
 AccompSeq_BankTablePtr:
 	jp	Voice_ResetToFactoryBanks
 
+; Jumps to Voice_InitBankTables.
 AccompSeq_InitBankTables:
 	jp Voice_InitBankTables
 

@@ -30250,6 +30250,9 @@ VoiceSlot_DispatchByType:
 	inc	4, xsp
 	ret
 
+; Points the song read position at the start of part (0x3996): SetWall_SlotResolve with W = that
+; part, then offset 0x3982 = IY and block 0x397e = (0x28af).  Preserves XIZ.
+; SetWall_StoreAndResolve also jumps here.
 Voice_ResolveSlotAddr:
 	push xiz
 	ld w, (0x3996:16)
@@ -30260,6 +30263,9 @@ Voice_ResolveSlotAddr:
 	pop xiz
 	ret
 
+; Resets the easy-composer channel table: 0x37c8 = 0x7f, 0x37c7 = 0xff and, for each of the seven
+; channels c, 0x37ab + c = 0 (style), 0x37b2 + c = 1 (variation), 0x37b9 + c = 0x37c0 + c = 0xff;
+; then reloads every channel (RhythmDrum_LoadVoiceParams with 0x37c9 = 64, 32, 16, 8, 4, 2, 1).
 VoiceSlot_Dispatch_Type81:
 	ld a, 0x7f:opc
 	ld (0x37c8:16), a
@@ -30336,6 +30342,8 @@ VoiceSlot_Dispatch_Return_Join2:
 	calr	VoiceSlot_Dispatch_Return_Helper
 	calr	DrumParam_BuildActiveMask
 	ret
+; Makes the composer pattern the panel kit: 0xfc5a = 0x80 + ((0x34d6) & 31), 0xfc5b keeps only bit
+; 7; then SwbtWr_QueuePostEvent with A = (0xfc5a), W = 0, E = 0x48, D = 0.
 VoiceSlot_Dispatch_Return_Helper:
 	ld	xhl, 0:i3
 	ld	l, (0x34d6:16)
@@ -30589,6 +30597,10 @@ VoiceAssign_Process_Loop:
 	calr VoiceAssign_ProcessRequest_Helper
 	ret
 
+; In: L = program, H = bank of the current part's drum entry.  0x90f6 = 72 and the program change
+; (SndParam_ApplyProgramChange_Safe, VoiceParam_ClampAndValidate_Tramp); L and H go to 0x38d2 +
+; part and 0x38d9 + part.  Out: XIX = 0x400000 + (RHYTHM_ROM_BASE) + (low byte of locator word 0)
+; << 16 + locator word 1, from RhythmROM_BankProgramLocators[H][L].
 VoiceAssign_Process_Return:
 	ld (0x90f6:16), 72
 	call SndParam_ApplyProgramChange_Safe
@@ -30671,6 +30683,10 @@ VoiceAssign_PresetSelToCase:		.byte	0, 3, 4, 7
 VoiceAssign_LoadLoopArgs:	.short	0x0000, 0x040f, 0x040f, 0x000f, 0x0400, 0x040f, 0x040f, 0x040f
 VoiceAssign_DispatchArgs:	.short	0x0000, 0x0431, 0x0431, 0x0031, 0x0400, 0x0431, 0x0431, 0x0431
 VoiceAssign_ResolveArgs:	.short	0x0000, 0x0406, 0x0406, 0x0006, 0x0400, 0x0406, 0x0406, 0x0406
+; Fills the four source-stream pointers of the current part (0x380a + 16 * part + 4 * n, n = 0..3)
+; from the rhythm ROM record XIX: index WA = 40 * slot (DrumChannel_MapToIndexA) + DE,
+; HL = 1 when the index is 0x400 or more, else 0; each pointer through ChanAssign_LookupEntry and
+; ChanAssign_Lookup_Found, with WA + 1 per pointer.
 RegPreset_Load_Loop:
 	push xix
 	push xde
@@ -30710,6 +30726,8 @@ ChanAssign_FourSlotLoop:
 ChanAssign_StoreResult:
 	ret
 
+; Out: XDE = XIY + the word at XIX + BC, BC = slot (DrumChannel_MapToIndexB) * 0x26 + 2 * (byte at
+; XIX + WA) + 0x118 (HL = 0) or + 0x518 (HL non-zero).
 ChanAssign_LookupEntry:
 	ld xde, 0:i3
 	ld	e, (xix+wa)
@@ -30738,6 +30756,8 @@ ChanAssign_Lookup_Loop:
 	add xde, xwa
 	ret
 
+; Stores XDE + 6 as the long at 0x380a + 16 * part + 4 * C (part from
+; Rhythm_MapChannelToDrumIndex).
 ChanAssign_Lookup_Found:
 	push xde
 	push xbc
@@ -30753,6 +30773,8 @@ ChanAssign_Lookup_Found:
 	ld (xwa), xde
 	ret
 
+; Despite the name, no dispatch: XIY = 0x400000 + (byte at XIX + 0x3d1) << 16, then XIX +=
+; (RHYTHM_ROM_BASE).
 MIDIChan_DispatchTable:
 	ldw bc, 0x3d1
 	ld xwa, 0:i3
@@ -30852,6 +30874,8 @@ MIDIChan_Dispatch_Ch12:
 DrumChannel_MapB_NullRet:
 	ret
 
+; Copies 7 bytes from XIX + 7 * slot (DrumChannel_MapToIndexA) + DE + 0x248 to 0x37d1 + 8 * part
+; (Rhythm_MapChannelToDrumIndex).
 MIDIChan_DispatchDone:
 	push xix
 	push xde
@@ -30874,6 +30898,9 @@ MIDIChan_DispatchDone:
 	ldir85
 	ret
 
+; Byte 0x387a + part = 0 for parts with bit 0-3 of 0x37c9 set; for the others, with A = byte at
+; XIX + DE + 0x3d2 and the mask VoiceResolve_SearchDone[part] (bytes spelled as instructions), 0
+; when A has every mask bit set, else 1.
 VoiceResolve_CheckAndStore:
 	bit 0, (0x37c9:16)
 	jr nz, Rhythm_ClearChannelDrumIndex
@@ -30916,6 +30943,7 @@ VoiceResolve_SearchDone:
 	ld	(P2:8), 16:io
 	.byte 0x20
 
+; Byte 0x37ca + part = AccTone_LookupByProgram_Table[byte at XIX + 0x3d0] (VoiceResolve_FindSlot).
 VoiceAssign_StoreFinal_Helper:
 	ldw bc, 0x3d0
 	ld	a, (xix+bc)
@@ -30931,6 +30959,7 @@ VoiceAssign_StoreFinal_Helper:
 	ld (xbc), a
 	ret
 
+; A = AccTone_LookupByProgram_Table[A].  Preserves XBC.
 VoiceResolve_FindSlot:
 	push xbc
 	ld xbc, AccTone_LookupByProgram_Table
@@ -30938,6 +30967,7 @@ VoiceResolve_FindSlot:
 	pop xbc
 	ret
 
+; A = A + 3.
 VoiceResolve_FindSlot_Return:
 	add	a, 3
 	ret
@@ -30972,6 +31002,9 @@ DrumParam_ProcessChannelAlt:
 	pop xiz
 	ret
 
+; Steps the current part's variation 0x37b2 + part up (A = 0) or down within 0..W (W from
+; DrumParam_ReadMaxCount); going down stops at 0, or at 1 for part bit 0 of 0x37c9.  Then reloads
+; the part (RhythmDrum_LoadVoiceParams) and rebuilds 0x37c8 (DrumParam_BuildActiveMask).
 PartVoice_UpdateParams:
 	push_a
 	calr DrumParam_ReadMaxCount
@@ -31039,6 +31072,8 @@ CmEsyTtl_Dispatch2_Helper2:
 	call	ExtVoice_ProcessList_Data
 	pop	xiz
 	ret
+; Unless bit 2 of 0x41e is set: sets bit 7 of 0x34cd, Seq_DispatcherEntry and
+; AccWrap_PlayModeStartAccPlay.
 ExtVoice_ProcessList_Data:
 	bit	2, (0x041e:16)
 	jr	nz, DrumParam_ReadMaxCount_Return
@@ -31059,6 +31094,11 @@ CmpEsy_ApplyEdit:
 	call	ExtVoice_ProcessList_Helper
 	pop	xiz
 	ret
+; AccWrap_PlayModeDispatch, waits for bit 2 of 0x41e to clear (DrumParam_ReadMaxCount_Helper2),
+; Seq_DispatcherEntry; with 0x37c9 saved, DrumParam_ReadMaxCount_Helper3, _Helper4 and, with
+; GLOBAL_ERROR_CODE = 0, _Helper5.  On an error AccPatch_InitCurrentSlot and 0x37c8 |= 0x7f, else
+; 0x37c8 = 0.  Then bit 7 of 0x34cd, Seq_DispatcherEntry, and AccWrap_PlayModeStartAccPlay (no
+; error) or DrumParam_ReadMaxCount_Helper (error).
 ExtVoice_ProcessList_Helper:
 	call	AccWrap_PlayModeDispatch
 	calr	DrumParam_ReadMaxCount_Helper2
@@ -31087,15 +31127,19 @@ DrumParam_ReadMaxCount_Skip2:
 	calr	DrumParam_ReadMaxCount_Helper
 DrumParam_ReadMaxCount_Return2:
 	ret
+; Calls DrumVoice_NotifyEE.
 DrumParam_ReadMaxCount_Helper:
 	call	DrumVoice_NotifyEE
 	ret
+; Busy-waits while bit 2 of 0x41e is set.
 DrumParam_ReadMaxCount_Helper2:
 	bit	2, (0x41e:16)
 	jr	z, DrumParam_ReadMaxCount_Return3
 	jr	DrumParam_ReadMaxCount_Helper2
 DrumParam_ReadMaxCount_Return3:
 	ret
+; With 0x37c9 = 1: when byte 0x37ca + part differs from the beats per measure 0x34d9, 0x37c8 =
+; 0x7f, 0x34d9 = that byte and 0x34d8 = it + 3.
 DrumParam_ReadMaxCount_Helper3:
 	ld	(0x37c9:16), 1
 	calr	Rhythm_MapChannelToDrumIndex
@@ -31110,6 +31154,7 @@ DrumParam_ReadMaxCount_Helper3:
 	ld	(0x34d8:16), a
 DrumParam_ReadMaxCount_Return4:
 	ret
+; 0x34d7 = 3.
 DrumParam_ReadMaxCount_Helper4:
 	ld	(0x34d7:16), 3
 	ret
@@ -31341,6 +31386,8 @@ AccPatch_SetCursorToChannelStart:
 	ld (13842:16), hl
 	ldw (13844:16), 6
 	ret
+; For each measure 0x38d1 = 0 .. (0x34d7), AccPatch_ResolveEntryAddr_Helper4; then
+; AccPatch_AppendPatternEndCode.
 AccPatch_ResolveEntryAddr_Helper3:
 	ld	c, 0:opc
 	ld	(0x38d1:16), c
@@ -31359,6 +31406,9 @@ AccPatch_ResolveEntryAddr_Join:
 AccPatch_ResolveEntryAddr_Skip:
 	calr	AccPatch_AppendPatternEndCode
 	ret
+; Points the current part's source stream (0x3898 + 4 * part) at measure (0x38d1)
+; (AccPatch_GetMeasureSourceStream) and copies (0x34d9) beats of it, counter 0x38d0
+; (AccPatch_ResolveEntryAddr_Helper6).
 AccPatch_ResolveEntryAddr_Helper4:
 	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
@@ -31398,6 +31448,10 @@ AccPatch_GetMeasureSourceStream:
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	ret
+; Copies events from the current part's source stream to the write cursor
+; (AccPatch_CopyEventToCursor) up to and including a beat marker 0x81.  At the stream's end (0x83,
+; AccPatch_ResolveEntryAddr_Sub) it points the stream at Rhythm_EmptyPattern and copies that one
+; 0x81.
 AccPatch_ResolveEntryAddr_Helper6:
 	calr	AccPatch_ResolveEntryAddr_Sub
 	cp	a, 131
@@ -31428,6 +31482,8 @@ AccPatch_ResolveEntryAddr_Helper6_Return:
 ;          Was Rhythm_EmptyPattern, decoded as `cp (xbc),l / swi 7 x3`.
 Rhythm_EmptyPattern:
 	.byte	0x81, 0xff, 0xff, 0xff, 0xff
+; Out: A = the first byte of the current part's source stream (0x3898 + 4 * part), or 0x83 when the
+; stream is Rhythm_EmptyPattern.
 AccPatch_ResolveEntryAddr_Sub:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 2
@@ -31808,6 +31864,9 @@ AccPatch_ResolveEntryAddr_Skip14:
 AccPatch_ResolveEntryAddr_Join7:
 	calr	AccVoice_SetupSlots_CheckStream
 	ret
+; W = 1 when any of the parts 1, 2, 4 (0x37c9 set to each in turn) has a byte other than 0x81 at
+; 0x342d + part (AccPatch_ResolveEntryAddr_Helper15), else 0.  0x37c9 is left at the last part
+; tested.
 AccPatch_ResolveEntryAddr_Helper14:
 	ld	a, 1:opc
 	ld	(0x37c9:16), a
@@ -31839,6 +31898,7 @@ AccPatch_ResolveEntryAddr_Helper15:
 	pop	xix
 	ld	a, (xix+c)
 	ret
+; L = AccPatch_IndexBitMask8[L & 7].
 AccPatch_ResolveEntryAddr_Helper16:
 	push	l
 	ld	xhl, 0:i3
@@ -31883,6 +31943,9 @@ AccVoice_SetupSlots_CheckStream_Skip17:
 	ld	(xix), a
 AccVoice_SetupSlots_CheckStream_Return9:
 	ret
+; Scans the three bytes at 0x342d with two indices L and A, both from 0: a byte with bit 7 set is
+; stepped over; when both bytes are clear of bit 7, L moves on if its byte is greater (signed),
+; else A.  Stops when either index passes 2.  Out: L, or 0 when L passed 2.
 AccPatch_ResolveEntryAddr_Helper17:
 	ld	l, 0:opc
 	ld	a, 0:opc
@@ -31919,6 +31982,9 @@ AccPatch_ResolveEntryAddr_Skip19:
 	ld	l, 0:opc
 AccPatch_ResolveEntryAddr_Return10:
 	ret
+; Steps the current part's source stream over note events (0x90, 0x91, 0xdn) whose note (byte +2)
+; maps to another part than 0x37c9 (AccPatch_ResolveEntryAddr_Helper19); stops at the first event
+; that maps to it or at any other byte.
 AccPatch_ResolveEntryAddr_Helper18:
 	calr	Rhythm_MapChannelToDrumIndex
 	ld	ix, bc
@@ -31954,6 +32020,8 @@ AccPatch_ResolveEntryAddr_Skip20:
 	jr	AccPatch_ResolveEntryAddr_Helper18_Join
 AccPatch_ResolveEntryAddr_Return11:
 	ret
+; In: A = note.  Out: C = AccVoice_SlotRows[byte 0x3881 + part][A], the part that note belongs to
+; in the current part's row.  Preserves A.
 AccPatch_ResolveEntryAddr_Helper19:
 	push_a
 	calr	Rhythm_MapChannelToDrumIndex
@@ -31967,6 +32035,7 @@ AccPatch_ResolveEntryAddr_Helper19:
 	pop_a
 	ld	c, (xde+a)
 	ret
+; Steps XIX over the event at XIX: XIX += AccPatch_GetEventLength of its status byte.
 AccPatch_ResolveEntryAddr_Helper18_Helper:
 	ld	a, (xix)
 	calr	AccPatch_GetEventLength
@@ -31976,17 +32045,21 @@ AccPatch_ResolveEntryAddr_Helper18_Helper:
 	add	xix, xbc
 	ret
 
+; Calls VoiceSlot_Init_CheckType with XIZ preserved.
 VoiceSlot_InitFromTable:
 	push xiz
 	call VoiceSlot_Init_CheckType
 	pop xiz
 	ret
 
+; VoiceSlot_Init_Process, then AccVoice_SetupStyleSlots.
 VoiceSlot_Init_CheckType:
 	calr VoiceSlot_Init_Process
 	calr AccVoice_SetupStyleSlots
 	ret
 
+; Sets the easy-composer part bit 0x37c9 from the record part 0x379b: bit 0 -> 16, bit 1 -> 32,
+; bit 2 -> 64, bit 3 -> 8, none -> 1 (the reverse of TimeSig_DisplayStrings_Code_Helper4).
 VoiceSlot_Init_Process:
 	ld (0x37c9:16), 16
 	bit 0, (0x379b:16)
@@ -35116,6 +35189,7 @@ MainMspBnkNameFunc:
 	ld xhl, 0:i3
 	ret
 
+; On ACTIVE_TITLE 181 only: delivers EVT_PAINT with XWA = 0xb5001e, XDE = 0 (ApDeliveryEvent).
 SoundCtrl_SendAccTempo:
 	cp (ACTIVE_TITLE:16), 181
 	ret nz
@@ -35136,6 +35210,8 @@ SoundCtrl_SendTempoScaled:
 	call ApDeliveryEvent
 	ret
 
+; 0x39ab = 100 * (0x34d4) / 190, at most 99: the free pattern entries (0x34d4, of 190) as a
+; percentage.
 SoundCtrl_CalcScaledTempo:
 	ld xhl, 0x64
 	ld bc, (0x34d4:16)
@@ -35189,6 +35265,7 @@ AccGuard_SendProgramChange:
 	ret
 
 
+; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc90009, XDE = 0 (ApDeliveryEvent).
 AccSeq_DeliverC9_0009:
 	cp (ACTIVE_TITLE:16), 201
 	ret nz
@@ -35198,6 +35275,7 @@ AccSeq_DeliverC9_0009:
 	call ApDeliveryEvent
 	ret
 
+; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc9000a, XDE = 0 (ApDeliveryEvent).
 AccSeq_DeliverC9_000A:
 	cp (ACTIVE_TITLE:16), 201
 	ret nz
@@ -35481,12 +35559,14 @@ MspRecTtl_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 1 (tail jump to ApPostEvent).
 AccSeq_PostEvent9E_Enable:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	jp ApPostEvent
 
+; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 0 (tail jump to ApPostEvent).
 AccSeq_PostEvent9E_Disable:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
@@ -36049,6 +36129,8 @@ AccDraw_SecondarySub_Handlers:
 	.long	AccDraw_SecondarySub_Handler17
 	.long	AccDraw_SecondarySub_Handler18
 	.long	AccDraw_SecondarySub_Handler19
+; For switch HL up to 15: XDE = AccDraw_IndexBitMask[HL + 1] (AccDraw_Secondary_Sub_Helper),
+; clears bit 0 of 0xe3e2 and calls handler HL & 31 of the table XIX with XBC = XHL.
 AccDraw_Secondary_Sub:
 	cp	hl, 15
 	jr	ugt, AccDraw_Secondary_Sub_Return
@@ -36063,6 +36145,7 @@ AccDraw_Secondary_Sub:
 	call	(xix)
 AccDraw_Secondary_Sub_Return:
 	ret
+; XDE = AccDraw_IndexBitMask[E], word 0 when E is above 32.  Preserves XIX.
 AccDraw_Secondary_Sub_Helper:
 	push	xix
 	cp	e, 32
@@ -36224,6 +36307,9 @@ AccDraw_SecondarySub_Handler18:
 	ret
 AccDraw_SecondarySub_Handler19:
 	ret
+; COLORBLIT_MODE = 2; when 0x3712 = 4 draws CmpStep_NoteEntryFrameRecords with
+; CmpStep_ValueFieldRecords (AccAudio_DataBlock1), otherwise the band CmpStep_NoteEntryAreaBand
+; (AccGraphics_BoundOp04).
 AccDraw_Secondary_Helper5:
 	ld	(COLORBLIT_MODE:24), 2
 	cp	(0x3712:16), 4
@@ -36237,6 +36323,8 @@ AccDraw_Secondary_Skip:
 	calr	AccGraphics_BoundOp04
 AccDraw_Secondary_Return4:
 	ret
+; Draws AccDraw_Secondary_Sub_Entry2_Data_2 with XIX = that address + 35 * (0x373e)
+; (AccAudio_DataBlock1).
 AccDraw_Secondary_Helper6:
 	xor	wa, wa
 	ld	xiy, AccDraw_Secondary_Sub_Entry2_Data_2
@@ -36248,6 +36336,8 @@ AccDraw_Secondary_Helper6:
 	add	xix, xwa
 	calr	AccAudio_DataBlock1
 	ret
+; AccDraw_Secondary_Helper8 on the lists AccDraw_Secondary_Sub_Entry2_Data_3 .. _6 with the entries
+; (0x373e), (0x373f), (0x3740) and (0x3741).
 AccDraw_Secondary_Helper7:
 	ld	xiy, AccDraw_Secondary_Sub_Entry2_Data_3
 	ld	c, (0x373e:16)
@@ -36383,6 +36473,10 @@ AccDraw_Secondary_Helper9_Helper:
 	pop	xix
 	pop	xiy
 	ret
+; Fills the box of step s = ((0x370f) - 1) & 0x7f (0x370f = 0 counts as step 0) with
+; SeGfx_StaticOp05_FillBoxMode1 (record 0x39c2, mode 5 on the stack): 0x39b9 = s / 32; x = word
+; [s mod 32] of AccDraw_Secondary_Sub_Entry2_Data_7 into 0x39c4 (+6 into 0x39c8), y = word [s /
+; 32] of _Data_8 into 0x39c6 (+8 into 0x39ca).
 AccDraw_Secondary_Helper10:
 	xor	wa, wa
 	ld	a, (0x370f:16)
@@ -36430,6 +36524,10 @@ AccDraw_Secondary_Skip2:
 	div	wa, c
 	ld	(0x39b9:16), a
 	ret
+; COLORBLIT_MODE = 0.  When 0x3712 is not 4, AccScreen_DrawMeasureDetail; otherwise
+; AccScreen_DrawTempoDisplay and AccScreen_UpdateBeatDisplay (unless 0x3717 = 0xff),
+; AccScreen_BeatDataBlock, byte 0x3716 copied to 0x39bb, and AccScreen_ArticulationCell drawn
+; (AccDraw_Secondary).
 AccDraw_Secondary_Helper12:
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(0x3712:16), 4
@@ -36459,6 +36557,7 @@ AccScreen_DrawTempoDisplay:
 	calr AccGraphics_RenderStart
 	ret
 
+; 0x39b8 = (0x3718) mod 12 and 0x39ba = (0x3718) / 12 (signed divide).
 AccScreen_CalcTempoParams:
 	xor wa, wa
 	ld a, (0x3718:16)
@@ -36503,6 +36602,8 @@ AccScreen_BeatDataBlock:
 AccScreen_BeatDataBlock_Code_Return:
 	ret
 
+; Runs AccScreen_DrawInit_Body (COLORBLIT_MODE = 0, AccScreen_DrawTempoDisplay) through
+; DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_DrawInit_StackWrap:
 	ld xwa, AccScreen_DrawInit_Body
 	push xwa
@@ -36515,6 +36616,7 @@ AccScreen_DrawInit_Body:
 	calr AccScreen_DrawTempoDisplay
 	ret
 
+; Runs AccScreen_UpdateBeat_Body through DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_UpdateBeat_StackWrap:
 	ld xwa, AccScreen_UpdateBeat_Body
 	push xwa
@@ -36527,6 +36629,7 @@ AccScreen_UpdateBeat_Body:
 	calr AccScreen_UpdateBeatDisplay
 	ret
 
+; Runs AccScreen_DrawMeasure_Body through DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_DrawMeasure_StackWrap:
 	ld xwa, AccScreen_DrawMeasure_Body
 	push xwa
@@ -36601,12 +36704,14 @@ AccScreen_UIDataBlock:
 ; |...f....g..ah...|
 ; |9@.#.4-.....STEP|
 	ld	(COLORBLIT_MODE:24), 0
+; Display_DeferOrDrawWall with C = 0 and A = 16 (the load of 12 into A is overwritten at once).
 AccScreen_DrawWall:
 	ld	c, 0:opc
 	ld	a, 12:opc
 	ld	a, 16:opc
 	call	Display_DeferOrDrawWall
 	ret
+; Display_DeferOrUpdateScreen with C = 7 and A = 12.
 AccScreen_RefreshScreen:
 	ld	c, 7:opc
 	ld	a, 12:opc
@@ -36903,6 +37008,8 @@ AccPatch_IterateSlot_NextBlock:
 	ld (xiy + 46), wa
 	ret
 
+; Swaps the 256-byte blocks at (0x376a) and (0x375a) through a buffer from Malloc (0x400 bytes, of
+; which 256 are used; pointer kept in 0x3564), then frees it.  Preserves XBC.
 AccPatch_SwapSlotBuffers:
 	push xbc
 	ld xwa, 0x400
@@ -37186,6 +37293,11 @@ AccPatch_VoiceAssignDataBlock_Helper:
 	call	AccPatch_VoiceAssignDataBlock_Helper22
 	pop	xiz
 	ret
+; Imports the style image at 0x69800 into the current patch slot, with status 0x3950 (0 = done,
+; bit 7 = stop): 0x3970 = 0, 0x3972 = 150; an unknown image header gives status 130.  Otherwise
+; copies word +14 (_Helper2), rebuilds slot (0x353e) (_Helper3), then _Sub, _Helper5 and
+; _Helper_Helper2, each skipped once bit 7 of 0x3950 is set; a stop rebuilds the slot again.  Ends
+; with _Helper21 (status to GLOBAL_ERROR_CODE) and AccPatch_ClearModeFlag.
 AccPatch_VoiceAssignDataBlock_Helper22:
 	ld	(0x3950:16), 0
 	ldw	(0x3970:16), 0
@@ -37220,6 +37332,7 @@ AccPatch_VoiceAssignDataBlock_Join2:
 	calr	AccPatch_VoiceAssignDataBlock_Helper21
 	call	AccPatch_ClearModeFlag
 	ret
+; Word +14 of RHYTHM_PATTERN_BUF_A = word +14 of the style image at 0x69800.
 AccPatch_VoiceAssignDataBlock_Helper2:
 	xor	xwa, xwa
 	ld	xiy, 0x069800
@@ -37227,6 +37340,9 @@ AccPatch_VoiceAssignDataBlock_Helper2:
 	ld	xiy, RHYTHM_PATTERN_BUF_A
 	ld	(xiy+14), wa
 	ret
+; W = 5 when the style image at 0x69800 starts with 'g', 0, 'k' or 'L', 'K', 'E', else 0xff.  The
+; first test, meant for 'H', 0, 'K', checks byte +1 for 'H' and byte +2 for both 0 and 'K', so it
+; never passes.
 AccPatch_VoiceAssignDataBlock_Helper_Helper:
 	ld	xhl, 0x069800
 	cp	(xhl+1), 72
@@ -37385,6 +37501,8 @@ AccPatch_VoiceAssignDataBlock_Sub_Helper2:
 	ldir85
 AccPatch_VoiceAssignDataBlock_Sub_Return2:
 	ret
+; Copies the 84 bytes from +12 of the image record 0x69800 + (0x397a) to +12 of the slot record
+; RHYTHM_PATTERN_BUF_A + (0x397c), then AccPatch_VoiceAssignDataBlock_Helper4.
 AccPatch_VoiceAssignDataBlock_Sub_Helper3:
 	xor	xiy, xiy
 	xor	xix, xix
@@ -37440,6 +37558,8 @@ AccPatch_VoiceAssignDataBlock_Helper4:
 	ld	wa, (xix+10)
 	ld	(0x3964:16), wa
 	ret
+; Calls the empty _Helper19 and _Helper20 five times (stopping when bit 7 of 0x3950 is set), then
+; AccPatch_VoiceAssignDataBlock_Helper6, 7, 8, 9 and 10.
 AccPatch_VoiceAssignDataBlock_Helper5:
 	calr	AccPatch_VoiceAssignDataBlock_Helper19
 	bit	7, (0x3950:16)
@@ -37458,6 +37578,8 @@ AccPatch_VoiceAssignDataBlock_Helper5:
 	calr	AccPatch_VoiceAssignDataBlock_Helper10
 AccPatch_VoiceAssignDataBlock_Helper5_Return:
 	ret
+; Part 0 of the image import: 0x3974 = (0x3952), 0x3976 = (0x395c); AccPatch_VoiceAssignDataBlock_Helper11;
+; then 0x3952 = (0x3974), 0x3966 = (0x3978), 0x395c = (0x3976).
 AccPatch_VoiceAssignDataBlock_Helper6:
 	ld	wa, (0x3952:16)
 	ld	(0x3974:16), wa
@@ -37471,6 +37593,7 @@ AccPatch_VoiceAssignDataBlock_Helper6:
 	ld	wa, (0x3976:16)
 	ld	(0x395c:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 1: 0x3954 / 0x395e, result also in 0x3968.
 AccPatch_VoiceAssignDataBlock_Helper7:
 	ld	wa, (0x3954:16)
 	ld	(0x3974:16), wa
@@ -37484,6 +37607,7 @@ AccPatch_VoiceAssignDataBlock_Helper7:
 	ld	wa, (0x3976:16)
 	ld	(0x395e:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 2: 0x3956 / 0x3960, result also in 0x396a.
 AccPatch_VoiceAssignDataBlock_Helper8:
 	ld	wa, (0x3956:16)
 	ld	(0x3974:16), wa
@@ -37497,6 +37621,7 @@ AccPatch_VoiceAssignDataBlock_Helper8:
 	ld	wa, (0x3976:16)
 	ld	(0x3960:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 3: 0x3958 / 0x3962, result also in 0x396c.
 AccPatch_VoiceAssignDataBlock_Helper9:
 	ld	wa, (0x3958:16)
 	ld	(0x3974:16), wa
@@ -37510,6 +37635,7 @@ AccPatch_VoiceAssignDataBlock_Helper9:
 	ld	wa, (0x3976:16)
 	ld	(0x3962:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 4: 0x395a / 0x3964, result also in 0x396e.
 AccPatch_VoiceAssignDataBlock_Helper10:
 	ld	wa, (0x395a:16)
 	ld	(0x3974:16), wa
@@ -37569,6 +37695,7 @@ AccPatch_VoiceAssignDataBlock_Skip10:
 	calr	AccPatch_VoiceAssignDataBlock_Helper11_Helper2
 AccPatch_VoiceAssignDataBlock_Return4:
 	ret
+; DE = 0 when (0x3970) <= (0x3974) <= (0x3970) + 3, else 0xff.
 AccPatch_VoiceAssignDataBlock_Helper12:
 	xor	xwa, xwa
 	xor	xhl, xhl
@@ -37586,6 +37713,8 @@ AccPatch_VoiceAssignDataBlock_Helper12_Skip2:
 	ldw	de, 255
 AccPatch_VoiceAssignDataBlock_Helper12_Return2:
 	ret
+; Unless bit 7 of 0x3950 is set: with (0x3974) at 340 or more, 0x3950 = 128; otherwise, around
+; calls of the empty _Helper19 / _Helper20, sets 0x3970 = 4 * ((0x3974) / 4 + 1).
 AccPatch_VoiceAssignDataBlock_Helper11_Helper2:
 	bit	7, (0x3950:16)
 	jr	nz, AccPatch_VoiceAssignDataBlock_Helper12_Return
@@ -37651,6 +37780,9 @@ AccPatch_VoiceAssignDataBlock_Helper14:
 	ldw	bc, 249
 	ldir85
 	ret
+; Follows both chains one block: 0x397a = ((0x3974) - (0x3970)) * 256 (_Helper13) and 0x3974 = the
+; forward link (+3) of that image block at 0x69800; 0x3978 = (0x3976) and 0x3976 = the forward link
+; of pattern block (0x3976) (_Helper).
 AccPatch_VoiceAssignDataBlock_Helper15:
 	xor	xiy, xiy
 	xor	xwa, xwa
@@ -37667,6 +37799,8 @@ AccPatch_VoiceAssignDataBlock_Helper15:
 	ld	wa, (xiz+3)
 	ld	(0x3976:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper16 for the five pairs 0x3974 / 0x3978 = (0x3952) / (0x3966),
+; (0x3954) / (0x3968), (0x3956) / (0x396a), (0x3958) / (0x396c), (0x395a) / (0x396e).
 AccPatch_VoiceAssignDataBlock_Helper_Helper2:
 	ld	wa, (0x3952:16)
 	ld	(0x3974:16), wa
@@ -37745,6 +37879,8 @@ AccPatch_VoiceAssignDataBlock_Helper16_Epilogue:
 AccPatch_VoiceAssignDataBlock_Helper16_Epilogue2:
 	nop
 	ret
+; 0x3972 = the first free pattern block (bit 7 of byte 0 clear) from (0x3972) on; when none is
+; free below 340, 0x3950 = 131.
 AccPatch_VoiceAssignDataBlock_Helper16_Helper:
 	xor	xhl, xhl
 	ld	hl, (0x3972:16)
@@ -37764,8 +37900,10 @@ AccPatch_VoiceAssignDataBlock_Helper16_Helper_Skip:
 AccPatch_VoiceAssignDataBlock_Helper16_Helper_Skip2:
 	ld	(0x3972:16), hl
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper17:
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper18:
 	ret
 ; Empty routine: returns at once.
@@ -37774,6 +37912,8 @@ AccPatch_VoiceAssignDataBlock_Helper19:
 ; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper20:
 	ret
+; Turns the style-image import status 0x3950 into GLOBAL_ERROR_CODE: 0 -> 35, 132 -> 3, 130 -> 0,
+; 131 -> 23, 129 and any other value -> 1.
 AccPatch_VoiceAssignDataBlock_Helper21:
 	cp	(0x3950:16), 0
 	jr	z, AccPatch_VoiceAssignDataBlock_Skip11
@@ -37812,6 +37952,7 @@ cmp_ld_mae:
 	pop xiz
 	ret
 
+; Calls AccDemo_InitWithFlag.
 CmpLoad_InitWithFlag:
 	call AccDemo_InitWithFlag
 	ret
@@ -37824,6 +37965,8 @@ cmp_ld_ato:
 	pop xiz
 	ret
 
+; In: WA = load result.  Negative: AccDemo_Init_Wrap (rebuild the default style image); otherwise
+; AccPatch_ClearModeFlag.  Then recounts the free pattern entries (AccPatch_CountAvailableSlots).
 CmpLoadAuto_CheckAndInit:
 	cp wa, 0:i3
 	jr lt, CmpLoadAuto_DemoInit
@@ -37837,12 +37980,14 @@ CmpLoadAuto_CountSlots:
 	call AccPatch_CountAvailableSlots
 	ret
 
+; Composer save preparation (HAMA function table): CmpSave_InitSlotAndCalcSize with XIZ preserved.
 cmp_sv_mae:
 	push xiz
 	calr CmpSave_InitSlotAndCalcSize
 	pop xiz
 	ret
 
+; AccPatch_InitSlotChain_WithAddr; out: XHL = its result WA * 16.
 CmpSave_InitSlotAndCalcSize:
 	call AccPatch_InitSlotChain_WithAddr
 	ld hl, wa
@@ -37850,12 +37995,14 @@ CmpSave_InitSlotAndCalcSize:
 	sll xhl, 4
 	ret
 
+; Composer automatic save (HAMA function table): CmpSaveAuto_ClearFlag with XIZ preserved.
 cmp_sv_ato:
 	push xiz
 	calr CmpSaveAuto_ClearFlag
 	pop xiz
 	ret
 
+; Clears bit 0 of 0x8d88.
 CmpSaveAuto_ClearFlag:
 	and (0x8d88:16), 254
 	ret
@@ -37868,6 +38015,7 @@ msp_ld_mae:
 	pop xiz
 	ret
 
+; Calls AccompSeq_InitBankTables.
 MspLoad_InitVoice:
 	call AccompSeq_InitBankTables
 	ret
@@ -37880,6 +38028,7 @@ msp_ld_ato:
 	pop xiz
 	ret
 
+; In: WA = load result.  Negative: Voice_InitBankDataSafe; otherwise nothing.
 MspLoadAuto_CheckAndInit:
 	cp wa, 0:i3
 	jr lt, MspLoadAuto_NegativeCase
@@ -37891,12 +38040,15 @@ MspLoadAuto_NegativeCase:
 MspLoadAuto_Return:
 	ret
 
+; Music-style-player save preparation (HAMA function table): MspSave_InitAndCalcSize with XIZ
+; preserved.
 msp_sv_mae:
 	push xiz
 	calr MspSave_InitAndCalcSize
 	pop xiz
 	ret
 
+; Voice_RefreshBankData; out: XHL = the word at 0x1e881c * 16.
 MspSave_InitAndCalcSize:
 	call Voice_RefreshBankData
 	ld xhl, 0x1e881c
@@ -37905,15 +38057,22 @@ MspSave_InitAndCalcSize:
 	sll xhl, 4
 	ret
 
+; Music-style-player automatic save (HAMA function table): MspSaveAuto_Return (empty) with XIZ
+; preserved.
 msp_sv_ato:
 	push xiz
 	calr MspSaveAuto_Return
 	pop xiz
 	ret
 
+; Empty routine: returns at once.
 MspSaveAuto_Return:
 	ret
 
+; Enters a style-convert screen: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
+; AccompSeq_StopSequence, AccWrap_PlayModeDispatch, bit 2 of 0x28a7 set, AudioInit_RefreshToneBank,
+; NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
+; MIDI_SendAllSoundOff, Vga_SetupMultiPlaneDisplay, then AccDisplay_CopyToBackBuffer.
 AccDisplay_FullInit:
 	call SeqBuf_Init
 	call NoteMap_SendAllNotesOff
@@ -38235,6 +38394,7 @@ AccBankData_CopyDataBlock_Loop:
 	jr	c, AccBankData_CopyDataBlock_Loop
 	ret
 
+; Clears the 2048 bytes at 0x3f88 (64 entries of 32 bytes).
 StyleBuf_ClearAllEntries:
 	lda xbc, (0x3f88:16)
 	ld xwa, xbc
@@ -38265,6 +38425,7 @@ StyleConv_ClearWorkBuf_Loop:
 	jr c, StyleConv_ClearWorkBuf_Loop
 	ret
 
+; Clears the 64 32-byte entries at 0x3f88 and the 64 longs at 0x4788.
 StyleConv_ClearEntryTables:
 	lda xwa, (0x4788:16)
 	ld xbc, xwa
@@ -38342,6 +38503,7 @@ SoundMem_ClearLoop:
 	jr c, SoundMem_ClearLoop
 	ret
 
+; Clears the 32 100-byte entries at 0x48dc and the 32 longs at 0x555c.
 StyleFile_ClearAllTables:
 	lda xwa, (0x555c:16)
 	ld xbc, xwa
@@ -39478,6 +39640,7 @@ MainStylCnvFunc:
 	ld xhl, 0:i3
 	ret
 
+; 0x48da = 0xff, then UI_PostModeChangeEvent with WA = 0x10 (tail jump).
 StylCnv_ReportErrorAndReturn:
 	ld (0x48da:16), 255
 	ldw wa, 0x10
