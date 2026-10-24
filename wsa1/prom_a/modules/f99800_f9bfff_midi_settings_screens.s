@@ -419,14 +419,14 @@ Paint_SysexBulkDump:
 	ld (UI_ScreenItem:16), 0x00                                 ; F99A20  f1 20 27 00 00
 .LF99A25:
 	calr LCD_ScreenRedraw_Begin                                      ; F99A25  1e c8 ff
-	ld XIY,0x00f0d6af                                    ; F99A28  45 af d6 f0 00
+	ld XIY,DL_SysexBulkDumpMidiTotalKeyboard             ; F99A28  45 af d6 f0 00
 	ld XIX,DL_Sending                                    ; F99A2D  44 9c d7 f0 00
 	cp	(Variant_Flag:8), 0x02                               ; F99A32  c0 c4 3f 02
 	jr nz, .LF99A3D                                      ; F99A36  6e 05
-	ld XIX,0x00f0d77f                                    ; F99A38  44 7f d7 f0 00
+	ld XIX,DL_SysexBulkDump_SequencerRow                 ; F99A38  44 7f d7 f0 00
 .LF99A3D:
 	call T_DisplayList_Run                               ; F99A3D  1d f0 17 f4
-	ld XIY,0x00f0d9a4                                    ; F99A41  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99A41  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99A46  1d 1c 18 f4
 	calr LCD_ScreenRedraw_End                                      ; F99A4A  1e b1 ff
 	ret                                                  ; F99A4D  0e
@@ -468,10 +468,10 @@ LcdKeyRow1_SysexBulkDump:   ; entry: named by 1 `.long` operand, first at 0xF998
 	cp	(UI_ScreenItem:16), 0x00                            ; F99A6B  c1 20 27 3f 00
 	jr z, .LF99A8E                                       ; F99A70  66 1c
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F99A72  f1 40 25 00 01
-	ld XIY,0x00f0d9d7                                    ; F99A77  45 d7 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_EraseSelectedRow            ; F99A77  45 d7 d9 f0 00
 	call T_DLB_Handler_Array6                            ; F99A7C  1d 24 18 f4
 	ld (UI_ScreenItem:16), 0x00                                 ; F99A80  f1 20 27 00 00
-	ld XIY,0x00f0d9a4                                    ; F99A85  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99A85  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99A8A  1d 1c 18 f4
 .LF99A8E:
 	ret                                                  ; F99A8E  0e
@@ -496,10 +496,10 @@ LcdKeyRow2_SysexBulkDump:   ; entry: named by 1 `.long` operand, first at 0xF998
 	cp	(UI_ScreenItem:16), 0x01                            ; F99ABF  c1 20 27 3f 01
 	jr z, .LF99AE2                                       ; F99AC4  66 1c
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F99AC6  f1 40 25 00 01
-	ld XIY,0x00f0d9d7                                    ; F99ACB  45 d7 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_EraseSelectedRow            ; F99ACB  45 d7 d9 f0 00
 	call T_DLB_Handler_Array6                            ; F99AD0  1d 24 18 f4
 	ld (UI_ScreenItem:16), 0x01                                 ; F99AD4  f1 20 27 00 01
-	ld XIY,0x00f0d9a4                                    ; F99AD9  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99AD9  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99ADE  1d 1c 18 f4
 .LF99AE2:
 	ret                                                  ; F99AE2  0e
@@ -518,10 +518,10 @@ LcdKeyRow2_SysexBulkDump__F99AEB:
 	cp	(UI_ScreenItem:16), 0x02                            ; F99AF0  c1 20 27 3f 02
 	jr z, .LF99B13                                       ; F99AF5  66 1c
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F99AF7  f1 40 25 00 01
-	ld XIY,0x00f0d9d7                                    ; F99AFC  45 d7 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_EraseSelectedRow            ; F99AFC  45 d7 d9 f0 00
 	call T_DLB_Handler_Array6                            ; F99B01  1d 24 18 f4
 	ld (UI_ScreenItem:16), 0x02                                 ; F99B05  f1 20 27 00 02
-	ld XIY,0x00f0d9a4                                    ; F99B0A  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99B0A  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99B0F  1d 1c 18 f4
 .LF99B13:
 	ret                                                  ; F99B13  0e
@@ -534,10 +534,10 @@ LcdKeyRow4_SysexBulkDump:   ; entry: named by 1 `.long` operand, first at 0xF998
 	cp	(UI_ScreenItem:16), 0x03                            ; F99B19  c1 20 27 3f 03
 	jr z, .LF99B3C                                       ; F99B1E  66 1c
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F99B20  f1 40 25 00 01
-	ld XIY,0x00f0d9d7                                    ; F99B25  45 d7 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_EraseSelectedRow            ; F99B25  45 d7 d9 f0 00
 	call T_DLB_Handler_Array6                            ; F99B2A  1d 24 18 f4
 	ld (UI_ScreenItem:16), 0x03                                 ; F99B2E  f1 20 27 00 03
-	ld XIY,0x00f0d9a4                                    ; F99B33  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99B33  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99B38  1d 1c 18 f4
 .LF99B3C:
 	ret                                                  ; F99B3C  0e
@@ -554,10 +554,10 @@ LcdKeyRow5_SysexBulkDump:   ; entry: named by 1 `.long` operand, first at 0xF998
 	cp	(UI_ScreenItem:16), 0x04                            ; F99B48  c1 20 27 3f 04
 	jr z, .LF99B6B                                       ; F99B4D  66 1c
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F99B4F  f1 40 25 00 01
-	ld XIY,0x00f0d9d7                                    ; F99B54  45 d7 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_EraseSelectedRow            ; F99B54  45 d7 d9 f0 00
 	call T_DLB_Handler_Array6                            ; F99B59  1d 24 18 f4
 	ld (UI_ScreenItem:16), 0x04                                 ; F99B5D  f1 20 27 00 04
-	ld XIY,0x00f0d9a4                                    ; F99B62  45 a4 d9 f0 00
+	ld XIY,DLB_SysexBulkDump_FillSelectedRow             ; F99B62  45 a4 d9 f0 00
 	call T_DLB_Handler_Array8                                        ; F99B67  1d 1c 18 f4
 .LF99B6B:
 	ret                                                  ; F99B6B  0e
@@ -630,7 +630,7 @@ Paint_Sending:
 	jr z, .LF99BA0                                       ; F99B87  66 17
 	calr LCD_ScreenRedraw_Begin                                      ; F99B89  1e 64 fe
 	ld XIY,DL_Sending                                    ; F99B8C  45 9c d7 f0 00
-	ld XIX,0x00f0d7d5                                    ; F99B91  44 d5 d7 f0 00
+	ld XIX,DL_Receiving                                  ; F99B91  44 d5 d7 f0 00
 	call T_DisplayList_Run                               ; F99B96  1d f0 17 f4
 	and	(0x60f810:24), 0xfe                          ; F99B9A  c2 10 f8 60 3c fe
 .LF99BA0:
@@ -667,7 +667,7 @@ Paint_Sending:
 SysexProgressBar_DrawDots:
 	push XHL                                             ; F99BED  3b
 	ld XIY,SysexProgressBar_DrawDots_DL                                     ; F99BEE  45 9c d9 f0 00
-	ld XIX,0x00f0d9a4                                    ; F99BF3  44 a4 d9 f0 00
+	ld XIX,DLB_SysexBulkDump_FillSelectedRow             ; F99BF3  44 a4 d9 f0 00
 	call T_DisplayList_Run                               ; F99BF8  1d f0 17 f4
 	pop XHL                                              ; F99BFC  5b
 	and L,0x7f                                           ; F99BFD  cf cc 7f
@@ -890,13 +890,13 @@ Paint_GeneralMidiMode:
 	push XBC                                             ; F99D90  39
 	ld XHL,PTR_F0DB18                                    ; F99D91  43 18 db f0 00
 	ld	xiy, (xhl+bc)                                ; F99D96  e3 07 ec e4 25
-	ld XHL,0x00f0db2c                                    ; F99D9B  43 2c db f0 00
+	ld XHL,PTR_F0DB18_ButtonStarts                       ; F99D9B  43 2c db f0 00
 	ld	xix, (xhl+bc)                                ; F99DA0  e3 07 ec e4 24
 	call T_DisplayList_Run                               ; F99DA5  1d f0 17 f4
 	pop XBC                                              ; F99DA9  59
-	ld XHL,0x00f0db40                                    ; F99DAA  43 40 db f0 00
+	ld XHL,PTR_F0DB18_ButtonStarts2                      ; F99DAA  43 40 db f0 00
 	ld	xiy, (xhl+bc)                                ; F99DAF  e3 07 ec e4 25
-	ld XHL,0x00f0db54                                    ; F99DB4  43 54 db f0 00
+	ld XHL,PTR_F0DB18_TextStarts                         ; F99DB4  43 54 db f0 00
 	ld	xix, (xhl+bc)                                ; F99DB9  e3 07 ec e4 24
 	call T_DisplayListB_Run                              ; F99DBE  1d f4 17 f4
 .LF99DC2:
@@ -1192,7 +1192,7 @@ Paint_MidiMenu:
 	jr z, .LF99F45                                       ; F99F35  66 0e
 	lda xbc, (DL_F0C917:24)                              ; F99F37  f2 17 c9 f0 31
 	push XBC                                             ; F99F3C  39
-	lda xwa, (0xf0c81f:24)                               ; F99F3D  f2 1f c8 f0 30
+	lda xwa, (DL_MidiT0talM0deC0nfigurePr0g:24)          ; F99F3D  f2 1f c8 f0 30
 	push XWA                                             ; F99F42  38
 	jr .LF99F51                                          ; F99F43  68 0c
 .LF99F45:

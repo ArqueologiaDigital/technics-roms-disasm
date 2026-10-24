@@ -7824,6 +7824,14 @@ Paint_StepRecord_DL2:
 	.short 0x00AF
 	.short 0x00FA
 	.short 0x00C3
+; Display-list records that prom_a names by number; from this record to the next label
+; their own text records read: "MASTER STEP RECORD".
+; The name is CamelCase of that text (notes/gen_prom_b_f067a6_module.py --dl-names's rule)
+; and says what the interpreter draws from here, nothing more.
+; Referenced by prom_a: Paint_StepRecord (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DL_MasterStepRecord:
 	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
 	.byte 0x3A
 	.short 0x002D

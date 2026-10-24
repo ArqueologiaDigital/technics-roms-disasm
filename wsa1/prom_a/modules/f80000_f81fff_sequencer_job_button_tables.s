@@ -3522,10 +3522,10 @@ Paint_StepRecord:
 	jrl .LF81BCF                                         ; F81B25  78 a7 00
 .LF81B28:
 	ld XIY,Paint_StepRecord_DL2                                     ; F81B28  45 09 cf f3 00
-	ld XIX,0x00f3cf32                                    ; F81B2D  44 32 cf f3 00
+	ld XIX,DL_MasterStepRecord                           ; F81B2D  44 32 cf f3 00
 	cp	(0x0e63:16), 0x02                            ; F81B32  c1 63 0e 3f 02
 	jr nz, .LF81B43                                      ; F81B37  6e 0a
-	ld XIY,0x00f3cf32                                    ; F81B39  45 32 cf f3 00
+	ld XIY,DL_MasterStepRecord                           ; F81B39  45 32 cf f3 00
 	ld XIX,DL_F3CF57                                     ; F81B3E  44 57 cf f3 00
 .LF81B43:
 	push XHL                                             ; F81B43  3b

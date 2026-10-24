@@ -490,6 +490,7 @@
 	.set LcdKeyRow4_SoundEditCopy,                0x00f0c616
 	.set ExitKey_SoundEditCopy,                   0x00f0c70a
 	.set DL_Input0utputFilterMidiT0talM0de,       0x00f0c800
+	.set DL_MidiT0talM0deC0nfigurePr0g,           0x00f0c81f
 	.set DL_RealtimeMessageInput0utput,           0x00f0c8d5
 	.set DL_F0C917,                               0x00f0c917
 	.set DL_TotalModeMidiMidiInputMode,           0x00f0c964
@@ -529,8 +530,11 @@
 	.set DL_OffOff,                               0x00f0d036
 	.set DL_F0D04B,                               0x00f0d04b
 	.set Data_F0D061,                             0x00f0d061
+	.set DL_SysexBulkDumpMidiTotalKeyboard,       0x00f0d6af
+	.set DL_SysexBulkDump_SequencerRow,           0x00f0d77f
 	.set DL_Sending,                              0x00f0d79c
 	.set DL_SystemExclusivePleaseWait,            0x00f0d7a7
+	.set DL_Receiving,                            0x00f0d7d5
 	.set Paint_SysPartMidiSoundCombination_DL,    0x00f0d7e2
 	.set DL_F0D81B,                               0x00f0d81b
 	.set DL_F0D82E,                               0x00f0d82e
@@ -538,11 +542,16 @@
 	.set DLPtrTable_F0D96E,                       0x00f0d96e
 	.set Chars_F0D99A,                            0x00f0d99a
 	.set SysexProgressBar_DrawDots_DL,            0x00f0d99c
+	.set DLB_SysexBulkDump_FillSelectedRow,       0x00f0d9a4
+	.set DLB_SysexBulkDump_EraseSelectedRow,      0x00f0d9d7
 	.set DL_GeneralMidiMidiGeneralMidiMode,       0x00f0d9e2
 	.set DL_F0DA73,                               0x00f0da73
 	.set DL_F0DA93,                               0x00f0da93
 	.set DL_GeneralMidiMidiYesNo,                 0x00f0daa2
 	.set PTR_F0DB18,                              0x00f0db18
+	.set PTR_F0DB18_ButtonStarts,                 0x00f0db2c
+	.set PTR_F0DB18_ButtonStarts2,                0x00f0db40
+	.set PTR_F0DB18_TextStarts,                   0x00f0db54
 	.set DL_OtherParts,                           0x00f17c08
 	.set DL_Solo_F17C2A,                          0x00f17c2a
 	.set DL_F17C45,                               0x00f17c45
@@ -1048,6 +1057,7 @@
 	.set DL_StepRecordPartSelectPressTheUpDownButton, 0x00f3c8a7
 	.set DL_F3C947,                               0x00f3c947
 	.set Paint_StepRecord_DL2,                    0x00f3cf09
+	.set DL_MasterStepRecord,                     0x00f3cf32
 	.set DL_F3CF57,                               0x00f3cf57
 	.set Paint_StepRecord_DL1,                    0x00f3cfc6
 	.set DL_StepRecordTrackTrackClrMeas,          0x00f3d016

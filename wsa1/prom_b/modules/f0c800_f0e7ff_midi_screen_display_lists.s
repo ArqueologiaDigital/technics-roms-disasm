@@ -40,6 +40,14 @@ DL_Input0utputFilterMidiT0talM0de:
 	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
 	.byte 0x66
 	.short 0x0AC9
+; Display-list records that prom_a names by number; from this record to the next label
+; their own text records read: "MIDI"; "T0TAL M0DE"; "C0NFIGURE"; "PR0G"; "CHANGE"; "MIDI 0UT". +3 more
+; The name is CamelCase of that text (notes/gen_prom_b_f067a6_module.py --dl-names's rule)
+; and says what the interpreter draws from here, nothing more.
+; Referenced by prom_a: Paint_MidiMenu (lda).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DL_MidiT0talM0deC0nfigurePr0g:
 	.byte 0x1C, 0x0A	; op 1C, 10 bytes -> handler 0xF31A52
 	.short 0x008F
 	.short 0x0004
@@ -1893,6 +1901,14 @@ Bitmap_F0D5BF_80x24:
 ;     Rewritten by notes/lane_promB3/gen_promB3_spans.py --splice.
 	.byte 0x0C, 0x1C, 0x34, 0x24, 0x44, 0xC4, 0x84, 0x84, 0x84, 0x04, 0x04, 0x0C	; F0D698  bitmap tail
 	.byte 0x18, 0x30, 0x60, 0xC0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	; F0D6A4  bitmap tail
+; Display-list records that prom_a names by number; from this record to the next label
+; their own text records read: "SYSEX BULK DUMP"; "MIDI"; "TOTAL KEYBOARD"; "SEND"; "SOUND"; "COMBINATION". +2 more
+; The name is CamelCase of that text (notes/gen_prom_b_f067a6_module.py --dl-names's rule)
+; and says what the interpreter draws from here, nothing more.
+; Referenced by prom_a: Paint_SysexBulkDump (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DL_SysexBulkDumpMidiTotalKeyboard:
 	.byte 0x23, 0x05	; op 23, 5 bytes -> handler 0xF31ACE
 	.byte 0x1D	; +0x02 glyph index
 	.short 0x0007	; +0x03 -> IX
@@ -1969,6 +1985,14 @@ Bitmap_F0D5BF_80x24:
 	.short 0x0047
 	.short 0x0133
 	.short 0x0056
+; The SYSEX BULK DUMP menu's last row: the records from here to DL_Sending draw " SEQUENCER"
+; (LCD 0x1E7B) and its row rectangle.  prom_a Paint_SysexBulkDump runs the menu list from
+; DL_SysexBulkDumpMidiTotalKeyboard and ends it at DL_Sending, or HERE when (Variant_Flag) == 2
+; (`cp (0xC4),0x02 / jr nz` at 0xF99A32), so model variant 2 shows no SEQUENCER row.
+; Referenced by prom_a: Paint_SysexBulkDump (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DL_SysexBulkDump_SequencerRow:
 	.byte 0x07, 0x05	; op 07, 5 bytes -> handler 0xF31A3A
 	.short 0x1E78
 	.byte 0x10	; character codes below 0x20
@@ -2019,6 +2043,14 @@ DL_SystemExclusivePleaseWait:
 	.short 0x007F
 	.short 0x0111
 	.short 0x00E4
+; Display-list records that prom_a names by number; from this record to the next label
+; their own text records read: "RECEIVING".
+; The name is CamelCase of that text (notes/gen_prom_b_f067a6_module.py --dl-names's rule)
+; and says what the interpreter draws from here, nothing more.
+; Referenced by prom_a: Paint_Sending (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DL_Receiving:
 	.byte 0x08, 0x0D	; op 08, 13 bytes -> handler 0xF31A3A
 	.short 0x0583
 	.ascii "RECEIVING"
@@ -2188,6 +2220,17 @@ SysexProgressBar_DrawDots_DL:
 ;     of all 18 spans this lane could not otherwise frame (--probe-refusals)
 ;     finds a decomposition for THIS ONE ONLY, and only one for it.
 ;     Evidence checked by scripts/analysis/prom_b_small_span_convert.py --check
+; One interpreter-B record, op 03: entry [(0x2720), UI_ScreenItem] of the five 8-byte rectangles
+; that follow it (0xF0D9AF), passed to SWI7 service 0x05 (fill a rectangle) -- DLB_Handler_Array8
+; reads the index field at +2, the service at +6 (0x05) and the array pointer at +7.  prom_a
+; Paint_SysexBulkDump runs it through T_DLB_Handler_Array8, and LcdKeyRow1_SysexBulkDump runs it
+; after storing the new row in (0x2720).  The five rectangles are the menu's five rows.
+; Referenced by prom_a: LcdKeyRow1_SysexBulkDump (ld); LcdKeyRow2_SysexBulkDump (ld);
+;   LcdKeyRow2_SysexBulkDump__F99AEB (ld); LcdKeyRow4_SysexBulkDump (ld);
+;   LcdKeyRow5_SysexBulkDump (ld); Paint_SysexBulkDump (ld) +1 more.
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DLB_SysexBulkDump_FillSelectedRow:
 	.byte 0x03, 0x0B	; F0D9A4  op 03, 11 bytes
 	.byte	0x20, 0x27, 0x07, 0x00, 0x05, 0xAF, 0xD9, 0xF0, 0x00	; F0D9A6  operands
 	.short	0x000C, 0x001E, 0x00E8, 0x003A	; F0D9AF  entry 0
@@ -2195,6 +2238,15 @@ SysexProgressBar_DrawDots_DL:
 	.short	0x000C, 0x006C, 0x00E8, 0x0088	; F0D9BF  entry 2
 	.short	0x000C, 0x0093, 0x00E8, 0x00AF	; F0D9C7  entry 3
 	.short	0x000C, 0x00BA, 0x00E8, 0x00D6	; F0D9CF  entry 4
+; The twin of DLB_SysexBulkDump_FillSelectedRow: the same index field (0x2720) and the same
+; rectangle array 0xF0D9AF, with SWI7 service 0x1B (erase) at +6.  LcdKeyRow1_SysexBulkDump runs
+; it BEFORE it stores the new row, so it clears the old row's rectangle.
+; Referenced by prom_a: LcdKeyRow1_SysexBulkDump (ld); LcdKeyRow2_SysexBulkDump (ld);
+;   LcdKeyRow2_SysexBulkDump__F99AEB (ld); LcdKeyRow4_SysexBulkDump (ld);
+;   LcdKeyRow5_SysexBulkDump (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+DLB_SysexBulkDump_EraseSelectedRow:
 	.byte 0x08, 0x0B	; F0D9D7  op 08, 11 bytes
 	.byte	0x20, 0x27, 0x07, 0x00, 0x1B, 0xAF, 0xD9, 0xF0, 0x00	; F0D9D9  operands
 
@@ -2386,16 +2438,35 @@ PTR_F0DB18:
 	.long DL_F0DDDB	; [2] box_starts[FRENCH]
 	.long DL_F0DF54	; [3] box_starts[SPANISH]
 	.long DL_F0E0BA	; [4] box_starts[ITALIAN]
+; Entries [5..9] of PTR_F0DB18, one per language (English, German, French, Spanish, Italian),
+; indexed by (0x7FC1) x 4.  prom_a Paint_GeneralMidiMode reads them as the END of the dialog box
+; list it runs from PTR_F0DB18[language] -- each is where that language's button list starts.
+; Referenced by prom_a: Paint_GeneralMidiMode (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+PTR_F0DB18_ButtonStarts:
 	.long DL_F0DB91	; [5] btn_starts[ENGLISH]
 	.long DL_F0DCC1	; [6] btn_starts[GERMAN]
 	.long DL_F0DE62	; [7] btn_starts[FRENCH]
 	.long DL_F0DF7D	; [8] btn_starts[SPANISH]
 	.long DL_F0E0E2	; [9] btn_starts[ITALIAN]
+; Entries [10..14] of PTR_F0DB18: the same five button-list starts again.  prom_a
+; Paint_GeneralMidiMode reads them as the START of the interpreter-B run (T_DisplayListB_Run).
+; Referenced by prom_a: Paint_GeneralMidiMode (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+PTR_F0DB18_ButtonStarts2:
 	.long DL_F0DB91	; [10] btn_starts[ENGLISH]
 	.long DL_F0DCC1	; [11] btn_starts[GERMAN]
 	.long DL_F0DE62	; [12] btn_starts[FRENCH]
 	.long DL_F0DF7D	; [13] btn_starts[SPANISH]
 	.long DL_F0E0E2	; [14] btn_starts[ITALIAN]
+; Entries [15..19] of PTR_F0DB18: the five message-text starts, read by prom_a
+; Paint_GeneralMidiMode as the END of that interpreter-B run.
+; Referenced by prom_a: Paint_GeneralMidiMode (ld).
+; (Labelled by wsa1/scripts/tools/label_cross_image_targets.py so the prom_a operands
+;  can be written symbolically.)
+PTR_F0DB18_TextStarts:
 	.long DL_F0DBCD_TEXT	; [15] txt_starts[ENGLISH]
 	.long DL_F0DCFD_TEXT	; [16] txt_starts[GERMAN]
 	.long DL_F0DE9E_TEXT	; [17] txt_starts[FRENCH]
