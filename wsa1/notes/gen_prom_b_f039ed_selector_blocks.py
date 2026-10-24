@@ -134,7 +134,7 @@ sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import prom_b_display_lists as DL              # noqa: E402
 import prom_b_dl_length_audit as LA            # noqa: E402
-from asm_source import write_part              # noqa: E402
+from asm_source import image_text, write_part  # noqa: E402
 
 B_BASE = 0xF00000
 S_FILE = "prom_b/wsa1_prom_b.s"
@@ -671,7 +671,7 @@ def main():
                       % (n, i + 1),
                       strict_records(b, ta, st[i], st[i + 1]) is not None, True)
         # every reader address really carries `ld XIZ,<table>`
-        src = open(os.path.join(ROOT, S_FILE), encoding="utf-8").read()
+        src = image_text(ROOT, S_FILE)       # the image, not its root file
         for t, (addrs, _c) in READERS.items():
             for a in addrs:
                 pat = "; %06X  ld XIZ,0x00%06x" % (a, t)

@@ -37,6 +37,12 @@ sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import data_range_census as drc  # noqa: E402
 
 PATH = os.path.join(ROOT, "wsa1", "prom_b", "wsa1_prom_b.s")
+# ⚠ wsa1_prom_X.s is the image's ROOT file since the CPU 1 module split
+# (wsa1/scripts/tools/split_cpu1_images.py); its text is in prom_X/modules/*.s.
+# asm_source.own_lines() gives the whole image as the one list this tool indexes, and
+# write_own_lines()/edit_image() write each line back into the file that holds it.
+sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
+import asm_source  # noqa: E402
 LAB = re.compile(r'^([A-Za-z_][\w.$]*):')
 CODE_STRUCT = re.compile(r'^(?P<data>.+?)_Code_(?P<role>Skip|Join|Loop|Return|Epilogue|Entry|Sub|Helper)(?P<n>\d*)$')
 ROLE = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Entry|Sub|Helper)\d*$')
@@ -90,8 +96,7 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--map")
     a = ap.parse_args()
-    raw = open(PATH, "rb").read().decode("latin-1")
-    lines = raw.split("\n")
+    lines, _origin = asm_source.own_lines(os.path.join(ROOT, "wsa1"), "prom_b/wsa1_prom_b.s")
     macros = drc.collect_macros(os.path.join(ROOT, "wsa1"))
     mapping, skipped = plan(lines, macros)
     print("re-parented: %d   left (no code label between table and label): %d" % (len(mapping), len(skipped)))
@@ -100,8 +105,8 @@ def main():
     if not a.apply:
         return 0
     rx = re.compile(r'\b(' + "|".join(re.escape(k) for k in sorted(mapping, key=len, reverse=True)) + r')\b')
-    new = rx.sub(lambda m: mapping[m.group(1)], raw)
-    open(PATH, "wb").write(new.encode("latin-1"))
+    asm_source.edit_image(os.path.join(ROOT, "wsa1"), "prom_b/wsa1_prom_b.s",
+                          lambda text, rel: rx.sub(lambda m: mapping[m.group(1)], text))
     if a.map:
         with open(a.map, "w") as f:
             for k in sorted(mapping):

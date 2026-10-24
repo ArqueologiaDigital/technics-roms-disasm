@@ -236,7 +236,11 @@ def op23_indices():
     for p in (SRC_B, ROOT / 'prom_a' / 'wsa1_prom_a.s'):
         if not p.exists():
             continue
-        lines = p.read_text(encoding='latin-1').split('\n')
+        # the IMAGE (root + the modules it .includes), not the root file alone
+        import sys as _sys
+        _sys.path.insert(0, str(ROOT / 'notes'))
+        from asm_source import image_lines
+        lines = image_lines(str(ROOT), str(p.relative_to(ROOT)))
         for i, l in enumerate(lines):
             if '.byte 0x23, 0x05' in l and '0xF31ACE' in l:
                 m = re.search(r'\.byte\s+(0x[0-9A-Fa-f]+)', lines[i + 1])

@@ -50,7 +50,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import prom_b_display_lists as DL           # noqa: E402
-from asm_source import write_part           # noqa: E402
+from asm_source import image_text, write_part  # noqa: E402
 
 B_BASE = 0xF00000
 S_FILE = "prom_b/wsa1_prom_b.s"
@@ -138,7 +138,7 @@ def main():
 
     if "--selftest" in sys.argv:
         print("gen_prom_b_f036c2_module.py --selftest")
-        text = open(os.path.join(ROOT, S_FILE), encoding="utf-8").read()
+        text = image_text(ROOT, S_FILE)      # the image, not its root file
         check("CITED end DL_T0neLayerSoundEditTrigGer present verbatim", CITED_END in text, True)
         check("Data_F036C2 header present verbatim", OLD_HEADER in text, True)
         check("Data_F036C2 old rows present verbatim", OLD_ROWS in text, True)

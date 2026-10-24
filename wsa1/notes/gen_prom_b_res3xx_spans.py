@@ -517,7 +517,9 @@ def selftest():
         "advance lands XIY on 0xF3B65C, PAST XIX=0xF3B65B -> the loop ends")
     chk(0xF3B651 + 10 == 0xF3B65B, "the 10-byte extent ends exactly where DL_F3B65B starts")
     # and it is the only such record: every other op-00 record in the source says 0x0A
-    src = open(SRC, encoding="utf-8").read()
+    sys.path.insert(0, "notes")
+    from asm_source import image_text
+    src = image_text(os.getcwd(), SRC)       # run from wsa1/; the image, not its root file
     n0a = src.count("\t.byte 0x00, 0x0A\t; B op 00")
     n0b = src.count("\t.byte 0x00, 0x0B\t; B op 00")
     chk(n0a > 0 and n0b == 1,

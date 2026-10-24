@@ -4,7 +4,7 @@ os.chdir("/home/fsanches/compartilhado/kn5000-roms-disasm")
 T = os.path.expanduser("~/compartilhado/tmp/wsa1-triage")
 W = os.environ.get("WSA1_WAVE", "11")      # wave number: reads <T>/wave<W>/proposals_wave<W>_<batch>.json
 BATCHES = sys.argv[1].split(",")
-srcs = ["wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"] + sorted(glob.glob("wsa1/prom_c/**/*.s", recursive=True))
+srcs = (["wsa1/prom_a/wsa1_prom_a.s"] + sorted(glob.glob("wsa1/prom_a/modules/*.s")) + ["wsa1/prom_b/wsa1_prom_b.s"] + sorted(glob.glob("wsa1/prom_b/modules/*.s"))) + sorted(glob.glob("wsa1/prom_c/**/*.s", recursive=True))
 text = "\n".join(open(p, "rb").read().decode("latin-1") for p in srcs)
 labels = set(re.findall(r'^([A-Za-z_][\w$]*):', text, re.M))
 tokens = set(re.findall(r'[A-Za-z_][\w$]*', "\n".join(l.split(";")[0] for l in text.split("\n"))))

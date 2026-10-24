@@ -74,6 +74,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import prom_b_display_lists as DL  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_text  # noqa: E402  (the image, not the root file)
 
 B_BASE, A_BASE, TOP = 0xF00000, 0xF80000, 0x1000000
 
@@ -347,8 +349,10 @@ def compute_null_rate(a, b, n, seed=0, root=ROOT):
     verified list end -- the same corpus a real candidate's landing test is
     checked against -- searched within the same local radius scan_file uses
     (the very next boundary, never an unbounded search)."""
-    text_b = open(os.path.join(root, "prom_b", "wsa1_prom_b.s"), encoding="utf-8", errors="replace").read()
-    text_a = open(os.path.join(root, "prom_a", "wsa1_prom_a.s"), encoding="utf-8", errors="replace").read()
+    # the IMAGES, not their root files: since the module split each root is a header
+    # plus `.include` lines (notes/asm_source.py resolves them as llvm-mc does)
+    text_b = image_text(root, "prom_b/wsa1_prom_b.s")
+    text_a = image_text(root, "prom_a/wsa1_prom_a.s")
     spans = _incbin_spans(text_b, B_BASE) + _incbin_spans(text_a, A_BASE)
     spans = [(addr, ln) for addr, ln in spans if ln >= 2]
     weights = [ln for _addr, ln in spans]

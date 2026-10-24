@@ -107,6 +107,70 @@ ROMS = {
 }
 SOURCES = {'a': ROOT / 'prom_a' / 'wsa1_prom_a.s',
            'b': ROOT / 'prom_b' / 'wsa1_prom_b.s'}
+# ⚠ SOURCES[img] is the image's ROOT FILE, not the image: since the module split
+# (scripts/tools/split_cpu1_images.py) it is a header plus one `.include` per
+# module.  image_source() expands it the way llvm-mc does and remembers which
+# file each line came from, so the address map is built over the whole image and
+# write_back() puts every rewritten line into the file that owns it.
+INCLUDE_LINE = re.compile(r'^\s*\.include\s+"([^"]+)"')
+
+
+def image_source(img):
+    """(lines, origin): the image's lines with every `.include` expanded in place,
+    and origin[i] = (path, index in that file) of line i.  An `.include` line is
+    replaced by the lines it pulls in, exactly as the assembler reads them."""
+    texts = {}
+
+    def file_lines(path):
+        if path not in texts:
+            texts[path] = path.read_text(encoding='latin-1').split('\n')
+        return texts[path]
+
+    def resolve(spec, including):
+        for cand in (ROOT / spec, including.parent / spec, ROOT / f'prom_{img}' / spec):
+            if cand.is_file():
+                return cand
+        raise FileNotFoundError(f"{including}: .include {spec!r} resolves to nothing")
+
+    lines, origin, seen = [], [], set()
+
+    def walk(path):
+        for k, ln in enumerate(file_lines(path)):
+            m = INCLUDE_LINE.match(ln)
+            if m:
+                tgt = resolve(m.group(1), path)
+                if tgt in seen and tgt.suffix != '.s':
+                    continue                     # a definitions .inc, expanded once
+                seen.add(tgt)
+                walk(tgt)
+            else:
+                lines.append(ln)
+                origin.append((path, k))
+    walk(SOURCES[img])
+    return lines, origin, texts
+
+
+_ORIGIN = {}
+
+
+def write_back(img, lines):
+    """Write the lines source_map(img) handed out back to the files they came from.
+    Only files whose text changed are written; a shared source (kernel/, dsp/,
+    include/, maincpu/) is never rewritten from here."""
+    origin, texts = _ORIGIN[img]
+    per_file = {}
+    for (path, k), ln in zip(origin, lines):
+        if texts[path][k] != ln:
+            per_file.setdefault(path, list(texts[path]))[k] = ln
+    for path, new in per_file.items():
+        rel = path.relative_to(ROOT).as_posix()
+        if not rel.startswith(f'prom_{img}/'):
+            sys.exit(f"refusing to rewrite {rel}: a source shared with another image")
+        tmp = path.with_suffix('.s.tmp')
+        tmp.write_text('\n'.join(new), encoding='latin-1')
+        os.replace(tmp, path)
+        texts[path] = new
+    return sorted(p.relative_to(ROOT).as_posix() for p in per_file)
 
 
 def entry(name, img, addr, bc, hl, evidence, order='col'):
@@ -406,7 +470,9 @@ def _line_size(line):
 
 
 def source_map(img):
-    """address -> (line index, value index) over the `.byte` lines of prom_<img>.
+    """address -> (line index, value index) over the `.byte` lines of prom_<img>,
+    the line index being into the EXPANDED image (image_source); write_back(img,
+    lines) stores a patched list into the files the lines came from.
 
     ⚠ ONLY 8,756 of prom_b's 22,144 `.byte` lines carry a trailing address
     comment, so the map is built by PROPAGATING an address forward and backward
@@ -418,7 +484,8 @@ def source_map(img):
     of the map the ROM itself confirms.
     """
     base, rom_data = rom(img)
-    lines = SOURCES[img].read_text(encoding='latin-1').split('\n')
+    lines, origin, texts = image_source(img)
+    _ORIGIN[img] = (origin, texts)
     sizes = [_line_size(l) for l in lines]
     hints = []
     for l in lines:
@@ -634,9 +701,7 @@ def _rewrite(apply_):
                                    from_grid(g, e['bc'], e['hl'], e['order']),
                                    data, base, e['name'], apply_)
         if apply_ and changed:
-            tmp = SOURCES[img].with_suffix('.s.tmp')
-            tmp.write_text('\n'.join(lines), encoding='latin-1')
-            os.replace(tmp, SOURCES[img])
+            write_back(img, lines)
         print(f"prom_{img}: {changed} `.byte` value(s) "
               f"{'rewritten' if apply_ else 'would change'}"
               f"   (map guard discarded {dropped:,} unconfirmed slots)")

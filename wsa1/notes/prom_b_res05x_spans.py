@@ -753,10 +753,7 @@ def splice(d, say):
     # character will not fit -- which is exactly what a stray U+26A0 does to
     # these latin-1 sources.  (It happened twice while writing this script.)
     blob = src.encode("latin-1")
-    tmp = SRC + ".res05x.tmp"
-    with open(tmp, "wb") as f:
-        f.write(blob)
-    os.replace(tmp, SRC)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC')
     say("  %s: %d -> %d bytes of source" % (os.path.basename(SRC), before, len(blob)))
     return True
 

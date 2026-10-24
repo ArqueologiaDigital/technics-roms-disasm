@@ -173,6 +173,8 @@ OWN_INCLUDE = re.compile(r'^\t\.include "([^"]+\.s)"')
 def included_sources(path):
     """Every .s file the image at `path` pulls in, in the order it names them,
     resolved the way llvm-mc resolves them: `-I .` then `-I <the image's dir>`."""
+    # ⚠ TO EVERY DEPTH, depth-first: since the CPU 1 module split
+    # (scripts/tools/split_cpu1_images.py) prom_a's kernel include sits inside a module file.
     out = []
     for ln in open(os.path.join(ROOT, path)).read().split("\n"):
         m = OWN_INCLUDE.match(ln)
@@ -181,7 +183,9 @@ def included_sources(path):
         rel = m.group(1)
         for cand in (rel, os.path.join(os.path.dirname(path), rel)):
             if os.path.exists(os.path.join(ROOT, cand)):
-                out.append(cand)
+                if cand not in out:
+                    out.append(cand)
+                    out += [x for x in included_sources(cand) if x not in out]
                 break
         else:
             raise FileNotFoundError(rel)

@@ -290,8 +290,7 @@ def apply():
     anchor = "\t.byte\t0x4D, 0x54, 0x68, 0x64, 0x4D, 0x54, 0x72, 0x6B\t; F6F528  [0..7]\n"
     assert anchor in s
     s = s.replace(anchor, anchor + BODY_HEADER + "Smf_ReadFile:\n", 1)
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print(f"renamed {len(RENAMES) + len(DATA_RENAMES)} labels, added 1")
     return 0
 

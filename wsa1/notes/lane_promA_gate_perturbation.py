@@ -66,7 +66,15 @@ def gate():
 
 
 def main():
+    # ⚠ ONE LINE AT A TIME, IN THE FILE THAT HOLDS IT.  The image is a root plus module
+    # files (scripts/tools/split_cpu1_images.py); own_lines() lists it as one sequence and
+    # write_own_lines() edits exactly the line's own file.  Writing the expanded image
+    # back over the root -- what this probe did while the root WAS the image -- would
+    # undo the split, and write_part() refuses it.
+    from asm_source import own_lines, write_own_lines
+    lines0, origin = own_lines(ROOT, "prom_a/wsa1_prom_a.s")
     original = open(SRC, encoding="utf-8").read()
+    touched = {}
     ok_all = True
     try:
         rc, _off, _out = gate()
@@ -74,10 +82,9 @@ def main():
         if rc != 0:
             return 2
         for name, addr, needle, repl, want in CASES:
-            lines = original.split("\n")
-            i = line_index(lines, addr, needle)
-            lines[i] = lines[i].replace(needle, repl, 1)
-            write_part(SRC_MASTER, "\n".join(lines))
+            i = line_index(lines0, addr, needle)
+            touched[i] = lines0[i]
+            write_own_lines(ROOT, origin, {i: lines0[i].replace(needle, repl, 1)})
             rc, off, _out = gate()
             good = rc != 0 and off == want
             ok_all &= good
@@ -86,10 +93,11 @@ def main():
                      "RED at file offset 0x%06X" % off if off is not None
                      else ("GREEN -- THE GATE IS BLIND HERE" if rc == 0 else "RED, no offset"),
                      "" if good else "  (expected 0x%06X)" % want))
-            write_part(SRC_MASTER, original)
+            write_own_lines(ROOT, origin, {i: lines0[i]})
     finally:
-        write_part(SRC_MASTER, original)
-    if open(SRC, encoding="utf-8").read() != original:
+        if touched:
+            write_own_lines(ROOT, origin, touched)
+    if open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), encoding="utf-8").read() != original:
         sys.exit("!! SOURCE NOT RESTORED -- fix by hand before committing")
     rc, _off, _out = gate()
     print("restored gate:  %s" % ("GREEN" if rc == 0 else "RED -- restore failed"))

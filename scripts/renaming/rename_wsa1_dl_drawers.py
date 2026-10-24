@@ -185,8 +185,10 @@ def main():
                 taken.add(m.group(1))
                 if m.group(1).startswith("DL_"):
                     dlnames.add(m.group(1))
-    for f in ("wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"):
-        L = open(os.path.join(REPO, f), "rb").read().decode("latin-1").split("\n")
+    sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+    import asm_source      # the IMAGE as one list (wsa1/scripts/tools/split_cpu1_images.py)
+    for f in ("prom_a/wsa1_prom_a.s", "prom_b/wsa1_prom_b.s"):
+        L, _origin = asm_source.own_lines(os.path.join(REPO, "wsa1"), f)
         labels = {}
         for i, l in enumerate(L):
             m = LABEL.match(l.split(";")[0])
@@ -236,7 +238,8 @@ def main():
         lds = sorted(glob.glob(os.path.join(REPO, "wsa1", "**", "*.ld"), recursive=True))
         notes = sorted(p for g in NOTES for p in glob.glob(os.path.join(REPO, g)))
         subprocess.run(["sed", "-i", "-f", sed] + files + lds + notes, check=True)
-        n = sum(fix_headers(os.path.join(REPO, f), drew) for f in ("wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"))
+        n = sum(fix_headers(f, drew) for img in ("prom_a/wsa1_prom_a.s", "prom_b/wsa1_prom_b.s")
+                for f in asm_source.image_writable_files(os.path.join(REPO, "wsa1"), img))
         print("%d generated headers corrected" % n)
     return 0
 

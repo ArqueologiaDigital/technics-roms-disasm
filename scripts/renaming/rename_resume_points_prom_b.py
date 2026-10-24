@@ -55,8 +55,11 @@ def main():
     ap.add_argument("--map")
     a = ap.parse_args()
     created = labels_at(PASS_COMMIT) - labels_at(PASS_COMMIT + "~1")
-    raw = open(PATH, "rb").read().decode("latin-1")
-    L = raw.split("\n")
+    # the IMAGE, not the root file (wsa1/scripts/tools/split_cpu1_images.py)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(PATH)), "notes"))
+    import asm_source
+    W = os.path.dirname(os.path.dirname(PATH))
+    L, _origin = asm_source.own_lines(W, "prom_b/wsa1_prom_b.s")
     idx = {}
     for i, t in enumerate(L):
         m = LAB.match(t)
@@ -100,7 +103,8 @@ def main():
         print("  %s -> %s" % (k, mapping[k]))
     if a.apply and mapping:
         rx = re.compile(r'\b(' + "|".join(re.escape(k) for k in sorted(mapping, key=len, reverse=True)) + r')\b')
-        open(PATH, "wb").write(rx.sub(lambda m: mapping[m.group(1)], raw).encode("latin-1"))
+        asm_source.edit_image(W, "prom_b/wsa1_prom_b.s",
+                              lambda text, rel: rx.sub(lambda m: mapping[m.group(1)], text))
         if a.map:
             with open(a.map, "w") as f:
                 for k in sorted(mapping):

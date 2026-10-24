@@ -96,8 +96,7 @@ def apply():
         blk = blk.replace(OLD_UNKNOWN, NOTE).replace(f"; {old}\n", f"; {new} -- 0x{old[4:]}\n", 1)
         s = s[:h] + blk + s[i:]
         s = re.sub(r"\b" + old + r"\b", new, s)
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print(f"renamed {len(RENAMES)}")
     return 0
 

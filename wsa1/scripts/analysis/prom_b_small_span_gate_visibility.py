@@ -58,10 +58,15 @@ def gate():
 
 
 def swap(old, new):
-    s = open(SRC, encoding="latin-1").read()
+    # in the ONE file of the image that holds the line (the image is a root plus module
+    # files since scripts/tools/split_cpu1_images.py); asm_source.locate() raises unless
+    # exactly one file has it, and the file itself must have it exactly once
+    from asm_source import locate
+    path = locate(ROOT, "prom_b/wsa1_prom_b.s", old)
+    s = open(path, encoding="utf-8").read()
     if s.count(old) != 1:
         sys.exit("expected exactly one copy of:\n%r\nfound %d" % (old, s.count(old)))
-    write_part(SRC_MASTER, s.replace(old, new))
+    write_part(path, s.replace(old, new))
 
 
 def main():

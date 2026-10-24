@@ -116,9 +116,7 @@ def apply(L, rows):
         L[i] = "; (%s removed 2026-10-04: no code names it and the line above falls through into it -- part of %s;\n" \
                ";  notes/prom_a_stray_label_removal.py)%s" % (n, p, ("  [was: " + tail + "]") if tail else "")
     data = "\n".join(L).encode("latin-1")             # encode before opening for write
-    with open(PA + ".tmp", "wb") as fh:
-        fh.write(data)
-    os.replace(PA + ".tmp", PA)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'PA')
     chk = os.path.join(ROOT, "notes", "prom_a_preservation_check.py")
     s = open(chk, "rb").read().decode("utf-8")
     anchor = "\n}\n\n\ndef _renames():"

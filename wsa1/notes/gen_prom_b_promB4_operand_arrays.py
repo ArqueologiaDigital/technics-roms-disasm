@@ -307,10 +307,7 @@ def read_src():
 def write_src(t):
     """Byte-preserving, and ATOMIC: an encode failure must never truncate the
     source (it did, once, before the tmp+rename)."""
-    tmp = SRC + ".tmp"
-    with open(tmp, "wb") as f:
-        f.write(t.encode("latin-1"))
-    os.replace(tmp, SRC)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC')
 
 
 def byte_line(b, addr, n, indent="\t.byte\t"):

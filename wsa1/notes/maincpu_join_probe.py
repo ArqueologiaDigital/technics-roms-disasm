@@ -60,6 +60,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
+from asm_source import image_lines  # noqa: E402  (the image, not its root file)
+sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import git_show  # noqa: E402  (git paths are repo-relative)
 IMAGES = {"prom_a": ("prom_a/wsa1_prom_a.s", "wsa1_prom_a.ic12", 0xF80000),
           "prom_b": ("prom_b/wsa1_prom_b.s", "wsa1_prom_b.ic13", 0xF00000)}
@@ -91,7 +93,7 @@ def rom(tag):
 
 
 def src(tag):
-    return open(os.path.join(ROOT, IMAGES[tag][0])).read().split('\n')
+    return image_lines(ROOT, IMAGES[tag][0])      # the image, not its root file
 
 
 def at(tag, addr, n):

@@ -123,7 +123,7 @@ sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import wave7_documentation_metrics as M                            # noqa: E402
 
-SRCA = os.path.join(ROOT, "prom_a", "wsa1_prom_a.s")
+SRCA = image_path(ROOT, "prom_a/wsa1_prom_a.s")      # the image, not its root file
 # ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
 # it is handed is the whole image: write_part() sees the master's
 # .include lines disappear.  That refusal is correct and is not the fix.

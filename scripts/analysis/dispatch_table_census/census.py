@@ -535,8 +535,11 @@ def detect_J(key):
             if e:
                 e["at"] = r[0]
                 ents.append(e)
+        # the file is the one the map says emits 0xF40000 -- since the CPU 1 module split
+        # (wsa1/scripts/tools/split_cpu1_images.py) that is the directory's own module file
+        first = next((r for r in rows if r[0] >= 0xF40000), None)
         out.append(dict(kind="J", addr=0xF40000, name="prom_b routine directory",
-                        nwords=n, file="prom_b/wsa1_prom_b.s", ents=ents, perentry=True))
+                        nwords=n, file=first[2] if first else "?", ents=ents, perentry=True))
     return out
 
 

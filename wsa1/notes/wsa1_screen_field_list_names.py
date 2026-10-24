@@ -17,6 +17,7 @@ RUN (from wsa1/)
   python3 notes/wsa1_screen_field_list_names.py --args     # 'old=new|header' items for wsa1_rename.py
 """
 import collections
+import os
 import re
 import sys
 
@@ -43,8 +44,10 @@ def screen_name(obj):
 
 
 def plan():
-    a = open("prom_a/wsa1_prom_a.s", "rb").read().decode("latin-1").split("\n")
-    b = open("prom_b/wsa1_prom_b.s", "rb").read().decode("latin-1").split("\n")
+    sys.path.insert(0, "notes")
+    from asm_source import image_lines           # run from wsa1/; the images, not their roots
+    a = image_lines(os.getcwd(), "prom_a/wsa1_prom_a.s")
+    b = image_lines(os.getcwd(), "prom_b/wsa1_prom_b.s")
     vt = longs_after(a, "PanelScreen_VtableTable", 256)
     lists = longs_after(b, "ScreenFieldListPtrs", 256)
     users = collections.defaultdict(list)

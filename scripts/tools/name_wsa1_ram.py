@@ -34,7 +34,9 @@ import sys
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
 INC = "wsa1/include/wsa1_ram.inc"
-SOURCES = ["wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"] + \
+# each image is its root file plus its module files (wsa1/scripts/tools/split_cpu1_images.py)
+SOURCES = ["wsa1/prom_a/wsa1_prom_a.s"] + sorted(glob.glob(os.path.join(REPO, "wsa1/prom_a/modules/*.s"))) + \
+    ["wsa1/prom_b/wsa1_prom_b.s"] + sorted(glob.glob(os.path.join(REPO, "wsa1/prom_b/modules/*.s"))) + \
     sorted(glob.glob(os.path.join(REPO, "wsa1/maincpu/shared/*.s")))
 
 # Groups of (findings note, section, {address: (name, what it holds, what establishes it)}).

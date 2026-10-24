@@ -11,9 +11,13 @@ USAGE (from the repository's wsa1/ directory)
   python3 notes/wsa1_601f_census.py
 """
 import collections
+import os
 import re
+import sys
 
-L = open('prom_a/wsa1_prom_a.s', 'rb').read().decode('latin-1').split('\n')
+sys.path.insert(0, "notes")
+from asm_source import image_lines  # noqa: E402  (run from wsa1/; the image, not its root file)
+L = image_lines(os.getcwd(), 'prom_a/wsa1_prom_a.s')
 cur = '?'
 d = collections.defaultdict(lambda: collections.defaultdict(set))
 for l in L:

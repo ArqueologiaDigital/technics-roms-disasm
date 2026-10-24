@@ -709,7 +709,7 @@ def apply_():
         return 1
     before = len(src)
     src = src.replace(old, text.encode("utf-8"))
-    open(SRC_B, "wb").write(src)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC_B')
     print("spliced: %s grew by %d bytes" % (SRC_B, len(src) - before))
     return 0
 

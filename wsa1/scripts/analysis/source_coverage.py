@@ -58,9 +58,18 @@ def resolve(rel, key):
 
 def measure(key):
     src = os.path.join(ROOT, f"prom_{key}", f"wsa1_prom_{key}.s")
-    text = open(src).read()
-    for extra in OWN_INCLUDE.findall(text):
-        text += "\n" + open(resolve(extra, key)).read()
+    # ⚠ FOLLOWED TO EVERY DEPTH.  One level was enough while a primary held its
+    # whole image; since the CPU 1 module split (scripts/tools/split_cpu1_images.py)
+    # prom_a's kernel include sits inside a MODULE file, two levels down.
+    text, todo, seen = "", [src], set()
+    while todo:
+        path = todo.pop(0)
+        if path in seen:
+            continue
+        seen.add(path)
+        body = open(path).read()
+        text += "\n" + body
+        todo[0:0] = [resolve(extra, key) for extra in OWN_INCLUDE.findall(body)]
     sliced = list(re.finditer(r'\.incbin\s+"[^"]+",\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+)', text))
     inc = sum(int(m.group(2), 16) for m in sliced)
     whole = re.findall(r'\.incbin\s+"[^"]+"\s*$', text, re.M)

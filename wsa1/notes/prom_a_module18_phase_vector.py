@@ -76,9 +76,7 @@ def apply():
     L[j:j + 1] = HDR_INIT + ["DiskScreens_InitSelectedEntry:"]
     L[k:k] = HDR_VEC + ["DiskScreens_PhaseVector:"]
     data = "\n".join(L).encode("latin-1")
-    with open(SRC + ".tmp", "wb") as fh:
-        fh.write(data)
-    os.replace(SRC + ".tmp", SRC)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC')
     print("prom_a: DiskScreens_PhaseVector and DiskScreens_InitSelectedEntry placed")
 
 

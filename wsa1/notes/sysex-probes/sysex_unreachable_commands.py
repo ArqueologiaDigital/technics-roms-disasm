@@ -91,7 +91,9 @@ WALKER_LO, WALKER_HI = 0xFB63D1, 0xFB6B87      # the trie walker, entry..end
 # ---------------------------------------------------------------------------
 LINE = re.compile(r";\s*([0-9A-F]{6})\s+((?:[0-9a-f]{2} )*[0-9a-f]{2})(?:\s|$)")
 insns = []                                    # (addr, bytes)
-for line in open(SRC):
+sys.path.insert(0, os.path.join(HERE, "..", "..", "notes"))
+from asm_source import image_lines  # noqa: E402  (the image, not its root file)
+for line in image_lines(os.path.normpath(os.path.join(HERE, "..", "..")), "prom_a/wsa1_prom_a.s"):
     body = line.split(";", 1)[0].strip()
     if not body or body.startswith("."):      # directives are data, not code
         continue

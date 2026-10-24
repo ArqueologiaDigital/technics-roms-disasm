@@ -209,9 +209,7 @@ def main():
         for name, i0, i1, new in sorted(done, key=lambda d: -d[1]):
             L[i0:i1] = new
         data = "\n".join(L).encode("latin-1")         # encode BEFORE opening: a failed encode must not truncate
-        with open(SRC + ".tmp", "wb") as fh:
-            fh.write(data)
-        os.replace(SRC + ".tmp", SRC)
+        raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'SRC')
     for name, _i0, _i1, new in done:
         print("RENDER %s (%d rows)" % (name, len(new)))
     for name, why in skipped:

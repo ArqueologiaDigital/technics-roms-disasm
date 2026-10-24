@@ -27,6 +27,12 @@ REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=Tr
                       text=True).stdout.strip() or "."
 NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 SRC = os.path.join(REPO, "wsa1/prom_a/wsa1_prom_a.s")
+# ⚠ wsa1_prom_X.s is the image's ROOT file since the CPU 1 module split
+# (wsa1/scripts/tools/split_cpu1_images.py); its text is in prom_X/modules/*.s.
+# asm_source.own_lines() gives the whole image as the one list this tool indexes, and
+# write_own_lines()/edit_image() write each line back into the file that holds it.
+sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+import asm_source  # noqa: E402
 ELF = os.path.join(REPO, "wsa1/rebuilt_ROMs/wsa1_prom_a.llvm.elf")
 LONG = re.compile(r'^(\s*\.long\s+)(\S+?)(\s*;\s*([0-9A-F]{6})\b.*)$')
 ROM = os.path.join(REPO, "wsa1/original_ROMs/wsa1_prom_a.ic12")
@@ -51,7 +57,8 @@ def main():
         v, t, n = l.split()
         if t in "tT" and not n.startswith(".L"):
             by.setdefault(int(v, 16), []).append(n)
-    L = open(SRC, "rb").read().decode("latin-1").split("\n")
+    L, origin = asm_source.own_lines(os.path.join(REPO, "wsa1"), "prom_a/wsa1_prom_a.s")
+    before = list(L)
     start = next(i for i, l in enumerate(L) if l.startswith(a.label + ":"))
     word, done, left = 0, 0, 0
     for i in range(start + 1, len(L)):
@@ -81,7 +88,8 @@ def main():
     print("%s: %d entries respelled, %d numeric entries with no live label at value%+#x%s"
           % (a.label, done, left, a.delta, "" if a.apply else " (dry run)"))
     if a.apply:
-        open(SRC, "wb").write("\n".join(L).encode("latin-1"))
+        asm_source.write_own_lines(os.path.join(REPO, "wsa1"), origin,
+                                   {i: x for i, x in enumerate(L) if x != before[i]})
     return 0
 
 

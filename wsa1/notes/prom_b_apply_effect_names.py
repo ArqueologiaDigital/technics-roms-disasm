@@ -182,8 +182,7 @@ def apply():
     assert NAMES_OLD in s
     s = s.replace(NAMES_OLD, NAMES_NEW, 1)
 
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print("converted 0x78 bytes, renamed 2 labels, closed 2 Unknowns")
     return 0
 

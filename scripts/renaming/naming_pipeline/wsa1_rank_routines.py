@@ -3,7 +3,11 @@ import re, collections, json, os
 G = re.compile(r'^([A-Za-z_][\w$]*):')
 LOC = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Done|Next|Exit|Cont|End|Default|Resume|Nop)\d*$|__[0-9A-Fa-f]{4,6}$')
 SUB = re.compile(r'^sub_F[0-9A-F]{5}$')
-src = {i: open("%s/wsa1_%s.s" % (i, i), "rb").read().decode("latin-1").split("\n") for i in ("prom_a", "prom_b")}
+# run from wsa1/; each image is its root file plus its modules (scripts/tools/split_cpu1_images.py)
+import sys  # noqa: E402
+sys.path.insert(0, "notes")
+import asm_source  # noqa: E402
+src = {i: asm_source.own_lines(os.getcwd(), "%s/wsa1_%s.s" % (i, i))[0] for i in ("prom_a", "prom_b")}
 thunk = {}   # T_xxx -> target name
 for l in src["prom_b"]:
     m = re.match(r'^(T_\w+):\s*jp\s+(\w+)', l)

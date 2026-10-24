@@ -246,8 +246,7 @@ def apply():
     if anchor in s and "MsgLine_AccompVolume:" not in s:
         s = s.replace(anchor, anchor + NEW_HEADER + "MsgLine_AccompVolume:\n", 1)
         n_lab += 1
-    with open(SRC, "w") as f:
-        f.write(s)
+    write_part(SRC_MASTER, s)   # guarded: refuses the whole image
     print(f"labels changed/added: {n_lab}   headers rewritten: {n_hdr}   other citations updated: {n_ref}")
     return 0
 

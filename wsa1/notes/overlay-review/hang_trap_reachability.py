@@ -71,6 +71,9 @@ import os, re
 HERE  = os.path.dirname(os.path.abspath(__file__))
 BASE  = os.path.join(HERE, "..", "..", "original_ROMs")
 SRC   = os.path.join(HERE, "..", "..")
+import sys  # noqa: E402
+sys.path.insert(0, os.path.join(SRC, "notes"))
+from asm_source import image_path  # noqa: E402
 
 IMAGES = [("wsa1_prom_b.ic13", 0xF00000, "prom_b (CPU 1)", "prom_b/wsa1_prom_b.s"),
           ("wsa1_prom_a.ic12", 0xF80000, "prom_a (CPU 1)", "prom_a/wsa1_prom_a.s")]
@@ -120,7 +123,7 @@ skipped = 0
 
 for fn, base, label, src in IMAGES:
     data = open(os.path.join(BASE, fn), "rb").read()
-    code = instruction_addrs(os.path.join(SRC, src))
+    code = instruction_addrs(image_path(os.path.normpath(SRC), src))   # the image, not its root
     print(f"\n=== {label}: `ldio <int enable>,imm` AT A CONVERTED INSTRUCTION BOUNDARY ===")
     print(f"    ({len(code)} instruction addresses read from {src})")
     n = 0

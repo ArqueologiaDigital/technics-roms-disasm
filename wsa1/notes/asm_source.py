@@ -510,6 +510,72 @@ def write_part(path, text, root=ROOT, allow_growth=False):
 
 
 # ---------------------------------------------------------------------------
+# ONE IMAGE AS ONE LIST OF LINES, AND BACK -- for tools written against a monolith
+# ---------------------------------------------------------------------------
+# ★ Added 2026-10-24 with the CPU 1 module split (scripts/tools/split_cpu1_images.py).
+#   Several tools -- the two cross-image symbolisers among them -- index ONE list of
+#   lines by position: `lines[li]`, `spans[k] == (addr, end, REL, li)`, `edits[li]`.
+#   own_lines() hands them the list they were written for: the image's text with its
+#   OWN parts expanded in place (for prom_a/prom_b, exactly the pre-split listing),
+#   while an `.include` of a SHARED source (kernel/, dsp/, include/, maincpu/) stays a
+#   line, as it always was.  origin[i] says which file and line each entry came from,
+#   and write_own_lines() puts edits and inserted lines back into those files.
+
+
+def own_lines(root, primary):
+    """(lines, origin): the image with only its OWN constituent files expanded.
+
+    origin[i] = (absolute path, line index in that file).  An `.include` of an own
+    part is replaced by that part's lines; an `.include` of a shared source is kept
+    as the line it is.  Read as UTF-8, like the rest of this module."""
+    lines, origin = [], []
+
+    def walk(path):
+        for k, ln in enumerate(open(path, encoding="utf-8").read().split("\n")):
+            m = INCLUDE_RE.match(ln)
+            if m:
+                target = _resolve(root, m.group(1), path)
+                if not _is_shared(root, target) and target.endswith(".s"):
+                    walk(target)
+                    continue
+            lines.append(ln)
+            origin.append((path, k))
+    walk(os.path.join(root, primary))
+    return lines, origin
+
+
+def write_own_lines(root, origin, edits=None, inserts=None):
+    """Apply {i: new text} and {i: [lines to insert BEFORE entry i]} -- i indexing the
+    list own_lines() returned -- to the files the entries came from.
+
+    An edit to None deletes the line; an edit holding newlines replaces one line by
+    several.  An inserted line goes into the file of the entry it precedes, at that position.
+    Every write goes through write_part(), so its guards apply; a shared source is
+    never in `origin` and so can never be written from here.  Returns the ROOT-relative
+    paths written."""
+    edits, inserts = edits or {}, inserts or {}
+    per = {}
+    for i, new in edits.items():
+        path, k = origin[i]
+        per.setdefault(path, [{}, {}])[0][k] = new
+    for i, add in inserts.items():
+        path, k = origin[i]
+        per.setdefault(path, [{}, {}])[1].setdefault(k, []).extend(add)
+    out = []
+    for path, (ed, ins) in sorted(per.items()):
+        old = open(path, encoding="utf-8").read().split("\n")
+        new = []
+        for k, ln in enumerate(old):
+            new.extend(ins.get(k, ()))
+            if k in ed and ed[k] is None:
+                continue
+            new.append(ed.get(k, ln))
+        write_part(path, "\n".join(new), root=root)
+        out.append(os.path.relpath(path, root).replace(os.sep, "/"))
+    return out
+
+
+# ---------------------------------------------------------------------------
 def _selftest():
     """INVARIANTS, not today's numbers.  Every check below is true of any
     correctly resolved image and would fail on a resolver that quietly skipped
@@ -769,6 +835,32 @@ def _selftest():
         write_part(part, "\n".join(["y"] * 60000), root=td, allow_growth=True)
         check("...unless allow_growth=True is typed",
               len(open(part).read().split("\n")) == 60000)
+
+    # ---- own_lines / write_own_lines: one list for the image, and back ----
+    with tempfile.TemporaryDirectory() as td:
+        os.makedirs(os.path.join(td, "img", "modules"))
+        os.makedirs(os.path.join(td, "kernel"))
+        open(os.path.join(td, "img", "modules", "m1.s"), "w").write("A:\n\tnop\n")
+        open(os.path.join(td, "img", "modules", "m2.s"), "w").write("B:\n\tret\n")
+        open(os.path.join(td, "kernel", "kernel.s"), "w").write("K:\n")
+        root_s = os.path.join(td, "img", "main.s")
+        open(root_s, "w").write('; head\n\t.include "img/modules/m1.s"\n'
+                                '\t.include "kernel/kernel.s"\n\t.include "img/modules/m2.s"\n')
+        L, O = own_lines(td, "img/main.s")
+        check("own_lines expands OWN parts and keeps a SHARED include as its line",
+              L == ["; head", "A:", "\tnop", "", '\t.include "kernel/kernel.s"', "B:", "\tret", "", ""],
+              repr(L))
+        check("...and every entry's origin points at the line it came from",
+              all(open(p).read().split("\n")[k] == L[i] for i, (p, k) in enumerate(O)))
+        i_nop, i_b = L.index("\tnop"), L.index("B:")
+        w = write_own_lines(td, O, edits={i_nop: "\tnop\t; edited"}, inserts={i_b: ["New:"]})
+        check("write_own_lines writes exactly the files that hold the edited lines",
+              w == ["img/modules/m1.s", "img/modules/m2.s"], repr(w))
+        check("...the edit lands in its part and the insertion before its line",
+              open(os.path.join(td, "img", "modules", "m1.s")).read() == "A:\n\tnop\t; edited\n"
+              and open(os.path.join(td, "img", "modules", "m2.s")).read() == "New:\nB:\n\tret\n")
+        check("...and the root keeps every .include it had",
+              open(root_s).read().count(".include") == 3)
 
     print("\nFAILURES: %d" % len(fails))
     return 1 if fails else 0

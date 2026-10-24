@@ -23,6 +23,9 @@ import sys
 
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
+import sys  # noqa: E402
+sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+from asm_source import image_lines  # noqa: E402  (the images, not their root files)
 BASE = int(sys.argv[1], 0) if len(sys.argv) > 1 else 0x12F6
 NAME = sys.argv[2] if len(sys.argv) > 2 else "DisplayListB_Stage"
 LO = int(sys.argv[3], 0) if len(sys.argv) > 3 else 0x12C0
@@ -38,7 +41,7 @@ def val(t):
 
 src, wr, other = collections.Counter(), collections.Counter(), collections.Counter()
 for f in ["wsa1/prom_a/wsa1_prom_a.s", "wsa1/prom_b/wsa1_prom_b.s"]:
-    for l in open(os.path.join(REPO, f), "rb").read().decode("latin-1").split("\n"):
+    for l in image_lines(os.path.join(REPO, "wsa1"), f[len("wsa1/"):]):   # the image, not its root
         m = re.match(r'^\s*\.short\s+%s\s*;\s*\+0x02 source variable' % TOK, l)
         if m:
             src[val(m.group(1))] += 1

@@ -23,9 +23,11 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-src = open(os.path.join(ROOT, "wsa1/prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
+sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
+from asm_source import image_text  # noqa: E402  (the images, not their root files)
+src = image_text(os.path.join(ROOT, "wsa1"), "prom_a/wsa1_prom_a.s")
 starts = {int(m.group(1), 16) for m in re.finditer(r";\s+([0-9A-F]{6})  [0-9a-f]{2}", src)}
-bs = open(os.path.join(ROOT, "wsa1/prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
+bs = image_text(os.path.join(ROOT, "wsa1"), "prom_b/wsa1_prom_b.s")
 tg = set()
 for m in re.finditer(r";\s+(F0[01][0-9A-F]{3})\s+call 0x(f[cd][0-9a-f]{4})\b", bs):
     if 0xF00C00 <= int(m.group(1), 16) < 0xF01800:

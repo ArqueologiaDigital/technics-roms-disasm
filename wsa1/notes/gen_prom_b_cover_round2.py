@@ -306,9 +306,8 @@ def _patch_reachability(lines=None):
     R._cache_load = lambda: {}
     R._cache_store = lambda *_a, **_k: None
     if lines is not None:
-        paths = dict((t, s) for t, s, _f, _b in R.IMAGES)
-        R.source_lines = lambda tag, _l=lines: _l if tag == "prom_b" else \
-            open(os.path.join(ROOT, paths[tag])).read().split("\n")
+        orig = R.source_lines                 # the IMAGE for the others, root + includes
+        R.source_lines = lambda tag, _l=lines, _o=orig: _l if tag == "prom_b" else _o(tag)
     return R
 
 

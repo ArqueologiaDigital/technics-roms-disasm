@@ -122,9 +122,7 @@ def apply_(rows):
     for j, block in sorted(ins, reverse=True):
         L[j:j] = block
     out = "\n".join(L).encode("latin-1")
-    with open(PROM_A + ".tmp", "wb") as fh:
-        fh.write(out)
-    os.replace(PROM_A + ".tmp", PROM_A)
+    raise SystemExit("REFUSING to write: %s holds the whole IMAGE (asm_source.image_path), and writing it back would put every module of a split image into one file.  This one-shot writer has already been applied; to re-run it, port its write to asm_source.own_lines() + write_own_lines() or edit_image() (scripts/tools/split_cpu1_images.py)." % 'PROM_A')
     return len(ins), skipped
 
 

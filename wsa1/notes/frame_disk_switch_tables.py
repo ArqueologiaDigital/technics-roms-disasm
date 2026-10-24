@@ -42,6 +42,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WSA1 = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import asm_source  # noqa: E402
 SRC = os.path.join(WSA1, "prom_a", "wsa1_prom_a.s")
 ROM = os.path.join(WSA1, "original_ROMs", "wsa1_prom_a.ic12")
 BASE = 0xF80000
@@ -143,7 +145,9 @@ def align(block):
 
 def main(apply):
     rom = open(ROM, "rb").read()
-    lines = open(SRC, "rb").read().decode("latin-1").split("\n")
+    # the image as one list (asm_source.own_lines): since the module split the tables are in
+    # prom_a/modules/, and the result is written back file by file (write_own_lines)
+    lines, origin = asm_source.own_lines(WSA1, "prom_a/wsa1_prom_a.s")
     if any(l.startswith("Disk_SetDriveGeometry_MediaCases:") for l in lines):
         die("already applied")
 
@@ -313,6 +317,12 @@ def main(apply):
         print(l)
     print("%d labels" % len(log))
     if apply:
+        # one edit holding the whole new text, against the list's first line: write_own_lines
+        # cannot place a re-flowed block across files, so refuse rather than guess
+        files = {p for p, _k in origin}
+        if len(files) > 1:
+            die("the image is split into %d files; re-run this one-shot framing against the "
+                "joined listing (scripts/tools/split_cpu1_images.py --join) and split again" % len(files))
         open(SRC, "wb").write(text.encode("latin-1"))
         print("APPLIED to", os.path.relpath(SRC, WSA1))
 
