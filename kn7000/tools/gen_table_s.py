@@ -119,17 +119,81 @@ def put_jpeg(jpg_dir, name, jpeg):
 
 def gui_resource_tables(d, s, e, ROMQ):
     """Segment 0: five header words (four table pointers and a 0) copied out by
-    InitializeResource, zeros, then the four tables the pointers name."""
-    names = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
+    InitializeResource, zeros, then the four tables. The bitmap, frame-piece and icon
+    tables are {s16 width, s16 height, u8 *pixels} rows ended by an all-zero row, the
+    font table 0x14-byte descriptors ended by an all-zero one; then the pixel and
+    glyph data the rows point at. All pointers are CPU addresses."""
+    tabs = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
     ptrs = [u32(d, s + 4 * k) for k in range(5)]
     offs = [p - BASE for p in ptrs[:4]]
     assert ptrs[4] == 0 and offs == sorted(offs) and s + 20 <= offs[0] and offs[-1] < e, "GUI header"
-    assert d[s + 20:offs[0]] == bytes(offs[0] - s - 20), "GUI header padding"
-    B = [f"    .long\t{', '.join(names)}, 0",
-         f"    .space\t0x{offs[0] - s - 20:x}, 0x00"]
-    for k, (nm, o) in enumerate(zip(names, offs)):
-        end = offs[k + 1] if k + 1 < len(offs) else e
-        B += [f"{nm}:", f"    .incbin_range\t{ROMQ}, 0x{o:06x}, 0x{end:06x}"]
+    B = [f"    .long\t{', '.join(tabs)}, 0"]
+    cur = s + 20
+
+    def fill(to):
+        assert d[cur:to] == bytes(to - cur), f"GUI tables: non-zero bytes at 0x{cur:x}"
+        return [f"    .space\t0x{to - cur:x}, 0x00"] if to > cur else []
+
+    def blobs(names, end):
+        """Each pointed-at block once, under its first name, up to the next one."""
+        first = {}
+        for p, nm in names:
+            first.setdefault(p, nm)
+        keys = sorted(first)
+        out = []
+        for n, p in enumerate(keys):
+            nxt = keys[n + 1] if n + 1 < len(keys) else end
+            out += [f"{first[p]}:", f"    .incbin_range\t{ROMQ}, 0x{p - BASE:06x}, 0x{nxt - BASE:06x}"]
+        return out, keys
+
+    bounds = offs + [e]
+    for t, (tab, o) in enumerate(zip(tabs, offs)):
+        B += fill(o)
+        B.append(f"{tab}:")
+        hi = BASE + bounds[t + 1]
+        names = []
+        if tab != "ResFontTable":
+            stem = {"ResBitmapTable": "ResBitmap", "ResFrameTable": "ResFrame",
+                    "ResIconTable": "ResIcon"}[tab]
+            rows = []
+            while True:
+                w, h, p = struct.unpack_from("<hhI", d, o + 8 * len(rows))
+                if (w, h, p) == (0, 0, 0):
+                    break
+                assert BASE + o < p < hi, f"{tab}[{len(rows)}] points outside its table's area"
+                rows.append((w, h, p))
+            names = [(p, f"{stem}{k:03d}") for k, (w, h, p) in enumerate(rows)]
+            first = {}
+            for p, nm in names:
+                first.setdefault(p, nm)              # a shared block keeps the first row's name
+            for w, h, p in rows:
+                B += [f"    .word\t{w}, {h}", f"    .long\t{first[p]}"]
+            k = len(rows)
+            B.append("    .long\t0, 0   # end of the table")
+            cur = o + 8 * (k + 1)
+        else:
+            k = 0
+            while True:
+                w, h, desc, cols, gl, kern, dbcs = struct.unpack_from("<HHhHIII", d, o + 0x14 * k)
+                if gl == 0:
+                    assert d[o + 0x14 * k:o + 0x14 * (k + 1)] == bytes(0x14), "font table end"
+                    break
+                names.append((gl, f"ResFont{k:02d}Glyphs"))
+                row = [f"ResFont{k:02d}Glyphs"]
+                for q, nm in ((kern, f"ResFont{k:02d}Kern"), (dbcs, f"ResFont{k:02d}Sjis")):
+                    if q:
+                        assert BASE + o < q < hi, f"font {k}: pointer outside the table's area"
+                        names.append((q, nm))
+                    row.append(nm if q else "0")
+                B += [f"    .word\t{w}, {h}, {desc}, {cols}", f"    .long\t{', '.join(row)}"]
+                k += 1
+            B.append("    .space\t0x14, 0x00   # end of the table")
+            cur = o + 0x14 * (k + 1)
+        lo = min(p for p, _ in names) - BASE
+        B += fill(lo)
+        bl, _keys = blobs(names, hi)
+        B += bl
+        cur = bounds[t + 1]
     return B
 
 
@@ -301,7 +365,6 @@ def help_texts(d, s, e, label):
     if cur < len(seg):
         B += gap_lines(seg, cur, len(seg))
     return B
-
 
 
 def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):

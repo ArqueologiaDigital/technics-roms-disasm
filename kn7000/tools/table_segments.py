@@ -132,9 +132,13 @@ def _segments():
     s[0] = ("GuiResourceTables", "gui", None, [
         "The GUI's drawing resources. InitializeResource copies the five header words to",
         "BitmapTablePtr, FrameTablePtr, IconTablePtr, FontTablePtr and 0x50122DBC",
-        "(annotations/gfx_draw.ann): the bitmap, frame-piece and icon tables hold",
-        "{s16 width, s16 height, u8 *pixels} entries, the font table 0x14-byte descriptors;",
-        "the fifth word is 0. The pointers are CPU addresses, not offsets."])
+        "(annotations/gfx_draw.ann); the fifth word is 0. The bitmap, frame-piece and icon",
+        "tables are {s16 width, s16 height, u8 *pixels} rows (DrawBitmap_Impl and friends",
+        "index them by number), the font table 0x14-byte descriptors {u16 width, u16",
+        "height, s16 descent, u16 byte columns per glyph, glyphs, kern table, Shift-JIS",
+        "table} (gfx_draw.ann, at the string renderer); each table ends with an all-zero",
+        "row and is followed by the data its rows point at. The pointers are CPU",
+        "addresses, not offsets."])
     s[1] = ("SramRecordDefaultsZZZJ", "raw", None, [
         "'ZZZJ', 0x00, 'K', 0x00, 0xDC (the 8-byte signature the reader compares with the",
         "program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.",

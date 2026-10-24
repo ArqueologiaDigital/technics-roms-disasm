@@ -109,20 +109,1538 @@ TableRomDirectory:
 # dir[0], 0x34658 bytes.
 # The GUI's drawing resources. InitializeResource copies the five header words to
 # BitmapTablePtr, FrameTablePtr, IconTablePtr, FontTablePtr and 0x50122dbc
-# (annotations/gfx_draw.ann): the bitmap, frame-piece and icon tables hold
-# {s16 width, s16 height, u8 *pixels} entries, the font table 0x14-byte descriptors;
-# the fifth word is 0. The pointers are CPU addresses, not offsets.
+# (annotations/gfx_draw.ann); the fifth word is 0. The bitmap, frame-piece and icon
+# tables are {s16 width, s16 height, u8 *pixels} rows (DrawBitmap_Impl and friends
+# index them by number), the font table 0x14-byte descriptors {u16 width, u16
+# height, s16 descent, u16 byte columns per glyph, glyphs, kern table, Shift-JIS
+# table} (gfx_draw.ann, at the string renderer); each table ends with an all-zero
+# row and is followed by the data its rows point at. The pointers are CPU
+# addresses, not offsets.
 GuiResourceTables:
     .long	ResBitmapTable, ResFrameTable, ResIconTable, ResFontTable, 0
     .space	0x2c, 0x00
 ResBitmapTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x000240, 0x00e880
+    .word	24, 24
+    .long	ResBitmap000
+    .word	24, 24
+    .long	ResBitmap001
+    .word	307, 45
+    .long	ResBitmap002
+    .word	33, 54
+    .long	ResBitmap003
+    .word	32, 14
+    .long	ResBitmap004
+    .word	17, 17
+    .long	ResBitmap005
+    .word	3, 3
+    .long	ResBitmap006
+    .word	27, 18
+    .long	ResBitmap007
+    .word	27, 18
+    .long	ResBitmap008
+    .word	27, 18
+    .long	ResBitmap009
+    .word	27, 18
+    .long	ResBitmap010
+    .word	27, 18
+    .long	ResBitmap011
+    .word	27, 18
+    .long	ResBitmap012
+    .word	32, 32
+    .long	ResBitmap013
+    .word	32, 32
+    .long	ResBitmap014
+    .word	32, 32
+    .long	ResBitmap015
+    .word	32, 32
+    .long	ResBitmap016
+    .word	32, 32
+    .long	ResBitmap017
+    .word	32, 32
+    .long	ResBitmap018
+    .word	32, 32
+    .long	ResBitmap019
+    .word	32, 32
+    .long	ResBitmap020
+    .word	32, 32
+    .long	ResBitmap021
+    .word	32, 32
+    .long	ResBitmap022
+    .word	32, 32
+    .long	ResBitmap023
+    .word	32, 32
+    .long	ResBitmap024
+    .word	32, 32
+    .long	ResBitmap025
+    .word	32, 32
+    .long	ResBitmap026
+    .word	32, 32
+    .long	ResBitmap027
+    .word	32, 32
+    .long	ResBitmap028
+    .word	32, 32
+    .long	ResBitmap029
+    .word	15, 11
+    .long	ResBitmap030
+    .word	15, 11
+    .long	ResBitmap031
+    .word	32, 32
+    .long	ResBitmap032
+    .word	32, 32
+    .long	ResBitmap033
+    .word	32, 32
+    .long	ResBitmap034
+    .word	32, 32
+    .long	ResBitmap035
+    .word	32, 32
+    .long	ResBitmap036
+    .word	32, 32
+    .long	ResBitmap037
+    .word	32, 32
+    .long	ResBitmap038
+    .word	32, 32
+    .long	ResBitmap039
+    .word	32, 32
+    .long	ResBitmap040
+    .word	32, 32
+    .long	ResBitmap041
+    .word	32, 32
+    .long	ResBitmap042
+    .word	32, 32
+    .long	ResBitmap043
+    .word	32, 32
+    .long	ResBitmap044
+    .word	33, 54
+    .long	ResBitmap045
+    .word	32, 14
+    .long	ResBitmap046
+    .word	33, 54
+    .long	ResBitmap047
+    .word	32, 14
+    .long	ResBitmap048
+    .word	34, 18
+    .long	ResBitmap049
+    .word	34, 18
+    .long	ResBitmap050
+    .word	27, 18
+    .long	ResBitmap051
+    .word	27, 18
+    .long	ResBitmap052
+    .long	0, 0   # end of the table
+ResBitmap000:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0003f0, 0x000630
+ResBitmap001:
+    .incbin_range	"baserom/kn7000_table.rom", 0x000630, 0x000870
+ResBitmap002:
+    .incbin_range	"baserom/kn7000_table.rom", 0x000870, 0x003e94
+ResBitmap003:
+    .incbin_range	"baserom/kn7000_table.rom", 0x003e94, 0x0045c0
+ResBitmap004:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0045c0, 0x004780
+ResBitmap005:
+    .incbin_range	"baserom/kn7000_table.rom", 0x004780, 0x0048b2
+ResBitmap006:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0048b2, 0x0048be
+ResBitmap007:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0048be, 0x004ab6
+ResBitmap008:
+    .incbin_range	"baserom/kn7000_table.rom", 0x004ab6, 0x004cae
+ResBitmap009:
+    .incbin_range	"baserom/kn7000_table.rom", 0x004cae, 0x004ea6
+ResBitmap010:
+    .incbin_range	"baserom/kn7000_table.rom", 0x004ea6, 0x00509e
+ResBitmap011:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00509e, 0x005296
+ResBitmap012:
+    .incbin_range	"baserom/kn7000_table.rom", 0x005296, 0x00548e
+ResBitmap013:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00548e, 0x00588e
+ResBitmap014:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00588e, 0x005c8e
+ResBitmap015:
+    .incbin_range	"baserom/kn7000_table.rom", 0x005c8e, 0x00608e
+ResBitmap016:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00608e, 0x00648e
+ResBitmap017:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00648e, 0x00688e
+ResBitmap018:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00688e, 0x006c8e
+ResBitmap019:
+    .incbin_range	"baserom/kn7000_table.rom", 0x006c8e, 0x00708e
+ResBitmap020:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00708e, 0x00748e
+ResBitmap021:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00748e, 0x00788e
+ResBitmap022:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00788e, 0x007c8e
+ResBitmap023:
+    .incbin_range	"baserom/kn7000_table.rom", 0x007c8e, 0x00808e
+ResBitmap024:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00808e, 0x00848e
+ResBitmap025:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00848e, 0x00888e
+ResBitmap026:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00888e, 0x008c8e
+ResBitmap027:
+    .incbin_range	"baserom/kn7000_table.rom", 0x008c8e, 0x00908e
+ResBitmap028:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00908e, 0x00948e
+ResBitmap029:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00948e, 0x00988e
+ResBitmap030:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00988e, 0x00993e
+ResBitmap031:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00993e, 0x0099ee
+ResBitmap032:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0099ee, 0x009dee
+ResBitmap033:
+    .incbin_range	"baserom/kn7000_table.rom", 0x009dee, 0x00a1ee
+ResBitmap034:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00a1ee, 0x00a5ee
+ResBitmap035:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00a5ee, 0x00a9ee
+ResBitmap036:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00a9ee, 0x00adee
+ResBitmap037:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00adee, 0x00b1ee
+ResBitmap038:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00b1ee, 0x00b5ee
+ResBitmap039:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00b5ee, 0x00b9ee
+ResBitmap040:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00b9ee, 0x00bdee
+ResBitmap041:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00bdee, 0x00c1ee
+ResBitmap042:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00c1ee, 0x00c5ee
+ResBitmap043:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00c5ee, 0x00c9ee
+ResBitmap044:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00c9ee, 0x00cdee
+ResBitmap045:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00cdee, 0x00d51a
+ResBitmap046:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00d51a, 0x00d6da
+ResBitmap047:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00d6da, 0x00de06
+ResBitmap048:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00de06, 0x00dfc6
+ResBitmap049:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00dfc6, 0x00e22a
+ResBitmap050:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00e22a, 0x00e48e
+ResBitmap051:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00e48e, 0x00e686
+ResBitmap052:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00e686, 0x00e880
 ResFrameTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e880, 0x01221c
+    .word	1, 1
+    .long	ResFrame000
+    .word	1, 1
+    .long	ResFrame001
+    .word	1, 1
+    .long	ResFrame002
+    .word	1, 1
+    .long	ResFrame003
+    .word	2, 2
+    .long	ResFrame004
+    .word	2, 2
+    .long	ResFrame005
+    .word	2, 2
+    .long	ResFrame006
+    .word	2, 2
+    .long	ResFrame007
+    .word	5, 5
+    .long	ResFrame008
+    .word	5, 5
+    .long	ResFrame009
+    .word	5, 5
+    .long	ResFrame010
+    .word	5, 5
+    .long	ResFrame011
+    .word	9, 9
+    .long	ResFrame012
+    .word	9, 9
+    .long	ResFrame013
+    .word	9, 9
+    .long	ResFrame014
+    .word	9, 9
+    .long	ResFrame015
+    .word	14, 14
+    .long	ResFrame016
+    .word	14, 14
+    .long	ResFrame017
+    .word	14, 14
+    .long	ResFrame018
+    .word	14, 14
+    .long	ResFrame019
+    .word	1, 1
+    .long	ResFrame020
+    .word	1, 1
+    .long	ResFrame021
+    .word	1, 1
+    .long	ResFrame022
+    .word	1, 1
+    .long	ResFrame023
+    .word	2, 2
+    .long	ResFrame024
+    .word	2, 2
+    .long	ResFrame025
+    .word	2, 2
+    .long	ResFrame026
+    .word	2, 2
+    .long	ResFrame027
+    .word	5, 5
+    .long	ResFrame028
+    .word	5, 5
+    .long	ResFrame029
+    .word	5, 5
+    .long	ResFrame030
+    .word	5, 5
+    .long	ResFrame031
+    .word	9, 9
+    .long	ResFrame032
+    .word	9, 9
+    .long	ResFrame033
+    .word	9, 9
+    .long	ResFrame034
+    .word	9, 9
+    .long	ResFrame035
+    .word	14, 14
+    .long	ResFrame036
+    .word	14, 14
+    .long	ResFrame037
+    .word	14, 14
+    .long	ResFrame038
+    .word	14, 14
+    .long	ResFrame039
+    .word	5, 12
+    .long	ResFrame040
+    .word	6, 16
+    .long	ResFrame041
+    .word	8, 24
+    .long	ResFrame042
+    .word	10, 32
+    .long	ResFrame043
+    .word	15, 48
+    .long	ResFrame044
+    .word	5, 12
+    .long	ResFrame045
+    .word	6, 16
+    .long	ResFrame046
+    .word	8, 24
+    .long	ResFrame047
+    .word	10, 32
+    .long	ResFrame048
+    .word	15, 48
+    .long	ResFrame049
+    .word	20, 16
+    .long	ResFrame050
+    .word	24, 24
+    .long	ResFrame051
+    .word	29, 32
+    .long	ResFrame052
+    .word	34, 48
+    .long	ResFrame053
+    .word	20, 16
+    .long	ResFrame054
+    .word	24, 24
+    .long	ResFrame055
+    .word	29, 32
+    .long	ResFrame056
+    .word	34, 48
+    .long	ResFrame057
+    .word	16, 16
+    .long	ResFrame058
+    .word	16, 16
+    .long	ResFrame059
+    .word	5, 5
+    .long	ResFrame060
+    .word	5, 5
+    .long	ResFrame061
+    .word	5, 5
+    .long	ResFrame062
+    .word	5, 5
+    .long	ResFrame063
+    .word	5, 5
+    .long	ResFrame064
+    .word	5, 5
+    .long	ResFrame065
+    .word	5, 5
+    .long	ResFrame066
+    .word	5, 5
+    .long	ResFrame067
+    .word	5, 5
+    .long	ResFrame068
+    .word	5, 5
+    .long	ResFrame069
+    .word	5, 5
+    .long	ResFrame070
+    .word	5, 5
+    .long	ResFrame071
+    .word	76, 11
+    .long	ResFrame072
+    .long	0, 0   # end of the table
+ResFrame000:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ead0, 0x00ead2
+ResFrame001:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ead2, 0x00ead4
+ResFrame002:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ead4, 0x00ead6
+ResFrame003:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ead6, 0x00ead8
+ResFrame004:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ead8, 0x00eadc
+ResFrame005:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eadc, 0x00eae0
+ResFrame006:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eae0, 0x00eae4
+ResFrame007:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eae4, 0x00eae8
+ResFrame008:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eae8, 0x00eb06
+ResFrame009:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eb06, 0x00eb24
+ResFrame010:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eb24, 0x00eb42
+ResFrame011:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eb42, 0x00eb60
+ResFrame012:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eb60, 0x00ebba
+ResFrame013:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ebba, 0x00ec14
+ResFrame014:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ec14, 0x00ec6e
+ResFrame015:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ec6e, 0x00ecc8
+ResFrame016:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ecc8, 0x00ed8c
+ResFrame017:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ed8c, 0x00ee50
+ResFrame018:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ee50, 0x00ef14
+ResFrame019:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00ef14, 0x00efd8
+ResFrame020:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efd8, 0x00efda
+ResFrame021:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efda, 0x00efdc
+ResFrame022:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efdc, 0x00efde
+ResFrame023:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efde, 0x00efe0
+ResFrame024:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efe0, 0x00efe4
+ResFrame025:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efe4, 0x00efe8
+ResFrame026:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efe8, 0x00efec
+ResFrame027:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00efec, 0x00eff0
+ResFrame028:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00eff0, 0x00f00e
+ResFrame029:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f00e, 0x00f02c
+ResFrame030:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f02c, 0x00f04a
+ResFrame031:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f04a, 0x00f068
+ResFrame032:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f068, 0x00f0c2
+ResFrame033:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f0c2, 0x00f11c
+ResFrame034:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f11c, 0x00f176
+ResFrame035:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f176, 0x00f1d0
+ResFrame036:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f1d0, 0x00f294
+ResFrame037:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f294, 0x00f358
+ResFrame038:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f358, 0x00f41c
+ResFrame039:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f41c, 0x00f4e0
+ResFrame040:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f4e0, 0x00f528
+ResFrame041:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f528, 0x00f588
+ResFrame042:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f588, 0x00f648
+ResFrame043:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f648, 0x00f788
+ResFrame044:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00f788, 0x00fa88
+ResFrame045:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00fa88, 0x00fad0
+ResFrame046:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00fad0, 0x00fb30
+ResFrame047:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00fb30, 0x00fbf0
+ResFrame048:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00fbf0, 0x00fd30
+ResFrame049:
+    .incbin_range	"baserom/kn7000_table.rom", 0x00fd30, 0x010030
+ResFrame050:
+    .incbin_range	"baserom/kn7000_table.rom", 0x010030, 0x010170
+ResFrame051:
+    .incbin_range	"baserom/kn7000_table.rom", 0x010170, 0x0103b0
+ResFrame052:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0103b0, 0x010770
+ResFrame053:
+    .incbin_range	"baserom/kn7000_table.rom", 0x010770, 0x010dd0
+ResFrame054:
+    .incbin_range	"baserom/kn7000_table.rom", 0x010dd0, 0x010f10
+ResFrame055:
+    .incbin_range	"baserom/kn7000_table.rom", 0x010f10, 0x011150
+ResFrame056:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011150, 0x011510
+ResFrame057:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011510, 0x011b70
+ResFrame058:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011b70, 0x011c70
+ResFrame059:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011c70, 0x011d70
+ResFrame060:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011d70, 0x011d8e
+ResFrame061:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011d8e, 0x011dac
+ResFrame062:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011dac, 0x011dca
+ResFrame063:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011dca, 0x011de8
+ResFrame064:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011de8, 0x011e06
+ResFrame065:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e06, 0x011e24
+ResFrame066:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e24, 0x011e42
+ResFrame067:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e42, 0x011e60
+ResFrame068:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e60, 0x011e7e
+ResFrame069:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e7e, 0x011e9c
+ResFrame070:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011e9c, 0x011eba
+ResFrame071:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011eba, 0x011ed8
+ResFrame072:
+    .incbin_range	"baserom/kn7000_table.rom", 0x011ed8, 0x01221c
 ResIconTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01221c, 0x0237a4
+    .word	24, 24
+    .long	ResIcon000
+    .word	24, 24
+    .long	ResIcon001
+    .word	24, 24
+    .long	ResIcon002
+    .word	24, 24
+    .long	ResIcon003
+    .word	24, 24
+    .long	ResIcon004
+    .word	24, 24
+    .long	ResIcon005
+    .word	24, 24
+    .long	ResIcon006
+    .word	24, 24
+    .long	ResIcon007
+    .word	24, 24
+    .long	ResIcon008
+    .word	24, 24
+    .long	ResIcon009
+    .word	24, 24
+    .long	ResIcon010
+    .word	24, 24
+    .long	ResIcon011
+    .word	24, 24
+    .long	ResIcon012
+    .word	24, 24
+    .long	ResIcon013
+    .word	24, 24
+    .long	ResIcon014
+    .word	24, 24
+    .long	ResIcon015
+    .word	24, 24
+    .long	ResIcon016
+    .word	24, 24
+    .long	ResIcon017
+    .word	24, 24
+    .long	ResIcon018
+    .word	24, 24
+    .long	ResIcon019
+    .word	24, 24
+    .long	ResIcon020
+    .word	24, 24
+    .long	ResIcon021
+    .word	24, 24
+    .long	ResIcon022
+    .word	24, 24
+    .long	ResIcon023
+    .word	24, 24
+    .long	ResIcon024
+    .word	24, 24
+    .long	ResIcon025
+    .word	24, 24
+    .long	ResIcon026
+    .word	24, 24
+    .long	ResIcon027
+    .word	24, 24
+    .long	ResIcon028
+    .word	24, 24
+    .long	ResIcon029
+    .word	24, 24
+    .long	ResIcon030
+    .word	24, 24
+    .long	ResIcon031
+    .word	24, 24
+    .long	ResIcon032
+    .word	24, 24
+    .long	ResIcon033
+    .word	24, 24
+    .long	ResIcon034
+    .word	24, 24
+    .long	ResIcon035
+    .word	24, 24
+    .long	ResIcon036
+    .word	24, 24
+    .long	ResIcon037
+    .word	24, 24
+    .long	ResIcon038
+    .word	24, 24
+    .long	ResIcon039
+    .word	24, 24
+    .long	ResIcon040
+    .word	24, 24
+    .long	ResIcon041
+    .word	24, 24
+    .long	ResIcon042
+    .word	24, 24
+    .long	ResIcon043
+    .word	24, 24
+    .long	ResIcon044
+    .word	24, 24
+    .long	ResIcon045
+    .word	24, 24
+    .long	ResIcon046
+    .word	24, 24
+    .long	ResIcon047
+    .word	24, 24
+    .long	ResIcon048
+    .word	24, 24
+    .long	ResIcon049
+    .word	24, 24
+    .long	ResIcon050
+    .word	24, 24
+    .long	ResIcon051
+    .word	24, 24
+    .long	ResIcon052
+    .word	24, 24
+    .long	ResIcon053
+    .word	24, 24
+    .long	ResIcon054
+    .word	24, 24
+    .long	ResIcon055
+    .word	24, 24
+    .long	ResIcon056
+    .word	24, 24
+    .long	ResIcon057
+    .word	24, 24
+    .long	ResIcon058
+    .word	24, 24
+    .long	ResIcon059
+    .word	24, 24
+    .long	ResIcon060
+    .word	24, 24
+    .long	ResIcon061
+    .word	24, 24
+    .long	ResIcon062
+    .word	24, 24
+    .long	ResIcon063
+    .word	24, 24
+    .long	ResIcon064
+    .word	24, 24
+    .long	ResIcon065
+    .word	24, 24
+    .long	ResIcon066
+    .word	24, 24
+    .long	ResIcon067
+    .word	24, 24
+    .long	ResIcon068
+    .word	24, 24
+    .long	ResIcon069
+    .word	24, 24
+    .long	ResIcon070
+    .word	24, 24
+    .long	ResIcon071
+    .word	24, 24
+    .long	ResIcon072
+    .word	24, 24
+    .long	ResIcon073
+    .word	24, 24
+    .long	ResIcon074
+    .word	24, 24
+    .long	ResIcon075
+    .word	24, 24
+    .long	ResIcon076
+    .word	24, 24
+    .long	ResIcon077
+    .word	24, 24
+    .long	ResIcon078
+    .word	24, 24
+    .long	ResIcon079
+    .word	24, 24
+    .long	ResIcon080
+    .word	24, 24
+    .long	ResIcon081
+    .word	24, 24
+    .long	ResIcon082
+    .word	24, 24
+    .long	ResIcon083
+    .word	24, 24
+    .long	ResIcon084
+    .word	24, 24
+    .long	ResIcon085
+    .word	24, 24
+    .long	ResIcon086
+    .word	24, 24
+    .long	ResIcon087
+    .word	24, 24
+    .long	ResIcon088
+    .word	24, 24
+    .long	ResIcon089
+    .word	24, 24
+    .long	ResIcon090
+    .word	24, 24
+    .long	ResIcon091
+    .word	24, 24
+    .long	ResIcon092
+    .word	24, 24
+    .long	ResIcon093
+    .word	24, 24
+    .long	ResIcon094
+    .word	24, 24
+    .long	ResIcon095
+    .word	24, 24
+    .long	ResIcon096
+    .word	24, 24
+    .long	ResIcon097
+    .word	24, 24
+    .long	ResIcon098
+    .word	24, 24
+    .long	ResIcon099
+    .word	24, 24
+    .long	ResIcon100
+    .word	24, 24
+    .long	ResIcon101
+    .word	24, 24
+    .long	ResIcon102
+    .word	24, 24
+    .long	ResIcon103
+    .word	24, 24
+    .long	ResIcon104
+    .word	24, 24
+    .long	ResIcon105
+    .word	24, 24
+    .long	ResIcon106
+    .word	24, 24
+    .long	ResIcon107
+    .word	24, 24
+    .long	ResIcon108
+    .word	24, 24
+    .long	ResIcon109
+    .word	24, 24
+    .long	ResIcon110
+    .word	24, 24
+    .long	ResIcon111
+    .word	24, 24
+    .long	ResIcon112
+    .word	24, 24
+    .long	ResIcon113
+    .word	24, 24
+    .long	ResIcon114
+    .word	24, 24
+    .long	ResIcon115
+    .word	24, 24
+    .long	ResIcon116
+    .word	24, 24
+    .long	ResIcon117
+    .word	24, 24
+    .long	ResIcon118
+    .word	24, 24
+    .long	ResIcon119
+    .word	24, 24
+    .long	ResIcon120
+    .word	24, 24
+    .long	ResIcon121
+    .word	24, 24
+    .long	ResIcon122
+    .word	24, 24
+    .long	ResIcon123
+    .word	24, 24
+    .long	ResIcon124
+    .word	24, 24
+    .long	ResIcon125
+    .word	24, 24
+    .long	ResIcon126
+    .word	24, 24
+    .long	ResIcon127
+    .word	24, 24
+    .long	ResIcon128
+    .word	24, 24
+    .long	ResIcon129
+    .word	24, 24
+    .long	ResIcon130
+    .word	24, 24
+    .long	ResIcon131
+    .word	24, 24
+    .long	ResIcon132
+    .word	24, 24
+    .long	ResIcon133
+    .word	24, 24
+    .long	ResIcon134
+    .word	24, 24
+    .long	ResIcon135
+    .word	24, 24
+    .long	ResIcon136
+    .word	24, 24
+    .long	ResIcon137
+    .word	24, 24
+    .long	ResIcon138
+    .word	24, 24
+    .long	ResIcon139
+    .word	24, 24
+    .long	ResIcon140
+    .word	24, 24
+    .long	ResIcon141
+    .word	24, 24
+    .long	ResIcon142
+    .word	24, 24
+    .long	ResIcon143
+    .word	24, 24
+    .long	ResIcon144
+    .word	24, 24
+    .long	ResIcon145
+    .word	24, 24
+    .long	ResIcon146
+    .word	24, 24
+    .long	ResIcon147
+    .word	24, 24
+    .long	ResIcon148
+    .word	24, 24
+    .long	ResIcon149
+    .word	24, 24
+    .long	ResIcon150
+    .word	24, 24
+    .long	ResIcon151
+    .word	24, 24
+    .long	ResIcon152
+    .word	24, 24
+    .long	ResIcon153
+    .word	24, 24
+    .long	ResIcon154
+    .word	24, 24
+    .long	ResIcon155
+    .word	24, 24
+    .long	ResIcon156
+    .word	24, 24
+    .long	ResIcon157
+    .word	24, 24
+    .long	ResIcon158
+    .word	24, 24
+    .long	ResIcon159
+    .word	24, 24
+    .long	ResIcon160
+    .word	24, 24
+    .long	ResIcon161
+    .word	24, 24
+    .long	ResIcon162
+    .word	24, 24
+    .long	ResIcon163
+    .word	24, 24
+    .long	ResIcon164
+    .word	24, 24
+    .long	ResIcon165
+    .word	24, 24
+    .long	ResIcon166
+    .word	24, 24
+    .long	ResIcon167
+    .word	24, 24
+    .long	ResIcon168
+    .word	24, 24
+    .long	ResIcon169
+    .word	24, 24
+    .long	ResIcon170
+    .word	24, 24
+    .long	ResIcon171
+    .word	24, 24
+    .long	ResIcon172
+    .word	24, 24
+    .long	ResIcon173
+    .word	24, 24
+    .long	ResIcon174
+    .word	24, 24
+    .long	ResIcon175
+    .word	24, 24
+    .long	ResIcon176
+    .word	24, 24
+    .long	ResIcon177
+    .word	24, 24
+    .long	ResIcon178
+    .word	24, 24
+    .long	ResIcon179
+    .word	24, 24
+    .long	ResIcon180
+    .word	24, 24
+    .long	ResIcon181
+    .word	24, 24
+    .long	ResIcon182
+    .word	24, 24
+    .long	ResIcon183
+    .word	24, 24
+    .long	ResIcon184
+    .word	24, 24
+    .long	ResIcon185
+    .word	24, 24
+    .long	ResIcon186
+    .word	24, 24
+    .long	ResIcon187
+    .word	24, 24
+    .long	ResIcon188
+    .word	24, 24
+    .long	ResIcon189
+    .word	24, 24
+    .long	ResIcon190
+    .word	24, 24
+    .long	ResIcon191
+    .word	24, 24
+    .long	ResIcon192
+    .word	24, 24
+    .long	ResIcon193
+    .word	24, 24
+    .long	ResIcon194
+    .word	24, 24
+    .long	ResIcon195
+    .word	24, 24
+    .long	ResIcon196
+    .word	24, 24
+    .long	ResIcon197
+    .word	24, 24
+    .long	ResIcon198
+    .word	24, 24
+    .long	ResIcon199
+    .word	24, 24
+    .long	ResIcon200
+    .word	24, 24
+    .long	ResIcon201
+    .word	24, 24
+    .long	ResIcon202
+    .word	24, 24
+    .long	ResIcon203
+    .word	24, 24
+    .long	ResIcon204
+    .word	24, 24
+    .long	ResIcon205
+    .word	24, 24
+    .long	ResIcon206
+    .word	24, 24
+    .long	ResIcon207
+    .word	24, 24
+    .long	ResIcon208
+    .word	24, 24
+    .long	ResIcon209
+    .word	24, 24
+    .long	ResIcon210
+    .word	24, 24
+    .long	ResIcon211
+    .word	24, 24
+    .long	ResIcon212
+    .word	24, 24
+    .long	ResIcon213
+    .word	24, 24
+    .long	ResIcon214
+    .word	24, 24
+    .long	ResIcon215
+    .word	24, 24
+    .long	ResIcon216
+    .word	24, 24
+    .long	ResIcon217
+    .word	24, 24
+    .long	ResIcon218
+    .word	24, 24
+    .long	ResIcon219
+    .word	24, 24
+    .long	ResIcon220
+    .word	24, 24
+    .long	ResIcon221
+    .word	24, 24
+    .long	ResIcon222
+    .word	24, 24
+    .long	ResIcon223
+    .word	24, 24
+    .long	ResIcon224
+    .word	24, 24
+    .long	ResIcon225
+    .word	24, 24
+    .long	ResIcon226
+    .word	24, 24
+    .long	ResIcon227
+    .word	24, 24
+    .long	ResIcon228
+    .word	24, 24
+    .long	ResIcon229
+    .word	24, 24
+    .long	ResIcon230
+    .word	24, 24
+    .long	ResIcon231
+    .word	24, 24
+    .long	ResIcon232
+    .word	24, 24
+    .long	ResIcon233
+    .word	24, 24
+    .long	ResIcon234
+    .word	24, 24
+    .long	ResIcon235
+    .word	24, 24
+    .long	ResIcon236
+    .word	24, 24
+    .long	ResIcon237
+    .word	24, 24
+    .long	ResIcon238
+    .word	24, 24
+    .long	ResIcon239
+    .long	0, 0   # end of the table
+ResIcon000:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0129a4, 0x012ac4
+ResIcon001:
+    .incbin_range	"baserom/kn7000_table.rom", 0x012ac4, 0x012be4
+ResIcon002:
+    .incbin_range	"baserom/kn7000_table.rom", 0x012be4, 0x012d04
+ResIcon003:
+    .incbin_range	"baserom/kn7000_table.rom", 0x012d04, 0x012e24
+ResIcon004:
+    .incbin_range	"baserom/kn7000_table.rom", 0x012e24, 0x012f44
+ResIcon005:
+    .incbin_range	"baserom/kn7000_table.rom", 0x012f44, 0x013064
+ResIcon006:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013064, 0x013184
+ResIcon007:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013184, 0x0132a4
+ResIcon008:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0132a4, 0x0133c4
+ResIcon009:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0133c4, 0x0134e4
+ResIcon010:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0134e4, 0x013604
+ResIcon011:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013604, 0x013724
+ResIcon012:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013724, 0x013844
+ResIcon013:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013844, 0x013964
+ResIcon014:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013964, 0x013a84
+ResIcon015:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013a84, 0x013ba4
+ResIcon016:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013ba4, 0x013cc4
+ResIcon017:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013cc4, 0x013de4
+ResIcon018:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013de4, 0x013f04
+ResIcon019:
+    .incbin_range	"baserom/kn7000_table.rom", 0x013f04, 0x014024
+ResIcon020:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014024, 0x014144
+ResIcon021:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014144, 0x014264
+ResIcon022:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014264, 0x014384
+ResIcon023:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014384, 0x0144a4
+ResIcon024:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0144a4, 0x0145c4
+ResIcon025:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0145c4, 0x0146e4
+ResIcon026:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0146e4, 0x014804
+ResIcon027:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014804, 0x014924
+ResIcon028:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014924, 0x014a44
+ResIcon029:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014a44, 0x014b64
+ResIcon030:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014b64, 0x014c84
+ResIcon031:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014c84, 0x014da4
+ResIcon032:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014da4, 0x014ec4
+ResIcon033:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014ec4, 0x014fe4
+ResIcon034:
+    .incbin_range	"baserom/kn7000_table.rom", 0x014fe4, 0x015104
+ResIcon035:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015104, 0x015224
+ResIcon036:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015224, 0x015344
+ResIcon037:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015344, 0x015464
+ResIcon038:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015464, 0x015584
+ResIcon039:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015584, 0x0156a4
+ResIcon040:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0156a4, 0x0157c4
+ResIcon041:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0157c4, 0x0158e4
+ResIcon042:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0158e4, 0x015a04
+ResIcon043:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015a04, 0x015b24
+ResIcon044:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015b24, 0x015c44
+ResIcon045:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015c44, 0x015d64
+ResIcon046:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015d64, 0x015e84
+ResIcon047:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015e84, 0x015fa4
+ResIcon048:
+    .incbin_range	"baserom/kn7000_table.rom", 0x015fa4, 0x0160c4
+ResIcon049:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0160c4, 0x0161e4
+ResIcon050:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0161e4, 0x016304
+ResIcon051:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016304, 0x016424
+ResIcon052:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016424, 0x016544
+ResIcon053:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016544, 0x016664
+ResIcon054:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016664, 0x016784
+ResIcon055:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016784, 0x0168a4
+ResIcon056:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0168a4, 0x0169c4
+ResIcon057:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0169c4, 0x016ae4
+ResIcon058:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016ae4, 0x016c04
+ResIcon059:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016c04, 0x016d24
+ResIcon060:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016d24, 0x016e44
+ResIcon061:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016e44, 0x016f64
+ResIcon062:
+    .incbin_range	"baserom/kn7000_table.rom", 0x016f64, 0x017084
+ResIcon063:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017084, 0x0171a4
+ResIcon064:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0171a4, 0x0172c4
+ResIcon065:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0172c4, 0x0173e4
+ResIcon066:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0173e4, 0x017504
+ResIcon067:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017504, 0x017624
+ResIcon068:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017624, 0x017744
+ResIcon069:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017744, 0x017864
+ResIcon070:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017864, 0x017984
+ResIcon071:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017984, 0x017aa4
+ResIcon072:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017aa4, 0x017bc4
+ResIcon073:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017bc4, 0x017ce4
+ResIcon074:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017ce4, 0x017e04
+ResIcon075:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017e04, 0x017f24
+ResIcon076:
+    .incbin_range	"baserom/kn7000_table.rom", 0x017f24, 0x018044
+ResIcon077:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018044, 0x018164
+ResIcon078:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018164, 0x018284
+ResIcon079:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018284, 0x0183a4
+ResIcon080:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0183a4, 0x0184c4
+ResIcon081:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0184c4, 0x0185e4
+ResIcon082:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0185e4, 0x018704
+ResIcon083:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018704, 0x018824
+ResIcon084:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018824, 0x018944
+ResIcon085:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018944, 0x018a64
+ResIcon086:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018a64, 0x018b84
+ResIcon087:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018b84, 0x018ca4
+ResIcon088:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018ca4, 0x018dc4
+ResIcon089:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018dc4, 0x018ee4
+ResIcon090:
+    .incbin_range	"baserom/kn7000_table.rom", 0x018ee4, 0x019004
+ResIcon091:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019004, 0x019124
+ResIcon092:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019124, 0x019244
+ResIcon093:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019244, 0x019364
+ResIcon094:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019364, 0x019484
+ResIcon095:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019484, 0x0195a4
+ResIcon096:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0195a4, 0x0196c4
+ResIcon097:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0196c4, 0x0197e4
+ResIcon098:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0197e4, 0x019904
+ResIcon099:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019904, 0x019a24
+ResIcon100:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019a24, 0x019b44
+ResIcon101:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019b44, 0x019c64
+ResIcon102:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019c64, 0x019d84
+ResIcon103:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019d84, 0x019ea4
+ResIcon104:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019ea4, 0x019fc4
+ResIcon105:
+    .incbin_range	"baserom/kn7000_table.rom", 0x019fc4, 0x01a0e4
+ResIcon106:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a0e4, 0x01a204
+ResIcon107:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a204, 0x01a324
+ResIcon108:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a324, 0x01a444
+ResIcon109:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a444, 0x01a564
+ResIcon110:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a564, 0x01a684
+ResIcon111:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a684, 0x01a7a4
+ResIcon112:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a7a4, 0x01a8c4
+ResIcon113:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a8c4, 0x01a9e4
+ResIcon114:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01a9e4, 0x01ab04
+ResIcon115:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ab04, 0x01ac24
+ResIcon116:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ac24, 0x01ad44
+ResIcon117:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ad44, 0x01ae64
+ResIcon118:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ae64, 0x01af84
+ResIcon119:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01af84, 0x01b0a4
+ResIcon120:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b0a4, 0x01b1c4
+ResIcon121:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b1c4, 0x01b2e4
+ResIcon122:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b2e4, 0x01b404
+ResIcon123:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b404, 0x01b524
+ResIcon124:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b524, 0x01b644
+ResIcon125:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b644, 0x01b764
+ResIcon126:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b764, 0x01b884
+ResIcon127:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b884, 0x01b9a4
+ResIcon128:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01b9a4, 0x01bac4
+ResIcon129:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01bac4, 0x01bbe4
+ResIcon130:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01bbe4, 0x01bd04
+ResIcon131:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01bd04, 0x01be24
+ResIcon132:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01be24, 0x01bf44
+ResIcon133:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01bf44, 0x01c064
+ResIcon134:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c064, 0x01c184
+ResIcon135:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c184, 0x01c2a4
+ResIcon136:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c2a4, 0x01c3c4
+ResIcon137:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c3c4, 0x01c4e4
+ResIcon138:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c4e4, 0x01c604
+ResIcon139:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c604, 0x01c724
+ResIcon140:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c724, 0x01c844
+ResIcon141:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c844, 0x01c964
+ResIcon142:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01c964, 0x01ca84
+ResIcon143:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ca84, 0x01cba4
+ResIcon144:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01cba4, 0x01ccc4
+ResIcon145:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ccc4, 0x01cde4
+ResIcon146:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01cde4, 0x01cf04
+ResIcon147:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01cf04, 0x01d024
+ResIcon148:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d024, 0x01d144
+ResIcon149:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d144, 0x01d264
+ResIcon150:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d264, 0x01d384
+ResIcon151:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d384, 0x01d4a4
+ResIcon152:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d4a4, 0x01d5c4
+ResIcon153:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d5c4, 0x01d6e4
+ResIcon154:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d6e4, 0x01d804
+ResIcon155:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d804, 0x01d924
+ResIcon156:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01d924, 0x01da44
+ResIcon157:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01da44, 0x01db64
+ResIcon158:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01db64, 0x01dc84
+ResIcon159:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01dc84, 0x01dda4
+ResIcon160:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01dda4, 0x01dec4
+ResIcon161:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01dec4, 0x01dfe4
+ResIcon162:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01dfe4, 0x01e104
+ResIcon163:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e104, 0x01e224
+ResIcon164:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e224, 0x01e344
+ResIcon165:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e344, 0x01e464
+ResIcon166:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e464, 0x01e584
+ResIcon167:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e584, 0x01e6a4
+ResIcon168:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e6a4, 0x01e7c4
+ResIcon169:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e7c4, 0x01e8e4
+ResIcon170:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01e8e4, 0x01ea04
+ResIcon171:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ea04, 0x01eb24
+ResIcon172:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01eb24, 0x01ec44
+ResIcon173:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ec44, 0x01ed64
+ResIcon174:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ed64, 0x01ee84
+ResIcon175:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ee84, 0x01efa4
+ResIcon176:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01efa4, 0x01f0c4
+ResIcon177:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f0c4, 0x01f1e4
+ResIcon178:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f1e4, 0x01f304
+ResIcon179:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f304, 0x01f424
+ResIcon180:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f424, 0x01f544
+ResIcon181:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f544, 0x01f664
+ResIcon182:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f664, 0x01f784
+ResIcon183:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f784, 0x01f8a4
+ResIcon184:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f8a4, 0x01f9c4
+ResIcon185:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01f9c4, 0x01fae4
+ResIcon186:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01fae4, 0x01fc04
+ResIcon187:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01fc04, 0x01fd24
+ResIcon188:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01fd24, 0x01fe44
+ResIcon189:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01fe44, 0x01ff64
+ResIcon190:
+    .incbin_range	"baserom/kn7000_table.rom", 0x01ff64, 0x020084
+ResIcon191:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020084, 0x0201a4
+ResIcon192:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0201a4, 0x0202c4
+ResIcon193:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0202c4, 0x0203e4
+ResIcon194:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0203e4, 0x020504
+ResIcon195:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020504, 0x020624
+ResIcon196:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020624, 0x020744
+ResIcon197:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020744, 0x020864
+ResIcon198:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020864, 0x020984
+ResIcon199:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020984, 0x020aa4
+ResIcon200:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020aa4, 0x020bc4
+ResIcon201:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020bc4, 0x020ce4
+ResIcon202:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020ce4, 0x020e04
+ResIcon203:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020e04, 0x020f24
+ResIcon204:
+    .incbin_range	"baserom/kn7000_table.rom", 0x020f24, 0x021044
+ResIcon205:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021044, 0x021164
+ResIcon206:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021164, 0x021284
+ResIcon207:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021284, 0x0213a4
+ResIcon208:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0213a4, 0x0214c4
+ResIcon209:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0214c4, 0x0215e4
+ResIcon210:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0215e4, 0x021704
+ResIcon211:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021704, 0x021824
+ResIcon212:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021824, 0x021944
+ResIcon213:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021944, 0x021a64
+ResIcon214:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021a64, 0x021b84
+ResIcon215:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021b84, 0x021ca4
+ResIcon216:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021ca4, 0x021dc4
+ResIcon217:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021dc4, 0x021ee4
+ResIcon218:
+    .incbin_range	"baserom/kn7000_table.rom", 0x021ee4, 0x022004
+ResIcon219:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022004, 0x022124
+ResIcon220:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022124, 0x022244
+ResIcon221:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022244, 0x022364
+ResIcon222:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022364, 0x022484
+ResIcon223:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022484, 0x0225a4
+ResIcon224:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0225a4, 0x0226c4
+ResIcon225:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0226c4, 0x0227e4
+ResIcon226:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0227e4, 0x022904
+ResIcon227:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022904, 0x022a24
+ResIcon228:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022a24, 0x022b44
+ResIcon229:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022b44, 0x022c64
+ResIcon230:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022c64, 0x022d84
+ResIcon231:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022d84, 0x022ea4
+ResIcon232:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022ea4, 0x022fc4
+ResIcon233:
+    .incbin_range	"baserom/kn7000_table.rom", 0x022fc4, 0x0230e4
+ResIcon234:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0230e4, 0x023204
+ResIcon235:
+    .incbin_range	"baserom/kn7000_table.rom", 0x023204, 0x023324
+ResIcon236:
+    .incbin_range	"baserom/kn7000_table.rom", 0x023324, 0x023444
+ResIcon237:
+    .incbin_range	"baserom/kn7000_table.rom", 0x023444, 0x023564
+ResIcon238:
+    .incbin_range	"baserom/kn7000_table.rom", 0x023564, 0x023684
+ResIcon239:
+    .incbin_range	"baserom/kn7000_table.rom", 0x023684, 0x0237a4
 ResFontTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0237a4, 0x034858
+    .word	8, 16, 4, 1
+    .long	ResFont00Glyphs, 0, 0
+    .word	8, 16, 4, 1
+    .long	ResFont01Glyphs, 0, 0
+    .word	16, 16, 2, 2
+    .long	ResFont02Glyphs, 0, 0
+    .word	6, 8, 1, 1
+    .long	ResFont03Glyphs, 0, 0
+    .word	11, 16, 2, 2
+    .long	ResFont04Glyphs, 0, 0
+    .word	0, 16, 4, 0
+    .long	ResFont05Glyphs, ResFont05Kern, 0
+    .word	8, 10, 0, 1
+    .long	ResFont06Glyphs, 0, 0
+    .word	8, 16, 4, 1
+    .long	ResFont07Glyphs, 0, 0
+    .word	8, 16, 4, 1
+    .long	ResFont08Glyphs, 0, 0
+    .word	11, 16, 2, 2
+    .long	ResFont09Glyphs, 0, 0
+    .word	16, 28, 4, 2
+    .long	ResFont10Glyphs, 0, 0
+    .word	16, 28, 4, 2
+    .long	ResFont11Glyphs, 0, 0
+    .space	0x14, 0x00   # end of the table
+ResFont00Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0238a8, 0x0246a8
+ResFont01Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0246a8, 0x0254a8
+ResFont02Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0254a8, 0x0270a8
+ResFont03Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0270a8, 0x0277a8
+ResFont04Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0277a8, 0x0293a8
+ResFont05Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x0293a8, 0x02a218
+ResFont05Kern:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02a218, 0x02a598
+ResFont06Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02a598, 0x02ae58
+ResFont07Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02ae58, 0x02bc58
+ResFont08Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02bc58, 0x02ca58
+ResFont09Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02ca58, 0x02e658
+ResFont10Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x02e658, 0x031758
+ResFont11Glyphs:
+    .incbin_range	"baserom/kn7000_table.rom", 0x031758, 0x034858
 
 # dir[1], 0x14b0 bytes.
 # 'ZZZJ', 0x00, 'K', 0x00, 0xdc (the 8-byte signature the reader compares with the
