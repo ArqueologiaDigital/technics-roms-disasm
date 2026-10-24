@@ -12,7 +12,7 @@
 # 0x50000000 and jumps to BootMain in RAM.
 #   18975 instructions in 401 routines (72 with no caller, 277 instructions of an older link),
 #   33 byte-identical to named firmware routines;
-#   data: 202 strings, 166 pointer words
+#   data: 192 strings, 166 pointer words
 
 # addresses outside this image: RAM past it, the older link's, the hardware
 .equ IVAR0, 0x20000000                         # low 16 bits of the level-0 interrupt entry
@@ -22,9 +22,11 @@
 .equ IVAR4, 0x20000010
 .equ IVAR5, 0x20000014
 .equ IVAR6, 0x20000018
+.equ CPUM, 0x20000040                          # [INFERENCE] CPU mode: bit 3 HALT, bit 4 STOP; the NMI handler sets STOP in a loop
 .equ CHCTR, 0x20000070                         # cache control: bits 0/1 enable I/D, 2/3 busy, 4/5 invalidate
 .equ DCACHE_WAY0, 0x28400000                   # reading 0x80 lines of 16 bytes here flushes one data-cache way
 .equ DCACHE_WAY1, 0x28401000                   # the other way
+.equ UNKNOWN_32000010, 0x32000010              # TODO: memory-controller block; Reset's second path writes 0x400 before MEMCTR0; not identified
 .equ MEMCTR0, 0x32000020                       # memory controller (chip-select timing), 0..7
 .equ MEMCTR1, 0x32000022
 .equ MEMCTR2, 0x32000024
@@ -33,6 +35,8 @@
 .equ MEMCTR5, 0x3200002A
 .equ MEMCTR6, 0x3200002C
 .equ MEMCTR7, 0x3200002E
+.equ SDRAM_CTRL, 0x32000040                    # [INFERENCE] SDRAM control: Reset pulses bit 2 eight times, the auto-refresh cycles an SDRAM wants before its first use
+.equ SDRAM_REFRESH, 0x32000042                 # [INFERENCE] the SDRAM refresh interval (0xEA6, then 0x3E8)
 .equ DMAC0_CTR, 0x32000800                     # DMA channel 0: control/start
 .equ DMAC0_SRC, 0x32000804                     # DMA channel 0: source address
 .equ DMAC0_DST, 0x32000808                     # DMA channel 0: destination address
@@ -71,20 +75,25 @@
 .equ SC0TXB, 0x34000808                        # serial 0: transmit byte
 .equ SC0RXB, 0x34000809                        # serial 0: receive byte
 .equ SC0STR, 0x3400080C                        # serial 0: status
+.equ TM0MD, 0x34001000                         # [INFERENCE] timer 0 mode: bit 7 counts; PanelLinkInit starts it
+.equ TM0BR, 0x34001010                         # [INFERENCE] timer 0 base (reload) value: PanelLinkInit 0x0A, the panel link's transmit states rewrite it
+.equ TMPSCNT, 0x34001071                       # [INFERENCE] timer prescaler control: bit 7 enables it (TickStart)
 .equ TM4MD, 0x34001080                         # timer 4 mode
 .equ TM4BR, 0x34001090                         # timer 4 base (reload) value
-.equ P04, 0x36008004                           # I/O port at 0x36008004: bit 5 strobed all through the boot, bit 1 SD card select
-.equ P05, 0x36008005                           # I/O port at 0x36008005
-.equ P24, 0x36008024                           # I/O port at 0x36008024
-.equ P25, 0x36008025                           # I/O port at 0x36008025
-.equ P44, 0x36008044                           # I/O port at 0x36008044
-.equ P64, 0x36008064                           # I/O port at 0x36008064
-.equ P65, 0x36008065                           # I/O port at 0x36008065
-.equ P84, 0x36008084                           # I/O port at 0x36008084
+.equ UNKNOWN_34004002, 0x34004002              # TODO: only the older link's reset writes it (0); not identified
+.equ P04, 0x36008004                           # bit 0 and bit 6 panel-link strobes; bit 1 the SD card's chip select (low = selected); bit 3 set by the NMI handler; bit 4 off while FdcDreqIsr moves the last byte; bit 5 strobed all through the boot
+.equ P05, 0x36008005                           # bit 0 set by PanelLinkInit
+.equ P24, 0x36008024                           # bit 0 a panel-link strobe; bit 4 set by FdcHwInit; bit 6 set by PanelLinkInit
+.equ P25, 0x36008025                           # bit 0 a panel-link strobe
+.equ P44, 0x36008044                           # bit 0 cleared by PanelLinkInit
+.equ P64, 0x36008064                           # bit 0 a panel-link strobe; bit 4 set by FdcHwInit; bit 6 set by PanelLinkInit
+.equ P65, 0x36008065                           # bit 0 cleared by PanelLinkInit
+.equ P84, 0x36008084                           # bit 0 tested by the panel link before it transmits (PanelTxPump, PanelWaitLinkIdle)
 .equ OldLink_40000404, 0x40000404              # an address of the older link
 .equ OldLink_4000041C, 0x4000041C              # an address of the older link
 .equ OldLink_4000BBB4, 0x4000BBB4              # an address of the older link
 .equ FirmwareReset, 0x48400000                 # the program flash's reset entry: the KN7000 firmware
+.equ PROGRAM_FLASH_VERSION, 0x4840000F         # a byte of the program flash's header: the firmware release, two hex digits X.Y (0x16 in PROGRAM 941)
 .equ IRQ_THUNK_JMP, 0x50000001                 # IrqThunk's jmp
 .equ NmiThunk, 0x50000006                      # the second thunk (the ROM vector table has the NMI at +8)
 .equ NMI_THUNK_JMP, 0x50000007                 # NmiThunk's jmp
@@ -135,7 +144,7 @@
 .equ PanelTxRingWrite, 0x5001035E
 .equ PanelTxRing, 0x50010360
 .equ PanelTxRingArg, 0x50010361                # the second byte of the first slot: PanelSendPairPolled's argument
-.equ PanelSwShadow00, 0x5001039C               # the switch-report bytes as PanelFrameDecode stores them, by offset from 0x5001039C
+.equ PanelSwShadow00, 0x5001039C               # the switch-report bytes as PanelFrameDecode stores them; each name ends in the byte's offset in the report, in hex
 .equ PanelSwShadow02, 0x5001039E
 .equ PanelSwShadow03, 0x5001039F
 .equ PanelSwShadow04, 0x500103A0
@@ -300,7 +309,128 @@
 .equ OldLink_501C0000, 0x501C0000              # an address of the older link
 .equ IRQ_THUNK_UNCACHED, 0x90000000            # IrqThunk through the uncached view
 .equ NMI_THUNK_UNCACHED, 0x90000006            # NmiThunk through the uncached view
+.equ FDC_DACK, 0x98010000                      # the controller's DMA data port: reading or writing a byte here answers one DMA request (FdcDreqIsr moves the last byte of a transfer through it)
+.equ FDC_DOR, 0x98020004                       # digital output register: 0x1C motor on, 0x0C off
+.equ FDC_MSR_DSR, 0x98020008                   # main status register when read, data-rate select when written
+.equ FDC_FIFO, 0x9802000A                      # the command / result / data FIFO
+.equ FDC_DIR_CCR, 0x9802000E                   # digital input register when read (bit 7 disk changed), configuration control when written
+.equ TGA_04, 0x98050004                        # TODO: SdSpiPortSetup writes 0xFFFF (twice on subtype 4); the firmware's tone generator bring-up writes 3
+.equ SD_SPI_DATA, 0x9805000C                   # the SPI shift register: a byte written goes out, the byte that came in is read back
+.equ SD_SPI_CLOCK, 0x9805000E                  # the SPI clock-rate latch: rate | 0x80
+.equ TGA_10, 0x98050010                        # TODO: SdSpiPortSetup writes 1 first; the firmware's tone generator bring-up pulses it with 1
+.equ SD_POWER_CTRL, 0x98060000                 # the power controller's port (SdPowerShadow keeps the last byte): bit 2 the SD card's supply
 .equ BOARD_STRAP, 0x98070000                   # board-revision strap, read only
+# [INFERENCE] the LCD controller's registers (LCDC_*) carry the names of Epson's
+# S1D13506, whose register set LcdControllerInit writes offset for offset
+# (tools/gen_ic18_s.py, S1D13506; notes/ic18-boot-rom.md)
+.equ LCDC, 0x9CC00000                          # the LCD controller's registers
+.equ LCDC_MISC, 0x9CC00001
+.equ LCDC_GPIO_CONFIG0, 0x9CC00004             # pin directions, 1 = output: bits 6 and 7 the SD lamps
+.equ LCDC_GPIO_CONFIG1, 0x9CC00005             # pin directions: bits 1 and 2 the SD slot-enable and supply lines
+.equ LCDC_GPIO_CTRL0, 0x9CC00008               # pin data: bit 6 the SD card lamp, bit 7 the SD in-use lamp
+.equ LCDC_GPIO_CTRL1, 0x9CC00009               # pin data, the SD slot: bit 0 card sensed, bit 1 slot enable, bit 2 supply line, bit 4 write-protected
+.equ LCDC_MEM_CLOCK_CONFIG, 0x9CC00010
+.equ LCDC_LCD_PCLK_CONFIG, 0x9CC00014
+.equ LCDC_CRT_PCLK_CONFIG, 0x9CC00018
+.equ LCDC_MEDIAPLUG_CLOCK_CONFIG, 0x9CC0001C
+.equ LCDC_CPU_MEM_WAIT, 0x9CC0001E
+.equ LCDC_MEM_CONFIG, 0x9CC00020
+.equ LCDC_DRAM_REFRESH, 0x9CC00021
+.equ LCDC_DRAM_TIMING0, 0x9CC0002A
+.equ LCDC_DRAM_TIMING1, 0x9CC0002B
+.equ LCDC_PANEL_TYPE, 0x9CC00030
+.equ LCDC_MOD_RATE, 0x9CC00031
+.equ LCDC_LCD_HDISP, 0x9CC00032                # (value + 1) x 8 pixels
+.equ LCDC_LCD_HNDP, 0x9CC00034
+.equ LCDC_TFT_FPLINE_START, 0x9CC00035
+.equ LCDC_TFT_FPLINE_WIDTH, 0x9CC00036
+.equ LCDC_LCD_VDISP0, 0x9CC00038               # value + 1 lines, low byte
+.equ LCDC_LCD_VDISP1, 0x9CC00039
+.equ LCDC_LCD_VNDP, 0x9CC0003A
+.equ LCDC_TFT_FPFRAME_START, 0x9CC0003B
+.equ LCDC_TFT_FPFRAME_WIDTH, 0x9CC0003C
+.equ LCDC_LCD_DISPLAY_MODE, 0x9CC00040         # bits 2-0 the pixel depth, 5 = 16 bits
+.equ LCDC_LCD_MISC, 0x9CC00041
+.equ LCDC_LCD_START0, 0x9CC00042
+.equ LCDC_LCD_START1, 0x9CC00043
+.equ LCDC_LCD_START2, 0x9CC00044
+.equ LCDC_LCD_OFFSET0, 0x9CC00046              # the line pitch in 16-bit words, low byte
+.equ LCDC_LCD_OFFSET1, 0x9CC00047
+.equ LCDC_LCD_PANNING, 0x9CC00048
+.equ LCDC_LCD_FIFO_HIGH, 0x9CC0004A
+.equ LCDC_LCD_FIFO_LOW, 0x9CC0004B
+.equ LCDC_CRT_HDISP, 0x9CC00050
+.equ LCDC_CRT_HNDP, 0x9CC00052
+.equ LCDC_CRT_HRTC_START, 0x9CC00053
+.equ LCDC_CRT_HRTC_WIDTH, 0x9CC00054
+.equ LCDC_CRT_VDISP0, 0x9CC00056
+.equ LCDC_CRT_VDISP1, 0x9CC00057
+.equ LCDC_CRT_VNDP, 0x9CC00058
+.equ LCDC_CRT_VRTC_START, 0x9CC00059
+.equ LCDC_CRT_VRTC_WIDTH, 0x9CC0005A
+.equ LCDC_TV_OUTPUT_CTRL, 0x9CC0005B
+.equ LCDC_CRT_DISPLAY_MODE, 0x9CC00060
+.equ LCDC_CRT_START0, 0x9CC00062
+.equ LCDC_CRT_START1, 0x9CC00063
+.equ LCDC_CRT_START2, 0x9CC00064
+.equ LCDC_CRT_OFFSET0, 0x9CC00066
+.equ LCDC_CRT_OFFSET1, 0x9CC00067
+.equ LCDC_CRT_PANNING, 0x9CC00068
+.equ LCDC_CRT_FIFO_HIGH, 0x9CC0006A
+.equ LCDC_CRT_FIFO_LOW, 0x9CC0006B
+.equ LCDC_LCD_CURSOR_CTRL, 0x9CC00070
+.equ LCDC_LCD_CURSOR_START, 0x9CC00071
+.equ LCDC_LCD_CURSOR_X0, 0x9CC00072
+.equ LCDC_LCD_CURSOR_X1, 0x9CC00073
+.equ LCDC_LCD_CURSOR_Y0, 0x9CC00074
+.equ LCDC_LCD_CURSOR_Y1, 0x9CC00075
+.equ LCDC_LCD_CURSOR_BLUE0, 0x9CC00076
+.equ LCDC_LCD_CURSOR_GREEN0, 0x9CC00077
+.equ LCDC_LCD_CURSOR_RED0, 0x9CC00078
+.equ LCDC_LCD_CURSOR_BLUE1, 0x9CC0007A
+.equ LCDC_LCD_CURSOR_GREEN1, 0x9CC0007B
+.equ LCDC_LCD_CURSOR_RED1, 0x9CC0007C
+.equ LCDC_LCD_CURSOR_FIFO, 0x9CC0007E
+.equ LCDC_CRT_CURSOR_CTRL, 0x9CC00080
+.equ LCDC_CRT_CURSOR_START, 0x9CC00081
+.equ LCDC_CRT_CURSOR_X0, 0x9CC00082
+.equ LCDC_CRT_CURSOR_X1, 0x9CC00083
+.equ LCDC_CRT_CURSOR_Y0, 0x9CC00084
+.equ LCDC_CRT_CURSOR_Y1, 0x9CC00085
+.equ LCDC_CRT_CURSOR_BLUE0, 0x9CC00086
+.equ LCDC_CRT_CURSOR_GREEN0, 0x9CC00087
+.equ LCDC_CRT_CURSOR_RED0, 0x9CC00088
+.equ LCDC_CRT_CURSOR_BLUE1, 0x9CC0008A
+.equ LCDC_CRT_CURSOR_GREEN1, 0x9CC0008B
+.equ LCDC_CRT_CURSOR_RED1, 0x9CC0008C
+.equ LCDC_CRT_CURSOR_FIFO, 0x9CC0008E
+.equ LCDC_BLT_CTRL0, 0x9CC00100
+.equ LCDC_BLT_CTRL1, 0x9CC00101
+.equ LCDC_BLT_ROP, 0x9CC00102
+.equ LCDC_BLT_OPERATION, 0x9CC00103
+.equ LCDC_BLT_SRC0, 0x9CC00104
+.equ LCDC_BLT_SRC1, 0x9CC00105
+.equ LCDC_BLT_SRC2, 0x9CC00106
+.equ LCDC_BLT_DST0, 0x9CC00108
+.equ LCDC_BLT_DST1, 0x9CC00109
+.equ LCDC_BLT_DST2, 0x9CC0010A
+.equ LCDC_BLT_OFFSET0, 0x9CC0010C
+.equ LCDC_BLT_OFFSET1, 0x9CC0010D
+.equ LCDC_BLT_WIDTH0, 0x9CC00110
+.equ LCDC_BLT_WIDTH1, 0x9CC00111
+.equ LCDC_BLT_HEIGHT0, 0x9CC00112
+.equ LCDC_BLT_HEIGHT1, 0x9CC00113
+.equ LCDC_BLT_BG0, 0x9CC00114
+.equ LCDC_BLT_BG1, 0x9CC00115
+.equ LCDC_BLT_FG0, 0x9CC00118
+.equ LCDC_BLT_FG1, 0x9CC00119
+.equ LCDC_LUT_MODE, 0x9CC001E0
+.equ LCDC_LUT_ADDR, 0x9CC001E2
+.equ LCDC_LUT_DATA, 0x9CC001E4
+.equ LCDC_POWER_SAVE_CONFIG, 0x9CC001F0
+.equ LCDC_WATCHDOG, 0x9CC001F4
+.equ LCDC_DISPLAY_MODE, 0x9CC001FC             # LcdControllerInit writes 0 before the set-up, 7 after it
+.equ LCDC_VRAM, 0x9CE00000                     # the LCD controller's display memory (its registers + 0x200000)
 
 # constants of the reset code
 .equ DATA_SIZE, __data_end - __data_start
@@ -376,9 +506,9 @@ OldReset:
     bset    0x20, (P04)
     bclr    0x20, (P04)
     mov     0x497, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     mov     0xea6, d0
-    movhu   d0, (0x32000042)
+    movhu   d0, (SDRAM_REFRESH)
     mov     0x945, d0
     movhu   d0, (MEMCTR4)
     bset    0x20, (P04)
@@ -386,9 +516,9 @@ OldReset:
     mov     0, d1
 old_loc_400000D4:
     mov     0x493, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     mov     0x497, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     inc     d1
     cmp     8, d1
     bne     old_loc_400000D4
@@ -430,7 +560,7 @@ old_loc_4000015A:
     bset    0x20, (P04)
     bclr    0x20, (P04)
     clr     d1
-    movbu   d1, (0x34004002)
+    movbu   d1, (UNKNOWN_34004002)
     mov     OldLink_50180824, a0
     mov     a0, sp
     add     -0xc, sp
@@ -708,7 +838,7 @@ TickPhase:                       # TickIsr's six-step cycle
     .byte   0x00
 TickPhase2:                      # and its eight-step one
     .byte   0x00, 0x00, 0x50
-SdPowerShadow:                   # the last byte written to the power controller (0x98060000)
+SdPowerShadow:                   # the last byte written to SD_POWER_CTRL
     .byte   0x00, 0x91, 0x00, 0x50
 Flash32ChipId:                   # both chips' device codes, or -1
     .long   0xFFFFFFFF
@@ -817,9 +947,9 @@ loc_400005ED:
     bset    0x20, (P04)
     bclr    0x20, (P04)
     mov     0x297, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     mov     0xea6, d0
-    movhu   d0, (0x32000042)
+    movhu   d0, (SDRAM_REFRESH)
     mov     0x965, d0
     movhu   d0, (MEMCTR4)
     bset    0x20, (P04)
@@ -829,9 +959,9 @@ loc_400005ED:
     mov     0, d1
 loc_40000648:
     mov     0x293, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     mov     0x297, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     inc     d1
     cmp     8, d1
     bne     loc_40000648
@@ -1039,7 +1169,7 @@ loc_40000885:
     jmp     BootMain
 loc_40000A25:
     mov     0x400, d0
-    movhu   d0, (0x32000010)
+    movhu   d0, (UNKNOWN_32000010)
     movhu   (MEMCTR0), d0
     and     0xfffb, d0
     movhu   d0, (MEMCTR0)
@@ -1057,14 +1187,14 @@ loc_40000A25:
     bra     loc_40000A7D
 loc_40000A72:
     mov     0x297, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     bra     loc_40000A86
 loc_40000A7D:
     mov     0x297, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
 loc_40000A86:
     mov     0x3e8, d0
-    movhu   d0, (0x32000042)
+    movhu   d0, (SDRAM_REFRESH)
     mov     4, d0
     movhu   d0, (MEMCTR5)
     mov     2, d0
@@ -1092,15 +1222,14 @@ ResetTail:
     ret     0, 0
 
 # ---- NmiHandler --------------------------------------------------------------
-# sets P04 bit 3, then sets bit 4 of 0x20000040 over and over: never returns (TODO: 0x20000040
-# is not identified)
+# sets P04 bit 3, then CPUM bit 4 over and over ([INFERENCE] STOP mode): never returns
 NmiHandler:
     add     -4, sp
     bset    0x08, (P04)
     setlb
-    movhu   (0x20000040), d0
+    movhu   (CPUM), d0
     or      0x10, d0
-    movhu   d0, (0x20000040)
+    movhu   d0, (CPUM)
     lra
     retf    0, 4
 
@@ -6765,8 +6894,7 @@ loc_500025C2:
     retf    [a2,a3], 8
 
 # ---- PanelDisableIrqGroups ---------------------------------------------------
-# disables the four interrupt groups whose numbers are kept at 0x50019738..44 (IrqGroupSetup);
-# nothing calls it
+# disables the four interrupt groups whose numbers are kept at 0x50019738..44 (IrqGroupSetup)
 # no caller: unreferenced code
 PanelDisableIrqGroups:
     add     -0x10, sp
@@ -6785,7 +6913,7 @@ PanelDisableIrqGroups:
     ret     0, 0x10
 
 # ---- PanelSendCmd1C ----------------------------------------------------------
-# sends command 0x1C with its argument clamped to 3..100; nothing calls it
+# sends command 0x1C with its argument clamped to 3..100
 # no caller: unreferenced code
 PanelSendCmd1C:
     movm    [d2], (sp)
@@ -6895,7 +7023,6 @@ PanelPump_entry:
     ret     0, 8
 
 # ---- PanelStatusPollWrap -----------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 PanelStatusPollWrap:
     add     -8, sp
@@ -6903,7 +7030,6 @@ PanelStatusPollWrap:
     ret     0, 8
 
 # ---- PanelTransactionWrap ----------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 PanelTransactionWrap:
     add     -8, sp
@@ -6912,7 +7038,6 @@ PanelTransactionWrap:
     ret     0, 8
 
 # ---- PanelHookNop ------------------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 PanelHookNop:
     retf    0, 0
@@ -7000,9 +7125,9 @@ loc_500027B3:
     mov     0xc84, d0
     movhu   d0, (SC0CTR)
     mov     0xa, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     mov     0x80, d0
-    movbu   d0, (0x34001000)
+    movbu   d0, (TM0MD)
     clr     d0
     movbu   d0, (PanelAtnPass)
     movhu   (EXTMD), d0
@@ -7129,8 +7254,7 @@ loc_50002943:
     ret     0, 0x10
 
 # ---- PanelSendPairPolled -----------------------------------------------------
-# sends a [command, argument] pair by polling serial 0 with the strobes by hand; nothing calls
-# it
+# sends a [command, argument] pair by polling serial 0 with the strobes by hand
 # no caller: unreferenced code
 PanelSendPairPolled:
     add     -0xc, sp
@@ -7220,7 +7344,7 @@ loc_50002AB7:
     ret     0, 0xc
 
 # ---- PanelBusyWait30 ---------------------------------------------------------
-# counted busy loop (0x1E iterations); nothing calls it
+# counted busy loop (0x1E iterations)
 # no caller: unreferenced code
 PanelBusyWait30:
     add     -8, sp
@@ -7240,7 +7364,7 @@ PanelBusyWait30:
     retf    0, 8
 
 # ---- PanelBusyWait60 ---------------------------------------------------------
-# counted busy loop (0x3C iterations); nothing calls it
+# counted busy loop (0x3C iterations)
 # no caller: unreferenced code
 PanelBusyWait60:
     add     -8, sp
@@ -7787,7 +7911,7 @@ PanelTxKick_entry:
     mov     1, d0
     movbu   d0, (PanelLinkState)
     mov     0x78, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     bset    0x01, (P24)
     bset    0x01, (P25)
     call    PanelModeFlagGet, 0, 0
@@ -7968,7 +8092,7 @@ PanelTxState1:
     bclr    0x40, (P04)
 loc_50003246:
     mov     0x3c, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     mov     4, d0
     call    LibIntcDisable_entry, 0, 8
     mov     5, d0
@@ -7996,7 +8120,7 @@ loc_50003246:
     mov     5, d0
     call    LibIntcDisable_entry, 0, 8
     mov     0x3c, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     bclr    0x02, (PanelLinkFlags)
 loc_500032CD:
     ret     0, 0xc
@@ -8006,7 +8130,7 @@ loc_500032CD:
 PanelTxState2:
     add     -0xc, sp
     mov     0xa, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
@@ -8080,7 +8204,7 @@ loc_500033B9:
     bclr    0x01, (P64)
     bset    0x01, (P24)
     bset    0x01, (P25)
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     mov     5, d0
     call    LibIntcEnable_entry, 0, 8
     movhu   (SC0CTR), d0
@@ -8099,7 +8223,7 @@ loc_500033B9:
 PanelTxState4:
     add     -0xc, sp
     mov     0xa, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     call    PanelModeFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
@@ -8171,7 +8295,7 @@ loc_500034EC:
     bset    0x01, (P24)
     bset    0x01, (P25)
     mov     0x3c, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     clr     d0
     movbu   d0, (SC0TXB)
     and     0xf7ff, psw
@@ -8234,7 +8358,7 @@ loc_500035BC:
     mov     0x78, d0
     bclr    0x01, (P04)
     bset    0x01, (P64)
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     mov     4, d0
     call    LibIntcDisable_entry, 0, 8
     movhu   (SC0CTR), d0
@@ -8276,7 +8400,7 @@ loc_50003630:
     mov     5, d0
     call    LibIntcDisable_entry, 0, 8
     mov     0x3c, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     bclr    0x02, (PanelLinkFlags)
 loc_50003673:
     ret     [d2], 0x10
@@ -8446,8 +8570,7 @@ PanelXferIdleState:
     retf    0, 0
 
 # ---- PanelLinkRxRearm --------------------------------------------------------
-# back to ATN-armed idle: serial 0 to receive, groups 5/6 off, group 26 acknowledged, 4 on;
-# nothing calls it
+# back to ATN-armed idle: serial 0 to receive, groups 5/6 off, group 26 acknowledged, 4 on
 # no caller: unreferenced code
 PanelLinkRxRearm:
     add     -0xc, sp
@@ -8536,7 +8659,7 @@ loc_50003967:
     mov     1, d0
     movbu   d0, (PanelLinkState)
     mov     0x78, d0
-    movbu   d0, (0x34001010)
+    movbu   d0, (TM0BR)
     bset    0x01, (P24)
     bset    0x01, (P25)
     call    PanelModeFlagGet, 0, 0
@@ -9302,18 +9425,18 @@ loc_50004079:
 loc_50004081:
     jmp     loc_5000410E
 loc_50004084:
-    movbu   (0x98020004), d0
+    movbu   (FDC_DOR), d0
     movbu   d0, (FdcSavedDor)
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_5000410E
 loc_5000409A:
     movbu   (FdcSavedDor), d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_5000410E
 loc_500040A8:
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     mov     1, d0
     movbu   d0, (FdcMotorState)
     bra     loc_5000410E
@@ -9345,7 +9468,7 @@ loc_500040FF:
     clr     d0
     movbu   d0, (FdcMotorState)
     mov     0xc, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
 loc_5000410E:
     ret     0, 0
 
@@ -9355,7 +9478,7 @@ loc_5000410E:
 FdcReadMsr:
     add     -0x10, sp
 FdcReadMsr_entry:
-    movbu   (0x98020008), d0
+    movbu   (FDC_MSR_DSR), d0
     movbu   d0, (0xc, sp)
     mov     2, d0
     call    FdcDelay, 0, 0
@@ -9363,8 +9486,9 @@ FdcReadMsr_entry:
     ret     0, 0x10
 
 # ---- FdcReadData -------------------------------------------------------------
+# one byte of FDC_FIFO into d0, with no status check of its own
 FdcReadData:
-    movbu   (0x9802000a), d0
+    movbu   (FDC_FIFO), d0
     ret     0, 0
 
 # ---- FdcWriteDsr -------------------------------------------------------------
@@ -9375,13 +9499,14 @@ FdcWriteDsr:
     movbu   d0, (FdcDsrPrev)
     movbu   (8, sp), d0
     movbu   d0, (FdcDsr)
-    movbu   d0, (0x98020008)
+    movbu   d0, (FDC_MSR_DSR)
     ret     0, 0
 
 # ---- FdcWriteData ------------------------------------------------------------
+# d0 into FDC_FIFO, with no status check of its own
 FdcWriteData:
     movbu   d0, (8, sp)
-    movbu   d0, (0x9802000a)
+    movbu   d0, (FDC_FIFO)
     ret     0, 0
 
 # ---- FdcWaitIdle -------------------------------------------------------------
@@ -9722,7 +9847,7 @@ loc_5000440C:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     jmp     loc_500044D6
 loc_50004429:
     clr     d0
@@ -9732,7 +9857,7 @@ loc_50004429:
     mov     0xc0, d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     jmp     loc_500044D6
 loc_50004448:
     mov     2, d0
@@ -9742,7 +9867,7 @@ loc_50004448:
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_500044D6
 loc_50004465:
     mov     3, d0
@@ -9752,7 +9877,7 @@ loc_50004465:
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_500044D6
 loc_50004482:
     mov     4, d0
@@ -9762,7 +9887,7 @@ loc_50004482:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_500044D6
 loc_5000449F:
     mov     5, d0
@@ -9772,7 +9897,7 @@ loc_5000449F:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_500044D6
 loc_500044BC:
     clr     d0
@@ -9782,7 +9907,7 @@ loc_500044BC:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
 loc_500044D6:
     call    FdcMotorOnWait_entry, 0, 0xc
     movbu   (FdcError), d0
@@ -10309,7 +10434,7 @@ loc_500049A0:
     mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
     mov     d0, (DMAC0_CTR)
-    mov     0x98010000, d0
+    mov     FDC_DACK, d0
     mov     d0, (DMAC0_SRC)
     mov     (FdcReqBuffer), d0
     mov     d0, (DMAC0_DST)
@@ -10364,7 +10489,7 @@ loc_50004A8D:
     mov     d0, (DMAC0_CTR)
     mov     (FdcReqBuffer), d0
     mov     d0, (DMAC0_SRC)
-    mov     0x98010000, d0
+    mov     FDC_DACK, d0
     mov     d0, (DMAC0_DST)
     mov     (FdcByteCount), d0
     mov     2, d1
@@ -11339,7 +11464,6 @@ loc_50005299:
     ret     0, 0x10
 
 # ---- FdcTickWait40 -----------------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 FdcTickWait40:
     add     -0xc, sp
@@ -12618,7 +12742,7 @@ loc_50006024:
     mov     (FdcByteCount), d0
     mov     1, d1
     sub     d1, d0
-    movbu   (0x98010000), d1
+    movbu   (FDC_DACK), d1
     movbu   d1, (d0, a0)
     bra     loc_50006059
 loc_5000603E:
@@ -12627,7 +12751,7 @@ loc_5000603E:
     mov     1, d1
     sub     d1, d0
     movbu   (d0, a0), d1
-    movbu   d1, (0x98010000)
+    movbu   d1, (FDC_DACK)
     bra     loc_50006059
 loc_50006058:
     nop
@@ -12806,7 +12930,7 @@ loc_500061F7:
     ret     0, 8
 
 # ---- FdcSeekTestLoop ---------------------------------------------------------
-# repeats reads at cylinders 0, 0x4E, 0x0A, 0x28 forever, 3000 ticks apart; nothing calls it
+# repeats reads at cylinders 0, 0x4E, 0x0A, 0x28 forever, 3000 ticks apart
 # no caller: unreferenced code
 FdcSeekTestLoop:
     add     -0x10, sp
@@ -13014,7 +13138,7 @@ loc_5000649E:
     call    FdcMotorCtl, 0, 0
     mov     0x83, d0
     call    FdcMotorCtl, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    FdcMotorCtl, 0, 0
@@ -13048,7 +13172,7 @@ loc_500064EF:
     ret     0, 0x10
 
 # ---- FdcDiskChangedClear -----------------------------------------------------
-# an init request clears the change flag, then reads it again; nothing calls it
+# an init request clears the change flag, then reads it again
 # no caller: unreferenced code
 FdcDiskChangedClear:
     add     -0x2c, sp
@@ -13056,7 +13180,7 @@ FdcDiskChangedClear:
     movbu   d0, (0xc, sp)
     mov     0x83, d0
     call    FdcMotorCtl, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    FdcMotorCtl, 0, 0
@@ -13082,7 +13206,7 @@ loc_50006528:
 loc_50006544:
     mov     0x83, d0
     call    FdcMotorCtl, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    FdcMotorCtl, 0, 0
@@ -13102,7 +13226,7 @@ loc_50006572:
     ret     0, 0x2c
 
 # ---- FdcMediaChangePoll ------------------------------------------------------
-# posts event 0x10708000 (KernelStubZero) on insert and removal; nothing calls it
+# posts event 0x10708000 (KernelStubZero) on insert and removal
 # no caller: unreferenced code
 FdcMediaChangePoll:
     add     -0x10, sp
@@ -13277,7 +13401,7 @@ loc_500066CC:
     ret     0, 0xc
 
 # ---- DiskDriveCtrlWrap -------------------------------------------------------
-# DiskDriveCtrlHandler on a canned message; nothing calls it
+# DiskDriveCtrlHandler on a canned message
 # no caller: unreferenced code
 DiskDriveCtrlWrap:
     add     -0xc, sp
@@ -14499,7 +14623,7 @@ loc_500070B6:
     ret     0, 0x10
 
 # ---- SdMediaChangeService ----------------------------------------------------
-# on a card: the canned drive-control messages '@' and 'C', state 2; nothing calls it
+# on a card: the canned drive-control messages '@' and 'C', state 2
 # no caller: unreferenced code
 SdMediaChangeService:
     movm    [d2,a2], (sp)
@@ -14531,7 +14655,7 @@ loc_50007101:
     ret     [d2,a2], 0x18
 
 # ---- SdPowerDownNotify -------------------------------------------------------
-# the canned 'F' drive-control message; nothing calls it
+# the canned 'F' drive-control message
 # no caller: unreferenced code
 SdPowerDownNotify:
     add     -0xc, sp
@@ -14563,7 +14687,7 @@ loc_50007137:
     retf    0, 0
 
 # ---- StubMinusOne ------------------------------------------------------------
-# returns -1; nothing calls it
+# returns -1
 # no caller: unreferenced code
 StubMinusOne:
     mov     -1, d0
@@ -14614,7 +14738,7 @@ FatClusterToSector_entry:
     ret     [d2], 4
 
 # ---- FatReadCluster ----------------------------------------------------------
-# every sector of cluster d0 into a0; nothing calls it
+# every sector of cluster d0 into a0
 # no caller: unreferenced code
 FatReadCluster:
     movm    [d2,d3,a2], (sp)
@@ -14749,7 +14873,7 @@ loc_50007241:
     clr     d0
     bra     loc_500072DF
 loc_500072CD:
-    mov     Str_12345678, a1
+    mov     FatMountFailImage, a1
     mov     a2, a0
     mov     -9, d1
     setlb
@@ -15202,7 +15326,7 @@ loc_50007630:
     ret     [d2,d3,a2,a3], 0x20
 
 # ---- FatEof ------------------------------------------------------------------
-# 1 when the position has reached the size; nothing calls it
+# 1 when the position has reached the size
 # no caller: unreferenced code
 FatEof:
     mov     (0x10, a0), d1
@@ -15232,8 +15356,7 @@ FatClose:
     retf    0, 0
 
 # ---- FatReadTestFile ---------------------------------------------------------
-# opens MORITANI.DAT and reads it through to the end, 512 bytes at a time into a ten-sector
-# ring; nothing calls it
+# opens MORITANI.DAT and reads it through to the end, 512 bytes at a time into a ten-sector ring
 # no caller: unreferenced code
 FatReadTestFile:
     movm    [d2,a2], (sp)
@@ -15306,18 +15429,18 @@ SdSpiPortSetup:
     add     -0xc, sp
 SdSpiPortSetup_entry:
     mov     1, d0
-    movhu   d0, (0x98050010)
+    movhu   d0, (TGA_10)
     mov     0x64, d0
     call    SdSpinDelay_entry, 0, 4
     mov     0x0000ffff, d2
-    movhu   d2, (0x98050004)
+    movhu   d2, (TGA_04)
     mov     0x64, d0
     call    SdSpinDelay_entry, 0, 4
     call    PanelSubTypeGet, 0, 0
     extbu   d0
     cmp     4, d0
     bne     loc_5000770B
-    movhu   d2, (0x98050004)
+    movhu   d2, (TGA_04)
 loc_5000770B:
     movhu   (EXTMD), d0
     or      0x0c00, d0
@@ -15375,18 +15498,18 @@ loc_50007780:
     mov     (TickCount), d0
     extbu   d1
     mov     d0, (8, sp)
-    movhu   (0x9805000e), d0
+    movhu   (SD_SPI_CLOCK), d0
     or      0x80, d1
     cmp     d1, d0
     beq     loc_500077B2
     setlb
-    movhu   d1, (0x9805000e)
+    movhu   d1, (SD_SPI_CLOCK)
     mov     (8, sp), d2
     mov     (TickCount), d0
     sub     d2, d0
     cmp     2, d0
     bhi     loc_500077B2
-    movhu   (0x9805000e), d0
+    movhu   (SD_SPI_CLOCK), d0
     cmp     d1, d0
     lne
 loc_500077B2:
@@ -15425,7 +15548,7 @@ SdDetectPortInit_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_500077E9
-    bset    0x06, (0x9cc00005)
+    bset    0x06, (LCDC_GPIO_CONFIG1)
 loc_500077E9:
     call    SdSlotDischarge_entry, [d2], 0x10
     call    SdPowerLineClear_entry, 0, 8
@@ -15472,7 +15595,7 @@ loc_50007855:
     ret     0, 0xc
 
 # ---- SdPowerLineSet ----------------------------------------------------------
-# 0x9CC00009 bit 2
+# LCDC_GPIO_CTRL1 bit 2
 # `call` enters at SdPowerLineSet_entry, past the prologue
 SdPowerLineSet:
     add     -8, sp
@@ -15481,7 +15604,7 @@ SdPowerLineSet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_5000786C
-    bset    0x04, (0x9cc00009)
+    bset    0x04, (LCDC_GPIO_CTRL1)
 loc_5000786C:
     ret     0, 8
 
@@ -15494,7 +15617,7 @@ SdPowerLineClear_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_50007883
-    bclr    0x04, (0x9cc00009)
+    bclr    0x04, (LCDC_GPIO_CTRL1)
 loc_50007883:
     ret     0, 8
 
@@ -15532,7 +15655,7 @@ SdSlotDrainWait_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_500078C3
-    bclr    0x02, (0x9cc00009)
+    bclr    0x02, (LCDC_GPIO_CTRL1)
 loc_500078C3:
     mov     0x1e, d0
     call    LibTickSleep, 0, 0
@@ -15605,7 +15728,7 @@ SdSlotDischarge_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_50007968
-    bset    0x02, (0x9cc00009)
+    bset    0x02, (LCDC_GPIO_CTRL1)
 loc_50007968:
     mov     0xa, d0
     movbu   d0, (SdDetectOverride)
@@ -15621,7 +15744,7 @@ loc_50007978:
     ret     [d2], 0x10
 
 # ---- SdSlotSenseGet ----------------------------------------------------------
-# 0x9CC00009 bit 0
+# LCDC_GPIO_CTRL1 bit 0
 # `call` enters at SdSlotSenseGet_entry, past the prologue
 SdSlotSenseGet:
     add     -8, sp
@@ -15630,7 +15753,7 @@ SdSlotSenseGet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_500079A1
-    movbu   (0x9cc00009), d0
+    movbu   (LCDC_GPIO_CTRL1), d0
     and     0x01, d0
     extbu   d0
     bra     loc_500079A2
@@ -15640,7 +15763,7 @@ loc_500079A2:
     ret     0, 8
 
 # ---- SdWriteProtectGet -------------------------------------------------------
-# 0x9CC00009 bit 4
+# LCDC_GPIO_CTRL1 bit 4
 # `call` enters at SdWriteProtectGet_entry, past the prologue
 SdWriteProtectGet:
     add     -8, sp
@@ -15649,7 +15772,7 @@ SdWriteProtectGet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_500079BE
-    movbu   (0x9cc00009), d0
+    movbu   (LCDC_GPIO_CTRL1), d0
     and     0x10, d0
     extbu   d0
     bra     loc_500079BF
@@ -15677,7 +15800,7 @@ SdSpiSendByte_entry:
     mov     (SdClockGap), d1
     extbu   d0
     mov     d1, (0, sp)
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     mov     (0, sp), d0
     mov     -1, d1
     add     d0, d1
@@ -15735,7 +15858,7 @@ loc_50007A2F:
     mov     d1, (0x10, sp)
     movbu   (d0, a2), d1
     mov     (0x10, sp), d0
-    movhu   d1, (0x9805000c)
+    movhu   d1, (SD_SPI_DATA)
     mov     -1, d1
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -15788,7 +15911,7 @@ SdSpiRecvByte_entry:
     mov     d1, (0, sp)
     cmp     0, d0
     mov     0xff, d0
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     beq     loc_50007AE6
     setlb
     movhu   (G28ICR), d0
@@ -15801,7 +15924,7 @@ SdSpiRecvByte_entry:
     cmp     0, d0
     lne
 loc_50007AE6:
-    movhu   (0x9805000c), d0
+    movhu   (SD_SPI_DATA), d0
     extbu   d0
     ret     0, 8
 
@@ -15841,7 +15964,7 @@ loc_50007B0A:
     mov     (SdClockGap), d1
     mov     0xff, d0
     mov     d1, (0x10, sp)
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     mov     (0x10, sp), d0
     mov     -1, d1
     add     d0, d1
@@ -15860,7 +15983,7 @@ loc_50007B0A:
     lne
 loc_50007B59:
     mov     (0xc, sp), d0
-    movhu   (0x9805000c), d1
+    movhu   (SD_SPI_DATA), d1
     movbu   d1, (d0, a2)
     mov     2, d0
     call    SdSpinDelay_entry, 0, 4
@@ -16870,7 +16993,7 @@ loc_500082C2:
     retf    [d2,d3], 8
 
 # ---- SdStatusProbeCmdA -------------------------------------------------------
-# a fixed command frame with two extra reply bytes; nothing calls it
+# a fixed command frame with two extra reply bytes
 # no caller: unreferenced code
 SdStatusProbeCmdA:
     movm    [d2,a2,a3], (sp)
@@ -17038,7 +17161,7 @@ IrqDispatch:
     rti
 
 # ---- ICacheInvalidate --------------------------------------------------------
-# instruction cache off, wait, invalidate, on again; nothing calls it
+# instruction cache off, wait, invalidate, on again
 # no caller: unreferenced code
 ICacheInvalidate:
     mov     CHCTR, a0
@@ -17257,13 +17380,14 @@ loc_500085F0:
     rets
 
 # ---- LcdControllerInitOld ----------------------------------------------------
-# another set-up of the LCD controller at 0x9CC00000, with its palette tables; nothing calls it
+# another set-up of the LCD controller, by a register map that is not the S1D13506's (even
+# offsets 0x00-0x14, two palette tables at +0x20 and +0x60), then 512 KB of LCDC_VRAM cleared
 # no caller: unreferenced code
 LcdControllerInitOld:
     movm    [d2,a2], (sp)
-    mov     0x9cc00000, a2
+    mov     LCDC, a2
     mov     0x80, d0
-    movbu   d0, (0x9cc00000)
+    movbu   d0, (LCDC)
     clr     d1
 loc_50008629:
     clr     d0
@@ -17275,22 +17399,22 @@ loc_50008629:
     cmp     0xffff, d1
     bcs     loc_50008629
     clr     d0
-    movbu   d0, (0x9cc00000)
+    movbu   d0, (LCDC)
     mov     0x18, d0
-    movbu   d0, (0x9cc00000)
+    movbu   d0, (LCDC)
     mov     0x12, d0
-    movbu   d0, (0x9cc00002)
+    movbu   d0, (LCDC+0x02)
     mov     0x50, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC+0x04)
     mov     0x20, d0
-    movbu   d0, (0x9cc00006)
-    movbu   d0, (0x9cc00008)
+    movbu   d0, (LCDC+0x06)
+    movbu   d0, (LCDC+0x08)
     mov     0x78, d0
-    movbu   d0, (0x9cc0000a)
+    movbu   d0, (LCDC+0x0a)
     clr     d0
-    movbu   d0, (0x9cc0000c)
-    movbu   d0, (0x9cc0000e)
-    movbu   d0, (0x9cc00014)
+    movbu   d0, (LCDC+0x0c)
+    movbu   d0, (LCDC+0x0e)
+    movbu   d0, (LCDC+0x14)
     mov     LcdOldPaletteA, a1
     clr     d2
     mov     LcdOldPaletteB, a0
@@ -17308,7 +17432,7 @@ loc_50008629:
     inc     a1
     cmp     LcdOldPaletteB, a1
     lcs
-    mov     0x9ce00000, a0
+    mov     LCDC_VRAM, a0
     clr     d0
     setlb
     clr     d1
@@ -17318,7 +17442,7 @@ loc_50008629:
     cmp     0x80000, d0
     lcs
     mov     0x1d, d0
-    movbu   d0, (0x9cc00000)
+    movbu   d0, (LCDC)
     retf    [d2,a2], 8
 
 # ---- BootMain ----------------------------------------------------------------
@@ -17609,7 +17733,7 @@ TickStart_entry:
     mov     0x81, d0
     movbu   d0, (TM4MD)
     mov     0x80, d0
-    movbu   d0, (0x34001071)
+    movbu   d0, (TMPSCNT)
     or      0x0f00, psw
     ret     0, 0x24
 
@@ -17696,7 +17820,7 @@ ScreenInit_entry:
     ret     0, 0xc
 
 # ---- SpinDelay ---------------------------------------------------------------
-# d0 rounds of ten nops; nothing calls it
+# d0 rounds of ten nops
 # no caller: unreferenced code
 SpinDelay:
     mov     0xffffffff, a1
@@ -17722,7 +17846,7 @@ loc_50008D21:
     rets
 
 # ---- SpinDelay10000 ----------------------------------------------------------
-# d0 rounds of SpinDelay(10000); nothing calls it
+# d0 rounds of SpinDelay(10000)
 # no caller: unreferenced code
 SpinDelay10000:
     movm    [a2], (sp)
@@ -17844,7 +17968,7 @@ loc_50008E7A:
     ret     [d2,a2], 0x60
 
 # ---- FlashUpdateScreen -------------------------------------------------------
-# FLASH MEMORY UPDATE: the program's version now (flash byte 0x4840000F) and on the disk, then
+# FLASH MEMORY UPDATE: the program's version now (PROGRAM_FLASH_VERSION) and on the disk, then
 # FlashUpdateRun
 # `call` enters at FlashUpdateScreen_entry, past the prologue
 FlashUpdateScreen:
@@ -17887,7 +18011,7 @@ loc_50008EEC:
     mov     d0, d3
     mov     Str_Newline_2, a0
     call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
-    movbu   (0x4840000f), d2
+    movbu   (PROGRAM_FLASH_VERSION), d2
     mov     Str_ProgramVersionInfo, a0
     call    ScreenPrint_entry, [d2,d3,a2,a3], 0x7c
     mov     sp, a2
@@ -18003,63 +18127,66 @@ loc_50009092:
     ret     0, 0x18
 
 # ---- LcdControllerInitAlt ----------------------------------------------------
-# a third set-up of the LCD controller registers; nothing calls it
+# a third set-up of the LCD controller, by yet another register map: the offsets 0x01-0x23 and
+# the values fit Epson's earlier S1D13505 ([INFERENCE] there 0x04 = 0x4F is 640 pixels a line,
+# 0x08 = 0xEF 240 lines, 0x0D the display mode, enabled last; not checked against its data
+# sheet)
 # no caller: unreferenced code
 LcdControllerInitAlt:
     clr     d0
-    movbu   d0, (0x9cc0001b)
+    movbu   d0, (LCDC+0x1b)
     mov     8, d0
-    movbu   d0, (0x9cc0001a)
+    movbu   d0, (LCDC+0x1a)
     mov     0x30, d0
-    movbu   d0, (0x9cc00001)
+    movbu   d0, (LCDC+0x01)
     mov     0x1c, d0
-    movbu   d0, (0x9cc00002)
+    movbu   d0, (LCDC+0x02)
     clr     d0
-    movbu   d0, (0x9cc00003)
+    movbu   d0, (LCDC+0x03)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC+0x04)
     mov     0x16, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC+0x05)
     mov     0xef, d0
-    movbu   d0, (0x9cc00008)
+    movbu   d0, (LCDC+0x08)
     clr     d0
-    movbu   d0, (0x9cc00009)
-    movbu   d0, (0x9cc0000a)
-    movbu   d0, (0x9cc0000c)
+    movbu   d0, (LCDC+0x09)
+    movbu   d0, (LCDC+0x0a)
+    movbu   d0, (LCDC+0x0c)
     mov     0x10, d0
-    movbu   d0, (0x9cc0000d)
+    movbu   d0, (LCDC+0x0d)
     mov     0xff, d0
-    movbu   d0, (0x9cc0000e)
+    movbu   d0, (LCDC+0x0e)
     mov     3, d0
-    movbu   d0, (0x9cc0000f)
+    movbu   d0, (LCDC+0x0f)
     clr     d0
-    movbu   d0, (0x9cc00010)
-    movbu   d0, (0x9cc00011)
-    movbu   d0, (0x9cc00012)
-    movbu   d0, (0x9cc00013)
-    movbu   d0, (0x9cc00014)
-    movbu   d0, (0x9cc00015)
+    movbu   d0, (LCDC+0x10)
+    movbu   d0, (LCDC+0x11)
+    movbu   d0, (LCDC+0x12)
+    movbu   d0, (LCDC+0x13)
+    movbu   d0, (LCDC+0x14)
+    movbu   d0, (LCDC+0x15)
     mov     0x80, d0
-    movbu   d0, (0x9cc00016)
+    movbu   d0, (LCDC+0x16)
     mov     2, d0
-    movbu   d0, (0x9cc00017)
+    movbu   d0, (LCDC+0x17)
     clr     d0
-    movbu   d0, (0x9cc00018)
+    movbu   d0, (LCDC+0x18)
     mov     1, d0
-    movbu   d0, (0x9cc00019)
+    movbu   d0, (LCDC+0x19)
     mov     0xff, d0
-    movbu   d0, (0x9cc0001e)
+    movbu   d0, (LCDC+0x1e)
     clr     d0
-    movbu   d0, (0x9cc0001f)
-    movbu   d0, (0x9cc00020)
+    movbu   d0, (LCDC+0x1f)
+    movbu   d0, (LCDC+0x20)
     mov     0xa4, d0
-    movbu   d0, (0x9cc00022)
+    movbu   d0, (LCDC+0x22)
     mov     0x10, d0
-    movbu   d0, (0x9cc00023)
+    movbu   d0, (LCDC+0x23)
     mov     0x11, d0
-    movbu   d0, (0x9cc0000d)
+    movbu   d0, (LCDC+0x0d)
     clr     d0
-    movbu   d0, (0x9cc0001a)
+    movbu   d0, (LCDC+0x1a)
     retf    0, 0
 
 # ---- IrqGroupsDisableAll -----------------------------------------------------
@@ -18150,169 +18277,169 @@ IrqGroupsDisableAll:
     retf    0, 0
 
 # ---- LcdControllerInit -------------------------------------------------------
-# the LCD controller's registers (0x9CC00000..), the frame buffer (0x9CE00000) cleared, the
-# display on
+# the LCD controller's registers, by the S1D13506 map (640 x 240, 16 bits a pixel), LCDC_VRAM
+# cleared, the display on
 # `call` enters at LcdControllerInit_entry, past the prologue
 LcdControllerInit:
     movm    [a2], (sp)
 LcdControllerInit_entry:
-    mov     0x9ce00000, a0
+    mov     LCDC_VRAM, a0
     clr     d0
-    movbu   d0, (0x9cc00001)
-    mov     0x9cc001fc, a2
+    movbu   d0, (LCDC_MISC)
+    mov     LCDC_DISPLAY_MODE, a2
     movbu   d0, (a2)
     mov     0xff, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC_GPIO_CONFIG0)
     mov     8, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC_GPIO_CONFIG1)
     clr     d0
-    movbu   d0, (0x9cc00008)
-    mov     0x9cc00009, a1
+    movbu   d0, (LCDC_GPIO_CTRL0)
+    mov     LCDC_GPIO_CTRL1, a1
     movbu   d0, (a1)
     mov     2, d0
-    movbu   d0, (0x9cc00010)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG)
     mov     0x11, d0
-    movbu   d0, (0x9cc00014)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG)
     mov     0x80, d0
-    movbu   d0, (0x9cc00018)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG)
     mov     3, d0
-    movbu   d0, (0x9cc0001c)
+    movbu   d0, (LCDC_MEDIAPLUG_CLOCK_CONFIG)
     clr     d0
-    movbu   d0, (0x9cc0001e)
+    movbu   d0, (LCDC_CPU_MEM_WAIT)
     mov     0x80, d0
-    movbu   d0, (0x9cc00020)
+    movbu   d0, (LCDC_MEM_CONFIG)
     mov     3, d0
-    movbu   d0, (0x9cc00021)
+    movbu   d0, (LCDC_DRAM_REFRESH)
     clr     d0
-    movbu   d0, (0x9cc0002a)
+    movbu   d0, (LCDC_DRAM_TIMING0)
     mov     1, d0
-    movbu   d0, (0x9cc0002b)
+    movbu   d0, (LCDC_DRAM_TIMING1)
     mov     0x1c, d0
-    movbu   d0, (0x9cc00030)
+    movbu   d0, (LCDC_PANEL_TYPE)
     clr     d0
-    movbu   d0, (0x9cc00031)
+    movbu   d0, (LCDC_MOD_RATE)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00032)
+    movbu   d0, (LCDC_LCD_HDISP)
     mov     0x1e, d0
-    movbu   d0, (0x9cc00034)
+    movbu   d0, (LCDC_LCD_HNDP)
     clr     d0
-    movbu   d0, (0x9cc00035)
-    movbu   d0, (0x9cc00036)
+    movbu   d0, (LCDC_TFT_FPLINE_START)
+    movbu   d0, (LCDC_TFT_FPLINE_WIDTH)
     mov     0xef, d0
-    movbu   d0, (0x9cc00038)
+    movbu   d0, (LCDC_LCD_VDISP0)
     clr     d0
-    movbu   d0, (0x9cc00039)
+    movbu   d0, (LCDC_LCD_VDISP1)
     mov     0xf, d0
-    movbu   d0, (0x9cc0003a)
+    movbu   d0, (LCDC_LCD_VNDP)
     clr     d0
-    movbu   d0, (0x9cc0003b)
-    movbu   d0, (0x9cc0003c)
+    movbu   d0, (LCDC_TFT_FPFRAME_START)
+    movbu   d0, (LCDC_TFT_FPFRAME_WIDTH)
     mov     0x15, d0
-    movbu   d0, (0x9cc00040)
+    movbu   d0, (LCDC_LCD_DISPLAY_MODE)
     clr     d0
-    movbu   d0, (0x9cc00041)
+    movbu   d0, (LCDC_LCD_MISC)
     mov     0xff, d0
-    movbu   d0, (0x9cc00042)
+    movbu   d0, (LCDC_LCD_START0)
     mov     0x57, d0
-    movbu   d0, (0x9cc00043)
+    movbu   d0, (LCDC_LCD_START1)
     mov     2, d0
-    movbu   d0, (0x9cc00044)
+    movbu   d0, (LCDC_LCD_START2)
     mov     0x80, d0
-    movbu   d0, (0x9cc00046)
+    movbu   d0, (LCDC_LCD_OFFSET0)
     mov     2, d0
-    movbu   d0, (0x9cc00047)
+    movbu   d0, (LCDC_LCD_OFFSET1)
     clr     d0
-    movbu   d0, (0x9cc00048)
+    movbu   d0, (LCDC_LCD_PANNING)
     mov     0x3c, d0
-    movbu   d0, (0x9cc0004a)
-    movbu   d0, (0x9cc0004b)
+    movbu   d0, (LCDC_LCD_FIFO_HIGH)
+    movbu   d0, (LCDC_LCD_FIFO_LOW)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00050)
+    movbu   d0, (LCDC_CRT_HDISP)
     mov     0x21, d0
-    movbu   d0, (0x9cc00052)
+    movbu   d0, (LCDC_CRT_HNDP)
     mov     9, d0
-    movbu   d0, (0x9cc00053)
+    movbu   d0, (LCDC_CRT_HRTC_START)
     clr     d0
-    movbu   d0, (0x9cc00054)
+    movbu   d0, (LCDC_CRT_HRTC_WIDTH)
     mov     0xe, d0
-    movbu   d0, (0x9cc00056)
+    movbu   d0, (LCDC_CRT_VDISP0)
     mov     1, d0
-    movbu   d0, (0x9cc00057)
+    movbu   d0, (LCDC_CRT_VDISP1)
     mov     0x7e, d0
-    movbu   d0, (0x9cc00058)
+    movbu   d0, (LCDC_CRT_VNDP)
     mov     0x30, d0
-    movbu   d0, (0x9cc00059)
+    movbu   d0, (LCDC_CRT_VRTC_START)
     clr     d0
-    movbu   d0, (0x9cc0005a)
+    movbu   d0, (LCDC_CRT_VRTC_WIDTH)
     mov     0x30, d0
-    movbu   d0, (0x9cc0005b)
+    movbu   d0, (LCDC_TV_OUTPUT_CTRL)
     mov     5, d0
-    movbu   d0, (0x9cc00060)
+    movbu   d0, (LCDC_CRT_DISPLAY_MODE)
     clr     d0
-    movbu   d0, (0x9cc00062)
-    movbu   d0, (0x9cc00063)
-    movbu   d0, (0x9cc00064)
+    movbu   d0, (LCDC_CRT_START0)
+    movbu   d0, (LCDC_CRT_START1)
+    movbu   d0, (LCDC_CRT_START2)
     mov     0x80, d0
-    movbu   d0, (0x9cc00066)
+    movbu   d0, (LCDC_CRT_OFFSET0)
     mov     2, d0
-    movbu   d0, (0x9cc00067)
+    movbu   d0, (LCDC_CRT_OFFSET1)
     clr     d0
-    movbu   d0, (0x9cc00068)
-    movbu   d0, (0x9cc0006a)
-    movbu   d0, (0x9cc0006b)
-    movbu   d0, (0x9cc00070)
-    movbu   d0, (0x9cc00071)
-    movbu   d0, (0x9cc00072)
-    movbu   d0, (0x9cc00073)
-    movbu   d0, (0x9cc00074)
-    movbu   d0, (0x9cc00075)
-    movbu   d0, (0x9cc00076)
-    movbu   d0, (0x9cc00077)
-    movbu   d0, (0x9cc00078)
-    movbu   d0, (0x9cc0007a)
-    movbu   d0, (0x9cc0007b)
-    movbu   d0, (0x9cc0007c)
-    movbu   d0, (0x9cc0007e)
-    movbu   d0, (0x9cc00080)
-    movbu   d0, (0x9cc00081)
-    movbu   d0, (0x9cc00082)
-    movbu   d0, (0x9cc00083)
-    movbu   d0, (0x9cc00084)
-    movbu   d0, (0x9cc00085)
-    movbu   d0, (0x9cc00086)
-    movbu   d0, (0x9cc00087)
-    movbu   d0, (0x9cc00088)
-    movbu   d0, (0x9cc0008a)
-    movbu   d0, (0x9cc0008b)
-    movbu   d0, (0x9cc0008c)
-    movbu   d0, (0x9cc0008e)
-    movbu   d0, (0x9cc00100)
-    movbu   d0, (0x9cc00101)
-    movbu   d0, (0x9cc00102)
-    movbu   d0, (0x9cc00103)
-    movbu   d0, (0x9cc00104)
-    movbu   d0, (0x9cc00105)
-    movbu   d0, (0x9cc00106)
-    movbu   d0, (0x9cc00108)
-    movbu   d0, (0x9cc00109)
-    movbu   d0, (0x9cc0010a)
-    movbu   d0, (0x9cc0010c)
-    movbu   d0, (0x9cc0010d)
-    movbu   d0, (0x9cc00110)
-    movbu   d0, (0x9cc00111)
-    movbu   d0, (0x9cc00112)
-    movbu   d0, (0x9cc00113)
-    movbu   d0, (0x9cc00114)
-    movbu   d0, (0x9cc00115)
-    movbu   d0, (0x9cc00118)
-    movbu   d0, (0x9cc00119)
-    movbu   d0, (0x9cc001e0)
-    movbu   d0, (0x9cc001e2)
-    movbu   d0, (0x9cc001e4)
+    movbu   d0, (LCDC_CRT_PANNING)
+    movbu   d0, (LCDC_CRT_FIFO_HIGH)
+    movbu   d0, (LCDC_CRT_FIFO_LOW)
+    movbu   d0, (LCDC_LCD_CURSOR_CTRL)
+    movbu   d0, (LCDC_LCD_CURSOR_START)
+    movbu   d0, (LCDC_LCD_CURSOR_X0)
+    movbu   d0, (LCDC_LCD_CURSOR_X1)
+    movbu   d0, (LCDC_LCD_CURSOR_Y0)
+    movbu   d0, (LCDC_LCD_CURSOR_Y1)
+    movbu   d0, (LCDC_LCD_CURSOR_BLUE0)
+    movbu   d0, (LCDC_LCD_CURSOR_GREEN0)
+    movbu   d0, (LCDC_LCD_CURSOR_RED0)
+    movbu   d0, (LCDC_LCD_CURSOR_BLUE1)
+    movbu   d0, (LCDC_LCD_CURSOR_GREEN1)
+    movbu   d0, (LCDC_LCD_CURSOR_RED1)
+    movbu   d0, (LCDC_LCD_CURSOR_FIFO)
+    movbu   d0, (LCDC_CRT_CURSOR_CTRL)
+    movbu   d0, (LCDC_CRT_CURSOR_START)
+    movbu   d0, (LCDC_CRT_CURSOR_X0)
+    movbu   d0, (LCDC_CRT_CURSOR_X1)
+    movbu   d0, (LCDC_CRT_CURSOR_Y0)
+    movbu   d0, (LCDC_CRT_CURSOR_Y1)
+    movbu   d0, (LCDC_CRT_CURSOR_BLUE0)
+    movbu   d0, (LCDC_CRT_CURSOR_GREEN0)
+    movbu   d0, (LCDC_CRT_CURSOR_RED0)
+    movbu   d0, (LCDC_CRT_CURSOR_BLUE1)
+    movbu   d0, (LCDC_CRT_CURSOR_GREEN1)
+    movbu   d0, (LCDC_CRT_CURSOR_RED1)
+    movbu   d0, (LCDC_CRT_CURSOR_FIFO)
+    movbu   d0, (LCDC_BLT_CTRL0)
+    movbu   d0, (LCDC_BLT_CTRL1)
+    movbu   d0, (LCDC_BLT_ROP)
+    movbu   d0, (LCDC_BLT_OPERATION)
+    movbu   d0, (LCDC_BLT_SRC0)
+    movbu   d0, (LCDC_BLT_SRC1)
+    movbu   d0, (LCDC_BLT_SRC2)
+    movbu   d0, (LCDC_BLT_DST0)
+    movbu   d0, (LCDC_BLT_DST1)
+    movbu   d0, (LCDC_BLT_DST2)
+    movbu   d0, (LCDC_BLT_OFFSET0)
+    movbu   d0, (LCDC_BLT_OFFSET1)
+    movbu   d0, (LCDC_BLT_WIDTH0)
+    movbu   d0, (LCDC_BLT_WIDTH1)
+    movbu   d0, (LCDC_BLT_HEIGHT0)
+    movbu   d0, (LCDC_BLT_HEIGHT1)
+    movbu   d0, (LCDC_BLT_BG0)
+    movbu   d0, (LCDC_BLT_BG1)
+    movbu   d0, (LCDC_BLT_FG0)
+    movbu   d0, (LCDC_BLT_FG1)
+    movbu   d0, (LCDC_LUT_MODE)
+    movbu   d0, (LCDC_LUT_ADDR)
+    movbu   d0, (LCDC_LUT_DATA)
     mov     0x10, d0
-    movbu   d0, (0x9cc001f0)
+    movbu   d0, (LCDC_POWER_SAVE_CONFIG)
     clr     d0
-    movbu   d0, (0x9cc001f4)
+    movbu   d0, (LCDC_WATCHDOG)
     setlb
     clr     d1
     movbu   d1, (a0)
@@ -18327,7 +18454,7 @@ LcdControllerInit_entry:
     retf    [a2], 4
 
 # ---- HexDumpLines ------------------------------------------------------------
-# ten lines of "%08X :" and sixteen "%02X " bytes from a0; nothing calls it
+# ten lines of "%08X :" and sixteen "%02X " bytes from a0
 # no caller: unreferenced code
 HexDumpLines:
     movm    [d2,d3,a2,a3], (sp)
@@ -18555,7 +18682,7 @@ SdPowerCtrlSetRaw:
     movbu   d1, (SdPowerShadow)
     movbu   (SdPowerShadow), d0
     clr     d1
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     setlb
     exthu   d0
     inc     d0
@@ -18575,7 +18702,7 @@ SdPowerCtrlClearRaw:
     movbu   d1, (SdPowerShadow)
     movbu   (SdPowerShadow), d0
     clr     d1
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     setlb
     exthu   d0
     inc     d0
@@ -19196,7 +19323,7 @@ loc_50009D26:
     ret     [d2], 0x10
 
 # ---- FlashEraseBootSectors ---------------------------------------------------
-# the small sectors one by one, then the large ones; nothing calls it
+# the small sectors one by one, then the large ones
 # no caller: unreferenced code
 FlashEraseBootSectors:
     movm    [d2,d3,a2,a3], (sp)
@@ -19318,7 +19445,6 @@ loc_50009E56:
     ret     0, 0xc
 
 # ---- FlashEraseChipWait ------------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 FlashEraseChipWait:
     movm    [d2], (sp)
@@ -19342,7 +19468,6 @@ loc_50009E84:
     ret     [d2], 0x10
 
 # ---- FlashEraseSectorsWait ---------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 FlashEraseSectorsWait:
     movm    [d2], (sp)
@@ -19563,7 +19688,6 @@ loc_5000A075:
     ret     0, 0xc
 
 # ---- Flash32EraseChipWait ----------------------------------------------------
-# nothing calls it
 # no caller: unreferenced code
 Flash32EraseChipWait:
     movm    [d2], (sp)
@@ -21792,7 +21916,7 @@ loc_5000B54C:
     jmp     loc_5000B54C
 loc_5000B5ED:
     mov     0xc0, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC_GPIO_CONFIG0)
     call    ScreenClear_entry, [d2], 0x10
     mov     Str_FlashMemoryUpdateSD_2, a0
     call    ScreenTitle_entry, [a2], 0x1c
@@ -22499,10 +22623,10 @@ SdInUseLedSet:
     exthu   d0
     cmp     0, d0
     beq     loc_5000BD2F
-    bset    0x80, (0x9cc00008)
+    bset    0x80, (LCDC_GPIO_CTRL0)
     bra     loc_5000BD36
 loc_5000BD2F:
-    bclr    0x80, (0x9cc00008)
+    bclr    0x80, (LCDC_GPIO_CTRL0)
 loc_5000BD36:
     retf    0, 0
 
@@ -22598,13 +22722,13 @@ SdUpdateStart_entry:
     ret     0, 8
 
 # ---- DiskStart ---------------------------------------------------------------
-# 0x9CC00005 := 0x0E, DiskInit
+# LCDC_GPIO_CONFIG1 := 0x0E (pins 1-3 outputs), DiskInit
 # `call` enters at DiskStart_entry, past the prologue
 DiskStart:
     add     -8, sp
 DiskStart_entry:
     mov     0xe, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC_GPIO_CONFIG1)
     call    DiskInit_entry, 0, 0xc
     ret     0, 8
 
@@ -23138,7 +23262,7 @@ LcdFill_entry:
 loc_5000C262:
     mov     0, a1
     setlb
-    mov     0x9ce00000, a2
+    mov     LCDC_VRAM, a2
     mov     a1, a0
     add     a0, a0
     mov     a0, d0
@@ -23176,7 +23300,7 @@ loc_5000C2A0:
     nop
     mul     d1, d0
     setlb
-    mov     0x9ce00000, a0
+    mov     LCDC_VRAM, a0
     mov     d2, d1
     add     d0, d1
     add     d1, d1
@@ -23337,7 +23461,7 @@ loc_5000C3CB:
     mov     a2, d0
     add     d3, d0
     add     d0, d0
-    mov     0x9ce00000, a0
+    mov     LCDC_VRAM, a0
     movhu   d1, (d0, a0)
     mov     d2, a0
     add     a0, a0
@@ -24347,39 +24471,38 @@ F64PowersOfTen:                  # 1e1 .. 1e308
 PanelDriverOps:                  # {init, three empty methods}; BootMain's PanelStart calls the first
     .long   PanelInit, PanelDriverOp1, PanelDriverOp2, PanelDriverOp3
     .long   DiskInit, DiskHookNop1, DiskHookNop2, DiskHookNop3
-Str_12345678:
-    .asciz  "12345678"
-    .byte   0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x20, 0x00, 0x02, 0x00, 0x00, 0x00, 0x0C, 0x00, 0xF6
-    .byte   0x0F, 0xD9, 0xFA, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+FatMountFailImage:               # FatMount copies these nine words over its volume variables when it rejects the boot sector, then returns -1. TODO: the numbers do not describe a usable volume (32 bytes a sector, no FAT); what they were meant to be is not known
+    .asciz  "12345678"            # -> FatVolumeName
+    .byte   0x00, 0x00, 0x00      # the rest of its 12 bytes
+    .long   0x200                 # -> FatPartitionStart
+    .word   0x20                  # -> FatBytesPerSector
+    .word   0x2                   # -> FatSectorsPerCluster
+    .byte   0x0                   # -> FatNumFats
+    .byte   0x0                   # (the byte after FatNumFats)
+    .word   0xC                   # -> FatRootEntries
+    .word   0xFF6                 # -> FatSectorsPerFat
+    .word   0xFAD9                # -> FatEntryCount
+    .long   0x60                  # -> FatTotalSectors
+    .long   0x0                   # -> FatDataStart
 FatFileInitImage:                # a closed file control block
     .space  20
 SdCrc7Table:                     # CRC7 (polynomial 0x09) of each byte, shifted left one
-    .byte   0x00, 0x12
-    .ascii  "$6HZl~"
-    .byte   0x90, 0x82, 0xB4, 0xA6, 0xD8, 0xCA, 0xFC, 0xEE, 0x32, 0x20, 0x16, 0x04, 0x7A, 0x68, 0x5E, 0x4C
-    .byte   0xA2, 0xB0, 0x86, 0x94, 0xEA, 0xF8, 0xCE, 0xDC
-    .ascii  "dv@R,>"
-    .byte   0x08, 0x1A, 0xF4, 0xE6, 0xD0, 0xC2, 0xBC, 0xAE, 0x98, 0x8A, 0x56, 0x44, 0x72, 0x60, 0x1E, 0x0C
-    .byte   0x3A, 0x28, 0xC6, 0xD4, 0xE2, 0xF0, 0x8E, 0x9C, 0xAA, 0xB8, 0xC8, 0xDA, 0xEC, 0xFE, 0x80, 0x92
-    .byte   0xA4, 0xB6, 0x58, 0x4A, 0x7C, 0x6E, 0x10, 0x02, 0x34, 0x26, 0xFA, 0xE8, 0xDE, 0xCC, 0xB2, 0xA0
-    .byte   0x96, 0x84
-    .ascii  "jxN\\\"0"
-    .byte   0x06, 0x14, 0xAC, 0xBE, 0x88, 0x9A, 0xE4, 0xF6, 0xC0, 0xD2, 0x3C, 0x2E, 0x18, 0x0A, 0x74, 0x66
-    .byte   0x50, 0x42, 0x9E, 0x8C, 0xBA, 0xA8, 0xD6, 0xC4, 0xF2, 0xE0, 0x0E, 0x1C
-    .ascii  "*8FTbp"
-    .byte   0x82, 0x90, 0xA6, 0xB4, 0xCA, 0xD8, 0xEE, 0xFC, 0x12, 0x00
-    .ascii  "6$ZH~l"
-    .byte   0xB0, 0xA2, 0x94, 0x86, 0xF8, 0xEA, 0xDC, 0xCE, 0x20, 0x32, 0x04, 0x16, 0x68, 0x7A, 0x4C, 0x5E
-    .byte   0xE6, 0xF4, 0xC2, 0xD0, 0xAE, 0xBC, 0x8A, 0x98
-    .ascii  "vdR@>,"
-    .byte   0x1A, 0x08, 0xD4, 0xC6, 0xF0, 0xE2, 0x9C, 0x8E, 0xB8, 0xAA, 0x44, 0x56, 0x60, 0x72, 0x0C, 0x1E
-    .ascii  "(:JXn|"
-    .byte   0x02, 0x10, 0x26, 0x34, 0xDA, 0xC8, 0xFE, 0xEC, 0x92, 0x80, 0xB6, 0xA4
-    .ascii  "xj\\N0\""
-    .byte   0x14, 0x06, 0xE8, 0xFA, 0xCC, 0xDE, 0xA0, 0xB2, 0x84, 0x96, 0x2E, 0x3C, 0x0A, 0x18, 0x66, 0x74
-    .byte   0x42, 0x50, 0xBE, 0xAC, 0x9A, 0x88, 0xF6, 0xE4, 0xD2, 0xC0, 0x1C, 0x0E
-    .ascii  "8*TFpb"
-    .byte   0x8C, 0x9E, 0xA8, 0xBA, 0xC4, 0xD6, 0xE0, 0xF2
+    .byte   0x00, 0x12, 0x24, 0x36, 0x48, 0x5A, 0x6C, 0x7E, 0x90, 0x82, 0xB4, 0xA6, 0xD8, 0xCA, 0xFC, 0xEE    # 0x00..
+    .byte   0x32, 0x20, 0x16, 0x04, 0x7A, 0x68, 0x5E, 0x4C, 0xA2, 0xB0, 0x86, 0x94, 0xEA, 0xF8, 0xCE, 0xDC    # 0x10..
+    .byte   0x64, 0x76, 0x40, 0x52, 0x2C, 0x3E, 0x08, 0x1A, 0xF4, 0xE6, 0xD0, 0xC2, 0xBC, 0xAE, 0x98, 0x8A    # 0x20..
+    .byte   0x56, 0x44, 0x72, 0x60, 0x1E, 0x0C, 0x3A, 0x28, 0xC6, 0xD4, 0xE2, 0xF0, 0x8E, 0x9C, 0xAA, 0xB8    # 0x30..
+    .byte   0xC8, 0xDA, 0xEC, 0xFE, 0x80, 0x92, 0xA4, 0xB6, 0x58, 0x4A, 0x7C, 0x6E, 0x10, 0x02, 0x34, 0x26    # 0x40..
+    .byte   0xFA, 0xE8, 0xDE, 0xCC, 0xB2, 0xA0, 0x96, 0x84, 0x6A, 0x78, 0x4E, 0x5C, 0x22, 0x30, 0x06, 0x14    # 0x50..
+    .byte   0xAC, 0xBE, 0x88, 0x9A, 0xE4, 0xF6, 0xC0, 0xD2, 0x3C, 0x2E, 0x18, 0x0A, 0x74, 0x66, 0x50, 0x42    # 0x60..
+    .byte   0x9E, 0x8C, 0xBA, 0xA8, 0xD6, 0xC4, 0xF2, 0xE0, 0x0E, 0x1C, 0x2A, 0x38, 0x46, 0x54, 0x62, 0x70    # 0x70..
+    .byte   0x82, 0x90, 0xA6, 0xB4, 0xCA, 0xD8, 0xEE, 0xFC, 0x12, 0x00, 0x36, 0x24, 0x5A, 0x48, 0x7E, 0x6C    # 0x80..
+    .byte   0xB0, 0xA2, 0x94, 0x86, 0xF8, 0xEA, 0xDC, 0xCE, 0x20, 0x32, 0x04, 0x16, 0x68, 0x7A, 0x4C, 0x5E    # 0x90..
+    .byte   0xE6, 0xF4, 0xC2, 0xD0, 0xAE, 0xBC, 0x8A, 0x98, 0x76, 0x64, 0x52, 0x40, 0x3E, 0x2C, 0x1A, 0x08    # 0xA0..
+    .byte   0xD4, 0xC6, 0xF0, 0xE2, 0x9C, 0x8E, 0xB8, 0xAA, 0x44, 0x56, 0x60, 0x72, 0x0C, 0x1E, 0x28, 0x3A    # 0xB0..
+    .byte   0x4A, 0x58, 0x6E, 0x7C, 0x02, 0x10, 0x26, 0x34, 0xDA, 0xC8, 0xFE, 0xEC, 0x92, 0x80, 0xB6, 0xA4    # 0xC0..
+    .byte   0x78, 0x6A, 0x5C, 0x4E, 0x30, 0x22, 0x14, 0x06, 0xE8, 0xFA, 0xCC, 0xDE, 0xA0, 0xB2, 0x84, 0x96    # 0xD0..
+    .byte   0x2E, 0x3C, 0x0A, 0x18, 0x66, 0x74, 0x42, 0x50, 0xBE, 0xAC, 0x9A, 0x88, 0xF6, 0xE4, 0xD2, 0xC0    # 0xE0..
+    .byte   0x1C, 0x0E, 0x38, 0x2A, 0x54, 0x46, 0x70, 0x62, 0x8C, 0x9E, 0xA8, 0xBA, 0xC4, 0xD6, 0xE0, 0xF2    # 0xF0..
 Str_Kn7kp1:
     .asciz  "KN7KP1"
 Str_Kn7kp2:

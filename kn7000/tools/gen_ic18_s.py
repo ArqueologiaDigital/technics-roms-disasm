@@ -35,7 +35,10 @@
 #     .byte row per glyph line, everything else typed by the width the code
 #     reads it with, else bytes;
 #   * addresses: every code and data address an operand names is a label; RAM
-#     outside the image (.bss, the stack) and the hardware registers are .equ.
+#     outside the image (.bss, the stack) and every hardware register an operand
+#     reads or writes are .equ (HW; the LCD controller's by the S1D13506 map, and
+#     in the two routines that program other maps as LCDC+offset). The device
+#     bases FlashDeviceBase returns stay numbers; its header lists them.
 #
 # Names come from kn7000_ic18.sym (`0xADDR NAME ; header comment`), then from
 # the firmware (PROGRAM 941) for a routine byte-identical to a named one of it,
@@ -46,6 +49,7 @@
 #                 [--names kn7000_ic18.sym] [--fw-rom P.rom --fw-r1-end N
 #                 --fw-lib-file N --fw-sym S.sym ...] [--report]
 import argparse
+import bisect
 import collections
 import difflib
 import hashlib
@@ -449,14 +453,56 @@ HW = {
     0x34001090: ("TM4BR", "timer 4 base (reload) value"), 0x34001092: ("TM5BR", "timer 5 base value"),
     0x340010A0: ("TM4BC", "timer 4 count"), 0x340010A2: ("TM5BC", "timer 5 count"),
     0x98070000: ("BOARD_STRAP", "board-revision strap, read only"),
-    0x36008004: ("P04", "I/O port at 0x36008004: bit 5 strobed all through the boot, bit 1 SD card select"),
-    0x36008005: ("P05", "I/O port at 0x36008005"),
-    0x36008024: ("P24", "I/O port at 0x36008024"),
-    0x36008025: ("P25", "I/O port at 0x36008025"),
-    0x36008044: ("P44", "I/O port at 0x36008044"),
-    0x36008064: ("P64", "I/O port at 0x36008064"),
-    0x36008065: ("P65", "I/O port at 0x36008065"),
-    0x36008084: ("P84", "I/O port at 0x36008084"),
+    # the I/O ports, by the bits this ROM drives (the panel link switches bit 0 of
+    # P04/P24/P25/P64 together, from state to state of a transfer)
+    0x36008004: ("P04", "bit 0 and bit 6 panel-link strobes; bit 1 the SD card's chip select (low = selected); "
+                        "bit 3 set by the NMI handler; bit 4 off while FdcDreqIsr moves the last byte; "
+                        "bit 5 strobed all through the boot"),
+    0x36008005: ("P05", "bit 0 set by PanelLinkInit"),
+    0x36008024: ("P24", "bit 0 a panel-link strobe; bit 4 set by FdcHwInit; bit 6 set by PanelLinkInit"),
+    0x36008025: ("P25", "bit 0 a panel-link strobe"),
+    0x36008044: ("P44", "bit 0 cleared by PanelLinkInit"),
+    0x36008064: ("P64", "bit 0 a panel-link strobe; bit 4 set by FdcHwInit; bit 6 set by PanelLinkInit"),
+    0x36008065: ("P65", "bit 0 cleared by PanelLinkInit"),
+    0x36008084: ("P84", "bit 0 tested by the panel link before it transmits (PanelTxPump, PanelWaitLinkIdle)"),
+    # The CPU's own registers below are named after the Linux mn10300 port's
+    # (arch/mn10300/include/asm/{cpu,timer}-regs.h), where the CPU block is at
+    # 0xC0000000 and the timers at 0xD4003000: this board's IVAR0 (+0x00), CHCTR
+    # (+0x70), TM4MD/BR/BC (+0x80/0x90/0xA0) sit at the same offsets from 0x20000000
+    # and 0x34001000, so [INFERENCE] the rest of those blocks does too.
+    0x20000040: ("CPUM", "[INFERENCE] CPU mode: bit 3 HALT, bit 4 STOP; the NMI handler sets STOP in a loop"),
+    0x34001000: ("TM0MD", "[INFERENCE] timer 0 mode: bit 7 counts; PanelLinkInit starts it"),
+    0x34001010: ("TM0BR", "[INFERENCE] timer 0 base (reload) value: PanelLinkInit 0x0A, the panel link's "
+                          "transmit states rewrite it"),
+    0x34001071: ("TMPSCNT", "[INFERENCE] timer prescaler control: bit 7 enables it (TickStart)"),
+    0x34004002: ("UNKNOWN_34004002", "TODO: only the older link's reset writes it (0); not identified"),
+    0x32000010: ("UNKNOWN_32000010", "TODO: memory-controller block; Reset's second path writes 0x400 before "
+                                     "MEMCTR0; not identified"),
+    0x32000040: ("SDRAM_CTRL", "[INFERENCE] SDRAM control: Reset pulses bit 2 eight times, the auto-refresh "
+                               "cycles an SDRAM wants before its first use"),
+    0x32000042: ("SDRAM_REFRESH", "[INFERENCE] the SDRAM refresh interval (0xEA6, then 0x3E8)"),
+    # the floppy controller (uPD765 family): registers two bytes apart
+    0x98010000: ("FDC_DACK", "the controller's DMA data port: reading or writing a byte here answers one "
+                             "DMA request (FdcDreqIsr moves the last byte of a transfer through it)"),
+    0x98020004: ("FDC_DOR", "digital output register: 0x1C motor on, 0x0C off"),
+    0x98020008: ("FDC_MSR_DSR", "main status register when read, data-rate select when written"),
+    0x9802000A: ("FDC_FIFO", "the command / result / data FIFO"),
+    0x9802000E: ("FDC_DIR_CCR", "digital input register when read (bit 7 disk changed), configuration "
+                                "control when written"),
+    # the SD card's SPI port, inside the tone generator A chip (0x98050000)
+    0x98050004: ("TGA_04", "TODO: SdSpiPortSetup writes 0xFFFF (twice on subtype 4); the firmware's tone "
+                           "generator bring-up writes 3"),
+    0x9805000C: ("SD_SPI_DATA", "the SPI shift register: a byte written goes out, the byte that came in "
+                                "is read back"),
+    0x9805000E: ("SD_SPI_CLOCK", "the SPI clock-rate latch: rate | 0x80"),
+    0x98050010: ("TGA_10", "TODO: SdSpiPortSetup writes 1 first; the firmware's tone generator bring-up "
+                           "pulses it with 1"),
+    0x98060000: ("SD_POWER_CTRL", "the power controller's port (SdPowerShadow keeps the last byte): bit 2 "
+                                  "the SD card's supply"),
+    0x4840000F: ("PROGRAM_FLASH_VERSION", "a byte of the program flash's header: the firmware release, "
+                                          "two hex digits X.Y (0x16 in PROGRAM 941)"),
+    0x9CE00000: ("LCDC_VRAM", "the LCD controller's display memory (its registers + 0x200000)"),
+    0x9CC00000: ("LCDC", "the LCD controller's registers"),
     0x48400000: ("FirmwareReset", "the program flash's reset entry: the KN7000 firmware"),
     # the two interrupt thunks Reset writes in work RAM (nop; jmp d32), through the
     # uncached view; a jmp's d32 counts from the jmp, one byte into its thunk
@@ -467,6 +513,72 @@ HW = {
     0x90000000: ("IRQ_THUNK_UNCACHED", "IrqThunk through the uncached view"),
     0x90000006: ("NMI_THUNK_UNCACHED", "NmiThunk through the uncached view"),
 }
+# The LCD controller's registers, as LcdControllerInit sets them. [INFERENCE] The
+# names are Epson's S1D13506's: LcdControllerInit writes exactly that chip's
+# register set -- every offset it touches is an S1D13506 register, and it skips
+# the chip's reserved offsets in between (0x033, 0x037, 0x045, 0x049, 0x107,
+# 0x116 ...) -- its values decode as 640 x 240 at 16 bits a pixel (0x032 = 0x4F,
+# 0x038 = 0xEF, 0x040 = 0x15, a line offset of 0x280 words), and the display
+# memory answers at +0x200000, where that chip's M/R# line puts it. The
+# firmware's uses of 0x004/0x005 (pin directions) and 0x008/0x009 (pin data:
+# the SD slot and its lamps) fit the chip's GPIO registers. LcdControllerInitAlt
+# and LcdControllerInitOld program other register maps; they are written as
+# offsets from LCDC (LCDC_OFFSET_ROUTINES).
+S1D13506 = {
+    0x001: ("MISC", ""),
+    0x004: ("GPIO_CONFIG0", "pin directions, 1 = output: bits 6 and 7 the SD lamps"),
+    0x005: ("GPIO_CONFIG1", "pin directions: bits 1 and 2 the SD slot-enable and supply lines"),
+    0x008: ("GPIO_CTRL0", "pin data: bit 6 the SD card lamp, bit 7 the SD in-use lamp"),
+    0x009: ("GPIO_CTRL1", "pin data, the SD slot: bit 0 card sensed, bit 1 slot enable, bit 2 supply "
+                          "line, bit 4 write-protected"),
+    0x010: ("MEM_CLOCK_CONFIG", ""), 0x014: ("LCD_PCLK_CONFIG", ""), 0x018: ("CRT_PCLK_CONFIG", ""),
+    0x01C: ("MEDIAPLUG_CLOCK_CONFIG", ""), 0x01E: ("CPU_MEM_WAIT", ""),
+    0x020: ("MEM_CONFIG", ""), 0x021: ("DRAM_REFRESH", ""),
+    0x02A: ("DRAM_TIMING0", ""), 0x02B: ("DRAM_TIMING1", ""),
+    0x030: ("PANEL_TYPE", ""), 0x031: ("MOD_RATE", ""),
+    0x032: ("LCD_HDISP", "(value + 1) x 8 pixels"), 0x034: ("LCD_HNDP", ""),
+    0x035: ("TFT_FPLINE_START", ""), 0x036: ("TFT_FPLINE_WIDTH", ""),
+    0x038: ("LCD_VDISP0", "value + 1 lines, low byte"), 0x039: ("LCD_VDISP1", ""),
+    0x03A: ("LCD_VNDP", ""), 0x03B: ("TFT_FPFRAME_START", ""), 0x03C: ("TFT_FPFRAME_WIDTH", ""),
+    0x040: ("LCD_DISPLAY_MODE", "bits 2-0 the pixel depth, 5 = 16 bits"), 0x041: ("LCD_MISC", ""),
+    0x042: ("LCD_START0", ""), 0x043: ("LCD_START1", ""), 0x044: ("LCD_START2", ""),
+    0x046: ("LCD_OFFSET0", "the line pitch in 16-bit words, low byte"), 0x047: ("LCD_OFFSET1", ""),
+    0x048: ("LCD_PANNING", ""), 0x04A: ("LCD_FIFO_HIGH", ""), 0x04B: ("LCD_FIFO_LOW", ""),
+    0x050: ("CRT_HDISP", ""), 0x052: ("CRT_HNDP", ""), 0x053: ("CRT_HRTC_START", ""),
+    0x054: ("CRT_HRTC_WIDTH", ""), 0x056: ("CRT_VDISP0", ""), 0x057: ("CRT_VDISP1", ""),
+    0x058: ("CRT_VNDP", ""), 0x059: ("CRT_VRTC_START", ""), 0x05A: ("CRT_VRTC_WIDTH", ""),
+    0x05B: ("TV_OUTPUT_CTRL", ""), 0x060: ("CRT_DISPLAY_MODE", ""),
+    0x062: ("CRT_START0", ""), 0x063: ("CRT_START1", ""), 0x064: ("CRT_START2", ""),
+    0x066: ("CRT_OFFSET0", ""), 0x067: ("CRT_OFFSET1", ""), 0x068: ("CRT_PANNING", ""),
+    0x06A: ("CRT_FIFO_HIGH", ""), 0x06B: ("CRT_FIFO_LOW", ""),
+    0x070: ("LCD_CURSOR_CTRL", ""), 0x071: ("LCD_CURSOR_START", ""),
+    0x072: ("LCD_CURSOR_X0", ""), 0x073: ("LCD_CURSOR_X1", ""),
+    0x074: ("LCD_CURSOR_Y0", ""), 0x075: ("LCD_CURSOR_Y1", ""),
+    0x076: ("LCD_CURSOR_BLUE0", ""), 0x077: ("LCD_CURSOR_GREEN0", ""), 0x078: ("LCD_CURSOR_RED0", ""),
+    0x07A: ("LCD_CURSOR_BLUE1", ""), 0x07B: ("LCD_CURSOR_GREEN1", ""), 0x07C: ("LCD_CURSOR_RED1", ""),
+    0x07E: ("LCD_CURSOR_FIFO", ""),
+    0x080: ("CRT_CURSOR_CTRL", ""), 0x081: ("CRT_CURSOR_START", ""),
+    0x082: ("CRT_CURSOR_X0", ""), 0x083: ("CRT_CURSOR_X1", ""),
+    0x084: ("CRT_CURSOR_Y0", ""), 0x085: ("CRT_CURSOR_Y1", ""),
+    0x086: ("CRT_CURSOR_BLUE0", ""), 0x087: ("CRT_CURSOR_GREEN0", ""), 0x088: ("CRT_CURSOR_RED0", ""),
+    0x08A: ("CRT_CURSOR_BLUE1", ""), 0x08B: ("CRT_CURSOR_GREEN1", ""), 0x08C: ("CRT_CURSOR_RED1", ""),
+    0x08E: ("CRT_CURSOR_FIFO", ""),
+    0x100: ("BLT_CTRL0", ""), 0x101: ("BLT_CTRL1", ""), 0x102: ("BLT_ROP", ""), 0x103: ("BLT_OPERATION", ""),
+    0x104: ("BLT_SRC0", ""), 0x105: ("BLT_SRC1", ""), 0x106: ("BLT_SRC2", ""),
+    0x108: ("BLT_DST0", ""), 0x109: ("BLT_DST1", ""), 0x10A: ("BLT_DST2", ""),
+    0x10C: ("BLT_OFFSET0", ""), 0x10D: ("BLT_OFFSET1", ""),
+    0x110: ("BLT_WIDTH0", ""), 0x111: ("BLT_WIDTH1", ""), 0x112: ("BLT_HEIGHT0", ""), 0x113: ("BLT_HEIGHT1", ""),
+    0x114: ("BLT_BG0", ""), 0x115: ("BLT_BG1", ""), 0x118: ("BLT_FG0", ""), 0x119: ("BLT_FG1", ""),
+    0x1E0: ("LUT_MODE", ""), 0x1E2: ("LUT_ADDR", ""), 0x1E4: ("LUT_DATA", ""),
+    0x1F0: ("POWER_SAVE_CONFIG", ""), 0x1F4: ("WATCHDOG", ""),
+    0x1FC: ("DISPLAY_MODE", "LcdControllerInit writes 0 before the set-up, 7 after it"),
+}
+for _o, (_n, _note) in S1D13506.items():
+    HW[0x9CC00000 + _o] = ("LCDC_" + _n, _note)
+# routines that program another controller's register map at the same addresses:
+# their operands stay offsets from LCDC
+LCDC_OFFSET_ROUTINES = {"LcdControllerInitAlt", "LcdControllerInitOld"}
+
 # ROM addresses of the two images' load copies and of the copy descriptor
 LOAD_NAMES = {0x40000400: "__data_load", 0x40000B00: "__image_load", 0x4000FA0C: "ImageCopyDescriptor"}
 for _g in range(2, 31):
@@ -766,6 +878,8 @@ SPECIAL_DATA = [
     (0x500100DC, 10, "sdframe", None),
     (0x5000D590, 8 * 312, "f64", None),          # 0.1, 5, log10(2), then 1e0..1e308
     (0x5000E104, 24, "fontdesc", None),          # FontTable
+    (0x5000DF70, 36, "fatfail", 0x500128F8),     # FatMount's failure image, over FatVolumeName..
+    (0x5000DFA8, 256, "crc7", None),             # SdCrc7Table
     (0x5000E11C, 0xE00, "font", 0x20),           # the 8x16 glyphs, characters 0x20..0xFF
 ]
 
@@ -1074,9 +1188,19 @@ class Emitter:
                     return OPERAND_NAMES[(pc, v)]
                 if len(m.group(1)) < 5:
                     return m.group(0)
+                if 0x9CC00000 <= v < 0x9CC00200 and self.routine_at(pc) in LCDC_OFFSET_ROUTINES:
+                    base = self.ext_name(0x9CC00000, False)
+                    return base if v == 0x9CC00000 else f"{base}+0x{v - 0x9CC00000:02x}"
                 return self.label_of(v, stale) or m.group(0)
             o = [re.sub(r"\b0x([0-9a-f]+)\b", rep, x) for x in o]
         return o
+
+    def routine_at(self, pc):
+        """the name of the routine that holds pc"""
+        if not hasattr(self, "_starts"):
+            self._starts = sorted(self.funcs)
+        k = bisect.bisect_right(self._starts, pc) - 1
+        return self.names.get(self._starts[k]) if k >= 0 else None
 
     def value_of(self, tok):
         if tok in self.values:
@@ -1270,6 +1394,35 @@ class Emitter:
                 L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + k:o + min(n, k + 16)])
                          + f"    # 0x{k - 1:02X}..")
             return L
+        if kind == "crc7":
+            # the CRC7 of the SD commands (x^7 + x^3 + 1) of each byte, kept shifted left
+            # one, so that the table drives the CRC a byte at a time
+            def crc7x2(i):
+                for _ in range(8):
+                    i = ((i << 1) ^ (0x12 if i & 0x80 else 0)) & 0xFF
+                return i
+            if any(d[o + i] != crc7x2(i) for i in range(256)):
+                sys.exit("gen_ic18_s: SdCrc7Table is not the CRC7 table")
+            for k in range(0, n, 16):
+                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + k:o + k + 16])
+                         + f"    # 0x{k:02X}..")
+            return L
+        if kind == "fatfail":
+            # nine words that FatMount copies over its volume variables, from `arg` on,
+            # when it rejects the boot sector; each field is written as wide as the
+            # variable it lands on
+            dst = lambda off: self.names.get(arg + off) or self.ext_name(arg + off, False) or f"+{off}"
+            nul = d.index(0, o, o + 12) - o
+            L.append(f"    .asciz  \"{esc(d[o:o + nul])}\"" + " " * max(1, 20 - nul) + f"# -> {dst(0)}")
+            pad = ", ".join(f"0x{b:02X}" for b in d[o + nul + 1:o + 12])
+            L.append(f"    .byte   {pad}" + " " * max(1, 22 - len(pad)) + "# the rest of its 12 bytes")
+            for off, w in ((12, 4), (16, 2), (18, 2), (20, 1), (21, 1), (22, 2), (24, 2), (26, 2),
+                           (28, 4), (32, 4)):
+                v = int.from_bytes(d[o + off:o + off + w], "little")
+                op = {1: ".byte ", 2: ".word ", 4: ".long "}[w]
+                what = f"# -> {dst(off)}" if off != 21 else f"# (the byte after {dst(20)})"
+                L.append(f"    {op}  0x{v:X}" + " " * max(1, 22 - len(f"0x{v:X}")) + what)
+            return L
         if kind == "hash":
             for k in range(o, o + n, 8):
                 key, tgt = struct.unpack_from("<II", d, k)
@@ -1415,6 +1568,10 @@ class Emitter:
              "",
              "# addresses outside this image: RAM past it, the older link's, the hardware"]
         for v, (nm, note) in sorted(self.ext.items()):
+            if v == 0x9CC00000:
+                H += ["# [INFERENCE] the LCD controller's registers (LCDC_*) carry the names of Epson's",
+                      "# S1D13506, whose register set LcdControllerInit writes offset for offset",
+                      "# (tools/gen_ic18_s.py, S1D13506; notes/ic18-boot-rom.md)"]
             H.append(f".equ {nm}, 0x{v:08X}" + (f"{' ' * max(1, 30 - len(nm))}# {note}" if note else ""))
         H += ["",
               "# constants of the reset code",

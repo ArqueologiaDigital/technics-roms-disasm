@@ -117,6 +117,59 @@ the handler directly, and the board probes the firmware makes are stand-ins here
 - A text console on the LCD controller at `0x9CC00000` (frame buffer `0x9CE00000`, 640 pixels a line) with
   an 8x16 font for 0x20-0xFF, and four soft-key captions read through the panel.
 
+### The hardware registers
+
+Every memory operand of the code that names a device register is an `.equ` (`HW` in the generator).
+
+- **The LCD controller** (`LCDC`, `0x9CC00000`). `[INFERENCE]` It is an Epson **S1D13506**, and its
+  registers carry that chip's names (`LCDC_LCD_HDISP`, `LCDC_BLT_CTRL0`, `LCDC_LUT_DATA` ...). The
+  evidence:
+  - `LcdControllerInit` writes 106 registers, and every offset is an S1D13506 register. Between them it
+    skips exactly that chip's reserved offsets (`0x033`, `0x037`, `0x045`, `0x049`, `0x107`, `0x116` ...).
+  - Its values decode, by that chip's rules, as 640 x 240 at 16 bits a pixel: `0x032` = `0x4F`,
+    `0x038` = `0xEF`, `0x040` = `0x15`, and a line offset of `0x280` words.
+  - The display memory answers at +`0x200000`, where that chip's M/R# line puts it.
+  - The firmware uses `0x004`/`0x005` as pin directions and `0x008`/`0x009` as pin data: the SD slot's
+    sense, enable, supply and write-protect lines, and the two SD lamps. Those offsets are the chip's GPIO
+    registers.
+  - Not checked against a board photo.
+
+  `LcdControllerInitAlt` and `LcdControllerInitOld`, which nothing calls, program other register maps.
+  Their operands are spelled `LCDC+0xNN`. `[INFERENCE]` Alt's offsets and values fit the earlier S1D13505;
+  Old's map is unidentified.
+- **The CPU's own registers** follow the Linux mn10300 port's names wherever this board's known registers
+  sit at the same offsets: `CPUM` (`0x20000040`; the NMI handler sets STOP in a loop), `TM0MD`/`TM0BR`
+  (the panel link's timer 0) and `TMPSCNT`. Like `IVAR0`, `CHCTR` and `TM4MD` before them, these are
+  `[INFERENCE]` names.
+- **The floppy controller** at `0x98020000`: `FDC_DOR`, `FDC_MSR_DSR`, `FDC_FIFO` and `FDC_DIR_CCR`,
+  two bytes apart. Its DMA data port is `FDC_DACK` (`0x98010000`).
+- **The SD card's SPI port**, inside tone generator A: `SD_SPI_DATA`, `SD_SPI_CLOCK`. The power
+  controller is `SD_POWER_CTRL`. `SDRAM_CTRL`/`SDRAM_REFRESH` are `[INFERENCE]` names, from the reset's
+  eight refresh pulses. `PROGRAM_FLASH_VERSION` is the firmware's release byte.
+- Still placeholders, with a TODO each: `UNKNOWN_32000010`, `UNKNOWN_34004002`, `TGA_04`, `TGA_10`.
+
+The base addresses that `FlashDeviceBase` returns stay numbers; its header comment lists them. The
+`notes/ic18-boot-rom-probes/leftovers.py` probe counts what is still numeric. On 2026-10-24 it found
+0 numeric memory operands, down from 222. The 104 code immediates at or above `0x20000000` that it
+still lists are masks, double constants, flash IDs and those device bases.
+
+### Data not typed yet
+
+`leftovers.py` also lists the `.byte` lines that carry no comment. It found 193 bytes under 23
+labels, down from 422 bytes before the CRC7 table and `FatMountFailImage` were typed. All of them sit
+under a named label, and most of those labels carry a comment. Open items:
+
+- `LcdOldPaletteA`/`B`: 32 bytes each, which `LcdControllerInitOld` writes to every other register from
+  `+0x20` and `+0x60`. What their entries mean depends on that unidentified map.
+- `OldDataImage`: 36 bytes, the older link's `.data`. Nothing in this ROM reads it.
+- `LocaleNumericC` (12 bytes) and `LocaleMonetaryC` (8 bytes): the byte fields that follow the C library's
+  "C" locale strings. Their struct layout is not typed.
+- The `.data` variables of one or two bytes (`FdcMotorState`, `SdPowerShadow`, `TickPhase2` ...): the
+  bytes that pad them to a word are not zero. They look like leftovers in the linked image, and nothing
+  reads them.
+- `FatMountFailImage` is typed by the variables it lands on. What its numbers were meant to be is still
+  a TODO (they describe 32-byte sectors and no FAT).
+
 ### The older link
 
 Bytes `0x0011-0x03FF` are from an earlier link of the same program that the new one did not overwrite:
