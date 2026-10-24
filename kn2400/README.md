@@ -60,6 +60,10 @@ The data comes first and the code after it: the reverse of the KN7000's program 
 - crt0 points the vector at `0x90000000` at `0x5018df0b`, which is file `0x3964c9` under
   the same offset.
 
+Much of it is what the KN7000 keeps in its library at `0x4C000000`. Of the 337 names
+`make ported-names` carries into this range, 250 come from KN7000 library routines, many of them
+`Tg*` tone-generator routines.
+
 `src/program.s` assembles that range under `.mnbase 0x4fdf7a42`, so its PC-relative encodings
 are reproduced exactly. The 24 bytes after it hold, among others, `0x487285be` (the flash
 address of the RAM-linked range), `0x50120000` (its link address) and `0x487965b8`. Those values
@@ -76,6 +80,12 @@ to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485d
   string tables (`MT_GetPadRun` would name the text `"EV_DISPPADRUN"`) and a menu table whose
   pointers lead into data.
 - `kn2400_manual.sym` holds names recovered by hand: `_reset`, `_vector_0a`, `crt0_start`.
+- `kn2400_ported.sym` (`make ported-names`, generated) holds 512 names carried over from the
+  KN7000 (program 941). `../kn7000/tools/port_names_by_code.py` carries a name when one of
+  this image's unnamed entries is the same code as a routine the KN7000's symbol files name:
+  the same instructions from the entry to the first return, with addresses masked out,
+  at least 8 of them, and a unique match on both sides. Each row records the KN7000 address
+  it came from.
 - `src/labels.inc` is generated with the source. It holds every other label the source defines,
   so that `kn7asm` resolves each reference in one pass and checks each label against its
   `.equ`. It holds these kinds of label:
@@ -102,11 +112,11 @@ The figures from `notes/conversion-stats.txt`, which the generator writes:
 
 | measure                      | value                                 |
 |------------------------------|---------------------------------------|
-| entries                      | 15,797 (2,553 named, 13,244 `func_`)  |
+| entries                      | 15,797 (3,471 named, 12,326 `func_`)  |
 | bytes emitted as code        | 1,759,156: 98.88% of the code ranges  |
 | instructions                 | 657,260, plus 389 `.byte` escapes     |
 | local branch labels          | 54,871                                |
-| code-range bytes left binary | 19,986, in 376 `.incbin_range` pieces |
+| code-range bytes left binary | 19,986, in 377 `.incbin_range` pieces |
 
 Most of the remaining code-range bytes are short stretches no traced path enters, such as switch
 cases reached only through RAM-linked jump tables and handlers reached only through tables of
@@ -114,10 +124,8 @@ non-`movm` code pointers.
 
 ## Open work
 
-- Names: 13,244 entries are still `func_<ADDR>`. The KN7000's hand-recovered names
-  (`../kn7000/kn7000_manual.sym`) could be carried over wherever a routine is the same code.
-  That needs a relocation-tolerant comparison, because the two builds link the code at
-  different addresses.
+- Names: 12,326 entries are still `func_<ADDR>`. `make ported-names` carries only exact,
+  unique matches. Routines that differ slightly from their KN7000 versions need another method.
 - Reflection tables whose procedures are in the RAM-linked range: `gen_symbols.py` assumes one
   link base, so it pairs none of them.
 - RAM, I/O and data addresses are still numbers in the source.
