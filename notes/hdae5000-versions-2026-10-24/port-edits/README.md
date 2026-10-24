@@ -6,19 +6,27 @@ says what it changed and why. They are kept as the record of the port. They matc
 text the tree had at the time, so they will not apply a second time and are not part of the
 build.
 
-The order they ran in, with the tool passes between them:
+The order they ran in, with the tool passes between them. The hunk counts are what
+`port_hdae5000_version.py status v2_01i` printed after each step.
 
-| step | what ran                                                        | result                                     |
-|------|-----------------------------------------------------------------|--------------------------------------------|
-| 1    | `port_hdae5000_version.py init / fix / strings / code` (rounds) | 165 hunks left                             |
-| 2    | `uitables`, then `00_filepanel_picture.py`                      | 104 hunks left                             |
-| 3    | `01`, `02a`, `02`, `03`, `04`                                   | byte-identical (commit `112123c41`)        |
-| 4    | `farptrs`, `05`, `06`, `07`, `08`, `09`, `10`, `11`, `12`       | names and comments fixed, still identical  |
-| 5    | `hdae5000_version_stale_comments.py --fix`, `13`, `14`           | comments fixed, still identical            |
+| step | what ran                                                            | hunks left / result                       |
+|------|---------------------------------------------------------------------|-------------------------------------------|
+| 1    | `port_hdae5000_version.py init`, then `fix / strings / code` rounds | 1,682                                     |
+| 2    | `uitables`, a `code / strings / fix` round                          | 1,067                                     |
+| 3    | `00_filepanel_picture.py`                                           | 165                                       |
+| 4    | `01`                                                                | 104                                       |
+| 5    | `02a`, `02`                                                         | 8                                         |
+| 6    | `03`                                                                | 3                                         |
+| 7    | `04`                                                                | 0: byte-identical (commit `112123c41`)    |
+| 8    | `farptrs`, `05` to `12`                                             | names and comments fixed, still identical |
+| 9    | `hdae5000_version_stale_comments.py --fix`, `13`, `14`              | comments fixed, still identical           |
+| 10   | `15` to `17`                                                        | labels fixed, still identical             |
 
-The review tools that found what steps 4 and 5 fix are committed:
+These committed review tools found what steps 8 to 10 fix:
 
 - `scripts/analysis/hdae5000_version_label_check.py` lists labels that may name different code
-  than in v2.06i.
+  than in v2.06i, and suggests renames.
 - `scripts/analysis/hdae5000_version_stale_comments.py` lists comments that quote a number the
   code no longer holds.
+- `scripts/analysis/hdae5000_version_routine_diff.py` compares the trees routine by routine; its
+  output is `../routine-diff-v2_01i.txt`.

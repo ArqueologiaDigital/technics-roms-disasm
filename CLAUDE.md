@@ -88,6 +88,7 @@ make rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom         # Sub CPU boot
 make rebuilt_ROMs/kn5000_table_data.llvm.rom          # Table data
 make rebuilt_ROMs/kn5000_custom_data.llvm.rom         # Custom data
 make rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom           # HDAE5000
+make rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom           # HDAE5000 v2.01i (dump copied from the private romset, HDAE5000_V201_REF)
 
 # NOT a routine step: llvm-convert* regenerates the authoritative .s trees from the
 # archived, pre-rename ASL sources in archive/asl/ and would overwrite everything done
@@ -181,22 +182,23 @@ When creating new scripts, place them in the appropriate `scripts/` subdirectory
 
 Symbol reference files in `symbols/` provide address-to-name mappings for external tools:
 
-| File                                        | ROM                                               | Symbols | Address Range                                              |
-|---------------------------------------------|---------------------------------------------------|---------|------------------------------------------------------------|
-| `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`) | 53,744  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v10_symbols_reference.txt` | Main CPU v10                                      | 53,744  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_v141_symbols_reference.txt` | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
-| `symbols/table_data_symbols_reference.txt`  | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
-| `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                | 5,298   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| File                                            | ROM                                               | Symbols | Address Range                                              |
+|-------------------------------------------------|---------------------------------------------------|---------|------------------------------------------------------------|
+| `symbols/maincpu_symbols_reference.txt`         | Main CPU **v10** (identical to `maincpu_v10_...`) | 53,744  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v10_symbols_reference.txt`     | Main CPU v10                                      | 53,744  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
+| `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
+| `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 5,298   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 5,213   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
-NAME+ADDRESS agreement for all ten files, `maincpu_v8` and `subcpu_v141` included; first regenerated this way on
+NAME+ADDRESS agreement for all eleven files, `maincpu_v8`, `subcpu_v141` and `hdae5000_v2_01i` included; first regenerated this way on
 2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
@@ -1290,11 +1292,12 @@ When encountering disputed interpretations:
 | table_data          | `table_data/kn5000_table_data.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                               | 100.00%    | 100.0%                | 0 B           |
 | hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`                                    | 100.00%    | 100.0%                | 0 B           |
+| hdae5000 v2.01i     | `hdae5000_v2_01i/hd-ae5000_v2_01i.s` (ported from v2.06i)        | 100.00%    | not measured          | not measured  |
 
 The two kinds of column answer different questions and must not be conflated. **Byte-match** is
 `python scripts/build/compare_roms.py`; measured 2026-10-24 after the wave 1 merges it printed `romset bytematch:
 100.00%` with all twelve LLVM sections at 100.00% (nine before `maincpu v8`, `subcpu payload v141` and
-`subcpu v141 update image` were added; the certifying gate is `make gate`,
+`subcpu v141 update image` were added; thirteen, all at 100.00%, since `hdae5000 v2.01i` on 2026-10-24; the certifying gate is `make gate`,
 `scripts/analysis/assert_byte_identical.py`). The two update-image sections have no source row of their
 own: each is the compressed form of the payload row above it. `DISASSEMBLY_PLAN.md`'s standing invariant
 also counts the six legacy ASL mirror builds, which only run when their `.rebuilt.rom` artefacts are
@@ -1345,7 +1348,9 @@ See `../technics-docs/rom-reconstruction.md` for the narrative breakdown.
 - `rebuilt_ROMs/`: Build output (created by make)
 - `v10/maincpu/images/`, `v10/maincpu/includes/` (and the `v9/`, `v7/` twins): Binary image data included in main CPU ROM
 - `table_data/images/`: BMP assets for feature demo
-- `hdae5000/`: HDAE5000 hard disk expansion ROM disassembly
+- `hdae5000/`: HDAE5000 hard disk expansion ROM disassembly (v2.06i)
+- `hdae5000_v2_01i/`: HDAE5000 v2.01i, ported from `hdae5000/`; it takes `shared/` and the unchanged
+  pictures from `hdae5000/` through a second `-I` (notes/hdae5000-versions-2026-10-24/)
 - `docs/`: Protocol analysis notes (control panel serial communication)
 
 ### Original ROM Files

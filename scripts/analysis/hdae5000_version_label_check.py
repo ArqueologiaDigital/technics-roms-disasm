@@ -23,8 +23,8 @@ QUESTION ANSWERED
     Data labels are compared by their first 8 bytes instead of instructions.
 
 INPUTS
-    rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf and rebuilt_ROMs/hd-ae5000_<ver>.llvm.elf
-    (run `make` first) and the two source trees.
+    The two source trees, assembled here (scripts/tools/port_hdae5000_version.py's
+    marker build, with --save-temp-labels so that .L labels are compared too).
 
 RUN
     python3 scripts/analysis/hdae5000_version_label_check.py v2_01i [--all]
@@ -60,25 +60,43 @@ def syms(elf):
     return d
 
 
-def decode(img):
+CALLS = re.compile(r'^(call|calr|jp|jr|jrl|djnz)\b')
+
+
+def decode(img, names=None):
+    """{address: (length, shape)}.  A shape masks numbers, except that the target of a
+    call or jump is replaced by the name a routine-level label gives it (names: address
+    -> name, local .L / _Skip / _Join-style names left out), so a label that slid onto
+    the next step of a chain of look-alike steps still differs."""
     p = os.path.join(SCRATCH, "hdae5000_label_check_%d.bin" % os.getpid())
     open(p, "wb").write(img)
     out = subprocess.run([UNIDASM, p, "-arch", "tlcs900", "-basepc", "%x" % BASE],
                          capture_output=True, text=True).stdout
     os.remove(p)
     ins = {}
-    order = []
     for l in out.split("\n"):
         m = re.match(r'^([0-9a-f]+):\s+((?:[0-9a-f]{2} )+)\s*(.*)$', l)
         if m:
             a = int(m.group(1), 16)
-            ins[a] = (len(m.group(2).split()), NUM.sub("N", m.group(3).strip().lower()))
-            order.append(a)
+            t = m.group(3).strip().lower()
+            if names and CALLS.match(t):
+                t = re.sub(r'0x([0-9a-f]{6})\b',
+                           lambda mm: names.get(int(mm.group(1), 16), mm.group(0)), t)
+            ins[a] = (len(m.group(2).split()), NUM.sub("N", t))
     return ins
 
 
-def shapes(ins, img, a, n=3):
-    if a >= CODE_END:
+def routine_names(sym):
+    keep = {}
+    for n, a in sym.items():
+        if n.startswith(".L") or re.search(r'_(Skip|Join|Loop|Next|Done|Default)\d*$', n):
+            continue
+        keep.setdefault(a, n)
+    return keep
+
+
+def shapes(ins, img, a, n=3, code_end=CODE_END):
+    if a >= code_end:
         return img[a - BASE:a - BASE + 8].hex()
     out = []
     while len(out) < n and a in ins:
@@ -108,12 +126,21 @@ def references(tree_dirs):
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
     tree = os.path.join(ROOT, "hdae5000_" + ver)
-    ea = os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_v2_06i.llvm.elf")
-    eb = os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_%s.llvm.elf" % ver)
-    ia = open(os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_v2_06i.llvm.rom"), "rb").read()
-    ib = open(os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_%s.llvm.rom" % ver), "rb").read()
-    sa, sb = syms(ea), syms(eb)
-    da, db = decode(ia), decode(ib)
+    # both trees assembled with --save-temp-labels (the porting tool's marker build),
+    # so the .L local labels are checked too
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P
+    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+                 os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_a"))
+    bb = P.Build(tree, "hd-ae5000_%s.s" % ver, [os.path.join(ROOT, "hdae5000")],
+                 os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_b"))
+    assert ba.ok and bb.ok, (ba.stderr[-500:], bb.stderr[-500:])
+    ia, ib = ba.img, bb.img
+    sa = {n: a for a, n in ba.syms if not n.startswith("__PM_")}
+    sb = {n: a for a, n in bb.syms if not n.startswith("__PM_")}
+    da, db = decode(ia, routine_names(sa)), decode(ib, routine_names(sb))
+    # the code ends where the registered-object name pool begins, in each version
+    ea, eb = sa.get("HDAE5000_Str_End_ObjNames", CODE_END), sb.get("HDAE5000_Str_End_ObjNames", CODE_END)
     refs, marked = references([tree])
     at_a = collections.defaultdict(set)
     at_b = collections.defaultdict(set)
@@ -127,10 +154,10 @@ def main():
         if n in marked:
             rows["orphan"].append((b, n, r, ""))
         if n not in sa:
-            rows["new"].append((b, n, r, shapes(db, ib, b)))
+            rows["new"].append((b, n, r, shapes(db, ib, b, code_end=eb)))
             continue
         a = sa[n]
-        x, y = shapes(da, ia, a), shapes(db, ib, b)
+        x, y = shapes(da, ia, a, code_end=ea), shapes(db, ib, b, code_end=eb)
         if x != y:
             rows["moved"].append((b, n, r, "v2.06i: %s\n%s      %s: %s" % (x, " " * 8, ver, y)))
         mates_b = at_b[b] & set(sa)
@@ -141,16 +168,16 @@ def main():
     # missing or unreferenced here, sits within 0x400 bytes, and its v2.06i code starts
     # with the same three instruction shapes as the new label's.
     for b, n, r, info in rows["new"]:
-        if b >= CODE_END:
+        if b >= eb:
             continue
-        here = shapes(db, ib, b)
+        here = shapes(db, ib, b, code_end=eb)
         best = None
         for m, a in sa.items():
             if m in sb and refs.get(m, 0):
                 continue
             if m.startswith("__") or abs(sb.get(m, a) - b) > 0x400 and abs(a - b) > 0x1000:
                 continue
-            if shapes(da, ia, a) == here and (best is None or abs(a - b) < abs(sa[best] - b)):
+            if shapes(da, ia, a, code_end=ea) == here and (best is None or abs(a - b) < abs(sa[best] - b)):
                 best = m
         if best:
             rows["suggest"].append((b, n, r, "-> %s (v2.06i 0x%06x%s)" % (

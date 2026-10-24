@@ -2090,6 +2090,14 @@ HDAE5000_HDD_DIRNAMECheck_Epilogue:
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; The hard-disk utility page.  Switch 11 prints the drive's identity and the
+; panel's resource information (HDAE5000_HardTest_HddIdRead, HamaFn_GetResouceInfo:
+; v2.01i lists LSW, SDA, PMT and SQF; v2.06i also SEQ, CMP, TM, MSP, RCM and MD).
+; Switch 9, which v2.06i's handler does not have, formats the drive from here:
+; "FORMAT TRY !!!", HDAE5000_HD_FormatDrive, then "FORMAT FINISHED !!!" or
+; "FORMAT ERROR !!!" and the error number (HD_FormatDrive's result in L, kept in QIZH).
+; ---------------------------------------------------------------------------
 HDAE5000_HDD_UTIL_PAGE:
 	; registered as "HDD_UTIL_PAGE" in HDAE5000_ObjHandler_Table
 	lda	xsp, (xsp-116)
@@ -2128,9 +2136,10 @@ HDAE5000_HDD_UTIL_PAGE_OnDraw:
 HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	ld xwa, (xsp + 0x6a)
 	cp	xwa, 0x0000000b
-	jr	z, HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip
+	jr	z, HDAE5000_HDD_UTIL_PAGE_OnSwIn_DriveInfo
 	cp	xwa, 0x00000009
 	jrl	nz, HDAE5000_HDD_UTIL_PAGE_Join
+	; switch 9: format the drive (v2.01i only)
 	lda	xwa, (HDAE5000_Str_FORMATTRY:24)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (HDAE5000_Str_PleaseWait:24)
@@ -2140,11 +2149,11 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	ldfr_berp	l, 0xfb
 	ldto_berp	a, 0xfb
 	cp	a, 0:i3
-	jr	nz, HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip2
+	jr	nz, HDAE5000_HDD_UTIL_PAGE_OnSwIn_FormatError
 	lda	xwa, (HDAE5000_Str_FORMATFINISHED:24)
 	calr	HDAE5000_HardTest_Print
 	jrl	t, HDAE5000_HDD_UTIL_PAGE_Join
-HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip2:
+HDAE5000_HDD_UTIL_PAGE_OnSwIn_FormatError:
 	lda	xwa, (HDAE5000_Str_FORMATERROR:24)
 	calr	HDAE5000_HardTest_Print
 	pushw	0x40
@@ -2172,7 +2181,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip2:
 	lda	xwa, (xsp+42)
 	calr	HDAE5000_HardTest_Print
 	jrl	t, HDAE5000_HDD_UTIL_PAGE_Join
-HDAE5000_HDD_UTIL_PAGE_OnSwIn_Skip:
+HDAE5000_HDD_UTIL_PAGE_OnSwIn_DriveInfo:
 	calr	HDAE5000_HardTest_HddIdRead
 	lda	xwa, (xsp+2)
 	ld	xbc, xwa

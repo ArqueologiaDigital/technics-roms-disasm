@@ -6149,7 +6149,7 @@ HDAE5000_FDFileSelectProc:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0:i3
 	call	(xhl)
-	jrl	t, HDAE5000_FDFileSelectProc_Skip2
+	jrl	t, .Lsc_ret0
 
 	; --- Down button handler ---
 .Lsc_07_btn_down:
@@ -6317,10 +6317,8 @@ HDAE5000_FDFileSelectProc:
 	; Epilogue
 	; ============================================================
 .Lsc_ret0:
-HDAE5000_FDFileSelectProc_Skip2:
 	ld xhl, 0:i3
 .Lsc_epilogue:
-HDAE5000_FDFileSelectProc_Skip:
 	pop xiz
 	lda xsp, (xsp+130:16)	; lda XSP, XSP+130 (restore stack)
 	ret
@@ -13099,7 +13097,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	ld_sril xix, (xde + HamaFn_fopen_ext)
 	call (xix)
 	cp hl, 0:i3
-	jrl	lt, HDAE5000_CopyFdSongToHd_Tlx_Skip
+	jrl	lt, .Lts92f_error
 	; Call 0x29AEC7 with args (8 bytes pushed, cleaned by inc 0)
 	; Workspace dispatch with XBC=0x16
 	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
@@ -13167,7 +13165,6 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	call (xhl)
 	jr .Lts92f_load
 .Lts92f_error:
-HDAE5000_CopyFdSongToHd_Tlx_Skip:
 	ldw (xsp + 10), 0xFFFF
 .Lts92f_load:
 	ld hl, (xsp + 10)
@@ -22016,24 +22013,23 @@ HDAE5000_HD_Format_CompareLoop_Skip:
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
 	call HDAE5000_ATA_WriteSector
 	cp	(HDAE5000_RAM_AtaError:24), 0
-	jp	z, (HDAE5000_HD_Format_CompareLoop_Skip4:24)
-	ld	(HDAE5000_RAM_AtaError), 0x05
-	jp	HDAE5000_HD_Format_Exit
-HDAE5000_HD_Format_CompareLoop_Skip4:
-	call	HDAE5000_ATA_SoftReset
-	cp	(HDAE5000_RAM_AtaError:24), 0x00
 	jp	z, (.LHD_Format_CompareLoop_Skip3:24)
-	ld	(HDAE5000_RAM_AtaError:24), 11
+	ld	(HDAE5000_RAM_AtaError:24), 5
 	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip3:
-	call HDAE5000_ATA_IdentifyDevice
+	call HDAE5000_ATA_SoftReset
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_CompareLoop_Skip4:24)
-	ld	(HDAE5000_RAM_AtaError:24), 6
+	ld	(HDAE5000_RAM_AtaError:24), 11
 	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip4:
-	call HDAE5000_HD_ParseIdentify
+	call HDAE5000_ATA_IdentifyDevice
+	cp	(HDAE5000_RAM_AtaError:24), 0
+	jp	z, (.LHD_Format_CompareLoop_Skip5:24)
+	ld	(HDAE5000_RAM_AtaError:24), 6
+	jp HDAE5000_HD_Format_Exit
 .LHD_Format_CompareLoop_Skip5:
+	call HDAE5000_HD_ParseIdentify
 	ld	xhl, 1:i3
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
 	ld	xde, 0x00000200
