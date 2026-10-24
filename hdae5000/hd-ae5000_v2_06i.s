@@ -189,6 +189,14 @@
 	.equ HDAE5000_RAM_RcmStreamDir, 0x238f1e	; directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm / _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)
 	.equ HDAE5000_RAM_RcmStreamSong, 0x238f20	; song of that RCM stream
 	.equ HDAE5000_RAM_RcmStreamResult, 0x238f22	; word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult returns it)
+	.equ HDAE5000_RAM_DirBrowserPage, 0x229d9f	; page of the directory browser (unreachable library; HD_Init sets it)
+	.equ HDAE5000_RAM_FlsBrowserPage, 0x229da0	; page of the FLS browser (unreachable library; HD_Init sets it)
+	.equ HDAE5000_RAM_DirBrowserCursors, 0x229dda	; 5 cursor bytes, one per directory-browser page (unreachable library)
+	.equ HDAE5000_RAM_DirBrowserRowBytes, 0x229ddf	; 120 bytes, one per directory row (unreachable library)
+	.equ HDAE5000_RAM_FlsBrowserCursors, 0x229e57	; 5 cursor bytes, one per FLS-browser page (unreachable library)
+	.equ HDAE5000_RAM_FlsBrowserRowBytes, 0x229e5c	; 120 bytes, one per FLS row (unreachable library)
+	.equ HDAE5000_RAM_DirNameHistory, 0x22abf2	; 5-entry history of directory names: {u8 count, u8 recall index, u8 next slot, pad, 5 x 27 bytes} (HDAE5000_NameHistory_Push / _Recall)
+	.equ HDAE5000_RAM_FlsNameHistory, 0x22ad0a	; 5-entry history of FLS names, same layout as DirNameHistory
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

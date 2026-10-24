@@ -2033,7 +2033,7 @@ HDAE5000_HDD_DIRNAMECheck_OnSwIn:
 	jr	z, HDAE5000_HDD_DIRNAMECheck_Skip
 	cp	xde, 0x0000008a
 	jrl	nz, HDAE5000_HDD_DIRNAMECheck_Done
-	lda xwa, (0x22abf2:24)
+	lda xwa, (HDAE5000_RAM_DirNameHistory:24)
 	calr	HDAE5000_NameHistory_Recall
 	ld	xiz, xhl
 	ld	xwa, xiz

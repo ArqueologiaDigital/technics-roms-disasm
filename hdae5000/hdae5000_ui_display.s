@@ -103,15 +103,19 @@ HDAE5000_ShowErrorMessageTitle:	; 0x28ACFA (78 bytes)
 	ld xde, TITLE_MESAGE		; title 0xEE (TT_MESAGE)
 	jp (xhl)		; tail-call RootFn_ApPostEvent
 
-HDAE5000_DirName_StoreWithUi:	; 0x28AD48 (248 bytes)
-	; XBC = new directory name (16 bytes), WA = directory number, XDE = the object that
-	; asked (a naming window).  Shows HD_PLEASE (SendEvent(obj, 0x01C00001, 3)),
-	; waits (HDAE5000_YieldUntilSem1Zero), then HDAE5000_DirName_SetAndStore(WA, name, 0).
-	; Success: PostEvent(XDE, 0x01C00001, 0).  Failure (HL = 0xFFFF): show
-	; ERR_SAVE, caption ERR_SAVE_EXIT on XDE, and restart its timer
-	; (RootFn_KillApTimer / RootFn_SetApTimer 0x14D, ERR_SAVE_CATCH, event
-	; 0x01CA0002).  Either way the name is added to the directory name history
-	; at 0x22ABF2 (HDAE5000_NameHistory_Push).
+; ---------------------------------------------------------------------------
+; Rename a directory with its screen messages: shows HD_PLEASE on the asking
+; object (RootFn_SendEvent(obj, 0x01C00001, 3)), waits
+; (HDAE5000_YieldUntilSem1Zero), then HDAE5000_DirName_SetAndStore(WA, name,
+; 0).  Success: RootFn_PostEvent(XDE, 0x01C00001, 0).  Failure (HL = 0xFFFF):
+; shows ERR_SAVE, captions XDE with ERR_SAVE_EXIT and restarts its timer
+; (RootFn_KillApTimer / SetApTimer 0x14D, ERR_SAVE_CATCH, event 0x01CA0002).
+; Either way the name goes on HDAE5000_RAM_DirNameHistory
+; (HDAE5000_NameHistory_Push).
+; In:  WA = directory, XBC = the new 16-byte name, XDE = the asking object
+;      (a naming window)
+; ---------------------------------------------------------------------------
+HDAE5000_DirName_StoreWithUi:
 	lda xsp, (xsp - 22)		; allocate 22 bytes on stack
 	pushw iz
 	ld (xsp + 20), xde		; save the requesting object
@@ -185,22 +189,19 @@ HDAE5000_DirName_StoreWithUi:	; 0x28AD48 (248 bytes)
 	ld xde, 0xFFFFFFFF
 	call (xhl)
 .Lmh_finish:
-	lda xwa, (0x22abf2:24); lda XWA, 0x22ABF2
+	lda xwa, (HDAE5000_RAM_DirNameHistory:24); lda XWA, 0x22ABF2
 	lda xbc, (xsp + 2)		; XBC = stack buffer
 	calr HDAE5000_NameHistory_Push
 	popw iz
 	lda xsp, (xsp + 22)		; deallocate stack
 	ret
 
-HDAE5000_FlsName_StoreWithUi:	; 0x28AE40 (248 bytes)
-	; XBC = new FLS name (16 bytes), WA = FLS number, XDE = the object that
-	; asked (a naming window).  Shows HD_PLEASE (SendEvent(obj, 0x01C00001, 3)),
-	; waits (HDAE5000_YieldUntilSem1Zero), then HDAE5000_FlsName_SetAndStore(WA, name, 0).
-	; Success: PostEvent(XDE, 0x01C00001, 0).  Failure (HL = 0xFFFF): show
-	; ERR_SAVE, caption ERR_SAVE_EXIT on XDE, and restart its timer
-	; (RootFn_KillApTimer / RootFn_SetApTimer 0x14D, ERR_SAVE_CATCH, event
-	; 0x01CA0002).  Either way the name is added to the FLS name history
-	; at 0x22AD0A (HDAE5000_NameHistory_Push).
+; ---------------------------------------------------------------------------
+; Rename an FLS with its screen messages, as HDAE5000_DirName_StoreWithUi
+; but with HDAE5000_FlsName_SetAndStore and HDAE5000_RAM_FlsNameHistory.
+; In:  WA = FLS, XBC = the new 16-byte name, XDE = the asking object
+; ---------------------------------------------------------------------------
+HDAE5000_FlsName_StoreWithUi:
 	lda xsp, (xsp - 22)		; allocate 22 bytes on stack
 	pushw iz
 	ld (xsp + 20), xde		; save the requesting object
@@ -274,7 +275,7 @@ HDAE5000_FlsName_StoreWithUi:	; 0x28AE40 (248 bytes)
 	ld xde, 0xFFFFFFFF
 	call (xhl)
 .Lmc_finish:
-	lda xwa, (0x22ad0a:24); lda XWA, 0x22AD0A
+	lda xwa, (HDAE5000_RAM_FlsNameHistory:24); lda XWA, 0x22AD0A
 	lda xbc, (xsp + 2)
 	calr HDAE5000_NameHistory_Push
 	popw iz
@@ -669,13 +670,14 @@ HDAE5000_Set_Menu_Visibility:	; 0x28B258 (229 bytes)
 HDAE5000_NameHistory_AfterPushNop:	; 0x28B33D (1 bytes)
 	ret
 
-HDAE5000_NameHistory_Push:	; 0x28B33E (61 bytes)
-	; Add a name to a 5-entry history: XWA = history {u8 count, u8 recall
-	; index, u8 next slot, pad, 5 x 27-byte names}, XBC = the name.  Copies
-	; it into slot [+2], sets the recall index to that slot, advances the
-	; slot modulo 5 and the count up to 5.  Histories: 0x22ABF2 (directory
-	; names, HDAE5000_DirName_StoreWithUi) and 0x22AD0A (FLS names,
-	; HDAE5000_FlsName_StoreWithUi); read back by HDAE5000_NameHistory_Recall.
+; ---------------------------------------------------------------------------
+; Add a name to a 5-entry history {u8 count, u8 recall index, u8 next slot,
+; pad, 5 x 27-byte names}: copy it into the next slot, make that slot the
+; recall index, advance the slot modulo 5 and the count up to 5.  Histories:
+; HDAE5000_RAM_DirNameHistory and HDAE5000_RAM_FlsNameHistory.
+; In:  XWA = history, XBC = name
+; ---------------------------------------------------------------------------
+HDAE5000_NameHistory_Push:
 	push xiz
 	ld xiz, xwa		; XIZ = the history
 	push xbc
@@ -706,11 +708,14 @@ HDAE5000_NameHistory_Push:	; 0x28B33E (61 bytes)
 	pop xiz
 	ret
 
-HDAE5000_NameHistory_Recall:	; 0x28B37B (56 bytes)
-	; XWA = a name history (see HDAE5000_NameHistory_Push): return XHL = the
-	; name at the recall index and step the index back (from 0 to count-1),
-	; or XHL = 0 when the history is empty.  Used by the naming windows' recall
-	; key (event 0x01C00007, code 0x8A) to cycle through earlier names.
+; ---------------------------------------------------------------------------
+; The name at a history's recall index; the index steps back (from 0 to
+; count - 1).  The naming windows' recall key (event 0x01C00007, code 0x8A)
+; cycles through earlier names with it.
+; In:  XWA = history (see HDAE5000_NameHistory_Push)
+; Out: XHL = the name, or 0 when the history is empty.
+; ---------------------------------------------------------------------------
+HDAE5000_NameHistory_Recall:
 	cp (xwa), 0x00		; empty history?
 	jr z, .LNameHistory_Recall__empty
 	ld c, (xwa + 1)		; recall index
@@ -738,21 +743,26 @@ HDAE5000_NameHistory_Recall:	; 0x28B37B (56 bytes)
 .LNameHistory_Recall__ret:
 	ret
 
-HDAE5000_Get_Status_Byte:	; 0x28B3B3 (6 bytes)
-	; Return byte from 0x22AD9A in L
-	ld l, (0x22ad9a:24); ld L, (0x22AD9A)
+; ---------------------------------------------------------------------------
+; L = the byte at RAM 0x22AD9A (its role is not established).
+; ---------------------------------------------------------------------------
+HDAE5000_Get_Status_Byte:
+	ld l, (0x22ad9a:24)
 	ret
 
-HDAE5000_Set_Status_Byte:	; 0x28B3B9 (6 bytes)
-	; Store A to 0x22AD9B
-	ld (0x22ad9b:24), a; ld (0x22AD9B), A
+; ---------------------------------------------------------------------------
+; Store A at RAM 0x22AD9B (its role is not established).
+; ---------------------------------------------------------------------------
+HDAE5000_Set_Status_Byte:
+	ld (0x22ad9b:24), a
 	ret
 
-HDAE5000_Count_Active_Files:	; 0x28B3BF (43 bytes)
-	; Count active file entries in table at 0x22AA9C
-	; Input: none
-	; Output: HL = count of entries with status byte == 1
-	; Scans 20 entries (0x0014), each 0x0114 bytes apart
+; ---------------------------------------------------------------------------
+; Number of the 20 entries (0x114 bytes apart) of the floppy file list at RAM
+; 0x22AA9C whose status byte is 1.
+; Out: HL = the count.
+; ---------------------------------------------------------------------------
+HDAE5000_Count_Active_Files:
 	ld hl, 0:i3		; HL = count = 0
 	ld de, 0:i3		; DE = index = 0
 	cp de, 0x0014		; check if index >= 20
@@ -7805,35 +7815,37 @@ HDAE5000_HD_FormatDrive:
 	inc 2, xsp
 	ret
 
-HDAE5000_DirName_Address:	; 0x28F97E (13 bytes)
-	; Calculate 16-byte offset in table at 0x201632
-	; Input: WA = table index
-	; Output: XHL = pointer to 16-byte entry
-	; (The table is the directory-name block, 16 bytes x 120 --
-	; HDAE5000_HD_GetBlockInfo block 0 -- so WA is a directory index.)
-	extz xwa		; zero-extend index to 32 bits
-	sll xwa, 4		; multiply by 16
-	ld xhl, HDAE5000_RAM_DirNames	; table base address
-	add xhl, xwa		; XHL = base + index*16
+; ---------------------------------------------------------------------------
+; Address of a directory's 16-byte name in HDAE5000_RAM_DirNames.
+; In:  WA = directory
+; Out: XHL = DirNames + WA * 16.  Clobbers XWA.
+; ---------------------------------------------------------------------------
+HDAE5000_DirName_Address:
+	extz xwa
+	sll xwa, 4
+	ld xhl, HDAE5000_RAM_DirNames
+	add xhl, xwa
 	ret
 
-HDAE5000_DirName_SetAndStore:	; 0x28F98B (34 bytes)
-	; Copy 16 bytes to table entry, then call Display_Callback
-	; Input: WA = table index, XBC = source pointer, DE = param
-	; (= set directory WA's name from XBC, then HDAE5000_HD_StoreTables(DE):
-	; "Display_Callback" is the table writer, DE its keep-spinning flag.)
+; ---------------------------------------------------------------------------
+; Set a directory's 16-byte name (HDAE5000_StrNCpy into HDAE5000_RAM_DirNames)
+; and write the tables (HDAE5000_HD_StoreTables(DE)).
+; In:  WA = directory, XBC = name, DE = 1 to leave the drive spinning
+; Out: HL as HDAE5000_HD_StoreTables returns it.  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_DirName_SetAndStore:
 	pushw iz
-	ld iz, de			; save DE param
-	pushw 0x0010			; push 16 (byte count)
-	push xbc			; push source pointer
-	extz xwa			; zero-extend index
-	sll xwa, 4			; index * 16
-	ld xbc, HDAE5000_RAM_DirNames		; table base
-	add xbc, xwa			; XBC = dest ptr
-	push xbc			; push dest pointer
-	call HDAE5000_StrNCpy	; memcpy(dest, src, 16)
-	lda xsp, (xsp + 0x0A)		; deallocate 10 bytes
-	ld wa, iz			; restore param
+	ld iz, de
+	pushw 0x0010
+	push xbc
+	extz xwa
+	sll xwa, 4
+	ld xbc, HDAE5000_RAM_DirNames
+	add xbc, xwa
+	push xbc
+	call HDAE5000_StrNCpy
+	lda xsp, (xsp + 0x0A)
+	ld wa, iz
 	calr HDAE5000_HD_StoreTables
 	popw iz
 	ret
@@ -7870,10 +7882,13 @@ HDAE5000_Dir_IsBlankName:
 	pop xiz			; restore XIZ
 	ret
 
-HDAE5000_Dir_CountEmptySongs:	; 0x28F9EB (51 bytes)
-	; Number of the 16 songs of directory WA that hold no part at all
-	; (HDAE5000_Song_IsUsed = 0xFFFF).  Output: HL = that count.
-	; (Was "16 tile entries"; they are song records.)
+; ---------------------------------------------------------------------------
+; Number of the 16 songs of a directory that hold no part at all
+; (HDAE5000_Song_IsUsed = 0xFFFF).
+; In:  WA = directory
+; Out: HL = that count.
+; ---------------------------------------------------------------------------
+HDAE5000_Dir_CountEmptySongs:
 	dec 2, xsp		; allocate 2 bytes
 	push xiz		; save XIZ
 	ld (xsp + 4), wa	; save WA param on stack
@@ -7959,24 +7974,29 @@ HDAE5000_SongName_SetAndStore:	; 0x28FA56 (74 bytes)
 	inc 4, xsp		; deallocate 4 bytes
 	retd 0x0002		; return and pop 2 bytes
 
-HDAE5000_FlsRecord_Address:	; 0x28FAA0 (26 bytes)
-	; FLS record address: 0x201632 + 0x24180 + WA*0x90 = 0x2257B2 + fls*144
-	; (HDAE5000_HD_GetBlockInfo block 2).  Input: WA = FLS index.
-	; (Was "tile address"/"tile index".)
-	; Algorithm: index*144 = index*(128+16) = (index<<3 + index)<<4
-	extz xwa		; zero-extend index to 32 bits
-	ld xbc, xwa		; XBC = index
-	sll xbc, 3		; XBC = index * 8
-	add xbc, xwa		; XBC = index * 9
-	sll xbc, 4		; XBC = index * 144
-	add xbc, 0x00024180	; add tile table offset
-	ld xhl, HDAE5000_RAM_DirNames	; table base address
-	add xhl, xbc		; XHL = base + offset
+; ---------------------------------------------------------------------------
+; Address of an FLS record: HDAE5000_RAM_FlsRecords + fls * 144 (computed as
+; DirNames + 0x24180 + ((fls << 3) + fls) << 4).
+; In:  WA = FLS
+; Out: XHL = the record.
+; ---------------------------------------------------------------------------
+HDAE5000_FlsRecord_Address:
+	extz xwa
+	ld xbc, xwa
+	sll xbc, 3
+	add xbc, xwa
+	sll xbc, 4
+	add xbc, 0x00024180
+	ld xhl, HDAE5000_RAM_DirNames
+	add xhl, xbc
 	ret
 
-HDAE5000_FlsName_SetAndStore:	; 0x28FABA (47 bytes)
-	; Set FLS record WA's 16-byte name from XBC, then
-	; HDAE5000_HD_StoreTables(DE).  (Was "tile index" / "callback param".)
+; ---------------------------------------------------------------------------
+; Set an FLS record's 16-byte name and write the tables
+; (HDAE5000_HD_StoreTables(DE)).
+; In:  WA = FLS, XBC = name, DE = 1 to leave the drive spinning
+; ---------------------------------------------------------------------------
+HDAE5000_FlsName_SetAndStore:
 	pushw iz		; save IZ
 	ld iz, de		; IZ = callback param
 	pushw 0x0010		; push 16 (copy size)
@@ -7997,9 +8017,12 @@ HDAE5000_FlsName_SetAndStore:	; 0x28FABA (47 bytes)
 	popw iz			; restore IZ
 	ret
 
-HDAE5000_Fls_IsBlankName:	; 0x28FAE9 (61 bytes)
-	; Is FLS record WA's name the blank string at 0x2F8DF2 (16 spaces)?
-	; Output: HL = 0xFFFF if blank (unused), 0 otherwise.  (Was "tile entry".)
+; ---------------------------------------------------------------------------
+; Is an FLS unused?  Compares its 16-byte name with the 16-space blank string.
+; In:  WA = FLS
+; Out: HL = 0xFFFF when the name is blank (unused), 0 otherwise.
+; ---------------------------------------------------------------------------
+HDAE5000_Fls_IsBlankName:
 	dec 2, xsp		; allocate 2 bytes for result
 	pushw iz		; save IZ
 	ld iz, wa		; IZ = tile index
@@ -8054,7 +8077,7 @@ HDAE5000_FlsItem_SongRecord:
 	add xde, xwa		; XDE = row * 9
 	sll xde, 4		; XDE = row * 144
 	add xde, xbc		; XDE = row*144 + col
-	lda xwa, (0x2257e2:24); song+1 bytes of the FLS items
+	lda xwa, (HDAE5000_RAM_FlsRecords+48:24); song+1 bytes of the FLS items
 	add xwa, xde		; XWA = table + row*144 + col
 	ld a, (xwa)		; A = dimension value
 	dec 1, a		; A -= 1
@@ -8071,7 +8094,7 @@ HDAE5000_FlsItem_SongRecord:
 	add xde, xwa		; XDE = row * 9
 	sll xde, 4		; XDE = row * 144
 	add xde, xbc		; XDE = row*144 + col
-	lda xwa, (0x2257c2:24); dir+1 bytes of the FLS items
+	lda xwa, (HDAE5000_RAM_FlsRecords+16:24); dir+1 bytes of the FLS items
 	add xwa, xde		; XWA = table + index
 	ld a, (xwa)		; A = directory + 1
 	dec 1, a		; A -= 1
@@ -8126,7 +8149,7 @@ HDAE5000_FlsItem_IsSet:	; 0x28FBB1 (1497 bytes)
 	add	xiy, xde
 	sll	xiy, 0x04
 	add	xiy, xix
-	lda xde, (0x2257c2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xde, xiy
 	cp	(xde), 0x00
 	jr	z, HDAE5000_FlsItem_IsSet_Done
@@ -8137,7 +8160,7 @@ HDAE5000_FlsItem_IsSet:	; 0x28FBB1 (1497 bytes)
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x2257e2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xwa, xde
 	cp	(xwa), 0x00
 	ret nz
@@ -8146,10 +8169,14 @@ HDAE5000_FlsItem_IsSet_Done:
 	ldw	hl, 0xffff
 	ret
 
+; ---------------------------------------------------------------------------
+; Copy item BC of FLS record WA out as {u16 dir; u16 song; u8 byte80; u8
+; byte112} (the stored 1-based directory and song bytes minus 1); nothing is
+; stored when the item is empty (HDAE5000_FlsItem_IsSet).  FLS records hold
+; 32 items as parallel byte arrays at +16 (dir + 1), +48 (song + 1), +80, +112.
+; In:  WA = FLS, BC = item, XDE = destination
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_Get:
-	; XDE = destination {u16 dir; u16 song; u8 byte80; u8 byte112} of item BC of
-	; FLS record WA (the 1-based dir/song bytes minus 1); nothing when the item
-	; is empty (HDAE5000_FlsItem_IsSet).
 	dec	6, xsp
 	pushw iz                                ; push IZ
 	ld (xsp + 0x02), xde
@@ -8170,7 +8197,7 @@ HDAE5000_FlsItem_Get:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x2257c2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xwa, xde
 	ld	a, (xwa)
 	dec	1, a
@@ -8187,7 +8214,7 @@ HDAE5000_FlsItem_Get:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x2257e2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xwa, xde
 	ld	a, (xwa)
 	dec	1, a
@@ -8204,7 +8231,7 @@ HDAE5000_FlsItem_Get:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225802:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
 	ld	xbc, xwa
 	add	xbc, xde
 	ld xwa, (xsp + 0x02)
@@ -8219,7 +8246,7 @@ HDAE5000_FlsItem_Get:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225822:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
 	ld	xbc, xwa
 	add	xbc, xde
 	ld xwa, (xsp + 0x02)
@@ -8230,8 +8257,12 @@ HDAE5000_FlsItem_Get_Epilogue:
 	inc	6, xsp
 	ret
 
+; ---------------------------------------------------------------------------
+; Zero the four bytes of item BC of FLS record WA (+16, +48, +80, +112).
+; In:  WA = FLS, BC = item
+; Out: HL = 0
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_Clear:
-	; zero the four bytes of item BC of FLS record WA (+16, +48, +80, +112); HL = 0
 	ld	hl, bc
 	extz xhl
 	ld	de, wa
@@ -8241,7 +8272,7 @@ HDAE5000_FlsItem_Clear:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257c2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	ld	hl, bc
@@ -8253,7 +8284,7 @@ HDAE5000_FlsItem_Clear:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257e2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	ld	hl, bc
@@ -8265,7 +8296,7 @@ HDAE5000_FlsItem_Clear:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x225802:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	extz xbc
@@ -8275,15 +8306,19 @@ HDAE5000_FlsItem_Clear:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225822:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xwa, xde
 	ld	(xwa), 0x00
 	ld	hl, 0:i3
 	ret
 
+; ---------------------------------------------------------------------------
+; Remove item BC of FLS record WA: items BC+1..31 move down one, item 31 is
+; zeroed.
+; In:  WA = FLS, BC = item
+; Out: HL = 0
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_Remove:
-	; remove item BC of FLS record WA: items BC+1..31 move down one, item 31
-	; is zeroed; HL = 0
 	ld	ix, bc
 	inc	1, ix
 	cp	ix, 0x0020
@@ -8300,7 +8335,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xiy, (0x2257c2:24)
+	lda xiy, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xiy, xhl
 	ld	de, ix
 	extz xde
@@ -8311,7 +8346,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xbc, (0x2257c2:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xbc, xhl
 	ld	c, (xbc)
 	ld	(xiy), c
@@ -8326,7 +8361,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xiy, (0x2257e2:24)
+	lda xiy, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xiy, xhl
 	ld	de, ix
 	extz xde
@@ -8337,7 +8372,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xbc, (0x2257e2:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xbc, xhl
 	ld	c, (xbc)
 	ld	(xiy), c
@@ -8352,7 +8387,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xiy, (0x225802:24)
+	lda xiy, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xiy, xhl
 	ld	de, ix
 	extz xde
@@ -8363,7 +8398,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xbc, (0x225802:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xbc, xhl
 	ld	c, (xbc)
 	ld	(xiy), c
@@ -8378,7 +8413,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xiy, (0x225822:24)
+	lda xiy, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xiy, xhl
 	ld	de, ix
 	extz xde
@@ -8389,7 +8424,7 @@ HDAE5000_FlsItem_Remove_Loop:
 	add	xhl, xbc
 	sll	xhl, 0x04
 	add	xhl, xde
-	lda xbc, (0x225822:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xbc, xhl
 	ld	c, (xbc)
 	ld	(xiy), c
@@ -8404,7 +8439,7 @@ HDAE5000_FlsItem_Remove_Join:
 	add	xde, xbc
 	sll	xde, 0x04
 	add	xde, 0x00024180
-	lda xbc, (0x201661:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords-0x24180+47:24)
 	add	xbc, xde
 	ld	(xbc), 0x00
 	ld	bc, wa
@@ -8414,7 +8449,7 @@ HDAE5000_FlsItem_Remove_Join:
 	add	xde, xbc
 	sll	xde, 0x04
 	add	xde, 0x00024180
-	lda xbc, (0x201681:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords-0x24180+79:24)
 	add	xbc, xde
 	ld	(xbc), 0x00
 	ld	bc, wa
@@ -8424,7 +8459,7 @@ HDAE5000_FlsItem_Remove_Join:
 	add	xde, xbc
 	sll	xde, 0x04
 	add	xde, 0x00024180
-	lda xbc, (0x2016a1:24)
+	lda xbc, (HDAE5000_RAM_FlsRecords-0x24180+111:24)
 	add	xbc, xde
 	ld	(xbc), 0x00
 	extz xwa
@@ -8433,15 +8468,19 @@ HDAE5000_FlsItem_Remove_Join:
 	add	xbc, xwa
 	sll	xbc, 0x04
 	add	xbc, 0x00024180
-	lda xwa, (0x2016c1:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords-0x24180+143:24)
 	add	xwa, xbc
 	ld	(xwa), 0x00
 	ld	hl, 0:i3
 	ret
 
+; ---------------------------------------------------------------------------
+; Open a gap at item BC of FLS record WA: items BC..30 move up one (item 31 is
+; lost) and item BC is zeroed.
+; In:  WA = FLS, BC = item
+; Out: HL = 0
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_Insert:
-	; open a gap at item BC of FLS record WA: items BC..30 move up one (item
-	; 31 is lost) and item BC is zeroed; HL = 0
 	push xiz
 	ldw	iy, 0x001f
 	cp	iy, bc
@@ -8456,7 +8495,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xiz, (0x2257c2:24)
+	lda xiz, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xiz, xix
 	ld	de, iy
 	dec	1, de
@@ -8469,7 +8508,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257c2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xde, xix
 	ld	e, (xde)
 	ld	(xiz), e
@@ -8482,7 +8521,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xiz, (0x2257e2:24)
+	lda xiz, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xiz, xix
 	ld	de, iy
 	dec	1, de
@@ -8495,7 +8534,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257e2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xde, xix
 	ld	e, (xde)
 	ld	(xiz), e
@@ -8508,7 +8547,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xiz, (0x225802:24)
+	lda xiz, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xiz, xix
 	ld	de, iy
 	dec	1, de
@@ -8521,7 +8560,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x225802:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xde, xix
 	ld	e, (xde)
 	ld	(xiz), e
@@ -8534,7 +8573,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xiz, (0x225822:24)
+	lda xiz, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xiz, xix
 	ld	de, iy
 	dec	1, de
@@ -8547,7 +8586,7 @@ HDAE5000_FlsItem_Insert_Loop:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x225822:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xde, xix
 	ld	e, (xde)
 	ld	(xiz), e
@@ -8564,7 +8603,7 @@ HDAE5000_FlsItem_Insert_Join:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257c2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	ld	hl, bc
@@ -8576,7 +8615,7 @@ HDAE5000_FlsItem_Insert_Join:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x2257e2:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	ld	hl, bc
@@ -8588,7 +8627,7 @@ HDAE5000_FlsItem_Insert_Join:
 	add	xix, xde
 	sll	xix, 0x04
 	add	xix, xhl
-	lda xde, (0x225802:24)
+	lda xde, (HDAE5000_RAM_FlsRecords+80:24)
 	add	xde, xix
 	ld	(xde), 0x00
 	extz xbc
@@ -8598,7 +8637,7 @@ HDAE5000_FlsItem_Insert_Join:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225822:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
 	add	xwa, xde
 	ld	(xwa), 0x00
 	ld	hl, 0:i3
@@ -8621,7 +8660,7 @@ HDAE5000_FlsItem_Set:
 	add	xiy, xwa
 	sll	xiy, 0x04
 	add	xiy, xix
-	lda xwa, (0x2257c2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
 	ld	xix, xwa
 	add	xix, xiy
 	ld	wa, (xde)
@@ -8636,7 +8675,7 @@ HDAE5000_FlsItem_Set:
 	add	xiy, xwa
 	sll	xiy, 0x04
 	add	xiy, xix
-	lda xwa, (0x2257e2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
 	ld	xix, xwa
 	add	xix, xiy
 	ld	wa, (xde+2)
@@ -8651,7 +8690,7 @@ HDAE5000_FlsItem_Set:
 	add	xiy, xwa
 	sll	xiy, 0x04
 	add	xiy, xix
-	lda xwa, (0x225802:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
 	ld	xix, xwa
 	add	xix, xiy
 	ld	a, (xde+4)
@@ -8664,7 +8703,7 @@ HDAE5000_FlsItem_Set:
 	add	xhl, xwa
 	sll	xhl, 0x04
 	add	xhl, xbc
-	lda xwa, (0x225822:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
 	ld	xbc, xwa
 	add	xbc, xhl
 	ld	a, (xde+5)
@@ -8673,8 +8712,12 @@ HDAE5000_FlsItem_Set:
 	calr	HDAE5000_HD_StoreTables
 	retd 0x0002
 
+; ---------------------------------------------------------------------------
+; Item BC of FLS record WA: its directory byte (+16) = E + 1.
+; In:  WA = FLS, BC = item, E = directory
+; Out: HL = 0
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_SetDir:
-	; item BC of FLS record WA: dir+1 byte = E+1; HL = 0
 	extz xbc
 	extz xwa
 	ld	xhl, xwa
@@ -8682,7 +8725,7 @@ HDAE5000_FlsItem_SetDir:
 	add	xhl, xwa
 	sll	xhl, 0x04
 	add	xhl, xbc
-	lda xwa, (0x2257c2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
 	ld	xbc, xwa
 	add	xbc, xhl
 	ld	a, e
@@ -8691,8 +8734,12 @@ HDAE5000_FlsItem_SetDir:
 	ld	hl, 0:i3
 	ret
 
+; ---------------------------------------------------------------------------
+; Item BC of FLS record WA: its song byte (+48) = E + 1.
+; In:  WA = FLS, BC = item, E = song
+; Out: HL = 0
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_SetSong:
-	; item BC of FLS record WA: song+1 byte = E+1; HL = 0
 	extz xbc
 	extz xwa
 	ld	xhl, xwa
@@ -8700,7 +8747,7 @@ HDAE5000_FlsItem_SetSong:
 	add	xhl, xwa
 	sll	xhl, 0x04
 	add	xhl, xbc
-	lda xwa, (0x2257e2:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
 	ld	xbc, xwa
 	add	xbc, xhl
 	ld	a, e
@@ -8709,8 +8756,12 @@ HDAE5000_FlsItem_SetSong:
 	ld	hl, 0:i3
 	ret
 
+; ---------------------------------------------------------------------------
+; Item BC of FLS record WA, when set: its byte at +80 = E (its meaning is not
+; established).
+; In:  WA = FLS, BC = item, E = value
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_SetByte80:
-	; item BC of FLS record WA, if set: byte at +80 = E
 	dec	4, xsp
 	pushw iz                                ; push IZ
 	ld	(xsp+2), e
@@ -8731,7 +8782,7 @@ HDAE5000_FlsItem_SetByte80:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225802:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
 	ld	xbc, xwa
 	add	xbc, xde
 	ld	a, (xsp+2)
@@ -8741,8 +8792,12 @@ HDAE5000_FlsItem_SetByte80_Epilogue:
 	inc 4, xsp
 	ret
 
+; ---------------------------------------------------------------------------
+; Item BC of FLS record WA, when set: its byte at +112 = E (its meaning is not
+; established).
+; In:  WA = FLS, BC = item, E = value
+; ---------------------------------------------------------------------------
 HDAE5000_FlsItem_SetByte112:
-	; item BC of FLS record WA, if set: byte at +112 = E
 	dec	4, xsp
 	pushw iz                                ; push IZ
 	ld	(xsp+2), e
@@ -8763,7 +8818,7 @@ HDAE5000_FlsItem_SetByte112:
 	add	xde, xwa
 	sll	xde, 0x04
 	add	xde, xbc
-	lda xwa, (0x225822:24)
+	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
 	ld	xbc, xwa
 	add	xbc, xde
 	ld	a, (xsp+2)
@@ -8797,7 +8852,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780		; + base offset
 	add xhl, xiz			; + column offset
-	lda xwa, (0x201656:24); 0x201656
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656
 	add xwa, xhl
 	ld xwa, (xwa)			; load slot value
 	cp xwa, 0xFFFFFFFF		; free?
@@ -8817,7 +8872,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8837,7 +8892,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8857,7 +8912,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8877,7 +8932,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8897,7 +8952,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8917,7 +8972,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8937,7 +8992,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -8957,7 +9012,7 @@ HDAE5000_Song_IsUsed:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9001,7 +9056,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201656:24); 0x201656
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9020,7 +9075,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9039,7 +9094,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9058,7 +9113,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9077,7 +9132,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9096,7 +9151,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9115,7 +9170,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9134,7 +9189,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9153,7 +9208,7 @@ HDAE5000_Song_PartMask:
 	call HDAE5000_Multiply
 	add xhl, 0x00000780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9348,7 +9403,7 @@ HDAE5000_LoadSong_Lsw:
 	add xhl, 0x780
 	add xhl, xiz
 	; Check if entry exists
-	lda xwa, (0x201656:24); 0x201656 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9395,7 +9450,7 @@ HDAE5000_LoadSong_Lsw:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup via 0x29811C
-	lda xwa, (0x201656:24); 0x201656
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -9487,7 +9542,7 @@ HDAE5000_LoadSong_Pmt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Check if entry exists
-	lda xwa, (0x20165a:24); 0x20165A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9516,7 +9571,7 @@ HDAE5000_LoadSong_Pmt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup via 0x29811C
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xbc, xwa
 	ld xwa, (xsp + 10)
@@ -9555,7 +9610,7 @@ HDAE5000_LoadSong_Pmt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table update via 0x29811C (with double dereference)
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 6)
@@ -9619,7 +9674,7 @@ HDAE5000_LoadSong_Sqt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Check if entry exists
-	lda xwa, (0x20165e:24); 0x20165E (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9656,7 +9711,7 @@ HDAE5000_LoadSong_Sqt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup via 0x29811C
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
@@ -9710,7 +9765,7 @@ HDAE5000_LoadSong_Sqt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table update via 0x29811C
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -9767,7 +9822,7 @@ HDAE5000_LoadSong_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9794,7 +9849,7 @@ HDAE5000_LoadSong_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
@@ -9832,7 +9887,7 @@ HDAE5000_LoadSong_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -9881,7 +9936,7 @@ HDAE5000_LoadSong_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xwa, (xwa)		; load table entry
 	cp xwa, 0xFFFFFFFF	; empty?
@@ -9917,7 +9972,7 @@ HDAE5000_LoadSong_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -9965,7 +10020,7 @@ HDAE5000_LoadSong_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -9990,7 +10045,7 @@ HDAE5000_LoadSong_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xbc, xwa
 	ld xwa, (xsp + 8)
@@ -10025,7 +10080,7 @@ HDAE5000_LoadSong_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -10071,7 +10126,7 @@ HDAE5000_LoadSong_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -10129,7 +10184,7 @@ HDAE5000_LoadSong_Md:
 	add xhl, 0x780
 	add xhl, xiz
 	; Check if entry exists
-	lda xwa, (0x201672:24); 0x201672 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -10165,7 +10220,7 @@ HDAE5000_LoadSong_Md:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup via 0x29811C
-	lda xwa, (0x201672:24); 0x201672
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -10224,7 +10279,7 @@ HDAE5000_LoadSong_Tlx:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, (xsp+10)
-	lda xwa, (0x201676:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
 	add	xwa, xhl
 	ld xwa, (xwa)
 	cp	xwa, 0xffffffff
@@ -10247,7 +10302,7 @@ HDAE5000_LoadSong_Tlx:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, (xsp+10)
-	lda xwa, (0x201676:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
 	add	xwa, xhl
 	ld	xbc, xwa
 	ld xwa, (xsp + 0x06)
@@ -10277,7 +10332,7 @@ HDAE5000_LoadSong_Tlx:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, (xsp+10)
-	lda xwa, (0x201676:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
 	add	xwa, xhl
 	ld	xde, xwa
 	ld xwa, (xsp + 0x02)
@@ -10689,7 +10744,7 @@ HDAE5000_SaveSong_Lsw:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup
-	lda xwa, (0x201656:24); 0x201656 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -10711,7 +10766,7 @@ HDAE5000_SaveSong_Lsw:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164c:24); 0x20164C (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+26:24); 0x20164C (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lti914_flag_done:
@@ -10770,7 +10825,7 @@ HDAE5000_SaveSong_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -10793,7 +10848,7 @@ HDAE5000_SaveSong_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164d:24); 0x20164D
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+27:24); 0x20164D
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts915_post:
@@ -10861,7 +10916,7 @@ HDAE5000_SaveSong_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -10882,7 +10937,7 @@ HDAE5000_SaveSong_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164e:24); 0x20164E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+28:24); 0x20164E
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts916_post:
@@ -10938,7 +10993,7 @@ HDAE5000_SaveSong_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -10961,7 +11016,7 @@ HDAE5000_SaveSong_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164f:24); 0x20164F
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+29:24); 0x20164F
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts917_post:
@@ -11018,7 +11073,7 @@ HDAE5000_SaveSong_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -11041,7 +11096,7 @@ HDAE5000_SaveSong_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201650:24); 0x201650
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+30:24); 0x201650
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts918_post:
@@ -11097,7 +11152,7 @@ HDAE5000_SaveSong_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -11120,7 +11175,7 @@ HDAE5000_SaveSong_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201651:24); 0x201651
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+31:24); 0x201651
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts919b_post:
@@ -11165,7 +11220,7 @@ HDAE5000_SaveSong_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
 	add xwa, xhl
 	calr HDAE5000_HD_WriteOpen
 	ld wa, hl
@@ -11228,7 +11283,7 @@ HDAE5000_SaveSong_Md:
 	call HDAE5000_Multiply		; multiply
 	add xhl, 0x780		; XHL += 1920
 	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x201672:24); XWA = 0x201672 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); XWA = 0x201672 (table base)
 	add xwa, xhl		; XWA = base + offset
 	ld xde, xwa		; XDE = table address
 	ld xwa, (xsp + 4)	; XWA = buffer ptr
@@ -11251,7 +11306,7 @@ HDAE5000_SaveSong_Md:
 	call HDAE5000_Multiply		; multiply
 	add xhl, 0x780		; XHL += 1920
 	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x201653:24); XWA = 0x201653 (flag table)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+33:24); XWA = 0x201653 (flag table)
 	add xwa, xhl		; XWA = base + offset
 	ld (xwa), 0x01	; set flag byte to 1
 .Lts91a_post:
@@ -11301,7 +11356,7 @@ HDAE5000_SaveSong_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201676:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -11324,7 +11379,7 @@ HDAE5000_SaveSong_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201654:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+34:24)
 	add xwa, xhl
 	ld (xwa), 0x01
 .Lts91b_exit:
@@ -12186,7 +12241,7 @@ HDAE5000_CopyFdSongToHd_Lsw:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table write via 0x297E16
-	lda xwa, (0x201656:24); 0x201656 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -12206,7 +12261,7 @@ HDAE5000_CopyFdSongToHd_Lsw:
 	add xhl, 0x780
 	add xhl, xiz
 	; Set flag byte to 1
-	lda xwa, (0x20164c:24); 0x20164C (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+26:24); 0x20164C (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch at 0xAC
@@ -12292,7 +12347,7 @@ HDAE5000_CopyFdSongToHd_Pmt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup
-	lda xwa, (0x20165a:24); 0x20165A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -12338,7 +12393,7 @@ HDAE5000_CopyFdSongToHd_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 8)
@@ -12365,7 +12420,7 @@ HDAE5000_CopyFdSongToHd_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164d:24); 0x20164D (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+27:24); 0x20164D (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch
@@ -12448,7 +12503,7 @@ HDAE5000_CopyFdSongToHd_Sqt:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup
-	lda xwa, (0x20165e:24); 0x20165E (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -12492,7 +12547,7 @@ HDAE5000_CopyFdSongToHd_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -12519,7 +12574,7 @@ HDAE5000_CopyFdSongToHd_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164e:24); 0x20164E (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+28:24); 0x20164E (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch
@@ -12595,7 +12650,7 @@ HDAE5000_CopyFdSongToHd_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -12636,7 +12691,7 @@ HDAE5000_CopyFdSongToHd_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -12662,7 +12717,7 @@ HDAE5000_CopyFdSongToHd_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164f:24); 0x20164F (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+29:24); 0x20164F (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -12752,7 +12807,7 @@ HDAE5000_CopyFdSongToHd_Tm:
 	add xhl, 0x780
 	add xhl, xiz
 	; Table lookup
-	lda xwa, (0x201666:24); 0x201666 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -12771,7 +12826,7 @@ HDAE5000_CopyFdSongToHd_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201650:24); 0x201650 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+30:24); 0x201650 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch
@@ -12856,7 +12911,7 @@ HDAE5000_CopyFdSongToHd_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -12874,7 +12929,7 @@ HDAE5000_CopyFdSongToHd_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201651:24); 0x201651 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+31:24); 0x201651 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -12952,7 +13007,7 @@ HDAE5000_CopyFdSongToHd_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -12993,7 +13048,7 @@ HDAE5000_CopyFdSongToHd_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 10)
@@ -13019,7 +13074,7 @@ HDAE5000_CopyFdSongToHd_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201652:24); 0x201652 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24); 0x201652 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -13100,7 +13155,7 @@ HDAE5000_CopyFdSongToHd_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -13118,7 +13173,7 @@ HDAE5000_CopyFdSongToHd_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201653:24); 0x201653 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+33:24); 0x201653 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -13218,7 +13273,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676 (table base)
 	add xwa, xhl
 	ld xde, xwa
 	ld xwa, (xsp + 4)
@@ -13238,7 +13293,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201654:24); 0x201654 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+34:24); 0x201654 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x01
 	; Final workspace dispatch
@@ -13255,23 +13310,21 @@ HDAE5000_CopyFdSongToHd_Tlx:
 	lda xsp, (xsp + 34)
 	ret
 
-HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
-	; Part 1: Clear matching entries in workspace tables
-	; ^ i.e. remove song (WA = directory, BC = song) from every FLS list:
-	;   the "workspace tables" are the 120 FLS records at 0x2257B2 (HDAE5000_HD_GetBlockInfo
-	;   block 2), 32 items each.
-	; Nested loop: IZ = 0..119, IY = 0..31
-	; For each (IZ,IY), computes table index = IZ*9*16 + IY
-	; If table[index] matches WA+1 AND table[index+0x20] matches BC+1,
-	; clears 4 related entries at offsets 0xC2, 0xE2, 0x02, 0x22
+; ---------------------------------------------------------------------------
+; Remove a song from every FLS list: for the 120 FLS records x 32 items, an
+; item whose directory byte is dir + 1 and song byte is song + 1 has its four
+; bytes cleared.
+; In:  WA = directory, BC = song
+; ---------------------------------------------------------------------------
+HDAE5000_Fls_ForgetSong:
 	pushw iz
-	ld iz, 0:i3			; IZ = 0 (outer counter)
+	ld iz, 0:i3
 	cp iz, 0x0078
-	jrl nc, .Lwh_outer_done		; skip if IZ >= 120
+	jrl nc, .Lwh_outer_done
 .Lwh_outer_loop:
-	ld iy, 0:i3			; IY = 0 (inner counter)
+	ld iy, 0:i3
 	cp iy, 0x0020
-	jrl nc, .Lwh_inner_done		; skip if IY >= 32
+	jrl nc, .Lwh_inner_done
 .Lwh_inner_loop:
 	; Compute table index: XIX = IZ * 144 + IY
 	ld hl, iy
@@ -13279,19 +13332,19 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	ld de, iz
 	extz xde
 	ld xix, xde
-	sll xix, 3			; XIX = IZ * 8
-	add xix, xde			; XIX = IZ * 9
-	sll xix, 4			; XIX = IZ * 144
-	add xix, xhl			; XIX = IZ * 144 + IY
+	sll xix, 3
+	add xix, xde
+	sll xix, 4
+	add xix, xhl
 	; Check WA match at base 0x2257C2
-	lda xde, (0x2257c2:24); XDE = 0x2257C2
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add xde, xix
-	ld e, (xde)			; E = table entry
+	ld e, (xde)
 	ld l, e
 	extz hl
-	ld de, wa			; DE = WA
-	inc 1, de			; DE = WA + 1
-	cp de, hl			; match?
+	ld de, wa
+	inc 1, de
+	cp de, hl
 	jrl nz, .Lwh_next_inner
 	; Check BC match at base 0x2257E2
 	ld hl, iy
@@ -13303,13 +13356,13 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	add xix, xde
 	sll xix, 4
 	add xix, xhl
-	lda xde, (0x2257e2:24); XDE = 0x2257E2
+	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
 	add xde, xix
 	ld e, (xde)
 	ld l, e
 	extz hl
-	ld de, bc			; DE = BC
-	inc 1, de			; DE = BC + 1
+	ld de, bc
+	inc 1, de
 	cp de, hl
 	jr nz, .Lwh_next_inner
 	; Both match — clear 4 table entries
@@ -13323,7 +13376,7 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	add xix, xde
 	sll xix, 4
 	add xix, xhl
-	lda xde, (0x2257c2:24); 0x2257C2
+	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
 	add xde, xix
 	ld (xde), 0x00
 	; Clear entry at base 0x2257E2
@@ -13336,7 +13389,7 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	add xix, xde
 	sll xix, 4
 	add xix, xhl
-	lda xde, (0x2257e2:24); 0x2257E2
+	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
 	add xde, xix
 	ld (xde), 0x00
 	; Clear entry at base 0x225802
@@ -13349,7 +13402,7 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	add xix, xde
 	sll xix, 4
 	add xix, xhl
-	lda xde, (0x225802:24); 0x225802
+	lda xde, (HDAE5000_RAM_FlsRecords+80:24)
 	add xde, xix
 	ld (xde), 0x00
 	; Clear entry at base 0x225822
@@ -13362,7 +13415,7 @@ HDAE5000_Fls_ForgetSong:	; 0x29311B (592 bytes)
 	add xix, xde
 	sll xix, 4
 	add xix, xhl
-	lda xde, (0x225822:24); 0x225822
+	lda xde, (HDAE5000_RAM_FlsRecords+112:24)
 	add xde, xix
 	ld (xde), 0x00
 .Lwh_next_inner:
@@ -13671,7 +13724,7 @@ HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
 	call HDAE5000_Multiply
 	add xhl, 0x780		; += 1920
 	add xhl, xiz
-	lda xwa, (0x201656:24); 0x201656 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -13688,7 +13741,7 @@ HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201656:24); 0x201656
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -13704,7 +13757,7 @@ HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201656:24); 0x201656
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+36:24); 0x201656
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -13721,7 +13774,7 @@ HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164c:24); 0x20164C (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+26:24); 0x20164C (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr0_exit:
@@ -13752,7 +13805,7 @@ HDAE5000_DeleteSongPart_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -13768,7 +13821,7 @@ HDAE5000_DeleteSongPart_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -13783,7 +13836,7 @@ HDAE5000_DeleteSongPart_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165a:24); 0x20165A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+40:24); 0x20165A
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -13799,7 +13852,7 @@ HDAE5000_DeleteSongPart_Pmt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164d:24); 0x20164D (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+27:24); 0x20164D (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr1_exit:
@@ -13830,7 +13883,7 @@ HDAE5000_DeleteSongPart_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -13846,7 +13899,7 @@ HDAE5000_DeleteSongPart_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -13861,7 +13914,7 @@ HDAE5000_DeleteSongPart_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20165e:24); 0x20165E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+44:24); 0x20165E
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -13877,7 +13930,7 @@ HDAE5000_DeleteSongPart_Sqt:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164e:24); 0x20164E (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+28:24); 0x20164E (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr2_exit:
@@ -13908,7 +13961,7 @@ HDAE5000_DeleteSongPart_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -13924,7 +13977,7 @@ HDAE5000_DeleteSongPart_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -13939,7 +13992,7 @@ HDAE5000_DeleteSongPart_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201662:24); 0x201662
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24); 0x201662
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -13955,7 +14008,7 @@ HDAE5000_DeleteSongPart_Cmp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20164f:24); 0x20164F (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+29:24); 0x20164F (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr3_exit:
@@ -13986,7 +14039,7 @@ HDAE5000_DeleteSongPart_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -14002,7 +14055,7 @@ HDAE5000_DeleteSongPart_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -14017,7 +14070,7 @@ HDAE5000_DeleteSongPart_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201666:24); 0x201666
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+52:24); 0x201666
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -14033,7 +14086,7 @@ HDAE5000_DeleteSongPart_Tm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201650:24); 0x201650 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+30:24); 0x201650 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr4_exit:
@@ -14064,7 +14117,7 @@ HDAE5000_DeleteSongPart_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -14080,7 +14133,7 @@ HDAE5000_DeleteSongPart_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -14095,7 +14148,7 @@ HDAE5000_DeleteSongPart_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166a:24); 0x20166A
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24); 0x20166A
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -14111,7 +14164,7 @@ HDAE5000_DeleteSongPart_Msp:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201651:24); 0x201651 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+31:24); 0x201651 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr5_exit:
@@ -14142,7 +14195,7 @@ HDAE5000_DeleteSongPart_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -14158,7 +14211,7 @@ HDAE5000_DeleteSongPart_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -14173,7 +14226,7 @@ HDAE5000_DeleteSongPart_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x20166e:24); 0x20166E
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24); 0x20166E
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -14189,7 +14242,7 @@ HDAE5000_DeleteSongPart_Rcm:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201652:24); 0x201652 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24); 0x201652 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr6_exit:
@@ -14220,7 +14273,7 @@ HDAE5000_DeleteSongPart_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -14236,7 +14289,7 @@ HDAE5000_DeleteSongPart_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -14251,7 +14304,7 @@ HDAE5000_DeleteSongPart_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201672:24); 0x201672
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+64:24); 0x201672
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -14267,7 +14320,7 @@ HDAE5000_DeleteSongPart_Md:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201653:24); 0x201653 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+33:24); 0x201653 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr7_exit:
@@ -14298,7 +14351,7 @@ HDAE5000_DeleteSongPart_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676 (table base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676 (table base)
 	add xwa, xhl
 	ld xwa, (xwa)
 	cp xwa, 0xFFFFFFFF
@@ -14314,7 +14367,7 @@ HDAE5000_DeleteSongPart_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676
 	add xwa, xhl
 	ld xwa, (xwa)
 	call HDAE5000_HD_FreeChain
@@ -14329,7 +14382,7 @@ HDAE5000_DeleteSongPart_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201676:24); 0x201676
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24); 0x201676
 	ld xbc, xwa
 	add xbc, xhl
 	ld xwa, 0xFFFFFFFF
@@ -14345,7 +14398,7 @@ HDAE5000_DeleteSongPart_Tlx:
 	call HDAE5000_Multiply
 	add xhl, 0x780
 	add xhl, xiz
-	lda xwa, (0x201654:24); 0x201654 (flag base)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+34:24); 0x201654 (flag base)
 	add xwa, xhl
 	ld (xwa), 0x00
 .Lcr8_exit:
@@ -14710,7 +14763,7 @@ HDAE5000_RcmStream_Read:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, xiz
-	lda xwa, (0x20166e:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
 	add	xwa, xhl
 	ld	xde, xwa
 	ld xwa, (xsp + 0x04)
@@ -14734,7 +14787,7 @@ HDAE5000_RcmStream_Read_Skip:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, xiz
-	lda xwa, (0x20166e:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
 	add	xwa, xhl
 	ld	xde, xwa
 	ld xwa, (xsp + 0x04)
@@ -14782,7 +14835,7 @@ HDAE5000_RcmStream_Write:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, xiz
-	lda xwa, (0x201652:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
 	add	xwa, xhl
 	ld	(xwa), 0x01
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
@@ -14810,7 +14863,7 @@ HDAE5000_RcmStream_Write_Skip2:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, xiz
-	lda xwa, (0x201652:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
 	add	xwa, xhl
 	ld	(xwa), 0x01
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 2
@@ -14955,7 +15008,7 @@ HDAE5000_HD_GetSongInfo:
 	call HDAE5000_Multiply
 	add	xhl, 0x00000780
 	add	xhl, xiz
-	lda xwa, (0x20164c:24)
+	lda xwa, (HDAE5000_RAM_SongRecords-0x780+26:24)
 	add	xwa, xhl
 	push xwa
 	ld xwa, (xsp + 0x0a)
@@ -20101,23 +20154,23 @@ HDAE5000_HD_Init_SpaceFillLoop:
 	inc 1, xix
 	jp HDAE5000_HD_Init_SpaceFillLoop                             ; jp 0x2972a1
 .LHD_Init_SpaceFillLoop_Skip1:
-	ld	(0x229D9F:24), 0
-	ld	(0x229DDA:24), 0
+	ld	(HDAE5000_RAM_DirBrowserPage:24), 0
+	ld	(HDAE5000_RAM_DirBrowserCursors:24), 0
 	ld	(0x229DDB:24), 0
 	ld	(0x229DDC:24), 0
 	ld	(0x229DDD:24), 0
 	ld	(0x229DDE:24), 0
-	ld	(0x229DDF:24), 0
+	ld	(HDAE5000_RAM_DirBrowserRowBytes:24), 0
 	ld	(0x229DD6:24), 0
-	ld	(0x229DA0:24), 0
-	ld	(0x229E57:24), 0
+	ld	(HDAE5000_RAM_FlsBrowserPage:24), 0
+	ld	(HDAE5000_RAM_FlsBrowserCursors:24), 0
 	ld	(0x229E58:24), 0
 	ld	(0x229E59:24), 0
 	ld	(0x229E5A:24), 0
 	ld	(0x229E5B:24), 0
-	ld	(0x229E5C:24), 0
+	ld	(HDAE5000_RAM_FlsBrowserRowBytes:24), 0
 	xor	bc, bc
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 HDAE5000_HD_Init_ClearLoop1:
 	cp	bc, 0x0078
 	jp	z, (.LHD_Init_ClearLoop1_Skip1:24)
@@ -20127,7 +20180,7 @@ HDAE5000_HD_Init_ClearLoop1:
 	jp HDAE5000_HD_Init_ClearLoop1                             ; jp 0x297318
 .LHD_Init_ClearLoop1_Skip1:
 	xor	bc, bc
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 HDAE5000_HD_Init_ClearLoop2:
 	cp	bc, 0x0078
 	jp	z, (.LHD_Init_ClearLoop2_Skip1:24)
@@ -22348,8 +22401,10 @@ HDAE5000_NameList5_Contains_CharLoop:
 HDAE5000_NameList5_Contains_Return:
 	ret
 
+; ---------------------------------------------------------------------------
+; A = 1 when the 26 bytes at XIX are all spaces, else 0 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_Name26_IsBlank:
-	; A = 1 if the 26 bytes at XIX are all spaces, else 0 (unreachable)
 	ld	xbc, 0:i3
 HDAE5000_Name26_IsBlank_Loop:
 	cp	xbc, 0x0000001a
@@ -22621,8 +22676,11 @@ HDAE5000_HD_ClearStatusBytes:
 	ld	(HDAE5000_RAM_HdStatusBytes+9:24), 0
 	ret
 
+; ---------------------------------------------------------------------------
+; A = 1 when the 26-byte name buffer at 0x200C98 holds a non-space, else 0
+; (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_NameBuf_IsNotBlank:
-	; A = 1 if the 26-byte name buffer 0x200C98 holds a non-space, else 0 (unreachable)
 	push xbc
 	push xix
 	ld	a, 0x00:opc
@@ -22740,7 +22798,7 @@ HDAE5000_DeadLib_FindFreeSlot32_Return:
 	jp HDAE5000_DeadLib_SelectNextFile_Return                             ; jp 0x298d8e
 HDAE5000_DeadLib_SelectNextFile_NextDir:
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -22752,7 +22810,7 @@ HDAE5000_DeadLib_SelectNextFile_NextDir:
 	call HDAE5000_DirBrowser_GetCursor
 	cp	a, 0x17
 	jp	c, (.LDeadLib_SelectNextFile_NextDir_Skip1:24)
-	inc	1, (0x229D9F:24)
+	inc	1, (HDAE5000_RAM_DirBrowserPage:24)
 	call HDAE5000_DirBrowser_ClearCursor
 	call HDAE5000_DirBrowser_ClearRowByte
 	jp HDAE5000_DeadLib_SelectNextFile_Return                             ; jp 0x298d8e
@@ -22772,7 +22830,7 @@ HDAE5000_DeadLib_SelectNextFile_Return:
 	jp HDAE5000_DeadLib_SelectNextFlsItem_Return                             ; jp 0x298e17
 HDAE5000_DeadLib_SelectNextFlsItem_NextRow:
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -22784,7 +22842,7 @@ HDAE5000_DeadLib_SelectNextFlsItem_NextRow:
 	call HDAE5000_FlsBrowser_GetCursor
 	cp	a, 0x17
 	jp	c, (.LDeadLib_SelectNextFlsItem_NextRow_Skip1:24)
-	inc	1, (0x229DA0:24)
+	inc	1, (HDAE5000_RAM_FlsBrowserPage:24)
 	call HDAE5000_FlsBrowser_ClearCursor
 	call HDAE5000_FlsBrowser_ClearRowByte
 	call HDAE5000_FlsBrowser_RowAddress
@@ -22802,7 +22860,7 @@ HDAE5000_DeadLib_SelectNextFlsItem_NextRow:
 HDAE5000_DeadLib_SelectNextFlsItem_Return:
 	ret
 
-	lda xix, (0x2257c2:24)
+	lda xix, (HDAE5000_RAM_FlsRecords+16:24)
 	ld	xiy, 0:i3
 HDAE5000_DeadLib_ClearRefsToEntry_RowLoop:
 	cp	xiy, 0x00000078
@@ -23098,7 +23156,7 @@ HDAE5000_DeadLib_CopyEntryNameOut_Loop:
 	push xix
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000180
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -23120,7 +23178,7 @@ HDAE5000_DeadLib_CopyEntryNameOut_Loop:
 	push xix
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000180
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -23141,38 +23199,43 @@ HDAE5000_DeadLib_CopyEntryNameOut_Loop:
 	pop xbc
 	ret
 
+; ---------------------------------------------------------------------------
+; A = HDAE5000_RAM_DirBrowserRowBytes[DirBrowserPage * 24 + the page's cursor]
+; (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_GetRowByte:
-	; A = 0x229DDF[page 0x229D9F * 24 + its cursor] (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_DirBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 	add	xix, xwa
 	ld	a, (xix)
 	pop xbc
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; DirBrowserRowBytes[page * 24 + cursor] += 1 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_IncRowByte:
-	; 0x229DDF[page * 24 + cursor] += 1 (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_DirBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 	add	xix, xwa
 	incm8	1, (xix)
 	pop xbc
@@ -23182,33 +23245,35 @@ HDAE5000_DirBrowser_IncRowByte:
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_DirBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 	add	xix, xwa
 	decm8	1, (xix)
 	pop xbc
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; DirBrowserRowBytes[page * 24 + cursor] = 0 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_ClearRowByte:
-	; 0x229DDF[page * 24 + cursor] = 0 (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_DirBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 	add	xix, xwa
 	ld	(xix), 0x00
 	ld	a, (xix)
@@ -23219,14 +23284,14 @@ HDAE5000_DirBrowser_ClearRowByte:
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_DirBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229ddf:24)
+	lda xix, (HDAE5000_RAM_DirBrowserRowBytes:24)
 	add	xix, xwa
 	ld	(xix), 0x0f
 	ld	a, (xix)
@@ -23240,7 +23305,7 @@ HDAE5000_DirBrowser_ClearRowByte:
 	push xwa
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000180
 	call HDAE5000_HD_Mul32
 	lda xix, (HDAE5000_RAM_DirNames:24)
@@ -23376,7 +23441,7 @@ HDAE5000_DeadLib_RecallRecentDirName_Exit:
 	push xwa
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000180
 	call HDAE5000_HD_Mul32
 	lda xix, (HDAE5000_RAM_DirNames:24)
@@ -23405,7 +23470,7 @@ HDAE5000_DeadLib_CopyDirNameOut_Loop:
 	ret
 
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -23418,7 +23483,7 @@ HDAE5000_DeadLib_CopyDirNameOut_Loop:
 
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	inc 1, xwa
@@ -23431,7 +23496,7 @@ HDAE5000_DeadLib_CopyDirNameOut_Loop:
 	xor	xbc, xbc
 	xor	xde, xde
 	ld	xde, HDAE5000_RAM_DirNames
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000180
 	call HDAE5000_HD_Mul32
 	add	xwa, xde
@@ -23439,23 +23504,27 @@ HDAE5000_DeadLib_CopyDirNameOut_Loop:
 	pop xbc
 	ret
 
+; ---------------------------------------------------------------------------
+; A = HDAE5000_RAM_DirBrowserCursors[DirBrowserPage] (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_GetCursor:
-	; A = cursor 0x229DDA[page 0x229D9F] (unreachable)
 	push xix
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	ld	a, (xix)
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; DirBrowserCursors[page] += 1; A = the new value (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_IncCursor:
-	; cursor 0x229DDA[page] += 1, A = it (unreachable)
 	push xix
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	incm8	1, (xix)
 	ld	a, (xix)
@@ -23463,30 +23532,32 @@ HDAE5000_DirBrowser_IncCursor:
 	ret
 
 	push xix
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	decm8	1, (xix)
 	ld	a, (xix)
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; DirBrowserCursors[page] = 0 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_DirBrowser_ClearCursor:
-	; cursor 0x229DDA[page] = 0 (unreachable)
 	push xix
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	ld	(xix), 0x00
 	pop xix
 	ret
 
 	push xix
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	ld	(xix), 0x17
 	pop xix
@@ -23494,9 +23565,9 @@ HDAE5000_DirBrowser_ClearCursor:
 
 	push xix
 	push xwa
-	lda xix, (0x229dda:24)
+	lda xix, (HDAE5000_RAM_DirBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	add	xix, xwa
 	pop xwa
 	ld	(xix), a
@@ -23509,7 +23580,7 @@ HDAE5000_DirBrowser_ClearCursor:
 	push xwa
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000d80
 	call HDAE5000_HD_Mul32
 	lda xix, (HDAE5000_RAM_FlsRecords:24)
@@ -23645,7 +23716,7 @@ HDAE5000_DeadLib_RecallRecentFlsName_Exit:
 	push xwa
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000d80
 	call HDAE5000_HD_Mul32
 	lda xix, (HDAE5000_RAM_FlsRecords:24)
@@ -23673,15 +23744,18 @@ HDAE5000_DeadLib_CopyFlsNameOut_Loop:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; XWA = HDAE5000_RAM_FlsRecords + FlsBrowserPage * 0xD80 + cursor * 0x90, the
+; current FLS row (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_RowAddress:
-	; XWA = 0x2257B2 + page 0x229DA0 * 0xD80 + cursor * 0x90, the current FLS row (unreachable)
 	push xbc
 	push xde
 	xor	xwa, xwa
 	xor	xbc, xbc
 	xor	xde, xde
 	ld	xde, HDAE5000_RAM_FlsRecords
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000d80
 	call HDAE5000_HD_Mul32
 	add	xde, xwa
@@ -23696,7 +23770,7 @@ HDAE5000_FlsBrowser_RowAddress:
 
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	inc 1, xwa
@@ -23709,7 +23783,7 @@ HDAE5000_FlsBrowser_RowAddress:
 	xor	xbc, xbc
 	xor	xde, xde
 	ld	xde, HDAE5000_RAM_FlsRecords
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000d80
 	call HDAE5000_HD_Mul32
 	add	xwa, xde
@@ -23719,7 +23793,7 @@ HDAE5000_FlsBrowser_RowAddress:
 
 	xor	xwa, xwa
 	xor	xbc, xbc
-	ld	a, (0x229D9F:24)
+	ld	a, (HDAE5000_RAM_DirBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
@@ -23729,42 +23803,48 @@ HDAE5000_FlsBrowser_RowAddress:
 	ld	(0x229c54), wa
 	ret
 
+; ---------------------------------------------------------------------------
+; A = HDAE5000_RAM_FlsBrowserCursors[FlsBrowserPage] (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_GetCursor:
-	; A = cursor 0x229E57[page 0x229DA0] (unreachable)
 	push xix
-	lda xix, (0x229e57:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	add	xix, xwa
 	ld	a, (xix)
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; A = HDAE5000_RAM_FlsBrowserRowBytes[page * 24 + cursor] (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_GetRowByte:
-	; A = 0x229E5C[page * 24 + cursor] (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_FlsBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 	add	xix, xwa
 	ld	a, (xix)
 	pop xbc
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; FlsBrowserCursors[page] += 1; A = the new value (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_IncCursor:
-	; cursor 0x229E57[page] += 1, A = it (unreachable)
 	push xix
-	lda xix, (0x229e57:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	add	xix, xwa
 	incm8	1, (xix)
 	ld	a, (xix)
@@ -23772,28 +23852,30 @@ HDAE5000_FlsBrowser_IncCursor:
 	ret
 
 	push xix
-	lda xix, (0x229e57:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	add	xix, xwa
 	decm8	1, (xix)
 	ld	a, (xix)
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; FlsBrowserRowBytes[page * 24 + cursor] += 1 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_IncRowByte:
-	; 0x229E5C[page * 24 + cursor] += 1 (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_FlsBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 	add	xix, xwa
 	incm8	1, (xix)
 	pop xbc
@@ -23803,53 +23885,57 @@ HDAE5000_FlsBrowser_IncRowByte:
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_FlsBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 	add	xix, xwa
 	decm8	1, (xix)
 	pop xbc
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; FlsBrowserCursors[page] = 0 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_ClearCursor:
-	; cursor 0x229E57[page] = 0 (unreachable)
 	push xix
-	lda xix, (0x229e57:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	add	xix, xwa
 	ld	(xix), 0x00
 	pop xix
 	ret
 
 	push xix
-	lda xix, (0x229e57:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserCursors:24)
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	add	xix, xwa
 	ld	(xix), 0x17
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; FlsBrowserRowBytes[page * 24 + cursor] = 0 (unreachable).
+; ---------------------------------------------------------------------------
 HDAE5000_FlsBrowser_ClearRowByte:
-	; 0x229E5C[page * 24 + cursor] = 0 (unreachable)
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_FlsBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 	add	xix, xwa
 	ld	(xix), 0x00
 	pop xbc
@@ -23859,14 +23945,14 @@ HDAE5000_FlsBrowser_ClearRowByte:
 	push xix
 	push xbc
 	xor	xwa, xwa
-	ld	a, (0x229DA0:24)
+	ld	a, (HDAE5000_RAM_FlsBrowserPage:24)
 	ld	xbc, 0x00000018
 	call HDAE5000_HD_Mul32
 	ld	xix, xwa
 	xor	xwa, xwa
 	call HDAE5000_FlsBrowser_GetCursor
 	add	xwa, xix
-	lda xix, (0x229e5c:24)
+	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 	add	xix, xwa
 	ld	(xix), 0x1f
 	pop xbc

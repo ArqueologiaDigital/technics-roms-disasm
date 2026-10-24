@@ -1555,7 +1555,7 @@ HDAE5000_FlsNamingCheck:
 	cp xde, 0x0000008a
 	jrl nz, .LFS_RdFSB__a_done
 	; Sub-code 0x8A: Validate filename string and update display
-	lda xwa, (0x22ad0a:24); XWA = filename string buffer
+	lda xwa, (HDAE5000_RAM_FlsNameHistory:24); XWA = filename string buffer
 	calr HDAE5000_NameHistory_Recall            ; validate/sanitize string
 	ld xiz, xhl                              ; XIZ = validated string ptr (or NULL)
 	ld xwa, xiz
@@ -1661,7 +1661,7 @@ HDAE5000_FlsNamingCheck2:
 	cp xde, 0x0000008a
 	jrl nz, .LFS_RdFSB__b_done
 	; Sub-code 0x8A: Validate filename and update display (same as handler A)
-	lda xwa, (0x22ad0a:24); filename string buffer
+	lda xwa, (HDAE5000_RAM_FlsNameHistory:24); filename string buffer
 	calr HDAE5000_NameHistory_Recall
 	ld xiz, xhl
 	ld xwa, xiz
@@ -4120,7 +4120,7 @@ HDAE5000_CP_FD_DIRNAMECheck:
 	cp xde, 0x0000008a
 	jrl nz, .LFSD__hB_default
 	; Key 0x8A: validate string + copy
-	lda xwa, (0x22abf2:24)
+	lda xwa, (HDAE5000_RAM_DirNameHistory:24)
 	calr HDAE5000_NameHistory_Recall
 	ld xiz, xhl
 	ld xwa, xiz

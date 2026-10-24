@@ -281,6 +281,16 @@ RAM = {
     0x238F20: ("RcmStreamSong", "song of that RCM stream"),
     0x238F22: ("RcmStreamResult", "word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult"
                                   " returns it)"),
+    # thirteenth run: name histories and the (unreachable) browser library's state
+    0x22ABF2: ("DirNameHistory", "5-entry history of directory names: {u8 count, u8 recall index, u8 next"
+                                 " slot, pad, 5 x 27 bytes} (HDAE5000_NameHistory_Push / _Recall)"),
+    0x22AD0A: ("FlsNameHistory", "5-entry history of FLS names, same layout as DirNameHistory"),
+    0x229D9F: ("DirBrowserPage", "page of the directory browser (unreachable library; HD_Init sets it)"),
+    0x229DDA: ("DirBrowserCursors", "5 cursor bytes, one per directory-browser page (unreachable library)"),
+    0x229DDF: ("DirBrowserRowBytes", "120 bytes, one per directory row (unreachable library)"),
+    0x229DA0: ("FlsBrowserPage", "page of the FLS browser (unreachable library; HD_Init sets it)"),
+    0x229E57: ("FlsBrowserCursors", "5 cursor bytes, one per FLS-browser page (unreachable library)"),
+    0x229E5C: ("FlsBrowserRowBytes", "120 bytes, one per FLS row (unreachable library)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -299,6 +309,9 @@ EXTENT = {
     0x239108: 0x50,
     0x22ABC4: 0x21,
     0x22B430: 0x5000,
+    0x2257B2: 0x4380,
+    0x22ABF2: 0x8B,
+    0x22AD0A: 0x8B,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
@@ -326,6 +339,12 @@ IO = {
     0x130020: ("HDAE5000_IO_AtaDeviceControl", "ATA device control: 0x0E (SRST + nIEN) then 0x0A (nIEN)"
                                                " is HDAE5000_ATA_SoftReset"),
 }
+# The compiled C addresses a field of a song record as DirNames + field + (0x780 + dir*0x4C0 + song*0x4C) and
+# a field of an FLS record as DirNames + field + (0x24180 + fls*0x90): the constant it loads is the table base
+# MINUS what it adds back.  Those constants are written that way.
+FORMS = {v: "HDAE5000_RAM_SongRecords-0x780+%d" % (v - 0x201632) for v in range(0x20164C, 0x20167E)}
+FORMS.update({v: "HDAE5000_RAM_FlsRecords-0x24180+%d" % (v - 0x201632)
+              for v in (0x201661, 0x201681, 0x2016A1, 0x2016C1)})
 FILE_MAIN = "hd-ae5000_v2_06i.s"
 NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")
 
@@ -355,6 +374,9 @@ def main(apply):
                 if v in sym:
                     counts[sym[v]] += 1
                     return sym[v]
+                if v in FORMS:
+                    counts["FORMS"] += 1
+                    return FORMS[v]
                 for base, size in EXTENT.items():
                     if base < v < base + size:
                         counts["%s+N" % sym[base]] += 1
