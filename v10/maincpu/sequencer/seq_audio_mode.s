@@ -385,6 +385,7 @@ AccVoice_LeftPedal1_SetAndCheck:
 AccVoice_LeftPedal1_Done:
 	ret
 
+; Sets bit 0 of 0x330f when any part bit 0..5 is set in 0x3314 or 0x3315.
 AccVoice_CheckChannelSetActive:
 	ld a, (0x3314:16)
 	or a, (0x3315:16)
@@ -395,6 +396,7 @@ AccVoice_CheckChannelSetActive:
 AccVoice_ChannelActiveDone:
 	ret
 
+; Sets bits 0..5 of 0x3327 when ((0x32e4) & 7) + 1 equals the byte at 0x433.
 AccVoice_CheckBitsAndSetFlags:
 	ld de, (0x32e3:16)
 	and d, 0x7
@@ -990,6 +992,8 @@ RhythmPart1_WriteDone:
 	call AccVoiceReg_WritePart1
 	ret
 
+; Copies the event time 0x32ec to 0x342e and runs RhythmAccent_UpdateRingBufPosition, with WA
+; and DE preserved.
 RhythmAccent_CopyAndUpdateRingBuf:
 	pushw de
 	pushw wa
@@ -1000,6 +1004,12 @@ RhythmAccent_CopyAndUpdateRingBuf:
 	popw de
 	ret
 
+; Stores the timing byte of an event being written to an accompaniment ring buffer.
+;   In:  XHL = ring buffer header, IY = write index; 0x342e = event time.
+;   The byte is (0x342e) - (0x464) + (0x462) when the difference is above 0; otherwise 0x342e
+;   becomes 1 and the byte is (0x462), or 1 when 0x462 is 0.  It is written at IY, IY advances
+;   (RingBuf_AdvanceIndex) and the smallest value written is kept in 0x3376.  Runs with
+;   interrupts masked to level 6.
 RhythmAccent_UpdateRingBufPosition:
 	ld a, (0x342e:16)
 	ei 6
@@ -1372,6 +1382,8 @@ Rhythm_Send3ByteMsg:
 	call Rhythm_SendByte
 	ret
 
+; Sends the three-byte rhythm message 0xd0 0x03 0x00 (Rhythm_Send3ByteMsg) and clears the four
+; bytes 0x332f..0x3332.
 Rhythm_SendChanPressure:
 	ld a, 0xd0:opc
 	ld w, 0x3:opc
@@ -1423,6 +1435,7 @@ AccVoice_LoadAllChannelParams:
 	call VoiceParams_LoadFiveSequential
 	ret
 
+; Sends the five bytes at XIX (post-incremented) on the rhythm byte stream (Rhythm_SendByte).
 VoiceParams_LoadFiveSequential:
 	ld A, (xix+)
 	call Rhythm_SendByte

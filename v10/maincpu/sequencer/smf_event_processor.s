@@ -99,6 +99,10 @@ VoiceChannel_CombineStatusBits:
 	or a, l
 	ret
 
+; Re-applies the current data-entry parameter of the MIDI channel in 0xfab (low nibble).
+;   The channel's parameter number comes from the table at 0x10b3 (0xff = none, nothing done);
+;   its value is byte <channel> of the table that VoiceSynth_DataEntry_PtrTable lists for that
+;   parameter, stored in 0x108a before SoundGen_PrepareAndBuildVoice runs with C = parameter.
 VoiceChannel_LookupParams:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -317,6 +321,9 @@ ToneGen_StoreBadValue:
 SoundGen_LookupReturn:
 	ret
 
+; Returns the 26-byte channel record for the MIDI channel in 0xfab (low nibble).
+;   Out: XIY = record pointer from VoiceChannel_ParamTable1 when (0x11f8) = 1, else from
+;   VoiceChannel_GetParamBlockAlt_Data (which swaps channels 9 and 15).  XHL = the same pointer.
 VoiceChannel_GetParamBlock:
 	xor h, h
 	ld l, (4011:16)
@@ -10822,6 +10829,7 @@ VoiceParam_ClampAndValidate_Tramp:
 SeqDispatch_TrampolineB:
 	jp	Rhythm_TailPadding
 
+; Alias entry: jumps to Rhythm_DispatchNote.
 Rhythm_DispatchNote_Tramp:
 	jp Rhythm_DispatchNote
 
@@ -10976,6 +10984,10 @@ VoiceParam_ClampAndStore:
 	ld (0x32f7:16), h
 	ret
 
+; Normalises a (number L, bank H) tone selection.
+;   L below 0x80: HL becomes the word L (bank H & 7) of VoiceParam_BankProgramWords.
+;   0x80..0xef: banks above 7 become 0 and numbers above 0x9d become 0.
+;   0xf0 and up: H = 0, L = 0x80 + (L & 15).
 VoiceParam_ClampAndValidate:
 	cp l, 0x80
 	jr c, VoiceParam_Clamp_LookupTable

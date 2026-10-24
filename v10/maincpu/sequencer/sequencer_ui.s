@@ -2256,6 +2256,7 @@ IvNamingExit_ScreenData_Epilogue:
 	lda	xsp, (xsp+178)
 	ret
 
+; Out: L = byte A of the part-type table at 0xf1a0.
 TrAsGrid_LookupByteTable:
 	extz wa
 	lda xbc, (0xf1a0:16)

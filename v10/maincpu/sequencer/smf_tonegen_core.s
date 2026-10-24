@@ -846,6 +846,7 @@ SoundGen_ScanBitmap_Next:
 	jrl ule, SoundGen_ScanBitmap_Loop
 	ret
 
+; Returns W = 1.
 FloppyIO_ReturnReady:
 	ld w, 0x1:opc
 	ret
@@ -1683,6 +1684,9 @@ SeqTrack_ScaledDelta_PassThrough:
 SeqTrack_ScaledDelta_Return:
 	ret
 
+; Reads a variable-length value from the SMF file (FloppyIO_ClearTrackParseBuffer,
+; FloppyIO_ReadVariableLength) and, if the read succeeded (FILEIO_BLOCK_BYTES not negative),
+; dispatches the part event (SeqTrack_DispatchPartEvt).
 Sequencer_ValidateFileData:
 	call FloppyIO_ClearTrackParseBuffer
 	call FloppyIO_ReadVariableLength
@@ -5472,6 +5476,10 @@ VoiceParam_ReadUpdate_11_Skip:
 VoiceParam_ReadUpdate_11_Return:
 	ret
 
+; Steps the SMF reader offset IY (low byte) one byte forward; past 0xff it follows the block
+; link at XIX+3: 0xffff sets error 2, a block above (0x286d) error 10, a block not in use error
+; 11; otherwise 0x28af = the block and VoiceChannel_CopyParamBlock runs.  The page pointer at
+; 0x10fd is saved in bank register 0x38 and restored.
 ToneGen_ValidateAndSelectVoice:
 	push xiz
 	ld xiz, (4349:16)

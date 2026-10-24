@@ -2470,6 +2470,8 @@ TempoRingBuf_ReadLoop:
 	ld a, l
 	ret
 
+; Reads BC bytes from the tempo ring buffer (TempoRingBuf_ReadLoop) into the buffer at 0x7f36;
+; when bit 4 of 0x7f15 is set it is cleared and the second byte of the buffer is zeroed.
 MidiSeqBuf_ScanAllEntries:
 	xor ix, ix
 

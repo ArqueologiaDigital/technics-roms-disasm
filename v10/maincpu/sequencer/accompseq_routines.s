@@ -292,6 +292,10 @@ AccompSeq_GetBlockBase:
 	ld	xiy, xwa
 	ret
 
+; Returns the address of the accompaniment-sequence read position.
+;   With (0x7e25) >= 0x80 and bit 0 of 0x7e6d clear: XIY = 0x1e8b00 + (page 0x7e42 & 0xfff) * 256
+;   + (offset 0x7e44 & 0xff), in the MIDI sequence buffer pool.  Otherwise XIY = the offset word
+;   and the page is put in bank register 0xe2.
 ResolveVRAMAddressForVoice:
 	cp (0x7e25:16), 128
 	jr c, AccompSeq_ResolveVRAMFallback
@@ -552,6 +556,8 @@ AccompSeq_ReadParams:
 	calr AccompSeq_AdvancePosition
 	ret
 
+; Stores in 0x7e50 the number of bytes waiting in the accompaniment-sequence ring buffer whose
+; header is at (0x7e4c) (same rule as AccBuf_ComputeFillLevel).
 AccompSeq_CalcEventSize:
 	ld xhl, (0x7e4c:16)
 	ld wa, (xhl + 6)
@@ -578,6 +584,8 @@ AccompSeq_CalcSize_Store:
 	ld (0x7e50:16), wa
 	ret
 
+; Resets the accompaniment-sequence ring buffer header at (0x7e4c): first 0x0a, last 0xff,
+; read and write 0x0a, +8 = 0xf6.
 AccompSeq_ResetCounters:
 	ld xhl, (0x7e4c:16)
 	ldw (xhl + 0:8), 0xa
@@ -730,6 +738,9 @@ AccompSeq_NoteOn5_StoreProgram:
 AccompSeq_NoteOn5_Return:
 	ret
 
+; Timing byte for an accompaniment-sequence record (as RhythmAccent_UpdateRingBufPosition, with
+; 0x7e55 / 0x46b / 0x46d / 0x7dfc): (0x7e55) - (0x46b) + (0x46d) when positive, else 0x7e55 = 1
+; and the byte is (0x46d) (1 when 0).  Written at IY, IY advanced, minimum kept in 0x7dfc.
 AccompSeq_ResolveChannel:
 	ld a, (0x7e55:16)
 	ei 6
@@ -1167,6 +1178,7 @@ AccompSeq_InitPartFull:
 	calr AccompSeq_InitPlayState
 	ret
 
+; Calls Voice_DecodeNoteParam.
 AccompSeq_ResetMidiState:
 	call Voice_DecodeNoteParam
 	ret
@@ -1462,6 +1474,10 @@ AccompSeq_HandleSpecialMode_Skip4:
 AccompSeq_HandleSpecialMode_Return:
 	ret
 
+; Sends a controller pair for the voice in HL (Voice_DecodeNoteChannel).  When the sequencer is
+; running (0x28aa) or title 138 is showing with 0xd65 = 2, and bit 3 of 0x7f15 is clear,
+; Tempo_ProcessExpressionChange sees it first; MidiPkt_SendControlPair sends it unless bit 1 of
+; 0x7f15 is set.  Preserves HL.
 AccompSeq_OutputEvent:
 	pushw hl
 	pushw hl
@@ -1622,6 +1638,9 @@ AccompSeq_GuardedNote_Return:
 	ret
 
 
+; Stops a running accompaniment sequence: when bits 0..1 of 0x7e24 are set, clears them and bit
+; 7, sets bit 3 of 0x41f and sends all-notes-off (AccompSeq_SendAllOff).  Always clears bit 0 of
+; 0x7e6e and 0x7e6f.
 AccompSeq_CleanupSequence:
 	ld a, (0x7e24:16)
 	and a, 0x3

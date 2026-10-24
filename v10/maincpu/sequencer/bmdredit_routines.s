@@ -657,6 +657,8 @@ BmDrEdit_AllocateNote_NextSlot:
 	jr c, BmDrEdit_AllocateNote_Loop
 	ret
 
+; Leaves the editor with an error: clears bit 0 of 0x8d88, sends sound command 0xee with
+; GLOBAL_ERROR_CODE = 0x0f (SoundCtrl_SaveAndSendCmd_EE) and sets bit 4 of DEMO_CONTROL_FLAGS.
 BmDrEdit_RefreshDisplayState:
 	res 0, (0x8d88:16)
 	ldw wa, 0xf
@@ -1024,6 +1026,8 @@ BmDrEdit_RestoreEditState:
 	ldmm16 9830, 0x2768
 	ret
 
+; Moves the playback position backwards to the previous status byte, following backward block
+; links (offset restarts at 0xff); reaching the first block sets SEQ_ERROR_CODE = 0xff.
 BmDrEdit_ClearAndScanToEnd:
 	ld (SEQ_ERROR_CODE:16), 0
 
@@ -1218,6 +1222,8 @@ BmDrEdit_CompareVelocity_Return:
 	pop xiz
 	ret
 
+; Saves the playback position (block 0x28af, offset 0x2666) as the write position of the edited
+; part (0x2965) + 1: entry (0x2965) of the 4-byte table at 0x23e0.
 BmDrEdit_SaveSongPosition:
 	ld a, (0x2965:16)
 	inc 1, a
@@ -1248,6 +1254,8 @@ BmDrEdit_ReadEventAtPosition:
 	pop xiz
 	ret
 
+; When the event at the playback position is a note-on that BmDrEdit_CompareVelocity accepts,
+; continues in BmDrEdit_ReadEventAtPosition; returns otherwise.
 BmDrEdit_CheckNoteAtPosition:
 	call SeqData_ReadNextByte
 	and l, 0xf0
@@ -1626,6 +1634,7 @@ BmDrEdit_ChordScrollDown:
 	ld (0x295d:16), 4
 	ret
 
+; Returns at once (the no-op case of the velocity and duration down checks).
 BmDrEdit_NullReturn:
 	ret
 
@@ -1775,6 +1784,10 @@ BmDrEdit_RefreshAfterInsert_CheckFull:
 	calr NoteEdit_SendScrollCmds
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; Returns the visible row range of the note editor.
+;   In:  XWA -> first row byte, XBC -> second row byte.  Drum mode (bit 0 of 0x2742): (0x279e)
+;   and (0x279e) + 11.  Melodic mode: the two bytes of WidgetData_DrawbarPositionTable for the
+;   scroll index 0x2798.
 BmDrEdit_SetupScrollRegion:
 	ld xde, xwa
 	bit 0, (0x2742:16)
@@ -2499,6 +2512,7 @@ BmDrEdit_PitchOverflow_UpdateDisplay:
 	jrl nz, BmDrEdit_RefreshDisplayState
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Alias entry: jumps to BmDrEdit_BuildVoiceList.
 NoteEditSy_CallFarRoutine:
 	jrl BmDrEdit_BuildVoiceList
 
@@ -2649,6 +2663,8 @@ BmDrEdit_AdjustViewToPosition:
 	calr NoteEdit_SendScrollCmds
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; Plays the note under the editor cursor: Metronome_PlayClick, BmDrEdit_BuildNoteOnEvent, and
+; 0x295e = 134.
 BmDrEdit_SendMetronomeNoteOn:
 	calr Metronome_PlayClick
 	calr BmDrEdit_BuildNoteOnEvent
@@ -2661,6 +2677,7 @@ BmDrEdit_SendMetronomeNoteOn_Alt:
 	ld (0x295e:16), 134
 	ret
 
+; Alias entry: jumps to BmDrEdit_WriteNoteOffEntry.
 Metronome_PlayClick:
 	jr BmDrEdit_WriteNoteOffEntry
 
@@ -3296,6 +3313,7 @@ PartCtrl_ReadByteExtended:
 	extz bc
 	jp PartCtrl_ReadByte
 
+; Zero-extends BC and DE and jumps to PartCtrl_WriteByteToBuf.
 PartCtrl_WriteByte_ZeroExtended:
 	extz bc
 	extz de

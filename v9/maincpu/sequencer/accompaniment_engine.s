@@ -12291,7 +12291,7 @@ AccTone_InlineBytecodeData_Code_Helper:
 	ld	(13354:16), a
 	cp	a, 255
 	ret	nz
-	.byte 0x81, 0x19, 0x2a, 0x34
+	ld	(0x342a:16), (xbc)
 	ld	(13355:16), 0
 	ret
 AccTone_JumpTableData_Data:
