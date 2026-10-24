@@ -1,7 +1,7 @@
 {
  "date": "2026-10-24",
- "head": "0e5962d9",
- "dirty": true,
+ "head": "6b7dbde0",
+ "dirty": false,
  "rules": 3,
  "entry_snapshot": "docs/coverage/dispatch-census-2026-10-24-01.json",
  "entry_snapshot_head": "124cf509",
