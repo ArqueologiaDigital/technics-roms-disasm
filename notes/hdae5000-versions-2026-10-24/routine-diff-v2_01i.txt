@@ -1,0 +1,17 @@
+v2.06i -> v2_01i: 584 routines in v2.06i, 582 in v2_01i; 568 same, 14 changed, 2 only in v2.06i, 0 only in v2_01i
+  changed         HDAE5000_HDD_UTIL_PAGE                                    2025 ->  1034 B,  726 ->  360 insns,  456 differ
+  changed         HDAE5000_LyricJumpEditCheck                                202 ->   111 B,   71 ->   40 insns,   31 differ
+  only in v2.06i  HDAE5000_LyricForeColorCheck                               127 B
+  only in v2.06i  HDAE5000_LyricBackColorCheck                               127 B
+  changed         HDAE5000_AcLanguageText1Proc                              6009 ->  5790 B, 2031 -> 1956 insns,   75 differ
+  changed         HDAE5000_LyricBoxProc                                     2301 ->  2325 B,  629 ->  621 insns,   65 differ
+  changed         HDAE5000_Lyrics_ResetState                                 381 ->   222 B,   98 ->   49 insns,   50 differ
+  changed         HDAE5000_FDFileSelectProc                                 2384 ->  2461 B,  653 ->  672 insns,   27 differ
+  changed         HDAE5000_CopyFdSongToHd                                    823 ->   717 B,  260 ->  229 insns,   32 differ
+  changed         HDAE5000_CopyFdSongToHd_Tlx                                329 ->   302 B,   98 ->   88 insns,   11 differ
+  changed         HDAE5000_HD_Init_SramClearLoop                             165 ->   153 B,   31 ->   29 insns,    2 differ
+  changed         HDAE5000_HD_Init_ClearLoop2                                261 ->   243 B,   68 ->   62 insns,    6 differ
+  changed         HDAE5000_HD_Format_CompareLoop                             347 ->   329 B,   86 ->   80 insns,    6 differ
+  changed         HDAE5000_HD_BuildSettingsSector_CopyVersion                 93 ->    71 B,   28 ->   22 insns,    6 differ
+  changed         HDAE5000_HD_LoadSettings                                    71 ->    55 B,   20 ->   16 insns,    4 differ
+  changed         HDAE5000_HD_SaveSettings_CopyLoop                           92 ->    76 B,   27 ->   23 insns,    4 differ

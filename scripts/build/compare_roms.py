@@ -30,6 +30,8 @@ for entry in [
 	("subcpu v140 update image",	"kn5000_subprogram_v140_compressed.rom",	"kn5000_subprogram_v140_compressed.rom",	0x3E0000),
 	("subcpu boot",		"kn5000_subcpu_boot.ic30",	"kn5000_subcpu_boot.llvm.rom",		0xFE0000),
 	("hdae5000",		"hd-ae5000_v2_06i.ic4",		"hd-ae5000_v2_06i.llvm.rom",		0x280000),
+	# v2.01i: reference copied (uncommitted) from the private romset, HDAE5000_V201_REF.
+	("hdae5000 v2.01i",	"hd-ae5000_v2_01i.ic4",		"hd-ae5000_v2_01i.llvm.rom",		0x280000),
 	("table data",		"kn5000_table_data.rom",	"kn5000_table_data.llvm.rom",		0x800000),
 	("custom data",		"kn5000_custom_data.ic19",	"kn5000_custom_data.llvm.rom",		0x300000),
 ]:
