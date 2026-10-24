@@ -392,7 +392,7 @@ Kernel_InitRam__free_nodes:
 	djnz8 b, Kernel_InitRam__free_nodes          ; F85687/F981EC  ca 1c f6   djnz B,0xf981e5
 	ldw iy, KERNEL_FREE_LIST                     ; F8568A/F981EF  a=35 c4 03 c=35 70 01   c: ld IY,0x0170   the FREE LIST head
 	extz XIY                                     ; F8568D/F981F2  ed 12   extz XIY
-	m_st_mr16 MDD+r5, 0x00, r5                   ; F8568F/F981F4  bd 00 55   ld (XIY+0x00),IY   ld (XIY+0x00),IY -- head->next = head
+	ld	(xiy+0:8), iy                        ; F8568F/F981F4  bd 00 55   ld (XIY+0x00),IY   ld (XIY+0x00),IY -- head->next = head
 	ld (XIY+0x02),IY                             ; F85692/F981F7  bd 02 55   ld (XIY+0x02),IY   head->prev = head
 	ldw ix, KERNEL_NODE_POOL                     ; F85695/F981FA  a=34 84 03 c=34 50 01   c: ld IX,0x0150
 	ld b, KERNEL_NODE_COUNT:opc                     ; F85698/F981FD  a=22 08 c=22 04   c: ld B,0x04
@@ -400,7 +400,7 @@ Kernel_InitRam__free_append:
 	extz XIX                                     ; F8569A/F981FF  ec 12   extz XIX
 	extz XIY                                     ; F8569C/F98201  ed 12   extz XIY
 	extz XWA                                     ; F8569E/F98203  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F856A0/F98205  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
+	ld	(xix+0:8), iy                        ; F856A0/F98205  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F856A3/F98208  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F856A6/F9820B  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
 	ld (XWA),IX                                  ; F856A9/F9820E  b0 54   ld (XWA),IX   head->prev->next = n
@@ -689,9 +689,9 @@ Kernel_Dispatch:
 	or WA,WA                                     ; F85718/F9827D  d8 e0   or WA,WA
 	jr nz, Kernel_ResumeTask                     ; F8571A/F9827F  6e 47   jr NZ,0xf982c8
 	xor WA,WA                                    ; F8571C/F98281  d8 d0   xor WA,WA
-	m_cp_mr MW8, KERNEL_CURRENT_TASK, r0         ; F8571E/F98283  a=d0 bf f8 c=d0 91 f8   c: cp (0x91),WA   (0xBF) = the task whose stack we are on, 0 = none
+	cp	(KERNEL_CURRENT_TASK:8), wa          ; F8571E/F98283  a=d0 bf f8 c=d0 91 f8   c: cp (0x91),WA   (0xBF) = the task whose stack we are on, 0 = none
 	jr z, Kernel_Dispatch__drain_ticks           ; F85721/F98286  66 12   jr Z,0xf9829a
-	m_ld_rm MW8, KERNEL_CURRENT_TASK, r5         ; F85723/F98288  a=d0 bf 25 c=d0 91 25   c: ld IY,(0x91)
+	ld	iy, (KERNEL_CURRENT_TASK:8)          ; F85723/F98288  a=d0 bf 25 c=d0 91 25   c: ld IY,(0x91)
 	extz XIY                                     ; F85726/F9828B  ed 12   extz XIY
 	ld (XIY+0x04),XSP                            ; F85728/F9828D  bd 04 67   ld (XIY+0x04),XSP   save its XSP into the TCB
 	ld XSP,KERNEL_STACK_TOP                      ; F8572B/F98290  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   and run the kernel on the boot stack
@@ -710,7 +710,7 @@ Kernel_Dispatch__pick_task:
 	ldw ix, KERNEL_READY_HEADS                   ; F85748/F982AD  a=34 30 03 c=34 24 01   c: ld IX,0x0124   the THREE ready-queue heads, 4 bytes each
 	extz XIX                                     ; F8574B/F982B0  ec 12   extz XIX
 Kernel_Dispatch__scan:
-	m_ld_rm MWD+r4, 0x00, r3                     ; F8574D/F982B2  9c 00 23   ld HL,(XIX+0x00)   HL = head->next; a head that points at itself is an EMPTY queue
+	ld	hl, (xix+0:8)                        ; F8574D/F982B2  9c 00 23   ld HL,(XIX+0x00)   HL = head->next; a head that points at itself is an EMPTY queue
 	cp HL,IX                                     ; F85750/F982B5  dc f3   cp HL,IX
 	jr nz, Kernel_Dispatch__switch_to            ; F85752/F982B7  6e 07   jr NZ,0xf982c0
 	inc 4,IX                                     ; F85754/F982B9  dc 64   inc 4,IX
@@ -814,9 +814,9 @@ Kernel_ServiceSoftTimers__next:
 	ld XWA,(XIX+0x04)                            ; F8577D/F982E2  ac 04 20   ld XWA,(XIX+0x04)
 	cp XWA,0xffffffff                            ; F85780/F982E5  e8 cf ff ff ff ff   cp XWA,0xffffffff   +4 = the callback, 0xFFFFFFFF = the slot is empty
 	jr z, Kernel_ServiceSoftTimers__step         ; F85786/F982EB  66 0c   jr Z,0xf982f9
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85788/F982ED  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85788/F982ED  9c 00 20   ld WA,(XIX+0x00)
 	dec 1,WA                                     ; F8578B/F982F0  d8 69   dec 1,WA   +0 = the countdown
-	m_st_mr16 MDD+r4, 0x00, r0                   ; F8578D/F982F2  bc 00 50   ld (XIX+0x00),WA
+	ld	(xix+0:8), wa                        ; F8578D/F982F2  bc 00 50   ld (XIX+0x00),WA
 	or WA,WA                                     ; F85790/F982F5  d8 e0   or WA,WA
 	jr z, Kernel_ServiceSoftTimers__fire         ; F85792/F982F7  66 12   jr Z,0xf9830b
 Kernel_ServiceSoftTimers__step:
@@ -829,7 +829,7 @@ Kernel_ServiceSoftTimers__step:
 	ret                                          ; F857A5/F9830A  0e   ret
 Kernel_ServiceSoftTimers__fire:
 	ld WA,(XIX+0x02)                             ; F857A6/F9830B  9c 02 20   ld WA,(XIX+0x02)   +2 = the reload value
-	m_st_mr16 MDD+r4, 0x00, r0                   ; F857A9/F9830E  bc 00 50   ld (XIX+0x00),WA
+	ld	(xix+0:8), wa                        ; F857A9/F9830E  bc 00 50   ld (XIX+0x00),WA
 	ld XWA,Kernel_ServiceSoftTimers__step        ; F857AC/F98311  a=40 94 57 f8 00 c=40 f9 82 f9 00   c: ld XWA,0x00f982f9   push the loop's continuation, then jump to the callback
 	push XWA                                     ; F857B1/F98316  38   push XWA
 	ld XWA,(XIX+0x04)                            ; F857B2/F98317  ac 04 20   ld XWA,(XIX+0x04)
@@ -1100,7 +1100,7 @@ Kernel_StartTask:
 	sub XIY,0x00000022                           ; F85806/F9836B  ed ca 22 00 00 00   sub XIY,0x00000022   room for 7 registers (0x1C) + SR (2) + PC (4)
 	ld WA,(XHL+0x08)                             ; F8580C/F98371  9b 08 20   ld WA,(XHL+0x08)   record+8 = the initial SR, 0x8800 in every record
 	ld (XIY+0x1c),WA                             ; F8580F/F98374  bd 1c 50   ld (XIY+0x1c),WA   ...lands where `pop SR` will read it
-	m_ld_rm MLD+r3, 0x00, r0                     ; F85812/F98377  ab 00 20   ld XWA,(XHL+0x00)   ld XWA,(XHL+0x00) -- record+0 = the entry address
+	ld	xwa, (xhl+0:8)                       ; F85812/F98377  ab 00 20   ld XWA,(XHL+0x00)   ld XWA,(XHL+0x00) -- record+0 = the entry address
 	ld (XIY+0x1e),XWA                            ; F85815/F9837A  bd 1e 60   ld (XIY+0x1e),XWA   ...lands where the final `ret` will read it
 	ld (XIX+0x04),XIY                            ; F85818/F9837D  bc 04 65   ld (XIX+0x04),XIY   TCB+4 = the saved XSP, which is what Kernel_Dispatch loads
 	ld A,(XHL+0x0a)                              ; F8581B/F98380  8b 0a 21   ld A,(XHL+0x0a)   record+10 = the priority level, 1..3
@@ -1114,7 +1114,7 @@ Kernel_StartTask:
 	extz XIX                                     ; F85833/F98398  ec 12   extz XIX
 	extz XIY                                     ; F85835/F9839A  ed 12   extz XIY
 	extz XWA                                     ; F85837/F9839C  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85839/F9839E  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
+	ld	(xix+0:8), iy                        ; F85839/F9839E  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F8583C/F983A1  9d 02 20   ld WA,(XIY+0x02)   head->prev
 	ld (XIX+0x02),WA                             ; F8583F/F983A4  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
 	ld (XWA),IX                                  ; F85842/F983A7  b0 54   ld (XWA),IX   head->prev->next = n
@@ -1167,7 +1167,7 @@ Kernel_StartTask:
 Kernel_ExitTask:
 	ei 0x06                                      ; F8584A/F983AF  06 06   ei 0x06
 	ld XSP,KERNEL_STACK_TOP                      ; F8584C/F983B1  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   the BOOT stack -- the task's own stack is abandoned
-	m_ld_rm MW8, KERNEL_CURRENT_TASK, r4         ; F85851/F983B6  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the running task's control block
+	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85851/F983B6  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the running task's control block
 	extz XIX                                     ; F85854/F983B9  ec 12   extz XIX
 	ld (XIX+0x09),0x00                           ; F85856/F983BB  bc 09 00 00   ld (XIX+0x09),0x00   state 0 = not live
 	xor WA,WA                                    ; F8585A/F983BF  d8 d0   xor WA,WA
@@ -1175,9 +1175,9 @@ Kernel_ExitTask:
 	extz XIX                                     ; F8585F/F983C4  ec 12   extz XIX
 	extz XWA                                     ; F85861/F983C6  e8 12   extz XWA
 	extz XHL                                     ; F85863/F983C8  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85865/F983CA  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
+	ld	wa, (xix+0:8)                        ; F85865/F983CA  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
 	ld HL,(XIX+0x02)                             ; F85868/F983CD  9c 02 23   ld HL,(XIX+0x02)   prev
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F8586B/F983D0  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
+	ld	(xhl+0:8), wa                        ; F8586B/F983D0  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
 	ld (XWA+0x02),HL                             ; F8586E/F983D3  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	jrl Kernel_Dispatch                          ; F85871/F983D6  78 a1 fe   jrl T,0xf9827a
 
@@ -1302,20 +1302,20 @@ Kernel_YieldRotate:
 	add WA,KERNEL_READY_HEADS-4                  ; F85886/F983EB  a=d8 c8 2c 03 c=d8 c8 20 01   c: add WA,0x0120   head = 0x032C + A*4
 	ld IY,WA                                     ; F8588A/F983EF  d8 8d   ld IY,WA
 	extz XIY                                     ; F8588C/F983F1  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F8588E/F983F3  9d 00 24   ld IX,(XIY+0x00)   IX = head->next
+	ld	ix, (xiy+0:8)                        ; F8588E/F983F3  9d 00 24   ld IX,(XIY+0x00)   IX = head->next
 	cp IX,(XIY+0x02)                             ; F85891/F983F6  9d 02 f4   cp IX,(XIY+0x02)   == head->prev? then 0 or 1 element
 	jrl z, Kernel_ResumeTask                     ; F85894/F983F9  76 cc fe   jrl Z,0xf982c8   nothing to rotate: unwind and return
 	extz XIX                                     ; F85897/F983FC  ec 12   extz XIX
 	extz XWA                                     ; F85899/F983FE  e8 12   extz XWA
 	extz XHL                                     ; F8589B/F98400  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F8589D/F98402  9c 00 20   ld WA,(XIX+0x00)   WA = n->next
+	ld	wa, (xix+0:8)                        ; F8589D/F98402  9c 00 20   ld WA,(XIX+0x00)   WA = n->next
 	ld HL,(XIX+0x02)                             ; F858A0/F98405  9c 02 23   ld HL,(XIX+0x02)   HL = n->prev
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F858A3/F98408  bb 00 50   ld (XHL+0x00),WA   prev->next = next
+	ld	(xhl+0:8), wa                        ; F858A3/F98408  bb 00 50   ld (XHL+0x00),WA   prev->next = next
 	ld (XWA+0x02),HL                             ; F858A6/F9840B  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	extz XIX                                     ; F858A9/F9840E  ec 12   extz XIX
 	extz XIY                                     ; F858AB/F98410  ed 12   extz XIY
 	extz XWA                                     ; F858AD/F98412  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F858AF/F98414  bc 00 55   ld (XIX+0x00),IY   n->next = head
+	ld	(xix+0:8), iy                        ; F858AF/F98414  bc 00 55   ld (XIX+0x00),IY   n->next = head
 	ld WA,(XIY+0x02)                             ; F858B2/F98417  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F858B5/F9841A  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
 	ld (XWA),IX                                  ; F858B8/F9841D  b0 54   ld (XWA),IX   head->prev->next = n
@@ -1374,20 +1374,20 @@ Kernel_RotateQueue:
 	add WA,KERNEL_READY_HEADS-4                  ; F858C9/F9842E  a=d8 c8 2c 03 c=d8 c8 20 01   c: add WA,0x0120
 	ld IY,WA                                     ; F858CD/F98432  d8 8d   ld IY,WA
 	extz XIY                                     ; F858CF/F98434  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F858D1/F98436  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F858D1/F98436  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,(XIY+0x02)                             ; F858D4/F98439  9d 02 f4   cp IX,(XIY+0x02)
 	jr z, Kernel_RotateQueue__ret                ; F858D7/F9843C  66 26   jr Z,0xf98464
 	extz XIX                                     ; F858D9/F9843E  ec 12   extz XIX
 	extz XWA                                     ; F858DB/F98440  e8 12   extz XWA
 	extz XHL                                     ; F858DD/F98442  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F858DF/F98444  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F858DF/F98444  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F858E2/F98447  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F858E5/F9844A  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F858E5/F9844A  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F858E8/F9844D  b8 02 53   ld (XWA+0x02),HL
 	extz XIX                                     ; F858EB/F98450  ec 12   extz XIX
 	extz XIY                                     ; F858ED/F98452  ed 12   extz XIY
 	extz XWA                                     ; F858EF/F98454  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F858F1/F98456  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F858F1/F98456  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F858F4/F98459  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F858F7/F9845C  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F858FA/F9845F  b0 54   ld (XWA),IX
@@ -1478,13 +1478,13 @@ Kernel_BlockSelf:
 	push XIX                                     ; F8590B/F98470  3c   push XIX
 	push XIY                                     ; F8590C/F98471  3d   push XIY
 	push XIZ                                     ; F8590D/F98472  3e   push XIZ   the seven Kernel_ResumeTask will pop
-	m_ld_rm MW8, KERNEL_CURRENT_TASK, r4         ; F8590E/F98473  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the RUNNING task
+	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F8590E/F98473  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the RUNNING task
 	extz XIX                                     ; F85911/F98476  ec 12   extz XIX
 	extz XWA                                     ; F85913/F98478  e8 12   extz XWA
 	extz XHL                                     ; F85915/F9847A  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85917/F9847C  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
+	ld	wa, (xix+0:8)                        ; F85917/F9847C  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
 	ld HL,(XIX+0x02)                             ; F8591A/F9847F  9c 02 23   ld HL,(XIX+0x02)   prev
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F8591D/F98482  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
+	ld	(xhl+0:8), wa                        ; F8591D/F98482  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
 	ld (XWA+0x02),HL                             ; F85920/F98485  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	ld (XIX+0x09),0x03                           ; F85923/F98488  bc 09 00 03   ld (XIX+0x09),0x03   state 3 -- the value a blocking receive writes
 	jrl Kernel_Dispatch                          ; F85927/F9848C  78 eb fd   jrl T,0xf9827a   (0xBF) is left set, so the dispatcher saves XSP into node+4
@@ -1589,7 +1589,7 @@ Kernel_ReadyTask:
 	extz XIX                                     ; F85956/F984BB  ec 12   extz XIX
 	extz XIY                                     ; F85958/F984BD  ed 12   extz XIY
 	extz XWA                                     ; F8595A/F984BF  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F8595C/F984C1  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
+	ld	(xix+0:8), iy                        ; F8595C/F984C1  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F8595F/F984C4  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85962/F984C7  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
 	ld (XWA),IX                                  ; F85965/F984CA  b0 54   ld (XWA),IX   head->prev->next = n
@@ -1698,7 +1698,7 @@ Kernel_ReadyTask_NoDispatch:
 	extz XIX                                     ; F85992/F984F7  ec 12   extz XIX
 	extz XIY                                     ; F85994/F984F9  ed 12   extz XIY
 	extz XWA                                     ; F85996/F984FB  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85998/F984FD  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85998/F984FD  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F8599B/F98500  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F8599E/F98503  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F859A1/F98506  b0 54   ld (XWA),IX
@@ -1803,7 +1803,7 @@ Kernel_SemaSignal:
 	add WA,KERNEL_SEMA_QUEUES-4                  ; F859BF/F98524  a=d8 c8 38 03 c=d8 c8 28 01   c: add WA,0x0128
 	ld IY,WA                                     ; F859C3/F98528  d8 8d   ld IY,WA
 	extz XIY                                     ; F859C5/F9852A  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F859C7/F9852C  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F859C7/F9852C  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,IY                                     ; F859CA/F9852F  dd f4   cp IX,IY
 	jr nz, Kernel_SemaSignal__wake               ; F859CC/F98531  6e 13   jr NZ,0xf98546
 	extz HL                                      ; F859CE/F98533  db 12   extz HL
@@ -1819,9 +1819,9 @@ Kernel_SemaSignal__wake:
 	extz XIX                                     ; F859E1/F98546  ec 12   extz XIX
 	extz XWA                                     ; F859E3/F98548  e8 12   extz XWA
 	extz XHL                                     ; F859E5/F9854A  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F859E7/F9854C  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F859E7/F9854C  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F859EA/F9854F  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F859ED/F98552  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F859ED/F98552  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F859F0/F98555  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F859F3/F98558  bc 09 00 04   ld (XIX+0x09),0x04
 	ld A,(XIX+0x08)                              ; F859F7/F9855C  8c 08 21   ld A,(XIX+0x08)
@@ -1832,7 +1832,7 @@ Kernel_SemaSignal__wake:
 	extz XIX                                     ; F85A05/F9856A  ec 12   extz XIX
 	extz XIY                                     ; F85A07/F9856C  ed 12   extz XIY
 	extz XWA                                     ; F85A09/F9856E  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85A0B/F98570  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85A0B/F98570  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85A0E/F98573  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85A11/F98576  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85A14/F98579  b0 54   ld (XWA),IX
@@ -1932,7 +1932,7 @@ Kernel_SemaSignal_NoDispatch__common:
 	extz XIY                                     ; F85A33/F98598  ed 12   extz XIY
 	push SR                                      ; F85A35/F9859A  02   push SR
 	ei 0x06                                      ; F85A36/F9859B  06 06   ei 0x06
-	m_ld_rm MWD+r5, 0x00, r4                     ; F85A38/F9859D  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F85A38/F9859D  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,IY                                     ; F85A3B/F985A0  dd f4   cp IX,IY
 	jr nz, Kernel_SemaSignal_NoDispatch__wake    ; F85A3D/F985A2  6e 16   jr NZ,0xf985ba
 	extz HL                                      ; F85A3F/F985A4  db 12   extz HL
@@ -1953,9 +1953,9 @@ Kernel_SemaSignal_NoDispatch__wake:
 	extz XIX                                     ; F85A55/F985BA  ec 12   extz XIX
 	extz XWA                                     ; F85A57/F985BC  e8 12   extz XWA
 	extz XHL                                     ; F85A59/F985BE  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85A5B/F985C0  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85A5B/F985C0  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85A5E/F985C3  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85A61/F985C6  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85A61/F985C6  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85A64/F985C9  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F85A67/F985CC  bc 09 00 04   ld (XIX+0x09),0x04
 	ld A,(XIX+0x08)                              ; F85A6B/F985D0  8c 08 21   ld A,(XIX+0x08)
@@ -1966,7 +1966,7 @@ Kernel_SemaSignal_NoDispatch__wake:
 	extz XIX                                     ; F85A79/F985DE  ec 12   extz XIX
 	extz XIY                                     ; F85A7B/F985E0  ed 12   extz XIY
 	extz XWA                                     ; F85A7D/F985E2  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85A7F/F985E4  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85A7F/F985E4  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85A82/F985E7  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85A85/F985EA  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85A88/F985ED  b0 54   ld (XWA),IX
@@ -2072,13 +2072,13 @@ Kernel_SemaWait:
 	decm8 0x01, (xwa)                            ; F85AAF/F98614  80 69   dec 1,(XWA)
 	jrl Kernel_ResumeTask                        ; F85AB1/F98616  78 af fc   jrl T,0xf982c8
 Kernel_SemaWait__block:
-	m_ld_rm MW8, KERNEL_CURRENT_TASK, r4         ; F85AB4/F98619  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)
+	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85AB4/F98619  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)
 	extz XIX                                     ; F85AB7/F9861C  ec 12   extz XIX
 	extz XWA                                     ; F85AB9/F9861E  e8 12   extz XWA
 	extz XHL                                     ; F85ABB/F98620  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85ABD/F98622  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85ABD/F98622  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85AC0/F98625  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85AC3/F98628  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85AC3/F98628  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85AC6/F9862B  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x03                           ; F85AC9/F9862E  bc 09 00 03   ld (XIX+0x09),0x03
 	sll e, 0x02                                  ; F85ACD/F98632  cd ee 02   sll 0x02,E
@@ -2088,7 +2088,7 @@ Kernel_SemaWait__block:
 	extz XIX                                     ; F85AD8/F9863D  ec 12   extz XIX
 	extz XIY                                     ; F85ADA/F9863F  ed 12   extz XIY
 	extz XWA                                     ; F85ADC/F98641  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85ADE/F98643  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85ADE/F98643  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85AE1/F98646  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85AE4/F98649  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85AE7/F9864C  b0 54   ld (XWA),IX
@@ -2236,21 +2236,21 @@ MsgQueue_Send__common:
 	add WA,KERNEL_MSGQ_WAITQ-4                   ; F85B30/F98695  a=d8 c8 60 03 c=d8 c8 3c 01   c: add WA,0x013c
 	ld IY,WA                                     ; F85B34/F98699  d8 8d   ld IY,WA
 	extz XIY                                     ; F85B36/F9869B  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F85B38/F9869D  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F85B38/F9869D  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,IY                                     ; F85B3B/F986A0  dd f4   cp IX,IY
 	jr nz, MsgQueue_Send__wake                   ; F85B3D/F986A2  6e 4f   jr NZ,0xf986f3
 	ld ix, (KERNEL_FREE_LIST:16)               ; F85B3F/F986A4  a=d1 c4 03 24 c=d1 70 01 24   c: ld IX,(0x0170)
 	extz XIX                                     ; F85B43/F986A8  ec 12   extz XIX
-	m_ld_rm MWD+r4, 0x00, r5                     ; F85B45/F986AA  9c 00 25   ld IY,(XIX+0x00)
+	ld	iy, (xix+0:8)                        ; F85B45/F986AA  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85B48/F986AD  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send__no_node                ; F85B4A/F986AF  76 39 00   jrl Z,0xf986eb
 	ldw	(xsp+20), 0x0000                     ; F85B4D/F986B2  bf 14 02 00 00   ld (XSP+0x14),0x0000
 	extz XIX                                     ; F85B52/F986B7  ec 12   extz XIX
 	extz XWA                                     ; F85B54/F986B9  e8 12   extz XWA
 	extz XHL                                     ; F85B56/F986BB  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85B58/F986BD  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85B58/F986BD  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85B5B/F986C0  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85B5E/F986C3  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85B5E/F986C3  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85B61/F986C6  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x04),XIZ                            ; F85B64/F986C9  bc 04 66   ld (XIX+0x04),XIZ
 	extz BC                                      ; F85B67/F986CC  d9 12   extz BC
@@ -2259,7 +2259,7 @@ MsgQueue_Send__common:
 	extz XIX                                     ; F85B6F/F986D4  ec 12   extz XIX
 	extz XIY                                     ; F85B71/F986D6  ed 12   extz XIY
 	extz XWA                                     ; F85B73/F986D8  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85B75/F986DA  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85B75/F986DA  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85B78/F986DD  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85B7B/F986E0  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85B7E/F986E3  b0 54   ld (XWA),IX
@@ -2275,9 +2275,9 @@ MsgQueue_Send__wake:
 	extz XIX                                     ; F85B93/F986F8  ec 12   extz XIX
 	extz XWA                                     ; F85B95/F986FA  e8 12   extz XWA
 	extz XHL                                     ; F85B97/F986FC  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85B99/F986FE  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85B99/F986FE  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85B9C/F98701  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85B9F/F98704  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85B9F/F98704  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85BA2/F98707  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F85BA5/F9870A  bc 09 00 04   ld (XIX+0x09),0x04
 	ld XWA,(XIX+0x04)                            ; F85BA9/F9870E  ac 04 20   ld XWA,(XIX+0x04)
@@ -2290,7 +2290,7 @@ MsgQueue_Send__wake:
 	extz XIX                                     ; F85BBD/F98722  ec 12   extz XIX
 	extz XIY                                     ; F85BBF/F98724  ed 12   extz XIY
 	extz XWA                                     ; F85BC1/F98726  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85BC3/F98728  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85BC3/F98728  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85BC6/F9872B  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85BC9/F9872E  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85BCC/F98731  b0 54   ld (XWA),IX
@@ -2338,21 +2338,21 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIY                                     ; F85BE6/F9874B  ed 12   extz XIY
 	push SR                                      ; F85BE8/F9874D  02   push SR
 	ei 0x06                                      ; F85BE9/F9874E  06 06   ei 0x06
-	m_ld_rm MWD+r5, 0x00, r4                     ; F85BEB/F98750  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F85BEB/F98750  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,IY                                     ; F85BEE/F98753  dd f4   cp IX,IY
 	jr nz, MsgQueue_Send_NoDispatch__wake        ; F85BF0/F98755  6e 52   jr NZ,0xf987a9
 	ld ix, (KERNEL_FREE_LIST:16)               ; F85BF2/F98757  a=d1 c4 03 24 c=d1 70 01 24   c: ld IX,(0x0170)
 	extz XIX                                     ; F85BF6/F9875B  ec 12   extz XIX
-	m_ld_rm MWD+r4, 0x00, r5                     ; F85BF8/F9875D  9c 00 25   ld IY,(XIX+0x00)
+	ld	iy, (xix+0:8)                        ; F85BF8/F9875D  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85BFB/F98760  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send_NoDispatch__no_node     ; F85BFD/F98762  76 3d 00   jrl Z,0xf987a2
 	ldw	(xsp+14), 0x0000                     ; F85C00/F98765  bf 0e 02 00 00   ld (XSP+0x0e),0x0000
 	extz XIX                                     ; F85C05/F9876A  ec 12   extz XIX
 	extz XWA                                     ; F85C07/F9876C  e8 12   extz XWA
 	extz XHL                                     ; F85C09/F9876E  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85C0B/F98770  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85C0B/F98770  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85C0E/F98773  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85C11/F98776  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85C11/F98776  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85C14/F98779  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x04),XIZ                            ; F85C17/F9877C  bc 04 66   ld (XIX+0x04),XIZ
 	extz BC                                      ; F85C1A/F9877F  d9 12   extz BC
@@ -2361,7 +2361,7 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85C22/F98787  ec 12   extz XIX
 	extz XIY                                     ; F85C24/F98789  ed 12   extz XIY
 	extz XWA                                     ; F85C26/F9878B  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85C28/F9878D  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85C28/F9878D  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85C2B/F98790  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85C2E/F98793  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85C31/F98796  b0 54   ld (XWA),IX
@@ -2382,9 +2382,9 @@ sub_F85C44:   ; <- prom_a's name for this address.  entry: reachable-run entry
 	extz XIX                                     ; F85C44/F987A9  ec 12   extz XIX
 	extz XWA                                     ; F85C46/F987AB  e8 12   extz XWA
 	extz XHL                                     ; F85C48/F987AD  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85C4A/F987AF  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85C4A/F987AF  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85C4D/F987B2  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85C50/F987B5  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85C50/F987B5  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85C53/F987B8  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F85C56/F987BB  bc 09 00 04   ld (XIX+0x09),0x04
 	ld XWA,(XIX+0x04)                            ; F85C5A/F987BF  ac 04 20   ld XWA,(XIX+0x04)
@@ -2397,7 +2397,7 @@ sub_F85C44:   ; <- prom_a's name for this address.  entry: reachable-run entry
 	extz XIX                                     ; F85C6E/F987D3  ec 12   extz XIX
 	extz XIY                                     ; F85C70/F987D5  ed 12   extz XIY
 	extz XWA                                     ; F85C72/F987D7  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85C74/F987D9  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85C74/F987D9  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85C77/F987DC  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85C7A/F987DF  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85C7D/F987E2  b0 54   ld (XWA),IX
@@ -2518,15 +2518,15 @@ MsgQueue_ReceiveBlocking:
 	add WA,KERNEL_MSGQ_HEADS-4                   ; F85C9D/F98802  a=d8 c8 70 03 c=d8 c8 44 01   c: add WA,0x0144   the message queue
 	ld IY,WA                                     ; F85CA1/F98806  d8 8d   ld IY,WA
 	extz XIY                                     ; F85CA3/F98808  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F85CA5/F9880A  9d 00 24   ld IX,(XIY+0x00)   IX = head->next
+	ld	ix, (xiy+0:8)                        ; F85CA5/F9880A  9d 00 24   ld IX,(XIY+0x00)   IX = head->next
 	cp IX,IY                                     ; F85CA8/F9880D  dd f4   cp IX,IY   == head? then the queue is EMPTY
 	jr z, MsgQueue_ReceiveBlocking__block        ; F85CAA/F9880F  66 3a   jr Z,0xf9884b
 	extz XIX                                     ; F85CAC/F98811  ec 12   extz XIX
 	extz XWA                                     ; F85CAE/F98813  e8 12   extz XWA
 	extz XHL                                     ; F85CB0/F98815  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85CB2/F98817  9c 00 20   ld WA,(XIX+0x00)   unlink the node
+	ld	wa, (xix+0:8)                        ; F85CB2/F98817  9c 00 20   ld WA,(XIX+0x00)   unlink the node
 	ld HL,(XIX+0x02)                             ; F85CB5/F9881A  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85CB8/F9881D  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85CB8/F9881D  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85CBB/F98820  b8 02 53   ld (XWA+0x02),HL
 	ld XIZ,(XIX+0x04)                            ; F85CBE/F98823  ac 04 26   ld XIZ,(XIX+0x04)   XIZ = the payload
 	ld XBC,0xffffffff                            ; F85CC1/F98826  41 ff ff ff ff   ld XBC,0xffffffff
@@ -2535,7 +2535,7 @@ MsgQueue_ReceiveBlocking:
 	extz XIX                                     ; F85CCC/F98831  ec 12   extz XIX
 	extz XIY                                     ; F85CCE/F98833  ed 12   extz XIY
 	extz XWA                                     ; F85CD0/F98835  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85CD2/F98837  bc 00 55   ld (XIX+0x00),IY   recycle it at the tail
+	ld	(xix+0:8), iy                        ; F85CD2/F98837  bc 00 55   ld (XIX+0x00),IY   recycle it at the tail
 	ld WA,(XIY+0x02)                             ; F85CD5/F9883A  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85CD8/F9883D  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85CDB/F98840  b0 54   ld (XWA),IX
@@ -2543,13 +2543,13 @@ MsgQueue_ReceiveBlocking:
 	ld (XSP+0x04),XIZ                            ; F85CE0/F98845  bf 04 66   ld (XSP+0x04),XIZ   the payload IS the return value
 	jrl Kernel_ResumeTask                        ; F85CE3/F98848  78 7d fa   jrl T,0xf982c8
 MsgQueue_ReceiveBlocking__block:
-	m_ld_rm MW8, KERNEL_CURRENT_TASK, r4         ; F85CE6/F9884B  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   IX = the CURRENT task's node
+	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85CE6/F9884B  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   IX = the CURRENT task's node
 	extz XIX                                     ; F85CE9/F9884E  ec 12   extz XIX
 	extz XWA                                     ; F85CEB/F98850  e8 12   extz XWA
 	extz XHL                                     ; F85CED/F98852  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85CEF/F98854  9c 00 20   ld WA,(XIX+0x00)   take it off its ready queue
+	ld	wa, (xix+0:8)                        ; F85CEF/F98854  9c 00 20   ld WA,(XIX+0x00)   take it off its ready queue
 	ld HL,(XIX+0x02)                             ; F85CF2/F98857  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85CF5/F9885A  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85CF5/F9885A  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85CF8/F9885D  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x03                           ; F85CFB/F98860  bc 09 00 03   ld (XIX+0x09),0x03   state 3 = waiting on a message queue
 	add DE,KERNEL_MSGQ_WAITQ-4                   ; F85CFF/F98864  a=da c8 60 03 c=da c8 3c 01   c: add DE,0x013c   the wait queue of the SAME index
@@ -2557,7 +2557,7 @@ MsgQueue_ReceiveBlocking__block:
 	extz XIX                                     ; F85D05/F9886A  ec 12   extz XIX
 	extz XIY                                     ; F85D07/F9886C  ed 12   extz XIY
 	extz XWA                                     ; F85D09/F9886E  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85D0B/F98870  bc 00 55   ld (XIX+0x00),IY   park it there, at the tail
+	ld	(xix+0:8), iy                        ; F85D0B/F98870  bc 00 55   ld (XIX+0x00),IY   park it there, at the tail
 	ld WA,(XIY+0x02)                             ; F85D0E/F98873  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85D11/F98876  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85D14/F98879  b0 54   ld (XWA),IX
@@ -2610,15 +2610,15 @@ sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	push SR                                      ; F85D2D/F98892  02   push SR
 	ei 0x06                                      ; F85D2E/F98893  06 06   ei 0x06
 	extz XIY                                     ; F85D30/F98895  ed 12   extz XIY
-	m_ld_rm MWD+r5, 0x00, r4                     ; F85D32/F98897  9d 00 24   ld IX,(XIY+0x00)
+	ld	ix, (xiy+0:8)                        ; F85D32/F98897  9d 00 24   ld IX,(XIY+0x00)
 	cp IX,IY                                     ; F85D35/F9889A  dd f4   cp IX,IY
 	jr z, MsgQueue_Receive_NoBlock__empty        ; F85D37/F9889C  66 38   jr Z,0xf988d6
 	extz XIX                                     ; F85D39/F9889E  ec 12   extz XIX
 	extz XWA                                     ; F85D3B/F988A0  e8 12   extz XWA
 	extz XHL                                     ; F85D3D/F988A2  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85D3F/F988A4  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85D3F/F988A4  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85D42/F988A7  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85D45/F988AA  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85D45/F988AA  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85D48/F988AD  b8 02 53   ld (XWA+0x02),HL
 	ld XIZ,(XIX+0x04)                            ; F85D4B/F988B0  ac 04 26   ld XIZ,(XIX+0x04)
 	ld XWA,0xffffffff                            ; F85D4E/F988B3  40 ff ff ff ff   ld XWA,0xffffffff
@@ -2627,7 +2627,7 @@ sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85D59/F988BE  ec 12   extz XIX
 	extz XIY                                     ; F85D5B/F988C0  ed 12   extz XIY
 	extz XWA                                     ; F85D5D/F988C2  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85D5F/F988C4  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85D5F/F988C4  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85D62/F988C7  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85D65/F988CA  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85D68/F988CD  b0 54   ld (XWA),IX
@@ -2677,13 +2677,13 @@ sub_F85D78:   ; <- prom_a's name for this address.  entry: branch/call in conver
 	push XIX                                     ; F85D7F/F988E4  3c   push XIX
 	push XIY                                     ; F85D80/F988E5  3d   push XIY
 	push XIZ                                     ; F85D81/F988E6  3e   push XIZ
-	m_ld_rm MBD+r4, 0x00, r1                     ; F85D82/F988E7  8c 00 21   ld A,(XIX+0x00)
+	ld	a, (xix+0:8)                         ; F85D82/F988E7  8c 00 21   ld A,(XIX+0x00)
 	mul A,0x08                                   ; F85D85/F988EA  c9 08 08   mul A,0x08
 	add WA,KERNEL_TIMERS-8                       ; F85D88/F988ED  a=d8 c8 c0 03 c=d8 c8 6c 01   c: add WA,0x016c
 	ld IY,WA                                     ; F85D8C/F988F1  d8 8d   ld IY,WA
 	extz XIY                                     ; F85D8E/F988F3  ed 12   extz XIY
 	ld WA,(XIX+0x02)                             ; F85D90/F988F5  9c 02 20   ld WA,(XIX+0x02)
-	m_st_mr16 MDD+r5, 0x00, r0                   ; F85D93/F988F8  bd 00 50   ld (XIY+0x00),WA
+	ld	(xiy+0:8), wa                        ; F85D93/F988F8  bd 00 50   ld (XIY+0x00),WA
 	ld (XIY+0x02),WA                             ; F85D96/F988FB  bd 02 50   ld (XIY+0x02),WA
 	ld XWA,(XIX+0x04)                            ; F85D99/F988FE  ac 04 20   ld XWA,(XIX+0x04)
 	ld (XIY+0x04),XWA                            ; F85D9C/F98901  bd 04 60   ld (XIY+0x04),XWA
@@ -2747,9 +2747,9 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85DC5/F9892A  ec 12   extz XIX
 	extz XWA                                     ; F85DC7/F9892C  e8 12   extz XWA
 	extz XHL                                     ; F85DC9/F9892E  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85DCB/F98930  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85DCB/F98930  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85DCE/F98933  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85DD1/F98936  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85DD1/F98936  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85DD4/F98939  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x08),E                              ; F85DD7/F9893C  bc 08 45   ld (XIX+0x08),E
 	sll e, 0x02                                  ; F85DDA/F9893F  cd ee 02   sll 0x02,E
@@ -2759,7 +2759,7 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85DE5/F9894A  ec 12   extz XIX
 	extz XIY                                     ; F85DE7/F9894C  ed 12   extz XIY
 	extz XWA                                     ; F85DE9/F9894E  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85DEB/F98950  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85DEB/F98950  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85DEE/F98953  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85DF1/F98956  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85DF4/F98959  b0 54   ld (XWA),IX
@@ -2802,9 +2802,9 @@ sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85E1D/F98982  ec 12   extz XIX
 	extz XWA                                     ; F85E1F/F98984  e8 12   extz XWA
 	extz XHL                                     ; F85E21/F98986  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85E23/F98988  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85E23/F98988  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85E26/F9898B  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85E29/F9898E  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85E29/F9898E  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85E2C/F98991  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x08),E                              ; F85E2F/F98994  bc 08 45   ld (XIX+0x08),E
 	sll e, 0x02                                  ; F85E32/F98997  cd ee 02   sll 0x02,E
@@ -2814,7 +2814,7 @@ sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85E3D/F989A2  ec 12   extz XIX
 	extz XIY                                     ; F85E3F/F989A4  ed 12   extz XIY
 	extz XWA                                     ; F85E41/F989A6  e8 12   extz XWA
-	m_st_mr16 MDD+r4, 0x00, r5                   ; F85E43/F989A8  bc 00 55   ld (XIX+0x00),IY
+	ld	(xix+0:8), iy                        ; F85E43/F989A8  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85E46/F989AB  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85E49/F989AE  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85E4C/F989B1  b0 54   ld (XWA),IX
@@ -2883,9 +2883,9 @@ sub_F85E5E:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	extz XIX                                     ; F85E6D/F989D2  ec 12   extz XIX
 	extz XWA                                     ; F85E6F/F989D4  e8 12   extz XWA
 	extz XHL                                     ; F85E71/F989D6  eb 12   extz XHL
-	m_ld_rm MWD+r4, 0x00, r0                     ; F85E73/F989D8  9c 00 20   ld WA,(XIX+0x00)
+	ld	wa, (xix+0:8)                        ; F85E73/F989D8  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85E76/F989DB  9c 02 23   ld HL,(XIX+0x02)
-	m_st_mr16 MDD+r3, 0x00, r0                   ; F85E79/F989DE  bb 00 50   ld (XHL+0x00),WA
+	ld	(xhl+0:8), wa                        ; F85E79/F989DE  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85E7C/F989E1  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x00                           ; F85E7F/F989E4  bc 09 00 00   ld (XIX+0x09),0x00
 	ei 0x00                                      ; F85E83/F989E8  06 00   ei 0x00
