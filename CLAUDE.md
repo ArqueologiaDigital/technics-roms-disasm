@@ -190,13 +190,14 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt` | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v140_symbols_reference.txt` | Sub CPU payload v1.40                             | 5,063   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
 | `symbols/table_data_symbols_reference.txt`  | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
 | `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                | 5,298   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
-NAME+ADDRESS agreement for all ten files, `maincpu_v8` and `subcpu_v141` included; first regenerated this way on
+NAME+ADDRESS agreement for all eleven files, `maincpu_v8`, `subcpu_v141` and `subcpu_v140` included; first regenerated this way on
 2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
@@ -1286,6 +1287,7 @@ When encountering disputed interpretations:
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 99.7%                 | 6,591 B       |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
+| subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`                               | 100.00%    | 100.0%                | 0 B           |
 | table_data          | `table_data/kn5000_table_data.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                               | 100.00%    | 100.0%                | 0 B           |
@@ -1295,10 +1297,11 @@ The two kinds of column answer different questions and must not be conflated. **
 `python scripts/build/compare_roms.py`; measured 2026-10-24 after the wave 1 merges it printed `romset bytematch:
 100.00%` with all twelve LLVM sections at 100.00% (nine before `maincpu v8`, `subcpu payload v141` and
 `subcpu v141 update image` were added; the certifying gate is `make gate`,
-`scripts/analysis/assert_byte_identical.py`). The two update-image sections have no source row of their
-own: each is the compressed form of the payload row above it. `DISASSEMBLY_PLAN.md`'s standing invariant
-also counts the six legacy ASL mirror builds, which only run when their `.rebuilt.rom` artefacts are
-present in `rebuilt_ROMs/`, so it now counts 18.
+`scripts/analysis/assert_byte_identical.py`). With `subcpu payload v140` and `subcpu v140 update image`
+(wave 2) it prints fourteen sections, all 100.00% (re-measured 2026-10-24). The three update-image
+sections have no source row of their own: each is the compressed form of the payload row above it.
+`DISASSEMBLY_PLAN.md`'s standing invariant also counts the six legacy ASL mirror builds, which only run
+when their `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`, so it now counts 20.
 
 **maincpu v8** has no tree of its own. Its dump differs from v9 in one byte,
 `FIRMWARE_VERSION` at 0xFFFFE8 (0x08 instead of 0x09), so the Makefile assembles the v9
