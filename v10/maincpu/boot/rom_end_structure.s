@@ -8,7 +8,11 @@
 ;   - Firmware version byte
 ;   - Reserved padding
 
-	.set FW_VERSION_BYTE, 0x0a
+; A build may preset FW_VERSION_BYTE with llvm-mc --defsym; the default is
+; this tree's own version.
+	.ifndef FW_VERSION_BYTE
+	.set	FW_VERSION_BYTE, 0x0a
+	.endif
 
 System_TimestampPointers:
 	.long 0x409

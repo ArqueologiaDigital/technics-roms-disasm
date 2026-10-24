@@ -48,11 +48,13 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
     os.environ.get("PROJECTS_ROOT", os.path.expanduser("~/compartilhado")),
     "llvm-project", "build", "bin", "llvm-mc")
 
-# (include dir, root source) -- exactly the eight `llvm-mc -filetype=obj`
-# invocations in the Makefile.
+# (include dir, root source[, extra llvm-mc arguments]) -- exactly the nine
+# `llvm-mc -filetype=obj` invocations in the Makefile.  v8 is the v9 root with
+# the version byte preset, so it is assembled here with the same --defsym.
 IMAGES = [
     ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s"),
     ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s"),
+    ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", ("--defsym", "FW_VERSION_BYTE=0x08")),
     ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
     ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s"),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
@@ -62,9 +64,9 @@ IMAGES = [
 ]
 
 
-def assemble(incdir, root, out):
+def assemble(incdir, root, out, extra=()):
     """-> list of llvm-mc error lines (empty means clean)."""
-    r = subprocess.run([MC, "-triple=tlcs900", "-filetype=obj",
+    r = subprocess.run([MC, "-triple=tlcs900", "-filetype=obj", *extra,
                         "-I", os.path.join(ROOT, incdir), "-o", out,
                         os.path.join(ROOT, root)],
                        capture_output=True, text=True)
@@ -74,9 +76,11 @@ def assemble(incdir, root, out):
 def run():
     bad = 0
     with tempfile.TemporaryDirectory() as td:
-        for incdir, root in IMAGES:
-            errs = assemble(incdir, root, os.path.join(td, "o.o"))
-            print(f"  {root:42} {'clean' if not errs else str(len(errs)) + ' ERROR(S)'}")
+        for incdir, root, *extra in IMAGES:
+            extra = extra[0] if extra else ()
+            errs = assemble(incdir, root, os.path.join(td, "o.o"), extra)
+            label = root + (" " + " ".join(extra) if extra else "")
+            print(f"  {label:42} {'clean' if not errs else str(len(errs)) + ' ERROR(S)'}")
             for e in errs[:4]:
                 print("      " + e.strip())
             bad += bool(errs)
@@ -96,9 +100,9 @@ def selftest():
         f += not cond
 
     ck("the pinned llvm-mc exists", os.path.exists(MC), MC)
-    ck("all eight roots and include dirs exist", all(
+    ck("all nine roots and include dirs exist", all(
         os.path.exists(os.path.join(ROOT, r)) and os.path.isdir(os.path.join(ROOT, d))
-        for d, r in IMAGES))
+        for d, r, *_ in IMAGES))
     with tempfile.TemporaryDirectory() as td:
         # POSITIVE CONTROL: a lone good instruction assembles.
         good = os.path.join(td, "good.s")

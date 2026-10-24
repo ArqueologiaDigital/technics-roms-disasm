@@ -19,6 +19,7 @@
 #
 #   For v7 use maincpu_v7_symbols_reference.txt
 #   For v9  use maincpu_v9_symbols_reference.txt
+#   For v8  use maincpu_v8_symbols_reference.txt
 # =====================================================
 #
 #   symbols .................. 53,744

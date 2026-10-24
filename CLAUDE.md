@@ -173,6 +173,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`) | 53,744  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v10_symbols_reference.txt` | Main CPU v10                                      | 53,744  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                             | 5,053   | 0x000400 - 0x03EE75                                        |
 | `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
@@ -181,7 +182,7 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
-NAME+ADDRESS agreement for all eight files; first regenerated this way on
+NAME+ADDRESS agreement for all nine files, `maincpu_v8` included; first regenerated this way on
 2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
@@ -1263,16 +1264,17 @@ When encountering disputed interpretations:
 
 ### ROM Components
 
-| Component           | Authoritative source                   | Byte-match | Source (not verbatim) | Verbatim blob |
-|---------------------|----------------------------------------|------------|-----------------------|---------------|
-| maincpu v10         | `v10/maincpu/kn5000_v10_program.s`     | 100.00%    | 100.0%                | 0 B           |
-| maincpu v9          | `v9/maincpu/kn5000_v9_program.s`       | 100.00%    | 100.0%                | 0 B           |
-| maincpu v7          | `v7/maincpu/kn5000_v7_program.s`       | 100.00%    | 99.7%                 | 6,591 B       |
-| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s` | 100.00%    | 100.0%                | 0 B           |
-| subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`     | 100.00%    | 100.0%                | 0 B           |
-| table_data          | `table_data/kn5000_table_data.s`       | 100.00%    | 84.8%                 | 318,468 B     |
-| custom_data (IC19)  | `custom_data/kn5000_custom_data.s`     | 100.00%    | 100.0%                | 0 B           |
-| hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`          | 100.00%    | 100.0%                | 0 B           |
+| Component           | Authoritative source                       | Byte-match | Source (not verbatim) | Verbatim blob |
+|---------------------|--------------------------------------------|------------|-----------------------|---------------|
+| maincpu v10         | `v10/maincpu/kn5000_v10_program.s`         | 100.00%    | 100.0%                | 0 B           |
+| maincpu v9          | `v9/maincpu/kn5000_v9_program.s`           | 100.00%    | 100.0%                | 0 B           |
+| maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08` | 100.00%    | as v9                 | as v9         |
+| maincpu v7          | `v7/maincpu/kn5000_v7_program.s`           | 100.00%    | 99.7%                 | 6,591 B       |
+| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`     | 100.00%    | 100.0%                | 0 B           |
+| subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`         | 100.00%    | 100.0%                | 0 B           |
+| table_data          | `table_data/kn5000_table_data.s`           | 100.00%    | 100.0%                | 0 B           |
+| custom_data (IC19)  | `custom_data/kn5000_custom_data.s`         | 100.00%    | 100.0%                | 0 B           |
+| hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`              | 100.00%    | 100.0%                | 0 B           |
 
 The two kinds of column answer different questions and must not be conflated. **Byte-match** is
 `python scripts/build/compare_roms.py`; measured 2026-10-24 it printed `romset bytematch:
@@ -1281,6 +1283,19 @@ The two kinds of column answer different questions and must not be conflated. **
 has no source row of its own. `DISASSEMBLY_PLAN.md`'s standing invariant counts **15**
 sections; the extra six are the legacy ASL mirror builds, which only run when their
 `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`.)
+Since 2026-10-24 `compare_roms.py` has ten LLVM sections (`maincpu v8` was added), and
+`DISASSEMBLY_PLAN.md`'s invariant counts 16.
+
+**maincpu v8** has no tree of its own. Its dump differs from v9 in one byte,
+`FIRMWARE_VERSION` at 0xFFFFE8 (0x08 instead of 0x09), so the Makefile assembles the v9
+sources with `--defsym FW_VERSION_BYTE=0x08` (`v9/maincpu/boot/rom_end_structure.s` sets
+the symbol only under `.ifndef`). Any edit to v9 therefore also edits v8, and the gate checks both.
+The v8 reference image is **not committed**. The older dumps in `original_ROMs/` (v7, v9,
+v10, the Sub-CPU payloads) are tracked, but new dumps are taken from the private romset and
+kept out of this public repository by choice. `make` copies it, git-ignored, from that romset (`KN5000_V8_REF`, default
+`$(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v8_program.rom`). It refuses a copy whose
+SHA-1 is not `a10a6f5a35175b74c3cfb42cef3bdf571c2858bb`, and it stops with a message when the
+file is missing. `make gate` re-checks the copy (`verify-v8-reference`).
 
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
 measured 2026-10-24: the script splits every ROM byte into assembly, typed data (including

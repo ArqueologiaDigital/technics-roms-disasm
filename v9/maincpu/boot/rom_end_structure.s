@@ -8,7 +8,13 @@
 ;   - Firmware version byte
 ;   - Reserved padding
 
-	.set FW_VERSION_BYTE, 0x09
+; A build may preset FW_VERSION_BYTE with llvm-mc --defsym; the default is
+; this tree's own version.
+; KN5000 v8 differs from v9 in this byte only (0x08), so the Makefile builds
+; it from these v9 sources with --defsym FW_VERSION_BYTE=0x08.
+	.ifndef FW_VERSION_BYTE
+	.set	FW_VERSION_BYTE, 0x09
+	.endif
 
 System_TimestampPointers:
 	.long 0x409

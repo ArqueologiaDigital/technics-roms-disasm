@@ -25,7 +25,7 @@ judgement of whether a name is APT -- no script can check that. A name like
 FileIO_ReadHeader counts as semantic even though this session found it actually
 builds a path rather than reading a header.
 
-Run:  python3 scripts/analysis/l2_symbol_reference.py [--regen]
+Run:  python3 scripts/analysis/l2_symbol_reference.py [--regen] [--only TAG[,TAG]]
 Exits non-zero if any reference file disagrees with its ELF.
 """
 import os, re, subprocess, sys
@@ -49,6 +49,10 @@ NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 PAIRS = {
     "maincpu_v7":  "kn5000_v7_program.llvm.elf",
     "maincpu_v9":  "kn5000_v9_program.llvm.elf",
+    # v8 is the v9 sources assembled with FW_VERSION_BYTE=0x08 -- one data byte
+    # apart, same link -- so this file has v9's rows.  It exists so that a v8
+    # question has a file named for it instead of borrowing v9's.
+    "maincpu_v8":  "kn5000_v8_program.llvm.elf",
     "maincpu_v10": "kn5000_v10_program.llvm.elf",
     # Kept so existing consumers keep working, and so --check keeps measuring it.
     # It is IDENTICAL to maincpu_v10. Anything asking a v7 or v9 question must
@@ -110,6 +114,7 @@ def write_ref(tag, syms):
             fh.write("#\n")
             fh.write("#   For v7 use maincpu_v7_symbols_reference.txt\n")
             fh.write("#   For v9  use maincpu_v9_symbols_reference.txt\n")
+            fh.write("#   For v8  use maincpu_v8_symbols_reference.txt\n")
             fh.write("# =====================================================\n#\n")
         fh.write(f"#   symbols .................. {len(syms):,}\n")
         fh.write(f"#   semantic names ........... {sem:,} ({100.0*sem/max(len(syms),1):.1f}%)\n")
@@ -120,8 +125,18 @@ def write_ref(tag, syms):
 
 def main():
     regen = "--regen" in sys.argv
+    # --only TAG[,TAG...] restricts the run, e.g. to regenerate one new file
+    # without rewriting the others.
+    only = None
+    if "--only" in sys.argv:
+        only = set(sys.argv[sys.argv.index("--only") + 1].split(","))
+        unknown = only - set(PAIRS)
+        if unknown:
+            sys.exit(f"--only: unknown tag(s) {sorted(unknown)}; known: {sorted(PAIRS)}")
     ok = True
     for tag, elf in PAIRS.items():
+        if only is not None and tag not in only:
+            continue
         path = os.path.join(ROOT, "rebuilt_ROMs", elf)
         if not os.path.exists(path):
             print(f"{tag:12} ELF missing ({elf}) -- run `make all` first"); ok = False; continue

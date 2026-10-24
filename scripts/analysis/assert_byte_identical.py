@@ -51,6 +51,9 @@ import glob, os, sys
 PAIRS = [
     ("kn5000_v7_program", "kn5000_v7_program.rom", "kn5000_v7_program.llvm.rom"),
     ("kn5000_v9_program", "kn5000_v9_program.rom", "kn5000_v9_program.llvm.rom"),
+    # v8 is built from the v9 sources (--defsym FW_VERSION_BYTE=0x08); its
+    # original is an uncommitted copy whose SHA-1 the Makefile checks.
+    ("kn5000_v8_program", "kn5000_v8_program.rom", "kn5000_v8_program.llvm.rom"),
     ("kn5000_v10_program", "kn5000_v10_program.rom", "kn5000_v10_program.llvm.rom"),
     ("kn5000_subprogram_v142", "kn5000_subprogram_v142.rom", "kn5000_subprogram_v142.llvm.rom"),
     ("kn5000_subprogram_v142_compressed", "kn5000_subprogram_v142_compressed.rom", "kn5000_subprogram_v142_compressed.rom"),

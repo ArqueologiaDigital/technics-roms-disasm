@@ -1,0 +1,62 @@
+  v5   7b69a8aaa84ee3d337acc0c29c34154c5da2df32  /home/fsanches/compartilhado/technics_roms/roms/kn5000/kn5000_v5_program.rom
+  v6   51108e2d75b180a034395e90bd40ca2bd2a0adfb  /home/fsanches/compartilhado/technics_roms/roms/kn5000/kn5000_v6_program.rom
+  v7   4c682cb248034a2de04c688b0a45654b8726bffb  original_ROMs/kn5000_v7_program.rom
+  v9   d9a3b462b1f9302402e8d37aacd15f069f56abd9  original_ROMs/kn5000_v9_program.rom
+  v10  1f2abc5b1b7b9e16fdf796f26d939edaceded354  original_ROMs/kn5000_v10_program.rom
+  K = 32-byte unique anchors
+
+=== v5 -> v6 ===
+  positional diff ...... 1,514,774 B (72.23%)
+  aligned (offset map) . 1,631,443 B in 8,359 blocks, 50 distinct deltas
+  gaps ................. 8,360: 465,709 B of v5 / 465,709 B of v6 unaligned
+    same-size (subst) .. 8,227 gaps, 442,617 B, of which 74,968 B differ
+    size-changing ...... 133 gaps, 23,092 B of v5; layout churn 2,907 B (as much grows as shrinks: both images are 2 MiB)
+    moved-pointer bytes  44,998 of the 74,968 differing same-size-gap bytes (24-bit ROM pointers the map explains)
+  estimated change ..... 53,062 B of v5 (differing same-size-gap bytes - moved pointers + size-changing gaps)
+  largest deltas (shift: bytes) +0x18: 864,138, +0x30d: 249,192, +0x0: 127,172, +0x454: 115,264, +0x347: 80,364, +0x2f9: 55,225
+  largest gaps (A addr+len -> B addr+len) eba380+5996 -> eba398+5996; f027af+5326 -> f027c7+5326; ee3566+4897 -> ee357e+4897; f2cf88+4641 -> f2d064+4641; ee0040+4106 -> ee0058+4106
+
+=== v6 -> v7 ===
+  positional diff ...... 1,461,567 B (69.69%)
+  aligned (offset map) . 1,436,547 B in 6,963 blocks, 73 distinct deltas
+  gaps ................. 6,964: 660,605 B of v6 / 660,605 B of v7 unaligned
+    same-size (subst) .. 6,856 gaps, 619,341 B, of which 112,562 B differ
+    size-changing ...... 108 gaps, 41,264 B of v6; layout churn 5,293 B (as much grows as shrinks: both images are 2 MiB)
+    moved-pointer bytes  45,238 of the 112,562 differing same-size-gap bytes (24-bit ROM pointers the map explains)
+  estimated change ..... 108,588 B of v6 (differing same-size-gap bytes - moved pointers + size-changing gaps)
+  largest deltas (shift: bytes) +0x0: 273,051, +0xfc: 261,102, -0x6: 216,028, +0xf5: 128,943, +0xff: 101,109, +0xf0: 94,427
+  largest gaps (A addr+len -> B addr+len) eba398+5996 -> eba494+5996; f5cd5f+5918 -> f5d245+5110; f027c7+5326 -> f028c6+5326; ee357e+4898 -> ee367a+4898; f2d06b+4634 -> f2d223+4634
+
+=== v5 -> v7 ===
+  positional diff ...... 1,556,228 B (74.21%)
+  aligned (offset map) . 1,411,870 B in 7,293 blocks, 98 distinct deltas
+  gaps ................. 7,294: 685,282 B of v5 / 685,282 B of v7 unaligned
+    same-size (subst) .. 7,164 gaps, 629,412 B, of which 120,524 B differ
+    size-changing ...... 130 gaps, 55,870 B of v5; layout churn 6,478 B (as much grows as shrinks: both images are 2 MiB)
+    moved-pointer bytes  51,911 of the 120,524 differing same-size-gap bytes (24-bit ROM pointers the map explains)
+  estimated change ..... 124,483 B of v5 (differing same-size-gap bytes - moved pointers + size-changing gaps)
+  largest deltas (shift: bytes) +0x114: 260,782, +0x12: 215,959, +0x18: 131,546, +0x0: 126,906, +0x402: 120,380, +0x117: 98,882
+  largest gaps (A addr+len -> B addr+len) eba380+5996 -> eba494+5996; f5ca52+5918 -> f5d245+5110; f027af+5326 -> f028c6+5326; ee3566+4898 -> ee367a+4898; f2cf88+4641 -> f2d21c+4641
+
+=== v7 -> v9 ===
+  positional diff ...... 1,039,383 B (49.56%)
+  aligned (offset map) . 1,597,881 B in 5,987 blocks, 16 distinct deltas
+  gaps ................. 5,988: 499,271 B of v7 / 499,271 B of v9 unaligned
+    same-size (subst) .. 5,972 gaps, 490,902 B, of which 82,138 B differ
+    size-changing ...... 16 gaps, 8,369 B of v7; layout churn 2,046 B (as much grows as shrinks: both images are 2 MiB)
+    moved-pointer bytes  27,336 of the 82,138 differing same-size-gap bytes (24-bit ROM pointers the map explains)
+  estimated change ..... 63,171 B of v7 (differing same-size-gap bytes - moved pointers + size-changing gaps)
+  largest deltas (shift: bytes) +0x0: 957,616, +0x2a: 162,920, +0x40d: 113,149, +0x404: 107,187, +0x7ce: 54,911, +0x7d1: 45,708
+  largest gaps (A addr+len -> B addr+len) f028c6+5325 -> f028f0+5325; f2d223+4634 -> f2d24d+4634; fc281d+3723 -> fc2fe8+3723; f19619+3299 -> f19643+3299; f574ac+3072 -> f578b0+3072
+
+=== v9 -> v10 ===
+  positional diff ......    13,517 B (0.64%)
+  aligned (offset map) . 2,085,935 B in 1,261 blocks, 3 distinct deltas
+  gaps ................. 1,261: 11,217 B of v9 / 11,217 B of v10 unaligned
+    same-size (subst) .. 1,258 gaps, 11,190 B, of which 1,725 B differ
+    size-changing ...... 3 gaps, 27 B of v9; layout churn 14 B (as much grows as shrinks: both images are 2 MiB)
+    moved-pointer bytes  349 of the 1,725 differing same-size-gap bytes (24-bit ROM pointers the map explains)
+  estimated change ..... 1,403 B of v9 (differing same-size-gap bytes - moved pointers + size-changing gaps)
+  largest deltas (shift: bytes) +0x0: 2,019,767, +0xe: 63,578, +0xb: 2,590
+  largest gaps (A addr+len -> B addr+len) fc542a+377 -> fc542a+377; ef4309+263 -> ef4309+263; fb8f4e+189 -> fb8f4e+189; fb96a1+186 -> fb96a1+186; ff0779+130 -> ff0787+130
+
