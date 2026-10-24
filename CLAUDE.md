@@ -936,6 +936,16 @@ that we can have strong evidence whenever we reach true full code-coverage"*.
    The C tables now name them through NAKA_ADDR.  The two blobs without a link script hold them as `.long` lines
    (scripts/tools/respell_c_slice_tables_as_long.py).  Every KN5000 image is again NOT = newT = U-NOT = U-newT =
    D-unres = 0, this time with the C-SLICE detector.
+7. **The doc-quality ledger** (added 2026-10-24) sits beside the dispatch census in `docs/coverage/`, as
+   `doc-quality-<date>-NN.{txt,json}`. Its instrument is `scripts/analysis/doc_quality_census.py`, whose docstring
+   defines each rule. For every image of all three models (KN5000, WSA1 and kn7000 program/table/cnv) it counts:
+   routines without a header comment, addresses spelled as numbers, locals named only by an address, `.byte` runs
+   between instructions, placeholder routine names and WSA1 byte-emitter macro uses. Run `make doc-quality`
+   after any change that adds or removes headers, labels, numeric operands or `.byte` lines in code, and before
+   quoting any of those figures. Commit the new snapshot in the same commit as the change. As with the census, a
+   committed snapshot is never rewritten, and a count that ROSE (exit 1) must be explained in the commit message,
+   for example when converted passthrough adds routines that have no header yet. The first snapshot is
+   `doc-quality-2026-10-24-01`.
 
 ### Semantic Score Badges
 

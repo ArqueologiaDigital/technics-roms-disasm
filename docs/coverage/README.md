@@ -3,11 +3,14 @@
 This directory holds the evidence for "every entry point is known": `DISASSEMBLY-COMPLETENESS-SPEC.md` L2,
 "including those reached only through jump tables or computed jumps". The policy that governs it is
 CLAUDE.md "Code-Coverage Evidence Ledger", and the instrument is `scripts/analysis/dispatch_table_census/`.
+Since 2026-10-24 it also holds the documentation-quality ledger (`doc-quality-*`, point 7 of that section).
 
-| file | what it is |
-|---|---|
-| `dispatch-census-YYYY-MM-DD-NN.txt` | the census on that date (NN = 01, 02, ... for that day's snapshots): per image, tables found / used / NOT used, distinct unused targets, unframed runs, and the ten worst tables. Its first line names the commit it measured. |
-| `dispatch-census-YYYY-MM-DD-NN.json` | the same as numbers, plus every not-used table with its blockers, so two dates can be diffed (`census.py --compare`) |
+| file                                 | what it is                                                                                                                                                                                                                                                                                                                             |
+|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dispatch-census-YYYY-MM-DD-NN.txt`  | the census on that date (NN = 01, 02, ... for that day's snapshots): per image, tables found / used / NOT used, distinct unused targets, unframed runs, and the ten worst tables. Its first line names the commit it measured.                                                                                                         |
+| `dispatch-census-YYYY-MM-DD-NN.json` | the same as numbers, plus every not-used table with its blockers, so two dates can be diffed (`census.py --compare`)                                                                                                                                                                                                                   |
+| `doc-quality-YYYY-MM-DD-NN.txt`      | the documentation-quality census (`scripts/analysis/doc_quality_census.py`, `make doc-quality`), same numbering: per image of all three models, routines without a header, numeric addresses, address-only locals, `.byte` runs in code, placeholder names, and the worst files for each. Its first line names the commit it measured. |
+| `doc-quality-YYYY-MM-DD-NN.json`     | the same as numbers, so two dates can be diffed (`doc_quality_census.py --compare`, which exits 1 when a count rose)                                                                                                                                                                                                                   |
 
 Snapshots are never edited after they are committed. Each snapshot is a new file: a later commit on the
 same day gets the next NN. Re-running before committing reuses that day's uncommitted file. The first

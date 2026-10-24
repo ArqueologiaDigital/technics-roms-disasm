@@ -513,3 +513,18 @@ WARNING: every number here is a property of the DECODER as much as of the bytes,
 so quote the toolchain commit beside it. `--roundtrip` and `--oracle` take a few
 minutes each; `--check` is seconds and needs no `make`.  Full account of what was fixed and
 what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
+
+
+## Added 2026-10-24 (measurement first, audit work package WP02)
+
+| script                  | question it answers                                                                                                                                                                                                                                                                                                                                                                                              |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `doc_quality_census.py` | Per image of all three models (KN5000 v10 v9 v7 v142 subboot tabledata customdata hdae5000, WSA1 prom_a-d, kn7000 program/table/cnv), how many routines lack a header comment, how many addresses are spelled as numbers, how many labels are named only by an address, how many `.byte` runs sit between instructions, and how many routines still have placeholder names? Did a change make any of them worse? |
+
+    python3 scripts/analysis/doc_quality_census.py                 # the table
+    python3 scripts/analysis/doc_quality_census.py --files v10     # per-file breakdown of one image
+    make doc-quality                                               # compare with the newest committed snapshot, then
+                                                                   # write docs/coverage/doc-quality-<date>-NN.{txt,json}
+
+It reads sources only and takes about 15 seconds. Its rules are in its docstring, and the ledger policy is in
+CLAUDE.md, "Code-Coverage Evidence Ledger", point 7.
