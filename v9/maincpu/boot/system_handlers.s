@@ -19,7 +19,7 @@ INTT2_HANDLER:
 NMI_HANDLER:
 	ldw (0x00ffca:24), 0x0000
 	calr NMI_StorePayloadChecksums
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr z, NMI_SetPowerOffCode_A5A5
 	ldw (0x00ffcc:24), 0x5a5a
 	jr NMI_ClearGuardAndHalt
@@ -28,7 +28,7 @@ NMI_SetPowerOffCode_A5A5:
 	ldw (0x00ffcc:24), 0xa5a5
 
 NMI_ClearGuardAndHalt:
-	ld (1024:16), 0
+	ld (BOOT_STAGE:16), 0
 	res 7, (354:16)
 	set	2, (PF:8)
 NMI_HaltLoop:
@@ -51,22 +51,22 @@ NMI_HaltLoop:
 ;        the payload on the next boot and show the splash screen (not "ALL INITIAL SETTING!").
 ; ===========================================================================
 NMI_StorePayloadChecksums:
-	cp (1024:16), 128
+	cp (BOOT_STAGE:16), 128
 	ret nz
 	call Demo_SelectEntry_PreSaveCheck
 	call SeqPlay_JumpCopyVoiceData
 	ld xwa, 0xf180
 	ldw bc, 0x800
 	call Checksum_ComputeComplement
-	ld (0x00ffd4:24), hl
+	ld (NMI_CHECKSUM_REGION1:24), hl
 	ld xwa, 0xf980
 	ldw bc, 0x280
 	call Checksum_ComputeComplement
-	ld (0x00ffd2:24), hl
+	ld (NMI_CHECKSUM_REGION2:24), hl
 	call Seq_IsMelodyActive
 	cp hl, 0:i3
 	jr z, NMI_CopyPayloadToSRAM
-	addw (0xffd4:24), 1000
+	addw (NMI_CHECKSUM_REGION1:24), 1000
 
 NMI_CopyPayloadToSRAM:
 	lda xde, (0x00066e:24)
@@ -97,13 +97,13 @@ SubCPU_Payload_Verify:
 	ld xwa, 0xf180	; Start of payload region 1
 	ldw bc, 0x800	; Size: 0x800 words
 	call Checksum_ComputeComplement	; Compute checksum -> HL
-	lda xwa, (0x00f980:24)
-	cp hl, (0xffd4:24); Compare with expected checksum
+	lda xwa, (LIVE_PANEL_BLOCK:24)
+	cp hl, (NMI_CHECKSUM_REGION1:24); Compare with expected checksum
 	jr nz, SubCPU_Payload_Verify_Fail	; First region checksum failed
 	ld (0x01e53e:24), 0x00; Mark as success (so far)
 	ldw bc, 0x280	; Size of second region
 	call Checksum_ComputeComplement	; Compute second checksum
-	cp hl, (0xffd2:24); Compare with expected
+	cp hl, (NMI_CHECKSUM_REGION2:24); Compare with expected
 	ret z	; Both match -> success
 	ld (0x01e53e:24), 0xff; Second region failed
 	ret
@@ -112,7 +112,7 @@ SubCPU_Payload_Verify_Fail:
 	ld (0x01e53e:24), 0xff; Mark as failed
 	ldw bc, 0x280
 	call Checksum_ComputeComplement
-	cp hl, (0xffd2:24)
+	cp hl, (NMI_CHECKSUM_REGION2:24)
 	ret nz	; Both checksums wrong
 	ld (0x01e53e:24), 0x01; First wrong, second correct (partial)
 	ret
@@ -428,12 +428,12 @@ INTT1_StoreCounters:
 
 INTT1_CheckScanFlag:
 	ld (1066:16), a
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jrl nz, INTT1_UpdateAlternateTimers
 	inc 1, (1050:16)
-	bit 0, (1056:16)
+	bit 0, (PLAY_TRANSPORT_STATE:16)
 	jr nz, INTT1_CheckTickOverflow
-	bit 5, (1056:16)
+	bit 5, (PLAY_TRANSPORT_STATE:16)
 	jr nz, INTT1_CheckTickCount
 	ld (1050:16), 0
 	jp UIStateMachine_DispatchEntry
@@ -441,14 +441,14 @@ INTT1_CheckScanFlag:
 INTT1_CheckTickCount:
 	cp (1050:16), 1
 	jrl nc, UIStateMachine_DispatchEntry
-	ld (1056:16), 16
+	ld (PLAY_TRANSPORT_STATE:16), 16
 
 INTT1_CheckMidiSync:
 	cp (CURRENT_MODE:16), 19
 	jr z, UIState_DispatchBranch
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, UIState_DispatchBranch
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, UIState_DispatchBranch
 	push	sr
 	ei 6
@@ -462,11 +462,11 @@ UIState_DispatchBranch:
 INTT1_CheckTickOverflow:
 	cp (1050:16), 1
 	jr ule, UIStateMachine_DispatchEntry
-	ld (1056:16), 6
+	ld (PLAY_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckAltSeqOverflow
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTT1_CheckAltSeqOverflow:
@@ -488,29 +488,29 @@ INTT1_SkipToDispatch:
 	jr UIStateMachine_DispatchEntry
 
 INTT1_UpdateAlternateTimers:
-	bit 3, (1054:16)
+	bit 3, (ACC_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckAltSeqTimer
-	ld (1054:16), 16
+	ld (ACC_TRANSPORT_STATE:16), 16
 
 INTT1_CheckAltSeqTimer:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckMetroTimer
 	ld (SEQ_TRANSPORT_STATE:16), 16
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld (1078:16), a
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (1079:16), a
 
 INTT1_CheckMetroTimer:
-	bit 3, (1056:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr z, UIStateMachine_DispatchEntry
-	ld (1056:16), 16
+	ld (PLAY_TRANSPORT_STATE:16), 16
 	jrl INTT1_CheckMidiSync
 
 UIStateMachine_DispatchEntry:
 	lda xhl, (1055:16)
 	ld a, (xhl)
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, UIStateMachine_CheckPending
 	bit 0, a
 	jr z, UIStateMachine_CheckPending
@@ -643,7 +643,7 @@ INTTR4_HANDLER:
 	ld (xhl), 0x0
 
 INTTR4_TickWrapped:
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr z, INTTR4_CheckSyncEnable
 	jp INTTR4_SubTick_Mode
 
@@ -671,46 +671,46 @@ INTTR4_SyncCounter2_Done:
 	pop	sr
 
 INTTR4_CheckMetroEnable:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_CheckSeqEnable
 	push	sr
 	ei 6
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	inc 1, a
 	cp a, 0x60
 	jr lt, INTTR4_MetroCounter_Store
 	xor a, a
-	incw 1, (1048:16)
+	incw 1, (PLAY_BEAT_COUNT:16)
 
 INTTR4_MetroCounter_Store:
-	ld (1047:16), a
+	ld (PLAY_CLOCK:16), a
 	pop	sr
 
 INTTR4_CheckSeqEnable:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_CheckAltSeqEnable
-	inc 1, (1045:16)
-	cp (1045:16), 96
+	inc 1, (ACC_CLOCK:16)
+	cp (ACC_CLOCK:16), 96
 	jr c, INTTR4_CheckAltSeqEnable
-	ld (1045:16), 0
-	inc 1, (1046:16)
-	cp (0x379b:16), 0
+	ld (ACC_CLOCK:16), 0
+	inc 1, (ACC_BEAT:16)
+	cp (CMP_RECORD_PART:16), 0
 	jr z, INTTR4_SeqTick_CheckBeat
 	calr TempoRingBuf_Write
 
 INTTR4_SeqTick_CheckBeat:
-	ld a, (1046:16)
-	ld w, (1075:16)
+	ld a, (ACC_BEAT:16)
+	ld w, (ACC_BEATS_PER_BAR:16)
 	ex (0x458:16), w
 	cp a, w
 	jr c, INTTR4_CheckAltSeqEnable
-	ld (1046:16), 0
-	inc 1, (1076:16)
-	inc 1, (1077:16)
-	ld a, (1077:16)
-	cp a, (0x34d7:16)
+	ld (ACC_BEAT:16), 0
+	inc 1, (ACC_BAR_COUNT:16)
+	inc 1, (ACC_SECTION_BAR:16)
+	ld a, (ACC_SECTION_BAR:16)
+	cp a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr ule, INTTR4_CheckAltSeqEnable
-	ld (1077:16), 0
+	ld (ACC_SECTION_BAR:16), 0
 
 INTTR4_CheckAltSeqEnable:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
@@ -720,16 +720,16 @@ INTTR4_CheckAltSeqEnable:
 	jr lt, INTTR4_MetroPhaseSync
 	ld (SEQ_BEAT_TICK:16), 0
 	incw 1, (SEQ_BEAT_COUNT:16)
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_MetroPhaseSync
 	calr TempoRingBuf_Write
 
 INTTR4_MetroPhaseSync:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqAutoStart
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroSync_CheckAltSeq
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTTR4_MetroSync_CheckAltSeq:
@@ -742,26 +742,26 @@ INTTR4_MetroSync_Done:
 	jr INTTR4_MetroBeat_Check
 
 INTTR4_SeqAutoStart:
-	bit 7, (1054:16)
+	bit 7, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroBeat_Check
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqInit_SetEnable
-	cp (1045:16), 95
+	cp (ACC_CLOCK:16), 95
 	jr c, INTTR4_SeqAutoStart_Skip
-	cp (1076:16), 1
+	cp (ACC_BAR_COUNT:16), 1
 	jr c, INTTR4_SeqAutoStart_Skip
-	ld a, (1075:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	dec 1, a
-	cp (1046:16), a
+	cp (ACC_BEAT:16), a
 	jr c, INTTR4_SeqAutoStart_Skip
 	ld a, 0x1:opc
-	ld (1056:16), a
+	ld (PLAY_TRANSPORT_STATE:16), a
 	ld (SEQ_TRANSPORT_STATE:16), a
 	cp (CURRENT_MODE:16), 19
 	jr z, INTTR4_SeqAutoStart_Skip
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, INTTR4_SeqAutoStart_Skip
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, INTTR4_SeqAutoStart_Skip
 	push	sr
 	ei 6
@@ -773,12 +773,12 @@ INTTR4_SeqAutoStart_Skip:
 	jr INTTR4_MetroBeat_Check
 
 INTTR4_SeqInit_SetEnable:
-	ld (1054:16), 134
+	ld (ACC_TRANSPORT_STATE:16), 134
 
 INTTR4_MetroBeat_Check:
-	bit 3, (1056:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqBeat_Check
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	cp a, 0:i3
 	jr z, INTTR4_MetroBeat_OnBeat
 	cp a, 0x18
@@ -790,12 +790,12 @@ INTTR4_MetroBeat_Check:
 	jr INTTR4_MetroQuarter_Check
 
 INTTR4_MetroBeat_OnBeat:
-	ld (1056:16), 16
+	ld (PLAY_TRANSPORT_STATE:16), 16
 	cp (CURRENT_MODE:16), 19
 	jr z, INTTR4_SeqBeat_Check
-	bit 2, (0xfd52:16)
+	bit 2, (PANEL_MIDI+2:16)
 	jr z, INTTR4_SeqBeat_Check
-	bit 2, (0xfd50:16)
+	bit 2, (PANEL_MIDI:16)
 	jr nz, INTTR4_SeqBeat_Check
 	push	sr
 	ei 6
@@ -804,23 +804,23 @@ INTTR4_MetroBeat_OnBeat:
 	pop	sr
 
 INTTR4_SeqBeat_Check:
-	bit 3, (1054:16)
+	bit 3, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_AltSeqBeat_Check
-	ld (1054:16), 16
+	ld (ACC_TRANSPORT_STATE:16), 16
 
 INTTR4_AltSeqBeat_Check:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroQuarter_Check
 	ld (SEQ_TRANSPORT_STATE:16), 16
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld (1078:16), a
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (1079:16), a
 
 INTTR4_MetroQuarter_Check:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqAccum_Update
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	and a, 0x3
 	jr nz, INTTR4_SeqAccum_Update
 	cp (CURRENT_MODE:16), 19
@@ -832,11 +832,11 @@ INTTR4_MetroQuarter_Check:
 	pop	sr
 
 INTTR4_SeqAccum_Update:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqAccum_Reset
 	push	sr
 	ei 6
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	ld w, a
 	sub a, (1111:16)
 	jr z, INTTR4_SeqAccum_Done
@@ -877,9 +877,9 @@ INTTR4_AltSeqAccum_Update:
 	jr z, INTTR4_AltSeqSync_Check
 	cp (1072:16), a
 	jr nz, INTTR4_AltSeqSync_Check
-	ld (1054:16), 8
+	ld (ACC_TRANSPORT_STATE:16), 8
 	and (1073:16), 247
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_AltSeqSync_Check
 	ld a, 0x86:opc
 	calr TempoRingBuf_WritePair
@@ -889,9 +889,9 @@ INTTR4_AltSeqSync_Check:
 	jr z, INTTR4_FadeDelay_Check
 	cp (1071:16), a
 	jr nz, INTTR4_FadeDelay_Check
-	ld (1054:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	and (1073:16), 254
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_FadeDelay_Check
 	ld a, 0x85:opc
 	calr TempoRingBuf_WritePair
@@ -1025,29 +1025,29 @@ INTTR4_SubTick_Mode:
 	inc 1, (SEQ_BEAT_TICK:16)
 
 INTTR4_SubTick_MetroInc:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_SeqInc
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	xor a, 0x3
 	and a, 0x3
 	jr z, INTTR4_SubTick_SeqInc
-	inc 1, (1047:16)
+	inc 1, (PLAY_CLOCK:16)
 
 INTTR4_SubTick_SeqInc:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_PhaseSync
-	ld a, (1045:16)
+	ld a, (ACC_CLOCK:16)
 	xor a, 0x3
 	and a, 0x3
 	jr z, INTTR4_SubTick_PhaseSync
-	inc 1, (1045:16)
+	inc 1, (ACC_CLOCK:16)
 
 INTTR4_SubTick_PhaseSync:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_ToAccum
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_PhaseSync_AltSeq
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTTR4_SubTick_PhaseSync_AltSeq:
@@ -1251,14 +1251,14 @@ Seq_TickWrapper:
 	lda xiy, (1115:16)
 	cp (xiy), 0x1
 	jr nz, SeqTick_CheckActive
-	cp (0xcedf:16), 0
+	cp (CHORD_TYPE:16), 0
 	jr z, SeqTick_CheckActive
 	ld (xiy), 0x0
 
 SeqTick_CheckActive:
 	bitm 0, (xiy)
 	jr z, SeqTick_Dispatch
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, SeqTick_Return
 
 SeqTick_Dispatch:
@@ -1271,7 +1271,7 @@ SeqTick_Return:
 MainLoop_ReinitSwbtWr:
 	call SwbtWr_InitBank3
 	call Audio_MainPeriodicUpdate
-	ld (0xc039:16), 255
+	ld (PANEL_EVENT_QUEUE:16), 255
 	calr SwbtWr_ReinitBothBanks
 	ret
 
@@ -1282,7 +1282,7 @@ MainLoop_AudioPeriodicCheck:
 	ret
 
 Seq_ProcessMidiEvent:
-	lda xhl, (0x01f37b:24)
+	lda xhl, (SEQMAIN_RING:24)
 	ld iy, (xhl - 8)
 	ld ix, (xhl - 4)
 	xor bc, bc
@@ -1377,7 +1377,7 @@ MidiSerial_ProcessAndReinit:
 	jr MidiEvt_UpdateReadPosition
 
 MidiEvt_UpdateReadPosition:
-	lda xhl, (0x01f37b:24)
+	lda xhl, (SEQMAIN_RING:24)
 	ld wa, (xhl - 6)
 	ld (xhl - 8), wa
 	popw wa
@@ -1423,7 +1423,7 @@ SwbtWr_ReinitBothBanks:
 	call SwbtWr_InitBank1
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 255
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_ReinitBothBanks_Return:
 	ret
@@ -1436,13 +1436,13 @@ SwbtWr_ReinitOutputBank:
 	jr z, SwbtWr_ReinitOutputBank_Return
 	call SwbtWr_InitBank2
 	ld (SWBTWR_EVENT_QUEUE:16), 255
-	ldw (0x90de:16), 0
+	ldw (SWBTWR_WRITE_INDEX:16), 0
 
 SwbtWr_ReinitOutputBank_Return:
 	ret
 
 RhythmBuf_ProcessEvents:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, RhythmBuf_ProcessLoop
 	calr SeqTiming_Snapshot
 
@@ -2045,7 +2045,7 @@ INTT3_HANDLER:
 TaskSched_Init:
 	ld xsp, 0x1e53a
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 	inc 1, wa
 	ldc_cr16 wa, 0x7c
 	ld (1475:16), wa
@@ -2193,14 +2193,14 @@ TaskSched_Dispatch:
 	or wa, wa
 	jr nz, TaskSched_ReturnToDispatch
 	xor wa, wa
-	cp (1159:16), wa
+	cp (TASK_CURRENT:16), wa
 	jr z, TaskSched_ScanPriorityQueues
-	ld iy, (1159:16)
+	ld iy, (TASK_CURRENT:16)
 	extz xiy
 	ld (xiy + 4), xsp
 	ld xsp, 0x1e53a
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 
 TaskSched_ScanPriorityQueues:
 	ld b, 0x3:opc
@@ -2216,7 +2216,7 @@ TaskSched_ScanQueue_Loop:
 	jr TaskSched_AllIdle
 
 TaskSched_FoundReadyTask:
-	ld (1159:16), hl
+	ld (TASK_CURRENT:16), hl
 	extz xhl
 	ld a, (xhl + 11)
 	sll a, 5
@@ -2372,12 +2372,12 @@ TaskSched_SpawnTask:
 TaskSched_ExitCurrentTask:
 	ei 6
 	ld xsp, 0x1e53a
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld (xix + 9), 0x0
 	ld (xix + 10), 0x0
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2392,7 +2392,7 @@ TaskSched_GetCurrentGroup:
 	or hl, hl
 	jr nz, TaskSched_GetCurrentGroup_Nested
 	push xix
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld l, (xix + 11)
 	extz hl
@@ -2484,7 +2484,7 @@ TaskSched_Resume:
 	push xix
 	push xiy
 	push xiz
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld a, (xix + 10)
 	cp a, 0:i3
@@ -2717,7 +2717,7 @@ TaskSched_WaitForEvent:
 	jrl TaskSched_ReturnToDispatch
 
 TaskSched_WaitForEvent_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2900,7 +2900,7 @@ Audio_Lock_Acquire:
 	jrl TaskSched_ReturnToDispatch
 
 AudioLock_Acquire_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3160,7 +3160,7 @@ TaskMsg_Receive:
 	jrl TaskSched_ReturnToDispatch
 
 TaskMsg_Receive_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3868,7 +3868,7 @@ SeqMain_ReadByte_1024:
 	; --- Sub 4: calr EF30A1 with XDE=0x01f37b (13 bytes) ---
 	pushw ix
 	push xde
-	lda	xde, (0x1f37b:24)
+	lda	xde, (SEQMAIN_RING:24)
 	calr Seq_RingBuf_Dequeue_1024
 	pop xde
 	popw ix
@@ -3880,7 +3880,7 @@ SeqMain_WriteByte:
 	pushw ix
 	push xde
 	ld a, (xiz + 8)
-	lda xde, (0x01f37b:24)
+	lda xde, (SEQMAIN_RING:24)
 	calr Seq_RingBuf_WriteByte
 	pop xde
 	popw ix
@@ -3894,7 +3894,7 @@ SeqMain_WriteBytes:
 	push xde
 	ld bc, (xiz + 8)
 	ld xiy, (xiz + 10)
-	lda xde, (0x01f37b:24)
+	lda xde, (SEQMAIN_RING:24)
 
 SeqMain_WriteBytes_Loop:
 	ld a, (xiy)
@@ -3908,8 +3908,8 @@ SeqMain_WriteBytes_Loop:
 	ret
 
 Seq_CheckSongEnd:
-	ld hl, (0x01f377:24)
-	cp hl, (0x1f373:24)
+	ld hl, (SEQMAIN_WRITE_POS:24)
+	cp hl, (SEQMAIN_READ_POS:24)
 	ld hl, 0:i3
 	jr z, Seq_CheckSongEnd_Return
 	ldw hl, 0xffff
@@ -3924,7 +3924,7 @@ SeqMain_GetTimingValue:
 SeqMain_InitBuffer:
 	pushw ix
 	push xde
-	lda xde, (0x01f37b:24)
+	lda xde, (SEQMAIN_RING:24)
 	call Seq_RingBuf_Init_1024
 	pop xde
 	popw ix
@@ -3932,7 +3932,7 @@ SeqMain_InitBuffer:
 
 SeqMain_SaveWritePos:
 	pushw hl
-	ld hl, (0x01f373:24)
+	ld hl, (SEQMAIN_READ_POS:24)
 	ld (0x01f371:24), hl
 	popw hl
 	ret
@@ -3940,7 +3940,7 @@ SeqMain_SaveWritePos:
 SeqMain_ReadData:
 	pushw ix
 	push xde
-	lda xde, (0x01f37b:24)
+	lda xde, (SEQMAIN_RING:24)
 	call Seq_RingBuf_ReadData
 	pop xde
 	popw ix
@@ -3949,18 +3949,18 @@ SeqMain_ReadData:
 SeqMain_ReadAlternate:
 	pushw	ix
 	push	xde
-	lda	xde, (0x1f37b:24)
+	lda	xde, (SEQMAIN_RING:24)
 	call	RingBuf1024_ReadAlt_ByteBlock
 	pop	xde
 	popw	ix
 	ret
 	pushw	hl
 	ld	hl, (0x1f375:24)
-	ld	(0x1f373:24), hl
+	ld	(SEQMAIN_READ_POS:24), hl
 	popw	hl
 	ret
 	pushw	hl
-	ld	hl, (0x1f377:24)
+	ld	hl, (SEQMAIN_WRITE_POS:24)
 	ld	(0x1f375:24), hl
 	popw	hl
 	ret
@@ -3968,7 +3968,7 @@ SeqMain_ReadAlternate:
 SeqBuf_MidiOut_ReadByte:
 	pushw ix
 	push xde
-	lda xde, (0x01f785:24)
+	lda xde, (SEQBUF_MIDIOUT:24)
 	calr Seq_RingBuf_ReadByte
 	pop xde
 	popw ix
@@ -3979,7 +3979,7 @@ SeqBuf_MidiOut_WriteByte:
 	pushw ix
 	push xde
 	ld a, (xiz + 8)
-	lda xde, (0x01f785:24)
+	lda xde, (SEQBUF_MIDIOUT:24)
 	calr Seq_RingBuf_WriteByte_Small
 	pop xde
 	popw ix
@@ -3993,7 +3993,7 @@ SeqBuf_MidiOut_WriteBytes:
 	push xde
 	ld bc, (xiz + 8)
 	ld xiy, (xiz + 10)
-	lda xde, (0x01f785:24)
+	lda xde, (SEQBUF_MIDIOUT:24)
 
 SeqBuf_MidiOut_WriteBytes_Loop:
 	ld a, (xiy)
@@ -4023,7 +4023,7 @@ SeqBuf_MidiOut_GetTimingValue:
 SeqBuf_MidiOut_Init:
 	pushw ix
 	push xde
-	lda xde, (0x01f785:24)
+	lda xde, (SEQBUF_MIDIOUT:24)
 	call Seq_RingBuf_Init_256
 	pop xde
 	popw ix
@@ -4040,7 +4040,7 @@ SeqBuf_MidiOut_ReadAlternate:
 	; --- Sub 2: call EF2FA1 with XDE=0x01f785 (14 bytes) ---
 	pushw ix
 	push xde
-	lda	xde, (0x1f785:24)
+	lda	xde, (SEQBUF_MIDIOUT:24)
 	call Seq_RingBuf_ReadByte_Large
 	pop xde
 	popw ix
@@ -4049,7 +4049,7 @@ SeqBuf_MidiOut_ReadAlternate2:
 	; --- Sub 3: call EF2FBC with XDE=0x01f785 (14 bytes) ---
 	pushw ix
 	push xde
-	lda	xde, (0x1f785:24)
+	lda	xde, (SEQBUF_MIDIOUT:24)
 	call Seq_RingBuf_ReadByte_Small
 	pop xde
 	popw ix
@@ -4269,7 +4269,7 @@ SeqBuf3_Helpers:
 SeqBuf_DspSysEx_ReadByte:
 	pushw ix
 	push xde
-	lda xde, (0x01fca3:24)
+	lda xde, (SEQBUF_DSPSYSEX:24)
 	calr Seq_RingBuf_Dequeue_1024
 	pop xde
 	popw ix
@@ -4281,7 +4281,7 @@ SeqBuf_DspSysEx_WriteByte:
 	pushw ix
 	push xde
 	ld a, (xiz + 8)
-	lda xde, (0x01fca3:24)
+	lda xde, (SEQBUF_DSPSYSEX:24)
 	calr Seq_RingBuf_WriteByte
 	pop xde
 	popw ix
@@ -4295,7 +4295,7 @@ SeqBuf_DspSysEx_WriteBytes:
 	push xde
 	ld bc, (xiz + 8)
 	ld xiy, (xiz + 10)
-	lda xde, (0x01fca3:24)
+	lda xde, (SEQBUF_DSPSYSEX:24)
 
 SeqBuf_DspSysEx_WriteBytes_Loop:
 	ld a, (xiy)
@@ -4326,7 +4326,7 @@ SeqBuf_DspSysEx_OrphanData:
 SeqBuf_DspSysEx_InitBuffer:
 	pushw ix
 	push xde
-	lda xde, (0x01fca3:24)
+	lda xde, (SEQBUF_DSPSYSEX:24)
 	call Seq_RingBuf_Init_1024
 	pop xde
 	popw ix
@@ -4340,14 +4340,14 @@ SeqBuf_DspSysEx_CopyPointers:
 	ret
 	pushw	ix
 	push	xde
-	lda	xde, (0x1fca3:24)
+	lda	xde, (SEQBUF_DSPSYSEX:24)
 	call	Seq_RingBuf_ReadData
 	pop	xde
 	popw	ix
 	ret
 	pushw	ix
 	push	xde
-	lda	xde, (0x1fca3:24)
+	lda	xde, (SEQBUF_DSPSYSEX:24)
 	call	RingBuf1024_ReadAlt_ByteBlock
 	pop	xde
 	popw	ix
@@ -5453,8 +5453,8 @@ SubCPU_Init_DMA_Channels:
 	ldc_cr32 xwa, 0x00
 	ld a, 0x0:opc
 	ldc_cr8 a, 0x42
-	ld (1504:16), 0
-	ld (1506:16), 0
+	ld (INTERCPU_XFER_STATE:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	ret
 
 ; sendCOMM - Send chunked data to SubCPU via inter-CPU communication channel
@@ -5527,7 +5527,7 @@ InterCPU_Send_WaitReady:
 	bit	3, (PZ:8)	; SSTAT1 - test if Sub CPU is ready
 	jr z, InterCPU_Send_TimeoutLoop
 	res	0, (PZ:8)	; MSTAT0 - clear to initiate handshake with Sub CPU
-	ld (1504:16), 1
+	ld (INTERCPU_XFER_STATE:16), 1
 	ld l, c
 	dec 1, l
 	sll a, 5
@@ -5539,16 +5539,16 @@ InterCPU_Send_WaitAck:
 	bit	3, (PZ:8)	; SSTAT1 - wait for Sub CPU to acknowledge (goes low)
 	jr nz, InterCPU_Send_AckTimeoutLoop
 	set	0, (PZ:8)	; MSTAT0 - set to signal DMA data transfer starting
-	ld (1498:16), xde
+	ld (INTERCPU_XFER_PTR:16), xde
 	extz bc
-	ld (1502:16), bc
+	ld (INTERCPU_XFER_COUNT:16), bc
 	calr Audio_DMA_Transfer
-	ld (1504:16), 0
-	cp (1504:16), 0
+	ld (INTERCPU_XFER_STATE:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	ret z
 
 InterCPU_Send_WaitComplete:
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr nz, InterCPU_Send_WaitComplete
 	ret
 
@@ -5583,7 +5583,7 @@ InterCPU_Send_AckTimeoutLoop:
 ; ===========================================================================
 InterCPU_E2_Send:
 	ld ix, 0:i3
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr z, InterCPU_E2_ClearAndSend
 
 InterCPU_E2_WaitIdle:
@@ -5591,12 +5591,12 @@ InterCPU_E2_WaitIdle:
 	inc 1, ix
 	cp hl, 0xea60
 	ret ugt
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr nz, InterCPU_E2_WaitIdle
 
 InterCPU_E2_ClearAndSend:
 	res	0, (PZ:8)	; MSTAT0 - clear to initiate E2 command handshake
-	ld (1504:16), 1
+	ld (INTERCPU_XFER_STATE:16), 1
 	ld (0x140000:24), 0xe2
 	ld ix, 0:i3
 
@@ -5608,16 +5608,16 @@ InterCPU_E2_WaitAck:
 	ld (xhl), xwa
 	ld (xhl + 4), xde
 	ld (xhl + 8), bc
-	ld (1498:16), xhl
-	ldw (1502:16), 10
+	ld (INTERCPU_XFER_PTR:16), xhl
+	ldw (INTERCPU_XFER_COUNT:16), 10
 	calr Audio_DMA_Transfer
-	ld (1504:16), 0
+	ld (INTERCPU_XFER_STATE:16), 0
 	set 7, (1568:16)
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	ret z
 
 InterCPU_E2_WaitComplete:
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr nz, InterCPU_E2_WaitComplete
 	ret
 
@@ -5650,7 +5650,7 @@ InterCPU_E2_TimeoutLoop:
 ;        The label is not renamed here, so this note stands in for it.
 ; ===========================================================================
 Audio_DMA_Transfer:
-	ld wa, (1502:16)
+	ld wa, (INTERCPU_XFER_COUNT:16)
 	ld de, wa
 	extz xde
 	cp wa, 0:i3
@@ -5663,9 +5663,9 @@ Audio_DMA_Transfer_CheckSize:
 	ret ule
 
 Audio_DMA_Transfer_ByteLoop:
-	ld xwa, (1498:16)
+	ld xwa, (INTERCPU_XFER_PTR:16)
 	lda xbc, (xwa+:1)
-	ld (1498:16), xwa
+	ld (INTERCPU_XFER_PTR:16), xwa
 	ld a, (xbc)
 	ld (0x140000:24), a
 	ld a, 0x0:opc
@@ -5703,7 +5703,7 @@ Audio_DMA_Transfer_DelayLoop:
 InterCPU_E1_Bulk_Transfer:
 	pushw iz
 	ld iz, 0:i3
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr z, E1Bulk_ReadyCheck
 
 E1Bulk_WaitIdle_Loop:
@@ -5711,7 +5711,7 @@ E1Bulk_WaitIdle_Loop:
 	inc 1, iz
 	cp hl, 0xea60
 	jrl ugt, FlashBufferIO_Exit
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr nz, E1Bulk_WaitIdle_Loop
 
 E1Bulk_ReadyCheck:
@@ -5721,7 +5721,7 @@ E1Bulk_WaitSubCPU_Ready:
 	bit	3, (PZ:8)	; SSTAT1 - test if Sub CPU is ready for E1 transfer
 	jrl z, E1Bulk_ReadyTimeout_Loop
 	res	0, (PZ:8)	; MSTAT0 - clear to initiate E1 bulk transfer
-	ld (1504:16), 2
+	ld (INTERCPU_XFER_STATE:16), 2
 	ld (0x140000:24), 0xe1
 	ld iz, 0:i3
 
@@ -5735,15 +5735,15 @@ E1Bulk_WaitAck:
 	ld (xwa), xde
 	ld (xhl + 4), bc
 	ld (xwa + 4), bc
-	ld (1498:16), xwa
-	ldw (1502:16), 6
+	ld (INTERCPU_XFER_PTR:16), xwa
+	ldw (INTERCPU_XFER_COUNT:16), 6
 	calr Audio_DMA_Transfer
-	ld (1504:16), 1
-	cp (1504:16), 1
+	ld (INTERCPU_XFER_STATE:16), 1
+	cp (INTERCPU_XFER_STATE:16), 1
 	jr z, E1Bulk_Phase2_Init
 
 E1Bulk_WaitPhase1_Loop:
-	cp (1504:16), 1
+	cp (INTERCPU_XFER_STATE:16), 1
 	jr nz, E1Bulk_WaitPhase1_Loop
 
 E1Bulk_Phase2_Init:
@@ -5755,15 +5755,15 @@ E1Bulk_Phase2_Delay:
 	jr c, E1Bulk_Phase2_Delay
 	lda xbc, (1544:16)
 	ld xwa, (xbc)
-	ld (1498:16), xwa
+	ld (INTERCPU_XFER_PTR:16), xwa
 	mrdw5 0x99, 0x04, 0x19, 0xde, 0x05
 	calr Audio_DMA_Transfer
-	ld (1504:16), 0
-	cp (1504:16), 0
+	ld (INTERCPU_XFER_STATE:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr z, E1Bulk_PostTransfer_Delay_Init
 
 E1Bulk_WaitPhase2_Loop:
-	cp (1504:16), 0
+	cp (INTERCPU_XFER_STATE:16), 0
 	jr nz, E1Bulk_WaitPhase2_Loop
 
 E1Bulk_PostTransfer_Delay_Init:
@@ -5932,10 +5932,10 @@ INT0_ReadLatch:
 				; MSTAT1 is lowered at 0xEF35C4, with neither gate
 				; re-checked and no DI in between -- see the
 				; RE-ENTRANCY HAZARD note above INT0_HANDLER.
-	ld (1508:16), a	; 0x05E4 = the header byte, kept for INTTC0_HANDLER
+	ld (INTERCPU_RX_HEADER:16), a	; 0x05E4 = the header byte, kept for INTTC0_HANDLER
 	cp a, 0xe1
 	jr nz, INT0_CheckE2Command
-	ld (1506:16), 2
+	ld (INTERCPU_RX_STATE:16), 2
 	lda xwa, (1550:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
@@ -5951,7 +5951,7 @@ INT0_ReadLatch:
 INT0_CheckE2Command:
 	cp a, 0xe2
 	jr nz, INT0_HandleDataCommand
-	ld (1506:16), 3
+	ld (INTERCPU_RX_STATE:16), 3
 	lda xwa, (1556:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
@@ -5965,11 +5965,11 @@ INT0_CheckE2Command:
 	jr INT0_AckAndReturn
 
 INT0_HandleDataCommand:
-	ld (1506:16), 1
+	ld (INTERCPU_RX_STATE:16), 1
 	lda xwa, (1512:16)
 	ld (1494:16), xwa
 	ldc_cr32 xwa, 0x20
-	ld a, (1508:16)
+	ld a, (INTERCPU_RX_HEADER:16)
 	and a, 0x1f
 	inc 1, a
 	extz wa
@@ -5997,15 +5997,15 @@ INT0_AckAndReturn:
 
 INTTC2_HANDLER:
 	res	2, (T8RUN:8)
-	cp (1504:16), 1
+	cp (INTERCPU_XFER_STATE:16), 1
 	jr nz, INTTC2_CheckPhase2
-	ld (1504:16), 0
+	ld (INTERCPU_XFER_STATE:16), 0
 	jr INTTC2_Exit
 
 INTTC2_CheckPhase2:
-	cp (1504:16), 2
+	cp (INTERCPU_XFER_STATE:16), 2
 	jr nz, INTTC2_Exit
-	ld (1504:16), 1
+	ld (INTERCPU_XFER_STATE:16), 1
 
 INTTC2_Exit:
 	reti
@@ -6023,7 +6023,7 @@ INTTC0_HANDLER:
 	and a, 0xf8
 	set 0, a
 	ld (xbc), a
-	ld a, (1506:16)
+	ld a, (INTERCPU_RX_STATE:16)
 	cp a, 4:i3
 	jr z, INTTC0_E1_Phase2_Complete
 	cp a, 3:i3
@@ -6032,7 +6032,7 @@ INTTC0_HANDLER:
 	jr z, E1DMA_TransferSetup
 	cp a, 1:i3
 	jr nz, E1DMA_ISR_Epilogue
-	ld c, (1508:16)
+	ld c, (INTERCPU_RX_HEADER:16)
 	ld a, c
 	and a, 0x1f
 	inc 1, a
@@ -6045,7 +6045,7 @@ INTTC0_HANDLER:
 	ld xbc, 0x5e8
 	ld xhl, (xde)
 	call (xhl)
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	jr INTTC0_SetTransferDone
 
 ; E1DMA ISR - DMA transfer setup (after SeqRingBuf dispatch)
@@ -6060,18 +6060,18 @@ E1DMA_TransferSetup:
 	and a, 0xf8
 	or a, 0x6
 	ld (xbc), a
-	ld (1506:16), 4
+	ld (INTERCPU_RX_STATE:16), 4
 	jr E1DMA_ISR_Epilogue
 
 INTTC0_E2_Complete:
 	ld (1510:16), 255
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)	; MSTAT1 - set to signal E2 command complete
 	set 7, (1566:16)
 	jr E1DMA_ISR_Epilogue
 
 INTTC0_E1_Phase2_Complete:
-	ld (1506:16), 0
+	ld (INTERCPU_RX_STATE:16), 0
 	res 7, (1568:16)
 
 INTTC0_SetTransferDone:
@@ -6120,7 +6120,7 @@ E1DMA_ISR_BytecodeBlock_Join2:
 	ret	ule
 	ldw	(0xe360:16), 0
 	ld	(256:16), 0
-	ld	(1506:16), 0
+	ld	(INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)
 	inc	1, (0xe35e:16)
 	ret
@@ -6137,7 +6137,7 @@ INTTC0_HANDLER_Skip4:
 	cp	bc, 250
 	jr	le, E1DMA_ISR_BytecodeBlock_Loop
 	ld	(256:16), 0
-	ld	(1506:16), 0
+	ld	(INTERCPU_RX_STATE:16), 0
 	set	1, (PZ:8)
 	res	7, (0x620:16)
 	inc	1, (0xe364:16)

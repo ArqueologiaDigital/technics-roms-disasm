@@ -146,3 +146,7 @@
 ; 0x34100 .. +16376; the probe loops (SndParam_ProbeEntry and its twins) index slot n at +8n,
 ; wrapping modulo 0x7FF.
 	.equ SNDPARAM_HASH_TABLE,	0x34100
+; variables named from their uses (audit WP17): one file, so that the naming lane owns it
+	.include "shared/ram_variables_by_use.s"
+; the live panel records (TLV payloads), named from SndParam_BlockRamPtrs
+	.include "shared/ram_panel_records.s"

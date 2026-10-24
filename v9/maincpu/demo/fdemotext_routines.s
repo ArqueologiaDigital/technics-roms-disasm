@@ -19,7 +19,7 @@ FDemoText_ReturnNull:
 FDemoText_LookupTableEntry:
 	extz wa
 	sla wa, 2
-	ld xbc, (0x90f2:16)
+	ld xbc, (PART_RECORD_PTRS:16)
 	exts xwa
 	add xwa, xbc
 	ld xhl, (xwa)
@@ -345,8 +345,8 @@ FDemoText_UpdateVoiceDisplay_CheckSend:
 	ld a, (0x0247ee:24)
 	and a, 0x38
 	jr nz, FDemoText_UpdateVoiceDisplay_Done
-	ld c, (0xfc26:16)
-	cp (0xfc74:16), c
+	ld c, (PANEL_REC_44:16)
+	cp (PANEL_DSP_EFFECT:16), c
 	jr z, FDemoText_UpdateVoiceDisplay_Done
 	extz bc
 	ldw wa, 0x61
@@ -361,7 +361,7 @@ FDemoText_SyncVoicePreset:
 	dec 6, xsp
 	pushw_erp 0xfa
 	ld (xsp + 6), a
-	lda xwa, (0xfc74:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
 	ld (xsp + 2), xwa
 	ld a, (0x0247ee:24)
 	and a, 0x38
@@ -395,7 +395,7 @@ FDemoText_SyncPreset_NextActive:
 FDemoText_SyncPreset_DirectCopy:
 	ld xwa, (xsp + 2)
 	ld a, (xwa)
-	ld (0xfc26:16), a
+	ld (PANEL_REC_44:16), a
 	ldib_erp 0xfb, 0
 
 FDemoText_SyncPreset_DirectLoop:
@@ -1165,7 +1165,7 @@ FDemoText_NotifyUIChange:
 	extz bc
 	ld xwa, 0x4900
 	call DSPCfg_WriteParamFull
-	ld e, (0xfc74:16)
+	ld e, (PANEL_DSP_EFFECT:16)
 	extz de
 	pushw 0xff
 	ldw wa, 0x61
@@ -2918,7 +2918,7 @@ Seq_InitializeAndStart:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), xwa
-	ldw (0x0251d8:24), 0x0001
+	ldw (PRESENTATION_LOADED:24), 0x0001
 	ld wa, 0:i3
 	calr Seq_InitVoiceStructures
 	ld xwa, (xsp + 4)

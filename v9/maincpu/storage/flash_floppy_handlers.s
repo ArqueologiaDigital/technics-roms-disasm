@@ -1181,16 +1181,16 @@ NoteEvent_LoadSoundGenParams:
 	lda xix, (xsp + 16)
 	ldw bc, 0x80
 	ldirw
-	ld xix, (3186:16)
+	ld xix, (STYLE_WORK_IMAGE_PTR:16)
 	ld xiy, MSP_Default_Signature1
 	ldw bc, 0x30
 	ldirw
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xiy, MSP_Default_VoiceEnable
 	lda xix, (xwa+5056)
 	ldw bc, 0x20
 	ldirw
-	ld xbc, (3186:16)
+	ld xbc, (STYLE_WORK_IMAGE_PTR:16)
 	ld xwa, 0xba0
 	add xbc, xwa
 	ld xwa, xbc
@@ -1204,7 +1204,7 @@ NoteEvent_CopyVoiceParamsLoop:
 	lda xwa, (xwa + 32)
 	cp xwa, xde
 	jr ule, NoteEvent_CopyVoiceParamsLoop
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	lda xwa, (xwa+3136)
 	ld xde, xwa
 	lda xwa, (xwa+1760)
@@ -1233,7 +1233,7 @@ NoteEvent_CopyExtParamsInner:
 	lda xbc, (xwa + 8)
 	ld (xsp + 12), xbc
 	lda xhl, (xwa + 10)
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	lda xwa, (xwa + 96)
 	ld de, 4:i3
 
@@ -1272,7 +1272,7 @@ NoteEvent_CopySlotData_Loop:
 
 NoteEvent_CopyExtParamsInner_Join:
 	ld xix, xwa
-	add xix, (3186:16)
+	add xix, (STYLE_WORK_IMAGE_PTR:16)
 	lda xiy, (xsp + 16)
 	ldw bc, 0x80
 	ldirw
@@ -1311,8 +1311,8 @@ Flash_InitExtMemAddrs:
 	lda xwa, (RHYTHM_PATTERN_BUF_A:24)
 	ld (RHYTHM_PATTERN_BUF_PTR:16), xwa
 	lda xwa, (0x069800:24)
-	ld (3186:16), xwa
-	ld (3222:16), xwa
+	ld (STYLE_WORK_IMAGE_PTR:16), xwa
+	ld (FLASH_SECTOR_IMAGE_PTR:16), xwa
 	ret
 
 Flash_InitBytecodeBlock:
@@ -1344,8 +1344,8 @@ Flash_InitBytecodeBlock:
 	lda	xbc, (MSP_Default_GroupIndexPad:24)
 	ld	a, (xbc+wa)
 	ld (xsp+6), a
-	ld xwa, (3186:16)
-	ld	(0x39ae:16), xwa
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
 	ldib_erp 251, 0
 Flash_InitBytecodeBlock_Loop:
 	ld	c, (xsp+6)
@@ -1356,15 +1356,15 @@ Flash_InitBytecodeBlock_Loop:
 	ld	de, wa
 	add	de, bc
 	lda	xwa, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac), (xwa+de)
+	ld	(STYLE_COPY_SRC_SECTION), (xwa+de)
 	call	AccPatch_InitFromSlotIndex
 	inc1b_erp 251
 	cp_erpb 251, 10
 	jr c, Flash_InitBytecodeBlock_Loop
 	ld	xwa, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x39ae:16), xwa
-	ld	xwa, (3186:16)
-	ld	(0x39b2:16), xwa
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_DST_IMAGE_PTR:16), xwa
 	res	0, (0x35b0:16)
 	ldib_erp	251, 0
 Flash_InitBytecodeBlock_Loop2:
@@ -1376,11 +1376,11 @@ Flash_InitBytecodeBlock_Loop2:
 	ld	bc, wa
 	add	wa, de
 	lda	xde, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac), (xde+wa)
+	ld	(STYLE_COPY_SRC_SECTION), (xde+wa)
 	ld	a, (xsp+0x6)
 	extz	wa
 	add	bc, wa
-	ld	(0x39ad), (xde+bc)
+	ld	(STYLE_COPY_DST_SECTION), (xde+bc)
 	call	DualVoice_ParamLoadDone
 	ld	a, (0x35b0:16)
 	extz	wa
@@ -1451,7 +1451,7 @@ Flash_InitBytecodeBlock_Skip7:
 	ld	a, (xsp+10)
 	extz	wa
 	calr	DualVoice_ScanAllColumnsAlt
-	ld	xix, (3186:16)
+	ld	xix, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xiy, (RHYTHM_PATTERN_BUF_PTR:16)
 	ldw	bc, 0xb400
 	ldirw
@@ -1460,8 +1460,8 @@ Flash_InitBytecodeBlock_Skip7:
 	lda	xbc, (MSP_Default_GroupIndexPad:24)
 	ld	a, (xbc+wa)
 	ld (xsp+6), a
-	ld xwa, (3186:16)
-	ld	(0x39ae:16), xwa
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
 	ldib_erp 251, 0
 Flash_InitBytecodeBlock_Loop4:
 	ld	c, (xsp+10)
@@ -1472,7 +1472,7 @@ Flash_InitBytecodeBlock_Loop4:
 	ld	de, wa
 	add	de, bc
 	lda	xwa, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac), (xwa+de)
+	ld	(STYLE_COPY_SRC_SECTION), (xwa+de)
 	call	AccPatch_InitFromSlotIndex
 	inc1b_erp 251
 	cp_erpb 251, 10
@@ -1480,9 +1480,9 @@ Flash_InitBytecodeBlock_Loop4:
 	ld	a, (xsp+12)
 	extz	wa
 	calr	PartGrid_ColumnDispatch
-	ld	(0x39ae:16), xhl
-	ld	xwa, (3186:16)
-	ld	(0x39b2:16), xwa
+	ld	(STYLE_SRC_IMAGE_PTR:16), xhl
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_DST_IMAGE_PTR:16), xwa
 	res	0, (0x35b0:16)
 	ldib_erp	251, 0
 Flash_InitBytecodeBlock_Loop5:
@@ -1494,20 +1494,20 @@ Flash_InitBytecodeBlock_Loop5:
 	ld	bc, wa
 	add	wa, de
 	lda	xde, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac), (xde+wa)
+	ld	(STYLE_COPY_SRC_SECTION), (xde+wa)
 	ld	a, (xsp+0xa)
 	extz	wa
 	add	bc, wa
-	ld	(0x39ad), (xde+bc)
+	ld	(STYLE_COPY_DST_SECTION), (xde+bc)
 	call	DualVoice_ParamLoadDone
 	ld	a, (0x35b0:16)
 	extz	wa
 	bit	0, wa
 	jr	z, Flash_InitBytecodeBlock_Skip8
 	ld	(xsp+8), 1
-	ld	xwa, (0x39b2:16)
-	ld	(0x39ae:16), xwa
-	ldmm8	0x39ac, 0x39ad
+	ld	xwa, (STYLE_DST_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
+	ldmm8	STYLE_COPY_SRC_SECTION, STYLE_COPY_DST_SECTION
 	call	AccPatch_InitFromSlotIndex
 	jr	Flash_InitBytecodeBlock_Join5
 Flash_InitBytecodeBlock_Skip8:
@@ -1523,7 +1523,7 @@ Flash_InitBytecodeBlock_Join5:
 	cpw	(xwa+0x2), 0xffff
 	jr	nz, Flash_InitBytecodeBlock_Skip9
 	ld	xix, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	xiy, (3186:16)
+	ld	xiy, (STYLE_WORK_IMAGE_PTR:16)
 	ldw	bc, 0xb400
 	ldirw
 Flash_InitBytecodeBlock_Join3:
@@ -1606,7 +1606,7 @@ CstmCpTtl_ResolvePendingCopy_Skip2:
 ; PartGrid column dispatch (7-entry, table 0xe1611a)
 PartGrid_ColumnDispatch:
 	ld xhl, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld xbc, (3186:16)
+	ld xbc, (STYLE_WORK_IMAGE_PTR:16)
 	cp a, 0x1e
 	jr nc, PartGrid_CopyHLtoBC
 	cp a, 0xa
@@ -1847,7 +1847,7 @@ PartGrid_DefaultLoop_Outer:
 	add xbc, xwa
 	sll xbc, 5
 	add xbc, 0x60
-	add xbc, (3186:16)
+	add xbc, (STYLE_WORK_IMAGE_PTR:16)
 	ld wa, (xbc)
 	ld c, (xsp + 4)
 	extz bc
@@ -1860,7 +1860,7 @@ PartGrid_DefaultLoop_Outer:
 	add xde, xbc
 	sll xde, 5
 	add xde, 0x60
-	add xde, (3186:16)
+	add xde, (STYLE_WORK_IMAGE_PTR:16)
 	ld (xde), wa
 	ld iz, 2:i3
 
@@ -1875,7 +1875,7 @@ PartGrid_DefaultLoop_Inner:
 	add xde, xwa
 	sll xde, 5
 	add xde, xbc
-	add xde, (3186:16)
+	add xde, (STYLE_WORK_IMAGE_PTR:16)
 	ld wa, (xde + 96)
 	ld c, (xsp + 4)
 	extz bc
@@ -1891,7 +1891,7 @@ PartGrid_DefaultLoop_Inner:
 	add xhl, xbc
 	sll xhl, 5
 	add xhl, xde
-	add xhl, (3186:16)
+	add xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld (xhl + 96), wa
 	inc 1, iz
 	cp iz, 5:i3
@@ -1907,7 +1907,7 @@ NoteEvent_CopyToSlot:
 	extz xwa
 	sll xwa, 8
 	add xwa, 0x1400
-	add xwa, (3186:16)
+	add xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld wa, (xwa + 1)
 	ld c, (xsp + 4)
 	extz bc
@@ -1918,9 +1918,9 @@ NoteEvent_CopyToSlot:
 	sll xbc, 8
 	add xbc, 0x1400
 	ld xde, xbc
-	add xde, (3186:16)
+	add xde, (STYLE_WORK_IMAGE_PTR:16)
 	ld (xde + 1), wa
-	add xbc, (3186:16)
+	add xbc, (STYLE_WORK_IMAGE_PTR:16)
 	ld wa, (xbc + 3)
 	ld c, (xsp + 4)
 	extz bc
@@ -1930,7 +1930,7 @@ NoteEvent_CopyToSlot:
 	extz xbc
 	sll xbc, 8
 	add xbc, 0x1400
-	add xbc, (3186:16)
+	add xbc, (STYLE_WORK_IMAGE_PTR:16)
 	ld (xbc + 3), wa
 	inc1w_erp 0xfa
 	cp_erpw 0xfa, 0x53, 0x01
@@ -1958,7 +1958,7 @@ NoteEvent_Store:
 
 NoteEventBuffer_CopyToSlot:
 	ld c, a
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	extz bc
 	dec 1, bc
 	cp bc, 0:i3
@@ -2011,7 +2011,7 @@ NoteEventBuffer_Store:
 	ld a, (xsp + 8)
 	extz wa
 	calr PartGrid_ColumnDispatch_Default
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld (xsp), xwa
 	ld a, (xsp + 8)
 	extz wa
@@ -2124,8 +2124,8 @@ Flash_EraseAndWriteFinal:
 	ret
 
 Flash_StoreBaseAndInitAccPatch:
-	ld xwa, (3186:16)
-	ld (0x39ae:16), xwa
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld (STYLE_SRC_IMAGE_PTR:16), xwa
 	jp AccPatch_InitSlotChain_Wrap
 Flash_ExtendedOpsBlock:
 	push	xiz
@@ -2145,7 +2145,7 @@ Flash_ExtendedOpsBlock_Loop:
 	muls	wa, 96
 	ld	iy, wa
 	add	iy, ix
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	lda	xiz, (xwa+iy)
 	ld a, l
 	exts	wa
@@ -2179,7 +2179,7 @@ Flash_ExtendedOpsBlock_Loop2:
 	muls	wa, 96
 	ld	iy, wa
 	add	iy, ix
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	lda	xwa, (xwa+iy)
 	ld	a, (xwa+160)
 	ld	(xiz+160), a
@@ -2195,7 +2195,7 @@ Flash_ExtendedOpsBlock_Epilogue:
 	add	e, 32
 	extz	de
 	add	de, 16
-	ld	xbc, (3186:16)
+	ld	xbc, (STYLE_WORK_IMAGE_PTR:16)
 	lda	xbc, (xbc+de)
 	cp a, 10
 	jr nc, Flash_ExtendedOpsBlock_Skip2
@@ -2231,7 +2231,7 @@ Flash_AssignSlotsToBlocks_Loop:
 	cp	a, (xsp+0x2)
 	jr	nz, Flash_AssignSlotsToBlocks_Skip2
 Flash_AssignSlotsToBlocks_Skip:
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xix)
 	ld	(xbc), wa
 	extz	hl
@@ -2272,7 +2272,7 @@ Flash_AssignSlotsToBlocks_Skip3:
 	sla	de, 2
 	ld	iz, de
 	inc	4, iz
-	lda	xiy, (1952:16)
+	lda	xiy, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xbc)
 	ld	(xiy+iz), wa
 	inc	6, de
@@ -2303,7 +2303,7 @@ Flash_InitBytecodeBlock_Helper10:
 	lda	xwa, (1748:16)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_InitBytecodeBlock_Helper10_Skip5
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xwa)
 	ld	(xbc), wa
 	ldw (xbc+2), 1536
@@ -2341,7 +2341,7 @@ Flash_StoreBaseAndInitAccPatch_Loop3:
 	sla	wa, 2
 	ld	iy, wa
 	inc	4, iy
-	lda	xix, (1952:16)
+	lda	xix, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xix+iy), bc
 	ld	bc, wa
 	inc	6, bc
@@ -2373,7 +2373,7 @@ Flash_InitBytecodeBlock_Helper10_Loop5:
 	sla	wa, 2
 	ld	iy, wa
 	inc	4, iy
-	lda	xix, (1952:16)
+	lda	xix, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xix+iy), bc
 	ld	bc, wa
 	inc	6, bc
@@ -2400,7 +2400,7 @@ Flash_StoreBaseAndInitAccPatch_Sub:
 	dec	2, xsp
 	push	xiz
 	ld	(xsp+4), a
-	cpw	(0x7a0:16), 0xffff
+	cpw	(FLASH_SLOT_ASSIGN_LIST:16), 0xffff
 	jr	z, Flash_StoreBaseAndInitAccPatch_Sub_Skip
 	ldib_erp 249, 0
 Flash_StoreBaseAndInitAccPatch_Sub_Loop:
@@ -2415,7 +2415,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Loop:
 	extz	bc
 	ld	de, 0:i3
 	calr	Util_FrameSetup10
-	lda	xwa, (1952:16)
+	lda	xwa, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp	hl, (xwa)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Skip5
 	ld	hl, (xwa+2)
@@ -2457,7 +2457,7 @@ Flash_StoreBaseAndInitAccPatch_Loop5:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip2
 	inc	6, wa
@@ -2481,7 +2481,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip2:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip3
 	inc	6, wa
@@ -2505,7 +2505,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip3:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip4
 	inc	6, wa
@@ -2529,7 +2529,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Skip4:
 	sla	wa, 2
 	ld	de, wa
 	inc	4, de
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	cp	hl, (xbc+de)
 	jr	nz, Flash_StoreBaseAndInitAccPatch_Sub_Skip5
 	inc	6, wa
@@ -2557,11 +2557,11 @@ Flash_StoreBaseAndInitAccPatch_Sub_Epilogue:
 ;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
 ;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
 Flash_WriteSlotOwnerMap:
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	lda	xhl, (1952:16)
+	lda	xhl, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	bc, (xhl+2)
 	cp	bc, 0xffff
 	jr	z, Flash_WriteSlotOwnerMap_Skip7
@@ -2570,7 +2570,7 @@ Flash_WriteSlotOwnerMap:
 	ld	e, w
 	extz	de
 	add	de, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xbc+de), a
 	cp w, 3:i3
 	jr z, Flash_WriteSlotOwnerMap_Join3
@@ -2582,7 +2582,7 @@ Flash_WriteSlotOwnerMap:
 Flash_WriteSlotOwnerMap_Loop6:
 	ld	ix, de
 	add	ix, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+ix)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip6
@@ -2599,7 +2599,7 @@ Flash_WriteSlotOwnerMap_Skip7:
 Flash_WriteSlotOwnerMap_Loop7:
 	ld	ix, de
 	add	ix, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+ix)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip8
@@ -2625,7 +2625,7 @@ Flash_WriteSlotOwnerMap_Loop8:
 	ld	e, w
 	extz	de
 	add	de, 16
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xbc+de), a
 	inc 1, w
 	inc1b_erp 226
@@ -2641,7 +2641,7 @@ Flash_WriteSlotOwnerMap_Skip9:
 Flash_WriteSlotOwnerMap_Loop9:
 	ld	hl, de
 	add	hl, 16
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+hl)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip10
@@ -2652,7 +2652,7 @@ Flash_WriteSlotOwnerMap_Skip10:
 	cp	w, 39
 	jr	ule, Flash_WriteSlotOwnerMap_Loop9
 Flash_WriteSlotOwnerMap_Skip11:
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
@@ -2663,11 +2663,11 @@ Flash_WriteSlotOwnerMap_Skip11:
 Flash_CopyBlocksToSlots:
 	lda	xsp, (xsp-12)
 	push	xiz
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	lda_d16	xwa, (0x7a0)
+	lda_d16	xwa, (FLASH_SLOT_ASSIGN_LIST)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_CopyBlocksToSlots_Skip12
 	ld	hl, (xwa)
@@ -2721,7 +2721,7 @@ Flash_CopyBlocksToSlots_Loop2:
 	sla	bc, 2
 	ld	wa, bc
 	inc	4, wa
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xde+wa)
 	cp wa, 65535
 	jr	z, Flash_CopyBlocksToSlots_Skip13
@@ -2776,7 +2776,7 @@ Flash_CopyBlocksToSlots_Skip:
 	cp	(xsp+0x6), 50
 	jrl	c, Flash_CopyBlocksToSlots_Loop2
 Flash_CopyBlocksToSlots_Skip13:
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	call	Flash_EraseSectorAndWrite
@@ -2786,7 +2786,7 @@ Flash_CopyBlocksToSlots_Skip13:
 Flash_InitBytecodeBlock_Helper9_Helper:
 	lda	xsp, (xsp-12)
 	push	xiz
-	lda	xwa, (1952:16)
+	lda	xwa, (FLASH_SLOT_ASSIGN_LIST:16)
 	cpw	(xwa), 0xffff
 	jr	z, Flash_StoreBaseAndInitAccPatch_Skip14
 	ld	hl, (xwa)
@@ -2839,7 +2839,7 @@ Flash_InitBytecodeBlock_Helper9_Helper_Loop5:
 	sla	bc, 2
 	ld	wa, bc
 	inc	4, wa
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xde+wa)
 	cp wa, 65535
 	jr	z, Flash_InitBytecodeBlock_Helper9_Helper_Epilogue
@@ -2925,7 +2925,7 @@ Flash_StoreBaseAndInitAccPatch_Skip15:
 	inc	1, ix
 	cp	c, 4:i3
 	jr	c, Flash_StoreBaseAndInitAccPatch_Loop10
-	lda	xhl, (1952:16)
+	lda	xhl, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (1748:16)
 	ld	(xhl), wa
 	ld	a, d
@@ -2976,7 +2976,7 @@ Flash_StoreBaseAndInitAccPatch_Skip16:
 	sla	ix, 2
 	ld	iz, ix
 	inc	4, iz
-	lda	xiy, (1952:16)
+	lda	xiy, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (xhl)
 	ld	(xiy+iz), wa
 	inc	6, ix
@@ -3029,7 +3029,7 @@ Flash_InitBytecodeBlock_Helper4_Skip4:
 	sla	iy, 2
 	ld qwa, iy
 	inc 4, qwa
-	lda xiz, (1952:16)
+	lda xiz, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld wa, (xhl)
 	ld	(xiz+qwa), wa
 	inc	6, iy
@@ -3419,25 +3419,25 @@ Flash_InitBytecodeBlock_Helper7_Loop:
 	jr	c, Flash_InitBytecodeBlock_Helper7_Loop
 	ret
 Flash_StoreBaseAndInitAccPatch_Join5:
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_Sequencer
 	ldw	bc, 8
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_SeqReserved
 	lda	xix, (xwa+16)
 	ldw	bc, 32
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_SeqTail
 	lda	xix, (xwa+80)
 	ldw	bc, 8
 	ldirw
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
@@ -3502,7 +3502,7 @@ VoiceParam_SubtractBase:
 VoiceParam_AddOffset:
 	extz de
 	add hl, de
-	ld xwa, (3222:16)
+	ld xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xwa+hl), c
 	ret
 
@@ -3693,7 +3693,7 @@ SlotTable_InitBank1850_Loop:
 	ret
 
 SlotTable_ExtendedOpsBlock:
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ldw (xde), 65535
 	ldw (xde+2), 65535
 	lda	xbc, (xde+6)
@@ -3839,7 +3839,7 @@ SlotTable_Insert1850_Next:
 
 Flash_WriteBackSlotTable:
 	pushw_erp 0xfa
-	ld xix, (3222:16)
+	ld xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xiy, (FLASH_SECTION_PTR_7:16)
 	ldw bc, 0x8000
 	ldirw
@@ -3874,7 +3874,7 @@ Flash_WriteBackSlot_Loop:
 	jr c, Flash_WriteBackSlot_Loop
 
 Flash_WriteBackSlot_Erase:
-	ld xbc, (3222:16)
+	ld xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	call Flash_EraseSectorAndWrite
@@ -4019,7 +4019,7 @@ Flash_InitBytecodeBlock_Helper8:
 	extz	wa
 	calr	NoteEventBuffer_CopyToSlot
 	calr	SlotTable_ExtendedOpsBlock
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	wa, (2362:16)
 	ld	(xbc), wa
 	ldw (xbc+2), 0
@@ -4057,7 +4057,7 @@ Flash_InitBytecodeBlock_Helper8_Loop:
 	extz	wa
 	calr	NoteEventBuffer_CopyToSlot
 	calr	SlotTable_ExtendedOpsBlock
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	e, (xsp+2)
 	extz	de
 	sla	de, 2
@@ -4089,7 +4089,7 @@ Flash_InitBytecodeBlock_Helper8_Epilogue:
 	ld	wa, (xhl+2)
 	cp	wa, 0xffff
 	jr	z, Flash_WriteBackSlotTable_Skip
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xbc), wa
 	ld	wa, (xhl+4)
 	ld	(xbc+2), wa
@@ -4106,7 +4106,7 @@ Flash_WriteBackSlotTable_Loop:
 	jr	z, Flash_WriteBackSlotTable_Skip2
 	ld	ix, bc
 	inc	4, ix
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xde+ix), wa
 	ld	ix, bc
 	inc	6, ix
@@ -4142,7 +4142,7 @@ Flash_InitBytecodeBlock_Helper9:
 	ld	wa, de
 	calr	Flash_StoreBaseAndInitAccPatch_Sub
 	ld	xix, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	xiy, (3186:16)
+	ld	xiy, (STYLE_WORK_IMAGE_PTR:16)
 	ldw	bc, 0xb400
 	ldirw
 	calr	Flash_InitBytecodeBlock_Helper9_Helper
@@ -4154,7 +4154,7 @@ Flash_InitBytecodeBlock_Helper9:
 	ld	wa, (xhl+2)
 	cp	wa, 0xffff
 	jr	z, Flash_WriteBackSlotTable_Skip3
-	lda	xbc, (1952:16)
+	lda	xbc, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xbc), wa
 	ld	wa, (xhl+4)
 	ld	(xbc+2), wa
@@ -4171,7 +4171,7 @@ Flash_WriteBackSlotTable_Loop2:
 	jr	z, Flash_WriteBackSlotTable_Skip4
 	ld	ix, bc
 	inc	4, ix
-	lda	xde, (1952:16)
+	lda	xde, (FLASH_SLOT_ASSIGN_LIST:16)
 	ld	(xde+ix), wa
 	ld	ix, bc
 	inc	6, ix
@@ -4186,7 +4186,7 @@ Flash_WriteBackSlotTable_Skip4:
 	extz	wa
 	calr	Flash_StoreBaseAndInitAccPatch_Sub
 	ld	xix, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	xiy, (3186:16)
+	ld	xiy, (STYLE_WORK_IMAGE_PTR:16)
 	ldw	bc, 0xb400
 	ldirw
 	inc	2, xsp
@@ -4215,7 +4215,7 @@ FileIO_LoadRcmToFlash:
 	cp	(xwa+0x2), 75
 	jrl	nz, FileIO_LoadRcmToFlash_Skip6
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+70)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4225,7 +4225,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 1:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+74)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4235,7 +4235,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 2:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+78)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4245,7 +4245,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 3:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+82)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4255,7 +4255,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 4:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+86)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4265,7 +4265,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 5:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+90)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4275,7 +4275,7 @@ FileIO_LoadRcmToFlash:
 	ld	wa, 6:i3
 	calr	NoteEventBuffer_Store
 	calr	NoteEvent_LoadSoundGenParams
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xbc, (xsp+94)
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
@@ -4284,18 +4284,18 @@ FileIO_LoadRcmToFlash:
 	jr	lt, FileIO_LoadRcmToFlash_Skip5
 	ld	wa, 7:i3
 	calr	NoteEventBuffer_Store
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xbc, 0xf400
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
 	ld	iz, hl
 	cp	iz, 0:i3
 	jr	lt, FileIO_LoadRcmToFlash_Skip5
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	call	Flash_EraseSectorAndWrite
@@ -4441,7 +4441,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jrl	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 1:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xwa+46)
 	ld	xbc, 0:i3
@@ -4455,7 +4455,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jrl	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 2:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xwa+46)
 	ld	xbc, 0:i3
@@ -4469,7 +4469,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jrl	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 3:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xwa+46)
 	ld	xbc, 0:i3
@@ -4483,7 +4483,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jrl	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 4:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xwa+46)
 	ld	xbc, 0:i3
@@ -4497,7 +4497,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jrl	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 5:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xhl, (3186:16)
+	ld	xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xhl+46)
 	ld	xbc, 0:i3
@@ -4512,7 +4512,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jr	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 6:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xhl, (3186:16)
+	ld	xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xhl+46)
 	ld	xbc, 0:i3
@@ -4527,7 +4527,7 @@ FileIO_SaveRcmFromFlash_Skip7:
 	jr	lt, FileIO_SaveRcmFromFlash_Skip8
 	ld	wa, 7:i3
 	calr	NoteEventBuffer_CopyToSlot
-	ld	xhl, (3186:16)
+	ld	xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld	xde, 0:i3
 	ld	e, (xhl+46)
 	ld	xbc, 0:i3
@@ -4574,7 +4574,7 @@ FloppyDisk_LoadNoteEvents:
 	cp (xwa + 2), 0x4b
 	jrl nz, Floppy_SetHLFF9A_RetZero
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 70)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4586,7 +4586,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 1:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 74)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4598,7 +4598,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 2:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 78)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4610,7 +4610,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 3:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 82)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4622,7 +4622,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 4:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 86)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4634,7 +4634,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 5:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 90)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4646,7 +4646,7 @@ FloppyDisk_LoadNoteEvents:
 	ld wa, 6:i3
 	calr NoteEventBuffer_Store
 	calr NoteEvent_LoadSoundGenParams
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xbc, (xsp + 94)
 	ld XIX, (xsp + 0x0406)
 	call (xix)
@@ -4657,11 +4657,11 @@ FloppyDisk_LoadNoteEvents:
 	jr lt, FloppyCtrl_LoadIzAndContinue
 	ld wa, 7:i3
 	calr NoteEventBuffer_Store
-	ld xix, (3222:16)
+	ld xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xiy, (FLASH_SECTION_PTR_7:16)
 	ldw bc, 0x8000
 	ldirw
-	ld xwa, (3222:16)
+	ld xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld XIX, (xsp + 0x0406)
 	ld xbc, 0xf400
 	call (xix)
@@ -4670,7 +4670,7 @@ FloppyDisk_LoadNoteEvents:
 	ld iz, hl
 	cp iz, 0:i3
 	jr lt, FloppyCtrl_LoadIzAndContinue
-	ld xbc, (3222:16)
+	ld xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	call Flash_EraseSectorAndWrite
@@ -4823,7 +4823,7 @@ FloppyDisk_CopyNoteBuffers:
 	jrl lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 1:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xwa + 46)
 	ld xbc, 0:i3
@@ -4839,7 +4839,7 @@ FloppyDisk_CopyNoteBuffers:
 	jrl lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 2:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xwa + 46)
 	ld xbc, 0:i3
@@ -4855,7 +4855,7 @@ FloppyDisk_CopyNoteBuffers:
 	jrl lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 3:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xwa + 46)
 	ld xbc, 0:i3
@@ -4871,7 +4871,7 @@ FloppyDisk_CopyNoteBuffers:
 	jrl lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 4:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xwa, (3186:16)
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xwa + 46)
 	ld xbc, 0:i3
@@ -4887,7 +4887,7 @@ FloppyDisk_CopyNoteBuffers:
 	jrl lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 5:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xhl, (3186:16)
+	ld xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xhl + 46)
 	ld xbc, 0:i3
@@ -4904,7 +4904,7 @@ FloppyDisk_CopyNoteBuffers:
 	jr lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 6:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xhl, (3186:16)
+	ld xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xhl + 46)
 	ld xbc, 0:i3
@@ -4921,7 +4921,7 @@ FloppyDisk_CopyNoteBuffers:
 	jr lt, FloppyCtrl_PopIzStoreRet
 	ld wa, 7:i3
 	calr NoteEventBuffer_CopyToSlot
-	ld xhl, (3186:16)
+	ld xhl, (STYLE_WORK_IMAGE_PTR:16)
 	ld xde, 0:i3
 	ld e, (xhl + 46)
 	ld xbc, 0:i3
@@ -5043,7 +5043,7 @@ AccPatch_ConvertLegacyStyleImage_Skip8:
 AccPatch_ConvertLegacyStyleImage_Skip9:
 	calr	AccPatch_ConvertLegacySectionLayout
 	ld	iz, hl
-	ld	xwa, (3186:16)
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
 	cp	(xwa+0x10), 0
 	jr	nz, AccPatch_ConvertLegacyStyleImage_Skip11
 	ld	wa, iz
@@ -5072,7 +5072,7 @@ AccPatch_ConvertLegacySectionLayout:
 	dec	6, xsp
 	ldw	(xsp+0x4), 0
 	ld	xhl, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	xde, (3186:16)
+	ld	xde, (STYLE_WORK_IMAGE_PTR:16)
 	ld	a, (xhl+16)
 	ld	(xde+16), a
 	lda	xiy, (xhl+96)
@@ -5086,16 +5086,16 @@ AccPatch_ConvertLegacySectionLayout:
 	ldirw
 	ldi85
 	call	cmp_ld_mae
-	ld	xwa, (3186:16)
-	ld	(0x39ae:16), xwa
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
 	ld	xwa, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x39b2:16), xwa
+	ld	(STYLE_DST_IMAGE_PTR:16), xwa
 	ld	xwa, 0:i3
 	ld	(xsp), xwa
 AccPatch_ConvertLegacySectionLayout_Loop:
 	ld	xwa, (xsp)
-	ld	(0x39ac:16), a
-	ld	(0x39ad:16), a
+	ld	(STYLE_COPY_SRC_SECTION:16), a
+	ld	(STYLE_COPY_DST_SECTION:16), a
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip12
@@ -5106,127 +5106,127 @@ AccPatch_ConvertLegacySectionLayout_Skip12:
 	ld	xwa, (xsp)
 	cp	xwa, 11
 	jr	ule, AccPatch_ConvertLegacySectionLayout_Loop
-	ld	(0x39ac:16), 12
-	ld	(0x39ad:16), 12
+	ld	(STYLE_COPY_SRC_SECTION:16), 12
+	ld	(STYLE_COPY_DST_SECTION:16), 12
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip13
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip13:
-	ld	(0x39ac:16), 13
-	ld	(0x39ad:16), 14
+	ld	(STYLE_COPY_SRC_SECTION:16), 13
+	ld	(STYLE_COPY_DST_SECTION:16), 14
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip14
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip14:
-	ld	(0x39ac:16), 14
-	ld	(0x39ad:16), 15
+	ld	(STYLE_COPY_SRC_SECTION:16), 14
+	ld	(STYLE_COPY_DST_SECTION:16), 15
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip15
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip15:
-	ld	(0x39ac:16), 15
-	ld	(0x39ad:16), 16
+	ld	(STYLE_COPY_SRC_SECTION:16), 15
+	ld	(STYLE_COPY_DST_SECTION:16), 16
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip16
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip16:
-	ld	(0x39ac:16), 16
-	ld	(0x39ad:16), 24
+	ld	(STYLE_COPY_SRC_SECTION:16), 16
+	ld	(STYLE_COPY_DST_SECTION:16), 24
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip17
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip17:
-	ld	(0x39ac:16), 17
-	ld	(0x39ad:16), 26
+	ld	(STYLE_COPY_SRC_SECTION:16), 17
+	ld	(STYLE_COPY_DST_SECTION:16), 26
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip18
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip18:
-	ld	(0x39ac:16), 18
-	ld	(0x39ad:16), 27
+	ld	(STYLE_COPY_SRC_SECTION:16), 18
+	ld	(STYLE_COPY_DST_SECTION:16), 27
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip19
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip19:
-	ld	(0x39ac:16), 19
-	ld	(0x39ad:16), 28
+	ld	(STYLE_COPY_SRC_SECTION:16), 19
+	ld	(STYLE_COPY_DST_SECTION:16), 28
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip20
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip20:
-	ld	(0x39ac:16), 12
-	ld	(0x39ad:16), 18
+	ld	(STYLE_COPY_SRC_SECTION:16), 12
+	ld	(STYLE_COPY_DST_SECTION:16), 18
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip21
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip21:
-	ld	(0x39ac:16), 13
-	ld	(0x39ad:16), 20
+	ld	(STYLE_COPY_SRC_SECTION:16), 13
+	ld	(STYLE_COPY_DST_SECTION:16), 20
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip22
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip22:
-	ld	(0x39ac:16), 14
-	ld	(0x39ad:16), 21
+	ld	(STYLE_COPY_SRC_SECTION:16), 14
+	ld	(STYLE_COPY_DST_SECTION:16), 21
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip23
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip23:
-	ld	(0x39ac:16), 15
-	ld	(0x39ad:16), 22
+	ld	(STYLE_COPY_SRC_SECTION:16), 15
+	ld	(STYLE_COPY_DST_SECTION:16), 22
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip24
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip24:
-	ld	(0x39ac:16), 12
-	ld	(0x39ad:16), 13
+	ld	(STYLE_COPY_SRC_SECTION:16), 12
+	ld	(STYLE_COPY_DST_SECTION:16), 13
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip25
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip25:
-	ld	(0x39ac:16), 15
-	ld	(0x39ad:16), 17
+	ld	(STYLE_COPY_SRC_SECTION:16), 15
+	ld	(STYLE_COPY_DST_SECTION:16), 17
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip26
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip26:
-	ld	(0x39ac:16), 16
-	ld	(0x39ad:16), 25
+	ld	(STYLE_COPY_SRC_SECTION:16), 16
+	ld	(STYLE_COPY_DST_SECTION:16), 25
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip27
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip27:
-	ld	(0x39ac:16), 19
-	ld	(0x39ad:16), 29
+	ld	(STYLE_COPY_SRC_SECTION:16), 19
+	ld	(STYLE_COPY_DST_SECTION:16), 29
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip28
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip28:
-	ld	(0x39ac:16), 12
-	ld	(0x39ad:16), 19
+	ld	(STYLE_COPY_SRC_SECTION:16), 12
+	ld	(STYLE_COPY_DST_SECTION:16), 19
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip29
 	ld	(xsp+4), hl
 AccPatch_ConvertLegacySectionLayout_Skip29:
-	ld	(0x39ac:16), 15
-	ld	(0x39ad:16), 23
+	ld	(STYLE_COPY_SRC_SECTION:16), 15
+	ld	(STYLE_COPY_DST_SECTION:16), 23
 	calr	AccPatch_CopySection
 	cp	hl, 0:i3
 	jr	z, AccPatch_ConvertLegacySectionLayout_Skip30
@@ -5250,12 +5250,12 @@ AccPatch_CopySection:
 	extz	wa
 	bit	0, wa
 	jr	z, ToneParam_ExtendedOpsBlock_Epilogue
-	ld	xwa, (0x39b2:16)
-	ld	(0x39ae:16), xwa
-	ldmm8	0x39ac, 0x39ad
+	ld	xwa, (STYLE_DST_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
+	ldmm8	STYLE_COPY_SRC_SECTION, STYLE_COPY_DST_SECTION
 	call	AccPatch_InitFromSlotIndex
-	ld	xwa, (3186:16)
-	ld	(0x39ae:16), xwa
+	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
 	ldw	iz, 0xff95
 ToneParam_ExtendedOpsBlock_Epilogue:
 	ld	hl, iz
@@ -5304,102 +5304,102 @@ AccPatch_ResetSectionPartByte2Defaults_Loop:
 AccPatch_LoadIntroFillEndingFromRhythm:
 	push	xiz
 	ld	hl, wa
-	ld	c, (0x34ed:16)
+	ld	c, (RHYTHM_LOAD_PROGRAM:16)
 	ldfr_berp c, 251
-	ld c, (13550:16)
+	ld c, (RHYTHM_LOAD_BANK:16)
 	ldfr_berp c, 250
-	ld	c, (0x34ef:16)
+	ld	c, (RHYTHM_LOAD_PART:16)
 	ldfr_berp	c, 249
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ed), (xbc+0x70)
+	ld	(RHYTHM_LOAD_PROGRAM), (xbc+0x70)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ee), (xbc+0x71)
-	ld	(0x34ef:16), 4
-	ld	(0x34d6:16), 12
+	ld	(RHYTHM_LOAD_BANK), (xbc+0x71)
+	ld	(RHYTHM_LOAD_PART:16), 4
+	ld	(STYLE_SECTION:16), 12
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 5
-	ld	(0x34d6:16), 13
+	ld	(RHYTHM_LOAD_PART:16), 5
+	ld	(STYLE_SECTION:16), 13
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 6
-	ld	(0x34d6:16), 16
+	ld	(RHYTHM_LOAD_PART:16), 6
+	ld	(STYLE_SECTION:16), 16
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 7
-	ld	(0x34d6:16), 17
+	ld	(RHYTHM_LOAD_PART:16), 7
+	ld	(STYLE_SECTION:16), 17
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 10
-	ld	(0x34d6:16), 14
+	ld	(RHYTHM_LOAD_PART:16), 10
+	ld	(STYLE_SECTION:16), 14
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 11
-	ld	(0x34d6:16), 15
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ed), (xbc+0x1f0)
-	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ee), (xbc+0x1f1)
-	ld	(0x34ef:16), 4
-	ld	(0x34d6:16), 18
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 5
-	ld	(0x34d6:16), 19
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 6
-	ld	(0x34d6:16), 22
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 7
-	ld	(0x34d6:16), 23
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 10
-	ld	(0x34d6:16), 20
-	ld	wa, hl
-	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 11
-	ld	(0x34d6:16), 21
+	ld	(RHYTHM_LOAD_PART:16), 11
+	ld	(STYLE_SECTION:16), 15
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ed), (xbc+0x370)
+	ld	(RHYTHM_LOAD_PROGRAM), (xbc+0x1f0)
 	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld	(0x34ee), (xbc+0x371)
-	ld	(0x34ef:16), 4
-	ld	(0x34d6:16), 24
+	ld	(RHYTHM_LOAD_BANK), (xbc+0x1f1)
+	ld	(RHYTHM_LOAD_PART:16), 4
+	ld	(STYLE_SECTION:16), 18
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 5
-	ld	(0x34d6:16), 25
+	ld	(RHYTHM_LOAD_PART:16), 5
+	ld	(STYLE_SECTION:16), 19
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 6
-	ld	(0x34d6:16), 28
+	ld	(RHYTHM_LOAD_PART:16), 6
+	ld	(STYLE_SECTION:16), 22
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 7
-	ld	(0x34d6:16), 29
+	ld	(RHYTHM_LOAD_PART:16), 7
+	ld	(STYLE_SECTION:16), 23
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 10
-	ld	(0x34d6:16), 26
+	ld	(RHYTHM_LOAD_PART:16), 10
+	ld	(STYLE_SECTION:16), 20
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
-	ld	(0x34ef:16), 11
-	ld	(0x34d6:16), 27
+	ld	(RHYTHM_LOAD_PART:16), 11
+	ld	(STYLE_SECTION:16), 21
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
+	ld	(RHYTHM_LOAD_PROGRAM), (xbc+0x370)
+	ld	xbc, (RHYTHM_PATTERN_BUF_PTR:16)
+	ld	(RHYTHM_LOAD_BANK), (xbc+0x371)
+	ld	(RHYTHM_LOAD_PART:16), 4
+	ld	(STYLE_SECTION:16), 24
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	(RHYTHM_LOAD_PART:16), 5
+	ld	(STYLE_SECTION:16), 25
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	(RHYTHM_LOAD_PART:16), 6
+	ld	(STYLE_SECTION:16), 28
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	(RHYTHM_LOAD_PART:16), 7
+	ld	(STYLE_SECTION:16), 29
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	(RHYTHM_LOAD_PART:16), 10
+	ld	(STYLE_SECTION:16), 26
+	ld	wa, hl
+	calr	AccPatch_LoadSectionFromRhythm
+	ld	(RHYTHM_LOAD_PART:16), 11
+	ld	(STYLE_SECTION:16), 27
 	ld	wa, hl
 	calr	AccPatch_LoadSectionFromRhythm
 	ldto_berp c, 251
-	ld (13549:16), c
+	ld (RHYTHM_LOAD_PROGRAM:16), c
 	ldto_berp c, 250
-	ld (13550:16), c
+	ld (RHYTHM_LOAD_BANK:16), c
 	ldto_berp c, 249
-	ld (13551:16), c
+	ld (RHYTHM_LOAD_PART:16), c
 	pop xiz
 	ret
 ; AccPatch_LoadSectionFromRhythm: Loads part (0x34EF) of rhythm (0x34ED/0x34EE) into section (0x34D6): sets 0x34D1 bit
@@ -5453,8 +5453,8 @@ DualVoice_LoadAndScan:
 	lda xbc, (MSP_Default_GroupIndexPad:24)
 	ld	a, (xbc+wa)
 	ld (xsp + 8), a
-	ld xwa, (3186:16)
-	ld (0x39ae:16), xwa
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld (STYLE_SRC_IMAGE_PTR:16), xwa
 	ldib_erp 0xfb, 0
 
 DualVoice_AccPatchLoop:
@@ -5466,15 +5466,15 @@ DualVoice_AccPatchLoop:
 	ld de, wa
 	add de, bc
 	lda xwa, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac:16), (xwa+de)
+	ld	(STYLE_COPY_SRC_SECTION:16), (xwa+de)
 	call AccPatch_InitFromSlotIndex
 	inc1b_erp 0xfb
 	cp_erpb 0xfb, 0x0a
 	jr c, DualVoice_AccPatchLoop
 	ld xwa, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld (0x39ae:16), xwa
-	ld xwa, (3186:16)
-	ld (0x39b2:16), xwa
+	ld (STYLE_SRC_IMAGE_PTR:16), xwa
+	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
+	ld (STYLE_DST_IMAGE_PTR:16), xwa
 	res 0, (0x35b0:16)
 	ldib_erp 0xfb, 0
 
@@ -5487,11 +5487,11 @@ DualVoice_ParamCompareLoop:
 	ld bc, wa
 	add wa, de
 	lda xde, (MSP_Default_ChannelMap:24)
-	ld	(0x39ac:16), (xde+wa)
+	ld	(STYLE_COPY_SRC_SECTION:16), (xde+wa)
 	ld a, (xsp + 8)
 	extz wa
 	add bc, wa
-	ld	(0x39ad:16), (xde+bc)
+	ld	(STYLE_COPY_DST_SECTION:16), (xde+bc)
 	call DualVoice_ParamLoadDone
 	ld a, (0x35b0:16)
 	extz wa
@@ -6261,7 +6261,7 @@ CmpSetP1GridCheck_OnRequestGridDraw:
 ; UI component dispatch table - handles cases 0-7 for grid/focus handling
 ; Offset table at 0xe1cef0 selects which handler to run based on WA value
 UI_COMPONENT_DISPATCH:
-	ld a, (0x34d7:16); Load byte from UI state
+	ld a, (STYLE_SECTION_LAST_MEASURE:16); Load byte from UI state
 	inc	1, a	; Increment by 1
 	extz	wa	; Zero-extend A to WA
 	pushw	wa	; Push WA as parameter
@@ -6279,7 +6279,7 @@ UI_COMPONENT_DISPATCH_CASE1:
 	lda xbc, (0x03d9f6:24); Load table address
 	ld	xwa, (xbc+wa)	; Load entry from table
 	push	xwa	; Push parameter
-	ld a, (0x34d8:16); Load byte from UI state
+	ld a, (STYLE_SECTION_TIME_SIG:16); Load byte from UI state
 	extz	wa	; Zero-extend A to WA
 	sla	wa, 2	; Shift left by 2 (multiply by 4)
 	lda xbc, (0x03da0e:24); Load table address
@@ -6482,7 +6482,7 @@ GridCheck_ReturnZero:
 	ret
 
 GridCheck_LookupSndParam:
-	ld e, (0x34d6:16)
+	ld e, (STYLE_SECTION:16)
 	extz de
 	sla de, 2
 	lda xhl, (RhythmTiming_OffsetTable:24)
@@ -7005,7 +7005,7 @@ PsSeqSongNoBoxProc:
 PsSeqSongNo_HandleScroll:
 	ld xwa, xiz
 	call InheritedProc
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	inc 1, a
 	extz wa
 	pushw wa

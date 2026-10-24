@@ -372,7 +372,7 @@ SysEx_ValidateRolandHeader:
 	ret nz
 	cp c, 0:i3
 	jr nz, SysEx_ValidateRolandHeader_NonZeroChan
-	lda xbc, (0x00f180:24)
+	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x2e0
 	jr SysEx_ValidateRolandHeader_Dispatch
 
@@ -421,7 +421,7 @@ SysEx_ApplyVoiceParam_4B:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
@@ -434,7 +434,7 @@ SysEx_ApplyVoiceParam_4B:
 	call DSPCfg_WriteParamSimple
 	cp hl, 0:i3
 	jr lt, SysEx_ApplyVoiceParam_4B_Return
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	cp xwa, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_ReadSubParams
 	ld a, (xwa)
@@ -442,7 +442,7 @@ SysEx_ApplyVoiceParam_4B:
 	ld a, (xsp + 10)
 	extz wa
 	calr SysEx_ClampVoiceIndex8
-	ld (0xfc8e:16), l
+	ld (PANEL_DIGITAL_REVERB:16), l
 
 SysEx_ApplyVoiceParam_4B_ReadSubParams:
 	ld xwa, 0x4b04
@@ -450,7 +450,7 @@ SysEx_ApplyVoiceParam_4B_ReadSubParams:
 	ldfr_werp HL, 0xfa
 	cpiw_erp 0xfa, 0
 	jr ge, SysEx_ApplyVoiceParam_4B_IterateSlots
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_SkipRestore
 	ld a, (xsp + 4)
@@ -485,7 +485,7 @@ SysEx_ApplyVoiceParam_4B_SlotNext:
 	jr lt, SysEx_ApplyVoiceParam_4B_SlotLoop
 
 SysEx_ApplyVoiceParam_4B_RestoreSlotId:
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_Return
 	ld a, (xsp + 4)
@@ -501,14 +501,14 @@ SysEx_ApplyVoiceParam_4B_128:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
 	extz wa
 	calr SysEx_ClampVoiceIndex128
 	ld (xsp + 10), l
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_128_ReadSub
 	ld a, (xbc)
@@ -523,7 +523,7 @@ SysEx_ApplyVoiceParam_4B_128_ReadSub:
 	ldfr_werp HL, 0xfa
 	cpiw_erp 0xfa, 0
 	jr ge, SysEx_ApplyVoiceParam_4B_128_IterateSlots
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_128_SkipRestore
 	ld a, (xsp + 4)
@@ -563,7 +563,7 @@ SysEx_ApplyVoiceParam_4B_128_SlotNext:
 	jr lt, SysEx_ApplyVoiceParam_4B_128_SlotLoop
 
 SysEx_ApplyVoiceParam_4B_128_RestoreSlotId:
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_4B_128_Return
 	ld a, (xsp + 4)
@@ -579,7 +579,7 @@ SysEx_ApplyVoiceParam_49:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc74:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
@@ -592,7 +592,7 @@ SysEx_ApplyVoiceParam_49:
 	call DSPCfg_WriteParamSimple
 	cp hl, 0:i3
 	jr lt, SysEx_ApplyVoiceParam_49_Return
-	lda xwa, (0xfc74:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
 	cp xwa, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_ReadSubParams
 	ld a, (xwa)
@@ -600,7 +600,7 @@ SysEx_ApplyVoiceParam_49:
 	ld a, (xsp + 10)
 	extz wa
 	calr SysEx_ClampVoiceIndex8_49
-	ld (0xfc74:16), l
+	ld (PANEL_DSP_EFFECT:16), l
 
 SysEx_ApplyVoiceParam_49_ReadSubParams:
 	ld xwa, 0x4904
@@ -608,7 +608,7 @@ SysEx_ApplyVoiceParam_49_ReadSubParams:
 	ldfr_werp HL, 0xfa
 	cpiw_erp 0xfa, 0
 	jr ge, SysEx_ApplyVoiceParam_49_IterateSlots
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_SkipRestore
 	ld a, (xsp + 4)
@@ -643,7 +643,7 @@ SysEx_ApplyVoiceParam_49_SlotNext:
 	jr lt, SysEx_ApplyVoiceParam_49_SlotLoop
 
 SysEx_ApplyVoiceParam_49_RestoreSlotId:
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_Return
 	ld a, (xsp + 4)
@@ -659,14 +659,14 @@ SysEx_ApplyVoiceParam_49_128:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc74:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
 	extz wa
 	calr SysEx_ClampVoiceIndex128_49
 	ld (xsp + 10), l
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_128_ReadSub
 	ld a, (xbc)
@@ -681,7 +681,7 @@ SysEx_ApplyVoiceParam_49_128_ReadSub:
 	ldfr_werp HL, 0xfa
 	cpiw_erp 0xfa, 0
 	jr ge, SysEx_ApplyVoiceParam_49_128_IterateSlots
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_128_SkipRestore
 	ld a, (xsp + 4)
@@ -721,7 +721,7 @@ SysEx_ApplyVoiceParam_49_128_SlotNext:
 	jr lt, SysEx_ApplyVoiceParam_49_128_SlotLoop
 
 SysEx_ApplyVoiceParam_49_128_RestoreSlotId:
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	cp xbc, (xsp + 6)
 	jr z, SysEx_ApplyVoiceParam_49_128_Return
 	ld a, (xsp + 4)
@@ -810,7 +810,7 @@ AssswbWr_Return:
 	pop xiz
 	ret
 AssswbWr:
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	cp hl, 0x1fc
 	jr nc, AssswbWr_BufferFull
 	lda xix, (SWBTWR_EVENT_QUEUE:16)
@@ -822,9 +822,9 @@ AssswbWr:
 	ld a, (xsp + 4)
 	ld (xhl+), a
 	ld (xhl), 0xff
-	ld wa, (0x90de:16)
+	ld wa, (SWBTWR_WRITE_INDEX:16)
 	inc 4, wa
-	ld (0x90de:16), wa
+	ld (SWBTWR_WRITE_INDEX:16), wa
 
 AssswbWr_BufferFull:
 	retd 0x2
@@ -850,7 +850,7 @@ AddswbWr_BufferFull:
 	retd 0x2
 
 SwbtWr:
-	lda xix, (0xc039:16)
+	lda xix, (PANEL_EVENT_QUEUE:16)
 	ld xiy, xix
 	lda xhl, (xix + 60)
 	cp (xix), 0xff
@@ -897,7 +897,7 @@ SwbtWr_ProcessAll:
 SwbtWr_ProcessAll_CompactDone:
 	ld (xix), 0xff
 	sub xix, 0xbd3c
-	ld (0x90de:16), ix
+	ld (SWBTWR_WRITE_INDEX:16), ix
 	ld (0xbf39:16), 255
 	ldw (0x90e2:16), 0
 	ret
@@ -908,7 +908,7 @@ SwbtWr_InitBank1:
 	ld xiy, SwbtBank1_PostCallbacks
 	ld (0xc085:16), xiy
 	ld xiy, SWBTWR_EVENT_QUEUE
-	ld (0xc089:16), xiy
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
@@ -918,7 +918,7 @@ SwbtWr_InitBank2:
 	ld xiy, SwbtBank2_PostCallbacks
 	ld (0xc085:16), xiy
 	ld xiy, SWBTWR_EVENT_QUEUE
-	ld (0xc089:16), xiy
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
@@ -927,17 +927,17 @@ SwbtWr_InitBank3:
 	ld (0xc081:16), xiy
 	ld xiy, SwbtBank3_PostCallbacks
 	ld (0xc085:16), xiy
-	ld xiy, 0xc039
-	ld (0xc089:16), xiy
+	ld xiy, PANEL_EVENT_QUEUE
+	ld (SWBTWR_BUFFER_PTR:16), xiy
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
 SwbtWr_DispatchLoop_Init:
-	ldw (0xc07b:16), 0
+	ldw (SWBTWR_DISPATCH_INDEX:16), 0
 
 SwbtWr_DispatchLoop:
-	ld xiy, (0xc089:16)
-	add iy, (0xc07b:16)
+	ld xiy, (SWBTWR_BUFFER_PTR:16)
+	add iy, (SWBTWR_DISPATCH_INDEX:16)
 	cp (xiy), 0xff
 	jr z, SwbtWr_DispatchLoop_PostCallbacks
 	ld xix, (0xc081:16)
@@ -988,7 +988,7 @@ SwbtWr_DispatchLoop_ExecuteCallback:
 	jr SwbtWr_DispatchLoop_ScanCallbacks
 
 SwbtWr_DispatchLoop_NextEvent:
-	addw (0xc07b:16), 4
+	addw (SWBTWR_DISPATCH_INDEX:16), 4
 	jrl SwbtWr_DispatchLoop
 
 SwbtWr_DispatchLoop_PostCallbacks:
@@ -1008,14 +1008,14 @@ SwbtWr_PostCallback_Done:
 	ret
 
 SwbtWr_QueueMainEvent:
-	cpw (0x90de:16), 507
+	cpw (SWBTWR_WRITE_INDEX:16), 507
 	jr ugt, SwbtWr_QueueMainEvent_Done
 	ld xhl, SWBTWR_EVENT_QUEUE
-	add hl, (0x90de:16)
+	add hl, (SWBTWR_WRITE_INDEX:16)
 	ld (xhl), de
 	ld (xhl + 2), wa
 	ld (xhl + 4), 0xff
-	add (0x90de:16), 4
+	add (SWBTWR_WRITE_INDEX:16), 4
 
 SwbtWr_QueueMainEvent_Done:
 	ret
@@ -1034,7 +1034,7 @@ SwbtWr_QueuePostEvent_Done:
 	ret
 
 SwbtWr_TrailingBytecode:
-	ld	xhl, 0xc039
+	ld	xhl, PANEL_EVENT_QUEUE
 SwbtWr_TrailingBytecode_Join:
 	cp	(xhl), 255
 	jr	z, SwbtWr_TrailingBytecode_Skip
@@ -1197,8 +1197,8 @@ VoiceParam_RestoreReverbChorus_Loop:
 	ret
 
 BitMapOut_ComputeRegionDelta:
-	lda xwa, (0xfda2:16)
-	lda xbc, (0xf980:16)
+	lda xwa, (PANEL_REC_98+12:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	sub xwa, xbc
 	pushw wa
 	push xbc
@@ -1223,13 +1223,13 @@ BitMapOut_RenderDisplay:
 	ld wa, 2:i3
 	call BitMapOut_GetRenderMode_CheckBit3
 	call PanelMemory_BackupLivePanel
-	lda xbc, (0xfc5a:16)
+	lda xbc, (PANEL_STYLE:16)
 	ld a, (xbc + 8)
 	ldfr_berp A, 0xf9
 	ld a, (xbc + 9)
 	ldfr_berp A, 0xfb
 	ldmi16 (xsp + 4), 0x8d3a
-	lda xbc, (0xfd96:16)
+	lda xbc, (PANEL_REC_98:16)
 	ld a, (xbc + 1)
 	ld (xsp + 6), a
 	ld a, (xbc + 11)
@@ -1248,8 +1248,8 @@ BitMapOut_RenderDisplay:
 	call Mem_Copy
 	lda xsp, (xsp + 20)
 	calr VoiceParam_SaveReverbChorus
-	lda xix, (0xf460:16)
-	lda xbc, (0xf980:16)
+	lda xix, (SEQ_SONG_RECORD+736:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	ld xhl, xbc
 	lda xwa, (0xfd5e:16)
 	sub xwa, xbc
@@ -1290,12 +1290,12 @@ BitMapOut_SkipRestore:
 	calr VoiceParam_RestoreReverbChorus
 
 BitMapOut_MergeOutputFields:
-	lda xix, (0xfd96:16)
+	lda xix, (PANEL_REC_98:16)
 	lda xbc, (xix + 1)
-	lda xhl, (0xf980:16)
+	lda xhl, (LIVE_PANEL_BLOCK:16)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xde, (0xf460:16)
+	lda xde, (SEQ_SONG_RECORD+736:16)
 	ld xiy, xde
 	add xiy, xwa
 	ld w, (xiy)
@@ -1318,7 +1318,7 @@ BitMapOut_MergeOutputFields:
 	ldfr_berp A, 0xe2
 	orb_erp W, 0xe2
 	ld (xbc), w
-	lda xbc, (0xfc5a:16)
+	lda xbc, (PANEL_STYLE:16)
 	ld a, (xbc + 5)
 	ldfr_berp A, 0xf8
 	ld a, (xbc + 6)
@@ -1348,7 +1348,7 @@ BitMapOut_MergeOutputFields:
 	call AddswbWr
 	ld w, (xsp + 6)
 	and w, 0x80
-	lda xbc, (0xfd97:16)
+	lda xbc, (PANEL_REC_98+1:16)
 	ld a, (xbc)
 	res 7, a
 	ld (xbc), a
@@ -1360,7 +1360,7 @@ BitMapOut_MergeOutputFields:
 	ldw wa, 0x98
 	ld bc, 1:i3
 	call AddswbWr
-	ld e, (0xfda1:16)
+	ld e, (PANEL_REC_98+11:16)
 	ld c, e
 	and c, 0xc0
 	ld a, (xsp + 8)
@@ -1372,7 +1372,7 @@ BitMapOut_MergeOutputFields:
 	ldw wa, 0x98
 	ldw bc, 0xb
 	call AddswbWr
-	lda xbc, (0xfc5a:16)
+	lda xbc, (PANEL_STYLE:16)
 	ldto_berp A, 0xf8
 	and a, 0x3f
 	ld (xbc + 5), a
@@ -1795,7 +1795,7 @@ MidiOut_SerializeRealtimeLoop:
 	bit 0, (1065:16)
 	jr z, MidiOut_CheckStart
 	res 0, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, MidiOut_SerializeRealtimeLoop
 	ld wa, iz
 	inc 1, iz
@@ -1810,7 +1810,7 @@ MidiOut_CheckStart:
 	bit 1, (1065:16)
 	jr z, MidiOut_CheckContinue
 	res 1, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, MidiOut_SerializeRealtimeLoop
 	ld bc, iz
 	inc 1, iz
@@ -1823,7 +1823,7 @@ MidiOut_CheckContinue:
 	bit 2, (1065:16)
 	jr z, MidiOut_CheckStop
 	res 2, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, MidiOut_SerializeRealtimeLoop
 	ld bc, iz
 	inc 1, iz
@@ -1836,7 +1836,7 @@ MidiOut_CheckStop:
 	bit 3, (1065:16)
 	jr z, MidiOut_SerializeRealtimeLoop
 	res 3, (1065:16)
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jrl nz, MidiOut_SerializeRealtimeLoop
 	ld bc, iz
 	inc 1, iz
@@ -1886,7 +1886,7 @@ GET_COMPUTER_INTERFACE_SELECTION:
 CompIface_ProcessInput:
 	bit 3, (0xc1f0:16)
 	jrl z, CompIface_RampControl
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, CompIface_FilterBySource
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr z, CompIface_FilterBySource
@@ -1894,7 +1894,7 @@ CompIface_ProcessInput:
 	jr z, CompIface_CheckUpDown
 	bit 5, (0xc1f0:16)
 	jr z, CompIface_CheckUpDown
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, CompIface_SetPedalBit
 	jr CompIface_CallFilterA
 
@@ -1908,7 +1908,7 @@ CompIface_CheckUpDown:
 CompIface_RampDown:
 	bit 5, (0xc1f0:16)
 	jr z, CompIface_PostProcess
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, CompIface_RampDown_Start
 	set 1, (9834:16)
 
@@ -1917,7 +1917,7 @@ CompIface_RampDown_Start:
 	jr CompIface_CallSync
 
 CompIface_FilterBySource:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, CompIface_FromSource2
 	bit 4, (0xc1f0:16)
 	jr z, CompIface_PostProcess
@@ -1936,7 +1936,7 @@ CompIface_FromSource2:
 	jr CompIface_PostProcess
 
 CompIface_Source2_ZeroCheck:
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, CompIface_CallFilterA
 
 CompIface_SetPedalBit:
@@ -5379,7 +5379,7 @@ AudioInit_ProcessModeChange:
 	ret z
 	call Audio_CheckInitStatus
 	andw (0xc594:16), 0xfffb
-	bit 1, (0xfc67:16)
+	bit 1, (PANEL_REC_90+1:16)
 	jr z, AudioModeChange_Handler
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5421,7 +5421,7 @@ Audio_CheckSubsystemReady:
 	ld wa, (0xc598:16)
 	and wa, 0x60
 	call z, (AudioInit_RefreshToneBank:24)
-	bit 1, (0xfc67:16)
+	bit 1, (PANEL_REC_90+1:16)
 	jr z, AudioSubsystem_Callback
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5495,7 +5495,7 @@ AudioDispatch_SetTimerBase:
 	ld (0xc5a0:16), 16
 
 AudioDispatch_CheckStereoMode:
-	bit 1, (0xfc67:16)
+	bit 1, (PANEL_REC_90+1:16)
 	jr z, AudioVoice_Callback
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5528,7 +5528,7 @@ AudioVoice_SkipToDispatch:
 	jp AudioInit_DispatchChanges
 
 AudioMode_SetStereoFlags:
-	bit 0, (0xfc69:16)
+	bit 0, (PANEL_REC_90+3:16)
 	ret z
 	orw (0xc596:16), 128
 	orw (0xc594:16), 4
@@ -5536,7 +5536,7 @@ AudioMode_SetStereoFlags:
 	ret
 
 AudioMode_ResetVoiceState:
-	bit 1, (0xfc67:16)
+	bit 1, (PANEL_REC_90+1:16)
 	jr z, AudioVoiceReset_Handler
 	ld wa, (0xc594:16)
 	bit 4, wa
@@ -5583,17 +5583,17 @@ AudioMode_ConfigureExternal:
 
 AudioMode_ConfigExternal_Off:
 	andw (0xc594:16), 0xffef
-	bit 0, (0xfc66:16)
+	bit 0, (PANEL_REC_90:16)
 	jr z, AudioMode_ConfigExternal_CheckBit1
 	set 0, (0xc1fe:16)
 
 AudioMode_ConfigExternal_CheckBit1:
-	bit 1, (0xfc66:16)
+	bit 1, (PANEL_REC_90:16)
 	jr z, AudioMode_ConfigExternal_CheckStereo
 	set 1, (0xc1fe:16)
 
 AudioMode_ConfigExternal_CheckStereo:
-	bit 1, (0xfc67:16)
+	bit 1, (PANEL_REC_90+1:16)
 	jr z, AudioMode_ConfigExternal_NoStereo
 	orw (0xc596:16), 32
 	jr AudioMode_ConfigExternal_MergeFlags
@@ -5606,7 +5606,7 @@ AudioMode_ConfigExternal_NoStereo:
 
 AudioMode_ConfigExternal_MergeFlags:
 	res 2, (0xc1fe:16)
-	ld a, (0xfc67:16)
+	ld a, (PANEL_REC_90+1:16)
 	and a, 0x2
 	ld c, a
 	add a, c
@@ -5805,7 +5805,7 @@ UIStateEvt_TransposeUpdate:
 	ld	bc, wa
 	add	bc, 228
 	lda_d16	xde, (0xc1ff)
-	ldb_d8	a, (0xfc6a)
+	ldb_d8	a, (PANEL_REC_90+4)
 	and	a, 255
 	sub	a, 64
 	ld	(xde+bc), a
@@ -5849,13 +5849,13 @@ PanelTag48_UpdateAudioConfig_StyleNumber:
 	ldw_d16	wa, (0xc598)
 	bit	6, wa
 	jr	z, PanelTag48_UpdateAudioConfig_StyleNumber_Skip
-	ldb_d8	a, (0xfc5e)
+	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 7
 	extz	wa
 	add	wa, wa
 	lda	xbc, (ParamEdit_WordTable:24)
 	ld	iz, (xbc+wa)
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5868,7 +5868,7 @@ PanelTag48_UpdateAudioConfig_StyleNumber_Skip:
 	cp	wa, 32
 	jr	nz, PanelTag48_UpdateAudioConfig_StyleNumber_Skip2
 	ld	iz, 2:i3
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5876,7 +5876,7 @@ PanelTag48_UpdateAudioConfig_StyleNumber_Skip:
 	or	iz, (xbc+wa)
 	jr	PanelTag48_UpdateAudioConfig_StyleNumber_Join
 PanelTag48_UpdateAudioConfig_StyleNumber_Skip2:
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 15
 	extz	wa
 	add	wa, wa
@@ -5949,13 +5949,13 @@ UIStateEvt_ParamEdit_Data_Case4_Skip10:
 	ldw_d16	wa, (0xc598)
 	bit	6, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Case4_Skip11
-	ldb_d8	a, (0xfc5e)
+	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 7
 	extz	wa
 	add	wa, wa
 	lda	xbc, (ParamEdit_WordTable:24)
 	ld	iz, (xbc+wa)
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5967,7 +5967,7 @@ UIStateEvt_ParamEdit_Data_Case4_Skip11:
 	bit	5, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Case4_Skip12
 	ld	iz, 2:i3
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 8
 	extz	wa
 	add	wa, wa
@@ -5975,7 +5975,7 @@ UIStateEvt_ParamEdit_Data_Case4_Skip11:
 	or	iz, (xbc+wa)
 	jr	UIStateEvt_ParamEdit_Data_Case4_Join5
 UIStateEvt_ParamEdit_Data_Case4_Skip12:
-	ldb_d8	a, (0xfc5d)
+	ldb_d8	a, (PANEL_STYLE+3)
 	and	a, 15
 	extz	wa
 	add	wa, wa
@@ -6002,7 +6002,7 @@ UIStateEvt_ParamEdit_Data_Case5:
 	ldw_d16	wa, (0xc596)
 	bit	9, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Case5_Skip14
-	ldb_d8	a, (0xfc5f)
+	ldb_d8	a, (PANEL_STYLE+5)
 	and	a, 252
 	jr	nz, UIStateEvt_ParamEdit_Data_Case5_Skip14
 UIStateEvt_ParamEdit_Data_Case5_Skip14:
@@ -6010,7 +6010,7 @@ UIStateEvt_ParamEdit_Data_Case5_Skip14:
 UIStateEvt_ParamEdit_Data_Case5_Skip15:
 	bit	1, (SWBTWR_PAYLOAD_3:16)
 	jr	z, UIStateEvt_ParamEdit_Data_Case6_Epilogue
-	bit	1, (0xfc5f:16)
+	bit	1, (PANEL_STYLE+5:16)
 	jr	z, UIStateEvt_ParamEdit_Data_Case5_Skip16
 	ldw_d16	wa, (0xc596)
 	bit	9, wa
@@ -6027,7 +6027,7 @@ UIStateEvt_ParamEdit_Data_Case6:
 	ldw_d16	wa, (0xc596)
 	bit	9, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Case6_Skip17
-	ldb_d8	a, (0xfc5f)
+	ldb_d8	a, (PANEL_STYLE+5)
 	and	a, 252
 	jr	nz, UIStateEvt_ParamEdit_Data_Case6_Skip17
 UIStateEvt_ParamEdit_Data_Case6_Skip17:
@@ -6194,7 +6194,7 @@ PanelTag70_UpdateAudioConfig:
 	jr	z, PanelTag70_UpdateAudioConfig_Skip5
 	cp	a, 0:i3
 	jr	nz, PanelTag70_UpdateAudioConfig_Join
-	ldb_d8	a, (0xfd03)
+	ldb_d8	a, (PANEL_REC_70+1)
 	res	7, a
 	stb_d8	(0xc5a2), a
 	orw	(0xc59a:16), 0x400
@@ -6218,7 +6218,7 @@ PanelTag70_UpdateAudioConfig_Skip:
 	res	7, a
 	cp	a, 0:i3
 	ret	z
-	ldb_d8	a, (0xfd02)
+	ldb_d8	a, (PANEL_REC_70)
 	and	a, 3
 	jr	nz, PanelTag70_UpdateAudioConfig_Skip8
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
@@ -6232,7 +6232,7 @@ PanelTag70_UpdateAudioConfig_Skip2:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 255
 	ret	z
-	bit	5, (0xfd50:16)
+	bit	5, (PANEL_MIDI:16)
 	ret	z
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
 	and	a, 255
@@ -6336,7 +6336,7 @@ PanelTag80_UpdateAudioConfig_Loop2:
 	ld	hl, wa
 	extz	xhl
 	add	xhl, xbc
-	ldb_d8	a, (0xfd04)
+	ldb_d8	a, (PANEL_REC_70+2)
 	and	a, 255
 	extz	wa
 	lda	xbc, (EffectSelect_StepTable:24)

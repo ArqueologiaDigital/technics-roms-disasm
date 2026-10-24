@@ -108,7 +108,7 @@ PanelTlv_WriteAllHeaders:
 ;   block-0 panel records at 0xF480, inside the received current-song record'; PanelTlv_ValidateLivePanel (0xF9A0) and
 ;   PanelTlv_ValidatePanelMemory (0x1ED400 + 960*n) do the same for the live panel and the panel memories.
 PanelTlv_ValidateSongPanel:
-	lda xwa, (0xf480:16)
+	lda xwa, (SEQ_SONG_RECORD+768:16)
 	jrl PanelTlv_ValidateBlock0
 
 ; a jr to PanelTlv_ResolvePartCompanions, for callers outside its calr reach
@@ -251,27 +251,27 @@ PanelTlv_ValidateBlock0_Loop:
 	inc 1, iz
 	cp iz, 0x2e
 	jr c, PanelTlv_ValidateBlock0_Loop
-	lda xbc, (0xfc74:16)
+	lda xbc, (PANEL_DSP_EFFECT:16)
 	sub xbc, 0xf9a0
 	add xbc, (xsp + 2)
 	ld wa, 0:i3
 	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	sub xbc, 0xf9a0
 	add xbc, (xsp + 2)
 	ld wa, 1:i3
 	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (0xfcc2:16)
+	lda xbc, (PANEL_ACOUSTIC_ILLUSION:16)
 	sub xbc, 0xf9a0
 	add xbc, (xsp + 2)
 	ld wa, 2:i3
 	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (0xfcdc:16)
+	lda xbc, (PANEL_MIC_REVERB:16)
 	sub xbc, 0xf9a0
 	add xbc, (xsp + 2)
 	ld wa, 3:i3
 	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (0xfca8:16)
+	lda xbc, (PANEL_EQUALIZER:16)
 	sub xbc, 0xf9a0
 	add xbc, (xsp + 2)
 	ld wa, 4:i3
@@ -564,7 +564,7 @@ PanelTlv_Rule_ZeroByte:
 	ld	(xwa+bc), 0x00
 	ld	hl, 2:i3
 	ret
-	lda_d16	xwa, (0xf480)
+	lda_d16	xwa, (SEQ_SONG_RECORD+768)
 	jrl	PanelTlv_WriteBlock0Headers
 
 ; xwa = a block-1 base.  PanelTlv_WriteRecordHeader for each of the 30 PanelTlv_Block1_Layout records.
@@ -611,7 +611,7 @@ DSPCfg_SyncBitmapData:
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp+14), xwa
 	ld	(xsp+10), xwa
-	ld	bc, (0x90de:16)
+	ld	bc, (SWBTWR_WRITE_INDEX:16)
 	jrl	DSPCfg_SyncBitmapData_Join
 DSPCfg_SyncBitmapData_Loop:
 	ld	(xsp+6), 0
@@ -686,7 +686,7 @@ DSPCfg_SyncBitmapData_Join:
 	extz	xwa
 	add	xwa, (xsp+14)
 	ld	(xwa), 255
-	ld	(0x90de:16), bc
+	ld	(SWBTWR_WRITE_INDEX:16), bc
 	pop	xiz
 	lda	xsp, (xsp+18)
 	ret
@@ -716,21 +716,21 @@ SndParam_SyncDisplayBitmap:
 	pushw 0xc8e4
 	call Mem_Copy
 	lda xsp, (xsp + 10)
-	lda xbc, (0xf9a0:16)
-	lda xwa, (0xf9b6:16)
+	lda xbc, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	sub xwa, xbc
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	add xwa, xde
 	xormi8 (xwa), 0x1
-	lda xwa, (0xf9d0:16)
-	sub xwa, xbc
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	sub xwa, xbc
 	add xwa, xde
 	xormi8 (xwa), 0x1
-	lda xwa, (0xfd97:16)
+	lda xwa, (PANEL_PART_LEFT:16)
+	sub xwa, xbc
+	add xwa, xde
+	xormi8 (xwa), 0x1
+	lda xwa, (PANEL_REC_98+1:16)
 	sub xwa, xbc
 	add xwa, xde
 	ormi8 (xwa), 0x7f
@@ -758,7 +758,7 @@ SoundParam_NotifyMultipleChanges:
 ToneGen_DiffScanAndUpdate:
 	lda xsp, (xsp - 14)
 	pushw iz
-	ld bc, (0x90de:16)
+	ld bc, (SWBTWR_WRITE_INDEX:16)
 	lda xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld (xsp + 12), xwa
 	ld (xsp + 8), xwa
@@ -789,7 +789,7 @@ ToneGen_DiffScanInner:
 	ld hl, iz
 	extz xhl
 	add xhl, xwa
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xhl, xwa
 	ld wa, iz
 	extz xwa
@@ -842,7 +842,7 @@ ToneGen_DiffRecordChange:
 	ld hl, iz
 	extz xhl
 	add xhl, xwa
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xhl, xwa
 	ld e, (xde)
 	xor e, (xhl)
@@ -872,7 +872,7 @@ ToneGen_DiffScanCheckEnd:
 	extz xwa
 	add xwa, (xsp + 12)
 	ld (xwa), 0xff
-	ld (0x90de:16), bc
+	ld (SWBTWR_WRITE_INDEX:16), bc
 	popw iz
 	lda xsp, (xsp + 14)
 	ret
@@ -886,8 +886,8 @@ ToneGen_FileIO_SaveAndSync:
 	ldmi16 (xwa), 0xfd50
 	ldmi16 (xwa + 1), 0xfd52
 	ldmi16 (xwa + 2), 0xfd54
-	lda xwa, (0xfda2:16)
-	lda xbc, (0xf9a0:16)
+	lda xwa, (PANEL_REC_98+12:16)
+	lda xbc, (PANEL_RECORDS:16)
 	sub xwa, xbc
 	pushw wa
 	push xiz
@@ -1135,7 +1135,7 @@ CtrlPanel_IndicatorJumpTable_SaveLanguage:
 	ld	xwa, 0x3d3400
 	push	xwa
 	ld	wa, 1:i3
-	ld	xbc, 0x0340e4
+	ld	xbc, HELP_LANGUAGE
 	ld	de, 2:i3
 	jr	CtrlPanel_IndicatorJumpTable_Join
 CtrlPanel_IndicatorJumpTable_SaveDisplayTime:
@@ -1188,7 +1188,7 @@ Audio_DispatchCommand_LoadHelpLanguage:
 	pushw	2
 	ld	xwa, 0x3d3400
 	push	xwa
-	ld	xwa, 0x0340e4
+	ld	xwa, HELP_LANGUAGE
 	jr	Audio_DispatchCommand_Join
 Audio_DispatchCommand_LoadDispTimeSet:
 	pushw	12
@@ -1237,7 +1237,7 @@ PanelDisplay_DispatchByMode:
 
 PanelDisplay_DispatchData:
 	ld	xde, 0x3d3400
-	lda	xhl, (0x0340e4:24)
+	lda	xhl, (HELP_LANGUAGE:24)
 	ld	bc, 0:i3
 PanelDisplay_DispatchData_Loop:
 	ld	a, (xhl+)
@@ -1305,7 +1305,7 @@ DSPCfg_Param_Default:
 	ret
 
 Encoder_MarkInvalid:
-	ld (0xc039:16), 255
+	ld (PANEL_EVENT_QUEUE:16), 255
 	ret
 
 Encoder_Stub1:
@@ -1343,7 +1343,7 @@ PanelButton_ProcessChanges_Loop:
 	ld a, (0x8e8e:16)
 	extz wa
 	sll wa, 2
-	lda xbc, (0xc039:16)
+	lda xbc, (PANEL_EVENT_QUEUE:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff

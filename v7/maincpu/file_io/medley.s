@@ -93,7 +93,7 @@ SeqName_HandlePlayAction:
 	call	CheckSongSlotHasData
 	cp	l, 0:i3
 	jr	z, SeqName_CheckDiskAvail
-	lda	xwa, (0x8970:16)
+	lda	xwa, (PASSWORD_STATE:16)
 	bitm	7, (xwa + 1)
 	jr	nz, SeqName_CheckDiskAvail
 	ld	(xwa), 0x1
@@ -105,7 +105,7 @@ SeqName_CheckDiskAvail:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, SeqName_LoadAndPlay
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SeqName_LoadAndPlay
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW
@@ -3839,11 +3839,11 @@ SetSongSlotValue:
 	add xhl, xde
 	add xhl, 0x1c
 	ld (xhl), bc
-	ld e, (0x00ffe3:24)
+	ld e, (SEQ_CURRENT_SONG:24)
 	extz de
 	cp de, wa
 	ret nz
-	lda xhl, (0x00f180:24)
+	lda xhl, (SEQ_SONG_RECORD:24)
 	add xhl, 0x1c
 	ld (xhl), bc
 	ret

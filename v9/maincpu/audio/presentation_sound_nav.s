@@ -1914,30 +1914,30 @@ AcNaming_CheckDefaultWidget:
 	ld (0x0274d2:24), xwa
 
 AcNaming_InitScrollState:
-	ldw (0x0274d8:24), 0x0000
-	ldw (0x0274da:24), 0x0000
+	ldw (NAMING_CURSOR:24), 0x0000
+	ldw (NAMING_PAGE:24), 0x0000
 	ld xwa, (0x0274d2:24)
 	ld xbc, EVT_GET_STRING_LENGTH
 	ld xde, 0:i3
 	call ApFuncCall
-	ld (0x0274d6:24), hl
+	ld (NAMING_LENGTH:24), hl
 	cp hl, 0x20
 	jr ule, AcNaming_QueryCharSet
-	ldw (0x0274d6:24), 0x0020
+	ldw (NAMING_LENGTH:24), 0x0020
 
 AcNaming_QueryCharSet:
 	ld xwa, (0x0274d2:24)
 	ld xbc, EVT_GET_NAMING_MODE
 	ld xde, 0:i3
 	call ApFuncCall
-	ld (0x0274e2:24), hl
+	ld (NAMING_MODE:24), hl
 	ld wa, hl
 	extz xwa
 	sll xwa, 2
 	ld xbc, AcNaming_FillCharByMode
 	add xbc, xwa
 	ld xwa, (xbc)
-	ld (0x0274e4:24), xwa
+	ld (NAMING_CHARSET:24), xwa
 	cp hl, 0:i3
 	jr z, AcNaming_ShowNavButtons
 	ld xwa, 0x17
@@ -1963,7 +1963,7 @@ AcNaming_ShowNavButtons:
 AcNaming_SetVisibleAndInit:
 	call SetVisible
 	ld iz, 0:i3
-	cpw (0x0274d6:24), 0
+	cpw (NAMING_LENGTH:24), 0
 	jr ule, WndScroll_InitBuffer
 
 ; --- UI Window Procs, Graphics & Mode Screens ---

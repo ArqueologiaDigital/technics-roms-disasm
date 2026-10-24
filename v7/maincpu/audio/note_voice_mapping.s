@@ -1566,7 +1566,7 @@ VoiceEvent_AllocAllLayers:
 	lda	xwa, (0xc162:16)
 	ld	bc, 1:i3
 	call	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	ret	z
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -2542,7 +2542,7 @@ MidiConfig_Return:
 	lda	xsp, (xsp+336)
 	ret
 Voice_FindAndAllocBestMatch:
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	ret	z
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -2552,9 +2552,9 @@ Voice_FindAndAllocBestMatch:
 	call	NoteMap_AllocateVoice
 	ret
 Voice_InitSlotData:
-	ld	a, (0xce49:16)
+	ld	a, (CHORD_NOTE_COUNT:16)
 	extz	wa
-	ld	(0xce63:16), wa
+	ld	(CHORD_HELD_KEY_COUNT:16), wa
 	ld	de, 0:i3
 	jr	VoiceSlotInit_Check
 VoiceSlotInit_Loop:
@@ -2567,7 +2567,7 @@ VoiceSlotInit_Loop:
 	add	xhl, xbc
 	ld	wa, de
 	inc	1, wa
-	lda	xbc, (0xce49:16)
+	lda	xbc, (CHORD_NOTE_COUNT:16)
 	ld	a, (xbc+wa)
 	ld	(xhl), a
 	ld	wa, de
@@ -2578,7 +2578,7 @@ VoiceSlotInit_Loop:
 	ld	(xwa), 0x40
 	inc	1, de
 VoiceSlotInit_Check:
-	ld	a, (0xce49:16)
+	ld	a, (CHORD_NOTE_COUNT:16)
 	extz	wa
 	cp	de, wa
 	jr	lt, VoiceSlotInit_Loop
@@ -2589,7 +2589,7 @@ VoiceSlotInit_Check:
 	lda	xwa, (0xc162:16)
 	ld	bc, 1:i3
 	call	NoteMap_AllocateVoice
-	ldw	(0xce63:16), 0
+	ldw	(CHORD_HELD_KEY_COUNT:16), 0
 	ret
 NoteMap_AssignAllVoiceLinks:
 	dec	6, xsp
@@ -3862,7 +3862,7 @@ NoteMap_AddEntry:
 	ld	xwa, (xsp + 4)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_AltCheckEmit
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -4064,7 +4064,7 @@ AllocCheckNoteOn_Data:
 	ld	xwa, (xsp+4)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_AddEntry_Skip
 	call	NoteMap_FindBestMatch
 	cp	l, 255
@@ -4252,7 +4252,7 @@ NoteMap_CollectAndFindBestVoice:
 	ld	xwa, (xsp+168)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_AltAllocEmit
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -4467,7 +4467,7 @@ NoteMap_CollectAndAllocVoice_NoTimerCheck:
 	ld	xwa, (xsp + 4)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_FallbackVoiceCheck
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -4633,7 +4633,7 @@ NoteMap_CollectAndAllocVoice_Indirect:
 	ld	xwa, (xsp+168)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_IndirectCollectEmit
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -4804,7 +4804,7 @@ NoteMap_UpdateEntry:
 	ld	xwa, (xsp + 4)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_FallbackAllocEmit
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -4970,7 +4970,7 @@ NoteMap_FindAndAllocBestVoice:
 	ld	xwa, (xsp+168)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_FindAllocEmit
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -5150,7 +5150,7 @@ PopRetFA_StoreAE3_LoadIter:
 	ld	xwa, xiz
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_AllocVoice_Done
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -5288,7 +5288,7 @@ ProcessNoteEvent_LoadFromStack:
 	ld	xwa, (xsp+166)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jrl	z, NoteMap_StoreAllocResult
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
@@ -7512,7 +7512,7 @@ SetChannelParam_LoadParam:
 	jr	z, SetChannelParam_LoadDRAM
 	cp	a, 0:i3
 	jr	nz, SetChannelParam_LoadParam2
-	ld	wa, (0xce65:16)
+	ld	wa, (CHORD_CHANGED:16)
 	extz	xwa
 	ld	xbc, SetChannelParam_ByteMap
 	add	xbc, xwa
@@ -8508,11 +8508,11 @@ FindEntry_AdvanceSlo_LoadReg2:
 FindEntry_AdvanceSlo_Deref:
 	ld	e, (xwa + 2)
 FindEntry_AdvanceSlo_StoreDRAM:
-	ld	(0xce63:16), hl
+	ld	(CHORD_HELD_KEY_COUNT:16), hl
 	ld	a, e
 	extz	wa
-	ld	(0xce65:16), wa
-	lda	xwa, (0xce63:16)
+	ld	(CHORD_CHANGED:16), wa
+	lda	xwa, (CHORD_HELD_KEY_COUNT:16)
 	push	xwa
 	call	VoiceSlot_CheckAndApply_Prologue
 	inc	4, xsp
@@ -8732,7 +8732,7 @@ FindBestFreeVoice_Ad_LoadReg2:
 FindBestFreeVoice_Ad_Deref:
 	ld	l, (xwa + 2)
 FindBestFreeVoice_Ad_StoreDRAM:
-	ld	(0xcd86:16), de
+	ld	(HARMONY_NOTE_LIST:16), de
 	ld	a, l
 	extz	wa
 	ld	(0xcd88:16), wa
@@ -13144,13 +13144,13 @@ VoiceMap_AllocateSlot:
 	ld	l, 0xff:opc
 	cpw	(0xcdca:16), 0
 	jr	nz, VoiceMap_AllocateSlo_Block
-	lda	xwa, (0xcd86:16)
+	lda	xwa, (HARMONY_NOTE_LIST:16)
 	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF
 	calr	UIParam_ScanAndCollect
-	ldmm8	0xce12, 0xce43
-	ldmm8	0xce14, 0xce44
+	ldmm8	0xce12, CHORD_TYPE
+	ldmm8	0xce14, CHORD_ROOT
 	ld	wa, (0xcd88:16)
 	ld	l, a
 	jr	NoteMap_FindBestMatch_Return
@@ -13158,7 +13158,7 @@ VoiceMap_AllocateSlo_SetByteFF:
 	ld	l, 0xff:opc
 	jr	NoteMap_FindBestMatch_Return
 VoiceMap_AllocateSlo_Block:
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	nz, VoiceMap_AllocateSlo_Block2
 	calr	Voice_ResetSearchState
 	ld	(0xce12:16), 255
@@ -13167,13 +13167,13 @@ VoiceMap_AllocateSlo_Block:
 	ld	l, a
 	jr	NoteMap_FindBestMatch_Return
 VoiceMap_AllocateSlo_Block2:
-	lda	xwa, (0xcd86:16)
+	lda	xwa, (HARMONY_NOTE_LIST:16)
 	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF2
 	ld	(0xe8f6:16), 10
-	ld	a, (0xce10:16)
-	cp	a, (0xce0e:16)
+	ld	a, (HARMONY_PREV_REF_NOTE:16)
+	cp	a, (HARMONY_REF_NOTE:16)
 	jr	nz, VoiceMap_AllocateSlo_SetByteFF_Join
 	ld	wa, (0xcd88:16)
 	cp	wa, (0xcdcc:16)
@@ -13197,27 +13197,27 @@ NoteMap_FindBestMatch_Return:
 NoteMap_FindBestMatch:
 	ld	l, 0xff:opc
 	ld	(0xe8f6:16), 0
-	cpw	(0xcd86:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, CheckVoiceReuse_Block
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	cp	a, (0xce12:16)
 	jr	nz, NoteMap_CheckVoiceReuse
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	cp	a, (0xce14:16)
 	jr	nz, NoteMap_CheckVoiceReuse
-	ld	a, (0xce10:16)
-	cp	a, (0xce0e:16)
+	ld	a, (HARMONY_PREV_REF_NOTE:16)
+	cp	a, (HARMONY_REF_NOTE:16)
 	jr	nz, NoteMap_CheckVoiceReuse
 	cp	(0xce16:16), 0
 	jr	z, CheckVoiceReuse_SetByteFF2
 NoteMap_CheckVoiceReuse:
-	lda	xwa, (0xcd86:16)
+	lda	xwa, (HARMONY_NOTE_LIST:16)
 	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, CheckVoiceReuse_SetByteFF
 	calr	UIParam_ScanAndCollect
-	ldmm8	0xce12, 0xce43
-	ldmm8	0xce14, 0xce44
+	ldmm8	0xce12, CHORD_TYPE
+	ldmm8	0xce14, CHORD_ROOT
 	ld	wa, (0xcd88:16)
 	ld	l, a
 	jr	NoteMap_GetVoiceData_Return
@@ -13236,10 +13236,10 @@ CheckVoiceReuse_Block:
 NoteMap_GetVoiceData_Return:
 	ret
 Harmony_FindReferenceNote:
-	ld	c, (0xce0e:16)
-	ld	(0xce10:16), c
-	ld	c, (0xce0f:16)
-	ld	(0xce11:16), c
+	ld	c, (HARMONY_REF_NOTE:16)
+	ld	(HARMONY_PREV_REF_NOTE:16), c
+	ld	c, (HARMONY_REF_BYTE:16)
+	ld	(HARMONY_PREV_REF_BYTE:16), c
 	cpw	(xwa), 0x0
 	jr	z, GetVoiceData_Entry_Block2
 	ld	l, (xwa + 5)
@@ -13276,18 +13276,18 @@ GetVoiceData_Entry_Compare:
 	jr	ule, GetVoiceData_Entry_Compare_Skip
 	cp	l, 0x67
 	jr	nc, GetVoiceData_Entry_Compare_Skip
-	ld	(0xce0e:16), l
-	ld	(0xce0f:16), h
+	ld	(HARMONY_REF_NOTE:16), l
+	ld	(HARMONY_REF_BYTE:16), h
 	jr	Voice_ReadSearchResult
 GetVoiceData_Entry_Compare_Skip:
-	ld	(0xce0e:16), 255
-	ld	(0xce0f:16), 255
+	ld	(HARMONY_REF_NOTE:16), 255
+	ld	(HARMONY_REF_BYTE:16), 255
 	jr	Voice_ReadSearchResult
 GetVoiceData_Entry_Block2:
-	ld	(0xce0e:16), 255
-	ld	(0xce0f:16), 255
+	ld	(HARMONY_REF_NOTE:16), 255
+	ld	(HARMONY_REF_BYTE:16), 255
 Voice_ReadSearchResult:
-	ld	l, (0xce0e:16)
+	ld	l, (HARMONY_REF_NOTE:16)
 	ret
 Voice_ResetSearchState:
 	ldw	(0xcdca:16), 0
@@ -13297,9 +13297,9 @@ UIParam_ScanAndCollect:
 	lda	xsp, (xsp - 68)
 	pushw_erp	0xfa
 	ld	(0xce16:16), 0
-	cp	(0xce0f:16), 15
+	cp	(HARMONY_REF_BYTE:16), 15
 	jr	ule, UIParam_SetDefaultCount
-	ld	a, (0xce0f:16)
+	ld	a, (HARMONY_REF_BYTE:16)
 	sub	a, 0xf
 	ldfr_berp	A, 0xfb
 	jr	UIParam_CallbackDispatch
@@ -13375,11 +13375,11 @@ SearchVoice_EntryLoop:
 	add	xbc, xix
 	ld	c, (xbc)
 	ldfr_berp	C, 0xea
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	ldto_berp	B, 0xea
 	cp	b, c
 	jr	gt, SearchVoice_CheckHighBound
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, 0xc
 	ld	b, c
 	ldto_berp	C, 0xea
@@ -13389,7 +13389,7 @@ SearchVoice_EntryLoop:
 SearchVoice_OctaveDown:
 	sub_erpb	0xea, 0x0c
 SearchVoice_CheckHighBound:
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	ldto_berp	B, 0xea
 	cp	b, c
 	jr	gt, SearchVoice_OctaveDown
@@ -13397,14 +13397,14 @@ SearchVoice_CheckHighBound:
 SearchVoice_OctaveUp:
 	add_erpb	0xea, 0x0c
 SearchVoice_CheckLowBound:
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, 0xc
 	ld	b, c
 	ldto_berp	C, 0xea
 	cp	c, b
 	jr	ule, SearchVoice_OctaveUp
 SearchVoice_CheckDistance:
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	subb_erp	C, 0xea
 	cp	c, 2:i3
 	jr	ule, SearchVoice_NextEntry
@@ -13529,7 +13529,7 @@ SoundFX_Handler_1:
 	jr	z, SoundFX_SetVolumeOffset_Return
 	cpw	(xiz), 0x1
 	jr	nz, SoundFX_Handler_1_Skip
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, (xiz + 5)
 	cp	a, 0x8
 	jr	ugt, SoundFX_SetVolumeOffset_Return
@@ -13547,7 +13547,7 @@ SoundFX_Handler_1_LoadReg:
 	inc	4, xwa
 	ld	xbc, xwa
 	add	xbc, xiz
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, (xbc + 1)
 	cp	a, 0x8
 	jr	ugt, SoundFX_Handler_1_LoadReg_Skip
@@ -13567,10 +13567,10 @@ SoundFX_SetVolumeOffset_Return:
 SoundFX_Handler_2:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13578,8 +13578,8 @@ SoundFX_Handler_2:
 	ld	a, l
 	cp	a, 0xff
 	jr	z, SoundFX_Handler_2_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13588,7 +13588,7 @@ SoundFX_Handler_2:
 	ld	l, w
 	ld	e, l
 	extz	de
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0xc
@@ -13596,7 +13596,7 @@ SoundFX_Handler_2:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ldw	(xiz), 0x1
@@ -13610,10 +13610,10 @@ SoundFX_Handler_2_LoadReg:
 SoundFX_Handler_3:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13621,8 +13621,8 @@ SoundFX_Handler_3:
 	ld	a, l
 	cp	a, 0xff
 	jr	z, SoundFX_Handler_3_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13631,7 +13631,7 @@ SoundFX_Handler_3:
 	ld	l, w
 	ld	e, l
 	extz	de
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0xc
@@ -13639,7 +13639,7 @@ SoundFX_Handler_3:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ldw	(xiz), 0x1
@@ -13653,10 +13653,10 @@ SoundFX_Handler_3_LoadReg:
 SoundFX_Handler_4:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13664,8 +13664,8 @@ SoundFX_Handler_4:
 	ld	a, l
 	cp	a, 0xff
 	jr	z, SoundFX_Handler_4_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13676,7 +13676,7 @@ SoundFX_Handler_4:
 	extz	wa
 	ld	de, wa
 	add	de, de
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x18
@@ -13684,14 +13684,14 @@ SoundFX_Handler_4:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	add	de, de
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x18
@@ -13700,7 +13700,7 @@ SoundFX_Handler_4:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 1)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 7), a
 	ldw	(xiz), 0x2
@@ -13714,10 +13714,10 @@ SoundFX_Handler_4_LoadReg:
 SoundFX_Handler_5:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13725,8 +13725,8 @@ SoundFX_Handler_5:
 	ld	a, l
 	cp	a, 0xff
 	jrl	z, SoundFX_Handler_5_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13737,7 +13737,7 @@ SoundFX_Handler_5:
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13745,14 +13745,14 @@ SoundFX_Handler_5:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ld	a, l
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13761,14 +13761,14 @@ SoundFX_Handler_5:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 1)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 7), a
 	ld	a, l
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13777,7 +13777,7 @@ SoundFX_Handler_5:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 2)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 9), a
 	ldw	(xiz), 0x3
@@ -13791,10 +13791,10 @@ SoundFX_Handler_5_LoadReg:
 SoundFX_Handler_6:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13802,8 +13802,8 @@ SoundFX_Handler_6:
 	ld	a, l
 	cp	a, 0xff
 	jrl	z, SoundFX_Handler_6_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13814,7 +13814,7 @@ SoundFX_Handler_6:
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -13822,14 +13822,14 @@ SoundFX_Handler_6:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -13838,14 +13838,14 @@ SoundFX_Handler_6:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 1)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 7), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -13854,14 +13854,14 @@ SoundFX_Handler_6:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 2)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 9), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -13870,7 +13870,7 @@ SoundFX_Handler_6:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa+3)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 11), a
 	ldw	(xiz), 0x4
@@ -13884,10 +13884,10 @@ SoundFX_Handler_6_LoadReg:
 SoundFX_Handler_7:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13895,8 +13895,8 @@ SoundFX_Handler_7:
 	ld	a, l
 	cp	a, 0xff
 	jrl	z, SoundFX_Handler_7_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13907,7 +13907,7 @@ SoundFX_Handler_7:
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13915,14 +13915,14 @@ SoundFX_Handler_7:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ld	a, l
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13931,14 +13931,14 @@ SoundFX_Handler_7:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 1)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 7), a
 	ld	a, l
 	extz	wa
 	muls	wa, 0x3
 	ld	de, wa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x24
@@ -13947,7 +13947,7 @@ SoundFX_Handler_7:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 2)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 9), a
 	ldw	(xiz), 0x3
@@ -13961,10 +13961,10 @@ SoundFX_Handler_7_LoadReg:
 SoundFX_Handler_8:
 	push	xiz
 	ld	xiz, xwa
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	ld	e, a
 	extz	de
-	ld	a, (0xce44:16)
+	ld	a, (CHORD_ROOT:16)
 	ld	c, a
 	extz	bc
 	ld	wa, de
@@ -13972,8 +13972,8 @@ SoundFX_Handler_8:
 	ld	a, l
 	cp	a, 0xff
 	jrl	z, SoundFX_Handler_8_ClearWord
-	ld	a, (0xce0e:16)
-	sub	a, (0xce44:16)
+	ld	a, (HARMONY_REF_NOTE:16)
+	sub	a, (CHORD_ROOT:16)
 	add	a, l
 	inc	1, a
 	ld	l, a
@@ -13984,7 +13984,7 @@ SoundFX_Handler_8:
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -13992,14 +13992,14 @@ SoundFX_Handler_8:
 	exts	xwa
 	add	xwa, xbc
 	ld	c, (xwa+de)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 5), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -14008,14 +14008,14 @@ SoundFX_Handler_8:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 1)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 7), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -14024,14 +14024,14 @@ SoundFX_Handler_8:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa + 2)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 9), a
 	ld	a, l
 	extz	wa
 	ld	de, wa
 	sla	de, 2
-	ld	a, (0xce43:16)
+	ld	a, (CHORD_TYPE:16)
 	dec	1, a
 	extz	wa
 	muls	wa, 0x30
@@ -14040,7 +14040,7 @@ SoundFX_Handler_8:
 	add	xwa, xbc
 	lda	xwa, (xwa+de)
 	ld	c, (xwa+3)
-	ld	a, (0xce0e:16)
+	ld	a, (HARMONY_REF_NOTE:16)
 	sub	a, c
 	ld	(xiz + 11), a
 	ldw	(xiz), 0x4
@@ -14053,11 +14053,11 @@ SoundFX_Handler_8_LoadReg:
 	ret
 SoundFX_Handler_9:
 	ld	e, (Harmony_FixedIntervals:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 5), c
 	ld	e, (Harmony_OctaveUpDown_Down:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 7), c
 	ldw	(xwa), 0x2
@@ -14065,11 +14065,11 @@ SoundFX_Handler_9:
 	ret
 SoundFX_Handler_10:
 	ld	e, (Harmony_FourthOctaveDown_Fourth:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 5), c
 	ld	e, (SoundFX_Handler_10_Data_2:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 7), c
 	ldw	(xwa), 0x2
@@ -14077,11 +14077,11 @@ SoundFX_Handler_10:
 	ret
 SoundFX_Handler_11:
 	ld	e, (SoundFX_Handler_11_Data:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 5), c
 	ld	e, (Harmony_SeventhFourthUp_Fourth:24)
-	ld	c, (0xce0e:16)
+	ld	c, (HARMONY_REF_NOTE:16)
 	sub	c, e
 	ld	(xwa + 7), c
 	ldw	(xwa), 0x2
@@ -14185,14 +14185,14 @@ Voice_UpdateNoteState:
 	dec	1, (0xce19:16)
 	jr	z, Voice_CheckAndUpdateMode
 UpdateNoteState_CheckDRAM:
-	cp	(0xce18:16), 0
+	cp	(CHORD_DECAY_TIMER:16), 0
 	jr	z, UpdateNoteState_CheckDRAM2
-	dec	1, (0xce18:16)
+	dec	1, (CHORD_DECAY_TIMER:16)
 	jr	z, Voice_CheckAndUpdateMode
 UpdateNoteState_CheckDRAM2:
-	cp	(0xce17:16), 0
+	cp	(CHORD_RECOGNIZE_DELAY:16), 0
 	jr	z, Voice_ProcessControllers_Return
-	dec	1, (0xce17:16)
+	dec	1, (CHORD_RECOGNIZE_DELAY:16)
 	jr	z, Voice_CheckAndUpdateMode
 Voice_CheckAndUpdateMode:
 	ld	de, (0xc4fa:16)
@@ -14211,26 +14211,26 @@ ProcessControllers_R_Prologue:
 	ld	de, (0xc4fa:16)
 	and	de, 0x2000
 	jr	nz, PlayMode_StoreResult
-	cpw	(0xce65:24), 2
+	cpw	(CHORD_CHANGED:24), 2
 	jr	z, ProcessControllers_R_LoadDRAM
-	cpw	(0xce65:24), 3
+	cpw	(CHORD_CHANGED:24), 3
 	jr	z, ProcessControllers_R_LoadDRAM
 	jr	PlayMode_ClearBit6
 ProcessControllers_R_LoadDRAM:
 	ld	de, (0xc4fc:16)
 	and	de, 0x20
 	jr	z, PlayMode_UpdateAndReturn
-	or	(0xce42:24), 64
+	or	(CHORD_FLAGS:24), 64
 	jr	PlayMode_UpdateAndReturn
 PlayMode_ClearBit6:
-	and	(0xce42:24), 191
+	and	(CHORD_FLAGS:24), 191
 	jr	PlayMode_UpdateAndReturn
 PlayMode_UpdateAndReturn:
 	calr	Voice_DispatchByTimingState
 	calr	VoiceSlot_CheckAndApply_LoadReg
-	and	(0xce42:24), 191
-	ld	hl, (0xce65:24)
-	andw	(0xce65:24), 255
+	and	(CHORD_FLAGS:24), 191
+	ld	hl, (CHORD_CHANGED:24)
+	andw	(CHORD_CHANGED:24), 255
 	cp	h, 0xff
 	jr	z, PlayMode_SetZeroResult
 	ldw	hl, 0xff
@@ -14247,25 +14247,25 @@ Voice_UpdatePlayModeState:
 	push	xix
 	push	xiz
 	push	xde
-	cpw	(0xce65:24), 2
+	cpw	(CHORD_CHANGED:24), 2
 	jr	z, PlayMode_CheckModes23
-	cpw	(0xce65:24), 3
+	cpw	(CHORD_CHANGED:24), 3
 	jr	z, PlayMode_CheckModes23
 	jr	PlayMode_ClearBit6_Alt
 PlayMode_CheckModes23:
 	ld	de, (0xc4fc:16)
 	and	de, 0x20
 	jr	z, PlayMode_CheckSlotAndReturn
-	or	(0xce42:24), 64
+	or	(CHORD_FLAGS:24), 64
 	jr	PlayMode_CheckSlotAndReturn
 PlayMode_ClearBit6_Alt:
-	and	(0xce42:24), 191
+	and	(CHORD_FLAGS:24), 191
 	jr	PlayMode_CheckSlotAndReturn
 PlayMode_CheckSlotAndReturn:
 	calr	Voice_CheckAndResetSlotState
-	and	(0xce42:24), 191
-	ld	hl, (0xce65:24)
-	andw	(0xce65:24), 255
+	and	(CHORD_FLAGS:24), 191
+	ld	hl, (CHORD_CHANGED:24)
+	andw	(CHORD_CHANGED:24), 255
 	cp	h, 0xff
 	jr	z, PlayMode_SetZero_Alt
 	ldw	hl, 0xff
@@ -14279,32 +14279,32 @@ PlayMode_Epilogue:
 	pop	xix
 	ret
 Voice_DispatchByTimingState:
-	ld	bc, (0xce63:24)
+	ld	bc, (CHORD_HELD_KEY_COUNT:24)
 	cp	bc, 0:i3
 	jr	z, VoiceTiming_ResetSlot
-	bit	0, (0xce42:24)
+	bit	0, (CHORD_FLAGS:24)
 	jr	nz, VoiceTiming_ResetSlot
 	jr	VoiceTiming_CheckBit6
 VoiceTiming_ResetSlot:
 	calr	Voice_CheckAndResetSlotState
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_CheckBit6:
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	z, VoiceTiming_CheckBit7
 	calr	Voice_CheckAndResetSlotState
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_CheckBit7:
-	bit	7, (0xce42:24)
+	bit	7, (CHORD_FLAGS:24)
 	jr	z, VoiceTiming_CompareThreshold
 	calr	Chord_RecognizeNowOrDelay
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_CompareThreshold:
-	cp	bc, (0xce7b:16)
+	cp	bc, (CHORD_PREV_KEY_COUNT:16)
 	jr	c, VoiceTiming_EqualThreshold
 	calr	Chord_RecognizeNowOrDelay
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_EqualThreshold:
-	cp	bc, (0xce7b:16)
+	cp	bc, (CHORD_PREV_KEY_COUNT:16)
 	jr	ugt, VoiceTiming_BelowThreshold
 	calr	Voice_SetDecayTimer
 	jr	Voice_AdjustTiming_Return
@@ -14313,31 +14313,31 @@ VoiceTiming_BelowThreshold:
 Voice_AdjustTiming_Return:
 	ret
 Chord_RecognizeNowOrDelay:
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, Voice_CheckAndUpdateSlot
-	cpw	(0xce7b:16), 0
+	cpw	(CHORD_PREV_KEY_COUNT:16), 0
 	jr	z, VelocityUpdate_CheckNoThreshold
-	bit	7, (0xce42:24)
+	bit	7, (CHORD_FLAGS:24)
 	jr	z, VelocityUpdate_CheckBit4
 	ld	de, (0xc4fa:16)
 	and	de, 0x2
 	jr	nz, Voice_CheckAndUpdateSlot
 VelocityUpdate_CheckBit4:
-	bit	4, (0xce42:24)
+	bit	4, (CHORD_FLAGS:24)
 	jr	z, Voice_CheckAndUpdateSlot
 	jr	VelocityUpdate_SetTimerValue
 VelocityUpdate_CheckNoThreshold:
 	ld	de, (0xc4fa:16)
 	and	de, 0x2
 	jr	z, Voice_CheckAndUpdateSlot
-	bit	4, (0xce42:24)
+	bit	4, (CHORD_FLAGS:24)
 	jr	z, Voice_CheckAndUpdateSlot
-	cp	(0xce44:24), 0x00
+	cp	(CHORD_ROOT:24), 0x00
 	jr	z, Voice_CheckAndUpdateSlot
 VelocityUpdate_SetTimerValue:
-	cp	(0xce17:16), 0
+	cp	(CHORD_RECOGNIZE_DELAY:16), 0
 	jr	nz, VelocityUpdate_Return
-	ld	(0xce17:16), 5
+	ld	(CHORD_RECOGNIZE_DELAY:16), 5
 	jr	VelocityUpdate_Return
 Voice_CheckAndUpdateSlot:
 	calr	Voice_CheckAndResetSlotState
@@ -14350,16 +14350,16 @@ Voice_SetDecayTimer:
 	cp	bc, 2:i3
 	jr	ule, DecayTimer_SetLong
 DecayTimer_SetShort:
-	ld	(0xce18:16), 6
+	ld	(CHORD_DECAY_TIMER:16), 6
 	jr	DecayTimer_Return
 DecayTimer_SetLong:
-	ld	(0xce18:16), 22
+	ld	(CHORD_DECAY_TIMER:16), 22
 DecayTimer_Return:
 	ret
 Voice_MatchVoicePairs:
-	ld	xiy, 0xce63
+	ld	xiy, CHORD_HELD_KEY_COUNT
 	ld	bc, (xiy + 0:8)
-	ld	xix, 0xce7b
+	ld	xix, CHORD_PREV_KEY_COUNT
 VoicePair_OuterLoop:
 	ld	de, (xix + 0:8)
 	ld	w, (xiy + 5)
@@ -14377,32 +14377,32 @@ VoicePair_AdvanceOuter:
 VoicePair_Return:
 	ret
 Voice_CheckAndResetSlotState:
-	ld	bc, (0xce63:24)
-	ld	(0xce17:16), 0
-	ld	(0xce18:16), 0
+	ld	bc, (CHORD_HELD_KEY_COUNT:24)
+	ld	(CHORD_RECOGNIZE_DELAY:16), 0
+	ld	(CHORD_DECAY_TIMER:16), 0
 	cp	bc, 0:i3
 	jr	z, Voice_CheckAndResetSlotState_Skip
 	calr	NullRet2_TestBit24
 	jr	Voice_NullRet2
 Voice_CheckAndResetSlotState_Skip:
-	or	(0xce42:24), 128
+	or	(CHORD_FLAGS:24), 128
 	ld	(0xce48:24), 0x00
-	ld	e, (0xfc5f:16)
+	ld	e, (PANEL_STYLE+5:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
-	ld	e, (0xfc60:16)
+	ld	e, (PANEL_STYLE+6:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
 	ld	de, (0xc4fc:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, CheckAndResetSlotSta_Block2
 CheckAndResetSlotSta_LoadDRAM:
 	ld	de, (0xc4fc:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM2
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, CheckAndResetSlotSta_Block2
 CheckAndResetSlotSta_LoadDRAM2:
 	ld	de, (0xc4fa:16)
@@ -14414,14 +14414,14 @@ CheckAndResetSlotSta_Block2:
 Voice_NullRet2:
 	ret
 Chord_ClearRecognizedChord:
-	ldw	(0xce63:24), 0x0000
-	ld	(0xce49:24), 0x00
+	ldw	(CHORD_HELD_KEY_COUNT:24), 0x0000
+	ld	(CHORD_NOTE_COUNT:24), 0x00
 	ld	(0xce55:24), 0x00
-	ld	(0xce44:24), 0x00
-	ld	(0xce43:24), 0x00
-	or	(0xce42:24), 128
-	and	(0xce42:24), 249
-	ld	(0xce45:24), 0x00
+	ld	(CHORD_ROOT:24), 0x00
+	ld	(CHORD_TYPE:24), 0x00
+	or	(CHORD_FLAGS:24), 128
+	and	(CHORD_FLAGS:24), 249
+	ld	(CHORD_BASS_ROOT:24), 0x00
 	ld	(0xce48:24), 0x00
 	calr	Chord_ApplyCurrentChord
 	ret
@@ -14433,7 +14433,7 @@ NullRet2_Data:
 	.byte	0xdc
 	cp	xix, xwa
 NullRet2_TestBit24:
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, EffectState_Dispatch
 	ld	de, (0xc4fa:16)
 	and	de, 0x1
@@ -14460,21 +14460,21 @@ EffectState_Dispatch_Block2:
 	calr	Chord_ApplyCurrentChord
 	ret
 EffectState_Dispatch_Block3:
-	ld	(0xce49:24), 0x04
-	ld	de, (0xce63:24)
+	ld	(CHORD_NOTE_COUNT:24), 0x04
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	calr	Chord_CollectHeldNotes
 	calr	VoiceSlot_StoreParams_LoadReg3
 	jr	VoiceSlot_StoreParams
 VoiceSlot_StoreParams:
 VoiceSlot_StoreParams_Block:
-	ld	(0xce43:24), a
-	ld	(0xce44:24), w
-	ld	(0xce45:24), 0x00
-	and	(0xce42:24), 249
+	ld	(CHORD_TYPE:24), a
+	ld	(CHORD_ROOT:24), w
+	ld	(CHORD_BASS_ROOT:24), 0x00
+	and	(CHORD_FLAGS:24), 249
 	ret
 Chord_CollectHeldNotes:
 	ldw	(0xce93:24), 0x0000
-	ld	xiy, 0xce63
+	ld	xiy, CHORD_HELD_KEY_COUNT
 	ld	xix, 0xcef3
 	ld	hl, de
 	dec	1, hl
@@ -14482,7 +14482,7 @@ Chord_CollectHeldNotes:
 	add	iy, hl
 	cp	de, 0:i3
 	jr	nz, VoiceSlot_StoreParams_OrBits
-	ld	(0xce49:24), 0x00
+	ld	(CHORD_NOTE_COUNT:24), 0x00
 	jr	VoiceSlot_StoreParams_Return
 VoiceSlot_StoreParams_OrBits:
 	xor	wa, wa
@@ -14502,7 +14502,7 @@ VoiceSlot_StoreParams_LoadReg:
 	ld	(xix), l
 	inc	1, ix
 	inc	1, b
-	cp	b, (0xce49:24)
+	cp	b, (CHORD_NOTE_COUNT:24)
 	jr	nc, VoiceSlot_StoreParams_Block3
 VoiceSlot_StoreParams_Decrement:
 	dec	1, iy
@@ -14511,10 +14511,10 @@ VoiceSlot_StoreParams_Decrement:
 	cp	de, 0:i3
 	jr	nz, VoiceSlot_StoreParams_LoadReg
 VoiceSlot_StoreParams_Block3:
-	ld	(0xce49:24), b
+	ld	(CHORD_NOTE_COUNT:24), b
 	ld	c, b
 	xor	b, b
-	ld	xix, 0xce4a
+	ld	xix, CHORD_NOTES
 	ld	xiy, 0xcef3
 	add	iy, bc
 	dec	1, iy
@@ -14527,15 +14527,15 @@ VoiceSlot_StoreParams_LoadReg2:
 VoiceSlot_StoreParams_Return:
 	ret
 VoiceSlot_StoreParams_LoadReg3:
-	ld	xiy, 0xce63
-	ld	bc, (0xce63:24)
+	ld	xiy, CHORD_HELD_KEY_COUNT
+	ld	bc, (CHORD_HELD_KEY_COUNT:24)
 	xor	a, a
 	xor	h, h
 	cp	bc, 0:i3
 	jr	z, VoiceSlot_StoreParams_LoadReg5
 VoiceSlot_StoreParams_LoadReg4:
 	ld	l, (xiy + 5)
-	cp	l, (0xce4a:24)
+	cp	l, (CHORD_NOTES:24)
 	jr	z, VoiceSlot_StoreParams_Increment
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	l, (xiz+hl)
@@ -14549,11 +14549,11 @@ VoiceSlot_StoreParams_LoadReg5:
 	ld	l, a
 	ld	xiz, VoiceSlot_StoreParams_LoadReg5_Code
 	ld	a, (xiz+hl)
-	ld	l, (0xce4a:24)
+	ld	l, (CHORD_NOTES:24)
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	w, (xiz+hl)
-	and	(0xce42:24), 127
-	and	(0xce42:24), 239
+	and	(CHORD_FLAGS:24), 127
+	and	(CHORD_FLAGS:24), 239
 	ret
 VoiceSlot_StoreParams_Data:
 	normal
@@ -14577,7 +14577,7 @@ Voice_ComputeNoteBitPosition:
 	ld	l, c
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	w, (xiz+hl)
 	ld	c, b
 	xor	b, b
@@ -14587,7 +14587,7 @@ Voice_ComputeNoteBitPosition:
 	xor	de, de
 ComputeNoteBitPositi_Prologue:
 	pushw	bc
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+iy)
 	sub	l, w
 	ld	xiz, ChordTables_NoteToPitchClass
@@ -14612,7 +14612,7 @@ ComputeNoteBitPositi_Data:
 	xor	iy, iy
 	xor	wa, wa
 	pushw	bc
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz)
 	ld	w, (xiz+iy)
 	sub	l, h
@@ -14642,7 +14642,7 @@ Voice_ComputeNoteBitPosition_Skip:
 	ret
 ComputeNoteBitPositi_StoreDRAM:
 	ld	(0xce61:16), de
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	xor	b, b
 ComputeNoteBitPositi_Block:
 	ldfr_werp	DE, 0x3c
@@ -14658,7 +14658,7 @@ ComputeNoteBitPositi_Block:
 ComputeNoteBitPositi_TestBit9:
 	bit	9, de
 	jr	z, Voice_DecrementCounter
-	cp	c, (0xce49:24)
+	cp	c, (CHORD_NOTE_COUNT:24)
 	jr	nz, Voice_DecrementCounter
 	ld	hl, de
 	and	hl, 0x1ff
@@ -14692,10 +14692,10 @@ PitchCalc_FindBitPosition_OrBits:
 	or	de, 0x1
 	jr	PitchCalc_FindBitPosition_TestBit11
 Voice_PitchCalcStep:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	dec	1, l
 	xor	h, h
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+hl)
 	add	l, b
 	ld	xiz, ChordTables_NoteToPitchClass
@@ -14708,19 +14708,19 @@ PitchCalcStep_ClearByte:
 PitchCalc_Return:
 	ret
 PitchCalc_Return_Block:
-	ld	(0xce49:24), 0x04
-	ld	de, (0xce63:24)
+	ld	(CHORD_NOTE_COUNT:24), 0x04
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	calr	Chord_CollectHeldNotes
-	cp	(0xce49:24), 0x02
+	cp	(CHORD_NOTE_COUNT:24), 0x02
 	jr	ugt, PitchCalcStep_ClearByte_Skip
 	jr	PitchCalcStep_ClearByte_Skip2
 PitchCalcStep_ClearByte_Skip:
 	calr	Voice_UpdateNoteBitmap
 	cp	w, 0:i3
 	jr	nz, VoiceSlot_CompareAndUpdate_Compare
-	dec	1, (0xce49:24)
+	dec	1, (CHORD_NOTE_COUNT:24)
 	calr	Voice_UpdateNoteBitmap
-	inc	1, (0xce49:24)
+	inc	1, (CHORD_NOTE_COUNT:24)
 	jr	VoiceSlot_CompareAndUpdate_Compare
 PitchCalcStep_ClearByte_Skip2:
 	calr	VoiceSlot_LoadResult_Block
@@ -14729,11 +14729,11 @@ VoiceSlot_CompareAndUpdate:
 VoiceSlot_CompareAndUpdate_Compare:
 	cp	w, 0:i3
 	jr	nz, VoiceSlot_CompareAndUpdate_TestBit24
-	ld	a, (0xce46:24)
-	ld	w, (0xce47:24)
+	ld	a, (CHORD_LAST_TYPE:24)
+	ld	w, (CHORD_LAST_ROOT:24)
 	jr	VoiceSlot_CompareAndUpdate_Block2
 VoiceSlot_CompareAndUpdate_TestBit24:
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_CompareAndUpdate_TestBit24_Skip
 	ldfr_werp	DE, 0x3e
 	ld	de, (0xc4fa:16)
@@ -14742,10 +14742,10 @@ VoiceSlot_CompareAndUpdate_TestBit24:
 	jr	nz, VoiceSlot_CompareAndUpdate_TestBit24_Skip3
 	jr	VoiceSlot_CompareAndUpdate_TestBit24_Skip2
 VoiceSlot_CompareAndUpdate_TestBit24_Skip:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	d, (xiz)
 	ld	e, (xiz+hl)
 	sub	d, e
@@ -14765,15 +14765,15 @@ VoiceSlot_CompareAndUpdate_Return:
 Voice_UpdateNoteBitmap:
 	push	xix
 	push	xiz
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	ld	b, c
 	calr	Voice_ComputeNoteBitPosition
 	ld	xiy, NoteMask9_ClassTable
 	calr	ComputeNoteBitPositi_StoreDRAM
 	cp	a, 0:i3
 	jr	z, UpdateNoteBitmap_ClearByte
-	or	(0xce42:24), 16
-	and	(0xce42:24), 127
+	or	(CHORD_FLAGS:24), 16
+	and	(CHORD_FLAGS:24), 127
 	jr	VoiceSlot_LoadResult_LoadReg
 UpdateNoteBitmap_ClearByte:
 	ld	a, 0x0:opc
@@ -14787,16 +14787,16 @@ VoiceSlot_LoadResult_LoadReg:
 	pop	xix
 	ret
 VoiceSlot_LoadResult_Data:
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	ld	b, c
 	calr	Voice_ComputeNoteBitPosition
 	ld	xiy, NoteMask9_ClassTable
 	calr	ComputeNoteBitPositi_StoreDRAM
 	cp	a, 0:i3
 	jr	z, Voice_UpdateNoteBitmap_Skip
-	or	(0xce42:24), 16
-	and	(0xce42:24), 127
-	and	(0xce42:24), 249
+	or	(CHORD_FLAGS:24), 16
+	and	(CHORD_FLAGS:24), 127
+	and	(CHORD_FLAGS:24), 249
 	jr	Voice_UpdateNoteBitmap_Return
 Voice_UpdateNoteBitmap_Skip:
 	ld	a, 0:opc
@@ -14805,72 +14805,72 @@ Voice_UpdateNoteBitmap_Skip:
 Voice_UpdateNoteBitmap_Return:
 	ret
 VoiceSlot_LoadResult_Block:
-	cp	(0xce44:24), 0x00
+	cp	(CHORD_ROOT:24), 0x00
 	jr	z, VoiceSlot_LoadResult_SetByte
 	ld	a, 0x0:opc
 	ld	w, 0x0:opc
 	jr	VoiceSlot_LoadResult_Block2
 VoiceSlot_LoadResult_SetByte:
 	ld	a, 0x1:opc
-	ld	l, (0xce4a:24)
+	ld	l, (CHORD_NOTES:24)
 	xor	h, h
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	w, (xiz+hl)
 VoiceSlot_LoadResult_Block2:
-	and	(0xce42:24), 127
-	or	(0xce42:24), 16
+	and	(CHORD_FLAGS:24), 127
+	or	(CHORD_FLAGS:24), 16
 	ret
 VoiceSlot_LoadResult_Data2:
 	ld	a, 1:opc
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+hl)
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	w, (xiz+hl)
-	or	(52802:24), 16
-	and	(52802:24), 127
+	or	(CHORD_FLAGS:24), 16
+	and	(CHORD_FLAGS:24), 127
 	ret
 VoiceSlot_LoadResult_Block3:
 	calr	Audio_NullRet2_Prologue
 	ld	wa, (0xce93:24)
-	add	a, (0xce49:24)
+	add	a, (CHORD_NOTE_COUNT:24)
 	cp	a, 2:i3
 	jr	ugt, VoiceSlot_LoadResult_TestBit24
 	jrl	Audio_NullRet2
 VoiceSlot_LoadResult_TestBit24:
-	bit	1, (0xce42:24)
+	bit	1, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_LoadResult_Block9
 	calr	Voice_LookupNoteAndComputePitch
 	cp	w, 0:i3
 	jr	nz, VoiceSlot_LoadResult_Compare
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
 	extz	hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	add	xiz, xhl
 	ld	c, (xiz)
 	ldfr_lerp	XIZ, 0x30
 	ldfr_berp	C, 0x34
-	ld	a, (0xce49:24)
+	ld	a, (CHORD_NOTE_COUNT:24)
 	dec	1, a
 	cp	a, 2:i3
 	jr	ugt, VoiceSlot_LoadResult_TestBit24_Skip
 	jr	Audio_NullRet2
 VoiceSlot_LoadResult_TestBit24_Skip:
-	dec	1, (0xce49:24)
+	dec	1, (CHORD_NOTE_COUNT:24)
 	calr	Voice_LookupNoteAndComputePitch
-	inc	1, (0xce49:24)
+	inc	1, (CHORD_NOTE_COUNT:24)
 	ldto_berp	C, 0x34
 	ldto_lerp	XIZ, 0x30
 	ld	(xiz), c
 VoiceSlot_LoadResult_Compare:
 	cp	w, 0:i3
 	jr	nz, VoiceSlot_LoadResult_Compare_Skip
-	ld	a, (0xce46:24)
-	ld	w, (0xce47:24)
+	ld	a, (CHORD_LAST_TYPE:24)
+	ld	w, (CHORD_LAST_ROOT:24)
 	jr	VoiceSlot_LoadResult_Compare_Skip2
 VoiceSlot_LoadResult_Compare_Skip:
 	ldfr_werp	DE, 0x3e
@@ -14907,8 +14907,8 @@ Audio_NullRet2:
 	ret
 Audio_NullRet2_Prologue:
 	push	xiz
-	ld	xiy, 0xce63
-	ld	hl, (0xce63:24)
+	ld	xiy, CHORD_HELD_KEY_COUNT
+	ld	hl, (CHORD_HELD_KEY_COUNT:24)
 	extz	xhl
 	dec	1, xhl
 	sla	xhl, 1
@@ -14922,7 +14922,7 @@ Audio_NullRet2_Prologue:
 	jr	nc, Audio_NullRet2_LoopBody
 	jr	Voice_ProcessSlotEntry
 Audio_NullRet2_LoopBody:
-	ld	de, (0xce63:24)
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	cp	de, 4:i3
 	jr	c, Voice_ProcessSlotEntry
 	ldw	(0xce93:24), 0x0001
@@ -14930,8 +14930,8 @@ Audio_NullRet2_LoopBody:
 	add	xiz, xhl
 	ld	wa, (xiz + 4)
 	ld	(0xce97:24), wa
-	or	(0xce42:24), 2
-	ld	(0xce49:24), 0x07
+	or	(CHORD_FLAGS:24), 2
+	ld	(CHORD_NOTE_COUNT:24), 0x07
 	dec	1, de
 	calr	VoiceSlot_CheckPitchIntervals
 	jrl	Audio_PopIzRet
@@ -14942,7 +14942,7 @@ Audio_NullRet2_LoopCheck:
 	sub	a, (xiz + 3)
 	cp	a, 0x8
 	jr	c, Audio_NullRet2_LoopBody
-	ld	de, (0xce63:24)
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	cp	de, 5:i3
 	jr	c, Voice_ProcessSlotEntry
 	ldw	(0xce93:24), 0x0001
@@ -14950,14 +14950,14 @@ Audio_NullRet2_LoopCheck:
 	add	xiz, xhl
 	ld	wa, (xiz + 4)
 	ld	(0xce97:24), wa
-	or	(0xce42:24), 2
-	ld	(0xce49:24), 0x07
+	or	(CHORD_FLAGS:24), 2
+	ld	(CHORD_NOTE_COUNT:24), 0x07
 	dec	1, de
 	dec	1, de
 	calr	VoiceSlot_CheckPitchIntervals
 	jr	Audio_PopIzRet
 Voice_ProcessSlotEntry:
-	ld	de, (0xce63:24)
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	cp	de, 3:i3
 	jr	c, Voice_ProcessSlotEntry_Skip2
 	ldfr_werp	DE, 0x3e
@@ -14966,23 +14966,23 @@ Voice_ProcessSlotEntry:
 	ldto_werp	DE, 0x3e
 	jr	z, Voice_ProcessSlotEntry_Skip
 	ldw	(0xce93:24), 0x0000
-	and	(0xce42:24), 253
-	ld	(0xce49:24), 0x07
-	ld	de, (0xce63:24)
+	and	(CHORD_FLAGS:24), 253
+	ld	(CHORD_NOTE_COUNT:24), 0x07
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	calr	VoiceSlot_CheckPitchIntervals
 	calr	NoteBuffer_CompactEn_Block2
 	jr	Audio_PopIzRet
 Voice_ProcessSlotEntry_Skip:
 	ldw	(0xce93:24), 0x0000
-	and	(52802:24), 253
-	ld	(0xce45:24), 0x00
-	ld	(0xce49:24), 0x07
-	ld	de, (0xce63:24)
+	and	(CHORD_FLAGS:24), 253
+	ld	(CHORD_BASS_ROOT:24), 0x00
+	ld	(CHORD_NOTE_COUNT:24), 0x07
+	ld	de, (CHORD_HELD_KEY_COUNT:24)
 	calr	VoiceSlot_CheckPitchIntervals
 	calr	NoteBuffer_CompactEn_Block2
 	jr	Audio_PopIzRet
 Voice_ProcessSlotEntry_Skip2:
-	ld	(0xce49:24), 0x00
+	ld	(CHORD_NOTE_COUNT:24), 0x00
 Audio_PopIzRet:
 	pop	xiz
 	ret
@@ -14990,10 +14990,10 @@ VoiceSlot_CheckPitchIntervals:
 	push	xiz
 	cp	de, 0:i3
 	jr	nz, VoiceSlot_CheckPitch_LoadReg
-	ld	(0xce49:24), 0x00
+	ld	(CHORD_NOTE_COUNT:24), 0x00
 	jrl	NoteBuffer_CompactEn_Epilogue
 VoiceSlot_CheckPitch_LoadReg:
-	ld	xiy, 0xce63
+	ld	xiy, CHORD_HELD_KEY_COUNT
 	xor	xhl, xhl
 	ld	bc, 1:i3
 	cp	de, 3:i3
@@ -15013,32 +15013,32 @@ VoiceSlot_CheckPitch_LoadReg2:
 VoiceSlot_CheckPitch_Compare:
 	cp	hl, 0:i3
 	jr	nz, VoiceSlot_CheckPitch_Compare2
-	and	(0xce42:24), 223
+	and	(CHORD_FLAGS:24), 223
 	jr	NoteBuffer_CompactEntries
 VoiceSlot_CheckPitch_Compare2:
 	cp	hl, 2:i3
 	jr	nz, VoiceSlot_CheckPitch_Compare3
 	ld	(0xce19:16), 2
-	or	(0xce42:24), 32
+	or	(CHORD_FLAGS:24), 32
 	jr	NoteBuffer_CompactEntries
 VoiceSlot_CheckPitch_Compare3:
 	cp	hl, 4:i3
 	jr	nz, VoiceSlot_CheckPitch_OrBits2
-	bit	5, (0xce42:24)
+	bit	5, (CHORD_FLAGS:24)
 	jr	z, VoiceSlot_CheckPitch_OrBits
 	cp	(0xce19:16), 0
 	jr	z, NoteBuffer_CompactEntries
 VoiceSlot_CheckPitch_OrBits:
 	xor	hl, hl
-	and	(0xce42:24), 223
+	and	(CHORD_FLAGS:24), 223
 	jr	NoteBuffer_CompactEntries
 VoiceSlot_CheckPitch_OrBits2:
 	xor	hl, hl
-	and	(0xce42:24), 223
+	and	(CHORD_FLAGS:24), 223
 	jr	NoteBuffer_CompactEntries
 NoteBuffer_CompactEntries:
 	ld	xix, 0xcef3
-	ld	xiy, 0xce63
+	ld	xiy, CHORD_HELD_KEY_COUNT
 	ld	wa, de
 	dec	1, wa
 	sla	wa, 1
@@ -15052,7 +15052,7 @@ NoteBuffer_CompactEn_LoadReg:
 	ld	(xix), l
 	inc	1, ix
 	inc	1, b
-	cp	b, (0xce49:24)
+	cp	b, (CHORD_NOTE_COUNT:24)
 	jr	nc, NoteBuffer_CompactEn_LoadReg_Join
 	dec	1, iy
 	dec	1, iy
@@ -15060,10 +15060,10 @@ NoteBuffer_CompactEn_LoadReg:
 	cp	de, 0:i3
 	jr	nz, NoteBuffer_CompactEn_LoadReg
 NoteBuffer_CompactEn_LoadReg_Join:
-	ld	(0xce49:24), b
+	ld	(CHORD_NOTE_COUNT:24), b
 	ld	c, b
 	xor	b, b
-	ld	xix, 0xce4a
+	ld	xix, CHORD_NOTES
 	ld	xiy, 0xcef3
 	add	iy, bc
 	dec	1, iy
@@ -15081,10 +15081,10 @@ NoteBuffer_CompactEn_Data:
 	sub	w, a
 	cp	w, 12
 	jr	ugt, NoteBuffer_CompactEn_LoadReg2_Skip
-	and	(52802:24), 247
+	and	(CHORD_FLAGS:24), 247
 	jr	VoiceSlot_CheckPitchIntervals_Return
 NoteBuffer_CompactEn_LoadReg2_Skip:
-	or	(52802:24), 8
+	or	(CHORD_FLAGS:24), 8
 	jr	VoiceSlot_CheckPitchIntervals_Return
 VoiceSlot_CheckPitchIntervals_Return:
 	ret
@@ -15094,8 +15094,8 @@ NoteBuffer_CompactEn_Block2:
 	cpw	(0xce93:24), 0
 	jr	nz, NoteBuffer_NullRet
 	ld	wa, (0xce97:24)
-	ld	bc, (0xce63:24)
-	ld	xiy, 0xce63
+	ld	bc, (CHORD_HELD_KEY_COUNT:24)
+	ld	xiy, CHORD_HELD_KEY_COUNT
 NoteBuffer_CompactEn_Compare:
 	cp	wa, (xiy + 4)
 	jr	nz, NoteBuffer_CompactEn_Increment
@@ -15103,21 +15103,21 @@ NoteBuffer_CompactEn_Compare:
 NoteBuffer_CompactEn_Increment:
 	inc	2, iy
 	djnz16	bc, NoteBuffer_CompactEn_Compare
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	a, (xiz+hl)
 	ld	w, (0xce98:24)
 	sub	a, w
 	cp	a, 7:i3
 	jr	c, NoteBuffer_NullRet
 	ldw	(0xce93:24), 0x0001
-	or	(0xce42:24), 2
+	or	(CHORD_FLAGS:24), 2
 NoteBuffer_NullRet:
 	ret
 Voice_LookupNoteAndComputePitch:
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	ld	b, c
 	pushw	bc
 	calr	Voice_ComputeNoteBitPosition
@@ -15135,7 +15135,7 @@ Voice_LookupNoteAndComputePitch:
 Voice_LookupNoteAndComputePitch_Skip:
 	cpw	(0xce93:24), 0
 	jr	nz, NoteDisplay_SetBounds
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	ld	b, 0x3:opc
 LookupNoteAndCompute_Prologue:
 	pushw	bc
@@ -15151,26 +15151,26 @@ LookupNoteAndCompute_Prologue:
 	popw	bc
 	cp	a, 0:i3
 	jr	nz, NoteDisplay_LookupEntry
-	cp	b, (0xce49:24)
+	cp	b, (CHORD_NOTE_COUNT:24)
 	jr	nc, NoteDisplay_SetBounds
 	inc	1, b
 	jr	LookupNoteAndCompute_Prologue
 NoteDisplay_LookupEntry:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+hl)
 	add	l, w
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	w, (xiz+hl)
 	dec	1, w
-	ld	l, (0xce49:24)
-	ld	xiz, 0xce4a
+	ld	l, (CHORD_NOTE_COUNT:24)
+	ld	xiz, CHORD_NOTES
 	ld	(xiz+hl), w
-	inc	1, (0xce49:24)
+	inc	1, (CHORD_NOTE_COUNT:24)
 NoteDisplay_SetBounds:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	ld	h, l
 NoteDisplay_ScanLoop:
 	ld	c, l
@@ -15193,10 +15193,10 @@ NoteDisplay_ScanLoop:
 	jr	c, NoteDisplay_NotFound
 	jr	NoteDisplay_ScanLoop
 NoteDisplay_FoundEntry:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	dec	1, l
 	xor	h, h
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+hl)
 	add	l, w
 	ld	xiz, ChordTables_NoteToPitchClass
@@ -15208,13 +15208,13 @@ NoteDisplay_NotFound:
 	jr	NoteDisplay_StoreBoundsReturn
 NoteDisplay_StoreBoundsReturn:
 	popw	bc
-	ld	(0xce49:24), c
+	ld	(CHORD_NOTE_COUNT:24), c
 	ret
 NoteDisplay_AlternateLookup:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	ld	a, (0xce98:24)
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	(xiz+hl), a
 	ld	bc, hl
 	inc	1, bc
@@ -15250,11 +15250,11 @@ NoteDisplay_AltReturn:
 NoteDisplay_ClearAndSetUpdate:
 	push	xix
 	push	xiz
-	cp	(0xce45:24), 0x00
+	cp	(CHORD_BASS_ROOT:24), 0x00
 	jr	nz, NoteDisplay_ClearReturn
-	and	(0xce42:24), 249
-	or	(0xce42:24), 16
-	and	(0xce42:24), 254
+	and	(CHORD_FLAGS:24), 249
+	or	(CHORD_FLAGS:24), 16
+	and	(CHORD_FLAGS:24), 254
 NoteDisplay_ClearReturn:
 	pop	xiz
 	pop	xix
@@ -15262,68 +15262,68 @@ NoteDisplay_ClearReturn:
 NoteDisplay_InitState:
 	push	xix
 	push	xiz
-	ld	(0xce43:24), a
-	ld	(0xce44:24), w
-	ld	(0xce45:24), 0x00
+	ld	(CHORD_TYPE:24), a
+	ld	(CHORD_ROOT:24), w
+	ld	(CHORD_BASS_ROOT:24), 0x00
 	ld	(0xce48:24), 0x00
-	and	(0xce42:24), 253
-	and	(0xce42:24), 251
-	and	(0xce42:24), 254
-	and	(0xce42:24), 127
-	or	(0xce42:24), 16
+	and	(CHORD_FLAGS:24), 253
+	and	(CHORD_FLAGS:24), 251
+	and	(CHORD_FLAGS:24), 254
+	and	(CHORD_FLAGS:24), 127
+	or	(CHORD_FLAGS:24), 16
 	pop	xiz
 	pop	xix
 	ret
 NoteDisplay_LookupBitmap:
 	push	xix
 	push	xiz
-	ld	(0xce43:24), a
-	ld	(0xce44:24), w
+	ld	(CHORD_TYPE:24), a
+	ld	(CHORD_ROOT:24), w
 	xor	hl, hl
 	cpw	(0xce93:24), 0
 	jr	z, NoteDisplay_LookupFromCurrent
 	ld	l, (0xce98:24)
 	jr	NoteDisplay_LookupFromTable
 NoteDisplay_LookupFromCurrent:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	l, (xiz+hl)
 NoteDisplay_LookupFromTable:
 	ld	xiz, ChordTables_NoteToPitchClass
 	ld	a, (xiz+hl)
-	cp	(0xce44:24), a
+	cp	(CHORD_ROOT:24), a
 	jr	z, NoteDisplay_SameNote
 	cpw	(0xce93:24), 0
 	jr	z, NoteDisplay_StoreNoCurrent
-	ld	(0xce45:24), a
+	ld	(CHORD_BASS_ROOT:24), a
 	ld	(0xce48:24), a
 	jr	NoteDisplay_SetUpdateFlags
 NoteDisplay_StoreNoCurrent:
-	ld	(0xce45:24), a
+	ld	(CHORD_BASS_ROOT:24), a
 	ld	(0xce48:24), 0x00
 NoteDisplay_SetUpdateFlags:
-	and	(0xce42:24), 251
-	or	(0xce42:24), 2
-	and	(0xce42:24), 254
-	and	(0xce42:24), 127
-	or	(0xce42:24), 16
+	and	(CHORD_FLAGS:24), 251
+	or	(CHORD_FLAGS:24), 2
+	and	(CHORD_FLAGS:24), 254
+	and	(CHORD_FLAGS:24), 127
+	or	(CHORD_FLAGS:24), 16
 	jr	VoiceSlot_Epilogue_Epilogue
 NoteDisplay_SameNote:
 	cpw	(0xce93:24), 0
 	jr	z, NoteDisplay_ClearBoth
-	ld	(0xce45:24), 0x00
+	ld	(CHORD_BASS_ROOT:24), 0x00
 	ld	(0xce48:24), w
 	jr	NoteDisplay_SetOverlayFlags
 NoteDisplay_ClearBoth:
-	ld	(0xce45:24), 0x00
+	ld	(CHORD_BASS_ROOT:24), 0x00
 	ld	(0xce48:24), 0x00
 NoteDisplay_SetOverlayFlags:
-	or	(0xce42:24), 4
-	and	(0xce42:24), 253
-	and	(0xce42:24), 254
-	and	(0xce42:24), 127
-	or	(0xce42:24), 16
+	or	(CHORD_FLAGS:24), 4
+	and	(CHORD_FLAGS:24), 253
+	and	(CHORD_FLAGS:24), 254
+	and	(CHORD_FLAGS:24), 127
+	or	(CHORD_FLAGS:24), 16
 	jr	VoiceSlot_Epilogue
 VoiceSlot_Epilogue:
 VoiceSlot_Epilogue_Epilogue:
@@ -15331,28 +15331,28 @@ VoiceSlot_Epilogue_Epilogue:
 	pop	xix
 	ret
 VoiceSlot_Epilogue_Block:
-	ld	(0xce43:24), a
-	ld	(0xce44:24), w
-	ld	(0xce45:24), 0x00
+	ld	(CHORD_TYPE:24), a
+	ld	(CHORD_ROOT:24), w
+	ld	(CHORD_BASS_ROOT:24), 0x00
 	ld	(0xce48:24), w
-	or	(0xce42:24), 4
-	and	(0xce42:24), 253
-	and	(0xce42:24), 127
-	or	(0xce42:24), 16
+	or	(CHORD_FLAGS:24), 4
+	and	(CHORD_FLAGS:24), 253
+	and	(CHORD_FLAGS:24), 127
+	or	(CHORD_FLAGS:24), 16
 	ret
 Chord_ApplyCurrentChord:
 	calr	Voice_InitPartAllocState
 	calr	VoiceSlot_IterateAlloc_TestBit24
-	orw	(0xce65:24), 0xff00
-	ld	a, (0xce43:24)
-	ld	(0xce46:24), a
-	ld	a, (0xce44:24)
-	ld	(0xce47:24), a
+	orw	(CHORD_CHANGED:24), 0xff00
+	ld	a, (CHORD_TYPE:24)
+	ld	(CHORD_LAST_TYPE:24), a
+	ld	a, (CHORD_ROOT:24)
+	ld	(CHORD_LAST_ROOT:24), a
 	ret
 Voice_InitPartAllocState:
 	push	xix
 	push	xiz
-	cp	(0xce43:24), 0x00
+	cp	(CHORD_TYPE:24), 0x00
 	jr	nz, Voice_InitPartAllocState_Skip
 	calr	InitPartAllocState_Block4
 	jr	InitPartAllocState_Epilogue
@@ -15364,14 +15364,14 @@ Voice_InitPartAllocState_Skip:
 	and	de, 0x2
 	ldto_werp	DE, 0x3e
 	jr	z, InitPartAllocState_TestBit24
-	bit	4, (0xce42:24)
+	bit	4, (CHORD_FLAGS:24)
 	jr	z, Voice_InitPartAllocState_Skip2
 	calr	VoiceSlot_SetPitchParams_TestBit24
 	jr	InitPartAllocState_TestBit24
 Voice_InitPartAllocState_Skip2:
 	calr	VoiceSlot_IterateAlloc_Block2
 InitPartAllocState_TestBit24:
-	bit	4, (0xce42:24)
+	bit	4, (CHORD_FLAGS:24)
 	jr	z, InitPartAllocState_TestBit24_Skip
 	calr	VoiceSlot_IterateAlloc_Block3
 	jr	InitPartAllocState_Epilogue
@@ -15382,26 +15382,26 @@ InitPartAllocState_Epilogue:
 	pop	xix
 	ret
 InitPartAllocState_Block4:
-	ld	(0xce49:24), 0x00
+	ld	(CHORD_NOTE_COUNT:24), 0x00
 	ldw	(0xcec3:24), 0x0000
 	ldw	(0xcedb:24), 0x0000
 	ld	(0xce55:24), 0x00
 	ret
 InitPartAllocState_TestBit242:
-	bit	4, (0xce42:24)
+	bit	4, (CHORD_FLAGS:24)
 	jrl	nz, InitPartAllocState_Return
-	ld	l, (0xce43:24)
+	ld	l, (CHORD_TYPE:24)
 	xor	h, h
 	dec	1, hl
 	ld	xiz, ChordTables_TypeNoteCount
 	ld	a, (xiz+hl)
-	ld	(0xce49:24), a
+	ld	(CHORD_NOTE_COUNT:24), a
 	ld	xiz, ChordTables_TypeIntervals
 	sla	hl, 2
 	ld	bc, (xiz+hl)
 	inc	2, hl
 	ld	de, (xiz+hl)
-	ld	l, (0xce44:24)
+	ld	l, (CHORD_ROOT:24)
 	dec	1, l
 	add	c, l
 	add	b, l
@@ -15421,8 +15421,8 @@ InitPartAllocState_TestBit242:
 	ld	l, d
 	sla	hl, 1
 	or	wa, (xiz+hl)
-	ld	xiy, 0xce4a
-	ld	c, (0xce49:24)
+	ld	xiy, CHORD_NOTES
+	ld	c, (CHORD_NOTE_COUNT:24)
 	xor	b, b
 	add	iy, bc
 	dec	1, iy
@@ -15438,12 +15438,12 @@ InitPartAllocState_Return:
 	ret
 InitPartAllocState_OrBits:
 	xor	hl, hl
-	bit	1, (0xce42:24)
+	bit	1, (CHORD_FLAGS:24)
 	jr	z, InitPartAllocState_OrBits_Skip
-	ld	l, (0xce45:24)
+	ld	l, (CHORD_BASS_ROOT:24)
 	jr	VoiceSlot_SetPitchParams_LoadReg
 InitPartAllocState_OrBits_Skip:
-	ld	l, (0xce44:24)
+	ld	l, (CHORD_ROOT:24)
 	jr	VoiceSlot_SetPitchParams
 VoiceSlot_SetPitchParams:
 VoiceSlot_SetPitchParams_LoadReg:
@@ -15454,9 +15454,9 @@ VoiceSlot_SetPitchParams_LoadReg:
 	ld	(0xcedf:24), wa
 	ret
 VoiceSlot_SetPitchParams_TestBit24:
-	bit	1, (0xce42:24)
+	bit	1, (CHORD_FLAGS:24)
 	jr	z, VoiceSlot_IterateAlloc_Block
-	ld	l, (0xce43:24)
+	ld	l, (CHORD_TYPE:24)
 	xor	h, h
 	dec	1, hl
 	ld	xiz, ChordTables_TypeNoteCount
@@ -15467,10 +15467,10 @@ VoiceSlot_SetPitchParams_TestBit24:
 	ld	xiy, ChordTables_TypeIntervals
 	ld	xix, 0xce56
 	sla	hl, 2
-	ld	d, (0xce45:24)
+	ld	d, (CHORD_BASS_ROOT:24)
 	dec	1, d
 	add	d, 0x30
-	ld	e, (0xce44:24)
+	ld	e, (CHORD_ROOT:24)
 	dec	1, e
 	add	e, 0x30
 	ld	a, d
@@ -15498,7 +15498,7 @@ VoiceSlot_IterateAlloc_NextIter:
 	djnz16	bc, VoiceSlot_SetPitchParams_LoadFromStack
 	jr	VoiceSlot_IterateAlloc_Return
 VoiceSlot_IterateAlloc_Block:
-	ld	l, (0xce43:24)
+	ld	l, (CHORD_TYPE:24)
 	xor	h, h
 	dec	1, hl
 	ld	xiz, ChordTables_TypeNoteCount
@@ -15508,7 +15508,7 @@ VoiceSlot_IterateAlloc_Block:
 	ld	xiy, ChordTables_TypeIntervals
 	ld	xix, 0xce56
 	sla	hl, 2
-	ld	e, (0xce44:24)
+	ld	e, (CHORD_ROOT:24)
 	dec	1, e
 	add	e, 0x30
 VoiceSlot_IterateAlloc_LoadFromStack:
@@ -15521,7 +15521,7 @@ VoiceSlot_IterateAlloc_LoadFromStack:
 VoiceSlot_IterateAlloc_Return:
 	ret
 VoiceSlot_IterateAlloc_Block2:
-	ld	l, (0xce43:24)
+	ld	l, (CHORD_TYPE:24)
 	xor	h, h
 	dec	1, hl
 	ld	xiz, ChordTables_TypeNoteCount
@@ -15533,7 +15533,7 @@ VoiceSlot_IterateAlloc_Block2:
 	inc	2, hl
 	ld	de, (xiz+hl)
 	ld	xiz, Chord_Tables
-	ld	l, (0xce44:24)
+	ld	l, (CHORD_ROOT:24)
 	ld	l, (xiz+l)
 	add	l, 0xc
 	add	c, l
@@ -15546,7 +15546,7 @@ VoiceSlot_IterateAlloc_Block2:
 	ld	(0xce59:24), d
 	ret
 VoiceSlot_IterateAlloc_Block3:
-	ld	bc, (0xce63:24)
+	ld	bc, (CHORD_HELD_KEY_COUNT:24)
 	ld	(0xcec3:24), bc
 	cp	bc, 0:i3
 	jr	z, VoiceSlot_IterateAlloc_Return2
@@ -15564,9 +15564,9 @@ VoiceSlot_IterateAlloc_SetByte:
 VoiceSlot_IterateAlloc_Return2:
 	ret
 VoiceSlot_IterateAlloc_LoadReg:
-	ld	xiy, 0xce4a
+	ld	xiy, CHORD_NOTES
 	ld	xix, 0xcec3
-	ld	c, (0xce49:24)
+	ld	c, (CHORD_NOTE_COUNT:24)
 	xor	b, b
 	ld	(xix + 0:8), bc
 VoiceSlot_IterateAlloc_LoadReg2:
@@ -15579,32 +15579,32 @@ VoiceSlot_IterateAlloc_LoadReg2:
 	djnz16	bc, VoiceSlot_IterateAlloc_LoadReg2
 	ret
 VoiceSlot_IterateAlloc_TestBit24:
-	bit	0, (0xce42:24)
+	bit	0, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_IterateAlloc_Block6
-	ld	a, (0xce43:24)
-	ld	w, (0xce44:24)
-	ld	l, (0xce45:24)
-	cp	a, (0x8ca6:16)
+	ld	a, (CHORD_TYPE:24)
+	ld	w, (CHORD_ROOT:24)
+	ld	l, (CHORD_BASS_ROOT:24)
+	cp	a, (DISPLAY_CHORD_TYPE:16)
 	jr	nz, VoiceSlot_IterateAlloc_StoreDRAM
-	cp	w, (0x8ca4:16)
+	cp	w, (DISPLAY_CHORD_ROOT:16)
 	jr	nz, VoiceSlot_IterateAlloc_StoreDRAM
-	cp	l, (0x8ca8:16)
+	cp	l, (DISPLAY_CHORD_BASS:16)
 	jr	z, VoiceSlot_CheckAndApply_Return
 VoiceSlot_IterateAlloc_StoreDRAM:
-	ld	(0x8ca6:16), a
-	ld	(0x8ca4:16), w
-	bit	1, (0xce42:24)
+	ld	(DISPLAY_CHORD_TYPE:16), a
+	ld	(DISPLAY_CHORD_ROOT:16), w
+	bit	1, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_IterateAlloc_StoreDRAM2
-	ld	(0x8ca8:16), 0
+	ld	(DISPLAY_CHORD_BASS:16), 0
 	jr	VoiceSlot_IterateAlloc_Block5
 VoiceSlot_IterateAlloc_StoreDRAM2:
-	ld	(0x8ca8:16), l
+	ld	(DISPLAY_CHORD_BASS:16), l
 VoiceSlot_IterateAlloc_Block5:
 	jr	VoiceSlot_CheckAndApply_DoCheckDis
 VoiceSlot_IterateAlloc_Block6:
-	ld	(0x8ca6:16), 0
-	ld	(0x8ca4:16), 0
-	ld	(0x8ca8:16), 0
+	ld	(DISPLAY_CHORD_TYPE:16), 0
+	ld	(DISPLAY_CHORD_ROOT:16), 0
+	ld	(DISPLAY_CHORD_BASS:16), 0
 	jr	VoiceSlot_CheckAndApply
 VoiceSlot_CheckAndApply:
 VoiceSlot_CheckAndApply_DoCheckDis:
@@ -15722,8 +15722,8 @@ ChordTables_PitchMask:
 	.hword	0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080, 0x0100
 	.hword	0x0200, 0x0400, 0x0800, 0x0001, 0x0002, 0x0004, 0x0008, 0x0010
 VoiceSlot_CheckAndApply_LoadReg:
-	ld	xiy, 0xce63
-	ld	xix, 0xce7b
+	ld	xiy, CHORD_HELD_KEY_COUNT
+	ld	xix, CHORD_PREV_KEY_COUNT
 	ld	bc, (xiy + 0:8)
 	inc	1, bc
 	ldirw
@@ -15756,43 +15756,43 @@ Chord_EvalAltNoteBuffer:
 	push	xiy
 	push	xiz
 ; index row
-	ld	a, (0xce42:24)
+	ld	a, (CHORD_FLAGS:24)
 	stb_d8	(0xce24), a
-	ld	a, (0xce43:24)
+	ld	a, (CHORD_TYPE:24)
 	stb_d8	(0xce25), a
-	ld	a, (0xce44:24)
+	ld	a, (CHORD_ROOT:24)
 	stb_d8	(0xce26), a
-	ld	a, (0xce45:24)
+	ld	a, (CHORD_BASS_ROOT:24)
 	stb_d8	(0xce27), a
-	ld	a, (0xce46:24)
+	ld	a, (CHORD_LAST_TYPE:24)
 	stb_d8	(0xce28), a
-	ld	a, (0xce47:24)
+	ld	a, (CHORD_LAST_ROOT:24)
 	stb_d8	(0xce29), a
 	ld	a, (0xce48:24)
 	stb_d8	(0xce2a), a
-	ld	xiy, 0xce49
+	ld	xiy, CHORD_NOTE_COUNT
 	ld	xix, 0xce2e
 	ldw	bc, 10
 	ldir85
 	ld	xiy, 0xce1a
-	ld	xix, 0xce49
+	ld	xix, CHORD_NOTE_COUNT
 	ldw	bc, 10
 	ldir85
-	cp	(0xce49:24), 2
+	cp	(CHORD_NOTE_COUNT:24), 2
 	jrl	ule, VoiceSlot_CheckAndApply_LoadReg_Skip3
 	calr	Voice_UpdateNoteBitmap
 	cp	w, 0:i3
 	jr	nz, Chord_EvalAltNoteBuffer_Join
-	dec	1, (0xce49:24)
+	dec	1, (CHORD_NOTE_COUNT:24)
 	calr	Voice_UpdateNoteBitmap
-	inc	1, (0xce49:24)
+	inc	1, (CHORD_NOTE_COUNT:24)
 	jr	Chord_EvalAltNoteBuffer_Join
 	cp	w, 0:i3
 	jr	nz, Chord_EvalAltNoteBuffer_Join
-	ld	a, (0xce46:24)
-	ld	w, (0xce47:24)
+	ld	a, (CHORD_LAST_TYPE:24)
+	ld	w, (CHORD_LAST_ROOT:24)
 Chord_EvalAltNoteBuffer_Join:
-	bit	6, (0xce42:24)
+	bit	6, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_CheckAndApply_LoadReg_Skip
 	ldfr_werp	de, 0x3e	; ld QHL3,DE: bank-3 register QHL <- DE
 	ldw_d16	de, (0xc4fa)
@@ -15801,10 +15801,10 @@ Chord_EvalAltNoteBuffer_Join:
 	jr	nz, VoiceSlot_CheckAndApply_LoadReg_Skip2
 	jr	VoiceSlot_CheckAndApply_LoadReg_Join
 VoiceSlot_CheckAndApply_LoadReg_Skip:
-	ld	l, (0xce49:24)
+	ld	l, (CHORD_NOTE_COUNT:24)
 	xor	h, h
 	dec	1, hl
-	ld	xiz, 0xce4a
+	ld	xiz, CHORD_NOTES
 	ld	d, (xiz)
 	ld	e, (xiz+hl)
 	sub	d, e
@@ -15816,13 +15816,13 @@ VoiceSlot_CheckAndApply_LoadReg_Join:
 VoiceSlot_CheckAndApply_LoadReg_Skip2:
 	calr	NoteDisplay_LookupBitmap
 VoiceSlot_CheckAndApply_LoadReg_Join2:
-	ld	a, (0xce43:24)
+	ld	a, (CHORD_TYPE:24)
 	stb_d8	(0xce1a), a
-	ld	a, (0xce44:24)
+	ld	a, (CHORD_ROOT:24)
 	stb_d8	(0xce1b), a
-	ld	a, (0xce45:24)
+	ld	a, (CHORD_BASS_ROOT:24)
 	stb_d8	(0xce1c), a
-	ld	a, (0xce42:24)
+	ld	a, (CHORD_FLAGS:24)
 	stb_d8	(0xce1d), a
 	jr	VoiceSlot_CheckAndApply_LoadReg_Join3
 VoiceSlot_CheckAndApply_LoadReg_Skip3:
@@ -15830,21 +15830,21 @@ VoiceSlot_CheckAndApply_LoadReg_Skip3:
 	ld	(0xce1b:16), 0
 VoiceSlot_CheckAndApply_LoadReg_Join3:
 	ldb_d8	a, (0xce24)
-	ld	(0xce42:24), a
+	ld	(CHORD_FLAGS:24), a
 	ldb_d8	a, (0xce25)
-	ld	(0xce43:24), a
+	ld	(CHORD_TYPE:24), a
 	ldb_d8	a, (0xce26)
-	ld	(0xce44:24), a
+	ld	(CHORD_ROOT:24), a
 	ldb_d8	a, (0xce27)
-	ld	(0xce45:24), a
+	ld	(CHORD_BASS_ROOT:24), a
 	ldb_d8	a, (0xce28)
-	ld	(0xce46:24), a
+	ld	(CHORD_LAST_TYPE:24), a
 	ldb_d8	a, (0xce29)
-	ld	(0xce47:24), a
+	ld	(CHORD_LAST_ROOT:24), a
 	ldb_d8	a, (0xce2a)
 	ld	(0xce48:24), a
 	ld	xiy, 0xce2e
-	ld	xix, 0xce49
+	ld	xix, CHORD_NOTE_COUNT
 	ldw	bc, 10
 	ldir85
 	pop	xiz
@@ -15902,7 +15902,7 @@ NoteDisplay_StoreAndDispatch:
 	ldmi16	(xsp + 8), 0xce44
 	ldmi16	(xsp + 6), 0xce45
 	ldmi16	(xsp + 4), 0xce42
-	ld	xiy, 0xce49
+	ld	xiy, CHORD_NOTE_COUNT
 	lda	xix, (xsp + 12)
 	ld	bc, 5:i3
 	ldirw
@@ -15928,25 +15928,25 @@ NoteDisplay_StoreAnd_LoadReg:
 	jrl	MIDI_FinalizeParamBlock
 NoteDisplay_StoreAnd_LoadReg2:
 	ld	xiy, xhl
-	ld	xix, 0xce49
+	ld	xix, CHORD_NOTE_COUNT
 	ld	bc, 5:i3
 	ldirw
 	ldi85
-	cp	(0xce49:16), 0
+	cp	(CHORD_NOTE_COUNT:16), 0
 	jr	nz, NoteDisplay_StoreAnd_LoadDRAM
 	call	NoteDisplay_ClearAndSetUpdate
-	ld	(0xce43:16), 0
-	ld	(0xce44:16), 0
-	ld	(0xce45:16), 0
+	ld	(CHORD_TYPE:16), 0
+	ld	(CHORD_ROOT:16), 0
+	ld	(CHORD_BASS_ROOT:16), 0
 	jr	NoteDisplay_StoreAnd_Block
 NoteDisplay_StoreAnd_LoadDRAM:
-	ld	a, (0xce49:16)
+	ld	a, (CHORD_NOTE_COUNT:16)
 	dec	1, a
 	extz	wa
-	lda	xbc, (0xce4a:16)
+	lda	xbc, (CHORD_NOTES:16)
 	extz	xwa
 	add	xwa, xbc
-	ld	c, (0xce4a:16)
+	ld	c, (CHORD_NOTES:16)
 	sub	c, (xwa)
 	ld	a, c
 	cp	a, 0xc
@@ -15954,9 +15954,9 @@ NoteDisplay_StoreAnd_LoadDRAM:
 	call	Voice_UpdateNoteBitmap
 	cp	hl, 0:i3
 	jr	nz, NoteDisplay_StoreAnd_DoLookupBi
-	dec	1, (0xce49:16)
+	dec	1, (CHORD_NOTE_COUNT:16)
 	call	Voice_UpdateNoteBitmap
-	inc	1, (0xce49:16)
+	inc	1, (CHORD_NOTE_COUNT:16)
 NoteDisplay_StoreAnd_DoLookupBi:
 	call	NoteDisplay_LookupBitmap
 	jr	NoteDisplay_StoreAnd_Block
@@ -15980,7 +15980,7 @@ MIDI_FinalizeParamBlock:
 	mrdb5	0x8f, 0x06, 0x19, 0x45, 0xce
 	mrdb5	0x8f, 0x04, 0x19, 0x42, 0xce
 	lda	xiy, (xsp + 12)
-	ld	xix, 0xce49
+	ld	xix, CHORD_NOTE_COUNT
 	ld	bc, 5:i3
 	ldirw
 	ldi85
@@ -16684,7 +16684,7 @@ SwbtB2_Code9A_Listener:
 	ld	a, (xsp+0x1)
 	dec	4, a
 	extz	wa
-	lda_d16	xbc, (0xf1a0)
+	lda_d16	xbc, (SEQ_TRACK_ASSIGN)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -17417,7 +17417,7 @@ SndParam_ApplySystemParam_ScaleTuneType:
 	cp	iz, 12
 	jrl	ge, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_ScaleTuneType_Loop:
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17462,7 +17462,7 @@ SndParam_ApplySystemParam_ScaleTuneKey:
 	cp	iz, 12
 	jrl	ge, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_ScaleTuneKey_Loop2:
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17492,7 +17492,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	ld	c, a
 	extz	bc
@@ -17504,7 +17504,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0_Skip18:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd1e:16)
+	ld	a, (PANEL_SCALE_TUNE+2:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17517,7 +17517,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	1, a
 	ld	c, a
@@ -17530,7 +17530,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1_Skip19:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd1f:16)
+	ld	a, (PANEL_SCALE_TUNE+3:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17543,7 +17543,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	2, a
 	ld	c, a
@@ -17556,7 +17556,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2_Skip20:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd20:16)
+	ld	a, (PANEL_SCALE_TUNE+4:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17569,7 +17569,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	3, a
 	ld	c, a
@@ -17582,7 +17582,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3_Skip21:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd21:16)
+	ld	a, (PANEL_SCALE_TUNE+5:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17595,7 +17595,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	4, a
 	ld	c, a
@@ -17608,7 +17608,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4_Skip22:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd22:16)
+	ld	a, (PANEL_SCALE_TUNE+6:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17621,7 +17621,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	5, a
 	ld	c, a
@@ -17634,7 +17634,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5_Skip23:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd23:16)
+	ld	a, (PANEL_SCALE_TUNE+7:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17647,7 +17647,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	6, a
 	ld	c, a
@@ -17660,7 +17660,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6_Skip24:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd24:16)
+	ld	a, (PANEL_SCALE_TUNE+8:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17673,7 +17673,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	7, a
 	ld	c, a
@@ -17686,7 +17686,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7_Skip25:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd25:16)
+	ld	a, (PANEL_SCALE_TUNE+9:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17699,7 +17699,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	inc	8, a
 	ld	c, a
@@ -17712,7 +17712,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8_Skip26:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd26:16)
+	ld	a, (PANEL_SCALE_TUNE+10:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17725,7 +17725,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 9
 	ld	c, a
@@ -17738,7 +17738,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9_Skip27:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd27:16)
+	ld	a, (PANEL_SCALE_TUNE+11:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17751,7 +17751,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 10
 	ld	c, a
@@ -17764,7 +17764,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10_Skip28:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd28:16)
+	ld	a, (PANEL_SCALE_TUNE+12:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -17777,7 +17777,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote11:
 	call	SndParam_LookupReadOnly
 	cp	hl, 128
 	jr	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	a, (0xfd1d:16)
+	ld	a, (PANEL_SCALE_TUNE+1:16)
 	and	a, 15
 	add	a, 11
 	ld	c, a
@@ -17790,7 +17790,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote11_Skip29:
 	ld	wa, bc
 	add	wa, 164
 	ld	bc, wa
-	ld	a, (0xfd29:16)
+	ld	a, (PANEL_SCALE_TUNE+13:16)
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
@@ -18194,7 +18194,7 @@ SeqVoice_CheckAndRet_Data_Case22:
 	lda	xhl, (SemitoneBias_TableN:24)
 	jr	SeqVoice_CheckAndRet_Data_Case22_Return
 SeqVoice_CheckAndRet_Data_Case22_Skip8:
-	lda	xhl, (0xfd1e:16)
+	lda	xhl, (PANEL_SCALE_TUNE+2:16)
 	jr	SeqVoice_CheckAndRet_Data_Case22_Return
 SeqVoice_CheckAndRet_Data_Case22_Skip9:
 	lda	xhl, (SemitoneBias_TableA:24)
@@ -18394,7 +18394,7 @@ PitchReset_ChannelLoop:
 	cp_erpw	0xfa, 0x0f, 0x00
 	jr	lt, PitchReset_ChannelLoop
 PitchReset_CheckExtChannels:
-	ld	a, (0x36ff:16)
+	ld	a, (CMP_RECORD_PART:16)
 	and	a, 0xf
 	jr	z, PitchReset_Flush
 	ldi_erpw	0xfa, 0x10, 0x00
@@ -18953,7 +18953,7 @@ AccWrap_PlayModeStateMachine_Skip:
 	ret	nz
 	res	1, (0x28b2:16)
 	res	2, (0x28b2:16)
-	res	3, (0x28a7:16)
+	res	3, (SEQ_RTMCFG:16)
 	ei	6
 	ldw	(SEQ_BEAT_COUNT:16), 0
 	ld	(SEQ_BEAT_TICK:16), 0
@@ -19013,7 +19013,7 @@ PlayModeStateMachine_TestBit22:
 ; Transport_EnableMidiStartContinue: Clears 0x28A7 bit 2, the flag that makes the transport ignore incoming MIDI Start
 ;   (0xFA) / Continue (0xFB). Basis: callers + body (and the readers of the bit).
 Transport_EnableMidiStartContinue:
-	res	2, (0x28a7:16)
+	res	2, (SEQ_RTMCFG:16)
 	ret
 PlayModeStateMachine_Prologue:
 	dec	4, xsp
@@ -20655,13 +20655,13 @@ Epilogue_Prologue:
 	ldw	wa, 0x63
 	ldw	bc, 0x14
 	call	SysEx_ApplyAndReloadPreset
-	ld	(0xfc94:16), 80
+	ld	(PANEL_DIGITAL_REVERB+6:16), 80
 	ld	iz, 0:i3
 	cp	iz, 0x8
 	jr	ge, Epilogue_InitVal
 Epilogue_LoadReg:
 	ld	bc, iz
-	lda	xwa, (0xfc8e:16)
+	lda	xwa, (PANEL_DIGITAL_REVERB:16)
 	ld	a, (xwa+iz)
 	extz	wa
 	pushw	0xff
@@ -20865,13 +20865,13 @@ Epilogue_Prologue2:
 	ldw	wa, 0x63
 	ldw	bc, 0x14
 	call	SysEx_ApplyAndReloadPreset
-	ld	(0xfc94:16), 80
+	ld	(PANEL_DIGITAL_REVERB+6:16), 80
 	ld	iz, 0:i3
 	cp	iz, 0x8
 	jr	ge, Epilogue_InitVal2
 Epilogue_LoadReg2:
 	ld	bc, iz
-	lda	xwa, (0xfc8e:16)
+	lda	xwa, (PANEL_DIGITAL_REVERB:16)
 	ld	a, (xwa+iz)
 	extz	wa
 	pushw	0xff
@@ -21191,10 +21191,10 @@ MidiSysMsg_SetScaledTempo_Skip4:
 	ld	xiz, xwa
 	cp	xiz, 0x100
 	jr	nc, MidiSysMsg_SetScaledTempo_Skip
-	res	0, (0xfc63:16)
+	res	0, (PANEL_STYLE+9:16)
 	jr	MidiSysMsg_SetScaledTempo_Join
 MidiSysMsg_SetScaledTempo_Skip:
-	set	0, (0xfc63:16)
+	set	0, (PANEL_STYLE+9:16)
 MidiSysMsg_SetScaledTempo_Join:
 	ld	wa, iz
 	ld	bc, wa
@@ -21795,7 +21795,7 @@ SoundParam_InitDefaultBanks:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	set	2, (0xfdad:16)
+	set	2, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 0:i3
 	ld	de, 1:i3
@@ -21817,7 +21817,7 @@ SoundParam_InitDefau_LoadReg:
 	ld	de, bc
 	ldw	bc, 0x401
 	call	SndParam_NotifyAndReturn
-	lda	xbc, (0xf1a0:16)
+	lda	xbc, (SEQ_TRACK_ASSIGN:16)
 	lda	xwa, (xsp + 66)
 	ld	a, (xwa+iz)
 	ld	(xbc+iz), a
@@ -21834,7 +21834,7 @@ SoundParam_InitDefau_Block:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	2, (0xfdad:16)
+	res	2, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc0
 	ld	bc, 1:i3
 	ld	de, 1:i3
@@ -21856,7 +21856,7 @@ SoundParam_InitDefau_LoadReg2:
 	ld	de, bc
 	ldw	bc, 0x401
 	call	SndParam_NotifyAndReturn
-	lda	xbc, (0xf1a0:16)
+	lda	xbc, (SEQ_TRACK_ASSIGN:16)
 	lda	xwa, (xsp + 34)
 	ld	a, (xwa+iz)
 	ld	(xbc+iz), a
@@ -21873,7 +21873,7 @@ SoundParam_InitDefau_Block2:
 	push	xiz
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
-	res	0, (0xfdad:16)
+	res	0, (PANEL_REC_91+3:16)
 	ld	xwa, 0xc1
 	ld	bc, 1:i3
 	ld	de, 1:i3
@@ -21895,7 +21895,7 @@ SoundParam_InitDefau_LoadReg3:
 	ld	de, bc
 	ldw	bc, 0x401
 	call	SndParam_NotifyAndReturn
-	lda	xbc, (0xf1a0:16)
+	lda	xbc, (SEQ_TRACK_ASSIGN:16)
 	lda	xwa, (xsp + 2)
 	ld	a, (xwa+iz)
 	ld	(xbc+iz), a
@@ -22481,7 +22481,7 @@ CharMap_ActivePreamb_Prologue:
 	jr	nz, CharMap_ActivePreamb_LoadDRAM2
 	ld	xwa, 0x4c
 CharMap_ActivePreamb_LoadDRAM2:
-	ld	xde, (0xe0b2:16)
+	ld	xde, (SOUND_TABLE_BASE:16)
 	add	xde, xwa
 	extz	xbc
 	add	xbc, (xde)
@@ -22498,13 +22498,13 @@ CharMap_ActivePreamb_Compare:
 	jr	nz, CharMap_ActivePreamb_LoadDRAM4
 	ld	xwa, 0x44
 CharMap_ActivePreamb_LoadDRAM3:
-	ld	xde, (0xe0b2:16)
+	ld	xde, (SOUND_TABLE_BASE:16)
 	add	xde, xwa
 	add	xbc, (xde)
 	ld	l, (xbc)
 	jr	CharMap_ActivePreamb_Increment
 CharMap_ActivePreamb_LoadDRAM4:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	add	xbc, (xwa + 60)
 	ld	l, (xbc)
 CharMap_ActivePreamb_Increment:
@@ -22658,7 +22658,7 @@ StoreDRAMInit_LoadParam2:
 	lda	xsp, (xsp+304)
 	retd	0x4
 StoreDRAMInit_LoadDRAM:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	ld	xde, (xhl + 4)
 	dec	1, xde
 	ld	xix, 0:i3
@@ -22822,13 +22822,13 @@ ApplyProgramChangeAs_SetByte:
 	ld	l, 0x89:opc
 	jr	ApplyProgramChangeAs_Return
 ApplyProgramChangeAs_LoadDRAM:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xwa, (xwa + 4)
 	ld	l, a
 ApplyProgramChangeAs_Return:
 	ret
 ApplyProgramChangeAs_LoadDRAM2:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	add	xhl, xbc
 	ld	xix, (xhl)
 	ld	c, (xwa + 4)
@@ -22885,7 +22885,7 @@ FetchOscTableEntry_Prologue:
 	ld	(xsp + 4), xbc
 	ld	xiz, xwa
 	calr	ApplyProgramChangeAs_DoLookupRe
-	ld	xbc, (0xe0b2:16)
+	ld	xbc, (SOUND_TABLE_BASE:16)
 	ld	xwa, (xbc + 8)
 	ld	e, a
 	cp	(xiz), l
@@ -22940,7 +22940,7 @@ ApplyProgramChange_Epilogue:
 	pop	xiz
 	ret
 ApplyProgramChange_LoadDRAM:
-	ld	xhl, (0xe0b2:16)
+	ld	xhl, (SOUND_TABLE_BASE:16)
 	add	xhl, xbc
 	ld	xix, (xhl)
 	ld	c, (xwa + 4)
@@ -23002,11 +23002,11 @@ SndParam_LookupOscEnvelope:
 	lda	xbc, (xiz + 2)
 	cp	hl, 0xf0
 	jr	lt, LookupOscEnvelope_LoadDRAM
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xhl, (xwa + 48)
 	jr	LookupOscEnvelope_LoadReg2
 LookupOscEnvelope_LoadDRAM:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xde, (xwa + 28)
 	ld	xwa, 0:i3
 	ld	a, (xbc)
@@ -23027,7 +23027,7 @@ LookupOscEnvelope_LoadReg:
 	jr	nz, LookupOscEnvelope_Increment
 	jr	LookupOscEnvelope_LoadReg3
 LookupOscEnvelope_LoadDRAM2:
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xhl, (xwa + 48)
 	lda	xbc, (xiz + 2)
 LookupOscEnvelope_LoadReg2:
@@ -23086,7 +23086,7 @@ SndParam_CheckAndApplyMode_Epilogue:
 	pop	xiz
 	ret
 SndParam_LookupFromPointerTable:
-	ld	xix, (0xe0b2:16)
+	ld	xix, (SOUND_TABLE_BASE:16)
 	add	xix, 0x38
 	ld	xiy, (xix)
 	ld	l, a
@@ -23109,7 +23109,7 @@ SndParam_LookupByPartAndNote:
 	dec	6, xsp
 	push	xiz
 	ld	e, c
-	ld	xbc, (0xe0b2:16)
+	ld	xbc, (SOUND_TABLE_BASE:16)
 	ld	xiz, (xbc + 52)
 	lda	xbc, (xsp + 4)
 	ld	(xbc + 3), a
@@ -23143,7 +23143,7 @@ SndParam_LookupAndDispatch:
 	jr	z, SndParam_ReturnResult
 	cp	(xsp + 4), 0x78
 	jr	nz, SndParam_ApplyMaskAndCheck
-	ld	xwa, (0xe0b2:16)
+	ld	xwa, (SOUND_TABLE_BASE:16)
 	ld	xbc, (xwa + 48)
 	ld	a, (xsp + 6)
 	extz	wa
@@ -23330,7 +23330,7 @@ Param_SignExtendRetu_Return:
 	ret
 Param_SignExtendRetu_Block:
 	ld	xwa, (SoundData_CategoryDescPtr:24)
-	ld	(0xe0b2:16), xwa
+	ld	(SOUND_TABLE_BASE:16), xwa
 	ret
 ; SoundData_InitPhase0: Init-phase-0 handler of subsystem table 11 (phases 1-3 are bare returns): jumps to the code
 ;   that sets the sound-table base 0xE0B2 to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry

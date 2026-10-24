@@ -2040,7 +2040,7 @@ CtrlPanel_HandleKey10:
 ; Sets PART_SELECT from bit 0 of the word at 0xfc66 (bit clear: 1, set: 0) and appends switch
 ; command {0x90, 0x10, PART_SELECT, 0xff} (AddswbWr).
 PartSelect_UpdateDisplayState:
-	ld a, (0xfc66:16)
+	ld a, (PANEL_REC_90:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc8 z, e

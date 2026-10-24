@@ -358,7 +358,7 @@ MidiPkt_EnqueueControl_3358:
 	ld xwa, (xiz + 4)
 	ld bc, 6:i3
 	call	ArpQueue_Enqueue
-	ld	xhl, (0x9056:16)
+	ld	xhl, (PART_RECORD_PTRS:16)
 	ld xwa, (xiz)
 	ld a, (xwa)
 	extz wa
@@ -502,7 +502,7 @@ MidiPkt_EnqueueControl_3364:
 	and a, (xbc + 2)
 	cp a, 1:i3
 	jr	nz, MidiPkt_EnqueueControl_3364_FormatData
-	ld c, (0xfc61:16)
+	ld c, (PANEL_STYLE+7:16)
 	and c, 0x30
 	ld a, (xde + 11)
 	and a, 0xf
@@ -549,7 +549,7 @@ MidiPkt_EnqueueControl_3368:
 	ld	xwa, SysEx_Msg_35DC
 	ld bc, 6:i3
 	call	ArpQueue_Enqueue
-	ld a, (0xfd99:16)
+	ld a, (PANEL_REC_98+3:16)
 	and a, 0x1
 	cp a, 1:i3
 	jr	nz, MidiPkt_EnqueueControl_3368_NoPedal
@@ -798,7 +798,7 @@ SysEx_OnGmSystemOn:
 	cp	a, 118
 	jr	ule, SysEx_OnGmSystemOn_Skip2
 SysEx_OnGmSystemOn_Skip:
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	ret	nz
 SysEx_OnGmSystemOn_Skip2:
 	cp	a, 153
@@ -807,7 +807,7 @@ SysEx_OnGmSystemOn_Skip2:
 	ret	nc
 SysEx_OnGmSystemOn_Skip3:
 	set	7, (0x905d:16)
-	lda	xbc, (0xfdad:16)
+	lda	xbc, (PANEL_REC_91+3:16)
 	ld	e, (xbc)
 	set	2, e
 	ld	(xbc), e
@@ -827,7 +827,7 @@ MidiPkt_SysExProcessor_Data:
 	cp	a, 118
 	jr	ule, MidiPkt_SysExProcessor_Data_Skip2
 MidiPkt_SysExProcessor_Data_Skip:
-	bit	4, (0xfd50:16)
+	bit	4, (PANEL_MIDI:16)
 	ret	nz
 MidiPkt_SysExProcessor_Data_Skip2:
 	cp	a, 153
@@ -835,7 +835,7 @@ MidiPkt_SysExProcessor_Data_Skip2:
 	cp	a, 148
 	ret	nc
 MidiPkt_SysExProcessor_Data_Skip3:
-	lda	xbc, (0xfdad:16)
+	lda	xbc, (PANEL_REC_91+3:16)
 	ld	a, (xbc)
 	bit	2, a
 	ret	z
@@ -881,7 +881,7 @@ MidiPkt_SysExBulkTransfer_Data_Case6:
 	calr	SysEx_ApplyGsChorusLevel
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper:
-	lda	xde, (0x95a8:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)
@@ -901,7 +901,7 @@ MidiPkt_SysExBulkTransfer_Data_Helper:
 	pop	xde
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper2:
-	lda	xde, (0x95a8:16)
+	lda	xde, (MIDIRX_PART_EVENT:16)
 	ld	c, (xwa)
 	ld	(xde), c
 	ld	c, (xwa+1)
@@ -1417,7 +1417,7 @@ SysEx_ValidateRolandHeader:
 	ret	nz
 	cp	c, 0:i3
 	jr	nz, SysEx_ValidateRolandHeader_NonZeroChan
-	lda	xbc, (0xf180:24)
+	lda	xbc, (SEQ_SONG_RECORD:24)
 	add	xbc, 0x2e0
 	jr	SysEx_ValidateRolandHeader_Dispatch
 SysEx_ValidateRolandHeader_NonZeroChan:
@@ -1460,7 +1460,7 @@ SysEx_ApplyVoiceParam_4B:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
@@ -1473,7 +1473,7 @@ SysEx_ApplyVoiceParam_4B:
 	call	DSPCfg_WriteParamSimple
 	cp hl, 0:i3
 	jr	lt, SysEx_ApplyVoiceParam_4B_Return
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	cp xwa, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_ReadSubParams
 	ld a, (xwa)
@@ -1481,14 +1481,14 @@ SysEx_ApplyVoiceParam_4B:
 	ld a, (xsp + 10)
 	extz wa
 	calr	SysEx_ClampVoiceIndex8
-	ld (0xfc8e:16), l
+	ld (PANEL_DIGITAL_REVERB:16), l
 SysEx_ApplyVoiceParam_4B_ReadSubParams:
 	ld xwa, 0x4b04
 	call	DSPCfg_ReadParam_Map0
 	ldfr_werp HL, 0xfa
 	cpiw_erp 0xfa, 0
 	jr	ge, SysEx_ApplyVoiceParam_4B_IterateSlots
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_SkipRestore
 	ld a, (xsp + 4)
@@ -1518,7 +1518,7 @@ SysEx_ApplyVoiceParam_4B_SlotNext:
 	cpw_erp IZ, 0xfa
 	jr	lt, SysEx_ApplyVoiceParam_4B_SlotLoop
 SysEx_ApplyVoiceParam_4B_RestoreSlotId:
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_Return
 	ld a, (xsp + 4)
@@ -1532,14 +1532,14 @@ SysEx_ApplyVoiceParam_4B_128:
 	push xiz
 	ld (xsp + 6), xbc
 	ld (xsp + 10), a
-	lda xwa, (0xfc8e:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
 	sub xwa, 0xf980
 	add (xsp + 6), xwa
 	ld a, (xsp + 10)
 	extz wa
 	calr	SysEx_ClampVoiceIndex128
 	ld (xsp + 10), l
-	lda xbc, (0xfc8e:16)
+	lda xbc, (PANEL_DIGITAL_REVERB:16)
 	cp xbc, (xsp + 6)
 	jr	z, SysEx_ApplyVoiceParam_4B_128_ReadSub
 	ld a, (xbc)

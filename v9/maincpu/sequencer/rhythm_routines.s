@@ -145,7 +145,7 @@ Rhythm_SetupChannel_D7:
 	ld (0x32cc:16), a
 	and (0x32f4:16), 251
 	or (0x32f4:16), 8
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -157,7 +157,7 @@ Rhythm_SetupChannel_D4:
 	ld (0x32cc:16), a
 	and (0x32f4:16), 247
 	or (0x32f4:16), 4
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -168,7 +168,7 @@ Rhythm_SetupChannel_D5:
 	ld a, (0x32c9:16)
 	ld (0x32cc:16), a
 	and (0x32f4:16), 243
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -179,12 +179,12 @@ Rhythm_SetupChannel_D6:
 	ld a, (0x32ca:16)
 	ld (0x32cc:16), a
 	and (0x32f4:16), 243
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	calr RhythmEvt_ProcessNote
 	ret
 
 RhythmEvt_ProcessNote:
-	cp (0x32e5:16), 240
+	cp (ACC_STYLE_NUMBER:16), 240
 	jr c, RhythmEvt_AlternateProcess
 	ld a, (0x3316:16)
 	or a, (0x3317:16)
@@ -193,7 +193,7 @@ RhythmEvt_ProcessNote:
 	or a, (0x3313:16)
 	or a, (0x3314:16)
 	or a, (0x3315:16)
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, RhythmEvt_AlternateProcess
 	ld a, (0x32df:16)
 	ld (0x3423:16), a
@@ -315,7 +315,7 @@ RhythmEvt_Full91:
 	pushw iy
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	ld (0x3430:16), a
+	ld (ACC_EVENT+3:16), a
 	calr Rhythm_AdvancePosition
 	ld	a, (xhl+iy)
 	ld (0x3433:16), a
@@ -339,7 +339,7 @@ RhythmEvt_Full91_PostTransp:
 	popw iy
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
-	ld a, (0x3430:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr Rhythm_AdvancePosition
 	calr Rhythm_AdvancePosition
@@ -792,7 +792,7 @@ Rhythm_DispatchCh_D7:
 	ld xix, 0x30f4
 
 Rhythm_DispatchCh_D7_Loop:
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x313c
@@ -810,7 +810,7 @@ Rhythm_DispatchCh_D4:
 	ld xix, 0x313c
 
 Rhythm_DispatchCh_D4_Loop:
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x3184
@@ -827,7 +827,7 @@ Rhythm_DispatchCh_D5:
 	ld xix, 0x3184
 
 Rhythm_DispatchCh_D5_Loop:
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x31cc
@@ -844,7 +844,7 @@ Rhythm_DispatchCh_D6:
 	ld xix, 0x31cc
 
 Rhythm_DispatchCh_D6_Loop:
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x3214
@@ -893,7 +893,7 @@ Rhythm_SendByte:
 	ret
 
 Rhythm_ValidateAndSend:
-	cp (0x32e5:16), 240
+	cp (ACC_STYLE_NUMBER:16), 240
 	jr c, Rhythm_Validate_Mismatch
 	ld a, (0x3316:16)
 	or a, (0x3317:16)
@@ -902,7 +902,7 @@ Rhythm_ValidateAndSend:
 	or a, (0x3313:16)
 	or a, (0x3314:16)
 	or a, (0x3315:16)
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, Rhythm_Validate_Mismatch
 	ld a, (0x32df:16)
 	ld (0x3423:16), a
@@ -977,7 +977,7 @@ Rhythm_Mismatch90_Output:
 Rhythm_MismatchOther:
 	pushw wa
 	ld a, (xix + 3)
-	ld (0x3430:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (xix + 6)
 	ld (0x3433:16), a
 	ld a, (xix + 7)
@@ -996,7 +996,7 @@ Rhythm_MismatchOther_PostRange:
 Rhythm_MismatchOther_Output:
 	calr Rhythm_VoiceMapLookup
 	ld (xix + 2), a
-	ld a, (0x3430:16)
+	ld a, (ACC_EVENT+3:16)
 	ld (xix + 3), a
 	popw wa
 
@@ -1211,9 +1211,9 @@ Rhythm_AdvanceTick_Store:
 	ret
 
 Rhythm_SaveState:
-	ld a, (0x32f5:16)
+	ld a, (ACC_PENDING_STYLE:16)
 	ld (0x32f6:16), a
-	ld a, (0x32f7:16)
+	ld a, (ACC_PENDING_GROUP:16)
 	ld (0x32f8:16), a
 	ld a, (0x32f9:16)
 	ld (0x32fa:16), a
@@ -1227,7 +1227,7 @@ Rhythm_SaveState:
 	ld (0x3302:16), a
 	ld a, (0x3303:16)
 	ld (0x3304:16), a
-	ld a, (0x3305:16)
+	ld a, (ACC_SECTION_REQUEST:16)
 	ld (0x3306:16), a
 	ld a, (0x3307:16)
 	ld (0x3308:16), a
@@ -1298,11 +1298,11 @@ Rhythm_VoiceAssignDetect:
 	ld a, (0x3319:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_PartBDetect
-	and (0xfc5f:16), 191
+	and (PANEL_STYLE+5:16), 191
 	ld a, (0x3313:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_PartAOn
-	or (0xfc5f:16), 128
+	or (PANEL_STYLE+5:16), 128
 	or (0x32fc:16), 2
 
 Rhythm_VoiceAssign_PartAOn:
@@ -1331,11 +1331,11 @@ Rhythm_VoiceAssign_PartBDetect:
 	ld a, (0x331a:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_Ext1Detect
-	and (0xfc5f:16), 127
+	and (PANEL_STYLE+5:16), 127
 	ld a, (0x3312:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_PartBOn
-	or (0xfc5f:16), 64
+	or (PANEL_STYLE+5:16), 64
 	or (0x32fc:16), 1
 
 Rhythm_VoiceAssign_PartBOn:
@@ -1364,7 +1364,7 @@ Rhythm_VoiceAssign_Ext1Detect:
 	ld a, (0x331d:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_Ext2Detect
-	and (0xfc5f:16), 251
+	and (PANEL_STYLE+5:16), 251
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld a, 0x0:opc
@@ -1388,7 +1388,7 @@ Rhythm_VoiceAssign_Ext2Detect:
 	ld a, (0x331e:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_Ext3Detect
-	and (0xfc5f:16), 247
+	and (PANEL_STYLE+5:16), 247
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld a, 0x0:opc
@@ -1412,7 +1412,7 @@ Rhythm_VoiceAssign_Ext3Detect:
 	ld a, (0x331f:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_Perc1Detect
-	and (0xfc60:16), 251
+	and (PANEL_STYLE+6:16), 251
 	ld e, 0x48:opc
 	ld d, 0x6:opc
 	ld a, 0x0:opc
@@ -1436,7 +1436,7 @@ Rhythm_VoiceAssign_Perc1Detect:
 	ld a, (0x331b:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_Perc2Detect
-	and (0xfc5f:16), 239
+	and (PANEL_STYLE+5:16), 239
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld a, 0x0:opc
@@ -1452,7 +1452,7 @@ Rhythm_VoiceAssign_Perc2Detect:
 	ld a, (0x331c:16)
 	and a, 0x3f
 	jr z, Rhythm_VoiceAssign_SaveShadow
-	and (0xfc5f:16), 223
+	and (PANEL_STYLE+5:16), 223
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld a, 0x0:opc
@@ -1476,7 +1476,7 @@ Rhythm_VoiceAssign_SaveShadow:
 	ld (0x331b:16), a
 	ld a, (0x3315:16)
 	ld (0x331c:16), a
-	ld a, (0x32e5:16)
+	ld a, (ACC_STYLE_NUMBER:16)
 	ld (0x3370:16), a
 	ld a, (0x333c:16)
 	ld (0x333e:16), a
@@ -1489,7 +1489,7 @@ Rhythm_SeqResetCheck:
 	jr z, Rhythm_SeqReset_UpdateFlags
 	bit 4, (0x34cf:16)
 	jr nz, Rhythm_SeqReset_UpdateFlags
-	ld l, (0x379b:16)
+	ld l, (CMP_RECORD_PART:16)
 	xor h, h
 	sla l, 2
 	ld xiy, Rhythm_SeqResetTable

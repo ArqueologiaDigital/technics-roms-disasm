@@ -35,15 +35,15 @@ FmmWallpaperLoadFunc:
 	ld xbc, EVT_SHOW
 	ld xde, 5:i3
 	call ApPostEvent
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, WPLoad_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 WPLoad_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, WPLoad_HandleSuccess
 	cp wa, 0:i3
@@ -360,7 +360,7 @@ WPScan_CheckAvail:
 
 WPScan_MarkAvailable:
 	or (0x89f6:16), de
-	cp (0x89f8:16), 4
+	cp (SINGLE_LOAD_AREA:16), 4
 	jr nc, WPScan_LimitReached
 	jr WPScan_LoopContinue
 
@@ -386,7 +386,7 @@ WPScan_TypeNotThree:
 
 WPScan_TypeTwo_Mark:
 	or (0x89f6:16), de
-	cp (0x89f8:16), 4
+	cp (SINGLE_LOAD_AREA:16), 4
 	jr nc, WPScan_LimitReached
 	jr WPScan_LoopContinue
 
@@ -406,12 +406,12 @@ WPScan_TypeGeneric:
 
 WPScan_Generic_Mark:
 	or (0x89f6:16), de
-	cp (0x89f8:16), 4
+	cp (SINGLE_LOAD_AREA:16), 4
 	jr c, WPScan_LoopContinue
 
 WPScan_LimitReached:
 	ldto_berp A, 0xf8
-	ld (0x89f8:16), a
+	ld (SINGLE_LOAD_AREA:16), a
 
 WPScan_LoopContinue:
 	inc 1, iz
@@ -422,7 +422,7 @@ WPScan_LoopContinue:
 
 WP_FindNextSlot:
 	pushw iz
-	ld a, (0x89f8:16)
+	ld a, (SINGLE_LOAD_AREA:16)
 	cp a, 4:i3
 	jr nc, WPFind_NotFound
 	ld bc, (0x89f6:16)
@@ -450,7 +450,7 @@ WPFind_SearchLoop:
 WPFind_CheckSlot:
 	and iy, bc
 	jr z, WPFind_NextSlot
-	ld (0x89f8:16), l
+	ld (SINGLE_LOAD_AREA:16), l
 	ld l, 0x1:opc
 	jr WPFind_Return
 

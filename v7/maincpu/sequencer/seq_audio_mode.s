@@ -43,7 +43,7 @@ AudioMode_CopyChannelMode:
 	ld	(12953:16), a
 	ret
 AudioMode_CopyAccentFlags:
-	ld	a, (13397:16)
+	ld	a, (CMP_SOLO:16)
 	and	a, 61
 	ld	(12998:16), a
 	ret
@@ -107,7 +107,7 @@ AccPedal_BankBaseTableCopy:
 AccPedal_ProcessAllChanges:
 	xor WA,WA
 	ld XHL,AccStyle_ApplyExt_SkipClamp_Table
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	bit	0, (xhl+wa)
 	jrl z, AccPedal_ReadBankAndReturn
 	xor a, a
@@ -139,7 +139,7 @@ AccPedal_ApplyChangeMask:
 	jr z, AccPedal_CheckAuxBit2
 	ld w, a
 	xor w, 0xff
-	and (0xfc5f:16), w
+	and (PANEL_STYLE+5:16), w
 	ld e, 0x48:opc
 	ld d, 0x5:opc
 	ld w, 0x0:opc
@@ -149,7 +149,7 @@ AccPedal_ApplyChangeMask:
 AccPedal_CheckAuxBit2:
 	bit 2, (0x3263:16)
 	jr z, AccPedal_ClearAllPedalFlags
-	and (0xfc60:16), 0xfb
+	and (PANEL_STYLE+6:16), 0xfb
 	ld e, 72:opc
 	ld d, 5:opc
 	ld w, 0:opc
@@ -167,7 +167,7 @@ AccPedal_ReadBankAndReturn:
 AccVoice_ReadBankAssign:
 	xor WA,WA
 	ld XHL,AccStyle_ApplyExt_SkipClamp_Table
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	ld	a, (xhl+wa)
 	bit 0, (0x31e7:16)
 	jr nz, AccVoice_StoreBankAssign
@@ -180,10 +180,10 @@ AccChannel_CompareAndMarkDirty:
 	or a, (0x3279:16)
 	and A,0x3f
 	jr nz, AccChannel_StoreCurrentState
-	ld a, (0x3259:16)
+	ld a, (ACC_PENDING_STYLE:16)
 	cp a, (0x325a:16)
 	jr nz, .Lc_f534c3
-	ld a, (0x325b:16)
+	ld a, (ACC_PENDING_GROUP:16)
 	and A,0x7f
 	and A,0x07
 	ld w, (0x325c:16)
@@ -201,9 +201,9 @@ AccChannel_MarkDirtyAndSync:
 
 
 AccChannel_StoreCurrentState:
-	ld	a, (12889:16)
+	ld	a, (ACC_PENDING_STYLE:16)
 	ld	(12875:16), a
-	ld	a, (12891:16)
+	ld	a, (ACC_PENDING_GROUP:16)
 	and	a, 127
 	and	w, 7
 	ld	(12876:16), a
@@ -218,12 +218,12 @@ AccChannel_StoreCurrentState:
 ; Was `.byte` until 2026-09-25; decodes cleanly, both decoders agree.
 ; -----------------------------------------------------------------------------
 AccChannel_StoreStateIfChanged:
-	ld a, (0x3259:16)
+	ld a, (ACC_PENDING_STYLE:16)
 	cp a, (0x325a:16)
 	jr nz, AccChannel_StoreStateIfChanged_Store
 	cp a, 128
 	jr nc, AccChannel_StoreStateIfChanged_Return
-	ld a, (0x325b:16)
+	ld a, (ACC_PENDING_GROUP:16)
 	and a, 127
 	and a, 7
 	ld w, (0x325c:16)
@@ -232,9 +232,9 @@ AccChannel_StoreStateIfChanged:
 	cp a, w
 	jr z, AccChannel_StoreStateIfChanged_Return
 AccChannel_StoreStateIfChanged_Store:
-	ld a, (0x3259:16)
+	ld a, (ACC_PENDING_STYLE:16)
 	ld (0x324b:16), a
-	ld a, (0x325b:16)
+	ld a, (ACC_PENDING_GROUP:16)
 	and w, 127
 	and w, 7
 	ld (0x324c:16), a
@@ -257,14 +257,14 @@ AccChannel_CheckActivitySetDirty:
 	or a, (0x327c:16)
 	and A,0x3f
 	jr z, AccChannel_ActivityCheckDone
-	cp (0x3259:16), 0x80
+	cp (ACC_PENDING_STYLE:16), 0x80
 	jr c, AccChannel_ActivityCheckDone
 	or (0x328a:16), 0x3f
 AccChannel_ActivityCheckDone:
 	ret
 
 AccChannel_CheckPartIndexDirty:
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	cp a, 1:i3
 	jr nz, AccChannel_PartIndexDone
 	or (0x328a:16), 0x3f
@@ -389,7 +389,7 @@ AccVoice_CheckBitsAndSetFlags:
 	ld de, (0x3247:16)
 	and D,0x07
 	inc 1,D
-	cp d, (0x0433:16)
+	cp d, (ACC_BEATS_PER_BAR:16)
 	jr nz, AccVoice_BitsCheckDone
 	or (0x328b:16), 0x3f
 AccVoice_BitsCheckDone:
@@ -402,7 +402,7 @@ AccPitch_CheckTransposeFlags:
 	jr z, .Lc_f536c0
 	ld a, (0x31e4:16)
 	inc 1,A
-	cp a, (0x0433:16)
+	cp a, (ACC_BEATS_PER_BAR:16)
 	jr nz, .Lc_f536c0
 	or (0x328d:16), 0x3f
 AccPitch_UpdateCheck:
@@ -413,7 +413,7 @@ AccPitch_UpdateCheck:
 	jr z, AccPitch_FinalReturn
 	ld a, (0x31e4:16)
 	inc 1,A
-	cp a, (0x0433:16)
+	cp a, (ACC_BEATS_PER_BAR:16)
 	jr nz, AccPitch_FinalReturn
 	or (0x328d:16), 0x3f
 AccPitch_FinalReturn:
@@ -450,7 +450,7 @@ AccChord_KeyChange1_Done:
 	ret
 
 AccChord_ResolveVoiceAndDispatch:
-	ld	a, (12873:16)
+	ld	a, (ACC_STYLE_NUMBER:16)
 	ld	w, (12939:16)
 	and	w, 63
 	jr	z, AccChord_CheckRange
@@ -532,7 +532,7 @@ RhythmPart_ProcessBit1:
 	jr z, AccChord_CheckExtraDirtyBit3
 	ld w, 0x0:opc
 	xor a, 0xff
-	and (0xfc5f:16), a
+	and (PANEL_STYLE+5:16), a
 	ld a, 0x0:opc
 	ld e, 0x48:opc
 	ld d, 0x5:opc
@@ -546,7 +546,7 @@ AccChord_CheckExtraDirtyBit3:
 	and (0x326e:16), 0xf7
 	and (0x328b:16), 0xc0
 	and (0x3263:16), 0xfb
-	and (0xfc5f:16), 0xfb
+	and (PANEL_STYLE+5:16), 0xfb
 	ld a, 0:opc
 	ld w, 0:opc
 	ld e, 72:opc
@@ -591,16 +591,16 @@ AccChord_CompareDone:
 	ret
 
 AccentVoice_DetectAndMarkChange:
-	ld a, (0x3269:16)
+	ld a, (ACC_SECTION_REQUEST:16)
 	cp a, (0x326a:16)
 	jr z, AccentVoice_UpdateParamIndex
 	ld a, (0x3278:16)
 	or a, (0x3279:16)
 	and A,0x3f
 	jr nz, AccentVoice_UpdateParamIndex
-	cp (0x3249:16), 0xf0
+	cp (ACC_STYLE_NUMBER:16), 0xf0
 	jr nc, AccentVoice_UpdateParamIndex
-	cp (0x3249:16), 0x80
+	cp (ACC_STYLE_NUMBER:16), 0x80
 	jr nc, AccentVoice_UpdateParamIndex
 	bit 0, (0x3265:16)
 	jr z, .Lc_f538fe
@@ -610,13 +610,13 @@ AccentVoice_DetectAndMarkChange:
 	jr nz, AccentVoice_UpdateParamIndex
 AccentVoice_CheckModeChange:
 .Lc_f538fe:
-	ld a, (0x3269:16)
+	ld a, (ACC_SECTION_REQUEST:16)
 	and A,0x03
 	cp a, (0x329c:16)
 	jr z, AccentVoice_UpdateParamIndex
 	or (0x3271:16), 0x01
 AccentVoice_UpdateParamIndex:
-	ld	a, (12905:16)
+	ld	a, (ACC_SECTION_REQUEST:16)
 	and	a, 3
 	ld	(12958:16), a
 	ret
@@ -634,7 +634,7 @@ AccVoice_ComputeParamOffset:
 	extz	xwa
 	add	xiy, xwa
 	ld	xiy, (xiy)
-	ld	a, (12874:16)
+	ld	a, (ACC_STYLE_GROUP:16)
 	extz	wa
 	sla	wa, 2
 	ld	xix, AccVoice_BankBaseTable
@@ -691,18 +691,18 @@ AccVoice_LookupWithOffset:
 	ret
 
 AccVoice_SelectAndApplyPatch:
-	cp (0x3249:16), 0x80
+	cp (ACC_STYLE_NUMBER:16), 0x80
 	jr nc, AccVoice_PatchFromDirect
-	ld xiy, (0x3232:16)
+	ld xiy, (ACC_STYLE_RECORD:16)
 	calr AccStyle_ReadVoiceParam
 	ld (0x3253:16), w
 	jr t, AccVoice_StorePatchAndLookup
 AccVoice_PatchFromDirect:
-	ld	a, (12873:16)
+	ld	a, (ACC_STYLE_NUMBER:16)
 	and	a, 127
 	calr	AccPatch_SetVoiceParam
 AccVoice_StorePatchAndLookup:
-	ld	(1075:16), a
+	ld	(ACC_BEATS_PER_BAR:16), a
 	ld	xhl, AccVoice_LookupTableAddress_Table
 	sla	a, 1
 	ld	wa, (xhl+a)
@@ -1112,24 +1112,24 @@ RhythmAccent_CopyAndUpdateRingBuf:
 	pushw	de
 	pushw	wa
 	ld	a, (12880:16)
-	ld	(13202:16), a
+	ld	(ACC_EVENT+1:16), a
 	calr	RhythmAccent_UpdateRingBufPosition
 	popw	wa
 	popw	de
 	ret
 RhythmAccent_UpdateRingBufPosition:
-	ld a, (0x3392:16)
+	ld a, (ACC_EVENT+1:16)
 	ei 0x06
 	sub a, (0x0464:16)
 	jr ugt, RhythmAccent_StorePosition
 	ld A, 0x01:opc
-	ld (0x3392:16), a
+	ld (ACC_EVENT+1:16), a
 	cp (0x0462:16), 0x00
 	jr z, RhythmAccent_AddAndCompare
 	xor A,A
 	jr t, RhythmAccent_AddAndCompare
 RhythmAccent_StorePosition:
-	ld	(13202:16), a
+	ld	(ACC_EVENT+1:16), a
 RhythmAccent_AddAndCompare:
 	ld	w, (1122:16)
 	add	a, w
@@ -1170,11 +1170,11 @@ RhythmPart2_LoadAndStore:
 	ld e, (0x31b1:16)
 	ld d, (0x31b2:16)
 	ld a, (0x31b3:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31b4:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31b5:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31b6:16)
 	ld (0x3227:16), a
 	ld a, (0x31b7:16)
@@ -1197,13 +1197,13 @@ RhythmPart2_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1221,11 +1221,11 @@ RhythmPart2_WriteDone:
 AccVoiceReg_StoreParamRecord:
 	ld	(xhl), e
 	ld	(xhl+1), d
-	ld	a, (13203:16)
+	ld	a, (ACC_EVENT+2:16)
 	ld	(xhl+2), a
-	ld	a, (13204:16)
+	ld	a, (ACC_EVENT+3:16)
 	ld	(xhl+3), a
-	ld	a, (13205:16)
+	ld	a, (ACC_EVENT+4:16)
 	ld	(xhl+4), a
 	ret
 Rhythm_PackVelocityHighBit:
@@ -1247,11 +1247,11 @@ RhythmPart3_LoadAndStore:
 	ld e, (0x31b8:16)
 	ld d, (0x31b9:16)
 	ld a, (0x31ba:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31bb:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31bc:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31bd:16)
 	ld (0x3228:16), a
 	ld a, (0x31be:16)
@@ -1274,13 +1274,13 @@ RhythmPart3_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1305,11 +1305,11 @@ RhythmPart4_LoadAndStore:
 	ld e, (0x31bf:16)
 	ld d, (0x31c0:16)
 	ld a, (0x31c1:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31c2:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31c3:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31c4:16)
 	ld (0x3229:16), a
 	ld a, (0x31c5:16)
@@ -1332,13 +1332,13 @@ RhythmPart4_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1363,11 +1363,11 @@ RhythmPart5_LoadAndStore:
 	ld e, (0x31c6:16)
 	ld d, (0x31c7:16)
 	ld a, (0x31c8:16)
-	ld (0x3393:16), a
+	ld (ACC_EVENT+2:16), a
 	ld a, (0x31c9:16)
-	ld (0x3394:16), a
+	ld (ACC_EVENT+3:16), a
 	ld a, (0x31ca:16)
-	ld (0x3395:16), a
+	ld (ACC_EVENT+4:16), a
 	ld a, (0x31cb:16)
 	ld (0x322a:16), a
 	ld a, (0x31cc:16)
@@ -1390,13 +1390,13 @@ RhythmPart5_ProcessRingBuf:
 	calr RingBuf_AdvanceIndex
 	ld	(xhl+iy), d
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3393:16)
+	ld a, (ACC_EVENT+2:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3394:16)
+	ld a, (ACC_EVENT+3:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
-	ld a, (0x3395:16)
+	ld a, (ACC_EVENT+4:16)
 	ld	(xhl+iy), a
 	calr RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -1583,9 +1583,9 @@ AccTuning_ResetFiveParts_Rec4:
 ; RAM 0x3259 := 15 and the low 3 bits of 0x325B := 0 -- the two bytes
 ; AccChannel_StoreCurrentState copies out.
 AccChannel_ResetCurrentState:
-	ld (0x3259:16), 15
-	and (0x325b:16), 0xf8
-	or (0x325b:16), 0x00
+	ld (ACC_PENDING_STYLE:16), 15
+	and (ACC_PENDING_GROUP:16), 0xf8
+	or (ACC_PENDING_GROUP:16), 0x00
 	ret
 
 AccVoice_EmptyStub:
@@ -1600,8 +1600,8 @@ Rhythm_StoreDispatchHelperResult:
 ; Rhythm_DispatchNote with A = RAM 0xFC5A and D = RAM 0xFC5B; the A it
 ; returns is stored into RAM 0x328F.
 Rhythm_DispatchNoteFromFC5A:
-	ld a, (0xfc5a:16)
-	ld d, (0xfc5b:16)
+	ld a, (PANEL_STYLE:16)
+	ld d, (PANEL_STYLE+1:16)
 	call Rhythm_DispatchNote
 	ld (0x328f:16), a
 	ret
@@ -1760,7 +1760,7 @@ AccPatch_SetByChordIndex:
 	ld L,W
 	and L,0x7f
 	srl L, 0x02
-	cp (0x324a:16), 0x00
+	cp (ACC_STYLE_GROUP:16), 0x00
 	jrl nz, AccPatch_ChIdx1_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx0_Bank1
@@ -1826,7 +1826,7 @@ AccPatch_ChIdx0_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx1_Entry:
-	cp (0x324a:16), 0x01
+	cp (ACC_STYLE_GROUP:16), 0x01
 	jrl nz, AccPatch_ChIdx2_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx1_Bank1
@@ -1892,7 +1892,7 @@ AccPatch_ChIdx1_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx2_Entry:
-	cp (0x324a:16), 0x02
+	cp (ACC_STYLE_GROUP:16), 0x02
 	jrl nz, AccPatch_ChIdx3_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx2_Bank1
@@ -1958,7 +1958,7 @@ AccPatch_ChIdx2_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx3_Entry:
-	cp (0x324a:16), 0x03
+	cp (ACC_STYLE_GROUP:16), 0x03
 	jrl nz, AccPatch_ChIdx4_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx3_Bank1
@@ -2024,7 +2024,7 @@ AccPatch_ChIdx3_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx4_Entry:
-	cp (0x324a:16), 0x04
+	cp (ACC_STYLE_GROUP:16), 0x04
 	jrl nz, AccPatch_ChIdx5_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx4_Bank1
@@ -2090,7 +2090,7 @@ AccPatch_ChIdx4_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx5_Entry:
-	cp (0x324a:16), 0x05
+	cp (ACC_STYLE_GROUP:16), 0x05
 	jrl nz, AccPatch_ChIdx6_Entry
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx5_Bank1
@@ -2156,7 +2156,7 @@ AccPatch_ChIdx5_Bank2:
 	ld	(13010:16), wa
 	jrl	AccPatch_NullReturn
 AccPatch_ChIdx6_Entry:
-	cp (0x324a:16), 0x06
+	cp (ACC_STYLE_GROUP:16), 0x06
 	jrl nz, AccPatch_ChIdxDefault_Bank0
 	cp l, 0:i3
 	jr nz, AccPatch_ChIdx6_Bank1

@@ -139,7 +139,7 @@ Encoder_ProcessBreath:
 	extz	wa
 	lda	xbc, (ENCODER_LUT_BREATH_VALUE:24)
 	ld	a, (xbc+wa)
-	ld	c, (0x36ff:16)
+	ld	c, (CMP_RECORD_PART:16)
 	and	c, 15
 	jr	nz, Encoder_ProcessBreath_WithModeAdjustment
 	cp	(0x7e6f:16), 0

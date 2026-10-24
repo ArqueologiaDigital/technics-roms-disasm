@@ -76,21 +76,21 @@ AccompSeq_SetupChannel1:
 	ld xwa, 0x7e72
 	ld (0x7e74:16), xwa
 	ld wa, (0x7e2c:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e2e:16)
 	ld (0x7e44:16), wa
 	ld wa, (0x7e3c:16)
-	ld (0x7e46:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7e6e:16)
 	ld (0x7e6d:16), a
 	calr AccompSeq_InitEventDispatch
 	ld a, (0x7e6d:16)
 	ld (0x7e6e:16), a
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7e3c:16), wa
 	ld wa, (0x7e44:16)
 	ld (0x7e2e:16), wa
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	ld (0x7e2c:16), wa
 
 AccompSeq_SetupChannel2:
@@ -104,21 +104,21 @@ AccompSeq_SetupChannel2:
 	ld xwa, 0x7e73
 	ld (0x7e74:16), xwa
 	ld wa, (0x7e30:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e32:16)
 	ld (0x7e44:16), wa
 	ld wa, (0x7e3e:16)
-	ld (0x7e46:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7e6f:16)
 	ld (0x7e6d:16), a
 	calr AccompSeq_InitEventDispatch
 	ld a, (0x7e6d:16)
 	ld (0x7e6f:16), a
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7e3e:16), wa
 	ld wa, (0x7e44:16)
 	ld (0x7e32:16), wa
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	ld (0x7e30:16), wa
 
 AccompSeq_ChannelSetupDone:
@@ -215,9 +215,9 @@ AccompSeq_EndMarkerCalcTime:
 
 AccompSeq_EndMarkerAdvance:
 	or (0x7e53:16), 2
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	inc 1, wa
-	ld (0x7e46:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	calr AccompSeq_AdvancePosition
 	jp AccompSeq_EventDispatchLoop
 
@@ -259,9 +259,9 @@ AccompSeq_AdvancePosition:
 	cp wa, 0:i3
 	jr nz, AccompSeq_AdvanceCheckPattern
 	pushw wa
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	inc 1, wa
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	popw wa
 
 AccompSeq_AdvanceCheckPattern:
@@ -270,7 +270,7 @@ AccompSeq_AdvanceCheckPattern:
 	cp a, 0x87
 	jr nz, AccompSeq_AdvanceDone
 	calr AccompSeq_ReadBeatHeader
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ldfr_werp WA, 0xe2
 	ld wa, 6:i3
 	ld (0x7e44:16), wa
@@ -288,7 +288,7 @@ AccompSeq_VRAMHelperData:
 	calr	AccompSeq_GetBlockBase
 	jr	AccompSeq_VRAMHelperData_Return
 AccompSeq_VRAMHelperData_Skip:
-	ld	wa, (0x7e42:16)
+	ld	wa, (ACCSEQ_BLOCK:16)
 	ld	iy, wa
 AccompSeq_VRAMHelperData_Return:
 	ret
@@ -297,7 +297,7 @@ AccompSeq_VRAMHelperData_Return:
 ;   it in pool mode ((0x7E25) >= 128); AccompSeq_InlineCodeBlock follows a 0x87 link by storing the next block in
 ;   0x7E42, calling it, and setting the offset IY = 6.
 AccompSeq_GetBlockBase:
-	ld	wa, (0x7e42:16)
+	ld	wa, (ACCSEQ_BLOCK:16)
 	and	xwa, 4095
 	sla	xwa, 8
 	add	xwa, 0x1e8b00
@@ -313,7 +313,7 @@ ResolveVRAMAddressForVoice:
 	jr c, AccompSeq_ResolveVRAMFallback
 	bit 0, (0x7e6d:16)
 	jr nz, AccompSeq_ResolveVRAMFallback
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	and xwa, 0xfff
 	sla xwa, 8
 	ld xiy, xwa
@@ -324,7 +324,7 @@ ResolveVRAMAddressForVoice:
 	jr AccompSeq_ResolveVRAMDone
 
 AccompSeq_ResolveVRAMFallback:
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	ldfr_werp WA, 0xe2
 	ld wa, (0x7e44:16)
 	ld xiy, xwa
@@ -351,7 +351,7 @@ AccompSeq_BuildVRAMAddr:
 ; Out: WA = the link word at +3 of page (0x7e42) of the MIDI sequence buffer pool (the next page of
 ; the accompaniment sequence).
 AccompSeq_ReadBeatHeader:
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	and xwa, 0xfff
 	sla xwa, 8
 	add xwa, 0x3
@@ -360,7 +360,7 @@ AccompSeq_ReadBeatHeader:
 	ret
 
 AccompSeq_ReadPatternTimeSig:
-	ld	wa, (0x7e42:16)
+	ld	wa, (ACCSEQ_BLOCK:16)
 	and	xwa, 4095
 	sla	xwa, 8
 	add	xwa, 1
@@ -378,14 +378,14 @@ AccompSeq_HandlePartTransition:
 	cp (0x7e52:16), 1
 	jr z, AccompSeq_TransitionChannel2
 	ld wa, (0x7e34:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e36:16)
 	ld (0x7e44:16), wa
 	jr AccompSeq_PartTransitionDone
 
 AccompSeq_TransitionChannel2:
 	ld wa, (0x7e38:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e3a:16)
 	ld (0x7e44:16), wa
 
@@ -419,7 +419,7 @@ AccompSeq_DispatchReturn:
 ;   for the next beat, 0x60 for a later beat, 0 for an earlier beat.
 AccompSeq_CalcDeltaTime:
 	ld e, a
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	cp wa, (0x7e1c:16)
 	jr nz, AccompSeq_DeltaCompare
 	ld a, (0x7e1e:16)
@@ -628,7 +628,7 @@ AccompSeq_InlineCodeBlock:
 	jr	nz, AccompSeq_InlineCodeBlock_Return
 	xor	xhl, xhl
 	ld	hl, (xhl+3)
-	ld	(0x7e42:16), hl
+	ld	(ACCSEQ_BLOCK:16), hl
 	push	xhl
 	calr	AccompSeq_VRAMHelperData
 	pop	xhl
@@ -1069,7 +1069,7 @@ AccompSeq_PortaFadeOut_Helper_Helper:
 	ld	(0x7e1e:16), a
 	ret
 	ld	a, (0x7e62:16)
-	ld	w, (1076:16)
+	ld	w, (ACC_BAR_COUNT:16)
 	ld	(0x7e62:16), w
 	cp	a, w
 	jr	z, AccompSeq_PortaFadeOut_Return2
@@ -1088,11 +1088,11 @@ AccompSeq_PortaFadeOut_Helper_Skip:
 	call	AccompSeq_ReinitPart
 AccompSeq_PortaFadeOut_Join:
 	ei	6
-	ld	c, (1045:16)
+	ld	c, (ACC_CLOCK:16)
 	ld	(1130:16), c
 	ld	(1138:16), c
 	ld	wa, 0:i3
-	ld	a, (1046:16)
+	ld	a, (ACC_BEAT:16)
 	ld	(1128:16), wa
 	ei	0
 AccompSeq_PortaFadeOut_Return2:
@@ -1114,7 +1114,7 @@ AccompSeq_UpdatePos_Part2:
 AccompSeq_UpdatePos_Store:
 	ld (0x7e44:16), wa
 	ldto_werp WA, 0xe2
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ret
 
 AccompSeq_JumpTable:
@@ -1175,7 +1175,7 @@ AccompSeq_LargeCodeBlock2_Skip2:
 	ld	hl, wa
 	ld	xix, AccompSeq_LowestBitIndex
 	ld	h, (xix+hl)
-	ld l, (64786:16)
+	ld l, (PANEL_MSP+6:16)
 	cp l, 17
 	jr	z, AccompSeq_LargeCodeBlock2_Return
 	cp	l, 18
@@ -1330,7 +1330,7 @@ AccompSeq_LoadParams_OverrideCheck:
 	ld wa, (0x7e32:16)
 	ld (0x7e69:16), xwa
 	ld wa, 0:i3
-	ld a, (1075:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	dec 1, a
 	and a, 0x7
 	sll wa, 2
@@ -1520,7 +1520,7 @@ AccompSeq_HandleSpecialMode:
 	calr	AccompSeq_SendAllOff
 	popw	hl
 AccompSeq_HandleSpecialMode_Skip:
-	ld	a, (0xfd12:16)
+	ld	a, (PANEL_MSP+6:16)
 	cp	a, 13
 	jr	z, AccompSeq_HandleSpecialMode_Skip2
 	cp	a, 14
@@ -1560,11 +1560,11 @@ AccompSeq_OutputEvent:
 	popw hl
 	ld wa, hl
 	ld hl, bc
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr nz, AccompSeq_Output_CheckFilter
 	cp (CURRENT_TITLE:16), 138
 	jr nz, AccompSeq_Output_CheckManual
-	cp (3429:16), 2
+	cp (SQSTEP_DISPLAY_MODE:16), 2
 	jr nz, AccompSeq_Output_CheckManual
 
 AccompSeq_Output_CheckFilter:
@@ -1790,7 +1790,7 @@ AccompSeq_MidiFilterCodeBlock_Step:
 	jp	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
 AccompSeq_MidiFilterCodeBlock_Step_Skip:
 	ld	e, 12:opc
-	ld	a, (0xfd12:16)
+	ld	a, (PANEL_MSP+6:16)
 	bit	7, w
 	jr	z, AccompSeq_MidiFilterCodeBlock_Step_Skip3
 	inc	1, a
@@ -1805,7 +1805,7 @@ AccompSeq_MidiFilterCodeBlock_Step_Skip3:
 	jr	nz, AccompSeq_MidiFilterCodeBlock_Step_Join
 	ld	a, 0:opc
 AccompSeq_MidiFilterCodeBlock_Step_Join:
-	ld	(0xfd12:16), a
+	ld	(PANEL_MSP+6:16), a
 	ld	(0x7e78:16), 0
 	or	(0xe3e0:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
@@ -1829,7 +1829,7 @@ AccompSeq_MidiFilterCodeBlock_Step2_Compare:
 	jr	ule, AccompSeq_MidiFilterCodeBlock_Step2_Store
 	ld	a, e
 AccompSeq_MidiFilterCodeBlock_Step2_Store:
-	ld	(0xfd12:16), a
+	ld	(PANEL_MSP+6:16), a
 	ld	(0x7e78:16), 0
 	or	(0xe3de:16), 16
 AccompSeq_MidiFilterCodeBlock_Step2_Store_Return:
@@ -1928,8 +1928,8 @@ AccompSeq_CompareChord:
 	ld a, (xiy + 0:8)
 	bit 4, a
 	jr z, AccompSeq_CompareChord_RestorePos
-	ld a, (1075:16)
-	ld w, (1046:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
+	ld w, (ACC_BEAT:16)
 	inc 1, w
 	cp a, w
 	jr z, AccompSeq_CompareChord_Match
@@ -1950,10 +1950,10 @@ AccompSeq_CompareChord_Return:
 
 AccompSeq_SetupChannels:
 	ei 6
-	ld c, (1045:16)
+	ld c, (ACC_CLOCK:16)
 	ld (0x7e63:16), c
 	ld wa, 0:i3
-	ld a, (1046:16)
+	ld a, (ACC_BEAT:16)
 	ld (0x7e64:16), a
 	ld (1130:16), c
 	ld (1138:16), c
@@ -1967,21 +1967,21 @@ AccompSeq_SetupChannels:
 	ld xwa, 0x7e72
 	ld (0x7e74:16), xwa
 	ld wa, (0x7e2c:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e2e:16)
 	ld (0x7e44:16), wa
 	ld wa, (0x7e3c:16)
-	ld (0x7e46:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7e6e:16)
 	ld (0x7e6d:16), a
 	calr AccompSeq_ParseSequenceData
 	ld a, (0x7e6d:16)
 	ld (0x7e6e:16), a
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7e3c:16), wa
 	ld wa, (0x7e44:16)
 	ld (0x7e2e:16), wa
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	ld (0x7e2c:16), wa
 
 AccompSeq_SetupCh2:
@@ -1993,21 +1993,21 @@ AccompSeq_SetupCh2:
 	ld xwa, 0x7e73
 	ld (0x7e74:16), xwa
 	ld wa, (0x7e30:16)
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	ld wa, (0x7e32:16)
 	ld (0x7e44:16), wa
 	ld wa, (0x7e3e:16)
-	ld (0x7e46:16), wa
+	ld (ACCSEQ_BEAT_COUNTER:16), wa
 	ld a, (0x7e6f:16)
 	ld (0x7e6d:16), a
 	calr AccompSeq_ParseSequenceData
 	ld a, (0x7e6d:16)
 	ld (0x7e6f:16), a
-	ld wa, (0x7e46:16)
+	ld wa, (ACCSEQ_BEAT_COUNTER:16)
 	ld (0x7e3e:16), wa
 	ld wa, (0x7e44:16)
 	ld (0x7e32:16), wa
-	ld wa, (0x7e42:16)
+	ld wa, (ACCSEQ_BLOCK:16)
 	ld (0x7e30:16), wa
 
 AccompSeq_SetupCh_Return:
@@ -2060,7 +2060,7 @@ AccompSeq_SeqParse_EndMark:
 	jr AccompSeq_SeqParse_Loop
 
 AccompSeq_SeqParse_TimeAdvance:
-	ld bc, (0x7e46:16)
+	ld bc, (ACCSEQ_BEAT_COUNTER:16)
 	inc 1, bc
 	ld b, c
 	xor c, c
@@ -2070,15 +2070,15 @@ AccompSeq_SeqParse_TimeAdvance:
 	jr AccompSeq_SeqParse_Loop
 
 AccompSeq_SeqParse_TimeStore:
-	incw 1, (0x7e46:16)
+	incw 1, (ACCSEQ_BEAT_COUNTER:16)
 	calr AccompSeq_AdvancePosition
 	jr AccompSeq_SeqParse_Loop
 
 AccompSeq_SeqParse_MidiEvent:
 	calr AccompSeq_CheckPatternEnd
-	ld bc, (0x7e46:16)
+	ld bc, (ACCSEQ_BEAT_COUNTER:16)
 	ld c, a
-	ld b, (0x7e46:16)
+	ld b, (ACCSEQ_BEAT_COUNTER:16)
 	cp de, bc
 	jr nc, AccompSeq_SeqParse_CheckNoteOn
 	or (0x7e53:16), 1
@@ -2198,7 +2198,7 @@ AccompSeq_SeqParse_TempoReset:
 AccompSeq_SeqParse_TempoStore:
 	ld (0x7e44:16), wa
 	ldto_werp WA, 0xe2
-	ld (0x7e42:16), wa
+	ld (ACCSEQ_BLOCK:16), wa
 	jp AccompSeq_SeqParse_Loop
 
 AccompSeq_SeqParse_Return:

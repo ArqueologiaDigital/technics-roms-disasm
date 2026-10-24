@@ -779,17 +779,17 @@ SeWrtMem_SelectMemorySlotSound_Join:
 	ld	c, (xwa+4)
 	cp	(xsp), 1
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip2
-	lda	xwa, (0xf9d0:16)
+	lda	xwa, (PANEL_PART_RT2:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip2:
 	cp	(xsp), 2
 	jr	nz, SeWrtMem_SelectMemorySlotSound_Skip3
-	lda	xwa, (0xf9ea:16)
+	lda	xwa, (PANEL_PART_LEFT:16)
 	ld	(xwa), e
 	jr	SeWrtMem_SelectMemorySlotSound_Join2
 SeWrtMem_SelectMemorySlotSound_Skip3:
-	lda	xwa, (0xf9b6:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	ld	(xwa), e
 SeWrtMem_SelectMemorySlotSound_Join2:
 	ld	(xwa+1), c
@@ -819,19 +819,19 @@ SeMenu_InitTrackInfo:
 	ld c, (xwa + 4)
 	cp (xsp), 0x1
 	jr nz, SeMenu_InitTrackInfo_Part1
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld (xwa), e
 	jr SeMenu_InitTrackInfo_Store
 
 SeMenu_InitTrackInfo_Part1:
 	cp (xsp), 0x2
 	jr nz, SeMenu_InitTrackInfo_Part2
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld (xwa), e
 	jr SeMenu_InitTrackInfo_Store
 
 SeMenu_InitTrackInfo_Part2:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld (xwa), e
 
 SeMenu_InitTrackInfo_Store:
@@ -1137,11 +1137,11 @@ SeMenu_ValidatePartNumber_End:
 	ret
 
 SeMenu_StorePartMask:
-	ld (1630:16), a
+	ld (SEMENU_PART_MASK:16), a
 	ret
 
 SeMenu_PartMask_Data:
-	ld	(xwa), (0x65e)
+	ld	(xwa), (SEMENU_PART_MASK)
 	ret
 ; SeMenu_SetPartEnabled: Sets (C != 0) or clears (C = 0) the enable bit of part A (1..4; bit 2A-2 of the part mask
 ;   0x65E), then sends the new mask (as edit element 17, or display object 13 when the object entry is non-zero); A
@@ -1171,12 +1171,12 @@ SeMenu_SetPartEnabled_Skip2:
 	jr	nz, SeMenu_PartMask_Data_Code_Skip
 	ld	a, l
 	cpl	a
-	and	(1630:16), a
+	and	(SEMENU_PART_MASK:16), a
 	jr	SeMenu_SetPartEnabled_Join
 SeMenu_PartMask_Data_Code_Skip:
-	or	(1630:16), l
+	or	(SEMENU_PART_MASK:16), l
 SeMenu_SetPartEnabled_Join:
-	ld	(xsp+2), (0x65e)
+	ld	(xsp+2), (SEMENU_PART_MASK)
 	extz	hl
 	lda	xde, (xsp+2)
 	cp	(xsp), 0
@@ -1214,7 +1214,7 @@ SeMenu_IsPartEnabled_CheckMask:
 	extz bc
 	ld wa, 1:i3
 	calr SeMenu_BitShiftMask
-	ld a, (1630:16)
+	ld a, (SEMENU_PART_MASK:16)
 	and a, l
 	cp a, 0:i3
 	scc16 nz, hl
@@ -2366,17 +2366,17 @@ SeWrtMem_ChooseInitialSlot:
 	calr	SeMenu_LoadMasterPtr
 	cp	(xsp+6), 1
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip12
-	lda	xwa, (0xf9d0:16)
+	lda	xwa, (PANEL_PART_RT2:16)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join5
 SeMenu_SetupPartDisplay_End_Skip12:
 	cp	(xsp+6), 2
 	jr	nz, SeMenu_SetupPartDisplay_End_Skip13
-	lda	xwa, (0xf9ea:16)
+	lda	xwa, (PANEL_PART_LEFT:16)
 	ld	e, (xwa)
 	jr	SeMenu_SetupPartDisplay_End_Join5
 SeMenu_SetupPartDisplay_End_Skip13:
-	lda	xwa, (0xf9b6:16)
+	lda	xwa, (PANEL_PART_RT1:16)
 	ld	e, (xwa)
 SeMenu_SetupPartDisplay_End_Join5:
 	ld	c, (xwa+1)
@@ -6011,7 +6011,7 @@ SeMenu_LoadObjEntries:
 
 ; Stores A in the sound-editor state byte 0x6ae (read by SeMenu_LoadObjEntries).
 SeMenu_SetMode:
-	ld (1710:16), a
+	ld (SEMENU_PART_MODE:16), a
 	ret
 
 SeMenu_SetMode_Data:
@@ -6259,9 +6259,9 @@ SeMenu_SetPartRecordBits:
 	calr	SeMenu_LoadMasterPtr
 	ld	a, (xsp+6)
 	extz	wa
-	lda	xix, (0xf9b6:16)
-	lda	xhl, (0xf9d0:16)
-	lda	xde, (0xf9ea:16)
+	lda	xix, (PANEL_PART_RT1:16)
+	lda	xhl, (PANEL_PART_RT2:16)
+	lda	xde, (PANEL_PART_LEFT:16)
 	ld	bc, wa
 	extz	xbc
 	add	xbc, xde
@@ -6400,11 +6400,11 @@ SeMenu_StepNoteParamInRange_Epilogue:
 SeMenu_SetEditEnable:
 	cp a, 1:i3
 	jr nz, SeMenu_SetEditEnable_Clear
-	set 2, (0x28a7:16)
+	set 2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_SetEditEnable_Clear:
-	res 2, (0x28a7:16)
+	res 2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_OrPartConfig:
@@ -6630,7 +6630,7 @@ SeMenu_StoreEffectCoeff_Data_Loop3:
 	ret
 
 SeMenu_RefreshPartDisplay:
-	lda xwa, (0xf9b6:16)
+	lda xwa, (PANEL_PART_RT1:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6639,7 +6639,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x0
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa
@@ -6648,7 +6648,7 @@ SeMenu_RefreshPartDisplay:
 	pushw bc
 	pushw 0x1
 	call SeMenu_DisplayPartValue
-	lda xwa, (0xf9ea:16)
+	lda xwa, (PANEL_PART_LEFT:16)
 	ld c, (xwa)
 	ld a, (xwa + 1)
 	extz wa

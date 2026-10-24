@@ -493,7 +493,7 @@ LoadExtROM_Entry:
 	jrl DbMemo_SendString
 LoadExtROM_JumpEntry:
 	ld xhl, 0x200008
-	lda xwa, (0x027ed2:24)
+	lda xwa, (OBJECT_REGISTRY:24)
 	jp (xhl)
 
 ; Xapr_GetPresentFlag: Returns L = XAPR_PRESENT_FLAG (RAM 0x3DD04): 1 when an extension ROM with the "XAPR" id was
@@ -569,6 +569,6 @@ LoadAndRunXapr_CallIfActive:
 	cp (XAPR_PRESENT_FLAG:24), 0x00
 	ret z
 	ld xhl, 0x280008
-	lda xwa, (0x027ed2:24)
+	lda xwa, (OBJECT_REGISTRY:24)
 	call (xhl)
 	ret

@@ -31,15 +31,15 @@ FmmSmfLoadTitleFunc:
 	ld xde, 5:i3
 	call ApPostEvent
 	ldmm8 0x808a, PREVIOUS_TITLE
-	cpw (0x8500:16), 0
+	cpw (DISK_MEDIA_TYPE:16), 0
 	jr ge, SmfLoad_DispatchState
 	call GetDiskSizeInfo
 	extz hl
-	ld (0x8500:16), hl
+	ld (DISK_MEDIA_TYPE:16), hl
 	calr SignalProgressUpdate
 
 SmfLoad_DispatchState:
-	ld wa, (0x8500:16)
+	ld wa, (DISK_MEDIA_TYPE:16)
 	cp wa, 1:i3
 	jrl z, SmfLoad_Success
 	cp wa, 0:i3
@@ -770,10 +770,10 @@ SmfFN_Save_WriteSlot:
 	lda xbc, (xsp + 8)
 	ldw de, 0x10
 	call FileIO_CopyString_WriteNull
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	cp a, (0x8948:16)
 	jr nz, SmfFN_Save_Finish
-	lda xwa, (0x00f180:24)
+	lda xwa, (SEQ_SONG_RECORD:24)
 	lda xwa, (xwa+256)
 	lda xbc, (xsp + 8)
 	ldw de, 0x10
@@ -788,7 +788,7 @@ SmfFN_Save_Finish:
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (0xf19e:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, SmfFN_Save_NoAltSlot
 	ldw wa, 0xa
 	jr SmfFN_Save_CallResult
@@ -821,7 +821,7 @@ SmfFN_HandleOpen:
 	call FileIO_CheckFileExists
 	cp l, 0:i3
 	jr z, SmfFN_Open_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SmfFN_Open_Execute
 	ld xwa, 0x600026
 	ld xbc, EVT_HIDE
@@ -917,7 +917,7 @@ SmfFN_HandleOpen2:
 SmfFN_HandleDelete:
 	cp xiz, 0x5
 	jrl nz, SmfFN_HandleDelete2
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SmfFN_Delete_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

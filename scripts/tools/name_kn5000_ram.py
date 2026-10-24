@@ -27,6 +27,7 @@ QUESTION THIS ANSWERS / JOB IT DOES
 USAGE
   make all
   python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 [--apply]
+  python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 --check-xhl   # named xhl loads the PTR rule would not make
 """
 import argparse
 import collections
@@ -39,7 +40,8 @@ import sys
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
 CONST = ["midi_encoder_constants.s", "cpanel_constants.s", "gui_constants.s", "kn5000_%s_program.s",
-         "shared/ram_variables.s"]
+         "shared/ram_variables.s", "shared/ram_variables_by_use.s",
+         "shared/ram_panel_records.s"]
 EQU = re.compile(r'^(\s*\.equ\s+)([A-Za-z_]\w*)(\s*,\s*)(0x[0-9a-fA-F]+)(.*)$')
 MEM = re.compile(r'\((0x[0-9a-fA-F]+|\d+)(:8|:16|:24)?\)')
 TOK = re.compile(r'\(([A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(?::8|:16|:24)?\)')
@@ -50,6 +52,38 @@ MM = re.compile(r'^(\s*ldmm(?:8|16)\s+)(0x[0-9a-fA-F]+|\d+)(\s*,\s*)(0x[0-9a-fA-
 # a DRAM address (>= 0x10000) loaded into, added to or subtracted from a 32-bit register is a pointer
 WIDE = re.compile(r'^(\s*(?:ld|add|sub)\s+x(?:wa|bc|de|hl|ix|iy|iz)\s*,\s*)(0x[0-9a-fA-F]{5,}|\d{5,})(\s*)$', re.I)
 LO, HI = 0x400, 0x100000      # internal RAM and the DRAM the code addresses (pattern buffers at 0x94800)
+LEAD_LABEL = re.compile(r'^[A-Za-z_][\w$]*:\s*')
+LEAVES = re.compile(r'^(?:(?:jr|jrl|jp)\s+(?:t\s*,\s*)?[A-Za-z_][\w$]*|reti?|retd\b.*|halt)$', re.I)
+XHL_DEREF = re.compile(r'\(\s*-?\s*xhl\b|\b(?:ldir|ldirw|lddr|lddrw|ldi|ldiw|ldd|lddw|cpir|cpirw)\b', re.I)
+XHL_LOST = re.compile(r'^(?:ld|lda|pop)\s+xhl\s*,|^pop\s+xhl$', re.I)
+
+
+def xhl_is_pointer(L, i, window=10):
+    """does the `ld xhl, N` on line i load a pointer?  XHL is also the C return register, so a number
+    loaded into it may be a value (LswLocal_SubParam returns 0x400 as an LSW data number, not RAM
+    0x400).  True only when one of the next `window` instructions dereferences XHL (`(xhl)`, `(xhl+..)`,
+    a block move), pushes it, adds to it (or to HL / H / L) or reads it as a source -- before control
+    leaves (an unconditional jump or return) or XHL is overwritten.  On the trees of 2026-10-24 this keeps
+    all 44 named `ld xhl, NAME` pointer loads of v10 and rejects only LswLocal_SubParam's"""
+    seen = 0
+    for l in L[i + 1:]:
+        code = LEAD_LABEL.sub("", l.split(";")[0].strip()).strip()
+        if not code:
+            continue
+        if code.startswith("."):
+            return False
+        if XHL_DEREF.search(code):
+            return True
+        if XHL_LOST.match(code):
+            return False
+        if re.search(r'\bxhl\b', code, re.I) or re.match(r'(?:add|adc|sub|sbc|inc|dec)\s+(?:\d+\s*,\s*)?(?:hl|h|l)\b', code, re.I):
+            return True     # push xhl, add xhl, .., ld (..), xhl, ld xde, xhl, ex .., add l, w (pointer arithmetic)
+        if LEAVES.match(code):
+            return False
+        seen += 1
+        if seen >= window:
+            return False
+    return False
 
 
 def const_files(t):
@@ -89,9 +123,19 @@ def bodies(t):
 NAMED = {}      # filled by main(): v10's RAM names, which count as numbers when shapes are compared
 
 
+_NAMED_RE = []   # the compiled form of NAMED's alternation, built once (it was rebuilt per line: minutes per tree)
+
+
+def names_re(names):
+    """one compiled `\b(NAME|NAME...)\b` for a set of names (None when empty)"""
+    return re.compile(r'\b(%s)\b' % "|".join(map(re.escape, sorted(names, key=len, reverse=True)))) if names else None
+
+
 def shape(code):
     if NAMED:
-        code = re.sub(r'\b(%s)\b' % "|".join(map(re.escape, NAMED)), "0", code)
+        if not _NAMED_RE:
+            _NAMED_RE.append(names_re(NAMED))
+        code = _NAMED_RE[0].sub("0", code)
     return re.sub(r'\s+', ' ', re.sub(r'(0x[0-9a-fA-F]+|\b\d+\b)', 'N', code.lower()))
 
 
@@ -134,7 +178,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tree", required=True, choices=["v10", "v9", "v7"])
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--check-xhl", action="store_true",
+                    help="list the tree's `ld xhl, NAME` loads of a RAM name that xhl_is_pointer() rejects")
     a = ap.parse_args()
+    if a.check_xhl:
+        names, kept, rejected = ram_names(a.tree), 0, 0
+        for f in sorted(glob.glob(os.path.join(REPO, a.tree, "maincpu", "**", "*.s"), recursive=True)):
+            L = open(f, "rb").read().decode("latin-1").split("\n")
+            for i, l in enumerate(L):
+                m = re.match(r'^\s*ld\s+xhl\s*,\s*([A-Za-z_]\w*)\s*(;|$)', l)
+                if m and m.group(1) in names:
+                    if xhl_is_pointer(L, i):
+                        kept += 1
+                    else:
+                        rejected += 1
+                        print("  not a pointer load: %s:%d: %s" % (os.path.relpath(f, REPO), i + 1, l.strip()))
+        print("%s: %d named `ld xhl, NAME` pointer loads pass xhl_is_pointer, %d do not" % (a.tree, kept, rejected))
+        return 1 if rejected else 0
     ref = ram_names("v10")
     NAMED.update(ref)
     byaddr10 = {v: n for n, v in ref.items()}
@@ -173,10 +233,11 @@ def main():
         # value in this tree is trusted, so the forms added later (ldmm, DRAM pointers) reach it too
         own = ram_names(a.tree)
         used = set()
+        own_re = names_re(own)
         for f in glob.glob(os.path.join(REPO, a.tree, "maincpu", "**", "*.s"), recursive=True):
             for l in open(f, "rb").read().decode("latin-1").split("\n"):
-                if not l.lstrip().startswith(".equ"):
-                    used |= set(re.findall(r'\b(%s)\b' % "|".join(map(re.escape, own)), l.split(";")[0]))
+                if own_re and not l.lstrip().startswith(".equ"):
+                    used |= set(own_re.findall(l.split(";")[0]))
         for n in used:
             if n in own:
                 # a name the code already uses keeps its value: a later vote never overrides it
@@ -209,9 +270,12 @@ def main():
                 return "(%s%s)" % (byaddr[v], m.group(2) or "") if v in byaddr else m.group(0)
 
             new = MEM.sub(mem, code)
+            ptr_done = 0
             p = PTR.match(new)
-            if p and int(p.group(2), 0) in byaddr:
+            if p and int(p.group(2), 0) in byaddr and (not re.match(r'\s*ld\s+xhl\b', new, re.I)
+                                                       or xhl_is_pointer(L, i)):
                 new = p.group(1) + byaddr[int(p.group(2), 0)] + p.group(3)
+                ptr_done = 1
             q = MM.match(new)
             if q:
                 x, y = int(q.group(2), 0), int(q.group(4), 0)
@@ -223,7 +287,7 @@ def main():
                 st["wide pointer operands"] += 1
             if new != code:
                 st["operands"] += len([1 for m in MEM.finditer(code) if int(m.group(1), 0) in byaddr]) + \
-                    (1 if PTR.match(code) and int(PTR.match(code).group(2), 0) in byaddr else 0)
+                    ptr_done
                 L[i] = new + sep + cmt
                 ch = True
         if ch and a.apply:
@@ -248,10 +312,11 @@ def main():
     print("%s: %d names applied; %s%s" % (a.tree, len(addr), dict(st), "" if a.apply else " (dry run)"))
     if report:
         used = set()
+        ref_re = names_re(ref)
         for f in files:
             for l in open(f, "rb").read().decode("latin-1").split("\n"):
                 if not l.lstrip().startswith(".equ"):
-                    used |= set(re.findall(r'\b(%s)\b' % "|".join(map(re.escape, ref)), l.split(";")[0]))
+                    used |= set(ref_re.findall(l.split(";")[0]))
         # a name the tree's code already uses has nothing numeric left to vote with: not "unsure"
         unsure = {n: v for n, v in report.items() if v != "inferred" and (not v or len(v) != 1) and n not in used}
         print("  inferred from the block's common delta: %s" % {n: report[n] for n in report if report[n] == "inferred"})

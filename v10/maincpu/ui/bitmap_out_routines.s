@@ -407,8 +407,8 @@ BitMapOut_CopyPreset9_Clamp50:
 	jrl ugt, BitMapOut_CopyPreset9_Done
 
 BitMapOut_CopyPreset9_Execute:
-	lda xhl, (0xf9a0:16)
-	lda xbc, (0xf9b6:16)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xbc, (PANEL_PART_RT1:16)
 	ld (xsp + 68), xbc
 	lda xbc, (xbc + 14)
 	sub xbc, xhl
@@ -423,7 +423,7 @@ BitMapOut_CopyPreset9_Execute:
 	lda xde, (xsp + 72)
 	ld a, (xix)
 	ld (xde), a
-	lda xwa, (0xf9d0:16)
+	lda xwa, (PANEL_PART_RT2:16)
 	ld (xsp + 64), xwa
 	lda xwa, (xwa + 14)
 	sub xwa, xhl
@@ -436,7 +436,7 @@ BitMapOut_CopyPreset9_Execute:
 	ld xix, xwa
 	ld a, (xiy)
 	ld (xix), a
-	lda xix, (0xf9ea:16)
+	lda xix, (PANEL_PART_LEFT:16)
 	lda xwa, (xix + 14)
 	sub xwa, xhl
 	ld (xsp + 36), xwa
@@ -662,9 +662,9 @@ PanelMemory_Recall_Finish:
 	pop xhl
 	pop xde
 	calr BitMapOut_DetectChanges
-	bit 4, (0xfd50:16)
+	bit 4, (PANEL_MIDI:16)
 	jr nz, PanelMemory_Recall_CheckActive
-	bit 1, (0xfd2c:16)
+	bit 1, (PANEL_REC_71:16)
 	call nz, (BitMapOut_DispatchIOChanges:24)
 
 PanelMemory_Recall_CheckActive:
@@ -672,7 +672,7 @@ PanelMemory_Recall_CheckActive:
 	call SndParam_LookupReadOnly
 	cp hl, 1:i3
 	jr nz, PanelMemory_Recall_NoSlot
-	bit 6, (0xfd9e:16)
+	bit 6, (PANEL_REC_98+8:16)
 	call z, (MidiSysEx_SendAllParams:24)
 
 PanelMemory_Recall_NoSlot:
@@ -692,11 +692,11 @@ PanelMemory_RecallKeepAccompaniment:
 	ld a, (xsp + 16)
 	extz wa
 	calr PanelMemory_CopySlotToLivePanel
-	lda xbc, (0xf9a0:16)
-	lda xwa, (0xfb56:16)
+	lda xbc, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_PART_ACP1:16)
 	ld (xsp + 8), xwa
 	sub xwa, xbc
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld xde, (xsp + 8)
 	ld a, (xwa)
@@ -706,7 +706,7 @@ PanelMemory_RecallKeepAccompaniment:
 	add xwa, xix
 	ld a, (xwa)
 	ld (xde), a
-	lda xwa, (0xfb70:16)
+	lda xwa, (PANEL_PART_ACP2:16)
 	ld (xsp + 4), xwa
 	sub xwa, xbc
 	add xwa, xix
@@ -718,7 +718,7 @@ PanelMemory_RecallKeepAccompaniment:
 	add xwa, xix
 	ld a, (xwa)
 	ld (xde), a
-	lda xde, (0xfb8a:16)
+	lda xde, (PANEL_PART_ACP3:16)
 	ld xwa, xde
 	sub xwa, xbc
 	add xwa, xix
@@ -730,7 +730,7 @@ PanelMemory_RecallKeepAccompaniment:
 	add xwa, xix
 	ld a, (xwa)
 	ld (xhl), a
-	lda xhl, (0xfba4:16)
+	lda xhl, (PANEL_PART_BASS:16)
 	ld xwa, xhl
 	sub xwa, xbc
 	add xwa, xix
@@ -742,7 +742,7 @@ PanelMemory_RecallKeepAccompaniment:
 	add xwa, xix
 	ld a, (xwa)
 	ld (xiy), a
-	lda xwa, (0xfbbe:16)
+	lda xwa, (PANEL_PART_DRUM:16)
 	ld (xsp + 12), xwa
 	sub xwa, xbc
 	add xwa, xix
@@ -898,7 +898,7 @@ PanelMemory_RecallKeepAccompaniment:
 	res 7, a
 	or e, a
 	ld (xhl), e
-	lda xiy, (0xfc5e:16)
+	lda xiy, (PANEL_STYLE+4:16)
 	ld e, (xiy)
 	and e, 0xf8
 	ld (xiy), e
@@ -909,7 +909,7 @@ PanelMemory_RecallKeepAccompaniment:
 	and a, 0x7
 	or e, a
 	ld (xiy), e
-	lda xwa, (0xfd0c:16)
+	lda xwa, (PANEL_MSP:16)
 	resm 7, (xwa)
 	resm 7, (xwa + 1)
 	resm 7, (xwa + 2)
@@ -953,7 +953,7 @@ PanelMemory_RecallRecords:
 	ld (xsp + 20), xwa
 	ld xwa, (xsp + 24)
 	ld xhl, (xwa)
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld (xsp + 12), xwa
 	ld xiy, xwa
 	ld ix, 0:i3
@@ -1019,7 +1019,7 @@ PanelMemory_RecallRecords_CheckEnd:
 	extz xbc
 	cp xbc, xwa
 	jr lt, PanelMemory_RecallRecords_FieldLoop
-	lda xde, (0xfc5e:16)
+	lda xde, (PANEL_STYLE+4:16)
 	ld c, (xde)
 	and c, 0x7
 	ld (xde), c
@@ -1032,7 +1032,7 @@ PanelMemory_RecallRecords_CheckEnd:
 	and a, 0xf8
 	or c, a
 	ld (xde), c
-	lda xbc, (0xfc66:16)
+	lda xbc, (PANEL_REC_90:16)
 	ld xde, xbc
 	sub xde, (xsp + 12)
 	ld xwa, (xix)
@@ -1065,7 +1065,7 @@ PanelMemory_RecallRecords_CheckEnd:
 	res 1, a
 	or c, a
 	ld (xde), c
-	lda xbc, (0xfd02:16)
+	lda xbc, (PANEL_REC_70:16)
 	ld (xsp + 16), xbc
 	sub xbc, (xsp + 12)
 	ld xwa, (xix)
@@ -1073,7 +1073,7 @@ PanelMemory_RecallRecords_CheckEnd:
 	ld xwa, (xsp + 16)
 	ld c, (xbc)
 	ld (xwa), c
-	lda xbc, (0xfc6e:16)
+	lda xbc, (PANEL_REC_60:16)
 	ld xde, xbc
 	sub xde, (xsp + 12)
 	ld xwa, (xix)
@@ -1109,7 +1109,7 @@ BitMapOut_CopyPresetTable_Loop:
 	inc 1, bc
 
 BitMapOut_CopyPresetTable_Check:
-	lda xhl, (0xfc74:16)
+	lda xhl, (PANEL_DSP_EFFECT:16)
 	lda xwa, (0xfca6:16)
 	sub xwa, xhl
 	ld de, bc
@@ -1120,7 +1120,7 @@ BitMapOut_CopyPresetTable_Check:
 	jr BitMapOut_CopyExtTable_Check
 
 BitMapOut_CopyExtTable_Loop:
-	lda xwa, (0xfcc2:16)
+	lda xwa, (PANEL_ACOUSTIC_ILLUSION:16)
 	ld de, bc
 	extz xde
 	add xde, xwa
@@ -1142,7 +1142,7 @@ BitMapOut_CopyExtTable_Check:
 	jr BitMapOut_CopyAuxTable_Check
 
 BitMapOut_CopyAuxTable_Loop:
-	lda xwa, (0xfcf6:16)
+	lda xwa, (PANEL_REC_68:16)
 	ld de, bc
 	extz xde
 	add xde, xwa
@@ -1183,7 +1183,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
-	lda xbc, (0xfd0c:16)
+	lda xbc, (PANEL_MSP:16)
 	lda xde, (xbc + 3)
 	ld xhl, xde
 	sub xhl, (xsp + 12)
@@ -1205,7 +1205,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
-	lda xbc, (0xfd2c:16)
+	lda xbc, (PANEL_REC_71:16)
 	ld xde, xbc
 	sub xde, (xsp + 12)
 	ld xhl, xix
@@ -1213,10 +1213,10 @@ BitMapOut_CopyAuxTable_Check:
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
-	lda xwa, (0xfb56:16)
+	lda xwa, (PANEL_PART_ACP1:16)
 	ld (xsp + 20), xwa
 	sub xwa, (xsp + 12)
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	add xbc, xde
 	ld xhl, (xsp + 20)
@@ -1228,7 +1228,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xbc), a
-	lda xbc, (0xfb70:16)
+	lda xbc, (PANEL_PART_ACP2:16)
 	ld (xsp + 16), xbc
 	sub xbc, (xsp + 12)
 	add xbc, xde
@@ -1241,7 +1241,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xbc), a
-	lda xwa, (0xfb8a:16)
+	lda xwa, (PANEL_PART_ACP3:16)
 	ld (xsp + 8), xwa
 	sub xwa, (xsp + 12)
 	add xwa, xde
@@ -1253,7 +1253,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xbc), a
-	lda xwa, (0xfba4:16)
+	lda xwa, (PANEL_PART_BASS:16)
 	ld (xsp + 4), xwa
 	sub xwa, (xsp + 12)
 	add xwa, xde
@@ -1266,7 +1266,7 @@ BitMapOut_CopyAuxTable_Check:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xbc), a
-	lda xwa, (0xfbbe:16)
+	lda xwa, (PANEL_PART_DRUM:16)
 	ld (xsp + 24), xwa
 	sub xwa, (xsp + 12)
 	add xwa, xde
@@ -1413,11 +1413,11 @@ PanelMemory_RecallKeepStyle:
 	pop xix
 	pop xhl
 	pop xde
-	lda xbc, (0xf9a0:16)
-	lda xix, (0xfc5a:16)
+	lda xbc, (PANEL_RECORDS:16)
+	lda xix, (PANEL_STYLE:16)
 	ld xwa, xix
 	sub xwa, xbc
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	add xwa, xde
 	ld a, (xwa)
 	ld (xix), a
@@ -1444,7 +1444,7 @@ PanelMemory_RecallKeepStyle:
 	and a, 0x7
 	or l, a
 	ld (xix), l
-	lda xix, (0xfd0c:16)
+	lda xix, (PANEL_MSP:16)
 	lda xhl, (xix + 8)
 	ld xwa, xhl
 	sub xwa, xbc
@@ -1482,17 +1482,17 @@ PanelMemory_CopySlotToLivePanel:
 BitMapOut_SelectiveFieldRestore:
 	lda xsp, (xsp - 14)
 	push xiz
-	lda xwa, (0xfd96:16)
+	lda xwa, (PANEL_REC_98:16)
 	ld (xsp + 6), xwa
 	inc 7, xwa
 	ld (xsp + 14), xwa
 	bitm 0, (xwa)
 	jrl z, BitMapOut_SelectRestore_CheckBit1
-	lda xde, (0xf9a0:16)
-	lda xbc, (0xfc5a:16)
+	lda xde, (PANEL_RECORDS:16)
+	lda xbc, (PANEL_STYLE:16)
 	ld xwa, xbc
 	sub xwa, xde
-	lda xhl, (0x03c8e4:24)
+	lda xhl, (PANEL_RECALL_BACKUP:24)
 	add xwa, xhl
 	ld a, (xwa)
 	ld (xbc), a
@@ -1548,12 +1548,12 @@ BitMapOut_SelectRestore_CheckBit1:
 	ld xwa, (xsp + 14)
 	bitm 1, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckBit2
-	lda xhl, (0xf9a0:16)
-	lda xde, (0xfc5a:16)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xde, (PANEL_STYLE:16)
 	lda xbc, (xde + 8)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	ld (xbc), a
@@ -1568,14 +1568,14 @@ BitMapOut_SelectRestore_CheckBit2:
 	ld xwa, (xsp + 14)
 	bitm 2, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckBit3
-	lda xde, (0xfd02:16)
+	lda xde, (PANEL_REC_70:16)
 	ld c, (xde)
 	and c, 0xfc
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x3
@@ -1592,10 +1592,10 @@ BitMapOut_SelectRestore_CheckBit3:
 	ld xwa, (xsp + 14)
 	bitm 3, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckBit4
-	lda xbc, (0xfd04:16)
+	lda xbc, (PANEL_REC_70+2:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -1604,20 +1604,20 @@ BitMapOut_SelectRestore_CheckBit4:
 	ld xwa, (xsp + 14)
 	bitm 4, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckVolBit
-	lda xde, (0xfc5d:16)
+	lda xde, (PANEL_STYLE+3:16)
 	ld c, (xde)
 	and c, 0xf0
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0xf
 	or c, a
 	ld (xde), c
-	lda xde, (0xfc69:16)
+	lda xde, (PANEL_REC_90+3:16)
 	ld c, (xde)
 	and c, 0xfc
 	ld (xde), c
@@ -1635,9 +1635,9 @@ BitMapOut_SelectRestore_CheckVolBit:
 	ld (xsp + 10), xwa
 	bitm 0, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckEffBit
-	lda xhl, (0xf9a0:16)
-	lda xwa, (0xfc74:16)
-	lda xix, (0x03c8e4:24)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_DSP_EFFECT:16)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -1654,9 +1654,9 @@ BitMapOut_SelectRestore_CheckEffBit:
 	ld xwa, (xsp + 14)
 	bitm 7, (xwa)
 	jr z, BitMapOut_RestoreVoiceChannels
-	lda xhl, (0xf9a0:16)
-	lda xwa, (0xfc8e:16)
-	lda xix, (0x03c8e4:24)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_DIGITAL_REVERB:16)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -1673,15 +1673,15 @@ BitMapOut_RestoreVoiceChannels:
 	ld xwa, (xsp + 14)
 	bitm 5, (xwa)
 	jrl z, BitMapOut_RestoreChannels_CheckParts
-	lda xiy, (0xf9b6:16)
+	lda xiy, (PANEL_PART_RT1:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
 	ld (xix), l
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	ld xwa, xix
 	sub xwa, xbc
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	add xwa, xde
 	ld a, (xwa)
 	and a, 0x7
@@ -1693,25 +1693,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xf9d0:16)
-	lda xix, (xiy + 12)
-	ld l, (xix)
-	and l, 0xf8
-	ld (xix), l
-	ld xwa, xix
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	and a, 0x7
-	or l, a
-	ld (xix), l
-	lda xhl, (xiy + 13)
-	ld xwa, xhl
-	sub xwa, xbc
-	add xwa, xde
-	ld a, (xwa)
-	ld (xhl), a
-	lda xiy, (0xf9ea:16)
+	lda xiy, (PANEL_PART_RT2:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1729,7 +1711,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa04:16)
+	lda xiy, (PANEL_PART_LEFT:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1747,7 +1729,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa1e:16)
+	lda xiy, (PANEL_PART_PT4:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1765,7 +1747,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa38:16)
+	lda xiy, (PANEL_PART_PT5:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1783,7 +1765,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa52:16)
+	lda xiy, (PANEL_PART_PT6:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1801,7 +1783,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa6c:16)
+	lda xiy, (PANEL_PART_PT7:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1819,7 +1801,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfa86:16)
+	lda xiy, (PANEL_PART_PT8:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1837,7 +1819,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfaa0:16)
+	lda xiy, (PANEL_PART_PT9:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1855,7 +1837,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfaba:16)
+	lda xiy, (PANEL_PART_PT10:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1873,7 +1855,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfad4:16)
+	lda xiy, (PANEL_PART_PT11:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1891,7 +1873,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfaee:16)
+	lda xiy, (PANEL_PART_PT12:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1909,7 +1891,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb08:16)
+	lda xiy, (PANEL_PART_PT13:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1927,7 +1909,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb22:16)
+	lda xiy, (PANEL_PART_PT14:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1945,7 +1927,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb3c:16)
+	lda xiy, (PANEL_PART_PT15:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1963,7 +1945,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb56:16)
+	lda xiy, (PANEL_PART_PT16:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1981,7 +1963,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb70:16)
+	lda xiy, (PANEL_PART_ACP1:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -1999,7 +1981,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfb8a:16)
+	lda xiy, (PANEL_PART_ACP2:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -2017,7 +1999,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfba4:16)
+	lda xiy, (PANEL_PART_ACP3:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -2035,7 +2017,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfbbe:16)
+	lda xiy, (PANEL_PART_BASS:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -2053,7 +2035,7 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfbd8:16)
+	lda xiy, (PANEL_PART_DRUM:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -2071,7 +2053,25 @@ BitMapOut_RestoreVoiceChannels:
 	add xwa, xde
 	ld a, (xwa)
 	ld (xhl), a
-	lda xiy, (0xfc0c:16)
+	lda xiy, (PANEL_PART_CHRD:16)
+	lda xix, (xiy + 12)
+	ld l, (xix)
+	and l, 0xf8
+	ld (xix), l
+	ld xwa, xix
+	sub xwa, xbc
+	add xwa, xde
+	ld a, (xwa)
+	and a, 0x7
+	or l, a
+	ld (xix), l
+	lda xhl, (xiy + 13)
+	ld xwa, xhl
+	sub xwa, xbc
+	add xwa, xde
+	ld a, (xwa)
+	ld (xhl), a
+	lda xiy, (PANEL_PART_CTRL:16)
 	lda xix, (xiy + 12)
 	ld l, (xix)
 	and l, 0xf8
@@ -2104,7 +2104,7 @@ BitMapOut_RestoreChannels_ByteLoop:
 	inc 1, hl
 
 BitMapOut_RestoreChannels_CheckEnd:
-	lda xiy, (0xfd50:16)
+	lda xiy, (PANEL_MIDI:16)
 	lda xwa, (0xfd5e:16)
 	sub xwa, xiy
 	ld ix, hl
@@ -2123,15 +2123,15 @@ BitMapOut_RestoreParts_OuterLoop:
 	ld hl, 0:i3
 
 BitMapOut_RestoreParts_InnerLoop:
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	ld iz, hl
 	add iz, de
-	lda xix, (0xfa04:16)
+	lda xix, (PANEL_PART_PT4:16)
 	extz xiz
 	add xiz, xix
 	ld xwa, xiz
 	sub xwa, xbc
-	lda xiy, (0x03c8e4:24)
+	lda xiy, (PANEL_RECALL_BACKUP:24)
 	add xwa, xiy
 	ld a, (xwa)
 	ld (xiz), a
@@ -2188,9 +2188,9 @@ BitMapOut_RestoreExtra_CheckBit6:
 	ld xwa, (xsp + 14)
 	bitm 6, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckConfigBit
-	lda xhl, (0xf9a0:16)
-	lda xwa, (0xfd1c:16)
-	lda xix, (0x03c8e4:24)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_SCALE_TUNE:16)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 14)
 
@@ -2207,9 +2207,9 @@ BitMapOut_RestoreExtra_CheckConfigBit:
 	ld xwa, (xsp + 10)
 	bitm 2, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckDataBit
-	lda xhl, (0xf9a0:16)
-	lda xwa, (0xfd30:16)
-	lda xix, (0x03c8e4:24)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_FOOT_CONTROLLERS:16)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 30)
 
@@ -2226,12 +2226,12 @@ BitMapOut_RestoreExtra_CheckDataBit:
 	ld xwa, (xsp + 10)
 	bitm 3, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckMiscBit
-	lda xhl, (0xf9a0:16)
-	lda xde, (0xfc54:16)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xde, (PANEL_MIC:16)
 	lda xbc, (xde + 1)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	ld (xbc), a
@@ -2240,7 +2240,7 @@ BitMapOut_RestoreExtra_CheckDataBit:
 	add xwa, xix
 	ld a, (xwa)
 	ld (xde), a
-	lda xwa, (0xfcdc:16)
+	lda xwa, (PANEL_MIC_REVERB:16)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -2257,12 +2257,12 @@ BitMapOut_RestoreExtra_CheckMiscBit:
 	ld xwa, (xsp + 10)
 	bitm 4, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckFlagBits
-	lda xde, (0xf9a0:16)
-	lda xix, (0xfd02:16)
+	lda xde, (PANEL_RECORDS:16)
+	lda xix, (PANEL_REC_70:16)
 	lda xbc, (xix + 5)
 	ld xwa, xbc
 	sub xwa, xde
-	lda xhl, (0x03c8e4:24)
+	lda xhl, (PANEL_RECALL_BACKUP:24)
 	add xwa, xhl
 	ld a, (xwa)
 	ld (xbc), a
@@ -2285,10 +2285,10 @@ BitMapOut_RestoreExtra_CheckFlagBits:
 	ld (xsp + 14), xwa
 	bitm 1, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckPanBit
-	lda xbc, (0xfd12:16)
+	lda xbc, (PANEL_MSP+6:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -2297,10 +2297,10 @@ BitMapOut_RestoreExtra_CheckPanBit:
 	ld xwa, (xsp + 10)
 	bitm 5, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckCtrlBit
-	lda xbc, (0xfc6a:16)
+	lda xbc, (PANEL_REC_90+4:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -2309,9 +2309,9 @@ BitMapOut_RestoreExtra_CheckCtrlBit:
 	ld xwa, (xsp + 10)
 	bitm 6, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckLevelBit
-	lda xhl, (0xf9a0:16)
-	lda xwa, (0xfc4a:16)
-	lda xix, (0x03c8e4:24)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xwa, (PANEL_VOCALIST:16)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 8)
 
@@ -2328,20 +2328,20 @@ BitMapOut_RestoreExtra_CheckLevelBit:
 	ld xwa, (xsp + 10)
 	bitm 7, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckExpBit
-	lda xde, (0xfc6f:16)
+	lda xde, (PANEL_REC_60+1:16)
 	ld c, (xde)
 	res 6, c
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x40
 	or c, a
 	ld (xde), c
-	lda xwa, (0xfcc2:16)
+	lda xwa, (PANEL_ACOUSTIC_ILLUSION:16)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -2358,20 +2358,20 @@ BitMapOut_RestoreExtra_CheckExpBit:
 	ld xwa, (xsp + 14)
 	bitm 0, (xwa)
 	jr z, BitMapOut_RestoreExtra_Done
-	lda xde, (0xfc6f:16)
+	lda xde, (PANEL_REC_60+1:16)
 	ld c, (xde)
 	res 5, c
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x20
 	or c, a
 	ld (xde), c
-	lda xwa, (0xfca8:16)
+	lda xwa, (PANEL_EQUALIZER:16)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -2409,12 +2409,12 @@ BitMapOut_DetectChanges:
 	jr nz, BitMapOut_DetectChanges_CheckMode
 	cp (CURRENT_MODE:16), 19
 	jr z, BitMapOut_DetectChanges_CheckMode
-	lda xhl, (0xf9a0:16)
-	lda xde, (0xfc5a:16)
+	lda xhl, (PANEL_RECORDS:16)
+	lda xde, (PANEL_STYLE:16)
 	lda xbc, (xde + 5)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld w, (xwa)
 	res 1, w
@@ -2437,7 +2437,7 @@ BitMapOut_DetectChanges_CheckMode:
 	jr z, BitMapOut_DetectChanges_FullScan
 
 BitMapOut_DetectChanges_UseShortList:
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	lda xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld (xsp + 8), xwa
 	set 2, (0x8d46:16)
@@ -2475,13 +2475,13 @@ BitMapOut_DeltaEncode_ReadEntry:
 
 BitMapOut_DeltaEncode_ScanLoop:
 	inc 1, iz
-	lda xde, (0xf9a0:16)
+	lda xde, (PANEL_RECORDS:16)
 	ld ix, iz
 	extz xix
 	add xix, xde
 	ld wa, iz
 	extz xwa
-	ld xbc, 0x3c8e4
+	ld xbc, PANEL_RECALL_BACKUP
 	add xbc, xwa
 	ld a, (xbc)
 	cp a, (xix)
@@ -2507,7 +2507,7 @@ BitMapOut_DeltaEncode_BufferFull:
 	ld (0x90e2:16), hl
 	lda xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld (xsp + 8), xwa
-	ld hl, (0x90de:16)
+	ld hl, (SWBTWR_WRITE_INDEX:16)
 	ld a, (0x8d46:16)
 	set 2, a
 	ld (0x8d46:16), a
@@ -2579,7 +2579,7 @@ BitMapOut_DeltaEncode_GenericByte:
 	inc 1, hl
 	extz xde
 	add xde, (xsp + 8)
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld bc, iz
 	extz xbc
 	add xbc, xwa
@@ -2587,7 +2587,7 @@ BitMapOut_DeltaEncode_GenericByte:
 	ld (xde), a
 	ld wa, iz
 	extz xwa
-	ld xde, 0x3c8e4
+	ld xde, PANEL_RECALL_BACKUP
 	add xde, xwa
 	ld a, (xde)
 	xor a, (xbc)
@@ -2607,7 +2607,7 @@ BitMapOut_DeltaEncode_NextEntry:
 	inc 1, iz
 
 BitMapOut_DeltaEncode_CheckBounds:
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xfd5e:16)
 	sub xwa, xbc
 	ld de, iz
@@ -2624,7 +2624,7 @@ BitMapOut_DeltaEncode_CheckBounds:
 	jr BitMapOut_DeltaEncode_Return
 
 BitMapOut_DeltaEncode_StoreShortLen:
-	ld (0x90de:16), hl
+	ld (SWBTWR_WRITE_INDEX:16), hl
 
 BitMapOut_DeltaEncode_Return:
 	popw iz
@@ -2632,17 +2632,17 @@ BitMapOut_DeltaEncode_Return:
 	ret
 
 BitMapOut_DispatchIOChanges:
-	bit 7, (0xf9c4:16)
+	bit 7, (PANEL_PART_RT1+14:16)
 	call z, (BitMapOut_ApplyIOChange_Port0:24)
-	bit 7, (0xf9c7:16)
+	bit 7, (PANEL_PART_RT1+17:16)
 	call z, (BitMapOut_ApplyIOChange_Port3:24)
-	bit 7, (0xf9de:16)
+	bit 7, (PANEL_PART_RT2+14:16)
 	call z, (BitMapOut_ApplyIOChange_Port1:24)
-	bit 7, (0xf9e1:16)
+	bit 7, (PANEL_PART_RT2+17:16)
 	call z, (BitMapOut_ApplyIOChange_Port4:24)
-	bit 7, (0xf9f8:16)
+	bit 7, (PANEL_PART_LEFT+14:16)
 	call z, (BitMapOut_ApplyIOChange_Port2:24)
-	bit 7, (0xf9fb:16)
+	bit 7, (PANEL_PART_LEFT+17:16)
 	ret nz
 	calr BitMapOut_ApplyIOChange_Port5
 	ret
@@ -2656,7 +2656,7 @@ BitMapOut_ApplyIOChange_Port0:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 15
 	ld b, (0x8d4c:16)
-	ld a, (0xf9c5:16)
+	ld a, (PANEL_PART_RT1+15:16)
 	and a, 0xff
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2667,7 +2667,7 @@ BitMapOut_ApplyIOChange_Port0:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 0
 	ld b, (0x8d4c:16)
-	ld a, (0xf9c4:16)
+	ld a, (PANEL_PART_RT1+14:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2689,7 +2689,7 @@ BitMapOut_ApplyIOChange_Port1:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 15
 	ld b, (0x8d4c:16)
-	ld a, (0xf9df:16)
+	ld a, (PANEL_PART_RT2+15:16)
 	and a, 0xff
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2700,7 +2700,7 @@ BitMapOut_ApplyIOChange_Port1:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 0
 	ld b, (0x8d4c:16)
-	ld a, (0xf9de:16)
+	ld a, (PANEL_PART_RT2+14:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2722,7 +2722,7 @@ BitMapOut_ApplyIOChange_Port2:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 15
 	ld b, (0x8d4c:16)
-	ld a, (0xf9f9:16)
+	ld a, (PANEL_PART_LEFT+15:16)
 	and a, 0xff
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2733,7 +2733,7 @@ BitMapOut_ApplyIOChange_Port2:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 0
 	ld b, (0x8d4c:16)
-	ld a, (0xf9f8:16)
+	ld a, (PANEL_PART_LEFT+14:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2755,7 +2755,7 @@ BitMapOut_ApplyIOChange_Port3:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 3
 	ld b, (0x8d4c:16)
-	ld a, (0xf9c7:16)
+	ld a, (PANEL_PART_RT1+17:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2777,7 +2777,7 @@ BitMapOut_ApplyIOChange_Port4:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 3
 	ld b, (0x8d4c:16)
-	ld a, (0xf9e1:16)
+	ld a, (PANEL_PART_RT2+17:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2799,7 +2799,7 @@ BitMapOut_ApplyIOChange_Port5:
 	ld c, (0x8d4c:16)
 	ld (0x8d4c:16), 3
 	ld b, (0x8d4c:16)
-	ld a, (0xf9fb:16)
+	ld a, (PANEL_PART_LEFT+17:16)
 	res 7, a
 	ld (0x8d4c:16), a
 	ld e, (0x8d4c:16)
@@ -2819,7 +2819,7 @@ BitMapOut_DeltaEncode_TypeDefault:
 	ld (xsp + 10), a
 	ld hl, (xsp + 16)
 	ld xiy, (xsp + 18)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld de, (xsp + 8)
 	extz xde
 	add xde, xix
@@ -2827,7 +2827,7 @@ BitMapOut_DeltaEncode_TypeDefault:
 	jrl z, BitMapOut_DeltaEncode_TypeDefaultC
 	ld wa, (xsp + 8)
 	extz xwa
-	ld xiz, 0x3c8e4
+	ld xiz, PANEL_RECALL_BACKUP
 	add xiz, xwa
 	cp c, 1:i3
 	jr z, BitMapOut_DeltaEncode_TypeDefaultB
@@ -2982,7 +2982,7 @@ BitMapOut_DeltaEncode_Type48Handler:
 	ld (xsp + 18), a
 	ld hl, (xsp + 24)
 	ld xde, (xsp + 26)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld wa, (xsp + 16)
 	extz xwa
 	add xwa, xix
@@ -2991,7 +2991,7 @@ BitMapOut_DeltaEncode_Type48Handler:
 	jrl z, BitMapOut_DeltaEncode_Type48End
 	ld iy, (xsp + 16)
 	extz xiy
-	ld xwa, 0x3c8e4
+	ld xwa, PANEL_RECALL_BACKUP
 	add xwa, xiy
 	ld (xsp + 8), xwa
 	cp c, 1:i3
@@ -3009,7 +3009,7 @@ BitMapOut_DeltaEncode_Type48Handler:
 	add xwa, xde
 	ld (xwa), c
 	ld xiy, xix
-	lda xiz, (0xfc5a:16)
+	lda xiz, (PANEL_STYLE:16)
 	lda xwa, (xiz + 5)
 	sub xwa, xix
 	ld bc, (xsp + 16)
@@ -3182,7 +3182,7 @@ BitMapOut_DeltaEncode_Type90Handler:
 	ld hl, (xsp + 12)
 	ld xiy, (xsp + 14)
 	ld w, (0x8d46:16)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld (xsp + 4), xix
 	ld ix, de
 	extz xix
@@ -3208,7 +3208,7 @@ BitMapOut_DeltaEncode_Type90Handler:
 	ld a, (xix)
 	ld (xbc), a
 	extz xde
-	ld xbc, 0x3c8e4
+	ld xbc, PANEL_RECALL_BACKUP
 	add xbc, xde
 	ld c, (xbc)
 	xor c, (xix)
@@ -3391,12 +3391,12 @@ BitMapOut_RefreshDisplay_ClearDirty:
 	push xiz
 	ld de, (0x90e2:16)
 	lda xhl, (0xbf39:16)
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld (xsp + 8), xwa
-	lda xix, (0xfc66:16)
+	lda xix, (PANEL_REC_90:16)
 	ld xbc, xix
 	sub xbc, (xsp + 8)
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	ld (xsp + 4), xwa
 	ld xiy, xbc
 	add xiy, (xsp + 4)
@@ -3485,10 +3485,10 @@ BitMapOut_CalcDisplayMetrics:
 	jr ule, BitMapOut_CalcMetrics_Done
 	ld iy, bc
 	lda xiz, (0xbf39:16)
-	lda xhl, (0xfd05:16)
+	lda xhl, (PANEL_REC_70+3:16)
 	ld xwa, xhl
 	sub xwa, 0xf9a0
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xde, xwa
 	add xde, xix
 	ld a, (xhl)
@@ -3537,10 +3537,10 @@ BitMapOut_PrepareRenderState:
 	jr ule, BitMapOut_PrepareRender_CheckBit0
 	ld iy, bc
 	lda xix, (0xbf39:16)
-	lda xhl, (0xfc5e:16)
+	lda xhl, (PANEL_STYLE+4:16)
 	ld xwa, xhl
 	sub xwa, 0xf9a0
-	lda xiz, (0x03c8e4:24)
+	lda xiz, (PANEL_RECALL_BACKUP:24)
 	ld xde, xwa
 	add xde, xiz
 	ld w, (xde)
@@ -3757,7 +3757,7 @@ BitMapOut_UpdateWidget_CheckType:
 	lda xbc, (PanelMemory_SlotAddresses:24)
 	ld	xbc, (xbc+wa)
 	pushw 0x10
-	lda xwa, (0xf9a2:16)
+	lda xwa, (PANEL_REC_78:16)
 	sub xwa, 0xf980
 	sub xwa, 0x20
 	add xwa, xbc
@@ -3781,7 +3781,7 @@ BitMapOut_UpdateWidget_TypeB:
 	ld	xde, (xde+wa)
 	pushw 0x10
 	push xbc
-	lda xwa, (0xf9a2:16)
+	lda xwa, (PANEL_REC_78:16)
 	sub xwa, 0xf980
 	sub xwa, 0x20
 	add xwa, xde
@@ -4013,8 +4013,8 @@ BitMapOut_ApplyPatch_Return:
 
 BitMapOut_ByteData_PatchTable:
 	push xiz
-	lda xhl, (0xf9b6:16)
-	lda xix, (0xf9a0:16)
+	lda xhl, (PANEL_PART_RT1:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld xbc, xhl
 	sub xbc, xix
 	lda xde, (0x03c2c4:24)
@@ -4075,7 +4075,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 9)
 	ld (xhl), c
-	lda xhl, (0xf9d0:16)
+	lda xhl, (PANEL_PART_RT2:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4135,7 +4135,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 19)
 	ld (xhl), c
-	lda xhl, (0xf9ea:16)
+	lda xhl, (PANEL_PART_LEFT:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4189,7 +4189,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 28)
 	ld (xhl), c
-	lda xhl, (0xfb56:16)
+	lda xhl, (PANEL_PART_ACP1:16)
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
@@ -4201,7 +4201,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 35)
 	ld (xhl), c
-	lda xhl, (0xfb70:16)
+	lda xhl, (PANEL_PART_ACP2:16)
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
@@ -4213,7 +4213,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 37)
 	ld (xhl), c
-	lda xhl, (0xfb8a:16)
+	lda xhl, (PANEL_PART_ACP3:16)
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
@@ -4225,7 +4225,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 39)
 	ld (xhl), c
-	lda xhl, (0xfba4:16)
+	lda xhl, (PANEL_PART_BASS:16)
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
@@ -4237,7 +4237,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 41)
 	ld (xhl), c
-	lda xhl, (0xfbbe:16)
+	lda xhl, (PANEL_PART_DRUM:16)
 	lda xbc, (xhl + 3)
 	sub xbc, xix
 	ld xiy, xbc
@@ -4249,7 +4249,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 43)
 	ld (xhl), c
-	lda xhl, (0xfc26:16)
+	lda xhl, (PANEL_REC_44:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4297,7 +4297,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 51)
 	ld (xhl), c
-	lda xhl, (0xfc32:16)
+	lda xhl, (PANEL_REC_45:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4345,7 +4345,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 59)
 	ld (xhl), c
-	lda xhl, (0xfc3e:16)
+	lda xhl, (PANEL_REC_46:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4396,7 +4396,7 @@ BitMapOut_ByteData_PatchTable:
 	ld c, (xwa + 72)
 	and c, 0x40
 	ldfr_berp C, 0xf4
-	lda xhl, (0xfc5e:16)
+	lda xhl, (PANEL_STYLE+4:16)
 	sub xhl, xix
 	add xhl, xde
 	ld c, (xhl)
@@ -4407,7 +4407,7 @@ BitMapOut_ByteData_PatchTable:
 	ld c, (xwa + 76)
 	and c, 0x1f
 	ldfr_berp C, 0xf4
-	lda xhl, (0xfc66:16)
+	lda xhl, (PANEL_REC_90:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiz, xbc
@@ -4446,7 +4446,7 @@ BitMapOut_ByteData_PatchTable:
 	ld (xhl), c
 	orb_erp C, 0xf4
 	ld (xhl), c
-	lda xhl, (0xfc74:16)
+	lda xhl, (PANEL_DSP_EFFECT:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4554,7 +4554,7 @@ BitMapOut_ByteData_PatchTable:
 	add xhl, xde
 	ld c, (xwa + 98)
 	ld (xhl), c
-	lda xhl, (0xfc8e:16)
+	lda xhl, (PANEL_DIGITAL_REVERB:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4611,7 +4611,7 @@ BitMapOut_ByteData_PatchTable:
 	ld c, (xwa + 80)
 	and c, 0xc0
 	ldfr_berp C, 0xf4
-	lda xhl, (0xfc6f:16)
+	lda xhl, (PANEL_REC_60+1:16)
 	sub xhl, xix
 	add xhl, xde
 	ld c, (xhl)
@@ -4619,7 +4619,7 @@ BitMapOut_ByteData_PatchTable:
 	ld (xhl), c
 	orb_erp C, 0xf4
 	ld (xhl), c
-	lda xhl, (0xfcc2:16)
+	lda xhl, (PANEL_ACOUSTIC_ILLUSION:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiy, xbc
@@ -4634,7 +4634,7 @@ BitMapOut_ByteData_PatchTable:
 	ld c, (xwa + 110)
 	and c, 0x4
 	ldfr_berp C, 0xf4
-	lda xhl, (0xfd02:16)
+	lda xhl, (PANEL_REC_70:16)
 	ld xbc, xhl
 	sub xbc, xix
 	ld xiz, xbc

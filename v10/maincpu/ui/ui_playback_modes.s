@@ -55,7 +55,7 @@ UIStateEvt_VoiceParamHandler_Skip6:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(0xf19e:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	and (10405:16), 254
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
@@ -71,7 +71,7 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	SeqBuf_Init
 	ld	(1073:16), 0
 	or (10419:16), 16
-	ldw	(0xf19e:16), 0
+	ldw	(SEQ_TRACK_MASK:16), 0
 	ld	(4596:16), 0
 	call	SeqPlay_CheckStartConditions
 UIStateEvt_VoiceParamHandler_Return:
@@ -83,7 +83,7 @@ UIStateEvt_VoiceParamHandler_Return:
 ;   = 0. Basis: callers + body -- UIStateEvt_VoiceParamHandler runs it before AccWrap_PlayModeDispatch / SeqBuf_Init
 ;   when the sequencer starts; value 16 is RHYTHM in both track-assign name tables.
 Seq_FindRhythmTrack:
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	xor	bc, bc
 	ld	c, 16:opc
 	ld	a, 16:opc
@@ -97,14 +97,14 @@ Seq_FindRhythmTrack_Skip3:
 	sub	wa, bc
 	ld	c, a
 	ld	b, a
-	ld	iz, (0xf19e:16)
+	ld	iz, (SEQ_TRACK_MASK:16)
 	ld	a, c
 	scf
 	xorcf_a_16	iz	; after scf: C = NOT bit A (the track) of the mask
 	ld	a, b
 	jr	c, Seq_FindRhythmTrack_Join
 	pushw	wa
-	ld	xhl, 0xf250
+	ld	xhl, SEQ_TRACK_TABLE
 	ld	c, 3:opc
 	mul	wa, c
 	ld	iy, wa
@@ -120,11 +120,11 @@ Seq_FindRhythmTrack_Join2:
 	ld	w, a
 	ld	(0x0d56:16), w
 	or	(0x0d54:16), 0x01
-	or	(0x287b:16), 0x04
+	or	(SEQ_EDIT_FLAGS:16), 0x04
 	jr	Seq_FindRhythmTrack_Return2
 Seq_FindRhythmTrack_Join:
 	and	(0x0d54:16), 0xfe
-	and	(0x287b:16), 0xfb
+	and	(SEQ_EDIT_FLAGS:16), 0xfb
 	xor	w, w
 Seq_FindRhythmTrack_Return2:
 	ret
@@ -132,13 +132,13 @@ Seq_FindRhythmTrack_Return2:
 ; Calls SeqVoice_InitEntry with the byte at 0x2878 temporarily replaced by the byte at 0xffe3,
 ; then restores 0x2878.
 SeqPlay_RestoreVoiceState_Return:
-	ld a, (0x2878:16)
+	ld a, (SEQ_SONG:16)
 	pushw wa
-	ld a, (0x00ffe3:24)
-	ld (0x2878:16), a
+	ld a, (SEQ_CURRENT_SONG:24)
+	ld (SEQ_SONG:16), a
 	call SeqVoice_InitEntry
 	popw wa
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 	ret
 
 SeqTimer_PostTempoUpdate:
@@ -152,7 +152,7 @@ SeqTimer_PostTempoUpdate:
 	ld w, 0xff:opc
 	call SwbtWr_QueuePostEvent
 	popw wa
-	ld (0xfc62:16), wa
+	ld (PANEL_STYLE+8:16), wa
 	call SeqTimer_UpdateTempoReg
 	ret
 
@@ -160,19 +160,19 @@ PlayMode_NullRet:
 	ret
 PlayMode_SetupAndDispatch:
 	; --- Setup: load/store/call/set flag ---
-	ld	wa, (0xf19e:16)
+	ld	wa, (SEQ_TRACK_MASK:16)
 	ld	(0x2875:16), wa
-	ld	(3424:16), 0
+	ld	(SEQ_SELECTED_TRACK:16), 0
 	call AccWrap_PlayModeDispatch
-	or	(0x28a7:16), 4
+	or	(SEQ_RTMCFG:16), 4
 	ret
 PlayMode_TeardownAndRestore:
 	; --- Teardown: load/store/clear flags ---
 	ld	wa, (0x2875:16)
-	ld	(0xf19e:16), wa
-	and	(0x28a7:16), 251
+	ld	(SEQ_TRACK_MASK:16), wa
+	and	(SEQ_RTMCFG:16), 251
 	or	(0x28b3:16), 16
-	and	(0x28a7:16), 247
+	and	(SEQ_RTMCFG:16), 247
 	ret
 PartLookup_NullRet:
 	ret
@@ -259,14 +259,14 @@ PartParam_Handler_0F:
 ; Copies byte C of the table at 0xf1a0 to 0xd5f and stores C + 1 at 0xd60.
 Part_LookupParam:
 	; --- Lookup function: load from table[IY], store ---
-	ld xhl, 0x0000f1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 	xor b, b
 	ld iy, bc
 	ld e, c
 	ld	a, (xhl+iy)
 	ld	(3423:16), a
 	inc 1, e
-	ld	(3424:16), e
+	ld	(SEQ_SELECTED_TRACK:16), e
 	ret
 ; Sets the word 0x287f to 1 and clears 0xd37; when the byte at 0xd60 is 1..16 it also clears
 ; 0x1108 and calls UI_PostModeChangeEvent with A = 0x8a (a title change to TITLE_PS + 0x8a).
@@ -274,9 +274,9 @@ Part_ValidateAndActivate:
 	; --- Validation: check range, optionally call ---
 	ldw	(0x287f:16), 1
 	ldw	(3383:16), 0
-	cp	(3424:16), 0
+	cp	(SEQ_SELECTED_TRACK:16), 0
 	jr z, PartValidate_Done
-	cp	(3424:16), 16
+	cp	(SEQ_SELECTED_TRACK:16), 16
 	jr ugt, PartValidate_Done
 	ldw	(4360:16), 0
 	xor	wa, wa
@@ -381,9 +381,9 @@ PlayMode_InitFlagBlock:
 ;   has reached 0. Twins: SongMode_InitFlagBlock_Helper, PartFormat_InitFlagBlock_Helper,
 ;   PlayModeStop_InitFlagBlock_Helper.
 PlayMode_ArmStartCountdown:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, PlayMode_ArmStartCountdown_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PlayMode_LoadStartCountdown
 PlayMode_ArmStartCountdown_Return:
 	ret
@@ -393,7 +393,7 @@ PlayMode_ArmStartCountdown_Return:
 ;   SeqRestart_SendPlaybackNotify act only while 0x28AC bit 2 is set, and PlayMode_DispatchAndClearBit2 clears it.
 PlayMode_LoadStartCountdown:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 
 SongBank_ScanActiveVoices:
@@ -424,14 +424,14 @@ ScanVoice_Return:
 	ret
 
 PlayMode_ClearModeFlag:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 PlayMode_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PlayMode_SendModeCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PlayMode_DispatchAndClearBit2
 	bit 2, (3394:16)
 	jr z, PlayMode_SendModeCommand
@@ -464,9 +464,9 @@ PlayMode_DispatchAndClearBit2:
 	ret
 
 PlayMode_StartAndSendCommand:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, SongMode_PostEvtRetZero
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jr nz, SongMode_PostEvtRetZero
 	call PlayMode_DispatchAndClearBit2
 	ld (4437:16), 1
@@ -493,7 +493,7 @@ SeqRestart_CheckAndDispatch:
 	bit 2, (0x28ac:16)
 	jr z, SeqRestart_Return
 	ld iz, wa
-	ld a, (0xfc5f:16)
+	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	ld wa, iz
 	jr nz, SeqRestart_Return
@@ -501,7 +501,7 @@ SeqRestart_CheckAndDispatch:
 	ldw bc, 0xf000
 
 SeqRestart_WaitBit2Loop:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SeqRestart_DispatchAndNotify
 	nop
 	nop
@@ -552,15 +552,15 @@ DpMdlyDocTtl_Dispatch_Helper:
 	call	SongMode_InitFlagBlock_Helper
 	ret
 SongMode_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, Medley_GetPlaybackStatus_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	SongMode_InitFlagBlock_Helper2
 Medley_GetPlaybackStatus_Return:
 	ret
 SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlyDoc_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is
 ;   left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback
@@ -568,14 +568,14 @@ SongMode_InitFlagBlock_Helper2:
 ;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
 ;   transport).
 DpMdlyDoc_DisarmStartCountdown:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 SongMode_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, SongMode_SendStopCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call SongMode_AbortAndClearBit2
 	bit 2, (3394:16)
 	jr z, SongMode_SendStopCommand
@@ -594,9 +594,9 @@ SongMode_AbortAndClearBit2:
 	ret
 
 SongMode_StartPlayback:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, SongMode_StartReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, SongMode_StartReturn
 	call SongMode_AbortAndClearBit2
 	ld (4437:16), 1
@@ -710,29 +710,29 @@ DpMdlyPdTtl_Dispatch_Helper:
 	call	PartFormat_InitFlagBlock_Helper
 	ret
 PartFormat_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, SongMode_VoiceStateDisp_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PartFormat_InitFlagBlock_Helper2
 SongMode_VoiceStateDisp_Return:
 	ret
 PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlyPd_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is
 ;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
 ;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
 ;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
 DpMdlyPd_DisarmStartCountdown:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 PartFormat_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PartFormat_SendStopCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PartFormat_AbortAndClearBit2
 	bit 2, (3394:16)
 	jr z, PartFormat_SendStopCommand
@@ -751,9 +751,9 @@ PartFormat_AbortAndClearBit2:
 	ret
 
 PartFormat_StartPlayback:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, PartFormat_StartReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, PartFormat_StartReturn
 	call PartFormat_AbortAndClearBit2
 	ld (4437:16), 1
@@ -776,15 +776,15 @@ DpMdlySmfTtl_Dispatch_Helper:
 PartFormat_StartPlayback_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, PartFormat_StartPlayback_Return2
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PlayModeStop_InitFlagBlock_Helper2
 PartFormat_StartPlayback_Return2:
 	ret
 PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
 ;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
@@ -793,15 +793,15 @@ PlayModeStop_InitFlagBlock_Helper2:
 DpMdlySmf_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PartFormat_StartPlayback_Return3
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 PartFormat_StartPlayback_Return3:
 	ret
 
 PlayMode_StopAbortRetZero:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PlayModeStop_SendStopCmd
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PlayMode_StopAndAbort
 	bit 2, (3394:16)
 	jr z, PlayModeStop_SendStopCmd
@@ -821,9 +821,9 @@ PlayMode_StopAndAbort:
 	ret
 
 PlayMode_SendCommand6C:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, PlayModeStop_SendReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, PlayModeStop_SendReturn
 	call PlayMode_StopAndAbort
 	ld (4437:16), 1
@@ -852,7 +852,7 @@ DpMdlySmfLyrTtl_NullRet:
 DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PlayMode_SendCommand6C_Return
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 PlayMode_SendCommand6C_Return:
 	ret
 
@@ -867,7 +867,7 @@ CDlikeSwitch_NullRet:
 	ret
 
 CDlikeSwitch_PlaybackTimer:
-	ld w, (4420:16)
+	ld w, (PLAYBACK_COUNTDOWN:16)
 	cp w, 0:i3
 	jr z, CDlikeTimer_Return
 	dec 1, w
@@ -882,7 +882,7 @@ CDlikeSwitch_PlaybackTimer:
 CDlikeTimer_ResetAccompaniment:
 	pushw wa
 	and (0x28b2:16), 249
-	and (0x28a7:16), 247
+	and (SEQ_RTMCFG:16), 247
 	call Seq_ResetAndRestartAccompaniment
 	popw wa
 	jr CDlikeSwTtl_StorePlaybackMode
@@ -928,7 +928,7 @@ CDlikeTimer_InitResetState:
 	popw wa
 
 CDlikeSwTtl_StorePlaybackMode:
-	ld (4420:16), w
+	ld (PLAYBACK_COUNTDOWN:16), w
 
 CDlikeTimer_Return:
 	ret
@@ -938,28 +938,28 @@ CDlike_ResetPlaybackState:
 	xor wa, wa
 	ld (SEQ_BEAT_COUNT:16), wa
 	ld (SEQ_BEAT_TICK:16), a
-	ld (1048:16), wa
-	ld (1047:16), a
-	bit 1, (0x28a7:16)
+	ld (PLAY_BEAT_COUNT:16), wa
+	ld (PLAY_CLOCK:16), a
+	bit 1, (SEQ_RTMCFG:16)
 	jr z, CDlikeReset_SetTimerFlags
-	ld (1054:16), 1
-	ld (1045:16), 0
-	ld (1046:16), 0
-	ld (1076:16), 0
-	ld (1077:16), 0
+	ld (ACC_TRANSPORT_STATE:16), 1
+	ld (ACC_CLOCK:16), 0
+	ld (ACC_BEAT:16), 0
+	ld (ACC_BAR_COUNT:16), 0
+	ld (ACC_SECTION_BAR:16), 0
 
 CDlikeReset_SetTimerFlags:
 	ld (SEQ_TRANSPORT_STATE:16), 1
-	ld (1056:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	ei 0
 	ret
 
 CDlike_InitModeAndLoadBank:
 	or (0xb7e2:16), 64
-	ld a, (0xfdad:16)
+	ld a, (PANEL_REC_91+3:16)
 	ld (3394:16), a
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call CDlike_LoadSongBankData
 	cp (CURRENT_TITLE:16), 119
 	jr z, CDlikeSw_NullRet
@@ -970,11 +970,11 @@ CDlike_InitModeAndLoadBank:
 	cp (CURRENT_TITLE:16), 122
 	jr z, CDlikeSw_NullRet
 	call SqTrAs_InitWall
-	ld wa, (0xf19e:16)
+	ld wa, (SEQ_TRACK_MASK:16)
 	ld (0x2875:16), wa
-	ldw (0xf19e:16), 0
+	ldw (SEQ_TRACK_MASK:16), 0
 	ldw (8980:16), 0
-	ld xiy, 0xf9a0
+	ld xiy, PANEL_RECORDS
 	ld xix, 0x3cf04
 	ldw bc, 0x310
 	ldirw
@@ -984,24 +984,24 @@ CDlikeSw_NullRet:
 
 CDlike_LoadSongBankData:
 	ld (6882:16), 0
-	cpw (0xf19e:16), 0
+	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, CDlikeBankLoad_CheckSavedState
 	ld (6882:16), 1
 
 CDlikeBankLoad_CheckSavedState:
-	ld wa, (0x00ffec:24)
-	ld (0xf19e:16), wa
-	ld xiy, 0xf180
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
+	ld xiy, SEQ_SONG_RECORD
 	ld xix, SEQ_SONG_SLOTS
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	add xix, xwa
 	ldw bc, 0x800
 	ldir85
 	cp (6882:16), 1
 	jr nz, CDlikeBankLoad_Return
-	ldw (0xf19e:16), 0
+	ldw (SEQ_TRACK_MASK:16), 0
 
 CDlikeBankLoad_Return:
 	ret
@@ -1010,7 +1010,7 @@ CDlike_ExitModeAndRestore:
 	call PlayMode_CheckAndAbort
 	and (0xb7e2:16), 191
 	and (0x28ac:16), 251
-	ld (4420:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	bit 2, (3394:16)
 	jr z, CDlikeExit_CheckPlaybackType
 	jr CDlikeExit_CheckPlaybackType
@@ -1030,60 +1030,60 @@ CDlikeExit_CheckPlaybackType:
 	call SwbtWr_ResetAllChannels
 	call SqTrAs_Setup
 	ld wa, (0x2875:16)
-	ld (0xf19e:16), wa
+	ld (SEQ_TRACK_MASK:16), wa
 
 PlayMode_ResetAndSchedule:
-	ld (3380:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
 	call Audio_CheckSubsystemReady
 	ret
 
 ; Stores A at 0xffe3, then SongBank_SaveAndReload and SeqTimer_PostTempoUpdate.
 SongBank_SwitchAndUpdateTempo:
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SongBank_SaveAndReload
 	call SeqTimer_PostTempoUpdate
 	ret
 
 SongBank_SaveAndReload:
-	ld wa, (0xf22f:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ld (0x286f:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
 	call SongBank_LoadToWorkArea
 	call SongBank_CheckAccompanimentMode
-	and (0x28b1:16), 254
+	and (SEQ_CYCLE_FLAGS:16), 254
 	ret
 
 SongBank_LoadToWorkArea:
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
-	ld xix, 0xf180
+	ld xix, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
-	ld wa, (0xf19e:16)
-	ld (0x00ffec:24), wa
+	ld wa, (SEQ_TRACK_MASK:16)
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ld wa, (0x286f:16)
-	ld (0xf22f:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	ld wa, (0x2871:16)
-	ld (0xf231:16), wa
+	ld (SEQ_FREE_BLOCKS:16), wa
 	ret
 
 SongBank_CheckAccompanimentMode:
-	cp (0xf23d:16), 255
+	cp (SEQ_SONG_RECORD+189:16), 255
 	jr z, SongBank_EnableAccompaniment
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr z, SongBank_CheckBassMode
-	and (0xfdad:16), 251
+	and (PANEL_REC_91+3:16), 251
 	xor a, a
 	jr SongBank_SendAccompEvent
 
 SongBank_EnableAccompaniment:
-	bit 2, (0xfdad:16)
+	bit 2, (PANEL_REC_91+3:16)
 	jr nz, SongBank_CheckBassMode
-	or (0xfdad:16), 4
+	or (PANEL_REC_91+3:16), 4
 	ld a, 0x4:opc
 
 SongBank_SendAccompEvent:
@@ -1095,14 +1095,14 @@ SongBank_SendAccompEvent:
 	call SwbtWr_ReinitBothBanks
 
 SongBank_CheckBassMode:
-	cp (0xf24b:16), 255
+	cp (SEQ_SONG_RECORD+203:16), 255
 	jr z, SongBank_EnableBassMode
-	and (0xfdad:16), 254
+	and (PANEL_REC_91+3:16), 254
 	xor a, a
 	jr SongBank_SendBassEvent
 
 SongBank_EnableBassMode:
-	or (0xfdad:16), 1
+	or (PANEL_REC_91+3:16), 1
 	ld a, 0x1:opc
 
 SongBank_SendBassEvent:
@@ -1119,7 +1119,7 @@ SongBank_SendBassEvent:
 ; SqTrAs setup handler
 SqTrAs_Setup:
 	ld xiy, 0xcce
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	xor bc, bc
 	ld c, 0x10:opc
 	ldir85
@@ -1128,7 +1128,7 @@ SqTrAs_Setup:
 ; SqTrAs init wall data
 SqTrAs_InitWall:
 	ld xix, 0xcce
-	ld xiy, 0xf1a0
+	ld xiy, SEQ_TRACK_ASSIGN
 	xor bc, bc
 	ld c, 0x10:opc
 	ldir85
@@ -2249,7 +2249,7 @@ NameGetFuncCall_Dispatch:
 	lda	xwa, (6888:16)
 	ld	(xwa+16), 0
 	push	xwa
-	ld	a, (0xffe3:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	inc	1, a
 	extz	wa
 	pushw	wa

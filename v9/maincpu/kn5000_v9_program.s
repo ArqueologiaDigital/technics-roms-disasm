@@ -1316,9 +1316,9 @@ We_seem_to_be_running_boot_ROM_code:
 Boot_PostSelfTest:
 	ld xwa, 0:i3
 	ld (SYSTEM_TIMESTAMP:16), xwa
-	ld (1024:16), 2
+	ld (BOOT_STAGE:16), 2
 	call TaskSched_Init
-	ld (1024:16), 3
+	ld (BOOT_STAGE:16), 3
 Boot_InitPeripherals:
 	calr Boot_ClearConfigFlag7
 	lda	xbc, (INTET01:8)
@@ -1422,11 +1422,11 @@ Boot_PayloadError:
 
 Boot_DisplayScreen:
 	call	ScreenGroup_Dispatch	; Display appropriate screen group
-	ld (1024:16), 6
+	ld (BOOT_STAGE:16), 6
 	ld wa, 3:i3
 	call ScreenGroup_Dispatch
-	ld (1024:16), 128
-	ldw (0x00ffd4:24), 0x0000
+	ld (BOOT_STAGE:16), 128
+	ldw (NMI_CHECKSUM_REGION1:24), 0x0000
 	ld a, (1026:16); Load boot combo code
 	extz wa
 	calr	Boot_HandleComboDisplay	; Handle combo 2 (LEDs) or combo 3 (version screen)
@@ -1546,11 +1546,11 @@ SubCPU_Payload_Done:
 	ret
 
 Boot_ClearConfigFlag7:
-	res 7, (1030:16)
+	res 7, (BOOT_CONFIG_FLAGS:16)
 	ret
 
 Boot_SetConfigFlag7:
-	set 7, (1030:16)
+	set 7, (BOOT_CONFIG_FLAGS:16)
 	ret
 
 Boot_CheckConfigFlag7:
@@ -1704,12 +1704,12 @@ GetResouceInfo:
 	jp	t, (xix+wa)
 ; Resource info handlers - 10 handlers for different resource types
 RESOURCE_INFO_HANDLERS:
-	lda xwa, (63872:16)
+	lda xwa, (LIVE_PANEL_BLOCK:16)
 	ld (xbc), xwa
 	lda xwa, (65470:16)
 	ld xde, xwa
 	inc 2, xde
-	lda xwa, (63872:16)
+	lda xwa, (LIVE_PANEL_BLOCK:16)
 	sub xde, xwa
 	ld (xbc + 4), xde
 	ret
@@ -2052,7 +2052,7 @@ PlayHalt:
 	call AccWrap_PlayModeDispatch
 	cp (xsp), 0x0
 	jr z, PlayHalt_SkipSetFlag
-	set 2, (10407:16)
+	set 2, (SEQ_RTMCFG:16)
 
 PlayHalt_SkipSetFlag:
 	call AccompSeq_StopSequence
@@ -2067,12 +2067,12 @@ PlayHalt_SkipSetFlag:
 	ret
 
 PlayStandBy:
-	bit 2, (10407:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr z, PlayStandBy_SkipClearFlag
-	res 2, (10407:16)
+	res 2, (SEQ_RTMCFG:16)
 
 PlayStandBy_SkipClearFlag:
-	res 3, (10407:16)
+	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
 	jp MidiThru_Disable
 
@@ -2111,7 +2111,7 @@ GetAdr_sqsrtc:
 	ret
 
 GetAdr_rtmcfg:
-	lda xhl, (10407:16)
+	lda xhl, (SEQ_RTMCFG:16)
 	ret
 
 SetGlobalError:
@@ -2443,7 +2443,7 @@ DrawDottedLineWithMode_Impl_Skip30:
 	jr	nz, DrawDottedLineWithMode_Impl_Skip32
 	jr	DrawDottedLineWithMode_Impl_Join9
 DrawDottedLineWithMode_Impl_Skip31:
-	ld	xiy, (197714:24)
+	ld	xiy, (WALLPAPER_BITMAP:24)
 	ld	de, (xhl)
 	exts	xde
 	ld	wa, (xhl+2)
@@ -2537,7 +2537,7 @@ DrawRect:
 	jr	z, DrawRect_Deferred
 	ld	a, (COLORBLIT_MODE:24)
 	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	jr	z, DrawRect_Return
 	ld	xwa, xiz
 	ld	bc, (xsp+4)
@@ -2568,7 +2568,7 @@ DrawRect_CallbackBlock:
 	ld	de, (xbc+12)
 	ld	c, (xbc+14)
 	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(197710:24), 0
+	cpw	(DRAW_ENABLED:24), 0
 	ret	z
 	ld	bc, de
 	calr	DrawRect_Impl
@@ -2683,7 +2683,7 @@ DrawText_QueueOrDirect:
 	jr z, DrawText_QueueDeferred
 	ld a, (COLORBLIT_MODE:24)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (197710:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jrl z, DrawText_PopAndReturn
 	ld xwa, (xsp + 28)
 	push xwa
@@ -2751,7 +2751,7 @@ DrawText_PopAndReturn_Code:
 	ld de, (xiz + 26)
 	ld a, (xiz + 28)
 	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (197710:24), 0
+	cpw (DRAW_ENABLED:24), 0
 	jr z, DrawText_DeferredFreeAndReturn
 	push xiy
 	pushw ix
@@ -3321,7 +3321,7 @@ MainChordPre:
 	call Malloc
 	ld xiz, xhl
 	ld (xiz), 0x0
-	ld a, (36160:16)
+	ld a, (DISPLAY_CHORD_ROOT:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (MainChordPre_RootNames:24)
@@ -3329,7 +3329,7 @@ MainChordPre:
 	push xwa
 	push xiz
 	call Strcat
-	ld a, (36162:16)
+	ld a, (DISPLAY_CHORD_TYPE:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (MainChordPre_ChordTypeNames:24)
@@ -3338,9 +3338,9 @@ MainChordPre:
 	push xiz
 	call Strcat
 	lda xsp, (xsp + 18)
-	cp (36164:16), 0
+	cp (DISPLAY_CHORD_BASS:16), 0
 	jr z, MainChordPre_EmptyChordStr
-	bit 1, (52958:16)
+	bit 1, (CHORD_FLAGS:16)
 	jr z, MainChordPre_EmptyChordStr
 	ld xwa, ChordStr_On
 	jr MainChordPre_AppendChordSuffix
@@ -3352,16 +3352,16 @@ MainChordPre_AppendChordSuffix:
 	push xwa
 	push xiz
 	call Strcat
-	ld a, (36162:16)
+	ld a, (DISPLAY_CHORD_TYPE:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (0x03f2f8:24)
 	ld	xbc, (xbc+wa)
-	ld a, (36160:16)
+	ld a, (DISPLAY_CHORD_ROOT:16)
 	extz wa
 	sla wa, 2
 	ld	xbc, (xbc+wa)
-	ld a, (36164:16)
+	ld a, (DISPLAY_CHORD_BASS:16)
 	extz wa
 	sla wa, 2
 	ld	xbc, (xbc+wa)
