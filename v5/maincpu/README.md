@@ -35,6 +35,12 @@ been edited by hand.  Before that point, regenerate v6 first (its README), then:
     make v5-progress
     python3 scripts/converters/disassemble_port_todo.py --tree v5 --rom $V5 --apply
 
+Edits made by hand after the last generation (redo them if the tree is regenerated):
+
+- `boot/rom_end_structure.s`: `FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`, with the default
+  `FW_VERSION_BYTE` set to 0x05.  v7 spells that byte `reti` (0x07 read as an instruction), so
+  the porter could only write the v5 byte as a TODO(port) row.
+
 ## Build
 
     make v5-progress KN5000_V5_REF=/path/to/kn5000_v5_program.rom

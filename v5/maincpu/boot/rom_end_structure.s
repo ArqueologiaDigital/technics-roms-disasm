@@ -11,7 +11,7 @@
 ; A build may preset FW_VERSION_BYTE with llvm-mc --defsym; the default is
 ; this tree's own version.
 	.ifndef FW_VERSION_BYTE
-	.set	FW_VERSION_BYTE, 0x07
+	.set	FW_VERSION_BYTE, 0x05
 	.endif
 
 System_TimestampPointers:
@@ -79,8 +79,7 @@ InterruptVectorTable:
 	.long 0xffffffff
 	.long 0xffffffff
 FIRMWARE_VERSION:
+	.byte	FW_VERSION_BYTE
 
 ; RESERVED:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x05
 	.fill 23, 1, 0xff

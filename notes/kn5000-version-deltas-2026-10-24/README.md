@@ -75,6 +75,15 @@ shrink elsewhere, because every image is 2 MiB, so code growth is paid for by fi
   5,918 B of v6 -> 5,110 B of v7), `InitializeScoop`, `SysExRx_Trie_000` and
   `IvExitTrSel_CopyString`. Names are from `symbols/maincpu_v7_symbols_reference.txt`.
 
+## Outcome (wave 2, lane kn5000-v6)
+
+Both ports were done along the route this note recommends, v7 -> v6 -> v5, by
+`scripts/converters/port_maincpu_version.py` and `scripts/converters/disassemble_port_todo.py`
+(`v6/maincpu/README.md`, `v5/maincpu/README.md`).  Both trees are byte-identical and in
+`make gate`.  `python3 scripts/analysis/kn5000_source_coverage.py` at the end of the lane:
+v6 98.8% source, 25,632 B verbatim debt; v5 98.7%, 28,041 B (TODO(port) rows, the raw bytes of
+the C divergence json, and the v7 romslices both trees still include).
+
 ## Not measured yet
 
 - No attribution of the change to v7 source files or subsystems. The offset map (`--map`) plus
