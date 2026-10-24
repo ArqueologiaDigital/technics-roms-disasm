@@ -1464,7 +1464,7 @@ AccompSeq_OutputEvent:
 	popw hl
 	ld wa, hl
 	ld hl, bc
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr nz, AccompSeq_Output_CheckFilter
 	cp (CURRENT_TITLE:16), 138
 	jr nz, AccompSeq_Output_CheckManual

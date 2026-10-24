@@ -619,7 +619,7 @@ Audio_CheckInitStatus:
 AudioInit_ClearStatusBit8:
 	andw	(0xc4fc:16), 0xfeff
 AudioInit_CheckGroupB_Presence:
-	ld	bc, (0x28a8:16)
+	ld	bc, (SEQ_REC_TRACKS:16)
 	or	bc, (3407:16)
 	ld	wa, bc
 	cp	wa, 0:i3

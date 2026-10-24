@@ -1839,7 +1839,7 @@ SMF_ParseEvents:
 	ld c, (3301:16)
 	ld wa, (SEQ_TRACK_MASK:16)
 	ld (SEQ_ERROR_CODE:16), 0
-	and (0x287b:16), 191
+	and (SEQ_EDIT_FLAGS:16), 191
 	xor xhl, xhl
 	ld l, (3301:16)
 	ld xix, SEQ_TRACK_ASSIGN
@@ -1928,7 +1928,7 @@ SMF_ChannelTranslationTable:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff	; inputs 0x38-0x3f
 
 SMF_ConfigSlot:
-	and (0x287b:16), 251
+	and (SEQ_EDIT_FLAGS:16), 251
 	xor w, w
 	ld (SEQ_ERROR_CODE:16), 0
 	ld (0x287d:16), wa

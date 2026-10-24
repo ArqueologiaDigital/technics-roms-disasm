@@ -1148,7 +1148,7 @@ BmDrEdit_SelectChannel_TestBit:
 	inc 1, a
 	ld (3414:16), a
 	set 0, (3412:16)
-	set 2, (0x287b:16)
+	set 2, (SEQ_EDIT_FLAGS:16)
 	ldto_berp L, 0xfb
 	inc 1, l
 	jr BmDrEdit_SelectChannel_Done
@@ -1160,7 +1160,7 @@ BmDrEdit_SelectChannel_NextCh:
 
 BmDrEdit_SelectChannel_NotFound:
 	res 0, (3412:16)
-	res 2, (0x287b:16)
+	res 2, (SEQ_EDIT_FLAGS:16)
 	ld l, 0x0:opc
 
 BmDrEdit_SelectChannel_Done:
@@ -3525,7 +3525,7 @@ BmDrEdit_ScanChannel_SelectLoop:
 	calr BmDrEdit_CheckAndSelectChannel
 	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
-	bit 2, (0x287b:16)
+	bit 2, (SEQ_EDIT_FLAGS:16)
 	jr z, BmDrEdit_ScanChannel_UseChannel
 	ld a, l
 
@@ -3810,7 +3810,7 @@ BmDrEdit_ProcessVoiceSection:
 	ld (xsp + 8), a
 	call SeqVoice_SetDefaultParams
 	ld (SEQ_ERROR_CODE:16), 0
-	bit 2, (0x287b:16)
+	bit 2, (SEQ_EDIT_FLAGS:16)
 	jr nz, BmDrEdit_ProcessVoice_WithState
 	ld c, (ACC_BEATS_PER_BAR:16)
 	extz bc

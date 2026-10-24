@@ -1903,7 +1903,7 @@ CompIface_ProcessInput:
 	jr z, CompIface_CheckUpDown
 	bit 5, (0xc1f0:16)
 	jr z, CompIface_CheckUpDown
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, CompIface_SetPedalBit
 	jr CompIface_CallFilterA
 
@@ -1917,7 +1917,7 @@ CompIface_CheckUpDown:
 CompIface_RampDown:
 	bit 5, (0xc1f0:16)
 	jr z, CompIface_PostProcess
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, CompIface_RampDown_Start
 	set 1, (9834:16)
 
@@ -1945,7 +1945,7 @@ CompIface_FromSource2:
 	jr CompIface_PostProcess
 
 CompIface_Source2_ZeroCheck:
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, CompIface_CallFilterA
 
 CompIface_SetPedalBit:

@@ -2321,7 +2321,7 @@ Display_RedrawInd_Ret:
 
 VoiceBank_BitsAndLoad:
 	ld w, (SEQ_CURSOR_TRACK:16)
-	or (0x287b:16), 4
+	or (SEQ_EDIT_FLAGS:16), 4
 	ret
 
 VoiceBank_StatusDoubleRCF:
@@ -5811,7 +5811,7 @@ VoiceState_DataBlock2_Helper5:
 AccPedal_CheckBitAndUpdate:
 	bit 0, (3412:16)
 	jrl z, AccPedal_ClearFlagAndJump
-	or (0x287b:16), 4
+	or (SEQ_EDIT_FLAGS:16), 4
 
 AccPedal_LoadModeAndChannel:
 	ld w, (3414:16)
@@ -5829,7 +5829,7 @@ AccPedal_StoreAddrAndCheck:
 	cp (SQSTEP_DISPLAY_MODE:16), 3
 	jrl nz, AccPedal_CallEventSwitch
 	ld w, a
-	or (0x287b:16), 4
+	or (SEQ_EDIT_FLAGS:16), 4
 
 AccPedal_CallEventSwitch:
 	call Scoop_EventHandler_MenuSwitch
@@ -5840,7 +5840,7 @@ AccPedal_CallEventSwitch:
 	ld (SQSTEP_MEASURE_BEATS:16), a
 	jp AccPedal_Ret
 AccPedal_ClearFlagAndJump:
-	and (0x287b:16), 251
+	and (SEQ_EDIT_FLAGS:16), 251
 	jp AccPedal_LoadModeAndChannel
 
 AccPedal_SendSysExAndReturn:
@@ -12129,11 +12129,11 @@ SoundEvt_LongPacketHandler_Helper2_Join:
 	ld	w, a
 	ld	(3414:16), w
 	or	(0x0d54:16), 1
-	or	(0x287b:16), 4
+	or	(SEQ_EDIT_FLAGS:16), 4
 	jp	VoiceState_DataBlock2_Entry3_Code_Return
 TempoRingBuf_IsEmpty_Skip3:
 	and	(0x0d54:16), 254
-	and	(0x287b:16), 251
+	and	(SEQ_EDIT_FLAGS:16), 251
 	xor	w, w
 VoiceState_DataBlock2_Entry3_Code_Return:
 	ret
@@ -12956,10 +12956,10 @@ SqStep_GetRhythmTrackForMeasures_Skip13:
 	inc	1, hl
 	jp	SqStep_GetRhythmTrackForMeasures_Join2
 SqStep_GetRhythmTrackForMeasures_Skip14:
-	and	(0x287b:16), 251
+	and	(SEQ_EDIT_FLAGS:16), 251
 	jp	SqStep_GetRhythmTrackForMeasures_Return3
 SqStep_GetRhythmTrackForMeasures_Join3:
-	or	(0x287b:16), 4
+	or	(SEQ_EDIT_FLAGS:16), 4
 SqStep_GetRhythmTrackForMeasures_Return3:
 	ret
 ; SqStep_SeekSecondGridRow: Moves the block read position past four 0x81 beat markers -- from a measure's start to its
@@ -17449,7 +17449,7 @@ Scoop_EventHandler_MenuSwitch:
 	call SetWall_ParserInit
 	popw wa
 	ld (SEQ_ERROR_CODE:16), 0
-	bit 2, (0x287b:16)
+	bit 2, (SEQ_EDIT_FLAGS:16)
 	jr nz, Scoop_EventHandler_MenuSwitch_Mode1
 	xor de, de
 	ld wa, (3299:16)

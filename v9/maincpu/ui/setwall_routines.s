@@ -690,7 +690,7 @@ SetWall_CrossType_Validate:
 	cp a, 0x13
 	jrl ugt, SetWall_CrossType_Reset
 	ld (SEQ_ERROR_CODE:16), 0
-	and (0x287b:16), 191
+	and (SEQ_EDIT_FLAGS:16), 191
 	xor hl, hl
 	ld l, (3301:16)
 	push xde
@@ -771,7 +771,7 @@ SetWall_SlotBitUpdate:
 	ret
 
 SetWall_ParsePatternStream:
-	and (0x287b:16), 251
+	and (SEQ_EDIT_FLAGS:16), 251
 	xor w, w
 	ld (SEQ_ERROR_CODE:16), 0
 	ld (0x287d:16), wa
@@ -1551,16 +1551,16 @@ SetWall_SingleSlot_Return:
 
 SetWall_DualPassScanner:
 	push_sd16w 0xaf, 0x28
-	and (0x287b:16), 223
+	and (SEQ_EDIT_FLAGS:16), 223
 	ld a, (ACC_BEATS_PER_BAR:16)
 	ld (0x288e:16), a
-	bit 2, (0x287b:16)
+	bit 2, (SEQ_EDIT_FLAGS:16)
 	jrl z, SetWall_DualPass_Done
 	ld a, (0x288d:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, SetWall_DualPass_InitLoop
-	and (0x287b:16), 251
+	and (SEQ_EDIT_FLAGS:16), 251
 	ld (SEQ_ERROR_CODE:16), 0
 	jrl SetWall_DualPass_Done
 
@@ -1653,7 +1653,7 @@ SetWall_DualPass_Error:
 	ld (SEQ_ERROR_CODE:16), 0
 	ld a, (ACC_BEATS_PER_BAR:16)
 	ld (0x288e:16), a
-	or (0x287b:16), 32
+	or (SEQ_EDIT_FLAGS:16), 32
 
 SetWall_DualPass_Done:
 	popw_dd16 0xaf, 0x28
@@ -1700,9 +1700,9 @@ SetWall_SkipEvents_Return:
 
 SetWall_ReplayScanner:
 	push_sd16w 0xaf, 0x28
-	bit 2, (0x287b:16)
+	bit 2, (SEQ_EDIT_FLAGS:16)
 	jrl z, SetWall_Replay_Done
-	bit 5, (0x287b:16)
+	bit 5, (SEQ_EDIT_FLAGS:16)
 	jrl nz, SetWall_Replay_Done
 	xor hl, hl
 	ld xhl, (0x2897:16)
@@ -1717,7 +1717,7 @@ SetWall_Replay_MainLoop:
 	jr z, SetWall_Replay_TypeC0
 	cp w, 0x82
 	jr nz, SetWall_Replay_Type84
-	or (0x287b:16), 32
+	or (SEQ_EDIT_FLAGS:16), 32
 	jrl SetWall_Replay_Done
 
 SetWall_Replay_Type84:
@@ -1877,7 +1877,7 @@ SetWall_ForwardSkip_Loop:
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_CheckType
-	or (0x287b:16), 32
+	or (SEQ_EDIT_FLAGS:16), 32
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_CheckType:
@@ -1907,7 +1907,7 @@ SetWall_ForwardSkip_TargetFound:
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_Check84
-	or (0x287b:16), 32
+	or (SEQ_EDIT_FLAGS:16), 32
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_Check84:
@@ -1925,7 +1925,7 @@ SetWall_ForwardSkip_SaveState:
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_Error:
-	or (0x287b:16), 32
+	or (SEQ_EDIT_FLAGS:16), 32
 	ld (SEQ_ERROR_CODE:16), 0
 
 SetWall_ForwardSkip_Return:

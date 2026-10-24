@@ -94,12 +94,17 @@
 	.equ TRACK_ASSIGN_EDIT_VALUE,		0x2873	; the TRACK ASSIGN value being edited, reloaded from SEQ_TRACK_ASSIGN when the cursor moves (SetWall_UpdateSlotIndex)
 	.equ SEQ_TRACK,				0x2877	; the track (1..16) a sequencer operation or loop works on; 127 = all tracks (the edit titles' track 0x11, MainExeCall_OnTitleSq*); MainExe_SongMem* and SeqStep_MultiTrackProcess loop it over 1..16
 	.equ SEQ_SONG,				0x2878	; the song (0..9) the song-memory routines (SeqVoice_InitEntry ...) address; SeqVoice_InitEntryForCurrentBank and SeqStep_TrackChange set it to SEQ_CURRENT_SONG or another song for one call and restore it
+	.equ SEQ_EDIT_FLAGS,			0x287b	; flags of the song-data edit and scan routines: bit 2 = take the measure lengths from the RHYTHM track (Seq_FindRhythmTrack sets it), bit 5 = a scan met the end marker (SeqTrack_ScanSetEndFlag, SetWall_ForwardSkip); bits 0, 3, 4, 6 and 7 are working flags of the SeqPart_* copy / exchange / load operations
 	.equ SEQ_WRITE_BLOCK_PTR,		0x2881	; the block SMF_Config* write output bytes into, at (this + IY); set from SEQ_BLOCK_PTR when a new block is started (IY = 5, past the block header)
 	.equ SEQ_RTMCFG,			0x28a7	; rtmcfg, the firmware's own name (GetAdr_rtmcfg returns its address): sequencer / accompaniment playback flags; bit 2 = ignore incoming MIDI Start / Continue (Transport_EnableMidiStartContinue clears it)
+	.equ SEQ_REC_TRACKS,			0x28a8	; word: one bit per track armed for recording (SqRealRecTitleFunc sets them through SeqVoice_SetOrClearBitMask); Audio_CheckInitStatus reports them as audio group B
+	.equ SEQ_RECORDING_TRACKS,		0x28aa	; word: the tracks being recorded now: SEQ_REC_TRACKS & SEQ_ACTIVE_PARTS when recording starts (SeqPlay_ActivatePartsAndSendOff), 0 when it stops; while it is non-zero INTTR4 writes a beat marker into TempoRingBuf every beat
 	.equ SEQ_DATA_BLOCK,			0x28af	; word: block number of the song-data cursor the sequencer reads and writes through (with SEQ_DATA_OFFSET; SeqNode_ResolveSlotPtr turns it into SEQ_BLOCK_PTR)
 	.equ SEQ_CYCLE_FLAGS,			0x28b1	; bit 0 = cycle play on (TT_SQCYCPLY), bit 1 = cycle recording on (TT_SQCYCREC; the record paths SeqMIDI_* test it) -- SeqAccomp_ParamDelivery_IncCycleEnable / SeqAccomp_SubChain_DecCycleEnable
 	.equ SQSTEP_SCAN_BLOCK,			0x28bf	; word: block of the song-data scan position (SeqStep_Walk*, SqStep_UpdateMsaStateFromEvent)
 	.equ SQSTEP_SCAN_OFFSET,		0x28c1	; word: offset in that block
+	.equ SEQ_PLAY_FLAGS,			0x28c5	; bit 0 = playback started (SeqPlay_InitTempoAndActivateParts; the start, stop and repeat paths test it), bit 6 = the recorded tracks are active (SeqPlay_ActivatePartsAndSendOff / _ReactivatePartsAndResume set it, SeqPlay_DeactivateAndSendOff clears it and sets bit 5)
+	.equ SEQ_RECORDED_TRACKS,		0x28c6	; word: the tracks recording took out of SEQ_TRACK_MASK; SeqPlay_DeactivateParts_LoopNext and SeqPlay_SyncPosition_StopAndReset put them back
 	.equ BMDREDIT_CHANNEL,			0x2965	; the MIDI channel (track) the beat / drum editor works on; SEQ_TRACK_ASSIGN[this] picks its part type (BmDrEdit_TestPartTableEntry)
 	.equ SEQ_SCREEN_OBJECT,			0x2972	; the object EVT_PAINT gave the sequencer screen handlers (ApEditSyori, NoteEditSyori, ApPlaySyori, EffEditMain store its parameter); EVT_PARA_DRAW redraw requests are sent to it
 	.equ DSP_EFFECT_NUMBER,			0x2976	; word: the DSP effect being edited (DspItem0_DisplayEffectName indexes DspEffectName_PtrTable by it)

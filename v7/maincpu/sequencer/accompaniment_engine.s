@@ -5135,7 +5135,7 @@ AccState_CollectAcc4_Loop:
 	jr nz, AccState_CollectReturn
 	cpw (SEQ_ACTIVE_PARTS:16), 0
 	jr nz, AccState_CollectAcc4_Active
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, AccState_CollectAcc4_Active
 	call AccWrap_PlayModeStopSync
 	jr AccState_Apply
@@ -7369,7 +7369,7 @@ AccAutoPlay_NoteDispatch_Check:
 	or (0x33fc:16), 0x80
 AccAutoPlay_NoteDispatch_Process:
 .Lc_f5a463:
-	cpw (0x28a8:16), 0x0000
+	cpw (SEQ_REC_TRACKS:16), 0x0000
 	jr z, AccAutoPlay_NoteDispatch_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_NoteDispatch_Return
@@ -7390,7 +7390,7 @@ AccAutoPlay_NoteDispatch_Return:
 
 AccAutoPlay_SplitDetect:
 	ld c, 0x0:opc
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, AccAutoPlay_SplitDetect_Check
 	bit 3, (0x28b3:16)
 	jr z, AccAutoPlay_SplitDetect_Check
@@ -7556,7 +7556,7 @@ AccAutoPlay_StateMachine:
 	jr z, .Lc_f5a5da
 	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5a5da
-	cpw (0x28a8:16), 0x0000
+	cpw (SEQ_REC_TRACKS:16), 0x0000
 	jr nz, .Lc_f5a5da
 	calr AccAutoPlay_SetConfig
 	bit 7, (0x33d1:16)
@@ -7691,7 +7691,7 @@ AccAutoPlay_ConfigureIfPending:
 AccAutoPlay_ConfigureIfPending_Return:
 	ret
 AccAutoPlay_SetConfig:
-	cpw (0x28a8:16), 0x0000
+	cpw (SEQ_REC_TRACKS:16), 0x0000
 	jr nz, AccAutoPlay_SetConfig_Apply
 	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr nz, AccAutoPlay_SetConfig_Apply
@@ -7716,7 +7716,7 @@ AccAutoPlay_Configure:
 	and (0x33d2:16), 0x1f
 	cp (CMP_RECORD_PART:16), 0x00
 	jr nz, .Lc_f5a74f
-	cpw (0x28a8:16), 0x0000
+	cpw (SEQ_REC_TRACKS:16), 0x0000
 	jr nz, .Lc_f5a759
 	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5a74f
@@ -7786,7 +7786,7 @@ AccAutoPlay_Periodic_Padding:
 AccAutoPlay_Periodic_Process:
 	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, AccAutoPlay_Periodic_Toggle
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, AccAutoPlay_Periodic_Return
 
 AccAutoPlay_Periodic_Toggle:
@@ -7890,7 +7890,7 @@ AccAutoPlay_SubModeB_Padding:
 AccAutoPlay_SeqHandoff:
 	cp (CMP_RECORD_PART:16), 0x00
 	jr nz, AccAutoPlay_SeqHandoff_Return
-	cpw (0x28aa:16), 0x0000
+	cpw (SEQ_RECORDING_TRACKS:16), 0x0000
 	jr nz, AccAutoPlay_SeqHandoff_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Return
@@ -8070,7 +8070,7 @@ AccPlayMode_OnMask0_Nop:
 	nop
 	nop
 AccPlayMode_TransitionRouter:
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, AccPlayMode_Router_Process
 	cpw (SEQ_TRACK_MASK:16), 0
 	jr z, AccPlayMode_Router_Check
@@ -8427,7 +8427,7 @@ AccSync_MidiClock_Padding:
 	nop
 
 AccTempo_WriteStartMarker:
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, AccTempo_WriteMarker_Return
 
 AccTempo_WriteStopMarker:
@@ -23473,7 +23473,7 @@ DrumKitExit_PostRestore:
 	call AccWrap_PlayModeDispatch
 	calr DrumKit_ValidateBank
 	call SeqAcc_RestorePlaybackState
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, DrumKitExit_ExtraInit
 	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, DrumKitExit_ExtraInit
@@ -26953,10 +26953,10 @@ VoiceSlot_UpdateState:
 	ld (0x288d:16), a
 	cp (0x38fa:16), 0x00
 	jr nz, VoiceSlot_SetBit2
-	res 2, (0x287b:16)
+	res 2, (SEQ_EDIT_FLAGS:16)
 	jr t, VoiceSlot_ValidateAndResolve
 VoiceSlot_SetBit2:
-	set 2, (0x287b:16)
+	set 2, (SEQ_EDIT_FLAGS:16)
 
 VoiceSlot_ValidateAndResolve:
 	call SeqVoice_ValidateAndProcessState

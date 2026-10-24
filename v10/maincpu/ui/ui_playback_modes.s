@@ -120,11 +120,11 @@ Seq_FindRhythmTrack_Join2:
 	ld	w, a
 	ld	(0x0d56:16), w
 	or	(0x0d54:16), 0x01
-	or	(0x287b:16), 0x04
+	or	(SEQ_EDIT_FLAGS:16), 0x04
 	jr	Seq_FindRhythmTrack_Return2
 Seq_FindRhythmTrack_Join:
 	and	(0x0d54:16), 0xfe
-	and	(0x287b:16), 0xfb
+	and	(SEQ_EDIT_FLAGS:16), 0xfb
 	xor	w, w
 Seq_FindRhythmTrack_Return2:
 	ret

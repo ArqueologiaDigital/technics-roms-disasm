@@ -1066,7 +1066,7 @@ Demo_ScanPartLoop:
 	inc 1, a
 	ld (3414:16), a
 	set 0, (3412:16)
-	set 2, (0x287b:16)
+	set 2, (SEQ_EDIT_FLAGS:16)
 	jr Demo_ScanPartDone
 
 Demo_ScanPartSkipToEnd:
@@ -1081,7 +1081,7 @@ Demo_ScanPartDone:
 	cp l, 0x10
 	ret nz
 	res 0, (3412:16)
-	res 2, (0x287b:16)
+	res 2, (SEQ_EDIT_FLAGS:16)
 	ret
 
 Voice_SavePreset:

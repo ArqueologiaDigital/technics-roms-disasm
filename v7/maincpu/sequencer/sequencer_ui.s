@@ -5602,7 +5602,7 @@ IvAutoPunchExit_CheckSendEvent:
 	call SendEvent
 	or xhl, xhl
 	jr z, IvAutoPunchExit_PrepareInherited
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, IvAutoPunchExit_PostSceneEvent
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr nz, IvAutoPunchExit_PrepareInherited

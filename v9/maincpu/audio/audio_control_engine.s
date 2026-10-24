@@ -260,7 +260,7 @@ PanelButton_ModeKey_FilterTarget_Join:
 	jr	z, FileIO_BytecodeData_Code_Skip15
 	ld	(xwa), 10
 FileIO_BytecodeData_Code_Skip15:
-	cpw	(10408:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, PanelButton_ModeKey_FilterTarget_Skip2
 	ld	a, (xwa)
 	cp	a, 19
@@ -8868,14 +8868,14 @@ MIDI_SelectTempoExpressionSource:
 TempoSrc_CheckAutoPlay:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr z, Tempo_ExpressionStore
-	ld wa, (0x28a8:16)
+	ld wa, (SEQ_REC_TRACKS:16)
 	set 2, (0x90f9:16)
 	jr Tempo_ExpressionStore
 
 Tempo_Expression_Bypass:
-	bit 0, (0x28c5:16)
+	bit 0, (SEQ_PLAY_FLAGS:16)
 	jr z, Tempo_ExpressionStore
-	ld wa, (0x28aa:16)
+	ld wa, (SEQ_RECORDING_TRACKS:16)
 	jr Tempo_ExpressionStore
 
 TempoSrc_DirectTempoMode:
@@ -8903,14 +8903,14 @@ Mod_SelectExpressionSource:
 	jr Mod_ExpressionStore
 
 ModExpr_CheckAutoPlay:
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, Mod_ExpressionStore
-	ld wa, (0x28a8:16)
+	ld wa, (SEQ_REC_TRACKS:16)
 	set 2, (0x90f9:16)
 	jr Mod_ExpressionStore
-	bit 0, (0x28c5:16)
+	bit 0, (SEQ_PLAY_FLAGS:16)
 	jr z, Mod_ExpressionStore
-	ld wa, (0x28aa:16)
+	ld wa, (SEQ_RECORDING_TRACKS:16)
 	jr Mod_ExpressionStore
 
 ModExpr_DirectMode:

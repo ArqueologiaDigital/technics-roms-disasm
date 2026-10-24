@@ -720,7 +720,7 @@ INTTR4_CheckAltSeqEnable:
 	jr lt, INTTR4_MetroPhaseSync
 	ld (SEQ_BEAT_TICK:16), 0
 	incw 1, (SEQ_BEAT_COUNT:16)
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_MetroPhaseSync
 	calr TempoRingBuf_Write
 
@@ -879,7 +879,7 @@ INTTR4_AltSeqAccum_Update:
 	jr nz, INTTR4_AltSeqSync_Check
 	ld (ACC_TRANSPORT_STATE:16), 8
 	and (1073:16), 247
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_AltSeqSync_Check
 	ld a, 0x86:opc
 	calr TempoRingBuf_WritePair
@@ -891,7 +891,7 @@ INTTR4_AltSeqSync_Check:
 	jr nz, INTTR4_FadeDelay_Check
 	ld (ACC_TRANSPORT_STATE:16), 1
 	and (1073:16), 254
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr z, INTTR4_FadeDelay_Check
 	ld a, 0x85:opc
 	calr TempoRingBuf_WritePair

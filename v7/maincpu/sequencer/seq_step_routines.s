@@ -15,7 +15,7 @@
 SeqStep_NoteDispatch:
 	dec 4, xsp
 	push xiz
-	bit 0, (0x287b:16)
+	bit 0, (SEQ_EDIT_FLAGS:16)
 	jrl z, SeqStep_NoteExit
 	ldmw2 (xsp + 4), 0x28af
 	ldmw2 (xsp + 6), 0x2666
@@ -206,7 +206,7 @@ SeqStep_EventProcess:
 SeqStep_EventPosManage:
 	ld (9824:16), 0
 	ld (9826:16), 0
-	bit 0, (0x287b:16)
+	bit 0, (SEQ_EDIT_FLAGS:16)
 	jrl nz, SeqStep_EventPosConsumeAdvance
 	jrl SeqStep_EventExit
 SeqStep_EventPosManage_Loop:
@@ -444,7 +444,7 @@ SeqStep_DeleteEvent:
 	ld a, (9740:16)
 	bit 7, a
 	jrl nz, SeqStep_DeletePopReturn
-	bit 0, (0x287b:16)
+	bit 0, (SEQ_EDIT_FLAGS:16)
 	jrl nz, SeqStep_DeleteDone
 SeqStep_DeleteDone_Case130:
 	calr SeqStep_InsertEvent
@@ -1318,7 +1318,7 @@ SeqStep_EventAdvance:
 	push xiz
 	ldmw2 (xsp + 4), 0x28af
 	ld iz, (SEQ_DATA_OFFSET:16)
-	bit 0, (0x287b:16)
+	bit 0, (SEQ_EDIT_FLAGS:16)
 	jr z, SeqStep_EventAdvanceRead
 	ldmm16 SEQ_DATA_BLOCK, 0x273c
 	ldmm16 SEQ_DATA_OFFSET, 0x273e
@@ -2579,7 +2579,7 @@ SeqStep_PlaybackDecrCount:
 	res 4, a
 	ld (SEQ_TRANSPORT_STATE:16), a
 	ei 0
-	cpw (0x28a8:16), 0
+	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, SeqStep_PlaybackCheck10408
 	bit_erpb 0xfb, 0x04
 	jr z, SeqStep_PlaybackCheckFill
@@ -2589,7 +2589,7 @@ SeqStep_PlaybackDecrCount:
 SeqStep_PlaybackCheckFill:
 	bit_erpb 0xfb, 0x04
 	jr z, SeqStep_PlaybackCheckBeat
-	bit 0, (0x28c5:16)
+	bit 0, (SEQ_PLAY_FLAGS:16)
 	jr z, SeqStep_PlaybackCheckBeat
 
 SeqStep_PlaybackCallFill:
@@ -2615,13 +2615,13 @@ SeqStep_PlaybackNoAction:
 SeqStep_PlaybackCheck10408:
 	bit_erpb 0xfb, 0x04
 	jr z, SeqStep_PlaybackCheckFill2
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr nz, SeqStep_PlaybackCallExtFill
 
 SeqStep_PlaybackCheckFill2:
 	bit_erpb 0xfb, 0x04
 	jr z, SeqStep_PlaybackCheckBeat2
-	bit 0, (0x28c5:16)
+	bit 0, (SEQ_PLAY_FLAGS:16)
 	jr z, SeqStep_PlaybackCheckBeat2
 
 SeqStep_PlaybackCallExtFill:
@@ -2645,11 +2645,11 @@ SeqStep_PlaybackCheckBeat2:
 	jr SeqStep_PlaybackResultDispatch
 
 SeqStep_PlaybackCheckTiming:
-	cpw (0x28aa:16), 0
+	cpw (SEQ_RECORDING_TRACKS:16), 0
 	jr nz, SeqStep_PlaybackCallPattern
 	cpw (SEQ_ACTIVE_PARTS:16), 0
 	jr z, SeqStep_PlaybackNoAction
-	bit 0, (0x28c5:16)
+	bit 0, (SEQ_PLAY_FLAGS:16)
 	jr z, SeqStep_PlaybackNoAction
 
 SeqStep_PlaybackCallPattern:

@@ -380,7 +380,7 @@ ClkTick_Src3ClickCheck:
 	jr	nz, ClkTick_Src3LowerSyncCheck
 	res	0, (1073:16)
 	ld	(ACC_TRANSPORT_STATE:16), 1
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, ClkTick_Src3LowerSyncCheck
 	ld	a, 0x85:opc
 	calr	MIDI_QUEUE_EVENT_PAIR
@@ -391,7 +391,7 @@ ClkTick_Src3LowerSyncCheck:
 	jr	nz, ClkTick_Src3OverflowQueue
 	res	3, (1073:16)
 	ld	(ACC_TRANSPORT_STATE:16), 8
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, ClkTick_Src3OverflowQueue
 	ld	a, 0x86:opc
 	calr	MIDI_QUEUE_EVENT_PAIR
@@ -400,7 +400,7 @@ ClkTick_Src3OverflowQueue:
 	jr	nz, Transport_Return
 	ld	(SEQ_BEAT_TICK:16), 0
 	incw	1, (SEQ_BEAT_COUNT:16)
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, Transport_StopHandler
 	calr	MIDI_QUEUE_TRACK_EVENT
 Transport_StopHandler:
@@ -416,7 +416,7 @@ Transport_StopHandler:
 	set	2, (0x33de:16)
 Transport_StopSrc1QueueEvent:
 	ld	(ACC_TRANSPORT_STATE:16), 16
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, Transport_StopSrc3Snapshot
 	ld	a, 0x86:opc
 	calr	MIDI_QUEUE_EVENT_PAIR
@@ -478,7 +478,7 @@ MIDI_RESET_PLAYBACK_STATE:
 	ld	(ACC_SECTION_BAR:16), a
 	ld	(ACC_TRANSPORT_STATE:16), 1
 	res	0, (0x28a6:16)
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, ResetPlay_Src3Check
 	ld	a, 0x85:opc
 	calr	MIDI_QUEUE_EVENT_PAIR
@@ -556,7 +556,7 @@ AltClk_DisabledClockPath:
 	set	2, (0x33de:16)
 AltClk_StopSrc1Queue:
 	ld	(ACC_TRANSPORT_STATE:16), 12
-	cpw	(0x28aa:16), 0
+	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	jr	z, AltClk_StopSrc3Snapshot
 	ld	a, 0x86:opc
 	calr	MIDI_QUEUE_EVENT_PAIR

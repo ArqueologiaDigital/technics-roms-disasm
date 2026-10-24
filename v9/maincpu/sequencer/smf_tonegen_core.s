@@ -2178,7 +2178,7 @@ SetWall_ParamOutOfRange:
 SetWall_ParamsValid:
 	xor hl, hl
 	ld (SEQ_ERROR_CODE:16), 0
-	and (0x287b:16), 191
+	and (SEQ_EDIT_FLAGS:16), 191
 	ld a, (SEQ_TRACK:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
