@@ -24,7 +24,8 @@ Felipe Sanches
 ## How semantic is it?
 
 Every image already rebuilds byte-identical to its dump, so byte-match says nothing about progress. The
-badges above measure understanding instead, over every ROM of both models. They are produced by
+badges above measure understanding instead, over every ROM of the two TLCS-900 models, the KN5000 and
+the SX-WSA1R (the KN7000 is not scored yet; `kn7000/tools/coverage_score.py` is its measure). They are produced by
 `make semantic-score`, i.e. `scripts/analysis/semantic_score.py`, whose docstring defines each part:
 
 - **bytes understood**: bytes whose purpose the source states with evidence: code, documented data and

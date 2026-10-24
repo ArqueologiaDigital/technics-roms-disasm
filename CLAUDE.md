@@ -299,7 +299,7 @@ This ensures the documentation website always reflects the latest extracted imag
 1. **Assembly source** -- Add/update `EVT_*` `.equ` constants in each tree's `shared/event_codes.s` (`v10/maincpu`, `v9/maincpu`, `v7/maincpu`, `hdae5000`), named after the firmware's own `EV_*`/`MT_*` name tables (catalog: `notes/event-codes-2026-10-02/`; apply with `scripts/tools/apply_event_constants.py`); replace raw hex values with symbolic names (e.g., `EVT_PARA_DRAW`)
 2. **Event codes reference page** -- Update `../technics-docs/event-codes.md` with new codes, dispatch paths, and descriptions
 3. **HDAE5000 homebrew page** -- Update `../technics-docs/hdae5000-homebrew.md` if the discovery affects handler registration or activation flow
-4. **Mines project** -- Update `../../Mines/CLAUDE.md` if applicable
+4. **Mines project** -- Update `../Mines/CLAUDE.md` if applicable
 
 **This policy exists because** event codes are the primary interface between the firmware and extension ROMs. Inconsistent documentation across the disassembly, website, and homebrew project causes confusion. The canonical event code reference is `../technics-docs/event-codes.md`.
 
