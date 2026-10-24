@@ -1768,6 +1768,8 @@ Data_InOutGridDispatch_AutoPlayChordInput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4	; -> 0xF75DF0
+; Data_InOutGridDispatch_VelocityInput: row VELOCITY INPUT: SndParam 0x5000 DIRECT/OFFSET/FIX, then redraws row 3 with
+;   the offset (0x5001) or fixed velocity (0x5002)
 Data_InOutGridDispatch_VelocityInput:
 	ld	xwa, 20480
 	call	SndParam_LookupReadOnly

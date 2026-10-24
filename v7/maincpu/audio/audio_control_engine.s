@@ -1270,6 +1270,9 @@ PanelAction_Volume:
 PanelAction_Volume_Epilogue:
 	pop	xiz
 	ret
+; PanelEvent_FillSelectedPart: If byte 0 of the panel event at XWA is 0 and byte 1 is not 3, writes the selected part
+;   (PART_SELECT, 0x8C9E) into byte 0. Basis: callers + body -- PanelAction_PostUnlessDemo and the other panel actions
+;   call it on the event frame immediately before PanelEvent_Post.
 PanelEvent_FillSelectedPart:
 	cp	(xwa), 0
 	ret	nz
@@ -10524,6 +10527,11 @@ MidiCC_Handler_BitManipulation_Code_Helper:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_SetPendingPartVolume: Queues a part volume: for target BC with part C <= 31 it stores E | 0x80 in the
+;   pending-volume byte 0x9416[C]; target BC = 0x00B0 instead marks 0x905C, stores E in MIDI_CC_EXPRESSION_PENDING and
+;   calls Audio_WriteBankSelectParams at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
+;   (function 3, the part) and PerfMode_Evt04_VolumeHandler passes C = PART_SELECT, B = 3; the scanners send each
+;   flagged byte as function 3.
 MidiCC_SetPendingPartVolume:
 	cp	bc, 176
 	jr	z, MidiStream_ApplyPendingParams_Skip
@@ -11705,6 +11713,12 @@ MidiStream_DispatchLoop_PtrTable:	.long	MidiStream_StatusPrecheck
 	.long	0xffffffff
 	.long	0xffffffff
 	.long	0xffffffff
+; =============================================================================
+; SoundParam_NotifyChange -- Notify UI of sound parameter change
+; =============================================================================
+; Hashes parameter ID and triggers UI refresh for affected widgets.
+; Called after preset loads: 0x4002 for reverb, 0x4006 for EQ.
+; Args: xwa = parameter ID
 SoundParam_NotifyChange:
 	lda	xsp, (xsp-0xa)
 	push	xiz

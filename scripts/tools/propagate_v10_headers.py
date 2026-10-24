@@ -440,12 +440,39 @@ def translate_addr(x, src, dst):
     return None
 
 
+def translate_linerefs(text, dst):
+    """Rewrite `path.s:NNNN` to the target's line number -> (text, first refused ref or '').
+    A line number alone proves nothing, so a reference is translated only when the comment
+    quotes that line's code in backticks right after it -- (path.s:5315): `RegObjTable
+    ...` -- and that code occurs on exactly one line of the target's file of that name."""
+    bad = []
+
+    def sub(m):
+        path = m.group(1).replace("kn5000_v10_program", "kn5000_%s_program" % dst.ver)
+        q = re.match(r'\)?:?\s*`([^`]+)`', text[m.end():])
+        files = [r for r in dst.files if r.endswith("/" + path)]
+        if not q or len(files) != 1:
+            bad.append(m.group(0))
+            return m.group(0)
+        want = norm_code(q.group(1))
+        hits = [n for n, line in enumerate(dst.files[files[0]], 1)
+                if norm_code(split_comment(line)[0]) == want]
+        if len(hits) != 1:
+            bad.append(m.group(0))
+            return m.group(0)
+        return "%s:%d" % (m.group(1).replace("kn5000_v10_program",
+                                             "kn5000_%s_program" % dst.ver), hits[0])
+
+    out = LINEREF.sub(sub, text)
+    return out, (bad[0] if bad else "")
+
+
 def adapt(text, src, dst, translate=True, exact=True):
     """-> (text for the target, reason it cannot be copied or '', detail).  Quoted v10 ROM
     addresses are rewritten to the target's when their correspondence is proved (and the
     number is not one the code spells as a literal, i.e. a constant); anything
-    else version-specific (a source line number, a version name, a symbol the target lacks)
-    is refused.  With translate=False (the in-body comments) a quoted ROM address is refused
+    else version-specific (a source line number that translate_linerefs cannot place, a
+    version name, a symbol the target lacks) is refused.  With translate=False (the in-body comments) a quoted ROM address is refused
     too: those are mostly inline address notes, which CLAUDE.md forbids, and a constant in the
     0xE00000-0xFFFFFF range (an object handle such as 0xf4fc10) can look like one.  A
     `; |....|` byte dump is copied only when the span's bytes are exactly equal (exact),
@@ -470,8 +497,9 @@ def adapt(text, src, dst, translate=True, exact=True):
     out = ROM_ADDR.sub(sub_addr, text)
     if notes:
         return text, "quotes-rom-address", notes[0]
-    if LINEREF.search(out):          # line numbers move with every edit; never translated
-        return text, "quotes-source-line", LINEREF.search(out).group(0)
+    out, bad = translate_linerefs(out, dst)
+    if bad:
+        return text, "quotes-source-line", bad
     if VERSION.search(out):
         return text, "mentions-version", VERSION.search(out).group(0)
     absent = sorted({w for w in IDENT.findall(out)

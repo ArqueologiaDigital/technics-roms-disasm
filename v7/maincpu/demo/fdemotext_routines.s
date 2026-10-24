@@ -1273,6 +1273,11 @@ FDemoText_ByteData_DisplayRefresh_Join:
 FDemoText_ByteData_DisplayRefresh_Epilogue:
 	pop	xiz
 	ret
+; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
+;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
+;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo
+;   and returns 0xFFFFFFFF. Basis: callers + body -- the feature-demo <SHOW> tag handler passes the OBJ attribute and
+;   sends EVT_SHOW to the id it returns; the firmware's own error string names the routine GetInstanceID.
 FDemoText_GetInstanceID:
 	lda	xsp, (xsp-136)
 	push	xiz

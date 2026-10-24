@@ -2044,6 +2044,11 @@ SetWall_RetStub2:
 SetWall_MiscDataAndCode:
 	ret
 	ret
+; SqSngName_ApplyNameAndExit: Applies a song name just typed: copies the 16 bytes at 0x1159 to the current song name
+;   (0xF280) and to the name field (+0x100) of the current song slot (SEQ_SONG_SLOTS + 0x800 * (0xFFE3)), then leaves
+;   the naming page: title 0x83 (TITLE_SQEASYREC) when the current title is 0xA7 (TITLE_SQEASYNAME), else 0x8E
+;   (TITLE_SQSNGSEL), through UI_PostModeChangeEvent. Basis: callers + body -- the only caller is
+;   MiddleFuncCall_OnSongNameSet (EVT_SONG_NAME_SET, MT_SongNameSet), which first Strcpys the name into 0x1159 (4441).
 SqSngName_ApplyNameAndExit:
 	ld	xix, 62080
 	ld	xiy, 4441

@@ -10,14 +10,16 @@ and header text that holds for the target build.
 
 ## Commands
 
-| question                                                      | command                                                         |
-|---------------------------------------------------------------|-----------------------------------------------------------------|
-| How many v10 labels with a header have one in v9 / v7?        | `python3 scripts/tools/propagate_v10_headers.py --count`        |
-| What would be copied, and what goes to review? (dry run)      | `python3 scripts/tools/propagate_v10_headers.py`                |
-| Copy, then write the review list                              | `python3 scripts/tools/propagate_v10_headers.py --apply`        |
-| Did the edit only add comments? (code lines and old comments) | `python3 scripts/tools/propagate_v10_headers.py --verify HEAD`  |
-| Did any byte move?                                            | `make -j3 gate`                                                 |
-| Calibrate address translation (dry run)                       | `python3 scripts/tools/propagate_v10_headers.py --no-translate` |
+| question                                                      | command                                                                                                 |
+|---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| How many v10 labels with a header have one in v9 / v7?        | `python3 scripts/tools/propagate_v10_headers.py --count`                                                |
+| What would be copied, and what goes to review? (dry run)      | `python3 scripts/tools/propagate_v10_headers.py`                                                        |
+| Copy, then write the review list                              | `python3 scripts/tools/propagate_v10_headers.py --apply`                                                |
+| Did the edit only add comments? (code lines and old comments) | `python3 scripts/tools/propagate_v10_headers.py --verify HEAD`                                          |
+| Did any byte move?                                            | `make -j3 gate`                                                                                         |
+| Calibrate address translation (dry run)                       | `python3 scripts/tools/propagate_v10_headers.py --no-translate`                                         |
+| Where does v7 keep a v10 RAM address?                         | `python3 scripts/analysis/v7_ram_shift_map.py --min-obs 2`                                              |
+| Apply the hand ports (idempotent)                             | `python3 scripts/tools/apply_handported_headers.py analysis/header-propagation/handport-2026-10-24.txt` |
 
 The dry run and `--apply` read the linked ELFs in `rebuilt_ROMs/`, so run `make all` first.
 
@@ -25,10 +27,10 @@ The dry run and `--apply` read the linked ELFs in `rebuilt_ROMs/`, so run `make 
 
 `--count`. A label is counted when the line directly above it is a `;` comment line.
 
-| tree | v10 labels with a header | label present | with header, before | after pass 1 | after pass 2 | after pass 3 | without, now |
-|------|--------------------------|---------------|---------------------|--------------|--------------|--------------|--------------|
-| v9   | 9,610                    | 9,607         | 8,381               | 9,585        | 9,599        | 9,599        | 8            |
-| v7   | 9,610                    | 9,254         | 8,101               | 8,765        | 8,929        | 8,970        | 284          |
+| tree | v10 labels with a header | label present | with header, before | after pass 1 | after pass 2 | after pass 3 | after hand ports | without, now |
+|------|--------------------------|---------------|---------------------|--------------|--------------|--------------|------------------|--------------|
+| v9   | 9,610                    | 9,607         | 8,381               | 9,585        | 9,599        | 9,599        | 9,599            | 8            |
+| v7   | 9,610                    | 9,254         | 8,101               | 8,765        | 8,929        | 8,970        | 9,062            | 192          |
 
 Three automatic passes were made with `--apply`. Pass 1 compared bodies with whitespace and hex case
 normalized. Pass 2 also normalized number bases and register case, split `Label: insn` lines, and
@@ -70,21 +72,47 @@ matched pointers by a shared label name as well as by translate_addr.
   with and without `--no-translate` and subtract the `header-already` figures. After pass 2 that
   was 8,134 - 7,798 = 336. After pass 3 it is 8,153 - 7,816 = 337.
 
+## Hand ports: handport-2026-10-24.txt
+
+After pass 3, 131 v7 review-list labels had a v10 header and none in v7, and their bodies differ
+(`body-differs` or `bytes-differ`). All 131 were read one by one. 92 were ported and 39 were
+recorded as not ported. Each decision has its reason in `handport-2026-10-24.txt` and in the
+review list's `handport` column. A port adapts the header only in these ways:
+
+- **RAM numbers.** A RAM number is rewritten to v7's value when the pair is read from the two
+  bodies, or else from the measured map `v7-ram-shift-2026-10-24.txt`. The map was made by
+  `scripts/analysis/v7_ram_shift_map.py --min-obs 2` from paired memory operands. It shows
+  v10 0x0100-0x29F6 unmoved, 0x3214-0xE38E at -156, 0xE3BA-0xEC11 at -198 and 0xF180-0x3F2F8
+  unmoved. The gaps between those runs are unmeasured, and no port relies on them.
+- **Numbers that are not RAM addresses are kept.** These are parameter ids (0x4000-0x428E,
+  0x5000), lengths, error codes, the 0x55AA boot signature, offsets into the 0x1E0000 sound-RAM
+  image and sub-CPU addresses. A first draft remapped some of them by the map, and those were
+  reverted by hand.
+- **Callee names.** v7 sometimes calls the same routine under a placeholder name. The header
+  then names v7's label, but only after the two routines were shown to be the same: equal ROM
+  bytes modulo the RAM map and relocated pointers, or equal bodies modulo spelling.
+- **Decimal RAM addresses** (FDC_CMD_EXEC, AccPart_GetParamAddr_Wrap) are rewritten the same way.
+
+A header is not ported when it names a symbol v7 does not define, or when v7 frames the code
+differently (FDC_INTERRUPT_HANDLER, SeMenu_ToggleSolo). It is also not ported when its sentence
+needs rewording rather than translation (MidiPkt_SendCtlValueSysEx). Those rows remain as
+follow-ups. Most of them first need v7 labels harmonized with v10's names.
+
 ## review-2026-10-24.tsv
 
 These are the labels the tool would not copy. There is one row per (target, label). The columns:
 
-| column     | meaning                                                                                                                                                                         |
-|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `target`   | `v9` or `v7`                                                                                                                                                                    |
-| `label`    | the label, defined in both trees unless `reason` is `label-absent`                                                                                                              |
-| `reason`   | why it was not copied (see below)                                                                                                                                               |
-| `detail`   | the first difference, or the offending token                                                                                                                                    |
-| `src_line` | v10 file:line of the label, at the time of the run                                                                                                                              |
-| `dst_line` | target file:line of the label, at the time of the run                                                                                                                           |
-| `ndiff`    | `body-differs` only: normalized code lines that differ                                                                                                                          |
-| `nlines`   | `body-differs` only: normalized code lines in the longer body                                                                                                                   |
-| `handport` | filled in by hand, or `scripted (RAM remap tier)` for that tier's ports. Records a port, or a decision not to port, and why. Rows with it are kept when the list is regenerated |
+| column     | meaning                                                                                                                                                                                                                                                              |
+|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `target`   | `v9` or `v7`                                                                                                                                                                                                                                                         |
+| `label`    | the label, defined in both trees unless `reason` is `label-absent`                                                                                                                                                                                                   |
+| `reason`   | why it was not copied (see below)                                                                                                                                                                                                                                    |
+| `detail`   | the first difference, or the offending token                                                                                                                                                                                                                         |
+| `src_line` | v10 file:line of the label, at the time of the run                                                                                                                                                                                                                   |
+| `dst_line` | target file:line of the label, at the time of the run                                                                                                                                                                                                                |
+| `ndiff`    | `body-differs` only: normalized code lines that differ                                                                                                                                                                                                               |
+| `nlines`   | `body-differs` only: normalized code lines in the longer body                                                                                                                                                                                                        |
+| `handport` | `hand-ported: ...` / `not ported: ...` (written by apply_handported_headers.py from the handport file), or `scripted (RAM remap tier)` for that tier's ports. Records a port, or a decision not to port, and why. Rows with it are kept when the list is regenerated |
 
 | reason                    | meaning                                                                                  |
 |---------------------------|------------------------------------------------------------------------------------------|

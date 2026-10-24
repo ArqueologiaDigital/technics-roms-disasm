@@ -1294,6 +1294,7 @@ DirmdTitleFunc:
 	calr DirmdEmulator_Entry
 	lda xsp, (xsp + 16)
 	ret
+; DirmdEmulator dispatch case F
 DirmdTitle_New:
 	ld	a, (ACTIVE_TITLE:16)
 	cp	a, (ACTIVE_TITLE_PREVIOUS:16)
@@ -1427,6 +1428,7 @@ DirmdEmu_OnSwitchIn:	; EVT_SW_IN: switches 0..255 only; method 2 (switch & 31, b
 	pop	xix
 	pop	xhl
 	pop	xde
+; DirmdEmulator default/fallthrough case
 DirmdEmu_DefaultCase:
 	bit 1, (0xe318:16)
 	jr z, .Lc_f9ab49

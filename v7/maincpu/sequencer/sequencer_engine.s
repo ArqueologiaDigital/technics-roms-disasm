@@ -21070,6 +21070,7 @@ AppEvent_InlineHandler:
 	ld bc, (xbc)
 	lda xix, (AppEvent_SubDispatch:24)
 	jp	t, (xix+bc)
+; Application event sub-dispatch
 AppEvent_SubDispatch:
 	ld	a, (CURRENT_TITLE:16)
 	extz	wa
@@ -25132,6 +25133,8 @@ MainExe_SongMemNextPart:
 MainExe_CallSongHandler:
 	calr	SoundCtrl_SaveAndSendCmd_EE
 	jrl	MainExe_ReturnZero
+; MainExeCall_OnTitleSqtrkmrg: EXECUTE on TT_SQTRKMRG: merges MrgTrA (0xf1d3) and MrgTrB (0xf1d4) into MrgTrC (0xf1d5)
+;   through SeqPart_Compare and moves the tracks' bits in 0x2875 / 0xffec from A and B to C.
 MainExeCall_OnTitleSqtrkmrg:
 	ldmm8	10359, 61907
 	ldmm8	9858, 61908
@@ -25438,6 +25441,8 @@ MainExe_InlineByteData_Join:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 163
 	jr	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqmins: EXECUTE on TT_SQMINS: track 0xf1e1 from measure 0xf1e2, second track 0xf1e6 at measure
+;   0xf1e7, then SeqPart_ByteBlockA95A (SeqPart_LoadDualPartData after error 0x23).
 MainExeCall_OnTitleSqmins:
 	ld	wa, (61922:16)
 	ld	(9778:16), wa

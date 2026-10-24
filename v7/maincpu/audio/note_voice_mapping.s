@@ -16456,6 +16456,7 @@ PanelTag72_ApplyPartMix_Volume_Skip:
 	ld	bc, 7:i3
 	calr	MIDI_SendControlChange
 	jr	HdaeRom_TableEntry2_Epilogue
+; PanelTag72_ApplyPartMix_ReverbSend: Payload +7: sent to parts 0x17 and 0x18 as CC 91 (reverb send).
 PanelTag72_ApplyPartMix_ReverbSend:
 	ld	a, (xsp+0x3)
 	res	7, a
@@ -17168,6 +17169,9 @@ MIDI_SendEpilogue:
 	popw	iz
 	inc	2, xsp
 	ret
+; SndParam_ApplySystemParam: Applies a non-part panel parameter: XWA = id (high byte namespace, low byte field), BC =
+;   value. Ids 0x00xx, 0x4000-0x4006, 0x4080, 0x4140-0x4142 and 0x4280-0x428E are sent now; DSP-slot ids (0x49xx,
+;   0x4Bxx-0x4Exx) are queued for Song_SendPartDataBlocks. Basis: callers + body.
 SndParam_ApplySystemParam:
 	dec	4, xsp
 	push	xiz
@@ -17312,6 +17316,8 @@ SendEpilogue_Data_Case5:
 	extz	wa
 	call	SendPartDataBlock_Block3
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_SendEqualizerOnOff: Id 0x4006 (tag 0x60 +1 bit 5, equalizer on/off): sent at once as COMM
+;   packet 0x25.
 SndParam_ApplySystemParam_SendEqualizerOnOff:
 	ldto_berp	a, 248
 	extz	wa
@@ -17765,6 +17771,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10_Skip28:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jr	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote11: Id 0x428E (record 0x92 +13, RAM 0xFD29): user scale-tune offset of
+;   the note 11 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote11:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -21136,6 +21144,12 @@ MidiSysMsg_DecodeDeltaTime_Skip2:
 	ld	xhl, 0:i3
 MidiSysMsg_DecodeDeltaTime_Return:
 	ret
+; MidiSysMsg_SetScaledTempo: Applies a song-stream tempo event: from the two 7-bit bytes at XWA (LSB, MSB) forms the
+;   14-bit value, scales it by (0xE925) / 1000 (Math_Multiply32, Math_DivideU32; nothing when (0xE925) = 0),
+;   clamps to 40..300, puts bit 8 in 0xFC63 bit 0, passes the tempo to SoundParam_NotifyChange (XWA = 4, DE = 3),
+;   recomputes the timer (SeqTimer_UpdateTempoReg) and stores tempo | 0x8000 in 0x11F5; XIZ preserved. Basis: callers
+;   + body -- MidiSysMsg_Handler_OnFBTempo (status 0xFB, header: 'tempo (14-bit value * (0xE925) / 1000, clamped to
+;   40..300), then SeqTimer_UpdateTempoReg') reads the two bytes and calls it.
 MidiSysMsg_SetScaledTempo:
 	push	xiz
 	ld	xbc, (0xe925:16)
@@ -22006,6 +22020,9 @@ DirectReturn_DoLookupC:
 SndParam_StoreAndReturn:
 	ldw	(4597:16), 120
 	ret
+; SongPlayer_ResetState: Resets the song-file player: clears its state, mode, flags and counters in the block at
+;   0xE8FE (+0, +0x20, +0x21, +0x23, +0x27, +0x2B, +0x2D, +0x31, +0x239, +0x23D) and re-initialises the track slots
+;   and the SysEx and MIDI ring buffers. Basis: callers + body.
 SongPlayer_ResetState:
 	ld	(0xe91e:16), 0
 	ld	xwa, 0:i3
@@ -24144,6 +24161,9 @@ COMM_BuildAndSendPacket:
 	ld	wa, 3:i3
 	ldw	bc, 0xa
 	jp	sendCOMM
+; SubCPU_SendSoundMemUpdated: Sends sub-CPU message {2C 30 7F 06 00 00 02 seq A C}: sound-memory entry (A, C) --
+;   0xFF/0xFF = all -- has been transferred; the sub-CPU runs DSP_VoiceState_Dispatch(A, C). Sent after the image at
+;   0x1E0000 is bulk-copied to sub-CPU 0x7800. Basis: callers + body + receiver.
 SubCPU_SendSoundMemUpdated:
 	lda	xde, (0xe2a2:16)
 	ld	(xde), 0x2c

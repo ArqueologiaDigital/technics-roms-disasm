@@ -1432,6 +1432,19 @@ FDC_CMD_EXEC_Helper6:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
+; --- FDC_CMD_EXEC: Main FDC command execution engine ---
+; Two nearly identical halves: READ path (command type 1) and
+; WRITE path (command type 8), set in state variable 35276.
+; Each path:
+;   1. Clears status, waits for FDC ready
+;   2. Sets up DMA: clear byte counter (35200), compute sector size
+;      (1024 or 512 based on format), configure DMA direction
+;   3. Sector loop: decrement sector count, advance track/head,
+;      check against max sectors (35440)
+;   4. Accumulates transferred sector count at 35246
+;   5. Error handling: sets error flag (35432=255) on failure
+; Tail calls format-specific routines and status verification.
+; Uses (R+d16) addressing for all FDC state variable access. 672 bytes.
 FDC_CMD_EXEC:
 ; [v10] --- FDC_CMD_EXEC: Main FDC command execution engine ---
 ; [v10] Two nearly identical halves: READ path (command type 1) and

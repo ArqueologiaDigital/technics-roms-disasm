@@ -4132,6 +4132,12 @@ DrawDesignBox_ByteData_Code:
 	ld	xwa, xhl
 	calr	DrawDottedLine_Impl
 	ret
+; DrawDottedLine_Impl: Draw-task body of a plain dotted line: from point (XWA) to point (XBC) (each {x, y} words) in
+;   colour DE, writing straight into OFFSCREEN_BUFFER_1 (320-byte rows) with a 2-on / 3-off pattern (counter 0,1 draw;
+;   2,3 skip; 4 resets), horizontal, vertical and fixed-point sloped cases; ends with SetChangeRect. No draw-mode
+;   dispatch, unlike DrawDottedLineWithMode_Impl. Basis: callers + body -- DrawDesignBox_ByteData (the standard
+;   direct-or-DrawQueue_Alloc wrapper; misnamed, and itself unreferenced) and its queued record function
+;   DrawDesignBox_ByteData_Code call it.
 DrawDottedLine_Impl:
 	lda	xsp, (xsp-52)
 	push	xiz

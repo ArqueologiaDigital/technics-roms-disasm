@@ -5202,6 +5202,11 @@ DataBuf_CopyBulkBitfields_Large_Loop:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
+; FileData_ImportNNLivePanel: Foreign .LSW import, stage 1 for header class 3 ('N','N'): between PreLswLoad and
+;   PostLswLoad, reads 0x420 bytes after the 32-byte header and converts its records into the live panel area at
+;   0xF980; HL = 0, 0xFF38 when out of memory, or the read error. Basis: callers + body -- FileData_AllocLoadAndParse
+;   runs it for class 3, where FileData_RawDataBlock (0x660 bytes, same Pre/PostLswLoad bracket) serves classes 1 and
+;   2.
 FileData_ImportNNLivePanel:
 	lda	xsp, (xsp-10)
 	push	xiz
@@ -9507,6 +9512,13 @@ MidiPkt_SetXferBlock_StyleImageTables:
 	ld	(xwa+4), xde
 	ld	(xwa+8), xbc
 	ret
+; MidiPkt_SetXferBlock_StyleImagePool: Fills the transfer descriptor at XWA for block 3 of the style-image transfer:
+;   {start 0x95BC0, end 0xAB000 (SEQ_SONG_SLOTS), length 0x15440}, the pattern block pool behind RHYTHM_PATTERN_BUF_B.
+;   With bit 6 of 0xBC7C set, the length is the used size ((0x9482E) * 16, MidiPkt_GetUsedSize_StyleImage) less
+;   blocks 1-2 (0x60 + 0x1360). Basis: callers + body -- MidiPkt_ArpExtHandler_G (command 17, state 9) points the
+;   block descriptor 0xBC50 with it and then takes the length from the message (MidiPkt_SetXferLengthFromMsg); blocks
+;   1-2 are RHYTHM_PATTERN_BUF_A (0x60) and 0x94860 (0x1360); the group's end step makes MidiSysEx_ProcessBlock run
+;   AccPatch_EnsureStyleImageHeader.
 MidiPkt_SetXferBlock_StyleImagePool:
 	push	xiz
 	ld	xiz, xwa
@@ -9641,6 +9653,13 @@ MidiPkt_SetXferBlock_AccompBankTables:
 	ld	(xwa+4), xhl
 	ld	(xwa+8), xbc
 	ret
+; MidiPkt_SetXferBlock_AccompBlockPool: Fills the transfer descriptor at XWA for block 3 of the accompaniment-block-
+;   area transfer: {start 0x1E8B00, end 0x1EC400, length 0x3900}, the 57 x 256-byte block pool
+;   (msp_factory_defaults.s). With bit 6 of 0xBC7C set, the length is the used size ((0x1E881C) * 16,
+;   MidiPkt_GetUsedSize_AccompBlocks) less blocks 1-2 (0x20 + 0x2E0). Basis: callers + body --
+;   MidiPkt_ArpExtHandler_J (command 25, state 20) points the block descriptor 0xBC50 with it, then takes the length
+;   from the message (MidiPkt_SetXferLengthFromMsg); blocks 1-2 are 0x1E8800 (0x20) and 0x1E8820 (0x2E0), the area
+;   Voice_InitBankTables initialises.
 MidiPkt_SetXferBlock_AccompBlockPool:
 	push	xiz
 	ld	xiz, xwa
@@ -11398,6 +11417,13 @@ MidiSysEx_SendSoundRamEndCmd:
 	pop	xhl
 	pop	xde
 	ret
+; MidiSysEx_FinishSoundRamXfer: End-of-transfer step for the sound-RAM group: if bit 6 of 0xBC7E is set (blocks 4-5
+;   received: the 16-byte 'KN5000 SOUND RAM' id at 0x1E0000 and the data from 0x1E0010), it sends command packet {4,
+;   0xF0, 0x50, 0x92, 0} (MIDI_SendAllVoicesPitchUpdate via MidiSysEx_SendSoundRamEndCmd) and clears bit 6. It also
+;   copies the 6-byte MidiSysEx_BlockTemplate into its frame and never reads it. Basis: callers + body --
+;   MidiSysEx_ProcessBlock (command 4) calls it second; bit 6 is set only by SeqChan_WriteField_Data_B, the end step
+;   (state 6) of blocks 4-5. The abort path for the same group (MidiSysEx_BlockOp_ToPartDataAndBend) sends the same
+;   packet.
 MidiSysEx_FinishSoundRamXfer:
 	dec	6, xsp
 	ld	xiy, MidiSysEx_BlockTemplate
@@ -11768,6 +11794,9 @@ SoundMode_RetStub_G:
 	ret
 SoundMode_RetStub_H:
 	ret
+; SeqTimer_SetPanelTempo: Stores tempo WA (40..300, 9 bits) into the panel tempo word 0xFC62 (low byte, bit 0 of
+;   0xFC63), queues it as SwbtWr param 0x48/8 and reloads the tempo timer (SeqTimer_UpdateTempoReg). Basis: callers +
+;   body -- the only caller is the F0 50 25 (message id 9, tempo) receive handler.
 SeqTimer_SetPanelTempo:
 	bit	4, (0xfd50:16)
 	ret	nz
@@ -12634,9 +12663,15 @@ SysEx_InitiateSend_Join:
 SysEx_ResetAndReturn:
 	ld	(0xbc7c:16), 0
 	jp	SoundMode_ResetAllParams
+; SysEx_InitiateSend_SendStyleImage: Case 1 (STYLE IMAGE) of SysEx_InitiateSend: sizes the style-image group (total
+;   0xBC20 from RHYTHM_PATTERN_BUF_A) and sends it (SysEx_ResetAndReturn_Helper), then rejoins
+;   SysEx_InitiateSend_Join. Basis: callers + body -- entry 1 of SysExSend_SwitchOffsets; message id 32 (F0 50 2B 01
+;   28 12 50 00 00, style request) selects code 1.
 SysEx_InitiateSend_SendStyleImage:
 	call	SysEx_ResetAndReturn_Helper
 	jr	SysEx_InitiateSend_Join
+; SysEx_InitiateSend_SendSequencer: Code 2 = SEQUENCER: size the whole sequencer transfer
+;   (MidiPkt_SetXferTotal_SeqData) and send it.
 SysEx_InitiateSend_SendSequencer:
 	call	SysEx_ResetAndReturn_Helper2
 	jr	SysEx_InitiateSend_Join

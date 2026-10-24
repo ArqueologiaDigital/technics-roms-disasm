@@ -6105,6 +6105,8 @@ SeDigEff_OnColumn3:
 	ld	wa, (xix+wa)
 	lda	xix, (SeDigEff_OnColumn3_CelesteChorusDetune:24)
 	jp	t, (xix+wa)
+; SeDigEff_OnColumn3_CelesteChorusDetune: Types 0-3 CELESTE 1/2, CHORUS 1/2 (also the switch base): column 3 is
+;   DETUNE, limits +50 and -50. Basis: switch value (DIGITAL EFFECT type) + body + screen captions.
 SeDigEff_OnColumn3_CelesteChorusDetune:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
@@ -6140,6 +6142,7 @@ SeDigEff_OnColumn3_SingleDelayKey:
 	ld	(xwa+8), 24
 	ld	(xwa+9), 232
 	jr	SeDigEff_OnColumn3_CelesteChorusDetune_Join11
+; SeDigEff_OnColumn3_RepeatDelaySustain: Type 9 REPEAT DELAY: column 3 is SUSTAIN, limits 30 and 0.
 SeDigEff_OnColumn3_RepeatDelaySustain:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
@@ -6177,6 +6180,8 @@ SeDigEff_OnColumn4:
 	ld	wa, (xix+wa)
 	lda	xix, (SeDigEff_OnColumn4_DelaySpeed2:24)
 	jp	t, (xix+wa)
+; SeDigEff_OnColumn4_DelaySpeed2: Types 0-5 and 7 (also the switch base): column 4 -- DELAY for CELESTE/CHORUS, SPEED2
+;   for ENSEMBLE and ORGAN TREMOLO -- limits 50 and 0. Basis: switch value + body + screen captions.
 SeDigEff_OnColumn4_DelaySpeed2:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
@@ -6200,6 +6205,7 @@ SeDigEff_OnColumn4_Balance:	; cases 6, 8
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
 	jr	SeDigEff_OnColumn4_DelaySpeed2_Join13
+; SeDigEff_OnColumn4_RepeatDelayRelease: Type 9 REPEAT DELAY: column 4 is RELEASE, limits 30 and 0.
 SeDigEff_OnColumn4_RepeatDelayRelease:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 30
@@ -6235,6 +6241,8 @@ SeDigEff_OnColumn5:
 	ld	wa, (xix+wa)
 	lda	xix, (SeDigEff_OnColumn5_CelesteChorusBalance:24)
 	jp	t, (xix+wa)
+; SeDigEff_OnColumn5_CelesteChorusBalance: Types 0-3 CELESTE 1/2, CHORUS 1/2 (also the switch base): column 5 is
+;   BALANCE, limits 100 and 0. Basis: switch value + body + screen captions.
 SeDigEff_OnColumn5_CelesteChorusBalance:
 	lda	xwa, (xsp)
 	ld	(xwa+8), 100
@@ -6253,6 +6261,7 @@ SeDigEff_OnColumn5_CelesteChorusBalance_Join14:
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
 	jr	SeDigEff_OnColumn5_EnsembleDetune_Epilogue11
+; SeDigEff_OnColumn5_EnsembleDetune: Types 4/5 ENSEMBLE: column 5 is DETUNE, limits +50 and -50.
 SeDigEff_OnColumn5_EnsembleDetune:	; cases 4, 5
 	lda	xwa, (xsp)
 	ld	(xwa+8), 50
@@ -10156,6 +10165,12 @@ SeWrtMem_DrawStaticScreen:
 	call	SeGfx_DrawBoundList
 	call	SeMenu_DrawWriteDestName
 	ret
+; SeMenu_DrawWriteDestName: On the MEMORY WRITE screen, fetches the 16-character name of the sound now stored in the
+;   selected destination (bank code 16 for bank A / 17 for B from page param 0, number = param 1 - 1, current part)
+;   with SndParam_ApplyProgramChange / SndParam_ApplyProgramChangeAsync into 0x20C13, maps it to font glyphs and draws
+;   it at text cell 147*40+9 (font-1 text record at 0x20C0F). Basis: callers + body -- SeWrtMem_DrawStaticScreen (draws the
+;   MEMORY WRITE screen) and SeWrtMem_DrawField (redraws the bank/number fields) call it after drawing the bank (A/B)
+;   and number bound records.
 SeMenu_DrawWriteDestName:
 	ldb_d8	l, (0x660)
 	cp	l, 1:i3

@@ -3190,6 +3190,13 @@ FileIO_ByteBlock_DemoProc1_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadPanelMemBank: Single-loads panel-memory bank WA of the selected .PMT file into bank BC: checks the
+;   file signature, reads the 16-byte bank name (file 16 + 16 * WA -> RAM 0x1ED350 + 16 + 16 * BC) and the bank's 8
+;   memories (8 * entry size from file 176 + WA * 8 * size -> 0x1ED350 + 176 + BC * 8 * size) between
+;   PanelMemory_PreBankLoad and PanelMemory_PostBankLoad; returns HL = read result, 0xFF98 with no file selected,
+;   0xFF9A on a wrong signature. Basis: callers + body -- SingleLoadDst_PanelMemListProc runs it for parameter 10 (the
+;   execute SingleLoadDstFunc sends) in ALL mode with WA = source bank (0x8960 / 8) and BC = destination bank (0x8966
+;   / 8); FileIO_ByteBlock_DemoProc1 is the one-memory load.
 SingleLoad_LoadPanelMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -3382,6 +3389,12 @@ SingleLoad_LoadSong_Epilogue3:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
+; SingleLoad_LoadComposerPattern: Single-loads from the selected .CMP file: opens it (type 3), validates the header
+;   (FileIO_ReadAndValidateHeader, else 0xFF9A) and hands source A = WA and destination C = BC to
+;   SingleLoad_CopyComposerPatternFromFile, which copies one composer pattern, or a whole memory bank when both are 30 +
+;   bank; returns HL = result (0xFF98 with no file selected). Basis: callers + body -- SingleLoadDst_ComposerListProc
+;   runs it for parameter 10 with WA = source position 0x8962 and BC = destination 0x896A, or in ALL mode with both =
+;   position / 10 + 30.
 SingleLoad_LoadComposerPattern:
 	lda	xsp, (xsp-28)
 	pushw	iz
@@ -3433,6 +3446,12 @@ SingleLoad_LoadComposerPattern_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+28)
 	ret
+; SingleLoad_LoadSoundMemEntry: Single-loads SOUND MEMORY entry WA of the selected .TM file into entry BC: entries
+;   below 40 are 470-byte sounds (file 16 + 470 * WA -> RAM 0x1E0000 + 16 + 470 * BC, flash block BC / 20, BC mod 20),
+;   entries from 40 are the 80-byte records at 0x4AA7 + 80 * (index - 40) (flash block 64); the read is wrapped in
+;   PreTmLoadEntry / PostTmLoadEntry; returns HL = result (0xFF98 no file, 0xFF9A wrong signature).
+;   Basis: callers + body -- SingleLoadDst_SoundMemListProc runs it for parameter 10 outside ALL mode with WA = source
+;   cursor 0x8964 and BC = destination cursor 0x896C.
 SingleLoad_LoadSoundMemEntry:
 	lda	xsp, (xsp-42)
 	pushw	iz
@@ -3557,6 +3576,11 @@ SingleLoad_LoadSoundMemEntry_Epilogue5:
 	popw	iz
 	lda	xsp, (xsp+42)
 	ret
+; SingleLoad_LoadSoundMemBank: Single-loads SOUND MEMORY bank WA of the selected .TM file into bank BC: banks 0-1 are
+;   20 sounds = 9400 bytes (file 16 + 9400 * WA -> RAM 0x1E0000 + 16 + 9400 * BC), bank 2 and up is the 0x2927-byte
+;   block at 0x4980 (the area of entries 40+); the read is wrapped in PostTmLoadEntry_Return /
+;   TmFlashWrite_ValidateParams; returns HL = result (0xFF98 no file, 0xFF9A wrong signature). Basis: callers + body
+;   -- SingleLoadDst_SoundMemListProc runs it for parameter 10 in ALL mode with WA = 0x8964 / 20 and BC = 0x896C / 20.
 SingleLoad_LoadSoundMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz

@@ -9455,6 +9455,7 @@ DispTimeSetGridCheck:
 ;   0x1c0001c -> DispTimeSetGridCheck_OnLswData
 ;   0x1c0001d -> DispTimeSetGridCheck_OnLswData
 	jp	t, (xix+wa)
+; DispTimeSetGridCheck event dispatch (7-entry, events 0x1c00017-0x1c0001d, table 0xed1582)
 DispTimeSet_EventDispatch:
 	call	GetFocusObject
 	ld	xwa, xhl

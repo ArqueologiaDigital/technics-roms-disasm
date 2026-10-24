@@ -2702,6 +2702,10 @@ Flash_StoreBaseAndInitAccPatch_Sub_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
+; Flash_WriteSlotOwnerMap: Copies the 64 KB section-7 sector into its RAM image at (0x0C96), writes owner A into the
+;   owner byte of every slot in the assignment list at RAM 0x7A0, clears A from the remaining slots after them, then
+;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
+;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
 Flash_WriteSlotOwnerMap:
 	ld	xix, (3222:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
@@ -2802,6 +2806,10 @@ Flash_StoreBaseAndInitAccPatch_Skip11:
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
+; Flash_CopyBlocksToSlots: Copies every block in the assignment list at RAM 0x7A0 from the RAM work area at 0x1E0000
+;   into its slot in the RAM image of the section-7 sector (large block 10,535 bytes, small blocks 470), then erases
+;   and rewrites the sector. Basis: callers + body -- Flash_InitBytecodeBlock calls it right after
+;   Flash_WriteSlotOwnerMap on its write path; Flash_GetSlotAddressAndSize supplies the source and destination addresses.
 Flash_CopyBlocksToSlots:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -8007,6 +8015,7 @@ S2cGridBoxProc:
 	ld wa, (xwa)
 	lda xix, (FdcFormat_DialGrid:24)
 	jp	t, (xix+wa)
+; FdcFormat dial grid dispatch (7-entry, table 0xe1d728)
 FdcFormat_DialGrid:
 	ld	xwa, (xsp+16)
 	ld	xbc, xiz

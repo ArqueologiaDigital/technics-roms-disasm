@@ -880,6 +880,14 @@ SndParam_RegisterMultiField_Data_Join:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
+; SndParam_SetRegWord: Register accessor 5 of the sound-parameter descriptors (word-list parameters): clamps the value
+;   BC to the descriptor's +7..+8 and translates it through the 16-bit list SndParam_WordValueListPtrs[+11]; when that
+;   word differs from the one in the parameter's slot (block SndParam_BlockRamPtrs[+4], word +5) it stores it there
+;   (not in mode DE = 4) and fills the change record at 0x9674 (+2 = 1) with the two byte writes {block, offset, low}
+;   and {block, offset + 1, high}. Returns XHL = 0x9674; 0xFFFF at +0 when the block has no RAM. Basis: callers + body
+;   -- entry 5 of SndParam_RegisterHandlers, picked by descriptor byte +0x0D in SndParam_DispatchCallback; the
+;   descriptor that uses it (MidiChParam_Entry_052) reads back with SndParam_ReadRegWord, the index of the stored word
+;   in the same list.
 SndParam_SetRegWord:
 	dec	2, xsp
 	push	xiz
