@@ -188,7 +188,7 @@ func_9780011C_entry_L4a:
 	mov	d0, (0xc, sp)
 	movbu	(0x19, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -471,7 +471,7 @@ func_978003E3_entry_L64:
 func_978003E3_entry_L6b:
 	mov	(0x60, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d0
 	mov	(0x60, sp), d1
 	cmp	d1, d0
@@ -485,7 +485,7 @@ func_978003E3_entry_L85:
 	mov	(0x60, sp), d0
 	add	-1, d0
 	mov	0x200, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	inc	d0
 	mov	d0, (0x979126e4)
 	mov	0x1000, d0
@@ -506,7 +506,7 @@ func_978003E3_entry_Lbc:
 func_978003E3_entry_Lc3:
 	mov	(0x979126d8), d0
 	mov	0x200, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	asl	9, d0
 	mov	(0x979126d8), d1
 	cmp	d1, d0
@@ -515,7 +515,7 @@ func_978003E3_entry_Lc3:
 func_978003E3_entry_Le1:
 	mov	(0x979126d8), d0
 	mov	0x200, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	inc	d0
 	asl	9, d0
 	mov	d0, (0x979126dc)
@@ -1442,7 +1442,7 @@ func_97800EAB:
 	mov	d0, (0xc, sp)
 	movhu	(0x979127d8), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x14, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -1463,7 +1463,7 @@ func_97800ED7_entry_La:
 	mov	(0x20, sp), d0
 	mov	1, d1
 	sub	d1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x20, sp), d1
 	mov	1, d0
 	sub	d0, d1
@@ -1475,7 +1475,7 @@ func_97800ED7_entry_L2c:
 	mov	(0x1c, sp), a0
 	mov	0x97912782, a1
 	mov	0x15, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x1c, sp), a0
 	movbu	d0, (0x15, a0)
@@ -1495,7 +1495,7 @@ func_97800F20_Ld:
 	mov	(0x20, sp), d0
 	mov	1, d1
 	sub	d1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x20, sp), d1
 	mov	1, d0
 	sub	d0, d1
@@ -1507,7 +1507,7 @@ func_97800F20_L2f:
 	mov	(0x1c, sp), a0
 	mov	0x9791279e, a1
 	mov	9, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x1c, sp), a0
 	movbu	d0, (9, a0)
@@ -1529,7 +1529,7 @@ func_97800F69_entry_La:
 	mov	(0x20, sp), d0
 	mov	1, d1
 	sub	d1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x20, sp), d1
 	mov	1, d0
 	sub	d0, d1
@@ -1541,7 +1541,7 @@ func_97800F69_entry_L2c:
 	mov	(0x1c, sp), a0
 	mov	0x979127a7, a1
 	mov	0x29, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x1c, sp), a0
 	movbu	d0, (0x29, a0)
@@ -2089,7 +2089,7 @@ func_97801498:
 	mov	0x97983e80, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0xaa55aa55, d0
 	mov	d0, (0x97983e80)
 	mov	0x23a4ef2b, d0
@@ -2131,15 +2131,15 @@ func_97801498_L84:
 	mov	0x97983eac, a0
 	mov	0x9783df1c, a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x97983ecc, a0
 	mov	0x9783df3c, a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x97983ecc, a0
 	mov	(0x20, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	1, d0
 	mov	d0, (0x97984088)
 	mov	d0, (0x979840a0)
@@ -2154,7 +2154,7 @@ func_97801568_entry:
 	mov	0x97987280, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x1c, sp), d0
 	cmp	3, d0
 	bge	func_97801568_entry_L1d
@@ -2386,7 +2386,7 @@ func_97801568_entry_L22:
 	mov	0x97987308, a0
 	mov	(0x20, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 func_97801568_entry_L2b3:
 	ret	0, 0x14
@@ -2399,7 +2399,7 @@ func_97801821_entry:
 	mov	0x97945e7c, a0
 	mov	0x20, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x14, sp)
 	bra	func_97801821_entry_L42
@@ -2457,7 +2457,7 @@ func_97801821_entry_L57:
 	mov	d3, a0
 	mov	0x20, d0
 	mov	0x1a, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d1
 	mov	0x300, d0
 	nop
@@ -2474,7 +2474,7 @@ func_97801821_entry_L57:
 	add	d1, a0
 	clr	d0
 	mov	2, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d1
 	mov	0x300, d0
 	nop
@@ -2491,7 +2491,7 @@ func_97801821_entry_L57:
 	add	d1, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x18, sp), d0
 	inc	d0
 	mov	d0, (0x18, sp)
@@ -2523,7 +2523,7 @@ func_97801821_entry_Lea:
 	add	0x97973e7c, a0
 	mov	0xff, d0
 	mov	0x80, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d0
 	mov	0x110, d1
 	nop
@@ -2534,7 +2534,7 @@ func_97801821_entry_Lea:
 	add	d0, a0
 	mov	0xff, d0
 	mov	0x80, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d0
 	mov	0x110, d1
 	nop
@@ -2545,7 +2545,7 @@ func_97801821_entry_Lea:
 	add	d0, a0
 	mov	0x20, d0
 	mov	0x10, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d0
 	inc	d0
 	mov	d0, (0x14, sp)
@@ -2566,11 +2566,11 @@ func_9780197E_entry:
 	mov	0x979898fc, a0
 	mov	0x20, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x97945e7c, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780197E_entry_L32
 	bra	func_9780197E_entry_L37
@@ -2598,7 +2598,7 @@ func_9780197E_entry_L45:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	4, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780197E_entry_L68
 	bra	func_9780197E_entry_L70
@@ -2630,7 +2630,7 @@ func_9780197E_entry_L8c:
 	add	0x20, a0
 	mov	0x20, d0
 	mov	0x1a, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d2
 	add	0x20, d2
@@ -2638,7 +2638,7 @@ func_9780197E_entry_L8c:
 	add	d2, a0
 	clr	d0
 	mov	2, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d0
 	add	0x20, d0
@@ -2646,7 +2646,7 @@ func_9780197E_entry_L8c:
 	add	d0, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x14, sp)
 	bra	func_9780197E_entry_L110
@@ -2671,7 +2671,7 @@ func_9780197E_entry_Lca:
 	mov	sp, a1
 	add	0x20, a1
 	mov	0x30, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780197E_entry_Lf6
 	bra	func_9780197E_entry_Lfe
@@ -2703,7 +2703,7 @@ func_9780197E_entry_L11a:
 	add	0x50, a0
 	mov	0xff, d0
 	mov	0x80, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d0
 	add	0x50, d0
@@ -2711,7 +2711,7 @@ func_9780197E_entry_L11a:
 	add	d0, a0
 	mov	0xff, d0
 	mov	0x80, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d0
 	add	0x50, d0
@@ -2719,7 +2719,7 @@ func_9780197E_entry_L11a:
 	add	d0, a0
 	mov	0x20, d0
 	mov	0x10, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x14, sp)
 	bra	func_9780197E_entry_L17c
@@ -2728,7 +2728,7 @@ func_9780197E_entry_L15a:
 	mov	sp, a1
 	add	0x50, a1
 	mov	0x110, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780197E_entry_L173
 	bra	func_9780197E_entry_L177
@@ -3445,7 +3445,7 @@ func_97802175:
 func_97802175_entry:
 	mov	d0, (0x24, sp)
 	mov	a0, (0x20, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d1
 	cmp	d1, d0
@@ -3458,7 +3458,7 @@ func_97802175_entry_L14:
 	mov	(0x14, sp), d0
 	sub	d0, d1
 	mov	d1, d0
-	call	func_9780A3B6_entry, [a2,a3], 8
+	call	strncat_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x20, sp), a0
 	mov	(0x24, sp), d1
@@ -3471,7 +3471,7 @@ func_978021AC:
 
 func_978021AC_entry:
 	mov	a0, (0x1c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	1, d1
 	sub	d1, d0
 	mov	d0, (0xc, sp)
@@ -3517,7 +3517,7 @@ func_978021E9_L8:
 	mov	(0x14, sp), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x14, sp), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -3538,7 +3538,7 @@ func_978021E9_L30:
 	add	d1, d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x14, sp), d0
 	mov	(0x18, sp), d1
 	mov	sp, a0
@@ -3598,7 +3598,7 @@ func_9780229B_L3f:
 	mov	(0x54, sp), a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 func_9780229B_L4a:
 	ret	0, 0x48
@@ -3619,7 +3619,7 @@ func_978022E8_entry_Le:
 	mov	sp, a0
 	add	0x14, a0
 	mov	(0x54, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x24, sp)
 	mov	sp, a0
@@ -3633,7 +3633,7 @@ func_978022E8_entry_Le:
 	mov	sp, a1
 	add	0x14, a1
 	mov	0x10, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 func_978022E8_entry_L3e:
 	ret	0, 0x48
@@ -3659,7 +3659,7 @@ func_9780232C_entry_L16:
 	mov	sp, a0
 	add	0x14, a0
 	mov	(0x54, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x24, sp)
 	mov	sp, a0
@@ -3677,7 +3677,7 @@ func_9780232C_entry_L16:
 	mov	sp, a1
 	add	0x14, a1
 	mov	0x10, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 func_9780232C_entry_L4d:
 	ret	0, 0x48
@@ -3712,7 +3712,7 @@ func_9780237F_entry_L19:
 	mov	0x100, a1
 	add	d1, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x24, sp)
 	movbu	(0x58, sp), d0
@@ -3727,7 +3727,7 @@ func_9780237F_entry_L4c:
 	mov	(0x54, sp), a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 func_9780237F_entry_L57:
 	ret	0, 0x48
@@ -4211,7 +4211,7 @@ func_9780271A_entry_L38:
 	add	d1, d2
 	mov	d2, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x2e, sp)
 	movbu	(0x60, sp), d0
@@ -4226,7 +4226,7 @@ func_9780271A_entry_L71:
 	mov	(0x5c, sp), a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 func_9780271A_entry_L7c:
 	ret	[d2], 0x4c
@@ -4284,7 +4284,7 @@ func_978027D8_entry_L18:
 	mov	sp, a0
 	add	0x14, a0
 	mov	(0x5c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x2e, sp)
 	mov	sp, a0
@@ -4307,7 +4307,7 @@ func_978027D8_entry_L18:
 	mov	sp, a1
 	add	0x14, a1
 	mov	0x1a, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 func_978027D8_entry_L55:
 	ret	[d2], 0x4c
@@ -5414,7 +5414,7 @@ func_9780303B:
 	mov	d0, (0x1c, sp)
 	mov	(0x979118e8), d0
 	mov	d0, (0x20, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -5491,7 +5491,7 @@ func_978030B2_entry_L64:
 	mov	d0, (0xc, sp)
 	movbu	(0x97910048), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x18, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -5591,7 +5591,7 @@ func_978031BD_L67:
 	mov	d0, (0xc, sp)
 	movbu	(0x97910048), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x18, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -5945,7 +5945,7 @@ func_97803546_entry_L6d:
 	mov	d0, (0xc, sp)
 	mov	(0x14, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x18, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -6233,7 +6233,7 @@ func_978037B3_Lb3:
 	mov	d0, (0x1c, sp)
 	mov	(0x97910068), d0
 	mov	d0, (0x20, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -6276,7 +6276,7 @@ func_978037B3_L170:
 	mov	d0, (0x10, sp)
 	mov	(0x97910064), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -6897,7 +6897,7 @@ func_97803F11_L16:
 	mov	0x97983e80, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	6, d0
@@ -7497,23 +7497,23 @@ func_97804369_entry_L84:
 	mov	0x9791394c, a0
 	mov	(0x24, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x97913974, a0
 	mov	(0x28, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x9791399c, a0
 	mov	(0x2c, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x979139c4, a0
 	mov	(0x30, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x979139ec, a0
 	mov	(0x34, sp), a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	1, d0
 	call	func_97803972_entry, 0, 0x30
 	mov	d0, (0x14, sp)
@@ -7598,7 +7598,7 @@ func_97804488_entry_L7c:
 	mov	0x97983e80, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_97804488_entry_L96
 	bra	func_97804488_entry_L9c
@@ -7646,7 +7646,7 @@ func_9780453F_entry_L22:
 	mov	0x97983e80, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x11, d0
@@ -7795,7 +7795,7 @@ func_97804661_entry_L65:
 	mov	0x97988288, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x18, d0
@@ -7903,7 +7903,7 @@ func_97804661_entry_L15d:
 	mov	0x97987280, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_97804661_entry_L177
 	bra	func_97804661_entry_L17d
@@ -7948,7 +7948,7 @@ func_9780480B_entry_L21:
 	mov	0x97988288, a0
 	mov	0x5a, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	movbu	(0x6c, sp), d0
 	mov	0x68, d1
 	nop
@@ -8010,7 +8010,7 @@ func_9780480B_entry_Lc1:
 	mov	0x97988288, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780480B_entry_Ldb
 	bra	func_9780480B_entry_Le2
@@ -8022,7 +8022,7 @@ func_9780480B_entry_Le2:
 	mov	0x97988288, a0
 	mov	0xff, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	movbu	(0x6c, sp), d0
 	mov	0x68, d1
 	nop
@@ -8084,7 +8084,7 @@ func_9780480B_entry_L183:
 	mov	0x97988288, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780480B_entry_L19d
 	bra	func_9780480B_entry_L1a4
@@ -8096,7 +8096,7 @@ func_9780480B_entry_L1a4:
 	mov	0x97988288, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	movbu	(0x6c, sp), d0
 	mov	0x68, d1
 	nop
@@ -8158,7 +8158,7 @@ func_9780480B_entry_L242:
 	mov	0x97988288, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_9780480B_entry_L25c
 	bra	func_9780480B_entry_L262
@@ -8200,7 +8200,7 @@ func_9780480B_entry_L2a0:
 	mov	d0, (0x14, sp)
 	mov	(0x97912724), d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x2c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -8252,7 +8252,7 @@ func_9780480B_entry_L31b:
 	mov	d0, (0x14, sp)
 	mov	(0x97912720), d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x2c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -8400,7 +8400,7 @@ func_97804C1C_entry_L7a:
 	mov	0x9791292c, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x1e, d0
@@ -8449,7 +8449,7 @@ func_97804C1C_entry_Lda:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x34, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -8517,7 +8517,7 @@ func_97804C1C_entry_L192:
 func_97804C1C_entry_L1aa:
 	mov	(0x7c, sp), d0
 	mov	0x10, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x20, sp)
 	asl	4, d0
 	mov	(0x7c, sp), d1
@@ -8549,7 +8549,7 @@ func_97804E0F_entry:
 	mov	0x9791292c, a0
 	mov	0x5a, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x1a, d0
@@ -8593,7 +8593,7 @@ func_97804E0F_entry_L70:
 	mov	0x9791292c, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_97804E0F_entry_L8a
 	bra	func_97804E0F_entry_L95
@@ -8606,7 +8606,7 @@ func_97804E0F_entry_L95:
 	mov	0x9791292c, a0
 	mov	0xff, d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x1c, d0
@@ -8650,7 +8650,7 @@ func_97804E0F_entry_L106:
 	mov	0x9791292c, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_97804E0F_entry_L120
 	bra	func_97804E0F_entry_L12b
@@ -8663,7 +8663,7 @@ func_97804E0F_entry_L12b:
 	mov	0x9791292c, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x1e, d0
@@ -8707,7 +8707,7 @@ func_97804E0F_entry_L198:
 	mov	0x9791292c, a0
 	mov	0x979898fc, a1
 	mov	0x1000, d0
-	call	func_9780A3ED_entry, [d2,a2], 8
+	call	memcmp_entry, [d2,a2], 8
 	cmp	0, d0
 	bne	func_97804E0F_entry_L1b2
 	bra	func_97804E0F_entry_L1bc
@@ -8823,7 +8823,7 @@ func_97805089_entry_L10:
 	mov	d0, (0xc, sp)
 	mov	(0x9791004c), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x9791004c), d0
 	cmp	0, d0
 	bgt	func_97805089_entry_L3f
@@ -8870,7 +8870,7 @@ func_978050D7_L2a:
 	mov	d3, a0
 	mov	0x20, d0
 	mov	0x1a, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d0
 	mov	0x300, d1
 	nop
@@ -8887,7 +8887,7 @@ func_978050D7_L2a:
 	add	d0, a0
 	clr	d0
 	mov	2, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x14, sp), d1
 	mov	0x300, d0
 	nop
@@ -8904,7 +8904,7 @@ func_978050D7_L2a:
 	add	d1, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x18, sp), d0
 	inc	d0
 	mov	d0, (0x18, sp)
@@ -9998,7 +9998,7 @@ func_97805A74_entry_L23:
 	add	d1, d2
 	mov	d2, a1
 	mov	0x1a, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x42, sp)
 	mov	(0x9791272c), d0
@@ -10050,7 +10050,7 @@ func_97805A74_entry_Lf4:
 	mulu	d0, d1
 	add	d1, a1
 	mov	0x1a, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	mov	d0, (0x20, sp)
 	bra	func_97805A74_entry_L18f
@@ -10112,7 +10112,7 @@ func_97805A74_entry_L1ab:
 	mov	d0, (0xc, sp)
 	mov	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -10131,7 +10131,7 @@ func_97805A74_entry_L1ab:
 	mov	d0, a0
 	mov	(0x40, a0), d1
 	mov	d1, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -10150,7 +10150,7 @@ func_97805A74_entry_L1ab:
 	mov	d0, a0
 	mov	(0x48, a0), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11013,7 +11013,7 @@ func_9780640E_entry_L60:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11032,7 +11032,7 @@ func_9780640E_entry_L60:
 	add	0x979127f4, a0
 	mov	(0x40, a0), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11051,7 +11051,7 @@ func_9780640E_entry_L60:
 	add	0x979127f4, a0
 	mov	(0x48, a0), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11074,7 +11074,7 @@ func_9780640E_entry_Lf7:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11098,7 +11098,7 @@ func_9780640E_entry_L12e:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11208,7 +11208,7 @@ func_97806595_entry_Lb0:
 	mov	d0, (0x10, sp)
 	mov	(0x97913934), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11369,7 +11369,7 @@ func_97806763_entry_L6e:
 	mov	d0, (0xc, sp)
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x34, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -11593,7 +11593,7 @@ func_978068AF_entry_L106:
 	mov	(0x20, sp), a0
 	mov	(0x1c, sp), a1
 	mov	(0x24, sp), d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 func_978068AF_entry_L112:
 	ret	0, 0x2c
@@ -11635,7 +11635,7 @@ func_978069C7_entry_L37:
 	mov	0x979898fc, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 func_978069C7_entry_L59:
 	mov	(0x3c, sp), d0
 	cmp	0, d0
@@ -11739,7 +11739,7 @@ func_978069C7_entry_L139:
 	mov	(0x1c, sp), a1
 	mov	a1, d0
 	mov	a2, a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(0x18, sp), d0
 	mov	(0x1c, sp), d1
 	add	d1, d0
@@ -11787,7 +11787,7 @@ func_978069C7_entry_L1c8:
 	mov	0x979898fc, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 func_978069C7_entry_L1e5:
 	mov	(0x97913a84), d0
 	cmp	0, d0
@@ -11833,7 +11833,7 @@ func_97806BC2_entry_L2f:
 	mov	d0, (0xc, sp)
 	mov	(0x24, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x30, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -12059,7 +12059,7 @@ func_97806CC0_entry_L12c:
 	mov	(0x58, sp), a0
 	mov	d0, a1
 	mov	(0x30, sp), d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(0x58, sp), d0
 	mov	(0x30, sp), d1
 	add	d1, d0
@@ -12818,7 +12818,7 @@ func_978074EE_entry:
 	mov	0x9791292c, a0
 	clr	d0
 	mov	0x1000, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	-1, d0
 	mov	d0, (0x9791292c)
 	clr	d0
@@ -13014,7 +13014,7 @@ func_9780767F:
 	mov	d1, (0x40, sp)
 	mov	(0x3c, a0), d1
 	mov	d1, (0x44, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97913a14, a0
 	call	func_9780AEBC_entry, 0, 0x14
 	mov	0x97913a14, d0
@@ -13058,7 +13058,7 @@ func_9780767F:
 	mov	d1, (0x50, sp)
 	mov	(0xec, a0), d1
 	mov	d1, (0x54, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97913a14, a0
 	call	func_9780AEBC_entry, 0, 0x14
 	ret	0, 0x58
@@ -13114,7 +13114,7 @@ func_9780777B_L8f:
 	add	0x70, a0
 	mov	0x97941e7c, a1
 	mov	0x4000, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	bra	func_9780777B_Ldf
 func_9780777B_La2:
 	mov	(0x6f80, sp), d0
@@ -13802,44 +13802,44 @@ func_9780777B_L648:
 	add	0x6f70, sp
 	ret	[d2], 4
 
-func_97807DCA:
+LibF64ToI16:
 	movm	[d3,a3], (sp)
 	add	-8, sp
 
-func_97807DCA_entry:
+LibF64ToI16_entry:
 	mov	(0x1c, sp), d1
 	mov	(0x18, sp), d0
 	mov	d1, a1
-	call	func_97807E4B, 0, 0
-	call	func_97807DE3, 0, 0
+	call	LibF64Unpack, 0, 0
+	call	LibF64UnpackedToI32, 0, 0
 	exth	d0
 	ret	[d3,a3], 0x10
 
-func_97807DE3:
+LibF64UnpackedToI32:
 	btst	0x06, d3
 	nop
-	beq	func_97807DE3_L9
-func_97807DE3_L6:
+	beq	LibF64UnpackedToI32_L9
+LibF64UnpackedToI32_L6:
 	clr	d0
-	bra	func_97807DE3_L4d
-func_97807DE3_L9:
+	bra	LibF64UnpackedToI32_L4d
+LibF64UnpackedToI32_L9:
 	btst	0x01, d3
 	nop
-	beq	func_97807DE3_L1d
-func_97807DE3_Lf:
+	beq	LibF64UnpackedToI32_L1d
+LibF64UnpackedToI32_Lf:
 	mov	0x7fffffff, d0
 	add	a1, a1
 	nop
-	bcc	func_97807DE3_L4d
+	bcc	LibF64UnpackedToI32_L4d
 	inc	d0
-	bra	func_97807DE3_L4d
-func_97807DE3_L1d:
+	bra	LibF64UnpackedToI32_L4d
+LibF64UnpackedToI32_L1d:
 	cmp	0x3ff00000, a3
 	nop
-	bcs	func_97807DE3_L6
+	bcs	LibF64UnpackedToI32_L6
 	cmp	0x41e00000, a3
 	nop
-	bcc	func_97807DE3_Lf
+	bcc	LibF64UnpackedToI32_Lf
 	asl	10, d1
 	lsr	22, d0
 	or	d1, d0
@@ -13851,50 +13851,50 @@ func_97807DE3_L1d:
 	asr	31, d1
 	xor	d1, d0
 	sub	d1, d0
-func_97807DE3_L4d:
+LibF64UnpackedToI32_L4d:
 	retf	0, 0
 
-func_97807E33:
+LibF64ToI32:
 	movm	[d3,a3], (sp)
 	add	-8, sp
 
-func_97807E33_entry:
+LibF64ToI32_entry:
 	mov	(0x1c, sp), d1
 	mov	(0x18, sp), d0
 	mov	d1, a1
-	call	func_97807E4B, 0, 0
-	call	func_97807DE3, 0, 0
+	call	LibF64Unpack, 0, 0
+	call	LibF64UnpackedToI32, 0, 0
 	ret	[d3,a3], 0x10
 
-func_97807E4B:
+LibF64Unpack:
 	mov	d1, d3
 	and	0x000fffff, d1
 	and	0x7ff00000, d3
 	mov	d3, a3
-	beq	func_97807E4B_L34
+	beq	LibF64Unpack_L34
 	or	0x00100000, d1
 	clr	d3
 	cmp	0x7ff00000, a3
 	nop
-	bne	func_97807E4B_L43
+	bne	LibF64Unpack_L43
 	and	0x000fffff, d1
 	or	d1, d0
 	nop
-	beq	func_97807E4B_L30
+	beq	LibF64Unpack_L30
 	mov	4, d3
-	bra	func_97807E4B_L43
-func_97807E4B_L30:
+	bra	LibF64Unpack_L43
+LibF64Unpack_L30:
 	mov	1, d3
-	bra	func_97807E4B_L43
-func_97807E4B_L34:
+	bra	LibF64Unpack_L43
+LibF64Unpack_L34:
 	or	d1, d0
 	nop
-	bne	func_97807E4B_L3d
+	bne	LibF64Unpack_L3d
 	mov	2, d3
-	bra	func_97807E4B_L43
-func_97807E4B_L3d:
+	bra	LibF64Unpack_L43
+LibF64Unpack_L3d:
 	add	0x100000, a3
-func_97807E4B_L43:
+LibF64Unpack_L43:
 	retf	0, 0
 
 func_97807E91:
@@ -13909,12 +13909,12 @@ func_97807E91_entry:
 	nop
 	bnc	func_97807E91_entry_L19
 	mov	d1, a1
-	call	func_97807E4B, 0, 0
-	call	func_97807DE3, 0, 0
+	call	LibF64Unpack, 0, 0
+	call	LibF64UnpackedToI32, 0, 0
 	bra	func_97807E91_entry_L5a
 func_97807E91_entry_L19:
 	clr	d3
-	call	func_97807E4B, 0, 0
+	call	LibF64Unpack, 0, 0
 	nop
 	btst	0x06, d3
 	nop
@@ -13946,11 +13946,11 @@ func_97807E91_entry_L33:
 func_97807E91_entry_L5a:
 	ret	[d3,a3], 0x10
 
-func_97807EF3:
+sprintf:
 	movm	[a2], (sp)
 	add	-0x1c, sp
 
-func_97807EF3_entry:
+sprintf_entry:
 	mov	(0x28, sp), a2
 	mov	sp, a0
 	mov	a0, d1
@@ -14436,7 +14436,7 @@ func_978081E5_entry_L78:
 	mov	d2, a0
 	mov	0x9783e404, a1
 	mov	2, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	nop
 	cmp	0, d0
 	nop
@@ -14444,7 +14444,7 @@ func_978081E5_entry_L78:
 	mov	d2, a0
 	mov	0x9783e407, a1
 	mov	2, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	nop
 	cmp	0, d0
 	nop
@@ -14524,7 +14524,7 @@ func_978082FD_entry:
 	beq	func_978082FD_entry_L16
 	mov	(a3), d1
 	mov	d1, a0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(a3), d0
 	nop
 	add	d2, d0
@@ -14833,15 +14833,15 @@ func_97808414_entry_Lb9:
 func_97808414_entry_Lce:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_978084EA:
+strncmp:
 	movm	[a2], (sp)
 
-func_978084EA_entry:
+strncmp_entry:
 	mov	a0, a2
 	add	d0, a2
 	cmp	a2, a0
 	nop
-	bcc	func_978084EA_entry_L1f
+	bcc	strncmp_entry_L1f
 	setlb
 	movbu	(a0), d0
 	movbu	(a1), d1
@@ -14849,27 +14849,27 @@ func_978084EA_entry:
 	extb	d1
 	cmp	d1, d0
 	nop
-	bne	func_978084EA_entry_L23
+	bne	strncmp_entry_L23
 	movbu	(a0), d1
 	extb	d1
 	cmp	0, d1
 	nop
-	beq	func_978084EA_entry_L1f
+	beq	strncmp_entry_L1f
 	inc	a0
 	inc	a1
 	cmp	a2, a0
 	nop
 	lcs
-func_978084EA_entry_L1f:
+strncmp_entry_L1f:
 	clr	d0
 	nop
-	bra	func_978084EA_entry_L2a
-func_978084EA_entry_L23:
+	bra	strncmp_entry_L2a
+strncmp_entry_L23:
 	movbu	(a0), d0
 	movbu	(a1), d1
 	nop
 	sub	d1, d0
-func_978084EA_entry_L2a:
+strncmp_entry_L2a:
 	nop
 	retf	[a2], 4
 
@@ -15190,7 +15190,7 @@ func_978085EA_entry_L19e:
 	add	d0, a0
 	mov	0x30, d0
 	mov	d3, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	nop
 	add	d3, d2
 func_978085EA_entry_L1ab:
@@ -15245,7 +15245,7 @@ func_978087A8_entry_L23:
 	mov	d2, (0x1c, sp)
 	mov	d0, (8, sp)
 	mov	d2, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	bge	func_978087A8_entry_L67
 	mov	(a2), d0
 	nop
@@ -15325,7 +15325,7 @@ func_978087A8_entry_La7:
 	mov	d2, (0x1c, sp)
 	mov	d0, (8, sp)
 	mov	d2, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	bge	func_978087A8_entry_Leb
 	mov	(a2), d0
 	nop
@@ -15443,7 +15443,7 @@ func_978088D8_entry:
 	ble	func_978088D8_entry_L59
 	mov	0x9783e674, a1
 	mov	a2, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	8, d0
 	bra	func_978088D8_entry_L7c
 func_978088D8_entry_L59:
@@ -15529,7 +15529,7 @@ func_9780895D_entry:
 	ble	func_9780895D_entry_L60
 	mov	(0x88, sp), a0
 	mov	0x9783e680, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	8, d0
 	ret	[d2,d3,a2,a3], 0x80
 func_9780895D_entry_L60:
@@ -15752,7 +15752,7 @@ func_97808ABD_entry:
 	mov	0x9783e68c, a1
 	mov	d0, (a2)
 	mov	(0x8c, sp), a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	8, d0
 	ret	[d2,d3,a2,a3], 0x84
 func_97808ABD_entry_L6b:
@@ -15889,7 +15889,7 @@ func_97808ABD_entry_L13e:
 	mov	d3, d0
 	mov	d2, a1
 	mov	a2, a0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	bra	func_97808ABD_entry_L1c1
 func_97808ABD_entry_L149:
 	mov	(0x2c, sp), d0
@@ -16001,14 +16001,14 @@ func_97808C88_entry:
 	add	0x38, a0
 	movhu	(2, a0), d0
 	exth	d0
-	call	func_97808FFE, 0, 0
+	call	abs, 0, 0
 	mov	(0x34, sp), a0
 	mov	d0, d3
 	add	2, d3
 	add	2, a0
 	mov	d3, d1
 	mov	0x30, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	nop
 	cmp	0, d2
 	nop
@@ -16099,7 +16099,7 @@ func_97808C88_entry_Lae:
 	add	d3, a0
 	add	-0x10, d1
 	mov	0x30, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x97989294), a0
 	mov	(a0), a0
 	movbu	(a0), d1
@@ -16117,7 +16117,7 @@ func_97808C88_entry_Lae:
 	add	d0, a0
 	mov	(0x4c, sp), d1
 	mov	0x30, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x18, sp), d0
 	ret	[d2,d3,a2,a3], 0x2c
 func_97808C88_entry_L102:
@@ -16152,7 +16152,7 @@ func_97808C88_entry_L102:
 	sub	d1, d0
 	mov	d0, d1
 	mov	0x30, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	sp, a0
 	add	0x38, a0
 	movhu	(2, a0), d0
@@ -16185,7 +16185,7 @@ func_97808C88_entry_L150:
 	mov	d2, d1
 	add	d2, d3
 	mov	0x30, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 func_97808C88_entry_L174:
 	mov	d3, d0
 	mov	(0x34, sp), a0
@@ -16315,7 +16315,7 @@ func_97808E89_entry_L31:
 	inc	a2
 func_97808E89_entry_L36:
 	mov	a3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	nop
 	inc	d3
 	inc	d2
@@ -16524,19 +16524,19 @@ func_97808F4E_entry_L96:
 	add	d0, a1
 	sub	d0, d1
 	mov	d1, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x28
 
-func_97808FFE:
+abs:
 	mov	d0, d1
 	cmp	0, d1
 	nop
-	bge	func_97808FFE_La
+	bge	abs_La
 	not	d1
 	mov	d1, d0
 	inc	d0
-func_97808FFE_La:
+abs_La:
 	nop
 	retf	0, 0
 
@@ -16550,21 +16550,21 @@ func_9780900C:
 	mov	a0, d1
 	retf	0, 0
 
-func_97809020:
+LibDiv32:
 	cmp	1, d1
 	nop
-	beq	func_97809020_L10
+	beq	LibDiv32_L10
 	cmp	-1, d1
 	nop
-	beq	func_97809020_L16
+	beq	LibDiv32_L16
 	ext	d0
 	div	d1, d0
 	rets
-func_97809020_L10:
+LibDiv32_L10:
 	cmp	0, d0
 	nop
 	retf	0, 0
-func_97809020_L16:
+LibDiv32_L16:
 	not	d0
 	inc	d0
 	nop
@@ -16722,7 +16722,7 @@ func_9780903D_entry_Lf0:
 	mov	(0x30, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	mov	(0x24, sp), d0
@@ -16733,7 +16733,7 @@ func_9780903D_entry_Lf0:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	mov	(0x58, sp), d0
@@ -16744,7 +16744,7 @@ func_9780903D_entry_Lf0:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	blt	func_9780903D_entry_L180
 func_9780903D_entry_L14a:
 	mov	(0x58, sp), d0
@@ -16755,7 +16755,7 @@ func_9780903D_entry_L14a:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x58, sp)
 	mov	d1, (0x5c, sp)
 	movhu	(0x46, sp), d0
@@ -16769,7 +16769,7 @@ func_9780903D_entry_L14a:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bge	func_9780903D_entry_L14a
 func_9780903D_entry_L180:
 	movhu	(0x46, sp), d3
@@ -16801,7 +16801,7 @@ func_9780903D_entry_L19d:
 	call	func_97809976_entry, 0, 0x28
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E33_entry, [d3,a3], 0x10
+	call	LibF64ToI32_entry, [d3,a3], 0x10
 	movbu	d0, (a2)
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
@@ -16811,7 +16811,7 @@ func_9780903D_entry_L19d:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x2c, sp)
 	mov	d1, (0x30, sp)
 	mov	1, d0
@@ -16829,7 +16829,7 @@ func_9780903D_entry_L1e1:
 	nop
 	sub	d1, d0
 	nop
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	mov	(0x2c, sp), d0
@@ -16840,10 +16840,10 @@ func_9780903D_entry_L1e1:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	bgt	func_9780903D_entry_L24b
 	mov	0x978afd90, a0
 	mov	(a0), d0
@@ -16854,13 +16854,13 @@ func_9780903D_entry_L1e1:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	func_97809853_entry, [d2,a2], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E33_entry, [d3,a3], 0x10
+	call	LibF64ToI32_entry, [d3,a3], 0x10
 	bra	func_9780903D_entry_L278
 func_9780903D_entry_L24b:
 	mov	0x978afd90, a0
@@ -16872,13 +16872,13 @@ func_9780903D_entry_L24b:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	func_97809889_entry, 0, 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E33_entry, [d3,a3], 0x10
+	call	LibF64ToI32_entry, [d3,a3], 0x10
 func_9780903D_entry_L278:
 	mov	sp, a0
 	mov	a0, d1
@@ -16918,7 +16918,7 @@ func_9780903D_entry_L290:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	bra	func_9780903D_entry_L2fa
@@ -16940,7 +16940,7 @@ func_9780903D_entry_L2cc:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 func_9780903D_entry_L2fa:
@@ -16950,7 +16950,7 @@ func_9780903D_entry_L2fa:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bge	func_9780903D_entry_L319
 	movhu	(0x46, sp), d0
 	exth	d0
@@ -16966,7 +16966,7 @@ func_9780903D_entry_L319:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	blt	func_9780903D_entry_L33b
 	movhu	(0x46, sp), d0
 	exth	d0
@@ -16990,7 +16990,7 @@ func_9780903D_entry_L34b:
 	mov	(0x38, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E33_entry, [d3,a3], 0x10
+	call	LibF64ToI32_entry, [d3,a3], 0x10
 	movbu	d0, (a3)
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
@@ -17007,7 +17007,7 @@ func_9780903D_entry_L34b:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	(0x24, sp), d0
@@ -17018,7 +17018,7 @@ func_9780903D_entry_L34b:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x34, sp)
 	mov	d1, (0x38, sp)
 	inc	a3
@@ -17039,7 +17039,7 @@ func_9780903D_entry_L3a3:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bgt	func_9780903D_entry_L3f9
 	mov	0x978afd88, a0
 	mov	(a0), d0
@@ -17054,7 +17054,7 @@ func_9780903D_entry_L3a3:
 	mov	(0x20, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bne	func_9780903D_entry_L431
 	mov	(0x18, sp), a0
 	movbu	(0x13, a0), d0
@@ -17113,7 +17113,7 @@ func_9780903D_entry_L431:
 	lne
 	ret	[d2,d3,a2,a3], 0x80
 
-func_97809485:
+LibI32ToF64:
 	mov	d2, a0
 	mov	0x41d00000, d2
 	mov	d0, d1
@@ -17124,34 +17124,34 @@ func_97809485:
 	xor	d1, d0
 	sub	d1, d0
 	nop
-	bnc	func_97809485_L27
+	bnc	LibI32ToF64_L27
 	clr	d1
 	clr	d0
 	add	0x100000, d2
-	bra	func_97809485_L49
-func_97809485_L27:
-	bne	func_97809485_L2d
+	bra	LibI32ToF64_L49
+LibI32ToF64_L27:
+	bne	LibI32ToF64_L2d
 	sub	d2, d2
-	bra	func_97809485_L55
-func_97809485_L2d:
+	bra	LibI32ToF64_L55
+LibI32ToF64_L2d:
 	mov	d0, d1
 	lsr	10, d1
 	asl	22, d0
-func_97809485_L34:
+LibI32ToF64_L34:
 	btst	0x00100000, d1
 	nop
-	bne	func_97809485_L49
+	bne	LibI32ToF64_L49
 	sub	0x100000, d2
 	add	d0, d0
 	nop
 	rol	d1
-	bra	func_97809485_L34
-func_97809485_L49:
+	bra	LibI32ToF64_L34
+LibI32ToF64_L49:
 	and	0x000fffff, d1
 	or	d2, d1
 	mov	a1, d2
 	or	d2, d1
-func_97809485_L55:
+LibI32ToF64_L55:
 	mov	a0, d2
 	retf	0, 0
 
@@ -17205,16 +17205,16 @@ func_9780952E_entry:
 	mov	sp, a0
 	add	0x14, a0
 	nop
-	call	func_97809549_entry, [d2,d3,a2], 0x2c
+	call	LibF64Modf_entry, [d2,d3,a2], 0x2c
 	mov	(0x14, sp), d0
 	mov	(0x18, sp), d1
 	ret	0, 0x1c
 
-func_97809549:
+LibF64Modf:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 
-func_97809549_entry:
+LibF64Modf_entry:
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	mov	d0, (0x18, sp)
@@ -17228,17 +17228,17 @@ func_97809549_entry:
 	mov	0x3ff, d0
 	cmp	d0, d1
 	nop
-	bge	func_97809549_entry_L29
+	bge	LibF64Modf_entry_L29
 	clr	d0
 	mov	d0, (a2)
 	mov	d0, (4, a2)
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	ret	[d2,d3,a2], 0x2c
-func_97809549_entry_L29:
+LibF64Modf_entry_L29:
 	cmp	0x433, d1
 	nop
-	blt	func_97809549_entry_L3d
+	blt	LibF64Modf_entry_L3d
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	mov	d0, (a2)
@@ -17246,8 +17246,8 @@ func_97809549_entry_L29:
 	nop
 	clr	d0
 	mov	d0, d1
-	bra	func_97809549_entry_L9d
-func_97809549_entry_L3d:
+	bra	LibF64Modf_entry_L9d
+LibF64Modf_entry_L3d:
 	sub	d0, d1
 	add	0xc, d1
 	mov	d1, d0
@@ -17271,7 +17271,7 @@ func_97809549_entry_L3d:
 	sub	d0, d3
 	cmp	0, d3
 	nop
-	blt	func_97809549_entry_L80
+	blt	LibF64Modf_entry_L80
 	mov	d3, a0
 	add	a0, a0
 	add	a1, a0
@@ -17283,7 +17283,7 @@ func_97809549_entry_L3d:
 	cmp	a1, a0
 	nop
 	lcc
-func_97809549_entry_L80:
+LibF64Modf_entry_L80:
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	mov	d0, (a2)
@@ -17296,56 +17296,56 @@ func_97809549_entry_L80:
 	mov	(0x38, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
-func_97809549_entry_L9d:
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
+LibF64Modf_entry_L9d:
 	ret	[d2,d3,a2], 0x2c
 
-func_978095EE:
+LibF64Sub:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-8, sp
 
-func_978095EE_entry:
+LibF64Sub_entry:
 	mov	(0x2c, sp), d0
 	xor	0x80000000, d0
 	mov	d0, (0x2c, sp)
-	bra	func_978095FF_L5
+	bra	LibF64Add_L5
 
-func_978095FF:
+LibF64Add:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-8, sp
-func_978095FF_L5:
+LibF64Add_L5:
 	mov	(0x24, sp), d1
 	mov	d1, d2
 	and	0x000fffff, d1
 	lsr	20, d2
 	and	0x07ff, d2
 	mov	d2, a2
-	beq	func_978095FF_L3c
+	beq	LibF64Add_L3c
 	or	0x00100000, d1
 	cmp	0x7ff, d2
 	mov	0, d2
-	bne	func_978095FF_L4a
+	bne	LibF64Add_L4a
 	mov	(0x20, sp), d0
 	and	0x000fffff, d1
 	or	d1, d0
 	nop
-	beq	func_978095FF_L38
+	beq	LibF64Add_L38
 	mov	4, d2
-	bra	func_978095FF_L4a
-func_978095FF_L38:
+	bra	LibF64Add_L4a
+LibF64Add_L38:
 	mov	1, d2
-	bra	func_978095FF_L4a
-func_978095FF_L3c:
+	bra	LibF64Add_L4a
+LibF64Add_L3c:
 	mov	(0x20, sp), d0
 	nop
 	or	d1, d0
 	nop
-	bne	func_978095FF_L48
+	bne	LibF64Add_L48
 	mov	2, d2
-	bra	func_978095FF_L4a
-func_978095FF_L48:
+	bra	LibF64Add_L4a
+LibF64Add_L48:
 	add	1, a2
-func_978095FF_L4a:
+LibF64Add_L4a:
 	mov	d1, a0
 	mov	(0x2c, sp), d1
 	mov	d1, d3
@@ -17353,128 +17353,128 @@ func_978095FF_L4a:
 	lsr	20, d3
 	and	0x07ff, d3
 	mov	d3, a3
-	beq	func_978095FF_L83
+	beq	LibF64Add_L83
 	or	0x00100000, d1
 	cmp	0x7ff, d3
 	mov	0, d3
-	bne	func_978095FF_L91
+	bne	LibF64Add_L91
 	mov	(0x28, sp), d0
 	and	0x000fffff, d1
 	or	d1, d0
 	nop
-	beq	func_978095FF_L7f
+	beq	LibF64Add_L7f
 	mov	4, d3
-	bra	func_978095FF_L91
-func_978095FF_L7f:
+	bra	LibF64Add_L91
+LibF64Add_L7f:
 	mov	1, d3
-	bra	func_978095FF_L91
-func_978095FF_L83:
+	bra	LibF64Add_L91
+LibF64Add_L83:
 	mov	(0x28, sp), d0
 	nop
 	or	d1, d0
 	nop
-	bne	func_978095FF_L8f
+	bne	LibF64Add_L8f
 	mov	2, d3
-	bra	func_978095FF_L91
-func_978095FF_L8f:
+	bra	LibF64Add_L91
+LibF64Add_L8f:
 	add	1, a3
-func_978095FF_L91:
+LibF64Add_L91:
 	mov	d1, a1
 	mov	d2, d0
 	or	d3, d0
 	nop
-	beq	func_978095FF_L102
+	beq	LibF64Add_L102
 	btst	0x04, d0
 	nop
-	bne	func_978095FF_Lf7
+	bne	LibF64Add_Lf7
 	and	d2, d3
 	btst	0x01, d0
 	nop
-	beq	func_978095FF_Lc7
+	beq	LibF64Add_Lc7
 	mov	(0x24, sp), d1
 	nop
 	btst	0x01, d3
 	nop
-	beq	func_978095FF_Lbb
+	beq	LibF64Add_Lbb
 	mov	(0x2c, sp), d0
 	nop
 	xor	d1, d0
 	nop
-	bns	func_978095FF_Lf7
-	bra	func_978095FF_Lc3
-func_978095FF_Lbb:
+	bns	LibF64Add_Lf7
+	bra	LibF64Add_Lc3
+LibF64Add_Lbb:
 	btst	0x01, d2
 	nop
-	bne	func_978095FF_Lc3
+	bne	LibF64Add_Lc3
 	mov	(0x2c, sp), d1
-func_978095FF_Lc3:
+LibF64Add_Lc3:
 	clr	d0
-	jmp	func_978095FF_L24c
-func_978095FF_Lc7:
+	jmp	LibF64Add_L24c
+LibF64Add_Lc7:
 	btst	0x02, d0
 	nop
-	beq	func_978095FF_L102
+	beq	LibF64Add_L102
 	btst	0x02, d3
 	nop
-	beq	func_978095FF_Le3
+	beq	LibF64Add_Le3
 	mov	(0x24, sp), d1
 	mov	(0x2c, sp), d0
 	nop
 	xor	d1, d0
 	nop
-	bnc	func_978095FF_Ldf
+	bnc	LibF64Add_Ldf
 	clr	d1
-func_978095FF_Ldf:
+LibF64Add_Ldf:
 	clr	d0
-	jmp	func_978095FF_L24c
-func_978095FF_Le3:
+	jmp	LibF64Add_L24c
+LibF64Add_Le3:
 	btst	0x02, d2
 	nop
-	beq	func_978095FF_Lf0
-func_978095FF_Le9:
+	beq	LibF64Add_Lf0
+LibF64Add_Le9:
 	mov	(0x2c, sp), d1
 	mov	(0x28, sp), d0
-	jmp	func_978095FF_L24c
-func_978095FF_Lf0:
+	jmp	LibF64Add_L24c
+LibF64Add_Lf0:
 	mov	(0x24, sp), d1
 	mov	(0x20, sp), d0
-	jmp	func_978095FF_L24c
-func_978095FF_Lf7:
+	jmp	LibF64Add_L24c
+LibF64Add_Lf7:
 	mov	0x7ff80000, d1
 	mov	0, d0
-	jmp	func_978095FF_L24c
-func_978095FF_L102:
+	jmp	LibF64Add_L24c
+LibF64Add_L102:
 	mov	a2, d3
 	sub	a3, d3
 	nop
-	bcs	func_978095FF_L11b
+	bcs	LibF64Add_L11b
 	cmp	0x38, d3
 	nop
-	bcc	func_978095FF_Lf0
+	bcc	LibF64Add_Lf0
 	mov	a2, a3
 	mov	a1, d1
 	mov	a0, d0
 	mov	d0, mdr
 	mov	(0x28, sp), d0
 	mov	(0x20, sp), a0
-	bra	func_978095FF_L134
-func_978095FF_L11b:
+	bra	LibF64Add_L134
+LibF64Add_L11b:
 	not	d3
 	add	1, d3
 	cmp	0x38, d3
 	nop
-	bcc	func_978095FF_Le9
+	bcc	LibF64Add_Le9
 	mov	a0, d1
 	mov	a1, d0
 	mov	d0, mdr
 	mov	(0x20, sp), d0
 	mov	(0x28, sp), a0
 	mov	0xffffffff, a1
-func_978095FF_L134:
+LibF64Add_L134:
 	add	-3, d3
 	nop
-	beq	func_978095FF_L18b
-	bcs	func_978095FF_L14d
+	beq	LibF64Add_L18b
+	bcs	LibF64Add_L14d
 	not	d3
 	inc	d3
 	asl	d3, d1
@@ -17484,11 +17484,11 @@ func_978095FF_L134:
 	add	0x21, d3
 	lsr	d3, d2
 	or	d2, d1
-	bra	func_978095FF_L18b
-func_978095FF_L14d:
+	bra	LibF64Add_L18b
+LibF64Add_L14d:
 	cmp	0x20, d3
 	nop
-	bcc	func_978095FF_L167
+	bcc	LibF64Add_L167
 	mov	d1, d2
 	asr	d3, d1
 	mov	d0, a2
@@ -17499,28 +17499,28 @@ func_978095FF_L14d:
 	or	d2, d0
 	mov	a2, d2
 	asl	d3, d2
-	bra	func_978095FF_L186
-func_978095FF_L167:
+	bra	LibF64Add_L186
+LibF64Add_L167:
 	or	d0, d0
 	nop
-	beq	func_978095FF_L16f
+	beq	LibF64Add_L16f
 	or	0x01, d1
-func_978095FF_L16f:
+LibF64Add_L16f:
 	mov	d1, d0
 	asr	31, d1
 	sub	0x20, d3
 	nop
-	beq	func_978095FF_L18b
+	beq	LibF64Add_L18b
 	mov	d0, d2
 	asr	d3, d0
 	not	d3
 	add	0x21, d3
 	asl	d3, d2
 	nop
-func_978095FF_L186:
-	beq	func_978095FF_L18b
+LibF64Add_L186:
+	beq	LibF64Add_L18b
 	or	0x01, d0
-func_978095FF_L18b:
+LibF64Add_L18b:
 	mov	d1, d3
 	mov	d0, a2
 	mov	mdr, d1
@@ -17536,56 +17536,56 @@ func_978095FF_L18b:
 	nop
 	xor	d2, d0
 	nop
-	bnc	func_978095FF_L1c3
+	bnc	LibF64Add_L1c3
 	sub	a2, a0
 	mov	a0, d0
 	subc	d3, d1
 	mov	a1, d3
-	bnc	func_978095FF_L1c9
+	bnc	LibF64Add_L1c9
 	xor	d1, d3
 	not	d0
 	not	d1
 	inc	d0
 	nop
-	bcc	func_978095FF_L1c9
+	bcc	LibF64Add_L1c9
 	inc	d1
-	bra	func_978095FF_L1c9
-func_978095FF_L1c3:
+	bra	LibF64Add_L1c9
+LibF64Add_L1c3:
 	add	a2, a0
 	mov	a0, d0
 	addc	d3, d1
-func_978095FF_L1c9:
+LibF64Add_L1c9:
 	xor	d2, d3
 	lsr	1, d1
 	mov	d0, d2
 	ror	d0
 	nop
-	bne	func_978095FF_L1d9
+	bne	LibF64Add_L1d9
 	or	d1, d1
 	nop
-	beq	func_978095FF_L24c
-func_978095FF_L1d9:
+	beq	LibF64Add_L24c
+LibF64Add_L1d9:
 	btst	0x00800000, d1
 	nop
-	beq	func_978095FF_L1ee
+	beq	LibF64Add_L1ee
 	add	1, a3
 	or	d0, d2
 	asr	1, d1
 	nop
 	ror	d0
-	bra	func_978095FF_L202
-func_978095FF_L1ee:
+	bra	LibF64Add_L202
+LibF64Add_L1ee:
 	btst	0x00400000, d1
 	nop
-	bne	func_978095FF_L202
+	bne	LibF64Add_L202
 	add	-1, a3
 	nop
-	beq	func_978095FF_L202
+	beq	LibF64Add_L202
 	add	d0, d0
 	nop
 	rol	d1
-	bra	func_978095FF_L1ee
-func_978095FF_L202:
+	bra	LibF64Add_L1ee
+LibF64Add_L202:
 	or	d0, d2
 	lsr	1, d1
 	nop
@@ -17594,36 +17594,36 @@ func_978095FF_L202:
 	nop
 	ror	d0
 	nop
-	bcc	func_978095FF_L22e
+	bcc	LibF64Add_L22e
 	ror	d2
 	nop
-	bcs	func_978095FF_L21e
+	bcs	LibF64Add_L21e
 	btst	0x01, d0
 	nop
-	beq	func_978095FF_L22e
-func_978095FF_L21e:
+	beq	LibF64Add_L22e
+LibF64Add_L21e:
 	inc	d0
 	nop
-	bcc	func_978095FF_L22e
+	bcc	LibF64Add_L22e
 	inc	d1
 	and	0x000fffff, d1
 	nop
-	bne	func_978095FF_L22e
+	bne	LibF64Add_L22e
 	add	1, a3
-func_978095FF_L22e:
+LibF64Add_L22e:
 	mov	a3, d2
 	cmp	0x7ff, d2
 	nop
-	bcs	func_978095FF_L239
+	bcs	LibF64Add_L239
 	clr	d0
 	clr	d1
-func_978095FF_L239:
+LibF64Add_L239:
 	and	0x000fffff, d1
 	and	0x80000000, d3
 	or	d3, d1
 	asl	20, d2
 	or	d2, d1
-func_978095FF_L24c:
+LibF64Add_L24c:
 	mov	d1, d2
 	add	d2, d2
 	or	d0, d2
@@ -17674,10 +17674,10 @@ func_97809889_entry:
 	mov	(0x24, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97809549_entry, [d2,d3,a2], 0x2c
+	call	LibF64Modf_entry, [d2,d3,a2], 0x2c
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	beq	func_97809889_entry_L51
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
@@ -17688,7 +17688,7 @@ func_97809889_entry:
 	mov	0x3ff00000, d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x20, sp)
 	mov	d1, (0x24, sp)
 	bra	func_97809889_entry_L51
@@ -17697,62 +17697,62 @@ func_97809889_entry_L44:
 	mov	(0x24, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97809549_entry, [d2,d3,a2], 0x2c
+	call	LibF64Modf_entry, [d2,d3,a2], 0x2c
 func_97809889_entry_L51:
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	ret	0, 0x18
 
-func_978098E4:
+LibF64CmpZero:
 	movm	[d2,d3], (sp)
 	add	-8, sp
 
-func_978098E4_entry:
+LibF64CmpZero_entry:
 	mov	(0x1c, sp), d1
 	mov	(0x18, sp), d0
 	mov	d1, d2
 	and	0x7fffffff, d2
 	nop
-	bne	func_978098E4_entry_L13
+	bne	LibF64CmpZero_entry_L13
 	or	d0, d0
 	nop
-	beq	func_978098E4_entry_L1b
-func_978098E4_entry_L13:
+	beq	LibF64CmpZero_entry_L1b
+LibF64CmpZero_entry_L13:
 	asr	31, d1
 	or	0x01, d1
 	add	d1, d1
 	nop
-func_978098E4_entry_L1b:
+LibF64CmpZero_entry_L1b:
 	retf	[d2,d3], 0x10
 
-func_97809907:
+LibF64Cmp:
 	movm	[d2,d3], (sp)
 	add	-8, sp
 
-func_97809907_entry:
+LibF64Cmp_entry:
 	mov	(0x24, sp), d3
 	mov	(0x20, sp), d0
 	mov	d3, d2
 	and	0x7fffffff, d2
 	nop
-	bne	func_97809907_entry_L15
+	bne	LibF64Cmp_entry_L15
 	or	d0, d0
 	nop
-	bne	func_97809907_entry_L15
-	bra	func_978098E4_entry
-func_97809907_entry_L15:
+	bne	LibF64Cmp_entry_L15
+	bra	LibF64CmpZero_entry
+LibF64Cmp_entry_L15:
 	mov	d0, a0
 	mov	(0x1c, sp), d1
 	mov	(0x18, sp), d0
 	mov	d1, d2
 	and	0x7fffffff, d2
 	nop
-	bne	func_97809907_entry_L2b
+	bne	LibF64Cmp_entry_L2b
 	or	d0, d0
 	nop
-	bne	func_97809907_entry_L2b
+	bne	LibF64Cmp_entry_L2b
 	mov	d2, d1
-func_97809907_entry_L2b:
+LibF64Cmp_entry_L2b:
 	mov	d3, a1
 	mov	d1, d2
 	not	d2
@@ -17761,33 +17761,33 @@ func_97809907_entry_L2b:
 	lsr	31, d3
 	cmp	d3, d2
 	nop
-	bne	func_97809907_entry_L67
+	bne	LibF64Cmp_entry_L67
 	mov	0x7fffffff, d3
 	and	d3, d1
 	mov	a1, d2
 	and	d2, d3
 	cmp	d3, d1
 	nop
-	bne	func_97809907_entry_L58
+	bne	LibF64Cmp_entry_L58
 	sub	a0, d0
 	nop
-	beq	func_97809907_entry_L67
+	beq	LibF64Cmp_entry_L67
 	subc	d3, d1
 	nop
-	bne	func_97809907_entry_L58
+	bne	LibF64Cmp_entry_L58
 	inc	d1
 	nop
-func_97809907_entry_L58:
+LibF64Cmp_entry_L58:
 	mov	psw, d0
 	add	a1, a1
 	nop
-	bcc	func_97809907_entry_L64
+	bcc	LibF64Cmp_entry_L64
 	xor	0x0006, d0
 	nop
-func_97809907_entry_L64:
+LibF64Cmp_entry_L64:
 	mov	d0, psw
 	nop
-func_97809907_entry_L67:
+LibF64Cmp_entry_L67:
 	retf	[d2,d3], 0x10
 
 func_97809976:
@@ -17807,14 +17807,14 @@ func_97809976_entry:
 	mov	(0x34, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97809A50, 0, 0
+	call	LibF64Abs, 0, 0
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	(0x38, sp), d0
 	mov	(0x3c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bge	func_97809976_entry_L38
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
@@ -17824,7 +17824,7 @@ func_97809976_entry_L38:
 	mov	(0x3c, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	beq	func_97809976_entry_L77
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
@@ -17834,7 +17834,7 @@ func_97809976_entry_L38:
 	mov	(0x3c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x18, sp)
 	mov	d1, (0x1c, sp)
 	mov	(0x30, sp), d0
@@ -17845,7 +17845,7 @@ func_97809976_entry_L38:
 	mov	(0x1c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bne	func_97809976_entry_L84
 func_97809976_entry_L77:
 	mov	1, d0
@@ -17863,13 +17863,13 @@ func_97809976_entry_L84:
 	mov	(0x3c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	sp, a0
 	add	0x20, a0
 	nop
-	call	func_97809549_entry, [d2,d3,a2], 0x2c
+	call	LibF64Modf_entry, [d2,d3,a2], 0x2c
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	mov	d0, (8, sp)
@@ -17878,7 +17878,7 @@ func_97809976_entry_L84:
 	mov	(0x3c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x18, sp)
 	mov	d1, (0x1c, sp)
 	mov	(0x30, sp), d0
@@ -17889,11 +17889,11 @@ func_97809976_entry_L84:
 	mov	(0x1c, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_978095EE_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Sub_entry, [d2,d3,a2,a3], 0x18
 func_97809976_entry_Ld4:
 	ret	0, 0x28
 
-func_97809A50:
+LibF64Abs:
 	mov	sp, a0
 	mov	a0, d1
 	add	8, d1
@@ -17907,43 +17907,43 @@ func_97809A50:
 	mov	(0xc, sp), d1
 	retf	0, 0
 
-func_97809A68:
+LibF64Mul:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-8, sp
 
-func_97809A68_entry:
+LibF64Mul_entry:
 	mov	(0x24, sp), d1
 	mov	d1, d2
 	and	0x000fffff, d1
 	lsr	20, d2
 	and	0x07ff, d2
 	mov	d2, a2
-	beq	func_97809A68_entry_L37
+	beq	LibF64Mul_entry_L37
 	or	0x00100000, d1
 	cmp	0x7ff, d2
 	mov	0, d2
-	bne	func_97809A68_entry_L45
+	bne	LibF64Mul_entry_L45
 	mov	(0x20, sp), d0
 	and	0x000fffff, d1
 	or	d1, d0
 	nop
-	beq	func_97809A68_entry_L33
+	beq	LibF64Mul_entry_L33
 	mov	4, d2
-	bra	func_97809A68_entry_L45
-func_97809A68_entry_L33:
+	bra	LibF64Mul_entry_L45
+LibF64Mul_entry_L33:
 	mov	1, d2
-	bra	func_97809A68_entry_L45
-func_97809A68_entry_L37:
+	bra	LibF64Mul_entry_L45
+LibF64Mul_entry_L37:
 	mov	(0x20, sp), d0
 	nop
 	or	d1, d0
 	nop
-	bne	func_97809A68_entry_L43
+	bne	LibF64Mul_entry_L43
 	mov	2, d2
-	bra	func_97809A68_entry_L45
-func_97809A68_entry_L43:
+	bra	LibF64Mul_entry_L45
+LibF64Mul_entry_L43:
 	add	1, a2
-func_97809A68_entry_L45:
+LibF64Mul_entry_L45:
 	mov	d1, a0
 	mov	(0x2c, sp), d1
 	mov	d1, d3
@@ -17951,81 +17951,81 @@ func_97809A68_entry_L45:
 	lsr	20, d3
 	and	0x07ff, d3
 	mov	d3, a3
-	beq	func_97809A68_entry_L7e
+	beq	LibF64Mul_entry_L7e
 	or	0x00100000, d1
 	cmp	0x7ff, d3
 	mov	0, d3
-	bne	func_97809A68_entry_L8c
+	bne	LibF64Mul_entry_L8c
 	mov	(0x28, sp), d0
 	and	0x000fffff, d1
 	or	d1, d0
 	nop
-	beq	func_97809A68_entry_L7a
+	beq	LibF64Mul_entry_L7a
 	mov	4, d3
-	bra	func_97809A68_entry_L8c
-func_97809A68_entry_L7a:
+	bra	LibF64Mul_entry_L8c
+LibF64Mul_entry_L7a:
 	mov	1, d3
-	bra	func_97809A68_entry_L8c
-func_97809A68_entry_L7e:
+	bra	LibF64Mul_entry_L8c
+LibF64Mul_entry_L7e:
 	mov	(0x28, sp), d0
 	nop
 	or	d1, d0
 	nop
-	bne	func_97809A68_entry_L8a
+	bne	LibF64Mul_entry_L8a
 	mov	2, d3
-	bra	func_97809A68_entry_L8c
-func_97809A68_entry_L8a:
+	bra	LibF64Mul_entry_L8c
+LibF64Mul_entry_L8a:
 	add	1, a3
-func_97809A68_entry_L8c:
+LibF64Mul_entry_L8c:
 	mov	d1, a1
 	mov	d2, d0
 	or	d3, d0
 	nop
-	beq	func_97809A68_entry_Ldb
+	beq	LibF64Mul_entry_Ldb
 	btst	0x04, d0
 	nop
-	bne	func_97809A68_entry_Lc1
+	bne	LibF64Mul_entry_Lc1
 	mov	d2, d0
 	and	d3, d0
 	btst	0x01, d0
 	nop
-	bne	func_97809A68_entry_Lc1
+	bne	LibF64Mul_entry_Lc1
 	btst	0x02, d0
 	nop
-	bne	func_97809A68_entry_Lc1
+	bne	LibF64Mul_entry_Lc1
 	btst	0x02, d2
 	nop
-	bne	func_97809A68_entry_Ld6
+	bne	LibF64Mul_entry_Ld6
 	btst	0x01, d2
 	nop
-	bne	func_97809A68_entry_Lcc
+	bne	LibF64Mul_entry_Lcc
 	btst	0x02, d3
 	nop
-	bne	func_97809A68_entry_Lcc
+	bne	LibF64Mul_entry_Lcc
 	btst	0x01, d3
 	nop
-	bne	func_97809A68_entry_Ld6
-func_97809A68_entry_Lc1:
+	bne	LibF64Mul_entry_Ld6
+LibF64Mul_entry_Lc1:
 	mov	0x7ff80000, d1
 	mov	0, d0
-	jmp	func_97809A68_entry_L296
-func_97809A68_entry_Lcc:
+	jmp	LibF64Mul_entry_L296
+LibF64Mul_entry_Lcc:
 	mov	0x7ff00000, d1
 	clr	d0
-	jmp	func_97809A68_entry_L288
-func_97809A68_entry_Ld6:
+	jmp	LibF64Mul_entry_L288
+LibF64Mul_entry_Ld6:
 	clr	d1
 	clr	d0
-	jmp	func_97809A68_entry_L288
-func_97809A68_entry_Ldb:
+	jmp	LibF64Mul_entry_L288
+LibF64Mul_entry_Ldb:
 	sub	a3, a2
 	mov	a2, d2
 	cmp	0x400, d2
 	nop
-	bgt	func_97809A68_entry_Lcc
+	bgt	LibF64Mul_entry_Lcc
 	cmp	-0x433, d2
 	nop
-	blt	func_97809A68_entry_Ld6
+	blt	LibF64Mul_entry_Ld6
 	mov	a2, a3
 	mov	a0, d2
 	mov	a1, d0
@@ -18037,15 +18037,15 @@ func_97809A68_entry_Ldb:
 	lsr	21, d1
 	or	d1, d0
 	nop
-	bns	func_97809A68_entry_L111
-func_97809A68_entry_L106:
+	bns	LibF64Mul_entry_L111
+LibF64Mul_entry_L106:
 	add	1, a3
 	add	a0, a0
 	nop
 	rol	d0
 	nop
-	bnc	func_97809A68_entry_L106
-func_97809A68_entry_L111:
+	bnc	LibF64Mul_entry_L106
+LibF64Mul_entry_L111:
 	mov	d0, a1
 	mov	(0x20, sp), d1
 	asl	11, d2
@@ -18054,87 +18054,87 @@ func_97809A68_entry_L111:
 	lsr	21, d0
 	or	d0, d2
 	nop
-	bns	func_97809A68_entry_L12f
-func_97809A68_entry_L125:
+	bns	LibF64Mul_entry_L12f
+LibF64Mul_entry_L125:
 	add	-1, a3
 	add	d1, d1
 	nop
 	rol	d2
 	nop
-	bnc	func_97809A68_entry_L125
-func_97809A68_entry_L12f:
+	bnc	LibF64Mul_entry_L125
+LibF64Mul_entry_L12f:
 	cmp	0x400, a3
 	nop
-	bgt	func_97809A68_entry_Lcc
+	bgt	LibF64Mul_entry_Lcc
 	cmp	a1, d2
 	nop
-	bcs	func_97809A68_entry_L15d
-	bne	func_97809A68_entry_L155
+	bcs	LibF64Mul_entry_L15d
+	bne	LibF64Mul_entry_L155
 	cmp	a0, d1
 	nop
-	bne	func_97809A68_entry_L155
+	bne	LibF64Mul_entry_L155
 	cmp	0xfffffbce, a3
 	nop
-	blt	func_97809A68_entry_Ld6
+	blt	LibF64Mul_entry_Ld6
 	mov	0x80000000, d1
 	clr	d0
-	jmp	func_97809A68_entry_L1e9
-func_97809A68_entry_L155:
+	jmp	LibF64Mul_entry_L1e9
+LibF64Mul_entry_L155:
 	lsr	1, d2
 	nop
 	ror	d1
 	add	1, a3
-func_97809A68_entry_L15d:
+LibF64Mul_entry_L15d:
 	cmp	0xfffffbce, a3
 	nop
-	bge	func_97809A68_entry_L169
-	jmp	func_97809A68_entry_Ld6
-func_97809A68_entry_L169:
+	bge	LibF64Mul_entry_L169
+	jmp	LibF64Mul_entry_Ld6
+LibF64Mul_entry_L169:
 	add	-1, a3
 	mov	d2, mdr
 	mov	a1, d3
 	divu	d3, d1
 	cmp	0, a0
 	nop
-	bne	func_97809A68_entry_L17d
+	bne	LibF64Mul_entry_L17d
 	clr	d0
 	divu	d3, d0
 	mov	mdr, d2
-	bra	func_97809A68_entry_L1e9
-func_97809A68_entry_L17d:
+	bra	LibF64Mul_entry_L1e9
+LibF64Mul_entry_L17d:
 	mov	mdr, d0
 	mov	a0, d2
 	mov	d1, a2
 	cmp	0, d2
 	nop
-	bns	func_97809A68_entry_L190
+	bns	LibF64Mul_entry_L190
 	mulu	d2, d1
 	mov	d1, d2
 	mov	a2, d1
-	bra	func_97809A68_entry_L192
-func_97809A68_entry_L190:
+	bra	LibF64Mul_entry_L192
+LibF64Mul_entry_L190:
 	mulu	d1, d2
-func_97809A68_entry_L192:
+LibF64Mul_entry_L192:
 	sub	a2, a2
 	sub	d2, a2
 	mov	mdr, d2
 	subc	d2, d0
 	nop
-	bcc	func_97809A68_entry_L1a7
-func_97809A68_entry_L19d:
+	bcc	LibF64Mul_entry_L1a7
+LibF64Mul_entry_L19d:
 	add	-1, d1
 	add	a0, a2
 	nop
 	addc	d3, d0
 	nop
-	bcc	func_97809A68_entry_L19d
-func_97809A68_entry_L1a7:
+	bcc	LibF64Mul_entry_L19d
+LibF64Mul_entry_L1a7:
 	cmp	d0, d3
 	nop
-	bne	func_97809A68_entry_L1af
+	bne	LibF64Mul_entry_L1af
 	mov	-1, d0
-	bra	func_97809A68_entry_L1e9
-func_97809A68_entry_L1af:
+	bra	LibF64Mul_entry_L1e9
+LibF64Mul_entry_L1af:
 	mov	d0, mdr
 	mov	a2, d0
 	divu	d3, d0
@@ -18143,55 +18143,55 @@ func_97809A68_entry_L1af:
 	mov	d0, a2
 	cmp	0, d2
 	nop
-	bns	func_97809A68_entry_L1c8
+	bns	LibF64Mul_entry_L1c8
 	mulu	d2, d0
 	mov	d0, d2
 	mov	a2, d0
-	bra	func_97809A68_entry_L1ca
-func_97809A68_entry_L1c8:
+	bra	LibF64Mul_entry_L1ca
+LibF64Mul_entry_L1c8:
 	mulu	d0, d2
-func_97809A68_entry_L1ca:
+LibF64Mul_entry_L1ca:
 	sub	a2, a2
 	sub	d2, a2
 	mov	mdr, d2
 	subc	d2, d3
 	nop
-	bcc	func_97809A68_entry_L1e5
+	bcc	LibF64Mul_entry_L1e5
 	mov	a1, d2
-func_97809A68_entry_L1d7:
+LibF64Mul_entry_L1d7:
 	sub	1, d0
 	add	a0, a2
 	nop
 	addc	d2, d3
 	nop
-	bcc	func_97809A68_entry_L1d7
-func_97809A68_entry_L1e5:
+	bcc	LibF64Mul_entry_L1d7
+LibF64Mul_entry_L1e5:
 	mov	a2, d2
 	or	d3, d2
-func_97809A68_entry_L1e9:
+LibF64Mul_entry_L1e9:
 	mov	0xa, d3
 	btst	0x80000000, d1
 	nop
-	bne	func_97809A68_entry_L1f8
+	bne	LibF64Mul_entry_L1f8
 	add	-1, a3
 	add	-1, d3
-func_97809A68_entry_L1f8:
+LibF64Mul_entry_L1f8:
 	cmp	0xfffffc02, a3
 	nop
-	bge	func_97809A68_entry_L20d
+	bge	LibF64Mul_entry_L20d
 	add	-0x3fe, d3
 	sub	a3, d3
 	mov	0xfffffc01, a3
-func_97809A68_entry_L20d:
+LibF64Mul_entry_L20d:
 	cmp	0x20, d3
 	nop
-	bcs	func_97809A68_entry_L230
+	bcs	LibF64Mul_entry_L230
 	or	d0, d2
 	mov	d1, d0
 	clr	d1
 	sub	0x20, d3
 	nop
-	beq	func_97809A68_entry_L249
+	beq	LibF64Mul_entry_L249
 	mov	d2, a0
 	mov	d0, d2
 	lsr	d3, d0
@@ -18200,8 +18200,8 @@ func_97809A68_entry_L20d:
 	asl	d3, d2
 	mov	a0, d3
 	or	d3, d2
-	bra	func_97809A68_entry_L249
-func_97809A68_entry_L230:
+	bra	LibF64Mul_entry_L249
+LibF64Mul_entry_L230:
 	mov	d2, a0
 	mov	d0, a1
 	mov	d1, d2
@@ -18215,56 +18215,56 @@ func_97809A68_entry_L230:
 	asl	d3, d2
 	mov	a0, d3
 	or	d3, d2
-func_97809A68_entry_L249:
+LibF64Mul_entry_L249:
 	lsr	1, d1
 	nop
 	ror	d0
 	nop
-	bcc	func_97809A68_entry_L26d
+	bcc	LibF64Mul_entry_L26d
 	or	d2, d2
 	nop
-	bne	func_97809A68_entry_L25d
+	bne	LibF64Mul_entry_L25d
 	btst	0x01, d0
 	nop
-	beq	func_97809A68_entry_L26d
-func_97809A68_entry_L25d:
+	beq	LibF64Mul_entry_L26d
+LibF64Mul_entry_L25d:
 	inc	d0
 	nop
-	bcc	func_97809A68_entry_L26d
+	bcc	LibF64Mul_entry_L26d
 	inc	d1
 	and	0x000fffff, d1
 	nop
-	bne	func_97809A68_entry_L26d
+	bne	LibF64Mul_entry_L26d
 	add	1, a3
-func_97809A68_entry_L26d:
+LibF64Mul_entry_L26d:
 	add	0x3ff, a3
 	cmp	0x7fe, a3
 	nop
-	bls	func_97809A68_entry_L27b
-	jmp	func_97809A68_entry_Lcc
-func_97809A68_entry_L27b:
+	bls	LibF64Mul_entry_L27b
+	jmp	LibF64Mul_entry_Lcc
+LibF64Mul_entry_L27b:
 	and	0x000fffff, d1
 	mov	a3, d2
 	asl	20, d2
 	or	d2, d1
-func_97809A68_entry_L288:
+LibF64Mul_entry_L288:
 	mov	(0x24, sp), d2
 	mov	(0x2c, sp), d3
 	xor	d3, d2
 	and	0x80000000, d2
 	or	d2, d1
-func_97809A68_entry_L296:
+LibF64Mul_entry_L296:
 	mov	d1, d2
 	add	d2, d2
 	or	d0, d2
 	nop
 	ret	[d2,d3,a2,a3], 0x18
 
-func_97809D0B:
+LibF64Div:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-8, sp
 
-func_97809D0B_entry:
+LibF64Div_entry:
 	mov	0x000fffff, d0
 	mov	(0x24, sp), d1
 	mov	d1, d2
@@ -18272,32 +18272,32 @@ func_97809D0B_entry:
 	lsr	20, d2
 	and	0x07ff, d2
 	mov	d2, a2
-	beq	func_97809D0B_entry_L35
+	beq	LibF64Div_entry_L35
 	or	0x00100000, d1
 	cmp	0x7ff, d2
 	mov	0, d2
-	bne	func_97809D0B_entry_L43
+	bne	LibF64Div_entry_L43
 	mov	(0x20, sp), d3
 	and	d0, d1
 	or	d1, d3
 	nop
-	beq	func_97809D0B_entry_L31
+	beq	LibF64Div_entry_L31
 	mov	4, d2
-	bra	func_97809D0B_entry_L43
-func_97809D0B_entry_L31:
+	bra	LibF64Div_entry_L43
+LibF64Div_entry_L31:
 	mov	1, d2
-	bra	func_97809D0B_entry_L43
-func_97809D0B_entry_L35:
+	bra	LibF64Div_entry_L43
+LibF64Div_entry_L35:
 	mov	(0x20, sp), d3
 	nop
 	or	d1, d3
 	nop
-	bne	func_97809D0B_entry_L41
+	bne	LibF64Div_entry_L41
 	mov	2, d2
-	bra	func_97809D0B_entry_L43
-func_97809D0B_entry_L41:
+	bra	LibF64Div_entry_L43
+LibF64Div_entry_L41:
 	add	1, a2
-func_97809D0B_entry_L43:
+LibF64Div_entry_L43:
 	mov	d1, a0
 	mov	(0x2c, sp), d1
 	mov	d1, d3
@@ -18305,82 +18305,82 @@ func_97809D0B_entry_L43:
 	lsr	20, d3
 	and	0x07ff, d3
 	mov	d3, a3
-	beq	func_97809D0B_entry_L75
+	beq	LibF64Div_entry_L75
 	or	0x00100000, d1
 	cmp	0x7ff, d3
 	nop
-	bne	func_97809D0B_entry_L84
+	bne	LibF64Div_entry_L84
 	mov	(0x28, sp), d3
 	and	d0, d1
 	or	d1, d3
 	nop
-	beq	func_97809D0B_entry_L70
+	beq	LibF64Div_entry_L70
 	or	0x04, d2
-	bra	func_97809D0B_entry_L84
-func_97809D0B_entry_L70:
+	bra	LibF64Div_entry_L84
+LibF64Div_entry_L70:
 	or	0x01, d2
-	bra	func_97809D0B_entry_L84
-func_97809D0B_entry_L75:
+	bra	LibF64Div_entry_L84
+LibF64Div_entry_L75:
 	mov	(0x28, sp), d3
 	nop
 	or	d1, d3
 	nop
-	bne	func_97809D0B_entry_L82
+	bne	LibF64Div_entry_L82
 	or	0x02, d2
-	bra	func_97809D0B_entry_L84
-func_97809D0B_entry_L82:
+	bra	LibF64Div_entry_L84
+LibF64Div_entry_L82:
 	add	1, a3
-func_97809D0B_entry_L84:
+LibF64Div_entry_L84:
 	mov	d1, a1
 	or	d2, d2
 	nop
-	beq	func_97809D0B_entry_Lbc
+	beq	LibF64Div_entry_Lbc
 	btst	0x04, d2
 	nop
-	bne	func_97809D0B_entry_La2
+	bne	LibF64Div_entry_La2
 	cmp	3, d2
 	nop
-	beq	func_97809D0B_entry_La2
+	beq	LibF64Div_entry_La2
 	btst	0x02, d2
 	nop
-	bne	func_97809D0B_entry_Lb7
+	bne	LibF64Div_entry_Lb7
 	btst	0x01, d2
 	nop
-	bne	func_97809D0B_entry_Lad
-func_97809D0B_entry_La2:
+	bne	LibF64Div_entry_Lad
+LibF64Div_entry_La2:
 	mov	0x7ff80000, d1
 	mov	0, d0
-	jmp	func_97809D0B_entry_L1af
-func_97809D0B_entry_Lad:
+	jmp	LibF64Div_entry_L1af
+LibF64Div_entry_Lad:
 	mov	0x7ff00000, d1
 	clr	d0
-	jmp	func_97809D0B_entry_L1a1
-func_97809D0B_entry_Lb7:
+	jmp	LibF64Div_entry_L1a1
+LibF64Div_entry_Lb7:
 	clr	d1
 	clr	d0
-	jmp	func_97809D0B_entry_L1a1
-func_97809D0B_entry_Lbc:
+	jmp	LibF64Div_entry_L1a1
+LibF64Div_entry_Lbc:
 	add	a2, a3
 	mov	a3, d2
 	cmp	0xbfd, d2
 	nop
-	bhi	func_97809D0B_entry_Lad
+	bhi	LibF64Div_entry_Lad
 	cmp	0x3ca, d2
 	nop
-	bcs	func_97809D0B_entry_Lb7
+	bcs	LibF64Div_entry_Lb7
 	mov	(0x20, sp), d2
 	mov	(0x28, sp), d1
 	mov	d2, a2
 	cmp	0, d2
 	nop
-	bns	func_97809D0B_entry_Le1
+	bns	LibF64Div_entry_Le1
 	mulu	d2, d1
 	mov	d1, d2
 	mov	(0x28, sp), d1
-	bra	func_97809D0B_entry_Le3
-func_97809D0B_entry_Le1:
+	bra	LibF64Div_entry_Le3
+LibF64Div_entry_Le1:
 	mulu	d1, d2
-func_97809D0B_entry_Le3:
+LibF64Div_entry_Le3:
 	mov	mdr, d3
 	mov	a0, d0
 	mulu	d0, d1
@@ -18395,28 +18395,28 @@ func_97809D0B_entry_Le3:
 	mulu	d1, d0
 	add	d0, d3
 	mov	mdr, d0
-	bcc	func_97809D0B_entry_Lfe
+	bcc	LibF64Div_entry_Lfe
 	inc	d0
-func_97809D0B_entry_Lfe:
+LibF64Div_entry_Lfe:
 	add	d0, a1
 	mov	a0, d0
 	nop
 	mulu	d1, d0
 	add	a1, d0
 	mov	mdr, d1
-	bcc	func_97809D0B_entry_L10c
+	bcc	LibF64Div_entry_L10c
 	inc	d1
-func_97809D0B_entry_L10c:
+LibF64Div_entry_L10c:
 	sub	0x3fe, a3
 	nop
-	bhi	func_97809D0B_entry_L12e
+	bhi	LibF64Div_entry_L12e
 	add	0xb, a3
 	nop
-	bgt	func_97809D0B_entry_L151
-func_97809D0B_entry_L11a:
+	bgt	LibF64Div_entry_L151
+LibF64Div_entry_L11a:
 	cmp	1, a3
 	nop
-	bge	func_97809D0B_entry_L151
+	bge	LibF64Div_entry_L151
 	or	d3, d2
 	asr	1, d1
 	nop
@@ -18424,8 +18424,8 @@ func_97809D0B_entry_L11a:
 	nop
 	ror	d3
 	add	1, a3
-	bra	func_97809D0B_entry_L11a
-func_97809D0B_entry_L12e:
+	bra	LibF64Div_entry_L11a
+LibF64Div_entry_L12e:
 	mov	d2, a0
 	asl	11, d1
 	mov	d0, d2
@@ -18441,13 +18441,13 @@ func_97809D0B_entry_L12e:
 	or	d2, d3
 	mov	a0, d2
 	asl	11, d2
-func_97809D0B_entry_L151:
+LibF64Div_entry_L151:
 	btst	0x00100000, d1
 	nop
-	bne	func_97809D0B_entry_L16b
+	bne	LibF64Div_entry_L16b
 	add	-1, a3
 	nop
-	beq	func_97809D0B_entry_L16b
+	beq	LibF64Div_entry_L16b
 	add	d2, d2
 	nop
 	rol	d3
@@ -18455,59 +18455,59 @@ func_97809D0B_entry_L151:
 	rol	d0
 	nop
 	rol	d1
-	bra	func_97809D0B_entry_L151
-func_97809D0B_entry_L16b:
+	bra	LibF64Div_entry_L151
+LibF64Div_entry_L16b:
 	add	d3, d3
 	nop
-	bcc	func_97809D0B_entry_L18a
+	bcc	LibF64Div_entry_L18a
 	or	d3, d2
 	nop
-	bne	func_97809D0B_entry_L17a
+	bne	LibF64Div_entry_L17a
 	btst	0x01, d0
 	nop
-	beq	func_97809D0B_entry_L18a
-func_97809D0B_entry_L17a:
+	beq	LibF64Div_entry_L18a
+LibF64Div_entry_L17a:
 	inc	d0
 	nop
-	bcc	func_97809D0B_entry_L18a
+	bcc	LibF64Div_entry_L18a
 	inc	d1
 	and	0x000fffff, d1
 	nop
-	bne	func_97809D0B_entry_L18a
+	bne	LibF64Div_entry_L18a
 	add	1, a3
-func_97809D0B_entry_L18a:
+LibF64Div_entry_L18a:
 	mov	a3, d3
 	cmp	0x7ff, d3
 	nop
-	bcs	func_97809D0B_entry_L196
-	jmp	func_97809D0B_entry_Lad
-func_97809D0B_entry_L196:
+	bcs	LibF64Div_entry_L196
+	jmp	LibF64Div_entry_Lad
+LibF64Div_entry_L196:
 	and	0x000fffff, d1
 	asl	20, d3
 	or	d3, d1
-func_97809D0B_entry_L1a1:
+LibF64Div_entry_L1a1:
 	mov	(0x24, sp), d2
 	mov	(0x2c, sp), d3
 	xor	d3, d2
 	and	0x80000000, d2
 	or	d2, d1
-func_97809D0B_entry_L1af:
+LibF64Div_entry_L1af:
 	mov	d1, d2
 	add	d2, d2
 	or	d0, d2
 	nop
 	ret	[d2,d3,a2,a3], 0x18
 
-func_97809EC7:
+memcpy:
 	movm	[a2,a3], (sp)
 
-func_97809EC7_entry:
+memcpy_entry:
 	mov	a0, a3
 	mov	a3, a2
 	add	d0, a2
 	cmp	a2, a3
 	nop
-	bcc	func_97809EC7_entry_L12
+	bcc	memcpy_entry_L12
 	setlb
 	movbu	(a1), d1
 	inc	a1
@@ -18516,41 +18516,41 @@ func_97809EC7_entry:
 	cmp	a2, a0
 	nop
 	lcs
-func_97809EC7_entry_L12:
+memcpy_entry_L12:
 	mov	a3, a0
 	retf	[a2,a3], 8
 
-func_97809EDF:
+memset:
 	movm	[a2], (sp)
 
-func_97809EDF_entry:
+memset_entry:
 	mov	a0, a2
 	mov	a2, a1
 	add	d1, a1
 	cmp	a1, a2
 	nop
-	bcc	func_97809EDF_entry_Lf
+	bcc	memset_entry_Lf
 	setlb
 	movbu	d0, (a0)
 	inc	a0
 	cmp	a1, a0
 	nop
 	lcs
-func_97809EDF_entry_Lf:
+memset_entry_Lf:
 	mov	a2, a0
 	retf	[a2], 4
 
-func_97809EF4:
+strcpy:
 	movm	[a2], (sp)
 
-func_97809EF4_entry:
+strcpy_entry:
 	movbu	(a1), d0
 	mov	a0, a2
 	movbu	d0, (a0)
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_97809EF4_entry_L17
+	beq	strcpy_entry_L17
 	setlb
 	inc	a1
 	movbu	(a1), d0
@@ -18560,7 +18560,7 @@ func_97809EF4_entry:
 	cmp	0, d0
 	nop
 	lne
-func_97809EF4_entry_L17:
+strcpy_entry_L17:
 	mov	a2, a0
 	retf	[a2], 4
 
@@ -18759,7 +18759,7 @@ func_97809F8B_entry_La3:
 func_97809F8B_entry_La5:
 	mov	0x7fffffff, d0
 	mov	a3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x30, sp)
 	mov	0x7fffffff, d0
 	ext	d0
@@ -18771,7 +18771,7 @@ func_97809F8B_entry_La5:
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0x7fffffff, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	nop
 	cmp	0, d0
 	nop
@@ -18782,7 +18782,7 @@ func_97809F8B_entry_Ld9:
 	inc	d1
 	mov	d1, (0x18, sp)
 	mov	a3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	nop
 	cmp	0, d0
 	nop
@@ -18790,7 +18790,7 @@ func_97809F8B_entry_Ld9:
 func_97809F8B_entry_Lec:
 	mov	0x80000001, d0
 	mov	a3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x28, sp)
 	mov	0x80000001, d0
 	ext	d0
@@ -18804,7 +18804,7 @@ func_97809F8B_entry_Lec:
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	0x80000001, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	cmp	0, d2
 	nop
@@ -18815,7 +18815,7 @@ func_97809F8B_entry_L123:
 	inc	d0
 	mov	d0, (0x14, sp)
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	cmp	0, d0
 	nop
@@ -19015,47 +19015,47 @@ func_9780A1EB_entry_L14:
 
 func_9780A204:
 	exth	d0
-	jmp	func_97809485
+	jmp	LibI32ToF64
 
-func_9780A208:
+LibU32ToF64:
 	mov	d2, a0
 	or	d0, d0
 	nop
-	bne	func_9780A208_Lc
+	bne	LibU32ToF64_Lc
 	clr	d1
 	sub	d2, d2
-	bra	func_9780A208_L36
-func_9780A208_Lc:
+	bra	LibU32ToF64_L36
+LibU32ToF64_Lc:
 	mov	0x41e00000, d2
 	mov	d0, d1
 	lsr	11, d1
 	asl	21, d0
-func_9780A208_L19:
+LibU32ToF64_L19:
 	btst	0x00100000, d1
 	nop
-	bne	func_9780A208_L2e
+	bne	LibU32ToF64_L2e
 	sub	0x100000, d2
 	add	d0, d0
 	nop
 	rol	d1
-	bra	func_9780A208_L19
-func_9780A208_L2e:
+	bra	LibU32ToF64_L19
+LibU32ToF64_L2e:
 	and	0x000fffff, d1
 	or	d2, d1
-func_9780A208_L36:
+LibU32ToF64_L36:
 	mov	a0, d2
 	retf	0, 0
 
-func_9780A243:
+strcat:
 	movm	[a2], (sp)
 
-func_9780A243_entry:
+strcat_entry:
 	movbu	(a0), d0
 	mov	a0, a2
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A243_entry_L12
+	beq	strcat_entry_L12
 	setlb
 	inc	a0
 	movbu	(a0), d0
@@ -19063,13 +19063,13 @@ func_9780A243_entry:
 	cmp	0, d0
 	nop
 	lne
-func_9780A243_entry_L12:
+strcat_entry_L12:
 	movbu	(a1), d0
 	movbu	d0, (a0)
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A243_entry_L28
+	beq	strcat_entry_L28
 	setlb
 	inc	a1
 	movbu	(a1), d0
@@ -19079,26 +19079,26 @@ func_9780A243_entry_L12:
 	cmp	0, d0
 	nop
 	lne
-func_9780A243_entry_L28:
+strcat_entry_L28:
 	mov	a2, a0
 	retf	[a2], 4
 
-func_9780A271:
+strncpy:
 	movm	[a2,a3], (sp)
 
-func_9780A271_entry:
+strncpy_entry:
 	mov	a0, a3
 	mov	a3, a2
 	add	d0, a2
 	cmp	a2, a3
 	nop
-	bcc	func_9780A271_entry_L1a
+	bcc	strncpy_entry_L1a
 	setlb
 	movbu	(a1), d0
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A271_entry_L1a
+	beq	strncpy_entry_L1a
 	movbu	(a1), d0
 	inc	a1
 	movbu	d0, (a0)
@@ -19106,10 +19106,10 @@ func_9780A271_entry:
 	cmp	a2, a0
 	nop
 	lcs
-func_9780A271_entry_L1a:
+strncpy_entry_L1a:
 	cmp	a2, a0
 	nop
-	bcc	func_9780A271_entry_L26
+	bcc	strncpy_entry_L26
 	setlb
 	clr	d0
 	movbu	d0, (a0)
@@ -19117,19 +19117,19 @@ func_9780A271_entry_L1a:
 	cmp	a2, a0
 	nop
 	lcs
-func_9780A271_entry_L26:
+strncpy_entry_L26:
 	mov	a3, a0
 	retf	[a2,a3], 8
 
-func_9780A29D:
+strchr:
 	movm	[d2], (sp)
 
-func_9780A29D_entry:
+strchr_entry:
 	movbu	(a0), d2
 	extb	d2
 	cmp	0, d2
 	nop
-	beq	func_9780A29D_entry_L1a
+	beq	strchr_entry_L1a
 	mov	d0, d2
 	extb	d2
 	setlb
@@ -19137,30 +19137,30 @@ func_9780A29D_entry:
 	extb	d1
 	cmp	d2, d1
 	nop
-	beq	func_9780A29D_entry_L23
+	beq	strchr_entry_L23
 	inc	a0
 	movbu	(a0), d1
 	extb	d1
 	cmp	0, d1
 	nop
 	lne
-func_9780A29D_entry_L1a:
+strchr_entry_L1a:
 	mov	d0, d1
 	extb	d1
 	cmp	0, d1
 	nop
-	beq	func_9780A29D_entry_L23
+	beq	strchr_entry_L23
 	mov	0, a0
-func_9780A29D_entry_L23:
+strchr_entry_L23:
 	retf	[d2], 4
 
-func_9780A2C5:
+LibStrlen:
 	mov	a0, a1
 	movbu	(a1), d1
 	extb	d1
 	cmp	0, d1
 	nop
-	beq	func_9780A2C5_L12
+	beq	LibStrlen_L12
 	setlb
 	inc	a1
 	movbu	(a1), d1
@@ -19168,26 +19168,26 @@ func_9780A2C5:
 	cmp	0, d1
 	nop
 	lne
-func_9780A2C5_L12:
+LibStrlen_L12:
 	mov	a1, d0
 	sub	a0, d0
 	nop
 	retf	0, 0
 
-func_9780A2DF:
+strcmp:
 	movbu	(a0), d1
 	movbu	(a1), d0
 	extb	d1
 	extb	d0
 	cmp	d0, d1
 	nop
-	bne	func_9780A2DF_L1e
+	bne	strcmp_L1e
 	setlb
 	movbu	(a0), d0
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A2DF_L1e
+	beq	strcmp_L1e
 	inc	a0
 	inc	a1
 	movbu	(a0), d1
@@ -19197,7 +19197,7 @@ func_9780A2DF:
 	cmp	d0, d1
 	nop
 	leq
-func_9780A2DF_L1e:
+strcmp_L1e:
 	movbu	(a0), d0
 	movbu	(a1), d1
 	nop
@@ -19205,10 +19205,10 @@ func_9780A2DF_L1e:
 	nop
 	retf	0, 0
 
-func_9780A308:
+strcspn:
 	movm	[d2,a2,a3], (sp)
 
-func_9780A308_entry:
+strcspn_entry:
 	add	-0x100, sp
 	mov	a0, a3
 	mov	a3, d1
@@ -19226,7 +19226,7 @@ func_9780A308_entry:
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A308_entry_L2d
+	beq	strcspn_entry_L2d
 	setlb
 	mov	sp, a0
 	mov	1, d2
@@ -19239,12 +19239,12 @@ func_9780A308_entry:
 	cmp	0, d0
 	nop
 	lne
-func_9780A308_entry_L2d:
+strcspn_entry_L2d:
 	movbu	(a3), d0
 	extb	d0
 	cmp	0, d0
 	nop
-	beq	func_9780A308_entry_L4a
+	beq	strcspn_entry_L4a
 	setlb
 	mov	sp, a0
 	movbu	(a3), d0
@@ -19253,14 +19253,14 @@ func_9780A308_entry_L2d:
 	nop
 	cmp	0, d0
 	nop
-	bne	func_9780A308_entry_L4a
+	bne	strcspn_entry_L4a
 	inc	a3
 	movbu	(a3), d0
 	extb	d0
 	cmp	0, d0
 	nop
 	lne
-func_9780A308_entry_L4a:
+strcspn_entry_L4a:
 	mov	a3, d0
 	sub	d1, d0
 	add	0x100, sp
@@ -19327,10 +19327,10 @@ func_9780A35F_entry_L4a:
 	add	0x100, sp
 	retf	[d2,a2,a3], 0xc
 
-func_9780A3B6:
+strncat:
 	movm	[a2,a3], (sp)
 
-func_9780A3B6_entry:
+strncat_entry:
 	movbu	(a0), d1
 	mov	a0, a3
 	mov	a1, a2
@@ -19338,7 +19338,7 @@ func_9780A3B6_entry:
 	extb	d1
 	cmp	0, d1
 	nop
-	beq	func_9780A3B6_entry_L15
+	beq	strncat_entry_L15
 	setlb
 	inc	a0
 	movbu	(a0), d1
@@ -19346,16 +19346,16 @@ func_9780A3B6_entry:
 	cmp	0, d1
 	nop
 	lne
-func_9780A3B6_entry_L15:
+strncat_entry_L15:
 	cmp	a2, a1
 	nop
-	bcc	func_9780A3B6_entry_L2b
+	bcc	strncat_entry_L2b
 	setlb
 	movbu	(a1), d1
 	extb	d1
 	cmp	0, d1
 	nop
-	beq	func_9780A3B6_entry_L2b
+	beq	strncat_entry_L2b
 	movbu	(a1), d1
 	inc	a1
 	movbu	d1, (a0)
@@ -19363,7 +19363,7 @@ func_9780A3B6_entry_L15:
 	cmp	a2, a1
 	nop
 	lcs
-func_9780A3B6_entry_L2b:
+strncat_entry_L2b:
 	clr	d0
 	movbu	d0, (a0)
 	mov	a3, a0
@@ -19372,37 +19372,37 @@ func_9780A3B6_entry_L2b:
 func_9780A3EA:
 	retf	0, 0
 
-func_9780A3ED:
+memcmp:
 	movm	[d2,a2], (sp)
 
-func_9780A3ED_entry:
+memcmp_entry:
 	mov	a0, a2
 	add	d0, a2
 	cmp	a2, a0
 	nop
-	bcc	func_9780A3ED_entry_L16
+	bcc	memcmp_entry_L16
 	setlb
 	movbu	(a0), d2
 	movbu	(a1), d1
 	nop
 	cmp	d1, d2
 	nop
-	bne	func_9780A3ED_entry_L1a
+	bne	memcmp_entry_L1a
 	inc	a0
 	inc	a1
 	cmp	a2, a0
 	nop
 	lcs
-func_9780A3ED_entry_L16:
+memcmp_entry_L16:
 	clr	d0
 	nop
-	bra	func_9780A3ED_entry_L21
-func_9780A3ED_entry_L1a:
+	bra	memcmp_entry_L21
+memcmp_entry_L1a:
 	movbu	(a0), d0
 	movbu	(a1), d1
 	nop
 	sub	d1, d0
-func_9780A3ED_entry_L21:
+memcmp_entry_L21:
 	nop
 	retf	[d2,a2], 8
 
@@ -19761,7 +19761,7 @@ func_9780A7FB_entry:
 	movbu	d1, (0x44, sp)
 	mov	d0, (0x40, sp)
 	mov	a0, (0x3c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	d0, (0x10, sp)
 	movhu	(0x10, sp), d0
 	exth	d0
@@ -19806,7 +19806,7 @@ func_9780A7FB_entry_L54:
 	mov	sp, a0
 	add	0x14, a0
 	mov	(0x3c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	movhu	d0, (0x12, sp)
 	bra	func_9780A7FB_entry_L8e
@@ -19826,7 +19826,7 @@ func_9780A7FB_entry_L74:
 	mov	sp, a1
 	add	0x14, a1
 	add	d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	func_9780A7FB_entry_La0
 func_9780A7FB_entry_L86:
 	movhu	(0x12, sp), d0
@@ -19857,9 +19857,9 @@ func_9780A8A1_entry:
 	movbu	d0, (0x97913f2d)
 	mov	0x97913f2d, a0
 	mov	0x9789dafc, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x20, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x14, sp)
 	mov	(0x14, sp), d0
 	cmp	3, d0
@@ -19874,7 +19874,7 @@ func_9780A8A1_entry_L33:
 	mov	0x97913f2d, a0
 	mov	(0x20, sp), a1
 	mov	(0x14, sp), d0
-	call	func_9780A3B6_entry, [a2,a3], 8
+	call	strncat_entry, [a2,a3], 8
 	mov	(0x14, sp), d0
 	inc	d0
 	clr	d1
@@ -19885,7 +19885,7 @@ func_9780A8A1_entry_L33:
 func_9780A8A1_entry_L51:
 	mov	0x97913f2d, a0
 	mov	0x9789db00, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x97913f31)
 	mov	-1, d0
@@ -19917,10 +19917,10 @@ func_9780A93E_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	(0x34, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x1c, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x14, sp)
 	mov	(0x14, sp), d0
 	cmp	0, d0
@@ -19955,7 +19955,7 @@ func_9780A93E_entry_L39:
 	mov	(0x18, sp), d0
 	sub	d0, d1
 	mov	d1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x14, sp), d1
 	mov	(0x18, sp), d0
 	sub	d0, d1
@@ -20004,7 +20004,7 @@ func_9780A9BB_entry_Ld:
 	add	0x9789db04, a0
 	mov	(0x24, sp), a1
 	mov	(0x28, sp), d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_9780A9BB_entry_L29
 	bra	func_9780A9BB_entry_L2d
@@ -20228,7 +20228,7 @@ Debug_Wind_RW_Ld8:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x34, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20255,7 +20255,7 @@ Debug_Wind_RW_L126:
 	add	0x98, a0
 	mov	d0, a1
 	mov	0x28, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	mov	d0, (0x24, sp)
 	bra	Debug_Wind_RW_L184
@@ -20266,7 +20266,7 @@ Debug_Wind_RW_L149:
 	movbu	(d0, a0), d0
 	extb	d0
 	mov	0x9789dbd4, a0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	Debug_Wind_RW_L164
 	bra	Debug_Wind_RW_L174
@@ -20345,7 +20345,7 @@ Debug_Wind_RW_L1e1:
 	add	0xfc, a0
 	mov	d0, a1
 	mov	0x28, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	mov	d0, (0x30, sp)
 	bra	Debug_Wind_RW_L23f
@@ -20356,7 +20356,7 @@ Debug_Wind_RW_L204:
 	movbu	(d0, a0), d0
 	extb	d0
 	mov	0x9789dc0c, a0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	Debug_Wind_RW_L21f
 	bra	Debug_Wind_RW_L22f
@@ -20415,7 +20415,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	mov	(0x9798ad94), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20427,7 +20427,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	mov	(0x9798ad98), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20439,7 +20439,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	movhu	(0x9798ad9e), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20451,7 +20451,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	movhu	(0x9798ada0), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20463,7 +20463,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	mov	(0x9798ada4), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20475,7 +20475,7 @@ Debug_Wind_RW_L273:
 	mov	d0, (0xc, sp)
 	mov	(0x9798ada8), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -20580,7 +20580,7 @@ func_9780AF46:
 func_9780AF46_entry:
 	mov	d0, (0x24, sp)
 	mov	a0, (0x20, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d1
 	cmp	d1, d0
@@ -20593,7 +20593,7 @@ func_9780AF46_entry_L12:
 	mov	(0x14, sp), d0
 	sub	d0, d1
 	mov	d1, d0
-	call	func_9780A3B6_entry, [a2,a3], 8
+	call	strncat_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x20, sp), a0
 	mov	(0x24, sp), d1
@@ -20950,7 +20950,7 @@ func_9780B023_L30a:
 	mov	d1, d0
 	inc	d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	bra	func_9780B023_L36d
 func_9780B023_L33e:
@@ -20969,7 +20969,7 @@ func_9780B023_L33e:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 func_9780B023_L36d:
 	movhu	(0x4a, sp), d0
@@ -21311,7 +21311,7 @@ func_9780B023_L706:
 	nop
 	mul	d2, d3
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	inc	d0
 	movhu	d0, (a3)
 	mov	(0x28, sp), a0
@@ -21404,7 +21404,7 @@ func_9780B023_L80e:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4e, sp), d0
 	exth	d0
@@ -21414,7 +21414,7 @@ func_9780B023_L80e:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	clr	d0
 	movhu	d0, (0x3e, sp)
@@ -21518,7 +21518,7 @@ func_9780B023_L896:
 	mov	a0, d0
 	add	0x58, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x78, a0
 	mov	0x14, d0
@@ -21617,7 +21617,7 @@ func_9780B023_L9e6:
 	add	d2, d0
 	extbu	d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movbu	d0, (0x97910c14)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
@@ -21663,7 +21663,7 @@ func_9780B023_La5e:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4e, sp), d0
 	exth	d0
@@ -21673,7 +21673,7 @@ func_9780B023_La5e:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	movhu	(0x4a, sp), d2
 	exth	d2
@@ -21733,7 +21733,7 @@ func_9780B023_La5e:
 	mov	a0, d0
 	add	0x58, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x78, a0
 	mov	0x14, d0
@@ -21787,7 +21787,7 @@ func_9780B023_Lb74:
 	mov	a0, d0
 	add	0x58, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x78, a0
 	mov	0x14, d0
@@ -21812,7 +21812,7 @@ func_9780B023_Lb74:
 	add	d2, d0
 	extbu	d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movbu	d0, (0x97910c14)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
@@ -21853,7 +21853,7 @@ func_9780B023_Lb74:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4e, sp), d0
 	exth	d0
@@ -21863,7 +21863,7 @@ func_9780B023_Lb74:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	movhu	(0x4a, sp), d2
 	exth	d2
@@ -21906,7 +21906,7 @@ func_9780B023_Lb74:
 	mov	0x97913dc9, a0
 	mov	sp, a1
 	add	0x78, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
@@ -23407,7 +23407,7 @@ func_9780CBE5_L3ae:
 	mov	d1, d0
 	inc	d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	bra	func_9780CBE5_L411
 func_9780CBE5_L3e2:
@@ -23426,7 +23426,7 @@ func_9780CBE5_L3e2:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 func_9780CBE5_L411:
 	movhu	(0x46, sp), d0
@@ -23818,7 +23818,7 @@ func_9780CBE5_L7b9:
 	mov	a0, d0
 	add	0x54, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x74, a0
 	mov	0x14, d0
@@ -23913,7 +23913,7 @@ func_9780CBE5_L8ea:
 	mov	a0, d0
 	add	0x54, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	func_9780CBE5_L92a
 func_9780CBE5_L926:
 	clr	d0
@@ -23960,7 +23960,7 @@ func_9780CBE5_L92a:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -23970,7 +23970,7 @@ func_9780CBE5_L92a:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	clr	d0
 	movhu	d0, (0x3e, sp)
@@ -24051,7 +24051,7 @@ func_9780CBE5_L9ba:
 	mov	a0, d0
 	add	0x54, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x74, a0
 	mov	0x1d, d0
@@ -24203,7 +24203,7 @@ func_9780CBE5_Lb74:
 	add	-1, d2
 	mov	2, d1
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	movhu	(0x3c, sp), d0
 	nop
@@ -24315,7 +24315,7 @@ func_9780CBE5_Lc88:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -24325,7 +24325,7 @@ func_9780CBE5_Lc88:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	movhu	(0x46, sp), d2
 	exth	d2
@@ -24389,7 +24389,7 @@ func_9780CBE5_Lc88:
 	mov	a0, d0
 	add	0x54, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x74, a0
 	mov	0x1d, d0
@@ -24451,7 +24451,7 @@ func_9780CBE5_Lda9:
 	mov	a0, d0
 	add	0x54, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x74, a0
 	mov	0x1d, d0
@@ -24477,7 +24477,7 @@ func_9780CBE5_Lda9:
 	movhu	(0x2c, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -24487,7 +24487,7 @@ func_9780CBE5_Lda9:
 	movhu	(0x2e, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
 	movhu	(0x46, sp), d2
 	exth	d2
@@ -24529,7 +24529,7 @@ func_9780CBE5_Lda9:
 	mov	0x97913dc9, a0
 	mov	sp, a1
 	add	0x74, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
@@ -25346,7 +25346,7 @@ KssPsParaBoxProc_L11f:
 KssPsParaBoxProc_L147:
 	mov	(0x24, sp), a0
 	mov	(0x7c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssPsParaBoxProc_L150:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -25481,7 +25481,7 @@ KssPsParaBoxProc_L257:
 	calls	(a1)
 	movhu	d0, (0x38, sp)
 	mov	(0x28, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x38, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -25514,12 +25514,12 @@ KssPsParaBoxProc_L2c9:
 	exth	d3
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x36, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	add	d3, d2
 	mov	d2, d0
@@ -25561,13 +25561,13 @@ KssPsParaBoxProc_L32f:
 	bra	KssPsParaBoxProc_L397
 KssPsParaBoxProc_L339:
 	mov	(0x28, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, d2
 	movhu	(0x38, sp), d1
 	exth	d1
 	mov	(0x28, sp), a0
 	add	d1, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	d0, d2
 	bhi	KssPsParaBoxProc_L353
 	bra	KssPsParaBoxProc_L373
@@ -25608,12 +25608,12 @@ KssPsParaBoxProc_L397:
 	exth	d3
 	sub	d1, d0
 	mov	4, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x36, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d3, d2
 	sub	d0, d2
 	add	2, d2
@@ -25641,12 +25641,12 @@ KssPsParaBoxProc_L397:
 	exth	d3
 	sub	d1, d0
 	mov	4, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x36, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d2, a0
 	mov	a0, d1
 	asl2	d1
@@ -25704,7 +25704,7 @@ KssPsParaBoxProc_L466:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	add	-0xb, d0
 	movhu	d0, (0x56, sp)
@@ -26000,7 +26000,7 @@ KssAcLanguageTextProc_L1dc:
 	mov	a0, (0x14, sp)
 	mov	(0x30, a0), a1
 	mov	(0x2c, sp), a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	bra	KssAcLanguageTextProc_L22e
 KssAcLanguageTextProc_L1fd:
@@ -27046,7 +27046,7 @@ KSSPsDirBoxProc_L192:
 	mov	a0, (0x1c, sp)
 	mov	(0x28, a0), a1
 	mov	(0x38, sp), a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	bra	KSSPsDirBoxProc_L1cb
 KSSPsDirBoxProc_L1b3:
@@ -27161,7 +27161,7 @@ KSSPsFileBoxProc_Lf1:
 	mov	a0, (0x14, sp)
 	mov	(0x28, a0), a1
 	mov	(0x28, sp), a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	bra	KSSPsFileBoxProc_L12a
 KSSPsFileBoxProc_L112:
@@ -27299,7 +27299,7 @@ KssTtlScreenProc_L14f:
 	jmp	KssTtlScreenProc_L79d
 KssTtlScreenProc_L153:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x2a, a0), d1
 	mov	d1, a0
@@ -27318,7 +27318,7 @@ KssTtlScreenProc_L153:
 	movhu	(0x50, sp), d1
 	inc	d1
 	mov	d2, d0
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -27334,7 +27334,7 @@ KssTtlScreenProc_L153:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x64, sp)
 	mov	(0x979126b4), a0
@@ -27355,7 +27355,7 @@ KssTtlScreenProc_L153:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x54, sp)
 	clr	d0
 	movhu	d0, (0x56, sp)
@@ -27395,7 +27395,7 @@ KssTtlScreenProc_L20c:
 KssTtlScreenProc_L25b:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x58, sp)
 	movhu	(0x58, sp), d0
 	exth	d0
@@ -27424,7 +27424,7 @@ KssTtlScreenProc_L25b:
 	calls	(a1)
 	movhu	d0, (0x5a, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x5a, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -27450,7 +27450,7 @@ KssTtlScreenProc_L2ce:
 	movhu	(0x54, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	(0x54, sp), d2
 	exth	d2
 	movhu	(0x56, sp), d1
@@ -28028,7 +28028,7 @@ KssPsToggleBoxProc_L30:
 	add	0x18, a0
 	mov	(0x60, sp), a1
 	mov	1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	movbu	(0x18, sp), d0
 	movbu	d0, (0x979898ec)
 	mov	sp, a0
@@ -28039,7 +28039,7 @@ KssPsToggleBoxProc_L30:
 	mov	d0, (0xc, sp)
 	movbu	(0x979898ec), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
@@ -28195,7 +28195,7 @@ KssBgScreenProc_Lef:
 	jmp	KssBgScreenProc_Lb4f
 KssBgScreenProc_Lf3:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x3a, a0), d1
 	add	d0, d1
@@ -28215,7 +28215,7 @@ KssBgScreenProc_Lf3:
 	inc	d1
 	mov	d1, a1
 	mov	a1, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -28231,7 +28231,7 @@ KssBgScreenProc_Lf3:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -28252,7 +28252,7 @@ KssBgScreenProc_Lf3:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -28260,7 +28260,7 @@ KssBgScreenProc_Lf3:
 KssBgScreenProc_L196:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -28289,7 +28289,7 @@ KssBgScreenProc_L196:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -28315,7 +28315,7 @@ KssBgScreenProc_L209:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -28585,7 +28585,7 @@ KssBgScreenProc_L44d:
 	jmp	KssBgScreenProc_Lb4f
 KssBgScreenProc_L451:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x52, a0), d1
 	add	d0, d1
@@ -28606,7 +28606,7 @@ KssBgScreenProc_L451:
 	mov	d1, a1
 	inc	a1
 	mov	a1, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -28622,7 +28622,7 @@ KssBgScreenProc_L451:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -28643,7 +28643,7 @@ KssBgScreenProc_L451:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -28651,7 +28651,7 @@ KssBgScreenProc_L451:
 KssBgScreenProc_L4f7:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -28680,7 +28680,7 @@ KssBgScreenProc_L4f7:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -28706,7 +28706,7 @@ KssBgScreenProc_L56a:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -28976,7 +28976,7 @@ KssBgScreenProc_L7ae:
 	jmp	KssBgScreenProc_Lb4f
 KssBgScreenProc_L7b2:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x6a, a0), d1
 	mov	d1, a0
@@ -28995,7 +28995,7 @@ KssBgScreenProc_L7b2:
 	clr	d0
 	movhu	(0x48, sp), d1
 	inc	d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -29011,7 +29011,7 @@ KssBgScreenProc_L7b2:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -29031,7 +29031,7 @@ KssBgScreenProc_L7b2:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -29039,7 +29039,7 @@ KssBgScreenProc_L7b2:
 KssBgScreenProc_L853:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -29068,7 +29068,7 @@ KssBgScreenProc_L853:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	mov	d1, a0
@@ -29095,7 +29095,7 @@ KssBgScreenProc_L8c9:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -29674,7 +29674,7 @@ KssVwBoxProc_Lef:
 	jmp	KssVwBoxProc_Lb5b
 KssVwBoxProc_Lf3:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x3a, a0), d1
 	add	d0, d1
@@ -29694,7 +29694,7 @@ KssVwBoxProc_Lf3:
 	inc	d1
 	mov	d1, a1
 	mov	a1, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -29710,7 +29710,7 @@ KssVwBoxProc_Lf3:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -29731,7 +29731,7 @@ KssVwBoxProc_Lf3:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -29739,7 +29739,7 @@ KssVwBoxProc_Lf3:
 KssVwBoxProc_L196:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -29768,7 +29768,7 @@ KssVwBoxProc_L196:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -29794,7 +29794,7 @@ KssVwBoxProc_L209:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -30064,7 +30064,7 @@ KssVwBoxProc_L44d:
 	jmp	KssVwBoxProc_Lb5b
 KssVwBoxProc_L451:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x52, a0), d1
 	add	d0, d1
@@ -30085,7 +30085,7 @@ KssVwBoxProc_L451:
 	mov	d1, a1
 	inc	a1
 	mov	a1, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -30101,7 +30101,7 @@ KssVwBoxProc_L451:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -30122,7 +30122,7 @@ KssVwBoxProc_L451:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -30130,7 +30130,7 @@ KssVwBoxProc_L451:
 KssVwBoxProc_L4fb:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -30159,7 +30159,7 @@ KssVwBoxProc_L4fb:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -30185,7 +30185,7 @@ KssVwBoxProc_L56e:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -30455,7 +30455,7 @@ KssVwBoxProc_L7b4:
 	jmp	KssVwBoxProc_Lb5b
 KssVwBoxProc_L7b8:
 	mov	(0x2c, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), a0
 	movhu	(0x6a, a0), d1
 	mov	d1, a0
@@ -30474,7 +30474,7 @@ KssVwBoxProc_L7b8:
 	clr	d0
 	movhu	(0x48, sp), d1
 	inc	d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
@@ -30490,7 +30490,7 @@ KssVwBoxProc_L7b8:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
 	mov	(0x979126b4), a0
@@ -30510,7 +30510,7 @@ KssVwBoxProc_L7b8:
 	exth	d1
 	sub	d1, d0
 	mov	d3, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	clr	d0
 	movhu	d0, (0x4e, sp)
@@ -30518,7 +30518,7 @@ KssVwBoxProc_L7b8:
 KssVwBoxProc_L85d:
 	mov	(0x34, sp), a0
 	mov	0x9789d88c, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	movhu	d0, (0x50, sp)
 	movhu	(0x50, sp), d0
 	exth	d0
@@ -30547,7 +30547,7 @@ KssVwBoxProc_L85d:
 	calls	(a1)
 	movhu	d0, (0x52, sp)
 	mov	(0x34, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x52, sp), d1
 	exth	d1
 	mov	d1, a0
@@ -30574,7 +30574,7 @@ KssVwBoxProc_L8d3:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movhu	(0x4c, sp), d0
 	exth	d0
@@ -31142,7 +31142,7 @@ KssUserBitmapProc_L68:
 	sub	d1, d2
 	mov	2, d1
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d3, d0
 	movhu	d0, (0x3a, sp)
 	mov	(0x979126b4), a0
@@ -31230,7 +31230,7 @@ KssUserBitmapProc_L13a:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x97913af6)
 	movhu	(0x97913af0), d0
@@ -31255,7 +31255,7 @@ KssUserBitmapProc_L13a:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x97913b02)
 	mov	(0x979126b4), a0
@@ -31592,7 +31592,7 @@ KssUserBitmapProc_L58e:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31605,7 +31605,7 @@ KssUserBitmapProc_L5b9:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31697,7 +31697,7 @@ KssUserBitmapProc_L6b5:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31718,7 +31718,7 @@ KssUserBitmapProc_L6e0:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31796,7 +31796,7 @@ KssUserBitmapProc_L7d6:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31817,7 +31817,7 @@ KssUserBitmapProc_L801:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31894,7 +31894,7 @@ KssUserBitmapProc_L8f1:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31915,7 +31915,7 @@ KssUserBitmapProc_L91c:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -31989,7 +31989,7 @@ KssUserBitmapProc_L9fc:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32002,7 +32002,7 @@ KssUserBitmapProc_La27:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32088,7 +32088,7 @@ KssUserBitmapProc_Lb12:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32101,7 +32101,7 @@ KssUserBitmapProc_Lb3d:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32217,7 +32217,7 @@ KssUserBitmapProc_Lc8e:
 	mov	d0, (0xc, sp)
 	mov	(0x30, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32230,7 +32230,7 @@ KssUserBitmapProc_Lcb9:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -32364,7 +32364,7 @@ KssNamingWindowProc_L31:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x34, sp)
 	movhu	(0x2e, sp), d1
@@ -32373,7 +32373,7 @@ KssNamingWindowProc_L31:
 	exth	d0
 	add	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x36, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -33548,7 +33548,7 @@ KssCatch_FormatBox_Lb05:
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lb24:
 	mov	0x97913b08, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	8, d0
 	bcc	KssCatch_FormatBox_Lb37
 	bra	KssCatch_FormatBox_Lb56
@@ -33572,17 +33572,17 @@ KssCatch_FormatBox_Lb56:
 	mov	d0, (0xc, sp)
 	mov	(0x50, sp), a0
 	mov	a0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97913b08, a0
 	mov	sp, a1
 	add	0x28, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x34, a0
 	mov	0x978a05e0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97913b08, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	sp, a0
 	add	0x34, a0
 	mov	8, d1
@@ -33593,7 +33593,7 @@ KssCatch_FormatBox_Lb56:
 	mov	sp, a0
 	add	0x34, a0
 	mov	0x97913b08, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -33612,7 +33612,7 @@ KssCatch_FormatBox_Lb56:
 	mov	0x01a000b6, d1
 	calls	(a1)
 	mov	0x97913b08, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	8, d0
 	beq	KssCatch_FormatBox_Lc0c
 	jmp	KssCatch_FormatBox_Lca2
@@ -33620,7 +33620,7 @@ KssCatch_FormatBox_Lc0c:
 	mov	0x97913b08, a0
 	mov	0x978a05ec, a1
 	mov	8, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	KssCatch_FormatBox_Lc27
 	bra	KssCatch_FormatBox_Lc42
@@ -33644,7 +33644,7 @@ KssCatch_FormatBox_Lc4b:
 	mov	sp, a0
 	add	0x34, a0
 	mov	0x978a05f8, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -34156,7 +34156,7 @@ KssCatch_LBNEntryBox_L4d6:
 	calls	(a0)
 	mov	(0x28, sp), d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
 	mov	(0x979126b4), a0
@@ -34165,7 +34165,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	(0x28, sp), d0
 	add	-1, d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
@@ -34178,7 +34178,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	(0x28, sp), d0
 	add	-1, d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
@@ -35131,7 +35131,7 @@ KssSetSfx_DISPProc_L5ba:
 	mov	d1, a1
 	add	0x97945e7c, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913b4c)
 	clr	d0
@@ -35185,7 +35185,7 @@ KssSetSfx_DISPProc_L61e:
 	mul	d0, d1
 	add	d1, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913b56)
 	clr	d0
@@ -35299,7 +35299,7 @@ func_97814854_entry_L17:
 	mov	0x978a0624, a1
 	movhu	(0x14, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	movhu	(0x14, sp), d1
 	exth	d1
 	clr	d0
@@ -35329,7 +35329,7 @@ func_97814854_entry_L5b:
 	movhu	(0x16, sp), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	mov	a0, d0
 	add	0x20, d0
@@ -35341,11 +35341,11 @@ func_97814854_entry_L5b:
 	movhu	(0x40, sp), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x34, sp), a0
 	mov	sp, a1
 	add	0x20, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	clr	d0
 func_97814854_entry_L9f:
 	ret	0, 0x2c
@@ -35800,7 +35800,7 @@ KssAcTitleMenuProc_L1cf:
 	add	0x38, a0
 	mov	(0x28, sp), a1
 	mov	0x23, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x24, sp), a0
 	movhu	(0x52, a0), d1
 	exth	d1
@@ -35825,7 +35825,7 @@ KssAcTitleMenuProc_L225:
 	mov	sp, a0
 	add	0x38, a0
 	mov	0x978a0678, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
@@ -35841,7 +35841,7 @@ KssAcTitleMenuProc_L225:
 	exth	d0
 	add	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x6a, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -35933,7 +35933,7 @@ KssAcTitleMenuProc_L303:
 	exth	d0
 	add	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x6a, sp)
 	mov	(0x24, sp), a0
 	movhu	(0x5e, a0), d1
@@ -36440,7 +36440,7 @@ func_9781523C_Lbf:
 	movhu	(0x28, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	(0x38, sp), d1
 	exth	d1
 	add	d0, d2
@@ -36464,7 +36464,7 @@ func_9781523C_Lec:
 	movhu	(0x28, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	(0x24, sp), d0
 	exth	d0
@@ -36476,7 +36476,7 @@ func_9781523C_Lec:
 	movhu	(0x24, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	(0x2a, sp), d1
 	exth	d1
 	cmp	d0, d1
@@ -36496,7 +36496,7 @@ func_9781523C_L127:
 	movhu	(0x28, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	(0x38, sp), d1
 	exth	d1
 	add	d0, d2
@@ -36516,7 +36516,7 @@ func_9781523C_L164:
 	movhu	(0x28, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	(0x24, sp), d1
 	exth	d1
@@ -36571,7 +36571,7 @@ func_9781523C_L1c2:
 	movhu	(0x28, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	0x1c, d0
 	sub	d0, d2
 	movhu	d2, (0x3c, sp)
@@ -37027,7 +37027,7 @@ KssAcIndexEditSwProc_L131:
 KssAcIndexEditSwProc_L147:
 	mov	(0x2c, sp), a0
 	mov	(0x54, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssAcIndexEditSwProc_L152:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -37205,7 +37205,7 @@ KssPsMenuBoxProc_L58:
 	add	0x30, a0
 	mov	(0x28, sp), a1
 	mov	0x23, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x24, sp), a0
 	movhu	(0x22, a0), d1
 	exth	d1
@@ -37230,7 +37230,7 @@ KssPsMenuBoxProc_Lda:
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x978a0688, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
@@ -37247,7 +37247,7 @@ KssPsMenuBoxProc_Lda:
 	add	d0, d2
 	mov	2, d1
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x62, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -37336,7 +37336,7 @@ KssPsMenuBoxProc_L1b8:
 	add	d0, d2
 	mov	2, d1
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x62, sp)
 	mov	(0x24, sp), a0
 	movhu	(0x2e, a0), d1
@@ -37639,7 +37639,7 @@ func_97815D8F_entry_L9d:
 	mov	0x978a068c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_Lb4:
@@ -37652,7 +37652,7 @@ func_97815D8F_entry_Lbc:
 	mov	0x978a0690, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_Ld3:
@@ -37660,7 +37660,7 @@ func_97815D8F_entry_Ld3:
 	mov	0x978a0694, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_Le9:
 	mov	1, d0
@@ -37676,7 +37676,7 @@ func_97815D8F_entry_Lfd:
 	mov	0x978a069c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L114:
@@ -37689,7 +37689,7 @@ func_97815D8F_entry_L11c:
 	mov	0x978a06a0, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L133:
@@ -37697,7 +37697,7 @@ func_97815D8F_entry_L133:
 	mov	0x978a06a4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L149:
 	mov	2, d0
@@ -37718,13 +37718,13 @@ func_97815D8F_entry_L15d:
 	mov	(0x18, sp), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x38, sp), a0
 	mov	sp, a1
 	add	0x24, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L18c:
@@ -37732,7 +37732,7 @@ func_97815D8F_entry_L18c:
 	mov	0x978a06b4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L1a2:
 	mov	3, d0
@@ -37748,7 +37748,7 @@ func_97815D8F_entry_L1b6:
 	mov	0x978a06bc, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L1cd:
@@ -37761,7 +37761,7 @@ func_97815D8F_entry_L1d5:
 	mov	0x978a06c8, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L1ec:
@@ -37769,7 +37769,7 @@ func_97815D8F_entry_L1ec:
 	mov	0x978a06d4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L202:
 	mov	4, d0
@@ -37785,7 +37785,7 @@ func_97815D8F_entry_L216:
 	mov	0x978a06dc, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L22d:
@@ -37798,7 +37798,7 @@ func_97815D8F_entry_L235:
 	mov	0x978a06e8, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L24c:
@@ -37811,7 +37811,7 @@ func_97815D8F_entry_L254:
 	mov	0x978a06f4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L26b:
@@ -37824,7 +37824,7 @@ func_97815D8F_entry_L273:
 	mov	0x978a0700, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L28a:
@@ -37837,7 +37837,7 @@ func_97815D8F_entry_L292:
 	mov	0x978a070c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L2a9:
@@ -37845,7 +37845,7 @@ func_97815D8F_entry_L2a9:
 	mov	0x978a0718, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L2bf:
 	mov	5, d0
@@ -37861,7 +37861,7 @@ func_97815D8F_entry_L2d3:
 	mov	0x978a0720, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L2ea:
@@ -37874,7 +37874,7 @@ func_97815D8F_entry_L2f2:
 	mov	0x978a072c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L309:
@@ -37882,7 +37882,7 @@ func_97815D8F_entry_L309:
 	mov	0x978a0734, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L31f:
 	mov	6, d0
@@ -37898,7 +37898,7 @@ func_97815D8F_entry_L333:
 	mov	0x978a073c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L34a:
@@ -37911,7 +37911,7 @@ func_97815D8F_entry_L352:
 	mov	0x978a0740, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L369:
@@ -37919,23 +37919,23 @@ func_97815D8F_entry_L369:
 	mov	0x978a0744, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L37f:
 	call	func_97802835_entry, 0, 0x10
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	0, d0
 	mov	0x41300000, d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_978098E4_entry, [d2,d3], 0x10
+	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	blt	func_97815D8F_entry_L3b7
 	bra	func_97815D8F_entry_L3cf
 func_97815D8F_entry_L3b7:
@@ -37943,7 +37943,7 @@ func_97815D8F_entry_L3b7:
 	mov	0x978a074c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	-2, d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L3cf:
@@ -37955,7 +37955,7 @@ func_97815D8F_entry_L3cf:
 	mov	0x408f4000, d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809907_entry, [d2,d3], 0x10
+	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bge	func_97815D8F_entry_L3ee
 	bra	func_97815D8F_entry_L422
 func_97815D8F_entry_L3ee:
@@ -37967,14 +37967,14 @@ func_97815D8F_entry_L3ee:
 	mov	0x40900000, d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809A68_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Mul_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
 	mov	(0x38, sp), d0
 	mov	d0, (8, sp)
 	mov	0x978a0754, d0
 	mov	d0, (0xc, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	func_97815D8F_entry_L446
 func_97815D8F_entry_L422:
 	mov	(0x1c, sp), d0
@@ -37987,7 +37987,7 @@ func_97815D8F_entry_L422:
 	mov	d0, (8, sp)
 	mov	0x978a0760, d0
 	mov	d0, (0xc, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 func_97815D8F_entry_L446:
 	clr	d0
 	jmp	func_97815D8F_entry_L780
@@ -38005,7 +38005,7 @@ func_97815D8F_entry_L45e:
 	mov	0x978a0768, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L475:
@@ -38018,7 +38018,7 @@ func_97815D8F_entry_L47d:
 	mov	0x978a0770, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L494:
@@ -38026,7 +38026,7 @@ func_97815D8F_entry_L494:
 	mov	0x978a0778, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L4aa:
 	mov	9, d0
@@ -38042,7 +38042,7 @@ func_97815D8F_entry_L4be:
 	mov	0x978a0780, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L4d5:
@@ -38055,7 +38055,7 @@ func_97815D8F_entry_L4dd:
 	mov	0x978a078c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L4f4:
@@ -38063,7 +38063,7 @@ func_97815D8F_entry_L4f4:
 	mov	0x978a0794, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L50a:
 	mov	0xa, d0
@@ -38079,7 +38079,7 @@ func_97815D8F_entry_L51e:
 	mov	0x978a079c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L535:
@@ -38092,7 +38092,7 @@ func_97815D8F_entry_L53d:
 	mov	0x978a07a8, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L554:
@@ -38100,7 +38100,7 @@ func_97815D8F_entry_L554:
 	mov	0x978a07b4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L56a:
 	mov	0xb, d0
@@ -38116,7 +38116,7 @@ func_97815D8F_entry_L57e:
 	mov	0x978a07bc, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L595:
@@ -38129,7 +38129,7 @@ func_97815D8F_entry_L59d:
 	mov	0x978a07c8, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L5b4:
@@ -38137,7 +38137,7 @@ func_97815D8F_entry_L5b4:
 	mov	0x978a07d4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L5ca:
 	mov	0xe, d0
@@ -38153,7 +38153,7 @@ func_97815D8F_entry_L5de:
 	mov	0x978a07dc, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L5f5:
@@ -38166,7 +38166,7 @@ func_97815D8F_entry_L5fd:
 	mov	0x978a07e8, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L614:
@@ -38174,7 +38174,7 @@ func_97815D8F_entry_L614:
 	mov	0x978a07f4, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L62a:
 	mov	0xf, d0
@@ -38190,7 +38190,7 @@ func_97815D8F_entry_L63e:
 	mov	0x978a07fc, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L655:
@@ -38203,7 +38203,7 @@ func_97815D8F_entry_L65d:
 	mov	0x978a0808, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L674:
@@ -38216,7 +38216,7 @@ func_97815D8F_entry_L67c:
 	mov	0x978a0810, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L693:
@@ -38224,7 +38224,7 @@ func_97815D8F_entry_L693:
 	mov	0x978a0818, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_97815D8F_entry_L77e
 func_97815D8F_entry_L6a9:
 	mov	0x10, d0
@@ -38240,7 +38240,7 @@ func_97815D8F_entry_L6bd:
 	mov	0x978a0820, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L6d4:
@@ -38253,7 +38253,7 @@ func_97815D8F_entry_L6dc:
 	mov	0x978a082c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	jmp	func_97815D8F_entry_L780
 func_97815D8F_entry_L6f3:
@@ -38266,7 +38266,7 @@ func_97815D8F_entry_L6fb:
 	mov	0x978a0838, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	bra	func_97815D8F_entry_L780
 func_97815D8F_entry_L711:
@@ -38279,7 +38279,7 @@ func_97815D8F_entry_L719:
 	mov	0x978a0844, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	bra	func_97815D8F_entry_L780
 func_97815D8F_entry_L72f:
@@ -38292,7 +38292,7 @@ func_97815D8F_entry_L737:
 	mov	0x978a0850, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	bra	func_97815D8F_entry_L780
 func_97815D8F_entry_L74d:
@@ -38305,7 +38305,7 @@ func_97815D8F_entry_L755:
 	mov	0x978a085c, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	bra	func_97815D8F_entry_L780
 func_97815D8F_entry_L76b:
@@ -38313,7 +38313,7 @@ func_97815D8F_entry_L76b:
 	mov	0x978a0864, a1
 	movhu	(0x40, sp), d0
 	exth	d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 func_97815D8F_entry_L77e:
 	mov	-5, d0
 func_97815D8F_entry_L780:
@@ -38531,7 +38531,7 @@ KssCOMM_DISPProc_L1dc:
 	asl2	d0
 	mov	0x978a08e4, a0
 	mov	(d0, a0), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	d0, (0x26, sp)
 	clr	d0
 	movhu	d0, (0x28, sp)
@@ -38594,7 +38594,7 @@ KssCOMM_DISPProc_L24b:
 	sub	d1, d0
 	mov	d0, d1
 	mov	d1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	KssCOMM_DISPProc_L2b0
 KssCOMM_DISPProc_L27a:
 	movhu	(0x26, sp), d1
@@ -38618,7 +38618,7 @@ KssCOMM_DISPProc_L27a:
 	sub	d0, a0
 	mov	a0, d0
 	mov	d1, a0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 KssCOMM_DISPProc_L2b0:
 	clr	d0
 	bra	KssCOMM_DISPProc_L2e9
@@ -38940,7 +38940,7 @@ KssPsWarnBoxProc_L281:
 KssPsWarnBoxProc_L2e3:
 	mov	0x97913b60, a0
 	mov	0x97913b81, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssPsWarnBoxProc_L2f6:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -39012,7 +39012,7 @@ KssPsWarnBoxProc_L3d0:
 KssPsWarnBoxProc_L3d8:
 	mov	0x97913b81, a0
 	mov	0x97913b60, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssPsWarnBoxProc_L3eb:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -39735,7 +39735,7 @@ KssPsWarnBoxProc_Lb6f:
 	add	d0, d2
 	mov	2, d1
 	mov	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3a, sp)
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
@@ -39748,7 +39748,7 @@ KssPsWarnBoxProc_Lb6f:
 	exth	d0
 	mov	d0, a1
 	add	0x97913b60, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x97913ba8), d1
 	movhu	(0x36, sp), d0
 	exth	d0
@@ -39764,7 +39764,7 @@ KssPsWarnBoxProc_Lb6f:
 	mov	d0, a0
 	add	0x97913b60, a0
 	mov	(0x2c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
@@ -39898,7 +39898,7 @@ KssPsWarnBoxProc_Ld4a:
 	mov	0x97913b60, a0
 	mov	0x9798ad1e, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -39925,7 +39925,7 @@ KssPsWarnBoxProc_Ldad:
 	mov	0x97913b60, a0
 	mov	0x97913ed8, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -39943,7 +39943,7 @@ KssPsWarnBoxProc_Ldf3:
 	mov	0x97913b60, a0
 	mov	0x97913ef9, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -39962,7 +39962,7 @@ KssPsWarnBoxProc_Le3b:
 	mov	0x9798ad1e, a0
 	mov	0x97913b60, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x9798ad38)
 	call	func_9781F001_entry, 0, 0x14
@@ -39983,7 +39983,7 @@ KssPsWarnBoxProc_Le87:
 	mov	0x97913ed8, a0
 	mov	0x97913b60, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913ee8)
 	call	func_97802F49, 0, 0
@@ -40021,7 +40021,7 @@ KssPsWarnBoxProc_Lf0a:
 	mov	0x97913ef9, a0
 	mov	0x97913b60, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913f09)
 	call	func_97802F52, 0, 0
@@ -40210,7 +40210,7 @@ KssPsWarnBoxProc_L1156:
 KssPsWarnBoxProc_L115a:
 	mov	0x97913b60, a0
 	mov	(0x78, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -40224,7 +40224,7 @@ KssPsWarnBoxProc_L115a:
 KssPsWarnBoxProc_L1188:
 	mov	(0x78, sp), a0
 	mov	0x97913b60, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	jmp	KssPsWarnBoxProc_L136d
 KssPsWarnBoxProc_L119b:
@@ -40752,7 +40752,7 @@ FDFileSelectProc_L280:
 	mov	sp, a1
 	add	0x38, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	call	func_9781F066, 0, 0
 	movbu	d0, (0x97913bc8)
 	mov	(0x979126b4), a0
@@ -41551,7 +41551,7 @@ FDFileSelectProc_Lcca:
 	mov	a0, (0x10, sp)
 	mov	0x9798ad1e, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	movhu	(0x97913bce), d0
 	exth	d0
 	add	0xa, d0
@@ -41669,7 +41669,7 @@ FDFileSelectProc_Lcca:
 	movhu	(0x97913bc6), d0
 	inc	d0
 	mov	d0, (0x1c, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	movhu	(0x97913bce), d0
 	exth	d0
 	add	0x14, d0
@@ -41769,11 +41769,11 @@ FDFileSelectProc_Lcca:
 	mov	(a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e54, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x01, d0
 	cmp	1, d0
@@ -41788,7 +41788,7 @@ FDFileSelectProc_L1000:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L103e
 FDFileSelectProc_L1020:
 	movbu	(0x979898ec), d0
@@ -41799,12 +41799,12 @@ FDFileSelectProc_L1020:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L103e:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e58, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -41813,11 +41813,11 @@ FDFileSelectProc_L103e:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e5c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x02, d0
 	cmp	2, d0
@@ -41837,7 +41837,7 @@ FDFileSelectProc_L1097:
 	mov	(0x14, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L10f5
 FDFileSelectProc_L10b7:
 	movbu	(0x979898ec), d0
@@ -41848,7 +41848,7 @@ FDFileSelectProc_L10b7:
 	mov	(0x18, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L10f5
 FDFileSelectProc_L10d7:
 	movbu	(0x979898ec), d0
@@ -41859,12 +41859,12 @@ FDFileSelectProc_L10d7:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L10f5:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e60, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -41873,11 +41873,11 @@ FDFileSelectProc_L10f5:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e64, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x04, d0
 	cmp	4, d0
@@ -41892,7 +41892,7 @@ FDFileSelectProc_L1142:
 	mov	(0xc, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L11b2
 FDFileSelectProc_L1162:
 	mov	(0x97913bc0), d0
@@ -41909,7 +41909,7 @@ FDFileSelectProc_L1174:
 	mov	(0x10, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L11b2
 FDFileSelectProc_L1194:
 	movbu	(0x979898ec), d0
@@ -41920,12 +41920,12 @@ FDFileSelectProc_L1194:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L11b2:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e68, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -41934,11 +41934,11 @@ FDFileSelectProc_L11b2:
 	mov	(0xc, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e6c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x08, d0
 	cmp	8, d0
@@ -41953,7 +41953,7 @@ FDFileSelectProc_L11ff:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L123d
 FDFileSelectProc_L121f:
 	movbu	(0x979898ec), d0
@@ -41964,7 +41964,7 @@ FDFileSelectProc_L121f:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L123d:
 	movhu	(0x97913bce), d0
 	exth	d0
@@ -42065,11 +42065,11 @@ FDFileSelectProc_L123d:
 	mov	(0x10, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e70, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x10, d0
 	cmp	0x10, d0
@@ -42084,7 +42084,7 @@ FDFileSelectProc_L13b3:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L13f1
 FDFileSelectProc_L13d3:
 	movbu	(0x979898ec), d0
@@ -42095,12 +42095,12 @@ FDFileSelectProc_L13d3:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L13f1:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e74, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42109,11 +42109,11 @@ FDFileSelectProc_L13f1:
 	mov	(0x14, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e78, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x20, d0
 	cmp	0x20, d0
@@ -42128,7 +42128,7 @@ FDFileSelectProc_L143e:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L147c
 FDFileSelectProc_L145e:
 	movbu	(0x979898ec), d0
@@ -42139,12 +42139,12 @@ FDFileSelectProc_L145e:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L147c:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e7c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42153,11 +42153,11 @@ FDFileSelectProc_L147c:
 	mov	(0x18, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e80, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x40, d0
 	cmp	0x40, d0
@@ -42172,7 +42172,7 @@ FDFileSelectProc_L14c9:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L1507
 FDFileSelectProc_L14e9:
 	movbu	(0x979898ec), d0
@@ -42183,12 +42183,12 @@ FDFileSelectProc_L14e9:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L1507:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e84, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42197,11 +42197,11 @@ FDFileSelectProc_L1507:
 	mov	(0x1c, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e88, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x80, d0
 	cmp	0x80, d0
@@ -42216,7 +42216,7 @@ FDFileSelectProc_L1556:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L1594
 FDFileSelectProc_L1576:
 	movbu	(0x979898ec), d0
@@ -42227,12 +42227,12 @@ FDFileSelectProc_L1576:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L1594:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e8c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42241,11 +42241,11 @@ FDFileSelectProc_L1594:
 	mov	(0x20, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e90, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x0100, d0
 	cmp	0x100, d0
@@ -42260,7 +42260,7 @@ FDFileSelectProc_L15e4:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L1622
 FDFileSelectProc_L1604:
 	movbu	(0x979898ec), d0
@@ -42271,7 +42271,7 @@ FDFileSelectProc_L1604:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L1622:
 	movhu	(0x97913bce), d0
 	exth	d0
@@ -42372,11 +42372,11 @@ FDFileSelectProc_L1622:
 	mov	(0x24, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e94, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x0200, d0
 	cmp	0x200, d0
@@ -42391,7 +42391,7 @@ FDFileSelectProc_L179b:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L17d9
 FDFileSelectProc_L17bb:
 	movbu	(0x979898ec), d0
@@ -42402,12 +42402,12 @@ FDFileSelectProc_L17bb:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L17d9:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e98, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42416,11 +42416,11 @@ FDFileSelectProc_L17d9:
 	mov	(0x28, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1e9c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x0400, d0
 	cmp	0x400, d0
@@ -42435,7 +42435,7 @@ FDFileSelectProc_L1829:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L1867
 FDFileSelectProc_L1849:
 	movbu	(0x979898ec), d0
@@ -42446,12 +42446,12 @@ FDFileSelectProc_L1849:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L1867:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1ea0, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42460,11 +42460,11 @@ FDFileSelectProc_L1867:
 	mov	(0x30, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1ea4, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x1000, d0
 	cmp	0x1000, d0
@@ -42479,7 +42479,7 @@ FDFileSelectProc_L18b7:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L18f5
 FDFileSelectProc_L18d7:
 	movbu	(0x979898ec), d0
@@ -42490,12 +42490,12 @@ FDFileSelectProc_L18d7:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L18f5:
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1ea8, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -42504,11 +42504,11 @@ FDFileSelectProc_L18f5:
 	mov	(0x34, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x5c, a0
 	mov	0x978a1eac, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x97913bc0), d0
 	and	0x2000, d0
 	cmp	0x2000, d0
@@ -42523,7 +42523,7 @@ FDFileSelectProc_L1945:
 	mov	(4, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	bra	FDFileSelectProc_L1983
 FDFileSelectProc_L1965:
 	movbu	(0x979898ec), d0
@@ -42534,7 +42534,7 @@ FDFileSelectProc_L1965:
 	mov	(8, a0), a1
 	mov	sp, a0
 	add	0x5c, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 FDFileSelectProc_L1983:
 	movhu	(0x97913bce), d0
 	exth	d0
@@ -42634,7 +42634,7 @@ FDFileSelectProc_L1a77:
 	mov	a0, d0
 	add	0xf4, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	movhu	(0x97913bce), d0
 	exth	d0
 	add	0xa, d0
@@ -42752,7 +42752,7 @@ FDFileSelectProc_L1a77:
 	movhu	(0x97913bc6), d0
 	inc	d0
 	mov	d0, (0x1c, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	movhu	(0x97913bce), d0
 	exth	d0
 	add	0x14, d0
@@ -43574,7 +43574,7 @@ KssTimerShowProc_L27f:
 	asl2	d0
 	mov	(d0, a0), a1
 	mov	(0x38, sp), a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	bra	KssTimerShowProc_L2eb
 KssTimerShowProc_L2d3:
@@ -43699,7 +43699,7 @@ KssPsAskBoxProc_L12a:
 	mov	sp, a0
 	add	0x40, a0
 	mov	(0x270, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssPsAskBoxProc_L138:
 	mov	(0x28, sp), a0
 	mov	(0x28, a0), a0
@@ -43799,7 +43799,7 @@ KssPsAskBoxProc_L193:
 	exth	d1
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	sub	d0, d2
 	movhu	d2, (0x14a, sp)
 	movhu	(0x14a, sp), d1
@@ -43829,7 +43829,7 @@ KssPsAskBoxProc_L28e:
 	movhu	(0x38, sp), d0
 	exth	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	sub	d0, d2
 	movhu	d2, (0x148, sp)
 	bra	KssPsAskBoxProc_L2c6
@@ -45000,7 +45000,7 @@ func_9781B0DD_entry:
 	mov	0x97913f38, a0
 	mov	0x9789dba4, a1
 	mov	0xe, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
@@ -45012,7 +45012,7 @@ func_9781B0DD_entry:
 	mov	0x97913bfc, a0
 	mov	0x9789d92e, a1
 	mov	0x1cd, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
@@ -45048,11 +45048,11 @@ func_9781B0DD_entry:
 	mov	0x97913f46, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x97913f5a, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	ret	0, 0x14
 
 func_9781B1D4:
@@ -45062,7 +45062,7 @@ func_9781B1D4_entry:
 	mov	0x97913f5a, a0
 	clr	d0
 	mov	0x14, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	ret	0, 0x14
 
 func_9781B1EA:
@@ -45074,7 +45074,7 @@ func_9781B1EA_entry:
 	mov	0x97913f38, a0
 	mov	0x9789dba4, a1
 	mov	0xe, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
@@ -45123,7 +45123,7 @@ func_9781B26A_entry:
 	mov	d0, (0x34, sp)
 	mov	a1, (0x30, sp)
 	mov	a0, (0x2c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x14, sp)
 	cmp	0xc, d0
 	bgt	func_9781B26A_entry_L15
@@ -45176,7 +45176,7 @@ func_9781B26A_entry_L5b:
 	mov	(0x30, sp), a0
 	mov	(0x2c, sp), a1
 	mov	(0x18, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x30, sp), a0
 	mov	(0x18, sp), d1
@@ -45186,7 +45186,7 @@ func_9781B26A_entry_L5b:
 	mov	(0x1c, sp), d0
 	add	d0, a1
 	mov	(0x20, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x34, sp), a0
 	mov	(0x20, sp), d1
@@ -45336,10 +45336,10 @@ func_9781B37B_entry_Ld0:
 	bra	func_9781B37B_entry_L100
 func_9781B37B_entry_Le8:
 	mov	(0x14, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x97913f38, a0
 	mov	(0x14, sp), a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 func_9781B37B_entry_L100:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -45376,7 +45376,7 @@ func_9781B37B_entry_L16a:
 	add	0x24, d0
 	mov	8, a1
 	add	d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	call	func_9780A93E_entry, 0, 0x2c
@@ -45387,7 +45387,7 @@ func_9781B37B_entry_L16a:
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x97913f2d, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	beq	func_9781B37B_entry_L1b2
 	bra	func_9781B37B_entry_L1c3
@@ -45417,7 +45417,7 @@ func_9781B37B_entry_L1d8:
 	add	0x24, d0
 	mov	8, a1
 	add	d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	call	func_9783DB37_entry, 0, 0x14
@@ -45466,7 +45466,7 @@ func_9781B37B_entry_L236:
 	mov	0xa, a1
 	add	d1, a1
 	mov	6, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	jmp	func_9781B37B_entry_L370
 func_9781B37B_entry_L26d:
 	mov	sp, a0
@@ -45476,7 +45476,7 @@ func_9781B37B_entry_L26d:
 	add	0x24, d0
 	mov	8, a1
 	add	d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	call	func_9780A93E_entry, 0, 0x2c
@@ -45487,7 +45487,7 @@ func_9781B37B_entry_L26d:
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x97913f2d, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	beq	func_9781B37B_entry_L2b5
 	bra	func_9781B37B_entry_L2c6
@@ -45519,7 +45519,7 @@ func_9781B37B_entry_L2df:
 	add	0x24, d0
 	mov	8, a1
 	add	d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	call	func_9783DB37_entry, 0, 0x14
@@ -45567,7 +45567,7 @@ func_9781B37B_entry_L33c:
 	mov	0xa, a1
 	add	d1, a1
 	mov	6, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 func_9781B37B_entry_L370:
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
@@ -45685,16 +45685,16 @@ func_9781B7FF_entry_L9:
 	movhu	(0x14, sp), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	mov	a0, d2
 	add	0x18, d2
 	mov	sp, a0
 	add	0x18, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d2, a0
 	mov	(0x28, sp), a1
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_9781B7FF_entry_L45
 	bra	func_9781B7FF_entry_L4d
@@ -46096,7 +46096,7 @@ AcKssPleaseWaitProc_Ld6:
 	mov	d0, (0x10, sp)
 	movhu	(0x1e, sp), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
@@ -47425,7 +47425,7 @@ func_9781C9E0:
 func_9781C9E0_L1d:
 	mov	sp, a0
 	add	0x18, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0, d0
 	bhi	func_9781C9E0_L2d
 	bra	func_9781C9E0_L30
@@ -47466,14 +47466,14 @@ func_9781CA15_L38:
 	mov	(0x24, sp), a0
 	mov	0x97910c30, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x1c, sp), d0
 	bra	func_9781CA15_L6a
 func_9781CA15_L4d:
 	mov	0x97910c30, a0
 	mov	(0x24, sp), a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	(0x1c, sp), d0
 	bra	func_9781CA15_L6a
 func_9781CA15_L62:
@@ -47786,7 +47786,7 @@ KssCursorBoxProc_L10e:
 	calls	(a0)
 	mov	0x97913e48, a0
 	mov	0x978a22f0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -48152,7 +48152,7 @@ KssCursorBoxProc_L42f:
 	mulu	d1, d0
 	mov	d0, a0
 	add	0x9798940d, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0, d0
 	bhi	KssCursorBoxProc_L58e
 	bra	KssCursorBoxProc_L5c2
@@ -48172,7 +48172,7 @@ KssCursorBoxProc_L58e:
 	mulu	d1, d0
 	add	0x9798940d, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssCursorBoxProc_L5f4
 KssCursorBoxProc_L5c2:
 	mov	sp, a0
@@ -48190,7 +48190,7 @@ KssCursorBoxProc_L5c2:
 	mulu	d1, d0
 	add	0x9798929c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 KssCursorBoxProc_L5f4:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -48217,15 +48217,15 @@ KssCursorBoxProc_L625:
 	mov	0x9798929c, a0
 	clr	d0
 	mov	0x171, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x9798940d, a0
 	clr	d0
 	mov	0x453, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x97989860, a0
 	clr	d0
 	mov	0x28, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	call	func_9781D5E3_entry, [a2], 4
 	clr	d0
 	jmp	KssCursorBoxProc_L961
@@ -48495,11 +48495,11 @@ KssCursorBoxProc_L8f8:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x9798929c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x34, a0
 	mov	0x978a2378, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
@@ -48553,10 +48553,10 @@ func_9781D5E3_entry_L25:
 	bra	func_9781D5E3_entry_L67
 func_9781D5E3_entry_L4d:
 	mov	(0x18, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x97913e48, a0
 	mov	(0x18, sp), a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	bra	func_9781D5E3_entry_L6e
 func_9781D5E3_entry_L67:
 	clr	d0
@@ -48565,14 +48565,14 @@ func_9781D5E3_entry_L6e:
 	clr	d0
 	movbu	d0, (0x97913e50)
 	mov	0x97913e48, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0, d0
 	bhi	func_9781D5E3_entry_L88
 	bra	func_9781D5E3_entry_L9b
 func_9781D5E3_entry_L88:
 	mov	0x97913e48, a0
 	mov	0x978a2380, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 func_9781D5E3_entry_L9b:
 	mov	0x978a2384, a0
 	call	func_9780A8A1_entry, 0, 0x18
@@ -48628,11 +48628,11 @@ func_9781D5E3_entry_L114:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x9798929c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x978a238c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	movhu	(0x20, sp), d0
@@ -48642,11 +48642,11 @@ func_9781D5E3_entry_L114:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x9798929c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x97913f2d, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movhu	(0x20, sp), d0
 	inc	d0
 	movhu	d0, (0x20, sp)
@@ -48680,7 +48680,7 @@ func_9781D785:
 	mov	sp, a0
 	add	0x20, a0
 	mov	(0x68, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x20, a0
 	call	func_9783DAD8_entry, 0, 0x24
@@ -48710,10 +48710,10 @@ func_9781D785_L40:
 	add	d1, d0
 	mov	d0, a0
 	add	0x9789d88e, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	a3, a1
 	mov	a2, a0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_9781D785_L73
 	bra	func_9781D785_L7a
@@ -48744,7 +48744,7 @@ func_9781D814_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	(0x8c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9783DAD8_entry, 0, 0x24
@@ -48755,7 +48755,7 @@ func_9781D814_entry:
 	add	0x1c, a0
 	mov	0x978a2394, a1
 	mov	4, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_9781D814_entry_L3b
 	jmp	func_9781D814_entry_L177
@@ -48775,10 +48775,10 @@ func_9781D814_entry_L4c:
 	add	0x50, a0
 	mov	sp, a1
 	add	0x1c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x50, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	sp, a0
 	add	0x50, a0
 	mov	4, d1
@@ -48793,7 +48793,7 @@ func_9781D814_entry_L83:
 	mov	0x9798929c, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x97913e40), d0
 	inc	d0
 	movhu	d0, (0x97913e40)
@@ -48813,7 +48813,7 @@ func_9781D814_entry_Laa:
 	mul	d1, d0
 	mov	d0, a1
 	add	0x9798929c, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	blt	func_9781D814_entry_Lca
 	bra	func_9781D814_entry_L136
@@ -48837,7 +48837,7 @@ func_9781D814_entry_Ld4:
 	mul	d0, d1
 	mov	d1, a1
 	add	0x9798929c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x18, sp), d0
 	add	-1, d0
 	mov	d0, (0x18, sp)
@@ -48857,7 +48857,7 @@ func_9781D814_entry_L10c:
 	add	0x9798929c, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x97913e40), d0
 	inc	d0
 	movhu	d0, (0x97913e40)
@@ -48883,7 +48883,7 @@ func_9781D814_entry_L149:
 	add	0x9798929c, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x97913e40), d0
 	inc	d0
 	movhu	d0, (0x97913e40)
@@ -48901,7 +48901,7 @@ func_9781D993_entry:
 	mov	0x9798ab5c, a0
 	clr	d0
 	mov	0x1c2, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	ret	0, 0x14
 
 func_9781D9AA:
@@ -49220,7 +49220,7 @@ KssInitialWaitProc_L29d:
 	mov	d0, (0x20, sp)
 	mov	(0x979a4a88), d0
 	mov	d0, (0x24, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
@@ -49291,19 +49291,19 @@ KssInitialWaitProc_L3a7:
 	mov	(0x10, a0), a1
 	mov	sp, a0
 	add	0x30, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x94, a0
 	mov	0x979a4afc, a1
 	mov	0x1e, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0xae, sp)
 	mov	sp, a0
 	add	0x30, a0
 	mov	sp, a1
 	add	0x94, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
@@ -49312,7 +49312,7 @@ KssInitialWaitProc_L3a7:
 	mov	(0x14, a0), a1
 	mov	sp, a0
 	add	0x30, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	call	func_9783B4C8, 0, 0
 	movbu	d0, (0x2c, sp)
 	movbu	(0x979898ec), d0
@@ -49325,7 +49325,7 @@ KssInitialWaitProc_L3a7:
 	mov	(d0, a0), a1
 	mov	sp, a0
 	add	0x30, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
@@ -49633,7 +49633,7 @@ KssCatch_USBPP_L286:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -49645,7 +49645,7 @@ KssCatch_USBPP_L286:
 	mov	d0, (0xc, sp)
 	mov	(0x97912660), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -49703,7 +49703,7 @@ KssCatch_USBPP_L361:
 	mov	d0, (0xc, sp)
 	mov	(0x97910c24), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -53478,7 +53478,7 @@ KssxCatch_DeleteDirectory_L14a:
 	mov	0x97913ed8, a0
 	mov	0x97910ce0, a1
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913ee8)
 	movhu	(0x38, sp), d0
@@ -55236,18 +55236,18 @@ func_97821976_entry_L45:
 	movbu	(0x15, sp), d0
 	add	-1, d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d2
 	movbu	(0x15, sp), d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	cmp	d0, d2
 	bne	func_97821976_entry_L65
 	bra	func_97821976_entry_Ld6
 func_97821976_entry_L65:
 	movbu	(0x15, sp), d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
 	mov	(0x979126b4), a0
@@ -55256,7 +55256,7 @@ func_97821976_entry_L65:
 	movbu	(0x15, sp), d0
 	add	-1, d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, a0
 	inc	a0
 	mov	a0, (0x10, sp)
@@ -55269,7 +55269,7 @@ func_97821976_entry_L65:
 	movbu	(0x15, sp), d0
 	add	-1, d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	inc	d1
 	mov	d1, (0x10, sp)
@@ -55354,7 +55354,7 @@ func_97821976_entry_L1d5:
 	call	func_97802F34, 0, 0
 	movhu	(0x2c, sp), d0
 	mov	0x30, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
 	mov	(0x979126b4), a0
@@ -55583,7 +55583,7 @@ func_97821E4F_entry:
 	mov	0x9798a8fc, a0
 	clr	d0
 	mov	0x260, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x4b494631, d0
 	mov	d0, (0x9798a8fc)
 	mov	1, d0
@@ -55946,7 +55946,7 @@ KssParaTextEntryProc_L231:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x30, sp)
 	movhu	(0x46, sp), d0
 	exth	d0
@@ -56048,7 +56048,7 @@ KssParaTextEntryProc_L315:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x30, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -56058,7 +56058,7 @@ KssParaTextEntryProc_L315:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x34, sp)
 	clr	d0
 	movhu	d0, (0x32, sp)
@@ -56134,7 +56134,7 @@ KssParaTextEntryProc_L3d1:
 	exth	d2
 	movhu	(0x32, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3a, sp)
 	movhu	(0x46, sp), d2
 	exth	d2
@@ -56185,7 +56185,7 @@ KssParaTextEntryProc_L3d1:
 	exth	d2
 	movhu	(0x34, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x4e, sp)
 	mov	(0x979126b4), a0
@@ -56220,7 +56220,7 @@ KssParaTextEntryProc_L3d1:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	exth	d3
 	mov	d1, d0
@@ -56844,7 +56844,7 @@ func_97822A65_entry_L4b:
 	exth	d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97913e7c, a0
 	movhu	(0x97913bf8), d1
 	exth	d1
@@ -56856,7 +56856,7 @@ func_97822A65_entry_L4b:
 	mov	d1, a1
 	add	0x97913bfc, a1
 	mov	8, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97913e84)
 	mov	0x97913e7a, a0
@@ -57259,7 +57259,7 @@ KssParaEditEntryProc_L24f:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x2c, sp)
 	movhu	(0x42, sp), d0
 	exth	d0
@@ -57358,7 +57358,7 @@ KssParaEditEntryProc_L32a:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x2c, sp)
 	movhu	(0x46, sp), d0
 	exth	d0
@@ -57368,7 +57368,7 @@ KssParaEditEntryProc_L32a:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x30, sp)
 	clr	d0
 	movhu	d0, (0x2e, sp)
@@ -57388,7 +57388,7 @@ KssParaEditEntryProc_L380:
 	movhu	(0x2e, sp), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	movhu	(0x2e, sp), d0
 	mov	0xf, d1
 	nop
@@ -57410,7 +57410,7 @@ KssParaEditEntryProc_L3ba:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x9798ab5c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 KssParaEditEntryProc_L3d5:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d2
@@ -57424,7 +57424,7 @@ KssParaEditEntryProc_L3d5:
 	exth	d2
 	movhu	(0x2e, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x36, sp)
 	movhu	(0x42, sp), d2
 	exth	d2
@@ -57475,7 +57475,7 @@ KssParaEditEntryProc_L3d5:
 	exth	d2
 	movhu	(0x30, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x4a, sp)
 	mov	(0x979126b4), a0
@@ -57512,7 +57512,7 @@ KssParaEditEntryProc_L3d5:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exth	d3
 	add	d0, d3
 	add	a2, d3
@@ -59064,7 +59064,7 @@ KssLoadSaveDel_DISPProc_La51:
 	mov	d0, (0xc, sp)
 	mov	0x978a384b, d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
@@ -59183,16 +59183,16 @@ func_97824338_entry_Lb2:
 	mov	sp, a0
 	add	0x20, a0
 	mov	(0x168, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x20, a0
 	mov	0x978a3850, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x124, a0
 	mov	0x20, d0
 	mov	0x20, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
@@ -59236,7 +59236,7 @@ func_97824338_entry_L167:
 	mov	d1, a1
 	inc	a1
 	mov	(0x18, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	0x9798ad1e, a0
 	mov	(0x18, sp), d1
@@ -59245,21 +59245,21 @@ func_97824338_entry_L167:
 func_97824338_entry_L18d:
 	mov	0x9798ad1e, a0
 	mov	(0x168, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	func_97824338_entry_L1ce
 func_97824338_entry_L1a0:
 	mov	0x9798ad1e, a0
 	mov	sp, a1
 	add	0x124, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x9798ad38)
 	bra	func_97824338_entry_L1ce
 func_97824338_entry_L1bd:
 	mov	0x9798ad1e, a0
 	mov	(0x168, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 func_97824338_entry_L1ce:
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
@@ -59342,16 +59342,16 @@ func_97824338_entry_L2da:
 	mov	sp, a0
 	add	0x20, a0
 	mov	(0x168, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x20, a0
 	mov	0x978a385c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x14c, a0
 	clr	d0
 	mov	0xa, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
@@ -60285,7 +60285,7 @@ KssFileSfx_DISPProc_L9bc:
 	mov	d0, (0xc, sp)
 	mov	0x978a3e27, d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
@@ -60399,15 +60399,15 @@ func_978251C6_entry_L53:
 	mov	d1, a1
 	add	0x9798ab5c, a1
 	mov	8, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x97916f4a)
 	mov	0x9798ad1e, a0
 	mov	0x97916f42, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97916f42, a0
 	mov	0x978a3e2c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x97916f42, a0
 	movhu	(0x97913fe8), d1
 	exth	d1
@@ -60419,7 +60419,7 @@ func_978251C6_entry_L53:
 	mov	9, a1
 	add	d1, a1
 	mov	3, d0
-	call	func_9780A3B6_entry, [a2,a3], 8
+	call	strncat_entry, [a2,a3], 8
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
@@ -60427,11 +60427,11 @@ func_978251C6_entry_L53:
 	mov	sp, a0
 	add	0x20, a0
 	mov	0x9798ad1e, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x20, a0
 	mov	0x978a3e30, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x800, d0
 	mov	0x9798ad1e, a0
 	call	func_9783C3D4_entry, 0, 0x1c
@@ -60468,15 +60468,15 @@ func_978251C6_entry_L16c:
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x9798ad1e, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x978a3e3c, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x58, a0
 	mov	0x9798ad1e, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
@@ -60496,12 +60496,12 @@ func_978251C6_entry_L1bd:
 	mov	sp, a0
 	add	0x58, a0
 	mov	0x978a3e48, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x20, d0
 	mov	0x20, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
@@ -60546,7 +60546,7 @@ func_978251C6_entry_L24d:
 	mov	d1, a1
 	inc	a1
 	mov	(0x18, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	0x9798ad1e, a0
 	mov	(0x18, sp), d1
@@ -60557,7 +60557,7 @@ func_978251C6_entry_L271:
 	mov	sp, a1
 	add	0x30, a1
 	mov	0x1a, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x9798ad38)
 	bra	func_978251C6_entry_L29c
@@ -60565,7 +60565,7 @@ func_978251C6_entry_L28c:
 	mov	0x9798ad1e, a0
 	mov	sp, a1
 	add	0x58, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 func_978251C6_entry_L29c:
 	mov	(0x979126b4), a0
 	mov	(0x107c, a0), a0
@@ -63490,15 +63490,15 @@ func_978270CB_entry:
 	mov	0x97916e6a, a0
 	clr	d0
 	mov	0x1d, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x97916e87, a0
 	clr	d0
 	mov	0x1d, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x97916ea4, a0
 	mov	0x7f, d0
 	mov	0x1d, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	movbu	(0x97916f4f), d0
 	cmp	1, d0
 	beq	func_978270CB_entry_Lc3
@@ -63710,7 +63710,7 @@ func_97827388_entry:
 	mov	0x97916d81, a0
 	clr	d0
 	mov	0xe9, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x14, sp)
 	bra	func_97827388_entry_L29
@@ -63805,7 +63805,7 @@ func_978273BF_entry_L80:
 func_978273BF_entry_L8e:
 	movbu	(0x97916d81), d0
 	mov	4, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x10, sp)
 	cmp	0x3a, d0
 	bge	func_978273BF_entry_La5
@@ -64438,7 +64438,7 @@ func_978278DA_Lbc:
 	mov	(0x88, sp), a0
 	mov	(a0), d0
 	mov	d0, (0x1c, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x38, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -65130,7 +65130,7 @@ KssCatch_NewClsScreen_L1a4:
 	mov	d0, (0x10, sp)
 	mov	(0xa4, sp), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssCatch_NewClsScreen_L1da
 KssCatch_NewClsScreen_L1c4:
 	mov	sp, a0
@@ -65139,7 +65139,7 @@ KssCatch_NewClsScreen_L1c4:
 	mov	d0, (8, sp)
 	mov	0x978a42e4, d0
 	mov	d0, (0xc, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 KssCatch_NewClsScreen_L1da:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -65505,7 +65505,7 @@ KssCopyFdToHD_DISPProc_L33d:
 	movhu	(6, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	movhu	(0x5e, sp), d0
 	exth	d0
@@ -65610,7 +65610,7 @@ KssCopyFdToHD_DISPProc_L41c:
 	movhu	(6, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3e, sp)
 	movhu	(0x62, sp), d0
 	exth	d0
@@ -65622,7 +65622,7 @@ KssCopyFdToHD_DISPProc_L41c:
 	movhu	(4, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x40, sp)
 	mov	(0x28, sp), a0
 	mov	(0x54, a0), a0
@@ -65644,7 +65644,7 @@ KssCopyFdToHD_DISPProc_L41c:
 	movhu	(8, a0), d0
 	exth	d0
 	movhu	(0x42, sp), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x44, sp)
 	clr	d0
 	movhu	d0, (0x46, sp)
@@ -65710,7 +65710,7 @@ KssCopyFdToHD_DISPProc_L526:
 	mov	sp, a0
 	add	0x6c, a0
 	mov	0x10, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x7c, sp)
 	bra	KssCopyFdToHD_DISPProc_L56a
@@ -65718,13 +65718,13 @@ KssCopyFdToHD_DISPProc_L548:
 	mov	sp, a0
 	add	0x6c, a0
 	mov	0x978a42e8, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	KssCopyFdToHD_DISPProc_L56a
 KssCopyFdToHD_DISPProc_L55a:
 	mov	sp, a0
 	add	0x6c, a0
 	mov	0x978a42ec, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssCopyFdToHD_DISPProc_L56a:
 	mov	(0x28, sp), a0
 	movhu	(0x44, a0), d1
@@ -65768,7 +65768,7 @@ KssCopyFdToHD_DISPProc_L59a:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	jmp	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L5c2:
 	mov	sp, a0
@@ -65784,7 +65784,7 @@ KssCopyFdToHD_DISPProc_L5c2:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	jmp	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L5ea:
 	mov	sp, a0
@@ -65800,7 +65800,7 @@ KssCopyFdToHD_DISPProc_L5ea:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	jmp	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L612:
 	mov	sp, a0
@@ -65816,7 +65816,7 @@ KssCopyFdToHD_DISPProc_L612:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L639:
 	mov	sp, a0
@@ -65832,7 +65832,7 @@ KssCopyFdToHD_DISPProc_L639:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L660:
 	mov	sp, a0
@@ -65848,7 +65848,7 @@ KssCopyFdToHD_DISPProc_L660:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssCopyFdToHD_DISPProc_L6a6
 KssCopyFdToHD_DISPProc_L687:
 	mov	sp, a0
@@ -65861,7 +65861,7 @@ KssCopyFdToHD_DISPProc_L687:
 	mov	a0, d0
 	add	0x6c, d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 KssCopyFdToHD_DISPProc_L6a6:
 	mov	(0x28, sp), a0
 	mov	(0x54, a0), a0
@@ -65879,7 +65879,7 @@ KssCopyFdToHD_DISPProc_L6a6:
 	movhu	(4, a0), d1
 	exth	d1
 	movhu	(0x46, sp), d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x5e, sp), d2
 	exth	d2
@@ -65924,7 +65924,7 @@ KssCopyFdToHD_DISPProc_L721:
 	exth	d2
 	movhu	(0x3e, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x64, sp)
 	bra	KssCopyFdToHD_DISPProc_L73d
@@ -65936,7 +65936,7 @@ KssCopyFdToHD_DISPProc_L73d:
 	exth	d2
 	movhu	(0x40, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x66, sp)
 	mov	(0x28, sp), a0
@@ -66064,7 +66064,7 @@ KssCopyFdToHD_DISPProc_L832:
 	nop
 	mul	d1, d2
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x56, sp)
 	mov	(0x28, sp), a0
 	mov	(0x48, a0), d1
@@ -66166,7 +66166,7 @@ KssCopyFdToHD_DISPProc_L918:
 	nop
 	mul	d1, d2
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x58, sp)
 	movhu	(0x58, sp), d1
 	exth	d1
@@ -66715,14 +66715,14 @@ KssCopySmfFdToHD_DISPProc_L199:
 KssCopySmfFdToHD_DISPProc_L1c1:
 	mov	0x78, d0
 	movhu	(0x9791406a), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	inc	d0
 	movhu	d0, (0x9791406c)
 	bra	KssCopySmfFdToHD_DISPProc_L1ee
 KssCopySmfFdToHD_DISPProc_L1d9:
 	mov	0x78, d0
 	movhu	(0x9791406a), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x9791406c)
 KssCopySmfFdToHD_DISPProc_L1ee:
 	mov	(0x979126b4), a0
@@ -66792,7 +66792,7 @@ KssCopySmfFdToHD_DISPProc_L27c:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x34, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -66908,7 +66908,7 @@ KssCopySmfFdToHD_DISPProc_L376:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x34, sp)
 	movhu	(0x4e, sp), d0
 	exth	d0
@@ -66918,7 +66918,7 @@ KssCopySmfFdToHD_DISPProc_L376:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	clr	d0
 	movhu	d0, (0x36, sp)
@@ -66958,7 +66958,7 @@ KssCopySmfFdToHD_DISPProc_L3cc:
 	mov	a0, d0
 	add	0x58, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0xe8, sp), a0
 	cmp	0xffffffff, a0
 	bne	KssCopySmfFdToHD_DISPProc_L42f
@@ -66982,7 +66982,7 @@ KssCopySmfFdToHD_DISPProc_L43b:
 	exth	d2
 	movhu	(0x36, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3e, sp)
 	movhu	(0x4a, sp), d2
 	exth	d2
@@ -67022,7 +67022,7 @@ KssCopySmfFdToHD_DISPProc_L43b:
 	exth	d2
 	movhu	(0x38, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x52, sp)
 	mov	(0x979126b4), a0
@@ -67058,7 +67058,7 @@ KssCopySmfFdToHD_DISPProc_L43b:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	exth	d3
 	mov	d1, d0
@@ -67882,12 +67882,12 @@ func_97829A0E_L79:
 	mov	d0, (0x14, sp)
 	mov	9, d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x24, sp), d0
 	asl2	d0
 	mov	0x97914074, a0
 	mov	(d0, a0), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x24, sp), d1
 	add	d0, d1
 	mov	d1, (0x24, sp)
@@ -68254,7 +68254,7 @@ KssVwDigitBoxProc_L303:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0xa4, sp)
 	movhu	(0xce, sp), d0
 	exth	d0
@@ -68341,7 +68341,7 @@ KssVwDigitBoxProc_L3c4:
 	movhu	(0xce, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0xcccccccd, d0
@@ -68352,10 +68352,10 @@ KssVwDigitBoxProc_L3c4:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0xd6, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -68485,7 +68485,7 @@ KssVwDigitBoxProc_L580:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0xa4, sp)
 	movhu	(0xd2, sp), d0
 	exth	d0
@@ -68495,7 +68495,7 @@ KssVwDigitBoxProc_L580:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0xa8, sp)
 	clr	d0
 	movhu	d0, (0xa6, sp)
@@ -68543,7 +68543,7 @@ KssVwDigitBoxProc_L619:
 	mov	a0, d0
 	add	0xec, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0xe4, sp), d0
 	cmp	0, d0
 	beq	KssVwDigitBoxProc_L648
@@ -68552,13 +68552,13 @@ KssVwDigitBoxProc_L648:
 	mov	sp, a0
 	add	0x154, a0
 	mov	0x978a44ac, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	KssVwDigitBoxProc_L66e
 KssVwDigitBoxProc_L65c:
 	mov	sp, a0
 	add	0x154, a0
 	mov	0x978a44b0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssVwDigitBoxProc_L66e:
 	mov	(0xe8, sp), d0
 	cmp	0, d0
@@ -68568,13 +68568,13 @@ KssVwDigitBoxProc_L676:
 	mov	sp, a0
 	add	0x158, a0
 	mov	0x978a44b4, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	KssVwDigitBoxProc_L69c
 KssVwDigitBoxProc_L68a:
 	mov	sp, a0
 	add	0x158, a0
 	mov	0x978a44b8, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssVwDigitBoxProc_L69c:
 	mov	(0x230, sp), a0
 	cmp	0xffffffff, a0
@@ -68599,7 +68599,7 @@ KssVwDigitBoxProc_L6b8:
 	exth	d2
 	movhu	(0xa6, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0xae, sp)
 	movhu	(0xce, sp), d2
 	exth	d2
@@ -68639,7 +68639,7 @@ KssVwDigitBoxProc_L6b8:
 	exth	d2
 	movhu	(0xa8, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0xd6, sp)
 	mov	(0x979126b4), a0
@@ -68675,7 +68675,7 @@ KssVwDigitBoxProc_L6b8:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exth	d3
 	add	d0, d3
 	add	a2, d3
@@ -68707,7 +68707,7 @@ KssVwDigitBoxProc_L6b8:
 	bra	KssVwDigitBoxProc_L820
 KssVwDigitBoxProc_L7e9:
 	mov	(0x4c, sp), d0
-	call	func_9780A208, 0, 0
+	call	LibU32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0, d0
@@ -68718,7 +68718,7 @@ KssVwDigitBoxProc_L7e9:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	func_97807E91_entry, [d3,a3], 0x10
@@ -68726,7 +68726,7 @@ KssVwDigitBoxProc_L7e9:
 	bra	KssVwDigitBoxProc_L855
 KssVwDigitBoxProc_L820:
 	mov	(0x50, sp), d0
-	call	func_9780A208, 0, 0
+	call	LibU32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0, d0
@@ -68737,7 +68737,7 @@ KssVwDigitBoxProc_L820:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	func_97807E91_entry, [d3,a3], 0x10
@@ -69184,7 +69184,7 @@ KssVwDigitBoxProc_Lc80:
 	mov	d0, (0x10, sp)
 	mov	0x978a44ce, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	KssVwDigitBoxProc_Lcd0
 KssVwDigitBoxProc_Lcaa:
 	mov	sp, a0
@@ -69199,7 +69199,7 @@ KssVwDigitBoxProc_Lcaa:
 	mov	(0x188, sp), d0
 	inc	d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 KssVwDigitBoxProc_Lcd0:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -69222,7 +69222,7 @@ KssVwDigitBoxProc_Lcd0:
 	movhu	(0xce, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0xcccccccd, d0
@@ -69233,10 +69233,10 @@ KssVwDigitBoxProc_Lcd0:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0xd6, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -71715,7 +71715,7 @@ func_9782C47C_entry_La4:
 	mov	0x97910cfc, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_9782C47C_entry_L185
 func_9782C47C_entry_Lc1:
 	call	func_97802E52_entry, [d2], 4
@@ -71723,7 +71723,7 @@ func_9782C47C_entry_Lc1:
 	mov	0x97910d18, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_9782C47C_entry_L185
 func_9782C47C_entry_Lde:
 	call	func_97802E52_entry, [d2], 4
@@ -71731,7 +71731,7 @@ func_9782C47C_entry_Lde:
 	mov	0x97910d34, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	jmp	func_9782C47C_entry_L185
 func_9782C47C_entry_Lfb:
 	call	func_97802E52_entry, [d2], 4
@@ -71739,7 +71739,7 @@ func_9782C47C_entry_Lfb:
 	mov	0x97910d50, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	func_9782C47C_entry_L185
 func_9782C47C_entry_L117:
 	call	func_97802E52_entry, [d2], 4
@@ -71747,7 +71747,7 @@ func_9782C47C_entry_L117:
 	mov	0x97910d6c, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	func_9782C47C_entry_L185
 func_9782C47C_entry_L133:
 	call	func_97802E52_entry, [d2], 4
@@ -71755,7 +71755,7 @@ func_9782C47C_entry_L133:
 	mov	0x97910d88, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	func_9782C47C_entry_L185
 func_9782C47C_entry_L14f:
 	call	func_97802E52_entry, [d2], 4
@@ -71763,7 +71763,7 @@ func_9782C47C_entry_L14f:
 	mov	0x97910da4, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	func_9782C47C_entry_L185
 func_9782C47C_entry_L16b:
 	call	func_97802E52_entry, [d2], 4
@@ -71771,7 +71771,7 @@ func_9782C47C_entry_L16b:
 	mov	0x97910dc0, a0
 	mov	(0x14, sp), a1
 	mov	0x1b, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 func_9782C47C_entry_L185:
 	mov	(0x24, sp), d0
 	ret	[d2], 0x1c
@@ -71819,35 +71819,35 @@ func_9782C60B_entry_L54:
 	mov	0x97910cfc, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910d18, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910d34, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910d50, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910d6c, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910d88, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910da4, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97910dc0, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	ret	0, 0x18
 
 KssAcParaStrBoxProc:
@@ -72527,7 +72527,7 @@ KssAcActualDFStrBoxProc_L2b7:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x50, sp)
 	movhu	(0x66, sp), d0
 	exth	d0
@@ -72973,7 +72973,7 @@ KssAcActualDFStrBoxProc_L7c2:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x50, sp)
 	movhu	(0x6a, sp), d0
 	exth	d0
@@ -72983,7 +72983,7 @@ KssAcActualDFStrBoxProc_L7c2:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x54, sp)
 	clr	d0
 	movhu	d0, (0x52, sp)
@@ -73111,12 +73111,12 @@ KssAcActualDFStrBoxProc_L8c9:
 KssAcActualDFStrBoxProc_L905:
 	mov	sp, a0
 	add	0x7c, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x40, sp)
 	mov	sp, a0
 	add	0x98, a0
 	mov	0x978a48d0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x3c, sp), d0
 	mov	d0, (0x44, sp)
 	bra	KssAcActualDFStrBoxProc_L940
@@ -73144,7 +73144,7 @@ KssAcActualDFStrBoxProc_L949:
 	add	0x7c, a0
 	mov	sp, a1
 	add	0x98, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 KssAcActualDFStrBoxProc_L958:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d1
@@ -73177,7 +73177,7 @@ KssAcActualDFStrBoxProc_L97a:
 	mov	a0, d0
 	add	0x7c, d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 KssAcActualDFStrBoxProc_L9a3:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d1
@@ -73204,7 +73204,7 @@ KssAcActualDFStrBoxProc_L9c7:
 	mov	(0x979167f0), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x20, d0
 	movbu	d0, (0x74, sp)
 	movbu	d0, (0x78, sp)
@@ -73233,7 +73233,7 @@ KssAcActualDFStrBoxProc_La13:
 	mov	d0, (0xc, sp)
 	mov	0x978a4944, d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x20, d0
 	movbu	d0, (0x74, sp)
 	movbu	d0, (0x78, sp)
@@ -73267,7 +73267,7 @@ KssAcActualDFStrBoxProc_La64:
 	exth	d2
 	movhu	(0x52, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x5a, sp)
 	movhu	(0x66, sp), d2
 	exth	d2
@@ -73307,7 +73307,7 @@ KssAcActualDFStrBoxProc_La64:
 	exth	d2
 	movhu	(0x54, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x6e, sp)
 	mov	(0x979126b4), a0
@@ -73341,7 +73341,7 @@ KssAcActualDFStrBoxProc_La64:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	exth	d3
 	add	d0, d3
 	add	a2, d3
@@ -74188,7 +74188,7 @@ KssAcActualDFStrBoxProc_L13fa:
 func_9782E021:
 	add	-0x14, sp
 	mov	a0, (0x1c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	1, d1
 	sub	d1, d0
 	mov	d0, (0xc, sp)
@@ -74240,7 +74240,7 @@ func_9782E057_entry_L11:
 	call	func_9780271A_entry, [d2], 0x4c
 	mov	sp, a0
 	add	0x3c, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x18, sp)
 	cmp	0, d0
 	bne	func_9782E057_entry_L36
@@ -74254,7 +74254,7 @@ func_9782E057_entry_L36:
 	mov	sp, a0
 	add	0x58, a0
 	mov	0x978a4970, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x28, sp), d0
 	mov	d0, (0x2c, sp)
 	bra	func_9782E057_entry_L7f
@@ -74294,7 +74294,7 @@ func_9782E057_entry_L88:
 	mov	sp, a1
 	add	0x58, a1
 	mov	5, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	sp, a0
 	mov	a0, d0
 	add	0x70, d0
@@ -74305,7 +74305,7 @@ func_9782E057_entry_L88:
 	mov	d0, (0x10, sp)
 	mov	(0x24, sp), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	5, d0
 	mov	d0, (0x30, sp)
 	bra	func_9782E057_entry_Lda
@@ -74339,7 +74339,7 @@ func_9782E057_entry_Le2:
 	add	0x97997f5c, a0
 	mov	sp, a1
 	add	0x64, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x1c, sp), d0
 	inc	d0
 	mov	d0, (0x1c, sp)
@@ -74384,7 +74384,7 @@ func_9782E057_entry_L139:
 	mul	d1, d0
 	mov	d0, a1
 	add	0x97997f5c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x38, sp), d1
 	mov	0xb, d0
 	nop
@@ -74401,7 +74401,7 @@ func_9782E057_entry_L139:
 	mul	d1, d0
 	mov	d0, a1
 	add	0x97997f5c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x38, sp), d0
 	mov	(0x34, sp), d1
 	add	d1, d0
@@ -74413,7 +74413,7 @@ func_9782E057_entry_L139:
 	add	0x97997f5c, a0
 	mov	sp, a1
 	add	0x7c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x38, sp), d0
 	mov	(0x34, sp), d1
 	cmp	d1, d0
@@ -74450,7 +74450,7 @@ func_9782E057_entry_L1b8:
 	mul	d1, d0
 	mov	d0, a1
 	add	0x97997f5c, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	ble	func_9782E057_entry_L1e9
 	jmp	func_9782E057_entry_L139
@@ -74471,7 +74471,7 @@ func_9782E057_entry_L1ee:
 func_9782E057_entry_L1fe:
 	mov	(0x34, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x34, sp)
 func_9782E057_entry_L20b:
 	mov	(0x34, sp), d0
@@ -74511,14 +74511,14 @@ func_9782E27A_entry_L13:
 	mov	d1, a1
 	add	0x97997f5c, a1
 	mov	1, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9783DB37_entry, 0, 0x14
 	mov	sp, a0
 	add	0x24, a0
 	mov	(0x34, sp), a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	bge	func_9782E27A_entry_L4b
 	bra	func_9782E27A_entry_L59
@@ -74728,14 +74728,14 @@ KSSSelectListProc_L199:
 KSSSelectListProc_L1bd:
 	mov	0xf0, d0
 	mov	(0x979167f8), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	inc	d0
 	mov	d0, (0x979167fc)
 	bra	KSSSelectListProc_L1ec
 KSSSelectListProc_L1d6:
 	mov	0xf0, d0
 	mov	(0x979167f8), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x979167fc)
 KSSSelectListProc_L1ec:
 	mov	(0x979126b4), a0
@@ -74805,7 +74805,7 @@ KSSSelectListProc_L27a:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x34, sp)
 	movhu	(0x4a, sp), d0
 	exth	d0
@@ -74920,7 +74920,7 @@ KSSSelectListProc_L373:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x34, sp)
 	movhu	(0x4e, sp), d0
 	exth	d0
@@ -74930,7 +74930,7 @@ KSSSelectListProc_L373:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x38, sp)
 	clr	d0
 	movhu	d0, (0x36, sp)
@@ -74970,7 +74970,7 @@ KSSSelectListProc_L3c9:
 	mov	a0, d0
 	add	0x58, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0xe8, sp), a0
 	cmp	0xffffffff, a0
 	bne	KSSSelectListProc_L42c
@@ -74994,7 +74994,7 @@ KSSSelectListProc_L438:
 	exth	d2
 	movhu	(0x36, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x3e, sp)
 	movhu	(0x4a, sp), d2
 	exth	d2
@@ -75035,7 +75035,7 @@ KSSSelectListProc_L438:
 	exth	d2
 	movhu	(0x38, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x52, sp)
 	mov	(0x979126b4), a0
@@ -75070,7 +75070,7 @@ KSSSelectListProc_L438:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	exth	d3
 	mov	d1, d0
@@ -75954,7 +75954,7 @@ KSSCLSListProc_L304:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x40, sp)
 	movhu	(0x56, sp), d0
 	exth	d0
@@ -76043,7 +76043,7 @@ KSSCLSListProc_L3bc:
 	movhu	(0x56, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0x33333333, d0
@@ -76054,10 +76054,10 @@ KSSCLSListProc_L3bc:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -76091,7 +76091,7 @@ KSSCLSListProc_L3bc:
 	movhu	(0x56, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0x33333333, d0
@@ -76102,10 +76102,10 @@ KSSCLSListProc_L3bc:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
 	mov	sp, a0
 	mov	a0, d0
@@ -76116,7 +76116,7 @@ KSSCLSListProc_L3bc:
 	mov	(0x97910ddc), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
@@ -76184,7 +76184,7 @@ KSSCLSListProc_L54f:
 	movhu	(0x30, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x40, sp)
 	movhu	(0x5a, sp), d0
 	exth	d0
@@ -76194,7 +76194,7 @@ KSSCLSListProc_L54f:
 	movhu	(0x32, a0), d1
 	exth	d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x44, sp)
 	clr	d0
 	movhu	d0, (0x42, sp)
@@ -76223,7 +76223,7 @@ KSSCLSListProc_L5a7:
 	mov	a0, d0
 	add	0x80, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x110, sp), a0
 	cmp	0xffffffff, a0
 	bne	KSSCLSListProc_L5f5
@@ -76247,7 +76247,7 @@ KSSCLSListProc_L603:
 	exth	d2
 	movhu	(0x42, sp), d0
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x4a, sp)
 	movhu	(0x56, sp), d2
 	exth	d2
@@ -76287,7 +76287,7 @@ KSSCLSListProc_L603:
 	exth	d2
 	movhu	(0x44, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x5e, sp)
 	mov	(0x979126b4), a0
@@ -76323,7 +76323,7 @@ KSSCLSListProc_L603:
 	not	d0
 	inc	d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, d1
 	mov	a2, d0
 	exth	d0
@@ -76520,7 +76520,7 @@ KSSCLSListProc_L87b:
 	movhu	(0x56, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0x33333333, d0
@@ -76531,10 +76531,10 @@ KSSCLSListProc_L87b:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -76584,7 +76584,7 @@ KSSCLSListProc_L87b:
 	movhu	(0x56, sp), d1
 	exth	d1
 	sub	d1, d0
-	call	func_97809485, 0, 0
+	call	LibI32ToF64, 0, 0
 	mov	d0, (0x24, sp)
 	mov	d1, (0x28, sp)
 	mov	0x33333333, d0
@@ -76595,10 +76595,10 @@ KSSCLSListProc_L87b:
 	mov	(0x28, sp), d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807DCA_entry, [d3,a3], 0x10
+	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
 	mov	sp, a0
 	mov	a0, d0
@@ -76609,7 +76609,7 @@ KSSCLSListProc_L87b:
 	mov	(0x97910ddc), d0
 	inc	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
@@ -77472,7 +77472,7 @@ AboutNHelpScreen_L26:
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -77660,7 +77660,7 @@ func_978301C6_L190:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x30, sp)
 	bra	func_978301C6_L1b3
@@ -77676,7 +77676,7 @@ func_978301C6_L1b3:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x32, sp)
 	mov	(0x50, sp), d0
@@ -77986,7 +77986,7 @@ func_97830472_L221:
 	inc	d0
 	mov	d0, (0x2c, sp)
 	mov	(0x490, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0x3ff, d0
 	bcc	func_97830472_L24e
 	bra	func_97830472_L266
@@ -77995,7 +77995,7 @@ func_97830472_L24e:
 	add	0x68, a0
 	mov	(0x490, sp), a1
 	mov	0x3ff, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x467, sp)
 	bra	func_97830472_L274
@@ -78003,7 +78003,7 @@ func_97830472_L266:
 	mov	sp, a0
 	add	0x68, a0
 	mov	(0x490, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 func_97830472_L274:
 	clr	d0
 	mov	d0, (0x30, sp)
@@ -78162,7 +78162,7 @@ func_97830472_L365:
 	mov	0x3ff33333, d1
 	mov	d0, (0x10, sp)
 	mov	d1, (0x14, sp)
-	call	func_97809D0B_entry, [d2,d3,a2,a3], 0x18
+	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	call	func_97807E91_entry, [d3,a3], 0x10
@@ -78191,7 +78191,7 @@ func_97830472_L3cc:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x470, sp)
 	bra	func_97830472_L3f5
@@ -78275,7 +78275,7 @@ func_97830472_L478:
 	exth	d2
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x472, sp)
 	movhu	(0x46a, sp), d1
@@ -78738,7 +78738,7 @@ HamaSelectListProc_L322:
 	mulu	d1, d0
 	mov	d0, a0
 	add	0x979a2cc0, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x30, sp), d1
 	mov	0x979a2c9a, a0
 	movbu	d0, (d1, a0)
@@ -79028,7 +79028,7 @@ HamaSelectListProc_L657:
 	exth	d2
 	movhu	(0x9798fdb0), d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x9798fdb8)
 	movhu	(0x97916cdc), d0
 	exth	d0
@@ -79036,7 +79036,7 @@ HamaSelectListProc_L657:
 	exth	d2
 	movhu	(0x9798fdb2), d1
 	sub	d2, d0
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	d0, (0x9798fdba)
 	clr	d0
 	movhu	d0, (0x979a3fcc)
@@ -79052,7 +79052,7 @@ HamaSelectListProc_L751:
 	exth	d3
 	sub	d1, d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	movhu	(0x9798fdb2), d1
 	mov	(0x24, sp), d2
 	inc	d2
@@ -79253,7 +79253,7 @@ HamaSelectListProc_L973:
 	mov	d0, (0x10, sp)
 	movhu	(0x979a3fb4), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79393,7 +79393,7 @@ func_978315A6:
 	mov	0x9798ad94, a0
 	clr	d0
 	mov	0x5004, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x979a2cbc)
 	clr	d0
@@ -79516,7 +79516,7 @@ func_97831613_entry_Lbd:
 	mov	d0, (0x10, sp)
 	mov	(0x979a3fc8), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79631,7 +79631,7 @@ func_97831613_entry_L23a:
 	jmp	func_97831613_entry_L5fd
 func_97831613_entry_L25c:
 	mov	0x979a3d52, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x24, sp)
 	movhu	(0x9798fdba), d1
 	cmp	d1, d0
@@ -79640,7 +79640,7 @@ func_97831613_entry_L25c:
 func_97831613_entry_L277:
 	mov	0x979a3509, a0
 	mov	0x979a3d52, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x979a2c98), d0
 	movhu	(0x9798fdba), d1
 	mov	(0x24, sp), d2
@@ -79826,7 +79826,7 @@ func_97831613_entry_L495:
 	mov	d0, (0x10, sp)
 	movbu	(0x979a3fb1), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79844,20 +79844,20 @@ func_97831613_entry_L4e3:
 func_97831613_entry_L4f0:
 	mov	0x979a3d53, a2
 	mov	0x978a4bc2, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x978a4bbc, a1
 	mov	a2, a0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_97831613_entry_L517
 	bra	func_97831613_entry_L560
 func_97831613_entry_L517:
 	mov	0x978a4bc8, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, a1
 	mov	0x979a3ea1, a0
 	add	0x979a3d53, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79869,14 +79869,14 @@ func_97831613_entry_L517:
 	jmp	func_97831613_entry_L5e3
 func_97831613_entry_L560:
 	mov	0x979a3d53, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	7, d0
 	bhi	func_97831613_entry_L573
 	bra	func_97831613_entry_L5ac
 func_97831613_entry_L573:
 	mov	0x979a3ea1, a0
 	mov	0x979a3d53, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79889,7 +79889,7 @@ func_97831613_entry_L573:
 func_97831613_entry_L5ac:
 	mov	0x979a3dd2, a0
 	mov	0x979a3d53, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -79940,7 +79940,7 @@ func_97831C18_entry:
 	mov	d0, (0x979a417c)
 	movhu	(0x9798ada0), d0
 	mov	0xc, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x979a4180)
 	clr	d0
 	movhu	d0, (0x979a4186)
@@ -79973,7 +79973,7 @@ func_97831CA9_entry_L23:
 	mov	0x979a3dd9, a0
 	mov	0x979a3d52, a1
 	mov	0x64, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x979a3e3c)
 	bra	func_97831CA9_entry_L7e
@@ -79981,7 +79981,7 @@ func_97831CA9_entry_L41:
 	movhu	(0x979a2bf6), d0
 	mov	0x979a3dd9, a0
 	mov	0x979a3d52, a1
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	movhu	(0x979a2bf6), d0
 	clr	d1
 	mov	0x979a3dd9, a0
@@ -79990,7 +79990,7 @@ func_97831CA9_entry_L41:
 func_97831CA9_entry_L6b:
 	mov	0x979a3dd9, a0
 	mov	0x978a4bd0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 func_97831CA9_entry_L7e:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
@@ -80012,7 +80012,7 @@ func_97831CA9_entry_La2:
 	mov	0x979a3e3d, a0
 	mov	0x979a3d52, a1
 	mov	0x64, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x979a3ea0)
 	bra	func_97831CA9_entry_Lfd
@@ -80020,7 +80020,7 @@ func_97831CA9_entry_Lc0:
 	movhu	(0x979a2bf6), d0
 	mov	0x979a3e3d, a0
 	mov	0x979a3d52, a1
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	movhu	(0x979a2bf6), d0
 	clr	d1
 	mov	0x979a3e3d, a0
@@ -80029,7 +80029,7 @@ func_97831CA9_entry_Lc0:
 func_97831CA9_entry_Lea:
 	mov	0x979a3dd9, a0
 	mov	0x978a4be4, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 func_97831CA9_entry_Lfd:
 	mov	-2, d0
 	mov	d0, (0x10, sp)
@@ -80107,7 +80107,7 @@ func_97831CA9_entry_L1d4:
 	mov	d0, (0x10, sp)
 	movbu	(0x979a3fb1), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	1, d0
 	movhu	d0, (0x979a3fb2)
 	clr	d0
@@ -80120,7 +80120,7 @@ func_97831CA9_entry_L1d4:
 	mov	d0, (0x10, sp)
 	movhu	(0x979a3fb4), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -80131,10 +80131,10 @@ func_97831CA9_entry_L1d4:
 	calls	(a0)
 	mov	0x979a3dd2, a0
 	mov	0x978a4c08, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x979a3ea1, a0
 	mov	0x978a4c0c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0xff, d0
 	movhu	d0, (0x979a2bf0)
 	clr	d0
@@ -80192,7 +80192,7 @@ func_97831F65_entry_L28:
 	mul	d0, d1
 	mov	d1, a1
 	add	0x979a2cc0, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x20, sp), d0
 	mov	0x65, d1
 	nop
@@ -80200,7 +80200,7 @@ func_97831F65_entry_L28:
 	mul	d0, d1
 	mov	d1, a0
 	add	0x979a2cc0, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x979a2c9a, a0
 	mov	(0x20, sp), d1
 	movbu	d0, (d1, a0)
@@ -80264,7 +80264,7 @@ func_97831F65_entry_Ld8:
 	add	0x979a2cc0, a0
 	mov	sp, a1
 	add	0x30, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	jmp	func_97831F65_entry_L20a
 func_97831F65_entry_Lfa:
 	movbu	(0x979a3d52), d0
@@ -80282,11 +80282,11 @@ func_97831F65_entry_L106:
 	mov	d0, a0
 	add	0x979a2cc0, a0
 	mov	0x978a4c10, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	jmp	func_97831F65_entry_L20a
 func_97831F65_entry_L12b:
 	mov	0x979a3d52, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x9798fdba), d1
 	mov	d1, a0
 	cmp	a0, d0
@@ -80298,11 +80298,11 @@ func_97831F65_entry_L146:
 	jmp	func_97831F65_entry_L9e
 func_97831F65_entry_L14e:
 	mov	0x979a3d52, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, d2
 	mov	sp, a0
 	add	0x30, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	(0x9798fdba), d1
 	mov	d1, a0
 	add	d0, d2
@@ -80313,7 +80313,7 @@ func_97831F65_entry_L175:
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x979a3d52, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x24, sp), d0
 	movhu	d0, (0x2c, sp)
 func_97831F65_entry_L18a:
@@ -80330,7 +80330,7 @@ func_97831F65_entry_L192:
 	mov	d0, a0
 	add	0x979a2cc0, a0
 	mov	0x978a4c14, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	bra	func_97831F65_entry_L20a
 func_97831F65_entry_L1b1:
 	mov	(0x24, sp), d0
@@ -80347,7 +80347,7 @@ func_97831F65_entry_L1ba:
 	add	0x979a2cc0, a0
 	mov	sp, a1
 	add	0x30, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x20, sp), d0
 	mov	0x65, d1
 	nop
@@ -80355,7 +80355,7 @@ func_97831F65_entry_L1ba:
 	mul	d0, d1
 	mov	d1, a0
 	add	0x979a2cc0, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x979a2c9a, a0
 	mov	(0x20, sp), d1
 	movbu	d0, (d1, a0)
@@ -80375,7 +80375,7 @@ func_97831F65_entry_L20a:
 	mul	d1, d0
 	mov	d0, a0
 	add	0x979a2cc0, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x979a2c9a, a0
 	mov	(0x20, sp), d1
 	movbu	d0, (d1, a0)
@@ -80741,7 +80741,7 @@ func_978322F4_entry_L1e1:
 	add	0x9798adac, d1
 	mov	a1, d0
 	mov	d1, a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	movhu	(0x979a2bf6), d0
 	clr	d1
 	mov	0x979a2c18, a0
@@ -80753,7 +80753,7 @@ func_978322F4_entry_L214:
 	mov	d1, a1
 	add	0x9798adac, a1
 	mov	0x7f, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x979a2c97)
 func_978322F4_entry_L235:
@@ -80777,7 +80777,7 @@ func_978322F4_entry_L260:
 	movhu	(0x1c, sp), d1
 	mov	d1, a1
 	add	0x9798adac, a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	movhu	(0x979a2bf6), d0
 	clr	d1
 	mov	0x979a3d52, a0
@@ -80789,7 +80789,7 @@ func_978322F4_entry_L28f:
 	mov	d1, a1
 	add	0x9798adac, a1
 	mov	0x7f, d0
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x979a3dd1)
 func_978322F4_entry_L2b0:
@@ -81026,7 +81026,7 @@ HamaSelectFileListProc_La8:
 	calls	(a0)
 	mov	0x979a477e, a0
 	mov	0x978a4c18, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
@@ -81409,7 +81409,7 @@ HamaSelectFileListProc_L3f2:
 	mulu	d0, d1
 	mov	d1, a0
 	add	0x979a42fa, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0, d0
 	bhi	HamaSelectFileListProc_L553
 	bra	HamaSelectFileListProc_L587
@@ -81429,7 +81429,7 @@ HamaSelectFileListProc_L553:
 	mulu	d1, d0
 	add	0x979a42fa, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	bra	HamaSelectFileListProc_L5b9
 HamaSelectFileListProc_L587:
 	mov	sp, a0
@@ -81447,7 +81447,7 @@ HamaSelectFileListProc_L587:
 	mulu	d1, d0
 	add	0x979a4189, d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 HamaSelectFileListProc_L5b9:
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
@@ -81474,15 +81474,15 @@ HamaSelectFileListProc_L5ea:
 	mov	0x979a4189, a0
 	clr	d0
 	mov	0x171, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x979a42fa, a0
 	clr	d0
 	mov	0x453, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x979a474d, a0
 	clr	d0
 	mov	0x28, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	call	func_97833050, 0, 0
 	clr	d0
 	jmp	HamaSelectFileListProc_L942
@@ -81752,11 +81752,11 @@ HamaSelectFileListProc_L8be:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x979a4189, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x34, a0
 	mov	0x978a4ca0, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x979126b4), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
@@ -81816,10 +81816,10 @@ func_97833050_L25:
 	bra	func_97833050_L67
 func_97833050_L4d:
 	mov	(0x18, sp), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	0x979a477e, a0
 	mov	(0x18, sp), a1
-	call	func_97809EC7_entry, [a2,a3], 8
+	call	memcpy_entry, [a2,a3], 8
 	bra	func_97833050_L6e
 func_97833050_L67:
 	clr	d0
@@ -81828,14 +81828,14 @@ func_97833050_L6e:
 	clr	d0
 	movbu	d0, (0x979a4786)
 	mov	0x979a477e, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	cmp	0, d0
 	bhi	func_97833050_L88
 	bra	func_97833050_L9b
 func_97833050_L88:
 	mov	0x979a477e, a0
 	mov	0x978a4ca8, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 func_97833050_L9b:
 	mov	sp, a0
 	add	0x24, a0
@@ -81879,11 +81879,11 @@ func_97833050_Le8:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x979a4189, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x978a4cac, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	movhu	(0x20, sp), d0
@@ -81893,11 +81893,11 @@ func_97833050_Le8:
 	mulu	d1, d0
 	mov	d0, a1
 	add	0x979a4189, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x130, a0
 	mov	0x978a4cb4, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	movhu	(0x20, sp), d0
 	inc	d0
 	movhu	d0, (0x20, sp)
@@ -81925,7 +81925,7 @@ func_978331C4_entry:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	(0x8c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9783DAD8_entry, 0, 0x24
@@ -81936,7 +81936,7 @@ func_978331C4_entry:
 	add	0x1c, a0
 	mov	0x978a4cbc, a1
 	mov	4, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_978331C4_entry_L3b
 	jmp	func_978331C4_entry_L177
@@ -81956,10 +81956,10 @@ func_978331C4_entry_L4c:
 	add	0x50, a0
 	mov	sp, a1
 	add	0x1c, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	add	0x50, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	sp, a0
 	add	0x50, a0
 	mov	4, d1
@@ -81974,7 +81974,7 @@ func_978331C4_entry_L83:
 	mov	0x979a4189, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x979a4776), d0
 	inc	d0
 	movhu	d0, (0x979a4776)
@@ -81994,7 +81994,7 @@ func_978331C4_entry_Laa:
 	mul	d1, d0
 	mov	d0, a1
 	add	0x979a4189, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	blt	func_978331C4_entry_Lca
 	bra	func_978331C4_entry_L136
@@ -82018,7 +82018,7 @@ func_978331C4_entry_Ld4:
 	mul	d0, d1
 	mov	d1, a1
 	add	0x979a4189, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x18, sp), d0
 	add	-1, d0
 	mov	d0, (0x18, sp)
@@ -82038,7 +82038,7 @@ func_978331C4_entry_L10c:
 	add	0x979a4189, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x979a4776), d0
 	inc	d0
 	movhu	d0, (0x979a4776)
@@ -82064,7 +82064,7 @@ func_978331C4_entry_L149:
 	add	0x979a4189, a0
 	mov	sp, a1
 	add	0x50, a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	movhu	(0x979a4776), d0
 	inc	d0
 	movhu	d0, (0x979a4776)
@@ -82100,7 +82100,7 @@ func_97833353_entry:
 	movhu	d1, (0x28, sp)
 	mov	a1, (0x20, sp)
 	mov	a1, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	movhu	d0, (0xc, sp)
 	clr	d0
 	movhu	d0, (0xe, sp)
@@ -82215,7 +82215,7 @@ WaitingFunc_entry_L2e:
 	mov	(d0, a0), a1
 	mov	sp, a0
 	add	0x18, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d2
 	add	0x58, d2
@@ -82226,7 +82226,7 @@ WaitingFunc_entry_L2e:
 	asl2	d0
 	mov	0x978a4d80, a0
 	mov	(d0, a0), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d2, a0
 	lsr	1, d0
 	exthu	d0
@@ -82805,7 +82805,7 @@ func_97833A24_L3e:
 	mov	sp, a0
 	add	0x54, a0
 	mov	0x978a4e80, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x18, sp), d0
 	inc	d0
 	mov	d0, (0x18, sp)
@@ -82861,12 +82861,12 @@ func_97833A24_Lbf:
 	mov	(d0, a0), a1
 	mov	sp, a0
 	add	0x54, a0
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 func_97833A24_Ld1:
 	mov	sp, a0
 	add	0x54, a0
 	mov	0x978a4eb4, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x18, sp), d0
 	inc	d0
 	mov	d0, (0x18, sp)
@@ -82965,7 +82965,7 @@ func_97833B38_entry_L59:
 	mov	(d0, a0), a1
 	mov	(0x10, sp), a0
 	add	0x97916f74, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x24, sp), d0
 	mov	0xa0, d1
 	nop
@@ -82982,7 +82982,7 @@ func_97833B38_entry_L59:
 	mov	(0x14, sp), d0
 	asl2	d0
 	mov	(d0, a0), a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	(0x10, sp), d1
 	add	d0, d1
 	mov	d1, (0x10, sp)
@@ -83023,7 +83023,7 @@ func_97833C07_entry:
 	mov	(a0), d1
 	mov	d1, a0
 	mov	(0x38, sp), a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	mov	d0, (0x18, sp)
 	mov	(0x18, sp), d1
 	mov	(0x30, sp), d0
@@ -83042,7 +83042,7 @@ func_97833C07_entry_L3b:
 	mov	(0x28, sp), a0
 	mov	d1, a1
 	mov	(0x18, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x28, sp), a0
 	mov	(0x18, sp), d1
@@ -83060,7 +83060,7 @@ func_97833C07_entry_L65:
 	mov	(0x28, sp), a0
 	mov	d1, a1
 	mov	(0x18, sp), d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	(0x28, sp), a0
 	mov	(0x18, sp), d1
@@ -83096,7 +83096,7 @@ func_97833C93_entry_L13:
 	extb	d1
 	mov	(0x20, sp), a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	beq	func_97833C93_entry_L28
 	bra	func_97833C93_entry_L2c
@@ -83106,7 +83106,7 @@ func_97833C93_entry_L28:
 func_97833C93_entry_L2c:
 	mov	(0x1c, sp), a0
 	inc	a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, d2
 	mov	(0x1c, sp), a0
 	inc	a0
@@ -83180,7 +83180,7 @@ func_97833D0A_entry_L2d:
 	extb	d1
 	mov	0x978aec84, a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	func_97833D0A_entry_L46
 	bra	func_97833D0A_entry_L57
@@ -83259,7 +83259,7 @@ func_97833D8E_entry_L28:
 	extb	d1
 	mov	0x978aec90, a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	func_97833D8E_entry_L41
 	bra	func_97833D8E_entry_L55
@@ -83282,7 +83282,7 @@ func_97833D8E_entry_L55:
 	extb	d1
 	mov	0x978aec98, a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	func_97833D8E_entry_L6e
 	bra	func_97833D8E_entry_L82
@@ -83305,7 +83305,7 @@ func_97833D8E_entry_L82:
 	extb	d1
 	mov	0x978aeca0, a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	func_97833D8E_entry_L9b
 	bra	func_97833D8E_entry_Lad
@@ -83385,7 +83385,7 @@ func_97833E69_entry_L22:
 	mov	d0, a0
 	sub	d1, a0
 	mov	a0, d0
-	call	func_97808FFE, 0, 0
+	call	abs, 0, 0
 	mov	d0, (0x14, sp)
 	mov	sp, a0
 	add	0x1c, a0
@@ -83399,7 +83399,7 @@ func_97833E69_entry_L22:
 	sub	d1, d0
 	mov	d0, d1
 	mov	d1, d0
-	call	func_97808FFE, 0, 0
+	call	abs, 0, 0
 	mov	(0x14, sp), d1
 	add	d1, d0
 	mov	d0, (0x14, sp)
@@ -83415,7 +83415,7 @@ func_97833E69_entry_L22:
 	sub	d1, d0
 	mov	d0, d1
 	mov	d1, d0
-	call	func_97808FFE, 0, 0
+	call	abs, 0, 0
 	mov	(0x14, sp), d1
 	add	d1, d0
 	mov	d0, (0x14, sp)
@@ -83478,7 +83478,7 @@ func_97833F31_entry_L24:
 	asl	3, d0
 	mov	(d0, a0), a1
 	mov	(0x9c, sp), a0
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	bne	func_97833F31_entry_L3d
 	bra	func_97833F31_entry_L45
@@ -83764,7 +83764,7 @@ func_97834109_entry_L4d:
 	add	d0, a0
 	mov	(4, a0), a0
 	mov	(0x24, sp), a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	beq	func_97834109_entry_L6e
 	bra	func_97834109_entry_L10
@@ -83980,7 +83980,7 @@ func_978343AC_L99:
 	add	d0, d1
 	mov	d1, a0
 	mov	0x978af104, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	beq	func_978343AC_Lbd
 	jmp	func_978343AC_L1a0
@@ -84016,7 +84016,7 @@ func_978343AC_Ld6:
 	movhu	(0x30, sp), d0
 	exth	d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97941da4, a0
 	call	func_9780AEBC_entry, 0, 0x14
 	jmp	func_978343AC_L324
@@ -84099,7 +84099,7 @@ func_978343AC_L1a0:
 	add	d0, d1
 	mov	d1, a0
 	mov	0x978af118, a1
-	call	func_9780A2DF, 0, 0
+	call	strcmp, 0, 0
 	cmp	0, d0
 	beq	func_978343AC_L1c4
 	jmp	func_978343AC_L324
@@ -84442,7 +84442,7 @@ func_97834719_entry_Lda:
 	mov	d0, (0xc, sp)
 	mov	(0x2ba4, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	0x97941da4, a0
 	call	func_9780AEBC_entry, 0, 0x14
 	jmp	func_97834719_entry_L275
@@ -84535,7 +84535,7 @@ func_97834719_entry_L1bc:
 	mov	(d0, a0), a1
 	mov	sp, a0
 	add	0x20, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x1c, sp), d0
 	mov	0xc, d1
 	nop
@@ -84636,7 +84636,7 @@ func_97834997_entry_L1f:
 	extb	d1
 	mov	0x978af210, a0
 	mov	d1, d0
-	call	func_9780A29D_entry, [d2], 4
+	call	strchr_entry, [d2], 4
 	cmp	0, a0
 	bne	func_97834997_entry_L38
 	bra	func_97834997_entry_L52
@@ -84682,7 +84682,7 @@ func_97834997_entry_L87:
 	mov	d0, a0
 	mov	0x978af22c, a1
 	mov	2, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	bne	func_97834997_entry_La3
 	bra	func_97834997_entry_Lba
@@ -84690,7 +84690,7 @@ func_97834997_entry_La3:
 	mov	(0x20, sp), a0
 	mov	0x978af22f, a1
 	mov	2, d0
-	call	func_978084EA_entry, [a2], 4
+	call	strncmp_entry, [a2], 4
 	cmp	0, d0
 	beq	func_97834997_entry_Lba
 	bra	func_97834997_entry_L11b
@@ -84698,7 +84698,7 @@ func_97834997_entry_Lba:
 	mov	(0x20, sp), a0
 	add	2, a0
 	mov	0x978af234, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	mov	d0, (0x28, sp)
 	mov	(0x20, sp), a0
 	add	2, a0
@@ -84751,7 +84751,7 @@ func_97834997_entry_L126:
 	mov	(0x20, sp), a0
 	inc	a0
 	mov	0x978af260, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	mov	d0, (0x28, sp)
 	mov	(0x20, sp), a0
 	inc	a0
@@ -85639,7 +85639,7 @@ func_97835087_entry_L179:
 	mov	d0, (0x24, sp)
 	mov	(0x40, sp), a0
 	mov	0x978af410, a1
-	call	func_9780A308_entry, [d2,a2,a3], 0xc
+	call	strcspn_entry, [d2,a2,a3], 0xc
 	mov	d0, (0x28, sp)
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
@@ -85740,7 +85740,7 @@ func_978352F0_entry:
 	mov	a1, d0
 	mov	d0, (0x24, sp)
 	mov	d0, a0
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x28, sp)
 	mov	(0x9791185c), d0
 	cmp	0, d0
@@ -85919,7 +85919,7 @@ func_978352F0_entry_L1de:
 	mov	d0, (0x10, sp)
 	mov	(0xf10, sp), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	mov	d0, (0x38, sp)
 	bra	func_978352F0_entry_L2b5
@@ -85972,7 +85972,7 @@ func_978352F0_entry_L23d:
 	add	d0, a0
 	mov	(0x49c, a0), d0
 	mov	d0, (0x20, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	(0x38, sp), d0
 	inc	d0
 	mov	d0, (0x38, sp)
@@ -86239,11 +86239,11 @@ KssxAlphabetBoxProc_L284:
 	mov	d0, d1
 	mov	(0x2c, sp), d0
 	exth	d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x30, sp)
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x34, sp)
 	movhu	(0x78, sp), d0
 	exth	d0
@@ -86254,7 +86254,7 @@ KssxAlphabetBoxProc_L284:
 	exth	d2
 	mov	(0x34, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	(0x97911874), d1
 	add	d1, d2
 	add	d0, d2
@@ -86603,7 +86603,7 @@ KssxAlphabetBoxProc_L5c4:
 	sub	d1, d0
 	exth	d2
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x4c, sp)
 	mov	(0x97911878), d1
 	sub	d1, d0
@@ -86658,7 +86658,7 @@ KssxAlphabetBoxProc_L664:
 	sub	d1, d0
 	exth	d2
 	mov	d2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x50, sp)
 	mov	(0x97911878), d1
 	sub	d1, d0
@@ -88517,11 +88517,11 @@ func_97837316:
 	mov	0x9798fe30, a0
 	clr	d0
 	mov	0x10, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x9798fe50, a0
 	clr	d0
 	mov	5, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x97997e58)
 	movbu	d0, (0x97997e59)
@@ -88771,11 +88771,11 @@ func_97837743_L22:
 	mov	0x9798fe30, a0
 	clr	d0
 	mov	0x10, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	mov	0x9798fe50, a0
 	clr	d0
 	mov	5, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 	clr	d0
 	movbu	d0, (0x97997e58)
 	movbu	d0, (0x97997e59)
@@ -90849,11 +90849,11 @@ func_97838D88_L56:
 	mov	0x979a4848, a0
 	mov	(0x2c, sp), a1
 	mov	0xfa, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x979a4948, a0
 	mov	(0x38, sp), a1
 	mov	0xfa, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	bra	func_97838D88_Ld2
 func_97838D88_L7c:
 	mov	2, d0
@@ -90876,11 +90876,11 @@ func_97838D88_Lae:
 	mov	0x979a4848, a0
 	mov	(0x38, sp), a1
 	mov	0xfa, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	0x979a4948, a0
 	mov	(0x2c, sp), a1
 	mov	0xfa, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 func_97838D88_Ld2:
 	movbu	(0x20, sp), d0
 	extbu	d0
@@ -91604,7 +91604,7 @@ func_978394C6_entry_L34:
 	mov	d0, (0x10, sp)
 	mov	(0x60, sp), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x20, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -91756,7 +91756,7 @@ func_978395D3_L46:
 	add	d1, a0
 	mov	(0xb4, sp), a1
 	mov	0x17, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	mov	sp, a0
 	mov	a0, d1
 	add	0x4c, d1
@@ -91764,7 +91764,7 @@ func_978395D3_L46:
 	add	d1, a0
 	mov	(0xb8, sp), a1
 	mov	0x13, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	mov	d0, (0x14, sp)
 	mov	sp, a0
@@ -91801,14 +91801,14 @@ func_9783967B:
 	mov	0x38, a0
 	add	d0, a0
 	mov	(0x270, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	sp, a0
 	mov	a0, d0
 	add	0x1c, d0
 	mov	0x138, a0
 	add	d0, a0
 	mov	(0x274, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	(0x278, sp), a0
 	mov	(a0), d0
 	mov	d0, (0x2c, sp)
@@ -92051,7 +92051,7 @@ func_97839823_entry_L73:
 	mov	d0, (0xc, sp)
 	mov	(0x18, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x4c, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -92387,7 +92387,7 @@ func_97839B75:
 	mov	d0, (0xc, sp)
 	mov	0x979a4a94, d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	clr	d0
 	add	0x114, sp
 	ret	0, 0
@@ -92542,7 +92542,7 @@ func_97839C51_entry_L91:
 	mov	d0, (0x10, sp)
 	mov	(0x9798928c), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -92861,7 +92861,7 @@ func_97839F62:
 	mov	d0, (0x14, sp)
 	movbu	(0x1d, sp), d0
 	mov	d0, (0x18, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	ret	0, 0x24
 
 func_97839FA8:
@@ -94366,7 +94366,7 @@ func_9783AA10_entry_L3aa:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x34, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -94682,7 +94682,7 @@ func_9783AA10_entry_L721:
 	mov	d0, (0xc, sp)
 	mov	(0x2c, sp), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x34, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -94771,7 +94771,7 @@ func_9783AA10_entry_L805:
 	add	0x34, a0
 	mov	0x979a4afc, a1
 	mov	0x1f, d0
-	call	func_9780A271_entry, [a2,a3], 8
+	call	strncpy_entry, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x4e, sp)
 	mov	(0x979a4a74), d0
@@ -95528,7 +95528,7 @@ func_9783B816_entry_L122:
 	mov	d0, (0x18, sp)
 	mov	(0x9c, sp), d0
 	mov	d0, (0x1c, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -95763,7 +95763,7 @@ func_9783BB6D:
 func_9783BB6D_entry:
 	mov	a1, (0x34, sp)
 	mov	0x97941e0c, a0
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	clr	d0
 	mov	d0, (0x979118b8)
 	mov	d0, (0x97941e20)
@@ -97354,10 +97354,10 @@ func_9783CA21_entry:
 	mov	d0, (0x97941e44)
 	mov	0x97941e60, a0
 	mov	(0x64, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afc20, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afc28, a1
 	call	func_9783C8C3_entry, [a2], 0x14
@@ -97393,7 +97393,7 @@ func_9783CA21_entry_L7a:
 	mov	d0, (0x10, sp)
 	mov	(0x97941e44), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x38, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -97414,7 +97414,7 @@ func_9783CA21_entry_Lc1:
 	mov	d0, (0xc, sp)
 	mov	(0x9798ada8), d0
 	mov	d0, (0x10, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x38, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -97444,10 +97444,10 @@ func_9783CB3D_entry:
 	mov	d0, (0x97941e44)
 	mov	0x97941e60, a0
 	mov	(0x6c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afc54, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	(0x9798ad94), d0
 	mov	(0x97941e44), d1
 	cmp	d1, d0
@@ -97464,7 +97464,7 @@ func_9783CB3D_entry_L45:
 	mov	d0, (0x10, sp)
 	mov	(0x97941e44), d0
 	mov	d0, (0x14, sp)
-	call	func_97807EF3_entry, [a2], 0x20
+	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
@@ -97819,10 +97819,10 @@ func_9783CE50_entry:
 	movhu	d0, (0x14, sp)
 	mov	0x97941e60, a0
 	mov	(0x20, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afc78, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x3146494b, d0
 	mov	d0, (0x9798a8fc)
 	call	func_9783C9CD_entry, [a2], 0x20
@@ -98357,7 +98357,7 @@ func_9783D37A_entry_L1d:
 	mov	0x979898fc, a0
 	clr	d0
 	mov	0x200, d1
-	call	func_97809EDF_entry, [a2], 4
+	call	memset_entry, [a2], 4
 func_9783D37A_entry_L2e:
 	mov	0x49365853, d0
 	mov	d0, (0x97941e5c)
@@ -98405,10 +98405,10 @@ func_9783D408_entry:
 	mov	d0, (0x97941e48)
 	mov	0x97941e60, a0
 	mov	(0x1c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afcac, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afcb4, a1
 	call	func_9783C8C3_entry, [a2], 0x14
@@ -98833,10 +98833,10 @@ func_9783D86D_entry:
 	movhu	d0, (0x10, sp)
 	mov	0x97941e60, a0
 	mov	(0x1c, sp), a1
-	call	func_97809EF4_entry, [a2], 4
+	call	strcpy_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afd14, a1
-	call	func_9780A243_entry, [a2], 4
+	call	strcat_entry, [a2], 4
 	mov	0x97941e60, a0
 	mov	0x978afd1c, a1
 	call	func_9783C8C3_entry, [a2], 0x14
@@ -99114,7 +99114,7 @@ func_9783DAD8:
 
 func_9783DAD8_entry:
 	mov	a0, (0x2c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0x10, sp)
 	clr	d0
 	mov	d0, (0x14, sp)
@@ -99123,7 +99123,7 @@ func_9783DAD8_entry:
 	mov	d0, (0x18, sp)
 	mov	(0x10, sp), d0
 	mov	2, d1
-	call	func_97809020, 0, 0
+	call	LibDiv32, 0, 0
 	mov	d0, (0x10, sp)
 	clr	d0
 	mov	d0, (0x1c, sp)
@@ -99164,7 +99164,7 @@ func_9783DB37:
 
 func_9783DB37_entry:
 	mov	a0, (0x1c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0xc, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -99208,7 +99208,7 @@ func_9783DB37_entry_L43:
 func_9783DB80:
 	add	-0x14, sp
 	mov	a0, (0x1c, sp)
-	call	func_9780A2C5, 0, 0
+	call	LibStrlen, 0, 0
 	mov	d0, (0xc, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
