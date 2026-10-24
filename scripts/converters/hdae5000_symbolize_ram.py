@@ -145,6 +145,69 @@ RAM = {
     0x23948A: ("FltDecDigits", "32-byte decimal digit string of HDAE5000_FltDec_Convert / _AddDigit"),
     0x2394AA: ("FltDecMantissa", "the binary mantissa as byte-wide u16 limbs (HDAE5000_FltDec_Convert)"),
     0x2394EA: ("FltDecFraction", "10-limb fraction work area (HDAE5000_FltDec_FractionDigits / _FracMulBy10)"),
+    # seventh run: the HD file-system driver's working variables (HDAE5000_HD_WriteFile / _AppendFile /
+    # _ReadFile / _ReadFileNext and the cluster and FAT routines they call)
+    0x229D40: ("HdXferPtr", "buffer pointer of the file transfer in progress (XWA of HD_WriteFile / _AppendFile /"
+                            " _ReadFile / _ReadFileNext); HD_WriteCluster / _ReadClusterFrom advance it 512"
+                            " per sector"),
+    0x229D38: ("HdXferBytes", "byte count of the transfer (XBC); HD_ReadClusterFrom counts it down"),
+    0x229D2C: ("HdXferSlotPtr", "pointer to the file's first-cluster slot (XDE of the four transfer routines)"),
+    0x229C98: ("HdXferClusters", "clusters a write needs: ceil(HdXferBytes / ClusterBytes)"),
+    0x229CA4: ("HdXferClustersDone", "clusters written so far (HD_WriteFile / _AppendFile)"),
+    0x229D94: ("HdXferLinkFromPrev", "0 for a write's first new cluster, then 1: from the second on, each"
+                                     " cluster is linked from HdFatSetCluster (HD_WriteFile / _AppendFile)"),
+    0x229D95: ("HdXferSlotSet", "1 once HD_WriteFile has stored the first cluster in *HdXferSlotPtr"),
+    0x229DBC: ("HdDiskFull", "1 when HD_FindFreeCluster found no free cluster during a write"),
+    0x229C9C: ("HdFatSetCluster", "the cluster whose FAT entry HD_FatSetEntry writes: the chain's last cluster"),
+    0x229CA0: ("HdFatSetValue", "the value HD_FatSetEntry stores: the next cluster, 0xFFFFFFFE (end of chain)"
+                                " or 0xFFFFFFFF (after a failed cluster write)"),
+    0x229CA8: ("HdFreeCluster", "HD_FindFreeCluster's result, 1-based, 0xFFFFFFFD = none; the cluster"
+                                " HD_WriteCluster writes"),
+    0x229CAC: ("HdFreeScanOffset", "byte offset of HD_FindFreeCluster's scan in HdFreeScanBuffer; 512 = load"
+                                   " the next FAT sector"),
+    0x229CB0: ("HdFreeScanFatSector", "FAT sector index of HD_FindFreeCluster's scan"),
+    0x229CB4: ("HdFreeScanDiskSector", "disk sector of HdFreeScanFatSector (FatStartSector + index)"),
+    0x229D96: ("HdFreeScanStarted", "0 until HD_FindFreeCluster loaded its first FAT sector, then 1 (the step"
+                                    " it adds to HdFreeScanFatSector / _DiskSector)"),
+    0x200898: ("HdFreeScanBuffer", "512-byte FAT sector buffer of HD_FindFreeCluster"),
+    0x229CBC: ("HdWriteClusterPtr0", "HdXferPtr at HD_WriteCluster's entry, put back when a sector write fails"),
+    0x229CC0: ("HdWriteClusterSector", "sector index within the cluster HD_WriteCluster is writing"),
+    0x229D97: ("HdWriteClusterError", "1 when a sector write of HD_WriteCluster failed"),
+    0x229D28: ("HdFatCacheSector", "index of the FAT sector held in HdFatCache, 0xFFFFFFFF = none"),
+    0x200A98: ("HdFatCache", "512-byte cache of one FAT sector (HD_FatSetEntry / _FatNextCluster / _FreeChain)"),
+    0x229D48: ("HdFatSector", "FAT sector index of the entry HD_FatSetEntry / _FatNextCluster address:"
+                              " (cluster - 1) / 128"),
+    0x229D4C: ("HdFatEntryOffset", "byte offset of that entry in its sector: ((cluster - 1) % 128) * 4"),
+    0x229D30: ("HdChainCluster", "current cluster of the chain being read (HD_ReadFile / _ReadFileNext) or"
+                                 " released (HD_FreeChain_Worker)"),
+    0x229D34: ("HdChainSector", "sector within HdChainCluster where reading continues (HD_ReadClusterFrom)"),
+    0x229D3C: ("HdSectorBytes", "bytes HD_ReadClusterFrom reads from the current sector: 512, or the rest"
+                                " of HdXferBytes in the last one"),
+    0x229DBE: ("HdReadClusterError", "1 when a sector read of HD_ReadClusterFrom failed"),
+    0x229DBF: ("HdReadLastSector", "1 when HdXferBytes ran out inside the sector just read"),
+    0x229CB8: ("HdFreeChainStart", "first cluster of the chain HD_FreeChain_Worker releases"),
+    0x229D24: ("HdFreeChainCount", "clusters HD_FreeChain_Worker has released, added to FreeClusters"),
+    # eighth run: the ATA layer (HDAE5000_ATA_* and HDAE5000_HD_ParseIdentify)
+    0x200000: ("AtaIdentifyBuffer", "the 512-byte IDENTIFY DEVICE answer (HDAE5000_ATA_IdentifyDevice);"
+                                    " HDAE5000_HD_ParseIdentify reads words 27-46 and 54-58"),
+    0x200200: ("HdSectorsPerHead", "cylinders x sectors per track: the head stride of the CHS split in"
+                                   " HDAE5000_ATA_ReadSector / _WriteSector (HD_ParseIdentify)"),
+    0x200204: ("AtaWriteSectorNo", "1-based sector number of HDAE5000_ATA_WriteSector (its XHL)"),
+    0x200208: ("AtaWriteData", "data pointer of HDAE5000_ATA_WriteSector (its XIX)"),
+    0x20020C: ("AtaReadSectorNo", "1-based sector number of HDAE5000_ATA_ReadSector (its XHL)"),
+    0x200210: ("AtaReadData", "buffer pointer of HDAE5000_ATA_ReadSector (its XIX)"),
+    0x200214: ("AtaReadKeepBytes", "bytes of the sector HDAE5000_ATA_ReadSector stores (its XDE)"),
+    0x200218: ("AtaWriteHeadBase", "head * HdSectorsPerHead in HDAE5000_ATA_WriteSector's CHS split"),
+    0x20021C: ("AtaReadHeadBase", "head * HdSectorsPerHead in HDAE5000_ATA_ReadSector's CHS split"),
+    0x200220: ("HdSectorsPerTrack", "word: IDENTIFY word 56, current sectors per track (HD_ParseIdentify)"),
+    0x200223: ("HdUsableSectors", "long at an odd address: IDENTIFY words 57-58 (current capacity) - 2"
+                                  " (HD_ParseIdentify)"),
+    0x229C32: ("HdCylinders", "word: IDENTIFY word 54, current cylinders (HD_ParseIdentify)"),
+    0x229C34: ("HdHeads", "word: IDENTIFY word 55, current heads (HD_ParseIdentify)"),
+    0x20083C: ("HdModelString", "40 bytes: IDENTIFY words 27-46 (model number), byte-swapped"
+                                " (HD_ParseIdentify; HDAE5000_HD_GetGeometry copies it out)"),
+    0x200628: ("HdSettingsSector", "512-byte image of disk sector 1: AA55AA55 F4F1F2F3 signature"
+                                   " (HDAE5000_HD_CheckSignature) and the settings (HDAE5000_HD_SaveSettings)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -155,6 +218,8 @@ RAM = {
 EXTENT = {
     0x22B274: 0x7F,
     0x22A0D0: 0x1F9,
+    0x200000: 0x200,
+    0x200628: 0x200,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes
@@ -179,6 +244,8 @@ IO = {
     0x13001A: ("HDAE5000_IO_AtaCylinderHigh", "ATA cylinder, high byte"),
     0x13001C: ("HDAE5000_IO_AtaDriveHead", "ATA drive/head; 0xA0 = master + head 0"),
     0x13001E: ("HDAE5000_IO_AtaStatusCommand", "ATA status (read) / command (write)"),
+    0x130020: ("HDAE5000_IO_AtaDeviceControl", "ATA device control: 0x0E (SRST + nIEN) then 0x0A (nIEN)"
+                                               " is HDAE5000_ATA_SoftReset"),
 }
 FILE_MAIN = "hd-ae5000_v2_06i.s"
 NUM = re.compile(r"(?<![\w.$+\-])(0x[0-9a-fA-F]+|\d{6,})(?![\w.$])")

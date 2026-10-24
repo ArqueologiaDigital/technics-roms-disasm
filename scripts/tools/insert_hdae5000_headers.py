@@ -16,8 +16,10 @@ BATCH FILE FORMAT
   <header lines, each starting with ';'>
   @@ <next label> ...
   `drop-notes` removes the comment lines between the label line and the routine's first instruction or
-  directive (blank lines there go too).  Without it they stay.  Lines of the batch file starting with '#'
-  outside a block are ignored.
+  directive (blank lines there go too).  Without it they stay.  `strip-line-comments` removes the trailing
+  comment of every code line of the routine (up to the next label that is neither a .L local nor
+  <label>_...), for routines whose line comments come from a discarded reading; whole-line comments stay.
+  Lines of the batch file starting with '#' outside a block are ignored.
 
 RUN (repository root)
   python3 scripts/tools/insert_hdae5000_headers.py BATCH            # check: every label found, none has a header
@@ -35,10 +37,11 @@ ADDRCOMMENT = re.compile(rb'[ \t]*;[ \t]*(?:0x[0-9a-fA-F]{6}|[0-9a-fA-F]{6}h)(?:
 
 def parse_batch(path):
     blocks, cur = [], None
-    for raw in open(path, encoding="utf-8").read().split("\n"):
+    for raw in open(path, encoding="latin-1").read().split("\n"):
         if raw.startswith("@@"):
             f = raw[2:].split()
-            cur = {"name": f[0], "drop": "drop-notes" in f[1:], "text": []}
+            cur = {"name": f[0], "drop": "drop-notes" in f[1:], "strip": "strip-line-comments" in f[1:],
+                   "text": []}
             blocks.append(cur)
         elif cur is not None and raw.strip():
             if not raw.startswith(";"):
@@ -85,6 +88,18 @@ def main():
                 while j < len(L) and (not L[j].strip() or L[j].lstrip().startswith(b";")):
                     j += 1
                 del L[i + 1:j]
+            if b["strip"]:
+                # trailing comments of every instruction line of the routine (up to the next label that is
+                # neither a .L local nor <name>_...); whole-line comments stay
+                own = b["name"].encode() + b"_"
+                j = i + 1
+                while j < len(L):
+                    m = re.match(rb'^([.A-Za-z_][\w$.]*):', L[j])
+                    if m and not m.group(1).startswith((b".L", own)):
+                        break
+                    if not L[j].lstrip().startswith(b";") and b";" in L[j] and b'"' not in L[j]:
+                        L[j] = L[j][:L[j].index(b";")].rstrip()
+                    j += 1
             head = [SEP.encode()] + [t.encode("latin-1") for t in b["text"]] + [SEP.encode()]
             if i > 0 and L[i - 1].strip():
                 head = [b""] + head

@@ -16,7 +16,8 @@ PATCH FILE FORMAT
   new text (may be empty)
   >>>
   (more <<< === >>> blocks for the same file, or another ### line)
-  The text is treated as latin-1, so every byte maps to one character and back.
+  Both files are read as latin-1, so every byte maps to one character and back (UTF-8 text in the
+  patch matches the same UTF-8 bytes in the target).
 
 RUN (repository root)
   python3 scripts/tools/apply_text_patches_bytes.py PATCHFILE            # check only
@@ -30,7 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 def parse(path):
     edits, cur_file, mode, old, new = [], None, None, [], []
-    for line in open(path, encoding="utf-8").read().split("\n"):
+    for line in open(path, encoding="latin-1").read().split("\n"):
         if mode is None and line.startswith("### "):
             cur_file = line[4:].strip()
         elif mode is None and line == "<<<":

@@ -99,6 +99,52 @@
 	.equ HDAE5000_IO_PpiControl, 0x160006	; 8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init); 0x89 = port A output, port C low nibble input (HDAE5000_PPORT_InitPort / _CommandLoop)
 	.equ HDAE5000_RAM_DirListText, 0x22a0d0	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte directory name at +4 (HDAE5000_DirList_BuildPage)
 	.equ HDAE5000_RAM_PartListText, 0x22b274	; nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build
+	.equ HDAE5000_RAM_HdFreeScanBuffer, 0x200898	; 512-byte FAT sector buffer of HD_FindFreeCluster
+	.equ HDAE5000_RAM_HdFatCache, 0x200a98	; 512-byte cache of one FAT sector (HD_FatSetEntry / _FatNextCluster / _FreeChain)
+	.equ HDAE5000_RAM_HdXferClusters, 0x229c98	; clusters a write needs: ceil(HdXferBytes / ClusterBytes)
+	.equ HDAE5000_RAM_HdFatSetCluster, 0x229c9c	; the cluster whose FAT entry HD_FatSetEntry writes: the chain's last cluster
+	.equ HDAE5000_RAM_HdFatSetValue, 0x229ca0	; the value HD_FatSetEntry stores: the next cluster, 0xFFFFFFFE (end of chain) or 0xFFFFFFFF (after a failed cluster write)
+	.equ HDAE5000_RAM_HdXferClustersDone, 0x229ca4	; clusters written so far (HD_WriteFile / _AppendFile)
+	.equ HDAE5000_RAM_HdFreeCluster, 0x229ca8	; HD_FindFreeCluster's result, 1-based, 0xFFFFFFFD = none; the cluster HD_WriteCluster writes
+	.equ HDAE5000_RAM_HdFreeScanOffset, 0x229cac	; byte offset of HD_FindFreeCluster's scan in HdFreeScanBuffer; 512 = load the next FAT sector
+	.equ HDAE5000_RAM_HdFreeScanFatSector, 0x229cb0	; FAT sector index of HD_FindFreeCluster's scan
+	.equ HDAE5000_RAM_HdFreeScanDiskSector, 0x229cb4	; disk sector of HdFreeScanFatSector (FatStartSector + index)
+	.equ HDAE5000_RAM_HdFreeChainStart, 0x229cb8	; first cluster of the chain HD_FreeChain_Worker releases
+	.equ HDAE5000_RAM_HdWriteClusterPtr0, 0x229cbc	; HdXferPtr at HD_WriteCluster's entry, put back when a sector write fails
+	.equ HDAE5000_RAM_HdWriteClusterSector, 0x229cc0	; sector index within the cluster HD_WriteCluster is writing
+	.equ HDAE5000_RAM_HdFreeChainCount, 0x229d24	; clusters HD_FreeChain_Worker has released, added to FreeClusters
+	.equ HDAE5000_RAM_HdFatCacheSector, 0x229d28	; index of the FAT sector held in HdFatCache, 0xFFFFFFFF = none
+	.equ HDAE5000_RAM_HdXferSlotPtr, 0x229d2c	; pointer to the file's first-cluster slot (XDE of the four transfer routines)
+	.equ HDAE5000_RAM_HdChainCluster, 0x229d30	; current cluster of the chain being read (HD_ReadFile / _ReadFileNext) or released (HD_FreeChain_Worker)
+	.equ HDAE5000_RAM_HdChainSector, 0x229d34	; sector within HdChainCluster where reading continues (HD_ReadClusterFrom)
+	.equ HDAE5000_RAM_HdXferBytes, 0x229d38	; byte count of the transfer (XBC); HD_ReadClusterFrom counts it down
+	.equ HDAE5000_RAM_HdSectorBytes, 0x229d3c	; bytes HD_ReadClusterFrom reads from the current sector: 512, or the rest of HdXferBytes in the last one
+	.equ HDAE5000_RAM_HdXferPtr, 0x229d40	; buffer pointer of the file transfer in progress (XWA of HD_WriteFile / _AppendFile / _ReadFile / _ReadFileNext); HD_WriteCluster / _ReadClusterFrom advance it 512 per sector
+	.equ HDAE5000_RAM_HdFatSector, 0x229d48	; FAT sector index of the entry HD_FatSetEntry / _FatNextCluster address: (cluster - 1) / 128
+	.equ HDAE5000_RAM_HdFatEntryOffset, 0x229d4c	; byte offset of that entry in its sector: ((cluster - 1) % 128) * 4
+	.equ HDAE5000_RAM_HdXferLinkFromPrev, 0x229d94	; 0 for a write's first new cluster, then 1: from the second on, each cluster is linked from HdFatSetCluster (HD_WriteFile / _AppendFile)
+	.equ HDAE5000_RAM_HdXferSlotSet, 0x229d95	; 1 once HD_WriteFile has stored the first cluster in *HdXferSlotPtr
+	.equ HDAE5000_RAM_HdFreeScanStarted, 0x229d96	; 0 until HD_FindFreeCluster loaded its first FAT sector, then 1 (the step it adds to HdFreeScanFatSector / _DiskSector)
+	.equ HDAE5000_RAM_HdWriteClusterError, 0x229d97	; 1 when a sector write of HD_WriteCluster failed
+	.equ HDAE5000_RAM_HdDiskFull, 0x229dbc	; 1 when HD_FindFreeCluster found no free cluster during a write
+	.equ HDAE5000_RAM_HdReadClusterError, 0x229dbe	; 1 when a sector read of HD_ReadClusterFrom failed
+	.equ HDAE5000_RAM_HdReadLastSector, 0x229dbf	; 1 when HdXferBytes ran out inside the sector just read
+	.equ HDAE5000_IO_AtaDeviceControl, 0x130020	; ATA device control: 0x0E (SRST + nIEN) then 0x0A (nIEN) is HDAE5000_ATA_SoftReset
+	.equ HDAE5000_RAM_AtaIdentifyBuffer, 0x200000	; the 512-byte IDENTIFY DEVICE answer (HDAE5000_ATA_IdentifyDevice); HDAE5000_HD_ParseIdentify reads words 27-46 and 54-58
+	.equ HDAE5000_RAM_HdSectorsPerHead, 0x200200	; cylinders x sectors per track: the head stride of the CHS split in HDAE5000_ATA_ReadSector / _WriteSector (HD_ParseIdentify)
+	.equ HDAE5000_RAM_AtaWriteSectorNo, 0x200204	; 1-based sector number of HDAE5000_ATA_WriteSector (its XHL)
+	.equ HDAE5000_RAM_AtaWriteData, 0x200208	; data pointer of HDAE5000_ATA_WriteSector (its XIX)
+	.equ HDAE5000_RAM_AtaReadSectorNo, 0x20020c	; 1-based sector number of HDAE5000_ATA_ReadSector (its XHL)
+	.equ HDAE5000_RAM_AtaReadData, 0x200210	; buffer pointer of HDAE5000_ATA_ReadSector (its XIX)
+	.equ HDAE5000_RAM_AtaReadKeepBytes, 0x200214	; bytes of the sector HDAE5000_ATA_ReadSector stores (its XDE)
+	.equ HDAE5000_RAM_AtaWriteHeadBase, 0x200218	; head * HdSectorsPerHead in HDAE5000_ATA_WriteSector's CHS split
+	.equ HDAE5000_RAM_AtaReadHeadBase, 0x20021c	; head * HdSectorsPerHead in HDAE5000_ATA_ReadSector's CHS split
+	.equ HDAE5000_RAM_HdSectorsPerTrack, 0x200220	; word: IDENTIFY word 56, current sectors per track (HD_ParseIdentify)
+	.equ HDAE5000_RAM_HdUsableSectors, 0x200223	; long at an odd address: IDENTIFY words 57-58 (current capacity) - 2 (HD_ParseIdentify)
+	.equ HDAE5000_RAM_HdSettingsSector, 0x200628	; 512-byte image of disk sector 1: AA55AA55 F4F1F2F3 signature (HDAE5000_HD_CheckSignature) and the settings (HDAE5000_HD_SaveSettings)
+	.equ HDAE5000_RAM_HdModelString, 0x20083c	; 40 bytes: IDENTIFY words 27-46 (model number), byte-swapped (HD_ParseIdentify; HDAE5000_HD_GetGeometry copies it out)
+	.equ HDAE5000_RAM_HdCylinders, 0x229c32	; word: IDENTIFY word 54, current cylinders (HD_ParseIdentify)
+	.equ HDAE5000_RAM_HdHeads, 0x229c34	; word: IDENTIFY word 55, current heads (HD_ParseIdentify)
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace
