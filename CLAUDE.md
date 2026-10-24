@@ -159,20 +159,22 @@ When creating new scripts, place them in the appropriate `scripts/` subdirectory
 
 Symbol reference files in `symbols/` provide address-to-name mappings for external tools:
 
-| File | ROM | Symbols | Address Range |
-|------|-----|---------|---------------|
-| `symbols/maincpu_symbols_reference.txt` | Main CPU **v10** (identical to `maincpu_v10_...`) | 47,836 | 0xE00000 - 0xFFFFE8 |
-| `symbols/maincpu_v9_symbols_reference.txt` | Main CPU v9 | 47,830 | 0xE00000 - 0xFFFFE8 |
-| `symbols/maincpu_v7_symbols_reference.txt` | Main CPU v7 | 47,920 | 0xE00000 - 0xFFFFE8 |
-| `symbols/subcpu_symbols_reference.txt` | Sub CPU payload v1.42 | 5,560 | 0x000400 - 0x03EE75 |
-| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot | 201 | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
-| `symbols/table_data_symbols_reference.txt` | Table data | 4,759 | 0x800000 - 0x9FFEF0 |
-| `symbols/hdae5000_symbols_reference.txt` | HDAE5000 expansion | 3,932 | 0x280000 - 0x300000 |
+| File                                        | ROM                                                   | Symbols             | Address Range                                              |
+|---------------------------------------------|-------------------------------------------------------|---------------------|------------------------------------------------------------|
+| `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`)     | 47,836              | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                           | 47,830              | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, same link) | 53,736 (2026-10-24) | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                           | 47,920              | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                                 | 5,560               | 0x000400 - 0x03EE75                                        |
+| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                          | 201                 | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
+| `symbols/table_data_symbols_reference.txt`  | Table data                                            | 4,759               | 0x800000 - 0x9FFEF0                                        |
+| `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                    | 3,932               | 0x280000 - 0x300000                                        |
 
 **In sync as of 2026-09-25** (after the Wave 2 merges): regenerated from each
 image's linked ELF by `python3 scripts/analysis/l2_symbol_reference.py --regen`,
 and `python3 scripts/analysis/l2_symbol_reference.py --check` reports 100 %
-NAME+ADDRESS agreement for all eight files. **Use that script to regenerate** --
+NAME+ADDRESS agreement for all eight files (nine since
+`maincpu_v8` was added on 2026-10-24). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
 The hand recipe below is kept for reference. Rows are `NAME 00ADDRESS` (8 hex
@@ -1235,16 +1237,17 @@ When encountering disputed interpretations:
 
 ### ROM Components
 
-| Component | Authoritative source | Byte-match | Not `.incbin` |
-|---|---|---|---|
-| maincpu v10 | `v10/maincpu/kn5000_v10_program.s` | 100.00% | 59.0% |
-| maincpu v9 | `v9/maincpu/kn5000_v9_program.s` | 100.00% | 59.0% |
-| maincpu v7 | `v7/maincpu/kn5000_v7_program.s` | 100.00% | 52.5% |
-| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s` | 100.00% | 100.0% |
-| subcpu boot (IC30) | `subcpu/boot/kn5000_subcpu_boot.s` | 100.00% | 100.0% |
-| table_data | `table_data/kn5000_table_data.s` | 100.00% | 46.9% |
-| custom_data (IC19) | `custom_data/kn5000_custom_data.s` | 100.00% | 36.3% |
-| hdae5000 | `hdae5000/hd-ae5000_v2_06i.s` | 100.00% | 40.3% |
+| Component           | Authoritative source                                                              | Byte-match | Not `.incbin` |
+|---------------------|-----------------------------------------------------------------------------------|------------|---------------|
+| maincpu v10         | `v10/maincpu/kn5000_v10_program.s`                                                | 100.00%    | 59.0%         |
+| maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                                  | 100.00%    | 59.0%         |
+| maincpu v8          | `v9/maincpu/kn5000_v9_program.s` with `--defsym FW_VERSION_BYTE=0x08` (see below) | 100.00%    | as v9         |
+| maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                                  | 100.00%    | 52.5%         |
+| subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                                            | 100.00%    | 100.0%        |
+| subcpu boot (IC30)  | `subcpu/boot/kn5000_subcpu_boot.s`                                                | 100.00%    | 100.0%        |
+| table_data          | `table_data/kn5000_table_data.s`                                                  | 100.00%    | 46.9%         |
+| custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                                                | 100.00%    | 36.3%         |
+| hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`                                                     | 100.00%    | 40.3%         |
 
 The two columns answer different questions and must not be conflated. **Byte-match** is
 `python scripts/build/compare_roms.py`; measured 2026-08-21 it printed `romset bytematch:
@@ -1252,6 +1255,17 @@ The two columns answer different questions and must not be conflated. **Byte-mat
 has no source row of its own. `DISASSEMBLY_PLAN.md`'s standing invariant counts **15**
 sections; the extra six are the legacy ASL mirror builds, which only run when their
 `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`.)
+Since 2026-10-24 there are ten: `maincpu v8` was added.
+
+**maincpu v8** has no tree of its own. Its dump differs from v9 in one byte,
+`FIRMWARE_VERSION` at 0xFFFFE8 (0x08 instead of 0x09), so the Makefile assembles the v9
+sources with `--defsym FW_VERSION_BYTE=0x08` (`v9/maincpu/boot/rom_end_structure.s` sets
+the symbol only under `.ifndef`). Any edit to v9 therefore also edits v8, and the gate checks both.
+The v8 reference image is **not committed**, because this repository is public: `make` copies it,
+uncommitted, from the private romset (`KN5000_V8_REF`, default
+`$(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v8_program.rom`). It refuses a copy whose
+SHA-1 is not `a10a6f5a35175b74c3cfb42cef3bdf571c2858bb`, and it stops with a message when the
+file is missing. `make gate` re-checks the copy (`verify-v8-reference`).
 
 **Not `.incbin`** is `python3 scripts/analysis/kn5000_source_coverage.py`, measured
 2026-08-21: the share of ROM bytes that do *not* enter the build through an `.incbin`.
