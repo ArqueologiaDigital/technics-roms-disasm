@@ -111,8 +111,11 @@ gate: all
 
 # The v1.40 and v1.41 Sub-CPU update images (File Type 007) have no source build;
 # this proves each decompresses to exactly its tracked plain payload ROM (under 1 s).
+# --selftest (about 4 s) shows the check catches one flipped byte, and that the
+# other two LZSS scripts agree with the build's decoder.
 verify-subprogram-update-images:
 	python3 scripts/build/verify_subprogram_update_images.py
+	python3 scripts/build/verify_subprogram_update_images.py --selftest
 
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
@@ -759,8 +762,10 @@ rebuilt_ROMs/kn5000_v9_program.llvm.rom: rebuilt_ROMs/kn5000_v9_program.llvm.elf
 # tree of its own: it is v9/maincpu assembled with --defsym FW_VERSION_BYTE=0x08,
 # which v9/maincpu/boot/rom_end_structure.s honours through `.ifndef`.
 #
-# The reference image is NOT committed (this repository is public).  It is
-# copied, git-ignored, from the private romset; override the source with
+# The reference image is not committed.  The older dumps in original_ROMs/
+# (v7, v9, v10, the Sub-CPU payloads) are tracked, but new dumps are taken
+# from the private romset and kept out of this public repository by choice.
+# It is copied, git-ignored, from that romset; override the source with
 #   make KN5000_V8_REF=/path/to/kn5000_v8_program.rom ...
 # The copy is refused unless its SHA-1 is KN5000_V8_SHA1, and a missing source
 # stops the build with a message instead of silently skipping v8.
@@ -770,7 +775,7 @@ KN5000_V8_SHA1 := a10a6f5a35175b74c3cfb42cef3bdf571c2858bb
 original_ROMs/kn5000_v8_program.rom:
 	@if [ ! -f "$(KN5000_V8_REF)" ]; then \
 	  echo "ERROR: the KN5000 v8 reference image is missing: $(KN5000_V8_REF)"; \
-	  echo "       It is not in git (copyrighted). Point KN5000_V8_REF at a copy whose"; \
+	  echo "       It is not in git (new dumps come from the private romset). Point KN5000_V8_REF at a copy whose"; \
 	  echo "       SHA-1 is $(KN5000_V8_SHA1), e.g. make KN5000_V8_REF=/path/kn5000_v8_program.rom"; \
 	  exit 1; fi
 	@got=$$(sha1sum < "$(KN5000_V8_REF)" | cut -d' ' -f1); \

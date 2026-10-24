@@ -43,5 +43,9 @@ C."* That is Wave 4's subject.
 ## Standing invariant (unchanged, and the one thing worth keeping from here)
 
 `make all` + `python scripts/build/compare_roms.py` must stay at **100.00% across
-all 15 sections**, the legacy ASL mirror builds included, after every change.
-Verified 2026-08-08: 15/15 at 100.00%.
+all 16 sections**, the legacy ASL mirror builds included, after every change.
+Verified 2026-08-08: 15/15 at 100.00%.  Since 2026-10-24 the count is 16: ten
+LLVM sections (`maincpu v8`, built from the v9 sources, was added) plus the six
+ASL mirror builds, which only run when their `.rebuilt.rom` artefacts are present.
+On 2026-10-24, without the ASL artefacts, `compare_roms.py` printed 10/10 LLVM
+sections at 100.00%.

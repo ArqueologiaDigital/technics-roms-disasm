@@ -159,22 +159,24 @@ When creating new scripts, place them in the appropriate `scripts/` subdirectory
 
 Symbol reference files in `symbols/` provide address-to-name mappings for external tools:
 
-| File                                        | ROM                                                   | Symbols             | Address Range                                              |
-|---------------------------------------------|-------------------------------------------------------|---------------------|------------------------------------------------------------|
-| `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`)     | 47,836              | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                           | 47,830              | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, same link) | 53,736 (2026-10-24) | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                           | 47,920              | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                                 | 5,560               | 0x000400 - 0x03EE75                                        |
-| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                          | 201                 | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
-| `symbols/table_data_symbols_reference.txt`  | Table data                                            | 4,759               | 0x800000 - 0x9FFEF0                                        |
-| `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                    | 3,932               | 0x280000 - 0x300000                                        |
+| File                                        | ROM                                                   | Symbols (2026-10-24) | Address Range                                              |
+|---------------------------------------------|-------------------------------------------------------|----------------------|------------------------------------------------------------|
+| `symbols/maincpu_symbols_reference.txt`     | Main CPU **v10** (identical to `maincpu_v10_...`)     | 53,744               | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`  | Main CPU v9                                           | 53,736               | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`  | Main CPU v8 (same rows as v9: same source, same link) | 53,736               | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`  | Main CPU v7                                           | 53,559               | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/subcpu_symbols_reference.txt`      | Sub CPU payload v1.42                                 | 5,053                | 0x000400 - 0x03EE75                                        |
+| `symbols/subcpu_boot_symbols_reference.txt` | Sub CPU boot                                          | 200                  | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
+| `symbols/table_data_symbols_reference.txt`  | Table data                                            | 4,759                | 0x800000 - 0x9FFEF0                                        |
+| `symbols/hdae5000_symbols_reference.txt`    | HDAE5000 expansion                                    | 4,099                | 0x280000 - 0x300000                                        |
 
 **In sync as of 2026-09-25** (after the Wave 2 merges): regenerated from each
 image's linked ELF by `python3 scripts/analysis/l2_symbol_reference.py --regen`,
 and `python3 scripts/analysis/l2_symbol_reference.py --check` reports 100 %
 NAME+ADDRESS agreement for all eight files (nine since
-`maincpu_v8` was added on 2026-10-24). **Use that script to regenerate** --
+`maincpu_v8` was added on 2026-10-24). The Symbols column above is the row count
+that `python3 scripts/analysis/l2_symbol_reference.py` printed on 2026-10-24
+(all nine files at 100 %). **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
 The hand recipe below is kept for reference. Rows are `NAME 00ADDRESS` (8 hex
@@ -1255,14 +1257,16 @@ The two columns answer different questions and must not be conflated. **Byte-mat
 has no source row of its own. `DISASSEMBLY_PLAN.md`'s standing invariant counts **15**
 sections; the extra six are the legacy ASL mirror builds, which only run when their
 `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`.)
-Since 2026-10-24 there are ten: `maincpu v8` was added.
+Since 2026-10-24 `compare_roms.py` has ten LLVM sections (`maincpu v8` was added), and
+`DISASSEMBLY_PLAN.md`'s invariant counts 16.
 
 **maincpu v8** has no tree of its own. Its dump differs from v9 in one byte,
 `FIRMWARE_VERSION` at 0xFFFFE8 (0x08 instead of 0x09), so the Makefile assembles the v9
 sources with `--defsym FW_VERSION_BYTE=0x08` (`v9/maincpu/boot/rom_end_structure.s` sets
 the symbol only under `.ifndef`). Any edit to v9 therefore also edits v8, and the gate checks both.
-The v8 reference image is **not committed**, because this repository is public: `make` copies it,
-uncommitted, from the private romset (`KN5000_V8_REF`, default
+The v8 reference image is **not committed**. The older dumps in `original_ROMs/` (v7, v9,
+v10, the Sub-CPU payloads) are tracked, but new dumps are taken from the private romset and
+kept out of this public repository by choice. `make` copies it, git-ignored, from that romset (`KN5000_V8_REF`, default
 `$(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v8_program.rom`). It refuses a copy whose
 SHA-1 is not `a10a6f5a35175b74c3cfb42cef3bdf571c2858bb`, and it stops with a message when the
 file is missing. `make gate` re-checks the copy (`verify-v8-reference`).
