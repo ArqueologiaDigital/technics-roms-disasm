@@ -148,3 +148,39 @@ nothing rose. Each lane's open follow-ups are in its notes and in the wave's mer
 Wave 2, started the same day, takes WP07, WP12, WP14 (c), WP16, WP17 (a), WP18 (v1.40, HD-AE5000
 v2.01i and the KN5000 v6/v5 programs), KN7000 function naming, measurement coverage for the new images,
 and a website sync.
+
+## Progress: wave 2 (merged 2026-10-24)
+
+Twelve lanes again (eleven in worktrees, one in technics-docs), each reviewed adversarially and fixed,
+then merged. The ram-naming merge conflicted with the v7 renames and propagated headers in 367 hunks;
+`scripts/tools/merge_ram_naming_conflicts.py` resolved them, and the byte gate proved the result.
+`make -j6 gate-all` passed on a clean build of the merged tree. compare_roms.py prints 17 LLVM sections,
+all 100.00%.
+
+| package       | lane              | outcome                                                                                                                |
+|---------------|-------------------|------------------------------------------------------------------------------------------------------------------------|
+| WP18          | kn5000-v6         | v6 and v5 gated, ported from v7 by `port_maincpu_version.py`; 98.9% and 98.8% source (22,289 / 24,927 B verbatim debt) |
+| WP18          | hdae5000-versions | HD-AE5000 v2.01i gated (100.0% source); v1.15i / v1.10i sized, not ported                                              |
+| WP18          | subcpu-v140       | sub-CPU v1.40 gated, generated as v1.41 + EDITS, drift check in `make gate`                                            |
+| WP14 (c)      | kn7000-935        | KN7000 programs 935 and 893 gated, names ported from 941                                                               |
+| WP08 (naming) | kn7000-names      | KN7000 program placeholder names 6,624 -> 6,500; sibling names carried both ways                                       |
+| WP07          | v7-harmonize      | 1,788 v7 renames to v10 names; v7 `.byte` runs after fall-through 180 -> 77, `.Lc_` locals 638 -> 507                  |
+| WP16          | v10-headers-seq   | with v10-headers-ui: v10 routines without a header 7,274 -> 5,471, call targets 4,482 -> 2,679                         |
+| WP16          | v10-headers-ui    | (see above)                                                                                                            |
+| WP17 (a)      | ram-naming        | numeric RAM operands v10 29,079 -> 18,421, v9 29,049 -> 18,391, v7 28,877 -> 18,473                                    |
+| WP12          | wsa1-structure    | prom_a / prom_b split into module files; census rows unchanged                                                         |
+| WP02          | metrics-2         | v141, program 942 and the MN10300 siblings measured; semantic score rules 4                                            |
+| --            | docs-sync         | technics-docs brought to the wave 1 state (gate counts, diagram, gallery, stale names, sibling pages)                  |
+
+Snapshots: `dispatch-census-2026-10-24-03` (nothing rose), `doc-quality-2026-10-24-04` (five rises, each
+explained in commit aa4e40da7), semantic score rules 4 (all 84.1%, KN5000 97.1%, WSA1 92.7%, KN7000 41.1%,
+MN10300 siblings 33.9%; the KN7000 fall is the new rule rating its 6,620 `func_` functions, commit
+597a0b850). `kn5000_source_coverage.py`: KN5000 11 images 99.7% source, 47,216 B verbatim debt (v7 6,591,
+v6 22,289, v5 24,927, before v7's own C divergence is counted).
+
+Open after wave 2, recorded in the lanes' notes:
+- v10's new headers are not yet propagated to v9/v7 (`propagate_v10_headers.py --apply`);
+- v6/v5 were ported from v7 before v7-harmonize renamed 1,788 v7 labels, and KN7000 935/893 were
+  generated before kn7000-names renamed 941 functions: both need regenerating or renaming;
+- v6, v5, v140 and HD-AE5000 v2.01i are not dispatch-census or semantic-score images yet;
+- HD-AE5000 v1.15i / v1.10i, and the KN5000 v6/v5 NAKA C variants, are not done.
