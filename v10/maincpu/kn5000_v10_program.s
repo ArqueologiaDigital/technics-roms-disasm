@@ -3515,7 +3515,9 @@ CPanel_RX_SkipToProcess:
 CPanel_RX_Return:
 	ret
 
-; Calls CPanel_InterruptPoll_MainLoop.
+; One pass of control-panel servicing (CPanel_InterruptPoll_MainLoop), from the main loop's timer
+; slots and from the LED writer while it waits.  Callers that need XDE, XHL, XIX or XIZ save them
+; around the call.
 CPanel_Poll:
 	calr CPanel_InterruptPoll_MainLoop
 	ret
@@ -3677,7 +3679,10 @@ Debug_SWI_JumpTable_Code:
 	jp	BOOT_ENTRY_POINT
 	ret
 
-; Returns in L the firmware version byte (FIRMWARE_VERSION).
+; Returns in L the byte FIRMWARE_VERSION in the ROM's end structure (FW_VERSION_BYTE, 0x0a in v10).
+; Callers compare it with 0xff (then CaptureLcd is called and the boot takes other branches) and
+; with 0x77 (SelfTest_FirmwareVersionCheck), take its low nibble for the boot LED pattern, and
+; print it in hex on the version screen.
 Get_Firmware_Version:
 	ld l, (FIRMWARE_VERSION:24)
 	ret

@@ -9131,22 +9131,25 @@ RootObject_GetterBlock:
 	inc 4, xsp
 	ret
 
-; Returns in XHL the root object (ROOT_OBJECT).
+; Returns in XHL ROOT_OBJECT: the object of the event that DispatchEvent (or the AP-timer
+; dispatch at RootContext_Setup) is handling.  Unlike FOCUS_OBJECT, nested SendEvent calls leave
+; it alone.
 GetRootObject:
 	ld xhl, (ROOT_OBJECT:24)
 	ret
 
-; Returns in XHL the root event (ROOT_EVENT).
+; Returns in XHL ROOT_EVENT, the event code of the top-level dispatch (see GetRootObject).
 GetRootEvent:
 	ld xhl, (ROOT_EVENT:24)
 	ret
 
-; Returns in XHL the root event's parameter (ROOT_PARAM).
+; Returns in XHL ROOT_PARAM, the parameter of the top-level dispatch (see GetRootObject).
 GetRootParam:
 	ld xhl, (ROOT_PARAM:24)
 	ret
 
-; Stores XWA in ROOT_OBJECT.
+; Overrides the top-level dispatch's object (ROOT_OBJECT, see GetRootObject) with XWA;
+; GroupBoxProc_StartSSFPresentation sets it, and the event with SetRootEvent, this way.
 SetRootObject:
 	ld (ROOT_OBJECT:24), xwa
 	ret

@@ -7187,7 +7187,7 @@ ToneGen_Dispatch_Return:
 	inc 6, xsp
 	ret
 
-; Empty routine (`ret`).
+; Empty routine (`ret`).  All four callers call it right after ToneGen_DispatchByMode.
 SwbtWr_NullRet:
 	ret
 

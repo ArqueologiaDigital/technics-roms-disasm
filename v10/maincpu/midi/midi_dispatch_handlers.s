@@ -8342,7 +8342,8 @@ MidiStream_JumpStubData:
 MidiStream_RetStub2:
 	ret
 
-; Returns HL = 0.
+; Ignores WA and returns HL = 0.  The MIDI bulk-dump code calls it with WA = 1, 3 or 4 before
+; each data group and skips the group when HL = 0xffff, so in this build no group is skipped.
 AccWrap_ReturnZero:
 	ld hl, 0:i3
 	ret

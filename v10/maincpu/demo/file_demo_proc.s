@@ -1029,7 +1029,8 @@ Banner_Loop_Exit:
 	inc 4, xsp
 	ret
 
-; Demo_ScanActivePartChannels, then Demo_PreSetup.
+; Runs Demo_ScanActivePartChannels and then stops the demo's playback through Demo_PreSetup:
+; the scan comes first, despite the name.
 Demo_PreSetupAndScan:
 	calr Demo_ScanActivePartChannels
 	jr Demo_PreSetup
@@ -4169,9 +4170,10 @@ FileIO_ReturnError:
 ; Opens a file by name for the C-library fopen and makes it the current file (handle at 0x7f44).
 ;   In:  XWA = file name, XBC = mode string ("r..." / "w...").
 ;   The name is appended to the 128-byte path prefix FileIO_OpenWithMode_PathInit
-;   (FileIO_BuildFilePath) and opened with FileOpen.  Out: HL = 0 on success, else a negative
-;   code that is also stored at 0x7f48: -2 open for read failed, -11 open for write failed with
-;   the word at 0x1e53c = 31, -3 any other write failure, -1 any other mode.
+;   (FileIO_BuildFilePath) and opened with FileOpen.  Out: HL = the code also stored in the
+;   last-error word at 0x7f48 (read back by FileIO_ReturnError): 0 on success, so a successful
+;   open clears the previous error; -2 open for read failed, -11 open for write failed with the
+;   word at 0x1e53c = 31, -3 any other write failure, -1 any other mode.
 FileIO_OpenWithMode:
 	lda xsp, (xsp - 128)
 	push xiz
@@ -5200,7 +5202,9 @@ FileIO_FormatName_CopyLoop:
 	and (0x272cc:24), bc
 	ret
 
-; Returns in HL the bit word at 0x272ce.
+; Returns in HL the bit word at 0x272ce: FileIO_BuildRecordPath_Done sets its bits 0..9,
+; FileIO_BuildRecordPath_Return clears them and FileIO_FormatName_Return tests one.  No name is
+; formatted, despite the label.
 FileIO_FormatName_Done:
 	ld hl, (0x0272ce:24)
 	ret
@@ -5278,7 +5282,8 @@ FileIO_SetModeFlag_Writing:
 	ld (0x0272d0:24), 0x01
 	ret
 
-; Clears the mode byte at 0x272d0.
+; Clears the mode byte at 0x272d0.  FileIO_SetModeFlag_Writing sets it to 1, and
+; FileIO_GetRecordAttr_Check returns it while the selected file index is valid.
 FileIO_SetModeFlag_Reading:
 	ld (0x0272d0:24), 0x00
 	ret

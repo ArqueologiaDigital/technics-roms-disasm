@@ -1929,7 +1929,10 @@ MidiThru_Disable:
 	res 6, (0xb7e2:16)
 	ret
 
-; Sets bit 6 of 0xb7e2.
+; Sets bit 6 of 0xb7e2.  While it is set MIDI_SYSTEM_MESSAGE_HANDLER ignores received clock and
+; transport bytes (0xf8..0xfc; active sensing is still taken).  CDlike_InitModeAndLoadBank sets
+; the same bit and CDlike_ExitModeAndRestore clears it.  Both callers run it after the voice
+; tables are initialised.  TODO: the name is not supported by the code; nothing here is MIDI thru.
 MidiThru_Enable:
 	set 6, (0xb7e2:16)
 	ret
@@ -5544,12 +5547,16 @@ AudioSubsystem_Callback:
 	call AudioInit_DispatchChanges
 	ret
 
-; AudioInit_SelectPriority followed by AudioInit_DispatchChanges (tail jump).
+; Re-derives the priority bytes 0xc252..0xc256 from the mode byte 0x379b (AudioInit_SelectPriority,
+; which also sets bit 4 of the change mask 0xc59c), then acts on the change mask
+; (AudioInit_DispatchChanges, tail jump).
 AudioInit_SelectAndDispatch:
 	call AudioInit_SelectPriority
 	jp AudioInit_DispatchChanges
 
-; AudioInit_CheckMIDIStatus, then AudioInit_DispatchChanges (tail jump).
+; Sets the bytes 0xc279 / 0xc27a from whether the byte at 0x7f0b is non-zero
+; (AudioInit_CheckMIDIStatus, which also sets bit 5 of the change mask 0xc59c), then acts on the
+; change mask (AudioInit_DispatchChanges, tail jump).
 AudioInit_CheckMIDIAndDispatch:
 	call AudioInit_CheckMIDIStatus
 	jp AudioInit_DispatchChanges

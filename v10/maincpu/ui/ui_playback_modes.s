@@ -538,7 +538,8 @@ SeqNotify_PostMode77:
 SeqNotify_Return:
 	ret
 
-; Returns in HL the byte at 0x1155 (zero-extended).
+; Returns in HL the byte at 0x1155 (zero-extended); the playback code in this file stores the
+; values 0 to 4 in it.
 Medley_GetPlaybackStatus:
 	xor hl, hl
 	ld l, (4437:16)

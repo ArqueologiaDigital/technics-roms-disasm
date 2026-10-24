@@ -26,8 +26,9 @@ SeMenu_SendEvent_StoreAndReturn:
 	inc 2, xsp
 	ret
 
-; Copies the byte at RAM 0x8d38 to (XWA) (spelled `ldmi16 (xwa), 0x8d38`, the memory-to-memory
-; move ld (xwa),(0x8d38)).
+; Copies ACTIVE_TITLE (the title on screen) to the byte at (XWA): `ldmi16 (xwa), 0x8d38` is the
+; memory-to-memory move ld (xwa),(ACTIVE_TITLE).  SeMenu_SetupMenuDisplay compares the copy with
+; 0x22, the title id of TITLE_SETONTON1.
 SeMenu_LoadRawAddr:
 	ldmi16 (xwa), 0x8d38
 	ret
@@ -38,7 +39,9 @@ SeMenu_TriggerNotification:
 	set 6, (0xe3de:16)
 	ret
 
-; Stores A at 0xe3dc and sets bit 1 of 0xe3de.
+; Requests a deferred part-change post: A goes to the request byte 0xe3dc and bit 1 of the request
+; flags 0xe3de is set.  DirmdEmu_DefaultCase later calls UI_PostPartChangeEvent with that value
+; and clears both bytes.  Nothing is cleared here, despite the name.
 SeMenu_ClearNotification:
 	ld (0xe3dc:16), a
 	set 1, (0xe3de:16)
@@ -938,11 +941,11 @@ SeMenu_SetFlags_Type0x4x:
 
 ; Registers the sound editor's per-part display elements for the current page.
 ;   In:  A = non-zero to load only the current part's value while SOLO (byte 0x65c) is on.
-;   Picks the part (part-parameter byte 0 when the state byte 0x6ae is 0 and the byte at 0x8d38
-;   is 0x22, else SeMenu_ValidatePartNumber), then fills a 4-byte local array from the bytes at
-;   0x6ba + part-1 (SeMenu_LoadParamByte), for parts 1..4 or for the one part.  With state 0
-;   each part gets SeMenu_RegisterElement_Extended (BC = 0x17, stack word 0x7f); otherwise two
-;   objects are set up with SeMenu_SetupDisplayObject_Alt1.
+;   Picks the part (part-parameter byte 0 when the state byte 0x6ae is 0 and ACTIVE_TITLE is
+;   0x22, TITLE_SETONTON1's id; else SeMenu_ValidatePartNumber), then fills a 4-byte local
+;   array from the bytes at 0x6ba + part-1 (SeMenu_LoadParamByte), for parts 1..4 or for the
+;   one part.  With state 0 each part gets SeMenu_RegisterElement_Extended (BC = 0x17, stack
+;   word 0x7f); otherwise two objects are set up with SeMenu_SetupDisplayObject_Alt1.
 SeMenu_SetupMenuDisplay:
 	lda xsp, (xsp - 14)
 	pushw_erp 0xfa
@@ -5989,7 +5992,8 @@ SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	inc	2, xsp
 	ret
 
-; Stores A at 0x6af.
+; Stores A in the sound-editor byte 0x6af (callers pass 0, 1 or 2); SeMenu_SetSelectedRow_Data
+; copies it back out.
 SeMenu_SetSelectedRow:
 	ld (1711:16), a
 	ret
@@ -6226,7 +6230,9 @@ SeMenu_HandleMenuChange_End:
 SeMenu_HandleMenuChange_Data:
 	ld	(xwa), (0x6b7)
 	ret
-; Stores A at 0x6b7.
+; Stores A (0 or 1) in the sound-editor byte 0x6b7, which SeMenu_HandleMenuChange_Data copies
+; back out.  The one caller that stores 1 does so right after SeMenu_TriggerNotification with
+; WA = 35.
 SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
@@ -6437,7 +6443,7 @@ SeMenu_LoadParamByte:
 	ld (xbc), a
 	ret
 
-; Stores A at 0x6c4.
+; Stores A (0 or 1) in the sound-editor byte 0x6c4, which SeMenu_LoadConfirmData copies back out.
 SeMenu_SetConfirmState:
 	ld (1732:16), a
 	ret

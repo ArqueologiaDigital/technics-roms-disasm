@@ -92,7 +92,9 @@ Display_SetBackgroundColor:
 	ld (0x03efa2:24), wa
 	ret
 
-; Stores WA in the word at 0x3efa4.
+; Sets the graphics foreground colour word at 0x3efa4 to WA, the colour that DrawLineWithMode and
+; the text routines draw with; the screen-init sequences store 0xff, next to
+; Display_SetBackgroundColor (0xf5).
 GraphicsRender_ByteData:
 	ld	(0x03efa4:24), wa
 	ret

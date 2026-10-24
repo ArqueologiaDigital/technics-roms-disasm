@@ -136,7 +136,9 @@ SubCPU_Payload_GetErrorFlag:
 	exts hl
 	ret
 
-; Stores 0xff at 0x1e53e.
+; Marks the sub-CPU payload as failed: stores 0xff in the error byte at 0x1e53e, as
+; SubCPU_Payload_Verify does on a mismatch, so SubCPU_Payload_GetErrorFlag then returns -1.
+; Callers: SelfTest_FirmwareVersionCheck, SelfTest_CheckBit4 and MainSysControl (EVT_SYS_INI).
 SubCPU_PayloadErrorStore:
 	ld (0x01e53e:24), 0xff
 	ret
@@ -1385,7 +1387,10 @@ MidiEvt_UpdateReadPosition:
 	add (xhl - 2), wa
 	ret
 
-; Calls RhythmBuf_DispatchEvent.
+; Dispatches the next run of events that share one status nibble from the 0x200-byte rhythm ring
+; buffer at 0x1ef5d (RhythmBuf_DispatchEvent): a note-on (0x9n) run goes to RhythmMidi_Dispatcher,
+; any other to SeqPart_EmitNoteOn_Full; the read position then advances past the run.
+; AccReplay_FullRestart drains the buffer with it, testing RhythmBuf_CheckEmpty between calls.
 RhythmBuf_DispatchWrap:
 	calr RhythmBuf_DispatchEvent
 	ret
@@ -3401,7 +3406,10 @@ Start_8bit_Timer_3:
 	set	3, (T8RUN:8)
 	ret
 
-; Stops 8-bit timer 3 (clears bit 3 of T8RUN).
+; Stops 8-bit timer 3: clears bit 3 of T8RUN, which on this CPU also clears the up-counter.
+; TaskSched_PostInit programs that timer (TREG3 = 7, its INTET23 level) and starts it before the
+; first task is dispatched; the Vga_* plane copies stop it while they run and restart it with
+; Start_8bit_Timer_3.
 Stop_and_Clear_8bit_Timer_3:
 	res	3, (T8RUN:8)
 	ret
