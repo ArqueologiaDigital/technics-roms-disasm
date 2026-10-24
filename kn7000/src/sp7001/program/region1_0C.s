@@ -325,7 +325,7 @@ loc_4858083A:
     mov     0x486afd70, a1
     mov     (0x20, a0), a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48580871
     mov     (0x50172ca0), a0
@@ -659,7 +659,7 @@ loc_48580B29:
     mov     d3, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -839,7 +839,7 @@ loc_48580CDA:
     add     d2, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580CF7
     clr     d0
@@ -920,7 +920,7 @@ loc_48580D81:
     mov     a2, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -964,7 +964,7 @@ loc_48580E02:
     add     d3, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580E20
     mov     1, d0
@@ -1026,11 +1026,11 @@ loc_48580E9D:
 loc_48580EA0:
     add     0x130, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_48580EA7:
+# SswObjectNameGet  (CPU 0x48580ea7)
+SswObjectNameGet:
     movm    [a2], (sp)
     add     -0x14, sp
-func_48580EA7_entry:
+SswObjectNameGet_entry:
     clr     d1
     mov     d1, (0x10, sp)
     mov     0x00060015, d1
@@ -1041,11 +1041,11 @@ func_48580EA7_entry:
     call    strcpy_entry, [a2], 4
     mov     a2, a0
     ret     [a2], 0x18
-
-func_48580ED0:
+# GetSswObjectID  (CPU 0x48580ed0)
+GetSswObjectID:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_48580ED0_entry:
+GetSswObjectID_entry:
     mov     a0, (0x2c, sp)
     mov     0x2f, d0
     mov     d0, (0x10, sp)
@@ -1075,7 +1075,7 @@ loc_48580F03:
     cmp     0, d0
     beq     loc_48580F28
     mov     d3, d0
-    call    func_48580EA7_entry, [a2], 0x18
+    call    SswObjectNameGet_entry, [a2], 0x18
     mov     a0, a1
     mov     (0x2c, sp), a0
     call    strcmp, 0, 0
@@ -1825,7 +1825,7 @@ loc_48581559:
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485815A1
 loc_4858157E:
     mov     a2, (8, sp)
@@ -1839,7 +1839,7 @@ loc_4858157E:
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485815A1:
     mov     (0x30, sp), a1
     mov     a2, a0
@@ -3796,7 +3796,7 @@ loc_48582851:
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_4858288E
 loc_4858286F:
@@ -9255,7 +9255,7 @@ PlugInProbe_entry:
     mov     0x483e8000, a0
     mov     XaprMagicHead, a1
     mov     4, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48585BB3
     bra     loc_48585BD8
@@ -9263,7 +9263,7 @@ loc_48585BB3:
     mov     (0x483e8004), a0
     mov     XaprMagicTail, a1
     mov     4, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48585BCE
     bra     loc_48585BD8
@@ -9384,20 +9384,20 @@ decompInit:
     mov     a0, (0x20, sp)
     mov     0x486bded8, a1
     mov     0x38, d1
-    call    func_48473B63_entry, [d2], 0x2c
+    call    deflateInit__entry, [d2], 0x2c
     ret     0, 0x18
 # decomp  (CPU 0x48585cde)
 decomp:
     add     -0x10, sp
     mov     d0, (0x1c, sp)
     mov     a0, (0x18, sp)
-    call    func_4847400A_entry, [d2,d3,a2,a3], 0x3c
+    call    deflate_entry, [d2,d3,a2,a3], 0x3c
     ret     0, 0x10
 # decompEnd  (CPU 0x48585cef)
 decompEnd:
     add     -0xc, sp
     mov     a0, (0x14, sp)
-    call    func_4847427D_entry, [d2,d3,a2,a3], 0x20
+    call    deflateEnd_entry, [d2,d3,a2,a3], 0x20
     ret     0, 0xc
 # compInit  (CPU 0x48585cfe)
 compInit:
@@ -9405,20 +9405,20 @@ compInit:
     mov     a0, (0x1c, sp)
     mov     0x486bdee0, a1
     mov     0x38, d0
-    call    func_48476888_entry, 0, 0x18
+    call    inflateInit__entry, 0, 0x18
     ret     0, 0x14
 # comp  (CPU 0x48585d15)
 comp:
     add     -0x10, sp
     mov     d0, (0x1c, sp)
     mov     a0, (0x18, sp)
-    call    func_48476896_entry, [d2,d3,a2,a3], 0x30
+    call    inflate_entry, [d2,d3,a2,a3], 0x30
     ret     0, 0x10
 # compEnd  (CPU 0x48585d26)
 compEnd:
     add     -0xc, sp
     mov     a0, (0x14, sp)
-    call    func_48476763_entry, [d2,a2,a3], 0x28
+    call    inflateEnd_entry, [d2,a2,a3], 0x28
     ret     0, 0xc
 # initialize_comp  (CPU 0x48585d35)
 initialize_comp:

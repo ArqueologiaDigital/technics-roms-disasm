@@ -65,7 +65,7 @@ MainSEQ_SongClrNameParaDraw:
     exthu   d0
     mov     d0, (0x18, sp)
     mov     a3, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485400C4
 loc_485400B7:
     mov     0x4867bb10, a1
@@ -93,7 +93,7 @@ loc_485400C4:
     exthu   d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48540122
 loc_48540115:
     mov     0x4867bb3c, a1
@@ -254,7 +254,7 @@ loc_485402BA:
     exthu   d0
     mov     d0, (0x18, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     (0x1c, sp), a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -574,7 +574,7 @@ MainSEQ_SeqAutoPunch_Reload:
     mov     d0, (0x14, sp)
     movhu   (0x20, sp), d0
     mov     d0, (0x18, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     0x00e003d7, d0
     mov     0x000600b4, d1
@@ -1405,7 +1405,7 @@ MainSEQ_TrackCopySongParaDraw:
     mov     d0, (0xc, sp)
     mov     d2, (0x10, sp)
     mov     a3, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48540EC5
 loc_48540EB8:
     mov     0x4867bba0, a1
@@ -6565,7 +6565,7 @@ loc_48544090:
     mov     0x4867bbf4, d0
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485440A3:
     mov     a2, (0x10, sp)
     mov     (0x14, sp), d0
@@ -6656,7 +6656,7 @@ loc_4854414F:
     call    abs, 0, 0
     mov     d0, (0x14, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0x18, sp), d0
     mov     0x000600b4, d1
@@ -8159,7 +8159,7 @@ loc_4854507C:
     extbu   d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8192,7 +8192,7 @@ loc_48545106:
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     movbu   d0, (0x50160651)
     mov     d0, (0x10, sp)
@@ -9785,11 +9785,11 @@ loc_485460AA:
     mov     d2, d1
     asl     24, d1
     or      0x4000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     mov     0x90b00001, d0
     asl     24, d2
     mov     d2, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     inc     d3
     mov     d3, d0
     exthu   d3
@@ -13698,7 +13698,7 @@ func_4854870D:
 func_4854870D_entry:
     mov     4, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     exth    d0
     call    func_48548245_entry, [d2,d3,a2], 0x1c
     ret     0, 0x10
@@ -13762,14 +13762,14 @@ loc_48548789:
     ble     loc_4854876E
     mov     0x0000b000, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x00010100, d0
     call    func_485488A2_entry, [d2,d3,a2], 0x28
     mov     0x0000b040, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0, d1
@@ -13781,7 +13781,7 @@ loc_48548789:
 loc_485487CF:
     mov     0x0000b050, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0, d1
@@ -13793,35 +13793,35 @@ loc_485487CF:
 loc_485487F2:
     mov     0x5020, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x20, d0
     call    func_485488A2_entry, [d2,d3,a2], 0x28
     mov     0x5023, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x21, d0
     call    func_485488A2_entry, [d2,d3,a2], 0x28
     mov     0x5021, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x22, d0
     call    func_485488A2_entry, [d2,d3,a2], 0x28
     mov     0x5022, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x23, d0
     call    func_485488A2_entry, [d2,d3,a2], 0x28
     mov     0x5024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     0x24, d0
@@ -17889,7 +17889,7 @@ loc_4854AF28:
     bra     loc_4854AF71
 loc_4854AF41:
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     movhu   (0x500051b8), d0
     exth    d0
     cmp     0, d0
@@ -18051,11 +18051,11 @@ loc_4854B06D:
     mov     0x50007e9a, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     mov     0x64, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    SdPowerLineSet_entry, 0, 8
     call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     0x5016065c, a0
     call    SdCardInitFull_entry, [d2,d3,a2,a3], 0x1c
     exth    d0
@@ -18090,7 +18090,7 @@ loc_4854B0ED:
     call    SdPowerLineSet_entry, 0, 8
     call    SdPowerRailSet_entry, 0, 0xc
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     0x5016065c, a0
     call    SdCardInitFull_entry, [d2,d3,a2,a3], 0x1c
     exth    d0
@@ -18424,7 +18424,7 @@ loc_4854B3E1:
     mov     0x50007e9a, a0
     call    SdCommandSend_entry, [d2,d3,a2,a3], 0x24
     mov     0x64, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    SdSlotDischarge_entry, [d2], 0x10
 loc_4854B401:
     mov     1, d0
@@ -18689,7 +18689,7 @@ loc_4854B616:
     bra     loc_4854B634
 loc_4854B624:
     mov     0xfa, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     inc     d3
     exth    d3
     cmp     0x14, d3
@@ -18752,7 +18752,7 @@ SdCardInitFull_entry:
     mov     0xa, d0
     call    SdSpiClockBurst_entry, [d2], 0x14
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     0xb, d0
     call    SdSpiClockSet_entry, [d2], 0x10
     clr     d3
@@ -18808,7 +18808,7 @@ loc_4854B6F9:
     ret     [d2,d3,a2,a3], 0x1c
 loc_4854B70C:
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bra     loc_4854B6AF
 loc_4854B717:
     clr     d2
@@ -18821,7 +18821,7 @@ loc_4854B718:
     cmp     a2, d0
     bne     loc_4854B737
     mov     0x14, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bra     loc_4854B742
 loc_4854B737:
     mov     a3, a0
@@ -18915,7 +18915,7 @@ loc_4854B7C9:
     bra     loc_4854B7E7
 loc_4854B7DB:
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bra     loc_4854B784
 loc_4854B7E6:
     clr     d0
@@ -19193,7 +19193,7 @@ loc_4854BA14:
     call    SdPowerRailClear_entry, 0, 0xc
     call    SdSlotDischarge_entry, [d2], 0x10
     mov     0x64, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    SdCsRelease, 0, 0
     call    SdSlotRelease_entry, 0, 8
     mov     1, d0
@@ -19611,7 +19611,7 @@ loc_4854BDF0:
     mov     -1, d0
     movhu   d0, (0x5000520c)
     mov     0x1e, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     (0x50151c0c), d0
     mov     d0, (0xc, sp)
     clr     d0
@@ -19657,7 +19657,7 @@ loc_4854BE63:
     cmp     1, d0
     bne     loc_4854BE72
     mov     0xa, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854BE72:
     mov     d2, d0
     extbu   d0
@@ -20085,7 +20085,7 @@ loc_4854C193:
     bra     loc_4854C1BC
 loc_4854C1AF:
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bra     loc_4854C193
 loc_4854C1BA:
     mov     -1, d0
@@ -20103,7 +20103,7 @@ SdSenseBusyWait_entry:
     mov     (0x50151c0c), d0
     mov     d0, (0xc, sp)
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    SdSlotSenseGet_entry, 0, 8
     extbu   d0
     cmp     0, d0
@@ -20129,7 +20129,7 @@ loc_4854C1FD:
     bcs     loc_4854C1F0
 loc_4854C20A:
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854C213:
     mov     -1, d0
 loc_4854C215:
@@ -20217,7 +20217,7 @@ SdCommandSend_entry:
     cmp     2, d0
     bne     loc_4854C2A8
     mov     5, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854C2A8:
     mov     a3, a2
     inc4    a2
@@ -20368,7 +20368,7 @@ SdReadBlockCmd_entry:
     cmp     2, d0
     bne     loc_4854C3C7
     mov     5, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854C3C7:
     mov     a3, a2
     inc4    a2
@@ -20510,7 +20510,7 @@ SdReadChainCmd_entry:
     cmp     2, d0
     bne     loc_4854C4F3
     mov     5, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854C4F3:
     mov     a3, a2
     inc4    a2
@@ -20625,7 +20625,7 @@ SdWriteBlockCmd_entry:
     cmp     2, d0
     bne     loc_4854C5E4
     mov     5, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_4854C5E4:
     mov     a3, a2
     inc4    a2
@@ -22364,7 +22364,7 @@ func_4854D6F3:
     add     -0xc, sp
 func_4854D6F3_entry:
     clr     d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     movhu   (0x3200002e), d2
     clr     d0
     movhu   d0, (0x3200002e)
@@ -22395,7 +22395,7 @@ loc_4854D74A:
 loc_4854D756:
     movhu   d2, (0x3200002e)
     clr     d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     [d2], 0x10
 
 func_4854D767:
@@ -23970,7 +23970,7 @@ loc_4854E852:
     mov     d0, (0xc, sp)
     movhu   (0x50082974), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_4854E871:
@@ -28898,7 +28898,7 @@ loc_48551B4C:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -28930,7 +28930,7 @@ loc_48551BC2:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -28955,7 +28955,7 @@ loc_48551C0A:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -28998,7 +28998,7 @@ loc_48551C9C:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -29098,7 +29098,7 @@ loc_48551DE8:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -29130,7 +29130,7 @@ loc_48551E5D:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -29159,7 +29159,7 @@ loc_48551EB2:
     mov     0x00050001, d1
     call    ApPostEvent_entry, [d2], 0x1c
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    DispatchEvent_entry, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
@@ -33582,7 +33582,7 @@ loc_48554E02:
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48563606_entry, [d2,d3,a2,a3], 0xfc
     exth    d0
     mov     0x60, d1
@@ -33625,7 +33625,7 @@ loc_48554EAC:
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48563606_entry, [d2,d3,a2,a3], 0xfc
     exth    d0
     mov     0x60, d1
@@ -37666,7 +37666,7 @@ loc_48557ABB:
     mov     1, d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     0xc8, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     1, d0
     call    SetExtMode, 0, 0
     call    func_48562652_entry, [d2,d3,a2,a3], 0xc0
@@ -38301,7 +38301,7 @@ loc_48558106:
     exth    d0
     call    func_485512EF_entry, [d2,d3,a2,a3], 0x34
     mov     0x64, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     a2, d0
     movbu   (0x50082c80), d1
     call    func_48557B7F_entry, [d2,d3,a2], 0x20
@@ -43237,7 +43237,7 @@ loc_4855B85C:
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     0x12c, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48564451_entry, [d2,d3,a2,a3], 0xa8
     exth    d0
     mov     0x60, d1

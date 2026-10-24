@@ -14,6 +14,12 @@ are the natural next questions; none of them is stated as fact in the
 annotations. Rendered from the workflow's reports by
 `research-scratch/sessions/2026-10-17_75c61257/review_notes.py`.
 
+Names as of 2026-10-24: this log keeps the names it was written with. `LibMemCopy`
+(a row at the flash copy 0x487BC00A of library 0x4C003039) is now `memcpy_entry`
+at 0x4C003039, the register-save entry of `memcpy` (0x4C003037); the flash-copy row
+was dropped. `LibStrncmp` (0x4C00203C) is now `strncmp_entry`. Evidence:
+notes/function-naming-2026-10-24/renames.tsv.
+
 ## bitmapfast_icons
 
 Functions: DrawBitmapFast, DrawBitmapFast_QueuedExec, DrawBitmapFast_Impl, DrawIcons, DrawIcons_QueuedExec, DrawIcons_Impl.

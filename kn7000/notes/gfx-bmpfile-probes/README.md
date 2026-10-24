@@ -38,11 +38,11 @@ and prints, per case, GetBitmapInfo's return value (d0), the 16-byte file-header
 struct it filled, whether the 40-byte info header was copied, how many colour
 bytes it copied and the pixel offset it returned, and BmpUnpackRow's output row
 (0xEE marks bytes it did not write) with the Malloc/memcpy/Free calls it made.
-Library calls (memcpy 0x4C003039, LibStrncmp 0x4C00203C, LibDiv32 0x4C0019D5) and
+Library calls (memcpy 0x4C003039, strncmp_entry 0x4C00203C, LibDiv32 0x4C0019D5) and
 Malloc/Free are modelled in Python, and the script models `call`/`ret`/`retf`
 itself (see the note on tools/mn10300_sim.py below). Results on 2026-10-18:
 
-- only "BM" passes: "BA", "B\0" and "\0\0" all return 0 (LibStrncmp compares
+- only "BM" passes: "BA", "B\0" and "\0\0" all return 0 (strncmp_entry compares
   before it tests for NUL);
 - biSize 12, 2 planes, 2 or 24 bpp, biClrUsed 257 and compression 1 return 0;
   1, 4 and 8 bpp with biClrUsed up to 256 return 1;

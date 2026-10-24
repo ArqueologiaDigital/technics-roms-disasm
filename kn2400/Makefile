@@ -108,7 +108,9 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 # matches with >= 8 unmasked instructions, unique among all the KN7000's routine
 # starts and among this image's entries, count (the tool's header has the rule). It
 # reads the KN7000 reference image (../kn7000: make -C ../kn7000 baserom) and this
-# tree's generated labels; run `make program-src` again afterwards. The committed
+# tree's generated labels; run `make program-src` again afterwards. --fuzzy then compares
+# whole routine bodies (../kn7000/tools/fn_similarity.py: classes exact / skeleton /
+# fuzzy, each other's best match, no callee or string disagreeing) for what is left. The committed
 # $(MODEL)_ported.sym is the result, so the build does not need the KN7000 image.
 KN7000_DIR := ../kn7000
 PORT_FROM  := --a-rom $(KN7000_DIR)/baserom/kn7000_program.rom \
@@ -120,7 +122,7 @@ PORT_FROM  := --a-rom $(KN7000_DIR)/baserom/kn7000_program.rom \
 ported-names: $(TOOLS)/port_names_by_code.py $(TOOLS)/gen_image_s.py src/labels.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/port_names_by_code.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
 	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym \
-	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) \
+	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) --fuzzy \
 	    --title "$(MODEL): names carried over from KN7000 program 941 (same code, relinked)"
 
 clean:

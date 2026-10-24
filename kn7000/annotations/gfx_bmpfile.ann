@@ -65,7 +65,7 @@ equ BmpSignature  485A28B8  "BM", NUL-terminated: the BMP bfType GetBitmapInfo c
 48421DE1 doc   BfFile2Struct), d0 = &BITMAPINFOHEADER copy (40 bytes), d1 = colour-table buffer
 48421DE1 doc   (1 KB), 5th argument at the caller's (0x18,sp) = &u8 *pixels) -> d0 = 1 if the
 48421DE1 doc   file passes every check below, else 0. In order: BfFile2Struct fills *a1,
-48421DE1 doc   always; bfType must be "BM" (LibStrncmp against BmpSignature; exact, since it
+48421DE1 doc   always; bfType must be "BM" (strncmp_entry against BmpSignature; exact, since it
 48421DE1 doc   compares a byte before testing it for NUL); the 40 bytes at file + 14 are copied
 48421DE1 doc   to *d0; then biSize must be 40, biPlanes 1, biBitCount 1, 4 or 8,
 48421DE1 doc   biClrUsed <= 256 (unsigned) and biCompression 0 (BI_RGB). Each failed check
@@ -94,7 +94,7 @@ equ BmpSignature  485A28B8  "BM", NUL-terminated: the BMP bfType GetBitmapInfo c
 48421DEA eol   d2 = the file
 48421DEC eol   BfFile2Struct(a0 = file, a1 = struct), before any check
 48421DF1 eol   a0 = &struct.bfType
-48421DFA eol   LibStrncmp(bfType, "BM", 2)
+48421DFA eol   strncmp_entry(bfType, "BM", 2)
 48421E05 eol   not "BM": return 0
 48421E09 label GetBitmapInfo_IsBM
 48421E0A eol   a1 = file + 14: the BITMAPINFOHEADER

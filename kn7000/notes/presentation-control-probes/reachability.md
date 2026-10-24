@@ -65,7 +65,7 @@ No mode or title changer is called from: the `.ACT` / SSW slide-show engine
 load (`0x4852Cxxx`-`0x4852Fxxx`), the fmm file layer (`0x48532xxx`), the SMF/.MID parser
 (`0x48480xxx`), or the MIDI RX ISRs (`0x484B1E86`, `0x484B2037`). The `SHOW` tag sends `EV_PAINT`
 (0x50009, at `0x4857FC34`) to an object that already exists, not a mode or title change; `DA`
-sends `MT_SleepMainTask`, `LibParamSet(0x90600007, NO)`, `MT_WakeUpMainTask`. Registration /
+sends `MT_SleepMainTask`, `PutM3Em_entry(0x90600007, NO)`, `MT_WakeUpMainTask`. Registration /
 panel-memory recall (`AcFavoriteProc`) reads ROM favorite tables, not the loaded data. The panel-
 remote procs `IvKNPRWinProc` / `IvPageKNPRProc` call no changer.
 

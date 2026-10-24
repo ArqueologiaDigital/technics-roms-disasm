@@ -1,0 +1,17 @@
+kn7000_addr	old_name	new_name	evidence_class	evidence
+0x4C001A48	LibSprintf	sprintf_entry	duplicate name (register-save entry)	register-save `call` entry of sprintf (942 export, 0x4C001A43); the tree spells such entries <export>_entry
+0x4C00203C	LibStrncmp	strncmp_entry	duplicate name (register-save entry)	register-save entry of strncmp (942 export, 0x4C00203A)
+0x4C0149FA	LibParamGet	GetM3EmVal_entry	duplicate name (register-save entry)	register-save entry of GetM3EmVal (942 export, 0x4C0149F7)
+0x4C014A56	LibParamSet	PutM3Em_entry	duplicate name (register-save entry)	register-save entry of PutM3Em (942 export, 0x4C014A51)
+0x4C03DCC8	LibIntcEnable	ena_int_entry	duplicate name (register-save entry)	register-save entry of ena_int (942 export, 0x4C03DCC6)
+0x4C03DD3F	LibIntcDisable	dis_int_entry	duplicate name (register-save entry)	register-save entry of dis_int (942 export, 0x4C03DD3D)
+0x4C03DD74	LibTickSleep	dly_tsk_entry	duplicate name (register-save entry)	register-save entry of dly_tsk (942 export, 0x4C03DD6F)
+0x487BAA19	LibPrintf	(row dropped)	duplicate name (flash-copy alias)	flash copy of lib 0x4C001A48, which sprintf_entry names
+0x487BC00A	LibMemCopy	(row dropped)	duplicate name (flash-copy alias)	flash copy of lib 0x4C003039, which memcpy_entry names
+0x487BC022	LibStrCopy	(row dropped)	duplicate name (flash-copy alias)	flash copy of lib 0x4C003051, which strcpy_entry names
+0x4C003024	LibMemSet (at flash 0x487BBFF5)	memset_entry	duplicate name (flash-copy alias)	register-save entry of memset (942 export, 0x4C003022)
+0x4C014948	LibResourceLookup (at flash 0x487CD919)	GetM3Em_entry	duplicate name (flash-copy alias)	register-save entry of GetM3Em (942 export, 0x4C014943)
+0x4C03DDA0	LibIrqQuickDispatch (at flash 0x487F6D71), source func_4C03DDA0	LibIrqQuickDispatch	name moved to the library address	the routine starts there (func_4C03DDA0 in the source); the name was on its flash copy only
+0x4C03DE26	LibIrqScheduler (at flash 0x487F6DF7), source func_4C03DE26	LibIrqScheduler	name moved to the library address	the routine starts there (func_4C03DE26); its body saves the task SP into the TCB *0x5038002C and switches to the stack *0x50380CBC, as the row says
+0x4C03DC33	ter_tsk	get_tid	wrong port (body comparison)	its body equals program 942's exported get_tid to the first return (tools/itron_stubs.py), and KN6500's reflection table names its copy get_tid; no 941 routine has ter_tsk's body
+0x4C00566E	TgPartModRouteMaskSet (at its call entry 0x4C005673), source func_4C00566E	TgPartModRouteMaskSet	name moved to the routine start	the name sat on the register-save `call` entry; the routine starts with movm [d2,d3,a2,a3] at 0x4C00566E (func_4C00566E in the source), so the name moves there and the entry becomes TgPartModRouteMaskSet_entry, as for every other routine in the tree (SP7001: 0x4C0056C8 / 0x4C0056CD)

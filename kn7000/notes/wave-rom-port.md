@@ -16,14 +16,14 @@ dumper that runs on the stock firmware. Probe: `wave-rom-port-probes/` (README t
 The core, for port `P` (`0x98050000` when its TG argument is 0, `0x98040000` otherwise),
 first unit `S`, last unit `E` and select bit `c`:
 
-    movhu 0x8000 -> P+6 ; LibTickSleep(1)                 ; 0x484839BC / 0x48483A68
+    movhu 0x8000 -> P+6 ; dly_tsk_entry(1)                ; 0x484839BC / 0x48483A68
     for bank = S>>15 .. E>>15:
         movhu 0x8000|bank -> P+6
         for a = c, c+2, .. 0x7FFF:
             movhu 0x8000|a -> P+8
             w = movhu P+A                                 ; 16-bit, no wait, no status poll
             sum += (w >> 8) + (w & 0xFF)                  ; 32-bit, wraps
-    movhu 0 -> P+6 ; LibTickSleep(1)
+    movhu 0 -> P+6 ; dly_tsk_entry(1)
 
 These six addresses (`P+6/8/A` for both ports) appear nowhere else in the program image, so no
 other firmware code competes for the latches.

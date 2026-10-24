@@ -71,7 +71,10 @@ def firmware_routines(rom, r1_end, lib_file, syms, unidasm):
     out = {}
     for cpu, (nm, _n) in T.load_syms(syms).items():
         if nm.endswith("_entry"):
-            continue
+            # the body from a routine's register-save `call` entry: a copy linked
+            # without the movm prologue (called only by `call X, [regs], n`) is a
+            # copy of that routine (the converters' and BASEEXT's strncmp)
+            nm = nm[:-len("_entry")]
         b = body(ix, cpu)
         if b and len(b) >= 8:
             out.setdefault(b, set()).add(nm)

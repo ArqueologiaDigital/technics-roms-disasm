@@ -467,7 +467,7 @@ LIB_CONVERT = {
     # a library function's range when something that is not its code
     # follows it before the next named function (the bytes after its end
     # come out as an unnamed function): (CPU start, CPU end-exclusive)
-    "LibSprintf":         (0x4C001A48, 0x4C001A65),
+    "sprintf_entry":      (0x4C001A48, 0x4C001A65),
     "LibF64Modf":         (0x4C000FA7, 0x4C00104C),
     "LibF64ToI16":        (0x4C001624, 0x4C00163D),
     "LibU16ToF64":        (0x4C0016AC, 0x4C0016B0),
@@ -478,7 +478,7 @@ LIB_CONVERT = {
     "TgLevelResolve":     (0x4C02FBDE, 0x4C02FCBA),
     "TgKeyOffFilterRelease": (0x4C03248B, 0x4C032747),
     "TgNoteOnTableTone":  (0x4C03600D, 0x4C036187),
-    "LibTickSleep":       (0x4C03DD74, 0x4C03DD98),
+    "dly_tsk_entry":      (0x4C03DD74, 0x4C03DD98),
     "TgDrumAmpReleaseCalc": (0x4C00AD43, 0x4C00AE3B),
     "TgVoiceListCollectGlobal": (0x4C010124, 0x4C01013D),
     "TgElemKeyOffRelease": (0x4C013F0A, 0x4C014040),
@@ -496,7 +496,7 @@ LIB_CONVERT = {
 # Notes on groups of library functions, emitted above the first function of
 # each group (they were the section comments of the old explicit LIB_CONVERT).
 LIB_SECTION_DOC = {
-    "LibSprintf": (
+    "sprintf_entry": (
         "the two C-library helpers the debug screens' renderer calls",
     ),
     "LibF64Pow": (
@@ -803,7 +803,7 @@ FUNC_DOC = {
     "SndCmdEmitUnitCc": [
         "★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector 1..6, d1 = value).",
         "Selectors 2..6 read the param-DB group keys 0xB010/0xB020/0xB030/",
-        "0xB040/0xB050 through LibParamGet; 0x484120DE turns the result into a",
+        "0xB040/0xB050 through GetM3EmVal_entry; 0x484120DE turns the result into a",
         "unit number, and the message emitted is one of",
         "  { 4, 0xB0, part, 0xC6, v }  control change 0xC6, parts 0x13..0x1A",
         "  { 4, 0xB0, part, 0xC4, v }  control change 0xC4",
@@ -1833,7 +1833,7 @@ FUNC_DOC = {
         "signed 32-bit divide d0/d1 with the fast paths the sym file",
         "documents: d1==1 -> d0, d1==-1 -> -d0, else ext/div",
     ],
-    "LibTickSleep": [
+    "dly_tsk_entry": [
         "sleep d0 ticks of the lib tick counter 0x500D3C58: yield loop via",
         "0x4C03C0E4 until the counter passes start+d0",
     ],
@@ -2149,7 +2149,7 @@ FUNC_DOC = {
         "set sync param 0xD001 := d1 (gate: unchanged -> return): value 0 only",
         "while the 0x50149682 clock is stopped (bit15 getter 0x484455EB);",
         "values 1..3 first propagate the current value into 0xD002/0xD003",
-        "(when nonzero) via LibParamSet",
+        "(when nonzero) via PutM3Em_entry",
     ],
     "TempoSyncD002Set": [
         "set 0xD002 := d1 (gates: 0x50149682 bit15 stopped, 0x48445645 bit12",
@@ -4238,7 +4238,7 @@ def main():
     lib_converted = 0
     # a section banner goes above the function's register-save prologue: when a
     # block holds only the prologue of the next one (`sprintf` before
-    # `LibSprintf`), the next block's banner moves up in front of it
+    # `sprintf_entry`), the next block's banner moves up in front of it
     # (and that block's header and notes with it: the two names are one function)
     section_doc = {so: list(LIB_SECTION_DOC.get(name, ())) for so, _eo, name, _cv in lib_blocks}
     entry_block = {}                  # prologue-only block -> (entry block off, its name)

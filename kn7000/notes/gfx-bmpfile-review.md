@@ -15,6 +15,11 @@ the caller lists and the simulated behaviour: notes/gfx-bmpfile-probes/. Rendere
 from the workflow's reports by
 `research-scratch/sessions/2026-10-18_tmp/review_notes_bmpfile.py`.
 
+Names as of 2026-10-24: this log keeps the names it was written with. `LibMemCopy`
+(a row at the flash copy 0x487BC00A of library 0x4C003039) is now `memcpy_entry`
+at 0x4C003039, the register-save entry of `memcpy` (0x4C003037); the flash-copy row
+was dropped. Evidence: notes/function-naming-2026-10-24/renames.tsv.
+
 ## parse
 
 Functions: BfFile2Struct, BfStruct2File, GetBitmapInfo, BmpUnpackRow.

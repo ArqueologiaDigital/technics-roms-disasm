@@ -1394,9 +1394,9 @@ func_48400E1B:
     add     -0xc, sp
 func_48400E1B_entry:
     mov     0xc, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     mov     0xb, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0xc
 
 func_48400E33:
@@ -1412,7 +1412,7 @@ func_48400E33_entry:
 loc_48400E4C:
     movbu   (0x18, sp), d0
     movbu   d0, (0x5009e882)
-    call    func_48400F1D, 0, 0
+    call    FdcOpcodeInvalid, 0, 0
     extb    d0
     cmp     0, d0
     beq     loc_48400E62
@@ -1499,8 +1499,8 @@ loc_48400F15:
     call    func_48401044_entry, 0, 0xc
 loc_48400F1A:
     ret     0, 0x10
-
-func_48400F1D:
+# FdcOpcodeInvalid  (CPU 0x48400f1d)
+FdcOpcodeInvalid:
     movbu   (0x5009e882), d0
     and     0x1f, d0
     cmp     6, d0
@@ -2030,7 +2030,7 @@ func_4840139A_entry:
     mov     7, d0
     call    func_4C03DB4A, 0, 0
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
 
 func_484013D2:
@@ -2427,7 +2427,7 @@ func_48401872_entry:
     mov     7, d0
     call    func_4C03DB4A, 0, 0
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
 
 func_484018AA:
@@ -2796,7 +2796,7 @@ func_48401CBA_entry:
     mov     7, d0
     call    func_4C03DB4A, 0, 0
     mov     2, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
 
 func_48401D16:
@@ -2949,7 +2949,7 @@ loc_48401E65:
     bset    0x10, (0x36008024)
     bset    0x10, (0x36008064)
     mov     0xe, d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     mov     1, d0
     movhu   d0, (0x1c, sp)
     mov     func_48402109, d0
@@ -2972,7 +2972,7 @@ loc_48401E65:
     movhu   d0, (0x34000280)
     mov     1, d0
     movhu   d0, (0x30, sp)
-    mov     func_4840221D, d0
+    mov     FdcIrq, d0
     mov     d0, (0x34, sp)
     mov     0x19, d0
     movhu   d0, (0x38, sp)
@@ -2988,7 +2988,7 @@ loc_48401E65:
     add     0x30, a0
     call    func_4C03DFAD_entry, [d2,d3,a2,a3], 0x24
     mov     (0x14, sp), d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     mov     1, d0
     movhu   d0, (0x44, sp)
     mov     func_4840219C, d0
@@ -3006,7 +3006,7 @@ loc_48401E65:
     add     0x44, a0
     call    func_4C03DFAD_entry, [d2,d3,a2,a3], 0x24
     mov     (0x18, sp), d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
 loc_48401F2F:
     ret     0, 0x58
 
@@ -3249,7 +3249,7 @@ loc_48402182:
 loc_48402183:
     bclr    0x10, (0x36008004)
     mov     0xe, d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     movhu   (0x34000160), d0
     ret     0, 0xc
 
@@ -3292,8 +3292,8 @@ loc_4840220F:
     call    func_48402109_entry, 0, 0xc
     movhu   (0x3400013c), d0
     ret     0, 0xc
-
-func_4840221D:
+# FdcIrq  (CPU 0x4840221d)
+FdcIrq:
     add     -0x18, sp
     and     0xf7ff, psw
     nop
@@ -3516,7 +3516,7 @@ loc_484023BC:
     mov     0x5009e948, a0
     call    func_48401F32_entry, 0, 0xc
     mov     0xbb8, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     (0x50000014), d0
     inc     d0
     mov     d0, (0x50000014)
@@ -3528,7 +3528,7 @@ func_484024DF:
     add     -0x28, sp
 func_484024DF_entry:
     mov     0xd, d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     mov     1, d0
     movhu   d0, (0x14, sp)
     mov     loc_4840259B, d0
@@ -3560,7 +3560,7 @@ func_484024DF_entry:
     mov     0x5009e948, a0
     call    func_48401F32_entry, 0, 0xc
     mov     0xd, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0x28
 
 func_48402563:
@@ -3765,7 +3765,7 @@ loc_48402750:
     movbu   d0, (0x5000001c)
     mov     0x10708000, d0
     mov     1, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_4840278A
 loc_48402769:
     call    func_484025DD_entry, 0, 0x10
@@ -3778,7 +3778,7 @@ loc_48402775:
     movbu   d0, (0x5000001c)
     mov     0x10708000, d0
     clr     d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_4840278A:
     ret     0, 0x10
 
@@ -5221,9 +5221,9 @@ func_484035A3:
     add     -0xc, sp
 func_484035A3_entry:
     mov     0xc, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     mov     0xb, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0xc
 
 func_484035BB:
@@ -6720,9 +6720,9 @@ func_484044BB_entry:
     add     0x2c, a0
     call    func_4C03DFAD_entry, [d2,d3,a2,a3], 0x24
     mov     (0x14, sp), d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     mov     (0x10, sp), d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0x40
 
 func_48404547:
@@ -6927,13 +6927,13 @@ func_48404774:
     add     -0xc, sp
     call    func_48403061, 0, 0
     clr     d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     movhu   (0x3400013c), d0
     and     0xff00, d0
     or      0x01, d0
     movhu   d0, (0x3400013c)
     clr     d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     movhu   (0x3400013c), d0
     ret     0, 0xc
 
@@ -7021,13 +7021,13 @@ loc_48404859:
     clr     d0
     movbu   d0, (0x50007fc4)
     clr     d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     movhu   (0x34000164), d0
     and     0xff00, d0
     or      0x01, d0
     movhu   d0, (0x34000164)
     clr     d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     movhu   (0x34000164), d0
     ret     0, 0x18
 
@@ -7186,7 +7186,7 @@ loc_48404969:
     mov     0x50008038, a0
     call    func_48404547_entry, 0, 0xc
     mov     0xbb8, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     mov     (0x50000024), d0
     inc     d0
     mov     d0, (0x50000024)
@@ -7197,7 +7197,7 @@ func_48404AA8:
     add     -0x28, sp
 func_48404AA8_entry:
     mov     0xd, d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     mov     1, d0
     movhu   d0, (0x14, sp)
     mov     func_48404B64, d0
@@ -7229,7 +7229,7 @@ func_48404AA8_entry:
     mov     0x50008038, a0
     call    func_48404547_entry, 0, 0xc
     mov     0xd, d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0x28
 
 func_48404B2C:
@@ -7259,13 +7259,13 @@ func_48404B64:
     mov     1, d0
     movbu   d0, (0x50000028)
     clr     d0
-    call    LibIntcDisable, [d2], 4
+    call    dis_int_entry, [d2], 4
     movhu   (0x34000178), d0
     and     0xff00, d0
     or      0x01, d0
     movhu   d0, (0x34000178)
     clr     d0
-    call    LibIntcEnable, [d2], 4
+    call    ena_int_entry, [d2], 4
     ret     0, 0xc
 
 func_48404BA1:
@@ -7403,7 +7403,7 @@ loc_48404CD3:
     movbu   d0, (0x50000034)
     mov     0x10708000, d0
     mov     1, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_48404D0D
 loc_48404CEC:
     call    func_48404BA1_entry, 0, 0x10
@@ -7416,7 +7416,7 @@ loc_48404CF8:
     movbu   d0, (0x50000034)
     mov     0x10708000, d0
     clr     d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_48404D0D:
     ret     0, 0x10
 
@@ -7705,10 +7705,10 @@ func_48404F97_entry:
 DspFullReinit:
     bset    0x80, (0x36008004)
     mov     0xa, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bclr    0x80, (0x36008004)
     mov     0xa, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     bset    0x80, (0x36008004)
     call    func_48404D71, 0, 0
     clr     d0
@@ -8136,7 +8136,7 @@ func_4840542D_entry:
     mov     1, d1
     call    func_48407DB4_entry, 0, 0x40
     mov     0x64, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0x18
 
 func_4840545D:
@@ -9494,7 +9494,7 @@ DspDownloadAll:
     movhu   d0, (0x2a, sp)
     call    func_48407ADC_entry, 0, 0x14
     mov     0x32, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     clr     d0
     movhu   d0, (0x26, sp)
     bra     loc_48406114
@@ -9951,7 +9951,7 @@ loc_484063FF:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
     jmp     loc_4840652E
 loc_48406492:
@@ -10015,7 +10015,7 @@ loc_48406492:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
 loc_4840652E:
     movhu   (0x1a, sp), d0
@@ -10128,7 +10128,7 @@ loc_484065B0:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
     jmp     loc_484066DA
 loc_48406643:
@@ -10188,7 +10188,7 @@ loc_48406643:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
 loc_484066DA:
     movhu   (0x1a, sp), d0
@@ -10301,7 +10301,7 @@ loc_4840675C:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
     jmp     loc_48406886
 loc_484067EF:
@@ -10361,7 +10361,7 @@ loc_484067EF:
     clr     d1
     call    DspRegWrite, 0, 0x10
     mov     1, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
     call    func_48407AF4_entry, 0, 0x10
 loc_48406886:
     movhu   (0x1a, sp), d0
@@ -11571,7 +11571,7 @@ loc_48407341:
     bra     loc_48407353
 loc_4840734A:
     mov     0x14, d0
-    call    LibTickSleep, [d2,a2], 0x18
+    call    dly_tsk_entry, [d2,a2], 0x18
 loc_48407353:
     ret     0, 0x1c
 
@@ -25247,7 +25247,7 @@ loc_48410070:
     mov     0x0000dccb, d0
     movhu   d0, (a0)
     add     2, a0
-    mov     func_4C03E34C, d0
+    mov     LibIrqScheduler, d0
     mov     0x50000001, d1
     sub     d1, d0
     movhu   d0, (a0)
@@ -25293,7 +25293,7 @@ loc_48410070:
     bclr    0x20, (0x36008004)
     call    func_484D7A2A_entry, [d2,d3,a2,a3], 0x54
     jmp     loc_487BA758
-    jmp     func_4C03E34C
+    jmp     LibIrqScheduler
     mov     0x20000070, a0
     movhu   (a0), d0
     and     0xfffe, d0
@@ -25348,8 +25348,8 @@ loc_48410070:
     nop
 loc_484101C6:
     ret     0, 0
-
-func_484101C9:
+# DCacheFlushDisable  (CPU 0x484101c9)
+DCacheFlushDisable:
     mov     0x20000070, a0
     movhu   (a0), d0
     btst    0x02, d0
@@ -25564,62 +25564,62 @@ func_484103E4:
 func_484103E4_entry:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     mov     2, d0
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     3, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     4, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     5, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     6, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000a200, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     1, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000a000, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     clr     d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000a100, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a0
     mov     9, d0
     mov     a0, d1
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
     mov     0x0000a400, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     mov     7, d0
     call    SndUnitSettingApplyFull_entry, [d2,d3,a2,a3], 0x7c
@@ -26114,7 +26114,7 @@ loc_48410850:
     movbu   (0x38, sp), d1
     mov     0xa000a401, d0
     extbu   d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_48410878:
     mov     (0x2c, sp), d0
     cmp     0, d0
@@ -26122,7 +26122,7 @@ loc_48410878:
     movbu   (0x2c, sp), d1
     mov     0xa000a402, d0
     extbu   d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_4841088F:
     mov     (0x24, sp), d0
     cmp     1, d0
@@ -26161,35 +26161,35 @@ loc_484108BF:
     jmp     loc_4841095F
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
     bra     loc_4841095F
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
     bra     loc_4841095F
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     mov     d0, d2
     asr     16, d2
     bra     loc_4841095F
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
     bra     loc_4841095F
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
@@ -26421,35 +26421,35 @@ loc_48410B05:
     jmp     loc_48410BA5
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
     bra     loc_48410BA5
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     mov     d0, d2
     asr     16, d2
     bra     loc_48410BA5
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     and     0x00ff0000, d2
     asr     16, d2
     bra     loc_48410BA5
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     and     0x00ff0000, d2
     asr     16, d2
     bra     loc_48410BA5
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
@@ -26660,7 +26660,7 @@ SndUnitRefreshGroups56:
 SndUnitRefreshGroups56_entry:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     5, d0
     mov     1, d1
@@ -26670,7 +26670,7 @@ SndUnitRefreshGroups56_entry:
     call    SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
     mov     0x0000b040, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     mov     d1, d2
     exthu   d2
@@ -26679,7 +26679,7 @@ SndUnitRefreshGroups56_entry:
     mov     0x00b0005f, d0
     exthu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     5, d0
@@ -26690,7 +26690,7 @@ loc_48410D8B:
     call    func_4844825D_entry, [d2,d3], 0x24
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     6, d0
     mov     1, d1
@@ -26700,7 +26700,7 @@ loc_48410D8B:
     call    SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
     mov     0x0000b050, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     mov     d1, d2
     exthu   d2
@@ -26709,7 +26709,7 @@ loc_48410D8B:
     mov     0x00b0005f, d0
     exthu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     mov     6, d0
@@ -26727,14 +26727,14 @@ SndSetupBroadcastAll_entry:
     mov     d0, d2
     mov     0x00008029, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_48410E0F
     jmp     loc_48410F3B
 loc_48410E0F:
     mov     0x0000802c, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     exth    d0
     cmp     0x1b, d0
     bne     loc_48410E28
@@ -26794,7 +26794,7 @@ loc_48410E59:
 loc_48410E87:
     mov     3, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d3, d1
     exth    d1
     cmp     4, d1
@@ -26895,7 +26895,7 @@ SndSetupBroadcastOne:
 SndSetupBroadcastOne_entry:
     mov     0x00008029, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_48410FAD
     mov     0x180, d0
@@ -26938,7 +26938,7 @@ loc_48410FAD:
 # SndCmdEmitUnitCc  (CPU 0x48410fb0)
 #   ★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector 1..6, d1 = value).
 #   Selectors 2..6 read the param-DB group keys 0xB010/0xB020/0xB030/
-#   0xB040/0xB050 through LibParamGet; 0x484120DE turns the result into a
+#   0xB040/0xB050 through GetM3EmVal_entry; 0x484120DE turns the result into a
 #   unit number, and the message emitted is one of
 #     { 4, 0xB0, part, 0xC6, v }  control change 0xC6, parts 0x13..0x1A
 #     { 4, 0xB0, part, 0xC4, v }  control change 0xC4
@@ -26967,25 +26967,25 @@ SndCmdEmitUnitCc_entry:
 loc_48410FD4:
     mov     0x0000b010, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     bra     loc_4841102E
 loc_48410FE5:
     mov     0x0000b020, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     bra     loc_4841102E
 loc_48410FF6:
     mov     0x0000b030, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     bra     loc_4841102E
 loc_48411007:
     mov     0x0000b040, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     extb    d0
     cmp     0x7f, d0
@@ -26995,7 +26995,7 @@ loc_48411007:
 loc_4841101F:
     mov     0x0000b050, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
 loc_4841102E:
     mov     d3, d0
@@ -27145,7 +27145,7 @@ loc_48411116:
 loc_48411120:
     mov     0x0000b040, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0x7f, d0
     bne     loc_4841116A
     mov     sp, a2
@@ -27225,7 +27225,7 @@ SndUnitRecApply_entry:
     mov     d0, (0x20, sp)
     call    func_48412B6F, 0, 0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     cmp     0x13, d1
@@ -27252,7 +27252,7 @@ loc_48411200:
 loc_48411219:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27260,7 +27260,7 @@ loc_48411219:
 loc_48411233:
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27268,7 +27268,7 @@ loc_48411233:
 loc_4841124D:
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27276,7 +27276,7 @@ loc_4841124D:
 loc_48411267:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27284,7 +27284,7 @@ loc_48411267:
 loc_48411281:
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27376,7 +27376,7 @@ SndUnitRecApplyShort_entry:
     mov     d2, d0
     call    func_48412B6F, 0, 0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exthu   d1
     cmp     0x13, d1
@@ -27402,7 +27402,7 @@ loc_4841135F:
 loc_48411376:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
@@ -27411,7 +27411,7 @@ loc_48411376:
 loc_48411391:
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     mov     d0, d2
@@ -27420,7 +27420,7 @@ loc_48411391:
 loc_484113AC:
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     and     0x00ff0000, d2
     asr     16, d2
@@ -27429,7 +27429,7 @@ loc_484113AC:
 loc_484113C7:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     and     0x00ff0000, d2
     asr     16, d2
@@ -27438,7 +27438,7 @@ loc_484113C7:
 loc_484113E2:
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     and     0x00ff0000, d2
     asr     16, d2
@@ -27493,7 +27493,7 @@ SndUnitRecApplyAlt_entry:
     mov     d0, (0x20, sp)
     call    func_48412B6F, 0, 0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exthu   d1
     cmp     0x13, d1
@@ -27520,7 +27520,7 @@ loc_4841146B:
 loc_48411484:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27528,7 +27528,7 @@ loc_48411484:
 loc_4841149E:
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27536,7 +27536,7 @@ loc_4841149E:
 loc_484114B8:
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27544,7 +27544,7 @@ loc_484114B8:
 loc_484114D2:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27552,7 +27552,7 @@ loc_484114D2:
 loc_484114EC:
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27664,7 +27664,7 @@ loc_484115D2:
     ret     [d2,d3], 0x1c
     mov     0x0000a401, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
     exth    d0
@@ -27677,7 +27677,7 @@ loc_484115D2:
     call    SndUnitSettingApply1_entry, [d2,d3,a2,a3], 0x64
     mov     0x0000a402, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
     exth    d0
@@ -27694,7 +27694,7 @@ loc_484115D2:
     ret     [d2,d3], 0x1c
     mov     1, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_48411668
     cmp     1, d0
@@ -27715,7 +27715,7 @@ loc_48411668:
     ret     [d2,d3], 0x1c
     mov     0x0000802c, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d0
     cmp     0x1b, d0
@@ -27827,7 +27827,7 @@ SndUnitSettingApply3_entry:
 loc_484117A2:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27835,7 +27835,7 @@ loc_484117A2:
 loc_484117BC:
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27843,7 +27843,7 @@ loc_484117BC:
 loc_484117D6:
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27851,7 +27851,7 @@ loc_484117D6:
 loc_484117F0:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -27859,7 +27859,7 @@ loc_484117F0:
 loc_4841180A:
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28010,7 +28010,7 @@ SndUnitSettingApply4_entry:
 loc_4841193B:
     mov     0x0000b014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28018,7 +28018,7 @@ loc_4841193B:
 loc_48411955:
     mov     0x0000b024, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28026,7 +28026,7 @@ loc_48411955:
 loc_4841196F:
     mov     0x0000b034, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28034,7 +28034,7 @@ loc_4841196F:
 loc_48411989:
     mov     0x0000b044, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28042,7 +28042,7 @@ loc_48411989:
 loc_484119A3:
     mov     0x0000b054, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0x00ff0000, d0
     asr     16, d0
     extbu   d0
@@ -28223,31 +28223,31 @@ SndUnitDbGroupQuery_entry:
 loc_48411B13:
     mov     0x0000b010, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     bra     loc_48411B6D
 loc_48411B24:
     mov     0x0000b020, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     bra     loc_48411B6D
 loc_48411B35:
     mov     0x0000b030, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     bra     loc_48411B6D
 loc_48411B46:
     mov     0x0000b040, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     bra     loc_48411B6D
 loc_48411B57:
     mov     0x0000b050, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     bra     loc_48411B6D
 loc_48411B68:
@@ -28262,7 +28262,7 @@ loc_48411B6D:
     mov     0x00b0005f, d0
     exth    d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     movhu   d0, (0x10, sp)
     bra     loc_48411B91
 loc_48411B8C:
@@ -29417,7 +29417,7 @@ loc_48412439:
     bne     loc_48412477
     clr     d1
     mov     4, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     (0x34, sp), a0
     mov     d0, (a0)
     mov     1, d0
@@ -29500,7 +29500,7 @@ loc_484124E9:
     clr     d1
     mov     d0, d2
     mov     4, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     (0x34, sp), a0
     exth    d2
     asl2    d2
@@ -30628,7 +30628,7 @@ loc_48412DA1:
     mov     a2, d0
     exth    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48412DF4
 loc_48412DDA:
     mov     (0x38, sp), d1
@@ -30952,7 +30952,7 @@ loc_4841301A:
     mov     d0, (8, sp)
     mov     0x4858f00c, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48413057
 loc_4841304D:
     mov     (0x34, sp), a0
@@ -31093,7 +31093,7 @@ loc_4841311B:
     mov     0x4858f020, d0
     mov     d0, (0xc, sp)
     mov     d2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48413180
 loc_48413169:
     mov     (0x38, sp), d0
@@ -31847,7 +31847,7 @@ func_484136FF_entry:
     bgt     loc_48413763
     mov     0x1000a301, d0
     mov     1, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     clr     d2
     extbu   d3
     mov     0xd, d0
@@ -31861,7 +31861,7 @@ loc_4841372D:
     mov     (d2, a0), d0
     movbu   (a2), d1
     or      0x10000000, d0
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     movbu   (a2), d0
     mov     0x50021f9c, a0
     mov     d0, (d2, a0)
@@ -31871,7 +31871,7 @@ loc_4841372D:
     blt     loc_4841372D
     mov     0x1000a301, d0
     clr     d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_48413763:
     ret     [d2,d3,a2], 0x1c
 
@@ -31900,11 +31900,11 @@ loc_48413782:
 loc_4841379C:
     mov     0x0000a310, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a3
     mov     0x0000a311, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a2
     clr     d3
     mov     d3, d2
@@ -31916,15 +31916,15 @@ loc_4841379C:
 loc_484137CE:
     mov     0x0000a312, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a3
     mov     0x0000a313, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a2
     mov     0x0000a314, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     2, d2
     jmp     loc_48413A07
@@ -31935,15 +31935,15 @@ loc_484137CE:
 loc_4841380F:
     mov     0x0000a315, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a3
     mov     0x0000a316, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a2
     mov     0x0000a317, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     5, d2
     jmp     loc_48413A07
@@ -31954,15 +31954,15 @@ loc_4841380F:
 loc_48413850:
     mov     0x0000a318, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a3
     mov     0x0000a319, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a2
     mov     0x0000a31a, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     8, d2
     jmp     loc_48413A07
@@ -31973,11 +31973,11 @@ loc_48413850:
 loc_48413891:
     mov     0x0000a31b, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a3
     mov     0x0000a31c, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, a2
     clr     d3
     mov     0xb, d2
@@ -31993,11 +31993,11 @@ loc_484138C6:
     call    func_484057D6_entry, 0, 0x18
     mov     0x0000a310, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     0x0000a311, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
     mov     d2, (0x14, sp)
@@ -32008,15 +32008,15 @@ loc_484138C6:
     call    func_48405AB8_entry, 0, 0x38
     mov     0x0000a312, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     0x0000a313, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     0x0000a314, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     2, d1
     mov     d1, (0x10, sp)
     mov     d3, (0x14, sp)
@@ -32027,15 +32027,15 @@ loc_484138C6:
     call    func_48405AB8_entry, 0, 0x38
     mov     0x0000a315, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     0x0000a316, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     0x0000a317, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     5, d1
     mov     d1, (0x10, sp)
     mov     d3, (0x14, sp)
@@ -32046,15 +32046,15 @@ loc_484138C6:
     call    func_48405AB8_entry, 0, 0x38
     mov     0x0000a318, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     mov     0x0000a319, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     0x0000a31a, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     8, d1
     mov     d1, (0x10, sp)
     mov     d3, (0x14, sp)
@@ -32065,11 +32065,11 @@ loc_484138C6:
     call    func_48405AB8_entry, 0, 0x38
     mov     0x0000a31b, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     mov     0x0000a31c, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     0xb, d1
     mov     d1, (0x10, sp)
     mov     d2, (0x14, sp)
@@ -33714,7 +33714,7 @@ loc_48414880:
     beq     loc_48414898
     mov     3, d0
     mov     0x40, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484148C0
 loc_48414898:
     cmp     0, d3
@@ -35327,7 +35327,7 @@ func_4841569B_entry:
     mov     d0, (0xc, sp)
     mov     (0x50021fd8), a1
     mov     a1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     (0x50021fd8), d0
     inc     d0
     mov     d0, (0x50021fd8)
@@ -35506,7 +35506,7 @@ func_48415846_entry:
     mov     d0, (0xc, sp)
     mov     (0x50021fdc), a1
     mov     a1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     (0x50021fdc), d0
     inc     d0
     mov     d0, (0x50021fdc)
@@ -35760,7 +35760,7 @@ func_48415AA5_entry:
     mov     (0x50021fe0), a1
     mov     a0, a3
     mov     a1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     (0x50021fe0), d0
     inc     d0
     mov     d0, (0x50021fe0)
@@ -36613,7 +36613,7 @@ loc_484161E1:
     asl2    d1
     mov     (d1, a2), d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     exthu   d0
     cmp     d0, a3
     bne     loc_484161F5
@@ -36831,7 +36831,7 @@ loc_484163E2:
     mov     d1, (0x14, sp)
     add     0x90000000, d2
     mov     d2, d0
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     jmp     loc_48416488
 loc_48416401:
     mov     (0x34, sp), a0
@@ -41910,7 +41910,7 @@ loc_484193D7:
     mov     d2, mdr
     divu    d1, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48419471
 loc_4841942E:
     mov     0x4859f580, a1
@@ -41929,7 +41929,7 @@ loc_4841943F:
     mov     d0, (0xc, sp)
     mov     (0x14, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_48419471
 loc_48419462:
     mov     0x4859f590, a1
@@ -44575,7 +44575,7 @@ loc_4841ABEB:
     add     0x188, a2
     exth    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     (0x1b4, sp), d0
     mov     0x00060080, d1
@@ -45088,7 +45088,7 @@ loc_4841B17A:
     movhu   (0x1a, sp), d0
     exth    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     sp, a0
     add     0x18, a0
@@ -45776,7 +45776,7 @@ PsNumEditBoxProc:
     movhu   (0x38, a0), d0
     exth    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -45789,7 +45789,7 @@ PsNumEditBoxProc:
     mov     a3, (0xc, sp)
     mov     (0x5c, sp), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a2, (0x10, sp)
     mov     d3, d1
     mov     d2, d0
@@ -46045,7 +46045,7 @@ loc_4841BB92:
     movhu   (0x3c, a0), d0
     exth    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     mov     a2, a1
     call    strcat_entry, [a2], 4
@@ -46060,7 +46060,7 @@ loc_4841BB92:
     movhu   (a0), d0
     exth    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
     mov     d3, d0
@@ -46697,7 +46697,7 @@ loc_4841C2D8:
     movhu   (8, a1), d0
     exth    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4841C32C
 loc_4841C2F7:
@@ -47181,7 +47181,7 @@ loc_4841C84A:
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_4841C888
 loc_4841C868:
@@ -49535,7 +49535,7 @@ loc_4841DFEF:
     exth    d3
     mov     d3, (0x10, sp)
     mov     d2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4841E044
 loc_4841E02E:
     mov     a0, (8, sp)
@@ -49544,7 +49544,7 @@ loc_4841E02E:
     exth    d3
     mov     d3, (0x10, sp)
     mov     d2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4841E044:
     mov     sp, a3
     add     0x28, a3
@@ -51655,7 +51655,7 @@ loc_4841F500:
     mov     d1, (0x14, sp)
     mov     (a1), d0
     mov     d0, (0x18, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4841F5A8
 loc_4841F561:
     mov     sp, a2
@@ -51671,7 +51671,7 @@ loc_4841F561:
     mov     d0, (0x10, sp)
     mov     (a1), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_4841F5A8
 loc_4841F587:
     mov     sp, a2
@@ -51685,7 +51685,7 @@ loc_4841F587:
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_4841F5A8:
     mov     a2, (0x10, sp)
     mov     0x000600b4, d1
@@ -51935,7 +51935,7 @@ loc_4841F740:
     mov     d0, (0xc, sp)
     mov     (0x30, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetColorMode, 0, 0
     mov     d2, (0x10, sp)
     mov     a3, a0

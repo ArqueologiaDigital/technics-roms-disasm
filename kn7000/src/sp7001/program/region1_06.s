@@ -19719,7 +19719,7 @@ loc_484CFF4D:
     extbu   d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484CFF66:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -19782,7 +19782,7 @@ loc_484CFFEA:
     extbu   d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D0003:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -19984,7 +19984,7 @@ loc_484D01B4:
     bne     loc_484D0210
     mov     0x0000f101, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -20000,7 +20000,7 @@ loc_484D01E3:
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D01F8:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -20012,7 +20012,7 @@ loc_484D0210:
     extbu   d2
     asl     24, d2
     mov     d2, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -20028,7 +20028,7 @@ loc_484D0237:
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D024C:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -20071,7 +20071,7 @@ loc_484D02BB:
     mov     0x00204004, d0
     extbu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627290, a0
     mov     (d0, a0), a1
@@ -20120,7 +20120,7 @@ loc_484D034F:
     mov     0x00204000, d0
     extbu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_484D0375
@@ -20897,7 +20897,7 @@ loc_484D0ADE:
     asl2    d1
     mov     (d1, a1), d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D0B41
     mov     0x486275a8, a1
@@ -21512,7 +21512,7 @@ loc_484D1116:
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1141
     cmp     1, d0
@@ -21573,7 +21573,7 @@ loc_484D11E1:
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1200
     cmp     1, d0
@@ -21608,7 +21608,7 @@ loc_484D124F:
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1277
     mov     0x48627718, a1
@@ -21784,7 +21784,7 @@ loc_484D13F2:
     mov     d0, d2
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D1441
     exth    d2
@@ -21873,7 +21873,7 @@ loc_484D14FC:
     mov     d0, d2
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D1546
     exth    d2
@@ -21953,7 +21953,7 @@ func_484D15DF:
     ret     [d2,d3,a2,a3], 0x24
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1614
     cmp     1, d0
@@ -22106,7 +22106,7 @@ loc_484D173C:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     beq     loc_484D179B
     cmp     2, d0
@@ -22223,7 +22223,7 @@ loc_484D1870:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     beq     loc_484D18CF
     cmp     2, d0
@@ -22456,7 +22456,7 @@ loc_484D1B35:
     movhu   d0, (0x26, sp)
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D1B6C
     mov     a3, (8, sp)
@@ -22466,7 +22466,7 @@ loc_484D1B35:
     and     0xff, d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D1B7A
 loc_484D1B6C:
     mov     0x48627af8, a1
@@ -22484,7 +22484,7 @@ loc_484D1B7A:
     movhu   d0, (0x26, sp)
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     bne     loc_484D1BC9
     mov     a3, (8, sp)
@@ -22494,7 +22494,7 @@ loc_484D1B7A:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D1BD7
 loc_484D1BC9:
     mov     0x48627b08, a1
@@ -22634,7 +22634,7 @@ loc_484D1D50:
     jmp     (a0)
     mov     0x2000, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627aac, a0
     mov     (d0, a0), a1
@@ -22648,7 +22648,7 @@ loc_484D1D50:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x2001, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -22662,7 +22662,7 @@ loc_484D1D50:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627ad0, a0
     mov     (d0, a0), a1
@@ -22674,7 +22674,7 @@ loc_484D1D50:
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1E19
     cmp     1, d0
@@ -22699,13 +22699,13 @@ loc_484D1E46:
     movhu   d0, (0x26, sp)
     mov     0x00008091, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extb    d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x48627b18, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -22717,12 +22717,12 @@ loc_484D1E87:
     movhu   d0, (0x26, sp)
     mov     0x00008092, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x48627b20, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -22734,7 +22734,7 @@ loc_484D1EC7:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1EE8
     cmp     1, d0
@@ -22755,13 +22755,13 @@ loc_484D1EE8:
 loc_484D1F10:
     mov     0x00008091, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extb    d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x48627b30, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -22771,12 +22771,12 @@ loc_484D1F10:
 loc_484D1F4C:
     mov     0x00008092, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x48627b38, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -22788,7 +22788,7 @@ loc_484D1F87:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x2010, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -22802,7 +22802,7 @@ loc_484D1F87:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x2013, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -22816,7 +22816,7 @@ loc_484D1F87:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x2011, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -22830,7 +22830,7 @@ loc_484D1F87:
     ret     [d2,d3,a2,a3], 0x3c
     mov     0x2012, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -22844,7 +22844,7 @@ loc_484D1F87:
     bra     loc_484D20A1
     mov     0x2014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x48627a90, a0
     mov     (d0, a0), a1
@@ -23423,7 +23423,7 @@ loc_484D264B:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     8, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D269D
     cmp     6, d0
@@ -23536,17 +23536,17 @@ loc_484D276A:
 loc_484D2783:
     mov     0x00204001, d0
     mov     0x10000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D27E3
     mov     0x00204001, d0
     mov     0x11000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D27E3
     mov     0x00204001, d0
     mov     0x12000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     bne     loc_484D27E3
     mov     sp, a0
@@ -23579,17 +23579,17 @@ loc_484D2800:
     bne     loc_484D288F
     mov     0x00204001, d0
     mov     0x10000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D285B
     mov     0x00204001, d0
     mov     0x11000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D285B
     mov     0x00204001, d0
     mov     0x12000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     beq     loc_484D2875
 loc_484D285B:
@@ -23659,7 +23659,7 @@ loc_484D28F0:
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     ret     [d2,d3,a2], 0x50
 loc_484D2923:
@@ -24799,7 +24799,7 @@ loc_484D3407:
     mov     (0x10, a2), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24817,7 +24817,7 @@ loc_484D3456:
     mov     (0x10, a2), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24865,7 +24865,7 @@ loc_484D3502:
     mov     d0, (0x10, sp)
     mov     (a2), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24883,7 +24883,7 @@ loc_484D3502:
     exthu   d0
     add     d0, d1
     mov     d1, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24941,7 +24941,7 @@ loc_484D360E:
     extb    d0
     mov     d0, (0x10, sp)
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24955,7 +24955,7 @@ loc_484D360E:
     mov     d0, (0x10, sp)
     mov     (a2), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -24973,7 +24973,7 @@ loc_484D360E:
     asl     7, d0
     add     d1, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -25021,7 +25021,7 @@ loc_484D36F9:
     movbu   (0x5006cc80), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25035,7 +25035,7 @@ loc_484D372D:
     movbu   (0x5006cc81), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25073,7 +25073,7 @@ loc_484D37BD:
     extb    d0
     mov     d0, (0x10, sp)
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25092,7 +25092,7 @@ loc_484D37BD:
     exthu   d1
     add     d1, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25145,7 +25145,7 @@ loc_484D38C2:
     extb    d0
     mov     d0, (0x10, sp)
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25161,7 +25161,7 @@ loc_484D38C2:
     movbu   (0x5006cc83), d0
     extb    d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -25180,7 +25180,7 @@ loc_484D38C2:
     exthu   d1
     add     d1, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     0x00060080, d1
@@ -26254,7 +26254,7 @@ loc_484D444C:
     mov     d3, (8, sp)
     mov     0x48628374, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -26308,7 +26308,7 @@ loc_484D44D4:
     mov     d3, (8, sp)
     mov     0x4862838c, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D4557
 loc_484D4548:
     mov     d3, a0
@@ -26342,7 +26342,7 @@ loc_484D4557:
     mov     d3, (8, sp)
     mov     0x4862839c, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     0x01800089, d0
     mov     0x00060080, d1
@@ -26370,7 +26370,7 @@ loc_484D4557:
     mov     d3, (8, sp)
     mov     0x486283ac, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     0x01800089, d0
     mov     0x00060080, d1
@@ -26400,7 +26400,7 @@ loc_484D4557:
     mov     d3, (8, sp)
     mov     0x486283bc, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D46A0
 loc_484D4691:
     mov     d3, a0
@@ -26486,7 +26486,7 @@ loc_484D4725:
     mov     d3, (8, sp)
     mov     0x486283dc, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D47BD
 loc_484D47AE:
     mov     d3, a0
@@ -26520,7 +26520,7 @@ loc_484D47BD:
     mov     d3, (8, sp)
     mov     0x486283ec, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     0x01800089, d0
     mov     0x00060080, d1
@@ -26548,7 +26548,7 @@ loc_484D47BD:
     mov     d3, (8, sp)
     mov     0x486283fc, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, (0x10, sp)
     mov     0x01800089, d0
     mov     0x00060080, d1
@@ -26578,7 +26578,7 @@ loc_484D47BD:
     mov     d3, (8, sp)
     mov     0x4862840c, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D4906
 loc_484D48F7:
     mov     d3, a0
@@ -26637,7 +26637,7 @@ loc_484D495D:
     mov     d1, (0x10, sp)
     inc     d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -27126,7 +27126,7 @@ loc_484D4DC4:
     mov     (a2), d0
     and     0xffffff7f, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D4E29
 loc_484D4E1B:
     mov     0x4862846c, a1
@@ -27159,7 +27159,7 @@ loc_484D4E43:
     mov     d0, (0x10, sp)
     mov     (a2), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     0x00060080, d1
@@ -27186,7 +27186,7 @@ loc_484D4E97:
     mov     d0, (0x10, sp)
     mov     (a2), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     0x00060080, d1
@@ -27215,7 +27215,7 @@ loc_484D4EEB:
     mov     (a2), d0
     and     0xffffff7f, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D4F3E
 loc_484D4F30:
     mov     0x4862849c, a1
@@ -27289,7 +27289,7 @@ loc_484D4FA0:
     mov     a2, (8, sp)
     mov     0x486284a4, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D5001
 loc_484D4FF3:
     mov     0x486284ac, a1
@@ -27323,7 +27323,7 @@ loc_484D501B:
     mov     0x486284b4, d0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -27351,7 +27351,7 @@ loc_484D507E:
     mov     0x486284c4, d0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -27381,7 +27381,7 @@ loc_484D50E1:
     mov     a2, (8, sp)
     mov     0x486284d4, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D5143
 loc_484D5135:
     mov     0x486284dc, a1
@@ -27852,8 +27852,8 @@ InitializeBlock25_entry:
     mov     0x4862970c, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_484D567D:
+# AcPmemBankSelProc  (CPU 0x484d567d)
+AcPmemBankSelProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     d0, (0x44, sp)
@@ -28032,7 +28032,7 @@ loc_484D583F:
     mov     a3, (0x14, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D589D
 loc_484D5892:
@@ -28086,7 +28086,7 @@ loc_484D58E6:
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D5959
 loc_484D5924:
@@ -28157,7 +28157,7 @@ loc_484D598C:
 loc_484D59BF:
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     extbu   d0
     cmp     0, d0
@@ -28284,7 +28284,7 @@ loc_484D5ACA:
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D5B27
 loc_484D5B1C:
@@ -28337,7 +28337,7 @@ PmemNaming:
 loc_484D5B89:
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0, d1
@@ -28448,7 +28448,7 @@ loc_484D5C9E:
     bne     loc_484D5CDF
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D5CD4
     mov     0xd2, d0
@@ -28511,7 +28511,7 @@ loc_484D5D4F:
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extbu   d0
     mov     a2, a0
     call    func_4C021BF8_entry, [d2,a2], 0x1c
@@ -28538,8 +28538,8 @@ loc_484D5DA3:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D5DAE:
     ret     [d2,d3,a2], 0x20
-
-func_484D5DB1:
+# PmBkSelTitleFunc  (CPU 0x484d5db1)
+PmBkSelTitleFunc:
     movm    [d2], (sp)
     add     -0x20, sp
     clr     d2
@@ -29326,7 +29326,7 @@ loc_484D6626:
     extbu   d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D663F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -29342,7 +29342,7 @@ loc_484D663F:
     extbu   d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29357,7 +29357,7 @@ loc_484D663F:
     extbu   d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29374,7 +29374,7 @@ loc_484D663F:
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29446,7 +29446,7 @@ loc_484D67A1:
     and     0xff, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D67B9:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -29488,7 +29488,7 @@ loc_484D67B9:
     mov     a0, (0x18, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29558,7 +29558,7 @@ loc_484D68D7:
     jmp     (a0)
     mov     d1, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0x11, d0
     beq     loc_484D68F7
     cmp     0x10, d0
@@ -29580,7 +29580,7 @@ loc_484D6917:
     mov     d1, (0xc, sp)
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D692B:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -29590,13 +29590,13 @@ loc_484D692B:
     ret     [d2,d3,a2,a3], 0x58
     mov     0x7001, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x4862a238, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29605,13 +29605,13 @@ loc_484D692B:
     ret     [d2,d3,a2,a3], 0x58
     mov     0x7002, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     0x4862a244, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29620,7 +29620,7 @@ loc_484D692B:
     ret     [d2,d3,a2,a3], 0x58
     clr     d1
     mov     0x7003, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
     mov     0x4862a058, a0
     mov     (d0, a0), a0
@@ -29628,7 +29628,7 @@ loc_484D692B:
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29637,7 +29637,7 @@ loc_484D692B:
     ret     [d2,d3,a2,a3], 0x58
     mov     0x7004, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D6A15
     cmp     1, d0
@@ -29675,7 +29675,7 @@ loc_484D6A53:
     ret     [d2,d3,a2,a3], 0x58
     mov     0x7005, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0x79, d0
     beq     loc_484D6A82
     cmp     0x78, d0
@@ -29696,7 +29696,7 @@ loc_484D6AA2:
     mov     0x4862a2a4, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D6AB5:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -29706,7 +29706,7 @@ loc_484D6AB5:
     ret     [d2,d3,a2,a3], 0x58
     clr     d1
     mov     0x7006, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     and     0xff, d3
     mov     d3, d0
@@ -29738,7 +29738,7 @@ loc_484D6AB5:
     mov     a0, (0x18, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29747,7 +29747,7 @@ loc_484D6AB5:
     ret     [d2,d3,a2,a3], 0x58
     clr     d1
     mov     0x7009, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0xff, d0
     movbu   d0, (0x1c, sp)
     movbu   (0x1c, sp), d0
@@ -29777,7 +29777,7 @@ loc_484D6AB5:
     mov     a0, (0x18, sp)
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
     mov     0x00060080, d1
@@ -29795,7 +29795,7 @@ loc_484D6AB5:
     asl2    d0
     mov     (d0, a0), d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D6BF5
     mov     0x4862a2c0, a1
@@ -29820,8 +29820,8 @@ loc_484D6C1F:
     clr     d0
 loc_484D6C20:
     ret     [d2,d3,a2,a3], 0x58
-
-func_484D6C23:
+# AcVocalistListBoxProc  (CPU 0x484d6c23)
+AcVocalistListBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -29870,8 +29870,8 @@ loc_484D6C99:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D6CA4:
     ret     [d2], 0x18
-
-func_484D6CA7:
+# PsHarmOnOffBoxProc  (CPU 0x484d6ca7)
+PsHarmOnOffBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     0x4862a2ec, a1
@@ -30117,8 +30117,8 @@ loc_484D6F1A:
     clr     d0
 loc_484D6F1B:
     ret     0, 0x14
-
-func_484D6F1E:
+# MainVocalistOK  (CPU 0x484d6f1e)
+MainVocalistOK:
     movm    [d2,d3], (sp)
     add     -0x10, sp
     cmp     0x1a60000, d1
@@ -30171,12 +30171,12 @@ loc_484D6F62:
     beq     loc_484D6FAA
     mov     0x90204000, d0
     mov     0x1b000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D6FBD
 loc_484D6FAA:
     mov     0x90204000, d0
     mov     0x1b000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D6FBD:
     mov     3, d0
     mov     0x23, d1
@@ -30199,12 +30199,12 @@ loc_484D6FCB:
     beq     loc_484D7008
     mov     0x90204000, d0
     mov     0x10000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D701B
 loc_484D7008:
     mov     0x90204000, d0
     mov     0x10000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D701B:
     mov     3, d0
     mov     0x23, d1
@@ -30221,7 +30221,7 @@ loc_484D7029:
     call    func_484C3B9E_entry, 0, 0x14
     mov     0x90008082, d0
     mov     3, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     lsr     16, d3
     mov     0x0000ffff, d0
     and     d3, d0
@@ -30230,12 +30230,12 @@ loc_484D7029:
     beq     loc_484D7078
     mov     0x90204000, d0
     mov     0x03000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D708B
 loc_484D7078:
     mov     0x90204000, d0
     mov     0x03000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D708B:
     mov     3, d0
     mov     0x23, d1
@@ -30481,8 +30481,8 @@ loc_484D73C7:
     mov     0x80, d0
     movbu   d0, (0x5006cc91)
     ret     0, 0xc
-
-func_484D74C1:
+# IrqGroupsDisableAll  (CPU 0x484d74c1)
+IrqGroupsDisableAll:
     movhu   (0x34000108), d0
     mov     0x0000feff, d1
     and     d1, d0
@@ -30621,7 +30621,7 @@ loc_484D76BB:
     cmp     6, d2
     bne     loc_484D76FF
 loc_484D76C3:
-    call    func_484D74C1, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x90000010, a1
     setlb
     clr     d0
@@ -30740,7 +30740,7 @@ func_484D77AC:
 func_484D77BE:
     movm    [d2,d3], (sp)
     add     -8, sp
-    call    func_484D74C1, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x0000ffff, d0
     movhu   d0, (0x34001092)
     mov     0x82, d0
@@ -30749,7 +30749,7 @@ func_484D77BE:
     clr     d0
     movhu   d0, (0x9000000e)
     bclr    0x04, (0x36008004)
-    call    func_484101C9, 0, 0
+    call    DCacheFlushDisable, 0, 0
     bclr    0x20, (0x36008004)
     bset    0x20, (0x36008004)
     bclr    0x20, (0x36008004)
@@ -32490,7 +32490,7 @@ loc_484D8BAE:
     movbu   (0x14, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D8BE0
     bra     loc_484D8BE0
@@ -32580,7 +32580,7 @@ loc_484D8C8A:
     mov     0x48639208, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D8CD0
 loc_484D8CBB:
     mov     (0x2c, sp), a0
@@ -32588,7 +32588,7 @@ loc_484D8CBB:
     mov     a0, (8, sp)
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D8CD0:
     clr     d0
     bra     loc_484D8CD6
@@ -32678,7 +32678,7 @@ loc_484D8D7F:
     movbu   (0x14, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D8DB2
     bra     loc_484D8DB2
@@ -32767,7 +32767,7 @@ loc_484D8E5B:
     movbu   (0x14, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D8E8E
     bra     loc_484D8E8E
@@ -32856,7 +32856,7 @@ loc_484D8F37:
     movbu   (0x14, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D8F6A
     bra     loc_484D8F6A
@@ -32945,7 +32945,7 @@ loc_484D9013:
     movbu   (0x14, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D9046
     bra     loc_484D9046
@@ -33082,7 +33082,7 @@ loc_484D91BE:
     mov     0x48639220, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
 loc_484D91D4:
     movbu   (0x50007df0), d0
@@ -33102,79 +33102,79 @@ loc_484D91E8:
     mov     0x48639230, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639240, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639250, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639260, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639270, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639280, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x48639290, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392a0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392b0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392c0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392d0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392e0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9308
     mov     (0x24, sp), a1
     mov     0x486392f0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D9308:
     clr     d0
     bra     loc_484D930E
@@ -33462,14 +33462,14 @@ loc_484D95E2:
     mov     0x48639300, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D960A
 loc_484D95F7:
     mov     (0x30, sp), a1
     mov     0x48639308, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D960A:
     clr     d0
     bra     loc_484D9610
@@ -33629,7 +33629,7 @@ loc_484D975A:
     extb    d0
     add     -8, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D9789
     bra     loc_484D9789
@@ -33788,7 +33788,7 @@ loc_484D98D5:
     extb    d0
     add     -8, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D9905
     bra     loc_484D9905
@@ -33947,7 +33947,7 @@ loc_484D9A4F:
     extb    d0
     add     -8, d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484D9A7E
     bra     loc_484D9A7E
@@ -34058,14 +34058,14 @@ loc_484D9B95:
     mov     0x4863931c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9BBD
 loc_484D9BAA:
     mov     (0x24, sp), a0
     mov     0x48639324, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D9BBD:
     clr     d0
     mov     d0, (0x10, sp)
@@ -34156,7 +34156,7 @@ loc_484D9CBB:
     mov     0x4863932c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9D08
 loc_484D9CD0:
     movbu   (0x5006cc98), d0
@@ -34170,14 +34170,14 @@ loc_484D9CE0:
     mov     0x48639330, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9D08
 loc_484D9CF5:
     mov     (0x24, sp), a1
     mov     0x48639334, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D9D08:
     clr     d0
     bra     loc_484D9D0E
@@ -34261,7 +34261,7 @@ loc_484D9DE5:
     mov     0x48639338, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9E15
 loc_484D9DFA:
     mov     (0x28, sp), a1
@@ -34270,7 +34270,7 @@ loc_484D9DFA:
     mov     d0, (0xc, sp)
     movbu   (0x5006cc9c), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D9E15:
     clr     d0
     bra     loc_484D9E1B
@@ -34359,14 +34359,14 @@ loc_484D9F01:
     mov     0x48639340, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484D9F29
 loc_484D9F16:
     mov     (0x24, sp), a1
     mov     0x48639344, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484D9F29:
     clr     d0
     bra     loc_484D9F5F
@@ -34501,14 +34501,14 @@ loc_484DA075:
     mov     0x48639348, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DA09D
 loc_484DA08A:
     mov     (0x24, sp), a1
     mov     0x4863934c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DA09D:
     clr     d0
     bra     loc_484DA0A3
@@ -34603,7 +34603,7 @@ loc_484DA196:
     mov     d0, (0xc, sp)
     movbu   (0x50007deb), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DA1B7
     bra     loc_484DA1B7
@@ -34697,7 +34697,7 @@ loc_484DA2AA:
     mov     d0, (0xc, sp)
     movbu   (0x50007dec), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DA2CB
     bra     loc_484DA2CB
@@ -34881,7 +34881,7 @@ loc_484DA4AD:
     mov     a2, (8, sp)
     mov     0x48639360, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b00311, d0
@@ -35070,7 +35070,7 @@ loc_484DA6E3:
     mov     a2, (8, sp)
     mov     0x48639364, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b00440, d0
@@ -35279,7 +35279,7 @@ loc_484DA940:
     call    SndRecTriFieldGet2_entry, [d2], 0x14
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DA97D
     bra     loc_484DA97D
@@ -35483,7 +35483,7 @@ loc_484DAB86:
     call    SndRecTriFieldGet2_entry, [d2], 0x14
     mov     a0, (0x10, sp)
     mov     a2, (8, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DABC3
     bra     loc_484DABC3
@@ -35629,14 +35629,14 @@ loc_484DAD4A:
     mov     0x48639370, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DAD72
 loc_484DAD5F:
     mov     (0x2c, sp), a1
     mov     0x48639374, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DAD72:
     clr     d0
     bra     loc_484DAD78
@@ -35783,14 +35783,14 @@ loc_484DAEFF:
     mov     0x48639378, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DAF27
 loc_484DAF14:
     mov     (0x2c, sp), a1
     mov     0x4863937c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DAF27:
     clr     d0
     bra     loc_484DAF2D
@@ -35868,7 +35868,7 @@ loc_484DAFF2:
     mov     d0, (0xc, sp)
     movbu   (0x5006cca8), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB013
     bra     loc_484DB013
@@ -35945,7 +35945,7 @@ loc_484DB0D8:
     mov     d0, (0xc, sp)
     movbu   (0x5006ccac), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB0F9
     bra     loc_484DB0F9
@@ -36056,14 +36056,14 @@ loc_484DB20F:
     mov     0x48639388, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB237
 loc_484DB224:
     mov     (0x24, sp), a1
     mov     0x4863938c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DB237:
     clr     d0
     bra     loc_484DB23D
@@ -36141,7 +36141,7 @@ loc_484DB302:
     mov     d0, (0xc, sp)
     movbu   (0x5006ccb4), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB323
     bra     loc_484DB323
@@ -36202,7 +36202,7 @@ loc_484DB391:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB3BF
     bra     loc_484DB3BF
@@ -36290,14 +36290,14 @@ loc_484DB4A6:
     mov     0x48639398, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB4CE
 loc_484DB4BB:
     mov     (0x24, sp), a1
     mov     0x4863939c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DB4CE:
     clr     d0
     bra     loc_484DB4FC
@@ -36382,14 +36382,14 @@ loc_484DB585:
     mov     0x486393a0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB5AD
 loc_484DB59A:
     mov     (0x30, sp), a1
     mov     0x486393a8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DB5AD:
     clr     d0
     bra     loc_484DB5B3
@@ -36475,79 +36475,79 @@ loc_484DB688:
     mov     0x486393b0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x486393c0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x486393d0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a1
     mov     0x486393e0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x486393f0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x48639400, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DB7A8
     mov     (0x24, sp), a1
     mov     0x48639410, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a1
     mov     0x48639420, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a1
     mov     0x48639430, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x48639440, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x48639450, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a1
     mov     0x48639460, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DB7A8
     mov     (0x24, sp), a0
     mov     0x48639470, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DB7A8:
     clr     d0
     bra     loc_484DB7AE
@@ -36598,7 +36598,7 @@ loc_484DB80F:
     movhu   (0x50007de8), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x000600b2, d1
@@ -36686,7 +36686,7 @@ loc_484DB8DA:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB919
     bra     loc_484DB919
@@ -36766,7 +36766,7 @@ loc_484DB9A7:
     movbu   (0x1c, sp), d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DB9E5
     bra     loc_484DB9E5
@@ -36852,14 +36852,14 @@ loc_484DBAA2:
     mov     0x4863948c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBACA
 loc_484DBAB7:
     mov     (0x30, sp), a1
     mov     0x48639490, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DBACA:
     clr     d0
     bra     loc_484DBAD0
@@ -36939,7 +36939,7 @@ loc_484DBB5C:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DBB98
     bra     loc_484DBB98
@@ -37023,14 +37023,14 @@ loc_484DBC51:
     mov     0x48639498, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBC79
 loc_484DBC66:
     mov     (0x30, sp), a0
     mov     0x486394a0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DBC79:
     clr     d0
     mov     d0, (0x10, sp)
@@ -37136,28 +37136,28 @@ loc_484DBD75:
     mov     0x486394a8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBDC7
 loc_484DBD8A:
     mov     (0x24, sp), a1
     mov     0x486394b4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBDC7
 loc_484DBD9F:
     mov     (0x24, sp), a0
     mov     0x486394c0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBDC7
 loc_484DBDB4:
     mov     (0x24, sp), a1
     mov     0x486394cc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DBDC7:
     clr     d0
     bra     loc_484DBDCD
@@ -37253,28 +37253,28 @@ loc_484DBE9B:
     mov     0x486394d8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBEED
 loc_484DBEB0:
     mov     (0x24, sp), a1
     mov     0x486394e4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBEED
 loc_484DBEC5:
     mov     (0x24, sp), a0
     mov     0x486394f0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBEED
 loc_484DBEDA:
     mov     (0x24, sp), a1
     mov     0x486394fc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DBEED:
     clr     d0
     bra     loc_484DBEF3
@@ -37337,35 +37337,35 @@ loc_484DBF76:
     mov     0x48639508, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBFDD
 loc_484DBF8B:
     mov     (0x20, sp), a1
     mov     0x48639514, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBFDD
 loc_484DBFA0:
     mov     (0x20, sp), a1
     mov     0x48639520, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBFDD
 loc_484DBFB5:
     mov     (0x20, sp), a1
     mov     0x4863952c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DBFDD
 loc_484DBFCA:
     mov     (0x20, sp), a1
     mov     0x48639538, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DBFDD:
     clr     d0
     bra     loc_484DBFE3
@@ -38578,7 +38578,7 @@ loc_484DCC79:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DCD1B
     mov     sp, a0
     add     0x1c, a0
@@ -38596,28 +38596,28 @@ loc_484DCCC9:
     mov     0x48639548, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DCD1B
 loc_484DCCDE:
     mov     (0x30, sp), a0
     mov     0x4863954c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DCD1B
 loc_484DCCF3:
     mov     (0x30, sp), a0
     mov     0x48639550, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DCD1B
 loc_484DCD08:
     mov     (0x30, sp), a1
     mov     0x48639554, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DCD1B:
     clr     d0
     ret     0, 0x20
@@ -38639,7 +38639,7 @@ loc_484DCD33:
     mov     0x48639558, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38650,7 +38650,7 @@ loc_484DCD33:
     mov     0x48639568, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38661,7 +38661,7 @@ loc_484DCD33:
     mov     0x48639578, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38672,7 +38672,7 @@ loc_484DCD33:
     mov     0x48639588, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38683,7 +38683,7 @@ loc_484DCD33:
     mov     0x48639598, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38694,7 +38694,7 @@ loc_484DCD33:
     mov     0x486395a8, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38705,7 +38705,7 @@ loc_484DCD33:
     mov     0x486395b8, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38717,7 +38717,7 @@ loc_484DCE77:
     mov     0x486395c8, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b00386, d0
@@ -38876,7 +38876,7 @@ loc_484DCFED:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD087
     mov     sp, a0
     add     0x1c, a0
@@ -38890,7 +38890,7 @@ loc_484DCFED:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD087
     mov     sp, a0
     add     0x1c, a0
@@ -38903,14 +38903,14 @@ loc_484DCFED:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD087
 loc_484DD074:
     mov     (0x30, sp), a0
     mov     0x486395e4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DD087:
     clr     d0
     ret     0, 0x20
@@ -38932,7 +38932,7 @@ loc_484DD09F:
     mov     0x486395e8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38943,7 +38943,7 @@ loc_484DD09F:
     mov     0x486395f8, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38954,7 +38954,7 @@ loc_484DD09F:
     mov     0x48639608, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38965,7 +38965,7 @@ loc_484DD09F:
     mov     0x48639618, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38976,7 +38976,7 @@ loc_484DD09F:
     mov     0x48639628, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38987,7 +38987,7 @@ loc_484DD09F:
     mov     0x48639638, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -38998,7 +38998,7 @@ loc_484DD09F:
     mov     0x48639648, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -39010,7 +39010,7 @@ loc_484DD1E3:
     mov     0x48639658, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b00388, d0
@@ -39214,7 +39214,7 @@ loc_484DD3C6:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
     mov     sp, a0
     add     0x1c, a0
@@ -39227,7 +39227,7 @@ loc_484DD3C6:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
     mov     sp, a0
     add     0x1c, a0
@@ -39249,35 +39249,35 @@ loc_484DD44A:
     mov     0x48639670, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
 loc_484DD460:
     mov     (0x30, sp), a1
     mov     0x48639674, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
 loc_484DD476:
     mov     (0x30, sp), a1
     mov     0x48639678, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
 loc_484DD48C:
     mov     (0x30, sp), a1
     mov     0x4863967c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
 loc_484DD4A2:
     mov     (0x30, sp), a1
     mov     0x48639680, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DD547
     mov     sp, a0
     add     0x1c, a0
@@ -39290,7 +39290,7 @@ loc_484DD4A2:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD547
     mov     sp, a0
     add     0x1c, a0
@@ -39304,7 +39304,7 @@ loc_484DD4A2:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD547
     mov     sp, a0
     add     0x1c, a0
@@ -39317,14 +39317,14 @@ loc_484DD4A2:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD547
 loc_484DD534:
     mov     (0x30, sp), a1
     mov     0x48639690, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DD547:
     clr     d0
     ret     0, 0x20
@@ -39346,7 +39346,7 @@ loc_484DD55F:
     mov     0x48639694, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39357,7 +39357,7 @@ loc_484DD55F:
     mov     0x486396a4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39368,7 +39368,7 @@ loc_484DD55F:
     mov     0x486396b4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39379,7 +39379,7 @@ loc_484DD55F:
     mov     0x486396c4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39390,7 +39390,7 @@ loc_484DD55F:
     mov     0x486396d4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39401,7 +39401,7 @@ loc_484DD55F:
     mov     0x486396e4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39412,7 +39412,7 @@ loc_484DD55F:
     mov     0x486396f4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39424,7 +39424,7 @@ loc_484DD6A3:
     mov     0x48639704, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b00389, d0
@@ -39574,20 +39574,20 @@ loc_484DD7F2:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD85C
     mov     (0x30, sp), a0
     mov     0x48639718, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DD85C
 loc_484DD849:
     mov     (0x30, sp), a1
     mov     0x4863971c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DD85C:
     clr     d0
     ret     0, 0x20
@@ -39609,7 +39609,7 @@ loc_484DD874:
     mov     0x48639720, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39620,7 +39620,7 @@ loc_484DD874:
     mov     0x48639730, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39631,7 +39631,7 @@ loc_484DD874:
     mov     0x48639740, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39642,7 +39642,7 @@ loc_484DD874:
     mov     0x48639750, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39653,7 +39653,7 @@ loc_484DD874:
     mov     0x48639760, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39664,7 +39664,7 @@ loc_484DD874:
     mov     0x48639770, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39675,7 +39675,7 @@ loc_484DD874:
     mov     0x48639780, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39687,7 +39687,7 @@ loc_484DD9B7:
     mov     0x48639790, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038a, d0
@@ -39811,7 +39811,7 @@ loc_484DDACD:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDB61
     mov     sp, a0
     add     0x1c, a0
@@ -39825,20 +39825,20 @@ loc_484DDACD:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDB61
     mov     (0x30, sp), a0
     mov     0x486397a8, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDB61
 loc_484DDB4E:
     mov     (0x30, sp), a1
     mov     0x486397ac, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DDB61:
     clr     d0
     ret     0, 0x20
@@ -39860,7 +39860,7 @@ loc_484DDB79:
     mov     0x486397b0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038b, d0
@@ -39871,7 +39871,7 @@ loc_484DDB79:
     mov     0x486397c0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038b, d0
@@ -39882,7 +39882,7 @@ loc_484DDB79:
     mov     0x486397d0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038b, d0
@@ -39894,7 +39894,7 @@ loc_484DDC08:
     mov     0x486397e0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038b, d0
@@ -39991,7 +39991,7 @@ loc_484DDCEB:
     mov     0x486397f0, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDD6A
     mov     sp, a0
     add     0x1c, a0
@@ -40004,20 +40004,20 @@ loc_484DDCEB:
     mov     d0, (0xc, sp)
     movbu   (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDD6A
     mov     (0x30, sp), a1
     mov     0x486397f8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDD6A
 loc_484DDD57:
     mov     (0x30, sp), a0
     mov     0x486397fc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DDD6A:
     clr     d0
     ret     0, 0x20
@@ -40039,7 +40039,7 @@ loc_484DDD82:
     mov     0x48639800, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038c, d0
@@ -40050,7 +40050,7 @@ loc_484DDD82:
     mov     0x48639810, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038c, d0
@@ -40061,7 +40061,7 @@ loc_484DDD82:
     mov     0x48639820, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038c, d0
@@ -40073,7 +40073,7 @@ loc_484DDE10:
     mov     0x48639830, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038c, d0
@@ -40201,13 +40201,13 @@ loc_484DDF37:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDFC2
     mov     (0x30, sp), a0
     mov     0x48639844, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDFC2
     mov     sp, a0
     add     0x1c, a0
@@ -40221,14 +40221,14 @@ loc_484DDF37:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DDFC2
 loc_484DDFAF:
     mov     (0x30, sp), a1
     mov     0x4863984c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DDFC2:
     clr     d0
     ret     0, 0x20
@@ -40250,7 +40250,7 @@ loc_484DDFDA:
     mov     0x48639850, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038d, d0
@@ -40261,7 +40261,7 @@ loc_484DDFDA:
     mov     0x48639860, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038d, d0
@@ -40272,7 +40272,7 @@ loc_484DDFDA:
     mov     0x48639870, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038d, d0
@@ -40284,7 +40284,7 @@ loc_484DE069:
     mov     0x48639880, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038d, d0
@@ -40388,14 +40388,14 @@ loc_484DE14C:
     movbu   (0x1c, sp), d0
     extb    d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE1A2
 loc_484DE18F:
     mov     (0x30, sp), a1
     mov     0x48639894, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE1A2:
     clr     d0
     ret     0, 0x20
@@ -40413,7 +40413,7 @@ loc_484DE1A6:
     mov     0x4863989c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x01b0038e, d0
@@ -40425,7 +40425,7 @@ loc_484DE1EB:
     mov     0x486398ac, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x01b0038e, d0
@@ -40526,7 +40526,7 @@ loc_484DE2E4:
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     mov     a2, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_484DE310
     bra     loc_484DE310
@@ -40614,50 +40614,50 @@ loc_484DE3CE:
     mov     0x486398c4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DE480
     mov     (0x20, sp), a0
     mov     0x486398cc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
     mov     (0x20, sp), a0
     mov     0x486398d4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
     mov     (0x20, sp), a1
     mov     0x486398dc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
     mov     (0x20, sp), a0
     mov     0x486398e4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
     mov     (0x20, sp), a1
     mov     0x486398ec, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
     mov     (0x20, sp), a0
     mov     0x486398f4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE480
 loc_484DE46D:
     mov     (0x20, sp), a1
     mov     0x486398fc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE480:
     clr     d0
     bra     loc_484DE486
@@ -40694,50 +40694,50 @@ loc_484DE4B6:
     mov     0x48639904, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DE568
     mov     (0x20, sp), a0
     mov     0x4863990c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
     mov     (0x20, sp), a0
     mov     0x48639914, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
     mov     (0x20, sp), a1
     mov     0x4863991c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
     mov     (0x20, sp), a0
     mov     0x48639924, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
     mov     (0x20, sp), a1
     mov     0x4863992c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
     mov     (0x20, sp), a0
     mov     0x48639934, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE568
 loc_484DE555:
     mov     (0x20, sp), a1
     mov     0x4863993c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE568:
     clr     d0
     bra     loc_484DE56E
@@ -40774,50 +40774,50 @@ loc_484DE59E:
     mov     0x48639944, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DE650
     mov     (0x20, sp), a0
     mov     0x4863994c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
     mov     (0x20, sp), a0
     mov     0x48639954, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
     mov     (0x20, sp), a1
     mov     0x4863995c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
     mov     (0x20, sp), a0
     mov     0x48639964, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
     mov     (0x20, sp), a1
     mov     0x4863996c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
     mov     (0x20, sp), a0
     mov     0x48639974, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE650
 loc_484DE63D:
     mov     (0x20, sp), a1
     mov     0x4863997c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE650:
     clr     d0
     bra     loc_484DE656
@@ -40854,50 +40854,50 @@ loc_484DE686:
     mov     0x48639984, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DE738
     mov     (0x20, sp), a0
     mov     0x4863998c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
     mov     (0x20, sp), a0
     mov     0x48639994, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
     mov     (0x20, sp), a1
     mov     0x4863999c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
     mov     (0x20, sp), a0
     mov     0x486399a4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
     mov     (0x20, sp), a1
     mov     0x486399ac, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
     mov     (0x20, sp), a0
     mov     0x486399b4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE738
 loc_484DE725:
     mov     (0x20, sp), a1
     mov     0x486399bc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE738:
     clr     d0
     bra     loc_484DE73E
@@ -40929,26 +40929,26 @@ loc_484DE759:
     mov     0x486399c4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE7C4
     mov     (0x20, sp), a0
     mov     0x486399cc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE7C4
     mov     (0x20, sp), a1
     mov     0x486399d4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE7C4
 loc_484DE7B1:
     mov     (0x20, sp), a0
     mov     0x486399dc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE7C4:
     clr     d0
     bra     loc_484DE7CA
@@ -40980,26 +40980,26 @@ loc_484DE7E5:
     mov     0x486399e4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE850
     mov     (0x20, sp), a0
     mov     0x486399ec, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE850
     mov     (0x20, sp), a1
     mov     0x486399f4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE850
 loc_484DE83D:
     mov     (0x20, sp), a0
     mov     0x486399fc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE850:
     clr     d0
     bra     loc_484DE856
@@ -41031,26 +41031,26 @@ loc_484DE871:
     mov     0x48639a04, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE8DC
     mov     (0x20, sp), a0
     mov     0x48639a0c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE8DC
     mov     (0x20, sp), a1
     mov     0x48639a14, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE8DC
 loc_484DE8C9:
     mov     (0x20, sp), a0
     mov     0x48639a1c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE8DC:
     clr     d0
     bra     loc_484DE8E2
@@ -41081,14 +41081,14 @@ loc_484DE8FA:
     mov     0x48639a24, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE93B
 loc_484DE928:
     mov     (0x20, sp), a0
     mov     0x48639a2c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE93B:
     clr     d0
     bra     loc_484DE941
@@ -41120,28 +41120,28 @@ loc_484DE970:
     mov     0x48639a34, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE9C2
 loc_484DE985:
     mov     (0x20, sp), a0
     mov     0x48639a48, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE9C2
 loc_484DE99A:
     mov     (0x20, sp), a1
     mov     0x48639a5c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DE9C2
 loc_484DE9AF:
     mov     (0x20, sp), a0
     mov     0x48639a70, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DE9C2:
     clr     d0
     bra     loc_484DE9C8
@@ -41192,63 +41192,63 @@ loc_484DEA1E:
     mov     0x48639a84, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DEADB
 loc_484DEA34:
     mov     (0x20, sp), a0
     mov     0x48639aa0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DEADB
 loc_484DEA4A:
     mov     (0x20, sp), a0
     mov     0x48639abc, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEA5F:
     mov     (0x20, sp), a1
     mov     0x48639ad8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEA74:
     mov     (0x20, sp), a0
     mov     0x48639af4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEA89:
     mov     (0x20, sp), a1
     mov     0x48639b10, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEA9E:
     mov     (0x20, sp), a1
     mov     0x48639b2c, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEAB3:
     mov     (0x20, sp), a0
     mov     0x48639b48, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEADB
 loc_484DEAC8:
     mov     (0x20, sp), a1
     mov     0x48639b64, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DEADB:
     clr     d0
     bra     loc_484DEAE1
@@ -41282,14 +41282,14 @@ loc_484DEB17:
     mov     0x48639b80, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEB3F
 loc_484DEB2C:
     mov     (0x20, sp), a0
     mov     0x48639b8c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DEB3F:
     clr     d0
     bra     loc_484DEB45
@@ -41323,14 +41323,14 @@ loc_484DEB7B:
     mov     0x48639b98, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEBA3
 loc_484DEB90:
     mov     (0x20, sp), a0
     mov     0x48639ba0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DEBA3:
     clr     d0
     bra     loc_484DEBA9
@@ -41381,63 +41381,63 @@ loc_484DEBFF:
     mov     0x48639ba8, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DECBC
 loc_484DEC15:
     mov     (0x20, sp), a0
     mov     0x48639bc4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484DECBC
 loc_484DEC2B:
     mov     (0x20, sp), a0
     mov     0x48639be0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DEC40:
     mov     (0x20, sp), a1
     mov     0x48639bfc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DEC55:
     mov     (0x20, sp), a0
     mov     0x48639c18, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DEC6A:
     mov     (0x20, sp), a1
     mov     0x48639c34, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DEC7F:
     mov     (0x20, sp), a1
     mov     0x48639c50, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DEC94:
     mov     (0x20, sp), a0
     mov     0x48639c6c, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DECBC
 loc_484DECA9:
     mov     (0x20, sp), a1
     mov     0x48639c88, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DECBC:
     clr     d0
     bra     loc_484DECC2
@@ -41471,14 +41471,14 @@ loc_484DECF8:
     mov     0x48639ca4, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DED20
 loc_484DED0D:
     mov     (0x20, sp), a0
     mov     0x48639cb0, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DED20:
     clr     d0
     bra     loc_484DED26
@@ -41512,14 +41512,14 @@ loc_484DED5C:
     mov     0x48639cbc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DED84
 loc_484DED71:
     mov     (0x20, sp), a0
     mov     0x48639cc4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DED84:
     clr     d0
     bra     loc_484DED8A
@@ -41559,14 +41559,14 @@ loc_484DEDCD:
     mov     0x48639ccc, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484DEDF5
 loc_484DEDE2:
     mov     (0x28, sp), a0
     mov     0x48639cd4, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_484DEDF5:
     clr     d0
     bra     loc_484DEDFB
@@ -43483,13 +43483,13 @@ loc_484DFF9B:
     mov     a3, (8, sp)
     mov     0x48639d34, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484E02CC
 loc_484E018A:
     mov     a3, (8, sp)
     mov     0x48639d38, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     jmp     loc_484E02CC
     mov     0x7f, d0
     mov     d0, (0x18, sp)
@@ -43588,7 +43588,7 @@ loc_484E027C:
     mov     a3, (8, sp)
     mov     0x48639d48, d0
     mov     d0, (0xc, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484E02CC
     extbu   d1
     mov     sp, a0
@@ -43608,7 +43608,7 @@ loc_484E027C:
     mov     d0, (0xc, sp)
     movhu   (0x4a, sp), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_484E02CC
     extbu   d1
     mov     d1, d0

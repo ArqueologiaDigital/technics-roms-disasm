@@ -7,7 +7,7 @@
 # Linked for, and loaded at, CPU 0x5029B000: the table-flash XAPR plug-in's
 # loader reads the whole 0x1D000-byte file there and calls its first byte
 # (XapEntry). Code 0x000000..0x01321E (398 chunks as MN10300 assembly), data to
-# 0x016B4C, then 0xFF. 7 routines are named as byte-identical copies
+# 0x016B4C, then 0xFF. 11 routines are named as byte-identical copies
 # of the firmware's (its own copy of the same C runtime).
 
 .mnbase 0x5029B000   # CPU address of output offset 0 (for PC-relative ops)
@@ -41,7 +41,7 @@
 .equ func_5029B619_entry, 0x5029B61C
 .equ func_5029B65F_entry, 0x5029B662
 .equ func_5029B708_entry, 0x5029B70B
-.equ LibStrncmp, 0x5029B7DE
+.equ strncmp, 0x5029B7DE
 .equ func_5029B80C, 0x5029B80C
 .equ func_5029B8DE_entry, 0x5029B8E1
 .equ func_5029BA9C_entry, 0x5029BA9F
@@ -58,7 +58,7 @@
 .equ func_5029C302, 0x5029C302
 .equ LibDiv32, 0x5029C316
 .equ func_5029C335_entry, 0x5029C338
-.equ func_5029C7AA, 0x5029C7AA
+.equ LibF64NegTo, 0x5029C7AA
 .equ func_5029C7CA_entry, 0x5029C7CD
 .equ func_5029C7E7_entry, 0x5029C7EA
 .equ func_5029C88C_entry, 0x5029C88F
@@ -68,9 +68,9 @@
 .equ LibF64Abs, 0x5029CC5A
 .equ func_5029CC74_entry, 0x5029CC77
 .equ func_5029CF17_entry, 0x5029CF1A
-.equ func_5029D0D3, 0x5029D0D3
-.equ func_5029D0EB, 0x5029D0EB
-.equ func_5029D100, 0x5029D100
+.equ memcpy, 0x5029D0D3
+.equ memset, 0x5029D0EB
+.equ strcpy, 0x5029D100
 .equ func_5029D11B_entry, 0x5029D11E
 .equ func_5029D126, 0x5029D126
 .equ func_5029D12B_entry, 0x5029D12E
@@ -1105,7 +1105,7 @@
     mov     d2, a0
     mov     0x502ae220, a1
     mov     2, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     nop
     cmp     0, d0
     nop
@@ -1113,7 +1113,7 @@
     mov     d2, a0
     mov     0x502ae223, a1
     mov     2, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     nop
     cmp     0, d0
     nop
@@ -1185,7 +1185,7 @@
     beq     0x5029b60a
     mov     (a3), d1
     mov     d1, a0
-    call    func_5029D0D3, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
     mov     (a3), d0
     nop
     add     d2, d0
@@ -1478,8 +1478,8 @@
     mov     a0, (0x2c, sp)
     ret     [d2,d3,a2,a3], 0x24
     movm    [a2], (sp)
-# LibStrncmp  (CPU 0x5029B7DE)
-#   byte-identical copy of the firmware's LibStrncmp
+# strncmp  (CPU 0x5029B7DE)
+#   byte-identical copy of the firmware's strncmp
     mov     a0, a2
     add     d0, a2
     cmp     a2, a0
@@ -1810,7 +1810,7 @@
     add     d0, a0
     mov     0x30, d0
     mov     d3, d1
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     nop
     add     d3, d2
     mov     d2, d0
@@ -2051,7 +2051,7 @@
     ble     0x5029bc28
     mov     0x502ae490, a1
     mov     a2, a0
-    call    func_5029D100, [a2], 4
+    call    strcpy, [a2], 4
     mov     8, d0
     bra     0x5029bc4b
     mov     (0x2c, sp), d0
@@ -2133,7 +2133,7 @@
     ble     0x5029bcb4
     mov     (0x88, sp), a0
     mov     0x502ae49c, a1
-    call    func_5029D100, [a2], 4
+    call    strcpy, [a2], 4
     mov     8, d0
     ret     [d2,d3,a2,a3], 0x80
     inc4    a1
@@ -2346,7 +2346,7 @@
     mov     0x502ae4a8, a1
     mov     d0, (a2)
     mov     (0x8c, sp), a0
-    call    func_5029D100, [a2], 4
+    call    strcpy, [a2], 4
     mov     8, d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (0x94, sp), a0
@@ -2474,7 +2474,7 @@
     mov     d3, d0
     mov     d2, a1
     mov     a2, a0
-    call    func_5029D0D3, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
     bra     0x5029bf79
     mov     (0x2c, sp), d0
     mov     sp, a1
@@ -2586,7 +2586,7 @@
     add     2, a0
     mov     d3, d1
     mov     0x30, d0
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     nop
     cmp     0, d2
     nop
@@ -2670,7 +2670,7 @@
     add     d3, a0
     add     -0x10, d1
     mov     0x30, d0
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x502b403c), a0
     mov     (a0), a0
     movbu   (a0), d1
@@ -2688,7 +2688,7 @@
     add     d0, a0
     mov     (0x4c, sp), d1
     mov     0x30, d0
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     mov     (0x18, sp), d0
     ret     [d2,d3,a2,a3], 0x2c
     mov     sp, a0
@@ -2722,7 +2722,7 @@
     sub     d1, d0
     mov     d0, d1
     mov     0x30, d0
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     mov     sp, a0
     add     0x38, a0
     movhu   (2, a0), d0
@@ -2754,7 +2754,7 @@
     mov     d2, d1
     add     d2, d3
     mov     0x30, d0
-    call    func_5029D0EB, [a2], 4
+    call    memset, [a2], 4
     mov     d3, d0
     mov     (0x34, sp), a0
     call    func_5029C224, [d2], 4
@@ -3065,7 +3065,7 @@
     add     d0, a1
     sub     d0, d1
     mov     d1, d0
-    call    func_5029D0D3, [a2,a3], 8
+    call    memcpy, [a2,a3], 8
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x28
 # abs  (CPU 0x5029C2F4)
@@ -3207,7 +3207,7 @@
     mov     (4, a0), d0
     mov     d1, (a1)
     mov     d0, (4, a1)
-    call    func_5029C7AA, 0, 0
+    call    LibF64NegTo, 0, 0
     mov     (4, sp), a0
     mov     sp, a1
     add     0x60, a1
@@ -3640,7 +3640,8 @@
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     retf    0, 0x10
-# func_5029C7AA  (CPU 0x5029C7AA)
+# LibF64NegTo  (CPU 0x5029C7AA)
+#   byte-identical copy of the firmware's LibF64NegTo
     mov     sp, a0
     add     8, a0
     movhu   (6, a0), d0
@@ -4748,7 +4749,8 @@
     nop
     ret     [d2,d3,a2,a3], 0x18
     movm    [a2,a3], (sp)
-# func_5029D0D3  (CPU 0x5029D0D3)
+# memcpy  (CPU 0x5029D0D3)
+#   byte-identical copy of the firmware's memcpy
     mov     a0, a3
     mov     a3, a2
     add     d0, a2
@@ -4766,7 +4768,8 @@
     mov     a3, a0
     retf    [a2,a3], 8
     movm    [a2], (sp)
-# func_5029D0EB  (CPU 0x5029D0EB)
+# memset  (CPU 0x5029D0EB)
+#   byte-identical copy of the firmware's memset
     mov     a0, a2
     mov     a2, a1
     add     d1, a1
@@ -4782,7 +4785,8 @@
     mov     a2, a0
     retf    [a2], 4
     movm    [a2], (sp)
-# func_5029D100  (CPU 0x5029D100)
+# strcpy  (CPU 0x5029D100)
+#   byte-identical copy of the firmware's strcpy
     movbu   (a1), d0
     mov     a0, a2
     movbu   d0, (a0)
@@ -10078,7 +10082,7 @@
     movm    [d2,d3,a2,a3], (sp)
 # func_502A0B85  (CPU 0x502A0B85)
     add     -0x15c, sp
-    .byte 0xFA, 0x90, 0x74, 0x01   # mov d97, (0x174, sp)
+    mov     a0, (0x174, sp)
     add     0x24, a0
     mov     (a0), d0
     asr     4, d0
@@ -10524,9 +10528,9 @@
     movm    [d2,d3,a2,a3], (sp)
 # func_502A1072  (CPU 0x502A1072)
     add     -0x154, sp
-    .byte 0xFA, 0x95, 0x74, 0x01   # mov d100, (0x174, sp)
-    .byte 0xFA, 0x90, 0x6C, 0x01   # mov d97, (0x16c, sp)
-    .byte 0xFA, 0x91, 0x70, 0x01   # mov d100, (0x170, sp)
+    mov     d1, (0x174, sp)
+    mov     a0, (0x16c, sp)
+    mov     d0, (0x170, sp)
     clr     d0
     mov     d0, (0x20, sp)
     mov     (0x502b4048), a0
@@ -11457,8 +11461,8 @@
 # func_502A19F3  (CPU 0x502A19F3)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2b8, sp
-    .byte 0xFA, 0x91, 0xD0, 0x02   # mov d100, (0x2d0, sp)
-    .byte 0xFA, 0x95, 0xD4, 0x02   # mov d100, (0x2d4, sp)
+    mov     d0, (0x2d0, sp)
+    mov     d1, (0x2d4, sp)
     mov     (0x502b4048), a0
     mov     (0x502b1b5c), d0
     mov     (0x48, a0), a0
@@ -12203,7 +12207,7 @@
     mov     (0x344, a2), a2
     calls   (a2)
     clr     d0
-    .byte 0xFA, 0x92, 0xA7, 0x01   # movbu d100, (0x1a7, sp)
+    movbu   d0, (0x1a7, sp)
     bra     0x502a21d9
     mov     (0x502b4044), a0
     mov     0x502af1a4, a1
@@ -12491,7 +12495,7 @@
     add     d3, d0
     add     d1, d0
     add     d2, d0
-    .byte 0xFA, 0x93, 0xAA, 0x02   # movhu d100, (0x2aa, sp)
+    movhu   d0, (0x2aa, sp)
     movhu   (a0), d1
     mov     (0x50, sp), d2
     exth    d1
@@ -12499,7 +12503,7 @@
     add     d2, d0
     sub     d1, d0
     add     -1, d0
-    .byte 0xFA, 0x93, 0xAE, 0x02   # movhu d100, (0x2ae, sp)
+    movhu   d0, (0x2ae, sp)
     mov     (0x2c, sp), a0
     movhu   (0x98, sp), d3
     mov     (a0), a0
@@ -12521,7 +12525,7 @@
     add     d3, d0
     add     d2, d0
     add     d1, d0
-    .byte 0xFA, 0x93, 0xA8, 0x02   # movhu d100, (0x2a8, sp)
+    movhu   d0, (0x2a8, sp)
     movhu   (a0), d1
     mov     (0x60, sp), d2
     exth    d1
@@ -12529,7 +12533,7 @@
     add     d2, d0
     sub     d1, d0
     add     -1, d0
-    .byte 0xFA, 0x93, 0xAC, 0x02   # movhu d100, (0x2ac, sp)
+    movhu   d0, (0x2ac, sp)
     mov     (0x68, sp), a0
     movbu   (a0), d0
     cmp     0, d0
@@ -12643,19 +12647,19 @@
     movhu   (0x2ae, sp), d0
     exth    d0
     add     -1, d0
-    .byte 0xFA, 0x93, 0xAE, 0x02   # movhu d100, (0x2ae, sp)
+    movhu   d0, (0x2ae, sp)
     movhu   (0x2a8, sp), d0
     exth    d0
     inc     d0
-    .byte 0xFA, 0x93, 0xA8, 0x02   # movhu d100, (0x2a8, sp)
+    movhu   d0, (0x2a8, sp)
     movhu   (0x2aa, sp), d0
     exth    d0
     inc     d0
-    .byte 0xFA, 0x93, 0xAA, 0x02   # movhu d100, (0x2aa, sp)
+    movhu   d0, (0x2aa, sp)
     movhu   (0x2ac, sp), d0
     exth    d0
     add     -1, d0
-    .byte 0xFA, 0x93, 0xAC, 0x02   # movhu d100, (0x2ac, sp)
+    movhu   d0, (0x2ac, sp)
     mov     (0x58, sp), a0
     exthu   d2
     movhu   (a0), d0
@@ -12734,19 +12738,19 @@
     beq     0x502a26f7
     jmp     0x502a2808
     mov     0x5a, d0
-    .byte 0xFA, 0x93, 0xB0, 0x02   # movhu d100, (0x2b0, sp)
+    movhu   d0, (0x2b0, sp)
     mov     0x14, d0
-    .byte 0xFA, 0x93, 0xB2, 0x02   # movhu d100, (0x2b2, sp)
+    movhu   d0, (0x2b2, sp)
     movhu   (0x2b0, sp), d0
     mov     sp, a1
     exth    d0
     add     0x17c, d0
-    .byte 0xFA, 0x93, 0xB4, 0x02   # movhu d100, (0x2b4, sp)
+    movhu   d0, (0x2b4, sp)
     movhu   (0x2b2, sp), d0
     add     0x2b0, a1
     exth    d0
     add     0xc3, d0
-    .byte 0xFA, 0x93, 0xB6, 0x02   # movhu d100, (0x2b6, sp)
+    movhu   d0, (0x2b6, sp)
     mov     (0x502b4044), a0
     mov     8, d0
     mov     (0x2e1c, a0), a0
@@ -12756,18 +12760,18 @@
     calls   (a2)
     jmp     0x502a2808
     mov     0x5a, d0
-    .byte 0xFA, 0x93, 0xB0, 0x02   # movhu d100, (0x2b0, sp)
+    movhu   d0, (0x2b0, sp)
     clr     d0
-    .byte 0xFA, 0x93, 0xB2, 0x02   # movhu d100, (0x2b2, sp)
+    movhu   d0, (0x2b2, sp)
     movhu   (0x2b0, sp), d0
     mov     sp, a1
     exth    d0
     add     0x17c, d0
-    .byte 0xFA, 0x93, 0xB4, 0x02   # movhu d100, (0x2b4, sp)
+    movhu   d0, (0x2b4, sp)
     movhu   (0x2b2, sp), d0
     exth    d0
     add     0x13, d0
-    .byte 0xFA, 0x93, 0xB6, 0x02   # movhu d100, (0x2b6, sp)
+    movhu   d0, (0x2b6, sp)
     mov     (0x502b4044), a0
     mov     (0x2e1c, a0), a0
     mov     (0x338, a0), a2
@@ -12807,19 +12811,19 @@
     beq     0x502a27ca
     jmp     0x502a2808
     mov     8, d0
-    .byte 0xFA, 0x93, 0xB0, 0x02   # movhu d100, (0x2b0, sp)
+    movhu   d0, (0x2b0, sp)
     mov     0x14, d0
-    .byte 0xFA, 0x93, 0xB2, 0x02   # movhu d100, (0x2b2, sp)
+    movhu   d0, (0x2b2, sp)
     movhu   (0x2b0, sp), d0
     mov     sp, a1
     exth    d0
     add     0x203, d0
-    .byte 0xFA, 0x93, 0xB4, 0x02   # movhu d100, (0x2b4, sp)
+    movhu   d0, (0x2b4, sp)
     movhu   (0x2b2, sp), d0
     add     0x2b0, a1
     exth    d0
     add     0xc2, d0
-    .byte 0xFA, 0x93, 0xB6, 0x02   # movhu d100, (0x2b6, sp)
+    movhu   d0, (0x2b6, sp)
     mov     (0x502b4044), a0
     mov     8, d0
     mov     (0x2e1c, a0), a0
@@ -12829,18 +12833,18 @@
     calls   (a2)
     bra     0x502a2808
     mov     0x5e, d0
-    .byte 0xFA, 0x93, 0xB0, 0x02   # movhu d100, (0x2b0, sp)
+    movhu   d0, (0x2b0, sp)
     clr     d0
-    .byte 0xFA, 0x93, 0xB2, 0x02   # movhu d100, (0x2b2, sp)
+    movhu   d0, (0x2b2, sp)
     movhu   (0x2b0, sp), d0
     mov     sp, a1
     exth    d0
     add     0x17c, d0
-    .byte 0xFA, 0x93, 0xB4, 0x02   # movhu d100, (0x2b4, sp)
+    movhu   d0, (0x2b4, sp)
     movhu   (0x2b2, sp), d0
     exth    d0
     add     0x13, d0
-    .byte 0xFA, 0x93, 0xB6, 0x02   # movhu d100, (0x2b6, sp)
+    movhu   d0, (0x2b6, sp)
     mov     (0x502b4044), a0
     mov     (0x2e1c, a0), a0
     mov     (0x338, a0), a2
