@@ -6,11 +6,16 @@
 # boundaries (kn7000.sym reflection names + kn7000_manual.sym hand-recovered
 # names). Functions named in CONVERT are emitted as REAL MN10300 assembly
 # (via MAME unidasm for the mnemonics, verified byte-exact with the mn10300_asm
-# encoder); every other function stays a raw .incbin_range block. Instructions
-# the encoder can't reproduce (a handful of compiler non-minimal encodings and
-# udf* coprocessor ops) fall back to a .byte escape, so the rebuild is always
-# byte-identical. Converted functions that annotations/*.ann covers come out as
-# labelled, commented listings (annotations/README.md).
+# encoder); every other function stays a raw .incbin_range block. Converted code
+# is symbolic: each function name is a real label (kn7asm checks it against the
+# .equ in src/symbols.inc), every call/branch target and every operand naming a
+# converted instruction start is a label -- the symbol-file name, func_<ADDR> for
+# an unnamed call target, loc_<ADDR> for a branch target (the convention of
+# tools/gen_cnv_s.py) -- and a call/jmp the linker left in its d32 form is
+# written `T:32`. Instructions the encoder can't reproduce fall back to a .byte
+# escape, so the rebuild is always byte-identical. Converted functions that
+# annotations/*.ann covers come out as labelled, commented listings
+# (annotations/README.md).
 # Run:  make program-src   (or python3 tools/gen_program_s.py)
 
 import os
@@ -31,6 +36,7 @@ BASE = 0x48400000
 LIB_FILE_BASE = 0x3B8FD1
 LIB_CPU_BASE = 0x4C000000
 LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE   # cpu addr = file offset + delta
+JOBS = int(os.environ.get("GEN_JOBS", "3"))   # unidasm processes run at once
 ROM = "baserom/kn7000_program.rom"
 SYM = "kn7000.sym"
 MANUAL_SYM = ["kn7000_manual.sym", "kn7000_exports_from_942.sym"]
@@ -3294,32 +3300,66 @@ def name_target(ops, names, used):
     return ops
 
 
-def emit_function(d, off, end, name, names, used, delta=BASE):
-    """Returns asm source lines for a converted function (byte-exact)."""
-    insns = disasm_function(d, off, end, delta)
-    if insns is None:
-        return None                       # contains an F4 gap; keep as .incbin
-    lines = []
+def decode_blocks(d, jobs):
+    """Disassemble every (file off, file end, delta) job, JOBS unidasm processes
+    at a time. Returns {job: insns or None}; insns as disasm_function, with the
+    0xFF padding between routines folded into FILL pseudo-instructions."""
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=JOBS) as ex:
+        res = list(ex.map(lambda j: disasm_function(d, *j), jobs))
+    return {j: (mark_fill(r) if r is not None else None) for j, r in zip(jobs, res)}
+
+
+# Instructions after which execution never falls through to the next byte.
+UNCOND = {"ret", "retf", "rets", "rti", "jmp", "bra"}
+FILL = ".fill"                    # pseudo-mnemonic: a run of 0xFF padding bytes
+
+
+def mark_fill(insns):
+    """unidasm decodes each 0xFF byte as a one-byte `?`. A run of them right
+    after an instruction that does not fall through is the 0xFF padding that
+    aligns the next routine: fold it into one FILL pseudo-instruction, emitted
+    as `.space N, 0xFF`. Any other `?` stays an instruction the encoder rejects."""
+    out = []
     for addr, b, mnem, ops in insns:
-        cpu = delta + addr
-        if addr != off and cpu in names and names[cpu].endswith("_entry"):
-            # register-save-`call` entry point (the caller's reg list + frame
-            # size perform the prologue); referenced by name at the call sites
-            lines.append(f"# {names[cpu]}:   (register-save `call` entry)")
-            used.add(cpu)
+        if mnem == "?" and b == b"\xff" and out and (out[-1][2] in UNCOND or out[-1][2] == FILL):
+            if out[-1][2] == FILL:
+                a0, b0, _m, _o = out[-1]
+                out[-1] = (a0, b0 + b, FILL, "")
+            else:
+                out.append((addr, b, FILL, ""))
+            continue
+        out.append((addr, b, mnem, ops))
+    return out
+
+
+def first_target(ops):
+    """The absolute target of a branch/call/jmp operand list, or None (an
+    indirect `jmp (a0)` / `calls (a0)`)."""
+    m = re.match(r"0x([0-9a-fA-F]+)\b", ops)
+    return int(m.group(1), 16) if m else None
+
+
+def reencode(mnem, ops, b, cpu):
+    """The operand text that re-encodes to exactly `b` at `cpu`, or None. The
+    mnemonic text unidasm prints is tried first; a call/jmp the linker left in
+    its 32-bit form although the 16-bit one reaches is written `T:32`, and a
+    udf* immediate held wider than it needs gets a `:16` / `:32` width."""
+    tries = [ops]
+    if mnem in CALL_MNEMS and first_target(ops) is not None:
+        p = ASM.split_ops(ops)
+        tries.append(", ".join([p[0] + ":32"] + p[1:]))
+    if mnem.startswith("udf") and len(b) in (4, 6):
+        p = ASM.split_ops(ops)
+        if len(p) == 2 and not ASM.is_reg_tok(p[0]):
+            tries.append(f"{p[0]}:{8 * (len(b) - 2)}, {p[1]}")
+    for t in tries:
         try:
-            enc = ASM.encode(mnem, ops, cpu)
+            if ASM.encode(mnem, t, cpu) == b:
+                return t
         except ASM.EncError:
-            enc = None
-        if enc == b:
-            if mnem in CALL_MNEMS:
-                ops = name_target(ops, names, used)
-            lines.append(f"    {mnem:8s}{ops}".rstrip())
-        else:
-            # keep the exact bytes; annotate with the disassembly for the reader
-            hexb = ", ".join(f"0x{x:02X}" for x in b)
-            lines.append(f"    .byte {hexb}   # {mnem} {ops}".rstrip())
-    return lines
+            pass
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -3427,77 +3467,90 @@ def port_annotations(A):
     return B
 
 
-def emit_annotated(d, off, end, name, names, used, A, code_names, data_names,
-                   data_used, labelled, delta=BASE):
-    """Like emit_function, but as a labelled, commented listing (see above).
-    `code_names` maps the code addresses that are labels anywhere in the output
-    (local labels of every annotated function); `labelled` collects the
-    addresses this function defines as labels, so no .equ repeats them."""
-    insns = disasm_function(d, off, end, delta)
-    if insns is None:
-        return None
-    lo, hi = delta + off, delta + end
-    starts = {delta + a for a, *_ in insns}
-    for (kind, a), where in sorted(A.at.items(), key=lambda kv: kv[0][1]):
-        if lo <= a < hi and a not in starts:
-            sys.exit(f"gen_program_s: {where}: {kind} at {a:#x} is not an instruction "
-                     f"start in {name}")
+class EmitCtx:
+    """What every converted block's emission shares: the name of each address,
+    the labels the converted code defines, and the tallies the header reports."""
 
-    def label_at(cpu):
-        if cpu == lo:
-            return name
-        if cpu in A.labels:
-            return A.labels[cpu]
-        nm = names.get(cpu)
-        return nm if nm and nm.endswith("_entry") else None
+    def __init__(self, names, label_of, A, data_names):
+        self.names, self.label_of, self.A, self.data_names = names, label_of, A, data_names
+        self.used = set()          # addresses of `names` referenced (an .equ unless labelled)
+        self.data_used = set()     # addresses of annotation data names referenced
+        self.ext = {}              # branch target outside the converted code -> loc_ name
+        self.escapes = []          # (cpu, mnem, ops) emitted as .byte
+        self.long_calls = 0        # call/jmp written T:32
+        self.wide_udf = 0          # udf immediates written with a width
+        self.fill = 0              # bytes of 0xFF padding
 
-    def addr_name(a):
-        """The name an operand equal to `a` prints as, or None."""
-        if lo <= a < hi:
-            return label_at(a)
-        if a in code_names:
-            return code_names[a]
-        if a in data_names:
-            data_used.add(a)
-            return data_names[a]
-        if a in names:
-            used.add(a)
-            return names[a]
+    def ref(self, a):
+        """The name an address operand prints as, or None."""
+        if a in self.label_of:
+            return self.label_of[a]
+        if a in self.data_names:
+            self.data_used.add(a)
+            return self.data_names[a]
+        if a in self.names:
+            self.used.add(a)
+            return self.names[a]
         return None
 
-    def rename(ops, mnem):
-        def one(m):
-            nm = addr_name(int(m.group(1), 16))
-            return nm if nm else m.group(1)
+    def symbolise(self, mnem, ops):
+        """Operand text with every address that has a name spelled by that name.
+        A branch/call target always becomes a name: a target outside the
+        converted code that nothing names gets a loc_<ADDR> equate."""
         if mnem in BRANCH_MNEMS:
-            m = re.match(r"(0x[0-9a-fA-F]+)(.*)", ops)
-            return one(m) + m.group(2) if m else ops
+            t = first_target(ops)
+            if t is None:
+                return ops
+            nm = self.ref(t)
+            if nm is None:
+                nm = self.ext.setdefault(t, f"loc_{t:08X}")
+            return nm + ops[len(re.match(r"0x[0-9a-fA-F]+", ops).group(0)):]
+
+        def one(m):
+            nm = self.ref(int(m.group(1), 16))
+            return nm if nm else m.group(1)
         return re.sub(r"(0x[0-9a-fA-F]{8})\b", one, ops)
 
-    unlabelled = []
+
+def emit_block(insns, name, lo, delta, ctx, annotated):
+    """Source lines for one converted block (byte-exact). Every address the
+    converted code branches to, calls, or names in an operand that is an
+    instruction start in converted code is a label (ctx.label_of); a block
+    covered by annotations/*.ann also carries their notes and end-of-line
+    comments, with a blank line before each label."""
+    A = ctx.A
     lines = []
+    unlabelled = []
+    hi = delta + insns[-1][0] + len(insns[-1][1]) if insns else lo
     for addr, b, mnem, ops in insns:
         cpu = delta + addr
-        lab = label_at(cpu)
-        if lab and cpu != lo:
+        lab = name if cpu == lo else ctx.label_of.get(cpu)
+        if lab and cpu != lo and (annotated or not lab.startswith("loc_")):
             lines.append("")
-        for t in A.notes.get(cpu, ()):
-            lines.append(f"    # {t}".rstrip())
+        if annotated:
+            for t in A.notes.get(cpu, ()):
+                lines.append(f"    # {t}".rstrip())
         if lab:
             lines.append(f"{lab}:")
-            labelled.add(cpu)
-        if mnem in BRANCH_MNEMS and mnem not in ("call", "calls"):
-            m = re.match(r"0x([0-9a-fA-F]+)", ops)
-            if m and lo <= int(m.group(1), 16) < hi and not label_at(int(m.group(1), 16)):
+        if mnem == FILL:
+            ctx.fill += len(b)
+            lines.append(f"    .space  {len(b)}, 0xFF                   # padding to the next routine")
+            continue
+        if annotated and mnem in BRANCH_MNEMS and mnem not in ("call", "calls"):
+            t = first_target(ops)
+            if t is not None and lo < t < hi and ctx.label_of.get(t, "loc_").startswith("loc_"):
                 unlabelled.append(f"{cpu:#x}: {mnem} {ops}")
-        try:
-            enc = ASM.encode(mnem, ops, cpu)
-        except ASM.EncError:
-            enc = None
-        eol = A.eol.get(cpu)
-        if enc == b:
-            text = f"    {mnem:8s}{rename(ops, mnem)}".rstrip()
+        eol = A.eol.get(cpu) if annotated else None
+        good = reencode(mnem, ops, b, cpu)
+        if good is not None:
+            if good != ops:
+                if mnem.startswith("udf"):
+                    ctx.wide_udf += 1
+                else:
+                    ctx.long_calls += 1
+            text = f"    {mnem:8s}{ctx.symbolise(mnem, good)}".rstrip()
         else:
+            ctx.escapes.append((cpu, mnem, ops))
             hexb = ", ".join(f"0x{x:02X}" for x in b)
             text = f"    .byte {hexb}   # {mnem} {ops}".rstrip()
             eol = f"-- {eol}" if eol else None
@@ -3679,18 +3732,20 @@ def main():
 
     # Full name map: reflection-table names + manual names + synthetic
     # func_<ADDR> for the internal helpers neither covers, so every call in
-    # converted code resolves to a label. `used` records which get referenced
-    # (to emit equates; manual names are not in symbols.inc, so they are
-    # equated here when used).
+    # converted code resolves to a label.
     names = dict(sym_by_addr)
     names.update({a: nm for a, nm in manual})
     for a in discover_functions(d):
         names.setdefault(a, f"func_{a:08X}")
-    used = set()
 
     L = ['# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>',
          '# Licensed under the terms of the GNU General Public License v3 or later',
          '#'] + TITLE + [
+         '#',
+         '# Labels in converted code: a function keeps its symbol-file name (an',
+         '# `X_entry` label is the register-save `call` entry a few bytes after the',
+         '# `movm` prologue of X); func_<ADDR> is a call target no symbol file names',
+         '# yet, loc_<ADDR> a branch target or code address inside a function.',
          '',
          '.equ PROGRAM_ROM_BASE, 0x48400000',
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
@@ -3701,13 +3756,24 @@ def main():
          '# Code region 1 -- organised by recovered function.',
          '# ============================================================================']
 
-    # annotation files: which converted blocks they label, checked up front
-    A = load_annotations(ANN_FILES)
-    blocks = []                       # (cpu lo, cpu hi, name) of each converted block
+    # the blocks to convert: region-1 functions (up to their limit) and the
+    # library functions, all disassembled up front
+    r1_blocks = []                    # (off, end, end_conv or None, name)
     for i, (off, name) in enumerate(r1):
         end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
-        if limit[off] is not None:
-            blocks.append((BASE + off, BASE + min(end, limit[off]), name))
+        r1_blocks.append((off, end, min(end, limit[off]) if limit[off] is not None else None, name))
+    lib_blocks = []                   # (file off, file end, name)
+    for name, (cs, ce) in sorted(LIB_CONVERT.items(), key=lambda kv: kv[1][0]):
+        so, eo = cs - LIB_DELTA, ce - LIB_DELTA
+        assert LIB_FILE_BASE <= so < eo <= IMAGE_END, name
+        lib_blocks.append((so, eo, name))
+    jobs = [(off, ec, BASE) for off, _e, ec, _n in r1_blocks if ec is not None] \
+        + [(so, eo, LIB_DELTA) for so, eo, _n in lib_blocks]
+    dec = decode_blocks(d, jobs)
+
+    # annotation files: which converted blocks they label, checked up front
+    A = load_annotations(ANN_FILES)
+    blocks = [(BASE + off, BASE + ec, name) for off, _e, ec, name in r1_blocks if ec is not None]
     starts = {BASE + off for off, _ in r1}
     annotated = set()
     for (kind, a), where in A.at.items():
@@ -3720,18 +3786,70 @@ def main():
             sys.exit(f"gen_program_s: {where}: {kind} at {a:#x} is not in a converted function")
         annotated.add(hit[0][0])
     annotated |= {a for a in A.docs if any(b[0] == a for b in blocks)}
-    code_names = dict(A.labels)
+    for lo, hi, name in blocks:
+        if lo not in annotated:
+            continue
+        insns = dec[(lo - BASE, hi - BASE, BASE)]
+        if insns is None:
+            sys.exit(f"gen_program_s: annotated function {name} does not disassemble")
+        istarts = {BASE + a for a, _b, mn, _o in insns if mn != FILL}
+        for (kind, a), where in sorted(A.at.items(), key=lambda kv: kv[0][1]):
+            if lo <= a < hi and a not in istarts:
+                sys.exit(f"gen_program_s: {where}: {kind} at {a:#x} is not an instruction "
+                         f"start in {name}")
     data_names = {a: nm for nm, (a, _t) in A.equs.items()}
-    taken = set(names.values())
+    taken = {nm for a, nm in names.items() if not nm.startswith("func_")}
     for a, nm in A.labels.items():
-        if a in names or nm in taken:
+        if (a in names and not names[a].startswith("func_")) or nm in taken:
             sys.exit(f"gen_program_s: {A.at[('label', a)]}: label {nm} at {a:#x}: "
                      f"{'the address is already ' + names[a] if a in names else 'the name is taken'}"
                      " (symbol files win; drop or rename the label)")
     for nm in A.equs:
         if nm in taken or nm in A.labels.values():
             sys.exit(f"gen_program_s: equ {nm}: the name is already a code symbol")
-    data_used, labelled = set(), set()
+
+    # every instruction start of the converted code, and what it branches to,
+    # calls, or names as an immediate / absolute operand
+    code_starts, calls, branches, imm_refs = set(), set(), set(), set()
+    for (_off, _end, delta), insns in dec.items():
+        for addr, _b, mn, ops in insns or ():
+            if mn == FILL:
+                continue
+            code_starts.add(delta + addr)
+            if mn in BRANCH_MNEMS:
+                t = first_target(ops)
+                if t is not None:
+                    (calls if mn in ("call", "calls") else branches).add(t)
+            else:
+                imm_refs.update(int(h, 16) for h in re.findall(r"0x([0-9a-fA-F]{8})\b", ops))
+    for t in calls:
+        names.setdefault(t, f"func_{t:08X}")
+    block_name = {BASE + off: name for off, _e, ec, name in r1_blocks if ec is not None}
+    block_name.update({LIB_DELTA + so: name for so, _eo, name in lib_blocks})
+    label_of = {}
+    for cpu in code_starts:
+        if cpu in block_name:
+            label_of[cpu] = block_name[cpu]
+        elif cpu in A.labels:
+            label_of[cpu] = A.labels[cpu]
+        elif cpu in names:
+            label_of[cpu] = names[cpu]
+        elif cpu in branches or cpu in imm_refs:
+            label_of[cpu] = f"loc_{cpu:08X}"
+    # one address per label name, and a label must agree with symbols.inc
+    seen, dup = {}, []
+    for cpu, nm in sorted(label_of.items()):
+        if nm in seen:
+            dup.append(f"{nm} at {seen[nm]:#x} and {cpu:#x}")
+        seen[nm] = cpu
+    if dup:
+        sys.exit("gen_program_s: labels defined twice:\n  " + "\n  ".join(dup))
+    inc = {nm: a for a, nm in sym_by_addr.items()}
+    clash = [f"{nm} at {cpu:#x} (symbols.inc: {inc[nm]:#x})"
+             for cpu, nm in label_of.items() if nm in inc and inc[nm] != cpu]
+    if clash:
+        sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
+    ctx = EmitCtx(names, label_of, A, data_names)
 
     ROMQ = f'"{ROM}"'
     body = []
@@ -3739,25 +3857,16 @@ def main():
         body.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
 
     converted = inherited = 0
-    for i, (off, name) in enumerate(r1):
-        end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
+    for off, end, end_conv, name in r1_blocks:
         body.append(f"# {name}  (CPU {BASE + off:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         for doc in A.docs.get(BASE + off, ()):
             body.append(f"#   {doc}".rstrip())
-        lim = limit[off]
-        end_conv = min(end, lim) if lim is not None else end
-        if lim is not None and BASE + off in annotated:
-            block = emit_annotated(d, off, end_conv, name, names, used, A, code_names,
-                                   data_names, data_used, labelled)
-            if block is None:
-                sys.exit(f"gen_program_s: annotated function {name} does not disassemble")
-            block = block + [""]
-        else:
-            block = emit_function(d, off, end_conv, name, names, used) if lim is not None else None
-        if block is not None:
-            body.extend(block)
+        insns = dec[(off, end_conv, BASE)] if end_conv is not None else None
+        if insns is not None:
+            ann = BASE + off in annotated
+            body.extend(emit_block(insns, name, BASE + off, BASE, ctx, ann) + ([""] if ann else []))
             if name in inherit:
                 inherited += 1
             else:
@@ -3768,34 +3877,31 @@ def main():
         else:
             body.append(f".incbin_range {ROMQ}, {off:#08x}, {end:#08x}")
 
-    # ---- code region 2: the library window (built before the equates so its
-    # named calls are recorded in `used`) ------------------------------------
+    # ---- code region 2: the library window ---------------------------------
     lib_body = ['',
                 '# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library',
                 '#      image the boot self-loads to 0x4C000000 starts at file offset',
                 f'#      0x{LIB_FILE_BASE:06X} (notes/library-rom-loading.md); converted lib functions',
-                '#      are emitted under the shifted .mnbase so their PC-relative',
-                '#      encodings reproduce the 0x4C link address byte-exactly. ----']
+                '#      are assembled under the shifted .mnbase so their labels and',
+                '#      PC-relative encodings are the 0x4C link addresses. ----',
+                f'.mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}']
     cur2 = DATA_END
     lib_converted = 0
-    for name, (cs, ce) in sorted(LIB_CONVERT.items(), key=lambda kv: kv[1][0]):
-        so, eo = cs - LIB_DELTA, ce - LIB_DELTA
-        assert LIB_FILE_BASE <= so < eo <= IMAGE_END, name
+    for so, eo, name in lib_blocks:
         if cur2 < so:
             lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, {so:#08x}")
-        lib_body.append(f"# {name}  (lib CPU {cs:#010x})")
+        lib_body.append(f"# {name}  (lib CPU {LIB_DELTA + so:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             lib_body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
-        block = emit_function(d, so, eo, name, names, used, LIB_DELTA)
-        if block is not None:
-            lib_body.append(f".mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}")
-            lib_body.extend(block)
-            lib_body.append(".mnbase 0x48400000")
+        insns = dec[(so, eo, LIB_DELTA)]
+        if insns is not None:
+            lib_body.extend(emit_block(insns, name, LIB_DELTA + so, LIB_DELTA, ctx, False))
             lib_converted += 1
         else:
             lib_body.append(f".incbin_range {ROMQ}, {so:#08x}, {eo:#08x}")
         cur2 = eo
     lib_body += [f".incbin_range {ROMQ}, {cur2:#08x}, 0x{IMAGE_END:06X}",
+                 ".mnbase 0x48400000",
                  '',
                  f'.org 0x{IMAGE_END:06X}   # end of image']
     if PAD_TO:
@@ -3804,18 +3910,24 @@ def main():
                      f'.space 0x{PAD_TO:06X} - 0x{IMAGE_END:06X}, 0xFF',
                      f'.org 0x{PAD_TO:06X}']
 
-    # equates for the synthetic helper labels actually referenced by converted code
-    # (a name the body defines as a label needs none: the label is the definition)
-    auto = sorted(a for a in used if a not in sym_by_addr and a not in labelled)
+    # equates for the names converted code references but does not define: a
+    # symbols.inc name needs none, nor does a name the body defines as a label
+    auto = sorted(a for a in ctx.used
+                  if a not in label_of and sym_by_addr.get(a) != names[a])
     if auto:
-        L.append(f"# {len(auto)} synthetic labels for internal helpers called by "
-                 "converted code")
+        L.append(f"# {len(auto)} names converted code references outside itself "
+                 "(not in symbols.inc)")
         for a in auto:
             L.append(f".equ {names[a]}, 0x{a:08X}")
         L.append("")
-    if data_used:
-        L.append(f"# {len(data_used)} data addresses named by annotations/*.ann")
-        for a in sorted(data_used):
+    if ctx.ext:
+        L.append(f"# {len(ctx.ext)} branch targets outside the converted code")
+        for a in sorted(ctx.ext):
+            L.append(f".equ {ctx.ext[a]}, 0x{a:08X}")
+        L.append("")
+    if ctx.data_used:
+        L.append(f"# {len(ctx.data_used)} data addresses named by annotations/*.ann")
+        for a in sorted(ctx.data_used):
             nm = data_names[a]
             note = A.equs[nm][1]
             L.append(f".equ {nm}, 0x{a:08X}" + (f"   # {note}" if note else ""))
@@ -3840,6 +3952,12 @@ def main():
     print(f"wrote {OUT}: {converted}/{len(CONVERT)} region-1 + "
           f"{lib_converted}/{len(LIB_CONVERT)} library functions converted to asm"
           + (f" (+{inherited} newly-named pieces of converted functions)" if inherited else ""))
+    print(f"  {len(label_of)} labels ({sum(1 for n in label_of.values() if n.startswith('loc_'))} loc_), "
+          f"{len(auto)} name equates, {len(ctx.ext)} outside branch targets, "
+          f"{ctx.long_calls} long call/jmp, {ctx.wide_udf} wide udf, {ctx.fill} fill bytes, "
+          f"{len(ctx.escapes)} .byte escapes")
+    for cpu, mn, ops in ctx.escapes:
+        print(f"  escape 0x{cpu:08X}: {mn} {ops}")
 
 
 if __name__ == "__main__":
