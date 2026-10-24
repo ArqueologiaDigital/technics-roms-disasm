@@ -98,63 +98,63 @@ InitializeToshi:
 	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x1c, Toshi_FunctionName_Table, 0x402
 	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x14, Toshi_MainFunction_Table, 0x142
 	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x14, Toshi_MainFunctionName_Table, 0x442
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x3f, 0xed76ba, 0x1
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x3f, 0xed7d42, 0x301
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3f, Toshi_Viewable_NORMAL, 0x1
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3f, Toshi_ResName_NORMAL, 0x301
 	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x9, Toshi_Viewable_CTMENU, 0x40
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x9, 0xed7ee2, 0x340
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x11, 0xed77e2, 0x41
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x9, Toshi_ResName_CTMENU, 0x340
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x11, Toshi_Viewable_CTINIT, 0x41
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x11, 0xed7f28, 0x341
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x6, 0xed782a, 0x42
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Toshi_Viewable_CTFSWAS, 0x42
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x6, 0xed7fae, 0x342
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x8, 0xed7846, 0x43
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Toshi_Viewable_CTTOUCH, 0x43
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x8, 0xed7fe2, 0x343
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x13, 0xed786a, 0x44
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x13, Toshi_Viewable_MSAMODE, 0x44
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x13, 0xed8022, 0x344
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x13, 0xed78ba, 0x45
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x13, Toshi_Viewable_CTPMMD, 0x45
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x13, 0xed809a, 0x345
 	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Toshi_Viewable_CTPMPARA, 0x46
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Toshi_ResName_CTPMPARA, 0x346
 	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Toshi_Viewable_CTSYSTEM, 0x47
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x7, Toshi_ResName_CTSYSTEM, 0x347
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x19, 0xed792e, 0x48
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x19, 0xed815a, 0x348
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x4, 0xed7996, 0xc0
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x19, Toshi_Viewable_CTWALLSET, 0x48
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x19, Toshi_ResName_CTWALLSET, 0x348
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Toshi_Viewable_ONETCH, 0xc0
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Toshi_ResName_ONETCH, 0x3c0
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x4, 0xed79aa, 0xc1
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Toshi_Viewable_MUSICSTYL, 0xc1
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Toshi_ResName_MUSICSTYL, 0x3c1
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x14, 0xed79be, 0xc2
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x14, 0xed8258, 0x3c2
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x11, 0xed7a12, 0xc3
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x11, 0xed82e8, 0x3c3
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x8, 0xed7a5a, 0xc4
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x14, Toshi_Viewable_MSCTSEL, 0xc2
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x14, Toshi_ResName_MSCTSEL, 0x3c2
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x11, Toshi_Viewable_MSSCTSEL, 0xc3
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x11, Toshi_ResName_MSSCTSEL, 0x3c3
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Toshi_Viewable_MSSONGLIST, 0xc4
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x8, 0xed8364, 0x3c4
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x7, 0xed7a7e, 0xc5
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Toshi_Viewable_MSALPSEL, 0xc5
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x7, 0xed83a4, 0x3c5
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x6, 0xed7a9e, 0xd0
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Toshi_Viewable_PMBKSEL, 0xd0
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x6, 0xed83dc, 0x3d0
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0xd, 0xed7aba, 0xd1
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xd, Toshi_Viewable_PMVIEW, 0xd1
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0xd, 0xed840c, 0x3d1
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x7, 0xed7af2, 0xd2
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Toshi_Viewable_PMNAME, 0xd2
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x7, 0xed8466, 0x3d2
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x7, 0xed7b12, 0xd3
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Toshi_Viewable_PMBKNAME, 0xd3
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x7, 0xed849c, 0x3d3
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x2, 0xed7b32, 0xe8
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x2, Toshi_Viewable_SVARI, 0xe8
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x2, 0xed84d4, 0x3e8
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x3, 0xed7b3e, 0xe9
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3, Toshi_Viewable_RVARI, 0xe9
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x3, 0xed84ea, 0x3e9
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0xe, 0xed7b4e, 0xf4
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xe, Toshi_Viewable_TEST1, 0xf4
 	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0xe, 0xed8506, 0x3f4
 	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x17, 0xed7b8a, 0xf5
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x17, Toshi_ResName_TEST2, 0x3f5
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x1, 0xed7bea, 0xf6
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Toshi_Viewable_TEST3, 0xf6
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, Toshi_ResName_TEST3, 0x3f6
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x3, 0xed7bf2, 0xf7
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3, Toshi_Viewable_TEST4, 0xf7
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3, Toshi_ResName_TEST4, 0x3f7
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x43, 0xed7c02, 0xf8
-	RegObjTabl	NAKA_CLASS_ResName, ResNameProc, 0x43, 0xed864e, 0x3f8
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x43, Toshi_Viewable_TEST5, 0xf8
+	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x43, Toshi_ResName_TEST5, 0x3f8
 	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x9, 0xed7d12, 0xf9
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x9, Toshi_ResName_TEST6, 0x3f9
-	RegObjTabl	NAKA_CLASS_Viewable, ViewableProc, 0x1, 0xed7d3a, 0xfb
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Toshi_Viewable_EXT, 0xfb
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, Toshi_ResName_EXT, 0x3fb
 
 	; RegMode / RegTitle push 0x0002 and then the 32-bit address of a name

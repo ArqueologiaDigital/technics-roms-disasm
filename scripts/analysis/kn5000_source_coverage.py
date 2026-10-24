@@ -428,7 +428,24 @@ def measure_kn5000_root(root):
         typed += td - pd
         verbatim += pd
         macro_calls += mc
+    # A ported tree's C data compiles from the newer tree's C; its <tree>_c_divergence.json
+    # (scripts/build/apply_c_divergence.py) overwrites single bytes of the compiled bins with
+    # ROM bytes.  Those raw bytes are copied, unexplained, like a TODO(port) row, so they move
+    # to verbatim debt (out of "roundtrip", where classify_incbin puts the .incbin slices of
+    # those bins).  Pointer relocations are explained moves and are not debt.
+    # Only the ported trees: v7's own v7_c_divergence.json belongs to the v7 tree's history.
+    tree = os.path.basename(os.path.dirname(root.rstrip("/")))
+    if tree in PORTED:
+        jp = os.path.join(root, "includes", "%s_c_divergence.json" % tree)
+        if os.path.exists(jp):
+            import json
+            raw = sum(len(e.get("raw", {})) for e in json.load(open(jp)).values())
+            roundtrip -= raw
+            verbatim += raw
     return dict(verbatim=verbatim, clang=clang, roundtrip=roundtrip, typed=typed, macro_calls=macro_calls)
+
+
+PORTED = ("v6", "v5")       # trees written by scripts/converters/port_maincpu_version.py
 
 
 def report_row(label, total, m):

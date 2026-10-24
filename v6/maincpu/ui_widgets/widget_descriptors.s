@@ -3636,7 +3636,7 @@ SeqPlay_AssignChordVoices_LocalInit:
 ; Typed in naka_widget_descriptors.c as uint8_t
 ; SeqPlay_AssignChordVoices_LocalInit_Tail[16].
 ; -----------------------------------------------------------------------------
-SeqPlay_AssignChordVoices_LocalInit_Tail:
+SeqPlay_AssignChordVoices_LocalInit_Tail:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x136C6, 0x10
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PartDetect_LookupAndApply_Table
 ; PartDetect_LookupAndApply_Table -- read by PartDetect_LookupAndApply
@@ -3651,9 +3651,6 @@ SeqPlay_AssignChordVoices_LocalInit_Tail:
 ; Typed in naka_widget_descriptors.c as uint8_t
 ; PartDetect_LookupAndApply_Table[20].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x03, 0x06, 0x09, 0x0c, 0x0f, 0x12, 0x15
-	.byte	0x18, 0x1b, 0x1e, 0x21, 0x24, 0x27, 0x2a, 0x2d
 PartDetect_LookupAndApply_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x136D6, 0x14
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PartSubBlkA_WriteLoop32_Table

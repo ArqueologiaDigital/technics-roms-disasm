@@ -149,7 +149,7 @@ SndParam_ResolveWidget_Skip2:
 	ld	e, (xwa+15)
 	extz	de
 	sla	de, 2
-	lda	xhl, (SndParam_EncodeHandlers:24)
+	lda	xhl, (SndParam_RegisterHandlers_Data:24)
 	exts	xde
 	add	xde, xhl
 	ld	xix, (xde)
@@ -451,7 +451,7 @@ SndParam_CompareRegField_Part_3:
 SndParam_CompareShifted:
 	ld	a, (xbc + 11)
 	sla	a, 2
-	lda	xbc, (SndParam_ValueTablePtrPair:24)
+	lda	xbc, (Naka_SubDispatch_B_Table:24)
 	ld	xbc, (xbc+a)
 	cp	l, (xbc + 1)
 	jr	nz, SndParam_CompareStatus5
@@ -804,7 +804,7 @@ SndParam_RegisterMultiField_Data:
 	ldirw
 	ld	a, (xde+11)
 	sla	a, 2
-	lda	xbc, (SndParam_ValueTablePtrPair:24)
+	lda	xbc, (Naka_SubDispatch_B_Table:24)
 	ld	xbc, (xbc+a)
 	ld	xwa, 1:i3
 	cp	l, (xbc)
@@ -1567,7 +1567,7 @@ SndParam_RegisterComplex_Data:
 	ld	xwa, (xsp+12)
 	ld	a, (xwa+11)
 	sla	a, 2
-	lda	xbc, (SndParam_ValueTablePtrPair:24)
+	lda	xbc, (Naka_SubDispatch_B_Table:24)
 	ld	xbc, (xbc+a)
 	cpw	(xsp+10), 0
 	jr	lt, SndParam_RegisterComplex_Data_Skip3
@@ -2072,7 +2072,7 @@ SndParam_EncodeFieldSub_Data:
 	ld	xbc, xwa
 	ld	a, (xbc+11)
 	sla	a, 2
-	lda	xde, (SndParam_ValueTablePtrPair:24)
+	lda	xde, (Naka_SubDispatch_B_Table:24)
 	ld	xde, (xde+a)
 	ld	xwa, 1:i3
 	cp	l, (xde)
@@ -2147,7 +2147,7 @@ SndParam_DecodeFieldAlt_Data:
 SndParam_DecodeFieldAlt_Data_Skip:
 	ld	a, (xde+11)
 	sla	a, 2
-	lda	xbc, (SndParam_ValueTablePtrPair:24)
+	lda	xbc, (Naka_SubDispatch_B_Table:24)
 	ld	xbc, (xbc+a)
 	cp	l, (xbc+1)
 	jr	nz, SndParam_DecodeFieldAlt_Data_Skip2
@@ -2216,7 +2216,7 @@ SndParam_WriteFieldSub_Data:
 	ld	xde, xwa
 	ld	a, (xde+11)
 	sla	a, 2
-	lda	xbc, (SndParam_ValueTablePtrPair:24)
+	lda	xbc, (Naka_SubDispatch_B_Table:24)
 	ld	xbc, (xbc+a)
 	ld	xwa, 1:i3
 	cp	l, (xbc)

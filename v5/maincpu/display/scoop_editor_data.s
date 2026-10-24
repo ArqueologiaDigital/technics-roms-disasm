@@ -69,7 +69,7 @@ SeAmpAmp1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeCtr2TitleFunc_Methods:24)
+	lda xde, (SeAmpAmp1TitleFunc_SwitchHandlers:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1796,7 +1796,7 @@ SeFilHpq1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (0xe0de66:24)
+	lda	xde, (SeFilLpq1TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1818,7 +1818,7 @@ SeFilL241TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (0xe0deae:24)
+	lda	xde, (SeFilHpq1TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1840,7 +1840,7 @@ SeFilH241TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (0xe0def6:24)
+	lda	xde, (SeFilL241TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1862,7 +1862,7 @@ SeFilBpf1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilL241TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilH241TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1884,7 +1884,7 @@ SeFilBcf1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilH241TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilBpf1TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1906,7 +1906,7 @@ SeFilFil2TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilBpf1TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilBcf1TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1928,7 +1928,7 @@ SeFilEnv1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilBcf1TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilFil2TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1950,7 +1950,7 @@ SeFilEnv2TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilFil2TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilEnv1TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)
@@ -1972,7 +1972,7 @@ SeFilLfo1TitleFunc_DispatchSwitch:
 	ld C,(XSP+0x02)
 	extz BC
 	sla BC, 0x02
-	lda	xde, (SeFilEnv1TitleFunc_SwitchHandlers_Data:24)
+	lda	xde, (SeFilEnv2TitleFunc_SwitchHandlers_Data:24)
 	exts XBC
 	add XBC,XDE
 	ld XHL,(XBC)

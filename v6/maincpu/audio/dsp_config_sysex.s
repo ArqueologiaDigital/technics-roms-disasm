@@ -367,7 +367,7 @@ SwbtWr_ProcessAll_CompactDone:
 	ldw	(0x9022:16), 0
 	ret
 SwbtWr_InitBank1:
-	ld	xiy, 0xee768a
+	ld	xiy, Naka_DisplayMode_Table
 	ld	(0xbfc1:16), xiy
 	ld	xiy, 0xee7ba7
 	ld	(0xbfc5:16), xiy

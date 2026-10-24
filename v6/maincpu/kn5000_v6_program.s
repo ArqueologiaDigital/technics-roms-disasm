@@ -216,10 +216,11 @@ InitializeScoop_Str_TT_SEWRTSND:	.incbin "includes/generated/gui_display_struct_
 ; parameter block of object 0x146 (class 0x01600003, proc MainFunctionProc), registered by InitializeScoop+0x125
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 136 B; the proc's read length was not measured
 GUI_DisplayStructData_0x750:
+	.long	SeMenuModeFunc
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xf0, 0x35, 0xf0, 0x00, 0x0d, 0x36, 0xf0, 0x00
-	.byte	0x40, 0x36, 0xf0, 0x00, 0x73, 0x36, 0xf0, 0x00
-	.byte	0xa6, 0x36, 0xf0, 0x00, 0xd9, 0x36, 0xf0, 0x00
+	.byte	0x0d, 0x36, 0xf0, 0x00, 0x40, 0x36, 0xf0, 0x00
+	.byte	0x73, 0x36, 0xf0, 0x00, 0xa6, 0x36, 0xf0, 0x00
+	.byte	0xd9, 0x36, 0xf0, 0x00
 	.long	SeTonRan2TitleFunc
 	.long	SeTonHyb1TitleFunc
 	.long	SePitPit1TitleFunc
@@ -408,30 +409,32 @@ SeDigEffTitleFunc_Methods:
 	.long	SeWrtSndTitleFunc_OnDraw
 	.long	SeWrtSndTitleFunc_OnHide
 	.long	SeWrtSndTitleFunc_OnSwitchIn
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x86, 0x3c, 0xf0, 0x00
 SeCtr2TitleFunc_Methods:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x70, 0x3d, 0xf0, 0x00, 0x1e, 0x3e, 0xf0, 0x00
 SeCtr3TitleFunc_Methods:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd1, 0x3e, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
 SeCopyTitleFunc_Methods:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x43, 0x3f, 0xf0, 0x00, 0x53, 0x3f, 0xf0, 0x00
-	.byte	0x63, 0x3f, 0xf0, 0x00, 0x92, 0x3f, 0xf0, 0x00
 SeWrtMemTitleFunc_Methods:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xb6, 0x3f, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0xfc, 0x3f, 0xf0, 0x00
 SeWrtSndTitleFunc_Methods:
+	.long SeWrtSndTitleFunc_Nop
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeAmpAmp1TitleFunc_DispatchSwitch+0x1E (0xF03DA7) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xda, 0x3f, 0xf0, 0x00
 SeAmpAmp1TitleFunc_SwitchHandlers:
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeAmpAmp1_OnColumn3
+	.long SeAmpAmp1_OnColumn4
+	.long SeAmpAmp1_OnColumn5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeAmpAmp1_OnSideRow1
+	.long SeAmpAmp1_OnSideRow2
+	.long SeAmpAmp1_OnSideRow3
+	.long SeAmpAmp1_OnSideRow4
+	.long SeAmpAmp1_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeAmpAmp1_OnSwitch15
+	.long SeAmpAmp1_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeAmpAmp2TitleFunc_DispatchSwitch+0x1E (0xF03DD5) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
@@ -520,180 +523,214 @@ SeAmpLfo1TitleFunc_SwitchHandlers:
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilLpq1TitleFunc_DispatchSwitch+0x1E (0xF04E52) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilLpq1TitleFunc_SwitchHandlers:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x01, 0x4f, 0xf0, 0x00, 0x9a, 0x4f, 0xf0, 0x00
-	.byte	0x33, 0x50, 0xf0, 0x00, 0xc3, 0x50, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x53, 0x51, 0xf0, 0x00
-	.byte	0xda, 0x51, 0xf0, 0x00, 0x5b, 0x52, 0xf0, 0x00
-	.byte	0xdd, 0x52, 0xf0, 0x00, 0x05, 0x53, 0xf0, 0x00
-	.byte	0x1d, 0x53, 0xf0, 0x00, 0x50, 0x53, 0xf0, 0x00
-	.byte	0x9c, 0x53, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0xea, 0x53, 0xf0, 0x00
-	.byte	0xc8, 0x53, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x19, 0x54, 0xf0, 0x00, 0x2b, 0x54, 0xf0, 0x00
-	.byte	0x3d, 0x54, 0xf0, 0x00, 0x47, 0x54, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x51, 0x54, 0xf0, 0x00
-	.byte	0x56, 0x54, 0xf0, 0x00, 0x5b, 0x54, 0xf0, 0x00
-	.byte	0x60, 0x54, 0xf0, 0x00, 0x65, 0x54, 0xf0, 0x00
-	.byte	0x6a, 0x54, 0xf0, 0x00, 0x6f, 0x54, 0xf0, 0x00
-	.byte	0xbc, 0x54, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0xe3, 0x54, 0xf0, 0x00
-	.byte	0xc1, 0x54, 0xf0, 0x00
+	.long SeFilLpq1_OnColumn1
+	.long SeFilLpq1_OnColumn2
+	.long SeFilLpq1_OnColumn3
+	.long SeFilLpq1_OnColumn4
+	.long SeMenu_SwitchNop
+	.long SeFilLpq1_OnColumn4_Join23
+	.long SeFilLpq1_OnColumn4_Join24
+	.long SeFilLpq1_OnColumn4_Join25
+	.long SeFilLpq1_OnColumn4_Join26
+	.long SeFilLpq1_OnColumn4_Join27
+	.long SeFilLpq1_OnColumn4_Join28
+	.long SeFilLpq1_OnSideRow4
+	.long SeFilLpq1_OnSideRow4_Join30
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilLpq1_OnSwitch15
+	.long SeFilLpq1_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilHpq1TitleFunc_DispatchSwitch+0x1E (0xF04E80) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilHpq1TitleFunc_SwitchHandlers:
+	.long SeFilHpq1_OnColumn1
+	.long SeFilHpq1_OnColumn2
+	.long SeFilHpq1_OnColumn3
+	.long SeFilHpq1_OnColumn4
+	.long SeMenu_SwitchNop
+	.long SeFilHpq1_OnColumn6
+	.long SeFilHpq1_OnColumn7
+	.long SeFilHpq1_OnColumn8
+	.long SeFilHpq1_OnSideRow1
+	.long SeFilHpq1_OnSideRow2
+	.long SeFilHpq1_OnSideRow3
+	.long SeFilHpq1_OnSideRow4
+	.long SeFilHpq1_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilHpq1_OnSwitch15
+	.long SeFilHpq1_OnSwitch25
+	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilL241TitleFunc_DispatchSwitch+0x1E (0xF04EAE) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilL241TitleFunc_SwitchHandlers:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x12, 0x55, 0xf0, 0x00, 0x24, 0x55, 0xf0, 0x00
-	.byte	0x36, 0x55, 0xf0, 0x00, 0x40, 0x55, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x4a, 0x55, 0xf0, 0x00, 0x72, 0x55, 0xf0, 0x00
-	.byte	0x8a, 0x55, 0xf0, 0x00, 0xbd, 0x55, 0xf0, 0x00
-	.byte	0x09, 0x56, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x57, 0x56, 0xf0, 0x00
-	.long	SeFilL241_OnSwitch25
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x86, 0x56, 0xf0, 0x00
-	.byte	0x98, 0x56, 0xf0, 0x00, 0xaa, 0x56, 0xf0, 0x00
-	.byte	0xb4, 0x56, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0xbe, 0x56, 0xf0, 0x00
-	.byte	0xc3, 0x56, 0xf0, 0x00, 0xc8, 0x56, 0xf0, 0x00
-	.byte	0xcd, 0x56, 0xf0, 0x00, 0x1a, 0x57, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x41, 0x57, 0xf0, 0x00, 0x1f, 0x57, 0xf0, 0x00
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilL241_OnColumn3
+	.long SeFilL241_OnColumn4
+	.long SeFilL241_OnColumn5
+	.long SeFilL241_OnColumn6
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilL241_OnColumn6_Join33
+	.long SeFilL241_OnColumn6_Join34
+	.long SeFilL241_OnColumn6_Join35
+	.long SeFilL241_OnSideRow4
+	.long SeFilL241_OnSideRow4_Join11
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilL241_OnSwitch15
+	.long SeFilL241_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilH241TitleFunc_DispatchSwitch+0x1E (0xF04EDC) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilH241TitleFunc_SwitchHandlers:
 	.long SeMenu_SwitchNop
-	.long	SeFilBpf1_OnColumn2
-	.long	SeFilBpf1_OnColumn3
-	.long	SeFilBpf1_OnColumn4
-	.long	SeFilBpf1_OnColumn5
-	.long	SeFilBpf1_OnColumn6
-	.long	SeFilBpf1_OnColumn7
 	.long SeMenu_SwitchNop
-	.long	SeFilBpf1_OnSideRow1
-	.long	SeFilBpf1_OnSideRow2
-	.long	SeFilBpf1_OnSideRow3
-	.long	SeFilBpf1_OnSideRow4
-	.long	SeFilBpf1_OnSideRow5
+	.long SeFilH241_OnColumn3
+	.long SeFilH241_OnColumn4
+	.long SeFilH241_OnColumn5
+	.long SeFilH241_OnColumn6
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilBpf1_OnSwitch15
-	.long	SeFilBpf1_OnSwitch25
+	.long SeFilH241_OnSideRow1
+	.long SeFilH241_OnSideRow2
+	.long SeFilH241_OnSideRow3
+	.long SeFilH241_OnSideRow4
+	.long SeFilH241_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilH241_OnSwitch15
+	.long SeFilH241_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilBpf1TitleFunc_DispatchSwitch+0x1E (0xF04F0A) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilBpf1TitleFunc_SwitchHandlers:
 	.long SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
-	.long	SeMenu_SwitchNop
+	.long SeFilBpf1_OnColumn2
+	.long SeFilBpf1_OnColumn3
+	.long SeFilBpf1_OnColumn4
+	.long SeFilBpf1_OnColumn5
+	.long SeFilBpf1_OnColumn6
+	.long SeFilBpf1_OnColumn7
 	.long SeMenu_SwitchNop
-	.long	SeFilBcf1_OnSideRow1
-	.long	SeFilBcf1_OnSideRow2
-	.long	SeFilBcf1_OnSideRow3
-	.long	SeFilBcf1_OnSideRow4
-	.long	SeFilBcf1_OnSideRow5
+	.long SeFilBpf1_OnSideRow1
+	.long SeFilBpf1_OnSideRow2
+	.long SeFilBpf1_OnSideRow3
+	.long SeFilBpf1_OnSideRow4
+	.long SeFilBpf1_OnSideRow5
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilBcf1_OnSwitch15
-	.long	SeFilBcf1_OnSwitch25
+	.long SeFilBpf1_OnSwitch15
+	.long SeFilBpf1_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilBcf1TitleFunc_DispatchSwitch+0x1E (0xF04F38) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilBcf1TitleFunc_SwitchHandlers:
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilFil2_OnColumn3
-	.long	SeFilFil2_OnColumn4
-	.long	SeFilFil2_OnColumn5
-	.long	SeFilFil2_OnColumn6
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilFil2_OnSideRow1
-	.long	SeFilFil2_OnSideRow2
-	.long	SeFilFil2_OnSideRow3
-	.long	SeFilFil2_OnSideRow4
-	.long	SeFilFil2_OnSideRow5
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilFil2_OnSwitch15
-	.long	SeFilFil2_OnSwitch25
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilBcf1_OnSideRow1
+	.long SeFilBcf1_OnSideRow2
+	.long SeFilBcf1_OnSideRow3
+	.long SeFilBcf1_OnSideRow4
+	.long SeFilBcf1_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilBcf1_OnSwitch15
+	.long SeFilBcf1_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilFil2TitleFunc_DispatchSwitch+0x1E (0xF04F66) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilFil2TitleFunc_SwitchHandlers:
-	.long	SeFilEnv1_OnColumn1
-	.long	SeFilEnv1_OnColumn2
-	.long	SeFilEnv1_OnColumn3
-	.long	SeFilEnv1_OnColumn4
-	.long	SeFilEnv1_OnColumn5
-	.long	SeFilEnv1_OnColumn6
-	.long	SeFilEnv1_OnColumn7
-	.long SeMenu_SwitchNop
-	.long	SeFilEnv1_OnSideRow1
-	.long	SeFilEnv1_OnSideRow2
-	.long	SeFilEnv1_OnSideRow3
-	.long	SeFilEnv1_OnSideRow4
-	.long	SeFilEnv1_OnSideRow5
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilEnv1_OnSwitch15
-	.long	SeFilEnv1_OnSwitch25
+	.long SeFilFil2_OnColumn3
+	.long SeFilFil2_OnColumn4
+	.long SeFilFil2_OnColumn5
+	.long SeFilFil2_OnColumn6
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilFil2_OnSideRow1
+	.long SeFilFil2_OnSideRow2
+	.long SeFilFil2_OnSideRow3
+	.long SeFilFil2_OnSideRow4
+	.long SeFilFil2_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilFil2_OnSwitch15
+	.long SeFilFil2_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilEnv1TitleFunc_DispatchSwitch+0x1E (0xF04F94) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilEnv1TitleFunc_SwitchHandlers:
-	.long	SeMenu_SwitchNop
-	.long	SeFilEnv2_OnColumn2
-	.long	SeFilEnv2_OnColumn3
-	.long	SeFilEnv2_OnColumn4
-	.long	SeFilEnv2_OnColumn5
-	.long	SeMenu_SwitchNop
-	.long	SeFilEnv2_OnColumn7
-	.long	SeFilEnv2_OnColumn8
-	.long	SeFilEnv2_OnSideRow1
-	.long	SeFilEnv2_OnSideRow2
-	.long	SeFilEnv2_OnSideRow3
-	.long	SeFilEnv2_OnSideRow4
-	.long	SeFilEnv2_OnSideRow5
+	.long SeFilEnv1_OnColumn1
+	.long SeFilEnv1_OnColumn2
+	.long SeFilEnv1_OnColumn3
+	.long SeFilEnv1_OnColumn4
+	.long SeFilEnv1_OnColumn5
+	.long SeFilEnv1_OnColumn6
+	.long SeFilEnv1_OnColumn7
+	.long SeMenu_SwitchNop
+	.long SeFilEnv1_OnSideRow1
+	.long SeFilEnv1_OnSideRow2
+	.long SeFilEnv1_OnSideRow3
+	.long SeFilEnv1_OnSideRow4
+	.long SeFilEnv1_OnSideRow5
 	.long SeMenu_SwitchNop
 	.long SeMenu_SwitchNop
-	.long	SeFilEnv2_OnSwitch15
-	.long	SeFilEnv2_OnSwitch25
+	.long SeFilEnv1_OnSwitch15
+	.long SeFilEnv1_OnSwitch25
 	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilEnv2TitleFunc_DispatchSwitch+0x1E (0xF04FC2) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeFilEnv2TitleFunc_SwitchHandlers:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0xaf, 0x5f, 0xf0, 0x00
-	.byte	0xb7, 0x5f, 0xf0, 0x00, 0xbf, 0x5f, 0xf0, 0x00
-	.byte	0xc7, 0x5f, 0xf0, 0x00, 0xcf, 0x5f, 0xf0, 0x00
-	.byte	0xd7, 0x5f, 0xf0, 0x00
-	.long	SeFilLfo1_OnColumn8
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe7, 0x5f, 0xf0, 0x00, 0xf7, 0x5f, 0xf0, 0x00
-	.long	SeFilLfo1_OnSideRow3
+	.long SeMenu_SwitchNop
+	.long SeFilEnv2_OnColumn2
+	.long SeFilEnv2_OnColumn3
+	.long SeFilEnv2_OnColumn4
+	.long SeFilEnv2_OnColumn5
+	.long SeMenu_SwitchNop
+	.long SeFilEnv2_OnColumn7
+	.long SeFilEnv2_OnColumn8
+	.long SeFilEnv2_OnSideRow1
+	.long SeFilEnv2_OnSideRow2
+	.long SeFilEnv2_OnSideRow3
+	.long SeFilEnv2_OnSideRow4
+	.long SeFilEnv2_OnSideRow5
+	.long SeMenu_SwitchNop
+	.long SeMenu_SwitchNop
+	.long SeFilEnv2_OnSwitch15
+	.long SeFilEnv2_OnSwitch25
+	.long 0x00000000
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeFilLfo1TitleFunc_DispatchSwitch+0x1E (0xF04FF0) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x19, 0x60, 0xf0, 0x00, 0x26, 0x60, 0xf0, 0x00
-	.byte	0x21, 0x6a, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
-	.byte	0x33, 0x60, 0xf0, 0x00, 0x21, 0x6a, 0xf0, 0x00
 SeFilLfo1TitleFunc_SwitchHandlers:
+	.long SeMenu_SwitchNop
+	.long SeFilLfo1_OnColumn2
+	.long SeFilLfo1_OnColumn3
+	.long SeFilLfo1_OnColumn4
+	.long SeFilLfo1_OnColumn5
+	.long SeFilLfo1_OnColumn6
+	.long SeFilLfo1_OnColumn7
+	.long SeFilLfo1_OnColumn8
+	.long SeFilLfo1_OnSideRow1
+	.long SeFilLfo1_OnSideRow2
+	.long SeFilLfo1_OnSideRow3
+	.long SeFilLfo1_OnSideRow4
+	.long SeFilLfo1_OnSideRow5
+	.long SeMenu_SwitchNop
 ; the rest of the code-pointer table at SeFilLfo1TitleFunc_SwitchHandlers, from entry 14 on;
 ; the table runs across this boundary (file slice)
-GUI_DisplayStructData_0x1100:
+GUI_DisplayStructData_0x1100:	.long SeMenu_SwitchNop
+	.long SeFilLfo1_OnSwitch15
+	.long SeMenu_SwitchNop
 	.long 0
 ; data read by SeMenu_ApplyPartEdit_Helper11+0x23 (0xF08A09)
 ; evidence: `lda xde, (this)` then `ld E,(XDE+WA) / mul L,0x1c`
@@ -3522,7 +3559,7 @@ SndParam_RW_ProcessResult:
 	inc	3, a
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_EncodeHandlers:24)
+	lda	xbc, (SndParam_RegisterHandlers_Data:24)
 	lda	xde, (xbc+wa)
 	ld	xwa, xiz
 	ld	bc, (xsp + 4)

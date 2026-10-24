@@ -256,15 +256,25 @@ def load(args):
     cache = args.cache or os.path.join(tempfile.gettempdir(), "port-%s-%s" % (args.src, args.dst))
     os.makedirs(cache, exist_ok=True)
     args.cache = cache
-    f = os.path.join(cache, "map_%s.json" % args.src)
+    # the map is cached under a hash of every source file, so an edited source tree is re-mapped
+    h = hashlib.sha1()
+    sdir = os.path.join(ROOT, args.src, "maincpu")
+    for dp, dn, fn in sorted(os.walk(sdir)):
+        dn.sort()
+        for name in sorted(fn):
+            if name.endswith((".s", ".c", ".h", ".ld", ".json")) or "/generated" in dp:
+                h.update(name.encode())
+                h.update(open(os.path.join(dp, name), "rb").read())
+    tag = h.hexdigest()[:16]
+    f = os.path.join(cache, "map_%s_%s.json" % (args.src, tag))
     if os.path.exists(f):
         d = json.load(open(f))
         order, syms = d["order"], d["syms"]
-        rom = open(os.path.join(cache, "rom_%s.bin" % args.src), "rb").read()
+        rom = open(os.path.join(cache, "rom_%s_%s.bin" % (args.src, tag)), "rb").read()
     else:
         order, syms, rom = tree_map(args.src)
         json.dump({"order": order, "syms": syms}, open(f, "w"))
-        open(os.path.join(cache, "rom_%s.bin" % args.src), "wb").write(rom)
+        open(os.path.join(cache, "rom_%s_%s.bin" % (args.src, tag)), "wb").write(rom)
     tgt = open(args.rom, "rb").read()
     key = hashlib.sha1(rom + tgt).hexdigest()[:16]
     g = os.path.join(cache, "dm2_%s.json" % key)
@@ -568,7 +578,8 @@ class Port:
                 continue
             bodies = [self.parsed[i][1] for i in lines]
             if sum(1 for b in bodies if b and not b.startswith(".")) * 2 < len(bodies):
-                continue                                 # mostly data: keep the byte mapping
+                self._realign_data(lines, a0, a1, b0, b1)
+                continue
             key = "%x-%x-%x-%x" % (a0, a1, b0, b1)
             if key not in memo:
                 memo[key] = [decode_region(self.rom[a0:a1]), decode_region(self.tgt[b0:b1])]
@@ -605,6 +616,54 @@ class Port:
             self.realigned["gaps"] += 1
             self.realigned["lines matched"] += len(pairs)
         json.dump(memo, open(cache, "w"))
+
+    def _realign_data(self, lines, a0, a1, b0, b1):
+        """the data counterpart of the instruction re-alignment: match the two sides'
+        bytes with every ROM pointer (a little-endian word at an even address whose value
+        is a ROM address) masked, so that records which differ only in where they point
+        line up; a line inside one matched run (or in an equal-size stretch between two)
+        maps.  Kept when it maps more lines than the byte mapping did."""
+        def masked(bs, base):
+            m = bytearray(bs)
+            for o in range(len(bs) - 3):
+                if (base + o) % 2 == 0 and BASE <= le(bs, o, 4) < BASE + len(self.rom):
+                    m[o:o + 4] = b"\xfe\xfe\xfe\xfe"
+            return bytes(m)
+        ms, mt = masked(self.rom[a0:a1], a0), masked(self.tgt[b0:b1], b0)
+        sm = difflib.SequenceMatcher(None, ms, mt, autojunk=False)
+        runs = []
+        qi = qj = 0
+        for i, j, n in sm.get_matching_blocks():
+            if i - qi == j - qj and i > qi:
+                runs.append((qi, qj, i - qi))           # equal-size stretch: a substitution
+            if n >= 4:
+                runs.append((i, j, n))
+            if n >= 4 or (i - qi == j - qj):
+                qi, qj = i + n, j + n
+        pairs = []
+        for i in lines:
+            a, n = self.order[i][0] - BASE - a0, self.size[i]
+            for ri, rj, rn in runs:
+                if ri <= a and a + n <= ri + rn:
+                    pairs.append((i, b0 + rj + (a - ri)))
+                    break
+        old = 0
+        for i in lines:
+            a, n = self.order[i][0] - BASE, self.size[i]
+            ds = set(self.dm[a:a + n])
+            old += len(ds) == 1 and None not in ds
+        if len(pairs) <= old:
+            return
+        for i in lines:
+            a, n = self.order[i][0] - BASE, self.size[i]
+            for x in range(a, a + n):
+                self.dm[x] = None
+        for i, t in pairs:
+            a, n = self.order[i][0] - BASE, self.size[i]
+            for x in range(a, a + n):
+                self.dm[x] = t - a
+        self.realigned["data gaps"] += 1
+        self.realigned["data lines matched"] += len(pairs)
 
     def _maps_whole(self, i):
         a, n = self.order[i][0] - BASE, self.size[i]

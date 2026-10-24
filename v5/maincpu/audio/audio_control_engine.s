@@ -11788,7 +11788,7 @@ SndParam_DispatchCallback:
 	jr	nc, SndParam_NotFound
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SndParam_RegisterHandlers:24)
+	lda	xde, (SndParam_Registry_Data2:24)
 	lda	xhl, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	de, (xsp+0xa)
@@ -11822,7 +11822,7 @@ SndParam_DispatchTypeDE5:
 	jr	nc, SndParam_Epilogue
 	extz	bc
 	sla	bc, 2
-	lda	xde, (SndParam_WriteHandlers:24)
+	lda	xde, (SndParam_Register2Handlers_Data:24)
 	lda	xde, (xde+bc)
 	ld	bc, (xsp+0xc)
 	ld	xhl, (xde)
@@ -11907,7 +11907,7 @@ SndParam_Lkp2_Dispatch:
 	jr	nc, SndParam_Lkp2_NotFound
 	extz	wa
 	sla	wa, 2
-	lda	xbc, (SndParam_Register2Handlers:24)
+	lda	xbc, (SndParam_ReadHandlers_Data:24)
 	lda	xhl, (xbc+wa)
 	ld	xwa, (xsp+0x6)
 	ld	bc, (xsp+0xc)
