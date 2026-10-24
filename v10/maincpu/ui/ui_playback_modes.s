@@ -129,6 +129,8 @@ Seq_FindRhythmTrack_Join:
 Seq_FindRhythmTrack_Return2:
 	ret
 
+; Calls SeqVoice_InitEntry with the byte at 0x2878 temporarily replaced by the byte at 0xffe3,
+; then restores 0x2878.
 SeqPlay_RestoreVoiceState_Return:
 	ld a, (0x2878:16)
 	pushw wa
@@ -254,6 +256,7 @@ PartParam_Handler_0F:
 	call Part_LookupParam
 	call Part_ValidateAndActivate
 	ret
+; Copies byte C of the table at 0xf1a0 to 0xd5f and stores C + 1 at 0xd60.
 Part_LookupParam:
 	; --- Lookup function: load from table[IY], store ---
 	ld xhl, 0x0000f1a0
@@ -265,6 +268,8 @@ Part_LookupParam:
 	inc 1, e
 	ld	(3424:16), e
 	ret
+; Sets the word 0x287f to 1 and clears 0xd37; when the byte at 0xd60 is 1..16 it also clears
+; 0x1108 and calls UI_PostModeChangeEvent with A = 0x8a (a title change to TITLE_PS + 0x8a).
 Part_ValidateAndActivate:
 	; --- Validation: check range, optionally call ---
 	ldw	(0x287f:16), 1
@@ -533,6 +538,8 @@ SeqNotify_PostMode77:
 SeqNotify_Return:
 	ret
 
+; Returns in HL the byte at 0x1155 (zero-extended); the playback code in this file stores the
+; values 0 to 4 in it.
 Medley_GetPlaybackStatus:
 	xor hl, hl
 	ld l, (4437:16)
@@ -1030,6 +1037,7 @@ PlayMode_ResetAndSchedule:
 	call Audio_CheckSubsystemReady
 	ret
 
+; Stores A at 0xffe3, then SongBank_SaveAndReload and SeqTimer_PostTempoUpdate.
 SongBank_SwitchAndUpdateTempo:
 	ld (0x00ffe3:24), a
 	call SongBank_SaveAndReload
@@ -1729,6 +1737,8 @@ DkMdlyPly_Finalize:
 	inc 2, xsp
 	ret
 
+; Sends the event batch for the current title when it is one of titles 0x6f..0x75
+; (CURRENT_TITLE), through DisplayMode_DispatchEvents_CaseTable; other titles return at once.
 DisplayMode_DispatchEvents:
 	ld a, (CURRENT_TITLE:16)
 	extz wa
@@ -1806,6 +1816,8 @@ DisplayMode_DispatchEvents_Join:
 DisplayMode_DispatchEvents_OnTitleDpsmflyr:
 	ret
 
+; Calls DkMdlyPly_CheckState and then tail-jumps to FileIO_ReadChunk, both with WA = the word at
+; 0x21086.
 DisplayMode_RefreshState:
 	ld wa, (0x021086:24)
 	calr DkMdlyPly_CheckState
@@ -2211,6 +2223,10 @@ DpMdlySmfLyr_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Name-query function of the CD-like song / document / PD navigation screens (Yoko's
+; MainFunction table).
+;   In:  XBC = event; EVT_GET_CUR_SONG_NAME .. +13 dispatch through NameGetFuncCall_CaseTable,
+;        anything else goes to NameGetFunc_Entry.
 NameGetFuncCall:
 	sub xbc, EVT_GET_CUR_SONG_NAME
 	cp xbc, 0x0

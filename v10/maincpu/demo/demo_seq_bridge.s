@@ -484,6 +484,7 @@ CDlikeSwTtl_SendStartEvtArg1:
 	ld	xde, 1:i3
 	jp	ApPostEvent
 
+; Posts EVT_SET_VISIBLE with parameter 0 to view 0x8b0003 (ApPostEvent), which hides it.
 CDlikeSwTtl_SendStartEvt:
 	ld xwa, 0x8b0003
 	ld xbc, EVT_SET_VISIBLE
@@ -535,6 +536,8 @@ CDlikeSwTtl_SetRecordAndNotify:
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Clears the byte at 0x21090 and posts EVT_REPAINT to the views NAKA_VIEW_DemoMed1, _DemoMed2
+; and _DemoMed3 (ApPostEvent).
 SeqInit_PostEventSequence:
 	ld (0x021090:24), 0x00
 	ld xwa, NAKA_VIEW_DemoMed1
@@ -566,6 +569,7 @@ SeqInit_PostDispatchEvent:
 	ld xde, 1:i3
 	jp ApDeliveryEvent
 
+; Posts EVT_INDEX_SELECT with parameter 0 to the current target (ApPostEvent).
 SeqInit_FinalEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_INDEX_SELECT
@@ -585,6 +589,9 @@ SeqRecPlay_EnableRecordOnly:
 	ld xbc, EVT_REFRESH_PARA_DRAW
 	jp ApPostEvent
 
+; Sets the byte at 0x21092 to 0 and 0x21094 to 1 and posts EVT_REFRESH_PARA_DRAW to views
+; 0x6f0025 (parameter 0) and 0x6f0024 (parameter 1, the new 0x21094) so both redraw.  Same shape
+; as SeqRecPlay_DisableBoth.
 SeqRecPlay_EnablePlayOnly:
 	ld (0x021092:24), 0x00
 	ld (0x021094:24), 0x01
@@ -598,6 +605,8 @@ SeqRecPlay_EnablePlayOnly:
 	ld xbc, EVT_REFRESH_PARA_DRAW
 	jp ApPostEvent
 
+; Clears the bytes at 0x21092 and 0x21094 and posts EVT_REFRESH_PARA_DRAW to views 0x6f0025
+; (parameter 0) and 0x6f0024 (parameter = the byte at 0x21094, now 0) so both redraw.
 SeqRecPlay_DisableBoth:
 	ld (0x021092:24), 0x00
 	ld (0x021094:24), 0x00
@@ -753,12 +762,17 @@ PlayMode_SwitchToModeAndNotify:
 DispatchHandler_ConditionalJump:
 	jr	t, DispatchHandler_SubJumpTable_Join
 
+; One-entry `jr` thunk: runs DispatchHandler_ResolveSlot (through DispatchHandler_CallResolve).
 DispatchHandler_JumpToSubHandler:
 	jr DispatchHandler_CallResolve
 
+; One-entry `jr` thunk: runs SeqNode_InsertAtPosition (through DispatchHandler_CallNodeInsert).
 DispatchHandler_JumpSub:
 	jr DispatchHandler_CallNodeInsert
 
+; Two-entry `jr` table; a call to its first entry runs SeqNode_ResolveSlotPtr (through
+; DispatchHandler_CallSlotResolve).  The second entry stores the u32 at 0x1d5a in 0x110a
+; (DispatchHandler_StoreNodePtr).
 DispatchHandler_SubJumpTable:
 	jr DispatchHandler_CallSlotResolve
 	jr DispatchHandler_StoreNodePtr
@@ -975,6 +989,9 @@ SeqNodeInsert_EmptyList:
 	andmi8 (xhl), 0x7f
 	jr SeqNodeInsert_LinkPrev
 
+; Points 0x10fd at 256-byte block IY (1-based) of the block area whose base is the u32 at
+; 0x110a: (IY - 1) * 256 + base.  Out: XHL = 0.  VoiceSlot_UpdateCurrentPointer does the same
+; with the base at 0x1d5a.
 SeqNode_ResolveSlotPtr:
 	ld hl, iy
 	extz xhl

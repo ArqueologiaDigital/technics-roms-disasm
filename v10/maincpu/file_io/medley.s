@@ -243,6 +243,10 @@ SeqName_Exit:
 	popw iz
 	ret
 
+; Writes a medley playlist entry as four characters: E, then 'M' and the song number C + 1 in
+; two digits (three digits, without the 'M', from 100 up).  C = 0xff (unused slot) gives three
+; spaces, C = 0xfe (marked) 'M' and two spaces.  No terminator is written.
+;   In:  XWA = destination, E = first character, C = entry byte.
 FormatMedleyNumber:
 	ld (xwa+), e
 	cp c, 0xff
@@ -4122,6 +4126,7 @@ ResetSlotsIfEmpty:
 	calr ClearAllSongSlots
 	ret
 
+; Returns HL = 1 when WA equals the first empty medley slot (FindFirstEmptySlot), else 0.
 CheckSlotIsSelected:
 	pushw iz
 	ld iz, wa
@@ -4141,10 +4146,12 @@ SetCurrentSlotIndex:
 	ld (0x09480e:24), wa
 	ret
 
+; Returns in HL the word at 0x9480e, the current medley slot.
 GetCurrentSlotIndex:
 	ld hl, (0x09480e:24)
 	ret
 
+; Returns HL = 1 when WA equals the current medley slot (GetCurrentSlotIndex), else 0.
 CheckIsCurrentSlot:
 	pushw iz
 	ld iz, wa

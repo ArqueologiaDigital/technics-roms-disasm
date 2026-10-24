@@ -570,6 +570,7 @@ DemoMode_Main_Operation:
 	call SeqInit_FinalEvent
 	jp Seq_StartMainControl
 
+; Calls CtrlPanel_IndicatorDispatch with WA = 0x22, BC = 0, DE = 0 and stores 4 at 0x8f4e.
 FDemo_IndicatorSetup:
 	ldw wa, 0x22
 	ld bc, 0:i3
@@ -1028,10 +1029,14 @@ Banner_Loop_Exit:
 	inc 4, xsp
 	ret
 
+; Runs Demo_ScanActivePartChannels and then stops the demo's playback through Demo_PreSetup:
+; the scan comes first, despite the name.
 Demo_PreSetupAndScan:
 	calr Demo_ScanActivePartChannels
 	jr Demo_PreSetup
 
+; Stops the demo's playback: AccWrap_PlayModeDispatch, SeqBuf_Init, SeqPlay_EmergencyStopAll,
+; and clears the byte at 0x431.
 Demo_PreSetup:
 	call AccWrap_PlayModeDispatch
 	call SeqBuf_Init
@@ -1084,6 +1089,7 @@ Demo_ScanPartDone:
 	res 2, (0x287b:16)
 	ret
 
+; Copies the 16 bytes at 0xf1a0 to 0xcce (Mem_Copy).
 Voice_SavePreset:
 	pushw 0x10
 	pushw 0x0
@@ -1113,6 +1119,8 @@ Demo_LookupPartTableEntry:
 	ld xhl, (xwa)
 	ret
 
+; Waits while bit 2 of the byte at 0x420 is set, for at most NakaData_RomEnd polls (the constant
+; is used as a loop count).
 Demo_WaitForDisplayBit:
 	ld xwa, NakaData_RomEnd
 	bit 2, (1056:16)
@@ -1351,6 +1359,11 @@ Demo_StoreRecordChainParams:
 	ld (0x025b8e:24), de
 	ret
 
+; Reads the next byte of a record stored as a chain of 256-byte blocks.
+;   The block number is the word at 0x3ec4e (0xffff = end of chain) and the offset the word at
+;   0x25b8e; blocks are based at the u32 at 0x25b8a and their data starts at +5.  After offset
+;   0xfa the chain moves to the block whose number is at +3 and the offset restarts at 0.
+;   Out: HL = the byte, or 0xffff at the end of the chain.
 RecordChain_ReadNextByte:
 	ld wa, (0x03ec4e:24)
 	cp wa, 0xffff
@@ -1405,6 +1418,10 @@ Demo_ParseSlideHeader:
 	call SLIDE_Parse_Header
 	ret
 
+; Checks that the open file carries the signature of region A.
+;   In:  A = region.  Seeks to the region's offset (FileIO_FileSigRecs_OffsetCol, 8-byte rows;
+;   FileIO_SeekAndReadBlock from the start) and compares the bytes read (FileIO_ReadByte) with
+;   FileIO_RegionSignatures[A].  A read error counts as a mismatch.
 FileIO_CheckRegionSignature:
 	dec 2, xsp
 	push xiz
@@ -4144,10 +4161,19 @@ LoadSecondary_Return:
 	popw iz
 	ret
 
+; Returns in HL the last file I/O error code (the word at 0x7f48, set negative by the FileIO
+; routines; the C-library ferror).
 FileIO_ReturnError:
 	ld hl, (0x7f48:16)
 	ret
 
+; Opens a file by name for the C-library fopen and makes it the current file (handle at 0x7f44).
+;   In:  XWA = file name, XBC = mode string ("r..." / "w...").
+;   The name is appended to the 128-byte path prefix FileIO_OpenWithMode_PathInit
+;   (FileIO_BuildFilePath) and opened with FileOpen.  Out: HL = the code also stored in the
+;   last-error word at 0x7f48 (read back by FileIO_ReturnError): 0 on success, so a successful
+;   open clears the previous error; -2 open for read failed, -11 open for write failed with the
+;   word at 0x1e53c = 31, -3 any other write failure, -1 any other mode.
 FileIO_OpenWithMode:
 	lda xsp, (xsp - 128)
 	push xiz
@@ -4202,6 +4228,8 @@ FileIO_OpenMode_Return:
 	lda xsp, (xsp+128:16)
 	ret
 
+; Closes the open file (FileClose on the handle at 0x7f44) and clears the handle; does nothing
+; when no file is open.  Out: HL = 0.  The C-library fclose goes through here.
 FileIO_CloseHandle:
 	ld xwa, (0x7f44:16)
 	or xwa, xwa
@@ -4216,6 +4244,10 @@ FileIO_CloseHandle_Done:
 	ld hl, 0:i3
 	ret
 
+; Creates a file by name for writing (FileOpenDefault) after the 16-byte path prefix
+; FileIO_OpenDefault_PathInit.
+;   In:  XWA = file name.  Out: HL = 0 on success, -11 when FileOpenDefault reports 31, -3 for
+;        any other failure.
 FileIO_OpenDefault:
 	lda xsp, (xsp - 16)
 	ld xde, xwa
@@ -4292,6 +4324,9 @@ FileIO_CopyOpen_Return:
 	lda xsp, (xsp + 32)
 	ret
 
+; Reads one byte from the open file (handle at 0x7f44, SeqStep_FileReadReturn): the C-library
+; fgetc.  Out: HL = the byte, -2 on a read error, -100 when no file is open; an error is
+; recorded at 0x7f48 unless an earlier one is there.
 FileIO_ReadByte:
 	ld xwa, (0x7f44:16)
 	or xwa, xwa
@@ -4362,6 +4397,11 @@ FileIO_SeekToOffset:
 	popw iz
 	ret
 
+; Reads up to XBC bytes from the open file into XWA, in chunks of at most 0x7fff (FileRead).
+;   Uses the handle at 0x7f44.  Out: XHL = bytes read, or a negative code: -100 when no file is
+;   open, -2 when a chunk comes back short without the handle's end-of-file flag (bit 15 of
+;   its +6 word).  A short read at end of file returns the count.  A new error is recorded at
+;   0x7f48 unless an earlier one is there.  The C-library fread goes through here.
 FileIO_ReadBlock:
 	lda xsp, (xsp - 18)
 	push xiz
@@ -4444,6 +4484,11 @@ FileIO_WriteByte:
 	lda xsp, (xsp + 18)
 	ret
 
+; Writes XBC bytes from XWA to the open file (handle at 0x7f44), in chunks of at most 0x7fff
+; (FileWrite).  The C-library fwrite goes through here.
+;   Out: XHL = XBC, or a negative code: -100 when no file is open, -11 when a chunk is short
+;        and the handle's +6 word (bit 15 masked) is 31, -3 for any other short write.  A new
+;        error is recorded at 0x7f48 unless an earlier one is there.
 FileIO_WriteByte_Impl:
 	lda xsp, (xsp - 18)
 	push xiz
@@ -4526,6 +4571,11 @@ FileIO_CheckHandle:
 	lda xsp, (xsp + 18)
 	ret
 
+; Seeks the open file (handle at 0x7f44) through SeqStep_FileSeekSetup.
+;   In:  XWA = offset, BC = origin (callers pass 0 = start, 2 = end); both go on the stack
+;        after the handle.
+;   Out: HL = 0, -5 when the seek fails, -100 when no file is open; a new error is recorded at
+;        0x7f48 unless an earlier one is there.
 FileIO_SeekAndReadBlock:
 	ld xde, (0x7f44:16)
 	or xde, xde
@@ -4553,6 +4603,9 @@ FileIO_SeekRead_Extended:
 	ld (0x7f48:16), wa
 	ret
 
+; Calls SeqStep_FileIoHelper on the open file (handle at 0x7f44) and returns HL = 0, or -100
+; when no file is open (recorded at 0x7f48 unless an earlier error is there).  The helper's own
+; result is discarded.
 FileIO_SeekRead_ExtReturn:
 	pushw iz
 	ld iz, 0:i3
@@ -4757,6 +4810,8 @@ FileIO_ValidateRecord_Return:
 	ld	xbc, FileIO_ValidateRecord_Ok_Str_MID	; pointer to "________.MID"
 	jr FileIO_CopyString
 
+; Copies the NUL-terminated string at XBC to XWA, terminator included.
+;   Out: XWA points at the destination's terminator, XDE at the source's.
 FileIO_CopyString:
 	ld xde, xbc
 	cp (xde), 0x0
@@ -4772,6 +4827,8 @@ FileIO_CopyString_Done:
 	ld (xwa), 0x0
 	ret
 
+; C strncpy: copies at most DE characters of the string at XBC to XWA and zero-fills the rest of
+; the DE bytes.  As in C, no terminator is written when the source fills them.
 FileIO_CopyString_WriteNull:
 	ld xhl, xbc
 	jr FileIO_CopyString_CheckEnd
@@ -4796,6 +4853,8 @@ FileIO_CopyString_Return:
 	djnz16 de, FileIO_CopyString_Return
 	ret
 
+; C strcat: appends the NUL-terminated string at XBC to the one at XWA.
+;   Out: XWA points at the new terminator, XDE at the source's.
 FileIO_BuildFilePath:
 	ld xde, xbc
 	cp (xwa), 0x0
@@ -4820,6 +4879,8 @@ FileIO_BuildPath_Return:
 	ld (xwa), 0x0
 	ret
 
+; C strcmp of the strings at XWA and XBC.  Out: HL = 0 when equal, else the sign-extended
+; difference of the first differing characters (XWA's minus XBC's).
 FileIO_SearchFile:
 	ld xhl, xwa
 	jr FileIO_Search_CheckNext
@@ -4878,6 +4939,8 @@ FileIO_Search_Return:
 	exts hl
 	ret
 
+; Writes the two-digit number C + 1 (01..29) at XWA and appends the string at XDE
+; (FileIO_CopyString).
 FileIO_FormatFileIndex:
 	inc 1, c
 	cp c, 0xa
@@ -4902,6 +4965,9 @@ FileIO_FormatIndex_AddChar:
 	ld xbc, xde
 	jrl FileIO_CopyString
 
+; Builds "<XBC>.<extension>" at XWA: copies the base name (FileIO_CopyString), appends "." and
+; FileIO_TypeExtensions[E] (FileIO_BuildFilePath twice).
+;   In:  XWA = destination, XBC = base name, E = file type index.
 FileIO_ReadHeader:
 	dec 2, xsp
 	push xiz
@@ -5024,6 +5090,9 @@ FileIO_GetRecordType_Standard:
 	popw iz
 	retd 0x4
 
+; Makes a file name displayable in place: '~' becomes '_' and control characters become spaces,
+; up to the terminator.
+;   In:  XWA = string.
 FileIO_GetRecordType_Extended:
 	cp (xwa), 0x0
 	ret z
@@ -5048,6 +5117,7 @@ FileIO_GetRecordType_Alt:
 	jr nz, FileIO_GetRecordType_Error
 	ret
 
+; Returns XHL = 0x25eaa, a fixed RAM address; no register selects a type.
 FileIO_GetRecordByType:
 	lda xhl, (0x025eaa:24)
 	ret
@@ -5060,10 +5130,13 @@ FileIO_GetRecordByType_Lookup:
 	ld (0x025eb0:24), 0x00
 	ret
 
+; Returns XHL = 0x271f2, a fixed RAM address.
 FileIO_GetRecordPtrAlt:
 	lda xhl, (0x0271f2:24)
 	ret
 
+; Copies at most 12 characters of the string at XWA to 0x271f2 (FileIO_CopyString_WriteNull) and
+; terminates it at 0x271fe.
 FileIO_WriteRecordName:
 	ld xbc, xwa
 	ld xwa, 0x271f2
@@ -5072,6 +5145,7 @@ FileIO_WriteRecordName:
 	ld (0x0271fe:24), 0x00
 	ret
 
+; Returns in HL the bit word at 0x272cc (FileIO_FormatName_Loop sets its bits).
 FileIO_WriteRecordName_Loop:
 	ld hl, (0x0272cc:24)
 	ret
@@ -5102,6 +5176,7 @@ FileIO_FormatRecordName:
 	scc8 z, l
 	ret
 
+; Sets bit A (0..9) of the word at 0x272cc; A >= 10 does nothing.
 FileIO_FormatName_Loop:
 	cp a, 0xa
 	ret nc
@@ -5127,6 +5202,9 @@ FileIO_FormatName_CopyLoop:
 	and (0x272cc:24), bc
 	ret
 
+; Returns in HL the bit word at 0x272ce: FileIO_BuildRecordPath_Done sets its bits 0..9,
+; FileIO_BuildRecordPath_Return clears them and FileIO_FormatName_Return tests one.  No name is
+; formatted, despite the label.
 FileIO_FormatName_Done:
 	ld hl, (0x0272ce:24)
 	ret
@@ -5157,6 +5235,8 @@ FileIO_BuildRecordPath_AddExt:
 	scc8 z, l
 	ret
 
+; Sets bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.  FileIO_BuildRecordPath_Return
+; clears it.
 FileIO_BuildRecordPath_Done:
 	cp a, 0xa
 	ret nc
@@ -5169,6 +5249,7 @@ FileIO_BuildRecordPath_Error:
 	or (0x272ce:24), bc
 	ret
 
+; Clears bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.
 FileIO_BuildRecordPath_Return:
 	cp a, 0xa
 	ret nc
@@ -5201,10 +5282,16 @@ FileIO_SetModeFlag_Writing:
 	ld (0x0272d0:24), 0x01
 	ret
 
+; Clears the mode byte at 0x272d0.  FileIO_SetModeFlag_Writing sets it to 1, and
+; FileIO_GetRecordAttr_Check returns it while the selected file index is valid.
 FileIO_SetModeFlag_Reading:
 	ld (0x0272d0:24), 0x00
 	ret
 
+; Tests bit A of the selected file's attribute word.
+;   In:  A = bit (0..9).  Out: L = 1 when the selected file index (word at 0x25ea8, valid
+;        0..19) has that bit set in the word at 0x25db8 + 12 * index, else 0 (also for an
+;        invalid index or A >= 10).
 FileIO_CheckRecordValid:
 	ld bc, (0x025ea8:24)
 	cp bc, 0:i3
@@ -5234,6 +5321,8 @@ CheckRecord_ShiftDone:
 	scc8 z, l
 	ret
 
+; Returns L = 1 when file WA (0..19) has bit C (0..9) set in its attribute word (0x25db8 + 12 *
+; WA), else 0.  FileIO_CheckRecordValid is the same test for the selected file.
 FileIO_CheckRecordByFile:
 	ld de, wa
 	cp de, 0x14
@@ -5266,6 +5355,8 @@ CheckRecordByFile_ShiftDone:
 	scc8 z, l
 	ret
 
+; Returns in HL the attribute word of the selected file (0x25db8 + 12 * index, index = word at
+; 0x25ea8), or 0 when the index is outside 0..19.
 CheckFileSystemStatus:
 	ld wa, (0x025ea8:24)
 	cp wa, 0:i3
@@ -5356,6 +5447,8 @@ InitRecordTable_ExtLoop:
 	ldw (0x0272ca:24), 0x0000
 	ret
 
+; Returns in L the inserted disk's media type, reading it (GetMediaType) into 0x25db6 first
+; when that byte still holds FileIO_DiskInfoInit_MediaType's initial value.
 GetDiskSizeInfo:
 	ld a, (FileIO_DiskInfoInit_MediaType:24)
 	cp a, (0x25db6:24)
@@ -5367,6 +5460,9 @@ GetDiskSize_Return:
 	ld l, (0x025db6:24)
 	ret
 
+; Returns in XHL the u32 at 0x25d6c, the cached result of GetDiskFreeSpace, first calling
+; GetDiskFreeSpace (XWA = 0x25d6c, XBC = 0x25d70) when it still holds FileIO_DiskInfoInit's
+; initial value.
 GetEncodedFreeSpaceData:
 	lda xwa, (0x025d6c:24)
 	ld xbc, (FileIO_DiskInfoInit:24)
@@ -5379,6 +5475,9 @@ GetEncoded_Return:
 	ld xhl, (0x025d6c:24)
 	ret
 
+; Refreshes the cached disk free-space value at 0x25d6c (GetDiskFreeSpace with XWA = 0x25d6c,
+; XBC = 0x25d70) and returns it in XHL.  GetEncodedFreeSpaceData does the same only when the
+; cache is invalid.
 FileIO_GetDiskFreeSpace:
 	lda xwa, (0x025d6c:24)
 	lda xbc, (xwa + 4)
@@ -5386,6 +5485,8 @@ FileIO_GetDiskFreeSpace:
 	ld xhl, (0x025d6c:24)
 	ret
 
+; Invalidates the cached disk free-space value: stores FileIO_DiskInfoInit's initial value at
+; 0x25d6c, so the next GetEncodedFreeSpaceData asks GetDiskFreeSpace again.
 FileIO_ResetCurrentRecord:
 	ld xwa, (FileIO_DiskInfoInit:24)
 	ld (0x025d6c:24), xwa
@@ -5400,6 +5501,9 @@ FileIO_GetDiskRecordPtr:
 	ld xhl, (0x025d70:24)
 	ret
 
+; Returns in XHL the disk's volume name buffer (0x25d74), filling it when FileIO_SearchFile does
+; not already find FileIO_EmptyVolumeName there: the label GetVolumeLabel returns, or "____"
+; when there is none.
 FileIO_SearchAndLoadFile:
 	push xiz
 	lda xwa, (0x025d74:24)
@@ -5430,6 +5534,8 @@ SearchLoad_Return:
 	pop xiz
 	ret
 
+; Returns HL = 0 when WA is a valid file index (0..19) and the media type byte at 0x25db6 is 2,
+; 3 or 4; otherwise 0xffff.
 ValidateFileSelectionIndex:
 	ld c, (0x025db6:24)
 	cp c, 2:i3
@@ -5453,6 +5559,8 @@ ValidateSelection_Ok:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the selected file index (word at 0x25ea8), or -104 when
+; ValidateFileSelectionIndex rejects it.
 GetCurrentFileIndex:
 	ld wa, (0x025ea8:24)
 	calr ValidateFileSelectionIndex
@@ -5465,6 +5573,9 @@ GetCurrentFile_ReturnIndex:
 	ld hl, (0x025ea8:24)
 	ret
 
+; Selects file WA: stores it as the selected index (word at 0x25ea8) when
+; ValidateFileSelectionIndex accepts it.  Out: HL = the selected index (unchanged when WA is
+; rejected).
 NotifyUIOfSelectionChange:
 	pushw iz
 	ld iz, wa
@@ -5483,6 +5594,8 @@ NotifyUI_Return:
 	popw iz
 	ret
 
+; Returns in XHL the 12-byte directory entry of file WA (0x25dba + 12 * WA), or the empty name
+; FileIO_EmptyEntryName when ValidateFileSelectionIndex rejects WA.
 GetFileEntryPtr:
 	pushw iz
 	ld iz, wa
@@ -5507,6 +5620,8 @@ GetFileEntryPtr_Return:
 	popw iz
 	ret
 
+; Returns in L the type byte of the selected file (0x25dc2 + 12 * index, index = word at
+; 0x25ea8), or 0 when ValidateFileSelectionIndex rejects the index.
 GetCurrentFileType:
 	ld wa, (0x025ea8:24)
 	calr ValidateFileSelectionIndex
@@ -6016,6 +6131,7 @@ ValidateFileRange_Found:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRange rejects it.
 GetFirstPageBase:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRange
@@ -6145,6 +6261,8 @@ NavToFileIdx_Return:
 	popw iz
 	ret
 
+; Returns in XHL the 82-byte record of file WA on the current page (0x25eb2 + 82 * (WA - first
+; index word 0x271ee)), or FileIO_EmptyEntryName when ValidateFileRange rejects WA.
 GetRecordPtrForFile:
 	pushw iz
 	ld iz, wa
@@ -6207,6 +6325,9 @@ ValidateAndSearch_Return:
 	ret
 
 
+; Rebuilds the second page of file records (BuildSecondPageRecords) and records its range: first
+; index word 0x271ee = 0, last index word 0x271ec = count - 1 (0 when there are none), and the
+; word at 0x271f0 (initially 0x3b) is lowered to that last index.
 GetFileCountEncoded:
 	ldw (0x0271ee:24), 0x0000
 	ldw (0x0271f0:24), 0x003b
@@ -6224,6 +6345,9 @@ GetFileCount_StoreAndClamp:
 	ld (0x0271f0:24), wa
 	ret
 
+; Reads a MIDI variable-length number from the open file (FileIO_ReadByte per byte, seven bits
+; per byte while bit 7 is set).  Out: HL = the value, clamped to 0x7fff, or 0xffff on a read
+; error.
 ReadVariableLengthInt:
 	push xiz
 	ld xiz, 0:i3
@@ -7128,6 +7252,7 @@ ValidateRange_IsValid:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeType5 rejects it.
 GetCurrentFileIndexAlt:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRangeType5
@@ -7472,6 +7597,7 @@ ValidateRangeAlt_IsValid:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeAlt rejects it.
 FileIO_GetCurrentFileIndex_Alt:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRangeAlt
@@ -8490,6 +8616,8 @@ InitWPNav_ClampEnd:
 	ld (0x0271f0:24), wa
 	ret
 
+; Resets the disk-operation state: the six words at 0x8500..0x850a to 0xffff,
+; FileIO_InitRecordTable, and one word from FmmPassword_StateInit to 0x8a0c.
 ResetProgressIndication:
 	ldw (0x8500:16), 0xffff
 	ldw (0x8502:16), 0xffff
@@ -8527,6 +8655,12 @@ FileIO_DiskRemoved:
 	call ApPostEvent
 	ret
 
+; Stops playback and resets the sound engine before a disk operation.
+;   In:  A = non-zero to also set bit 2 of 0x28a7.
+;   Calls, in order: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
+;   AccWrap_PlayModeDispatch, AccompSeq_StopSequence, AudioInit_RefreshToneBank,
+;   NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
+;   MIDI_SendAllSoundOff and MidiThru_Enable.
 InitializeOperationState:
 	dec 2, xsp
 	ld (xsp), a
@@ -8550,6 +8684,9 @@ InitOp_SkipSetFlag:
 	inc 2, xsp
 	ret
 
+; Undoes InitializeOperationState after a disk operation: clears bits 2 and 3 of 0x28a7,
+; re-initialises the playback state (SeqAcc_InitPlaybackState) and turns MIDI thru off
+; (MidiThru_Disable, tail jump).
 CancelOperationCleanup:
 	ld a, (0x28a7:16)
 	bit 2, a
@@ -8562,6 +8699,9 @@ CancelOp_ClearSeq:
 	call SeqAcc_InitPlaybackState
 	jp MidiThru_Disable
 
+; Calls CPanel_InitButtonState_SaveRegs, then tail-jumps to RefreshSwEvent, which clears the
+; TRANSITION_* state, deletes queued EVT_SW_ON / EVT_SW_IN / EVT_SW_OFF events and posts
+; EVT_REFRESH_SW_EVENT.
 SignalProgressUpdate:
 	call CPanel_InitButtonState_SaveRegs
 	jp RefreshSwEvent
@@ -8831,6 +8971,12 @@ DiskCap_Return:
 	inc 2, xsp
 	ret
 
+; Turns a file-operation result into the code the disk screens show.
+;   In:  WA = result, C = code to use for an unmapped error.
+;   Out: L = 0x23 for a result >= 0; for a negative result whose low 15 bits are below 0xff, L =
+;        its low byte; otherwise the code of its FileIO_StatusToErrorCode entry (4-byte
+;        {status word, code byte} entries; the first entry with a non-negative status ends the
+;        table and supplies the code for unlisted results).  A code of 0xff or more becomes C.
 FileIO_ValidateSignedValue:
 	cp wa, 0:i3
 	jr ge, ValidateSigned_Positive

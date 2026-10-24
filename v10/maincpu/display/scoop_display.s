@@ -284,6 +284,8 @@ Display_UpdateRegion10_Check:
 Display_UpdateRegion10_Done:
 	ret
 
+; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX when bit 0 of
+; DISPLAY_ENABLE_FLAG is set.
 UIRender_SingleTable:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, UIRender_SingleTable_Body
@@ -348,6 +350,8 @@ GraphicsRender_TwoTable_Alt_Body:
 	pop xwa
 	ret
 
+; Calls ColorBlit_WithPaletteSave with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set; XWA is
+; preserved.
 UIRender_TwoTableEvtCheck:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, UIRender_TwoTableEvtCheck_Body
@@ -372,6 +376,8 @@ UIRender_ConditionalDrawInit_Body:
 	pop xwa
 	ret
 
+; Calls Scoop_CurveUpdate_SegmentEnd with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set;
+; XWA is preserved.
 Scoop_ConditionalCurveUpdate:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, Scoop_ConditionalCurveUpdate_Body
@@ -391,6 +397,8 @@ Scoop_CurveUpdate_Direct:
 	pop xwa
 	ret
 
+; Calls Scoop_GlideParam_Setup with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set.
+;   XWA is preserved.
 Scoop_ConditionalGlideSetup:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, Scoop_ConditionalGlideSetup_Body
@@ -415,6 +423,8 @@ UIRender_ConditionalFBCall_Body:
 	pop xwa
 	ret
 
+; Calls Scoop_EventLoop_36Entry with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set; XWA is
+; preserved.
 GraphicsRender_EventCheck:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, GraphicsRender_EventCheck_Body
@@ -462,6 +472,8 @@ UIRender_DescriptorTable2:
 UIRender_DescriptorTable2_Return:
 	ret
 
+; Splits a value into decimal digits (ParamDigit_DivideValue) and blanks leading digits: when
+; bit 1 of 0x1185 is clear 0x1181 becomes a space, and 0x1182 as well when bit 0 is clear too.
 ParamDigit_ExtractAndFormat:
 	calr ParamDigit_DivideValue
 	bit 1, (4485:16)
@@ -474,6 +486,7 @@ ParamDigit_ExtractAndFormat:
 ParamDigit_ExtractDone:
 	ret
 
+; ScoopDisp_BytecodeBlock1, then ParamDigit_ExtractAndFormat.
 ParamDigit_CalrData:
 	calr	ScoopDisp_BytecodeBlock1
 	calr	ParamDigit_ExtractAndFormat
@@ -768,6 +781,7 @@ Display_NullHandler:
 	ret
 
 
+; MIDI_SendSysExCmd with the command byte taken from W.
 MIDI_SendSysExFromW:
 	ld a, w
 	call MIDI_SendSysExCmd
@@ -2107,6 +2121,7 @@ UIState_UpdateAllRegions:
 	call UIState_UpdateMultiRegions
 UIState_Dispatch_Ret:
 	ret
+; Marks display regions 7, 8, 9, 1, 10 and 2 for redraw (Display_UpdateRegion*).
 UIState_UpdateMultiRegions:
 	; --- Multi-call teardown (25 bytes) ---
 	call Display_UpdateRegion7
@@ -2274,6 +2289,7 @@ Display_RedrawInd_StoreDigits:
 Display_RedrawInd_Ret:
 	ret
 
+; Loads W with the part number byte at 0xeee and sets bit 2 of 0x287b.
 VoiceBank_BitsAndLoad:
 	ld w, (3822:16)
 	or (0x287b:16), 4
@@ -3131,6 +3147,7 @@ SoundEvt_LongPacketHandler_DispatchTbl_Target1_Helper:
 	call	VoiceAlloc_ScoopDisplayProcess
 Timer_ModeHandler_0_Return2:
 	ret
+; VoiceSlot_FinalRetZ with XHL preserved.
 Timer_ModeHandler_0_Helper:
 	push	xhl
 	call	VoiceSlot_FinalRetZ
@@ -3572,6 +3589,7 @@ MemConfig_Handler_5_Helper2:
 MemConfig_Handler_5_Skip19:
 	call	ToneParam_Evt09_BytecodeHandler_Sub
 	jp	MemConfig_Handler_5_Return
+; VoiceSlot_RetZ with W = 1.
 MemConfig_Handler_5_Helper3:
 	ld	w, 1:opc
 	call	VoiceSlot_RetZ
@@ -3758,6 +3776,7 @@ MemConfig_Handler_5_Skip11:
 	xor	w, w
 	call	MemConfig_Handler_5_Helper9
 	jp	MemConfig_Handler_5_Skip7
+; Calls VoiceSlot_FinalRetZ with WA preserved, then VoiceSlot_WriteCurrentParam.
 MemConfig_Handler_5_Helper9:
 	pushw	wa
 	call	VoiceSlot_FinalRetZ
@@ -5338,6 +5357,10 @@ DMA_Channel3_CallAndInit:
 	ld	(0x3728:16), 0
 	call DisplayStr_StyleSectionInit
 	ret
+; Saves the current part's selection to slot 0 (VoiceSlot_SaveState), calls
+; VoiceSlot_StatusRet, restores the selection and reads the byte at the read position
+; (VoiceSlot_ReadCurrentParams).  A note-on status (0x9n) sets bit 2 of 0xd54; 0xd5e is cleared
+; either way.
 DMA_FlagCheckWithCalls:
 	; --- Flag-check with calls (42 bytes) ---
 	xor	a, a
@@ -6070,6 +6093,9 @@ VoiceCtrl_CheckAndReset:
 VoiceCtrl_CheckAndReset_Return:
 	ret
 
+; Sets bit 6 of 0x28b3, writes the 5-byte sequencer-buffer event {0x90, 0x7f, 0x33, 0, part-1}
+; (SeqBuf_WriteByte; part = the byte at 0xeee) and runs VoiceAlloc_ScoopDisplayProcess.
+; Preserves WA and XHL.
 VoiceCtrl_SendNoteOffSequence:
 	push xhl
 	pushw wa
@@ -7428,6 +7454,7 @@ Interrupt_FlagSetBytecode:
 	call	SNS_Init_Startup
 	call	Display_UpdateRegion3
 	ret
+; Sets the bytes 0xd68 = 2 and 0xd67 = 4 and runs Audio_CheckSubsystemReady.
 MemConfig_Handler_5_Helper10:
 	ld	(3432:16), 2
 	ld	(3431:16), 4
@@ -7491,6 +7518,8 @@ Interrupt_ClearModeAndRet:
 	ld (3432:16), 0
 	ret
 
+; Copies the bytes at 0x8d40, 0x8d42 and 0x8d44 to 0xd6d, 0xd6e and 0x1127, reloads the key /
+; chord / duration display data (SNS_Init_Startup) and marks display region 3 for redraw.
 Display_RegionUpdateFromHW:
 	ld a, (0x8d40:16)
 	ld (3437:16), a
@@ -8303,6 +8332,9 @@ MemoryConfig_Handler_Table_Target2_Join2:
 	ld	w, 0:opc
 	ret
 
+; Rewinds the current part's song-data cursor: its block number (word at 0xc9e + 2*(part-1)) is
+; set from the word at 0xf250 + 3*(part-1) + 1 unless that word is 0xffff, and its index byte
+; (0xcbe + part-1) to 5, the first data byte.  The part is the byte at 0xeee.
 MemConfig_VoiceSlotLookup:
 	call VoiceSlot_ComputeIndex
 	push xde
@@ -9114,6 +9146,8 @@ SndDispatch_ProcessCommand_Skip23:
 	call	VoiceSlot_RestoreState
 SndDispatch_ProcessCommand_Return2:
 	ret
+; When the byte at the current part's read position is 0x90 (note on), runs
+; MemConfig_Handler_5_Helper10; then DMA_FlagCheckWithCalls.
 PortConfig_Handler_0_Helper7:
 	call	VoiceSlot_ReadCurrentParams
 	cp	a, 144
@@ -9130,6 +9164,8 @@ MemConfig_Handler_3_Helper5:
 	call	Interrupt_SetFlagBytecode
 SndDispatch_ProcessCommand_Return3:
 	ret
+; Redraws the display regions in order: Display_UpdateRegion0, 1, 6 and 3,
+; SqStep_UpdateChordCellCursor, then Display_UpdateRegion2.
 MemConfig_Handler_5_Helper11:
 	call	Display_UpdateRegion0
 	call	Display_UpdateRegion1
@@ -9284,6 +9320,8 @@ MemConfig_Handler_4_Skip8:
 	ld	w, 0:opc
 MemConfig_Handler_4_Return3:
 	ret
+; Clears the bytes 0xfc5f and 0xfc60, then calls PortConfig_DataTable_A_Helper twice with
+; A = 72, D = 4, E = 0 and W = 5, then W = 6.  Registers are preserved.
 MemConfig_Handler_4_Helper:
 	ld	(0xfc5f:16), 0
 	ld	(0xfc60:16), 0
@@ -9331,6 +9369,8 @@ MemConfig_Handler_4_Helper2_Skip:
 MemConfig_Handler_4_Helper2_Return:
 	ret
 
+; Clears the style-section byte 0x3728, redraws the section name (DisplayStr_StyleSectionInit)
+; and requests mode NAKA_MODE_MD_PS + 10 (UI_PostPartChangeEvent with A = 10).
 SysInit_SendAllNotesAndReset:
 	ld (0x3728:16), 0
 	call DisplayStr_StyleSectionInit
@@ -9964,6 +10004,8 @@ SqStep_LowestSetBitOfWord_Skip23:
 	jp	SqStep_LowestSetBitOfWord_Join8
 SqStep_LowestSetBitOfWord_Return2:
 	ret
+; Calls SysEx_BytecodeDispatcher_Tbl2_Helper for the part number byte at 0xeee, then sets bit 0
+; of 0x8d88 and of 0x266a.
 SystemInit_StepHandler_0_Helper2:
 	ld	a, (3822:16)
 	call	SysEx_BytecodeDispatcher_Tbl2_Helper
@@ -10326,6 +10368,10 @@ VoiceSlot_RetZ_Join3:
 VoiceSlot_RetZ_Return:
 	ret
 
+; Checks the event at the current part's read position and handles it.
+;   Out: W = 0xff when the next byte is past the end of the block chain (VoiceSlot_FlagCheck),
+;        when it is 0x82, or when the current byte is 0x84; otherwise W = 0 and
+;        VoiceSlot_CompareRet is called.
 VoiceSlot_LoadAndDispatch:
 	call VoiceSlot_FlagCheck
 	cp w, 0xff
@@ -10345,12 +10391,15 @@ VoiceSlot_ReadParamsErrExit:
 VoiceSlot_DispatchDone:
 	ret
 
+; VoiceSlot_LoadAndDispatch with the word at 0xd58 saved and restored around it.
 VoiceSlot_DispatchRet:
 	push_sd16w 0x58, 0x0d
 	call VoiceSlot_LoadAndDispatch
 	popw_dd16 0x58, 0x0d
 	ret
 
+; VoiceSlot_CompareRet with W = 1: steps the current part's song-data cursor back one event (see
+; VoiceSlot_StepCursorBack).
 VoiceSlot_CompareAndBranch:
 	ld	w, 1:opc
 	call	VoiceSlot_CompareRet
@@ -10517,6 +10566,11 @@ VoiceSlot_AdvancePointer:
 	pop xiy
 	ret
 
+; Reads the current parameter byte of the voice selected for the part number at 0xeee.
+;   The record is (word at 0xc9e + 2*(part-1), minus 1) * 256 + the u32 base at 0x1d5a; its
+;   address is stored at 0x10fd (VoiceSlot_UpdateCurrentPointer).  The byte index is the byte
+;   at 0xcbe + (part-1).
+;   Out: WA = the byte (W = 0), XHL = the record, IZ = 2*(part-1).
 VoiceSlot_ReadCurrentParams:
 	call VoiceSlot_ComputeWordIndex
 	push xde
@@ -10536,6 +10590,11 @@ VoiceSlot_ReadCurrentParams:
 	xor w, w
 	ret
 
+; Peeks the byte one past the current part's read position (offset word 0xdf5 = 1, then
+; VoiceSlot_FlagCheckDone).  The position is a block number (word at 0xc9e + 2*(part-1)) in a
+; chain of 256-byte blocks based at the u32 at 0x1d5a, and an index (byte at 0xcbe + part-1);
+; the part number is the byte at 0xeee.  Past the end of a block it reads byte 5 of the next
+; block (link word at +3); with no next block (0xffff) it returns W = 0xff.  Out: A = the byte.
 VoiceSlot_FlagCheck:
 	ldw (3573:16), 1
 	call VoiceSlot_FlagCheckDone
@@ -10836,6 +10895,8 @@ VoiceSlot_FinalRetZ_Skip7:
 VoiceSlot_FinalRetZ_Return2:
 	ret
 
+; Points 0x10fd at 256-byte block IY (1-based) of the block area whose base is the u32 at
+; 0x1d5a: (IY - 1) * 256 + base.  Out: XHL = 0.
 VoiceSlot_UpdateCurrentPointer:
 	ld hl, iy
 	dec 1, hl
@@ -10846,6 +10907,8 @@ VoiceSlot_UpdateCurrentPointer:
 	xor xhl, xhl
 	ret
 
+; Returns IZ = 2 * (part - 1) for the part number byte at 0xeee: the word index into the
+; per-part tables at 0xc9e.  Preserves WA.
 VoiceSlot_ComputeWordIndex:
 	pushw wa
 	ld a, (3822:16)
@@ -11753,6 +11816,10 @@ Display_ModePopupIds:
 VoiceSlot_StatusRet_Tbl2:
 	.byte	0x00, 0x06, 0x04, 0x05, 0x03, 0x07, 0x02, 0x07, 0x01, 0x07, 0x07, 0x07
 
+; Saves the current part's voice selection into save slot A (0..7, 8 bytes each at 0xdff).
+;   Slot = {word at 0xc9e + 2*(part-1), byte at 0xcbe + (part-1), byte 0xd57, word 0xd58,
+;   word 0xd5a}; the part number is the byte at 0xeee.  Registers are preserved.
+;   VoiceSlot_RestoreState writes the same fields back.
 VoiceSlot_SaveState:
 	pushw wa
 	push xhl
@@ -11786,6 +11853,9 @@ VoiceSlot_SaveState:
 	popw wa
 	ret
 
+; Restores the current part's voice selection from save slot A (0..7) written by
+; VoiceSlot_SaveState (VoiceState_RestoreEntry, VoiceState_RestoreDone).  Preserves WA, XHL,
+; XIZ and XIY.
 VoiceSlot_RestoreState:
 	pushw wa
 	push xhl
@@ -13958,6 +14028,8 @@ OscScope_Handler_6:
 OscScope_Handler_7:
 	call	OscScope_Handler_2_Helper
 	ret
+; In the 4-byte entry (byte at 0xec4) of the table the u32 at 0x1114 points to, clears bit 5 and
+; sets bit 6 of the first byte.
 OscScope_Handler_2_Helper:
 	ld	xix, (4372:16)
 	ld	e, (3780:16)
@@ -14507,6 +14579,8 @@ DisplayStr_BytecodeBlock_A_Skip7:
 	popw (0x28bf:16)	; popw (0x28bf)
 	ret
 
+; Points 0x10fd at 256-byte block HL (1-based) of the block area whose base is the u32 at 0x1d5a.
+;   Out: XHL = 0.
 DisplayStr_ComputeTableAddr:
 	dec 1, hl
 	extz xhl
@@ -14784,6 +14858,7 @@ DisplayStr_ShowBlankLine:
 	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
 DisplayStr_BytecodeBlock_C_Text:
 	.ascii	"                         "
+; Marks display region 0 for redraw (Display_UpdateRegion0).
 DisplayMode_Handler_3_Helper13:
 	call	Display_UpdateRegion0
 	ret
@@ -14807,6 +14882,7 @@ DisplayStr_ShowMeasureNumber_Skip3:
 DisplayStr_ShowMeasureNumber_Return:
 	ret
 
+; Writes "---" at the start of the display text line 0xeca.
 DisplayStr_FillDashes:
 	ld xix, 0xeca
 	ld a, 0x2d:opc
@@ -14834,6 +14910,7 @@ DisplayStr_BytecodeBlock_D:
 	call	Display_UpdateRegion3
 	ret
 
+; Fills the 27-byte display string buffer at 0xecd with spaces.  Preserves WA, BC and XIX.
 DisplayStr_ClearRegion:
 	pushw wa
 	pushw bc
@@ -14850,6 +14927,10 @@ DisplayStr_ClearLoop:
 	popw wa
 	ret
 
+; Shows the current style section's name: clears the display string at 0xecd
+; (DisplayStr_ClearRegion), writes four spaces, the 8-character entry (byte at 0x3728) of
+; DisplayStr_StyleSectionNames and three spaces from 0xece, then redraws region 3
+; (Display_UpdateRegion3).
 DisplayStr_StyleSectionInit:
 	call DisplayStr_ClearRegion
 	ld xiy, DisplayStr_StyleSectionNames
@@ -15268,6 +15349,7 @@ DisplayStr_ShowMeasureNumber_B_Skip3:
 DisplayStr_ShowMeasureNumber_B_Return:
 	ret
 
+; Calls SNS_LoadKeyAndChord with XIX = 0xed4, then SNS_LoadDurationData.
 SNS_Init_Startup:
 	ld xix, 0xed4
 	call SNS_LoadKeyAndChord
@@ -16997,6 +17079,8 @@ Tbl_PedalNames_Join4:
 	ld	(4472:16), wa
 	pop	xix
 	ret
+; Returns in A the byte at index (word 0x1178) of 256-byte block (word 0x117a), addressed through
+; DisplayStr_ComputeTableAddr.
 Tbl_PedalNames_Helper6:
 	ld	hl, (4474:16)
 	call	DisplayStr_ComputeTableAddr
@@ -18239,6 +18323,10 @@ Scoop_EventHandler_SpecialMode_Skip13:
 Scoop_EventHandler_SpecialMode_Return:
 	ret
 
+; Copies BC bytes downwards (LDDR) from source offset IY in the block at (0x267e) to destination
+; offset IX in the block at (0x267a): one piece of the backward chained copy in the sequencer
+; event memory.  Out: IY and IX = the offsets after the copy.  BC = 0 copies nothing.  Preserves
+; WA, XDE and XHL.
 Scoop_SpecialMode_Setup:
 	pushw wa
 	push xde
@@ -18293,6 +18381,10 @@ Scoop_SpecialMode_Toggle:
 Scoop_SpecialMode_ToggleEnd:
 	ret
 
+; Moves the destination of a backward chained copy to the previous block: follows the link at
+; +1 of the block at (0x267a), stores the block number in 0x289f and the block's address in
+; (0x267a) and 0x10fd, and sets the offset IX = 0xff (the block's last byte).  When the linked
+; block is not in use (bit 7 of its first byte clear) it sets SEQ_ERROR_CODE = 11 instead.
 Scoop_SpecialMode_Draw:
 	xor ix, ix
 	ld xix, (9850:16)
@@ -18317,6 +18409,10 @@ Scoop_SpecialMode_DrawAlt:
 Scoop_SpecialMode_DrawEnd:
 	ret
 
+; Moves the source of a forward chained copy to the next block: saves the block address at
+; (0x267e) in 0xce8, follows its next-block link (+3), stores the block number in 0x28ba and the
+; block's address in (0x267e) and 0x10fd, and sets the offset IY = 5 (first data byte).  When the
+; linked block is not in use (bit 7 clear) it sets SEQ_ERROR_CODE = 11 instead.
 Scoop_SpecialMode_UpdateParams:
 	xor	iy, iy
 	ld	xiy, (9854:16)

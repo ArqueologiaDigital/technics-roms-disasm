@@ -1082,6 +1082,7 @@ Report_BlinkLoop_OffDelayInner:
 	ret
 
 
+; Busy-waits 0x1000 x 0x100 loop iterations.  Clobbers WA and BC.
 A_Short_Pause:
 	ld bc, 0:i3
 
@@ -1097,6 +1098,7 @@ ShortPause_InnerLoop:
 	jr c, ShortPause_OuterLoop
 	ret
 
+; Busy-waits 16 iterations.  Clobbers WA.
 DramTest_Loop:
 	ld wa, 0:i3
 
@@ -8159,6 +8161,8 @@ AudioTable_ReturnZero:
 	lda xsp, (xsp+264)
 	ret
 
+; Looks A up in the 30-byte table FswAssign_FunctionCodes.
+;   Out: L = its index, or 30 when it is not there.
 AudioTable_FindMatchIndex:
 	ld l, 0x0:opc
 	lda xde, (FswAssign_FunctionCodes:24)
@@ -13673,6 +13677,8 @@ VariScreen_Epilogue:
 	lda xsp, (xsp+566)
 	ret
 
+; Returns L = C + A/2 + 1 when A >= C + A/2 + 1, else L = 0.
+;   In:  A, C (bytes).  Clobbers E and C.
 VariScreen_CalcValidNoteRow:
 	ld e, a
 	srl e, 1
@@ -13689,6 +13695,7 @@ CalcValidNoteRow_Invalid:
 	ld l, 0x0:opc
 	ret
 
+; Returns L = 1 when A / 2 >= C, else 0.
 VariScreen_IsHalfRangeAbove:
 	srl a, 1
 	cp a, c

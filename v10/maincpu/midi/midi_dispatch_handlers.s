@@ -1125,6 +1125,10 @@ MidiRx_BuildChannelPartLists_Skip4:
 	cp	(0x966e:16), 32
 	jr	nz, MidiRx_BuildChannelPartLists_Loop
 	ret
+; Calls handler C (0..0xbf) of MidiDispatchCC_HandlerTable; BC and DE are saved at 0x964c /
+; 0x964e for the handler.
+;   Skipped while bit 0 of 0xb7e7 or bit 4 of 0xfd50 is set; bit 7 of 0x90e5 is cleared on the
+;   way out in every case.
 MIDI_DispatchCC:
 	bit 0, (0xb7e7:16)
 	jr nz, MidiCC_DispatchCleanupRet
@@ -1652,6 +1656,7 @@ PanelEvt_D11Slot11_SendCC83_Return:
 PanelEvt_D11Slot11_ValueMap:
 	.byte 0x00, 0x02, 0x01, 0x00
 
+; Calls handler (byte at 0x964d) of the u32 handler table at XIY when that index is at most A.
 PanelEvent_DispatchByIndex:
 	ld l, (0x964d:16)
 	cp l, a
@@ -4261,6 +4266,7 @@ DataBuf_CopyReverbBlock6:
 	stcfm 0, (xbc)
 	ret
 
+; Copies byte +2 and bit 7 of byte +3 from the record at XWA to the record at XBC.
 DataBuf_CopySimpleBlock4:
 	ld e, (xwa + 2)
 	ld (xbc + 2), e
@@ -4671,6 +4677,8 @@ DataBuf_CopyCompressorBlock16:
 	ld (xde + 15), a
 	ret
 
+; Copies bits 1 and 0 of byte +2 from the record at XWA to the record at XBC; both pointers are
+; advanced by 2.
 DataBuf_CopyDelayBit2:
 	inc 2, xbc
 	inc 2, xwa
@@ -6336,6 +6344,8 @@ VoiceParam_CopyFields_TypeD:
 	or (xbc + 3), a
 	ret
 
+; Copies bits 1 and 0 of byte +2 from the record at XWA to the record at XBC; both pointers are
+; advanced by 2 (the same code as DataBuf_CopyDelayBit2).
 VoiceParam_CopyBits_TwoFlags:
 	inc 2, xbc
 	inc 2, xwa
@@ -8332,6 +8342,8 @@ MidiStream_JumpStubData:
 MidiStream_RetStub2:
 	ret
 
+; Ignores WA and returns HL = 0.  The MIDI bulk-dump code calls it with WA = 1, 3 or 4 before
+; each data group and skips the group when HL = 0xffff, so in this build no group is skipped.
 AccWrap_ReturnZero:
 	ld hl, 0:i3
 	ret
@@ -8371,6 +8383,8 @@ MidiStream_PrevBankCheck_Epilogue:
 	pop qiz
 	ret
 
+; MidiSeq_SwapActiveBuffers, SeqBuf_WaitForEmpty, MidiChan_ParseVoiceData,
+; SeqData_InitPlaybackFromField, then SeqAlt_CheckInitBuffer (tail jump).
 SeqAlt_ProcessAndFinalize:
 	call MidiSeq_SwapActiveBuffers
 	calr SeqBuf_WaitForEmpty
@@ -8510,6 +8524,8 @@ VoiceQueue_IncrementCount:
 	incw 1, (xbc)
 	ret
 
+; Takes the next byte from a 0xff-terminated byte queue whose read pointer is the u32 at (XWA + 2).
+;   Out: L = the byte (the pointer advances), or 0xff at the end mark (the pointer stays).
 MidiChan_DequeueVoiceEntry:
 	ld l, 0xff:opc
 	lda xbc, (xwa + 2)
@@ -8544,6 +8560,9 @@ MidiChan_DequeueVoiceEntry_Skip:
 	ld	(xwa), 255
 	ret
 
+; Stores E at (XWA + BC) for BC = 0..15 (a compiled switch with one case per offset); any other
+; BC returns without a store.  Despite the name nothing is read.
+;   In:  XWA = base, BC = offset, E = value.
 MIDI_ReadChannelParam:
 	extz bc
 	cp bc, 0:i3
@@ -9833,6 +9852,9 @@ ArpQueue_Pack21BitValue:
 	inc	4, xsp
 	ret
 
+; Appends BC bytes from (XWA) to the queue whose descriptor pointer is at 0xbc5c.
+;   The descriptor's +10 u32 is the write pointer, advanced per byte, and its +0 word counts
+;   the bytes; a 0xff end mark is written after the last byte.  BC = 0 only writes the mark.
 ArpQueue_Enqueue:
 	ld de, bc
 	dec 1, bc
@@ -9859,6 +9881,11 @@ ArpQueue_EnqueueDone:
 	ld (xwa), 0xff
 	ret
 
+; Runs the MIDI output passes until the active buffer is busy (+4 of MIDISEQ_ACTIVE_BUF_PTR's
+; buffer non-zero) or nothing more is pending (the u32 at 0xbcd4 is 0): pre-dispatch, the three
+; ArpQueue_ProcessAndSort_Data_Helper passes, ArpQueue_ComputeAndEnqueue, a chunked flush of the
+; queue at 0xbc5c (SeqOut_FlushWithChunking), MidiSeq_UpdateAllParams, ArpQueue_SwapBuffers and
+; MidiStream_PrevBankCheck.
 ArpQueue_ProcessAndSort_Data:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp	(xwa+4), 0
@@ -10018,6 +10045,9 @@ SeqOut_ChunkRemainder:
 	inc 2, xsp
 	ret
 
+; Sends a timed buffer out in pieces of 32 bytes (SeqOut_WriteTimedBytes, interrupts at level 6
+; around each), the remainder last.
+;   In:  XWA = buffer descriptor: +0 = byte count, data from +14.  Stores 0xf0 at 0x424 first.
 SeqOut_FlushTimedBuffer:
 	dec 2, xsp
 	push xiz
@@ -10698,6 +10728,7 @@ MidiChan_TimerDispatch_Data_Code_Loop:
 	jr	lt, MidiChan_TimerDispatch_Data_Code_Loop
 	ret
 
+; Returns in XHL entry WA (zero-extended) of the pointer table the u32 at 0x90f2 points to.
 Part_LookupByIndex:
 	ld xbc, (0x90f2:16)
 	extz wa
@@ -10705,6 +10736,8 @@ Part_LookupByIndex:
 	ld	xhl, (xbc+wa)
 	ret
 
+; Reads two bytes through the read pointer at (XWA + 6), advancing it by 2, and returns
+; L = (first << 4) | (second & 0x0f): a value sent as two nibbles.
 MIDI_PackNibbleParam:
 	lda xbc, (xwa + 6)
 	ld xwa, (xbc)
@@ -10881,6 +10914,8 @@ AssSwb_ProcessLoop_Data_Join:
 	inc	6, xsp
 	ret
 
+; Returns in L byte BC of the record that entry WA of the pointer table at (0x90f2) points to,
+; or 0 when that entry is 0xffffffff.
 Part_LookupTableEntry:
 	ld xde, (0x90f2:16)
 	extz wa
@@ -12489,6 +12524,7 @@ MidiSysEx_FinishPanelXfer:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	res	7, (0xbd1a:16)
 	ret
+; Sets bit 0 of 0x10ea when bit 4 of 0xbd1a is set.
 MidiSysEx_ProcessBlock_Helper5:
 	bit	4, (0xbd1a:16)
 	ret	z
@@ -12838,6 +12874,12 @@ MidiSeq_SwapActiveBuffers:
 MidiSeq_SwapBuffersFallthru:
 	jr MidiSeq_ReinitCurrentBuffer
 
+; Exchanges the active and spare buffer pairs of the MIDI output queue and starts the new
+; active one empty (ArpQueue_ReinitCurrentBuffer).
+;   The swap (0xbcb4 <-> 0xbcb8, 0xbc5c <-> 0xbc60) happens only when the active block (0xbcb4)
+;   has a zero byte +4 and the active queue (0xbc5c) holds data (its +14 and +10 pointers
+;   differ); the new active block then takes byte +3 of the old one.  Otherwise only the
+;   current buffer is re-initialised.
 ArpQueue_SwapBuffers:
 	ld xbc, (0xbcb4:16)
 	cp (xbc + 4), 0x0

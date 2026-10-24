@@ -125,6 +125,8 @@ FDC_WaitParamByteReady_Skip6:
 FDC_WaitParamByteReady_Epilogue2:
 	pop	xiz
 	ret
+; Sends floppy-controller command 0x36 (FDC_Send_Command), waits SOME_DELAY 2 and marks the head
+; position unknown (0x8b04 = 0xff).
 FDC_INIT:
 	ldw	wa, 54
 	calr	FDC_Send_Command
@@ -579,6 +581,7 @@ FDC_NOP_Delay_Exit:
 	ret
 
 
+; Pulses port H bit 0 high for FDC_NOP_Delay 10.
 FDC_Pulse_PH0:
 	set	0, (PH:8)
 	ldw wa, 0xa
@@ -1304,6 +1307,9 @@ FDC_DRIVE_STATUS_Skip9:
 FDC_PRE_OP_CHECK:
 	ret
 
+; Records an FDC error: A goes to FDC_ERROR_CODE unless an earlier error is already there.
+;   Out: L = FDC_ERROR_CODE.  The `nop` branches for 0x33, 0x35 (missing address mark) and
+;   0x36 (data field error) do nothing.
 FDC_Set_Status:
 	cp (FDC_ERROR_CODE:16), 0
 	jr nz, FDC_SetStatus_AlreadySet
@@ -1341,6 +1347,7 @@ FDC_SetStatus_Return:
 FDC_ClearStatus_InitTimer:
 	ld	(FDC_ERROR_CODE:16), 0
 	ret
+; Stores 0xff at 0x8a60, marking the FDC result buffer empty before a command.
 FDC_TIMING_DELAY:
 	ld	(0x8a60:16), 255
 	ret
@@ -1368,6 +1375,8 @@ FDC_POST_OP_Skip2:
 	ret
 
 
+; Busy-waits until SYSTEM_TIMESTAMP has advanced by more than WA / 2 ticks, or for at most 65535
+; polls.  Out: HL = polls made.  Clobbers BC and DE.
 SOME_DELAY:
 	srl wa, 1
 	ld de, (SYSTEM_TIMESTAMP:16)
@@ -1438,6 +1447,10 @@ FDC_CmdRecalibrate_Skip:
 	calr	SOME_DELAY
 	pop qiz
 	ret
+; Seeks the floppy head to FDC_TARGET_TRACK unless the current-track byte 0x8b04 already holds
+; it: records the target in 0x8b04, waits (SOME_DELAY 2, FDC_TIMING_DELAY), sends SEEK (0x0f,
+; FDC_CMD_SEND) and waits for the result (FDC_POST_OP).  On an error 0x8b04 becomes 0xff
+; (track unknown).  Ends with SOME_DELAY 16.
 FDC_CmdSeek:
 	ld	a, (FDC_TARGET_TRACK:16)
 	cp	a, (35588:16)
@@ -1970,6 +1983,9 @@ FDC_MC_EXIT_Code_Join2:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
+; Selects the floppy controller for a command: sets bit 3 of port A and sends byte 0xfe
+; (FDC_CMD_SEND).  When that leaves an error in FDC_ERROR_CODE it records status 0x31
+; (FDC_Set_Status); otherwise it waits SOME_DELAY 10 once.
 FDC_CMD_ENABLE:
 	pushw	iz
 	set	3, (PA:8)
@@ -2057,6 +2073,14 @@ FDC_INTERRUPT_HANDLER_Code_Epilogue:
 	pop qiz
 	ret
 
+; Runs one floppy-disk-controller command described by a 16-byte parameter block.
+;   In:  stack +4 = block pointer: {command (word), five parameter words, u32}.
+;   Out: L = status.  0xfb (FDC_Set_Status) when a command is already running: the busy byte
+;        0x8a16 holds 0xa5 for the duration (command 0 clears it first).
+;   The block is copied to FDC_COMMAND_INDEX.. and to 0x8a50..; 0x8a20 is cleared, the previous
+;   FDC_ERROR_CODE is moved to 0x8a26 and FDC_ERROR_CODE cleared.  After FDC_COMMAND_DISPATCHER
+;   succeeds, commands 0..11 run through FDC_CommandEntry_CopyParams_CaseTable
+;   (FDC_HANDLER_DISPATCH_BASE: init, recalibrate, seek, execute, sector transfer, mode ...).
 FDC_CommandEntry:
 	push xiz
 	ld xiz, (xsp + 8)
@@ -2451,6 +2475,7 @@ FDC_Reset_BuildParams:
 	incw 1, (0xe3da:16)
 	ret
 
+; Returns L = 1 when the disk-change line (port D bit 6) is low, else 0.
 Check_for_Floppy_Disk_Change:
 	bit	6, (PD:8)
 	jr z, Detected_Floppy_Disk_Change

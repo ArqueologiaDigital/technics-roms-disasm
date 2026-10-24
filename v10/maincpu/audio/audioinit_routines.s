@@ -1228,6 +1228,10 @@ AudioInit_MIDIDisabled:
 	orw (0xc59c:16), 32
 	ret
 
+; Runs the voice allocation passes again: Voice_UpdatePlayModeState and, when it returns a
+; voice (L != 0xff), VoiceEvent_AllocAllLayers; then NoteMap_FindBestMatch and, when it finds
+; one, VoiceEvent_DispatchTable.  Bit 4 of 0xc596 is clear during the passes and the word is
+; restored afterwards.
 AudioInit_RefreshToneBank:
 	pushw iz
 	ld iz, (0xc596:16)
@@ -1726,6 +1730,9 @@ AudioInit_Dispatch_Finalize:
 	ldw (0xc59a:16), 0
 	ret
 
+; Appends a 4-byte command {A, C, E, stack byte} to the audio-init command list at 0xc4cc
+; (count word 0xc4ca); a full list (49 entries) is first sent (VoiceEvent_HandlerTable) and
+; emptied.  Pops its stack word on return (RETD 2).
 AudioInit_QueueCommand:
 	dec 6, xsp
 	ld (xsp), e

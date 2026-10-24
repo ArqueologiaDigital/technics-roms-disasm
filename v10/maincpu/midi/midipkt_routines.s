@@ -592,6 +592,11 @@ MidiPkt_DispatchSpecialType_Return:
 	inc 8, xsp
 	ret
 
+; Searches a pointer list for a MIDI control record matching a parameter.
+;   In:  XWA = parameter (+1 = id, +3 = flag mask), XBC = list of record pointers ending with
+;        MidiCtl_NullRecord.
+;   Out: XHL = the first record whose byte +7 equals the id and whose byte +8 shares a bit with
+;        the mask; the end marker MidiCtl_NullRecord when none does.
 MidiPkt_MatchParamInTable:
 	ld xde, xbc
 	lda xix, (MidiCtl_NullRecord:24)
@@ -1140,6 +1145,10 @@ MidiPkt_SendCtlValueSysEx_Epilogue:
 	lda	xsp, (xsp+10)
 	ret
 
+; Tests the up to two gate conditions a MIDI control record names.
+;   In:  XWA = record; bytes +12 and +13 index MidiCtl_GateRecords and MidiCtl_SecondGateRecords
+;        (6-byte entries {pointer, mask, value}; index 0 = no condition).
+;   Out: HL = 0 when every named condition holds ((pointer) & mask = value), 0xffff otherwise.
 MidiPkt_CheckGateCondition:
 	ld c, (xwa + 12)
 	cp c, 0:i3

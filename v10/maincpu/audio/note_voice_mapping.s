@@ -1685,6 +1685,8 @@ VoiceTablePair_Return:
 VoiceEvent_ResetAndInit:
 	ret
 
+; NoteMap_AllocateVoice on the voice map at 0xc1fe for layers 0 and 1, and for layer 2 when
+; 0xce22 is non-zero and NoteMap_FindBestMatch finds a voice.
 VoiceEvent_AllocAllLayers:
 	lda xwa, (0xc1fe:16)
 	ld bc, 0:i3
@@ -1710,6 +1712,8 @@ VoiceEvent_AllocTwoLayers:
 	ld	bc, 1:i3
 	jp	NoteMap_AssignVoiceParams
 
+; NoteMap_AssignVoiceParams and then NoteMap_InitVoiceSlots (tail jump) for layer 2 of the voice
+; map at 0xc1fe.
 VoiceEvent_DispatchTable:
 	lda xwa, (0xc1fe:16)
 	ld bc, 2:i3
@@ -2738,6 +2742,8 @@ MidiConfig_Return:
 	lda xsp, (xsp+336)
 	ret
 
+; When 0xce22 is non-zero and NoteMap_FindBestMatch finds a voice, allocates layer 2 of the voice
+; map at 0xc1fe (NoteMap_AllocateVoice).
 Voice_FindAndAllocBestMatch:
 	cpw (0xce22:16), 0
 	ret z
@@ -14147,6 +14153,7 @@ Voice_ReadSearchResult:
 	ld l, (0xceaa:16)
 	ret
 
+; Clears the word at 0xce66 and the byte at 0xceb2.
 Voice_ResetSearchState:
 	ldw (0xce66:16), 0
 	ld (0xceb2:16), 0
@@ -19369,6 +19376,8 @@ SeqVoice_CheckAndRet_RestoreReg:
 	lda xsp, (xsp + 12)
 	retd 0x2
 
+; Sends the 5-byte command packet {4, 0xf0, A, C, E} (MIDI_SendCmdPacket, then
+; MIDI_PostSendStub).
 SeqVoice_CheckAndRet_Prologue:
 	dec 6, xsp
 	ld (xsp + 0:8), 0x4
@@ -19542,6 +19551,8 @@ SendEpilogue_Data_Helper_Case22_Skip12:
 SendEpilogue_Data_Helper_Case22_Return2:
 	ret
 
+; Sends the 5-byte command packet {4, 0xf0, 0x50, 0x87, A} (MIDI_SendCmdPacket, then
+; MIDI_PostSendStub).
 MIDI_SendSysExCmd:
 	dec 6, xsp
 	ld (xsp + 0:8), 0x4
@@ -19773,6 +19784,7 @@ SendCmdPacket_CheckCount:
 	ld wa, 0:i3
 	jp sendCOMM
 
+; Empty routine (`ret`) called after MIDI command packets are sent.
 MIDI_PostSendStub:
 	ret
 
@@ -20095,6 +20107,9 @@ ReadChunk_RestoreReg:
 	lda xsp, (xsp + 14)
 	ret
 
+; When bit 0 of the word at 0xe9e5 is set: runs play-mode state 4 (AccWrap_PlayModeStateMachine),
+; resets all MIDI channels (MIDI_ResetAllChannels) and sets bit 1.  Bit 2 is cleared in every
+; case.
 Acc_TransitionPlayMode:
 	ld wa, (0xe9e5:16)
 	bit 0, wa
@@ -20108,6 +20123,8 @@ Acc_TransitionPlayMode_Join:
 	andw (0xe9e5:16), 0xfffb
 	ret
 
+; Runs play-mode state 3 (AccWrap_PlayModeStateMachine) and clears bits 1 and 2 of the word at
+; 0xe9e5.
 Acc_StopPlayMode:
 	ld wa, 3:i3
 	calr AccWrap_PlayModeStateMachine
@@ -20420,11 +20437,14 @@ PlayModeStateMachine_LoadParam:
 	inc 4, xsp
 	ret
 
+; Spins while bit 0 of the byte at 0x432 is set.
 SeqPlay_BusyWaitLoop:
 	bit 0, (1074:16)
 	jr nz, SeqPlay_BusyWaitLoop
 	ret
 
+; Sends, for each of the 16 MIDI channels n, the three controller messages Bn 7B 00 (all notes
+; off), Bn 00 40 and Bn 40 00 (sustain off), each through MIDI_SendSinglePacket.
 MIDI_ResetAllChannels:
 	lda xsp, (xsp - 10)
 	pushw iz
@@ -23781,6 +23801,7 @@ RingBuffer_ReadByte_IncDRAM:
 RingBuffer_ReadByte_Return:
 	ret
 
+; Returns HL = 0x7ff minus the word at 0xd0ac.
 Seq_CalcAddrOffset:
 	ldw hl, 0x7ff
 	sub hl, (0xd0ac:16)
@@ -23936,6 +23957,7 @@ SysexRingBuf_IncrementRead:
 SysexRingBuf_ReadReturn:
 	ret
 
+; Returns HL = 0x7ff minus the word at 0xd8b2.
 SysexRingBuf_GetFreeSpace:
 	ldw hl, 0x7ff
 	sub hl, (0xd8b2:16)
@@ -24256,6 +24278,8 @@ CharMap_ActivePreamb_Increment:
 	inc 4, xsp
 	ret
 
+; Calls CharMap_ActivePreamb_Prologue with WA = the selected part (GetCurrentPartSelect) and
+; BC = A.
 CharMap_ActivePreamb_Prologue2:
 	dec 2, xsp
 	ld (xsp), a
@@ -24770,6 +24794,7 @@ ApplyProgramChange_LoadReg:
 	ldw de, 0x400
 	jr ApplyProgramChange_LoadDRAM
 
+; Enters ApplyProgramChange_LoadDRAM with XBC = 0x28 and DE = 0x200.
 SndParam_InitBufferConverge:
 	ld xbc, 0x28
 	ldw de, 0x200
@@ -25221,6 +25246,7 @@ Param_SignExtendRetu_Data:
 	or xhl, xde
 	or xhl, xbc
 	ret
+; Returns HL = WA & ~BC and pops two stack words (RETD 4).
 Param_SignExtendReturn_Helper2:
 	ld hl, wa
 	cpl	bc
@@ -25962,6 +25988,10 @@ CommPacket_WriteMeas_Block:
 	res 7, l
 	ret
 
+; Sends a packet on the inter-CPU link: an 8-byte header {0x2c, 0, 8, C, 0, 0, E, sequence}
+; followed by E bytes from XWA, built in the buffer at 0xe320 and passed to sendCOMM (WA = 3,
+; BC = E + 8).  The sequence number at 0xe197 is incremented first; its low 7 bits are sent and
+; returned in L.
 SendCOMM_VariableLengthPacket:
 	push xiz
 	lda xhl, (0xe320:16)
@@ -26009,6 +26039,9 @@ SendCOMM_VariableLen_Increment:
 	pop xiz
 	ret
 
+; Sends the 10-byte inter-CPU message {0x2c, 0x30, 0x7f, 4, 0, 0, 2, sequence, A, C} built at
+; 0xe334 (sendCOMM, WA = 3); the sequence number at 0xe197 is incremented first and sent with
+; bit 7 clear.
 COMM_BuildAndSendPacket:
 	lda xde, (0xe334:16)
 	ld (xde), 0x2c
@@ -26597,6 +26630,8 @@ SendPartDataBlock_SetWord6:
 SendPartDataBlock_Return4:
 	ret
 
+; When SubCPU_Payload_GetErrorFlag returns 0xffff, sends the inter-CPU message
+; COMM_BuildAndSendPacket(0xff, 0xff).
 SendPartDataBlock_DoGetError:
 	call	SubCPU_Payload_GetErrorFlag
 	cp	hl, 0xffff
@@ -27977,6 +28012,8 @@ TmFlashWrite_ValidateParams_Join:
 	inc	2, xsp
 	ret
 
+; Calls InterCPU_E1_Bulk_Transfer with XWA = 0x3b0400 (0x300000 + 0xb0400, in the custom-data
+; flash), BC = 0xee1f and XDE = 0xa0000, then continues at TmFlash_Return.
 TmFlash_CopyToExtMem:
 	lda xwa, (0x300000:24)
 	add xwa, 0xb0400
@@ -28493,6 +28530,9 @@ Sprintf_OutputCallback:
 	ld	(xwa), 0
 	ret
 
+; C free(p): returns a Malloc block to the address-ordered free list at 0x3d52c, under kernel
+; semaphore 1, merging it with the free neighbours it touches.
+;   In:  stack +4 = p (0 is ignored).  A block already on the list is left alone.
 Free:
 	ld xwa, (xsp + 4)
 	or xwa, xwa
@@ -28740,6 +28780,8 @@ Math_DivideU32_Shift2:
 	ld xde, xwa
 	ret
 
+; C strncat(dst, src, n): appends at most n characters of src to dst and always terminates.
+;   In:  stack +4 = dst, +8 = src, +12 = n (u16).  Out: XHL = dst.
 Strncat:
 	ld xix, (xsp + 4)
 	ld xhl, xix
@@ -28771,6 +28813,9 @@ Strncat_LoadReg2:
 	ld (xix), 0x0
 	ret
 
+; C strncmp(s1, s2, n).
+;   In:  stack +4 = s1, +8 = s2, +12 = n (u16).  Out: HL = 0 when the first n characters match
+;        (or both end), else the sign-extended difference s1[i] - s2[i] at the first mismatch.
 String_Compare:
 	ld bc, (xsp + 12)
 	ld xde, (xsp + 8)
@@ -28911,6 +28956,10 @@ Mem_Compare_Block4:
 	djnz16 de, Mem_Compare_Block4
 	ret
 
+; C memcpy(dst, src, n): copies n bytes and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = src (u32), +12 = n (u16).  Returns at once when n = 0 or dst = src.
+;   Copies one byte first when dst is odd, then words (LDIRW), then a trailing odd byte; the
+;   copy runs upwards, so overlapping moves to a higher address are not safe.
 Mem_Copy:
 	ld bc, (xsp + 12)
 	ld xhl, (xsp + 4)
@@ -29064,6 +29113,12 @@ Strchr_Loop:
 	ld	xhl, 0:i3
 	ret
 
+; C malloc(n): first-fit allocation from the free list at 0x3d52c, under kernel semaphore 1.
+;   In:  stack +4 = n (u16, rounded up to even).  Out: XHL = block, or 0 when nothing fits and
+;        Heap_Alloc cannot extend the heap.
+;   Free blocks carry a 6-byte header {next (u32), size (u16)}; a block is split when at least
+;   10 bytes would remain.  When the list has no fit the block is carved from the heap top
+;   (Heap_Alloc).  The returned pointer is just past the header, which Free reads back.
 Malloc:
 	dec 6, xsp
 	push xiz
@@ -29176,6 +29231,10 @@ Strcmp:
 	pop xiz
 	ret
 
+; C strcpy(dst, src): copies the NUL-terminated string at src to dst and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = src (caller pops).
+;   Implemented as Sprintf_StringNSearch(dst, src, 0, 0xfffe) (memccpy); when no NUL is found
+;   within 0xfffe bytes it writes a NUL at dst+0xffff.
 Strcpy:
 	push xiz
 	pushw 0xfffe
@@ -29298,6 +29357,9 @@ Itoa_WithBase:
 	lda xsp, (xsp + 10)
 	ret
 
+; C memset(dst, c, n): fills n bytes with c and returns dst in XHL.
+;   In:  stack +4 = dst, +8 = c (byte), +10 = n (u16).
+;   Byte stores up to a 4-byte boundary, then long-word stores, then the tail bytes.
 Memset:
 	ld bc, (xsp + 10)
 	ld xhl, (xsp + 4)
@@ -29336,6 +29398,7 @@ Memset_Block3:
 	djnz16 de, Memset_Block3
 	ret
 
+; Returns HL = |stack word +4| (signed 16-bit).
 Math_AbsInt16:
 	ld hl, (xsp + 4)
 	cp hl, 0:i3

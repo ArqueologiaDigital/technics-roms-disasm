@@ -1847,6 +1847,10 @@ FrameLoop_Cleanup:
 	inc 2, xsp
 	retd 0x4
 
+; Draws a frame DE pixels thick inside a rectangle.
+;   In:  XWA = rectangle (copied), BC = style (only style 1 draws), DE = thickness, stack word
+;        = colour for DrawFrame (popped on return, RETD 2).
+;   Each pass draws the rectangle's outline (DrawFrame) and shrinks it by one pixel per side.
 DrawDesignFrame:
 	lda xsp, (xsp - 10)
 	push xiz
@@ -2072,6 +2076,12 @@ DrawDesignFrame_Skip6:
 	lda	xsp, (xsp+28)
 	ret
 
+; Draws the marker beside an edit switch.
+;   In:  WA = switch code (GetEditSwPoint); 0xff and 0x0f draw nothing.
+;   The marker is one of three one-character strings, DrawEditSw_Str_N7f (left column),
+;   DrawEditSw_SelectVariantA_Str_N80 (right column) or DrawEditSw_SelectVariantC_Str_N81
+;   (bottom row, y = 0xef), placed against the switch's point by its width (CalcTotalWidth)
+;   and the font height (GetCharHeight) and drawn with DrawString (colours 0xf7 / 0xf4).
 DrawEditSw:
 	lda xsp, (xsp - 18)
 	pushw iz
@@ -2327,6 +2337,13 @@ TextBox_Epilogue:
 	lda xsp, (xsp + 38)
 	ret
 
+; Proc of the VwBox class: a framed box.  Instance: +14 rectangle, +22 colour word, +24 border
+; style word, +26 index word.
+;   EVT_GET_BOX_COLOR / EVT_GET_BOX_BORDER / EVT_GET_INDEX return those words (sign-extended);
+;   EVT_CHECK_INDEX returns 1 when the parameter equals the index.  EVT_DRAW passes the event to
+;   ViewableProc and then draws the box (DrawDesignBox with BC = border, DE = colour);
+;   EVT_DRAW_SELECTED draws the selection frame around the client box (GetClientBox).  Other
+;   events go to ViewableProc.
 VwBoxProc:
 	lda xsp, (xsp - 12)
 	push xiz
@@ -2423,6 +2440,12 @@ ViewableProc_Return:
 	lda xsp, (xsp + 12)
 	ret
 
+; Proc of the PsParaBox class: a VwBox that shows a text string.
+;   EVT_GET_STRING returns an empty string in the parameter's buffer.  EVT_PARA_DRAW draws the
+;   box (VwBoxProc) and then the text: the parameter string, or, when the parameter is 0, the
+;   string the object returns for EVT_GET_STRING (into a 256-byte local buffer), drawn with
+;   DrawStringAlignment at the client box (GetClientBox, GetBoxCenter) with the instance's font
+;   (+28), colours (+32, +22) and alignment (+34 byte).  Other events go to VwBoxProc.
 PsParaBoxProc:
 	lda xsp, (xsp-276)
 	push xiz
@@ -3949,6 +3972,7 @@ PsGridBoxProc:
 
 	.include "ui/psgridbox_routines.s"
 	.include "ui/ui_widget_defs.s"
+; Returns HL = 1 when the point at XWA {x, y} lies on the 320 x 240 screen, else 0.
 IsPointOnScreen:
 	cpw (xwa), 0x0
 	jr lt, IsPointOnScreen_OutOfBounds
@@ -4338,6 +4362,11 @@ DrawDottedLine_Impl_Epilogue2:
 	lda	xsp, (xsp+52)
 	ret
 
+; Draws a design box (DrawDesignBox_Impl) with XWA = rectangle, BC and DE as style arguments.
+;   On the draw task's own stack (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws at once, and only
+;   while the word at 0x3044e is non-zero; from any other task it queues a 16-byte command
+;   {DrawDesignBox_QueueCallback, rectangle, BC, DE} for the draw task (DrawQueue_Alloc,
+;   DrawRing_Post).
 DrawDesignBox:	; SysData_FAD559
 	dec 4, xsp
 	push xiz

@@ -73,6 +73,7 @@ SysEx_ClampVoiceIndex8_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx4B_LevelCurve128; A >= 0x80 is taken as 0.
 SysEx_ClampVoiceIndex128:
 	cp a, 0x80
 	jr c, SysEx_ClampVoiceIndex128_DoLookup
@@ -140,6 +141,7 @@ SysEx_ClampVoiceIndex128_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx49_VoiceIndexMap8 (8 entries); A >= 8 is taken as 0.
 SysEx_ClampVoiceIndex8_49:
 	cp a, 0x8
 	jr c, SysEx_ClampVoiceIndex8_49_DoLookup
@@ -205,6 +207,7 @@ SysEx_ApplyGsChorusLevel_Epilogue:
 	inc	2, xsp
 	ret
 
+; Returns in L entry A of SysEx49_LevelCurve128; A >= 0x80 is taken as 0.
 SysEx_ClampVoiceIndex128_49:
 	cp a, 0x80
 	jr c, SysEx_ClampVoiceIndex128_49_DoLookup
@@ -809,6 +812,10 @@ AssswbWr_ReturnFail:
 AssswbWr_Return:
 	pop xiz
 	ret
+; Appends the 4-byte command {A, C, E, stack byte} to SWBTWR_EVENT_QUEUE and writes the 0xff end
+; mark after it; the write offset is the word at 0x90de, advanced by 4.  When the offset is 0x1fc
+; or more the command is dropped.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry AssswbWr of the Hama function table.
 AssswbWr:
 	ld hl, (0x90de:16)
 	cp hl, 0x1fc
@@ -829,6 +836,10 @@ AssswbWr:
 AssswbWr_BufferFull:
 	retd 0x2
 
+; Appends the 4-byte command {A, C, E, stack byte} to the buffer at 0xbf39 and writes the 0xff
+; end mark after it; the write offset is the word at 0x90e2, advanced by 4.  When the offset
+; is 0xfc or more the command is dropped.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry AddswbWr of the Hama function table.
 AddswbWr:
 	ld hl, (0x90e2:16)
 	cp hl, 0xfc
@@ -849,6 +860,9 @@ AddswbWr:
 AddswbWr_BufferFull:
 	retd 0x2
 
+; Appends the 4-byte command {A, C, E, stack byte} to the 0xff-terminated buffer at 0xc039 (60
+; bytes) unless it is full.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry SwbtWr of the Hama function table.
 SwbtWr:
 	lda xix, (0xc039:16)
 	ld xiy, xix
@@ -874,6 +888,7 @@ SwbtWr_CheckSpace:
 SwbtWr_Done:
 	retd 0x2
 
+; SwbtWr_ProcessAll with XIZ preserved.
 SwbtWr_CallProcessAll:
 	push xiz
 	calr SwbtWr_ProcessAll
@@ -911,6 +926,9 @@ SwbtWr_ProcessAll_CompactDone:
 	ldw (0x90e2:16), 0
 	ret
 
+; Points the switch-write dispatcher at bank 1: listener table SwbtBank1_ListenerTable (0xc081),
+; post callbacks SwbtBank1_PostCallbacks (0xc085), queue SWBTWR_EVENT_QUEUE (0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank1:
 	ld xiy, SwbtBank1_ListenerTable
 	ld (0xc081:16), xiy
@@ -921,6 +939,9 @@ SwbtWr_InitBank1:
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
+; Points the switch-write dispatcher at bank 2: listener table Naka_RenderMode_A_Table (0xc081),
+; post callbacks SwbtBank2_PostCallbacks (0xc085), queue SWBTWR_EVENT_QUEUE (0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank2:
 	ld xiy, Naka_RenderMode_A_Table
 	ld (0xc081:16), xiy
@@ -931,6 +952,9 @@ SwbtWr_InitBank2:
 	calr SwbtWr_DispatchLoop_Init
 	ret
 
+; Points the switch-write dispatcher at bank 3: listener table Naka_EventHandler_Table (0xc081),
+; post callbacks SwbtBank3_PostCallbacks (0xc085), queue 0xc039 (SwbtWr's buffer, 0xc089), then
+; SwbtWr_DispatchLoop_Init.
 SwbtWr_InitBank3:
 	ld xiy, Naka_EventHandler_Table
 	ld (0xc081:16), xiy
@@ -1016,6 +1040,9 @@ SwbtWr_PostCallback_Loop:
 SwbtWr_PostCallback_Done:
 	ret
 
+; Appends a 4-byte {DE, WA} entry to SWBTWR_EVENT_QUEUE and writes the 0xff end mark after it.
+; The write offset is the word at 0x90de, advanced by 4; when it is above 507 the entry is
+; dropped.
 SwbtWr_QueueMainEvent:
 	cpw (0x90de:16), 507
 	jr ugt, SwbtWr_QueueMainEvent_Done
@@ -1029,6 +1056,9 @@ SwbtWr_QueueMainEvent:
 SwbtWr_QueueMainEvent_Done:
 	ret
 
+; Appends a 4-byte {DE, WA} entry to the buffer at 0xbf39 and writes the 0xff end mark after
+; it.  The write offset is the word at 0x90e2, advanced by 4; when it is above 251 the entry is
+; dropped.
 SwbtWr_QueuePostEvent:
 	cpw (0x90e2:16), 251
 	jr ugt, SwbtWr_QueuePostEvent_Done
@@ -1058,6 +1088,8 @@ SwbtWr_TrailingBytecode_Skip:
 SwbtWr_TrailingBytecode_Return:
 	ret
 
+; Before a panel-memory (LSW) load: VoiceParam_SaveReverbChorus, then SndParam_SyncDisplayBitmap
+; (tail jump).
 PreLswLoad:
 	calr VoiceParam_SaveReverbChorus
 	jp SndParam_SyncDisplayBitmap
@@ -1104,9 +1136,12 @@ PreLswSave:
 PostLswSave:
 	ret
 
+; Empty routine (`ret`).
 PrePmLoad:
 	ret
 
+; After a panel-memory load that succeeded (WA >= 0): PanelTlv_ValidatePanelMemories and
+; PanelTlv_WritePanelMemoryHeaders.
 PostPmLoad:
 	cp wa, 0:i3
 	ret lt
@@ -1205,6 +1240,8 @@ VoiceParam_RestoreReverbChorus_Loop:
 	inc 4, xsp
 	ret
 
+; Copies the RAM block 0xf980..0xfda1 (0x422 bytes) to 0xf460 (Mem_Copy).  The name does not
+; describe it.
 BitMapOut_ComputeRegionDelta:
 	lda xwa, (0xfda2:16)
 	lda xbc, (0xf980:16)
@@ -1217,6 +1254,7 @@ BitMapOut_ComputeRegionDelta:
 	lda xsp, (xsp + 10)
 	ret
 
+; Calls Audio_ConfigureDSP and then BitMapOut_RenderDisplay, both with WA as given.
 BitMapOut_PrepareAndRender:
 	pushw iz
 	ld iz, wa
@@ -1425,6 +1463,13 @@ BitMapOut_MergeOutputFields:
 	lda xsp, (xsp + 34)
 	ret
 
+; Queues bytes for output on the selected port, with interrupts at level 6.
+;   In:  stack +4 = count (word), +6 = data pointer.  Out: HL = the write routine's result;
+;        on the MIDI path 0xffff when the buffer has no room.
+;   COM_SELECT = 0 (MIDI): SeqBuf_MidiOut_WriteBytes when SeqBuf_MidiOut_GetTimingValue
+;   reports room for the count, then MIDI_SC0_ENABLE_TX.  Otherwise the computer-interface type
+;   at 0xc1e4 selects the PC-2 path (2) or the serial path (0, 1: SeqBuf3_WriteBytes,
+;   CompIface_SerialEnableTx).
 SeqOut_WriteTimedBytes:
 	push xiz
 	ld iz, (xsp + 8)
@@ -1884,10 +1929,15 @@ MidiThru_Disable:
 	res 6, (0xb7e2:16)
 	ret
 
+; Sets bit 6 of 0xb7e2.  While it is set MIDI_SYSTEM_MESSAGE_HANDLER ignores received clock and
+; transport bytes (0xf8..0xfc; active sensing is still taken).  CDlike_InitModeAndLoadBank sets
+; the same bit and CDlike_ExitModeAndRestore clears it.  Both callers run it after the voice
+; tables are initialised.  TODO: the name is not supported by the code; nothing here is MIDI thru.
 MidiThru_Enable:
 	set 6, (0xb7e2:16)
 	ret
 
+; Returns in L the computer-interface selection (COM_SELECT; 0 = MIDI).
 GET_COMPUTER_INTERFACE_SELECTION:
 	ld l, (COM_SELECT:16)
 	ret
@@ -2041,6 +2091,8 @@ CompIface_RampDown_Clamp:
 	call CtrlPanel_IndicatorDispatch
 	ret
 
+; When bit 2 of 0xc1f0 is set: clears it, sets bit 0, and turns on indicator 0x4d
+; (CtrlPanel_SetIndicatorLED).
 CompIface_ResetPedal:
 	bit 2, (0xc1f0:16)
 	ret z
@@ -2096,6 +2148,8 @@ CompIface_ScaleAndNormalize:
 	pop xiz
 	ret
 
+; Sets the computer-interface volume to A when it changed: stores it at 0xc1ec and A << 8 at
+; 0xc1ee, and notifies sound parameter 0x4005 (SoundParam_NotifyChange, BC = A, DE = 3).
 CompIface_WriteVolume:
 	ld c, (0xc1ec:16)
 	cp c, a
@@ -2355,6 +2409,8 @@ DSPCfg_ScaleFactor_StoreResult:
 	ld (0xc1fc:16), hl
 	ret
 
+; Returns in XHL the panel TLV payload (PanelTlv_PayloadOfTag) of the tag that
+; DspBlock_ObjectCode_Table gives for DSP block A; 0xffffffff when that tag is absent.
 DSPCfg_LookupMidiMap:
 	extz xwa
 	ld xbc, DspBlock_ObjectCode_Table
@@ -2541,6 +2597,8 @@ DSPCfg_WriteParam_SetMask3F:
 	ld e, 0x3f:opc
 	jrl DSPCfg_WriteParam_Exit
 
+; Returns in XHL the record after the DSP parameter record at XWA: XWA + (byte +0 << 8 | byte
+; +1); a record whose byte +0 is 0xf0 (an end mark) returns XWA itself.
 DSPCfg_PackAddress:
 	ld e, (xwa + 1)
 	and e, 0xff
@@ -2790,11 +2848,16 @@ DSPCfg_ReadMultiField_Final:
 	lda xsp, (xsp + 12)
 	ret
 
+; Returns in HL the byte at (XWA) zero-extended: the count byte that heads a DSP parameter
+; record.
 DSPCfg_GetParamCount:
 	ld l, (xwa)
 	extz hl
 	ret
 
+; Reads a DSP parameter through the field list of its record type: DspFxRecListPtrTable[count
+; byte of the record at XBC] goes to DSPCfg_ReadMultiField with the record body (XBC + 1) and
+; DE = WA.
 DSPCfg_ReadViaTableLookup:
 	dec 2, xsp
 	push xiz
@@ -2814,11 +2877,15 @@ DSPCfg_ReadViaTableLookup:
 	inc 2, xsp
 	ret
 
+; Stores A at (XBC) and returns HL = 0.
 DSPCfg_StoreByte_ReturnZero:
 	ld (xbc), a
 	ld hl, 0:i3
 	ret
 
+; Writes a DSP parameter through the field list of its record type: DspFxRecListPtrTable[count
+; byte of the record at XDE] goes to DSPCfg_WriteMultiField with the record body (XDE + 1), BC,
+; WA and the two stack words (popped on return, RETD 8).
 DSPCfg_WriteViaTableLookup:
 	dec 4, xsp
 	push xiz
@@ -2909,6 +2976,7 @@ DSPCfg_Data_001:
 	extz	hl
 	ret
 
+; Returns in HL entry WA of the byte table DspFxParamCountTable.
 DSPCfg_GetSlotCount:
 	extz xwa
 	ld xbc, DspFxParamCountTable
@@ -3310,10 +3378,12 @@ DSPCfg_ResolveWithFallback_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; DSPCfg_ResolveWithFallback with BC = 0 (the first parameter map).
 DSPCfg_ReadParam_Map0:
 	ld bc, 0:i3
 	jrl DSPCfg_ResolveWithFallback
 
+; DSPCfg_ResolveWithFallback with BC = 1 (the second parameter map).
 DSPCfg_ReadParam_Map1:
 	ld bc, 1:i3
 	jrl DSPCfg_ResolveWithFallback
@@ -3856,6 +3926,8 @@ DSPCfg_WriteAllSlots_Clamped_CheckCount:
 	lda xsp, (xsp + 18)
 	ret
 
+; Runs DSPCfg_WriteAllSlots_Direct and then DSPCfg_WriteAllSlots_Clamped with the same WA / XBC.
+;   Out: HL = 0 when the two results add up to 0, else 0xffff.
 DSPCfg_WriteAllSlots_Combined:
 	dec 4, xsp
 	push xiz
@@ -5425,6 +5497,14 @@ AudioModeChange_Handler:
 	call AudioInit_DispatchChanges
 	ret
 
+; Recomputes the audio routing state after a part or mode change and re-applies it.
+;   Refreshes the status word 0xc598 (Audio_CheckInitStatus) and, when its bits 5-6 are clear,
+;   the tone bank (AudioInit_RefreshToneBank).  With bit 1 of 0xfc67 set, 0xc1fe gets bit 2 or
+;   is cleared (bit 4 of 0xc594); bit 3 of 0xc1fe is then cleared, 0xc2b4, 0xc2bc, 0xc200 and
+;   0xc201 are set to 0xff and bits 0 and 8 of 0xc59c set.  The per-mode voice handler
+;   AudioVoiceHandler_Table[CURRENT_MODE] is called with WA = 0 (unless it is the
+;   AudioVoiceHandler_NoneSentinel, which ends the routine), then the drum routing, drum save,
+;   voice parameter, part flag and change dispatch steps (AudioInit_*).
 Audio_CheckSubsystemReady:
 	call Audio_CheckInitStatus
 	ld wa, (0xc598:16)
@@ -5467,10 +5547,16 @@ AudioSubsystem_Callback:
 	call AudioInit_DispatchChanges
 	ret
 
+; Re-derives the priority bytes 0xc252..0xc256 from the mode byte 0x379b (AudioInit_SelectPriority,
+; which also sets bit 4 of the change mask 0xc59c), then acts on the change mask
+; (AudioInit_DispatchChanges, tail jump).
 AudioInit_SelectAndDispatch:
 	call AudioInit_SelectPriority
 	jp AudioInit_DispatchChanges
 
+; Sets the bytes 0xc279 / 0xc27a from whether the byte at 0x7f0b is non-zero
+; (AudioInit_CheckMIDIStatus, which also sets bit 5 of the change mask 0xc59c), then acts on the
+; change mask (AudioInit_DispatchChanges, tail jump).
 AudioInit_CheckMIDIAndDispatch:
 	call AudioInit_CheckMIDIStatus
 	jp AudioInit_DispatchChanges
@@ -5536,6 +5622,8 @@ AudioVoice_Callback:
 AudioVoice_SkipToDispatch:
 	jp AudioInit_DispatchChanges
 
+; When bit 0 of 0xfc69 is set: sets bit 7 of 0xc596 and bit 2 of 0xc594 and runs
+; AudioInit_ProcessModeChange.
 AudioMode_SetStereoFlags:
 	bit 0, (0xfc69:16)
 	ret z

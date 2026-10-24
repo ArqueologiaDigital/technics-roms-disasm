@@ -86,6 +86,11 @@ DrawLine_QueuedExec:
 	calr DrawLine_Impl
 	ret
 
+; Draws a line between two points on the draw task's side of DrawLine.
+;   In:  XWA = first point {x, y}, XBC = second point, DE = colour or pattern argument.
+;   Returns without drawing when either point is off screen (IsPointOnScreen).  The step
+;   direction and slope are computed per axis (Math_DivideSigned32 / Math_Multiply32) and the
+;   touched area is reported with SetChangeRect.
 DrawLine_Impl:
 	lda xsp, (xsp - 66)
 	push xiz
@@ -1059,6 +1064,10 @@ DrawBox_QueuedExec:
 	calr DrawBox_Impl
 	ret
 
+; Fills a rectangle on the draw task's side of DrawBox.
+;   In:  XWA = rectangle {x1, y1, x2, y2}, BC = colour; 0xf7 draws nothing.
+;   An empty rectangle (x1 > x2 or y1 > y2) is ignored; the rest is clipped to the 320 x 240
+;   screen in place.
 DrawBox_Impl:
 	lda xsp, (xsp - 16)
 	pushw iz
@@ -1237,6 +1246,9 @@ DrawFrame_QueuedExec:
 	calr DrawFrame_Impl
 	ret
 
+; Draws a rectangle's outline on the draw task's side of DrawFrame.
+;   In:  XWA = rectangle {x1, y1, x2, y2}, BC = colour.  The rectangle is clipped to the
+;   320 x 240 screen in place before drawing.
 DrawFrame_Impl:
 	lda xsp, (xsp - 44)
 	push xiz
@@ -2770,6 +2782,11 @@ DrawFrameSP_QueuedExec:
 	calr DrawFrameSP_Impl
 	ret
 
+; Draws frame pattern BC at a point on the draw task's side of DrawFrameSP.
+;   In:  XWA = top-left point, BC = pattern number.
+;   Nothing is drawn when the point is off screen (IsPointOnScreen).  The pattern's size and
+;   pixel pointer come from its 8-byte entry in the table at 0x934000 (as GetFrameSPSize reads
+;   it); rows at y >= 240 are not drawn.
 DrawFrameSP_Impl:
 	lda xsp, (xsp - 34)
 	ld (xsp + 26), de
@@ -3122,6 +3139,11 @@ DrawBitmapSP_Impl_Return:
 	lda xsp, (xsp + 26)
 	retd 0x2
 
+; Draws a bitmap through DrawBitmapSPFast_Impl, directly on the draw task or queued from any
+; other task.
+;   In:  XWA, XBC, DE and one stack word, passed through unchanged.
+;   On the draw task (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws while the word at 0x3044e is
+;   non-zero; otherwise it queues a 16-byte command (DrawBitmapSPFast_DeferredPath_Code).
 DrawBitmapSPFast:
 	dec 6, xsp
 	push xiz
@@ -3250,6 +3272,12 @@ DrawBitmapSPFast_Impl_Return:
 	lda xsp, (xsp + 22)
 	retd 0x2
 
+; Draws a bitmap through DrawBitmapSP2_Impl, directly on the draw task or queued from any other
+; task.
+;   In:  XWA, XBC, DE and three stack words, passed through unchanged.
+;   On the draw task (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws while the word at 0x3044e is
+;   non-zero; otherwise it queues a 20-byte command (DrawQueue_Alloc,
+;   DrawBitmapSP2_DeferredPath_Code) for the draw task.
 DrawBitmapSP2:
 	dec 6, xsp
 	push xiz

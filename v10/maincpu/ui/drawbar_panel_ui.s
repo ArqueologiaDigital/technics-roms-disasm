@@ -6638,6 +6638,8 @@ AcLswPartPan_Return:
 	lda xsp, (xsp + 36)
 	ret
 
+; Returns in HL the index of BC in a word list ending with 0xffff, or 0xffff when it is absent.
+;   In:  XWA = list, BC = value.
 SdpartLookupPartId:
 	ld hl, 0:i3
 	cpw (xwa), 0xffff
@@ -6657,6 +6659,10 @@ SdpartLookupPartId_CheckEnd:
 	ldw hl, 0xffff
 	ret
 
+; Turns an index-switch event into a step.
+;   In:  XWA = event, BC = step for EVT_INDEXSW_UP, DE = step for EVT_INDEXSW_UP_AIC.
+;   Out: HL = BC for EVT_INDEXSW_UP, DE for EVT_INDEXSW_UP_AIC, -DE for EVT_INDEXSW_DOWN, -BC
+;        for EVT_INDEXSW_DOWN_AIC, 0 for any other event.
 SdpartScrollDelta:
 	ld hl, bc
 	cp xwa, EVT_INDEXSW_DOWN
@@ -12860,6 +12866,9 @@ ResetPage_Epilogue:
 	inc 8, xsp
 	ret
 
+; Returns in XHL the address of 12-byte record WA (sign-extended) of the mixer record array
+; whose base is the u32 at 0x3ea30: base + 12 * WA.  (The name describes only the first
+; instruction.)
 Util_SignExtendAndDouble:
 	exts xwa
 	ld xhl, xwa
@@ -12873,6 +12882,7 @@ Util_StorePartArrayBase:
 	ld (0x03ea30:24), xwa
 	ret
 
+; Returns in HL word WA (signed index) of the mixer word array the u32 at 0x3ea34 points to.
 PsMixer_ReadWordArrayEntry:
 	exts xwa
 	add xwa, xwa
@@ -13046,6 +13056,11 @@ PsMixer_DrawCaptionFrame_Join:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
+; Computes the screen rectangle of mixer row BC.
+;   In:  XWA = 8-byte rectangle to fill, BC = row (signed).
+;   The row's edit switch is 136 + BC mod 5 (GetEditSwPoint); the band spans x = 8..311 and
+;   y = switch y - 9 .. switch y + 31, both minus BC mod 5 and plus the word at +4 of the row's
+;   12-byte record (array based at the u32 at 0x3ea30).
 PsMixer_CalcRowBandRect:
 	dec	8, xsp
 	push	xiz

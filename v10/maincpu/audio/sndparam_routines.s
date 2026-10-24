@@ -101,6 +101,11 @@ SndParam_DispatchTypeDE5:
 	ld (xsp + 4), hl
 	jr SndParam_Epilogue
 
+; Notifies a sound-parameter change by group and index.
+;   In:  WA = group (6 bits), BC = index (10 bits), DE = value, stack +4 = a word argument
+;        (popped on return, RETD 2).
+;   Encodes the key (SndParam_EncodeAddress) and calls SoundParam_NotifyChange with XWA = key,
+;   BC = value, DE = the stack word.
 SndParam_NotifyAndReturn:
 	pushw iz
 	ld iz, de
@@ -112,6 +117,12 @@ SndParam_NotifyAndReturn:
 	popw iz
 	retd 0x2
 
+; Writes a sound parameter by its 24-bit key.
+;   In:  XWA = key, BC and DE = the value arguments handed to the setter.
+;   Out: HL = 0, or 0xffff when the key is not registered or the setter reports failure.
+;   The key is hashed and SNDPARAM_HASH_TABLE probed as in SndParam_LookupReadOnly; the setter is
+;   SndParam_Lkp2_Dispatch_Data[record type byte +14] (types 0..7).  Depending on the word +2 of
+;   the setter's result, SndParam_WidgetNotifyType0 or _Type1 tells the UI.
 SndParam_LookupByKey:
 	lda xsp, (xsp - 10)
 	push xiz
@@ -229,6 +240,13 @@ SndParam_WrapNotify2:
 	popw	iz
 	retd	2
 
+; Reads a sound parameter by its 24-bit key without changing it.
+;   In:  XWA = key (the form SndParam_EncodeAddress builds).  Out: HL = value, 0xffff when the
+;        key is not registered or its record type is 7 or more.
+;   Hashes the key ((b0 * 513 + b1) * 513 + (b2 & 0x1f)) mod 0x7ff and probes
+;   SNDPARAM_HASH_TABLE (8-byte {key, record} slots, step 3, stop at SNDPARAM_HASH_EMPTY_KEY);
+;   the last matching slot's record is used.  The getter is SndParam_RO_Dispatch_Data[record
+;   type byte +12], called with XWA = record.
 SndParam_LookupReadOnly:
 	dec 6, xsp
 	push xiz
@@ -313,6 +331,8 @@ SndParam_RO_Epilogue:
 	inc 6, xsp
 	ret
 
+; SndParam_LookupReadOnly by group and index: WA = group, BC = index are encoded into the key
+; (SndParam_EncodeAddress) first.  Out: HL = value or 0xffff.
 SndParam_LookupViaEncode:
 	calr SndParam_EncodeAddress
 	ld xwa, xhl

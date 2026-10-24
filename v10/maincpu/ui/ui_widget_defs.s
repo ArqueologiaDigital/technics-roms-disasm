@@ -293,6 +293,13 @@ GridCheck_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; Proc of the PsEditBox class: an edit field whose value the index switches and the data dial
+; step (the base of AcNumEditBoxProc, AcLswEditBoxProc, AcOnOffBoxProc ...).  The instance's +46
+; pointer leads to the edited value.
+;   Handles EVT_CHECK_SELECTED, EVT_INDEXSW_DOWN / _UP, EVT_INDEX_SELECT, EVT_SW_IN,
+;   EVT_GET_STRING, EVT_PARA_DRAW, EVT_SELE_DRAW, EVT_DRAW, EVT_SHOW and EVT_SET_SELECTED (store
+;   the new value, redraw with EVT_SELE_DRAW and EVT_PARA_DRAW, and point the dial at the box:
+;   SetDialUp / SetDialDown with EVT_INDEXSW_UP / _DOWN).  Other events go to VwBoxProc.
 PsEditBoxProc:
 	lda xsp, (xsp-540)
 	push xiz
@@ -1438,6 +1445,12 @@ LswEditCheck_Return:
 	pop xiz
 	ret
 
+; Posts an LSW_PUT request to the panel-memory manager.
+;   In:  XWA, BC, DE = the three request fields.
+;   Allocates a 12-byte block {XWA, BC, DE, 0} (Malloc) and calls MainFunction
+;   NAKA_MAINFUNC_MainPmanControl with EVT_LSW_PUT and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE and the same block (both queued through
+;   MainFuncCall, so the block is freed after the request is served).  Out: HL = 0.
 MainLswPut:
 	dec 8, xsp
 	push xiz
@@ -1506,6 +1519,12 @@ MainLswPartPut:
 	inc 8, xsp
 	retd 0x2
 
+; Posts an LSW_ADD request to the panel-memory manager.
+;   In:  XWA, BC, DE = the three request fields.
+;   Allocates a 12-byte block {XWA, BC, DE, 0} (Malloc) and queues MainFunction
+;   NAKA_MAINFUNC_MainPmanControl with EVT_LSW_ADD and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE and the same block (MainFuncCall).
+;   Out: HL = 0.  Same shape as MainLswPut.
 MainLswAdd:
 	dec 8, xsp
 	push xiz
@@ -1574,6 +1593,11 @@ MainLswPartAdd:
 	inc 8, xsp
 	retd 0x2
 
+; Requests an LSW_GET from the panel-memory manager.
+;   In:  XWA = the request's first field.  Builds a 12-byte block {XWA, 0, 0, 0} (Malloc) and
+;   calls MainFunction NAKA_MAINFUNC_MainPmanControl with EVT_LSW_GET and the block, then
+;   NAKA_MAINFUNC_MainAutoFree with EVT_AUTO_FREE, both synchronously (FuncCall, unlike
+;   MainLswPut's queued MainFuncCall).  Out: HL = 0.
 MainLswGet:
 	dec 4, xsp
 	push xiz
@@ -1635,11 +1659,14 @@ MainLswPartGet:
 	inc 6, xsp
 	ret
 
+; Stores XWA + XBC in LSW_FILTER.
 SetLswFilter:
 	add xwa, xbc
 	ld (LSW_FILTER:24), xwa
 	ret
 
+; Stores XWA + XBC in LSW_FILTER (the same code as SetLswFilter; callers pass the values that
+; clear the filter).
 ResetLswFilter:
 	add xwa, xbc
 	ld (LSW_FILTER:24), xwa
@@ -1981,6 +2008,9 @@ ResetLswFilter_Epilogue:
 	pop xiz
 	ret
 
+; Posts a RAM_PUT request to MainFunction NAKA_MAINFUNC_MainRamControl: like MainRamAdd, the
+; 22-byte request at XWA is copied into a Malloc block, queued with EVT_RAM_PUT and released with
+; NAKA_MAINFUNC_MainAutoFree / EVT_AUTO_FREE (MainFuncCall).
 MainRamPut:
 	dec 4, xsp
 	push xiz
@@ -2006,6 +2036,9 @@ MainRamPut:
 	inc 4, xsp
 	ret
 
+; Posts a RAM_ADD request to MainFunction NAKA_MAINFUNC_MainRamControl.
+;   In:  XWA = 22-byte request, copied into a Malloc block that is queued with EVT_RAM_ADD and
+;   then released with NAKA_MAINFUNC_MainAutoFree / EVT_AUTO_FREE (both through MainFuncCall).
 MainRamAdd:
 	dec 4, xsp
 	push xiz
@@ -2343,6 +2376,8 @@ MainBitGet:
 	inc 8, xsp
 	ret
 
+; Proc of the PsMenuBox class, a VwBox: handles EVT_CHECK_EDIT_SW, EVT_PARA_DRAW and EVT_DRAW,
+; and returns an empty string for EVT_GET_STRING; other events go to VwBoxProc.
 PsMenuBoxProc:
 	lda xsp, (xsp-276)
 	push xiz
@@ -4782,6 +4817,9 @@ PsWideToggle_Return:
 	lda xsp, (xsp + 20)
 	ret
 
+; Proc of the PsInvisibleBox class, a view that draws nothing: EVT_GET_STRING returns an empty
+; string, EVT_PARA_DRAW and EVT_DRAW return 0, everything else goes to ViewableProc.  The base
+; of the Iv* procs.
 PsInvisibleBoxProc:
 	cp xbc, EVT_GET_STRING
 	jr z, PsInvisibleBox_GetText
@@ -5347,6 +5385,8 @@ IvNaming_Return:
 	inc 8, xsp
 	ret
 
+; Returns XHL = 10, the naming window's id, for the file-naming screens (TechnicsFileNaming,
+; SmfFileRename, FormatDiskNaming ...).
 GetNamingWindowID:
 	ld xhl, 0xa
 	ret
@@ -8380,6 +8420,10 @@ TrTransposeBoxProc:
 TrChordBoxProc:
 	jp AcChordBoxProc_Entry
 
+; Proc of the root class Object, the end of every InheritedProc chain (ResEventProc,
+; ResMethodProc and ResNameProc jump here).
+;   Asks the object's table proc for its class (EVT_GET_CLASS_SP) and then handles the generic
+;   methods numbered from EVT_GET_CLASS on.
 ObjectProc:
 	lda xsp, (xsp-144)
 	push xiz
@@ -8824,6 +8868,8 @@ InitializeObjectTable_Loop4:
 	lda xsp, (xsp + 14)
 	ret
 
+; Returns in HL the sum of the count words (+8) of object table entries WA..BC (14-byte entries
+; at 0x27ed2); 0 when WA > BC.
 CountObject:
 	dec 6, xsp
 	push xiz
@@ -9008,6 +9054,12 @@ UnRegisterObject:
 	pop xiz
 	ret
 
+; Passes the event being handled to the parent of the current class (the base-class call of the
+; UI object system).
+;   In:  XWA/XBC/XDE as the class proc received them; they reach the parent's proc unchanged.
+;   Out: XHL = the parent proc's result, or 0 when the class has no parent (0xffffffff).
+;   The current class id is 0x2bc14; its record's +4 word is the parent class, which is made
+;   current for the duration of the call and 0x2bc14 is restored afterwards.
 InheritedProc:
 	dec 4, xsp
 	push xiz
@@ -9079,18 +9131,25 @@ RootObject_GetterBlock:
 	inc 4, xsp
 	ret
 
+; Returns in XHL ROOT_OBJECT: the object of the event that DispatchEvent (or the AP-timer
+; dispatch at RootContext_Setup) is handling.  Unlike FOCUS_OBJECT, nested SendEvent calls leave
+; it alone.
 GetRootObject:
 	ld xhl, (ROOT_OBJECT:24)
 	ret
 
+; Returns in XHL ROOT_EVENT, the event code of the top-level dispatch (see GetRootObject).
 GetRootEvent:
 	ld xhl, (ROOT_EVENT:24)
 	ret
 
+; Returns in XHL ROOT_PARAM, the parameter of the top-level dispatch (see GetRootObject).
 GetRootParam:
 	ld xhl, (ROOT_PARAM:24)
 	ret
 
+; Overrides the top-level dispatch's object (ROOT_OBJECT, see GetRootObject) with XWA;
+; GroupBoxProc_StartSSFPresentation sets it, and the event with SetRootEvent, this way.
 SetRootObject:
 	ld (ROOT_OBJECT:24), xwa
 	ret
@@ -9103,6 +9162,7 @@ SetRootParam:
 	ld (ROOT_PARAM:24), xwa
 	ret
 
+; Returns in XHL the object of the event SendEvent is dispatching (FOCUS_OBJECT).
 GetFocusObject:
 	ld xhl, (FOCUS_OBJECT:24)
 	ret
@@ -9115,6 +9175,8 @@ GetFocusParam:
 	ld xhl, (FOCUS_PARAM:24)
 	ret
 
+; Table proc of the class objects (registered with RegObjTable NAKA_CLASS_Class by
+; InitializeRoot and InitializeScoop): answers the events sent to a class id.
 ClassProc:
 	lda xsp, (xsp-278)
 	push xiz
@@ -9575,6 +9637,9 @@ FuncProc_PopIzSkip4Ret:
 	inc 4, xsp
 	ret
 
+; Calls a Function object: the function pointer at entry (id & 0xffff) of object table entry
+; (id >> 16) & 0xfff's data array, with XWA/XBC/XDE unchanged.
+;   Out: XHL and XWA = the function's result.  No class check, unlike ApFuncCall.
 FuncCall:
 	ld xhl, xwa
 	srl xhl, 16
@@ -9633,6 +9698,12 @@ ApFuncCall_VirtualDispatch:
 	ret
 
 
+; Calls an ApFunction object: the function pointer that the object id indexes in its table.
+;   In:  XWA = object id, XBC / XDE = the arguments passed on to the function.
+;   Out: XHL = the function's result, or 0 when the object is not of class
+;        NAKA_CLASS_ApFunction (checked first with EVT_CHECK_CLASS through SendEvent).
+;   The function is entry (id & 0xffff) of object table entry (id >> 16)'s data array, called
+;   with XWA = the object id.
 ApFuncCall:
 	dec 8, xsp
 	push xiz
@@ -9711,6 +9782,8 @@ MainFuncCall_DispatchDSP:
 	ld xhl, (xde)
 	ret
 
+; Calls a MainFunction object by posting the call to the main event queue (MainPostEvent with
+; the same XWA/XBC/XDE) and returns XHL = 0 without waiting for it.
 MainFuncCall:
 	call MainPostEvent
 	ld xhl, 0:i3
@@ -9980,10 +10053,12 @@ GetMode_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
+; Returns in XHL the current mode as an object id (MODE_NOW).
 GetModeNow:
 	ld xhl, (MODE_NOW:24)
 	ret
 
+; Returns in XHL the previous mode as an object id (MODE_OLD).
 GetModeOld:
 	ld xhl, (MODE_OLD:24)
 	ret
@@ -10990,10 +11065,12 @@ TitleFunc_Epilogue34:
 	lda xsp, (xsp + 34)
 	ret
 
+; Returns in XHL the current title as an object id (0x01a0nnnn, TITLE_NOW).
 GetTitleNow:
 	ld xhl, (TITLE_NOW:24)
 	ret
 
+; Returns in XHL the previous title as an object id (TITLE_OLD).
 GetTitleOld:
 	ld xhl, (TITLE_OLD:24)
 	ret
@@ -11020,6 +11097,7 @@ EnumList_Reset:
 	popw iz
 	ret
 
+; Returns HL = 1 when bit 2 of the word at 0x2bc30 is clear, else 0.
 CheckNotDrawFlag:
 	ld wa, (0x02bc30:24)
 	and wa, 0x4
@@ -11027,6 +11105,8 @@ CheckNotDrawFlag:
 	scc16 z, hl
 	ret
 
+; Sets (WA non-zero) or clears (WA = 0) bit 3 of the title flag word through
+; TitleProc_SetResourceDirtyFlag / TitleProc_ClearResourceDirtyFlag.
 SetVariFlag:
 	cp wa, 0:i3
 	jr z, EnumList_Reset_CheckPart
@@ -11047,6 +11127,9 @@ EnumList_Reset_Send:
 	ld wa, 4:i3
 	jr TitleProc_ClearResourceDirtyFlag
 
+; ORs WA into the title flag word at 0x2bc30 and sends the new flags to MainFunction
+; NAKA_MAINFUNC_MainTitleControl with EVT_SET_TITLE_FLAG (MainFuncCall, tail call).
+; SetVariFlag and SetNotDrawFlag jump here.
 TitleProc_SetResourceDirtyFlag:
 	or (0x02bc30:24), wa
 	ld de, (0x02bc30:24)
@@ -11129,6 +11212,15 @@ ViewableProc_VirtualDispatch:
 	ld xhl, (xwa)
 	ret
 
+; Proc of the Viewable class, the base of every view (registered by InitializeRoot for the view
+; object tables, and called by the derived procs for what they do not handle).
+;   In:  XWA = view id, XBC = event, XDE = parameter.  Out: XHL = result.
+;   Handles the rectangle setters EVT_SET_EDIT_SW_RECT / EVT_SET_MENU_RECT, EVT_SEARCH_LINK,
+;   EVT_SEARCH_CLASS, EVT_SET_VISIBLE, the view-tree queries EVT_GET_PREVVIEW / _NEXTVIEW /
+;   _SUBVIEW / _SUPERVIEW, EVT_GET_INSTANCE, the name events EVT_SET_NAME / EVT_GET_NAME (through
+;   the name table at object table entry + 0x300), EVT_DELIVERY_EVENT, EVT_HIDE, EVT_SHOW,
+;   EVT_GET_CLASS_SP and EVT_PAINT .. +6 (ViewableProc_CaseTable); the rest goes to
+;   Viewable_DefaultDispatch.
 ViewableProc:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -11603,6 +11695,7 @@ Viewable_Return:
 	lda xsp, (xsp + 20)
 	ret
 
+; Sets bit 2 of view XWA's instance flag word (+12) when XBC is non-zero, clears it when XBC = 0.
 SetChange:
 	pushw iz
 	ld iz, bc
@@ -11653,6 +11746,9 @@ GetConst:
 	scc16 nz, hl
 	ret
 
+; Shows or hides a view: clears bit 0 of the instance's +12 flag word when XBC is non-zero, sets
+; it when XBC = 0.
+;   In:  XWA = view id, XBC = visible.  Nothing is redrawn.
 SetVisible:
 	pushw iz
 	ld iz, bc
@@ -11670,6 +11766,8 @@ DrawWidget_Hline_2_Draw:
 	popw iz
 	ret
 
+; Returns HL = 1 when the view XWA is visible (bit 0 of its instance's +12 flag word clear),
+; else 0.  Counterpart of SetVisible.
 GetVisible:
 	calr GetViewInstance
 	ld wa, (xhl + 12)
@@ -11885,6 +11983,8 @@ DrawWidget_Hline_10_Draw:
 	pop xiz
 	ret
 
+; Returns in XHL the id of view XWA's superview: the same object table with the index in the
+; instance's +6 word, or 0xffffffff when that word is 0xffff (no superview).
 View_GetSuperViewInstance:
 	push xiz
 	ld xiz, xwa
@@ -12138,6 +12238,9 @@ FrameDraw_Return:
 	pop xiz
 	ret
 
+; Returns the instance pointer an object id names: entry (id & 0xffff) of the u32 data array of
+; object table entry (id >> 16) & 0xfff (the entry's +10 pointer).
+;   In:  XWA = object id.  Out: XHL = that entry.  No range check.
 GetViewInstance:
 	ld xbc, xwa
 	srl xbc, 16
@@ -12159,6 +12262,7 @@ GetViewInstance:
 	ld xhl, (xde)
 	ret
 
+; Copies view XWA's rectangle (instance +14, 8 bytes) to XBC.
 GetBox:
 	push xiz
 	ld xiz, xbc
@@ -17439,6 +17543,14 @@ pStringProc:
 EventIDProc:
 	jrl slongProc
 
+; Shared property-method handler for the typed property procs (scharProc, uwordProc, boolProc,
+; RectX1Proc ...).
+;   In:  XWA = property object, XBC = event, XDE = parameter.  Out: XHL = result.
+;   The property's instance (EVT_GET_INSTANCE) holds the value pointer (+4) and, at +8, a list
+;   of 8-byte {name string, value} pairs.  EVT_MAKE_DUMP and EVT_CHECK_PROP_STRING return 0,
+;   EVT_GET_PROP_MEMBER returns 1.  EVT_COPY_PROPERTY_EX .. +6 go through
+;   CommonIDProc_CaseTable: dump as text (the value's name from the list, Strcpy into the
+;   parameter's buffer), set from text (Strcmp against the names), get the data or the count.
 CommonIDProc:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -17635,6 +17747,12 @@ CommonIDProc_Epilogue:
 	lda xsp, (xsp + 20)
 	ret
 
+; Returns in XHL the address of property BC's field in an object's instance data: the instance
+; (GetViewInstance) plus the sizes of the first BC properties.
+;   In:  XWA = object, BC = property index.
+;   The object's property string (EVT_GET_PROP_STRING, into a 256-byte local buffer) has one
+;   letter per property; letter 'A' + n is property-type object 0x2600000 + n, asked for its
+;   size with EVT_GET_PROP_SIZE.
 IDCountHelper:
 	lda xsp, (xsp-262)
 	push xiz
@@ -17677,6 +17795,12 @@ IDCountHelper_Done:
 	lda xsp, (xsp+262)
 	ret
 
+; Computes where an ID-type property's field starts inside its object's instance data.
+;   In:  XWA = the property descriptor (+0 = its index among the object's properties, +8 = the
+;        object).  Out: XHL = the object's instance (EVT_GET_INSTANCE) plus the summed
+;        EVT_GET_PROP_SIZE of the properties before it.
+;   The object's property string (EVT_GET_PROP_STRING) lists one letter per property; letter
+;   'A' + n names property-type object 0x2600000 + n, which is asked for its size.
 IDCursorAdvance:
 	lda xsp, (xsp-136)
 	pushw iz
@@ -17804,6 +17928,16 @@ EventHandler_DispatchLoop:
 	lda xsp, (xsp + 12)
 	ret
 
+; Synchronous event dispatch: calls the target's class proc with the event and returns its result.
+;   In:  XWA = object id (0xffffffff = the current target, GetCurrentTarget), XBC = event,
+;        XDE = parameter.  Out: XHL = the class proc's result.
+;   The object's table proc (object table entry (id >> 16) & 0xfff, +4) is asked for the class
+;   with EVT_GET_CLASS_SP; that class id becomes the current class (0x2bc14, which InheritedProc
+;   walks up), and the class record's proc (+0 of the 24-byte record in the class table's data
+;   array) is called with XWA/XBC/XDE.  FOCUS_OBJECT / FOCUS_EVENT / FOCUS_PARAM hold the event
+;   being dispatched and are restored afterwards, as is 0x2bc14, so the call nests.  When the
+;   word at 0x3ef4e is non-zero it yields to ready queue 3 (TaskSched_YieldToQueue) before
+;   returning.
 SendEvent:
 	lda xsp, (xsp - 24)
 	push xiz
@@ -17889,6 +18023,10 @@ EventRoute_DispatchJump:
 	pop xiz
 	lda xsp, (xsp + 24)
 	ret
+; Queues {object, event, parameter} on the application event queue (the queue of ApPostEvent).
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   Quirk: when the queue is full it releases semaphore 4 and spins forever; ApPostEvent waits
+;   or drops instead.
 PostEvent:
 	dec 8, xsp
 	push xiz
@@ -18005,6 +18143,9 @@ GetEvent_Prologue:
 	lda xsp, (xsp + 10)
 	ret
 
+; Cancels queued events: every entry of the application event queue (ApPostEvent's) whose
+; object is XWA and whose event is XBC gets its event replaced by EVT_NONE, under kernel
+; semaphore 4.  The entries stay in the queue.
 DeleteEvent:
 	dec 4, xsp
 	push xiz
@@ -18272,10 +18413,13 @@ MainSendEvent_Prologue:
 	ret
 
 
+; Returns in XHL the object that events addressed to 0xffffffff go to (CURRENT_TARGET).
 GetCurrentTarget:
 	ld xhl, (CURRENT_TARGET:24)
 	ret
 
+; Makes XWA the object that events addressed to 0xffffffff go to (CURRENT_TARGET); 0xffffffff
+; itself is ignored.
 SetCurrentTarget:
 	cp xwa, 0xffffffff
 	ret z
@@ -18380,6 +18524,13 @@ MainPostEvent_Return:
 	inc 8, xsp
 	ret
 
+; Queues {object, event, parameter} on the 256-entry main event queue (12-byte records at
+; 0x2ec38, write index 0x2f83a, read index 0x2f838, post counter 0x2f842), under kernel
+; semaphore 7.
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   While the queue is full the event is dropped when Boot_CheckConfigFlag7 returns 0;
+;   otherwise the task yields (queue 3) and retries.  Unlike ApPostEvent it does not signal
+;   semaphore 2.
 MainPostEvent:
 	dec 8, xsp
 	push xiz
@@ -18611,6 +18762,13 @@ MainDeleteSpecEvent_Epilogue:
 	inc 8, xsp
 	ret
 
+; Queues {object, event, parameter} on the 1024-entry application event queue for later dispatch.
+;   In:  XWA = object, XBC = event, XDE = parameter.
+;   The queue is 12-byte records at 0x2bc34, write index 0x2ec36, read index 0x2ec34 (wrapping
+;   after 0x3ff), guarded by kernel semaphore 4; each post counts in 0x2f840 and signals
+;   semaphore 2 to wake the dispatching task.  While the queue is full the event is dropped
+;   when Boot_CheckConfigFlag7 returns 0; otherwise the task yields (queue 3) and retries.
+;   Compare PostEvent, which hangs when the queue is full.
 ApPostEvent:
 	dec 8, xsp
 	push xiz
@@ -18677,6 +18835,12 @@ ApDeliveryEvent_Prologue:
 	inc 8, xsp
 	ret
 
+; Posts an event to be delivered to a given object through the current target.
+;   In:  XWA = object (0xffffffff = post the event as is), XBC = event, XDE = parameter.
+;   For a real object a 12-byte {object, event, parameter} block is allocated (Malloc) and
+;   EVT_DELIVERY_EVENT with the block as parameter is queued for object 0xffffffff; otherwise
+;   {0xffffffff, event, parameter} is queued.  Queue, semaphores and full-queue handling as in
+;   ApPostEvent.
 ApDeliveryEvent:
 	lda xsp, (xsp - 12)
 	push xiz
@@ -18960,6 +19124,13 @@ ApTimer_IncrementCounter:
 	inc 8, xsp
 	ret
 
+; Arms an application timer that will call back after XWA ticks.
+;   In:  XWA = delay in ticks, XBC = object, XDE = a word stored with it (+12), stack +4 / +8 =
+;        two more words (stored at +20 / +16; popped on return, RETD 8).
+;   Takes the first free entry (+8 = 0xffffffff) of the 128 24-byte entries at 0x2f844, sets its
+;   due time to the tick counter (0x30444) + XWA and links it into the list at 0x30448, which is
+;   kept in due-time order.  Quirk: with all 128 entries in use it spins forever.  KillApTimer
+;   cancels a timer by the same four values.
 SetApTimer:
 	lda xsp, (xsp - 16)
 	push xiz
@@ -19061,6 +19232,9 @@ ResetApTimer_Epilogue:
 	lda xsp, (xsp + 16)
 	retd 0x8
 
+; Restarts an application timer: cancels the one that matches XBC, XDE and the two stack words
+; (KillApTimer) and, when there was one, arms it again with delay XWA (SetApTimer).
+;   Out: HL = 1 when the timer existed, else 0.
 ResetApTimer:
 	lda xsp, (xsp - 12)
 	push xiz
@@ -19095,6 +19269,11 @@ KillApTimer_Return:
 	lda xsp, (xsp + 12)
 	retd 0x8
 
+; Cancels an application timer armed with SetApTimer.
+;   In:  XBC = object, XDE = the word stored at +12, stack +4 / +8 = the two stack arguments it
+;        was armed with (popped on return, RETD 8).
+;   The first timer in the list at 0x30448 whose four fields match is unlinked and freed (+8 =
+;   0xffffffff).  Out: HL = 1 when one was found, else 0.
 KillApTimer:
 	dec 4, xsp
 	push xiz
@@ -19442,6 +19621,9 @@ DrawFunc_StackHandler_Epilogue:
 	ret
 	ret
 
+; Runs a drawing function given on the stack (stack +4): DrawFunc calls it at once on the draw
+; task (IS_XSP_INSIDE_4K_REGION_AT_1C032), and from any other task queues an 8-byte command
+; {DrawFunc_StackHandler, function} for the draw task (DrawQueue_Alloc, DrawRing_Post).
 DrawFunc_StackEntry:
 	ld xwa, (xsp + 4)
 	jr DrawFunc
@@ -19488,6 +19670,9 @@ DrawFunc_XspCheck_Epilogue:
 	jr	DrawFunc_StackEntry_Join
 
 
+; Returns XHL = 1 when the stack pointer lies in 0x1c032..0x1d032 (the draw task's stack), else
+; 0.  The drawing entry points use it to draw directly on the draw task and to queue a command
+; for it from any other task.
 IS_XSP_INSIDE_4K_REGION_AT_1C032:
 	xor xhl, xhl
 	cp xsp, 0x1c032
@@ -19742,6 +19927,7 @@ SetChangeRect_Prologue:
 	popw iz
 	inc 8, xsp
 	ret
+; Empty routine (`ret`).
 SetNeedUpdate:
 	ret
 

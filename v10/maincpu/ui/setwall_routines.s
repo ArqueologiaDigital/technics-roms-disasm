@@ -23,6 +23,7 @@ SetWall_JumpStubData:
 	call	SetWall_UpdateSlotIndex
 	ret
 
+; Copies entry (byte at 0xcdf) of the byte table at 0xf1a0 to 0x2873.
 SetWall_UpdateSlotIndex:
 	ld xhl, 0xf1a0
 	xor wa, wa
@@ -540,6 +541,8 @@ SetWall_WriteAll_ModeSet:
 SetWall_NopPadding:
 	.fill 6, 1, 0x0e
 
+; SetWall_LocalWriteAll when the byte at 0xd3f is 10, otherwise SetWall_LocalSingle_Exec; then
+; PlayMode_SwitchToModeAndNotify.
 SetWall_LocalSlotChange:
 	cp (3391:16), 10
 	jr nz, SetWall_LocalSingle
@@ -1051,6 +1054,10 @@ SetWall_ParserInit:
 	pop xiy
 	ret
 
+; Advances the read index IY within the current 256-byte stream block; past 0xff it follows the
+; block's link word (+3) to the next block (block number kept at 0x288b, address via
+; SetWall_StreamIndexResolve at 0x10fd) and restarts at index 5.  When the next block's first
+; byte has bit 7 clear, SEQ_ERROR_CODE is set to 2.
 SetWall_AdvanceStreamPos:
 	inc 1, iy
 	cp iy, 0xff
@@ -1359,6 +1366,8 @@ SetWall_SlotResolve_FoundMatch:
 SetWall_SlotResolve_Return:
 	ret
 
+; Points 0x10fd at 256-byte block HL (1-based) of the block area whose base is the u32 at 0x1d5a.
+;   Out: XHL = 0.
 SetWall_StreamIndexResolve:
 	dec 1, hl
 	extz xhl
@@ -1977,6 +1986,8 @@ SqSngSel_LeaveTitle:
 	ret
 	ret
 
+; SetWall_LoadBankToToneGen with A = the byte at 0x1d4c, then copies the byte at 0x1d4e to 0xffe3
+; and runs SetWall_SyncToneGenToDRAM.
 SetWall_LoadToneGenData:
 	ld a, (7500:16)
 	pushw wa

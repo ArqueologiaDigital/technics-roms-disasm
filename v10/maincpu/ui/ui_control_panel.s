@@ -2037,6 +2037,8 @@ CtrlPanel_HandleKey10:
 	call ApPostEvent				; dispatch event
 	ret
 
+; Sets PART_SELECT from bit 0 of the word at 0xfc66 (bit clear: 1, set: 0) and appends switch
+; command {0x90, 0x10, PART_SELECT, 0xff} (AddswbWr).
 PartSelect_UpdateDisplayState:
 	ld a, (0xfc66:16)
 	and a, 0x1
@@ -2116,12 +2118,16 @@ MainTaskCtrl_HandleB0:
 MainTaskCtrl_ReturnZero:
 	ld xhl, 0:i3
 	ret
+; Sends EVT_SLEEP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
+; ApTaskControl).
 SleepMainTask:
 	ld xwa, NAKA_APFUNC_ApTaskControl
 	ld xbc, EVT_SLEEP_MAIN_TASK
 	ld xde, 0:i3
 	jrl ApTaskControl
 
+; Sends EVT_WAKE_UP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
+; ApTaskControl).
 WakeUpMainTask:
 	ld xwa, NAKA_APFUNC_ApTaskControl
 	ld xbc, EVT_WAKE_UP_MAIN_TASK
@@ -2880,15 +2886,21 @@ CtrlPanel_SelectionReturnZero:
 	ld hl, 0:i3
 	ret
 
+; Returns the selected part (PART_SELECT) zero-extended in HL.
 GetPartSelect:
 	ld l, (PART_SELECT:16)
 	extz hl
 	ret
 
+; Returns the selected part (PART_SELECT) in L; H is not cleared (GetPartSelect zero-extends).
 GetCurrentPartSelect:
 	ld l, (PART_SELECT:16)
 	ret
 
+; Requests a change to mode NAKA_MODE_MD_PS + A: removes any queued EVT_CHANGE_MODE
+; (DeleteEvent) and posts a new one to the current target (ApPostEvent).  Despite the name the
+; event is a mode change.
+;   In:  A = mode offset from NAKA_MODE_MD_PS.
 UI_PostPartChangeEvent:
 	dec 2, xsp
 	ld (xsp), a
@@ -2904,6 +2916,9 @@ UI_PostPartChangeEvent:
 	inc 2, xsp
 	ret
 
+; Requests a change to title TITLE_PS + A: removes any queued EVT_CHANGE_TITLE (DeleteEvent) and
+; posts a new one with that title to the current target (ApPostEvent).
+;   In:  A = title offset from TITLE_PS.
 UI_PostModeChangeEvent:
 	dec 2, xsp
 	ld (xsp), a
@@ -2943,12 +2958,14 @@ SoundCtrl_SendCommand:
 	inc 2, xsp
 	ret
 
+; Posts EVT_ALL_PAINT with parameter 0 to the current target (ApPostEvent).
 UI_PostRefreshEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_ALL_PAINT
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Posts EVT_PARA_DRAW and then EVT_SELE_DRAW (parameter 0) to the current target (ApPostEvent).
 UI_PostTimerResetEvent:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_PARA_DRAW
@@ -2959,12 +2976,14 @@ UI_PostTimerResetEvent:
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Returns HL = 1 when CURRENT_TITLE differs from ACTIVE_TITLE, else 0.
 SeqState_HasModeChanged:
 	ld a, (CURRENT_TITLE:16)
 	cp a, (ACTIVE_TITLE:16)
 	scc16 nz, hl
 	ret
 
+; Posts EVT_VALEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialEnable:
 	ld e, a
 	ld d, 0x0:opc
@@ -2983,6 +3002,7 @@ UI_StoreA_Ram27495:
 	ld (0x027495:24), a
 	ret
 
+; Posts EVT_AICEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostEvent_0x6E:
 	ld e, a
 	ld d, 0x0:opc
@@ -2991,6 +3011,7 @@ UI_PostEvent_0x6E:
 	ld xbc, EVT_AICEN_SET
 	jp ApPostEvent
 
+; Posts EVT_EDIT_DOWN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialRangeEvent:
 	ld e, a
 	ld d, 0x0:opc
@@ -2999,6 +3020,7 @@ UI_PostDialRangeEvent:
 	ld xbc, EVT_EDIT_DOWN_SET
 	jp ApPostEvent
 
+; Posts EVT_EDIT_UP_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialValueEvent:
 	ld e, a
 	ld d, 0x0:opc
@@ -3007,6 +3029,10 @@ UI_PostDialValueEvent:
 	ld xbc, EVT_EDIT_UP_SET
 	jp ApPostEvent
 
+; Proc of the Box class: EVT_GET_BOX_COLOR / EVT_GET_BOX_BORDER return the instance's +22 / +24
+; word (sign-extended); EVT_DRAW passes the event to ViewableProc and then draws the box
+; (DrawDesignBox with the +14 rectangle, BC = border, DE = colour).  Other events go to
+; ViewableProc.  VwBoxProc is the same with an index field added.
 BoxProc:
 	push xiz
 	ld xiz, xwa
@@ -3051,6 +3077,10 @@ BoxProc_Return:
 	pop xiz
 	ret
 
+; Returns a view's client rectangle.
+;   In:  XWA = view id, XBC = 8-byte rectangle to fill.
+;   Starts from the view instance's rectangle (+14) and its frame style (+24 word), then
+;   GetClientBox2 copies it to XBC and insets it for that style.
 GetClientBox:
 	dec 8, xsp
 	push xiz
@@ -3304,6 +3334,9 @@ CtrlPanel_FrameReturn:
 	inc 4, xsp
 	ret
 
+; Computes the centre point of a rectangle.
+;   In:  XWA = rectangle {x1, y1, x2, y2} (inclusive), XBC = 4-byte point to fill.
+;   x = x1 + (x2 - x1 + 1) / 2, y likewise (signed division).
 GetBoxCenter:
 	ld de, (xwa + 4)
 	sub de, (xwa)

@@ -92,6 +92,9 @@ Display_SetBackgroundColor:
 	ld (0x03efa2:24), wa
 	ret
 
+; Sets the graphics foreground colour word at 0x3efa4 to WA, the colour that DrawLineWithMode and
+; the text routines draw with; the screen-init sequences store 0xff, next to
+; Display_SetBackgroundColor (0xf5).
 GraphicsRender_ByteData:
 	ld	(0x03efa4:24), wa
 	ret
@@ -200,6 +203,8 @@ GraphicsRender_ByteData_Loop3:
 	popw	iz
 	ret
 
+; Runs Display_DeferOrDrawWall_Direct on the draw task; from any other task queues a 4-byte
+; command {Display_DeferOrDrawWall_Code} for it (DrawQueue_Alloc, DrawRing_Post).
 Display_DeferOrDrawWall:
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp hl, 0:i3
@@ -219,6 +224,8 @@ Display_DeferOrDrawWall_Direct:
 	calr SetNeedUpdate
 	jrl DrawWall
 
+; Runs Display_DeferOrUpdateScreen_Direct on the draw task; from any other task queues a 4-byte
+; command {Display_DeferOrUpdateScreen_Code} for it (DrawQueue_Alloc, DrawRing_Post).
 Display_DeferOrUpdateScreen:
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp hl, 0:i3
@@ -1908,6 +1915,8 @@ SeGfx_BoundOp08_ColorBlit_Skip2:
 	inc	8, xsp
 	ret
 
+; Reads the size of frame pattern WA from the table at 0x934000 in the table-data ROM (8-byte
+; entries): word +0 to (XBC), word +2 to (XDE).
 GetFrameSPSize:
 	ld hl, wa
 	extz xhl
@@ -2339,6 +2348,7 @@ InitPaletteRGB_CopyLoop:
 	jr c, InitPaletteRGB_CopyLoop
 	ret
 
+; Stores the u32 colour XBC as entry WA (signed index) of the palette table at 0x324fc.
 SetPaletteRGB:
 	exts xwa
 	sll xwa, 2
@@ -2347,6 +2357,8 @@ SetPaletteRGB:
 	ld (xde), xbc
 	ret
 
+; Returns in XHL entry WA (signed index) of the u32 palette table at 0x324fc (SetPaletteRGB writes
+; it).
 Table_LookupDword:
 	exts xwa
 	sll xwa, 2
@@ -2691,6 +2703,9 @@ VGA_ClearVRAM:
 	lda xsp, (xsp + 16)
 	ret
 
+; Writes C to byte WA of the VGA controller's register window at 0x170000, after a
+; 128-iteration busy-wait.
+;   In:  WA = register offset, C = value.  Clobbers DE.
 _Write_VGA_Register:
 	ld de, 0:i3
 
@@ -2704,6 +2719,8 @@ VGA_WriteReg_Delay:
 	ld (xde), c
 	ret
 
+; Returns in L byte WA of the VGA controller's register window at 0x170000 (no delay, unlike
+; _Write_VGA_Register).
 _Read_VGA_Register:
 	extz xwa
 	ld xbc, 0x170000

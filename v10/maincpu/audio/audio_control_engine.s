@@ -2327,10 +2327,12 @@ PanelInput_QueueChange_Done:
 	pop xiz
 	ret
 
+; Returns XHL = 0x8e94, the panel input change queue.
 PanelInput_ChangeQueue:
 	lda xhl, (0x8e94:16)
 	ret
 
+; Empties the panel input change queue: 0xff at 0x8e94 and 0 at 0x8ec4.
 PanelInput_ClearChangeQueue:
 	ld (0x8e94:16), 255
 	ld (0x8ec4:16), 0
@@ -2375,6 +2377,8 @@ MidiParam_ForceResync:
 	setm 7, (xwa + 1)
 	ret
 
+; Returns in L the byte at 0x121, 0x123, 0x125 or 0x127 for A = 0, 1, 2 or 3; for any other A
+; it reads the byte at XBC + 1 with XBC as passed.
 MidiChannel_GetParamByIndex:
 	cp a, 3:i3
 	jr z, MidiChannel_GetParam3
@@ -2660,6 +2664,9 @@ AudioChange_SetChannelFlag:
 	ld (0x8f60:16), l
 	ret
 
+; Calls every handler of a table whose mask shares a bit with WA.
+;   In:  WA = bits, XBC = table of 6-byte {mask word, handler u32} entries ending with a 0xffff
+;        mask.
 DispatchBitmaskHandlers:
 	dec 2, xsp
 	push xiz
@@ -2731,6 +2738,10 @@ LEDUpdate_Cleanup:
 	ret
 
 
+; Writes one row of the control-panel LEDs.
+;   In:  A = row (0..15; larger values return at once), C = LED pattern.
+;   Stores the row's protocol byte (Protocol_values_for_LED_rows) and C in
+;   CPANEL_LEDS__ROW_AND_PATTERN_BYTES and sends them (LED_WriteToPanel).
 Set_LEDs:
 	; Input: WA: row of LEDs
 	;         C: LED pattern
@@ -3727,6 +3738,10 @@ CtrlPanel_PopRetFA2:
 	popw_erp 0xfa
 	ret
 
+; Turns on one indicator bit in one of three groups.
+;   In:  A = (group << 4) | bit; group 0x00, 0x20 or 0x40 (other groups do nothing).
+;   The bit's mask (CtrlPanel_LookupIndicatorEntry) is set in the group's word at 0x8f3a,
+;   0x8f3e or 0x8f42 and cleared in the word after it (0x8f3c, 0x8f40, 0x8f44).
 CtrlPanel_SetIndicatorLED:
 	pushw_erp 0xfa
 	ld c, a
@@ -4017,6 +4032,8 @@ UIState_ProcessSimpleMode:
 	orw	(0x8f3a:16), 0x90
 	ret
 
+; Returns in XHL entry WA (zero-extended byte index) of the u32 table
+; CtrlPanel_SingleBitMaskTable.
 CtrlPanel_LookupIndicatorEntry:
 	extz wa
 	sla wa, 2
@@ -4603,6 +4620,10 @@ MidiMsg_LoopAndFlush:
 	pop xiz
 	ret
 
+; Restores the panel-memory work area to its defaults: copies DataSlot_HeaderTemplate (0x20
+; bytes) to 0xf980 and SndParamRam_DefaultImage (0x620 bytes) to 0xf9a0, clears bit 0 of
+; 0xffc2, sets bit 1 of 0xffc0, stores 1 (region 2, Get_Region_Code) or 2 in 0xffc8, then
+; BitMapOut_PrepareRender_CheckBit2 with WA = 0 and Audio_FillParamBuffer (tail call).
 Display_SetupAndPrepareRender:
 	pushw 0x20
 	pushw DataSlot_HeaderTemplate@hi16
@@ -5900,6 +5921,11 @@ ExtData_Voice_CompareAndDispatch_Helper:
 	ld	(0x9181), (37169:16)
 	jp	MIDI_LoadParamsAndDispatchCC
 
+; Re-sends the modulation wheel after a reset: clears bit 7 of 0x28ae and copies
+; MIDI_CC_MODWHEEL_VALUE, with bit 7 set, to MIDI_CC_MODWHEEL_PENDING.  When the value had bit 7
+; set it flushes pending bank selects, builds CC 1 (status 0xb0, data = the value, 0x7f) in
+; MIDI_MSG_STATUS..DATA3, queues it as switch command {0xb0, 1, value, 0x7f} (AddswbWr) and
+; dispatches it (0x917e..0x9181, MIDI_LoadParamsAndDispatchCC).
 MidiChannel_ResetAndConfigure:
 	res 7, (0x28ae:16)
 	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
@@ -6342,6 +6368,8 @@ IndBitmask_ReturnResult:
 	pop xiz
 	ret
 
+; Writes the numbers of the set bits of XWA (0..31, lowest first) to the byte list at 0x90fb and
+; ends it with 0xff.
 Part_BitmaskToIndexList:
 	ld iy, 0:i3
 	lda xde, (0x90fb:16)
@@ -6749,6 +6777,9 @@ SndParam_FetchSequencerParams:
 	ld (MIDI_MSG_DATA3:16), 0
 	ret
 
+; Copies one byte of a panel TLV payload to 0x9132: the payload of tag MIDI_MSG_STATUS
+; (PanelTlv_PayloadOfTag), at the offset in the byte 0x912f.  Does nothing when the tag is
+; absent.
 SndParam_WriteLookupAndStore:
 	ld	a, (MIDI_MSG_STATUS:16)
 	extz	wa
@@ -6796,6 +6827,9 @@ SwbtWr_CheckBufferOverflow:
 SwbtWr_CheckBufferOverflow_Skip:
 	jrl	SwbtWr_AppendFixedParamBlock
 
+; Appends a fixed parameter block to the switch-write buffer (SwbtWr_AppendFixedParamBlock),
+; first sending and emptying the buffer (SwbtWr_ReinitOutputBank, offset word 0x90de = 0) when
+; the offset has reached 508.
 SwbtWr_WriteParamBlock:
 	cpw (0x90de:16), 508
 	jr c, SwbtWr_WriteParamBlock_Join
@@ -7153,6 +7187,7 @@ ToneGen_Dispatch_Return:
 	inc 6, xsp
 	ret
 
+; Empty routine (`ret`).  All four callers call it right after ToneGen_DispatchByMode.
 SwbtWr_NullRet:
 	ret
 
@@ -7303,6 +7338,11 @@ SndParam_FetchDone:
 	inc 6, xsp
 	ret
 
+; Resolves a voice selection record in place.
+;   In:  XWA = record: +0/+1 the result bytes, +2 type byte, +3/+4 the selection.
+;   Types up to 0x1f go to SndParam_FetchOscTableEntry; type 0x48 (rhythm) passes {+3, +4, type}
+;   through the buffer at 0x90ea to Rhythm_DispatchNote_Finalize and copies the two bytes it
+;   leaves at 0x90ee back to +0/+1.  Other types are left alone.
 SndParam_ResolveVoiceEntry:
 	push xiz
 	ld xiz, xwa
@@ -8044,6 +8084,7 @@ MIDI_MapCCToIndex_Skip10:
 	ldw	hl, 100
 	ret
 
+; SwbtWr_FlushAndAppendParams with every register preserved.
 SwbtWr_WriteVoiceParam_PreserveRegs:
 	push xwa
 	push xbc
@@ -8092,6 +8133,8 @@ SwbtWr_WriteParamBlockSafe:
 	pop xwa
 	ret
 
+; Stores HL in 0x90ea, copies the byte at 0x90f6 to 0x90ec and calls SndParam_ApplyAndFetch with
+; every register preserved.  Out: HL = the word at 0x90ee.
 SndParam_ApplyProgramChange_Safe:
 	push xwa
 	push xbc
@@ -8114,6 +8157,9 @@ SndParam_ApplyProgramChange_Safe:
 	ld hl, (0x90ee:16)
 	ret
 
+; Stores HL in 0x90ea, copies the byte at 0x90f7 to 0x90ec and calls SndParam_FetchAndStore
+; with every register preserved.  Out: HL = the word at 0x90ee.
+;   Also handed out as a pointer by MidiStream_CheckPartProgramAllowed.
 PartCtrl_WriteProgramChange:
 	push xwa
 	push xbc
@@ -8160,15 +8206,19 @@ SndParam_UpdateVoiceEntry_Safe:
 	pop xwa
 	ret
 
+; Loads BC and DE from 0x917e / 0x9180 and runs MIDI_ClearGuardAndDispatchCC.
 MIDI_LoadParamsAndDispatchCC:
 	ld bc, (0x917e:16)
 	ld de, (0x9180:16)
 	call MIDI_ClearGuardAndDispatchCC
 	ret
 
+; Clears 0x90e5 and falls into MIDI_DispatchCC_Guarded.
 MIDI_ClearGuardAndDispatchCC:
 	ld (0x90e5:16), 0
 
+; MIDI_DispatchCC with every register preserved, skipped while bit 0 of 0xb7e7 or bit 4 of
+; 0xfd50 is set.
 MIDI_DispatchCC_Guarded:
 	bit 0, (0xb7e7:16)
 	jr nz, MidiGuarded_Return
@@ -8193,6 +8243,12 @@ MIDI_DispatchCC_Guarded:
 MidiGuarded_Return:
 	ret
 
+; Writes bits of a voice parameter byte and records the change.
+;   In:  C = record index into the pointer table at (0x90f2), B = byte offset, D = bit mask,
+;        E = new bits.
+;   Nothing happens when D = 0 or the record pointer is the dummy 0x9166.  Otherwise the masked
+;   bits of the byte are replaced by E's and BC / DE are stored in MIDI_MSG_STATUS /
+;   MIDI_MSG_DATA2.  Registers are preserved.
 MIDI_WriteVoiceParamCC:
 	push xix
 	pushw wa
@@ -8230,6 +8286,9 @@ MIDI_WriteVoiceParamFromBuffer:
 	ld e, (0x9180:16)
 	ld d, (0x9181:16)
 
+; The same code as MIDI_WriteVoiceParamCC: replaces bits D of byte B of record C (pointer table
+; at (0x90f2)) with E's and stores BC / DE in MIDI_MSG_STATUS / MIDI_MSG_DATA2; D = 0 or the
+; dummy record 0x9166 does nothing.
 MIDI_WriteVoiceParamDirect:
 	push xix
 	pushw wa
@@ -8310,6 +8369,12 @@ BankSelect_Done:
 	popw de
 	ret
 
+; Programs timer 5 for the current tempo.
+;   Skipped while bit 2 of 0xfd50 is set.  The tempo is the low 9 bits of the word at 0xfc68
+;   (0xfc5a + 8); outside 40..300 it is reset to 120.  It is stored at 0xbd3a and TREG5 is set
+;   to 80,000,000 / (tempo * 64), rounded (60,000,000 when Boot_ReadFDCStatus returns 4).
+;   Unless bit 4 of 0xfd50 or of 0x90f9 is set SeqData_DispatchLoop_Done runs; bit 4 of
+;   0x90f9 is then cleared.  Registers are preserved.
 SeqTimer_UpdateTempoReg:
 	bit 2, (0xfd50:16)
 	jr nz, SeqTimer_Return
@@ -8369,6 +8434,9 @@ SeqTimer_ClearFlag:
 SeqTimer_Return:
 	ret
 
+; Tail-jumps to entry (byte 0xfc5d & 7) of RegisterBit_Manipulate_Table with A = the low bits of
+; the word at 0xfc66 masked with 0x203 (1 when they are 0), WA, HL and XIX pushed for the
+; handler to restore.
 ToneGen_DispatchByMode:
 	pushw wa
 	pushw hl
@@ -8855,6 +8923,8 @@ TempoExpr_Done:
 	inc 2, xsp
 	ret
 
+; Clears the word at 0x90e0 and runs MidiStream_ProcessEventBuffer, MidiStream_ProcessSeqBuffer,
+; Mod_SelectExpressionSource and MidiStream_ProcessTempoRingBuf.
 Audio_ProcessAllMidiStreams:
 	ldw (0x90e0:16), 0
 	calr MidiStream_ProcessEventBuffer
@@ -9261,6 +9331,10 @@ TempoPartStream_CopyLoop:
 TempoPartStream_Done:
 	ret
 
+; Sends the pending entry at 0x91ad, if any (0xff = none): TempoRingBuf_WriteBytes with the
+; entry and the length in bits 0-2 of 0x91ca, at interrupt level 6.  When the byte at 0x90f8 is
+; 0xff, SeqPlay_CheckAndStartPlayback runs with every register saved (AudioCtrl_SaveAllRegs).
+; 0x91ca is cleared.
 TempoRingBuf_ProcessEntry:
 	cp (0x91ad:16), 255
 	jr z, TempoRingBuf_EntryDone
@@ -9417,6 +9491,8 @@ PartReinit_SendD1Command:
 	calr VoiceParam_DispatchByMode
 	ret
 
+; Writes the command {0xd0, 0, 0, part (byte 0x91c8)} with an 0xff end mark at 0x91b5 and runs it
+; (VoiceParam_DispatchByMode).
 PartReinit_SendD0Command:
 	ld xix, 0x91b5
 	ldw wa, 0xd0
@@ -10651,6 +10727,8 @@ PendingVolume_NextEntry:
 	djnz16 bc, PendingVolume_ScanEntry
 	ret
 
+; Returns in the carry flag bit (0x91c8) of the part mask word at 0xf1d0 (shifted out by
+; repeated SRL).  WA and BC are preserved.
 PartCtrl_CheckBitmaskBit:
 	pushw wa
 	pushw bc
@@ -11759,6 +11837,7 @@ MidiStream_HandlePartSelect:
 MidiStream_PartSelectDone:
 	ret
 
+; Empty routine (`ret`).
 MidiStream_ExtendedDispatch:
 	ret
 ; MidiRx_ApplyProgramChange: Applies a received program change for the part in (0x9644) (E = program): part 20 is

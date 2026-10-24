@@ -26,6 +26,9 @@ SeMenu_SendEvent_StoreAndReturn:
 	inc 2, xsp
 	ret
 
+; Copies ACTIVE_TITLE (the title on screen) to the byte at (XWA): `ldmi16 (xwa), 0x8d38` is the
+; memory-to-memory move ld (xwa),(ACTIVE_TITLE).  SeMenu_SetupMenuDisplay compares the copy with
+; 0x22, the title id of TITLE_SETONTON1.
 SeMenu_LoadRawAddr:
 	ldmi16 (xwa), 0x8d38
 	ret
@@ -36,6 +39,9 @@ SeMenu_TriggerNotification:
 	set 6, (0xe3de:16)
 	ret
 
+; Requests a deferred part-change post: A goes to the request byte 0xe3dc and bit 1 of the request
+; flags 0xe3de is set.  DirmdEmu_DefaultCase later calls UI_PostPartChangeEvent with that value
+; and clears both bytes.  Nothing is cleared here, despite the name.
 SeMenu_ClearNotification:
 	ld (0xe3dc:16), a
 	set 1, (0xe3de:16)
@@ -49,6 +55,7 @@ SeMenu_LoadObjectPtr_Data:
 	ld	(xwa), (0x698)
 	ret
 
+; Copies the selected part (PART_SELECT) to (XWA).  Despite the name no pointer is loaded.
 SeMenu_LoadMasterPtr:
 	ld c, (PART_SELECT:24)
 	ld (xwa), c
@@ -69,6 +76,12 @@ SeMenu_FlushDisplayObj_CopyLoop:
 	ld bc, 6:i3
 	jp sendCOMM
 
+; Builds a sound-editor display element with an indirect value byte in a 9-byte local record
+; and registers it.
+;   In:  A = object flags (SeMenu_SetObjectFlags), C = record byte 2, XDE = pointer to the value
+;        byte (copied to +4), stack word = record byte 5 (popped on return, RETD 2).
+;   Record: {0x88, master byte (SeMenu_LoadMasterPtr), C, 1, (XDE), stack byte, ...}, flushed
+;   with SeMenu_FlushDisplayObj.  Out: HL = 0.
 SeMenu_RegisterElement_Extended:
 	lda xsp, (xsp - 20)
 	ld (xsp + 12), xde
@@ -108,6 +121,11 @@ SeMenu_RegisterElement_ClearLoop:
 	lda xsp, (xsp + 20)
 	retd 0x2
 
+; Builds a sound-editor display element of type 1 in a 9-byte local record and registers it.
+;   In:  A = object flags (SeMenu_SetObjectFlags), C and E = record bytes 2 and 3, stack word
+;        = record byte 5 (popped on return, RETD 2).
+;   Record: {0x80, master byte (SeMenu_LoadMasterPtr), C, E, 1, stack byte, ...}; it is
+;   flushed with SeMenu_FlushDisplayObj.  Out: HL = 0.
 SeMenu_RegisterElement_Type1:
 	lda xsp, (xsp - 18)
 	ld (xsp + 12), e
@@ -646,6 +664,8 @@ SeMenu_ClearDisplayBuffer_Loop:
 	lda xsp, (xsp + 12)
 	ret
 
+; Builds and flushes a sound-editor display element {0x80, 0, 0x0b, A, 1, C} in a 9-byte local
+; record (SeMenu_FlushDisplayObj).
 SeMenu_InitDisplayColumn:
 	lda xsp, (xsp - 10)
 	lda xde, (xsp)
@@ -919,6 +939,13 @@ SeMenu_SetFlags_Type0x4x:
 	ormi8 (xde), 0xc0
 	ret
 
+; Registers the sound editor's per-part display elements for the current page.
+;   In:  A = non-zero to load only the current part's value while SOLO (byte 0x65c) is on.
+;   Picks the part (part-parameter byte 0 when the state byte 0x6ae is 0 and ACTIVE_TITLE is
+;   0x22, TITLE_SETONTON1's id; else SeMenu_ValidatePartNumber), then fills a 4-byte local
+;   array from the bytes at 0x6ba + part-1 (SeMenu_LoadParamByte), for parts 1..4 or for the
+;   one part.  With state 0 each part gets SeMenu_RegisterElement_Extended (BC = 0x17, stack
+;   word 0x7f); otherwise two objects are set up with SeMenu_SetupDisplayObject_Alt1.
 SeMenu_SetupMenuDisplay:
 	lda xsp, (xsp - 14)
 	pushw_erp 0xfa
@@ -1052,6 +1079,11 @@ SeMenu_SetCurrentPart_Skip:
 	ld	(1629:16), 1
 	ret
 
+; Returns a selectable sound-editor part in (XWA) and makes it the current one (RAM 0x65d).
+;   In:  XWA = destination byte.
+;   The part at 0x65d is kept when it is 1..4 and enabled (SeMenu_IsPartEnabled, mask byte
+;   0x65e); a value outside 1..4 becomes 1; a disabled part is replaced by the first enabled one
+;   of 1..4, or by 1 when none is.
 SeMenu_ValidatePartNumber:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -1163,6 +1195,8 @@ SeMenu_PartMask_Data_Code_Epilogue:
 	inc	8, xsp
 	ret
 
+; Returns HL = 1 when sound-editor part A (1..4) is enabled in the mask byte at 0x65e (bit
+; 2*(A-1)), else 0; parts outside 1..4 return 0.
 SeMenu_IsPartEnabled:
 	cp a, 1:i3
 	jr c, SeMenu_IsPartEnabled_OutOfRange
@@ -1186,6 +1220,8 @@ SeMenu_IsPartEnabled_CheckMask:
 	scc16 nz, hl
 	ret
 
+; Stores C in byte WA of the sound-editor part parameter block at 0x660.
+;   In:  WA = parameter index, C = value.  Counterpart of SeMenu_LoadPartParam.
 SeMenu_StorePartParam:
 	extz wa
 	lda xde, (1632:16)
@@ -1194,6 +1230,8 @@ SeMenu_StorePartParam:
 	ld (xwa), c
 	ret
 
+; Copies byte WA of the sound-editor part parameter block at 0x660 to (XBC).
+;   In:  WA = parameter index, XBC = destination byte.  Counterpart of SeMenu_StorePartParam.
 SeMenu_LoadPartParam:
 	extz wa
 	lda xde, (1632:16)
@@ -1208,6 +1246,7 @@ SeMenu_LoadPartParam:
 SeMenu_SwitchNop:
 	ret
 
+; Returns L = A << BC (by repeated doubling; BC = 0 returns A).  Clobbers DE.
 SeMenu_BitShiftMask:
 	ld l, a
 	ld de, 0:i3
@@ -1222,6 +1261,8 @@ SeMenu_BitShiftMask_Loop:
 	jr c, SeMenu_BitShiftMask_Loop
 	ret
 
+; Returns L = A >> BC (logical, one bit per pass; BC = 0 returns A).  Counterpart of
+; SeMenu_BitShiftMask.  Clobbers DE.
 SeMenu_BitShiftMask_End:
 	ld	l, a
 	ld	de, 0:i3
@@ -2030,18 +2071,23 @@ SeMenu_InitObjEntry:
 	inc 2, xsp
 	ret
 
+; Copies the sound editor's current-step byte at RAM 0x693 to (XWA) (spelled `ldmi16 (xwa),
+; 0x693`, the memory-to-memory move ld (xwa),(0x693)).
 SeMenu_ReadObjData:
 	ldmi16 (xwa), 0x693
 	ret
 
+; Stores A as the sound editor's current step (RAM byte 0x693).
 SeMenu_SetCurrentStep:
 	ld (1683:16), a
 	ret
 
+; Clears the sound editor's sub-index byte at 0x694 (SeMenu_AdvanceSubIndex counts it up).
 SeMenu_ResetSubIndex:
 	ld (1684:16), 0
 	ret
 
+; Increments the sound editor's sub-index byte at 0x694 and returns the new value in L.
 SeMenu_AdvanceSubIndex:
 	ld l, (1684:16)
 	inc 1, l
@@ -2052,6 +2098,8 @@ SeMenu_ReadObjParam_Data:
 	ld	(1684:16), a
 	ret
 
+; Copies the sound editor's sub-index byte at RAM 0x694 to (XWA) (spelled `ldmi16 (xwa),
+; 0x694`, the memory-to-memory move ld (xwa),(0x694)).
 SeMenu_ReadObjParam:
 	ldmi16 (xwa), 0x694
 	ret
@@ -2070,6 +2118,8 @@ SeMenu_CheckObjValid:
 	ld hl, 0:i3
 	ret
 
+; Copies the entries of the record at 0x20c33 into the array at XWA: byte +3 of the record is
+; the count, and that many bytes from record+6 go to XWA[0..].
 SeMenu_FillEntryTable:
 	lda xhl, (0x020c33:24)
 	ld c, (xhl + 3)
@@ -4696,6 +4746,7 @@ SeMenu_DrawEnvGraphLine_Epilogue:
 	popw	iz
 	lda	xsp, (xsp+10)
 	retd	2
+; Returns HL = (XWA * BC) / DE, unsigned (MUL then DIV).
 SeMenu_ApplyPartEdit_Helper9_Helper:
 	mul	xwa, bc
 	extz	xwa
@@ -5941,6 +5992,8 @@ SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	inc	2, xsp
 	ret
 
+; Stores A in the sound-editor byte 0x6af (callers pass 0, 1 or 2); SeMenu_SetSelectedRow_Data
+; copies it back out.
 SeMenu_SetSelectedRow:
 	ld (1711:16), a
 	ret
@@ -5949,10 +6002,14 @@ SeMenu_SetSelectedRow_Data:
 	ld	(xwa), (0x6af)
 	ret
 
+; Copies the sound-editor state byte at RAM 0x6ae to (XWA); callers test it for 0, 1 or 2.
+;   The instruction is spelled `ldmi16 (xwa), 0x6ae`, which encodes the memory-to-memory move
+;   `ld (xwa), (0x6ae)` (see TLCS900InstrInfo.td), not a store of the number 0x6ae.
 SeMenu_LoadObjEntries:
 	ldmi16 (xwa), 0x6ae
 	ret
 
+; Stores A in the sound-editor state byte 0x6ae (read by SeMenu_LoadObjEntries).
 SeMenu_SetMode:
 	ld (1710:16), a
 	ret
@@ -6173,14 +6230,20 @@ SeMenu_HandleMenuChange_End:
 SeMenu_HandleMenuChange_Data:
 	ld	(xwa), (0x6b7)
 	ret
+; Stores A (0 or 1) in the sound-editor byte 0x6b7, which SeMenu_HandleMenuChange_Data copies
+; back out.  The one caller that stores 1 does so right after SeMenu_TriggerNotification with
+; WA = 35.
 SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
 
+; Copies the byte at RAM 0x6b8 to (XWA) (spelled `ldmi16 (xwa), 0x6b8`, the memory-to-memory
+; move ld (xwa),(0x6b8)).
 SeMenu_LoadPatchStatus:
 	ldmi16 (xwa), 0x6b8
 	ret
 
+; Stores A at 0x6b8, the byte SeMenu_LoadPatchStatus reads back.
 SeMenu_SetPatchBank:
 	ld (1720:16), a
 	ret
@@ -6348,6 +6411,7 @@ SeMenu_OrPartConfig:
 	or (0x0205f2:24), a
 	ret
 
+; Sets bit 3 of 0xe3e2 (the flag SeTitle_DrawField also sets).
 SeMenu_SetPartConfigBit3:
 	set	3, (58338:24)
 	ret
@@ -6356,6 +6420,8 @@ SeMenu_GetPartConfigBit3:
 	and	l, 8
 	ret
 
+; Stores C as byte A - 1 of the per-part block at 0x6ba (A = part 1..4); counterpart of
+; SeMenu_LoadParamByte.
 SeMenu_StoreParamByte:
 	dec 1, a
 	extz wa
@@ -6365,6 +6431,8 @@ SeMenu_StoreParamByte:
 	ld (xwa), c
 	ret
 
+; Copies byte A - 1 of the per-part block at 0x6ba to (XBC).
+;   In:  A = part (1..4), XBC = destination.
 SeMenu_LoadParamByte:
 	dec 1, a
 	extz wa
@@ -6375,6 +6443,7 @@ SeMenu_LoadParamByte:
 	ld (xbc), a
 	ret
 
+; Stores A (0 or 1) in the sound-editor byte 0x6c4, which SeMenu_LoadConfirmData copies back out.
 SeMenu_SetConfirmState:
 	ld (1732:16), a
 	ret
@@ -6387,6 +6456,7 @@ SeMenu_ReturnZero:
 	ld l, 0x0:opc
 	ret
 
+; Stores A at 0x6c5 (read back by SeMenu_GetDisplayState).
 SeMenu_SetDisplayState:
 	ld (1733:16), a
 	ret
@@ -6410,6 +6480,7 @@ SeMenu_GetLastSwitch:
 	ld	(xwa), (0x65a)
 	ret
 
+; Stores C as byte WA of the block at 0x6be.
 SeMenu_StoreEffectParam:
 	extz wa
 	lda xde, (1726:16)
@@ -6427,6 +6498,7 @@ SeMenu_StoreEffectParam_Data:
 	ld	(xbc), a
 	ret
 
+; Stores C as byte WA of the block at 0x6c1.
 SeMenu_StoreEffectCoeff:
 	extz wa
 	lda xde, (1729:16)

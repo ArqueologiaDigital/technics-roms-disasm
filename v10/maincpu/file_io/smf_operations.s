@@ -414,6 +414,10 @@ SmfLoadAs_Return:
 	ld xhl, 0:i3
 	ret
 
+; Makes a fixed-width display name in place.
+;   In:  XWA = string, BC = width.
+;   Within the first BC characters: '~' becomes '_' and control characters become spaces; the
+;   string is padded with spaces to BC characters and terminated with a NUL at position BC.
 TrimAndPadSmfFilename:
 	ld ix, 0:i3
 	ld xhl, xwa
@@ -536,6 +540,10 @@ ValidateFN_ReturnValid:
 	ld l, 0x1:opc
 	ret
 
+; File-name function of the SMF disk screens (the PsFileNameBox handler).
+;   EVT_INDEXSW_DOWN / _UP step the file, EVT_PAINT redraws, and EVT_SET_SELECTED_FILE_NUMBER
+;   .. +5 dispatch through FmmSmfFileNameFunc_CaseTable; other events return 0.  The file list
+;   is the u32 at 0x81a0.
 FmmSmfFileNameFunc:
 	lda xsp, (xsp - 32)
 	push xiz

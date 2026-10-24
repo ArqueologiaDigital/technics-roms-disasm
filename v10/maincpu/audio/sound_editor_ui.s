@@ -7819,6 +7819,8 @@ SeGfx_DrawStaticList:
 	pop xbc
 	pop xwa
 	ret
+; Calls GraphicsRender_Start with XWA = XIY and XBC = XIX, preserving XWA and XBC: the
+; sound-editor pages keep the display-list pointer in XIY and its argument in XIX.
 SeGfx_DrawBoundList:
 	; --- Wrapper function 2: same pattern ---
 	push xwa
@@ -7829,6 +7831,7 @@ SeGfx_DrawBoundList:
 	pop xbc
 	pop xwa
 	ret
+; Calls GraphicsRender_StartSingleRecord with XWA = XIY; XWA is preserved.
 SeGfx_DrawBoundRecord:
 	; --- Wrapper function 3: push xwa, ld xwa=xiy, call, pop, ret ---
 	push xwa
@@ -7844,6 +7847,8 @@ SeGfx_StaticOp00_FromBuf:
 	call SeGfx_StaticOp00_Line
 	pop xwa
 	ret
+; Calls SeGfx_StaticOp02_Line with XWA = 0x6ca (a RAM buffer) and COLORBLIT_MODE cleared; XWA is
+; preserved.
 SeGfx_StaticOp02_FromBuf:
 	; --- Wrapper function 5: same pattern ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -7886,6 +7891,8 @@ SeGfx_StaticOp07_Text:
 	call SeGfx_StaticOp07_CellTextFont1
 	pop xwa
 	ret
+; Calls SeGfx_StaticOp09_Box with XWA = 0x6ca (a RAM buffer) and COLORBLIT_MODE cleared; XWA is
+; preserved.
 SeGfx_StaticOp09_FromBuf:
 	; --- Wrapper function 10: set flag, push, ld xwa=imm, call, pop, ret ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -8131,6 +8138,10 @@ SeMenu_DrawDottedLine:
 	pop	xiz
 	ret
 
+; Draws the static part of a sound-editor title's screen.
+;   In:  stack +4 = title id (0x20..0x4f).
+;   Wraps SeTitle_StaticScreenTable[title - 0x20] between SeTitle_DrawWall and
+;   SeTitle_UpdateScreen.  Every register is preserved.
 SeTitle_DrawStaticScreen:
 	push xiz
 	ld xiz, xsp
@@ -8219,6 +8230,10 @@ SeTitle_StaticScreenTable:
 	.long SeTitle_UnusedSlot
 	.long SeTitle_UnusedSlot
 
+; Redraws one parameter field of the current sound-editor title.
+;   In:  stack +4 = title id (0x20..0x4f), stack +6 = field index (byte, handed to the drawer in A).
+;   Calls SeTitle_FieldDrawTable[title - 0x20], then sets bit 3 of 0xe3e2.  Every register is
+;   preserved.
 SeTitle_DrawField:
 	push xiz
 	ld xiz, xsp
@@ -8926,6 +8941,8 @@ SeCopy_DrawStaticScreen:
 	call SeGfx_DrawStaticList
 SeMenu_PresetManager_End:
 	ret
+; Draws the static list SeMenu_PresetManager_Save_Records .. SeMenuTitle_StaticRecords with
+; COLORBLIT_MODE cleared, then SeMenu_PresetManager_Save_Helper.
 SeMenu_PresetManager_Save:
 	; --- Wrapper 2: XIY/XIX setup + 2 calls (25 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9157,6 +9174,8 @@ SePitPit1_DrawStaticScreen:
 	call SeGfx_DrawBoundList
 	call SeMenu_PresetBrowser_Select
 	ret
+; Draws the static list SeMenu_PresetBrowser_Navigate_Records .. SeMenu_PresetBrowser_Navigate_Data
+; (SeGfx_DrawStaticList) with COLORBLIT_MODE cleared.
 SeMenu_PresetBrowser_Navigate:
 	; --- Helper 1: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9164,6 +9183,8 @@ SeMenu_PresetBrowser_Navigate:
 	ld xix, SeMenu_PresetBrowser_Navigate_Data
 	call SeGfx_DrawStaticList
 	ret
+; Draws the static list SeMenu_PresetBrowser_Navigate_Data .. +5 (SeGfx_DrawStaticList) with
+; COLORBLIT_MODE cleared.
 SeMenu_PresetBrowser_Select:
 	; --- Helper 2: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9386,6 +9407,8 @@ SeMenu_CompareAndApply_Data2:
 SeMenu_CompareAndApply_Data3:
 	call SeGfx_DrawStaticList
 	ret
+; Draws the static list SeScreenData_0x113B .. SeTouchCurve_AreaFill4Part with COLORBLIT_MODE
+; cleared.
 SeMenu_CompareAndApply_Data4:
 	; --- Tail helper: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9542,6 +9565,8 @@ SeFilLpq1_DrawStaticScreen_Loop:
 	call SeGfx_DrawBoundList
 	call SeFil_DrawModeCaption
 	ret
+; Draws the static list SeMenu_Utility_CompareBlock_Data .. SeMenu_Utility_CompareBlock_Data_2,
+; then SeMenu_PresetManager_Save.
 SeFilLpq1_DrawStaticScreen_End:
 	; --- Helper: XIY/XIX setup + call F0EC00, call F0F6F5 (19 bytes) ---
 	ld xiy, SeMenu_Utility_CompareBlock_Data
@@ -9549,6 +9574,9 @@ SeFilLpq1_DrawStaticScreen_End:
 	call SeGfx_DrawStaticList
 	call SeMenu_PresetManager_Save
 	ret
+; Draws the filter pages' header list (SeGfx_DrawStaticList with SeFil_PageHeader_Records),
+; ending it at SeFil_DrawModeCaption_Records when the state byte 0x6ae is not 1 and at
+; SeFil_PageHeader_Records + 38 when it is.  Clears COLORBLIT_MODE first.
 SeFil_DrawPageHeader:
 	; --- Init: language-conditional XIX selection (35 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9562,6 +9590,8 @@ SeFil_DrawPageHeader_Join:
 	ld xiy, SeFil_PageHeader_Records
 	call SeGfx_DrawStaticList
 	ret
+; Draws the filter pages' mode caption: SeGfx_DrawStaticList over
+; SeFil_DrawModeCaption_Records .. +5, with COLORBLIT_MODE cleared first.
 SeFil_DrawModeCaption:
 	; --- Tail: clear flag, XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9569,6 +9599,10 @@ SeFil_DrawModeCaption:
 	ld xix, SeFil_DrawModeCaption_Records + 5
 	call SeGfx_DrawStaticList
 	ret
+; Draws the filter pages' filter-type field: stores CURRENT_TITLE at 0x678, draws the static list
+; that starts at SeMenu_Utility_FormatNumber_Data_2 with COLORBLIT_MODE = 2 (ending at
+; SeMenu_Utility_CompareBlock_Data, or 24 bytes in when the state byte 0x6ae is 1), then the
+; record SeFil_FilterTypeField_Record with COLORBLIT_MODE = 0 (SeGfx_DrawBoundRecord).
 SeFil_DrawFilterTypeField:
 	; --- Data setup: load A, store, set flag=2, language-conditional XIX (58 bytes) ---
 	ld	a, (CURRENT_TITLE:16)
@@ -19678,6 +19712,9 @@ StylCnvStorOkFunc_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Draws a line for PaintArrow_DrawFilled, optionally with x and y swapped.
+;   In:  XWA, XBC = the two points, stack word = non-zero to swap x and y of both (popped on
+;   return, RETD 2).  The swapped points go through local copies; DrawLine draws.
 StylCnvStorOkFunc_DataBlock:
 	dec	8, xsp
 	ld	xhl, xbc

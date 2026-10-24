@@ -2726,6 +2726,12 @@ RVari_Epilogue:
 	lda xsp, (xsp+552)
 	ret
 
+; Sends the registration-variation box's current setting to the main task.
+;   In:  XWA = the box's view id.
+;   Builds a 4-byte block {value at instance +48, 0, value at +56, value at +60} (the low bytes
+;   of the words those instance pointers lead to; Malloc), and queues MainFunction
+;   NAKA_MAINFUNC_MainVariSet with EVT_VARI_WRITE and the block, then NAKA_MAINFUNC_MainAutoFree
+;   with EVT_AUTO_FREE to release it (MainFuncCall).
 RVari_UpdateDisplayNotify:
 	dec 4, xsp
 	push xiz

@@ -136,6 +136,9 @@ SubCPU_Payload_GetErrorFlag:
 	exts hl
 	ret
 
+; Marks the sub-CPU payload as failed: stores 0xff in the error byte at 0x1e53e, as
+; SubCPU_Payload_Verify does on a mismatch, so SubCPU_Payload_GetErrorFlag then returns -1.
+; Callers: SelfTest_FirmwareVersionCheck, SelfTest_CheckBit4 and MainSysControl (EVT_SYS_INI).
 SubCPU_PayloadErrorStore:
 	ld (0x01e53e:24), 0xff
 	ret
@@ -1384,6 +1387,10 @@ MidiEvt_UpdateReadPosition:
 	add (xhl - 2), wa
 	ret
 
+; Dispatches the next run of events that share one status nibble from the 0x200-byte rhythm ring
+; buffer at 0x1ef5d (RhythmBuf_DispatchEvent): a note-on (0x9n) run goes to RhythmMidi_Dispatcher,
+; any other to SeqPart_EmitNoteOn_Full; the read position then advances past the run.
+; AccReplay_FullRestart drains the buffer with it, testing RhythmBuf_CheckEmpty between calls.
 RhythmBuf_DispatchWrap:
 	calr RhythmBuf_DispatchEvent
 	ret
@@ -1638,6 +1645,9 @@ SeqEvt_ProcessTimedEvents_Idle:
 	call SeqPlay_HandleVoiceReassign
 	ret
 
+; Hands every byte collected in the buffer at 0x477 (count word 0x475) to
+; TempoRingBuf_DequeueOne, then empties it and clears bit 0 of 0x459; runs at interrupt
+; level 6.  Preserves XIX and HL.
 TempoRingBuf_Consume:
 	push xix
 	pushw hl
@@ -1847,6 +1857,9 @@ AudioMix_EnableChannels_Loop:
 	unlk	xiz
 	ret
 
+; Loads the eight registers of audio-mixer channel group A from the bytes at XBC: register
+; index (A << 5) | 0x10 + n goes to the address latch at 0x150000 and the byte to the data port
+; at 0x150002.  XBC is advanced past the eight bytes.
 AudioMix_WriteChannelGroup:
 	pushw de
 	sll a, 5
@@ -2403,6 +2416,10 @@ TaskSched_GetCurrentGroup_Nested:
 	xor hl, hl
 	ret
 
+; Kernel: rotates ready queue A (rot_rdq_X, the ITRON rot_rdq call, jumps here): when more
+; than one task is ready at priority A (queue at 0x4c1 + 4*A), the first is moved to the end
+; and the scheduler runs (TaskSched_Dispatch); otherwise it returns.  Interrupts at level 6,
+; registers preserved.
 TaskSched_YieldToQueue:
 	push	sr
 	ei 6
@@ -2504,6 +2521,9 @@ TaskSched_Resume_DecrementWait:
 	ld (xix + 10), a
 	jrl TaskSched_ReturnToDispatch
 
+; Kernel: wakes task A (ITRON wup_tsk).  A task in the waiting state (3 at +9 of its 12-byte
+; block at 0x47d + 12*A) is made ready (4) and appended to its priority's ready queue; otherwise
+; its wake-up count (+10) is incremented.  The scheduler then runs (TaskSched_Dispatch).
 TaskSched_WakeBySlotID:
 	push	sr
 	ei 6
@@ -2592,6 +2612,12 @@ TaskSched_WakeInline_Pending:
 	ld (xix + 10), 0x0
 	jrl TaskSched_ReturnToDispatch
 
+; Kernel: signals binary semaphore A.
+;   When no task waits on it (wait list at 0x4cd + 4*A empty) the semaphore's flag (bit 0 of
+;   0x4f8 + A) is set; otherwise the first waiting task is unlinked, marked ready (state 4 at
+;   +9) and appended to the ready queue of its priority (0x4c1 + 4 * byte +8), and the
+;   scheduler runs (TaskSched_Dispatch).  Runs with interrupts at level 6 and every register
+;   preserved.  Counterpart of TaskSched_WaitForEvent.
 TaskSched_SignalEvent:
 	push	sr
 	ei 6
@@ -3248,6 +3274,8 @@ TaskTimer_Register:
 	ld (xiy + 4), xwa
 	jrl TaskSched_Dispatch
 
+; Kernel: gives task A the priority C; a task in the ready state (4) is first unlinked from its
+; ready queue.  Interrupts at level 6, registers preserved.
 TaskSched_ChangePriority:
 	push	sr
 	ei 6
@@ -3378,6 +3406,10 @@ Start_8bit_Timer_3:
 	set	3, (T8RUN:8)
 	ret
 
+; Stops 8-bit timer 3: clears bit 3 of T8RUN, which on this CPU also clears the up-counter.
+; TaskSched_PostInit programs that timer (TREG3 = 7, its INTET23 level) and starts it before the
+; first task is dispatched; the Vga_* plane copies stop it while they run and restart it with
+; Start_8bit_Timer_3.
 Stop_and_Clear_8bit_Timer_3:
 	res	3, (T8RUN:8)
 	ret
@@ -3387,6 +3419,8 @@ SeqBuf_BytecodeSnippet:
 	ret
 	decw	1, (0x5c3:16)
 	ret
+; Takes the next byte from the sequencer event buffer (descriptor ending at 0x1e549) with
+; RingBuf_CheckFull_512.  Out: HL = byte or 0xffff.  Preserves IX and XDE.
 SeqBuf_ReadByte:
 	pushw ix
 	push xde
@@ -3396,6 +3430,8 @@ SeqBuf_ReadByte:
 	popw ix
 	ret
 
+; Writes the stack byte (+4) to the sequencer event buffer: Seq_RingBuf_WriteByte_512 on the
+; ring descriptor ending at 0x1e549.  Preserves IX and XDE.
 SeqBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3437,10 +3473,14 @@ SeqBuf_InlineBytecode:
 SeqBuf_InlineBytecode_Return:
 	ret
 
+; Returns in HL the word at 0x1e547: the -2 word of the sequencer event buffer's descriptor (which
+; ends at 0x1e549), its free count.
 SeqBuf_GetWritePos:
 	ld hl, (0x01e547:24)
 	ret
 
+; Resets the sequencer event buffer: Seq_RingBuf_Init_512 on the ring descriptor ending at
+; 0x1e549.  Preserves IX and XDE.
 SeqBuf_Init:
 	pushw ix
 	push xde
@@ -3457,6 +3497,8 @@ SeqBuf_SaveReadPos:
 	popw hl
 	ret
 
+; RingBuf_CheckFull_256 (a read-ahead) on the sequencer event buffer (descriptor ending at
+; 0x1e549).  Preserves IX and XDE.
 SeqBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3487,6 +3529,9 @@ SeqBuf_SaveWritePos:
 	popw hl
 	ret
 
+; Takes the next byte from the 2048-byte ring buffer whose descriptor ends at 0x1e753
+; (Seq_RingBuf_PeekByte).  Out: HL = the byte, or 0xffff when the buffer is empty.
+;   Preserves IX and XDE.
 TempoRingBuf_ReadByte:
 	pushw ix
 	push xde
@@ -3508,6 +3553,9 @@ TempoRingBuf_WriteByte_Ext:
 	unlk	xiz
 	ret
 
+; Copies bytes into the tempo event buffer (ring descriptor ending at 0x1e753), one
+; Seq_RingBuf_WriteByte_Check per byte.
+;   In:  stack +4 = count (word), +6 = data pointer.
 TempoRingBuf_WriteBytes:
 	link	xiz, 0x0000
 	push xiy
@@ -3528,6 +3576,8 @@ TempoRingBuf_WriteBytes_Loop:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the tempo event buffer's read and write indexes (words 0x1e74b and
+; 0x1e74f) are equal, else 0xffff.
 TempoRingBuf_CheckEmpty:
 	ld hl, (0x01e74f:24)
 	cp hl, (0x1e74b:24)
@@ -3542,6 +3592,8 @@ TempoRingBuf_BytecodeSnippet2:
 	ld	hl, (0x1e751:24)
 	ret
 
+; Resets the tempo event buffer: Seq_RingBuf_Init_2048 on the ring descriptor ending at
+; 0x1e753.  Preserves IX and XDE.
 TempoRingBuf_Init:
 	pushw ix
 	push xde
@@ -3551,6 +3603,8 @@ TempoRingBuf_Init:
 	popw ix
 	ret
 
+; Resets the tempo event buffer's read-ahead index (word 0x1e749, -10 of its descriptor) to its
+; read index (0x1e74b, -8).  HL is preserved.
 TempoRingBuf_SaveReadPos:
 	pushw hl
 	ld hl, (0x01e74b:24)
@@ -3567,6 +3621,8 @@ TempoRingBuf_InlineBytecode2:
 	popw	ix
 	ret
 
+; Seq_RingBuf_ReadAhead on the tempo event buffer (descriptor ending at 0x1e753).  Preserves IX
+; and XDE.
 TempoRingBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3595,6 +3651,8 @@ TempoRingBuf_SaveWritePos:
 	popw	ix
 	ret
 
+; Writes the stack byte (+4) to the rhythm event buffer: Seq_RingBuf_WriteByte_512 on the ring
+; descriptor ending at 0x1ef5d.  Preserves IX and XDE.
 RhythmBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3625,6 +3683,8 @@ RhythmBuf_InlineBytecode:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the rhythm event buffer's read and write indexes (words 0x1ef55 and
+; 0x1ef59) are equal, else 0xffff.
 RhythmBuf_CheckEmpty:
 	ld hl, (0x01ef59:24)
 	cp hl, (0x1ef55:24)
@@ -3655,6 +3715,8 @@ RhythmBuf_SaveWritePos:
 	popw hl
 	ret
 
+; RingBuf_CheckFull_256 on the rhythm event buffer (descriptor ending at 0x1ef5d).  Preserves
+; IX and XDE.
 RhythmBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3778,6 +3840,8 @@ AltEvtBuf_Helpers:
 	popw	ix
 	ret
 
+; Writes the stack byte (+4) to the sequencer event buffer: Seq_RingBuf_WriteByte_Small on the
+; ring descriptor ending at 0x1f271.  Preserves IX and XDE.
 SeqEvtBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3832,6 +3896,8 @@ SeqEvtBuf_SaveReadPos:
 	popw hl
 	ret
 
+; Seq_RingBuf_ReadByte_Large on the sequencer event buffer whose descriptor ends at 0x1f271.
+; Preserves IX and XDE.
 SeqEvtBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3921,6 +3987,8 @@ SeqMain_GetTimingValue:
 	ld hl, (0x01f379:24)
 	ret
 
+; Empties the 1024-byte ring buffer whose descriptor ends at 0x1f37b (Seq_RingBuf_Init_1024).
+; Preserves IX and XDE.
 SeqMain_InitBuffer:
 	pushw ix
 	push xde
@@ -3937,6 +4005,8 @@ SeqMain_SaveWritePos:
 	popw hl
 	ret
 
+; Seq_RingBuf_ReadData on the ring buffer whose descriptor ends at 0x1f37b.  Preserves IX and
+; XDE.
 SeqMain_ReadData:
 	pushw ix
 	push xde
@@ -4016,10 +4086,14 @@ SeqBuf_MidiOut_CheckEmpty:
 SeqBuf_MidiOut_CheckEmpty_Return:
 	ret
 
+; Returns in HL the word at 0x1f783: the free count (-2 word) of the ring buffer whose descriptor
+; ends at 0x1f785.  SeqOut_WriteTimedBytes writes only when it is at least the byte count.
 SeqBuf_MidiOut_GetTimingValue:
 	ld hl, (0x01f783:24)
 	ret
 
+; Empties the 256-byte ring buffer whose descriptor ends at 0x1f785 (Seq_RingBuf_Init_256).
+; Preserves IX and XDE.
 SeqBuf_MidiOut_Init:
 	pushw ix
 	push xde
@@ -4079,6 +4153,8 @@ SeqBuf2_ReadByte:
 	popw ix
 	ret
 
+; Writes the stack byte (+4) to the ring buffer whose descriptor ends at 0x1f88f
+; (Seq_RingBuf_WriteByte_512).  Preserves IX and XDE.
 SeqBuf2_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -4533,6 +4609,7 @@ SeqBuf_TimerEvent_BytecodeBlock2_Return:
 	ret
 
 
+; Seq_RingBuf_ReadByte on the ring buffer at SEQ_ALT3_RINGBUF_BASE.  Preserves IX and XDE.
 SeqBuf_VoiceMap_ReadByte:
 	pushw ix
 	push xde
@@ -4829,6 +4906,7 @@ SeqBuf_SoundEdit_AdvanceCheckpoint:
 	ret
 
 
+; Seq_RingBuf_ReadByte on the ring buffer whose descriptor ends at 0x204df.  Preserves IX and XDE.
 SeqBuf_SoundEdit_ReadByte:
 	pushw ix
 	push xde
@@ -4866,6 +4944,8 @@ SeqBuf_SoundEdit_BytecodeBlock:
 	unlk	xiz
 	ret
 
+; Returns HL = 0 when the words at 0x204d7 and 0x204db (a ring buffer's read and write indexes)
+; are equal, else 0xffff.
 SeqBuf_NoteEvent_CheckSongEnd:
 	ld hl, (0x0204db:24)
 	cp hl, (0x204d7:24)
@@ -4905,6 +4985,8 @@ SeqBuf_NoteEvent_AlternateRead:
 	popw	ix
 	ret
 
+; Seq_RingBuf_ReadByte_Small on the ring buffer whose descriptor ends at 0x204df.  Preserves IX
+; and XDE.
 Seq_RingBuf_ReadSmall:
 	pushw ix
 	push xde
@@ -4983,6 +5065,9 @@ RingBuf128_ReadAlt2_Dequeue:
 	ret
 
 
+; Writes A into a 128-byte ring buffer.
+;   In:  XDE = buffer; descriptor words below it: write index (-4), free count (-2).
+;   Out: HL = the free count left, or 0xffff when the buffer was full.
 RingBuf128_WriteByte_CheckFull:
 	cpw (xde - 2), 0x0
 	jr nz, RingBuf128_WriteByte_Store
@@ -4999,6 +5084,8 @@ RingBuf128_WriteByte_Store:
 	ret
 
 
+; Empties a 256-byte ring buffer: the descriptor words below XDE (-10, -8, -6, -4) become 0 and
+; the free count (-2) 0xff.
 Seq_RingBuf_Init_256:
 	ldw (xde - 10), 0x0
 	ldw (xde - 8), 0x0
@@ -5050,6 +5137,9 @@ Seq_RingBuf_ReadByte_Small_Dequeue:
 	ld (xde - 10), ix
 	ret
 
+; Writes A into a 256-byte ring buffer.
+;   In:  XDE = buffer; the descriptor words below it are the write index (-4) and the free count
+;        (-2).  Out: HL = the free count left, or 0xffff when the buffer was full.
 Seq_RingBuf_WriteByte_Small:
 	cpw (xde - 2), 0x0
 	jr nz, Seq_RingBuf_WriteByte_Small_Store
@@ -5065,6 +5155,8 @@ Seq_RingBuf_WriteByte_Small_Store:
 	ld hl, (xde - 2)
 	ret
 
+; Empties a 512-byte ring buffer: the descriptor words below XDE (-10 read-ahead, -8 read, -6
+; checkpoint, -4 write) become 0 and the free count (-2) 0x1ff.
 Seq_RingBuf_Init_512:
 	ldw (xde - 10), 0x0
 	ldw (xde - 8), 0x0
@@ -5073,6 +5165,9 @@ Seq_RingBuf_Init_512:
 	ldw (xde - 2), 0x1ff
 	ret
 
+; Takes the next byte from a 512-byte ring buffer: reads at the read index (-8 below XDE),
+; advances it and frees one byte (-2).  Out: HL = the byte, or 0xffff when the read index has
+; reached the write index (-4).  Despite the name it reads.
 RingBuf_CheckFull_512:
 	ld ix, (xde - 8)
 	cp ix, (xde - 4)
@@ -5088,6 +5183,9 @@ RingBuf512_CheckFull_Read:
 	incw 1, (xde - 2)
 	ret
 
+; Reads ahead in a ring buffer without freeing space: returns in HL the byte at the read-ahead
+; index (-10 below XDE) and advances it (wrapping at 0x1ff), or 0xffff when it has reached the
+; checkpoint (-6).  Despite the name it neither checks for full nor wraps at 256.
 RingBuf_CheckFull_256:
 	ld ix, (xde - 10)
 	cp ix, (xde - 6)
@@ -5102,6 +5200,9 @@ RingBuf256_CheckFull_Read:
 	ld (xde - 10), ix
 	ret
 
+; Reads ahead in a 512-byte ring buffer up to the write index: returns in HL the byte at the
+; read-ahead index (-10 below XDE) and advances it, or 0xffff when it equals the write index
+; (-4).  Frees no space.
 RingBuf512_ReadAlt_ByteBlock:
 	ld	ix, (xde-10)
 	cp	ix, (xde-4)
@@ -5180,6 +5281,9 @@ RingBuf1024_ReadAlt_ByteBlock_Skip:
 	ld	(xde-10), ix
 	ret
 
+; Writes A into a 1024-byte ring buffer.
+;   In:  XDE = buffer; descriptor words below it: write index (-4), free count (-2).
+;   Out: HL = the free count left, or 0xffff when the buffer was full.
 Seq_RingBuf_WriteByte:
 	cpw (xde - 2), 0x0
 	jr nz, Seq_RingBuf_WriteByte_1024_Store
@@ -6472,6 +6576,7 @@ FlashOp_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
+; Returns HL = 0 when the flash ready line (port 7 bit 5) is high, else 0xffff.
 Flash_CheckReady:
 	bit	5, (P7:8)
 	jr z, Flash_CheckReady_NotReady
@@ -6604,6 +6709,11 @@ Flash_WriteFromMemory_Delay:
 	lda xsp, (xsp + 10)
 	ret
 
+; Erases a flash sector and rewrites it.
+;   In:  A = chip / bank, XDE = sector address, XBC = the other argument of
+;        Flash_WriteFromMemory.
+;   Flash_IdentifyChip, Flash_EraseSectorWithBankSelect (XBC = XDE), wait for Flash_CheckReady
+;   to stop returning 0xffff, then Flash_WriteFromMemory with the original XBC / XDE.
 Flash_EraseSectorAndWrite:
 	lda xsp, (xsp - 10)
 	ld (xsp), xde
@@ -7360,6 +7470,10 @@ FDC_SetupSectorParams:
 	lda xsp, (xsp + 14)
 	ret
 
+; Reads sectors from the floppy, retrying until it succeeds.
+;   In:  XWA, BC, XDE = the parameters FDC_SetupSectorParams puts in the command block at 0x62e.
+;   Issues command 3 through FDC_CommandEntry; on any error it recalibrates (FDC_InitRecalibrate)
+;   and tries again, with no retry limit.
 FDC_ReadSectors:
 	dec 6, xsp
 	push xiz
@@ -7759,6 +7873,8 @@ FDC_WriteCompressed_Return:
 	lda xsp, (xsp + 18)
 	retd 0x2
 
+; Draws the "FD -> Flash Memory" bitmap (Bitmap_1bit_FD_to_Flash_Memory) with
+; Draw_FlashMemUpdate_message_bitmap at BC = 0x30, DE = 0xa0, stack words 2 and 8.
 SHOW_FD_TO_FLASH_MEMORY_MESSAGE:
 	pushw 0x8
 	pushw 0x2
@@ -7969,6 +8085,7 @@ SHOW_ILLEGAL_DISK_MESSAGE:
 IllegalDisk_HaltLoop:
 	jr IllegalDisk_HaltLoop
 
+; Busy-waits XWA loop iterations (none when XWA = 0).  Clobbers XBC.
 BusyWait_XWA_Cycles:
 	ld xbc, 0:i3
 	cp xbc, xwa

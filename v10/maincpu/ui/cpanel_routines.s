@@ -292,6 +292,7 @@ Delay10L_Done:
 	ret
 
 
+; Busy-waits 300 iterations of a decrement loop.  Clobbers WA.
 DELAY_300_LOOPS:
 	ldw wa, 0x12c
 
@@ -318,6 +319,7 @@ Delay1500L_Done:
 	ret
 
 
+; Busy-waits 3000 iterations of a decrement loop.  Clobbers WA.
 DELAY_3000_LOOPS:
 	ldw wa, 0xbb8
 
@@ -343,6 +345,8 @@ DELAY_2_TICKS__loop:
 	ret
 
 
+; Busy-waits until SYSTEM_TIMESTAMP has advanced by 6 from its value on entry (the start is
+; kept in TIMESTAMP_FOR_DELAY).
 DELAY_6_TICKS:
 	ld wa, (SYSTEM_TIMESTAMP:16)
 	ld (TIMESTAMP_FOR_DELAY:16), wa
@@ -355,6 +359,8 @@ Delay6T_Loop:
 	ret
 
 
+; Busy-waits until SYSTEM_TIMESTAMP has advanced by 51 from its value on entry (the start is kept
+; in TIMESTAMP_FOR_DELAY).
 DELAY_51_TICKS:
 	ld wa, (SYSTEM_TIMESTAMP:16)
 	ld (TIMESTAMP_FOR_DELAY:16), wa
@@ -597,6 +603,11 @@ CPanel_InitButtonState:	; do that
 	ret
 
 
+; Waits until the control-panel link is idle, then prepares it for reception.
+;   Polls (up to 200 times, DELAY_1500_LOOPS between polls) until SCLK1 (PF.6) is high, INTA
+;   (PE.5) is low, bits 0-1 of CPANEL_TX_RX_FLAGS are clear and the LED transmit buffer is
+;   empty.  Then, on success or timeout alike, clears the INTRX1 / INTTX1 requests, sets INTES1,
+;   disables reception (SC1MOD.RXE = 0) and sets bit 7 of CPANEL_PROTOCOL_FLAGS.
 CPanel_WaitTXReady:
 	ld (CPANEL_COUNTER_DOWN_FROM_200:16), 200; =200
 
@@ -638,6 +649,11 @@ WaitTX_ConfigAndReturn:
 	ret
 
 
+; Starts sending the 16-bit command WA to the control panel.
+;   Resets the LED transmit buffer pointers, puts WA in CPANEL_LED_TX_BUFFER, sets the transmit
+;   flag in CPANEL_TX_RX_FLAGS and state-machine index 4, sets serial channel 1 to 31,250 baud
+;   (BR1CR), drives SCLK1 low, disables reception, clears the pending INTTX1 / INTRX1 / INTA
+;   requests, then writes A to SC1BUF (A holds the PFCR copy at that point, not part of WA).
 CPanel_SendCommand:
 	ei 6
 	ldw (CPANEL_LED_READ_PTR:16), 0
@@ -1179,6 +1195,7 @@ PollLoop_BusyRetry:
 
 
 
+; Sets bit 2 of CPANEL_TX_RX_FLAGS and continues in CPanel_RX_DispatchLoop.
 CPanel_RX_ProcessWithFlag:
 	or (CPANEL_TX_RX_FLAGS:16), 4	; CP_Flags_A.2 = 1  ; UNUSED?
 	jr CPanel_RX_DispatchLoop
@@ -1517,6 +1534,7 @@ LEDs_Return:
 	ret
 
 
+; Advances the control-panel receive index IY, wrapping from 92 to 0.
 CPanel_IncRXPtr:
 	inc 1, iy
 	cp iy, 0x5c
@@ -1527,6 +1545,7 @@ IncRX_NoWrap:
 	ret
 
 
+; Advances the control-panel LED buffer index IY, wrapping from 60 to 0.
 CPanel_IncLEDPtr:
 	inc 1, iy
 	cp iy, 0x3c
@@ -1537,6 +1556,7 @@ IncLED_NoWrap:
 	ret
 
 
+; Advances the control-panel event index IX, wrapping from 128 to 0.
 CPanel_IncEventPtr:
 	inc 1, ix
 	cp ix, 0x80
@@ -1547,6 +1567,7 @@ IncEvt_NoWrap:
 	ret
 
 
+; Steps the control-panel event index IX back by one, wrapping from 0 to 127.
 CPanel_DecEventPtr:
 	cp ix, 0:i3
 	jr nz, DecEvt_NoWrap
