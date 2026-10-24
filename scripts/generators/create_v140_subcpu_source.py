@@ -113,10 +113,10 @@ SVC_V140 = b"""\
 ; Exit:  HL = 10 (the byte count, which DSP_Cmd2B_PostProcess turns into the reply length),
 ;        XIX = source record.
 ; Body:  hi & 0x20 set -> ToneDB_Find_ToneRecord(WA = lo, BC = hi) supplies the source
-;                         record (v1.41: ToneDB_Find_SubToneRecord(patchrec, i, DE = 0xFF));
-;        otherwise     -> idx = ((hi & 0x1F) << 7) + (lo & 0x7F)
-;                         e   = u16[ ToneDB_RelBase + Root->+0x7C + 2*idx ]
-;                         src = ToneDB_RelBase + Root->+0xB0 + 10*e
+;                         record (v1.41: ToneDB_Find_SubToneRecord(patchrec, i, DE = 0xff));
+;        otherwise     -> idx = ((hi & 0x1f) << 7) + (lo & 0x7f)
+;                         e   = u16[ ToneDB_RelBase + Root->+0x7c + 2*idx ]
+;                         src = ToneDB_RelBase + Root->+0xb0 + 10*e
 ;        Ten bytes are copied src -> XDE.  No stack frame: the destination walks in XIZ.
 DSP_SetVoiceCoefficients:
 	push	xiz
@@ -140,13 +140,13 @@ DSP_SetVoiceCoefficients:
 	cp	bc, 0:i3
 	jr	nz, DSP_SetCoeff_ComputeIndex
 
-; Every value of hi & 0xC0 arrives here, so the four-way compare is vestigial.
-; XHL = ToneDB_RootPtr->+0x7C, the sub-tone index table.
+; Every value of hi & 0xc0 arrives here, so the four-way compare is vestigial.
+; XHL = ToneDB_RootPtr->+0x7c, the sub-tone index table.
 DSP_SetCoeff_LoadTableBase:
 	ld	xbc, (Payload_Bss_Start+0x649e:24)
 	ld	xhl, (xbc+124)
 
-; e = u16 table[((hi & 0x1F) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xB0 + 10*e.
+; e = u16 table[((hi & 0x1f) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xb0 + 10*e.
 DSP_SetCoeff_ComputeIndex:
 	ld	bc, de
 	sll	bc, 7
@@ -194,6 +194,12 @@ DSP_SetCoeff_Return:
 """
 
 # (file, old, new): each `old` must occur exactly once in the v141 text.
+# Spelling rule (cross-version diff minimisation): inside these short edits an instruction
+# that v1.41 also has at that spot keeps v1.41's text byte for byte (v141 inherits v142's
+# space-after-mnemonic style), so a v141/v140 diff shows only real changes; instructions that
+# are new or different use the policy's tab style.  SVC_V140 is the exception: it replaces
+# the whole v1.41 function (different registers, no frame) and is written in tab style
+# throughout, so a diff of that function shows every line.
 # SPAN entries are (file, first_line, last_line, sha1_of_span, new).
 EDITS = [
     ("subcpu_data_tables.s",
@@ -217,17 +223,17 @@ EDITS = [
      b"; and the reference is the record's {lo, hi} pair at +0x27+2*i, passed as WA, BC with\n"
      b"; XDE = the reply buffer.  v1.41 passes (part, i) and does this lookup in the callee.\n"
      b"DSP_Cmd2B_SetParam:\n"
-     b"\tld\ta, (0x4370:16)\n\textz\twa\n\tmuls\twa, 0x11f\n"
-     b"\tlda\txbc, (Payload_Bss_Start+0x250b:24)\n\tld\ta, (xbc+wa)\n\tld\te, a\n\textz\tde\n"
-     b"\tld\ta, (0x4370:16)\n\textz\twa\n\tmuls\twa, 0x11f\n"
-     b"\tlda\txbc, (Payload_Bss_Start+0x250c:24)\n\tld\ta, (xbc+wa)\n\tld\tc, a\n\textz\tbc\n"
-     b"\tld\twa, de\n\tcall\tToneDB_Find_ToneRecord\n"
-     b"\tld\ta, (0x4371:16)\n\textz\twa\n\tadd\twa, wa\n\tadd\twa, 0x27\n"
-     b"\tld\ta, (xhl+wa)\n\tld\te, a\n\textz\tde\n"
-     b"\tld\ta, (0x4371:16)\n\textz\twa\n\tadd\twa, wa\n\tadd\twa, 0x27\n"
-     b"\texts\txwa\n\tadd\txwa, xhl\n\tld\ta, (xwa+1)\n\tld\tc, a\n\textz\tbc\n"
-     b"\tld\twa, de\n\tld\txde, (xsp+10)\n\tcall\tDSP_SetVoiceCoefficients\n"
-     b"\tjr\tDSP_Cmd2B_PostProcess\n"),
+     b"\tld a, (17264:16)\n\textz\twa\n\tmuls\twa, 0x11f\n"
+     b"\tlda\txbc, (Payload_Bss_Start+0x250b:24)\n\tld\ta, (xbc+wa)\n\tld e, a\n\textz de\n"
+     b"\tld a, (17264:16)\n\textz\twa\n\tmuls\twa, 0x11f\n"
+     b"\tlda\txbc, (Payload_Bss_Start+0x250c:24)\n\tld\ta, (xbc+wa)\n\tld c, a\n\textz bc\n"
+     b"\tld wa, de\n\tcall\tToneDB_Find_ToneRecord\n"
+     b"\tld a, (17265:16)\n\textz\twa\n\tadd\twa, wa\n\tadd\twa, 0x27\n"
+     b"\tld\ta, (xhl+wa)\n\tld e, a\n\textz de\n"
+     b"\tld a, (17265:16)\n\textz\twa\n\tadd\twa, wa\n\tadd\twa, 0x27\n"
+     b"\texts\txwa\n\tadd\txwa, xhl\n\tld\ta, (xwa+1)\n\tld c, a\n\textz bc\n"
+     b"\tld wa, de\n\tld xde, (xsp + 10)\n\tcall DSP_SetVoiceCoefficients\n"
+     b"\tjr DSP_Cmd2B_PostProcess\n"),
     (MAIN_DST,
      b"DSP_Cmd2B_VoiceParamWrite:\n"
      b"\tldto_berp A, 0xFB\n\textz wa\n\tld iz, wa\n\tand iz, 0xF\n"

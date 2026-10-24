@@ -35140,10 +35140,10 @@ DSP_VoiceParam_Dispatch_Return:
 ; Exit:  HL = 10 (the byte count, which DSP_Cmd2B_PostProcess turns into the reply length),
 ;        XIX = source record.
 ; Body:  hi & 0x20 set -> ToneDB_Find_ToneRecord(WA = lo, BC = hi) supplies the source
-;                         record (v1.41: ToneDB_Find_SubToneRecord(patchrec, i, DE = 0xFF));
-;        otherwise     -> idx = ((hi & 0x1F) << 7) + (lo & 0x7F)
-;                         e   = u16[ ToneDB_RelBase + Root->+0x7C + 2*idx ]
-;                         src = ToneDB_RelBase + Root->+0xB0 + 10*e
+;                         record (v1.41: ToneDB_Find_SubToneRecord(patchrec, i, DE = 0xff));
+;        otherwise     -> idx = ((hi & 0x1f) << 7) + (lo & 0x7f)
+;                         e   = u16[ ToneDB_RelBase + Root->+0x7c + 2*idx ]
+;                         src = ToneDB_RelBase + Root->+0xb0 + 10*e
 ;        Ten bytes are copied src -> XDE.  No stack frame: the destination walks in XIZ.
 DSP_SetVoiceCoefficients:
 	push	xiz
@@ -35167,13 +35167,13 @@ DSP_SetVoiceCoefficients:
 	cp	bc, 0:i3
 	jr	nz, DSP_SetCoeff_ComputeIndex
 
-; Every value of hi & 0xC0 arrives here, so the four-way compare is vestigial.
-; XHL = ToneDB_RootPtr->+0x7C, the sub-tone index table.
+; Every value of hi & 0xc0 arrives here, so the four-way compare is vestigial.
+; XHL = ToneDB_RootPtr->+0x7c, the sub-tone index table.
 DSP_SetCoeff_LoadTableBase:
 	ld	xbc, (Payload_Bss_Start+0x649e:24)
 	ld	xhl, (xbc+124)
 
-; e = u16 table[((hi & 0x1F) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xB0 + 10*e.
+; e = u16 table[((hi & 0x1f) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xb0 + 10*e.
 DSP_SetCoeff_ComputeIndex:
 	ld	bc, de
 	sll	bc, 7
@@ -44198,42 +44198,42 @@ DSP_Cmd2B_ReadParam5D:
 ; and the reference is the record's {lo, hi} pair at +0x27+2*i, passed as WA, BC with
 ; XDE = the reply buffer.  v1.41 passes (part, i) and does this lookup in the callee.
 DSP_Cmd2B_SetParam:
-	ld	a, (0x4370:16)
+	ld a, (17264:16)
 	extz	wa
 	muls	wa, 0x11f
 	lda	xbc, (Payload_Bss_Start+0x250b:24)
 	ld	a, (xbc+wa)
-	ld	e, a
-	extz	de
-	ld	a, (0x4370:16)
+	ld e, a
+	extz de
+	ld a, (17264:16)
 	extz	wa
 	muls	wa, 0x11f
 	lda	xbc, (Payload_Bss_Start+0x250c:24)
 	ld	a, (xbc+wa)
-	ld	c, a
-	extz	bc
-	ld	wa, de
+	ld c, a
+	extz bc
+	ld wa, de
 	call	ToneDB_Find_ToneRecord
-	ld	a, (0x4371:16)
+	ld a, (17265:16)
 	extz	wa
 	add	wa, wa
 	add	wa, 0x27
 	ld	a, (xhl+wa)
-	ld	e, a
-	extz	de
-	ld	a, (0x4371:16)
+	ld e, a
+	extz de
+	ld a, (17265:16)
 	extz	wa
 	add	wa, wa
 	add	wa, 0x27
 	exts	xwa
 	add	xwa, xhl
 	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	xde, (xsp+10)
-	call	DSP_SetVoiceCoefficients
-	jr	DSP_Cmd2B_PostProcess
+	ld c, a
+	extz bc
+	ld wa, de
+	ld xde, (xsp + 10)
+	call DSP_SetVoiceCoefficients
+	jr DSP_Cmd2B_PostProcess
 
 ; Sub-command 0x27: DSP_ReadVoiceParam11 with the same three arguments.
 DSP_Cmd2B_ReadParam11:
