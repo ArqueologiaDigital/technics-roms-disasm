@@ -279,31 +279,31 @@ Names:
 - ConvertBitmapFile: KEEP. It is the firmware's own name (kn7000.sym, InitBlockTable +
   0x660). The doc describes what it does: a BMP repacker plus the 8-bpp reduction to 176
   colours.
-- func_4858056C -> SswDrawImage: ACCEPT, with one correction. The function starts at
+- SswDrawImage_entry -> SswDrawImage: ACCEPT, with one correction. The function starts at
   0x4858056A (movm [d2,d3,a2,a3]), and 0x4858056C is the call entry, so the name goes at
   0x4858056A with _entry at 0x4858056C. It has 4 direct callers, all in the AcSswImgListProc
   span: 0x4857FB68, 0x4857FD27, 0x48580A0D, 0x48580A46. It draws a BMP (GetBitmapInfo,
   ConvertBitmapFile, then DrawBitmapFile, or DrawBitmap 0), a JPEG (GetJpegSize,
   DrawJpegFile), or bitmap 0 as a 24-pixel placeholder, at the u16 cursor 0x5009E284/86. It
-  aligns by u8 0x5009E28E (0 centre, 2 right, else left, against a width that func_48580282
+  aligns by u8 0x5009E28E (0 centre, 2 right, else left, against a width that func_4858027D_entry
   returns) and advances x by the width. The strings '<SLIDESHOW>' and 'SSW-ACT-V01' at
   0x486AF889 support the Ssw prefix.
-- func_4852EC49 (entry 0x4852EC4E) -> LoadHpBmpFile: CONFIRMED. It opens a file through
-  func_48532395 with a1 = 'rb' (0x486643A4), calls LoadHpBmp_entry 0x48497135, closes the
-  file with func_485323BF and returns LoadHpBmp's d0. Its only caller is 0x48522417.
-- func_4853411C -> 'probably Malloc': CONFIRMED as an allocator, but NOT the main Malloc
+- LoadHpBmpFile (entry 0x4852EC4E) -> LoadHpBmpFile: CONFIRMED. It opens a file through
+  fmmopen_entry with a1 = 'rb' (0x486643A4), calls LoadHpBmp_entry 0x48497135, closes the
+  file with fmmclose_entry and returns LoadHpBmp's d0. Its only caller is 0x48522417.
+- ZArenaAlloc_entry -> 'probably Malloc': CONFIRMED as an allocator, but NOT the main Malloc
   (0x48416625, free list 0x500006E8). It does a first-fit search over its own block list at
   (0x50160600), sentinel 0x501605F8. Headers are 0x10 bytes {u32 size, u8 0xA5 magic, u8 in-
   use, next, prev}; a block is split when more than 0x14 bytes remain; it returns header +
-  0x10, or 0. The arena is set up by func_485340BE (0x445C0 bytes at 0x503BB800), and
-  func_4853419F frees (it checks 0xA5 at header + 4). Suggested names, tentative:
+  0x10, or 0. The arena is set up by ZArenaReset (0x445C0 bytes at 0x503BB800), and
+  ZArenaFree_entry frees (it checks 0xA5 at header + 4). Suggested names, tentative:
   WorkArenaReset / WorkArenaAlloc / WorkArenaFree.
-- func_48532468 -> 'probably a file read': NOT VERIFIED by me. Its use in LoadHpBmp (a0 =
+- fmmread_entry -> 'probably a file read': NOT VERIFIED by me. Its use in LoadHpBmp (a0 =
   buffer, d0 = 0x42B6, result exth'd and tested < 0) fits a read, but I did not dump it.
 
 Left open:
 
-- LoadHpBmp calls func_485340BE before it allocates. That function resets the arena at
+- LoadHpBmp calls ZArenaReset before it allocates. That function resets the arena at
   0x503BB800 (0x445C0 bytes, list head 0x50160600) to one free block, so any other live
   block in that arena is lost. I did not check whether anything else uses the arena. It
   belongs in LoadHpBmp's annotation, not this file.
@@ -355,7 +355,7 @@ Corrections (14):
   ConvertBitmapFile computes n = min((size - 0x36 - P)/4, 2^bpp) at 0x48421F04..0x48421F25
   and tests n > 0xB0 at 0x48421FFB. LoadHpBmp passes 0x42B6 (0x484971AF) and accepts at most
   160 x 100 (0x4849718C..0x484971A8), so the room is at least 0x400 and n = 256 for every
-  8-bpp file. func_4858056C passes (0x2c,sp) = bfSize at 0x485806B0.
+  8-bpp file. SswDrawImage_entry passes (0x2c,sp) = bfSize at 0x485806B0.
   - was: Only caller: ConvertBitmapFile, for an 8-bpp file with more than 0xB0 palette
     entries, with d0 = 0xB0 -- the 176 entries 0x20..0xCF that DrawBitmapFile_Impl loads
     from a file.
@@ -375,7 +375,7 @@ Corrections (14):
 - **4842215B** -- A missed bug. BmpReduceColors reads biHeight with a 32-bit mov (0x480,sp)
   at 0x484221D5, 0x484221E4, 0x48422439 and 0x48422456. ConvertBitmapFile sizes the pixel
   array with movhu (0x4c,sp) + exth (0x48421EF3/0x48421EF8). GetBitmapInfo does not check
-  the height, and func_4858056C does not either. LoadHpBmp rejects heights above 100 by a
+  the height, and SswDrawImage_entry does not either. LoadHpBmp rejects heights above 100 by a
   signed 32-bit compare at 0x4849718E, but negative width and height together can still give
   a large positive product. The rewrite loop at 0x48422449..0x48422462 stores map[byte] into
   every byte it visits.
@@ -383,7 +383,7 @@ Corrections (14):
   - now: biHeight is read as 32 bits here but as s16 by ConvertBitmapFile's room check, so a
     malformed height (e.g. 0x10010, which that check takes as 16 rows) can make both pixel
     loops run past the file, the second one writing.
-- **4842215B** -- func_4858056C goes from GetBitmapInfo (0x485805E3) to
+- **4842215B** -- SswDrawImage_entry goes from GetBitmapInfo (0x485805E3) to
   ConvertBitmapFile(bfSize) (0x485806B6) with no width or height test. ConvertBitmapFile
   only checks that the pixels fit in the size it is given. So a slide-show BMP above 65535
   pixels (e.g. 320 x 240) can wrap a count. The u16 wrap and the 160 x 100 cap were re-
@@ -454,14 +454,14 @@ Names:
 
 Left open:
 
-- Where the slide-show files come from was not traced. func_4858056C is called with a0 = a
+- Where the slide-show files come from was not traced. SswDrawImage_entry is called with a0 = a
   record's +0x10 pointer (0x4857FB65, 0x4857FD24), an entry of the table at
   (0x50172C90)+0x240 (0x48580A09), and a PICTURE_FLASH (0x57800000) table entry
   (0x48580A38..0x48580A44). With a flash pointer, ConvertBitmapFile and then BmpReduceColors
   would write into flash in place. I did not check whether those files are stored already
   packed and reduced, or whether such writes take effect. I also did not check whether the
   picture import caps the image size, which decides whether the u16 count wrap can happen in
-  practice. The doc says only that func_4858056C sets no limit of its own.
+  practice. The doc says only that SswDrawImage_entry sets no limit of its own.
 - The malformed-height bug (e.g. biHeight = 0x10010) comes from reading the code only, not
   from running it in an emulator. From LoadHpBmp it needs a negative width and a negative
   32-bit height, since that function rejects heights above 100.
@@ -488,7 +488,7 @@ Corrections (6):
 
 - **0x4842829F (Draw2BpFile doc, the caller's read)** -- 0x48532468 copies the device table
   at 0x486646F0 and calls slot [byte 0x5007125A]. Device 0's handler, 0x4853282E, loops
-  func_4846DA31(a0 = buf, d0 = 1, d1 = min(remaining, 0x7FFF), a1 = *(0x50071254)) until d0
+  func_4846DA2C_entry(a0 = buf, d0 = 1, d1 = min(remaining, 0x7FFF), a1 = *(0x50071254)) until d0
   bytes are read, or until a short read with flag 0x8000 set at (8,file), i.e. EOF. So it
   reads AT MOST d0 bytes. Its sibling at 0x485328B5 is the write: it gives error -11 when
   (8,file) & 0x7FFF == 0x1F, i.e. disk full. DbBitmapLoadProc discards the return: the call
@@ -503,7 +503,7 @@ Corrections (6):
   0x48727718..0x4872772C hold GetPaletteRGB4, Draw2BpFile, Check2BitLcd, SetLcdMode,
   GetColorMode and SetColorMode. The name strings 0x485B4E4F..0x485B4E8F are the same six,
   contiguous. CheckColorLcd and GetLcdMode have their strings elsewhere, at 0x485B493F.
-  Colour mode 2 is real and reachable: at 0x48414328, func_484142D5 calls SetColorMode(2)
+  Colour mode 2 is real and reachable: at 0x48414328, func_484142D0_entry calls SetColorMode(2)
   and SetLcdMode(2) when func_4854D778 (u16 at 0x50005218) is 2. In mode 2, SetPaletteRGB
   (0x4842DA00..0x4842DA60) stores level 0..3 at 0x50122CAC[index], and GetPaletteRGB4 reads
   it. It is read by the screen-output code at 0x48415056 (for bytes whose high nibble is not
@@ -562,15 +562,15 @@ Names:
 - kn7000_manual.sym section header 'the 2-bpp blitter Draw2BpFile' is wrong. Suggest:
   'Draw2BpFile, the DrawBitmapFile twin (1/4/8-bpp BMP -> 8-bpp FrameBuffer) of the debug
   BITMAP LOAD screen'.
-- func_48532395 -> fmmopen_entry (fmmopen is 0x48532390 in kn7000_exports_from_942.sym;
-  movm, add, then this entry). func_485323BF -> fmmclose_entry (fmmclose 0x485323BC).
-  func_485323E9 -> fmmremove_entry (fmmremove 0x485323E4).
-- func_48532468 (movm at 0x48532463) -> fmmread: (a0 = buffer, d0 = max bytes) -> d0 = bytes
+- fmmopen_entry -> fmmopen_entry (fmmopen is 0x48532390 in kn7000_exports_from_942.sym;
+  movm, add, then this entry). fmmclose_entry -> fmmclose_entry (fmmclose 0x485323BC).
+  fmmremove_entry -> fmmremove_entry (fmmremove 0x485323E4).
+- fmmread_entry (movm at 0x48532463) -> fmmread: (a0 = buffer, d0 = max bytes) -> d0 = bytes
   read or a negative error, on the file fmmopen opened. I agree with the writer: device 0's
   handler 0x4853282E reads in chunks of at most 0x7FFF and stops at EOF, and the next table
   slot (0x486646FC, handler 0x485328B5) is the write. The name is inferred; 942 does not
   export it.
-- func_4842DB41 (movm at 0x4842DB3C) -> e.g. ColorToMono4Level. It maps a 0x00BBGGRR colour
+- ColorToMono4Level_entry (movm at 0x4842DB3C) -> e.g. ColorToMono4Level. It maps a 0x00BBGGRR colour
   to the nearest of the greys 0x00/0x80/0xC0/0xFF, returned as 0xFF0000 / 0xFF6060 /
   0xFFA0A0 / 0xFFFFFF. The squared distances are kept in 16 bits (exthu, movhu). When none
   of the four tests wins, the last one falls through to the ret at 0x4842DC85 with d0 = a
@@ -589,7 +589,7 @@ Left open:
 
 - 'Colour mode 2 is a 4-level panel' is inferred from four facts: the 0..3 levels
   SetPaletteRGB keeps, the GetPaletteRGB4 calls at 0x48415056 / 0x484155D8 / CaptureLcd, the
-  four blue-white target colours of func_4842DB41, and the existing kn7000.sym name
+  four blue-white target colours of ColorToMono4Level_entry, and the existing kn7000.sym name
   ConvPaletteMono4 (0x4842DC88). I did not trace the code at 0x48415056 out to the LCD
   controller.
 - Only device 0's handler behind 0x48532468 was traced (0x4853282E, a read that stops at

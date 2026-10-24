@@ -13,9 +13,12 @@
 #
 # Labels in converted code: a function keeps its symbol-file name (an
 # `X_entry` label is the register-save `call` entry a few bytes after the
-# `movm` prologue of X); func_<ADDR> is a function no symbol file names yet
-# (a call target, or the code after a FUNC_END cap), loc_<ADDR> a branch
-# target or code address inside a function, rodata_<ADDR> typed data.
+# `movm` / `add -N, sp` prologue of X); func_<ADDR> is a function no symbol
+# file names yet (a call target, a pointer to a prologue, or the code after a
+# FUNC_END cap), its call entry func_<ADDR>_entry; loc_<ADDR> a branch
+# target or code address inside a function, rodata_<ADDR> typed data. A
+# symbol-file name that sits on the call entry itself keeps that address: its
+# block header then says where the unlabelled prologue in front of it starts.
 
 .equ PROGRAM_ROM_BASE, 0x48400000
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
@@ -63,7 +66,7 @@ _reset:
     nop
     nop
 _vector_0a:
-    jmp     loc_484D77CF
+    jmp     func_484D77CF
 _rom_marker:
     .byte 0x16                              # ROM-present marker (cmp vs 0xFF)
     .space 0x80 - 0x10, 0xFF

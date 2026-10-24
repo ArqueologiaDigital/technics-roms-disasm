@@ -127,7 +127,7 @@ an immediate width `0x30:32` / `0x10:16` (or `udf00 0xec:16, d0`), so every
 instruction of the program re-encodes byte-exactly. The encoder covers the
 `udfNN`/`udfuNN` user-defined-function ops (the JPEG IDCT multiplies with
 `udf00 imm16`), the `other*` register-list bits, the bit ops on `(aN)` and
-`(d8, aN)` and `mov sp, (d8, aN)`. unidasm also swaps the registers of an
+`(d8, aN)` and `mov sp, (d8, aN)`. unidasm also swaps the registers of a
 load `fc 00`..`fc 7f` from `(d32, aN)`; the generator rebuilds those from the opcode
 byte too.
 
@@ -150,8 +150,10 @@ understands `.byte`/`.word`/`.long`/`.space`/`.align`, `.ascii`/`.asciz`,
 labels/`.equ`/`.org`/`.mnbase`, `.include`, and the two `.incbin` forms. An
 instruction operand may be `NAME+N`. A label may be used before it is defined;
 the source is assembled again until every such use was right (`--labels FILE`
-seeds the first pass with the previous build's addresses, so the converted
-program takes about one pass instead of five). `.incbin_range "file", START, END` asserts that the current
+seeds the first pass with the previous build's addresses, so an unchanged
+program takes one pass instead of five; when the seeded pass is not exact the
+assembler starts again without it, because a stale seed can settle a branch in
+its long relaxed form). `.incbin_range "file", START, END` asserts that the current
 output offset equals `START`, so any gap or overlap in the region layout is
 caught immediately.
 
@@ -204,10 +206,15 @@ The source is symbolic. Every function keeps its symbol-file name as a real
 label (`kn7asm` checks it against its `.equ` in `src/symbols.inc`): the
 reflection names of `kn7000.sym`, the hand-recovered names of
 `kn7000_manual.sym` (which also give the library its function boundaries;
-`LIB_CONVERT` in the generator only overrides an end), `X_entry` for a
-register-save `call` entry. A function no symbol file names yet is
-`func_<ADDR>`; every branch target and every code address an operand names is a
-label, `loc_<ADDR>` unless something names it. Data inside the code ranges is
+`LIB_CONVERT` in the generator only overrides an end). A function that can
+also be reached through a pointer starts with a register-save prologue
+(`movm [regs], (sp)` and/or `add -N, sp`) and is entered by `call` right after
+it: its label is on the prologue and `X_entry` on the `call` entry (the
+generator takes the pair only when every `call` of the entry saves the same
+registers and opens the same frame; `notes/convert-probes/prologue_census.py`
+counts them). A function no symbol file names yet is `func_<ADDR>`, its call
+entry `func_<ADDR>_entry`; every branch target and every code address an
+operand names is a label, `loc_<ADDR>` unless something names it. Data inside the code ranges is
 typed rather than decoded (`DATA_ISLANDS`): the `.rodata` that code region 1
 ends in (double-precision gain tables, a micro-ITRON `T_CTSK`) and the library
 loader's copy descriptor at the end of the image. `notes/convert-probes/reach.py`

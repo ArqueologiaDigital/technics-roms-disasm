@@ -1322,7 +1322,7 @@
 0x4C02D0A7  TgVoiceModLfoStep       ; (d0 part, a0 tone entry, a1 slot state) step one mod-slot oscillator: flags bit4 = delay counter (re-arms as running), bit3 = running (phase wrap -> new value via 0x4C0399DD / triangle), scaled by tone +0xE+dest*2 / 0x800, +-0x1FFF out
 0x4C02D0AC  TgVoiceModLfoStep_entry
 0x4C02D2B0  TgPartModSlotSweep      ; the per-part MOD-SLOT service sweep (all 0x22 parts): TgPartGlideTick (partrec bits6+7), 0x4C039A09, then per collected voice step the 4 mod units (tone +0x52+u*4 bit7 = per-voice at librec+0x82+u*8) via TgVoiceModLfoStep -> TgVoiceModDepthWrite; tail = global +0x52 release-countdown sweep (graceful for partrec bit-0x2000 parts)
-0x4C02D2B6  TgPartModSlotSweep_entry
+0x4C02D2B2  TgPartModSlotSweep_entry ; the `call` entry (callers pass [d2,d3,a2,a3], 0x10): the frame needs 0x104 more bytes than call's 8-bit size can open, so the `add -0x104, sp` after the movm is part of the body, not of the prologue
 0x4C02D52A  TgVoicePeriodicService  ; the periodic voice tick: glide + 0x4C039A09 for all parts, 0x4C009A16/0x4C009839, then the global sweep running the +0x52 countdowns and +0x54 level ramps (TgVoiceReleaseCountdownTick / TgVoiceLevelRampTick; immediate key-off for non-bit-0x2000 parts)
 0x4C02D530  TgVoicePeriodicService_entry
 0x4C02D75F  TgPartGlideStateReset   ; (d0 part) reset the portamento state 0x500AD5A8+part*0x10C: +0x26 := 0xFF, clear +0x28..+0x35 and +0x40/+0x42, +0x44 := -1; rets leaf
@@ -2647,7 +2647,7 @@
 0x48486061  JpegDecodeCrop          ; (a0 = JPEG, a1 = destination, d0 = x offset, d1 = y offset) decodes through JpegEngine 0x4840E721 (input limit 0x7FFFF) into a 640x240, 3-byte-per-pixel, bottom-up buffer: each pixel lands at its position plus the offsets, pixels outside 640x240 are dropped -> d0 = JpegEngine's result. Only caller: PictureImport's JPEG crop (0x485814C2). No movm; callers enter at JpegDecodeCrop_entry past add -0x4c,sp
 0x48486064  JpegDecodeCrop_entry
 0x4848886E  CaptureLcdCheck         ; the firmware's own name (string 0x485D5AC0; ApFunction table 0x48742674, registered by InitializeBlock01 at 0x484874FC): (d1 = message) 0x50005 -> CaptureLcd, returns 0; 0x50000 -> returns d0 + a stack argument; anything else -> 0
-0x48496F51  HpFlashCheck            ; init (called from func_4854AC2B; runs at boot): when the custom flash answers and its record 0x96811000 differs from the ROM template 0x485F9584 (strcmp of the 'JK ' string, then the u32 at +4), calls HpFlashWriteDefaults; then always HpRecordLoad
+0x48496F51  HpFlashCheck            ; init (called from func_4854AC28_entry; runs at boot): when the custom flash answers and its record 0x96811000 differs from the ROM template 0x485F9584 (strcmp of the 'JK ' string, then the u32 at +4), calls HpFlashWriteDefaults; then always HpRecordLoad
 0x48496F54  HpFlashCheck_entry
 0x48496F93  HpFlashWriteDefaults    ; copies the ROM template 0x485F9584 (0x18C bytes) to 0x5006B5F8, then HpRecordProgram and HpBmpResetDefault
 0x48496F96  HpFlashWriteDefaults_entry
@@ -2661,13 +2661,13 @@
 0x4849709F  HmpBufferAlloc_entry
 0x484970C1  HmpInstall              ; (d0 = fmm error after the .HMP read) if d0 >= 0: copies the first 0x18C bytes of the buffer *(0x5006B798), the 'JK' record, to 0x5006B5F8, programs it with HpRecordProgram, calls TtNormal(0x330001, 0x600B5) (which re-reads the record word at 0x5006B600), and programs buffer+0x18C (0x42B6 bytes, the BMP) to custom flash 0x9681118C with no chip check. Always frees the buffer
 0x484970C4  HmpInstall_entry
-0x48497122  HmpBlobGet              ; (a0, a1 = out pointers) stores 0x96811000 to (a0) and 0x4442 to (a1): the custom-flash homepage blob (record + BMP) that the .HMP save func_4852D59E (from SaveHmp_HD) writes to the file
+0x48497122  HmpBlobGet              ; (a0, a1 = out pointers) stores 0x96811000 to (a0) and 0x4442 to (a1): the custom-flash homepage blob (record + BMP) that the .HMP save func_4852D599_entry (from SaveHmp_HD) writes to the file
 0x48497135  LoadHpBmp_entry
-0x4852C10C  SeqActFileLoad          ; (a0 = song file base name, d0 = song-load result) builds '<a0>.ACT' (func_4852F887, extension 0xD) and calls SswSongActLoad with d0, or with -0x68 when that file does not exist (func_485325E4) -> d0 = its result, -0x68 turned into 0. Called after a sequencer song load: 0x4852C20F, 0x4852C29A, 0x4852C2F4, 0x4852E443
+0x4852C10C  SeqActFileLoad          ; (a0 = song file base name, d0 = song-load result) builds '<a0>.ACT' (func_4852F882_entry, extension 0xD) and calls SswSongActLoad with d0, or with -0x68 when that file does not exist (func_485325DF_entry) -> d0 = its result, -0x68 turned into 0. Called after a sequencer song load: 0x4852C20F, 0x4852C29A, 0x4852C2F4, 0x4852E443
 0x4852C111  SeqActFileLoad_entry
-0x4852CC3A  HmpFileLoad             ; (a0 = base name) .HMP load (file type 9; LoadHmp_HD, load-handler table 0x486642FC): builds "<name>.HMP", fmmopen "rb" (failure: returns the fmm error), 'JK ' signature check func_4852B74B(9) (failure: -0x66), HmpBufferAlloc, fmmread 0x4442 bytes (count ignored, no size check), HmpInstall(fmm error), fmmclose; returns the fmm error
+0x4852CC3A  HmpFileLoad             ; (a0 = base name) .HMP load (file type 9; LoadHmp_HD, load-handler table 0x486642FC): builds "<name>.HMP", fmmopen "rb" (failure: returns the fmm error), 'JK ' signature check func_4852B746_entry(9) (failure: -0x66), HmpBufferAlloc, fmmread 0x4442 bytes (count ignored, no size check), HmpInstall(fmm error), fmmclose; returns the fmm error
 0x4852CC3F  HmpFileLoad_entry
-0x4852EC49  LoadHpBmpFile           ; homepage picture load, called by FmmWallpaperLoadFunc: opens the current file-list entry (func_48531F10 / func_48532236) with fmmopen "rb", runs LoadHpBmp (reads up to 0x42B6 bytes into the zlib-arena buffer 0x503BB810, accepts a BMP of at most 160x100 at <= 8 bpp, programs it to custom flash 0x9681118C) and closes it. Returns LoadHpBmp's result, the fmm error if the open fails, or -0x68 if func_48531F10 fails
+0x4852EC49  LoadHpBmpFile           ; homepage picture load, called by FmmWallpaperLoadFunc: opens the current file-list entry (func_48531F0D_entry / func_48532231_entry) with fmmopen "rb", runs LoadHpBmp (reads up to 0x42B6 bytes into the zlib-arena buffer 0x503BB810, accepts a BMP of at most 160x100 at <= 8 bpp, programs it to custom flash 0x9681118C) and closes it. Returns LoadHpBmp's result, the fmm error if the open fails, or -0x68 if func_48531F0D_entry fails
 0x4852EC4E  LoadHpBmpFile_entry
 0x48532368  fmmerror                ; -> d0 = the fmm layer's sticky error (u16; callers sign-extend, < 0 = error): a backend records an error only when none is recorded; table 0x486646A8 {0x4853263A floppy 0x50071258, 0x48565805 SD 0x50092584, 0x485840EA third 0x5017316C}. Name inferred
 0x4853236B  fmmerror_entry
@@ -2689,11 +2689,11 @@
 0x48534191  ZArenaAllocArray_entry
 0x4853419D  ZArenaFree              ; frees a zlib-arena block (checks the 0xA5 magic) and merges it with free neighbours
 0x4853419F  ZArenaFree_entry
-0x4854E143  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F487, read by func_4852F4CD) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
+0x4854E143  FeatureDemoSqtLoad      ; (a0 = .SQT name) fmmopen 'rb', loads its song data (length from func_4852F482_entry, read by func_4852F4C8_entry) to 0x502C0000 (0x5008294C; length 0x50082950) and records the demo pool after it: base 0x50082954 = 0x502C0000 + round4(len), size 0x50082958 = 0xC0000 - round4(len), ending at 0x50380000 -> d0 = 0, -0xC8 on an empty or short read, or fmmopen's error. The pool itself is created by FeatureDemoActLoad
 0x4854E148  FeatureDemoSqtLoad_entry
 0x4854E1CA  FeatureDemoActLoad      ; (a0 = .ACT name) SswPoolInit + SswPoolSelect on the demo pool FeatureDemoSqtLoad recorded (0x50082954 base, 0x50082958 size), then SswActOpen(a0) -> its result
 0x4854E1CF  FeatureDemoActLoad_entry
-0x4854E20C  FeaturePreLoad          ; (a0 -> .SQT name, a1 -> .ACT name, d0 -> 16-char buffer) reads 'FEATURE .PRE': first line (up to 8 characters kept) + '.SQT' / '.ACT'; next non-empty line (up to 16 characters) into d0's buffer, else a copy of the .SQT name (shown by func_4854E2E0: a title, inferred); all three left empty if the file does not open -> d0 = 0 always
+0x4854E20C  FeaturePreLoad          ; (a0 -> .SQT name, a1 -> .ACT name, d0 -> 16-char buffer) reads 'FEATURE .PRE': first line (up to 8 characters kept) + '.SQT' / '.ACT'; next non-empty line (up to 16 characters) into d0's buffer, else a copy of the .SQT name (shown by func_4854E2DB_entry: a title, inferred); all three left empty if the file does not open -> d0 = 0 always
 0x4854E211  FeaturePreLoad_entry
 0x4857EE8D  SswSongActLoad          ; (a0 = .ACT name, d0 = status) always re-creates (SswPoolMainInit) and selects the main picture pool, wiping it; then SswActOpen(a0) only when d0 >= 0, else returns d0. Only caller: SeqActFileLoad, which passes -0x68 when the .ACT does not exist
 0x4857EE92  SswSongActLoad_entry
@@ -2716,7 +2716,7 @@
 0x485807ED  SswActScriptLoad_entry
 0x48580886  SswSlideshowSectionCut  ; measures, then copies, the text between '<SLIDESHOW>' and '</SLIDESHOW>' of the script at pool+0x20 into a new pool block kept at pool+0x24 -> d0 = 0 or < 0
 0x4858088B  SswSlideshowSectionCut_entry
-0x485808E8  SswSlideshowRun         ; (d0 = interpreter mode: 1 load, 2 show) runs func_4857F300(mode) over the <SLIDESHOW> text at pool+0x24 until its NUL (one tag per call, inferred); returns 0
+0x485808E8  SswSlideshowRun         ; (d0 = interpreter mode: 1 load, 2 show) runs func_4857F2FE_entry(mode) over the <SLIDESHOW> text at pool+0x24 until its NUL (one tag per call, inferred); returns 0
 0x485808ED  SswSlideshowRun_entry
 0x4858090E  SswActionSectionCut     ; the same for '<ACTION>' .. '</ACTION>', block kept at pool+0x28
 0x48580913  SswActionSectionCut_entry

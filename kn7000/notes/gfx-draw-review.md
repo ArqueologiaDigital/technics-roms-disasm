@@ -152,7 +152,7 @@ Left open:
   deliberately says only 'u32 colours'. The name SetPaletteRGB and the 0x6060A0 'blue' set
   suggest 0x00RRGGBB, but that was not proven.
 - Whether the extra pixel at x + width (the SPFast4 bug) is visible in practice depends on
-  the rect widths that func_48496B2D's callers pass. Not checked.
+  the rect widths that func_48496B28_entry's callers pass. Not checked.
 - With s16 widths, a negative width makes LibMemCopy copy nothing in SPFast: dest+len wraps
   below dest and 'bcc' skips the loop. The source stride (w+1)/2*2 is then negative. This
   edge case is not documented; probably no caller does it.
@@ -265,7 +265,7 @@ Functions: DrawBitmapFileEx, DrawBitmapFileEx_QueuedExec, DrawBitmapFileEx_Impl,
 
 Corrections (11; the reviewer counted 168 claims it checked and found right):
 
-- **0x48424EBD** -- The caller list was incomplete. region1.lst has five calls to DrawJpegFile_entry 0x48424EC2: 0x484188AC, 0x48418DC7, 0x4848A988, 0x4854E0A1 (AcDemoImageProc, which draws a JPEG from table 0x4867C5DC) and 0x485806E2 (func_4858056C, which picks DrawBitmapFile, DrawJpegFile or DrawBitmap 0 by calling GetBitmapInfo and then GetJpegSize). The text gives the address, not the func_ name, because the 942 port translates addresses in comments but not names: it renders 0x4858055B.
+- **0x48424EBD** -- The caller list was incomplete. region1.lst has five calls to DrawJpegFile_entry 0x48424EC2: 0x484188AC, 0x48418DC7, 0x4848A988, 0x4854E0A1 (AcDemoImageProc, which draws a JPEG from table 0x4867C5DC) and 0x485806E2 (SswDrawImage_entry, which picks DrawBitmapFile, DrawJpegFile or DrawBitmap 0 by calling GetBitmapInfo and then GetJpegSize). The text gives the address, not the func_ name, because the 942 port translates addresses in comments but not names: it renders 0x4858055B.
   - was: Callers: the view procs VwBitmapFileProc and VwJpegFileProc, and OpeningFrameDraw
     (the boot splash, frames straight from the table ROM).
   - now: Callers: ... VwBitmapFileProc and VwJpegFileProc, OpeningFrameDraw (the boot
@@ -281,7 +281,7 @@ Corrections (11; the reviewer counted 168 claims it checked and found right):
   - now: DrawJpegFile: 'unclipped (see JpegDecodeBlit)'. JpegDecodeBlit: pixels go to (y +
     row)*640 + x + col with no clip; a picture wider than 640 - x wraps into the following
     rows, and one taller than 240 - y runs off the end of each plane.
-- **0x48424F28** -- JpegPixelStore is only one of the output callbacks that JpegSetup installs. func_48486AF8 and func_48486DB6 are others, picked by the format word at (0x1C,a0) in callback 0x484863B6. All of them do 'add 0xd0' and write both 0x500D4080 and 0x500F9880. The layout of the second plane is green4<<4|blue4.
+- **0x48424F28** -- JpegPixelStore is only one of the output callbacks that JpegSetup installs. func_48486AF3_entry and func_48486DB1_entry are others, picked by the format word at (0x1C,a0) in callback 0x484863B6. All of them do 'add 0xd0' and write both 0x500D4080 and 0x500F9880. The layout of the second plane is green4<<4|blue4.
   - was: The pixels are direct-colour picture pixels (JpegPixelStore: 0xD0|red4 in
     FrameBuffer, green4/blue4 in PICTURE_PLANE2)
   - now: JpegSetup's pixel writers (JpegPixelStore and its siblings) store direct-colour
@@ -326,7 +326,7 @@ Left open:
 - SetPaletteRGB has a colour-mode-2 side path (GetColorMode == 2 -> 0x50122CAC[index] :=
   0..3 for four specific colours). The DrawBitmapFileEx_Impl doc's 'CLUT entries 0x20..0xCF
   are set' does not mention it; that belongs to whoever annotates SetPaletteRGB.
-- func_48428307 (0x484283EE caller of the row unpacker) looks like a third, unnamed BMP
+- Draw2BpFile_Impl_entry (0x484283EE caller of the row unpacker) looks like a third, unnamed BMP
   blitter outside the converted range. It may deserve a name.
 - GetJpegSize treats SOS (0xFFDA) like SOF0. When the SOS 'precision' byte is not 8 it
   resumes scanning from inside the SOS header. This does not matter for well-formed files,

@@ -18,6 +18,7 @@
 # (annotations/README.md).
 # Run:  make program-src   (or python3 tools/gen_program_s.py)
 
+import bisect
 import os
 import re
 import struct
@@ -371,20 +372,20 @@ DATA_ISLANDS = {
     # the start of the constant data the data region continues (its gain
     # tables run on past 0x186000)
     0x18599C: (0x186000, [
-        (0x18599C, "byte", 5, "copied to the stack by a 5-iteration movbu loop at 0x48404DBA"),
+        (0x18599C, "byte", 5, "copied to the stack by the 5-iteration movbu loop of {in:0x48404DBA}"),
         (0x1859A1, "fill", 3, None),
         (0x1859A4, "f64", 25, "gain factors 10**(dB/20) for 0 .. +12 dB in 0.5 dB steps,"
-                              " indexed by a rounded dB value at 0x484086C3"),
-        (0x185A6C, "f64", 49, "gain factors for -6 .. +6 dB in 0.25 dB steps (indexed at 0x4840871F)"),
+                              " indexed by a rounded dB value in {in:0x484086C3}"),
+        (0x185A6C, "f64", 49, "gain factors for -6 .. +6 dB in 0.25 dB steps (indexed in {in:0x4840871F})"),
         (0x185BF4, "f64", 49, "gain factors for -12 .. +12 dB in 0.5 dB steps"),
-        (0x185D7C, "word", 2, "micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry,"
-                              " itskpri 3, stksz 0x2800"),
+        (0x185D7C, "word", 2, "micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry"
+                              " {in:0x48405B95}, itskpri 3, stksz 0x2800"),
         (0x185D84, "ptr", 1, None),
         (0x185D88, "word", 2, None),
-        (0x185D90, "word", 3, "packet {0, 8, 0} passed with id 10 to the kernel call at 0x4C03C7EF"),
-        (0x185D9C, "word", 2, "zero packet passed with ids 1 and 2 to the kernel call at 0x4C03C017"),
-        (0x185DA4, "word", 2, "zero packet passed with ids 5..8 to the kernel call at 0x4C03BF3C"),
-        (0x185DAC, "half", 10, "copied to the stack by a 20-iteration movbu loop at 0x48407DBD"),
+        (0x185D90, "word", 3, "packet {0, 8, 0} passed with id 10 to the kernel call {in:0x4C03C7EF}"),
+        (0x185D9C, "word", 2, "zero packet passed with ids 1 and 2 to the kernel call {in:0x4C03C017}"),
+        (0x185DA4, "word", 2, "zero packet passed with ids 5..8 to the kernel call {in:0x4C03BF3C}"),
+        (0x185DAC, "half", 10, "copied to the stack by the 20-iteration movbu loop of {in:0x48407DBD}"),
         (0x185DC0, "f64", 25, "a second copy of the 0 .. +12 dB table"),
         (0x185E88, "f64", 47, "a second copy of the -6 .. +6 dB table; its last two entries are"
                               " the first bytes of the data region"),
@@ -3049,6 +3050,49 @@ def first_target(ops):
     return int(m.group(1), 16) if m else None
 
 
+PRO_ADD = re.compile(r"-(?:0x[0-9a-fA-F]+|\d+),\s*sp$")       # add -N, sp
+PRO_MOVM = re.compile(r"\[([^\]]*)\],\s*\(sp\)$")            # movm [regs], (sp)
+
+
+CALL_FRAME = re.compile(r"0x[0-9a-fA-F]+,\s*(\[[^\]]*\]|0),\s*(0x[0-9a-fA-F]+|\d+)$")
+
+
+def frame_regs(text):
+    """The register list of a `call` / `movm` operand (`[d2,a2]`, or `0` = none)."""
+    return tuple(r.strip() for r in text.strip("[]").split(",") if r.strip() and r.strip() != "0")
+
+
+def find_prologues(dec):
+    """Register-save prologues in the decoded code: {entry: (prologue start,
+    [prologue insns as (cpu, bytes, mnem, ops)])}.
+
+    On the MN10300 `call T, [regs], N` saves the registers and opens the frame
+    itself, so a function that is also reached through `calls` / a pointer
+    begins with its own `movm [regs], (sp)` and/or `add -N, sp`, and the
+    direct-call entry T is the first instruction after it. A prologue is one
+    of: movm; add -N,sp; movm + add -N,sp -- right before T, and itself right
+    after an instruction that does not fall through (ret/retf/rets/rti/jmp/bra)
+    or after 0xFF padding, so it can only be entered from outside. Every
+    instruction start that fits is returned; main() keeps the labelled ones."""
+    seq = sorted((delta + a, b, mn, ops) for (_o, _e, delta), ins in dec.items()
+                 for a, b, mn, ops in ins or ())
+
+    def adj(i, cpu):            # seq[i] ends exactly at cpu
+        return i >= 0 and seq[i][0] + len(seq[i][1]) == cpu
+
+    out = {}
+    for i in range(1, len(seq)):
+        t, k, j = seq[i][0], i, i - 1
+        if adj(j, t) and seq[j][2] == "add" and PRO_ADD.match(seq[j][3]):
+            k, j = j, j - 1
+        if adj(j, seq[k][0]) and seq[j][2] == "movm" and PRO_MOVM.match(seq[j][3]):
+            k, j = j, j - 1
+        if k == i or not adj(j, seq[k][0]) or not (seq[j][2] in UNCOND or seq[j][2] == FILL):
+            continue
+        out[t] = (seq[k][0], seq[k:i])
+    return out
+
+
 def reencode(mnem, ops, b, cpu):
     """The operand text that re-encodes to exactly `b` at `cpu`, or None. The
     mnemonic text unidasm prints is tried first; a call/jmp the linker left in
@@ -3194,6 +3238,9 @@ class EmitCtx:
         self.wide_udf = 0          # udf immediates written with a width
         self.fill = 0              # bytes of 0xFF padding
         self.inside = []           # (start, end, label) of each labelled data item
+        self.pro_starts = set()    # register-save prologue starts (find_prologues)
+        self.pro_entries = set()   # the call entries right after them
+        self.func_labels = []      # sorted (addr, name) of function labels, for name_code
 
     def ref(self, a):
         """The name an address operand prints as, or None."""
@@ -3209,6 +3256,18 @@ class EmitCtx:
             if lo < a < hi:
                 return f"{nm}+{a - lo}"
         return None
+
+    def name_code(self, text):
+        """A comment with `{in:ADDR}` spelled as the name of the function that
+        holds code address ADDR (the nearest function label at or below it),
+        so the comment follows the code's names as they are recovered."""
+        def one(m):
+            a = int(m.group(1), 16)
+            i = bisect.bisect_right(self.func_labels, (a, "\uffff")) - 1
+            if i < 0:
+                sys.exit(f"gen_program_s: no function holds {a:#x} (comment {text!r})")
+            return self.func_labels[i][1]
+        return re.sub(r"\{in:(0x[0-9A-Fa-f]+)\}", one, text)
 
     def symbolise(self, mnem, ops):
         """Operand text with every address that has a name spelled by that name.
@@ -3256,7 +3315,7 @@ def emit_data(d, a, b, items, ctx):
         if kind != "fill" and comment is not None:   # a None comment continues the item above
             lines.append("")
             if comment:
-                lines.append(f"# {DOC_XLATE(comment) if DOC_XLATE else comment}")
+                lines.append(f"# {ctx.name_code(DOC_XLATE(comment) if DOC_XLATE else comment)}")
             lines.append(f"{ctx.label_of[cpu]}:")
         if kind == "byte":
             for i in range(0, n, 16):
@@ -3303,7 +3362,12 @@ def emit_block(insns, name, lo, delta, ctx, annotated):
     for addr, b, mnem, ops in insns:
         cpu = delta + addr
         lab = name if cpu == lo else ctx.label_of.get(cpu)
-        if lab and cpu != lo and (annotated or not lab.startswith("loc_")):
+        # a blank line opens each function: before its register-save prologue
+        # (not between the prologue and its call entry), and before any other
+        # non-loc_ label; a prologue carried in front of the block's own entry
+        # (cpu < lo) follows the block header directly
+        if cpu > lo and (cpu in ctx.pro_starts or (
+                lab and cpu not in ctx.pro_entries and (annotated or not lab.startswith("loc_")))):
             lines.append("")
         if annotated:
             for t in A.notes.get(cpu, ()):
@@ -3604,9 +3668,12 @@ def main():
          '#',
          '# Labels in converted code: a function keeps its symbol-file name (an',
          '# `X_entry` label is the register-save `call` entry a few bytes after the',
-         '# `movm` prologue of X); func_<ADDR> is a function no symbol file names yet',
-         '# (a call target, or the code after a FUNC_END cap), loc_<ADDR> a branch',
-         '# target or code address inside a function, rodata_<ADDR> typed data.',
+         '# `movm` / `add -N, sp` prologue of X); func_<ADDR> is a function no symbol',
+         '# file names yet (a call target, a pointer to a prologue, or the code after a',
+         '# FUNC_END cap), its call entry func_<ADDR>_entry; loc_<ADDR> a branch',
+         '# target or code address inside a function, rodata_<ADDR> typed data. A',
+         '# symbol-file name that sits on the call entry itself keeps that address: its',
+         '# block header then says where the unlabelled prologue in front of it starts.',
          '',
          '.equ PROGRAM_ROM_BASE, 0x48400000',
          '.mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)',
@@ -3681,6 +3748,7 @@ def main():
     # every instruction start of the converted code, and what it branches to,
     # calls, or names as an immediate / absolute operand
     code_starts, calls, branches, imm_refs = set(), set(), set(), set()
+    call_frames = {}                  # call target -> {(saved regs, frame size)}
     for (_off, _end, delta), insns in dec.items():
         for addr, _b, mn, ops in insns or ():
             if mn == FILL:
@@ -3690,6 +3758,9 @@ def main():
                 t = first_target(ops)
                 if t is not None:
                     (calls if mn in ("call", "calls") else branches).add(t)
+                fm = CALL_FRAME.match(ops) if mn == "call" else None
+                if fm and t is not None:
+                    call_frames.setdefault(t, set()).add((frame_regs(fm.group(1)), int(fm.group(2), 0)))
             else:
                 imm_refs.update(int(h, 16) for h in re.findall(r"0x([0-9a-fA-F]{8})\b", ops))
     # data islands: labelled at their flash address (BASE + file offset), also
@@ -3724,6 +3795,63 @@ def main():
     for cpu, (kind, _n, comment, _o) in data_items.items():
         if kind != "fill" and comment is not None:
             label_of[cpu] = names.get(cpu, f"rodata_{cpu:08X}")
+    # register-save prologues (find_prologues): the function's label goes on the
+    # prologue, and the direct-call entry after it is <that label>_entry. A
+    # loc_ on a prologue start is an address the code or a data table holds --
+    # a pointer to a function -- so it becomes func_<ADDR>. A symbol-file name
+    # on either address is never moved (kn7asm checks names against symbols.inc).
+    # A prologue is only taken when every direct `call` of its entry saves the
+    # same registers as its movm and opens the same frame (N = 4 * regs + M for
+    # `add -M, sp`): then the two are one function's two ways in.
+    pro, pro_frame_bad = {}, []
+    pro_unref = 0
+    found = find_prologues(dec)
+    # the `add -N, sp` of a movm + add prologue is itself found as the entry of
+    # a movm-only one; that is a real entry only when something calls it
+    inner = {v[1][1][0] for v in found.values() if len(v[1]) == 2}
+    for t, v in found.items():
+        if t in inner and t not in label_of:
+            continue
+        if t not in label_of and v[0] not in label_of \
+                and not any(c in label_of for c, _b, _m, _o in v[1]):
+            # nothing in the converted code reaches it: a function only a data
+            # table (window procedures, task entries) points at (a label on the
+            # `add -N, sp` of the prologue makes that the call entry instead)
+            label_of[v[0]] = f"func_{v[0]:08X}"
+            pro_unref += 1
+        mv = next((ops for _c, _b, mn, ops in v[1] if mn == "movm"), None)
+        rl = frame_regs(PRO_MOVM.match(mv).group(0).split("]")[0] + "]") if mv else ()
+        m = next((-int(ops.split(",")[0], 0) for _c, _b, mn, ops in v[1] if mn == "add"), 0)
+        if any(cr != rl or (not any(r.startswith("other") for r in rl) and n != 4 * len(rl) + m)
+               for cr, n in call_frames.get(t, ())):
+            pro_frame_bad.append(t)
+            continue
+        pro[t] = v
+    taken_nm = set(label_of.values()) | set(names.values())
+    pro_renamed = pro_ptr = 0
+    pro_clash = []
+    for t, (p, _ins) in sorted(pro.items()):
+        if label_of.get(p) == f"loc_{p:08X}" and p not in block_name:
+            label_of[p] = f"func_{p:08X}"
+            taken_nm.add(label_of[p])
+            pro_ptr += 1
+        if label_of.get(t) != f"func_{t:08X}":
+            continue
+        base = label_of.get(p, f"func_{p:08X}")
+        if base == f"loc_{p:08X}" or base.endswith("_entry"):
+            continue
+        new = base + "_entry"
+        if new in taken_nm:
+            pro_clash.append(f"{new} for {t:#x}")
+            continue
+        taken_nm.add(new)
+        label_of[p] = base
+        label_of[t] = names[t] = new
+        if t in block_name:
+            block_name[t] = new
+        pro_renamed += 1
+    if pro_clash:
+        sys.exit("gen_program_s: prologue entry names already taken:\n  " + "\n  ".join(pro_clash))
     # one address per label name, and a label must agree with symbols.inc
     seen, dup = {}, []
     for cpu, nm in sorted(label_of.items()):
@@ -3738,6 +3866,43 @@ def main():
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
     ctx = EmitCtx(names, label_of, A, data_names)
+    ctx.pro_starts = {p for p, _ins in pro.values()}
+    ctx.func_labels = sorted((a, nm) for a, nm in label_of.items() if a in code_starts
+                             and not nm.startswith("loc_") and not nm.endswith("_entry"))
+    ctx.pro_entries = {t for t in pro if t in label_of}
+    # a block that starts on a call entry gets its prologue back from the end
+    # of the block before, so the block header (and blank line) precede the
+    # prologue instead of leaving it to read as dead code after a `ret`
+    conv_starts = {BASE + off: (off, BASE) for off, _e, ec, _n in r1_blocks
+                   if ec is not None and segs[off][0][0] == "code"}
+    conv_starts.update({LIB_DELTA + so: (so, LIB_DELTA) for so, _eo, _n, cv in lib_blocks
+                        if cv and lib_segs[so][0][0] == "code"})
+    job_by_end = {delta + b: (a, b, delta) for (a, b, delta) in dec}
+    carry = {}                        # block start -> its prologue's insns
+    for t, (p, ins) in sorted(pro.items()):
+        if t not in conv_starts or p in conv_starts:
+            continue                  # not a block start, or a prologue-only block
+        prev = dec.get(job_by_end.get(t))
+        if not prev or len(prev) <= len(ins) or \
+                [prev[i][0] + job_by_end[t][2] for i in range(-len(ins), 0)] != [x[0] for x in ins]:
+            continue
+        carry[t] = prev[-len(ins):]
+        del prev[-len(ins):]
+
+    def block_header(name, start, region):
+        """`# name  (CPU ...)` for the block starting at `start`; a block whose
+        prologue was carried in front of its call entry names the prologue."""
+        if start in carry:
+            p = start - len(b"".join(x[1] for x in carry[start]))
+            if name is None:
+                return (f"# {label_of.get(p, block_name.get(start))}  ({region} {p:#010x}): "
+                        "no symbol file names this function")
+            return (f"# {name}  ({region} {start:#010x}; its register-save prologue "
+                    f"starts at {p:#010x})")
+        if name is None:
+            return (f"# {block_name.get(start, '(unnamed code)')}  ({region} {start:#010x}): "
+                    "no symbol file names this function")
+        return f"# {name}  ({region} {start:#010x})"
     i = L.index(BOOT)
     L[i:i + 1] = boot_header(d, ctx)
     # an operand pointing inside a labelled data item is spelled label+offset
@@ -3766,11 +3931,7 @@ def main():
         if SPLIT_FILES and off // CHUNK != cur_w:
             cur_w = off // CHUNK
             body.append(f"{SPLIT}region1_{cur_w:02X}")
-        if name is None:
-            body.append(f"# {block_name[BASE + off]}  (CPU {BASE + off:#010x}): no symbol file"
-                        " names this function")
-        else:
-            body.append(f"# {name}  (CPU {BASE + off:#010x})")
+        body.append(block_header(name, BASE + off, "CPU"))
         for doc in FUNC_DOC.get(name, ()):
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         for doc in A.docs.get(BASE + off, ()):
@@ -3781,7 +3942,9 @@ def main():
             out = []
             for k, a, b in sl:
                 if k == "code":
-                    out += emit_block(dec[(a, b, BASE)], block_name[BASE + off] if a == off else None,
+                    out += emit_block(carry.get(BASE + off, []) + dec[(a, b, BASE)] if a == off
+                                      else dec[(a, b, BASE)],
+                                      block_name[BASE + off] if a == off else None,
                                       BASE + off, BASE, ctx, BASE + off in annotated)
                 else:
                     out += emit_data(d, a, b, data_items, ctx)
@@ -3811,6 +3974,21 @@ def main():
                 f'.mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}']
     cur2 = DATA_END
     lib_converted = 0
+    # a section banner goes above the function's register-save prologue: when a
+    # block holds only the prologue of the next one (`sprintf` before
+    # `LibSprintf`), the next block's banner moves up in front of it
+    # (and that block's header and notes with it: the two names are one function)
+    section_doc = {so: list(LIB_SECTION_DOC.get(name, ())) for so, _eo, name, _cv in lib_blocks}
+    entry_block = {}                  # prologue-only block -> (entry block off, its name)
+    for i in range(len(lib_blocks) - 1):
+        so, nso = lib_blocks[i][0], lib_blocks[i + 1][0]
+        if LIB_DELTA + nso in pro and pro[LIB_DELTA + nso][0] == LIB_DELTA + so \
+                and lib_blocks[i][3] and lib_blocks[i + 1][3] and lib_blocks[i + 1][2] \
+                and (so - LIB_FILE_BASE) // CHUNK == (nso - LIB_FILE_BASE) // CHUNK:
+            section_doc[so] = section_doc[nso] + section_doc[so]
+            section_doc[nso] = []
+            entry_block[so] = (nso, lib_blocks[i + 1][2])
+    merged = {nso for nso, _n in entry_block.values()}
     cur_w = None
     for so, eo, name, cv in lib_blocks:
         if SPLIT_FILES and (so - LIB_FILE_BASE) // CHUNK != cur_w:
@@ -3819,20 +3997,26 @@ def main():
         if cur2 < so:
             lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, {so:#08x}")
         xl = DOC_XLATE or (lambda t: t)
-        for i, t in enumerate(LIB_SECTION_DOC.get(name, ())):
+        for i, t in enumerate(section_doc.get(so, ())):
             lib_body += ["", f"# ---- {xl(t)}"] if i == 0 else [f"# {xl(t)}"]
-        if name is None:
-            lib_body.append(f"# {block_name.get(LIB_DELTA + so, '(unnamed code)')}  (lib CPU "
-                            f"{LIB_DELTA + so:#010x}): no symbol file names this function")
+        if so in entry_block:
+            nso, nname = entry_block[so]
+            lib_body.append(f"# {name or block_name.get(LIB_DELTA + so)}  (lib CPU {LIB_DELTA + so:#010x}; "
+                            f"its `call` entry {nname} at {LIB_DELTA + nso:#010x})")
+            docs = tuple(FUNC_DOC.get(name, ())) + tuple(FUNC_DOC.get(nname, ()))
+        elif so in merged:
+            docs = ()
         else:
-            lib_body.append(f"# {name}  (lib CPU {LIB_DELTA + so:#010x})")
-        for doc in FUNC_DOC.get(name, ()):
+            lib_body.append(block_header(name, LIB_DELTA + so, "lib CPU"))
+            docs = FUNC_DOC.get(name, ())
+        for doc in docs:
             lib_body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         sl = lib_segs.get(so) if cv else None
         if sl and all(k == "data" or dec[(a, b, LIB_DELTA)] is not None for k, a, b in sl):
             for k, a, b in sl:
                 if k == "code":
-                    lib_body.extend(emit_block(dec[(a, b, LIB_DELTA)],
+                    lib_body.extend(emit_block(carry.get(LIB_DELTA + so, []) + dec[(a, b, LIB_DELTA)]
+                                               if a == so else dec[(a, b, LIB_DELTA)],
                                                block_name[LIB_DELTA + so] if a == so else None,
                                                LIB_DELTA + so, LIB_DELTA, ctx, False))
                 else:
@@ -3909,6 +4093,11 @@ def main():
           f"{len(auto)} name equates, {len(ctx.ext)} outside branch targets, "
           f"{ctx.long_calls} long call/jmp, {ctx.wide_udf} wide udf, {ctx.fill} fill bytes, "
           f"{len(ctx.escapes)} .byte escapes")
+    print(f"  {len(ctx.pro_starts)} register-save prologues: {pro_renamed} call entries named "
+          f"<function>_entry, {pro_ptr} pointed-to prologues func_<ADDR>, {pro_unref} prologues "
+          f"nothing in the code reaches func_<ADDR>, {len(carry)} carried "
+          f"in front of their block's entry; {len(pro_frame_bad)} rejected (call frames disagree: "
+          + ", ".join(f"{t:#x}" for t in pro_frame_bad) + ")")
     for cpu, mn, ops in ctx.escapes:
         print(f"  escape 0x{cpu:08X}: {mn} {ops}")
 
