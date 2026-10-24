@@ -168457,11 +168457,11 @@ Disk_SetDriveGeometry:
 	cp wa, 0x05:i3                                         ; FE33A3  d8 dd
 	jrl gt, .LFE35F4                                       ; FE33A5  7a 4c 02
 	add WA,WA                                            ; FE33A8  d8 80
-	lda xix, (Table_FE6DBF+0x1:24)                       ; FE33AA  f2 c0 6d fe 34
+	lda xix, (Disk_SetDriveGeometry_MediaCases:24)       ; FE33AA  f2 c0 6d fe 34
 	ld	wa, (xix+wa)                                 ; FE33AF  d3 07 f0 e0 20
-	lda xix, (.LFE33BE:24)                               ; FE33B4  f2 be 33 fe 34
+	lda xix, (Disk_SetDriveGeometry__media0:24)                               ; FE33B4  f2 be 33 fe 34
 	jp	t, (xix+wa)                                  ; FE33B9  f3 07 f0 e0 d8
-.LFE33BE:
+Disk_SetDriveGeometry__media0:
 	ldw (0x605d3e:24), 0x07                             ; FE33BE  f2 3e 5d 60 02 07 00
 	ldw (0x605d40:24), 0x0e                             ; FE33C5  f2 40 5d 60 02 0e 00
 	lda xiy, (0x605d50:24)                               ; FE33CC  f2 50 5d 60 35
@@ -168481,6 +168481,7 @@ Disk_SetDriveGeometry:
 	muls	xwa, (xix)                                   ; FE3415  94 48
 	ld (XBC),WA                                          ; FE3417  b1 50
 	jrl .LFE35F4                                           ; FE3419  78 d8 01
+Disk_SetDriveGeometry__media1:
 	ldw (0x605d3e:24), 0x07                             ; FE341C  f2 3e 5d 60 02 07 00
 	ldw (0x605d40:24), 0x0e                             ; FE3423  f2 40 5d 60 02 0e 00
 	lda xiy, (0x605d50:24)                               ; FE342A  f2 50 5d 60 35
@@ -168500,6 +168501,7 @@ Disk_SetDriveGeometry:
 	muls	xwa, (xix)                                   ; FE3473  94 48
 	ld (XBC),WA                                          ; FE3475  b1 50
 	jrl .LFE35F4                                           ; FE3477  78 7a 01
+Disk_SetDriveGeometry__media2:
 	ldw (0x605d3e:24), 0x05                             ; FE347A  f2 3e 5d 60 02 05 00
 	ldw (0x605d40:24), 0x0b                             ; FE3481  f2 40 5d 60 02 0b 00
 	lda xiy, (0x605d50:24)                               ; FE3488  f2 50 5d 60 35
@@ -168519,6 +168521,7 @@ Disk_SetDriveGeometry:
 	muls	xwa, (xix)                                   ; FE34D1  94 48
 	ld (XBC),WA                                          ; FE34D3  b1 50
 	jrl .LFE35F4                                           ; FE34D5  78 1c 01
+Disk_SetDriveGeometry__media3:
 	ldw (0x605d3e:24), 0x13                             ; FE34D8  f2 3e 5d 60 02 13 00
 	ldw (0x605d40:24), 0x21                             ; FE34DF  f2 40 5d 60 02 21 00
 	lda xiy, (0x605d50:24)                               ; FE34E6  f2 50 5d 60 35
@@ -168538,6 +168541,7 @@ Disk_SetDriveGeometry:
 	muls	xwa, (xix)                                   ; FE352F  94 48
 	ld (XBC),WA                                          ; FE3531  b1 50
 	jrl .LFE35F4                                             ; FE3533  78 be 00
+Disk_SetDriveGeometry__media4:
 	ldw (0x605d3e:24), 0x07                             ; FE3536  f2 3e 5d 60 02 07 00
 	ldw (0x605d40:24), 0x0e                             ; FE353D  f2 40 5d 60 02 0e 00
 	lda xiy, (0x605d50:24)                               ; FE3544  f2 50 5d 60 35
@@ -168557,6 +168561,7 @@ Disk_SetDriveGeometry:
 	muls	xwa, (xix)                                   ; FE358D  94 48
 	ld (XBC),WA                                          ; FE358F  b1 50
 	jr .LFE35F4                                              ; FE3591  68 61
+Disk_SetDriveGeometry__media5:
 	ldw (0x605d3e:24), 0x0b                             ; FE3593  f2 3e 5d 60 02 0b 00
 	ldw (0x605d40:24), 0x12                             ; FE359A  f2 40 5d 60 02 12 00
 	lda xde, (0x605d50:24)                               ; FE35A1  f2 50 5d 60 32
@@ -168927,7 +168932,7 @@ DiskCmd_CloseFile:
 	cp wa, 0x05:i3                                         ; FE3974  d8 dd
 	jr gt, DiskCmd_CloseFile_Join                                          ; FE3976  6a 0e
 	add WA,WA                                            ; FE3978  d8 80
-	lda xix, (Table_FE6DBF+0xD:24)                       ; FE397A  f2 cc 6d fe 34
+	lda xix, (DiskCmd_CloseFile_ClusterBytesByMedia:24)  ; FE397A  f2 cc 6d fe 34
 	ld	wa, (xix+wa)                                 ; FE397F  d3 07 f0 e0 20
 	ld BC,WA                                             ; FE3984  d8 89
 DiskCmd_CloseFile_Join:
@@ -169543,11 +169548,11 @@ DiskCmd_CheckMediaId:
 	cp bc, 0x05:i3                                         ; FE3F02  d9 dd
 	jr gt, .LFE3F81                                          ; FE3F04  6a 7b
 	add BC,BC                                            ; FE3F06  d9 81
-	lda xix, (Table_FE6DBF+0x19:24)                      ; FE3F08  f2 d8 6d fe 34
+	lda xix, (DiskCmd_CheckMediaId_MediaCases:24)        ; FE3F08  f2 d8 6d fe 34
 	ld	bc, (xix+bc)                                 ; FE3F0D  d3 07 f0 e4 21
-	lda xix, (.LFE3F1C:24)                               ; FE3F12  f2 1c 3f fe 34
+	lda xix, (DiskCmd_CheckMediaId__expectF9:24)                               ; FE3F12  f2 1c 3f fe 34
 	jp	t, (xix+bc)                                  ; FE3F17  f3 07 f0 e4 d8
-.LFE3F1C:
+DiskCmd_CheckMediaId__expectF9:
 	cp (XWA),0x00                                        ; FE3F1C  80 3f 00
 	jr nz, .LFE3F65                                          ; FE3F1F  6e 44
 	cp (XWA+0x01),0xff                                   ; FE3F21  88 01 3f ff
@@ -169578,13 +169583,15 @@ DiskCmd_CheckMediaId:
 	cp (XWA),0xf9                                        ; FE3F65  80 3f f9
 	jr z, .LFE3F7F                                           ; FE3F68  66 15
 	jr .LFE3F81                                              ; FE3F6A  68 15
-sub_FE3F6C:
+DiskCmd_CheckMediaId__expectFE:
 	cp (XWA),0xfe                                        ; FE3F6C  80 3f fe
 	jr z, .LFE3F7F                                           ; FE3F6F  66 0e
 	jr .LFE3F81                                              ; FE3F71  68 0e
+DiskCmd_CheckMediaId__expectF0:
 	cp (XWA),0xf0                                        ; FE3F73  80 3f f0
 	jr z, .LFE3F7F                                           ; FE3F76  66 07
 	jr .LFE3F81                                              ; FE3F78  68 07
+DiskCmd_CheckMediaId__expectF7:
 	cp (XWA),0xf7                                        ; FE3F7A  80 3f f7
 	jr nz, .LFE3F81                                          ; FE3F7D  6e 02
 .LFE3F7F:
@@ -169687,19 +169694,19 @@ DiskCmd_ReadFileBlock:
 	calr Disk_CopyBytes                                          ; FE4050  1e 2b 05
 	lda xsp, (xsp+0x0a)                                  ; FE4053  bf 0a 37
 	inc 0x01, (0x607f9b:24)                           ; FE4056  c2 9b 7f 60 61
-	jr .LFE40B5                                              ; FE405B  68 58
+	jr DiskCmd_ReadFileBlock__done                                              ; FE405B  68 58
 .LFE405D:
 	ld wa, (0x605d36:24)                                ; FE405D  d2 36 5d 60 20
 	cp wa, 0x00:i3                                         ; FE4062  d8 d8
-	jr mi, .LFE40B5                                          ; FE4064  65 4f
+	jr mi, DiskCmd_ReadFileBlock__done                                          ; FE4064  65 4f
 	cp wa, 0x05:i3                                         ; FE4066  d8 dd
-	jr gt, .LFE40B5                                          ; FE4068  6a 4b
+	jr gt, DiskCmd_ReadFileBlock__done                                          ; FE4068  6a 4b
 	add WA,WA                                            ; FE406A  d8 80
-	lda xix, (Table_FE6DBF+0x25:24)                      ; FE406C  f2 e4 6d fe 34
+	lda xix, (DiskCmd_ReadFileBlock_MediaCases:24)       ; FE406C  f2 e4 6d fe 34
 	ld	wa, (xix+wa)                                 ; FE4071  d3 07 f0 e0 20
-	lda xix, (.LFE4080:24)                               ; FE4076  f2 80 40 fe 34
+	lda xix, (DiskCmd_ReadFileBlock__secondCluster:24)                               ; FE4076  f2 80 40 fe 34
 	jp	t, (xix+wa)                                  ; FE407B  f3 07 f0 e0 d8
-.LFE4080:
+DiskCmd_ReadFileBlock__secondCluster:
 	ld XWA,0x00000200                                    ; FE4080  40 00 02 00 00
 	add (XBC),XWA                                        ; FE4085  a1 88
 	ld WA,(XDE)                                          ; FE4087  92 20
@@ -169720,7 +169727,7 @@ DiskCmd_ReadFileBlock:
 	incw 0x01, (xiz+0x1e)                                ; FE40A8  9e 1e 61
 	ld XWA,0x00000200                                    ; FE40AB  40 00 02 00 00
 	sub (0x605d2c:24), xwa                           ; FE40B0  e2 2c 5d 60 a8
-.LFE40B5:
+DiskCmd_ReadFileBlock__done:
 	ld hl, 0x00:i3                                         ; FE40B5  db a8
 .LFE40B7:
 	pop XIZ                                              ; FE40B7  5e
@@ -169759,7 +169766,7 @@ DiskCmd_WriteFileBlock:
 	push XWA                                             ; FE410A  38
 	calr Fcb_AddToFileSize                                          ; FE410B  1e 68 02
 	lda xsp, (xsp+0x10)                                  ; FE410E  bf 10 37
-	jrl .LFE423A                                           ; FE4111  78 26 01
+	jrl DiskCmd_WriteFileBlock__done                                           ; FE4111  78 26 01
 .LFE4114:
 	ld (0x607f9c:24), 0x03                             ; FE4114  f2 9c 7f 60 00 03
 	pushw 0x0400                                         ; FE411A  0b 00 04
@@ -169818,18 +169825,18 @@ DiskCmd_WriteFileBlock:
 	ld (XBC),IZ                                          ; FE419D  b1 56
 	ld XWA,(XSP+0x06)                                    ; FE419F  af 06 20
 	cp (XWA),0x01                                        ; FE41A2  80 3f 01
-	jrl z, .LFE423A                                          ; FE41A5  76 92 00
+	jrl z, DiskCmd_WriteFileBlock__done                                          ; FE41A5  76 92 00
 	ld wa, (0x605d36:24)                                ; FE41A8  d2 36 5d 60 20
 	cp wa, 0x00:i3                                         ; FE41AD  d8 d8
-	jrl mi, .LFE423A                                         ; FE41AF  75 88 00
+	jrl mi, DiskCmd_WriteFileBlock__done                                         ; FE41AF  75 88 00
 	cp wa, 0x05:i3                                         ; FE41B2  d8 dd
-	jrl gt, .LFE423A                                         ; FE41B4  7a 83 00
+	jrl gt, DiskCmd_WriteFileBlock__done                                         ; FE41B4  7a 83 00
 	add WA,WA                                            ; FE41B7  d8 80
-	lda xix, (Table_FE6DBF+0x31:24)                      ; FE41B9  f2 f0 6d fe 34
+	lda xix, (DiskCmd_WriteFileBlock_MediaCases:24)      ; FE41B9  f2 f0 6d fe 34
 	ld	wa, (xix+wa)                                 ; FE41BE  d3 07 f0 e0 20
-	lda xix, (.LFE41CD:24)                               ; FE41C3  f2 cd 41 fe 34
+	lda xix, (DiskCmd_WriteFileBlock__secondCluster:24)                               ; FE41C3  f2 cd 41 fe 34
 	jp	t, (xix+wa)                                  ; FE41C8  f3 07 f0 e0 d8
-.LFE41CD:
+DiskCmd_WriteFileBlock__secondCluster:
 	ld XWA,0x00000200                                    ; FE41CD  40 00 02 00 00
 	add (0x605d2c:24), xwa                              ; FE41D2  e2 2c 5d 60 88
 	ld WA,(XBC)                                          ; FE41D7  91 20
@@ -169875,7 +169882,7 @@ DiskCmd_WriteFileBlock:
 	ld XWA,(XSP+0x06)                                    ; FE422F  af 06 20
 	incw 0x01, (xwa+0x1e)                                ; FE4232  98 1e 61
 	ld (0x605d34:24), iz                                ; FE4235  f2 34 5d 60 56
-.LFE423A:
+DiskCmd_WriteFileBlock__done:
 	ld hl, 0x00:i3                                         ; FE423A  db a8
 .LFE423C:
 	popw iz                                              ; FE423C  4e
@@ -169905,17 +169912,22 @@ DiskCmd_StoreFatIfConsistent:
 ;                         prom_b thunk T_Disk_CommandDispatch_SaveRegs_Entry)
 ;
 ; Reads a command code from (XSP+0x04) and routes it through a word-offset jump
-; table (offsets at 0xFE6DFE, base 0xFE42B4) to one of ~19 handlers, each of
+; table (Disk_CommandDispatch_CommandCases, 19 entries) to one of 14 arms (or
+; Disk_CommandDispatch__badCommand), each of
 ; which manipulates the disk state area at 0x605Axx and issues Fdc_Request-
 ; family operations.  Arguments arrive in BC (XSP+0x0a) and XDE (XSP+0x06).
-; Evidence: 0xFE42A0 `lda XIX,0xFE6DFC` + `mx_ld_rm` + `lda XIX,0xFE42B4` +
-;           `mx_jp_cc` is the TLCS-900 word-offset dispatch idiom; the command
-;           is range-checked before indexing.  Entered via
+; Evidence: `lda XIX,Disk_CommandDispatch_CommandCases` / `ld WA,(XIX+WA)` /
+;           `lda XIX,<base>` / `jp T,(XIX+WA)` is the TLCS-900 word-offset
+;           dispatch idiom; the command is range-checked before indexing:
+;           0 goes straight to the base arm (DiskCmd_MountDrive), 0x0F..0x1B are
+;           entries 0..12 and 0x80..0x85 entries 13..18.  Each arm calls one
+;           DiskCmd_* routine and is named after it; 0x0F..0x1B are the MS-DOS
+;           INT 21h function numbers of the same operations (open, close, find
+;           first/next, delete, create, set DTA, FAT info).  0x14, 0x15, 0x17,
+;           0x18, 0x19 and every other code return HL = 0xFF.  Entered via
 ;           Disk_CommandDispatch_SaveRegs (0xFE3042) and _Thunk (0xFE3020);
 ;           T_Disk_CommandDispatch_SaveRegs_Entry has 23 call sites
 ;           (notes/FINDINGS-prom_a-portb-and-blockdev-entry.md §2).
-; NOT established: the semantics of the individual command handlers -- they stay
-;           sub_XXXXXX.  Naming the dispatcher does not name what it dispatches.
 ; Was sub_FE426E.
 ; ---------------------------------------------------------------------
 Disk_CommandDispatch:
@@ -169924,24 +169936,24 @@ Disk_CommandDispatch:
 	ld A,(XSP+0x04)                                      ; FE4274  8f 04 21
 	extz WA                                              ; FE4277  d8 12
 	cp wa, 0x00:i3                                         ; FE4279  d8 d8
-	jr z, .LFE42B4                                           ; FE427B  66 37
+	jr z, Disk_CommandDispatch__cmd00_MountDrive                                           ; FE427B  66 37
 	sub WA,0x000f                                        ; FE427D  d8 ca 0f 00
 	cp wa, 0x00:i3                                         ; FE4281  d8 d8
-	jrl lt, .LFE434A                                         ; FE4283  71 c4 00
+	jrl lt, Disk_CommandDispatch__badCommand                                         ; FE4283  71 c4 00
 	cp WA,0x000c                                         ; FE4286  d8 cf 0c 00
 	jr le, .LFE429E                                          ; FE428A  62 12
 	sub WA,0x0064                                        ; FE428C  d8 ca 64 00
 	cp WA,0x000d                                         ; FE4290  d8 cf 0d 00
-	jrl lt, .LFE434A                                         ; FE4294  71 b3 00
+	jrl lt, Disk_CommandDispatch__badCommand                                         ; FE4294  71 b3 00
 	cp WA,0x0012                                         ; FE4297  d8 cf 12 00
-	jrl gt, .LFE434A                                         ; FE429B  7a ac 00
+	jrl gt, Disk_CommandDispatch__badCommand                                         ; FE429B  7a ac 00
 .LFE429E:
 	add WA,WA                                            ; FE429E  d8 80
-	lda xix, (Table_FE6DBF+0x3D:24)                      ; FE42A0  f2 fc 6d fe 34
+	lda xix, (Disk_CommandDispatch_CommandCases:24)      ; FE42A0  f2 fc 6d fe 34
 	ld	wa, (xix+wa)                                 ; FE42A5  d3 07 f0 e0 20
-	lda xix, (.LFE42B4:24)                               ; FE42AA  f2 b4 42 fe 34
+	lda xix, (Disk_CommandDispatch__cmd00_MountDrive:24)                               ; FE42AA  f2 b4 42 fe 34
 	jp	t, (xix+wa)                                  ; FE42AF  f3 07 f0 e0 d8
-.LFE42B4:
+Disk_CommandDispatch__cmd00_MountDrive:
 	ldw (0x605a06:24), 0xffff                           ; FE42B4  f2 06 5a 60 02 ff ff
 	ld A,C                                               ; FE42BB  cb 89
 	extz WA                                              ; FE42BD  d8 12
@@ -169954,62 +169966,76 @@ Disk_CommandDispatch:
 	ldw	(xwa+10), 0x0001                             ; FE42CD  b8 0a 02 01 00
 	ldw (0x605a06:24), 0x00                             ; FE42D2  f2 06 5a 60 02 00 00
 	jr .LFE434D                                              ; FE42D9  68 72
+Disk_CommandDispatch__cmd0F_OpenFile:
 	push XDE                                             ; FE42DB  3a
 	calr DiskCmd_OpenFile                                          ; FE42DC  1e bf f5
 	inc 4,XSP                                            ; FE42DF  ef 64
 	jr .LFE434D                                              ; FE42E1  68 6a
+Disk_CommandDispatch__cmd10_CloseFile:
 	push XDE                                             ; FE42E3  3a
 	calr DiskCmd_CloseFile                                          ; FE42E4  1e 73 f6
 	inc 4,XSP                                            ; FE42E7  ef 64
 	jr .LFE434D                                              ; FE42E9  68 62
+Disk_CommandDispatch__cmd11_FindFirst:
 	push XDE                                             ; FE42EB  3a
 	calr DiskCmd_FindFirst                                          ; FE42EC  1e 5d f7
 	inc 4,XSP                                            ; FE42EF  ef 64
 	jr .LFE434D                                              ; FE42F1  68 5a
+Disk_CommandDispatch__cmd12_FindNext:
 	calr DiskCmd_FindNext                                          ; FE42F3  1e fd f7
 	jr .LFE434D                                              ; FE42F6  68 55
+Disk_CommandDispatch__cmd13_DeleteFile:
 	push XDE                                             ; FE42F8  3a
 	calr DiskCmd_DeleteFile                                          ; FE42F9  1e b5 f9
 	inc 4,XSP                                            ; FE42FC  ef 64
 	jr T,.LFE434D                                            ; FE42FE  68 4d
+Disk_CommandDispatch__cmd16_CreateFile:
 	push XDE                                             ; FE4300  3a
 	calr DiskCmd_CreateFile                                          ; FE4301  1e ae fa
 	inc 4,XSP                                            ; FE4304  ef 64
 	jr .LFE434D                                              ; FE4306  68 45
+Disk_CommandDispatch__cmd1A_SetTransferAddress:
 	push XDE                                             ; FE4308  3a
 	calr DiskCmd_SetTransferAddress                                          ; FE4309  1e 8b fb
 	inc 4,XSP                                            ; FE430C  ef 64
 	jr .LFE434D                                              ; FE430E  68 3d
+Disk_CommandDispatch__cmd1B_CheckMediaId:
 	ld WA,BC                                             ; FE4310  d9 88
 	pushw wa                                             ; FE4312  28
 	calr DiskCmd_CheckMediaId                                          ; FE4313  1e 8c fb
 	inc 2,XSP                                            ; FE4316  ef 62
 	jr .LFE434D                                              ; FE4318  68 33
+Disk_CommandDispatch__cmd80_CountFreeSpace:
 	calr DiskCmd_CountFreeSpace                                          ; FE431A  1e af 08
 	jr .LFE434D                                              ; FE431D  68 2e
+Disk_CommandDispatch__cmd81_ReadSectors:
 	pushw bc                                             ; FE431F  29
 	ld WA,DE                                             ; FE4320  da 88
 	pushw wa                                             ; FE4322  28
 	calr DiskCmd_ReadSectors                                          ; FE4323  1e 5c fc
 	inc 4,XSP                                            ; FE4326  ef 64
 	jr .LFE434D                                              ; FE4328  68 23
+Disk_CommandDispatch__cmd82_WriteSectors:
 	pushw bc                                             ; FE432A  29
 	ld WA,DE                                             ; FE432B  da 88
 	pushw wa                                             ; FE432D  28
 	calr DiskCmd_WriteSectors                                          ; FE432E  1e 68 fc
 	inc 4,XSP                                            ; FE4331  ef 64
 	jr .LFE434D                                              ; FE4333  68 18
+Disk_CommandDispatch__cmd83_ReadFileBlock:
 	push XDE                                             ; FE4335  3a
 	calr DiskCmd_ReadFileBlock                                          ; FE4336  1e 77 fc
 	inc 4,XSP                                            ; FE4339  ef 64
 	jr .LFE434D                                              ; FE433B  68 10
+Disk_CommandDispatch__cmd84_WriteFileBlock:
 	push XDE                                             ; FE433D  3a
 	calr DiskCmd_WriteFileBlock                                          ; FE433E  1e 78 fd
 	inc 4,XSP                                            ; FE4341  ef 64
 	jr .LFE434D                                              ; FE4343  68 08
+Disk_CommandDispatch__cmd85_StoreFatIfConsistent:
 	calr DiskCmd_StoreFatIfConsistent                                          ; FE4345  1e f6 fe
 	jr .LFE434D                                              ; FE4348  68 03
-.LFE434A:
+Disk_CommandDispatch__badCommand:
 	ldw hl, 0xff                                         ; FE434A  33 ff 00
 .LFE434D:
 	ret                                                  ; FE434D  0e
@@ -170754,16 +170780,18 @@ Fat_Load:
 	cp wa, 0x05:i3                                         ; FE495F  d8 dd
 	jr gt, .LFE4992                                          ; FE4961  6a 2f
 	add WA,WA                                            ; FE4963  d8 80
-	lda xix, (Table_FE6DBF+0x63:24)                      ; FE4965  f2 22 6e fe 34
+	lda xix, (Fat_Load_MediaCases:24)                    ; FE4965  f2 22 6e fe 34
 	ld	wa, (xix+wa)                                 ; FE496A  d3 07 f0 e0 20
-	lda xix, (.LFE4979:24)                               ; FE496F  f2 79 49 fe 34
+	lda xix, (Fat_Load__fat2Sectors1024:24)                               ; FE496F  f2 79 49 fe 34
 	jp	t, (xix+wa)                                  ; FE4974  f3 07 f0 e0 d8
-.LFE4979:
+Fat_Load__fat2Sectors1024:
 	ld QIZ,2                                             ; FE4979  d7 fa aa
 	ldw	(xsp+8), 0x0400                              ; FE497C  bf 08 02 00 04
 	jr .LFE4992                                              ; FE4981  68 0f
+Fat_Load__fat9Sectors512:
 	ldw qiz, 0x09                                        ; FE4983  d7 fa 03 09 00
 	jr .LFE498D                                              ; FE4988  68 03
+Fat_Load__fat3Sectors512:
 	ld QIZ,3                                             ; FE498A  d7 fa ab
 .LFE498D:
 	ldw	(xsp+8), 0x0200                              ; FE498D  bf 08 02 00 02
@@ -170903,7 +170931,7 @@ Fat_Store:
 	jr mi, .LFE4B46                                          ; FE4AEC  65 58
 	cp wa, 0x05:i3                                         ; FE4AEE  d8 dd
 	jr gt, .LFE4B46                                          ; FE4AF0  6a 54
-	lda xix, (Table_FE6DBF+0x6F:24)                      ; FE4AF2  f2 2e 6e fe 34
+	lda xix, (Fat_Store_FatSectorsByMedia:24)            ; FE4AF2  f2 2e 6e fe 34
 	ld	a, (xix+wa)                                  ; FE4AF7  c3 07 f0 e0 21
 	ldfr_berp a, 0xf8                                      ; FE4AFC  c7 f8 99   ld IZL,A
 	exts IZ                                              ; FE4AFF  de 13
@@ -170998,7 +171026,7 @@ Fat_FindCrossLinkedCluster:
 	inc 2,XSP                                            ; FE4BC9  ef 62
 	ret                                                  ; FE4BCB  0e
 ; DiskCmd_CountFreeSpace: command 0x80: Fat_Load, then counts the clusters 0 .. (0x605D58) whose FAT entry is 0; returns the count scaled by
-;   8 on FAT16 or by the format's factor from Table_FE6DBF+0x75.
+;   8 on a type-1 drive (where it stops at 129 free clusters) and halved on media type 3; else as counted.
 DiskCmd_CountFreeSpace:
 	dec 6,XSP                                            ; FE4BCC  ef 6e
 	push XIZ                                             ; FE4BCE  3e
@@ -171019,7 +171047,7 @@ DiskCmd_CountFreeSpace:
 	jr mi, .LFE4C0D                                          ; FE4BF6  65 15
 	cp wa, 0x05:i3                                         ; FE4BF8  d8 dd
 	jr gt, .LFE4C0D                                          ; FE4BFA  6a 11
-	lda xix, (Table_FE6DBF+0x75:24)                      ; FE4BFC  f2 34 6e fe 34
+	lda xix, (DiskCmd_CountFreeSpace_ByMedia:24)         ; FE4BFC  f2 34 6e fe 34
 	ld	a, (xix+wa)                                  ; FE4C01  c3 07 f0 e0 21
 	exts WA                                              ; FE4C06  d8 13
 	ld (XSP+0x08),WA                                     ; FE4C08  bf 08 50
@@ -172598,27 +172626,30 @@ Fdc_ResetAndIdentifyMedia:
 	and A,0x0f                                    ; FE565F  c9 cc 0f
 	extz WA                                       ; FE5662  d8 12
 	cp wa, 0x00:i3                                  ; FE5664  d8 d8
-	jr mi, .LFE56AC                               ; FE5666  65 44
+	jr mi, Fdc_ResetAndIdentifyMedia__geometry0                               ; FE5666  65 44
 	cp wa, 0x05:i3                                  ; FE5668  d8 dd
-	jr gt, .LFE56AC                               ; FE566A  6a 40
+	jr gt, Fdc_ResetAndIdentifyMedia__geometry0                               ; FE566A  6a 40
 	add WA,WA                                     ; FE566C  d8 80
 	lda xix, (Fdc_MediaTypeJumpTable:24)          ; FE566E  f2 3a 6e fe 34
 	ld	wa, (xix+wa)                          ; FE5673  d3 07 f0 e0 20
-	lda xix, (.LFE5682:24)                        ; FE5678  f2 82 56 fe 34
+	lda xix, (Fdc_ResetAndIdentifyMedia__geometry2:24)                        ; FE5678  f2 82 56 fe 34
 	jp	t, (xix+wa)                           ; FE567D  f3 07 f0 e0 d8
-.LFE5682:
+Fdc_ResetAndIdentifyMedia__geometry2:
 	ld (0x605a5a:24), 0x02                      ; FE5682  f2 5a 5a 60 00 02
 	jr .LFE5690                                   ; FE5688  68 06
+Fdc_ResetAndIdentifyMedia__geometry3:
 	ld (0x605a5a:24), 0x03                      ; FE568A  f2 5a 5a 60 00 03
 .LFE5690:
 	ldw (0x605a13:24), 0x00                      ; FE5690  f2 13 5a 60 02 00 00
 	pushw 0x00                                    ; FE5697  0b 00 00
 	jr .LFE56BC                                   ; FE569A  68 20
+Fdc_ResetAndIdentifyMedia__geometry4:
 	ld (0x605a5a:24), 0x04                      ; FE569C  f2 5a 5a 60 00 04
 	jr .LFE56B2                                   ; FE56A2  68 0e
+Fdc_ResetAndIdentifyMedia__geometry5:
 	ld (0x605a5a:24), 0x05                      ; FE56A4  f2 5a 5a 60 00 05
 	jr .LFE56B2                                   ; FE56AA  68 06
-.LFE56AC:
+Fdc_ResetAndIdentifyMedia__geometry0:
 	ld (0x605a5a:24), 0x00                      ; FE56AC  f2 5a 5a 60 00 00
 .LFE56B2:
 	ldw (0x605a13:24), 0x00                      ; FE56B2  f2 13 5a 60 02 00 00
@@ -172695,21 +172726,22 @@ Fdc_Op10_TestControllerPresent:
 Fdc_ValidateRequest:
 	lda xwa, (Fdc_ReqOp:24)                        ; FE5716  f2 30 5a 60 30
 	cpw	(xwa+2), 0x0001                       ; FE571B  98 02 3f 01 00
-	jr z, .LFE5780                                ; FE5720  66 5e
+	jr z, Fdc_ValidateRequest__accept                                ; FE5720  66 5e
 	ld (0x605a1a:24), 0x00                      ; FE5722  f2 1a 5a 60 00 00
 	ld WA,(XWA)                                   ; FE5728  90 20
 	cp WA,0x000b                                  ; FE572A  d8 cf 0b 00
-	jr ugt, .LFE574F                              ; FE572E  6b 1f
+	jr ugt, Fdc_ValidateRequest__checkFields                              ; FE572E  6b 1f
 	add WA,WA                                     ; FE5730  d8 80
 	lda xix, (Fdc_ValidateJumpTable:24)           ; FE5732  f2 46 6e fe 34
 	ld	wa, (xix+wa)                          ; FE5737  d3 07 f0 e0 20
-	lda xix, (.LFE5746:24)                        ; FE573C  f2 46 57 fe 34
+	lda xix, (Fdc_ValidateRequest__op0:24)                        ; FE573C  f2 46 57 fe 34
 	jp	t, (xix+wa)                           ; FE5741  f3 07 f0 e0 d8
-.LFE5746:
+Fdc_ValidateRequest__op0:
 	calr .LFE57FF                                 ; FE5746  1e b6 00
 	jrl .LFE57F9                                  ; FE5749  78 ad 00
+Fdc_ValidateRequest__op9:
 	calr .LFE5936                                 ; FE574C  1e e7 01
-.LFE574F:
+Fdc_ValidateRequest__checkFields:
 	lda xde, (Fdc_CommandByte:24)                        ; FE574F  f2 18 5a 60 32
 	lda xbc, (Fdc_ReqOp:24)                        ; FE5754  f2 30 5a 60 31
 	ld WA,(XBC+0x02)                              ; FE5759  99 02 20
@@ -172726,10 +172758,10 @@ Fdc_ValidateRequest:
 	cp wa, 0x05:i3                                  ; FE5772  d8 dd
 	jr z, .LFE5783                                ; FE5774  66 0d
 	cp WA,0x000b                                  ; FE5776  d8 cf 0b 00
-	jr z, .LFE5780                                ; FE577A  66 04
+	jr z, Fdc_ValidateRequest__accept                                ; FE577A  66 04
 	cp wa, 0x01:i3                                  ; FE577C  d8 d9
 	jr nz, .LFE5788                               ; FE577E  6e 08
-.LFE5780:
+Fdc_ValidateRequest__accept:
 	ld l, 0x00:opc                                   ; FE5780  27 00
 	ret                                           ; FE5782  0e
 .LFE5783:
@@ -173792,30 +173824,28 @@ Fdc_ClassifyCommandOpcode:
 	and A,0x1f                                    ; FE5CED  c9 cc 1f
 	extz WA                                       ; FE5CF0  d8 12
 	cp WA,0x001d                                  ; FE5CF2  d8 cf 1d 00
-	jr z, .LFE5D2A                                ; FE5CF6  66 32
+	jr z, Fdc_ClassifyCommandOpcode__valid                                ; FE5CF6  66 32
 	cp WA,0x0019                                  ; FE5CF8  d8 cf 19 00
-	jr z, .LFE5D2A                                ; FE5CFC  66 2c
+	jr z, Fdc_ClassifyCommandOpcode__valid                                ; FE5CFC  66 2c
 	cp WA,0x000a                                  ; FE5CFE  d8 cf 0a 00
 	jr gt, .LFE5D08                               ; FE5D02  6a 04
 	cp wa, 0x02:i3                                  ; FE5D04  d8 da
-	jr ge, .LFE5D2A                               ; FE5D06  69 22
+	jr ge, Fdc_ClassifyCommandOpcode__valid                               ; FE5D06  69 22
 .LFE5D08:
 	sub WA,0x000b                                 ; FE5D08  d8 ca 0b 00
 	cp wa, 0x00:i3                                  ; FE5D0C  d8 d8
-	jr lt, .LFE5D2D                               ; FE5D0E  61 1d
+	jr lt, Fdc_ClassifyCommandOpcode__invalid                               ; FE5D0E  61 1d
 	cp wa, 0x06:i3                                  ; FE5D10  d8 de
-	jr gt, .LFE5D2D                               ; FE5D12  6a 19
+	jr gt, Fdc_ClassifyCommandOpcode__invalid                               ; FE5D12  6a 19
 	add WA,WA                                     ; FE5D14  d8 80
 	lda xix, (Fdc_OpcodeValidityJumpTable:24)     ; FE5D16  f2 5e 6e fe 34
 	ld	wa, (xix+wa)                          ; FE5D1B  d3 07 f0 e0 20
 	lda xix, (Fdc_ClassifyCommandOpcode__valid:24) ; FE5D20  f2 2a 5d fe 34
 	jp	t, (xix+wa)                           ; FE5D25  f3 07 f0 e0 d8
 Fdc_ClassifyCommandOpcode__valid:
-.LFE5D2A:
 	ld l, 0x00:opc                                   ; FE5D2A  27 00
 	ret                                           ; FE5D2C  0e
 Fdc_ClassifyCommandOpcode__invalid:
-.LFE5D2D:
 	ld l, 0x01:opc                                   ; FE5D2D  27 01
 	ret                                           ; FE5D2F  0e
 
@@ -174267,10 +174297,9 @@ Fdc_Delay20Ticks:
 ;          converted but unnamed (see that block's banner).
 ; ---------------------------------------------------------------------
 Fdc_Op0_ResetAndIdentifyMedia:
-.LFE5F1D:
 	cpw	(Fdc_ReqUnit:24), 0x0001                 ; FE5F1D  d2 32 5a 60 3f 01 00
 	jr nz, .LFE5F29                               ; FE5F24  6e 03
-	jrl .LFE65EF                                  ; FE5F26  78 c6 06
+	jrl Fdc_Op6_PortA3_Off                                  ; FE5F26  78 c6 06
 .LFE5F29:
 	calr uDMA0_ArmOnINT7__jrentry                                   ; FE5F29  1e 38 fa
 	calr PortB3_Pulse                                   ; FE5F2C  1e 1d fa
@@ -174296,7 +174325,6 @@ Fdc_Op0_ResetAndIdentifyMedia:
 ; Unknown:  nothing here.
 ; ---------------------------------------------------------------------
 Fdc_Op1_Recalibrate:
-.LFE5F44:
 	pushw iz                                      ; FE5F44  2e
 	cpw	(Fdc_ReqUnit:24), 0x0001                 ; FE5F45  d2 32 5a 60 3f 01 00
 	jr z, .LFE5F96                                ; FE5F4C  66 48
@@ -174305,7 +174333,7 @@ Fdc_Op1_Recalibrate:
 	ldfr_berp a, 0xf9                               ; FE5F55  c7 f9 99   ld IZH,A
 	ld (XBC),0x05                                 ; FE5F58  b1 00 05
 	ld (Fdc_CurrentCylinder:24), 0xff                      ; FE5F5B  f2 ee 5a 60 00 ff
-	calr .LFE5F98                                 ; FE5F61  1e 34 00
+	calr Fdc_Op2_SeekToCylinder                                 ; FE5F61  1e 34 00
 	ld (Fdc_CurrentCylinder:24), 0x00                      ; FE5F64  f2 ee 5a 60 00 00
 	calr .LFE5EBF                                 ; FE5F6A  1e 52 ff
 	pushw 0x07                                    ; FE5F6D  0b 07 00
@@ -174336,7 +174364,6 @@ Fdc_Op1_Recalibrate:
 ; Unknown:  nothing here.
 ; ---------------------------------------------------------------------
 Fdc_Op2_SeekToCylinder:
-.LFE5F98:
 	cpw	(Fdc_ReqUnit:24), 0x0001                 ; FE5F98  d2 32 5a 60 3f 01 00
 	ret Z                                         ; FE5F9F  b0 f6
 	ld a, (0x605a26:24)                          ; FE5FA1  c2 26 5a 60 21
@@ -174410,7 +174437,6 @@ Fdc_IssueReadData:
 ;          Fdc_RequestIsTrack0SectorProbe said no.
 ; ---------------------------------------------------------------------
 Fdc_Op3_ReadSectors:
-.LFE5FFE:
 	pushw iz                                      ; FE5FFE  2e
 	lda xwa, (Fdc_ReqOp:24)                        ; FE5FFF  f2 30 5a 60 30
 	cpw	(xwa+2), 0x0001                       ; FE6004  98 02 3f 01 00
@@ -174440,7 +174466,7 @@ Fdc_Op3_ReadSectors:
 Fdc_Op3_ReadSectors__attempt:
 .LFE6041:
 	ld (Fdc_ErrorCode:24), 0x00                      ; FE6041  f2 15 5a 60 00 00
-	calr .LFE5F98                                 ; FE6047  1e 4e ff
+	calr Fdc_Op2_SeekToCylinder                                 ; FE6047  1e 4e ff
 	ld a, (Fdc_ErrorCode:24)                          ; FE604A  c2 15 5a 60 21
 	cp a, 0x00:i3                                   ; FE604F  c9 d8
 	jr z, .LFE6066                                ; FE6051  66 13
@@ -174504,7 +174530,7 @@ Fdc_Op3_ReadSectors__attempt:
 	jr z, .LFE6105                                ; FE60F7  66 0c
 	calr Fdc_ResetAndIdentifyMedia                                   ; FE60F9  1e 8f f4
 	ld (Fdc_CurrentCylinder:24), 0xff                      ; FE60FC  f2 ee 5a 60 00 ff
-	calr .LFE5F98                                 ; FE6102  1e 93 fe
+	calr Fdc_Op2_SeekToCylinder                                 ; FE6102  1e 93 fe
 .LFE6105:
 	ld wa, (0x605afb:24)                         ; FE6105  d2 fb 5a 60 20
 	ld (Fdc_ReqCount:24), wa                         ; FE610A  f2 3a 5a 60 50
@@ -174569,7 +174595,6 @@ Fdc_Op3_ReadSectors__attempt:
 ;          of the sector number and the sector count and are named positionally.
 ; ---------------------------------------------------------------------
 Fdc_Op4_WriteSectors:
-.LFE6181:
 	push XIZ                                      ; FE6181  3e
 	lda xwa, (Fdc_ReqOp:24)                        ; FE6182  f2 30 5a 60 30
 	cpw	(xwa+2), 0x0001                       ; FE6187  98 02 3f 01 00
@@ -174593,7 +174618,7 @@ Fdc_Op4_WriteSectors:
 Fdc_Op4_WriteSectors__attempt:
 .LFE61B4:
 	ld (Fdc_ErrorCode:24), 0x00                      ; FE61B4  f2 15 5a 60 00 00
-	calr .LFE5F98                                 ; FE61BA  1e db fd
+	calr Fdc_Op2_SeekToCylinder                                 ; FE61BA  1e db fd
 	ld a, (Fdc_ErrorCode:24)                          ; FE61BD  c2 15 5a 60 21
 	cp a, 0x00:i3                                   ; FE61C2  c9 d8
 	jr z, .LFE61D9                                ; FE61C4  66 13
@@ -174658,7 +174683,7 @@ Fdc_Op4_WriteSectors__attempt:
 	.byte 0xc7, 0xfb, 0xcf, 0x2f                  ; FE626E  c7 fb cf 2f
 	jrl z, .LFE62F8                               ; FE6272  76 83 00
 	ld (Fdc_CurrentCylinder:24), 0xff                      ; FE6275  f2 ee 5a 60 00 ff
-	calr .LFE5F98                                 ; FE627B  1e 1a fd
+	calr Fdc_Op2_SeekToCylinder                                 ; FE627B  1e 1a fd
 	ld wa, (0x605afb:24)                         ; FE627E  d2 fb 5a 60 20
 	ld (Fdc_ReqCount:24), wa                         ; FE6283  f2 3a 5a 60 50
 	ld a, (0x605a58:24)                          ; FE6288  c2 58 5a 60 21
@@ -174749,7 +174774,6 @@ Fdc_IssueWriteData:
 ;          cylinder/head before each track and is named positionally.
 ; ---------------------------------------------------------------------
 Fdc_Op5_FormatDisk:
-.LFE6319:
 	lda xwa, (Fdc_ReqOp:24)                        ; FE6319  f2 30 5a 60 30
 	cpw	(xwa+2), 0x0001                       ; FE631E  98 02 3f 01 00
 	jr nz, .LFE632F                               ; FE6323  6e 0a
@@ -174762,10 +174786,10 @@ Fdc_Op5_FormatDisk:
 	calr .LFE5E83                                 ; FE632F  1e 51 fb
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE6332  c2 15 5a 60 3f 00
 	jrl nz, .LFE63F1                              ; FE6338  7e b6 00
-	calr .LFE6668                                 ; FE633B  1e 2a 03
+	calr Fdc_Op11_SenseDriveStatus                                 ; FE633B  1e 2a 03
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE633E  c2 15 5a 60 3f 00
 	jrl nz, .LFE63F1                              ; FE6344  7e aa 00
-	calr .LFE5F44                                 ; FE6347  1e fa fb
+	calr Fdc_Op1_Recalibrate                                 ; FE6347  1e fa fb
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE634A  c2 15 5a 60 3f 00
 	jrl nz, .LFE63F1                              ; FE6350  7e 9e 00
 	ld e, (0x605a5a:24)                          ; FE6353  c2 5a 5a 60 25
@@ -174832,7 +174856,7 @@ Fdc_Op5_FormatDisk:
 	jr z, .LFE63FC                                ; FE63F7  66 03
 	calr Fdc_ResetAndIdentifyMedia                                   ; FE63F9  1e 8f f1
 .LFE63FC:
-	calr .LFE5F44                                 ; FE63FC  1e 45 fb
+	calr Fdc_Op1_Recalibrate                                 ; FE63FC  1e 45 fb
 	ld (Fdc_CurrentCylinder:24), 0xff                      ; FE63FF  f2 ee 5a 60 00 ff
 	ret                                           ; FE6405  0e
 
@@ -174850,7 +174874,7 @@ Fdc_Op5_FormatDisk:
 ; ---------------------------------------------------------------------
 Fdc_FormatOneTrack:
 .LFE6406:
-	calr .LFE5F98                                 ; FE6406  1e 8f fb
+	calr Fdc_Op2_SeekToCylinder                                 ; FE6406  1e 8f fb
 	cp	(Fdc_ErrorCode:24), 0x00                   ; FE6409  c2 15 5a 60 3f 00
 	jr z, .LFE6414                                ; FE640F  66 03
 	jrl Fdc_ResetAndIdentifyMedia                                     ; FE6411  78 77 f1
@@ -175080,7 +175104,6 @@ Fdc_IssueFormatTrack:
 ;          XIZ saved and restored.
 ; ---------------------------------------------------------------------
 Fdc_Op6_PortA3_Off:
-.LFE65EF:
 	pushw iz                                      ; FE65EF  2e
 	lda xwa, (Fdc_ReqOp:24)                        ; FE65F0  f2 30 5a 60 30
 	cpw	(xwa+2), 0x0001                       ; FE65F5  98 02 3f 01 00
@@ -175121,7 +175144,6 @@ Fdc_Op6_PortA3_Off:
 ;          state and this operation is the RELEASE.
 ; ---------------------------------------------------------------------
 Fdc_Op7_PortA3_On:
-.LFE661F:
 	cpw	(Fdc_ReqUnit:24), 0x0001                 ; FE661F  d2 32 5a 60 3f 01 00
 	jr nz, .LFE662B                               ; FE6626  6e 03
 	jrl Unit1_Op6_IssueCommandAndWaitReady_Join                                     ; FE6628  78 22 ee
@@ -175142,7 +175164,6 @@ Fdc_Op7_PortA3_On:
 ; Unknown:  nothing here.
 ; ---------------------------------------------------------------------
 Fdc_Op8_GetSavedError:
-.LFE6635:
 	ld a, (0x605a16:24)                          ; FE6635  c2 16 5a 60 21
 	ld (Fdc_ErrorCode:24), a                          ; FE663A  f2 15 5a 60 41
 	ret                                           ; FE663F  0e
@@ -175162,7 +175183,6 @@ Fdc_Op8_GetSavedError:
 ;          request field" code Fdc_ValidateHead raises.
 ; ---------------------------------------------------------------------
 Fdc_Op9_SetFlag605A59:
-.LFE6640:
 	ld wa, (Fdc_ReqHead:24)                         ; FE6640  d2 34 5a 60 20
 	cp wa, 0x01:i3                                  ; FE6645  d8 d9
 	jr z, .LFE664F                                ; FE6647  66 06
@@ -175205,7 +175225,6 @@ Fdc_Op9_SetFlag605A59:
 ;          Fdc_SetError calls from it.  XIZ saved and restored.
 ; ---------------------------------------------------------------------
 Fdc_Op11_SenseDriveStatus:
-.LFE6668:
 	pushw iz                                      ; FE6668  2e
 	cpw	(Fdc_ReqUnit:24), 0x0001                 ; FE6669  d2 32 5a 60 3f 01 00
 	jr z, .LFE66C5                                ; FE6670  66 53
@@ -175350,29 +175369,40 @@ Fdc_Request:
 	lda xix, (Fdc_Request__dispatch:24)           ; FE679A  f2 a4 67 fe 34
 	jp	t, (xix+wa)                           ; FE679F  f3 07 f0 e0 d8
 Fdc_Request__dispatch:
-	calr .LFE5F1D                                 ; FE67A4  1e 76 f7
+	calr Fdc_Op0_ResetAndIdentifyMedia                                 ; FE67A4  1e 76 f7
 	jr .LFE67E8                                   ; FE67A7  68 3f
-	calr .LFE5F44                                 ; FE67A9  1e 98 f7
+Fdc_Request__op1:
+	calr Fdc_Op1_Recalibrate                                 ; FE67A9  1e 98 f7
 	jr .LFE67E8                                   ; FE67AC  68 3a
-	calr .LFE5F98                                 ; FE67AE  1e e7 f7
+Fdc_Request__op2:
+	calr Fdc_Op2_SeekToCylinder                                 ; FE67AE  1e e7 f7
 	jr .LFE67E8                                   ; FE67B1  68 35
-	calr .LFE5FFE                                 ; FE67B3  1e 48 f8
+Fdc_Request__op3:
+	calr Fdc_Op3_ReadSectors                                 ; FE67B3  1e 48 f8
 	jr .LFE67E8                                   ; FE67B6  68 30
-	calr .LFE6181                                 ; FE67B8  1e c6 f9
+Fdc_Request__op4:
+	calr Fdc_Op4_WriteSectors                                 ; FE67B8  1e c6 f9
 	jr .LFE67E8                                   ; FE67BB  68 2b
-	calr .LFE6319                                 ; FE67BD  1e 59 fb
+Fdc_Request__op5:
+	calr Fdc_Op5_FormatDisk                                 ; FE67BD  1e 59 fb
 	jr .LFE67E8                                   ; FE67C0  68 26
-	calr .LFE65EF                                 ; FE67C2  1e 2a fe
+Fdc_Request__op6:
+	calr Fdc_Op6_PortA3_Off                                 ; FE67C2  1e 2a fe
 	jr .LFE67E8                                   ; FE67C5  68 21
-	calr .LFE661F                                 ; FE67C7  1e 55 fe
+Fdc_Request__op7:
+	calr Fdc_Op7_PortA3_On                                 ; FE67C7  1e 55 fe
 	jr .LFE67E8                                   ; FE67CA  68 1c
-	calr .LFE6635                                 ; FE67CC  1e 66 fe
+Fdc_Request__op8:
+	calr Fdc_Op8_GetSavedError                                 ; FE67CC  1e 66 fe
 	jr .LFE67E8                                   ; FE67CF  68 17
-	calr .LFE6640                                 ; FE67D1  1e 6c fe
+Fdc_Request__op9:
+	calr Fdc_Op9_SetFlag605A59                                 ; FE67D1  1e 6c fe
 	jr .LFE67E8                                   ; FE67D4  68 12
+Fdc_Request__op10:
 	calr Fdc_Op10_TestControllerPresent                                   ; FE67D6  1e fe ee
 	jr .LFE67E8                                   ; FE67D9  68 0d
-	calr .LFE6668                                 ; FE67DB  1e 8a fe
+Fdc_Request__op11:
+	calr Fdc_Op11_SenseDriveStatus                                 ; FE67DB  1e 8a fe
 	jr .LFE67E8                                   ; FE67DE  68 08
 .LFE67E0:
 	pushw 0xff                                    ; FE67E0  0b ff 00
@@ -176104,30 +176134,101 @@ DiskImage_HardDisk_MBR:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00  ; FE6D9F
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0xaa  ; FE6DAF
 ; ---------------------------------------------------------------------
-; Table_FE6DBF -- 123 bytes, framing NOT established
+; 0xFE6DBF-0xFE6E39 -- the disk command layer's per-media tables (123 bytes)
 ;
-; Emitted as `.byte`, and that is the claim: 123 is odd, so the block is not a
-; whole number of 16-bit words however it is aligned, and no reader is located.
+; Until 2026-10-24 this was one `.byte` blob, Table_FE6DBF, "framing NOT
+; established".  Its nine readers frame it: each loads `lda XIX,<table>` and
+; indexes it by the media type (0x605D36), which it first range-checks to
+; 0..5 -- except Disk_CommandDispatch's, indexed by the command.  Six are
+; word-offset switch tables (`ld WA,(XIX+WA)` then `jp T,(XIX+WA)` from the
+; base the reader loads), one is a word table, two are byte tables.  With the
+; leading byte they tile the 123 bytes: 1 + 6 x 12 + 38 + 2 x 6.
 ;
-; What can be SAID rather than claimed: read as 16-bit little-endian words from
-; the SECOND byte, the first six are 0, 94, 188, 282, 376, 469 -- five
-; differences of 94, 94, 94, 94, 93.  That is the shape of a cumulative offset
-; table, and it is also the shape of the four FDC jump tables that begin 74
-; bytes later at 0xFE6E3A (16-bit byte offsets added to a base the READER
-; supplies).  No base is located, so the observation is recorded and not used.
-;
-; Unknown:  everything except its extent.  It ends where the FDC jump tables
-;          begin, which is a boundary, not a meaning.
+; Read across, the tables agree with each other per media type:
+;   media   ID byte   cluster   FAT sectors   Fat_Load reads
+;   0 1 4   0xF9      1024      3             3 x 512
+;   2       0xFE      1024      2             2 x 1024
+;   3       0xF0       512      9             9 x 512
+;   5       0xF7      1024      3             3 x 512
+; (ID byte: DiskCmd_CheckMediaId's arms; cluster: DiskCmd_CloseFile's
+; divisor, and media 3 alone moving a second 0x200-byte cluster in
+; DiskCmd_ReadFileBlock / _WriteFileBlock; FAT sectors: Fat_Store's count.)
 ; ---------------------------------------------------------------------
-Table_FE6DBF:
-	.byte 0x04, 0x00, 0x00, 0x5e, 0x00, 0xbc, 0x00, 0x1a, 0x01, 0x78, 0x01, 0xd5, 0x01, 0x00, 0x04, 0x00  ; FE6DBF
-	.byte 0x04, 0x00, 0x04, 0x00, 0x02, 0x00, 0x04, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x57  ; FE6DCF
-	.byte 0x00, 0x00, 0x00, 0x5e, 0x00, 0x35, 0x00, 0x35, 0x00, 0x35, 0x00, 0x00, 0x00, 0x35, 0x00, 0x35  ; FE6DDF
-	.byte 0x00, 0x6d, 0x00, 0x6d, 0x00, 0x6d, 0x00, 0x00, 0x00, 0x6d, 0x00, 0x6d, 0x00, 0x27, 0x00, 0x2f  ; FE6DEF
-	.byte 0x00, 0x37, 0x00, 0x3f, 0x00, 0x44, 0x00, 0x96, 0x00, 0x96, 0x00, 0x4c, 0x00, 0x96, 0x00, 0x96  ; FE6DFF
-	.byte 0x00, 0x96, 0x00, 0x54, 0x00, 0x5c, 0x00, 0x66, 0x00, 0x6b, 0x00, 0x76, 0x00, 0x81, 0x00, 0x89  ; FE6E0F
-	.byte 0x00, 0x91, 0x00, 0x11, 0x00, 0x11, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x11, 0x00, 0x11, 0x00, 0x03  ; FE6E1F
-	.byte 0x03, 0x02, 0x09, 0x03, 0x03, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00    ; FE6E2F
+; Data_FE6DBF: one byte between DiskImage_HardDisk_MBR and the word tables,
+; which start on an even address.  No reader located.
+Data_FE6DBF:
+	.byte 0x04                                           ; FE6DBF
+Disk_SetDriveGeometry_MediaCases:
+; index = the media type; base Disk_SetDriveGeometry__media0
+	.short	Disk_SetDriveGeometry__media0 - Disk_SetDriveGeometry__media0                              ; FE6DC0  media 0
+	.short	Disk_SetDriveGeometry__media1 - Disk_SetDriveGeometry__media0                              ; FE6DC2  media 1
+	.short	Disk_SetDriveGeometry__media2 - Disk_SetDriveGeometry__media0                              ; FE6DC4  media 2
+	.short	Disk_SetDriveGeometry__media3 - Disk_SetDriveGeometry__media0                              ; FE6DC6  media 3
+	.short	Disk_SetDriveGeometry__media4 - Disk_SetDriveGeometry__media0                              ; FE6DC8  media 4
+	.short	Disk_SetDriveGeometry__media5 - Disk_SetDriveGeometry__media0                              ; FE6DCA  media 5
+DiskCmd_CloseFile_ClusterBytesByMedia:
+; DiskCmd_CloseFile divides the file size by this; 0x1000 on a type-1 drive
+	.short	1024, 1024, 1024, 512, 1024, 1024                                                          ; FE6DCC
+DiskCmd_CheckMediaId_MediaCases:
+; index = the media type; base DiskCmd_CheckMediaId__expectF9
+	.short	DiskCmd_CheckMediaId__expectF9 - DiskCmd_CheckMediaId__expectF9                            ; FE6DD8  media 0
+	.short	DiskCmd_CheckMediaId__expectF9 - DiskCmd_CheckMediaId__expectF9                            ; FE6DDA  media 1
+	.short	DiskCmd_CheckMediaId__expectFE - DiskCmd_CheckMediaId__expectF9                            ; FE6DDC  media 2
+	.short	DiskCmd_CheckMediaId__expectF0 - DiskCmd_CheckMediaId__expectF9                            ; FE6DDE  media 3
+	.short	DiskCmd_CheckMediaId__expectF9 - DiskCmd_CheckMediaId__expectF9                            ; FE6DE0  media 4
+	.short	DiskCmd_CheckMediaId__expectF7 - DiskCmd_CheckMediaId__expectF9                            ; FE6DE2  media 5
+DiskCmd_ReadFileBlock_MediaCases:
+; index = the media type; base DiskCmd_ReadFileBlock__secondCluster
+	.short	DiskCmd_ReadFileBlock__done - DiskCmd_ReadFileBlock__secondCluster                         ; FE6DE4  media 0
+	.short	DiskCmd_ReadFileBlock__done - DiskCmd_ReadFileBlock__secondCluster                         ; FE6DE6  media 1
+	.short	DiskCmd_ReadFileBlock__done - DiskCmd_ReadFileBlock__secondCluster                         ; FE6DE8  media 2
+	.short	DiskCmd_ReadFileBlock__secondCluster - DiskCmd_ReadFileBlock__secondCluster                ; FE6DEA  media 3
+	.short	DiskCmd_ReadFileBlock__done - DiskCmd_ReadFileBlock__secondCluster                         ; FE6DEC  media 4
+	.short	DiskCmd_ReadFileBlock__done - DiskCmd_ReadFileBlock__secondCluster                         ; FE6DEE  media 5
+DiskCmd_WriteFileBlock_MediaCases:
+; index = the media type; base DiskCmd_WriteFileBlock__secondCluster
+	.short	DiskCmd_WriteFileBlock__done - DiskCmd_WriteFileBlock__secondCluster                       ; FE6DF0  media 0
+	.short	DiskCmd_WriteFileBlock__done - DiskCmd_WriteFileBlock__secondCluster                       ; FE6DF2  media 1
+	.short	DiskCmd_WriteFileBlock__done - DiskCmd_WriteFileBlock__secondCluster                       ; FE6DF4  media 2
+	.short	DiskCmd_WriteFileBlock__secondCluster - DiskCmd_WriteFileBlock__secondCluster              ; FE6DF6  media 3
+	.short	DiskCmd_WriteFileBlock__done - DiskCmd_WriteFileBlock__secondCluster                       ; FE6DF8  media 4
+	.short	DiskCmd_WriteFileBlock__done - DiskCmd_WriteFileBlock__secondCluster                       ; FE6DFA  media 5
+Disk_CommandDispatch_CommandCases:
+; index = the command; base Disk_CommandDispatch__cmd00_MountDrive
+	.short	Disk_CommandDispatch__cmd0F_OpenFile - Disk_CommandDispatch__cmd00_MountDrive              ; FE6DFC  command 0x0F
+	.short	Disk_CommandDispatch__cmd10_CloseFile - Disk_CommandDispatch__cmd00_MountDrive             ; FE6DFE  command 0x10
+	.short	Disk_CommandDispatch__cmd11_FindFirst - Disk_CommandDispatch__cmd00_MountDrive             ; FE6E00  command 0x11
+	.short	Disk_CommandDispatch__cmd12_FindNext - Disk_CommandDispatch__cmd00_MountDrive              ; FE6E02  command 0x12
+	.short	Disk_CommandDispatch__cmd13_DeleteFile - Disk_CommandDispatch__cmd00_MountDrive            ; FE6E04  command 0x13
+	.short	Disk_CommandDispatch__badCommand - Disk_CommandDispatch__cmd00_MountDrive                  ; FE6E06  command 0x14
+	.short	Disk_CommandDispatch__badCommand - Disk_CommandDispatch__cmd00_MountDrive                  ; FE6E08  command 0x15
+	.short	Disk_CommandDispatch__cmd16_CreateFile - Disk_CommandDispatch__cmd00_MountDrive            ; FE6E0A  command 0x16
+	.short	Disk_CommandDispatch__badCommand - Disk_CommandDispatch__cmd00_MountDrive                  ; FE6E0C  command 0x17
+	.short	Disk_CommandDispatch__badCommand - Disk_CommandDispatch__cmd00_MountDrive                  ; FE6E0E  command 0x18
+	.short	Disk_CommandDispatch__badCommand - Disk_CommandDispatch__cmd00_MountDrive                  ; FE6E10  command 0x19
+	.short	Disk_CommandDispatch__cmd1A_SetTransferAddress - Disk_CommandDispatch__cmd00_MountDrive    ; FE6E12  command 0x1A
+	.short	Disk_CommandDispatch__cmd1B_CheckMediaId - Disk_CommandDispatch__cmd00_MountDrive          ; FE6E14  command 0x1B
+	.short	Disk_CommandDispatch__cmd80_CountFreeSpace - Disk_CommandDispatch__cmd00_MountDrive        ; FE6E16  command 0x80
+	.short	Disk_CommandDispatch__cmd81_ReadSectors - Disk_CommandDispatch__cmd00_MountDrive           ; FE6E18  command 0x81
+	.short	Disk_CommandDispatch__cmd82_WriteSectors - Disk_CommandDispatch__cmd00_MountDrive          ; FE6E1A  command 0x82
+	.short	Disk_CommandDispatch__cmd83_ReadFileBlock - Disk_CommandDispatch__cmd00_MountDrive         ; FE6E1C  command 0x83
+	.short	Disk_CommandDispatch__cmd84_WriteFileBlock - Disk_CommandDispatch__cmd00_MountDrive        ; FE6E1E  command 0x84
+	.short	Disk_CommandDispatch__cmd85_StoreFatIfConsistent - Disk_CommandDispatch__cmd00_MountDrive  ; FE6E20  command 0x85
+Fat_Load_MediaCases:
+; index = the media type; base Fat_Load__fat2Sectors1024
+	.short	Fat_Load__fat3Sectors512 - Fat_Load__fat2Sectors1024                                       ; FE6E22  media 0
+	.short	Fat_Load__fat3Sectors512 - Fat_Load__fat2Sectors1024                                       ; FE6E24  media 1
+	.short	Fat_Load__fat2Sectors1024 - Fat_Load__fat2Sectors1024                                      ; FE6E26  media 2
+	.short	Fat_Load__fat9Sectors512 - Fat_Load__fat2Sectors1024                                       ; FE6E28  media 3
+	.short	Fat_Load__fat3Sectors512 - Fat_Load__fat2Sectors1024                                       ; FE6E2A  media 4
+	.short	Fat_Load__fat3Sectors512 - Fat_Load__fat2Sectors1024                                       ; FE6E2C  media 5
+Fat_Store_FatSectorsByMedia:
+; Fat_Store's sector count for each of the two FAT copies
+	.byte	3, 3, 2, 9, 3, 3                                                                           ; FE6E2E
+DiskCmd_CountFreeSpace_ByMedia:
+; stored to (XSP+8), which is only ever compared with 0xFFFF (the type-1-drive
+; marker), so the values do not reach the result; what they meant is unknown
+	.byte	0, 0, 0, 3, 0, 0                                                                           ; FE6E34
 ; ==============================================================================
 ; 0xFE6E3A-0xFE6E83 -- the FDC module's FOUR JUMP TABLES, which tile exactly
 ; ==============================================================================
@@ -176151,52 +176252,50 @@ Table_FE6DBF:
 ; prom_a/wsa1_prom_a.s or if the four tables stop tiling.
 ; ==============================================================================
 Fdc_MediaTypeJumpTable:
-; index = (0x605A5B) & 0x0F, the media descriptor's low nibble.  Base 0xFE5682.
-	.short 0x002A                                  ; FE6E3A  0 -> 0xFE56AC  geometry 0
-	.short 0x002A                                  ; FE6E3C  1 -> 0xFE56AC  geometry 0
-	.short 0x0000                                  ; FE6E3E  2 -> 0xFE5682  geometry 2
-	.short 0x0008                                  ; FE6E40  3 -> 0xFE568A  geometry 3
-	.short 0x001A                                  ; FE6E42  4 -> 0xFE569C  geometry 4
-	.short 0x0022                                  ; FE6E44  5 -> 0xFE56A4  geometry 5
+; index = the media nibble; base Fdc_ResetAndIdentifyMedia__geometry2
+	.short	Fdc_ResetAndIdentifyMedia__geometry0 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E3A  0
+	.short	Fdc_ResetAndIdentifyMedia__geometry0 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E3C  1
+	.short	Fdc_ResetAndIdentifyMedia__geometry2 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E3E  2
+	.short	Fdc_ResetAndIdentifyMedia__geometry3 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E40  3
+	.short	Fdc_ResetAndIdentifyMedia__geometry4 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E42  4
+	.short	Fdc_ResetAndIdentifyMedia__geometry5 - Fdc_ResetAndIdentifyMedia__geometry2  ; FE6E44  5
 Fdc_ValidateJumpTable:
-; index = the request's operation word.  Base 0xFE5746.
-	.short 0x0000                                  ; FE6E46   0 -> 0xFE5746  geometry setup
-	.short 0x0009                                  ; FE6E48   1 -> 0xFE574F  generic check
-	.short 0x0009                                  ; FE6E4A   2 -> 0xFE574F
-	.short 0x0009                                  ; FE6E4C   3 -> 0xFE574F
-	.short 0x0009                                  ; FE6E4E   4 -> 0xFE574F
-	.short 0x0009                                  ; FE6E50   5 -> 0xFE574F
-	.short 0x003A                                  ; FE6E52   6 -> 0xFE5780  accept, no check
-	.short 0x003A                                  ; FE6E54   7 -> 0xFE5780
-	.short 0x003A                                  ; FE6E56   8 -> 0xFE5780
-	.short 0x0006                                  ; FE6E58   9 -> 0xFE574C  head check only
-	.short 0x003A                                  ; FE6E5A  10 -> 0xFE5780
-	.short 0x0009                                  ; FE6E5C  11 -> 0xFE574F
+; index = the operation; base Fdc_ValidateRequest__op0
+	.short	Fdc_ValidateRequest__op0 - Fdc_ValidateRequest__op0                          ; FE6E46  0
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E48  1
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E4A  2
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E4C  3
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E4E  4
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E50  5
+	.short	Fdc_ValidateRequest__accept - Fdc_ValidateRequest__op0                       ; FE6E52  6
+	.short	Fdc_ValidateRequest__accept - Fdc_ValidateRequest__op0                       ; FE6E54  7
+	.short	Fdc_ValidateRequest__accept - Fdc_ValidateRequest__op0                       ; FE6E56  8
+	.short	Fdc_ValidateRequest__op9 - Fdc_ValidateRequest__op0                          ; FE6E58  9
+	.short	Fdc_ValidateRequest__accept - Fdc_ValidateRequest__op0                       ; FE6E5A  10
+	.short	Fdc_ValidateRequest__checkFields - Fdc_ValidateRequest__op0                  ; FE6E5C  11
 Fdc_OpcodeValidityJumpTable:
-; index = (opcode & 0x1F) - 0x0B, for the seven values 0x0B..0x11 only.
-; Base 0xFE5D2A = "valid"; 0xFE5D2D = "invalid".
-	.short 0x0003                                  ; FE6E5E  0x0B -> invalid
-	.short 0x0000                                  ; FE6E60  0x0C -> valid    READ DELETED DATA
-	.short 0x0000                                  ; FE6E62  0x0D -> valid    FORMAT TRACK
-	.short 0x0003                                  ; FE6E64  0x0E -> invalid
-	.short 0x0000                                  ; FE6E66  0x0F -> valid    SEEK
-	.short 0x0003                                  ; FE6E68  0x10 -> invalid
-	.short 0x0000                                  ; FE6E6A  0x11 -> valid    SCAN EQUAL
+; index = the opcode & 0x1F; base Fdc_ClassifyCommandOpcode__valid
+	.short	Fdc_ClassifyCommandOpcode__invalid - Fdc_ClassifyCommandOpcode__valid        ; FE6E5E  0x0B
+	.short	Fdc_ClassifyCommandOpcode__valid - Fdc_ClassifyCommandOpcode__valid          ; FE6E60  0x0C
+	.short	Fdc_ClassifyCommandOpcode__valid - Fdc_ClassifyCommandOpcode__valid          ; FE6E62  0x0D
+	.short	Fdc_ClassifyCommandOpcode__invalid - Fdc_ClassifyCommandOpcode__valid        ; FE6E64  0x0E
+	.short	Fdc_ClassifyCommandOpcode__valid - Fdc_ClassifyCommandOpcode__valid          ; FE6E66  0x0F
+	.short	Fdc_ClassifyCommandOpcode__invalid - Fdc_ClassifyCommandOpcode__valid        ; FE6E68  0x10
+	.short	Fdc_ClassifyCommandOpcode__valid - Fdc_ClassifyCommandOpcode__valid          ; FE6E6A  0x11
 Fdc_OperationJumpTable:
-; index = the request's operation word.  Base 0xFE67A4; the arms are 5 bytes
-; each, which is why the offsets step by 5.
-	.short 0x0000                                  ; FE6E6C   0 -> Fdc_Op0_ResetAndIdentifyMedia
-	.short 0x0005                                  ; FE6E6E   1 -> Fdc_Op1_Recalibrate
-	.short 0x000A                                  ; FE6E70   2 -> Fdc_Op2_SeekToCylinder
-	.short 0x000F                                  ; FE6E72   3 -> Fdc_Op3_ReadSectors
-	.short 0x0014                                  ; FE6E74   4 -> Fdc_Op4_WriteSectors
-	.short 0x0019                                  ; FE6E76   5 -> Fdc_Op5_FormatDisk
-	.short 0x001E                                  ; FE6E78   6 -> Fdc_Op6_PortA3_Off
-	.short 0x0023                                  ; FE6E7A   7 -> Fdc_Op7_PortA3_On
-	.short 0x0028                                  ; FE6E7C   8 -> Fdc_Op8_GetSavedError
-	.short 0x002D                                  ; FE6E7E   9 -> Fdc_Op9_SetFlag605A59
-	.short 0x0032                                  ; FE6E80  10 -> Fdc_Op10_TestControllerPresent
-	.short 0x0037                                  ; FE6E82  11 -> Fdc_Op11_SenseDriveStatus
+; index = the operation; base Fdc_Request__dispatch
+	.short	Fdc_Request__dispatch - Fdc_Request__dispatch                                ; FE6E6C  0
+	.short	Fdc_Request__op1 - Fdc_Request__dispatch                                     ; FE6E6E  1
+	.short	Fdc_Request__op2 - Fdc_Request__dispatch                                     ; FE6E70  2
+	.short	Fdc_Request__op3 - Fdc_Request__dispatch                                     ; FE6E72  3
+	.short	Fdc_Request__op4 - Fdc_Request__dispatch                                     ; FE6E74  4
+	.short	Fdc_Request__op5 - Fdc_Request__dispatch                                     ; FE6E76  5
+	.short	Fdc_Request__op6 - Fdc_Request__dispatch                                     ; FE6E78  6
+	.short	Fdc_Request__op7 - Fdc_Request__dispatch                                     ; FE6E7A  7
+	.short	Fdc_Request__op8 - Fdc_Request__dispatch                                     ; FE6E7C  8
+	.short	Fdc_Request__op9 - Fdc_Request__dispatch                                     ; FE6E7E  9
+	.short	Fdc_Request__op10 - Fdc_Request__dispatch                                    ; FE6E80  10
+	.short	Fdc_Request__op11 - Fdc_Request__dispatch                                    ; FE6E82  11
 ; sub_FE6E84 -- unreferenced.  No call, jump or 24-bit value in prom_a or prom_b names 0xFE6E84-0xFE6F88; the
 ;          values that match are inside prom_b bitmap rows (0xF233F1, 0xF23C49, 0xF23C4F) and prom_a's dead copy
 ;          (0xF8A696).  Its two numeric branches land inside Fdc_OperationJumpTable (0xFE6E80) and inside
