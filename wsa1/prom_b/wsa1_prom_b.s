@@ -27864,9 +27864,9 @@ Blink_DrawField_Op02:
 	ldir85	; F0E93B  ldir
 	pop	xix	; F0E93D  pop XIX
 	ld	h, (LCD_CurrentLayer:16)	; F0E93E  ld H,(0x2540)
-	m_ld_m16m MB16, Blink_Layer, LCD_CurrentLayer	; F0E942  ld (0x2540),(0x28c8)
-	m_ld_mm16 MDD+r4, 0x06, Blink_SwiFunction	; F0E948  ld (XIX+0x06),(0x28c9)
-	m_ldw_mm16 MDD+r4, 0x0d, Blink_Op02Word0D	; F0E94D  ldw (XIX+0x0d),(0x28ca)
+	ld	(LCD_CurrentLayer), (Blink_Layer:16)	; F0E942  ld (0x2540),(0x28c8)
+	ld	(xix+6), (Blink_SwiFunction)	; F0E948  ld (XIX+0x06),(0x28c9)
+	ldw	(xix+13), (Blink_Op02Word0D)	; F0E94D  ldw (XIX+0x0d),(0x28ca)
 	ld	bc, (Blink_BytesPerEntry:16)	; F0E952  ld BC,(0x28d0)
 	extz	bc	; F0E956  extz BC
 	ld	(xix+11), bc	; F0E958  ld (XIX+0x0b),BC
@@ -27913,10 +27913,10 @@ Blink_DrawField_Op07:
 	ldir85	; F0E98D  ldir
 	pop	xix	; F0E98F  pop XIX
 	ld	h, (LCD_CurrentLayer:16)	; F0E990  ld H,(0x2540)
-	m_ld_m16m MB16, Blink_Layer, LCD_CurrentLayer	; F0E994  ld (0x2540),(0x28c8)
-	m_ld_mm16 MDD+r4, 0x06, Blink_SwiFunction	; F0E99A  ld (XIX+0x06),(0x28c9)
-	m_ldw_mm16 MDD+r4, 0x0d, Blink_Op07Word0D	; F0E99F  ldw (XIX+0x0d),(0x28cc)
-	m_ldw_mm16 MDD+r4, 0x0f, Blink_Op07Word0F	; F0E9A4  ldw (XIX+0x0f),(0x28ce)
+	ld	(LCD_CurrentLayer), (Blink_Layer:16)	; F0E994  ld (0x2540),(0x28c8)
+	ld	(xix+6), (Blink_SwiFunction)	; F0E99A  ld (XIX+0x06),(0x28c9)
+	ldw	(xix+13), (Blink_Op07Word0D)	; F0E99F  ldw (XIX+0x0d),(0x28cc)
+	ldw	(xix+15), (Blink_Op07Word0F)	; F0E9A4  ldw (XIX+0x0f),(0x28ce)
 	ld	bc, (Blink_BytesPerEntry:16)	; F0E9A9  ld BC,(0x28d0)
 	extz	bc	; F0E9AD  extz BC
 	ld	(xix+11), bc	; F0E9AF  ld (XIX+0x0b),BC
@@ -27970,7 +27970,7 @@ Blink_Command:
 	jr	nc, Blink_DrawField_Op07_Skip2	; F0E9EA  jr NC,0xf0e9f1
 	ld	(Blink_PostToRing:16), 0	; F0E9EC  ld (0x28d3),0x00
 Blink_DrawField_Op07_Skip2:
-	m_ld_m16m MB16, LCD_CurrentLayer, Blink_Layer	; F0E9F1  ld (0x28c8),(0x2540)
+	ld	(Blink_Layer), (LCD_CurrentLayer:16)	; F0E9F1  ld (0x28c8),(0x2540)
 	ld	xbc, (xiz+8)	; F0E9F7  ld XBC,(XIZ+0x08)
 	ld	a, (xbc)	; F0E9FA  ld A,(XBC)
 	extz	wa	; F0E9FC  extz WA
@@ -28279,7 +28279,7 @@ Blink_SetupNumberFieldAndDraw:
 	cp	l, 10	; F0EABF  cp L,0x0a
 	jr	nz, Blink_SetupNumberFieldAndDraw_Skip2	; F0EAC2  jr NZ,0xf0ead1
 Blink_SetupNumberFieldAndDraw_Skip:
-	m_ld_m16m MWI+r4, 0, 0x28d4	; F0EAC4  ldw (0x28d4),(XIX)
+	ldw	(0x28d4), (xix)	; F0EAC4  ldw (0x28d4),(XIX)
 	sub	xbc, xbc	; F0EAC8  sub XBC,XBC
 	inc	2, xbc	; F0EACA  inc 2,XBC
 	add	(xiz+8), xbc	; F0EACC  add (XIZ+0x08),XBC
@@ -28318,21 +28318,21 @@ Blink_SetupNumberFieldAndDraw_Join2:
 	jr	nz, Blink_SetupNumberFieldAndDraw_Skip5	; F0EB17  jr NZ,0xf0eb2b
 Blink_SetupNumberFieldAndDraw_Skip4:
 	ld	xbc, (xiz+8)	; F0EB19  ld XBC,(XIZ+0x08)
-	m_ld_m16m MWI+r1, 0, Blink_Op07Word0D	; F0EB1C  ldw (0x28cc),(XBC)
+	ldw	(Blink_Op07Word0D), (xbc)	; F0EB1C  ldw (0x28cc),(XBC)
 	inc	2, xbc	; F0EB20  inc 2,XBC
 	ld	(xiz+8), xbc	; F0EB22  ld (XIZ+0x08),XBC
-	m_ld_m16m MWI+r1, 0, Blink_Op07Word0F	; F0EB25  ldw (0x28ce),(XBC)
+	ldw	(Blink_Op07Word0F), (xbc)	; F0EB25  ldw (0x28ce),(XBC)
 	jr	Blink_SetupNumberFieldAndDraw_Join3	; F0EB29  jr T,0xf0eb32
 Blink_SetupNumberFieldAndDraw_Skip5:
 	ld	xbc, (xiz+8)	; F0EB2B  ld XBC,(XIZ+0x08)
-	m_ld_m16m MWI+r1, 0, Blink_Op02Word0D	; F0EB2E  ldw (0x28ca),(XBC)
+	ldw	(Blink_Op02Word0D), (xbc)	; F0EB2E  ldw (0x28ca),(XBC)
 Blink_SetupNumberFieldAndDraw_Join3:
 	sub	xbc, xbc	; F0EB32  sub XBC,XBC
 	inc	2, xbc	; F0EB34  inc 2,XBC
 	add	(xiz+8), xbc	; F0EB36  add (XIZ+0x08),XBC
 	ld	xwa, (xiz+8)	; F0EB39  ld XWA,(XIZ+0x08)
-	m_ld_m16m MBI+r0, 0, Blink_BytesPerEntry	; F0EB3C  ld (0x28d0),(XWA)
-	m_ld_m16m MBD+r0, 0x01, 0x28d6	; F0EB40  ld (0x28d6),(XWA+0x01)
+	ld	(Blink_BytesPerEntry), (xwa)	; F0EB3C  ld (0x28d0),(XWA)
+	ld	(0x28d6), (xwa+1)	; F0EB40  ld (0x28d6),(XWA+0x01)
 	lda	xix, (Blink_TextPtr:16)	; F0EB45  lda XIX,0x28c0
 	cp	l, 5:i3	; F0EB49  cp L,5
 	jr	z, Blink_SetupNumberFieldAndDraw_Skip6	; F0EB4B  jr Z,0xf0eb53
@@ -28508,7 +28508,7 @@ sub_F0EC4A_Skip:
 	ld	(Blink_SwiFunction:16), d	; F0EC8D  ld (0x28c9),D
 	ld	xbc, (xix+1)	; F0EC91  ld XBC,(XIX+0x01)
 	ld	(xiz-4), xbc	; F0EC94  ld (XIZ+0xfc),XBC
-	m_ld_m16m MBD+r4, 0x05, Blink_BytesPerEntry	; F0EC97  ld (0x28d0),(XIX+0x05)
+	ld	(Blink_BytesPerEntry), (xix+5)	; F0EC97  ld (0x28d0),(XIX+0x05)
 	ld	xwa, xix	; F0EC9C  ld XWA,XIX
 	inc	7, xwa	; F0EC9E  inc 7,XWA
 	ld	(xiz+8), xwa	; F0ECA0  ld (XIZ+0x08),XWA
@@ -28518,12 +28518,12 @@ sub_F0EC4A_Skip:
 	jr	nz, sub_F0EC4A_Skip3	; F0ECAD  jr NZ,0xf0ecbd
 sub_F0EC4A_Skip2:
 	ld	xbc, (xiz+8)	; F0ECAF  ld XBC,(XIZ+0x08)
-	m_ld_m16m MWI+r1, 0, Blink_Op07Word0D	; F0ECB2  ldw (0x28cc),(XBC)
-	m_ld_m16m MWD+r1, 0x02, Blink_Op07Word0F	; F0ECB6  ldw (0x28ce),(XBC+0x02)
+	ldw	(Blink_Op07Word0D), (xbc)	; F0ECB2  ldw (0x28cc),(XBC)
+	ldw	(Blink_Op07Word0F), (xbc+2)	; F0ECB6  ldw (0x28ce),(XBC+0x02)
 	jr	sub_F0EC4A_Join2	; F0ECBB  jr T,0xf0ecc4
 sub_F0EC4A_Skip3:
 	ld	xbc, (xiz+8)	; F0ECBD  ld XBC,(XIZ+0x08)
-	m_ld_m16m MWI+r1, 0, Blink_Op02Word0D	; F0ECC0  ldw (0x28ca),(XBC)
+	ldw	(Blink_Op02Word0D), (xbc)	; F0ECC0  ldw (0x28ca),(XBC)
 sub_F0EC4A_Join2:
 	cp	(Blink_State:16), 0x02	; F0ECC4  cp (0x28d2),0x02
 	jr	nz, sub_F0EC4A_Skip4	; F0ECC9  jr NZ,0xf0ecfb
@@ -28851,7 +28851,7 @@ Data_F0F000:
 ;   called in-module by ScreenEnterBody_DspEffect.
 DspEffect_SetSection:		; <- T_DspEffect_SetSection
 	link XIZ,0x0000	; F0F018  link XIZ,0x0000
-	m_ld_m16m MBD+r6, 0x08, DspEffect_Section	; F0F01C  ld (0x2790),(XIZ+0x08)
+	ld	(DspEffect_Section), (xiz+8)	; F0F01C  ld (0x2790),(XIZ+0x08)
 	calr	DspEffect_SelectSectionBlock	; F0F021  calr 0xf0f047
 	set	7, (0x2791:16)	; F0F024  set 7,(0x2791)
 	unlk XIZ	; F0F028  unlk XIZ
@@ -28874,7 +28874,7 @@ DspEffect_SetSection:		; <- T_DspEffect_SetSection
 ;   FINDINGS-prom_ab-screen-stage-and-flags.md).  Called by the ExitKey / LcdKeyRow2..4 _DspEffect arms.
 DspEffect_SetSectionAndRepaint:		; <- T_DspEffect_SetSectionAndRepaint
 	link XIZ,0x0000	; F0F02B  link XIZ,0x0000
-	m_ld_m16m MBD+r6, 0x08, DspEffect_Section	; F0F02F  ld (0x2790),(XIZ+0x08)
+	ld	(DspEffect_Section), (xiz+8)	; F0F02F  ld (0x2790),(XIZ+0x08)
 	calr	DspEffect_SelectSectionBlock	; F0F034  calr 0xf0f047
 	set	7, (0x2791:16)	; F0F037  set 7,(0x2791)
 	set	4, (UI_Request_Hi:16)	; F0F03B  set 4,(0x2071)
@@ -28919,7 +28919,7 @@ DspEffect_SelectSectionBlock:
 	extz	bc	; F0F052  extz BC
 	extz	xbc	; F0F054  extz XBC
 	add	xbc, EffectPage_BlockIndex	; F0F056  add XBC,0x00f135f7
-	m_ld_m16m MBI+r1, 0, Effect_BlockIndex	; F0F05C  ld (0x2797),(XBC)
+	ld	(Effect_BlockIndex), (xbc)	; F0F05C  ld (0x2797),(XBC)
 DspEffect_SelectSectionBlock_Return:
 	ret	; F0F060  ret
 
@@ -31564,7 +31564,7 @@ EffectEditor_PaintJob1_Join4:
 	pop	xiy	; F0F946  pop XIY
 	jr	EffectEditor_PaintJob1_Join4	; F0F947  jr T,0xf0f930
 EffectEditor_PaintJob1_Skip11:
-	m_ld_m16m MB16, Effect_BlockIndex, UI_DrawScratch	; F0F949  ld (0x2640),(0x2797)
+	ld	(UI_DrawScratch), (Effect_BlockIndex:16)	; F0F949  ld (0x2640),(0x2797)
 	cp	(0x2798:16), 0x00	; F0F94F  cp (0x2798),0x00
 	jr	nz, EffectEditor_PaintJob1_Skip13	; F0F954  jr NZ,0xf0f9ba
 	ld	(xix), 1	; F0F956  ld (XIX),0x01
@@ -32142,12 +32142,12 @@ EffectEditor_PaintJob3_Resume4:
 	push	xiy	; F0FEA0  push XIY
 	jp	(xix)	; F0FEA1  jp T,XIX
 EffectEditor_PaintJob3_Resume5:
-	m_ld_m16m MB16, Effect_BlockIndex, UI_DrawScratch	; F0FEA3  ld (0x2640),(0x2797)
+	ld	(UI_DrawScratch), (Effect_BlockIndex:16)	; F0FEA3  ld (0x2640),(0x2797)
 	lda	xbc, (DL_F143AF:24)	; F0FEA9  lda XBC,0xf143af
 	push	xbc	; F0FEAE  push XBC
 	call	T_DisplayListB_RunOne_Stack	; F0FEAF  call 0xf42e0c
 	ld	(LCD_CurrentLayer:16), 1	; F0FEB3  ld (0x2540),0x01
-	m_ld_m16m MB16, DspEffect_Section, UI_DrawScratch	; F0FEB8  ld (0x2640),(0x2790)
+	ld	(UI_DrawScratch), (DspEffect_Section:16)	; F0FEB8  ld (0x2640),(0x2790)
 	lda	xbc, (DL_F146A6:24)	; F0FEBE  lda XBC,0xf146a6
 	push	xbc	; F0FEC3  push XBC
 	lda	xwa, (DL_F1469B:24)	; F0FEC4  lda XWA,0xf1469b
@@ -34363,7 +34363,7 @@ EffectEditor_PaintJob5_Resume5:
 	push	xiy	; F10E55  push XIY
 	jp	(xix)	; F10E56  jp T,XIX
 EffectEditor_PaintJob5_Resume6:
-	m_ld_m16m MB16, Effect_BlockIndex, UI_DrawScratch	; F10E58  ld (0x2640),(0x2797)
+	ld	(UI_DrawScratch), (Effect_BlockIndex:16)	; F10E58  ld (0x2640),(0x2797)
 	lda	xbc, (DL_F143AF:24)	; F10E5E  lda XBC,0xf143af
 	push	xbc	; F10E63  push XBC
 	call	T_DisplayListB_RunOne_Stack	; F10E64  call 0xf42e0c
@@ -34385,7 +34385,7 @@ EffectEditor_PaintJob5_Resume7:
 	jp	(xix)	; F10E93  jp T,XIX
 EffectEditor_PaintJob5_Resume8:
 	ld	(LCD_CurrentLayer:16), 1	; F10E95  ld (0x2540),0x01
-	m_ld_m16m MB16, DspEffect_Section, UI_DrawScratch	; F10E9A  ld (0x2640),(0x2790)
+	ld	(UI_DrawScratch), (DspEffect_Section:16)	; F10E9A  ld (0x2640),(0x2790)
 	lda	xbc, (DL_F146A6:24)	; F10EA0  lda XBC,0xf146a6
 	push	xbc	; F10EA5  push XBC
 	lda	xwa, (DL_F1469B:24)	; F10EA6  lda XWA,0xf1469b
@@ -34409,7 +34409,7 @@ EffectEditor_PaintJob5_Resume8:
 EffectEditor_PaintJob6:
 	res	6, (0x2799:16)	; F10EB8  res 6,(0x2799)
 	ld	(LCD_CurrentLayer:16), 0	; F10EBC  ld (0x2540),0x00
-	m_ld_m16m MB16, Effect_Algorithm, UI_DrawScratch	; F10EC1  ld (0x2640),(0x2796)
+	ld	(UI_DrawScratch), (Effect_Algorithm:16)	; F10EC1  ld (0x2640),(0x2796)
 	lda	xbc, (DL_F146F0:24)	; F10EC7  lda XBC,0xf146f0
 	push	xbc	; F10ECC  push XBC
 	lda	xwa, (EffectEditor_PaintJob6_DL:24)	; F10ECD  lda XWA,0xf146e1
@@ -34480,7 +34480,7 @@ DspEffect_RepaintParamPage:
 	ld	(xix), c	; F10F2A  ld (XIX),C
 	ld	d, (10132:16)	; F10F2C  ld D,(0x2794)
 	extz	xix	; F10F30  extz XIX
-	m_ld_mm16 MDD+r4, 0x01, 0x2795	; F10F32  ld (XIX+0x01),(0x2795)
+	ld	(xix+1), (0x2795)	; F10F32  ld (XIX+0x01),(0x2795)
 	ld	(10133:16), d	; F10F37  ld (0x2795),D
 	lda	xbc, (DspEffect_RepaintParamPage_DL + 0x16:24)	; F10F3B  lda XBC,0xf14728
 	push	xbc	; F10F40  push XBC
@@ -36733,7 +36733,7 @@ DspParam_WriteByNumber_Join3:
 	inc	1, xbc	; F11F1F  inc 1,XBC
 	sub	(xiz-10), xbc	; F11F21  sub (XIZ+0xf6),XBC
 	ld	xwa, (xiz-10)	; F11F24  ld XWA,(XIZ+0xf6)
-	m_ld_mm16 MDI+r0, 0, 0x279b	; F11F27  ld (XWA),(0x279b)
+	ld	(xwa), (0x279b)	; F11F27  ld (XWA),(0x279b)
 	jrl	DspParam_WriteByNumber_Join10	; F11F2B  jrl T,0xf12150
 DspParam_WriteByNumber_Join4:
 	ld	c, (xix)	; F11F2E  ld C,(XIX)
@@ -36882,8 +36882,8 @@ DspParam_WriteByNumber_Join8:
 	ld	(xbc), a	; F12076  ld (XBC),A
 	jrl	DspParam_WriteByNumber_Join10	; F12078  jrl T,0xf12150
 DspParam_WriteByNumber_Join9:
-	m_ld_m16m MBD+r6, 0x08, 0x279a	; F1207B  ld (0x279a),(XIZ+0x08)
-	m_ld_m16m MBD+r6, 0x0a, 0x279b	; F12080  ld (0x279b),(XIZ+0x0a)
+	ld	(0x279a), (xiz+8)	; F1207B  ld (0x279a),(XIZ+0x08)
+	ld	(0x279b), (xiz+10)	; F12080  ld (0x279b),(XIZ+0x0a)
 	jrl	DspParam_WriteByNumber_Join12	; F12085  jrl T,0xf12205
 DspParam_WriteByNumber_Skip29:
 	ld	c, (xiz+8)	; F12088  ld C,(XIZ+0x08)
@@ -36899,7 +36899,7 @@ DspParam_WriteByNumber_Skip29:
 	extz	xbc	; F120A1  extz XBC
 	dec	1, xbc	; F120A3  dec 1,XBC
 	add	xbc, xiz	; F120A5  add XBC,XIZ
-	m_ld_mm16 MDD+r1, 0xd0, 0x279b	; F120A7  ld (XBC+0xd0),(0x279b)
+	ld	(xbc-48), (0x279b)	; F120A7  ld (XBC+0xd0),(0x279b)
 	ld	h, (10139:16)	; F120AC  ld H,(0x279b)
 	ld	c, (xix+1)	; F120B0  ld C,(XIX+0x01)
 	extz	bc	; F120B3  extz BC
@@ -77898,7 +77898,7 @@ sub_F38843:		; <- T_F42664
 	pop	xde	; F3885E  pop XDE
 	ld	c, (32482:16)	; F3885F  ld C,(0x7ee2)
 	ld	(xiz-1), c	; F38863  ld (XIZ+0xff),C
-	m_ld_mm16 MDD+r6, 0xfe, 0x7ee3	; F38866  ld (XIZ+0xfe),(0x7ee3)
+	ld	(xiz-2), (0x7ee3)	; F38866  ld (XIZ+0xfe),(0x7ee3)
 	ld	a, (UI_PartIndex:16)	; F3886B  ld A,(0x2250)
 	ld	(xiz-3), a	; F3886F  ld (XIZ+0xfd),A
 	ld	e, (32517:16)	; F38872  ld E,(0x7f05)
@@ -116249,9 +116249,9 @@ Paint_DrawbarScreenLayout_Unchanged:
 	push	xwa	; F537E2  push XWA
 	jr	PaintAllDrawbars_Join2	; F537E3  jr T,0xf53817
 PaintAllDrawbars_Skip2:
-	m_ld_m16m MB16, 0x28a1, UI_DrawScratch	; F537E5  ld (0x2640),(0x28a1)
+	ld	(UI_DrawScratch), (0x28a1:16)	; F537E5  ld (0x2640),(0x28a1)
 	ld	h, (10401:16)	; F537EB  ld H,(0x28a1)
-	m_ld_m16m MB16, 0x28a2, UI_DrawScratch+1	; F537EF  ld (0x2641),(0x28a2)
+	ld	(UI_DrawScratch+1), (0x28a2:16)	; F537EF  ld (0x2641),(0x28a2)
 	ld	(10402:16), h	; F537F5  ld (0x28a2),H
 	lda	xbc, (ParamCursorRects:24)	; F537F9  lda XBC,0xf546da
 	push	xbc	; F537FE  push XBC

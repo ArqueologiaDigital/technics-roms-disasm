@@ -24796,7 +24796,7 @@ Link_SendCommandAndLong:
 ; ---------------------------------------------------------------------
 Link_SendCommand3_WaitTicks:
 	link XIZ,0xfffe                                      ; F8E1FE  ee 0c fe ff
-	m_ldw_mm16 MDD+r6, 0xfe, Tick_Count                      ; F8E202  be fe 16 80 00
+	ldw	(xiz-2), (Tick_Count)                            ; F8E202  be fe 16 80 00
 	pushw 0x03                                           ; F8E207  0b 03 00
 	ld XBC,(XIZ+0x08)                                    ; F8E20A  ae 08 21
 	push XBC                                             ; F8E20D  39
@@ -24835,7 +24835,7 @@ Link_SendCommand3_WaitTicks:
 ; ---------------------------------------------------------------------
 Link_SendCommand5_WaitDone:
 	link XIZ,0xfffe                                      ; F8E222  ee 0c fe ff
-	m_ldw_mm16 MDD+r6, 0xfe, Tick_Count                      ; F8E226  be fe 16 80 00
+	ldw	(xiz-2), (Tick_Count)                            ; F8E226  be fe 16 80 00
 	set	6, (0x00008a:24)                             ; F8E22B  f2 8a 00 00 be
 	pushw 0x05                                           ; F8E230  0b 05 00
 	ld XBC,(XIZ+0x08)                                    ; F8E233  ae 08 21
@@ -70016,7 +70016,7 @@ MIDI_Fg_Deliver2:
 	push XIX                                      ; FA5A8F  3c
 	lda xix, (xiz-2)                              ; FA5A90  be fe 34
 	calr PanelLed_ToggleActivityLed_SaveRegs                    ; FA5A93  1e 9f fe   PanelLed_ToggleActivityLed_SaveRegs
-	m_ld_mm16 MDI+r4, 0, MIDI_Fg_RunningStatus                   ; FA5A96  b4 14 60 09   buffer[0] = running status
+	ld	(xix), (MIDI_Fg_RunningStatus)                       ; FA5A96  b4 14 60 09   buffer[0] = running status
 	ld C,(XIZ+0x08)                               ; FA5A9A  8e 08 23
 	ld (XIX+0x01),C                               ; FA5A9D  bc 01 43   buffer[1] = the data byte
 	push XIX                                      ; FA5AA0  3c
@@ -70069,8 +70069,8 @@ MIDI_Fg_Deliver3:
 	push XIX                                      ; FA5AC2  3c
 	lda xix, (xiz-4)                              ; FA5AC3  be fc 34
 	calr PanelLed_ToggleActivityLed_SaveRegs                    ; FA5AC6  1e 6c fe   PanelLed_ToggleActivityLed_SaveRegs
-	m_ld_mm16 MDI+r4, 0, MIDI_Fg_RunningStatus                   ; FA5AC9  b4 14 60 09   buffer[0] = status
-	m_ld_mm16 MDD+r4, 0x01, MIDI_Fg_FirstData                ; FA5ACD  bc 01 14 61 09   buffer[1] = first data byte
+	ld	(xix), (MIDI_Fg_RunningStatus)                       ; FA5AC9  b4 14 60 09   buffer[0] = status
+	ld	(xix+1), (MIDI_Fg_FirstData)                     ; FA5ACD  bc 01 14 61 09   buffer[1] = first data byte
 	ld C,(XIZ+0x08)                               ; FA5AD2  8e 08 23
 	ld (XIX+0x02),C                               ; FA5AD5  bc 02 43   buffer[2] = second data byte
 	push XIX                                      ; FA5AD8  3c
@@ -110943,7 +110943,7 @@ CombinationNaming_WriteToUserMemory:
 	ld xbc, (xiz-8)                                      ; FBF090  ae f8 21
 	push XBC                                             ; FBF093  39
 	call T_Link_SendCommand5_WaitDone                    ; FBF094  1d 38 12 f4
-	m_ld_mm16 MD24, 0x60f189, 0x276e                     ; FBF098  f2 89 f1 60 14 6e 27
+	ld	(0x60f189:24), (0x276e)                      ; FBF098  f2 89 f1 60 14 6e 27
 	ld (0x60f18a:24), 0x08                             ; FBF09F  f2 8a f1 60 00 08
 	ld (0x60f180:24), 0x98                             ; FBF0A5  f2 80 f1 60 00 98
 	call T_CombiSel_GroupMemberFromNumberAndBank                                        ; FBF0AB  1d 08 08 f4
@@ -111339,7 +111339,7 @@ ScreenEnterBody_CombiEditConfigure:
 	call T_CallbackQueue_Post                            ; FBF3E8  1d 84 2e f4
 	pushw 0x01                                           ; FBF3EC  0b 01 00
 	call T_Kernel_SemaSignal_StackArg                    ; FBF3EF  1d c0 2d f4
-	m_ld_mm16 MDI+r4, 0, CombiEdit_Page                          ; FBF3F3  b4 14 67 27
+	ld	(xix), (CombiEdit_Page)                              ; FBF3F3  b4 14 67 27
 	inc 6,XSP                                            ; FBF3F7  ef 66
 .LFBF3F9:
 	lda xbc, (.LFBF807:24)                               ; FBF3F9  f2 07 f8 fb 31
@@ -111809,26 +111809,26 @@ CombiEditConfigure_RepaintMarkedSounds:
 	lda xix, (UI_DrawScratch:16)                                ; FBF80D  f1 40 26 34
 	ld (xiz-4), xix                                      ; FBF811  be fc 64
 	ld xbc, (xiz-4)                                      ; FBF814  ae fc 21
-	m_ld_mm16 MDI+r1, 0, CombiEdit_Part                          ; FBF817  b1 14 65 27
+	ld	(xbc), (CombiEdit_Part)                              ; FBF817  b1 14 65 27
 	ld h, (CombiEdit_Part:16)                                   ; FBF81B  c1 65 27 26
 	ld xbc, (xiz-4)                                      ; FBF81F  ae fc 21
-	m_ld_mm16 MDD+r1, 0x01, 0x2766                       ; FBF822  b9 01 14 66 27
+	ld	(xbc+1), (0x2766)                            ; FBF822  b9 01 14 66 27
 	ld xbc, (xiz-4)                                      ; FBF827  ae fc 21
 	inc 2,XBC                                            ; FBF82A  e9 62
 	ld (xiz-8), xbc                                      ; FBF82C  be f8 61
 	ld (0x2766:16), h                                   ; FBF82F  f1 66 27 46
-	m_ld_mm16 MDI+r1, 0, CombiEdit_Row                          ; FBF833  b1 14 69 27
+	ld	(xbc), (CombiEdit_Row)                              ; FBF833  b1 14 69 27
 	ld l, (CombiEdit_Row:16)                                   ; FBF837  c1 69 27 27
 	ld xbc, (xiz-4)                                      ; FBF83B  ae fc 21
-	m_ld_mm16 MDD+r1, 0x03, 0x276a                       ; FBF83E  b9 03 14 6a 27
+	ld	(xbc+3), (0x276a)                            ; FBF83E  b9 03 14 6a 27
 	ld xbc, (xiz-4)                                      ; FBF843  ae fc 21
 	inc 4,XBC                                            ; FBF846  e9 64
 	ld (xiz-12), xbc                                     ; FBF848  be f4 61
 	ld (0x276a:16), l                                   ; FBF84B  f1 6a 27 47
-	m_ld_mm16 MDI+r1, 0, 0x276b                          ; FBF84F  b1 14 6b 27
+	ld	(xbc), (0x276b)                              ; FBF84F  b1 14 6b 27
 	ld l, (0x276b:16)                                   ; FBF853  c1 6b 27 27
 	ld xbc, (xiz-4)                                      ; FBF857  ae fc 21
-	m_ld_mm16 MDD+r1, 0x05, 0x276c                       ; FBF85A  b9 05 14 6c 27
+	ld	(xbc+5), (0x276c)                            ; FBF85A  b9 05 14 6c 27
 	ld (0x276c:16), l                                   ; FBF85F  f1 6c 27 47
 	set	0, (0xc6:8)                                   ; FBF863  f0 c6 b8
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FBF866  f1 40 25 00 01
@@ -111860,7 +111860,7 @@ CombiEditConfigure_RepaintMarkedSounds:
 	ld (xiz-4), xix                                      ; FBF8A7  be fc 64
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FBF8AA  f1 40 25 00 00
 	ld xbc, (xiz-4)                                      ; FBF8AF  ae fc 21
-	m_ld_mm16 MDI+r1, 0, 0x276b                          ; FBF8B2  b1 14 6b 27
+	ld	(xbc), (0x276b)                              ; FBF8B2  b1 14 6b 27
 	ld h, (0x276b:16)                                   ; FBF8B6  c1 6b 27 26
 	ld C,(XIX+0x05)                                      ; FBF8BA  8c 05 23
 	cp H,C                                               ; FBF8BD  cb f6
@@ -164603,10 +164603,10 @@ Delay_Ticks:
 	link XIZ,0x0000                                      ; FE1421  ee 0c 00 00
 	pushw hl                                             ; FE1425  2b
 	ldw hl, 0x00                                         ; FE1426  33 00 00
-	m_ldw_mm16 MD24, 0x0017bb, Tick_Count                    ; FE1429  f2 bb 17 00 16 80 00
+	ldw	(0x0017bb:24), (Tick_Count)                      ; FE1429  f2 bb 17 00 16 80 00
 	jr .LFE1445                                              ; FE1430  68 13
 .LFE1432:
-	m_ldw_mm16 MD24, 0x0017bd, Tick_Count                    ; FE1432  f2 bd 17 00 16 80 00
+	ldw	(0x0017bd:24), (Tick_Count)                      ; FE1432  f2 bd 17 00 16 80 00
 	ld hl, (0x17bd:24)                                  ; FE1439  d2 bd 17 00 23
 	ld bc, (0x17bb:24)                                  ; FE143E  d2 bb 17 00 21
 	sub HL,BC                                            ; FE1443  d9 a3
@@ -176296,7 +176296,7 @@ sub_FE6E84:
 	pop XDE                                              ; FE6F6D  5a
 	ld c, (0x7ee2:16)                                   ; FE6F6E  c1 e2 7e 23
 	ld (xiz-1), c                                        ; FE6F72  be ff 43
-	m_ld_mm16 MDD+r6, 0xfe, 0x7ee3                       ; FE6F75  be fe 14 e3 7e
+	ld	(xiz-2), (0x7ee3)                            ; FE6F75  be fe 14 e3 7e
 	ld a, (UI_PartIndex:16)                                   ; FE6F7A  c1 50 22 21
 	ld (xiz-3), a                                        ; FE6F7E  be fd 41
 	extz XIX                                             ; FE6F81  ec 12

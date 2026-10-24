@@ -583,6 +583,19 @@ def names_agree(native, reading):
     return True
 
 
+def addresses_agree(native, reading, syms):
+    """two DIRECT addresses in one instruction (ld (mem),(mem)): llvm-mc decides from the width tag
+    which one goes into the prefix, so the byte match alone cannot tell the operands apart.  The
+    addresses the spelling names, in order, must be the ones unidasm reads, in order."""
+    ops = [o for o in re.findall(r"\(([A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(?::\d+)?\)", native)
+           if o.lower() not in ALLREGS]
+    if len(ops) < 2:
+        return True
+    val = [num(o) if num(o) is not None else syms.get(o) for o in ops]
+    got = [int(x, 16) for x in re.findall(r"\(0x([0-9a-f]+)\)", reading or "")]
+    return len(got) == len(val) and all(v is not None and (v & 0xFFFFFF) == g for v, g in zip(val, got))
+
+
 # --------------------------------------------------------------------------------------------
 def choose(sites, fams, tmp):
     """-> {site index: native text}, plus Counter of reasons for the rest"""
@@ -596,7 +609,8 @@ def choose(sites, fams, tmp):
     sel = [k for k, s in enumerate(sites) if family_of(s["mac"]) in fams]
     cands = {k: candidates(sites[k]["mac"], sites[k]["args"]) for k in sel}
     imgs = sorted({i for k in sel for i in images_of(sites[k]["file"])})
-    pres = {i: preamble(elf_symbols(i), skip) for i in imgs}
+    symv = {i: elf_symbols(i) for i in imgs}
+    pres = {i: preamble(symv[i], skip) for i in imgs}
     macro_bytes = {}                                    # (k, img) -> bytes
     cand_bytes = {}                                     # (k, j, img) -> bytes
     for img in imgs:
@@ -633,7 +647,8 @@ def choose(sites, fams, tmp):
     ks = sorted(best)
     seqs = [macro_bytes[(k, images_of(sites[k]["file"])[0])] for k in ks]
     for k, rd in zip(ks, unidasm(seqs, tmp)):
-        if not names_agree(best[k], rd):
+        img0 = images_of(sites[k]["file"])[0]
+        if not names_agree(best[k], rd) or not addresses_agree(best[k], rd, symv[img0]):
             why[(sites[k]["mac"], "bytes match but unidasm reads other names: %s | %s"
                  % (best[k].replace("\t", " "), rd))] += 1
             del best[k]
