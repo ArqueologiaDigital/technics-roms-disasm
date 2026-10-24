@@ -69,9 +69,10 @@ build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) src/symbols.
 symbols kn7000.sym src/symbols.inc: tools/gen_symbols.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_symbols.py baserom/kn7000_program.rom
 
-# Regenerate src/program.s, converting the CONVERT function set (in
-# tools/gen_program_s.py) into real MN10300 assembly (needs unidasm). The
-# committed src/program.s is the byte-exact result; the build does not need this.
+# Regenerate src/program.s and its parts in src/program/ (code region 1 and the
+# library image as MN10300 assembly; tools/gen_program_s.py, needs unidasm,
+# about 3 minutes). The committed source is the byte-exact result; the build
+# does not need this.
 # Recover the MILK framework's named-constant tables (colours, view flags, ...)
 # into a reference listing + an assembler include.
 constants src/constants.inc: tools/gen_constants.py baserom/kn7000_program.rom
