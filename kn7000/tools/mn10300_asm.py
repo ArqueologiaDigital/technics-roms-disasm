@@ -168,8 +168,14 @@ def encode(mnem, ops_str, pc):
         if fits_s16(d) and not wide:
             return b"\xcc" + le16(d)
         return b"\xdc" + le32(d & 0xFFFFFFFF)
-    if mnem == "calls" and ops[0].startswith("("):  # calls (aM) -> F0 F0-F3
-        return b"\xf0" + u8(0xF0 | mem(ops[0])["a"])
+    if mnem == "calls" and ops[0].startswith("("):
+        m = mem(ops[0])
+        if m["kind"] == "areg":                 # calls (aM) -> F0 F0-F3
+            return b"\xf0" + u8(0xF0 | m["a"])
+        if m["kind"] != "abs":
+            raise EncError(f"bad calls operand {ops[0]!r}")
+        # MAME prints the PC-relative calls d16/d32 as `calls (0xTARGET)`
+        ops = [ops[0].strip()[1:-1]] + ops[1:]
     if mnem in ("call", "calls"):
         target, wide = target_op(ops[0]); d = (target - pc) & 0xFFFFFFFF
         if mnem == "calls":
@@ -227,6 +233,11 @@ def encode(mnem, ops_str, pc):
         if m["kind"] == "abs":                               # (abs32) -> 7 bytes
             return b"\xfe" + u8(kind) + le32(m["disp"]) + u8(mask)
 
+    # --- udfNN / udfuNN: the user-defined-function (coprocessor) ops ---
+    m = re.fullmatch(r"udf(u?)(\d\d)", mnem)
+    if m:
+        return enc_udf(m.group(1) == "u", int(m.group(2)), ops)
+
     # --- ALU/mov families dispatched by operand shapes ---
     if mnem in ("mov", "movbu", "movhu"):
         return enc_move(mnem, ops, pc)
@@ -234,6 +245,47 @@ def encode(mnem, ops_str, pc):
         return enc_alu(mnem, ops)
 
     raise EncError(f"unsupported mnemonic: {mnem} {ops_str}")
+
+
+def enc_udf(unsigned, n, ops):
+    """udfNN dS, dD (F6 for NN = 00..15, F5 for 20..35: op2 = (NN mod 20) << 4 |
+    S << 2 | D) and udf[u]NN imm, dD (F9 imm8 / FB imm16 / FD imm32: op2 =
+    (NN mod 20) << 4 | (NN >= 20) << 3 | u << 2 | D), the inverse of MAME
+    mn103dasm.cpp's disassemble_f5/f6/f9/fb/fd. The immediate is the raw field
+    as unidasm prints it; the smallest field that holds it is chosen (unsigned
+    for a positive value, signed for a negative one), and a `:8` / `:16` / `:32`
+    suffix forces the width (an operand the compiler stored wider than needed)."""
+    if not (0 <= n <= 15 or 20 <= n <= 35):
+        raise EncError(f"udf{'u' if unsigned else ''}{n:02d}: no such function number")
+    if len(ops) != 2:
+        raise EncError("udf takes two operands")
+    hi, k = n >= 20, n % 20
+    dc, di = reg(ops[1])
+    if dc != "d":
+        raise EncError(f"udf takes a data register, not {ops[1]}")
+    if is_reg_tok(ops[0]):
+        sc, si = reg(ops[0])
+        if sc != "d" or unsigned:
+            raise EncError(f"udf{'u' if unsigned else ''}{n:02d} {ops[0]}: no such register form")
+        return (b"\xf5" if hi else b"\xf6") + u8((k << 4) | (si << 2) | di)
+    tok = ops[0].strip()
+    m = re.fullmatch(r"(.+):(8|16|32)", tok)
+    width = int(m.group(2)) if m else None
+    v = imm(m.group(1) if m else tok)
+    fits = {8: (fits_s8(v) or fits_u8(v)), 16: (fits_s16(v) or fits_u16(v)),
+            32: -0x80000000 <= v <= 0xFFFFFFFF}
+    if width is None:
+        lo_fit = {8: fits_s8(v) if v < 0 else fits_u8(v),
+                  16: fits_s16(v) if v < 0 else fits_u16(v), 32: fits[32]}
+        width = next((w for w in (8, 16, 32) if lo_fit[w]), None)
+    if width is None or not fits[width]:
+        raise EncError(f"udf immediate {tok} does not fit")
+    op2 = u8((k << 4) | (8 if hi else 0) | (4 if unsigned else 0) | di)
+    if width == 8:
+        return b"\xf9" + op2 + u8(v)
+    if width == 16:
+        return b"\xfb" + op2 + le16(v)
+    return b"\xfd" + op2 + le32(v)
 
 
 REGLIST_BITS = {"d2": 0x80, "d3": 0x40, "a2": 0x20, "a3": 0x10}

@@ -3336,7 +3336,7 @@ def mark_fill(insns):
 def first_target(ops):
     """The absolute target of a branch/call/jmp operand list, or None (an
     indirect `jmp (a0)` / `calls (a0)`)."""
-    m = re.match(r"0x([0-9a-fA-F]+)\b", ops)
+    m = re.match(r"\(?0x([0-9a-fA-F]+)\b", ops)     # MAME prints `calls (0xT)`
     return int(m.group(1), 16) if m else None
 
 
@@ -3346,7 +3346,7 @@ def reencode(mnem, ops, b, cpu):
     its 32-bit form although the 16-bit one reaches is written `T:32`, and a
     udf* immediate held wider than it needs gets a `:16` / `:32` width."""
     tries = [ops]
-    if mnem in CALL_MNEMS and first_target(ops) is not None:
+    if mnem in CALL_MNEMS and first_target(ops) is not None and not ops.startswith("("):
         p = ASM.split_ops(ops)
         tries.append(", ".join([p[0] + ":32"] + p[1:]))
     if mnem.startswith("udf") and len(b) in (4, 6):
@@ -3504,7 +3504,7 @@ class EmitCtx:
             nm = self.ref(t)
             if nm is None:
                 nm = self.ext.setdefault(t, f"loc_{t:08X}")
-            return nm + ops[len(re.match(r"0x[0-9a-fA-F]+", ops).group(0)):]
+            return re.sub(r"0x[0-9a-fA-F]+", nm, ops, count=1)
 
         def one(m):
             nm = self.ref(int(m.group(1), 16))
