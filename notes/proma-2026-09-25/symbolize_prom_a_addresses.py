@@ -48,6 +48,7 @@ RUN
     python3 notes/proma-2026-09-25/symbolize_prom_a_addresses.py                   # dry run
     python3 notes/proma-2026-09-25/symbolize_prom_a_addresses.py --apply
     python3 notes/proma-2026-09-25/symbolize_prom_a_addresses.py --check-equates
+    python3 notes/proma-2026-09-25/symbolize_prom_a_addresses.py --rerender-block   # format only
     python3 notes/proma-2026-09-25/symbolize_prom_a_addresses.py --arms --offsets [--apply]
       --arms   labels an UNLABELLED instruction start that a .long/ld/lda/add names,
                when unidasm also sees an instruction start there and the bytes are
@@ -355,15 +356,50 @@ def render_block(equates, comments=None):
            "; the names or values; a trailing comment on an equate is kept."]
     for n, v in sorted(equates.items(), key=lambda t: (t[1], t[0])):
         c = (comments or {}).get(n)
-        out.append(("\t.set %-40s 0x%08X\t%s" % (n + ",", v, c)) if c else ("\t.set %-40s 0x%08X" % (n + ",", v)))
+        # lowercase hex, the tree's STRICT notation policy (CLAUDE.md, Cross-Version Diff rule 2)
+        out.append(("\t.set %-40s 0x%08x\t%s" % (n + ",", v, c)) if c else ("\t.set %-40s 0x%08x" % (n + ",", v)))
     out.append(END)
     return out
+
+
+def rerender_block():
+    """Re-emit the equate block as render_block() spells it today, from the block itself.
+
+    Answers "what does the block look like in the current format?" without
+    re-running the analysis -- so a FORMAT change (2026-10-24: lowercase hex)
+    cannot also smuggle in new symbolisations.  Names, values and trailing
+    comments are parsed back out and must survive unchanged; a parse that
+    drops a line raises."""
+    lines = open(PATH, "rb").read().decode("latin-1").split("\n")
+    blk = block_of(lines)
+    if not blk:
+        print("no equate block")
+        return 1
+    eq, com, n = {}, {}, 0
+    for t in lines[blk[0]:blk[1] + 1]:
+        if re.match(r'^\s*\.set\b', t):
+            n += 1
+            m = re.match(r'^\s*\.set\s+([\w.$@]+)\s*,\s*(0x[0-9a-fA-F]+)\s*(;.*)?$', t)
+            assert m, "unparsed equate line: %r" % t
+            eq[m.group(1)] = int(m.group(2), 16)
+            if m.group(3):
+                com[m.group(1)] = m.group(3)
+    assert len(eq) == n, "duplicate equate names in the block"
+    new = render_block(eq, com)
+    changed = sum(1 for x, y in zip(lines[blk[0]:blk[1] + 1], new) if x != y)
+    lines[blk[0]:blk[1] + 1] = new
+    open(PATH, "wb").write("\n".join(lines).encode("latin-1"))
+    print("re-rendered %d equates, %d line(s) changed" % (n, changed))
+    return 0
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--check-equates", action="store_true")
+    ap.add_argument("--rerender-block", action="store_true",
+                    help="rewrite the existing equate block through render_block() -- same names, values "
+                         "and comments, no analysis, no build; for a change of the block's FORMAT only")
     ap.add_argument("--arms", action="store_true",
                     help="also LABEL unlabelled instruction starts that a .long/ld/lda/add names "
                          "(unidasm must see an instruction start there; sub_<ADDR> after a "
@@ -371,6 +407,8 @@ def main():
     ap.add_argument("--offsets", action="store_true",
                     help="also spell a value inside DATA as <nearest data label>+0xN (N <= 0x1000)")
     a = ap.parse_args()
+    if a.rerender_block:
+        sys.exit(rerender_block())
     res = analyse(a.arms, a.offsets)
     if a.check_equates:
         bad = [(n, v) for n, v in res["eq_now"].items() if n not in res["b_lab"].get(v, [])]

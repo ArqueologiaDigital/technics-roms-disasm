@@ -66,6 +66,7 @@ RUN
     python3 scripts/converters/symbolize_wsa1_rom_addresses.py                 # dry run
     python3 scripts/converters/symbolize_wsa1_rom_addresses.py --apply --verify
     python3 scripts/converters/symbolize_wsa1_rom_addresses.py --check-equates
+    python3 scripts/converters/symbolize_wsa1_rom_addresses.py --rerender-block   # format only
     python3 scripts/converters/symbolize_wsa1_rom_addresses.py --report out.json
 Always follow an --apply with the real gate: `make gate-wsa1`.
 """
@@ -366,7 +367,7 @@ def equate_block(used_a, a_lab):
            ";     python3 scripts/converters/symbolize_wsa1_rom_addresses.py --check-equates",
            "; Never edit by hand: re-run the tool with --apply, which rewrites this block."]
     for name, v in sorted(used_a.items(), key=lambda kv: (kv[1], kv[0])):
-        out.append("\t.set\t%s, 0x%06X" % (name, v))
+        out.append("\t.set\t%s, 0x%06x" % (name, v))   # lowercase hex: CLAUDE.md rule 2
     out.append(END)
     return "\n".join(out) + "\n"
 
@@ -423,12 +424,42 @@ def check_equates():
     return 1 if bad else 0
 
 
+def rerender_block():
+    """Re-emit the equate block as equate_block() spells it today, from the block itself.
+
+    Answers "what does the block look like in the current format?" without
+    re-running the analysis, so a FORMAT change (2026-10-24: lowercase hex)
+    cannot also bring in new symbolisations.  Every `.set` line must parse."""
+    text = open(PATH, "rb").read().decode("latin-1")
+    if BEGIN not in text:
+        print("no equate block")
+        return 1
+    s = text.index(BEGIN)
+    e = text.index(END, s) + len(END) + 1
+    used, n = {}, 0
+    for t in text[s:e].split("\n"):
+        if re.match(r'^\s*\.set\b', t):
+            n += 1
+            m = re.match(r'^\s*\.set\s+([\w.$@]+)\s*,\s*(0x[0-9a-fA-F]+)\s*$', t)
+            assert m, "unparsed equate line: %r" % t
+            used[m.group(1)] = int(m.group(2), 16)
+    assert len(used) == n, "duplicate equate names in the block"
+    blk = equate_block(used, None)
+    changed = sum(1 for x, y in zip(text[s:e].split("\n"), blk.split("\n")) if x != y)
+    open(PATH, "wb").write((text[:s] + blk + text[e:]).encode("latin-1"))
+    print("re-rendered %d equates, %d line(s) changed" % (n, changed))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--report")
     ap.add_argument("--check-equates", action="store_true")
+    ap.add_argument("--rerender-block", action="store_true",
+                    help="rewrite the existing equate block through equate_block() -- same names and "
+                         "values, no analysis, no build; for a change of the block's FORMAT only")
     ap.add_argument("--offsets", action="store_true",
                     help="spell a prom_b value with no label as `<nearest non-structural label above> + 0xN`")
     ap.add_argument("--arms", action="store_true",
@@ -436,6 +467,8 @@ def main():
     a = ap.parse_args()
     if a.check_equates:
         sys.exit(check_equates())
+    if a.rerender_block:
+        sys.exit(rerender_block())
     res = analyse(a.arms, a.offsets)
     for k in sorted(res["stats"]):
         print("  %-28s %6d" % (k, res["stats"][k]))
