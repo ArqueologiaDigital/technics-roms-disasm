@@ -20033,7 +20033,7 @@ ModifyPixel:
 	muls bc, 0x140
 	add bc, (xwa)
 	extz xbc
-	add xbc, (0x030452:24)
+	add xbc, (WALLPAPER_BITMAP:24)
 	ld a, (xbc)
 	ldfr_berp A, 0xf8
 	extz iz
@@ -20107,7 +20107,7 @@ ModifyPixelEx:
 	muls bc, 0x140
 	add bc, (xwa)
 	extz xbc
-	add xbc, (0x030452:24)
+	add xbc, (WALLPAPER_BITMAP:24)
 	ld a, (xbc)
 	ldfr_berp A, 0xf8
 	extz iz

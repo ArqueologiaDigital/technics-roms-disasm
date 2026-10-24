@@ -683,10 +683,10 @@ SndParam_SyncDisplayBitmap:
 	pushw	0xc8e4
 	call	Mem_Copy
 	lda	xsp, (xsp + 10)
-	lda	xbc, (0xf9a0:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	lda	xwa, (PANEL_PART_RT1:16)
 	sub	xwa, xbc
-	lda	xde, (0x03c8e4:24)
+	lda	xde, (PANEL_RECALL_BACKUP:24)
 	add	xwa, xde
 	xormi8	(xwa), 0x1
 	lda	xwa, (PANEL_PART_RT2:16)
@@ -752,7 +752,7 @@ ToneGen_DiffScanInner:
 	ld	hl, iz
 	extz	xhl
 	add	xhl, xwa
-	lda	xwa, (0x03c8e4:24)
+	lda	xwa, (PANEL_RECALL_BACKUP:24)
 	add	xhl, xwa
 	ld	wa, iz
 	extz	xwa
@@ -804,7 +804,7 @@ ToneGen_DiffRecordChange:
 	ld	hl, iz
 	extz	xhl
 	add	xhl, xwa
-	lda	xwa, (0x03c8e4:24)
+	lda	xwa, (PANEL_RECALL_BACKUP:24)
 	add	xhl, xwa
 	ld	e, (xde)
 	xor	e, (xhl)
@@ -845,7 +845,7 @@ ToneGen_FileIO_SaveAndSync:
 	ldmi16	(xwa + 1), 0xfd52
 	ldmi16	(xwa + 2), 0xfd54
 	lda	xwa, (PANEL_REC_98+12:16)
-	lda	xbc, (0xf9a0:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	sub	xwa, xbc
 	pushw	wa
 	push	xiz

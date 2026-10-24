@@ -1149,7 +1149,7 @@ PmemOutLGridCheck:
 	lda xbc, (xsp + 36)
 	lda xwa, (0x1ed400:24)
 	ld (xsp + 24), xwa
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld (xsp + 20), xwa
 	lda xwa, (PANEL_REC_71:16)
 	sub xwa, (xsp + 20)
@@ -2219,7 +2219,7 @@ PmemOutRGridCheck_OnRamData:
 	ld	(xwa), xbc
 	lda	xwa, (0x24772:24)
 	ld	(xsp+24), xiy
-	lda	xbc, (0xf9a0:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	cp	xwa, (xiz)
 	jrl	nz, PmemOutRGridCheck_OnRamData_Skip3
 	ld	xwa, (xsp+24)

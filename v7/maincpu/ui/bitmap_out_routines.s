@@ -399,7 +399,7 @@ BitMapOut_CopyPreset9_Clamp50:
 	jrl ugt, BitMapOut_CopyPreset9_Done
 
 BitMapOut_CopyPreset9_Execute:
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xbc, (PANEL_PART_RT1:16)
 	ld (xsp + 68), xbc
 	lda xbc, (xbc + 14)
@@ -688,7 +688,7 @@ PanelMemory_RecallKeepAccompaniment:
 	ld	(xhl), c
 	ld	xwa, xhl
 	sub	xwa, 63904
-	lda	xix, (0x03c8e4:24)
+	lda	xix, (PANEL_RECALL_BACKUP:24)
 	ld	xde, xwa
 	add	xde, xix
 	ld	a, (xde)
@@ -736,7 +736,7 @@ PanelMemory_RecallRecords:
 	ld	(xsp + 0xc), xwa
 	ld	xwa, (xsp + 0x10)
 	ld	xhl, (xwa)
-	lda	xwa, (0xf9a0:16)
+	lda	xwa, (PANEL_RECORDS:16)
 	ld	(xsp + 0x4), xwa
 	ld	xiy, xwa
 	ld	ix, 0:i3
@@ -968,11 +968,11 @@ BitMapOut_SelectiveFieldRestore:
 	ld (xsp + 14), xwa
 	bitm 0, (xwa)
 	jrl z, BitMapOut_SelectRestore_CheckBit1
-	lda xde, (0xf9a0:16)
+	lda xde, (PANEL_RECORDS:16)
 	lda xbc, (PANEL_STYLE:16)
 	ld xwa, xbc
 	sub xwa, xde
-	lda xhl, (0x03c8e4:24)
+	lda xhl, (PANEL_RECALL_BACKUP:24)
 	add xwa, xhl
 	ld a, (xwa)
 	ld (xbc), a
@@ -1028,12 +1028,12 @@ BitMapOut_SelectRestore_CheckBit1:
 	ld xwa, (xsp + 14)
 	bitm 1, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckBit2
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xde, (PANEL_STYLE:16)
 	lda xbc, (xde + 8)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	ld (xbc), a
@@ -1052,10 +1052,10 @@ BitMapOut_SelectRestore_CheckBit2:
 	ld c, (xde)
 	and c, 0xfc
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x3
@@ -1075,7 +1075,7 @@ BitMapOut_SelectRestore_CheckBit3:
 	lda xbc, (PANEL_REC_70+2:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -1088,10 +1088,10 @@ BitMapOut_SelectRestore_CheckBit4:
 	ld c, (xde)
 	and c, 0xf0
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0xf
@@ -1115,9 +1115,9 @@ BitMapOut_SelectRestore_CheckVolBit:
 	ld (xsp + 10), xwa
 	bitm 0, (xwa)
 	jr z, BitMapOut_SelectRestore_CheckEffBit
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xwa, (PANEL_DSP_EFFECT:16)
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -1134,9 +1134,9 @@ BitMapOut_SelectRestore_CheckEffBit:
 	ld xwa, (xsp + 14)
 	bitm 7, (xwa)
 	jr z, BitMapOut_RestoreVoiceChannels
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xwa, (PANEL_DIGITAL_REVERB:16)
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 24)
 
@@ -1158,10 +1158,10 @@ BitMapOut_RestoreVoiceChannels:
 	ld l, (xix)
 	and l, 0xf8
 	ld (xix), l
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	ld xwa, xix
 	sub xwa, xbc
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	add xwa, xde
 	ld a, (xwa)
 	and a, 0x7
@@ -1603,7 +1603,7 @@ BitMapOut_RestoreParts_OuterLoop:
 	ld hl, 0:i3
 
 BitMapOut_RestoreParts_InnerLoop:
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	ld iz, hl
 	add iz, de
 	lda xix, (PANEL_PART_PT4:16)
@@ -1611,7 +1611,7 @@ BitMapOut_RestoreParts_InnerLoop:
 	add xiz, xix
 	ld xwa, xiz
 	sub xwa, xbc
-	lda xiy, (0x03c8e4:24)
+	lda xiy, (PANEL_RECALL_BACKUP:24)
 	add xwa, xiy
 	ld a, (xwa)
 	ld (xiz), a
@@ -1668,9 +1668,9 @@ BitMapOut_RestoreExtra_CheckBit6:
 	ld xwa, (xsp + 14)
 	bitm 6, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckConfigBit
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xwa, (PANEL_SCALE_TUNE:16)
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 14)
 
@@ -1687,9 +1687,9 @@ BitMapOut_RestoreExtra_CheckConfigBit:
 	ld xwa, (xsp + 10)
 	bitm 2, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckDataBit
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xwa, (PANEL_FOOT_CONTROLLERS:16)
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 30)
 
@@ -1706,12 +1706,12 @@ BitMapOut_RestoreExtra_CheckDataBit:
 	ld xwa, (xsp + 10)
 	bitm 3, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckMiscBit
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xde, (PANEL_MIC:16)
 	lda xbc, (xde + 1)
 	ld xwa, xbc
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	ld (xbc), a
@@ -1737,12 +1737,12 @@ BitMapOut_RestoreExtra_CheckMiscBit:
 	ld xwa, (xsp + 10)
 	bitm 4, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckFlagBits
-	lda xde, (0xf9a0:16)
+	lda xde, (PANEL_RECORDS:16)
 	lda xix, (PANEL_REC_70:16)
 	lda xbc, (xix + 5)
 	ld xwa, xbc
 	sub xwa, xde
-	lda xhl, (0x03c8e4:24)
+	lda xhl, (PANEL_RECALL_BACKUP:24)
 	add xwa, xhl
 	ld a, (xwa)
 	ld (xbc), a
@@ -1768,7 +1768,7 @@ BitMapOut_RestoreExtra_CheckFlagBits:
 	lda xbc, (PANEL_MSP+6:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -1780,7 +1780,7 @@ BitMapOut_RestoreExtra_CheckPanBit:
 	lda xbc, (PANEL_REC_90+4:16)
 	ld xde, xbc
 	sub xde, 0xf9a0
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	ld a, (xde)
 	ld (xbc), a
@@ -1789,9 +1789,9 @@ BitMapOut_RestoreExtra_CheckCtrlBit:
 	ld xwa, (xsp + 10)
 	bitm 6, (xwa)
 	jr z, BitMapOut_RestoreExtra_CheckLevelBit
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xwa, (PANEL_VOCALIST:16)
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld xbc, xwa
 	lda xde, (xwa + 8)
 
@@ -1812,10 +1812,10 @@ BitMapOut_RestoreExtra_CheckLevelBit:
 	ld c, (xde)
 	res 6, c
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x40
@@ -1842,10 +1842,10 @@ BitMapOut_RestoreExtra_CheckExpBit:
 	ld c, (xde)
 	res 5, c
 	ld (xde), c
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	ld xwa, xde
 	sub xwa, xhl
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add xwa, xix
 	ld a, (xwa)
 	and a, 0x20
@@ -1888,12 +1888,12 @@ BitMapOut_DetectChanges:
 	jr nz, .Lc_fb4e26
 	cp (CURRENT_MODE:16), 0x13
 	jr z, .Lc_fb4e26
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	lda xde, (PANEL_STYLE:16)
 	lda xbc, (xde + 0x05)
 	ld XWA,XBC
 	sub XWA,XHL
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	add XWA,XIX
 	ld W,(XWA)
 	res 0x01,W
@@ -1969,13 +1969,13 @@ BitMapOut_DeltaEncode_ReadEntry:
 
 BitMapOut_DeltaEncode_ScanLoop:
 	inc 1,IZ
-	lda xde, (0xf9a0:16)
+	lda xde, (PANEL_RECORDS:16)
 	ld IX,IZ
 	extz XIX
 	add XIX,XDE
 	ld WA,IZ
 	extz XWA
-	ld XBC,0x0003c8e4
+	ld XBC,PANEL_RECALL_BACKUP
 	add XBC,XWA
 	ld A,(XBC)
 	cp A,(XIX)
@@ -2071,7 +2071,7 @@ BitMapOut_DeltaEncode_GenericByte:
 	inc 1, hl
 	extz xde
 	add xde, (xsp + 8)
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld bc, iz
 	extz xbc
 	add xbc, xwa
@@ -2079,7 +2079,7 @@ BitMapOut_DeltaEncode_GenericByte:
 	ld (xde), a
 	ld wa, iz
 	extz xwa
-	ld xde, 0x3c8e4
+	ld xde, PANEL_RECALL_BACKUP
 	add xde, xwa
 	ld a, (xde)
 	xor a, (xbc)
@@ -2099,7 +2099,7 @@ BitMapOut_DeltaEncode_NextEntry:
 	inc 1, iz
 
 BitMapOut_DeltaEncode_CheckBounds:
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xfd5e:16)
 	sub XWA,XBC
 	ld DE,IZ
@@ -2303,7 +2303,7 @@ BitMapOut_DeltaEncode_TypeDefault:
 	ld (xsp + 10), a
 	ld hl, (xsp + 16)
 	ld xiy, (xsp + 18)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld de, (xsp + 8)
 	extz xde
 	add xde, xix
@@ -2311,7 +2311,7 @@ BitMapOut_DeltaEncode_TypeDefault:
 	jrl z, BitMapOut_DeltaEncode_TypeDefaultC
 	ld wa, (xsp + 8)
 	extz xwa
-	ld xiz, 0x3c8e4
+	ld xiz, PANEL_RECALL_BACKUP
 	add xiz, xwa
 	cp c, 1:i3
 	jr z, BitMapOut_DeltaEncode_TypeDefaultB
@@ -2517,7 +2517,7 @@ BitMapOut_DeltaEncode_Type48Handler:
 	ld (xsp + 18), a
 	ld hl, (xsp + 24)
 	ld xde, (xsp + 26)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld wa, (xsp + 16)
 	extz xwa
 	add xwa, xix
@@ -2526,7 +2526,7 @@ BitMapOut_DeltaEncode_Type48Handler:
 	jrl z, BitMapOut_DeltaEncode_Type48End
 	ld iy, (xsp + 16)
 	extz xiy
-	ld xwa, 0x3c8e4
+	ld xwa, PANEL_RECALL_BACKUP
 	add xwa, xiy
 	ld (xsp + 8), xwa
 	cp c, 1:i3
@@ -2764,7 +2764,7 @@ BitMapOut_DeltaEncode_Type90Handler:
 	ld HL,(XSP+0x0c)
 	ld XIY,(XSP+0x0e)
 	ld w, (0x8caa:16)
-	lda_d16 xix, (63904)
+	lda_d16 xix, (PANEL_RECORDS)
 	ld (xsp+4), xix
 	ld ix, de
 	extz xix
@@ -2790,7 +2790,7 @@ BitMapOut_DeltaEncode_Type90Handler:
 	ld a, (xix)
 	ld (xbc), a
 	extz xde
-	ld xbc, 248036
+	ld xbc, PANEL_RECALL_BACKUP
 	add xbc, xde
 	ld c, (xbc)
 	xor c, (xix)
@@ -2969,12 +2969,12 @@ BitMapOut_RefreshDisplay_ClearDirty:
 	push XIZ
 	ld de, (0x9046:16)
 	lda xhl, (0xbe9d:16)
-	lda xwa, (0xf9a0:16)
+	lda xwa, (PANEL_RECORDS:16)
 	ld (XSP+0x08),XWA
 	lda xix, (PANEL_REC_90:16)
 	ld XBC,XIX
 	sub XBC,(XSP+0x08)
-	lda xwa, (0x03c8e4:24)
+	lda xwa, (PANEL_RECALL_BACKUP:24)
 	ld (XSP+0x04),XWA
 	ld XIY,XBC
 	add XIY,(XSP+0x04)
@@ -3082,7 +3082,7 @@ BitMapOut_CalcDisplayMetrics:
 	lda xhl, (PANEL_REC_70+3:16)
 	ld XWA,XHL
 	sub XWA,0x0000f9a0
-	lda xix, (0x03c8e4:24)
+	lda xix, (PANEL_RECALL_BACKUP:24)
 	ld XDE,XWA
 	add XDE,XIX
 	ld A,(XHL)
@@ -3132,7 +3132,7 @@ BitMapOut_PrepareRenderState:
 	lda	xhl, (PANEL_STYLE+4:16)
 	ld	xwa, xhl
 	sub	xwa, 63904
-	lda	xiz, (248036:24)
+	lda	xiz, (PANEL_RECALL_BACKUP:24)
 	ld	xde, xwa
 	add	xde, xiz
 	ld	w, (xde)
@@ -3589,7 +3589,7 @@ BitMapOut_ApplyPatch_Return:
 BitMapOut_ByteData_PatchTable:
 	push xiz
 	lda xhl, (PANEL_PART_RT1:16)
-	lda xix, (0xf9a0:16)
+	lda xix, (PANEL_RECORDS:16)
 	ld xbc, xhl
 	sub xbc, xix
 	lda xde, (0x03c2c4:24)

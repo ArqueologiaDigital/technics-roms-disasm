@@ -701,7 +701,7 @@ INTTR4_SeqTick_CheckBeat:
 	inc	1, (1076:16)
 	inc	1, (1077:16)
 	ld	a, (1077:16)
-	cp	a, (0x343b:16)
+	cp	a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr	ule, INTTR4_CheckAltSeqEnable
 	ld	(1077:16), 0
 INTTR4_CheckAltSeqEnable:

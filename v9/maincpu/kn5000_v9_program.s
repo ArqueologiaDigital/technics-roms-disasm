@@ -2443,7 +2443,7 @@ DrawDottedLineWithMode_Impl_Skip30:
 	jr	nz, DrawDottedLineWithMode_Impl_Skip32
 	jr	DrawDottedLineWithMode_Impl_Join9
 DrawDottedLineWithMode_Impl_Skip31:
-	ld	xiy, (197714:24)
+	ld	xiy, (WALLPAPER_BITMAP:24)
 	ld	de, (xhl)
 	exts	xde
 	ld	wa, (xhl+2)

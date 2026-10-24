@@ -2137,7 +2137,7 @@ Display_RedrawParams_StoreAndLoad:
 	ld a, (SEQ_SELECTED_TRACK:16)
 	call SetWall_SlotResolve
 	ld (3820:16), a
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x28bf:16), wa
 	ld (0x28c1:16), iy
 	call VoiceBank_ProcessCommand
@@ -2244,7 +2244,7 @@ Display_RedrawInd_Store:
 
 Display_RedrawInd_LoadDirect:
 	ld (3820:16), a
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x28bf:16), wa
 	ld (0x28c1:16), iy
 	call VoiceBank_ProcessCommand
@@ -5658,7 +5658,7 @@ SqStep_SetupPrevGridRow_Skip8:
 	jrl	nz, VoiceSlot_TableSetup_Code_Return
 	ld	(3666:16), 4
 	ld	(0x28c1:16), iy
-	ld	iy, (0x28af:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), iy
 	ld	iy, (SQSTEP_MEASURE:16)
 	cp	iy, 1000
@@ -5675,7 +5675,7 @@ SqStep_SetupPrevGridRow_Skip9:
 	ld	a, (SEQ_SELECTED_TRACK:16)
 	call	SetWall_SlotResolve
 	ld	(0x28c1:16), iy
-	ld	iy, (0x28af:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), iy
 	ld	iy, (0x287f:16)
 	cp	iy, 1000
@@ -5705,7 +5705,7 @@ SqStep_SetupPrevGridRow_Skip12:
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, VoiceSlot_TableSetup_Code_Return
 	ld	(0x28c1:16), iy
-	ld	iy, (0x28af:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), iy
 	ld	iy, (SQSTEP_MEASURE:16)
 	cp	iy, 1000
@@ -5782,7 +5782,7 @@ SqStep_SetupNextGridRow_Skip18:
 	jp	VoiceSlot_TableSetup_Code_Return2
 VoiceSlot_TableSetup_Code_Skip7:
 	ld	(0x28c1:16), iy
-	ld	iy, (0x28af:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), iy
 	cp	a, 4:i3
 	jrl	ule, SqStep_SetupNextGridRow_Skip19
@@ -5807,7 +5807,7 @@ VoiceSlot_TableSetup_Code_Skip8:
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, VoiceSlot_TableSetup_Code_Return2
 	ld	(0x28c1:16), iy
-	ld	iy, (0x28af:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), iy
 	call	SqStep_SeekSecondGridRow
 	cp	c, 4:i3
@@ -6513,7 +6513,7 @@ TempoRingBuf_OnProgramChangeEvent_Skip26:
 	rrc l, 3	; rrc 0x03,L
 	or	a, l
 	ld	(4539:16), a
-	ld	(0x90f7:16), a
+	ld	(PROGRAM_CHANGE_PART:16), a
 	call	TempoRingBuf_ReadByte
 	ld	wa, hl
 	ld	(xiy+3), a
@@ -11055,7 +11055,7 @@ VoiceSlot_StatusRet_Skip9:
 	cp	a, 72
 	jrl	z, VoiceSlot_StatusRet_Skip11
 	ld	(4539:16), a
-	ld	(0x90f7:16), a
+	ld	(PROGRAM_CHANGE_PART:16), a
 	call	VoiceSlot_FinalRetZ
 	ld	h, a
 	push	xhl
@@ -13069,7 +13069,7 @@ PerfMode_ParamHandler_11_Skip3:
 	call	SqStep_GetRhythmTrackForMeasures
 	ld	a, (SEQ_CURSOR_TRACK:16)
 	call	SetWall_SlotResolve
-	ld	wa, (0x28af:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), wa
 	ld	(0x28c1:16), iy
 	ld	wa, (3662:16)
@@ -13281,7 +13281,7 @@ SubCPU_ToneParamRet_Helper2:
 	ld	a, (SEQ_CURSOR_TRACK:16)
 	call	SetWall_SlotResolve
 	pushw	wa
-	ld	wa, (0x28af:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld	(0x28bf:16), wa
 	ld	(0x28c1:16), iy
 	ld	hl, (3662:16)
@@ -14573,7 +14573,7 @@ DisplayStr_WriteRhythmName:
 	ld	h, (0x3723:16)
 	ld	l, (0x3722:16)
 	ld	h, (3829:16)
-	ld	(0x90f7:16), 72
+	ld	(PROGRAM_CHANGE_PART:16), 72
 	call	PartCtrl_WriteProgramChange
 	call	AccVoice_DispatchEntry
 	ld	xiy, 0x34ab
@@ -14821,7 +14821,7 @@ DisplayStr_BytecodeBlock_D:
 	ld	h, (0x3723:16)
 	ld	l, (0x3722:16)
 	ld	h, (3829:16)
-	ld	(0x90f7:16), 72
+	ld	(PROGRAM_CHANGE_PART:16), 72
 	call	PartCtrl_WriteProgramChange
 	call	AccVoice_DispatchEntry
 	call	DisplayStr_ClearRegion
@@ -14968,7 +14968,7 @@ DisplayStr_WritePartAndSoundName_Join:
 	ld	wa, (xiy+2)
 	ld	(xix+2), wa
 	ld	w, (4539:16)
-	ld	(0x90f7:16), w
+	ld	(PROGRAM_CHANGE_PART:16), w
 	ld	l, (4541:16)
 	ld	h, (4540:16)
 	cp	w, 23

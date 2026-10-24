@@ -1500,7 +1500,7 @@ AccPlay_SetupSoundParams:
 	call SwbtWr_QueuePostEvent
 	ld H, 0x00:opc
 	ld L, 0x00:opc
-	ld (0x905b:16), 0x17
+	ld (PROGRAM_CHANGE_PART:16), 0x17
 	call PartCtrl_WriteProgramChange
 	ld XBC,0x0000ff7e
 	ld	(xbc+l), h

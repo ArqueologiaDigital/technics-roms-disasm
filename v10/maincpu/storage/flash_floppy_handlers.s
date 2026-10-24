@@ -6263,7 +6263,7 @@ CmpSetP1GridCheck_OnRequestGridDraw:
 ; UI component dispatch table - handles cases 0-7 for grid/focus handling
 ; Offset table at 0xe1cef0 selects which handler to run based on WA value
 UI_COMPONENT_DISPATCH:
-	ld a, (0x34d7:16); Load byte from UI state
+	ld a, (STYLE_SECTION_LAST_MEASURE:16); Load byte from UI state
 	inc	1, a	; Increment by 1
 	extz	wa	; Zero-extend A to WA
 	pushw	wa	; Push WA as parameter
@@ -6281,7 +6281,7 @@ UI_COMPONENT_DISPATCH_CASE1:
 	lda xbc, (0x03d9f6:24); Load table address
 	ld	xwa, (xbc+wa)	; Load entry from table
 	push	xwa	; Push parameter
-	ld a, (0x34d8:16); Load byte from UI state
+	ld a, (STYLE_SECTION_TIME_SIG:16); Load byte from UI state
 	extz	wa	; Zero-extend A to WA
 	sla	wa, 2	; Shift left by 2 (multiply by 4)
 	lda xbc, (0x03da0e:24); Load table address

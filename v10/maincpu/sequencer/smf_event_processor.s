@@ -54,18 +54,18 @@ ToneGen_DispatchAndLinkBlock:
 	push xiy
 	call DispatchHandler_JumpToSubHandler
 	ld wa, ix
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
-	ld bc, (0x28af:16)
+	ld bc, (SEQ_DATA_BLOCK:16)
 	ld (xhl + 1), bc
 	ldw (xhl + 3), 0xffff
-	ld (0x28af:16), wa
-	ldw (9830:16), 5
+	ld (SEQ_DATA_BLOCK:16), wa
+	ldw (SEQ_DATA_OFFSET:16), 5
 	pop xiy
 	pop xix
 	ret
@@ -938,8 +938,8 @@ SMF_SetupActiveChannel:
 	ld xde, 0xf250
 	ld	hl, (xde+hl)
 	pop xde
-	ld (0x28af:16), hl
-	ldw (9830:16), 5
+	ld (SEQ_DATA_BLOCK:16), hl
+	ldw (SEQ_DATA_OFFSET:16), 5
 	ld xiy, SMF_SetupActiveChannel_Str_MThd
 	ld xix, 0x13fa
 	ld bc, 7:i3

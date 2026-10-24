@@ -13,7 +13,7 @@
 ; =============================================================================
 
 SetWall_X:
-	ld (0x030452:24), xwa
+	ld (WALLPAPER_BITMAP:24), xwa
 	ret
 
 SetWall_JumpStubData:
@@ -787,7 +787,7 @@ SetWall_ParseStream_Init:
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld (0x2885:16), iy
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x2887:16), wa
 	ld (0x2889:16), iy
 	ld (0x288b:16), wa
@@ -1272,7 +1272,7 @@ SetWall_EventAdvanceCheck:
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	cp wa, 0xffff
 	jr z, SetWall_EventAdvance_Return
 	cp wa, (0x28a2:16)
@@ -1538,7 +1538,7 @@ SetWall_SingleSlot_InvalidPos:
 	jr SetWall_SingleSlot_Return
 
 SetWall_SingleSlot_CheckBounds:
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -1853,7 +1853,7 @@ SetWall_StreamAdv_CheckBounds:
 	jr SetWall_StreamAdv_Return
 
 SetWall_StreamAdv_LoadNext:
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -2177,7 +2177,7 @@ SetWall_Sync_FinalUpdate:
 	ld (4596:16), 1
 	and (SEQ_RTMCFG:16), 247
 	call SeqPlay_CheckStartConditions
-	and (0x28b1:16), 254
+	and (SEQ_CYCLE_FLAGS:16), 254
 	call Audio_CheckSubsystemReady
 	ret
 

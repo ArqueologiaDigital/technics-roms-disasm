@@ -1909,32 +1909,32 @@ SoundGen_CaptureVoiceParams:
 	sla xiy, 1
 	ld xde, 0xc9e
 	ld	wa, (xde+iy)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	srl xiy, 1
 	ld xde, 0xcbe
 	ld	a, (xde+iy)
 	xor w, w
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 	pop xde
 	ret
 
 ToneGen_LoadBlockValidate:
 	push xhl
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
-	ld iy, (9830:16)
+	ld iy, (SEQ_DATA_OFFSET:16)
 	ld	(xhl+iy), a
 	pop xhl
 	ret
 
 SoundGen_StoreVoiceParamsToTables:
 	push xix
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	ld xix, 0xf218
 	ld	(xix+hl), a
 	sla hl, 1
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld xix, 0xf1f8
 	ld	(xix+hl), wa
 	pop xix
@@ -2183,13 +2183,13 @@ SetWall_ParamsValid:
 	jrl Scoop_NullRet
 
 SetWall_SlotResolved:
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x27d4:16), wa
 	ld a, (9858:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_NullRet
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x27d8:16), wa
 	ld a, (9860:16)
 	cp a, (SEQ_TRACK:16)
@@ -2211,7 +2211,7 @@ SetWall_InitVoiceSlots:
 	ld xix, 0x17fa
 	nop
 	ld wa, (0x27d4:16)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	call VoiceChannel_CopyParamBlock
@@ -2222,7 +2222,7 @@ SetWall_InitVoiceSlots:
 	ld xix, 0x18fa
 	nop
 	ld wa, (0x27d8:16)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	call VoiceChannel_CopyParamBlock
@@ -2433,7 +2433,7 @@ ToneGen_WriteAllCh_Done:
 	ret
 
 ToneGen_UpdateBlocks:
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	pushw bc
 	call ToneGen_ComputeBlockPtr
 	popw bc
@@ -2473,11 +2473,11 @@ ToneGen_SetChannelFlag:
 
 ToneGen_WriteChannelRegs:
 	push xix
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	sla iy, 1
 	ld xix, 0xc9e
 	ld	(xix+iy), wa
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	srl iy, 1
 	ld xix, 0xcbe
 	ld	(xix+iy), a
@@ -2748,9 +2748,9 @@ Scoop_ApplySoundParams:
 	pop xiy
 	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet2
-	ld a, (9830:16)
+	ld a, (SEQ_DATA_OFFSET:16)
 	ld (xix + 2), a
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (xix + 3), wa
 	xor a, a
 	push xiy
@@ -2823,15 +2823,15 @@ Scoop_ApplyMatchedVoiceEntry:
 	pop xhl
 	push_sd16w 0xaf, 0x28
 	push_sd16w 0x66, 0x26
-	ld (0x28af:16), hl
-	ld (9830:16), ix
+	ld (SEQ_DATA_BLOCK:16), hl
+	ld (SEQ_DATA_OFFSET:16), ix
 	pushw wa
 	call ToneGen_AdvanceBlockPosition
 	popw wa
 	push xix
 	push xiy
 	ld xix, (SEQ_BLOCK_PTR:16)
-	ld iy, (9830:16)
+	ld iy, (SEQ_DATA_OFFSET:16)
 	and iy, 0xff
 	ld	(xix+iy), a
 	pop xiy
@@ -3470,9 +3470,9 @@ MidiNoteOn_ClampVelocityB:
 	pop xiy
 	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet2
-	ld a, (9830:16)
+	ld a, (SEQ_DATA_OFFSET:16)
 	ld (xix + 2), a
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (xix + 3), wa
 	xor a, a
 	push xiy
@@ -3546,12 +3546,12 @@ Scoop_ApplyMatchedVoiceEntryAlt:
 	pop xhl
 	push_sd16w 0xaf, 0x28
 	push_sd16w 0x66, 0x26
-	ld (0x28af:16), hl
-	ld (9830:16), ix
+	ld (SEQ_DATA_BLOCK:16), hl
+	ld (SEQ_DATA_OFFSET:16), ix
 	pushw wa
 	call ToneGen_AdvanceBlockPosition
 	popw wa
-	ld ix, (9830:16)
+	ld ix, (SEQ_DATA_OFFSET:16)
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	popw_dd16 0x66, 0x26
@@ -4040,12 +4040,12 @@ SoundGen_ReadVoiceRegs:
 	sla iy, 1
 	ld xde, 0xc9e
 	ld	wa, (xde+iy)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	srl iy, 1
 	ld xde, 0xcbe
 	ld	a, (xde+iy)
 	xor w, w
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 	pop xde
 	ret
 
@@ -4056,11 +4056,11 @@ SoundGen_StoreVoiceToTables_Clamped:
 	ld hl, 1:i3
 
 SoundGen_StoreVoice_AfterClamp:
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	ld xix, 0xf218
 	ld	(xix+hl), a
 	sla hl, 1
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld xix, 0xf1f8
 	ld	(xix+hl), wa
 	pop xix
@@ -4098,7 +4098,7 @@ VoiceChannel_CopyParamBlock:
 	ld xiy, (SEQ_BLOCK_PTR:16)
 	ldw bc, 0x100
 	ldir85
-	ld iy, (0x28af:16)
+	ld iy, (SEQ_DATA_BLOCK:16)
 	ld wa, 1:i3
 	call DispatchHandler_JumpSub
 	pop_lerp 0x38
@@ -4296,7 +4296,7 @@ VoiceChannel_AdvPos_CheckBounds:
 	jr VoiceChannel_StorePosition_Continue
 
 VoiceChannel_AdvPos_LoadBlock:
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
@@ -4306,7 +4306,7 @@ VoiceChannel_AdvPos_LoadBlock:
 	jr VoiceChannel_StorePosition_Continue
 
 VoiceChannel_AdvPos_CopyBlock:
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_CopyBlockToVoiceBuffer
 	ld iy, 5:i3
 
@@ -4315,9 +4315,9 @@ VoiceChannel_StorePosition_Continue:
 	ret
 
 ToneGen_WriteParamToBlock:
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
-	ld iy, (9830:16)
+	ld iy, (SEQ_DATA_OFFSET:16)
 	and iy, 0xff
 	extz xiy
 	add xiy, (SEQ_BLOCK_PTR:16)
@@ -4325,7 +4325,7 @@ ToneGen_WriteParamToBlock:
 	ret
 
 ToneGen_AdvancePosition:
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvPos_Increment
 	cpw (SEQ_FREE_BLOCKS:16), 0
@@ -4339,7 +4339,7 @@ ToneGen_AdvPos_DispatchLink:
 
 ToneGen_AdvPos_Increment:
 	inc 1, wa
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 
 ToneGen_AdvPos_ClearError:
 	ld (SEQ_EVENT_ABORT:16), 0
@@ -4348,7 +4348,7 @@ ToneGen_AdvPos_Return:
 	ret
 
 ToneGen_AdvPosForRefresh:
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvRefresh_Increment
 	cpw (SEQ_FREE_BLOCKS:16), 0
@@ -4362,7 +4362,7 @@ ToneGen_AdvRefresh_DispatchLink:
 
 ToneGen_AdvRefresh_Increment:
 	inc 1, wa
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 
 ToneGen_AdvRefresh_ClearError:
 	ld (SEQ_EVENT_ABORT:16), 0
@@ -4385,14 +4385,14 @@ ToneGen_SetSustainBit:
 	ret
 
 ToneGen_AdvanceBlockPosition:
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvBlock_IncrementPos
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	ld wa, 5:i3
@@ -4402,7 +4402,7 @@ ToneGen_AdvBlock_IncrementPos:
 	inc 1, wa
 
 ToneGen_AdvBlock_StorePos:
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 	ret
 
 VoiceSynth_HandleBankSelect:
@@ -4861,11 +4861,11 @@ SoundGen_WriteVoiceParams:
 	push xde
 	ld iy, (4237:16)
 	call SoundGen_ClampVoiceIndexMin1
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	sla xiy, 1
 	ld xde, 0xc9e
 	ld	(xde+iy), wa
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	srl xiy, 1
 	ld xde, 0xcbe
 	ld	(xde+iy), a
@@ -5450,7 +5450,7 @@ ToneGen_ValidateVoice_CheckBounds:
 	jr ToneGen_SaveVoiceState_Continue
 
 ToneGen_ValidateVoice_LoadBlock:
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)

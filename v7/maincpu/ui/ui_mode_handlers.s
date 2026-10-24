@@ -10,7 +10,7 @@
 EffectMode_CopyVoiceParams:
 	pushw iz
 	lda xbc, (PANEL_REC_70+3:16)
-	lda xhl, (0xf9a0:16)
+	lda xhl, (PANEL_RECORDS:16)
 	sub xbc, xhl
 	lda xde, (0x03c2c4:24)
 	add xbc, xde
@@ -396,7 +396,7 @@ EffectMode_ProcessPresetChange_Done:
 
 EffectMode_CopyParamByte:
 	lda	xwa, (PANEL_PART_PT4+3:16)
-	lda	xde, (0xf9a0:16)
+	lda	xde, (PANEL_RECORDS:16)
 	sub	xwa, xde
 	lda	xbc, (0x3c2c4:24)
 	ld	xhl, xwa
@@ -583,7 +583,7 @@ EffectMode_UpdateBitFlags:
 	lda	xwa, (xsp+48)
 	ld	(xsp+12), xwa
 	lda	xwa, (PANEL_PART_RT1+4:16)
-	lda	xde, (63904:16)
+	lda	xde, (PANEL_RECORDS:16)
 	sub	xwa, xde
 	lda	xbc, (246468:24)
 	ld	(xsp+32), xwa
@@ -723,7 +723,7 @@ EffectMode_UpdateBitFlags_Loop:
 	ret
 
 EffectMode_BackupParamBlock:
-	lda	xbc, (63904:16)
+	lda	xbc, (PANEL_RECORDS:16)
 	lda	xwa, (64862:16)
 	sub	xwa, xbc
 	inc	2, xwa

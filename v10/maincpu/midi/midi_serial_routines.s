@@ -360,7 +360,7 @@ ClkTick_Src2CoarseOverflow:
 	inc 1, (1076:16)
 	inc 1, (1077:16)
 	ld a, (1077:16)
-	cp a, (0x34d7:16)
+	cp a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr ule, ClkTick_Src2ErrorDelta
 	ld (1077:16), 0
 

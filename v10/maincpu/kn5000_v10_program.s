@@ -2443,7 +2443,7 @@ Voice_FactoryPresetData_Skip30:
 	jr	nz, Voice_FactoryPresetData_Skip32
 	jr	Voice_FactoryPresetData_Join9
 Voice_FactoryPresetData_Skip31:
-	ld	xiy, (197714:24)
+	ld	xiy, (WALLPAPER_BITMAP:24)
 	ld	de, (xhl)
 	exts	xde
 	ld	wa, (xhl+2)

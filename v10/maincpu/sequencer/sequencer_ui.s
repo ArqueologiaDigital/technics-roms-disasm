@@ -13646,7 +13646,7 @@ SqplyFunc_OnGetCycEnString:
 	lda	xbc, (xwa+18)
 	cp	l, 130
 	jr	nz, SqplyFunc_OnGetCycEnString_Skip5
-	bit 0, (0x28b1:16)
+	bit 0, (SEQ_CYCLE_FLAGS:16)
 	jr z, SqplyFunc_OnGetCycEnString_Skip4
 	ld	xwa, SqplyFunc_ParamFormatData_Str_6
 	jr	SqplyFunc_OnGetCycEnString_Join2
@@ -13659,7 +13659,7 @@ SqplyFunc_OnGetCycEnString_Join2:
 	jr SqplyFunc_FormatCases_Join4
 SqplyFunc_OnGetCycEnString_Skip5:
 	ld xbc, (xbc)
-	bit 1, (0x28b1:16)
+	bit 1, (SEQ_CYCLE_FLAGS:16)
 	jr z, SqplyFunc_OnGetCycEnString_Skip6
 	ld	xwa, SqplyFunc_ParamFormatData_Str_8
 	jr	SqplyFunc_OnGetCycEnString_Join3
@@ -13808,7 +13808,7 @@ SqplyFunc_HandleGetValue_MeasureAddr:
 	lda xhl, (SEQ_START_MEASURE:16)
 	jr SqplyFunc_GetValueReturn
 SqplyFunc_HandleGetValue_CycleOnOffAddr:
-	lda xhl, (0x28b1:16)
+	lda xhl, (SEQ_CYCLE_FLAGS:16)
 	jr SqplyFunc_GetValueDone
 SqplyFunc_HandleGetValue_CycleStartMeasureAddr:
 	call GetTitleNow

@@ -967,7 +967,7 @@ CDlike_InitModeAndLoadBank:
 	ld (0x2875:16), wa
 	ldw (SEQ_SONG_RECORD+30:16), 0
 	ldw (8980:16), 0
-	ld xiy, 0xf9a0
+	ld xiy, PANEL_RECORDS
 	ld xix, 0x3cf04
 	ldw bc, 0x310
 	ldirw
@@ -1043,7 +1043,7 @@ SongBank_SaveAndReload:
 	ld (0x2871:16), wa
 	call SongBank_LoadToWorkArea
 	call SongBank_CheckAccompanimentMode
-	and (0x28b1:16), 254
+	and (SEQ_CYCLE_FLAGS:16), 254
 	ret
 
 SongBank_LoadToWorkArea:

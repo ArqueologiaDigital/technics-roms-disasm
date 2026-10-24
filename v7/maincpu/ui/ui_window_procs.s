@@ -72,7 +72,7 @@ WndScroll_BasicWindowProc:
 	jrl UIDialog_ReturnZeroJmp
 
 WndScroll_HandleSelectionChange:
-	ld (0x0274de:24), de
+	ld (NAMING_CHAR:24), de
 	cp (0x0274e0:24), de
 	jrl z, UIDialog_ReturnZeroJmp
 	ld XWA,(XSP+0x32)
@@ -130,7 +130,7 @@ WndScroll_HandleSelectionChange:
 	ldw BC, 0x00f5
 	call DrawFrame
 WndScroll_DrawCurrentItem:
-	ld wa, (0x0274de:24)
+	ld wa, (NAMING_CHAR:24)
 
 	extz xwa
 
@@ -144,7 +144,7 @@ WndScroll_DrawCurrentItem:
 
 	call	ConvertStrings
 
-	ld wa, (0x0274de:24)
+	ld wa, (NAMING_CHAR:24)
 
 	extz xwa
 
@@ -166,7 +166,7 @@ WndScroll_DrawCurrentItem:
 
 	ld (xde + 2), wa
 
-	ld wa, (0x0274de:24)
+	ld wa, (NAMING_CHAR:24)
 
 	extz xwa
 
@@ -216,7 +216,7 @@ WndScroll_DrawCurrentItem:
 
 	call	DrawFrame
 
-	ld wa, (0x0274de:24)
+	ld wa, (NAMING_CHAR:24)
 
 	ld (0x0274e0:24), wa
 
@@ -364,7 +364,7 @@ WndEvt_DispatchByEventCode_CursorRight:
 ; WndEvt_DispatchByEventCode_PrevChar: button 3 (dial down): previous character of the page (0x274DE - 1) written at
 ;   the cursor
 WndEvt_DispatchByEventCode_PrevChar:
-	ld	bc, (160990:24)
+	ld	bc, (NAMING_CHAR:24)
 	cp	bc, 0:i3
 	jrl	z, UIDialog_ReturnZeroJmp
 	ld	wa, (160986:24)
@@ -375,7 +375,7 @@ WndEvt_DispatchByEventCode_PrevChar:
 	ld	xwa, (xde)
 	ld	(xsp+4), xwa
 	dec	1, bc
-	ld	(160990:24), bc
+	ld	(NAMING_CHAR:24), bc
 	extz	xbc
 	sll	xbc, 2
 	ld	xwa, xbc
@@ -393,7 +393,7 @@ WndEvt_DispatchByEventCode_PrevChar:
 	ld	xwa, 22
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
-	ld	de, (160990:24)
+	ld	de, (NAMING_CHAR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SELE_DRAW
@@ -418,11 +418,11 @@ WndEvt_DispatchByEventCode_CharRowUpDown:
 	cp	xwa, EVT_INDEXSW_UP_AIC
 	jrl	nz, UIDialog_ReturnZeroJmp
 WndEvt_EventCodeDispatch_OnIndexswUp:
-	ld	bc, (160990:24)
+	ld	bc, (NAMING_CHAR:24)
 	cp	bc, 13
 	jrl	c, UIDialog_ReturnZeroJmp
 	sub	bc, 13
-	ld	(160990:24), bc
+	ld	(NAMING_CHAR:24), bc
 	ld	wa, (160986:24)
 	extz	xwa
 	sll	xwa, 2
@@ -448,7 +448,7 @@ WndEvt_EventCodeDispatch_OnIndexswUp:
 	ld	xwa, 22
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
-	ld	de, (160990:24)
+	ld	de, (NAMING_CHAR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SELE_DRAW
@@ -464,7 +464,7 @@ WndEvt_EventCodeDispatch_OnIndexswDownAny:
 	add	xde, xwa
 	ld	xwa, (xde)
 	ld	(xsp+4), xwa
-	ld	wa, (160990:24)
+	ld	wa, (NAMING_CHAR:24)
 	extz	xwa
 	sll	xwa, 2
 	; v10 does not spell this byte either
@@ -482,7 +482,7 @@ WndEvt_EventCodeDispatch_OnIndexswDownAny:
 	lda	xde, (WndScroll_NamingPageLastIndex:24)
 	ld	xbc, xde
 	add	xbc, xwa
-	ld	wa, (0x0274de:24)
+	ld	wa, (NAMING_CHAR:24)
 	ld	hl, wa
 	add	hl, 12
 	; v10 does not spell this byte either
@@ -496,7 +496,7 @@ WndEvt_EventCodeDispatch_OnIndexswDownAny:
 	jr	nz, WndEvt_EventCodeDispatch_Skip4
 WndEvt_EventCodeDispatch_Skip3:
 	dec	1, wa
-	ld	(0x0274de:24), wa
+	ld	(NAMING_CHAR:24), wa
 WndEvt_EventCodeDispatch_Skip4:
 	ld	bc, (0x0274e2:24)
 	mul	bc, 3
@@ -505,7 +505,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	extz	xbc
 	add	xbc, xbc
 	add	xde, xbc
-	ld	wa, (0x0274de:24)
+	ld	wa, (NAMING_CHAR:24)
 	ld	bc, wa
 	add	bc, 13
 	; v10 does not spell this byte either
@@ -514,7 +514,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	jrl	ugt, UIDialog_ReturnZeroJmp
 	ld	bc, wa
 	add	bc, 13
-	ld	(0x0274de:24), bc
+	ld	(NAMING_CHAR:24), bc
 	ld	wa, (0x0274da:24)
 	extz	xwa
 	sll	xwa, 2
@@ -565,7 +565,7 @@ WndEvt_EventCodeDispatch_Join:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 160944
 	call	SendEvent
-	ld	de, (160990:24)
+	ld	de, (NAMING_CHAR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SELE_DRAW
@@ -592,7 +592,7 @@ WndEvt_DispatchByEventCode_NextChar:
 	add	xwa, xwa
 	ld	xbc, WndScroll_NamingPageLastIndex
 	add	xbc, xwa
-	ld	wa, (160990:24)
+	ld	wa, (NAMING_CHAR:24)
 	ld	de, wa
 	inc	1, de
 	; v10 does not spell this byte either
@@ -600,7 +600,7 @@ WndEvt_DispatchByEventCode_NextChar:
 	cp	de, (xbc)
 	jrl	ugt, UIDialog_ReturnZeroJmp
 	inc	1, wa
-	ld	(0x0274de:24), wa
+	ld	(NAMING_CHAR:24), wa
 	extz	xwa
 	sll	xwa, 2
 	; v10 does not spell this byte either
@@ -636,7 +636,7 @@ WndEvt_DispatchByEventCode_NextChar_Join2:
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 160944
 	call	SendEvent
-	ld	de, (160990:24)
+	ld	de, (NAMING_CHAR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SELE_DRAW
@@ -1026,7 +1026,7 @@ WndScroll_ComputeCharOffset:
 	ld a, (xde)
 	sub a, c
 	extz wa
-	ld (0x0274de:24), wa
+	ld (NAMING_CHAR:24), wa
 	jrl WndScroll_SendPageEvents
 
 WndScroll_CharIsSpace:
@@ -1039,7 +1039,7 @@ WndScroll_CharIsSpace:
 	ldw (0x0274da:24), 0x0000
 
 WndScroll_SetSpaceOffset:
-	ldw (0x0274de:24), 0x0025
+	ldw (NAMING_CHAR:24), 0x0025
 	jr WndScroll_SendPageEvents
 
 WndScroll_CharIsUnderscore:
@@ -1050,7 +1050,7 @@ WndScroll_CharIsUnderscore:
 	ldw (0x0274da:24), 0x0000
 
 WndScroll_SetUnderscoreOffset:
-	ldw (0x0274de:24), 0x001a
+	ldw (NAMING_CHAR:24), 0x001a
 	jr WndScroll_SendPageEvents
 
 WndScroll_SearchCharTable:
@@ -1075,7 +1075,7 @@ WndScroll_CompareCharLoop:
 	cp a, (xsp + 12)
 	jr nz, WndScroll_CharMismatch
 	ldw (0x0274da:24), 0x0002
-	ld (0x0274de:24), iz
+	ld (NAMING_CHAR:24), iz
 
 WndScroll_CharMismatch:
 	inc 1, iz
@@ -1097,7 +1097,7 @@ WndScroll_SendPageEvents:
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SET_PAGE
 	call SendEvent
-	ld de, (0x0274de:24)
+	ld de, (NAMING_CHAR:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SELE_DRAW
@@ -1141,9 +1141,9 @@ WndScroll_HandleDialPage:
 	ld xwa, WndScroll_NamingPageLastIndex
 	add xwa, xbc
 	ld wa, (xwa)
-	cp (0x0274de:24), wa
+	cp (NAMING_CHAR:24), wa
 	jr ule, WndScroll_ClampPageCount
-	ld (0x0274de:24), wa
+	ld (NAMING_CHAR:24), wa
 
 WndScroll_ClampPageCount:
 	ld wa, (0x0274da:24)
@@ -1153,7 +1153,7 @@ WndScroll_ClampPageCount:
 	add xbc, xwa
 	ld xwa, (xbc)
 	ld (xsp + 4), xwa
-	ld wa, (0x0274de:24)
+	ld wa, (NAMING_CHAR:24)
 	extz xwa
 	sll xwa, 2
 	add xwa, (xsp + 4)
@@ -1181,7 +1181,7 @@ WndScroll_CheckSPMarker:
 
 WndScroll_SendConfirmEvent:
 	call SendEvent
-	ld de, (0x0274de:24)
+	ld de, (NAMING_CHAR:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SELE_DRAW
@@ -6267,7 +6267,7 @@ DrawFunc_Epilogue74:
 Gfx_ImageDecodeByteData:
 	dec	4, xsp
 	push	xiz
-	ld	xbc, (0x030452:24)
+	ld	xbc, (WALLPAPER_BITMAP:24)
 	ld	(xsp+4), xbc
 	ld	ix, (xwa+2)
 	jr	Gfx_ImageDecodeByteData_Join2
@@ -7310,7 +7310,7 @@ ChangeWall_Impl:
 	add xwa, xbc
 	ld xwa, (xwa)
 	ld (0x03ef98:24), xwa
-	ld (0x030452:24), xwa
+	ld (WALLPAPER_BITMAP:24), xwa
 	ret
 
 ChangeWallPalette:
@@ -7980,7 +7980,7 @@ ColorBlit_ModeF5_RowLoop:
 	exts xbc
 	ld xiz, xde
 	add xiz, xbc
-	add xiz, (0x030452:24)
+	add xiz, (WALLPAPER_BITMAP:24)
 	ld ix, (xwa)
 	ld xbc, (xsp + 8)
 	cp ix, (xbc)
@@ -8276,7 +8276,7 @@ ColorBlit2_ModeF5_RowLoop:
 	exts xbc
 	ld xiz, xde
 	add xiz, xbc
-	add xiz, (0x030452:24)
+	add xiz, (WALLPAPER_BITMAP:24)
 	ld ix, (xwa)
 	ld xbc, (xsp + 8)
 	cp ix, (xbc)
@@ -8563,7 +8563,7 @@ DrawMonoBitmap_Impl_Loop2:
 	ld	(xsp+2), a
 	ld	(xsp+4), 0
 DrawMonoBitmap_Impl_Loop3:
-	ld	xhl, (0x030452:24)
+	ld	xhl, (WALLPAPER_BITMAP:24)
 	ld	xwa, (xsp+14)
 	ld	wa, (xwa)
 	exts	xwa
@@ -9096,7 +9096,7 @@ DrawLineWithMode_Impl_Skip7:
 	exts	xwa
 	ld	xix, xbc
 	add	xix, xwa
-	add	xix, (0x030452:24)
+	add	xix, (WALLPAPER_BITMAP:24)
 	ld	xbc, 0:i3
 	ld	xwa, (xsp+8)
 	cp	xwa, 0
@@ -9172,7 +9172,7 @@ DrawLineWithMode_Impl_Skip11:
 	exts	xwa
 	ld	xix, xbc
 	add	xix, xwa
-	add	xix, (0x030452:24)
+	add	xix, (WALLPAPER_BITMAP:24)
 	ld	xbc, 0:i3
 	ld	xwa, (xsp+4)
 	cp	xwa, 0
@@ -9247,7 +9247,7 @@ DrawLineWithMode_Impl_Loop5:
 	jr	nz, DrawLineWithMode_Impl_Skip15
 	jr	DrawLineWithMode_Impl_Join3
 DrawLineWithMode_Impl_Skip14:
-	ld	xiz, (0x030452:24)
+	ld	xiz, (WALLPAPER_BITMAP:24)
 	ld	hl, (xiy)
 	exts	xhl
 	ld	wa, (xiy+2)
@@ -9326,7 +9326,7 @@ DrawLineWithMode_Impl_Loop6:
 	jr	nz, DrawLineWithMode_Impl_Skip18
 	jr	DrawLineWithMode_Impl_Join4
 DrawLineWithMode_Impl_Skip17:
-	ld	xiz, (0x030452:24)
+	ld	xiz, (WALLPAPER_BITMAP:24)
 	ld	hl, (xix)
 	exts	xhl
 	ld	wa, (xix+2)
@@ -9899,7 +9899,7 @@ DrawDottedLineWithMode_Impl_Skip6:
 	jr	nz, DrawDottedLineWithMode_Impl_Skip8
 	jrl	DrawDottedLineWithMode_Impl_Join3
 DrawDottedLineWithMode_Impl_Skip7:
-	ld	xix, (0x030452:24)
+	ld	xix, (WALLPAPER_BITMAP:24)
 	ld	bc, (xiy)
 	exts	xbc
 	ld	wa, (xiy+2)
@@ -10026,7 +10026,7 @@ DrawDottedLineWithMode_Impl_Skip14:
 	jr	nz, DrawDottedLineWithMode_Impl_Skip16
 	jrl	DrawDottedLineWithMode_Impl_Join5
 DrawDottedLineWithMode_Impl_Skip15:
-	ld	xix, (0x030452:24)
+	ld	xix, (WALLPAPER_BITMAP:24)
 	ld	bc, (xiy)
 	exts	xbc
 	ld	wa, (xiy+2)
@@ -10174,7 +10174,7 @@ DrawDottedLineWithMode_Impl_Skip22:
 	jr	nz, DrawDottedLineWithMode_Impl_Skip24
 	jr	DrawDottedLineWithMode_Impl_Join7
 DrawDottedLineWithMode_Impl_Skip23:
-	ld	xiy, (0x030452:24)
+	ld	xiy, (WALLPAPER_BITMAP:24)
 	ld	de, (xiz)
 	exts	xde
 	ld	wa, (xiz+2)

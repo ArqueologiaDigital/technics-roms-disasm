@@ -346,7 +346,7 @@ ClkTick_Src2CoarseOverflow:
 	inc	1, (1076:16)
 	inc	1, (1077:16)
 	ld	a, (1077:16)
-	cp	a, (0x343b:16)
+	cp	a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr	ule, ClkTick_Src2ErrorDelta
 	ld	(1077:16), 0
 ClkTick_Src2ErrorDelta:
@@ -960,7 +960,7 @@ MidiSerial_PumpLoop:
 	jr	z, MidiSerial_PumpDone
 	and	(1064:16), 254
 	call	MidiSerial_WaitForData
-	ld	a, (0x9598:16)
+	ld	a, (MIDIRX_STATUS:16)
 	ld	(0x95b8:16), a
 	and	a, 0x70
 	srl	a, 2
@@ -999,7 +999,7 @@ MidiSerial_StatusHandlers:
 	.long	MidiRx_SystemMsgDispatch
 MidiSerial_WaitForData:
 	ld	xiz, 0x1f37b
-	ld	xiy, 0x9598
+	ld	xiy, MIDIRX_STATUS
 	ld	(xiy + 3), 0x0
 MidiSerial_WaitLoop:
 	call	SeqMain_ReadData
@@ -1013,7 +1013,7 @@ MidiSerial_WaitLoop:
 MidiSerial_WaitDone:
 	ret
 MidiRx_SystemMsgDispatch:
-	ld	l, (0x9598:16)
+	ld	l, (MIDIRX_STATUS:16)
 	and	l, 15
 	sla	l, 2
 	extz	hl
@@ -1048,7 +1048,7 @@ MidiSerial_CmdJumpTable:
 	.long	MidiSerial_HandleDefault_Data
 	.long	MidiSerial_HandleDefault_Data
 MidiSerial_HandleSongPosition:
-	ld	wa, (0x9599:16)
+	ld	wa, (MIDIRX_DATA1:16)
 	ld	(1069:16), a
 	bit	2, (PANEL_MIDI+2:16)
 	jr	z, MidiSerial_HandleSongPosition_Skip
@@ -1057,7 +1057,7 @@ MidiSerial_HandleSongPosition_Skip:
 	ld	(1070:16), w
 	ret
 MidiSerial_HandleSongSelect:
-	ld	a, (0x9599:16)
+	ld	a, (MIDIRX_DATA1:16)
 	bit	3, (PANEL_MIDI+1:16)
 	jr	z, MidiSerial_HandleSongSelect_Skip
 	set	7, a
@@ -1078,7 +1078,7 @@ MidiSerial_HandleDefault_Data:
 ; sweep read that routine's first byte as `.byte 0xc1` and the rest as
 ; `pushw wa / max / push xiz / normal`.
 MidiRx_ChannelMsgDispatch:
-	ld	a, (0x9598:16)
+	ld	a, (MIDIRX_STATUS:16)
 	and	a, 15
 	ld	xhl, 0x9458
 	ld	a, (xhl+a)
@@ -1090,22 +1090,22 @@ MidiRx_ChannelMsgDispatch:
 	cp	a, 0:i3
 	jr	z, MidiRx_ChannelMsgDispatch_Return
 	ld	(0x95cd:16), a
-	ld	(0x95cf:16), a
+	ld	(MIDIRX_PARTS_LEFT:16), a
 MidiRx_ChannelMsgDispatch_Loop:
 	inc	1, (0x95cc:16)
 	xor	h, h
 	ld	l, (0x95cc:16)
 	ld	xix, 0x9478
 	ld	a, (xix+hl)
-	ld	(0x95ce:16), a
+	ld	(MIDIRX_PART:16), a
 	xor	h, h
-	ld	l, (0x9598:16)
+	ld	l, (MIDIRX_STATUS:16)
 	and	l, 112
 	srl	hl, 2
 	ld	xix, MidiCC_LowRange_Table
 	ld	xix, (xix+hl)
 	call	(xix)
-	dec	1, (0x95cf:16)
+	dec	1, (MIDIRX_PARTS_LEFT:16)
 	jr	nz, MidiRx_ChannelMsgDispatch_Loop
 MidiRx_ChannelMsgDispatch_Return:
 	ret
@@ -1134,7 +1134,7 @@ MidiCC_Handler_SimpleParamStore:
 	ret
 MidiRx_ControlChange:
 	ld	xix, MidiCC_ChannelMappingData
-	ld	l, (0x9599:16)
+	ld	l, (MIDIRX_DATA1:16)
 	ld	a, (xix+l)
 	ld	(0x95bb:16), a
 	cp	a, 255
@@ -1222,13 +1222,13 @@ MidiCC_NullHandlerBlock:
 MidiCC_Handler_BitManipulation:
 	bit	2, (PANEL_MIDI+1:16)
 	jr	z, MidiCC_Handler_BitManipulation_Return
-	ld	a, (0x95ce:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 25
 	jr	nz, MidiCC_Handler_BitManipulation_Return
 	cp	(0x95bb:16), 18
 	jr	nz, MidiCC_Handler_BitManipulation_Return
 	xor	e, e
-	ld	a, (0x959a:16)
+	ld	a, (MIDIRX_DATA2:16)
 	cp	a, 2:i3
 	jr	ugt, MidiCC_Handler_BitManipulation_Skip
 	ld	xix, MidiCC_CC83_ValueMap
@@ -1257,7 +1257,7 @@ MidiCC_CC83_ValueMap:
 	.byte	0x00, 0x80, 0x40
 MidiCC_Handler_PairedParamA:
 	extz	hl
-	ld	l, (0x95ce:16)
+	ld	l, (MIDIRX_PART:16)
 	cp	l, 31
 	jr	ugt, MidiCC_Handler_PairedParamA_Return
 	bit	4, (PANEL_MIDI+7:16)
@@ -1267,7 +1267,7 @@ MidiCC_Handler_PairedParamA:
 	ld	bc, (xix+hl)
 	cp	c, 255
 	jr	z, MidiCC_Handler_PairedParamA_Return
-	ld	e, (0x959a:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	d, 255:opc
 	ld	a, (0x959b:16)
 	ld	(0x95ac:16), a
@@ -1278,7 +1278,7 @@ MidiCC_Handler_PairedParamA_Return:
 	ret
 MidiCC_Handler_PairedParamB:
 	extz	hl
-	ld	l, (0x95ce:16)
+	ld	l, (MIDIRX_PART:16)
 	cp	l, 31
 	jr	ugt, MidiCC_Handler_PairedParamB_Return
 	bit	4, (PANEL_MIDI+7:16)
@@ -1288,7 +1288,7 @@ MidiCC_Handler_PairedParamB:
 	ld	bc, (xix+hl)
 	cp	c, 255
 	jr	z, MidiCC_Handler_PairedParamB_Return
-	ld	d, (0x959a:16)
+	ld	d, (MIDIRX_DATA2:16)
 	ld	e, 255:opc
 	ld	a, (0x959b:16)
 	ld	(0x95ac:16), a
@@ -1298,13 +1298,13 @@ MidiCC_Handler_PairedParamB:
 MidiCC_Handler_PairedParamB_Return:
 	ret
 MidiCC_Handler_RangeCheck:
-	ld	a, (0x95ce:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 16
 	jr	nz, MidiCC_Handler_RangeCheck_Return
 	cp	(0x95bb:16), 16
 	jr	nz, MidiCC_Handler_RangeCheck_Return
 	xor	e, e
-	ld	a, (0x959a:16)
+	ld	a, (MIDIRX_DATA2:16)
 	cp	a, 3:i3
 	jr	ugt, MidiCC_Handler_RangeCheck_Skip
 	ld	xix, MidiCC_CC80_ValueMap
@@ -1331,14 +1331,14 @@ MidiCC_Handler_RangeCheck_Return:
 MidiCC_CC80_ValueMap:
 	.byte	0x00, 0x02, 0x01, 0x03
 MidiCC_Handler_ChannelMapping:
-	ld	a, (0x95ce:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 20
 	jr	nz, MidiCC_Handler_ChannelMapping_Return
 	cp	(0x95bb:16), 17
 	jr	nz, MidiCC_Handler_ChannelMapping_Return
 	ld	b, 5:opc
 	ldw	de, 0xfc00
-	ld	a, (0x959a:16)
+	ld	a, (MIDIRX_DATA2:16)
 	cp	a, 11
 	jr	ugt, MidiCC_Handler_ChannelMapping_Skip
 	extz	wa

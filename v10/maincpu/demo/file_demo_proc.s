@@ -540,9 +540,9 @@ FDemo_FileOpen_Exit:
 
 
 DemoMode_Main_Operation:
-	res 0, (0x28b1:16)
+	res 0, (SEQ_CYCLE_FLAGS:16)
 	call Voice_InitializeAll
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xffbe:16)
 	sub xwa, xbc
 	inc 2, xwa
@@ -642,7 +642,7 @@ Demo_SelectEntry_PreSaveCheck:
 	cp (CURRENT_MODE:16), 19
 	jr nz, Demo_SelectEntry_CheckVoiceKeys
 	calr Voice_SavePreset
-	lda xbc, (0xf9a0:16)
+	lda xbc, (PANEL_RECORDS:16)
 	lda xwa, (0xffbe:16)
 	sub xwa, xbc
 	inc 2, xwa

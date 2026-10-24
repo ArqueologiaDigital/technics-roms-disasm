@@ -784,22 +784,22 @@ SMF_ChannelHelperReturn:
 	ret
 
 SMF_GetNextEvent:
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
-	ld iy, (9830:16)
+	ld iy, (SEQ_DATA_OFFSET:16)
 	ld	a, (xhl+iy)
 	ret
 
 SMF_AdvancePosition:
-	ld wa, (9830:16)
+	ld wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, SMF_AdvancePos_Inc
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld (0x28af:16), wa
+	ld (SEQ_DATA_BLOCK:16), wa
 	ld wa, 5:i3
 	jr SMF_AdvancePos_Store
 
@@ -807,7 +807,7 @@ SMF_AdvancePos_Inc:
 	inc 1, wa
 
 SMF_AdvancePos_Store:
-	ld (9830:16), wa
+	ld (SEQ_DATA_OFFSET:16), wa
 	ret
 
 SMF_CalcTimeDelta:
@@ -1058,8 +1058,8 @@ SMF_HandleEventType:
 	ld xde, 0xf250
 	ld	hl, (xde+hl)
 	pop xde
-	ld (0x28af:16), hl
-	ldw (9830:16), 5
+	ld (SEQ_DATA_BLOCK:16), hl
+	ldw (SEQ_DATA_OFFSET:16), 5
 	calr SMF_GetNextEvent
 
 SMF_EventType_Switch:
@@ -1461,12 +1461,12 @@ SMF_FileWriteAndClear:
 	ret
 
 SMF_LookupSongBank:
-	ld hl, (0x28af:16)
+	ld hl, (SEQ_DATA_BLOCK:16)
 	extz xhl
 	dec 1, xhl
 	sla xhl, 8
 	add xhl, (SEQ_BLOCK_POOL:16)
-	ld iy, (9830:16)
+	ld iy, (SEQ_DATA_OFFSET:16)
 	ld	(xhl+iy), a
 	ret
 
@@ -1947,7 +1947,7 @@ SMF_ConfigSlot_Setup:
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld (0x2885:16), iy
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x2887:16), wa
 	ld (0x2889:16), iy
 	ld (0x288b:16), wa
@@ -3373,7 +3373,7 @@ SMF_SetupSongBankRead:
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
-	ld wa, (0x28af:16)
+	ld wa, (SEQ_DATA_BLOCK:16)
 	ld (0x2887:16), wa
 
 SMF_SetupRead_Adjust:
