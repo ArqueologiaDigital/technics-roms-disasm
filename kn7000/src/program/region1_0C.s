@@ -1026,11 +1026,11 @@ loc_48580EAE:
 loc_48580EB1:
     add     0x130, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_48580EB8:
+# SswObjectNameGet  (CPU 0x48580eb8)
+SswObjectNameGet:
     movm    [a2], (sp)
     add     -0x14, sp
-func_48580EB8_entry:
+SswObjectNameGet_entry:
     clr     d1
     mov     d1, (0x10, sp)
     mov     0x00060015, d1
@@ -1041,11 +1041,11 @@ func_48580EB8_entry:
     call    strcpy_entry, [a2], 4
     mov     a2, a0
     ret     [a2], 0x18
-
-func_48580EE1:
+# GetSswObjectID  (CPU 0x48580ee1)
+GetSswObjectID:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_48580EE1_entry:
+GetSswObjectID_entry:
     mov     a0, (0x2c, sp)
     mov     0x2f, d0
     mov     d0, (0x10, sp)
@@ -1075,7 +1075,7 @@ loc_48580F14:
     cmp     0, d0
     beq     loc_48580F39
     mov     d3, d0
-    call    func_48580EB8_entry, [a2], 0x18
+    call    SswObjectNameGet_entry, [a2], 0x18
     mov     a0, a1
     mov     (0x2c, sp), a0
     call    strcmp, 0, 0

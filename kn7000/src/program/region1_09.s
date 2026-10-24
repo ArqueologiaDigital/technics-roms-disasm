@@ -29853,7 +29853,7 @@ func_48532C77_entry:
     mov     -1, d0
     mov     0x48664844, a1
     mov     0x38, d1
-    call    func_48473B74_entry, [d2], 0x2c
+    call    deflateInit__entry, [d2], 0x2c
     cmp     0, d0
     beq     loc_48532CD4
     movhu   (0x500812d2), d1
@@ -29895,7 +29895,7 @@ func_48532D0A_entry:
     mov     0x50071294, a0
     mov     0x4866484c, a1
     mov     0x38, d0
-    call    func_48476899_entry, 0, 0x18
+    call    inflateInit__entry, 0, 0x18
     cmp     0, d0
     beq     loc_48532D77
     movhu   (0x500812d2), d1
@@ -29945,7 +29945,7 @@ loc_48532DEB:
     mov     -1, d0
     mov     0x48664854, a1
     mov     0x38, d1
-    call    func_48473B74_entry, [d2], 0x2c
+    call    deflateInit__entry, [d2], 0x2c
     cmp     0, d0
     beq     loc_48532E24
     movhu   (0x500812d2), d1
@@ -29962,7 +29962,7 @@ loc_48532E14:
 loc_48532E24:
     mov     0x5007125c, a0
     mov     4, d0
-    call    func_4847401B_entry, [d2,d3,a2,a3], 0x3c
+    call    deflate_entry, [d2,d3,a2,a3], 0x3c
     exth    d0
     cmp     1, d0
     bne     loc_48532E3B
@@ -30158,7 +30158,7 @@ loc_48533018:
     movhu   d0, (0x500812d2)
 loc_4853301E:
     mov     0x5007125c, a0
-    call    func_4847428E_entry, [d2,d3,a2,a3], 0x20
+    call    deflateEnd_entry, [d2,d3,a2,a3], 0x20
     cmp     0, d0
     beq     loc_48533043
     movhu   (0x500812d2), d1
@@ -30192,7 +30192,7 @@ func_4853304C_entry:
     mov     0x5007125c, a0
     mov     0x4866485c, a1
     mov     0x38, d0
-    call    func_48476899_entry, 0, 0x18
+    call    inflateInit__entry, 0, 0x18
     cmp     0, d0
     beq     loc_485330BC
     movhu   (0x500812d2), d1
@@ -30273,7 +30273,7 @@ loc_48533177:
 loc_48533186:
     mov     0x5007125c, a0
     clr     d0
-    call    func_484768A7_entry, [d2,d3,a2,a3], 0x30
+    call    inflate_entry, [d2,d3,a2,a3], 0x30
     exth    d0
     cmp     1, d0
     bne     loc_485331B2
@@ -30383,7 +30383,7 @@ loc_4853329C:
 loc_485332A2:
     mov     0x5007125c, a0
     mov     4, d0
-    call    func_484768A7_entry, [d2,d3,a2,a3], 0x30
+    call    inflate_entry, [d2,d3,a2,a3], 0x30
     exth    d0
     cmp     1, d0
     beq     loc_485332CE
@@ -30416,7 +30416,7 @@ loc_485332F0:
     bra     loc_48533329
 loc_485332FA:
     mov     0x5007125c, a0
-    call    func_48476774_entry, [d2,a2,a3], 0x28
+    call    inflateEnd_entry, [d2,a2,a3], 0x28
     cmp     0, d0
     beq     loc_48533323
     movhu   (0x500812d2), d1
@@ -30471,7 +30471,7 @@ loc_4853336C:
 loc_4853337D:
     mov     0x50071294, a0
     mov     d2, d0
-    call    func_4847401B_entry, [d2,d3,a2,a3], 0x3c
+    call    deflate_entry, [d2,d3,a2,a3], 0x3c
     exth    d0
     cmp     1, d0
     bne     loc_48533393
@@ -30685,7 +30685,7 @@ loc_485335B4:
     bra     loc_485335F7
 loc_485335C3:
     mov     0x50071294, a0
-    call    func_4847428E_entry, [d2,d3,a2,a3], 0x20
+    call    deflateEnd_entry, [d2,d3,a2,a3], 0x20
     cmp     0, d0
     beq     loc_485335E8
     movhu   (0x500812d2), d1
@@ -30775,7 +30775,7 @@ loc_485336CC:
 loc_485336DB:
     mov     a3, a0
     clr     d0
-    call    func_484768A7_entry, [d2,d3,a2,a3], 0x30
+    call    inflate_entry, [d2,d3,a2,a3], 0x30
     exth    d0
     cmp     1, d0
     beq     loc_48533720
@@ -30807,7 +30807,7 @@ loc_48533720:
     mov     a3, a0
     sub     d0, d3
     mov     d3, (0x500712cc)
-    call    func_48476774_entry, [d2,a2,a3], 0x28
+    call    inflateEnd_entry, [d2,a2,a3], 0x28
     cmp     0, d0
     beq     loc_4853374E
     movhu   (0x500812d2), d1
@@ -30847,7 +30847,7 @@ func_48533758_entry:
     mov     (0x14, sp), a0
     mov     0x48664864, a1
     mov     0x38, d0
-    call    func_48476899_entry, 0, 0x18
+    call    inflateInit__entry, 0, 0x18
     cmp     0, d0
     beq     loc_48533793
     mov     -1, d0
@@ -30855,17 +30855,17 @@ func_48533758_entry:
 loc_48533793:
     mov     (0x14, sp), a0
     mov     4, d0
-    call    func_484768A7_entry, [d2,d3,a2,a3], 0x30
+    call    inflate_entry, [d2,d3,a2,a3], 0x30
     cmp     1, d0
     beq     loc_485337AF
     mov     (0x14, sp), a0
-    call    func_48476774_entry, [d2,a2,a3], 0x28
+    call    inflateEnd_entry, [d2,a2,a3], 0x28
     mov     -1, d0
     bra     loc_485337C3
 loc_485337AF:
     mov     (0x2c, sp), d2
     mov     (0x14, sp), a0
-    call    func_48476774_entry, [d2,a2,a3], 0x28
+    call    inflateEnd_entry, [d2,a2,a3], 0x28
     cmp     0, d0
     bge     loc_485337C2
     mov     -1, d0

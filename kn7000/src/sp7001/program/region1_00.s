@@ -1412,7 +1412,7 @@ func_48400E33_entry:
 loc_48400E4C:
     movbu   (0x18, sp), d0
     movbu   d0, (0x5009e882)
-    call    func_48400F1D, 0, 0
+    call    FdcOpcodeInvalid, 0, 0
     extb    d0
     cmp     0, d0
     beq     loc_48400E62
@@ -1499,8 +1499,8 @@ loc_48400F15:
     call    func_48401044_entry, 0, 0xc
 loc_48400F1A:
     ret     0, 0x10
-
-func_48400F1D:
+# FdcOpcodeInvalid  (CPU 0x48400f1d)
+FdcOpcodeInvalid:
     movbu   (0x5009e882), d0
     and     0x1f, d0
     cmp     6, d0
@@ -2972,7 +2972,7 @@ loc_48401E65:
     movhu   d0, (0x34000280)
     mov     1, d0
     movhu   d0, (0x30, sp)
-    mov     func_4840221D, d0
+    mov     FdcIrq, d0
     mov     d0, (0x34, sp)
     mov     0x19, d0
     movhu   d0, (0x38, sp)
@@ -3292,8 +3292,8 @@ loc_4840220F:
     call    func_48402109_entry, 0, 0xc
     movhu   (0x3400013c), d0
     ret     0, 0xc
-
-func_4840221D:
+# FdcIrq  (CPU 0x4840221d)
+FdcIrq:
     add     -0x18, sp
     and     0xf7ff, psw
     nop
@@ -25348,8 +25348,8 @@ loc_48410070:
     nop
 loc_484101C6:
     ret     0, 0
-
-func_484101C9:
+# DCacheFlushDisable  (CPU 0x484101c9)
+DCacheFlushDisable:
     mov     0x20000070, a0
     movhu   (a0), d0
     btst    0x02, d0

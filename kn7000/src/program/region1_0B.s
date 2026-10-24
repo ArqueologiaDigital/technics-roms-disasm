@@ -50873,7 +50873,7 @@ loc_4857FC1E:
     add     0x20, a0
     cmp     0, d0
     beq     loc_4857FC41
-    call    func_48580EE1_entry, [d2,d3,a2,a3], 0x24
+    call    GetSswObjectID_entry, [d2,d3,a2,a3], 0x24
     cmp     -1, d0
     beq     loc_4857FC41
     clr     d1

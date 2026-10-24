@@ -27852,8 +27852,8 @@ InitializeBlock25_entry:
     mov     0x48629218, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_484D568E:
+# AcPmemBankSelProc  (CPU 0x484d568e)
+AcPmemBankSelProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     d0, (0x44, sp)
@@ -28538,8 +28538,8 @@ loc_484D5DB4:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D5DBF:
     ret     [d2,d3,a2], 0x20
-
-func_484D5DC2:
+# PmBkSelTitleFunc  (CPU 0x484d5dc2)
+PmBkSelTitleFunc:
     movm    [d2], (sp)
     add     -0x20, sp
     clr     d2
@@ -29820,8 +29820,8 @@ loc_484D6C30:
     clr     d0
 loc_484D6C31:
     ret     [d2,d3,a2,a3], 0x58
-
-func_484D6C34:
+# AcVocalistListBoxProc  (CPU 0x484d6c34)
+AcVocalistListBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -29870,8 +29870,8 @@ loc_484D6CAA:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D6CB5:
     ret     [d2], 0x18
-
-func_484D6CB8:
+# PsHarmOnOffBoxProc  (CPU 0x484d6cb8)
+PsHarmOnOffBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     0x48629df8, a1
@@ -30117,8 +30117,8 @@ loc_484D6F2B:
     clr     d0
 loc_484D6F2C:
     ret     0, 0x14
-
-func_484D6F2F:
+# MainVocalistOK  (CPU 0x484d6f2f)
+MainVocalistOK:
     movm    [d2,d3], (sp)
     add     -0x10, sp
     cmp     0x1a60000, d1
@@ -30481,8 +30481,8 @@ loc_484D73D8:
     mov     0x80, d0
     movbu   d0, (0x5006cc81)
     ret     0, 0xc
-
-func_484D74D2:
+# IrqGroupsDisableAll  (CPU 0x484d74d2)
+IrqGroupsDisableAll:
     movhu   (0x34000108), d0
     mov     0x0000feff, d1
     and     d1, d0
@@ -30621,7 +30621,7 @@ loc_484D76CC:
     cmp     6, d2
     bne     loc_484D7710
 loc_484D76D4:
-    call    func_484D74D2, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x90000010, a1
     setlb
     clr     d0
@@ -30740,7 +30740,7 @@ func_484D77BD:
 func_484D77CF:
     movm    [d2,d3], (sp)
     add     -8, sp
-    call    func_484D74D2, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x0000ffff, d0
     movhu   d0, (0x34001092)
     mov     0x82, d0
@@ -30749,7 +30749,7 @@ func_484D77CF:
     clr     d0
     movhu   d0, (0x9000000e)
     bclr    0x04, (0x36008004)
-    call    func_484101C9, 0, 0
+    call    DCacheFlushDisable, 0, 0
     bclr    0x20, (0x36008004)
     bset    0x20, (0x36008004)
     bclr    0x20, (0x36008004)

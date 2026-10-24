@@ -9460,8 +9460,8 @@ loc_48489C4E:
 GetNamingWindowID:
     mov     0x00200000, d0
     retf    0, 0
-
-func_48489C5A:
+# NamingCheck  (CPU 0x48489c5a)
+NamingCheck:
     movm    [d2], (sp)
     add     -0x10, sp
     mov     d0, d2
@@ -9619,8 +9619,8 @@ InitializeBlock05_entry:
     mov     0x485d85cc, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_48489E64:
+# TtMessage  (CPU 0x48489e64)
+TtMessage:
     movm    [d2], (sp)
     add     -0x14, sp
     clr     d2
@@ -9658,8 +9658,8 @@ loc_48489E9D:
 loc_48489EC2:
     mov     d2, d0
     ret     [d2], 0x18
-
-func_48489EC6:
+# IvMessageProc  (CPU 0x48489ec6)
+IvMessageProc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -10386,8 +10386,8 @@ InitializeBlock04_entry:
     mov     0x485e6d50, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_4848A689:
+# TtWelcome  (CPU 0x4848a689)
+TtWelcome:
     movm    [d2], (sp)
     add     -0x1c, sp
     clr     d2
@@ -10462,8 +10462,8 @@ loc_4848A775:
 loc_4848A777:
     mov     d2, d0
     ret     [d2], 0x20
-
-func_4848A77B:
+# AcWelcomeScreenProc  (CPU 0x4848a77b)
+AcWelcomeScreenProc:
     movm    [d2,d3], (sp)
     add     -0x1c, sp
     mov     d0, d3
@@ -42128,8 +42128,8 @@ loc_4849E63C:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_4849E647:
     ret     [d2,d3,a2,a3], 0x2c
-
-func_4849E64A:
+# FavSetFunc  (CPU 0x4849e64a)
+FavSetFunc:
     add     -0x14, sp
     cmp     0x50005, d1
     bne     loc_4849E692
@@ -42158,8 +42158,8 @@ loc_4849E692:
     clr     d0
 loc_4849E693:
     ret     0, 0x14
-
-func_4849E696:
+# FavBankNamingFunc  (CPU 0x4849e696)
+FavBankNamingFunc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2

@@ -17981,7 +17981,7 @@ loc_484ABB24:
     call    PanelTickWait6, 0, 0
     call    PanelTickWait6, 0, 0
     call    PanelTickWait6, 0, 0
-    call    func_484ABBE7_entry, [d2,a2,a3], 0x58
+    call    PanelLinkInit_entry, [d2,a2,a3], 0x58
     call    PanelTickWait51, 0, 0
     call    PanelTickWait51, 0, 0
     call    PanelTickWait51, 0, 0
@@ -18051,11 +18051,11 @@ func_484ABBD6_entry:
     call    PanelTypeDetect_entry, [a2], 0xc
     extbu   d0
     ret     0, 8
-
-func_484ABBE7:
+# PanelLinkInit  (CPU 0x484abbe7)
+PanelLinkInit:
     movm    [d2,a2,a3], (sp)
     add     -0x4c, sp
-func_484ABBE7_entry:
+PanelLinkInit_entry:
     mov     sp, a0
     mov     a0, d2
     add     0x10, d2
@@ -18255,8 +18255,8 @@ loc_484ABE71:
     mov     4, d0
     call    ena_int_entry, [d2], 4
     ret     0, 0x10
-
-func_484ABEBF:
+# PanelSendPairPolled  (CPU 0x484abebf)
+PanelSendPairPolled:
     add     -0xc, sp
     movbu   d0, (0x5006be14)
     movbu   d1, (0x5006be15)
@@ -18342,8 +18342,8 @@ loc_484ABFF1:
     bclr    0x01, (0x36008064)
     bclr    0x01, (0x36008065)
     ret     0, 0xc
-
-func_484AC031:
+# PanelBusyWait30  (CPU 0x484ac031)
+PanelBusyWait30:
     add     -8, sp
     mov     0x1e, d0
     mov     d0, (0, sp)
@@ -18359,8 +18359,8 @@ func_484AC031:
     cmp     0, d0
     lne
     retf    0, 8
-
-func_484AC04E:
+# PanelBusyWait60  (CPU 0x484ac04e)
+PanelBusyWait60:
     add     -8, sp
     mov     0x3c, d0
     mov     d0, (0, sp)

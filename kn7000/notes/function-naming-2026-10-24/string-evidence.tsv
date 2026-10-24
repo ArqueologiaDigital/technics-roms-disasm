@@ -1,0 +1,66 @@
+kn7000_addr	name	evidence_class	evidence
+0x48473AB1	adler32	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	(d0 = adler, a0 = buf, d1 = len): buf == 0 -> 1; sums mod 65521 in runs of at most 5552 bytes
+0x48473B74	deflateInit_	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	(strm, level, version, size) -> deflateInit2_(..., Z_DEFLATED, 15, 8, 0, ...); the fmm layer's two compressing writers call it
+0x48473B90	deflateInit2_	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	checks version[0] against "1.0.4", allocates the state, window, prev, head and pending buffers; on failure deflateEnd; ends in deflateReset
+0x48473D6E	deflateSetDictionary	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	adler32 of the dictionary into strm->adler, memcpy into the window, inserts its strings into the hash chains
+0x48473E7B	deflateReset	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	counters cleared, status BUSY_STATE (113) or INIT_STATE (42) when a zlib header is due, then _tr_init and lm_init
+0x48473EEB	deflateParams	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	level/strategy change: flushes with deflate(Z_PARTIAL_FLUSH) when the compression function changes, then reloads configuration_table 0x50000D60
+0x48473F90	putShortMSB	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	appends a 16-bit value, most significant byte first, to the pending buffer (the zlib header and the adler32 trailer)
+0x48473FB1	flush_pending	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	copies as much of the pending buffer as fits to next_out (memcpy)
+0x4847401B	deflate	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	writes the zlib header (3 putShortMSB), runs the level's function from configuration_table, then _tr_align / _tr_stored_block / CLEAR_HASH (memset) per flush mode, and the adler32 trailer
+0x4847428E	deflateEnd	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	frees pending, head, prev, window and the state through strm->zfree; Z_DATA_ERROR if the stream was BUSY_STATE (113)
+0x4847432F	deflateCopy	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	1.0.4's stub: checks the pointers, copies the 14-word z_stream, and returns Z_STREAM_ERROR (-2) anyway
+0x48474353	read_buf	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	copies up to the asked size from next_in, updating adler32 when a zlib header is wanted (fill_window's only input)
+0x4847439E	lm_init	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	window_size = 2*w_size, CLEAR_HASH (memset), then the level's max_lazy / good / nice / max_chain from configuration_table 0x50000D60
+0x48474430	longest_match	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the hash-chain match search up to MAX_MATCH (258), MIN_LOOKAHEAD (262) bound; called by deflate_fast and deflate_slow
+0x484745BA	fill_window	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	slides the window down by w_size (memcpy) when the lookahead runs short, rebases head and prev, then read_buf
+0x48474719	deflate_stored	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	configuration_table level 0: stored blocks of at most 0xFFFF bytes (fill_window, _tr_flush_block, flush_pending)
+0x4847481F	deflate_fast	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	levels 1-3: greedy matching (longest_match, _tr_tally, _tr_flush_block)
+0x48474A78	deflate_slow	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	levels 4-9: lazy matching (longest_match, _tr_tally, _tr_flush_block)
+0x48474DA5	tr_static_init	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	first _tr_init only: base_length / base_dist tables, the static literal tree (lengths 8/9/7/8 for codes 0-143/144-255/256-279/280-287, gen_codes) and the static distance tree (bi_reverse)
+0x48474F60	_tr_init	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	tr_static_init once, then the three tree descriptors and init_block
+0x48474FC4	init_block	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	zeroes the dynamic literal, distance and bit-length frequencies, counts the END_BLOCK code once
+0x48475015	pqdownheap	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	restores the heap property from node k down (build_tree's priority queue)
+0x484750BF	gen_bitlen	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	computes the optimal bit lengths for a tree, limited to max_length, updating opt_len / static_len
+0x484752AA	gen_codes	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	assigns the codes for given bit lengths (bi_reverse on each)
+0x48475300	build_tree	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	builds one Huffman tree: heap (pqdownheap), gen_bitlen, gen_codes
+0x484754D8	scan_tree	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	counts the run lengths of a tree's code lengths into the bit-length tree's frequencies (138 = longest repeat)
+0x484755A8	send_tree	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	emits a tree's code lengths with the bit-length codes, run-length coded
+0x48475A29	build_bl_tree	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	scan_tree on the literal and distance trees, build_tree on the bit-length tree, returns the index of the last length to send
+0x48475A92	send_all_trees	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	sends the three tree sizes, the bit-length code lengths, then send_tree for the literal and distance trees
+0x48475CAC	_tr_stored_block	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	block type STORED_BLOCK, then copy_block with the header (deflate's sync flush, _tr_flush_block's fallback)
+0x48475D49	_tr_align	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	an empty static block for Z_PARTIAL_FLUSH, padded with a second one when the decoder could otherwise stall (two bi_flush)
+0x48475F34	_tr_flush_block	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	picks stored / static / dynamic (set_data_type, build_tree x2, build_bl_tree), sends it (compress_block or _tr_stored_block), init_block, bi_windup at the end of stream
+0x4847611D	_tr_tally	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	records a literal or a (distance, length) pair and its frequencies; returns whether the buffer is full
+0x48476201	compress_block	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	emits a block's symbols with the given literal and distance trees
+0x48476577	set_data_type	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	Z_ASCII / Z_BINARY from the literal frequencies of 0-6, 7-127 and 128-255
+0x484765D4	bi_reverse	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	reverses the low len bits of a code
+0x484765EF	bi_flush	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	writes out the complete bytes of the bit buffer, keeps the rest
+0x48476651	bi_windup	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	writes out the bit buffer to a byte boundary
+0x484766AD	copy_block	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	bi_windup, then optionally the LEN / NLEN header, then the stored data
+0x48476731	inflateReset	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	counters and msg cleared, mode METHOD (or BLOCKS for raw streams), inflate_blocks_reset
+0x48476774	inflateEnd	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	inflate_blocks_free, then frees the state through z->zfree
+0x484767C6	inflateInit2_	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	checks version[0] against "1.0.4"; zalloc / zfree default to zcalloc / zcfree; window bits 8..15 (negative = raw); inflate_blocks_new with adler32 as the check; inflateReset
+0x48476899	inflateInit_	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	-> inflateInit2_(z, 15, version, size); the fmm layer's decompressing readers call it
+0x484768A7	inflate	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	argument check (Z_STREAM_ERROR -2), then the mode switch through table 0x485CD27C: header, inflate_blocks, check bytes
+0x48476BF0	inflateSetDictionary	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	adler32 of the dictionary must equal the one the header asked for, then inflate_set_dictionary
+0x48476C5E	inflateSync	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	skips input up to a 00 00 FF FF stored-block marker, then inflateReset
+0x48476D1F	inflate_blocks_reset	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	frees the per-block trees (inflate_codes_free, inflate_trees_free x2), mode TYPE, restarts the check value
+0x48476D9F	inflate_blocks_new	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	allocates the block state and its window, inflate_blocks_reset
+0x48476E0B	inflate_blocks	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the block-type state machine (stored, fixed, dynamic) that inflate_codes and inflate_flush serve
+0x484779B4	inflate_blocks_free	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	inflate_blocks_reset, then frees the window and the block state
+0x484779E5	inflate_set_dictionary	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	memcpy of the dictionary into the window
+0x48477A05	huft_build	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	builds a Huffman decoding table set from code lengths (inflate_trees_free on allocation failure)
+0x48477DDB	inflate_trees_bits	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the 19-code bit-length tree ("oversubscribed / incomplete dynamic bit lengths tree")
+0x48477E21	inflate_trees_dynamic	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the literal/length (257 + n) and distance trees of a dynamic block ("... literal/length tree" texts)
+0x48477EF8	inflate_trees_fixed	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the fixed trees, built once (lengths 8/9/7/8 for 0-143/144-255/256-279/280-287, 5 for the distances)
+0x48478039	inflate_trees_free	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	frees a table chain link by link through z->zfree
+0x48478072	inflate_codes_new	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	allocates the 0x1C-byte codes state: mode START, lbits/dbits, ltree/dtree
+0x4847809E	inflate_codes	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the literal/length/distance decoding state machine (inflate_fast when there is room, inflate_flush)
+0x484787FB	inflate_codes_free	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	frees the codes state through z->zfree
+0x4847880D	inflate_flush	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	copies the window's output to next_out (memcpy, twice when it wraps), updating the check
+0x48478904	inflate_fast	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the fast decoding loop, no calls ("invalid distance code", "invalid literal/length code")
+0x48478C47	zcalloc	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the default zalloc inflateInit2_ installs: ZArenaAllocArray(items, size)
+0x48478C5F	zcfree	zlib 1.0.4: strings, constants and call graph against the zlib 1.0.4 source	the default zfree: ZArenaFree
+0x48580EB8	SswObjectNameGet	call-graph role: the name GetSswObjectID compares	(d0 = object id) -> a0 = static buffer 0x5009E290 holding the text SendEvent(id, 0x00060015) returns (strcpy); GetSswObjectID compares it with the name it looks for, so it is the object's name [inferred]
+0x48580EE1	GetSswObjectID	error text naming the routine; its caller/callee role	(a0 = name) -> d0 = id (class << 20 | index) of the first visible object (CheckViewObject) whose SswObjectNameGet text equals the name, scanning classes 0x2F down to 0 with CountObject; else prints "Error! (GetSswObjectID)" through func_48487831 and returns -1. The name is the firmware's own, from that error text

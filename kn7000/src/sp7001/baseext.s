@@ -7,7 +7,7 @@
 # Linked for, and loaded at, CPU 0x5029B000: the table-flash XAPR plug-in's
 # loader reads the whole 0x1D000-byte file there and calls its first byte
 # (XapEntry). Code 0x000000..0x01321E (398 chunks as MN10300 assembly), data to
-# 0x016B4C, then 0xFF. 10 routines are named as byte-identical copies
+# 0x016B4C, then 0xFF. 11 routines are named as byte-identical copies
 # of the firmware's (its own copy of the same C runtime).
 
 .mnbase 0x5029B000   # CPU address of output offset 0 (for PC-relative ops)
@@ -58,7 +58,7 @@
 .equ func_5029C302, 0x5029C302
 .equ LibDiv32, 0x5029C316
 .equ func_5029C335_entry, 0x5029C338
-.equ func_5029C7AA, 0x5029C7AA
+.equ LibF64NegTo, 0x5029C7AA
 .equ func_5029C7CA_entry, 0x5029C7CD
 .equ func_5029C7E7_entry, 0x5029C7EA
 .equ func_5029C88C_entry, 0x5029C88F
@@ -3207,7 +3207,7 @@
     mov     (4, a0), d0
     mov     d1, (a1)
     mov     d0, (4, a1)
-    call    func_5029C7AA, 0, 0
+    call    LibF64NegTo, 0, 0
     mov     (4, sp), a0
     mov     sp, a1
     add     0x60, a1
@@ -3640,7 +3640,8 @@
     mov     d0, (8, sp)
     mov     d1, (0xc, sp)
     retf    0, 0x10
-# func_5029C7AA  (CPU 0x5029C7AA)
+# LibF64NegTo  (CPU 0x5029C7AA)
+#   byte-identical copy of the firmware's LibF64NegTo
     mov     sp, a0
     add     8, a0
     movhu   (6, a0), d0

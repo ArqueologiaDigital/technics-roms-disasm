@@ -10428,8 +10428,8 @@ InitializeBlock11_entry:
     mov     0x48646030, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_48506D53:
+# AcSndArgGridBoxProc  (CPU 0x48506d53)
+AcSndArgGridBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     d0, d3
@@ -11435,8 +11435,8 @@ loc_485079C4:
     clr     d0
 loc_485079C5:
     ret     0, 0x14
-
-func_485079C8:
+# AcMultiIndexListProc  (CPU 0x485079c8)
+AcMultiIndexListProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     d0, d3
@@ -34404,8 +34404,8 @@ loc_485166EE:
     clr     d0
 loc_485166EF:
     ret     0, 0x14
-
-func_485166F2:
+# RSpSelectProc  (CPU 0x485166f2)
+RSpSelectProc:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
     mov     d0, d2

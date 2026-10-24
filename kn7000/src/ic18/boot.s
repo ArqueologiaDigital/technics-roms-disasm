@@ -11,7 +11,7 @@
 # image to 0x50010000, clears .bss, builds the two interrupt thunks at
 # 0x50000000 and jumps to BootMain in RAM.
 #   18975 instructions in 401 routines (72 with no caller, 277 instructions of an older link),
-#   33 byte-identical to named firmware routines;
+#   42 byte-identical to named firmware routines;
 #   data: 192 strings, 166 pointer words
 
 # addresses outside this image: RAM past it, the older link's, the hardware
@@ -1536,6 +1536,7 @@ sprintf_entry:
 # ---- vsprintf_core -----------------------------------------------------------
 # the printf engine sprintf calls: walks the format, parses each spec (PfParseSpec) and switches
 # on the conversion letter 'E'..'x'
+# the same code as the firmware's routine of this name (941 0x4C001A65), linked elsewhere
 # `call` enters at vsprintf_core_entry, past the prologue
 vsprintf_core:
     movm    [d2,d3,a2,a3], (sp)
@@ -2098,6 +2099,7 @@ loc_500005A4:
 # ---- PfOutString -------------------------------------------------------------
 # append d0 bytes: memcpy into the output buffer when writing to a string, else fwrite to the
 # stream
+# the same code as the firmware's routine of this name (941 0x4C001E4D), linked elsewhere
 # `call` enters at PfOutString_entry, past the prologue
 PfOutString:
     movm    [d2,a2,a3], (sp)
@@ -2127,6 +2129,7 @@ loc_500005D4:
 
 # ---- PfOutPad ----------------------------------------------------------------
 # append d1 copies of the character d0 (field padding)
+# the same code as the firmware's routine of this name (941 0x4C001E75), linked elsewhere
 # `call` enters at PfOutPad_entry, past the prologue
 PfOutPad:
     movm    [d2,a2,a3], (sp)
@@ -2179,6 +2182,7 @@ loc_5000061A:
 # ---- PfParseSpec -------------------------------------------------------------
 # the flag characters of one conversion, through a hashed switch on the character, then
 # PfParseWidthPrecSize
+# the same code as the firmware's routine of this name (941 0x4C001EBB), linked elsewhere
 # `call` enters at PfParseSpec_entry, past the prologue
 PfParseSpec:
     movm    [d2,d3,a2,a3], (sp)
@@ -2482,6 +2486,7 @@ loc_500007C8:
 # ---- localeconv --------------------------------------------------------------
 # fills the struct lconv in .bss from the current locale's numeric and monetary tables; returns
 # it in a0
+# the same code as the firmware's routine of this name (941 0x4C00206A), linked elsewhere
 localeconv:
     mov     (NumericLocaleIndex), d0
     mov     0x28, d1
@@ -2537,6 +2542,7 @@ localeconv:
 # ---- PfFormatInteger ---------------------------------------------------------
 # one %d/%i/%u/%o/%x/%X/%p: fetch the argument by size, sign or prefix, digits by base,
 # precision
+# byte-identical (to its first return) to the firmware's routine of this name
 # `call` enters at PfFormatInteger_entry, past the prologue
 PfFormatInteger:
     movm    [d2,d3,a2,a3], (sp)
@@ -2816,6 +2822,7 @@ loc_50000A4C:
 
 # ---- PfFloatToDigits ---------------------------------------------------------
 # the digits and decimal exponent of a double for the %f/%e/%g formatters (sign split off first)
+# the same code as the firmware's routine of this name (941 0x4C0022F8), linked elsewhere
 # `call` enters at PfFloatToDigits_entry, past the prologue
 PfFloatToDigits:
     movm    [d2,a2,a3], (sp)
@@ -3007,6 +3014,7 @@ loc_50000B5C:
 
 # ---- PfFormatF ---------------------------------------------------------------
 # %f; "Infinity" for an infinite value
+# the same code as the firmware's routine of this name (941 0x4C002428), linked elsewhere
 # `call` enters at PfFormatF_entry, past the prologue
 PfFormatF:
     movm    [d2,a2,a3], (sp)
@@ -3093,6 +3101,7 @@ loc_50000C0B:
 
 # ---- PfFormatE ---------------------------------------------------------------
 # %e / %E; "Infinity" for an infinite value
+# the same code as the firmware's routine of this name (941 0x4C0024AD), linked elsewhere
 # `call` enters at PfFormatE_entry, past the prologue
 PfFormatE:
     movm    [d2,d3,a2,a3], (sp)
@@ -3310,6 +3319,7 @@ loc_50000D34:
 
 # ---- PfFormatG ---------------------------------------------------------------
 # %g / %G: picks %e or %f style by the exponent
+# the same code as the firmware's routine of this name (941 0x4C00260D), linked elsewhere
 # `call` enters at PfFormatG_entry, past the prologue
 PfFormatG:
     movm    [d2,d3,a2,a3], (sp)
@@ -3901,6 +3911,7 @@ loc_50001127:
 
 # ---- PfShortToDigits ---------------------------------------------------------
 # the same for an h-size (16-bit) argument
+# the same code as the firmware's routine of this name (941 0x4C0029D9), linked elsewhere
 # `call` enters at PfShortToDigits_entry, past the prologue
 PfShortToDigits:
     movm    [d2,d3,a2,a3], (sp)
@@ -4016,6 +4027,7 @@ loc_500011CA:
 
 # ---- StrReverse --------------------------------------------------------------
 # reverse d0 bytes at a0 in place
+# byte-identical (to its first return) to the firmware's routine of this name
 # `call` enters at StrReverse_entry, past the prologue
 StrReverse:
     movm    [d2], (sp)
@@ -4044,6 +4056,7 @@ loc_500011FD:
 
 # ---- PfRoundDigits -----------------------------------------------------------
 # round a decimal digit string at a given length, carrying '9's up; may add a leading '1'
+# the same code as the firmware's routine of this name (941 0x4C002A9E), linked elsewhere
 # `call` enters at PfRoundDigits_entry, past the prologue
 PfRoundDigits:
     movm    [d2,d3,a2,a3], (sp)
@@ -4212,6 +4225,7 @@ loc_500012E8:
 
 # ---- PfDoubleToDecimal -------------------------------------------------------
 # the decimal digits and exponent of a double, by scaling with the powers-of-ten table
+# the same code as the firmware's routine of this name (941 0x4C002B70), linked elsewhere
 # `call` enters at PfDoubleToDecimal_entry, past the prologue
 PfDoubleToDecimal:
     movm    [d2,d3,a2,a3], (sp)
@@ -4889,6 +4903,7 @@ loc_5000183A:
 
 # ---- LibF64Zero --------------------------------------------------------------
 # returns 0.0 (from the constant table)
+# the same code as the firmware's routine of this name (941 0x4C002FB8), linked elsewhere
 # no caller: unreferenced code
 LibF64Zero:
     add     -8, sp
@@ -4917,6 +4932,7 @@ LibF64Max:
 
 # ---- LibF64NegTo -------------------------------------------------------------
 # stores -x through the result pointer
+# byte-identical (to its first return) to the firmware's routine of this name
 LibF64NegTo:
     mov     sp, a0
     add     8, a0
@@ -5381,6 +5397,7 @@ loc_50001BAB:
 
 # ---- ceil --------------------------------------------------------------------
 # -floor(-x)
+# the same code as the firmware's routine of this name (941 0x4C001A0D), linked elsewhere
 # `call` enters at ceil_entry, past the prologue
 ceil:
     movm    [d2,a2], (sp)
@@ -6351,6 +6368,7 @@ StreamPutByte:
 
 # ---- fwrite ------------------------------------------------------------------
 # d1 items of d0 bytes, one StreamPutByte each
+# byte-identical (to its first return) to the firmware's routine of this name
 # `call` enters at fwrite_entry, past the prologue
 fwrite:
     movm    [d2,d3,a2,a3], (sp)
@@ -6400,6 +6418,7 @@ loc_500022C1:
 
 # ---- strtol ------------------------------------------------------------------
 # wraps StrToLongCore; sets errno (2) on overflow
+# the same code as the firmware's routine of this name (941 0x4C0030C0), linked elsewhere
 # `call` enters at strtol_entry, past the prologue
 strtol:
     movm    [a2], (sp)
@@ -6424,6 +6443,7 @@ loc_500022E8:
 
 # ---- StrToLongCore -----------------------------------------------------------
 # the signed counterpart of StrToULongCore (LibDiv32)
+# byte-identical (to its first return) to the firmware's routine of this name
 # `call` enters at StrToLongCore_entry, past the prologue
 StrToLongCore:
     movm    [d2,d3,a2,a3], (sp)
@@ -7345,6 +7365,7 @@ loc_50002AB7:
 
 # ---- PanelBusyWait30 ---------------------------------------------------------
 # counted busy loop (0x1E iterations)
+# byte-identical (to its first return) to the firmware's routine of this name
 # no caller: unreferenced code
 PanelBusyWait30:
     add     -8, sp
@@ -7365,6 +7386,7 @@ PanelBusyWait30:
 
 # ---- PanelBusyWait60 ---------------------------------------------------------
 # counted busy loop (0x3C iterations)
+# byte-identical (to its first return) to the firmware's routine of this name
 # no caller: unreferenced code
 PanelBusyWait60:
     add     -8, sp
@@ -10994,6 +11016,7 @@ loc_50004F0B:
 
 # ---- FdcOpcodeInvalid --------------------------------------------------------
 # 0 for a command code (low 5 bits) the controller knows, else 1
+# the same code as the firmware's routine of this name (941 0x48400F1D), linked elsewhere
 FdcOpcodeInvalid:
     movbu   (FdcOpcode), d0
     and     0x1f, d0
@@ -12790,6 +12813,7 @@ FdcDmaDoneIsr:
 
 # ---- FdcIrq ------------------------------------------------------------------
 # group 25: reads the result phase into FdcResult (or a SENSE INTERRUPT), FdcCheckResult
+# the same code as the firmware's routine of this name (941 0x4840221D), linked elsewhere
 # nothing calls it directly: its address is taken (a handler or a method)
 FdcIrq:
     add     -0x18, sp
@@ -17228,6 +17252,7 @@ loc_500084A0:
 
 # ---- DCacheFlushDisable ------------------------------------------------------
 # written back way by way unless write-through, invalidated, left off
+# byte-identical (to its first return) to the firmware's routine of this name
 DCacheFlushDisable:
     mov     CHCTR, a0
     movhu   (a0), d0
@@ -18191,6 +18216,7 @@ LcdControllerInitAlt:
 
 # ---- IrqGroupsDisableAll -----------------------------------------------------
 # the enable bit of every GxICR off, before the jump to the firmware
+# byte-identical (to its first return) to the firmware's routine of this name
 IrqGroupsDisableAll:
     movhu   (G2ICR), d0
     mov     0x0000feff, d1
