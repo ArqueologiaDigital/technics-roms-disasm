@@ -31,13 +31,13 @@ held over from the driver work.  Nothing here rests on it; a fit is a fit whatev
 
 ---
 
-## 1. ★★ `Curve_FE04C9` and `Curve_FE05C9` are not two curves — they are ONE FILTER CUTOFF
+## 1. ★★ `Curve_Muting_Cutoff_Q16_128` and `Curve_Muting_Cutoff_Q13_128` are not two curves — they are ONE FILTER CUTOFF
 
 This is the result that made the rest readable, and it is the one to check first.
 
 ### The encoding had to be undone before anything fit
 
-Read as `s16`, `Curve_FE04C9` is not monotone: it falls from −510 to −31655 and then *jumps*
+Read as `s16`, `Curve_Muting_Cutoff_Q16_128` is not monotone: it falls from −510 to −31655 and then *jumps*
 to +350 and rises to +28591.  Passed through the firmware's **own** `fold()` — the function
 the packer applies at `0xFC5361` on the way to register `0x01C0` —
 
@@ -126,14 +126,14 @@ Equivalently, entry for entry, `(1 − G/8192) · g = 1/128`.
 
 ### ★ Sanity against music
 
-| index `k` | cutoff | MIDI |
-|---:|---:|---:|
-| 9 (the floor ends) | 110.0 Hz | 45 |
-| 34 (`Table_FDFF96` min) | 466 Hz | 70 |
-| 44 (a reader's lower clamp) | 831 Hz | 80 |
-| 60 (`Table_FDFF96` max) | 2093 Hz | 96 |
-| 96 (a reader's upper clamp) | 16744 Hz | 132 |
-| 100 (the ceiling) | 21096 Hz | 136 |
+| index `k`                                         | cutoff   | MIDI |
+|--------------------------------------------------:|---------:|-----:|
+| 9 (the floor ends)                                | 110.0 Hz | 45   |
+| 34 (`Table_Muting_CutoffFloor_ByKeyZone_256` min) | 466 Hz   | 70   |
+| 44 (a reader's lower clamp)                       | 831 Hz   | 80   |
+| 60 (`Table_Muting_CutoffFloor_ByKeyZone_256` max) | 2093 Hz  | 96   |
+| 96 (a reader's upper clamp)                       | 16744 Hz | 132  |
+| 100 (the ceiling)                                 | 21096 Hz | 136  |
 
 The readers clamp the index to `44..96` (`0xFC4971`, `0xFC4976`) and to
 `Table_FDFF96[zone] .. PART[+0x12]` (`0xFC52D2`), i.e. **831 Hz to 16.7 kHz**.  That is a
@@ -188,7 +188,7 @@ Musical sanity: 10.58 octaves is a range of 1625:1.  A delay line covering the 8
 ## 3. `Const_0100_251` → register `chan+0x0100`: constant on this firmware, **and refreshed**
 
 `0x0100` in **all 251 entries**.  Read with the *same* clamped 0..250 index as
-`Curve_Log2_251`, one instruction later (`lda XBC,0xFDFCD6` at `0xFC49ED`).
+`Curve_Position_Log2Period_251`, one instruction later (`lda XBC,0xFDFCD6` at `0xFC49ED`).
 
 ### ⚠ How the 251 bound is set — three independent ways, all agreeing
 
@@ -202,7 +202,7 @@ from a label:
    or into a neighbour.
 2. **The reader's clamp.**  `cp HL,0x00fa` (else `0xFA`) at `0xFC49CC` and `cp HL,0` (else 0)
    at `0xFC49D7` give an index of 0..250 — 251 entries.
-3. **The next cited base.**  `0xFDFCD6 + 502 = 0xFDFECC` = `Curve_Exp2Decay_101`, which prom_c
+3. **The next cited base.**  `0xFDFCD6 + 502 = 0xFDFECC` = `Curve_Exp2Gain_Percent_101`, which prom_c
    cites in its own `add <X..>,#imm32` at `0xFC4B1B`.
 
 ### ⚠ And the register is refreshed, not latched once
@@ -216,7 +216,7 @@ the value is constant**: an emulator must expect the writes and may ignore the n
 Three readings, and the numbers cannot separate them:
 
 * **1.0 in Q8 — a unity coefficient.**  The structural twin of this pair is
-  (`Curve_FE04C9`, `Curve_FE05C9`) → (`0x0400`, `0x0340`): the same
+  (`Curve_Muting_Cutoff_Q16_128`, `Curve_Muting_Cutoff_Q13_128`) → (`0x0400`, `0x0340`): the same
   `add`-then-`lda`-one-instruction-later idiom, one index, two words — and *there* the second
   table is a real second coefficient.  So the slot is a second-coefficient slot that this
   firmware pins.
@@ -236,27 +236,27 @@ UNIDENTIFIED.**  ⚠ And it constrains THIS FIRMWARE, not the silicon.
 
 All three share one slope — **16 steps per doubling = 6.0206/16 = 0.3763 dB per step**.
 
-| table | closed form | max residual | live span |
-|---|---|---:|---|
-| `Curve_Exp2Decay_256` | `round(32768 * 2^((k-255)/16))` | 4 counts | `0` for `k <= 46`, then 78.6 dB up to `0x8000` |
-| `Curve_Exp2Rise_128` | `32768 * (1 - 2^(-k/16))` | **0 — exact on all 128** | `0` .. `0x7F7A` (0.99586) |
-| `Curve_Exp2Decay_101` | `T[0]=0`; `round(32768 * 2^((k-100)/16))` | 4 counts | `0`, then 37.28 dB up to `0x8000` |
-| `ExpCurve_0_to_0x80` | `T[0]=0`; `max(1, round(128 * 2^((k-127)/16)))` | **0 — exact on all 128** | `0`, then 42.1 dB up to `0x80` |
+| table                         | closed form                                     | max residual             | live span                                      |
+|-------------------------------|-------------------------------------------------|-------------------------:|------------------------------------------------|
+| `Curve_Fitting_Exp2Decay_256` | `round(32768 * 2^((k-255)/16))`                 | 4 counts                 | `0` for `k <= 46`, then 78.6 dB up to `0x8000` |
+| `Curve_Fitting_Exp2Rise_128`  | `32768 * (1 - 2^(-k/16))`                       | **0 — exact on all 128** | `0` .. `0x7F7A` (0.99586)                      |
+| `Curve_Exp2Gain_Percent_101`  | `T[0]=0`; `round(32768 * 2^((k-100)/16))`       | 4 counts                 | `0`, then 37.28 dB up to `0x8000`              |
+| `Curve_Exp2Gain_U8_128`       | `T[0]=0`; `max(1, round(128 * 2^((k-127)/16)))` | **0 — exact on all 128** | `0`, then 42.1 dB up to `0x80`                 |
 
 Nulls (over bands where the 1-count quantisation is under 0.0014 in log2, so the comparison is
 about the law and not about rounding):
 
-| table | straight line in `T` | straight line in `log2 T` |
-|---|---:|---:|
-| `Curve_Exp2Decay_256` | R² 0.841, max 10026 | R² 0.999999, max 0.0041 |
-| `Curve_Exp2Rise_128` | R² 0.703, max 14439 | R² 1.000000, max 0.0042 *(on `log2(32768−T)`)* |
-| `Curve_Exp2Decay_101` | R² 0.783, max 12343 | R² 0.999998, max 0.0094 |
-| `ExpCurve_0_to_0x80` | R² 0.968, max 11.6 | R² 0.999849, max 0.0157 |
+| table                         | straight line in `T` | straight line in `log2 T`                      |
+|-------------------------------|---------------------:|-----------------------------------------------:|
+| `Curve_Fitting_Exp2Decay_256` | R² 0.841, max 10026  | R² 0.999999, max 0.0041                        |
+| `Curve_Fitting_Exp2Rise_128`  | R² 0.703, max 14439  | R² 1.000000, max 0.0042 *(on `log2(32768−T)`)* |
+| `Curve_Exp2Gain_Percent_101`  | R² 0.783, max 12343  | R² 0.999998, max 0.0094                        |
+| `Curve_Exp2Gain_U8_128`       | R² 0.968, max 11.6   | R² 0.999849, max 0.0157                        |
 
 ★ **Two of the four have index ranges that are UI parameters, and say so.**
-`Curve_Exp2Decay_101`'s index is clamped `0..100` (`0xFC4B04`, `0xFC6ECA`): a **0..100 percent
+`Curve_Exp2Gain_Percent_101`'s index is clamped `0..100` (`0xFC4B04`, `0xFC6ECA`): a **0..100 percent
 control with an explicit OFF position**, given a 37 dB logarithmic taper.
-`ExpCurve_0_to_0x80`'s index is a tone-record byte `0..127`: a **0..127 control** over 42 dB —
+`Curve_Exp2Gain_U8_128`'s index is a tone-record byte `0..127`: a **0..127 control** over 42 dB —
 and the packer writes `(b << 8) | b`, **one byte in both halves** of register `0x0300`, which
 is the shape of a device with two 8-bit fields fed the same number.
 
@@ -264,7 +264,7 @@ is the shape of a device with two 8-bit fields fed the same number.
 
 ## 5. ⚠ The one musically absurd result, and what makes it go away
 
-**`Curve_Exp2Decay_256` / `Curve_Exp2Rise_128` cannot be per-sample filter poles.**
+**`Curve_Fitting_Exp2Decay_256` / `Curve_Fitting_Exp2Rise_128` cannot be per-sample filter poles.**
 
 The table's two largest entries are `0x8000` (= 1.0) and `0x7A90` (= 0.957520), with **nothing
 in between**.  As a per-sample pole, 0.957520 is a time constant of **0.522 ms** at 44.1 kHz —
@@ -285,7 +285,7 @@ Reported rather than smoothed over: a per-sample reading of these tables is *wro
 | 191 | 0.062500 | 8.9 ms | 0.061 s | 0.36 |
 
 — **24 ms to 3.9 s of T60**, where the per-sample reading gave 0.5 ms and nothing longer.
-`Curve_Exp2Rise_128`'s complement gives the same law with `tau = 16/(f_refresh·ln2·k)`:
+`Curve_Fitting_Exp2Rise_128`'s complement gives the same law with `tau = 16/(f_refresh·ln2·k)`:
 `k=1` → 567 ms, `k=16` → 35 ms, `k=127` → 4.5 ms — attack times.
 
 ⚠ **[INFERENCE, with its condition explicit]** the 40.69 Hz refresh is measured for registers
@@ -293,7 +293,7 @@ Reported rather than smoothed over: a per-sample reading of these tables is *wro
 advances an envelope on the host's write cadence.  What is established is the shape, and the
 fact that one plausible rate turns an absurd range into a musical one.
 
-★ **`Curve_Exp2Rise_128` in its other role IS musical without any assumption.**  Register
+★ **`Curve_Fitting_Exp2Rise_128` in its other role IS musical without any assumption.**  Register
 `0x01C0` is register `0x0400`'s word — a *cutoff coefficient* — times
 `Curve_Exp2Rise_128[v1]/2`.  Scaling that coefficient scales the cutoff:
 
@@ -313,7 +313,7 @@ the reason for the second copy is an inference.
 `v1 >= 48` that is `32768·2^(-v1/16)`, and `Curve_Exp2Rise_128[v1]` is
 `32768·(1 − 2^(-v1/16))` — an **exact `(a, 1−a)` pair**, i.e. a first-order lag toward the
 `0x0400` target.  ⚠ Nothing here fixes `b`; it comes from a key-zone record in prom_d.
-`Table_FDFF96`'s own values at that index run `0x22..0x3C`, which brackets `0x30`.
+`Table_Muting_CutoffFloor_ByKeyZone_256`'s own values at that index run `0x22..0x3C`, which brackets `0x30`.
 
 ---
 
@@ -329,17 +329,17 @@ result = (T[D] * A) >> 5                   so T is a coefficient in Q5, 32 = 1.0
 ```
 
 ⚠ Null: these are not "approximately linear".  Each is **exact** against its integer law on
-every entry, and `LinCoef_FE0196`'s single exception at `k = 127` is what a sampled check
+every entry, and `LinCoef_Muting_TouchRamp_Q5_128`'s single exception at `k = 127` is what a sampled check
 would have missed.
 
-| table | law | Q5 range | slope per key | destination, and therefore its unit |
-|---|---|---|---|---|
-| `LinCoef_FE0096` | `2k − 128` | −4.000 .. +3.938 | 1/16 | `R[+0x12]`, the `Curve_Log2_251` index (0..250) |
-| `LinCoef_FE0116` | `65k//128 − 32` | −1.000 .. +1.000, bipolar, single zero at `k=64` | 1/63 | `v1`/`v2`, an exp2 index — so one unit is **0.3763 dB** |
-| `LinCoef_FE0196` | `k//2 − 64`, `T[127]=0` | −2.000 .. −0.031, unipolar | 1/64 | `i3`/`i4`, **the cutoff index, in semitones** |
-| `LinCoef_FE0216` | byte-identical to `FE0196` (all 128) | — | — | two copies, one curve |
+| table                               | law                                  | Q5 range                                         | slope per key | destination, and therefore its unit                            |
+|-------------------------------------|--------------------------------------|--------------------------------------------------|---------------|----------------------------------------------------------------|
+| `LinCoef_Position_TouchRamp_Q5_128` | `2k − 128`                           | −4.000 .. +3.938                                 | 1/16          | `R[+0x12]`, the `Curve_Position_Log2Period_251` index (0..250) |
+| `LinCoef_Fitting_TouchRamp_Q5_128`  | `65k//128 − 32`                      | −1.000 .. +1.000, bipolar, single zero at `k=64` | 1/63          | `v1`/`v2`, an exp2 index — so one unit is **0.3763 dB**        |
+| `LinCoef_Muting_TouchRamp_Q5_128`   | `k//2 − 64`, `T[127]=0`              | −2.000 .. −0.031, unipolar                       | 1/64          | `i3`/`i4`, **the cutoff index, in semitones**                  |
+| `LinCoef_SubGain_TouchRamp_Q5_128`  | byte-identical to `FE0196` (all 128) | —                                                | —             | two copies, one curve                                          |
 
-> ★★ **`LinCoef_FE0196` gives the cutoff key-follow an exact unit.**  Its slope is 1/64 of a
+> ★★ **`LinCoef_Muting_TouchRamp_Q5_128` gives the cutoff key-follow an exact unit.**  Its slope is 1/64 of a
 > Q5 unit per key, and its destination `i3` is in **semitones of cutoff**.  So a depth byte of
 > **64 is exactly one semitone of cutoff per semitone of key = 100% key follow**, and the
 > signed byte's ±127 range is ±198%.  The same holds for the `ks(Q, o)` stage the register map
@@ -365,7 +365,7 @@ key-scaled term, differing in their variable as well as in their constant — wh
 implementation must not share a constant between them.
 (`FINDINGS-l7a1429-editor-pages.md` §1b; `FINDINGS-l7a1429-gate-and-keyscaling.md` §2.)
 
-## 7. `Table_FDFF96`: a minimum cutoff per key zone
+## 7. `Table_Muting_CutoffFloor_ByKeyZone_256`: a minimum cutoff per key zone
 
 256 `u8`, 27 distinct values, `0x22..0x3C` (34..60).  Indexed by the key-zone byte at
 `0x00E08C`; used as the **lower clamp** on the cutoff index `i3`/`i4` (`0xFC52D2`, `0xFC5439`).
@@ -378,27 +378,27 @@ keeps the filter above the zone's own band.  No closed form; the values are data
 
 ## 8. The table an emulator author can use directly
 
-| table | n | fit | endpoints | unit inferred | grade |
-|---|---:|---|---|---|---|
-| `Curve_Log2_251` | 251 | `T[0]=27648`; `round(27543 − 3072·log2 k)` | 27648 → 3072 | 1/256 semitone, log-domain | PROVEN fit / STRONG unit |
-| `Const_0100_251` | 251 | `0x0100` | flat | Q8 unity, or 1 semitone, or a bit-8 flag | PROVEN value / UNIDENTIFIED unit |
-| `Curve_Exp2Decay_256` | 256 | `round(32768·2^((k−255)/16))` | 0 (k≤46) → 0x8000 | Q15 gain, 0.3763 dB/step, 78.6 dB; **not** a per-sample pole | PROVEN fit / UNIDENTIFIED role |
-| `Curve_Exp2Rise_128` | 128 | `32768·(1 − 2^(−k/16))` exact | 0 → 0x7F7A | Q15 depth; as a cutoff scaler, 0 to −4.56 octaves | PROVEN fit / STRONG for `0x01C0` |
-| `Curve_Exp2Decay_101` | 101 | `T[0]=0`; `round(32768·2^((k−100)/16))` | 0 / 448 → 0x8000 | Q15 gain over a **0..100 percent** control, 37.3 dB + OFF | PROVEN fit / STRONG unit |
-| `ExpCurve_0_to_0x80` | 128 | `T[0]=0`; `max(1, round(128·2^((k−127)/16)))` | 0 → 0x80 | 8-bit gain over a 0..127 control, 42.1 dB, in **both** register halves | PROVEN fit / STRONG unit |
-| `Curve_FE04C9` (folded) | 128 | `round(65536·g/(1+g))`, `g = tan(π f/44100)`, `f = 440·2^((k−33)/12)` | 510 → 61359 | **one-pole lowpass coefficient**; index = semitone = MIDI note − 36 | PROVEN fit / STRONG unit |
-| `Curve_FE05C9` (folded) | 128 | `round(8192·(1 − 1/(128·g)))`, same `g` | 25 → 8188 | Q13 companion of the **same** cutoff: `(1−G/8192)·g = 1/128` | PROVEN fit / UNIDENTIFIED role |
-| `Table_FDFF96` | 256 | data, 27 distinct values | 0x22 → 0x3C | minimum cutoff per key zone, 466 Hz .. 2093 Hz | PROVEN range / STRONG unit |
-| `LinCoef_FE0096` | 128 | `2k − 128` exact | −128 → +126 | Q5 key ramp ±4.0 | PROVEN fit / STRONG unit |
-| `LinCoef_FE0116` | 128 | `65k//128 − 32` exact | −32 → +32 | Q5 key ramp ±1.0, bipolar | PROVEN fit / STRONG unit |
-| `LinCoef_FE0196` | 128 | `k//2 − 64`, `T[127]=0` | −64 → −1, then 0 | Q5 key ramp −2.0..0; **depth 64 = 100% cutoff key follow** | PROVEN fit / STRONG unit |
-| `LinCoef_FE0216` | 128 | byte-identical to `FE0196` | same | same | PROVEN |
+| table                                    | n   | fit                                                                   | endpoints         | unit inferred                                                          | grade                            |
+|------------------------------------------|----:|-----------------------------------------------------------------------|-------------------|------------------------------------------------------------------------|----------------------------------|
+| `Curve_Position_Log2Period_251`          | 251 | `T[0]=27648`; `round(27543 − 3072·log2 k)`                            | 27648 → 3072      | 1/256 semitone, log-domain                                             | PROVEN fit / STRONG unit         |
+| `Dev104_Reg0100_Const_251`               | 251 | `0x0100`                                                              | flat              | Q8 unity, or 1 semitone, or a bit-8 flag                               | PROVEN value / UNIDENTIFIED unit |
+| `Curve_Fitting_Exp2Decay_256`            | 256 | `round(32768·2^((k−255)/16))`                                         | 0 (k≤46) → 0x8000 | Q15 gain, 0.3763 dB/step, 78.6 dB; **not** a per-sample pole           | PROVEN fit / UNIDENTIFIED role   |
+| `Curve_Fitting_Exp2Rise_128`             | 128 | `32768·(1 − 2^(−k/16))` exact                                         | 0 → 0x7F7A        | Q15 depth; as a cutoff scaler, 0 to −4.56 octaves                      | PROVEN fit / STRONG for `0x01C0` |
+| `Curve_Exp2Gain_Percent_101`             | 101 | `T[0]=0`; `round(32768·2^((k−100)/16))`                               | 0 / 448 → 0x8000  | Q15 gain over a **0..100 percent** control, 37.3 dB + OFF              | PROVEN fit / STRONG unit         |
+| `Curve_Exp2Gain_U8_128`                  | 128 | `T[0]=0`; `max(1, round(128·2^((k−127)/16)))`                         | 0 → 0x80          | 8-bit gain over a 0..127 control, 42.1 dB, in **both** register halves | PROVEN fit / STRONG unit         |
+| `Curve_Muting_Cutoff_Q16_128` (folded)   | 128 | `round(65536·g/(1+g))`, `g = tan(π f/44100)`, `f = 440·2^((k−33)/12)` | 510 → 61359       | **one-pole lowpass coefficient**; index = semitone = MIDI note − 36    | PROVEN fit / STRONG unit         |
+| `Curve_Muting_Cutoff_Q13_128` (folded)   | 128 | `round(8192·(1 − 1/(128·g)))`, same `g`                               | 25 → 8188         | Q13 companion of the **same** cutoff: `(1−G/8192)·g = 1/128`           | PROVEN fit / UNIDENTIFIED role   |
+| `Table_Muting_CutoffFloor_ByKeyZone_256` | 256 | data, 27 distinct values                                              | 0x22 → 0x3C       | minimum cutoff per key zone, 466 Hz .. 2093 Hz                         | PROVEN range / STRONG unit       |
+| `LinCoef_Position_TouchRamp_Q5_128`      | 128 | `2k − 128` exact                                                      | −128 → +126       | Q5 key ramp ±4.0                                                       | PROVEN fit / STRONG unit         |
+| `LinCoef_Fitting_TouchRamp_Q5_128`       | 128 | `65k//128 − 32` exact                                                 | −32 → +32         | Q5 key ramp ±1.0, bipolar                                              | PROVEN fit / STRONG unit         |
+| `LinCoef_Muting_TouchRamp_Q5_128`        | 128 | `k//2 − 64`, `T[127]=0`                                               | −64 → −1, then 0  | Q5 key ramp −2.0..0; **depth 64 = 100% cutoff key follow**             | PROVEN fit / STRONG unit         |
+| `LinCoef_SubGain_TouchRamp_Q5_128`       | 128 | byte-identical to `FE0196`                                            | same              | same                                                                   | PROVEN                           |
 
 
 ⚠ **CORRECTED 2026-09-04.**  The four `LinCoef_*` rows above say "Q5 key ramp"; they are
-**Q5 TOUCH ramps** — see the ⚠ note at the end of §6.  `LinCoef_FE0196`'s "depth 64 = 100 %
+**Q5 TOUCH ramps** — see the ⚠ note at the end of §6.  `LinCoef_Muting_TouchRamp_Q5_128`'s "depth 64 = 100 %
 cutoff key follow" reads **100 % cutoff TOUCH follow**.  No number in the table changes.
-⚠ `Table_FDFF96` is genuinely indexed by a **key zone** and is not affected.
+⚠ `Table_Muting_CutoffFloor_ByKeyZone_256` is genuinely indexed by a **key zone** and is not affected.
 
 ### The registers this puts a physical quantity on
 
@@ -424,15 +424,15 @@ it cannot choose between.
 
 ## 9. What is still open, and what would settle it
 
-* **What `Curve_FE05C9` IS.**  Its closed form is exact and its tie to the cutoff is exact, so
+* **What `Curve_Muting_Cutoff_Q13_128` IS.**  Its closed form is exact and its tie to the cutoff is exact, so
   an emulator does not need it — but no standard filter structure this pass tried puts
   `8192·(1 − 1/(128·g))` next to `65536·g/(1+g)`.  ⚠ Recorded as a shape, not a role.
 * **The absolute scale of `chan+0x00C0`.**  The unit per count and the direction are fixed;
   the zero point is not.  One value of that register observed against one known delay or decay
   time would fix it, and there is no reader in the image to supply one.
-* **`Curve_Exp2Decay_256`'s rate.**  §5 shows the table is absurd per sample and musical at
+* **`Curve_Fitting_Exp2Decay_256`'s rate.**  §5 shows the table is absurd per sample and musical at
   40.69 Hz.  Which rate the LSI actually uses is not in this ROM.
-* **`Table_FDFF96`'s 27 values.**  A per-zone floor, with no closed form.  Its producer is the
+* **`Table_Muting_CutoffFloor_ByKeyZone_256`'s 27 values.**  A per-zone floor, with no closed form.  Its producer is the
   key-zone record in prom_d, so prom_d's zone format would give the 27 numbers a meaning.
 * **The `0x00E08C` bias in `0x0140`'s index.**  If it is `0x30` the `(a, 1−a)` pair of §5 is
   exact.  It comes from prom_d.

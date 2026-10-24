@@ -172,8 +172,8 @@ Zeroes an 8-byte buffer, pushes it to all four channels, then sets register
 each pass) to `0x7F0000` with a stride of `0x20`.
 
 `0xF85F4C`-`0xF85F58` is **13 bytes identical** to the KN5000 sub-CPU at
-`0x1FCD1`, where the sibling's labels are `DSP_Init_Channels_Loop` inside
-`DSP_Init_Channels` at `0x1FC95`
+`0x1FCD1`, where the sibling's labels are `DSP_ChannelRegs_Init_Loop` inside
+`DSP_ChannelRegs_Init` at `0x1FC95`
 (`../kn5000-roms-disasm/v142/subcpu/kn5000_subprogram_v142.s:396-428`).
 Regenerate with `python3 notes/prom_a_sibling_short_runs.py`.
 

@@ -95,21 +95,21 @@ cp BC,<n-1> / jrl UGT,<default>
 sll 0x02,BC / add XBC,<base> / ld XBC,(XBC) / jp T,XBC
 ```
 
-| table | entries | bound | selector | last-entry test |
-|---|---:|---|---|---|
-| `JumpTable_F99F96` | 32 | `cp BC,0x1F` @`0xF99F82` | — | base+128 = `0xF9A016` = min entry |
-| `JumpTable_F9A2A7` | 32 | `cp BC,0x1F` @`0xF9A293` | — | base+128 = `0xF9A327` = min entry |
-| `JumpTable_F9A3C7` | 6 | `cp BC,5` @`0xF9A3B6` | `(0x2720)` | base+24 = `0xF9A3DF` = min entry |
-| `JumpTable_F9A78E` | 32 | `cp BC,0x1F` @`0xF9A77A` | — | base+128 = `0xF9A80E` = min entry |
-| `JumpTable_F9AA89` | 32 | `cp BC,0x1F` @`0xF9AA75` | — | base+128 = `0xF9AB09` = min entry |
-| `JumpTable_F9AB84` | 8 | `cp BC,7` @`0xF9AB72` | `(0x2720)` | base+32 = `0xF9ABA4` = min entry |
-| `JumpTable_F9B098` | 32 | `cp BC,0x1F` @`0xF9B084` | — | base+128 = `0xF9B118` = min entry |
-| `JumpTable_F9D966` | 8 | `cp BC,7` @`0xF9D954` | `(0x269A)` | base+32 = `0xF9D986` = min entry |
-| `JumpTable_F9DBE6` | 8 | `cp BC,7` @`0xF9DBD4` | `(0x269A)` | base+32 = `0xF9DC06` = min entry |
-| `JumpTable_F9EC58` | 7 | `cp BC,6` @`0xF9EC47` | `(0x26A5)` | base+28 = `0xF9EC74` = min entry |
-| `SystemTest_NoteKeyItemHandlers` | 6 | `cp BC,5` @`0xFA08AD` | `(0x26A7)&7` | base+24 = `0xFA08D7` = min entry |
-| `SystemTest_VelocityKeyItemHandlers` | 6 | `cp BC,5` | — | base+24 = `0xFA09D5` = min entry |
-| `SystemTest_ValueHeaderItemHandlers` | 6 | `cp BC,5` | — | base+24 = `0xFA0B2B` = min entry |
+| table                                        | entries | bound                    | selector     | last-entry test                   |
+|----------------------------------------------|--------:|--------------------------|--------------|-----------------------------------|
+| `JumpTable_F99F96`                           | 32      | `cp BC,0x1F` @`0xF99F82` | —            | base+128 = `0xF9A016` = min entry |
+| `ScreenButtonHandlers_MidiTotalMode`         | 32      | `cp BC,0x1F` @`0xF9A293` | —            | base+128 = `0xF9A327` = min entry |
+| `JumpTable_F9A3C7`                           | 6       | `cp BC,5` @`0xF9A3B6`    | `(0x2720)`   | base+24 = `0xF9A3DF` = min entry  |
+| `ScreenButtonHandlers_MidiRealtimeMessages`  | 32      | `cp BC,0x1F` @`0xF9A77A` | —            | base+128 = `0xF9A80E` = min entry |
+| `ScreenButtonHandlers_MidiInputOutputFilter` | 32      | `cp BC,0x1F` @`0xF9AA75` | —            | base+128 = `0xF9AB09` = min entry |
+| `JumpTable_F9AB84`                           | 8       | `cp BC,7` @`0xF9AB72`    | `(0x2720)`   | base+32 = `0xF9ABA4` = min entry  |
+| `ScreenButtonHandlers_MidiOutProgramChange`  | 32      | `cp BC,0x1F` @`0xF9B084` | —            | base+128 = `0xF9B118` = min entry |
+| `JumpTable_F9D966`                           | 8       | `cp BC,7` @`0xF9D954`    | `(0x269A)`   | base+32 = `0xF9D986` = min entry  |
+| `JumpTable_F9DBE6`                           | 8       | `cp BC,7` @`0xF9DBD4`    | `(0x269A)`   | base+32 = `0xF9DC06` = min entry  |
+| `JumpTable_F9EC58`                           | 7       | `cp BC,6` @`0xF9EC47`    | `(0x26A5)`   | base+28 = `0xF9EC74` = min entry  |
+| `SystemTest_NoteKeyItemHandlers`             | 6       | `cp BC,5` @`0xFA08AD`    | `(0x26A7)&7` | base+24 = `0xFA08D7` = min entry  |
+| `SystemTest_VelocityKeyItemHandlers`         | 6       | `cp BC,5`                | —            | base+24 = `0xFA09D5` = min entry  |
+| `SystemTest_ValueHeaderItemHandlers`         | 6       | `cp BC,5`                | —            | base+24 = `0xFA0B2B` = min entry  |
 
 **The last-entry test in every row is the same and it is strong: `base + 4*n` is
 the MINIMUM value any entry holds — the table abuts its own first arm.** One
@@ -121,22 +121,22 @@ the agreement is.
 
 ### 2b. The five whose count comes from the CALLEE's bound
 
-`DisplayListPtrs_F92C66`, `_F93557`, `_F93839`, `_F9408E` are each named by a
-`ld XIX,<base> / call T_F41B08`, and `DisplayListPtrs_F99870` by two
+`ScreenButtonHandlers_GroupSoundDisplayHold`, `_F93557`, `_F93839`, `_F9408E` are each named by a
+`ld XIX,<base> / call T_F41B08`, and `ScreenButtonRow_SysexBulkDump` by two
 `ld XIX,<base> / ld E,(0x2740) / call T_F41B0C`.
 
 `T_F41B08` → prom_a `0xF8BDC5` and `T_F41B0C` → prom_a `0xF8BDF8` — both already
 converted, and **both open with the same two instructions,
 `cp HL,0x001F / jr ugt`**. `0x1F` is the last index either lets through, so the
-tables they are handed have **32 entries**. `DisplayListPtrs_F99870` is 96 words
+tables they are handed have **32 entries**. `ScreenButtonRow_SysexBulkDump` is 96 words
 = three such tables end to end, two of whose bases have a located reader
 (`0xF99870`, `0xF998F0`); the third, `0xF99970`, has none, and the header says so.
 
 ### 2c. The four with neither, stated as the weaker claim
 
-* **`PtrTable_F99121`** — 169 words, 676 bytes. One reader, at
+* **`MessageScreen_ListPairs`** — 169 words, 676 bytes. One reader, at
   `0xF990F9`/`0xF99108`, and it indexes from `0x00F99321` = **entry 128**,
-  reading a consecutive **pair** and handing `(start, end)` to `T_F42E04`. What
+  reading a consecutive **pair** and handing `(start, end)` to `T_DisplayListB_Run_Stack`. What
   indexes entries 0–127 is not established. Both ends are pinned by something
   other than the run: `0xF99120` is a `ret`, and the four bytes at `0xF993C5`
   are `0x0E0E0E0E`, the start of a 58-byte RET pad. ★ And its last three
@@ -147,7 +147,7 @@ tables they are handed have **32 entries**. `DisplayListPtrs_F99870` is 96 words
   is dereferenced as a **byte array** base (`ld XIY,(XIY+HL)` then
   `ld A,(XIY+HL)`), not as a branch target. The index comes from a `div`, so
   there is no compile-time bound; the count is the detector's.
-* **`PtrTables_F95C95`** — 493 bytes holding **three** tables and one stray byte:
+* **`ScreenButtonHandlers_StaleCopy`** — 493 bytes holding **three** tables and one stray byte:
   32 entries at `0xF95C95` (bounded by `cp (XIZ+0x08),0x001F` at `0xF95896`),
   32 at `0xF95D15` (named at `0xF95A07`), one `0x00` at `0xF95D95`, then 59 at
   `0xF95D96` with no located reader. Emitted as `.byte`, not `.long`, **and
@@ -155,7 +155,7 @@ tables they are handed have **32 entries**. `DisplayListPtrs_F99870` is 96 words
   table is offset by one byte from the second, so a `.long` rendering would have
   to invent an alignment the ROM does not have. Last-element test: the word at
   `0xF95E82` is `0x0E0E0E0E`.
-* **`DisplayListPtrs_F99870`**'s third block, as above.
+* **`ScreenButtonRow_SysexBulkDump`**'s third block, as above.
 
 ---
 
@@ -165,8 +165,8 @@ Counting operands in the converted text of `0xF99021-0xFA1403`: the only address
 anywhere in `0x600000-0x7FFFFF` is `0x60A000`, the RAM staging buffer. Asserted
 (§3 of the checks) rather than eyeballed.
 
-What it does instead is draw: `T_EditValue_StepBitField` ×61, `T_F42E04` ×43, `T_F42E00` ×43,
-`T_F42E0C` ×38, `T_F42E84` ×32, `T_F42E08` ×28, `T_F42DC0` ×26, `T_F42E80` ×25.
+What it does instead is draw: `T_EditValue_StepBitField` ×61, `T_DisplayListB_Run_Stack` ×43, `T_DisplayList_Run_Stack` ×43,
+`T_DisplayListB_RunOne_Stack` ×38, `T_CallbackQueue_Post` ×32, `T_DisplayList_RunOne_Stack` ×28, `T_Kernel_SemaSignal_StackArg` ×26, `T_CallbackQueue_ResetAndRestartTask2` ×25.
 `T_F42E00` → prom_b `0xF31800` and `T_F42E04` → `0xF31814` are the two
 display-list draw entries of `FINDINGS-ui-display-list.md`.
 
@@ -208,7 +208,7 @@ instruction pointing at a non-boundary.
   `stcf 0x03,(0x0D)` around a `ld HL,0x4000` delay. That is exactly what the
   service manual and the driver lane describe, now in the tree rather than
   inferred from it.
-  ⚠ It does **not** answer gap L's open half. The reset path calls `T_F40144`
+  ⚠ It does **not** answer gap L's open half. The reset path calls `T_CheckingDevice_RunSelfTest`
   unconditionally at `0xF827D1` and `0xF95137` gates only on P5 bit 4; no panel
   shadow byte is read anywhere before it. The manual's "hold `2` and power on"
   procedure is not a boot-time chord that this conversion can see.

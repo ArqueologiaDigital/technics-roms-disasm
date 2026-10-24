@@ -138,12 +138,12 @@ three destinations are used and neither table indexes past its own data.
 
 ## 4. The four directory objects at the end, which tile the last 4,818 bytes
 
-| object | extent | shape |
-|---|---|---|
-| `PoolDir_Records` | `0xFDBFD9-0xFDC550` | 56 × 25 B: four stream pointers, two `DescriptorStrings` pointers, one byte |
-| `PoolDir_IndexMap128` | `0xFDC551-0xFDC5D0` | 128 bytes, each a record index 0..55 |
-| `PoolDir_FieldRecords` | `0xFDC5D1-0xFDD1CA` | 56 records, **every length a multiple of 7** |
-| `PoolDir_FieldRec_PtrTable` | `0xFDD1CB-0xFDD2AA` | 56 × u32, ending on the region's last byte |
+| object                         | extent              | shape                                                                       |
+|--------------------------------|---------------------|-----------------------------------------------------------------------------|
+| `PoolDir_Records`              | `0xFDBFD9-0xFDC550` | 56 × 25 B: four stream pointers, two `DescriptorStrings` pointers, one byte |
+| `PoolDir_RecordForUnitProgram` | `0xFDC551-0xFDC5D0` | 128 bytes, each a record index 0..55                                        |
+| `PoolDir_FieldRecords`         | `0xFDC5D1-0xFDD1CA` | 56 records, **every length a multiple of 7**                                |
+| `PoolDir_FieldRec_PtrTable`    | `0xFDD1CB-0xFDD2AA` | 56 × u32, ending on the region's last byte                                  |
 
 **The stride 25 is an instruction operand**, not a guess: `0xFA2B44` is
 `ld A,(XBC) / mul A,0x19 / extz XWA / inc 8,XWA / add XWA,0x00FDBFD9 / ld XBC,(XWA)`, and

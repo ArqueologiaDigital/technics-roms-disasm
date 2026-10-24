@@ -24,12 +24,12 @@ says what `0x0FE4` is. The answer is outside them, and it is four links long.
 
 ## 2. `0x00000FE4` is one line of on-screen text, and the chain says so
 
-| step | where | what it says |
-|---|---|---|
-| 1 | prom_b slot `T_F431B4` | `jp 0xF7D006`, the veneer `Veneer_F81C15`, `jrl` prom_a `0xF81C15` |
-| 2 | prom_a `0xF81C15` | if `(0x207C) != 0x0E` return; else `ld XIY,0x00f3d38a / call 0xf417f8` |
-| 3 | prom_b `T_F417F8` | `jp 0xF31B21` = `DLB_Handler_StringTable`, interpreter B's opcode-0x02 handler |
-| 4 | prom_b `0xF3D38A` | the 15-byte record it runs |
+| step | where                              | what it says                                                                   |
+|------|------------------------------------|--------------------------------------------------------------------------------|
+| 1    | prom_b slot `T_F431B4`             | `jp 0xF7D006`, the veneer `Veneer_F81C15`, `jrl` prom_a `0xF81C15`             |
+| 2    | prom_a `0xF81C15`                  | if `(0x207C) != 0x0E` return; else `ld XIY,0x00f3d38a / call 0xf417f8`         |
+| 3    | prom_b `T_DLB_Handler_StringTable` | `jp 0xF31B21` = `DLB_Handler_StringTable`, interpreter B's opcode-0x02 handler |
+| 4    | prom_b `0xF3D38A`                  | the 15-byte record it runs                                                     |
 
 The record is `02 0F 00 00 00 00 06 E4 0F 00 00 1E 00 21 1C`, and under the
 field map `FINDINGS-ui-display-list-interpreter-b.md` already established for
@@ -98,7 +98,7 @@ anything here reaches them.
 Every writer that shows a number ends by copying 2 or 3 bytes from RAM
 `(0x2661)`. That is prom_a's `Value_ToAsciiDigits3` scratch: `WA` in, up to
 three ASCII digits at `0x2661`–`0x2663`, with `(0x2665)` bits 0–1 recording
-which digits were produced. `T_F41AF0` and `T_F41AF8` are its two
+which digits were produced. `T_Value_ToAsciiDigits3_RightJustified` and `T_Value_ToSignedAsciiDigits3_RightJustified` are its two
 leading-zero-blanking variants (`0xF8BCAF`, `0xF8BCC9`).
 
 ### 2.4 What is still unknown, and is NOT named for
@@ -194,7 +194,7 @@ one byte after its `ret`.
 * **`sub_F6D72F`** writes `P n ` into the line at +14 but does most of its work
   in work DRAM (`0x60A000`–`0x60A002`, `0x60F01D`) and its caption copy is not
   the routine's purpose. Left `sub_XXXXXX`.
-* ⚠ **CORRECTED the same day:** `sub_F6E463` was listed here as unnamed. It is
+* ⚠ **CORRECTED the same day:** `MsgLine_NoteName` was listed here as unnamed. It is
   `MsgLine_NoteName` now — it copies four bytes of entry `(0x125A) & 15` of
   `Text_GAbABbBCDbDEbEFF` (`<G >`, `<Ab>` … `<F#>`) to `0x0FE9` and paints. It
   was missed by `prom_b_msgline.py`'s writer table only because it moves those

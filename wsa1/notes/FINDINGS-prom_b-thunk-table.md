@@ -75,29 +75,29 @@ operand is a 4-aligned address inside the table. Because the scan is not at
 instruction boundaries, some hits are bytes inside another instruction or inside
 data. The numbers rank slots; they are not exact call counts.
 
-| slot | x | target | what it is |
-|---|---:|---|---|
-| `T_F417F0` | 392 | `0xF31A09` | **`DisplayList_Run`** — the UI engine. Converted. |
-| `T_F417F4` | 269 | `0xF31AF0` | `DisplayListB_Run`, the second interpreter. Converted. |
-| `T_F42E84` | 188 | prom_a `0xF8DA16` | enqueue one 32-bit word on the ring buffer at `0x600416` (write index `+0xFC`, free count `+0xFE`, `minc4 0x01FC` wrap ⇒ 128 slots, returns `0xFFFF` when fewer than 5 free, runs under `ei 6`) |
-| `T_F42E80` | 141 | prom_a `0xF8DA83` | a fixed sequence of six calls through other slots with `A` = 4/2. Not identified. |
-| `T_F42C90` | 119 | `0xF5533C` | **`IndexedTable_GetByte`** — byte *m* of pointer *n* of the table whose base is the 32-bit word at `0x60F018`. Converted. |
-| `T_F41ED4` | 109 | `0xF5B9B8` | **`Dispatch_Code80`** — indexes a 48-entry table of routine pointers with a 16-bit selector ≥ 0x80. Converted. |
-| `T_F42E0C` | 107 | `0xF3183D` | `DisplayListB_RunOne_Stack`. Converted. |
-| `T_F42E04` | 104 | `0xF31814` | `DisplayListB_Run_Stack`. Converted. |
-| `T_F42D88` | 98 | prom_a `0xF859AE` | `A` selects a 4-byte descriptor at `0x0338 + A*4` and a saturating byte counter at `0x035B + A`, under `ei 6`; an empty descriptor is self-referential. A kernel object operation — **which** one is not established. |
-| `T_F42DC0` | 98 | prom_a `0xF859AB` | the same routine entered 3 bytes earlier, which first does `ld A,(XSP+4)` — the stack-argument form |
-| `T_F42E24` | 85 | `0xF0E82B` | not identified |
-| `T_EditValue_StepBitField` | 77 | `0xF550A6` | reads a bit-field through an 8-byte descriptor and range-checks it. Converted. |
-| `T_F431B4` | 57 | `0xF7D006` | the third slot of an eight-entry `jrl` long-branch veneer table at `0xF7D000`, into prom_a `0xF81C15`. Not converted. |
-| `T_F431B0` | 53 | `0xF7D000` | the first slot of that same veneer table, into prom_a `0xF81ACB` |
-| `T_F42C8C` | 45 | `0xF55321` | **`IndexedTable_GetPtr`** — pointer *n* of the `0x60F018` table. Converted. |
-| `T_F41ED0` | 39 | `0xF5B8B6` | **`Dispatch_Code80_Bracketed`** — the same 48-entry dispatch, with the call bracketed by `swi 7` functions `0x0C`/`0x10`. Converted. |
-| `T_F42E00` | 85 | `0xF31800` | `DisplayList_Run_Stack`. Converted. |
+| slot                                   | x   | target            | what it is                                                                                                                                                                                                            |
+|----------------------------------------|----:|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `T_DisplayList_Run`                    | 392 | `0xF31A09`        | **`DisplayList_Run`** — the UI engine. Converted.                                                                                                                                                                     |
+| `T_DisplayListB_Run`                   | 269 | `0xF31AF0`        | `DisplayListB_Run`, the second interpreter. Converted.                                                                                                                                                                |
+| `T_CallbackQueue_Post`                 | 188 | prom_a `0xF8DA16` | enqueue one 32-bit word on the ring buffer at `0x600416` (write index `+0xFC`, free count `+0xFE`, `minc4 0x01FC` wrap ⇒ 128 slots, returns `0xFFFF` when fewer than 5 free, runs under `ei 6`)                       |
+| `T_CallbackQueue_ResetAndRestartTask2` | 141 | prom_a `0xF8DA83` | a fixed sequence of six calls through other slots with `A` = 4/2. Not identified.                                                                                                                                     |
+| `T_IndexedTable_GetByte`               | 119 | `0xF5533C`        | **`IndexedTable_GetByte`** — byte *m* of pointer *n* of the table whose base is the 32-bit word at `0x60F018`. Converted.                                                                                             |
+| `T_Dispatch_Code80`                    | 109 | `0xF5B9B8`        | **`Dispatch_Code80`** — indexes a 48-entry table of routine pointers with a 16-bit selector ≥ 0x80. Converted.                                                                                                        |
+| `T_DisplayListB_RunOne_Stack`          | 107 | `0xF3183D`        | `DisplayListB_RunOne_Stack`. Converted.                                                                                                                                                                               |
+| `T_DisplayListB_Run_Stack`             | 104 | `0xF31814`        | `DisplayListB_Run_Stack`. Converted.                                                                                                                                                                                  |
+| `T_Kernel_SemaSignal`                  | 98  | prom_a `0xF859AE` | `A` selects a 4-byte descriptor at `0x0338 + A*4` and a saturating byte counter at `0x035B + A`, under `ei 6`; an empty descriptor is self-referential. A kernel object operation — **which** one is not established. |
+| `T_Kernel_SemaSignal_StackArg`         | 98  | prom_a `0xF859AB` | the same routine entered 3 bytes earlier, which first does `ld A,(XSP+4)` — the stack-argument form                                                                                                                   |
+| `T_Blink_Stop`                         | 85  | `0xF0E82B`        | not identified                                                                                                                                                                                                        |
+| `T_EditValue_StepBitField`             | 77  | `0xF550A6`        | reads a bit-field through an 8-byte descriptor and range-checks it. Converted.                                                                                                                                        |
+| `T_F431B4`                             | 57  | `0xF7D006`        | the third slot of an eight-entry `jrl` long-branch veneer table at `0xF7D000`, into prom_a `0xF81C15`. Not converted.                                                                                                 |
+| `T_F431B0`                             | 53  | `0xF7D000`        | the first slot of that same veneer table, into prom_a `0xF81ACB`                                                                                                                                                      |
+| `T_IndexedTable_GetPtr`                | 45  | `0xF55321`        | **`IndexedTable_GetPtr`** — pointer *n* of the `0x60F018` table. Converted.                                                                                                                                           |
+| `T_Dispatch_Code80_Bracketed`          | 39  | `0xF5B8B6`        | **`Dispatch_Code80_Bracketed`** — the same 48-entry dispatch, with the call bracketed by `swi 7` functions `0x0C`/`0x10`. Converted.                                                                                  |
+| `T_DisplayList_Run_Stack`              | 85  | `0xF31800`        | `DisplayList_Run_Stack`. Converted.                                                                                                                                                                                   |
 
 ### One slot worth naming separately
 
-`T_F400A4` = `jp 0xF8E9A5` is the target of prom_a's **SWI7 vector**
+`T_SWI7_ServiceCall_Dispatch` = `jp 0xF8E9A5` is the target of prom_a's **SWI7 vector**
 (`0xFFFF1C` = `0x00F400A4`). `0xF8E9A5` masks `A` with `0x3F`, scales by 4 and
 indexes a 64-entry table at prom_a `0xF8E9C6`. That is the machine's system-call
 interface; see `FINDINGS-ui-display-list.md`.

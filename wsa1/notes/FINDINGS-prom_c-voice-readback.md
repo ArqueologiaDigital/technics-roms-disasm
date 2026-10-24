@@ -5,7 +5,7 @@
 > retire path — `ChanRec_Release` + `Dev10C_ChanReset` + `0xFA5CE9` — is driven by the
 > *bitmap difference* alone.  What the `0x80` comparison drives is a second, different
 > action: below `0x80`, **and only if the record's flag bit 2 is set** (`0xFA69D4`), the
-> record goes to `sub_FA65BD`, an undecoded routine that clears flag bits 2 and 3, sets
+> record goes to `ChanRec_ToPoolQueue6_SetFlag1`, an undecoded routine that clears flag bits 2 and 3, sets
 > bit 1 and calls `0xFA62DA(rec, rec[+0x0F], 6)`.  The source header at `0xFA68DC` always
 > stated this correctly; this note and the round report did not.
 
@@ -33,8 +33,8 @@ conversion itself is certified by `scripts/analysis/assert_byte_identical.py`.
 
 * **What the `0x0180` quantity physically is.** What is proven is that the firmware
   treats it as a magnitude that FALLS and that crossing below `0x80`, with flag bit 2 set,
-  sends the record to `sub_FA65BD`.  ⚠ That is **not** the retire path (see the correction
-  under the title); nothing here says what `sub_FA65BD` is for.
+  sends the record to `ChanRec_ToPoolQueue6_SetFlag1`.  ⚠ That is **not** the retire path (see the correction
+  under the title); nothing here says what `ChanRec_ToPoolQueue6_SetFlag1` is for.
   Nothing here ties it to amplitude, to a sample position or to time. **"Envelope" is not
   asserted anywhere in this note or in the source.**
 * **What the device does on a WRITE to block 0.** Block 0 is written per channel with
@@ -129,7 +129,7 @@ record's flag bit 2 is set (`0xFA69D4`), the channel goes to `0xFA65BD`, which c
 bits 2 and 3, sets bit 1 and re-queues the record.
 
 So: **a per-channel magnitude that falls, with a threshold at half scale.** ⚠ The action at
-that threshold is `sub_FA65BD`, not retirement (see the correction under the title). An
+that threshold is `ChanRec_ToPoolQueue6_SetFlag1`, not retirement (see the correction under the title). An
 envelope level fits and so does a remaining-sample-length counter; this note does not
 choose, and the source says so at the routine.
 
@@ -213,8 +213,8 @@ In `prom_c/wsa1_prom_c.s`, six routines lost address-only names and one was corr
 Two new block comments carry the tables: **"THE 64 CHANNEL RECORDS, AND WHAT 0x0010C000
 GIVES BACK"** (sections A-D above) in front of `VoiceSubsystem_Init`, and **"BLOCK GROUP
 0x20-0x29 IS A GROUP OF BYTE PAIRS…"** appended to the register-meanings comment in front
-of `Dev10C_WriteAllChanRegs`. Six producer routines — `sub_FAA4C3`, `sub_FAA96C`,
-`sub_FAACEE`, `sub_FAB0BD`, `sub_FA842D`, `sub_FA93AF` — keep their `sub_` names and gain a
+of `Dev10C_WriteAllChanRegs`. Six producer routines — `Voice_StageRegs_0800_A`, `Voice_StageRegs_0800_CD`,
+`Voice_StageRegs_0800_B_ModeLt3`, `Voice_StageRegs_0800_B_ModeGe3`, `Voice_StageRegs_0900_0940_0980_AB`, `Voice_StageRegs_09C0_0A00_0A40_AB` — keep their `sub_` names and gain a
 ★ paragraph saying which register they build, because naming a 955-byte routine after one
 of its outputs would be the misleading half of a true statement.
 
@@ -266,11 +266,11 @@ listing, not a dataflow; the per-site readings quoted below were done by hand.
 
 ## 9. ★★ `chan + 0x0800` — the high byte is an envelope LEVEL, the low byte a RATE
 
-**In this image.** Staging word 12 has exactly **four** producers — `sub_FAA4C3`,
-`sub_FAA96C`, `sub_FAACEE`, `sub_FAB0BD` — and those are **exactly** the four routines in
+**In this image.** Staging word 12 has exactly **four** producers — `Voice_StageRegs_0800_A`,
+`Voice_StageRegs_0800_CD`, `Voice_StageRegs_0800_B_ModeLt3`, `Voice_StageRegs_0800_B_ModeGe3` — and those are **exactly** the four routines in
 prom_c that compute the address of `Voice_LevelPair_AttackCurve` (`0xFDEF74`, 101 bytes
 descending `0xFF`..`0x09`). No other routine computes that curve's address and no other
-routine stores a computed value into that word. Read out at `sub_FAA4C3`:
+routine stores a computed value into that word. Read out at `Voice_StageRegs_0800_A`:
 
 ```
 FAA62E  add XWA,0x00fdf03e        ; Voice_EnvelopeRate_Table[ tone[+0x28] ]
@@ -302,9 +302,9 @@ byte the device receives is a "level" or an "attenuation" at the pin is not deci
 
 ## 10. The other six of the group, and the ±50 → ±127 law
 
-`0x0900`, `0x0940`, `0x0980` are written by `sub_FA842D` and `0x09C0`, `0x0A00`, `0x0A40`
-by `sub_FA93AF` — three registers each, and those are the only routines that store a
-**computed** value into them. (`sub_FA96F7` zero-fills words 15..21 at entry with
+`0x0900`, `0x0940`, `0x0980` are written by `Voice_StageRegs_0900_0940_0980_AB` and `0x09C0`, `0x0A00`, `0x0A40`
+by `Voice_StageRegs_09C0_0A00_0A40_AB` — three registers each, and those are the only routines that store a
+**computed** value into them. (`Voice_StageRegs_CD` zero-fills words 15..21 at entry with
 immediates and then ORs word 16's low byte into word 15's high half at `0xFA976C`; those
 are the only other stores, and `notes/prom_c_dev10c_field_sources.py`, which scans the
 based `lda XIX,0x00d75e … ld (XIX+n),BC` form as well as the absolute one, lists the same
@@ -313,13 +313,13 @@ two routines make **twelve** of prom_c's thirty `Voice_EnvelopeLevel_Curve` look
 each) and no other curve lookup. In every one of the six registers:
 
 * the **high** byte is a value clamped to `0..0xFF` by `Clamp_ToRange_Word`
-  (`sub_FA7598`), fed from those curve lookups;
+  (`Clamp_ToRange_Word`), fed from those curve lookups;
 * the **low** byte is `DetuneCurve_LookupSigned` (`sub_FA7602`) of a value first clamped to
   **−50..+50** (`push 0xFFCE / push 0x0032`, e.g. `0xFA94C0`), i.e. a **signed ±127 depth**.
 
 `DetuneCurve_LookupSigned` is `sign(v) · Detune_Scale_Curve[min(|v|,50)]`; the 51-byte
 table rises `0x00`..`0x7F` with knees at [16] and [32] and `T[50] = 0x7F`, so the law is *a
-±50 control expanded to a ±127 field, coarsening as it goes*. In `sub_FA93AF` the ±50 input
+±50 control expanded to a ±127 field, coarsening as it goes*. In `Voice_StageRegs_09C0_0A00_0A40_AB` the ±50 input
 is `tone[+0x3D] + tone[+0x40]` (and `+0x44`, `+0x48`…) — a common offset plus a per-register
 signed byte.
 
@@ -338,20 +338,20 @@ the encoding does not.
 
 ## 11. Where gap A stands after this round
 
-| register | what it carries | round |
-|---|---|---|
-| `0x0000 + n` (read, n = 0..3) | **busy bitmap**, bit `chan & 15` of word `chan >> 4` | 2 |
-| `0x0000 + chan` (write) | `0x8100` on a full update, `0x7E00` on stop | 2 |
-| `0x0040 + chan` | key-zone record word 0 | 1 |
-| `0x0080 + chan` | OUTPUT LEVEL, log2, 256 counts/octave | 1 |
-| `0x00C0 + chan` | *(stopped value `0x0000` only)* | 2 |
-| `0x0180 + chan` (read) | a falling magnitude; below `0x80` (with flag bit 2) the record goes to `sub_FA65BD` | 2 |
-| `0x0400 + chan` | PITCH, 1/256 semitone | 1 |
-| `0x0800 + chan` | **(envelope level << 8) \| envelope rate**; quiescent `0xFF80` | **2** |
-| `0x0840 + chan` | byte pair; quiescent `0xFF00` | 1, 2 |
-| `0x0880 + chan` | byte pair | 2 |
-| `0x08C0`, `0x0900`, `0x0940`, `0x0980`, `0x09C0`, `0x0A00`, `0x0A40 + chan` | byte pair: curve-derived high byte, ±127 depth low byte | 2 |
-| `0x0100`, `0x0140`, `0x0440`, `0x0480`, `0x04C0`, `0x0500 + chan` | **still nothing** | — |
+| register                                                                    | what it carries                                                                                        | round                               |       |
+|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------|-------|
+| `0x0000 + n` (read, n = 0..3)                                               | **busy bitmap**, bit `chan & 15` of word `chan >> 4`                                                   | 2                                   |       |
+| `0x0000 + chan` (write)                                                     | `0x8100` on a full update, `0x7E00` on stop                                                            | 2                                   |       |
+| `0x0040 + chan`                                                             | key-zone record word 0                                                                                 | 1                                   |       |
+| `0x0080 + chan`                                                             | OUTPUT LEVEL, log2, 256 counts/octave                                                                  | 1                                   |       |
+| `0x00C0 + chan`                                                             | *(stopped value `0x0000` only)*                                                                        | 2                                   |       |
+| `0x0180 + chan` (read)                                                      | a falling magnitude; below `0x80` (with flag bit 2) the record goes to `ChanRec_ToPoolQueue6_SetFlag1` | 2                                   |       |
+| `0x0400 + chan`                                                             | PITCH, 1/256 semitone                                                                                  | 1                                   |       |
+| `0x0800 + chan`                                                             | **(envelope level << 8) \                                                                              | envelope rate**; quiescent `0xFF80` | **2** |
+| `0x0840 + chan`                                                             | byte pair; quiescent `0xFF00`                                                                          | 1, 2                                |       |
+| `0x0880 + chan`                                                             | byte pair                                                                                              | 2                                   |       |
+| `0x08C0`, `0x0900`, `0x0940`, `0x0980`, `0x09C0`, `0x0A00`, `0x0A40 + chan` | byte pair: curve-derived high byte, ±127 depth low byte                                                | 2                                   |       |
+| `0x0100`, `0x0140`, `0x0440`, `0x0480`, `0x04C0`, `0x0500 + chan`           | **still nothing**                                                                                      | —                                   |       |
 
 Six of the twenty-two per-channel registers still have no statement of any kind against
 them, and that is the honest next target.

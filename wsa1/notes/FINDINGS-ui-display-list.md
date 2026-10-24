@@ -33,7 +33,7 @@ python3 notes/prom_b_dl_operand_tables.py --exact            # the 13 gaps
 
 **A third entry point, found 2026-08-25.** Not every interpreter-B record is
 reached by an `ld XIY / ld XIX / call` pair. `DisplayListB_RunOne_Stack`
-(`0xF3183D`, thunk `T_F42E0C`) takes ONE pointer on the stack, sets
+(`0xF3183D`, thunk `T_DisplayListB_RunOne_Stack`) takes ONE pointer on the stack, sets
 `XIX = XIY+1`, and so draws exactly one record — which is how the 176 records
 of `0xF157A8-0xF17558` are addressed, at a uniform **15-byte stride** with
 `0xFF` padding. The call-site scan in
@@ -73,8 +73,8 @@ Call sites pass both ends:
     call 0xF417F0              ; -> DisplayList_Run
 ```
 
-`T_F417F0` is the most-referenced slot in the whole thunk table (upper bound 392
-references); `T_F417F4`, the second interpreter, is second (269).
+`T_DisplayList_Run` is the most-referenced slot in the whole thunk table (upper bound 392
+references); `T_DisplayListB_Run`, the second interpreter, is second (269).
 
 ## Four independent checks, all of which pass
 
@@ -118,7 +118,7 @@ references); `T_F417F4`, the second interpreter, is second (269).
    runs `walk()`. The check lives in `notes/prom_b_dl_length_audit.py`.
 3. **The opcode is the system-call number.** Handler `0xF31A3A` does
    `ld A,(XIY)` then `swi 7`. prom_a's SWI7 vector (`0xFFFF1C`) is `0x00F400A4`
-   = thunk `T_F400A4` in this image → prom_a `0xF8E9A5`, which masks `A` with
+   = thunk `T_SWI7_ServiceCall_Dispatch` in this image → prom_a `0xF8E9A5`, which masks `A` with
    `0x3F`, scales by 4 and indexes a 64-entry table at prom_a `0xF8E9C6`.
    Entries `0x00-0x22` span 35 slots but slot **0x18 also points at the shared `ret` stub
    0xF8EAC6**, so there are **34 live services and the first dead slot is 0x18**, not
@@ -190,7 +190,7 @@ printable ASCII; the rest are these short control/glyph codes.
 
 ## The second interpreter — the same VM, bound to live variables
 
-`DisplayListB_Run` at `0xF31AF0` (thunk `T_F417F4`) has the same loop but bound
+`DisplayListB_Run` at `0xF31AF0` (thunk `T_DisplayListB_Run`) has the same loop but bound
 `0x0F` and handler table `0xF31DB1` — again exactly 15 entries for a `0x0F`
 bound, with opcodes `0x0C-0x0E` mapping to the bare `ret` at `0xF31D20`.
 

@@ -393,7 +393,7 @@ its internal pointers relocated.  ~~**Left for a later pass**~~ **DONE 2026-08-2
   and the based addressing forms.  Word 0 has no writer and `Dev10C_WriteAllChanRegs`
   reads no word 0 either, which is two independent readings agreeing.
   ★ The twin device is different in kind: `0x00D7A2`, the 0x00104000 struct, is filled by
-  ONE routine, `sub_FC4DBD`, which writes 19 offsets 0x00..0x24 through its pointer
+  ONE routine, `Dev104_PackStagingStruct`, which writes 19 offsets 0x00..0x24 through its pointer
   argument — exactly the span `Dev104_WriteAllChanRegs` reads — out of a "current object"
   pointer block at RAM 0x00E082-0x00E08D that four small routines set from the part record
   (RAM 0x005D23, stride 187) and the voice record (RAM 0x003BCF, stride 0x44).

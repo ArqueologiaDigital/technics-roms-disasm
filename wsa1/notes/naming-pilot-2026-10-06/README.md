@@ -48,7 +48,7 @@ older build, but the banner limits that to 0xF6F000-0xF6F3FF.
 
 **Wave 7** (`proposals_wave7_{w,x,y,z}.json`): the next 120, 116 named and 4 refused. Two of the refusals are the
 reviewer's: batch z had named the empty button-table slots sub_F7E750 / sub_F7E758, whose source header deliberately
-says "NO NAME". Batch x reports two leads for later. `Data_F6D002` is code: the tail of sub_F6CFCB, the HOLD-latch
+says "NO NAME". Batch x reports two leads for later. `StepRecord_AppendLatchedHoldEvent_Cont` is code: the tail of sub_F6CFCB, the HOLD-latch
 append (decoded 2026-10-06; the label is now `StepRecord_AppendLatchedHoldEvent_Cont`). The local labels `sub_F64A34_Join*` and `sub_F6B2EE_Entry*` sit after their routine's `ret` and belong to
 other, unlabelled routines.
 
@@ -57,11 +57,11 @@ other, unlabelled routines.
   `pop XSP`. They should be respelled as text.
 - `sub_F82CE8` (now `Variant_SendPortBToCpu2`) is the missing writer of CPU 2's 0xFFF8. This answers the open
   question in FINDINGS-prom_c-scheduler.md:82.
-- `sub_F49861`'s tail labels `_Join`/`_Join2` are the entry points of SeqRecord_DrainEventRing*.
+- `SeqRecord_SoundAlert`'s tail labels `_Join`/`_Join2` are the entry points of SeqRecord_DrainEventRing*.
 
 **Wave 9** (`proposals_wave9_{a9,b9,c9,d9}.json`): 126 named, 16 refused. Routines whose only named callers were
 OldCopy_* (an older build's code, whose calls into prom_a say nothing about this build) were left out of the batches.
-Derivative passes then named 15 thunk slots, 2 wrappers (`sub_FE00EB` / `sub_FE00F8`, which batch c9 had refused
+Derivative passes then named 15 thunk slots, 2 wrappers (`Msg0716_PostClearSoundRamAndRestageAllParts_SaveRegs` / `Msg0716_PostRestageAllParts_SaveRegs2`, which batch c9 had refused
 because their targets were still unnamed), 15 display lists, 1 exact copy (`TrackAssign_IsLocalControlDashed_Copy`)
 and 904 local labels after their enclosing routine (rename_orphan_locals.py). Leads reported for later:
 - `MidiFileSave_Page4_*` / `MidiFileSave_Page5_*` are the button tables of the floppy-format screens 0x50 / 0x51

@@ -295,15 +295,15 @@ numbers; the id-membership half is the only part that is not post-hoc.
 
 ## 5. What the run-2 and run-3 targets are NOT — three refutations with nulls
 
-| test | observed | null | source |
-|---|---:|---:|---|
-| run 2's 121 prom_b targets on the proven 72-byte icon grid at `0xF78028` | **1** | 1.7 | earlier lane, `gen_prom_b_f78028_icon_sheet.py` |
-| run 2's 24 prom_a targets on a `DisplayList_FC4000` record boundary | **3** | 1.8 | earlier lane |
-| run 3's 21 targets on an instruction boundary in prom_a `0xFE28B2-0xFE2F8C` | **6** | 8.6 (35.7 % of all addresses) — **below chance** | earlier lane |
-| ★ NEW — a **constant relocation** puts the prom_b targets back on the icon grid | max residue bucket **6** of 121 | mean 1.68, sd 1.29, 3σ = **5.5** — inside the null | §7 |
-| ★ NEW — a constant relocation puts the prom_a targets back on record boundaries | best shift **7** of 24, and **5** different shifts reach 7 | 2.21 per shift; over 401 shifts, ~2.8 shifts reaching 7 is **expected** | §7 |
-| ★ NEW — the objects parse as display lists: op/len walk from a target lands with **zero drift** on the next target | **0 / 143** | **0.0040** (80/20 000 random starts, same size multiset) | §8 |
-| ★ NEW — first bytes at the targets look like DL opcodes | **77 distinct** values, max `0xFF` | the real op bound is `0x24` | §8 |
+| test                                                                                                               | observed                                                   | null                                                                    | source                                          |
+|--------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------:|------------------------------------------------------------------------:|-------------------------------------------------|
+| run 2's 121 prom_b targets on the proven 72-byte icon grid at `0xF78028`                                           | **1**                                                      | 1.7                                                                     | earlier lane, `gen_prom_b_f78028_icon_sheet.py` |
+| run 2's 24 prom_a targets on a `DigitalEffect_Frame` record boundary                                               | **3**                                                      | 1.8                                                                     | earlier lane                                    |
+| run 3's 21 targets on an instruction boundary in prom_a `0xFE28B2-0xFE2F8C`                                        | **6**                                                      | 8.6 (35.7 % of all addresses) — **below chance**                        | earlier lane                                    |
+| ★ NEW — a **constant relocation** puts the prom_b targets back on the icon grid                                    | max residue bucket **6** of 121                            | mean 1.68, sd 1.29, 3σ = **5.5** — inside the null                      | §7                                              |
+| ★ NEW — a constant relocation puts the prom_a targets back on record boundaries                                    | best shift **7** of 24, and **5** different shifts reach 7 | 2.21 per shift; over 401 shifts, ~2.8 shifts reaching 7 is **expected** | §7                                              |
+| ★ NEW — the objects parse as display lists: op/len walk from a target lands with **zero drift** on the next target | **0 / 143**                                                | **0.0040** (80/20 000 random starts, same size multiset)                | §8                                              |
+| ★ NEW — first bytes at the targets look like DL opcodes                                                            | **77 distinct** values, max `0xFF`                         | the real op bound is `0x24`                                             | §8                                              |
 
 The relocation test is the one that mattered: "vestigial index, pool moved" is
 the natural rescue, and a *constant shift* is its simplest form.  It does not
@@ -338,7 +338,7 @@ the identical column signature (c13/c14 absent, c17 zero in all 12 records);
 c15 > c16 in 11 of 11; and the pool-order chain, 144/144 ascending against 0 in
 20 000 shuffles.
 **UNIDENTIFIED: what the 145 objects are.**  They are not the icon sheet's
-24×24 cells, not `DisplayList_FC4000`'s records, not display lists in their own
+24×24 cells, not `DigitalEffect_Frame`'s records, not display lists in their own
 right, and not a constant relocation of any of those (§5).  The best-supported
 reading is a **stale resource index left behind when the pools were relaid
 out** — but that is a hypothesis with no in-image test, and it is not graded

@@ -296,12 +296,12 @@ of an answer the code already gives — never as the reason.
 
 ### 8.2 Why `PtrTable_F003F9` is not the sheet's index — measured, both ways
 
-| test | observed | chance |
-|---|---:|---:|
-| its 121 targets in the sheet that are on the 72-byte grid | **1** | 1.7 |
-| its 24 targets in prom_a's `DisplayList_FC4000` that are on a **record boundary** of that region's *proven* framing (155 records, zero resyncs) | **3** | 1.8 |
-| immediates equal to `0xF003F9` in the four ROM images | **0** | — |
-| ★ CONTROL — the table 185 B earlier at `0xF00340`, which *does* have a consumer (`add XBC,0x00F0033C` at `0xF00D51`), whose targets start `EE 0C` (`link XIZ,0`) | **25 of 26** | 3.8% |
+| test                                                                                                                                                             | observed     | chance |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------:|-------:|
+| its 121 targets in the sheet that are on the 72-byte grid                                                                                                        | **1**        | 1.7    |
+| its 24 targets in prom_a's `DigitalEffect_Frame` that are on a **record boundary** of that region's *proven* framing (155 records, zero resyncs)                 | **3**        | 1.8    |
+| immediates equal to `0xF003F9` in the four ROM images                                                                                                            | **0**        | —      |
+| ★ CONTROL — the table 185 B earlier at `0xF00340`, which *does* have a consumer (`add XBC,0x00F0033C` at `0xF00D51`), whose targets start `EE 0C` (`link XIZ,0`) | **25 of 26** | 3.8%   |
 
 A table that indexes neither of the two things it points at is not an index of
 either — and the control says the instrument can still find a live table.
@@ -310,7 +310,7 @@ either — and the control says the instrument can still find a live table.
 
 `prom_b/wsa1_prom_b.s` now carries **119 `DLGlyph_NNN_XXXXXX` cells** over
 `0xF78028-0xF7A19F`, one `.byte` line per 8-pixel column, each naming its PNG.
-The 110 `Bitmap_F78*` labels, `Data_F78029` (609 B) and `Data_F799E8` (1,976 B)
+The 110 `Bitmap_F78*` labels, `Data_F78029` (609 B) and `DLGlyph_118_F7A158` (1,976 B)
 are gone. `make images-check` and `make gate-wsa1` both green; both were shown
 to go red at `0x7A15F` on a one-byte perturbation of a converted cell.
 

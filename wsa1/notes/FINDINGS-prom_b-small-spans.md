@@ -232,7 +232,7 @@ declared nowhere.
 
 ### One refusal worth someone else's time
 
-**0xF3B656.**  `Data_F3B651` starts `00 0B`.  Read as op 0x00 with length 11 the
+**0xF3B656.**  `TrackAssign_PaintTrackGroup_DL` starts `00 0B`.  Read as op 0x00 with length 11 the
 record would end at 0xF3B65C -- but the next record demonstrably starts at
 0xF3B65B (`02 0F 41 26 ...`, op 0x02 length 15, and the chain from there is
 clean and reaches the end of `DL_F3B65B`'s documented extent).  So **either op

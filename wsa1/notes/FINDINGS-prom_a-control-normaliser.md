@@ -12,7 +12,7 @@ answers the third, which the note itself flags as the one that matters:
 > the module's only call out of itself.
 
 and `notes/FINDINGS-prom_b-sc1-link.md` ends its open questions with *"What
-would settle it: a caller of `T_F40F08` in prom_a whose surroundings are
+would settle it: a caller of `T_SC1_TxFlush` in prom_a whose surroundings are
 identified, or `0xF89800`."*
 
 Every number below is re-derived by **`python3 notes/prom_a_ctrl_checks.py`** —
@@ -71,7 +71,7 @@ with `ldb w,#` immediately before and `jr nc` immediately after. There are
 
 Four of them come from `ADREG0`-`ADREG3`, two from `(0x600000)`/`(0x600001)`.
 `notes/FINDINGS-prom_a-ring-buffers.md` already said "all six report through
-directory slot `T_F405F0`"; this is the other end of that sentence, and it also
+directory slot `T_Ctrl_Normalise`"; this is the other end of that sentence, and it also
 corrects the count: **eight sites, six channels**, because `0xF8DDBC-0xF8DDE5` is
 **byte-identical** to `0xF8DD4D-0xF8DD76` — AnalogScan carries a duplicate scan
 routine for channel 4 and another for channel 5. Recorded as measured (the two
@@ -91,7 +91,7 @@ established: prom_b's SC1 receive decoder calls this same routine, twice, at
 So the cross-note lead gap E flags —
 
 > ★ One cross-note lead nobody has followed: the six analogue controls report
-> through directory slot `T_F405F0` — **the same slot** the SC1 receive decoder
+> through directory slot `T_Ctrl_Normalise` — **the same slot** the SC1 receive decoder
 > calls out through. If it is one slot, the analogue controls and the SC1 peer
 > are the same board.
 

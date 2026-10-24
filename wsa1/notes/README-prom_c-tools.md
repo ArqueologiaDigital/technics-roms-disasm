@@ -240,7 +240,7 @@ routine's own address from the `; ADDR` comment on its first instruction line, d
 instruction at every cited address, and checks it is a transfer to that routine.
 
 ⚠ **Read the output; it is not a pass/fail.** A header legitimately names a pointer-table entry
-(`Link_Ch0_AppendToRing` is reached through `Handler_PtrTable_FCC53F`, not by a `call`), a
+(`Link_Ch0_AppendToRing` is reached through `Link_ClassHandlerTable`, not by a `call`), a
 descriptor argument, or the routine that *contains* the call rather than the call itself.
 
 ★ **Since round 3 every non-decoding row is CLASSIFIED**, because "N did not decode" was a
@@ -861,7 +861,7 @@ Twelve sections over `original_ROMs/wsa1_prom_c.ic28`, no `.s` file and no unida
 2*block**, block 0 LAST; the five small accessors touch exactly **eight blocks 0x00C0..0x0280,
 all 0x40 apart**; the whole image holds **nine** `0x00104000` literals and **no read-back**.
 The 19 staging words are filled by **24 stores** — 20 in `Dev104_PackStagingStruct`, 3 in
-`sub_FC49AD`, 1 in `sub_FC4AED`.
+`Pack104_StageRegs_00C0_0100_0240`, 1 in `Pack104_StageReg_0280`.
 
 ★ **It also asserts a correction.** `notes/prom_c_dev10c_field_sources.py --dev104` reports
 0xFC5522, 0xFC55AF, 0xFC55C5 and 0xFC5657 as struct writes. **They are not**: all four load
@@ -887,12 +887,12 @@ Thirteen sections over `original_ROMs/wsa1_prom_{b.ic13,c.ic28,d.bin}`; no `.s` 
 unidasm text. It is the evidence behind **`notes/HLE-GUIDE-l7a1429.md`**, the topology hypothesis and
 per-register HLE guidance it supports. The results that matter:
 
-* **`fold()` is a sign-magnitude -> offset-binary converter.** Under it, `Curve_FE04C9` and
-  `Curve_FE05C9` are MONOTONE over all 128 entries, including across the `0x8459 -> 0x015E`
+* **`fold()` is a sign-magnitude -> offset-binary converter.** Under it, `Curve_Muting_Cutoff_Q16_128` and
+  `Curve_Muting_Cutoff_Q13_128` are MONOTONE over all 128 entries, including across the `0x8459 -> 0x015E`
   step that looks like a wrap in the two's-complement reading. The null is that reading,
   which is not monotone. ⚠ `prom_c/data_tables/tail_data_zone.s` describes both tables in
   two's complement; **reported, not edited** — that file is another lane's.
-* **`Curve_FE04C9` is a bilinear one-pole coefficient.** Read as sign-magnitude Q15 it is
+* **`Curve_Muting_Cutoff_Q16_128` is a bilinear one-pole coefficient.** Read as sign-magnitude Q15 it is
   `a1 = (K-1)/(K+1)` with `K = tan(pi*f/fs)`, and `f` doubles every **12.0016 index steps**
   with a max residual of **0.8 cents** over i=14..90. Four rival value-to-frequency maps are
   fitted as a null; the best is 50x worse. Index `i` is MIDI note `i+36` at **44,091 +/- 11 Hz**,
@@ -903,7 +903,7 @@ per-register HLE guidance it supports. The results that matter:
   words 7, 8 and 9 of the power-on reset image at 0xFE133B are reproduced EXACTLY by the
   high-half computation, each from one Curve_Exp2Rise_128 index, and the low-half computation
   reproduces none of the three from any of the 128 entries.
-* **THREE sections, not two.** `Curve_FE04C9`, `Curve_FE05C9` and `Curve_Exp2Rise_128` are each
+* **THREE sections, not two.** `Curve_Muting_Cutoff_Q16_128`, `Curve_Muting_Cutoff_Q13_128` and `Curve_Fitting_Exp2Rise_128` are each
   cited **exactly three times in the whole image** — an exhaustive census, not a sighting — and
   the third pair lands in `P[+0x24]` / `P[+0x26]`, i.e. registers 0x03C0 and 0x0480. The
   Stage_B ROM image at 0xFE1315 says the same thing from a path that never runs the packer.
@@ -1093,8 +1093,8 @@ than cited from another file.
 a **one-pole lowpass cutoff**, `F = 65536·g/(1+g)` and `G = 8192·(1 − 1/(128·g))` with
 `g = tan(π f/44100)` and `f = 440·2^((k−33)/12)`, residuals 1 and 5 counts. So the index is a
 **semitone**, `k = MIDI note − 36` to 0.4 cent, and the table saturates at `k = 100` because
-`θ(101) > π/2` — one step past **Nyquist**. `Curve_Log2_251`'s slope of 3072 counts per octave
-makes register `0x00C0`'s unit **1/256 semitone**; `LinCoef_FE0196`'s slope makes a depth byte
+`θ(101) > π/2` — one step past **Nyquist**. `Curve_Position_Log2Period_251`'s slope of 3072 counts per octave
+makes register `0x00C0`'s unit **1/256 semitone**; `LinCoef_Muting_TouchRamp_Q5_128`'s slope makes a depth byte
 of 64 exactly **100% cutoff key follow**. Findings:
 `notes/FINDINGS-l7a1429-curve-tables.md`.
 

@@ -148,7 +148,7 @@ slots and the two-against-thirty-seven reference counts — all re-derived by
 **maximal in both directions** (the bytes either side differ). Nothing in either
 image names `0xFAD3EB`, `0xFAD3EC`, `0xFAD424`, `0xFAD431` or `0xFAD465`, while
 every other table in the module is named by at least one reader. Read as the
-original's framing, the copy holds the last 14 entries of `PtrTable_FAD28A`, all
+original's framing, the copy holds the last 14 entries of `ParamNumber_DefaultRecordPtrs`, all
 of `ByteTable_FAD38A`, all of `PtrTable_FAD397` and 32 more `0x0F` bytes.
 
 Whether one mechanism produced 3a and 3b is **not** established.
@@ -161,22 +161,22 @@ The rule used throughout: an entry count must come from **the reader**, not from
 where the bytes stop looking like a table. Where no reader could be found, the
 block is `.byte` with no count claimed.
 
-| table | entries | what pins the count |
-|---|---:|---|
-| `Dispatch_By_60F080` `0xFAC8EA` | 256 LE32 | `mul BC,(0x60f080)` — an **8-bit** memory operand, so the index cannot exceed 0xFF |
-| `Dispatch_By_60F080__Tail` `0xFACCEA` | 64 LE32 | all identical to the default handler; unreachable by any index the reader can form |
-| `Lookup32_By_Arg8` `0xFACDEA` | 256 LE32 | `mul BC,(XIZ+0x08)`, likewise 8-bit; ends exactly where `Bytes_00_to_1F` begins |
-| `Bytes_00_to_1F` `0xFAD1EA` | 32 bytes | both ends pinned by *other* tables' readers |
-| `BitMask32_Table` `0xFAD20A` | 32 LE32 | 128 bytes between two addresses each named as a 32-bit immediate |
-| `PtrTable_FAD28A` | 64 LE32 | its END is named by `add XBC,0x00FAD38A` at two sites |
-| `ByteTable_FAD38A` | 13 bytes | its END is named by `add XBC,0x00FAD397` |
-| `PtrTable_FAD397` | 13 LE32 | its END is named by `add XBC,0x00FAD3CB` |
-| `Bytes_0F_FAD3CB` | 32 bytes | ⚠ the run itself; no second reader |
-| `Bytes_00_to_1F_FC64A5` | 32 bytes + one 0xFF | its END is named by eight readers |
-| `BitMask32_Table_FC64C6` | 32 LE32 | between two independently named addresses |
-| `NoteRouting_BuildByPanelMode` | 32 LE32 | its END is named by the reader at `0xFC5BE8` |
-| `Bytes_00_to_1F_x3_FC65C6` | 3 × 32 bytes | the three runs, then a value that is not identity |
-| `MixedTables_FAD28A`/`_FC6626` | — | **no reader found; no count claimed** |
+| table                                 | entries             | what pins the count                                                                |
+|---------------------------------------|--------------------:|------------------------------------------------------------------------------------|
+| `Dispatch_By_60F080` `0xFAC8EA`       | 256 LE32            | `mul BC,(0x60f080)` — an **8-bit** memory operand, so the index cannot exceed 0xFF |
+| `Dispatch_By_60F080__Tail` `0xFACCEA` | 64 LE32             | all identical to the default handler; unreachable by any index the reader can form |
+| `ParamNumber_RecordPtrs` `0xFACDEA`   | 256 LE32            | `mul BC,(XIZ+0x08)`, likewise 8-bit; ends exactly where `Bytes_00_to_1F` begins    |
+| `Bytes_00_to_1F` `0xFAD1EA`           | 32 bytes            | both ends pinned by *other* tables' readers                                        |
+| `BitMask32_Table` `0xFAD20A`          | 32 LE32             | 128 bytes between two addresses each named as a 32-bit immediate                   |
+| `ParamNumber_DefaultRecordPtrs`       | 64 LE32             | its END is named by `add XBC,0x00FAD38A` at two sites                              |
+| `ByteTable_FAD38A`                    | 13 bytes            | its END is named by `add XBC,0x00FAD397`                                           |
+| `PtrTable_FAD397`                     | 13 LE32             | its END is named by `add XBC,0x00FAD3CB`                                           |
+| `Bytes_0F_FAD3CB`                     | 32 bytes            | ⚠ the run itself; no second reader                                                 |
+| `Bytes_00_to_1F_FC64A5`               | 32 bytes + one 0xFF | its END is named by eight readers                                                  |
+| `BitMask32_Table_FC64C6`              | 32 LE32             | between two independently named addresses                                          |
+| `NoteRouting_BuildByPanelMode`        | 32 LE32             | its END is named by the reader at `0xFC5BE8`                                       |
+| `Bytes_00_to_1F_x3_FC65C6`            | 3 × 32 bytes        | the three runs, then a value that is not identity                                  |
+| `MixedTables_FAD28A`/`_FC6626`        | —                   | **no reader found; no count claimed**                                              |
 
 `Dispatch_By_60F080` is the module's command dispatcher: the reader pushes
 `0xFAB860` as a return address before `jp T,XBC`, so entries are *called*. Of its
@@ -231,10 +231,10 @@ What is already known about it, for whoever takes it next:
 
 **What the module is for.** It moves bytes between `0x60F000-0x60F1FF` RAM and
 the prom_b directory. The command byte at `(0x60F080)` is written by code inside
-the module and is not traced to a source. `Lookup32_By_Arg8`'s 78 distinct
+the module and is not traced to a source. `ParamNumber_RecordPtrs`'s 78 distinct
 values are 16-bit quantities in `0x7622-0x7F5A` that are **not** addresses in any
 image of this machine, and `0xFFFFFFFF` reads as "absent" but nothing tests for
-it. `PtrTable_FAD28A` points into prom_b's `0xF3Fxxx`, which is another lane's
+it. `ParamNumber_DefaultRecordPtrs` points into prom_b's `0xF3Fxxx`, which is another lane's
 image.
 
 Routine labels in both spans are therefore `sub_XXXXXX` except where a header

@@ -96,7 +96,7 @@ each one stages.  The mapping, so the table below stays followable:
 | `sub_FC4BB6` | `Pack104_SetInputs_PartRecord` |
 | `sub_FC4C85` | `Pack104_SetInputs_SubRecordPair` |
 
-⚠ **AND ONE CORRECTION TO §3.**  This file says `sub_FC4DBD` "writes **19 offsets** in
+⚠ **AND ONE CORRECTION TO §3.**  This file says `Dev104_PackStagingStruct` "writes **19 offsets** in
 `0x00..0x24`".  Nineteen is the number of WRITE SITES; the distinct offsets are **16**, of
 which 15 are even (whole words) and one (`+0x1D`) is a high-byte write.  Four of the
 nineteen even fields — `+0x06`, `+0x08`, `+0x12` and `+0x16` — are not written by the
@@ -197,11 +197,11 @@ write.
   16-21.  A register with two producers is one routine-read away from a meaning.
 * **Word 6 → register `0x0180 + channel` is the one the emulator most needs**: it is the
   block `0xFA69B1` READS BACK and keeps as `(value & 0x3FFF) >> 5` (gap F).  Its only two
-  producers are `sub_FA96F7__FA9801` and `sub_FA9C60__FA9F06`.  That is the shortest path
+  producers are `Voice_StageRegs_CD__FA9801` and `Voice_StageRegs_0180_AB__FA9F06`.  That is the shortest path
   in this table from "the driver answers 0" to "the driver answers something true".
 * Word 1 → register `0x0040 + channel` has the most: **nine write sites from six
-  routines**.  Four of them — `sub_FA7467`, `sub_FA74AB`, `sub_FA74ED`, `sub_FA752F`, of
-  68, 66, 66 and 65 bytes — are the same SHAPE and are the only callers of `sub_FC4D85`:
+  routines**.  Four of them — `KeyZone_Stage_Reg0040_Stride8`, `KeyZone_Stage_Reg0040_Stride6A`, `KeyZone_Stage_Reg0040_Stride6B`, `KeyZone_Stage_Reg0040_Stride4`, of
+  68, 66, 66 and 65 bytes — are the same SHAPE and are the only callers of `Pack104_SetInputs_Rec0C_E08C`:
 
   ```
       XIX = arg(+0x0A) + STRIDE * arg(+0x0E)      ; index a record array
@@ -226,38 +226,38 @@ write.
 ## 3. The 0x00104000 side: ONE packer, and its input block
 
 The twin device's staging struct at `0x00D7A2` is not filled that way at all.  **One
-routine fills it**: `sub_FC4DBD` (0xFC4DBD, 2,311 bytes), whose only argument is the
+routine fills it**: `Dev104_PackStagingStruct` (0xFC4DBD, 2,311 bytes), whose only argument is the
 struct POINTER and which writes **19 offsets in `0x00..0x24`** through it — exactly the
 span `Dev104_WriteAllChanRegs` reads (`register (chan + k*0x40) = struct word 2k`,
 k = 0..0x12).  `VoiceRegs_Stage_A` calls it with `0x00D7A2` and then hands the same
 pointer to the device writer, two instructions later.
 
 That asymmetry — many small writers on one device, one packer on the other — is itself a
-finding, and it makes `sub_FC4DBD` the single highest-value routine body left in this
+finding, and it makes `Dev104_PackStagingStruct` the single highest-value routine body left in this
 subsystem.
 
 ### Its inputs are a "current object" pointer block at RAM 0x00E082-0x00E08D
 
-`sub_FC4DBD` reads no argument except the struct pointer.  Everything else comes from
+`Dev104_PackStagingStruct` reads no argument except the struct pointer.  Everything else comes from
 seven globals, set by four small routines that this pass read:
 
-| global | set by | value |
-|---|---|---|
-| `0x00E082` | `sub_FC4BB6` | `0x005D23 + 0xBB * arg` — an array at RAM `0x005D23`, stride **187** |
-| `0x00E084` | `sub_FC4C85` | `(0x00E082) + 0x2A * arg + 0x13` — a sub-array at `+0x13` inside that record, stride **42**.  187 − 19 = 168 = **4 × 42** |
-| `0x00E086` | `sub_FC4C85` | `0x00753E + 0x25 * arg` — an array at RAM `0x00753E`, stride **37** |
-| `0x00E088` | `sub_FC4D63` | `voice_record[+0x0C]` with **bit 7 cleared** |
-| `0x00E089` | `sub_FC4D63` | the first byte of the object the 32-bit pointer at `voice_record[+0x1F]` points to |
-| `0x00E08A` | `sub_FC4D63` | `voice_record[+0x08]` (word) |
-| `0x00E08D` | `sub_FC4DA1` | `voice_record[+0x0A]` (word) |
-| `(0x00E086)[+0x0E]` | `sub_FC4DA1` | `voice_record[+0x06]` (word) |
+| global              | set by                             | value                                                                                                                     |
+|---------------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `0x00E082`          | `Pack104_SetInputs_PartRecord`     | `0x005D23 + 0xBB * arg` — an array at RAM `0x005D23`, stride **187**                                                      |
+| `0x00E084`          | `Pack104_SetInputs_SubRecordPair`  | `(0x00E082) + 0x2A * arg + 0x13` — a sub-array at `+0x13` inside that record, stride **42**.  187 − 19 = 168 = **4 × 42** |
+| `0x00E086`          | `Pack104_SetInputs_SubRecordPair`  | `0x00753E + 0x25 * arg` — an array at RAM `0x00753E`, stride **37**                                                       |
+| `0x00E088`          | `Pack104_SetInputs_E088_E089_E08A` | `voice_record[+0x0C]` with **bit 7 cleared**                                                                              |
+| `0x00E089`          | `Pack104_SetInputs_E088_E089_E08A` | the first byte of the object the 32-bit pointer at `voice_record[+0x1F]` points to                                        |
+| `0x00E08A`          | `Pack104_SetInputs_E088_E089_E08A` | `voice_record[+0x08]` (word)                                                                                              |
+| `0x00E08D`          | `Pack104_SetInputs_Rec0E_E08D`     | `voice_record[+0x0A]` (word)                                                                                              |
+| `(0x00E086)[+0x0E]` | `Pack104_SetInputs_Rec0E_E08D`     | `voice_record[+0x06]` (word)                                                                                              |
 
 `voice_record` is the 68-byte record at `0x003BCF + 0x44 * voice` — the same array the
 tone-generator note already documents, re-derived here from
 `ld C,0x44 / mul BC,(XIZ+0x08) / ld WA,0x3bcf / add DE,BC` at the top of every
 `VoiceRegs_Stage_*`.
 
-`sub_FC4BB6` is called from the arms of `MidiNote_OnByPartMode`, so `0x00E082` is
+`Pack104_SetInputs_PartRecord` is called from the arms of `MidiNote_OnByPartMode`, so `0x00E082` is
 "the record of the part this note-on belongs to", 187 bytes, containing four 42-byte
 sub-records at `+0x13`.
 
@@ -301,16 +301,16 @@ module".
 
 ---
 
-## 3b. ★ ROUND 3: two of `sub_FC4DBD`'s nineteen registers now have their TABLES
+## 3b. ★ ROUND 3: two of `Dev104_PackStagingStruct`'s nineteen registers now have their TABLES
 
-`sub_FC49AD` — a helper `sub_FC4DBD` calls at `0xFC56AA` — reads two parallel 251-entry tables
+`Pack104_StageRegs_00C0_0100_0240` — a helper `Dev104_PackStagingStruct` calls at `0xFC56AA` — reads two parallel 251-entry tables
 with one index, clamped to `0..250` by its own code (`cp HL,0x00FA` at `0xFC49CC`, `cp HL,0` at
 `0xFC49D7`), and stores both results through the struct pointer:
 
-| table | contents | struct | register |
-|---|---|---|---|
-| `Curve_Log2_251` (`0xFDFAE0`) | `round(27543 − 3072·log₂k)`, `T[0] = 0x6C00` | `+0x06` | `0x00C0 + chan` |
-| `Const_0100_251` (`0xFDFCD6`) | `0x0100` in **all 251 entries** | `+0x08` | `0x0100 + chan` |
+| table                                        | contents                                     | struct  | register        |
+|----------------------------------------------|----------------------------------------------|---------|-----------------|
+| `Curve_Position_Log2Period_251` (`0xFDFAE0`) | `round(27543 − 3072·log₂k)`, `T[0] = 0x6C00` | `+0x06` | `0x00C0 + chan` |
+| `Dev104_Reg0100_Const_251` (`0xFDFCD6`)      | `0x0100` in **all 251 entries**              | `+0x08` | `0x0100 + chan` |
 
 So register `0x0100 + chan` is fed a **constant** on this firmware, and `0x00C0 + chan` a
 **logarithmic** quantity — 3072 counts per halving — plus two per-part offsets, clamped to
@@ -330,12 +330,12 @@ Full account and the closed forms: `notes/FINDINGS-prom_c-tail-data-zone.md` §4
 > side; its WRITE side is decoded in
 > `notes/FINDINGS-prom_c-dev10c-sibling-register-map.md` §4.
 
-1. Read `sub_FA96F7__FA9801` and `sub_FA9C60__FA9F06` — the only two producers of the one
+1. Read `Voice_StageRegs_CD__FA9801` and `Voice_StageRegs_0180_AB__FA9F06` — the only two producers of the one
    register the firmware READS BACK (`0x0180 + channel`, gap F).  Two routines, one
    register, and the emulator has a stub waiting for the answer.
-2. Read `sub_FC4DBD` end to end.  Nineteen registers of the twin device come out of it and
+2. Read `Dev104_PackStagingStruct` end to end.  Nineteen registers of the twin device come out of it and
    its inputs are already enumerated above.
-3. Read one of `sub_FA7467` / `sub_FA74AB` / `sub_FA74ED` / `sub_FA752F` and identify the
+3. Read one of `KeyZone_Stage_Reg0040_Stride8` / `KeyZone_Stage_Reg0040_Stride6A` / `KeyZone_Stage_Reg0040_Stride6B` / `KeyZone_Stage_Reg0040_Stride4` and identify the
    record arrays they walk (strides 8, 6, 6, 4).  Four same-shaped routines feeding one
    register is the strongest structural signal in the whole subsystem, and the shared
-   callee `sub_FC4D85` — 28 bytes — is the cheapest place to start.
+   callee `Pack104_SetInputs_Rec0C_E08C` — 28 bytes — is the cheapest place to start.

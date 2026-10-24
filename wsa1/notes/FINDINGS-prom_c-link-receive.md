@@ -116,7 +116,7 @@ INTTC3 arms — quoting the arms' own range here would have been an off-by-one.)
 * `0x008519` — **1 site**, the write in state 3. Never read by any literal-addressed
   instruction anywhere in the image. Reported as measured, not declared dead.
 
-## 4. `Handler_PtrTable_FCC53F` — a question this round closed
+## 4. `Link_ClassHandlerTable` — a question this round closed
 
 That table's header used to say *"nothing in prom_c references 0xFCC53F as a literal, so the
 START of this table is inferred … What dispatches through it is not traced."* Both halves are
@@ -190,7 +190,7 @@ last 0xFC575B — both ends checked.
 
 ## ★ The channel map, both directions (added 2026-08-25)
 
-The four `Handler_PtrTable_FCC53F` arms are converted, so the receive side of the channel index
+The four `Link_ClassHandlerTable` arms are converted, so the receive side of the channel index
 is no longer a shape:
 
 | channel | CPU 2 RECEIVES | CPU 2 SENDS |
@@ -212,5 +212,5 @@ the link**. See `notes/FINDINGS-prom_c-keyboard-and-touch.md`.
 ⚠ **A retraction from the same session.** The first version of the `0xF9993D` header in
 `prom_c/wsa1_prom_c.s` called it "a lone `ret` … nothing in prom_c references it
 (notes/prom_c_xrefs.py 0xF9993D: no literal, no calr)". The tool had not been run; running it
-finds **four** ABS32 references, which are entries 4-7 of `Handler_PtrTable_FCC53F` — a fact
+finds **four** ABS32 references, which are entries 4-7 of `Link_ClassHandlerTable` — a fact
 the table's own header in the same file already stated. The byte gate passed either way.

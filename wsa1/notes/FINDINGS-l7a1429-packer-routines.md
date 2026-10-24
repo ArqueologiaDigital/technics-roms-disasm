@@ -240,15 +240,15 @@ reason each still stands is recorded here rather than left to be re-derived.
 
 ### 2.1 Established as NOT on the `0x00104000` path
 
-| routine | what it really belongs to |
-|---|---|
-| `sub_FC39FA`, `sub_FC3B24` | the SOUND-RAM / flash path: both call `SoundRam_ClearFourBanks`, `Flash_ReprogramSector` and `Flash_ReadSectorToBuffer`, and neither touches `0x00E082`/`0x00E084`/`0x00E086`. |
-| `sub_FC3407`, `sub_FC3480`, `sub_FC355B` | called only from `Voice_StageRegs_0040_B`; no contact with the packer's input globals. |
-| `sub_FC35DB`, `sub_FC36BE`, `sub_FC382A`, `sub_FC4B2E` | voice-parameter helpers under `VoiceParams_Compute_*`; no contact with the globals. |
-| `sub_FC7E10`, `sub_FC7E79`, `sub_FC7F03`, `sub_FC7F7A`, `sub_FC7FCA`, `sub_FC810C`, `sub_FC8129`, `sub_FC81B8`, `sub_FC81F8` | the `0x0010C000` voice-register and part-record side; `sub_FC7E79` calls `Dev10C_ReadChanReg_0100`, and the `Voice_StageRegs_*` / `Dev10C_Stage*` callers name the other device. |
-| `sub_FC7CF9` | reached from `ExtBoard_ProbeAndInstallBases`; its only tie here is that it initialises the slot pool. |
-| `ToneEdit_Dispatch__FBAE7D_Nop` | one byte, a bare `ret`. |
-| `sub_FC4140`, `sub_FC4269` | arithmetic: `Divide32_Signed` and a 1,087-byte routine over `Math_Sin_Q11` / `Math_Cos_Q11` / `Math_Atan_Q11` / `Math_Exp2_Q11`. `sub_FC4269` *is* reached from the RESO MODE arms, but naming it needs §2.2's answer. |
+| routine                                                                                                                      | what it really belongs to                                                                                                                                                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `sub_FC39FA`, `sub_FC3B24`                                                                                                   | the SOUND-RAM / flash path: both call `SoundRam_ClearFourBanks`, `Flash_ReprogramSector` and `Flash_ReadSectorToBuffer`, and neither touches `0x00E082`/`0x00E084`/`0x00E086`.                                                         |
+| `sub_FC3407`, `sub_FC3480`, `sub_FC355B`                                                                                     | called only from `Voice_StageRegs_0040_B`; no contact with the packer's input globals.                                                                                                                                                 |
+| `sub_FC35DB`, `sub_FC36BE`, `sub_FC382A`, `sub_FC4B2E`                                                                       | voice-parameter helpers under `VoiceParams_Compute_*`; no contact with the globals.                                                                                                                                                    |
+| `sub_FC7E10`, `sub_FC7E79`, `sub_FC7F03`, `sub_FC7F7A`, `sub_FC7FCA`, `sub_FC810C`, `sub_FC8129`, `sub_FC81B8`, `sub_FC81F8` | the `0x0010C000` voice-register and part-record side; `sub_FC7E79` calls `Dev10C_ReadChanReg_0100`, and the `Voice_StageRegs_*` / `Dev10C_Stage*` callers name the other device.                                                       |
+| `sub_FC7CF9`                                                                                                                 | reached from `ExtBoard_ProbeAndInstallBases`; its only tie here is that it initialises the slot pool.                                                                                                                                  |
+| `ToneEdit_Dispatch__FBAE7D_Nop`                                                                                              | one byte, a bare `ret`.                                                                                                                                                                                                                |
+| `Divide16_Signed_Shl11_Sat`, `Pack104_SolveCoupledDetune`                                                                    | arithmetic: `Divide32_Signed` and a 1,087-byte routine over `Math_Sin_Q11` / `Math_Cos_Q11` / `Math_Atan_Q11` / `Math_Exp2_Q11`. `Pack104_SolveCoupledDetune` *is* reached from the RESO MODE arms, but naming it needs §2.2's answer. |
 
 ### 2.2 On the path, but the purpose is not established
 
@@ -257,7 +257,7 @@ reason each still stands is recorded here rather than left to be re-derived.
   the four elements' `RESO MODE` code. What *selects* them is PROVEN; what they
   *compute* is not. Three are 66-byte near-twins (the block header's own
   duplicate census records `0xFC6CA8`/`0xFC6CEA` differing in one byte); the
-  other three are 578-655 bytes and all three call `sub_FC4269`'s trigonometry
+  other three are 578-655 bytes and all three call `Pack104_SolveCoupledDetune`'s trigonometry
   and write `0x00E093`/`0x00E095`, two globals nothing in this pass located.
   **Tried:** the MODELING top screen's `CONNEC`+`TION` caption makes a
   connection-topology reading attractive, and that is exactly why it was

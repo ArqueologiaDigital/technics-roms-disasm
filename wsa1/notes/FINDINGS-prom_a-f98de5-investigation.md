@@ -40,11 +40,11 @@ family was read as a change of grid, and the span was refused on it.
    (opcode, length) framing -- not by "looks like an address". The local values
    are `0x00F98D20` (31x), `0x00F98D21` (3x) and `0x00F98C85` (1x).
 
-4. **A converted sibling with the same shape.** `PtrTable_F99121` is already in
+4. **A converted sibling with the same shape.** `MessageScreen_ListPairs` is already in
    `prom_a/wsa1_prom_a.s`: 169 LE32 pointers of exactly this kind, converted on
    exactly this class of evidence -- its own header says the entry count came
    from `prom_a_ptr_tables.py`, "NOT from a reader's bound, because no reader
-   bound was found". Align this table's entry 0 with `PtrTable_F99121`'s entry
+   bound was found". Align this table's entry 0 with `MessageScreen_ListPairs`'s entry
    49 (0xF991E5) and 28 of 120 entries are byte-identical, including unbroken
    runs of 10 (indices 0-9) and 12 (indices 23-34). Both tails have the same
    shape -- many copies of a local default, one outlier, then three copies of a
@@ -79,7 +79,7 @@ exist and inventing one would change the image.
 
 What indexes the table. No literal `0x00F98DE5`, nor any base inside
 0xF98D00-0xF99010, exists in any of the four images -- re-checked this pass with
-a whole-image LE24 and LE32 scan. `PtrTable_F99121` has the same gap and was
+a whole-image LE24 and LE32 scan. `MessageScreen_ListPairs` has the same gap and was
 converted anyway; so is this.
 
 ---
@@ -130,10 +130,10 @@ converted anyway; so is this.
 > computed/relocated addressing this pass could not find, not a literal
 > `ld XIY,0x00f98de5`-shaped load.
 >
-> ### Relationship to the already-documented `PtrTables_F95C95` cluster
+> ### Relationship to the already-documented `ScreenButtonHandlers_StaleCopy` cluster
 >
 > `prom_a/wsa1_prom_a.s` already has a converted, comparable structure at
-> 0xF95C95-0xF95E82 (`PtrTables_F95C95`, converted in an earlier pass) with
+> 0xF95C95-0xF95E82 (`ScreenButtonHandlers_StaleCopy`, converted in an earlier pass) with
 > the SAME symptom: multiple mixed pointer tables, one of whose 59 entries
 > still has "NO reader located" even after dedicated forensic work, and one
 > stray byte that "belongs to neither" table. That cluster's own header

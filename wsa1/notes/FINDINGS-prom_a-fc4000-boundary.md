@@ -114,5 +114,5 @@ instances of the *same kind of argument* is not independent evidence, and
 neither had an external anchor. The actual boundary, `0xFC48E4`, is 13 bytes
 later than that estimate — inside what those passes could see only as "text
 ends, then something else", which is now accounted for by
-`FixedStringTable_FC482F` ending at `0xFC48D8` and `Unclassified_FC48D8`'s
+`DigitalEffect_TypeNames` ending at `0xFC48D8` and `Unclassified_FC48D8`'s
 12-byte residue.

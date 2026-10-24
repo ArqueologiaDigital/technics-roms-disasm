@@ -22,7 +22,7 @@ directory: the caller writes `call 0xF4xxxx` and the linker fills in the slot.
 ## Layer 2 — the selector dispatchers, `0xF5B8B6` and `0xF5B9B8`
 
 Two nearly identical routines, both in the thunk table's top ten for prom_b
-targets (`T_F41ED0` x39, `T_F41ED4` x109):
+targets (`T_Dispatch_Code80_Bracketed` x39, `T_Dispatch_Code80` x109):
 
 ```
     code = (XIZ+8)                      ; 16-bit, >= 0x80

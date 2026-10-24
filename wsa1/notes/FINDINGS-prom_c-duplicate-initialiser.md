@@ -127,7 +127,7 @@ duplication, not of an object**. See `notes/prom_c_tail_census.py --corrections`
 
 Copy B's row is **unchanged** by the correction, so this section's conclusion stands. And the
 one surviving hit for copy B is not a reference either: it is at `0xFE05DC`, inside
-`Curve_FE05C9` (`... e7 ff | e2 ff | 18 fe | 68 fc | d4 fa ...`), where the bytes
+`Curve_Muting_Cutoff_Q13_128` (`... e7 ff | e2 ff | 18 fe | 68 fc | d4 fa ...`), where the bytes
 `e2 ff 18 fe` are the boundary between two table **entries**. A second census with a wider
 exclusion — `notes/prom_c_tail_census.py --copyb`, which discards sites anywhere in the tail
 data zone — reports **zero** hits for copy B.
@@ -152,18 +152,18 @@ bytes of verified filler**.
 
 Emitted with headers in `prom_c/wsa1_prom_c.s`:
 
-| object | address | size | how the size was fixed |
-|---|---|---:|---|
-| `Voice_KeyTable_Remapping` | 0xFE11F0 | 8 | 0xFF terminator |
-| `Voice_Search_Order_List_1` | 0xFE11F8 | 15 | 0xFF terminator; pointed at by record 0 |
-| `Voice_Search_Order_List_2` | 0xFE1207 | 14 | 0xFF terminator; pointed at by record 1 |
-| `Voice_Search_Order_List_3` | 0xFE1215 | 11 | 0xFF terminator; pointed at by records 2-15 |
-| `Voice_SearchOrder_Records` | 0xFE1220 | 96 | 16 relocated pointers at stride 6 |
-| `Dev10C_GlobalRegs_ResetImage` | 0xFE12B5 | 26 | 13 fields in `Dev10C_WriteGlobalRegs`; `0xFE12CF - 0xFE12B5` |
-| `Dev10C_StagingStruct_ResetImage` | 0xFE12CF | 68 | `MemCopyWords` count argument |
-| `Dev104_Reg0800_ResetValue` | 0xFE1313 | 2 | its two neighbours |
-| `unexplained_FE1315` | 0xFE1315 | 38 | its two neighbours |
-| `Dev104_StagingStruct_ResetImage` | 0xFE133B | 38 | `MemCopyWords` count argument; 19 registers |
+| object                             | address  | size | how the size was fixed                                       |
+|------------------------------------|----------|-----:|--------------------------------------------------------------|
+| `Voice_KeyTable_Remapping`         | 0xFE11F0 | 8    | 0xFF terminator                                              |
+| `Voice_Search_Order_List_1`        | 0xFE11F8 | 15   | 0xFF terminator; pointed at by record 0                      |
+| `Voice_Search_Order_List_2`        | 0xFE1207 | 14   | 0xFF terminator; pointed at by record 1                      |
+| `Voice_Search_Order_List_3`        | 0xFE1215 | 11   | 0xFF terminator; pointed at by records 2-15                  |
+| `Voice_SearchOrder_Records`        | 0xFE1220 | 96   | 16 relocated pointers at stride 6                            |
+| `Dev10C_GlobalRegs_ResetImage`     | 0xFE12B5 | 26   | 13 fields in `Dev10C_WriteGlobalRegs`; `0xFE12CF - 0xFE12B5` |
+| `Dev10C_StagingStruct_ResetImage`  | 0xFE12CF | 68   | `MemCopyWords` count argument                                |
+| `Dev104_Reg0800_ResetValue`        | 0xFE1313 | 2    | its two neighbours                                           |
+| `Dev104_StagingStruct_StageBImage` | 0xFE1315 | 38   | its two neighbours                                           |
+| `Dev104_StagingStruct_ResetImage`  | 0xFE133B | 38   | `MemCopyWords` count argument; 19 registers                  |
 
 ★ The four 0xFF-terminated lists total **48 bytes**, which is *exactly* the backing-run length
 the KN5000 transplant table quotes for those four names

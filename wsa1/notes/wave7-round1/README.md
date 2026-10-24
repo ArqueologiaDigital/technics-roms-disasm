@@ -176,7 +176,7 @@ script and in any prose derived from it **before** the span is converted.
 * **MINOR — summary, correction (b): "the briefing's `T_F42FD0-T_DL_Pt1Pt2Pt3Pt4Pt5Pt6Pt7Pt8 (13 slots)` are STALE, not entry points".**
   The briefing's line 114 reads only `0xF17559-0xF1B400 16,039 T_F42FD0` -- no slot count, no range, and no claim that the slots are unconverted entry points. The finding itself (13 slots, all unreferenced, 11 of 13 mid-record) is fully verified; only the quoted attribution is invented. The `retires` field states this more honestly ('that the briefing lists as this span's thunk run'), so the two disagree with each other.
 
-* **MINOR — summary, cross-lane note: "`Data_F0EEE0` is its first four 24x24 dial glyphs".**
+* **MINOR — summary, cross-lane note: "`OldBuild_ValueGlyph_Bitmaps` is its first four 24x24 dial glyphs".**
   The existing block header in prom_b/wsa1_prom_b.s:9336 sizes Data_F0EEE0 at 287 bytes, one short of four whole 72-byte glyphs (288). I confirmed 0xF0EEE0[288] == 0xF31EE1[288] and that the 5th block differs, so the substance is right, but the existing block holds three whole glyphs plus 71 bytes of the fourth. The dossier does not state the count. Separately, the dossier missed a correction sitting in the same file: the `.incbin` header at prom_b/wsa1_prom_b.s:21798-21801 says '0xF17A6C holds a 24-entry array of pointers spaced 0x48' -- I measured 29 entries, stride 72 on all 28 gaps, and the dossier's own script agrees on 29. That wrong count is left standing.
 
 * **MINOR — segment 0xF1B1B0-0xF1B22F: "`ldw BC,4 / mul XBC,XHL / add XBC,0x00f1b1b0 / ld XBC,(XBC) / jp (XBC)` at prom_a 0xFBF259-0xFBF26C -- a jump table".**

@@ -397,7 +397,7 @@ interpreter B **one record at a time**:
 0xF1115B   call 0xf42e0c
 ```
 
-and `T_F42E0C` is `jp DisplayListB_RunOne_Stack` (0xF3183D) — already converted
+and `T_DisplayListB_RunOne_Stack` is `jp DisplayListB_RunOne_Stack` (0xF3183D) — already converted
 and already named in `prom_b/wsa1_prom_b.s`. Walking record lengths from those
 two bases:
 

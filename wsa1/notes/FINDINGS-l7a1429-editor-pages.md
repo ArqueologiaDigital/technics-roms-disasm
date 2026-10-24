@@ -73,7 +73,7 @@ second, positional route.  Two claims are overturned; see section 1.
 `FINDINGS-l7a1429-parameter-names.md` section 2d ends:
 
 > prom_a `0xFD434D` sends the same parameter `0x0B` with mask `0xC0` -- the top two
-> bits, which is the field `sub_FC7481` reads and which PAGE3/3 draws as two bit-7
+> bits, which is the field `Pack104_DispatchByResoMode_ForPart` reads and which PAGE3/3 draws as two bit-7
 > flags.  `+0x0B` bits 7:6 = **`RESO MODE`**, grade STRONG.
 
 The two bit-7 flags PAGE3/3 draws are `(0x27A7)` and `(0x27A8)`, and on that page
@@ -107,8 +107,8 @@ field is read as `GROUP` its result and this one fit together -- see section 4c.
 ### 1b. The `LinCoef_*_KeyRamp_Q5_128` tables are **TOUCH** (velocity), not key ramps
 
 `prom_c/devices/dev10c_dev104_drivers.s` names five coefficient tables
-`LinCoef_Position_KeyRamp_Q5_128`, `LinCoef_Fitting_KeyRamp_Q5_128`,
-`LinCoef_Muting_KeyRamp_Q5_128`, `LinCoef_SubGain_KeyRamp_Q5_128`.  Their
+`LinCoef_Position_TouchRamp_Q5_128`, `LinCoef_Fitting_TouchRamp_Q5_128`,
+`LinCoef_Muting_TouchRamp_Q5_128`, `LinCoef_SubGain_TouchRamp_Q5_128`.  Their
 coefficient inputs are `Q[+0x10] +0x17 +0x18 +0x22 +0x23 +0x24` -- and those six
 bytes are **exactly** the six fields of the page captioned `TOUCH DEPTH`
 (`0xF02D13`), plus `TOUCH` on `P0SITI0N M0VEMENT` (`0xF02983`).  Six for six.

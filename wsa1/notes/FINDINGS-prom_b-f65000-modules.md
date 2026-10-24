@@ -201,7 +201,7 @@ RAM-pointer tables (256), 1 bit-weight table (128), 6 index maps (286), 1 string
   no-wrap clause in the rule is load-bearing: at 0xF6A9A9 the byte before the map
   is the 0xFF that ends a `jrl` displacement, and 0xFF,0x00,0x01… would extend
   the "map" backwards into an instruction.
-* **`Text_F6CA3B`** — `PAN      :KEY SHIFT:TUNING   :BEND SENS:`, 40 bytes, four
+* **`Text_PanKeyShiftTuningBendSens`** — `PAN      :KEY SHIFT:TUNING   :BEND SENS:`, 40 bytes, four
   10-character columns, read by `ld XIY,0x00f6ca3b` at 0xF6C9D7.
 * **Three unsplit runs remain**, 45 bytes: one byte at 0xF657B2, one at
   0xF65E93, and 43 bytes at 0xF6B1FE that begin `0E 0E 0E 50 40 30 20 10 00 01

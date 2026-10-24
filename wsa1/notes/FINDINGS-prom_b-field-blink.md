@@ -6,7 +6,7 @@ inside a module that makes one on-screen text field flash: **sixteen labels —
 eleven routines, four dispatch arms reached only by `jp`, and one 12-entry
 table** (`grep -c '^Blink_' prom_b/wsa1_prom_b.s`).
 
-`notes/prom_b_call_graph.py` no longer lists `T_F42E24`, because the ranking is
+`notes/prom_b_call_graph.py` no longer lists `T_Blink_Stop`, because the ranking is
 filtered to targets that are still `.incbin` and this one no longer is — which
 is the point of the tool.
 
@@ -22,13 +22,13 @@ python3 scripts/analysis/assert_byte_identical.py
 
 Five consecutive thunk slots name five consecutive routines:
 
-| slot | refs (upper bound) | target |
-|---|---:|---|
-| `T_F42E20` | 41 | `0xF0E9CF` `Blink_Command` |
-| `T_F42E24` | 85 | `0xF0E82B` `Blink_Stop` |
-| `T_F42E28` | 21 | `0xF0E800` `Blink_SetEnable` |
-| `T_F42E2C` | 1 | `0xF0E83A` `Blink_Tick` |
-| `T_F42E30` | 2 | `0xF0E835` `Blink_GetState` |
+| slot                | refs (upper bound) | target                       |
+|---------------------|-------------------:|------------------------------|
+| `T_Blink_Command`   | 41                 | `0xF0E9CF` `Blink_Command`   |
+| `T_Blink_Stop`      | 85                 | `0xF0E82B` `Blink_Stop`      |
+| `T_Blink_SetEnable` | 21                 | `0xF0E800` `Blink_SetEnable` |
+| `T_Blink_Tick`      | 1                  | `0xF0E83A` `Blink_Tick`      |
+| `T_Blink_GetState`  | 2                  | `0xF0E835` `Blink_GetState`  |
 
 That is one linker input file, exported in address order. The lower boundary is
 hard: the bytes below `0xF0E800` are a long run of `0x0E` (`ret`) fill, the same
@@ -139,7 +139,7 @@ live.
 
 ## The command dispatcher
 
-`Blink_Command` (`T_F42E20`, x41) reads a command byte `0x00-0x0B` through a
+`Blink_Command` (`T_Blink_Command`, x41) reads a command byte `0x00-0x0B` through a
 pointer argument and jumps through a 12-entry table at `0xF0EA14`. The count is
 bounded twice and the two bounds meet: `cp WA,0x000b / jrl UGT` allows at most
 12, and `0xF0EA14 + 12*4 = 0xF0EA44` is the lowest address any entry holds — the
@@ -168,6 +168,6 @@ the same three instructions and this tree cannot tell them apart.
 * What the 12 commands are, beyond the four state transitions their arms make.
 * What `(0x28D2) == 1` means; nothing here runs on it.
 * What `0x17` and `0x1C` are as `swi 7` functions.
-* prom_a `0xF8BC78` (reached from `Blink_Stop` through `T_F432F8`), and prom_b
+* prom_a `0xF8BC78` (reached from `Blink_Stop` through `T_AsciiField_Clear`), and prom_b
   `0xF0EA9F` and `0xF0EC4A`, which the command arms call. All three are still
   `.incbin`; they are the obvious next step outward.

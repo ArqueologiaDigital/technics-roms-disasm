@@ -61,7 +61,7 @@ lda XWA,<start> / push XWA            ; last push  =>  lowest slot  =>  (XIZ+8)
 Shape 2 is a call through a **cached function pointer**: `lda XIX,<veneer>` once
 per routine, then a hand-built return address and `jp (XIX)`. Exactly three
 values are ever cached in XIX ahead of that shape — `0xFF75D3` (40 uses),
-`T_F42E00` = `DisplayList_Run_Stack` (38) and `T_F42E04` =
+`T_DisplayList_Run_Stack` = `DisplayList_Run_Stack` (38) and `T_DisplayListB_Run_Stack` =
 `DisplayListB_Run_Stack` (19).
 
 > ★ **That answers a header this tree already carried.**
@@ -95,7 +95,7 @@ walked from `start` land exactly on `end`.
 `prom_a 0xFF7668`, `0xFF7623`, `0xFF763F` and `0xFF7656` take **one** pointer on
 the stack and jump straight into a single interpreter-B *handler* — `T_DLB_Handler_Decimal`
 → `0xF31BA1` (op 00), `T_DLB_Handler_Array8_2`/`T_DLB_Handler_Array8` → `0xF31B57` (ops 03/08),
-`T_F417F8` → `0xF31B21` (op 02). Together with `T_F42E08`/`T_F42E0C` they give
+`T_F417F8` → `0xF31B21` (op 02). Together with `T_DisplayList_RunOne_Stack`/`T_DisplayListB_RunOne_Stack` they give
 **25 single-record entry points into this module**, and they are what run the
 orphan records that sit between the framed spans. Each such record's header
 names its own sites.
@@ -137,11 +137,11 @@ Until this round the paragraph here read:
 > a directly usable fact about what a real WSA1 floppy contains.**
 
 The round-2 audit found it and the audit is right. **Nothing on that path touches
-a sector.** The helper both arms call, `sub_FF76FE` (`prom_a` `0xFF76FE`), is
+a sector.** The helper both arms call, `LCD_DrawText8x14_Layer0_SaveRegs` (`prom_a` `0xFF76FE`), is
 `stdi8 (0x2540),0x00 / ldb a,0x06 / swi 7`, and SWI7 service `0x06` is
 `LCD_Svc_06_DrawText8x14` (`SWI7_ServiceTable[6]` = `0xF8F039`). Its own loop
 does `inc 1,IX` per glyph, so `IX` is a **text cursor**: the `add IX,0x0006` at
-`0xFF76E2` steps the cursor six CELLS, because `sub_FF76FE` pushes and pops `XIX`
+`0xFF76E2` steps the cursor six CELLS, because `LCD_DrawText8x14_Layer0_SaveRegs` pushes and pops `XIX`
 and therefore hands `IX` back unchanged. The routine draws a six-cell name field
 and a four-cell extension field next to it. Two corroborations that it is a
 screen field: the index-9 arm at `0xFF76ED` draws **nine** cells

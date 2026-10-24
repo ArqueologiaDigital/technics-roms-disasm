@@ -193,8 +193,8 @@ round established.
 
 **What it talks to.** Every external call is through the directory, and all but
 three targets are already converted, so they can be named:
-`Ring60080A_Scan` ×5 and `_ScanRewind`, `Ring600A14_PutBlock`,
-`Ring600C1E_Scan` ×3 and `_ScanRewind`, `Ring601028_Scan` ×3 and `_ScanRewind`,
+`Ring60080A_Scan` ×5 and `_ScanRewind`, `SeqBufRing_PutBlock`,
+`MidiInARing_Scan` ×3 and `_ScanRewind`, `MidiInBRing_Scan` ×3 and `_ScanRewind`,
 `Ring601432_PutBlock` ×3, `Ring60153C_PutBlock` ×3, `Ring601850_Get` ×2,
 `MIDI_PostSendWork` ×3, and the link block sender ×10. Seven distinct ring
 objects, three scanned and three written by block — the shape of something that

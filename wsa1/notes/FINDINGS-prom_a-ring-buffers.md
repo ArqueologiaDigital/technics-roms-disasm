@@ -204,8 +204,8 @@ not a fact.
   that device as "8 writes per slot, slot = `(n<<5) | 0x10`" from a byte census
   taken while this routine was still `.incbin`, and cited these very
   instructions; converting it confirms the census rather than adding to it. Its
-  four entry stubs are directory slots `T_F40004`, `T_F40008`, `T_F4000C`,
-  `T_F40010`, and the body is named by five `calr` sites and nothing else.
+  four entry stubs are directory slots `T_Dev7F_WriteSlot8_Slot0`, `T_Dev7F_WriteSlot8_Slot1`, `T_Dev7F_WriteSlot8_Slot2`,
+  `T_Dev7F_WriteSlot8_Slot3`, and the body is named by five `calr` sites and nothing else.
 
 * **`sub_F831B3`** keeps an address label deliberately. Its four
   `ld XHL,XSP / add XHL,8|6|4|2` sources overlap each other and reach **above**
@@ -278,17 +278,17 @@ the task consumes one signal per iteration.
   `include/tmp95c061_sfr.inc`), read as words and shifted right eight, and two
   from `(0x600000)` and `(0x600001)`, which the module's own initialiser parks
   at `0x80`. One deadband filter, thresholds 2 and 6, per-channel state pair at
-  `0x28E0 + 2n`. All six report through directory slot `T_F405F0`. Each channel's
+  `0x28E0 + 2n`. All six report through directory slot `T_Ctrl_Normalise`. Each channel's
   ADREG index, state pair and channel number is a separate check, so a changed
   literal fails instead of passing forever. ⚠ What the six controls **are** is
   not established.
 
-  **Updated 2026-08-25.** `T_F405F0`'s target, prom_a `0xF89800`, is now
+  **Updated 2026-08-25.** `T_Ctrl_Normalise`'s target, prom_a `0xF89800`, is now
   converted and named: it is the **continuous-control normaliser**, a 32-slot
   dispatcher over `W` with eight response-curve tables, and its carry result
   means "the cooked value changed" — see `notes/FINDINGS-prom_a-control-normaliser.md`.
   Two corrections to the sentence above, both from
-  `notes/prom_a_ctrl_checks.py`: there are **eight** call sites of `T_F405F0` in
+  `notes/prom_a_ctrl_checks.py`: there are **eight** call sites of `T_Ctrl_Normalise` in
   this module, not six (`0xF8DC63 0xF8DC96 0xF8DCC9 0xF8DCFC 0xF8DD54 0xF8DD69
   0xF8DDC3 0xF8DDD8`), passing `W = 0,1,2,3,4,5,4,5`; and the two extra ones are
   inside a **byte-identical duplicate** — `0xF8DDBC-0xF8DDE5` equals

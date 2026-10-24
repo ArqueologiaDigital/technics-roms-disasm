@@ -48,7 +48,7 @@ which is really 64 write pairs into the device port at `0x108000`.
 
 The source ends at `0xFCC5C1`.  Zone 2 of the data tables starts at `0xFCC53F`, so the
 last **131** bytes of the copy are the objects `prom_c/wsa1_prom_c.s` calls
-`Handler_PtrTable_FCC53F`, `unexplained_FCC55F`, `Packet_PtrTable_FCC576` and the first
+`Link_ClassHandlerTable`, `P7Module_RamStateImage`, `P7Unit_StreamPtrsByGroupAndUnit` and the first
 four bytes of `unexplained_FCC5BE`.  Their RAM copies land at `0x00F334`, `0x00F354`,
 `0x00F36B` and `0x00F3B3`.
 
@@ -65,7 +65,7 @@ at runtime, which a ROM table cannot be:
 0xFA2DD4  f2 b3 f3 00 43         ld (0x00F3B3),C
 ```
 
-So `Packet_PtrTable_FCC576` is a pointer table that is **relocated to RAM at boot and
+So `P7Unit_StreamPtrsByGroupAndUnit` is a pointer table that is **relocated to RAM at boot and
 patchable afterwards**, not a constant ROM table.  Its entries stay valid across the copy
 because they hold ROM addresses (`0x00FCD119` and friends), which copying does not
 disturb.

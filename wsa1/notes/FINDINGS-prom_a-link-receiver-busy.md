@@ -57,11 +57,11 @@ Three NORMAL releases, all in `INTTC3_LinkDmaDone`, one per selector:
 
 and three RECOVERY releases, each with its own error counter:
 
-| site | routine | condition | counter |
-|---|---|---|---|
-| `0xF8E258` | `sub_F8E222` | bit 6 of `(0x8A)` still set after **2500** ticks | `(0x6007DB)` |
-| `0xF8E663` | `Link_ServiceTask` | **eleven** consecutive equal `DMAC3` samples | `(0x6007DC)` |
-| `0xF8E68C` | `Link_WaitBlockDone` | bit 7 of `(0x8A)` still set after **500** ticks | `(0x6007E1)` |
+| site       | routine                      | condition                                        | counter      |
+|------------|------------------------------|--------------------------------------------------|--------------|
+| `0xF8E258` | `Link_SendCommand5_WaitDone` | bit 6 of `(0x8A)` still set after **2500** ticks | `(0x6007DB)` |
+| `0xF8E663` | `Link_ServiceTask`           | **eleven** consecutive equal `DMAC3` samples     | `(0x6007DC)` |
+| `0xF8E68C` | `Link_WaitBlockDone`         | bit 7 of `(0x8A)` still set after **500** ticks  | `(0x6007E1)` |
 
 Selector **2** — the `0xE1` header — deliberately does **not** release it: it
 re-arms channel 3 for the block's payload and sets selector 4, so the line stays

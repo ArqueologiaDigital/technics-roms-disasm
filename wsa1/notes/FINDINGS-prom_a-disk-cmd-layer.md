@@ -140,7 +140,7 @@ existing name was found in the module.
 
 ## Cross-file blast radius handled
 
-The rename of `sub_FE426E` reached two notes that referenced it by its old
+The rename of `Disk_CommandDispatch` reached two notes that referenced it by its old
 address: `notes/FINDINGS-prom_a-gap-T-pa3.md` line 113 and
 `notes/prom_a_pa3_census.py` line 338 — both updated to `Disk_CommandDispatch`.
 

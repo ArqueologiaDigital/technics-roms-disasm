@@ -813,7 +813,7 @@ one-span-extent/span-count/summed reference bound per run.
 
 `--selftest` asserts on the LAST slot of the top run (raw `jp` opcode, target and
 `.incbin` membership, all re-derived from the ROM), two ordering invariants, that
-the three runs this tree has already converted (`T_F42770` block store,
+the three runs this tree has already converted (`T_BStore_ValidateSavedCursor` block store,
 `T_BStore_FreeList_Init_Veneer`/`T_BStore_AppendBytes_Join3_Veneer` allocator and song-store commands) are ABSENT, and that a
 known-unconverted run (`T_BStore_StepCursorOneByte`) is PRESENT.
 ⚠ Its first draft hard-coded the then-top run and would have begun FAILING the
@@ -1298,12 +1298,12 @@ corroboration, not as a claimed indexing scheme.
 **`gen_prom_b_f05621_fix_module.py`** finds a 29th instance of the
 recurring oversized-`Data_Fxxxxxx` defect (28 known as of
 `2fd82c82`) through a NEW entry point, since the object-adjacent scan
-reached a fixpoint after round 4: `Data_F0563B`, already committed and
+reached a fixpoint after round 4: `DLRecordPtrs_F0563B`, already committed and
 reachable, is an array of 4 pointers; 3 are this same round's own
 already-converted record starts, and the 4th lands 2 bytes inside
 `Data_F0550B`'s declared tail. Shrinking `Data_F0550B` by those 2 bytes and
 walking from the recovered start gives 4 records instead of 3, landing
-with zero drift on `Data_F0563B` itself.
+with zero drift on `DLRecordPtrs_F0563B` itself.
 
 **Re-tested characterisations, per the lane brief's instruction, and what
 held:** 0xF00C4D (2,995 B), 0xF0033F (1,217 B) — no op/len walk under
@@ -1339,7 +1339,7 @@ each run landing exactly on the next object), and eight operand tables/arrays
 (entry size fixed by the referring handler, entry count = extent ÷ that, never
 more than the record's `(mask >> shift) + 1` allows). Five of the six spans end
 exactly on a display-list call site's start address; the sixth ends on
-`Data_F28522`, already converted. Nothing is emitted as an instruction —
+`DLText_PanL64CtrR63`, already converted. Nothing is emitted as an instruction —
 `--selftest` asserts that too, along with re-assembling the emitted text back to
 the ROM's own bytes.
 
@@ -1419,7 +1419,7 @@ comes from outside the span, and `--selftest` asserts it against the ROM:
   `DisplayListB_RunOne` (XIX = XIY + 1: exactly one record).
 * `0xF286A2` is where the string table of the **framed** record at `0xF28468`
   stops: that record declares 3 bytes per entry and mask `0x7F`, so 128 × 3 =
-  384 B ending at `0xF286A1`. `Data_F28522` was declared 426 B — 42 too many,
+  384 B ending at `0xF286A1`. `DLText_PanL64CtrR63` was declared 426 B — 42 too many,
   not one. (Lane promB5 had it as one, measuring to the `.incbin` edge rather
   than to the table.)
 * Each far end is an already-framed display-list start, so the tiling has to
@@ -1428,7 +1428,7 @@ comes from outside the span, and `--selftest` asserts it against the ROM:
 
 Two `Data_` extents were the reachability walk's, not the objects', and are
 shortened with the old wording kept and marked superseded in place:
-`Data_F28522` 426 → 384 B, `Data_F32992` 110 → 104 B.
+`DLText_PanL64CtrR63` 426 → 384 B, `Data_F32992` 110 → 104 B.
 
 **The `0xF3B651` question, settled from the handler.** Lane promB6 left it
 precisely: as op `0x00` length 11 the record ends at `0xF3B65C`, yet the next
@@ -1483,7 +1483,7 @@ tree already decodes.
   `"-"`.
 * **`0xF05CEC`** — three interpreter-A op-03 records (`0xF02B97`, `0xF06307`,
   `0xF0631D`) each carry `.long 0x00F05CE0`, width 2 **bytes** and 12 rows, so
-  the bitmap is 24 B and ends exactly at `Data_F05CF8`. Both edges and the
+  the bitmap is 24 B and ends exactly at `DLText_Frequencies65HzTo48K`. Both edges and the
   length come from outside. `Data_F05AB4` 568 → 556 B; the 12 bytes it had
   over-run are the bitmap's first byte-column.
   `notes/prom_b_dl_operand_tables.py` reports the same object independently.
@@ -1547,7 +1547,7 @@ pointer.
 
 `0xF02FFE` is **not a table**. It is the `+0x07` pointer FIELD of the
 interpreter-B record at `0xF02FF7`, of which round 1 typed only the first 7
-bytes as `Data_F02FF7`, plus the 40-byte operand array that pointer names. The
+bytes as `UiPaint_Ordinals_DL3`, plus the 40-byte operand array that pointer names. The
 record is `03 0B` → `HTBL_B[3]` = `0xF31B57`, which does `sla 0x03,HL` before
 `add XIX,XHL`, so the entries are **8 bytes**; the array runs from `0xF03002` to
 `0xF0302A`, a proven display-list start, so there are **5** of them — not the
@@ -1588,7 +1588,7 @@ handler `0xF31ABE`, length byte 12), never the pointer value alone.
 
 **Refused, and why — with the fear measured rather than asserted.** The span
 starts four bytes INSIDE the `0xF13D30` bitmap. `0xF13D30-0xF13D33` is the tail
-of `Data_F139AB`'s `.byte` run, which `gen_prom_b_f0ea9f_module.py` emits from
+of `EffectDefaults_Unused`'s `.byte` run, which `gen_prom_b_f0ea9f_module.py` emits from
 `("data", 0xF139AB, 0x0389)` and whose `--checks` asserts that LAYOUT covers
 `0xF0EA9F-0xF13D33` exactly. Closing the bitmap is a one-line change — `LO, HI`
 in `prom_b_f0ea9f_layout.py` from `0xF13D34` to `0xF13D30`, and that size from
@@ -1598,7 +1598,7 @@ The obvious objection is that this re-runs that module's whole code walk, which
 is the failure the byte gate cannot see. **It does not.**
 `res02f_f0ea9f_hi_shift_probe.py` emits the module both ways and the two differ
 in exactly SIX lines, all six being the four bytes themselves — `21141 → 21137`
-twice, `Data_F139AB` `905 → 901`, its printable preview, and the last `.byte`
+twice, `EffectDefaults_Unused` `905 → 901`, its printable preview, and the last `.byte`
 line. **81 segments and 23 unsplit `.byte` runs both ways**; not one label,
 instruction or segment boundary moves.
 
@@ -1638,7 +1638,7 @@ the consuming code's arithmetic rather than on which one draws nicer pictures?*
 = 119 * 72`, remainder 0) and 119 is also the highest op-`0x23` record index
 plus one — two measurements of different things agreeing. `PtrTable_F003F9` is
 not its index: 1 of its 121 targets here is on the grid against 1.7 by chance,
-and it misses the same way in prom_a's `DisplayList_FC4000` (3 of 24 on a record
+and it misses the same way in prom_a's `DigitalEffect_Frame` (3 of 24 on a record
 boundary against 1.8). ⚠ `--selftest` **asserts the refutation** — if those
 counts ever rise, or if an immediate `0xF003F9` ever appears in a ROM image, it
 fails rather than letting the old framing creep back.

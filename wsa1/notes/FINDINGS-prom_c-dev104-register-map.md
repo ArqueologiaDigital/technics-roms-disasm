@@ -46,8 +46,8 @@ Checker section 5 asserts the split both ways, including that no real struct sto
 3. The scanner also **misses five real struct stores** in the class its own docstring
    warns about — `0xFC50D5`, `0xFC50DD`, `0xFC51AD`, `0xFC51EF` (extended-prefix immediate
    stores) and `0xFC51E6` (`and (XBC),0xff7f`, a read-modify-write).  With those added the
-   packer makes **20 stores over 15 offsets**, and its two callees `sub_FC49AD` (+0x06,
-   +0x08, +0x12) and `sub_FC4AED` (+0x14) supply the other four — **24 stores, 19 words,
+   packer makes **20 stores over 15 offsets**, and its two callees `Pack104_StageRegs_00C0_0100_0240` (+0x06,
+   +0x08, +0x12) and `Pack104_StageReg_0280` (+0x14) supply the other four — **24 stores, 19 words,
    no word unaccounted for**.
 
 ⚠ **NOT EDITED.**  Both texts are in files this lane does not own.  Reported for
