@@ -51,6 +51,38 @@ MM = re.compile(r'^(\s*ldmm(?:8|16)\s+)(0x[0-9a-fA-F]+|\d+)(\s*,\s*)(0x[0-9a-fA-
 # a DRAM address (>= 0x10000) loaded into, added to or subtracted from a 32-bit register is a pointer
 WIDE = re.compile(r'^(\s*(?:ld|add|sub)\s+x(?:wa|bc|de|hl|ix|iy|iz)\s*,\s*)(0x[0-9a-fA-F]{5,}|\d{5,})(\s*)$', re.I)
 LO, HI = 0x400, 0x100000      # internal RAM and the DRAM the code addresses (pattern buffers at 0x94800)
+LEAD_LABEL = re.compile(r'^[A-Za-z_][\w$]*:\s*')
+LEAVES = re.compile(r'^(?:(?:jr|jrl|jp)\s+(?:t\s*,\s*)?[A-Za-z_][\w$]*|reti?|retd\b.*|halt)$', re.I)
+XHL_DEREF = re.compile(r'\(\s*-?\s*xhl\b|\b(?:ldir|ldirw|lddr|lddrw|ldi|ldiw|ldd|lddw|cpir|cpirw)\b', re.I)
+XHL_LOST = re.compile(r'^(?:ld|lda|pop)\s+xhl\s*,|^pop\s+xhl$', re.I)
+
+
+def xhl_is_pointer(L, i, window=10):
+    """does the `ld xhl, N` on line i load a pointer?  XHL is also the C return register, so a number
+    loaded into it may be a value (LswLocal_SubParam returns 0x400 as an LSW data number, not RAM
+    0x400).  True only when one of the next `window` instructions dereferences XHL (`(xhl)`, `(xhl+..)`,
+    a block move), pushes it, adds to it (or to HL / H / L) or reads it as a source -- before control
+    leaves (an unconditional jump or return) or XHL is overwritten.  On the trees of 2026-10-24 this keeps
+    all 44 named `ld xhl, NAME` pointer loads of v10 and rejects only LswLocal_SubParam's"""
+    seen = 0
+    for l in L[i + 1:]:
+        code = LEAD_LABEL.sub("", l.split(";")[0].strip()).strip()
+        if not code:
+            continue
+        if code.startswith("."):
+            return False
+        if XHL_DEREF.search(code):
+            return True
+        if XHL_LOST.match(code):
+            return False
+        if re.search(r'\bxhl\b', code, re.I) or re.match(r'(?:add|adc|sub|sbc|inc|dec)\s+(?:\d+\s*,\s*)?(?:hl|h|l)\b', code, re.I):
+            return True     # push xhl, add xhl, .., ld (..), xhl, ld xde, xhl, ex .., add l, w (pointer arithmetic)
+        if LEAVES.match(code):
+            return False
+        seen += 1
+        if seen >= window:
+            return False
+    return False
 
 
 def const_files(t):
@@ -221,9 +253,12 @@ def main():
                 return "(%s%s)" % (byaddr[v], m.group(2) or "") if v in byaddr else m.group(0)
 
             new = MEM.sub(mem, code)
+            ptr_done = 0
             p = PTR.match(new)
-            if p and int(p.group(2), 0) in byaddr:
+            if p and int(p.group(2), 0) in byaddr and (not re.match(r'\s*ld\s+xhl\b', new, re.I)
+                                                       or xhl_is_pointer(L, i)):
                 new = p.group(1) + byaddr[int(p.group(2), 0)] + p.group(3)
+                ptr_done = 1
             q = MM.match(new)
             if q:
                 x, y = int(q.group(2), 0), int(q.group(4), 0)
@@ -235,7 +270,7 @@ def main():
                 st["wide pointer operands"] += 1
             if new != code:
                 st["operands"] += len([1 for m in MEM.finditer(code) if int(m.group(1), 0) in byaddr]) + \
-                    (1 if PTR.match(code) and int(PTR.match(code).group(2), 0) in byaddr else 0)
+                    ptr_done
                 L[i] = new + sep + cmt
                 ch = True
         if ch and a.apply:
