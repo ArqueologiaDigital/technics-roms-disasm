@@ -384,7 +384,8 @@
 ; prom_b is linked separately: these name the prom_b addresses this file calls or
 ; points at.  Each name is the label prom_b's own linked ELF defines at that address
 ; (best non-structural name).  The gate checks every VALUE; `--check-equates`
-; checks the NAMES against prom_b after a rename there.  Regenerate, never edit.
+; checks the NAMES against prom_b after a rename there.  Regenerate, never edit
+; the names or values; a trailing comment on an equate is kept.
 	.set ScaleTuningOffsets,                      0x00F06800
 	.set ToneGroupNames,                          0x00F068B4
 	.set GroupMaxMemberIndex_ToneGroups,          0x00F06EB4
@@ -1302,7 +1303,7 @@
 	.set T_Sequencer_ResetToDefault,              0x00F40A18
 	.set T_SeqRecord_StartOnFirstEvent,           0x00F40A24
 	.set T_SeqRecord_TerminateTracksIfRecording,  0x00F40A28
-	.set T_F40A34_Zeroed,                         0x00F40A34
+	.set T_F40A34_Zeroed,                         0x00F40A34	; prom_b: 8 zero bytes (nop) that run into T_SeqCycle_TickDeferredAction
 	.set T_SeqCycle_TickDeferredAction,           0x00F40A3C
 	.set T_SeqMasterTrack_UpdateActiveFromSavedMask, 0x00F40A70
 	.set T_Seq_ApplySongBeatsPerBar,              0x00F40AC8
@@ -25829,12 +25830,12 @@ ZeroInitData_F8E773:   ; 9 B, all zero -- LDIR source named by the
 AddrTable_F8E77C:   ; 8 entries
 	.long 0x00f8e68b   ; F8E77C  [0]
 	.long 0x00f8e67a   ; F8E780  [1]
-	.long LinkSelector1_NoAction ; F8E784  [2]
+	.long 0x00f8e000   ; F8E784  [2]
 	.long .LF8E69C     ; F8E788  [3]  instruction boundary
 	.long uDMA2_SetDest+11   ; F8E78C  [4]
 	.long uDMA3_GetDest+0x1 ; F8E790  [5]
 	.long 0x00f8e6be   ; F8E794  [6]
-	.long LinkSelector1_NoAction ; F8E798  [7]
+	.long 0x00f8e000   ; F8E798  [7]
 ; 0xF8E79C-0xF8E7A9 (13 B) -- RESIDUE, byte-identical to 0xF8E76F-0xF8E77C:
 ; `jr nz / ret / reti` closing the init routine at 0xF8E74B, then the
 ; nine-byte LDIR source that follows it.  Left as bytes on purpose: framing
@@ -25847,11 +25848,11 @@ AddrTable_F8E7A9:   ; 9 entries; ends exactly where the 0x0E pad begins
 	.long uDMA3_SetDest ; F8E7AD  [1]  instruction boundary
 	.long Link_Init_DmaAndTimer ; F8E7B1  [2]  instruction boundary
 	.long 0x00f8e6eb   ; F8E7B5  [3]
-	.long LinkSelector1_NoAction ; F8E7B9  [4]
+	.long 0x00f8e000   ; F8E7B9  [4]
 	.long .LF8E70C     ; F8E7BD  [5]  instruction boundary
 	.long 0x00f8e029   ; F8E7C1  [6]
-	.long LinkSelector1_NoAction ; F8E7C5  [7]
-	.long LinkSelector1_NoAction ; F8E7C9  [8]
+	.long 0x00f8e000   ; F8E7C5  [7]
+	.long 0x00f8e000   ; F8E7C9  [8]
 ; 0xF8E7CD-0xF8E7FF -- 51 bytes of 0x0E (RET), module padding.
 ; Checked byte by byte, not sampled: verified against original_ROMs/wsa1_prom_a.ic12.
 	.fill 51, 1, 0x0E

@@ -86,9 +86,36 @@ reasons again on any later tree. Closing a gap is a backend commit: add a def, t
 - **Hex copied from macro arguments** (`0x3C`, `0xF4`) is lowercased, per CLAUDE.md. A digit inside a
   symbol name keeps its case.
 
-## Census note for whoever runs `make dispatch-census` next
+## Census: what the respelling exposed, and how it was closed
 
 The 10 `mx_jp_cc` sites are now spelled `jp t, (xix+wa)`. The census D detector finds dispatch sites by
-matching that text, so it can now see these 10 sites in prom_a/prom_b, where before it saw a macro.
-Expect D-found tables or D-unres to change for those two images. The new sites are what changed, not
-the code.
+matching that text, so it could see them for the first time. All 10 are in prom_a, in the disk command
+layer and the FDC driver, and the first count was a rise against the last committed snapshot:
+
+| prom_a, measured at                              | tables | NOT | newT | spellT | staleT | D-unres |
+|--------------------------------------------------|--------|-----|------|--------|--------|---------|
+| `docs/coverage/dispatch-census-2026-10-06-31`    | 424    | 0   | 0    | 0      | 13     | 0       |
+| ca8302fd2 (all families respelled)               | 426    | 2   | 11   | 3      | 12     | 8       |
+| after `wsa1/notes/frame_disk_switch_tables.py`   | 434    | 0   | 0    | 0      | 12     | 0       |
+| after the stale-table entries were made numeric  | 434    | 0   | 0    | 0      | 13     | 0       |
+
+- The 2 NOT tables were Fdc_OperationJumpTable (11 unlabelled 5-byte arms in Fdc_Request) and
+  Fdc_OpcodeValidityJumpTable, both spelled as bare `.short 0x000A`.
+- The 8 D-unres sites indexed `Table_FE6DBF+N`, a 123-byte `.byte` blob, from an assembler-local `.L`
+  base the ELF does not carry.
+- `frame_disk_switch_tables.py` labels every arm from the code that reaches it and splits the blob at
+  its readers' offsets into nine tables. It respells all ten switch tables as `.short Case - Base`,
+  computed from the ROM, and the gate is byte-identical.
+- staleT 13 -> 12 came from the equate symbolizer, not from the respelling: it spelled five entries of
+  the stale AddrTable_F8E77C / _F8E7A9 as `LinkSelector1_NoAction`. Those entries are numeric again
+  (blocking 7 and 5, as in snapshot -31), and the symbolizer now leaves `.long` lines under a
+  `census: stale` marker alone.
+- prom_b and prom_c did not move.
+
+The command (repository root; the maps are scratch):
+
+    DISPATCH_CENSUS_DIR=<scratch> python3 scripts/analysis/dispatch_table_census/build_maps.py prom_a prom_b prom_c
+    DISPATCH_CENSUS_DIR=<scratch> python3 scripts/analysis/dispatch_table_census/census_keys.py prom_a,prom_b,prom_c --report
+
+No snapshot was written. `make dispatch-census` runs once after the merge, and it should find nothing
+risen in WSA1.
