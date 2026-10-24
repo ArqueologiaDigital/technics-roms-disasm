@@ -3788,7 +3788,7 @@ AcCurSong_CallInherited:
 AcCurSongName_HandleFocusGained:
 	ld	xwa, xiz
 	call	InheritedProc
-	ld	a, (65507:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	inc	1, a
 	extz	wa
 	pushw	wa
@@ -7458,7 +7458,7 @@ SngSelFunc_OnGetRamString:
 	ld	xwa, (xiz+18)
 	push	xwa
 	call	Strcpy
-	ld	a, (65507:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	inc	1, a
 	extz	wa
 	pushw	wa
@@ -7485,7 +7485,7 @@ SngSelFunc_OnGetRamString:
 	jr	ReturnTitleOrZero
 SngSelFunc_LoadTitleCount:
 	ld xhl, 0:i3
-	ld l, (0x00ffe3:24)
+	ld l, (SEQ_CURRENT_SONG:24)
 	jr ReturnTitleOrZero
 
 SngSelFunc_GetTitleIndex:
@@ -14814,7 +14814,7 @@ SqedtFunc_OnGetSclrNoString:
 	ld xwa, (xsp + 8)
 	ld (xsp + 4), xwa
 	pushw 0x6
-	ld a, (0x2878:16)
+	ld a, (SEQ_SONG:16)
 	extz wa
 	muls wa, 0x6
 	ld xbc, Sqedt_ParamDispatch_Table_2
@@ -14835,7 +14835,7 @@ SqedtFunc_OnGetSclrNameString:
 SqedtFunc_OnGetSclrKbString:
 	ld XWA,(XSP+0x08)
 	ld (XSP+0x04),XWA
-	cp (0x2878:16), 0x0a
+	cp (SEQ_SONG:16), 0x0a
 	jr nz, SqedtFunc_Case2_CopyParam
 	pushw Sqedt_ParamDispatch_Entry2_Str_Blank5@hi16
 	pushw Sqedt_ParamDispatch_Entry2_Str_Blank5@lo16
@@ -14860,7 +14860,7 @@ SqedtFunc_Case2_CopyParam_Join9:
 SqedtFunc_CheckMode:
 	ld XWA,(XSP+0x08)
 	ld (XSP+0x04),XWA
-	cp (0x2878:16), 0x0a
+	cp (SEQ_SONG:16), 0x0a
 	jr nz, SqedtFunc_CheckMode_CopyParam
 	pushw SqedtFunc_CheckMode_Str_N100@hi16
 	pushw SqedtFunc_CheckMode_Str_N100@lo16
@@ -15263,7 +15263,7 @@ SeqFmt_Field_LoadB:
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadC:
-	lda xhl, (0x2878:16)
+	lda xhl, (SEQ_SONG:16)
 	jrl SqedtFunc_Epilogue
 ; SqedtFunc_StateChainB_OnSqNoteCng: EVT_GET_RAM_ADDRESS on title 0x9F TT_SQNOTECNG: parameter 1 -> 0x2610, 2 ->
 ;   0x2612, 10 -> 0x2616, 11 -> 0x2658, others -> 0x260E

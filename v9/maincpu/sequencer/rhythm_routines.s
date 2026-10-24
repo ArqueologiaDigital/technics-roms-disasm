@@ -145,7 +145,7 @@ Rhythm_SetupChannel_D7:
 	ld (0x32cc:16), a
 	and (0x32f4:16), 251
 	or (0x32f4:16), 8
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -157,7 +157,7 @@ Rhythm_SetupChannel_D4:
 	ld (0x32cc:16), a
 	and (0x32f4:16), 247
 	or (0x32f4:16), 4
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -168,7 +168,7 @@ Rhythm_SetupChannel_D5:
 	ld a, (0x32c9:16)
 	ld (0x32cc:16), a
 	and (0x32f4:16), 243
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -179,7 +179,7 @@ Rhythm_SetupChannel_D6:
 	ld a, (0x32ca:16)
 	ld (0x32cc:16), a
 	and (0x32f4:16), 243
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	calr RhythmEvt_ProcessNote
 	ret
 
@@ -193,7 +193,7 @@ RhythmEvt_ProcessNote:
 	or a, (0x3313:16)
 	or a, (0x3314:16)
 	or a, (0x3315:16)
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, RhythmEvt_AlternateProcess
 	ld a, (0x32df:16)
 	ld (0x3423:16), a
@@ -792,7 +792,7 @@ Rhythm_DispatchCh_D7:
 	ld xix, 0x30f4
 
 Rhythm_DispatchCh_D7_Loop:
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x313c
@@ -810,7 +810,7 @@ Rhythm_DispatchCh_D4:
 	ld xix, 0x313c
 
 Rhythm_DispatchCh_D4_Loop:
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x3184
@@ -827,7 +827,7 @@ Rhythm_DispatchCh_D5:
 	ld xix, 0x3184
 
 Rhythm_DispatchCh_D5_Loop:
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x31cc
@@ -844,7 +844,7 @@ Rhythm_DispatchCh_D6:
 	ld xix, 0x31cc
 
 Rhythm_DispatchCh_D6_Loop:
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
 	cp xix, 0x3214
@@ -902,7 +902,7 @@ Rhythm_ValidateAndSend:
 	or a, (0x3313:16)
 	or a, (0x3314:16)
 	or a, (0x3315:16)
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, Rhythm_Validate_Mismatch
 	ld a, (0x32df:16)
 	ld (0x3423:16), a

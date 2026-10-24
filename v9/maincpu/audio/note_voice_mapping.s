@@ -20293,7 +20293,7 @@ AccWrap_PlayModeStateMachine_Skip:
 	ret nz
 	res 1, (0x28b2:16)
 	res 2, (0x28b2:16)
-	res 3, (0x28a7:16)
+	res 3, (SEQ_RTMCFG:16)
 	ei 6
 	ldw (SEQ_BEAT_COUNT:16), 0
 	ld (SEQ_BEAT_TICK:16), 0
@@ -20361,7 +20361,7 @@ PlayModeStateMachine_TestBit22:
 ; Transport_EnableMidiStartContinue: Clears 0x28A7 bit 2, the flag that makes the transport ignore incoming MIDI Start
 ;   (0xFA) / Continue (0xFB). Basis: callers + body (and the readers of the bit).
 Transport_EnableMidiStartContinue:
-	res 2, (0x28a7:16)
+	res 2, (SEQ_RTMCFG:16)
 	ret
 
 PlayModeStateMachine_Prologue:

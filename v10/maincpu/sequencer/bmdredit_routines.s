@@ -517,7 +517,7 @@ BmDrEdit_CheckTempoData:
 BmDrEdit_CheckTempoData_ReadyToProcess:
 	bit 7, (0x295c:16)
 	ret nz
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr z, BmDrEdit_ClearNoteAndRefresh
 	call TempoRingBuf_CheckEmpty
 	cp hl, 0:i3
@@ -1856,7 +1856,7 @@ BmDrEdit_InitCommon_SetupDisplay:
 	set 0, (9834:16)
 	set 0, (9954:16)
 	call AccWrap_PlayModeDispatch
-	set 2, (0x28a7:16)
+	set 2, (SEQ_RTMCFG:16)
 	ld (0x295c:16), 0
 	ld wa, (0x2963:16)
 	ld (3407:16), wa
@@ -1899,7 +1899,7 @@ BmDrEdit_CopyStepCount:
 
 BmDrEdit_InitFirstStep:
 	ldw (0x2744:16), 1
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jrl z, BmDrEdit_RefreshAndReturn
 	call Part_ProcessAndDecrementVoice
 	ld iz, hl
@@ -2005,7 +2005,7 @@ BmDrEdit_SkipMelodicPartSelect:
 	jr BmDrEdit_CleanupCommon
 
 BmDrEdit_CleanupCommon:
-	res 2, (0x28a7:16)
+	res 2, (SEQ_RTMCFG:16)
 	ld (0x295c:16), 0
 	ld wa, (3407:16)
 	or (0xffec:24), wa
@@ -4525,7 +4525,7 @@ BmDrEdit_EnterPlay_UpdateProgress:
 	ldmm16 9832, 9500
 	cpw (9832:16), 1
 	jr z, BmDrEdit_EnterPlay_AllocAndInit
-	set 3, (0x28a7:16)
+	set 3, (SEQ_RTMCFG:16)
 
 BmDrEdit_EnterPlay_AllocAndInit:
 	jp SeqPlay_AllocBuffersAndInit

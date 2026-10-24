@@ -120,13 +120,13 @@ Seq_FindRhythmTrack_Join:
 Seq_FindRhythmTrack_Return2:
 	ret
 SeqPlay_RestoreVoiceState_Return:
-	ld a, (0x2878:16)
+	ld a, (SEQ_SONG:16)
 	pushw wa
-	ld a, (0x00ffe3:24)
-	ld (0x2878:16), a
+	ld a, (SEQ_CURRENT_SONG:24)
+	ld (SEQ_SONG:16), a
 	call SeqVoice_InitEntry
 	popw wa
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 	ret
 
 SeqTimer_PostTempoUpdate:
@@ -151,15 +151,15 @@ PlayMode_SetupAndDispatch:
 	ld	(0x2875:16), wa
 	ld	(3424:16), 0
 	call AccWrap_PlayModeDispatch
-	or	(0x28a7:16), 4
+	or	(SEQ_RTMCFG:16), 4
 	ret
 PlayMode_TeardownAndRestore:
 	; --- Teardown: load/store/clear flags ---
 	ld	wa, (0x2875:16)
 	ld	(0xf19e:16), wa
-	and	(0x28a7:16), 251
+	and	(SEQ_RTMCFG:16), 251
 	or	(0x28b3:16), 16
-	and	(0x28a7:16), 247
+	and	(SEQ_RTMCFG:16), 247
 	ret
 PartLookup_NullRet:
 	ret
@@ -856,7 +856,7 @@ CDlikeSwitch_PlaybackTimer:
 CDlikeTimer_ResetAccompaniment:
 	pushw wa
 	and (0x28b2:16), 249
-	and (0x28a7:16), 247
+	and (SEQ_RTMCFG:16), 247
 	call Seq_ResetAndRestartAccompaniment
 	popw wa
 	jr CDlikeSwTtl_StorePlaybackMode
@@ -912,7 +912,7 @@ CDlike_ResetPlaybackState:
 	ld (SEQ_BEAT_TICK:16), a
 	ld (1048:16), wa
 	ld (1047:16), a
-	bit 1, (0x28a7:16)
+	bit 1, (SEQ_RTMCFG:16)
 	jr z, CDlikeReset_SetTimerFlags
 	ld (1054:16), 1
 	ld (1045:16), 0
@@ -965,7 +965,7 @@ CDlikeBankLoad_CheckSavedState:
 	ld xiy, 0xf180
 	ld xix, SEQ_SONG_SLOTS
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	add xix, xwa
 	ldw bc, 0x800
@@ -1007,7 +1007,7 @@ PlayMode_ResetAndSchedule:
 	call	Audio_CheckSubsystemReady
 	ret
 SongBank_SwitchAndUpdateTempo:
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SongBank_SaveAndReload
 	call SeqTimer_PostTempoUpdate
 	ret
@@ -1015,7 +1015,7 @@ SongBank_SwitchAndUpdateTempo:
 SongBank_SaveAndReload:
 	ld wa, (0xf22f:16)
 	ld (0x286f:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
 	call SongBank_LoadToWorkArea
 	call SongBank_CheckAccompanimentMode
@@ -1024,7 +1024,7 @@ SongBank_SaveAndReload:
 
 SongBank_LoadToWorkArea:
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
@@ -1036,7 +1036,7 @@ SongBank_LoadToWorkArea:
 	ld wa, (0x286f:16)
 	ld (0xf22f:16), wa
 	ld wa, (0x2871:16)
-	ld (0xf231:16), wa
+	ld (SEQ_FREE_BLOCKS:16), wa
 	ret
 
 SongBank_CheckAccompanimentMode:
@@ -2184,7 +2184,7 @@ NameGetFuncCall_Dispatch:
 	lda	xwa, (6888:16)
 	ld	(xwa+16), 0
 	push	xwa
-	ld	a, (65507:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	inc	1, a
 	extz	wa
 	pushw	wa

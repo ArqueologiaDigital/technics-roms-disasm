@@ -407,32 +407,32 @@ AccStyle_ApplyStd_Return:
 AccStyle_SetupPartAddresses:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	ld a, (0x32a3:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
 	ld (0x3287:16), wa
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	ld a, (0x32a4:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
 	ld (0x3289:16), wa
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	ld a, (0x32a5:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
 	ld (0x328b:16), wa
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	ld a, (0x32a6:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
 	ld (0x328d:16), wa
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	ld a, (0x32a7:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
 	ld (0x328f:16), wa
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	ld a, (0x32a8:16)
 	calr AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -612,27 +612,27 @@ AccStyle_SetupPartAddressesByHL:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
 	ldfr_werp HL, 0x3c
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	call AccPart_GetParamAddr
 	ld (0x3287:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	call AccPart_GetParamAddr
 	ld (0x3289:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	call AccPart_GetParamAddr
 	ld (0x328b:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	call AccPart_GetParamAddr
 	ld (0x328d:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	call AccPart_GetParamAddr
 	ld (0x328f:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	call AccPart_GetParamAddr
 	ld (0x3291:16), wa
 	ld xwa, AccStyle_DefaultStream
@@ -912,31 +912,31 @@ AccStyle_ReadParamOffset:
 	ld	hl, (xhl+w)
 	extz xhl
 	add xhl, xiy
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccStyle_ReadParamOff_Part2
 	ld w, (xhl + 0:8)
 	jr AccStyle_ReadParamRet
 
 AccStyle_ReadParamOff_Part2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccStyle_ReadParamOff_Part4
 	ld w, (xhl + 0:8)
 	jr AccStyle_ReadParamRet
 
 AccStyle_ReadParamOff_Part4:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccStyle_ReadParamOff_Part8
 	ld w, (xhl + 40)
 	jr AccStyle_ReadParamRet
 
 AccStyle_ReadParamOff_Part8:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccStyle_ReadParamOff_Part16
 	ld w, (xhl + 80)
 	jr AccStyle_ReadParamRet
 
 AccStyle_ReadParamOff_Part16:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccStyle_ReadParamOff_Part32
 	ld w, (xhl + 120)
 	jr AccStyle_ReadParamRet
@@ -953,32 +953,32 @@ AccStyle_ByteDataBlock:
 	ld	hl, (xhl+a)
 	extz xhl
 	add	xhl, xiy
-	cp	(0x33d4:16), 1
+	cp	(ACC_PART_BIT:16), 1
 	jr	nz, AccStyle_ByteDataBlock_Skip
 	ld	a, (xhl+20)
 	jr	AccStyle_ReadParamOffset_Return
 AccStyle_ByteDataBlock_Skip:
-	cp	(0x33d4:16), 2
+	cp	(ACC_PART_BIT:16), 2
 	jr	nz, AccStyle_ByteDataBlock_Skip2
 	ld	a, (xhl+20)
 	jr	AccStyle_ReadParamOffset_Return
 AccStyle_ByteDataBlock_Skip2:
-	cp	(0x33d4:16), 4
+	cp	(ACC_PART_BIT:16), 4
 	jr	nz, AccStyle_ReadParamOffset_Skip
 	ld	a, (xhl+60)
 	jr	AccStyle_ReadParamOffset_Return
 AccStyle_ReadParamOffset_Skip:
-	cp	(0x33d4:16), 8
+	cp	(ACC_PART_BIT:16), 8
 	jr	nz, AccStyle_ReadParamOffset_Skip2
 	ld	a, (xhl+100)
 	jr	AccStyle_ReadParamOffset_Return
 AccStyle_ReadParamOffset_Skip2:
-	cp	(0x33d4:16), 16
+	cp	(ACC_PART_BIT:16), 16
 	jr	nz, AccStyle_ReadParamOffset_Skip3
 	ld	a, (xhl+140)
 	jr	AccStyle_ReadParamOffset_Return
 AccStyle_ReadParamOffset_Skip3:
-	cp	(0x33d4:16), 32
+	cp	(ACC_PART_BIT:16), 32
 	jr	nz, AccStyle_ReadParamOffset_Return
 	ld a, (xhl+180)
 AccStyle_ReadParamOffset_Return:
@@ -1092,7 +1092,7 @@ AccVoice_SavePartState1:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x1:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x3297:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x3287:16)
@@ -1142,7 +1142,7 @@ AccVoice_EventLoop_Active:
 	jr AccVoice_EventProcessingReturn
 
 AccVoice_EventLoop_Dispatch:
-	ld w, (0x33d4:16)
+	ld w, (ACC_PART_BIT:16)
 	ld iz, (0x33d6:16)
 	call AccVoice_SelectByMask
 	ld iy, (0x33d8:16)
@@ -1188,7 +1188,7 @@ AccVoice_EventLoop_Idle:
 	ret
 
 AccVoice_DispatchByChannel:
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccVoice_DispatchCh_Kbd2
 	bit 0, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1196,7 +1196,7 @@ AccVoice_DispatchByChannel:
 	jr SoundPatch_NullRet
 
 AccVoice_DispatchCh_Kbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccVoice_DispatchCh_Acc1
 	bit 1, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1204,7 +1204,7 @@ AccVoice_DispatchCh_Kbd2:
 	jr SoundPatch_NullRet
 
 AccVoice_DispatchCh_Acc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccVoice_DispatchCh_Acc2
 	bit 2, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1212,7 +1212,7 @@ AccVoice_DispatchCh_Acc1:
 	jr SoundPatch_NullRet
 
 AccVoice_DispatchCh_Acc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccVoice_DispatchCh_Acc3
 	bit 3, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1220,7 +1220,7 @@ AccVoice_DispatchCh_Acc2:
 	jr SoundPatch_NullRet
 
 AccVoice_DispatchCh_Acc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccVoice_DispatchCh_Acc4
 	bit 4, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1228,7 +1228,7 @@ AccVoice_DispatchCh_Acc3:
 	jr SoundPatch_NullRet
 
 AccVoice_DispatchCh_Acc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, SoundPatch_NullRet
 	bit 5, (0x332c:16)
 	jr z, SoundPatch_NullRet
@@ -1314,7 +1314,7 @@ AccVoice_BarEnd_NextPage:
 	jr z, AccVoice_BarEnd_CheckChord65
 
 AccVoice_BarEnd_CheckChord94:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3326:16)
 	jr nz, AccVoice_SetChordChangeFlags
 
@@ -1327,7 +1327,7 @@ AccVoice_BarEnd_CheckChord65:
 	jr z, AccVoice_BarEnd_CheckSync69
 
 AccVoice_BarEnd_CheckChord95:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3327:16)
 	jr nz, AccVoice_SetChordChangeFlags
 
@@ -1360,7 +1360,7 @@ AccVoice_SetChordChangeFlags:
 	jr z, AccVoice_NullRet
 	and (0x330e:16), 252
 	or (0x330e:16), 1
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3312:16)
 	jr z, AccVoice_NullRet
 	or (0x330e:16), 2
@@ -1400,12 +1400,12 @@ AccBuf_AdvanceNoPage:
 	ret
 
 AccVoice_HandleMarker83:
-	ld w, (0x33d4:16)
+	ld w, (ACC_PART_BIT:16)
 	ld a, (0x3314:16)
 	or a, (0x3315:16)
 	and w, a
 	jr nz, AccVoice_Marker83_Activate
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3328:16)
 	jr z, AccVoice_Marker83_CheckDeact
 
@@ -1415,7 +1415,7 @@ AccVoice_Marker83_Activate:
 
 AccVoice_Marker83_CheckDeact:
 	calr AccPart_CheckAnyActive
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr z, AccVoice_Marker83_NextPart
 	calr AccPart_Deactivate
 	jr AccVoice_Marker83_Return
@@ -1427,7 +1427,7 @@ AccVoice_Marker83_Return:
 	ret
 
 AccVoice_ActivatePart:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	or (0x332a:16), a
 	or (0x3328:16), a
 	or (0x32f4:16), 1
@@ -1445,12 +1445,12 @@ AccVoice_ActivateByteData:
 	ld	a, (0x3470:16)
 	and	a, 192
 	jr	nz, AccVoice_ActivateByteData_Skip
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	and	a, (0x3329:16)
 	jr	z, AccVoice_ActivateByteData_Skip2
 AccVoice_ActivateByteData_Skip:
 	calr	AccPart_ResolveWithPedal
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	xor	a, 255
 	and	(0x3329:16), a
 	jr	AccVoice_ActivatePart_Return2
@@ -1458,13 +1458,13 @@ AccVoice_ActivateByteData_Skip2:
 	ld	a, (0x3316:16)
 	or	a, (0x3317:16)
 	or	a, (0x3318:16)
-	and	a, (0x33d4:16)
+	and	a, (ACC_PART_BIT:16)
 	jr	nz, AccVoice_ActivatePart_Skip3
 	bit	0, (0x3301:16)
 	jr	z, AccVoice_ActivatePart_Skip3
 	and	(0x330e:16), 252
 	or	(0x330e:16), 1
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	and	a, (0x3312:16)
 	jr	z, AccVoice_ActivateByteData_Join
 	or	(0x330e:16), 2
@@ -1476,7 +1476,7 @@ AccVoice_ActivatePart_Skip3:
 	calr	AccPart_SelectSourceOrParam
 	calr	AccPart_ResolveStyleAddr
 AccVoice_ActivatePart_Join:
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	xor	a, 255
 	and	(0x3312:16), a
 	and	(0x3313:16), a
@@ -1500,17 +1500,17 @@ AccPart_SelectSource_Param:
 	calr AccPart_LoadParamOffsetTable
 
 AccPart_SelectSource_Done:
-	ld w, (0x33d4:16)
+	ld w, (ACC_PART_BIT:16)
 	ret
 
 AccPart_AdvanceAndResolve:
 	calr AccPart_IncrementIndex
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x335d:16)
 	jr z, AccPart_AdvanceResolve_Done
 	call AccVoice_InitPerChannel
 	calr AccPart_LoadParamOffsetTable
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x335d:16), a
 	call AccVoice_AssignPerPart
@@ -1569,7 +1569,7 @@ AccPart_ResolveWithPedal:
 	jr AccPart_ResolveWithPedal_Return
 
 AccPart_ResolveWithPedal_DirB:
-	ld w, (0x33d4:16)
+	ld w, (ACC_PART_BIT:16)
 	calr AccPedal_DirectionB
 	call AccVoice_ResolveParamAddr
 	calr AccPart_GetFreeVoiceAddr
@@ -1595,42 +1595,42 @@ AccPart_LoadParamOffsetTable:
 	ret
 
 AccPart_LoadTuningByChannel:
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccPart_LoadTuning_Kbd2
 	call AccTuning_LoadAndApplyMaster
 	or (0x332c:16), 1
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Kbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccPart_LoadTuning_Acc1
 	call AccTuning_LoadAndApplyMaster
 	or (0x332c:16), 2
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccPart_LoadTuning_Acc2
 	call AccTuning_LoadCoarseFromStyle
 	or (0x332c:16), 4
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccPart_LoadTuning_Acc3
 	call AccTuning_LoadFineFromStyle
 	or (0x332c:16), 8
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccPart_LoadTuning_Acc4
 	call AccTuning_LoadOctaveFromStyle
 	or (0x332c:16), 16
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccPart_NullRet
 	call AccTuning_LoadTransposeFromStyle
 	or (0x332c:16), 32
@@ -1639,47 +1639,47 @@ AccPart_NullRet:
 	ret
 
 AccPart_GetFreeVoiceAddr:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x33e0:16), a
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccPart_FreeAddr_Kbd2
 	ld wa, (xiy + 0:8)
 	jr AccPart_CheckEndOfDataMarker
 
 AccPart_FreeAddr_Kbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccPart_FreeAddr_Acc1
 	ldw wa, 0xfffe
 	jr AccPart_CheckEndOfDataMarker
 
 AccPart_FreeAddr_Acc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccPart_FreeAddr_Acc2
 	ld wa, (xiy + 4)
 	jr AccPart_CheckEndOfDataMarker
 
 AccPart_FreeAddr_Acc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccPart_FreeAddr_Acc3
 	ld wa, (xiy + 6)
 	jr AccPart_CheckEndOfDataMarker
 
 AccPart_FreeAddr_Acc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccPart_FreeAddr_Acc4
 	ld wa, (xiy + 8)
 	jr AccPart_CheckEndOfDataMarker
 
 AccPart_FreeAddr_Acc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccPart_CheckEndOfDataMarker
 	ld wa, (xiy + 10)
 
 AccPart_CheckEndOfDataMarker:
 	cp wa, 0xfffe
 	jr nz, AccPart_FreeAddr_Return
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	or (0x33e0:16), a
 	ldw wa, 0xfffe
 
@@ -1694,45 +1694,45 @@ AccPart_FreeAddr_Return:
 ; Adds per-part offset (0x118-0x1d6) based on channel (kbd/acc1-5).
 ; ============================================================================
 AccPart_GetParamAddr:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x33e0:16), a
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccPart_ParamAddr_Kbd2
 	add hl, 0x118
 	ld	wa, (xiy+hl)
 	jr AccPart_SubtractBaseAddr
 
 AccPart_ParamAddr_Kbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccPart_ParamAddr_Acc1
 	add hl, 0x13e
 	ld	wa, (xiy+hl)
 	jr AccPart_SubtractBaseAddr
 
 AccPart_ParamAddr_Acc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccPart_ParamAddr_Acc2
 	add hl, 0x164
 	ld	wa, (xiy+hl)
 	jr AccPart_SubtractBaseAddr
 
 AccPart_ParamAddr_Acc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccPart_ParamAddr_Acc3
 	add hl, 0x18a
 	ld	wa, (xiy+hl)
 	jr AccPart_SubtractBaseAddr
 
 AccPart_ParamAddr_Acc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccPart_ParamAddr_Acc4
 	add hl, 0x1b0
 	ld	wa, (xiy+hl)
 	jr AccPart_SubtractBaseAddr
 
 AccPart_ParamAddr_Acc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccPart_SubtractBaseAddr
 	add hl, 0x1d6
 	ld	wa, (xiy+hl)
@@ -1745,9 +1745,9 @@ AccPart_SubtractBaseAddr:
 
 AccPart_SelectSource:
 	ld xiy, (0x32ce:16)
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr z, AccPart_SelectKbd
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccPart_CheckAcc1
 
 AccPart_SelectKbd:
@@ -1756,28 +1756,28 @@ AccPart_SelectKbd:
 	jr AccPart_CopyData
 
 AccPart_CheckAcc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccPart_CheckAcc2
 	add xiy, 0x20
 	ld xix, 0x324d
 	jr AccPart_CopyData
 
 AccPart_CheckAcc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccPart_CheckAcc3
 	add xiy, 0x28
 	ld xix, 0x3254
 	jr AccPart_CopyData
 
 AccPart_CheckAcc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccPart_CheckAcc4
 	add xiy, 0x30
 	ld xix, 0x325b
 	jr AccPart_CopyData
 
 AccPart_CheckAcc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccPart_CheckAcc4
 	add xiy, 0x38
 	ld xix, 0x3262
@@ -1785,7 +1785,7 @@ AccPart_CheckAcc4:
 AccPart_CopyData:
 	ld bc, 7:i3
 	ldir85
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	or (0x332c:16), a
 	ret
 
@@ -1938,9 +1938,9 @@ AccMidi_ParseCommon:
 	call AccBuf_Advance
 	ld	a, (xhl+iy)
 	ld (0x342f:16), a
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr z, AccMidi_ParseCommon_ExtraFields
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr z, AccMidi_ParseCommon_ExtraFields
 	call Rhythm_CheckVelocityThreshold
 
@@ -1958,7 +1958,7 @@ AccMidi_ParseCommon_ExtraFields:
 	ret
 
 AccMidi_SelectVelocitySource:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	ld w, (0x333f:16)
 	and a, (0x3316:16)
 	jr nz, AccMidi_VelSource_Active
@@ -1979,37 +1979,37 @@ AccMidi_VelSource_Store:
 	ret
 
 AccMidi_DispatchPerPart:
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccMidi_DispatchKbd2
 	calr AccKbd1_RingBufEntry
 	jr AccMidi_DispatchAcc4Return
 
 AccMidi_DispatchKbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccMidi_DispatchAcc1
 	calr AccKbd2_RingBufEntry
 	jr AccMidi_DispatchAcc4Return
 
 AccMidi_DispatchAcc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccMidi_DispatchAcc2
 	call AccCh1_NoteOnEntry
 	jr AccMidi_DispatchAcc4Return
 
 AccMidi_DispatchAcc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccMidi_DispatchAcc3
 	call AccCh2_NoteOnEntry
 	jr AccMidi_DispatchAcc4Return
 
 AccMidi_DispatchAcc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccMidi_DispatchAcc4
 	call AccCh3_NoteOnEntry
 	jr AccMidi_DispatchAcc4Return
 
 AccMidi_DispatchAcc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccMidi_DispatchAcc4Return
 	call AccCh4_NoteOnEntry
 
@@ -2316,10 +2316,10 @@ AccBuf_NoteEvent_Return:
 	ret
 
 AccKbd2_CheckActive:
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	and	a, (0x33e0:16)
 	jr	z, AccKbd2_CheckActive_Return
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	ld	w, (0x3314:16)
 	or	w, (0x3315:16)
 	and	w, a
@@ -2328,7 +2328,7 @@ AccKbd2_CheckActive:
 	or	(0x3328:16), a
 	jr	AccKbd2_CheckActive_Return
 AccKbd2_CheckActive_Skip:
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	xor	a, 255
 	and	(0x3312:16), a
 	and	(0x3313:16), a
@@ -2352,7 +2352,7 @@ AccKbd2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x2:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x3299:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x3289:16)
@@ -2621,7 +2621,7 @@ AccCh1_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x4:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x329b:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x328b:16)
@@ -2652,9 +2652,9 @@ AccCh1_RestoreState:
 	ret
 
 AccVoice_AssignPerPart:
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr z, AccVoice_AssignReturn
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr z, AccVoice_AssignReturn
 	ld a, (0x33d5:16)
 	call AccTuning_FetchValue
@@ -2687,7 +2687,7 @@ AccVoice_ScanDone:
 	ret
 
 AccVoice_SendProgChange:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccVoice_SendD4
 	ld a, 0xd7:opc
 	ld w, 0x3:opc
@@ -2697,7 +2697,7 @@ AccVoice_SendProgChange:
 	jr AccCh_ReturnStub
 
 AccVoice_SendD4:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccVoice_SendD5
 	ld a, 0xd4:opc
 	ld w, 0x3:opc
@@ -2707,7 +2707,7 @@ AccVoice_SendD4:
 	jr AccCh_ReturnStub
 
 AccVoice_SendD5:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccVoice_SendD6
 	ld a, 0xd5:opc
 	ld w, 0x3:opc
@@ -2911,35 +2911,35 @@ AccMidi_ParseDType:
 	ret
 
 AccMidi_DispatchDType:
-	cp (0x33d4:16), 1
+	cp (ACC_PART_BIT:16), 1
 	jr nz, AccMidi_DType_CheckKbd2
 	jr AccMidi_DType_Return
 
 AccMidi_DType_CheckKbd2:
-	cp (0x33d4:16), 2
+	cp (ACC_PART_BIT:16), 2
 	jr nz, AccMidi_DType_CheckAcc1
 	jr AccMidi_DType_Return
 
 AccMidi_DType_CheckAcc1:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccMidi_DType_CheckAcc2
 	calr AccCh1_DTypeEntry
 	jr AccMidi_DType_Return
 
 AccMidi_DType_CheckAcc2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccMidi_DType_CheckAcc3
 	calr AccCh2_DTypeEntry
 	jr AccMidi_DType_Return
 
 AccMidi_DType_CheckAcc3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccMidi_DType_CheckAcc4
 	calr AccCh3_DTypeEntry
 	jr AccMidi_DType_Return
 
 AccMidi_DType_CheckAcc4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccMidi_DType_CheckAcc4
 	calr AccCh4_DTypeEntry
 
@@ -3069,7 +3069,7 @@ AccCh2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x8:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x329d:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x328d:16)
@@ -3244,7 +3244,7 @@ AccCh3_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x10:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x329f:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x328f:16)
@@ -3419,7 +3419,7 @@ AccCh4_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
 	ld a, 0x20:opc
-	ld (0x33d4:16), a
+	ld (ACC_PART_BIT:16), a
 	ld wa, (0x32a1:16)
 	ld (0x33d6:16), wa
 	ld wa, (0x3291:16)
@@ -3634,13 +3634,13 @@ AccPart_Deactivate:
 	ld a, (0x3470:16)
 	and a, 0xc0
 	jr nz, AccPart_Deactivate_WithPedal
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3329:16)
 	jr z, AccPart_Deactivate_NoPedal
 
 AccPart_Deactivate_WithPedal:
 	calr AccPart_ResolveWithPedal
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x3329:16), a
 	jrl AccPart_DeactivateReturn
@@ -3649,7 +3649,7 @@ AccPart_Deactivate_NoPedal:
 	ld a, (0x3316:16)
 	or a, (0x3317:16)
 	or a, (0x3318:16)
-	and a, (0x33d4:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, AccPart_Deactivate_ActiveNote
 	bit 0, (0x3301:16)
 	jr nz, AccPart_Deactivate_WithSync
@@ -3660,7 +3660,7 @@ AccPart_Deactivate_NoPedal:
 AccPart_Deactivate_WithSync:
 	and (0x330e:16), 252
 	or (0x330e:16), 1
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x3312:16)
 	jr z, AccPart_Deactivate_SetDone
 	or (0x330e:16), 2
@@ -3680,7 +3680,7 @@ AccPart_Deactivate_SendOff:
 	calr AccPart_ResolveStyleAddr
 
 AccPart_Deactivate_ClearMasks:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x3312:16), a
 	and (0x3313:16), a
@@ -3694,10 +3694,10 @@ AccPart_DeactivateReturn:
 	ret
 
 AccPart_Reactivate:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	and a, (0x33e0:16)
 	jr z, AccPart_ReactivateReturn
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	ld w, (0x3314:16)
 	or w, (0x3315:16)
 	and w, a
@@ -3709,7 +3709,7 @@ AccPart_Reactivate:
 	jr AccPart_ReactivateReturn
 
 AccPart_Reactivate_Inactive:
-	ld a, (0x33d4:16)
+	ld a, (ACC_PART_BIT:16)
 	xor a, 0xff
 	and (0x3312:16), a
 	and (0x3313:16), a
@@ -3803,25 +3803,25 @@ AccVelocity_CurveTable:
 	.byte 0xcc, 0xe6, 0xff
 
 AccVoice_InitPerChannel:
-	cp (0x33d4:16), 4
+	cp (ACC_PART_BIT:16), 4
 	jr nz, AccVoice_InitCh2
 	calr AccVoice_InitCh1_D7
 	jr AccVoice_InitReturn
 
 AccVoice_InitCh2:
-	cp (0x33d4:16), 8
+	cp (ACC_PART_BIT:16), 8
 	jr nz, AccVoice_InitCh3
 	calr AccVoice_InitCh2_D4
 	jr AccVoice_InitReturn
 
 AccVoice_InitCh3:
-	cp (0x33d4:16), 16
+	cp (ACC_PART_BIT:16), 16
 	jr nz, AccVoice_InitCh4
 	calr AccVoice_InitCh3_D5
 	jr AccVoice_InitReturn
 
 AccVoice_InitCh4:
-	cp (0x33d4:16), 32
+	cp (ACC_PART_BIT:16), 32
 	jr nz, AccVoice_InitReturn
 	calr AccVoice_InitCh4_D6
 
@@ -4500,7 +4500,7 @@ AccVoice_SetupKbd1:
 	and (0x32ab:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupKbd1_Free
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	ld a, (0x32a3:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4508,7 +4508,7 @@ AccVoice_SetupKbd1:
 	jr AccVoice_SetupKbd1_Return
 
 AccVoice_SetupKbd1_Free:
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	call AccPart_GetFreeVoiceAddr
 	ld (0x3297:16), wa
 	ldw (0x3287:16), 6
@@ -4520,7 +4520,7 @@ AccVoice_SetupKbd2:
 	and (0x32ac:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupKbd2_Free
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	ld a, (0x32a4:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4528,7 +4528,7 @@ AccVoice_SetupKbd2:
 	jr AccVoice_SetupKbd2_Return
 
 AccVoice_SetupKbd2_Free:
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	call AccPart_GetFreeVoiceAddr
 	ld (0x3299:16), wa
 	ldw (0x3289:16), 6
@@ -4540,7 +4540,7 @@ AccVoice_SetupAcc1:
 	and (0x32ad:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupAcc1_Free
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	ld a, (0x32a5:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4548,7 +4548,7 @@ AccVoice_SetupAcc1:
 	jr AccVoice_SetupAcc1_Return
 
 AccVoice_SetupAcc1_Free:
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329b:16), wa
 	ldw (0x328b:16), 6
@@ -4560,7 +4560,7 @@ AccVoice_SetupAcc2:
 	and (0x32ae:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupAcc2_Free
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	ld a, (0x32a6:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4568,7 +4568,7 @@ AccVoice_SetupAcc2:
 	jr AccVoice_SetupAcc2_Return
 
 AccVoice_SetupAcc2_Free:
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329d:16), wa
 	ldw (0x328d:16), 6
@@ -4580,7 +4580,7 @@ AccVoice_SetupAcc3:
 	and (0x32af:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupAcc3_Free
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	ld a, (0x32a7:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4588,7 +4588,7 @@ AccVoice_SetupAcc3:
 	jr AccVoice_SetupAcc3_Return
 
 AccVoice_SetupAcc3_Free:
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329f:16), wa
 	ldw (0x328f:16), 6
@@ -4600,7 +4600,7 @@ AccVoice_SetupAcc4:
 	and (0x32b0:16), 15
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_SetupAcc4_Free
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	ld a, (0x32a8:16)
 	call AccPart_LookupBoundVoiceParam
 	call AccPart_GetParamAddr
@@ -4608,7 +4608,7 @@ AccVoice_SetupAcc4:
 	jrl AccVoice_SetupAcc4_Return
 
 AccVoice_SetupAcc4_Free:
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	call AccPart_GetFreeVoiceAddr
 	ld (0x32a1:16), wa
 	ldw (0x3291:16), 6
@@ -4928,53 +4928,53 @@ AccVoice_LoadAllParts:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
 	ldfr_werp HL, 0x3c
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	call AccPart_GetParamAddr
 	ld (0x3287:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	call AccPart_GetParamAddr
 	ld (0x3289:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	call AccPart_GetParamAddr
 	ld (0x328b:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	call AccPart_GetParamAddr
 	ld (0x328d:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	call AccPart_GetParamAddr
 	ld (0x328f:16), wa
 	ldto_werp HL, 0x3c
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	call AccPart_GetParamAddr
 	ld (0x3291:16), wa
 	ret
 
 AccInit_AllPartPositions:
-	ld (0x33d4:16), 1
+	ld (ACC_PART_BIT:16), 1
 	call AccPart_GetFreeVoiceAddr
 	ld (0x3297:16), wa
 	ldw (0x3287:16), 6
-	ld (0x33d4:16), 4
+	ld (ACC_PART_BIT:16), 4
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329b:16), wa
 	ldw (0x328b:16), 6
-	ld (0x33d4:16), 8
+	ld (ACC_PART_BIT:16), 8
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329d:16), wa
 	ldw (0x328d:16), 6
-	ld (0x33d4:16), 16
+	ld (ACC_PART_BIT:16), 16
 	call AccPart_GetFreeVoiceAddr
 	ld (0x329f:16), wa
 	ldw (0x328f:16), 6
-	ld (0x33d4:16), 32
+	ld (ACC_PART_BIT:16), 32
 	call AccPart_GetFreeVoiceAddr
 	ld (0x32a1:16), wa
 	ldw (0x3291:16), 6
-	ld (0x33d4:16), 2
+	ld (ACC_PART_BIT:16), 2
 	call AccPart_GetFreeVoiceAddr
 	ld (0x3299:16), wa
 	ldw (0x3289:16), 6
@@ -5456,7 +5456,7 @@ AccVoice_ScanDone2:
 	ret
 
 AccVoice_SetupByteData:
-	ld	(0x33d4:16), 4
+	ld	(ACC_PART_BIT:16), 4
 	ld	e, (0x3349:16)
 	ld	(0x3333:16), 0
 AccVoice_SetupByteData_Join:
@@ -5474,7 +5474,7 @@ AccVoice_SetupByteData_Join:
 	jr	AccVoice_SetupByteData_Join
 AccVoice_SetupByteData_Return:
 	ret
-	ld	(0x33d4:16), 8
+	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x3349:16)
 	ld	(0x3333:16), 0
 AccVoice_SetupByteData_Join2:
@@ -5492,7 +5492,7 @@ AccVoice_SetupByteData_Join2:
 	jr	AccVoice_SetupByteData_Join2
 AccVoice_SetupByteData_Return2:
 	ret
-	ld	(0x33d4:16), 8
+	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x3349:16)
 	ld	(0x3333:16), 0
 AccVoice_SetupByteData_Join3:
@@ -5510,7 +5510,7 @@ AccVoice_SetupByteData_Join3:
 	jr	AccVoice_SetupByteData_Join3
 AccVoice_SetupByteData_Return3:
 	ret
-	ld	(0x33d4:16), 8
+	ld	(ACC_PART_BIT:16), 8
 	ld	e, (0x3349:16)
 	ld	(0x3333:16), 0
 AccVoice_SetupByteData_Join4:
@@ -5539,27 +5539,27 @@ AccVoice_SetupByteData_Return4:
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
 	ld	(0x3287:16), wa
-	ld	(0x33d4:16), 2
+	ld	(ACC_PART_BIT:16), 2
 	ld	a, (0x32a4:16)
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
 	ld	(0x3289:16), wa
-	ld	(0x33d4:16), 4
+	ld	(ACC_PART_BIT:16), 4
 	ld	a, (0x32a5:16)
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
 	ld	(0x328b:16), wa
-	ld	(0x33d4:16), 8
+	ld	(ACC_PART_BIT:16), 8
 	ld	a, (0x32a6:16)
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
 	ld	(0x328d:16), wa
-	ld	(0x33d4:16), 16
+	ld	(ACC_PART_BIT:16), 16
 	ld	a, (0x32a7:16)
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
 	ld	(0x328f:16), wa
-	ld	(0x33d4:16), 32
+	ld	(ACC_PART_BIT:16), 32
 	ld	l, (0x32a8:16)
 	call	AccPart_LookupBoundVoiceParam
 	call	AccPart_GetParamAddr
@@ -6408,7 +6408,7 @@ AccPedal_Sustain_SpecialStyle:
 	jrl AccPedal_SustainReturn
 
 AccPedal_Sustain_CheckPlay:
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr z, AccPedal_Sustain_CheckMultiStyle
 	calr AccPlayMode_Dispatch
 	bit 3, (3411:16)
@@ -7691,7 +7691,7 @@ AccAutoPlay_NoteDispatch:
 	cp a, 1:i3
 	popw wa
 	jr z, AccAutoPlay_NoteDispatch_Process
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr nz, AccAutoPlay_NoteDispatch_Process
 	push xwa
 	push xhl
@@ -7824,7 +7824,7 @@ AccAutoPlay_ZoneTrack:
 	cp a, 1:i3
 	popw wa
 	jr z, AccAutoPlay_ZoneTrack_Update
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr nz, AccAutoPlay_ZoneTrack_Update
 	calr AccAutoPlay_ZoneTrack_Apply
 	ld hl, (0x349c:16)
@@ -7927,7 +7927,7 @@ AccAutoPlay_SM_Padding:
 	nop
 
 AccAutoPlay_TriggerCheck:
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jrl nz, AccAutoPlay_ModeAvail_Padding2
 	calr AccAutoPlay_SetConfig
 	bit 0, (0x3498:16)
@@ -8289,7 +8289,7 @@ AccAutoPlay_SeqHandoff_Padding:
 	nop
 
 AccAutoPlay_ModeDecode:
-	ld a, (0x28a7:16)
+	ld a, (SEQ_RTMCFG:16)
 	and a, 0x3
 	cp a, 2:i3
 	jr nz, AccAutoPlay_ModeDecode_Process
@@ -8480,7 +8480,7 @@ AccPlayMode_StartRecording_Padding:
 AccPlayMode_StartRecording:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_StartRec_Apply
-	bit 1, (0x28a7:16)
+	bit 1, (SEQ_RTMCFG:16)
 	jr z, AccPlayMode_StartRec_Process
 	ei 6
 	calr AccPlayMode_StopExprB
@@ -8504,7 +8504,7 @@ AccPlayMode_StartRec_Padding:
 AccPlayMode_StartAcc:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_StartAcc_Apply
-	bit 1, (0x28a7:16)
+	bit 1, (SEQ_RTMCFG:16)
 	jr z, AccPlayMode_StartAcc_Process
 	ei 6
 	calr AccPlayMode_StopExprB
@@ -8548,9 +8548,9 @@ AccPlayMode_StopToSync_Padding:
 	nop
 
 AccPlayMode_StartPlay:
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr nz, AccPlayMode_StartPlay_Return
-	bit 1, (0x28a7:16)
+	bit 1, (SEQ_RTMCFG:16)
 	jr nz, AccPlayMode_StartPlay_Process
 	ei 6
 	calr AccPlayMode_StartPlayFull
@@ -8763,7 +8763,7 @@ AccTempo_ClearPositions_Loop:
 AccTempo_ClearSubPos:
 	xor wa, wa
 	ei 6
-	bit 3, (0x28a7:16)
+	bit 3, (SEQ_RTMCFG:16)
 	jr nz, AccTempo_ClearSubPos_Loop
 	ld (SEQ_BEAT_COUNT:16), wa
 	ld (SEQ_BEAT_TICK:16), a
@@ -8776,7 +8776,7 @@ AccSync_MidiClock:
 	bit 2, (0xfd52:16)
 	jr z, AccSync_MidiClock_Return
 	ei 6
-	bit 3, (0x28a7:16)
+	bit 3, (SEQ_RTMCFG:16)
 	jr z, AccSync_MidiClock_Update
 	or (1065:16), 4
 	jr AccSync_MidiClock_Apply
@@ -13226,7 +13226,7 @@ AccTuning_ComplexBytecodeData:
 	ld	c, (13424:16)
 	ld	e, c
 	and	e, 128
-	ld	l, (13268:16)
+	ld	l, (ACC_PART_BIT:16)
 	cpl	l
 	cp	e, 128
 	jr	z, AccTuning_ComplexBytecodeData_Skip
@@ -13240,14 +13240,14 @@ AccTuning_ComplexBytecodeData_Skip:
 	ld	a, (1075:16)
 	cp	a, (13162:16)
 	jr	nz, AccTuning_ComplexBytecodeData_Loop
-	ld	a, (13268:16)
+	ld	a, (ACC_PART_BIT:16)
 	or	(13075:16), a
 	ld	e, (13163:16)
 	jr	AccTuning_ComplexBytecodeData_Loop2
 AccTuning_ComplexBytecodeData_Loop:
 	ld	e, (13345:16)
 AccTuning_ComplexBytecodeData_Loop2:
-	ld	a, (13268:16)
+	ld	a, (ACC_PART_BIT:16)
 	cp	a, 2:i3
 	jr	nz, AccTuning_ComplexBytecodeData_Skip4
 	ldw	(13270:16), 65534
@@ -13265,7 +13265,7 @@ AccTuning_ComplexBytecodeData_Skip3:
 	ld	a, (1075:16)
 	cp	a, (13160:16)
 	jr nz, AccTuning_ComplexBytecodeData_Loop
-	ld a, (13268:16)
+	ld a, (ACC_PART_BIT:16)
 	or (13074:16), a
 	ld e, (13161:16)
 	jr AccTuning_ComplexBytecodeData_Loop2
@@ -13653,7 +13653,7 @@ AccPart_GetParamAddr_Wrap:
 	push	xde
 	push	xhl
 	xor	xwa, xwa
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	call	AccPedal_DirectionA_Wrap_Helper
 	pop	xhl	; was .ascii "[ZYX^]\\"
 	pop	xde
@@ -13671,7 +13671,7 @@ AccPart_GetParamAddr_Wrap:
 	push	xde
 	push	xhl
 	xor	xwa, xwa
-	ld	a, (0x33d4:16)
+	ld	a, (ACC_PART_BIT:16)
 	call	AccPedal_DirectionA_Wrap_Helper2
 	pop	xhl	; was .ascii "[ZYX^]\\"
 	pop	xde
@@ -24498,7 +24498,7 @@ DrumKitInit_Setup:
 	ld (0x3715:16), 0
 	ld (0x3716:16), 1
 	call AccWrap_PlayModeDispatch
-	or (0x28a7:16), 4
+	or (SEQ_RTMCFG:16), 4
 	ld (0x379b:16), 64
 	ld a, (0xfc5a:16)
 	ld (0x34ed:16), a
@@ -24588,7 +24588,7 @@ DrumKitExit_CheckState1:
 	and (0x8d88:16), 254
 
 DrumKitExit_ClearFlags:
-	and (0x28a7:16), 251
+	and (SEQ_RTMCFG:16), 251
 	and (0xe3e2:16), 254
 	and (0xe3e2:16), 247
 	and (0xe3e2:16), 223
@@ -24927,7 +24927,7 @@ RhythmPatInit_Entry:
 	cp	(PREVIOUS_TITLE:16), 181
 	jr nz, RhythmPatInit_Cleanup
 	call AccWrap_PlayModeDispatch
-	or	(0x28a7:16), 4
+	or	(SEQ_RTMCFG:16), 4
 	jr t, RhythmPatInit_Cleanup
 RhythmPatInit_Cleanup:
 	and	(0xe3e2:16), 158
@@ -25049,7 +25049,7 @@ CmpRealTtl_EnterTitle:
 ;   (AccWrap_PlayModeStartAccPlay). Basis: callers + body -- its only caller is the XIZ wrapper CmpRealTtl_EnterTitle,
 ;   whose header describes exactly this (the _Impl pairing of CmpSetTtl_StepEntryIndex).
 CmpRealTtl_EnterTitle_Impl:
-	and	(0x28a7:16), 251
+	and	(SEQ_RTMCFG:16), 251
 	and	(0xe3e2:16), 254
 	cp	(PREVIOUS_TITLE:16), 181
 	jr	z, RhythmFillIn_Select_Return
@@ -26818,7 +26818,7 @@ CmpNcp_StepSlotInGroup2_Skip:
 TimeSig_DisplayStrings_Code_Return7:
 	ret
 	call	AccWrap_PlayModeDispatch
-	or	(0x28a7:16), 4
+	or	(SEQ_RTMCFG:16), 4
 	ld	a, (0xfc5a:16)
 	and	a, 15
 	ld	(0x390a:16), a
@@ -27211,7 +27211,7 @@ S2cTtl_InitOnTitleChange:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, (PREVIOUS_TITLE:16)
 	ret	z
-	ld	a, (0xffe3:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	inc	1, a
 	ld	(0x3989:16), a
 	ld	wa, (0x398a:16)
@@ -30621,7 +30621,7 @@ CmpMenuTtlFunc:
 	jp	t, (xix+de)
 ; CmpMenuTtlFunc title dispatch
 CmpMenuTtl_Dispatch:
-	set	2, (0x28a7:16)
+	set	2, (SEQ_RTMCFG:16)
 	call	AccWrap_PlayModeDispatch
 	jr	t, CmpMenuTtl_ReturnZero
 
@@ -32127,7 +32127,7 @@ CmEsyTtl_Dispatch:
 	ld	(0x34d6:16), a
 CmEsyTtl_Dispatch_Skip:
 	or	(0x37c8:16), 127
-	res	2, (0x28a7:16)
+	res	2, (SEQ_RTMCFG:16)
 	res	6, (0x34cd:16)
 	push	xde
 	push	xhl
@@ -36368,7 +36368,7 @@ AccDisplay_FullInit:
 	call Part_ReinitAllActive
 	call AccompSeq_StopSequence
 	call AccWrap_PlayModeDispatch
-	set 2, (0x28a7:16)
+	set 2, (SEQ_RTMCFG:16)
 	call AudioInit_RefreshToneBank
 	call NoteMap_ProcessAndMerge
 	call Voice_InitializeAll
@@ -36379,7 +36379,7 @@ AccDisplay_FullInit:
 	jr AccDisplay_CopyToBackBuffer
 
 Display_RestoreEntry:
-	res 2, (0x28a7:16)
+	res 2, (SEQ_RTMCFG:16)
 	call Vga_RestoreMultiPlaneDisplay
 	jr AccDisplay_CopyToFrontBuffer
 

@@ -2052,7 +2052,7 @@ PlayHalt:
 	call AccWrap_PlayModeDispatch
 	cp (xsp), 0x0
 	jr z, PlayHalt_SkipSetFlag
-	set 2, (10407:16)
+	set 2, (SEQ_RTMCFG:16)
 
 PlayHalt_SkipSetFlag:
 	call AccompSeq_StopSequence
@@ -2067,12 +2067,12 @@ PlayHalt_SkipSetFlag:
 	ret
 
 PlayStandBy:
-	bit 2, (10407:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr z, PlayStandBy_SkipClearFlag
-	res 2, (10407:16)
+	res 2, (SEQ_RTMCFG:16)
 
 PlayStandBy_SkipClearFlag:
-	res 3, (10407:16)
+	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
 	jp MidiThru_Disable
 
@@ -2111,7 +2111,7 @@ GetAdr_sqsrtc:
 	ret
 
 GetAdr_rtmcfg:
-	lda xhl, (10407:16)
+	lda xhl, (SEQ_RTMCFG:16)
 	ret
 
 SetGlobalError:

@@ -285,7 +285,7 @@ PanelButton_SequencerPlay:
 	ld	a, (CURRENT_MODE:16)
 	cp	a, 19
 	jr	z, PanelButton_SequencerPlay_Epilogue
-	bit	2, (0x421:16)
+	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	nz, PanelButton_SequencerPlay_Skip2
 	ld	a, (10405:16)
 	xor	a, 1
@@ -1302,7 +1302,7 @@ SndParam_ResolveSelectedPartVoice:
 	call	SndParam_LookupViaEncode
 	lda	xwa, (xsp)
 	ld	(xwa+4), l
-	ld	(xwa+2), (0x8d3a)
+	ld	(xwa+2), (PART_SELECT)
 	call	SndParam_ResolveVoiceEntry
 	lda	xhl, (xsp)
 	inc	6, xsp
@@ -1702,7 +1702,7 @@ ExtDev_SndParam_Block14_Dual:
 	and	c, e
 	ret	z
 	set	1, (0x90f9:16)
-	ld	(xwa), (0x8d3a)
+	ld	(xwa), (PART_SELECT)
 	ld	(xwa+1), 4
 	ld	(xhl), 64
 	ld	(xix), 64
@@ -3840,7 +3840,7 @@ MidiChannel_ScanPending:
 	jr nz, MidiScan_PopIzRet
 	bit 2, (1054:16)
 	jr nz, MidiScan_PopIzRet
-	bit 2, (0x28a7:16)
+	bit 2, (SEQ_RTMCFG:16)
 	jr nz, MidiScan_AltPathCheck
 	ld xwa, 0x28103
 	call SndParam_LookupReadOnly

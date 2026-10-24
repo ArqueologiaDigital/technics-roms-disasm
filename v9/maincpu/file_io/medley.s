@@ -4045,7 +4045,7 @@ SetSongSlotValue:
 	add xhl, xde
 	add xhl, 0x1c
 	ld (xhl), bc
-	ld e, (0x00ffe3:24)
+	ld e, (SEQ_CURRENT_SONG:24)
 	extz de
 	cp de, wa
 	ret nz

@@ -313,7 +313,7 @@ SetWall_SlotSetup_Active:
 	ld (0x2875:16), wa
 	ld a, (3295:16)
 	inc 1, a
-	ld (0x2877:16), a
+	ld (SEQ_TRACK:16), a
 	call Scoop_SpecialMode_ParamCheckBound
 	call SetWall_SlotBitUpdate
 	ld wa, (0x2875:16)
@@ -347,7 +347,7 @@ SetWall_SlotUpdate_Return:
 
 SetWall_DataBlock1:
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ld	a, (0xffe3:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	ld	(3391:16), a
 	ret
 ; SqTrAsPsTtl_NullRet: Empty routine (`ret`; two dead `ret`s follow): the leave-title hook of TT_SQTRASPS --
@@ -362,7 +362,7 @@ SetWall_ACSlotChange:
 	cp (3391:16), 10
 	jr z, SetWall_ACSlot_CheckPanel
 	ld a, (3391:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SetWall_ACSlot_IndexChange
 
 SetWall_ACSlot_CheckPanel:
@@ -419,13 +419,13 @@ SetWall_ACSlot_Return:
 	ret
 
 SetWall_WriteSingleSlot:
-	ld l, (0x2878:16)
+	ld l, (SEQ_SONG:16)
 	pushw hl
 	ld a, (3391:16)
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 	call SeqVoice_InitEntry
 	popw hl
-	ld (0x2878:16), l
+	ld (SEQ_SONG:16), l
 	xor hl, hl
 	ld l, (3390:16)
 	dec 1, l
@@ -783,8 +783,8 @@ SetWall_ParsePatternStream:
 
 SetWall_ParseStream_Init:
 	push xhl
-	ld xhl, (4349:16)
-	ld (0x2881:16), xhl
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld (0x2885:16), iy
 	ld wa, (0x28af:16)
@@ -796,7 +796,7 @@ SetWall_ParseStream_Init:
 
 SetWall_ParseStream_MainLoop:
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 0x82
@@ -836,7 +836,7 @@ SetWall_ParseStream_CheckD1D2:
 
 SetWall_ParseStream_ReadEvent:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	call SetWall_AdvanceWritePos
@@ -846,12 +846,12 @@ SetWall_ParseStream_ReadEvent:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_ParseStream_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jr SetWall_ParseStream_ReadEvent
@@ -865,7 +865,7 @@ SetWall_ParseStream_TypeC0:
 	bit 1, (4393:16)
 	jr nz, SetWall_ParseStream_TypeC0_Loop
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -879,7 +879,7 @@ SetWall_ParseStream_TypeC0:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp l, 0:i3
 	jrl nz, SetWall_ParseStream_Advance
@@ -894,7 +894,7 @@ SetWall_ParseStream_C0_Iter:
 
 SetWall_ParseStream_C0_Read:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	pushw bc
@@ -909,12 +909,12 @@ SetWall_ParseStream_C0_Read:
 	jrl nz, SetWall_ParseStream_Return
 	inc 1, c
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jr SetWall_ParseStream_C0_Iter
@@ -936,7 +936,7 @@ SetWall_ParseStream_B0_ShiftLoop:
 	bit 1, (4393:16)
 	jr nz, SetWall_ParseStream_B0_Iter
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -950,7 +950,7 @@ SetWall_ParseStream_B0_ShiftLoop:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_ParseStream_Return
@@ -1001,7 +1001,7 @@ SetWall_ParseStream_B0_Byte4:
 
 SetWall_ParseStream_B0_Write:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	pushw bc
@@ -1016,19 +1016,19 @@ SetWall_ParseStream_B0_Write:
 	jr nz, SetWall_ParseStream_Return
 	inc 1, c
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jrl SetWall_ParseStream_B0_ByteLoop
 
 SetWall_ParseStream_End:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	ld wa, (0x2887:16)
@@ -1042,9 +1042,9 @@ SetWall_ParseStream_Return:
 SetWall_ParserInit:
 	push xiy
 	ld (0x28a1:16), 16
-	ld iy, (0x286d:16)
+	ld iy, (SEQ_BLOCK_TOTAL:16)
 	ld (0x28a2:16), iy
-	ld xiy, (7514:16)
+	ld xiy, (SEQ_BLOCK_POOL:16)
 	ld (3304:16), xiy
 	ldw (3376:16), 0
 	ld (0x289e:16), 15
@@ -1057,12 +1057,12 @@ SetWall_AdvanceStreamPos:
 	jr ule, SetWall_AdvanceStream_Return
 	ld hl, (0x288b:16)
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x288b:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_AdvanceStream_Reset
 	ld (SEQ_ERROR_CODE:16), 2
@@ -1075,29 +1075,29 @@ SetWall_AdvanceStream_Return:
 	ret
 
 SetWall_AdvanceWritePos:
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	push xwa
 	inc 1, ix
 	cp ix, 0xff
 	jr ule, SetWall_AdvanceWrite_Return
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x2887:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_AdvanceWrite_Reset
 	ld (SEQ_ERROR_CODE:16), 2
 	jr SetWall_AdvanceWrite_Return
 
 SetWall_AdvanceWrite_Reset:
-	ld (0x2881:16), xhl
+	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	ld ix, 5:i3
 
 SetWall_AdvanceWrite_Return:
 	pop xwa
-	ld (4349:16), xwa
+	ld (SEQ_BLOCK_PTR:16), xwa
 	ret
 
 SetWall_SkipC0Scanner:
@@ -1109,14 +1109,14 @@ SetWall_SkipC0Scanner:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SkipC0_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	call SetWall_AdvanceStreamPos
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SkipC0_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	xor l, l
@@ -1138,7 +1138,7 @@ SetWall_ParseB0ControlChange:
 	jrl nz, SetWall_B0CC_Return
 	ld (3387:16), 255
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	and a, 0x7f
@@ -1159,7 +1159,7 @@ SetWall_ParseB0ControlChange:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 3:i3
@@ -1193,7 +1193,7 @@ SetWall_B0CC_Type48:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 5:i3
@@ -1206,7 +1206,7 @@ SetWall_B0CC_Type48:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	and a, 0x7f
@@ -1227,7 +1227,7 @@ SetWall_B0CC_Type48_Check12:
 	cp (0x2873:16), 12
 	jr nz, SetWall_B0CC_ClearFlags
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 3:i3
@@ -1251,7 +1251,7 @@ SetWall_EventOutput:
 	ld	(xde+hl), wa
 	xor xwa, xwa
 	ld xiz, SEQ_SONG_SLOTS
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	add xiz, xwa
 	ld xde, 0x98
@@ -1270,7 +1270,7 @@ SetWall_EventOutput:
 SetWall_EventAdvanceCheck:
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x28af:16), wa
 	cp wa, 0xffff
@@ -1299,7 +1299,7 @@ SetWall_SlotResolve:
 SetWall_SlotResolve_Init:
 	ld iy, 5:i3
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -1311,7 +1311,7 @@ SetWall_SlotResolve_Init:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	xor de, de
 	inc 1, de
@@ -1334,7 +1334,7 @@ SetWall_SlotResolve_FoundMatch:
 	ld (3383:16), ix
 	inc 1, de
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -1350,7 +1350,7 @@ SetWall_SlotResolve_FoundMatch:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SlotResolve_Return
@@ -1363,25 +1363,25 @@ SetWall_StreamIndexResolve:
 	dec 1, hl
 	extz xhl
 	sla xhl, 8
-	add xhl, (7514:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
 SetWall_BankInit:
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ld iy, 1:i3
 	call SetWall_ResolveStreamPtr
 	ldw (0xf22f:16), 1
-	ld xiy, (4349:16)
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
-	ld bc, (0x286d:16)
-	ld (0xf231:16), bc
+	ld bc, (SEQ_BLOCK_TOTAL:16)
+	ld (SEQ_FREE_BLOCKS:16), bc
 	dec 1, bc
 
 SetWall_BankInit_SlotLoop:
@@ -1541,7 +1541,7 @@ SetWall_SingleSlot_CheckBounds:
 	ld (0x28af:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_SingleSlot_Return
 	ld (SEQ_ERROR_CODE:16), 11
@@ -1567,13 +1567,13 @@ SetWall_DualPassScanner:
 SetWall_DualPass_InitLoop:
 	xor hl, hl
 	push xwa
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (0x288f:16), xwa
 	pop xwa
 	ld iy, 5:i3
 
 SetWall_DualPass_MainLoop:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	ld w, a
 	and a, 0xf0
@@ -1612,7 +1612,7 @@ SetWall_DualPass_TypeC0:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_DualPass_Error
 	ld wa, (0x2893:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	w, (xhl+iy)
 	or a, w
 	pushw wa
@@ -1620,12 +1620,12 @@ SetWall_DualPass_TypeC0:
 	popw wa
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_DualPass_Error
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	d, (xhl+iy)
 	ld hl, (0x2895:16)
 	or d, l
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x30
 	pop xiz
 	push_lerp 0x30
@@ -1637,7 +1637,7 @@ SetWall_DualPass_TypeC0:
 	pop_lerp 0x30
 	push xiz
 	ldto_lerp XIZ, 0x30
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ld (0x288e:16), a
 	call SetWall_StreamAdvanceBounded
@@ -1667,7 +1667,7 @@ SetWall_SkipEvents_CheckCount:
 	jr z, SetWall_SkipEvents_Return
 
 SetWall_SkipEvents_ReadLoop:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	cp a, 0x84
 	jr z, SetWall_SkipEvents_EndMarker
@@ -1706,7 +1706,7 @@ SetWall_ReplayScanner:
 	jrl nz, SetWall_Replay_Done
 	xor hl, hl
 	ld xhl, (0x2897:16)
-	ld (4349:16), xhl
+	ld (SEQ_BLOCK_PTR:16), xhl
 	ld iy, (0x289b:16)
 
 SetWall_Replay_MainLoop:
@@ -1772,7 +1772,7 @@ SetWall_Replay_C0_Byte4:
 
 SetWall_Replay_C0_ReadBank:
 	ld wa, (0x2893:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	w, (xhl+iy)
 	or a, w
 	pushw wa
@@ -1784,10 +1784,10 @@ SetWall_Replay_C0_ReadBank:
 	jr SetWall_Replay_Done
 
 SetWall_Replay_C0_ReadCC:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	d, (xhl+iy)
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x3c
 	pop xiz
 	push_lerp 0x3c
@@ -1799,7 +1799,7 @@ SetWall_Replay_C0_ReadCC:
 	pop_lerp 0x3c
 	push xiz
 	ldto_lerp XIZ, 0x3c
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ld (0x288e:16), a
 	call SetWall_StreamAdvanceBounded
@@ -1830,8 +1830,8 @@ SetWall_ResolveStreamPtr:
 	extz xhl
 	dec 1, hl
 	sla xhl, 8
-	add xhl, (4362:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL_COPY:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -1839,7 +1839,7 @@ SetWall_StreamAdvanceBounded:
 	inc 1, iy
 	cp iy, 0xff
 	jr le, SetWall_StreamAdv_Return
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	cp wa, 0xffff
 	jr ule, SetWall_StreamAdv_CheckBounds
@@ -1856,7 +1856,7 @@ SetWall_StreamAdv_LoadNext:
 	ld (0x28af:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_StreamAdv_Reset
 	ld (SEQ_ERROR_CODE:16), 11
@@ -1874,7 +1874,7 @@ SetWall_ForwardSkip:
 SetWall_ForwardSkip_Loop:
 	cp (0x288e:16), c
 	jr z, SetWall_ForwardSkip_TargetFound
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_CheckType
 	or (0x287b:16), 32
@@ -1893,7 +1893,7 @@ SetWall_ForwardSkip_CheckType:
 SetWall_ForwardSkip_Type84:
 	ld iy, 5:i3
 	ld xhl, (0x288f:16)
-	ld (4349:16), xhl
+	ld (SEQ_BLOCK_PTR:16), xhl
 	jr SetWall_ForwardSkip_Loop
 
 SetWall_ForwardSkip_Type81:
@@ -1904,7 +1904,7 @@ SetWall_ForwardSkip_Type81:
 	jr SetWall_ForwardSkip_Loop
 
 SetWall_ForwardSkip_TargetFound:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_Check84
 	or (0x287b:16), 32
@@ -1919,7 +1919,7 @@ SetWall_ForwardSkip_Check84:
 SetWall_ForwardSkip_SaveState:
 	ld (0x289b:16), iy
 	push xwa
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (0x2897:16), xwa
 	pop xwa
 	jr SetWall_ForwardSkip_Return
@@ -1942,7 +1942,7 @@ SetWall_InlineCodeBlock3:
 ;   SongBank_LookupTableEntry prints 0x1145[song] with "%3d%%".
 SqSngSel_CalcSongUsageOnEnter:
 	call	AccWrap_PlayModeDispatch
-	or (10407:16), 4
+	or (SEQ_RTMCFG:16), 4
 	ld	wa, (0xffec:24)
 	ld	(0xf19e:16), wa
 	push	xix
@@ -1970,7 +1970,7 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 ;   (CtrlPanel_SetIndicatorBit). Basis: callers + body -- SqSngSelTtlFunc_OnTitleOld (EVT_ACTIVATE_STATE phase 3)
 ;   calls it; SqSngSel_CalcSongUsageOnEnter's header names it as the phase-3 step.
 SqSngSel_LeaveTitle:
-	and (10407:16), 251
+	and (SEQ_RTMCFG:16), 251
 	xor	wa, wa
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
@@ -1983,7 +1983,7 @@ SetWall_LoadToneGenData:
 	call SetWall_LoadBankToToneGen
 	popw wa
 	ld a, (7502:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SetWall_SyncToneGenToDRAM
 	ret
 
@@ -2005,7 +2005,7 @@ SqSngName_ApplyNameAndExit:
 	ldw	bc, 16
 	ldir85
 	xor	xwa, xwa
-	ld	a, (0xffe3:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	sla	xwa, 11
 	ld	xix, SEQ_SONG_SLOTS
 	add	xix, xwa
@@ -2033,11 +2033,11 @@ SqSngName_ApplyNameAndExit_Return:
 ;   restores the block pointer 0x10FD. Basis: callers + body -- SqSngSel_CalcSongUsageOnEnter calls it for songs 0..9
 ;   and copies 0x286C to the table 0x1145; its header describes this computation.
 SqSngSel_CalcSongUsagePercent:
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	push	xwa
 	xor	xwa, xwa
 	ld	a, (0x286b:16)
-	cp a, (65507:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SqSngSel_CalcSongUsagePercent_Skip3
 	ld xix, 62032
 	jr	SqSngSel_CalcSongUsagePercent_Join
@@ -2070,7 +2070,7 @@ SqSngSel_CalcSongUsagePercent_Skip:
 	jr	z, SqSngSel_CalcSongUsagePercent_Join2
 	ld	xde, xbc
 	mul	bc, 100
-	ld	hl, (0x286d:16)
+	ld	hl, (SEQ_BLOCK_TOTAL:16)
 	div	xbc, hl
 	inc	1, bc
 	cp	bc, 100
@@ -2079,7 +2079,7 @@ SqSngSel_CalcSongUsagePercent_Skip:
 SqSngSel_CalcSongUsagePercent_Join2:
 	stb_d8 (10348), c
 	pop xwa
-	ld	(4349:16), xwa
+	ld	(SEQ_BLOCK_PTR:16), xwa
 	ret
 SetWall_MiscDataAndCode_Data:
 	.byte	0xe7, 0x34, 0xa8	; ld XBC3,0
@@ -2092,7 +2092,7 @@ SetWall_MiscDataAndCode_Data:
 	push_lerp 52
 	call SetWall_MiscDataAndCode_Data_Code_Helper
 	pop_lerp 52
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	pop xhl
 	jr	z, SetWall_MiscDataAndCode_Data_Code_Return
@@ -2101,7 +2101,7 @@ SetWall_MiscDataAndCode_Data_Code_Join:
 	push_lerp	52
 	call	SetWall_MiscDataAndCode_Data_Code_Helper
 	pop_lerp	52
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	bit	7, (xhl)
 	jr	z, SetWall_MiscDataAndCode_Data_Code_Return
 	ld	hl, (xhl+3)
@@ -2113,12 +2113,12 @@ SetWall_MiscDataAndCode_Data_Code_Return:
 	ret
 SetWall_MiscDataAndCode_Data_Code_Helper:
 	push	xiy
-	ld	xiy, (7514:16)
+	ld	xiy, (SEQ_BLOCK_POOL:16)
 	extz	xhl
 	dec	1, xhl
 	sla	xhl, 8
 	add	xiy, xhl
-	ld	(4349:16), xiy
+	ld	(SEQ_BLOCK_PTR:16), xiy
 	xor	xhl, xhl
 	pop	xiy
 	ret
@@ -2126,10 +2126,10 @@ SetWall_MiscDataAndCode_Data_Code_Helper:
 SetWall_SyncToneGenToDRAM:
 	ld wa, (0xf22f:16)
 	ld (0x286f:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
@@ -2139,7 +2139,7 @@ SetWall_SyncToneGenToDRAM:
 	ld wa, (0x286f:16)
 	ld (0xf22f:16), wa
 	ld wa, (0x2871:16)
-	ld (0xf231:16), wa
+	ld (SEQ_FREE_BLOCKS:16), wa
 	ld wa, (0xf19e:16)
 	ld (0x00ffec:24), wa
 	and (0x28a5:16), 254
@@ -2175,7 +2175,7 @@ SetWall_Sync_FinalUpdate:
 	ld (4596:16), 1
 	call BitMapOut_RenderDisplay
 	ld (4596:16), 1
-	and (0x28a7:16), 247
+	and (SEQ_RTMCFG:16), 247
 	call SeqPlay_CheckStartConditions
 	and (0x28b1:16), 254
 	call Audio_CheckSubsystemReady
@@ -2186,7 +2186,7 @@ SetWall_LoadBankToToneGen:
 	ld (0xf19e:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
-	ld l, (0x00ffe3:24)
+	ld l, (SEQ_CURRENT_SONG:24)
 	sla xhl, 11
 	add xix, xhl
 	ld xiy, 0xf180

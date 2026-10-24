@@ -15,7 +15,7 @@
 
 ToneGen_DispatchSubHandler:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -27,20 +27,20 @@ ToneGen_DispatchSubHandler:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
-	cp ix, (0x286d:16)
+	cp ix, (SEQ_BLOCK_TOTAL:16)
 	jr ule, ToneGen_StoreBlockAndLink
 	ld (SEQ_ERROR_CODE:16), 5
 	jr ToneGen_DispatchReturn
 
 ToneGen_StoreBlockAndLink:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), ix
 	ld hl, ix
 	call ToneGen_ComputeBlockPtr
 	ld wa, (3308:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), wa
 	ldw (xhl + 3), 0xffff
 	ld (3308:16), ix
@@ -56,11 +56,11 @@ ToneGen_DispatchAndLinkBlock:
 	ld wa, ix
 	ld hl, (0x28af:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld bc, (0x28af:16)
 	ld (xhl + 1), bc
 	ldw (xhl + 3), 0xffff
@@ -154,7 +154,7 @@ VoiceChannel_UpdateWithPitch:
 VoiceChannel_ApplyPitchFlags:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceChannel_NullRet
 	sla xiy, 1
 	push xix
@@ -168,7 +168,7 @@ VoiceChannel_ApplyPitchFlags:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceChannel_NullRet
 	push xix
 	ld xix, SeqTrack_ChannelMapIdentity
@@ -182,31 +182,31 @@ VoiceChannel_SelectChannelBank:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4233:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4234:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4235:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceChannel_NullRet:
 	ret
@@ -220,7 +220,7 @@ SoundGen_ClampUpdateVoice:
 	ld a, 0xb0:opc
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	sla iy, 1
 	push xix
@@ -234,36 +234,36 @@ SoundGen_ClampUpdateVoice:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4011:16)
 	and a, 0xf
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4233:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4234:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4235:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceChannel_NullRet2:
 	ret
@@ -405,7 +405,7 @@ SoundGen_UpdateAndWriteChannel:
 	call SoundGen_UpdateAndRefresh
 	popw bc
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	sla xiy, 1
 	push xix
@@ -419,7 +419,7 @@ SoundGen_UpdateAndWriteChannel:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld l, c
 	xor h, h
@@ -448,7 +448,7 @@ SoundGen_ApplyChannelParam:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	pop xiy
 	push xiy
@@ -459,20 +459,20 @@ SoundGen_ApplyChannelParam:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld a, (4234:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld a, 0x7f:opc
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	call ToneGen_SetSustainBit
 	ld iy, (4011:16)
@@ -488,7 +488,7 @@ SoundGen_ApplyChannelParam:
 
 SoundGen_CommitChannelRegs:
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 SoundGen_PopIyRet:
 	pop xiy
@@ -768,10 +768,10 @@ SMF_LoadSoundBankAndPlay:
 	push xde
 	call SetWall_LoadBankToToneGen
 	ld a, (4599:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr z, SMF_LoadBank_ClearAndPrepare
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 	call SeqPlay_StartWithDisplay
 
@@ -932,7 +932,7 @@ SMF_FindFirstActiveChannel:
 	jrl SMF_Finalize_RestoreAndPlay
 
 SMF_SetupActiveChannel:
-	ld (0x2877:16), c
+	ld (SEQ_TRACK:16), c
 	inc 1, hl
 	push xde
 	ld xde, 0xf250
@@ -1051,12 +1051,12 @@ SMF_WriteChannel_Continue:
 	cp (6709:16), 0
 	jrl z, SMF_FinishChannelAndGetNextEvent
 	call BitMapOut_ComputeRegionDelta
-	ld (0x2877:16), 0
+	ld (SEQ_TRACK:16), 0
 
 SMF_ScanAndProcessChannel:
 	ld xiy, 0xf460
 	xor hl, hl
-	ld l, (0x2877:16)
+	ld l, (SEQ_TRACK:16)
 	ld c, l
 	ld de, (4325:16)
 	ld a, c
@@ -1098,8 +1098,8 @@ SMF_WriteChannelNoteData:
 	ld (4359:16), a
 	ld a, (xiy + 7)
 	ld (4332:16), a
-	and (0x2877:16), 15
-	ld l, (0x2877:16)
+	and (SEQ_TRACK:16), 15
+	ld l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
 	ld xix, 0xf1a0
@@ -1372,7 +1372,7 @@ SMF_WriteVol_FileUnderflow4:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteVol_PanAndPitch:
-	ld l, (0x2877:16)
+	ld l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
 	ld xix, 0xf1a0
@@ -1461,7 +1461,7 @@ SMF_WriteRPN_FileUnderflow3:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_FineTune:
-	ld l, (0x2877:16)
+	ld l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
 	ld xix, 0xf1a0
@@ -1563,7 +1563,7 @@ SMF_WriteRPN_FileUnderflow7:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_CoarseTune:
-	ld l, (0x2877:16)
+	ld l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
 	ld xix, 0xf1a0
@@ -1660,7 +1660,7 @@ SMF_WriteRPN_FileUnderflow11:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_Transpose:
-	ld l, (0x2877:16)
+	ld l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
 	ld xix, 0xf1a0
@@ -1713,8 +1713,8 @@ SMF_WriteRPN_FileUnderflow13:
 	jp SMF_FlushAndFinalize
 
 SMF_AdvanceChannelScan:
-	inc 1, (0x2877:16)
-	cp (0x2877:16), 15
+	inc 1, (SEQ_TRACK:16)
+	cp (SEQ_TRACK:16), 15
 	jrl ule, SMF_ScanAndProcessChannel
 
 SMF_FinishChannelAndGetNextEvent:

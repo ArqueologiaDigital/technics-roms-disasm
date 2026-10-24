@@ -581,13 +581,13 @@ SeqStep_TrackChange:
 	ld c, (0x270a:16)
 	cp c, (0x2708:16)
 	jrl z, SeqStep_TrackChangeExit
-	ld a, (0x2878:16)
+	ld a, (SEQ_SONG:16)
 	st_erpb_rr a, 0xfb
 	dec 1,C
-	ld (0x2878:16), c
+	ld (SEQ_SONG:16), c
 	call SeqVoice_InitAllChannelParams
 	ld_erpb_rr a, 0xfb
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 	calr SeqStep_MultiTrackProcess
 	jrl t, SeqStep_TrackChangeExit
 SeqStep_TrackChangeCheck:
@@ -600,7 +600,7 @@ SeqStep_TrackChangeCheck:
 SeqStep_TrackChangeCompare:
 	ld a, e
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeClear
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeSetup
@@ -627,7 +627,7 @@ SeqStep_TrackChangeDrum:
 	ld c, (9994:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeDrumClear
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeDrumSetup
@@ -651,7 +651,7 @@ SeqStep_TrackChangeProcess:
 	ld c, (9994:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeStore
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeUpdate
@@ -684,7 +684,7 @@ SeqStep_TrackChangeNext:
 	jr ule, SeqStep_TrackChangeAdvance
 
 SeqStep_TrackChangeNonDrum:
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, SeqStep_TrackChangeLoopDone
 
 SeqStep_TrackChangeLoop:
@@ -711,7 +711,7 @@ SeqStep_TrackChangeLoopBody:
 	extz bc
 	ld de, 0:i3
 	call Part_WriteSubBlock32
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr z, SeqStep_TrackChangeLoop
 
 SeqStep_TrackChangeLoopDone:
@@ -725,7 +725,7 @@ SeqStep_TrackChangeLoopDone:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeLoopReturn
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeLoopExit
@@ -753,7 +753,7 @@ SeqStep_TrackChangeLoopExit:
 	jrl z, SeqStep_TrackChangeRecoverDone
 	ld a, (9998:16)
 	dec 1, a
-	ld (0x2877:16), a
+	ld (SEQ_TRACK:16), a
 	calr SeqStep_DeleteShiftExit
 	ld (xsp + 6), hl
 	ld wa, (xsp + 4)
@@ -781,7 +781,7 @@ SeqStep_TrackChangeFinish:
 	jrl SeqStep_TrackChangeWriteDone
 
 SeqStep_TrackChangeComplete:
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, SeqStep_TrackChangeFinal
 
 SeqStep_TrackChangeValidate:
@@ -844,16 +844,16 @@ SeqStep_TrackChangeWriteDone:
 	jrl nz, SeqStep_TrackChangeComplete
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, (0x28af:16)
 	call Part_WriteWord_Indexed
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeError
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, (0x28af:16)
@@ -864,7 +864,7 @@ SeqStep_TrackChangeError:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeErrorExit
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeRecover
@@ -881,7 +881,7 @@ SeqStep_TrackChangeRecover:
 	ldfr_berp L, 0xfb
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ldto_berp E, 0xfb
@@ -889,9 +889,9 @@ SeqStep_TrackChangeRecover:
 	call Part_WriteByte_Indexed
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeRecoverDone
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ldto_berp E, 0xfb
@@ -903,7 +903,7 @@ SeqStep_TrackChangeRecoverDone:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeRecoverStore
 	ldib_erp 0xfa, 0
 	jr SeqStep_TrackChangeRecoverReturn
@@ -927,7 +927,7 @@ SeqStep_TrackChangeRecoverReturn:
 	call Part_WriteSubBlock32
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeRecoverAdvance
 	ld c, (9998:16)
 	extz bc
@@ -957,7 +957,7 @@ SeqStep_TrackChangeRecoverLoop:
 	call Part_WriteWord
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_TrackChangeExit
 	ld a, (9998:16)
 	dec 1, a
@@ -977,15 +977,15 @@ SeqStep_TrackChangeExit:
 SeqStep_MultiTrackProcess:
 	lda xsp, (xsp - 22)
 	push xiz
-	ld (0x2877:16), 0
+	ld (SEQ_TRACK:16), 0
 
 SeqStep_MultiTrackLoop:
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jrl z, SeqStep_MultiTrackCleanup
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_MultiTrackCheck
 	ldib_erp 0xf9, 0
 	jr SeqStep_MultiTrackAdvance
@@ -996,7 +996,7 @@ SeqStep_MultiTrackCheck:
 SeqStep_MultiTrackAdvance:
 	ldto_berp A, 0xf9
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	call Part_ReadVoiceBit7
@@ -1004,7 +1004,7 @@ SeqStep_MultiTrackAdvance:
 	jrl z, SeqStep_PartCopyComplete
 	ldto_berp A, 0xf9
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	call Part_ReadVoiceWord
@@ -1040,11 +1040,11 @@ SeqStep_MultiTrackInner:
 	jrl SeqStep_PartCopyFinish
 
 SeqStep_MultiTrackCopyCheck:
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, SeqStep_PartCopy
 
 SeqStep_MultiTrackCleanup:
-	ld a, (0x2878:16)
+	ld a, (SEQ_SONG:16)
 
 	ldfr_berp A, 0xfb
 
@@ -1052,13 +1052,13 @@ SeqStep_MultiTrackCleanup:
 
 	dec 1, a
 
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 
 	call	SeqVoice_InitAllChannelParams
 
 	ldto_berp A, 0xfb
 
-	ld (0x2878:16), a
+	ld (SEQ_SONG:16), a
 	ld (GLOBAL_ERROR_CODE:16), 15	; stdi8 (0x7f42), 15 (v7 patched)
 	jrl SeqStep_VoiceReassignFinalExit	; jrl SeqStep_VoiceReassignFinalExit (v7 displacement)
 
@@ -1116,16 +1116,16 @@ SeqStep_PartCopyFinish:
 	jrl nz, SeqStep_MultiTrackCopyCheck
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, (0x28af:16)
 	call Part_WriteWord_Indexed
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_PartCopyUpdateSrc
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, (0x28af:16)
@@ -1136,7 +1136,7 @@ SeqStep_PartCopyUpdateSrc:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_PartCopyClearSrc
 	ldib_erp 0xf9, 0
 	jr SeqStep_PartCopySetupDest
@@ -1147,14 +1147,14 @@ SeqStep_PartCopyClearSrc:
 SeqStep_PartCopySetupDest:
 	ldto_berp A, 0xf9
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	call Part_ReadByte_Indexed
 	ldfr_berp L, 0xfb
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ldto_berp E, 0xfb
@@ -1162,9 +1162,9 @@ SeqStep_PartCopySetupDest:
 	call Part_WriteByte_Indexed
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_PartCopyComplete
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ldto_berp E, 0xfb
@@ -1173,9 +1173,9 @@ SeqStep_PartCopySetupDest:
 	call Part_WriteByte_Indexed
 
 SeqStep_PartCopyComplete:
-	ld a, (0x2877:16)
+	ld a, (SEQ_TRACK:16)
 	inc 1, a
-	ld (0x2877:16), a
+	ld (SEQ_TRACK:16), a
 	cp a, 0x10
 	jrl c, SeqStep_MultiTrackLoop
 	ldib_erp 0xfa, 1
@@ -1186,7 +1186,7 @@ SeqStep_VoiceReassign:
 	dec 1, a
 	ldto_berp C, 0xfa
 	extz bc
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignCheck
 	ld wa, 0:i3
 	jr SeqStep_VoiceReassignSetup
@@ -1207,7 +1207,7 @@ SeqStep_VoiceReassignSetup:
 	call Part_WriteSubBlock32
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignProcess
 	ldto_berp C, 0xfa
 	extz bc
@@ -1223,7 +1223,7 @@ SeqStep_VoiceReassignProcess:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignValidate
 	ld de, (0x00ffec:24)
 	jr SeqStep_VoiceReassignStore
@@ -1239,7 +1239,7 @@ SeqStep_VoiceReassignStore:
 	ld c, (9994:16)
 	ld a, c
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_VoiceReassignUpdate
 	ld (0x00ffec:24), de
 	jr SeqStep_VoiceReassignDone
@@ -1254,7 +1254,7 @@ SeqStep_VoiceReassignDone:
 	ld c, (9992:16)
 	ld a, c
 	dec 1, a
-	ld e, (0x00ffe3:24)
+	ld e, (SEQ_CURRENT_SONG:24)
 	cp a, e
 	jr nz, SeqStep_VoiceReassignReturn
 	ldib_erp 0xf9, 0
@@ -1301,11 +1301,11 @@ SeqStep_VoiceReassignCleanup:
 	call Part_CopyToBuffer
 	ld c, (0x270a:16)
 	dec 1, c
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	cp c, a
 	jr nz, SeqStep_VoiceReassignFinalExit
 	ld (0x1d4c:16), a
-	ld (0x1d4e:16), (0x00ffe3:24)
+	ld (0x1d4e:16), (SEQ_CURRENT_SONG:24)
 	call SetWall_LoadToneGenData
 ; === end v7 block ===
 SeqStep_VoiceReassignFinalExit:
@@ -1657,7 +1657,7 @@ SeqStep_InsertEventInner:
 	jr SeqStep_InsertError
 
 SeqStep_InsertValidate:
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr z, SeqStep_InsertDone
 	ldw wa, 0x81
 	call PartCtrl_WriteByte_Indexed
@@ -1817,7 +1817,7 @@ SeqStep_DeleteShiftCleanup:
 
 SeqStep_DeleteShiftExit:
 	pushw iz
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, SeqStep_DeleteShiftFinal
 	ldw hl, 0xffff
 	jr SeqStep_BoundaryCheckB
@@ -1837,29 +1837,29 @@ SeqStep_DeleteShiftFinal:
 	call PartCtrl_WriteWord
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, 1:i3
 	call Part_SetClearVoiceBit7
 	ld a, (9994:16)
 	extz wa
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld de, iz
 	call Part_WriteVoiceWord
 	ld a, (9994:16)
 	dec 1, a
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_BoundaryCheckA
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
 	ld de, 1:i3
 	call Part_SetClearVoiceBit7
-	ld c, (0x2877:16)
+	ld c, (SEQ_TRACK:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
@@ -1876,7 +1876,7 @@ SeqStep_BoundaryCheckB:
 SeqStep_BoundaryReturn:
 	pushw_erp 0xfa
 	ld a, (0x2710:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_BoundaryProcess
 	ldib_erp 0xfb, 0
 	jr SeqStep_BoundaryAdvance
@@ -1928,7 +1928,7 @@ SeqStep_BoundaryExit:
 	ldw de, 0xffff
 	call Part_WriteVoiceWord
 	ld a, (0x2710:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_BoundaryError
 	ld c, (0x271a:16)
 	inc 1, c
@@ -1961,7 +1961,7 @@ SeqStep_BoundaryError:
 	ld de, 5:i3
 	call Part_WriteByte_Indexed
 	ld a, (0x2710:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SeqStep_BoundaryFinal
 	ld c, (0x271a:16)
 	inc 1, c
@@ -2818,7 +2818,7 @@ SeqStep_SwapTwoParts:
 SeqStep_CopyPartData:
 	dec 4, xsp
 	push xiz
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xsp + 4), xde
 	ld iy, wa
 	extz xiy
@@ -2963,13 +2963,13 @@ SeqStep_RebuildPartChain:
 	ld (xsp + 2), wa
 	cpw (xsp + 2), 0x4d8
 	jr ule, SeqStep_RebuildLoop
-	ldw (0xf231:16), 0
+	ldw (SEQ_FREE_BLOCKS:16), 0
 	ldw (0xf22f:16), 0xffff
 	jrl SeqStep_RebuildReturn
 
 SeqStep_RebuildLoop:
 	mrdw5 0x9f, 0x02, 0x19, 0x2f, 0xf2
-	ldw (0xf231:16), 0
+	ldw (SEQ_FREE_BLOCKS:16), 0
 	ld wa, (xsp + 2)
 	ld bc, 0:i3
 	call PartCtrl_SetClearBit7
@@ -2984,7 +2984,7 @@ SeqStep_RebuildLoop:
 	ld bc, 5:i3
 	ldw de, 0x82
 	call PartCtrl_WriteByteToBuf
-	incw 1, (0xf231:16)
+	incw 1, (SEQ_FREE_BLOCKS:16)
 	ld iz, (xsp + 2)
 	inc 1, iz
 	cp iz, 0x4d8
@@ -3006,7 +3006,7 @@ SeqStep_RebuildCheck:
 	ld bc, 5:i3
 	ldw de, 0x82
 	call PartCtrl_WriteByteToBuf
-	incw 1, (0xf231:16)
+	incw 1, (SEQ_FREE_BLOCKS:16)
 	inc 1, iz
 	cp iz, 0x4d8
 	jr c, SeqStep_RebuildCheck
@@ -3029,7 +3029,7 @@ SeqStep_RebuildDone:
 	ld bc, 5:i3
 	ldw de, 0x82
 	call PartCtrl_WriteByteToBuf
-	incw 1, (0xf231:16)
+	incw 1, (SEQ_FREE_BLOCKS:16)
 
 SeqStep_RebuildReturn:
 	popw iz
@@ -3055,43 +3055,43 @@ SeqStep_RebuildReturn:
 SeqStep_ByteBlockEA5F:
 	dec 2, xsp
 	push xiz
-	ld (0xf247:16), (0x00ffe3:24)
+	ld (0xf247:16), (SEQ_CURRENT_SONG:24)
 	ldw (0xf248:16), (0x00ffec:24)
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call SeqData_CopyBlockToBuffer
 	calr SeqStep_FindAndCompact
 	ld wa, (0xf1ce:16)
 	ld qiz, wa
-	ld iz, (0xf231:16)
+	ld iz, (SEQ_FREE_BLOCKS:16)
 	ldw (xsp+4), (0xf22f)
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call VoicePreset_LoadAndInitPan
 	ld wa, qiz
 	ld (0xf1ce:16), wa
-	ld (0xf231:16), iz
+	ld (SEQ_FREE_BLOCKS:16), iz
 	ldw (0xf22f), (xsp+4)
 	pop xiz
 	inc 2, xsp
 	ret
 MidiSysEx_RestoreSongSelection:
 	ld a, (0xf247:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	ld (0xf247:16), 0
 	ld wa, (0xf248:16)
 	ld (0x00ffec:24), wa
 	ldw (0xf248:16), 0
 	ldw (0x2668:16), 1
-	res 3, (0x28a7:16)
+	res 3, (SEQ_RTMCFG:16)
 	jrl SeqStep_FindAndCompactEntry
 SeqStep_ReinitPartTable:
 	dec 6, xsp
 	push xiz
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call SeqData_CopyBlockToBuffer
-	ld e, (0x00ffe3:24)
+	ld e, (SEQ_CURRENT_SONG:24)
 	extz de
 	ld wa, 1:i3
 	ldw bc, 0xc7
@@ -3106,7 +3106,7 @@ SeqStep_ReinitPartTable:
 	ld wa, (0xf22f:16)
 	ldfr_werp WA, 0xfa
 	ldmw2 (xsp + 8), 0xf231
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	call VoicePreset_LoadAndInitPan
 	ld (0xf1ce:16), iz
@@ -3115,7 +3115,7 @@ SeqStep_ReinitPartTable:
 	mrdw5 0x9f, 0x08, 0x19, 0x31, 0xf2
 	ldto_werp WA, 0xfa
 	call Part_WriteWordBlock_OffsetAF
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	call Part_SetAllVoicePos
 	ldib_erp 0xfb, 1
 

@@ -333,10 +333,10 @@ SMF_SelectBank_AfterReset:
 	push xde
 	call SetWall_LoadBankToToneGen
 	ld a, (4599:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jrl z, SMF_SelectBank_AfterToneLoad
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 
 SMF_SelectBank_AfterToneLoad:
@@ -385,10 +385,10 @@ SMF_ResetMidiChanMap_Loop:
 SoundBank_LoadToWorkRAM:
 	ld wa, (0xf22f:16)
 	ld (0x286f:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
@@ -398,7 +398,7 @@ SoundBank_LoadToWorkRAM:
 	ld wa, (0x286f:16)
 	ld (0xf22f:16), wa
 	ld wa, (0x2871:16)
-	ld (0xf231:16), wa
+	ld (SEQ_FREE_BLOCKS:16), wa
 	ld wa, (0xf19e:16)
 	ld (0x00ffec:24), wa
 	xor wa, wa
@@ -407,7 +407,7 @@ SoundBank_LoadToWorkRAM:
 
 SMF_InitSequencerState:
 	xor a, a
-	ld (4323:16), a
+	ld (SEQ_EVENT_ABORT:16), a
 	ld (4330:16), a
 	ld (3830:16), a
 	ld (4343:16), a
@@ -506,7 +506,7 @@ SMF_AfterFloppyWait:
 	call FloppyIO_SelectReadMode
 	call FloppyIO_ConfigureSwitchboard
 	call SeqPlay_PrepareAndScanChannels
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, Sequencer_ResetAfterFloppyIO
 	cp (3830:16), 0
 	jrl z, SeqPlay_FinishFloppyLoadAndStart
@@ -565,7 +565,7 @@ SMF_ReadTrackData_Continue:
 	ld (0xf19e:16), wa
 	ld (0x00ffec:24), wa
 	call SeqTrack_AssignFloppyChannels
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, Sequencer_ResetAfterFloppyIO
 	cp (3830:16), 0
 	jrl nz, SeqPlay_ResetAndStop
@@ -639,7 +639,7 @@ SMF_MetaEvent_FloppyErr:
 SMF_MetaEvent_CheckResult:
 	cp (4009:16), 255
 	jrl z, SMF_ActivateVoicesAndFinish
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl z, SMF_ReadLoopWithRetry
 	jrl Sequencer_ResetAfterFloppyIO
 
@@ -695,7 +695,7 @@ SMF_MidiEvent_FloppyErr:
 	jp SeqPlay_ResetAndStop
 
 SMF_MidiEvent_CheckResult:
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, Sequencer_ResetAfterFloppyIO
 	jrl SMF_ReadLoopWithRetry
 
@@ -717,7 +717,7 @@ SMF_RunningStatus_FloppyErr:
 	jp SeqPlay_ResetAndStop
 
 SMF_RunningStatus_CheckResult:
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, Sequencer_ResetAfterFloppyIO
 	jrl SMF_ReadLoopWithRetry
 

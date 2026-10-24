@@ -139,7 +139,7 @@ Rhythm_SetupChannel_D7:
 	ld (0x3230:16), a
 	and (0x3258:16), 0xfb
 	or (0x3258:16), 0x08
-	ld (0x3338:16), 0x04
+	ld (ACC_PART_BIT:16), 0x04
 	calr RhythmEvt_ProcessNote
 	ret
 Rhythm_SetupChannel_D4:
@@ -150,7 +150,7 @@ Rhythm_SetupChannel_D4:
 	ld (0x3230:16), a
 	and (0x3258:16), 0xf7
 	or (0x3258:16), 0x04
-	ld (0x3338:16), 0x08
+	ld (ACC_PART_BIT:16), 0x08
 	calr RhythmEvt_ProcessNote
 	ret
 Rhythm_SetupChannel_D5:
@@ -160,7 +160,7 @@ Rhythm_SetupChannel_D5:
 	ld a, (0x322d:16)
 	ld (0x3230:16), a
 	and (0x3258:16), 0xf3
-	ld (0x3338:16), 0x10
+	ld (ACC_PART_BIT:16), 0x10
 	calr RhythmEvt_ProcessNote
 	ret
 Rhythm_SetupChannel_D6:
@@ -170,7 +170,7 @@ Rhythm_SetupChannel_D6:
 	ld a, (0x322e:16)
 	ld (0x3230:16), a
 	and (0x3258:16), 0xf3
-	ld (0x3338:16), 0x20
+	ld (ACC_PART_BIT:16), 0x20
 	calr RhythmEvt_ProcessNote
 	ret
 RhythmEvt_ProcessNote:
@@ -183,7 +183,7 @@ RhythmEvt_ProcessNote:
 	or a, (0x3277:16)
 	or a, (0x3278:16)
 	or a, (0x3279:16)
-	and a, (0x3338:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, RhythmEvt_AlternateProcess
 	ld a, (0x3243:16)
 	ld (0x3387:16), a
@@ -770,7 +770,7 @@ Rhythm_DispatchCh_D7:
 	ld W, 0x97:opc
 	ld XIX,0x00003058
 Rhythm_DispatchCh_D7_Loop:
-	ld	(13112:16), 4
+	ld	(ACC_PART_BIT:16), 4
 	calr	Rhythm_SingleNoteHandler
 	add	xix, 9
 	cp	xix, 12448
@@ -786,7 +786,7 @@ Rhythm_DispatchCh_D4:
 	ld W, 0x94:opc
 	ld XIX,0x000030a0
 Rhythm_DispatchCh_D4_Loop:
-	ld	(13112:16), 8
+	ld	(ACC_PART_BIT:16), 8
 	calr	Rhythm_SingleNoteHandler
 	add	xix, 9
 	cp	xix, 12520
@@ -801,7 +801,7 @@ Rhythm_DispatchCh_D5:
 	ld W, 0x95:opc
 	ld XIX,0x000030e8
 Rhythm_DispatchCh_D5_Loop:
-	ld	(13112:16), 16
+	ld	(ACC_PART_BIT:16), 16
 	calr	Rhythm_SingleNoteHandler
 	add	xix, 9
 	cp	xix, 12592
@@ -816,7 +816,7 @@ Rhythm_DispatchCh_D6:
 	ld W, 0x96:opc
 	ld XIX,0x00003130
 Rhythm_DispatchCh_D6_Loop:
-	ld	(13112:16), 32
+	ld	(ACC_PART_BIT:16), 32
 	calr	Rhythm_SingleNoteHandler
 	add	xix, 9
 	cp	xix, 12664
@@ -873,7 +873,7 @@ Rhythm_ValidateAndSend:
 	or a, (0x3277:16)
 	or a, (0x3278:16)
 	or a, (0x3279:16)
-	and a, (0x3338:16)
+	and a, (ACC_PART_BIT:16)
 	jr nz, Rhythm_Validate_Mismatch
 	ld a, (0x3243:16)
 	ld (0x3387:16), a

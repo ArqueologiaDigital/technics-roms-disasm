@@ -197,7 +197,7 @@ SeqSongNameFunc:
 	cp xbc, EVT_PS_SONG_SEL_BOX_ID
 	jrl nz, SongBank_ReturnZero
 	ld (7116:16), xde
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	ld (7120:16), wa
 	ld de, wa
@@ -352,7 +352,7 @@ SeqSongMemoryFunc:
 	cp xbc, EVT_PS_SONG_SEL_BOX_ID
 	jrl nz, SongBank_EventHandler_Return
 	ld (7192:16), xde
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	extz wa
 	ld (7196:16), wa
 	ld de, wa
@@ -767,27 +767,27 @@ DispatchHandler_CallSlotResolve:
 	ret
 
 DispatchHandler_StoreNodePtr:
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ret
 
 DispatchHandler_InitAllSlots:
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ld iy, 1:i3
 	call SeqNode_ResolveSlotPtr
 	ldw (0xf22f:16), 1
-	ld xiy, (4349:16)
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
-	ld bc, (0x286d:16)
-	ld (0xf231:16), bc
+	ld bc, (SEQ_BLOCK_TOTAL:16)
+	ld (SEQ_FREE_BLOCKS:16), bc
 	dec 1, bc
 
 SeqSlot_InitEntryLoop:
@@ -843,18 +843,18 @@ SeqSlot_InitF218Loop:
 
 DispatchHandler_ResolveSlot:
 	push xde
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ld iy, (0xf22f:16)
 	cp iy, 0xffff
 	jr z, DispatchResolve_ReturnFail
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	push xde
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0xf22f:16), wa
 	ld ix, iy
@@ -862,17 +862,17 @@ DispatchHandler_ResolveSlot:
 	jr z, DispatchResolve_MarkCurrent
 	ld iy, wa
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ldw (xhl + 1), 0x0
 
 DispatchResolve_MarkCurrent:
 	ld iy, ix
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ormi8 (xhl), 0x80
-	decw 1, (0xf231:16)
+	decw 1, (SEQ_FREE_BLOCKS:16)
 	pop xde
-	ld (4349:16), xde
+	ld (SEQ_BLOCK_PTR:16), xde
 	ld w, 0x0:opc
 	pop xde
 	ret
@@ -883,9 +883,9 @@ DispatchResolve_ReturnFail:
 	ret
 
 SeqNode_InsertAtPosition:
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld xde, (7514:16)
+	ld xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ld (3302:16), wa
@@ -893,7 +893,7 @@ SeqNode_InsertAtPosition:
 	ld (0xf22f:16), iy
 	xor wa, wa
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld ix, (xhl + 1)
 	ld de, ix
 	cp ix, 0:i3
@@ -902,13 +902,13 @@ SeqNode_InsertAtPosition:
 	ldw (xhl + 1), 0x0
 	call SeqNode_ResolveSlotPtr
 	ld ix, iy
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 3)
 
 SeqNodeInsert_TraverseNext:
 	call SeqNode_ResolveSlotPtr
 	ld ix, iy
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
 	jr z, SeqNodeInsert_LinkHead
@@ -923,7 +923,7 @@ SeqNodeInsert_UnmarkAndCount:
 
 SeqNodeInsert_LinkPrev:
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), de
 
 SeqNodeInsert_LinkHead:
@@ -933,28 +933,28 @@ SeqNodeInsert_LinkHead:
 	ld iy, de
 	call SeqNode_ResolveSlotPtr
 	popw iy
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), iy
 
 SeqNodeInsert_Finalize:
 	ld iy, ix
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	andmi8 (xhl), 0x7f
 	ld (xhl + 5), 0x82
 	ld (xhl + 3), bc
 	ld iy, bc
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), ix
 	inc 1, wa
-	add (0xf231:16), wa
+	add (SEQ_FREE_BLOCKS:16), wa
 	ret
 
 SeqNodeInsert_EmptyList:
 	call SeqNode_ResolveSlotPtr
 	ld ix, iy
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
 	jr nz, SeqNodeInsert_UnmarkAndCount
@@ -968,8 +968,8 @@ SeqNode_ResolveSlotPtr:
 	extz xhl
 	dec 1, hl
 	sla xhl, 8
-	add xhl, (4362:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL_COPY:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -1082,7 +1082,7 @@ VoiceSlot_Overflow:
 	ldto_lerp XIX, 0x38
 	sla iz, 1
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ldw (xhl + 3), 0xffff
 	ld (0x289f:16), iy
 	ld wa, iy
@@ -1093,7 +1093,7 @@ VoiceSlot_Overflow:
 	ld	(xix+iz), wa
 	ld iy, de
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), wa
 	popw de
 	push xwa
@@ -1168,7 +1168,7 @@ VoiceSlot_AllocNewSlot:
 	popw iz
 	popw wa
 	call SeqNode_ResolveSlotPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ldw (xhl + 1), 0x0
 	ldw (xhl + 3), 0xffff
 	jrl VoiceSlot_ScanLoop

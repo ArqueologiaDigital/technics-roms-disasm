@@ -6337,11 +6337,11 @@ SeMenu_StepNoteParamInRange_Epilogue:
 SeMenu_SetEditEnable:
 	cp a, 1:i3
 	jr nz, SeMenu_SetEditEnable_Clear
-	set 2, (0x28a7:16)
+	set 2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_SetEditEnable_Clear:
-	res 2, (0x28a7:16)
+	res 2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_OrPartConfig:

@@ -677,7 +677,7 @@ Display_CopyToneTableToRAM:
 	push xiy
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
-	ld l, (0x00ffe3:24)
+	ld l, (SEQ_CURRENT_SONG:24)
 	sla xhl, 11
 	add xix, xhl
 	ld xiy, 0xf180
@@ -2848,7 +2848,7 @@ PerfMode_Handler_EvtB_Skip5:
 	ld	(DISPLAY_CACHED_VAL3:24), 255
 	ld	(DISPLAY_CACHED_VAL2:24), 255
 	ld	a, (3822:16)
-	ld	(10359:16), a
+	ld	(SEQ_TRACK:16), a
 	call	Scoop_SpecialMode_ParamCheckBound
 	res	7, (0x0d54:16)
 	ld	(3434:16), 0
@@ -2920,7 +2920,7 @@ UIState_EventTable_Target11_Return:
 	ret
 DefaultHandler_Ret_Helper:
 	ld a, (0x0eee:16)
-	ld (0x2877:16), a
+	ld (SEQ_TRACK:16), a
 	call Scoop_SpecialMode_ParamCheckBound
 	res 7, (0x0d54:16)
 	ld (0x0d6a:16), 0x00
@@ -5853,7 +5853,7 @@ AccPedal_Ret:
 
 AccPedal_ScanVoiceSlots:
 	push xwa
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XWA, 0x38
 	pop xwa
 	push_lerp 0x38
@@ -5921,7 +5921,7 @@ AccPedal_RestoreAndReturn:
 	pop_lerp 0x38
 	push xwa
 	ldto_lerp XWA, 0x38
-	ld (4349:16), xwa
+	ld (SEQ_BLOCK_PTR:16), xwa
 	pop xwa
 	ret
 
@@ -6870,7 +6870,7 @@ SysEx_BytecodeDispatcher_Helper5:
 	jrl	z, SerialPort_ModeHandler_0_Epilogue
 	ld	(xiy), 255
 	ldb_d8	a, (0x0eee)
-	stb_d8	(0x2877), a
+	stb_d8	(SEQ_TRACK), a
 	call	Scoop_SpecialMode_ParamCheckBound
 	res	7, (0x0d54:16)
 	call	PerfMode_Handler_EvtB_Helper2
@@ -7021,7 +7021,7 @@ PerfMode_Handler_EvtB_Helper2:
 	call SqStep_SetPopupIdForDisplayMode
 	call PerfMode_Handler_EvtB_Helper2_Helper6
 	call SqStep_TrackSetupNullRet
-	cpw (0xf231:16), 0x0000
+	cpw (SEQ_FREE_BLOCKS:16), 0x0000
 	jrl nz, .Lc_efa1aa
 	call SqStep_CheckCursorTrackUsed
 	cp w, 0:i3
@@ -7108,7 +7108,7 @@ PerfMode_Handler_EvtB_Helper2_Skip2:
 	and	(0x33d2:16), 239
 	and	(0x045b:16), 252
 	call	PerfMode_Handler_EvtB_Helper2_Helper10
-	or	(0x28a7:16), 4
+	or	(SEQ_RTMCFG:16), 4
 	ld	xiy, 0x0d53
 	ormi8	(xiy), 8
 	andmi8	(xiy), 223
@@ -7556,8 +7556,8 @@ PortConfig_DataTable_B:
 	.byte	0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03, 0x0f, 0xff, 0xff, 0xff
 	.byte	0xff, 0x0c, 0x0d, 0x0e
 SeqNode_SetPoolBaseToEventMemory:
-	ld	xhl, 4362
-	ld	xwa, (7514:16)
+	ld	xhl, SEQ_BLOCK_POOL_COPY
+	ld	xwa, (SEQ_BLOCK_POOL:16)
 	ld	(xhl), xwa
 	ret
 TempoRingBuf_DiscardAll:
@@ -7764,8 +7764,8 @@ ClockConfig_Handler_0_Skip4:
 	call	Part_InitVoiceDefaults
 	popw	wa
 	or	(0x28b3:16), 16
-	and	(0x28a7:16), 247
-	and	(0x28a7:16), 251
+	and	(SEQ_RTMCFG:16), 247
+	and	(SEQ_RTMCFG:16), 251
 	and	(0x0d53:16), 247
 	ldb_d8	a, (0x0d65)
 	cp	a, 3:i3
@@ -8235,7 +8235,7 @@ MemConfig_Handler_1_Code_Skip3:
 	ld	iy, (xix+iz)
 	pop XIX
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (0x10fd:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld IY,(XHL+0x03)
 	push XIX
 	ld XIX,0x0000f1f8
@@ -8245,11 +8245,11 @@ MemConfig_Handler_1_Code_Skip3:
 	jrl z, .Lc_efaf0b
 MemConfig_Handler_1_Join3:
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (0x10fd:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld IY,(XHL+0x03)
 	cp IY,0xffff
 	jrl z, .Lc_efaf0b
-	ld wa, (0x286d:16)
+	ld wa, (SEQ_BLOCK_TOTAL:16)
 	call MemConfig_Handler_1_Helper3
 	jp MemConfig_Handler_1_Return
 .Lc_efaee4:
@@ -9810,7 +9810,7 @@ DisplayMode_Handler_3_Helper16_Skip2:
 	ldto_lerp	xix, 56
 	sla	iz, 1
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ldw	(xhl+3), 65535
 	ld	(0x289f:16), iy
 	ld	wa, iy
@@ -9821,7 +9821,7 @@ DisplayMode_Handler_3_Helper16_Skip2:
 	ld	(xix+iz), wa
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+3), wa
 	popw	de
 	pushw	de
@@ -9883,7 +9883,7 @@ DisplayMode_Handler_3_Helper16_Skip3:
 	pop	xiz
 	popw	wa
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ldw	(xhl+1), 0
 	ldw	(xhl+3), 65535
 	jp	SysInit_BytecodeBlock_Join9
@@ -9917,7 +9917,7 @@ VoiceSlot_InitLoop:
 	ld	iy, (xix+iz)
 	call VoiceSlot_UpdateCurrentPointer
 	popw iy
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	extz xiy
 	add xhl, xiy
 	popw bc
@@ -9937,7 +9937,7 @@ VoiceSlot_ProcessEntry:
 	sub wa, ix
 	ld bc, wa
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	extz xix
 	add xhl, xix
 	ld xix, xhl
@@ -9955,10 +9955,10 @@ VoiceSlot_ProcessEntry:
 	sub c, 0x5
 	ld	iy, (xix+iz)
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 3)
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xix+iz), iy
 	ld xix, xhl
 	add xix, 0x5
@@ -9997,7 +9997,7 @@ VoiceSlot_RetZ_Join:
 	jp	VoiceSlot_RetZ_Join2
 VoiceSlot_RetZ_Skip:
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	iy, (xhl+3)
 	sub	wa, 251
 	jp	VoiceSlot_RetZ_Join
@@ -10047,12 +10047,12 @@ VoiceSlot_RetZ_Skip3:
 VoiceSlot_RetZ_Join3:
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	de, (xhl+1)
 	ld	(xix+iz), de
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	srl	iz, 1
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+iz)
@@ -10116,7 +10116,7 @@ VoiceSlot_CompareRet:
 	ld	iy, (xix+iz)
 	pop xix
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	srl iz, 1
 	push xde
 	ld xde, 0xcbe
@@ -10183,12 +10183,12 @@ VoiceSlot_LoadFromTableBody:
 	ld	iy, (xde+iz)
 	pop xde
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
 	jrl z, VoiceSlot_SubrDone
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld ix, 4:i3
 	jp VoiceSlot_StoreAndAdvance
 
@@ -10229,12 +10229,12 @@ VoiceSlot_SubroutineBody:
 	ld	iy, (xde+iz)
 	pop xde
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (xhl + 1)
 	cp iy, 0:i3
 	jrl z, VoiceSlot_SubrDone
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ldw ix, 0x100
 	jp VoiceSlot_DecCountLoop
 
@@ -10263,7 +10263,7 @@ VoiceSlot_ReadCurrentParams:
 	ld	iy, (xde+iz)
 	pop xde
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	srl iz, 1
 	push xde
 	ld xde, 0xcbe
@@ -10293,7 +10293,7 @@ VoiceSlot_FlagCheckDone:
 	ld	iy, (xde+iz)
 	pop xde
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	srl iz, 1
 	push xde
 	ld xde, 0xcbe
@@ -10312,7 +10312,7 @@ VoiceSlot_FinalCheck:
 	cp iy, 0xffff
 	jrl z, VoiceSlot_FinalDone
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, 5:i3
 	ld	a, (xhl+iy)
 	jp VoiceSlot_FinalRetNZ
@@ -10362,7 +10362,7 @@ VoiceSlot_FinalRetZ_0x1E:
 	pop	xix
 	and	iy, 255
 	sla	iz, 1
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	popw	de
 	pop	xhl
@@ -10408,7 +10408,7 @@ VoiceSlot_WriteCurrentParam:
 	pop	xde
 	sla	iz, 1
 	and	iy, 255
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+iy), w
 	ret
 Timer_ModeHandler_0_Helper6:
@@ -10460,7 +10460,7 @@ VoiceSlot_FinalRetZ_Skip2:
 	ld	bc, wa
 	ld	iy, (xix+iz)
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	iy, (xhl+3)
 	ld	l, (3566:16)
 	xor	h, h
@@ -10494,14 +10494,14 @@ VoiceSlot_WriteCurrentParam_Skip:
 	ld	w, 255:opc
 VoiceSlot_FinalRetZ_Return:
 	ret
-	ld	xhl, 4362
-	ld	xwa, (7514:16)
+	ld	xhl, SEQ_BLOCK_POOL_COPY
+	ld	xwa, (SEQ_BLOCK_POOL:16)
 	ld	(xhl), xwa
 	ret
 MemConfig_Handler_1_Helper3:
-	ld	xhl, 4362
+	ld	xhl, SEQ_BLOCK_POOL_COPY
 	push	xde
-	ld	xde, (7514:16)
+	ld	xde, (SEQ_BLOCK_POOL:16)
 	ld	(xhl), xde
 	pop	xde
 	ld	(3302:16), wa
@@ -10509,7 +10509,7 @@ MemConfig_Handler_1_Helper3:
 	ld	(61999:16), iy
 	xor	wa, wa
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, (xhl+1)
 	ld	de, ix
 	cp	ix, 0:i3
@@ -10517,12 +10517,12 @@ MemConfig_Handler_1_Helper3:
 	ld	iy, ix
 	ldw	(xhl+1), 0
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 VoiceSlot_FinalRetZ_Loop4:
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 	cp	iy, 65535
@@ -10536,7 +10536,7 @@ VoiceSlot_WriteCurrentParam_Loop:
 	dec	1, wa
 VoiceSlot_FinalRetZ_Join:
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+1), de
 VoiceSlot_FinalRetZ_Skip4:
 	cp	de, 0:i3
@@ -10545,26 +10545,26 @@ VoiceSlot_FinalRetZ_Skip4:
 	ld	iy, de
 	call	VoiceSlot_UpdateCurrentPointer
 	pop	xiy
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+3), iy
 VoiceSlot_FinalRetZ_Skip5:
 	ld	iy, ix
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	andmi8	(xhl), 127
 	ld	(xhl+5), 130
 	ld	(xhl+3), bc
 	ld	iy, bc
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+1), ix
 	inc	1, wa
-	add (62001:16), wa
+	add (SEQ_FREE_BLOCKS:16), wa
 	jp	VoiceSlot_FinalRetZ_Return2
 VoiceSlot_FinalRetZ_Skip6:
 	call	VoiceSlot_UpdateCurrentPointer
 	ld	ix, iy
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	iy, (xhl+3)
 	cp	iy, 65535
 	jrl	nz, VoiceSlot_WriteCurrentParam_Loop
@@ -10579,8 +10579,8 @@ VoiceSlot_UpdateCurrentPointer:
 	dec 1, hl
 	extz xhl
 	sla xhl, 8
-	add xhl, (7514:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -11609,7 +11609,7 @@ VoiceState_DataBlock2_Code_Skip2:
 VoiceState_DataBlock2_Code_Skip3:
 	ld	iy, wa
 	call	VoiceSlot_UpdateCurrentPointer
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	wa, (xhl+1)
 	cp	wa, 0:i3
 	jrl	z, VoiceState_DataBlock2_Code_Skip4
@@ -11674,7 +11674,7 @@ VoiceSlot_CheckCursorAtTrackStart:
 	jrl z, .Lc_efd255
 	ld IY,WA
 	call VoiceSlot_UpdateCurrentPointer
-	ld xhl, (0x10fd:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	cpw (XHL+0x01), 0x0000
 	jrl z, .Lc_efd242
 .Lc_efd238:
@@ -11942,7 +11942,7 @@ VoiceState_DataBlock2_Join2:
 	pop	xiy
 	ret
 	push	xwa
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp	xwa, 56
 	pop	xwa
 	push_lerp	56
@@ -12022,7 +12022,7 @@ VoiceState_DataBlock2_Skip15:
 	pop_lerp 56
 	push	xwa
 	ldto_lerp	xwa, 56
-	ld	(4349:16), xwa
+	ld	(SEQ_BLOCK_PTR:16), xwa
 	pop	xwa
 	ret
 VoiceState_DataBlock2_Helper9:
@@ -13992,27 +13992,27 @@ VoiceBank_Ret:
 
 VoiceBank_LoadLerpState:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
 	push xix
 	ld hl, (0x28bf:16)
 	call DisplayStr_ComputeTableAddr
-	ld xiy, (4349:16)
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	ld ix, (0x28c1:16)
 	ld	a, (xiy+ix)
 	pop xix
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ret
 
 VoiceBank_UpdateLerpState:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -14022,7 +14022,7 @@ VoiceBank_UpdateLerpState:
 	jrl nz, VoiceBank_IncrementIndex
 	ld hl, (0x28bf:16)
 	call DisplayStr_ComputeTableAddr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld hl, (xhl + 3)
 	ld (0x28bf:16), hl
 	ld wa, 5:i3
@@ -14037,7 +14037,7 @@ VoiceBank_StoreIndex:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ret
 
@@ -14231,8 +14231,8 @@ DisplayStr_ComputeTableAddr:
 	dec 1, hl
 	extz xhl
 	sla xhl, 8
-	add xhl, (7514:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -16160,7 +16160,7 @@ Tbl_MsaStates:
 ;   set.
 SqStep_FindMsaStateAtCursor:
 	push	xiz
-	ld	xiz, (0x10fd:16)
+	ld	xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp	xiz, 56
 	pop	xiz
 	push_lerp	56
@@ -16224,7 +16224,7 @@ SqStep_FindMsaStateAtCursor_Skip5:
 	pop_lerp	56
 	push	xiz
 	ldto_lerp	xiz, 56
-	ld	(0x10fd:16), xiz
+	ld	(SEQ_BLOCK_PTR:16), xiz
 	pop	xiz
 	ret
 ; SqStep_UpdateMsaStateFromEvent: For the 0xBn event at the song-data scan position: records the position (0x28BF /
@@ -16599,7 +16599,7 @@ Tbl_PedalNames_Helper5:
 	jrl	nz, ParamPopup_PartPedal_Skip26
 	ldw_d16	hl, (0x117a)
 	call	DisplayStr_ComputeTableAddr
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	wa, (xhl+1)
 	cp	wa, 0:i3
 	jrl	nz, ParamPopup_PartPedal_Skip25
@@ -16623,7 +16623,7 @@ ParamPopup_PartPedal_Helper:
 	jrl	nz, ParamPopup_PartPedal_Skip27
 	ldw_d16	hl, (0x117a)
 	call	DisplayStr_ComputeTableAddr
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	hl, (xhl+3)
 	ld	(0x117a:16), hl
 	ld	wa, 5:i3
@@ -16637,7 +16637,7 @@ Tbl_PedalNames_Join5:
 Tbl_PedalNames_Helper6:
 	ldw_d16	hl, (0x117a)
 	call	DisplayStr_ComputeTableAddr
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ldw_d16	iy, (0x1178)
 	ld	a, (xhl+iy)
 	ret
@@ -17494,11 +17494,11 @@ Scoop_EventHandler_Scroll:
 	ld (SEQ_ERROR_CODE:16), 0
 	ld hl, (0x28ba:16)
 	call SetWall_StreamIndexResolve
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (9854:16), xwa
 	ld hl, (0x289f:16)
 	call SetWall_StreamIndexResolve
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (9850:16), xwa
 	cp de, (0x28ba:16)
 	jr nz, Scoop_Scroll_ValidateRange
@@ -17682,11 +17682,11 @@ Scoop_EventHandler_SpecialMode:
 	ld	hl, (0x28ba:16)
 	call	SetWall_StreamIndexResolve
 	push	xwa
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	ld	(9854:16), xwa
 	ld	hl, (0x289f:16)
 	call	SetWall_StreamIndexResolve
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	ld	(0x267a:16), xwa
 	pop	xwa
 	cp	de, (0x28ba:16)
@@ -17905,21 +17905,21 @@ Scoop_SpecialMode_CheckState:
 SeqData_ChainPrevSrcBlock:
 	xor iy, iy
 	ld xiy, (9854:16)
-	ld (4349:16), xiy
+	ld (SEQ_BLOCK_PTR:16), xiy
 	ld wa, (xiy + 1)
 	ld (0x28ba:16), wa
 	extz xwa
 	dec 1, xwa
 	sla xwa, 8
-	add xwa, (7514:16)
-	ld (4349:16), xwa
+	add xwa, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xwa
 	bitm 7, (xwa)
 	jr nz, Scoop_SpecialMode_Toggle
 	ld (SEQ_ERROR_CODE:16), 11
 	jr Scoop_SpecialMode_ToggleEnd
 
 Scoop_SpecialMode_Toggle:
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (9854:16), xwa
 	ldw iy, 0xff
 
@@ -17929,21 +17929,21 @@ Scoop_SpecialMode_ToggleEnd:
 Scoop_SpecialMode_Draw:
 	xor ix, ix
 	ld xix, (9850:16)
-	ld (4349:16), xix
+	ld (SEQ_BLOCK_PTR:16), xix
 	ld wa, (xix + 1)
 	ld (0x289f:16), wa
 	extz xwa
 	dec 1, xwa
 	sla xwa, 8
-	add xwa, (7514:16)
-	ld (4349:16), xwa
+	add xwa, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xwa
 	bitm 7, (xwa)
 	jr nz, Scoop_SpecialMode_DrawAlt
 	ld (SEQ_ERROR_CODE:16), 11
 	jr Scoop_SpecialMode_DrawEnd
 
 Scoop_SpecialMode_DrawAlt:
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld (9850:16), xwa
 	ldw ix, 0xff
 
@@ -17959,15 +17959,15 @@ Scoop_SpecialMode_UpdateParams:
 	extz	xwa
 	dec	1, xwa
 	sla	xwa, 8
-	add	xwa, (7514:16)
-	ld	(4349:16), xwa
+	add	xwa, (SEQ_BLOCK_POOL:16)
+	ld	(SEQ_BLOCK_PTR:16), xwa
 	bitm	7, (xwa)
 	jr	nz, Scoop_SpecialMode_UpdateParams_Skip
 	ld	(SEQ_ERROR_CODE:16), 11
 	jr	Scoop_SpecialMode_UpdateParams_Return
 Scoop_SpecialMode_UpdateParams_Skip:
 	push	xwa
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	ld	(9854:16), xwa
 	pop	xwa
 	ld	iy, 5:i3
@@ -17982,21 +17982,21 @@ Scoop_SpecialMode_UpdateParams_Return:
 SeqData_ChainNextDstBlock:
 	xor	xix, xix
 	ld	xix, (9850:16)
-	ld	(4349:16), xix
+	ld	(SEQ_BLOCK_PTR:16), xix
 	ld	wa, (xix+3)
 	ld	(0x289f:16), wa
 	extz	xwa
 	dec	1, xwa
 	sla	xwa, 8
-	add	xwa, (7514:16)
-	ld	(4349:16), xwa
+	add	xwa, (SEQ_BLOCK_POOL:16)
+	ld	(SEQ_BLOCK_PTR:16), xwa
 	bitm	7, (xix)
 	bitm	7, (xwa)
 	jr	nz, SeqData_ChainNextDstBlock_Skip2
 	ld	(SEQ_ERROR_CODE:16), 11
 	jr	SeqData_ChainNextDstBlock_Return2
 SeqData_ChainNextDstBlock_Skip2:
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	ld	(9850:16), xwa
 	ld	ix, 5:i3
 SeqData_ChainNextDstBlock_Return2:
@@ -18029,7 +18029,7 @@ SeqData_ChainCopyBytes_Epilogue:
 	ret
 
 Scoop_SpecialMode_ParamCheckBound:
-	ld a, (0x2877:16)
+	ld a, (SEQ_TRACK:16)
 	cp a, 1:i3
 	jr c, Scoop_SpecialMode_ParamEnd
 	cp a, 0x10
@@ -18044,7 +18044,7 @@ Scoop_SpecialMode_ParamEnd:
 
 Scoop_SpecialMode_ValueEdit:
 	xor wa, wa
-	ld a, (0x2877:16)
+	ld a, (SEQ_TRACK:16)
 	dec 1, a
 	ld iy, wa
 	pushw bc
@@ -18076,7 +18076,7 @@ Scoop_SpecialMode_ValueEdit:
 	jr z, Scoop_SpecialMode_ValueEditEnd
 	ldw	(xix+iy), 0xffff
 	ld iy, wa
-	ld wa, (0x286d:16)
+	ld wa, (SEQ_BLOCK_TOTAL:16)
 	calr Scoop_SpecialMode_ValueSend
 
 Scoop_SpecialMode_ValueEditEnd:
@@ -18088,7 +18088,7 @@ Scoop_SpecialMode_ValueSend:
 	ld (0xf22f:16), iy
 	xor wa, wa
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld ix, (xhl + 1)
 	ld de, ix
 	cp ix, 0:i3
@@ -18096,13 +18096,13 @@ Scoop_SpecialMode_ValueSend:
 	ld iy, ix
 	ldw (xhl + 1), 0x0
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld ix, iy
 	ld iy, (xhl + 3)
 
 Scoop_SpecialMode_ValueSend_Part1:
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld ix, iy
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
@@ -18118,7 +18118,7 @@ Scoop_SpecialMode_ValueSend_Part2:
 
 Scoop_SpecialMode_ValueSend_Part3:
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), de
 
 Scoop_SpecialMode_ValueSend_End:
@@ -18127,28 +18127,28 @@ Scoop_SpecialMode_ValueSend_End:
 	pushw iy
 	ld iy, de
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	popw iy
 	ld (xhl + 3), iy
 
 Scoop_SpecialMode_CurveUpdate:
 	ld iy, ix
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	andmi8 (xhl), 0x7f
 	ld (xhl + 5), 0x82
 	ld (xhl + 3), bc
 	ld iy, bc
 	call DispatchHandler_SubJumpTable
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), ix
 	inc 1, wa
-	add (0xf231:16), wa
+	add (SEQ_FREE_BLOCKS:16), wa
 	ret
 
 Scoop_CurveUpdate_DrawSegment:
 	call	DispatchHandler_SubJumpTable
-	ld	xhl, (0x10fd:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 	cp	iy, 65535

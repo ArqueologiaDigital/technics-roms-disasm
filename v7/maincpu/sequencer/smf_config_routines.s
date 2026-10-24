@@ -133,7 +133,7 @@ SMF_FinalizeAndStartPlayback:
 	call SMF_CheckAndFlush
 	call Vga_RestoreMultiPlaneDisplay
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 	call SeqPlay_StartWithDisplay
 	ldw (6699:16), 2
@@ -144,7 +144,7 @@ SMF_Finalize_PopReturn:
 SMF_Finalize_RestoreAndPlay:
 	call Vga_RestoreMultiPlaneDisplay
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 	call SeqPlay_StartWithDisplay
 	jr SMF_PopReturn
@@ -164,7 +164,7 @@ SMF_FlushAndFinalize:
 	pop xhl
 	call Vga_RestoreMultiPlaneDisplay
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 	call SeqPlay_StartWithDisplay
 	jr SMF_PopReturn
@@ -276,7 +276,7 @@ SMF_ScanChannels_Loop:
 	pop xix
 	cp a, 0x10
 	jr z, SMF_ScanChannels_Inactive
-	ld (0x2877:16), c
+	ld (SEQ_TRACK:16), c
 	push xhl
 	pushw bc
 	call SMF_DispatchEvent
@@ -285,8 +285,8 @@ SMF_ScanChannels_Loop:
 	jr SMF_ScanChannels_Next
 
 SMF_ScanChannels_Inactive:
-	ld (0x2877:16), c
-	inc 1, (0x2877:16)
+	ld (SEQ_TRACK:16), c
+	inc 1, (SEQ_TRACK:16)
 	push xhl
 	pushw bc
 	call Scoop_SpecialMode_ParamCheckBound
@@ -360,8 +360,8 @@ SMF_FindFree_CheckPart:
 	pop xix
 	jr z, SMF_FindFree_Next
 	inc 1, c
-	ld (0x2877:16), l
-	inc 1, (0x2877:16)
+	ld (SEQ_TRACK:16), l
+	inc 1, (SEQ_TRACK:16)
 
 SMF_AssignRemainingChannels:
 	ld de, (0x00ffec:24)
@@ -378,7 +378,7 @@ SMF_AssignRemainingChannels:
 	jr z, SMF_AssignRemaining_Next
 	ld (9858:16), c
 	inc 1, (9858:16)
-	ld a, (0x2877:16)
+	ld a, (SEQ_TRACK:16)
 	ld (9860:16), a
 	push xhl
 	pushw bc
@@ -786,7 +786,7 @@ SMF_ChannelHelperReturn:
 SMF_GetNextEvent:
 	ld hl, (0x28af:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld iy, (9830:16)
 	ld	a, (xhl+iy)
 	ret
@@ -797,7 +797,7 @@ SMF_AdvancePosition:
 	jr nz, SMF_AdvancePos_Inc
 	ld hl, (0x28af:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x28af:16), wa
 	ld wa, 5:i3
@@ -1144,7 +1144,7 @@ SMF_Event_ProgramChange:
 	push xhl
 	calr SMF_GetNextEvent
 	pop xhl
-	ld e, (0x2877:16)
+	ld e, (SEQ_TRACK:16)
 	xor d, d
 	ld iy, de
 	cp a, 0:i3
@@ -1465,7 +1465,7 @@ SMF_LookupSongBank:
 	extz xhl
 	dec 1, xhl
 	sla xhl, 8
-	add xhl, (7514:16)
+	add xhl, (SEQ_BLOCK_POOL:16)
 	ld iy, (9830:16)
 	ld	(xhl+iy), a
 	ret
@@ -1703,7 +1703,7 @@ SMF_ResolveGlobalChannel:
 	push xbc
 	push xde
 	xor iy, iy
-	ld iy, (0x2877:16)
+	ld iy, (SEQ_TRACK:16)
 	ld xix, 0xf1a0
 	cp	(xix+iy), 0x0c
 	jr nz, SMF_GlobalCh_NoDrum
@@ -1794,15 +1794,15 @@ SMF_LoadBank_ReadEntries:
 	pop xhl
 	ldw de, 0xb1
 	ld	wa, (xhl+de)
-	ld (0xf231:16), wa
-	ld (0x00ffe3:24), 0x00
+	ld (SEQ_FREE_BLOCKS:16), wa
+	ld (SEQ_CURRENT_SONG:24), 0x00
 
 SMF_LoadBank_EventLoop:
 	calr SMF_SetupReadPointers
 	calr SMF_ResetPlaybackState
 	call SMF_SetupRead_Return
-	inc 1, (0xffe3:24)
-	cp (0x00ffe3:24), 0x0a
+	inc 1, (SEQ_CURRENT_SONG:24)
+	cp (SEQ_CURRENT_SONG:24), 0x0a
 	jr c, SMF_LoadBank_EventLoop
 
 SMF_LoadBank_Return:
@@ -1811,7 +1811,7 @@ SMF_LoadBank_Return:
 SMF_SetupReadPointers:
 	ld wa, (0xf22f:16)
 	ld (0x286f:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld (0x2871:16), wa
 	call SongBank_LoadToWorkArea
 	ret
@@ -1943,8 +1943,8 @@ SMF_ConfigSlot_Setup:
 	calr SMF_SetupSongBankRead
 	pop xiy
 	push xhl
-	ld xhl, (4349:16)
-	ld (0x2881:16), xhl
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld (0x2885:16), iy
 	ld wa, (0x28af:16)
@@ -1956,7 +1956,7 @@ SMF_ConfigSlot_Setup:
 
 SMF_ConfigSlot_EventLoop:
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+ix)
 	pop xde
 	ld w, 0xf0:opc
@@ -1979,7 +1979,7 @@ SMF_ConfigSlot_EventLoop:
 
 SMF_ConfigSlot_DefaultHandler:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+iy), a
 	pop xhl
 
@@ -1993,12 +1993,12 @@ SMF_ConfigSlot_AdvanceEvent:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SMF_ConfigSlot_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+ix)
 	pop xde
 	jr nz, SMF_ConfigSlot_EventLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+ix)
 	pop xde
 	jr SMF_ConfigSlot_DefaultHandler
@@ -2045,7 +2045,7 @@ SMF_ConfigSlot_ReadDataLoop:
 	popw hl
 	pop xiy
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+ix)
 	pop xde
 	ld	(xiy+hl), a
@@ -2188,7 +2188,7 @@ SMF_Config_WriteOutput:
 	ld xix, 0x112c
 	ld a, (xix)
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+iy), a
 	pop xhl
 
@@ -2201,7 +2201,7 @@ SMF_Config_WriteLoop:
 	pop xix
 	ld	a, (xix+hl)
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+iy), a
 	pop xhl
 	cp hl, (4402:16)
@@ -2309,7 +2309,7 @@ SMF_Config_ClearFlags:
 
 SMF_ConfigSlot_EndOfTrack:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+iy), a
 	pop xhl
 	ld wa, (0x2887:16)
@@ -2337,19 +2337,19 @@ SMF_AdvanceInPageChain:
 	incw	1, (4417:16)
 	cpw	(4417:16), 255
 	jr	ule, SMF_AdvanceInPageChain_Epilogue
-	ld	xhl, (10369:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	wa, (xhl+3)
 	ld	(4415:16), wa
 	ld	(10375:16), wa
 	ld	hl, wa
 	calr	SMF_CalcPageAddress
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr	nz, SMF_AdvanceInPageChain_Skip
 	ld	(SEQ_ERROR_CODE:16), 2
 	jr	SMF_AdvanceInPageChain_Epilogue
 SMF_AdvanceInPageChain_Skip:
-	ld	(10369:16), xhl
+	ld	(SEQ_WRITE_BLOCK_PTR:16), xhl
 	ldw	(4417:16), 5
 	ld	iy, 5:i3
 SMF_AdvanceInPageChain_Epilogue:
@@ -2393,12 +2393,12 @@ SMF_AdvanceReadPtr:
 	jr ule, SMF_AdvanceRead_Return
 	ld hl, (0x288b:16)
 	calr SMF_CalcPageAddress
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x288b:16), wa
 	ld hl, wa
 	calr SMF_CalcPageAddress
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SMF_AdvanceRead_NewPage
 	ld (SEQ_ERROR_CODE:16), 2
@@ -2411,37 +2411,37 @@ SMF_AdvanceRead_Return:
 	ret
 
 SMF_AdvanceWritePtr:
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	push xwa
 	inc 1, iy
 	cp iy, 0xff
 	jr ule, SMF_AdvanceWrite_Return
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	ld (0x2887:16), wa
 	ld hl, wa
 	calr SMF_CalcPageAddress
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SMF_AdvanceWrite_NewPage
 	ld (SEQ_ERROR_CODE:16), 2
 	jr SMF_AdvanceWrite_Return
 
 SMF_AdvanceWrite_NewPage:
-	ld (0x2881:16), xhl
+	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	ld iy, 5:i3
 
 SMF_AdvanceWrite_Return:
 	pop xwa
-	ld (4349:16), xwa
+	ld (SEQ_BLOCK_PTR:16), xwa
 	ret
 
 SMF_CalcPageAddress:
 	dec 1, hl
 	extz xhl
 	sla xhl, 8
-	add xhl, (7514:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -3371,15 +3371,15 @@ SMF_SlotParam_Type80Handler:
 
 SMF_SetupSongBankRead:
 	push xhl
-	ld xhl, (4349:16)
-	ld (0x2881:16), xhl
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld (SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
 	ld wa, (0x28af:16)
 	ld (0x2887:16), wa
 
 SMF_SetupRead_Adjust:
 	push xhl
-	ld xhl, (0x2881:16)
+	ld xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	pop xhl
 	cp a, 0x82
@@ -3407,7 +3407,7 @@ SMF_SetupRead_Return:
 	ld (0xf19e:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
-	ld l, (0x00ffe3:24)
+	ld l, (SEQ_CURRENT_SONG:24)
 	sla xhl, 11
 	add xix, xhl
 	ld xiy, 0xf180

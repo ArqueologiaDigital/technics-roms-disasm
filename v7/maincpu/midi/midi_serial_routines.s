@@ -435,7 +435,7 @@ Transport_Return:
 Transport_NoClockSourcePath:
 	bit	2, (0xfd52:16)
 	jr	z, Transport_StopSrc3Snapshot
-	bit	2, (0x28a7:16)
+	bit	2, (SEQ_RTMCFG:16)
 	jr	nz, Transport_NoClockReturn
 	cp	d, 0xfa
 	jr	z, MIDI_SystemMessage_OnStart
@@ -470,7 +470,7 @@ MIDI_RESET_PLAYBACK_STATE:
 	ld	(1047:16), a
 	ld	(1048:16), wa
 	ld	(1056:16), 1
-	bit	1, (0x28a7:16)
+	bit	1, (SEQ_RTMCFG:16)
 	jr	z, ResetPlay_Src3Check
 	ld	(1045:16), a
 	ld	(1046:16), a
@@ -483,7 +483,7 @@ MIDI_RESET_PLAYBACK_STATE:
 	ld	a, 0x85:opc
 	calr	MIDI_QUEUE_EVENT_PAIR
 ResetPlay_Src3Check:
-	bit	0, (0x28a7:16)
+	bit	0, (SEQ_RTMCFG:16)
 	jr	z, ResetPlay_Return
 	xor	wa, wa
 	ld	(SEQ_BEAT_TICK:16), a
@@ -520,10 +520,10 @@ StartTiming_ClearAndReturn:
 	ret
 Continue_SetRunning:
 	ld	(1056:16), 6
-	bit	0, (0x28a7:16)
+	bit	0, (SEQ_RTMCFG:16)
 	jr	z, Continue_Return
 	ld	(SEQ_TRANSPORT_STATE:16), 6
-	bit	1, (0x28a7:16)
+	bit	1, (SEQ_RTMCFG:16)
 	jr	z, Continue_Return
 	bit	0, (0x28a6:16)
 	jr	nz, Continue_ClearPositionAndSetSrc1
@@ -575,7 +575,7 @@ AltClk_Return:
 AltClk_NoSrcFlagPath:
 	bit	2, (0xfd52:16)
 	jr	z, AltClk_NoMatchReturn
-	bit	2, (0x28a7:16)
+	bit	2, (SEQ_RTMCFG:16)
 	jr	nz, AltClk_NoMatchReturn
 	cp	d, 0xfa
 	jr	z, AltClk_StartArmTx
@@ -588,7 +588,7 @@ AltClk_StartArmTx:
 	ld	(234:16), 221
 	jrl	MIDI_SystemMessage_OnStart
 AltClk_ContinueArmTx:
-	bit	0, (0x28a7:16)
+	bit	0, (SEQ_RTMCFG:16)
 	jr	z, AltClk_Src3DisabledReturn
 	set	2, (1065:16)
 	ld	(234:16), 221

@@ -8536,7 +8536,7 @@ InitializeOperationState:
 	call AccWrap_PlayModeDispatch
 	cp (xsp), 0x0
 	jr z, InitOp_SkipSetFlag
-	set 2, (0x28a7:16)
+	set 2, (SEQ_RTMCFG:16)
 
 InitOp_SkipSetFlag:
 	call AccompSeq_StopSequence
@@ -8551,14 +8551,14 @@ InitOp_SkipSetFlag:
 	ret
 
 CancelOperationCleanup:
-	ld a, (0x28a7:16)
+	ld a, (SEQ_RTMCFG:16)
 	bit 2, a
 	jr z, CancelOp_ClearSeq
 	res 2, a
-	ld (0x28a7:16), a
+	ld (SEQ_RTMCFG:16), a
 
 CancelOp_ClearSeq:
-	res 3, (0x28a7:16)
+	res 3, (SEQ_RTMCFG:16)
 	call SeqAcc_InitPlaybackState
 	jp MidiThru_Disable
 

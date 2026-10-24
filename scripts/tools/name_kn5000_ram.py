@@ -39,7 +39,7 @@ import sys
 REPO = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
                       text=True).stdout.strip() or "."
 CONST = ["midi_encoder_constants.s", "cpanel_constants.s", "gui_constants.s", "kn5000_%s_program.s",
-         "shared/ram_variables.s"]
+         "shared/ram_variables.s", "shared/ram_variables_by_use.s"]
 EQU = re.compile(r'^(\s*\.equ\s+)([A-Za-z_]\w*)(\s*,\s*)(0x[0-9a-fA-F]+)(.*)$')
 MEM = re.compile(r'\((0x[0-9a-fA-F]+|\d+)(:8|:16|:24)?\)')
 TOK = re.compile(r'\(([A-Za-z_]\w*|0x[0-9a-fA-F]+|\d+)(?::8|:16|:24)?\)')
@@ -89,9 +89,19 @@ def bodies(t):
 NAMED = {}      # filled by main(): v10's RAM names, which count as numbers when shapes are compared
 
 
+_NAMED_RE = []   # the compiled form of NAMED's alternation, built once (it was rebuilt per line: minutes per tree)
+
+
+def names_re(names):
+    """one compiled `\b(NAME|NAME...)\b` for a set of names (None when empty)"""
+    return re.compile(r'\b(%s)\b' % "|".join(map(re.escape, sorted(names, key=len, reverse=True)))) if names else None
+
+
 def shape(code):
     if NAMED:
-        code = re.sub(r'\b(%s)\b' % "|".join(map(re.escape, NAMED)), "0", code)
+        if not _NAMED_RE:
+            _NAMED_RE.append(names_re(NAMED))
+        code = _NAMED_RE[0].sub("0", code)
     return re.sub(r'\s+', ' ', re.sub(r'(0x[0-9a-fA-F]+|\b\d+\b)', 'N', code.lower()))
 
 
@@ -173,10 +183,11 @@ def main():
         # value in this tree is trusted, so the forms added later (ldmm, DRAM pointers) reach it too
         own = ram_names(a.tree)
         used = set()
+        own_re = names_re(own)
         for f in glob.glob(os.path.join(REPO, a.tree, "maincpu", "**", "*.s"), recursive=True):
             for l in open(f, "rb").read().decode("latin-1").split("\n"):
-                if not l.lstrip().startswith(".equ"):
-                    used |= set(re.findall(r'\b(%s)\b' % "|".join(map(re.escape, own)), l.split(";")[0]))
+                if own_re and not l.lstrip().startswith(".equ"):
+                    used |= set(own_re.findall(l.split(";")[0]))
         for n in used:
             if n in own:
                 # a name the code already uses keeps its value: a later vote never overrides it
@@ -248,10 +259,11 @@ def main():
     print("%s: %d names applied; %s%s" % (a.tree, len(addr), dict(st), "" if a.apply else " (dry run)"))
     if report:
         used = set()
+        ref_re = names_re(ref)
         for f in files:
             for l in open(f, "rb").read().decode("latin-1").split("\n"):
                 if not l.lstrip().startswith(".equ"):
-                    used |= set(re.findall(r'\b(%s)\b' % "|".join(map(re.escape, ref)), l.split(";")[0]))
+                    used |= set(ref_re.findall(l.split(";")[0]))
         # a name the tree's code already uses has nothing numeric left to vote with: not "unsure"
         unsure = {n: v for n, v in report.items() if v != "inferred" and (not v or len(v) != 1) and n not in used}
         print("  inferred from the block's common delta: %s" % {n: report[n] for n in report if report[n] == "inferred"})
