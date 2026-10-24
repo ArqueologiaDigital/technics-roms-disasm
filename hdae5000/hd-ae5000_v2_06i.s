@@ -145,6 +145,22 @@
 	.equ HDAE5000_RAM_HdModelString, 0x20083c	; 40 bytes: IDENTIFY words 27-46 (model number), byte-swapped (HD_ParseIdentify; HDAE5000_HD_GetGeometry copies it out)
 	.equ HDAE5000_RAM_HdCylinders, 0x229c32	; word: IDENTIFY word 54, current cylinders (HD_ParseIdentify)
 	.equ HDAE5000_RAM_HdHeads, 0x229c34	; word: IDENTIFY word 55, current heads (HD_ParseIdentify)
+	.equ HDAE5000_RAM_HdSectorBuffer, 0x200228	; 512-byte sector buffer: read-back of HD_WriteTables / _ReadTables, the FAT sectors HD_CountFreeClusters scans, HD_Format's zero sector
+	.equ HDAE5000_RAM_HdVerifyBuffer, 0x200428	; 512-byte read-back buffer of HD_Format's verify pass
+	.equ HDAE5000_RAM_HdVersionKeyWord, 0x229c60	; 0x0000FFEE after HD_ResetVersionKeyWord; HD_CheckVersionKey compares it with HDAE5000_Version_Key
+	.equ HDAE5000_RAM_HdTablesSector, 0x229c74	; disk sector of HD_WriteTables / _ReadTables' current table sector
+	.equ HDAE5000_RAM_HdTablesPtr, 0x229c78	; RAM pointer of that sector within the tables (from DirNames on)
+	.equ HDAE5000_RAM_HdTablesCount, 0x229c7c	; table sectors transferred so far, of 323
+	.equ HDAE5000_RAM_HdCountSector, 0x229c84	; FAT sector HD_CountFreeClusters is scanning
+	.equ HDAE5000_RAM_HdCountEntries, 0x229c88	; FAT entries HD_CountFreeClusters has scanned
+	.equ HDAE5000_RAM_HdFormatSector, 0x229c8c	; disk sector HD_Format_Worker is clearing or verifying
+	.equ HDAE5000_RAM_HdFormatCount, 0x229c90	; sectors done in that pass, of 3906
+	.equ HDAE5000_RAM_HdUsageData, 0x229d10	; data area in units of 10,000 bytes (HD_ComputeDiskUsage)
+	.equ HDAE5000_RAM_HdUsageFree, 0x229d14	; free space in units of 10,000 bytes (HD_ComputeDiskUsage)
+	.equ HDAE5000_RAM_HdUsageDrive, 0x229d18	; the drive in units of 10,000 bytes (HD_ComputeDiskUsage)
+	.equ HDAE5000_RAM_HdUsageSystem, 0x229d1c	; the system area (sectors before the data area) in units of 10,000 bytes
+	.equ HDAE5000_RAM_HdRetries, 0x229d93	; retries left: 7 for HD_WriteTables / _ReadTables, 5 for HD_CountFreeClusters
+	.equ HDAE5000_RAM_HdStatusBytes, 0x229daf	; ten bytes HD_ClearStatusBytes zeroes; no reader found
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

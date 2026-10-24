@@ -208,6 +208,25 @@ RAM = {
                                 " (HD_ParseIdentify; HDAE5000_HD_GetGeometry copies it out)"),
     0x200628: ("HdSettingsSector", "512-byte image of disk sector 1: AA55AA55 F4F1F2F3 signature"
                                    " (HDAE5000_HD_CheckSignature) and the settings (HDAE5000_HD_SaveSettings)"),
+    # ninth run: table, format and usage bookkeeping of the HD driver
+    0x200228: ("HdSectorBuffer", "512-byte sector buffer: read-back of HD_WriteTables / _ReadTables, the FAT"
+                                 " sectors HD_CountFreeClusters scans, HD_Format's zero sector"),
+    0x200428: ("HdVerifyBuffer", "512-byte read-back buffer of HD_Format's verify pass"),
+    0x229C60: ("HdVersionKeyWord", "0x0000FFEE after HD_ResetVersionKeyWord; HD_CheckVersionKey compares it"
+                                   " with HDAE5000_Version_Key"),
+    0x229C74: ("HdTablesSector", "disk sector of HD_WriteTables / _ReadTables' current table sector"),
+    0x229C78: ("HdTablesPtr", "RAM pointer of that sector within the tables (from DirNames on)"),
+    0x229C7C: ("HdTablesCount", "table sectors transferred so far, of 323"),
+    0x229C84: ("HdCountSector", "FAT sector HD_CountFreeClusters is scanning"),
+    0x229C88: ("HdCountEntries", "FAT entries HD_CountFreeClusters has scanned"),
+    0x229C8C: ("HdFormatSector", "disk sector HD_Format_Worker is clearing or verifying"),
+    0x229C90: ("HdFormatCount", "sectors done in that pass, of 3906"),
+    0x229D93: ("HdRetries", "retries left: 7 for HD_WriteTables / _ReadTables, 5 for HD_CountFreeClusters"),
+    0x229D10: ("HdUsageData", "data area in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D14: ("HdUsageFree", "free space in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D18: ("HdUsageDrive", "the drive in units of 10,000 bytes (HD_ComputeDiskUsage)"),
+    0x229D1C: ("HdUsageSystem", "the system area (sectors before the data area) in units of 10,000 bytes"),
+    0x229DAF: ("HdStatusBytes", "ten bytes HD_ClearStatusBytes zeroes; no reader found"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -220,6 +239,7 @@ EXTENT = {
     0x22A0D0: 0x1F9,
     0x200000: 0x200,
     0x200628: 0x200,
+    0x229DAF: 10,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes

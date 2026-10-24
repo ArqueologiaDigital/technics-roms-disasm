@@ -7749,50 +7749,51 @@ HDAE5000_Finalize_Init:	; 28F90Bh
 	; Stub that just returns (placeholder)
 	ret
 
-HDAE5000_HD_FormatDrive:	; 28F90Ch (114 bytes)
-	; Format the hard disk (HDAE5000_HD_Format) bracketed by main-CPU
-	; callbacks: workspace (0x23A1A2)->0x0E88 table +0xE8 (with WA=1) before,
-	; +0xEC and +0xF0 after; with IZ = WA = 1 also the 0x0E0A table +0x538
-	; before and +0x53C after.  Returns HL = HDAE5000_HD_Format's result
-	; (0 = formatted).  Callers: HDAE5000_AttenHDFormatSwCatch and
-	; HDAE5000_PPORT_Svc17_FormatHd.  (It registers nothing: an earlier
-	; header called it "display and callback initialization".)
-	; Input: WA = display mode (1 = with sub-handlers)
-	dec 2, xsp			; allocate 2 bytes on stack
-	pushw iz			; save IZ
-	ld iz, wa			; IZ = mode parameter
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace pointer
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA+0x0E88) — display handler table
-	ld_sril xhl, (xwa + HamaFn_PlayHalt)             ; ld XHL, (XWA+0x00E8) — init callback
-	ld wa, 1:i3			; WA = 1
-	call (xhl)			; call init callback
-	cp iz, 1:i3			; mode == 1?
-	jr nz, .Ldi_skip1		; skip sub-handler if not
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA+0x0E0A) — sub-handler table
-	ld xhl, (xwa + RootFn_SleepMainTask)             ; ld XHL, (XWA+0x0538) — sub-handler callback
-	call (xhl)			; call sub-handler
+; ---------------------------------------------------------------------------
+; Format the hard disk (HDAE5000_HD_Format) inside the main-CPU bracket:
+; HamaFn_PlayHalt(1) before, HamaFn_PlayStandBy and HamaFn_EditSwRefresh
+; after; with WA = 1 also RootFn_SleepMainTask before the format and
+; RootFn_WakeUpMainTask after it.  Callers: HDAE5000_AttenHDFormatSwCatch
+; and HDAE5000_PPORT_Svc17_FormatHd.
+; In:  WA = 1 to put the main task to sleep during the format
+; Out: HL = HDAE5000_HD_Format's result (0 = formatted).  IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_FormatDrive:
+	dec 2, xsp
+	pushw iz
+	ld iz, wa
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld_sril xhl, (xwa + HamaFn_PlayHalt)
+	ld wa, 1:i3
+	call (xhl)
+	cp iz, 1:i3
+	jr nz, .Ldi_skip1
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_SleepMainTask)
+	call (xhl)
 .Ldi_skip1:
 	call HDAE5000_HD_Format
-	ld (xsp + 2), hl		; save result on stack
-	cp iz, 1:i3			; mode == 1?
-	jr nz, .Ldi_skip2		; skip sub-handler if not
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA+0x0E0A)
-	ld xhl, (xwa + RootFn_WakeUpMainTask)             ; ld XHL, (XWA+0x053C) — post-render callback
-	call (xhl)			; call post-render sub-handler
+	ld (xsp + 2), hl
+	cp iz, 1:i3
+	jr nz, .Ldi_skip2
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_WakeUpMainTask)
+	call (xhl)
 .Ldi_skip2:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA+0x0E88)
-	ld_sril xhl, (xwa + HamaFn_PlayStandBy)             ; ld XHL, (XWA+0x00EC) — cleanup callback
-	call (xhl)			; call cleanup
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA+0x0E88)
-	ld_sril xhl, (xwa + HamaFn_EditSwRefresh)             ; ld XHL, (XWA+0x00F0) — final callback
-	call (xhl)			; call final callback
-	ld hl, (xsp + 2)		; restore result from stack
-	popw iz				; restore IZ
-	inc 2, xsp			; deallocate 2 bytes
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld_sril xhl, (xwa + HamaFn_PlayStandBy)
+	call (xhl)
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld_sril xhl, (xwa + HamaFn_EditSwRefresh)
+	call (xhl)
+	ld hl, (xsp + 2)
+	popw iz
+	inc 2, xsp
 	ret
 
 HDAE5000_DirName_Address:	; 0x28F97E (13 bytes)
@@ -14625,13 +14626,17 @@ HDAE5000_RcmStream_FreeSpace:
 	lda	xsp, (xsp+16)
 	ret
 
+; ---------------------------------------------------------------------------
+; Describe one in-RAM filesystem table for the PC link: {long address; word
+; record width; word record count[; word items]} -- block 0 the directory
+; names (HDAE5000_RAM_DirNames, 16, 120: the "FGB" of the service-4 trace),
+; 1 the song records (HDAE5000_RAM_SongRecords, 76, 1920: "FEB"), 2 the FLS
+; records (HDAE5000_RAM_FlsRecords, 144, 120, 32: "FLS").  Any other block
+; returns without storing.  Callers: PC-link services 4-6
+; (SendInfosAbout{Dir,FileSystem,Fls}Block).
+; In:  WA = block, XBC = destination
+; ---------------------------------------------------------------------------
 HDAE5000_HD_GetBlockInfo:
-	; WA = block (0 dir, 1 file system, 2 FLS), XBC = destination: stores
-	; {long address; u16 record width; u16 record count[; u16 items]} of the
-	; in-RAM filesystem table -- 0: 0x201632, 16, 120 (the directory names,
-	; the "FGB" of the service-4 trace); 1: 0x201DB2, 76, 1920 (the file
-	; records, "FEB"); 2: 0x2257B2, 144, 120, 32 ("FLS").  Callers: PC-link
-	; services 4-6 (SendInfosAbout{Dir,FileSystem,Fls}Block).
 	cp	wa, 2:i3
 	jr	z, HDAE5000_HD_GetBlockInfo_Skip2
 	cp	wa, 1:i3
@@ -14660,12 +14665,17 @@ HDAE5000_HD_GetBlockInfo_Skip2:
 	ldw	(xbc+8), 0x0020
 	ret
 
+; ---------------------------------------------------------------------------
+; Song information for PC-link service 13 (SendInfosAboutSong): dest+0 =
+; HDAE5000_Song_PartMask(dir, song) (when that is 0xFFFF nothing else is
+; stored and HL = 0xFFFF), dest+2 = the 16-byte directory name, dest+18 =
+; the 26-byte song name, dest+44 = bytes 26..35 of the 76-byte song record
+; (song records sit 0x780 bytes after DirNames, 0x4C0 per directory, 0x4C
+; per song).
+; In:  WA = directory, BC = song, XDE = destination
+; Out: HL = 0, or 0xFFFF for an empty song.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_GetSongInfo:
-	; (WA = directory, BC = file, XDE = destination; PC-link service 13,
-	; SendInfosAboutSong): dest+0 = HDAE5000_Song_PartMask(WA, BC) (0xFFFF
-	; -> return HL = 0xFFFF), dest+2 = the 16-byte directory name, dest+18 =
-	; the 26-byte file name, dest+44 = bytes 26..35 of the 76-byte file
-	; record.  HL = 0.
 	dec 8, xsp                              ; dec 0,XSP
 	push xiz
 	ld (xsp + 0x04), xde
@@ -14738,76 +14748,81 @@ HDAE5000_HD_GetSongInfo_Epilogue:
 	ret
 
 
-HDAE5000_HD_WriteOpen:	; 0x294273 (43 bytes)
-	; Open a buffered write (the "WriteOpenHD" of PC-link service 21,
-	; HDAE5000_PPORT_Svc21_WriteOpenHD, which calls it):
-	; Input: XWA = pointer to the file's first-cluster slot, kept in
-	;        0x238F28 and later passed as XDE to HDAE5000_HD_WriteFile /
-	;        HDAE5000_HD_AppendFile
-	; Output: HL = 0 (opened; fill pointer 0x238F24 = the 0x8000-byte buffer
-	;         0x230F1C, state 0x238F2C = 1) or 0xFFFF (a write was already
-	;         open: state reset to 0)
-	; (An earlier header read 0x238F28 as a "callback function pointer";
-	; it is only ever used as that XDE.)
-	cp (HDAE5000_RAM_HdStreamState:24), 0x00; write state 0x238F2C: 0 = closed
+; ---------------------------------------------------------------------------
+; Open a buffered write ("WriteOpenHD", PC-link service 21): keep the slot
+; pointer in HDAE5000_RAM_HdStreamSlot (later the XDE of
+; HDAE5000_HD_WriteFile / _AppendFile), fill pointer = start of
+; HDAE5000_RAM_HdStreamBuffer, state 1 (open, nothing written).  When a write
+; was already open the state is reset to 0 instead and HL = 0xFFFF.
+; In:  XWA = pointer to the file's first-cluster slot
+; Out: HL = 0 (opened) or 0xFFFF.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_WriteOpen:
+	cp (HDAE5000_RAM_HdStreamState:24), 0x00
 	jr z, .Lds273_setup
-	ld (HDAE5000_RAM_HdStreamState:24), 0x00; clear active flag
-	ldw hl, 0xFFFF			; return -1 (already active)
+	ld (HDAE5000_RAM_HdStreamState:24), 0x00
+	ldw hl, 0xFFFF
 	jr t, .Lds273_done
 .Lds273_setup:
-	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24); the 0x8000-byte write buffer 0x230F1C
-	ld (HDAE5000_RAM_HdStreamFill:24), xbc; fill pointer 0x238F24 = buffer start
-	ld (HDAE5000_RAM_HdStreamSlot:24), xwa; 0x238F28 = the first-cluster slot pointer
-	ld (HDAE5000_RAM_HdStreamState:24), 0x01; state 1 = open, nothing written yet
-	ld hl, 0:i3			; return 0 (success)
+	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24)
+	ld (HDAE5000_RAM_HdStreamFill:24), xbc
+	ld (HDAE5000_RAM_HdStreamSlot:24), xwa
+	ld (HDAE5000_RAM_HdStreamState:24), 0x01
+	ld hl, 0:i3
 .Lds273_done:
 	ret
 
-HDAE5000_HD_WriteClose:	; 0x29429E (99 bytes)
-	; Close a buffered write ("WriteCloseHD", PC-link service 22): the
-	; bytes still in the buffer (fill pointer 0x238F24 - 0x230F1C) go out
-	; with HDAE5000_HD_WriteFile while state 0x238F2C is 1 (nothing written
-	; yet) or HDAE5000_HD_AppendFile otherwise; state -> 0.
-	; (Was described as executing a "display callback".)
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24); buffer start 0x230F1C
-	cp xwa, (HDAE5000_RAM_HdStreamFill:24); buffer empty (fill pointer 0x238F24 at start)?
+; ---------------------------------------------------------------------------
+; Close a buffered write ("WriteCloseHD", PC-link service 22): the bytes
+; still in HDAE5000_RAM_HdStreamBuffer go out with HDAE5000_HD_WriteFile
+; while HdStreamState is 1 (nothing on disk yet), with
+; HDAE5000_HD_AppendFile otherwise; state -> 0.
+; Out: clobbers XWA, XBC, XDE, XHL.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_WriteClose:
+	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
+	cp xwa, (HDAE5000_RAM_HdStreamFill:24)
 	jr z, .Lds29e_clear
-	cp (HDAE5000_RAM_HdStreamState:24), 0x01; state 1: nothing on disk yet
+	cp (HDAE5000_RAM_HdStreamState:24), 0x01
 	jr nz, .Lds29e_restore
 	; State 1: the buffer is the whole file -> HD_WriteFile
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24); XWA = buffer start
-	ld xhl, xwa			; XHL = buffer start
-	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24); XBC = base
-	ld xwa, (HDAE5000_RAM_HdStreamFill:24); XWA = fill pointer
-	sub xwa, xbc			; XWA = bytes in the buffer
-	ld xbc, xwa			; XBC = byte count
-	ld xde, (HDAE5000_RAM_HdStreamSlot:24); XDE = first-cluster slot pointer (0x238F28)
-	ld xwa, xhl			; XWA = source (buffer start)
+	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
+	ld xhl, xwa
+	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24)
+	ld xwa, (HDAE5000_RAM_HdStreamFill:24)
+	sub xwa, xbc
+	ld xbc, xwa
+	ld xde, (HDAE5000_RAM_HdStreamSlot:24)
+	ld xwa, xhl
 	call HDAE5000_HD_WriteFile
-	ld (HDAE5000_RAM_HdStreamState:24), 0x02; set state to 2
+	ld (HDAE5000_RAM_HdStreamState:24), 0x02
 	jr t, .Lds29e_clear
 .Lds29e_restore:
 	; State 2: earlier chunks written -> HD_AppendFile
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24); XWA = buffer start
+	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
 	ld xhl, xwa
-	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24); XBC = base
-	ld xwa, (HDAE5000_RAM_HdStreamFill:24); XWA = fill pointer
-	sub xwa, xbc			; XWA = bytes in the buffer
-	ld xbc, xwa			; XBC = byte count
-	ld xde, (HDAE5000_RAM_HdStreamSlot:24); XDE = first-cluster slot pointer
-	ld xwa, xhl			; XWA = source (buffer start)
+	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24)
+	ld xwa, (HDAE5000_RAM_HdStreamFill:24)
+	sub xwa, xbc
+	ld xbc, xwa
+	ld xde, (HDAE5000_RAM_HdStreamSlot:24)
+	ld xwa, xhl
 	call HDAE5000_HD_AppendFile
 .Lds29e_clear:
-	ld (HDAE5000_RAM_HdStreamState:24), 0x00; state 0 = closed
+	ld (HDAE5000_RAM_HdStreamState:24), 0x00
 	ret
 
-HDAE5000_HD_WriteStream:	; 0x294301 (275 bytes)
-	; Buffered write ("WriteFileHD", PC-link service 23): XWA = source,
-	; XBC = byte count.  Copies into the 0x8000-byte buffer 0x230F1C (at
-	; fill pointer 0x238F24, in HDAE5000_MemCopy pieces of at most 0xFFFF);
-	; each time it fills, the buffer goes to disk -- HDAE5000_HD_WriteFile
-	; the first time (state 0x238F2C 1 -> 2), HDAE5000_HD_AppendFile after
-	; that.  HL = 0, or 0xFFFF when no write is open or a disk write fails.
+; ---------------------------------------------------------------------------
+; Buffered write ("WriteFileHD", PC-link service 23): copy the source into
+; HDAE5000_RAM_HdStreamBuffer at HdStreamFill (HDAE5000_MemCopy pieces of at
+; most 0xFFFF bytes); each time the 0x8000-byte buffer fills it goes to disk
+; -- HDAE5000_HD_WriteFile the first time (HdStreamState 1 -> 2),
+; HDAE5000_HD_AppendFile after that -- and the fill pointer restarts.
+; In:  XWA = source, XBC = byte count
+; Out: HL = 0; 0xFFFF when no write is open or XBC = 0; a failed disk write's
+;      result stops the copy and is returned.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_HD_WriteStream:
 	lda xsp, (xsp - 14)
 	push xiz
 	ld (xsp + 10), xbc		; save arg1
@@ -19958,7 +19973,7 @@ HDAE5000_HD_CheckSignature_Done:
 	push xix
 	lda xix, (HDAE5000_Version_Key:24)
 	ld xwa, (xix)
-	ld	xbc, (0x229c60)
+	ld	xbc, (HDAE5000_RAM_HdVersionKeyWord)
 	cp	xwa, xbc
 	jp	z, (.LHD_CheckSignature_Done_Skip1:24)
 	pop xix
@@ -20517,20 +20532,20 @@ HDAE5000_HD_WriteTables:			; 0x297A8D
 	push xix
 	push xiy
 	push xiz
-	ld (0x229d93:24), 0x07; (0x229D93) = 7 — retry counter
+	ld (HDAE5000_RAM_HdRetries:24), 0x07; (0x229D93) = 7 — retry counter
 .Lhciv_config_restart:			; 0x297A9A
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24); XWA = (0x229C64) — HD base sector
-	ld (0x229c74:24), xwa; (0x229C74) = current sector
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa; (0x229C74) = current sector
 	ld xwa, HDAE5000_RAM_DirNames		; 0x201632 — RAM buffer base
-	ld (0x229c78:24), xwa; (0x229C78) = buffer ptr
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa; (0x229C78) = buffer ptr
 	xor xwa, xwa
-	ld (0x229c7c:24), xwa; (0x229C7C) = sector counter = 0
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa; (0x229C7C) = sector counter = 0
 .Lhciv_write_loop:			; 0x297AB5
 	ld xwa, 323			; 0x143 — total sectors
-	cp (2268284:24), xwa; cp (0x229C7C), XWA — counter == 323?
+	cp (HDAE5000_RAM_HdTablesCount:24), xwa; cp (0x229C7C), XWA — counter == 323?
 	jp z, (.Lhdd_verify1:24)		; jp Z, verify phase (0x297B09 in next block)
-	ld xhl, (0x229c74:24); XHL = (0x229C74) — current sector
-	ld xix, (0x229c78:24); XIX = (0x229C78) — current buffer ptr
+	ld xhl, (HDAE5000_RAM_HdTablesSector:24); XHL = (0x229C74) — current sector
+	ld xix, (HDAE5000_RAM_HdTablesPtr:24); XIX = (0x229C78) — current buffer ptr
 	call HDAE5000_ATA_WriteSector			; call 0x29769B — write sector to HD
 	; Function continues in next block (HD_Detect_Drive)
 
@@ -20545,37 +20560,37 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	; After calling write sector, check error and increment counters
 	cp (HDAE5000_RAM_AtaError:24), 0x00; cp (0x200222), 0 — error?
 	jp nz, (.Lhdd_error1:24)		; jp NZ, .Lhdd_error1
-	ld xwa, (0x229c74:24); XWA = (0x229C74) sector++
+	ld xwa, (HDAE5000_RAM_HdTablesSector:24); XWA = (0x229C74) sector++
 	inc 1, xwa
-	ld (0x229c74:24), xwa
-	ld xwa, (0x229c7c:24); XWA = (0x229C7C) counter++
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesCount:24); XWA = (0x229C7C) counter++
 	inc 1, xwa
-	ld (0x229c7c:24), xwa
-	ld xwa, (0x229c78:24); XWA = (0x229C78) buffer += 512
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesPtr:24); XWA = (0x229C78) buffer += 512
 	add xwa, 512
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhciv_write_loop		; loop back to write phase
 
 	; --- Verify phase: read back each sector, compare with RAM ---
 .Lhdd_verify1:				; 0x297B09
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24); base sector → (0x229C74)
-	ld (0x229c74:24), xwa
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames		; 0x201632 → (0x229C78)
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	xor xwa, xwa
-	ld (0x229c7c:24), xwa; counter = 0
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa; counter = 0
 .Lhdd_verify_loop1:			; 0x297B24
 	ld xwa, 323
-	cp (2268284:24), xwa; counter == 323?
+	cp (HDAE5000_RAM_HdTablesCount:24), xwa; counter == 323?
 	jp z, (.Lhdd_success1:24)		; jp Z, .Lhdd_success1
-	ld xhl, (0x229c74:24); XHL = current sector
+	ld xhl, (HDAE5000_RAM_HdTablesSector:24); XHL = current sector
 	ld xde, 512			; 512 bytes
-	ld xix, 2097704			; 0x200228 read buffer
+	ld xix, HDAE5000_RAM_HdSectorBuffer			; 0x200228 read buffer
 	call HDAE5000_ATA_ReadSector			; read sector to buffer
 	cp (HDAE5000_RAM_AtaError:24), 0x00; error check
 	jp nz, (.Lhdd_error1:24)		; jp NZ, .Lhdd_error1
-	ld xix, (0x229c78:24); XIX = RAM buffer ptr
-	ld xiy, 2097704			; XIY = read buffer
+	ld xix, (HDAE5000_RAM_HdTablesPtr:24); XIX = RAM buffer ptr
+	ld xiy, HDAE5000_RAM_HdSectorBuffer			; XIY = read buffer
 	ld bc, 0:i3
 .Lhdd_compare_loop1:			; 0x297B5D
 	cp bc, 512			; compared all 512 bytes?
@@ -20586,15 +20601,15 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 	inc 4, bc			; 4 bytes at a time
 	jp .Lhdd_compare_loop1
 .Lhdd_verify_next1:			; 0x297B7B
-	ld xwa, (0x229c74:24); sector++
+	ld xwa, (HDAE5000_RAM_HdTablesSector:24); sector++
 	inc 1, xwa
-	ld (0x229c74:24), xwa
-	ld xwa, (0x229c7c:24); counter++
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesCount:24); counter++
 	inc 1, xwa
-	ld (0x229c7c:24), xwa
-	ld xwa, (0x229c78:24); buffer += 512
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesPtr:24); buffer += 512
 	add xwa, 512
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhdd_verify_loop1
 
 	; --- Success exit 1 ---
@@ -20610,9 +20625,9 @@ HDAE5000_HD_WriteTables_Next:	; 0x297AD2 (836 bytes)
 
 	; --- Error handler 1: retry or set error flag ---
 .Lhdd_error1:				; 0x297BAF
-	cp (0x229d93:24), 0x00; (0x229D93) retry == 0?
+	cp (HDAE5000_RAM_HdRetries:24), 0x00; (0x229D93) retry == 0?
 	jp z, (.Lhdd_final_error1:24)		; jp Z, .Lhdd_final_error1
-	dec 1, (2268563:24); retry--
+	dec 1, (HDAE5000_RAM_HdRetries:24); retry--
 	jp .Lhciv_config_restart	; restart from scratch
 .Lhdd_final_error1:			; 0x297BC3
 	ld (HDAE5000_RAM_AtaError:24), 0x01; (0x200222) = 1 error flag
@@ -20641,55 +20656,55 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	push xix
 	push xiy
 	push xiz
-	ld (0x229d93:24), 0x07; retry = 7
+	ld (HDAE5000_RAM_HdRetries:24), 0x07; retry = 7
 .Lhdd_restart2:				; 0x297BF6
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24); base sector
-	ld (0x229c74:24), xwa
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
-	ld (0x229c78:24), xwa; buffer = 0x201632
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa; buffer = 0x201632
 	xor xwa, xwa
-	ld (0x229c7c:24), xwa; counter = 0
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa; counter = 0
 	; Read phase: read each of 323 sectors into RAM
 .Lhdd_read_loop2:			; 0x297C11
 	ld xwa, 323
-	cp (2268284:24), xwa; counter == 323?
+	cp (HDAE5000_RAM_HdTablesCount:24), xwa; counter == 323?
 	jp z, (.Lhdd_verify_start2:24)		; jp Z, .Lhdd_verify_start2
 	ld xde, 512
-	ld xhl, (0x229c74:24); current sector
-	ld xix, (0x229c78:24); current buffer ptr
+	ld xhl, (HDAE5000_RAM_HdTablesSector:24); current sector
+	ld xix, (HDAE5000_RAM_HdTablesPtr:24); current buffer ptr
 	call HDAE5000_ATA_ReadSector			; read sector
 	cp (HDAE5000_RAM_AtaError:24), 0x00
 	jp nz, (.Lhdd_error2:24)		; jp NZ, .Lhdd_error2
-	ld xwa, (0x229c7c:24); counter++
+	ld xwa, (HDAE5000_RAM_HdTablesCount:24); counter++
 	inc 1, xwa
-	ld (0x229c7c:24), xwa
-	ld xwa, (0x229c74:24); sector++
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesSector:24); sector++
 	inc 1, xwa
-	ld (0x229c74:24), xwa
-	ld xwa, (0x229c78:24); buffer += 512
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesPtr:24); buffer += 512
 	add xwa, 512
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhdd_read_loop2
 	; Verify phase: re-read each sector, compare with RAM copy
 .Lhdd_verify_start2:			; 0x297C6A
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24)
-	ld (0x229c74:24), xwa
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	xor xwa, xwa
-	ld (0x229c7c:24), xwa
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa
 .Lhdd_verify_loop2:			; 0x297C85
 	ld xwa, 323
-	cp (2268284:24), xwa
+	cp (HDAE5000_RAM_HdTablesCount:24), xwa
 	jp z, (.Lhdd_success2:24)		; jp Z, .Lhdd_success2
-	ld xhl, (0x229c74:24)
+	ld xhl, (HDAE5000_RAM_HdTablesSector:24)
 	ld xde, 512
-	ld xix, 2097704			; read into 0x200228
+	ld xix, HDAE5000_RAM_HdSectorBuffer			; read into 0x200228
 	call HDAE5000_ATA_ReadSector
 	cp (HDAE5000_RAM_AtaError:24), 0x00
 	jp nz, (.Lhdd_error2:24)		; jp NZ, .Lhdd_error2
-	ld xix, (0x229c78:24); RAM buffer
-	ld xiy, 2097704			; read buffer
+	ld xix, (HDAE5000_RAM_HdTablesPtr:24); RAM buffer
+	ld xiy, HDAE5000_RAM_HdSectorBuffer			; read buffer
 	ld bc, 0:i3
 .Lhdd_compare_loop2:			; 0x297CBE
 	cp bc, 512
@@ -20700,15 +20715,15 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	inc 4, bc
 	jp .Lhdd_compare_loop2
 .Lhdd_verify_next2:			; 0x297CDC
-	ld xwa, (0x229c74:24)
+	ld xwa, (HDAE5000_RAM_HdTablesSector:24)
 	inc 1, xwa
-	ld (0x229c74:24), xwa
-	ld xwa, (0x229c7c:24)
+	ld (HDAE5000_RAM_HdTablesSector:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesCount:24)
 	inc 1, xwa
-	ld (0x229c7c:24), xwa
-	ld xwa, (0x229c78:24)
+	ld (HDAE5000_RAM_HdTablesCount:24), xwa
+	ld xwa, (HDAE5000_RAM_HdTablesPtr:24)
 	add xwa, 512
-	ld (0x229c78:24), xwa
+	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
 	jp .Lhdd_verify_loop2
 
 .Lhdd_success2:			; 0x297D08
@@ -20722,9 +20737,9 @@ HDAE5000_HD_ReadTables:			; 0x297BE9
 	ret
 
 .Lhdd_error2:				; 0x297D10
-	cp (0x229d93:24), 0x00
+	cp (HDAE5000_RAM_HdRetries:24), 0x00
 	jp z, (.Lhdd_final_error2:24)		; jp Z, .Lhdd_final_error2
-	dec 1, (2268563:24)
+	dec 1, (HDAE5000_RAM_HdRetries:24)
 	jp .Lhdd_restart2
 .Lhdd_final_error2:			; 0x297D24
 	ld (HDAE5000_RAM_AtaError:24), 0x01
@@ -20756,32 +20771,32 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	push xix
 	push xiy
 	push xiz
-	ld (0x229d93:24), 0x05; retry = 5
+	ld (HDAE5000_RAM_HdRetries:24), 0x05; retry = 5
 .Lhdd_restart3:				; 0x297D56
 	xor xwa, xwa
 	ld (HDAE5000_RAM_FreeClusters:24), xwa; free count = 0
 	ld xwa, (HDAE5000_RAM_FatStartSector:24); base sector from (0x229C68)
-	ld (0x229c84:24), xwa; → (0x229C84) current sector
+	ld (HDAE5000_RAM_HdCountSector:24), xwa; → (0x229C84) current sector
 	xor xwa, xwa
-	ld (0x229c88:24), xwa; (0x229C88) = 0 counter
+	ld (HDAE5000_RAM_HdCountEntries:24), xwa; (0x229C88) = 0 counter
 .Lhdd_outer3:				; 0x297D6E
 	ld xwa, (HDAE5000_RAM_FatEntryCount:24); total sectors (0x229C70)
-	cp (2268296:24), xwa; counter >= total?
+	cp (HDAE5000_RAM_HdCountEntries:24), xwa; counter >= total?
 	jp nc, (.Lhdd_success3:24)		; jp NC, .Lhdd_success3
 	ld xde, 512
-	ld xhl, (0x229c84:24); current sector
-	lda xix, (0x200228:24); XIX = &0x200228
+	ld xhl, (HDAE5000_RAM_HdCountSector:24); current sector
+	lda xix, (HDAE5000_RAM_HdSectorBuffer:24); XIX = &0x200228
 	call HDAE5000_ATA_ReadSector			; read sector
 	cp (HDAE5000_RAM_AtaError:24), 0x00
 	jp nz, (.Lhdd_error3:24)		; jp NZ, .Lhdd_error3
-	lda xix, (0x200228:24)
+	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	ld bc, 0:i3
 .Lhdd_inner3:				; 0x297DA2
 	cp bc, 512			; scanned all bytes?
 	jp z, (.Lhdd_next_sector3:24)		; jp Z, .Lhdd_next_sector3
-	ld xwa, (0x229c88:24); increment scan counter
+	ld xwa, (HDAE5000_RAM_HdCountEntries:24); increment scan counter
 	inc 1, xwa
-	ld (0x229c88:24), xwa
+	ld (HDAE5000_RAM_HdCountEntries:24), xwa
 	ld	xwa, (xix+bc)	; XWA = (XIX+BC)
 	inc 4, bc
 	cp xwa, 0			; is this 32-bit word zero?
@@ -20791,9 +20806,9 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	ld (HDAE5000_RAM_FreeClusters:24), xwa
 	jp .Lhdd_inner3			; continue scanning
 .Lhdd_next_sector3:			; 0x297DD9
-	ld xwa, (0x229c84:24); sector++
+	ld xwa, (HDAE5000_RAM_HdCountSector:24); sector++
 	inc 1, xwa
-	ld (0x229c84:24), xwa
+	ld (HDAE5000_RAM_HdCountSector:24), xwa
 	jp .Lhdd_outer3
 
 .Lhdd_success3:			; 0x297DE9
@@ -20807,9 +20822,9 @@ HDAE5000_HD_CountFreeClusters:			; 0x297D49
 	ret
 
 .Lhdd_error3:				; 0x297DF1
-	cp (0x229d93:24), 0x00
+	cp (HDAE5000_RAM_HdRetries:24), 0x00
 	jp z, (.Lhdd_final_error3:24)		; jp Z, .Lhdd_final_error3
-	dec 1, (2268563:24)
+	dec 1, (HDAE5000_RAM_HdRetries:24)
 	jp .Lhdd_restart3
 .Lhdd_final_error3:			; 0x297E05
 	ld (HDAE5000_RAM_AtaError:24), 0x01
@@ -21583,16 +21598,12 @@ HDAE5000_HD_FreeChain_Worker:
 	pop xwa
 	ret
 
+; ---------------------------------------------------------------------------
+; C-callable format: HDAE5000_HD_Format_Worker, then HDAE5000_ATA_Standby and
+; HDAE5000_HD_ClearStatusBytes.  Only caller: HDAE5000_HD_FormatDrive.
+; Out: HL = HDAE5000_RAM_AtaError, the worker's step code (0 = formatted).
+; ---------------------------------------------------------------------------
 HDAE5000_HD_Format:	; 0x298622 (cross-reference from Display_Init)
-	; (Display_Init is now HDAE5000_HD_FormatDrive, its only caller.)
-	; C-callable: HDAE5000_HD_Format_Worker, then HDAE5000_ATA_Standby and
-	; HDAE5000_HD_ClearStatusBytes; returns L = the drive error byte
-	; 0x200222 (0 = formatted).
-; LDSR: 0x298622 (7600 bytes)
-	; ^ conversion-region size (local-label prefix .LDSR_), not a routine
-	;   size: the format code, the disk-usage helpers, the settings-sector
-	;   routines and an unreachable browser library (see below).
-
 	call HDAE5000_HD_Format_Worker
 	xor	hl, hl
 	ld	l, (HDAE5000_RAM_AtaError:24)
@@ -21602,22 +21613,27 @@ HDAE5000_HD_Format:	; 0x298622 (cross-reference from Display_Init)
 	popw hl                                 ; pop HL
 	ret
 
+; ---------------------------------------------------------------------------
+; Format the drive; the step that fails leaves its code in
+; HDAE5000_RAM_AtaError:
+; 1. IDENTIFY and HDAE5000_HD_ParseIdentify; blank tables
+;    (HDAE5000_HD_InitTables) written (HDAE5000_HD_WriteTables; error 1).
+;    An IDENTIFY failure loads 6 into A, which the register restore at the
+;    exit discards: AtaError keeps ATA_IdentifyDevice's own code.
+; 2. Zero the 3,906 sectors from FatStartSector (2) -- the whole FAT area,
+;    up to the tables at 3908 (write error 2) -- then read every one back
+;    into HdVerifyBuffer and compare it with the zero sector HdSectorBuffer
+;    (3 = read error, 4 = mismatch).
+; 3. Build the settings sector (HDAE5000_HD_BuildSettingsSector) and write
+;    it to sector 1 (error 5).
+; 4. Remount as HDAE5000_HD_Init does: soft reset (11), IDENTIFY (6), read
+;    sector 1 (7), signature (8), its six setting bytes to QuickLoadMode ..
+;    LyricBackColor, free clusters (9), tables (10).
+; Always ends with HDAE5000_ATA_Standby.  All registers kept.
+; RAM: HDAE5000_RAM_HdFormatSector, _HdFormatCount, _HdSectorBuffer,
+;      _HdVerifyBuffer, _HdSettingsSector
+; ---------------------------------------------------------------------------
 HDAE5000_HD_Format_Worker:
-	; 1. IDENTIFY and HDAE5000_HD_ParseIdentify; blank tables
-	;    (HDAE5000_HD_InitTables) written (HDAE5000_HD_WriteTables; error 1).
-	;    An IDENTIFY failure loads 6 into A, which the register restore at
-	;    the exit discards: 0x200222 keeps ATA_IdentifyDevice's own code.
-	; 2. Zero the 3,906 sectors from the FAT start 0x229C68 (= 2) -- the whole
-	;    FAT area, up to the tables at 3908 (write error 2) -- then read every
-	;    one back and compare it with the zero buffer 0x200228 (3 = read
-	;    error, 4 = mismatch).
-	; 3. Build the settings sector (HDAE5000_HD_BuildSettingsSector) and write
-	;    it to sector 1 (error 5).
-	; 4. Remount as HDAE5000_HD_Init does: soft reset (11), IDENTIFY (6), read
-	;    sector 1 (7), signature (8), its six setting bytes to 0x229DA9..AE,
-	;    free clusters (9), tables (10).
-	; Codes go to the drive error byte 0x200222; always ends with
-	; HDAE5000_ATA_Standby.
 	push xwa
 	push xbc
 	push xde
@@ -21639,51 +21655,51 @@ HDAE5000_HD_Format_Worker:
 	ld	(HDAE5000_RAM_AtaError:24), 1
 	jp HDAE5000_HD_Format_Exit                             ; jp 0x29888a
 .LHD_Format_Worker_Skip2:
-	lda xix, (0x200228:24)
+	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	call HDAE5000_HD_ZeroSector
 	ld	xwa, (HDAE5000_RAM_FatStartSector)
-	ld	(0x229c8c), xwa
+	ld	(HDAE5000_RAM_HdFormatSector), xwa
 	xor	xwa, xwa
-	ld	(0x229c90), xwa
+	ld	(HDAE5000_RAM_HdFormatCount), xwa
 HDAE5000_HD_Format_ClearLoop:
-	ld	xwa, (0x229c90)
+	ld	xwa, (HDAE5000_RAM_HdFormatCount)
 	cp	xwa, 0x00000f42
 	jp	z, (.LHD_Format_ClearLoop_Skip2:24)
-	ld	xhl, (0x229c8c)
-	lda xix, (0x200228:24)
+	ld	xhl, (HDAE5000_RAM_HdFormatSector)
+	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
 	call HDAE5000_ATA_WriteSector
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_ClearLoop_Skip1:24)
 	ld	(HDAE5000_RAM_AtaError:24), 2
 	jp HDAE5000_HD_Format_Exit                             ; jp 0x29888a
 .LHD_Format_ClearLoop_Skip1:
-	ld	xwa, (0x229c8c)
+	ld	xwa, (HDAE5000_RAM_HdFormatSector)
 	add	xwa, 0x00000001
-	ld	(0x229c8c), xwa
-	ld	xwa, (0x229c90)
+	ld	(HDAE5000_RAM_HdFormatSector), xwa
+	ld	xwa, (HDAE5000_RAM_HdFormatCount)
 	add	xwa, 0x00000001
-	ld	(0x229c90), xwa
+	ld	(HDAE5000_RAM_HdFormatCount), xwa
 	jp HDAE5000_HD_Format_ClearLoop                             ; jp 0x29868f
 .LHD_Format_ClearLoop_Skip2:
 	ld	xwa, (HDAE5000_RAM_FatStartSector)
-	ld	(0x229c8c), xwa
+	ld	(HDAE5000_RAM_HdFormatSector), xwa
 	xor	xwa, xwa
-	ld	(0x229c90), xwa
+	ld	(HDAE5000_RAM_HdFormatCount), xwa
 HDAE5000_HD_Format_VerifyLoop:
-	ld	xwa, (0x229c90)
+	ld	xwa, (HDAE5000_RAM_HdFormatCount)
 	cp	xwa, 0x00000f42
 	jp	z, (.LHD_Format_CompareLoop_Skip2:24)
-	ld	xhl, (0x229c8c)
+	ld	xhl, (HDAE5000_RAM_HdFormatSector)
 	ld	xde, 0x00000200
-	lda xix, (0x200428:24)
+	lda xix, (HDAE5000_RAM_HdVerifyBuffer:24)
 	call HDAE5000_ATA_ReadSector
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	jp	z, (.LHD_Format_VerifyLoop_Skip1:24)
 	ld	(HDAE5000_RAM_AtaError:24), 3
 	jp HDAE5000_HD_Format_Exit                             ; jp 0x29888a
 .LHD_Format_VerifyLoop_Skip1:
-	lda xix, (0x200228:24)
-	lda xiy, (0x200428:24)
+	lda xix, (HDAE5000_RAM_HdSectorBuffer:24)
+	lda xiy, (HDAE5000_RAM_HdVerifyBuffer:24)
 	ld	bc, 0:i3
 HDAE5000_HD_Format_CompareLoop:
 	cp	bc, 0x0200
@@ -21697,12 +21713,12 @@ HDAE5000_HD_Format_CompareLoop_Skip:
 	inc	4, bc
 	jp HDAE5000_HD_Format_CompareLoop                             ; jp 0x29873b
 .LHD_Format_CompareLoop_Skip1:
-	ld	xwa, (0x229c8c)
+	ld	xwa, (HDAE5000_RAM_HdFormatSector)
 	add	xwa, 0x00000001
-	ld	(0x229c8c), xwa
-	ld	xwa, (0x229c90)
+	ld	(HDAE5000_RAM_HdFormatSector), xwa
+	ld	xwa, (HDAE5000_RAM_HdFormatCount)
 	add	xwa, 0x00000001
-	ld	(0x229c90), xwa
+	ld	(HDAE5000_RAM_HdFormatCount), xwa
 	jp HDAE5000_HD_Format_VerifyLoop                             ; jp 0x2986f7
 .LHD_Format_CompareLoop_Skip2:
 	call HDAE5000_HD_BuildSettingsSector
@@ -21783,8 +21799,12 @@ HDAE5000_HD_Format_Exit:
 	pop xwa
 	ret
 
+; ---------------------------------------------------------------------------
+; Zero 512 bytes.
+; In:  XIX = buffer
+; Out: A = 0, BC = 0x200.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_ZeroSector:
-	; 512 zero bytes at XIX
 	ld	a, 0x00:opc
 	xor	bc, bc
 HDAE5000_HD_ZeroSector_Loop:
@@ -21796,12 +21816,15 @@ HDAE5000_HD_ZeroSector_Loop:
 .LHD_ZeroSector_Return1:
 	ret
 
+; ---------------------------------------------------------------------------
+; Build a fresh sector-1 image in HDAE5000_RAM_HdSettingsSector: zeroed, the
+; signature AA55AA55 F4F1F2F3, the 112-byte HDAE5000_Version_Info, the six
+; setting bytes = 1 (also stored to QuickLoadMode .. LyricBackColor), then
+; 0xFFFFFFFF.  The format's counterpart of HDAE5000_HD_SaveSettings, which
+; writes the current settings instead of 1s.
+; Out: clobbers XWA, XIX, XIY, XIZ.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_BuildSettingsSector:
-	; Build a fresh sector-1 image at 0x200628: zeroed, the signature
-	; AA55AA55 F4F1F2F3, the 112-byte HDAE5000_Version_Info, the six setting
-	; bytes = 1 (also stored to 0x229DA9..AE), then 0xFFFFFFFF.  The format's
-	; counterpart of HDAE5000_HD_SaveSettings, which writes the current
-	; settings instead of 1s.
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
 	call HDAE5000_HD_ZeroSector
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
@@ -21888,12 +21911,14 @@ HDAE5000_DeadLib_CopyName26_Loop:
 	pop xix
 	ret
 
+; ---------------------------------------------------------------------------
+; HDAE5000_RAM_HdVersionKeyWord = 0x0000FFEE: the long
+; HDAE5000_HD_CheckVersionKey compares with the "XXXX" of
+; HDAE5000_Version_Key.  Called by HDAE5000_HD_CheckSignature.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_ResetVersionKeyWord:
-	; RAM 0x229C60 = 0x0000FFEE: the long HDAE5000_HD_CheckVersionKey compares
-	; with the "XXXX" of HDAE5000_Version_Key.  Called by
-	; HDAE5000_HD_CheckSignature.
 	ld	xwa, 0x0000ffee
-	ld	(0x229c60), xwa
+	ld	(HDAE5000_RAM_HdVersionKeyWord), xwa
 	ret
 
 ; ----------------------------------------------------------------------------
@@ -22128,27 +22153,33 @@ HDAE5000_DeadLib_Delay37x4095_Inner:
 	pop xwa
 	ret
 
+; ---------------------------------------------------------------------------
+; Four longs in units of 10,000 bytes (HDAE5000_HD_ComputeDiskUsage): +0 the
+; drive (HdUsableSectors), +4 the system area (DataStartSector + 1
+; sectors), +8 the data area (cluster bytes x FatEntryCount), +12 the free
+; space (cluster bytes x FreeClusters).
+; In:  XWA = destination.  XIZ preserved; clobbers XBC.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_GetDiskUsage:
-	; XWA = destination of four longs, each in units of 10,000 bytes
-	; (HDAE5000_HD_ComputeDiskUsage): +0 the drive (0x200223 sectors), +4 the
-	; system area (data-area start 0x229C6C + 1 sectors), +8 the data area
-	; (cluster bytes x FAT entries 0x229C70), +12 the free space (cluster
-	; bytes x free clusters 0x229C80).
 	push xiz
 	call HDAE5000_HD_ComputeDiskUsage
-	ld	xbc, (0x229d18)
+	ld	xbc, (HDAE5000_RAM_HdUsageDrive)
 	ld (xwa), xbc
-	ld	xbc, (0x229d1c)
+	ld	xbc, (HDAE5000_RAM_HdUsageSystem)
 	ld (xwa + 0x04), xbc
-	ld	xbc, (0x229d10)
+	ld	xbc, (HDAE5000_RAM_HdUsageData)
 	ld (xwa + 0x08), xbc
-	ld	xbc, (0x229d14)
+	ld	xbc, (HDAE5000_RAM_HdUsageFree)
 	ld (xwa + 0x0c), xbc
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; Fill HDAE5000_RAM_HdUsageDrive, _HdUsageSystem, _HdUsageData and
+; _HdUsageFree (units of 10,000 bytes) for HDAE5000_HD_GetDiskUsage.
+; XWA, XBC preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_ComputeDiskUsage:
-	; fills 0x229D18 (drive), 0x229D1C (system area), 0x229D10 (data area), 0x229D14 (free) for HDAE5000_HD_GetDiskUsage
 	push xwa
 	push xbc
 	ld	xwa, (HDAE5000_RAM_HdUsableSectors)
@@ -22156,7 +22187,7 @@ HDAE5000_HD_ComputeDiskUsage:
 	call HDAE5000_HD_Mul32
 	ld	xbc, 0x00002710
 	call HDAE5000_HD_UDiv32
-	ld	(0x229d18), xwa
+	ld	(HDAE5000_RAM_HdUsageDrive), xwa
 	ld	xwa, (HDAE5000_RAM_DataStartSector)
 	dec	1, xwa
 	add	xwa, 0x00000002
@@ -22164,7 +22195,7 @@ HDAE5000_HD_ComputeDiskUsage:
 	call HDAE5000_HD_Mul32
 	ld	xbc, 0x00002710
 	call HDAE5000_HD_UDiv32
-	ld	(0x229d1c), xwa
+	ld	(HDAE5000_RAM_HdUsageSystem), xwa
 	ld	xwa, (HDAE5000_RAM_SectorsPerCluster)
 	ld	xbc, 0x00000200
 	call HDAE5000_HD_Mul32
@@ -22173,31 +22204,33 @@ HDAE5000_HD_ComputeDiskUsage:
 	call HDAE5000_HD_Mul32
 	ld	xbc, 0x00002710
 	call HDAE5000_HD_UDiv32
-	ld	(0x229d10), xwa
+	ld	(HDAE5000_RAM_HdUsageData), xwa
 	pop xwa
 	ld	xbc, (HDAE5000_RAM_FreeClusters)
 	call HDAE5000_HD_Mul32
 	ld	xbc, 0x00002710
 	call HDAE5000_HD_UDiv32
-	ld	(0x229d14), xwa
+	ld	(HDAE5000_RAM_HdUsageFree), xwa
 	pop xbc
 	pop xwa
 	ret
 
+; ---------------------------------------------------------------------------
+; Zero the ten bytes of HDAE5000_RAM_HdStatusBytes.  No reader of them was
+; found (each address literal searched in all seven hdae5000 sources).
+; Callers: HDAE5000_HD_Init, HDAE5000_HD_Format.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_ClearStatusBytes:
-	; zero the ten bytes 0x229DAF..0x229DB8.  No reader of them was found
-	; (each address literal searched in all seven hdae5000 sources).
-	; Callers: HDAE5000_HD_Init, HDAE5000_HD_Format.
-	ld	(0x229DAF:24), 0
-	ld	(0x229DB0:24), 0
-	ld	(0x229DB1:24), 0
-	ld	(0x229DB2:24), 0
-	ld	(0x229DB3:24), 0
-	ld	(0x229DB4:24), 0
-	ld	(0x229DB5:24), 0
-	ld	(0x229DB6:24), 0
-	ld	(0x229DB7:24), 0
-	ld	(0x229DB8:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+1:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+2:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+3:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+4:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+5:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+6:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+7:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+8:24), 0
+	ld	(HDAE5000_RAM_HdStatusBytes+9:24), 0
 	ret
 
 HDAE5000_NameBuf_IsNotBlank:
@@ -22222,16 +22255,22 @@ HDAE5000_NameBuf_IsNotBlank_Loop:
 	pop xbc
 	ret
 
+; ---------------------------------------------------------------------------
+; Clusters needed for a byte count (HDAE5000_HD_BytesToClusters).
+; In:  XWA = byte count
+; Out: XHL = clusters.  XIZ preserved; clobbers XWA, XBC.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_ClusterCount:
-	; XWA = byte count -> XHL = clusters needed (HDAE5000_HD_BytesToClusters)
 	push xiz
 	call HDAE5000_HD_BytesToClusters
 	ld	xhl, xwa
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; XWA = ceil(XWA / HDAE5000_RAM_ClusterBytes).  Clobbers XBC.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_BytesToClusters:
-	; XWA = ceil(XWA / cluster bytes 0x229C58)
 	ld	xbc, (HDAE5000_RAM_ClusterBytes)
 	call HDAE5000_HD_UDiv32
 	cp	xbc, 0x00000000
@@ -22251,7 +22290,7 @@ HDAE5000_HD_CheckVersionKey:
 	push xix
 	lda xix, (HDAE5000_Version_Key:24)
 	ld xwa, (xix)
-	ld	xbc, (0x229c60)
+	ld	xbc, (HDAE5000_RAM_HdVersionKeyWord)
 	cp	xwa, xbc
 	jp	z, (.LHD_CheckVersionKey_Skip1:24)
 	pop xix
@@ -23499,10 +23538,14 @@ HDAE5000_DeadLib_Copy64Back_Loop:
 ; "mid-line" refusal of `call 0x2998e4` (a call into the middle of `ld w`).
 HDAE5000_DecimalDigits:
 	.ascii	"0123456789 "
+
+; ---------------------------------------------------------------------------
+; Read sector 1 into HDAE5000_RAM_HdSettingsSector and restore the six setting
+; bytes it carries at +120 into QuickLoadMode .. LyricBackColor -- the
+; mirror image of HDAE5000_HD_SaveSettings.  Only caller:
+; HDAE5000_HD_RestoreSettings, itself unreachable.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_HD_LoadSettings:
-	; read sector 1 (the signature sector) into RAM 0x200628 and restore the
-	; six setting bytes it carries at +0x78 (0x2006A0) into 0x229DA9..AE --
-	; the mirror image of HDAE5000_HD_SaveSettings.  Called from 0x293F01.
 	push	xiz
 	ld	xhl, 1:i3
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
@@ -23524,14 +23567,14 @@ HDAE5000_HD_LoadSettings:
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; Build and write the signature sector: in HDAE5000_RAM_HdSettingsSector,
+; after HDAE5000_HD_ZeroSector, the longs 0xAA55AA55 and 0xF4F1F2F3 (what
+; HDAE5000_HD_CheckSignature looks for), the 112-byte HDAE5000_Version_Info,
+; the six setting bytes QuickLoadMode .. LyricBackColor at +120, a
+; 0xFFFFFFFF long, then HDAE5000_ATA_WriteSector(1).
+; ---------------------------------------------------------------------------
 HDAE5000_HD_SaveSettings:
-	; build and write the signature sector: at RAM 0x200628, after
-	; HDAE5000_HD_ZeroSector, the longs 0xAA55AA55 and
-	; 0xF4F1F2F3 (what HDAE5000_HD_CheckSignature looks for), the 112-byte
-	; HDAE5000_Version_Info record copied byte by byte (_CopyLoop, up to
-	; HDAE5000_Version_Info_End), the six setting bytes 0x229DA9..AE at +0x78
-	; (0x2006A0), a 0xFFFFFFFF long, then HDAE5000_ATA_WriteSector(1).
-	; (Was Display_Callback_Helper3.)
 	push xiz
 	lda xix, (HDAE5000_RAM_HdSettingsSector:24)
 	call HDAE5000_HD_ZeroSector
