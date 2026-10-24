@@ -5,12 +5,24 @@ LZSS SLIDE4K Compressor for Technics KN5000
 Compresses data using the SLIDE4K format used by the KN5000 firmware:
 - 4KB sliding window (0x1000 bytes)
 - 12-bit offset (masked with 0x0FFF)
-- 4-bit length (stored in high nibble, actual length = value + 2)
+- 4-bit length (stored in the LOW nibble of the second byte, actual length = value + 3)
 - Flag byte: bit=1 for literal, bit=0 for back-reference
 - Window pre-filled with zeros (positions 0-0xFED)
 - Initial write position: 0x0FEE
 
 Usage: python lzss_compress.py <input_file> <output_file> [--header "SLIDE4K"]
+
+WARNING: nothing in the build uses this script.  For anything that goes into a
+ROM image use scripts/build/compress_lzss.py, which writes the firmware's
+11-byte header (this one writes only the header string and a NUL) and
+reproduces the shipped streams byte for byte.  Until 2026-10-24 this script
+also encoded and decoded the length as value + 2 (wrong for the firmware's
+decoder), and its match search ignored that a back-reference may overlap the
+bytes it is writing, so on the first 3,000 bytes of the v1.40 Sub-CPU payload
+its own --verify failed at offset 0x11b.  Both are fixed: the length is
+value + 3 like compress_lzss.py, and that input now round-trips through this
+script's decoder and through compress_lzss.py's
+(scripts/build/verify_subprogram_update_images.py --selftest checks it).
 """
 
 import sys
@@ -18,8 +30,8 @@ import argparse
 
 WINDOW_SIZE = 4096  # 0x1000
 WINDOW_MASK = 0x0FFF
-MIN_MATCH_LEN = 2
-MAX_MATCH_LEN = 17  # 4 bits + 2 = 2-17
+MIN_MATCH_LEN = 3
+MAX_MATCH_LEN = 18  # 4 bits + 3 = 3-18
 INITIAL_POS = 0x0FEE  # Pre-fill positions 0-0xFED with zeros
 
 
@@ -36,9 +48,14 @@ def find_longest_match(data, pos, window, window_pos):
         match_len = 0
         src_pos = offset
 
-        while (match_len < MAX_MATCH_LEN and
-               pos + match_len < len(data) and
-               window[src_pos] == data[pos + match_len]):
+        while match_len < MAX_MATCH_LEN and pos + match_len < len(data):
+            # The decoder writes each copied byte into the window before it
+            # reads the next one, so a source position this match has already
+            # overwritten holds the byte the match itself put there.
+            ahead = (src_pos - window_pos) & WINDOW_MASK
+            src_byte = data[pos + ahead] if ahead < match_len else window[src_pos]
+            if src_byte != data[pos + match_len]:
+                break
             match_len += 1
             src_pos = (src_pos + 1) & WINDOW_MASK
 
@@ -46,7 +63,7 @@ def find_longest_match(data, pos, window, window_pos):
             best_length = match_len
             best_offset = offset
 
-    # Only use match if it's worthwhile (length >= 2)
+    # Only use match if it can be encoded (length >= 3)
     if best_length >= MIN_MATCH_LEN:
         return best_offset, best_length
     return 0, 0
@@ -106,10 +123,10 @@ def compress_lzss(data, header=None):
                 output.append(op_data if isinstance(op_data, int) else 0)
             else:
                 offset, length = op_data
-                # Encode: low 8 bits of offset, then (high 4 bits of offset << 4) | (length - 2)
+                # Encode: low 8 bits of offset, then (high 4 bits of offset << 4) | (length - 3)
                 low_offset = offset & 0xFF
                 high_offset = (offset >> 8) & 0x0F
-                encoded_length = (length - 2) & 0x0F
+                encoded_length = (length - 3) & 0x0F
                 output.append(low_offset)
                 output.append((high_offset << 4) | encoded_length)
 
@@ -153,7 +170,7 @@ def decompress_lzss(data, skip_header=0, output_size=None):
                 pos += 2
 
                 offset = low_offset | ((high_and_len >> 4) << 8)
-                length = (high_and_len & 0x0F) + 2
+                length = (high_and_len & 0x0F) + 3
 
                 for _ in range(length):
                     if output_size is not None and len(output) >= output_size:

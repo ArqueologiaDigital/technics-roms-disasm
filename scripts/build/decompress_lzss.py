@@ -11,6 +11,14 @@ from the table_data ROM at 0x8E0000.
 NOTE: This compressed data is NOT the Sub CPU ROM! The Sub CPU ROM is a separate
 physical chip (kn5000_subprogram_v142.rom). The compressed data here contains
 ~33KB of preset/parameter data with MIDI-range values, not executable code.
+
+DECODER FIX (2026-10-24): back-reference length is low nibble + 3, as in
+scripts/build/compress_lzss.py (the decoder/encoder the build uses, and the
+one to prefer).  Until 2026-10-24 decompress_slide4k() used + 2, which on the
+v1.40 Sub-CPU update image produced 177,007 bytes, 172,469 of them wrong;
+`scripts/build/verify_subprogram_update_images.py --legacy-decoder` still
+reproduces that by passing length_bias=2.  The default decoder now yields the
+tracked plain image exactly (checked by that script's --selftest).
 """
 
 import sys
@@ -18,7 +26,7 @@ import os
 
 # Paths
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
+PROJECT_DIR = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 
 TABLE_DATA_ROM = os.path.join(PROJECT_DIR, "original_ROMs", "kn5000_table_data.rom")
 COMPRESSED_BIN = os.path.join(PROJECT_DIR, "table_data", "includes", "subcpu_payload_compressed.bin")
@@ -31,12 +39,14 @@ WINDOW_MASK = 0xFFF
 PREFILL_SIZE = 0xFEE  # First 4078 bytes pre-filled with zeros
 
 
-def decompress_slide4k(compressed_data):
+def decompress_slide4k(compressed_data, length_bias=3):
     """
     Decompress SLIDE4K (LZSS) encoded data.
 
     Args:
         compressed_data: Bytes of compressed data (after header)
+        length_bias: added to the 4-bit length field; 3 is the firmware's
+            format (lengths 3..18).  2 reproduces this script's old bug.
 
     Returns:
         Decompressed data as bytes
@@ -77,9 +87,9 @@ def decompress_slide4k(compressed_data):
 
                 # Decode offset and length
                 # offset = (high_nibble << 8) | low_byte
-                # length = low_nibble + 2
+                # length = low_nibble + length_bias (3)
                 offset = ((high & 0xF0) << 4) | low
-                length = (high & 0x0F) + 2
+                length = (high & 0x0F) + length_bias
 
                 # Copy from window
                 for _ in range(length):
