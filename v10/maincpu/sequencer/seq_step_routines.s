@@ -2045,6 +2045,8 @@ SeqStep_AdvanceOneReturn:
 	ld hl, 0:i3
 	ret
 
+; Skips events (SeqStep_AdvanceOneEvent) until the secondary read position is on a status byte.
+;   Out: HL = 0, or 0xffff when SeqStep_AdvanceOneEvent fails.
 SeqStep_SkipToMeasure:
 	extz wa
 	calr SeqStep_AdvanceOneEvent

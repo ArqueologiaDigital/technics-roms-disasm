@@ -352,6 +352,7 @@ RhythmEvt_FullSkip:
 RhythmEvt_FullDone:
 	ret
 
+; Sets bit 4 of 0x32f4 when velocity A is 0x78 or more, clears it otherwise.
 Rhythm_CheckVelocityThreshold:
 	and (0x32f4:16), 239
 	cp a, 0x78
@@ -390,6 +391,11 @@ Rhythm_AdvancePos_Step3:
 Rhythm_AdvanceDone:
 	ret
 
+; Applies the chord-voicing correction to a note.
+;   Active when bit 0 or 1 of 0x32d7 is set, or when no part has the bits 0x3f set in
+;   0x3316..0x3318 and bit 5 of 0x32f3 is set.  Then 0x332e = A + (0x32cb) + 1 - 12, bit 0 of
+;   0x332d is set, A loses its pitch-class offset (A - Note_PitchClassTable[A]) and 0x3433 /
+;   0x3434 are cleared.  Bit 5 of 0x32f3 is always cleared.
 Rhythm_CrossVoiceCorrect:
 	bit 0, (0x32d7:16)
 	jr nz, Rhythm_CrossVoice_Apply
@@ -422,6 +428,8 @@ Rhythm_CrossVoice_ClearFlag:
 	and (0x32f3:16), 223
 	ret
 
+; With bit 0 of 0x32d7 set, reduces note A by its pitch-class offset (A -
+; Note_PitchClassTable[A]) and clears 0x3433 / 0x3434.
 Rhythm_NoteRangeCheck:
 	bit 0, (0x32d7:16)
 	jr z, Rhythm_NoteRangeReturn

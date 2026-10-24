@@ -31,6 +31,7 @@ USAGE
       --all          include routines that already have a header
       --names A,B    only these routines
       --list         one line per routine (calls, reason, file:line, name) instead of dossiers
+      --max-body N / --min-body N   only routines whose body has at most / at least N code lines
 
   Every .s file is read as bytes and decoded latin-1 (CLAUDE.md: `.ascii` lines hold non-UTF-8 bytes).
 """
@@ -115,6 +116,8 @@ def main():
     ap.add_argument('--max-lines', type=int, default=90)
     ap.add_argument('--skip', type=int, default=0)
     ap.add_argument('--count', type=int, default=0)
+    ap.add_argument('--max-body', type=int, default=0, help='skip routines whose body is longer than N lines')
+    ap.add_argument('--min-body', type=int, default=0, help='skip routines whose body is shorter than N lines')
     a = ap.parse_args()
 
     rows = census_routines(a.key)
@@ -179,6 +182,17 @@ def main():
     rank = {'call': 0, 'address': 1, 'xfile_jump': 2, 'unreferenced': 3}
     if a.order == 'calls':
         sel.sort(key=lambda r: (rank.get(r[3], 4), -sum(calls[r[2]].values()), r[0], r[1]))
+    if a.max_body or a.min_body:
+        def body_len(r):
+            f, line = r[0], r[1]
+            nxt = len(text[f]) + 1
+            for ln, _ in routine_starts[f]:
+                if ln > line:
+                    nxt = ln
+                    break
+            return sum(1 for b in text[f][line - 1:nxt - 1] if b.strip() and not b.lstrip().startswith(';'))
+        sel = [r for r in sel if (not a.max_body or body_len(r) <= a.max_body)
+               and (not a.min_body or body_len(r) >= a.min_body)]
     if a.skip:
         sel = sel[a.skip:]
     if a.count:

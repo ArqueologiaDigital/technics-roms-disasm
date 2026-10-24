@@ -2432,6 +2432,8 @@ AccPlay_RestoreMuteStates:
 	calr AccompSeq_QueueAllMutes
 	ret
 
+; Out: XIX = 0x1e8b00 + (HL & 0xfff) * 256, the address of 256-byte page HL of the MIDI
+; sequence buffer pool.  Preserves XHL.
 Util_ExtractAndShiftBits:
 	push xhl
 	and xhl, 0xfff
@@ -2487,6 +2489,9 @@ MidiSeqBuf_ScanLoop:
 MidiSeqBuf_ScanDone:
 	ret
 
+; Copies DE bytes from the buffer at 0x7f36 into the MIDI sequence buffer at the write position
+; (page 0x7f10, offset 0x7f12), advancing with MidiSeqBuf_AdvancePosition.  Does nothing when
+; the free page count 0x7e18 is 0.
 MidiSeqBuf_ProcessEntries:
 	cpw (0x7e18:16), 0
 	jr z, MidiSeqBuf_ProcessDone
@@ -2511,6 +2516,10 @@ MidiSeqBuf_ProcessLoop:
 MidiSeqBuf_ProcessDone:
 	ret
 
+; Moves the MIDI sequence buffer write offset (0x7f12) one byte forward.  At offset 0xff a
+; free page is taken (Voice_FindFreeSlot), linked after the current page (0x7f10: the old
+; page's +3 and the new page's +1 links), marked in use (bit 7 of byte 0), the free count at
+; 0x7e18 decremented, and the offset restarts at 6.
 MidiSeqBuf_AdvancePosition:
 	ld wa, (0x7f12:16)
 	inc 1, wa
@@ -2562,6 +2571,8 @@ MidiSeqBuf_WriteAdvDone:
 	ld (0x7f12:16), wa
 	ret
 
+; Stores A at XIX + (0x7f12), after Util_ExtractAndShiftBits with HL = (0x7f10).
+; Preserves XIX and XHL.
 MidiSeqBuf_WriteByte:
 	push xix
 	push xhl

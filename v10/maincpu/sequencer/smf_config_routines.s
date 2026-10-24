@@ -805,6 +805,9 @@ SMF_GetNextEvent:
 	ld	a, (xhl+iy)
 	ret
 
+; Moves the playback position (block 0x28af, offset 0x2666) one byte forward; past offset 0xff
+; the next block comes from the word at +3 of the current one (ToneGen_ComputeBlockPtr) and the
+; offset restarts at 5.
 SMF_AdvancePosition:
 	ld wa, (9830:16)
 	cp wa, 0xff
@@ -2415,6 +2418,10 @@ SMF_Format_Version1:
 SMF_Format_Return:
 	ret
 
+; Steps the SMF reader's offset IX through the song-data block chain.
+;   At offset 0xff the next block is taken from the word at block+3 of block 0x288b
+;   (SMF_CalcPageAddress) and IX restarts at 5; a next block that is not in use (bit 7 of its
+;   byte 0 clear) sets error 2 in SEQ_ERROR_CODE.
 SMF_AdvanceReadPtr:
 	inc 1, ix
 	cp ix, 0xff
@@ -2438,6 +2445,10 @@ SMF_AdvanceRead_NewPage:
 SMF_AdvanceRead_Return:
 	ret
 
+; Steps the SMF reader's write-side offset IY through the song-data block chain.
+;   At offset 0xff the next block comes from the word at +3 of the block whose address is in
+;   0x2881; it is stored in 0x2887, its address in 0x2881, and IY restarts at 5.  A next block
+;   not in use sets error 2.  The page pointer at 0x10fd is preserved.
 SMF_AdvanceWritePtr:
 	ld xwa, (4349:16)
 	push xwa

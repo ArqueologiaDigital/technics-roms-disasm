@@ -2707,6 +2707,7 @@ TrAsGrid_Epilogue:
 	lda xsp, (xsp + 16)
 	ret
 
+; Out: HL = word A of TrAsGrid_LookupTable_Table.
 TrAsGrid_LookupTable:
 	extz wa
 	add wa, wa
@@ -2739,6 +2740,9 @@ TrAsGrid_StepListValue_Join:
 	ld	l, (xbc+wa)
 	ret
 
+; Tells whether a track of the track-assign grid is a drum track (type 0x0d or 0x0e).
+;   In:  A = 0 to test entry C of the part-type table at 0xf1a0, anything else to test the
+;   current cell's type at 0x21082.  Out: L = 1 for a drum type, 0 otherwise.
 TrAsGrid_CheckTrackType:
 	cp a, 0:i3
 	jr nz, TrAsGrid_CheckCurrentCell

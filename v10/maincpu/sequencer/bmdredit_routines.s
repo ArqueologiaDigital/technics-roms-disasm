@@ -1015,6 +1015,8 @@ BmDrEdit_SaveEditState:
 	ldmm16 0x2768, 9830
 	ret
 
+; Restores the editor cursor saved by BmDrEdit_SaveEditState: 0x2762 -> 0x275e, byte 0x2764 ->
+; 0x2760, 0x2766 -> 0x28af (block), 0x2768 -> 0x2666 (offset).
 BmDrEdit_RestoreEditState:
 	ldmm16 0x275e, 0x2762
 	ldmm8 0x2760, 0x2764
@@ -1188,6 +1190,9 @@ BmDrEdit_AlignGrid_Store:
 	ld (0x279a:16), de
 	ret
 
+; In drum mode (bit 0 of 0x2742) compares the note number two bytes after the playback position
+; with the editor's note in 0x2786, leaving the position unchanged.
+;   Out: L = 0 when they match or the editor is not in drum mode, 0xff otherwise.  Preserves XIZ.
 BmDrEdit_CompareVelocity:
 	push xiz
 	bit 0, (0x2742:16)
@@ -1335,6 +1340,13 @@ BmDrEdit_SetupCoordinates:
 	add (xbc), wa
 	ret
 
+; Checks whether a note event starts exactly at the editor cursor and, if so, loads it.
+;   The cursor positions (BmDrEdit_SetupCoordinates) are compared with 0x279a; the event at the
+;   playback position must be a note-on (0x9n) whose velocity BmDrEdit_CompareVelocity
+;   accepts.  Then bit 0 of 0x295f is set, the note bytes go to 0x2786 / 0x2788, its length
+;   (count * 96 + ticks) to 0x278c, BmDrEdit_ClearAndScanToEnd runs, 0x2786 is copied to 0x2962
+;   and the view is scrolled (BmDrEdit_AdjustScrollToView).  Otherwise bit 0 of 0x295f stays
+;   clear.
 BmDrEdit_SetupAndWalkToNote:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -3243,6 +3255,11 @@ BmDrEdit_DecrValidate_Epilog:
 	inc 4, xsp
 	ret
 
+; Steps a (block, offset) cursor one byte forward through the song-data block chain.
+;   In:  XWA -> block word, XBC -> offset word.  Past offset 0xff the block becomes its forward
+;   link (PartCtrl_ReadWord) and the offset 5.
+;   Out: HL = 0, or 0xffff with error 0xa1 (SeqData_SetErrorCode) when the next block number is
+;   above 0x4d8.
 PartCtrl_ReadWordWithBoundsCheck:
 	dec 4, xsp
 	push xiz
@@ -3274,6 +3291,7 @@ BmDrEdit_BoundsCheck_Epilog:
 	inc 4, xsp
 	ret
 
+; Zero-extends BC and jumps to PartCtrl_ReadByte.
 PartCtrl_ReadByteExtended:
 	extz bc
 	jp PartCtrl_ReadByte
@@ -3283,6 +3301,9 @@ PartCtrl_WriteByte_ZeroExtended:
 	extz de
 	jp PartCtrl_WriteByteToBuf
 
+; Inserts one bar marker (0x81) at the editor position of part (0x2965) + 1:
+; BmDrEdit_SaveSongPosition, then BmDrEdit_ApplyVelocityChange with a one-byte event.
+; SEQ_ERROR_CODE is cleared first.
 BmDrEdit_InsertStepEntry:
 	dec 2, xsp
 	calr BmDrEdit_SaveSongPosition
@@ -3382,6 +3403,10 @@ BmDrEdit_ValidateVoice_Epilog:
 	inc 8, xsp
 	ret
 
+; Copies the editor's target bar (0x2744) to 0x287f, selects the editor channel
+; (BmDrEdit_CheckAndSelectChannel) and seeks part (0x2965) + 1 to it
+; (BmDrEdit_ValidateAndProcessVoice).  Out: HL = the word that routine returns through its
+; DE pointer.
 BmDrEdit_SyncChannelAndGetPos:
 	dec 2, xsp
 	ldmm16 0x287f, 0x2744
@@ -3397,6 +3422,9 @@ BmDrEdit_SyncChannelAndGetPos:
 	inc 2, xsp
 	ret
 
+; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores its position as
+; the alternate cursor: 0x276a = HL, 0x276c = 0, 0x276e = block (0x28af), 0x2770 = offset.
+; Nothing is stored when SEQ_ERROR_CODE is set.
 BmDrEdit_SelectChannelAndLoadPos:
 	ld (SEQ_ERROR_CODE:16), 0
 	calr BmDrEdit_SyncChannelAndGetPos
@@ -3917,6 +3945,9 @@ BmDrEdit_MultiSong_Return:
 	inc 4, xsp
 	ret
 
+; Sends the note editor's widget updates after a cursor move.  Drum mode (bit 0 of 0x2742)
+; and melodic mode each send a shorter set when no note is under the cursor (bit 0 of
+; 0x295f clear), then scroll commands 0, 1, 2 and NoteEditSy_SendModeScrollCmd.
 NoteEdit_SendScrollCmds:
 	bit 0, (0x2742:16)
 	jr nz, BmDrEdit_SendScrollCmds_DrumMode
@@ -3955,6 +3986,8 @@ BmDrEdit_SendScrollCmds_CommonDrumEnd:
 	call NoteEditSy_SendScrollCmd2
 	jp NoteEditSy_SendModeScrollCmd
 
+; Redraws all note-editor widgets (NoteEditSy_UpdateAllWidgets) unless the cursor tick 0x279a
+; is at or past (0x2774) * 96, the end of the visible range.
 NoteEdit_UpdateScrollAndDisplay:
 	ld a, (0x2774:16)
 	mul a, 0x60

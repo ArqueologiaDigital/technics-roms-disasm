@@ -717,6 +717,8 @@ AccVoice_ComputeChannelIndex:
 	ld	iy, (xiy+hl)
 	ret
 
+; Resolves a voice table entry: AccVoice_ComputeChannelIndex, AccVoice_TableLookup_Inner, then
+; XIY = XHL + the zero-extended IY that came in.
 AccVoice_LookupWithOffset:
 	calr AccVoice_ComputeChannelIndex
 	call AccVoice_TableLookup_Inner
@@ -773,6 +775,10 @@ AccPatch_ClampedSetParam:
 	ld	a, (xhl+a)
 	ret
 
+; Loads the 0x31-byte per-part tuning block at 0x3246 from a style.
+;   In:  XIY = style base, XHL = offset; the block is copied from XIY + XHL + 0x248.
+;   Then forces bytes 9 = 0x40, 0x10 = 0x0c, 0x17 = 0x74 and 0x1e = 0x40 of the block and calls
+;   AccTuning_LoadFromROM.  Preserves XIY, XWA, XIX.
 AccVoice_LoadTuningBlock:
 	push xiy
 	add xhl, 0x248
@@ -801,6 +807,9 @@ AccVoice_LoadTuningBlock:
 	nop
 	ret
 
+; Copies five 7-byte tuning records from a style header into the per-part tuning area.
+;   In:  XIY = style header.  Header offsets 0x18, 0x20, 0x28, 0x30, 0x38 go to 0x3246, 0x324d,
+;   0x3254, 0x325b, 0x3262.  Preserves XIY.
 AccTuning_CopyAllPartsFromStyle:
 	push xiy
 	ld xhl, xiy
@@ -1104,6 +1113,7 @@ AccVoiceReg_StoreParamRecord:
 	ld (xhl + 4), a
 	ret
 
+; Moves bit 7 of E into bit 4 of D (E keeps its low 7 bits).
 Rhythm_PackVelocityHighBit:
 	bit 7, e
 	jr z, Rhythm_VelocityPackDone

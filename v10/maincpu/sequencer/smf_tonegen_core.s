@@ -2445,6 +2445,9 @@ ToneGen_WriteAllChannels_Next:
 ToneGen_WriteAllCh_Done:
 	ret
 
+; Writes BC parameter bytes from the buffer at 0x1073 into the song data, starting at the
+; playback position (block 0x28af): each byte through ToneGen_WriteParamToBlock and
+; ToneGen_AdvancePosition, stopping early when 0x10e3 becomes non-zero.
 ToneGen_UpdateBlocks:
 	ld hl, (0x28af:16)
 	pushw bc
@@ -2471,6 +2474,8 @@ ToneGen_UpdateBlocks_Loop:
 ToneGen_UpdateBlocks_Done:
 	ret
 
+; Sets the bit for channel IY & 15 in the 16-bit mask at 0xffec, and stores a set carry into
+; bit A of the byte at 0x19fa as well (STCF A,(mem)).
 ToneGen_SetChannelFlag:
 	ld bc, iy
 	and bc, 0xf
@@ -4063,6 +4068,9 @@ VoiceParam_ChannelMapRemapped:
 ; nop / normal / push sr / ... mnemonics.
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0f, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
 
+; Loads the playback position of the track in 0x108d (clamped to 0..1 by
+; SoundGen_ClampVoiceIndexMin1): block from the table at 0xc9e into 0x28af, offset from the
+; table at 0xcbe into 0x2666.  SoundGen_WriteVoiceParams stores it back.  Preserves XDE.
 SoundGen_ReadVoiceRegs:
 	push xde
 	ld iy, (4237:16)
@@ -4891,6 +4899,9 @@ VoiceParam_ByMode_StoreAndReturn:
 	pop xiy
 	ret
 
+; Saves the playback position (0x28af block, 0x2666 offset) into the slot of the track in
+; 0x108d (clamped to 0..1): word in the table at 0xc9e, byte in the table at 0xcbe.
+; Inverse of SoundGen_ReadVoiceRegs.  Preserves XDE.
 SoundGen_WriteVoiceParams:
 	push xde
 	ld iy, (4237:16)

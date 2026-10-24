@@ -1069,6 +1069,7 @@ AccompSeq_StopSequence:
 	pop xiz
 	ret
 
+; Alias entry: jumps to AccompSeq_WriteMidiToBuffer (A = status, W and E = data bytes).
 AccompSeq_SendMidiEvent:
 	jp AccompSeq_WriteMidiToBuffer
 

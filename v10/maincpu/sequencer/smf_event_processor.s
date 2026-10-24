@@ -3206,6 +3206,11 @@ FileOpen_Return:
 	lda xsp, (xsp + 16)
 	ret
 
+; C library read: FileRead(buffer, size, count, handle), stack arguments.
+;   The handle must be open (byte +4 non-zero, else error 0x11 in 0x1e53c) and readable (bit 0
+;   of +4, else error 0x0d).  size * count bytes are read through the handle's device read
+;   method (pointer at handle+14, entry +4).
+;   Out: HL = items read (the byte count divided by size), 0 on error.
 FileRead:
 	ld xbc, (xsp + 12)
 	or xbc, xbc
@@ -3638,6 +3643,7 @@ SeqStep_FileNopA:
 SeqStep_FileNopB:
 	ret
 
+; C-style wrapper: Free(stack argument), then returns HL = 0.
 SeqStep_FreeMemory:
 	ld xwa, (xsp + 4)
 	push xwa
@@ -4100,6 +4106,19 @@ SeqStep_FileIoHelper:
 	ldw (xwa + 6), 0x0
 	ret
 
+; FAT sector cache: returns a buffer holding one sector of a volume, reading it if needed.
+;   Stack arguments: (1) the request (+5 = drive byte copied to the buffer, +6 = result
+;   status, +18 = volume, whose +10 points at the device methods and +26 at the drive
+;   geometry), (2) the sector number, (3) a buffer to try first (may be 0), (4) flags
+;   (bit 6: use argument 3 directly; bit 5: allocate without reading; bit 2: retry).
+;   The 10 buffers of 538 bytes at 0x2121a carry +0 volume, +4 sector, +18 an age counter
+;   (+0x14 on each hit, -1 on each search) and +22 state bits.  A miss takes the oldest buffer
+;   that is not locked (state bits 0x88), writes it back first when it is dirty
+;   (SeqStep_FileBufferSetup) and reads the sector through the device's method at +16.  With
+;   bit 2 set a failed read is retried at sector + (geometry word +48), up to (geometry byte
+;   +58) times: the layout of the FAT copies.
+;   Out: XHL = buffer, or 0 with the error left in the request's +6.  0x3e3e0 notes an age
+;   counter overflow.
 SeqStep_FileIoCheck:
 	dec 2, xsp
 	push xiz
@@ -4484,6 +4503,8 @@ SeqStep_FileBufferFinal_Skip3:
 	inc	4, xsp
 	ret
 
+; Reads a little-endian 16-bit value from a byte stream and advances the stream.
+;   Stack argument: pointer to the stream pointer, which is advanced by 2.  Out: HL = value.
 SeqStep_FileSectorRead:
 	ld xbc, (xsp + 4)
 	ld xde, (xbc)
@@ -10804,6 +10825,8 @@ SeqDispatch_TrampolineB:
 Rhythm_DispatchNote_Tramp:
 	jp Rhythm_DispatchNote
 
+; Calls Rhythm_DispatchNote with D = C and XIZ preserved; returns its A result zero-extended
+; in XHL.
 Rhythm_NoteDispatchWrapper:
 	push xiz
 	ld d, c
@@ -10822,6 +10845,7 @@ Rhythm_LookupTempoVelocity_Wrap:
 	pop xiz
 	ret
 
+; Calls AccStyle_LookupVelocityTable with XIZ preserved.
 Rhythm_DispatchNote_Finalize:
 	push xiz
 	call AccStyle_LookupVelocityTable
