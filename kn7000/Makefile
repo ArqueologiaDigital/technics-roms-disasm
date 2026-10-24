@@ -536,7 +536,7 @@ verify-table80: build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom
 	 else echo "FAIL  kn7000_table_b80.rom differs from table build 80:"; \
 	    cmp build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom || true; exit 1; fi
 
-# ---- Older program builds, ported from 941 (935 = v1.5) ---------------------
+# ---- Older program builds, ported from 941 (935 = v1.5, 893 = v1.3) ---------
 # Each is a byte-exact target with real source, made like SP7001's program 942:
 # tools/gen_program_s.py --profile b<N> ports 941's names, function split, caps,
 # data islands and notes through the exact 941->N offset map, dropping (and
@@ -552,6 +552,7 @@ verify-table80: build/kn7000_table_b80.rom baserom/kn7000_table_b80.rom
 # PORT_MIN_RUN: the shortest 1:1 run of the offset map a ported program address
 # may sit on (tools/port_symbols.py --min-run; MIN_RUN in gen_program_s.py).
 PORT_MIN_RUN := 16
+COMMA        := ,
 B941_CODE    := 0x80:0x186000 0x3b8fd1:0x3f6f01:0x4c000000
 B935_SHA1    := 5690195daa4c098069c0d84b4933bd1325f98269
 B935_EPROMS  := kn7000_program_even_v1.5_b935.ic17 kn7000_program_odd_v1.5_b935.ic16
@@ -562,6 +563,14 @@ B935_CODE    := 0x80:0x18595c 0x3b8f6d:0x3f6e9d:0x4c000000
 # where gen_symbols.py looks for the reflection tables' procedures: region 1 and
 # code region 2 (941's 0x3B8000..0x3F6F01 through the map), as for SP7001
 B935_RECOVER := 0x80:0x18595C 0x3B7F9C:0x3F6E9D
+# 893 (v1.3) is the program flash of Felipe's own instrument; the romset's two halves
+# are the dumper's pass-1 reads (real_dump_v1.3_b893/pass1-run{1,2}/PRG{EVEN,ODD}.BIN,
+# identical in both runs). It pairs with table 80 (verify-table80 above).
+B893_SHA1    := 13e0b29181b7bbee671dba70d707e0f55161a15c
+B893_EPROMS  := kn7000_program_even_v1.3_b893.ic17 kn7000_program_odd_v1.3_b893.ic16
+B893_TABLE   := baserom/kn7000_table_b80.rom
+B893_CODE    := 0x80:0x1846a0 0x3b76b1:0x3f55cf:0x4c000000
+B893_RECOVER := 0x80:0x1846A0 0x3B66E0:0x3F55CF
 
 # $(1) = build number
 define PORTED_BUILD
@@ -584,13 +593,14 @@ verify-$(1): build/kn7000_program_b$(1).rom baserom/kn7000_program_b$(1).rom
 	    cmp build/kn7000_program_b$(1).rom baserom/kn7000_program_b$(1).rom || true; exit 1; fi
 
 B$(1)_PORT = $$(PYTHON) tools/port_symbols.py baserom/kn7000_program.rom baserom/kn7000_program_b$(1).rom \
-    baserom/kn7000_table.rom $$(B$(1)_TABLE) --min-run $$(PORT_MIN_RUN)
+    baserom/kn7000_table.rom $$(B$(1)_TABLE) --min-run $$(PORT_MIN_RUN) --cache-dir build/offset-maps
 # (src/b<N>/symbols.inc is written with kn7000_b<N>.sym but is not declared a
 # target here, so verify-<N> never re-ports symbols: it needs only the reference)
 symbols-$(1): kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym
 kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym &: \
 		tools/port_symbols.py tools/offset_map.py tools/gen_symbols.py \
-		kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym $$(REFS) baserom/kn7000_program_b$(1).rom
+		kn7000.sym kn7000_manual.sym kn7000_exports_from_942.sym $$(REFS) $$(B$(1)_TABLE) \
+		baserom/kn7000_program_b$(1).rom
 	@mkdir -p src/b$(1)
 	$$(B$(1)_PORT) kn7000.sym kn7000_b$(1).sym --inc src/b$(1)/symbols.inc \
 	    --title "KN7000 program $(1) symbols" \
@@ -602,7 +612,7 @@ kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym &: \
 
 program-src-$(1): tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py tools/offset_map.py \
 		kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym $$(wildcard kn7000_b$(1)_bycode.sym) \
-		$$(wildcard annotations/*.ann) $$(REFS) baserom/kn7000_program_b$(1).rom
+		$$(wildcard annotations/*.ann) $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
 	UNIDASM=$$(UNIDASM) $$(PYTHON) tools/gen_program_s.py --profile b$(1)
 
 ported-names-$(1): tools/port_names_by_code.py tools/gen_image_s.py src/b$(1)/program.s \
@@ -621,9 +631,10 @@ check-names-$(1): tools/check_ported_names.py baserom/kn7000_program.rom baserom
 	    --pair kn7000.sym:kn7000_b$(1).sym --pair kn7000_manual.sym:kn7000_b$(1)_manual.sym \
 	    --pair kn7000_exports_from_942.sym:kn7000_b$(1)_exports.sym \
 	    $$(if $$(wildcard kn7000_b$(1)_bycode.sym),\
-	      --pair kn7000.sym,kn7000_manual.sym,kn7000_exports_from_942.sym:kn7000_b$(1)_bycode.sym)
+	      --pair kn7000.sym$$(COMMA)kn7000_manual.sym$$(COMMA)kn7000_exports_from_942.sym:kn7000_b$(1)_bycode.sym)
 endef
 $(eval $(call PORTED_BUILD,935))
+$(eval $(call PORTED_BUILD,893))
 
 clean:
 	rm -rf build

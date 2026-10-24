@@ -136,6 +136,40 @@ class OffsetMap:
         return out
 
 
+def cached(old, new, cache_dir=None):
+    """OffsetMap(old, new), reusing the result an earlier run saved in cache_dir
+    (JSON keyed by the SHA-1 of both images and of this file, so a changed image
+    or a changed method never reuses a stale map). Mapping two builds far apart
+    (941 -> 893: about 1,800 edits) takes minutes; without cache_dir nothing is
+    saved and this is plain OffsetMap(old, new)."""
+    if not cache_dir:
+        return OffsetMap(old, new)
+    import hashlib
+    import json
+    import os
+    key = "-".join(hashlib.sha1(x).hexdigest()[:16]
+                   for x in (old, new, open(__file__, "rb").read()))
+    path = os.path.join(cache_dir, f"offset-map-{key}.json")
+    m = OffsetMap.__new__(OffsetMap)
+    try:
+        j = json.load(open(path))
+        m.old_len, m.new_len = j["old_len"], j["new_len"]
+        m.blocks = [tuple(b) for b in j["blocks"]]
+        m.inserted = [tuple(b) for b in j["inserted"]]
+        m.deleted = [tuple(b) for b in j["deleted"]]
+        m._los = [b[0] for b in m.blocks]
+        return m
+    except (OSError, ValueError, KeyError):
+        pass
+    m = OffsetMap(old, new)
+    os.makedirs(cache_dir, exist_ok=True)
+    with open(path + ".tmp", "w") as f:
+        json.dump({"old_len": m.old_len, "new_len": m.new_len, "blocks": m.blocks,
+                   "inserted": m.inserted, "deleted": m.deleted}, f)
+    os.replace(path + ".tmp", path)
+    return m
+
+
 def load_sym(paths, base):
     syms = []
     for p in paths:

@@ -46,7 +46,7 @@ import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from offset_map import OffsetMap, _trim   # noqa: E402
+from offset_map import OffsetMap, _trim, cached   # noqa: E402
 
 PROG, TABLE, LIB, RAM = 0x48400000, 0x48000000, 0x4C000000, 0x50000000
 OLD_LIB_FILE_BASE = 0x3B8FD1          # notes/library-rom-loading.md (build 941)
@@ -88,10 +88,10 @@ def ram_map(pmap, A, B):
 
 class Porter:
     def __init__(self, old_prog, new_prog, old_tab, new_tab, old_lib_base=OLD_LIB_FILE_BASE,
-                 min_run=1):
+                 min_run=1, cache_dir=None):
         self.A, self.B = _trim(old_prog), _trim(new_prog)
-        self.pmap = OffsetMap(old_prog, new_prog)
-        self.tmap = OffsetMap(old_tab, new_tab)
+        self.pmap = cached(old_prog, new_prog, cache_dir)
+        self.tmap = cached(old_tab, new_tab, cache_dir)
         self.old_lib_base = old_lib_base
         self.min_run = min_run
         self.new_lib_base = self.pmap.map(old_lib_base)
@@ -167,13 +167,14 @@ def main():
                     help="port a program/library address only when the 1:1 run of the "
                          "offset map that holds it is at least this many bytes (default 1: "
                          "any run; 16 for the older builds 935/893, see Porter._pmap)")
+    ap.add_argument("--cache-dir", help="save / reuse the offset maps here (offset_map.cached)")
     ap.add_argument("--check-recovered", nargs="+", metavar="LO:HI",
                     help="new-build code file ranges for gen_symbols' reflection scan")
     args = ap.parse_args()
 
     P = Porter(*(open(p, "rb").read() for p in
                  (args.old_prog, args.new_prog, args.old_table, args.new_table)),
-               old_lib_base=args.old_lib_base, min_run=args.min_run)
+               old_lib_base=args.old_lib_base, min_run=args.min_run, cache_dir=args.cache_dir)
 
     # The new build's own reflection tables are authoritative for the names they
     # carry. Where they disagree with the offset map, accept the build's address
