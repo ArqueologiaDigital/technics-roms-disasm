@@ -240,6 +240,9 @@ BmDrEdit_ScanBackward_Done:
 	popw iz
 	ret
 
+; Draws the outline of the note under the editor cursor: position from BmDrEdit_CalcNotePosition,
+; the horizontal layout on the note-edit screen (TITLE_SQNOTEEDT) and the vertical one otherwise,
+; then DrawFrame with the rectangle 0x27ba / 0x27be - 0x27bc / 0x27c0.
 BmDrEdit_RenderNoteBlock:
 	dec 8, xsp
 	calr BmDrEdit_CalcNotePosition
@@ -336,6 +339,8 @@ BmDrEdit_CalcNotePos_ClampSize:
 	popw_erp 0xfa
 	ret
 
+; Note box for the horizontal editor: x1 0x27ba = (0x2808) / 4 + 0x16, x2 0x27bc = (0x280a) / 4 +
+; x1, y1 0x27be = BmDrEdit_RenderHorizontal_Table[(0x2806)], y2 0x27c0 = y1 + 3.
 BmDrEdit_RenderHorizontal:
 	ld wa, (0x2808:16)
 	srl wa, 2
@@ -355,6 +360,7 @@ BmDrEdit_RenderHorizontal:
 	ld (0x27c0:16), wa
 	ret
 
+; BmDrEdit_RenderHorizontal with x1 = (0x2808) / 4 + 0x5b and BmDrEdit_RenderVertical_Table.
 BmDrEdit_RenderVertical:
 	ld wa, (0x2808:16)
 	srl wa, 2
@@ -374,6 +380,10 @@ BmDrEdit_RenderVertical:
 	ld (0x27c0:16), wa
 	ret
 
+; Copies byte 0x281c to 0x210b0 and word 0x2820 to 0x210b2, places the box
+; (BmDrEdit_CalcSecondaryPosition, then BmDrEdit_RenderSecondaryHoriz on TITLE_SQNOTEEDT, else
+; BmDrEdit_RenderSecondaryVert) and draws it with DrawDesignBox from an 8-byte stack record (words
+; 0x27c2, 0x27c6, 0x27c4, 0x27c8 at +0, +2, +4, +6), BC = DE = 0.
 BmDrEdit_RenderSecondaryBlock:
 	dec 8, xsp
 	ldmmb_dd24 0xb0, 0x10, 0x02, 0x1c, 0x28
@@ -400,6 +410,8 @@ BmDrEdit_RenderSecondary_StoreCoords:
 	inc 8, xsp
 	ret
 
+; 0x27c2 = (0x281e) / 4 + 0x16, 0x27c4 = (0x210b2) / 4 + (0x27c2), 0x27c6 =
+; BmDrEdit_RenderHorizontal_Table[(0x210b0)], 0x27c8 = (0x27c6) + 3.
 BmDrEdit_RenderSecondaryHoriz:
 	ld wa, (0x281e:16)
 	srl wa, 2
@@ -419,6 +431,8 @@ BmDrEdit_RenderSecondaryHoriz:
 	ld (0x27c8:16), wa
 	ret
 
+; BmDrEdit_RenderSecondaryHoriz with + 0x5b and BmDrEdit_RenderVertical_Table, then 0x27c6 - 2
+; and 0x27c8 + 2.
 BmDrEdit_RenderSecondaryVert:
 	ld wa, (0x281e:16)
 	srl wa, 2
@@ -440,6 +454,9 @@ BmDrEdit_RenderSecondaryVert:
 	incw 2, (0x27c8:16)
 	ret
 
+; 0x281e = ((0x2814) * 96 + (0x2816)) - ((0x280c) * 96 + (0x280e)); byte 0x210b0 - (0x2826), then +
+; 3 on TITLE_SQNOTEEDT when 0x2798 is 0, or 11 minus it on the other title.  The length 0x210b2 is
+; cut so that (0x281e) + length stays within (0x2774) * 96 - 1.
 BmDrEdit_CalcSecondaryPosition:
 	ld bc, (0x2814:16)
 	mul bc, 0x60
@@ -477,6 +494,8 @@ BmDrEdit_CalcSecondaryPos_ClampSize:
 	ld (0x0210b2:24), de
 	ret
 
+; Sets the note-editor display defaults: 0x2794 = 0x2796 = 48, 0x2790 = 38, scroll index 0x2798 =
+; 5, top row 0x279e = 40, cursor row 0x27a0 = 5, 0x278a = 100.
 BmDrEdit_InitDisplayParams:
 	ldw (0x2794:16), 48
 	ldw (0x2796:16), 48
@@ -570,6 +589,7 @@ BmDrEdit_TempoEventLoop:
 	jr nz, BmDrEdit_ProcessTempoEvent
 	ret
 
+; Counts the editor timer 0x295c down while bit 7 is set, stopping at 0x80.
 BmDrEdit_DecrementDelayA:
 	ld a, (0x295c:16)
 	bit 7, a
@@ -580,6 +600,9 @@ BmDrEdit_DecrementDelayA:
 	ld (0x295c:16), a
 	ret
 
+; When the timer 0x295c has reached 0x80: clears it and tail-jumps by action 0x295d: 5 ->
+; BmDrEdit_DelayAction_WalkAndUpdateAlt, 4 -> _UpdateScrollAlt, 3 -> _CheckCountError, 2 ->
+; _WalkAndUpdate, 1 -> _SetupAndWalk, others -> BmDrEdit_HandleDelayExpired_Rescan.
 BmDrEdit_DelayAExpired:
 	cp (0x295c:16), 128
 	ret nz
@@ -597,6 +620,7 @@ BmDrEdit_DelayAExpired:
 	jrl nz, BmDrEdit_HandleDelayExpired_Rescan
 	jrl BmDrEdit_DelayAction_SetupAndWalk
 
+; Counts the timer 0x295e down while bit 7 is set, stopping at 0x80.
 BmDrEdit_DecrementDelayB:
 	ld a, (0x295e:16)
 	bit 7, a
@@ -607,6 +631,8 @@ BmDrEdit_DecrementDelayB:
 	ld (0x295e:16), a
 	ret
 
+; When the timer 0x295e has reached 0x80: clears it and tail-jumps to
+; BmDrEdit_DelayAction_PlayClick.
 BmDrEdit_DelayBExpired:
 	cp (0x295e:16), 128
 	ret nz
@@ -616,6 +642,8 @@ BmDrEdit_DelayBExpired:
 BmDrEdit_DelayReturn:
 	ret
 
+; Takes the first free 3-byte slot at 0x2746 (8 slots, 1 in drum mode, bit 0 of 0x2742): sets bit 7
+; of byte 0 and copies bytes 0x2960 / 0x2961 to +1 / +2.  Nothing when all are taken.
 BmDrEdit_AllocateNoteSlot:
 	ldw ix, 0x8
 	bit 0, (0x2742:16)
@@ -657,6 +685,8 @@ BmDrEdit_AllocateNote_NextSlot:
 	jr c, BmDrEdit_AllocateNote_Loop
 	ret
 
+; Leaves the editor with an error: clears bit 0 of 0x8d88, sends sound command 0xee with
+; GLOBAL_ERROR_CODE = 0x0f (SoundCtrl_SaveAndSendCmd_EE) and sets bit 4 of DEMO_CONTROL_FLAGS.
 BmDrEdit_RefreshDisplayState:
 	res 0, (0x8d88:16)
 	ldw wa, 0xf
@@ -664,6 +694,8 @@ BmDrEdit_RefreshDisplayState:
 	set 4, (DEMO_CONTROL_FLAGS:16)
 	ret
 
+; HL = 0xffff when entry A of the song slot's type table (Part_ReadVoiceByte, WA = 0) is 0x0d, 0x0f
+; or 0x10, else 0.
 BmDrEdit_CheckNoteType:
 	ld c, a
 	extz bc
@@ -684,6 +716,8 @@ BmDrEdit_CheckNoteType_NotDrum:
 	ld hl, 0:i3
 	ret
 
+; UI_PostModeChangeEvent with WA = 0x98 in drum mode (bit 0 of 0x2742), else 0x95; then word 0xd4f
+; -> 0x2963, SeqVoice_FindSingleActive, and PART_SELECT -> 0x1d58.
 BmDrEdit_SaveSequencerState:
 	bit 0, (0x2742:16)
 	jr z, BmDrEdit_SaveSeqState_SetMode95
@@ -700,6 +734,8 @@ BmDrEdit_SaveSeqState_Apply:
 	ldmm8 7512, PART_SELECT
 	ret
 
+; HL = 0xffff while the editor timer runs (bit 7 of 0x295c) with action 0x295d non-zero.  Otherwise
+; moves the measure 0x2744 one on (at most 999) with BmDrEdit_ScrollReset, HL = 0.
 BmDrEdit_CheckScrollBusy:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ScrollRight
@@ -720,6 +756,8 @@ BmDrEdit_ScrollRight_Done:
 	ld hl, 0:i3
 	ret
 
+; HL = 0xffff while the editor timer runs (bit 7 of 0x295c) with action 0x295d non-zero.  Otherwise
+; moves the measure 0x2744 one back (at least 1) with BmDrEdit_ScrollReset, HL = 0.
 BmDrEdit_CheckScrollBusyAlt:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ScrollLeft
@@ -740,6 +778,8 @@ BmDrEdit_ScrollLeft_Done:
 	ld hl, 0:i3
 	ret
 
+; Moves the editor cursor to the start: redraws parameter 0 (NoteEditSy_SendScrollCmd0), clears
+; the cursor tick 0x279a and the count / tick pair 0x2782 / 0x2784, 0x295c = 130, 0x295d = 0.
 BmDrEdit_ScrollReset:
 	call NoteEditSy_SendScrollCmd0
 	ldw (0x279a:16), 0
@@ -749,6 +789,9 @@ BmDrEdit_ScrollReset:
 	ld (0x295d:16), 0
 	ret
 
+; Unless the timer runs with an action other than 1: the cursor tick 0x2784 + 1 (at 0x5f
+; BmDrEdit_PitchScrollOverflow instead), NoteEditSy_SendScrollCmd2, NoteEditSy_CallFarRoutine,
+; BmDrEdit_BuildVoice_NullReturn and BmDrEdit_SetFeedbackTimer.
 BmDrEdit_PitchScrollUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_PitchScrollUp
@@ -766,6 +809,9 @@ BmDrEdit_PitchScrollUp:
 	calr BmDrEdit_BuildVoice_NullReturn
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Unless the timer runs with an action other than 1: the cursor tick 0x2784 - 1 (at 0
+; BmDrEdit_PitchWrapToEnd instead), NoteEditSy_SendScrollCmd2, NoteEditSy_CallFarRoutine,
+; BmDrEdit_BuildVoice_NullReturn and BmDrEdit_SetFeedbackTimer.
 BmDrEdit_PitchScrollDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_PitchScrollDown
@@ -783,6 +829,9 @@ BmDrEdit_PitchScrollDown:
 	calr BmDrEdit_BuildVoice_NullReturn
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Unless the timer runs with an action other than 2, and only with bit 0 of 0x295f set: moves the
+; note 0x2786 down in drum mode (bit 0 of 0x2742), up otherwise (BmDrEdit_DecrementVelocity /
+; BmDrEdit_IncrementVelocity, in BmDrEdit_VelocityDown_Check).
 BmDrEdit_VelocityUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_VelocityUp_Dispatch
@@ -796,6 +845,10 @@ BmDrEdit_VelocityUp_Dispatch:
 	jr nz, BmDrEdit_DecrementVelocity
 	jr BmDrEdit_IncrementVelocity
 
+; The reverse of BmDrEdit_VelocityUp_Check.  The two bodies after it step the note 0x2786 within
+; 1..0x7f (in drum mode through BmDrEdit_DrumVoiceUp / _DrumVoiceDown), write and play it
+; (BmDrEdit_UpdateVelocityDisplay), redraw (NoteEditSy_SendScrollCmd3) and set the timer 0x295c =
+; 131, 0x295d = 2.
 BmDrEdit_VelocityDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_VelocityDown_Dispatch
@@ -839,6 +892,8 @@ BmDrEdit_DecrementVelocity:
 	ld (0x295d:16), 2
 	ret
 
+; Only while the timer is idle: with bit 0 of 0x295f the gate 0x2788 + 1 (BmDrEdit_IncrementGateTime,
+; in BmDrEdit_GateOrVelocityDown); otherwise, in drum mode, BmDrEdit_IncrementVelocityValue.
 BmDrEdit_GateOrVelocityUp:
 	bit 7, (0x295c:16)
 	ret nz
@@ -849,6 +904,8 @@ BmDrEdit_GateOrVelocityUp:
 	calr BmDrEdit_IncrementVelocityValue
 	ret
 
+; The reverse of BmDrEdit_GateOrVelocityUp.  The two bodies after it step the gate 0x2788 within
+; 1..0x7f, then NoteEditSy_SendGateCmd and BmDrEdit_UpdateGateDisplay.
 BmDrEdit_GateOrVelocityDown:
 	bit 7, (0x295c:16)
 	ret nz
@@ -877,6 +934,7 @@ BmDrEdit_DecrementGateTime:
 	call NoteEditSy_SendGateCmd
 	jrl BmDrEdit_UpdateGateDisplay
 
+; Velocity 0x278a + 1, at most 0x7f, then NoteEditSy_SendVelocityCmd (tail jump).
 BmDrEdit_IncrementVelocityValue:
 	ld a, (0x278a:16)
 	cp a, 0x7f
@@ -885,6 +943,7 @@ BmDrEdit_IncrementVelocityValue:
 	ld (0x278a:16), a
 	jp NoteEditSy_SendVelocityCmd
 
+; Velocity 0x278a - 1, at least 1, then NoteEditSy_SendVelocityCmd (tail jump).
 BmDrEdit_DecrementVelocityValue:
 	ld a, (0x278a:16)
 	cp a, 1:i3
@@ -893,6 +952,7 @@ BmDrEdit_DecrementVelocityValue:
 	ld (0x278a:16), a
 	jp NoteEditSy_SendVelocityCmd
 
+; Unless the timer runs with an action other than 3: BmDrEdit_IncrementDuration.
 BmDrEdit_DurationUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_DurationUp_Dispatch
@@ -973,6 +1033,7 @@ BmDrEdit_DecrementDuration_GlobalClamp:
 BmDrEdit_DecrementDuration_Send:
 	jp NoteEditSy_SendScrollCmd8
 
+; Only while the timer is idle: 0x2792 + 1, at most 0x60, then NoteEditSy_SendModeScrollCmd.
 BmDrEdit_ModeScrollUp:
 	bit 7, (0x295c:16)
 	ret nz
@@ -983,6 +1044,8 @@ BmDrEdit_ModeScrollUp:
 	ld (0x2792:16), wa
 	jp NoteEditSy_SendModeScrollCmd
 
+; Only while the timer is idle: 0x2792 - 1, at least 1, or 48 when it was 0; then
+; NoteEditSy_SendModeScrollCmd.
 BmDrEdit_ModeScrollDown:
 	bit 7, (0x295c:16)
 	ret nz
@@ -1006,6 +1069,8 @@ BmDrEdit_SetFeedbackTimer:
 	ld (0x295d:16), 1
 	ret
 
+; Saves the drum/bass editor cursor: 0x275e -> 0x2762 (count), byte 0x2760 -> 0x2764
+; (ticks), 0x28af -> 0x2766 (data block), 0x2666 -> 0x2768 (offset).
 BmDrEdit_SaveEditState:
 	ldmm16 0x2762, 0x275e
 	ldmm8 0x2764, 0x2760
@@ -1013,6 +1078,8 @@ BmDrEdit_SaveEditState:
 	ldmm16 0x2768, 9830
 	ret
 
+; Restores the editor cursor saved by BmDrEdit_SaveEditState: 0x2762 -> 0x275e, byte 0x2764 ->
+; 0x2760, 0x2766 -> 0x28af (block), 0x2768 -> 0x2666 (offset).
 BmDrEdit_RestoreEditState:
 	ldmm16 0x275e, 0x2762
 	ldmm8 0x2760, 0x2764
@@ -1020,6 +1087,8 @@ BmDrEdit_RestoreEditState:
 	ldmm16 9830, 0x2768
 	ret
 
+; Moves the playback position backwards to the previous status byte, following backward block
+; links (offset restarts at 0xff); reaching the first block sets SEQ_ERROR_CODE = 0xff.
 BmDrEdit_ClearAndScanToEnd:
 	ld (SEQ_ERROR_CODE:16), 0
 
@@ -1049,6 +1118,9 @@ BmDrEdit_ScanToEnd_CheckEndMark:
 	jr z, BmDrEdit_ScanToEnd_Loop
 	ret
 
+; Restores the drum/bass editor's saved cursor: 0x276a -> 0x275e (count), byte 0x276c ->
+; 0x2760 (ticks), 0x276e -> 0x28af (data block) and byte 0x2770 -> 0x2666 (offset).
+; BmDrEdit_SaveEditState keeps a second copy at 0x2762..0x2768.
 BmDrEdit_LoadAlternateState:
 	ldmm16 0x275e, 0x276a
 	ldmm8 0x2760, 0x276c
@@ -1058,6 +1130,9 @@ BmDrEdit_LoadAlternateState:
 	ld (9830:16), wa
 	ret
 
+; Restores the saved cursor (BmDrEdit_LoadAlternateState) and counts beat markers 0x81 in 0x2772
+; while reading events (SeqData_ReadNextByte, SeqData_SkipToNextEvent), until 0x82 or 0x84 or the
+; count passes (0x2774).
 BmDrEdit_LoadAlternateAndCountNotes:
 	calr BmDrEdit_LoadAlternateState
 	ldw (0x2772:16), 0
@@ -1167,6 +1242,8 @@ BmDrEdit_SelectChannel_Done:
 	popw_erp 0xfa
 	ret
 
+; Rounds the cursor tick 0x279a up to the next multiple of the grid step 0x2792 (strictly above
+; it).
 BmDrEdit_AlignDisplayGrid:
 	ld de, 0:i3
 	ld wa, (0x279a:16)
@@ -1183,6 +1260,9 @@ BmDrEdit_AlignGrid_Store:
 	ld (0x279a:16), de
 	ret
 
+; In drum mode (bit 0 of 0x2742) compares the note number two bytes after the playback position
+; with the editor's note in 0x2786, leaving the position unchanged.
+;   Out: L = 0 when they match or the editor is not in drum mode, 0xff otherwise.  Preserves XIZ.
 BmDrEdit_CompareVelocity:
 	push xiz
 	bit 0, (0x2742:16)
@@ -1208,6 +1288,8 @@ BmDrEdit_CompareVelocity_Return:
 	pop xiz
 	ret
 
+; Saves the playback position (block 0x28af, offset 0x2666) as the write position of the edited
+; part (0x2965) + 1: entry (0x2965) of the 4-byte table at 0x23e0.
 BmDrEdit_SaveSongPosition:
 	ld a, (0x2965:16)
 	inc 1, a
@@ -1224,6 +1306,8 @@ BmDrEdit_SaveSongPosition:
 	ld (xwa + 2), de
 	ret
 
+; Reads the byte after the playback position into 0x2760 (the tick byte of the note there),
+; leaving the position unchanged.  Preserves XIZ.
 BmDrEdit_ReadEventAtPosition:
 	push xiz
 	ld iz, (0x28af:16)
@@ -1238,6 +1322,8 @@ BmDrEdit_ReadEventAtPosition:
 	pop xiz
 	ret
 
+; When the event at the playback position is a note-on that BmDrEdit_CompareVelocity accepts,
+; continues in BmDrEdit_ReadEventAtPosition; returns otherwise.
 BmDrEdit_CheckNoteAtPosition:
 	call SeqData_ReadNextByte
 	and l, 0xf0
@@ -1307,6 +1393,9 @@ BmDrEdit_WalkTrack_CheckNoteOn:
 	jr nz, BmDrEdit_WalkTrack_ProcessEvent
 	jrl BmDrEdit_ReadEventAtPosition
 
+; Converts two (count, ticks) positions into tick counts at 96 ticks per count.
+;   In:  XWA -> word that receives (0x275e) * 96 + byte (0x2760);
+;        XBC -> word that receives (0x276a) * 96 + byte (0x276c).
 BmDrEdit_SetupCoordinates:
 	ld xde, xwa
 	ldmw2 (xde), 0x275e
@@ -1327,6 +1416,13 @@ BmDrEdit_SetupCoordinates:
 	add (xbc), wa
 	ret
 
+; Checks whether a note event starts exactly at the editor cursor and, if so, loads it.
+;   The cursor positions (BmDrEdit_SetupCoordinates) are compared with 0x279a; the event at the
+;   playback position must be a note-on (0x9n) whose velocity BmDrEdit_CompareVelocity
+;   accepts.  Then bit 0 of 0x295f is set, the note bytes go to 0x2786 / 0x2788, its length
+;   (count * 96 + ticks) to 0x278c, BmDrEdit_ClearAndScanToEnd runs, 0x2786 is copied to 0x2962
+;   and the view is scrolled (BmDrEdit_AdjustScrollToView).  Otherwise bit 0 of 0x295f stays
+;   clear.
 BmDrEdit_SetupAndWalkToNote:
 	dec 4, xsp
 	pushw_erp 0xfa
@@ -1378,6 +1474,10 @@ BmDrEdit_SetupAndWalkDone:
 	inc 4, xsp
 	ret
 
+; Searches forward from the playback position for the note under the editor cursor (note-on
+; accepted by BmDrEdit_CompareVelocity) up to the next bar / end / track marker.  A match whose
+; next byte is 0 leaves the position on it (BmDrEdit_ClearAndScanToEnd); otherwise the saved
+; editor state is restored (BmDrEdit_SaveEditState / BmDrEdit_RestoreEditState).
 BmDrEdit_SaveAndFindNote:
 	calr BmDrEdit_SaveEditState
 
@@ -1407,6 +1507,7 @@ BmDrEdit_FindNote_SkipNonNote:
 	call SeqData_SkipToNextEvent
 	jr BmDrEdit_FindNote_Loop
 
+; Clears byte 0 of the eight 3-byte slots at 0x2746.  BmDrEdit_CleanupMelodicMode also jumps here.
 BmDrEdit_ClearAllSlots:
 	lda xbc, (0x2746:16)
 	ld xwa, xbc
@@ -1419,6 +1520,7 @@ BmDrEdit_ClearSlots_Loop:
 	jr c, BmDrEdit_ClearSlots_Loop
 	ret
 
+; BmDrEdit_CheckChannelActive, then tail-jumps to BmDrEdit_SelectActiveChannel.
 BmDrEdit_CheckAndSelectChannel:
 	calr BmDrEdit_CheckChannelActive
 	jrl BmDrEdit_SelectActiveChannel
@@ -1470,6 +1572,7 @@ BmDrEdit_FindNote_Return:
 	popw iz
 	ret
 
+; Clears byte 0 of each 3-byte entry from 0x2747 to 0x2747 + 24 (eight entries).
 BmDrEdit_ClearAllSlotsAlt:
 	lda xbc, (0x2747:16)
 	ld xwa, xbc
@@ -1482,6 +1585,7 @@ BmDrEdit_ClearSlotsAlt_Loop:
 	jr c, BmDrEdit_ClearSlotsAlt_Loop
 	ret
 
+; HL = 0xff when any of the eight 3-byte slots at 0x2746 is in use (bit 7 of byte 0), else 0.
 BmDrEdit_CheckSlotsAvailable:
 	ld de, 0:i3
 	lda xbc, (0x2746:16)
@@ -1503,6 +1607,8 @@ BmDrEdit_CheckSlots_Next:
 	ld hl, 0:i3
 	ret
 
+; From the grid tick 0x279a: 0x2760 = tick mod 96 and 0x275e = tick / 96 + (0x276a).
+; BmDrEdit_WalkEventsOrSetError also jumps here.
 BmDrEdit_CalcBeatFromGridPos:
 	ld wa, (0x279a:16)
 	extz xwa
@@ -1572,6 +1678,8 @@ BmDrEdit_ModeScrollDown_Dup_Send:
 	call	NoteEditSy_SendModeScrollCmd
 	ret
 
+; Unless the timer runs with an action other than 4: 0x2798 + 1, at most 9,
+; NoteEditSy_UpdateChordDisplay, and the timer 0x295c = 129, 0x295d = 4.
 BmDrEdit_ChordScrollUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ChordScrollUp
@@ -1589,6 +1697,8 @@ BmDrEdit_ChordScrollUp:
 	ld (0x295d:16), 4
 	ret
 
+; Unless the timer runs with an action other than 4: 0x2798 - 1, at least 0,
+; NoteEditSy_UpdateChordDisplay, and the timer 0x295c = 129, 0x295d = 4.
 BmDrEdit_ChordScrollDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_ChordScrollDown
@@ -1606,6 +1716,7 @@ BmDrEdit_ChordScrollDown:
 	ld (0x295d:16), 4
 	ret
 
+; Returns at once (the no-op case of the velocity and duration down checks).
 BmDrEdit_NullReturn:
 	ret
 
@@ -1643,6 +1754,9 @@ BmDrEdit_PitchWrap_CheckEnd:
 	calr ReadSeqData_StoreParams
 	jrl BmDrEdit_NavigateToPrevAndDisplay
 
+; Writes the editor note length 0x278c into the note at the playback position (a 0x9n event,
+; status = byte 0): byte 4 = length mod 96, byte 5 = length / 96 (both with bit 7 cleared), then
+; restores the cursor (BmDrEdit_RestoreEditState).
 BmDrEdit_CalcDurationPosition:
 	calr BmDrEdit_SaveEditState
 	call SeqData_ReadNextByte
@@ -1685,6 +1799,8 @@ BmDrEdit_UpdateGateDisplay:
 	calr BmDrEdit_RestoreEditState
 	jrl BmDrEdit_SendMetronomeNoteOn
 
+; Writes the editor note number 0x2786 into byte 2 (status = byte 0) of the note at the playback
+; position (a 0x9n event), restores the cursor and plays the note (BmDrEdit_SendMetronomeNoteOn).
 BmDrEdit_UpdateVelocityDisplay:
 	calr BmDrEdit_SaveEditState
 	call SeqData_ReadNextByte
@@ -1700,6 +1816,10 @@ BmDrEdit_UpdateVelocityDisplay:
 	calr BmDrEdit_RestoreEditState
 	jrl BmDrEdit_SendMetronomeNoteOn
 
+; Clears bit 0 of 0x295f, sets the note from the cursor row (BmDrEdit_CalcTrackPosition), copies
+; note 0x2786 to 0x2960, byte 0x278a to 0x2961 and to 0x2788, plays the note
+; (BmDrEdit_PlayNoteAndSetDelay), inserts it (BmDrEdit_WalkEventsOrSetError) and goes on to
+; BmDrEdit_RefreshAfterInsert.
 BmDrEdit_InsertNoteEvent:
 	res 0, (0x295f:16)
 	calr BmDrEdit_CalcTrackPosition
@@ -1716,6 +1836,10 @@ BmDrEdit_SendWidgetCmd:
 	ret z
 	jp NoteEditSy_SendWidgetCmdE
 
+; When the measure 0x2744 is above 1: rescans from the measure before (BmDrEdit_SelectChannelAndLoadPos,
+; BmDrEdit_LoadAlternateState, BmDrEdit_ScanChannelEvents), puts the measure back, clears the
+; cursor 0x2782 / 0x2784, reloads the position, row list and note under the cursor and redraws the
+; editor widgets.  BmDrEdit_NullReturn also jumps here.
 BmDrEdit_NavigatePrevPage:
 	ld wa, (0x2744:16)
 	cp wa, 1:i3
@@ -1736,6 +1860,10 @@ BmDrEdit_NavigatePrevPage:
 	call NoteEditSy_SendWidgetCmd0
 	jrl NoteEdit_SendScrollCmds
 
+; BmDrEdit_AlignDisplayGrid and BmDrEdit_InsertNoteSequence; an insert error (bit 2 of 0x295f)
+; records 0xd0 (SeqData_SetErrorCode) and leaves through BmDrEdit_RefreshDisplayState.  When the
+; cursor tick 0x279a has reached the page end ((0x2774) * 96), BmDrEdit_NavigateAndLoadPosition;
+; otherwise BmDrEdit_CalcBeatMeasure and the widget redraws.
 BmDrEdit_RefreshAfterInsert:
 	calr BmDrEdit_AlignDisplayGrid
 	calr BmDrEdit_InsertNoteSequence
@@ -1755,6 +1883,10 @@ BmDrEdit_RefreshAfterInsert_CheckFull:
 	calr NoteEdit_SendScrollCmds
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; Returns the visible row range of the note editor.
+;   In:  XWA -> first row byte, XBC -> second row byte.  Drum mode (bit 0 of 0x2742): (0x279e)
+;   and (0x279e) + 11.  Melodic mode: the two bytes of WidgetData_DrawbarPositionTable for the
+;   scroll index 0x2798.
 BmDrEdit_SetupScrollRegion:
 	ld xde, xwa
 	bit 0, (0x2742:16)
@@ -1809,6 +1941,9 @@ BmDrEdit_TestPartTableEntry_Below:
 	ldw hl, 0xffff
 	ret
 
+; Enters the drum editor: Malloc(0x6a4) into 0x1d50 and 0x1d54, NoteEditSy_ScanAndSortEntries,
+; 0x278e = 10, grid step 0x2792 = (0x2796), drum mode (bit 0 of 0x2742) set, 0x2774 = 7, 0x27a2 = 8;
+; then BmDrEdit_InitCommon.
 BmDrEdit_InitDrumMode:
 	pushw 0x6a4
 	call Malloc
@@ -1979,6 +2114,9 @@ BmDrEdit_PopIzAndReturn:
 	popw iz
 	ret
 
+; Leaves the drum editor: saves the grid step 0x2792 in 0x2796, frees (0x1d50) and, unless
+; CURRENT_TITLE is 152, clears bit 0 of 0x26e2 with PartSelect_UpdateDisplayState; then
+; BmDrEdit_CleanupCommon.
 BmDrEdit_CleanupDrumMode:
 	ldmm16 0x2796, 0x2792
 	ld xwa, (7504:16)
@@ -1993,6 +2131,11 @@ BmDrEdit_CleanupDrumMode:
 BmDrEdit_SkipPartSelect:
 	jr BmDrEdit_CleanupCommon
 
+; Leaves the note editor: unless CURRENT_TITLE is 149, clears bit 0 of 0x26e2 with
+; PartSelect_UpdateDisplayState; saves 0x2792 in 0x2794 and 0x278e in 0x2790.  The common tail
+; after it clears bit 2 of 0x28a7 and the timer 0x295c, ORs word 0xd4f into 0xffec and clears 0xd4f
+; / 0xd51, copies the measure 0x2744 to 0x2668, runs Audio_CheckSubsystemReady, clears bit 0 of
+; 0x27b0 and empties both slot lists (BmDrEdit_ClearAllSlotsAlt, BmDrEdit_ClearAllSlots).
 BmDrEdit_CleanupMelodicMode:
 	cp (CURRENT_TITLE:16), 149
 	jr z, BmDrEdit_SkipMelodicPartSelect
@@ -2064,6 +2207,9 @@ BmDrEdit_InsertNotesFromSlots_Done:
 	popw iz
 	ret
 
+; Inserts the note being edited (BmDrEdit_PrepareAndInsertNote); on success continues in
+; BmDrEdit_CalcBeatFromGridPos, on failure records 0xcf and leaves through
+; BmDrEdit_RefreshDisplayState.
 BmDrEdit_WalkEventsOrSetError:
 	calr BmDrEdit_PrepareAndInsertNote
 	cp (SEQ_ERROR_CODE:16), 0
@@ -2142,6 +2288,10 @@ BmDrEdit_Rescan_CalcAndWalk:
 	calr NoteEditSy_SendCompoundWidgetUpdate
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; SEQ_ERROR_CODE = 0; saves the cursor (an error records 0xb6) and counts the measures
+; (BmDrEdit_CountMeasuresAndValidate).  When the count 0x2772 is 0 it inserts two bar markers
+; (EditChannel_LoadVoiceParams, BmDrEdit_InsertStepEntry, stopping on an error); then restores the
+; cursor (BmDrEdit_RestoreEditState).
 BmDrEdit_ValidateAndInsertSteps:
 	ld (SEQ_ERROR_CODE:16), 0
 	calr BmDrEdit_SaveEditState
@@ -2170,6 +2320,12 @@ BmDrEdit_ValidateSteps_InsertLoop:
 BmDrEdit_ValidateSteps_RestoreState:
 	jrl BmDrEdit_RestoreEditState
 
+; Points the editor at the start of the part being edited and re-inserts its step entries.
+;   The part is (0x2965) + 1; its first data block comes from the voice table of song slot 0
+;   (Part_ReadVoiceWord), returning at once when it is 0xffff.  Sets 0x28af / 0x2666 = block / 5
+;   (error 0xb7 if an error was pending), counts the measures (BmDrEdit_CountMeasuresAndValidate),
+;   then repeats EditChannel_LoadVoiceParams + BmDrEdit_InsertStepEntry (0x2782) + 2 times,
+;   counting down in 0x2772.  Any error goes to BmDrEdit_RefreshDisplayState.
 BmDrEdit_SeekToPartVoice:
 	ld c, (0x2965:16)
 	inc 1, c
@@ -2213,6 +2369,8 @@ BmDrEdit_SeekVoice_DecrementLoop:
 	jr nz, BmDrEdit_SeekVoice_InsertLoop
 	ret
 
+; Advances the page if needed (BmDrEdit_CheckAndAdvancePage) and sets the cursor tick 0x279a =
+; (0x2782) * 96 + (0x2784).
 BmDrEdit_CalcTickPosition:
 	calr BmDrEdit_CheckAndAdvancePage
 	ld bc, (0x2782:16)
@@ -2258,6 +2416,11 @@ BmDrEdit_LoadAndDisplayNotes:
 	calr BmDrEdit_SendMetronomeNoteOn
 	ret
 
+; Moves the editor to the cursor tick (BmDrEdit_CalcTickPosition), selects the channel and seeks the
+; position (BmDrEdit_LoadAlternateState, BmDrEdit_SkipToEventByCount), re-seeking the part
+; (BmDrEdit_SeekToPartVoice) after an error and leaving through BmDrEdit_RefreshDisplayState if
+; that fails too.  Then finds the note under the cursor, redraws the widgets and, with bit 0 of
+; 0x295f set, plays it (BmDrEdit_SendMetronomeNoteOn).  Three other routines jump here.
 BmDrEdit_NavigateAndLoadPosition:
 	calr BmDrEdit_CalcTickPosition
 	calr BmDrEdit_SelectChannelAndLoadPos
@@ -2473,6 +2636,7 @@ BmDrEdit_PitchOverflow_UpdateDisplay:
 	jrl nz, BmDrEdit_RefreshDisplayState
 	jrl BmDrEdit_SetFeedbackTimer
 
+; Alias entry: jumps to BmDrEdit_BuildVoiceList.
 NoteEditSy_CallFarRoutine:
 	jrl BmDrEdit_BuildVoiceList
 
@@ -2547,6 +2711,10 @@ BmDrEdit_AdjustViewReturn:
 	inc 4, xsp
 	ret
 
+; From the restored cursor (BmDrEdit_LoadAlternateState, BmDrEdit_CheckNoteAtPosition), walks the
+; track forward (BmDrEdit_WalkTrackForward) until its end flag (bit 1 of 0x295f) or until the
+; tick distance between the two positions in its 4-byte stack frame (BmDrEdit_SetupCoordinates)
+; passes (0x279c).
 BmDrEdit_LoadAndCheckNote:
 	dec 4, xsp
 	calr BmDrEdit_LoadAlternateState
@@ -2584,6 +2752,10 @@ BmDrEdit_WalkReturn:
 	inc 4, xsp
 	ret
 
+; Sets the cursor tick 0x279a from the two editor positions (BmDrEdit_SetupCoordinates, their
+; difference); past the visible range ((0x2774) * 96) it reloads the page
+; (BmDrEdit_NavigateAndLoadPosition), otherwise it walks to the note there and refreshes the
+; widgets, playing the note.
 BmDrEdit_InitViewAndNavigate:
 	dec 4, xsp
 	lda xwa, (xsp + 2)
@@ -2611,6 +2783,9 @@ BmDrEdit_InitView_Return:
 	inc 4, xsp
 	ret
 
+; When the cursor tick 0x279a is past the visible range ((0x2774) * 96) reloads the page
+; (BmDrEdit_NavigateAndLoadPosition); otherwise clears bit 0 of 0x295f, restores the cursor,
+; recomputes beat / measure and refreshes the widgets.
 BmDrEdit_AdjustViewToPosition:
 	ld a, (0x2774:16)
 	mul a, 0x60
@@ -2623,21 +2798,28 @@ BmDrEdit_AdjustViewToPosition:
 	calr NoteEdit_SendScrollCmds
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; Plays the note under the editor cursor: Metronome_PlayClick, BmDrEdit_BuildNoteOnEvent, and
+; 0x295e = 134.
 BmDrEdit_SendMetronomeNoteOn:
 	calr Metronome_PlayClick
 	calr BmDrEdit_BuildNoteOnEvent
 	ld (0x295e:16), 134
 	ret
 
+; Plays the note under the editor cursor with its velocity: Metronome_PlayClick,
+; BmDrEdit_BuildNoteOnEvent_WithVelocity, and 0x295e = 134.
 BmDrEdit_SendMetronomeNoteOn_Alt:
 	calr Metronome_PlayClick
 	calr BmDrEdit_BuildNoteOnEvent_WithVelocity
 	ld (0x295e:16), 134
 	ret
 
+; Alias entry: jumps to BmDrEdit_WriteNoteOffEntry.
 Metronome_PlayClick:
 	jr BmDrEdit_WriteNoteOffEntry
 
+; Sends the 5-byte sequencer event 0x90 0x7e (0x2786) (0x2788) (0x2965) from a stack buffer
+; (SeqBuf_WriteMidiEvent, BC = 5), then SeqBuf_FlushAndReinit_NoteEvents.
 BmDrEdit_BuildNoteOnEvent:
 	dec 8, xsp
 	lda xwa, (xsp)
@@ -2653,6 +2835,7 @@ BmDrEdit_BuildNoteOnEvent:
 	inc 8, xsp
 	ret
 
+; BmDrEdit_BuildNoteOnEvent with the fixed byte 0x50 in place of (0x2788).
 BmDrEdit_BuildNoteOnEvent_WithVelocity:
 	dec 8, xsp
 	lda xwa, (xsp)
@@ -2674,6 +2857,10 @@ BmDrEdit_WriteNoteOffEntry:
 	extz wa
 	jp SeqBuf_WriteNoteOffEntry
 
+; Pads the edited part with empty bars up to the cursor: with the cursor bar (0x279a / 96) + 1
+; at or past the bar count 0x2772, inserts (difference + 1) bar markers (BmDrEdit_InsertStepEntry,
+; after EditChannel_LoadVoiceParams); an error sets bit 2 of 0x295f.  The playback position is
+; restored afterwards.  Preserves XIZ.
 BmDrEdit_InsertNoteSequence:
 	push xiz
 	ld wa, (0x28af:16)
@@ -2718,6 +2905,11 @@ BmDrEdit_InsertSeq_PopIzRet:
 	pop xiz
 	ret
 
+; Clears bit 3 of 0x295f.  With 0x279c = 0: a beat marker 0x81 at the position, a 0x9n note that
+; BmDrEdit_CompareVelocity rejects, or tick 0x2760 non-zero sets bit 3 of 0x295f; another event
+; goes to BmDrEdit_WalkAndScanAfterEdit.  Otherwise walks forward from the restored cursor
+; (BmDrEdit_WalkTrackForward) while the tick distance stays below (0x279c), then restores the
+; cursor.
 BmDrEdit_ScanAfterModify:
 	dec 4, xsp
 	res 3, (0x295f:16)
@@ -2763,6 +2955,8 @@ BmDrEdit_ScanAfterModify_Return:
 	inc 4, xsp
 	ret
 
+; Moves the cursor tick 0x279a back to the previous multiple of the grid step 0x2792 (strictly
+; below it); nothing at 0.
 BmDrEdit_AlignGridBackward:
 	ld wa, (0x279a:16)
 	cp wa, 0:i3
@@ -2782,6 +2976,8 @@ BmDrEdit_AlignGridBackward_Store:
 	ld (0x279a:16), de
 	ret
 
+; Restores the saved cursor (BmDrEdit_LoadAlternateState; a pending error records 0xb8), then goes
+; on to BmDrEdit_CountMeasuresAndValidate.
 BmDrEdit_LoadAlternateAndValidate:
 	calr BmDrEdit_LoadAlternateState
 	cp (SEQ_ERROR_CODE:16), 0
@@ -2792,6 +2988,8 @@ BmDrEdit_LoadAlternateAndValidate:
 BmDrEdit_LoadAlternateAndValidate_Done:
 	jr BmDrEdit_CountMeasuresAndValidate
 
+; Counts the bar markers (0x81) from the playback position to the next end (0x82) or bar-start
+; (0x84) marker into 0x2772.  A pending error records 0xd1 before and 0xce after the scan.
 BmDrEdit_CountMeasuresAndValidate:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, BmDrEdit_CountMeasures_Init
@@ -2975,6 +3173,8 @@ BmDrEdit_WalkScan_Return:
 	inc 4, xsp
 	ret
 
+; Unless slot 0 at 0x2746 is in use or the timer runs: UI_PostModeChangeEvent with WA = 0x96
+; (tail jump).
 BmDrEdit_PostModeChange96:
 	bit 7, (0x2746:16)
 	ret nz
@@ -2983,6 +3183,8 @@ BmDrEdit_PostModeChange96:
 	ldw wa, 0x96
 	jp UI_PostModeChangeEvent
 
+; Unless the timer runs with an action other than 5: clears bit 0 of 0x295f and goes on to
+; BmDrEdit_DrumVoiceUp.
 BmDrEdit_DrumVoiceUp_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_DrumVoiceUp_ClearFlag
@@ -2993,6 +3195,10 @@ BmDrEdit_DrumVoiceUp_ClearFlag:
 	res 0, (0x295f:16)
 	jr BmDrEdit_DrumVoiceUp
 
+; Unless slot 0 at 0x2746 is in use: steps the cursor row 0x27a0 up, to at most 11, or once it is
+; 11 the top row 0x279e (at most 0x74); then redraws, plays the note
+; (BmDrEdit_SendMetronomeNoteOn_Alt), sets the timer 0x295c = 131, 0x295d = 5 and tail-jumps to
+; Audio_CheckSubsystemReady.
 BmDrEdit_DrumVoiceUp:
 	bit 7, (0x2746:16)
 	ret nz
@@ -3019,6 +3225,8 @@ BmDrEdit_DrumVoiceUp_UpdateDisplay:
 	ld (0x295d:16), 5
 	jp Audio_CheckSubsystemReady
 
+; Unless the timer runs with an action other than 5: clears bit 0 of 0x295f and goes on to
+; BmDrEdit_DrumVoiceDown.
 BmDrEdit_DrumVoiceDown_Check:
 	bit 7, (0x295c:16)
 	jr z, BmDrEdit_DrumVoiceDown_ClearFlag
@@ -3029,6 +3237,9 @@ BmDrEdit_DrumVoiceDown_ClearFlag:
 	res 0, (0x295f:16)
 	jr BmDrEdit_DrumVoiceDown
 
+; Unless slot 0 at 0x2746 is in use: steps the cursor row 0x27a0 down, to at least 0, or once it
+; is 0 the top row 0x279e (at least 1); then redraws, plays the note, sets the timer 0x295c = 131,
+; 0x295d = 5 and tail-jumps to Audio_CheckSubsystemReady.
 BmDrEdit_DrumVoiceDown:
 	bit 7, (0x2746:16)
 	ret nz
@@ -3055,6 +3266,8 @@ BmDrEdit_DrumVoiceDown_UpdateDisplay:
 	ld (0x295d:16), 5
 	jp Audio_CheckSubsystemReady
 
+; In drum mode (bit 0 of 0x2742) sets the editor note 0x2786 to the visible top row (0x279e)
+; plus the cursor row (0x27a0); does nothing in melodic mode.
 BmDrEdit_CalcTrackPosition:
 	bit 0, (0x2742:16)
 	ret z
@@ -3063,6 +3276,8 @@ BmDrEdit_CalcTrackPosition:
 	ld (0x2786:16), a
 	ret
 
+; Unless slot 0 at 0x2746 is in use or the timer runs: UI_PostModeChangeEvent with WA = 0x99
+; (tail jump).
 BmDrEdit_PostModeChange99:
 	bit 7, (0x2746:16)
 	ret nz
@@ -3075,6 +3290,8 @@ BmDrEdit_DelayAction_WalkAndUpdateAlt:
 	calr BmDrEdit_SetupAndWalkToNote
 	jrl NoteEdit_UpdateScrollAndDisplay
 
+; Plays the note under the cursor (BmDrEdit_SendMetronomeNoteOn) and starts the timer 0x295e =
+; 134.
 BmDrEdit_PlayNoteAndSetDelay:
 	calr BmDrEdit_SendMetronomeNoteOn
 	ld (0x295e:16), 134
@@ -3198,6 +3415,11 @@ BmDrEdit_VelChange_Epilog:
 	lda xsp, (xsp + 20)
 	ret
 
+; Steps a (block, offset) cursor one byte backward through the song-data block chain.
+;   In:  XWA -> block word, XBC -> offset word.  Below offset 5 the block becomes its backward
+;   link (PartCtrl_ReadWord_Off1) and the offset 0xff.
+;   Out: HL = 0, or 0xffff with error 0xa0 (SeqData_SetErrorCode) when that block number is above
+;   0x4d8.  Counterpart of PartCtrl_ReadWordWithBoundsCheck.
 BmDrEdit_DecrementAndValidateCounter:
 	dec 4, xsp
 	push xiz
@@ -3229,6 +3451,11 @@ BmDrEdit_DecrValidate_Epilog:
 	inc 4, xsp
 	ret
 
+; Steps a (block, offset) cursor one byte forward through the song-data block chain.
+;   In:  XWA -> block word, XBC -> offset word.  Past offset 0xff the block becomes its forward
+;   link (PartCtrl_ReadWord) and the offset 5.
+;   Out: HL = 0, or 0xffff with error 0xa1 (SeqData_SetErrorCode) when the next block number is
+;   above 0x4d8.
 PartCtrl_ReadWordWithBoundsCheck:
 	dec 4, xsp
 	push xiz
@@ -3260,15 +3487,20 @@ BmDrEdit_BoundsCheck_Epilog:
 	inc 4, xsp
 	ret
 
+; Zero-extends BC and jumps to PartCtrl_ReadByte.
 PartCtrl_ReadByteExtended:
 	extz bc
 	jp PartCtrl_ReadByte
 
+; Zero-extends BC and DE and jumps to PartCtrl_WriteByteToBuf.
 PartCtrl_WriteByte_ZeroExtended:
 	extz bc
 	extz de
 	jp PartCtrl_WriteByteToBuf
 
+; Inserts one bar marker (0x81) at the editor position of part (0x2965) + 1:
+; BmDrEdit_SaveSongPosition, then BmDrEdit_ApplyVelocityChange with a one-byte event.
+; SEQ_ERROR_CODE is cleared first.
 BmDrEdit_InsertStepEntry:
 	dec 2, xsp
 	calr BmDrEdit_SaveSongPosition
@@ -3283,6 +3515,9 @@ BmDrEdit_InsertStepEntry:
 	inc 2, xsp
 	ret
 
+; Builds a 6-byte note-on at 0x2967 for the cursor position and inserts it into part (0x2965) + 1
+; (BmDrEdit_ApplyVelocityChange): 0x90, cursor tick mod 96, the bytes 0x2960 / 0x2961, and the
+; length 0x278e as (mod 96, / 96).  BmDrEdit_WalkToGridPosition positions first.
 BmDrEdit_PrepareAndInsertNote:
 	calr BmDrEdit_WalkToGridPosition
 	ld (0x2967:16), 144
@@ -3368,6 +3603,10 @@ BmDrEdit_ValidateVoice_Epilog:
 	inc 8, xsp
 	ret
 
+; Copies the editor's target bar (0x2744) to 0x287f, selects the editor channel
+; (BmDrEdit_CheckAndSelectChannel) and seeks part (0x2965) + 1 to it
+; (BmDrEdit_ValidateAndProcessVoice).  Out: HL = the word that routine returns through its
+; DE pointer.
 BmDrEdit_SyncChannelAndGetPos:
 	dec 2, xsp
 	ldmm16 0x287f, 0x2744
@@ -3383,6 +3622,9 @@ BmDrEdit_SyncChannelAndGetPos:
 	inc 2, xsp
 	ret
 
+; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores its position as
+; the alternate cursor: 0x276a = HL, 0x276c = 0, 0x276e = block (0x28af), 0x2770 = offset.
+; Nothing is stored when SEQ_ERROR_CODE is set.
 BmDrEdit_SelectChannelAndLoadPos:
 	ld (SEQ_ERROR_CODE:16), 0
 	calr BmDrEdit_SyncChannelAndGetPos
@@ -3395,6 +3637,8 @@ BmDrEdit_SelectChannelAndLoadPos:
 	ld (0x2770:16), a
 	ret
 
+; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores the result as the
+; editor position: 0x275e = HL, 0x2760 = 0.  Nothing is stored when SEQ_ERROR_CODE is set.
 BmDrEdit_LoadAlternatePosition:
 	ld (SEQ_ERROR_CODE:16), 0
 	calr BmDrEdit_SyncChannelAndGetPos
@@ -3603,6 +3847,8 @@ BmDrEdit_ScanChannel_ClearSlot:
 	dec 1, l
 	jr BmDrEdit_ScanChannel_FillRemaining
 
+; Finds the row of the bar (0x2744) - (0x27b2) + 1 in the list at 0x27a4 and sets the cursor tick
+; 0x279a = ((0x2782) + row) * 96 + (0x2784).
 BmDrEdit_BuildVoiceList:
 	ld bc, (0x2744:16)
 	sub bc, (0x27b2:16)
@@ -3634,6 +3880,7 @@ BmDrEdit_BuildVoice_SearchLoop:
 	ld (0x279a:16), bc
 	ret
 
+; Empty routine: returns at once.
 BmDrEdit_BuildVoice_NullReturn:
 	ret
 
@@ -3687,6 +3934,9 @@ BmDrEdit_FindNextNonZeroEntry:
 BmDrEdit_FindNextPage_Return:
 	ret
 
+; In melodic mode, scrolls the note editor (index 0x2798, 0..9) until the note 0x2962 lies in the
+; visible row range (BmDrEdit_SetupScrollRegion), then redraws when the index changed
+; (NoteEditSy_UpdateChordDisplay).  Nothing in drum mode.
 BmDrEdit_AdjustScrollToView:
 	dec 4, xsp
 	bit 0, (0x2742:16)
@@ -3779,6 +4029,9 @@ BmDrEdit_RestoreEditRet:
 	popw_erp 0xfa
 	ret
 
+; When the last entry of the row list at 0x27a4 ((0x27a2) entries) is non-zero, the measure 0x2744
+; + 1 and the count 0x2782 = 0; otherwise the count 0x2782 + 1.  Then the tick 0x2784 = low byte of
+; (0x279a) - (0x2774) * 96.
 BmDrEdit_CheckAndAdvancePage:
 	ld a, (0x27a2:16)
 	dec 1, a
@@ -3861,6 +4114,11 @@ BmDrEdit_ProcessVoice_Epilog:
 	lda xsp, (xsp + 10)
 	ret
 
+; Copies the count 0x2772 to 0xce3 and 0x275e, selects the channel (BmDrEdit_CheckAndSelectChannel)
+; and runs BmDrEdit_ProcessVoiceSection on a 4-byte stack frame.  Unless the measure 0x2744 equals
+; frame word +2, inserts L (less frame word +0 when that is non-zero) bar markers
+; (EditChannel_LoadVoiceParams, BmDrEdit_InsertStepEntry), counting 0x275e up and stopping on an
+; error, and copies 0x275e to 0xce3.
 BmDrEdit_InsertMultiSongSteps:
 	dec 4, xsp
 	ldmm16 3299, 0x2772
@@ -3903,6 +4161,9 @@ BmDrEdit_MultiSong_Return:
 	inc 4, xsp
 	ret
 
+; Sends the note editor's widget updates after a cursor move.  Drum mode (bit 0 of 0x2742)
+; and melodic mode each send a shorter set when no note is under the cursor (bit 0 of
+; 0x295f clear), then scroll commands 0, 1, 2 and NoteEditSy_SendModeScrollCmd.
 NoteEdit_SendScrollCmds:
 	bit 0, (0x2742:16)
 	jr nz, BmDrEdit_SendScrollCmds_DrumMode
@@ -3941,6 +4202,8 @@ BmDrEdit_SendScrollCmds_CommonDrumEnd:
 	call NoteEditSy_SendScrollCmd2
 	jp NoteEditSy_SendModeScrollCmd
 
+; Redraws all note-editor widgets (NoteEditSy_UpdateAllWidgets) unless the cursor tick 0x279a
+; is at or past (0x2774) * 96, the end of the visible range.
 NoteEdit_UpdateScrollAndDisplay:
 	ld a, (0x2774:16)
 	mul a, 0x60
@@ -4048,6 +4311,11 @@ BmDrEdit_ClampScrollPos:
 	ld	(10176:16), wa
 	ret
 
+; Re-enters the note under the cursor: reads its four parameter bytes into 0x2969..0x296c,
+; steps back to its status byte, removes it from the part (BmDrEdit_CopyEventDataBetweenParts)
+; and re-inserts a 6-byte note-on (0x90, 0x2784 note, then those bytes) at the right position
+; (BmDrEdit_SeekForwardToEvent, BmDrEdit_ApplyVelocityChange), then recounts
+; (BmDrEdit_CountMeasuresInit).  Errors go to BmDrEdit_RefreshDisplayState.
 ReadSeqData_StoreParams:
 	call SeqData_AdvancePosition
 	call SeqData_AdvancePosition
@@ -4164,6 +4432,8 @@ BmDrEdit_CalcSongPos_Store:
 	ld (0x2744:16), bc
 	ret
 
+; Finds the entry equal to bar (0x2744) - (0x27b2) + 1 in the row list at 0x27a4 ((0x27a2)
+; entries) and stores in 0x2782 the number of zero entries just before it.
 BmDrEdit_CalcEventPosition:
 	ld de, (0x2744:16)
 	sub de, (0x27b2:16)
@@ -4498,6 +4768,11 @@ BmDrEdit_SecondaryNote_PopIzReturn:
 	inc 4, xsp
 	ret
 
+; Only when CURRENT_TITLE differs from PREVIOUS_TITLE: saves 0x28b1 in 0x283c and sets its bit 0;
+; the active-part mask 0xf19e = word 0xffec (when 0x283a = 0) or (0x2963);
+; Audio_CheckSubsystemReady; 0x251c = measure 0x2744 (0x251e raised to it when lower), 0x2668 =
+; (0x251c), and bit 3 of 0x28a7 set unless that is 1.  Then SeqPlay_AllocBuffersAndInit (tail
+; jump).
 BmDrEdit_EnterPlayMode:
 	ld a, (CURRENT_TITLE:16)
 	cp a, (PREVIOUS_TITLE:16)
@@ -4530,6 +4805,9 @@ BmDrEdit_EnterPlay_UpdateProgress:
 BmDrEdit_EnterPlay_AllocAndInit:
 	jp SeqPlay_AllocBuffersAndInit
 
+; On leaving the note/drum copy screens (CURRENT_TITLE differs from PREVIOUS_TITLE): restores
+; 0x28b1 from 0x283c, clears the active-part mask 0xf19e, re-runs the play-mode dispatcher and, when
+; the active title is 0x95 or 0x98, restores 0xd4f from 0x2963 and SeqVoice_FindSingleActive.
 BmDrEdit_ExitPlayMode:
 	ld a, (CURRENT_TITLE:16)
 	cp a, (PREVIOUS_TITLE:16)

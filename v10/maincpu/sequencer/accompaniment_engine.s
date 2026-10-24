@@ -5,6 +5,11 @@
 ; Rhythm note dispatch, accompaniment voice selection, timing,
 ; patch management, drum configuration, and style conversion.
 ; One of the largest files in the ROM.
+;
+; Part numbering in the routine headers: the six accompaniment parts are named by
+; their one-hot selector value in 0x33d4, which is how the code tells them apart --
+; parts 1 and 2 are AccKbd1 / AccKbd2, parts 4, 8, 16 and 32 are AccCh1..AccCh4.
+; "Part 8" therefore means AccCh2, not the eighth part.
 ; =============================================================================
 
 Rhythm_DispatchNote:
@@ -38,10 +43,16 @@ AccStyle_TempoLookupData:
 	calr	Rhythm_DispatchNote_Helper
 	pop	xiz
 	ret
+; Calls AccStyle_TempoLookupData_Helper.
+; Reached from AccStyle_TempoLookupData, Rhythm_StoreDispatchHelperResult and
+; Rhythm_TransposeTrampBlock.
 Rhythm_DispatchNote_Helper:
 	call	AccStyle_TempoLookupData_Helper
 	ret
 
+; Looks up a two-byte style value: entry (0x90eb) (0..0x4f) of group (0x90ea) (0..15) of
+; AccStyle_TempoWordTable, the group base taken from AccStyle_TempoMultiplierTable; its bytes go to
+; 0x90ee / 0x90ef.  Preserves XHL, XWA.
 AccStyle_LookupTempoAndVelocity:
 	push xhl
 	push xwa
@@ -138,6 +149,7 @@ AccStyle_Velocity_StoreResult:
 	pop xhl
 	ret
 
+; Sets bit 7 of 0x34cd when 0x32f1 is 14 (composer) but the current mode is not 14.
 AccStyle_CheckRecordMode:
 	ld a, (0x32f1:16)
 	cp a, 0xe
@@ -299,6 +311,12 @@ AccStyle_DetectChanges_ClearFlags:
 	and (0x3361:16), 120
 	ret
 
+; Switches the accompaniment to a new style: resets the voice state and the six ring buffers,
+; reads the voice registers back (AccompVoice_BulkReadRegisters), takes the bank ((0x32f7) & 7)
+; into 0x32e6 / 0x32e8 and the style number (0x32f5) into 0x32e5 / 0x32e7 / 0x3370, initialises
+; tuning, applies the style (standard for numbers below 0x80, extended otherwise), then
+; AccBuf_InitKbd1WithMarkers, 0x458 = (0x433), 0x32ec = 1 and Rhythm_ProcessAllPartsAndLoad.
+;   Clears bit 2 of 0x3283 and the byte 0x462 first.
 AccStyle_ApplyChanges:
 	calr AccStyle_ResetAllVoiceState
 	and (0x3283:16), 251
@@ -332,6 +350,9 @@ AccStyle_ApplyChanges_Finalize:
 	call Rhythm_ProcessAllPartsAndLoad
 	ret
 
+; Clears the accompaniment playback state (positions 0x415 / 0x416 / 0x434 / 0x435, the part
+; counters 0x327d..0x3280, 0x32ab..0x32c2, 0x3328, 0x334d, 0x3385..0x338a) and the channel states
+; (AccTone_CallWithSaveAll).
 AccStyle_ResetAllVoiceState:
 	xor wa, wa
 	ld (1045:16), a
@@ -373,6 +394,11 @@ AccStyle_ResetAllVoiceState:
 	call AccTone_CallWithSaveAll
 	ret
 
+; Applies a style numbered below 0x80: takes (0x3305) & 3 into 0x3338 / 0x333a, finds the style
+; for (0x32e5, 0x32e6) (AccVoice_LookupWithOffset) into 0x32ce, sets its time signature and bank,
+; updates the tuning (Rhythm_UpdateTuningConfig) and then either selects the part offset
+; (AccVoice_SelectPartOffset, when (0x32ff) & 7 is set) or sets up the part addresses and loads the
+; tuning block, setting bits 0..5 of 0x332c.
 AccStyle_ApplyStandardStyle:
 	ld a, (0x3305:16)
 	and a, 0x3
@@ -404,6 +430,10 @@ AccStyle_ApplyStd_LoadTuning:
 AccStyle_ApplyStd_Return:
 	ret
 
+; Loads the parameter address of each of the six parts (0x3287..0x3291) from the style at XIY,
+; the parameter index of each being its byte in 0x32a3..0x32a8 (AccPart_LookupBoundVoiceParam,
+; AccPart_GetParamAddr), points 0x3293 at AccStyle_DefaultStream + 6 and clears bits 0..5 of
+; 0x3316..0x3318.  Byte +977 of the style goes to 0x3285.
 AccStyle_SetupPartAddresses:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
@@ -608,6 +638,9 @@ AccVoice_SelectPartOffset_Mode3:
 AccVoice_SelectPartOffset_Return:
 	ret
 
+; Loads the parameter addresses of all six accompaniment parts for a style (as
+; AccVoice_LoadAllParts: XIY = style, HL = base) and also points 0x3293 at AccStyle_DefaultStream
+; + 6.
 AccStyle_SetupPartAddressesByHL:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
@@ -640,6 +673,10 @@ AccStyle_SetupPartAddressesByHL:
 	ld (0x3293:16), xwa
 	ret
 
+; Uses one of two alternative pattern records for the style: (0x3365) when bit 0 of 0x32ff is
+; set, else (0x3367), resolved by AccVoice_ResolveParamAddr; re-initialises the part positions
+; and tuning from it and sets bits 0..5 of 0x332c.  Then bits 0..5 go to 0x3316 (bit 0 set) or
+; to 0x3318 (bit 0 clear), the other two of 0x3316..0x3318 being cleared.
 AccStyle_UseSecondarySource:
 	ld a, (0x3365:16)
 	bit 0, (0x32ff:16)
@@ -681,6 +718,8 @@ AccPart_InitPositionsAndBase:
 	ld (0x3293:16), xwa
 	ret
 
+; Re-initialises the part positions for the style at (0x32ce), copies its tuning records, sets bits
+; 0..5 of 0x332c and clears them in 0x3316..0x3318.
 AccPart_ResetAndCopyTuning:
 	ld xiy, (0x32ce:16)
 	calr AccPart_InitPositionsAndBase
@@ -691,6 +730,8 @@ AccPart_ResetAndCopyTuning:
 	and (0x3318:16), 192
 	ret
 
+; Resets the headers of the six accompaniment ring buffers at 0x2a94, 0x2b94 .. 0x2f94
+; (AccBuf_ResetOnePosition).
 AccBuf_ResetAllPositions:
 	ld xhl, 0x2a94
 	call AccBuf_ResetOnePosition
@@ -706,6 +747,7 @@ AccBuf_ResetAllPositions:
 	call AccBuf_ResetOnePosition
 	ret
 
+; Appends the record 0xd0 0x01 0x10 0x01 to the ring buffer at 0x2a94.
 AccBuf_InitKbd1WithMarkers:
 	ld xhl, 0x2a94
 	ld iy, (xhl + 4)
@@ -721,6 +763,8 @@ AccBuf_InitKbd1WithMarkers:
 	ld (xhl + 4), iy
 	ret
 
+; Sends the three-byte rhythm message 0xd8 0x10 0x00.
+; Called from AccStyle_DetectChanges_Init.
 Rhythm_SendResetMsg:
 	ld a, 0xd8:opc
 	ld w, 0x10:opc
@@ -728,6 +772,8 @@ Rhythm_SendResetMsg:
 	call Rhythm_Send3ByteMsg
 	ret
 
+; Sets the six bytes 0x32a3..0x32a8 to the value Rhythm_LookupTuningByStyle gives for
+; (W = (0x32d8), A = (0x3338)), then runs Rhythm_LookupTuningRange with the same inputs.
 Rhythm_UpdateTuningConfig:
 	ld w, (0x32d8:16)
 	ld a, (0x3338:16)
@@ -743,6 +789,8 @@ Rhythm_UpdateTuningConfig:
 	calr Rhythm_LookupTuningRange
 	ret
 
+; Out: A = Rhythm_LookupTuningByStyle_Data[...] for style W and variation A: the index is the
+; style group (Rhythm_LookupStyleIndex) plus AccVoice_LookupParamIndex.
 Rhythm_LookupTuningByStyle:
 	calr Rhythm_LookupStyleIndex
 	calr AccVoice_LookupParamIndex
@@ -750,6 +798,9 @@ Rhythm_LookupTuningByStyle:
 	ld	a, (xhl+a)
 	ret
 
+; Sets the two velocity settings 0x333f / 0x3340 from the style at XIY (word at the offset
+; Rhythm_LookupTuningRange_Data gives for the style group and variation); style numbers 0x80 and
+; up use 0x39 for both.
 Rhythm_LookupTuningRange:
 	cp (0x32e5:16), 128
 	jr nc, Rhythm_LookupTuning_DefaultRange
@@ -770,6 +821,8 @@ Rhythm_StoreTuningRange:
 	ld (0x3340:16), w
 	ret
 
+; Out: HL = Rhythm_LookupStyleIndex_Compute_Data[Rhythm_LookupStyleIndex_Data[W] & 3] (0, 8, 4
+; or 12), W being a style number (48 and up read as 0).
 Rhythm_LookupStyleIndex:
 	ld xhl, Rhythm_LookupStyleIndex_Data
 	cp w, 0x30
@@ -784,6 +837,7 @@ Rhythm_LookupStyleIndex_Compute:
 	xor h, h
 	ret
 
+; Out: A = AccVoice_ParamIndexData[WA & 3] (0, 3, 4 or 7).  Preserves XHL.
 AccVoice_LookupParamIndex:
 	push xhl
 	ld xhl, AccVoice_ParamIndexData
@@ -827,6 +881,10 @@ Rhythm_LookupTuningByStyle_Data:
 Rhythm_LookupTuningRange_Data:
 	.short 0x03d2, 0x03d4, 0x03d6, 0x03d8, 0x07d2, 0x07d4, 0x07d6, 0x07d8
 
+; Looks up one entry of a part's parameter offset table.
+;   In:  W3 (bank-3 register, code 0x31) = row (index into AccPart_VoiceParamDispatchTable, which selects
+;        one of the AccPart_VoiceParamOffsets_* tables), W = column.
+;   Out: XHL = word W of that table, zero-extended.
 AccPart_GetVoiceParamOffsetTable:
 	ld xhl, AccPart_VoiceParamDispatchTable
 	ldfr_berp W, 0x31
@@ -893,6 +951,11 @@ AccPart_VoiceParamOffsets_ChordB:
 	; data, not code: AccPart_VoiceParamOffsets_ChordB is reached only as data (5 data), and its instruction decode held halt (scripts/converters/data_as_code_to_bytes.py).
 	.byte	0x31, 0x04, 0x93, 0x04, 0xf5, 0x04, 0x26, 0x01, 0x26, 0x05, 0x57, 0x01, 0x57, 0x05
 
+; Reads one style parameter of the selected part and maps it through a lookup table.
+;   In:  A = parameter index, XIY = style data; the part is the one-hot selector in 0x33d4.
+;   AccStyle_ReadParamOffset turns the index into the part's byte value (in W).
+;   Out: HL = word W of AccPart_LookupBoundVoiceParam_Data for parameters below 0x14, of
+;        AccPart_LookupBoundVoiceParam_Data_2 for the others.
 AccPart_LookupBoundVoiceParam:
 	ld w, a
 	calr AccStyle_ReadParamOffset
@@ -906,6 +969,11 @@ AccPart_LookupBound_ComputeIdx:
 	ld	hl, (xhl+w)
 	ret
 
+; Reads one style parameter byte of the selected part.
+;   In:  W = parameter index, XIY = style; the part is the one-hot selector 0x33d4.  The
+;   parameter's offset comes from AccStyle_ReadParamOffset_Data; parts 1 and 2 read it directly,
+;   parts 4, 8, 16 and 32 at +40, +80, +120 and +160.
+;   Out: W = the byte, XHL = the parameter's address for the first part.
 AccStyle_ReadParamOffset:
 	ld xhl, AccStyle_ReadParamOffset_Data
 	sla w, 1
@@ -1013,6 +1081,8 @@ AccPart_LookupBoundVoiceParam_Data:
 AccPart_LookupBoundVoiceParam_Data_2:
 	.short 0x0400, 0x0402, 0x0404, 0x0406, 0x0408, 0x040a, 0x040c, 0x040e
 
+; Returns a style parameter offset for note range A: 0x18 below 0x0f, 0x1c below 0x14, 0x418
+; below 0x23, 0x41c otherwise, each + 2 when bit 0 of 0x3309 is clear.  Out: XHL.
 AccVoice_ComputeParamAddr:
 	cp a, 0xf
 	jr nc, AccVoice_ParamAddr_Range0F_14
@@ -1050,6 +1120,7 @@ AccVoice_ReturnExtHL:
 	extz xhl
 	ret
 
+; Sets the six bytes 0x32a3..0x32a8 to AccTuning_ValueTable[A].
 AccTuning_SetAllFromLookup:
 	calr AccTuning_FetchValue
 	ld (0x32a3:16), a
@@ -1060,6 +1131,7 @@ AccTuning_SetAllFromLookup:
 	ld (0x32a8:16), a
 	ret
 
+; Out: A = AccTuning_ValueTable[A] (A rounded down to a multiple of 5).
 AccTuning_FetchValue:
 	ld xhl, AccTuning_ValueTable
 	ld	a, (xhl+a)
@@ -1082,12 +1154,18 @@ AccTuning_ValueTable:
 	.byte 20, 20, 20, 20, 20, 25, 25, 25, 25, 25
 	.byte 30, 30, 30, 30, 30, 35, 35, 35, 35, 35
 
+; Runs the accompaniment event loop for the parts (AccVoice_ProcessEventLoop) between saving part
+; 1's state into the working cursor and restoring it (AccVoice_SavePartState1 /
+; AccVoice_RestorePartState1).
 AccVoice_ProcessAllSixParts:
 	calr AccVoice_SavePartState1
 	calr AccVoice_ProcessEventLoop
 	calr AccVoice_RestorePartState1
 	ret
 
+; Loads part 1 into the working cursor: selector 0x33d4 = 1, page / offset 0x3297 / 0x3287 into
+; 0x33d6 / 0x33d8, bytes 0x32b5, 0x32ab, 0x32a3, 0x33eb into 0x33da, 0x33db, 0x33d5, 0x33ea; clears
+; bits 0..1 of 0x32f4 and the counter 0x32ed.
 AccVoice_SavePartState1:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -1107,6 +1185,7 @@ AccVoice_SavePartState1:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 1's state (the reverse of AccVoice_SavePartState1).
 AccVoice_RestorePartState1:
 	ld wa, (0x33d6:16)
 	ld (0x3297:16), wa
@@ -1238,6 +1317,9 @@ AccVoice_DispatchCh_Acc4:
 SoundPatch_NullRet:
 	ret
 
+; Steps the working cursor (AccBuf_AdvanceNoPage) and counts the steps in 0x32ed; at 32 steps the
+; pattern is treated as broken: the play-mode dispatcher and AccDemo_InitDone run, 0x32f5 = 0xff
+; and bits 0 and 5 of 0x32f4 are set.
 AccVoice_AdvanceAndCheckEnd:
 	calr AccBuf_AdvanceNoPage
 	inc 1, (0x32ed:16)
@@ -1251,6 +1333,10 @@ AccVoice_AdvanceAndCheckEnd:
 AccVoice_AdvanceAndCheck_Return:
 	ret
 
+; Handles a note event of the working part: peeks the next byte (AccVoice_AdvanceWithSave) and,
+; when the event is at most 0x18 ticks ahead of the clock (AccTempo_PositionCompare against the
+; position from AccVoice_LookupTableAddress), dispatches it (AccMidi_Dispatch); otherwise sets bit
+; 0 of 0x32f4.
 AccVoice_HandleNoteOnEvent:
 	calr AccVoice_AdvanceWithSave
 	ld w, (0x33db:16)
@@ -1368,6 +1454,8 @@ AccVoice_SetChordChangeFlags:
 AccVoice_NullRet:
 	ret
 
+; Out: DE = word (W & 7) of AccVoice_LookupTableAddress_Table + A, i.e. a bar-length (or
+; bar-position) value for time signature W plus an offset A.  W is cleared.
 AccVoice_LookupTableAddress:
 	ld xde, AccVoice_LookupTableAddress_Table
 	and w, 0x7
@@ -1377,6 +1465,8 @@ AccVoice_LookupTableAddress:
 	add de, wa
 	ret
 
+; Out: DE = word ((W & 7) + 1) of AccVoice_LookupTableAddress_Table, the bar length for the
+; time-signature entry after W.
 AccVoice_LookupExtParamAddr:
 	ld xde, AccVoice_LookupTableAddress_Table
 	and w, 0x7
@@ -1385,12 +1475,15 @@ AccVoice_LookupExtParamAddr:
 	ld	de, (xde+w)
 	ret
 
+; AccBuf_AdvanceWithPageTurn on the working cursor (IY = 0x33d8, IZ = 0x33d6), which is not stored
+; back.
 AccVoice_AdvanceWithSave:
 	ld iy, (0x33d8:16)
 	ld iz, (0x33d6:16)
 	call AccBuf_AdvanceWithPageTurn
 	ret
 
+; AccBuf_Advance on the cursor kept in 0x33d6 (page) / 0x33d8 (offset), stored back afterwards.
 AccBuf_AdvanceNoPage:
 	ld iy, (0x33d8:16)
 	ld iz, (0x33d6:16)
@@ -1399,6 +1492,10 @@ AccBuf_AdvanceNoPage:
 	ld (0x33d8:16), iy
 	ret
 
+; Handles the end byte 0x83 of the working part's pattern: activates the part (AccVoice_ActivatePart)
+; when its bit is set in 0x3314 / 0x3315 or 0x3328; otherwise deactivates it (AccPart_Deactivate)
+; when AccPart_CheckAnyActive reports it, or moves on to its next pattern
+; (AccPart_AdvanceAndResolve).
 AccVoice_HandleMarker83:
 	ld w, (0x33d4:16)
 	ld a, (0x3314:16)
@@ -1426,6 +1523,8 @@ AccVoice_Marker83_NextPart:
 AccVoice_Marker83_Return:
 	ret
 
+; Marks the working part active in 0x332a and 0x3328 and sets bit 0 of 0x32f4; once all six parts
+; are set in 0x332a, sets bit 2 of 0x3283 and clears them.
 AccVoice_ActivatePart:
 	ld a, (0x33d4:16)
 	or (0x332a:16), a
@@ -1490,6 +1589,8 @@ AccVoice_ActivatePart_Return2:
 	.byte 0xc1, 0xf4
 	ldw	de, 318
 
+; Selects the selected part's data source: AccPart_SelectSource for style numbers (0x32e5) of
+; 0x80 and up, AccPart_LoadParamOffsetTable otherwise.  Out: W = the part selector (0x33d4).
 AccPart_SelectSourceOrParam:
 	cp (0x32e5:16), 128
 	jr c, AccPart_SelectSource_Param
@@ -1503,6 +1604,10 @@ AccPart_SelectSource_Done:
 	ld w, (0x33d4:16)
 	ret
 
+; Moves the working part to its next pattern (AccPart_IncrementIndex); when the part's bit is set
+; in 0x335d it is first re-initialised (AccVoice_InitPerChannel, AccPart_LoadParamOffsetTable,
+; AccVoice_AssignPerPart) and the bit cleared; then its cursor is pointed at the stream start
+; (AccPart_ResolveStyleAddr).
 AccPart_AdvanceAndResolve:
 	calr AccPart_IncrementIndex
 	ld a, (0x33d4:16)
@@ -1519,6 +1624,10 @@ AccPart_AdvanceResolve_Done:
 	calr AccPart_ResolveStyleAddr
 	ret
 
+; Points the selected part's event cursor (0x33d6 page, 0x33d8 offset) at its stream start.
+;   With (0x32e5) >= 0x80 the style record is AccVoice_ResolveParamAddr((0x32e5) & 0x7f) and the
+;   start comes from AccPart_GetFreeVoiceAddr (offset 6); otherwise the style at (0x32ce) is
+;   used through AccPart_LookupBoundVoiceParam and AccPart_GetParamAddr.
 AccPart_ResolveStyleAddr:
 	cp (0x32e5:16), 128
 	jr c, AccPart_ResolveStyle_Bound
@@ -1540,6 +1649,9 @@ AccPart_ResolveStyle_Bound:
 AccPart_ResolveStyle_Return:
 	ret
 
+; For style numbers below 0x80: moves the working part's pattern index 0x33d5 to the next entry;
+; when the style's entry there is 0x83 (end, AccStyle_ReadParamOffset) the index goes back to the
+; start of its group of five (AccTuning_FetchValue).
 AccPart_IncrementIndex:
 	cp (0x32e5:16), 128
 	jr nc, AccPart_IncrementIndex_Return
@@ -1557,6 +1669,11 @@ AccPart_IncrementIndex:
 AccPart_IncrementIndex_Return:
 	ret
 
+; Points the selected part's event cursor at its stream start, for the pedal variations.
+;   Styles below 0x80: AccPedal_DirectionA, then AccPart_GetParamAddr on the style at (0x32ce)
+;   (offset to 0x33d8).  Otherwise with bit 0 of 0x3363 clear the same on the style at (0x32d3);
+;   with it set AccPedal_DirectionB picks a record (AccVoice_ResolveParamAddr) whose start
+;   (AccPart_GetFreeVoiceAddr) goes to 0x33d6 with offset 6.
 AccPart_ResolveWithPedal:
 	cp (0x32e5:16), 128
 	jr c, AccPart_ResolveWithPedal_Bound
@@ -1586,6 +1703,8 @@ AccPart_ResolveWithPedal_Bound:
 AccPart_ResolveWithPedal_Return:
 	ret
 
+; Loads the selected part's parameter offset for the style at (0x32ce): row (0x33d5), column 0
+; of AccPart_GetVoiceParamOffsetTable, then AccPart_LoadTuningByChannel.
 AccPart_LoadParamOffsetTable:
 	ld xiy, (0x32ce:16)
 	ld a, (0x33d5:16)
@@ -1594,6 +1713,9 @@ AccPart_LoadParamOffsetTable:
 	calr AccPart_LoadTuningByChannel
 	ret
 
+; Loads the tuning of the working part (0x33d4) from the style: parts 1 and 2 through
+; AccTuning_LoadAndApplyMaster, parts 4, 8, 16, 32 through AccTuning_LoadCoarse / Fine / Octave /
+; TransposeFromStyle; the part's bit is set in 0x332c.
 AccPart_LoadTuningByChannel:
 	cp (0x33d4:16), 1
 	jr nz, AccPart_LoadTuning_Kbd2
@@ -1638,6 +1760,11 @@ AccPart_LoadTuning_Acc4:
 AccPart_NullRet:
 	ret
 
+; Reads the stream start word of the selected accompaniment part from a style header.
+;   In:  XIY = style header; the part is the one-hot selector in 0x33d4 (1 = +0, 2 = none,
+;        4 = +4, 8 = +6, 16 = +8, 32 = +10).
+;   Out: WA = the word; 0xfffe (no data) also sets the part's bit in the mask at 0x33e0, any
+;        other value clears it.  Part 2 always gives 0xfffe.
 AccPart_GetFreeVoiceAddr:
 	ld a, (0x33d4:16)
 	xor a, 0xff
@@ -1743,6 +1870,10 @@ AccPart_SubtractBaseAddr:
 	add wa, 0x6
 	ret
 
+; Copies the working part's 7-byte tuning record from the style at (0x32ce) (offset 0x18 for parts
+; 1 and 2, 0x20 / 0x28 / 0x30 / 0x38 for parts 4 / 8 / 16 / 32) to its slot 0x3246 / 0x324d /
+; 0x3254 / 0x325b / 0x3262.  Quirk: a selector that is none of these loops forever on its last
+; test (`jr nz` to itself).
 AccPart_SelectSource:
 	ld xiy, (0x32ce:16)
 	cp (0x33d4:16), 1
@@ -1789,6 +1920,8 @@ AccPart_CopyData:
 	or (0x332c:16), a
 	ret
 
+; Out: A = (0x3316) | (0x3317) | (0x3318) | (0x3312) | (0x3313), the parts with a pending variation
+; or pedal state.
 AccPart_CheckAnyActive:
 	ld a, (0x3316:16)
 	or a, (0x3317:16)
@@ -1831,6 +1964,10 @@ AccPedal_DirA_Apply:
 	and (0x3309:16), 252
 	ret
 
+; Picks the pattern record for the working part (bit W) under the pedal variation: depending on
+; bits 6..7 of 0x3470 and bit 0 of 0x32fb it moves the part's bit between 0x3312 and 0x3313 and
+; returns A = (0x336b) or (0x3369) when the time signature 0x433 matches 0x336a / 0x3368, else A =
+; the style number (0x32e5) & 0x7f.
 AccPedal_DirectionB:
 	ld a, (0x3470:16)
 	and a, 0xc0
@@ -1873,6 +2010,10 @@ AccPedal_DirB_DefaultStyle:
 AccPedal_DirB_Return:
 	ret
 
+; Dispatches one accompaniment event of the working part: after AccMidi_NormalizeVelocity, 0xd1..0xd5
+; records go through AccMidi_ParseDType / AccMidi_DispatchDType, everything else (0x90 / 0x91 and
+; other statuses) through AccMidi_ParseNoteOn / AccMidi_DispatchPerPart; the velocity setting
+; (AccMidi_SelectVelocitySource) is chosen in between.
 AccMidi_Dispatch:
 	calr AccMidi_NormalizeVelocity
 	cp a, 0x90
@@ -1904,6 +2045,7 @@ AccMidi_ControlEvent:
 AccMidi_DispatchReturn:
 	ret
 
+; Stores A (0 taken as 1) in E and 0x33d2 and returns A = the byte at (XHL+IY), the event status.
 AccMidi_NormalizeVelocity:
 	cp a, 0:i3
 	jr nz, AccMidi_VelNonZero
@@ -1915,6 +2057,8 @@ AccMidi_VelNonZero:
 	ld	a, (xhl+iy)
 	ret
 
+; Parses a note record at the working cursor (AccMidi_ParseCommon); for status 0x91 two more bytes
+; go to 0x3433 / 0x3434.  The cursor (IY, IZ) is saved in 0x33d8 / 0x33d6.
 AccMidi_ParseNoteOn:
 	calr AccMidi_ParseCommon
 	cp (0x342d:16), 145
@@ -1931,6 +2075,9 @@ AccMidi_ParseNoteOn_StorePos:
 	ld (0x33d6:16), iz
 	ret
 
+; Reads the common note fields into 0x342d (status A), 0x342e (time E), 0x342f (note), 0x3430,
+; 0x3431, 0x3432, advancing the reader (AccBuf_Advance) between them; for parts other than 1 and 2
+; the note is checked against 0x78 (Rhythm_CheckVelocityThreshold).
 AccMidi_ParseCommon:
 	ld (0x342d:16), a
 	call AccBuf_Advance
@@ -1957,6 +2104,8 @@ AccMidi_ParseCommon_ExtraFields:
 	call AccBuf_Advance
 	ret
 
+; Stores in 0x33de the velocity setting for the selected part (0x33d4): (0x3340) when the part's
+; bit is set in any of 0x3314..0x3318, else (0x333f).
 AccMidi_SelectVelocitySource:
 	ld a, (0x33d4:16)
 	ld w, (0x333f:16)
@@ -1978,6 +2127,8 @@ AccMidi_VelSource_Store:
 	ld (0x33de:16), w
 	ret
 
+; Hands the parsed note to the working part's ring-buffer writer: parts 1 / 2 to
+; AccKbd1_RingBufEntry / AccKbd2_RingBufEntry, parts 4 / 8 / 16 / 32 to AccCh1..AccCh4_NoteOnEntry.
 AccMidi_DispatchPerPart:
 	cp (0x33d4:16), 1
 	jr nz, AccMidi_DispatchKbd2
@@ -2016,6 +2167,8 @@ AccMidi_DispatchAcc4:
 AccMidi_DispatchAcc4Return:
 	ret
 
+; When part 1 may take an event (AccKbd1_CheckEligible), appends the parsed note to its ring buffer
+; 0x2a94 (AccBuf_WriteNoteEvent).
 AccKbd1_RingBufEntry:
 	calr AccKbd1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2028,6 +2181,11 @@ AccKbd1_RingBufEntry:
 AccKbd1_RingBufReturn:
 	ret
 
+; Sets bit 0 of 0x33e1 when part 1 may queue an event: bit 0 of 0x33de and 0x3307 set, bit 0 of
+; 0x3362 clear; with bit 4 of the record-part byte 0x379b set, also bit 2 of 0x34cf clear and (when
+; bit 7 of 0x3558 is set) the note 0x342f neither equal to (0x3558) & 0x7f nor 93 while that is
+; 0x30; then bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 clear, and more than 16 bytes
+; waiting in ring buffer 0x2a94.
 AccKbd1_CheckEligible:
 	and (0x33e1:16), 254
 	bit 0, (0x33de:16)
@@ -2067,6 +2225,9 @@ AccKbd1_CheckRecording:
 AccKbd1_CheckReturn:
 	ret
 
+; Appends a note record to an accompaniment ring buffer (XHL, write index IY): status (0x342d),
+; the timing byte (RhythmAccent_UpdateRingBufPosition), (0x342f), (0x3430), (0x3431) with 0
+; replaced by 1, and (0x3432).  The new write index goes to +4.
 AccBuf_WriteNoteEvent:
 	ld a, (0x342d:16)
 	ld	(xhl+iy), a
@@ -2092,6 +2253,10 @@ AccBuf_WriteNote_VelNonZero:
 	ld (xhl + 4), iy
 	ret
 
+; Computes the number of bytes waiting in an accompaniment ring buffer into 0x3324.
+;   In:  XHL = header (+0 = first index, +2 = last index, +4 = read, +6 = write).
+;   write > read: write - read; write < read: size - read + write; equal: the full size
+;   (last - first + 1).
 AccBuf_ComputeFillLevel:
 	ld wa, (xhl + 6)
 	cp wa, (xhl + 4)
@@ -2117,6 +2282,12 @@ AccBuf_FillLevel_Store:
 	ld (0x3324:16), wa
 	ret
 
+; Ticks from the current position to a target position, for the accompaniment timing checks.
+;   In:  W = target bar, DE = target tick, BC = current tick; the current bar is 0x32b4.
+;   Out: A = DE - BC when the target is ahead in the same bar (0 when it is not ahead).  For a
+;        later bar (255 -> 0 counts as later) the bar length AccVoice_LookupTableAddress_Table
+;        [(0x458)] is added to DE first.  A difference of 256 or more gives 0x60; an earlier bar
+;        gives 0.
 AccTempo_PositionCompare:
 	cp w, (0x32b4:16)
 	jr nz, AccTempo_DiffBar
@@ -2167,6 +2338,10 @@ AccTempo_ComputeDelta:
 AccTempo_Return:
 	ret
 
+; Per-tick processing of part 1: unless its timing check fails (bit 0 of 0x32f4), updates the
+; slot timers and ring buffer (AccKbd1_ScanSlots, AccKbd1_DrainRingBuf), saves the 5-byte record
+; 0x3214 into 0x322d, sets 0x32ec = (0x343c), runs RhythmPart1_ProcessAccentData and clears bit 0
+; of 0x332c.
 AccKbd1_ProcessNotes:
 	calr AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -2185,6 +2360,11 @@ AccKbd1_ProcessNotes:
 AccKbd1_ProcessReturn:
 	ret
 
+; Timing check of a part's next event against the accompaniment clock, for every part.
+;   Compares the position from AccVoice_LookupTableAddress (A = 0, W = 0x33db) with the event
+;   position (0x327d, bar 0x33da) through AccTempo_PositionCompare: more than 0x18 ticks ahead
+;   sets bit 0 of 0x32f4; otherwise the distance goes to 0x343c and the distance to the end of
+;   the previous bar (A = 0x5f, W = (0x458) - 1, bar - 1) to 0x343b.
 AccKbd1_TimingCheck:
 	ld a, 0x0:opc
 	ld w, (0x33db:16)
@@ -2212,6 +2392,7 @@ AccKbd1_TimingOK:
 AccKbd1_TimingReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 1 at 0x3094..0x30c3.
 AccKbd1_ScanSlots:
 	ld xhl, 0x3094
 
@@ -2222,6 +2403,11 @@ AccKbd1_ScanSlots_Loop:
 	jr c, AccKbd1_ScanSlots_Loop
 	ret
 
+; Lowers a pending-note timer to the time left in the current bar.
+;   In:  XHL = slot (bit 7 of +0 = active, word +4 = timer).  The limit is (0x343b) + (0x460) -
+;   (0x464), borrowing a 96-tick unit when negative (0 if none is left).  A smaller limit
+;   replaces the slot's timer and, if smaller still, the minimum in 0x3372.  Runs with
+;   interrupts masked to level 6.
 AccSlot_CheckAndUpdate:
 	bitm 7, (xhl)
 	jr z, AccSlot_Return
@@ -2255,6 +2441,7 @@ AccSlot_RestoreInterrupts:
 AccSlot_Return:
 	ret
 
+; Re-times every 0x90 note record still waiting in ring buffer 0x2a94 (AccBuf_ProcessNoteEvent).
 AccKbd1_DrainRingBuf:
 	ld xhl, 0x2a94
 	ld iy, (xhl + 6)
@@ -2277,6 +2464,11 @@ AccKbd1_DrainSkip:
 AccKbd1_DrainDone:
 	ret
 
+; Clamps the 16-bit value of one note record in an accompaniment ring buffer.
+;   In:  XHL = buffer header (+0 = restart index), IY = index, BC = last valid index.
+;   Reads the record's next three bytes as W, E, D, computes A = (0x343b) + (0x462) - ((0x464)
+;   + W), floored at 0, and when DE (E low, D high) is above A writes A and 0 over E and D.
+;   Runs with interrupts masked to level 6.
 AccBuf_ProcessNoteEvent:
 	call RingBuf_AdvanceIndex
 	ld	w, (xhl+iy)
@@ -2343,11 +2535,17 @@ AccKbd2_CheckActive_Skip:
 AccKbd2_CheckActive_Return:
 	ret
 
+; Runs the accompaniment event loop for part 2: loads its state into the working cursor, runs
+; AccVoice_ProcessEventLoop and stores it back.  Quirk: there is no ret after the restore, so
+; execution falls into AccKbd2_SaveState and reloads the cursor before returning.
 AccKbd2_ProcessEntry:
 	calr AccKbd2_SaveState
 	calr AccVoice_ProcessEventLoop
 	calr AccKbd2_RestoreState
 
+; Loads part 2 into the working cursor: selector 0x33d4 = 2, page / offset 0x3299 / 0x3289, bytes
+; 0x32b6, 0x32ac, 0x32a4, 0x33ec into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4
+; and the counter 0x32ed.
 AccKbd2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -2367,6 +2565,7 @@ AccKbd2_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 2's state (the reverse of AccKbd2_SaveState).
 AccKbd2_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x3299:16), wa
@@ -2382,6 +2581,8 @@ AccKbd2_RestoreState:
 	ld (0x33ec:16), a
 	ret
 
+; When part 2 may take an event (AccKbd2_CheckEligible), appends the parsed note to its ring buffer
+; 0x2b94 (AccBuf_WriteNoteEvent).
 AccKbd2_RingBufEntry:
 	calr AccKbd2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2394,6 +2595,9 @@ AccKbd2_RingBufEntry:
 AccKbd2_RingBufReturn:
 	ret
 
+; Sets bit 0 of 0x33e1 when part 2 may queue an event: style number below 0x80, bit 1 of 0x33de and
+; bit 0 of 0x3307 set, bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 clear, and more than
+; 16 bytes waiting in ring buffer 0x2b94.
 AccKbd2_CheckEligible:
 	and (0x33e1:16), 254
 	cp (0x32e5:16), 128
@@ -2417,6 +2621,8 @@ AccKbd2_CheckEligible:
 AccKbd2_CheckReturn:
 	ret
 
+; Per-tick processing of part 2: unless its timing check fails, updates the slot timers and ring
+; buffer (AccKbd2_ScanSlots, AccKbd2_DrainRingBuf) and clears bit 1 of 0x332c.
 AccKbd2_ProcessNotes:
 	calr AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -2428,6 +2634,7 @@ AccKbd2_ProcessNotes:
 AccKbd2_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 2 at 0x30c4..0x30f3.
 AccKbd2_ScanSlots:
 	ld xhl, 0x30c4
 
@@ -2438,6 +2645,7 @@ AccKbd2_ScanSlots_Loop:
 	jr c, AccKbd2_ScanSlots_Loop
 	ret
 
+; Re-times every 0x90 note record still waiting in ring buffer 0x2b94 (AccBuf_ProcessNoteEvent).
 AccKbd2_DrainRingBuf:
 	ld xhl, 0x2b94
 	ld iy, (xhl + 6)
@@ -2540,18 +2748,23 @@ AccSeq_EndOfBar_TooFar:
 AccSeq_ScanDone:
 	ret
 
+; Out: A = the byte after the accompaniment pattern pointer (0x3293) + 1, XHL = that address; the
+; pointer itself is not changed.
 AccSeq_ReadNextByte:
 	ld xhl, (0x3293:16)
 	inc 1, xhl
 	ld a, (xhl)
 	ret
 
+; Increments the accompaniment pattern read pointer at 0x3293.  Out: XHL = new pointer.
 AccSeq_AdvancePointer:
 	ld xhl, (0x3293:16)
 	inc 1, xhl
 	ld (0x3293:16), xhl
 	ret
 
+; Points 0x3293 back at AccStyle_DefaultStream + 6 and returns its first byte in A (XHL = the
+; address).
 AccSeq_ResetToStart:
 	ld xhl, AccStyle_DefaultStream
 	add xhl, 0x6
@@ -2611,12 +2824,17 @@ AccSeq_ParseNote_WriteToKbd2:
 AccSeq_ParseNote_Return:
 	ret
 
+; Runs the accompaniment event loop for part 4 (AccCh1): AccCh1_SaveState, AccVoice_ProcessEventLoop,
+; AccCh1_RestoreState.
 AccCh1_ProcessEntry:
 	calr AccCh1_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh1_RestoreState
 	ret
 
+; Loads part 4 into the working cursor: selector 0x33d4 = 4, page / offset 0x329b / 0x328b, bytes
+; 0x32b7, 0x32ad, 0x32a5, 0x33ed into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4 and
+; the counter 0x32ed.
 AccCh1_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -2636,6 +2854,7 @@ AccCh1_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 4's state (the reverse of AccCh1_SaveState).
 AccCh1_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329b:16), wa
@@ -2651,6 +2870,9 @@ AccCh1_RestoreState:
 	ld (0x33ed:16), a
 	ret
 
+; For parts other than 1 and 2: sets 0x3349 to the first index of the working part's pattern group
+; (AccTuning_FetchValue on 0x33d5), finds the program set by the patterns before it
+; (AccVoice_ScanInstruments) and sends it (AccVoice_SendProgChange).
 AccVoice_AssignPerPart:
 	cp (0x33d4:16), 1
 	jr z, AccVoice_AssignReturn
@@ -2665,6 +2887,8 @@ AccVoice_AssignPerPart:
 AccVoice_AssignReturn:
 	ret
 
+; Scans the style patterns from index (0x3349) up to the working index 0x33d5 for 0xd3 records
+; (AccVoice_ScanForD3), leaving the last value found in 0x3333 (0 when none).
 AccVoice_ScanInstruments:
 	ld e, (0x3349:16)
 	ld (0x3333:16), 0
@@ -2686,6 +2910,8 @@ AccVoice_ScanLoop:
 AccVoice_ScanDone:
 	ret
 
+; Sends the program 0x3333 for the working part on its rhythm channel: part 4 -> 0xd7 0x03 n
+; (stored in 0x332f), part 8 -> 0xd4 (0x3330), part 16 -> 0xd5 (0x3331), otherwise 0xd6 (0x3332).
 AccVoice_SendProgChange:
 	cp (0x33d4:16), 4
 	jr nz, AccVoice_SendD4
@@ -2727,6 +2953,10 @@ AccVoice_SendD6:
 AccCh_ReturnStub:
 	ret
 
+; Appends the three bytes at 0x342d, 0x342f and 0x3430 to an accompaniment ring buffer.
+;   In:  XHL = ring buffer header, IY = write index.  Each byte advances IY with
+;   RingBuf_AdvanceIndex; RhythmAccent_UpdateRingBufPosition runs after the first.
+;   Out: the new index is stored at XHL+4.
 AccBuf_Write3ByteEvent:
 	ld a, (0x342d:16)
 	ld	(xhl+iy), a
@@ -2745,6 +2975,9 @@ AccCh1_Padding:
 	nop
 	nop
 
+; When part 4 may take an event (AccCh1_CheckEligible), loads its channel bytes 0x32c3 / 0x32c7 into
+; 0x32cb / 0x32cc, sets bit 3 and clears bit 2 of 0x32f4, and appends the parsed note to ring buffer
+; 0x2c94 (AccBuf_WriteExtendedEvent).
 AccCh1_NoteOnEntry:
 	calr AccCh1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2763,6 +2996,11 @@ AccCh1_NoteOnEntry:
 AccCh1_NoteOnReturn:
 	ret
 
+; Decides whether part 4 (AccCh1, ring buffer 0x2c94) may take a new event: bit 0 of
+; 0x33e1 is set only when bit 2 of 0x3362 is clear, bit 1 of 0x3307 and bit 3 of 0xc5a0 are set,
+; AccCh_CheckOverlap returns 0, bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 are clear
+; and more than 16 bytes are waiting (AccBuf_ComputeFillLevel); with 16 or fewer the buffer is
+; re-initialised with the controller defaults (AccBuf_InitWithDefaults) instead.
 AccCh1_CheckEligible:
 	and (0x33e1:16), 254
 	bit 2, (0x3362:16)
@@ -2793,6 +3031,11 @@ AccCh1_SetReady:
 AccCh1_CheckReturn:
 	ret
 
+; Appends an extended note record to an accompaniment ring buffer.
+;   In:  XHL = header, IY = write index.  Copies 0x3433 / 0x3434 to 0x3336 / 0x3337, then writes:
+;   status (0x342d), the timing byte (RhythmAccent_UpdateRingBufPosition), (0x342f) adjusted by
+;   AccVoice_CheckStyle, (0x3430), (0x3431) with 0 replaced by 1, (0x3432), the extra bytes of
+;   AccBuf_ExtEvt_WriteExtra, and (0x3435) (the original 0x342f).  The new write index goes to +4.
 AccBuf_WriteExtendedEvent:
 	ld a, (0x3433:16)
 	ld (0x3336:16), a
@@ -2828,6 +3071,8 @@ AccBuf_ExtEvt_VelNonZero:
 	ld (xhl + 4), iy
 	ret
 
+; For statuses other than 0x90 appends the two extra bytes 0x3336 / 0x3337 to the ring buffer
+; being written.
 AccBuf_ExtEvt_WriteExtra:
 	cp (0x342d:16), 144
 	jr z, AccBuf_ExtEvt_ExtraReturn
@@ -2841,6 +3086,8 @@ AccBuf_ExtEvt_WriteExtra:
 AccBuf_ExtEvt_ExtraReturn:
 	ret
 
+; Calls AccVoice_CorrectNote (the test of 0x32e5 against 0xf0 branches to the same place either
+; way).
 AccVoice_CheckStyle:
 	cp (0x32e5:16), 240
 	jr c, AccVoice_CallCorrection
@@ -2866,6 +3113,9 @@ AccVoice_CorrectionData_Skip2:
 	pop	xhl
 	ret
 
+; Corrects the parsed note 0x342f for the chord: unless bit 4 of 0x32f4 is set, applies
+; Rhythm_CrossVoiceCorrect (bit 3 of 0x32f4 set) and Rhythm_NoteRangeCheck; then maps it with
+; Rhythm_VoiceMapLookup for status 0x91, Rhythm_VelocityLookup_A otherwise.  Preserves XHL, IY.
 AccVoice_CorrectNote:
 	push xhl
 	pushw iy
@@ -2893,6 +3143,9 @@ AccVoice_CorrectReturn:
 	pop xhl
 	ret
 
+; Parses a 0xdn controller record at the working cursor: 0x342d = status & 0xf0, 0x342e = time
+; (E), 0x342f = status & 0x0f (controller type), 0x3430 = value; the cursor is saved in 0x33d8 /
+; 0x33d6.
 AccMidi_ParseDType:
 	ld d, a
 	and a, 0xf0
@@ -2910,6 +3163,8 @@ AccMidi_ParseDType:
 	ld (0x33d6:16), iz
 	ret
 
+; Hands a parsed controller record to the working part: parts 4 / 8 / 16 / 32 to AccCh1..AccCh4_
+; DTypeEntry; parts 1 and 2 ignore it.  Quirk: an unknown selector loops forever on its last test.
 AccMidi_DispatchDType:
 	cp (0x33d4:16), 1
 	jr nz, AccMidi_DType_CheckKbd2
@@ -2946,6 +3201,8 @@ AccMidi_DType_CheckAcc4:
 AccMidi_DType_Return:
 	ret
 
+; When part 4 may take an event (AccCh1_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2c94 (AccBuf_Write3ByteEvent).
 AccCh1_DTypeEntry:
 	calr AccCh1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2958,6 +3215,8 @@ AccCh1_DTypeEntry:
 AccCh1_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 3 of the record-part byte 0x379b are both set, else 0
+; (AccCh1_CheckEligible requires 0).
 AccCh_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -2969,6 +3228,8 @@ AccCh_CheckOverlap:
 AccCh_OverlapReturn:
 	ret
 
+; Resets an accompaniment ring buffer (first 0x0a, last 0xff, read and write 0x0a) and queues the
+; four controller defaults as 0xd0 records at time (0x33d2): type 2 = 64, 1 = 0, 3 = 0, 5 = 127.
 AccBuf_InitWithDefaults:
 	ldw (xhl + 0:8), 0xa
 	ldw (xhl + 2), 0xff
@@ -2999,6 +3260,10 @@ AccBuf_InitWithDefaults:
 	calr AccBuf_Write3ByteEvent
 	ret
 
+; Per-tick processing of part 4: unless its timing check fails, updates the slot timers and ring
+; buffer, re-sends the controller defaults when needed (AccCh1_InitProgChange), saves the record
+; 0x3219 into 0x3232, sets 0x32ec = (0x343c), runs RhythmPart2_ProcessAccentData and clears bit 2
+; of 0x332c.
 AccCh1_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3018,6 +3283,7 @@ AccCh1_ProcessNotes:
 AccCh1_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 4 at 0x30f4..0x313b.
 AccCh1_ScanSlots:
 	ld xhl, 0x30f4
 
@@ -3028,6 +3294,8 @@ AccCh1_ScanSlots_Loop:
 	jr c, AccCh1_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2c94
+; (AccBuf_ProcessNoteEvent), skipping the extra bytes of the longer records.
 AccCh1_DrainRingBuf:
 	ld xhl, 0x2c94
 	ld iy, (xhl + 6)
@@ -3059,12 +3327,17 @@ AccCh1_DrainOther:
 AccCh1_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 8 (AccCh2): AccCh2_SaveState, AccVoice_ProcessEventLoop,
+; AccCh2_RestoreState.
 AccCh2_ProcessEntry:
 	calr AccCh2_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh2_RestoreState
 	ret
 
+; Loads part 8 into the working cursor: selector 0x33d4 = 8, page / offset 0x329d / 0x328d, bytes
+; 0x32b8, 0x32ae, 0x32a6, 0x33ee into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4 and
+; the counter 0x32ed.
 AccCh2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3084,6 +3357,7 @@ AccCh2_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 8's state (the reverse of AccCh2_SaveState).
 AccCh2_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329d:16), wa
@@ -3099,6 +3373,9 @@ AccCh2_RestoreState:
 	ld (0x33ee:16), a
 	ret
 
+; When part 8 may take an event (AccCh2_CheckEligible), loads its channel bytes 0x32c4 / 0x32c8 into
+; 0x32cb / 0x32cc, sets bit 2 and clears bit 3 of 0x32f4, and appends the parsed note to ring buffer
+; 0x2d94 (AccBuf_WriteExtendedEvent).
 AccCh2_NoteOnEntry:
 	calr AccCh2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3117,6 +3394,9 @@ AccCh2_NoteOnEntry:
 AccCh2_NoteOnReturn:
 	ret
 
+; As AccCh1_CheckEligible for part 8 (ring buffer 0x2d94): additionally requires bit 3 of 0x33de
+; and bit 0 of 0x3310; uses bit 3 of 0x3362, bit 2 of 0x3307, bit 0 of 0xc5a0 and
+; AccCh2_CheckOverlap.
 AccCh2_CheckEligible:
 	and (0x33e1:16), 254
 	bit 3, (0x33de:16)
@@ -3151,6 +3431,8 @@ AccCh2_SetReady:
 AccCh2_CheckReturn:
 	ret
 
+; When part 8 may take an event (AccCh2_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2d94 (AccBuf_Write3ByteEvent).
 AccCh2_DTypeEntry:
 	calr AccCh2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3163,6 +3445,7 @@ AccCh2_DTypeEntry:
 AccCh2_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 0 of the record-part byte 0x379b are both set, else 0.
 AccCh2_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3174,6 +3457,9 @@ AccCh2_CheckOverlap:
 AccCh2_OverlapReturn:
 	ret
 
+; Per-tick processing of part 8: as AccCh1_ProcessNotes with slots 0x313c.., ring buffer 0x2d94,
+; AccCh2_InitProgChange, record 0x321e saved to 0x3237, RhythmPart3_ProcessAccentData and bit 3 of
+; 0x332c.
 AccCh2_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3193,6 +3479,7 @@ AccCh2_ProcessNotes:
 AccCh2_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 8 at 0x313c..0x3183.
 AccCh2_ScanSlots:
 	ld xhl, 0x313c
 
@@ -3203,6 +3490,7 @@ AccCh2_ScanSlots_Loop:
 	jr c, AccCh2_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2d94.
 AccCh2_DrainRingBuf:
 	ld xhl, 0x2d94
 	ld iy, (xhl + 6)
@@ -3234,12 +3522,17 @@ AccCh2_DrainOther:
 AccCh2_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 16 (AccCh3): AccCh3_SaveState,
+; AccVoice_ProcessEventLoop, AccCh3_RestoreState.
 AccCh3_ProcessEntry:
 	calr AccCh3_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh3_RestoreState
 	ret
 
+; Loads part 16 into the working cursor: selector 0x33d4 = 0x10, page / offset 0x329f / 0x328f,
+; bytes 0x32b9, 0x32af, 0x32a7, 0x33ef into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of
+; 0x32f4 and the counter 0x32ed.
 AccCh3_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3259,6 +3552,7 @@ AccCh3_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 16's state (the reverse of AccCh3_SaveState).
 AccCh3_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329f:16), wa
@@ -3274,6 +3568,9 @@ AccCh3_RestoreState:
 	ld (0x33ef:16), a
 	ret
 
+; When part 16 may take an event (AccCh3_CheckEligible), loads its channel bytes 0x32c5 / 0x32c9
+; into 0x32cb / 0x32cc, clears bits 2..3 of 0x32f4, and appends the parsed note to ring buffer 0x2e94
+; (AccBuf_WriteExtendedEvent).
 AccCh3_NoteOnEntry:
 	calr AccCh3_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3292,6 +3589,8 @@ AccCh3_NoteOnEntry:
 AccCh3_NoteOnReturn:
 	ret
 
+; As AccCh1_CheckEligible for part 16 (ring buffer 0x2e94): requires bit 4 of 0x33de and bit 1 of
+; 0x3310; uses bit 4 of 0x3362, bit 3 of 0x3307, bit 1 of 0xc5a0 and AccCh3_CheckOverlap.
 AccCh3_CheckEligible:
 	and (0x33e1:16), 254
 	bit 4, (0x33de:16)
@@ -3326,6 +3625,8 @@ AccCh3_SetReady:
 AccCh3_CheckReturn:
 	ret
 
+; When part 16 may take an event (AccCh3_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2e94 (AccBuf_Write3ByteEvent).
 AccCh3_DTypeEntry:
 	calr AccCh3_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3338,6 +3639,7 @@ AccCh3_DTypeEntry:
 AccCh3_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 1 of the record-part byte 0x379b are both set, else 0.
 AccCh3_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3349,6 +3651,9 @@ AccCh3_CheckOverlap:
 AccCh3_OverlapReturn:
 	ret
 
+; Per-tick processing of part 16: as AccCh1_ProcessNotes with slots 0x3184.., ring buffer 0x2e94,
+; AccCh3_InitProgChange, record 0x3223 saved to 0x323c, RhythmPart4_ProcessAccentData and bit 4 of
+; 0x332c.
 AccCh3_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3368,6 +3673,7 @@ AccCh3_ProcessNotes:
 AccCh3_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 16 at 0x3184..0x31cb.
 AccCh3_ScanSlots:
 	ld xhl, 0x3184
 
@@ -3378,6 +3684,7 @@ AccCh3_ScanSlots_Loop:
 	jr c, AccCh3_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2e94.
 AccCh3_DrainRingBuf:
 	ld xhl, 0x2e94
 	ld iy, (xhl + 6)
@@ -3409,12 +3716,17 @@ AccCh3_DrainOther:
 AccCh3_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 32 (AccCh4): AccCh4_SaveState,
+; AccVoice_ProcessEventLoop, AccCh4_RestoreState.
 AccCh4_ProcessEntry:
 	calr AccCh4_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh4_RestoreState
 	ret
 
+; Loads part 32 into the working cursor: selector 0x33d4 = 0x20, page / offset 0x32a1 / 0x3291,
+; bytes 0x32ba, 0x32b0, 0x32a8, 0x33f0 into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of
+; 0x32f4 and the counter 0x32ed.
 AccCh4_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3434,6 +3746,7 @@ AccCh4_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 32's state (the reverse of AccCh4_SaveState).
 AccCh4_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x32a1:16), wa
@@ -3449,6 +3762,9 @@ AccCh4_RestoreState:
 	ld (0x33f0:16), a
 	ret
 
+; When part 32 may take an event (AccCh4_CheckEligible), loads its channel bytes 0x32c6 / 0x32ca
+; into 0x32cb / 0x32cc, clears bits 2..3 of 0x32f4, and appends the parsed note to ring buffer 0x2f94
+; (AccBuf_WriteExtendedEvent).
 AccCh4_NoteOnEntry:
 	calr AccCh4_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3467,6 +3783,8 @@ AccCh4_NoteOnEntry:
 AccCh4_NoteOnReturn:
 	ret
 
+; As AccCh1_CheckEligible for part 32 (ring buffer 0x2f94): requires bit 5 of 0x33de and bit 2 of
+; 0x3310; uses bit 5 of 0x3362, bit 4 of 0x3307, bit 2 of 0xc5a0 and AccCh4_CheckOverlap.
 AccCh4_CheckEligible:
 	and (0x33e1:16), 254
 	bit 5, (0x33de:16)
@@ -3501,6 +3819,8 @@ AccCh4_SetReady:
 AccCh4_CheckReturn:
 	ret
 
+; When part 32 may take an event (AccCh4_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2f94 (AccBuf_Write3ByteEvent).
 AccCh4_DTypeEntry:
 	calr AccCh4_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3513,6 +3833,7 @@ AccCh4_DTypeEntry:
 AccCh4_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 2 of the record-part byte 0x379b are both set, else 0.
 AccCh4_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3524,6 +3845,9 @@ AccCh4_CheckOverlap:
 AccCh4_OverlapReturn:
 	ret
 
+; Per-tick processing of part 32: as AccCh1_ProcessNotes with slots 0x31cc.., ring buffer 0x2f94,
+; AccCh4_InitProgChange, record 0x3228 saved to 0x3241, RhythmPart5_ProcessAccentData and bit 5 of
+; 0x332c.
 AccCh4_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3543,6 +3867,7 @@ AccCh4_ProcessNotes:
 AccCh4_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 32 at 0x31cc..0x3213.
 AccCh4_ScanSlots:
 	ld xhl, 0x31cc
 
@@ -3553,6 +3878,7 @@ AccCh4_ScanSlots_Loop:
 	jr c, AccCh4_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2f94.
 AccCh4_DrainRingBuf:
 	ld xhl, 0x2f94
 	ld iy, (xhl + 6)
@@ -3584,26 +3910,32 @@ AccCh4_DrainOther:
 AccCh4_DrainDone:
 	ret
 
+; Queues the controller defaults in ring buffer 0x2c94 (AccBuf_WriteD0Defaults).
 AccCh1_InitProgChange:
 	ld xhl, 0x2c94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2d94 (AccBuf_WriteD0Defaults).
 AccCh2_InitProgChange:
 	ld xhl, 0x2d94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2e94 (AccBuf_WriteD0Defaults).
 AccCh3_InitProgChange:
 	ld xhl, 0x2e94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the controller defaults in ring buffer 0x2f94 (AccBuf_WriteD0Defaults).
 AccCh4_InitProgChange:
 	ld xhl, 0x2f94
 	calr AccBuf_WriteD0Defaults
 	ret
 
+; Queues the four controller defaults as 0xd0 records at time (0x343c) in an accompaniment ring
+; buffer (XHL): type 2 = 64, 1 = 0, 3 = 0, 5 = 127 (AccBuf_Write3ByteEvent).
 AccBuf_WriteD0Defaults:
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -3693,6 +4025,9 @@ AccPart_Deactivate_ClearMasks:
 AccPart_DeactivateReturn:
 	ret
 
+; At a bar end, for a working part marked in 0x33e0: when its bit is set in 0x3314 / 0x3315 it is
+; marked active in 0x332a / 0x3328; otherwise its bit is cleared in 0x3312, 0x3313, 0x3316..0x3318,
+; 0x335d and 0x3329 and 0x33ea is cleared.  Either way the cursor is reset to page 0xfe, offset 6.
 AccPart_Reactivate:
 	ld a, (0x33d4:16)
 	and a, (0x33e0:16)
@@ -3802,6 +4137,8 @@ AccVelocity_CurveTable:
 	.byte 0x0d, 0x1a, 0x33, 0x4d, 0x66, 0x80, 0x9a, 0xb3
 	.byte 0xcc, 0xe6, 0xff
 
+; Resets the rhythm channel of the working part: parts 4 / 8 / 16 / 32 to AccVoice_InitCh1_D7 /
+; _InitCh2_D4 / _InitCh3_D5 / _InitCh4_D6; nothing for parts 1 and 2.
 AccVoice_InitPerChannel:
 	cp (0x33d4:16), 4
 	jr nz, AccVoice_InitCh2
@@ -3828,6 +4165,9 @@ AccVoice_InitCh4:
 AccVoice_InitReturn:
 	ret
 
+; Resets rhythm channel D7: neutralises the controllers pending in ring buffer 0x2c94
+; (AccBuf_DrainAndReset) and sends the defaults 0xd7 02 40, 0xd7 01 00, 0xd7 03 00, 0xd7 05 7f,
+; clearing 0x332f.  Preserves HL, XIY.
 AccVoice_InitCh1_D7:
 	pushw hl
 	push xiy
@@ -3854,6 +4194,8 @@ AccVoice_InitCh1_D7:
 	popw hl
 	ret
 
+; Appends a 0xd0 record of type 3 with value (0x3333) at time (0x32ea) to an accompaniment ring
+; buffer (XHL); the new write index goes to +4.
 AccBuf_WriteD0WithVoice:
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -3870,6 +4212,8 @@ AccBuf_WriteD0WithVoice:
 	ld (xhl + 4), iy
 	ret
 
+; Resets rhythm channel D4 (ring buffer 0x2d94, 0xd4 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3330).
+; Preserves HL, XIY.
 AccVoice_InitCh2_D4:
 	pushw hl
 	push xiy
@@ -3896,6 +4240,8 @@ AccVoice_InitCh2_D4:
 	popw hl
 	ret
 
+; Resets rhythm channel D5 (ring buffer 0x2e94, 0xd5 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3331).
+; Preserves HL, XIY.
 AccVoice_InitCh3_D5:
 	pushw hl
 	push xiy
@@ -3922,6 +4268,8 @@ AccVoice_InitCh3_D5:
 	popw hl
 	ret
 
+; Resets rhythm channel D6 (ring buffer 0x2f94, 0xd6 02 40 / 01 00 / 03 00 / 05 7f, clears 0x3332).
+; Preserves HL, XIY.
 AccVoice_InitCh4_D6:
 	pushw hl
 	push xiy
@@ -3948,6 +4296,9 @@ AccVoice_InitCh4_D6:
 	popw hl
 	ret
 
+; Calls AccInit_FullReInit when a pedal / variation change needs it: bit 0 of 0x330c or bits 0..1
+; of 0x330b set with no bit 0..5 in 0x3326, or bits 0, 2, 3 of 0x330a or bits 0..1 of 0x3309 set
+; with no bit 0..5 in 0x3327.
 AccPedal_CheckCombined:
 	bit 0, (0x330c:16)
 	jr nz, AccPedal_CheckFlags
@@ -4057,6 +4408,10 @@ AccPedal_CheckCombined_Skip4:
 	or	(0x332c:16), 128
 	ret
 
+; Compares the accompaniment bar 0x32b5 (and the beat / tick 0x3280 / 0x327f) with the clock
+; (bar 0x32b4, position 0x32e3 / 0x32e4) and stores the tick delta in 0x32ea / 0x32ec: 1 when the
+; part is ahead (later bar, or same bar and later position), otherwise the difference computed at
+; AccTempo_ComputeSubDelta.  Bar 255 -> 0 counts as the next bar.
 AccTempo_BarCompare:
 	ld w, (0x32b5:16)
 	cp w, (0x32b4:16)
@@ -4266,6 +4621,9 @@ AccSeq_ScannerPadding:
 	nop
 	nop
 
+; Peeks at the byte after the accompaniment reader position (XHL page, IY offset); when it is
+; the page end 0x87, returns the first data byte (+6) of the next page instead.
+;   Out: A.  Preserves IY, XHL, IZ.
 AccBuf_AdvanceWithPageTurn:
 	pushw iy
 	inc 1, iy
@@ -4284,6 +4642,11 @@ AccBuf_AdvanceReturn:
 	popw iy
 	ret
 
+; Steps the accompaniment event reader one byte forward.
+;   In:  XHL = current 256-byte page, IY = offset in it.
+;   Out: IY incremented, A = byte at (XHL+IY).  A 0x87 byte marks the end of a page: the word at
+;        page+3 names the next page, which AccWave_BankResolve turns into XHL, and IY restarts at 6
+;        (the first data byte after the page header); A still holds 0x87 then.
 AccBuf_Advance:
 	inc 1, iy
 	ld	a, (xhl+iy)
@@ -4476,6 +4839,9 @@ AccInit_ClearAllFlags:
 	call AccTone_CallWithSaveAll
 	ret
 
+; Sets up the voices of all six accompaniment parts (AccVoice_SetupKbd1 .. AccVoice_SetupAcc4)
+; from the style at (0x32ce); with (0x32e5) below 0x80 byte +977 of the style is copied to 0x3285
+; first.
 AccVoice_SetupAllParts:
 	cp (0x32e5:16), 128
 	jr c, AccVoice_SetupAll_Extended
@@ -4496,6 +4862,9 @@ AccVoice_SetupAll_Dispatch:
 	calr AccVoice_SetupAcc4
 	ret
 
+; Sets up part 1's stream for the style: clears bits 4..7 of 0x32ab; styles below 0x80 take the
+; parameter address of pattern index (0x32a3) (AccPart_LookupBoundVoiceParam, AccPart_GetParamAddr)
+; into 0x3287; others take the stream start (AccPart_GetFreeVoiceAddr) into 0x3297 with offset 6.
 AccVoice_SetupKbd1:
 	and (0x32ab:16), 15
 	cp (0x32e5:16), 128
@@ -4516,6 +4885,7 @@ AccVoice_SetupKbd1_Free:
 AccVoice_SetupKbd1_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 2: 0x32ac, index 0x32a4, offset 0x3289, page 0x3299.
 AccVoice_SetupKbd2:
 	and (0x32ac:16), 15
 	cp (0x32e5:16), 128
@@ -4536,6 +4906,7 @@ AccVoice_SetupKbd2_Free:
 AccVoice_SetupKbd2_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 4: 0x32ad, index 0x32a5, offset 0x328b, page 0x329b.
 AccVoice_SetupAcc1:
 	and (0x32ad:16), 15
 	cp (0x32e5:16), 128
@@ -4556,6 +4927,7 @@ AccVoice_SetupAcc1_Free:
 AccVoice_SetupAcc1_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 8: 0x32ae, index 0x32a6, offset 0x328d, page 0x329d.
 AccVoice_SetupAcc2:
 	and (0x32ae:16), 15
 	cp (0x32e5:16), 128
@@ -4576,6 +4948,7 @@ AccVoice_SetupAcc2_Free:
 AccVoice_SetupAcc2_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 16: 0x32af, index 0x32a7, offset 0x328f, page 0x329f.
 AccVoice_SetupAcc3:
 	and (0x32af:16), 15
 	cp (0x32e5:16), 128
@@ -4596,6 +4969,7 @@ AccVoice_SetupAcc3_Free:
 AccVoice_SetupAcc3_Return:
 	ret
 
+; As AccVoice_SetupKbd1 for part 32: 0x32b0, index 0x32a8, offset 0x3291, page 0x32a1.
 AccVoice_SetupAcc4:
 	and (0x32b0:16), 15
 	cp (0x32e5:16), 128
@@ -4924,6 +5298,10 @@ AccVoice_SplitReassign_Apply:
 	or (0x332c:16), 63
 	ret
 
+; Loads the parameter addresses of all six accompaniment parts for a style.
+;   In:  XIY = style, HL = parameter base (kept in HL3 (bank-3 register, code 0x3c)).  Stores byte +977 of the
+;   style in 0x3285, then AccPart_GetParamAddr for parts 1, 2, 4, 8, 16, 32 (selector 0x33d4) into
+;   0x3287, 0x3289, 0x328b, 0x328d, 0x328f, 0x3291.
 AccVoice_LoadAllParts:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
@@ -4953,6 +5331,9 @@ AccVoice_LoadAllParts:
 	ld (0x3291:16), wa
 	ret
 
+; Resets the stream positions of all six accompaniment parts for a style (XIY): for parts 1, 4,
+; 8, 16, 32 and 2 (selector 0x33d4) the start word (AccPart_GetFreeVoiceAddr) goes to 0x3297,
+; 0x329b, 0x329d, 0x329f, 0x32a1, 0x3299 and the offset words 0x3287..0x3291 are set to 6.
 AccInit_AllPartPositions:
 	ld (0x33d4:16), 1
 	call AccPart_GetFreeVoiceAddr
@@ -5108,6 +5489,7 @@ AccVoice_ThirdReassign_Apply:
 	or (0x332c:16), 63
 	ret
 
+; Appends a 0x9f 0x7f 0x7f record at time (0x32ea) to the ring buffer at 0x2a94.
 AccBuf_WriteAllNotesOff:
 	ld xhl, 0x2a94
 	ld iy, (xhl + 4)
@@ -5129,6 +5511,8 @@ AccBuf_AllNotesOffPadding:
 	nop
 	nop
 
+; Neutralises the pending controller records of the four accompaniment ring buffers at
+; 0x2c94..0x2f94 (AccBuf_DrainAndReset).
 AccBuf_ResetAll4:
 	ld xhl, 0x2c94
 	calr AccBuf_DrainAndReset
@@ -5140,6 +5524,11 @@ AccBuf_ResetAll4:
 	calr AccBuf_DrainAndReset
 	ret
 
+; Neutralises the pending controller records in an accompaniment ring buffer.
+;   In:  XHL = buffer header (+2 = last index, +4 = write index, +6 = read index).
+;   From the read index to the write index, each 0xd0 record has its value byte set by its
+;   type byte: type 2 -> 0x40, 1 -> 0, 3 -> 0, 5 -> 0x7f (other types are left).  The indices
+;   themselves are not changed.
 AccBuf_DrainAndReset:
 	ld iy, (xhl + 6)
 	ld bc, (xhl + 2)
@@ -5195,6 +5584,9 @@ AccBuf_DrainReset_Other:
 AccBuf_DrainReset_Done:
 	ret
 
+; With bit 1 of 0x3284 set, runs the chord and timing refresh: SeqEvt_CallTimingHelper,
+; Voice_UpdatePlayModeState, AccChord_ReadAndStoreKeys, AccChord_CompareAndSetDirty and
+; Rhythm_CompareAndTrigger.
 AccTiming_CallHelper:
 	bit 1, (0x3284:16)
 	jr z, AccTiming_HelperReturn
@@ -5207,6 +5599,10 @@ AccTiming_CallHelper:
 AccTiming_HelperReturn:
 	ret
 
+; Chooses where the voice data of the part in W3 (bank-3 register, code 0x31) (one-hot) comes from.
+;   AccWave_BankResolve is used when (0x32e5) >= 0x80, the part's bit is clear in 0x3317, and
+;   either bit 0 of 0x3363 is set or the part's bit is clear in 0x3316, 0x3318, 0x3312..0x3315
+;   and 0x3328; otherwise AccVoice_TableLookup with A = (0x3285).
 AccVoice_SelectByMask:
 	cp (0x32e5:16), 128
 	jr c, AccVoice_SelectByMask_Default
@@ -5249,6 +5645,11 @@ AccWave_BankResolve_Short_Skip:
 AccWave_BankResolve_Short_Return:
 	ret
 
+; Converts a 16-bit pattern-page handle into an address.
+;   In:  IZ = handle: bits 12..15 select the long in AccWave_BankTable (bank 0 is RAM
+;   RHYTHM_PATTERN_BUF_B, banks 1..7 lie in the custom data flash window from 0x301400), bits
+;   0..11 the 256-byte page.
+;   Out: XHL = bank + page * 256; handle 0xfffe gives 0x95bc0.  Preserves XWA, XIX, XIZ.
 AccWave_BankResolve:
 	push xwa
 	push xix
@@ -5281,11 +5682,14 @@ AccWave_BankTable:
 	.byte 0x00, 0xac, 0x34, 0x00, 0x00, 0x14, 0x36, 0x00
 	.byte 0x00, 0xac, 0x37, 0x00, 0x00, 0x14, 0x39, 0x00
 
+; AccVoice_TableLookup_Inner, plus 0x8000 on the XHL result.
 AccVoice_TableLookup:
 	call AccVoice_TableLookup_Inner
 	add xhl, 0x8000
 	ret
 
+; Out: XHL = AccVoice_OffsetTable[A] + (RHYTHM_ROM_BASE), the 64 KB rhythm-data bank for index
+; A (0..0x3f; larger indices read as 0).
 AccVoice_TableLookup_Inner:
 	cp a, 0x3f
 	jr ule, AccVoice_TableLookup_Compute
@@ -5389,7 +5793,7 @@ AccState_CollectAcc4_Active:
 	call AccWrap_PlayModeStartPlay
 
 AccState_Apply:
-	call AccInit_CallF435A9
+	call AccInit_SendNoteOffAndFlush
 	ld a, (0xcedf:16)
 	ld (0x8d42:16), a
 	ld a, (0xcee0:16)
@@ -5437,6 +5841,9 @@ AccState_ScanLookupTable:
 	nop
 	.zero 10
 
+; Scans an accompaniment event stream (AccBuf_Advance) up to its end byte 0x83 and stores in
+; 0x3333 the byte two after the last 0xd3 record seen.
+;   In:  XHL = page, IY = offset.
 AccVoice_ScanForD3:
 	ld	a, (xhl+iy)
 	cp a, 0x83
@@ -5693,6 +6100,7 @@ AccFlags_Handler9_Join:
 	calr	AccBuf_ResetByteData
 	ret
 
+; Resets the headers of the four ring buffers 0x2c94..0x2f94 (AccBuf_ResetOnePosition).
 AccBuf_ResetAll4Positions:
 	ld xhl, 0x2c94
 	calr AccBuf_ResetOnePosition
@@ -5704,6 +6112,9 @@ AccBuf_ResetAll4Positions:
 	calr AccBuf_ResetOnePosition
 	ret
 
+; Resets one accompaniment ring-buffer header: +0 = 0x0a (restart index), +2 = 0xff (last
+; index), +4 and +6 (read and write indices) = 0x0a.  The index words are written with
+; interrupts masked to level 6.
 AccBuf_ResetOnePosition:
 	ld (xhl + 0:8), 0xa
 	ld (xhl + 2), 0xff
@@ -5715,6 +6126,8 @@ AccBuf_ResetOnePosition:
 	ei 0
 	ret
 
+; Clears byte 0 (the active flag) of the eight 9-byte note slots of each of the four parts at
+; 0x30f4, 0x313c, 0x3184 and 0x31cc.
 AccBuf_ResetByteData:
 	ld	a, 0:opc
 	ld	xhl, 0x30f4
@@ -5747,6 +6160,9 @@ AccBuf_ResetByteData_Loop4:
 	jr	c, AccBuf_ResetByteData_Loop4
 	ret
 
+; When any part has a pending record change (bits 0..5 of 0x332c), saves the part records
+; (RhythmPart_CopyData), processes the accent data of parts 1..5 (0x32ec = 1 before part 2) and
+; clears those bits.
 AccNote_FlushAll:
 	ld a, (0x332c:16)
 	and a, 0x3f
@@ -5764,6 +6180,9 @@ AccNote_FlushAll:
 AccNote_FlushReturn:
 	ret
 
+; Stores in 0x32ec / 0x32ea the distance from the current event position (0x327d, bar 0x32b5 -
+; 1) to the end of the previous bar (AccVoice_LookupTableAddress with A = 0x5f, W = (0x458) - 1;
+; AccTempo_PositionCompare).
 AccTempo_CalcPosition:
 	ld a, 0x5f:opc
 	ld w, (1112:16)
@@ -5861,6 +6280,8 @@ AccInit_ReInit_SetDirty:
 	or (0x332c:16), 128
 	ret
 
+; Clears 0x32e2; when it was already 0, first sends note-offs and flushes
+; (SeqVoice_SendNoteOffAndFlush).
 AccInit_ResetSongCounter:
 	cp (0x32e2:16), 0
 	jr nz, AccInit_ResetSong_Store
@@ -5870,10 +6291,14 @@ AccInit_ResetSong_Store:
 	ld (0x32e2:16), 0
 	ret
 
-AccInit_CallF435A9:
+; Calls SeqVoice_SendNoteOffAndFlush.
+; Called from AccState_Apply.
+AccInit_SendNoteOffAndFlush:
 	call SeqVoice_SendNoteOffAndFlush
 	ret
 
+; For style numbers below 0x80, sets bit 0 of 0x3393 when bit 0 of the tuning state 0x3391
+; differs from the saved copy 0x3392.
 AccTuning_CheckChange:
 	cp (0x32e5:16), 128
 	jr nc, AccTuning_ChangeReturn
@@ -5940,6 +6365,8 @@ AccTuning_LoadReturn:
 	pop xwa
 	ret
 
+; Loads part 1's tuning pair from the style-tuning entry at 0x1e7810 + AccHelper_ComputeVoiceOffset
+; when its byte +1 has bit 7 set: 0x3246 = byte +0, 0x3247 = byte +1 & 0x7f.
 AccTuning_LoadMaster:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -5954,6 +6381,8 @@ AccTuning_LoadMaster:
 AccTuning_LoadMasterReturn:
 	ret
 
+; Loads part 4's tuning from the style-tuning entry (as AccTuning_LoadMaster): 0x324d = byte +2,
+; 0x324e = byte +3 & 0x7f, 0x3250 = bit 7 of byte +3.
 AccTuning_LoadCoarse:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -5972,6 +6401,8 @@ AccTuning_LoadCoarse:
 AccTuning_LoadCoarseReturn:
 	ret
 
+; Loads part 8's tuning from the style-tuning entry: 0x3254 = byte +4, 0x3255 = byte +5 & 0x7f,
+; 0x3257 = bit 7 of byte +5.
 AccTuning_LoadFine:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -5990,6 +6421,8 @@ AccTuning_LoadFine:
 AccTuning_LoadFineReturn:
 	ret
 
+; Loads part 16's tuning from the style-tuning entry: 0x325b = byte +6, 0x325c = byte +7 & 0x7f,
+; 0x325e = bit 7 of byte +7.
 AccTuning_LoadOctave:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6008,6 +6441,8 @@ AccTuning_LoadOctave:
 AccTuning_LoadOctaveReturn:
 	ret
 
+; Loads part 32's tuning from the style-tuning entry: 0x3262 = byte +8, 0x3263 = byte +9 & 0x7f,
+; 0x3265 = bit 7 of byte +9.
 AccTuning_LoadTranspose:
 	call AccHelper_ComputeVoiceOffset
 	add xhl, 0x1e7810
@@ -6101,6 +6536,10 @@ AccTuning_ApplyReturn:
 	and (0x3393:16), 254
 	ret
 
+; Applies a change of the tuning switch: for styles below 0x80, when bit 0 of 0x3391 differs from
+; 0x3392, writes it into bit 7 of byte +1 of the style-tuning entry (0x1e7810 + offset) and sets bit
+; 0 of 0x333b; a pending change flag (bit 0 of 0x3393) also sets 0x333b and is cleared.  For styles
+; 0x80 and up the switch is turned off (AccTuning_LEDOff).
 AccTuning_Toggle:
 	cp (0x32e5:16), 128
 	jr nc, AccTuning_Toggle_NoStyle
@@ -6136,11 +6575,16 @@ AccTuning_Toggle_NoStyle:
 AccTuning_Toggle_Return:
 	ret
 
+; Copies the tuning state 0x3391 to 0x3392.
 AccTuning_SaveState:
 	ld a, (0x3391:16)
 	ld (0x3392:16), a
 	ret
 
+; Sets the style-tuning state: for style numbers below 0x80 whose entry at 0x1e7810 +
+; (AccHelper_ComputeVoiceOffset result) has bit 7 of byte +1 set, bit 0 of 0x3391 is set and the
+; tuning LED turned on; otherwise the bit is cleared and the LED turned off.  0x3392 = 0x3391.
+;   Preserves XWA, XHL.
 AccTuning_Init:
 	push xwa
 	push xhl
@@ -6167,6 +6611,7 @@ AccTuning_Init_Epilogue:
 	pop xwa
 	ret
 
+; For style numbers 0x80 and up, clears bit 0 of 0x3391 and turns the tuning LED off.
 AccTuning_DisableIfNoStyle:
 	cp (0x32e5:16), 128
 	jr c, AccTuning_DisableReturn
@@ -6176,12 +6621,15 @@ AccTuning_DisableIfNoStyle:
 AccTuning_DisableReturn:
 	ret
 
+; Sets 0x3390 = 1 and calls CtrlPanel_SetIndicatorBit with A = 0x4a.  AccTuning_LEDOff is the
+; counterpart.
 AccTuning_LEDOn:
 	ld (0x3390:16), 1
 	ld a, 0x4a:opc
 	call CtrlPanel_SetIndicatorBit
 	ret
 
+; Clears 0x3390 and calls CtrlPanel_SetIndicatorBit with A = 0x4a.
 AccTuning_LEDOff:
 	ld (0x3390:16), 0
 	ld a, 0x4a:opc
@@ -6203,6 +6651,8 @@ AccWrap_ReplayStop:
 AccWrap_ReplayStopAlt:
 	jp	AccPedal_RawHandler_Join
 
+; Calls AccAutoPlay_NoteDispatch with XIZ preserved (called on each note-on).
+; Called from NoteOn_AutoPlayVoiceLoop and AccNoteOn_AutoPlayLoop.
 AccWrap_AutoPlayCheck:
 	push xiz
 	call AccAutoPlay_NoteDispatch
@@ -6213,21 +6663,29 @@ AccWrap_PlayModeByteData:
 	jp	AccReplay_FullRestart
 	jp	AccAutoPlay_ActionDispatch
 
+; Alias entry: jumps to AccAutoPlay_DeferredAction (called from MainLoop).
 AccWrap_DeferredAction:
 	jp AccAutoPlay_DeferredAction
 
+; Calls AccAutoPlay_StateMachine with XIZ preserved (called on each note-on).
+; Called from NoteOn_PostAutoPlay and AccNoteOn_Return.
 AccWrap_AutoPlayStateMachine:
 	push xiz
 	call AccAutoPlay_StateMachine
 	pop xiz
 	ret
 
+; Calls AccPlayMode_Dispatch with XIZ preserved.  This is the entry used from outside the
+; accompaniment engine (panel, MIDI, demo, sequencer and UI-state handlers, PlayHalt).
 AccWrap_PlayModeDispatch:
 	push xiz
 	call AccPlayMode_Dispatch
 	pop xiz
 	ret
 
+; Calls AccPlayMode_StartPlayFull with XIZ preserved.
+; Reached from AccWrap_PlayModeStateMachine_Skip, PlayModeStateMachine_DoPlayMode2 and
+; SeqPlay_CheckAndStartPlayback.
 AccWrap_PlayModeStart:
 	push xiz
 	call AccPlayMode_StartPlayFull
@@ -6237,39 +6695,55 @@ AccWrap_PlayModeStart:
 AccWrap_PlayModeStopData:
 	jp	AccPlayMode_StopExprC
 
+; Alias entry: jumps to AccPlayMode_StartAccPlayFull.
 AccWrap_PlayModeStartAccPlay:
 	jp AccPlayMode_StartAccPlayFull
 
+; Alias entry: jumps to AccPlayMode_StopToSync2.
 AccWrap_PlayModeStopSync:
 	jp AccPlayMode_StopToSync2
 
+; Calls AccPlayMode_StopExprD with XIZ preserved.
+; Called from CompIface_RampDown_Start, SeqPlay_StopReset_NotPlaying and SeqPlay_DeactClearBit.
 AccWrap_PlayModeStopExpr:
 	push xiz
 	call AccPlayMode_StopExprD
 	pop xiz
 	ret
 
+; Calls AccPlayMode_StartPlay2 with XIZ preserved.
+; Reached from CompIface_CheckUpDown, AccState_CollectAcc4_Active, SeqNote_HandleMasterChannel and
+; SeqCh_ClearActive_DrumShiftDone.
 AccWrap_PlayModeStartPlay:
 	push xiz
 	call AccPlayMode_StartPlay2
 	pop xiz
 	ret
 
+; Calls AccReplay_SavedPedal with XIZ preserved.
+; Called from AccPedalConfig_ReplayAndReturnOK and SeqAccVoice_ReplaySavedPedal.
 AccWrap_ReplaySavedPedal:
 	push xiz
 	call AccReplay_SavedPedal
 	pop xiz
 	ret
 
+; Alias entry: jumps to AccReplay_SavedExpression.
 AccWrap_ReplaySavedExpr:
 	jp AccReplay_SavedExpression
 
+; Calls AccReplay_FullStop with XIZ preserved.
+; Called from SeqPlay_CheckSilentAndStop and Portamento_ComputeAndStore.
 AccWrap_FullStop:
 	push xiz
 	call AccReplay_FullStop
 	pop xiz
 	ret
 
+; Calls AccPos_ClearOnStart with XIZ preserved (sequencer start / stop, step-record entry).
+; Called from SqStep_InitOnEnter, SeqAcc_InitPlayback_FreshStart, SeqPlay_InitFromDemoRecord,
+; SeqPlay_EmergencyStopAll, AccWrap_ClearPositionAndReset, SeqModeTransit_SetRepeatBit and 1 more
+; site.
 AccWrap_PositionClear:
 	push xiz
 	call AccPos_ClearOnStart
@@ -6282,11 +6756,14 @@ AccWrap_PositionSaveData:
 	pop	xiz
 	ret
 
+; Alias entry: jumps to AccFlags_SyncTo64607 (called from MainLoop).
 AccWrap_FlagSync:
 	jp AccFlags_SyncTo64607
 AccWrap_PlayModeStopData2:
 	jp	AccTempo_WriteMarker_Padding_Return
 
+; Calls AccAutoPlay_ZoneTrack with XIZ preserved.
+; Called from FindEntry_AdvanceSlo_StoreDRAM.
 AccWrap_AutoPlayZoneTrack:
 	push xiz
 	call AccAutoPlay_ZoneTrack
@@ -6304,6 +6781,10 @@ AccWrap_AutoPlayByteData:
 	pop	xiz
 	ret
 
+; Handles a pedal event from the switch-write payload: type (SWBTWR_PAYLOAD_1) to 0x348a; types
+; 5 and 6 store PAYLOAD_2 in 0x347e and PAYLOAD_3 (0xff read as 0) in 0x347f and run
+; AccPedal_SustainHandler, AccPedal_ExprToggle and AccPedal_DistributeParams.  Type 0, or type 7
+; with bit 4 or 5 of PAYLOAD_3 set, also saves the position (AccPos_SaveOnStop).
 AccPedal_EventDispatch:
 	ld a, (SWBTWR_PAYLOAD_1:16)
 	ld (0x348a:16), a
@@ -6487,6 +6968,8 @@ AccPedal_SustainPadding:
 	nop
 	nop
 
+; Out: A = 1 (pedal action not allowed) on titles 108..122 or in mode 19 (CURRENT_MODE), A = 0
+; otherwise.  The extra tests for titles 111 and 120 cannot change the result.
 AccPedal_StyleCheck:
 	cp (CURRENT_TITLE:16), 111
 	jr z, AccPedal_StyleCheck_Ineligible
@@ -6516,6 +6999,9 @@ AccPedal_StyleCheck_Ineligible:
 AccPedal_StyleCheckReturn:
 	ret
 
+; For pedal event type 5 (0x348a) whose bit 1 is set in both 0x347e and 0x347f: toggles bit 1 of
+; the panel byte 0xfc5f and, unless 0x90f8 is 0xff and with bit 3 of 0xfd56 set, sends the switch
+; packet 0x48 / 5 / (bit) / 2 built at 0x38e8 (MidiPkt_DispatchViaTable_4DCE).
 AccPedal_ExprToggle:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_ExprReturn
@@ -6547,6 +7033,9 @@ AccPedal_ExprPadding:
 	nop
 	nop
 
+; Rebuilds the pedal flag pairs 0x3480..0x3487 from the pedal event (AccPedal_ProcessAllBits) and
+; sends them (AccPedal_StateSync); in composer mode 14, or with bit 0 of 0x28a6 set, does nothing.
+; With bit 3 of 0xd53 set the "on" halves and the high nibble of 0xfc5f are cleared.
 AccPedal_DistributeParams:
 	cp (CURRENT_MODE:16), 14
 	jr z, AccPedal_Distribute_JumpMain
@@ -6645,6 +7134,8 @@ AccPedal_SendEvents_OnExpr:
 AccPedal_SendEventsReturn:
 	ret
 
+; Handles each pedal function of the event: sustain, expression, portamento, hold, sostenuto, soft
+; and damper (AccPedal_Bit2_Sustain .. AccPedal_Bit3_Damper).
 AccPedal_ProcessAllBits:
 	calr AccPedal_Bit2_Sustain
 	calr AccPedal_Bit2_Expression
@@ -6659,6 +7150,9 @@ AccPedal_ProcessBitsPadding:
 	nop
 	nop
 
+; For pedal event type 5: on a press of bit 2 (set in 0x347e and 0x347f) sets bit 2 of 0x1108 and
+; turns sustain on (or sostenuto when 0x90f8 is 127 and the accompaniment runs); on a release turns
+; the same function off.
 AccPedal_Bit2_Sustain:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit2_Return
@@ -6703,6 +7197,8 @@ AccPedal_Bit2_OffSostenuto:
 AccPedal_Bit2_Return:
 	ret
 
+; For pedal event type 6: on a press of bit 2 sets bit 10 of 0x1108 and turns expression on (or
+; soft when 0x90f8 is 127 and the accompaniment runs); on a release turns the same function off.
 AccPedal_Bit2_Expression:
 	cp (0x348a:16), 6
 	jr nz, AccPedal_Expr_Return
@@ -6749,6 +7245,8 @@ AccPedal_Expr_OffSoft:
 AccPedal_Expr_Return:
 	ret
 
+; For pedal event type 5: on a press of bit 7 sets bit 7 of 0x1108 and turns portamento on while
+; the accompaniment runs (bit 2 of 0x41e), damper otherwise; the release does the matching off.
 AccPedal_Bit7_Portamento:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit7_Return
@@ -6781,6 +7279,8 @@ AccPedal_Bit7_OffDamper:
 AccPedal_Bit7_Return:
 	ret
 
+; For pedal event type 5: on a press of bit 6 sets bit 6 of 0x1108 and, while the accompaniment
+; runs, turns hold on; the release turns hold off (only while running).
 AccPedal_Bit6_Hold:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit6_Return
@@ -6807,6 +7307,8 @@ AccPedal_Bit6_HoldOff:
 AccPedal_Bit6_Return:
 	ret
 
+; For pedal event type 5, while the accompaniment runs: bit 4 pressed turns sostenuto on, released
+; turns it off.
 AccPedal_Bit4_Sostenuto:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit4_Return
@@ -6830,6 +7332,8 @@ AccPedal_Bit4_Off:
 AccPedal_Bit4_Return:
 	ret
 
+; For pedal event type 5, while the accompaniment runs: bit 5 pressed turns soft on, released turns
+; it off.
 AccPedal_Bit5_Soft:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit5_Return
@@ -6853,6 +7357,7 @@ AccPedal_Bit5_Off:
 AccPedal_Bit5_Return:
 	ret
 
+; For pedal event type 5: bit 3 pressed turns damper on, released turns it off.
 AccPedal_Bit3_Damper:
 	cp (0x348a:16), 5
 	jr nz, AccPedal_Bit3_Return
@@ -6872,6 +7377,8 @@ AccPedal_Bit3_Off:
 AccPedal_Bit3_Return:
 	ret
 
+; Sends the pedal state: AccPedal_SendEvents when 0x90f8 is 127 or 0xff, then (unless it is 0xff)
+; the four controller groups AccPedal_SendCtrl1..4.
 AccPedal_StateSync:
 	cp (0x90f8:16), 127
 	jr z, AccPedal_Sync_SendEvents
@@ -6892,6 +7399,10 @@ AccPedal_Sync_DispatchAll:
 AccPedal_Sync_Return:
 	ret
 
+; Sends the pedal functions newly released in pair 1 (bits set in 0x3483 but not in 0x3482): with
+; bit 3 of 0xfd56 set as switch packet 0x48 / 5 at 0x38e8 (MidiPkt_DispatchViaTable_4DCE); unless
+; bit 4 of 0xfd50 is set, also through the port path with 0x90e5 = (0x90e4) & 0x8f (bit 7 cleared
+; when 0x90f8 is 127).
 AccPedal_SendCtrl1:
 	ld a, (0x3482:16)
 	xor a, 0xff
@@ -6935,6 +7446,7 @@ AccPedal_SendCtrl1_UpdateMask:
 AccPedal_SendCtrl1_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for pair 2 (0x3486 / 0x3487, switch type 6).
 AccPedal_SendCtrl2:
 	ld a, (0x3486:16)
 	xor a, 0xff
@@ -6978,6 +7490,7 @@ AccPedal_SendCtrl2_UpdateMask:
 AccPedal_SendCtrl2_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for the functions active in both 0x3482 and 0x3483 (switch type 5).
 AccPedal_SendCtrl3:
 	ld a, (0x3482:16)
 	and a, (0x3483:16)
@@ -7019,6 +7532,7 @@ AccPedal_SendCtrl3_UpdateMask:
 AccPedal_SendCtrl3_Return:
 	ret
 
+; As AccPedal_SendCtrl1 for the functions active in both 0x3486 and 0x3487 (switch type 6).
 AccPedal_SendCtrl4:
 	ld a, (0x3486:16)
 	and a, (0x3487:16)
@@ -7208,6 +7722,8 @@ AccPedal_SustainOff_Padding:
 	nop
 	nop
 
+; Releases the sustain function: clears bit 2 of 0x3470 and, unless 0x90f8 is 127, bit 2 of the
+; panel byte 0xfc5f.
 AccPedal_SustainOff:
 	bit 2, (0x3470:16)
 	jr z, AccPedal_SustainOff_Clear
@@ -7285,6 +7801,8 @@ AccPedal_ExprOff_Padding:
 	nop
 	nop
 
+; Releases the expression function: clears bit 0 of 0x3470 and, unless 0x90f8 is 127, bit 2 of
+; the panel byte 0xfc60.
 AccPedal_ExprOff:
 	bit 0, (0x3470:16)
 	jr z, AccPedal_ExprOff_Clear
@@ -7359,6 +7877,8 @@ AccPedal_SostenutoOff_Padding:
 	nop
 	nop
 
+; When the sostenuto bit (bit 4 of 0x3470) is set, clears it and moves bit 4 from "on" to "off"
+; in the two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_SostenutoOff:
 	bit 4, (0x3470:16)
 	jr z, AccPedal_SostenutoOff_Return
@@ -7432,6 +7952,8 @@ AccPedal_SoftOff_Padding:
 	nop
 	nop
 
+; When the soft bit (bit 5 of 0x3470) is set, clears it and moves bit 5 from "on" to "off" in the
+; two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_SoftOff:
 	bit 5, (0x3470:16)
 	jr z, AccPedal_SoftOff_Return
@@ -7505,6 +8027,8 @@ AccPedal_HoldOff_Padding:
 	nop
 	nop
 
+; When the hold bit (bit 6 of 0x3470) is set, clears it and moves bit 6 from "on" to "off" in the
+; two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_HoldOff:
 	bit 6, (0x3470:16)
 	jr z, AccPedal_HoldOff_Return
@@ -7591,6 +8115,8 @@ AccPedal_DamperOff_Padding:
 	nop
 	nop
 
+; Releases the damper function: clears bit 3 of 0x3470 and, unless 0x90f8 is 127, bit 3 of the
+; panel byte 0xfc5f.
 AccPedal_DamperOff:
 	bit 3, (0x3470:16)
 	jr z, AccPedal_DamperOff_Clear
@@ -7665,6 +8191,8 @@ AccPedal_PortamentoOff_Padding:
 	nop
 	nop
 
+; When the portamento bit (bit 7 of 0x3470) is set, clears it and moves bit 7 from "on" to "off"
+; in the two flag pairs 0x3480 / 0x3481 and 0x3482 / 0x3483.
 AccPedal_PortamentoOff:
 	bit 7, (0x3470:16)
 	jr z, AccPedal_PortamentoOff_Return
@@ -7816,6 +8344,9 @@ AccAutoPlay_SplitDetect_Store:
 AccAutoPlay_SplitDetect_Return:
 	ret
 
+; On a note while no replay runs (0x7f0b = 0), pedal actions are allowed (AccPedal_StyleCheck) and
+; bit 2 of 0x28a7 is clear: applies the zone (AccAutoPlay_ZoneTrack_Apply) and shifts the note
+; history (0x349a = old 0x349c, 0x349c = WA).
 AccAutoPlay_ZoneTrack:
 	cp (0x7f0b:16), 0
 	jr nz, AccAutoPlay_ZoneTrack_Update
@@ -7834,6 +8365,9 @@ AccAutoPlay_ZoneTrack:
 AccAutoPlay_ZoneTrack_Update:
 	ret
 
+; Counts in 0x38e8 the keys of the record at 0xceff (count at +0, keys every 2 bytes from +5) that
+; lie at or above the split value chosen by mode word +2 (0 -> 0x80, 1 -> 0, else 0xf0, adjusted by
+; AccAutoPlay_ZoneTrack_SetFlag).
 AccAutoPlay_ZoneTrack_Apply:
 	ld xix, 0xceff
 	ld wa, (xix + 2)
@@ -7875,6 +8409,8 @@ AccAutoPlay_ZoneTrack_Default:
 	ld wa, (0x38e8:16)
 	ret
 
+; Returns the split value in L: AccAutoPlay_ModeAvail when bit 7 of W is set or bit 0 of 0xfd53
+; is clear, else 0x7f.  C = 0.
 AccAutoPlay_ZoneTrack_SetFlag:
 	ld c, 0x0:opc
 	bit 7, w
@@ -7897,6 +8433,10 @@ AccAutoPlay_ZoneTrack_Return2:
 AccAutoPlay_ZoneTrack_Return:
 	ret
 
+; Per-note auto-play update: AccAutoPlay_TriggerCheck; with bit 6 of 0x346e set, parts active and
+; no sequencer parts, re-evaluates the configuration (AccAutoPlay_SetConfig) and disables auto-play
+; when bit 7 of 0x346d stays clear; then runs AccAutoPlay_ActionDispatch and, when it requested a
+; restart (bit 0 of 0x3474), sets bit 2 of 0x346e and AccReplay_FullRestart.
 AccAutoPlay_StateMachine:
 	calr AccAutoPlay_TriggerCheck
 	bit 6, (0x346e:16)
@@ -7990,6 +8530,10 @@ AccAutoPlay_ModeAvail_Padding3:
 	nop
 	nop
 
+; Returns the auto-play value for the panel setting: with (0xfd02) & 3 non-zero,
+; AccAutoPlay_ModeAvail_Values[(0xfd02) & 3]; otherwise ((0xfd03) & 0x7f) - 1 (0 for 0).  In
+; composer mode (CURRENT_MODE = 14) the result is always 0x7f.
+;   Out: L.
 AccAutoPlay_ModeAvail:
 	ld l, (0xfd02:16)
 	and l, 0x3
@@ -8044,6 +8588,9 @@ AccAutoPlay_ConfigureIfPending:
 AccAutoPlay_ConfigureIfPending_Return:
 	ret
 
+; Sets bit 7 of the auto-play flag 0x346d only when nothing is playing or recording (0x28a8,
+; 0xf19e and 0x379b all 0), the panel byte 0xfc5d has bit 3 clear and a non-zero low 3 bits, and
+; bit 1 of 0xfc5f is set; otherwise clears 0x346d.
 AccAutoPlay_SetConfig:
 	cpw (0x28a8:16), 0
 	jr nz, AccAutoPlay_SetConfig_Apply
@@ -8068,6 +8615,11 @@ AccAutoPlay_SetConfig_Apply:
 AccAutoPlay_SetConfig_Return:
 	ret
 
+; Chooses the auto-play mode in the top bits of 0x346e (bits 0..4 are kept).
+;   While recording (0x379b non-zero) or with nothing active (0x28a8 and 0xf19e both 0): bits
+;   0xa0 and AccAutoPlay_SubModeA.  With sequencer parts (0x28a8) but no active part: 0x80 when
+;   the accompaniment runs (bit 2 of 0x420), else 0xe0.  Otherwise, when the accompaniment is not
+;   running: AccAutoPlay_ModeDecode and AccAutoPlay_SubModeB.
 AccAutoPlay_Configure:
 	and (0x346e:16), 31
 	cp (0x379b:16), 0
@@ -8132,6 +8684,9 @@ AccAutoPlay_Configure_Return2:
 	nop
 
 
+; While auto-play is on (bit 1 of 0xfc5f): with a pending re-check (bit 2 of 0x346e) re-evaluates
+; the configuration and disables it when not allowed, clearing the pending bit; otherwise disables
+; it as soon as any part or sequencer part is active.
 AccAutoPlay_PeriodicCheck:
 	bit 1, (0xfc5f:16)
 	jr nz, AccAutoPlay_Periodic_Evaluate
@@ -8162,6 +8717,8 @@ AccAutoPlay_Periodic_Toggle:
 AccAutoPlay_Periodic_Return:
 	ret
 
+; Clears bit 1 of 0xfc5f and posts the matching switch event (SwbtWr_QueuePostEvent with E =
+; 0x48, D = 5, W = 2, A = 0).
 AccAutoPlay_Disable:
 	and (0xfc5f:16), 253
 	ld w, 0x2:opc
@@ -8175,6 +8732,10 @@ AccAutoPlay_Disable_Return:
 	nop
 	nop
 
+; Auto-play sub-mode for the start case: with bit 7 of 0x346d set and the accompaniment stopped,
+; sets bit 0 (both bits 0..1 of 0x3283 set) or bit 2 of 0x346d; while running with bits 2 and 3 of
+; 0x420 set, clears bit 3 of 0x420 and 0x41e and sets bit 3 of 0x346d.  Bit 4 of 0x346d is cleared
+; whenever it changes.
 AccAutoPlay_SubModeA:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeA_Return
@@ -8211,6 +8772,8 @@ AccAutoPlay_SubModeA_Padding:
 	nop
 	nop
 
+; As AccAutoPlay_SubModeA with bit 1 instead of bit 0 of 0x346d in the stopped case, and bit 3 of
+; SEQ_TRANSPORT_STATE also cleared in the running case.
 AccAutoPlay_SubModeB:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeB_Return
@@ -8248,6 +8811,11 @@ AccAutoPlay_SubModeB_Padding:
 	nop
 	nop
 
+; Hands an auto-play start over to the sequencer side: only when not recording (0x379b = 0),
+; the sequencer is idle (0x28aa = 0) and bit 2 of 0x41e is set.  Sets bit 4 / clears bit 3 of
+; 0x346d; with no active part runs AccPlayMode_StopToSync2 when bit 2 of 0x420 is set; with
+; active parts and bit 2 of SEQ_TRANSPORT_STATE set runs AccPlayMode_StopExprFull (bit 2 of 0x41e
+; set) or AccPlayMode_StopExprC.  Handlers run with interrupts masked to level 6.
 AccAutoPlay_SeqHandoff:
 	cp (0x379b:16), 0
 	jr nz, AccAutoPlay_SeqHandoff_Return
@@ -8288,6 +8856,8 @@ AccAutoPlay_SeqHandoff_Padding:
 	nop
 	nop
 
+; Sets the auto-play mode bits of 0x346e from bits 0..1 of 0x28a7: 2 -> 0xa0, 1 -> 0x60, 3 -> 0xe0
+; (0 leaves them).
 AccAutoPlay_ModeDecode:
 	ld a, (0x28a7:16)
 	and a, 0x3
@@ -8314,6 +8884,11 @@ AccAutoPlay_ModeDecode_Padding:
 	nop
 	nop
 
+; Carries out the pending auto-play action.  With bit 7 of 0x346d set and bit 2 set, bit 2 is
+; replaced by bit 3.  The mode bits 5..7 of 0x346e then select: none -> return at once; bit 7
+; clear -> AccPlayMode_StartPlayFull; bit 7 set, bit 5 clear -> AccPlayMode_StartAccPlay; bits 7,
+; 5, 6 set -> AccPlayMode_StopExprB; bits 7, 5 set, 6 clear -> AccPlayMode_StartAccPlayFull.  Bits
+; 5..7 of 0x346e are then cleared.
 AccAutoPlay_ActionDispatch:
 	ld a, (0x346d:16)
 	bit 7, a
@@ -8395,6 +8970,9 @@ AccAutoPlay_Deferred_Padding:
 	nop
 	nop
 
+; Dispatches on the transport state: bit 2 of 0x41e, of SEQ_TRANSPORT_STATE and of 0x420 select
+; one of the eight handlers of AccPlayMode_Dispatch_Execute_Data, called with interrupts masked
+; to level 6.
 AccPlayMode_Dispatch:
 	xor xhl, xhl
 	ei 6
@@ -8436,6 +9014,9 @@ AccPlayMode_OnMask0_Nop:
 	nop
 	nop
 
+; Chooses the play-mode transition for a sustain-pedal start/stop: with sequencer parts (0x28a8)
+; and active parts AccPlayMode_Router_Alt, with sequencer parts only AccPlayMode_StartRecording,
+; with active parts only AccPlayMode_StartAcc, with neither AccPlayMode_StopToSync.
 AccPlayMode_TransitionRouter:
 	cpw (0x28a8:16), 0
 	jr z, AccPlayMode_Router_Process
@@ -8464,6 +9045,8 @@ AccPlayMode_Router_Padding:
 	nop
 	nop
 
+; Calls AccPlayMode_StartPlay unless the accompaniment runs (bit 2 of 0x420).
+; Called from AccPlayMode_TransitionRouter.
 AccPlayMode_Router_Alt:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_Router_AltPadding
@@ -8477,6 +9060,9 @@ AccPlayMode_StartRecording_Padding:
 	nop
 	nop
 
+; With the accompaniment running (bit 2 of 0x420) AccPlayMode_StopExprA; otherwise
+; AccPlayMode_StopExprB when bit 1 of 0x28a7 is set (with interrupts masked to level 6), else the
+; play-mode dispatcher.
 AccPlayMode_StartRecording:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_StartRec_Apply
@@ -8501,6 +9087,8 @@ AccPlayMode_StartRec_Padding:
 	nop
 	nop
 
+; With the accompaniment running the play-mode dispatcher; otherwise AccPlayMode_StopExprB (bit 1
+; of 0x28a7 set) or AccPlayMode_StartPlayFull, with interrupts masked to level 6.
 AccPlayMode_StartAcc:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_StartAcc_Apply
@@ -8527,6 +9115,8 @@ AccPlayMode_StartAcc_Padding:
 	nop
 	nop
 
+; AccPlayMode_StopToSync2 while the accompaniment runs (bit 2 of 0x420), AccPlayMode_StartAccPlayFull
+; otherwise, with interrupts masked to level 6.
 AccPlayMode_StopToSync:
 	bit 2, (1056:16)
 	jr nz, AccPlayMode_StopToSync_Process
@@ -8547,6 +9137,8 @@ AccPlayMode_StopToSync_Padding:
 	nop
 	nop
 
+; Unless bit 2 of 0x28a7 is set: AccPlayMode_StopExprB when bit 1 of 0x28a7 is set, else
+; AccPlayMode_StartPlayFull, with interrupts masked to level 6.
 AccPlayMode_StartPlay:
 	bit 2, (0x28a7:16)
 	jr nz, AccPlayMode_StartPlay_Return
@@ -8569,6 +9161,8 @@ AccPlayMode_StartPlay_Padding:
 	nop
 	nop
 
+; AccPlayMode_StartPlay2 when bit 2 of 0x41e is set, AccPlayMode_StartAccPlay otherwise, with
+; interrupts masked to level 6.
 AccPlayMode_StopExprA:
 	bit 2, (1054:16)
 	jr nz, AccPlayMode_StopExprA_Process
@@ -8589,6 +9183,10 @@ AccPlayMode_StopExprA_Padding:
 	nop
 	nop
 
+; Starts accompaniment playback unless it is running (bit 0 or 2 of 0x420): with bit 1 of
+; 0x28b2 set and bit 2 clear it only arms a synchro start (SeqPlay_SetBarAndResetScroll,
+; 0x41e = 0x80, bit 2 of 0x28b2 set); otherwise 0x420 = 1, AccTempo_ClearCounters and
+; AccSync_MidiClock.  Then SEQ_TRANSPORT_STATE = 1 and AccTempo_ClearSubPos.
 AccPlayMode_StopExprB:
 	bit 0, (1056:16)
 	jr nz, AccPlayMode_StopExprB_Return
@@ -8612,6 +9210,8 @@ AccPlayMode_StopExprB_Return:
 	ld (SEQ_TRANSPORT_STATE:16), 1
 	calr AccTempo_ClearSubPos
 
+; Starts accompaniment play without touching 0x420: 0x41e = 1, bit 0 of 0x3474 set, positions
+; cleared (AccTempo_ClearPositions) and tempo marker 0x85 (AccTempo_WriteStartMarker).
 AccPlayMode_StartAccPlay:
 	ld (1054:16), 1
 	or (0x3474:16), 1
@@ -8626,6 +9226,9 @@ AccPlayMode_StartAccPlay_Padding:
 	nop
 	nop
 
+; Play-mode handler (entry 5 of AccPlayMode_Dispatch_Execute_Data): when 0x420 has bit 2 set and
+; bit 3 clear, sets 0x420 = 12; then falls into AccPlayMode_StartPlay2 (0x41e = 12, 0x3470 = 0,
+; tempo marker 0x86 through AccTempo_WriteStartMarker).
 AccPlayMode_StopToSync2:
 	bit 3, (1056:16)
 	jr nz, AccPlayMode_StartPlay2
@@ -8633,6 +9236,8 @@ AccPlayMode_StopToSync2:
 	jr z, AccPlayMode_StartPlay2
 	ld (1056:16), 12
 
+; Play-mode handler (entry 1 of AccPlayMode_Dispatch_Execute_Data): 0x41e = 12, 0x3470 = 0 and
+; tempo marker 0x86 (AccTempo_WriteStartMarker).
 AccPlayMode_StartPlay2:
 	ld (1054:16), 12
 	ld (0x3470:16), 0
@@ -8644,6 +9249,9 @@ AccPlayMode_StartPlay2_Padding:
 	nop
 	nop
 
+; Like AccPlayMode_StopExprB with the transport set first: with bit 1 of 0x28b2 set and bit 2
+; clear it arms the synchro start; otherwise SEQ_TRANSPORT_STATE = 1, AccTempo_ClearSubPos,
+; and unless 0x420 bit 0 or 2 is set, 0x420 = 1, AccTempo_ClearCounters, AccSync_MidiClock.
 AccPlayMode_StartPlayFull:
 	bit 2, (0x28b2:16)
 	jr nz, AccPlayMode_StartPlayFull_Process
@@ -8672,6 +9280,9 @@ AccPlayMode_StartPlayFull_Padding:
 	nop
 	nop
 
+; Play-mode handler (entry 7 of AccPlayMode_Dispatch_Execute_Data): 0x41e = 12, bit 2 of 0x347a set
+; unless bit 0 of 0x28b2 is, and tempo marker 0x86 (AccTempo_WriteStartMarker, into which it
+; falls).
 AccPlayMode_StopExprFull:
 	ld (1054:16), 12
 	bit 0, (0x28b2:16)
@@ -8682,6 +9293,9 @@ AccPlayMode_StopExprFull_Process:
 	ld a, 0x86:opc
 	calr AccTempo_WriteStartMarker
 
+; Play-mode handler (entry 6 of AccPlayMode_Dispatch_Execute_Data): SEQ_TRANSPORT_STATE = 12,
+; then falls into AccPlayMode_OnMask4 (0x420 = 12 when its bit 2 is set and bit 3 clear; 0x3470 =
+; 0).
 AccPlayMode_StopExprC:
 	ld (SEQ_TRANSPORT_STATE:16), 12
 AccPlayMode_OnMask4:
@@ -8699,6 +9313,7 @@ AccPlayMode_StopExprC_Return:
 	nop
 	nop
 
+; Play-mode handler (entry 2 of AccPlayMode_Dispatch_Execute_Data): SEQ_TRANSPORT_STATE = 12.
 AccPlayMode_StopExprD:
 	ld (SEQ_TRANSPORT_STATE:16), 12
 	ret
@@ -8707,6 +9322,9 @@ AccPlayMode_StopExprD_Return:
 	nop
 	nop
 
+; Starts accompaniment play: 0x41e = 1, bit 0 of 0x3474 set, positions cleared
+; (AccTempo_ClearPositions), tempo marker 0x85 (AccTempo_WriteStartMarker); unless 0x420 has bit 0
+; or 2 set, also 0x420 = 1, AccTempo_ClearCounters and AccSync_MidiClock.
 AccPlayMode_StartAccPlayFull:
 	ld (1054:16), 1
 	or (0x3474:16), 1
@@ -8737,6 +9355,7 @@ AccPlayMode_OnMask3:
 	nop
 	nop
 
+; Clears the byte 0x417 and the word 0x418 with interrupts masked to level 6.
 AccTempo_ClearCounters:
 	xor wa, wa
 	ei 6
@@ -8745,6 +9364,8 @@ AccTempo_ClearCounters:
 	ei 0
 	ret
 
+; Clears the position bytes 0x434 / 0x435 and, unless bit 0 of 0x28a6 is set, 0x415 / 0x416;
+; then clears bit 0 of 0x28a6.  The stores run with interrupts masked to level 6.
 AccTempo_ClearPositions:
 	xor wa, wa
 	ei 6
@@ -8760,6 +9381,8 @@ AccTempo_ClearPositions_Loop:
 	and (0x28a6:16), 254
 	ret
 
+; Clears SEQ_BEAT_COUNT and SEQ_BEAT_TICK unless bit 3 of 0x28a7 is set (playback not starting
+; at measure 1), with interrupts masked to level 6.
 AccTempo_ClearSubPos:
 	xor wa, wa
 	ei 6
@@ -8772,6 +9395,9 @@ AccTempo_ClearSubPos_Loop:
 	ei 0
 	ret
 
+; When MIDI clock output is enabled (bit 2 of 0xfd52), flags a transport message for serial
+; channel 0 and sends it (MIDI_SC0_TX_DISPATCH): bit 2 of 0x429 when bit 3 of 0x28a7 is set
+; (playback not starting at measure 1), bit 1 otherwise.  Runs with interrupts masked to level 6.
 AccSync_MidiClock:
 	bit 2, (0xfd52:16)
 	jr z, AccSync_MidiClock_Return
@@ -8795,10 +9421,15 @@ AccSync_MidiClock_Padding:
 	nop
 	nop
 
+; When the word at 0x28aa is non-zero, falls into AccTempo_WriteStopMarker: writes the byte in
+; A and then SEQ_BEAT_TICK to the tempo ring buffer (TempoRingBuf_WriteByte_Ext) with
+; interrupts masked to level 6.
 AccTempo_WriteStartMarker:
 	cpw (0x28aa:16), 0
 	jr z, AccTempo_WriteMarker_Return
 
+; Writes the marker byte A and then SEQ_BEAT_TICK to the tempo ring buffer
+; (TempoRingBuf_WriteByte_Ext), with interrupts masked to level 6.
 AccTempo_WriteStopMarker:
 	ei 6
 	pushw wa
@@ -8867,6 +9498,8 @@ AccReplay_Restart_Return:
 	nop
 	nop
 
+; Waits until SYSTEM_TIMESTAMP has advanced by 8 from its value on entry (busy loop).
+; Preserves HL.
 AccTiming_AlignTo8Tick:
 	pushw hl
 	ldw bc, 0x8
@@ -8884,6 +9517,7 @@ AccTiming_Align_Return:
 	popw hl
 	ret
 
+; Waits (up to 0x500 polls) for bit 0 of 0x41e to clear.
 AccPlayMode_WaitIdle:
 	xor bc, bc
 
@@ -8901,6 +9535,9 @@ AccPlayMode_WaitIdle_Return:
 	nop
 	nop
 
+; Clears 0x45b when it is 1 and 0xcedf is non-zero; then, unless bit 0 of 0x45b is set while the
+; accompaniment runs (bit 2 of 0x41e), runs the sequencer dispatcher (Seq_DispatcherEntry) and
+; clears 0x464.
 AccTempo_CheckSource:
 	cp (1115:16), 1
 	jr nz, AccTempo_CheckSource_Process
@@ -8925,6 +9562,10 @@ AccTempo_CheckSource_Padding:
 	nop
 	nop
 
+; Replays the saved pedal event: puts 0x3488 / 0x3475 / RHYTHM_VARIATION_INDEX into the switch
+; payload, runs AccPedal_EventDispatch with 0x90f8 = 0, then restores the payload and 0x90f8,
+; clears the three saved bytes, posts the two pedal-off events (0x48 / 5 and 0x48 / 6) and calls
+; AudioMode_SetStereoFlags.
 AccReplay_SavedPedal:
 	ld a, (SWBTWR_PAYLOAD_1:16)
 	pushw wa
@@ -8967,6 +9608,8 @@ AccReplay_SavedPedal_Return:
 	nop
 	nop
 
+; Calls AccReplay_SendPedalType6 with XIZ preserved.
+; Called from EffectMode_CheckPedalType and EffectMode_SendPedalType_Bank1.
 AccReplay_SendPedalType5:
 	push xiz
 	calr AccReplay_SendPedalType6
@@ -9168,6 +9811,9 @@ AccReplay_Stop_Return:
 	nop
 	nop
 
+; For a pedal event with a non-zero value while bit 0 of 0x28a6 is set: moves the position bytes
+; 0x415 / 0x416 to 0x436 / 0x437 (clearing them, interrupts masked) and stops the replay
+; (AccReplay_FullStop).
 AccPos_SaveOnStop:
 	ld a, (SWBTWR_PAYLOAD_3:16)
 	cp a, 0:i3
@@ -9192,6 +9838,8 @@ AccPos_SaveOnStop_Padding:
 	nop
 	nop
 
+; Unless bit 0 of 0x3283 is set: clears the positions 0x415 / 0x416 / 0x436 / 0x437 and 0x3479,
+; sets bit 7 of 0x34cd and runs the sequencer dispatcher (Seq_DispatcherEntry).
 AccPos_ClearOnStart:
 	bit 0, (0x3283:16)
 	jr nz, AccPos_ClearOnStart_Return
@@ -9212,6 +9860,9 @@ AccPos_ClearOnStart_Return:
 AccPos_ClearOnStart_Padding:
 	nop
 	nop
+; In demo mode (19) clears bit 1 of 0x347a and bit 0 of 0x28a6; otherwise, when bit 1 of 0x347a is
+; set and bits 0..1 of 0x3283 are clear, clears 0x3479, stops the replay (AccReplay_FullStop) and
+; clears that bit.
 AccPos_ClearOnStart_Padding_Sub:
 	cp	(CURRENT_MODE:16), 19
 	jr	nz, AccPos_ClearOnStart_Padding_Sub_Skip
@@ -9261,6 +9912,10 @@ AccFlags_Sync_Padding:
 	nop
 	nop
 
+; Recomputes the timing minimum of all parts: 0x3374 = 0xff5f, scans the slot tables of parts 1
+; and 2 (0x3094, 0x30c4: 6-byte slots, 48 bytes, AccKbdTiming_TableScan) and of the four other
+; parts (0x30f4..0x31cc: 9-byte slots, 72 bytes, AccAccTiming_TableScan with 0x338c = 7, 4, 5, 6),
+; then copies the result to 0x3372.
 AccTiming_InitAllParts:
 	ldw (0x3374:16), 0xff5f
 	ldw (0x337c:16), 6
@@ -9699,6 +10354,9 @@ AccKbdTiming_Catchup_Done:
 	pop xwa
 	ret
 
+; Steps a circular-buffer index.
+;   In:  IX = index, XHL = buffer header (+0 = first index, +2 = last index).
+;   Out: IX + 1, or the first index when that passes the last.
 AccKbdTiming_AdvancePos:
 	inc 1, ix
 	cp ix, (xhl + 2)
@@ -9759,6 +10417,9 @@ AccKbdTiming_TableScan_NextSlot:
 AccKbdTiming_TableScan_Done:
 	ret
 
+; Pushes the byte in WA into the rhythm ring buffer (RhythmBuf_WriteByte, a compiled-C routine
+; taking its argument on the stack) with every register preserved, so the timing scanners can
+; call it in the middle of a buffer walk.
 AccSeq_WriteByte:
 	push xhl
 	push xbc
@@ -10201,6 +10862,7 @@ AccAccTiming_SlotOverflow_Data:
 AccDir_TickVector:
 	jp AccDir_Main
 
+; Alias entry (called from MainLoop): jumps to AccDir_PeriodicCheck.
 AccDir_PeriodicEntry:
 	jp AccDir_PeriodicCheck
 
@@ -10237,6 +10899,9 @@ AccDir_Padding1:
 	nop
 	nop
 
+; Samples the state the direction logic compares: 0x34a4 = (0xfc5a), 0x34a7 / 0x34a9 = the part
+; bits of 0x3312 / 0x3313, 0x34a0 = (0x415), bit 0 of 0x34a5 = bit 0 of 0x3283; with bit 0 of
+; 0xfd99 clear, bits 0 and 3 of 0x349f are cleared.
 AccDir_ReadState:
 	ld a, (0xfc5a:16)
 	ld (0x34a4:16), a
@@ -10268,6 +10933,8 @@ AccDir_Padding2:
 	nop
 	nop
 
+; Keeps the sampled state for the next pass: 0x34a8 = (0x34a7), 0x34aa = (0x34a9), bit 1 of 0x34a5
+; = bit 0.
 AccDir_SavePrevState:
 	ld a, (0x34a7:16)
 	ld (0x34a8:16), a
@@ -10349,6 +11016,9 @@ AccDir_Padding4:
 	nop
 	nop
 
+; With bit 0 of 0xfd99 set and 0x34a4 below 0x80, posts the panel byte 0xfc61 as switch event
+; (E = 0x48, D = 7, W = 0x30); unless bits 4..6 of 0xfd99 equal 1, also stores bits 4..5 of
+; 0xfc61 in 0x8d54 and calls EffectMode_ReinitWithFlag.
 AccDir_DispatchEvent:
 	ld w, (0xfd99:16)
 	and w, 0x1
@@ -10497,6 +11167,9 @@ AccProcess_PostAveragedTapTempo_Join:
 	call	SwbtWr_TrailingBytecode
 	ret
 
+; Tap-tempo timeout: while a tap sequence is open (bit 0 of 0x3490), closes it and clears
+; 0x3492 / 0x3494 / 0x3496 when 0x400 or more timestamp units have passed since the last tap
+; (TAP_TEMPO_LAST_TAP_TIME), counting across the 16-bit wrap.
 AccProcess_TimerCompare:
 	bit 0, (0x3490:16)
 	jr z, AccProcess_Timer_Ret
@@ -10532,9 +11205,12 @@ AccProcess_Timer_WrapCase:
 AccProcess_Timer_Ret:
 	ret
 
+; Alias entry: jumps to AccVoice_Dispatch.
 AccVoice_DispatchEntry:
 	jp AccVoice_Dispatch
 
+; Calls AccVoice_Dispatch with L = A and H = C, then returns its XIY result in XHL as well.
+; Preserves XIZ.  Used by the rhythm-variation screen and the rhythm-name getters.
 AccVoice_DispatchWithChannel:
 	push xiz
 	ld l, a
@@ -10544,6 +11220,8 @@ AccVoice_DispatchWithChannel:
 	pop xiz
 	ret
 
+; Calls AccVoice_GetChannelCount with L = A, preserving XIZ.
+; Called from MainRvariIni, SndArgNm_ChannelLoop, BitMapOut_ApplyPatch_Loop and RVariScreenProc.
 AccVoice_GetChannelCount_Wrap:
 	push xiz
 	ld l, a
@@ -10551,10 +11229,15 @@ AccVoice_GetChannelCount_Wrap:
 	pop xiz
 	ret
 
+; Calls AccVoice_GetChannelCount.
+; Called from MidiStream_ExtDispatch_Mode0_Skip, AccHelper_VoiceOffset_Loop, CmpSet_StepRhythmBank,
+; CmpNcp_ItemStep1 and CmpNcp_ItemStep2.
 AccVoice_GetChannelCount_Direct:
 	call AccVoice_GetChannelCount
 	ret
 
+; Calls AccVoice_CopyFromROM with L = A and returns its XIY result in XHL, preserving XIZ.
+; Called from MainGetRhyGrpName, MainCmpCpFunc and RVari_Paint.
 AccVoice_CopyFromROM_Wrap:
 	push xiz
 	ld l, a
@@ -10563,6 +11246,10 @@ AccVoice_CopyFromROM_Wrap:
 	pop xiz
 	ret
 
+; Fetches the name / data record of a rhythm (style) selection.
+;   In:  L = group (0..15, larger read as 0), H = number (0..0x4f, larger read as 0).  Group 15
+;   uses AccVoice_ROMLookup, group 14 AccVoice_IndexedTableLookup, the others AccVoice_ComputedCopy.
+;   Out: XIY = 0x34ab, the buffer they fill.  Preserves XWA, XBC, XDE, XHL.
 AccVoice_Dispatch:
 	push xwa
 	push xbc
@@ -10606,6 +11293,8 @@ AccVoice_Dispatch_Padding:
 	nop
 	nop
 
+; Copies the 13-byte record for group L, number H from AccVoice_RomRecords13 (index L * 20 + H)
+; to the buffer 0x34ab.
 AccVoice_ComputedCopy:
 	ld a, l
 	xor w, w
@@ -10625,6 +11314,8 @@ AccVoice_ComputedCopy_Padding:
 	nop
 	nop
 
+; Copies 13 bytes for number H & 15 to the buffer 0x34ab from RHYTHM_PATTERN_BUF_A + the offset
+; AccVoice_ROMLookup_Data lists for it.
 AccVoice_ROMLookup:
 	ld l, h
 	and hl, 0xf
@@ -10754,6 +11445,7 @@ AccVoice_IndexedTableLookup_Data_2:
 AccVoice_IndexedTableLookup_BaseOffsets_Data:
 	.long 0x00000bb0, 0x00000bd0, 0x00000bf0, 0x00000c10
 	.long 0x00000c30, 0x00000bb0, 0x00000bb0, 0x00000bb0
+; Out: L = AccVoice_GetChannelCount_Lookup_Data[L] (L above 15 read as 0).  Preserves XIX.
 AccVoice_GetChannelCount:
 	push xix
 	cp l, 0x10
@@ -10773,6 +11465,8 @@ AccVoice_GetChannelCount_Lookup_Data:	.byte	0x0f, 0x0c, 0x10, 0x09, 0x12, 0x0d
 	.byte 0x0c, 0x0e, 0x0c, 0x12, 0x0b, 0x0b, 0x0c, 0x0d
 	.byte 0x13, 0x0b
 
+; Copies the 16-byte record L (0..15, larger read as 0) of AccVoice_RomRecords16 to 0x34ab.
+;   Out: XIY = 0x34ab.  Preserves XWA, XBC, XHL.
 AccVoice_CopyFromROM:
 	push xwa
 	push xbc
@@ -10889,6 +11583,8 @@ AccStyle_JumpTable:
 	jp	AccStyle_ModeExit
 	jp	AccStyle_InlinedBlock_Helper
 
+; Calls AccStyle_InitVRAM with XIZ preserved.
+; Called from AccBuf_ResetAndReload.
 AccStyle_InitVRAM_Wrap:
 	push xiz
 	call AccStyle_InitVRAM
@@ -10993,12 +11689,17 @@ AccStyle_IndexedLookup_Ret:
 	ret
 
 
+; Calls AccStyle_ModeEnter with XIZ preserved.
+; Called from SndArgModeFunc.
 AccStyle_ModeEnter_Wrap:
 	push xiz
 	calr AccStyle_ModeEnter
 	pop xiz
 	ret
 
+; Entering mode 17 (from another mode): clears 0x338e / 0x338f / 0x339f and bit 0 of 0x33d1; if
+; parts were active, saves them (SeqAcc_SetIndicator_PB), clears the active mask and sets bit 0 of
+; 0x33d1; then sets bit 3 of 0x34cd and bit 0 of 0x33d3 and updates panel indicator 0x4b.
 AccStyle_ModeEnter:
 	cp (PREVIOUS_MODE:16), 17
 	jr z, AccStyle_ModeEnter_Ret
@@ -11022,12 +11723,17 @@ AccStyle_ModeEnter_SetFlags:
 AccStyle_ModeEnter_Ret:
 	ret
 
+; Calls AccStyle_ModeExit with XIZ preserved.
+; Called from SndArgTtl_SubB.
 AccStyle_ModeExit_Wrap:
 	push xiz
 	calr AccStyle_ModeExit
 	pop xiz
 	ret
 
+; Leaving mode 17: clears 0x338e / 0x338f / 0x339f and bit 3 of 0x34cd; when parts were saved on
+; entry (bit 0 of 0x33d1), re-runs the play-mode dispatcher and restores them
+; (SeqAcc_RestorePlaybackState); clears bits 0..1 of 0x33d3 and PartSelect_UpdateDisplayState.
 AccStyle_ModeExit:
 	cp (CURRENT_MODE:16), 17
 	jr z, AccStyle_ModeExit_Ret
@@ -11048,6 +11754,8 @@ AccStyle_ModeExit_ClearFlags:
 AccStyle_ModeExit_Ret:
 	ret
 
+; Calls AccStyle_InlinedBlock_Helper with XIZ preserved.
+; Called from SndArgTtl_Dispatch_Skip.
 AccStyle_InlinedBlock:
 	push	xiz
 	calr	AccStyle_InlinedBlock_Helper
@@ -11194,6 +11902,10 @@ AccStyle_IndexedLookup_Data:
 	.byte 0x00, 0x14, 0x13, 0x00, 0x10, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 
+; In mode 17 (CURRENT_MODE) with no bit 0..4 set in 0x338e, copies part 3's settings into its
+; voice record: 0xfb56 = (0x321e) with bit 7 = bit 4 of (0x321f), low 7 bits of 0xfb57 = (0x321f)
+; with bit 4 cleared, bit 6 of 0xfb5a = bit 0 of (0x3221); then AccVoiceState_DispatchChange with
+; L = 4.
 AccVoiceReg_WritePart3:
 	cp (CURRENT_MODE:16), 17
 	jr nz, AccVoiceReg_WritePart3_Ret
@@ -11223,6 +11935,8 @@ AccVoiceReg_WritePart3_StoreBit4:
 AccVoiceReg_WritePart3_Ret:
 	ret
 
+; As AccVoiceReg_WritePart3 for part 4: 0x3223 / 0x3224 / 0x3226 into 0xfb70 / 0xfb71 / 0xfb74,
+; L = 8.
 AccVoiceReg_WritePart4:
 	cp (CURRENT_MODE:16), 17
 	jr nz, AccVoiceReg_WritePart4_Ret
@@ -11252,6 +11966,8 @@ AccVoiceReg_WritePart4_StoreBit4:
 AccVoiceReg_WritePart4_Ret:
 	ret
 
+; As AccVoiceReg_WritePart3 for part 5: 0x3228 / 0x3229 / 0x322b into 0xfb8a / 0xfb8b / 0xfb8e,
+; L = 0x10.
 AccVoiceReg_WritePart5:
 	cp (CURRENT_MODE:16), 17
 	jr nz, AccVoiceReg_WritePart5_Ret
@@ -11281,6 +11997,8 @@ AccVoiceReg_WritePart5_StoreBit4:
 AccVoiceReg_WritePart5_Ret:
 	ret
 
+; As AccVoiceReg_WritePart3 for part 2: 0x3219 / 0x321a / 0x321c into 0xfba4 / 0xfba5 / 0xfba8,
+; L = 2.
 AccVoiceReg_WritePart2:
 	cp (CURRENT_MODE:16), 17
 	jr nz, AccVoiceReg_WritePart2_Ret
@@ -11310,6 +12028,8 @@ AccVoiceReg_WritePart2_StoreBit4:
 AccVoiceReg_WritePart2_Ret:
 	ret
 
+; Part 1 counterpart of AccVoiceReg_WritePart3: 0xfbbe = (0x3214) | 0xf0, low 7 bits of 0xfbbf =
+; (0x3215); then AccVoiceState_DispatchChange with L = 1.
 AccVoiceReg_WritePart1:
 	cp (CURRENT_MODE:16), 17
 	jr nz, AccVoiceReg_WritePart1_Ret
@@ -11627,6 +12347,11 @@ AccStyle_SC0ByteSelect_Code_Skip5:
 	ld	(0x338e:16), 2
 	ret
 
+; Computes a triangular index from the pair at 0xfc5a / 0xfc5b.
+;   Sets 0x90f7 = 72 and calls PartCtrl_WriteProgramChange first.  Then
+;   index = ((0xfc5b) & 7) + 1 + 2 + ... + n with n = (0xfc5a); AccVoice_GetChannelCount_Direct
+;   is called once per step but its result is discarded.
+;   Out: XHL = index * 10, XWA = index * 8.
 AccHelper_ComputeVoiceOffset:
 	xor xwa, xwa
 	ld l, (0xfc5a:16)
@@ -11660,10 +12385,18 @@ AccHelper_VoiceOffset_Done:
 	add xhl, xwa
 	ret
 
+; Calls AccDemo_Init.
+; Called from AccDemo_InitDone, AccPatch_InitByteData, AccDemo_InitWithFlag,
+; AccPatch_CheckAndInitDemo, AccPatch_EnsureStyleImageHeader_Skip2, AccPatch_CallParamLookup_Skip5
+; and 2 more sites.
 AccDemo_Init_Wrap:
 	calr AccDemo_Init
 	ret
 
+; Fills the user-style area with the built-in default: rhythm header, 30 variation records, fill-in
+; data and the block data (AccDemo_Load*, Demo_LoadVariationC_Data), sets the free count 0x34d4 =
+; 190, clears bit 0 of 0x32f3, refreshes the widgets unless bit 7 of 0x34d1 is set (then clears it),
+; and sets 0x39b6 = 0, 0x39b7 = 10.
 AccDemo_Init:
 	xor xbc, xbc
 	calr AccDemo_LoadRhythm
@@ -11693,6 +12426,7 @@ AccDemo_Init_DataBlock:
 	ld	(xix+2979), 3
 	ret
 
+; Copies the 0x60-byte Demo_StyleRhythmData into the start of RHYTHM_PATTERN_BUF_A.
 AccDemo_LoadRhythm:
 	ld xiy, Demo_StyleRhythmData
 	ld xix, RHYTHM_PATTERN_BUF_A
@@ -11701,6 +12435,10 @@ AccDemo_LoadRhythm:
 	ldir85
 	ret
 
+; Writes the 30 default 96-byte pattern records from RHYTHM_PATTERN_BUF_A + 0x60: five consecutive
+; block numbers (one per part, the second word 0), the 0x34 bytes of
+; AccDemo_LoadVariation_EntryLoop_Data_2, 16 bytes of AccDemo_LoadVariation_EntryLoop_Data for the
+; record and the 16-byte AccDemo_SectionRecordTail.
 AccDemo_LoadVariation:
 	ld a, 0x0:opc
 	ld xix, RHYTHM_PATTERN_BUF_A
@@ -11778,6 +12516,7 @@ AccDemo_LoadVariation_Loop:
 	jr	lt, AccDemo_LoadVariation_Loop
 	ret
 
+; Copies the 0x40 bytes of AccDemo_LoadFillIn_Data to RHYTHM_PATTERN_BUF_A + 0x13c0.
 AccDemo_LoadFillIn:
 	ldw bc, 0x40
 	ld xix, RHYTHM_PATTERN_BUF_A
@@ -11786,6 +12525,8 @@ AccDemo_LoadFillIn:
 	ldir85
 	ret
 
+; Fills the 256-byte pattern blocks from RHYTHM_PATTERN_BUF_A + 0x1400: 30 groups of one
+; Demo_LoadVariationData_Data block followed by four Demo_LoadVariationData_Inner_Data blocks.
 AccDemo_LoadVariationData:
 	ld xix, RHYTHM_PATTERN_BUF_A
 	add xix, 0x1400
@@ -11967,6 +12708,9 @@ AccDemo_SectionRecordTail:
 	.zero 247
 	.byte 0x87
 
+; Out: L = the beats per measure (AccTone_LookupByProgram_Table) of the time-signature code at +12 of
+; the user-style record that the entry (A - 0xf0) of AccTone_LookupByProgram_Table_2 selects
+; (record address 0x94860 + RhythmTiming_OffsetTable[index]).
 AccTone_LookupByProgram:
 	sub a, 0xf0
 	extz wa
@@ -11985,6 +12729,11 @@ AccTone_LookupByProgram:
 	ld	l, (xbc+wa)
 	ret
 
+; Sends the tone selected by the bank / number pair at 0xfc5a / 0xfc5b and resolves it.
+;   The pair (bit 7 of the number cleared) is validated (AccTone_ValidateAndClamp) and sent
+;   (AccTone_WriteProgramChange).  Numbers below 0x80 go to AccTone_NoteLookup; 0x80..0xef are
+;   passed with bit 7 cleared to AccTone_ExtendAndDispatch; 0xf0 and up are looked up in
+;   AccTone_LookupByProgram_Table_2 first.
 AccTone_ReadAndProcess:
 	dec 4, xsp
 	lda xbc, (0xfc5a:16)
@@ -12040,6 +12789,10 @@ AccTone_Process_Cleanup:
 	inc 4, xsp
 	ret
 
+; Looks up one byte of AccTone_NoteLookup_Table at A * 0x28 + C * 2 (+1 when bit 10 of the word
+; 0x1108 is set; A reaches IY through register code 0xf4, the low byte of XIY).  With bits 2 and
+; 10 of 0x1108 both clear the result is bit 3 of 0x1108 instead (L = 1 or 0).
+;   Out: L.
 AccTone_NoteLookup:
 	ldfr_berp A, 0xf4
 	extz iy
@@ -12279,6 +13032,10 @@ AccTone_InlineBytecodeData_Skip2:
 	ldmm8	13345, 13354
 	ldmm8	13344, 13355
 	ret
+; Two-step lookup for style number n = (0x32d8): 0x342b = byte n of
+; AccTuning_ReadAndApplyOffset_Table, then 0x342a = byte (0x342b) of the table at (0x32ce) --
+; the second lookup is indexed by the first one's result, not by n.  When that byte is 0xff,
+; 0x342a gets the table's first byte instead and 0x342b is cleared.
 AccTone_InlineBytecodeData_Code_Helper:
 	ld	a, (13016:16)
 	extz	wa
@@ -12291,9 +13048,14 @@ AccTone_InlineBytecodeData_Code_Helper:
 	ld	(13354:16), a
 	cp	a, 255
 	ret	nz
-	.byte 0x81, 0x19, 0x2a, 0x34
+	ld	(0x342a:16), (xbc)
 	ld	(13355:16), 0
 	ret
+; When bit 0 of 0x341f is set: sends channel pressure reset, neutralises the four ring buffers,
+; points 0x3426 at user-style record (0x3421) (0x94860 + RhythmTiming_OffsetTable[...]), copies its
+; tuning, marks all parts changed in 0x332c (bit 7 too), runs
+; AccTone_InlineBytecodeData_Code_Helper2, copies 0x32d8..0x32da to 0x32df..0x32e1 and clears the
+; bit.
 AccTone_JumpTableData_Data:
 	bit	0, (0x341f:16)
 	ret	z
@@ -12316,6 +13078,9 @@ AccTone_JumpTableData_Data:
 	ldmm8	13025, 13018
 	res	0, (0x341f:16)
 	ret
+; Re-reads the measure starts (AccVoice_BarCounterBytecodeData), clears the low nibbles of the part
+; counters 0x32ab..0x32b0 and rescans the parts (AccSeq_DualPartScan, and AccSeq_FourChannelScan
+; unless bit 6 of 0x32f4 is set).
 AccTone_InlineBytecodeData_Code_Helper2:
 	calr	AccVoice_BarCounterBytecodeData
 	and	(0x32ab:16), 240
@@ -12350,6 +13115,9 @@ AccVoice_GetMeasureStartBlock:
 	add	xbc, 611392
 	ld	hl, (xbc+hl)
 	ret
+; Reads one word from the table area at 0x95440 (records of 160 bytes).
+;   In:  A = record, BC = row (32 bytes each), DE = column (4 bytes each).
+;   Out: HL = word at 0x95440 + A*160 + BC*32 + DE*4 + 2.
 AccVoice_BarCounterBytecodeData_Helper2:
 	extz	de
 	sla	de, 2
@@ -12447,6 +13215,8 @@ AccTone_InlineBytecodeData_Code_Skip:
 	pop	xiz
 	inc	2, xsp
 	ret
+; For style numbers 0xf0 and up: looks up the style values (AccTone_InlineBytecodeData_Code_Helper)
+; and, when 0x342a differs from 0x3421, sets bit 0 of 0x333b (the flag AccTuning_Toggle also sets).
 AccTone_JumpTableData_Helper2:
 	cp	(13029:16), 240
 	ret	c
@@ -12454,7 +13224,7 @@ AccTone_JumpTableData_Helper2:
 	ld	a, (13354:16)
 	cp	a, (13345:16)
 	ret	z
-	.byte 0xf1, 0x3b, 0x33, 0xb8
+	set	0, (0x333b:16)
 	ret
 AccTone_JumpTableData_Helper3:
 	dec	2, xsp
@@ -12653,6 +13423,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Epilogue:
 	popw	iz
 	inc	2, xsp
 	ret
+; Clears bit 1 of 0x32ff and bit 3 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccTone_InlineBytecodeData_Code_Helper3_Helper:
 	res	1, (0x32ff:16)
 	res	3, (0xfc5f:16)
@@ -12662,6 +13433,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Helper:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 0 of 0x32ff and bit 2 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccTone_InlineBytecodeData_Code_Helper3_Helper2:
 	res	0, (0x32ff:16)
 	res	2, (0xfc5f:16)
@@ -12671,6 +13443,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Helper2:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 2 of 0x32ff and bit 2 of 0xfc60 and sends AddswbWr(72, 6, 0, 0).
 AccTone_InlineBytecodeData_Code_Helper3_Helper3:
 	res	2, (0x32ff:16)
 	res	2, (0xfc60:16)
@@ -12680,6 +13453,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Helper3:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 0 of 0x32fd and bit 4 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccVoice_BarCounterBytecodeData_Helper8:
 	res	0, (0x32fd:16)
 	res	4, (0xfc5f:16)
@@ -12689,6 +13463,7 @@ AccVoice_BarCounterBytecodeData_Helper8:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 1 of 0x32fd and bit 5 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccVoice_BarCounterBytecodeData_Helper9:
 	res	1, (0x32fd:16)
 	res	5, (0xfc5f:16)
@@ -12698,6 +13473,7 @@ AccVoice_BarCounterBytecodeData_Helper9:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 0 of 0x32fb and bit 6 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccVoice_BarCounterBytecodeData_Helper3:
 	res	0, (0x32fb:16)
 	res	6, (0xfc5f:16)
@@ -12707,6 +13483,7 @@ AccVoice_BarCounterBytecodeData_Helper3:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Clears bit 1 of 0x32fb and bit 7 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
 AccVoice_BarCounterBytecodeData_Helper10:
 	res	1, (0x32fb:16)
 	res	7, (0xfc5f:16)
@@ -12716,6 +13493,8 @@ AccVoice_BarCounterBytecodeData_Helper10:
 	ld	de, 0:i3
 	call	AddswbWr
 	ret
+; Sets the working cursor for part bit A: A = 2 gives page 0xfffe (empty); otherwise the page is
+; the word for that part (AccPart_BitToIndexTable) in the record at (0x3426).  Offset 0x33d8 = 6.
 AccPedal_DirectionA_Wrap_Helper:
 	cp	a, 2:i3
 	jr	nz, AccVoice_BarCounterBytecodeData_Helper3_Skip
@@ -12732,6 +13511,9 @@ AccVoice_BarCounterBytecodeData_Helper3_Skip:
 AccVoice_BarCounterBytecodeData_Helper3_Join:
 	ldw	(0x33d8:16), 6
 	ret
+; Copies the 7-byte tuning record of part bit A from the record at (0x3426) (+24 + 8 * index) into
+; its slot at 0x3246 + 7 * index (index from AccTone_InlineBytecodeData_Data_2) and marks the part
+; in 0x332c.
 AccPedal_DirectionA_Wrap_Helper2:
 	ld	xix, (0x3426:16)
 	ld	c, a
@@ -12763,6 +13545,8 @@ AccPedal_DirectionA_Wrap_Helper2:
 	ld	(xhl+6), c
 	or	(0x332c:16), a
 	ret
+; Clears the six per-part bytes 0x33eb..0x33f0 (the counters AccVoice_SavePartState1 and its
+; siblings copy into 0x33ea).
 AccVoice_ClearChannelStates:
 	ld (0x33eb:16), 0
 	ld (0x33ec:16), 0
@@ -12772,6 +13556,8 @@ AccVoice_ClearChannelStates:
 	ld (0x33f0:16), 0
 	ret
 
+; Steps the working part's measure counter 0x33ea, wrapping to 0 past the last measure (byte +13
+; of the record at (0x3426)).
 AccVoice_IncrementBarCounter:
 	ld a, (0x33ea:16)
 	inc 1, a
@@ -13211,6 +13997,7 @@ AccVoice_BarCounterBytecodeData_Join6:
 	inc	2, xsp
 	ret
 
+; Sets 0x3422 = AccTuning_ReadAndApplyOffset_Table[(0x3423)].
 AccTuning_ReadAndApplyOffset:
 	ld a, (0x3423:16)
 	extz wa
@@ -13486,6 +14273,8 @@ AccTuning_ComplexBytecodeData_Code_Skip6:
 AccTuning_NullRet:
 	ret
 
+; Sends a program change for the pair at XBC (L = +0, H = +1) with 0x90f7 = 72
+; (PartCtrl_WriteProgramChange) and stores the pair it returns at XWA.  Preserves XIZ.
 AccTone_WriteProgramChange:
 	push xiz
 	ld xix, xwa
@@ -13501,6 +14290,9 @@ AccTone_WriteProgramChange:
 	pop xiz
 	ret
 
+; Validates a two-byte tone selection in place.
+;   In:  XWA -> (number, bank).  VoiceParam_ClampAndValidate corrects L / H and the result is
+;   written back.  Preserves XIZ.
 AccTone_ValidateAndClamp:
 	push xiz
 	ld xbc, xwa
@@ -13514,6 +14306,8 @@ AccTone_ValidateAndClamp:
 	pop xiz
 	ret
 
+; Calls AccVoice_LookupWithOffset with L = A and H = C (both masked to 8 bits) and returns its
+; XIY result in XHL.  Preserves XIZ.
 AccTone_LookupByProgram_Dispatch:
 	push	xiz
 	and	xwa, 255
@@ -13523,24 +14317,34 @@ AccTone_LookupByProgram_Dispatch:
 	ld	xhl, xiy
 	pop	xiz
 	ret
+; Calls Rhythm_UpdateTuningConfig with XIY = XWA, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Skip and AccTone_InlineBytecodeData_Code_Skip2.
 Rhythm_UpdateTuningConfig_Wrap:
 	push	xiz
 	ld	xiy, xwa
 	call	Rhythm_UpdateTuningConfig
 	pop	xiz
 	ret
+; Calls AccPatch_SetByChordIndex with W = A, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Skip and AccTone_InlineBytecodeData_Code_Skip2.
 AccPatch_SetByChordIndex_Wrap:
 	push	xiz
 	ld	w, a
 	call	AccPatch_SetByChordIndex
 	pop	xiz
 	ret
+; Calls AccTuning_CopyAllPartsFromStyle with XIY = XWA (the style header), preserving XIZ.
+; Called from AccTone_JumpTableData_Data, AccTone_InlineBytecodeData_Code_Skip,
+; AccTone_InlineBytecodeData_Code_Helper3_Join, AccTone_InlineBytecodeData_Code_Helper3_Skip7,
+; AccVoice_BarCounterBytecodeData_Join2, AccVoice_BarCounterBytecodeData_Join3 and 1 more site.
 AccTuning_CopyAllPartsFromStyle_Wrap:
 	push	xiz
 	ld	xiy, xwa
 	call	AccTuning_CopyAllPartsFromStyle
 	pop	xiz
 	ret
+; Calls AccVoice_LoadTuningBlock with XIY = XWA and XHL = BC zero-extended, preserving XIZ.
+; Called from AccVoice_BarCounterBytecodeData_Skip20.
 AccVoice_LoadTuningBlock_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -13549,6 +14353,7 @@ AccVoice_LoadTuningBlock_Wrap:
 	call	AccVoice_LoadTuningBlock
 	pop	xiz
 	ret
+; Calls AccVoice_ComputeParamAddr with A = XWA & 0xff and returns HL zero-extended, preserving XIZ.
 AccVoice_ComputeParamAddr_Wrap:
 	push	xiz
 	and	xwa, 255
@@ -13556,23 +14361,33 @@ AccVoice_ComputeParamAddr_Wrap:
 	and	xhl, 0xffff
 	pop	xiz
 	ret
+; Calls AccPart_InitPositionsAndBase with XIY = XWA, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Helper3_Join.
 AccPart_InitPositionsAndBase_Wrap:
 	push	xiz
 	ld	xiy, xwa
 	call	AccPart_InitPositionsAndBase
 	pop	xiz
 	ret
+; Calls AccInit_AllPartPositions with XIY = XWA (the style header) and XIZ preserved.
+; Called from AccVoice_IncrementBarWithSave_Helper, AccVoice_BarCounterBytecodeData_Skip6,
+; AccVoice_BarCounterBytecodeData_Skip7, AccVoice_BarCounterBytecodeData_Skip8,
+; AccVoice_IncrementBarWithSave_Helper2, AccVoice_BarCounterBytecodeData_Skip12 and 7 more sites.
 AccInit_AllPartPositions_Wrap:
 	push	xiz
 	ld	xiy, xwa
 	call	AccInit_AllPartPositions
 	pop	xiz
 	ret
+; Calls AccPedal_ProcessAllChanges with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Skip2.
 AccPedal_ProcessAllChanges_Wrap:
 	push	xiz
 	call	AccPedal_ProcessAllChanges
 	pop	xiz
 	ret
+; Calls AccStyle_SetupPartAddressesByHL with XIY = XWA and XHL = BC zero-extended, preserving XIZ.
+; Called from AccTone_InlineBytecodeData_Code_Helper3_Skip7.
 AccStyle_SetupPartAddressesByHL_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -13581,6 +14396,9 @@ AccStyle_SetupPartAddressesByHL_Wrap:
 	call	AccStyle_SetupPartAddressesByHL
 	pop	xiz
 	ret
+; Calls AccVoice_LoadAllParts with XIY = XWA and HL = BC, preserving XIZ.
+; Called from AccVoice_BarCounterBytecodeData_Join, AccVoice_BarCounterBytecodeData_Skip16,
+; AccVoice_BarCounterBytecodeData_Skip20 and AccVoice_BarCounterBytecodeData_Join4.
 AccVoice_LoadAllParts_Wrap:
 	push	xiz
 	ld	xiy, xwa
@@ -13605,26 +14423,36 @@ AccVoice_LoadAllParts_Wrap:
 	call	AccBuf_WriteAllNotesOff
 	pop	xiz
 	ret
+; Calls Rhythm_SendChanPressure with XIZ preserved.
+; Called from AccTone_JumpTableData_Data.
 Rhythm_SendChanPressure_Wrap:
 	push	xiz
 	call	Rhythm_SendChanPressure
 	pop	xiz
 	ret
+; Calls AccBuf_ResetAll4 with XIZ preserved.
+; Called from AccTone_JumpTableData_Data.
 AccBuf_ResetAll4_Wrap:
 	push	xiz
 	call	AccBuf_ResetAll4
 	pop	xiz
 	ret
+; Calls AccSeq_DualPartScan with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Helper2.
 AccSeq_DualPartScan_Wrap:
 	push	xiz
 	call	AccSeq_DualPartScan
 	pop	xiz
 	ret
+; Calls AccSeq_FourChannelScan with XIZ preserved.
+; Called from AccTone_InlineBytecodeData_Code_Helper2.
 AccSeq_FourChannelScan_Wrap:
 	push	xiz
 	call	AccSeq_FourChannelScan
 	pop	xiz
 	ret
+; Calls AccPedal_DirectionA and returns XHL zero-extended from HL, preserving XIZ.
+; Called from AccTuning_ComplexBytecodeData_Code_Skip.
 AccPedal_DirectionA_Wrap:
 	push	xiz
 	call	AccPedal_DirectionA
@@ -13682,6 +14510,8 @@ AccPart_GetParamAddr_Wrap:
 	pop	xix
 	ret
 
+; Calls AccVoice_ClearChannelStates with every register preserved.
+; Called from AccStyle_ResetAllVoiceState and AccInit_ClearAllFlags.
 AccTone_CallWithSaveAll:
 	push xix
 	push xiy
@@ -13700,6 +14530,8 @@ AccTone_CallWithSaveAll:
 	pop xix
 	ret
 
+; Calls AccVoice_IncrementBarCounter with every register preserved.
+; Called from AccVoice_BarEnd_NextPage.
 AccVoice_IncrementBarWithSave:
 	push xix
 	push xiy
@@ -13783,6 +14615,7 @@ AccTuning_DispatchDataBlock_A:
 	pop	xiy
 	pop	xix
 	ret
+; Calls AccTone_ReadAndProcess with every register preserved except E, which receives its L result.
 AccStyle_TempoLookupData_Helper:
 	push	xix
 	push	xiy
@@ -13803,6 +14636,8 @@ AccStyle_TempoLookupData_Helper:
 	pop	xix
 	ret
 
+; Calls AccTuning_ReadAndApplyOffset with every register preserved.
+; Called from RhythmEvt_ProcessNote and Rhythm_ValidateAndSend.
 AccTuning_CallWithSaveRestore:
 	push xix
 	push xiy
@@ -13835,6 +14670,8 @@ AccTuning_DispatchDataBlock_B:
 	pop	xix
 	ret
 
+; Calls AccTone_LookupByProgram with A = the low byte of XWA and C = D, returning its L in A.
+; Preserves XIX, XIY, XIZ, XBC, XHL.
 AccTone_LookupByProgramWrapped:
 	push xix
 	push xiy
@@ -13890,6 +14727,8 @@ AccPatch_RecountFreeSlots:
 	calr AccPatch_CountAvailableSlots
 	ret
 
+; Calls AccPatch_CountAvailableSlotsInAltImage.
+; Called from AccBankData_CopyLoop_NonZero, Flash_InitBytecodeBlock and DualVoice_LoadAndScan.
 AccPatch_CountSlotsAlt:
 	calr AccPatch_CountAvailableSlotsInAltImage
 	ret
@@ -13901,6 +14740,8 @@ AccPatch_InitAndCountSlots:
 	ld (0x39b7:16), 10
 	ret
 
+; Runs AccDemo_Init and then AccPatch_CountAvailableSlots, with XIZ preserved.  Also the first
+; entry of AccPatch_InitFuncTable.
 AccDemo_InitDone:
 	push xiz
 	call AccDemo_Init_Wrap
@@ -13924,6 +14765,7 @@ AccPatch_InitByteData:
 	pop	xiz
 	ret
 
+; Sets bit 7 of 0x34d1 and runs AccDemo_Init, preserving XIZ.
 AccDemo_InitWithFlag:
 	push xiz
 	or (0x34d1:16), 128
@@ -13931,6 +14773,8 @@ AccDemo_InitWithFlag:
 	pop xiz
 	ret
 
+; After a style-image transfer: AccPatch_EnsureStyleImageHeader and AccPatch_ClearModeFlag, with XIZ
+; preserved.
 AccPatch_MultiCallWrapper:
 	push	xiz
 	calr	AccPatch_EnsureStyleImageHeader
@@ -13947,12 +14791,15 @@ AccPatch_ClearModeAndInitSlotChain_Wrap:
 	call	AccPatch_InitSlotChain_WithAddr
 	pop	xiz
 	ret
+; Calls AccPatch_ClearModeFlag with XIZ preserved.
+; Called from AccStyle_TableDataEntry_Skip22.
 AccStyle_TableDataEntry_Helper2:
 	push	xiz
 	calr	AccPatch_ClearModeFlag
 	pop	xiz
 	ret
 
+; Clears the byte 0x35d5.
 AccPatch_ClearModeFlag:
 	ld (0x35d5:16), 0
 	ret
@@ -14000,6 +14847,10 @@ Not_sure_maybe_SOFT_VERSION_related_Skip:
 	calr	AccDemo_InitDone
 Not_sure_maybe_SOFT_VERSION_related_Code_Return4:
 	ret
+; Positions the patch-sequence reader for the current slot (AccPatch_InitCurrentSlotPointer)
+; and moves it by the slot's beats * measures (AccPatch_GetSlotBeatsAndMeasures, through
+; ..._Code_Helper_Helper); an empty slot (0x3612 = 0xffff) re-initialises the patterns
+; (AccDemo_InitDone) instead.  Any overflow flag (bit 0 of 0x3616) sets 0x35d5 = 1 and is cleared.
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper:
 	calr	AccPatch_InitCurrentSlotPointer
 	calr	AccPatch_GetSlotBeatsAndMeasures
@@ -14020,6 +14871,9 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Join:
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Skip2:
 	and	(0x3616:16), 254
 	ret
+; Skips A beat markers with the patch-sequence reader (AccPatch_SlotScanByteData_Helper); when the
+; end byte 0x83 comes first, writes the missing markers (..._Code_Helper2).  Out: W = 0, or the B
+; result of the writer (1 = no space left).
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper:
 	ld	w, 0:opc
 	ld	c, 0:opc
@@ -14042,6 +14896,8 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Skip:
 	ld	w, b
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Return:
 	ret
+; Writes beat markers 0x81 at the patch-sequence write position for C = C .. A - 1
+; (..._Code_Helper3), stopping when the writer reports no space (B = 1).
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper2:
 	cp	c, a
 	jr	z, Not_sure_maybe_SOFT_VERSION_related_Code_Skip2
@@ -14061,6 +14917,9 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Epilogue:
 	pop	c
 Not_sure_maybe_SOFT_VERSION_related_Code_Return2:
 	ret
+; Writes one beat marker 0x81 at the patch-sequence position (entry 0x3612, offset 0x3614) and
+; advances; at offset 0xfe it continues in the next entry (AccPatch_SeqAdvStep_WrapToNext), or
+; returns B = 1 when no entry is free (0x34d4 = 0).  B = 0 otherwise.
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper3:
 	ld	hl, (0x3612:16)
 	calr	AccPatch_GetEntryAddr
@@ -14083,6 +14942,8 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Skip4:
 	ld	b, 0:opc
 Not_sure_maybe_SOFT_VERSION_related_Code_Return3:
 	ret
+; Ends the pattern at the patch-sequence position: writes the end byte 0x83 there, cuts the entry's
+; forward link and frees the rest of the chain (entries below 0x154: in-use bit and links cleared).
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper2:
 	ld	hl, (0x3612:16)
 	calr	AccPatch_GetEntryAddr
@@ -14102,6 +14963,8 @@ Not_sure_maybe_SOFT_VERSION_related_Code_Helper3_Join:
 Not_sure_maybe_SOFT_VERSION_related_Code_Helper3_Return:
 	ret
 
+; Fills the user-style area with the defaults (AccDemo_Init) unless its word at
+; RHYTHM_PATTERN_BUF_A + 0x0e is 0.
 AccPatch_CheckAndInitDemo:
 	ld xiy, RHYTHM_PATTERN_BUF_A
 	add xiy, 0xe
@@ -14139,6 +15002,9 @@ AccPatch_SlotConfigByteData_Skip:
 	pop	(0x34d6:16)
 	pop	(0x379b:16)
 	ret
+; For a kit index (0x34d6) below 12: positions the patch-sequence reader at the slot start, scans
+; it (AccPatch_SlotScanByteData), and stores the cursor of each measure 1 .. n-1
+; (AccPatch_StoreMeasureCursor), n being the measure count from AccPatch_GetSlotBeatsAndMeasures.
 AccPatch_CheckAndInitDemo_Helper:
 	cp	(0x34d6:16), 12
 	jr	nc, AccPatch_CheckAndInitDemo_Return
@@ -14165,6 +15031,9 @@ AccPatch_CheckAndInitDemo_Join:
 AccPatch_CheckAndInitDemo_Return:
 	ret
 
+; Points the patch-sequence reader at the start of the current slot's entry for the part in
+; 0x379b: 0x3612 = the slot's word for that part (AccPatch_GetCurrentSlotAddr,
+; MapBitFlagsToChannelOffset), 0x3614 = 6 (first data byte).
 AccPatch_InitCurrentSlotPointer:
 	calr AccPatch_GetCurrentSlotAddr
 	ld a, (0x379b:16)
@@ -14174,6 +15043,8 @@ AccPatch_InitCurrentSlotPointer:
 	ldw (0x3614:16), 6
 	ret
 
+; Stores the patch-sequence cursor as measure entries 0..7 (AccPatch_StoreMeasureCursor with C =
+; 0..7).
 AccPatch_SlotScanByteData:
 	ld	c, 0:opc
 AccPatch_SlotScanByteData_Join:
@@ -14186,6 +15057,8 @@ AccPatch_SlotScanByteData_Join:
 	jr	AccPatch_SlotScanByteData_Join
 AccPatch_SlotScanByteData_Return:
 	ret
+; Advances the patch-sequence reader to just after the next beat marker (0x81), or stops on the
+; end byte 0x83, or when the reader overflows (bit 0 of 0x3616).  Out: A = the byte last read.
 AccPatch_SlotScanByteData_Helper:
 	call	AccPatch_SeqReadByte
 	cp	a, 129
@@ -14220,6 +15093,8 @@ AccPatch_GetSlotBeatsAndMeasures:
 	ld	c, (xiy+13)
 	inc	1, c
 	ret
+; Calls AccPatch_SlotScanByteData_Helper A times, i.e. moves the patch-sequence reader past A
+; beat markers (0x81).  Preserves A.
 AccPatch_CheckAndInitDemo_Helper3:
 	ld	c, 0:opc
 AccPatch_SlotScanByteData_Join2:
@@ -14270,12 +15145,16 @@ AccPatch_StoreMeasureCursor:
 ;   AccPatch_StoreMeasureCursor: bits 0, 1, 2, 3, 4 (indices 0, 1, 2, 4, 8) -> 2, 3, 4, 1, 0.
 AccPatch_ChannelBitToIndex:	.byte 2, 3, 4, 0, 1, 0, 0, 0, 0
 
+; Calls AccPatch_RefreshSlotOffset with XIZ preserved.
+; Called from Tempo_DisplayBPMReturn.
 AccPatch_RefreshSlotOffset_Wrap:
 	push xiz
 	call AccPatch_RefreshSlotOffset
 	pop xiz
 	ret
 
+; Current patch slot (AccPatch_GetCurrentSlotAddr): word +16 = the AccPatch_VoiceStrideTable
+; entry for its byte +12.
 AccPatch_RefreshSlotOffset:
 	calr AccPatch_GetCurrentSlotAddr
 	ld xhl, 0:i3
@@ -14286,6 +15165,11 @@ AccPatch_RefreshSlotOffset:
 	ld (xiy + 16), wa
 	ret
 
+; Composer rhythm work for one sequencer tick: RhythmProc_CheckStyleChange,
+; RhythmProc_CheckPlayMode, RhythmProc_CallDispatch, RhythmProc_NullStub,
+; RhythmProc_CheckRhythmEdit, RhythmProc_CheckStyleSwitch, RhythmProc_CheckRepeatFlag,
+; AccPatch_ProcessPartChanges and RhythmProc_SavePrevState, in that order.  Most of them act only
+; on one CURRENT_TITLE (178, 180, 184, 189).
 Seq_RhythmProcessor:
 	calr RhythmProc_CheckStyleChange
 	calr RhythmProc_CheckPlayMode
@@ -14298,6 +15182,8 @@ Seq_RhythmProcessor:
 	calr RhythmProc_SavePrevState
 	ret
 
+; On title 178 with bit 2 of 0x34cd pending: clears it and rebuilds the current slot
+; (AccPatch_InitCurrentSlot, AccPatch_UpdateAllChains), then RhythmPatInit_LoadParams.
 RhythmProc_CheckStyleChange:
 	cp (CURRENT_TITLE:16), 178
 	jr z, RhythmProc_StyleChange_Init
@@ -14388,19 +15274,26 @@ AccPatch_DetectModeChange:
 AccPatch_CopySlotsExit:
 	ret
 
+; Calls AccPlayback_InitOrUpdate.
+; Called from Seq_RhythmProcessor.
 RhythmProc_CallDispatch:
 	call AccPlayback_InitOrUpdate
 	ret
 
+; Empty routine: returns at once.
 RhythmProc_NullStub:
 	ret
 
+; Calls RhythmProc_CopySlotData with XIZ preserved.
+; Called from MiddleNameFunc.
 RhythmProc_CopySlotData_Wrap:
 	push xiz
 	call RhythmProc_CopySlotData
 	pop xiz
 	ret
 
+; Copies the 16 bytes at 0x34bc into the current patch slot at +0x40 (LDIR with XIX, the
+; destination, = slot + 0x40 and XIY = 0x34bc).
 RhythmProc_CopySlotData:
 	calr AccPatch_GetCurrentSlotAddr
 	ld xbc, 0x40
@@ -14459,6 +15352,8 @@ AccPatch_GetSlotAddr_Valid:
 	add xiy, xhl
 	ret
 
+; Out: XIY = RHYTHM_PATTERN_BUF_A + 96 + 96 * (0x34d6), slot 0 when the index is 30 or more --
+; AccPatch_GetCurrentSlotAddr with XWA and XIX preserved.  Clobbers XHL.
 AccPatch_GetSlotAddr_Preserve:
 	push	xwa
 	push	xix
@@ -14480,7 +15375,7 @@ AccPatch_GetSlotAddr_Preserve_Skip:
 ; AccPatch_GetEntryAddr - Get address of an accompaniment patch entry by index
 ; ============================================================================
 ; Input:  HL = patch entry index (0xffff = return immediately)
-; Output: XIX = pointer to patch entry (at 0x95c00 + index*256)
+; Output: XIX = pointer to patch entry (at RHYTHM_PATTERN_BUF_B + index*256)
 ; Converts a patch index to a memory address in the patch data table.
 ; Each entry is 256 bytes. Returns immediately if index is 0xffff (invalid).
 ; ============================================================================
@@ -14499,6 +15394,9 @@ AccPatch_GetEntryAddr:
 AccPatch_GetEntryAddr_Ret:
 	ret
 
+; Rebuilds the current patch slot: frees its chains (AccPatch_FreeAllChains), copies the defaults
+; (AccPatch_CopyDefaultsForInit), writes empty patterns (AccPatch_FillAllVoiceData), sets bit 7
+; of 0x34cd and positions the reader at the sequence end (AccPatch_ScanToSequenceStart).
 AccPatch_InitCurrentSlot:
 	calr AccPatch_GetCurrentSlotAddr
 	calr AccPatch_FreeAllChains
@@ -14508,12 +15406,20 @@ AccPatch_InitCurrentSlot:
 	calr AccPatch_ScanToSequenceStart
 	ret
 
+; Calls AccPatch_InitFromIndex with XIZ preserved (entry used by the file and flash loaders).
+; Called from AccBankData_ProcessSlot, AccBankData_ReInit_Loop, AccBankData_SlotScan_Loop,
+; AccBankData_ReInit_ScanLoop, AccStyle_TableDataEntry_Join2, AccStyle_TableDataEntry_Skip17 and 7
+; more sites.
 AccPatch_InitFromSlotIndex:
 	push xiz
 	calr AccPatch_InitFromIndex
 	pop xiz
 	ret
 
+; Rebuilds pattern slot (0x39ac) (0..29, larger read as 0) of the store at (0x39ae): frees its
+; chains, copies the defaults (AccPatch_CopyDefaultsToSlot), writes empty patterns, sets bit 7
+; of 0x34cd and runs AccPatch_ScanSequenceToEnd.  The slot record is (0x39ae) + 0x60 + index *
+; 0x60.
 AccPatch_InitFromIndex:
 	xor xhl, xhl
 	ld l, (0x39ac:16)
@@ -14539,6 +15445,9 @@ AccPatch_InitByteStub:
 	pop	xiz
 	ret
 
+; Prepares the pattern work area and loads a patch into it.
+;   Copies the byte at 0x34d6 to 0x39ac, points 0x39ae at RHYTHM_PATTERN_BUF_A, then calls
+;   AccPatch_InitFromIndex with the caller's XWA (preserved across the setup).
 AccPat_InitWorkAreaFromSlot:
 	push xwa
 	ld a, (0x34d6:16)
@@ -14549,6 +15458,9 @@ AccPat_InitWorkAreaFromSlot:
 	calr AccPatch_InitFromIndex
 	ret
 
+; Copies the 0x54 bytes of AccPatch_DefaultSlotData into slot record XIY from +12; when the old
+; byte +12 was 7, the old word +16 is put back.  Then AccPatch_ClearSlot13ByIndex.  Preserves
+; XIY, XWA, XBC.
 AccPatch_CopyDefaultsToSlot:
 	push xiy
 	push xwa
@@ -14581,6 +15493,8 @@ AccPatch_CopyDefaults_Done:
 	calr AccPatch_ClearSlot13ByIndex
 	ret
 
+; Clears byte +13 of slot record XIY when the slot index 0x39ac is 14, 15, 20, 21, 26 or 27.
+; Preserves XWA.  AccPatch_ClearSlot13BySlotIdx is the same test on 0x34d6.
 AccPatch_ClearSlot13ByIndex:
 	push xwa
 	ld a, 0x0:opc
@@ -14627,6 +15541,8 @@ AccPatch_MiscByteData:
 	calr	AccPatch_ScanToSequenceStart
 	ret
 
+; Frees the block chains of the five parts of a patch slot record (XIY: words +0, +4, +6, +8,
+; +10) with AccPatch_FreeChainEntries.
 AccPatch_FreeAllChains:
 	ld hl, (xiy + 0:8)
 	calr AccPatch_FreeChainEntries
@@ -14640,6 +15556,10 @@ AccPatch_FreeAllChains:
 	calr AccPatch_FreeChainEntries
 	ret
 
+; Releases the chain of pattern entries that follows entry HL.
+;   From the entry's forward link (+3) on, each entry gets both links set to 0xffff and its
+;   in-use bit (bit 7 of +0) cleared, and the free count 0x34d4 is incremented.  Entry HL itself
+;   is kept with its forward link cut.  Preserves XIY.
 AccPatch_FreeChainEntries:
 	push xiy
 	calr AccPatch_GetEntryAddr
@@ -14663,6 +15583,8 @@ AccPatch_FreeChain_Done:
 	pop xiy
 	ret
 
+; Writes an empty pattern into the first block of each of the five parts of a patch slot record
+; (XIY: words +0, +4, +6, +8, +10) with AccPatch_FillEntryWithVoiceData.
 AccPatch_FillAllVoiceData:
 	ld hl, (xiy + 0:8)
 	calr AccPatch_FillEntryWithVoiceData
@@ -14676,6 +15598,9 @@ AccPatch_FillAllVoiceData:
 	calr AccPatch_FillEntryWithVoiceData
 	ret
 
+; Writes an empty pattern into entry HL: (beats of time signature (XIY+12), from
+; AccTone_LookupByProgram_Table) * ((XIY+13) + 1) bytes 0x81 from entry + 6, then 0x83.
+;   In:  XIY = slot record.  Preserves XIY.
 AccPatch_FillEntryWithVoiceData:
 	push xiy
 	pushw hl
@@ -14703,6 +15628,10 @@ AccPatch_FillVoice_Loop:
 	pop xiy
 	ret
 
+; Overwrites a patch slot record (XIY) from +12 with the 0x54 default bytes of
+; AccPatch_DefaultSlotData (LDIR (XIX+),(XIY+) after swapping the pointers), keeping the old
+; word +16 when the old byte +12 was 7, then AccPatch_ClearSlot13BySlotIdx.  Preserves XIY, XWA,
+; XBC.
 AccPatch_CopyDefaultsForInit:
 	push xiy
 	push xwa
@@ -14748,6 +15677,7 @@ AccPatch_DefaultSlotData:
 	.asciz	"    clear       "	; +52: the slot name
 	.zero	15
 
+; Clears byte +13 of slot record XIY when the slot index 0x34d6 is 14, 15, 20, 21, 26 or 27.
 AccPatch_ClearSlot13BySlotIdx:
 	ld a, 0x0:opc
 	cp (0x34d6:16), 14
@@ -14782,6 +15712,9 @@ AccPatch_ClearSlot13_Idx1B:
 AccPatch_ClearSlot13_IdxDone:
 	ret
 
+; Current patch slot: byte +12 = (0x34d8), an empty pattern in every part
+; (AccPatch_InitAllSentinels), word +16 = the AccPatch_VoiceStrideTable entry for (0x34d8); then
+; AccPatch_CheckConfigType and bit 7 of 0x34cd set.
 AccPatch_SetVoiceAndInit:
 	calr AccPatch_GetCurrentSlotAddr
 	ld a, (0x34d8:16)
@@ -14807,6 +15740,8 @@ AccPatch_VoiceStrideTable:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0x58, 0x02
 	.byte 0x00, 0x00, 0x08, 0x02, 0x00, 0x00, 0x18, 0x03
 
+; Calls RhythmConfig_ReturnStub, which returns at once, when 0x34d9 (beats per measure) is 3, 4,
+; 6 or 8: no effect either way.
 AccPatch_CheckConfigType:
 	cp (0x34d9:16), 6
 	jr z, RhythmConfig_CheckAndSkip
@@ -14824,6 +15759,9 @@ RhythmConfig_CheckAndSkip:
 AccPatch_CheckConfig_Done:
 	ret
 
+; Writes an empty pattern of (beats per measure) * (((0x34d7) & 7) + 1) beat markers into the
+; first block of each of the five parts of the slot record XIY (AccPatch_InitSlotSentinels); the
+; beats come from AccPatch_ReadVoiceStride (0x34d9).
 AccPatch_InitAllSentinels:
 	calr AccPatch_ReadVoiceStride
 	ld xwa, 0:i3
@@ -14845,6 +15783,8 @@ AccPatch_InitAllSentinels:
 	calr AccPatch_InitSlotSentinels
 	ret
 
+; Writes an empty pattern into entry HL: C bytes 0x81 (beat markers) from entry + 6, then the
+; end byte 0x83.  Preserves XIY.
 AccPatch_InitSlotSentinels:
 	push xiy
 	push c
@@ -14863,6 +15803,8 @@ AccPatch_WriteSentinel_Loop:
 	pop xiy
 	ret
 
+; Sets 0x34d9 = AccTone_LookupByProgram_Table[(0x34d8)], the beats per measure for the time
+; signature code 0x34d8.  Out: A = the same.
 AccPatch_ReadVoiceStride:
 	ld xhl, 0:i3
 	ld l, (0x34d8:16)
@@ -14872,6 +15814,7 @@ AccPatch_ReadVoiceStride:
 	ld (0x34d9:16), a
 	ret
 
+; On title 180: RhythmProc_CheckVoiceChange, then RhythmProc_CheckConfigBits.
 RhythmProc_CheckRhythmEdit:
 	cp (CURRENT_TITLE:16), 180
 	jr nz, RhythmProc_RhythmEdit_Ret
@@ -14881,6 +15824,8 @@ RhythmProc_CheckRhythmEdit:
 RhythmProc_RhythmEdit_Ret:
 	ret
 
+; Services the pending bits of 0x34ce, clearing each: bit 1 -> AccPatch_SetVoiceAndInit, bit 0 ->
+; RhythmProc_UpdateVoiceSentinels.
 RhythmProc_CheckVoiceChange:
 	bit 1, (0x34ce:16)
 	jr z, RhythmProc_CheckVoiceUpdate
@@ -14896,6 +15841,8 @@ RhythmProc_CheckVoiceUpdate:
 RhythmProc_VoiceUpdate_Ret:
 	ret
 
+; Current patch slot: byte +13 = (0x34d7) & 7, then an empty pattern in every part
+; (AccPatch_InitAllSentinels).
 RhythmProc_UpdateVoiceSentinels:
 	calr AccPatch_GetCurrentSlotAddr
 	ld a, (0x34d7:16)
@@ -14904,6 +15851,9 @@ RhythmProc_UpdateVoiceSentinels:
 	calr AccPatch_InitAllSentinels
 	ret
 
+; Services the pending bits of 0x34d2 on byte +14 of the current patch slot, clearing each: bit 0
+; -> low nibble = low nibble of 0x34e9; bit 1 -> bit 4 = bit 4 of 0x34ea; bit 2 -> bits 5 and 6 =
+; bits 5 and 6 of 0x34ea.
 RhythmProc_CheckConfigBits:
 	bit 0, (0x34d2:16)
 	jr z, RhythmProc_ConfigBit1
@@ -14942,6 +15892,11 @@ RhythmProc_ConfigBit2_SetBit6:
 RhythmProc_ConfigBits_Done:
 	ret
 
+; For the record part (0x379b & 0x1f, nothing when 0): 0x342e = its word offset in a slot record
+; (MapBitFlagsToChannelOffset), 0x343d = the current slot's first entry for it; frees that
+; entry's chain and writes an empty pattern of AccTone_LookupByProgram_Table[(0x34d8)] *
+; (((0x34d7) & 7) + 1) beat markers (low 7 bits) into it.  Then AccPatch_ComputeSeqPosition,
+; 0x35fe = 0, AccPatch_WriteRhythmInit, and bit 7 of 0x34cd set unless bit 0 of 0x3283 is.
 AccPatch_RebuildChannelSlot:
 	ld a, (0x379b:16)
 	and a, 0x1f
@@ -14979,6 +15934,8 @@ AccPatch_RebuildChannelSlot:
 AccPatch_RebuildChannel_Done:
 	ret
 
+; Out: W = byte offset of the record part's word in a slot record: A bit 4 -> 0, bit 3 -> 4,
+; bit 0 -> 6, bit 1 -> 8, otherwise 10.
 MapBitFlagsToChannelOffset:
 	ld w, 0x0:opc
 	bit 4, a
@@ -15048,6 +16005,9 @@ AccPatch_SeqPosition_Store_Data:
 	.byte 0x9b, 0x32, 0x00, 0x00, 0x9d, 0x32, 0x00, 0x00
 	.byte 0x9f, 0x32, 0x00, 0x00, 0xa1, 0x32, 0x00, 0x00
 
+; For the channel offset C = (0x342e), nothing when 0: AccPatch_WriteRhythmParams with A =
+; AccPatch_ChannelToParamTable[C] (0x342e preserved), then empties that part's ring buffer -- the
+; header AccPatch_ChannelToRecordPtr[C / 2] gets its read position (+6) = its write position (+4).
 AccPatch_WriteRhythmInit:
 	ld l, (0x342e:16)
 	cp l, 0:i3
@@ -15125,6 +16085,9 @@ AccPatch_RhythmParamDefaults:
 	; as `normal / nop / push sr / ld xwa, 0x40040003 / halt / jrl nc, 6`.
 	.byte	1, 0, 2, 64, 3, 0, 4, 64, 5, 127, 6, 0
 
+; In: A = part code 0xd7, 0xd4, 0xd5 or 0xd6.  0x344d = byte +0x22, +0x2a, +0x32 or +0x3a of the
+; current patch slot (byte +2 of the part record at +0x20 / +0x28 / +0x30 / +0x38); 0x40 for any
+; other code.  Preserves XWA, XHL, XIX, XIY.
 AccPatch_FetchVolumeForChannel:
 	push xwa
 	push xhl
@@ -15158,6 +16121,7 @@ AccPatch_FetchVolume_Default:
 	pop xwa
 	ret
 
+; On title 184: AccPat_DispatchNoteChange.
 RhythmProc_CheckStyleSwitch:
 	cp (CURRENT_TITLE:16), 184
 	jr z, RhythmProc_StyleSwitch_Call
@@ -15169,6 +16133,8 @@ RhythmProc_StyleSwitch_Call:
 RhythmProc_StyleSwitch_Ret:
 	ret
 
+; On title 189 with bit 1 of 0x34d3 pending: clears it and copies bit 0 of 0x34d3 into bit 0 of
+; RHYTHM_PATTERN_BUF_A + 0x10 (the reverse of AccPatch_ReadRepeatBit).
 RhythmProc_CheckRepeatFlag:
 	cp (CURRENT_TITLE:16), 189
 	jr nz, RhythmProc_RepeatFlag_Ret
@@ -15190,6 +16156,8 @@ RhythmProc_RepeatFlag_Store:
 RhythmProc_RepeatFlag_Ret:
 	ret
 
+; End of the composer tick: 0x3525 = CURRENT_TITLE, 0x3510 = (0x379b) & 0x7f, 0x3601 = (0x3283);
+; the record part 0x379b is cleared unless CURRENT_MODE is 14.
 RhythmProc_SavePrevState:
 	ld a, (CURRENT_TITLE:16)
 	ld (0x3525:16), a
@@ -15205,6 +16173,8 @@ RhythmProc_SavePrevState:
 RhythmProc_SavePrevState_Done:
 	ret
 
+; Counts the free pattern entries 0x96..0x153 (bit 7 of byte 0 clear) and stores the count
+; (190 minus the used ones) in 0x34d4.
 AccPatch_CountAvailableSlots:
 	ldw wa, 0xbe
 	ldw de, 0x153
@@ -15337,6 +16307,7 @@ AccPatch_PartChanges_CheckFlag:
 AccPatch_PartChanges_Done:
 	ret
 
+; Copies bit 0 of RHYTHM_PATTERN_BUF_A + 0x10 into bit 0 of 0x34d3.
 AccPatch_ReadRepeatBit:
 	ld xix, RHYTHM_PATTERN_BUF_A
 	add xix, 0x0
@@ -15368,6 +16339,8 @@ AccPatch_PartNumberTable:
 	.byte 0x00, 0x10, 0x11, 0x00, 0x12, 0x00, 0x00, 0x00, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 
+; Runs the per-part chain update (AccPatch_UpdateChain_Rhythm, _Bass, _Acc1, _Acc2, _Acc3) on the
+; current patch slot (AccPatch_GetCurrentSlotAddr).
 AccPatch_UpdateAllChains:
 	calr AccPatch_GetCurrentSlotAddr
 	calr AccPatch_UpdateChain_Rhythm
@@ -15662,6 +16635,7 @@ AccPatch_UpdateChain_Acc3:
 	pop xiy
 	ret
 
+; Runs AccPatch_SyncVoice_Rhythm, _Acc1, _Acc2, _Acc3 and _Bass on the current patch slot.
 AccPatch_SyncAllVoiceParams:
 	calr AccPatch_GetCurrentSlotAddr
 	calr AccPatch_SyncVoice_Rhythm
@@ -15671,6 +16645,10 @@ AccPatch_SyncAllVoiceParams:
 	calr AccPatch_SyncVoice_Bass
 	ret
 
+; Takes W = byte +0 and A = byte +1 (7 bits, bit 7 = bit 6 of byte +4) of the 26-byte record at
+; 0xfba4.  When W:A differs from the copy in 0x34e1 / 0x34e2, writes them into the part record at
+; XIY + 0x20 (+0 = W, +1 = A & 0x7f, +3 = bit 7 of A), updates the copy and loads that record into
+; 0x3219 (AccPatch_LoadVoiceParams).  Preserves XIY.
 AccPatch_SyncVoice_Rhythm:
 	push xiy
 	add xiy, 0x20
@@ -15708,6 +16686,8 @@ AccPatch_SyncRhythm_Done:
 	pop xiy
 	ret
 
+; AccPatch_SyncVoice_Rhythm for the record at 0xfbbe (byte +0 masked to 0..15), the part record at
+; XIY + 0x18, the copy 0x34df / 0x34e0 and the target 0x3214.  Preserves XIY.
 AccPatch_SyncVoice_Bass:
 	push xiy
 	add xiy, 0x18
@@ -15746,6 +16726,8 @@ AccPatch_SyncBass_Done:
 	pop xiy
 	ret
 
+; AccPatch_SyncVoice_Rhythm for the record at 0xfb56, the part record at XIY + 0x28, the copy
+; 0x34e3 / 0x34e4 and the target 0x321e.  Preserves XIY.
 AccPatch_SyncVoice_Acc1:
 	push xiy
 	add xiy, 0x28
@@ -15783,6 +16765,8 @@ AccPatch_SyncAcc1_Done:
 	pop xiy
 	ret
 
+; AccPatch_SyncVoice_Rhythm for the record at 0xfb70, the part record at XIY + 0x30, the copy
+; 0x34e5 / 0x34e6 and the target 0x3223.  Preserves XIY.
 AccPatch_SyncVoice_Acc2:
 	push xiy
 	add xiy, 0x30
@@ -15820,6 +16804,8 @@ AccPatch_SyncAcc2_Done:
 	pop xiy
 	ret
 
+; AccPatch_SyncVoice_Rhythm for the record at 0xfb8a, the part record at XIY + 0x38, the copy
+; 0x34e7 / 0x34e8 and the target 0x3228.  Preserves XIY.
 AccPatch_SyncVoice_Acc3:
 	push xiy
 	add xiy, 0x38
@@ -15857,6 +16843,8 @@ AccPatch_SyncAcc3_Done:
 	pop xiy
 	ret
 
+; Loads a 5-byte part record at XIY: E = +0, D = +1, and +2..+4 into 0x342f..0x3431, then
+; AccPatch_CallParamLookup.
 AccPatch_LoadVoiceParams:
 	ld e, (xiy + 0:8)
 	ld d, (xiy + 1)
@@ -15869,6 +16857,10 @@ AccPatch_LoadVoiceParams:
 	calr AccPatch_CallParamLookup
 	ret
 
+; In: E, D = bytes +0 / +1 of a part record, XIX = 5-byte target.  Calls RhythmPart_CopyData
+; (through RhythmPart_CopyData_Tramp) with 0x342f..0x3431 saved around it; then, when bit 7 of E
+; is set, sets bit 4 of D and clears bit 7 of E.  Stores E, D, (0x342f), (0x3430), (0x3431) at
+; XIX + 0..4 and sends all five records (AccVoice_LoadAllChannelParams).
 AccPatch_CallParamLookup:
 	push xix
 	pushw de
@@ -15905,6 +16897,10 @@ AccPatch_ComplexDataBlock:
 	calr	AccPatch_CallParamLookup_Helper
 AccPatch_ComplexDataBlock_Return:
 	ret
+; With SWBTWR_PAYLOAD_1 = 0 and SWBTWR_PAYLOAD_3 non-zero: on title 180, when SWBTWR_PAYLOAD_2 is
+; below 128 and bit 0 of RHYTHM_PATTERN_BUF_A + 0x10 is clear, Rhythm_LoadCurrentTimeSig and 0x3540
+; = 7; on title 184, CmpNcp_LatchPanelRhythmAsSource, AccPatch_ComplexDataBlock_Helper2 (empty)
+; and Rhythm_LoadCurrentTimeSig.
 AccPatch_CallParamLookup_Helper:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 0:i3
@@ -15937,6 +16933,8 @@ AccPatch_CallParamLookup_Skip:
 	call	Rhythm_LoadCurrentTimeSig
 AccPatch_CallParamLookup_Return2:
 	ret
+; Calls AccPatch_CallParamLookup_Helper2, which tests the image at XIY for the header bytes 'H', 0,
+; 'K' or 'L', 'K', 'E'.
 AccDemo_InitDone_Helper:
 	calr	AccPatch_CallParamLookup_Helper2
 	ret
@@ -16033,8 +17031,10 @@ AccPatch_CallParamLookup_Join:
 	jr	AccPatch_CallParamLookup_Return4
 AccPatch_CallParamLookup_Return4:
 	ret
+; Empty routine: returns at once.
 AccPatch_CallParamLookup_Helper2_Helper:
 	ret
+; Writes 72, 0, 75 into the first three bytes of RHYTHM_PATTERN_BUF_A.
 AccPatch_ComplexDataBlock_Helper:
 	ld	xiy, RHYTHM_PATTERN_BUF_A
 	add	xiy, 0
@@ -16050,6 +17050,8 @@ AccPatch_ComplexDataBlock_Helper:
 	calr	AccPatch_CopyDefaultsForInit
 	calr	AccPatch_CallParamLookup_Helper3
 	ret
+; Runs AccPatch_CallParamLookup_Helper4 on each part's first entry in slot record XIY (words +0,
+; +4, +6, +8, +10): cuts its chain and writes an empty pattern.
 AccPatch_CallParamLookup_Helper3:
 	ld hl, (xiy+0:8)
 	calr AccPatch_CallParamLookup_Helper4
@@ -16062,6 +17064,8 @@ AccPatch_CallParamLookup_Helper3:
 	ld	hl, (xiy+10)
 	calr	AccPatch_CallParamLookup_Helper4
 	ret
+; Cuts entry HL's forward link (0xffff) and writes an empty pattern into it, as
+; AccPatch_FillEntryWithVoiceData does.  Preserves XIY.
 AccPatch_CallParamLookup_Helper4:
 	push	xiy
 	calr	AccPatch_GetEntryAddr
@@ -16090,6 +17094,8 @@ AccPatch_CallParamLookup_Loop:
 	pop	xiy
 	ret
 
+; Runs AccPatch_ClearLinkedListEntries (store based at (0x39ae)) on each part's first entry in
+; slot record XIY (words +0, +4, +6, +8, +10).
 AccPatch_FreeAllChains_Alt:
 	ld hl, (xiy + 0:8)
 	calr AccPatch_ClearLinkedListEntries
@@ -16103,6 +17109,8 @@ AccPatch_FreeAllChains_Alt:
 	calr AccPatch_ClearLinkedListEntries
 	ret
 
+; AccPatch_FreeChainEntries for the pattern store whose base is in 0x39ae (entries addressed
+; with AccPatch_ResolveSlotAddr): frees the chain after entry HL and counts it in 0x34d4.
 AccPatch_ClearLinkedListEntries:
 	push xiy
 	calr AccPatch_ResolveSlotAddr
@@ -16126,6 +17134,8 @@ AccPatch_FreeChain_Alt_Done:
 	pop xiy
 	ret
 
+; Out: XIX = (0x39ae) + 0x1400 + HL * 256, the address of 256-byte entry HL of the pattern
+; store whose base is in 0x39ae; nothing is done for HL = 0xffff.  HL is preserved.
 AccPatch_ResolveSlotAddr:
 	cp hl, 0xffff
 	jr z, AccPatch_ResolveSlotAddr_Ret
@@ -16142,6 +17152,8 @@ AccPatch_ResolveSlotAddr:
 AccPatch_ResolveSlotAddr_Ret:
 	ret
 
+; Runs AccPatch_FillSlotWithVoiceData (store based at (0x39ae)) on each part's first entry in slot
+; record XIY (words +0, +4, +6, +8, +10).
 AccPatch_FillAllSlots_Alt:
 	ld hl, (xiy + 0:8)
 	calr AccPatch_FillSlotWithVoiceData
@@ -16155,6 +17167,8 @@ AccPatch_FillAllSlots_Alt:
 	calr AccPatch_FillSlotWithVoiceData
 	ret
 
+; AccPatch_FillEntryWithVoiceData for the pattern store whose base is in 0x39ae (entries
+; addressed with AccPatch_ResolveSlotAddr).
 AccPatch_FillSlotWithVoiceData:
 	push xiy
 	pushw hl
@@ -16182,6 +17196,9 @@ AccPatch_FillSlot_Alt_Loop:
 	pop xiy
 	ret
 
+; In the pattern store based at (0x39ae): starts the reader at the record part's first entry
+; (AccPatch_InitSlotPointer_Alt), reads up to the end byte 0x83 or until the reader overflows (bit
+; 0 of 0x3616), and saves the reader's entry / offset (0x3612 / 0x3614) in 0x3606 / 0x3608.
 AccPatch_ScanSequenceToEnd:
 	calr AccPatch_InitSlotPointer_Alt
 
@@ -16201,6 +17218,8 @@ AccPatch_ScanSeq_StorePosAndRet:
 	ld (0x3608:16), wa
 	ret
 
+; Out: A = the byte at offset (0x3614) of entry (0x3612) in the store based at (0x39ae)
+; (AccPatch_ResolveSlotAddr).  Preserves XIX.
 AccPatch_SeqReadByte_Alt:
 	push xix
 	ld hl, (0x3612:16)
@@ -16210,6 +17229,9 @@ AccPatch_SeqReadByte_Alt:
 	pop xix
 	ret
 
+; Moves the reader offset 0x3614 one byte forward; past 0xfe it follows the entry's forward link
+; (+3) into 0x3612 and restarts at 6, setting bit 0 of 0x3616 when the link is 0xffff or 0x154 or
+; more.  Store based at (0x39ae).
 AccPatch_SeqAdvance_Alt:
 	ld wa, (0x3614:16)
 	cp wa, 0xfe
@@ -16238,6 +17260,9 @@ AccPatch_SeqAdvance_Store:
 	ld (0x3614:16), wa
 	ret
 
+; Slot record XIY = (0x39ae) + 96 + 96 * (0x39ac) (slot 0 when the index is 30 or more); the
+; reader entry 0x3612 = its word for the record part 0x379b (MapBitFlagsToChannelOffset) and the
+; offset 0x3614 = 6.
 AccPatch_InitSlotPointer_Alt:
 	xor xhl, xhl
 	ld l, (0x39ac:16)
@@ -16273,6 +17298,8 @@ AccPatch_CmpRealTick:
 	adc wa, (xwa)
 	jrl AccPatch_SeqAdvanceStep
 
+; Reads the byte at the patch-sequence read position: entry 0x3612 (AccPatch_GetEntryAddr),
+; offset 0x3614.  Out: A = byte.  Preserves XIX.
 AccPatch_SeqReadByte:
 	push xix
 	ld hl, (0x3612:16)
@@ -16286,6 +17313,10 @@ AccPatch_SeqDispatch_Padding:
 	nop
 	nop
 
+; Moves the patch-sequence read position one byte forward.
+;   RAM: 0x3612 = current patch entry, 0x3614 = offset in it.  At offset 0xfe the next entry
+;   is taken from the word at entry+3 (AccPatch_GetEntryAddr) and the offset restarts at 6;
+;   bit 0 of 0x3616 is set when that link is 0xffff (end) or 0x154 or more (out of range).
 AccPatch_AdvanceSeqIndex:
 	ld wa, (0x3614:16)
 	cp wa, 0xfe
@@ -16402,6 +17433,9 @@ AccPatch_SeqDispatch_MiscData:
 	call	AccPatch_InitAndLoadSequence
 	ret
 
+; Clears bits 2 and 3 of 0x34cf; with ACTIVE_TITLE = 181, sets bit 2 when bit 9 (0x200) is set in
+; TRANSITION_PROGRESS | TRANSITION_TIMER but clear in TRANSITION_TIMER, bit 3 likewise for bit 10
+; (0x400).  The OR is kept in 0x11d0 and TRANSITION_TIMER in 0x39e0.
 AccPatch_ReadModeFlags:
 	ld a, (0x34cf:16)
 	and a, 0xf3
@@ -16447,6 +17481,8 @@ AccPatch_SetFlagExit:
 AccPatch_ScanSeq_PaddingByte:
 	ret
 
+; Positions the patch-sequence reader on the end byte 0x83 of the current slot's part (or where
+; it overflowed) and saves that position (0x3612 / 0x3614) in 0x3606 / 0x3608.
 AccPatch_ScanToSequenceStart:
 	calr AccPatch_InitCurrentSlotPointer
 
@@ -16470,6 +17506,11 @@ AccPatch_ScanSeq_PaddingWord:
 	nop
 	nop
 
+; Restarts the patch-sequence playback at the current song position.
+;   Clears the first word of the eight 6-byte records at 0x361a, re-initialises the tempo ring
+;   buffer unless bit 0 of 0x364a is set (then clears that bit), points the reader at the slot
+;   start (AccPatch_InitCurrentSlotPointer) and skips (0x416) + (0x435) * (0x34d9) beat markers
+;   (AccPatch_ScanToSequenceEnd).
 AccPatch_InitAndLoadSequence:
 	ld xhl, 0x361a
 	ldw bc, 0x8
@@ -16511,6 +17552,10 @@ AccPatch_InitSeq_Padding:
 	nop
 	nop
 
+; Clears the first word of the eight 6-byte step records at 0x361a and bit 0 of 0x364a, then
+; positions the patch-sequence reader (AccPatch_InitCurrentSlotPointer) and moves it past N beat
+; markers (AccPatch_ScanToSequenceEnd), N = low byte of (0x416) + (0x435) * (0x34d9); 0x435 and
+; 0x416 are read with interrupts masked to level 6.
 AccPatch_ResetSeqCounters:
 	ld xhl, 0x361a
 	ldw bc, 0x8
@@ -16547,6 +17592,9 @@ AccPatch_ResetSeqCounters_AdvLoop_Pad:
 	nop
 	nop
 
+; Advances the patch-sequence reader past the next beat marker (0x81).  When the byte after the
+; marker is the end byte 0x83, AccPatch_MarkAllSlotsActive runs.  Stops early when the reader
+; overflows (bit 0 of 0x3616).
 AccPatch_ScanToSequenceEnd:
 	calr AccPatch_SeqReadByte
 	cp a, 0x81
@@ -16572,6 +17620,8 @@ AccPatch_ScanDone_Pad:
 	nop
 	nop
 
+; For each of the eight 6-byte step records at 0x361a whose byte 0 has bit 7 set, sets bit 7 of
+; byte 1; then AccPatch_InitCurrentSlotPointer.
 AccPatch_MarkAllSlotsActive:
 	ld xhl, 0x361a
 
@@ -16695,6 +17745,9 @@ AccPatch_UpdateSeqState_StoreFlags_Pad:
 	nop
 	nop
 
+; Clears bit 7 of 0x3558 and reads the tempo ring buffer until it is empty.  For a 0x9n status
+; whose velocity (third byte after it) is non-zero, stores the note (second byte after it) | 0x80
+; in 0x3558 and empties the ring (TempoRingBuf_ReInitAndRet).
 AccPatch_ClearAndScanForNote:
 	and (0x3558:16), 127
 
@@ -16727,6 +17780,7 @@ AccPatch_ScanNote_Continue:
 AccPatch_ScanNote_Done:
 	ret
 
+; Reads and discards BC bytes from the tempo ring buffer (TempoRingBuf_ReadByteToA).
 TempoRingBuf_SkipBytes:
 	cp bc, 0:i3
 	jr z, TempoRingBuf_SkipBytes_Done
@@ -16739,6 +17793,9 @@ TempoRingBuf_SkipBytes:
 TempoRingBuf_SkipBytes_Done:
 	ret
 
+; Reads the tempo ring buffer until it is empty.  A 0x9n status whose note (second byte after it)
+; is the note in 0x3558 and whose velocity (next byte) is 0 clears bit 7 of 0x3558 and empties the
+; ring (TempoRingBuf_ReInitAndRet).
 AccPatch_ScanForNoteOff:
 	call AccPatch_CheckEmpty
 	cp wa, 0:i3
@@ -16769,6 +17826,10 @@ AccPatch_ErrorExit:
 AccPatch_ScanForNoteOff_Done:
 	ret
 
+; Positions the patch-sequence reader at the current step (AccPatch_SeekForwardSteps), parses
+; up to position (0x3706) (AccPatch_ParseSequenceHeader with limit 0x36f8) and saves the reader
+; position in 0x35de / 0x35e0.  AccPatch_PrepareSequencePlayback does the same into 0x35e2 /
+; 0x35e4.
 AccPatch_SeekToPosition:
 	calr AccPatch_SeekForwardSteps
 	ld a, (0x3706:16)
@@ -16780,6 +17841,8 @@ AccPatch_SeekToPosition:
 	ld (0x35e0:16), wa
 	ret
 
+; Points the patch-sequence reader at the slot start and skips (0x3707) + (0x35f9) * (0x34d9)
+; beat markers (AccPatch_ScanToSequenceEnd), i.e. to beat (0x3707) of measure (0x35f9).
 AccPatch_SeekForwardSteps:
 	ld a, (0x35f9:16)
 	ld c, (0x3707:16)
@@ -16806,6 +17869,11 @@ AccPatch_SeekFwd_AdvLoop_Pad:
 	nop
 	nop
 
+; Skips the patch-sequence reader (0x3612 / 0x3614) over the events before the next beat
+; marker whose position byte does not exceed the limit 0x36f8.
+;   Each event's first two bytes are read; when the second is above (0x36f8), or a beat marker
+;   0x81 is next, the reader is put back to the event start (saved in 0x36fa / 0x36fc).  An end
+;   byte 0x83 sets bit 1 of 0x3616; a reader overflow (bit 0 of 0x3616) stops the scan.
 AccPatch_ParseSequenceHeader:
 	ld wa, (0x3612:16)
 	ld (0x36fa:16), wa
@@ -16936,6 +18004,9 @@ AccPatch_ResumeSeq_InitSlot_Pad:
 	nop
 	nop
 
+; AccPatch_SeekForwardSteps, copies 0x3706 to 0x36f8, parses the sequence header
+; (AccPatch_ParseSequenceHeader) and saves the reader position (0x3612 / 0x3614) in 0x35e2 /
+; 0x35e4.
 AccPatch_PrepareSequencePlayback:
 	calr AccPatch_SeekForwardSteps
 	ld a, (0x3706:16)
@@ -16947,6 +18018,10 @@ AccPatch_PrepareSequencePlayback:
 	ld (0x35e4:16), wa
 	ret
 
+; When notes were recorded (0x360a non-zero) and the recorded position (0x35de / 0x35e0)
+; differs from the reader position (0x3612 / 0x3614), copies the sequence entry
+; (AccPatch_CopySequenceEntry, AccPatch_UpdateEntryFromTable) and moves the reader to the
+; recorded position.  The two positions are kept in 0x365a / 0x3660 and 0x3658 / 0x365e.
 AccPatch_CheckSequenceChanged:
 	cpw (0x360a:16), 0
 	jr z, AccPatch_CheckChanged_Return
@@ -16981,6 +18056,11 @@ AccPatch_CheckChanged_DoCopy_Pad:
 	nop
 	nop
 
+; Copies the recorded part of a pattern into place: block-copy setup between entries (0x3658)
+; (source, 0x3650) and (0x365a) (destination, 0x364c) from the saved end position (0x3606 /
+; 0x3608), AccPatch_SetupBlockCopyDispatch.  When the destination entry is not the old end
+; entry, the entries after it are cut off (link 0xffff, freed, 0x34d4 counted).  The new end
+; position is stored back in 0x3606 / 0x3608.
 AccPatch_CopySequenceEntry:
 	ld de, (0x3606:16)
 	ld wa, (0x3608:16)
@@ -17072,6 +18152,9 @@ AccPatch_NullRet_Pad:
 	nop
 	nop
 
+; Loads the two per-part pointers for the record part in 0x379b: XIX = the long at
+; AccPatch_PartOffsetVarTable + 4*(0x379b), XIY = the long at AccPatch_PartBlockVarTable +
+; 4*(0x379b).  Preserves XBC.
 AccPatch_LoadTablePointers:
 	push xbc
 	ld xbc, 0:i3
@@ -17088,6 +18171,9 @@ AccPatch_LoadTablePointers:
 	pop xbc
 	ret
 
+; Moves the record part's position (offset word at XIX, entry word at XIY, AccPatch_LoadTablePointers)
+; back by (0x360a) bytes; when that passes the entry's first data byte (+6), it continues from 0xff
+; in the previous entry (backward link +1).
 AccPatch_AdjustTableEntryPos:
 	calr AccPatch_LoadTablePointers
 	ld de, (xix)
@@ -17220,6 +18306,7 @@ AccPatch_ProcessSeqEvt_StorePos:
 	ld (0x35e0:16), wa
 	ret
 
+; Empty routine: returns at once.  AccPatch_PrepareAndProcessEvents also jumps here.
 AccPatch_ProcessSeqEvt_RetNop:
 	ret
 
@@ -17307,6 +18394,10 @@ AccPatch_ContinueProcessing_Pad:
 	nop
 	nop
 
+; After recording (0x360a non-zero): saves 0x3602 / 0x3604 in 0x36fe / 0x3700, rebuilds the slot
+; (AccPatch_InitSlotAndCopyData, AccPatch_AdvancePlayPos, AccPatch_AdvanceAllSteps) and clears
+; 0x360a.  Then sends queued notes when 0x360e is non-zero (AccPatch_DispatchQueuedNotes) and
+; clears 0x35ff.
 AccPatch_UpdatePlayback:
 	cpw (0x360a:16), 0
 	jr z, AccPatch_UpdatePlayback_CheckQueue
@@ -17332,6 +18423,8 @@ AccPatch_UpdatePlayback_ClearStep_Pad:
 	nop
 	nop
 
+; For each of the eight 6-byte step records at 0x361a whose byte 0 has bit 7 set, increments byte
+; 1, stopping at 0xff.
 AccPatch_AdvanceSlotCounters:
 	ld xhl, 0x361a
 
@@ -17356,6 +18449,8 @@ AccPatch_AdvSlotCtr_Store_Pad:
 	nop
 	nop
 
+; Reads BC bytes from the tempo ring buffer (TempoRingBuf_ReadByteToA) into the buffer at
+; 0x36ea.
 AccPatch_ReadRingBufBytes:
 	ld xhl, 0:i3
 
@@ -17384,6 +18479,10 @@ AccPatch_ReadBuf_StoreAndNext_Pad:
 	nop
 	nop
 
+; Handles one recorded step: 0x36f7 = 0x36f8 = (0x36eb), AccPatch_LookupStepByDrumParam; unless
+; it repeats the previous step (0x35ff counted, 0x3600 equal), finishes the previous one
+; (AccPatch_UpdatePlayback), parses to the new position (AccPatch_ParseSequenceHeader) and saves
+; it in 0x3602 / 0x3604.  Then increments 0x35ff and stores the position in 0x3600.
 AccPatch_ParseAndResolve:
 	ld a, (0x36eb:16)
 	ld (0x36f7:16), a
@@ -17413,6 +18512,10 @@ AccPatch_ParseResolve_IncStep_Pad:
 	nop
 	nop
 
+; In: A = event tick.  With quantize on ((0x34db) non-zero), rounds it to the grid (0x34db) & 7
+; (AccPatch_QuantizeTick) and stores the result in 0x36f8 and 0x36eb.  A result of 0x7f stores 0
+; instead and, the first time (bit 1 of 0x364a, then set), runs AccPatch_UpdatePlayback and
+; AccPatch_ScanToSequenceEnd.
 AccPatch_LookupStepByDrumParam:
 	xor w, w
 	ld iy, wa
@@ -17628,6 +18731,9 @@ AccPatch_StoreDrumParams_Data:
 	.byte 0x00, 0x00, 0x00
 	.byte 0x01, 0x11, 0x11
 
+; Stores in 0x3a4e the transpose byte of the record part 0x379b from the current slot record:
+; offset 0x25 (bit 3), 0x2d (bit 0), 0x35 (bit 1) or 0x3d (otherwise).  Preserves all
+; registers.
 AccPatch_ReadTransposeAmount:
 	push xwa
 	push xhl
@@ -17662,6 +18768,7 @@ AccPatch_SelectTranspose:
 	pop xwa
 	ret
 
+; Appends byte A to the step list at 0x366a; the count of bytes is the word at 0x360a.
 AccPatch_FetchStepEntry:
 	ld xiy, 0x366a
 	ld hl, (0x360a:16)
@@ -17677,6 +18784,9 @@ AccPatch_FetchStepData:
 	inc	1, hl
 	ld	(0x360e:16), hl
 	ret
+; Moves the patch-sequence read offset 0x3614 one byte forward; at 0xfe it continues in the
+; next entry (AccPatch_SeqAdvStep_WrapToNext) unless the word at 0x34d4 is 0, in which case
+; the offset stays.
 AccPatch_SeqAdvanceStep:
 	ld wa, (0x3614:16)
 	cp wa, 0xfe
@@ -17693,6 +18803,9 @@ AccPatch_SeqAdvStep_Increment:
 AccPatch_SeqAdvStep_Return:
 	ret
 
+; Continues the patch-sequence reader in the next entry of the chain (link at +3 of entry
+; 0x3612); at the end of the chain it takes the first free entry from 0x96 up instead.  Sets
+; 0x3612 = that entry and 0x3614 = 6.
 AccPatch_SeqAdvStep_WrapToNext:
 	ld hl, (0x3612:16)
 	calr AccPatch_GetEntryAddr
@@ -17720,6 +18833,8 @@ AccPatch_SeqAdvStep_StorePos_Pad:
 	nop
 	nop
 
+; Fills the 6-byte step record at 0x361a + DE: +0 = A | 0x80, +1 = 0, +2 = (0x36f7), +3..+4 =
+; reader entry (0x3612), +5 = low byte of the reader offset (0x3614).  Preserves IY.
 AccPatch_UpdateSlotVoiceData:
 	ld xhl, 0x361a
 	ld iy, de
@@ -17740,6 +18855,8 @@ AccPatch_UpdateSlotVoiceData:
 	popw iy
 	ret
 
+; Unless the record part is bit 4 of 0x379b, AccPatch_TransposeNote; then appends the 6-byte event
+; at 0x36ea to the list at 0x36aa (offset word 0x360e, advanced by 6).
 AccPatch_TransposeAndCopyNote:
 	bit 4, (0x379b:16)
 	jr nz, AccPatch_TransposeCopy_DoCopy
@@ -17760,6 +18877,9 @@ AccPatch_TransposeCopy_DoCopy_Pad:
 	nop
 	nop
 
+; With free pattern entries left (0x34d4 non-zero): appends the event byte 0x36ea, mapped 0xd4 ->
+; 0xd3, 0xd3 -> 0xd5, 0xd5 -> 0xd4 (others unchanged), then 0x36eb and 0x36ec, to the step list
+; (AccPatch_FetchStepEntry), each followed by AccPatch_SeqAdvanceStep.
 AccPatch_ProcessMarkerEvent:
 	cpw (0x34d4:16), 0
 	jr z, AccPatch_ProcessMarker_Return
@@ -17798,6 +18918,7 @@ AccPatch_FetchSequence_Pad:
 	nop
 	nop
 
+; Reads tempo ring bytes until one with bit 7 set (a status byte), returned in A.
 AccPatch_SkipToMarker:
 	call TempoRingBuf_ReadByteToA
 	bit 7, a
@@ -17919,6 +19040,9 @@ AccPatch_InitSlot_Finalize_Pad:
 	nop
 	nop
 
+; Finds the first free pattern entry from 0x96 upwards (bit 7 of byte 0 clear; the search has no
+; upper bound), links it after entry (0x3606) (that entry's +3), marks it used with +1 = (0x3606)
+; and +3 = 0xffff, and decrements the free count 0x34d4.  Out: XIX = the entry, WA = its index.
 AccPatch_FindFreeEntrySlot:
 	ldw hl, 0x95
 
@@ -18039,6 +19163,8 @@ AccPatch_PartOffsetVarTable:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000
 	.long 0x00003287
 
+; For each of the eight 6-byte step records at 0x361a..0x3649 whose byte +1 has bit 7 set,
+; advances its cursor (0x360a) times with AccPatch_AdvanceSingleStep.
 AccPatch_AdvanceAllSteps:
 	ld xix, 0x361a
 
@@ -18061,6 +19187,8 @@ AccPatch_AdvAllSteps_InnerLoop_Pad:
 	nop
 	nop
 
+; Moves the step record XIX one byte forward: offset +5 + 1, or, past 0xfe, entry +3 = that
+; entry's forward link and offset 6.
 AccPatch_AdvanceSingleStep:
 	xor w, w
 	ld a, (xix + 5)
@@ -18087,6 +19215,8 @@ AccPatch_AdvSingleStep_Store_Pad:
 	nop
 	nop
 
+; Sends each queued 6-byte note record at 0x36aa (count of bytes in 0x360e) to its voice
+; (AccPatch_DispatchNoteToVoice), then clears 0x360e.
 AccPatch_DispatchQueuedNotes:
 	ld xix, 0x36aa
 
@@ -18104,6 +19234,10 @@ AccPatch_DispatchQueuedNotes_Pad:
 	nop
 	nop
 
+; Closes the step record of a released note.  Searches the eight 6-byte step records at 0x361a,
+; last first, for an active one (bit 7 of byte 0) whose note (byte 0 & 0x7f) equals byte +2 of
+; the note record XIX; clears bit 7 of its bytes 0 and 1 and passes the length (XIX+1) - (byte
+; 2), borrowing 96 ticks from byte 1 when negative, to AccPatch_WriteVelocityToSeq.
 AccPatch_DispatchNoteToVoice:
 	ld xhl, 0x361a
 	ldw iy, 0x2a
@@ -18148,6 +19282,10 @@ AccPatch_DispatchNote_NextSlot_Pad:
 	nop
 	nop
 
+; Points the patch-sequence reader at the position held in the step record at XHL + IY (entry word
+; at +1, offset byte at +3); when the byte there equals (XIX + 2), writes A (from WA) and then D in
+; the second and third bytes after it.  The reader position is saved in 0x36fa / 0x36fc and put
+; back.
 AccPatch_WriteVelocityToSeq:
 	pushw de
 	pushw wa
@@ -18192,6 +19330,8 @@ AccPatch_WriteVel_RestorePos_Pad:
 	nop
 	nop
 
+; Writes A at the patch-sequence write position: entry 0x3612 (AccPatch_GetEntryAddr), offset
+; 0x3614.  Preserves XIX, XWA.
 AccPatch_WriteSeqByte:
 	push xix
 	ld hl, (0x3612:16)
@@ -18209,6 +19349,12 @@ AccPatch_WriteSeqByte_Pad:
 	nop
 	nop
 
+; Downward pattern-data move (DSP_BlockCopyReverse) for an insert.  Clears GLOBAL_ERROR_CODE.
+; When DE is entry (0x3658), 0x3664 = (0x365e) - 5, 0x3666 = (0x3660) - 5 and
+; AccPatch_CalcBlockCopyBounds runs with IY = (0x365e), IX = (0x3660).  Otherwise (0x3660) above,
+; equal to or below (0x365e) selects AccPatch_CalcBlockCopy_Clamp_Helper,
+; BlockCopy_SameEntry_Reverse or BlockCopy_IXFirst_Reverse, followed by
+; AccPatch_CalcBlockCopyBounds unless GLOBAL_ERROR_CODE was set.
 AccPatch_CalcBlockCopySetup:
 	ld (GLOBAL_ERROR_CODE:16), 0
 	cp de, (0x3658:16)
@@ -18304,6 +19450,12 @@ BlockCopy_Rev_StoreBounds:
 DSP_SetupDone:
 	ret
 
+; Copies a block downwards (LDDR) between two buffers addressed by base + 8-bit offset.
+;   In:  XIX = destination offset, XIY = source offset (both masked to 0..0xff), BC = count;
+;        the bases are the pointers at 0x364c (destination) and 0x3650 (source); the copy is
+;        LDDR (XIX-),(XIY-).
+;   Out: XIX / XIY are the offsets left by the copy, masked to 0..0xff; the bases are kept.
+;   Preserves XWA, XHL.  DSP_BlockCopyForward is the LDIR counterpart.
 DSP_BlockCopyReverse:
 	push xwa
 	push xhl
@@ -18328,6 +19480,11 @@ DSP_BlockCopyReverse:
 	pop xwa
 	ret
 
+; Copies a block upwards (LDIR) between two buffers addressed by base + 8-bit offset.
+;   In:  XIX = destination offset, XIY = source offset (both masked to 0..0xff), BC = count;
+;        the bases are the pointers at 0x364c (destination) and 0x3650 (source); the copy is
+;        LDIR (XIX+),(XIY+).
+;   Out: XIX / XIY are the offsets left by the copy, masked to 0..0xff.  Preserves XWA, XHL.
 DSP_BlockCopyForward:
 	push xwa
 	push xhl
@@ -18352,6 +19509,10 @@ DSP_BlockCopyForward:
 	pop xwa
 	ret
 
+; Case of AccPatch_CalcBlockCopySetup with equal offsets (0x365e) = (0x3660): copies (0x365e) - 5
+; bytes downwards, then whole entries (0xf9 bytes each), stepping both cursors to the previous
+; entry (AccPatch_AdvanceNextEntry_IX / _IY) until DE is entry (0x3658); then 0x3664 = 0x3666 =
+; 0xf9.  Stops when a step sets GLOBAL_ERROR_CODE.
 BlockCopy_SameEntry_Reverse:
 	ld bc, (0x365e:16)
 	sub bc, 0x6
@@ -18459,6 +19620,9 @@ BlockCopy_IXFirst_StoreBounds:
 DSP_NullRet2:
 	ret
 
+; Moves (0x3664) - ((0x3604) - 6) bytes downwards with DSP_BlockCopyReverse, splitting the copy
+; at the end of the current entry (0x3666 bytes left) and continuing in the previous entry
+; (AccPatch_AdvanceNextEntry_IX) when needed.  The count goes to 0x3668.
 AccPatch_CalcBlockCopyBounds:
 	ld wa, (0x3604:16)
 	sub wa, 0x6
@@ -18489,6 +19653,11 @@ BlockCopyBounds_CopyRemainder:
 BlockCopyBounds_Return:
 	ret
 
+; Moves the source cursor (0x3650, see DSP_BlockCopyReverse) of the pattern block copy to the
+; previous entry.
+;   The entry at (0x3650) gives its backward link (+1), stored in 0x3658; that entry must be in
+;   use (bit 7), else GLOBAL_ERROR_CODE = 11.  Then 0x3650 = its address and XIY = 0xfe (the last
+;   data byte, for a downward copy).  Preserves XIX.
 AccPatch_AdvanceNextEntry_IY:
 	push xix
 	ld xiy, (0x3650:16)
@@ -18509,6 +19678,9 @@ AdvNextEntry_IY_Return:
 	pop xix
 	ret
 
+; Moves the destination cursor (0x364c) of the pattern block copy to the previous entry: backward link (+1)
+; of the entry at (0x364c), stored in 0x365a, must be in use (else GLOBAL_ERROR_CODE = 11);
+; then 0x364c = its address and XIX = 0xfe.
 AccPatch_AdvanceNextEntry_IX:
 	ld xix, (0x364c:16)
 	ld hl, (xix + 1)
@@ -18527,6 +19699,11 @@ AdvNextEntry_IX_StoreAndReset:
 AdvNextEntry_IX_Return:
 	ret
 
+; Upward counterpart of AccPatch_CalcBlockCopySetup (delete).  Clears GLOBAL_ERROR_CODE, 0x3650 =
+; address of entry (0x3658).  When DE is that entry, 0x3664 = 0xff - (0x365e), 0x3666 = 0xff -
+; (0x3660) and AccPatch_ForwardBlockCopy runs; otherwise (0x3660) below, equal to or above
+; (0x365e) selects BlockCopy_FwdIYSmaller, BlockCopy_FwdEqual or BlockCopy_FwdIXSmaller, followed
+; by AccPatch_ForwardBlockCopy unless GLOBAL_ERROR_CODE was set.
 AccPatch_SetupBlockCopyDispatch:
 	ld (GLOBAL_ERROR_CODE:16), 0
 	ld hl, (0x3658:16)
@@ -18738,6 +19915,9 @@ BlockCopy_FwdIXSmall_StoreBounds:
 AccPatch_NullRet3:
 	ret
 
+; Upward counterpart of AccPatch_CalcBlockCopyBounds: moves (0x3664) - (0xfe - (0x3662)) bytes
+; with DSP_BlockCopyForward, continuing in the next entry (AccPatch_AdvancePrevEntry_IX) after
+; (0x3666) bytes when needed.  Does nothing when GLOBAL_ERROR_CODE is set.
 AccPatch_ForwardBlockCopy:
 	cp (GLOBAL_ERROR_CODE:16), 0
 	jr nz, AccPatch_DoneBlockCopy
@@ -18770,6 +19950,9 @@ FwdBlockCopy_CopyRemainder:
 AccPatch_DoneBlockCopy:
 	ret
 
+; Moves the destination cursor (0x364c) of the pattern block copy to the next entry: forward link (+3) of
+; the entry at (0x364c), stored in 0x365a, must be in use (else GLOBAL_ERROR_CODE = 11); then
+; 0x364c = its address and XIX = 6 (the first data byte, for an upward copy).
 AccPatch_AdvancePrevEntry_IX:
 	ld xix, (0x364c:16)
 	ld hl, (xix + 3)
@@ -18788,6 +19971,9 @@ AdvPrevEntry_IX_StoreAndReset:
 AdvPrevEntry_IX_Return:
 	ret
 
+; Moves the source cursor (0x3650) of the pattern block copy to the next entry: forward link (+3)
+; of the entry at (0x3650), stored in 0x3658, must be in use (else GLOBAL_ERROR_CODE = 11); then
+; 0x3650 = its address and XIY = 6.  Preserves XIX.
 AccPatch_AdvancePrevEntry_IY:
 	push xix
 	ld xix, (0x3650:16)
@@ -18808,20 +19994,28 @@ AdvPrevEntry_IY_Return:
 	pop xix
 	ret
 
+; TempoRingBuf_CheckEmpty, with the result copied to WA.
 AccPatch_CheckEmpty:
 	call TempoRingBuf_CheckEmpty
 	ld wa, hl
 	ret
 
+; TempoRingBuf_ReadByte, with the byte returned in A as well as in L.
 TempoRingBuf_ReadByteToA:
 	call TempoRingBuf_ReadByte
 	ld a, l
 	ret
 
+; Calls TempoRingBuf_Init.
+; Called from AccPatch_SeqDispatch_CheckPlaying, AccPatch_InitSeq_ClearLoop,
+; AccPatch_ScanForActiveNote, AccPatch_ScanForNoteOff, AccPlay_InitAndStartLoop,
+; AccPlay_ToggleCodeFragment and 1 more site.
 TempoRingBuf_ReInitAndRet:
 	call TempoRingBuf_Init
 	ret
 
+; Out: A = L = the next tempo ring byte, read through the read-ahead cursor:
+; TempoRingBuf_SaveReadPos (word 0x1e74b -> 0x1e749), then TempoRingBuf_ReadAlternate.
 TempoRingBuf_PeekByte:
 	call TempoRingBuf_SaveReadPos
 	call TempoRingBuf_ReadAlternate
@@ -18948,7 +20142,7 @@ AccPlayback_Finalize_Code:
 ; ToneGen_CalcBufferAddr - Compute tone generator buffer address
 ; ============================================================================
 ; Input:  HL = buffer index
-; Output: XHL = 0x95c00 + (HL & 0xffff) * 256
+; Output: XHL = RHYTHM_PATTERN_BUF_B + (HL & 0xffff) * 256
 ; Calculates address into tone generator hardware buffer memory.
 ; Called from MIDI voice processing code (handles status bytes 0x81-0x91).
 ; ============================================================================
@@ -18962,6 +20156,10 @@ ToneGen_CalcBufferAddr_Pad:
 	nop
 	nop
 
+; Computes the composer playback position: 0x371a = (0x34fa) + 1, then (after
+; ToneGen_StepFwd_Alternate) 0x370f = (0x34fb) * 8 + (0x34fc) / 12 + 1 + ((0x34fa) - (0x3746))
+; * 32, or * 64 when the byte 0x34d9 is 5 or more.  The code after the
+; unconditional jumps (0x371c, and folding values above 32) is never reached.
 AccPlayback_CalcTimingPosition:
 	ld a, (0x34fa:16)
 	inc 1, a
@@ -19018,6 +20216,9 @@ AccTiming_CompareStyles_Pad:
 	nop
 	nop
 
+; Sets the composer play position to measure (0x371a) - 1, beat and tick 0 (0x34fa, 0x34fb,
+; 0x34fc).  Bit 7 of 0x3713 makes it one measure later (0 past (0x34d7)), bit 6 one earlier
+; ((0x34d7) below 0).
 AccPlayback_AdjustBeatPosition:
 	ld wa, (0x371a:16)
 	dec 1, a
@@ -19231,6 +20432,10 @@ ToneGen_MapNote_OrMask_Pad:
 	nop
 	nop
 
+; Restarts composer playback at measure (0x371a) - 1: 0x370f = 1, 0x3712 = 4, 0x3717 = 0xff,
+; UI_PostTimerResetEvent (all registers preserved), 0x34f7 = beat 0x34fb = tick 0x34fc = 0, 0x34fa
+; = measure; then AccPatch_GetCurrentSlotAddr, AccPlayback_CalcTimingPosition and
+; AccVoice_InitPatternBuffer.
 AccPlayback_ProcessStyleChanges:
 	ld (0x370f:16), 1
 	ld (0x3712:16), 4
@@ -19599,6 +20804,10 @@ ToneGen_Velocity_Store_Pad:
 	nop
 	nop
 
+; Out: W = beat number from the start ((0x34fa) * (0x34d9) + (0x34fb)) and A = tick of the previous
+; 12-tick step (tick (0x34fc) rounded down to a multiple of 12, one step back when already on
+; one).  Before tick 0 it goes to tick 84 of the beat before; before beat 0 it uses beat
+; (0x34d9) - 1 and sets bit 3 of 0x3522.
 ToneGen_CalcNotePosition:
 	ld a, (0x34fc:16)
 	ld e, a
@@ -19636,6 +20845,9 @@ ToneGen_CalcPos_SubOctave_Pad:
 	nop
 	nop
 
+; Steps a (measure 0x34fa, beat 0x34fb, tick 0x34fc) position back by W ticks from E: tick = E -
+; W, borrowing 96 ticks from the beat, the beat borrowing from the measure (beats per measure
+; 0x34d9), and the measure wrapping to (0x34d7) & 7.
 ToneGen_AdjustNoteWrap:
 	ld a, e
 	sub a, w
@@ -19748,6 +20960,9 @@ ToneGen_ScanRestored_EndMarker_Pad:
 	nop
 	nop
 
+; Returns the current patch slot's word for the record part 0x379b (MapBitFlagsToChannelOffset,
+; in the table at XIY); a record part with none of bits 0..4 set is first set to 0x10.
+;   Out: HL = the word.
 ToneGen_GetSlotIndex:
 	ld a, (0x379b:16)
 	and a, 0x1f
@@ -19767,6 +20982,8 @@ ToneGen_GetSlot_Lookup_Pad:
 	nop
 	nop
 
+; Out: A = tick of the next 12-tick step after (0x34fc) (0 and one beat on at 96), W = beat number
+; from the start ((0x34fa) * (0x34d9) + (0x34fb)).
 ToneGen_CalcNoteWithWrap:
 	ld a, (0x34fc:16)
 	ld e, a
@@ -19795,6 +21012,8 @@ ToneGen_CalcWrap_Store_Pad:
 	nop
 	nop
 
+; Moves the play tick 0x34fc to the next 12-tick step (ToneGen_StoreNoteOrWrap), then 0x3712 = 4
+; and 0x3717 = 0xff.
 ToneGen_RecalcAndRestart:
 	ld a, (0x34fc:16)
 	ld e, a
@@ -19813,12 +21032,15 @@ ToneGen_RecalcAndRestart_Pad:
 	nop
 	nop
 
+; In: A = tick.  Stores it in 0x34fc, or at 96 goes on to ToneGen_AdvancePeriodWrap.
 ToneGen_StoreNoteOrWrap:
 	cp a, 0x60
 	jr z, ToneGen_AdvancePeriodWrap
 	ld (0x34fc:16), a
 	jr PitchValidate_Exit
 
+; Tick 0x34fc = 0 and the beat 0x34fb one on; past the last beat ((0x34d9)) beat 0 and the measure
+; 0x34fa one on, which wraps to 0 after ((0x34d7) & 7) + 1 measures.
 ToneGen_AdvancePeriodWrap:
 	ld (0x34fc:16), 0
 	ld a, (0x34fb:16)
@@ -19850,6 +21072,8 @@ ToneGen_PeriodWrap_ResetBar_Pad:
 	nop
 	nop
 
+; Classifies the pattern event whose status is A: 0xd1..0xd6 go to ToneGen_ClassifyStereoEvent,
+; every other status to ToneGen_ClassifyMonoEvent.
 ToneGen_ClassifyAndDispatch:
 	cp a, 0xd1
 	jr z, ToneGen_ClassifyStereoType
@@ -19876,6 +21100,9 @@ ToneGen_ClassifyStereoType_Pad:
 	nop
 	nop
 
+; 0x3712 = 5.  Classifies the byte at the edit cursor (page (0x346b), offset (0x3449)) into 0x3720:
+; 0xd2 -> 1, 0xd1 -> 2, 0xd3 -> 3, 0xd4 -> 4, 0xd5 -> 5, anything else -> 6; then steps the cursor
+; by two (ToneGen_StepToNextStereoSlot) and stores the byte there in 0x3721.
 ToneGen_ClassifyStereoEvent:
 	ld a, 0x5:opc
 	ld (0x3712:16), a
@@ -20124,6 +21351,9 @@ AccPlayback_NoteOn_SetBit:
 	nop
 	nop
 
+; Builds the step list at 0x366a from the (0x34fe) entries of 0x3500, last first: each is 0x90
+; followed by a 5-byte record (ToneGen_WriteVoiceEventEntry, HL = entry index), and 0x360a counts
+; the bytes (6 per entry, from 0).
 AccPlayback_NoteOn_Check91:
 	ld wa, 0:i3
 	ld (0x360a:16), wa
@@ -20151,6 +21381,8 @@ AccPlayback_NoteOn_WritePan_Pad:
 	nop
 	nop
 
+; Appends a 5-byte record at XIY (advanced past it): (0x34fc), byte HL of XIX, byte HL + 6 of
+; XIX, (0x342d), (0x342e).
 ToneGen_WriteVoiceEventEntry:
 	ld a, (0x34fc:16)
 	ld (xiy), a
@@ -20176,6 +21408,9 @@ AccPlayback_AdvancePattern:
 	nop
 	nop
 
+; AccPlayback_NoteOn_Check91 with AccPlayback_AdvanceRingBuffer run on each entry first; when bit 0
+; of 0x3431 is set the entry is written as 0x91, the 5-byte record, (0x3432), (0x3433) (8 bytes)
+; instead of 0x90 and the record (6 bytes).
 AccPlayback_AdvPattern_Loop:
 	ld wa, 0:i3
 	ld (0x360a:16), wa
@@ -20350,6 +21585,10 @@ ToneGen_PitchClassNoteFormTable:
 	.byte 0x00, 0x00, 0x00
 	.byte 0x01, 0x11, 0x11
 
+; Clears bit 7 of XIY + 15 and runs ToneGen_ProcessVoiceSlots; then 0x3602 = 0x3447 = edit page
+; (0x346b), 0x3604 = 0x3445 = edit offset (0x3435), 0x344b = step-list size (0x360a), and the step
+; list goes into the pattern (AccPatch_InitSlotAndCopyData, ToneGen_AdvanceSeqList); 0x34fe = 0.
+; When stopped (bit 0 of 0x3283 clear) at measure 0, beat 0, tick 48 or less, sets bit 7 of 0x34cd.
 AccPlayback_ProcessOngoingEvents:
 	andmi8 (xiy + 15), 0x7f
 	calr ToneGen_ProcessVoiceSlots
@@ -20487,6 +21726,9 @@ ToneGen_StepVoiceReturn_Pad:
 	nop
 	nop
 
+; 0x351c = 0x351e = low byte of (0x3608) - 1 (also in E), 0x351a = (0x3606), XHL = address of
+; entry (0x3606) (ToneGen_CalcBufferAddr), and 0x3520 = word with high byte ((0x34d7) + 1) *
+; (0x34d9) - 1 and low byte 0.
 AccPlayback_Ongoing_AdvSlot:
 	ld wa, (0x3608:16)
 	dec 1, a
@@ -20610,6 +21852,9 @@ ToneGen_InitPlay_SetupTables_Data_2:
 	.long 0x00000000, 0x00000000, 0x00000000, 0x00000000
 	.long 0x00003287
 
+; Walks the current slot's chain for the record part (0x379b, set to 0x10 when no part is
+; selected) through the forward links (+3), from its first entry up to entry (0x3534); when an
+; entry equals (0x3447), sets bit 6 of 0x34d0.
 ToneGen_SearchVoiceBuffer:
 	call AccPatch_GetCurrentSlotAddr
 	ld a, (0x379b:16)
@@ -20821,6 +22066,9 @@ PlaybackState_InitDone_Pad:
 	nop
 	nop
 
+; Prepares the pattern-edit pointers for the record part 0x379b (set to 0x10 when none of bits
+; 0..4 is set): 0x3548 / 0x354c = the part's entries in ToneGen_InitPlay_SetupTables_Data /
+; ..._Data_2, and 0x3534 / 0x3441 = the first words they point at.  Clears bit 6 of 0x34d0.
 ToneGen_InitPlaybackState:
 	and (0x34d0:16), 191
 	ld a, (0x379b:16)
@@ -20851,6 +22099,8 @@ ToneGen_InitPlay_SetupTables_Pad:
 	nop
 	nop
 
+; Moves a pattern read position one byte on: IY (offset) and C (counter) + 1; when C reaches 0xff,
+; DE = the forward link (+3) of entry DE, XHL = its address (ToneGen_CalcBufferAddr), IY = C = 6.
 ToneGen_AdvanceVoiceStep:
 	inc 1, iy
 	inc 1, c
@@ -20871,6 +22121,9 @@ ToneGen_AdvanceVoiceStep_Pad:
 	nop
 	nop
 
+; With bit 2 of 0x3713 pending: clears bit 5 of 0x34d0, moves the position on (ToneGen_CalcTempo,
+; ToneGen_AdvanceByTempo, AccPlayback_CalcTimingPosition), resets the pattern buffer
+; (AccVoice_InitPatternBuffer), sets 0x3712 = 4, 0x3717 = 0xff, 0xe3e0 = 16 and clears the bit.
 AccPlayback_ProcessTempoAdvance:
 	bit 2, (0x3713:16)
 	jr z, AccPlayback_TempoAdv_Return
@@ -20965,6 +22218,9 @@ ToneGen_CalcTempo_Lookup_Data:	.byte	0x00, 0x00, 0x08, 0x00, 0x0c, 0x00
 	.byte 0x40, 0x00, 0x60, 0x00, 0xc0, 0x00, 0x80, 0x01
 	.byte 0x00, 0x03, 0x80, 0x04, 0x00, 0x06
 
+; Advances the pattern position (measure 0x34fa, beat 0x34fb, tick 0x34fc) by (0x3430) beats and
+; (0x342f) ticks: ticks carry at 96, beats at the beats-per-measure 0x34d9, and the measure wraps
+; to 0 after ((0x34d7) & 7) + 1 measures.
 ToneGen_AdvanceByTempo:
 	ld a, (0x342f:16)
 	ld w, (0x3430:16)
@@ -21002,6 +22258,8 @@ ToneGen_AdvTempo_StoreBeat_Pad:
 	nop
 	nop
 
+; Counts 0x3518 down; when it reaches 0, writes the three bytes (0x3516), (0x3517), 0 with
+; RhythmBuf_WriteByte (byte passed on the stack).
 AccPlayback_UpdateRhythmSustain:
 	ld a, (0x3518:16)
 	cp a, 0:i3
@@ -21032,6 +22290,9 @@ AccPlayback_UpdateRhythmSustain_Pad:
 	nop
 	nop
 
+; With bit 5 of 0x34d0 set: when 0x3712 = 4, ToneGen_AdjustVoiceVelocity if bits 2-3 of 0x372d are
+; non-zero and ToneGen_AdjustVolumePan if bits 0-1 are; when 0x3712 = 5, ToneGen_ProcessStereoType
+; if bits 4-5 are.
 AccPlayback_ProcessVoiceType5:
 	bit 5, (0x34d0:16)
 	jr z, AccVoice_DispatchType5Handler
@@ -21381,6 +22642,9 @@ ToneGen_MultiChan_WriteFinalNote:
 	nop
 	nop
 
+; Replaces the note event at the pattern cursor: saves its bytes (ToneGen_SaveCursorEventBytes),
+; deletes it (ToneGen_DeleteEventAtCursor), builds the converted event
+; (ToneGen_BuildConvertedNoteEvent) and steps on (ToneGen_StepWithBoundsCheck).
 ToneGen_CompareVoiceBlocks:
 	calr ToneGen_SaveCursorEventBytes
 	calr ToneGen_DeleteEventAtCursor
@@ -21569,6 +22833,11 @@ AccVoice_WriteNoteEventToBuffer_Pad:
 	nop
 	nop
 
+; With no free pattern entries (0x34d4 = 0): GLOBAL_ERROR_CODE = 15, 0xe3dc = 238, 0xe3de = 64 and
+; MIDI_SendSysExCmd with A = 8.  Otherwise 0x360a = 6 (step list at 0x366a starts with 0x90) or 8,
+; the edit cursor is set from 0x3514 / 0x3512 (page 0x346b, offset 0x3435), 0x3602 = 0x3447 =
+; page, 0x3604 = 0x3445 = offset, 0x344b = (0x360a), and the step list goes into the pattern
+; (AccPatch_InitSlotAndCopyData, ToneGen_AdvanceSeqList).
 ToneGen_StepWithBoundsCheck:
 	cpw (0x34d4:16), 0
 	jr z, ToneGen_SeqAdvanceMain
@@ -21614,6 +22883,9 @@ ToneGen_SeqAdvanceMain_Pad:
 	nop
 	nop
 
+; Peeks at the byte after the accompaniment edit cursor (page 0x346b, offset 0x3449); when it is
+; a page end (0x87) the first data byte (+6) of the next page is returned instead.
+;   Out: A = the byte.  Preserves XHL, XIY.
 AccVoice_ReadCurrentToneType:
 	push xiy
 	push xhl
@@ -21640,6 +22912,13 @@ ToneGen_Interp_Loop:
 	nop
 	nop
 
+; Advances the edit cursor of the accompaniment event stream by one byte, following page links.
+;   RAM: 0x346b = current 256-byte page number, 0x3449 = offset in it, 0x3435 = a byte counter
+;        incremented with the offset.
+;   A 0x87 byte ends a page: the word at page+3 becomes the new page (0x346b) and the offset
+;   restarts at 6.  A 0x83 byte ends the stream: the cursor wraps to the first page of the
+;   current patch slot (AccPatch_GetCurrentSlotAddr, ToneGen_GetSlotIndex), also at offset 6.
+;   Preserves XHL and XIY.
 ToneGen_StepToNextVoiceSlot:
 	push xiy
 	push xhl
@@ -21683,6 +22962,9 @@ ToneGen_Interp_Done:
 	nop
 	nop
 
+; Advances the accompaniment edit cursor (page 0x346b, offset 0x3449, counter 0x3435) by two
+; bytes, crossing a page end marker (0x87) through ToneGen_StepToNextBuffer at either step.
+; Preserves XHL and XIY.
 ToneGen_StepToNextStereoSlot:
 	push xiy
 	push xhl
@@ -21716,6 +22998,8 @@ ToneGen_Interp_OverflowDone:
 	nop
 	nop
 
+; Moves the accompaniment edit cursor to the next page: 0x346b = the link at +3 of the current
+; page, IY = 6 and the byte counter 0x3435 = 6.  Out: XHL = new page address.
 ToneGen_StepToNextBuffer:
 	ld hl, (0x346b:16)
 	calr ToneGen_CalcBufferAddr
@@ -21739,6 +23023,10 @@ ToneGen_AdvanceBeatCounter_Return:
 	nop
 	nop
 
+; Steps a pattern-stream pointer one byte.
+;   In:  XIX = pointer, DE = its page.  Out: XIX + 1, or the first data byte (+6) of the next
+;   page when that byte is the page end 0x87 (the new page number is returned in DE); A = the
+;   byte at XIX + 1 (0x87 when a page was crossed).  Preserves XHL.
 ToneGen_ReadBufferWithIndirection:
 	push xhl
 	inc 1, xix
@@ -21761,6 +23049,9 @@ ToneGen_ReadBufferWithIndirection_Pad:
 	nop
 	nop
 
+; Despite the name, moves the edit cursor one byte back: offset 0x3449 and counter 0x3435 - 1.
+; When the byte there is 0x87, it goes to the page's backward link (+1) at offset 0xfe, or, with no
+; link (0xffff), to page (0x3606) at offset (0x3608) - 1.  Preserves XIY, XHL.
 ToneGen_StepVoiceForward:
 	push xiy
 	push xhl
@@ -21800,6 +23091,12 @@ ToneGen_StepFwd_Exit:
 	nop
 	nop
 
+; Updates the first measure 0x3746 of the measure view for the current measure E = (0x371a), the
+; previous one D = (0x3747) and B = (0x34d7).  With 4 beats or fewer ((0x34d9)) a four-measure view
+; (0 when B <= 3; else AccTiming_ScrollFourBarViewForward, ChordDetect_CheckDescending,
+; _CheckRoot1, _CheckInversion1); with more a two-measure view (0 when B <= 1; else
+; ChordDetect_CheckAscending, _CheckMirror, _CheckRoot2, _CheckInversion2).  Then 0x3747 = E and
+; AccPlayback_DetectMeasurePos.
 ToneGen_StepFwd_Alternate:
 	ld e, (0x371a:16)
 	ld d, (0x3747:16)
@@ -21871,6 +23168,8 @@ RhythmParam_CheckExit6_Pad:
 	nop
 	nop
 
+; Measure-view scroll, not chord detection: four-measure view C; when C > 0, B > C + 2 and the play
+; moved from measure C + 1 (D) to C (E), C = C - 1.
 ChordDetect_CheckDescending:
 	cp c, 0:i3
 	jr z, ToneGen_NullRet2
@@ -21895,6 +23194,8 @@ ToneGen_NullRet2_Pad:
 	nop
 	nop
 
+; Measure-view wrap for the four-measure view: when C = 0 and the play moved from measure 1 (D) to
+; B + 1 (E), C = B - 3.
 ChordDetect_CheckRoot1:
 	cp c, 0:i3
 	jr nz, RhythmParam_CheckExit5
@@ -21915,6 +23216,8 @@ RhythmParam_CheckExit5_Pad:
 	nop
 	nop
 
+; Measure-view wrap for the four-measure view: when C = B - 3 and the play moved from measure B + 1
+; (D) to 1 (E), C = 0.
 ChordDetect_CheckInversion1:
 	ld a, b
 	sub a, 0x3
@@ -21935,6 +23238,8 @@ RhythmParam_CheckExit4_Pad:
 	nop
 	nop
 
+; Measure-view scroll for the two-measure view: when B > C + 1 and the play moved from measure C + 2
+; (D) to C + 3 (E), C = C + 1.
 ChordDetect_CheckAscending:
 	ld a, c
 	add a, 0x1
@@ -21956,6 +23261,8 @@ RhythmParam_CheckExit3_Pad:
 	nop
 	nop
 
+; Measure-view scroll for the two-measure view: when C > 0, B > C and the play moved from measure
+; C + 1 (D) to C (E), C = C - 1.
 ChordDetect_CheckMirror:
 	cp c, 0:i3
 	jr z, Rhythm_NullRet
@@ -21979,6 +23286,8 @@ Rhythm_NullRet_Pad:
 	nop
 	nop
 
+; Measure-view wrap for the two-measure view: when C = 0 and the play moved from measure 1 (D) to
+; B + 1 (E), C = B - 1.
 ChordDetect_CheckRoot2:
 	cp c, 0:i3
 	jr nz, RhythmParam_CheckExit2
@@ -21999,6 +23308,8 @@ RhythmParam_CheckExit2_Pad:
 	nop
 	nop
 
+; Measure-view wrap for the two-measure view: when C = B - 1 and the play moved from measure B + 1
+; (D) to 1 (E), C = 0.
 ChordDetect_CheckInversion2:
 	ld a, b
 	dec 1, a
@@ -22212,6 +23523,8 @@ CmStep_DebugShowHexBytes_Return:
 	ret
 	nop
 	nop
+; Debug output: splits a byte into two hex digit characters (CmStep_DebugSplitHexDigits, D and
+; E) and passes each to CmStep_DebugPutCharStub, advancing the column in IX.
 CmStep_DebugPrintHexByte:
 	calr	CmStep_DebugSplitHexDigits
 	pushw	ix
@@ -22224,10 +23537,13 @@ CmStep_DebugPrintHexByte:
 	ret
 	nop
 	nop
+; Empty debug output hook: returns at once (the character in A is dropped).
 CmStep_DebugPutCharStub:
 	ret
 	nop
 	nop
+; In: A = byte.  Out: D = its high nibble, A = HL = its low nibble, E = the byte.  The digit string
+; "0123456789ABCDEF" follows the routine.
 CmStep_DebugSplitHexDigits:
 	ld	e, a
 	and	wa, 240
@@ -22243,6 +23559,7 @@ CmStep_DebugSplitHexDigits:
 	.ascii "0123456789ABCDEF"
 	ret
 
+; No effect apart from the flags: computes (HL & 0xfff) << 4 and then restores HL.
 AccPat_ShiftAndMask:
 	pushw hl
 	and hl, 0xfff
@@ -22254,6 +23571,7 @@ AccPat_ShiftAndMask_Pad:
 	nop
 	nop
 
+; Out: XHL = RHYTHM_PATTERN_BUF_B + HL * 256, the address of 256-byte pattern block HL.
 AccPat_IndexToAddress:
 	and xhl, 0xffff
 	sla xhl, 8
@@ -22263,6 +23581,7 @@ AccPat_IndexToAddress:
 AccPat_InlineFunctions_DataBlock:
 	nop
 	nop
+; Out: XHL = RHYTHM_PATTERN_BUF_B + HL * 256.  Unreferenced code follows the ret.
 AccPat_IndexToAddress_Sub2:
 	and	xhl, 0xffff
 	sla	xhl, 8
@@ -22309,6 +23628,8 @@ AccPat_InlineFunctions_DataBlock_Code:
 	nop
 	pop	xix
 	push	0
+; Calls AccPat_DispatchNoteChange with XIZ preserved.
+; Called from AccPatch_LoadSectionFromRhythm.
 AccPat_IndexToAddress_Sub:
 	push	xiz
 	calr	AccPat_DispatchNoteChange
@@ -22407,12 +23728,19 @@ AccPat_CleanupAndFree_Pad:
 	nop
 	nop
 
+; Calls AccPatch_LoadDualVoiceParams with XIZ preserved (entry used by the file and flash
+; loaders).
 DualVoice_ParamLoadDone:
 	push xiz
 	calr AccPatch_LoadDualVoiceParams
 	pop xiz
 	ret
 
+; Locates the two pattern records named by 0x39ac and 0x39ad (indices 0..29, larger ones read
+; as 0) through RhythmTiming_OffsetTable, in the buffers at (0x39ae) and (0x39b2), stores their
+; addresses + 0x60 in 0x355c and 0x3560, copies 0x54 bytes from the first record + 12 to the
+; second + 12 (LDIR (XIX+),(XIY+)), and continues with AccPat_DualVoice_ReadParamsA, AccPatch_LoadDualVoiceParamsB
+; and AccPat_DualVoice_CopyAllBanks.
 AccPatch_LoadDualVoiceParams:
 	ld l, (0x39ac:16)
 	cp l, 0x1e
@@ -22480,6 +23808,8 @@ AccPatch_LoadDualVoiceParams_Skip:
 	add	xiy, 96
 	ld	(0x3560:16), xiy
 	ret
+; Copies the five part words (+0, +4, +6, +8, +10) of the slot record at (0x355c) to 0x35a4,
+; 0x35a6, 0x35a8, 0x35aa, 0x35ac.
 AccPat_DualVoice_ReadParamsA:
 	ld xiy, (0x355c:16)
 	ld hl, (xiy + 0:8)
@@ -22498,6 +23828,8 @@ AccPat_DualVoice_ReadParamsA_Pad:
 	nop
 	nop
 
+; Copies five words of the pattern record at (0x3560), offsets +0, +4, +6, +8, +10, to
+; 0x3598..0x35a0.
 AccPatch_LoadDualVoiceParamsB:
 	ld xiy, (0x3560:16)
 	ld hl, (xiy + 0:8)
@@ -22516,6 +23848,7 @@ AccPatch_LoadDualVoiceParamsB_Pad:
 	nop
 	nop
 
+; ToneBank_CopyEntry for the five pairs IY = (0x35a4 ... 0x35ac), IX = (0x3598 ... 0x35a0).
 AccPat_DualVoice_CopyAllBanks:
 	ld iy, (0x35a4:16)
 	ld ix, (0x3598:16)
@@ -22613,6 +23946,8 @@ ToneBank_CopyComplete_Return:
 ToneBank_CopyChunk:
 	nop
 
+; Out: XHL = XWA + 0x1400 + (XHL & 0xfff) * 256, the address of 256-byte entry HL of the tone
+; bank whose base is XWA.
 ToneBank_ComputeEntryAddress:
 	and xhl, 0xfff
 	sla xhl, 8
@@ -22620,6 +23955,8 @@ ToneBank_ComputeEntryAddress:
 	add xhl, 0x1400
 	ret
 
+; RhythmBuf_FindFreeBlock for the store based at (0x39b2): DE = the first entry 0x96..0x153 whose
+; byte 0 has bit 7 clear (XHL = its address); with none free, bit 0 of 0x35b0 is set (DE = 0x154).
 ToneBank_CopyChunk_Return:
 	ldw de, 0x96
 
@@ -22682,6 +24019,12 @@ ToneBank_SwapCopy_Pad_Code_Skip2:
 	or	de, 0x8000
 	ret
 
+; Loads the drum kit selected by bank / program 0x34ee / 0x34ed (validated by
+; VoiceParam_ClampAndValidate_Tramp and written back): the pair's two locator words from
+; RhythmROM_BankProgramLocators go to 0x355a / 0x355c, 0x3560 points at pattern record (0x34d6)
+; (0..29) of RHYTHM_PATTERN_BUF_A + 0x60, and RhythmROM_LoadPattern runs.  Kit types 0..3
+; (0x34ef) continue with DrumKit_DataTable_Entry0, the others with the accent/velocity path.
+;   Clears bits 1 and 2 of 0x35b0 first.
 RhythmROM_PatternDispatcher:
 	and (0x35b0:16), 249
 	ld l, (0x34ed:16)
@@ -22861,6 +24204,9 @@ RhythmROM_PatternDisp_Handle91:
 	nop
 	nop
 
+; Computes the address of a 64 KB bank of rhythm pattern data.
+;   In:  W = bank number (the rest of XWA is ignored).
+;   Out: XIX = RHYTHM_DATA_ROM__BASE_ADDR + (RHYTHM_ROM_BASE) + W * 0x10000.  XWA is clobbered.
 RhythmROM_CalcPatternAddr:
 	and xwa, 0xff00
 	sla xwa, 8
@@ -22969,6 +24315,10 @@ RhythmVoice_SetupChan_Finalize:
 	nop
 	nop
 
+; Counts the beat markers (0x81) of a rhythm-ROM pattern up to its end byte 0x83.
+;   The bank is the drum-kit byte +0x3d1 of the record at (0x3564) (RhythmROM_CalcPatternAddr);
+;   the pattern starts 6 bytes past the word at XHL, relative to the bank.
+;   Out: E = the count.
 RhythmROM_CountEntries:
 	push xhl
 	ld xhl, (0x3564:16)
@@ -23194,6 +24544,8 @@ RhythmROM_LoadKit_InitLDA:
 	nop
 	nop
 
+; Reads one word of a drum-kit table and the kit's byte at offset 0x3d1.
+;   In:  XHL = table, A = word index.  Out: HL = word A of the table, A = byte at (0x3564) + 0x3d1.
 ToneData_LookupEffectParam:
 	sla a, 1
 	xor w, w
@@ -23209,6 +24561,10 @@ RhythmROM_LoadKit_Return:
 	nop
 	nop
 
+; From the data at (0x3564): byte +0x3d1 into 0x358c..0x3590; 0x35b4 = ToneData_EffectParamWords
+; entry (ToneData_LookupEffectParam_Helper); then, with XIY = (0x3564) + (0x35b4), the words at XIY
+; + 0x26 (XIY + 0 when bit 0 of 0x35b1 is set), + 0x4c, + 0x72, + 0x98 and + 0xbe into 0x356a,
+; 0x356c, 0x356e, 0x3570 and 0x3572.
 AccPat_CalcAccentVelocity_Body_Helper:
 	ld xix, (0x3564:16)
 	add xix, 0x3d1
@@ -23254,6 +24610,7 @@ RhythmROM_LoadKit_CopyReturn:
 	nop
 	nop
 
+; 0x35b4 = ToneData_EffectParamWords[(0x34ef) & 15].
 ToneData_LookupEffectParam_Helper:
 	ld l, (0x34ef:16)
 	and l, 0xf
@@ -23562,7 +24919,7 @@ AccSection_Finalize:
 ; RhythmBuf_LoadPattern - Load rhythm pattern from ROM to DRAM buffer
 ; ============================================================================
 ; Input:  XIY = source ROM pointer, XIZ = write offset, XDE = dest base
-; Output: Pattern data at 0x95c00 + index*256
+; Output: Pattern data at RHYTHM_PATTERN_BUF_B + index*256
 ; Copies bytes until end marker (0x83) or buffer full (0xfe). Chains buffers.
 ; ============================================================================
 RhythmBuf_LoadPattern:
@@ -23658,6 +25015,10 @@ RhythmBuf_BarQuartersByTimeSig:
 	ei	7
 	.byte 0x08
 
+; Writes an empty pattern into a pattern slot: one 0x81 byte per beat, then an end byte 0x83.
+;   The record at (0x3560) gives the time-signature index (+12), looked up in
+;   RhythmBuf_BarQuartersByTimeSig, and the bar count ((+13 & 7) + 1).
+;   In:  DE = slot index (AccPat_IndexToAddress); the bytes start at slot + 6.
 RhythmBuf_FillEmptyPattern:
 	ld xiy, (0x3560:16)
 	ld l, (xiy + 12)
@@ -23705,6 +25066,9 @@ StyleConvert_ReloadParams_Return:
 	nop
 	nop
 
+; Rebases the program number 0x34ed by the kit type 0x34ef: types 16..19 give
+; 0x70 + type (+4 when 0x34ed >= 132, +4 more when >= 136), types above 19 give 0x78 + type
+; (+6, +6 at the same thresholds); types below 16 leave it unchanged.
 AccPat_CalcAccentVelocity:
 	cp (0x34ef:16), 19
 	jr ule, StyleConvert_Reload_Return
@@ -23905,6 +25269,8 @@ StyleConvert_Reload_Fallback_Return:
 	nop
 	nop
 
+; Copies 0x8000 words (64 KB) from 0x9b4000 in the table data ROM to RHYTHM_PATTERN_BUF_A (LDIRW,
+; XIX = destination).
 AccWidget_DispatchTable:
 	ld xiy, 0x9b4000
 	ld xix, RHYTHM_PATTERN_BUF_A
@@ -24542,6 +25908,10 @@ DrumKitInit_FinalSetup:
 DrumKitInit_Return:
 	ret
 
+; Sends the program of the composer's current kit.
+;   The kit index (0x34d6) becomes the program byte at 0xfc5a: 0x80 + (index & 0x1f) for
+;   indices below 0x1e, else 0x80 + (((index - 0x1e) * 4) & 0x1f); the bank byte 0xfc5b keeps
+;   only bit 7.  Then DrumKit_PostMidiEvents sends the pair.
 DrumKit_SendProgramChange:
 	ld xhl, 0:i3
 	ld l, (0x34d6:16)
@@ -24652,6 +26022,10 @@ DrumKit_ValidateBank_Wrap:
 	pop	xiz
 	ret
 
+; Folds a drum-kit program (0xfc5a) of 0x8c..0xff back into the valid range: 0x8c..0x91 -> 0x80,
+; 0x92..0x97 -> 0x84, above -> 0x88; stores it (DrumKit_StoreAndSendBank), sets the kit index
+; 0x34d6 to its low 5 bits and sends it (DrumKit_SendProgramChange).  Programs below 0x8c are
+; left alone.
 DrumKit_ValidateBank:
 	ld a, (0xfc5a:16)
 	cp a, 0x80
@@ -24683,6 +26057,8 @@ DrumKit_ValidateBank_Apply:
 DrumKit_ValidateBank_Return:
 	ret
 
+; In: L = kit program.  0xfc5a = L and 0xfc5b keeps only bit 7; PartCtrl_WriteProgramChange with H
+; = 0; then H is stored at 0xff92 + L and DrumKit_PostMidiEvents posts the pair.
 DrumKit_StoreAndSendBank:
 	ld (0xfc5a:16), l
 	and (0xfc5b:16), 128
@@ -24693,6 +26069,10 @@ DrumKit_StoreAndSendBank:
 	call DrumKit_PostMidiEvents
 	ret
 
+; Posts the bank and program of the kit pair at 0xfc5a / 0xfc5b as two events on channel
+; 0x48 (SwbtWr_QueuePostEvent, D = 1 with (0xfc5b) & 0x7f, then D = 0 with (0xfc5a)), then
+; sets 0x90f7 = 72, sends the program change (PartCtrl_WriteProgramChange, HL = the pair) and
+; re-applies the channel setup (MIDI_SetupChannelParams, C = 0x48).
 DrumKit_PostMidiEvents:
 	ld e, 0x48:opc
 	ld a, (0xfc5b:16)
@@ -24720,6 +26100,9 @@ DrumKit_PostMidiEvents:
 	call MIDI_SetupChannelParams
 	ret
 
+; Recomputes the composer's part-mute byte 0x34f1 (SOLO in the CmpMode_Deactivate comment):
+; bits 0xc2 are kept; when bit 7 is set, the record part 0x379b (bits 4, 3, 0, 1, 2) ORs in
+; 0x3c, 0x39, 0x35, 0x2d or 0x1d, i.e. every part bit except the record part's own.
 DrumKit_UpdateStatusFlags:
 	ld w, (0x34f1:16)
 	and w, 0xc2
@@ -24759,13 +26142,18 @@ DrumKit_InlineCode1:
 	call	DrumKit_InlineCode1_Helper
 	pop	xiz
 	ret
+; Empty routine: returns at once.
 DrumKit_InlineCode1_Helper:
 	ret
+; Calls DrumKit_InlineCode1_Data with XIZ preserved.
+; Called from CmpBkslTtl_Dispatch and CmpBkslTtlFunc_OnTitleActivate.
 CmpBkslTtl_Dispatch_Helper:
 	push	xiz
 	call	DrumKit_InlineCode1_Data
 	pop	xiz
 	ret
+; Unless PREVIOUS_TITLE is 177: DrumKit_UpdateStatusFlags_Helper2, record part 0x379b = 64, bit 6
+; of 0x34cd cleared and DrumKit_UpdateStatusFlags_Helper.  Always clears bits 0, 5 and 6 of 0xe3e2.
 DrumKit_InlineCode1_Data:
 	cp	(PREVIOUS_TITLE:16), 177
 	jr	z, DrumKit_InlineCode1_Data_Skip
@@ -24776,6 +26164,8 @@ DrumKit_InlineCode1_Data:
 DrumKit_InlineCode1_Data_Skip:
 	and	(0xe3e2:16), 158
 	ret
+; When the class of kit index 0x34d6 (DrumKit_SlotClassBits) differs from (0x34cd) & 0x30, moves
+; the index to 0, 4 or 8 for class 0, 0x20 or 0x10 and sends it (DrumKit_SendProgramChange).
 DrumKit_UpdateStatusFlags_Helper:
 	ld	e, (0x34cd:16)
 	and	e, 48
@@ -24809,11 +26199,16 @@ DrumKit_UpdateStatusFlags_Return:
 DrumKit_SlotClassBits:	.byte 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x20, 0x20, 0x10, 0x10, 0x10, 0x10
 			.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
 			.byte 0x10, 0x10, 0x10, 0x10, 0x10, 0x10
+; Calls DrumKit_UpdateStatusFlags_Helper2 with XIZ preserved.
+; Called from CmEsyTtl_Dispatch_Skip.
 DrumKit_InlineCode1_Sub:
 	push	xiz
 	call	DrumKit_UpdateStatusFlags_Helper2
 	pop	xiz
 	ret
+; When the low 3 bits of the panel byte 0xfc5d are 0: sends the switch event (A = 2, W = 7, E =
+; 0x48, D = 3) through SwbtWr_TrailingBytecode, sets bit 3 of 0xfc5d and posts (W = 8, E = 0x48,
+; D = 3) with SwbtWr_QueuePostEvent.
 DrumKit_UpdateStatusFlags_Helper2:
 	xor	xwa, xwa
 	xor	xde, xde
@@ -24835,12 +26230,18 @@ DrumKit_UpdateStatusFlags_Helper2:
 DrumKit_UpdateStatusFlags_Return2:
 	ret
 
+; Calls DrumSlot_Dispatch with XIZ preserved (used by CmpBkslTtl_Dispatch).
+; Called from CmpBkslTtl_Mode1, DrumSlot_Dispatch_Slot0, DrumSlot_Dispatch_Slot3_WithMode,
+; DrumSlot_Dispatch_Slot2, DrumSlot_Dispatch_Slot5, DrumSlot_Dispatch_Slot4 and 4 more sites.
 DrumSlot_DispatchWrapper:
 	push xiz
 	call DrumSlot_Dispatch
 	pop xiz
 	ret
 
+; In: HL = slot button 0..9 (others count as 0).  Calls DrumSlot_HandlerTable[HL] with HL
+; (DrumSlot_Handler_Type0 for 0-3, DrumSlot_Handler_Type1 for 4-9), then
+; DrumKit_SendProgramChange.
 DrumSlot_Dispatch:
 	cp hl, 0xa
 	jr c, DrumSlot_ClampAndLookup
@@ -24874,6 +26275,7 @@ DrumSlot_Handler_Type1:
 	; --- Wrapper: calr to F64DC4, ret (4 bytes) ---
 	calr DrumSlot_OffsetCalc_Extended
 	ret
+; Kit index 0x34d6 = L + 0, 4 or 8 for the class (0x34cd) & 0x30 = 0, 0x20 or other.
 DrumSlot_OffsetCalc_Simple:
 	; --- Offset calc 1: add 0/4/8 to L based on (0x34cd) bits 5:4 (30 bytes) ---
 	ld	e, (0x34cd:16)
@@ -24891,6 +26293,7 @@ DrumSlot_OffsetCalc_AddHigh:
 DrumSlot_OffsetCalc_StoreAndRet:
 	ld	(0x34d6:16), l
 	ret
+; Kit index 0x34d6 = L + 8, 14 or 20 for the class (0x34cd) & 0x30 = 0, 0x20 or other.
 DrumSlot_OffsetCalc_Extended:
 	; --- Offset calc 2: add 8/0x0e/0x14 to L based on (0x34cd) bits 5:4 (33 bytes) ---
 	ld	e, (0x34cd:16)
@@ -24921,6 +26324,9 @@ CmpBkslSTtl_EnterTitle:
 	call RhythmPatInit_Entry
 	pop xiz
 	ret
+; Unless PREVIOUS_TITLE is 178: RhythmPatInit_LoadParams, record part 0x379b = 32 and, coming from
+; title 181, AccWrap_PlayModeDispatch and bit 2 of 0x28a7 set.  Always clears bits 0, 5 and 6 of
+; 0xe3e2.
 RhythmPatInit_Entry:
 	; --- Conditional init: check (0x8d37), calr, store, optional call (39 bytes) ---
 	cp	(PREVIOUS_TITLE:16), 178
@@ -25014,6 +26420,9 @@ CmpBkslSTtl_SelectRecPart:
 	pop xiz
 	ret
 
+; In: HL = part button.  Clears bit 3 of 0xe3e2; record part 0x379b = RhythmFillIn_PatternTable[HL]
+; (HL 4 and up less 4); then DrumKit_UpdateStatusFlags, AudioInit_SelectAndDispatch and
+; AudioMode_ResetVoiceState.
 RhythmFillIn_Select:
 	and (0xe3e2:16), 247
 	ld xwa, RhythmFillIn_PatternTable
@@ -25079,10 +26488,14 @@ CmpRealTtl_CycleQuantize:
 	pop xiz
 	ret
 
+; Calls RhythmMute_StateMachine.  Its caller is CmpRealTtl_CycleQuantize: this steps the quantize
+; setting, not a mute.
 RhythmMute_Toggle:
 	calr RhythmMute_StateMachine
 	ret
 
+; Steps the quantize setting 0x34db through 0, 4, 5, 6, 7, 1, 2, 3 and back to 0 (settings 1..7
+; are the AccPatch_QuantizeTick grids), and sets bit 3 of 0xe3e2.
 RhythmMute_StateMachine:
 	or (0xe3e2:16), 8
 	inc 1, (0x34db:16)
@@ -25150,6 +26563,8 @@ CmpRealTtl_ToggleSolo:
 	pop xiz
 	ret
 
+; Toggles 0x34f1 between 0x80 and 0, recomputes it (DrumKit_UpdateStatusFlags), and sets bit 7 of
+; 0x34cd unless bit 0 of 0x3283 is set.
 RhythmSolo_Toggle:
 	bit 7, (0x34f1:16)
 	jr nz, RhythmSolo_Disable
@@ -25180,6 +26595,9 @@ CmpRealTtl_SelectRecPart:
 	pop xiz
 	ret
 
+; Unless 0x34cf or 0x35fc has bit 2 or 3 set: record part 0x379b = RhythmFillIn_PatternTable[HL &
+; 15], DrumKit_UpdateStatusFlags, bit 7 of 0x34cd set unless bit 0 of 0x3283 is, then
+; AudioInit_SelectAndDispatch and AudioMode_ResetVoiceState.
 RhythmVariation_Select:
 	ld a, (0x34cf:16)
 	and a, 0xc
@@ -25247,11 +26665,17 @@ CmpStep_ClearSustainBlockFlag:
 CmpStep_ClearSustainBlockFlag_Impl:
 	and	(0x34cd:16), 247
 	ret
+; Calls RhythmVariation_Select_Helper6 with XIZ preserved.
+; Called from AccDraw_SecondarySub_Handler08.
 AccScreen_DataBlock_Helper3:
 	push	xiz
 	calr	RhythmVariation_Select_Helper6
 	pop	xiz
 	ret
+; Moves the record part 0x379b one place along DRM, AC3, AC2, AC1, BAS (0x10 -> 4 -> 2 -> 1 -> 8,
+; and 8 stays): the byte at RhythmVariation_InlineCode_Code + ((0x379b) & 31), a 32-byte table
+; spelled as instructions.  Then AudioInit_SelectAndDispatch, AudioMode_ResetVoiceState and
+; DrumKit_UpdateStatusFlags.
 RhythmVariation_Select_Helper6:
 	ld	xhl, 0:i3
 	ld	l, (0x379b:16)
@@ -25447,11 +26871,16 @@ AccDraw_StepArticulation_Skip:
 	or	(0x372d:16), 32
 RhythmVariation_Select_Return3:
 	ret
+; Calls RhythmVariation_Select_Entry_Data with XIZ preserved.
+; Called from CmpSetTtl_Dispatch.
 CmpSetTtl_Dispatch_Helper:
 	push	xiz
 	call	RhythmVariation_Select_Entry_Data
 	pop	xiz
 	ret
+; Unless PREVIOUS_TITLE is 180: 0x3540 = 1, the current slot's kit pair (word +16, bank & 0x7f) is
+; made the panel kit (TimeSig_DisplayStrings_Code_Sub2) and posted (DrumKit_PostMidiEvents).
+; Always ends with Rhythm_LoadCurrentTimeSig.
 RhythmVariation_Select_Entry_Data:
 	cp	(PREVIOUS_TITLE:16), 180
 	jr	z, RhythmVariation_Select_Entry_Data_Skip
@@ -25467,14 +26896,18 @@ RhythmVariation_Select_Entry_Data_Skip:
 	calr	Rhythm_LoadCurrentTimeSig
 	ret
 
+; Empty routine: returns at once.
 RhythmConfig_ReturnStub:
 	ret
 
+; Calls RhythmConfig_InlineCode2_Data with XIZ preserved.
+; Called from CmpSetTtlFunc_OnTitleOld.
 RhythmConfig_InlineCode2:
 	push	xiz
 	call	RhythmConfig_InlineCode2_Data
 	pop	xiz
 	ret
+; Unless CURRENT_TITLE is 180: DrumKit_SendProgramChange.
 RhythmConfig_InlineCode2_Data:
 	cp	(CURRENT_TITLE:16), 180
 	jr	z, RhythmConfig_InlineCode2_Data_Return
@@ -25482,6 +26915,9 @@ RhythmConfig_InlineCode2_Data:
 RhythmConfig_InlineCode2_Data_Return:
 	ret
 
+; Steps the composer value 0x3540 up (W bit 7 clear) or down (set): down stops at 1; up stops at
+; 6, or at 8 when bit 0 of RHYTHM_PATTERN_BUF_A + 0x10 is clear and the kit index 0x34d6 is 11
+; or less.  Preserves XIX, XIZ.
 DrumTempo_Adjust:
 	push xiz
 	push xix
@@ -25516,6 +26952,9 @@ DrumTempo_Done:
 	pop xiz
 	ret
 
+; Calls DrumVoice_Dispatch with L = (0x3540) - 1 (at least 0), preserving XIZ.
+; Called from CmpSetTtl_DrumVoice0, CmpSetTtl_DrumVoice1, MainCmpSetFunc_Skip and
+; MainCmpSetFunc_Skip2.
 DrumVoice_Select:
 	push xiz
 	xor hl, hl
@@ -25536,6 +26975,8 @@ DrumVoice_InlineStub:
 	pop	xiz
 	ret
 
+; Sets bit 0 of 0x8d88 and calls entry (L & 15) of DrumVoice_DispatchTable (handlers 0..7, the
+; rest DrumVoice_NullHandler).
 DrumVoice_Dispatch:
 	or (0x8d88:16), 1
 	pushw hl
@@ -25760,6 +27201,9 @@ DrumVoice_Handler7_Return:
 DrumVoice_Handler7_Epilogue:
 	pop	xiz
 	ret
+; Sets bit 0 of 0x8d88 and clears bit 3 of 0xe3e2; when bit 0 of RHYTHM_PATTERN_BUF_A + 0x10 is
+; clear and the kit index 0x34d6 is below 12, DrumVoice_Handler7_Helper_Helper.  A run of
+; unreferenced rets follows.
 DrumVoice_Handler7_Helper:
 	or	(0x8d88:16), 1
 	and	(0xe3e2:16), 247
@@ -25784,11 +27228,17 @@ DrumVoice_Handler7_Code_Return:
 	ret
 	and	(0xe3e2:16), 254
 	ret
+; Calls DrumVoice_Handler7_Data with XIZ preserved.
+; Called from CmpNcpTtl_Dispatch and CmpNcpTtlFunc_OnTitleActivate.
 CmpNcpTtl_Dispatch_Helper:
 	push	xiz
 	call	DrumVoice_Handler7_Data
 	pop	xiz
 	ret
+; Unless PREVIOUS_TITLE is 184 (TT_CMPNCP): DrumVoice_Handler7_Code_Helper2, the pair (0x34ed) /
+; (0x34ee) made the panel kit (DrumVoice_Handler7_Data_Code_Helper) and posted
+; (DrumKit_PostMidiEvents), bit 6 of 0x34cd cleared.  Always: CmpNcp_LatchPanelRhythmAsSource,
+; DrumVoice_Handler7_Code_Helper, DrumVoice_Handler7_Code_Helper2.
 DrumVoice_Handler7_Data:
 	cp	(PREVIOUS_TITLE:16), 184	; TT_CMPNCP
 	jr	z, DrumVoice_Handler7_Data_Code_Skip
@@ -25803,6 +27253,10 @@ DrumVoice_Handler7_Data_Code_Skip:
 	calr	DrumVoice_Handler7_Code_Helper
 	calr	DrumVoice_Handler7_Code_Helper2
 	ret
+; When the panel kit program 0xfc5a is 0x80 or more but not 0x80, 0x84 or 0x88: replaces it by the
+; first program of its group (CmpNcp_ProgramGroupBase[A & 0x7f]) in 0xfc5a and 0x34ed, with the
+; low 7 bits in 0xffa1 and 0xffbf, and posts it (DrumKit_PostMidiEvents).  Values 0x8c and up
+; index past the 12-byte table.
 DrumVoice_Handler7_Code_Helper:
 	ld	a, (0xfc5a:16)
 	and	a, 255
@@ -25839,6 +27293,7 @@ CmpNcp_SendProgramChangeOnLeave:
 	call	DrumVoice_Handler7_Data_3
 	pop	xiz
 	ret
+; Unless CURRENT_TITLE is 184 (TT_CMPNCP): DrumKit_SendProgramChange.
 DrumVoice_Handler7_Data_3:
 	cp	(CURRENT_TITLE:16), 184	; TT_CMPNCP
 	jr	z, DrumVoice_Handler7_Code_Return3
@@ -26025,6 +27480,9 @@ CmpNcp_ItemHandler4:
 	call	DrumVoice_Handler7_Data_4
 	pop	xiz
 	ret
+; Unless PREVIOUS_TITLE is 189 (TT_CMMODE): clears bit 6 of 0x34cd and copies bit 0 of
+; RHYTHM_PATTERN_BUF_A + 0x10 into bit 0 of 0x34d3.  Always clears bits 0 and 5 of 0xe3e2.  An
+; XIZ-preserving wrapper of DrumVoice_Handler7_Code_Entry_Data follows two unreferenced rets.
 DrumVoice_Handler7_Data_4:
 	cp	(PREVIOUS_TITLE:16), 189	; TT_CMMODE
 	jr	z, CmpNcp_ItemHandler4_Join
@@ -26045,6 +27503,8 @@ CmpNcp_ItemHandler4_Join:
 	call	DrumVoice_Handler7_Code_Entry_Data
 	pop	xiz
 	ret
+; Unless PREVIOUS_TITLE is 187 (TT_CMBEND), clears bit 6 of 0x34cd; always clears bit 0 of
+; 0xe3e2.  The ACTIVE_TITLE_PREVIOUS test branches to the next line either way.
 DrumVoice_Handler7_Code_Entry_Data:
 	cp	(PREVIOUS_TITLE:16), 187	; TT_CMBEND
 	jr	z, CmpNcp_ItemHandler4_Join2
@@ -26126,7 +27586,7 @@ DrumVoice_Handler7_Code_Join3:
 	ld	(0xfc5b:16), h
 	ret
 ; Rhythm_LoadCurrentTimeSig: Locates the current rhythm's header in the Rhythm Data ROM
-;   (RhythmROM_BankProgramLocators[bank 0xFC5B & 0x7F][program 0xFC5A], 0x400000 + (hi & 0xFF) << 16 + lo) and copies
+;   (RhythmROM_BankProgramLocators[bank 0xFC5B & 0x7F][program 0xFC5A], RHYTHM_DATA_ROM__BASE_ADDR + (hi & 0xff) << 16 + lo) and copies
 ;   its byte +976 (0x3D0), the time-signature index into TimeSig_DisplayStrings, to RAM 0x34F0. Basis: callers + body
 ;   + ROM data -- every rhythm-selection path (DrumVoice_Handler6/7, RhythmVariation_Select_Entry_Data,
 ;   AccPatch_CallParamLookup_Helper) calls it after the selection.
@@ -26200,6 +27660,10 @@ DrumVoice_Handler7_Code_Join5:
 	and	h, 127
 	ld	(0xfc5b:16), h
 	ret
+; Compares byte 7 of the 8-byte TimeSig_DisplayStrings entries for (0x34f0) & 31 and (0x34d8) &
+; 31.  Equal: the current slot's kit pair (+16 / +17) = (0xfc5a) / (0xfc5b) & 0x7f,
+; GLOBAL_ERROR_CODE = 21 and DrumVoice_NotifyEE.  Different: GLOBAL_ERROR_CODE = 22,
+; DrumVoice_NotifyEE and MIDI_SendSysExCmd with A = 8.
 DrumVoice_Handler7_Helper_Helper:
 	ld	l, (0x34f0:16)
 	and	l, 31
@@ -26235,6 +27699,8 @@ DrumVoice_Handler7_Code_Skip4:
 DrumVoice_Handler7_Code_Return7:
 	ret
 
+; Sends sound-controller command 0xee with argument 0 (SoundCtrl_SendCommand), preserving all
+; registers.
 DrumVoice_NotifyEE:
 	push xwa
 	push xhl
@@ -26309,8 +27775,12 @@ TimeSig_DisplayStrings:
 	.byte 7
 	.ascii "(16/8)+0 "
 	.byte 8
+; Calls VoiceParam_ClampAndValidate_Tramp, then falls into TimeSig_DisplayStrings_Code_Sub2.
+; Called from DrumVoice_Handler7_Data.
 DrumVoice_Handler7_Data_Code_Helper:
 	call	VoiceParam_ClampAndValidate_Tramp
+; In: L = kit program, H = bank.  0xfc5a = L, bits 0-6 of 0xfc5b = H & 0x7f, 0x90f7 = 72;
+; PartCtrl_WriteProgramChange; then H is stored at 0xff92 + L.
 TimeSig_DisplayStrings_Code_Sub2:
 	ld	(0xfc5a:16), l
 	and	h, 127
@@ -26524,6 +27994,8 @@ TimeSig_DisplayStrings_Code_Skip11:
 	jr	CmpNcp_LatchPanelRhythmAsSource_Join
 TimeSig_DisplayStrings_Code_Return:
 	ret
+; Empty routine: returns at once (the code after the ret, which clears 0x34ef when 0x34ed >= 0x80
+; and 0x34ef >= 10, is not reached from here).
 AccPatch_ComplexDataBlock_Helper2:
 	ret
 	cp	(0x34ed:16), 128
@@ -26841,6 +28313,7 @@ CmpNcp_StepSlotInGroup2_Skip2:
 	ret
 	ret
 	ret
+; Out: XIY = RHYTHM_PATTERN_BUF_A + 0xba0 + 32 * (0x390a), a 32-byte record of the composer data.
 TimeSig_DisplayStrings_Helper:
 	ld	xwa, 0:i3
 	ld	xbc, 0:i3
@@ -26935,6 +28408,9 @@ TimeSig_DisplayStrings_Code_Helper_Helper2_Join3:
 	calr	TimeSig_DisplayStrings_Code_Helper_Helper
 	or	(0x3926:16), 1
 	ret
+; Builds in 0x390d the mask of composer slots 1..3 whose beat count differs from the previous
+; slot's (TimeSig_DisplayStrings_Code_Helper2 for H = 0..3, TimeSig_DisplayStrings_Code_Helper3
+; for each change); slots marked 0xff are skipped.
 TimeSig_DisplayStrings_Code_Helper_Helper:
 	ld	(0x390d:16), 0
 	ld	h, 0:opc
@@ -26971,6 +28447,8 @@ TimeSig_DisplayStrings_Code_Skip34:
 	calr	TimeSig_DisplayStrings_Code_Helper3
 TimeSig_DisplayStrings_Code_Helper_Helper_Return:
 	ret
+; For the kit index byte H of the table at XIX (0xff = none): temporarily sets 0x34d6 to it and
+; returns its beat count in B (AccPatch_GetSlotBeatsAndMeasures, A); BC = 0xffff for none.
 TimeSig_DisplayStrings_Code_Helper2:
 	ld	l, (xix+h)
 	cp l, 255
@@ -26989,6 +28467,7 @@ TimeSig_DisplayStrings_Code_Helper2_Skip:
 	ldw	bc, 0xffff
 TimeSig_DisplayStrings_Code_Helper2_Return:
 	ret
+; ORs TimeSig_SlotBitMask[H] (1, 2, 4, then 8 for 3..7) into 0x390d.  Preserves XWA.
 TimeSig_DisplayStrings_Code_Helper3:
 	push	xwa
 	ld	xwa, TimeSig_SlotBitMask
@@ -27004,6 +28483,7 @@ TimeSig_SlotBitMask:
 	call	TimeSig_DisplayStrings_Helper2
 	pop	xiz
 	ret
+; Empty routine: returns at once (unreferenced code follows).
 TimeSig_DisplayStrings_Helper2:
 	ret
 	; No reference found.  Saves (0x390A)/(0x390B), runs (0x390A) = 0..4 through
@@ -27030,6 +28510,7 @@ TimeSig_RunSlots0to4_Done:
 	pop	(0x390a:16)
 	ld	(0x390d:16), 0
 	ret
+; For each of bits 1, 2 and 3 of 0x390d that is set, writes 0xff to XIX + 1, + 2 or + 3.
 TimeSig_DisplayStrings_Code_Helper3_Helper:
 	bit	1, (0x390d:16)
 	jr	z, TimeSig_DisplayStrings_Code_Helper3_Skip
@@ -27066,6 +28547,8 @@ CmpEsy_PrepareRealtimeRecording:
 	call	TimeSig_DisplayStrings_Helper3
 	pop	xiz
 	ret
+; TimeSig_DisplayStrings_Code_Helper4, DrumKit_UpdateStatusFlags, AudioInit_SelectAndDispatch,
+; AudioMode_ResetVoiceState, RhythmPatInit_LoadParams.
 TimeSig_DisplayStrings_Helper3:
 	calr	TimeSig_DisplayStrings_Code_Helper4
 	calr	DrumKit_UpdateStatusFlags
@@ -27073,6 +28556,8 @@ TimeSig_DisplayStrings_Helper3:
 	call	AudioMode_ResetVoiceState
 	calr	RhythmPatInit_LoadParams
 	ret
+; Record part 0x379b from the EASY part mask 0x37c9: bit 4 -> 1, bit 5 -> 2, bit 6 -> 4, bit 3 -> 8,
+; none -> 16.  The reverse mapping, unlabelled, follows the ret.
 TimeSig_DisplayStrings_Code_Helper4:
 	ld	(0x379b:16), 1
 	bit	4, (0x37c9:16)
@@ -27252,6 +28737,9 @@ TimeSig_CallProc:
 	call	(xhl)
 	ret
 
+; Composer parameter 0x80: steps the start measure 0x398a up (A = 0, up to 999) or down (to 1),
+; keeps the end measure 0x398c at least equal to it and at most 7 above, and sets bit 4 of
+; 0xe3e0.  Tempo_DisplayParamCommon records the parameter first.
 Tempo_AdjustStartMeasure:
 	dec 2, xsp
 	ld (xsp), a
@@ -27296,6 +28784,8 @@ Tempo_StartMeasureReturn:
 	inc 2, xsp
 	ret
 
+; Composer parameter 0x81: steps the end measure 0x398c up (A = 0, up to 999) or down (to 1) and
+; keeps the start measure 0x398a no later than it and within 7 below, then sets bit 4 of 0xe3e0.
 Tempo_AdjustEndMeasure:
 	dec 2, xsp
 	ld (xsp), a
@@ -27342,6 +28832,8 @@ Tempo_EndMeasureReturn:
 	inc 2, xsp
 	ret
 
+; Composer parameter 0x82: steps 0x398e up (A = 0, up to 0x31) or down (to 1) and sets bit 4 of
+; 0xe3e0.
 Tempo_AdjustQuantize:
 	dec 2, xsp
 	ld (xsp), a
@@ -27372,6 +28864,8 @@ Tempo_QuantizeReturn:
 	inc 2, xsp
 	ret
 
+; Composer parameter 0x86: steps the byte that Tempo_AdjustEffect_Table lists for index (0x3990)
+; up (A = 0, up to 0x10) or down (to 0) and sets bit 4 of 0xe3e0.
 Tempo_AdjustEffect:
 	dec 2, xsp
 	ld (xsp), a
@@ -27404,6 +28898,9 @@ Tempo_EffectReturn:
 	inc 2, xsp
 	ret
 
+; Only for A = 0: records the change for the display (Tempo_DisplayParamCommon, A = 9, C = 8) and
+; steps 0x398f up, at most to 29, setting bit 4 of 0xe3e0.  0x398f is the user-style record index
+; SeqRec_ValidateDone reads, despite the name.
 Tempo_IncrementTimeSigNum:
 	cp a, 0:i3
 	ret nz
@@ -27418,6 +28915,8 @@ Tempo_IncrementTimeSigNum:
 	set 4, (0xe3e0:16)
 	ret
 
+; Only for A = 0: records the change for the display (Tempo_DisplayParamCommon, A = 9, C = 8) and
+; steps 0x398f down, at least to 0, setting bit 4 of 0xe3e0.
 Tempo_DecrementTimeSigNum:
 	cp a, 0:i3
 	ret nz
@@ -27472,6 +28971,9 @@ Tempo_DecrementTimeSigNum_Epilogue:
 	inc	2, xsp
 	ret
 
+; Only for A = 0: sets bit 0 of 0x8d88 and runs Tempo_DisplayParamReturn; its result L goes to
+; 0x3988.  L = 1: Tempo_DisplayParamSkipClear with 15 and MIDI_SendSysExCmd with 8; L = 0:
+; Tempo_DisplayParamSkipClear with 0x23.  Sets bit 7 of 0x34cd.
 Tempo_EditBPM:
 	cp a, 0:i3
 	ret nz
@@ -27610,12 +29112,15 @@ Tempo_AdjustEffect_WideArg:
 	extz	wa
 	jrl	Tempo_AdjustEffect
 
+; Records a parameter change for the composer's display: sets bits 0 and 3 of 0xe3e2 and
+; stores A in 0xe3e4 and C in 0xe3e6.
 Tempo_DisplayParamCommon:
 	or (0xe3e2:16), 9
 	ld (0xe3e4:16), a
 	ld (0xe3e6:16), c
 	ret
 
+; Stores A in GLOBAL_ERROR_CODE and sends sound-controller command 0xee.
 Tempo_DisplayParamSkipClear:
 	ld (GLOBAL_ERROR_CODE:16), a
 	ldw wa, 0xee
@@ -27760,6 +29265,7 @@ Tempo_DisplayEffectLookup:
 	popw_erp 0xfa
 	ret
 
+; SeqRec_ValidateDone for A = 0, 1, 2, 3 and 4 (the last as a tail jump).
 Tempo_DisplayEffectRender:
 	ld wa, 0:i3
 	calr SeqRec_ValidateDone
@@ -28092,6 +29598,8 @@ SeqRec_UpdateFlags:
 	inc 8, xsp
 	ret
 
+; Stores a tone selection at XWA: number C & 15 and bank E for C of 0xf0 and up, (0, 0)
+; otherwise.
 SeqRec_CheckOverflow:
 	lda xhl, (xwa + 1)
 	cp c, 0xf0
@@ -28106,6 +29614,8 @@ SeqRec_HandleOverflow:
 	ld (xhl), 0x0
 	ret
 
+; Stores a tone selection at XWA (number, bank): C of 0xf0 and up gives (0, 0); C of 0x80..0xef
+; with E = 7 gives (0x58, 0); otherwise (C, E with bit 7 cleared).
 SeqRec_OverflowCleanup:
 	lda xhl, (xwa + 1)
 	cp c, 0xf0
@@ -28133,6 +29643,10 @@ SeqRec_Validate:
 	ld (xhl), e
 	ret
 
+; Initialises a voice slot from user-style record (0x398f) with the part selector set from A.
+;   A = 0..4 sets 0x379b to 16, 8, 1, 2 or 4 (other values keep it).  With 0x34d6 = (0x398f),
+;   the record at 0x94860 + (0x398f) * 96 gives 0x34d9 = byte 12 - 3 and 0x34d7 = byte 13, and
+;   VoiceSlot_InitFromTable runs.  0x34d6 and 0x379b are restored afterwards.
 SeqRec_ValidateDone:
 	pushw_erp 0xfa
 	ld c, (0x34d6:16)
@@ -28198,6 +29712,7 @@ Part_LoadAndIndexVoiceTable:
 	popw_erp 0xfa
 	ret
 
+; Sets 0x3980 = (0x398f) * 5 + A and 0x3984 = 6.
 Part_StoreVoiceTableIndex:
 	ld c, a
 	extz bc
@@ -28209,12 +29724,15 @@ Part_StoreVoiceTableIndex:
 	ldw (0x3984:16), 6
 	ret
 
+; Stores WA in 0x287f and tail-calls Voice_ResolveSlotAddr with WA = C (zero-extended).
 SetWall_StoreAndResolve:
 	ld (0x287f:16), wa
 	extz bc
 	ld wa, bc
 	jp Voice_ResolveSlotAddr
 
+; 0x3996 = the 1-based index of the first of the 16 bytes at 0xf1a0 that equals 0x10, or 0 when
+; none does.
 MIDIChan_ScanForFree:
 	ld xbc, 0xf1a0
 	ld a, 0x1:opc
@@ -28291,6 +29809,8 @@ VoiceSlot_StoreAndReturn:
 	ldmm8 0x3986, 0x288e
 	ret
 
+; Out: L = 1 when part A (1-based) of the part-type table at 0xf1a0 has a rhythm type (0x0d,
+; 0x0e, 0x0f or 0x10), else 0.
 Part_IsPercussionType:
 	dec 1, a
 	extz wa
@@ -28444,6 +29964,9 @@ VoiceScan_Return:
 	pop xiz
 	ret
 
+; Moves the song read position one byte on: offset 0x3982 + 1; at 0x100 the block 0x397e becomes
+; the block's forward link (+3 / +4 of 0xb0000 + (block - 1) * 256) and the offset 5.  Then
+; VoiceTable_ResolveReadAddr.
 VoiceTable_AdvanceReadPos:
 	ld xhl, xwa
 	ld wa, (0x3982:16)
@@ -28469,6 +29992,8 @@ VoiceTable_AdvanceReadPos:
 VoiceTable_AdvRead_Done:
 	jr VoiceTable_ResolveReadAddr
 
+; Out: XHL = 0xb0000 + ((0x397e) - 1) * 256 + (0x3982), the song-memory address of the read
+; position.
 VoiceTable_ResolveReadAddr:
 	ld bc, (0x3982:16)
 	extz xbc
@@ -28536,6 +30061,8 @@ RhythmParam_Setup:
 RhythmParam_Entry:
 	ret
 
+; Out: XHL = RHYTHM_PATTERN_BUF_B + (0x3980) * 256 + (0x3984), the position of a write cursor
+; (block 0x3980, offset 0x3984) in the pattern store.
 Voice_ResolveTableAddr:
 	ld bc, (0x3984:16)
 	extz xbc
@@ -28805,6 +30332,9 @@ VoiceSlot_DispatchByType:
 	inc	4, xsp
 	ret
 
+; Points the song read position at the start of part (0x3996): SetWall_SlotResolve with W = that
+; part, then offset 0x3982 = IY and block 0x397e = (0x28af).  Preserves XIZ.
+; SetWall_StoreAndResolve also jumps here.
 Voice_ResolveSlotAddr:
 	push xiz
 	ld w, (0x3996:16)
@@ -28815,6 +30345,9 @@ Voice_ResolveSlotAddr:
 	pop xiz
 	ret
 
+; Resets the easy-composer channel table: 0x37c8 = 0x7f, 0x37c7 = 0xff and, for each of the seven
+; channels c, 0x37ab + c = 0 (style), 0x37b2 + c = 1 (variation), 0x37b9 + c = 0x37c0 + c = 0xff;
+; then reloads every channel (RhythmDrum_LoadVoiceParams with 0x37c9 = 64, 32, 16, 8, 4, 2, 1).
 VoiceSlot_Dispatch_Type81:
 	ld a, 0x7f:opc
 	ld (0x37c8:16), a
@@ -28857,6 +30390,8 @@ VoiceSlot_Dispatch_D0Type:
 	calr RhythmDrum_LoadVoiceParams
 	ret
 
+; Calls CmpEsy_StepVariPattern with XIZ preserved (A = 0 steps up, 0x80 down).
+; Called from CmpEsyTtl_Mode2_OnMemoryNumberInc and CmpEsyTtl_Mode2_OnMemoryNumberDec.
 VoiceSlot_Dispatch_Return:
 	push	xiz
 	call	CmpEsy_StepVariPattern
@@ -28890,6 +30425,8 @@ VoiceSlot_Dispatch_Return_Join2:
 	calr	VoiceSlot_Dispatch_Return_Helper
 	calr	DrumParam_BuildActiveMask
 	ret
+; Makes the composer pattern the panel kit: 0xfc5a = 0x80 + ((0x34d6) & 31), 0xfc5b keeps only bit
+; 7; then SwbtWr_QueuePostEvent with A = (0xfc5a), W = 0, E = 0x48, D = 0.
 VoiceSlot_Dispatch_Return_Helper:
 	ld	xhl, 0:i3
 	ld	l, (0x34d6:16)
@@ -28909,6 +30446,8 @@ VoiceSlot_Dispatch_Return_Helper:
 	call	SwbtWr_QueuePostEvent
 	ret
 
+; Selects the easy-composer channel (DrumParam_LookupChannelBit) and steps its style
+; (DrumParam_StepChannelStyle), preserving XIZ.
 DrumParam_ProcessChannel:
 	push xiz
 	calr DrumParam_LookupChannelBit
@@ -28916,23 +30455,24 @@ DrumParam_ProcessChannel:
 	pop xiz
 	ret
 
+; Sets 0x37c9 = DrumParam_ChannelBitTable[(0x39b8)], the one-hot bit of the selected easy-composer
+; channel.  Preserves XWA, XIX.
 DrumParam_LookupChannelBit:
 	push xwa
 	push xix
 	ld a, (0x39b8:16)
-	ld xix, PatIdx_Lookup_Return
+	ld xix, DrumParam_ChannelBitTable
 	ld	a, (xix+a)
 	ld (0x37c9:16), a
 	pop xix
 	pop xwa
 	ret
 
-PatIdx_Lookup_Return:
-	normal
-	push	sr
-	max
-	ld	(P4:8), 32:io
-	.byte 0x40
+DrumParam_ChannelBitTable:
+	; One-hot part bit per easy-composer channel index 0..6; DrumParam_LookupChannelBit indexes it
+	; with the selected channel and stores the entry.  Was spelled as normal / push sr / max /
+	; ld (P4:8),32:io.
+	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
 
 ; DrumParam_StepChannelStyle: Steps the easy-composer style index of the selected channel (0x37AB +
 ;   Rhythm_MapChannelToDrumIndex) up to 9 (A bit 7 clear) or down to 0 (A bit 7 set), clamps that channel's variation
@@ -28987,6 +30527,9 @@ RhythmVoice_LoadParams_Done:
 	calr DrumParam_BuildActiveMask
 	ret
 
+; Builds in 0x37c8 the mask of drum parts whose settings differ from the saved copy: bit k set
+; when byte k of 0x37ab..0x37b1 differs from 0x37b9..0x37bf, or byte k of 0x37b2..0x37b8 from
+; 0x37c0..0x37c6.  A kit index 0x34d6 different from the saved 0x37c7 sets 0x7f instead.
 DrumParam_BuildActiveMask:
 	ld w, 0x0:opc
 	ld (0x37c8:16), w
@@ -29031,6 +30574,11 @@ MultiVoice_Setup_Loop:
 MultiVoice_Setup_WriteParam:
 	ret
 
+; Converts the one-hot part bit in 0x37c9 into a part number.
+;   Out: XBC = 1..6, the position of the single bit set in (0x37c9) >> 1, looked up in the
+;        33-byte table that follows (indices 0..32); every other index in that range gives 0,
+;        and a looked-up value above 6 is forced to 0.
+;   Clobbers nothing else.
 Rhythm_MapChannelToDrumIndex:
 	ld xbc, 0:i3
 	ld c, (0x37c9:16)
@@ -29062,6 +30610,8 @@ MultiVoice_Setup_Done:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06
 
+; Out: A = the variation index of the current drum part (byte 0x37b2 + part,
+; Rhythm_MapChannelToDrumIndex).
 DrumParam_ReadVoiceCount:
 	calr Rhythm_MapChannelToDrumIndex
 	ld xix, 0x37b2
@@ -29069,6 +30619,11 @@ DrumParam_ReadVoiceCount:
 	ld a, (xix)
 	ret
 
+; Looks up and applies the drum entry of the current part (part p from
+; Rhythm_MapChannelToDrumIndex on 0x37c9).
+;   index = (sum of RhythmDrum_EntryCounts[0 .. p*10 + (0x37ab+p) - 1]) + (0x37b2+p); the
+;   32-bit RhythmDrum_Entries[index] gives its top byte to 0x3881 + p, then
+;   VoiceAssign_Process_Return and VoiceAssign_ProcessRequest_Helper (L = bits 16..23) run.
 RhythmDrum_LoadVoiceParams:
 	calr Rhythm_MapChannelToDrumIndex
 	ld xix, 0x37ab
@@ -29126,6 +30681,10 @@ VoiceAssign_Process_Loop:
 	calr VoiceAssign_ProcessRequest_Helper
 	ret
 
+; In: L = program, H = bank of the current part's drum entry.  0x90f6 = 72 and the program change
+; (SndParam_ApplyProgramChange_Safe, VoiceParam_ClampAndValidate_Tramp); L and H go to 0x38d2 +
+; part and 0x38d9 + part.  Out: XIX = RHYTHM_DATA_ROM__BASE_ADDR + (RHYTHM_ROM_BASE) + (low byte
+; of locator word 0) << 16 + locator word 1, from RhythmROM_BankProgramLocators[H][L].
 VoiceAssign_Process_Return:
 	ld (0x90f6:16), 72
 	call SndParam_ApplyProgramChange_Safe
@@ -29208,6 +30767,10 @@ VoiceAssign_PresetSelToCase:		.byte	0, 3, 4, 7
 VoiceAssign_LoadLoopArgs:	.short	0x0000, 0x040f, 0x040f, 0x000f, 0x0400, 0x040f, 0x040f, 0x040f
 VoiceAssign_DispatchArgs:	.short	0x0000, 0x0431, 0x0431, 0x0031, 0x0400, 0x0431, 0x0431, 0x0431
 VoiceAssign_ResolveArgs:	.short	0x0000, 0x0406, 0x0406, 0x0006, 0x0400, 0x0406, 0x0406, 0x0406
+; Fills the four source-stream pointers of the current part (0x380a + 16 * part + 4 * n, n = 0..3)
+; from the rhythm ROM record XIX: index WA = 40 * slot (DrumChannel_MapToIndexA) + DE,
+; HL = 1 when the index is 0x400 or more, else 0; each pointer through ChanAssign_LookupEntry and
+; ChanAssign_Lookup_Found, with WA + 1 per pointer.
 RegPreset_Load_Loop:
 	push xix
 	push xde
@@ -29247,6 +30810,8 @@ ChanAssign_FourSlotLoop:
 ChanAssign_StoreResult:
 	ret
 
+; Out: XDE = XIY + the word at XIX + BC, BC = slot (DrumChannel_MapToIndexB) * 0x26 + 2 * (byte at
+; XIX + WA) + 0x118 (HL = 0) or + 0x518 (HL non-zero).
 ChanAssign_LookupEntry:
 	ld xde, 0:i3
 	ld	e, (xix+wa)
@@ -29275,6 +30840,8 @@ ChanAssign_Lookup_Loop:
 	add xde, xwa
 	ret
 
+; Stores XDE + 6 as the long at 0x380a + 16 * part + 4 * C (part from
+; Rhythm_MapChannelToDrumIndex).
 ChanAssign_Lookup_Found:
 	push xde
 	push xbc
@@ -29290,6 +30857,8 @@ ChanAssign_Lookup_Found:
 	ld (xwa), xde
 	ret
 
+; Despite the name, no dispatch: XIY = RHYTHM_DATA_ROM__BASE_ADDR + (byte at XIX + 0x3d1) << 16,
+; then XIX += (RHYTHM_ROM_BASE).
 MIDIChan_DispatchTable:
 	ldw bc, 0x3d1
 	ld xwa, 0:i3
@@ -29301,6 +30870,8 @@ MIDIChan_DispatchTable:
 	add xiy, xwa
 	ret
 
+; Out: XBC = slot of the one-hot part 0x37c9: parts 1, 2, 4 -> 0, 8 -> 1, 16 -> 2, 32 -> 3,
+; anything else -> 4.
 DrumChannel_MapToIndexA:
 	cp (0x37c9:16), 1
 	jr nz, MIDIChan_Dispatch_Ch1
@@ -29343,6 +30914,8 @@ MIDIChan_Dispatch_Ch6:
 DrumChannel_MapA_NullRet:
 	ret
 
+; Out: XBC = slot of the one-hot part 0x37c9: parts 1, 2, 4 -> 0, 8 -> 2, 16 -> 3, 32 -> 4,
+; anything else -> 5.
 DrumChannel_MapToIndexB:
 	cp (0x37c9:16), 1
 	jr nz, MIDIChan_Dispatch_Ch7
@@ -29385,6 +30958,8 @@ MIDIChan_Dispatch_Ch12:
 DrumChannel_MapB_NullRet:
 	ret
 
+; Copies 7 bytes from XIX + 7 * slot (DrumChannel_MapToIndexA) + DE + 0x248 to 0x37d1 + 8 * part
+; (Rhythm_MapChannelToDrumIndex).
 MIDIChan_DispatchDone:
 	push xix
 	push xde
@@ -29407,6 +30982,9 @@ MIDIChan_DispatchDone:
 	ldir85
 	ret
 
+; Byte 0x387a + part = 0 for parts with bit 0-3 of 0x37c9 set; for the others, with A = byte at
+; XIX + DE + 0x3d2 and the mask VoiceResolve_SearchDone[part] (bytes spelled as instructions), 0
+; when A has every mask bit set, else 1.
 VoiceResolve_CheckAndStore:
 	bit 0, (0x37c9:16)
 	jr nz, Rhythm_ClearChannelDrumIndex
@@ -29449,6 +31027,7 @@ VoiceResolve_SearchDone:
 	ld	(P2:8), 16:io
 	.byte 0x20
 
+; Byte 0x37ca + part = AccTone_LookupByProgram_Table[byte at XIX + 0x3d0] (VoiceResolve_FindSlot).
 VoiceAssign_StoreFinal_Helper:
 	ldw bc, 0x3d0
 	ld	a, (xix+bc)
@@ -29464,6 +31043,7 @@ VoiceAssign_StoreFinal_Helper:
 	ld (xbc), a
 	ret
 
+; A = AccTone_LookupByProgram_Table[A].  Preserves XBC.
 VoiceResolve_FindSlot:
 	push xbc
 	ld xbc, AccTone_LookupByProgram_Table
@@ -29471,6 +31051,7 @@ VoiceResolve_FindSlot:
 	pop xbc
 	ret
 
+; A = A + 3.
 VoiceResolve_FindSlot_Return:
 	add	a, 3
 	ret
@@ -29496,6 +31077,8 @@ DrumParam_CopyStyleNameAndReload:
 	calr RhythmDrum_LoadVoiceParams
 	ret
 
+; Selects the easy-composer channel (DrumParam_LookupChannelBit) and steps its variation
+; (PartVoice_UpdateParams), preserving XIZ.
 DrumParam_ProcessChannelAlt:
 	push xiz
 	calr DrumParam_LookupChannelBit
@@ -29503,6 +31086,9 @@ DrumParam_ProcessChannelAlt:
 	pop xiz
 	ret
 
+; Steps the current part's variation 0x37b2 + part up (A = 0) or down within 0..W (W from
+; DrumParam_ReadMaxCount); going down stops at 0, or at 1 for part bit 0 of 0x37c9.  Then reloads
+; the part (RhythmDrum_LoadVoiceParams) and rebuilds 0x37c8 (DrumParam_BuildActiveMask).
 PartVoice_UpdateParams:
 	push_a
 	calr DrumParam_ReadMaxCount
@@ -29548,6 +31134,8 @@ DrumParam_ClampVoiceCount_Join:
 	calr DrumParam_BuildActiveMask
 	ret
 
+; Out: W = RhythmDrum_EntryCounts[part * 10 + style] - 1, the highest variation index of the
+; current drum part's style (style = byte 0x37ab + part).
 DrumParam_ReadMaxCount:
 	calr Rhythm_MapChannelToDrumIndex
 	ld xhl, xbc
@@ -29562,11 +31150,15 @@ DrumParam_ReadMaxCount:
 
 ExtVoice_ProcessList:
 	ret
+; Calls ExtVoice_ProcessList_Data with XIZ preserved.
+; Called from CmpEsyTtl_Mode2_OnEdit and CmpEsyTtl_SubModeC.
 CmEsyTtl_Dispatch2_Helper2:
 	push	xiz
 	call	ExtVoice_ProcessList_Data
 	pop	xiz
 	ret
+; Unless bit 2 of 0x41e is set: sets bit 7 of 0x34cd, Seq_DispatcherEntry and
+; AccWrap_PlayModeStartAccPlay.
 ExtVoice_ProcessList_Data:
 	bit	2, (0x041e:16)
 	jr	nz, DrumParam_ReadMaxCount_Return
@@ -29587,6 +31179,11 @@ CmpEsy_ApplyEdit:
 	call	ExtVoice_ProcessList_Helper
 	pop	xiz
 	ret
+; AccWrap_PlayModeDispatch, waits for bit 2 of 0x41e to clear (DrumParam_ReadMaxCount_Helper2),
+; Seq_DispatcherEntry; with 0x37c9 saved, DrumParam_ReadMaxCount_Helper3, _Helper4 and, with
+; GLOBAL_ERROR_CODE = 0, _Helper5.  On an error AccPatch_InitCurrentSlot and 0x37c8 |= 0x7f, else
+; 0x37c8 = 0.  Then bit 7 of 0x34cd, Seq_DispatcherEntry, and AccWrap_PlayModeStartAccPlay (no
+; error) or DrumParam_ReadMaxCount_Helper (error).
 ExtVoice_ProcessList_Helper:
 	call	AccWrap_PlayModeDispatch
 	calr	DrumParam_ReadMaxCount_Helper2
@@ -29615,15 +31212,20 @@ DrumParam_ReadMaxCount_Skip2:
 	calr	DrumParam_ReadMaxCount_Helper
 DrumParam_ReadMaxCount_Return2:
 	ret
+; Calls DrumVoice_NotifyEE.
+; Called from DrumParam_ReadMaxCount_Skip2.
 DrumParam_ReadMaxCount_Helper:
 	call	DrumVoice_NotifyEE
 	ret
+; Busy-waits while bit 2 of 0x41e is set.
 DrumParam_ReadMaxCount_Helper2:
 	bit	2, (0x41e:16)
 	jr	z, DrumParam_ReadMaxCount_Return3
 	jr	DrumParam_ReadMaxCount_Helper2
 DrumParam_ReadMaxCount_Return3:
 	ret
+; With 0x37c9 = 1: when byte 0x37ca + part differs from the beats per measure 0x34d9, 0x37c8 =
+; 0x7f, 0x34d9 = that byte and 0x34d8 = it + 3.
 DrumParam_ReadMaxCount_Helper3:
 	ld	(0x37c9:16), 1
 	calr	Rhythm_MapChannelToDrumIndex
@@ -29638,6 +31240,7 @@ DrumParam_ReadMaxCount_Helper3:
 	ld	(0x34d8:16), a
 DrumParam_ReadMaxCount_Return4:
 	ret
+; 0x34d7 = 3.
 DrumParam_ReadMaxCount_Helper4:
 	ld	(0x34d7:16), 3
 	ret
@@ -29696,6 +31299,11 @@ DrumParam_ReadMaxCount_Helper5_Skip5:
 DrumParam_ReadMaxCount_Helper5_Return:
 	ret
 
+; Clears the pattern of the current part in the current patch slot and frees its extra blocks.
+;   The part's word in the slot record (AccPatch_GetCurrentSlotAddrXix, DrumChannel_MapToIndexB)
+;   names the first 256-byte block: its forward link is cut, it is cleared and an empty pattern
+;   written (AccVoice_WriteEmptyPattern).  Every following block of the chain is unlinked,
+;   marked free, cleared, and counted in 0x34d4.
 AccVoice_SetupStyleSlots:
 	calr AccPatch_GetCurrentSlotAddrXix
 	calr DrumChannel_MapToIndexB
@@ -29740,6 +31348,7 @@ AccVoice_SetupSlots_InitEntry:
 	popw hl
 	ret
 
+; Clears the 249 data bytes of a 256-byte pattern block (XWA + 6 .. XWA + 0xfe).
 Voice_ClearSlotBuffer:
 	add xwa, 0x6
 	ld xix, xwa
@@ -29804,6 +31413,8 @@ AccVoice_SetupSlots_WriteDone:
 	nop
 	nop
 
+; Out: XWA = RHYTHM_PATTERN_BUF_B + HL * 256, the address of 256-byte pattern block HL.
+; Preserves HL and XIX.
 AccPatch_ResolveEntryAddr:
 	push xix
 	pushw hl
@@ -29817,6 +31428,9 @@ AccPatch_ResolveEntryAddr:
 	pop xix
 	ret
 
+; For the current drum part (Rhythm_MapChannelToDrumIndex on 0x37c9) with a non-zero byte at
+; 0x37b2 + part: runs AccPatch_ResolveEntryAddr_Helper, AccPatch_SetCursorToChannelStart and
+; AccPatch_ResolveEntryAddr_Helper3.
 AccVoice_SetupSlots_DataBlock:
 	calr	Rhythm_MapChannelToDrumIndex
 	add	xbc, 0x37b2
@@ -29828,6 +31442,8 @@ AccVoice_SetupSlots_DataBlock:
 	calr	AccPatch_ResolveEntryAddr_Helper3
 AccPatch_ResolveEntryAddr_Return:
 	ret
+; Copies the 8 bytes of the current part's settings from the current slot record (+24 +
+; 8 * DrumChannel_MapToIndexA) to 0x37d1 + 8 * part.
 AccPatch_ResolveEntryAddr_Helper:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 3
@@ -29856,6 +31472,8 @@ AccPatch_SetCursorToChannelStart:
 	ld (13842:16), hl
 	ldw (13844:16), 6
 	ret
+; For each measure 0x38d1 = 0 .. (0x34d7), AccPatch_ResolveEntryAddr_Helper4; then
+; AccPatch_AppendPatternEndCode.
 AccPatch_ResolveEntryAddr_Helper3:
 	ld	c, 0:opc
 	ld	(0x38d1:16), c
@@ -29874,6 +31492,9 @@ AccPatch_ResolveEntryAddr_Join:
 AccPatch_ResolveEntryAddr_Skip:
 	calr	AccPatch_AppendPatternEndCode
 	ret
+; Points the current part's source stream (0x3898 + 4 * part) at measure (0x38d1)
+; (AccPatch_GetMeasureSourceStream) and copies (0x34d9) beats of it, counter 0x38d0
+; (AccPatch_ResolveEntryAddr_Helper6).
 AccPatch_ResolveEntryAddr_Helper4:
 	calr	AccPatch_GetMeasureSourceStream
 	push	xwa
@@ -29913,6 +31534,10 @@ AccPatch_GetMeasureSourceStream:
 	add	xbc, xwa
 	ld	xwa, (xbc)
 	ret
+; Copies events from the current part's source stream to the write cursor
+; (AccPatch_CopyEventToCursor) up to and including a beat marker 0x81.  At the stream's end (0x83,
+; AccPatch_ResolveEntryAddr_Sub) it points the stream at Rhythm_EmptyPattern and copies that one
+; 0x81.
 AccPatch_ResolveEntryAddr_Helper6:
 	calr	AccPatch_ResolveEntryAddr_Sub
 	cp	a, 131
@@ -29943,6 +31568,8 @@ AccPatch_ResolveEntryAddr_Helper6_Return:
 ;          Was Rhythm_EmptyPattern, decoded as `cp (xbc),l / swi 7 x3`.
 Rhythm_EmptyPattern:
 	.byte	0x81, 0xff, 0xff, 0xff, 0xff
+; Out: A = the first byte of the current part's source stream (0x3898 + 4 * part), or 0x83 when the
+; stream is Rhythm_EmptyPattern.
 AccPatch_ResolveEntryAddr_Sub:
 	calr	Rhythm_MapChannelToDrumIndex
 	sll	xbc, 2
@@ -30292,6 +31919,10 @@ AccPatch_ResolveEntryAddr_Skip12:
 	ld	(xbc), xwa
 AccPatch_ResolveEntryAddr_Return7:
 	ret
+; For the current drum part p (Rhythm_MapChannelToDrumIndex): when its byte at 0x37b2 + p is
+; set, runs AccPatch_ResolveEntryAddr_Helper18 and replaces a stream pointer (0x3898 + 4p)
+; that points at an end byte 0x83 with Rhythm_EmptyPattern; otherwise sets that pointer to
+; Rhythm_EmptyPattern.  Ends with AccVoice_SetupSlots_CheckStream.
 AccPatch_ResolveEntryAddr_Helper13:
 	calr	Rhythm_MapChannelToDrumIndex
 	add	xbc, 0x37b2
@@ -30319,6 +31950,9 @@ AccPatch_ResolveEntryAddr_Skip14:
 AccPatch_ResolveEntryAddr_Join7:
 	calr	AccVoice_SetupSlots_CheckStream
 	ret
+; W = 1 when any of the parts 1, 2, 4 (0x37c9 set to each in turn) has a byte other than 0x81 at
+; 0x342d + part (AccPatch_ResolveEntryAddr_Helper15), else 0.  0x37c9 is left at the last part
+; tested.
 AccPatch_ResolveEntryAddr_Helper14:
 	ld	a, 1:opc
 	ld	(0x37c9:16), a
@@ -30341,6 +31975,8 @@ AccPatch_ResolveEntryAddr_Skip15:
 	ld	w, 1:opc
 AccPatch_ResolveEntryAddr_Return8:
 	ret
+; Out: A = byte p of the buffer at 0x342d, p being the current drum part
+; (Rhythm_MapChannelToDrumIndex).
 AccPatch_ResolveEntryAddr_Helper15:
 	ld	xix, 0x342d
 	push	xix
@@ -30348,6 +31984,7 @@ AccPatch_ResolveEntryAddr_Helper15:
 	pop	xix
 	ld	a, (xix+c)
 	ret
+; L = AccPatch_IndexBitMask8[L & 7].
 AccPatch_ResolveEntryAddr_Helper16:
 	push	l
 	ld	xhl, 0:i3
@@ -30392,6 +32029,9 @@ AccVoice_SetupSlots_CheckStream_Skip17:
 	ld	(xix), a
 AccVoice_SetupSlots_CheckStream_Return9:
 	ret
+; Scans the three bytes at 0x342d with two indices L and A, both from 0: a byte with bit 7 set is
+; stepped over; when both bytes are clear of bit 7, L moves on if its byte is greater (signed),
+; else A.  Stops when either index passes 2.  Out: L, or 0 when L passed 2.
 AccPatch_ResolveEntryAddr_Helper17:
 	ld	l, 0:opc
 	ld	a, 0:opc
@@ -30428,6 +32068,9 @@ AccPatch_ResolveEntryAddr_Skip19:
 	ld	l, 0:opc
 AccPatch_ResolveEntryAddr_Return10:
 	ret
+; Steps the current part's source stream over note events (0x90, 0x91, 0xdn) whose note (byte +2)
+; maps to another part than 0x37c9 (AccPatch_ResolveEntryAddr_Helper19); stops at the first event
+; that maps to it or at any other byte.
 AccPatch_ResolveEntryAddr_Helper18:
 	calr	Rhythm_MapChannelToDrumIndex
 	ld	ix, bc
@@ -30463,6 +32106,8 @@ AccPatch_ResolveEntryAddr_Skip20:
 	jr	AccPatch_ResolveEntryAddr_Helper18_Join
 AccPatch_ResolveEntryAddr_Return11:
 	ret
+; In: A = note.  Out: C = AccVoice_SlotRows[byte 0x3881 + part][A], the part that note belongs to
+; in the current part's row.  Preserves A.
 AccPatch_ResolveEntryAddr_Helper19:
 	push_a
 	calr	Rhythm_MapChannelToDrumIndex
@@ -30476,6 +32121,7 @@ AccPatch_ResolveEntryAddr_Helper19:
 	pop_a
 	ld	c, (xde+a)
 	ret
+; Steps XIX over the event at XIX: XIX += AccPatch_GetEventLength of its status byte.
 AccPatch_ResolveEntryAddr_Helper18_Helper:
 	ld	a, (xix)
 	calr	AccPatch_GetEventLength
@@ -30485,17 +32131,22 @@ AccPatch_ResolveEntryAddr_Helper18_Helper:
 	add	xix, xbc
 	ret
 
+; Calls VoiceSlot_Init_CheckType with XIZ preserved.
+; Called from Part_LoadAndIndexVoiceTable.
 VoiceSlot_InitFromTable:
 	push xiz
 	call VoiceSlot_Init_CheckType
 	pop xiz
 	ret
 
+; VoiceSlot_Init_Process, then AccVoice_SetupStyleSlots.
 VoiceSlot_Init_CheckType:
 	calr VoiceSlot_Init_Process
 	calr AccVoice_SetupStyleSlots
 	ret
 
+; Sets the easy-composer part bit 0x37c9 from the record part 0x379b: bit 0 -> 16, bit 1 -> 32,
+; bit 2 -> 64, bit 3 -> 8, none -> 1 (the reverse of TimeSig_DisplayStrings_Code_Helper4).
 VoiceSlot_Init_Process:
 	ld (0x37c9:16), 16
 	bit 0, (0x379b:16)
@@ -33625,6 +35276,7 @@ MainMspBnkNameFunc:
 	ld xhl, 0:i3
 	ret
 
+; On ACTIVE_TITLE 181 only: delivers EVT_PAINT with XWA = 0xb5001e, XDE = 0 (ApDeliveryEvent).
 SoundCtrl_SendAccTempo:
 	cp (ACTIVE_TITLE:16), 181
 	ret nz
@@ -33634,6 +35286,7 @@ SoundCtrl_SendAccTempo:
 	call ApDeliveryEvent
 	ret
 
+; On title 181 only: SoundCtrl_CalcScaledTempo, then EVT_PAINT with 0xb50002 to that screen.
 SoundCtrl_SendTempoScaled:
 	cp (ACTIVE_TITLE:16), 181
 	ret nz
@@ -33644,6 +35297,8 @@ SoundCtrl_SendTempoScaled:
 	call ApDeliveryEvent
 	ret
 
+; 0x39ab = 100 * (0x34d4) / 190, at most 99: the free pattern entries (0x34d4, of 190) as a
+; percentage.
 SoundCtrl_CalcScaledTempo:
 	ld xhl, 0x64
 	ld bc, (0x34d4:16)
@@ -33697,6 +35352,7 @@ AccGuard_SendProgramChange:
 	ret
 
 
+; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc90009, XDE = 0 (ApDeliveryEvent).
 AccSeq_DeliverC9_0009:
 	cp (ACTIVE_TITLE:16), 201
 	ret nz
@@ -33706,6 +35362,7 @@ AccSeq_DeliverC9_0009:
 	call ApDeliveryEvent
 	ret
 
+; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc9000a, XDE = 0 (ApDeliveryEvent).
 AccSeq_DeliverC9_000A:
 	cp (ACTIVE_TITLE:16), 201
 	ret nz
@@ -33989,12 +35646,14 @@ MspRecTtl_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 1 (tail jump to ApPostEvent).
 AccSeq_PostEvent9E_Enable:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	jp ApPostEvent
 
+; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 0 (tail jump to ApPostEvent).
 AccSeq_PostEvent9E_Disable:
 	ld xwa, 0xffffffff
 	ld xbc, EVT_SET_NOT_DRAW_FLAG
@@ -34351,19 +36010,26 @@ CmpStepTitle_OnSwitchIn:
 CmpStepTitle_Method3Nop:
 	ret
 
+; Acquires audio lock 8 (Audio_Lock_Acquire).
 AccAudio_LockAcquire:
 	ldw wa, 0x8
 	jp Audio_Lock_Acquire
 
+; Releases audio lock 8 (Audio_Lock_Release).
 AccAudio_LockRelease:
 	ldw wa, 0x8
 	jp Audio_Lock_Release
+; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX.
+; Called from AccScreen_DataBlock_Code, AccDraw_Secondary_Helper5, AccDraw_Secondary_Helper6 and
+; AccDraw_Secondary_Helper8.
 AccAudio_DataBlock1:
 	ld	xwa, xiy
 	ld	xbc, xix
 	call	GraphicsRender_ProcessEntries
 	ret
 
+; Calls GraphicsRender_Start with XWA = XIY and XBC = XIX, preserving XWA and XBC.
+; Called from AccScreen_DataBlock_Code2, AccScreen_DrawTempoDisplay and AccScreen_BeatDataBlock.
 AccGraphics_RenderStart:
 	push xwa
 	push xbc
@@ -34381,6 +36047,8 @@ AccGraphics_DataBlock2:
 	pop	xwa
 	ret
 
+; Calls DrawFunc_Init with XWA = XIY, preserving XWA.
+; Called from AccScreen_BeatDisplay_Draw and AccScreen_DrawMeas_Other.
 AccDraw_Init:
 	push xwa
 	ld xwa, xiy
@@ -34388,6 +36056,9 @@ AccDraw_Init:
 	pop xwa
 	ret
 
+; Calls DrawText_ExtendedLayout with XWA = XIY, preserving XWA.
+; Called from AccScreen_DataBlock_Code2, AccScreen_DataBlock_Code6, AccDraw_Secondary_Skip4,
+; AccScreen_DrawMeasureDetail and AccScreen_DrawMeas_Variant3.
 AccDraw_Secondary:
 	push xwa
 	ld xwa, xiy
@@ -34551,6 +36222,8 @@ AccDraw_SecondarySub_Handlers:
 	.long	AccDraw_SecondarySub_Handler17
 	.long	AccDraw_SecondarySub_Handler18
 	.long	AccDraw_SecondarySub_Handler19
+; For switch HL up to 15: XDE = AccDraw_IndexBitMask[HL + 1] (AccDraw_Secondary_Sub_Helper),
+; clears bit 0 of 0xe3e2 and calls handler HL & 31 of the table XIX with XBC = XHL.
 AccDraw_Secondary_Sub:
 	cp	hl, 15
 	jr	ugt, AccDraw_Secondary_Sub_Return
@@ -34565,6 +36238,7 @@ AccDraw_Secondary_Sub:
 	call	(xix)
 AccDraw_Secondary_Sub_Return:
 	ret
+; XDE = AccDraw_IndexBitMask[E], word 0 when E is above 32.  Preserves XIX.
 AccDraw_Secondary_Sub_Helper:
 	push	xix
 	cp	e, 32
@@ -34726,6 +36400,9 @@ AccDraw_SecondarySub_Handler18:
 	ret
 AccDraw_SecondarySub_Handler19:
 	ret
+; COLORBLIT_MODE = 2; when 0x3712 = 4 draws CmpStep_NoteEntryFrameRecords with
+; CmpStep_ValueFieldRecords (AccAudio_DataBlock1), otherwise the band CmpStep_NoteEntryAreaBand
+; (AccGraphics_BoundOp04).
 AccDraw_Secondary_Helper5:
 	ld	(COLORBLIT_MODE:24), 2
 	cp	(0x3712:16), 4
@@ -34739,6 +36416,8 @@ AccDraw_Secondary_Skip:
 	calr	AccGraphics_BoundOp04
 AccDraw_Secondary_Return4:
 	ret
+; Draws AccDraw_Secondary_Sub_Entry2_Data_2 with XIX = that address + 35 * (0x373e)
+; (AccAudio_DataBlock1).
 AccDraw_Secondary_Helper6:
 	xor	wa, wa
 	ld	xiy, AccDraw_Secondary_Sub_Entry2_Data_2
@@ -34750,6 +36429,8 @@ AccDraw_Secondary_Helper6:
 	add	xix, xwa
 	calr	AccAudio_DataBlock1
 	ret
+; AccDraw_Secondary_Helper8 on the lists AccDraw_Secondary_Sub_Entry2_Data_3 .. _6 with the entries
+; (0x373e), (0x373f), (0x3740) and (0x3741).
 AccDraw_Secondary_Helper7:
 	ld	xiy, AccDraw_Secondary_Sub_Entry2_Data_3
 	ld	c, (0x373e:16)
@@ -34764,6 +36445,8 @@ AccDraw_Secondary_Helper7:
 	ld	c, (0x3741:16)
 	calr	AccDraw_Secondary_Helper8
 	ret
+; Draws entry C of a list of 20-byte records that starts at XIY + 10 (AccAudio_DataBlock1 with
+; XIX = the record); entry 0 is skipped.
 AccDraw_Secondary_Helper8:
 	xor	wa, wa
 	ld	xix, xiy
@@ -34851,6 +36534,8 @@ AccDraw_Secondary_Helper9_Skip:
 	jrl	AccDraw_Secondary_Join
 AccDraw_Secondary_Return6:
 	ret
+; Draws one 4-byte entry of AccDraw_Secondary_Sub_Entry2_Data (index HL) at column IX: builds the
+; cell record at 0x39cc (6, 8, IX, the four bytes) and calls SeGfx_StaticOp06_CellTextFont0.
 AccDraw_Secondary_Helper9_Helper:
 	push	xiy
 	push	xix
@@ -34881,6 +36566,10 @@ AccDraw_Secondary_Helper9_Helper:
 	pop	xix
 	pop	xiy
 	ret
+; Fills the box of step s = ((0x370f) - 1) & 0x7f (0x370f = 0 counts as step 0) with
+; SeGfx_StaticOp05_FillBoxMode1 (record 0x39c2, mode 5 on the stack): 0x39b9 = s / 32; x = word
+; [s mod 32] of AccDraw_Secondary_Sub_Entry2_Data_7 into 0x39c4 (+6 into 0x39c8), y = word [s /
+; 32] of _Data_8 into 0x39c6 (+8 into 0x39ca).
 AccDraw_Secondary_Helper10:
 	xor	wa, wa
 	ld	a, (0x370f:16)
@@ -34915,6 +36604,7 @@ AccDraw_Secondary_Helper10_Skip:
 	call	SeGfx_StaticOp05_FillBoxMode1
 	pop	xwa
 	ret
+; Sets 0x39b9 = (((0x370f) - 1) & 0x7f) / 32 (0x370f = 0 taken as 0).
 AccDraw_Secondary_Helper11:
 	xor	wa, wa
 	ld	a, (0x370f:16)
@@ -34927,6 +36617,10 @@ AccDraw_Secondary_Skip2:
 	div	wa, c
 	ld	(0x39b9:16), a
 	ret
+; COLORBLIT_MODE = 0.  When 0x3712 is not 4, AccScreen_DrawMeasureDetail; otherwise
+; AccScreen_DrawTempoDisplay and AccScreen_UpdateBeatDisplay (unless 0x3717 = 0xff),
+; AccScreen_BeatDataBlock, byte 0x3716 copied to 0x39bb, and AccScreen_ArticulationCell drawn
+; (AccDraw_Secondary).
 AccDraw_Secondary_Helper12:
 	ld	(COLORBLIT_MODE:24), 0
 	cp	(0x3712:16), 4
@@ -34947,6 +36641,8 @@ AccDraw_Secondary_Skip4:
 AccDraw_Secondary_Return7:
 	ret
 
+; Computes the tempo display values (AccScreen_CalcTempoParams) and draws
+; AccScreen_DrawTempoDisplay_Data with AccScreen_DrawTempoDisplay_Data_2.
 AccScreen_DrawTempoDisplay:
 	calr AccScreen_CalcTempoParams
 	ld xiy, AccScreen_DrawTempoDisplay_Data
@@ -34954,6 +36650,7 @@ AccScreen_DrawTempoDisplay:
 	calr AccGraphics_RenderStart
 	ret
 
+; 0x39b8 = (0x3718) mod 12 and 0x39ba = (0x3718) / 12 (signed divide).
 AccScreen_CalcTempoParams:
 	xor wa, wa
 	ld a, (0x3718:16)
@@ -34963,6 +36660,9 @@ AccScreen_CalcTempoParams:
 	ld (0x39ba:16), a
 	ret
 
+; Copies 0x3717 to 0x39bb, draws the cell AccScreen_DrawTempoDisplay_Data_2 and then
+; AccScreen_UpdateBeatDisplay_Data (or AccScreen_BeatDisplay_Large_Data when 0x3717 is above 99)
+; through AccDraw_Init.
 AccScreen_UpdateBeatDisplay:
 	ldmm8 0x39bb, 0x3717
 	ld xiy, AccScreen_DrawTempoDisplay_Data_2
@@ -34982,6 +36682,8 @@ AccScreen_BeatDisplay_Draw:
 	calr AccDraw_Init
 	ret
 
+; When 0x3712 is 4, copies the bytes 0x3714 / 0x3715 to 0x39bb / 0x39bc and draws
+; AccScreen_BeatDataBlock_DisplayList with AccScreen_ArticulationCell (AccGraphics_RenderStart).
 AccScreen_BeatDataBlock:
 	cp	(0x3712:16), 4
 	jr	nz, AccScreen_BeatDataBlock_Code_Return
@@ -34993,6 +36695,8 @@ AccScreen_BeatDataBlock:
 AccScreen_BeatDataBlock_Code_Return:
 	ret
 
+; Runs AccScreen_DrawInit_Body (COLORBLIT_MODE = 0, AccScreen_DrawTempoDisplay) through
+; DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_DrawInit_StackWrap:
 	ld xwa, AccScreen_DrawInit_Body
 	push xwa
@@ -35005,6 +36709,7 @@ AccScreen_DrawInit_Body:
 	calr AccScreen_DrawTempoDisplay
 	ret
 
+; Runs AccScreen_UpdateBeat_Body through DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_UpdateBeat_StackWrap:
 	ld xwa, AccScreen_UpdateBeat_Body
 	push xwa
@@ -35017,6 +36722,7 @@ AccScreen_UpdateBeat_Body:
 	calr AccScreen_UpdateBeatDisplay
 	ret
 
+; Runs AccScreen_DrawMeasure_Body through DrawFunc_StackEntry, its address passed on the stack.
 AccScreen_DrawMeasure_StackWrap:
 	ld xwa, AccScreen_DrawMeasure_Body
 	push xwa
@@ -35029,6 +36735,9 @@ AccScreen_DrawMeasure_Body:
 	calr AccScreen_DrawMeasureDetail
 	ret
 
+; Draws the measure fields: AccScreen_DrawMeasureDetail_Data with 0x39ba = (0x3720) - 1, then
+; for (0x3720) = 3 AccScreen_DrawMeas_Variant3_Data with 0x39ba = 1 when 0x3721 is non-zero (else
+; 0), otherwise AccScreen_DrawMeas_Other_Data with 0x39ba = (0x3721).
 AccScreen_DrawMeasureDetail:
 	ld a, (0x3720:16)
 	dec 1, a
@@ -35088,12 +36797,14 @@ AccScreen_UIDataBlock:
 ; |...f....g..ah...|
 ; |9@.#.4-.....STEP|
 	ld	(COLORBLIT_MODE:24), 0
+; Display_DeferOrDrawWall with C = 0 and A = 16 (the load of 12 into A is overwritten at once).
 AccScreen_DrawWall:
 	ld	c, 0:opc
 	ld	a, 12:opc
 	ld	a, 16:opc
 	call	Display_DeferOrDrawWall
 	ret
+; Display_DeferOrUpdateScreen with C = 7 and A = 12.
 AccScreen_RefreshScreen:
 	ld	c, 7:opc
 	ld	a, 12:opc
@@ -35319,6 +37030,8 @@ AccPatch_InitSlotChain_Wrap:
 	pop xiz
 	ret
 
+; Points the pattern store base 0x39ae at RHYTHM_PATTERN_BUF_A and runs AccPatch_InitSlotChain,
+; preserving XIZ.
 AccPatch_InitSlotChain_WithAddr:
 	push xiz
 	ld xiz, RHYTHM_PATTERN_BUF_A
@@ -35327,6 +37040,10 @@ AccPatch_InitSlotChain_WithAddr:
 	pop xiz
 	ret
 
+; Compacts the pattern store at (0x39ae): for each of the 0x96 head entries it walks the chain and
+; renumbers the linked entries consecutively from 0x96 (AccPatch_UpdateLinkPointers,
+; AccPatch_SwapSlotBuffers), then stores the used size ((last entry * 256 + 0x1400) rounded up to
+; 1 KB, in 16-byte units) at word +46 of the store.  Work variables 0x375a..0x378e.
 AccPatch_InitSlotChain:
 	xor xwa, xwa
 	xor xbc, xbc
@@ -35384,6 +37101,8 @@ AccPatch_IterateSlot_NextBlock:
 	ld (xiy + 46), wa
 	ret
 
+; Swaps the 256-byte blocks at (0x376a) and (0x375a) through a buffer from Malloc (0x400 bytes, of
+; which 256 are used; pointer kept in 0x3564), then frees it.  Preserves XBC.
 AccPatch_SwapSlotBuffers:
 	push xbc
 	ld xwa, 0x400
@@ -35457,6 +37176,8 @@ AccPatch_UpdateLink_Fwd2:
 AccPatch_UpdateLink_Return:
 	ret
 
+; Out: XIZ = (0x39ae) + 0x1400 + HL * 256, the address of entry HL of the pattern store whose
+; base is in 0x39ae.
 AccPatch_CalcSlotBufferAddr:
 	xor xiz, xiz
 	ld xiz, 0x100
@@ -35654,6 +37375,7 @@ AccPatch_VoiceAssignDataBlock_Skip16:
 	cp	c, 0:i3
 	jrl	ugt, AccPatch_VoiceAssignDataBlock_Loop2
 	ret
+; Out: XIZ = RHYTHM_PATTERN_BUF_B + HL * 256, the address of 256-byte pattern block HL.
 AccPatch_VoiceAssignDataBlock_Helper:
 	xor	xiz, xiz
 	ld	xiz, 256
@@ -35664,6 +37386,11 @@ AccPatch_VoiceAssignDataBlock_Helper:
 	call	AccPatch_VoiceAssignDataBlock_Helper22
 	pop	xiz
 	ret
+; Imports the style image at 0x69800 into the current patch slot, with status 0x3950 (0 = done,
+; bit 7 = stop): 0x3970 = 0, 0x3972 = 150; an unknown image header gives status 130.  Otherwise
+; copies word +14 (_Helper2), rebuilds slot (0x353e) (_Helper3), then _Sub, _Helper5 and
+; _Helper_Helper2, each skipped once bit 7 of 0x3950 is set; a stop rebuilds the slot again.  Ends
+; with _Helper21 (status to GLOBAL_ERROR_CODE) and AccPatch_ClearModeFlag.
 AccPatch_VoiceAssignDataBlock_Helper22:
 	ld	(0x3950:16), 0
 	ldw	(0x3970:16), 0
@@ -35698,6 +37425,7 @@ AccPatch_VoiceAssignDataBlock_Join2:
 	calr	AccPatch_VoiceAssignDataBlock_Helper21
 	call	AccPatch_ClearModeFlag
 	ret
+; Word +14 of RHYTHM_PATTERN_BUF_A = word +14 of the style image at 0x69800.
 AccPatch_VoiceAssignDataBlock_Helper2:
 	xor	xwa, xwa
 	ld	xiy, 0x069800
@@ -35705,6 +37433,9 @@ AccPatch_VoiceAssignDataBlock_Helper2:
 	ld	xiy, RHYTHM_PATTERN_BUF_A
 	ld	(xiy+14), wa
 	ret
+; W = 5 when the style image at 0x69800 starts with 'g', 0, 'k' or 'L', 'K', 'E', else 0xff.  The
+; first test, meant for 'H', 0, 'K', checks byte +1 for 'H' and byte +2 for both 0 and 'K', so it
+; never passes.
 AccPatch_VoiceAssignDataBlock_Helper_Helper:
 	ld	xhl, 0x069800
 	cp	(xhl+1), 72
@@ -35743,6 +37474,7 @@ AccPatch_VoiceAssignDataBlock_Skip9:
 	ld	w, 255:opc
 AccPatch_VoiceAssignDataBlock_Return3:
 	ret
+; Rebuilds patch slot A (AccPatch_InitCurrentSlot with 0x34d6 temporarily set to A).
 AccPatch_VoiceAssignDataBlock_Helper3:
 	ld	w, (0x34d6:16)
 	ld	(0x34d6:16), a
@@ -35807,6 +37539,8 @@ AccPatch_VoiceAssignDataBlock_Sub_Join:
 	calr	AccPatch_VoiceAssignDataBlock_Sub_Helper3
 AccPatch_VoiceAssignDataBlock_Sub_Return:
 	ret
+; Copies 84 bytes of a pattern record from the style image at 0x69800 + (0x397a) + 12 into
+; RHYTHM_PATTERN_BUF_A + (0x397c) + 12, then AccPatch_VoiceAssignDataBlock_Helper4.
 AccPatch_VoiceAssignDataBlock_Sub_Helper:
 	xor	xiz, xiz
 	ld	xiy, 0x069800
@@ -35822,6 +37556,9 @@ AccPatch_VoiceAssignDataBlock_Sub_Helper:
 	ldir85
 	calr	AccPatch_VoiceAssignDataBlock_Helper4
 	ret
+; Copies (1024 - (0x397a) - 12) bytes from the style image at 0x69800 + (0x397a) + 12 into
+; RHYTHM_PATTERN_BUF_A + (0x397c) + 12, runs AccPatch_VoiceAssignDataBlock_Helper4 and, unless
+; bit 7 of 0x3950 is set, continues with (96 - count - 12) bytes from the start of the image.
 AccPatch_VoiceAssignDataBlock_Sub_Helper2:
 	xor	xwa, xwa
 	xor	xbc, xbc
@@ -35857,6 +37594,8 @@ AccPatch_VoiceAssignDataBlock_Sub_Helper2:
 	ldir85
 AccPatch_VoiceAssignDataBlock_Sub_Return2:
 	ret
+; Copies the 84 bytes from +12 of the image record 0x69800 + (0x397a) to +12 of the slot record
+; RHYTHM_PATTERN_BUF_A + (0x397c), then AccPatch_VoiceAssignDataBlock_Helper4.
 AccPatch_VoiceAssignDataBlock_Sub_Helper3:
 	xor	xiy, xiy
 	xor	xix, xix
@@ -35871,6 +37610,9 @@ AccPatch_VoiceAssignDataBlock_Sub_Helper3:
 	ldir85
 	calr	AccPatch_VoiceAssignDataBlock_Helper4
 	ret
+; Copies five words of two pattern records into 0x3952..0x3964: from the style image at 0x69800
+; + (0x397a) (offsets +0, +4, +6, +8, +10) and from RHYTHM_PATTERN_BUF_A + (0x397c) (same
+; offsets).
 AccPatch_VoiceAssignDataBlock_Helper4:
 	xor	xiy, xiy
 	xor	xix, xix
@@ -35909,6 +37651,8 @@ AccPatch_VoiceAssignDataBlock_Helper4:
 	ld	wa, (xix+10)
 	ld	(0x3964:16), wa
 	ret
+; Calls the empty _Helper19 and _Helper20 five times (stopping when bit 7 of 0x3950 is set), then
+; AccPatch_VoiceAssignDataBlock_Helper6, 7, 8, 9 and 10.
 AccPatch_VoiceAssignDataBlock_Helper5:
 	calr	AccPatch_VoiceAssignDataBlock_Helper19
 	bit	7, (0x3950:16)
@@ -35927,6 +37671,8 @@ AccPatch_VoiceAssignDataBlock_Helper5:
 	calr	AccPatch_VoiceAssignDataBlock_Helper10
 AccPatch_VoiceAssignDataBlock_Helper5_Return:
 	ret
+; Part 0 of the image import: 0x3974 = (0x3952), 0x3976 = (0x395c); AccPatch_VoiceAssignDataBlock_Helper11;
+; then 0x3952 = (0x3974), 0x3966 = (0x3978), 0x395c = (0x3976).
 AccPatch_VoiceAssignDataBlock_Helper6:
 	ld	wa, (0x3952:16)
 	ld	(0x3974:16), wa
@@ -35940,6 +37686,7 @@ AccPatch_VoiceAssignDataBlock_Helper6:
 	ld	wa, (0x3976:16)
 	ld	(0x395c:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 1: 0x3954 / 0x395e, result also in 0x3968.
 AccPatch_VoiceAssignDataBlock_Helper7:
 	ld	wa, (0x3954:16)
 	ld	(0x3974:16), wa
@@ -35953,6 +37700,7 @@ AccPatch_VoiceAssignDataBlock_Helper7:
 	ld	wa, (0x3976:16)
 	ld	(0x395e:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 2: 0x3956 / 0x3960, result also in 0x396a.
 AccPatch_VoiceAssignDataBlock_Helper8:
 	ld	wa, (0x3956:16)
 	ld	(0x3974:16), wa
@@ -35966,6 +37714,7 @@ AccPatch_VoiceAssignDataBlock_Helper8:
 	ld	wa, (0x3976:16)
 	ld	(0x3960:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 3: 0x3958 / 0x3962, result also in 0x396c.
 AccPatch_VoiceAssignDataBlock_Helper9:
 	ld	wa, (0x3958:16)
 	ld	(0x3974:16), wa
@@ -35979,6 +37728,7 @@ AccPatch_VoiceAssignDataBlock_Helper9:
 	ld	wa, (0x3976:16)
 	ld	(0x3962:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper6 for part 4: 0x395a / 0x3964, result also in 0x396e.
 AccPatch_VoiceAssignDataBlock_Helper10:
 	ld	wa, (0x395a:16)
 	ld	(0x3974:16), wa
@@ -35992,6 +37742,8 @@ AccPatch_VoiceAssignDataBlock_Helper10:
 	ld	wa, (0x3976:16)
 	ld	(0x3964:16), wa
 	ret
+; Runs ..._Helper11_Helper, then ..._Helper14 and ..._Helper15, stopping as soon as bit 7 of
+; 0x3950 is set.
 AccPatch_VoiceAssignDataBlock_Helper11:
 	bit	7, (0x3950:16)
 	jr	nz, AccPatch_VoiceAssignDataBlock_Helper11_Return
@@ -36002,6 +37754,9 @@ AccPatch_VoiceAssignDataBlock_Helper11:
 	calr	AccPatch_VoiceAssignDataBlock_Helper15
 AccPatch_VoiceAssignDataBlock_Helper11_Return:
 	ret
+; After ..._Helper12, when DE is not 0: with (0x3974) >= (0x3970) steps 0x3970 by 4 up to
+; (0x3974) (word counts /4 apart), stopping when bit 7 of 0x3950 is set; otherwise
+; ..._Helper11_Helper2.
 AccPatch_VoiceAssignDataBlock_Helper11_Helper:
 	calr	AccPatch_VoiceAssignDataBlock_Helper12
 	cp	de, 0:i3
@@ -36033,6 +37788,7 @@ AccPatch_VoiceAssignDataBlock_Skip10:
 	calr	AccPatch_VoiceAssignDataBlock_Helper11_Helper2
 AccPatch_VoiceAssignDataBlock_Return4:
 	ret
+; DE = 0 when (0x3970) <= (0x3974) <= (0x3970) + 3, else 0xff.
 AccPatch_VoiceAssignDataBlock_Helper12:
 	xor	xwa, xwa
 	xor	xhl, xhl
@@ -36050,6 +37806,8 @@ AccPatch_VoiceAssignDataBlock_Helper12_Skip2:
 	ldw	de, 255
 AccPatch_VoiceAssignDataBlock_Helper12_Return2:
 	ret
+; Unless bit 7 of 0x3950 is set: with (0x3974) at 340 or more, 0x3950 = 128; otherwise, around
+; calls of the empty _Helper19 / _Helper20, sets 0x3970 = 4 * ((0x3974) / 4 + 1).
 AccPatch_VoiceAssignDataBlock_Helper11_Helper2:
 	bit	7, (0x3950:16)
 	jr	nz, AccPatch_VoiceAssignDataBlock_Helper12_Return
@@ -36087,6 +37845,7 @@ AccPatch_VoiceAssignDataBlock_Helper11_Helper2_Skip:
 	ld	(0x3950:16), 128
 AccPatch_VoiceAssignDataBlock_Helper12_Return:
 	ret
+; Sets 0x397a = ((0x3974) - (0x3970)) * 256.
 AccPatch_VoiceAssignDataBlock_Helper13:
 	xor	xwa, xwa
 	xor	xhl, xhl
@@ -36097,6 +37856,8 @@ AccPatch_VoiceAssignDataBlock_Helper13:
 	mul	xwa, hl
 	ld	(0x397a:16), wa
 	ret
+; Copies 249 bytes of block data from the style image at 0x69800 + (0x397a) + 6 into pattern
+; block (0x3976) + 6 (AccPatch_VoiceAssignDataBlock_Helper).
 AccPatch_VoiceAssignDataBlock_Helper14:
 	calr	AccPatch_VoiceAssignDataBlock_Helper13
 	xor	xiy, xiy
@@ -36112,6 +37873,9 @@ AccPatch_VoiceAssignDataBlock_Helper14:
 	ldw	bc, 249
 	ldir85
 	ret
+; Follows both chains one block: 0x397a = ((0x3974) - (0x3970)) * 256 (_Helper13) and 0x3974 = the
+; forward link (+3) of that image block at 0x69800; 0x3978 = (0x3976) and 0x3976 = the forward link
+; of pattern block (0x3976) (_Helper).
 AccPatch_VoiceAssignDataBlock_Helper15:
 	xor	xiy, xiy
 	xor	xwa, xwa
@@ -36128,6 +37892,8 @@ AccPatch_VoiceAssignDataBlock_Helper15:
 	ld	wa, (xiz+3)
 	ld	(0x3976:16), wa
 	ret
+; AccPatch_VoiceAssignDataBlock_Helper16 for the five pairs 0x3974 / 0x3978 = (0x3952) / (0x3966),
+; (0x3954) / (0x3968), (0x3956) / (0x396a), (0x3958) / (0x396c), (0x395a) / (0x396e).
 AccPatch_VoiceAssignDataBlock_Helper_Helper2:
 	ld	wa, (0x3952:16)
 	ld	(0x3974:16), wa
@@ -36206,6 +37972,8 @@ AccPatch_VoiceAssignDataBlock_Helper16_Epilogue:
 AccPatch_VoiceAssignDataBlock_Helper16_Epilogue2:
 	nop
 	ret
+; 0x3972 = the first free pattern block (bit 7 of byte 0 clear) from (0x3972) on; when none is
+; free below 340, 0x3950 = 131.
 AccPatch_VoiceAssignDataBlock_Helper16_Helper:
 	xor	xhl, xhl
 	ld	hl, (0x3972:16)
@@ -36225,14 +37993,20 @@ AccPatch_VoiceAssignDataBlock_Helper16_Helper_Skip:
 AccPatch_VoiceAssignDataBlock_Helper16_Helper_Skip2:
 	ld	(0x3972:16), hl
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper17:
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper18:
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper19:
 	ret
+; Empty routine: returns at once.
 AccPatch_VoiceAssignDataBlock_Helper20:
 	ret
+; Turns the style-image import status 0x3950 into GLOBAL_ERROR_CODE: 0 -> 35, 132 -> 3, 130 -> 0,
+; 131 -> 23, 129 and any other value -> 1.
 AccPatch_VoiceAssignDataBlock_Helper21:
 	cp	(0x3950:16), 0
 	jr	z, AccPatch_VoiceAssignDataBlock_Skip11
@@ -36263,22 +38037,30 @@ AccPatch_VoiceAssignDataBlock_Skip11:
 AccPatch_VoiceAssignDataBlock_Return5:
 	ret
 
+; Composer load preparation (Matsushita name "cmp_ld_mae", in the HAMA function table): calls
+; CmpLoad_InitWithFlag with XIZ preserved.
 cmp_ld_mae:
 	push xiz
 	calr CmpLoad_InitWithFlag
 	pop xiz
 	ret
 
+; Calls AccDemo_InitWithFlag.
+; Called from cmp_ld_mae.
 CmpLoad_InitWithFlag:
 	call AccDemo_InitWithFlag
 	ret
 
+; Composer automatic load (Matsushita name "cmp_ld_ato", in the HAMA function table): calls
+; CmpLoadAuto_CheckAndInit with XIZ preserved.
 cmp_ld_ato:
 	push xiz
 	calr CmpLoadAuto_CheckAndInit
 	pop xiz
 	ret
 
+; In: WA = load result.  Negative: AccDemo_Init_Wrap (rebuild the default style image); otherwise
+; AccPatch_ClearModeFlag.  Then recounts the free pattern entries (AccPatch_CountAvailableSlots).
 CmpLoadAuto_CheckAndInit:
 	cp wa, 0:i3
 	jr lt, CmpLoadAuto_DemoInit
@@ -36292,12 +38074,14 @@ CmpLoadAuto_CountSlots:
 	call AccPatch_CountAvailableSlots
 	ret
 
+; Composer save preparation (HAMA function table): CmpSave_InitSlotAndCalcSize with XIZ preserved.
 cmp_sv_mae:
 	push xiz
 	calr CmpSave_InitSlotAndCalcSize
 	pop xiz
 	ret
 
+; AccPatch_InitSlotChain_WithAddr; out: XHL = its result WA * 16.
 CmpSave_InitSlotAndCalcSize:
 	call AccPatch_InitSlotChain_WithAddr
 	ld hl, wa
@@ -36305,32 +38089,41 @@ CmpSave_InitSlotAndCalcSize:
 	sll xhl, 4
 	ret
 
+; Composer automatic save (HAMA function table): CmpSaveAuto_ClearFlag with XIZ preserved.
 cmp_sv_ato:
 	push xiz
 	calr CmpSaveAuto_ClearFlag
 	pop xiz
 	ret
 
+; Clears bit 0 of 0x8d88.
 CmpSaveAuto_ClearFlag:
 	and (0x8d88:16), 254
 	ret
 
+; Music-style-player load preparation (Matsushita name "msp_ld_mae", in the HAMA function
+; table): calls MspLoad_InitVoice with XIZ preserved.
 msp_ld_mae:
 	push xiz
 	calr MspLoad_InitVoice
 	pop xiz
 	ret
 
+; Calls AccompSeq_InitBankTables.
+; Called from msp_ld_mae.
 MspLoad_InitVoice:
 	call AccompSeq_InitBankTables
 	ret
 
+; Music-style-player automatic load (Matsushita name "msp_ld_ato", in the HAMA function table):
+; calls MspLoadAuto_CheckAndInit with XIZ preserved.
 msp_ld_ato:
 	push xiz
 	calr MspLoadAuto_CheckAndInit
 	pop xiz
 	ret
 
+; In: WA = load result.  Negative: Voice_InitBankDataSafe; otherwise nothing.
 MspLoadAuto_CheckAndInit:
 	cp wa, 0:i3
 	jr lt, MspLoadAuto_NegativeCase
@@ -36342,12 +38135,15 @@ MspLoadAuto_NegativeCase:
 MspLoadAuto_Return:
 	ret
 
+; Music-style-player save preparation (HAMA function table): MspSave_InitAndCalcSize with XIZ
+; preserved.
 msp_sv_mae:
 	push xiz
 	calr MspSave_InitAndCalcSize
 	pop xiz
 	ret
 
+; Voice_RefreshBankData; out: XHL = the word at 0x1e881c * 16.
 MspSave_InitAndCalcSize:
 	call Voice_RefreshBankData
 	ld xhl, 0x1e881c
@@ -36356,15 +38152,22 @@ MspSave_InitAndCalcSize:
 	sll xhl, 4
 	ret
 
+; Music-style-player automatic save (HAMA function table): MspSaveAuto_Return (empty) with XIZ
+; preserved.
 msp_sv_ato:
 	push xiz
 	calr MspSaveAuto_Return
 	pop xiz
 	ret
 
+; Empty routine: returns at once.
 MspSaveAuto_Return:
 	ret
 
+; Enters a style-convert screen: SeqBuf_Init, NoteMap_SendAllNotesOff, Part_ReinitAllActive,
+; AccompSeq_StopSequence, AccWrap_PlayModeDispatch, bit 2 of 0x28a7 set, AudioInit_RefreshToneBank,
+; NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
+; MIDI_SendAllSoundOff, Vga_SetupMultiPlaneDisplay, then AccDisplay_CopyToBackBuffer.
 AccDisplay_FullInit:
 	call SeqBuf_Init
 	call NoteMap_SendAllNotesOff
@@ -36381,6 +38184,10 @@ AccDisplay_FullInit:
 	call Vga_SetupMultiPlaneDisplay
 	jr AccDisplay_CopyToBackBuffer
 
+; Leaves a style-convert screen: clears bit 2 of 0x28a7, restores the VGA planes
+; (Vga_RestoreMultiPlaneDisplay) and copies 0xb400 words from the save area at 0x69800 back
+; into RHYTHM_PATTERN_BUF_A (AccDisplay_CopyToFrontBuffer; both addresses are noted in 0x55dc /
+; 0x55e0).  AccDisplay_CopyToBackBuffer, after it, makes the save.
 Display_RestoreEntry:
 	res 2, (0x28a7:16)
 	call Vga_RestoreMultiPlaneDisplay
@@ -36682,6 +38489,7 @@ AccBankData_CopyDataBlock_Loop:
 	jr	c, AccBankData_CopyDataBlock_Loop
 	ret
 
+; Clears the 2048 bytes at 0x3f88 (64 entries of 32 bytes).
 StyleBuf_ClearAllEntries:
 	lda xbc, (0x3f88:16)
 	ld xwa, xbc
@@ -36700,6 +38508,7 @@ StyleBuf_ClearEntry_Inner:
 	jr c, StyleBuf_ClearEntry_Outer
 	ret
 
+; Clears the 32 bytes at 0x488c.
 StyleConv_ClearWorkBuffer:
 	lda xbc, (0x488c:16)
 	ld xwa, xbc
@@ -36711,6 +38520,7 @@ StyleConv_ClearWorkBuf_Loop:
 	jr c, StyleConv_ClearWorkBuf_Loop
 	ret
 
+; Clears the 64 32-byte entries at 0x3f88 and the 64 longs at 0x4788.
 StyleConv_ClearEntryTables:
 	lda xwa, (0x4788:16)
 	ld xbc, xwa
@@ -36732,6 +38542,9 @@ StyleConv_ClearEntry_Inner:
 	jr c, StyleConv_ClearEntry_Outer
 	ret
 
+; Fills the 256-entry style-convert list at 0x55e4 (37-byte entries): byte 0 = index mod 20 (the
+; remainder that `div wa, 0x14` leaves in QWA), then 32 characters (12 spaces, then zeros), and a
+; 0 long at +33.  Preserves IZ.
 StyleConv_InitEntryTable:
 	pushw iz
 	ld ix, 0:i3
@@ -36775,6 +38588,7 @@ StyleConvInit_StoreChar:
 	popw iz
 	ret
 
+; Clears the 1 KB from 0xffc00 up to 0x100000.
 SoundMem_ClearRegion:
 	ld xwa, 0xffc00
 
@@ -36784,6 +38598,7 @@ SoundMem_ClearLoop:
 	jr c, SoundMem_ClearLoop
 	ret
 
+; Clears the 32 100-byte entries at 0x48dc and the 32 longs at 0x555c.
 StyleFile_ClearAllTables:
 	lda xwa, (0x555c:16)
 	ld xbc, xwa
@@ -36805,6 +38620,8 @@ StyleFile_ClearTable_Inner:
 	jr c, StyleFile_ClearTable_Outer
 	ret
 
+; Enables the dial for a style-convert screen: UI_PostDialEnable(1), UI_PostDialValueEvent(0x82),
+; UI_PostDialRangeEvent(2).
 DialUI_PostInitEvents:
 	ld wa, 1:i3
 	call UI_PostDialEnable
@@ -37918,6 +39735,7 @@ MainStylCnvFunc:
 	ld xhl, 0:i3
 	ret
 
+; 0x48da = 0xff, then UI_PostModeChangeEvent with WA = 0x10 (tail jump).
 StylCnv_ReportErrorAndReturn:
 	ld (0x48da:16), 255
 	ldw wa, 0x10
@@ -39132,6 +40950,8 @@ StylCnv_Epilogue114:
 	lda xsp, (xsp + 114)
 	ret
 
+; Jumps to address 0x80000 (all callers are
+; style-convert screens or FloppyState_Dispatch).
 TableData_JumpToEntry:
 	ld xhl, 0x80000
 	jp (xhl)

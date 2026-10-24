@@ -49,6 +49,9 @@ ToneGen_StoreBlockAndLink:
 ToneGen_DispatchReturn:
 	ret
 
+; Appends block IX (after DispatchHandler_JumpToSubHandler) to the song-data chain being written:
+; the current block 0x28af gets IX as its forward link, IX gets 0x28af as its backward link and
+; 0xffff as forward link, and the write position becomes block IX, offset 5.  Preserves XIX, XIY.
 ToneGen_DispatchAndLinkBlock:
 	push xix
 	push xiy
@@ -70,6 +73,10 @@ ToneGen_DispatchAndLinkBlock:
 	pop xix
 	ret
 
+; Stores the data-entry byte A for MIDI channel IY and combines it with the other half of the
+; pair: with (0xfac) = 6 the byte goes to the table at 0x10c3 and the partner comes from 0x10d3,
+; otherwise the reverse.
+;   Out: A = (0x10c3 byte) * 2 + bit 6 of the 0x10d3 byte.
 VoiceChannel_GetCombinedStatus:
 	cp (4012:16), 6
 	jr z, VoiceChannel_GetStatusBank2First
@@ -99,6 +106,10 @@ VoiceChannel_CombineStatusBits:
 	or a, l
 	ret
 
+; Re-applies the current data-entry parameter of the MIDI channel in 0xfab (low nibble).
+;   The channel's parameter number comes from the table at 0x10b3 (0xff = none, nothing done);
+;   its value is byte <channel> of the table that VoiceSynth_DataEntry_PtrTable lists for that
+;   parameter, stored in 0x108a before SoundGen_PrepareAndBuildVoice runs with C = parameter.
 VoiceChannel_LookupParams:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -122,6 +133,8 @@ VoiceChannel_LookupParams:
 VoiceChannel_LookupReturn:
 	ret
 
+; Sets bit 3 of byte +4 of the current MIDI channel's record (VoiceChannel_GetParamBlock) when the
+; controller value 0xfad is 64 or more, clears it otherwise, and sets bit 4 (value present).
 VoiceChannel_SetPanDirection:
 	call VoiceChannel_GetParamBlock
 	ld w, (xiy + 4)
@@ -268,6 +281,8 @@ SoundGen_ClampUpdateVoice:
 VoiceChannel_NullRet2:
 	ret
 
+; Stores the controller value 0xfad in the low 7 bits of byte +7 of the current MIDI channel's
+; record (bit 7 kept).
 VoiceChannel_SetParamByte7:
 	call VoiceChannel_GetParamBlock
 	ld a, (4013:16)
@@ -277,6 +292,8 @@ VoiceChannel_SetParamByte7:
 	ld (xiy + 7), w
 	ret
 
+; Stores the controller value 0xfad in the low 7 bits of byte +5 of the current MIDI channel's
+; record (bit 7 kept).
 VoiceChannel_MergeParamByte5:
 	call VoiceChannel_GetParamBlock
 	ld a, (4013:16)
@@ -286,6 +303,9 @@ VoiceChannel_MergeParamByte5:
 	ld (xiy + 5), w
 	ret
 
+; Selects the data-entry parameter of the current MIDI channel (0xfab low nibble) from its
+; parameter-number pair: when the high byte (table 0x1093) is 0 and the low byte (table 0x10a3)
+; is 0..2, that number goes to the table at 0x10b3; otherwise 0xff (none).
 SoundGen_LookupChannelBankParams:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -317,6 +337,9 @@ ToneGen_StoreBadValue:
 SoundGen_LookupReturn:
 	ret
 
+; Returns the 26-byte channel record for the MIDI channel in 0xfab (low nibble).
+;   Out: XIY = record pointer from VoiceChannel_ParamTable1 when (0x11f8) = 1, else from
+;   VoiceChannel_GetParamBlockAlt_Data (which swaps channels 9 and 15).  XHL = the same pointer.
 VoiceChannel_GetParamBlock:
 	xor h, h
 	ld l, (4011:16)
@@ -510,6 +533,8 @@ FileIO_ReadBlockToBuffer:
 	pop xwa
 	ret
 
+; Reads the next 0x400 bytes of the open file into the buffer at 0x13fa (FileIO_ReadBlock) and
+; stores the byte count (negative on error) in FILEIO_BLOCK_BYTES.  Preserves XWA, XBC, XHL.
 FileIO_ReadBlockToFilePos:
 	push xwa
 	push xbc
@@ -595,6 +620,9 @@ SoundGen_InitVoiceData:
 ; SoundGen_UpdateAndRefresh is not established.
 	.byte 0x04, 0x05, 0x06
 
+; In mode 2 (0x11f8) for MIDI channel 9 only: looks up the voice for the channel's stored
+; selection (word at 0x1a37 + 2 * channel) and note 0xfac (SndParam_LookupByChannel).
+;   Out: A = the result, or 0 when it is 0xff or the condition does not hold.  Preserves XHL.
 SndParam_LookupChannelVoice:
 	push xhl
 	cp (4600:16), 2
@@ -634,6 +662,9 @@ SndParam_LookupReturn:
 	pop xhl
 	ret
 
+; Records the MIDI channel of the current message (0xfab low nibble) in 0x1a5f; for channel 9 it
+; also applies the voice value (SndParam_ApplyVoiceValue, XWA = 0x1a57) and stores the two
+; bytes 0x1a5a / 0x1a5b at 0x1a37 + 2 * channel.
 VoiceChannel_StoreVoiceIdx:
 	push xde
 	xor de, de
@@ -828,6 +859,10 @@ SMF_RestoreTimerState:
 SMF_SeekReturn:
 	ret
 
+; Starts playback after a song load: SeqPlay_CheckStartConditions, then bit 2 of 0xfdad set
+; (A = 4) when 0xf23d = 0xff, cleared (A = 0) otherwise; 0x10ea = 1; queues main event
+; (W = 4, D = 3, E = 0x91) (SwbtWr_QueueMainEvent), SwbtWr_ReinitBothBanks and
+; BitMapOut_RenderDisplay.
 SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (0xf23d:16), 255
@@ -2889,6 +2924,13 @@ SMF_CC_Volume_Handler:
 	.include "sequencer/sequencer_ui.s"
 	.include "sequencer/sequencer_engine.s"
 
+; C library open: FileOpen(name, mode), both stack arguments (C strings).
+;   The mode letters r w a + b ~ d set the open flags (default: text); the name is upper-cased
+;   up to a ':' and its device prefix looked up in the device table at 0x3e3bc (0x3e3de entries
+;   of 0x22 bytes, name pointer at +22).  A free entry of the 16-slot handle table at 0x210b4
+;   gets a newly allocated 0x4b-byte handle that is filled from the device entry.
+;   Out: XHL = handle, or 0 with the error in 0x1e53c (7 = no such device, 2 = mode not allowed
+;   by the device, 4 = no free handle).  Stores FileClose's address in 0x210f6.
 FileOpen:
 	lda xsp, (xsp - 16)
 	push xiz
@@ -3199,6 +3241,11 @@ FileOpen_Return:
 	lda xsp, (xsp + 16)
 	ret
 
+; C library read: FileRead(buffer, size, count, handle), stack arguments.
+;   The handle must be open (byte +4 non-zero, else error 0x11 in 0x1e53c) and readable (bit 0
+;   of +4, else error 0x0d).  size * count bytes are read through the handle's device read
+;   method (pointer at handle+14, entry +4).
+;   Out: HL = items read (the byte count divided by size), 0 on error.
 FileRead:
 	ld xbc, (xsp + 12)
 	or xbc, xbc
@@ -3236,6 +3283,11 @@ SeqStep_FileReadProcess:
 	ld hl, wa
 	ret
 
+; C library write: FileWrite(buffer, size, count, handle), stack arguments.
+;   The handle must be open (byte +4 non-zero, else error 0x11 in 0x1e53c) and writable (bit 1
+;   of +4, else error 0x0d).  size * count bytes go through the device write method (pointer at
+;   handle+14, entry +12).
+;   Out: HL = items written (the byte count divided by size), 0 on error.
 FileWrite:
 	ld xbc, (xsp + 12)
 	or xbc, xbc
@@ -3442,6 +3494,12 @@ SeqStep_ByteBlockF002_Skip4:
 	ldw	hl, 0xffff
 	ret
 
+; C library close.  Stack argument: the file handle (the record FileOpen returned).
+;   SeqStep_FileCloseInner calls the handle's close method (pointer at handle+14, entry +20),
+;   clears its entry in the 16-slot table at 0x210b4 and frees the record; errors land in
+;   0x1e53c (0x11 = not an open handle, 0x26 = free failed).  Then tail-jumps to
+;   SeqStep_ParseHeaderContinue, which calls SeqStep_ParseVariableHeader with the constant
+;   arguments 7, 0, 0, 0, 0, 0, 0L.  FileOpen stores this routine's address at 0x210f6.
 FileClose:
 	ld xwa, (xsp + 4)
 	push xwa
@@ -3622,9 +3680,11 @@ SeqStep_FileCloseExit_Skip4:
 SeqStep_FileNopA:
 	ret
 
+; Empty routine: returns at once (called by the file layer where a lock release would be).
 SeqStep_FileNopB:
 	ret
 
+; C-style wrapper: Free(stack argument), then returns HL = 0.
 SeqStep_FreeMemory:
 	ld xwa, (xsp + 4)
 	push xwa
@@ -3640,6 +3700,9 @@ SeqStep_MallocWrapper:
 	inc 2, xsp
 	ret
 
+; Opens a file for writing: FileOpen(name, "w") with the name as stack argument, then calls the
+; handle's device method at +32.
+;   Out: HL = that method's result, or 0xffff when the open failed.
 FileOpenDefault:
 	pushw FileOpenDefault_Str_w@hi16
 	pushw FileOpenDefault_Str_w@lo16
@@ -4087,6 +4150,19 @@ SeqStep_FileIoHelper:
 	ldw (xwa + 6), 0x0
 	ret
 
+; FAT sector cache: returns a buffer holding one sector of a volume, reading it if needed.
+;   Stack arguments: (1) the request (+5 = drive byte copied to the buffer, +6 = result
+;   status, +18 = volume, whose +10 points at the device methods and +26 at the drive
+;   geometry), (2) the sector number, (3) a buffer to try first (may be 0), (4) flags
+;   (bit 6: use argument 3 directly; bit 5: allocate without reading; bit 2: retry).
+;   The 10 buffers of 538 bytes at 0x2121a carry +0 volume, +4 sector, +18 an age counter
+;   (+0x14 on each hit, -1 on each search) and +22 state bits.  A miss takes the oldest buffer
+;   that is not locked (state bits 0x88), writes it back first when it is dirty
+;   (SeqStep_FileBufferSetup) and reads the sector through the device's method at +16.  With
+;   bit 2 set a failed read is retried at sector + (geometry word +48), up to (geometry byte
+;   +58) times: the layout of the FAT copies.
+;   Out: XHL = buffer, or 0 with the error left in the request's +6.  0x3e3e0 notes an age
+;   counter overflow.
 SeqStep_FileIoCheck:
 	dec 2, xsp
 	push xiz
@@ -4432,6 +4508,10 @@ SeqStep_FileBufferExit:
 	inc 6, xsp
 	ret
 
+; Flushes the FAT sector cache for one drive: every dirty buffer (state bits 0..1 = 3) among the
+; 10 at 0x2121a is written back (SeqStep_FileBufferSetup); buffers of the request's drive
+; (stack argument +5) that are not locked (bit 2) keep only state bit 7.
+;   Out: HL = the last non-zero write-back result, 0 when all succeeded.
 SeqStep_FileBufferFinal:
 	dec	4, xsp
 	push	xiz
@@ -4471,6 +4551,8 @@ SeqStep_FileBufferFinal_Skip3:
 	inc	4, xsp
 	ret
 
+; Reads a little-endian 16-bit value from a byte stream and advances the stream.
+;   Stack argument: pointer to the stream pointer, which is advanced by 2.  Out: HL = value.
 SeqStep_FileSectorRead:
 	ld xbc, (xsp + 4)
 	ld xde, (xbc)
@@ -4488,6 +4570,8 @@ SeqStep_FileSectorRead:
 	add hl, wa
 	ret
 
+; Reads a little-endian 32-bit value from a byte stream and advances the stream.
+;   Stack argument: pointer to the stream pointer, which is advanced by 4.  Out: XHL = value.
 SeqStep_FileSectorProcess:
 	ld xix, (xsp + 4)
 	ld xbc, xix
@@ -7981,6 +8065,8 @@ SeqStep_SectorCompareBlock_Skip3:
 	ld	hl, (xbc+69)
 	ret
 
+; Packs its seven stack arguments (six words and a long) into a 16-byte floppy command block on
+; the stack and passes it to FDC_CommandEntry.
 SeqStep_ParseVariableHeader:
 	lda xsp, (xsp - 16)
 	ld wa, (xsp + 20)
@@ -8017,6 +8103,7 @@ SeqStep_ParseHeaderContinue:
 	lda xsp, (xsp + 16)
 	ret
 
+; Returns HL = 0 (no-op disk error handler step used by Fat_HandleDiskIoError).
 SeqChan_ByteBlockA:
 	ld	hl, 0:i3
 	ret
@@ -8086,6 +8173,8 @@ SeqChan_ByteBlockC_Skip3:
 SeqChan_ByteBlockC_Epilogue:
 	pop	xiz
 	ret
+; Builds the floppy command for one sector transfer of type 4 (write) from its stack arguments and
+; the drive byte +4 of the request, and runs it (SeqStep_ParseVariableHeader).
 SeqChan_ByteBlockD:
 	ld	xwa, (xsp+16)
 	push	xwa
@@ -8464,6 +8553,8 @@ FDC_ReturnAndPop:
 	ld	hl, 1:i3
 	ret
 
+; Stores the disk type (stack argument, byte) in 0x3e3e4, sets the word 0x3e3e6 = 1 and clears
+; 0x3e3be.
 FDC_StoreDiskType:
 	ld a, (xsp + 4)
 	ld (0x03e3e4:24), a
@@ -8483,10 +8574,14 @@ FDC_ReadDiskChangeStatus:
 	ld	hl, (0x3e3e6:24)
 	ret
 
+; Out: L = the disk type byte at 0x3e3e4 (5 selects the alternative file layer in the
+; _findfirst / _findnext / _findclose family).
 FDC_ReadDiskType:
 	ld l, (0x03e3e4:24)
 	ret
 
+; Formats a floppy (name from the HAMA function table): WA = 3 runs FDC_Format2HD_Start, 2 runs
+; FDC_Format2DD_Start, anything else returns HL = 0.
 format_FD:
 	extz wa
 	cp wa, 3:i3
@@ -9401,6 +9496,10 @@ GetMediaType_ReturnAndCleanup:
 	lda xsp, (xsp + 20)
 	ret
 
+; Returns the free space of a disk (name from the HAMA function table).
+;   In:  XWA, XBC = the caller's arguments (XBC kept in XIZ).  The disk type (FDC_ReadDiskType)
+;   0..6 selects a case through GetDiskFreeSpace_CaseTable / GetDiskFreeSpace_JumpTable; other
+;   types go to FileIO_ReadFreeSpaceViaFAT.
 GetDiskFreeSpace:
 	dec 4, xsp
 	push xiz
@@ -9462,6 +9561,10 @@ GetDiskFreeSpace_Epilogue:
 	inc 4, xsp
 	ret
 
+; Returns the volume label of the disk (name from the HAMA function table).  The disk type
+; (FDC_ReadDiskType) 0..6 selects a case through GetVolumeLabel_CaseTable /
+; GetVolumeLabel_JumpTable; other types read it from the FAT directory
+; (FileIO_ReadVolumeLabelEntry).
 GetVolumeLabel:
 	lda xsp, (xsp - 56)
 	push xiz
@@ -9676,6 +9779,12 @@ FileIO_ParsePath_Return:
 	lda xsp, (xsp + 18)
 	ret
 
+; Directory search, first match (C runtime style, named in the HAMA function table).
+;   In:  XWA = path with a wildcard pattern, XBC = result record (as _findnext fills it).
+;   With the device type at 0x3e3e4 = 5 the request goes to FindFirst_SndTable.  Otherwise it
+;   allocates the 8-byte search record, splits the path (FileIO_ParsePathComponents), opens the
+;   directory with mode "d" (FileOpen), keeps a copy of the pattern and runs _findnext.
+;   Out: XHL = search record for _findnext / _findclose, or 0xffffffff on failure.
 _findfirst:
 	lda xsp, (xsp - 20)
 	push xiz
@@ -9802,6 +9911,11 @@ FdcFile_Epilogue20:
 	lda xsp, (xsp + 20)
 	ret
 
+; Directory search, release (C runtime style, named in the HAMA function table).
+;   In:  XWA = search record from _findfirst.  With the device type at 0x3e3e4 = 5 the record is
+;   handed to FileIO_ValidateHandle; otherwise its directory file is closed (FileClose) and the
+;   pattern and the record are freed.
+;   Out: HL = 0, or 0xffff for a null record.
 _findclose:
 	push xiz
 	ld xiz, xwa
@@ -9837,6 +9951,15 @@ FindClose_Return:
 	pop xiz
 	ret
 
+; Directory search, next match (C runtime style, the name is in the HAMA function table).
+;   In:  XWA = search record (+0 = open directory file, +4 = wildcard pattern),
+;        XBC = result record.
+;   With the device type at 0x3e3e4 = 5 the request goes to FileIO_ReadNextDirEntry.  Otherwise
+;   32-byte FAT directory entries are read (FileRead) until one is neither deleted (0xe5) nor a
+;   volume label (attribute bit 3) and matches the pattern (FileIO_MatchWildcard); a 0 first
+;   byte ends the directory.  The result gets: +0 attribute, +2 size (entry offset 28), +6 the
+;   8-character name, '.', the 3-character extension and a NUL.
+;   Out: HL = 0 found, 0xffff no more entries.
 _findnext:
 	lda xsp, (xsp - 64)
 	push xiz
@@ -10071,6 +10194,7 @@ FindFirst_SndTable_Return:
 	inc 4, xsp
 	ret
 
+; Out: HL = 0 when XWA is not null, 0xffff when it is.
 FileIO_ValidateHandle:
 	or xwa, xwa
 	jr nz, FileIO_ValidateHandle_Ok
@@ -10259,6 +10383,13 @@ SndTable_ByteBlock_ReadOps_Code_Loop:
 	jr	nz, SndTable_ByteBlock_ReadOps_Code_Loop
 	ret
 
+; Returns the next byte of a data stream received through task-message mailbox 3.
+;   State: 0x2358a = stream state (1 = open), 0x23582 = current message block (word 0 = byte
+;   count, word 2 = a pending value, data from +4), 0x23580 = bytes left, 0x23586 = read
+;   pointer.  An empty buffer is refilled with TaskMsg_Receive(3); when a full 0x400-byte block
+;   has been consumed it is handed back with TaskMsg_Send(2).
+;   Out: HL = byte (0..0xff); the block's pending word when one is set; 0xffff at end of data or
+;        when the stream is not open.  State becomes 2 after the first read.
 TaskBuf_ReadNextByte:
 	pushw iz
 	cp (0x02358a:24), 0x01
@@ -10427,6 +10558,8 @@ SndTable_CalcSectorPosition:
 	ld (xbc), wa
 	retd 0x4
 
+; Builds a floppy command block (type 3, sector position from SndTable_CalcSectorPosition and
+; the three word arguments, count 1, buffer XBC) and runs it with FDC_CommandEntry.
 FDC_ExecuteSectorCommand:
 	lda xsp, (xsp - 22)
 	push xiz
@@ -10751,17 +10884,23 @@ SeqDispatch_TrampolineBlock_Join:
 	calr	AccBuf_ResetAndReload
 	ret
 
+; Entry to the sequencer tick dispatcher: jumps to Seq_DispatcherTick.  Called from the
+; accompaniment, demo and playback code as well as from Seq_TickWrapper.
 Seq_DispatcherEntry:
 	jp Seq_DispatcherTick
 
+; Alias entry: jumps to VoiceParam_ClampAndValidate.
 VoiceParam_ClampAndValidate_Tramp:
 	jp VoiceParam_ClampAndValidate
 SeqDispatch_TrampolineB:
 	jp	Rhythm_TailPadding
 
+; Alias entry: jumps to Rhythm_DispatchNote.
 Rhythm_DispatchNote_Tramp:
 	jp Rhythm_DispatchNote
 
+; Calls Rhythm_DispatchNote with D = C and XIZ preserved; returns its A result zero-extended
+; in XHL.
 Rhythm_NoteDispatchWrapper:
 	push xiz
 	ld d, c
@@ -10774,18 +10913,25 @@ Rhythm_NoteDispatchWrapper:
 RhythmPart_CopyData_Tramp:
 	jp RhythmPart_CopyData
 
+; Calls AccStyle_LookupTempoAndVelocity with XIZ preserved.
+; Called from ExtData_ToneParam_AltBody_Join, SndParam_CheckRhythm and
+; SndParam_ApplyFromPointer_Skip.
 Rhythm_LookupTempoVelocity_Wrap:
 	push xiz
 	call AccStyle_LookupTempoAndVelocity
 	pop xiz
 	ret
 
+; Calls AccStyle_LookupVelocityTable with XIZ preserved.
+; Called from SndParam_FetchCheckRhythm, SndParamResolve_CheckRhythm, SndBuf_WriteParamEntries_Skip,
+; MainGetRhythmName, RhythmROM_PatternDisp_Check91, BitMapOut_ApplyPatch_Return and 1 more site.
 Rhythm_DispatchNote_Finalize:
 	push xiz
 	call AccStyle_LookupVelocityTable
 	pop xiz
 	ret
 
+; Alias entry: jumps to Rhythm_TransposeWithMod.
 Rhythm_TransposeWithMod_Tramp:
 	jp Rhythm_TransposeWithMod
 Rhythm_TransposeTrampBlock:
@@ -10910,6 +11056,10 @@ VoiceParam_ClampAndStore:
 	ld (0x32f7:16), h
 	ret
 
+; Normalises a (number L, bank H) tone selection.
+;   L below 0x80: HL becomes the word L (bank H & 7) of VoiceParam_BankProgramWords.
+;   0x80..0xef: banks above 7 become 0 and numbers above 0x9d become 0.
+;   0xf0 and up: H = 0, L = 0x80 + (L & 15).
 VoiceParam_ClampAndValidate:
 	cp l, 0x80
 	jr c, VoiceParam_Clamp_LookupTable
@@ -10949,6 +11099,8 @@ Rhythm_InitDataBlock:
 ; address and address+1 in the whole dump (2026-09-25, lane seqeng).
 	.zero 128
 
+; Posts an event through SwbtWr_QueuePostEvent with the caller's registers unchanged; the
+; accompaniment and rhythm code uses this entry for part-change notifications.
 Rhythm_QueuePartChangeEvent:
 	call SwbtWr_QueuePostEvent
 	ret
@@ -11160,6 +11312,8 @@ AccChord_CompareNoteC:
 AccChord_ReadKeysRet:
 	ret
 
+; Calls BitMapOut_CheckDiskAndApply when the low 3 bits of the panel byte 0xfc5d are not 0.
+; Preserves XWA.
 AccDisplay_RefreshIfDiskActive:
 	push xwa
 	ld a, (0xfc5d:16)

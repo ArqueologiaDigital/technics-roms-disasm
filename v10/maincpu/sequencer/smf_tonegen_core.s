@@ -83,6 +83,7 @@ SeqTrack_ClearRemaining_Loop:
 	djnz16 bc, SeqTrack_ClearRemaining_Loop
 	ret
 
+; Clears byte 0 (the active flag) of the 33 seven-byte SMF track records at 0x11f9.
 SeqTrack_ScanActiveChannels:
 	ld xhl, 0x11f9
 	xor iy, iy
@@ -95,6 +96,7 @@ SeqTrack_ScanActiveChannels_Loop:
 	jrl ule, SeqTrack_ScanActiveChannels_Loop
 	ret
 
+; Clears the 16 bytes at 0xf72 and the 16 bytes at 0xf82.  Preserves XWA, XBC, XIX.
 SeqTrack_ClearPlaybackBuffers:
 	push xwa
 	push xbc
@@ -190,6 +192,8 @@ SeqTrack_ClearPartParams_Loop:
 	popw wa
 	ret
 
+; Runs SoundMode_DispatchRender with A = 1 for mode 0 (0x11f8), 0 for mode 1 and 2 otherwise,
+; preserving every register.
 FloppyIO_SelectReadMode:
 	push xwa
 	push xhl
@@ -237,6 +241,10 @@ ChannelRecord_PtrTable:
 	.long 0x0000f566, 0x0000f580, 0x0000f59a, 0x0000f5b4
 	.long 0x0000f5ce, 0x0000f5e8, 0x0000f602, 0x0000f61c
 
+; Sets up the tone generator for SMF playback: mode 0 (0x11f8) sets bit 2 of 0xfdad and 0xf23d =
+; 0xff (C = 0xff), other modes clear them (C = 0); then FloppyIO_ComputeSwitchboardAddr, 0x10ea = 1,
+; main event (W = 4, D = 3, E = 0x91, A = 4 in mode 0 with the low 3 bits of 0xf73d cleared, else
+; 0) and SwbtWr_ReinitBothBanks.
 FloppyIO_ConfigureSwitchboard:
 	cp (4600:16), 0
 	jrl z, FloppyIO_ConfigSwb_Mode0
@@ -365,6 +373,10 @@ SeqTrack_ErrorMark:
 SeqTrack_AssignChannels_Done:
 	ret
 
+; Reads an SMF variable-length quantity from the file into the buffer at 0x106e (bytes while bit
+; 7 is set, then the last one).
+;   Out: XIX = number of bytes read; a read error (FILEIO_BLOCK_BYTES < 0) stops early with XIX
+;   left as the buffer pointer.
 FloppyIO_ReadToTrackBuffer:
 	ld xix, 0x106e
 
@@ -590,6 +602,8 @@ SeqTrack_ComputeTempo_NoDeltaStore:
 SeqTrack_UpdateVolumesExit:
 	ret
 
+; For each active SMF track record at 0x11f9 (7-byte records), adds SeqTrack_ComputeScaledDelta
+; to its word +5, clamped to 0x2fff (also on overflow).
 SeqTrack_UpdateChannelVolumes:
 	xor xiy, xiy
 
@@ -825,6 +839,8 @@ Voice_ActivateChannels_Next:
 	jrl ule, Voice_ActivateChannels_Loop
 	ret
 
+; For each channel 0..15 whose bit is set in the mask at 0xffec, sets 0x2877 = channel + 1 and runs
+; Scoop_SpecialMode_ParamCheckBound.
 SoundGen_ScanActiveVoiceBitmap:
 	xor c, c
 
@@ -846,6 +862,7 @@ SoundGen_ScanBitmap_Next:
 	jrl ule, SoundGen_ScanBitmap_Loop
 	ret
 
+; Returns W = 1.
 FloppyIO_ReturnReady:
 	ld w, 0x1:opc
 	ret
@@ -900,6 +917,9 @@ SMF_ReadMidiEvt_CheckComplete:
 SMF_ReadMidiEvt_Done:
 	ret
 
+; Collects an SMF channel event in 0xfab..0xfad: the status byte (0xfaa), the first data byte A,
+; and one more byte read from the file (FloppyIO_ReadNextByte) except for program change (0xcn)
+; and channel pressure (0xdn).  A read error (FILEIO_BLOCK_BYTES < 0) stops it.
 FloppyIO_ReadMidiEventBytes:
 	ld c, a
 	ld a, (4010:16)
@@ -961,6 +981,9 @@ FloppyIO_DispatchMidiEvent:
 FloppyIO_ReadMidiEvtBytes_Exit:
 	ret
 
+; Loads the MIDI-channel-to-part map into the part-type table at 0xf1a0 (VoiceChannels_PartMapTable
+; in mode 1, the variant with channels 10 and 16 swapped otherwise), sets 0xf290 = 0xffff and
+; initialises the pan settings (VoiceChannels_InitPanFromPreset).
 VoiceChannels_LoadPartMapAndInitPan:
 	ld xiy, VoiceChannels_PartMapTable
 	cp (4600:16), 1
@@ -1592,6 +1615,10 @@ SeqTrack_ChannelMapIdentity:
 SeqTrack_ChannelMapSwap10And16:
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0f, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
 
+; Computes the address of one 256-byte song-data block.
+;   In:  HL = block number (1-based).
+;   Out: 0x10fd = (0x1d5a) + (HL-1)*256, the base pointer in 0x1d5a plus the block offset;
+;        XHL = 0.  Preserves XIY.
 ToneGen_ComputeBlockPtr:
 	push xiy
 	ld xiy, (7514:16)
@@ -1610,6 +1637,10 @@ SeqTrack_ClearPartEventParams:
 	ld (4213:16), wa
 	ret
 
+; Re-sends the tone-generator setup of the current track: loads its position
+; (SoundGen_CaptureVoiceParams), then runs SoundGen_UpdateAndRefresh with A = 0x81
+; (BOOTSERIAL_STATUS) times or until 0x10e3 becomes non-zero; on completion saves the position
+; (ToneGen_WriteChannelRegs), sets bit 0 of 0x108c and clears 0x10e3.
 SoundGen_RefreshAllVoices:
 	push xiy
 	call SoundGen_CaptureVoiceParams
@@ -1679,6 +1710,9 @@ SeqTrack_ScaledDelta_PassThrough:
 SeqTrack_ScaledDelta_Return:
 	ret
 
+; Reads a variable-length value from the SMF file (FloppyIO_ClearTrackParseBuffer,
+; FloppyIO_ReadVariableLength) and, if the read succeeded (FILEIO_BLOCK_BYTES not negative),
+; dispatches the part event (SeqTrack_DispatchPartEvt).
 Sequencer_ValidateFileData:
 	call FloppyIO_ClearTrackParseBuffer
 	call FloppyIO_ReadVariableLength
@@ -1907,6 +1941,11 @@ SoundGen_SetVoiceBitAndWriteRegs:
 SoundGen_NullRet:
 	ret
 
+; Loads the playback position of one sequencer track into the current-position variables.
+;   In:  IY = track index.
+;   Out: 0x28af = word IY of the table at 0xc9e (block number), 0x2666 = byte IY of the
+;        table at 0xcbe (offset in the block, zero-extended).  Preserves IY and XDE.
+;   ToneGen_WriteChannelRegs is the inverse (stores the position back).
 SoundGen_CaptureVoiceParams:
 	push xde
 	sla xiy, 1
@@ -1921,6 +1960,8 @@ SoundGen_CaptureVoiceParams:
 	pop xde
 	ret
 
+; Stores A at the playback position (block 0x28af via ToneGen_ComputeBlockPtr, offset 0x2666).
+; Preserves XHL.
 ToneGen_LoadBlockValidate:
 	push xhl
 	ld hl, (0x28af:16)
@@ -1931,6 +1972,8 @@ ToneGen_LoadBlockValidate:
 	pop xhl
 	ret
 
+; Saves the playback position as the start of part HL (0-based) in song slot 0: offset 0x2666 to
+; the byte table at 0xf218, block 0x28af to the word table at 0xf1f8.  Preserves XIX.
 SoundGen_StoreVoiceParamsToTables:
 	push xix
 	ld wa, (9830:16)
@@ -2067,6 +2110,7 @@ MidiEvent_ProgramChangeB:
 MidiNoteOff_NullRetB:
 	ret
 
+; Clamps the track index: XIY is zero-extended and anything above 1 becomes 1.
 SoundGen_ClampVoiceIndexMin1:
 	extz xiy
 	cp xiy, 0x1
@@ -2307,6 +2351,9 @@ Scoop_Compare_FindNextValid:
 Scoop_NullRet:
 	ret
 
+; Copies song-data block HL into the SMF track buffer at 0x17fa (256 bytes), runs
+; DispatchHandler_JumpSub with WA = 1, IY = HL, restores the page pointer 0x10fd (kept in XDE3,
+; bank-3 register code 0x38) and returns IY = 5.
 ToneGen_CopyBlockToVoiceBuffer:
 	push xiz
 	ld xiz, (4349:16)
@@ -2394,6 +2441,9 @@ ToneGen_ReadVoiceBlock_Loop:
 ToneGen_ReadVoiceBlock_Done:
 	ret
 
+; For tracks 0..15: loads the track's position, writes byte A there (ToneGen_WriteParamToBlock) and,
+; for A = 0x81, advances (ToneGen_AdvancePosition), stopping when 0x10e3 reports no free block;
+; saves the position back (ToneGen_WriteChannelRegs).
 ToneGen_WriteAllChannels:
 	xor iy, iy
 
@@ -2435,6 +2485,9 @@ ToneGen_WriteAllChannels_Next:
 ToneGen_WriteAllCh_Done:
 	ret
 
+; Writes BC parameter bytes from the buffer at 0x1073 into the song data, starting at the
+; playback position (block 0x28af): each byte through ToneGen_WriteParamToBlock and
+; ToneGen_AdvancePosition, stopping early when 0x10e3 becomes non-zero.
 ToneGen_UpdateBlocks:
 	ld hl, (0x28af:16)
 	pushw bc
@@ -2461,6 +2514,8 @@ ToneGen_UpdateBlocks_Loop:
 ToneGen_UpdateBlocks_Done:
 	ret
 
+; Sets the bit for channel IY & 15 in the 16-bit mask at 0xffec, and stores a set carry into
+; bit A of the byte at 0x19fa as well (STCF A,(mem)).
 ToneGen_SetChannelFlag:
 	ld bc, iy
 	and bc, 0xf
@@ -2474,6 +2529,10 @@ ToneGen_SetChannelFlag:
 	ld (0x00ffec:24), de
 	ret
 
+; Saves the current playback position back into one sequencer track's slot.
+;   In:  IY = track index.  Stores 0x28af (block number) as word IY of the table at 0xc9e and
+;        the low byte of 0x2666 (offset) as byte IY of the table at 0xcbe.
+;   Inverse of SoundGen_CaptureVoiceParams.  Preserves XIX and IY.
 ToneGen_WriteChannelRegs:
 	push xix
 	ld wa, (0x28af:16)
@@ -2577,6 +2636,9 @@ FloppyIO_ReadVarLen_StoreByte:
 FloppyIO_ReadVarLen_Done:
 	ret
 
+; Scales a value by 96 / (word at 0xf60): from a resolution of (0xf60) per unit to 96.
+;   In:  WA = value.  Out: WA = WA * 96 / (0xf60), remainder in the upper word of XWA; nothing
+;   is done when the word at 0xf60 is 96.  DE is passed through QWA (upper word of XWA, code 0xe2).
 SoundGen_ScalePitchByTempo:
 	ld hl, (3936:16)
 	cp hl, 0x60
@@ -4046,6 +4108,9 @@ VoiceParam_ChannelMapRemapped:
 ; nop / normal / push sr / ... mnemonics.
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0f, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
 
+; Loads the playback position of the track in 0x108d (clamped to 0..1 by
+; SoundGen_ClampVoiceIndexMin1): block from the table at 0xc9e into 0x28af, offset from the
+; table at 0xcbe into 0x2666.  SoundGen_WriteVoiceParams stores it back.  Preserves XDE.
 SoundGen_ReadVoiceRegs:
 	push xde
 	ld iy, (4237:16)
@@ -4079,6 +4144,9 @@ SoundGen_StoreVoice_AfterClamp:
 	pop xix
 	ret
 
+; Empties part HL (1-based) of song slot 0 and its track position: voice-table flag cleared and
+; word 0xffff (table at 0xf250), start offset 5 (0xf218) and block 0xffff (0xf1f8), track offset 5
+; (0xcbe) and block 0xffff (0xc9e).
 VoiceChannel_ClearRegisters:
 	dec 1, hl
 	ld iy, hl
@@ -4100,6 +4168,8 @@ VoiceChannel_ClearRegisters:
 	pop xix
 	ret
 
+; Copies the 256-byte song-data block at (0x10fd) to XIX (LDIR (XIX+),(XIY+)), runs
+; DispatchHandler_JumpSub with WA = 1 and IY = block (0x28af), restores 0x10fd (kept in XDE3 (bank-3 register, code 0x38)) and returns IY = 5, the first data offset.  Preserves BC, XHL.
 VoiceChannel_CopyParamBlock:
 	pushw bc
 	push xhl
@@ -4124,6 +4194,9 @@ VoiceChannel_CopyParamBlock:
 	ld iy, 5:i3
 	ret
 
+; Steps the first SMF track buffer (0x17fa, offset 0x27d6) to its next byte: an end (0x82) or bar
+; (0x81) marker sets bit 0 of 0x27d2 instead; otherwise ToneGen_ValidateAndSelectVoice advances
+; IY and the new byte and offset go to 0x27dc / 0x27d6.  Bit 0 of 0x27d2 is cleared first.
 VoiceChannel_UpdateParamSet:
 	and (0x27d2:16), 254
 	ld iy, (0x27d6:16)
@@ -4158,6 +4231,8 @@ VoiceChannel_ParamSet_Validate:
 VoiceChannel_ParamSet_Done:
 	ret
 
+; Same as VoiceChannel_UpdateParamSet for the second buffer (0x18fa, offset 0x27da, byte to
+; 0x27de, end flag bit 1 of 0x27d2).
 ToneGen_ValidateVoiceCh2:
 	and (0x27d2:16), 253
 	ld iy, (0x27da:16)
@@ -4192,6 +4267,7 @@ ToneGen_ValidateCh2_Validate:
 ToneGen_ValidateCh2_Done:
 	ret
 
+; Repeats VoiceChannel_FindNextValid until bit 0 of 0x27d2 (first buffer ended) is set.
 VoiceChannel_FindNextLoop:
 	call VoiceChannel_FindNextValid
 	bit 0, (0x27d2:16)
@@ -4237,12 +4313,17 @@ Scoop_Equal_AdvanceAndRevalidate:
 Scoop_Equal_Done:
 	ret
 
+; Repeats ToneGen_AdvanceAndValidateVoice until bit 1 of 0x27d2 (second buffer ended) is set.
 ToneGen_AdvanceVoiceLoop:
 	call ToneGen_AdvanceAndValidateVoice
 	bit 1, (0x27d2:16)
 	jr z, ToneGen_AdvanceVoiceLoop
 	ret
 
+; Copies one event from the first SMF track buffer (0x17fa, offset 0x27d6) into the page at
+; (0x10fd), starting with byte C at offset IX (then 0x27dc unless the buffer already ended),
+; following with the data bytes up to the next status byte, and steps the buffer
+; (VoiceChannel_UpdateParamSet).
 VoiceChannel_FindNextValid:
 	ld xhl, (4349:16)
 	ld	(xhl+ix), c
@@ -4280,6 +4361,7 @@ VoiceChannel_FindNext_StoreAndUpdate:
 	call VoiceChannel_UpdateParamSet
 	ret
 
+; Clears the 8 bytes at 0x1073.
 VoiceChannel_ClearParamTable:
 	ld xix, 0x1073
 	xor wa, wa
@@ -4327,6 +4409,7 @@ VoiceChannel_StorePosition_Continue:
 	ld (0x27d6:16), iy
 	ret
 
+; Stores A at the playback position: offset (0x2666) & 0xff of block 0x28af.
 ToneGen_WriteParamToBlock:
 	ld hl, (0x28af:16)
 	call ToneGen_ComputeBlockPtr
@@ -4337,6 +4420,9 @@ ToneGen_WriteParamToBlock:
 	ld (xiy), a
 	ret
 
+; Moves the SMF write position 0x2666 one byte forward; at 0xff it links a new block
+; (ToneGen_DispatchAndLinkBlock) unless the free count 0xf231 is 0, which sets 0x10e3 = 0xff
+; (out of memory).  0x10e3 = 0 otherwise.
 ToneGen_AdvancePosition:
 	ld wa, (9830:16)
 	cp wa, 0xff
@@ -4383,6 +4469,8 @@ ToneGen_AdvRefresh_ClearError:
 ToneGen_AdvRefresh_Return:
 	ret
 
+; Sets the bit for the current MIDI channel (low nibble of 0xfab) in the 16-bit channel mask
+; at 0xffec.  Preserves BC; clobbers IY, DE and A.
 ToneGen_SetSustainBit:
 	pushw bc
 	ld iy, (4011:16)
@@ -4397,6 +4485,8 @@ ToneGen_SetSustainBit:
 	popw bc
 	ret
 
+; Moves the playback position (block 0x28af, offset 0x2666) one byte forward; past 0xff it
+; continues at offset 5 of the next block (link at +3).
 ToneGen_AdvanceBlockPosition:
 	ld wa, (9830:16)
 	cp wa, 0xff
@@ -4510,9 +4600,11 @@ VoiceSynth_Pan_StoreAndUpdate:
 	call VoiceChannel_UpdateWithPitch
 	ret
 
+; Empty command handler: returns at once.
 VoiceSynth_HandleNop42:
 	ret
 
+; Empty command handler: returns at once.
 VoiceSynth_HandleNop43:
 	ret
 
@@ -4544,6 +4636,9 @@ VoiceSynth_Chorus_SetParams:
 	call VoiceChannel_UpdateWithPitch
 	ret
 
+; Data increment: raises the current data-entry parameter of the MIDI channel in 0xfab by one, up
+; to its limit (VoiceChannel_ParamLimitTable), and re-applies it (VoiceChannel_LookupParams).
+; Nothing when the channel has no parameter selected (0xff in 0x10b3).
 VoiceChannel_SelectNextParam:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -4589,6 +4684,8 @@ VoiceChannel_ParamLimitTable:
 ; ld E,(XIY+IX)` (VoiceChannel_SelectPrevParam does not: it floors at 0), IX = index; a value above E is replaced by E.
 	.byte 0x0c, 0x7f, 0xff
 
+; Data decrement: lowers the current data-entry parameter of the MIDI channel in 0xfab by one
+; (not below 0) and re-applies it (VoiceChannel_LookupParams).
 VoiceChannel_SelectPrevParam:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -4617,6 +4714,9 @@ VoiceChannel_PrevParam_AtZero:
 VoiceChannel_PrevParam_Done:
 	ret
 
+; Clears the current MIDI channel's bit in the masks 0x108f and 0x1091 and its selected
+; data-entry parameter (0xff in 0x10b3).  A and DE pass through bank-3 registers (codes 0x3c /
+; 0x3e) around the stores.
 VoiceChannel_ClearChannelFlags:
 	ld c, (4011:16)
 	and c, 0xf
@@ -4872,6 +4972,9 @@ VoiceParam_ByMode_StoreAndReturn:
 	pop xiy
 	ret
 
+; Saves the playback position (0x28af block, 0x2666 offset) into the slot of the track in
+; 0x108d (clamped to 0..1): word in the table at 0xc9e, byte in the table at 0xcbe.
+; Inverse of SoundGen_ReadVoiceRegs.  Preserves XDE.
 SoundGen_WriteVoiceParams:
 	push xde
 	ld iy, (4237:16)
@@ -4985,6 +5088,8 @@ VoiceParam_Chorus_SetParams:
 	call SoundGen_ClampUpdateVoice
 	ret
 
+; Same as VoiceChannel_FindNextValid for the second SMF track buffer (0x18fa, offset 0x27da, byte
+; B first, then 0x27de), stepping with ToneGen_ValidateVoiceCh2.
 ToneGen_AdvanceAndValidateVoice:
 	ld xhl, (4349:16)
 	ld	(xhl+ix), b
@@ -5442,6 +5547,10 @@ VoiceParam_ReadUpdate_11_Skip:
 VoiceParam_ReadUpdate_11_Return:
 	ret
 
+; Steps the SMF reader offset IY (low byte) one byte forward; past 0xff it follows the block
+; link at XIX+3: 0xffff sets error 2, a block above (0x286d) error 10, a block not in use error
+; 11; otherwise 0x28af = the block and VoiceChannel_CopyParamBlock runs.  The page pointer at
+; 0x10fd is saved in XDE3 (bank-3 register, code 0x38) and restored.
 ToneGen_ValidateAndSelectVoice:
 	push xiz
 	ld xiz, (4349:16)

@@ -5145,7 +5145,7 @@ AccState_CollectAcc4_Active:
 	call AccWrap_PlayModeStartPlay
 
 AccState_Apply:
-	call	AccInit_CallF435A9
+	call	AccInit_SendNoteOffAndFlush
 	ld	a, (0xce43:16)
 	ld	(0x8ca6:16), a
 	ld	a, (0xce44:16)
@@ -5602,7 +5602,7 @@ AccInit_ResetSongCounter:
 AccInit_ResetSong_Store:
 	ld	(12870:16), 0
 	ret
-AccInit_CallF435A9:
+AccInit_SendNoteOffAndFlush:
 	call SeqVoice_SendNoteOffAndFlush
 	ret
 
@@ -28337,18 +28337,17 @@ DrumParam_LookupChannelBit:
 	push XWA
 	push XIX
 	ld a, (0x391c:16)
-	ld XIX,PatIdx_Lookup_Return
+	ld XIX,DrumParam_ChannelBitTable
 	ld	a, (xix+a)
 	ld	(0x372d:16), a
 	pop	xix
 	pop	xwa
 	ret
-PatIdx_Lookup_Return:
-	normal
-	push	sr
-	max
-	ld	(P4:8), 32:io
-	.byte 0x40
+DrumParam_ChannelBitTable:
+	; One-hot part bit per easy-composer channel index 0..6; DrumParam_LookupChannelBit indexes it
+	; with the selected channel and stores the entry.  Was spelled as normal / push sr / max /
+	; ld (P4:8),32:io.
+	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
 
 DrumParam_StepChannelStyle:
 	push_a

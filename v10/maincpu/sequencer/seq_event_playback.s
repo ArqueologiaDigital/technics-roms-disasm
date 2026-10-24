@@ -8,9 +8,11 @@
 ; =============================================================================
 
 
+; Alias entry: jumps to SeqEvt_InitAndProcess.
 SeqEvt_EntryPoint1:
 	jp SeqEvt_InitAndProcess
 
+; Alias entry: jumps to SeqEvt_InitVoiceScan.
 SeqEvt_EntryPoint2:
 	jp SeqEvt_InitVoiceScan
 
@@ -405,6 +407,8 @@ SeqEvt_HandleBufferWrap:
 SeqEvt_CalcTempoRet:
 	ret
 
+; Pushes the byte in WA into the sequencer event buffer (SeqEvtBuf_WriteByte, a compiled-C
+; routine that takes its argument on the stack), preserving every register.
 SeqEvtBuf_WriteBytePreserve:
 	push xhl
 	push xbc
@@ -428,6 +432,9 @@ SeqEvtBuf_WriteBytePreserve:
 SeqEvtBuf_SizeConstant:
 	ret
 
+; Steps a circular-buffer index.
+;   In:  IX = index, XHL = buffer header (+0 = first index, +2 = last index).
+;   Out: IX + 1, or the first index when that passes the last (signed compare).
 SeqEvtBuf_AdvanceReadPos:
 	inc 1, ix
 	cp ix, (xhl + 2)
@@ -1418,6 +1425,8 @@ AccPlay_ProcessVoiceBank:
 AccPlay_VoiceBankRet:
 	ret
 
+; Out: XIY = 0x1e8820 + (0x7f14) * 16, the 16-byte bank entry for index (0x7f14) (indices 12
+; and up read as 0).
 Voice_GetBankEntryPointer:
 	ld a, (0x7f14:16)
 	cp a, 0xc
@@ -1852,6 +1861,9 @@ AccPlay_HoldLoopAdvance:
 	jr nz, AccPlay_IncrementHoldLoop
 	ret
 
+; Moves a 4-byte record from the tempo ring buffer into the MIDI sequence buffer, turning a 0xd3
+; status into 0xd5, and stores its first 3 bytes (MidiSeqBuf_ScanAllEntries,
+; MidiSeqBuf_ProcessEntries).
 MidiSeq_ProcessSustainEvent:
 	ld bc, 4:i3
 	calr MidiSeqBuf_ScanAllEntries
@@ -2372,6 +2384,8 @@ AccompSeq_QueueAllMutes:
 	calr AccompSeq_QueueMuteEvent
 	ret
 
+; Posts one mute event: SwbtWr_QueuePostEvent with D = 0x0d and W = 0xcf (the caller sets the
+; other registers).  AccompSeq_QueueAllMutes calls it once per part.
 AccompSeq_QueueMuteEvent:
 	ld d, 0xd:opc
 	ld w, 0xcf:opc
@@ -2425,6 +2439,8 @@ AccPlay_RestoreMuteStates:
 	calr AccompSeq_QueueAllMutes
 	ret
 
+; Out: XIX = 0x1e8b00 + (HL & 0xfff) * 256, the address of 256-byte page HL of the MIDI
+; sequence buffer pool.  Preserves XHL.
 Util_ExtractAndShiftBits:
 	push xhl
 	and xhl, 0xfff
@@ -2434,6 +2450,9 @@ Util_ExtractAndShiftBits:
 	pop xhl
 	ret
 
+; Finds the first free page (bit 7 of byte 0 clear) among pages 0..0x38 of the MIDI sequence buffer
+; pool.  Out: WA = the page, or 0xffff after restarting the accompaniment playback
+; (AccPlay_InitAndStartLoop) when none is free.
 Voice_FindFreeSlot:
 	xor xix, xix
 	ld bc, 0:i3
@@ -2456,11 +2475,14 @@ Voice_FindDone:
 	ld wa, bc
 	ret
 
+; TempoRingBuf_ReadByte, with the byte returned in A as well as in L.
 TempoRingBuf_ReadLoop:
 	call TempoRingBuf_ReadByte
 	ld a, l
 	ret
 
+; Reads BC bytes from the tempo ring buffer (TempoRingBuf_ReadLoop) into the buffer at 0x7f36;
+; when bit 4 of 0x7f15 is set it is cleared and the second byte of the buffer is zeroed.
 MidiSeqBuf_ScanAllEntries:
 	xor ix, ix
 
@@ -2480,6 +2502,9 @@ MidiSeqBuf_ScanLoop:
 MidiSeqBuf_ScanDone:
 	ret
 
+; Copies DE bytes from the buffer at 0x7f36 into the MIDI sequence buffer at the write position
+; (page 0x7f10, offset 0x7f12), advancing with MidiSeqBuf_AdvancePosition.  Does nothing when
+; the free page count 0x7e18 is 0.
 MidiSeqBuf_ProcessEntries:
 	cpw (0x7e18:16), 0
 	jr z, MidiSeqBuf_ProcessDone
@@ -2504,6 +2529,10 @@ MidiSeqBuf_ProcessLoop:
 MidiSeqBuf_ProcessDone:
 	ret
 
+; Moves the MIDI sequence buffer write offset (0x7f12) one byte forward.  At offset 0xff a
+; free page is taken (Voice_FindFreeSlot), linked after the current page (0x7f10: the old
+; page's +3 and the new page's +1 links), marked in use (bit 7 of byte 0), the free count at
+; 0x7e18 decremented, and the offset restarts at 6.
 MidiSeqBuf_AdvancePosition:
 	ld wa, (0x7f12:16)
 	inc 1, wa
@@ -2533,6 +2562,8 @@ MidiSeqBuf_AdvanceDone:
 	ld (0x7f12:16), wa
 	ret
 
+; Moves the MIDI sequence buffer offset 0x7f12 one byte forward; at 0xff it continues at offset 6
+; of the next page (the link at +3 of page 0x7f10).
 MidiSeqBuf_AdvanceWritePos:
 	ld wa, (0x7f12:16)
 	inc 1, wa
@@ -2555,6 +2586,8 @@ MidiSeqBuf_WriteAdvDone:
 	ld (0x7f12:16), wa
 	ret
 
+; Stores A at XIX + (0x7f12), after Util_ExtractAndShiftBits with HL = (0x7f10).
+; Preserves XIX and XHL.
 MidiSeqBuf_WriteByte:
 	push xix
 	push xhl
@@ -2566,6 +2599,8 @@ MidiSeqBuf_WriteByte:
 	pop xix
 	ret
 
+; Restarts the accompaniment playback: clears 0x7f0b, re-initialises the tempo ring buffer, sets
+; bit 2 of 0x7f15, sends SysEx command 8 (MIDI_SendSysExCmd) and runs AccPlay_MainUpdateLoop.
 AccPlay_InitAndStartLoop:
 	ld (0x7f0b:16), 0
 	call TempoRingBuf_ReInitAndRet

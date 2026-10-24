@@ -1495,6 +1495,9 @@ SeqStep_SkipDone:
 	ld (9804:16), l
 	ret
 
+; Steps the read position saved in 0x2648 / 0x264a to the next event: loads it into 0x2666 /
+; 0x28af, skips data bytes, and unless the next status is an end (0x82) or bar (0x81) marker
+; stores the new position back and the byte after the status in 0x264e.  Errors stop it.
 SeqStep_AdvanceHelper1:
 	ldmm16 9830, 9800
 	ldmm16 0x28af, 9802
@@ -1529,6 +1532,9 @@ SeqStep_AdvanceHelper2Done:
 	ld (9806:16), l
 	ret
 
+; Steps the step-editor position (block 0x273c, offset 0x273e) one byte back into 0x2726 / 0x2720:
+; below offset 5 into the previous block (offset 0xff); returns without change at the first
+; block.  Sets 0x2662 = 1.
 SeqStep_DecrementPos:
 	ld wa, (0x273e:16)
 	cp wa, 5:i3
@@ -1982,6 +1988,9 @@ SeqStep_BoundaryFinal:
 	popw_erp 0xfa
 	ret
 
+; With bit 0 of 0x2879 set, advances the secondary read position one byte (PartCtrl_AdvanceReadPos);
+; otherwise skips to the next status byte (SeqStep_SkipToMeasure, WA zero-extended).
+;   Out: HL = 0, or 0xffff on error.
 SeqStep_SkipIfLeftFlag:
 	bit 0, (0x2879:16)
 	jr z, SeqStep_SkipIfLeftDone
@@ -2027,6 +2036,9 @@ SeqStep_SkipInvertedBDone:
 	ld hl, 0:i3
 	ret
 
+; Copies byte WA to the primary write position (SeqPart_WriteByte_Primary) and advances both
+; cursors (PartCtrl_AdvanceToNextEntry, PartCtrl_AdvanceReadPos).
+;   Out: HL = 0, or 0xffff when either advance fails.
 SeqStep_AdvanceOneEvent:
 	extz wa
 	call SeqPart_WriteByte_Primary
@@ -2045,6 +2057,8 @@ SeqStep_AdvanceOneReturn:
 	ld hl, 0:i3
 	ret
 
+; Skips events (SeqStep_AdvanceOneEvent) until the secondary read position is on a status byte.
+;   Out: HL = 0, or 0xffff when SeqStep_AdvanceOneEvent fails.
 SeqStep_SkipToMeasure:
 	extz wa
 	calr SeqStep_AdvanceOneEvent
@@ -2061,6 +2075,8 @@ SeqStep_SkipToMeasureLoop:
 	ld hl, 0:i3
 	ret
 
+; Advances the secondary read position three bytes (PartCtrl_AdvanceReadPos) and checks that the
+; byte there is 0.  Out: HL = 0 when it is, 0xffff otherwise or on error.
 SeqStep_SkipThreeEvents:
 	call PartCtrl_AdvanceReadPos
 	cp (SEQ_ERROR_CODE:16), 0
@@ -2677,12 +2693,15 @@ SeqStep_PlaybackReturn:
 	popw_erp 0xfa
 	ret
 
+; Empty routine: returns at once.
 SeqStep_PlaybackNop:
 	ret
 
 SeqStep_TimerNop:
 	ret
 
+; Compacts the used song-data blocks to the front (as SeqStep_FindAndCompact, without rebuilding
+; the chains): swaps the last used block with the first free one until they meet.
 SeqStep_FindLastUsedPart:
 	dec 4, xsp
 	ldw wa, 0x4d8
@@ -2709,12 +2728,18 @@ SeqStep_FindLastReturn:
 	inc 4, xsp
 	ret
 
+; Rebuilds the block chains (SeqStep_RebuildPartChain) with WA = the first free song-data block
+; (SeqStep_SearchForward from 1).
 SeqStep_FindAndCompactEntry:
 	ld wa, 1:i3
 	calr SeqStep_SearchForward
 	ld wa, hl
 	jrl SeqStep_RebuildPartChain
 
+; Compacts the used song-data blocks to the front: swaps the last used block (searching down
+; from 0x4d8) with the first free one (SeqStep_SwapTwoParts) until they meet, then rebuilds the
+; chains (SeqStep_RebuildPartChain) and stores (first free - 1) * 16 in 0xf1ce.
+;   Out: XHL = (first free block - 1) * 256, the used size in bytes.
 SeqStep_FindAndCompact:
 	dec 4, xsp
 	pushw iz
@@ -2754,6 +2779,8 @@ SeqStep_CompactDone:
 	inc 4, xsp
 	ret
 
+; Finds the last song-data block, from block WA down to 1, whose in-use flag is set.
+;   Out: HL = that block, or 0 when none is.  Preserves IZ.
 SeqStep_SearchBackward:
 	pushw iz
 	ld iz, wa
@@ -2770,6 +2797,8 @@ SeqStep_SearchBackwardDone:
 	popw iz
 	ret
 
+; Finds the first song-data block, from block WA up to 0x4d8, whose in-use flag is clear.
+;   Out: HL = that block, or 0x4d9 when every block up to 0x4d8 is in use.  Preserves IZ.
 SeqStep_SearchForward:
 	pushw iz
 	ld iz, wa
@@ -2788,6 +2817,9 @@ SeqStep_SearchForwardDone:
 	popw iz
 	ret
 
+; Moves the used block *XWA into the free block *XBC (SeqStep_CopyPartData,
+; SeqStep_UpdateRefsAfterSwap, SeqStep_UpdateForwardLinks), then moves both cursors on: *XWA to the
+; previous used block (SeqStep_SearchBackward), *XBC to the next free one (SeqStep_SearchForward).
 SeqStep_SwapTwoParts:
 	dec 4, xsp
 	push xiz
@@ -3140,6 +3172,8 @@ SeqStep_ReinitLoop:
 	inc 6, xsp
 	ret
 
+; C-style calloc: allocates (stack argument) bytes (SeqStep_MallocWrapper) and clears them
+; (Memset).  Out: XHL = block, or 0 with error 3 in 0x1e53c.
 SeqStep_MemAllocWrapper:
 	push xiz
 	ld wa, (xsp + 8)

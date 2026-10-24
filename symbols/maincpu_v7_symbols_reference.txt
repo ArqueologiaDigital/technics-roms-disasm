@@ -32267,7 +32267,7 @@ AccInit_ReInit_ClearHighBits 00F59350
 AccInit_ReInit_SetDirty 00F5937A
 AccInit_ResetSongCounter 00F59380
 AccInit_ResetSong_Store 00F5938B
-AccInit_CallF435A9 00F59391
+AccInit_SendNoteOffAndFlush 00F59391
 AccTuning_CheckChange 00F59396
 AccTuning_ChangeReturn 00F593AF
 AccTuning_LoadFromROM 00F593B0
@@ -34892,7 +34892,7 @@ VoiceSlot_Dispatch_Return_Join2 00F66BAA
 VoiceSlot_Dispatch_Return_Helper 00F66BB1
 DrumParam_ProcessChannel 00F66BE7
 DrumParam_LookupChannelBit 00F66BF1
-PatIdx_Lookup_Return 00F66C08
+DrumParam_ChannelBitTable 00F66C08
 DrumParam_StepChannelStyle 00F66C0F
 VoiceTable_InitEntry 00F66C32
 VoiceTable_InitEntry_Loop 00F66C37

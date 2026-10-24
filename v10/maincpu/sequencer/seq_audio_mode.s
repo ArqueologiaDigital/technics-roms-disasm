@@ -11,6 +11,8 @@
 	ld (0x327f:16), a
 	ret
 
+; With bit 3 of 0x3284 pending and the tick 0x327f at 0x30 or below or 0x5d or above:
+; AudioMode_SetStereoFlags, then clears the bit.
 AudioMode_CheckAndUpdateStereo:
 	bit 3, (0x3284:16)
 	jr z, AudioMode_CheckDone
@@ -27,6 +29,7 @@ AudioMode_ApplyStereoUpdate:
 AudioMode_CheckDone:
 	ret
 
+; Copies the low 3 bits of 0x32f9 into the low 3 bits of 0x3310.
 AudioMode_MergeOutputBits:
 	ld a, (0x3310:16)
 	and a, 0xf8
@@ -36,12 +39,14 @@ AudioMode_MergeOutputBits:
 	ld (0x3310:16), a
 	ret
 
+; 0x3335 = (0x28b2) & 3.
 AudioMode_CopyChannelMode:
 	ld a, (0x28b2:16)
 	and a, 0x3
 	ld (0x3335:16), a
 	ret
 
+; 0x3362 = (0x34f1) & 0x3d.
 AudioMode_CopyAccentFlags:
 	ld a, (0x34f1:16)
 	and a, 0x3d
@@ -76,6 +81,7 @@ AccPedal_LoadFlagFromStyleMem_Done:
 	popw wa
 	ret
 
+; Sets bit 0 of 0x3363.  Preserves WA, XIY.
 AccPedal_SetFlag13155:
 	pushw wa
 	push xiy
@@ -171,6 +177,7 @@ AccPedal_ReadBankAndReturn:
 	calr AccVoice_ReadBankAssign
 	ret
 
+; Sets 0x3282 = AccStyle_ApplyExt_SkipClamp_Table[(0x433)] when bit 0 of 0x3283 is set, else 0.
 AccVoice_ReadBankAssign:
 	xor wa, wa
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
@@ -184,6 +191,9 @@ AccVoice_StoreBankAssign:
 	ld (0x3282:16), a
 	ret
 
+; Unless part bits 0..5 are set in 0x3314 or 0x3315: when 0x32f5 differs from 0x32f6 or the low 3
+; bits of 0x32f7 and 0x32f8 differ, AccChannel_SetDirtyIfActive, _CheckActivitySetDirty,
+; _CheckPartIndexDirty and bit 0 of 0x330c set.  Always 0x32e7 = (0x32f5), 0x32e8 = (0x32f7) & 0x7f.
 AccChannel_CompareAndMarkDirty:
 	ld a, (0x3314:16)
 	or a, (0x3315:16)
@@ -250,6 +260,7 @@ AccChannel_StoreStateIfChanged_Store:
 AccChannel_StoreStateIfChanged_Return:
 	ret
 
+; Sets bits 0..5 of 0x3326 when the low 3 bits of 0x32e4 are not 0.
 AccChannel_SetDirtyIfActive:
 	ld wa, (0x32e3:16)
 	and w, 0x7
@@ -260,6 +271,8 @@ AccChannel_SetDirtyIfActive:
 AccChannel_SetDirtyDone:
 	ret
 
+; Sets bits 0..5 of 0x3326 when 0x3312, 0x3313, 0x3316, 0x3317 or 0x3318 has a part bit 0..5 set and
+; 0x32f5 is 0x80 or more.
 AccChannel_CheckActivitySetDirty:
 	ld a, (0x3312:16)
 	or a, (0x3313:16)
@@ -275,6 +288,7 @@ AccChannel_CheckActivitySetDirty:
 AccChannel_ActivityCheckDone:
 	ret
 
+; Sets bits 0..5 of 0x3326 when byte 0x433 is 1.
 AccChannel_CheckPartIndexDirty:
 	ld a, (1075:16)
 	cp a, 1:i3
@@ -344,6 +358,9 @@ AccVoice_Pedal2_SetAndCheck:
 AccVoice_Pedal2_Done:
 	ret
 
+; For bit 0 and bit 1 of 0x32fb newly set (clear in 0x32fc): 0x330a = 0x330b = 0, the other bit
+; of 0x3309 cleared and this one set, bits 0..5 of 0x3327 cleared (and of 0x3326 unless bit 0 of
+; 0x330c), then AccVoice_CheckBitsAndSetFlags and AccVoice_CheckChannelSetActive.
 AccVoice_ProcessLeftPedalChanges:
 	bit 0, (0x32fb:16)
 	jr z, AccVoice_LeftPedal0_Done
@@ -385,6 +402,7 @@ AccVoice_LeftPedal1_SetAndCheck:
 AccVoice_LeftPedal1_Done:
 	ret
 
+; Sets bit 0 of 0x330f when any part bit 0..5 is set in 0x3314 or 0x3315.
 AccVoice_CheckChannelSetActive:
 	ld a, (0x3314:16)
 	or a, (0x3315:16)
@@ -395,6 +413,7 @@ AccVoice_CheckChannelSetActive:
 AccVoice_ChannelActiveDone:
 	ret
 
+; Sets bits 0..5 of 0x3327 when ((0x32e4) & 7) + 1 equals the byte at 0x433.
 AccVoice_CheckBitsAndSetFlags:
 	ld de, (0x32e3:16)
 	and d, 0x7
@@ -406,6 +425,8 @@ AccVoice_CheckBitsAndSetFlags:
 AccVoice_BitsCheckDone:
 	ret
 
+; For bit 6 and bit 7: when set in 0x3281 but not in 0x3470 and (0x3280) + 1 equals byte 0x433,
+; sets bits 0..5 of 0x3329.
 AccPitch_CheckTransposeFlags:
 	bit 6, (0x3470:16)
 	jr nz, AccPitch_UpdateCheck
@@ -431,6 +452,9 @@ AccPitch_UpdateCheck:
 AccPitch_FinalReturn:
 	ret
 
+; For bit 0 and bit 1 of 0x32fd newly set (clear in 0x32fe): 0x330a = 0x3309 = 0, bits 0..5 of
+; 0x3327 and 0x3326 cleared, the other bit of 0x330b cleared and this one set, then
+; AccChannel_SetDirtyIfActive.
 AccChord_ProcessKeyChanges:
 	bit 0, (0x32fd:16)
 	jr z, AccChord_KeyChange0_Done
@@ -596,6 +620,8 @@ AccChord_CheckPitchLeftPedal1:
 AccChord_NullRet:
 	ret
 
+; Sets bit 5 of 0x32f3 when the chord bytes 0x32d8 / 0x32da differ from 0x32dc / 0x32de; clears it
+; again when 0x32dc is 0.
 AccChord_CompareAndSetDirty:
 	ld a, (0x32d8:16)
 	cp a, (0x32dc:16)
@@ -615,6 +641,9 @@ AccChord_CheckZeroChord:
 AccChord_CompareDone:
 	ret
 
+; Sets bit 0 of 0x330d when 0x3305 differs from 0x3306, 0x3314 / 0x3315 have no part bit 0..5,
+; 0x32e5 is below 0x80, 0x3312 / 0x3313 have no part bit either (checked only with bit 0 of 0x3301)
+; and (0x3305) & 3 differs from 0x3338.  Always 0x333a = (0x3305) & 3.
 AccentVoice_DetectAndMarkChange:
 	ld a, (0x3305:16)
 	cp a, (0x3306:16)
@@ -647,6 +676,10 @@ AccentVoice_UpdateParamIndex:
 	ld (0x333a:16), a
 	ret
 
+; Returns the address of one style pattern record.
+;   In:  A = record index (0..0x1d, larger ones read as 0); the bank is the byte at 0x32e6.
+;   Out: XIY = RhythmTiming_OffsetTable[A] + AccVoice_BankBaseTable[(0x32e6)] + 0x60.
+;   Preserves XWA, XIX.
 AccVoice_ResolveParamAddr:
 	push xwa
 	push xix
@@ -700,6 +733,8 @@ AccVoice_BankBaseTable:
 	.long 0x00379800
 	.long 0x00390000
 
+; Out: WA = word 0 and IY = word 1 of RhythmROM_BankProgramLocators[H & 7][A] (HL = its byte
+; offset, (H & 7) * 512 + A * 4).
 AccVoice_ComputeChannelIndex:
 	and h, 0x7
 	sla h, 1
@@ -713,6 +748,8 @@ AccVoice_ComputeChannelIndex:
 	ld	iy, (xiy+hl)
 	ret
 
+; Resolves a voice table entry: AccVoice_ComputeChannelIndex, AccVoice_TableLookup_Inner, then
+; XIY = XHL + the zero-extended IY that came in.
 AccVoice_LookupWithOffset:
 	calr AccVoice_ComputeChannelIndex
 	call AccVoice_TableLookup_Inner
@@ -721,6 +758,10 @@ AccVoice_LookupWithOffset:
 	ld xiy, xhl
 	ret
 
+; Selects the style's time signature: with (0x32e5) below 0x80 from the style at (0x32ce)
+; (AccStyle_ReadVoiceParam, W also stored in 0x32ef), else AccPatch_SetVoiceParam((0x32e5) &
+; 0x7f).  The value goes to 0x433 and its bar length (AccVoice_LookupTableAddress_Table) to
+; 0x327b.
 AccVoice_SelectAndApplyPatch:
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_PatchFromDirect
@@ -742,6 +783,8 @@ AccVoice_StorePatchAndLookup:
 	ld (0x327b:16), wa
 	ret
 
+; Reads two style values: W = byte +986 of the style at XIY and A = the beats-per-measure
+; (AccTone_LookupByProgram_Table) of its time-signature code at +976.
 AccStyle_ReadVoiceParam:
 	ld	w, (xiy+986)
 	ld	a, (xiy+976)
@@ -769,6 +812,10 @@ AccPatch_ClampedSetParam:
 	ld	a, (xhl+a)
 	ret
 
+; Loads the 0x31-byte per-part tuning block at 0x3246 from a style.
+;   In:  XIY = style base, XHL = offset; the block is copied from XIY + XHL + 0x248.
+;   Then forces bytes 9 = 0x40, 0x10 = 0x0c, 0x17 = 0x74 and 0x1e = 0x40 of the block and calls
+;   AccTuning_LoadFromROM.  Preserves XIY, XWA, XIX.
 AccVoice_LoadTuningBlock:
 	push xiy
 	add xhl, 0x248
@@ -797,6 +844,9 @@ AccVoice_LoadTuningBlock:
 	nop
 	ret
 
+; Copies five 7-byte tuning records from a style header into the per-part tuning area.
+;   In:  XIY = style header.  Header offsets 0x18, 0x20, 0x28, 0x30, 0x38 go to 0x3246, 0x324d,
+;   0x3254, 0x325b, 0x3262.  Preserves XIY.
 AccTuning_CopyAllPartsFromStyle:
 	push xiy
 	ld xhl, xiy
@@ -827,6 +877,8 @@ AccTuning_CopyAllPartsFromStyle:
 	pop xiy
 	ret
 
+; Copies one 7-byte tuning record from XIY + XHL + 0x248 to 0x3246 and applies it
+; (AccTuning_LoadMaster).  Preserves XIY.
 AccTuning_LoadAndApplyMaster:
 	push xiy
 	add xhl, 0x248
@@ -842,6 +894,8 @@ AccTuning_LoadAndApplyMaster:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x24f to 0x324d, sets 0x324f = 0x40 and runs AccTuning_LoadCoarse.
+; Preserves XIY.
 AccTuning_LoadCoarseFromStyle:
 	push xiy
 	add xhl, 0x24f
@@ -859,6 +913,8 @@ AccTuning_LoadCoarseFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x256 to 0x3254, sets 0x3256 = 0x0c and runs AccTuning_LoadFine.
+; Preserves XIY.
 AccTuning_LoadFineFromStyle:
 	push xiy
 	add xhl, 0x256
@@ -876,6 +932,8 @@ AccTuning_LoadFineFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x25d to 0x325b, sets 0x325d = 0x74 and runs
+; AccTuning_LoadOctave.  Preserves XIY.
 AccTuning_LoadOctaveFromStyle:
 	push xiy
 	add xhl, 0x25d
@@ -893,6 +951,8 @@ AccTuning_LoadOctaveFromStyle:
 	nop
 	ret
 
+; Copies 7 bytes from XIY + XHL + 0x264 to 0x3262, sets 0x3264 = 0x40 and runs
+; AccTuning_LoadTranspose.  Preserves XIY.
 AccTuning_LoadTransposeFromStyle:
 	push xiy
 	add xhl, 0x264
@@ -910,6 +970,8 @@ AccTuning_LoadTransposeFromStyle:
 	nop
 	ret
 
+; Copies the part records (RhythmPart_CopyData), processes the accent data of parts 1..5 and,
+; unless bit 0 of 0x3283 is set, sends all channel parameters (AccVoice_LoadAllChannelParams).
 Rhythm_ProcessAllPartsAndLoad:
 	calr RhythmPart_CopyData
 	calr RhythmPart1_ProcessAccentData
@@ -924,6 +986,7 @@ Rhythm_ProcessAllPartsAndLoad:
 Rhythm_ProcessAllDone:
 	ret
 
+; Saves the 25 bytes of part records at 0x3214 into 0x322d (LDIR (XIX+),(XIY+)).
 RhythmPart_CopyData:
 	ldw bc, 0x19
 	ld xiy, 0x3214
@@ -977,6 +1040,8 @@ RhythmPart1_WriteDone:
 	call AccVoiceReg_WritePart1
 	ret
 
+; Copies the event time 0x32ec to 0x342e and runs RhythmAccent_UpdateRingBufPosition, with WA
+; and DE preserved.
 RhythmAccent_CopyAndUpdateRingBuf:
 	pushw de
 	pushw wa
@@ -987,6 +1052,12 @@ RhythmAccent_CopyAndUpdateRingBuf:
 	popw de
 	ret
 
+; Stores the timing byte of an event being written to an accompaniment ring buffer.
+;   In:  XHL = ring buffer header, IY = write index; 0x342e = event time.
+;   The byte is (0x342e) - (0x464) + (0x462) when the difference is above 0; otherwise 0x342e
+;   becomes 1 and the byte is (0x462), or 1 when 0x462 is 0.  It is written at IY, IY advances
+;   (RingBuf_AdvanceIndex) and the smallest value written is kept in 0x3376.  Runs with
+;   interrupts masked to level 6.
 RhythmAccent_UpdateRingBufPosition:
 	ld a, (0x342e:16)
 	ei 6
@@ -1088,6 +1159,7 @@ RhythmPart2_WriteDone:
 	call AccVoiceReg_WritePart2
 	ret
 
+; Fills a 5-byte record at XHL: E, D, then the bytes at 0x342f, 0x3430 and 0x3431.
 AccVoiceReg_StoreParamRecord:
 	ld (xhl), e
 	ld (xhl + 1), d
@@ -1099,6 +1171,7 @@ AccVoiceReg_StoreParamRecord:
 	ld (xhl + 4), a
 	ret
 
+; Moves bit 7 of E into bit 4 of D (E keeps its low 7 bits).
 Rhythm_PackVelocityHighBit:
 	bit 7, e
 	jr z, Rhythm_VelocityPackDone
@@ -1335,6 +1408,9 @@ BulkRead_Loop6_9Byte:
 	jr c, BulkRead_Loop6_9Byte
 	ret
 
+; Sends the three-byte rhythm message 0x90 0x7f 0x7f (Rhythm_Send3ByteMsg).
+; Called from AccStyle_DetectChanges_Init, AccTick_ByteData, AccInit_FullReInit and
+; AccVoice_LoadAllParts_Wrap.
 Rhythm_SendNoteOnMax:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
@@ -1342,6 +1418,9 @@ Rhythm_SendNoteOnMax:
 	calr Rhythm_Send3ByteMsg
 	ret
 
+; Sends a three-byte message on the rhythm byte stream (Rhythm_SendByte), byte by byte.
+;   In:  A = first (status) byte, W = second, E = third.
+;   Writes the three bytes to 0x33e2..0x33e4 first and sends them from there.
 Rhythm_Send3ByteMsg:
 	ld (0x33e2:16), a
 	ld (0x33e3:16), w
@@ -1354,6 +1433,8 @@ Rhythm_Send3ByteMsg:
 	call Rhythm_SendByte
 	ret
 
+; Sends the three-byte rhythm message 0xd0 0x03 0x00 (Rhythm_Send3ByteMsg) and clears the four
+; bytes 0x332f..0x3332.
 Rhythm_SendChanPressure:
 	ld a, 0xd0:opc
 	ld w, 0x3:opc
@@ -1366,12 +1447,16 @@ Rhythm_SendChanPressure:
 	ld (0x3332:16), a
 	ret
 
+; Resets the six accompaniment ring buffers, reads the voice registers back
+; (AccompVoice_BulkReadRegisters) and runs AccStyle_InitVRAM_Wrap.
 AccBuf_ResetAndReload:
 	call AccBuf_ResetAllPositions
 	call AccompVoice_BulkReadRegisters
 	call AccStyle_InitVRAM_Wrap
 	ret
 
+; Sends the five 5-byte part records at 0x3214, 0x3219, 0x321e, 0x3223, 0x3228 on the rhythm byte
+; stream, each preceded by a program-change status: 0xc8, 0xc7, 0xc4, 0xc5, 0xc6.
 AccVoice_LoadAllChannelParams:
 	ld xix, 0x3214
 	ld a, 0x98:opc
@@ -1405,6 +1490,7 @@ AccVoice_LoadAllChannelParams:
 	call VoiceParams_LoadFiveSequential
 	ret
 
+; Sends the five bytes at XIX (post-incremented) on the rhythm byte stream (Rhythm_SendByte).
 VoiceParams_LoadFiveSequential:
 	ld A, (xix+)
 	call Rhythm_SendByte
@@ -1443,22 +1529,27 @@ AccTuning_ResetFiveParts:
 	calr AccTuning_ResetFiveParts_Rec3
 	calr AccTuning_ResetFiveParts_Rec4
 	ret
+; 0x3246 = 6, 0x3247 = 0.
 AccTuning_ResetFiveParts_Rec0:
 	ld (0x3246:16), 6
 	ld (0x3247:16), 0
 	ret
+; 0x324d = 0x324e = 0.
 AccTuning_ResetFiveParts_Rec1:
 	ld (0x324d:16), 0
 	ld (0x324e:16), 0
 	ret
+; 0x3254 = 0x3255 = 0.
 AccTuning_ResetFiveParts_Rec2:
 	ld (0x3254:16), 0
 	ld (0x3255:16), 0
 	ret
+; 0x325b = 0x325c = 0.
 AccTuning_ResetFiveParts_Rec3:
 	ld (0x325b:16), 0
 	ld (0x325c:16), 0
 	ret
+; 0x3262 = 0x3263 = 0.
 AccTuning_ResetFiveParts_Rec4:
 	ld (0x3262:16), 0
 	ld (0x3263:16), 0
@@ -1490,6 +1581,8 @@ Rhythm_DispatchNoteFromFC5A:
 	ld (0x332b:16), a
 	ret
 
+; Out: C = 1 when the long in RHYTHM_ROM_BASE is 0xffffffff, else 0.  Each such call counts 0x3454
+; up; when it wraps to 0, 0xe3dc = 0xee and 0xe3de = 64.
 RhythmROM_CheckValid:
 	ld c, 0x0:opc
 	ld xwa, 0xffffffff
@@ -1540,6 +1633,7 @@ Heap_AllocAndFreeTwoBlocks:
 	add xsp, 4
 	ret
 
+; Clears bits 0-1 of 0x332c when the long at 0x3214 equals the long at 0x3246.
 AccentData_ComparePart1:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1556,6 +1650,8 @@ AccentData_ComparePart1:
 AccentData_Part1_Done:
 	ret
 
+; Clears bit 2 of 0x332c when the long at 0x3219 equals the long at 0x324d.  The extra byte test
+; compares byte +1 of the part-1 records (0x3215 / 0x3247), as in all four ComparePart routines.
 AccentData_ComparePart2:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1572,6 +1668,8 @@ AccentData_ComparePart2:
 AccentData_Part2_Done:
 	ret
 
+; Clears bit 3 of 0x332c when the long at 0x321e equals the long at 0x3254 (and bytes 0x3215 /
+; 0x3247 match).
 AccentData_ComparePart3:
 	ld xix, 0x3214
 	ld xiy, 0x3246
@@ -1588,6 +1686,8 @@ AccentData_ComparePart3:
 AccentData_Part3_Done:
 	ret
 
+; Clears bit 4 of 0x332c when the long at 0x3223 equals the long at 0x325b (and bytes 0x3215 /
+; 0x3247 match).
 AccentData_ComparePart4:
 	ld xix, 0x3214
 	ld xiy, 0x3246
