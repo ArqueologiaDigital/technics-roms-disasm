@@ -346,6 +346,38 @@ CONVERT = {
     "BfFile2Struct", "BfStruct2File", "GetBitmapInfo", "ConvertBitmapFile",
     "BmpUnpackRow", "BmpReduceColors",
     "Draw2BpFile", "Draw2BpFile_QueuedExec", "Draw2BpFile_Impl",
+    # code, then the start of .rodata (DATA_ISLANDS)
+    "DemoJpgDataL8",
+}
+
+# Data inside code region 1, emitted as typed data instead of being decoded:
+# file start -> (file end, layout). A layout item is (file offset, kind, count,
+# comment); kinds: "byte" (.byte), "half" (16-bit .word), "word" (.long, a
+# value that names an address prints as that name), "f64" (an IEEE-754 double
+# as .long lo, hi with its value), "fill" (0xFF padding). Each item starts at a
+# label: its symbol-file name, else rodata_<ADDR>. Build 941 file offsets; the
+# sp7001 profile ports them.
+DATA_ISLANDS = {
+    # region 1 ends inside .rodata: the bytes after DemoJpgDataL8's `retf` are
+    # the start of the constant data the data region continues (its gain
+    # tables run on past 0x186000)
+    0x18599C: (0x186000, [
+        (0x18599C, "byte", 5, "copied to the stack by a 5-iteration movbu loop at 0x48404DBA"),
+        (0x1859A1, "fill", 3, None),
+        (0x1859A4, "f64", 25, "gain factors 10**(dB/20) for 0 .. +12 dB in 0.5 dB steps,"
+                              " indexed by a rounded dB value at 0x484086C3"),
+        (0x185A6C, "f64", 49, "gain factors for -6 .. +6 dB in 0.25 dB steps (indexed at 0x4840871F)"),
+        (0x185BF4, "f64", 49, "gain factors for -12 .. +12 dB in 0.5 dB steps"),
+        (0x185D7C, "word", 5, "micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry,"
+                              " itskpri 3, stksz 0x2800"),
+        (0x185D90, "word", 3, "packet {0, 8, 0} passed with id 10 to the kernel call at 0x4C03C7EF"),
+        (0x185D9C, "word", 2, "zero packet passed with ids 1 and 2 to the kernel call at 0x4C03C017"),
+        (0x185DA4, "word", 2, "zero packet passed with ids 5..8 to the kernel call at 0x4C03BF3C"),
+        (0x185DAC, "half", 10, "copied to the stack by a 20-iteration movbu loop at 0x48407DBD"),
+        (0x185DC0, "f64", 25, "a second copy of the 0 .. +12 dB table"),
+        (0x185E88, "f64", 47, "a second copy of the -6 .. +6 dB table; its last two entries are"
+                              " the first bytes of the data region"),
+    ]),
 }
 
 # A converted function whose named block extends past its real end (because the
@@ -3512,6 +3544,66 @@ class EmitCtx:
         return re.sub(r"(0x[0-9a-fA-F]{8})\b", one, ops)
 
 
+def segments(off, end):
+    """The file range [off, end) of a converted block as ("code", a, b) and
+    ("data", a, b) pieces: every DATA_ISLANDS range inside it is data."""
+    out, cur = [], off
+    for s, (e, _layout) in sorted(DATA_ISLANDS.items()):
+        if off <= s < end:
+            if e > end:
+                sys.exit(f"gen_program_s: data island {s:#x}..{e:#x} runs past its block's end {end:#x}")
+            if cur < s:
+                out.append(("code", cur, s))
+            out.append(("data", s, e))
+            cur = e
+    if cur < end:
+        out.append(("code", cur, end))
+    return out
+
+
+def emit_data(d, a, b, items, ctx):
+    """Typed directives for the data island at file range [a, b) (DATA_ISLANDS)."""
+    lines, cur = [], a
+    for cpu in sorted(c for c in items if a <= items[c][3] < b):
+        kind, n, comment, o = items[cpu]
+        if o != cur:
+            sys.exit(f"gen_program_s: data island layout has a gap or overlap at {o:#x}")
+        if kind != "fill":
+            lines.append("")
+            if comment:
+                lines.append(f"# {DOC_XLATE(comment) if DOC_XLATE else comment}")
+            lines.append(f"{ctx.label_of[cpu]}:")
+        if kind == "byte":
+            for i in range(0, n, 16):
+                lines.append("    .byte   " + ", ".join(f"0x{x:02X}" for x in d[o + i:o + min(n, i + 16)]))
+            cur = o + n
+        elif kind == "half":
+            v = struct.unpack_from(f"<{n}H", d, o)
+            for i in range(0, n, 8):
+                lines.append("    .word   " + ", ".join(f"0x{x:04X}" for x in v[i:i + 8]))
+            cur = o + 2 * n
+        elif kind == "word":
+            v = struct.unpack_from(f"<{n}I", d, o)
+            lines.append("    .long   " + ", ".join(ctx.ref(x) or f"0x{x:08X}" for x in v))
+            cur = o + 4 * n
+        elif kind == "f64":
+            for i in range(n):
+                lo32, hi32 = struct.unpack_from("<II", d, o + 8 * i)
+                val = struct.unpack_from("<d", d, o + 8 * i)[0]
+                lines.append(f"    .long   0x{lo32:08X}, 0x{hi32:08X}   # {val:.9g}")
+            cur = o + 8 * n
+        elif kind == "fill":
+            if set(d[o:o + n]) != {0xFF}:
+                sys.exit(f"gen_program_s: data island fill at {o:#x} is not all 0xFF")
+            lines.append(f"    .space  {n}, 0xFF                   # padding")
+            cur = o + n
+        else:
+            sys.exit(f"gen_program_s: unknown data island kind {kind!r}")
+    if cur != b:
+        sys.exit(f"gen_program_s: data island {a:#x}..{b:#x} layout ends at {cur:#x}")
+    return lines
+
+
 def emit_block(insns, name, lo, delta, ctx, annotated):
     """Source lines for one converted block (byte-exact). Every address the
     converted code branches to, calls, or names in an operand that is an
@@ -3584,7 +3676,7 @@ NEW_CODE_942 = (0x18598B, 0x185E8F)
 def select_profile(name):
     global ROM, SYM, MANUAL_SYM, OUT, R1_END, PALETTE, DATA_END, IMAGE_END, PAD_TO
     global SYMBOLS_INC, TITLE, DOC_XLATE, LIB_FILE_BASE, LIB_DELTA
-    global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS, ANN_PORT
+    global FUNC_END, LIB_CONVERT, CONVERT, INHERIT_SYMS, ANN_PORT, DATA_ISLANDS
     if name == "941":
         return
     if name != "sp7001":
@@ -3617,6 +3709,8 @@ def select_profile(name):
     LIB_DELTA = LIB_CPU_BASE - LIB_FILE_BASE
     IMAGE_END, PAD_TO = P.pmap.new_len, 0x400000
     FUNC_END = {k: fmap(v) for k, v in FUNC_END.items()}
+    DATA_ISLANDS = {fmap(st): (fmap(en - 1) + 1, [(fmap(o), k, n, c) for o, k, n, c in lay])
+                    for st, (en, lay) in DATA_ISLANDS.items()}
     LIB_CONVERT = {k: (lmap(cs), lmap(ce - 1) + 1) for k, (cs, ce) in LIB_CONVERT.items()}
 
     # the code that exists only in 942: convert all of it (it is what changed),
@@ -3767,7 +3861,8 @@ def main():
         so, eo = cs - LIB_DELTA, ce - LIB_DELTA
         assert LIB_FILE_BASE <= so < eo <= IMAGE_END, name
         lib_blocks.append((so, eo, name))
-    jobs = [(off, ec, BASE) for off, _e, ec, _n in r1_blocks if ec is not None] \
+    segs = {off: segments(off, ec) for off, _e, ec, _n in r1_blocks if ec is not None}
+    jobs = [(a, b, BASE) for sl in segs.values() for kind, a, b in sl if kind == "code"] \
         + [(so, eo, LIB_DELTA) for so, eo, _n in lib_blocks]
     dec = decode_blocks(d, jobs)
 
@@ -3789,6 +3884,8 @@ def main():
     for lo, hi, name in blocks:
         if lo not in annotated:
             continue
+        if len(segs[lo - BASE]) != 1:
+            sys.exit(f"gen_program_s: annotated function {name} holds a data island")
         insns = dec[(lo - BASE, hi - BASE, BASE)]
         if insns is None:
             sys.exit(f"gen_program_s: annotated function {name} does not disassemble")
@@ -3822,6 +3919,14 @@ def main():
                     (calls if mn in ("call", "calls") else branches).add(t)
             else:
                 imm_refs.update(int(h, 16) for h in re.findall(r"0x([0-9a-fA-F]{8})\b", ops))
+    data_items = {}                   # CPU address -> (kind, count, comment, file offset)
+    for sl in segs.values():
+        for kind, a, b in sl:
+            if kind == "data":
+                for o, k, n, c in DATA_ISLANDS[a][1]:
+                    data_items[BASE + o] = (k, n, c, o)
+                    if k == "word":           # a pointer word names code like an operand
+                        imm_refs.update(struct.unpack_from(f"<{n}I", d, o))
     for t in calls:
         names.setdefault(t, f"func_{t:08X}")
     block_name = {BASE + off: name for off, _e, ec, name in r1_blocks if ec is not None}
@@ -3836,6 +3941,9 @@ def main():
             label_of[cpu] = names[cpu]
         elif cpu in branches or cpu in imm_refs:
             label_of[cpu] = f"loc_{cpu:08X}"
+    for cpu, (kind, _n, _c, _o) in data_items.items():
+        if kind != "fill":
+            label_of[cpu] = names.get(cpu, f"rodata_{cpu:08X}")
     # one address per label name, and a label must agree with symbols.inc
     seen, dup = {}, []
     for cpu, nm in sorted(label_of.items()):
@@ -3863,10 +3971,18 @@ def main():
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         for doc in A.docs.get(BASE + off, ()):
             body.append(f"#   {doc}".rstrip())
-        insns = dec[(off, end_conv, BASE)] if end_conv is not None else None
-        if insns is not None:
-            ann = BASE + off in annotated
-            body.extend(emit_block(insns, name, BASE + off, BASE, ctx, ann) + ([""] if ann else []))
+        sl = segs.get(off) if end_conv is not None else None
+        out = None
+        if sl and all(k == "data" or dec[(a, b, BASE)] is not None for k, a, b in sl):
+            out = []
+            for k, a, b in sl:
+                if k == "code":
+                    out += emit_block(dec[(a, b, BASE)], name if a == off else None,
+                                      BASE + off, BASE, ctx, BASE + off in annotated)
+                else:
+                    out += emit_data(d, a, b, data_items, ctx)
+        if out is not None:
+            body.extend(out + ([""] if BASE + off in annotated else []))
             if name in inherit:
                 inherited += 1
             else:

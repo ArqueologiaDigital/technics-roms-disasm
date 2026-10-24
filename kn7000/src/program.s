@@ -44176,7 +44176,253 @@ loc_4857B2C9:
 # DemoJpgDataL7  (CPU 0x48585966)
 .incbin_range "baserom/kn7000_program.rom", 0x185966, 0x185981
 # DemoJpgDataL8  (CPU 0x48585981)
-.incbin_range "baserom/kn7000_program.rom", 0x185981, 0x186000
+DemoJpgDataL8:
+    cmp     0x600e6, d1
+    bne     loc_48585998
+    mov     (0x48000108), d1
+    add     TableRomDirectory, d1
+    mov     d1, d0
+    bra     loc_48585999
+loc_48585998:
+    clr     d0
+loc_48585999:
+    retf    0, 0
+
+# copied to the stack by a 5-iteration movbu loop at 0x48404DBA
+rodata_4858599C:
+    .byte   0x00, 0x00, 0x00, 0x00, 0x00
+    .space  3, 0xFF                   # padding
+
+# gain factors 10**(dB/20) for 0 .. +12 dB in 0.5 dB steps, indexed by a rounded dB value at 0x484086C3
+rodata_485859A4:
+    .long   0x00000000, 0x3FF00000   # 1
+    .long   0xFF4B7A27, 0x3FF0F2B3   # 1.05925369
+    .long   0xA0F35522, 0x3FF1F3C9   # 1.12201846
+    .long   0xDF5463DA, 0x3FF3041A   # 1.18850219
+    .long   0x008E7046, 0x3FF4248F   # 1.25892544
+    .long   0xA14102D5, 0x3FF5561A   # 1.33352149
+    .long   0xFEB8574A, 0x3FF699C0   # 1.41253757
+    .long   0xC040F843, 0x3FF7F094   # 1.49623561
+    .long   0x00E80766, 0x3FF95BB9   # 1.58489323
+    .long   0xA0031533, 0x3FFADC61   # 1.67880404
+    .long   0x1F00CC2E, 0x3FFC73D5   # 1.77827942
+    .long   0x3FC96E9E, 0x3FFE236D   # 1.88364911
+    .long   0x21497BCA, 0x3FFFEC98   # 1.99526227
+    .long   0xFFDD9B51, 0x4000E86C   # 2.11348915
+    .long   0x9FB1B69C, 0x4001E8E6   # 2.23872113
+    .long   0xBF8AC4EB, 0x4002F892   # 2.37137365
+    .long   0xE03BBF74, 0x40041857   # 2.51188636
+    .long   0x40705D8B, 0x4005492A   # 2.66072512
+    .long   0x60359FCA, 0x40068C0C   # 2.81838298
+    .long   0x4069FD75, 0x4007E210   # 2.98538256
+    .long   0x4032F5F7, 0x40094C58   # 3.1622777
+    .long   0xA0859C0C, 0x400ACC17   # 3.34965444
+    .long   0xFFFCA502, 0x400C6293   # 3.54813385
+    .long   0x6091E61C, 0x400E1126   # 3.75837398
+    .long   0x1FEBD8AC, 0x400FD93C   # 3.98107171
+
+# gain factors for -6 .. +6 dB in 0.25 dB steps (indexed at 0x4840871F)
+rodata_48585A6C:
+    .long   0xC283F395, 0x3FE009B9   # 0.50118721
+    .long   0x7ED674C1, 0x3FE0819D   # 0.51582217
+    .long   0x5D782B35, 0x3FE0FD01   # 0.53088444
+    .long   0xA008C97D, 0x3FE17BFF   # 0.54638654
+    .long   0x3EB140AA, 0x3FE1FEB3   # 0.56234133
+    .long   0xDD66F8DD, 0x3FE28537   # 0.57876199
+    .long   0x019BB67F, 0x3FE30FAA   # 0.59566212
+    .long   0x2258C569, 0x3FE39E27   # 0.61305577
+    .long   0x82AA3ED8, 0x3FE430CD   # 0.63095737
+    .long   0x014D87F3, 0x3FE4C7BC   # 0.64938164
+    .long   0xBF1F6520, 0x3FE56312   # 0.6683439
+    .long   0xBE78F70D, 0x3FE602F2   # 0.68785989
+    .long   0xDDD156F5, 0x3FE6A77D   # 0.70794576
+    .long   0xFD5250B0, 0x3FE750D6   # 0.72861814
+    .long   0x1F0EB900, 0x3FE7FF22   # 0.7498942
+    .long   0x21375D39, 0x3FE8B284   # 0.77179152
+    .long   0xFE87AFE2, 0x3FE96B22   # 0.79432821
+    .long   0x1ECDA087, 0x3FEA2926   # 0.81752306
+    .long   0x802A06E5, 0x3FEAECB5   # 0.84139514
+    .long   0xDE580F8C, 0x3FEBB5FA   # 0.86596435
+    .long   0xA0DF5E1F, 0x3FEC8520   # 0.89125091
+    .long   0x025B79F9, 0x3FED5A53   # 0.91727591
+    .long   0x1EE446BC, 0x3FEE35BF   # 0.94406086
+    .long   0x7FA4250E, 0x3FEF1793   # 0.97162795
+    .long   0x00000000, 0x3FF00000   # 1
+    .long   0xFEF46746, 0x3FF0779A   # 1.02920055
+    .long   0xFF4B7A27, 0x3FF0F2B3   # 1.05925369
+    .long   0x3FF5B955, 0x3FF17165   # 1.09018445
+    .long   0xA0F35522, 0x3FF1F3C9   # 1.12201846
+    .long   0xA0A4FBA2, 0x3FF279FC   # 1.15478194
+    .long   0xDF5463DA, 0x3FF3041A   # 1.18850219
+    .long   0xA10A264A, 0x3FF39241   # 1.22320712
+    .long   0x008E7046, 0x3FF4248F   # 1.25892544
+    .long   0xFF842F24, 0x3FF4BB21   # 1.29568672
+    .long   0xA14102D5, 0x3FF5561A   # 1.33352149
+    .long   0x9FA3C9C9, 0x3FF5F599   # 1.37246096
+    .long   0xFEB8574A, 0x3FF699C0   # 1.41253757
+    .long   0x60EAFC63, 0x3FF742B3   # 1.45378435
+    .long   0xC040F843, 0x3FF7F094   # 1.49623561
+    .long   0x00497BF5, 0x3FF8A38A   # 1.53992653
+    .long   0x00E80766, 0x3FF95BB9   # 1.58489323
+    .long   0xC139F193, 0x3FFA1948   # 1.6311729
+    .long   0xA0031533, 0x3FFADC61   # 1.67880404
+    .long   0xE032DB1F, 0x3FFBA52C   # 1.727826
+    .long   0x1F00CC2E, 0x3FFC73D5   # 1.77827942
+    .long   0x41223432, 0x3FFD4886   # 1.83020616
+    .long   0x3FC96E9E, 0x3FFE236D   # 1.88364911
+    .long   0x9EC27860, 0x3FFF04B8   # 1.93865263
+    .long   0x21497BCA, 0x3FFFEC98   # 1.99526227
+
+# gain factors for -12 .. +12 dB in 0.5 dB steps
+rodata_48585BF4:
+    .long   0x847B4F57, 0x3FD01379   # 0.25118864
+    .long   0xFE3422F2, 0x3FD10754   # 0.26607251
+    .long   0x8250A7B8, 0x3FD209A3   # 0.2818383
+    .long   0x42904862, 0x3FD31B40   # 0.29853827
+    .long   0x5BD263BB, 0x3FD43D13   # 0.31622776
+    .long   0xE285C6A9, 0x3FD57012   # 0.33496544
+    .long   0x434BAF2B, 0x3FD6B543   # 0.3548134
+    .long   0x64E0D542, 0x3FD80DB8   # 0.37583742
+    .long   0x7EDCFFCB, 0x3FD97A96   # 0.39810717
+    .long   0x5BD263BB, 0x3FDAFD13   # 0.42169651
+    .long   0xC4AD6E8E, 0x3FDC9676   # 0.44668359
+    .long   0x43AD7ED4, 0x3FDE481C   # 0.47315127
+    .long   0xC283F395, 0x3FE009B9   # 0.50118721
+    .long   0x5D782B35, 0x3FE0FD01   # 0.53088444
+    .long   0x3EB140AA, 0x3FE1FEB3   # 0.56234133
+    .long   0x019BB67F, 0x3FE30FAA   # 0.59566212
+    .long   0x82AA3ED8, 0x3FE430CD   # 0.63095737
+    .long   0xBF1F6520, 0x3FE56312   # 0.6683439
+    .long   0xDDD156F5, 0x3FE6A77D   # 0.70794576
+    .long   0x1F0EB900, 0x3FE7FF22   # 0.7498942
+    .long   0xFE87AFE2, 0x3FE96B22   # 0.79432821
+    .long   0x802A06E5, 0x3FEAECB5   # 0.84139514
+    .long   0xA0DF5E1F, 0x3FEC8520   # 0.89125091
+    .long   0x1EE446BC, 0x3FEE35BF   # 0.94406086
+    .long   0x00000000, 0x3FF00000   # 1
+    .long   0xFF4B7A27, 0x3FF0F2B3   # 1.05925369
+    .long   0xA0F35522, 0x3FF1F3C9   # 1.12201846
+    .long   0xDF5463DA, 0x3FF3041A   # 1.18850219
+    .long   0x008E7046, 0x3FF4248F   # 1.25892544
+    .long   0xA14102D5, 0x3FF5561A   # 1.33352149
+    .long   0xFEB8574A, 0x3FF699C0   # 1.41253757
+    .long   0xC040F843, 0x3FF7F094   # 1.49623561
+    .long   0x00E80766, 0x3FF95BB9   # 1.58489323
+    .long   0xA0031533, 0x3FFADC61   # 1.67880404
+    .long   0x1F00CC2E, 0x3FFC73D5   # 1.77827942
+    .long   0x3FC96E9E, 0x3FFE236D   # 1.88364911
+    .long   0x21497BCA, 0x3FFFEC98   # 1.99526227
+    .long   0xFFDD9B51, 0x4000E86C   # 2.11348915
+    .long   0x9FB1B69C, 0x4001E8E6   # 2.23872113
+    .long   0xBF8AC4EB, 0x4002F892   # 2.37137365
+    .long   0xE03BBF74, 0x40041857   # 2.51188636
+    .long   0x40705D8B, 0x4005492A   # 2.66072512
+    .long   0x60359FCA, 0x40068C0C   # 2.81838298
+    .long   0x4069FD75, 0x4007E210   # 2.98538256
+    .long   0x4032F5F7, 0x40094C58   # 3.1622777
+    .long   0xA0859C0C, 0x400ACC17   # 3.34965444
+    .long   0xFFFCA502, 0x400C6293   # 3.54813385
+    .long   0x6091E61C, 0x400E1126   # 3.75837398
+    .long   0x1FEBD8AC, 0x400FD93C   # 3.98107171
+
+# micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry, itskpri 3, stksz 0x2800
+rodata_48585D7C:
+    .long   0x00000000, 0x00000001, 0x48405B95, 0x00000003, 0x00002800
+
+# packet {0, 8, 0} passed with id 10 to the kernel call at 0x4C03C7EF
+rodata_48585D90:
+    .long   0x00000000, 0x00000008, 0x00000000
+
+# zero packet passed with ids 1 and 2 to the kernel call at 0x4C03C017
+rodata_48585D9C:
+    .long   0x00000000, 0x00000000
+
+# zero packet passed with ids 5..8 to the kernel call at 0x4C03BF3C
+rodata_48585DA4:
+    .long   0x00000000, 0x00000000
+
+# copied to the stack by a 20-iteration movbu loop at 0x48407DBD
+rodata_48585DAC:
+    .word   0x8080, 0x8083, 0x8086, 0x8089, 0x808C, 0x808F, 0x8093, 0x8097
+    .word   0x809D, 0x80A0
+
+# a second copy of the 0 .. +12 dB table
+rodata_48585DC0:
+    .long   0x00000000, 0x3FF00000   # 1
+    .long   0xFF4B7A27, 0x3FF0F2B3   # 1.05925369
+    .long   0xA0F35522, 0x3FF1F3C9   # 1.12201846
+    .long   0xDF5463DA, 0x3FF3041A   # 1.18850219
+    .long   0x008E7046, 0x3FF4248F   # 1.25892544
+    .long   0xA14102D5, 0x3FF5561A   # 1.33352149
+    .long   0xFEB8574A, 0x3FF699C0   # 1.41253757
+    .long   0xC040F843, 0x3FF7F094   # 1.49623561
+    .long   0x00E80766, 0x3FF95BB9   # 1.58489323
+    .long   0xA0031533, 0x3FFADC61   # 1.67880404
+    .long   0x1F00CC2E, 0x3FFC73D5   # 1.77827942
+    .long   0x3FC96E9E, 0x3FFE236D   # 1.88364911
+    .long   0x21497BCA, 0x3FFFEC98   # 1.99526227
+    .long   0xFFDD9B51, 0x4000E86C   # 2.11348915
+    .long   0x9FB1B69C, 0x4001E8E6   # 2.23872113
+    .long   0xBF8AC4EB, 0x4002F892   # 2.37137365
+    .long   0xE03BBF74, 0x40041857   # 2.51188636
+    .long   0x40705D8B, 0x4005492A   # 2.66072512
+    .long   0x60359FCA, 0x40068C0C   # 2.81838298
+    .long   0x4069FD75, 0x4007E210   # 2.98538256
+    .long   0x4032F5F7, 0x40094C58   # 3.1622777
+    .long   0xA0859C0C, 0x400ACC17   # 3.34965444
+    .long   0xFFFCA502, 0x400C6293   # 3.54813385
+    .long   0x6091E61C, 0x400E1126   # 3.75837398
+    .long   0x1FEBD8AC, 0x400FD93C   # 3.98107171
+
+# a second copy of the -6 .. +6 dB table; its last two entries are the first bytes of the data region
+rodata_48585E88:
+    .long   0xC283F395, 0x3FE009B9   # 0.50118721
+    .long   0x7ED674C1, 0x3FE0819D   # 0.51582217
+    .long   0x5D782B35, 0x3FE0FD01   # 0.53088444
+    .long   0xA008C97D, 0x3FE17BFF   # 0.54638654
+    .long   0x3EB140AA, 0x3FE1FEB3   # 0.56234133
+    .long   0xDD66F8DD, 0x3FE28537   # 0.57876199
+    .long   0x019BB67F, 0x3FE30FAA   # 0.59566212
+    .long   0x2258C569, 0x3FE39E27   # 0.61305577
+    .long   0x82AA3ED8, 0x3FE430CD   # 0.63095737
+    .long   0x014D87F3, 0x3FE4C7BC   # 0.64938164
+    .long   0xBF1F6520, 0x3FE56312   # 0.6683439
+    .long   0xBE78F70D, 0x3FE602F2   # 0.68785989
+    .long   0xDDD156F5, 0x3FE6A77D   # 0.70794576
+    .long   0xFD5250B0, 0x3FE750D6   # 0.72861814
+    .long   0x1F0EB900, 0x3FE7FF22   # 0.7498942
+    .long   0x21375D39, 0x3FE8B284   # 0.77179152
+    .long   0xFE87AFE2, 0x3FE96B22   # 0.79432821
+    .long   0x1ECDA087, 0x3FEA2926   # 0.81752306
+    .long   0x802A06E5, 0x3FEAECB5   # 0.84139514
+    .long   0xDE580F8C, 0x3FEBB5FA   # 0.86596435
+    .long   0xA0DF5E1F, 0x3FEC8520   # 0.89125091
+    .long   0x025B79F9, 0x3FED5A53   # 0.91727591
+    .long   0x1EE446BC, 0x3FEE35BF   # 0.94406086
+    .long   0x7FA4250E, 0x3FEF1793   # 0.97162795
+    .long   0x00000000, 0x3FF00000   # 1
+    .long   0xFEF46746, 0x3FF0779A   # 1.02920055
+    .long   0xFF4B7A27, 0x3FF0F2B3   # 1.05925369
+    .long   0x3FF5B955, 0x3FF17165   # 1.09018445
+    .long   0xA0F35522, 0x3FF1F3C9   # 1.12201846
+    .long   0xA0A4FBA2, 0x3FF279FC   # 1.15478194
+    .long   0xDF5463DA, 0x3FF3041A   # 1.18850219
+    .long   0xA10A264A, 0x3FF39241   # 1.22320712
+    .long   0x008E7046, 0x3FF4248F   # 1.25892544
+    .long   0xFF842F24, 0x3FF4BB21   # 1.29568672
+    .long   0xA14102D5, 0x3FF5561A   # 1.33352149
+    .long   0x9FA3C9C9, 0x3FF5F599   # 1.37246096
+    .long   0xFEB8574A, 0x3FF699C0   # 1.41253757
+    .long   0x60EAFC63, 0x3FF742B3   # 1.45378435
+    .long   0xC040F843, 0x3FF7F094   # 1.49623561
+    .long   0x00497BF5, 0x3FF8A38A   # 1.53992653
+    .long   0x00E80766, 0x3FF95BB9   # 1.58489323
+    .long   0xC139F193, 0x3FFA1948   # 1.6311729
+    .long   0xA0031533, 0x3FFADC61   # 1.67880404
+    .long   0xE032DB1F, 0x3FFBA52C   # 1.727826
+    .long   0x1F00CC2E, 0x3FFC73D5   # 1.77827942
+    .long   0x41223432, 0x3FFD4886   # 1.83020616
+    .long   0x3FC96E9E, 0x3FFE236D   # 1.88364911
 
 # ---- data / resources region ----
 .incbin_range "baserom/kn7000_program.rom", 0x186000, 0x32573C
