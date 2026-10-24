@@ -793,22 +793,22 @@ SysEx_InProgressReturn:
 	ret
 ; (pre-port v7 note about the bytes at 0xFCF08C:)
 MIDI_RX_CONTEXT_RESTORE:
-	ld	xwa, (1080:16)
-	ld	xbc, (1084:16)
-	ld	xde, (1088:16)
-	ld	xhl, (1092:16)
-	ld	xix, (1096:16)
-	ld	xiy, (1100:16)
-	ld	xiz, (1104:16)
+	ld	xwa, (MIDI_RX_CONTEXT:16)
+	ld	xbc, (MIDI_RX_CONTEXT+4:16)
+	ld	xde, (MIDI_RX_CONTEXT+8:16)
+	ld	xhl, (MIDI_RX_CONTEXT+12:16)
+	ld	xix, (MIDI_RX_CONTEXT+16:16)
+	ld	xiy, (MIDI_RX_CONTEXT+20:16)
+	ld	xiz, (MIDI_RX_CONTEXT+24:16)
 	ret
 MIDI_RX_CONTEXT_SAVE:
-	ld	(1080:16), xwa
-	ld	(1084:16), xbc
-	ld	(1088:16), xde
-	ld	(1092:16), xhl
-	ld	(1096:16), xix
-	ld	(1100:16), xiy
-	ld	(1104:16), xiz
+	ld	(MIDI_RX_CONTEXT:16), xwa
+	ld	(MIDI_RX_CONTEXT+4:16), xbc
+	ld	(MIDI_RX_CONTEXT+8:16), xde
+	ld	(MIDI_RX_CONTEXT+12:16), xhl
+	ld	(MIDI_RX_CONTEXT+16:16), xix
+	ld	(MIDI_RX_CONTEXT+20:16), xiy
+	ld	(MIDI_RX_CONTEXT+24:16), xiz
 	ret
 SC0Init_Entry:
 	res	0, (0xb74b:16)
@@ -868,15 +868,15 @@ MidiSerial_OffsetTable:
 ; `nop` / `push sr` / `pop sr` / `nop`.
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x03, 0x00
 SC0Init_ClearContextSlots:
-	ld	(1080:16), 0
-	ld	(1084:16), 0
-	ld	(1088:16), 0
-	ld	(1092:16), 0
-	ld	(1096:16), 0
+	ld	(MIDI_RX_CONTEXT:16), 0
+	ld	(MIDI_RX_CONTEXT+4:16), 0
+	ld	(MIDI_RX_CONTEXT+8:16), 0
+	ld	(MIDI_RX_CONTEXT+12:16), 0
+	ld	(MIDI_RX_CONTEXT+16:16), 0
 ; (pre-port v7 note about the bytes at 0xFCF164:)
 SC0Init_ClearContextSlots_Part:
-	ld	(1100:16), 0
-	ld	(1104:16), 0
+	ld	(MIDI_RX_CONTEXT+20:16), 0
+	ld	(MIDI_RX_CONTEXT+24:16), 0
 	ret
 SC0Init_EnableRegisters:
 	ei	6

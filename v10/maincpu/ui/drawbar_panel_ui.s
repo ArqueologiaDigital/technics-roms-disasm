@@ -8576,7 +8576,7 @@ LswLocal_PartIdLookup:
 	jr LswLocalControl_PopIzRet
 
 LswLocal_SubParam:
-	ld xhl, 0x400
+	ld xhl, NMI_GUARD
 	jr LswLocalControl_PopIzRet
 
 LswLocal_StepSize:

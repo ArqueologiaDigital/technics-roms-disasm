@@ -8042,7 +8042,7 @@ SeqChan_ByteBlockC_Skip:
 	jr	nz, SeqChan_ByteBlockC_Skip3
 	cpw	(xsp+16), 1
 	jr	nz, SeqChan_ByteBlockC_Skip3
-	ldw	(0x8a10:16), 0xffff
+	ldw	(FDC_PROBE_FLAG:16), 0xffff
 	push	xiz
 	pushw	1
 	pushw	1
@@ -8055,7 +8055,7 @@ SeqChan_ByteBlockC_Skip:
 	pushw	3
 	calr	SeqStep_ParseVariableHeader
 	lda	xsp, (xsp+16)
-	ldw	(0x8a10:16), 0
+	ldw	(FDC_PROBE_FLAG:16), 0
 	cp	hl, 0:i3
 	jr	nz, SeqChan_ByteBlockC_Skip2
 	ld	(xiz+16), 2
@@ -9278,7 +9278,7 @@ GetMediaType_SetupReadCmd:
 	ldw (xsp + 16), 0x1
 	ld xwa, (xsp + 2)
 	ld (xsp + 18), xwa
-	ldw (0x8a10:16), 0xffff
+	ldw (FDC_PROBE_FLAG:16), 0xffff
 	ldib_erp 0xfb, 0
 	call Check_for_Floppy_Disk_Change
 	cp l, 0:i3
@@ -9385,7 +9385,7 @@ GetMediaType_CheckExtraFormat:
 	ldib_erp 0xfb, 5
 
 GetMediaType_Epilogue:
-	ldw (0x8a10:16), 0
+	ldw (FDC_PROBE_FLAG:16), 0
 	ld xwa, (xsp + 2)
 	push xwa
 	call Free

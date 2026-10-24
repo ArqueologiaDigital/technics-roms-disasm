@@ -28,7 +28,7 @@ NMI_SetPowerOffCode_A5A5:
 	ldw (0x00ffcc:24), 0xa5a5
 
 NMI_ClearGuardAndHalt:
-	ld (1024:16), 0
+	ld (NMI_GUARD:16), 0
 	res 7, (354:16)
 	set	2, (PF:8)
 NMI_HaltLoop:
@@ -51,7 +51,7 @@ NMI_HaltLoop:
 ;        the payload on the next boot and show the splash screen (not "ALL INITIAL SETTING!").
 ; ===========================================================================
 NMI_StorePayloadChecksums:
-	cp (1024:16), 128
+	cp (NMI_GUARD:16), 128
 	ret nz
 	call Demo_SelectEntry_PreSaveCheck
 	call SeqPlay_JumpCopyVoiceData
@@ -2002,7 +2002,7 @@ INTT3_HANDLER:
 TaskSched_Init:
 	ld xsp, 0x1e53a
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 	inc 1, wa
 	ldc_cr16 wa, 0x7c
 	ld (1475:16), wa
@@ -2148,14 +2148,14 @@ TaskSched_Dispatch:
 	or wa, wa
 	jr nz, TaskSched_ReturnToDispatch
 	xor wa, wa
-	cp (1159:16), wa
+	cp (TASK_CURRENT:16), wa
 	jr z, TaskSched_ScanPriorityQueues
-	ld iy, (1159:16)
+	ld iy, (TASK_CURRENT:16)
 	extz xiy
 	ld (xiy + 4), xsp
 	ld xsp, 0x1e53a
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 
 TaskSched_ScanPriorityQueues:
 	ld b, 0x3:opc
@@ -2171,7 +2171,7 @@ TaskSched_ScanQueue_Loop:
 	jr TaskSched_AllIdle
 
 TaskSched_FoundReadyTask:
-	ld (1159:16), hl
+	ld (TASK_CURRENT:16), hl
 	extz xhl
 	ld a, (xhl + 11)
 	sll a, 5
@@ -2327,12 +2327,12 @@ TaskSched_SpawnTask:
 TaskSched_ExitCurrentTask:
 	ei 6
 	ld xsp, 0x1e53a
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld (xix + 9), 0x0
 	ld (xix + 10), 0x0
 	xor wa, wa
-	ld (1159:16), wa
+	ld (TASK_CURRENT:16), wa
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2347,7 +2347,7 @@ TaskSched_GetCurrentGroup:
 	or hl, hl
 	jr nz, TaskSched_GetCurrentGroup_Nested
 	push xix
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld l, (xix + 11)
 	extz hl
@@ -2439,7 +2439,7 @@ TaskSched_Resume:
 	push xix
 	push xiy
 	push xiz
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	ld a, (xix + 10)
 	cp a, 0:i3
@@ -2672,7 +2672,7 @@ TaskSched_WaitForEvent:
 	jrl TaskSched_ReturnToDispatch
 
 TaskSched_WaitForEvent_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2855,7 +2855,7 @@ Audio_Lock_Acquire:
 	jrl TaskSched_ReturnToDispatch
 
 AudioLock_Acquire_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3115,7 +3115,7 @@ TaskMsg_Receive:
 	jrl TaskSched_ReturnToDispatch
 
 TaskMsg_Receive_Block:
-	ld ix, (1159:16)
+	ld ix, (TASK_CURRENT:16)
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl

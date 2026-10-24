@@ -2,9 +2,13 @@
 ; The names and reasons are v10's (v10/maincpu/shared/ram_variables_by_use.s); the values here are
 ; v7's own, derived by scripts/tools/name_kn5000_ram.py from the same instructions in the same routines
 ; (a corrected line says so).  Names it could not derive for v7 are left out.
+	.equ NMI_GUARD,				0x0400	; 0x80 arms the power-fail NMI: NMI_StorePayloadChecksums stores the checksums only when it is set (Boot_DisplayScreen arms it)
+	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
 	.equ ACC_BEATS_PER_BAR,			0x0433	; beats per measure of the style; 3 or 6 select the three-beat LED pattern (BeatLed_ThreeBeatMasks)
+	.equ MIDI_RX_CONTEXT,			0x0438	; [28 bytes] XWA, XBC, XDE, XHL, XIX, XIY, XIZ saved by MIDI_RX_CONTEXT_SAVE and put back by MIDI_RX_CONTEXT_RESTORE
+	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (TaskSched_FoundReadyTask sets it, TaskSched_Dispatch saves XSP at its +4)
 	.equ SEMENU_PART_MASK,			0x065e	; the sound editor's enabled parts, one bit per part (SeMenu_SetPartEnabled)
 	.equ SEMENU_PART_MODE,			0x06ae	; the sound editor's part layout: 1 = 2 parts, else 4 (SeMenu_DrawPartSelector, SeMenu_DrawPartRadioButtons)
 	.equ STYLE_WORK_IMAGE_PTR,		0x0c72	; the style work image (0x69800, set by Flash_InitExtMemAddrs); the legacy-image converters build there
@@ -60,6 +64,42 @@
 	.equ STYLE_DST_IMAGE_PTR,		0x3916	; the style image AccPatch_CopySection writes to	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39b2
 	.equ DISK_MEDIA_TYPE,			0x8464	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xFFFF none (DiskInfo_MediaTypeNames)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8500
 	.equ SINGLE_LOAD_AREA,			0x895c	; the memory area of the single-load screens: 0 PANEL MEMORY, 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none (SingleLoadSrc_ListProcByMode is indexed by it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x89f8
+	.equ FDC_PROBE_FLAG,			0x8974	; word: 0xFFFF while a caller probes the disk format (a one-sector read of track 0, head 0 gets a single try: FDC_DETECT_CHECK, FDC_DRIVE_DETECT)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a10
+	.equ FDC_BUSY_LATCH,			0x897a	; 0xA5 while a request runs, 0x5A when it ends; a request that finds 0xA5 fails with 0xFB (FDC_CommandEntry)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a16
+	.equ FDC_SECTOR_SIZE,			0x8982	; word: sector size, 0x200 or 0x400	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a1e
+	.equ FDC_INIT_FLAG,			0x8984	; 0xFF once the controller is initialised (FDC_CONFIG_VERIFY)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a20
+	.equ FDC_CMD_OPCODE,			0x898c	; the uPD765 command byte being issued (0xD1 / 0xD9 / 0xDD are the scan commands FDC_SendParams_ReadWrite sends STP for)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a28
+	.equ FDC_HEAD,				0x898d	; head 0 or 1 for the command's unit/head byte (FDC_CheckHead copies the request's head; other values fail with 0xFE)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a29
+	.equ FDC_DRIVE,				0x898e	; drive 0 or 1 for the command's unit/head byte (FDC_CheckDriveCount copies the request's drive)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2a
+	.equ FDC_PARAM_C,			0x898f	; uPD765 parameter C, the cylinder (FDC_SendParams_ReadWrite)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2b
+	.equ FDC_PARAM_H,			0x8990	; parameter H, the head (bit 0 sent)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2c
+	.equ FDC_PARAM_R,			0x8991	; parameter R, the sector number	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2d
+	.equ FDC_PARAM_N,			0x8992	; parameter N, the sector size code (bits 0-2 sent; also FORMAT TRACK's N)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2e
+	.equ FDC_PARAM_EOT,			0x8993	; parameter EOT, the last sector of the track	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a2f
+	.equ FDC_PARAM_GPL,			0x8994	; parameter GPL, the gap length	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a30
+	.equ FDC_PARAM_DTL,			0x8995	; parameter DTL, the data length (0xFF from FDC_InitStateVars)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a31
+	.equ FDC_FORMAT_SC,			0x8996	; FORMAT TRACK's SC, sectors per track (FDC_SendParams_Format)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a32
+	.equ FDC_FORMAT_GPL,			0x8997	; FORMAT TRACK's gap length (80 / 108 / 116, FDC_MODE_CONFIG)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a33
+	.equ FDC_FORMAT_FILL,			0x8998	; FORMAT TRACK's filler byte (0xE5)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a34
+	.equ FDC_PARAM_STP,			0x8999	; the scan commands' STP (bits 0-1 sent instead of DTL)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a35
+	.equ FDC_SPECIFY_SRT,			0x899b	; SPECIFY's step rate time (the high nibble of its first byte)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a37
+	.equ FDC_SPECIFY_HUT,			0x899c	; SPECIFY's head unload time (the low nibble, 15 from FDC_InitStateVars)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a38
+	.equ FDC_SPECIFY_HLT,			0x899d	; SPECIFY's head load time (bits 1-7 of its second byte, 1 from FDC_InitStateVars)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a39
+	.equ FDC_SPECIFY_ND,			0x899e	; SPECIFY's non-DMA bit (bit 0 of its second byte, 0 = DMA)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a3a
+	.equ FDC_REQ_DRIVE,			0x89a6	; word: request +0x02, the drive (FDC_CommandEntry_CopyParams copies the caller's 16-byte request to FDC_COMMAND_INDEX..)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a42
+	.equ FDC_REQ_HEAD,			0x89a8	; word: request +0x04, the head (command 9 reads it as the new disk-changed flag)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a44
+	.equ FDC_REQ_TRACK,			0x89aa	; word: request +0x06, the track (command 0: the media-type code)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a46
+	.equ FDC_REQ_SECTOR,			0x89ac	; word: request +0x08, the starting sector (1-based)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a48
+	.equ FDC_REQ_COUNT,			0x89ae	; word: request +0x0A, the sector count	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a4a
+	.equ FDC_REQ_BUFFER,			0x89b0	; request +0x0C, the buffer address (the DMA memory address, advanced after each burst; a format points it at FDC_FORMAT_IDS)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a4c
+	.equ FDC_REQUEST_COPY,			0x89b4	; [16 bytes] the second copy of the caller's request FDC_CommandEntry_CopyParams makes	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a50
+	.equ FDC_RESULT,			0x89c4	; [7 bytes] the result-phase bytes FDC_ResultPhase_Read collects (ST0 first)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a60
+	.equ FDC_RETRY_COUNT,			0x89cc	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a68
+	.equ FDC_DISK_CHANGED,			0x89ce	; disk-changed flag: command 9 sets 0xFF or 0; cleared at initialisation	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a6a
+	.equ FDC_DRIVE_MODE,			0x89d0	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a6c
+	.equ FDC_FORMAT_IDS,			0x89d4	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a70
+	.equ FDC_CURRENT_CYLINDER,		0x8a68	; the cylinder last sought to, 0xFF = unknown (FDC_CmdSeek compares it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8b04
+	.equ FDC_SECTOR_LIMIT,			0x8a70	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8b0c
 	.equ DISPLAY_CHORD_ROOT,		0x8ca4	; the chord MainChordPre shows: its root (copied from CHORD_ROOT by Chord_ApplyCurrentChord)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d40
 	.equ DISPLAY_CHORD_TYPE,		0x8ca6	; the chord MainChordPre shows: its type	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d42
 	.equ DISPLAY_CHORD_BASS,		0x8ca8	; the chord MainChordPre shows: its bass root, 0 unless it is an on-bass chord	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d44

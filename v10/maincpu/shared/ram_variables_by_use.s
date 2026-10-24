@@ -2,9 +2,13 @@
 ; line per variable, sorted by address.  Each comment says what the uses show: who writes it, with what,
 ; and how it is read (scripts/analysis/kn5000_ram_evidence.py prints that evidence for an address).
 ; Added by scripts/tools/add_kn5000_ram_names.py, which also rewrites the numeric operands.
+	.equ NMI_GUARD,				0x0400	; 0x80 arms the power-fail NMI: NMI_StorePayloadChecksums stores the checksums only when it is set (Boot_DisplayScreen arms it)
+	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
 	.equ ACC_BEATS_PER_BAR,			0x0433	; beats per measure of the style; 3 or 6 select the three-beat LED pattern (BeatLed_ThreeBeatMasks)
+	.equ MIDI_RX_CONTEXT,			0x0438	; [28 bytes] XWA, XBC, XDE, XHL, XIX, XIY, XIZ saved by MIDI_RX_CONTEXT_SAVE and put back by MIDI_RX_CONTEXT_RESTORE
+	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (TaskSched_FoundReadyTask sets it, TaskSched_Dispatch saves XSP at its +4)
 	.equ SEMENU_PART_MASK,			0x065e	; the sound editor's enabled parts, one bit per part (SeMenu_SetPartEnabled)
 	.equ SEMENU_PART_MODE,			0x06ae	; the sound editor's part layout: 1 = 2 parts, else 4 (SeMenu_DrawPartSelector, SeMenu_DrawPartRadioButtons)
 	.equ STYLE_WORK_IMAGE_PTR,		0x0c72	; the style work image (0x69800, set by Flash_InitExtMemAddrs); the legacy-image converters build there
@@ -60,6 +64,42 @@
 	.equ STYLE_DST_IMAGE_PTR,		0x39b2	; the style image AccPatch_CopySection writes to
 	.equ DISK_MEDIA_TYPE,			0x8500	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xFFFF none (DiskInfo_MediaTypeNames)
 	.equ SINGLE_LOAD_AREA,			0x89f8	; the memory area of the single-load screens: 0 PANEL MEMORY, 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none (SingleLoadSrc_ListProcByMode is indexed by it)
+	.equ FDC_PROBE_FLAG,			0x8a10	; word: 0xFFFF while a caller probes the disk format (a one-sector read of track 0, head 0 gets a single try: FDC_DETECT_CHECK, FDC_DRIVE_DETECT)
+	.equ FDC_BUSY_LATCH,			0x8a16	; 0xA5 while a request runs, 0x5A when it ends; a request that finds 0xA5 fails with 0xFB (FDC_CommandEntry)
+	.equ FDC_SECTOR_SIZE,			0x8a1e	; word: sector size, 0x200 or 0x400
+	.equ FDC_INIT_FLAG,			0x8a20	; 0xFF once the controller is initialised (FDC_CONFIG_VERIFY)
+	.equ FDC_CMD_OPCODE,			0x8a28	; the uPD765 command byte being issued (0xD1 / 0xD9 / 0xDD are the scan commands FDC_SendParams_ReadWrite sends STP for)
+	.equ FDC_HEAD,				0x8a29	; head 0 or 1 for the command's unit/head byte (FDC_CheckHead copies the request's head; other values fail with 0xFE)
+	.equ FDC_DRIVE,				0x8a2a	; drive 0 or 1 for the command's unit/head byte (FDC_CheckDriveCount copies the request's drive)
+	.equ FDC_PARAM_C,			0x8a2b	; uPD765 parameter C, the cylinder (FDC_SendParams_ReadWrite)
+	.equ FDC_PARAM_H,			0x8a2c	; parameter H, the head (bit 0 sent)
+	.equ FDC_PARAM_R,			0x8a2d	; parameter R, the sector number
+	.equ FDC_PARAM_N,			0x8a2e	; parameter N, the sector size code (bits 0-2 sent; also FORMAT TRACK's N)
+	.equ FDC_PARAM_EOT,			0x8a2f	; parameter EOT, the last sector of the track
+	.equ FDC_PARAM_GPL,			0x8a30	; parameter GPL, the gap length
+	.equ FDC_PARAM_DTL,			0x8a31	; parameter DTL, the data length (0xFF from FDC_InitStateVars)
+	.equ FDC_FORMAT_SC,			0x8a32	; FORMAT TRACK's SC, sectors per track (FDC_SendParams_Format)
+	.equ FDC_FORMAT_GPL,			0x8a33	; FORMAT TRACK's gap length (80 / 108 / 116, FDC_MODE_CONFIG)
+	.equ FDC_FORMAT_FILL,			0x8a34	; FORMAT TRACK's filler byte (0xE5)
+	.equ FDC_PARAM_STP,			0x8a35	; the scan commands' STP (bits 0-1 sent instead of DTL)
+	.equ FDC_SPECIFY_SRT,			0x8a37	; SPECIFY's step rate time (the high nibble of its first byte)
+	.equ FDC_SPECIFY_HUT,			0x8a38	; SPECIFY's head unload time (the low nibble, 15 from FDC_InitStateVars)
+	.equ FDC_SPECIFY_HLT,			0x8a39	; SPECIFY's head load time (bits 1-7 of its second byte, 1 from FDC_InitStateVars)
+	.equ FDC_SPECIFY_ND,			0x8a3a	; SPECIFY's non-DMA bit (bit 0 of its second byte, 0 = DMA)
+	.equ FDC_REQ_DRIVE,			0x8a42	; word: request +0x02, the drive (FDC_CommandEntry_CopyParams copies the caller's 16-byte request to FDC_COMMAND_INDEX..)
+	.equ FDC_REQ_HEAD,			0x8a44	; word: request +0x04, the head (command 9 reads it as the new disk-changed flag)
+	.equ FDC_REQ_TRACK,			0x8a46	; word: request +0x06, the track (command 0: the media-type code)
+	.equ FDC_REQ_SECTOR,			0x8a48	; word: request +0x08, the starting sector (1-based)
+	.equ FDC_REQ_COUNT,			0x8a4a	; word: request +0x0A, the sector count
+	.equ FDC_REQ_BUFFER,			0x8a4c	; request +0x0C, the buffer address (the DMA memory address, advanced after each burst; a format points it at FDC_FORMAT_IDS)
+	.equ FDC_REQUEST_COPY,			0x8a50	; [16 bytes] the second copy of the caller's request FDC_CommandEntry_CopyParams makes
+	.equ FDC_RESULT,			0x8a60	; [7 bytes] the result-phase bytes FDC_ResultPhase_Read collects (ST0 first)
+	.equ FDC_RETRY_COUNT,			0x8a68	; retries left: 8 for a read or write, 1 for a probe read; at 0 the command fails with error 16 (read) or 32 (write)
+	.equ FDC_DISK_CHANGED,			0x8a6a	; disk-changed flag: command 9 sets 0xFF or 0; cleared at initialisation
+	.equ FDC_DRIVE_MODE,			0x8a6c	; drive mode 0-5 (FDC_CONFIG_VERIFY's media cases)
+	.equ FDC_FORMAT_IDS,			0x8a70	; the sector ID bytes a FORMAT TRACK sends by DMA (FDC_MODE_CONFIG_Helper2 builds them)
+	.equ FDC_CURRENT_CYLINDER,		0x8b04	; the cylinder last sought to, 0xFF = unknown (FDC_CmdSeek compares it)
+	.equ FDC_SECTOR_LIMIT,			0x8b0c	; word: one more than the sectors per track (10, 9 or 19 by media type); bounds the sector number in the read and write loops
 	.equ DISPLAY_CHORD_ROOT,		0x8d40	; the chord MainChordPre shows: its root (copied from CHORD_ROOT by Chord_ApplyCurrentChord)
 	.equ DISPLAY_CHORD_TYPE,		0x8d42	; the chord MainChordPre shows: its type
 	.equ DISPLAY_CHORD_BASS,		0x8d44	; the chord MainChordPre shows: its bass root, 0 unless it is an on-bass chord
