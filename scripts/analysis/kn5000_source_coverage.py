@@ -440,7 +440,9 @@ def measure_kn5000_root(root):
     # (scripts/build/apply_c_divergence.py) overwrites single bytes of the compiled bins with
     # ROM bytes.  Those raw bytes are copied, unexplained, like a TODO(port) row, so they move
     # to verbatim debt (out of "roundtrip", where classify_incbin puts the .incbin slices of
-    # those bins).  Pointer relocations are explained moves and are not debt.
+    # those bins).  Pointer relocations are not counted as debt: each is a whole pointer moved
+    # by a number.  They are not explained either, because no label of the ported tree checks
+    # what one points at (a follow-up: tie each relocated pointer to a label).
     # Only the ported trees: v7's own v7_c_divergence.json belongs to the v7 tree's history.
     tree = os.path.basename(os.path.dirname(root.rstrip("/")))
     if tree in PORTED:
