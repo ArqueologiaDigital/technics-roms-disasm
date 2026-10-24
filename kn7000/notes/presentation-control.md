@@ -44,7 +44,7 @@ What a KN7000 `.ACT` can do (tag table 0x486AF204):
 | tag    | handler      | effect                                                                                                |
 |--------|--------------|-------------------------------------------------------------------------------------------------------|
 | `SHOW` | `0x4857FB88` | looks `OBJ` up over every GUI view slot (`0x48580EE6`) and sends the object `EV_PAINT` (`0x00050009`) |
-| `DA`   | `0x4857F73D` | `MT_SleepMainTask`, `LibParamSet(0x90600007, NO 0..3)`, `MT_WakeUpMainTask`                           |
+| `DA`   | `0x4857F73D` | `MT_SleepMainTask`, `PutM3Em_entry(0x90600007, NO 0..3)`, `MT_WakeUpMainTask`                           |
 | others | —            | pictures, text, fonts, the score band, USER slots (see the kn5000-docs slide-show page)               |
 
 `EV_PAINT` is the ROM's own name for 0x00050009 (event names table 0x48726BF0, class 5; MT names

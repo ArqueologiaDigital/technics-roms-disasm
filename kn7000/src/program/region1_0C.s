@@ -325,7 +325,7 @@ loc_4858084B:
     mov     0x486af87c, a1
     mov     (0x20, a0), a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48580882
     mov     (0x50172c90), a0
@@ -659,7 +659,7 @@ loc_48580B3A:
     mov     d3, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -839,7 +839,7 @@ loc_48580CEB:
     add     d2, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580D08
     clr     d0
@@ -920,7 +920,7 @@ loc_48580D92:
     mov     a2, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -964,7 +964,7 @@ loc_48580E13:
     add     d3, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580E31
     mov     1, d0
@@ -1825,7 +1825,7 @@ loc_4858156A:
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485815B2
 loc_4858158F:
     mov     a2, (8, sp)
@@ -1839,7 +1839,7 @@ loc_4858158F:
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485815B2:
     mov     (0x30, sp), a1
     mov     a2, a0
@@ -3796,7 +3796,7 @@ loc_48582862:
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_4858289F
 loc_48582880:

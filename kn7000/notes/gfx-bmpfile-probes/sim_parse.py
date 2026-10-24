@@ -2,7 +2,7 @@
 # Runs the real ROM code of GetBitmapInfo (0x48421DE1) and BmpUnpackRow
 # (0x48422016) on test inputs in tools/mn10300_sim.py, to check what the
 # annotations claim: outputs, return values, bit/nibble order, and the
-# colour-table copy length. Library calls (memcpy 0x4C003039, LibStrncmp
+# colour-table copy length. Library calls (memcpy 0x4C003039, strncmp_entry
 # 0x4C00203C, LibDiv32 0x4C0019D5) and Malloc_entry/Free_entry are modelled in
 # Python (high-level emulation); everything else is the ROM's own instructions.
 # usage (from technics-roms-disasm/kn7000): python3 sim_parse.py
@@ -26,7 +26,7 @@ class Sim(S.Sim):
             self.log.append(("memcpy", a[0], a[1], d[0]))
             for i in range(n):
                 m.w(a[0] + i, 1, m.r(a[1] + i, 1))
-        elif target == 0x4C00203C:                    # LibStrncmp, as in the lib ROM
+        elif target == 0x4C00203C:                    # strncmp_entry, as in the lib ROM
             s1, s2, n = a[0], a[1], d[0]
             r = 0
             for i in range(n):

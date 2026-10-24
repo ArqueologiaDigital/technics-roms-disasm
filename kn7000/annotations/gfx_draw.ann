@@ -165,7 +165,7 @@ equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X 
 ; ---- DrawBitmapFast_Impl ------------------------------------------------------
 48423CEC doc   DrawBitmapFast_Impl(a0 = &point, d0 = bitmap index): the blit. Index -1, or a
 48423CEC doc   top-left corner off the screen, draws nothing. Each row goes into FrameBuffer
-48423CEC doc   with one memcpy of width bytes (lib 0x4C003039, i.e. LibMemCopy), so there
+48423CEC doc   with one memcpy of width bytes (lib 0x4C003039, i.e. memcpy_entry), so there
 48423CEC doc   is no 0xF7 transparency; source rows are padded to an even length, as for
 48423CEC doc   DrawBitmap. A row at y >= 240 ends the copy, but nothing clips horizontally:
 48423CEC doc   a bitmap wider than 640 - x runs on into the next framebuffer row. Ends by
@@ -530,7 +530,7 @@ equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X 
 ; ---- DrawBitmapSPFast_Impl ----------------------------------------------------
 48424319 doc   DrawBitmapSPFast_Impl(a0 = &point, a1 = pixels, d0 = width, d1 = height):
 48424319 doc   the blit. A top-left corner off the screen draws nothing. Each row is
-48424319 doc   copied whole into FrameBuffer with LibMemCopy (lib 0x4C003039), no
+48424319 doc   copied whole into FrameBuffer with memcpy_entry (lib 0x4C003039), no
 48424319 doc   transparency; the source advances by the width rounded up to even. A row
 48424319 doc   at y >= 240 ends the copy, but nothing clips horizontally: a bitmap wider
 48424319 doc   than 640 - x runs on into the next framebuffer row. Ends by marking
@@ -552,7 +552,7 @@ equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X 
 48424376 eol   (0x14,sp) = source stride: width rounded up to even
 48424378 label DrawBitmapSPFast_Impl_RowLoop
 4842437D eol   y >= 240: below the screen, stop
-48424383 eol   LibMemCopy(a0 = dest, a1 = src, d0 = width)
+48424383 eol   memcpy_entry(a0 = dest, a1 = src, d0 = width)
 4842438C eol   next framebuffer row
 48424390 eol   next source row
 48424398 eol   next row while row < height
@@ -875,7 +875,7 @@ equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X 
 4842480C doc   colour index, so it must span at least 0xD0 words, and entries 0x00..0x1F
 4842480C doc   and 0xD0..0xFF are left alone. (SetPaletteRGB dims indices 0x20..0xDF to
 4842480C doc   77/100 per component in its RGB565 copy at 0x50122AAC.) Then it copies
-4842480C doc   each row into FrameBuffer with LibMemCopy (memcpy, called at its library
+4842480C doc   each row into FrameBuffer with memcpy_entry (memcpy, called at its library
 4842480C doc   address 0x4C003039): pixel values go in unchanged (nothing keeps them
 4842480C doc   inside 0x20..0xCF) and 0xF7 is not transparent. Source rows are padded to
 4842480C doc   an even width. A row at y >= 240 ends the copy, but nothing clips
@@ -904,7 +904,7 @@ equ SjisMissingGlyph  485A28DC  16x16 1 bpp column-major glyph: a box with an X 
 48424887 eol   (0x14,sp) = source stride: width rounded up to even
 48424889 label DrawBitmapSPFast256_Impl_RowLoop
 4842488E eol   y >= 240: below the screen, stop
-48424894 eol   LibMemCopy(dest, src, width): copy one row
+48424894 eol   memcpy_entry(dest, src, width): copy one row
 4842489D eol   next framebuffer row
 484248A1 eol   next source row
 484248A9 eol   next row while row < height

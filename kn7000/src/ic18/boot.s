@@ -18505,6 +18505,7 @@ IrqDefaultHandler:
 
 # ---- LibTickSleep ------------------------------------------------------------
 # waits until the tick counter (TickCount) has moved on by d0
+# called where the firmware's DiskDriveCtrlHandler calls its dly_tsk (941 0x4C03DD6F)
 LibTickSleep:
     mov     (TickCount), d1
     add     d1, d0
@@ -18575,6 +18576,7 @@ loc_500096BC:
 
 # ---- LibIntcDisable ----------------------------------------------------------
 # slot d0's GxICR enable bit (8) off; slot 0: all interrupts off (loc_cpu)
+# called where the firmware's PanelAtnIsr calls its dis_int (941 0x4C03DD3D)
 # `call` enters at LibIntcDisable_entry, past the prologue
 LibIntcDisable:
     add     -8, sp
@@ -18602,6 +18604,7 @@ loc_5000970B:
 
 # ---- LibIntcEnable -----------------------------------------------------------
 # slot d0's GxICR enable bit on; slot 0: interrupts on (unl_cpu)
+# called where the firmware's PanelAtnIsr calls its ena_int (941 0x4C03DCC6)
 # `call` enters at LibIntcEnable_entry, past the prologue
 LibIntcEnable:
     add     -8, sp

@@ -42,6 +42,9 @@ function of code region 1 and of the library image to MN10300 source
   30 are symbol-file names on the call entry itself, with the block header
   moved above their unlabelled prologue; 8 library names (`LibSprintf` after
   `sprintf`, ...) keep their own name after a named prologue, header above both.
+  (Since 2026-10-24 those library entry names follow the tree's convention,
+  `<export>_entry`: `sprintf_entry`, `dly_tsk_entry`, ...;
+  `scripts/renaming/rename_kn7000_lib_entries.sed`.)
   No block header sits between a prologue and its entry. Frames: 6,257 entries
   match every direct `call`, 18 have none, 1 does not (`func_4840FF64`: a bare
   `add -8, sp` before it, its callers save `[d2]` in an 8-byte frame), so it is

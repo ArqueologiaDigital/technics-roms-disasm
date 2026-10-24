@@ -24,6 +24,7 @@
 #       baserom/kn7000_program.rom 0x3B8FD1 kn7000_sp7001_exports.sym \
 #       kn7000_exports_from_942.sym [--fix]
 import argparse
+import collections
 import os
 import re
 import subprocess
@@ -95,8 +96,10 @@ ap.add_argument("ported")
 ap.add_argument("--fix", action="store_true")
 args = ap.parse_args()
 
-s_old = stubs(*listing(args.old_rom, args.old_lib))
-s_new = stubs(*listing(args.new_rom, args.new_lib))
+ins_942, at_942 = listing(args.old_rom, args.old_lib)
+ins_941, at_941 = listing(args.new_rom, args.new_lib)
+s_old = stubs(ins_942, at_942)
+s_new = stubs(ins_941, at_941)
 twins = {}
 for a, (_, body) in s_new.items():
     twins.setdefault(body, []).append(a)
@@ -112,6 +115,61 @@ for a, (n, body) in sorted(s_old.items()):
     said = " ".join(f"0x{k:08X}" for k, v in ported.items() if v == nm) if nm else ""
     print(f"0x{a:08X}  {nm or '-':8}  {n:4}  {', '.join(f'0x{h:08X}' for h in hit) or '-':10}  "
           f"{said or ('(unported)' if nm else '')}")
+# The exported kernel services that are not entry stubs (ena_int, get_tid, ...)
+# are called directly: the same check on their own bodies, to the first return.
+# A name moves only to a 941 routine whose body equals its 942 routine's when no
+# other 941 or 942 routine start has that body; a name whose 941 address is that
+# twin of another name, and that has no twin of its own, is unported.
+
+
+def starts_of(ins):
+    out = {a for a, t in ins if t.startswith("movm")}
+    for _, t in ins:
+        if (m := re.match(r"calls?\s+(0x4c[0-9a-f]{6})", t)):
+            out.add(int(m.group(1), 16))
+    return out
+
+
+def body_at(ins, at, a):
+    body = []
+    for _, u in ins[at[a]:at[a] + 400]:
+        body.append(norm(u))
+        if re.match(r"(ret|retf|rets)\b", u):
+            return tuple(body)
+    return None
+
+
+bodies_941 = collections.defaultdict(list)
+for a in starts_of(ins_941):
+    if a in at_941 and (b := body_at(ins_941, at_941, a)) and len(b) >= 8:
+        bodies_941[b].append(a)
+bodies_942 = collections.defaultdict(list)
+for a in starts_of(ins_942):
+    if a in at_942 and (b := body_at(ins_942, at_942, a)):
+        bodies_942[b].append(a)
+direct = {}
+for a, nm in sorted(exported.items()):
+    if nm in want or a not in at_942:
+        continue
+    b = body_at(ins_942, at_942, a)
+    hit = bodies_941.get(b, []) if b else []
+    if len(hit) == 1 and len(bodies_942.get(b, [])) == 1:
+        direct[nm] = (a, hit[0])
+claimed = {new: nm for nm, (_, new) in direct.items()}
+for a, nm in sorted(exported.items()):
+    if nm in want or nm in direct:
+        continue
+    placed = [k for k, v in ported.items() if v == nm]
+    if len(placed) == 1 and placed[0] in claimed:
+        direct[nm] = (a, None)
+for nm, (a, new) in sorted(direct.items()):
+    was = [k for k, v in ported.items() if v == nm]
+    if was != ([new] if new else []):
+        print(f"direct service {nm}: 942 0x{a:08X}, 941 twin "
+              f"{f'0x{new:08X}' if new else '- (its 941 address is the twin of ' + claimed[was[0]] + ')'}"
+              f", ported .sym says {' '.join(f'0x{k:08X}' for k in was) or '(unported)'}")
+        want[nm] = (a, new)
+
 wrong = [nm for nm, (_, new) in want.items()
          if [k for k, v in ported.items() if v == nm] != ([new] if new else [])]
 print(f"itron_stubs: {len(s_old)} stubs in 942, {len(s_new)} in 941; {len(want)} exported names, "
@@ -124,9 +182,10 @@ if args.fix and wrong:
         m = line.match(l)
         if m and m.group(1) in wrong:
             nm, (old, new) = m.group(1), want[m.group(1)]
+            why = ("its 941 address is another export's routine and no 941 routine has its body"
+                   if nm in direct else "no 941 kernel stub enters the same service routine")
             l = (f"0x{new:08X}  {nm}{m.group(2)}" if new else
-                 f"; UNPORTED (no 941 kernel stub enters the same service routine, tools/itron_stubs.py): "
-                 f"0x{old:08X}  {nm}{m.group(2)}")
+                 f"; UNPORTED ({why}, tools/itron_stubs.py): 0x{old:08X}  {nm}{m.group(2)}")
         out.append(l)
     open(args.ported, "w").write("\n".join(out))
     print(f"itron_stubs: rewrote {args.ported}")

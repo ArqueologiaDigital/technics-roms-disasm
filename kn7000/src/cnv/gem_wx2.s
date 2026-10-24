@@ -8,7 +8,7 @@
 #
 # Linked for and loaded at 0x502B8000; the firmware calls CnvEntry (offset 0).
 #   code     0x00000..0x0D2C4  21822 instructions in 149 routines:
-#                              25 with no caller, 6 copies of named firmware routines,
+#                              25 with no caller, 12 copies of named firmware routines,
 #                              75 the same in all 7 converters
 #   .rodata  0x0D2C4..0x118E4  133 strings and text fields, 3 pointer words
 #   .data    0x118E4..0x14F04  image of 0x502CCF04..0x502D0524
@@ -662,7 +662,7 @@ loc_502B869D:
     mov     (0x14, sp), a0
     mov     str_502C5350, a1
     mov     1, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502B86B4
     bra     loc_502B86E3
@@ -708,7 +708,7 @@ loc_502B86FF:
     inc4    a0
     mov     str_502C5354, a1
     mov     3, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502B8722
     bra     loc_502B8749
@@ -846,7 +846,7 @@ loc_502B880B:
     add     0x34, a0
     mov     d0, a1
     mov     3, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502B882E
     bra     loc_502B8864
@@ -9663,7 +9663,7 @@ loc_502BCEF6:
     mov     (0x28, sp), a0
     mov     Str_Korg9, a1
     mov     5, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     bne     loc_502BCF0D
     bra     loc_502BCF3B
@@ -9671,7 +9671,7 @@ loc_502BCF0D:
     mov     (0x28, sp), a0
     mov     Str_Korg5, a1
     mov     5, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     bne     loc_502BCF24
     bra     loc_502BCF3B
@@ -9679,7 +9679,7 @@ loc_502BCF24:
     mov     (0x28, sp), a0
     mov     Str_Korg, a1
     mov     5, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502BCF3B
     bra     loc_502BCF42
@@ -9723,7 +9723,7 @@ loc_502BCF77:
     mov     (0x28, sp), a0
     mov     Str_MThd, a1
     mov     4, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502BCF8F
     jmp     loc_502BD028
@@ -9754,7 +9754,7 @@ loc_502BCFA0:
     mov     Str_SFF, a1
     mov     3, d0
     mov     d1, a0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     bne     loc_502BCFE8
     bra     loc_502BCFF4
@@ -9900,7 +9900,7 @@ loc_502BD0EF:
     mov     (0x28, sp), a0
     mov     Str_Kpat, a1
     mov     4, d0
-    call    LibStrncmp:32, [a2], 4
+    call    strncmp:32, [a2], 4
     cmp     0, d0
     beq     loc_502BD106
     bra     loc_502BD155
@@ -19310,7 +19310,7 @@ loc_502C1E39:
     mov     sp, a1
     add     0x34, a1
     mov     0x20, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp, [a2], 4
     cmp     0, d0
     beq     loc_502C1E5A
     bra     loc_502C1E96
@@ -24601,6 +24601,7 @@ loc_502C4BB7:
 
 # ---- LibF64CmpZero -----------------------------------------------------
 # compare arg1 with 0.0: flags set, d1 = +2 / -2 / 0 (as the firmware's)
+# byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in all the other converters
 LibF64CmpZero:
     mov     (0x1c, sp), d1
@@ -24648,6 +24649,7 @@ LibF64Sub:
 
 # ---- LibF64Add ---------------------------------------------------------
 # arg1 + arg2, IEEE double (as the firmware's)
+# byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in GEM_WS2.CNV, KORG.CNV, ROLAND.CNV, SOLTON.CNV
 LibF64Add:
     mov     (0x24, sp), d1
@@ -25107,6 +25109,7 @@ loc_502C4F4E:
 
 # ---- memcpy ------------------------------------------------------------
 # (a0 dst, a1 src, d0 n) -> a0 = dst
+# byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in all the other converters
 memcpy:
     mov     a0, a3
@@ -25129,6 +25132,7 @@ loc_502C4F63:
 
 # ---- memset ------------------------------------------------------------
 # (a0 dst, d0 byte, d1 n) -> a0 = dst
+# byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in all the other converters
 memset:
     mov     a0, a2
@@ -25281,6 +25285,7 @@ loc_502C5008:
 
 # ---- strcpy ------------------------------------------------------------
 # (a0 dst, a1 src) -> a0 = dst
+# byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in all the other converters
 strcpy:
     movbu   (a1), d0
@@ -25363,10 +25368,10 @@ loc_502C5074:
 loc_502C5076:
     retf    [d2,a2,a3], 0xc
 
-# ---- LibStrncmp --------------------------------------------------------
+# ---- strncmp -----------------------------------------------------------
 # byte-identical (to its first return) to the firmware's routine of this name
 # the same code is in all the other converters
-LibStrncmp:
+strncmp:
     mov     a0, a2
     add     d0, a2
     cmp     a2, a0
@@ -25447,6 +25452,7 @@ loc_502C50D2:
 
 # ---- LibF64Mul ---------------------------------------------------------
 # arg1 * arg2, IEEE double (as the firmware's)
+# byte-identical (to its first return) to the firmware's LibF64Div
 # the same code is in all the other converters
 LibF64Mul:
     mov     0x000fffff, d0

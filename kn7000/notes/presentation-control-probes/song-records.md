@@ -13,7 +13,7 @@ run; **unknown** = not determined. Scripts: `songrec/` (table at the end).
 | due events popped by 0x48447FD2          | 0x48447FD2 drains the keybed FIFO (reads 0x98050004 at 0x484480A2) and posts M3 id 0x10700000 (source 1): local keyboard, not the sequencer       |
 | ... and by 0x48453A99                    | correct: pop (0x484537FF) of the song output ring (0x5003CA00/02/04, entries 0x5003CA06/CB08/CF08), pumped by lib 0x4C014E75 into 0x4C01B6DF      |
 | songs dispatched from the ISR 0x48447084 | the ISR only advances clock lanes; the engine service calls the player tick 0x484595F0 (at 0x48457549), then the recorder 0x4845A0B9 (0x4845755F) |
-| LibParamSet takes (index << 24) \| id24  | 0x4C014A51 is the 942 export `PutM3Em` (entry 0x4C014A56); d0 top byte = source << 4 or sub-index, bits 23..0 = id; d1 top byte = part            |
+| PutM3Em_entry takes (index << 24) \| id24  | 0x4C014A51 is the 942 export `PutM3Em` (entry 0x4C014A56); d0 top byte = source << 4 or sub-index, bits 23..0 = id; d1 top byte = part            |
 
 ## 1. The M3 parameter bus
 

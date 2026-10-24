@@ -146,7 +146,7 @@
 0x484ADD86  PanelBtnActType2_entry
 0x484ADDCA  PanelBtnActType4        ; action type 4 (continuous value): payload = DATA<<6 (0x3FC0 saturates to 0x3FFF), event 0x16000000|id
 0x484ADDCF  PanelBtnActType4_entry
-0x484ADDFF  PanelBtnActType3        ; action type 3 (rhythm transport composite): post 0x16000000|event, then per changed bit 1/2/4/8/0x10/0x20 LibParamGet 0x4007..0x4002 + walk the returned descriptor via 0x484ADFC8
+0x484ADDFF  PanelBtnActType3        ; action type 3 (rhythm transport composite): post 0x16000000|event, then per changed bit 1/2/4/8/0x10/0x20 GetM3EmVal_entry 0x4007..0x4002 + walk the returned descriptor via 0x484ADFC8
 0x484ADE04  PanelBtnActType3_entry
 0x484AE17D  PanelEventPost          ; post (event,param) into the panel event queue 0x5006BEF4/0x5006BF44 (wr idx 0x5006BF96, gate 0x5006BF98); drained by the MILK pump 0x484145FF -> resolver 0x4841473A -> ApPostEvent
 0x484AE182  PanelEventPost_entry
@@ -218,7 +218,7 @@
 0x48433520  StyleNameCommitMem_entry
 0x48433569  StyleNameCommitCustom      ; CUSTOM-source twin: same shape, records resolved through 0x4843E10C against the custom-source handle *(0x50034B98)
 0x4843356E  StyleNameCommitCustom_entry
-0x484335BF  StyleVariationNameGet      ; (d0 = variation slot 0..19) -> a0 = the variation's NAME. Takes the low 3 bits of the record byte +1 (builtin) or +0x11 (MEM/CUSTOM) as a variation kind, asks the library resource dispatcher (LibResourceLookup path, resource 0x0000D00A via lib 0x4C0149FA) and on success indexes the ROM pointer table 0x48736078; otherwise falls back to the 3-byte-offset variation sub-table *(0x50034B84) into the resource base *(0x50034B78). Sets the "name resolved" flag 0x50122DD0
+0x484335BF  StyleVariationNameGet      ; (d0 = variation slot 0..19) -> a0 = the variation's NAME. Takes the low 3 bits of the record byte +1 (builtin) or +0x11 (MEM/CUSTOM) as a variation kind, asks the library resource dispatcher (GetM3Em_entry path, resource 0x0000D00A via lib 0x4C0149FA) and on success indexes the ROM pointer table 0x48736078; otherwise falls back to the 3-byte-offset variation sub-table *(0x50034B84) into the resource base *(0x50034B78). Sets the "name resolved" flag 0x50122DD0
 0x484335C4  StyleVariationNameGet_entry
 0x48433643  StyleRecordSlotSelect      ; (d0 = group < 0x0C, d1 = slot <= 0x14, arg5 = index) selects one of the 20 cached style records 0x50034BCC[] as the CURRENT record *(0x50034C1C); slot 0x14 goes through StyleVariationNameGet first. The group index must be a multiple of 3. Returns the newly selected record, or 0 when unchanged
 0x48433648  StyleRecordSlotSelect_entry
@@ -271,31 +271,28 @@
 0x487B8FD1  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
 0x487F6EE6  LibLoadSentinel        ; InitializeBlock27 descriptor's last-record payload `retf 0, 0` (de 00 00): copied to 0x4C03FFF0, the end of the library window
 0x487F6EE9  LibLoadDescriptor      ; InitializeBlock27's copy descriptor at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
-0x487BC022  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
 0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
-0x487F6D71  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
-0x487F6DF7  LibIrqScheduler        ; = lib 0x4C03DE26: RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
-0x487BAA19  LibPrintf              ; = lib 0x4C001A48: printf-like formatter (varargs; a1 = &args on the caller stack)
-0x487BBFF5  LibMemSet              ; = lib 0x4C003024: memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
-0x487BC00A  LibMemCopy             ; = lib 0x4C003039: memcpy(dest=a0, src=a1, len=d0) -- hardware-loop (setlb)
+0x4C03DDA0  LibIrqQuickDispatch    ; (flash copy 0x487F6D71) AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
+0x4C03DE26  LibIrqScheduler        ; (flash copy 0x487F6DF7) RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
+0x4C003024  memset_entry              ; (flash copy 0x487BBFF5) memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
 0x4C003039  memcpy_entry           ; the runtime address callers `call ..., [a2,a3], 8` (after memcpy's movm at 0x4C003037, named by the 942 export table): memcpy(a0 = dest, a1 = src, d0 = len) -> a0 = dest
 0x487F6E43  LibIrqSubDispatch      ; = lib 0x4C03DE72: scans the INTC group's DETECT bits 0-3 to pick the sub-source (called by the IRQ handlers)
-0x487CD919  LibResourceLookup      ; = lib 0x4C014948: resource dispatcher -- masks the resource ID to 24 bits, calls the trie lookup at lib 0x4C01BB0C, returns the resource record (the GUI/style-name resource path; see rhythm-name-list-bug.md)
+0x4C014948  GetM3Em_entry      ; (flash copy 0x487CD919) resource dispatcher -- masks the resource ID to 24 bits, calls the trie lookup at lib 0x4C01BB0C, returns the resource record (the GUI/style-name resource path; see rhythm-name-list-bug.md)
 
 ; ---- Table-ROM segment 2: the FACTORY MEMORY-STYLE container -----------------
 ; RETRACTION 2026-07-20: this used to be called `RamCodeOverlayImage` and was
 ; described as a "~0xA96C-byte CODE overlay copied to RAM 0x50180000 at boot".
 ; That was wrong on both counts, and it collided with MEM_STYLE_AREA = 0x50180000
 ; (whose 0x25800-byte extent is hard-coded in MemStyleAllocFits). The live trace
-; behind the old note -- LibMemCopy(dest=0x50180000, src=0x48035D08, len=0xA96C),
+; behind the old note -- memcpy_entry(dest=0x50180000, src=0x48035D08, len=0xA96C),
 ; 44036 non-zero writes spanning 0x50180000..0x5018A964 -- was REAL, but it is
 ; MemStyleAreaLoadFactory 0x4843B15B doing it, and what it copies is DATA:
-;   0x4843B160  LibMemSet(0x50180000, 0, 0x25800)          <- MEM_STYLE_AREA
+;   0x4843B160  memset_entry(0x50180000, 0, 0x25800)          <- MEM_STYLE_AREA
 ;               TableRomSeg02PtrSize -> a2 = 0x48000000 + dir[2] = 0x48035D08
 ;                                       size = dir[3]-dir[2] = 0x40674-0x35D08
 ;                                            = 0xA96C       <- the "overlay" len
 ;               strncmp(a2, 0x487312E8, 4) == "TCMP" ?
-;                 yes -> LibMemCopy(0x50180000, a2, 0xA96C)
+;                 yes -> memcpy_entry(0x50180000, a2, 0xA96C)
 ;                 no  -> build an empty container from the ROM templates
 ;               MemStyleAreaChecksumInit
 ; The chunk itself starts with the ASCII bytes "TCMP" and carries the very same
@@ -318,7 +315,7 @@
 ; Loaders of table-ROM segments 1, 3 and 4 (src/table.s segment headers).
 0x4843FB65  SramRecordsLoadFactory ; (d0 = first, d1 = last record) both < 0xDC and first <= last, else -1: if table-ROM segment 1 (TableRomSeg01PtrSize) starts with the 8-byte 'ZZZJ',0,'K',0,0xDC signature of 0x485B7370, copy records first..last (0x18 bytes each, from segment+0x10) over the battery-SRAM table at 0x84030FF8; otherwise fall back to a program-ROM default record
 0x4843FB6A  SramRecordsLoadFactory_entry
-0x48432175  MemPadAreaLoadFactory ; clear the 0xA000-byte PERFORMANCE PAD user memory at 0x501F91A0 (LibMemSet), then copy table-ROM segment 3 (TableRomSeg03PtrSize -> FactoryMemPadContainer) in when it starts with 'TPAD' (0x48729858), otherwise build an empty container; the pad validators re-run it on any failure
+0x48432175  MemPadAreaLoadFactory ; clear the 0xA000-byte PERFORMANCE PAD user memory at 0x501F91A0 (memset_entry), then copy table-ROM segment 3 (TableRomSeg03PtrSize -> FactoryMemPadContainer) in when it starts with 'TPAD' (0x48729858), otherwise build an empty container; the pad validators re-run it on any failure
 0x4843217A  MemPadAreaLoadFactory_entry
 0x48433F4A  TechnicsPadsResourceParse ; (a0 = resource) zero the 0x18 bytes at 0x50034C24, then -1 for NULL, -3 when its 16-byte name is not "Technics Pads   " (0x485B6B68); otherwise record it in 0x50034C28 and read its header's big-endian u24 offsets (LoadU24BE at +0x18, +0x1B, +0x1E): a u16 (LoadU16BE) at the first section's +2 goes to 0x50034C24, the other two sections' addresses to 0x50034C2C and 0x50034C30 (a 0 offset leaves the field 0); 0x50034C38 = TableRomNullPtr(); return 1
 0x48433F4F  TechnicsPadsResourceParse_entry
@@ -377,9 +374,9 @@
 0x4847375F  TechniChordOff          ; techni-chord off / style out of range: note count = 0
 0x48473766  TechniChordAugDimFold   ; (d0=chord type, d1=root 1..12) -> root-fold offset for the symmetric chord types: type 4 buckets of 4 semitones -> 0/4/8, type 7 buckets of 3 -> 0/3/6/9; 0 for other types, -1 for type 0 (no chord). Called by the 7 matrix voicers so enharmonically identical aug/dim chords share matrix columns
 0x48473768  TechniChordAugDimFold_entry
-0x4C0149FA  LibParamGet             ; library ROM: parameter/table get by id (d0=param id, d1=index<<24); reads the sound-parameter database (techni-chord uses ids 0x8080-0x8082, 0xB0007E)
-0x4C03DCC8  LibIntcEnable           ; library ROM: ENABLE a registered interrupt (d0=slot id) -- sets the ICR control bit (verified from the helper body; panel uses ids 4=ATN grp 0x1A, 5=TX grp 0x11, 6=RX grp 0x10)
-0x4C03DD3F  LibIntcDisable          ; library ROM: DISABLE a registered interrupt (d0=slot id) -- clears the ICR control bit
+0x4C0149FA  GetM3EmVal_entry             ; library ROM: parameter/table get by id (d0=param id, d1=index<<24); reads the sound-parameter database (techni-chord uses ids 0x8080-0x8082, 0xB0007E)
+0x4C03DCC8  ena_int_entry           ; library ROM: ENABLE a registered interrupt (d0=slot id) -- sets the ICR control bit (verified from the helper body; panel uses ids 4=ATN grp 0x1A, 5=TX grp 0x11, 6=RX grp 0x10)
+0x4C03DD3F  dis_int_entry          ; library ROM: DISABLE a registered interrupt (d0=slot id) -- clears the ICR control bit
 ; Techni-Chord data (reference only; DATA, not code):
 ; 0x485EC940  TechniChordStyleParamMap   ; 14 halfwords, param value -> GUI grid slot: 0,1,2,4,5,6,7,8,9,10,11,12,13,3 (see header note; same map in the KN6000)
 ; 0x485EC960  TechniChordStyleNamePool   ; "CLOSE"..."FANFARE" NUL-separated, grid order; ptr table follows @0x485EC9D4
@@ -618,7 +615,7 @@
 0x485630DB  SdCardFsInit            ; card init + FAT mount trampoline -> 0x48565d17 (the VFS device-'C' chain; state-3 gate); "card-init 0x485630de" in the MAME notes
 0x485630DE  SdCardFsInit_entry
 0x4C0019D5  LibDiv32                ; library ROM: signed 32-bit divide d0/d1 (fast paths d1=1/-1)
-0x4C03DD74  LibTickSleep            ; library ROM: sleep d0 ticks of the lib tick counter 0x500d3c58 (yield loop via 0x4c03c0e4)
+0x4C03DD74  dly_tsk_entry            ; library ROM: sleep d0 ticks of the lib tick counter 0x500d3c58 (yield loop via 0x4c03c0e4)
 0x4C03D219  LibMsgSend              ; library ROM: post message id d0 to the kernel object of ctrl block a0 (ring-buffer op; disk worker ids 9=cmd, 0xA=done)
 0x4C03D36D  LibMsgReceive           ; library ROM: blocking receive of message id d0 into (a0) (the disk-worker task loop)
 ;
@@ -838,7 +835,7 @@
 0x4C036837  TgNoteOn_entry
 0x4C036E9E  TgPartKeyEvent          ; (d0 flags, d1 part, stack note/vel) the part-level key router (parts >= 0x22 rejected): vel&0x7F nonzero -> note-on via 0x4C0147A4 + TgNoteOn; vel == 0 -> key-off: state query 0x4C02E0F9 (0xFF/0xFE -> release the note's voices: list 0x4C010047, per slot 0x4C03B0CD + TgVoiceSlotService_entry(slot,0); 0 -> mark-only via 0x4C02E2C7 = the sustain/hold path), then TgKeyOffSample
 0x4C036EA4  TgPartKeyEvent_entry
-0x4C014A56  LibParamSet             ; library ROM: parameter set (d0 = (index<<24)|id24, d1 = aux); the write-side partner of LibParamGet 0x4C0149FA
+0x4C014A56  PutM3Em_entry             ; library ROM: parameter set (d0 = (index<<24)|id24, d1 = aux); the write-side partner of GetM3EmVal_entry 0x4C0149FA
 ;
 ; ---- TG voice allocator + steal engine (library image). Static RE of the
 ;      slot-choice machinery under TgNoteOn (kn7000_mame/notes/
@@ -2208,7 +2205,7 @@
 ; the custom flash is absent/unusable and every fetcher below returns NULL.
 ; 0x96820002 + slot*2 is the 20-entry slot descriptor array (0x48483F53 reads
 ; its presence byte).
-0x4848453B  CustomStyleIndexFromParam ; read the current style id (LibParamGet 0xC000); if its source field (& 0x00700000) is CUSTOM (0x200000) return its low byte clamped to 0..0x13, else 0xFF
+0x4848453B  CustomStyleIndexFromParam ; read the current style id (GetM3EmVal_entry 0xC000); if its source field (& 0x00700000) is CUSTOM (0x200000) return its low byte clamped to 0..0x13, else 0xFF
 0x48484540  CustomStyleIndexFromParam_entry
 0x48484578  CustomStyleBlockFetch   ; (d0 = custom slot 0..0x13) -> a0 = the slot's block, or NULL when the flash is absent or the slot is empty. THE CUSTOM arm of StyleNameSourceSet
 0x4848457D  CustomStyleBlockFetch_entry
@@ -2390,9 +2387,9 @@
 0x484353EE  MemStyleRecInitAll_entry
 0x484353FE  MemStyleVarRecInit      ; (d0 = absolute variation 0..0x3B) copy the 0xE0-byte variation template 0x487313D8 over the record while PRESERVING three fields the caller has already set: rec[0x10], rec[0x11] and the u24BE stream offset at rec+0x15. Then apply the slot rules -- set bit 4 of rec[3] when 0x485B6D74[var%20] != 0; for var%20 < 0x0C write rec[0x10] = 1 on multiples of 3 and 0 otherwise; for var%20 >= 0x0C clamp each non-zero byte of rec[4..0x0B] to 1
 0x48435403  MemStyleVarRecInit_entry
-0x484354DE  MemStyleAreaVarStreamsInit ; build all 0x3C empty variation streams from scratch: per variation set rec[0x11] = 3 and rec[0x10] = 1, MemStyleVarRecInit, then pick the ROM prototype stream (0x487314B8 for rec[0x10]==0, 0x487314C5 otherwise), bump-allocate LoadU24BE(proto+1)+4 bytes through MemStyleAllocPtrGet/Set, LibMemCopy it in, StoreU24BE the heap offset into rec+0x15, and stamp stream[0] with the variation index
+0x484354DE  MemStyleAreaVarStreamsInit ; build all 0x3C empty variation streams from scratch: per variation set rec[0x11] = 3 and rec[0x10] = 1, MemStyleVarRecInit, then pick the ROM prototype stream (0x487314B8 for rec[0x10]==0, 0x487314C5 otherwise), bump-allocate LoadU24BE(proto+1)+4 bytes through MemStyleAllocPtrGet/Set, memcpy_entry it in, StoreU24BE the heap offset into rec+0x15, and stamp stream[0] with the variation index
 0x484354E3  MemStyleAreaVarStreamsInit_entry
-0x4843B15B  MemStyleAreaLoadFactory ; wipe MEM_STYLE_AREA (LibMemSet 0x25800 zeros) and repopulate it: if table-ROM segment 2 (TableRomSeg02PtrSize -> 0x48035D08, 0xA96C bytes) starts with "TCMP" copy the whole factory container in, otherwise build an empty one (MemStyleAreaHeaderInit + MemStyleRecInitAll + MemStyleAreaVarStreamsInit); finish with MemStyleAreaChecksumInit. 7 call sites -- THIS is the LibMemCopy(0x50180000, 0x48035D08, 0xA96C) the old boot write-taps saw and mistook for a code overlay
+0x4843B15B  MemStyleAreaLoadFactory ; wipe MEM_STYLE_AREA (memset_entry 0x25800 zeros) and repopulate it: if table-ROM segment 2 (TableRomSeg02PtrSize -> 0x48035D08, 0xA96C bytes) starts with "TCMP" copy the whole factory container in, otherwise build an empty one (MemStyleAreaHeaderInit + MemStyleRecInitAll + MemStyleAreaVarStreamsInit); finish with MemStyleAreaChecksumInit. 7 call sites -- THIS is the memcpy_entry(0x50180000, 0x48035D08, 0xA96C) the old boot write-taps saw and mistook for a code overlay
 0x4843B160  MemStyleAreaLoadFactory_entry
 0x4843B1B5  MemStyleAreaValidate    ; signature, then checksum, then streams; any failure re-runs MemStyleAreaLoadFactory and returns -1, success returns 1
 0x4843B1B8  MemStyleAreaValidate_entry
@@ -2512,9 +2509,9 @@
 0x484D791D  BackupSramValidInvalidate ; 0x5006CC80 = -1
 0x48456E49  Rec8E0TablePtr          ; (d0 = index) -> 0x501A5800 + (index & 0xFF) * 0x8E0 for index < 11, else the fallback 0x501A60E0. An 11-entry table of 0x8E0-byte records in work RAM; the next array starts at 0x501AB9A0 = base + 11*0x8E0, which fixes the count independently. IDENTITY PLAUSIBLE ONLY -- probably the sequencer song slots (the manual says 10 SONG MAX. and AppSEQ_InitSmfLyricsSeq is one caller) -- NOT proven
 0x48456EBB  Rec8E0Field120Ptr       ; (d0 = index) -> Rec8E0TablePtr(index) + 0x120, out-of-range fallback 0x501A5920. Supplies the MEMORY DUMP viewer's ADR3 power-on default (EV_SHOW calls it with index 0). The only 0x501A5920 literal in the whole image is this function's fallback at 0x48456ED8
-0x4C001A48  LibSprintf              ; library ROM: sprintf(buf = caller's (8,sp), fmt = caller's (0xC,sp), varargs from (0x10,sp)) -- builds the va_list at &(0x30,sp) and tail-calls the formatter at 0x4C001A6B. INFERRED from the call-site shape; the library window has no reflection name table
+0x4C001A48  sprintf_entry              ; library ROM: sprintf(buf = caller's (8,sp), fmt = caller's (0xC,sp), varargs from (0x10,sp)) -- builds the va_list at &(0x30,sp) and tail-calls the formatter at 0x4C001A6B. INFERRED from the call-site shape; the library window has no reflection name table
 0x4C0032F7  LibStrlen               ; library ROM: strlen(a0) -- NUL walk returning a1 - a0
-0x4C00203C  LibStrncmp              ; library ROM: strncmp(a0 = s1, a1 = s2, d0 = n): hardware loop over at most n bytes; at the first difference returns *s1 - *s2 (unsigned bytes), returns 0 early on a NUL in s1 -- the NUL stop is what makes it strncmp, not memcmp. Most callers pass n = LibStrlen(...); SP7001's PlugInProbe uses it for the 4-byte 'XAPR' magic
+0x4C00203C  strncmp_entry              ; library ROM: strncmp(a0 = s1, a1 = s2, d0 = n): hardware loop over at most n bytes; at the first difference returns *s1 - *s2 (unsigned bytes), returns 0 early on a NUL in s1 -- the NUL stop is what makes it strncmp, not memcmp. Most callers pass n = LibStrlen(...); SP7001's PlugInProbe uses it for the 4-byte 'XAPR' magic
 
 ; ---- SD PLUG-iN (SP7001) investigation, 2026-10-08 -------------------------
 ; KEY SOFT SERVICE's SP7001 "SD PLUG-iN" loaded plug-in program code from the SD

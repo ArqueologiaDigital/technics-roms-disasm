@@ -325,7 +325,7 @@ loc_4858083A:
     mov     0x486afd70, a1
     mov     (0x20, a0), a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48580871
     mov     (0x50172ca0), a0
@@ -659,7 +659,7 @@ loc_48580B29:
     mov     d3, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -839,7 +839,7 @@ loc_48580CDA:
     add     d2, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580CF7
     clr     d0
@@ -920,7 +920,7 @@ loc_48580D81:
     mov     a2, (0x10, sp)
     mov     (0x18, sp), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     a3, a0
     call    LibStrlen, 0, 0
     mov     d0, d2
@@ -964,7 +964,7 @@ loc_48580E02:
     add     d3, d1
     mov     d1, a0
     mov     0xb, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     bne     loc_48580E20
     mov     1, d0
@@ -1825,7 +1825,7 @@ loc_48581559:
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     bra     loc_485815A1
 loc_4858157E:
     mov     a2, (8, sp)
@@ -1839,7 +1839,7 @@ loc_4858157E:
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
 loc_485815A1:
     mov     (0x30, sp), a1
     mov     a2, a0
@@ -3796,7 +3796,7 @@ loc_48582851:
     mov     d0, (0xc, sp)
     mov     (0x10, a1), d0
     mov     d0, (0x10, sp)
-    call    LibSprintf, [a2], 0x20
+    call    sprintf_entry, [a2], 0x20
     mov     d2, d0
     bra     loc_4858288E
 loc_4858286F:
@@ -9255,7 +9255,7 @@ PlugInProbe_entry:
     mov     0x483e8000, a0
     mov     XaprMagicHead, a1
     mov     4, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48585BB3
     bra     loc_48585BD8
@@ -9263,7 +9263,7 @@ loc_48585BB3:
     mov     (0x483e8004), a0
     mov     XaprMagicTail, a1
     mov     4, d0
-    call    LibStrncmp, [a2], 4
+    call    strncmp_entry, [a2], 4
     cmp     0, d0
     beq     loc_48585BCE
     bra     loc_48585BD8
