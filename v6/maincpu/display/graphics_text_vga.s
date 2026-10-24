@@ -1,0 +1,5837 @@
+; =============================================================================
+; Graphics, Text & VGA Routines
+; =============================================================================
+;
+; VGA palette initialization, text rendering engine, string
+; layout, character set handling, and VRAM blit operations.
+; The low-level graphics API used by all UI subsystems.
+; =============================================================================
+
+	add xwa, xbc
+	lda xiz, (OFFSCREEN_BUFFER_1:24)
+	add xiz, xwa
+	ld hl, 0:i3
+	cpw (xsp + 24), 0x0
+	jr ule, TextRender_AdvancePointerAndUpdateLine
+
+TextRender_PixelLoop:
+	ld bc, (xde)
+	add bc, hl
+	ld (xix), bc
+	ld XIY, (xsp + 0x013a)
+	cp bc, (xiy)
+	jr lt, TextRender_BitMask6_Return
+	ld wa, (xix)
+	cp wa, (xiy + 4)
+	jr gt, TextRender_AdvancePointerAndUpdateLine
+	ld wa, 7:i3
+	sub wa, hl
+	ld iy, 1:i3
+	and a, 0xf
+	jr z, TextRender_CheckBitMask
+	slaa iy
+
+TextRender_CheckBitMask:
+	ld xwa, (xsp + 16)
+	ld a, (xwa)
+	extz wa
+	and wa, iy
+	jr z, TextRender_BitMask6_Return
+	bitm 7, (xiz)
+	jr z, TextRender_SetBit6
+	resm 6, (xiz)
+	jr TextRender_BitMask6_Return
+
+TextRender_SetBit6:
+	setm 6, (xiz)
+
+TextRender_BitMask6_Return:
+	inc 1, hl
+	inc 1, xiz
+	cp hl, (xsp + 24)
+	jr c, TextRender_PixelLoop
+
+TextRender_AdvancePointerAndUpdateLine:
+	ld xwa, 1:i3
+	add (xsp + 16), xwa
+	incw 1, (xsp + 28)
+
+TextRender_CheckColumnEnd:
+	ld xwa, (xsp + 4)
+	ld wa, (xwa + 2)
+	cp (xsp + 28), wa
+	jrl c, TextRender_XorMode_DrawPixel
+
+TextRender_AdvanceToNextLine:
+	ld wa, (xsp + 24)
+	add	(xsp+298), wa
+	incw 1, (xsp + 26)
+	ld wa, (xsp + 26)
+	cp wa, (xsp + 22)
+	jrl c, TextRender_ScanLineLoop
+
+TextRender_AdvanceStringPointer:
+	ld xwa, 1:i3
+	add (xsp + 30), xwa
+	ld xwa, (xsp + 30)
+	cp (xwa), 0x0
+	jrl nz, TextRender_CharEncodeAndDraw
+
+TextRender_Finalize:
+	lda xwa, (xsp+302)
+	calr SetChangeRect
+
+TextRender_PopAndReturn:
+	pop xiz
+	lda xsp, (xsp+314)
+	retd 0x8
+; Display_SetBackgroundColor: Sets the graphics background colour word (RAM 0x3EFA2) to WA; text and mono-bitmap
+;   drawing use it for 0 bits (0xF5 = copy the wallpaper pixel). Basis: callers + body -- the four screen-init
+;   sequences call it with WA = 0xF5 next to GraphicsRender_ByteData (foreground colour, 0x3EFA4 = 0xFF).
+Display_SetBackgroundColor:
+	ld	(0x03ef9e:24), wa
+	ret
+
+GraphicsRender_ByteData:
+	ld	(0x03efa0:24), wa
+	ret
+; Display_FillPaletteBandFromEntry: Sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC)
+;   and flags a palette upload; runs directly on the draw task, otherwise posts itself to the draw ring. Basis:
+;   callers + body -- screen (re)initialisation calls it with WA = 0xFF.
+Display_FillPaletteBandFromEntry:
+	pushw	iz
+	ld	iz, wa
+	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
+	cp	hl, 0:i3
+	jr	z, Display_FillPaletteBandFromEntry_Skip
+	ld	wa, iz
+	calr	Display_FillPaletteBandFromEntry_Impl
+	jr	Display_FillPaletteBandFromEntry_Epilogue
+Display_FillPaletteBandFromEntry_Skip:
+	ld	wa, 6:i3
+	calr	DrawQueue_Alloc
+	ld	xwa, xhl
+	lda	xbc, (GraphicsRender_ByteData_Code:24)
+	ld	(xwa), xbc
+	ld	(xwa+4), iz
+	calr	DrawRing_Post
+Display_FillPaletteBandFromEntry_Epilogue:
+	popw	iz
+	ret
+GraphicsRender_ByteData_Code:
+	ld	wa, (xwa+4)
+	jr	Display_FillPaletteBandFromEntry_Impl
+; Display_FillPaletteBandFromEntry_Impl: Immediate body of Display_FillPaletteBandFromEntry: records WA at 0x3EFA6,
+;   sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC) and flags a palette upload
+;   (PALETTE_INDEX_CACHED = 4, PALETTE_UPDATE_FLAG = 1). Basis: callers + body -- Display_FillPaletteBandFromEntry
+;   calls it directly on the draw task and otherwise posts GraphicsRender_ByteData_Code, which jumps here with the
+;   queued WA.
+Display_FillPaletteBandFromEntry_Impl:
+	dec	4, xsp
+	pushw	iz
+	ld	(0x03efa2:24), wa
+	call	Table_LookupDword
+	ld	(xsp+2), xhl
+	ldw	iz, 64
+Display_FillPaletteBandFromEntry_Impl_Loop:
+	ld	wa, iz
+	ld	xbc, (xsp+2)
+	call	SetPaletteRGB
+	inc	1, iz
+	cp	iz, 192
+	jr	c, Display_FillPaletteBandFromEntry_Impl_Loop
+	ldw	(PALETTE_INDEX_CACHED:24), 4
+	ldw	(PALETTE_UPDATE_FLAG:24), 1
+	popw	iz
+	inc	4, xsp
+	ret
+; Display_LoadFixedPaletteBands: Loads palette slots 32..63 (GraphicsRender_LowBandColorIndex) and 192..223
+;   (GraphicsRender_PaletteSrc192) from the RGB table and flags a palette update; queued on the draw ring when not
+;   called from the draw task. Basis: callers + body -- the screen-init sequences call it between setting fg/bg
+;   colours and loading slots 64..191 from a selectable table (Display_FillPaletteBandFromEntry).
+Display_LoadFixedPaletteBands:
+	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
+	cp	hl, 0:i3
+	jr	nz, GraphicsRender_ByteData_Join
+	ld	wa, 4:i3
+	calr	DrawQueue_Alloc
+	ld	xwa, xhl
+	lda	xbc, (GraphicsRender_ByteData_Code2:24)
+	ld	(xwa), xbc
+	jrl	DrawRing_Post
+GraphicsRender_ByteData_Code2:
+	jr	GraphicsRender_ByteData_Join
+GraphicsRender_ByteData_Join:
+	pushw	iz
+	ldw	iz, 32
+GraphicsRender_ByteData_Loop2:
+	ld	wa, iz
+	sub	wa, 32
+	extz	xwa
+	ld	xbc, GraphicsRender_LowBandColorIndex
+	add	xbc, xwa
+	ld	a, (xbc)
+	extz	wa
+	call	Table_LookupDword
+	ld	xbc, xhl
+	ld	wa, iz
+	call	SetPaletteRGB
+	inc	1, iz
+	cp	iz, 64
+	jr	c, GraphicsRender_ByteData_Loop2
+	ldw	iz, 192
+GraphicsRender_ByteData_Loop3:
+	ld	wa, iz
+	sub	wa, 192
+	extz	xwa
+	ld	xbc, GraphicsRender_PaletteSrc192
+	add	xbc, xwa
+	ld	a, (xbc)
+	extz	wa
+	call	Table_LookupDword
+	ld	xbc, xhl
+	ld	wa, iz
+	call	SetPaletteRGB
+	inc	1, iz
+	cp	iz, 224
+	jr	c, GraphicsRender_ByteData_Loop3
+	ldw	(PALETTE_INDEX_CACHED:24), 4
+	ldw	(PALETTE_UPDATE_FLAG:24), 1
+	popw	iz
+	ret
+
+Display_DeferOrDrawWall:
+	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
+	cp hl, 0:i3
+	jr nz, Display_DeferOrDrawWall_Direct
+	ld wa, 4:i3
+	calr DrawQueue_Alloc
+	ld xwa, xhl
+	lda xbc, (Display_DeferOrDrawWall_Code:24)
+	ld (xwa), xbc
+	jrl DrawRing_Post
+Display_DeferOrDrawWall_Code:
+	jr Display_DeferOrDrawWall_Direct
+
+Display_DeferOrDrawWall_Direct:
+	ldw	(0x03ef8e:24), 0x0000
+	ld wa, 0:i3
+	calr SetNeedUpdate
+	jrl DrawWall
+
+Display_DeferOrUpdateScreen:
+	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
+	cp hl, 0:i3
+	jr nz, Display_DeferOrUpdateScreen_Direct
+	ld wa, 4:i3
+	calr DrawQueue_Alloc
+	ld xwa, xhl
+	lda xbc, (Display_DeferOrUpdateScreen_Code:24)
+	ld (xwa), xbc
+	jrl DrawRing_Post
+Display_DeferOrUpdateScreen_Code:
+	jr Display_DeferOrUpdateScreen_Direct
+
+Display_DeferOrUpdateScreen_Direct:
+	ldw	(0x03ef8e:24), 0x0001
+	ld wa, 1:i3
+	calr SetNeedUpdate
+	jrl UpdateScreen
+Display_DeferOrUpdateScreen_Direct_0xF:
+	ret
+
+GraphicsRender_RetStub:
+	ret
+
+GraphicsRender_ShortByteBlock:
+	lda	xbc, (xwa+1)
+	jr	GraphicsRender_ProcessEntries
+; GraphicsRender_StartSingleRecord: Renders the one bound ScreenData record at XWA: sets the end pointer XBC = XWA + 1
+;   and enters GraphicsRender_Start, whose loop stops after that record. Basis: callers + body --
+;   SeGfx_DrawBoundRecord (the single-record wrapper; XIY = record) is its only caller, and SeGfx_DrawBoundList calls
+;   GraphicsRender_Start with an explicit end; GraphicsRender_ShortByteBlock is the same two instructions for the
+;   static-record renderer.
+GraphicsRender_StartSingleRecord:
+	lda	xbc, (xwa+1)
+	jr	t, GraphicsRender_Start
+
+GraphicsRender_ProcessEntries:
+	lda xsp, (xsp-150)
+	push xiz
+	ld	(xsp+150), xbc
+	ld xiz, xwa
+	ld xiy, GraphicsRender_ProcessEntries_PtrTable
+	lda xix, (xsp + 6)
+	ldw bc, 0x48
+	ldirw
+	cp	(xsp+150), xiz
+	jr ule, GraphicsRender_ProcessEntries_Done
+
+GraphicsRender_ProcessEntry_Loop:
+	ld c, (xiz)
+	ld a, (xiz + 1)
+	ld (xsp + 4), a
+	cp c, 0x23
+	jr ule, VoiceMidi_EventHandler
+	ld xwa, xiz
+	calr GraphicsRender_RetStub
+	jr GraphicsRender_ProcessEntries_Done
+
+; Voice MIDI event handler dispatch
+VoiceMidi_EventHandler:
+	ld a, c
+	extz wa
+	sla wa, 2
+	lda xbc, (xsp + 6)
+	lda	xbc, (xbc+wa)
+	ld xwa, xiz
+	ld xhl, (xbc)
+	call (xhl)
+	ld a, (xsp + 4)
+	extz wa
+	lda	xiz, (xiz+wa)
+	cp	(xsp+150), xiz
+	jr ugt, GraphicsRender_ProcessEntry_Loop
+
+GraphicsRender_ProcessEntries_Done:
+	pop xiz
+	lda xsp, (xsp+150:16)
+	ret
+
+GraphicsRender_Start:
+	lda xsp, (xsp - 54)
+	push xiz
+	ld (xsp + 54), xbc
+	ld xiz, xwa
+	ld xiy, GraphicsRender_Start_PtrTable
+	lda xix, (xsp + 6)
+	ldw bc, 0x18
+	ldirw
+	cp (xsp + 54), xiz
+	jr ule, GraphicsRender_Start_Done
+
+GraphicsRender_Start_EntryLoop:
+	ld c, (xiz)
+	ld a, (xiz + 1)
+	ld (xsp + 4), a
+	cp c, 0xb
+	jr ule, VoiceMidi_AltEventHandler
+	ld xwa, xiz
+	calr GraphicsRender_RetStub
+	jr GraphicsRender_Start_Done
+
+; Voice MIDI alt event handler dispatch
+VoiceMidi_AltEventHandler:
+	ld a, c
+	extz wa
+	sla wa, 2
+	lda xbc, (xsp + 6)
+	lda	xbc, (xbc+wa)
+	ld xwa, xiz
+	ld xhl, (xbc)
+	call (xhl)
+	ld a, (xsp + 4)
+	extz wa
+	lda	xiz, (xiz+wa)
+	cp (xsp + 54), xiz
+	jr ugt, GraphicsRender_Start_EntryLoop
+
+GraphicsRender_Start_Done:
+	pop xiz
+	lda xsp, (xsp + 54)
+	ret
+
+SeGfx_StaticOp06_CellTextFont0:
+	lda xsp, (xsp-274)
+	push xiz
+	ld xiy, SeGfx_StaticOp06_ClipBox
+	lda xix, (xsp+270)
+	ld bc, 4:i3
+	ldirw
+	ld hl, (xwa + 2)
+	ld c, (xwa + 1)
+	dec 4, c
+	extz bc
+	ld (xsp + 4), bc
+	lda xbc, (xsp+266)
+	ld (xsp + 6), xbc
+	ld de, hl
+	extz xde
+	div de, 0x28
+	ld xbc, (xsp + 6)
+	ld (xbc + 2), de
+	muls de, 0x28
+	sub hl, de
+	sll hl, 3
+	ld (xbc), hl
+	ld iy, 0:i3
+	cpw (xsp + 4), 0x0
+	jr ule, DrawText_NullTerminate
+	lda xhl, (xsp + 10)
+	ld xde, 4:i3
+
+DrawText_CopyCharLoop:
+	ld xix, xde
+	ld xbc, 0xfffffffc
+	add xix, xbc
+	ld xiz, xhl
+	add xiz, xix
+	ld xbc, xde
+	add xbc, xwa
+	ld c, (xbc)
+	ld (xiz), c
+	inc 1, iy
+	inc 1, xde
+	cp iy, (xsp + 4)
+	jr c, DrawText_CopyCharLoop
+
+DrawText_NullTerminate:
+	ld wa, iy
+	extz xwa
+	lda xde, (xsp + 10)
+	ld xbc, xde
+	add xbc, xwa
+	ld (xbc), 0x0
+	lda xwa, (xsp+270)
+	ld xbc, 0:i3
+	push xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld xbc, (xsp + 14)
+	calr DrawText_QueueOrDirect
+	pop xiz
+	lda xsp, (xsp+274)
+	ret
+
+SeGfx_StaticOp07_CellTextFont1:
+	lda xsp, (xsp-274)
+	push	xiz
+	ld	xiy, SeGfx_StaticOp07_ClipBox
+	lda	xix, (xsp+270)
+	ld	bc, 4:i3
+	ldirw
+	ld	hl, (xwa+2)
+	ld	c, (xwa+1)
+	dec	4, c
+	extz	bc
+	ld	(xsp+4), bc
+	lda	xbc, (xsp+266)
+	ld	(xsp+6), xbc
+	ld	de, hl
+	extz	xde
+	div	de, 40
+	ld	xbc, (xsp+6)
+	ld	(xbc+2), de
+	muls	de, 40
+	sub	hl, de
+	sll	hl, 3
+	ld	(xbc), hl
+	ld	iy, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_LayoutAndRender_Variant1_Skip
+	lda	xhl, (xsp+10)
+	ld	xde, 4:i3
+DrawText_LayoutAndRender_Variant1_Loop2:
+	ld	xix, xde
+	ld	xbc, 0xfffffffc
+	add	xix, xbc
+	ld	xiz, xhl
+	add	xiz, xix
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	c, (xbc)
+	ld	(xiz), c
+	inc	1, iy
+	inc	1, xde
+	cp	iy, (xsp+4)
+	jr	c, DrawText_LayoutAndRender_Variant1_Loop2
+DrawText_LayoutAndRender_Variant1_Skip:
+	ld	wa, iy
+	extz	xwa
+	lda	xde, (xsp+10)
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	(xbc), 0
+	lda	xwa, (xsp+270)
+	ld	xbc, 1:i3
+	push	xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld	xbc, (xsp+14)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+274)
+	ret
+SeGfx_StaticOp08_CellTextFont2:
+	lda xsp, (xsp-274)
+	push	xiz
+	ld	xiy, SeGfx_StaticOp08_ClipBox
+	lda	xix, (xsp+270)
+	ld	bc, 4:i3
+	ldirw
+	ld	hl, (xwa+2)
+	ld	c, (xwa+1)
+	dec	4, c
+	extz	bc
+	ld	(xsp+4), bc
+	lda	xbc, (xsp+266)
+	ld	(xsp+6), xbc
+	ld	de, hl
+	extz	xde
+	div	de, 40
+	ld	xbc, (xsp+6)
+	ld	(xbc+2), de
+	muls	de, 40
+	sub	hl, de
+	sll	hl, 3
+	ld	(xbc), hl
+	ld	iy, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_LayoutAndRender_Variant1_Skip2
+	lda	xhl, (xsp+10)
+	ld	xde, 4:i3
+DrawText_LayoutAndRender_Variant1_Loop3:
+	ld	xix, xde
+	ld	xbc, 0xfffffffc
+	add	xix, xbc
+	ld	xiz, xhl
+	add	xiz, xix
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	c, (xbc)
+	ld	(xiz), c
+	inc	1, iy
+	inc	1, xde
+	cp	iy, (xsp+4)
+	jr	c, DrawText_LayoutAndRender_Variant1_Loop3
+DrawText_LayoutAndRender_Variant1_Skip2:
+	ld	wa, iy
+	extz	xwa
+	lda	xde, (xsp+10)
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	(xbc), 0
+	lda	xwa, (xsp+270)
+	ld	xbc, 2:i3
+	push	xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld	xbc, (xsp+14)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+274)
+	ret
+SeGfx_StaticOp17_PixelTextFont3:
+	lda xsp, (xsp-274)
+	push	xiz
+	ld	xiy, SeGfx_StaticOp17_ClipBox
+	lda	xix, (xsp+270)
+	ld	bc, 4:i3
+	ldirw
+	ld	c, (xwa+1)
+	dec	6, c
+	extz	bc
+	ld	(xsp+4), bc
+	lda	xbc, (xsp+266)
+	ld	(xsp+6), xbc
+	ld	de, (xwa+4)
+	ld	xbc, (xsp+6)
+	ld	(xbc+2), de
+	ld	de, (xwa+2)
+	ld	(xbc), de
+	ld	iy, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_LayoutAndRender_Variant1_Skip3
+	lda	xhl, (xsp+10)
+	ld	xde, 6:i3
+DrawText_LayoutAndRender_Variant1_Loop4:
+	ld	xix, xde
+	ld	xbc, 0xfffffffa
+	add	xix, xbc
+	ld	xiz, xhl
+	add	xiz, xix
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	c, (xbc)
+	ld	(xiz), c
+	inc	1, iy
+	inc	1, xde
+	cp	iy, (xsp+4)
+	jr	c, DrawText_LayoutAndRender_Variant1_Loop4
+DrawText_LayoutAndRender_Variant1_Skip3:
+	ld	wa, iy
+	extz	xwa
+	lda	xde, (xsp+10)
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	(xbc), 0
+	lda	xwa, (xsp+270)
+	ld	xbc, 3:i3
+	push	xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld	xbc, (xsp+14)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+274)
+	ret
+SeGfx_StaticOp1C_PixelTextFont4:
+	lda xsp, (xsp-274)
+	push	xiz
+	ld	xiy, SeGfx_StaticOp1C_ClipBox
+	lda	xix, (xsp+270)
+	ld	bc, 4:i3
+	ldirw
+	ld	c, (xwa+1)
+	dec	6, c
+	extz	bc
+	ld	(xsp+4), bc
+	lda	xbc, (xsp+266)
+	ld	(xsp+6), xbc
+	ld	de, (xwa+4)
+	ld	xbc, (xsp+6)
+	ld	(xbc+2), de
+	ld	de, (xwa+2)
+	ld	(xbc), de
+	ld	iy, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_LayoutAndRender_Variant1_Skip4
+	lda	xhl, (xsp+10)
+	ld	xde, 6:i3
+DrawText_LayoutAndRender_Variant1_Loop:
+	ld	xix, xde
+	ld	xbc, 0xfffffffa
+	add	xix, xbc
+	ld	xiz, xhl
+	add	xiz, xix
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	c, (xbc)
+	ld	(xiz), c
+	inc	1, iy
+	inc	1, xde
+	cp	iy, (xsp+4)
+	jr	c, DrawText_LayoutAndRender_Variant1_Loop
+DrawText_LayoutAndRender_Variant1_Skip4:
+	ld	wa, iy
+	extz	xwa
+	lda	xde, (xsp+10)
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	(xbc), 0
+	lda	xwa, (xsp+270)
+	ld	xbc, 4:i3
+	push	xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld	xbc, (xsp+14)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+274)
+	ret
+SeGfx_StaticOp20_CellTextFont6:
+	lda xsp, (xsp-274)
+	push	xiz
+	ld	xiy, SeGfx_StaticOp20_ClipBox
+	lda	xix, (xsp+270)
+	ld	bc, 4:i3
+	ldirw
+	ld	hl, (xwa+2)
+	ld	c, (xwa+1)
+	dec	4, c
+	extz	bc
+	ld	(xsp+4), bc
+	lda	xbc, (xsp+266)
+	ld	(xsp+6), xbc
+	ld	de, hl
+	extz	xde
+	div	de, 40
+	ld	xbc, (xsp+6)
+	ld	(xbc+2), de
+	muls	de, 40
+	sub	hl, de
+	sll	hl, 3
+	ld	(xbc), hl
+	ld	iy, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_LayoutAndRender_Variant1_Skip5
+	lda	xhl, (xsp+10)
+	ld	xde, 4:i3
+DrawText_LayoutAndRender_Variant1_Loop5:
+	ld	xix, xde
+	ld	xbc, 0xfffffffc
+	add	xix, xbc
+	ld	xiz, xhl
+	add	xiz, xix
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	c, (xbc)
+	ld	(xiz), c
+	inc	1, iy
+	inc	1, xde
+	cp	iy, (xsp+4)
+	jr	c, DrawText_LayoutAndRender_Variant1_Loop5
+DrawText_LayoutAndRender_Variant1_Skip5:
+	ld	wa, iy
+	extz	xwa
+	lda	xde, (xsp+10)
+	ld	xbc, xde
+	add	xbc, xwa
+	ld	(xbc), 0
+	lda	xwa, (xsp+270)
+	ld	xbc, 6:i3
+	push	xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld	xbc, (xsp+14)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+274)
+	ret
+SeGfx_StaticOp00_Line:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp01_Line:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp02_Line:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp11_DottedLine:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp12_DottedLine:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp15_DottedLine:
+	dec	8, xsp
+	ld	xde, xwa
+	lda	xwa, (xsp+4)
+	ld	bc, (xde+2)
+	ld	(xwa), bc
+	ld	bc, (xde+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp)
+	ld	hl, (xde+6)
+	ld	(xbc), hl
+	ld	de, (xde+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	inc	8, xsp
+	ret
+SeGfx_StaticOp09_Box:
+	dec	8, xsp
+	lda	xbc, (xsp)
+	ld	de, (xwa+2)
+	ld	(xbc), de
+	ld	de, (xwa+4)
+	ld	(xbc+2), de
+	ld	de, (xwa+6)
+	ld	(xbc+4), de
+	ld	wa, (xwa+8)
+	ld	(xbc+6), wa
+	ld	de, (0x03efa0:24)
+	ld	xwa, xbc
+	ld	bc, de
+	calr	DrawRect
+	inc	8, xsp
+	ret
+SeGfx_StaticOp0A_ShadowBox2:
+	lda	xsp, (xsp-16)
+	push	xiz
+	ld	xiz, xwa
+	lda	xwa, (xsp+12)
+	ld	bc, (xiz+2)
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	ld	(xwa+2), bc
+	ld	bc, (xiz+6)
+	ld	(xwa+4), bc
+	ld	bc, (xiz+8)
+	ld	(xwa+6), bc
+	ld	bc, (0x03efa0:24)
+	calr	DrawRect
+	lda	xwa, (xsp+8)
+	lda	xde, (xiz+6)
+	ld	bc, (xde)
+	inc	1, bc
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	inc	1, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xde)
+	inc	1, de
+	ld	(xbc), de
+	ld	de, (xiz+8)
+	inc	1, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	lda	xwa, (xsp+8)
+	lda	xde, (xiz+6)
+	ld	bc, (xde)
+	inc	2, bc
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	inc	2, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xde)
+	inc	2, de
+	ld	(xbc), de
+	ld	de, (xiz+8)
+	inc	2, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	lda	xwa, (xsp+8)
+	ld	bc, (xiz+2)
+	inc	1, bc
+	ld	(xwa), bc
+	lda	xhl, (xiz+8)
+	ld	bc, (xhl)
+	inc	1, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xiz+6)
+	inc	1, de
+	ld	(xbc), de
+	ld	de, (xhl)
+	inc	1, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	lda	xwa, (xsp+8)
+	ld	bc, (xiz+2)
+	inc	2, bc
+	ld	(xwa), bc
+	lda	xhl, (xiz+8)
+	ld	bc, (xhl)
+	inc	2, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xiz+6)
+	inc	2, de
+	ld	(xbc), de
+	ld	de, (xhl)
+	inc	2, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	pop	xiz
+	lda	xsp, (xsp+16)
+	ret
+SeGfx_StaticOp13_DottedBox:
+	dec	8, xsp
+	push	xiz
+	ld	xiz, xwa
+	lda	xwa, (xsp+8)
+	ld	bc, (xiz+2)
+	ld	(xwa), bc
+	lda	xhl, (xiz+4)
+	ld	bc, (xhl)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xiz+6)
+	ld	(xbc), de
+	ld	de, (xhl)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	lda	xwa, (xsp+8)
+	ld	bc, (xiz+2)
+	ld	(xwa), bc
+	lda	xhl, (xiz+8)
+	ld	bc, (xhl)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xiz+6)
+	ld	(xbc), de
+	ld	de, (xhl)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	lda	xwa, (xsp+8)
+	lda	xde, (xiz+2)
+	ld	bc, (xde)
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xde)
+	ld	(xbc), de
+	ld	de, (xiz+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	lda	xwa, (xsp+8)
+	lda	xde, (xiz+6)
+	ld	bc, (xde)
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xde)
+	ld	(xbc), de
+	ld	de, (xiz+8)
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawDottedLineWithMode
+	pop	xiz
+	inc	8, xsp
+	ret
+SeGfx_StaticOp22_ShadowBox1:
+	lda	xsp, (xsp-16)
+	push	xiz
+	ld	xiz, xwa
+	lda	xwa, (xsp+12)
+	ld	bc, (xiz+2)
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	ld	(xwa+2), bc
+	ld	bc, (xiz+6)
+	ld	(xwa+4), bc
+	ld	bc, (xiz+8)
+	ld	(xwa+6), bc
+	ld	bc, (0x03efa0:24)
+	calr	DrawRect
+	lda	xwa, (xsp+8)
+	lda	xde, (xiz+6)
+	ld	bc, (xde)
+	inc	1, bc
+	ld	(xwa), bc
+	ld	bc, (xiz+4)
+	inc	1, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xde)
+	inc	1, de
+	ld	(xbc), de
+	ld	de, (xiz+8)
+	inc	1, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	lda	xwa, (xsp+8)
+	ld	bc, (xiz+2)
+	inc	1, bc
+	ld	(xwa), bc
+	lda	xhl, (xiz+8)
+	ld	bc, (xhl)
+	inc	1, bc
+	ld	(xwa+2), bc
+	lda	xbc, (xsp+4)
+	ld	de, (xiz+6)
+	inc	1, de
+	ld	(xbc), de
+	ld	de, (xhl)
+	inc	1, de
+	ld	(xbc+2), de
+	ld	de, (0x03efa0:24)
+	calr	DrawLineWithMode
+	pop	xiz
+	lda	xsp, (xsp+16)
+	ret
+SeGfx_StaticOp03_Bitmap:
+	dec	8, xsp
+	lda	xhl, (xsp)
+	lda	xde, (xhl+2)
+	lda	xix, (xwa+6)
+	ld	bc, (xix)
+	extz	xbc
+	div	bc, 40
+	ld	(xde), bc
+	ld	bc, (xix)
+	extz	xbc
+	div	bc, 40
+	ld bc, qbc
+	sll bc, 3
+	ld	(xhl), bc
+	ld	bc, (xde)
+	add	bc, (xwa+10)
+	ld	(xhl+6), bc
+	ld	bc, (xwa+8)
+	sll	bc, 3
+	ld	de, (xhl)
+	add	de, bc
+	ld	(xhl+4), de
+	ld	xbc, (xwa+2)
+	ld	de, (0x03efa0:24)
+	ld	xwa, xhl
+	calr	ColorBlit2_LargeCodeBlock
+	inc	8, xsp
+	ret
+SeGfx_StaticOp23_DesignBox:
+	lda	xsp, (xsp-12)
+	pushw	iz
+	lda	xhl, (xsp+10)
+	lda	xde, (xhl+2)
+	lda	xix, (xwa+3)
+	ld	bc, (xix)
+	extz	xbc
+	div	bc, 40
+	ld	(xde), bc
+	ld	bc, (xix)
+	extz	xbc
+	div	bc, 40
+	ld bc, qbc
+	sll bc, 3
+	ld	(xhl), bc
+	ld	a, (xwa+2)
+	ldfr_berp a, 248
+	extz	iz
+	lda	xwa, (xsp+2)
+	ld	bc, (xhl)
+	dec	2, bc
+	ld	(xwa), bc
+	ld	bc, (xhl)
+	add	bc, 25
+	ld	(xwa+4), bc
+	ld	bc, (xde)
+	dec	2, bc
+	ld	(xwa+2), bc
+	ld	bc, (xde)
+	add	bc, 25
+	ld	(xwa+6), bc
+	ldw	bc, 196
+	ldw	de, 240
+	calr	DrawDesignBox
+	lda	xwa, (xsp+10)
+	ld	bc, iz
+	inc	2, bc
+	extz	xbc
+	calr	DrawIcons
+	popw	iz
+	lda	xsp, (xsp+12)
+	ret
+SeGfx_StaticOp05_FillBoxMode1:
+	dec	8, xsp
+	push	qiz
+	lda	xbc, (xsp+2)
+	ld	de, (xwa+2)
+	ld	(xbc), de
+	ld	de, (xwa+4)
+	ld	(xbc+2), de
+	ld	de, (xwa+6)
+	ld	(xbc+4), de
+	ld	wa, (xwa+8)
+	ld	(xbc+6), wa
+	ld	a, (COLORBLIT_MODE:24)
+	ldfr_berp	a, 251
+	ld	(COLORBLIT_MODE:24), 1
+	ld	de, (0x03efa0:24)
+	ld	xwa, xbc
+	ld	bc, de
+	calr	ColorBlit
+	ldto_berp	a, 251
+	ld	(COLORBLIT_MODE:24), a
+	pop	qiz
+	inc	8, xsp
+	ret
+
+ColorBlit_ComputeRectAndBlit:
+	dec 8, xsp
+	ld xbc, xwa
+	lda xwa, (xsp)
+	lda xhl, (xwa + 2)
+	lda xix, (xbc + 2)
+	ld de, (xix)
+	extz xde
+	div de, 0x28
+	ld (xhl), de
+	ld de, (xix)
+	extz xde
+	div de, 0x28
+	ldto_werp DE, 0xea
+	sll de, 3
+	ld (xwa), de
+	ld de, (xhl)
+	add de, (xbc + 6)
+	ld (xwa + 6), de
+	ld bc, (xbc + 4)
+	sll bc, 3
+	ld de, (xwa)
+	add de, bc
+	ld (xwa + 4), de
+	ld	bc, (0x03ef9e:24)
+	calr ColorBlit2
+	inc 8, xsp
+	ret
+
+ColorBlit_ByteData:
+	dec	8, xsp
+	lda	xbc, (xsp)
+	ld	de, (xwa+2)
+	ld	(xbc), de
+	ld	de, (xwa+4)
+	ld	(xbc+2), de
+	ld	de, (xwa+6)
+	ld	(xbc+4), de
+	ld	wa, (xwa+8)
+	ld	(xbc+6), wa
+	ld	de, (0x03ef9e:24)
+	ld	xwa, xbc
+	ld	bc, de
+	calr	ColorBlit2
+	inc	8, xsp
+	ret
+
+DrawText_ExtendedLayout:
+	lda xsp, (xsp-284)
+	push xiz
+	ld	(xsp+284), xwa
+	ld xiy, DrawText_ExtendedLayout_ClipRect
+	lda xix, (xsp+276)
+	ld bc, 4:i3
+	ldirw
+	ld XDE, (xsp + 0x011c)
+	ld iy, (xde + 2)
+	extz xiy
+	ld c, (xde + 4)
+	ld a, (xde + 5)
+	ld (xsp + 14), a
+	ld a, (xiy)
+	and a, c
+	ld (xsp + 6), a
+	ld a, (xsp + 14)
+	ld c, (xsp + 6)
+	and a, 0xf
+	jr z, DrawText_ExtLayout_SkipShift
+	srla c
+
+DrawText_ExtLayout_SkipShift:
+	ld (xsp + 6), c
+	ld wa, (xde + 13)
+	ld (xsp + 10), wa
+	ld wa, (xde + 11)
+	ld (xsp + 4), wa
+	lda xwa, (xsp+272)
+	ld (xsp + 12), xwa
+	ld bc, (xsp + 10)
+	extz xbc
+	div bc, 0x28
+	ld xhl, (xsp + 12)
+	ld (xhl + 2), bc
+	muls bc, 0x28
+	ld wa, bc
+	ld bc, (xsp + 10)
+	sub bc, wa
+	sll bc, 3
+	ld (xhl), bc
+	ld hl, 0:i3
+	cpw (xsp + 4), 0x0
+	jr ule, DrawText_ExtLayout_NullAndDraw
+	lda xwa, (xde + 7)
+	ld (xsp + 8), xwa
+	lda xix, (xsp + 16)
+	ld a, (xsp + 6)
+	extz wa
+	mrdw3 0x9f, 0x04, 0x40
+	ld xbc, xwa
+	ld xde, 0:i3
+
+DrawText_ExtLayout_CopyLoop:
+	ld xwa, (xsp + 8)
+	ld xiy, (xwa)
+	ld xiz, xix
+	add xiz, xde
+	ld xwa, xbc
+	add xwa, xiy
+	ld a, (xwa)
+	ld (xiz), a
+	inc 1, hl
+	inc 1, xde
+	inc 1, xbc
+	cp hl, (xsp + 4)
+	jr c, DrawText_ExtLayout_CopyLoop
+
+DrawText_ExtLayout_NullAndDraw:
+	extz xhl
+	lda xwa, (xsp + 16)
+	ld (xsp + 8), xwa
+	add xwa, xhl
+	ld (xwa), 0x0
+	ld XWA, (xsp + 0x011c)
+	ld a, (xwa + 6)
+	and a, 0x3f
+	extz wa
+	sla wa, 2
+	lda xbc, (TextStyle_FontTable:24)
+	ld	xbc, (xbc+wa)
+	lda xwa, (xsp+276)
+	push xbc
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	ld xbc, (xsp + 20)
+	ld xde, (xsp + 16)
+	calr DrawText_QueueOrDirect
+	pop xiz
+	lda xsp, (xsp+284)
+	ret
+
+DrawText_ExtLayout_Variant1:
+	lda	xsp, (xsp-284)
+	push	xiz
+	ld	(xsp+284), xwa
+	ld	xiy, SeGfx_BoundOp07_ClipBox
+	lda	xix, (xsp+276)
+	ld	bc, 4:i3
+	ldirw
+	ld	xde, (xsp+284)
+	ld	iy, (xde+2)
+	extz	xiy
+	ld	c, (xde+4)
+	ld	a, (xde+5)
+	ld	(xsp+14), a
+	ld	a, (xiy)
+	and	a, c
+	ld	(xsp+6), a
+	ld	a, (xsp+14)
+	ld	c, (xsp+6)
+	and	a, 15
+	jr	z, DrawText_ExtLayout_Variant1_Skip2
+	srla c	; srl A,C
+DrawText_ExtLayout_Variant1_Skip2:
+	ld	(xsp+6), c
+	lda	xwa, (xsp+272)
+	ld	(xsp+12), xwa
+	ld	xbc, (xsp+12)
+	ld	wa, (xde+13)
+	ld	(xbc), wa
+	ld	wa, (xde+15)
+	ld	(xbc+2), wa
+	ld	wa, (xde+11)
+	ld	(xsp+4), wa
+	ld	hl, 0:i3
+	cpw	(xsp+4), 0
+	jr	ule, DrawText_ExtLayout_Variant1_Skip
+	ld	xbc, xde
+	lda	xwa, (xbc+7)
+	ld	(xsp+8), xwa
+	lda	xix, (xsp+16)
+	ld	a, (xsp+6)
+	extz	wa
+	mul	xwa, (xsp+4)
+	ld	xbc, xwa
+	ld	xde, 0:i3
+DrawText_ExtLayout_Variant1_Loop:
+	ld	xwa, (xsp+8)
+	ld	xiy, (xwa)
+	ld	xiz, xix
+	add	xiz, xde
+	ld	xwa, xbc
+	add	xwa, xiy
+	ld	a, (xwa)
+	ld	(xiz), a
+	inc	1, hl
+	inc	1, xde
+	inc	1, xbc
+	cp	hl, (xsp+4)
+	jr	c, DrawText_ExtLayout_Variant1_Loop
+DrawText_ExtLayout_Variant1_Skip:
+	extz	xhl
+	lda	xwa, (xsp+16)
+	ld	(xsp+8), xwa
+	add	xwa, xhl
+	ld	(xwa), 0
+	ld	xwa, (xsp+284)
+	ld	a, (xwa+6)
+	and	a, 15
+	extz	wa
+	lda	xbc, (TextStyle_NibbleFontTable:24)
+	ld	c, (xbc+wa)
+	extz	bc
+	extz	xbc
+	lda	xwa, (xsp+276)
+	push	xbc
+	pushw	(0x03efa0:24)
+	pushw	(0x03ef9e:24)
+	ld	xbc, (xsp+20)
+	ld	xde, (xsp+16)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+284)
+	ret
+
+DrawFunc_Init:
+	lda xsp, (xsp-268)
+	push xiz
+	ld xiz, xwa
+	ld xiy, SeGfx_BoundOp00_ClipBox
+	lda xix, (xsp+264)
+	ld bc, 4:i3
+	ldirw
+	ld wa, (xiz + 2)
+	extz xwa
+	ld e, (xiz + 4)
+	ld c, (xiz + 5)
+	ld l, (xwa)
+	and l, e
+	ld a, c
+	and a, 0xf
+	jr z, DrawFunc_Init_SkipShift
+	srla l
+
+DrawFunc_Init_SkipShift:
+	ld de, (xiz + 7)
+	ld a, (xiz + 9)
+	ldfr_berp A, 0xf0
+	extz ix
+	lda xbc, (xsp+260)
+	ld wa, de
+	extz xwa
+	div wa, 0x28
+	ld (xbc + 2), wa
+	muls wa, 0x28
+	sub de, wa
+	sll de, 3
+	ld (xbc), de
+	extz hl
+	lda xbc, (xsp + 4)
+	pushw hl
+	cp ix, 2:i3
+	jr z, DrawFunc_Init_FontTable2
+	cp ix, 1:i3
+	jr nz, DrawFunc_Init_FontTable0
+	ld xwa, DrawFunc_Init_SkipShift_Str_Fmt1d
+	jr DrawFunc_Init_PushFontAndDraw
+
+DrawFunc_Init_FontTable2:
+	ld xwa, DrawFunc_Init_FontTable2_Str_Fmt2d
+	jr DrawFunc_Init_PushFontAndDraw
+
+DrawFunc_Init_FontTable0:
+	ld xwa, DrawFunc_Init_FontTable0_Str_Fmt3d
+
+DrawFunc_Init_PushFontAndDraw:
+	push	xwa
+	push	xbc
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	ld	a, (xiz+6)
+	and	a, 63
+	extz	wa
+	sla	wa, 2
+	lda	xbc, (TextStyle_FontTable:24)
+	ld	xhl, (xbc+wa)
+	lda	xwa, (xsp+264)
+	lda	xbc, (xsp+260)
+	lda	xde, (xsp+4)
+	push	xhl
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+DrawFunc_Init_Variant1:
+	lda	xsp, (xsp-268)
+	push	xiz
+	ld	xiz, xwa
+	ld	xiy, DrawFunc_Init_Variant1_ClipRect
+	lda	xix, (xsp+264)
+	ld	bc, 4:i3
+	ldirw
+	ld	wa, (xiz+2)
+	extz	xwa
+	ld	e, (xiz+4)
+	ld	c, (xiz+5)
+	ld	a, (xwa)
+	and	a, e
+	ld	e, a
+	ld	a, c
+	and	a, 15
+	jr	z, DrawFunc_Init_Skip
+	srla e	; srl A,E
+DrawFunc_Init_Skip:
+	ld	ix, (xiz+7)
+	ld	l, (xiz+9)
+	extz	hl
+	lda	xbc, (xsp+260)
+	ld	wa, ix
+	extz	xwa
+	div	wa, 40
+	ld	(xbc+2), wa
+	muls	wa, 40
+	sub	ix, wa
+	sll	ix, 3
+	ld	(xbc), ix
+	ld	a, (xiz+10)
+	cp	a, e
+	jr	z, DrawFunc_Init_Skip6
+	cp	a, 128
+	jr	nc, DrawFunc_Init_Skip2
+	cp	e, 128
+	jr	c, DrawFunc_Init_Skip2
+	ld	a, 128:opc
+	sub	e, 128
+DrawFunc_Init_Skip2:
+	cp	e, a
+	jr	ule, DrawFunc_Init_Skip3
+	ld	(xsp+4), 43
+	sub	e, a
+	jr	DrawFunc_Init_Join
+DrawFunc_Init_Skip3:
+	ld	(xsp+4), 45
+	sub	a, e
+	ld	e, a
+DrawFunc_Init_Join:
+	ld	c, e
+	extz	bc
+	lda	xde, (xsp+5)
+	cp	hl, 2:i3
+	jr	z, DrawFunc_Init_Skip4
+	pushw	bc
+	cp	hl, 1:i3
+	jr	nz, DrawFunc_Init_Skip5
+	ld	xwa, DrawFunc_Init_Variant1_Str_Fmt1d
+	jr	DrawFunc_Init_Join2
+DrawFunc_Init_Skip4:
+	pushw	bc
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xea, 0x00, 0x0b, 0x48, 0xb0
+	push	xde
+	jr	DrawFunc_Init_Join4
+DrawFunc_Init_Skip5:
+	ld	xwa, DrawFunc_Init_Variant1_Str_Fmt3d
+DrawFunc_Init_Join2:
+	push	xwa
+	push	xde
+	jr	DrawFunc_Init_Join4
+DrawFunc_Init_Skip6:
+	pushw	0
+	cp	hl, 2:i3
+	jr	z, DrawFunc_Init_Skip7
+	cp	hl, 1:i3
+	jr	nz, DrawFunc_Init_Skip8
+	ld	xwa, DrawFunc_Init_Entry_Str_Fmt2d
+	jr	DrawFunc_Init_Join3
+DrawFunc_Init_Skip7:
+	ld	xwa, DrawFunc_Init_Entry_Str_Fmt3d
+	jr	DrawFunc_Init_Join3
+DrawFunc_Init_Skip8:
+	ld	xwa, DrawFunc_Init_Entry_Str_Fmt4d
+DrawFunc_Init_Join3:
+	push	xwa
+	lda	xwa, (xsp+10)
+	push	xwa
+DrawFunc_Init_Join4:
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	ld	a, (xiz+6)
+	and	a, 63
+	extz	wa
+	sla	wa, 2
+	lda	xbc, (TextStyle_FontTable:24)
+	ld	xhl, (xbc+wa)
+	lda	xwa, (xsp+264)
+	lda	xbc, (xsp+260)
+	lda	xde, (xsp+4)
+	push	xhl
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+AccDraw_Secondary_Helper20:
+	lda xsp, (xsp - 0x010c)
+	push XIZ
+	ld XIZ,XWA
+	ld XIY,SeGfx_BoundOp06_ClipRect
+	lda xix, (xsp + 0x0108)
+	ld bc, 4:i3
+	ldirw
+	ld IX,(XIZ+0x02)
+	extz XIX
+	ld DE,(XIZ+0x07)
+	ld L,(XIZ+0x09)
+	extz HL
+	lda xbc, (xsp + 0x0104)
+	ld WA,DE
+	extz XWA
+	div WA,0x0028
+	ld (XBC+0x02),WA
+	muls WA,0x0028
+	sub DE,WA
+	sll DE, 0x03
+	ld (XBC),DE
+	lda xbc, (xsp + 0x04)
+	cp hl, 2:i3
+	jr z, .Lc_fb1e46
+	cp hl, 1:i3
+	jr nz, .Lc_fb1e4f
+	pushm (xix)
+	ld XWA,DrawFunc_Init_Entry_Str_Fmt1d
+	jr t, .Lc_fb1e56
+.Lc_fb1e46:
+	pushm (xix)
+	ld XWA,DrawFunc_Init_Entry2_Str_Fmt2d
+	jr t, .Lc_fb1e56
+.Lc_fb1e4f:
+	pushm (xix)
+	ld XWA,DrawFunc_Init_Entry3_Str_Fmt3d
+.Lc_fb1e56:
+	push XWA
+	push XBC
+	call Sprintf_Locked
+	lda xsp, (xsp + 0x0a)
+	ld A,(XIZ+0x06)
+	and A,0x3f
+	extz WA
+	sla WA, 0x02
+	lda xbc, (TextStyle_FontTable:24)
+	ld	xhl, (xbc+wa)
+	lda xwa, (xsp + 0x0108)
+	lda xbc, (xsp + 0x0104)
+	lda xde, (xsp + 0x04)
+	push XHL
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+SeGfx_BoundOp09_FormatNumber:
+	lda	xsp, (xsp-268)
+	push	xiz
+	ld	xiz, xwa
+	ld	xiy, SeGfx_BoundOp09_ClipRect
+	lda	xix, (xsp+264)
+	ld	bc, 4:i3
+	ldirw
+	ld	wa, (xiz+2)
+	extz	xwa
+	ld	e, (xiz+4)
+	ld	c, (xiz+5)
+	ld	a, (xwa)
+	and	a, e
+	ld	e, a
+	ld	a, c
+	and	a, 15
+	jr	z, SeGfx_BoundOp09_FormatNumber_Skip14
+	srla e	; srl A,E
+SeGfx_BoundOp09_FormatNumber_Skip14:
+	ld	l, (xiz+11)
+	lda	xbc, (xsp+260)
+	ld	wa, (xiz+7)
+	ld	(xbc), wa
+	ld	wa, (xiz+9)
+	ld	(xbc+2), wa
+	extz	de
+	lda	xbc, (xsp+4)
+	pushw	de
+	cp	l, 2:i3
+	jr	z, SeGfx_BoundOp09_FormatNumber_Skip15
+	cp	l, 1:i3
+	jr	nz, SeGfx_BoundOp09_FormatNumber_Skip16
+	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt1d
+	jr	SeGfx_BoundOp09_FormatNumber_Join4
+SeGfx_BoundOp09_FormatNumber_Skip15:
+	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt2d
+	jr	SeGfx_BoundOp09_FormatNumber_Join4
+SeGfx_BoundOp09_FormatNumber_Skip16:
+	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt3d_2
+SeGfx_BoundOp09_FormatNumber_Join4:
+	push	xwa
+	push	xbc
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	ld	a, (xiz+6)
+	and	a, 15
+	extz	wa
+	lda	xbc, (TextStyle_NibbleFontTable:24)
+	ld	xhl, 0:i3
+	ld	l, (xbc+wa)
+	lda	xwa, (xsp+264)
+	lda	xbc, (xsp+260)
+	lda	xde, (xsp+4)
+	push	xhl
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+SeGfx_BoundOp0B_FormatNumber:
+	lda	xsp, (xsp-268)
+	push	xiz
+	ld	xiz, xwa
+	ld	xiy, SeGfx_BoundOp0B_ClipRect
+	lda	xix, (xsp+264)
+	ld	bc, 4:i3
+	ldirw
+	ld	wa, (xiz+2)
+	extz	xwa
+	ld	e, (xiz+4)
+	ld	c, (xiz+5)
+	ld	a, (xwa)
+	and	a, e
+	ld	e, a
+	ld	a, c
+	and	a, 15
+	jr	z, SeGfx_BoundOp0B_FormatNumber_Skip17
+	srla e	; srl A,E
+SeGfx_BoundOp0B_FormatNumber_Skip17:
+	ld	l, (xiz+11)
+	lda	xbc, (xsp+260)
+	ld	wa, (xiz+7)
+	ld	(xbc), wa
+	ld	wa, (xiz+9)
+	ld	(xbc+2), wa
+	ld	a, (xiz+12)
+	cp	a, e
+	jr	z, AccDraw_Secondary_Helper20_Skip9
+	cp	a, 128
+	jr	nc, SeGfx_BoundOp0B_FormatNumber_Skip7
+	cp	e, 128
+	jr	c, SeGfx_BoundOp0B_FormatNumber_Skip7
+	ld	a, 128:opc
+	sub	e, 128
+SeGfx_BoundOp0B_FormatNumber_Skip7:
+	cp	e, a
+	jr	ule, SeGfx_BoundOp0B_FormatNumber_Skip8
+	ld	(xsp+4), 43
+	sub	e, a
+	jr	SeGfx_BoundOp0B_FormatNumber_Join5
+SeGfx_BoundOp0B_FormatNumber_Skip8:
+	ld	(xsp+4), 45
+	sub	a, e
+	ld	e, a
+SeGfx_BoundOp0B_FormatNumber_Join5:
+	extz	de
+	lda	xbc, (xsp+5)
+	pushw	de
+	cp	l, 2:i3
+	jr	z, SeGfx_BoundOp0B_FormatNumber_Skip
+	cp	l, 1:i3
+	jr	nz, AccDraw_Secondary_Helper20_Skip8
+	ld	xwa, DrawFunc_Init_Entry3_Str_Fmt1d_2
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
+SeGfx_BoundOp0B_FormatNumber_Skip:
+	ld	xwa, FmtStr_pct2d
+	jr	SeGfx_BoundOp0B_FormatNumber_Join
+AccDraw_Secondary_Helper20_Skip8:
+	ld	xwa, DrawFunc_Init_Entry4_Str_Fmt3d
+SeGfx_BoundOp0B_FormatNumber_Join:
+	push	xwa
+	push	xbc
+	jr	AccDraw_Secondary_Helper20_Join5
+AccDraw_Secondary_Helper20_Skip9:
+	lda	xbc, (xsp+4)
+	pushw	0
+	cp	l, 2:i3
+	jr	z, AccDraw_Secondary_Helper20_Skip10
+	cp	l, 1:i3
+	jr	nz, AccDraw_Secondary_Helper20_Skip11
+	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt2d
+	jr	AccDraw_Secondary_Helper20_Join4
+AccDraw_Secondary_Helper20_Skip10:
+	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt3d
+	jr	AccDraw_Secondary_Helper20_Join4
+AccDraw_Secondary_Helper20_Skip11:
+	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt4d
+AccDraw_Secondary_Helper20_Join4:
+	push	xwa
+	push	xbc
+AccDraw_Secondary_Helper20_Join5:
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	ld	a, (xiz+6)
+	and	a, 15
+	extz	wa
+	lda	xbc, (TextStyle_NibbleFontTable:24)
+	ld	xhl, 0:i3
+	ld	l, (xbc+wa)
+	lda	xwa, (xsp+264)
+	lda	xbc, (xsp+260)
+	lda	xde, (xsp+4)
+	push	xhl
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+SeGfx_BoundOp0A_FormatNumber:
+	lda	xsp, (xsp-268)
+	push	xiz
+	ld	xiz, xwa
+	ld	xiy, SeGfx_BoundOp0A_ClipRect
+	lda	xix, (xsp+264)
+	ld	bc, 4:i3
+	ldirw
+	ld	de, (xiz+2)
+	extz	xde
+	ld	l, (xiz+11)
+	lda	xbc, (xsp+260)
+	ld	wa, (xiz+7)
+	ld	(xbc), wa
+	ld	wa, (xiz+9)
+	ld	(xbc+2), wa
+	lda	xbc, (xsp+4)
+	cp	l, 2:i3
+	jr	z, SeGfx_BoundOp0A_FormatNumber_Skip19
+	cp	l, 1:i3
+	jr	nz, AccDraw_Secondary_Helper20_Skip13
+	pushm	(xde)
+	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt1d
+	jr	SeGfx_BoundOp0A_FormatNumber_Join10
+SeGfx_BoundOp0A_FormatNumber_Skip19:
+	pushm	(xde)
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xea, 0x00, 0x0b, 0xb0, 0xb0
+	push	xbc
+	jr	SeGfx_BoundOp0A_FormatNumber_Join7
+AccDraw_Secondary_Helper20_Skip13:
+	pushm	(xde)
+	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt3d_2
+SeGfx_BoundOp0A_FormatNumber_Join10:
+	push	xwa
+	push	xbc
+SeGfx_BoundOp0A_FormatNumber_Join7:
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	ld	a, (xiz+6)
+	and	a, 15
+	extz	wa
+	lda	xbc, (TextStyle_NibbleFontTable:24)
+	ld	xhl, 0:i3
+	ld	l, (xbc+wa)
+	lda	xwa, (xsp+264)
+	lda	xbc, (xsp+260)
+	lda	xde, (xsp+4)
+	push	xhl
+	pushw	(0x3efa0:24)
+	pushw	(0x3ef9e:24)
+	calr	DrawText_QueueOrDirect
+	pop	xiz
+	lda	xsp, (xsp+268)
+	ret
+ColorBlit_WithPaletteSave:
+	dec 8, xsp
+	pushw_erp 0xfa
+	ld xbc, xwa
+	ld wa, (xbc + 2)
+	extz xwa
+	ld l, (xbc + 4)
+	ld e, (xbc + 5)
+	ld a, (xwa)
+	and a, l
+	ld l, a
+	ld a, e
+	and a, 0xf
+	jr z, ColorBlit_PalSave_SkipShift
+	srla l
+
+ColorBlit_PalSave_SkipShift:
+	sll l, 2
+	extz hl
+	add hl, hl
+	ld xbc, (xbc + 7)
+	lda	xde, (xbc+hl)
+	lda xwa, (xsp + 2)
+	ld bc, (xde)
+	ld (xwa), bc
+	ld bc, (xde + 2)
+	ld (xwa + 2), bc
+	ld bc, (xde + 4)
+	ld (xwa + 4), bc
+	ld bc, (xde + 6)
+	ld (xwa + 6), bc
+	ld c, (COLORBLIT_MODE:24)
+	ldfr_berp C, 0xfb
+	ld (COLORBLIT_MODE:24), 0x01
+	ld	bc, (0x03efa0:24)
+	calr ColorBlit
+	ldto_berp A, 0xfb
+	ld (COLORBLIT_MODE:24), a
+	popw_erp 0xfa
+	inc 8, xsp
+	ret
+
+ColorBlit_Variant_ByteData:
+	dec	8, xsp
+	ld	xbc, xwa
+	ld	wa, (xbc+2)
+	extz	xwa
+	ld	l, (xbc+4)
+	ld	e, (xbc+5)
+	ld	a, (xwa)
+	and	a, l
+	ld	l, a
+	ld	a, e
+	and	a, 15
+	jr	z, ColorBlit_Variant_ByteData_Skip
+	srla l	; srl A,L
+ColorBlit_Variant_ByteData_Skip:
+	mul	l, 3
+	extz	hl
+	add	hl, hl
+	ld	xbc, (xbc+7)
+	exts	xhl
+	add	xhl, xbc
+	lda	xwa, (xsp)
+	lda	xde, (xwa+2)
+	ld	bc, (xhl)
+	extz	xbc
+	div	bc, 40
+	ld	(xde), bc
+	ld	bc, (xhl)
+	extz	xbc
+	div	bc, 40
+	ld bc, qbc
+	sll bc, 3
+	ld	(xwa), bc
+	ld	bc, (xde)
+	add	bc, (xhl+4)
+	ld	(xwa+6), bc
+	ld	bc, (xhl+2)
+	sll	bc, 3
+	ld	de, (xwa)
+	add	de, bc
+	ld	(xwa+4), de
+	ld	bc, (0x03ef9e:24)
+	calr	ColorBlit2
+	inc	8, xsp
+	ret
+SeGfx_BoundOp08_ColorBlit:
+	dec	8, xsp
+	ld	xbc, xwa
+	ld	wa, (xbc+2)
+	extz	xwa
+	ld	l, (xbc+4)
+	ld	e, (xbc+5)
+	ld	a, (xwa)
+	and	a, l
+	ld	l, a
+	ld	a, e
+	and	a, 15
+	jr	z, SeGfx_BoundOp08_ColorBlit_Skip2
+	srla l	; srl A,L
+SeGfx_BoundOp08_ColorBlit_Skip2:
+	sll	l, 2
+	extz	hl
+	add	hl, hl
+	ld	xbc, (xbc+7)
+	lda	xde, (xbc+hl)
+	lda xwa, (xsp)
+	ld	bc, (xde)
+	ld	(xwa), bc
+	ld	bc, (xde+2)
+	ld	(xwa+2), bc
+	ld	bc, (xde+4)
+	ld	(xwa+4), bc
+	ld	bc, (xde+6)
+	ld	(xwa+6), bc
+	ld	bc, (0x03ef9e:24)
+	calr	ColorBlit2
+	inc	8, xsp
+	ret
+
+GetFrameSPSize:
+	ld hl, wa
+	extz xhl
+	sll xhl, 3
+	add xhl, 0x934000
+	ld wa, (xhl)
+	ld (xbc), wa
+	ld wa, (xhl + 2)
+	ld (xde), wa
+	ret
+
+; =============================================================================
+; Font Glyph Table Access Functions
+;
+; The font glyph table is in ROM at 0x945c00 (Table Data ROM).
+; Each entry is 16 bytes:
+;   +0x00: word  char_width    (pixels per character)
+;   +0x02: word  char_height   (pixels)
+;   +0x04: word  descent       (below baseline)
+;   +0x06: word  ascent        (above baseline)
+;   +0x08: long  glyph_ptr     (pointer to 1bpp bitmap data)
+;   +0x0c: long  kerning_ptr   (0 = fixed-width; else per-char width table)
+;
+; Lookup: entry_addr = 0x945c00 + (font_id << 4)
+; =============================================================================
+
+; GetCharHeight - Return character height for a font
+; Input:  XWA = font_id
+; Output: HL = character height in pixels
+GetCharHeight:
+	sll xwa, 4		; font_id * 16
+	add xwa, 0x945c00	; + table base
+	ld hl, (xwa + 2)	; height at offset +2
+	ret
+
+; GetCharDescent - Return character descent for a font
+; Input:  XWA = font_id
+; Output: HL = descent in pixels (below baseline)
+GetCharDescent:
+	sll xwa, 4		; font_id * 16
+	add xwa, 0x945c00	; + table base
+	ld hl, (xwa + 4)	; descent at offset +4
+	ret
+
+GetCenteredDelta:
+	cp xwa, 0x7
+	jr z, GetCenteredDelta_RetNeg1
+	cp xwa, 0x5
+	jr z, GetCenteredDelta_RetNeg1
+	or xwa, xwa
+	jr nz, GetCenteredDelta_RetZero
+
+GetCenteredDelta_RetNeg1:
+	ldw hl, 0xffff
+	jr GetCenteredDelta_Return
+
+GetCenteredDelta_RetZero:
+	ld hl, 0:i3
+
+GetCenteredDelta_Return:
+	ret
+
+; =============================================================================
+; ConvertStrings - Convert control-code strings to displayable characters
+;
+; Processes a null-terminated input string (XWA) and outputs displayable
+; characters to the buffer (XBC). Handles:
+;   - 0x7e escape prefix: next two bytes are hex digits forming a char code
+;     e.g., 0x7e 0x33 0x41 -> character 0x3a (colon)
+;   - Characters < 0x20: mapped to 0x20 (space)
+;   - Characters >= 0x20: copied as-is
+;   - 0x00: null terminator (copied and returns)
+;
+; Input:
+;   XWA = pointer to source string (null-terminated)
+;   XBC = pointer to output buffer
+; =============================================================================
+ConvertStrings:
+	dec 4, xsp
+	push xiz
+	ld (xsp + 4), xbc
+	ld xiz, xwa
+
+ConvertStrings_MainLoop:
+	cp (xiz), 0x7e		; Check for escape prefix
+	jr nz, ConvertStrings_CheckNull
+	inc 1, xiz
+	cp (xiz), 0x0
+	jr z, ConvertStrings_NullTerminate
+	ld a, (xiz)
+	extz wa
+	calr HexCharToNibble
+	sll l, 4
+	ld xwa, (xsp + 4)
+	ld (xwa), l
+	inc 1, xiz
+	cp (xiz), 0x0
+	jr z, ConvertStrings_NullTerminate
+	ld a, (xiz)
+	extz wa
+	calr HexCharToNibble
+	ld xwa, (xsp + 4)
+	add (xwa), l
+	jr ConvertStrings_AdvancePointer
+
+ConvertStrings_NullTerminate:
+	ld xwa, (xsp + 4)
+	ld (xwa), 0x0
+	jr ConvertStrings_PopAndReturn
+
+ConvertStrings_CheckNull:
+	cp (xiz), 0x0
+	jr nz, ConvertStrings_CheckPrintable
+	ld xwa, (xsp + 4)
+	ld c, (xiz)
+	ld (xwa), c
+
+ConvertStrings_PopAndReturn:
+	pop xiz
+	inc 4, xsp
+	ret
+
+ConvertStrings_CheckPrintable:
+	cp (xiz), 0x20
+	jr nc, ConvertStrings_CopyChar
+	ld xwa, (xsp + 4)
+	ld (xwa), 0x20
+	jr ConvertStrings_AdvancePointer
+
+ConvertStrings_CopyChar:
+	ld xwa, (xsp + 4)
+	ld c, (xiz)
+	ld (xwa), c
+
+ConvertStrings_AdvancePointer:
+	inc 1, xiz
+	ld xwa, 1:i3
+	add (xsp + 4), xwa
+	jr ConvertStrings_MainLoop
+
+ConvertStringsEx:
+	ld xde, xwa
+
+ConvertStringsEx_Loop:
+	cp (xde), 0x7e
+	jr nz, ConvertStringsEx_CopyChar
+	ld a, (xde)
+	ld (xbc+), a
+	ld (xbc+), 0x34
+	addmi8 (xbc), 0x30
+	jr ConvertStringsEx_Advance
+
+ConvertStringsEx_CopyChar:
+	ld a, (xde)
+	ld (xbc), a
+	cp (xde), 0x0
+	ret z
+
+ConvertStringsEx_Advance:
+	inc 1, xde
+	inc 1, xbc
+	jr ConvertStringsEx_Loop
+
+; =============================================================================
+; CalcTotalWidth - Calculate pixel width of a rendered string
+;
+; Computes the total width in pixels that a string will occupy when rendered
+; with the specified font. Supports both fixed-width and kerning-enabled fonts.
+;
+; For fixed-width fonts: width = char_count * char_width
+; For kerning fonts: width = sum of per-character kerning values
+;
+; Characters are offset by 0x20 before kerning table lookup.
+;
+; Input:
+;   XWA = pointer to null-terminated string
+;   XBC = font_id
+;
+; Output:
+;   HL = total width in pixels
+; =============================================================================
+CalcTotalWidth:
+	lda xsp, (xsp - 0x0c)
+	push XIZ
+	ld (XSP+0x0c),XBC
+	ld XIZ,XWA
+	push XIZ
+	call Strlen
+	inc 1,HL
+	pushw hl
+	call Malloc
+	inc 6,XSP
+	ld (XSP+0x08),XHL
+	ld XWA,(XSP+0x08)
+	ld (XSP+0x04),XWA
+	ld XWA,XIZ
+	ld XBC,(XSP+0x08)
+	calr ConvertStrings
+	ld XIZ,(XSP+0x0c)
+	sll XIZ, 0x04
+	add XIZ,0x00945c00
+	ld XWA,(XSP+0x08)
+	push XWA
+	call Strlen
+	inc 4,XSP
+	ld XBC,(XIZ+0x0c)
+	or XBC,XBC
+	jr nz, CalcTotalWidth_KerningLoop_Init
+	muls	xhl, (xiz)
+	ld	iz, hl
+	jr	CalcTotalWidth_FreeAndReturn
+CalcTotalWidth_KerningLoop_Init:
+	ld iz, 0:i3
+	ld xix, xbc
+	ld de, 0:i3
+	cp hl, 0:i3
+	jr le, CalcTotalWidth_FreeAndReturn
+
+CalcTotalWidth_KerningLoop:
+	ld xwa, (xsp + 4)
+	ld	a, (xwa+de)
+	sub a, 0x20
+	extz wa
+	sla wa, 2
+	lda	xix, (xix+wa)
+	ld a, (xix)
+	extz wa
+	add iz, wa
+	ld xix, xbc
+	inc 1, de
+	cp de, hl
+	jr lt, CalcTotalWidth_KerningLoop
+
+CalcTotalWidth_FreeAndReturn:
+	ld	xwa, (xsp+8)
+	push	xwa
+	call	Free
+	inc	4, xsp
+	ld	hl, iz
+	pop	xiz
+	lda	xsp, (xsp+12)
+	ret
+WordwrapStrings:
+	lda	xsp, (xsp-22)
+	push	xiz
+	ld	(xsp+16), de
+	ld	(xsp+18), xbc
+	ld	(xsp+22), xwa
+	ldw	(xsp+4), 0
+	ldw	(xsp+10), 0
+	ld	xiz, (xsp+22)
+	push	xiz
+	call	Strlen
+	inc	1, hl
+	pushw	hl
+	call	Malloc
+	inc	6, xsp
+	ld	(xsp+12), xhl
+	ld	xwa, (xsp+12)
+	ld	(xsp+6), xwa
+	cp	(xiz), 0
+	jr	z, Wordwrap_FreeAndReturn
+Wordwrap_ScanWordStart:
+	cp (xiz), 0x0
+	jr z, Wordwrap_CheckSpaces
+
+Wordwrap_ScanWordChars:
+	cp (xiz), 0x20
+	jr z, Wordwrap_CheckSpaces
+	inc 1, xiz
+	incw 1, (xsp + 4)
+	cp (xiz), 0x0
+	jr nz, Wordwrap_ScanWordChars
+
+Wordwrap_CheckSpaces:
+	cp (xiz), 0x0
+	jr z, Wordwrap_MeasureWidth
+
+Wordwrap_SkipSpaces:
+	cp (xiz), 0x20
+	jr nz, Wordwrap_MeasureWidth
+	inc 1, xiz
+	incw 1, (xsp + 4)
+	cp (xiz), 0x0
+	jr nz, Wordwrap_SkipSpaces
+
+Wordwrap_MeasureWidth:
+	ld	xwa, (xsp+22)
+	push	xwa
+	ld	xwa, (xsp+10)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	ld	xwa, (xsp+6)
+	ld	bc, (xsp+4)
+	ld	(xwa+bc), 0x00
+	ld	xwa, (xsp+6)
+	ld	xbc, (xsp+18)
+	calr	CalcTotalWidth
+	cp	hl, (xsp+16)
+	jr	gt, Wordwrap_CheckEndOfString
+	ld	wa, (xsp+4)
+	ld	(xsp+10), wa
+Wordwrap_CheckEndOfString:
+	cp (xiz), 0x0
+	jr nz, Wordwrap_ScanWordStart
+
+Wordwrap_FreeAndReturn:
+	ld	xwa, (xsp+12)
+	push	xwa
+	call	Free
+	inc	4, xsp
+	ld	hl, (xsp+10)
+	pop	xiz
+	lda	xsp, (xsp+22)
+	ret
+; HexDigitToValue - Convert ASCII hex digit to 4-bit value
+; Input:  A = ASCII character ('0'-'9', 'a'-'f', 'A'-'F')
+; Output: L = 0x00-0x0f (value), or 0x00 if invalid
+HexCharToNibble:
+	cp a, 0x30		; '0'
+	jr c, HexCharToNibble_CheckLower
+	cp a, 0x39		; '9'
+	jr ugt, HexCharToNibble_CheckLower
+	sub a, 0x30		; '0'-'9' -> 0-9
+	ld l, a
+	ret
+
+HexCharToNibble_CheckLower:
+	cp a, 0x61		; 'a'
+	jr c, HexCharToNibble_CheckUpper
+	cp a, 0x66		; 'f'
+	jr ugt, HexCharToNibble_CheckUpper
+	sub a, 0x57		; 'a'-'f' -> 10-15
+	ld l, a
+	ret
+
+HexCharToNibble_CheckUpper:
+	cp a, 0x41		; 'A'
+	jr c, HexCharToNibble_Invalid
+	cp a, 0x46		; 'F'
+	jr ugt, HexCharToNibble_Invalid
+	sub a, 0x37		; 'A'-'F' -> 10-15
+	ld l, a
+	ret
+
+HexCharToNibble_Invalid:
+	ld l, 0x0:opc		; Invalid -> 0
+	ret
+
+FontGlyph_ByteData:
+	ld	a, (xwa)
+	extz	wa
+	lda	xde, (Text_CharGlyphMap:24)
+	ld	a, (xde+wa)
+	ld	(xbc), a
+	ret
+Text_GlyphToCharCode:
+	ld	e, (xwa)
+	cp	e, 32
+	jr	z, Text_GlyphToCharCode_Skip
+	cp	e, 0:i3
+	jr	nz, Text_GlyphToCharCode_Skip2
+Text_GlyphToCharCode_Skip:
+	ld	a, (xwa)
+	ld	(xbc), a
+	ret
+Text_GlyphToCharCode_Skip2:
+	ld	de, 0:i3
+	lda	xhl, (Text_CharGlyphMap:24)
+	ld	a, (xwa)
+Text_GlyphToCharCode_Loop:
+	cp	(xhl+de), a
+	jr	nz, Text_GlyphToCharCode_Skip3
+	ld	a, e
+	ld	(xbc), a
+	jr	Text_GlyphToCharCode_Join
+Text_GlyphToCharCode_Skip3:
+	inc	1, de
+	cp	de, 256
+	jr	lt, Text_GlyphToCharCode_Loop
+Text_GlyphToCharCode_Join:
+	cp	de, 256
+	ret	nz
+	ld	(xbc), 32
+	ret
+
+; =============================================================================
+; InitPaletteRGB - Initialize 256-color palette from ROM data
+;
+; Copies palette RGB data from ROM (0xeb37de) to RAM (0x0324fc).
+; The palette data is stored as packed RGB bytes.
+; =============================================================================
+InitPaletteRGB:
+	lda xde, (0x0324fc:24)
+	lda xwa, (Palette_8bit_RGBA:24)
+	ld xbc, xwa
+	lda xhl, (xwa+1024)
+
+InitPaletteRGB_CopyLoop:
+	ld XWA, (xbc+)
+	ld (xde+), XWA
+	cp xbc, xhl
+	jr c, InitPaletteRGB_CopyLoop
+	ret
+
+SetPaletteRGB:
+	exts xwa
+	sll xwa, 2
+	ld xde, 0x324fc
+	add xde, xwa
+	ld (xde), xbc
+	ret
+
+Table_LookupDword:
+	exts xwa
+	sll xwa, 2
+	ld xbc, 0x324fc
+	add xbc, xwa
+	ld xhl, (xbc)
+	ret
+
+GetWallPaletteRGB:
+	extz xwa
+	sll xwa, 2
+	ld	xde, 0x3f1e0
+	add xde, xwa
+	ld xde, (xde)
+	extz xbc
+	sll xbc, 2
+	add xde, xbc
+	ld xhl, (xde)
+	ret
+
+InitializeRoot:
+	lda xsp, (xsp - 14)
+
+
+
+
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0xb7, 0x31, 0x40, 0x04, 0x00, 0x60, 0x01, 0xb1
+	.byte	0x60, 0xf2, 0xe0, 0x3f, 0xfa, 0x30, 0xb9, 0x04
+	.byte	0x60, 0xd2, 0x96, 0xd9, 0xea, 0x20, 0xb9, 0x08
+	.byte	0x50, 0xf2, 0xf2, 0xc8, 0xea, 0x30, 0xb9, 0x0a
+	.byte	0x60, 0x30, 0x60, 0x01, 0x1d, 0xf9, 0x3d, 0xfa
+	.byte	0xb7, 0x31, 0x40, 0x0c, 0x00, 0x60, 0x01, 0xb1
+	.byte	0x60, 0xf2, 0xf9, 0x53, 0xfa, 0x30, 0xb9, 0x04
+	.byte	0x60, 0xd2, 0xb4, 0xea, 0xea, 0x20, 0xb9, 0x08
+	.byte	0x50, 0xf2, 0xba, 0xe6, 0xea, 0x30, 0xb9, 0x0a
+	.byte	0x60, 0x30, 0xc0, 0x01, 0x1d, 0xf9, 0x3d, 0xfa
+	.byte	0xb7, 0x31, 0x40, 0x0d, 0x00, 0x60, 0x01, 0xb1
+	.byte	0x60, 0xf2, 0x46, 0x54, 0xfa, 0x30, 0xb9, 0x04
+	.byte	0x60, 0xd2, 0x70, 0xf9, 0xea, 0x20, 0xb9, 0x08
+	.byte	0x50, 0xf2, 0xb6, 0xea, 0xea, 0x30, 0xb9, 0x0a
+	.byte	0x60, 0x30, 0xe0, 0x01, 0x1d, 0xf9, 0x3d, 0xfa
+	.byte	0xb7, 0x31, 0x40, 0x02, 0x00, 0x60, 0x01, 0xb1
+	.byte	0x60, 0xf2, 0x6a, 0x44, 0xfa, 0x30, 0xb9, 0x04
+	.byte	0x60, 0xb9, 0x08, 0x02, 0x0c, 0x00, 0xf2, 0xb8
+	.byte	0xb1, 0xea, 0x30, 0xb9, 0x0a, 0x60, 0x30, 0x20
+	.byte	0x01, 0x1d, 0xf9, 0x3d, 0xfa, 0xb7, 0x31, 0x40
+	.byte	0x02, 0x00, 0x60, 0x01, 0xb1, 0x60, 0xf2, 0x6a
+	.byte	0x44, 0xfa, 0x30, 0xb9, 0x04, 0x60, 0xb9, 0x08
+	.byte	0x02, 0x0c, 0x00, 0xf2, 0xec, 0xb1, 0xea, 0x30
+	.byte	0xb9, 0x0a, 0x60, 0x30, 0x20, 0x04, 0x1d, 0xf9
+	.byte	0x3d, 0xfa, 0xb7, 0x31, 0x40, 0x01, 0x00, 0x60
+	.byte	0x01, 0xb1, 0x60, 0xf2, 0xa7, 0x43, 0xfa, 0x30
+	.byte	0xb9, 0x04, 0x60, 0xb9, 0x08, 0x02, 0x60, 0x01
+	.byte	0xf2, 0x72, 0xf9, 0xea, 0x30, 0xb9, 0x0a, 0x60
+	.byte	0x30, 0x00, 0x01, 0x1d, 0xf9, 0x3d, 0xfa, 0xb7
+	.byte	0x31, 0x40, 0x01, 0x00, 0x60, 0x01, 0xb1, 0x60
+	.byte	0xf2, 0xa7, 0x43, 0xfa, 0x30, 0xb9, 0x04, 0x60
+	.byte	0xb9, 0x08, 0x02, 0x60, 0x01, 0xf2, 0xf6, 0xfe
+	.byte	0xea, 0x30, 0xb9, 0x0a, 0x60, 0x30, 0x00, 0x04
+	.byte	0x1d, 0xf9, 0x3d, 0xfa, 0xb7, 0x31, 0x40, 0x03
+	.byte	0x00, 0x60, 0x01, 0xb1, 0x60, 0xf2, 0x16, 0x45
+	.byte	0xfa, 0x30, 0xb9, 0x04, 0x60, 0xb9, 0x08, 0x02
+	.byte	0x0d, 0x00, 0xf2, 0x9c, 0x35, 0xeb, 0x30, 0xb9
+	.byte	0x0a, 0x60, 0x30, 0x40, 0x01, 0x1d, 0xf9, 0x3d
+	.byte	0xfa, 0xb7, 0x31, 0x40, 0x03, 0x00, 0x60, 0x01
+	.byte	0xb1, 0x60, 0xf2, 0x16, 0x45, 0xfa, 0x30, 0xb9
+	.byte	0x04, 0x60, 0xb9, 0x08, 0x02, 0x0d, 0x00, 0xf2
+	.byte	0xd4, 0x35, 0xeb, 0x30, 0xb9, 0x0a, 0x60, 0x30
+	.byte	0x40, 0x04, 0x1d, 0xf9, 0x3d, 0xfa, 0xb7, 0x31
+	.byte	0x40, 0x10, 0x00, 0x60, 0x01, 0xb1, 0x60, 0xf2
+	.byte	0x93, 0x54, 0xfa, 0x30, 0xb9, 0x04, 0x60, 0xb9
+	.byte	0x08, 0x02, 0x33, 0x00, 0xf2, 0x78, 0x32, 0xeb
+	.byte	0x30, 0xb9, 0x0a, 0x60, 0xd8, 0xa8, 0x1d, 0xf9
+	.byte	0x3d, 0xfa, 0xb7, 0x31, 0x40, 0x0f, 0x00, 0x60
+	.byte	0x01, 0xb1, 0x60, 0xf2, 0xc9, 0x5d, 0xfa, 0x30
+	.byte	0xb9, 0x04, 0x60, 0xb9, 0x08, 0x02, 0x33, 0x00
+	.byte	0xf2, 0x70, 0x33, 0xeb, 0x30, 0xb9, 0x0a, 0x60
+	.byte	0x30, 0x00, 0x03, 0x1d, 0xf9, 0x3d, 0xfa, 0xb7
+	.byte	0x31, 0x40, 0x10, 0x00, 0x60, 0x01, 0xb1, 0x60
+	.byte	0xf2, 0x93, 0x54, 0xfa, 0x30, 0xb9, 0x04, 0x60
+	.byte	0xb9, 0x08, 0x02, 0x09, 0x00, 0xf2, 0x48, 0x33
+	.byte	0xeb, 0x30, 0xb9, 0x0a, 0x60, 0x30, 0xff, 0x00
+	.byte	0x1d, 0xf9, 0x3d, 0xfa, 0xb7, 0x31, 0x40, 0x0f
+	.byte	0x00, 0x60, 0x01, 0xb1, 0x60, 0xf2, 0xc9, 0x5d
+	.byte	0xfa, 0x30, 0xb9, 0x04, 0x60, 0xb9, 0x08, 0x02
+	.byte	0x09, 0x00, 0xf2, 0x2e, 0x35, 0xeb, 0x30, 0xb9
+	.byte	0x0a, 0x60, 0x30, 0xff, 0x03, 0x1d, 0xf9, 0x3d
+	.byte	0xfa, 0x0b, 0x00, 0x00, 0x0b, 0xeb, 0x00, 0x0b
+	.byte	0x86, 0x35, 0xe8, 0xa8, 0x41, 0x00, 0x00, 0x20
+	.byte	0x01, 0x42, 0x00, 0x00, 0xa0, 0x01, 0x1d, 0x29
+	.byte	0x48, 0xfa, 0x0b, 0x00, 0x00, 0x0b, 0xeb, 0x00
+	.byte	0x0b, 0x8c, 0x35, 0xe8, 0xa8, 0x41, 0x00, 0x00
+	.byte	0x20, 0x01, 0xea, 0xa8, 0x1d, 0x7e, 0x48, 0xfa
+	.byte	0x0b, 0x00, 0x00, 0x0b, 0xeb, 0x00, 0x0b, 0x92
+	.byte	0x35, 0x40, 0xff, 0x00, 0x00, 0x00, 0x41, 0x09
+	.byte	0x00, 0x40, 0x01, 0x42, 0x00, 0x00, 0xff, 0x00
+	.byte	0x1d, 0x7e, 0x48, 0xfa
+	lda xsp, (xsp + 14)
+	ret
+
+
+.macro _VGA_WRITE regnum, value
+	.if \regnum <= 7
+	ld wa, \regnum:i3
+	.else
+	ldw wa, \regnum
+	.endif
+	.if \value <= 7
+	ld bc, \value:i3
+	.else
+	ldw bc, \value
+	.endif
+	calr _Write_VGA_Register
+.endm
+
+
+.macro _VGA_READ regnum
+	.if \regnum <= 7
+	ld wa, \regnum:i3
+	.else
+	ldw wa, \regnum
+	.endif
+	calr _Read_VGA_Register
+.endm
+
+
+.macro _PALLETE_WRITE red, green, blue
+	ldw wa, 0x3c9
+	.if \red <= 7
+	ld bc, \red:i3
+	.else
+	ldw bc, \red
+	.endif
+	calr _Write_VGA_Register
+	.if \green <= 7
+	ld bc, \green:i3
+	.else
+	ldw bc, \green
+	.endif
+	calr _Write_VGA_Register
+	.if \blue <= 7
+	ld bc, \blue:i3
+	.else
+	ldw bc, \blue
+	.endif
+	calr _Write_VGA_Register
+.endm
+
+
+.macro _VGA_ATTRIBUTE field, value
+	_VGA_WRITE 0x3c0, \field
+	_VGA_WRITE 0x3c0, \value
+.endm
+
+
+.macro _VGA_SEQUENCER field, value
+	_VGA_WRITE 0x3c4, \field
+	_VGA_WRITE 0x3c5, \value
+.endm
+
+
+.macro _VGA_GFX_CONTROLLER field, value
+	_VGA_WRITE 0x3ce, \field
+	_VGA_WRITE 0x3cf, \value
+.endm
+
+
+.macro _VGA_COLOR_CRTC field, value
+	_VGA_WRITE 0x3d4, \field
+	_VGA_WRITE 0x3d5, \value
+.endm
+
+
+VGA_Initialize:
+	dec 2, xsp
+	push xiz
+
+
+
+
+
+
+
+
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc3, 0x03, 0xd9, 0xa9, 0x1e, 0x76, 0x05
+	.byte	0x30, 0xc2, 0x03, 0x31, 0xe3, 0x00, 0x1e, 0x6d
+	.byte	0x05, 0x30, 0xc4, 0x03, 0xd9, 0xa8, 0x1e, 0x65
+	.byte	0x05, 0x30, 0xc5, 0x03, 0xd9, 0xa8, 0x1e, 0x5d
+	.byte	0x05, 0x30, 0xc4, 0x03, 0xd9, 0xa9, 0x1e, 0x55
+	.byte	0x05, 0x30, 0xc5, 0x03, 0x31, 0x21, 0x00, 0x1e
+	.byte	0x4c, 0x05, 0x30, 0xc4, 0x03, 0xd9, 0xa8, 0x1e
+	.byte	0x44, 0x05, 0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e
+	.byte	0x3c, 0x05, 0x30, 0xc4, 0x03, 0xd9, 0xaa, 0x1e
+	.byte	0x34, 0x05, 0x30, 0xc5, 0x03, 0x31, 0x0f, 0x00
+	.byte	0x1e, 0x2b, 0x05, 0x30, 0xc4, 0x03, 0xd9, 0xab
+	.byte	0x1e, 0x23, 0x05, 0x30, 0xc5, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0x1b, 0x05, 0x30, 0xc4, 0x03, 0xd9, 0xac
+	.byte	0x1e, 0x13, 0x05, 0x30, 0xc5, 0x03, 0xd9, 0xae
+	.byte	0x1e, 0x0b, 0x05, 0x30, 0xce, 0x03, 0xd9, 0xa9
+	.byte	0x1e, 0x03, 0x05, 0x30, 0xcf, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xfb, 0x04, 0x30, 0xce, 0x03, 0xd9, 0xab
+	.byte	0x1e, 0xf3, 0x04, 0x30, 0xcf, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xeb, 0x04, 0x30, 0xce, 0x03, 0xd9, 0xac
+	.byte	0x1e, 0xe3, 0x04, 0x30, 0xcf, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xdb, 0x04, 0x30, 0xce, 0x03, 0xd9, 0xad
+	.byte	0x1e, 0xd3, 0x04, 0x30, 0xcf, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xcb, 0x04, 0x30, 0xce, 0x03, 0xd9, 0xae
+	.byte	0x1e, 0xc3, 0x04, 0x30, 0xcf, 0x03, 0xd9, 0xa9
+	.byte	0x1e, 0xbb, 0x04, 0x30, 0xce, 0x03, 0x31, 0x08
+	.byte	0x00, 0x1e, 0xb2, 0x04, 0x30, 0xcf, 0x03, 0x31
+	.byte	0xff, 0x00, 0x1e, 0xa9, 0x04, 0x30, 0xd4, 0x03
+	.byte	0x31, 0x11, 0x00, 0x1e, 0xa0, 0x04, 0x30, 0xd5
+	.byte	0x03, 0xd9, 0xa8, 0x1e, 0x98, 0x04, 0x30, 0xd4
+	.byte	0x03, 0xd9, 0xaf, 0x1e, 0x90, 0x04, 0x30, 0xd5
+	.byte	0x03, 0x31, 0x10, 0x00, 0x1e, 0x87, 0x04, 0x30
+	.byte	0xd4, 0x03, 0x31, 0x08, 0x00, 0x1e, 0x7e, 0x04
+	.byte	0x30, 0xd5, 0x03, 0xd9, 0xa8, 0x1e, 0x76, 0x04
+	.byte	0x30, 0xd4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x6d
+	.byte	0x04, 0x30, 0xd5, 0x03, 0x31, 0x40, 0x00, 0x1e
+	.byte	0x64, 0x04, 0x30, 0xd4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0x5b, 0x04, 0x30, 0xd5, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0x53, 0x04, 0x30, 0xd4, 0x03, 0x31, 0x0d
+	.byte	0x00, 0x1e, 0x4a, 0x04, 0x30, 0xd5, 0x03, 0xd9
+	.byte	0xa8, 0x1e, 0x42, 0x04, 0x30, 0xd4, 0x03, 0x31
+	.byte	0x12, 0x00, 0x1e, 0x39, 0x04, 0x30, 0xd5, 0x03
+	.byte	0x31, 0xef, 0x00, 0x1e, 0x30, 0x04, 0x30, 0xd4
+	.byte	0x03, 0x31, 0x13, 0x00, 0x1e, 0x27, 0x04, 0x30
+	.byte	0xd5, 0x03, 0x31, 0x14, 0x00, 0x1e, 0x1e, 0x04
+	.byte	0x30, 0xd4, 0x03, 0x31, 0x14, 0x00, 0x1e, 0x15
+	.byte	0x04, 0x30, 0xd5, 0x03, 0xd9, 0xa8, 0x1e, 0x0d
+	.byte	0x04, 0x30, 0xd4, 0x03, 0x31, 0x17, 0x00, 0x1e
+	.byte	0x04, 0x04, 0x30, 0xd5, 0x03, 0x31, 0xe3, 0x00
+	.byte	0x1e, 0xfb, 0x03, 0x30, 0xd4, 0x03, 0x31, 0x18
+	.byte	0x00, 0x1e, 0xf2, 0x03, 0x30, 0xd5, 0x03, 0x31
+	.byte	0xff, 0x00, 0x1e, 0xe9, 0x03, 0x30, 0xda, 0x03
+	.byte	0x1e, 0xf9, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xdb, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xd3, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xa9
+	.byte	0x1e, 0xcb, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xa9
+	.byte	0x1e, 0xc3, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xaa
+	.byte	0x1e, 0xbb, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xaa
+	.byte	0x1e, 0xb3, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xab
+	.byte	0x1e, 0xab, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xab
+	.byte	0x1e, 0xa3, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xac
+	.byte	0x1e, 0x9b, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xac
+	.byte	0x1e, 0x93, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xad
+	.byte	0x1e, 0x8b, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xad
+	.byte	0x1e, 0x83, 0x03, 0x30, 0xc0, 0x03, 0xd9, 0xae
+	.byte	0x1e, 0x7b, 0x03, 0x30, 0xc0, 0x03, 0x31, 0x14
+	.byte	0x00, 0x1e, 0x72, 0x03, 0x30, 0xc0, 0x03, 0xd9
+	.byte	0xaf, 0x1e, 0x6a, 0x03, 0x30, 0xc0, 0x03, 0xd9
+	.byte	0xaf, 0x1e, 0x62, 0x03, 0x30, 0xc0, 0x03, 0x31
+	.byte	0x08, 0x00, 0x1e, 0x59, 0x03, 0x30, 0xc0, 0x03
+	.byte	0x31, 0x38, 0x00, 0x1e, 0x50, 0x03, 0x30, 0xc0
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0x47, 0x03, 0x30
+	.byte	0xc0, 0x03, 0x31, 0x39, 0x00, 0x1e, 0x3e, 0x03
+	.byte	0x30, 0xc0, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x35
+	.byte	0x03, 0x30, 0xc0, 0x03, 0x31, 0x3a, 0x00, 0x1e
+	.byte	0x2c, 0x03, 0x30, 0xc0, 0x03, 0x31, 0x0b, 0x00
+	.byte	0x1e, 0x23, 0x03, 0x30, 0xc0, 0x03, 0x31, 0x3b
+	.byte	0x00, 0x1e, 0x1a, 0x03, 0x30, 0xc0, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0x11, 0x03, 0x30, 0xc0, 0x03
+	.byte	0x31, 0x3c, 0x00, 0x1e, 0x08, 0x03, 0x30, 0xc0
+	.byte	0x03, 0x31, 0x0d, 0x00, 0x1e, 0xff, 0x02, 0x30
+	.byte	0xc0, 0x03, 0x31, 0x3d, 0x00, 0x1e, 0xf6, 0x02
+	.byte	0x30, 0xc0, 0x03, 0x31, 0x0e, 0x00, 0x1e, 0xed
+	.byte	0x02, 0x30, 0xc0, 0x03, 0x31, 0x3e, 0x00, 0x1e
+	.byte	0xe4, 0x02, 0x30, 0xc0, 0x03, 0x31, 0x0f, 0x00
+	.byte	0x1e, 0xdb, 0x02, 0x30, 0xc0, 0x03, 0x31, 0x3f
+	.byte	0x00, 0x1e, 0xd2, 0x02, 0x30, 0xc0, 0x03, 0x31
+	.byte	0x10, 0x00, 0x1e, 0xc9, 0x02, 0x30, 0xc0, 0x03
+	.byte	0xd9, 0xa9, 0x1e, 0xc1, 0x02, 0x30, 0xc0, 0x03
+	.byte	0x31, 0x11, 0x00, 0x1e, 0xb8, 0x02, 0x30, 0xc0
+	.byte	0x03, 0xd9, 0xa8, 0x1e, 0xb0, 0x02, 0x30, 0xc0
+	.byte	0x03, 0x31, 0x12, 0x00, 0x1e, 0xa7, 0x02, 0x30
+	.byte	0xc0, 0x03, 0x31, 0x0f, 0x00, 0x1e, 0x9e, 0x02
+	.byte	0x30, 0xc0, 0x03, 0x31, 0x13, 0x00, 0x1e, 0x95
+	.byte	0x02, 0x30, 0xc0, 0x03, 0xd9, 0xa8, 0x1e, 0x8d
+	.byte	0x02, 0x30, 0xc0, 0x03, 0x31, 0x34, 0x00, 0x1e
+	.byte	0x84, 0x02, 0x30, 0xc0, 0x03, 0xd9, 0xa8, 0x1e
+	.byte	0x7c, 0x02, 0x30, 0xc4, 0x03, 0xd9, 0xae, 0x1e
+	.byte	0x74, 0x02, 0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e
+	.byte	0x6c, 0x02, 0x30, 0xd4, 0x03, 0xd9, 0xa8, 0x1e
+	.byte	0x64, 0x02, 0x30, 0xd5, 0x03, 0x31, 0x50, 0x00
+	.byte	0x1e, 0x5b, 0x02, 0x30, 0xd4, 0x03, 0xd9, 0xa9
+	.byte	0x1e, 0x53, 0x02, 0x30, 0xd5, 0x03, 0x31, 0x27
+	.byte	0x00, 0x1e, 0x4a, 0x02, 0x30, 0xd4, 0x03, 0xd9
+	.byte	0xac, 0x1e, 0x42, 0x02, 0x30, 0xd5, 0x03, 0x31
+	.byte	0x28, 0x00, 0x1e, 0x39, 0x02, 0x30, 0xd4, 0x03
+	.byte	0xd9, 0xad, 0x1e, 0x31, 0x02, 0x30, 0xd5, 0x03
+	.byte	0x31, 0x29, 0x00, 0x1e, 0x28, 0x02, 0x30, 0xd4
+	.byte	0x03, 0xd9, 0xae, 0x1e, 0x20, 0x02, 0x30, 0xd5
+	.byte	0x03, 0x31, 0xf3, 0x00, 0x1e, 0x17, 0x02, 0x30
+	.byte	0xd4, 0x03, 0xd9, 0xaf, 0x1e, 0x0f, 0x02, 0x30
+	.byte	0xd5, 0x03, 0xd9, 0xa8, 0x1e, 0x07, 0x02, 0x30
+	.byte	0xd4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xfe, 0x01
+	.byte	0x30, 0xd5, 0x03, 0xd9, 0xa8, 0x1e, 0xf6, 0x01
+	.byte	0x30, 0xd4, 0x03, 0x31, 0x10, 0x00, 0x1e, 0xed
+	.byte	0x01, 0x30, 0xd5, 0x03, 0x31, 0xf2, 0x00, 0x1e
+	.byte	0xe4, 0x01, 0x30, 0xd4, 0x03, 0x31, 0x11, 0x00
+	.byte	0x1e, 0xdb, 0x01, 0x30, 0xd5, 0x03, 0xd9, 0xab
+	.byte	0x1e, 0xd3, 0x01, 0x30, 0xd4, 0x03, 0x31, 0x15
+	.byte	0x00, 0x1e, 0xca, 0x01, 0x30, 0xd5, 0x03, 0x31
+	.byte	0xef, 0x00, 0x1e, 0xc1, 0x01, 0x30, 0xd4, 0x03
+	.byte	0x31, 0x16, 0x00, 0x1e, 0xb8, 0x01, 0x30, 0xd5
+	.byte	0x03, 0x31, 0xf3, 0x00, 0x1e, 0xaf, 0x01, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x08, 0x00, 0x1e, 0xa6, 0x01
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x9e, 0x01
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0d, 0x00, 0x1e, 0x95
+	.byte	0x01, 0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e, 0x8d
+	.byte	0x01
+	call Get_Region_Code
+	cp l, 4:i3
+	jr nz, VGA_Init_ExtSeq0F_44
+
+	; For byte-matching purposes, the following instructions
+	; are equivalent to: _VGA_SEQUENCER 0fh, 000h
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0f, 0x00, 0x1e, 0x7c
+	.byte	0x01
+	ldw wa, 0x3c5
+	ld bc, 0:i3
+	; but omitting the final "CALR _Write_VGA_Register"
+
+	jr VGA_Init_WriteExtSeq
+
+
+VGA_Init_ExtSeq0F_44:
+	; For byte-matching purposes, the following instructions
+	; are equivalent to: _VGA_SEQUENCER 0fh, 044h
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0f, 0x00, 0x1e, 0x6c
+	.byte	0x01
+	ldw wa, 0x3c5
+	ldw bc, 0x44
+VGA_Init_WriteExtSeq:
+	calr _Write_VGA_Register
+
+VGA_Init_FinalRegs:
+
+
+
+
+
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x13, 0x00, 0x1e, 0x5a
+	.byte	0x01, 0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x52
+	.byte	0x01, 0x30, 0xd4, 0x03, 0x31, 0x19, 0x00, 0x1e
+	.byte	0x49, 0x01, 0x30, 0xd5, 0x03, 0xd9, 0xa8, 0x1e
+	.byte	0x41, 0x01, 0x30, 0xd4, 0x03, 0x31, 0x1a, 0x00
+	.byte	0x1e, 0x38, 0x01, 0x30, 0xd5, 0x03, 0x31, 0x10
+	.byte	0x00, 0x1e, 0x2f, 0x01, 0x30, 0xc4, 0x03, 0xd9
+	.byte	0xaf, 0x1e, 0x27, 0x01, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x20, 0x00, 0x1e, 0x1e, 0x01, 0x30, 0xc4, 0x03
+	.byte	0xd9, 0xae, 0x1e, 0x16, 0x01, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xa8, 0x1e, 0x0e, 0x01, 0x30, 0xd4, 0x03
+	.byte	0x31, 0x11, 0x00, 0x1e, 0x05, 0x01, 0x30, 0xd5
+	.byte	0x03, 0x31, 0x80, 0x00, 0x1e, 0xfc, 0x00, 0x30
+	.byte	0xc6, 0x03, 0x31, 0xff, 0x00, 0x1e, 0xf3, 0x00
+	.byte	0x30, 0xc8, 0x03, 0xd9, 0xa8, 0x1e, 0xeb, 0x00
+	ldw (xsp + 4), 0x0
+
+VGA_Palette_Loop:
+	ld WA,(XSP+0x04)
+	sll WA, 0x02
+	lda	xbc, (0xe2fe:16)
+	ld IZ,WA
+	extz XIZ
+	add XIZ,XBC
+	bit 3,(XIZ)
+	jr z, VGA_Palette_LowNibble
+	cp (XIZ),0xf0
+	jr nc, VGA_Palette_HighNibble
+	ld A,(XIZ)
+	srl A, 0x04
+	inc 1,A
+	ld C,A
+	extz BC
+	ldw WA, 0x03c9
+	jr t, VGA_Palette_WriteRed
+VGA_Palette_HighNibble:
+	ld c, (xiz)
+	srl c, 4
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_Palette_WriteRed
+
+VGA_Palette_LowNibble:
+	ld c, (xiz)
+	srl c, 4
+	extz bc
+	ldw wa, 0x3c9
+
+VGA_Palette_WriteRed:
+	calr _Write_VGA_Register
+	ld e, (xiz + 1)
+	ld a, e
+	srl a, 4
+	ld c, a
+	extz bc
+	bit 3, e
+	jr z, VGA_Palette_GreenLow
+	cp e, 0xf0
+	jr nc, VGA_Palette_GreenHigh
+	inc 1, a
+	ld c, a
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_Palette_WriteGreen
+
+VGA_Palette_GreenHigh:
+	ldw wa, 0x3c9
+	jr VGA_Palette_WriteGreen
+
+VGA_Palette_GreenLow:
+	ldw wa, 0x3c9
+
+VGA_Palette_WriteGreen:
+	calr _Write_VGA_Register
+	ld e, (xiz + 2)
+	ld a, e
+	srl a, 4
+	ld c, a
+	extz bc
+	bit 3, e
+	jr z, VGA_Palette_BlueLow
+	cp e, 0xf0
+	jr nc, VGA_Palette_BlueHigh
+	inc 1, a
+	ld c, a
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_Palette_WriteBlue
+
+VGA_Palette_BlueHigh:
+	ldw wa, 0x3c9
+	jr VGA_Palette_WriteBlue
+
+VGA_Palette_BlueLow:
+	ldw wa, 0x3c9
+
+VGA_Palette_WriteBlue:
+	calr _Write_VGA_Register
+	incw 1, (xsp + 4)
+	cpw (xsp + 4), 0x100
+	jrl c, VGA_Palette_Loop
+	calr VGA_ConfigExtSequencer
+	calr VGA_ClearVRAM
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0xd9, 0xa9, 0x1e, 0x33, 0x00
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x2b, 0x00
+	pop xiz
+	inc 2, xsp
+	ret
+
+VGA_Stub_1:
+	ret
+
+VGA_Stub_2:
+	ret
+
+VGA_Stub_3:
+	ret
+
+VGA_ClearVRAM:
+	pushw	38400
+	pushw	0
+	pushw	26
+	pushw	0
+	call	Memset
+	pushw	38400
+	pushw	0
+	lda	xwa, (1742336:24)	; Is this a second video page?
+	push	xwa
+	call	Memset
+	lda	xsp, (xsp+16)
+	ret
+_Write_VGA_Register:
+	ld de, 0:i3
+
+VGA_WriteReg_Delay:
+	inc 1, de
+	cp de, 0x80
+	jr c, VGA_WriteReg_Delay
+	extz xwa
+	ld xde, 0x170000
+	add xde, xwa
+	ld (xde), c
+	ret
+
+_Read_VGA_Register:
+	extz xwa
+	ld xbc, 0x170000
+	add xbc, xwa
+	ld l, (xbc)
+	ret
+
+AllBOut:
+	pushw	38400
+	pushw	4
+	pushw	15360
+	pushw	26
+	pushw	0
+	call	Mem_Copy
+	pushw	38400
+	lda	xwa, (315904:24)
+	push	xwa
+	lda	xwa, (1742336:24)	; Is this a second video page?
+	push	xwa
+	call	Mem_Copy
+	lda	xsp, (xsp+20)
+	ret
+DisplayBuffer_Process:
+	lda xsp, (xsp - 12)
+	push xiz
+	ld (xsp + 12), xwa
+	ld xbc, (xsp + 12)
+	ld wa, (xbc)
+	srl wa, 1
+	add wa, wa
+	extz xwa
+	ld (xsp + 8), xwa
+	ld wa, (xbc + 4)
+	srl wa, 1
+	add wa, wa
+	extz xwa
+	ld (xsp + 4), xwa
+	ld xwa, (xsp + 8)
+	sub (xsp + 4), xwa
+	ld xwa, 2:i3
+	add (xsp + 4), xwa
+	ld iz, (xbc + 2)
+	extz xiz
+	jr DisplayBuf_CheckEvenRowEnd
+
+DisplayBuf_CopyEvenRow:
+	ld xwa, (xsp + 4)
+
+	pushw wa
+
+	ld xwa, xiz
+
+	sll xwa, 2
+
+	add xwa, xiz
+
+	sll xwa, 6
+
+	add xwa, (xsp + 10)
+
+	ld xbc, OFFSCREEN_BUFFER_1
+
+	add xbc, xwa
+
+	push xbc
+
+	srl xwa, 1
+
+	add xwa, xwa
+
+	ld xbc, 0x1a0000
+
+	add xbc, xwa
+
+	push xbc
+
+	call Mem_Copy
+
+	lda xsp, (xsp + 10)
+
+	inc 1, xiz
+
+
+
+DisplayBuf_CheckEvenRowEnd:
+	ld xwa, (xsp + 12)
+	ld wa, (xwa + 6)
+	srl wa, 1
+	extz xwa
+	cp xiz, xwa
+	jr ule, DisplayBuf_CopyEvenRow
+	ld xiz, xwa
+	jr DisplayBuf_CheckOddRowEnd
+
+DisplayBuf_CopyOddRow:
+	ld xwa, (xsp + 4)
+
+	pushw wa
+
+	ld xwa, xiz
+
+	sll xwa, 2
+
+	add xwa, xiz
+
+	sll xwa, 6
+
+	add xwa, (xsp + 10)
+
+	ld xbc, OFFSCREEN_BUFFER_1
+
+	add xbc, xwa
+
+	push xbc
+
+	srl xwa, 1
+
+	add xwa, xwa
+
+	ld xbc, 0x1a0000
+
+	add xbc, xwa
+
+	push xbc
+
+	call Mem_Copy
+
+	lda xsp, (xsp + 10)
+
+	inc 1, xiz
+
+
+
+DisplayBuf_CheckOddRowEnd:
+	ld xwa, (xsp + 12)
+	ld wa, (xwa + 6)
+	extz xwa
+	cp xiz, xwa
+	jr ule, DisplayBuf_CopyOddRow
+	pop xiz
+	lda xsp, (xsp + 12)
+	ret
+
+
+; =============================================================================
+; VGA_ScreenUnblank (VGA_ScreenUnblank) - Enable display output
+;
+; Writes VGA Sequencer register 01h = 01h (screen on, no blanking).
+; Sequencer register 01h bit 5: 0=display on, 1=display blanked.
+; Value 0x01 = 8-dot character clocks, display active.
+; =============================================================================
+VGA_ScreenUnblank:
+	; For byte-matching purposes:
+	; This is equivalent to:
+	;
+	; _VGA_SEQUENCER 01h, 001h
+	; RET
+	;
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0xd9, 0xa9, 0x1e, 0xf5, 0xfe
+	ldw wa, 0x3c5
+	ld bc, 1:i3
+	jrl _Write_VGA_Register
+
+; =============================================================================
+; VGA_ScreenBlank (VGA_ScreenBlank) - Blank display output
+;
+; Writes VGA Sequencer register 01h = 21h (screen blanked).
+; Bit 5 = 1: blanks display during VRAM updates to prevent tearing.
+; Used during large screen updates and palette changes.
+; =============================================================================
+VGA_ScreenBlank:
+	; For byte-matching purposes:
+	; This is equivalent to:
+	;
+	; _VGA_SEQUENCER 01h, 021h
+	; RET
+	;
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0xd9, 0xa9, 0x1e, 0xe5, 0xfe
+	ldw wa, 0x3c5
+	ldw bc, 0x21
+	jrl _Write_VGA_Register
+
+
+VGA_WritePaletteEntry:
+	push xiz
+	ld xiz, xbc
+	ld c, a
+	extz bc
+	ldw wa, 0x3c8
+	calr _Write_VGA_Register
+	bitm 3, (xiz)
+	jr z, VGA_WritePalEntry_RedLow
+	cp (xiz), 0xf0
+	jr nc, VGA_WritePalEntry_RedHigh
+	ld a, (xiz)
+	srl a, 4
+	inc 1, a
+	ld c, a
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteRed
+
+VGA_WritePalEntry_RedHigh:
+	ld c, (xiz)
+	srl c, 4
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteRed
+
+VGA_WritePalEntry_RedLow:
+	ld c, (xiz)
+	srl c, 4
+	extz bc
+	ldw wa, 0x3c9
+
+VGA_WritePalEntry_WriteRed:
+	calr _Write_VGA_Register
+	ld e, (xiz + 1)
+	ld a, e
+	srl a, 4
+	ld c, a
+	extz bc
+	bit 3, e
+	jr z, VGA_WritePalEntry_GreenLow
+	cp e, 0xf0
+	jr nc, VGA_WritePalEntry_GreenHigh
+	inc 1, a
+	ld c, a
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteGreen
+
+VGA_WritePalEntry_GreenHigh:
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteGreen
+
+VGA_WritePalEntry_GreenLow:
+	ldw wa, 0x3c9
+
+VGA_WritePalEntry_WriteGreen:
+	calr _Write_VGA_Register
+	ld e, (xiz + 2)
+	ld a, e
+	srl a, 4
+	ld c, a
+	extz bc
+	bit 3, e
+	jr z, VGA_WritePalEntry_BlueLow
+	cp e, 0xf0
+	jr nc, VGA_WritePalEntry_BlueHigh
+	inc 1, a
+	ld c, a
+	extz bc
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteBlue
+
+VGA_WritePalEntry_BlueHigh:
+	ldw wa, 0x3c9
+	jr VGA_WritePalEntry_WriteBlue
+
+VGA_WritePalEntry_BlueLow:
+	ldw wa, 0x3c9
+
+VGA_WritePalEntry_WriteBlue:
+	calr _Write_VGA_Register
+	pop xiz
+	ret
+
+VGA_CRTCTiming_ByteData:
+	dec	4, xsp
+	push	qiz
+	ld	(xsp+2), xwa
+	ldib_erp 251, 0
+VGA_WritePaletteEntry_Join:
+	ldto_berp a, 251
+	extz	wa
+	ld	xbc, (xsp+2)
+	calr	VGA_WritePaletteEntry
+	ld	xwa, 4:i3
+	add	(xsp+2), xwa
+	inc1b_erp 251
+	jr VGA_WritePaletteEntry_Join
+	ldw	wa, 964
+	ld	bc, 6:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 1:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 4:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 16
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 23
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 5:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 6:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 37
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 19
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 8
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 0:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 28
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 17
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 3:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 2:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 5:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 17
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 3:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 8
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 170
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 16
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 8
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 1:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 19
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 6:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 13
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 1:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 0:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 37
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 15
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 17
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 14
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 0:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 51
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 8
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 17
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 247
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 16
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 10
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 251
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 34
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 14
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 1:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 100
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 3:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 5:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 43
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 7:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 88
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 7:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 11
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 1:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 13
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 13
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 15
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 58
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 9
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 17
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ldw	bc, 12
+	calr	_Write_VGA_Register
+	ldw	wa, 964
+	ld	bc, 6:i3
+	calr	_Write_VGA_Register
+	ldw	wa, 965
+	ld	bc, 0:i3
+	jrl	_Write_VGA_Register
+
+VGA_ConfigExtSequencer:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	; For byte-matching purposes:
+	; This is equivalent to:
+	;
+	; _VGA_SEQUENCER 06h, 000h
+	; RET
+	;
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0xd9, 0xae, 0x1e, 0xd6, 0xf9
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0xce, 0xf9
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xc5
+	.byte	0xf9, 0x30, 0xc5, 0x03, 0xd9, 0xac, 0x1e, 0xbd
+	.byte	0xf9, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0xb4, 0xf9, 0x30, 0xc5, 0x03, 0x31, 0x10, 0x00
+	.byte	0x1e, 0xab, 0xf9, 0x30, 0xc4, 0x03, 0x31, 0x0b
+	.byte	0x00, 0x1e, 0xa2, 0xf9, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x13, 0x00, 0x1e, 0x99, 0xf9, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0x90, 0xf9, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xad, 0x1e, 0x88, 0xf9, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0x7f, 0xf9, 0x30
+	.byte	0xc5, 0x03, 0xd9, 0xae, 0x1e, 0x77, 0xf9, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x6e, 0xf9
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x15, 0x00, 0x1e, 0x65
+	.byte	0xf9, 0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00, 0x1e
+	.byte	0x5c, 0xf9, 0x30, 0xc5, 0x03, 0x31, 0x64, 0x00
+	.byte	0x1e, 0x53, 0xf9, 0x30, 0xc4, 0x03, 0x31, 0x0c
+	.byte	0x00, 0x1e, 0x4a, 0xf9, 0x30, 0xc5, 0x03, 0xd9
+	.byte	0xaf, 0x1e, 0x42, 0xf9, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0x39, 0xf9, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xa8, 0x1e, 0x31, 0xf9, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0a, 0x00, 0x1e, 0x28, 0xf9, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x1c, 0x00, 0x1e, 0x1f, 0xf9, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0b, 0x00, 0x1e, 0x16, 0xf9
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e, 0x0d
+	.byte	0xf9, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e
+	.byte	0x04, 0xf9, 0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e
+	.byte	0xfc, 0xf8, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0xf3, 0xf8, 0x30, 0xc5, 0x03, 0xd9, 0xaa
+	.byte	0x1e, 0xeb, 0xf8, 0x30, 0xc4, 0x03, 0x31, 0x0a
+	.byte	0x00, 0x1e, 0xe2, 0xf8, 0x30, 0xc5, 0x03, 0xd9
+	.byte	0xad, 0x1e, 0xda, 0xf8, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0b, 0x00, 0x1e, 0xd1, 0xf8, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x11, 0x00, 0x1e, 0xc8, 0xf8, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0xbf, 0xf8, 0x30
+	.byte	0xc5, 0x03, 0xd9, 0xab, 0x1e, 0xb7, 0xf8, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xae, 0xf8
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x08, 0x00, 0x1e, 0xa5
+	.byte	0xf8, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0x9c, 0xf8, 0x30, 0xc5, 0x03, 0x31, 0x92, 0x00
+	.byte	0x1e, 0x93, 0xf8, 0x30, 0xc4, 0x03, 0x31, 0x0b
+	.byte	0x00, 0x1e, 0x8a, 0xf8, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x13, 0x00, 0x1e, 0x81, 0xf8, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0x78, 0xf8, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x08, 0x00, 0x1e, 0x6f, 0xf8, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x66, 0xf8
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x5d
+	.byte	0xf8, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0x54, 0xf8, 0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e
+	.byte	0x4c, 0xf8, 0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00
+	.byte	0x1e, 0x43, 0xf8, 0x30, 0xc5, 0x03, 0x31, 0x14
+	.byte	0x00, 0x1e, 0x3a, 0xf8, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0x31, 0xf8, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xae, 0x1e, 0x29, 0xf8, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0x20, 0xf8, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x0d, 0x00, 0x1e, 0x17, 0xf8, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x0e, 0xf8
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x06, 0xf8
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xfd
+	.byte	0xf7, 0x30, 0xc5, 0x03, 0x31, 0x0c, 0x00, 0x1e
+	.byte	0xf4, 0xf7, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00
+	.byte	0x1e, 0xeb, 0xf7, 0x30, 0xc5, 0x03, 0xd9, 0xa8
+	.byte	0x1e, 0xe3, 0xf7, 0x30, 0xc4, 0x03, 0x31, 0x0b
+	.byte	0x00, 0x1e, 0xda, 0xf7, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x72, 0x00, 0x1e, 0xd1, 0xf7, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0xc8, 0xf7, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0xbf, 0xf7, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xb6, 0xf7
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x0f, 0x00, 0x1e, 0xad
+	.byte	0xf7, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0xa4, 0xf7, 0x30, 0xc5, 0x03, 0x31, 0x11, 0x00
+	.byte	0x1e, 0x9b, 0xf7, 0x30, 0xc4, 0x03, 0x31, 0x09
+	.byte	0x00, 0x1e, 0x92, 0xf7, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x0e, 0x00, 0x1e, 0x89, 0xf7, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0a, 0x00, 0x1e, 0x80, 0xf7, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xa8, 0x1e, 0x78, 0xf7, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0b, 0x00, 0x1e, 0x6f, 0xf7, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x13, 0x00, 0x1e, 0x66, 0xf7
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x5d
+	.byte	0xf7, 0x30, 0xc5, 0x03, 0x31, 0x08, 0x00, 0x1e
+	.byte	0x54, 0xf7, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0x4b, 0xf7, 0x30, 0xc5, 0x03, 0x31, 0x11
+	.byte	0x00, 0x1e, 0x42, 0xf7, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0a, 0x00, 0x1e, 0x39, 0xf7, 0x30, 0xc5, 0x03
+	.byte	0x31, 0xff, 0x00, 0x1e, 0x30, 0xf7, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0x27, 0xf7, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x10, 0x00, 0x1e, 0x1e, 0xf7
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x15
+	.byte	0xf7, 0x30, 0xc5, 0x03, 0x31, 0xfe, 0x00, 0x1e
+	.byte	0x0c, 0xf7, 0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00
+	.byte	0x1e, 0x03, 0xf7, 0x30, 0xc5, 0x03, 0x31, 0x73
+	.byte	0x00, 0x1e, 0xfa, 0xf6, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0xf1, 0xf6, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x0f, 0x00, 0x1e, 0xe8, 0xf6, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0xdf, 0xf6, 0x30
+	.byte	0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0xd7, 0xf6, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0xce, 0xf6
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x74, 0x00, 0x1e, 0xc5
+	.byte	0xf6, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e
+	.byte	0xbc, 0xf6, 0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e
+	.byte	0xb4, 0xf6, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0xab, 0xf6, 0x30, 0xc5, 0x03, 0x31, 0x09
+	.byte	0x00, 0x1e, 0xa2, 0xf6, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0x99, 0xf6, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xad, 0x1e, 0x91, 0xf6, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0x88, 0xf6, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x2b, 0x00, 0x1e, 0x7f, 0xf6, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x76, 0xf6
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xaf, 0x1e, 0x6e, 0xf6
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x65
+	.byte	0xf6, 0x30, 0xc5, 0x03, 0x31, 0x68, 0x00, 0x1e
+	.byte	0x5c, 0xf6, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0x53, 0xf6, 0x30, 0xc5, 0x03, 0x31, 0x09
+	.byte	0x00, 0x1e, 0x4a, 0xf6, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0x41, 0xf6, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xad, 0x1e, 0x39, 0xf6, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0x30, 0xf6, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x0b, 0x00, 0x1e, 0x27, 0xf6, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x1e, 0xf6
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x16, 0xf6
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x0d
+	.byte	0xf6, 0x30, 0xc5, 0x03, 0x31, 0x0d, 0x00, 0x1e
+	.byte	0x04, 0xf6, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0xfb, 0xf5, 0x30, 0xc5, 0x03, 0x31, 0x0c
+	.byte	0x00, 0x1e, 0xf2, 0xf5, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0xe9, 0xf5, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x0f, 0x00, 0x1e, 0xe0, 0xf5, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0xd7, 0xf5, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x3a, 0x00, 0x1e, 0xce, 0xf5
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xc5
+	.byte	0xf5, 0x30, 0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e
+	.byte	0xbc, 0xf5, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0xb3, 0xf5, 0x30, 0xc5, 0x03, 0x31, 0x0d
+	.byte	0x00, 0x1e, 0xaa, 0xf5, 0x30, 0xc4, 0x03, 0xd9
+	.byte	0xae, 0x1e, 0xa2, 0xf5
+	ldw wa, 0x3c5
+	ld bc, 0:i3
+	jrl _Write_VGA_Register
+
+
+; who calls here?
+VGA_ConfigExtSequencer_Alt:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	; For byte-matching purposes:
+	; This is equivalent to:
+	;
+	; _VGA_SEQUENCER 06h, 000h
+	; RET
+	;
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x30, 0xc4, 0x03, 0xd9, 0xae, 0x1e, 0x92, 0xf5
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x8a, 0xf5
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x81
+	.byte	0xf5, 0x30, 0xc5, 0x03, 0xd9, 0xac, 0x1e, 0x79
+	.byte	0xf5, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0x70, 0xf5, 0x30, 0xc5, 0x03, 0x31, 0x10, 0x00
+	.byte	0x1e, 0x67, 0xf5, 0x30, 0xc4, 0x03, 0x31, 0x0b
+	.byte	0x00, 0x1e, 0x5e, 0xf5, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x21, 0x00, 0x1e, 0x55, 0xf5, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x24, 0x00, 0x1e, 0x4c, 0xf5, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0x43, 0xf5, 0x30
+	.byte	0xc5, 0x03, 0xd9, 0xad, 0x1e, 0x3b, 0xf5, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x32, 0xf5
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xae, 0x1e, 0x2a, 0xf5
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x21
+	.byte	0xf5, 0x30, 0xc5, 0x03, 0x31, 0x15, 0x00, 0x1e
+	.byte	0x18, 0xf5, 0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00
+	.byte	0x1e, 0x0f, 0xf5, 0x30, 0xc5, 0x03, 0x31, 0x64
+	.byte	0x00, 0x1e, 0x06, 0xf5, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0xfd, 0xf4, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xaf, 0x1e, 0xf5, 0xf4, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0xec, 0xf4, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xa8, 0x1e, 0xe4, 0xf4, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0a, 0x00, 0x1e, 0xdb, 0xf4, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x1c, 0x00, 0x1e, 0xd2, 0xf4
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00, 0x1e, 0xc9
+	.byte	0xf4, 0x30, 0xc5, 0x03, 0x31, 0x21, 0x00, 0x1e
+	.byte	0xc0, 0xf4, 0x30, 0xc5, 0x03, 0x31, 0x12, 0x00
+	.byte	0x1e, 0xb7, 0xf4, 0x30, 0xc4, 0x03, 0x31, 0x0c
+	.byte	0x00, 0x1e, 0xae, 0xf4, 0x30, 0xc5, 0x03, 0xd9
+	.byte	0xab, 0x1e, 0xa6, 0xf4, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0x9d, 0xf4, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xaa, 0x1e, 0x95, 0xf4, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0a, 0x00, 0x1e, 0x8c, 0xf4, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xad, 0x1e, 0x84, 0xf4, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0b, 0x00, 0x1e, 0x7b, 0xf4, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x22, 0x00, 0x1e, 0x72, 0xf4
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e, 0x69
+	.byte	0xf4, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e
+	.byte	0x60, 0xf4, 0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e
+	.byte	0x58, 0xf4, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0x4f, 0xf4, 0x30, 0xc5, 0x03, 0x31, 0x08
+	.byte	0x00, 0x1e, 0x46, 0xf4, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0a, 0x00, 0x1e, 0x3d, 0xf4, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x92, 0x00, 0x1e, 0x34, 0xf4, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0b, 0x00, 0x1e, 0x2b, 0xf4, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x73, 0x00, 0x1e, 0x22, 0xf4
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x13, 0x00, 0x1e, 0x19
+	.byte	0xf4, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e
+	.byte	0x10, 0xf4, 0x30, 0xc5, 0x03, 0x31, 0x08, 0x00
+	.byte	0x1e, 0x07, 0xf4, 0x30, 0xc4, 0x03, 0x31, 0x09
+	.byte	0x00, 0x1e, 0xfe, 0xf3, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x0a, 0x00, 0x1e, 0xf5, 0xf3, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0a, 0x00, 0x1e, 0xec, 0xf3, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xa9, 0x1e, 0xe4, 0xf3, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0b, 0x00, 0x1e, 0xdb, 0xf3, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x24, 0x00, 0x1e, 0xd2, 0xf3
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x32, 0x00, 0x1e, 0xc9
+	.byte	0xf3, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e
+	.byte	0xc0, 0xf3, 0x30, 0xc5, 0x03, 0xd9, 0xaf, 0x1e
+	.byte	0xb8, 0xf3, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0xaf, 0xf3, 0x30, 0xc5, 0x03, 0x31, 0x0d
+	.byte	0x00, 0x1e, 0xa6, 0xf3, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0a, 0x00, 0x1e, 0x9d, 0xf3, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xa8, 0x1e, 0x95, 0xf3, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0x8c, 0xf3, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0x83, 0xf3, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x7a, 0xf3
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xa9, 0x1e, 0x72, 0xf3
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00, 0x1e, 0x69
+	.byte	0xf3, 0x30, 0xc5, 0x03, 0x31, 0x27, 0x00, 0x1e
+	.byte	0x60, 0xf3, 0x30, 0xc5, 0x03, 0x31, 0x35, 0x00
+	.byte	0x1e, 0x57, 0xf3, 0x30, 0xc4, 0x03, 0x31, 0x0c
+	.byte	0x00, 0x1e, 0x4e, 0xf3, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x0d, 0x00, 0x1e, 0x45, 0xf3, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0x3c, 0xf3, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x0f, 0x00, 0x1e, 0x33, 0xf3, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x0a, 0x00, 0x1e, 0x2a, 0xf3
+	.byte	0x30, 0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e, 0x21
+	.byte	0xf3, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e
+	.byte	0x18, 0xf3, 0x30, 0xc5, 0x03, 0x31, 0x0e, 0x00
+	.byte	0x1e, 0x0f, 0xf3, 0x30, 0xc4, 0x03, 0x31, 0x0a
+	.byte	0x00, 0x1e, 0x06, 0xf3, 0x30, 0xc5, 0x03, 0xd9
+	.byte	0xa8, 0x1e, 0xfe, 0xf2, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0b, 0x00, 0x1e, 0xf5, 0xf2, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x32, 0x00, 0x1e, 0xec, 0xf2, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0xe3, 0xf2, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x08, 0x00, 0x1e, 0xda, 0xf2
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xd1
+	.byte	0xf2, 0x30, 0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e
+	.byte	0xc8, 0xf2, 0x30, 0xc4, 0x03, 0x31, 0x0a, 0x00
+	.byte	0x1e, 0xbf, 0xf2, 0x30, 0xc5, 0x03, 0x31, 0x33
+	.byte	0x00, 0x1e, 0xb6, 0xf2, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0xad, 0xf2, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x10, 0x00, 0x1e, 0xa4, 0xf2, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0a, 0x00, 0x1e, 0x9b, 0xf2, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x33, 0x00, 0x1e, 0x92, 0xf2
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0b, 0x00, 0x1e, 0x89
+	.byte	0xf2, 0x30, 0xc5, 0x03, 0x31, 0x25, 0x00, 0x1e
+	.byte	0x80, 0xf2, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0x77, 0xf2, 0x30, 0xc5, 0x03, 0x31, 0x0f
+	.byte	0x00, 0x1e, 0x6e, 0xf2, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x09, 0x00, 0x1e, 0x65, 0xf2, 0x30, 0xc5, 0x03
+	.byte	0xd9, 0xa9, 0x1e, 0x5d, 0xf2, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0x54, 0xf2, 0x30, 0xc5
+	.byte	0x03, 0x31, 0x74, 0x00, 0x1e, 0x4b, 0xf2, 0x30
+	.byte	0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0x42, 0xf2
+	.byte	0x30, 0xc5, 0x03, 0xd9, 0xab, 0x1e, 0x3a, 0xf2
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x31
+	.byte	0xf2, 0x30, 0xc5, 0x03, 0x31, 0x0a, 0x00, 0x1e
+	.byte	0x28, 0xf2, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0x1f, 0xf2, 0x30, 0xc5, 0x03, 0xd9, 0xad
+	.byte	0x1e, 0x17, 0xf2, 0x30, 0xc4, 0x03, 0x31, 0x0c
+	.byte	0x00, 0x1e, 0x0e, 0xf2, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x2c, 0x00, 0x1e, 0x05, 0xf2, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x09, 0x00, 0x1e, 0xfc, 0xf1, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xaf, 0x1e, 0xf4, 0xf1, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x0c, 0x00, 0x1e, 0xeb, 0xf1, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x69, 0x00, 0x1e, 0xe2, 0xf1
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x09, 0x00, 0x1e, 0xd9
+	.byte	0xf1, 0x30, 0xc5, 0x03, 0x31, 0x09, 0x00, 0x1e
+	.byte	0xd0, 0xf1, 0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00
+	.byte	0x1e, 0xc7, 0xf1, 0x30, 0xc5, 0x03, 0xd9, 0xad
+	.byte	0x1e, 0xbf, 0xf1, 0x30, 0xc4, 0x03, 0x31, 0x09
+	.byte	0x00, 0x1e, 0xb6, 0xf1, 0x30, 0xc5, 0x03, 0x31
+	.byte	0x0b, 0x00, 0x1e, 0xad, 0xf1, 0x30, 0xc4, 0x03
+	.byte	0x31, 0x0c, 0x00, 0x1e, 0xa4, 0xf1, 0x30, 0xc5
+	.byte	0x03, 0xd9, 0xa9, 0x1e, 0x9c, 0xf1, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0x93, 0xf1, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x0d, 0x00, 0x1e, 0x8a, 0xf1
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x81
+	.byte	0xf1, 0x30, 0xc5, 0x03, 0x31, 0x0d, 0x00, 0x1e
+	.byte	0x78, 0xf1, 0x30, 0xc4, 0x03, 0x31, 0x09, 0x00
+	.byte	0x1e, 0x6f, 0xf1, 0x30, 0xc5, 0x03, 0x31, 0x0f
+	.byte	0x00, 0x1e, 0x66, 0xf1, 0x30, 0xc4, 0x03, 0x31
+	.byte	0x0c, 0x00, 0x1e, 0x5d, 0xf1, 0x30, 0xc5, 0x03
+	.byte	0x31, 0x3b, 0x00, 0x1e, 0x54, 0xf1, 0x30, 0xc4
+	.byte	0x03, 0x31, 0x09, 0x00, 0x1e, 0x4b, 0xf1, 0x30
+	.byte	0xc5, 0x03, 0x31, 0x11, 0x00, 0x1e, 0x42, 0xf1
+	.byte	0x30, 0xc4, 0x03, 0x31, 0x0c, 0x00, 0x1e, 0x39
+	.byte	0xf1, 0x30, 0xc5, 0x03, 0x31, 0x08, 0x00, 0x1e
+	.byte	0x30, 0xf1, 0x30, 0xc4, 0x03, 0xd9, 0xae, 0x1e
+	.byte	0x28, 0xf1
+	ldw wa, 0x3c5
+	ld bc, 0:i3
+	jrl _Write_VGA_Register
+
+
+BitMapOut:
+	lda xsp, (xsp - 16)
+	push xiz
+	ld (xsp + 16), xwa
+	ld xbc, (xsp + 16)
+	lda xwa, (xbc + 14)
+	ld (xsp + 8), xwa
+	ld (xsp + 4), xbc
+	ld xwa, xbc
+	ld xwa, (xwa + 10)
+	add (xsp + 4), xwa
+	ldw wa, 0x3c8
+	ld bc, 0:i3
+	calr _Write_VGA_Register
+	ld xiz, 0:i3
+
+	.include "ui/bitmap_out_routines.s"
+	.include "ui/ui_mode_handlers.s"
+PmBankScreenProc:
+	lda xsp, (xsp-280)
+	push xiz
+	ld	(xsp+276), xde
+	ld xiz, xbc
+	ld	(xsp+280), xwa
+	cp xiz, EVT_SW_IN
+	jrl z, PmBank_OK
+	cp xiz, EVT_PMBK_NAME
+	jrl z, PmBank_BankChanged
+	cp xiz, EVT_PARA_DRAW
+	jrl z, PmBank_Confirm
+	cp xiz, EVT_SELE_DRAW
+	jrl z, PmBank_Select
+	cp xiz, EVT_DRAW
+	jr z, PmBank_Paint
+	cp xiz, EVT_PM_BANK_SET_NOTIFY
+	jr z, PmBank_EnumNotify
+	cp xiz, EVT_PAINT
+	jr z, PmBank_Show
+	cp xiz, EVT_SHOW
+	jrl nz, PmBank_Default
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	jr PmBank_ForwardToHandler
+
+PmBank_Show:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_SET
+	ld xde, 0:i3
+	jrl PmBank_DispatchBankSelect
+
+PmBank_EnumNotify:
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld XWA, (xsp + 0x0114)
+	ldfr_berp A, 0xfb
+	ld XWA, (xsp + 0x0118)
+	ld xbc, EVT_PARA_DRAW
+	ld xde, 0:i3
+	call SendEvent
+	ld xde, 0:i3
+	ldto_berp E, 0xfb
+	ld XWA, (xsp + 0x0118)
+	ld xbc, EVT_SELE_DRAW
+	call SendEvent
+	jrl PmBank_ReturnZero
+
+PmBank_Paint:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+
+PmBank_ForwardToHandler:
+	call InheritedProc
+	jrl PmBank_ReturnZero
+
+PmBank_Select:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld (xsp + 4), xhl
+	ld xwa, (xsp + 4)
+	lda xhl, (xwa + 52)
+	ld xbc, (xhl)
+	lda xde, (xwa + 48)
+	ld xwa, (xde)
+	ld wa, (xwa)
+	ld (xbc), wa
+	ld xbc, (xde)
+	ld XWA, (xsp + 0x0114)
+	extz wa
+	ld (xbc), wa
+	ld xwa, (xhl)
+	lda xbc, (EditSw_SplitMap10:24)
+	ld wa, (xwa)
+	ld	a, (xbc+wa)
+	extz wa
+	lda xbc, (xsp+264)
+	call GetEditSwPoint
+	lda xwa, (xsp+268)
+	lda xhl, (xsp+264)
+	lda xde, (xhl + 2)
+	ld bc, (xde)
+	sub bc, 0xf
+	ld (xwa + 2), bc
+	ld bc, (xde)
+	add bc, 0x10
+	ld (xwa + 6), bc
+	lda xbc, (xwa + 4)
+	cpw (xhl), 0x0
+	jr nz, PmBank_Select_RightSide
+	ldw (xwa), 0x8
+	ldw (xbc), 0x9c
+	jr PmBank_Select_DrawFirstRow
+
+PmBank_Select_RightSide:
+	ldw (xwa), 0xa3
+	ldw (xbc), 0x137
+
+PmBank_Select_DrawFirstRow:
+	ld bc, 0:i3
+	ldw de, 0xf5
+	call DrawDesignBox
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 52)
+	ld wa, (xwa)
+	exts xwa
+	ld	(xsp+276), xwa
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_NAME
+	ld XDE, (xsp + 0x0114)
+	call MainFuncCall
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 48)
+	lda xbc, (EditSw_SplitMap10:24)
+	ld wa, (xwa)
+	ld	a, (xbc+wa)
+	extz wa
+	lda xbc, (xsp+264)
+	call GetEditSwPoint
+	lda xwa, (xsp+268)
+	lda xhl, (xsp+264)
+	lda xde, (xhl + 2)
+	ld bc, (xde)
+	sub bc, 0xf
+	ld (xwa + 2), bc
+	ld bc, (xde)
+	add bc, 0x10
+	ld (xwa + 6), bc
+	lda xbc, (xwa + 4)
+	cpw (xhl), 0x0
+	jr nz, PmBank_Select_SecondRightSide
+	ldw (xwa), 0x8
+	ldw (xbc), 0x9c
+	jr PmBank_Select_DrawSecondRow
+
+PmBank_Select_SecondRightSide:
+	ldw (xwa), 0xa3
+	ldw (xbc), 0x137
+
+PmBank_Select_DrawSecondRow:
+	ldw bc, 0xc1
+	ld de, 7:i3
+	call DrawDesignBox
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 48)
+	ld wa, (xwa)
+	exts xwa
+	ld	(xsp+276), xwa
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_NAME
+	ld XDE, (xsp + 0x0114)
+	jrl PmBank_DispatchBankSelect
+
+PmBank_Confirm:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ldib_erp 0xfb, 0
+
+PmBank_Confirm_Loop:
+	ld xwa, 0:i3
+	ldto_berp A, 0xfb
+	ld	(xsp+276), xwa
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_NAME
+	ld XDE, (xsp + 0x0114)
+	call MainFuncCall
+	inc1b_erp 0xfb
+	cp_erpb 0xfb, 0x09
+	jr ule, PmBank_Confirm_Loop
+	jrl PmBank_ReturnZero
+
+PmBank_BankChanged:
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld (xsp + 4), 0xff
+	ld (xsp + 6), 0xf5
+	ld xbc, (xhl + 48)
+	ld XWA, (xsp + 0x0114)
+	ld a, (xwa)
+	extz wa
+	cp wa, (xbc)
+	jr nz, PmBank_BankChanged_Lookup
+	ld (xsp + 4), 0x0
+	ld (xsp + 6), 0x7
+
+PmBank_BankChanged_Lookup:
+	ld XWA, (xsp + 0x0114)
+	ld a, (xwa)
+	extz wa
+	lda xbc, (EditSw_SplitMap10:24)
+	ld	a, (xbc+wa)
+	extz wa
+	call DrawEditSw
+	ld XWA, (xsp + 0x0114)
+	ld a, (xwa)
+	extz wa
+	lda xbc, (EditSw_SplitMap10:24)
+	ld	a, (xbc+wa)
+	extz wa
+	lda xbc, (xsp+264)
+	call GetEditSwPoint
+	lda xde, (xsp+268)
+	lda xhl, (xsp+264)
+	lda xbc, (xhl + 2)
+	ld wa, (xbc)
+	sub wa, 0xf
+	ld (xde + 2), wa
+	ld wa, (xbc)
+	add wa, 0x10
+	ld (xde + 6), wa
+	lda xwa, (xde + 4)
+	cpw (xhl), 0x0
+	jr nz, PmBank_BankChanged_RightSide
+	ldw (xde), 0x8
+	ldw (xwa), 0x1e
+	jr PmBank_BankChanged_DrawSlot
+
+PmBank_BankChanged_RightSide:
+	ldw (xde), 0xa3
+	ldw (xwa), 0xbe
+PmBank_BankChanged_DrawSlot:
+	decm	8, (xbc)
+	ld	xwa, (xsp+276)
+	ld	a, (xwa)
+	inc	1, a
+	extz	wa
+	pushw	wa
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x7e, 0x15
+	lda	xwa, (xsp+14)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+10)
+	lda	xwa, (xsp+268)
+	lda	xhl, (xsp+264)
+	lda	xde, (xsp+8)
+	ld	xbc, 3:i3
+	push	xbc
+	ld	c, (xsp+8)
+	extz	bc
+	pushw	bc
+	ld	c, (xsp+12)
+	extz	bc
+	pushw	bc
+	ld	xbc, xhl
+	call	DrawStringLeftJustify
+	lda	xde, (xsp+264)
+	lda	xbc, (xde+2)
+	ld	hl, (xbc)
+	add	hl, 12
+	ld	(xbc), hl
+	lda	xwa, (xsp+268)
+	sub	hl, 15
+	ld	(xwa+2), hl
+	ld	bc, (xbc)
+	add	bc, 16
+	ld	(xwa+6), bc
+	lda	xbc, (xwa+4)
+	cpw	(xde), 0
+	jr	nz, PmBank_BankChanged_SecondRight
+	ldw	(xwa), 16
+	ldw	(xbc), 156
+	jr	PmBank_BankChanged_DrawIndicator
+PmBank_BankChanged_SecondRight:
+	ldw (xwa), 0xab
+	ldw (xbc), 0x137
+
+PmBank_BankChanged_DrawIndicator:
+	ld XBC, (xsp + 0x0114)
+	lda xhl, (xbc + 1)
+	ld xbc, 1:i3
+	push xbc
+	ld c, (xsp + 8)
+	extz bc
+	pushw bc
+	ld c, (xsp + 12)
+	extz bc
+	pushw bc
+	ld xbc, xde
+	ld xde, xhl
+	call DrawStringLeftJustify
+	jrl PmBank_ReturnZero
+
+PmBank_OK:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld XWA, (xsp + 0x0114)
+	cp xwa, 0xc
+	jrl z, PmBank_OK_Slot9
+	cp xwa, 0xb
+	jrl z, PmBank_OK_Slot8
+	cp xwa, 0xa
+	jrl z, PmBank_OK_Slot7
+	cp xwa, 0x9
+	jrl z, PmBank_OK_Slot6
+	cp xwa, 0x8
+	jrl z, PmBank_OK_Slot5
+	cp xwa, 0x8c
+	jrl z, PmBank_OK_Slot4
+	cp xwa, 0x8b
+	jrl z, PmBank_OK_Slot3
+	cp xwa, 0x8a
+	jrl z, PmBank_OK_Slot2
+	cp xwa, 0x89
+	jr z, PmBank_OK_Slot1
+	cp xwa, 0x88
+	jr z, PmBank_OK_Slot0
+	cp xwa, 0x10
+	jr z, PmBank_OK_SaveDelete
+	cp xwa, 0x90
+	jr nz, PmBank_OK_Forward
+
+PmBank_OK_SaveDelete:
+	ld xwa, 0xffffffff
+	ld xbc, EVT_INTERRUPT_TITLE
+	ld xde, TITLE_PMVIEW
+	call PostEvent
+	call GetTitleNow
+	ld xwa, xhl
+	ld xbc, EVT_CHECK_HOLD
+	ld xde, 0:i3
+	call SendEvent
+	cp hl, 0:i3
+	jr z, PmBank_OK_Forward
+	ld xwa, 0xffffffff
+	ld xbc, EVT_SET_HOLD
+	ld xde, 1:i3
+	call PostEvent
+
+PmBank_OK_Forward:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	jrl PmBank_CallHandler
+
+PmBank_OK_Slot0:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 0:i3
+	jrl PmBank_DispatchBankSelect
+
+PmBank_OK_Slot1:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 1:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot2:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 2:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot3:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 3:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot4:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 4:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot5:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 5:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot6:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 6:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot7:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 7:i3
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot8:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 0x8
+	jr PmBank_DispatchBankSelect
+
+PmBank_OK_Slot9:
+	ld xwa, NAKA_MAINFUNC_MainPmGet
+	ld xbc, EVT_PM_BANK_MK
+	ld xde, 0x9
+
+PmBank_DispatchBankSelect:
+	call MainFuncCall
+
+PmBank_ReturnZero:
+	ld xhl, 0:i3
+	jr PmBank_Epilogue
+
+PmBank_Default:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+
+PmBank_CallHandler:
+	call InheritedProc
+
+PmBank_Epilogue:
+	pop xiz
+	lda xsp, (xsp+280)
+	ret
+PmBank_Boundary:
+
+SineWaveScreenProc:
+	lda xsp, (xsp-280)
+	push xiz
+	ld	(xsp+276), xde
+	ld xiz, xbc
+	ld	(xsp+280), xwa
+	cp xiz, EVT_SW_IN
+	jrl z, PmBank_OnEnumNotify
+	cp xiz, EVT_PARA_DRAW
+	jrl z, PmBank_OnConfirm
+	cp xiz, EVT_SELE_DRAW
+	jrl z, PmBank_OnSelect
+	cp xiz, EVT_DRAW
+	jrl z, PmBank_OnPaint
+	cp xiz, EVT_KEY_INFO
+	jr z, PmBank_DrawRegionInfo
+	cp xiz, EVT_SVARI_SET
+	jr z, PmBank_OnBankChanged
+	cp xiz, EVT_PAINT
+	jr z, PmBank_InitDisplay
+	cp xiz, EVT_SHOW
+	jrl nz, PmBank_DefaultPassthrough
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	jr PmBank_CallInherited
+
+PmBank_InitDisplay:
+	ld xwa, NAKA_MAINFUNC_MainSvariIni
+	ld xbc, EVT_SVARI_INI
+	ld xde, 0:i3
+	call MainFuncCall
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+
+PmBank_CallInherited:
+	call InheritedProc
+	jrl ToneGen_InitDone
+
+PmBank_OnBankChanged:
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld xde, (xhl + 48)
+	lda xbc, (xhl + 44)
+	ld xwa, (xbc)
+	ld wa, (xwa)
+	ld (xde), wa
+	ld xbc, (xbc)
+	ld XWA, (xsp + 0x0114)
+	ld a, (xwa)
+	extz wa
+	ld (xbc), wa
+	ld XWA, (xsp + 0x0118)
+	ld xbc, EVT_SELE_DRAW
+	ld xde, 0:i3
+	jrl PmBank_SendEventAndDone
+PmBank_DrawRegionInfo:
+	ld	a, (36038:16)
+	extz	wa
+	pushw	wa
+	ld	c, (36036:16)
+	ld	a, c
+	extz	wa
+	div	a, 12
+	dec	2, a
+	extz	wa
+	pushw	wa
+	extz	bc
+	div	c, 12
+	ld	a, b
+	extz	wa
+	sla	wa, 2
+	lda	xbc, (ParamStr_Table_05:24)
+	ld	xwa, (xbc+wa)
+	push	xwa
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x1c, 0x16
+	lda	xwa, (xsp+20)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+16)
+	lda	xbc, (xsp+264)
+	ldw	(xbc), 230
+	lda	xhl, (xbc+2)
+	ldw	(xhl), 220
+	lda	xwa, (xsp+268)
+	ld	de, (xbc)
+	ld	(xwa), de
+	ld	de, (xbc)
+	add	de, 89
+	ld	(xwa+4), de
+	ld	de, (xhl)
+	ld	(xwa+2), de
+	ld	de, (xhl)
+	add	de, 19
+	ld	(xwa+6), de
+	lda	xde, (xsp+8)
+	ld	xhl, 0:i3
+	push	xhl
+	pushw 255
+	pushw 245
+	call	DrawString
+	jrl	ToneGen_InitDone
+PmBank_OnPaint:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	lda xbc, (xsp+264)
+	ldw (xbc), 0xa
+	lda xhl, (xbc + 2)
+	ldw (xhl), 0x6
+	lda xwa, (xsp+268)
+	ld de, (xbc)
+	ld (xwa), de
+	ld de, (xbc)
+	add de, 0xca
+	ld (xwa + 4), de
+	ld de, (xhl)
+	ld (xwa + 2), de
+	ld de, (xhl)
+	add de, 0x13
+	ld (xwa + 6), de
+	ld xde, 4:i3
+	push xde
+	pushw 0xff
+	pushw 0xf7
+	ld xde, PmBank_OnPaint_Str_CHECK_BY_SINE_WAVE
+	call DrawString
+	lda xbc, (xsp+264)
+	ldw (xbc), 0x8
+	lda xhl, (xbc + 2)
+	ldw (xhl), 0x1c
+	lda xwa, (xsp+268)
+	ld de, (xbc)
+	ld (xwa), de
+	ld de, (xbc)
+	add de, 0x128
+	ld (xwa + 4), de
+	ld de, (xhl)
+	ld (xwa + 2), de
+	ld de, (xhl)
+	add de, 0x10
+	ld (xwa + 6), de
+	ld xde, 3:i3
+	push xde
+	pushw 0xfb	; colour pair for DrawString, not a pointer
+	pushw 0xf7
+	ld xde, PmBank_OnPaint_Str_Select_the_mode_by_sound_button
+	call DrawString
+	lda xbc, (xsp+264)
+	ldw (xbc), 0x0
+	lda xhl, (xbc + 2)
+	ldw (xhl), 0x2a
+	lda xwa, (xsp+268)
+	ld de, (xbc)
+	ld (xwa), de
+	ld de, (xbc)
+	add de, 0x5c
+	ld (xwa + 4), de
+	ld de, (xhl)
+	ld (xwa + 2), de
+	ld de, (xhl)
+	add de, 0x13
+	ld (xwa + 6), de
+	ld xde, 0:i3
+	push xde
+	pushw 0xff
+	pushw 0xf7
+	ld xde, PmBank_OnPaint_Str_CHECK_MODE
+	call DrawString
+	lda xbc, (xsp+264)
+	ldw (xbc), 0x28
+	lda xhl, (xbc + 2)
+	ldw (xhl), 0xdc
+	lda xwa, (xsp+268)
+	ld de, (xbc)
+	ld (xwa), de
+	ld de, (xbc)
+	add de, 0xb8
+	ld (xwa + 4), de
+	ld de, (xhl)
+	ld (xwa + 2), de
+	ld de, (xhl)
+	add de, 0x13
+	ld (xwa + 6), de
+	ld xde, 0:i3
+	push xde
+	pushw 0xff	; colour pair for DrawString, not a pointer
+	pushw 0xf5
+	ld xde, PmBank_OnPaint_Str_KEY_DOWN_INFORMATION
+	call DrawString
+	ld XWA, (xsp + 0x0118)
+	ld xbc, EVT_PARA_DRAW
+	ld xde, 0:i3
+
+PmBank_SendEventAndDone:
+	call SendEvent
+	jrl ToneGen_InitDone
+
+PmBank_OnSelect:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld (xsp + 4), xhl
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 48)
+	ld wa, (xwa)
+	sla wa, 3
+	lda xbc, (SelectRect_Table:24)
+	lda	xiy, (xbc+wa)
+	lda xix, (xsp+268)
+	ld bc, 4:i3
+	ldirw
+	lda xwa, (xsp+268)
+	ld bc, 0:i3
+	ldw de, 0xf5
+	call DrawDesignBox
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 48)
+	ld wa, (xwa)
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 44)
+	ld wa, (xwa)
+	sla wa, 3
+	lda xbc, (SelectRect_Table:24)
+	lda	xiy, (xbc+wa)
+	lda xix, (xsp+268)
+	ld bc, 4:i3
+	ldirw
+	lda xwa, (xsp+268)
+	ldw bc, 0xc1
+	ld de, 7:i3
+	call DrawDesignBox
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa + 44)
+	ld wa, (xwa)
+	ld bc, 0:i3
+	jr PmBank_WriteLastParam
+
+PmBank_OnConfirm:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld wa, 0:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 1:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 2:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 3:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 4:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 5:i3
+	ldw bc, 0xff
+	calr ToneGen_WriteParamByIndex
+	ld wa, 6:i3
+	ldw bc, 0xff
+
+PmBank_WriteLastParam:
+	calr ToneGen_WriteParamByIndex
+
+ToneGen_InitDone:
+	ld xhl, 0:i3
+	jr PmBank_OnDefault
+
+PmBank_OnEnumNotify:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	call InheritedProc
+	ld XWA, (xsp + 0x0118)
+	call GetViewInstance
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+	jr PmBank_CallInheritedDirect
+
+PmBank_DefaultPassthrough:
+	ld XWA, (xsp + 0x0118)
+	ld xbc, xiz
+	ld XDE, (xsp + 0x0114)
+
+PmBank_CallInheritedDirect:
+	call InheritedProc
+
+PmBank_OnDefault:
+	pop xiz
+	lda xsp, (xsp+280)
+	ret
+
+ToneGen_WriteParamByIndex:
+	lda xsp, (xsp - 12)
+	pushw iz
+	ld iz, bc
+	ld bc, wa
+	ld wa, iz
+	lda xiy, (SelectRect_Table:24)
+	cp bc, 5:i3
+	jrl ugt, ToneGen_WriteParam_Return
+	add bc, bc
+	lda xix, (ToneGen_WriteParamByIndex_CaseTable:24)
+	ld	bc, (xix+bc)
+	lda xix, (ToneGen_ParamWriteDispatch:24)
+	jp	t, (xix+bc)
+; ToneGen_WriteParamByIndex dispatch table
+ToneGen_ParamWriteDispatch:
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xde, (xsp+2)
+	lda	xbc, (xsp+6)
+	ld	hl, (xbc)
+	inc	1, hl
+	ld	(xde), hl
+	ld	hl, (xbc+2)
+	inc	1, hl
+	ld	(xde+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xbc
+	ld	xbc, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N1_SINE_WAVE_ROM_check_w_o_TOUCH
+	call	DrawString
+	lda	xbc, (xsp+2)
+	lda	xwa, (xsp+6)
+	ld	de, (xwa)
+	add	de, 9
+	ld	(xbc), de
+	ld	de, (xwa+2)
+	add	de, 15
+	ld	(xbc+2), de
+	ld	xde, 7:i3
+	push	xde
+	pushw	iz
+	pushw	247
+	ld	xde, ToneGen_ParamWriteDispatch_Str_C_key_IC304_305_C_7eB_key_IC306
+	jrl	ToneGen_WriteParamByIndex_Join
+; ToneGen_WriteParamByIndex_DrawOutselCheckItem: CHECK MODE item 1: draws "(2)GENERATOR LSI OUTSEL check" and
+;   "C-key=DIRECT+REV/DSP,C#~7eB-key=REV/DSP" in SelectRect slot 1.
+ToneGen_WriteParamByIndex_DrawOutselCheckItem:
+	inc	8, xiy
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xde, (xsp+2)
+	lda	xbc, (xsp+6)
+	ld	hl, (xbc)
+	inc	1, hl
+	ld	(xde), hl
+	ld	hl, (xbc+2)
+	inc	1, hl
+	ld	(xde+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xbc
+	ld	xbc, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N2_GENERATOR_LSI_OUTSEL_check
+	call	DrawString
+	lda	xbc, (xsp+2)
+	lda	xwa, (xsp+6)
+	ld	de, (xwa)
+	add	de, 9
+	ld	(xbc), de
+	ld	de, (xwa+2)
+	add	de, 15
+	ld	(xbc+2), de
+	ld	xde, 7:i3
+	push	xde
+	pushw	iz
+	pushw	247
+	ld	xde, ToneGen_ParamWriteDispatch_Str_C_key_DIRECT_REV_DSP_C_7eB_key
+	jrl	ToneGen_WriteParamByIndex_Join
+ToneGen_WriteParamByIndex_DrawHighSoundCheckItem:
+	lda	xiy, (xiy+16)
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xbc, (xsp+2)
+	lda	xde, (xsp+6)
+	ld	hl, (xde)
+	inc	1, hl
+	ld	(xbc), hl
+	ld	hl, (xde+2)
+	inc	2, hl
+	ld	(xbc+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N3_HIGH_SOUND_check_2octave
+	jrl	ToneGen_WriteParamByIndex_Join
+ToneGen_WriteParamByIndex_DrawLowSoundCheckItem:
+	lda	xiy, (xiy+24)
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xbc, (xsp+2)
+	lda	xde, (xsp+6)
+	ld	hl, (xde)
+	inc	1, hl
+	ld	(xbc), hl
+	ld	hl, (xde+2)
+	inc	2, hl
+	ld	(xbc+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N4_LOW_SOUND_check_2octave
+	jr	ToneGen_WriteParamByIndex_Join
+ToneGen_WriteParamByIndex_DrawNormalSoundCheckItem:
+	lda	xiy, (xiy+32)
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xbc, (xsp+2)
+	lda	xde, (xsp+6)
+	ld	hl, (xde)
+	inc	1, hl
+	ld	(xbc), hl
+	ld	hl, (xde+2)
+	inc	2, hl
+	ld	(xbc+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N5_NORMAL_SOUND_check_with_TOUCH
+	jr	ToneGen_WriteParamByIndex_Join
+ToneGen_WriteParamByIndex_DrawSineWaveMinus16dBItem:
+	lda	xiy, (xiy+40)
+	lda	xix, (xsp+6)
+	ld	bc, 4:i3
+	ldirw
+	lda	xbc, (xsp+2)
+	lda	xde, (xsp+6)
+	ld	hl, (xde)
+	inc	1, hl
+	ld	(xbc), hl
+	ld	hl, (xde+2)
+	inc	2, hl
+	ld	(xbc+2), hl
+	ld	xhl, 0:i3
+	push	xhl
+	pushw	wa
+	pushw	247
+	ld	xwa, xde
+	ld	xde, ToneGen_ParamWriteDispatch_Str_N6_SINE_WAVE_ROM_check_16dB_DOWN
+ToneGen_WriteParamByIndex_Join:
+	call	DrawString
+
+ToneGen_WriteParam_Return:
+	popw iz
+	lda xsp, (xsp + 12)
+	ret
+
+WallHomeEditCheck:
+	dec 4, xsp
+	push xiz
+	ld xiz, xde
+	ld (xsp + 4), xwa
+	ld xwa, xbc
+	cp xbc, EVT_RAM_DATA_REQ
+	jrl z, WallHomeEditCheck_ReturnFalse
+	cp xbc, EVT_HIDE
+	jr z, WallHomeEdit_EventDispatch
+	sub xwa, EVT_GET_LARGE_STEP
+	cp xwa, 0x0
+	jr lt, WallHomeEditCheck_ReturnFalse
+	cp xwa, 0x9
+	jr gt, WallHomeEditCheck_ReturnFalse
+	add xwa, xwa
+	add xwa, WallHomeEditCheck_CaseTable
+	ld wa, (xwa)
+	lda xix, (WallHomeEdit_EventDispatch:24)
+	jp	t, (xix+wa)
+
+; WallHomeEditCheck event dispatch
+WallHomeEdit_EventDispatch:
+	ld	xwa, (xsp+4)
+	ld	xde, xiz
+	call	InheritedProc
+	or	xiz, xiz
+	jr	nz, WallHomeEditCheck_ReturnFalse
+	ldw	wa, 8
+	call	PanelDisplay_DispatchByMode
+	cp	hl, 0:i3
+	jr	z, WallHomeEditCheck_ReturnFalse
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 1:i3
+	call	SendEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 0:i3
+	call	PostEvent
+	ld	(GLOBAL_ERROR_CODE:16), 72
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+	call	PostEvent
+	ld	xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
+	ld	xbc, EVT_TOSHI_FLASH_LOAD
+	ld	xde, xiz
+	call	MainFuncCall
+WallHomeEditCheck_ReturnFalse:
+	ld xhl, 0:i3
+	jr WallHome_PopIzSkip4Ret
+WallHomeEditCheck_OnGetRamString:
+	ld xde, (xiz + 14)
+	lda xwa, (xiz + 18)
+	cp xde, 0x1
+	jr z, WallHomeEdit_PushSndAddr
+	ld xbc, (xwa)
+	or xde, xde
+	jr nz, WallHomeEdit_LoadSndAddr3
+	ld xwa, WallHomeEdit_Text
+	jr WallHomeEdit_PushAddr
+
+WallHomeEdit_PushSndAddr:
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0xba, 0x17
+	ld xwa, (xwa)
+	push xwa
+	jr WallHomeEdit_CallAudio
+
+WallHomeEdit_LoadSndAddr3:
+	ld xwa, WallHomeEdit_LoadSndAddr3_Str_ERROR
+
+WallHomeEdit_PushAddr:
+	push xwa
+	push xbc
+
+WallHomeEdit_CallAudio:
+	call	Sprintf_Locked
+	inc	8, xsp
+	ld	xhl, (xsp+4)
+	jr	WallHome_PopIzSkip4Ret
+WallHomeEditCheck_OnGetLargeStep:	; cases 31457342, 31457343, 31457347
+	ld	xhl, 1:i3
+	jr	WallHome_PopIzSkip4Ret
+WallHomeEditCheck_OnGetRamAddress:
+	lda	xhl, (213242:24)
+	jr	WallHome_PopIzSkip4Ret
+WallHomeEditCheck_OnGetRamSize:
+	ld	xhl, 2:i3
+WallHome_PopIzSkip4Ret:
+	pop xiz
+	inc 4, xsp
+	ret
+
+WallMenuEditCheck:
+	push xiz
+	ld xiz, xwa
+	ld xwa, xbc
+	cp xbc, EVT_RAM_DATA_REQ
+	jr z, WallOthEditCheck_RetZero
+	sub xwa, EVT_GET_LARGE_STEP
+	cp xwa, 0x0
+	jr lt, WallOthEditCheck_RetZero
+	cp xwa, 0x9
+	jr gt, WallOthEditCheck_RetZero
+	add xwa, xwa
+	add xwa, WallMenuEditCheck_CaseTable
+	ld wa, (xwa)
+	lda xix, (WallMenuEdit_EventDispatch:24)
+	jp	t, (xix+wa)
+
+; WallMenuEditCheck event dispatch
+WallMenuEdit_EventDispatch:
+	ld	xwa, (xde+14)
+	ld	xbc, (xde+18)
+	cp	xwa, 1
+	jr	z, WallMenuEdit_EventDispatch_Skip
+	or	xwa, xwa
+	jr	nz, WallMenuEdit_EventDispatch_Skip2
+	ld	xwa, WallMenuEdit_Text
+	jr	WallMenuEdit_EventDispatch_Join2
+WallMenuEdit_EventDispatch_Skip:
+	ld	xwa, WallMenuEdit_EventDispatch_Str_USER
+	jr	WallMenuEdit_EventDispatch_Join2
+WallMenuEdit_EventDispatch_Skip2:
+	ld	xwa, WallMenuEdit_EventDispatch_Str_ERROR
+WallMenuEdit_EventDispatch_Join2:
+	push	xwa
+	push	xbc
+	call	Sprintf_Locked
+	inc	8, xsp
+	ld	xhl, xiz
+	jr	WallMenuEditCheck_Epilogue
+WallMenuEditCheck_OnGetLargeStep:	; cases 31457342, 31457343, 31457347
+	ld	xhl, 1:i3
+	jr	WallMenuEditCheck_Epilogue
+WallMenuEditCheck_OnGetRamAddress:
+	lda	xhl, (213244:24)
+	jr	WallMenuEditCheck_Epilogue
+WallMenuEditCheck_OnGetRamSize:
+	ld	xhl, 2:i3
+	jr	WallMenuEditCheck_Epilogue
+WallOthEditCheck_RetZero:
+	ld xhl, 0:i3
+WallMenuEditCheck_Epilogue:
+	pop xiz
+	ret
+
+WallOthEditCheck:
+	push xiz
+	ld xiz, xwa
+	ld xwa, xbc
+	cp xbc, EVT_RAM_DATA_REQ
+	jr z, WallOthCheckLoop_RetZero
+	sub xwa, EVT_GET_LARGE_STEP
+	cp xwa, 0x0
+	jr lt, WallOthCheckLoop_RetZero
+	cp xwa, 0x9
+	jr gt, WallOthCheckLoop_RetZero
+	add xwa, xwa
+	add xwa, WallOthEditCheck_CaseTable
+	ld wa, (xwa)
+	lda xix, (WallOthEdit_EventDispatch:24)
+	jp	t, (xix+wa)
+
+; WallOthEditCheck event dispatch
+WallOthEdit_EventDispatch:
+	ld	xwa, (xde+14)
+	ld	xbc, (xde+18)
+	cp	xwa, 1
+	jr	z, WallOthEdit_EventDispatch_Skip3
+	or	xwa, xwa
+	jr	nz, WallOthEdit_EventDispatch_Skip4
+	ld	xwa, WallOthEdit_Text
+	jr	WallOthEdit_EventDispatch_Join3
+WallOthEdit_EventDispatch_Skip3:
+	ld	xwa, WallOthEdit_EventDispatch_Str_USER
+	jr	WallOthEdit_EventDispatch_Join3
+WallOthEdit_EventDispatch_Skip4:
+	ld	xwa, WallOthEdit_EventDispatch_Str_ERROR
+WallOthEdit_EventDispatch_Join3:
+	push	xwa
+	push	xbc
+	call	Sprintf_Locked
+	inc	8, xsp
+	ld	xhl, xiz
+	jr	WallOthEditCheck_Epilogue
+WallOthEditCheck_OnGetLargeStep:	; cases 31457342, 31457343, 31457347
+	ld	xhl, 1:i3
+	jr	WallOthEditCheck_Epilogue
+WallOthEditCheck_OnGetRamAddress:
+	lda	xhl, (213246:24)
+	jr	WallOthEditCheck_Epilogue
+WallOthEditCheck_OnGetRamSize:
+	ld	xhl, 2:i3
+	jr	WallOthEditCheck_Epilogue
+WallOthCheckLoop_RetZero:
+	ld xhl, 0:i3
+WallOthEditCheck_Epilogue:
+	pop xiz
+	ret
+
+WallSetOKFunc:
+	cp xbc, EVT_SW_IN
+	jr nz, WallSetOK_ReturnZero
+	ld xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
+	ld xbc, EVT_TOSHI_FLASH_WRITE
+	call MainFuncCall
+
+WallSetOK_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+MainWallSetFlashFunc:
+	cp	xbc, EVT_WALL_INI
+	jr	z, MainWallFlash_ClearAndRestore
+	cp	xbc, EVT_TOSHI_FLASH_LOAD
+	jr	z, MainWallFlash_DispatchAudio
+	cp	xbc, EVT_TOSHI_FLASH_WRITE
+	jrl	nz, MainWallFlash_ReturnZero
+	ld	(GLOBAL_ERROR_CODE:16), 40
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+	call	ApPostEvent
+	ldw	wa, 8
+	call	CtrlPanel_IndicatorJumpTable
+	ld	(GLOBAL_ERROR_CODE:16), 35
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+	jr	MainWallFlash_PostEvent
+MainWallFlash_DispatchAudio:
+	ldw wa, 0x8
+	call Audio_DispatchCommand
+	jr MainWallFlash_ReturnZero
+
+MainWallFlash_ClearAndRestore:
+	ld	(GLOBAL_ERROR_CODE:16), 40
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+	call	ApPostEvent
+	call	Gfx_ClearFrameBuffers
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 1:i3
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_CHANGE_TITLE
+	ld	xde, TITLE_CTWALLSET
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 0:i3
+	call	ApPostEvent
+	ld	(GLOBAL_ERROR_CODE:16), 35
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+MainWallFlash_PostEvent:
+	call ApPostEvent
+
+MainWallFlash_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+WallUsrIniFunc:
+	cp (0x0340ea:24), 0x00
+	jr nz, WallUsrIni_PostBootEvent
+	ld xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
+	ld xbc, EVT_WALL_INI
+	call MainFuncCall
+	jr WallUsrIni_ReturnZero
+
+WallUsrIni_PostBootEvent:
+	ld xwa, 0x48000f
+	ld xbc, EVT_SHOW
+	ld xde, 0:i3
+	call PostEvent
+
+WallUsrIni_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+WallSureLngCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, WallSureLng_ReturnZero
+	lda xhl, (LngTable_UserInitialWallpaper:24)
+	ret
+
+WallSureLng_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+WallUsrIniNoFunc:
+	ld xwa, 0xffffffff
+	ld xbc, EVT_CHANGE_TITLE
+	ld xde, TITLE_CTWALLSET
+	call PostEvent
+	ld xhl, 0:i3
+	ret
+
+WallUsrIniYesFunc:
+	ld xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
+	ld xbc, EVT_WALL_INI
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
+
+WallSureShowHideFunc:
+	ld xhl, 0:i3
+	ret
+
+WallUsrShowHideFunc:
+	push	xiz
+	ld	xiz, xde
+	cp	xbc, EVT_HIDE
+	jr	nz, MainVariSet_ReturnZero
+	ld	xde, xiz
+	call	InheritedProc
+	or	xiz, xiz
+	jr	nz, MainVariSet_ReturnZero
+	ldw	wa, 8
+	call	PanelDisplay_DispatchByMode
+	cp	hl, 0:i3
+	jr	z, MainVariSet_ReturnZero
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 1:i3
+	call	SendEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 0:i3
+	call	PostEvent
+	ld	(GLOBAL_ERROR_CODE:16), 72
+	ld	xwa, 4294967295
+	ld	xbc, EVT_INTERRUPT_TITLE
+	ld	xde, TITLE_MESAGE
+	call	PostEvent
+	ld	xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
+	ld	xbc, EVT_TOSHI_FLASH_LOAD
+	ld	xde, xiz
+	call	MainFuncCall
+MainVariSet_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	ret
+
+MainVariSet:
+	push	xiz
+	cp	xbc, EVT_VARI_WRITE
+	jr	nz, MainVariSet_Done
+	ld	xiz, xde
+	ld	a, (xiz)
+	extz	wa
+	ld	c, (xiz+2)
+	extz	bc
+	ld	e, (xiz+3)
+	extz	de
+	call	MIDI_DistributeParamToChannels
+	ld	a, (xiz)
+	extz	wa
+	ld	e, (xiz+2)
+	extz	de
+	ld	c, (xiz+3)
+	extz	bc
+	pushw	bc
+	ld	bc, 0:i3
+	call	SwbtWr
+	ld	wa, 1:i3
+	call	BitMapOut_StorePresetValue
+MainVariSet_Done:
+	ld xhl, 0:i3
+	pop xiz
+	ret
+
+MainSvariIni:
+	push	xiz
+	cp	xbc, EVT_SVARI_INI
+	jr	nz, MainSvariIni_ReturnZero
+	pushw	6
+	call	Malloc
+	inc	2, xsp
+	ld	xiz, xhl
+	ldb_d8	a, (PART_SELECT)
+	extz	wa
+	ld	bc, 0:i3
+	call	SndParam_LookupViaEncode
+	ld	(xiz+3), l
+	ldb_d8	a, (PART_SELECT)
+	extz	wa
+	ldw	bc, 32
+	call	SndParam_LookupViaEncode
+	ld	(xiz+4), l
+	ld	(xiz+2), (PART_SELECT)
+	ld	xwa, xiz
+	call	SndParam_FetchOscTableEntry
+	ld	a, (xiz)
+	extz	wa
+	call	CharMap_ActivePreamb_Prologue2
+	ld	(xiz+3), l
+	ld	(xiz+4), (PART_SELECT)
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SVARI_SET
+	ld	xde, xiz
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, xiz
+	call	ApPostEvent
+MainSvariIni_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	ret
+
+MainRvariIni:
+	push	xiz
+	cp	xbc, EVT_RVARI_INI
+	jr	nz, MainRvariIni_ReturnZero
+	pushw	6
+	call	Malloc
+	inc	2, xsp
+	ld	xiz, xhl
+	ld	xwa, 163840
+	call	SndParam_LookupReadOnly
+	ld	(xiz+3), l
+	ld	xwa, 163841
+	call	SndParam_LookupReadOnly
+	ld	(xiz+4), l
+	ld	(xiz+2), 72
+	ld	xwa, xiz
+	call	SndParam_ResolveVoiceEntry
+	ld	a, (xiz)
+	extz	wa
+	call	AccVoice_GetChannelCount_Wrap
+	ld	(xiz+3), l
+	ld	xwa, 4294967295
+	ld	xbc, EVT_RVARI_SET
+	ld	xde, xiz
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, xiz
+	call	ApPostEvent
+MainRvariIni_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	ret
+
+MainGetSndGrpName:
+	dec	6, xsp
+	push	xiz
+	cp	xbc, EVT_GET_SND_GRP_NAME
+	jr	nz, MainGetSndGrpName_ReturnZero
+	pushw	18
+	call	Malloc
+	inc	2, xsp
+	ld	xiz, xhl
+	ldb_d8	a, (PART_SELECT)
+	extz	wa
+	ld	bc, 0:i3
+	call	SndParam_LookupViaEncode
+	ld	(xsp+7), l
+	ldb_d8	a, (PART_SELECT)
+	extz	wa
+	ldw	bc, 32
+	call	SndParam_LookupViaEncode
+	lda	xwa, (xsp+4)
+	ld	(xwa+4), l
+	ld	(xwa+2), (PART_SELECT)
+	call	SndParam_FetchOscTableEntry
+	ld	a, (xsp+4)
+	extz	wa
+	ld	xbc, xiz
+	call	StoreDRAMInit_LoadDRAM
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SOUND_GRP_NAME
+	ld	xde, xiz
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, xiz
+	call	ApPostEvent
+MainGetSndGrpName_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	inc 6, xsp
+	ret
+
+MainGetSndName:
+	dec	6, xsp
+	push	xiz
+	ld	xiz, xde
+	cp	xbc, EVT_GET_SND_NAME
+	jr	nz, MainGetSndName_ReturnZero
+	pushw	18
+	call	Malloc
+	inc	2, xsp
+	ld	(xsp+6), xhl
+	ld	a, (xiz+3)
+	ld	(xsp+4), a
+	ld	xwa, xiz
+	call	SndParam_ApplyProgramChange
+	ld	a, (xiz+3)
+	extz	wa
+	ld	c, (xiz+4)
+	extz	bc
+	ld	xde, (xsp+6)
+	inc	1, xde
+	call	SndParam_ApplyProgramChangeAsync
+	ld	xwa, (xsp+6)
+	ld	(xwa+17), 0
+	ld	c, (xsp+4)
+	ld	(xwa), c
+	ld	xwa, 4294967295
+	ld	xbc, EVT_TOSHI_SOUND_NAME
+	ld	xde, (xsp+6)
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, (xsp+6)
+	call	ApPostEvent
+MainGetSndName_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	inc 6, xsp
+	ret
+
+MainGetRhyGrpName:
+	dec	6, xsp
+	push	xiz
+	cp	xbc, EVT_GET_RHY_GRP_NAME
+	jr	nz, MainGetRhyGrpName_ReturnZero
+	pushw	17
+	call	Malloc
+	inc	2, xsp
+	ld	xiz, xhl
+	ld	xwa, 163840
+	call	SndParam_LookupReadOnly
+	ld	(xsp+7), l
+	ld	xwa, 163841
+	call	SndParam_LookupReadOnly
+	lda	xwa, (xsp+4)
+	ld	(xwa+4), l
+	ld	(xwa+2), 72
+	call	SndParam_ResolveVoiceEntry
+	ld	a, (xsp+4)
+	extz	wa
+	call	AccVoice_CopyFromROM_Wrap
+	extz	xhl
+	pushw	16
+	push	xhl
+	push	xiz
+	call	Mem_Copy
+	lda	xsp, (xsp+10)
+	ld	(xiz+16), 0
+	ld	xwa, 4294967295
+	ld	xbc, EVT_RHYTHM_GRP_NAME
+	ld	xde, xiz
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, xiz
+	call	ApPostEvent
+MainGetRhyGrpName_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	inc 6, xsp
+	ret
+
+MainGetRhyName:
+	dec	6, xsp
+	push	xiz
+	ld	xiz, xde
+	cp	xbc, EVT_GET_RHY_NAME
+	jr	nz, MainGetRhyName_ReturnZero
+	pushw	15
+	call	Malloc
+	inc	2, xsp
+	ld	(xsp+6), xhl
+	ld	xbc, xiz
+	ld	a, (xbc+3)
+	ld	(xsp+4), a
+	ld	a, (xbc)
+	extz	wa
+	ld	c, (xbc+1)
+	extz	bc
+	call	AccVoice_DispatchWithChannel
+	extz	xhl
+	pushw	13
+	push	xhl
+	ld	xwa, (xsp+12)
+	inc	1, xwa
+	push	xwa
+	call	Mem_Copy
+	lda	xsp, (xsp+10)
+	ld	xwa, (xsp+6)
+	ld	(xwa+14), 0
+	ld	c, (xsp+4)
+	ld	(xwa), c
+	ld	xwa, 4294967295
+	ld	xbc, EVT_TOSHI_RHYTHM_NAME
+	ld	xde, (xsp+6)
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, (xsp+6)
+	call	ApPostEvent
+MainGetRhyName_ReturnZero:
+	ld xhl, 0:i3
+	pop xiz
+	inc 6, xsp
+	ret
+
+MainPmGet:
+	dec 8, xsp
+	pushw_erp 0xfa
+	ld (xsp + 6), xde
+	cp xbc, EVT_PM_NAME_REQ
+	jrl z, MainPmGet_HandleBankDisplay
+	cp xbc, EVT_PM_BANK_MK
+	jr z, MainPmGet_HandleCheckBit2
+	cp xbc, EVT_PM_BANK_NAME
+	jr z, MainPmGet_HandleBankData
+	cp xbc, EVT_PM_BANK_SET
+	jrl nz, MainPmGet_ReturnZero
+	call BitMapOut_PrepareRender_CheckBit1
+	ld h, 0x0:opc
+	extz xhl
+	ld (xsp + 6), xhl
+	ld xwa, 0xffffffff
+	ld xbc, EVT_PM_BANK_SET_NOTIFY
+	ld xde, (xsp + 6)
+	jrl MainPmGet_PostEvent
+
+MainPmGet_HandleBankData:
+	pushw	18
+	call	Malloc
+	inc	2, xsp
+	ld	(xsp+2), xhl
+	ld	xwa, (xsp+6)
+	ldfr_berp	a, 251
+	ld	xde, (xsp+2)
+	ldto_berp	c, 251
+	ld	(xde), c
+	ldto_berp	a, 251
+	extz	wa
+	lda	xbc, (xde+1)
+	call	BitMapOut_UpdateWidget_PostDraw
+	ld	xwa, 4294967295
+	ld	xbc, EVT_PMBK_NAME
+	ld	xde, (xsp+2)
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, (xsp+2)
+	jr	MainPmGet_PostEvent	; -> 0xFC23E8
+MainPmGet_HandleCheckBit2:
+	ld xwa, (xsp + 6)
+	ldfr_berp A, 0xfb
+	extz wa
+	call BitMapOut_PrepareRender_CheckBit2
+	ld xde, 0:i3
+	ldto_berp E, 0xfb
+	ld xwa, 0xffffffff
+	ld xbc, EVT_SELE_DRAW
+	jr MainPmGet_PostEvent
+
+MainPmGet_HandleBankDisplay:
+	pushw 0x13
+
+	call	Malloc
+
+	inc 2, xsp
+
+	ld (xsp + 2), xhl
+
+	ld xwa, (xsp + 6)
+
+	ldfr_berp A, 0xfb
+
+	ld xwa, (xsp + 2)
+
+	ldto_berp C, 0xfb
+
+	ld (xwa), c
+
+	ld xwa, 0x300
+
+	call	SndParam_LookupReadOnly
+
+	ld xbc, (xsp + 2)
+
+	ld (xbc + 1), l
+
+	ldto_berp A, 0xfb
+
+	extz wa
+
+	inc 2, xbc
+
+	call	BitMapOut_UpdateDisplayWidget
+
+	ld xwa, 0xffffffff
+
+	ld xbc, EVT_PM_NAME
+
+	ld xde, (xsp + 2)
+
+	call	ApPostEvent
+
+	ld xwa, 0xffffffff
+
+	ld xbc, EVT_AUTO_FREE
+
+	ld xde, (xsp + 2)
+
+
+
+MainPmGet_PostEvent:
+	call ApPostEvent
+
+MainPmGet_ReturnZero:
+	ld xhl, 0:i3
+	popw_erp 0xfa
+	inc 8, xsp
+	ret
+MainSysControl:
+	dec	4, xsp
+	push	qiz
+	ld	(xsp+2), xde
+	cp	xbc, EVT_SYS_INI
+	jr	nz, MainSysControl_PostDispatchFinalize
+	ld	(GLOBAL_ERROR_CODE:16), 40
+	ldw	wa, 238
+	call	SoundCtrl_SendCommand
+	ld	xwa, (xsp+2)
+	ldfr_berp	a, 251
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	SubCPU_PayloadErrorStore
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	ldto_berp	a, 251
+	extz	wa
+	cp	wa, 0:i3
+	jr	mi, MainSysControl_PostDispatchFinalize
+	cp	wa, 8
+	jr	gt, MainSysControl_PostDispatchFinalize
+	add	wa, wa
+	lda	xix, (MainSysControl_CaseTable:24)
+	ld	wa, (xix+wa)
+	lda	xix, (MainSysCtrl_DispatchTable:24)
+	jp	t, (xix+wa)
+MainSysCtrl_DispatchTable:
+	ld	wa, 2:i3
+	call	ScreenGroup_Dispatch
+	jr	MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry1_AccDemo:
+	call AccDemo_InitDone
+	jr t, MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry2_PartInit:
+	call Part_InitFromPreset
+	jr t, MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry3_Misc:
+	call	SendPartDataBlock_DoGetError
+	jr	MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry4_CopyBitmaps:
+	call Display_CopyAndRenderBitmaps
+	jr t, MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry5_VoiceInit:
+	call Voice_InitBankDataSafe
+	jr t, MainSysControl_PostDispatchFinalize
+; MainSysCtrl_OnInitCurrentPanel: Case 1 of MainSysControl's EVT_SYS_INI switch = item 1 "CURRENT PANEL" of the
+;   INITIAL SETTING list (widget 0x410002): calls MainSysCtrl_ResetCurrentPanel, which validates and re-resolves
+;   the live panel (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, ...). Basis: callers + body.
+MainSysCtrl_OnInitCurrentPanel:
+	call MainSysCtrl_ResetCurrentPanel
+	jr t, MainSysControl_PostDispatchFinalize
+MainSysCtrl_Entry7:
+	call MainSysCtrl_ResetPartSettings
+	jr t, MainSysControl_PostDispatchFinalize
+; MainSysCtrl_OnInitMidiSetting: Case 3 of MainSysControl's EVT_SYS_INI switch = item 3 "MIDI SETTING" of the INITIAL
+;   SETTING list (widget 0x410002): calls MainSysCtrl_ResetMidiSettings, which restores bits 0-2 of byte +14 of
+;   each part record from SndParamRam_DefaultImage. Basis: callers + body.
+MainSysCtrl_OnInitMidiSetting:
+	call MainSysCtrl_ResetMidiSettings
+
+
+MainSysControl_PostDispatchFinalize:
+	call RefreshSwEvent
+	call CPanel_InitButtonState_SaveRegs
+	ld bc, 0:i3
+
+MainSysCtrl_DelayOuter:
+	ld wa, 0:i3
+
+MainSysCtrl_DelayInner:
+	inc	1, wa
+	cp	wa, 256
+	jr	c, MainSysCtrl_DelayInner
+	inc	1, bc
+	cp	bc, 4096
+	jr	c, MainSysCtrl_DelayOuter
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 1:i3
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_CHANGE_MODE
+	ld	xde, NAKA_MODE_MD_NORMAL
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SET_NOT_DRAW_FLAG
+	ld	xde, 0:i3
+	call	ApPostEvent
+	ld	(GLOBAL_ERROR_CODE:16), 35
+	ldw	wa, 238
+	call	SoundCtrl_SendCommand
+	ld	xhl, 0:i3
+	pop	qiz
+	inc	4, xsp
+	ret
+CntIniFunc:
+	cp xbc, EVT_ACTIVATE_STATE
+	jr nz, CntIniFunc_ReturnZero
+	dec 2, xde
+	cp xde, 0x0
+	jr c, CntIniFunc_ReturnZero
+	cp xde, 0x5
+	jr ugt, CntIniFunc_ReturnZero
+	add xde, xde
+	add xde, CntIniFunc_CaseTable
+	ld de, (xde)
+	lda xix, (CntIniFunc_EventDispatch:24)
+	jp	t, (xix+de)
+; CntIniFunc event dispatch
+CntIniFunc_EventDispatch:
+	call	AccWrap_PlayModeDispatch
+	call	AccompSeq_StopSequence
+
+CntIniFunc_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+MainMssSetUp:
+	cp	xbc, EVT_OTP_CNT_RESET
+	jr	z, MainMssSetUp_ClearMode
+	cp	xbc, EVT_OTP_CNT_SET
+	jr	nz, MainMssSetUp_ReturnZero
+	ld	(35998:16), de
+	incw	1, (35998:16)
+	ld	(35990:16), 7
+	jr	MainMssSetUp_ReturnZero
+MainMssSetUp_ClearMode:
+	ld	(35990:16), 0
+MainMssSetUp_ReturnZero:
+	ld xhl, 0:i3
+	ret
+MainMssSetUp_End:
+
+AcFreeSplitBoxProc:
+	lda xsp, (xsp-260)
+	push xiz
+	ld xiz, xde
+	ld	(xsp+260), xwa
+	cp xbc, EVT_LSW_DATA
+	jr z, AcFreeSplit_ValueChanged
+	cp xbc, EVT_REPAINT
+	jr z, AcFreeSplit_ShowHide
+	cp xbc, EVT_PAINT
+	jr z, AcFreeSplit_ShowHide
+	cp xbc, EVT_HIDE
+	jr z, AcFreeSplit_Release
+	cp xbc, EVT_SHOW
+	jr z, AcFreeSplit_Init
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	jrl AcFreeSplit_PopAndReturn
+
+AcFreeSplit_Init:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld XWA, (xsp + 0x0104)
+	ld xbc, 0x4180
+	call SetLswFilter
+	jrl UI_AccChordBoxProc_Return
+
+AcFreeSplit_Release:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld XWA, (xsp + 0x0104)
+	ld xbc, 0x4180
+	call ResetLswFilter
+	jrl UI_AccChordBoxProc_Return
+
+AcFreeSplit_ShowHide:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld xwa, 0x4180
+	call MainLswGet
+	jrl UI_AccChordBoxProc_Return
+
+AcFreeSplit_ValueChanged:
+	ld	xwa, (xsp+260)
+	ld	xde, xiz
+	call	InheritedProc
+	ld	xwa, (xiz)
+	ld	(0x340c0:24), xwa
+	cp	xwa, 16768
+	jr	nz, AcFreeSplit_CheckSecondKey
+	cpw	(xiz+4), 0
+	jr	z, AcFreeSplit_LookupNoteLabel
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0xf0, 0x1a
+	lda	xwa, (xsp+8)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	jr	AcFreeSplit_SendConfirmEvent
+AcFreeSplit_LookupNoteLabel:
+	ld	xwa, 16769
+	call	SndParam_LookupReadOnly
+	exts	xhl
+	divs	hl, 12
+	sla	hl, 2
+	lda	xbc, (AcFreeSplit_OctaveDigitTable:24)
+	ld	xwa, (xbc+hl)
+	push	xwa
+	ld	xwa, 16769
+	call	SndParam_LookupReadOnly
+	exts	xhl
+	divs	hl, 12
+	ld	wa, qhl
+	sla	wa, 2
+	lda	xbc, (ParamStr_Table_06:24)
+	ld	xwa, (xbc+wa)
+	push	xwa
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0xfc, 0x1a
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+16)
+AcFreeSplit_SendConfirmEvent:
+	lda xde, (xsp + 4)
+	ld XWA, (xsp + 0x0104)
+	ld xbc, EVT_PARA_DRAW
+	jrl AcFreeSplit_SendEventAndReturn
+
+AcFreeSplit_CheckSecondKey:
+	cp	xwa, 16769
+	jr	nz, UI_AccChordBoxProc_Return
+	ld	xwa, 16768
+	call	SndParam_LookupReadOnly
+	cp	hl, 0:i3
+	jr	z, AcFreeSplit_LookupSecondNote
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x08, 0x1b
+	lda	xwa, (xsp+8)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	jr	AcFreeSplit_SendSecondConfirm
+AcFreeSplit_LookupSecondNote:
+	ld	xwa, 16769
+	call	SndParam_LookupReadOnly
+	exts	xhl
+	divs	hl, 12
+	sla	hl, 2
+	lda	xbc, (AcFreeSplit_OctaveDigitTable:24)
+	ld	xwa, (xbc+hl)
+	push	xwa
+	ld	xwa, 16769
+	call	SndParam_LookupReadOnly
+	exts	xhl
+	divs	hl, 12
+	ld	wa, qhl
+	sla	wa, 2
+	lda	xbc, (ParamStr_Table_06:24)
+	ld	xwa, (xbc+wa)
+	push	xwa
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x14, 0x1b
+	lda	xwa, (xsp+16)
+	push	xwa
+	call	Sprintf_Locked
+	lda	xsp, (xsp+16)
+AcFreeSplit_SendSecondConfirm:
+	lda xde, (xsp + 4)
+	ld XWA, (xsp + 0x0104)
+	ld xbc, EVT_PARA_DRAW
+
+AcFreeSplit_SendEventAndReturn:
+	call SendEvent
+
+UI_AccChordBoxProc_Return:
+	ld xhl, 0:i3
+
+AcFreeSplit_PopAndReturn:
+	pop xiz
+	lda xsp, (xsp+260)
+	ret
+
+AcTranspose_ParamData:
+	ld	xhl, NAKA_FUNC_AcFreeSplitBoxProc
+	ret
+AcTranspose_ParamData_End:
+
+AcTransposeBoxProc:
+	lda xsp, (xsp-260)
+	push xiz
+	ld xiz, xde
+	ld	(xsp+260), xwa
+	cp xbc, EVT_LSW_DATA
+	jr z, AcTranspose_ValueChanged
+	cp xbc, EVT_REPAINT
+	jr z, AcTranspose_ShowHide
+	cp xbc, EVT_PAINT
+	jr z, AcTranspose_ShowHide
+	cp xbc, EVT_HIDE
+	jr z, AcTranspose_Release
+	cp xbc, EVT_SHOW
+	jr z, AcTranspose_Init
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	jrl UI_EventHandler_PopAndReturn
+
+AcTranspose_Init:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld XWA, (xsp + 0x0104)
+	ld xbc, 3:i3
+	call SetLswFilter
+	jrl UI_EventHandler_InitReturnZero
+
+AcTranspose_Release:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld XWA, (xsp + 0x0104)
+	ld xbc, 3:i3
+	call ResetLswFilter
+	jr UI_EventHandler_InitReturnZero
+
+AcTranspose_ShowHide:
+	ld XWA, (xsp + 0x0104)
+	ld xde, xiz
+	call InheritedProc
+	ld xwa, 3:i3
+	call MainLswGet
+	jr UI_EventHandler_InitReturnZero
+
+AcTranspose_ValueChanged:
+	ld	xwa, (xsp+260)
+	ld	xde, xiz
+	call	InheritedProc
+	ld	xwa, (xiz)
+	cp	xwa, 3
+	jr	nz, UI_EventHandler_InitReturnZero
+	lda	xbc, (xsp+4)
+	ld	wa, (xiz+4)
+	cp	wa, 5:i3
+	jr	nz, AcTranspose_FormatLabel
+	cp	(0x8c84:16), 0
+	jr	nz, AcTranspose_FormatLabel
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x8a, 0x1b
+	push	xbc
+	call	Strcpy
+	inc	8, xsp
+	jr	ChordProc_SendRefreshEvent
+AcTranspose_FormatLabel:
+	sla wa, 2
+	lda xde, (AcTranspose_KeyNameTable:24)
+	ld	xwa, (xde+wa)
+	push xwa
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x0b, 0xed, 0x00, 0x0b, 0x90, 0x1b
+	push xbc
