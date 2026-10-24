@@ -40,6 +40,7 @@ USAGE
   python3 scripts/converters/respell_wsa1_macros.py --family imm         # dry run, one family
   python3 scripts/converters/respell_wsa1_macros.py --family imm --apply # rewrite + in-context proof
   python3 scripts/converters/respell_wsa1_macros.py --family all --left  # what stays a macro, and why
+  python3 scripts/converters/respell_wsa1_macros.py --check              # exit 1 if any call is respellable
 
   Families: imm bit regmem stack unary memmem branch mx regdirect block (see FAMILY below).
   Needs the images built once (cd wsa1 && make all) for the symbol values.
@@ -754,6 +755,8 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--count", action="store_true")
     ap.add_argument("--left", action="store_true", help="list why sites stay macros")
+    ap.add_argument("--check", action="store_true",
+                    help="exit 1 if any macro call has a byte-proven native spelling (run after a merge)")
     a = ap.parse_args()
     known = macro_names()
     sites, texts = call_sites(known)
@@ -780,6 +783,10 @@ def main():
     if a.left or not a.apply:
         for (m, r), n in sorted(why.items(), key=lambda x: -x[1]):
             print("  left %5d  %-16s %s" % (n, m, r))
+    if a.check:
+        print("check: %s" % ("PASS -- no macro call has a native spelling" if not best else
+                             "FAIL -- %d macro call(s) can be respelled: run --apply" % len(best)))
+        return 1 if best else 0
     if a.apply and best:
         live = apply(sites, texts, best)
         print("applied: %d lines rewritten in-context, images byte-identical (%d reverted)"

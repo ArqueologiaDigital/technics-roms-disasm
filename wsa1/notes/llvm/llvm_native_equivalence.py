@@ -55,7 +55,8 @@ def mem(pfx, addr):
     to the (Xrr+d16) form, so the byte has to be sign-extended here or the
     two sides disagree for every negative frame offset.  A displacement of
     zero is a second special case: the macro still emits the two-byte d8
-    prefix, and the backend spells that with its documented `+256` sentinel.
+    prefix, which the backend spells `(xrr+0:8)` (KN5000 TOOLCHAIN_VERSION
+    UPDATE 17; it used to be a `+256` sentinel, and `+256` now means +256).
     """
     head = pfx.split("+")[0].strip()
     idx = pfx.split("+")[1].strip() if "+" in pfx else None
@@ -71,7 +72,9 @@ def mem(pfx, addr):
         except (TypeError, ValueError):
             return None, None          # symbolic d8: no spelling claimed
         if v == 0:
-            d = "256"                  # force-d8-with-zero sentinel
+            d = "0:8"                  # d8 form with a zero displacement (was the
+                                       # `+256` sentinel before TOOLCHAIN_VERSION
+                                       # UPDATE 17; `+256` now means +256)
         elif 0x80 <= v <= 0xFF:
             d = str(v - 256)
         elif not (-128 <= v <= 127):
