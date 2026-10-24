@@ -10,6 +10,11 @@ CLAUDE.md "Code-Coverage Evidence Ledger".
 | `build_maps.py` | For every byte of each image, which source line emits it, what kind of line it is, and which ELF symbols sit where? It reuses `scripts/analysis/data_range_census.py`'s marked-mirror instrument unchanged, and refuses an image whose mirror does not rebuild byte-identical. | `python3 scripts/analysis/dispatch_table_census/build_maps.py` (~2 min, 11 images) |
 | `census.py` | For each jump/call table, does every entry that points into code land on a labelled, disassembled instruction, spelled symbolically? Which tables do not, and what blocks their targets? Which tables are stale, i.e. not this build's entry points? The table detectors, target classes, blocker rules and the STALE rule are in its docstring. | `python3 scripts/analysis/dispatch_table_census/census.py --report` (also `--top`, `--list KEY`, `--stale KEY`, `--unresolved KEY`, `--snapshot DIR`, `--compare FILE.json`, `--selftest`) |
 
+`census_keys.py` answers the same question for a subset of the images, when the other maps are not built
+(for example in a worktree that touched only WSA1): build the maps with the same keys, then
+`python3 scripts/analysis/dispatch_table_census/census_keys.py prom_a,prom_b,prom_c --report`, with the same
+`DISPATCH_CENSUS_DIR`. It refuses `--snapshot` and `--compare`, which stay whole-repository.
+
 `make dispatch-census` runs all three steps: build the maps, compare with the newest committed snapshot
 (exit 1 if anything rose), and write today's snapshot into `docs/coverage/`.
 

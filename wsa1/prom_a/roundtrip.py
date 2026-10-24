@@ -18,7 +18,11 @@ METHOD
        (b) llvm-mc's disassembler text   -- guaranteed to be in llvm-mc's dialect
        (c) a macro from the MACRO PRELUDE inside prom_a/wsa1_prom_a.s, for the
            8-bit-direct "(n)" operand forms that llvm-mc's tlcs900 backend has no
-           encoding for (see that prelude for why, and for the encoding source)
+           encoding for (see that prelude for why, and for the encoding source).
+           Since 2026-10-24 most of those forms have native spellings, and the tree
+           uses them: after splicing this tool's output, run (repository root)
+           `python3 scripts/converters/respell_wsa1_macros.py --family all --apply`;
+           `--check` exits 1 while any respellable macro call is left
        (d) .byte -- give up, keep the bytes, with unidasm's text in a comment
   3. Each candidate is assembled with `llvm-mc --show-encoding` (the macro prelude
      is prepended, so macro candidates resolve) and compared byte for byte.

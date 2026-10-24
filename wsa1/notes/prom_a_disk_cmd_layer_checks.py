@@ -58,7 +58,7 @@ def calr_callers(lines, target):
 def op_written_at(lines, label):
     """For a builder, the immediate written to request-block offset +0 that
     immediately precedes its `call 0xfe66c7` (Fdc_Request).  Returns the op int
-    or None.  Reads the `m_ld_mi16 MDI+rN, 0, 0xNN` line before the call."""
+    or None.  Reads the `ldw (xrr), 0xNN` line (once `m_ld_mi16 MDI+rN, 0, 0xNN`) before the call."""
     body = []
     grab = False
     for i, l in enumerate(lines):
@@ -69,9 +69,11 @@ def op_written_at(lines, label):
     # find the last "MDI+r?, 0, 0xXXXX" that precedes a call to fe66c7 or f42d38
     op = None
     for l in body:
-        m = re.search(r'm_ld_mi16 MDI\+r\d,\s*0,\s*0x([0-9a-fA-F]+)', l)
+        # `ldw (xrr), 0xNN` since the 2026-10-24 macro respelling; `m_ld_mi16 MDI+rN, 0, 0xNN` before
+        m = (re.search(r'm_ld_mi16 MDI\+r\d,\s*0,\s*0x([0-9a-fA-F]+)', l)
+             or re.search(r'\bldw\s+\(x[a-z]{2}\),\s*0x([0-9a-fA-F]+)', l, re.I))
         if m: op = int(m.group(1), 16)
-        if 'call 0xfe66c7' in l or 'call 0xf42d38' in l:
+        if re.search(r'\bcall\s+(0xfe66c7|0xf42d38|Fdc_Request|T_Fdc_Request_SaveRegs_Entry)\b', l):
             return op
     return op
 

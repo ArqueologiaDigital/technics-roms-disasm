@@ -2,6 +2,39 @@
 ; include/tlcs900_mem_ops.inc -- the TLCS-900 byte-emitter macros, ONE COPY
 ; ==============================================================================
 ;
+; ★ STATE AS OF 2026-10-24: THREE MACROS ARE STILL NEEDED, NINE CALL SITES.
+;   scripts/converters/respell_wsa1_macros.py rewrote every other call site in
+;   prom_a, prom_b, the kernel and maincpu/shared as an llvm-mc instruction --
+;   12,437 of 12,446 -- each one proven byte for byte against the macro's own
+;   expansion under every image that assembles it, cross-checked against MAME
+;   unidasm's reading, and re-proven in context by the gate.  What is left are
+;   the forms the pinned backend has NO spelling for at all (backend gaps):
+;
+;     m_rd_add_rrx RLX  5 sites  add R32,<bank reg>   e7 <r> 80+R  add XHL,XDE3
+;                                the byte and word forms exist (addb_erp,
+;                                addw_erp); the E7 long form has no def
+;     m_rd_ldcf_ax RBX  2 sites  ldcf A,<bank byte>   c7 <r> 2b    ldcf A,RH3
+;     m_rd_stcf_ax RBX  2 sites  stcf A,<bank byte>   c7 <r> 2c    stcf A,RH3
+;                                only the D7 word stcf exists (stcfw_erp);
+;                                no C7 byte form of either has a def
+;   (wsa1/notes/llvm/wsa1_macro_gap_probe.s is the probe behind these lines.)
+;
+;   All nine are in prom_b.  Re-measure, and see the reason for each, with
+;       python3 scripts/converters/respell_wsa1_macros.py --left
+;   and after any merge that may have brought macro calls back:
+;       python3 scripts/converters/respell_wsa1_macros.py --check   (exit 1 = respellable)
+;       python3 scripts/converters/respell_wsa1_macros.py --apply   (then make gate-wsa1)
+;
+; ⚠ EVERY OTHER MACRO BELOW HAS ZERO CALL SITES AND IS RETIRED.  New code must
+;   use the instruction: the encoding-quirks table in ../CLAUDE.md and
+;   wsa1/notes/llvm/wsa1-macro-respell.md give the spelling for each form
+;   (`cp (Sym:16), 1`, `pushw (xiz-4)`, `ld a, (xiy+c)`, `ldto_lerp xiz, 0x38`
+;   ...).  The definitions are kept only so that a branch still in flight that
+;   calls one keeps assembling; delete them once --check passes on main after
+;   that branch is merged.  The prose below ("the forms llvm-mc's tlcs900
+;   backend has no encoding for", "only a handful of the resulting
+;   instructions") describes the backend of 2026-08 and is no longer true.
+;
 ; ★ THIS FILE IS SHARED.  It is `.include`d by
 ;
 ;     prom_a/wsa1_prom_a.s   CPU 1, IC12, base 0xF80000

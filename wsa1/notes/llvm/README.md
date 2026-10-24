@@ -1,15 +1,22 @@
 # What llvm-mc still cannot spell, and what it can now
 
+> **2026-10-24: the respell is done.** `scripts/converters/respell_wsa1_macros.py` rewrote 12,437 of
+> the 12,446 macro call sites as instructions, each proven byte for byte. Nine remain, in three forms
+> the backend has no spelling for. The current state is `wsa1-macro-respell.md`. The rest of this page
+> describes the 2026-09 measurement; the two tools below now report on the nine sites that are left.
+
 `wsa1/include/tlcs900_mem_ops.inc` exists only to work around the assembler:
 122 macros, 12,539 call sites, every one of them emitting raw `.byte` because
 llvm-mc had no mnemonic for the instruction.  These two tools measure how much
 of that is still necessary.  Both read the REAL call sites in this tree, so
 their numbers are about this firmware, not about a synthetic test case.
 
-| script | question it answers | run it |
-|---|---|---|
-| `llvm_encoding_gaps.py` | which forms are fixed, which are still rejected, and which are ACCEPTED AND WRONG | `python3 wsa1/notes/llvm/llvm_encoding_gaps.py` |
-| `llvm_native_equivalence.py` | for every macro call site in the tree, does the native spelling emit the SAME BYTES? | `python3 wsa1/notes/llvm/llvm_native_equivalence.py` |
+| script                                               | question it answers                                                                                                                               | run it                                                                          |
+|------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `llvm_encoding_gaps.py`                              | which forms are fixed, which are still rejected, and which are ACCEPTED AND WRONG                                                                 | `python3 wsa1/notes/llvm/llvm_encoding_gaps.py`                                 |
+| `llvm_native_equivalence.py`                         | for every macro call site in the tree, does the native spelling emit the SAME BYTES?                                                              | `python3 wsa1/notes/llvm/llvm_native_equivalence.py`                            |
+| `../../../scripts/converters/respell_wsa1_macros.py` | builds each call site's native spelling from the macro arguments, proves it byte for byte and against unidasm, and rewrites the line (2026-10-24) | `python3 scripts/converters/respell_wsa1_macros.py --check`                     |
+| `wsa1_macro_gap_probe.s`                             | which spellings exist for the three forms still emitted as bytes                                                                                  | `llvm-mc -triple=tlcs900 -show-encoding wsa1/notes/llvm/wsa1_macro_gap_probe.s` |
 
 Both take `--selftest` (exit non-zero on failure); the equivalence tool also
 takes `-v` to print the first few mismatches per macro.
@@ -51,5 +58,7 @@ addressing class for which this tool claims nothing.
 The tool renders both sides itself, and two of its own details are easy to get
 wrong and were: the `MBD/MWD/MLD/MDD` displacement is an **unsigned byte** in
 the macro (`0xfe` means -2), and a displacement of **zero** still emits the
-two-byte d8 prefix, which the backend spells with its `+256` sentinel.  Getting
-either wrong produces mismatches that look like backend bugs and are not.
+two-byte d8 prefix.  The backend spells that `(xrr+0:8)` (KN5000 TOOLCHAIN_VERSION
+UPDATE 17).  This page used to say `+256`, the sentinel the backend used before;
+`(xrr+256)` now means a displacement of +256.  Getting either wrong produces
+mismatches that look like backend bugs and are not.

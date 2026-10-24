@@ -178,12 +178,14 @@ def analyse(arms=False, offsets=False):
         if m and m.group(1) not in order:
             order[m.group(1)] = i
     blk = block_of(lines)
-    eq_now = {}
+    eq_now, eq_comment = {}, {}
     if blk:
         for t in lines[blk[0]:blk[1] + 1]:
-            m = re.match(r'^\s*\.set\s+([\w.$@]+)\s*,\s*(0x[0-9a-fA-F]+)', t)
+            m = re.match(r'^\s*\.set\s+([\w.$@]+)\s*,\s*(0x[0-9a-fA-F]+)\s*(;.*)?$', t)
             if m:
                 eq_now[m.group(1)] = int(m.group(2), 16)
+                if m.group(3):                  # a hand comment on an equate survives regeneration
+                    eq_comment[m.group(1)] = m.group(3)
     own = a_names - set(eq_now)
     stats = collections.Counter()
     edits, equates = {}, {}
@@ -271,6 +273,17 @@ def analyse(arms=False, offsets=False):
             nm = sorted([n for n in a_lab[base] if not STRUCT.search(n)], key=lambda n: rank(n, order))[0]
             return nm if base == v else "%s+0x%X" % (nm, v - base)
         return None
+    def in_stale_table(li):
+        """a `census: stale` marker in the comment block above (same paragraph, no blank line between):
+        an older build's table, whose values must stay numbers -- naming them after whatever routine is at
+        that address today would assert a relationship nobody has shown"""
+        j = li - 1
+        while j >= 0 and lines[j].strip():
+            if "census: stale" in lines[j]:
+                return True
+            j -= 1
+        return False
+
     for li, text in enumerate(lines):
         if blk and blk[0] <= li <= blk[1]:
             continue
@@ -285,6 +298,9 @@ def analyse(arms=False, offsets=False):
             continue
         v = int(m.group("num"), 0)
         if not (0xF00000 <= v <= 0xFFFFFF):
+            continue
+        if kind == "long" and in_stale_table(li):
+            stats["kept_numeric_in_stale_table"] += 1
             continue
         img_of = "a" if v >= 0xF80000 else "b"
         if img_of == "a" and kind in ("call", "jp"):
@@ -327,17 +343,19 @@ def analyse(arms=False, offsets=False):
             edits[li] = lead + new_code
         stats["replaced_%s_%s" % (kind, img_of)] += 1
     return dict(lines=lines, edits=edits, equates=equates, stats=stats, blk=blk, eq_now=eq_now,
-                b_lab=b_lab, new_labels=new_labels)
+                eq_comment=eq_comment, b_lab=b_lab, new_labels=new_labels)
 
 
-def render_block(equates):
+def render_block(equates, comments=None):
     out = [BEGIN,
            "; prom_b is linked separately: these name the prom_b addresses this file calls or",
            "; points at.  Each name is the label prom_b's own linked ELF defines at that address",
            "; (best non-structural name).  The gate checks every VALUE; `--check-equates`",
-           "; checks the NAMES against prom_b after a rename there.  Regenerate, never edit."]
+           "; checks the NAMES against prom_b after a rename there.  Regenerate, never edit",
+           "; the names or values; a trailing comment on an equate is kept."]
     for n, v in sorted(equates.items(), key=lambda t: (t[1], t[0])):
-        out.append("\t.set %-40s 0x%08X" % (n + ",", v))
+        c = (comments or {}).get(n)
+        out.append(("\t.set %-40s 0x%08X\t%s" % (n + ",", v, c)) if c else ("\t.set %-40s 0x%08X" % (n + ",", v)))
     out.append(END)
     return out
 
@@ -373,7 +391,7 @@ def main():
     eq = dict(res["eq_now"])
     eq.update(res["equates"])
     blk = block_of(lines)
-    new_blk = render_block(eq)
+    new_blk = render_block(eq, res["eq_comment"])
     if blk:
         lines[blk[0]:blk[1] + 1] = new_blk
     else:

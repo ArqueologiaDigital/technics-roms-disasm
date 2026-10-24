@@ -40,11 +40,17 @@ WHAT AN "OPERATION WORD" IS HERE
   Fdc_Request takes a pointer to a 16-byte request block whose +0x00 word is
   the operation.  Every located caller writes that word as an IMMEDIATE, in one
   of two shapes:
-    `m_ld_mi16 MDI+rN, 0, 0xNNNN`   store imm16 through a register, offset 0
-    `stiw_da (0xAAAA), 0xNNNN`      store imm16 to an absolute address
+    `ldw (xrr), 0xNNNN`             store imm16 through a register, offset 0
+                                    (bytes b0+r 02 nn nn; spelled `m_ld_mi16 MDI+rN, 0, ...`
+                                    until the 2026-10-24 macro respelling)
+    `ldw (0xAAAAAA:24), 0xNNNN`     store imm16 to an absolute address
+                                    (bytes f2 aa aa aa 02 nn nn; once `stiw_da`)
   For the second shape the block base is taken to be the LOWEST absolute
-  address any `stiw_da`/`stl_da` in the same window writes, which is what +0x00
-  means; the script prints the base it chose so the choice can be checked.
+  address any absolute-address store in the same window writes, which is what
+  +0x00 means; the script prints the base it chose so the choice can be checked.
+  Both shapes are recognised from the instruction BYTES each line's comment
+  carries, not from the spelling, so a respelling cannot blind the census
+  again (the 2026-10-24 one did: every indirect store went unrecognised).
 
   ⚠ AND THE INDIRECT SHAPE NEEDS A POINTER CHECK, which is why this script has
   one.  `m_ld_mi16 MDI+r0, 0, ...` writes offset 0 OF WHATEVER THE REGISTER
@@ -77,12 +83,9 @@ VENEER_BODIES = (0xFE3020, 0xFE30D8)       # the veneer module's own call sites
 WINDOW = 140                               # instructions to walk back
 
 LINE = re.compile(r"^\s*(\S.*?)\s+;\s([0-9A-F]{6})\s\s([0-9a-f ]+?)\s*$")
-IND0 = re.compile(r"m_ld_mi16\s+MDI\+r(\d+),\s*0,\s*(0x[0-9a-f]+)")
 REGS = ["XWA", "XBC", "XDE", "XHL", "XIX", "XIY", "XIZ", "XSP"]
 LOADS = re.compile(r"\b(?:ld|lda|lda_24|ldl_da|ld_sd8b)\s+(x?[a-zA-Z]{2,3})\s*,")
 ARITH = re.compile(r"\b(?:add|sub|inc|dec)\s+(?:\d+,)?(x?[a-zA-Z]{2,3})\b")
-ABSW = re.compile(r"stiw_da\s+\((0x[0-9a-f]+)\),\s*(0x[0-9a-f]+)")
-ABSANY = re.compile(r"st[iwl]+_da\s+\((0x[0-9a-f]+)\)")
 
 
 def listing():
@@ -92,7 +95,7 @@ def listing():
         m = LINE.match(line.rstrip("\n"))
         if not m:
             continue
-        out.append((int(m.group(2), 16), m.group(1), len(m.group(3).split())))
+        out.append((int(m.group(2), 16), m.group(1), [int(x, 16) for x in m.group(3).split()]))
     out.sort()
     return out
 
@@ -108,28 +111,42 @@ def opcode_refs(target):
     return sorted(hits)
 
 
+def ind0(b):
+    """`ldw (xrr), imm16` -- b0+r 02 lo hi -- as (register, value), else None"""
+    if len(b) == 4 and 0xB0 <= b[0] <= 0xB7 and b[1] == 0x02:
+        return REGS[b[0] - 0xB0], b[2] | b[3] << 8
+    return None
+
+
+def abs_store(b):
+    """an absolute 24-bit-address store -- f2 a a a op ... with op LD#8 (00), LDW#16 (02) or
+    LD (mem),R (0x40-0x6f) -- as (address, imm16 or None), else None.  (f2 .. 0x30-0x37 is LDA.)"""
+    if len(b) >= 5 and b[0] == 0xF2 and (b[4] in (0x00, 0x02) or 0x40 <= b[4] <= 0x6F):
+        return b[1] | b[2] << 8 | b[3] << 16, (b[5] | b[6] << 8) if b[4] == 0x02 and len(b) == 7 else None
+    return None
+
+
 def operation_at(lines, idx):
     """Walk back from lines[idx] and return (value, how, base) or None."""
     lo = max(0, idx - WINDOW)
     win = lines[lo:idx]
     # block base for the absolute shape: the lowest absolute address written
-    absaddrs = [int(m.group(1), 16) for _, t, _ in win
-                for m in [ABSANY.search(t)] if m]
+    absaddrs = [s[0] for _, _, b in win for s in [abs_store(b)] if s]
     base = min(absaddrs) if absaddrs else None
     best = None
     dirty = set()
-    for at, text, _ in win:
-        m = IND0.search(text)
+    for at, text, b in win:
+        m = ind0(b)
         if m:
-            reg = REGS[int(m.group(1))]
+            reg, val = m
             if reg not in dirty:
-                best = (int(m.group(2), 16), "indirect +0 @%06X" % at, None)
+                best = (val, "indirect +0 @%06X" % at, None)
             _track(text, dirty)
             continue
         _track(text, dirty)
-        m = ABSW.search(text)
-        if m and base is not None and int(m.group(1), 16) == base:
-            best = (int(m.group(2), 16), "absolute @%06X" % at, base)
+        m = abs_store(b)
+        if m and m[1] is not None and base is not None and m[0] == base:
+            best = (m[1], "absolute @%06X" % at, base)
     return best
 
 

@@ -6,7 +6,7 @@ WHAT QUESTION EACH SECTION ANSWERS, and the exact command:
   python3 wsa1/notes/driver_insight/driver_insight_probes.py --hdd
       "Does the ROM itself say what the unit-1 back end at 0x7E0008 is?"
       Decodes the FAT16 BPB at prom_a 0xFE69BF and the MBR partition entry at
-      0xFE6DBF straight out of the EPROM image, and checks that the geometry
+      0xFE6D7D (the MBR at 0xFE6BBF, +0x1BE) straight out of the EPROM image, and checks that the geometry
       they state is the same geometry the ATA INITIALIZE DEVICE PARAMETERS
       operands and the 0xFE31xx compares use.
 
@@ -81,7 +81,8 @@ def check(name, got, want):
 # ---------------------------------------------------------------- --hdd
 
 BPB_ADDR = 0xFE69BF          # DiskImage_HardDisk_BootSector
-MBR_ADDR = 0xFE6DBF          # the master boot record that follows it
+MBR_ADDR = 0xFE6BBF          # DiskImage_HardDisk_MBR, the master boot record that follows it
+                             # (was 0xFE6DBF, the byte after it, until 2026-10-24; never read)
 
 
 def sec_hdd(selftest=False):

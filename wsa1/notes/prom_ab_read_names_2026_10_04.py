@@ -151,7 +151,9 @@ ROWS = [
      "else 0xFF."),
     ("FE4BCC", "DiskCmd_CountFreeSpace",
      "command 0x80: Fat_Load, then counts the clusters 0 .. (0x605D58) whose FAT entry is 0; returns the count scaled by\n"
-     "8 on FAT16 or by the format's factor from Table_FE6DBF+0x75."),
+     "8 on a type-1 drive (where it stops at 129 free clusters) and halved on media type 3; else as counted.\n"
+     "(Corrected 2026-10-24: it used to say 'or by the format's factor from Table_FE6DBF+0x75'; that byte only\n"
+     "has to differ from 0xFFFF -- DiskCmd_CountFreeSpace_ByMedia, notes/frame_disk_switch_tables.py.)"),
     ("FE3F82", "DiskCmd_ReadSectors",
      "command 0x81: Disk_ReadSectors(sector, count from the arguments, into the transfer buffer (0x605D2C))."),
     ("FE3F99", "DiskCmd_WriteSectors",
