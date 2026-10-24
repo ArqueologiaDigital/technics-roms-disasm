@@ -1310,11 +1310,12 @@ The two kinds of column answer different questions and must not be conflated. **
 `python scripts/build/compare_roms.py`; measured 2026-10-24 after the wave 1 merges it printed `romset bytematch:
 100.00%` with all twelve LLVM sections at 100.00% (nine before `maincpu v8`, `subcpu payload v141` and
 `subcpu v141 update image` were added; the certifying gate is `make gate`,
-`scripts/analysis/assert_byte_identical.py`). With `subcpu payload v140` and `subcpu v140 update image`
-(wave 2) it prints fourteen sections, all 100.00% (re-measured 2026-10-24). The three update-image
-sections have no source row of their own: each is the compressed form of the payload row above it.
-`DISASSEMBLY_PLAN.md`'s standing invariant also counts the six legacy ASL mirror builds, which only run
-when their `.rebuilt.rom` artefacts are present in `rebuilt_ROMs/`, so it now counts 20.
+`scripts/analysis/assert_byte_identical.py`). With wave 2's `maincpu v6`, `maincpu v5`, `subcpu payload v140`,
+`subcpu v140 update image` and `hdae5000 v2.01i` it prints seventeen sections, all 100.00% (re-measured
+2026-10-24 after the wave 2 merges). The three update-image sections have no source row of their own:
+each is the compressed form of the payload row above it. `DISASSEMBLY_PLAN.md`'s standing invariant also
+counts the six legacy ASL mirror builds, which only run when their `.rebuilt.rom` artefacts are present in
+`rebuilt_ROMs/`, so it now counts 23.
 
 **maincpu v8** has no tree of its own. Its dump differs from v9 in one byte,
 `FIRMWARE_VERSION` at 0xFFFFE8 (0x08 instead of 0x09), so the Makefile assembles the v9

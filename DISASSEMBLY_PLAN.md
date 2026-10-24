@@ -43,12 +43,13 @@ C."* That is Wave 4's subject.
 ## Standing invariant (unchanged, and the one thing worth keeping from here)
 
 `make all` + `python scripts/build/compare_roms.py` must stay at **100.00% across
-all 20 sections**, the legacy ASL mirror builds included, after every change.
+all 23 sections**, the legacy ASL mirror builds included, after every change.
 Verified 2026-08-08: 15/15 at 100.00%.  Since 2026-10-24 the count is 18: twelve
 LLVM sections (`maincpu v8`, built from the v9 sources, `subcpu payload v141` and
 `subcpu v141 update image` were added) plus the six ASL mirror builds, which only
 run when their `.rebuilt.rom` artefacts are present. On 2026-10-24, after the wave 1
 merges and without the ASL artefacts, `compare_roms.py` printed 12/12 LLVM sections
-at 100.00%. Wave 2 added `subcpu payload v140` and `subcpu v140 update image`, so the
-count is 20: fourteen LLVM sections, which `compare_roms.py` printed at 100.00% on
-2026-10-24 without the ASL artefacts, plus the six ASL mirror builds.
+at 100.00%. Wave 2 added `maincpu v6`, `maincpu v5`, `subcpu payload v140`, `subcpu v140 update
+image` and `hdae5000 v2.01i`, so the count is 23: seventeen LLVM sections, which
+`compare_roms.py` printed at 100.00% on 2026-10-24 after the wave 2 merges without the
+ASL artefacts, plus the six ASL mirror builds.
