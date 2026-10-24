@@ -262,15 +262,15 @@ HDAE5000_FltDec_Convert:
 	pushw 0x0023
 	pushw 0x948a
 	call HDAE5000_MemFill
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ld	qiz, 0
 HDAE5000_FltDec_Convert_Loop:
 	ld	bc, qiz
 	add	bc, bc
 	lda xde, (HDAE5000_RAM_FltDecFraction:24)
 	lda xwa, (HDAE5000_RAM_FltDecMantissa:24)
-	ldw	(xwa+bc), 0x0000	; ld (XWA+BC),0x0000
-	ldw	(xde+bc), 0x0000	; ld (XDE+BC),0x0000
+	ldw	(xwa+bc), 0x0000
+	ldw	(xde+bc), 0x0000
 	inc	1, qiz
 	cpw	qiz, 0x0020
 	jr	lt, HDAE5000_FltDec_Convert_Loop
@@ -345,7 +345,7 @@ HDAE5000_FltDec_Convert_Join7:
 	add	iz, hl
 	sub	iz, bc
 HDAE5000_FltDec_Convert_Join8:
-	pushw iz                                ; push IZ
+	pushw iz
 	calr	HDAE5000_FltDec_DecimalExponent
 	inc 2, xsp
 	ld (xsp + 0x04), hl
@@ -430,7 +430,7 @@ HDAE5000_FltDec_Convert_Join12:
 	pushm	(xsp+6)
 	ld	wa, 6:i3
 	sub	wa, iz
-	pushw wa                                ; push WA
+	pushw wa
 	pushw 0x0023
 	pushw 0x94aa
 	jr	t, HDAE5000_FltDec_Convert_Join13
@@ -454,11 +454,11 @@ HDAE5000_FltDec_Convert_Next2:
 	pushm	(xsp+6)
 	ld	wa, 6:i3
 	sub	wa, iz
-	pushw wa                                ; push WA
+	pushw wa
 	push xbc
 HDAE5000_FltDec_Convert_Join13:
 	calr	HDAE5000_FltDec_ShiftRightBits
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ld	qiz, 1
 HDAE5000_FltDec_Convert_Loop8:
 	push	qiz
@@ -508,7 +508,7 @@ HDAE5000_FltDec_Convert_Next3:
 	jr	lt, HDAE5000_FltDec_Convert_Loop9
 	ld	de, (xsp+6)
 	inc	1, de
-	lda	xbc, (xhl+de)	; lda XBC,XHL+DE
+	lda	xbc, (xhl+de)
 	cp	(xbc), 0x05
 	jr	c, HDAE5000_FltDec_Convert_Join15
 	ld	wa, (xsp+6)
@@ -527,7 +527,7 @@ HDAE5000_FltDec_Convert_Loop10:
 HDAE5000_FltDec_Convert_Next4:
 	cp	qiz, 0
 	jr	z, HDAE5000_FltDec_Convert_Join16
-	lda	xwa, (xhl+qiz)	; lda XWA,XHL+QIZ
+	lda	xwa, (xhl+qiz)
 	cp	(xwa), 0x09
 	jr	ugt, HDAE5000_FltDec_Convert_Loop10
 HDAE5000_FltDec_Convert_Join16:
@@ -552,8 +552,8 @@ HDAE5000_FltDec_Convert_Next5:
 ; arguments on the stack.
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_ShiftRightBits:
-	dec 8, xsp                              ; dec 0,XSP
-	pushw iz                                ; push IZ
+	dec 8, xsp
+	pushw iz
 	ld	iz, 0:i3
 	ld	wa, 0:i3
 	ld	hl, (xsp+18)
@@ -615,8 +615,8 @@ HDAE5000_FltDec_ShiftRightBits_Join3:
 	srla	bc
 HDAE5000_FltDec_ShiftRightBits_Join4:
 	ld (xiy), bc
-	popw iz                                 ; pop IZ
-	inc 8, xsp                              ; inc 0,XSP
+	popw iz
+	inc 8, xsp
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -664,12 +664,12 @@ HDAE5000_FltDec_ShiftLeftBits_Next:
 ; digit (HDAE5000_FltDec_AddDigit).  IZ preserved.
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_FractionDigits:
-	pushw iz                                ; push IZ
+	pushw iz
 	lda xde, (HDAE5000_RAM_FltDecFraction:24)
 	ld	xwa, xde
 	lda	xbc, (xde+18)
 HDAE5000_FltDec_FractionDigits_Loop:
-	ldw (xwa+), 0x0000		; ld (XWA+),0x0000
+	ldw (xwa+), 0x0000
 	cp	xwa, xbc
 	jr	c, HDAE5000_FltDec_FractionDigits_Loop
 	ld	wa, (xsp+6)
@@ -707,19 +707,19 @@ HDAE5000_FltDec_FractionDigits_Next:
 	ld	wa, (xbc+wa)
 	cp	wa, 0:i3
 	jr	z, HDAE5000_FltDec_FractionDigits_Loop3
-	pushw iz                                ; push IZ
-	pushw wa                                ; push WA
+	pushw iz
+	pushw wa
 	calr	HDAE5000_FltDec_AddDigit
 	inc 4, xsp
 	ldw	bc, 0x0008
 	sub	bc, (xsp+8)
 	add	bc, bc
 	lda xwa, (HDAE5000_RAM_FltDecFraction:24)
-	ldw	(xwa+bc), 0x0000	; ld (XWA+BC),0x0000
+	ldw	(xwa+bc), 0x0000
 	cp	iz, 0x0020
 	jrl	le, HDAE5000_FltDec_FractionDigits_Loop2
 HDAE5000_FltDec_FractionDigits_Epilogue:
-	popw iz                                 ; pop IZ
+	popw iz
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -787,7 +787,7 @@ HDAE5000_FltDec_DivBy10_Loop:
 ; Compiled C, arguments on the stack; IZ preserved.
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_MulBy10:
-	pushw iz                                ; push IZ
+	pushw iz
 	ld	ix, 0:i3
 	ld	xbc, 0:i3
 HDAE5000_FltDec_MulBy10_Loop:
@@ -833,7 +833,7 @@ HDAE5000_FltDec_MulBy10_Next2:
 	incw	1, (xhl+28)
 HDAE5000_FltDec_MulBy10_Join:
 	ldw	(xbc), 0x0000
-	popw iz                                 ; pop IZ
+	popw iz
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -878,7 +878,7 @@ HDAE5000_FltDec_FracMulBy10_Next2:
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_NormalizeLeft:
 	dec	2, xsp
-	pushw iz                                ; push IZ
+	pushw iz
 	ld	iz, 0:i3
 	cpw	(xsp+12), 0x0000
 	jr	le, HDAE5000_FltDec_NormalizeLeft_Join
@@ -917,12 +917,12 @@ HDAE5000_FltDec_NormalizeLeft_Next:
 HDAE5000_FltDec_NormalizeLeft_Join2:
 	cp	iz, 0:i3
 	jr	z, HDAE5000_FltDec_NormalizeLeft_Join3
-	pushw iz                                ; push IZ
+	pushw iz
 	pushm	(xsp+14)
 	ld xwa, (xsp + 0x0c)
 	push xwa
 	calr	HDAE5000_FltDec_ShiftLeftBits
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 HDAE5000_FltDec_NormalizeLeft_Join3:
 	add	(xsp+2), iz
 HDAE5000_FltDec_NormalizeLeft_Next2:
@@ -932,7 +932,7 @@ HDAE5000_FltDec_NormalizeLeft_Next2:
 	jr	z, HDAE5000_FltDec_NormalizeLeft_Loop2
 	ld	hl, (xsp+2)
 HDAE5000_FltDec_NormalizeLeft_Epilogue:
-	popw iz                                 ; pop IZ
+	popw iz
 	inc 2, xsp
 	ret
 
@@ -941,7 +941,7 @@ HDAE5000_FltDec_NormalizeLeft_Epilogue:
 ; Out: HL = the shift count.  IZ preserved.
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_NormalizeRight:
-	pushw iz                                ; push IZ
+	pushw iz
 	ld xde, (xsp + 0x06)
 	ld	iz, 0:i3
 	ld	bc, (xsp+10)
@@ -978,15 +978,15 @@ HDAE5000_FltDec_NormalizeRight_Next:
 HDAE5000_FltDec_NormalizeRight_Join2:
 	cp	iz, 0:i3
 	jr	z, HDAE5000_FltDec_NormalizeRight_Done
-	pushw bc                                ; push BC
-	pushw iz                                ; push IZ
+	pushw bc
+	pushw iz
 	push xde
 	calr	HDAE5000_FltDec_ShiftRightBits
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 HDAE5000_FltDec_NormalizeRight_Done:
 	ld	hl, iz
 HDAE5000_FltDec_NormalizeRight_Epilogue:
-	popw iz                                 ; pop IZ
+	popw iz
 	ret
 
 ; ---------------------------------------------------------------------------
@@ -995,7 +995,7 @@ HDAE5000_FltDec_NormalizeRight_Epilogue:
 ; In:  (xsp+4) = binary exponent (word).  XIZ preserved.
 ; ---------------------------------------------------------------------------
 HDAE5000_FltDec_DecimalExponent:
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld	wa, (xsp+16)
 	exts xwa
@@ -1048,7 +1048,7 @@ HDAE5000_FltDec_DecimalExponent_Done:
 	ld	xhl, xiz
 HDAE5000_FltDec_DecimalExponent_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 
@@ -1276,9 +1276,9 @@ HDAE5000_SDivMod32_Common_Join:
 	cpl	bc
 	inc 1, xbc
 HDAE5000_SDivMod32_Common_Join2:
-	pushw de                                ; push DE
+	pushw de
 	calr	HDAE5000_UDivMod32
-	popw wa                                 ; pop WA
+	popw wa
 	cp	w, 1:i3
 	jr	z, HDAE5000_SDivMod32_Common_Skip
 	ld	xhl, xde

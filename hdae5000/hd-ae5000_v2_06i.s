@@ -659,16 +659,16 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x1CA: ResEventProc (class id 0x0160000C) ===
 	ld xwa, NAKA_CLASS_ResEvent	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResEventProc)             ; Handler function via table offset 0x013C
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ld wa, (0x239822:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; data size (variable)
 	lda xwa, (0x2397ea:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -678,16 +678,16 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x1EA: ResMethodProc (class id 0x0160000D) ===
 	ld xwa, NAKA_CLASS_ResMethod	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResMethodProc)             ; Handler function via table offset 0x0140
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ld wa, (0x239870:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; data size (variable)
 	lda xwa, (0x239824:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -697,15 +697,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x12A: ApFunctionProc, the module's ApFunction table (class id 0x01600002) ===
 	ld xwa, NAKA_CLASS_ApFunction	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x45	; ld (XSP+0x08), 0045h  ; size = 69 bytes
 	lda xwa, (0x23952a:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -715,15 +715,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x42A: the names of table 0x12A ===
 	ld xwa, NAKA_CLASS_ApFunction	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x45	; ld (XSP+0x08), 0045h  ; size = 69 bytes
 	lda xwa, (0x239642:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -733,15 +733,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x10A: FunctionProc, the module's Function table (class id 0x01600001) ===
 	ld xwa, NAKA_CLASS_Function	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xD	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
 	lda xwa, (0x239872:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -751,15 +751,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x40A: the names of table 0x10A ===
 	ld xwa, NAKA_CLASS_Function	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xD	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
 	lda xwa, (0x2398aa:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -769,15 +769,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x14A: MainFunctionProc, the module's MainFunction table (class id 0x01600003) ===
 	ld xwa, NAKA_CLASS_MainFunction	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
 	lda xwa, (0x239fd2:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -787,15 +787,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x44A: the names of table 0x14A ===
 	ld xwa, NAKA_CLASS_MainFunction	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
 	lda xwa, (0x23a00e:24)
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -805,15 +805,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x7F: ViewableProc, the UI object descriptor table (class id 0x01600010) ===
 	ld xwa, NAKA_CLASS_Viewable	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ViewableProc)             ; Handler function via table offset 0x0280
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x315	; ld (XSP+0x08), 0315h  ; entry count = 789 objects
 	lda xwa, (HDAE5000_UiObject_PtrTable:24)	; = HDAE5000_UiObject_PtrTable
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -823,15 +823,15 @@ HDAE5000_Handler_Registration:	; 280020h
 
 	; === table 0x37F: ResNameProc, the UI object names (class id 0x0160000F) ===
 	ld xwa, NAKA_CLASS_ResName	; class id
-	ld (xsp + 0:8), xwa	; ld (XSP+0x00), XWA
+	ld (xsp + 0:8), xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ResNameProc)             ; Handler function via table offset 0x0148
-	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA
+	ld (xsp + 4), xwa
 	ldw (xsp + 8), 0x315	; ld (XSP+0x08), 0315h  ; entry count = 789 objects
 	lda xwa, (HDAE5000_UiObjectName_PtrTable:24)	; = HDAE5000_UiObjectName_PtrTable
-	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA
-	lda xwa, (xsp)	; lda XWA, XSP
+	ld (xsp + 10), xwa
+	lda xwa, (xsp)
 	ld xbc, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
@@ -1034,7 +1034,7 @@ HDAE5000_UiState_Reset_Join:
 
 HDAE5000_AcWindowPage1Proc:
 	; registered as "AcWindowPage1Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld (xsp + 0x04), xde
 	ld (xsp + 0x08), xbc
@@ -1058,12 +1058,12 @@ HDAE5000_AcWindowPage1Proc_Join:
 	ld_sril	xix, (xhl + RootFn_InheritedProc)
 	call	(xix)
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_TtlScreenRProc:
 	; registered as "TtlScreenRProc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld (xsp + 0x04), xde
 	ld	xiz, xbc
@@ -1134,12 +1134,12 @@ HDAE5000_TtlScreenRProc_Join2:
 	call	(xix)
 HDAE5000_TtlScreenRProc_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_TtlScreenR2Proc:
 	; registered as "TtlScreenR2Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld (xsp + 0x04), xde
 	ld	xiz, xbc
@@ -1210,12 +1210,12 @@ HDAE5000_TtlScreenR2Proc_Join2:
 	call	(xix)
 HDAE5000_TtlScreenR2Proc_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_TtlScreenR3Proc:
 	; registered as "TtlScreenR3Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld (xsp + 0x04), xde
 	ld	xiz, xbc
@@ -1286,12 +1286,12 @@ HDAE5000_TtlScreenR3Proc_Join2:
 	call	(xix)
 HDAE5000_TtlScreenR3Proc_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_IvScreenR2Proc:
 	; registered as "IvScreenR2Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld (xsp + 0x04), xde
 	ld	xiz, xbc
@@ -1350,7 +1350,7 @@ HDAE5000_IvScreenR2Proc_Join2:
 	call	(xix)
 HDAE5000_IvScreenR2Proc_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_SelectListProc:
@@ -1506,7 +1506,7 @@ HDAE5000_SelectListProc_OnPaint:
 	sub	bc, (xsp+80)
 	exts xbc
 	ld xwa, (xsp + 0x04)
-	divs xbc, (xwa+42)		; divs XBC,(XWA+0x2a)
+	divs xbc, (xwa+42)
 	ld (xsp + 0x0c), bc
 	ld	wa, (xsp+82)
 	inc	1, wa
@@ -1518,7 +1518,7 @@ HDAE5000_SelectListProc_OnPaint:
 	jr	t, HDAE5000_SelectListProc_Next
 HDAE5000_SelectListProc_Loop:
 	ld	wa, (xsp+12)
-	mul xwa, (xsp+8)		; mul XWA,(XSP+0x08)
+	mul xwa, (xsp+8)
 	ld	bc, (xsp+80)
 	add	bc, wa
 	dec	1, bc
@@ -1598,13 +1598,13 @@ HDAE5000_SelectListProc_Skip3:
 	sub	bc, (xsp+80)
 	exts xbc
 	ld xwa, (xsp + 0x04)
-	divs xbc, (xwa+42)		; divs XBC,(XWA+0x2a)
+	divs xbc, (xwa+42)
 	ld (xsp + 0x0c), bc
 	ld	bc, (xsp+86)
 	sub	bc, (xsp+82)
 	exts xbc
 	ld xwa, (xsp + 0x04)
-	divs xbc, (xwa+44)		; divs XBC,(XWA+0x2c)
+	divs xbc, (xwa+44)
 	ld (xsp + 0x0e), bc
 	ldw (xsp + 0x08), 0
 	ldw (xsp + 0x0a), 0
@@ -1835,7 +1835,7 @@ HDAE5000_SelectListProc_Next3:
 	ld xwa, (xsp + 0x04)
 	ld	bc, (xwa+42)
 	ld xwa, (xsp + 0x04)
-	muls xbc, (xwa+44)		; muls XBC,(XWA+0x2c)
+	muls xbc, (xwa+44)
 	cp	(xsp+8), bc
 	jrl	c, HDAE5000_SelectListProc_Loop2
 	ld	xhl, 0:i3
@@ -1868,7 +1868,7 @@ HDAE5000_SelectListProc_Skip8:
 	ld xwa, (xsp + 0x04)
 	ld	bc, (xwa+44)
 	ld xwa, (xsp + 0x04)
-	muls xbc, (xwa+42)		; muls XBC,(XWA+0x2a)
+	muls xbc, (xwa+42)
 	cp	de, bc
 	jr	lt, HDAE5000_SelectListProc_Skip9
 	ld	bc, de
@@ -2164,7 +2164,7 @@ HDAE5000_SelectListProc_Skip18:
 	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip19:
 	ld	xwa, xiz
-	inc 8, xwa		; inc 0,XWA
+	inc 8, xwa
 	cp	xwa, (xsp+96)
 	jr	nz, HDAE5000_SelectListProc_Skip20
 	ld xwa, (xsp + 0x04)
@@ -2297,7 +2297,7 @@ HDAE5000_DbMemoClProc_OnMemoDraw:
 	ld	wa, (xsp+98)
 	ld (xsp + 0x4e), wa
 	ld	wa, (xsp+104)
-	dec 8, wa		; dec 0,WA
+	dec 8, wa
 	ld (xsp + 0x50), wa
 	lda	xiy, (xsp+98)
 	lda	xix, (xsp+90)
@@ -2309,7 +2309,7 @@ HDAE5000_DbMemoClProc_OnMemoDraw:
 	ld	bc, 4:i3
 	ldirw
 	ld	wa, (xsp+88)
-	dec 8, wa		; dec 0,WA
+	dec 8, wa
 	ld (xsp + 0x54), wa
 	ld	wa, (xsp+98)
 	ld (xsp + 0x4a), wa
@@ -2335,7 +2335,7 @@ HDAE5000_DbMemoClProc_Loop:
 	ld_sril	xhl, (xde + RootFn_DrawBox)
 	call	(xhl)
 	ld	wa, (xsp+8)
-	pushw wa                                ; push WA
+	pushw wa
 	ld xwa, (xsp + 0x0c)
 	push xwa
 	lda	xwa, (xsp+20)
@@ -2823,7 +2823,7 @@ HDAE5000_AcHddNamingWindowProc_Skip3:
 	add	xwa, HDAE5000_AcHddNamingWindowProc_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_AcHddNamingWindowProc_OnPositionLeft:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 ; HDAE5000_AcHddNamingWindowProc_OnPositionLeft: index switch 1, the left key under POSITION: move the name cursor one
 ;   place left (auto-repeats)
 HDAE5000_AcHddNamingWindowProc_OnPositionLeft:
@@ -3459,7 +3459,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetString:
 	lda xwa, (HDAE5000_RAM_NamingText:24)
 	push xwa
 	call HDAE5000_StrCpy
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ld xwa, (xsp + 0x30)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
@@ -3475,7 +3475,7 @@ HDAE5000_AcHddNamingWindowProc_OnGetString:
 	ld xwa, (xsp + 0x2c)
 	push xwa
 	call HDAE5000_StrCpy
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnSetApFunction:
@@ -3820,7 +3820,7 @@ HDAE5000_AcHddNamingWindowProc_Epilogue:
 
 HDAE5000_IvHddNamingProc:
 	; registered as "IvHddNamingProc" in HDAE5000_ClassProc_Table
-	dec 8, xsp                              ; dec 0,XSP
+	dec 8, xsp
 	push xiz
 	ld	xiz, xde
 	ld (xsp + 0x04), xbc
@@ -3906,7 +3906,7 @@ HDAE5000_IvHddNamingProc_OnHide:
 	ld	xhl, 0:i3
 HDAE5000_IvHddNamingProc_Epilogue:
 	pop xiz
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	ret
 
 HDAE5000_HDTitleMenuProc:

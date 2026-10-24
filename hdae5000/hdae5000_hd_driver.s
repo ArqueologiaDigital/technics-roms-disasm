@@ -1275,7 +1275,7 @@ HDAE5000_PartList_Build:
 ; ---------------------------------------------------------------------------
 HDAE5000_SongScreen_Refresh:
 	lda	xsp, (xsp-26)
-	pushw iz                                ; push IZ
+	pushw iz
 	ld	(xsp+24), c
 	ld	(xsp+26), a
 	cp	(xsp+24), 0x00
@@ -1292,7 +1292,7 @@ HDAE5000_SongScreen_Refresh:
 	call HDAE5000_StrCat
 	ld	wa, (HDAE5000_RAM_CurDir:24)
 	inc	1, wa
-	pushw wa                                ; push WA
+	pushw wa
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh@hi16
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh@lo16		; low half of HDAE5000_Fmt_2_2d_SongScreen_Refresh
 	lda	xwa, (xsp+24)
@@ -1367,7 +1367,7 @@ HDAE5000_SongScreen_Refresh_Loop:
 	call HDAE5000_MemCopy
 	ld	wa, iz
 	inc	1, wa
-	pushw wa                                ; push WA
+	pushw wa
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh_2@hi16
 	pushw HDAE5000_Fmt_2_2d_SongScreen_Refresh_2@lo16		; low half of HDAE5000_Fmt_2_2d_SongScreen_Refresh_2
 	lda	xwa, (xsp+18)
@@ -1440,7 +1440,7 @@ HDAE5000_SongScreen_Refresh_Join3:
 	ld	xwa, (xbc+wa)
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
-	pushw hl                                ; push HL
+	pushw hl
 	calr	HDAE5000_PartList_Build
 	jr	t, HDAE5000_SongScreen_Refresh_Epilogue
 HDAE5000_SongScreen_Refresh_Skip:
@@ -1454,7 +1454,7 @@ HDAE5000_SongScreen_Refresh_Skip:
 	ldw	de, 0xffff
 	calr	HDAE5000_PartList_Build
 HDAE5000_SongScreen_Refresh_Epilogue:
-	popw iz                                 ; pop IZ
+	popw iz
 	lda	xsp, (xsp+26)
 	ret
 
@@ -1476,7 +1476,7 @@ HDAE5000_FILE_LOAD_Screen:
 	add	xwa, HDAE5000_FILE_LOAD_Screen_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_FILE_LOAD_Screen_Ev01C00001:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_FILE_LOAD_Screen_Ev01C00001:
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -1895,7 +1895,7 @@ HDAE5000_HDDNamingCheck_OnSwIn:
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrLen
-	pushw hl                                ; push HL
+	pushw hl
 	ld	xwa, xiz
 	push xwa
 	lda xwa, (0x23a04e:24)
@@ -2043,7 +2043,7 @@ HDAE5000_HDD_DIRNAMECheck_OnSwIn:
 	ld	xwa, xiz
 	push xwa
 	call HDAE5000_StrLen
-	pushw hl                                ; push HL
+	pushw hl
 	ld	xwa, xiz
 	push xwa
 	lda xwa, (HDAE5000_RAM_NameEditBuffer:24)
@@ -2171,7 +2171,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2195,7 +2195,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2239,7 +2239,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2263,7 +2263,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2307,7 +2307,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2331,7 +2331,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2375,7 +2375,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2399,7 +2399,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2443,7 +2443,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2467,7 +2467,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2511,7 +2511,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2535,7 +2535,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2579,7 +2579,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2603,7 +2603,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2647,7 +2647,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2671,7 +2671,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2715,7 +2715,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2739,7 +2739,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	lda	xwa, (xsp+4)
@@ -2783,7 +2783,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 	pushw 0x0040
@@ -2807,7 +2807,7 @@ HDAE5000_HDD_UTIL_PAGE_OnSwIn:
 	lda	xwa, (xsp+48)
 	push xwa
 	call HDAE5000_StrCat
-	inc 8, xsp                              ; inc 0,XSP
+	inc 8, xsp
 	lda	xwa, (xsp+44)
 	calr	HDAE5000_HardTest_Print
 HDAE5000_HDD_UTIL_PAGE_Join:
@@ -2843,7 +2843,7 @@ HDAE5000_PPORT_Svc26_ShowStatus:
 	jr	ule, HDAE5000_PPORT_Svc26_ShowStatus_Join
 	ldw	hl, 0x0019
 HDAE5000_PPORT_Svc26_ShowStatus_Join:
-	pushw hl                                ; push HL
+	pushw hl
 	ld	xwa, xiz
 	push xwa
 	lda xwa, (HDAE5000_RAM_PcLinkStatusText+7:24)
@@ -3053,8 +3053,8 @@ HDAE5000_SeparateOutput_SendPartMsg:
 	lda xwa, (xsp + 4)		; XWA = pointer to first param block
 	ld xde, xwa			; XDE = param block ptr
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA + 0x0E88)
-	ld xhl, (xwa + HamaFn_sendCOMM)             ; ld XHL, (XWA + 0x0114)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld xhl, (xwa + HamaFn_sendCOMM)
 	ld wa, 0:i3			; WA = 0
 	ld bc, 4:i3			; BC = 4 (param count)
 	call (xhl)			; call handler
@@ -3062,8 +3062,8 @@ HDAE5000_SeparateOutput_SendPartMsg:
 	lda xwa, (xsp)			; XWA = pointer to second param block
 	ld xde, xwa			; XDE = param block ptr
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA + 0x0E88)
-	ld xhl, (xwa + HamaFn_sendCOMM)             ; ld XHL, (XWA + 0x0114)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld xhl, (xwa + HamaFn_sendCOMM)
 	ld wa, 0:i3			; WA = 0
 	ld bc, 4:i3			; BC = 4
 	call (xhl)			; call handler
@@ -3082,7 +3082,7 @@ HDAE5000_SeparateOutput_Apply:
 	ld a, (HDAE5000_RAM_SeparateOutputMode:24)
 	extz wa
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_HamaFnTable)             ; ld XBC, (XBC + 0x0E88)
+	ld xbc, (xbc + WS_HamaFnTable)
 	ld_sril xhl, (xbc + HamaFn_SetSepaOutMode)             ; ld XHL, (XBC + 0x0084)
 	call (xhl)			; callback
 	cp (HDAE5000_RAM_SeparateDrumPartSent:24), 0x00
@@ -3191,7 +3191,7 @@ HDAE5000_SeparateOutputModeCheck:
 	add xwa, HDAE5000_SeparateOutputModeCheck_CaseTable		; + jump table base
 	ld wa, (xwa)			; WA = offset
 	lda xix, (.LHD_SC__h1_case9:24); XIX = dispatch base (h1_case9)
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 .LHD_SC__h1_case9:			; case 9 (offset 0x0000): PPI block copy
 	ld xwa, (xde + 0x0e)
 	sll xwa, 2
@@ -3227,13 +3227,13 @@ HDAE5000_SeparateOutputModeCheck:
 	jr t, .LHD_SC__h1_exit
 .LHD_SC__h1_event82:			; event 0x01E00082: callback chain
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA + 0x0E0A)
-	ld xhl, (xwa + RootFn_SleepMainTask)             ; ld XHL, (XWA + 0x0538)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_SleepMainTask)
 	call (xhl)
 	calr HDAE5000_SeparateOutput_Apply	; recursive call
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_WakeUpMainTask)             ; ld XHL, (XWA + 0x053C)
+	ld xhl, (xwa + RootFn_WakeUpMainTask)
 	call (xhl)
 	ld xhl, 0:i3
 	jr t, .LHD_SC__h1_exit
@@ -3260,7 +3260,7 @@ HDAE5000_SeparateDrumPartCheck:
 	add xwa, HDAE5000_SeparateDrumPartCheck_CaseTable		; jump table 2
 	ld wa, (xwa)
 	lda xix, (.LHD_SC__h2_case9:24); XIX = dispatch base (h2_case9)
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 .LHD_SC__h2_case9:			; case 9: PPI block copy
 	ld xwa, (xde + 0x0e)
 	sll xwa, 2
@@ -3329,7 +3329,7 @@ HDAE5000_SeparateBassPartCheck:
 	add xwa, HDAE5000_SeparateBassPartCheck_CaseTable		; jump table 3
 	ld wa, (xwa)
 	lda xix, (.LHD_SC__h3_case9:24); XIX = dispatch base (h3_case9)
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 .LHD_SC__h3_case9:			; case 9: PPI block copy
 	ld xwa, (xde + 0x0e)
 	sll xwa, 2
@@ -3503,7 +3503,7 @@ HDAE5000_SaveOptNameCheck:
 	add xwa, HDAE5000_SaveOptNameCheck_CaseTable		; jump table base
 	ld wa, (xwa + 0)		; load offset from table
 	lda xix, (.Lhbi_case0:24); base of case handlers (0x2853D6)
-	jp	t, (xix+wa)	; jp T, XIX+WA
+	jp	t, (xix+wa)
 .Lhbi_case0:
 	; Case 0: PPI block copy from device
 	pushw 0x0023
@@ -3810,7 +3810,7 @@ HDAE5000_FileOptNameCheck:
 	add	xwa, HDAE5000_FileOptNameCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_FileOptNameCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_FileOptNameCheck_Ev01E00047:
 	ld	xiz, xde
 	ld	wa, (HDAE5000_RAM_CurDir:24)
@@ -3869,7 +3869,7 @@ HDAE5000_SfxLswBitCheck:
 	add	xwa, HDAE5000_SfxLswBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxLswBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxLswBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -3917,7 +3917,7 @@ HDAE5000_SfxLswBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -3944,7 +3944,7 @@ HDAE5000_SfxPmtBitCheck:
 	add	xwa, HDAE5000_SfxPmtBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxPmtBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxPmtBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -3992,7 +3992,7 @@ HDAE5000_SfxPmtBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4019,7 +4019,7 @@ HDAE5000_SfxSqtBitCheck:
 	add	xwa, HDAE5000_SfxSqtBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxSqtBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxSqtBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4067,7 +4067,7 @@ HDAE5000_SfxSqtBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4094,7 +4094,7 @@ HDAE5000_SfxCmpBitCheck:
 	add	xwa, HDAE5000_SfxCmpBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxCmpBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxCmpBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4142,7 +4142,7 @@ HDAE5000_SfxCmpBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4169,7 +4169,7 @@ HDAE5000_SfxTmBitCheck:
 	add	xwa, HDAE5000_SfxTmBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxTmBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxTmBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4217,7 +4217,7 @@ HDAE5000_SfxTmBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4244,7 +4244,7 @@ HDAE5000_SfxMspBitCheck:
 	add	xwa, HDAE5000_SfxMspBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxMspBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxMspBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4292,7 +4292,7 @@ HDAE5000_SfxMspBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4319,7 +4319,7 @@ HDAE5000_SfxRcmBitCheck:
 	add	xwa, HDAE5000_SfxRcmBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxRcmBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxRcmBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4367,7 +4367,7 @@ HDAE5000_SfxRcmBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4394,7 +4394,7 @@ HDAE5000_SfxMdBitCheck:
 	add	xwa, HDAE5000_SfxMdBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxMdBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxMdBitCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4442,7 +4442,7 @@ HDAE5000_SfxMdBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4470,7 +4470,7 @@ HDAE5000_SfxTlxBitCheck:
 	add	xwa, HDAE5000_SfxTlxBitCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_SfxTlxBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_SfxTlxBitCheck_Ev01E00047:
 	ld	xiz, xde
 	ld xwa, (xiz + 0x0e)
@@ -4532,7 +4532,7 @@ HDAE5000_SfxTlxBitCheck_OnRamDataReq:
 	ld	bc, (HDAE5000_RAM_CurDir:24)
 	ld	de, (HDAE5000_RAM_CurSong:24)
 	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa                                ; push WA
+	pushw wa
 	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
 	calr	HDAE5000_PartList_Build
 	ld	xhl, 0:i3
@@ -4560,7 +4560,7 @@ HDAE5000_WriteProtectEditCheck:
 	add	xwa, HDAE5000_WriteProtectEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_WriteProtectEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_WriteProtectEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4619,7 +4619,7 @@ HDAE5000_LyricJumpEditCheck:
 	add	xwa, HDAE5000_LyricJumpEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_LyricJumpEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_LyricJumpEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
@@ -4707,7 +4707,7 @@ HDAE5000_LyricForeColorCheck:
 	add	xwa, HDAE5000_LyricForeColorCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_LyricForeColorCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_LyricForeColorCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4766,7 +4766,7 @@ HDAE5000_LyricBackColorCheck:
 	add	xwa, HDAE5000_LyricBackColorCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_LyricBackColorCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_LyricBackColorCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4825,7 +4825,7 @@ HDAE5000_WriteConfirmEditCheck:
 	add	xwa, HDAE5000_WriteConfirmEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_WriteConfirmEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_WriteConfirmEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	sll	xwa, 0x02
@@ -4881,7 +4881,7 @@ HDAE5000_QuickLoadModeEditCheck:
 	add	xwa, HDAE5000_QuickLoadModeEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_QuickLoadModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_QuickLoadModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
@@ -4933,7 +4933,7 @@ HDAE5000_LoadByNumberModeEditCheck:
 	add	xwa, HDAE5000_LoadByNumberModeEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
@@ -4985,7 +4985,7 @@ HDAE5000_JumpAfterLoadModeEditCheck:
 	add	xwa, HDAE5000_JumpAfterLoadModeEditCheck_CaseTable
 	ld	wa, (xwa)
 	lda xix, (HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)	; jp T,XIX+WA
+	jp	t, (xix+wa)
 HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:
 	ld xwa, (xde + 0x0e)
 	push xwa
@@ -5047,7 +5047,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	lda xwa, (0x22b30c:24)
 	push xwa
 	call HDAE5000_MemCopy
-	pushw 0x000a		; push 0x000A
+	pushw 0x000a
 	lda xwa, (xsp + 0x24)
 	push xwa
 	ld wa, (xsp + 0x48)
@@ -5063,7 +5063,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	push xwa
 	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x20)
-	pushw 0x000a		; push 0x000A
+	pushw 0x000a
 	lda xwa, (xsp + 0x1a)
 	push xwa
 	ld wa, (xsp + 0x40)
@@ -5078,7 +5078,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	lda xwa, (0x22b35a:24)
 	push xwa
 	call HDAE5000_MemCopy
-	pushw 0x000a		; push 0x000A
+	pushw 0x000a
 	lda xwa, (xsp + 0x30)
 	push xwa
 	ld wa, (xsp + 0x58)
@@ -5226,7 +5226,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	ld xde, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_ApPostEvent)             ; ld XHL, (XWA + 0x0124)
+	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_HD_INFO_LIST
 	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
@@ -5277,7 +5277,7 @@ HDAE5000_SetupP2SwCatch:
 	call (xhl)
 	jr t, .LHD_PS__exit
 .LHD_PS__case_09:			; case 0x09: format and validate
-	pushw 0x000a		; push 0x000A
+	pushw 0x000a
 	pushw 0x0000
 	lda xwa, (0x22ad9c:24)
 	push xwa
@@ -5432,7 +5432,7 @@ HDAE5000_AttenHDFormatSwCatch:
 	add xwa, HDAE5000_AttenHDFormatSwCatch_CaseTable			; jump table base
 	ld wa, (xwa)				; WA = offset
 	lda xix, (HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1:24); dispatch base
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 	; Case 0: bit test → call with 0/1
 ; HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1: edit switch 0 (no caption on ATTEN_HD_FORMAT): append code digit 0
 ;   (switch code bit 7 set) or 1
@@ -5716,7 +5716,7 @@ HDAE5000_Lbn_StepDigit:
 	lda xix, (HDAE5000_Lbn_StepDigit_CaseTable:24); jump table base
 	ld	wa, (xix+wa)
 	lda xix, (HDAE5000_Lbn_StepDigit_NoDigitTyped:24); dispatch base
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 	; Case 0 (offset 0x0000): jump to FS_Init directly
 ; HDAE5000_Lbn_StepDigit_NoDigitTyped: nothing typed yet: no step and no redraw
 HDAE5000_Lbn_StepDigit_NoDigitTyped:
@@ -5830,7 +5830,7 @@ HDAE5000_Lbn_StepDigit_SongUnits:
 	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
 	ld bc, 0:i3
 	calr HDAE5000_TypeSel_Init
-	pushw 0xffff		; push 0xFFFF
+	pushw 0xffff
 	ld xwa, HDAE5000_OBJ_LBN_OPTION
 	ldw bc, 0xffff
 	ldw de, 0xffff
@@ -5896,7 +5896,7 @@ HDAE5000_LBNPage1SwCatch:
 	add xwa, HDAE5000_LBNPage1SwCatch_CaseTable
 	ld wa, (xwa)
 	lda xix, (HDAE5000_LBNPage1SwCatch_OnClear:24); dispatch base
-	jp	t, (xix+wa)	; jp (XIX + WA)
+	jp	t, (xix+wa)
 	; Case 0: re-init FS
 ; HDAE5000_LBNPage1SwCatch_OnClear: edit switch 12, the CLEAR key: reset the load-by-number entry (Lbn_ShowEntry
 ;   position 6)
