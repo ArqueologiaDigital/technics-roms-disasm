@@ -338,11 +338,23 @@ NakaInst_IT_Off:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4CA, 0x8
 ; [nakarest] purpose not established: layout of 623 B at 0xeb7690 not derived; readers below
 ; [nakarest] Readers: source references InitializeObjectTable_Loop3 (ui/ui_widget_defs.s: `lda xwa,
 ; [nakarest] (SupportClass_PropTypeRecords:24)`).
+; SupportClass_PropTypeRecords: The SupportClass object table: 55 x 12-byte records {u32 proc, u16 count, u16 size,
+;   u32 prop}, one per property type (boolProc, ObjectIDProc, pFuncProc, ... PartIDProc, TrackIDProc, IntTimeIDProc);
+;   record k is object 0x2600000 + k, the type of propdata letter 'A' + k. InitializeObjectTable registers it at slot
+;   0x260 with SupportClassProc and count 0x37. This slice holds records 0-51 but their last byte;
+;   SupportClass_WindowIDPropTopByte and SupportClass_PartTrackIntTimeRecords hold the rest. Basis: readers + bytes.
 SupportClass_PropTypeRecords:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4D2, 0x26F
 ; [nakarest] SupportClass_WindowIDPropTopByte  +0x741..+0x774 (0xeb78ff, 51 B)
 ; [nakarest] purpose not established: 51 B at 0xeb78ff that no registered NAKA table, symbol, 24/32-bit literal or data word points into
 SupportClass_WindowIDPropTopByte:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x741, 0x1
+; SupportClass_PartTrackIntTimeRecords -- 3 x {u32 proc, u16 count, u16 size, u32 prop}: the last three records (52-54) of
+; the 55-record SupportClass table SupportClass_PropTypeRecords (slot 0x260): PartIDProc, 29 values of 2 B, NakaInst_PartID_EnumTable;
+; TrackIDProc, 17, 2 B, NakaInst_TrackID_EnumTable; IntTimeIDProc, 13, 2 B, NakaInst_IntTimeID_EnumTable. Record k is
+; object 0x2600000 + k, the type of propdata letter 'A' + k: these serve the letters u (part), v (track), w (time);
+; ClassProc sends EVT_CHECK_PROP_STRING / EVT_GET_PROP_MEMBER to 0x2600000 + letter - 0x41 (ui/ui_widget_defs.s).
 SupportClass_PartTrackIntTimeRecords:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x742, 0x24
+; SupportClass_ZeroEndRecord -- 1 x {u32 proc, u16 count, u16 size, u32 prop}: all zero, a 56th record after the 55 that
+; InitializeObjectTable registers (`ldw (xbc + 8), 0x37`); nothing indexes it.
 SupportClass_ZeroEndRecord:		.incbin "includes/generated/naka_style_bitmaps.bin", 0x766, 0xC
 Softver_ShowHide_Data:			.incbin "includes/generated/naka_style_bitmaps.bin", 0x772, 0x2
 ; [nakarest] VGA_InitFuncTable  +0x774..+0x784 (0xeb7932, 16 B)
@@ -636,6 +648,10 @@ Bitmap_FadeOutText:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x2A66,
 ; StyleSong_MasterTable[1000] (a local typedef).
 ; -----------------------------------------------------------------------------
 StyleSong_MasterTable:			.incbin "includes/generated/naka_style_bitmaps.bin", 0x32D6, 0x4
+; StyleSong_MasterTable_IdColumn: +4 of StyleSong_MasterTable: the u16 id column of its 1000 x 6-byte {u32 title, u16
+;   id} records (stride 6). The MasterSetup and MstStyleAlp cell-select paths load the id of entry 9 * (page - 1) +
+;   scroll + row through this label and pass it to MainMssSetUp as EVT_OTP_CNT_SET. Basis: readers + bytes -- `muls
+;   ..., 6` / `lda xbc, (<this>:24)` / `ld de, (xbc+wa)`.
 StyleSong_MasterTable_IdColumn:		.incbin "includes/generated/naka_style_bitmaps.bin", 0x32DA, 0x1766
 StyleSong_MasterTable_LastEntry:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x4A40, 0x6
 ; -----------------------------------------------------------------------------
@@ -3515,6 +3531,10 @@ NakaInst_Romantic_Bossa:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x
 ; [nakarest] label 4 bytes into it (MstStyle_GenreTable_GroupColumn) and store it at 0x0340d2;
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
 ; [nakarest] MstStyle_GenreTable (= this address).
+; MstStyle_GenreTable: Root of the MstStyle music-style browser: 10 x {u32 genre name, u32 genre's style-group table}
+;   -- Easy Listening, Rock & Pop, Dance Pop, Party Music, Gospel/Blues/R&B, Jazz & Swing, Show/Trad Dance, Trad &
+;   Folk, Country, Latin / World. MstStyle1Grid_CellSelect and MstStyle2_NameB_Render read the names here (index * 8);
+;   the group-table column is read through MstStyle_GenreTable_GroupColumn (= this + 4). Basis: readers + bytes.
 MstStyle_GenreTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE6, 0x4
 ; [nakarest] MstStyle_GenreTable_GroupColumn  +0x18aea..+0x18b36 (0xecfca8, 76 B)
 ; [nakarest] Continues the root of the MstStyle browser tree (0xecfca4): 10 x {u32 group name,
@@ -3524,6 +3544,10 @@ MstStyle_GenreTable:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AE
 ; [nakarest] MstStyle1Grid_CellSelect and MstStyle2_NameB_Render load +0, the name, through
 ; [nakarest] MstStyle_GenreTable (= this address) (starts 0xecfca4, 76 of its
 ; [nakarest] 80 bytes are here or later).
+; MstStyle_GenreTable_GroupColumn: +4 of MstStyle_GenreTable: the style-group-table column of the 10 x {u32 genre
+;   name, u32 group table} genre records (stride 8). MstStyle1_EventDispatch, MstStyle1Sub_HandleSubSelect and
+;   MstStyle1Page_EventDispatch load the group table of genre (0x340C4) through this label and store it at 0x340D2;
+;   entry 0's table is Easy Listening's, not Latin Dance's. Basis: readers + bytes.
 MstStyle_GenreTable_GroupColumn:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18AEA, 0x4C
 ; [nakarest] NakaInst_Latin_World  +0x18b36..+0x18b48 (0xecfcf4, 18 B)
 ; [nakarest] group name string (16 characters): "Latin / World".
@@ -3617,6 +3641,15 @@ NakaInst_MEMORY_B_ECFDEA:	.incbin "includes/generated/naka_style_bitmaps.bin", 0
 ; [nakarest] read by RVari_Confirm_TypeF_SubItems (ui/rvari_routines.s: `lda xhl,
 ; [nakarest] (RVari_MemoryBankNames:24)`).
 NakaInst_MEMORY_A_ECFDF4:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18C36, 0xA
+; [nakarest] naka_style_bitmaps+0x18c40  +0x18c40..+0x18d22 (0xecfdfe, 226 B)
+; [nakarest] Text (226 B at 0xecfdfe), first string "RIGHT1 RIGHT2 LEFT PART4 PART5 PART6 PART7
+; [nakarest] "; no registered NAKA table points into it; reached through source references
+; [nakarest] VariScreenProc_OnDraw (ui/ui_mode_handlers.s: `lda xhl,
+; [nakarest] (VariScreen_PartNames:24)`).
+; VariScreen_PartNames: 32 fixed-width 7-character part names, not NUL-separated (one NUL + 0xFF at the end): "RIGHT1
+;   ", "RIGHT2 ", "LEFT ", "PART4 " .. "PART16 ", "ACCOMP1", "ACCOMP2", "ACCOMP3", "BASS ", "DRUMS ", "CHORD ",
+;   "R.BASS ", "MSP " x2, "CONTROL", "PART27 " .. "PART32 ". VariScreenProc_OnDraw draws the name at part index * 7 in
+;   a 56-pixel-wide cell. Basis: readers + bytes.
 VariScreen_PartNames:	.incbin "includes/generated/naka_style_bitmaps.bin", 0x18C40, 0xE2
 ; MainChordPre_RootNames -- 16 x pointer: chord-root display name by root code (RAM byte 0x8D40): 0 "  ", 1 "C ", 2 "D~a0" (Db),
 ; 3 "D ", 4 "E~a0", 5 "E ", 6 "F ", 7 "F~9e" (F#), 8 "G ", 9 "A~a0", 10 "A ", 11 "B~a0", 12 "B ", 13-15 "  "

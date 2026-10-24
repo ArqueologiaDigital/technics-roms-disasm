@@ -1340,6 +1340,9 @@ Data_InOutGridDispatch:
 	ld	bc, (xix+bc)
 	lda	xix, (InOutGridCheck_IncRight1Input:24)
 	jp	t, (xix+bc)
+; InOutGridCheck_IncRight1Input: Case 0 (row 0, "RIGHT 1 INPUT") of InOutGridCheck's increment switch: steps SndParam
+;   0x2100 by +1 (values CONDUCTOR / DIRECT). Basis: callers + body -- entry 0 of Data_InOutGridDispatch_CaseTable_3;
+;   siblings InOutGridCheck_IncAutoPlayChordInput (0x2101) ...
 InOutGridCheck_IncRight1Input:
 	ld	xwa, 0x2100
 	ld	bc, 1:i3
@@ -1355,6 +1358,8 @@ InOutGridCheck_IncVelocityInputMode:
 	ld	bc, 1:i3
 	ld	de, 1:i3
 	jrl	InOutGridCheck_Join
+; InOutGridCheck_IncVelocityOffsetOrFixed: VELOCITY OFFSET VALUE (Lsw 0x5001) or VELOCITY FIXED VALUE (Lsw 0x5002)
+;   row, by the VELOCITY INPUT mode in Lsw 0x5000; nothing in DIRECT mode.
 InOutGridCheck_IncVelocityOffsetOrFixed:
 	ld	xwa, 0x5000
 	call	SndParam_LookupReadOnly
@@ -1416,6 +1421,9 @@ InOutGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	ld	bc, (xix+bc)
 	lda	xix, (InOutGridCheck_DecRight1Input:24)
 	jp	t, (xix+bc)
+; InOutGridCheck_DecRight1Input: Case 0 (row 0, "RIGHT 1 INPUT") of InOutGridCheck's decrement switch
+;   (InOutGridCheck_OnIndexswDown): steps SndParam 0x2100 by -1. Basis: callers + body -- entry 0 of
+;   Data_InOutGridDispatch_CaseTable_2; sibling InOutGridCheck_DecAutoPlayChordInput (0x2101).
 InOutGridCheck_DecRight1Input:
 	ld	xwa, 0x2100
 	ldw	bc, 0xffff
@@ -1431,6 +1439,8 @@ InOutGridCheck_DecVelocityInputMode:
 	ldw	bc, 0xffff
 	ld	de, 1:i3
 	jr	InOutGridCheck_Join
+; InOutGridCheck_DecVelocityOffsetOrFixed: VELOCITY OFFSET VALUE (Lsw 0x5001) or VELOCITY FIXED VALUE (Lsw 0x5002)
+;   row, by the VELOCITY INPUT mode in Lsw 0x5000; nothing in DIRECT mode.
 InOutGridCheck_DecVelocityOffsetOrFixed:
 	ld	xwa, 0x5000
 	call	SndParam_LookupReadOnly
@@ -1743,6 +1753,7 @@ Data_ParaLoadOptDispatch:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
+; Data_InOutGridDispatch_AutoPlayChordInput: row AUTO PLAY CHORD INPUT: SndParam 0x2101 OFF/ON
 Data_InOutGridDispatch_AutoPlayChordInput:
 	ld	xwa, 8449
 	call	SndParam_LookupReadOnly
@@ -1759,6 +1770,8 @@ Data_InOutGridDispatch_AutoPlayChordInput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
+; Data_InOutGridDispatch_VelocityInput: row VELOCITY INPUT: SndParam 0x5000 DIRECT/OFFSET/FIX, then redraws row 3 with
+;   the offset (0x5001) or fixed velocity (0x5002)
 Data_InOutGridDispatch_VelocityInput:
 	ld	xwa, 0x5000
 	call	SndParam_LookupReadOnly
@@ -1829,6 +1842,8 @@ Data_InOutGridDispatch_VelocityInput_Skip15:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
+; Data_InOutGridDispatch_VelocityOffsetOrFix: row under VELOCITY INPUT: blank for DIRECT, else the offset (0x5001) or
+;   fixed velocity (0x5002) as %3d
 Data_InOutGridDispatch_VelocityOffsetOrFix:
 	ld	xwa, 0x5000
 	call	SndParam_LookupReadOnly
@@ -1880,6 +1895,7 @@ Data_InOutGridDispatch_VelocityOffsetOrFix_Skip17:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
+; Data_InOutGridDispatch_TechniChordOutput: row TECHNI-CHORD OUTPUT: SndParam 0x2181 OFF/ON
 Data_InOutGridDispatch_TechniChordOutput:
 	ld	xwa, 8577
 	call	SndParam_LookupReadOnly
@@ -1896,6 +1912,7 @@ Data_InOutGridDispatch_TechniChordOutput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4
+; Data_InOutGridDispatch_TransposeOutput: row TRANSPOSE OUTPUT: SndParam 0x2184 OFF/ON
 Data_InOutGridDispatch_TransposeOutput:
 	ld	xwa, 8580
 	call	SndParam_LookupReadOnly
@@ -1912,6 +1929,7 @@ Data_InOutGridDispatch_TransposeOutput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jr	InOutGridCheck_Join4
+; Data_InOutGridDispatch_DrumPatternOutput: row DRUM PATTERN OUTPUT: SndParam 0x2182 OFF/ON
 Data_InOutGridDispatch_DrumPatternOutput:
 	ld	xwa, 8578
 	call	SndParam_LookupReadOnly
@@ -1928,6 +1946,7 @@ Data_InOutGridDispatch_DrumPatternOutput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jr	InOutGridCheck_Join4
+; Data_InOutGridDispatch_AutoPlayChordOutput: row AUTO PLAY CHORD OUTPUT: SndParam 0x2183 OFF/ON
 Data_InOutGridDispatch_AutoPlayChordOutput:
 	ld	xwa, 8579
 	call	SndParam_LookupReadOnly

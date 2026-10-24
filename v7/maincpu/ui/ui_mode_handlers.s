@@ -8177,6 +8177,7 @@ FSWAss_CheckAndNotify:
 	call	SoundParam_NotifyChange
 	ret
 FSWAss_RefreshAllVoices:
+	; --- Multi-call setup function (37 bytes) ---
 	push	xde
 	push	xhl
 	push	xix
@@ -8446,7 +8447,7 @@ PmExpFilter_Repaint:
 	ld (xwa + 6), de
 	ld xde, 0:i3
 	push xde
-	pushw 0xfb
+	pushw 0xfb	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xde, PmExpFilter_Repaint_Str_FILTER_TYPE
 	call DrawString
@@ -8467,7 +8468,7 @@ PmExpFilter_Repaint:
 	ld (xwa + 6), de
 	ld xde, 0:i3
 	push xde
-	pushw 0xfb
+	pushw 0xfb	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xde, PmExpFilter_Repaint_Str_ON_OFF
 	call DrawString
@@ -8990,7 +8991,7 @@ PmExpFilterGridCheck_OnLswData_Loop:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xbc, (xsp+256)
+	lda	xbc, (xsp+256)	; lda xbc, xsp+0x0100
 	ldw	(xbc), 1
 	inc	2, l
 	extz	hl
@@ -9011,7 +9012,7 @@ PmExpFilterGridCheck_OnLswData_Skip9:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xde, (xsp+256)
+	lda	xde, (xsp+256)	; lda xde, xsp+0x0100
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmExpFilterCheck_DoSend
 PmExpFilterGridCheck_OnLswData_Skip10:
@@ -9036,7 +9037,7 @@ PmExpFilterGridCheck_OnLswData_Loop2:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xbc, (xsp+256)
+	lda	xbc, (xsp+256)	; lda xbc, xsp+0x0100
 	ldw	(xbc), 1
 	inc	2, l
 	extz	hl
@@ -9057,7 +9058,7 @@ PmExpFilterGridCheck_OnLswData_Skip12:
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
 	; v10 does not spell this byte either
-	lda	xde, (xsp+256)
+	lda	xde, (xsp+256)	; lda xde, xsp+0x0100
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmExpFilterCheck_DoSend
 PmExpFilterGridCheck_OnLswData_Skip13:
@@ -11520,7 +11521,7 @@ AcPmBkEdit_BankEdit:
 AcPmBkEdit_BankEdit_DrawDiff:
 	ld xbc, 0:i3
 	push xbc
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString (by value), not a pointer
 	pushw 0xf5
 	ld xbc, xde
 	ld xde, xhl

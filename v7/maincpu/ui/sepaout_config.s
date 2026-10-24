@@ -19,9 +19,19 @@ RESOURCE_INFO_HANDLER_OFFSETS:
 
 ; SepaOut configuration data (826 bytes, compiled from sepaout_config.c)
 SepaOut_Config_0:	.incbin "includes/generated/sepaout_config.bin", 0x0, 0x4
+; SepaOut_Msg_CC9B_Value32: 4-byte sub-CPU control-change template B0 <part> 9B 20 (status, part placeholder,
+;   controller 0x9B, value 0x20 = 32); SetSepaOutMode patches the part to 0x14/0x13/0x16 and sends it with sendCOMM.
+;   Basis: readers + bytes -- used for part 0x14 in modes 1-3 and for all three parts in modes 2-3; mode 0 sends
+;   SepaOut_Config_0 (B0 xx 9B 01) instead.
 SepaOut_Msg_CC9B_Value32:	.incbin "includes/generated/sepaout_config.bin", 0x4, 0x4
+; SepaOut_Msg_CC9D_Value0: 4-byte sub-CPU control-change template B0 <part> 9D 00 (controller 0x9D, value 0);
+;   SetSepaOutMode sends it for parts 0x14, 0x13 and 0x16 in modes 0, 1 and 2. Basis: readers + bytes.
 SepaOut_Msg_CC9D_Value0:	.incbin "includes/generated/sepaout_config.bin", 0x8, 0x4
+; SepaOut_Msg_CC9D_Value1: 4-byte sub-CPU control-change template B0 <part> 9D 01 (controller 0x9D, value 1);
+;   SetSepaOutMode sends it only in mode 3, for parts 0x13 and 0x16. Basis: readers + bytes.
 SepaOut_Msg_CC9D_Value1:	.incbin "includes/generated/sepaout_config.bin", 0xC, 0x4
+; SepaOut_Msg_CC9D_Value2: 4-byte sub-CPU control-change template B0 <part> 9D 02 (controller 0x9D, value 2);
+;   SetSepaOutMode sends it only in mode 3, for part 0x14. Basis: readers + bytes.
 SepaOut_Msg_CC9D_Value2:	.incbin "includes/generated/sepaout_config.bin", 0x10, 0x4
 SqSngSelTtlFunc_CaseTable:
 	.short	SqTrAs_CondCheck - SqTrAs_CondCheck
@@ -69,7 +79,12 @@ DkMdlyPlyTtlFunc_CaseTable:
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
 	.short	DkMdlyPly_ReturnZero - DkMdlyPlyTtl_Dispatch
+; DkMdlyPly_BitMaskByIndex: 16 x u16 single-bit masks, entry n = 1 << n; DkMdlyPly_SendAudioCmd ANDs each with WA and
+;   returns HL = the index of the lowest set bit of WA (16 when none). Basis: readers + bytes.
 DkMdlyPly_BitMaskByIndex:			.incbin "includes/generated/sepaout_config.bin", 0x6E, 0x20
+; DkMdlyPly_PartIndexTable: 32 x u16 part numbers 0..31 (entry i = i) through which DkMdlyPly_CheckState walks the
+;   parts: the entry is passed to SndParam_LookupViaEncode with BC = 0x401 and, on a match with the lowest set bit of
+;   the mask (DkMdlyPly_SendAudioCmd), written to PART_SELECT. Basis: readers + bytes.
 DkMdlyPly_PartIndexTable:			.incbin "includes/generated/sepaout_config.bin", 0x8E, 0x40
 DisplayMode_DispatchEvents_CaseTable:
 	.short	DisplayMode_BatchEventSend - DisplayMode_BatchEventSend
@@ -195,6 +210,10 @@ SqTrSelTtlFunc_CaseTable:
 	.short	SqTrSelTtl_ReturnZero - SqTrSelTtl_Dispatch
 	.short	SqTrSelTtl_ReturnZero - SqTrSelTtl_Dispatch
 	.short	SqTrSelTtl_ReturnZero - SqTrSelTtl_Dispatch
+; SqStepTtlFunc_Methods: The TT_SQSTEP title's 4-entry DirmdEmulator method vector: [0] Display_InitGraphicsAndScreen
+;   (draw), [1] Display_CallConditionalCompare (EVT_HIDE), [2] Display_CallPollAudioUpdate, [3] SqTrSel_CaseA. Basis:
+;   readers + bytes -- SqStepTtlFunc copies it to the stack and calls DirmdEmulator, like SeMenuTitleFunc_Methods /
+;   DirmdTitle_EmulatorMethods.
 SqStepTtlFunc_Methods:				.incbin "includes/generated/sepaout_config.bin", 0x1CE, 0x10
 DemoStyleTtlFunc_CaseTable:
 	.short	DemoStyle_DispatchTable - DemoStyle_DispatchTable
@@ -232,6 +251,9 @@ MiddleFuncCall_CaseTable:
 	.short	MiddleFuncCall_OnDirectPlayMute - MiddleFuncCall_DispatchData
 	.short	MiddleFuncCall_OnTrackMidiCall - MiddleFuncCall_DispatchData
 SongBankLookup_BuildAudioCmd_Str_Fmt3d_FmtPct:	.incbin "includes/generated/sepaout_config.bin", 0x21C, 0x6
+; Demo_SongViewIdTable: 18 x u32 NAKA view ids of the demo song selectors DemoSong0..DemoSong17 (0xE10001-0xE10006,
+;   0xE20001-0xE20006, 0xE30001-0xE30006), indexed by DEMO_ACTIVE_ENTRY; SeqInit_PostDispatchEvent sends
+;   EVT_SET_SELECTED 1 to the entry's view. Basis: readers + bytes.
 Demo_SongViewIdTable:		.incbin "includes/generated/sepaout_config.bin", 0x222, 0x48
 SqTrSel_CaseG_CaseTable:
 	.short	SqTrSel_CaseG_JumpTable - SqTrSel_CaseG_JumpTable

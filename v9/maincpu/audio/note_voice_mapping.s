@@ -6604,6 +6604,9 @@ LinkVoiceSlots_InitVal:
 	ld hl, 1:i3
 	ret
 
+; NoteMap_FindLinkedSlotByKey: Walks the slot list of the record at XWA (head NoteMap_LinkByte_Table[(XWA+3)], nodes
+;   {prev, next} at (0xE7E8)) for the slot whose stored key (0xC5CB)[3*slot] equals byte 0 of entry BC; returns it in
+;   L, or the list head when none. Basis: callers + body.
 NoteMap_FindLinkedSlotByKey:
 	lda xix, (0xc5ca:16)
 	lda xiy, (0xe7e8:16)
@@ -13507,6 +13510,8 @@ ProcessEventDispatch_LoadParam4:
 	ldw bc, 0xb
 	call SndParam_NotifyAndReturn
 	jrl RhythmBuf_EventDispatchLoop
+; SeqPart_EmitNoteOn_Full_ResetPartControllers: Status 0xD0: for the data pair (3, 0) resets modulation (0), pitch
+;   bend (0x2000), damper (0) and expression (127) of parts 0x10..0x13.
 SeqPart_EmitNoteOn_Full_ResetPartControllers:
 	call RhythmBuf_ReadAlternate
 	ldfr_werp HL, 0xfa
@@ -13572,6 +13577,8 @@ ProcessEventDispatch_LoadIter:
 	cp iz, 0x14
 	jr lt, ProcessEventDispatch_LoadIter
 	jrl RhythmBuf_EventDispatchLoop
+; SeqPart_EmitNoteOn_Full_SetPartController: Status 0xD4..0xD8: channel 4..8 -> part 0x10..0x14 (Rhythm_EventMapA);
+;   data kind 1 modulation, 2 pitch bend, 3 damper, 4 pan, 5 expression, 0x10 Audio_InitDispatchReturn.
 SeqPart_EmitNoteOn_Full_SetPartController:	; cases 212, 213, 214, 215, 216
 	call RhythmBuf_ReadAlternate
 	ldfr_werp HL, 0xfa
@@ -13879,6 +13886,8 @@ SeqPerformance_EventDispatch:
 	ld	bc, 1:i3
 	call	SndParam_NotifyAndReturn
 	jrl	SeqEvtBuf_NonNoteDispatchLoop
+; SeqEvtBuf_NoteDispatch_PitchBend: 7-bit value widened to 14 bits ((v << 7) | (v >= 64 ? 2v - 128 : 0), 64 ->
+;   0x2000), sent as SndPart_SetParam code 0x1B0 (pitch bend).
 SeqEvtBuf_NoteDispatch_PitchBend:
 	ld	wa, 0:i3
 	cp	iz, 64
@@ -13935,6 +13944,8 @@ SeqEvtBuf_NoteDispatch_Expression:
 	ldw	bc, 11
 	call	SndParam_NotifyAndReturn
 	jrl	SeqEvtBuf_NonNoteDispatchLoop
+; SeqEvtBuf_NoteDispatch_DelaySend: Value 6 is ignored (SeqEvtBuf_NoteDispatch_Ignore); value 7 is the CC 94 send, which
+;   SndPart_SetParam keeps per part at 0xD050.
 SeqEvtBuf_NoteDispatch_DelaySend:
 	ld	wa, (xsp+4)
 	ld	de, iz
@@ -13947,6 +13958,8 @@ SeqEvtBuf_NoteDispatch_DelaySend:
 	call	SndParam_NotifyAndReturn
 	jrl	SeqEvtBuf_NonNoteDispatchLoop
 
+; SeqEvtBuf_NoteDispatch_Ignore: Case of SeqEvtBuf_NoteDispatch for value 6 and out-of-range values: ignores the event
+;   and returns to SeqEvtBuf_NonNoteDispatchLoop. Basis: switch value + body.
 SeqEvtBuf_NoteDispatch_Ignore:
 	jrl SeqEvtBuf_NonNoteDispatchLoop
 
@@ -14067,6 +14080,12 @@ CheckVoiceReuse_Block:
 NoteMap_GetVoiceData_Return:
 	ret
 
+; Harmony_FindReferenceNote: Finds the harmony reference note: the lowest note (byte +1 of each 2-byte entry from +4)
+;   of the note list at XWA (word count at +0); kept, with the entry's other byte, in 0xCEAA / 0xCEAB when it lies in
+;   25..102, else both are set to 0xFF; the previous pair is saved in 0xCEAC / 0xCEAD first. Returns L = (0xCEAA).
+;   Basis: callers + body -- VoiceMap_AllocateSlot and NoteMap_FindBestMatch call it on the list at 0xCE22 and, when L
+;   is not 0xFF, run UIParam_ScanAndCollect, whose UIParam_CallbackDispatch calls the Harmony_HandlerTable entry
+;   chosen by 0xE9BE; those handlers subtract their intervals from 0xCEAA ("the reference note").
 Harmony_FindReferenceNote:
 	ld c, (0xceaa:16)
 	ld (0xceac:16), c
@@ -15251,6 +15270,14 @@ VoiceTiming_BelowThreshold:
 Voice_AdjustTiming_Return:
 	ret
 
+; Chord_RecognizeNowOrDelay: Starts chord recognition for a change in the held chord keys, either at once
+;   (Voice_CheckAndResetSlotState) or after a 5-tick delay (0xCEB3 = 5 unless already running): immediate when 0xCEDE
+;   bit 6 is set; when no keys were held before (previous count 0xCF17 = 0) only delayed if 0xC596 bit 1 and 0xCEDE
+;   bit 4 are set and a chord root (0xCEE0) exists; otherwise delayed when 0xCEDE bit 4 is set, unless 0xCEDE bit 7
+;   and 0xC596 bit 1 are both set. Basis: callers + body -- Voice_DispatchByTimingState calls it when keys are held
+;   and the count did not drop (or 0xCEDE bit 7 is set), Voice_MatchVoicePairs when a held note is new; a drop goes to
+;   Voice_SetDecayTimer (0xCEB4 = 6 / 22) instead, and Voice_UpdateNoteState re-runs the recognition when either timer
+;   runs out.
 Chord_RecognizeNowOrDelay:
 	bit 6, (0xcede:24)
 	jr nz, Voice_CheckAndUpdateSlot
@@ -15373,6 +15400,13 @@ CheckAndResetSlotSta_Block2:
 Voice_NullRet2:
 	ret
 
+; Chord_ClearRecognizedChord: Clears the recognized chord: held-key count 0xCEFF, chord note count 0xCEE5, 0xCEF1,
+;   root 0xCEE0, type 0xCEDF, bass root 0xCEE1 and 0xCEE4 = 0; sets 0xCEDE bit 7 and clears its bits 1-2 (bit 1 = on-
+;   bass chord); then applies the empty chord with Chord_ApplyCurrentChord (voicing, displayed chord
+;   0x8D40/0x8D42/0x8D44, changed flag 0xCF01). Basis: callers + body -- Voice_CheckAndResetSlotState calls it
+;   (through CheckAndResetSlotSta_Block2) when no chord keys are held and none of the hold conditions (panel record
+;   0x48 +5 / +6 bits 4-5, 0xC598 / 0xC596 / 0xCEDE flags) applies; slot 0 of the unreferenced jump block at 0xFE9413
+;   also jumps here.
 Chord_ClearRecognizedChord:
 	ldw (0x00ceff:24), 0x0000
 	ld (0x00cee5:24), 0x00
@@ -15441,6 +15475,13 @@ VoiceSlot_StoreParams_Block:
 	and (0xcede:24), 249
 	ret
 
+; Chord_CollectHeldNotes: Collects the notes for chord recognition from the held chord keys: walks the held-key list
+;   at 0xCEFF (DE entries, note = byte +1 of each 2-byte entry from +4) from the newest entry back, keeps each note
+;   whose pitch class (ChordTables_NoteToPitchClass) is not taken yet (set ChordTables_PitchClassBits in bank register
+;   WA3) until (0xCEE5) notes are kept, then stores the count in 0xCEE5 and the notes, in list order, at 0xCEE6..; DE
+;   = 0 gives 0xCEE5 = 0. Basis: callers + body -- the two recognition paths of Voice_CheckAndResetSlotState
+;   (PitchCalc_Return_Block and EffectState_Dispatch_Block3) set 0xCEE5 = 4 and DE = (0xCEFF), call it, then classify
+;   0xCEE5 / 0xCEE6.. into chord type and root.
 Chord_CollectHeldNotes:
 	ldw (0x00cf2f:24), 0x0000
 	ld xiy, 0xceff
@@ -16414,6 +16455,13 @@ VoiceSlot_Epilogue_Block:
 	or (0xcede:24), 16
 	ret
 
+; Chord_ApplyCurrentChord: Applies the current chord (type 0xCEDF, root 0xCEE0, bass 0xCEE1): rebuilds its voicing and
+;   bass note (Voice_InitPartAllocState, from the chord tables), copies it to 0x8D42 / 0x8D40 / 0x8D44 -- the chord
+;   MainChordPre shows -- and calls BitMapOut_CheckDiskAndApply when that changed (VoiceSlot_IterateAlloc_TestBit24),
+;   sets the changed flag (0xCF01 high byte = 0xFF) and records the chord as the last one (0xCEE2 = type, 0xCEE3 =
+;   root). Basis: callers + body -- Chord_ClearRecognizedChord calls it after clearing the chord and EffectState_Dispatch_Block2
+;   after each recognition; Voice_UpdatePlayModeState reports the 0xCF01 flag, and recognition falls back to 0xCEE2 /
+;   0xCEE3 when it finds no chord.
 Chord_ApplyCurrentChord:
 	calr Voice_InitPartAllocState
 	calr VoiceSlot_IterateAlloc_TestBit24
@@ -16883,6 +16931,7 @@ Chord_EvalAltNoteBuffer:
 	push	xix
 	push	xiy
 	push	xiz
+; index row
 	ld	a, (0xcede:24)
 	stb_d8	(0xcec0), a
 	ld	a, (0xcedf:24)
@@ -17167,6 +17216,9 @@ UIState_ProcessKeyEvent:
 	ld	wa, (xix+wa)
 	lda	xix, (UIState_ProcessKeyEvent_OnVoiceSelect:24)
 	jp	t, (xix+wa)
+; UIState_ProcessKeyEvent_OnVoiceSelect: Payload offset 0 of a part record (the voice selector; also the switch base):
+;   applies the whole byte (mask 0xFF) through SndParam_ApplyEventField unless MIDI_WriteChannelData_Block rejects the
+;   part. Basis: switch value + body.
 UIState_ProcessKeyEvent_OnVoiceSelect:
 	ld	a, (xsp+0x3)
 	and	a, 255
@@ -17366,6 +17418,9 @@ UIState_ProcessKeyEvent_Skip2:
 SndParam_ProcessEntry_Epilogue:
 	inc	4, xsp
 	ret
+; PanelTag60_ApplyEffectOnOff: SwbtWr listener of panel record 0x60: for payload +1 applies bits 7, 6 and 5 (DIGITAL
+;   REVERB, ACOUSTIC ILLUSION and EQUALIZER on/off) one at a time through SndParam_ApplyEventField. Basis: callers +
+;   body.
 PanelTag60_ApplyEffectOnOff:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
@@ -17550,6 +17605,8 @@ HdaeRom_TableEntry1:
 	ret
 SwbtB2_Code6B_NopListener:
 	ret
+; PanelTag72_ApplyPartMix: SwbtWr listener of panel record 0x72: +3 is sent to parts 0x17 and 0x18 as CC 7 (volume; 0
+;   when bit 7 is set), +7 as CC 91 (reverb send). Basis: callers + body; nothing to do with the HDAE ROM.
 PanelTag72_ApplyPartMix:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
@@ -17567,6 +17624,8 @@ PanelTag72_ApplyPartMix:
 	ld	wa, (xix+wa)
 	lda	xix, (PanelTag72_ApplyPartMix_Volume:24)
 	jp	t, (xix+wa)
+; PanelTag72_ApplyPartMix_Volume: Payload +3 of record 0x72 (also the switch base): sent to parts 0x17 and 0x18 as CC
+;   7 (volume), 0 when the value's bit 7 is set. Basis: switch value + body.
 PanelTag72_ApplyPartMix_Volume:
 	ld	a, (xsp+0x3)
 	and	a, 255
@@ -17592,6 +17651,7 @@ PanelTag72_ApplyPartMix_Volume_Skip:
 	ld	bc, 7:i3
 	calr	MIDI_SendControlChange
 	jr	PanelTag72_ApplyPartMix_ReverbSend_Epilogue
+; PanelTag72_ApplyPartMix_ReverbSend: Payload +7: sent to parts 0x17 and 0x18 as CC 91 (reverb send).
 PanelTag72_ApplyPartMix_ReverbSend:
 	ld	a, (xsp+0x3)
 	res	7, a
@@ -18043,6 +18103,10 @@ HdaeRom_AltTableEntry9_Join:
 HdaeRom_AltTableEntry9_Epilogue:
 	inc	4, xsp
 	ret
+; SndParam_ApplyEventField: Applies the 4-byte event at XWA with its byte 3 temporarily set to C:
+;   SndParam_ResolveWidget looks it up; if SndParam_KeyToLswPartNumber decodes the result, SndPart_SetParam, else
+;   SndParam_ApplySystemParam; byte 3 is restored. Basis: callers + body -- the UIState_ProcessKeyEvent cases copy the SwbtWr
+;   event to the stack and call this once per masked field of byte 3.
 SndParam_ApplyEventField:
 	lda	xsp, (xsp-12)
 	push	xiz
@@ -18325,6 +18389,9 @@ MIDI_SendEpilogue:
 	inc 2, xsp
 	ret
 
+; SndParam_ApplySystemParam: Applies a non-part panel parameter: XWA = id (high byte namespace, low byte field), BC =
+;   value. Ids 0x00xx, 0x4000-0x4006, 0x4080, 0x4140-0x4142 and 0x4280-0x428E are sent now; DSP-slot ids (0x49xx,
+;   0x4Bxx-0x4Exx) are queued for Song_SendPartDataBlocks. Basis: callers + body.
 SndParam_ApplySystemParam:
 	dec	4, xsp
 	push	xiz
@@ -18455,12 +18522,21 @@ SendEpilogue_Data_Case1:
 	extz	wa
 	call	SendPartDataBlock_Block2
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_QueueReverbOnOff: Id 0x4002 (tag 0x60 +1 bit 7, reverb on/off): kept in 0xCFCA until
+;   Song_SendPartDataBlocks sends COMM packet 0x21.
 SndParam_ApplySystemParam_QueueReverbOnOff:
 	ld	(0xcfca:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_QueueRotarySpeed: Id 0x4003 (SndParam_RotarySpeedSwitch, tag 0x70 +0 bit 2, a 0/1
+;   switch): kept in 0xCFC8 until Song_SendPartDataBlocks sends COMM packet 0x23, which the sub CPU's
+;   DSP_Set_RotarySpeed applies to DSP EFFECT slot 0 only for the rotary-speaker algorithms (15 ROCK ROTARY,
+;   53 ROTARY SPEAKER); the DIGITAL DRAWBAR screen shows it on its TREMOLO (SLOW/FAST) view.  Called a
+;   digital-effect switch until 2026-10-17 (analysis/disk-format-probes/sndparam-r3/observations.json).
 SndParam_ApplySystemParam_QueueRotarySpeed:
 	ld	(0xcfc8:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_QueueAcousticIllusionOnOff: Id 0x4004 (tag 0x60 +1 bit 6, acoustic-illusion on/off): kept
+;   in 0xCFCC until Song_SendPartDataBlocks sends COMM packet 0x22.
 SndParam_ApplySystemParam_QueueAcousticIllusionOnOff:
 	ld	(0xcfcc:16), iz
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
@@ -18469,6 +18545,8 @@ SendEpilogue_Data_Case5:
 	extz	wa
 	call	SendPartDataBlock_Block3
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_SendEqualizerOnOff: Id 0x4006 (tag 0x60 +1 bit 5, equalizer on/off): sent at once as COMM
+;   packet 0x25.
 SndParam_ApplySystemParam_SendEqualizerOnOff:
 	ldto_berp a, 248
 	extz	wa
@@ -18530,6 +18608,8 @@ SndParam_ApplySystemParam_SendEqualizerOnOff_Skip14:
 	ld	wa, (xix+wa)
 	lda xix, (SndParam_ApplySystemParam_ScaleTuneOnOff:24)
 	jp	t, (xix+wa)
+; SndParam_ApplySystemParam_ScaleTuneOnOff: Id 0x4280 (record 0x92 +1 bit 7, scale tune on/off; also the switch base):
+;   sends F0 50 B1 with 127 (on) or 0 (off). Basis: switch value + body + receiver.
 SndParam_ApplySystemParam_ScaleTuneOnOff:
 	ldw	wa, 127
 	cp	iz, 0:i3
@@ -18544,6 +18624,8 @@ SndParam_ApplySystemParam_ScaleTuneOnOff_Skip15:
 	ldw	bc, 177
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneType: Id 0x4281 (record 0x92 +0, scale-tune type): sends F0 50 86 <mode> and,
+;   unless the mode's high byte is set (types 64-66), the type's 12 offsets rotated by the key to F0 50 A4..AF.
 SndParam_ApplySystemParam_ScaleTuneType:
 	ldto_berp a, 248
 	extz	wa
@@ -18588,6 +18670,8 @@ SndParam_ApplySystemParam_ScaleTuneType_Skip16:
 	cp	iz, 12
 	jr	lt, SndParam_ApplySystemParam_ScaleTuneType_Loop
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneKey: Id 0x4282 (record 0x92 +1 low nibble, scale key): re-sends the current
+;   type's 12 offsets rotated to the new key.
 SndParam_ApplySystemParam_ScaleTuneKey:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18631,6 +18715,8 @@ SndParam_ApplySystemParam_ScaleTuneKey_Skip17:
 	cp	iz, 12
 	jr	lt, SndParam_ApplySystemParam_ScaleTuneKey_Loop2
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote0: Id 0x4283 (record 0x92 +2, RAM 0xFD1E): user scale-tune offset of the
+;   note 0 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote0:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18654,6 +18740,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0_Skip18:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote1: Id 0x4284 (record 0x92 +3, RAM 0xFD1F): user scale-tune offset of the
+;   note 1 semitone above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote1:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18678,6 +18766,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1_Skip19:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote2: Id 0x4285 (record 0x92 +4, RAM 0xFD20): user scale-tune offset of the
+;   note 2 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote2:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18702,6 +18792,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2_Skip20:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote3: Id 0x4286 (record 0x92 +5, RAM 0xFD21): user scale-tune offset of the
+;   note 3 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote3:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18726,6 +18818,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3_Skip21:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote4: Id 0x4287 (record 0x92 +6, RAM 0xFD22): user scale-tune offset of the
+;   note 4 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote4:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18750,6 +18844,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4_Skip22:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote5: Id 0x4288 (record 0x92 +7, RAM 0xFD23): user scale-tune offset of the
+;   note 5 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote5:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18774,6 +18870,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5_Skip23:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote6: Id 0x4289 (record 0x92 +8, RAM 0xFD24): user scale-tune offset of the
+;   note 6 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote6:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18798,6 +18896,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6_Skip24:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote7: Id 0x428A (record 0x92 +9, RAM 0xFD25): user scale-tune offset of the
+;   note 7 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote7:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18822,6 +18922,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7_Skip25:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote8: Id 0x428B (record 0x92 +10, RAM 0xFD26): user scale-tune offset of the
+;   note 8 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote8:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18846,6 +18948,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8_Skip26:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote9: Id 0x428C (record 0x92 +11, RAM 0xFD27): user scale-tune offset of the
+;   note 9 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote9:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18870,6 +18974,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9_Skip27:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote10: Id 0x428D (record 0x92 +12, RAM 0xFD28): user scale-tune offset of
+;   the note 10 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote10:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -18894,6 +19000,8 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10_Skip28:
 	ldw	wa, 80
 	calr	SeqVoice_CheckAndRet_Prologue
 	jr	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
+; SndParam_ApplySystemParam_ScaleTuneUserNote11: Id 0x428E (record 0x92 +13, RAM 0xFD29): user scale-tune offset of
+;   the note 11 semitones above the key; sent only when the type is 128 (user).
 SndParam_ApplySystemParam_ScaleTuneUserNote11:
 	ld	xwa, 0x4281
 	call	SndParam_LookupReadOnly
@@ -19272,6 +19380,9 @@ SeqVoice_CheckAndRet_Prologue:
 	inc 6, xsp
 	ret
 
+; ScaleTune_TypeToOffsetTable: Returns in XHL the 12-entry per-pitch-class offset table (0x80 = none) of scale-tune
+;   type A: SemitoneBias_TableA..N for the preset types, the user table in record 0x92 (RAM 0xFD1E) for 128. Basis:
+;   callers + body.
 ScaleTune_TypeToOffsetTable:
 	cp	a, 128
 	jrl	z, SeqVoice_CheckAndRet_Data_Case22_Skip8
@@ -19349,6 +19460,8 @@ SeqVoice_CheckAndRet_Data_Case22_Skip9:
 	lda	xhl, (SemitoneBias_TableA:24)
 SeqVoice_CheckAndRet_Data_Case22_Return:
 	ret
+; ScaleTune_TypeToModeCode: Maps scale-tune type A to the mode word sent with F0 50 86: 0, 3-5, 16-22 and 128 to
+;   themselves, 64-66 to 0xFF40-0xFF42 (high byte set: no 12-note table is sent), others to 0. Basis: callers + body.
 ScaleTune_TypeToModeCode:
 	cp	a, 128
 	jrl	z, SendEpilogue_Data_Helper_Case22_Skip11
@@ -19578,6 +19691,9 @@ PitchReset_Flush:
 	pop xiz
 	ret
 
+; MIDI_SendAllVoicesPitchUpdate: Sends the sub-CPU system message {F0 50 92 00} and flushes; the sub-CPU runs
+;   Voice_AllVoices_PortamentoUpdate (pitch refresh of parts 0-0x19) for it. Sent at the end of a sound-RAM transfer
+;   and on its abort path. Basis: callers + body + receiver.
 MIDI_SendAllVoicesPitchUpdate:
 	ldw	wa, 80
 	ldw	bc, 146
@@ -20242,6 +20358,8 @@ PlayModeStateMachine_TestBit22:
 	jr ule, PlayModeStateMachine_TestBit22
 	ret
 
+; Transport_EnableMidiStartContinue: Clears 0x28A7 bit 2, the flag that makes the transport ignore incoming MIDI Start
+;   (0xFA) / Continue (0xFB). Basis: callers + body (and the readers of the bit).
 Transport_EnableMidiStartContinue:
 	res 2, (0x28a7:16)
 	ret
@@ -22371,6 +22489,7 @@ MidiSysMsg_Dispatch_Skip:
 	cp	l, 247
 	jr	nz, MidiSysMsg_Dispatch
 	jrl	Dispatch_InitVal2
+; MidiSysMsg_Handler_SkipF1Event: Song-stream status 0xF1: one data byte, discarded.
 MidiSysMsg_Handler_SkipF1Event:
 	ld	iz, 0:i3
 	cp	iz, 1:i3
@@ -22386,9 +22505,13 @@ MidiSysMsg_Handler_Skip2:
 	cp	iz, 1:i3
 	jr	lt, MidiSysMsg_Handler_Loop
 	jrl	Dispatch_InitVal2
+; MidiSysMsg_Handler_OnF2EndOfTrack: Song-stream status 0xF2: end of the track (returns 0xFFFD, as the SMF reader does
+;   for meta 0x2F).
 MidiSysMsg_Handler_OnF2EndOfTrack:
 	ldw	hl, 0xfffd
 	jrl	Dispatch_Epilogue
+; MidiSysMsg_Handler_OnF3ShortDeltaTime: Song-stream status 0xF3: one-byte (7-bit) delta-time added to the event time
+;   0xE9E7.
 MidiSysMsg_Handler_OnF3ShortDeltaTime:
 	ld	iz, 0:i3
 	cp	iz, 1:i3
@@ -22413,6 +22536,8 @@ MidiSysMsg_Handler_Skip4:
 	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
+; MidiSysMsg_Handler_OnF4LongDeltaTime: Song-stream status 0xF4: two-byte (14-bit) delta-time added to the event time
+;   0xE9E7.
 MidiSysMsg_Handler_OnF4LongDeltaTime:
 	ld	iz, 0:i3
 	cp	iz, 2:i3
@@ -22437,6 +22562,7 @@ MidiSysMsg_Handler_Skip6:
 	calr	MidiSysMsg_DecodeDeltaTime
 	add	(0xe9e7:16), xhl
 	jrl	Dispatch_InitVal2
+; MidiSysMsg_Handler_SkipF9Event: Song-stream status 0xF9: two data bytes, discarded.
 MidiSysMsg_Handler_SkipF9Event:
 	ld	iz, 0:i3
 	cp	iz, 2:i3
@@ -22452,6 +22578,8 @@ MidiSysMsg_Handler_Skip7:
 	cp	iz, 2:i3
 	jr	lt, MidiSysMsg_Handler_Loop4
 	jrl	Dispatch_InitVal2
+; MidiSysMsg_Handler_OnFBTempo: Song-stream status 0xFB: tempo (14-bit value * (0xE9EB) / 1000, clamped to 40..300),
+;   then SeqTimer_UpdateTempoReg.
 MidiSysMsg_Handler_OnFBTempo:
 	ld	iz, 0:i3
 	cp	iz, 2:i3
@@ -22473,6 +22601,7 @@ MidiSysMsg_Handler_Skip9:
 	lda	xwa, (xsp+4)
 	calr	MidiSysMsg_SetScaledTempo
 	jr	Dispatch_InitVal2
+; MidiSysMsg_Handler_SkipFEEvent: Song-stream status 0xFE: two data bytes, discarded.
 MidiSysMsg_Handler_SkipFEEvent:
 	ld	iz, 0:i3
 	cp	iz, 2:i3
@@ -22547,6 +22676,11 @@ Dispatch_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
+; MidiSysMsg_DecodeDeltaTime: Decodes the delta time carried by a song-stream status 0xF3 / 0xF4 event: A = the
+;   status, XBC = its data bytes; 0xF3 -> the 7-bit byte, 0xF4 -> the 14-bit value LSB + 128 * MSB of two 7-bit bytes;
+;   returns it in XHL (0 for any other status). Basis: callers + body -- MidiSysMsg_Handler_OnF3ShortDeltaTime /
+;   _OnF4LongDeltaTime read one / two bytes into their frame, call it with WA = 243 / 244 and add XHL to the event
+;   time 0xE9E7.
 MidiSysMsg_DecodeDeltaTime:
 	cp	a, 244
 	jr	z, MidiSysMsg_DecodeDeltaTime_Skip
@@ -22579,6 +22713,12 @@ MidiSysMsg_DecodeDeltaTime_Skip2:
 	ld	xhl, 0:i3
 MidiSysMsg_DecodeDeltaTime_Return:
 	ret
+; MidiSysMsg_SetScaledTempo: Applies a song-stream tempo event: from the two 7-bit bytes at XWA (LSB, MSB) forms the
+;   14-bit value, scales it by (0xE9EB) / 1000 (Math_Multiply32, Math_DivideU32; nothing when (0xE9EB) = 0),
+;   clamps to 40..300, puts bit 8 in 0xFC63 bit 0, passes the tempo to SoundParam_NotifyChange (XWA = 4, DE = 3),
+;   recomputes the timer (SeqTimer_UpdateTempoReg) and stores tempo | 0x8000 in 0x11F5; XIZ preserved. Basis: callers
+;   + body -- MidiSysMsg_Handler_OnFBTempo (status 0xFB, header: 'tempo (14-bit value * (0xE9EB) / 1000, clamped to
+;   40..300), then SeqTimer_UpdateTempoReg') reads the two bytes and calls it.
 MidiSysMsg_SetScaledTempo:
 	push	xiz
 	ld	xbc, (0xe9eb:16)
@@ -23539,6 +23679,9 @@ SndParam_StoreAndReturn:
 	ldw (4597:16), 120
 	ret
 
+; SongPlayer_ResetState: Resets the song-file player: clears its state, mode, flags and counters in the block at
+;   0xE9C4 (+0, +0x20, +0x21, +0x23, +0x27, +0x2B, +0x2D, +0x31, +0x239, +0x23D) and re-initialises the track slots
+;   and the SysEx and MIDI ring buffers. Basis: callers + body.
 SongPlayer_ResetState:
 	ld (0xe9e4:16), 0
 	ld xwa, 0:i3
@@ -23578,6 +23721,11 @@ InitTrackSlots_LoopCheck:
 	jr c, InitTrackSlots_LoopBody
 	ret
 
+; RingBuffer_WriteByte: Writes byte A into the 2 KB ring buffer at 0xD0AE (write index 0xD0A8, free count 0xD0AC; the
+;   index wraps after 2047): returns HL = 0, or HL = 0xFFFF without writing when the buffer is full. Basis: callers +
+;   body -- the writer twin of RingBuffer_ReadByte (same buffer, read index 0xD0AA); MidiRingBuf_WriteBytes calls it
+;   for each of its IZ bytes after checking the free count, and VoiceReset_Return_Prologue for each byte of a record
+;   it builds; FileIO_InitTrackSlots empties the buffer.
 RingBuffer_WriteByte:
 	cpw (0xd0ac:16), 0
 	jr nz, InitTrackSlots_LoadDRAM
@@ -25031,6 +25179,9 @@ Param_SignExtendRetu_Block:
 	ld (0xe14e:16), xwa
 	ret
 
+; SoundData_InitPhase0: Init-phase-0 handler of subsystem table 11 (phases 1-3 are bare returns): jumps to the code
+;   that sets the sound-table base 0xE14E to (SoundData_CategoryDescPtr). Basis: callers (SoundData_InitFuncTable entry
+;   0) + body.
 SoundData_InitPhase0:
 	jr Param_SignExtendRetu_Block
 Param_SignExtendReturn_Helper:
@@ -25651,6 +25802,9 @@ Param_SignExtendReturn_Join6:
 	inc	4, xsp
 	ret
 
+; SubCPU_RequestSoundName: Sends sub-CPU request 0x20 {2B 30 7F 20 00 00 02 seq A C} (bank A, program C) on COMM
+;   channel 3 and returns its sequence number in L; the caller waits for the 17-byte reply, the sound's name. Basis:
+;   callers + body.
 SubCPU_RequestSoundName:
 	lda xde, (0xe2b8:16)
 	ld (xde), 0x2b
@@ -25693,6 +25847,9 @@ Param_SignExtendRetu_Block4:
 	ld l, (0xe2c9:16)
 	ret
 
+; SubCPU_RequestShortSoundName: Sends sub-CPU request 0x24 {2B 30 7F 24 00 00 02 seq A C} on COMM channel 3 and
+;   returns its sequence number; the caller waits for a 10-byte reply, substituting 'SName Error!!' on failure. Basis:
+;   callers + body.
 SubCPU_RequestShortSoundName:
 	lda xde, (0xe2cc:16)
 	ld (xde), 0x2b
@@ -25873,6 +26030,9 @@ COMM_BuildAndSendPacket:
 	ldw bc, 0xa
 	jp sendCOMM
 
+; SubCPU_SendSoundMemUpdated: Sends sub-CPU message {2C 30 7F 06 00 00 02 seq A C}: sound-memory entry (A, C) --
+;   0xFF/0xFF = all -- has been transferred; the sub-CPU runs DSP_VoiceState_Dispatch(A, C). Sent after the image at
+;   0x1E0000 is bulk-copied to sub-CPU 0x7800. Basis: callers + body + receiver.
 SubCPU_SendSoundMemUpdated:
 	lda xde, (0xe33e:16)
 	ld (xde), 0x2c
@@ -26051,6 +26211,8 @@ CommParam_SetComplete_Return:
 	inc 6, xsp
 	ret
 
+; COMM_ResetSentValues: Init-phase-0 handler of subsystem table 1: sets 0xE356 = 1 and 0xFF into the last-sent caches
+;   0xE351-0xE35C of the set-if-changed COMM senders, so each next value is sent. Basis: callers + body.
 COMM_ResetSentValues:
 	ld (0xe356:16), 1
 	ld (0xe357:16), 255
@@ -26065,6 +26227,8 @@ COMM_ResetSentValues:
 	ld (0xe35c:16), 255
 	ret
 
+; COMM_ResetSentValues_Phase1: Init-phase-1 entry of subsystem table 1: jumps to COMM_ResetSentValues. Basis: callers
+;   + body.
 COMM_ResetSentValues_Phase1:
 	jr COMM_ResetSentValues
 
@@ -26186,6 +26350,8 @@ SendPartDataBlock_Block3:
 	ld	de, 1:i3
 	call SendCOMM_VariableLengthPacket
 	ret
+; COMM_SendMicVolume: Set-if-changed sender of the MIC volume: stores A in 0xE354 and sends it as COMM packet type 7
+;   (sub-CPU DSP_Set_MicLevel). Basis: callers + body + receiver.
 COMM_SendMicVolume:
 	cp	(0xe354:16), a
 	ret z
@@ -26261,6 +26427,8 @@ SendPartDataBlock_ClearByte3_Join:
 	call SendCOMM_VariableLengthPacket
 	ret
 
+; COMM_SendEqualizerOnOff: Set-if-changed sender of the EQUALIZER on/off: A != 0 -> 1, stored in 0xE35A and sent as
+;   COMM packet 0x25 (sub-CPU DSP_Set_EqualizerOnOff). Basis: callers + body + receiver.
 COMM_SendEqualizerOnOff:
 	ld	c, 0:opc
 	cp	a, 0:i3
@@ -26438,6 +26606,9 @@ SendPartDataBlock_DoGetError:
 SendPartDataBlock_Return5:
 	ret
 
+; SoundRam_ConvertKn1500Record: Converts one KN1500 sound-RAM record (the 289-byte copy at XBC) into a 470-byte KN5000
+;   record at XWA: fills it with defaults (SoundRam_DefaultRecord) and moves the fields to their KN5000 offsets.
+;   Basis: callers + body.
 SoundRam_ConvertKn1500Record:
 	lda	xsp, (xsp-10)
 	push	xiz
@@ -26741,6 +26912,10 @@ SendPartDataBlock_Return5_Loop3:
 	cp	hl, 102
 	jr	lt, SendPartDataBlock_Return5_Loop3
 	ret
+; SoundRam_FillDefaultRecord: Fills the sound record at XWA with the 426-byte SoundRam_DefaultRecord (' Initial ',
+;   copied through a stack buffer) and copies its 81-byte block at +102 to +183, +264 and +345. Basis: callers + body
+;   -- SoundRam_ConvertKn1500Record ('fills it with defaults (SoundRam_DefaultRecord)') and
+;   SoundRam_ConvertKn2000Record call it on the destination KN5000 record before moving the converted fields in.
 SoundRam_FillDefaultRecord:
 	lda xsp, (xsp-426)
 	ld	xde, xwa
@@ -26772,6 +26947,11 @@ SoundRam_FillDefaultRecord:
 	ldi85
 	lda	xsp, (xsp+426)
 	ret
+; SoundRam_ConvertKn2000Record: Converts one 144-byte sound record of a KN2000 / MKA / MKB sound-RAM image (XBC) into
+;   a 470-byte KN5000 record at XWA: fills it with defaults (SoundRam_FillDefaultRecord), copies the 16-byte
+;   name, maps the flag bits, packed nibble fields and levels (+0x12 * 127 / 30) to their KN5000 offsets. Basis:
+;   callers + body -- HdaeRom_DataHandler_ConvertKn2000MkaMkb (image ids 1-3) calls it per record with XWA = image +16
+;   + 470 * n and XBC = the record; the KN1500 counterpart is SoundRam_ConvertKn1500Record.
 SoundRam_ConvertKn2000Record:
 	lda	xsp, (xsp-0x1a)
 	push	xiz
@@ -27484,6 +27664,12 @@ HdaeRom_DataHandler_Epilogue:
 	lda	xsp, (xsp+440)
 	ret
 
+; SoundRam_WriteIdAndChecksum: Stamps the sound-memory image at 0x1E0000 as a KN5000 one: copies the 16-byte id
+;   "KN5000 SOUND RAM" (SoundRam_Id_KN5000) to 0x1E0000..0x1E000F, then SendPartDataBlock_SetWord7 stores the
+;   complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at 0x1E72A8; returns HL = 0. Basis: callers + body --
+;   PostTmLoad, PostTmSave_Success, PostTmLoadEntry and TmFlashWrite_ValidateParams call it right after converting the
+;   loaded data (HdaeRom_DataHandler / HdaeRom_AltHandler) and before bulk-copying the image (0x72AA bytes, checksum
+;   word last) to the sub-CPU.
 SoundRam_WriteIdAndChecksum:
 	lda	xde, (0x1e0000:24)
 	lda	xwa, (SoundRam_Id_KN5000:24)
@@ -27554,6 +27740,7 @@ HdaeRom_AltHandler:
 HdaeRom_AltDispatch:
 	ld	xwa, 0x1e0000
 	calr	HdaeRom_DataDispatch_Block3
+; HdaeRom_AltHandler_Kn5000Image: Image id 6 (KN5000 SOUND RAM): nothing to convert, result 0.
 HdaeRom_AltHandler_Kn5000Image:
 	ld	iz, 0:i3
 	jr	HdaeRom_AltHandler_Join
@@ -27655,8 +27842,13 @@ PostTmSave_Failure:
 
 PostTmSave_JumpToRestore:
 	jp FDemoText_RefreshFullDisplay
+; PreTmLoadEntry: Empty hook called before a single SOUND MEMORY entry is read from a .TM file, the per-entry
+;   counterpart of PreTmLoad (also a bare ret). Basis: callers + body.
 PreTmLoadEntry:
 	ret
+; PostTmLoadEntry: After a single SOUND MEMORY entry was read: on success converts it (HdaeRom_DataHandler or
+;   _AltHandler), bulk-copies the 470-byte (A < 64) or 80-byte record to the sub-CPU at 0x7800 + offset and sends
+;   SubCPU_SendSoundMemUpdated(A, C); on failure the 0x04 message; then refreshes the display. Basis: callers + body.
 PostTmLoadEntry:
 	dec	4, xsp
 	ld	(xsp), c
@@ -28856,6 +29048,8 @@ NumFormat_DivideAndC_Epilogue:
 	lda xsp, (xsp + 18)
 	ret
 
+; Strchr: C strchr(s, c): returns in XHL the first byte of string (xsp+4) equal to (xsp+8), or 0 at the terminating
+;   NUL. Basis: callers + body.
 Strchr:
 	ld	xhl, (xsp+4)
 	ld	wa, (xsp+8)

@@ -903,6 +903,12 @@ SoundEvt_LongPacketHandler_DispatchTbl2:
 	.long	Timer_ParamCompareAlt
 	.long	Timer_ParamLoadAndCompare
 	.long	DefaultHandler_Ret
+; ============================================================================
+; DefaultHandler_Ret - Null handler stub (immediate return)
+; ============================================================================
+; Returns immediately. Used as placeholder in 396+ jump table entries where
+; no specific handler is assigned. The default "do nothing" dispatch target.
+; ============================================================================
 DefaultHandler_Ret:
 	ret
 ; DisplayMode_Dispatch -- if SeqState_HasModeChanged returns 0, dispatch on the
@@ -986,6 +992,12 @@ ScoopDisp_FlagSetAndDispatch_Return:
 	; indexed with stride 4 (`sla hl, 2`)
 	; 32 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 ScoopDisp_DispatchTable_Small:
+	; ScoopDisp_DispatchTable_Small -- 32 handler pointers, index scaled by 4.
+	; INDEXING RULE, from the only site that loads it (this file, ~40 lines above):
+	;     sla hl, 2 / push xix / ld xix, ScoopDisp_DispatchTable_Small
+	;     ld_rrl xhl, xix, hl / pop xix / call (xhl)
+	; The table was already typed except its LAST entry, which the old sweep read
+	; as `inc 1, xwa / .byte 0xef / nop`. 32 entries reach exactly the next label.
 	.long	ScoopDisp_FlagSetAndDispatch
 	.long	DefaultHandler_Ret
 	.long	DefaultHandler_Ret
@@ -1695,6 +1707,10 @@ PerfMode_VolumeParam_Process_Skip:
 	call	SoundCtrl_SendCommand
 PerfMode_VolumeParam_Process_Return:
 	ret
+; PerfMode_ShowVolumeLine: Rebuilds the LCD text line of the part-volume pop-up: blanks 27 characters at 0x0ECD,
+;   writes "VOLUME = " at 0x0ED5, formats the value (0x0EF7) as three digits (ParamDigit_ExtractAndFormat, 0x1181)
+;   after it and marks region 3 for redraw. Basis: callers + body -- both PerfMode volume handlers store the selected
+;   part's volume in 0x0EF7 and then call it.
 PerfMode_ShowVolumeLine:
 	ld	xix, 3789
 	ld	a, 32:opc
@@ -1928,6 +1944,8 @@ VoiceParam_MultiDispatch:
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartKeyShift
 	jp VoiceParam_CommonTail
+; VoiceParam_MultiDispatch_StepVolume: Selector 3 (volume): steps the value within 0..127, writes it to the part and
+;   shows the VOLUME pop-up.
 VoiceParam_MultiDispatch_StepVolume:
 	; --- Case 0x03: H=0x7f, L=0x00 ---
 	ld	a, (4339:16)
@@ -1939,6 +1957,8 @@ VoiceParam_MultiDispatch_StepVolume:
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartVolume
 	jp VoiceParam_CommonTail
+; VoiceParam_MultiDispatch_StepPanpot: Selector 8 (panpot): steps the value within 0..127, writes it to the part and
+;   shows the PANPOT pop-up.
 VoiceParam_MultiDispatch_StepPanpot:
 	; --- Case 0x08: H=0x7f, L=0x00 ---
 	ld	a, (4339:16)
@@ -9990,6 +10010,11 @@ VoiceSlot_CompareAndBranch:
 	ld	w, 1:opc
 	call	VoiceSlot_CompareRet
 	ret
+; VoiceSlot_StepCursorBack: Steps the song-data cursor back one event (VoiceSlot_CompareAndBranch:
+;   VoiceSlot_CompareRet with W = 1) while keeping the 0x81-marker counter 0x0D58 unchanged (pushed and popped around
+;   the step); W = 255 at the start of the track. Backward twin of VoiceSlot_DispatchRet. Basis: callers + body --
+;   ScoopDisp_SeekBackWrapMarkers walks back to the preceding 0x81 with it and stops on W = 255 ('it stops at the
+;   start of the track'); 12 other scoop-display sites use it the same way.
 VoiceSlot_StepCursorBack:
 	pushdi_w	(0x0d58)
 	call	VoiceSlot_CompareAndBranch
@@ -10282,6 +10307,9 @@ Timer_ModeHandler_0_Helper5:
 	pop	xwa
 	ld	a, (3524:16)
 	ret
+; VoiceSlot_WriteCurrentParam: Stores W at the current song-data cursor: block (0x0C9E)[track] (via
+;   VoiceSlot_UpdateCurrentPointer), offset (0x0CBE)[track], track = (0x0EEE). Basis: callers + body -- the write twin
+;   of VoiceSlot_ReadCurrentParams; callers read, modify W and write back, or write marker bytes.
 VoiceSlot_WriteCurrentParam:
 	call	VoiceSlot_ComputeWordIndex
 	push	xde
@@ -11328,6 +11356,11 @@ VoiceSlot_StatusRet_Skip87:
 	call	DisplayStr_BytecodeBlock_B
 VoiceSlot_StatusRet_Return:
 	ret
+; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with VoiceSlot_FinalRetZ (read the cursor byte,
+;   advance one) and returns the second in A (W = the advance status), so it skips one byte. Basis: callers + body --
+;   VoiceSlot_StatusRet calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
+;   fetch data byte +2 (the 0xDn value that goes to 0x3721, the 0xBn tag compared with 72, the 0xCn part), and twice
+;   in a row to reach byte +4.
 VoiceSlot_SkipByteAndRead:
 	call	VoiceSlot_FinalRetZ
 	call	VoiceSlot_FinalRetZ
@@ -11510,6 +11543,11 @@ VoiceState_DataBlock2_Epilogue:
 	pop	xiz
 	pop	xhl
 	ret
+; VoiceSlot_CompareSavedMarkerCount: Compares the 0x81-marker count saved in song-cursor snapshot slot A (0..7; word
+;   +4 of the 8-byte record at 0x0DFF + 8*A, copied from 0x0D58 by VoiceSlot_SaveState) with the current count 0x0D58:
+;   W = 1 equal, 2 saved count below the current one, 3 saved count above it. Basis: callers + body --
+;   ScoopDisp_StepMeasureForward/Back save the target position in slot 4 and step the cursor while W = 3, stopping on
+;   W = 1 (reached) or W = 2 (passed).
 VoiceSlot_CompareSavedMarkerCount:
 	push	xhl
 	xor	w, w
@@ -12018,6 +12056,13 @@ VoiceState_DataBlock2_Entry3_Code_Return:
 VoiceState_DataBlock2_Tbl:
 	.byte	0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80, 0x00
 	.byte	0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80
+; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x372E) or below (XIX = 0x3736):
+;   reads events from the block read position into 0x0EB5 (VoiceBank_ProcessCommand), sets bit (clock 0x0EB6 / 12) of
+;   the current beat byte for each displayable event (VoiceSlot_StatusCheck W = 0), moves to the next byte on a 0x81
+;   beat marker and stops after (0x0EC1) beats or on 0x84; on the 0x82 end marker in the lower row it records the end
+;   position (0x0F5B, 0x0F5A = 3). Basis: callers + body -- SqStep_SetupPrevGridRow and SqStep_SetupNextGridRow call
+;   it last with XIX = 0x372E / 0x3736 and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
+;   for the current row at 0x3732.
 SqStep_BuildAdjacentRowBitmap:
 	xor	bc, bc
 VoiceState_DataBlock2_Loop9:
@@ -12436,6 +12481,8 @@ SubCPU_ToneDispatch:
 	.long 0x0000fa1e, 0x0000fa38, 0x0000fa52, 0x0000fa04
 	.long 0x0000fb3c, 0xffffffff, 0xffffffff, 0xffffffff
 	.long 0xffffffff, 0x0000faee, 0x0000fb08, 0x0000fb22
+	; Byte data, 4 B.  Read by SubCPU_ToneParamDisplay (0xEFD992): `ld xiy, SubCPU_ToneParamDisplay_Tbl`
+	; reader SubCPU_ToneParamDisplay: `ld xiy, SubCPU_ToneParamDisplay_Tbl` then `ld a, (xiy+hl)`
 SubCPU_ToneParamDisplay_Tbl:
 	.byte	0x08, 0x09, 0x0a, 0x0b
 	; Entry 1 of SubCPU_ToneParamRet (a code pointer the table holds).
@@ -12788,6 +12835,12 @@ SubCPU_ToneParamRet_Join:
 	stb_d8	(0x0ec1), a
 PerfMode_ParamHandler_11_Return2:
 	ret
+; SqStep_GetRhythmTrackForMeasures: Returns in W the track that supplies the measure lengths: when 0x0D54 bit 0 is
+;   set, the first track whose TRACK ASSIGN value 0xF1A0[t] is 16 (RHYTHM), as t + 1, with 0x287B bit 2 set; when
+;   0x0D54 bit 0 is clear, W = 0 with 0x287B bit 2 cleared (no RHYTHM track found: W = 0, 0x287B unchanged). Basis:
+;   callers + body -- SqStep_SetupPrevGridRow / SqStep_SetupNextGridRow call it before SetWall_SlotResolve, which
+;   stores W in 0x288D, the track SetWall_DualPassScanner reads measure lengths from when 0x287B bit 2 is set;
+;   SqStep_SetupNextGridRow also resolves the measure on that track itself (`ld a, w`).
 SqStep_GetRhythmTrackForMeasures:
 	xor	w, w
 	bit	0, (0x0d54:16)
@@ -13482,6 +13535,9 @@ SubCPU_ToneParamRet_Return3:
 	; indexed with stride 4 (`sla hl, 2`)
 	; 16 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 OscScope_HandlerTable:
+	; OscScope_HandlerTable -- 16 handler pointers (`ld xde, OscScope_HandlerTable`
+	; in this file). Only the last entry was untyped; 16 entries reach exactly the
+	; next label, SndHandler_DefaultRet.
 	.long	SndHandler_DefaultRet
 	.long	SndHandler_DefaultRet
 	.long	OscScope_Handler_2
@@ -14028,6 +14084,12 @@ DisplayStr_BytecodeBlock_A_Return2:
 	; indexed with stride 4 (`sla hl, 2`), index from `ld l, (3782:16)`
 DisplayStr_BytecodeBlock_A_Tbl:
 	.byte	0x4c, 0x0e, 0x00, 0x00, 0x4e, 0x0e, 0x00, 0x00, 0x50, 0x0e, 0x00, 0x00
+; SqStep_PeekNextEvent: Looks ahead one event at the song-data read cursor without moving it: saves the cursor (block
+;   0x28BF, offset 0x28C1), copies the event at it into 0x0EBB.. -- just the byte when it is a marker 0x81 / 0x82 /
+;   0x84, otherwise the status byte and its data bytes up to the next byte with bit 7 set -- skipping whole events
+;   whose first data byte is 47 or 95, then restores the cursor; registers preserved. Basis: callers + body -- the
+;   chord-grid builders call it and then test 0x0EBB against the markers (129 / 130 / 132) and 0x0EBC against 48 to
+;   decide how to fill the next cells; VoiceBank_LoadLerpState / _UpdateLerpState are the cursor's read and advance.
 SqStep_PeekNextEvent:
 	pushdi_w	(0x28bf)
 	pushdi_w	(0x28c1)
@@ -14271,6 +14333,9 @@ DisplayStr_BytecodeBlock_C_Tbl2:
 	.ascii	"  TEMPO  "
 	.byte	0x93
 	.ascii	"=              "
+; DisplayMode_RedrawWithBlankLine: Redraws region 0, blanks the LCD text line at 0x0ECA (30 bytes, then 25) and
+;   redraws regions 5, 3 and 4. Basis: callers + body -- both callers set the pop-up id (0x0DEF) to 8 and call it;
+;   DMA_ChannelHandler_2 reuses the tail without region 0 when already in that pop-up.
 DisplayMode_RedrawWithBlankLine:
 	call	Display_UpdateRegion0
 DisplayStr_ShowBlankLine:
@@ -17664,6 +17729,12 @@ Scoop_SpecialMode_CheckState:
 	popw wa
 	ret
 
+; SeqData_ChainPrevSrcBlock: Moves the source of a chained copy in the sequencer event memory to the previous block:
+;   follows the link at +1 of the block at (0x267E), stores the block number in 0x28BA and the block's address in
+;   (0x267E), and sets the source offset IY = 0xFF (the block's last byte); when the linked block is not in use (bit 7
+;   clear) it sets SEQ_ERROR_CODE = 11. Basis: callers + body -- Scoop_EventHandler_Scroll, the backward (`lddr`,
+;   Scoop_SpecialMode_Setup) chained copy, calls it between pieces; the forward twin is Scoop_SpecialMode_UpdateParams
+;   (link +3, IY = 5), the destination twin Scoop_SpecialMode_Draw (0x267A, 0x289F, IX).
 SeqData_ChainPrevSrcBlock:
 	xor iy, iy
 	ld xiy, (9854:16)
@@ -17735,6 +17806,12 @@ Scoop_SpecialMode_UpdateParams_Skip:
 	ld	iy, 5:i3
 Scoop_SpecialMode_UpdateParams_Return:
 	ret
+; SeqData_ChainNextDstBlock: Moves the destination of a chained copy in the sequencer event memory to the next block:
+;   follows the next-block link (+3) of the block at (0x267A), stores the number in 0x289F and the block's address in
+;   (0x267A), and sets the offset IX = 5 (first data byte); when the linked block is not in use (bit 7 clear) it sets
+;   SEQ_ERROR_CODE = 11 instead. Basis: callers + body -- Scoop_EventHandler_SpecialMode, the forward copy over the
+;   256-byte block chain, calls it after each SeqData_ChainCopyBytes that filled a destination block;
+;   Scoop_SpecialMode_UpdateParams is the same step for the source (0x267E, IY).
 SeqData_ChainNextDstBlock:
 	xor	xix, xix
 	ld	xix, (9850:16)
@@ -17757,6 +17834,12 @@ SeqData_ChainNextDstBlock_Skip2:
 	ld	ix, 5:i3
 SeqData_ChainNextDstBlock_Return2:
 	ret
+; SeqData_ChainCopyBytes: Copies BC bytes (none when BC = 0) from offset IY of the source block (0x267E) to offset IX
+;   of the destination block (0x267A) in the sequencer event memory (`ldir` (XIX+),(XIY+)) and returns IY / IX
+;   advanced by BC as block offsets. Basis: callers + body -- Scoop_EventHandler_SpecialMode calls it for each piece
+;   of its forward copy over the 256-byte block chain, stepping the blocks between pieces with
+;   SeqData_ChainNextDstBlock and Scoop_SpecialMode_UpdateParams; Scoop_SpecialMode_Setup is the backward (`lddr`)
+;   twin.
 SeqData_ChainCopyBytes:
 	pushw	wa
 	push	xde
@@ -18018,7 +18101,7 @@ Scoop_EnvelopeCalc:
 	ld xde, xwa
 	ld xwa, (xsp + 4)
 	push xwa
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xwa, xhl
 	call DrawString
@@ -18426,7 +18509,7 @@ Scoop_GlideParam_End:
 	ld xde, xwa
 	ld xwa, 0:i3
 	push xwa
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xwa, xhl
 	call DrawString
@@ -19085,7 +19168,7 @@ Scoop_EventLoop_36Entry_Branch3:
 	ld xde, xwa
 	ld xwa, (xsp + 2)
 	push xwa
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xwa, xhl
 	call DrawString

@@ -203,6 +203,11 @@ PanelButton_ModeKey_Join3:
 PanelButton_ModeKey_Epilogue:
 	pop	xiz
 	ret
+; PanelButton_ModeKey_FilterTarget: Vets the target mode in byte +2 of the mode-key event frame XWA; sets frame byte 0
+;   to 0xFF (no event) in MD_DEMO unless the target is 0 or 19, when panel parameter 0xC0 is 1 and the target is
+;   9/14/15/17/19, when SeqState_GetFlags & 7 and the target is 7, and for targets 19/20 while word 0x28A8 is nonzero;
+;   remaps 9 -> 8 when byte 0x26FC is 1 and 8 -> 10 when bit 0 of 0x266A is set. Basis: callers + body --
+;   PanelButton_ModeKey stores the mapped mode at +2, calls it, then posts nothing when byte 0 came back 0xFF.
 PanelButton_ModeKey_FilterTarget:
 	push	xiz
 	ld	xiz, xwa
@@ -1270,6 +1275,9 @@ PanelAction_Volume:
 PanelAction_Volume_Epilogue:
 	pop	xiz
 	ret
+; PanelEvent_FillSelectedPart: If byte 0 of the panel event at XWA is 0 and byte 1 is not 3, writes the selected part
+;   (PART_SELECT, 0x8D3A) into byte 0. Basis: callers + body -- PanelAction_PostUnlessDemo and the other panel actions
+;   call it on the event frame immediately before PanelEvent_Post.
 PanelEvent_FillSelectedPart:
 	cp	(xwa), 0
 	ret	nz
@@ -1277,6 +1285,10 @@ PanelEvent_FillSelectedPart:
 	ret	z
 	.byte 0xb0, 0x14, 0x3a, 0x8d
 	ret
+; SndParam_ResolveSelectedPartVoice: Resolves the voice of the selected part (PART_SELECT): builds a 6-byte record {+2
+;   part, +3 part param 0, +4 part param 32} on its stack frame, runs SndParam_ResolveVoiceEntry and returns XHL ->
+;   that record (+0/+1 = resolved entry; the frame is already released, so read it at once). Basis: callers + body --
+;   the DIGITAL EFFECT and SUSTAIN button handlers test byte +0 for 0x0F / 0x0C right after the call.
 SndParam_ResolveSelectedPartVoice:
 	dec	6, xsp
 	ld	a, (PART_SELECT:16)
@@ -1308,6 +1320,10 @@ SndParam_ResolveSelectedPartVoice:
 	lda	xhl, (xsp)
 	inc	6, xsp
 	ret
+; PanelAction_DispatchPedalFunction: Runs the foot-pedal function assigned by code BC: index =
+;   PanelAction_PedalAssignHandlerIndex[BC]; if <= 22, calls PanelAction_PedalFunctionHandlers[index] with XWA = the
+;   panel event. Basis: callers + body -- PanelAction_FootSwitch1/2 and FootController1-4 pass their assignment
+;   parameter (0x2886..0x2890) in BC.
 PanelAction_DispatchPedalFunction:
 	extz	bc
 	lda	xde, (PanelAction_PedalAssignHandlerIndex:24)
@@ -3143,18 +3159,25 @@ ExtData_VoiceParam_DispatchBytecode:
 	ld	wa, (xix+wa)
 	lda	xix, (ExtData_VoiceParam_DispatchBytecode_ModeMsp:24)
 	jp	t, (xix+wa)
+; ExtData_VoiceParam_DispatchBytecode_ModeMsp: MD_MSP (CURRENT_MODE 15; also the switch base): sets bit 7 of LED row 2
+;   (0x8F1A). Basis: switch value (CURRENT_MODE - 2) + body.
 ExtData_VoiceParam_DispatchBytecode_ModeMsp:
 	setm	7, (xbc)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeCmp: MD_CMP: sets bit 1 of LED row 0 (0x8F18)
 ExtData_VoiceParam_DispatchBytecode_ModeCmp:
 	ld	a, 1:opc
 	jr	ExtData_VoiceParam_DispatchBytecode_Join
+; ExtData_VoiceParam_DispatchBytecode_ModeSndArg: MD_SND_ARG: sets bit 2 of LED row 0 (0x8F18)
 ExtData_VoiceParam_DispatchBytecode_ModeSndArg:
 	ld	a, 2:opc
 	jr	ExtData_VoiceParam_DispatchBytecode_Join
+; ExtData_VoiceParam_DispatchBytecode_ModeSeq: MD_SEQ / MD_SEQ_EDIT / MD_SEQ_STEP: sets bit 7 of LED row 6 (0x8F1E)
 ExtData_VoiceParam_DispatchBytecode_ModeSeq:	; cases 8, 12, 13
 	setm	7, (xde)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeSeqReal: MD_SEQ_REAL: sets bit 7 of LED row 6, and bit 6 too when (0x26FC) =
+;   1
 ExtData_VoiceParam_DispatchBytecode_ModeSeqReal:
 	ld	xwa, xde
 	setm	7, (xde)
@@ -3162,24 +3185,31 @@ ExtData_VoiceParam_DispatchBytecode_ModeSeqReal:
 	jr	nz, ExtData_VoiceParam_DispatchBytecode_Epilogue2
 	setm	6, (xwa)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeSeqErec: MD_SEQ_EREC: sets bit 6 of LED row 6 (0x8F1E)
 ExtData_VoiceParam_DispatchBytecode_ModeSeqErec:
 	setm	6, (xde)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeSound: MD_SOUND / MD_SOUNDEDIT: sets bit 0 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeSound:	; cases 2, 3
 	setm	0, (xiy)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeMidi: MD_MIDI: sets bit 2 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeMidi:
 	setm	2, (xiy)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeControl: MD_CONTROL: sets bit 1 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeControl:
 	setm	1, (xiy)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeDisk: MD_DISK: sets bit 3 of LED row 11 (0x8F23)
 ExtData_VoiceParam_DispatchBytecode_ModeDisk:
 	setm	3, (xiy)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeEntertainer: MD_ENTERTAINER: sets bit 3 of LED row 10 (0x8F22)
 ExtData_VoiceParam_DispatchBytecode_ModeEntertainer:
 	setm	3, (xhl)
 	jr	ExtData_VoiceParam_DispatchBytecode_Epilogue2
+; ExtData_VoiceParam_DispatchBytecode_ModeOtp: MD_OTP: sets bit 4 of LED row 0 (0x8F18)
 ExtData_VoiceParam_DispatchBytecode_ModeOtp:
 	ld	a, 4:opc
 ExtData_VoiceParam_DispatchBytecode_Join:
@@ -3908,6 +3938,8 @@ UIState_ProcessExtendedMode:
 UIState_ProcessExtendedMode_Cases:	; the switch's base: case k is at +UIState_ProcessExtendedMode_CaseTable[k]
 	orw	(36670:16), 515
 	ret
+; UIState_ProcessExtendedMode_OnStartFillIntroBytes: Style record bytes 5/6 (START/STOP, SYNCHRO & BREAK, FILL IN,
+;   INTRO & ENDING bits) changed: request update bits 2-7 of 0x8F3E.
 UIState_ProcessExtendedMode_OnStartFillIntroBytes:	; cases 5, 6
 	orw	(36670:16), 252
 	ret
@@ -3920,11 +3952,17 @@ UIState_ProcessExtendedMode_Case3:
 UIState_ProcessExtendedMode_Skip:
 	orw	(36670:16), 256
 	ret
+; UIState_ProcessExtendedMode_OnTechniChordByte: Style record byte 4 (TECHNI CHORD, bit 6, plus a 3-bit field)
+;   changed: request update bit 4 of 0x8F42.
 UIState_ProcessExtendedMode_OnTechniChordByte:
 	orw	(36674:16), 16
 	ret
+; UIState_ProcessExtendedMode_OnVariationByte: Style record byte 7 (VARIATION, bits 4-5) changed: request update bit 9
+;   of 0x8F3E.
 UIState_ProcessExtendedMode_OnVariationByte:
 	orw	(36670:16), 512
+; UIState_ProcessExtendedMode_IgnoreBytes1And2: Style record bytes 1 and 2 changed: nothing to update (bare ret, also
+;   the tail of the byte-7 case).
 UIState_ProcessExtendedMode_IgnoreBytes1And2:	; cases 1, 2
 	ret
 UIStateEvt_NullHandler:
@@ -4244,6 +4282,12 @@ VoiceData_ExtendedParamSetup:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ret
+; MainSysCtrl_ResetCurrentPanel: INITIAL SETTING 'CURRENT PANEL': resets the live panel --
+;   Display_SetupAndPrepareRender copies the header template (0x20 bytes, DataSlot_HeaderTemplate) to 0xF980 and
+;   SndParamRam_DefaultImage (0x620 bytes) to 0xF9A0 and sets the region bytes -- then validates and re-resolves it
+;   (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, PanelTlv_WriteLivePanelHeaders), applies it
+;   (MidiMsg_ParseChannelStream), sets GLOBAL_ERROR_CODE 35 ('COMPLETED!') and tail-jumps to Audio_FillParamBuffer.
+;   Basis: callers + body -- MainSysCtrl_OnInitCurrentPanel (case 1, item 'CURRENT PANEL') calls it.
 MainSysCtrl_ResetCurrentPanel:
 	calr	Display_SetupAndPrepareRender
 	call	PanelTlv_ValidateLivePanel
@@ -4252,6 +4296,11 @@ MainSysCtrl_ResetCurrentPanel:
 	calr	MidiMsg_ParseChannelStream
 	call	MainTitle_SetBootFlag
 	jrl	Audio_FillParamBuffer
+; MainSysCtrl_ResetPartSettings: INITIAL SETTING 'PART SETTING': for each of the 24 part records (26-byte stride from
+;   +20) copies the record's field run (length at +1, data from +2) from SndParamRam_DefaultImage into the live panel
+;   0xF9A0, sends each record (MIDI_WriteMultiByteWithHeader), then re-resolves the part companions. Basis: callers +
+;   body -- MainSysCtrl_OnInitPartSetting (case 2, item 'PART SETTING') calls it; its header already says it copies
+;   part records of SndParamRam_DefaultImage into 0xF9A0.
 MainSysCtrl_ResetPartSettings:
 	dec	8, xsp
 	pushw	iz
@@ -4293,6 +4342,12 @@ VoiceData_ExtendedParamSetup_Loop3:
 	popw	iz
 	inc	8, xsp
 	ret
+; MainSysCtrl_ResetMidiSettings: INITIAL SETTING 'MIDI SETTING': in the live panel 0xF9A0 restores, for each of the 24
+;   part records, bits 0-2 of byte +14 and the 9 bytes at +15 from SndParamRam_DefaultImage and re-sends them
+;   (MIDI_WriteCommandToBuffer), restores and re-sends the 14 bytes at +944 and clears bit 2 of byte +1037
+;   (SwbtWr_ReinitOutputBank); then makes the same +14 / +15 / +944 restore in each of the 80 panel memories (0x1ED400
+;   + 960 * n). Basis: callers + body -- MainSysCtrl_OnInitMidiSetting (case 3, item 'MIDI SETTING') calls it; its
+;   header already names the +14 restore.
 MainSysCtrl_ResetMidiSettings:
 	lda	xsp, (xsp-10)
 	push	qiz
@@ -4946,6 +5001,9 @@ ExtData_ToneParam_DispatchHandler:
 	ld	wa, (xix+wa)
 	lda xix, (ExtData_ToneParam_DispatchHandler_OnVoiceSelect:24)
 	jp	t, (xix+wa)
+; ExtData_ToneParam_DispatchHandler_OnVoiceSelect: Payload offset 0 of a per-part record (tags 0x00-0x19), the voice
+;   selector: re-applies the program (SndParam_ApplyProgramChange) and posts the record's +0/+1. Basis: switch value
+;   (changed payload offset) + body.
 ExtData_ToneParam_DispatchHandler_OnVoiceSelect:
 	jr ExtData_ToneParam_DispatchHandler_Join
 ExtData_ToneParam_DispatchHandler_Case3:
@@ -5154,6 +5212,11 @@ ExtData_ToneParam_CheckMode_Join:
 	ldw	wa, 128
 	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
+; ExtData_Tag43_SetByte1Fields: Applies an incoming event to byte +1 of panel record 0x43 as two fields, bit 7 and
+;   bits 0-6 (ExtData_SetTlvField 0x80, then 0x7F), and posts the change with SwbtWr_FlushAndAppendParams. Basis:
+;   callers + body -- ExtData_ToneParam_CheckMode is entry 0x43 of SoundProgram_DispatchTable and calls it when the
+;   event offset (0x912F) is 1; record 0x43 is identified in docs/kn-disk-file-formats.md:534 as the microphone record
+;   (on/off, a 0..127 level, a second on/off; 'microphone' is that page's inference).
 ExtData_Tag43_SetByte1Fields:
 	ldw	wa, 128
 	calr	ExtData_SetTlvField
@@ -5173,12 +5236,20 @@ ExtData_ToneParam_AltDispatch:
 	ld	wa, (xix+wa)
 	lda xix, (ExtData_ToneParam_AltDispatch_WholeByteFields:24)
 	jp	t, (xix+wa)
+; ExtData_ToneParam_AltDispatch_WholeByteFields: Payload +0 and +8 of a drawbar record (0x44/0x45/0x46; also the
+;   switch base): merges the whole byte (ExtData_SetTlvField 0xFF) and posts it. Basis: switch value + body.
 ExtData_ToneParam_AltDispatch_WholeByteFields:
 	jr ExtData_ToneParam_AltDispatch_Join
+; ExtData_ToneParam_AltDispatch_DrawbarNibbleFields: Payload +1/+2 of a drawbar record (cases 1, 2): merges the byte
+;   as two 4-bit fields (ExtData_SetTlvField 0x0F, 0xF0).
 ExtData_ToneParam_AltDispatch_DrawbarNibbleFields:	; cases 1, 2
 	jr ExtData_ToneParam_AltDispatch_Join2
+; ExtData_ToneParam_AltDispatch_DrawbarFootages: Payload +3..+6 (cases 3-6): two drawbar footages per byte (16'/8', 5
+;   1/3'/4', 2 2/3'/2', 1 3/5'/1 1/3'), merged as low and high nibble.
 ExtData_ToneParam_AltDispatch_DrawbarFootages:	; cases 3, 4, 5, 6
 	jr	ExtData_ToneParam_AltDispatch_Join3
+; ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches: Payload +7: the 1' drawbar (low nibble, ExtData_SetTlvField
+;   0x0F) and the two switch bits 0x10/0x20 (ExtData_ToggleTlvBits 0x30).
 ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches:
 	calr	ExtData_Drawbar_SetByte7Fields
 	ret
@@ -5198,6 +5269,11 @@ ExtData_ToneParam_AltDispatch_Join3:
 	ldw	wa, 240
 	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
+; ExtData_Drawbar_SetByte7Fields: Applies an incoming event to byte +7 of a drawbar record (0x44/0x45/0x46) as the 1'
+;   drawbar (low nibble, ExtData_SetTlvField 0x0F) and the two switch bits 0x10/0x20 (ExtData_ToggleTlvBits 0x30),
+;   then posts the change with SwbtWr_FlushAndAppendParams. Basis: callers + body -- its only caller is case 7 of
+;   ExtData_ToneParam_AltDispatch, ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches, whose header names these two
+;   fields; same shape as ExtData_Tag43_SetByte1Fields.
 ExtData_Drawbar_SetByte7Fields:
 	ldw	wa, 15
 	calr	ExtData_SetTlvField
@@ -5219,6 +5295,9 @@ ExtData_ToneParam_AltBody:
 	ld	wa, (xix+wa)
 	lda xix, (ExtData_ToneParam_AltBody_OnStyleProgram:24)
 	jp	t, (xix+wa)
+; ExtData_ToneParam_AltBody_OnStyleProgram: Offset 0 of style/tempo record 0x48 (the style selection; also the switch
+;   base): resolves (0x9130, 0x9131) with AccStyle_LookupTempoAndVelocity, writes the result to +0/+1 and posts both.
+;   Basis: switch value + body.
 ExtData_ToneParam_AltBody_OnStyleProgram:
 	jr ExtData_ToneParam_AltBody_Join
 ExtData_ToneParam_AltBody_Case3:
@@ -5229,6 +5308,8 @@ ExtData_ToneParam_AltBody_Case5:	; cases 5, 6
 	jrl	ExtData_ToneParam_AltBody_Entry
 ExtData_ToneParam_AltBody_Case7:
 	jrl	ExtData_ToneParam_AltBody_Join4
+; ExtData_ToneParam_AltBody_OnTempo: Offset 8 of style/tempo record 0x48 (0xFC5A): stores a changed tempo into
+;   0xFC62/0xFC63, posts it and calls SeqTimer_UpdateTempoReg.
 ExtData_ToneParam_AltBody_OnTempo:
 	calr	ExtData_SetTempoIfChanged
 ExtData_ToneParam_AltBody_Case1:	; cases 1, 2
@@ -5287,6 +5368,12 @@ ExtData_ToneParam_AltBody_Join4:
 	ldw	wa, 48
 	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
+; ExtData_SetTempoIfChanged: Stores the received two-byte value (0x9130, 0x9131) as the tempo word at 0xFC62/0xFC63 of
+;   the style/tempo record 0xFC5A when it differs from what is there, posts both bytes (the current param with DATA3 =
+;   255, then param 9 with DATA3 = 1, via SwbtWr_FlushAndAppendParams) and recomputes the tempo timer
+;   (SeqTimer_UpdateTempoReg); XIZ preserved. Basis: callers + body -- ExtData_ToneParam_AltBody_OnTempo (offset 8 of
+;   record 0x48, header: 'stores a changed tempo into 0xFC62/0xFC63, posts it and calls SeqTimer_UpdateTempoReg') is
+;   only this call.
 ExtData_SetTempoIfChanged:
 	push	xiz
 	lda	xiz, (0xfc5a:16)
@@ -5568,6 +5655,10 @@ ExtData_Voice_UpdateFlags:
 	ld	(xbc), a
 	calr	MIDI_WriteResetSequence
 	ret
+; ExtData_PostRawValueAndMask: Posts the incoming event unchanged: MIDI_MSG_DATA2 := value (0x9130), MIDI_MSG_DATA3 :=
+;   mask (0x9131), then SwbtWr_FlushAndAppendParams (which appends it when the mask is non-zero); no panel record byte
+;   is touched. Basis: callers + body -- ExtData_ToneParam_MultiChannel (entry 0x90 of SoundProgram_DispatchTable)
+;   calls it for offset 16, outside tag 0x90's 6-byte record; ExtData_Voice_CopyAndJump (entry 0xA8) is the same body.
 ExtData_PostRawValueAndMask:
 	ld	(MIDI_MSG_DATA2), (37168:16)
 	ld	(MIDI_MSG_DATA3), (37169:16)
@@ -5579,6 +5670,12 @@ ExtData_Voice_CheckMode:
 	ret	nz
 	calr	ExtData_ToggleReverbIllusionOnOff
 	ret
+; ExtData_ToggleReverbIllusionOnOff: Toggles bits 7 and 6 of panel record 0x60 byte +1 -- the DIGITAL REVERB and
+;   ACOUSTIC ILLUSION on/off bits -- by the incoming event (ExtData_ToggleTlvBits with mask 0xC0) and posts the change
+;   with SwbtWr_FlushAndAppendParams; bit 5 (EQUALIZER) is not handled here. Basis: callers + body --
+;   ExtData_Voice_CheckMode (entry 0x60 of SoundProgram_DispatchTable) calls it for offset 1; the bit meanings are
+;   docs/kn-disk-file-formats.md:469 (0x4002/0x4004/0x4006 = tag 0x60 +1 bits 7/6/5 for slots 1/2/4), confirmed by
+;   BitMapOut_RestoreExtra.
 ExtData_ToggleReverbIllusionOnOff:
 	ldw	wa, 192
 	calr	ExtData_ToggleTlvBits
@@ -5625,6 +5722,13 @@ ExtData_Voice_MixedHandler_Join4:
 	ldw	wa, 69
 	call	CtrlPanel_SetIndicatorBit
 	ret
+; ExtData_ApplyTransposeEvent: Applies a panel event to the TRANSPOSE byte, panel record 0x70 byte +2 (0xFD04, 0..11 =
+;   -5..+6 semitones, 5 = none): mask 0xFF sets it from the value; otherwise, unless 0xE3E2 bit 1 is set, value bits
+;   0-1 = 1 step down (floor 0), 2 step up (cap 11), 0 or 3 reset to 5. When the posted value is 5 it sets the 0x8D3C
+;   display countdown to 24; then SwbtWr_FlushAndAppendParams. Basis: callers + body -- ExtData_Voice_MixedHandler
+;   (entry 0x70 of SoundProgram_DispatchTable) calls it for offset 2; the record rule (0..11, default 5),
+;   EffectSelect_StepTable (-5..+6 applied per channel from 0xFD04) and AcTransposeBoxProc (labels G..F# with C at 5,
+;   blank at 5 once 0x8D3C runs out) identify the byte.
 ExtData_ApplyTransposeEvent:
 	ld	c, (0x9131:16)
 	ld	a, c
@@ -6696,6 +6800,10 @@ SwbtWr_WriteParamBlock:
 
 SwbtWr_WriteParamBlock_Join:
 	jrl SwbtWr_AppendFixedParamBlock
+; ExtData_ToggleTlvBits: XORs the panel TLV byte (tag MIDI_MSG_STATUS, offset (0x912F)) with the incoming bits
+;   (0x9130) & (0x9131) when mask A is enabled; if the byte changed, ORs the changed bits (within A) into
+;   MIDI_MSG_DATA3 and copies the byte to (0x9132) and MIDI_MSG_DATA2. Basis: callers + body -- ExtData_* handlers
+;   call it per field mask and then flush with SwbtWr_FlushAndAppendParams.
 ExtData_ToggleTlvBits:
 	dec 2, xsp
 	ld (xsp), a
@@ -6860,6 +6968,10 @@ SwbtWr_WriteParamBlock_Skip2:
 SwbtWr_WriteParamBlock_Epilogue4:
 	inc	2, xsp
 	ret
+; ExtData_StepTlvField: Adds the step (0x9153) to field C of the panel TLV byte (tag MIDI_MSG_STATUS, offset
+;   (0x912F)); a sum >= the limit (0x9154) becomes the fallback (0x9155). Gated by A in (0x9131) and (0x9130); if the
+;   byte changed it goes to (0x9132) and MIDI_MSG_DATA2 and C is ORed into MIDI_MSG_DATA3. Basis: callers + body --
+;   the ExtData_* handlers load step/limit/fallback, call it, then flush.
 ExtData_StepTlvField:
 	dec	2, xsp
 	ld	(xsp), c
@@ -6904,6 +7016,11 @@ ExtData_StepTlvField_Join:
 ExtData_StepTlvField_Epilogue3:
 	inc	2, xsp
 	ret
+; ExtData_ForceSetTlvField: If mask A is enabled in (0x9131), sets field A of the panel TLV byte (tag MIDI_MSG_STATUS,
+;   offset (0x912F)) to (0x9130) & A and, unlike ExtData_SetTlvField, always records it -- byte to (0x9132) and
+;   MIDI_MSG_DATA2, A ORed into MIDI_MSG_DATA3 -- even when the byte did not change. Basis: callers + body --
+;   ExtData_Voice_FullHandler (tag 0x98 offsets 1 and 2, masks 0x80 / 0x40, 0x80) and ExtData_Voice_CheckMode3_Helper
+;   (mask 8) call it per field before flushing, exactly as the ExtData_SetTlvField callers do.
 ExtData_ForceSetTlvField:
 	dec	2, xsp
 	ld	(xsp), a
@@ -7237,6 +7354,12 @@ RegBitManip_Handler_4_Helper:
 	ld	(xde+2), a
 	inc	6, xsp
 	ret
+; MidiStream_ResolveVoiceIndexMode1_Impl: Body of MidiStream_ResolveVoiceIndexMode1: for part (0x90F7) up to 31 builds
+;   a selection record (+2 part, +3/+4 the program/bank bytes at 0x916F/0x9170), resolves it
+;   (SndBuf_WriteParamEntries_Helper) and copies the result to 0x90EE and 0x916B; for part 72 it hands the pair to
+;   Rhythm_DispatchNote_Finalize through the 0x90EA record instead; finally copies 0x90EE +0/+1/+3 to 0x9173-0x9175.
+;   Basis: callers + body -- MidiStream_ResolveVoiceIndexMode1 stores HL at 0x916F, calls it and returns HL/W from
+;   0x9173-0x9175; its header describes the resolve.
 MidiStream_ResolveVoiceIndexMode1_Impl:
 	dec	6, xsp
 	ld	a, (0x90f7:16)
@@ -8293,6 +8416,12 @@ VoiceMode_ParamHandler_4_Helper:
 	pop	xbc
 	pop	xwa
 	ret
+; MidiStream_GetCategoryLastSlot: Register-preserving call of CharMap_ActivePreamb_Prologue2: returns in A the last
+;   slot index of sound category A (the per-category tables at descriptor +0x3C/+0x40/+0x44/+0x48/+0x4C, chosen by
+;   part and mode), all other registers kept. The part comes from PART_SELECT (GetCurrentPartSelect), not from the B
+;   the caller loads. Basis: callers + body -- the only caller MidiStream_ExtDispatch_Mode0 takes the received program
+;   E (<= 17, the category count - 1) as a category and drops the change when the part's bank byte 0x9412[part] (the
+;   slot) is above this value.
 MidiStream_GetCategoryLastSlot:
 	push	xbc
 	push	xde
@@ -8311,6 +8440,13 @@ MidiStream_GetCategoryLastSlot:
 	pop	xde
 	pop	xbc
 	ret
+; MidiStream_ResolveVoiceIndex: Register-preserving call of SndBuf_WriteParamEntries: builds a sound-selection record
+;   from the received bank-select pair at (0x90EA) (+0 = CC32 byte, +1 = CC0 byte) and the program and part at
+;   (0x90EC) (+2 = program, +5 = part). SndParam_CheckAndApplyMode resolves the record's (program, bank): the +2 voice
+;   index goes through the +0x1C / +0x30 tables (SndParam_LookupOscEnvelope, +1 selecting the variation), or
+;   SndParam_ApplyVoiceValue in mode 1. The result is left at (0x90EE). Basis: callers + body -- the only caller
+;   MidiStream_ExtDispatch_Mode3 (MIDI mode 3) fills 0x90EA/0x90EC from 0x93D2[2p] and DE, then passes (0x90EE) to
+;   MidiStream_SetPartProgram as program E and bank B.
 MidiStream_ResolveVoiceIndex:
 	push	xwa
 	push	xbc
@@ -8328,6 +8464,9 @@ MidiStream_ResolveVoiceIndex:
 	pop	xbc
 	pop	xwa
 	ret
+; MidiStream_ResolveVoiceIndexMode1: MIDI-mode-1 twin of PartCtrl_WriteProgramChange: stores HL (program L, bank H) at
+;   0x916F, resolves it for part (0x90F7) (MidiStream_ResolveVoiceIndexMode1_Impl) and returns HL/W from
+;   0x9173-0x9175; registers preserved. Basis: callers + body.
 MidiStream_ResolveVoiceIndexMode1:
 	ld	(0x916f:16), hl
 ;
@@ -10524,9 +10663,16 @@ VoiceMode_ParamConfigTables:
 	.byte 0x17, 0x00, 0xff, 0x00, 0x17, 0x04, 0x48, 0x01
 	.byte 0x17, 0x08, 0x7f, 0x01, 0xff, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff
+; SeqTrackAssign_PartTagTable: 20 bytes: TRACK ASSIGN value (0xF1A0[track]) -> panel part-record tag: RIGHT1 0, LEFT
+;   2, RIGHT2 1, PART4..PART15 3..14, DRUMS 15, CHORD/APC 0x15, CONTROL/RHYTHM 0. Basis: readers + bytes.
 SeqTrackAssign_PartTagTable:	.byte	0x00, 0x02, 0x01, 0x07
 	.byte 0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03
 	.byte 0x0f, 0x15, 0x15, 0x00, 0x00, 0x0c, 0x0d, 0x0e
+; MidiVoiceNote_PartAssignsD1D2: 15 TRACK ASSIGN values (0xF1A0[track]) that MidiVoiceNote_Dispatch accepts for
+;   sequencer events 0xD1 and 0xD2 (low status bits 1 and 2): 0, 2, 1, 8, 9, 10, 11, 3, 4, 5, 6, 7, 17, 18, 19 -- the
+;   sound parts, without DRUMS 12, CHORD 13, APC 14, CONTROL 15 and RHYTHM 16; a track with another value cancels the
+;   event (0x91B5 = 0xFF). Same bytes as MidiVoiceNote_LookupMode0_Data (event 0xD0); MidiVoiceNote_LookupMode3_Data
+;   (0xD3) adds 12 and 15. Basis: readers + bytes.
 MidiVoiceNote_PartAssignsD1D2:
 	.byte 0x00, 0x02, 0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03
 	.byte	0x04, 0x05, 0x06, 0x07, 0x11, 0x12, 0x13
@@ -10868,6 +11014,9 @@ SeqTrackAssign_PlaybackMapTable:	.byte	0xf3, 0xbf, 0xfc, 0x00
 	.byte 0x72, 0x03, 0xff, 0x06, 0x72, 0x07, 0x7f, 0x06
 	.fill 8, 1, 0xff
 	.fill 8, 1, 0xff
+; MidiStream_PartEventMapTable: 16 pointers by (0x379B) & 15 (0xFFFFFFFF = none; set for 1, 2, 4, 8): panel-event maps
+;   of part records 0x10-0x13 (ACP1-3, BASS) in the same 4-byte format, used by MidiStream_ProcessEventBuffer. Basis:
+;   readers + bytes.
 MidiStream_PartEventMapTable:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xd7, 0xc4, 0xfc, 0x00
 	.byte 0xf3, 0xc4, 0xfc, 0x00, 0xff, 0xff, 0xff, 0xff
@@ -10891,6 +11040,11 @@ MidiStream_PartEventMapTable:
 	.byte 0xb2, 0x13, 0x7f, 0x00, 0xb3, 0x13, 0x7f, 0x02
 	.byte 0x13, 0x04, 0x08, 0x03, 0x13, 0x08, 0x7f, 0x04
 	.fill 8, 1, 0xff
+; MidiCC_RxCC83_SetParamBitsAndQueue: CC83 on part 25: merges bits 6-7 of E into the byte at 0xFDA1 (bits 0-5 kept),
+;   puts the result in E and queues the event BC/DE (BC = 0x0B98: param 0x0B of target 0x98, D = 0xC0 mask) on the
+;   SwbtWr queue; marks (0x90F8) = 0xFF. What bits 6-7 of that byte control is not established. Basis: callers + body
+;   -- the only caller MidiCC_Handler_BitManipulation is CC function 18 <- CC83, taken only for part 25 with bit 2 of
+;   (0xFD51) set, E from MidiCC_CC83_ValueMap (value 0/1/2 -> 0x00/0x80/0x40).
 MidiCC_RxCC83_SetParamBitsAndQueue:
 	ld	(0x90f8:16), 255
 	ld	a, (0xfda1:16)
@@ -10935,6 +11089,11 @@ MidiStream_ApplyDone:
 MidiStream_DispatchData:
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_Switch_WritePartParamAndQueue: Switch-controller copy of MidiCC_WritePartParamAndQueue: writes E under mask D
+;   into parameter byte B of part C's block (MIDI_WriteVoiceParamDirect, the same body as MIDI_WriteVoiceParamCC) and
+;   queues the event on the SwbtWr queue; marks (0x90F8) = 0xFF. The caller has already set E to D (on) or 0 (off).
+;   Basis: callers + body -- reached only from MidiCC_Helper_ConditionalESetup, the on/off tail (value >= 0x40) shared
+;   by CC64 Sustain, CC94 and CC91's target 0x60.
 MidiCC_Switch_WritePartParamAndQueue:
 	ld	(0x90f8:16), 255
 	call	MIDI_WriteVoiceParamDirect
@@ -10942,6 +11101,11 @@ MidiCC_Switch_WritePartParamAndQueue:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_SetPendingPartVolume: Queues a part volume: for target BC with part C <= 31 it stores E | 0x80 in the
+;   pending-volume byte 0x94B2[C]; target BC = 0x00B0 instead marks 0x90F8, stores E in MIDI_CC_EXPRESSION_PENDING and
+;   calls Audio_WriteBankSelectParams at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
+;   (function 3, the part) and PerfMode_Evt04_VolumeHandler passes C = PART_SELECT, B = 3; the scanners send each
+;   flagged byte as function 3.
 MidiCC_SetPendingPartVolume:
 	cp	bc, 176
 	jr	z, MidiCC_SetPendingPartVolume_Skip
@@ -10959,6 +11123,11 @@ MidiCC_SetPendingPartVolume_Return:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_SetPendingPartExpression: Defers a received CC11 (Expression): for target C = 0xB3 and part B <= 31 it stores
+;   E | 0x80 in the pending byte 0x9432[B]; the one target C = 0xB0 (part 25's record {0xB0, 0x01}) stores E | 0x80 in
+;   0x94F2 instead. MidiStream_LoadAllPresets later sends each flagged 0x9432 byte as event 0xB3 and 0x94F2 as status
+;   0xB0, data 1. Basis: callers + body -- the only caller is MidiCC_RxCC11_Expression
+;   (MidiCC_PartTargets_CC11_Expression); sibling of MidiCC_SetPendingPartVolume.
 MidiCC_SetPendingPartExpression:
 	cp	c, 176
 	jr	nz, MidiCC_SetPendingPartExpression_Skip2
@@ -10975,6 +11144,10 @@ MidiStream_ApplyPendingParams_Return2:
 	ret
 	calr MidiStream_ExtendedDispatch
 	ret
+; MidiRx_SetPendingPartPitchBend: Defers a received pitch bend: for part B <= 31 stores the word DE (E = LSB | 0x80 as
+;   the pending flag, D = MSB) in 0x9472[2 * B]; MidiStream_LoadMultiPartPreset later sends each flagged word as event
+;   0xB1 and clears the flag. Basis: callers + body -- the only caller is MidiRx_PitchBend (status Ex,
+;   MidiPB_PartTargets {0xB1, part}, E = LSB 0x9635, D = MSB 0x9636); sibling of MidiCC_SetPendingPartVolume.
 MidiRx_SetPendingPartPitchBend:
 	cp	b, 31
 	jr	ugt, MidiStream_ApplyPendingParams_Return2
@@ -10985,6 +11158,10 @@ MidiRx_SetPendingPartPitchBend:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_SetPendingPartModulation: Defers a received CC1 (Modulation): for part B <= 31 stores E | 0x80 in the pending
+;   byte 0x9452[B]; MidiStream_LoadAllPresets later sends each flagged byte as event 0xB2 and clears the flag. Basis:
+;   callers + body -- the only caller is MidiCC_RxCC1_Modulation (MidiCC_PartTargets_CC1_Modulation, records {0xB2,
+;   part, 0x7F}); sibling of MidiCC_SetPendingPartVolume.
 MidiCC_SetPendingPartModulation:
 	cp	b, 31
 	jr	ugt, MidiStream_ApplyPendingParams_Return2
@@ -10994,6 +11171,10 @@ MidiCC_SetPendingPartModulation:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_DataEntry_WritePartParamAndQueue: Data-entry (CC6/CC38) copy of MidiCC_WritePartParamAndQueue, byte for byte:
+;   writes the value into the target part's parameter byte under mask D (MIDI_WriteVoiceParamCC on (0x9644)/(0x9646)),
+;   queues the event on the SwbtWr queue and marks (0x90F8) = 0xFF. Basis: callers + body -- the only callers are the
+;   CC6 and CC38 data-entry handlers.
 MidiCC_DataEntry_WritePartParamAndQueue:
 	ld	(0x90f8:16), 255
 	ld	bc, (0x9644:16)
@@ -11003,6 +11184,10 @@ MidiCC_DataEntry_WritePartParamAndQueue:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_RxFunc08_QueuePartParam: Copy of MidiCC_QueuePartParam for CC functions 8 and 9, byte for byte: queues the
+;   saved part-parameter event ((0x9644)/(0x9646) -> MIDI_MSG_STATUS/DATA2) on the SwbtWr queue without writing it
+;   into the part block; marks (0x90F8) = 0xFF. Basis: callers + body -- only MidiCC_RxFunc08/09 call it (no
+;   controller maps to those functions).
 MidiCC_RxFunc08_QueuePartParam:
 	ld	(0x90f8:16), 255
 	ld	wa, (0x9644:16)
@@ -11013,6 +11198,9 @@ MidiCC_RxFunc08_QueuePartParam:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_QueuePartParam: Queues the part-parameter event saved by a MIDI receive handler ((0x9644) part/param,
+;   (0x9646) value/mask) on the SwbtWr event queue WITHOUT writing it into the part's parameter block; marks (0x90F8)
+;   = 0xFF. Basis: callers + body -- CC functions 12-15 and Channel Pressure.
 MidiCC_QueuePartParam:
 	ld	(0x90f8:16), 255
 	ld	wa, (0x9644:16)
@@ -11023,6 +11211,11 @@ MidiCC_QueuePartParam:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_ResetAllControllers: MIDI Reset All Controllers for part (0x9645): posts the control event (0x9644)/(0x9646),
+;   then pitch bend 0x4000 (event 0xB1), channel pressure 0 (0xB4), modulation 0 (0xB2), expression 127 (0xB3), voice
+;   param 4 = 0x800, re-posts the original event and sets the part's RPN word (0x9674 + 2*part) to the null 0x7F7F.
+;   Basis: callers + body -- MidiCC_Handler_ParamDispatch reaches it through MidiCC_PartTargets_CC121_ResetAll
+;   (CC121); the event codes are those of the pitch-bend, channel-pressure, CC1 and CC11 part-target tables.
 MidiCC_ResetAllControllers:
 	ld	bc, (0x9644:16)
 	ld	de, (0x9646:16)
@@ -11062,6 +11255,11 @@ MidiCC_ResetAllControllers:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_AllSoundOff_QueuePartParam: CC120 (All Sound Off) copy of MidiCC_QueuePartParam: queues the saved part event
+;   ((0x9644) = 0xAE / part, (0x9646) = value / 0x7F -> MIDI_MSG_STATUS / DATA2) on the SwbtWr queue without writing a
+;   part parameter; marks (0x90F8) = 0xFF. Same as the first six instructions of MidiCC_ResetAllControllers. Basis:
+;   callers + body -- the only caller MidiCC_Handler_TableDispatch reads MidiCC_PartTargets_CC120_AllSoundOff
+;   (function 41 <- CC120).
 MidiCC_AllSoundOff_QueuePartParam:
 	ld	bc, (0x9644:16)
 	ld	de, (0x9646:16)
@@ -11072,6 +11270,9 @@ MidiCC_AllSoundOff_QueuePartParam:
 	ret
 	calr	MidiStream_ExtendedDispatch
 	ret
+; MidiCC_WritePartParamAndQueue: Writes the received controller value into the target part's parameter byte under mask
+;   D (MIDI_WriteVoiceParamCC on (0x9644)/(0x9646)) and queues the same 4-byte event on the SwbtWr queue; marks
+;   (0x90F8) = 0xFF. Basis: callers + body -- Pan, Chorus and Reverb receive handlers.
 MidiCC_WritePartParamAndQueue:
 	ld	(0x90f8:16), 255
 	ld	bc, (0x9644:16)
@@ -11250,6 +11451,12 @@ MidiStream_StatusJumpTable:
 MidiStream_HandleNoteCC:
 	ret
 	; --- Indexed dispatch: table lookup, conditional call paths (76 bytes) ---
+; MidiStream_RunStatus_Mode3: MIDI-mode-3 handler (0xFD50 bits 0-1 = 3) of MidiStream_HandleRunningStatus, entry 3
+;   beside MidiStream_RunStatus_Mode0 / _Mode1: for part C (not 72) it takes word 0 of the part record ((0x90F2)[C])
+;   and the part as the selection at 0x90EA / 0x90EC, resolves it (VoiceMode_ParamHandler_4_Helper) and, unless
+;   MIDI_ParamValidate_CheckBit2 objects, dispatches DE = (0x90EE) with B = the part and C = 0x81, then E = (0x90F0)
+;   with C = (0x915B) and B = 0, through MIDI_ClearGuardAndDispatchCC. Basis: readers (table entry) + body; what the
+;   four MIDI modes are is not established, as for its siblings.
 MidiStream_RunStatus_Mode3:
 	cp c, 0x48
 	jr z, MidiStream_HandleNoteCC_Ret
@@ -11499,6 +11706,12 @@ MidiStream_PartSelectDone:
 
 MidiStream_ExtendedDispatch:
 	ret
+; MidiRx_ApplyProgramChange: Applies a received program change for the part in (0x9644) (E = program): part 20 is
+;   taken as part 72; in modes 14 (MD_CMP) and 17 (MD_SND_ARG) part 72 is ignored; marks (0x90F8) = 0xFF. Part 0 with
+;   bit 3 of (0xFD50) set and program < 80 writes program + 1 into param 1 of target 0x98 and queues it. Otherwise it
+;   calls the MIDI-mode handler for (0xFD50) bits 0-1 (MidiRx_ProgramChangeModeTable: Mode0 / Mode1 / nothing /
+;   Mode3), which ends in MidiStream_SetPartProgram. Basis: callers + body -- the only caller is MidiRx_ProgramChange
+;   (status Cx, MidiPC_PartTargets, gated by bit 4 of 0xFD57).
 MidiRx_ApplyProgramChange:
 	cp	(0x9644:16), 20
 	jr	nz, MidiRx_ApplyProgramChange_Skip8
@@ -11664,6 +11877,11 @@ MidiStream_ExtDispatch_Mode3:
 	call	MidiStream_SetPartProgram
 MidiStream_ExtDispatch_Mode3_Return3:
 	ret
+; MidiStream_SetPartProgram: Sets part C's program to E and bank to B: writes them into the part record ((0x90F2)[C]),
+;   PartCtrl_WriteProgramChange, MIDI_SetupChannelParams, two SwbtWr voice-param writes and, unless C = 72,
+;   SndParam_UpdateVoiceEntry_Safe; skipped when its pre-check sets bit 1 of 0x90FA. Basis: callers + body -- the
+;   three MIDI-mode handlers (MidiStream_ExtDispatch_Mode0/1/3, chosen by 0xFD50 bits 0-1) call it with the program
+;   and the part's bank from 0x9412.
 MidiStream_SetPartProgram:
 	push	xix
 	pushw	hl
@@ -11711,6 +11929,12 @@ MidiStream_SetPartProgram_Epilogue:
 	popw	hl
 	pop	xix
 	ret
+; MidiStream_CheckPartProgramAllowed: Pre-check of MidiStream_SetPartProgram (part C, program E, bank B): clears bit 1
+;   of 0x90FA. If bit 0 is set, it clears it and replaces E with the category of (E, B) (PartCtrl_WriteProgramChange,
+;   or MidiStream_ResolveVoiceIndexMode1 in MIDI mode 1). It then sets bit 1 (refuse) when part 15 or 20 gets a category
+;   other than 15 (drum kits), when parts 16-19, 21 or 22 get category 15, or when part 20 or 16-22 is used while
+;   (0x379B) & 0x1F = 0. Registers are preserved. Basis: callers + body -- the only caller MidiStream_SetPartProgram
+;   sets bit 0 of 0x90FA, calls it, and skips the program write when bit 1 comes back set.
 MidiStream_CheckPartProgramAllowed:
 	push	xix
 	pushw	hl
@@ -11772,6 +11996,10 @@ MidiStream_CheckPartProgramAllowed_Epilogue2:
 	popw	hl
 	pop	xix
 	ret
+; MidiStream_IsDrumKitCategory: Sets the carry flag when the sound category in E is 15 (drum kits), clears it
+;   otherwise. Basis: callers + body -- MidiStream_CheckPartProgramAllowed calls it for parts 15/20 (refuse when no
+;   carry: a non-drum category) and for parts 16-19, 21, 22 (refuse on carry); its header names category 15 the drum
+;   kits.
 MidiStream_IsDrumKitCategory:
 	cp	e, 15
 	jr	nz, MidiStream_IsDrumKitCategory_Skip4
@@ -11780,6 +12008,10 @@ MidiStream_IsDrumKitCategory:
 MidiStream_IsDrumKitCategory_Skip4:
 	rcf
 	ret
+; MidiCC_ApplyBankSelect: Records a received bank select for part (0x9644): E (CC32) into 0x93D2[2p] or, when E =
+;   0xFF, D (CC0) into 0x93D3[2p]; then derives the part's bank at 0x9412[p] by the MIDI mode in 0xFD50 bits 0-1
+;   (modes 0/2 LSB, 3 MSB, 1 mixed). Part 72 is mapped to 20. Basis: callers + body -- MidiCC_Handler_PairedParamA/B
+;   are the CC32/CC0 (bank select) handlers; MidiPkt_SysExBulkTransfer_Data_Helper feeds the same 4-byte block.
 MidiCC_ApplyBankSelect:
 	cp	(0x9644:16), 72
 	jr	nz, MidiCC_ApplyBankSelect_Skip5

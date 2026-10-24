@@ -30,6 +30,8 @@ HamaStr_hamadeb:
 	aligned_string "hamadeb"
 HamaStr_HamaPage1Func:
 	aligned_string "HamaPage1Func"
+; NakaPropTbl_HamaList: Property-name list (+0x14 `props` field) of the HAMA class "HamaList": a single pointer to "",
+;   i.e. the class adds no properties. Basis: readers + bytes (naka_class_t layout).
 NakaPropTbl_HamaList:
 	.long	HamaList_EntryStr_Empty
 HamaList_EntryStr_Empty:

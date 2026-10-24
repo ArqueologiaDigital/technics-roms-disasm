@@ -406,10 +406,14 @@ FDLoadSaveTest_Str_error:	.byte	0x20, 0x65
 	.byte	0x72, 0x72, 0x6f, 0x72, 0x00, 0xff
 FDTest_OpenFailed_Str_OK:	.byte	0x20, 0x4f
 	.byte	0x4b, 0x00
+; FDTest_AllocBuffer_Str_Not_Enough_memory: Factory-test diagnostic message "\nNot Enough memory!" (leading LF), the
+;   text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDTest_AllocBuffer_Str_Not_Enough_memory:	.byte	0x0a
 	.asciz	"Not Enough memory!"
 FDTest_OpenForWrite_Str_wb:
 	.byte	0x77, 0x62, 0x00, 0xff
+; FDTest_OpenForWrite_Str_cannot_open_write_file: Factory-test diagnostic message "\ncannot open write file" (leading
+;   LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes.
 FDTest_OpenForWrite_Str_cannot_open_write_file:	.byte	0x0a
 	.asciz	"cannot open write file"
 FDTest_WriteBuffer_Str_File_Write:

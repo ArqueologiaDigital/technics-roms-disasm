@@ -1773,8 +1773,8 @@ LoadRegion0_OpenSuccess:
 	call	PostLswLoad
 	jr	LoadRegion0_Finalize
 LoadRegion0_AltPath:
-	call	FileData_AllocLoadAndParse
-	ld	iz, hl
+	call	FileData_AllocLoadAndParse				; alternate path setup
+	ld	iz, hl				; IZ = result
 LoadRegion0_Finalize:
 	call FileIO_CloseHandle			; finalize display
 	ld hl, iz				; return result in HL

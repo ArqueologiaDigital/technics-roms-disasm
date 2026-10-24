@@ -112,10 +112,17 @@ FDemo_DisplayResourceData_Skip6:
 	pop	xiz
 	lda	xsp, (xsp+0x124)
 	ret
+; FDemo_ResetAllocBuffer: Resets the feature-demo load arena: stores SEQ_SONG_SLOTS (the arena start) in the next-free
+;   pointer at RAM 0x25B7E that FDemo_AllocBuffer bumps. Basis: callers + body -- FDemo_DisplayResourceData calls it
+;   once after opening the .SQT file and before allocating a 256-byte FDemo_AllocBuffer block per file block.
 FDemo_ResetAllocBuffer:
 	lda	xwa, (SEQ_SONG_SLOTS:24)
 	ld	(0x25b7e:24), xwa
 	ret
+; FDemo_AllocBuffer: Bump-allocates XWA bytes from the feature-demo load arena SEQ_SONG_SLOTS..0xFD800 (next-free
+;   pointer at RAM 0x25B7E); returns XHL = the block, or 0 when it does not fit. Basis: callers + body -- the feature-
+;   demo loaders reset the pointer (FDemo_ResetAllocBuffer), then call this per 256-byte file block or for a
+;   whole file and copy/read into the returned block.
 FDemo_AllocBuffer:
 	lda	xhl, (SEQ_SONG_SLOTS:24)
 	lda	xbc, (0xfd800:24)
@@ -434,6 +441,11 @@ FDemo_LinkedListSearchInsert_Epilogue:
 	popw	iz
 	inc	8, xsp
 	ret
+; FDemo_RegisterLoadedFile: Copies name XWA into the first free entry (data pointer at +16 == 0) of the 63-entry,
+;   24-byte loaded-file table at RAM 0x249D8 and stores data pointer XBC at +16; HL = 1, or 0 when the table is full.
+;   Basis: callers + body -- FDemo_FileOpenAndProcess, after FDemo_LinkedListSearchInsert found the name neither in
+;   this table nor in the ROM directory, reads the whole file into an FDemo_AllocBuffer block, closes it and registers
+;   name + block here.
 FDemo_RegisterLoadedFile:
 	dec	4, xsp
 	push	xiz
@@ -3278,6 +3290,13 @@ SingleLoad_LoadPanelMemBank_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadSong: Single-loads the song of the selected .SQT file into song slot WA: checks the file signature
+;   and header (FileIO_ReadHeaderAt4, else 0xFF96), checks the free song memory (SeqLoad_ProcessDataBlock vs
+;   UpdateFileEntry, else 0xFF97), reads the 2048-byte song header into SEQ_SONG_SLOTS + 2048 * WA and the event data
+;   to 0xB0000 + the offset SingleLoad_PrepareSongSlot returns, finishes with
+;   SingleLoad_FinishSongLoad and SetSongSlotValue(WA, 0); returns HL = result (0xFF98 no file, 0xFF9A wrong
+;   signature). Basis: callers + body -- SingleLoadDst_SequencerListProc runs it for parameter 10 with WA = the
+;   destination song number 0x8A04.
 SingleLoad_LoadSong:
 	lda	xsp, (xsp-30)
 	push	xiz
@@ -3368,6 +3387,12 @@ SingleLoad_LoadSong_Epilogue3:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	ret
+; SingleLoad_LoadComposerPattern: Single-loads from the selected .CMP file: opens it (type 3), validates the header
+;   (FileIO_ReadAndValidateHeader, else 0xFF9A) and hands source A = WA and destination C = BC to
+;   SingleLoad_CopyComposerPatternFromFile, which copies one composer pattern, or a whole memory bank when both are 30 +
+;   bank; returns HL = result (0xFF98 with no file selected). Basis: callers + body -- SingleLoadDst_ComposerListProc
+;   runs it for parameter 10 with WA = source position 0x89FE and BC = destination 0x8A06, or in ALL mode with both =
+;   position / 10 + 30.
 SingleLoad_LoadComposerPattern:
 	lda	xsp, (xsp-28)
 	pushw	iz
@@ -3419,6 +3444,12 @@ SingleLoad_LoadComposerPattern_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+28)
 	ret
+; SingleLoad_LoadSoundMemEntry: Single-loads SOUND MEMORY entry WA of the selected .TM file into entry BC: entries
+;   below 40 are 470-byte sounds (file 16 + 470 * WA -> RAM 0x1E0000 + 16 + 470 * BC, flash block BC / 20, BC mod 20),
+;   entries from 40 are the 80-byte records at 0x4AA7 + 80 * (index - 40) (flash block 64); the read is wrapped in
+;   PreTmLoadEntry / PostTmLoadEntry; returns HL = result (0xFF98 no file, 0xFF9A wrong signature).
+;   Basis: callers + body -- SingleLoadDst_SoundMemListProc runs it for parameter 10 outside ALL mode with WA = source
+;   cursor 0x8A00 and BC = destination cursor 0x8A08.
 SingleLoad_LoadSoundMemEntry:
 	lda	xsp, (xsp-42)
 	pushw	iz
@@ -3543,6 +3574,11 @@ SingleLoad_LoadSoundMemEntry_Epilogue5:
 	popw	iz
 	lda	xsp, (xsp+42)
 	ret
+; SingleLoad_LoadSoundMemBank: Single-loads SOUND MEMORY bank WA of the selected .TM file into bank BC: banks 0-1 are
+;   20 sounds = 9400 bytes (file 16 + 9400 * WA -> RAM 0x1E0000 + 16 + 9400 * BC), bank 2 and up is the 0x2927-byte
+;   block at 0x4980 (the area of entries 40+); the read is wrapped in PostTmLoadEntry_Return /
+;   TmFlashWrite_ValidateParams; returns HL = result (0xFF98 no file, 0xFF9A wrong signature). Basis: callers + body
+;   -- SingleLoadDst_SoundMemListProc runs it for parameter 10 in ALL mode with WA = 0x8A00 / 20 and BC = 0x8A08 / 20.
 SingleLoad_LoadSoundMemBank:
 	lda	xsp, (xsp-36)
 	push	xiz
@@ -6735,6 +6771,11 @@ GetFileEntryByIndex_Epilogue2:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
+; SingleLoadSrc_ReadPmtMemoryName: Returns XHL = the 16-character name of panel memory WA in the selected .PMT file:
+;   opens it (type 1), reads the entry size word at offset 13, reads 16 bytes at 178 + WA * size into 0x25BE8 and NUL-
+;   terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body --
+;   SingleLoadSrc_PanelMemDrawMemoryName puts its result in row 3 of the PANEL MEMORY source list; +178 is the name
+;   offset in a panel-memory record (single_load.s: 0x1ED350 + entry size * n + 178).
 SingleLoadSrc_ReadPmtMemoryName:
 	lda	xsp, (xsp-26)
 	push	xiz
@@ -6787,6 +6828,11 @@ GetFileEntryByIndex_Epilogue3:
 	pop	xiz
 	lda	xsp, (xsp+26)
 	ret
+; SingleLoadSrc_ReadSqtSongName: Returns XHL = the 16-character name of song WA in the selected .SQT file: opens the
+;   file (type 2, 'rb'), reads 16 bytes at offset 256 + 2048 * WA into 0x25BFE and NUL-terminates them; returns
+;   FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body --
+;   SingleLoadSrc_SequencerListProc puts its result for song 0 in cell 2 of the SEQUENCER source list, under the
+;   'SONG:' row.
 SingleLoadSrc_ReadSqtSongName:
 	lda	xsp, (xsp-26)
 	pushw	iz
@@ -6832,6 +6878,11 @@ SingleLoadSrc_ReadSqtSongName_Epilogue4:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
+; SingleLoadSrc_ReadCmpPatternName: Returns XHL = the 13-character name of composer pattern (bank WA, slot BC) in the
+;   selected .CMP file: opens it (type 3), reads 13 bytes at 160 + 96 * (4 * bank + slot) into 0x25C14 and NUL-
+;   terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body --
+;   SingleLoadSrc_ComposerDrawPatternName puts its result in row 3 of the COMPOSER source list; its header gives this
+;   offset (the layout of RAM 0x948A0).
 SingleLoadSrc_ReadCmpPatternName:
 	lda	xsp, (xsp-28)
 	pushw	iz
@@ -6880,6 +6931,11 @@ GetFileEntryByIndex_Epilogue5:
 	popw	iz
 	lda	xsp, (xsp+28)
 	ret
+; SingleLoadSrc_ReadTmSoundName: Returns XHL = the 16-character name of sound WA in the selected sound-memory (.TM)
+;   file: opens it (type 4), reads 16 bytes at 16 + 470 * WA into 0x25C2A and NUL-terminates them;
+;   FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body --
+;   SingleLoadSrc_DrawSoundMemItemName uses it for positions below 2 x C (the 40 sounds); 470 is the KN5000 sound-
+;   record size (SingleLoad_LoadSoundMemEntry).
 SingleLoadSrc_ReadTmSoundName:
 	lda	xsp, (xsp-26)
 	pushw	iz
@@ -6926,6 +6982,10 @@ GetFileEntryByIndex_Epilogue6:
 	popw	iz
 	lda	xsp, (xsp+26)
 	ret
+; SingleLoadSrc_ReadTmUserKitName: Returns XHL = the 16-character USER KIT name of the selected sound-memory (.TM)
+;   file: opens it (type 4), reads 16 bytes at offset 0x4980 (16 + 40 * 470, after the 40 sound records) into 0x25C40
+;   and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis: callers + body
+;   -- SingleLoadSrc_DrawUserKitName puts it in row 1 for USER KIT positions; its header already describes this read.
 SingleLoadSrc_ReadTmUserKitName:
 	lda	xsp, (xsp-24)
 	pushw	iz
@@ -6968,6 +7028,11 @@ GetFileEntryByIndex_Epilogue7:
 	popw	iz
 	lda	xsp, (xsp+24)
 	ret
+; SingleLoadSrc_ReadTmUserKitEntryName: Returns XHL = ' ' + the 13-character name of USER KIT entry WA in the selected
+;   sound-memory (.TM) file: opens it (type 4), reads 13 bytes at 0x4AA7 + 80 * WA into 0x25C57 after a leading space
+;   at 0x25C56 and NUL-terminates them; FileIO_EmptyEntryName when no file is selected or it does not open. Basis:
+;   callers + body -- SingleLoadSrc_DrawSoundMemItemName uses it for positions past the 2 x C sounds (WA = position -
+;   2C); the 80-byte records at 0x4AA7 are the ones SingleLoad_LoadSoundMemEntry copies for entries from 40.
 SingleLoadSrc_ReadTmUserKitEntryName:
 	lda	xsp, (xsp-26)
 	pushw	iz

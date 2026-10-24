@@ -37,6 +37,8 @@ FDC_Write_Data_Entry_Helper:
 	ldmm8 0x8a84, 0x8a86
 	ld (0x8a86:16), a
 	ret
+; FDC_WriteDataRegister: Writes A to the uPD72068 data register (0x11000A): command and parameter bytes. Basis:
+;   callers + body -- FDC_SendCommandByte, FDC_SendParameterByte, INT4_SendSpecifyCmd and FDC_CONFIG_VERIFY call it.
 FDC_WriteDataRegister:
 	ld (0x11000a:24), a
 	ret
@@ -778,6 +780,10 @@ FDC_SendCommandByte:
 	calr FDC_WriteDataRegister
 	inc 2,XSP
 	ret
+; FDC_SendParameterByte: Waits (500-tick timeout, status 1) until the main status register shows RQM|CB (0x90) and
+;   writes A to the data register 0x11000A -- one command parameter byte. Basis: callers + body + twin -- FDC_CMD_SEND
+;   sends the unit/head byte through it and the SPECIFY / SEEK / FORMAT / READ-WRITE parameter senders call it once
+;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:
 	dec	2, xsp
 	ld	(xsp), a

@@ -22,6 +22,7 @@ ParaLoadOpt_AudioFlagCheck:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
+; ParaLoadOpt case A
 ParaLoadOpt_CaseA:
 	ld a, (0x02475c:24)
 	cp a, (xsp + 2)
@@ -128,6 +129,8 @@ ParaLoadOpt_AudioFlagCheck_MspSending:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_A_Join
+; ParaLoadOpt_AudioFlagCheck_MspCompleted: data-exchange stage 12: Msp (ExcMspFunc) status := 3 "COMPLETED", repaint
+;   0x57000A
 ParaLoadOpt_AudioFlagCheck_MspCompleted:
 	ld	(0x024768:24), 3
 	ld	xwa, 0x57000a
@@ -259,6 +262,8 @@ ParaLoadOpt_AudioFlagCheck_B_MspReceiving:
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
 	jr	ParaLoadOpt_DispatchTable_B_Join
+; ParaLoadOpt_AudioFlagCheck_B_MspCompleted: data-exchange stage 12 (receive side): Msp (ExcMspFunc) status := 3
+;   "COMPLETED", repaint 0x570015
 ParaLoadOpt_AudioFlagCheck_B_MspCompleted:
 	ld	(0x024768:24), 3
 	ld	xwa, 0x570015
@@ -551,6 +556,7 @@ AcParaLoadOptGridBoxProc_OnLswData:	; cases 29360156, 29360157
 	ld	xbc, (xsp+16)
 	ld	xde, (xsp+12)
 	jr	ParaLoadOpt_CallApFunc
+; ParaLoadOpt grid check case 2
 ParaLoadOpt_GridCheck2:
 	ld xwa, xiz
 	call GetViewInstance
@@ -841,6 +847,7 @@ ParaLoadOptGridCheck_OnRamData_Skip7:
 	lda	xde, (xsp+20)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	ParaLoadOptSendEvtReturn
+; Voice UI misc handler
 VoiceUI_MiscHandler:
 	ld xde, xhl
 	srl xde, 16

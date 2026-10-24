@@ -3,6 +3,9 @@
 ; debug page function names, RTOS command strings, and test list widgets
 
 Hama_ModeInit_Table:
+; table of 6 pointers to NakaInst_* instruction texts ("Select the sound for each part" and
+; its A-D variants); evidence: SndArrLangCheck (audio/sound_editor_ui.s) returns this address in
+; XHL when XBC = 0x01E0009F.  Not HAMA mode data; the name is kept because that file uses it.
 	.long NakaInst_Select_the_sound_for_each_part
 	.long NakaInst_Select_the_sound_for_each_part
 	.long NakaInst_SelectSoundForPart_A
@@ -18,6 +21,8 @@ Hama_ApFuncTable_429:	.byte	0x6c, 0xf0
 HamaStr_Empty:	aligned_string ""
 HamaStr_hamadeb:	aligned_string "hamadeb"
 HamaStr_HamaPage1Func:	aligned_string "HamaPage1Func"
+; NakaPropTbl_HamaList: Property-name list (+0x14 `props` field) of the HAMA class "HamaList": a single pointer to "",
+;   i.e. the class adds no properties. Basis: readers + bytes (naka_class_t layout).
 NakaPropTbl_HamaList:
 	.long HamaList_EntryStr_Empty
 HamaList_EntryStr_Empty:	aligned_string ""
@@ -135,6 +140,8 @@ Hama_FunctionTable_109:
 	.long	SetWall_X
 	.long	ferror_ext
 	.long	0x00000000
+; table of 85 pointers to the NAME strings of the functions in object 0x109's table
+; evidence: InitializeHama `RegObjTablHama 0x1600001, FunctionProc, 0x4b, <this>, 0x409` -> RegisterObjectTable (descriptor +10 = this; registry 0x27ED2 + 14*index)
 Hama_ModeParam_Table:
 	.long HamaStr_HamaListProc
 	.long HamaStr_FDLoadSaveTest

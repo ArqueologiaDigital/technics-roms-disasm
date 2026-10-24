@@ -67,6 +67,12 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	SeqPlay_CheckStartConditions
 UIStateEvt_VoiceParamHandler_Return:
 	ret
+; Seq_FindRhythmTrack: Finds the RHYTHM track: the first of the 16 tracks whose TRACK ASSIGN value (0xF1A0[t]) is 16;
+;   when its bit is set in the track mask 0xF19E and bit 7 of 0xF250[3*t] is set, returns W = t + 1, stores it in
+;   0x0D56 and sets 0x0D54 bit 0 and 0x287B bit 2, which make AccPedal_CheckBitAndUpdate /
+;   Scoop_EventHandler_MenuSwitch take the measure lengths from that track; otherwise clears both flags and returns W
+;   = 0. Basis: callers + body -- UIStateEvt_VoiceParamHandler runs it before AccWrap_PlayModeDispatch / SeqBuf_Init
+;   when the sequencer starts; value 16 is RHYTHM in both track-assign name tables.
 Seq_FindRhythmTrack:
 	ld	xix, 0xf1a0
 	xor	bc, bc
@@ -350,6 +356,13 @@ DispatchHandler_ClearActiveFlag:
 PlayMode_InitFlagBlock:
 	call	PlayMode_ArmStartCountdown
 	ret
+; PlayMode_ArmStartCountdown: Once per arming ((0x0D34) = 0): sets (0x0D34) = 1, sets bit 2 of 0x28AC and loads the
+;   playback countdown (0x1144) = 10, which CDlikeSwitch_PlaybackTimer (main-loop tick) counts down -- at 5 it
+;   restarts the accompaniment and at 0 starts the transport (CDlike_ResetPlaybackState) on the medley-play titles
+;   120/122. Basis: callers + body -- PlayMode_InitFlagBlock, the activate-state case 0 of SqMdlyPlyTtlFunc and
+;   DkMdlyPlyTtlFunc, is its only caller; PlayMode_StartAndSendCommand acts only when (0x0D34) = 1 and the countdown
+;   has reached 0. Twins: SongMode_InitFlagBlock_Helper, PartFormat_InitFlagBlock_Helper,
+;   PlayModeStop_InitFlagBlock_Helper.
 PlayMode_ArmStartCountdown:
 	cp (3380:16), 0
 	jr	nz, PlayMode_ArmStartCountdown_Return
@@ -357,6 +370,10 @@ PlayMode_ArmStartCountdown:
 	call	PlayMode_LoadStartCountdown
 PlayMode_ArmStartCountdown_Return:
 	ret
+; PlayMode_LoadStartCountdown: Sets bit 2 of 0x28AC and loads the playback countdown (0x1144) = 10. Basis: callers +
+;   body -- PlayMode_ArmStartCountdown calls it once per arming; CDlikeSwitch_PlaybackTimer counts 0x1144 down (at 5
+;   it restarts the accompaniment, at 0 starts the transport on titles 120/122), SeqRestart_CheckAndDispatch and
+;   SeqRestart_SendPlaybackNotify act only while 0x28AC bit 2 is set, and PlayMode_DispatchAndClearBit2 clears it.
 PlayMode_LoadStartCountdown:
 	or (10412:16), 4
 	ld	(4420:16), 10
@@ -523,6 +540,11 @@ SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlyDoc_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is
+;   left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyDocTtlFunc_OnTitleOld calls it;
+;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
+;   transport).
 DpMdlyDoc_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
@@ -678,6 +700,10 @@ PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlyPd_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is
+;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
+;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
 DpMdlyPd_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
@@ -805,6 +831,7 @@ DpMdlySmfLyrTtlFunc_Helper3:
 	ld (0x0d34:16), 0x00
 .Lc_f209d5:
 	ret
+; SqSngNameTtlFunc title dispatch
 SqSngNameTtl_Dispatch:
 	xor wa, wa
 	ld a, 0x73:opc
@@ -1055,6 +1082,7 @@ SongBank_SendBassEvent:
 	call	BitMapOut_RenderDisplay
 	call	Audio_CheckSubsystemReady
 	ret
+; SqTrAs setup handler
 SqTrAs_Setup:
 	ld xiy, 0xcce
 	ld xix, 0xf1a0
@@ -1644,6 +1672,7 @@ DkMdlyPly_HandleResult:
 	call	AddswbWr
 	call	AudioMode_ResetVoiceState
 	jr	DkMdlyPly_Finalize	; -> 0xF2112B
+; DkMdlyPly extended check
 DkMdlyPly_ExtendedCheck:
 	inc1w_erp 0xfa
 	cp_erpw 0xfa, 0x20, 0x00
@@ -1668,6 +1697,11 @@ DisplayMode_DispatchEvents:
 	ld	wa, (xix+wa)
 	lda xix, (DisplayMode_BatchEventSend:24)
 	jp	t, (xix+wa)
+; --- DisplayMode_BatchEventSend: Dispatch events for display mode transitions ---
+; Multiple entry points, each dispatching 2-3 events for a specific mode.
+; Pattern per entry: XWA=event_id, XBC=0x1e0043b (target), XDE=0 (param),
+;   then call EventDispatch (0xfac14b) or jump to common tail.
+; Event IDs encode mode/sub-function: 0x6f000a, 0x70000x, 0x73000c, etc.
 DisplayMode_BatchEventSend:
 	ld	xwa, 0x6f000a
 	ld	xbc, EVT_SET_PARAM
@@ -1965,6 +1999,7 @@ DpMdlySmfTtlFunc_OnTitleOld:
 	pop xde
 	calr SqTrAsPsTtl_CaseF
 	jr DpMdlySmf_ReturnZero
+; DpMdlySmf case A
 DpMdlySmfTtlFunc_OnSwIn:
 	cp xde, 0xf
 	jr z, DpMdlySmf_CaseE
@@ -2086,6 +2121,7 @@ DpMdlySmfLyrTtlFunc_OnTitleActivate:
 DpMdlySmfLyrTtlFunc_Join2:
 	call	ApPostEvent
 	jr	DpMdlySmfLyr_ReturnZero
+; DpMdlySmfLyr case A
 DpMdlySmfLyrTtlFunc_OnSwIn:
 	cp xde, 0xf
 	jr z, DpMdlySmfLyr_CaseC
@@ -2375,6 +2411,7 @@ NameGetFuncCall_Join:
 	ld	xde, 0:i3
 NameGetFuncCall_Join2:
 	call	ApPostEvent
+; NameGetFuncCall entry handler
 NameGetFunc_Entry:
 	ld xhl, 0:i3
 	ret
@@ -2837,6 +2874,7 @@ DpDocTtlFunc_OnTitleOld:
 DpDocTtlFunc_Skip:
 	calr	SqTrAsPsTtl_CaseF
 	jrl	DpDocTtl_ReturnZero
+; DpDocTtl case A
 DpDocTtlFunc_OnSwIn:
 	ld xwa, xde
 	cp xde, 0x5
@@ -2878,6 +2916,7 @@ DpDoc_CheckBit0PlayMode:
 	calr	SeqRecPlay_EnablePlayOnly
 	call	Acc_TransitionPlayMode
 	jr	DpDocTtl_ReturnZero
+; DpDocTtl case D
 DpDoc_CaseD:
 	calr CDlikeSwTtl_DocBitCheck
 	jr DpDocTtl_ReturnZero
@@ -2962,6 +3001,7 @@ DpPdTtlFunc_OnTitleOld:
 DpPdTtlFunc_Skip:
 	calr	SqTrAsPsTtl_CaseF
 	jrl	DpPdTtl_ReturnZero
+; DpPdTtl case A
 DpPdTtlFunc_OnSwIn:
 	ld xwa, xde
 	cp xde, 0x5
@@ -3003,6 +3043,7 @@ DpPd_CheckBit0PlayMode:
 	calr	SeqRecPlay_EnablePlayOnly
 	call	Acc_TransitionPlayMode
 	jr	DpPdTtl_ReturnZero
+; DpPdTtl case D
 DpPd_CaseD:
 	calr CDlikeSwTtl_PdBitCheck
 	jr DpPdTtl_ReturnZero
@@ -3097,6 +3138,7 @@ DpSmfTtlFunc_Case3:
 DpSmfTtlFunc_Skip:
 	calr	SqTrAsPsTtl_CaseF
 	jrl	DpSmfTtl_ReturnZero
+; DpSmfTtl case A
 DpSmfTtlFunc_OnSwIn:
 	ld xwa, xde
 	cp xde, 0x5
@@ -3138,6 +3180,7 @@ DpSmf_CheckBit0PlayMode:
 	calr	SeqRecPlay_EnablePlayOnly
 	call	Acc_TransitionPlayMode
 	jr	DpSmfTtl_ReturnZero
+; DpSmfTtl case D
 DpSmf_CaseD:
 	calr CDlikeSwTtl_SongBit1Check
 	jr DpSmfTtl_ReturnZero

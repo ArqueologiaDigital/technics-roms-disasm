@@ -667,6 +667,14 @@ MidiPkt_EnqueueControl_3354_Return:
 	inc 4, xsp
 	ret
 
+; MidiPkt_SendCtlWordValueSysEx: 16-bit variant of MidiPkt_SendCtlValueSysEx: given XWA -> {packet, record}, returns
+;   on MidiPkt_CheckGateCondition = 0xFFFF, on MidiCtl_NullRecord or when the packet's mask word (+4) is 0; else
+;   queues SysEx_Msg_35DC (F0 50 2C 01 28 12) and the record's first 6 bytes, then the low byte of (value word +2 &
+;   mask word +4) >> (record+11 & 15) as two nibbles, high first, plus a zero byte, and closes and sends the message.
+;   No live caller in this build. Basis: callers + body -- its only caller MidiPkt_ExtractAndPack builds the packet
+;   {record+6, record+7, u16 value from two consecutive part-table bytes (record+7, record+7+1), u16 mask record+8 <<
+;   (record+11 & 15)}; MidiPkt_ExtractAndPack itself has no referrer (no call/calr/jp to 0xFD9D04, no 24-bit pointer
+;   to it in any ROM image).
 MidiPkt_SendCtlWordValueSysEx:
 	dec	4, xsp
 	push	xiz
@@ -1059,6 +1067,14 @@ MidiPkt_EnqueueControl_3368_Return:
 
 MidiPkt_EnqueueExtended2_Data:
 	ret
+; MidiPkt_SendCtlValueSysEx: Sends one MIDI-control-record value as a Technics SysEx: given XWA -> {packet, record},
+;   it returns early on MidiPkt_CheckGateCondition = 0xFFFF, on MidiCtl_NullRecord, or when record+8 & packet[3] = 0.
+;   Otherwise it queues SysEx_Msg_35DC (F0 50 2C 01 28 12), a 6-byte block whose byte 1 is packet[0] | 0x20, and the
+;   value (packet[2] & record+8) >> (record+11 & 15) as two nibbles, high first, plus a zero byte. It then closes and
+;   sends the message (ArpQueue_ComputeAndEnqueue, SeqOut_FlushTimedBuffer, ArpQueue_SwapBuffers). Basis: callers +
+;   body -- both callers (MidiPkt_BuildControl and the routine after it, labels MidiPkt_BuildControl_Skip2/_Join)
+;   build the 4-byte packet {record+6 | (field 10 - 32), record+7, value, record+8} and pass {packet, record}; it is
+;   the 0x336C member of the MidiPkt_EnqueueControl_33xx family, whose 3364 variant queues the same header and record.
 MidiPkt_SendCtlValueSysEx:
 	lda	xsp, (xsp-10)
 	push	xiz
@@ -1254,6 +1270,9 @@ MidiPkt_SendBankSelect_Send:
 	call ArpQueue_SwapBuffers
 	ret
 
+; SysEx_OnGmSystemOn: Handler of message id 36, the Universal SysEx F0 7E 7F 09 01 (General MIDI System On): outside
+;   the guarded titles sets bit 2 of the byte at 0xFDAD, writes it with AssswbWr (0x91, 3) and re-sends both output
+;   banks. Basis: table + body.
 SysEx_OnGmSystemOn:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 108
@@ -1283,6 +1302,9 @@ SysEx_OnGmSystemOn_Skip3:
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
 	ret
+; SysEx_OnGmSystemOff: Handler of message id 37, F0 7E 7F 09 02 (General MIDI System Off): if bit 2 of the byte at
+;   0xFDAD is set, clears it, writes it with AssswbWr (0x91, 3) and re-sends both output banks -- the inverse of
+;   SysEx_OnGmSystemOn. Basis: table + body.
 SysEx_OnGmSystemOff:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 108
@@ -1315,6 +1337,9 @@ SysEx_OnGmSystemOff_Skip3:
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz
 	ret
+; SysEx_OnRolandGsParam: Handler of message id 38, Roland GS data set F0 41 <dev> 42 12 40 ..: switches on field 1 --
+;   1 = 40 1x 15 (use for rhythm part), 2 = 40 00 7F 00 41 (GS reset), 3/4/5/6 = 40 01 30/33/38/3A (reverb
+;   macro/level, chorus macro/level). Basis: table + body.
 SysEx_OnRolandGsParam:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 1:i3
@@ -1330,6 +1355,9 @@ SysEx_OnRolandGsParam:
 	ld	hl, (xix+hl)
 	lda xix, (SysEx_OnRolandGs_UseForRhythmPart:24)
 	jp	t, (xix+hl)
+; SysEx_OnRolandGs_UseForRhythmPart: Case 0 (field 1 = 1, GS address 40 1x 15 USE FOR RHYTHM PART) of
+;   SysEx_OnRolandGsParam: jumps to the body that maps block x through SysExBulk_SlotMap to a part and, for value 1-2,
+;   sets its bank to 120 (drums), for 0 back to 0. Basis: callers + body.
 SysEx_OnRolandGs_UseForRhythmPart:
 	jr	MidiPkt_SysExBulkTransfer_Data_Helper2_Join
 MidiPkt_SysExBulkTransfer_Data_Case2:

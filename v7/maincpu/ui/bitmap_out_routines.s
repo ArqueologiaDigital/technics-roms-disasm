@@ -3439,6 +3439,10 @@ FileIO_ByteBlock_DemoProc1_Helper5:
 	cp	bc, 0:i3
 	jp	lt, (VoiceData_InitAndCopyParams:24)
 	jp	PanelTlv_ValidatePanelMemory
+; PanelMemory_PreBankLoad: Empty hook (ret) run before one panel-memory bank (16-byte bank name + 8 memories) is read
+;   from a .PMT file; WA = destination bank. Basis: callers + body -- FileIO_LoadRegion1_VRAM (bank 0 of a one-bank
+;   file) and SingleLoad_LoadPanelMemBank (bank load) call it before the reads, where the whole-file path calls
+;   PrePmLoad.
 PanelMemory_PreBankLoad:
 	ret
 PanelMemory_PostBankLoad:

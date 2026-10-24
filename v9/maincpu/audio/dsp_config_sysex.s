@@ -18,6 +18,12 @@ SysEx_ClampVoiceIndex8_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
+; SysEx_ApplyGsReverbLevel: Roland GS REVERB LEVEL (40 01 33): maps the data value (field 11 of the active MIDISEQ
+;   buffer) through SysEx4B_LevelCurve128 (0..127 -> 0..94) and writes it to the first parameter 0x4B10 + i of DSP
+;   block 0x4B (the reverb, i below the count read from 0x4B04) for which DSPCfg_ResolveAndExtract returns 1 or 2;
+;   then re-sends the output bank (SwbtWr_ReinitOutputBank). Basis: callers + body -- case 4 (field 1 = 4) of
+;   SysEx_OnRolandGsParam, whose header lists 40 01 30 / 33 / 38 / 3A as reverb macro / level, chorus macro / level;
+;   the reverb-macro case writes the same block (0x4B00, 0x4B10 + i).
 SysEx_ApplyGsReverbLevel:
 	dec	2, xsp
 	push	xiz
@@ -78,6 +84,12 @@ SysEx_ClampVoiceIndex128_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
+; SysEx_ApplyGsChorusMacro: Roland GS CHORUS MACRO (40 01 38): maps the macro number (field 11 of the active MIDISEQ
+;   buffer, 0..7) through SysEx49_VoiceIndexMap8 and writes it to DSP parameter 0x4900 (block 0x49, the chorus); if
+;   that succeeds it writes the macro's default words, SysEx_DispatchByChannel(macro, i), to 0x4910 + i for i below
+;   the count read from 0x4904 (skipping 0xD8F0 = none), then re-sends the output bank. Basis: callers + body -- case
+;   5 (field 1 = 5) of SysEx_OnRolandGsParam; SysEx_DispatchByChannel's case 0 is already named
+;   SysEx_DispatchByChannel_ChorusMacroChorus1 ("GS chorus macro 0 ... written by the callers to DSP param 0x4910+C").
 SysEx_ApplyGsChorusMacro:
 	dec	2, xsp
 	push	xiz
@@ -139,6 +151,11 @@ SysEx_ClampVoiceIndex8_49_DoLookup:
 	ld	l, (xbc+wa)
 	ret
 
+; SysEx_ApplyGsChorusLevel: Roland GS CHORUS LEVEL (40 01 3A): maps the data value (field 11 of the active MIDISEQ
+;   buffer) through SysEx49_LevelCurve128 (the same 0..127 -> 0..94 curve as the reverb's) and writes it to the first
+;   parameter 0x4910 + i of DSP block 0x49 (the chorus, i below the count read from 0x4904) for which
+;   DSPCfg_ResolveAndExtract returns 1 or 2; then re-sends the output bank. Basis: callers + body -- case 6 (field 1 =
+;   6) of SysEx_OnRolandGsParam; the chorus twin of SysEx_ApplyGsReverbLevel (block 0x4B).
 SysEx_ApplyGsChorusLevel:
 	dec	2, xsp
 	push	xiz
@@ -215,6 +232,9 @@ SysEx_DispatchByChannel:
 	lda xix, (SysEx_DispatchByChannel_ChorusMacroChorus1:24)
 	jp	t, (xix+wa)
 
+; SysEx_DispatchByChannel_ChorusMacroChorus1: GS chorus macro 0 (Chorus 1; also the switch base): value C of
+;   SysEx4B_ChannelWords0, written by the callers to DSP param 0x4910+C (DSP EFFECT slot). Basis: switch value (GS
+;   CHORUS MACRO) + body.
 SysEx_DispatchByChannel_ChorusMacroChorus1:
 	cp	c, 5:i3
 	ret	nc
@@ -274,41 +294,57 @@ SysEx_DispatchByChannel_49:
 	lda xix, (SysEx_DispatchByChannel_49_ReverbMacroRoom1:24)
 	jp	t, (xix+wa)
 
+; SysEx_DispatchByChannel_49_ReverbMacroRoom1: GS reverb macro 0 (Room 1; also the switch base): value C of
+;   SysEx49_ChannelWords0, written by the callers to DSP param 0x4B10+C. Basis: switch value (GS REVERB MACRO) + body.
 SysEx_DispatchByChannel_49_ReverbMacroRoom1:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords0
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroRoom2: GS reverb macro 1 (Room 2): value i of SysEx49_ChannelWords1, written
+;   by the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroRoom2:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords1
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroRoom3: GS reverb macro 2 (Room 3): value i of SysEx49_ChannelWords2, written
+;   by the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroRoom3:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords2
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroHall1: GS reverb macro 3 (Hall 1): value i of SysEx49_ChannelWords3, written
+;   by the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroHall1:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords3
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroHall2: GS reverb macro 4 (Hall 2): value i of SysEx49_ChannelWords4, written
+;   by the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroHall2:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords4
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroPlate: GS reverb macro 5 (Plate): value i of SysEx49_ChannelWords5, written by
+;   the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroPlate:
 	cp	c, 5:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords5
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroDelay: GS reverb macro 6 (Delay): value i of SysEx49_ChannelWords6, written by
+;   the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroDelay:
 	cp	c, 6:i3
 	ret	nc
 	ld	xwa, SysEx49_ChannelWords6
 	jr	SysEx_DispatchByChannel_49_Entry
+; SysEx_DispatchByChannel_49_ReverbMacroPanningDelay: GS reverb macro 7 (Panning Delay): value i of
+;   SysEx49_ChannelWords7, written by the callers to DSP param 0x4B10+i
 SysEx_DispatchByChannel_49_ReverbMacroPanningDelay:
 	cp	c, 6:i3
 	ret	nc
@@ -1591,6 +1627,9 @@ SeqBuf_DspSysEx_ReadAndForward_Done:
 	inc 2, xsp
 	ret
 
+; CompIface_SerialEnableTx: Empty (ret) computer-interface counterpart of MIDI_SC0_ENABLE_TX: MIDI_SC0_TX_DISPATCH
+;   calls it when COM_SELECT is not MIDI, SeqOut_WriteTimedBytes after queuing bytes in SeqBuf3 for interface types
+;   0/1. Basis: callers + body.
 CompIface_SerialEnableTx:
 	ret
 
@@ -3942,6 +3981,12 @@ DSPCfg_Data_ParamDispatch_Skip8:
 	ld	hl, wa
 	ld	qiz, 1
 	jr	DSPCfg_Data_ParamDispatch_Join5
+; DSPCfg_FindParamAtRecordOffset: Finds the effect parameter stored at byte offset E of a DSP-block panel record:
+;   walks the effect type's parameter list (XBC, from DspFxRecListPtrTable) with DSPCfg_Data_ParamDispatch, adding up
+;   each parameter's byte size and taking its bit mask, until it reaches offset E with a field whose mask meets the
+;   changed-bit mask at the stacked pointer (or passes E); clears those bits from that mask and returns HL = the index
+;   of the parameter that covers offset E; retd 4. Basis: callers + body -- DSPCfg_RecordFieldToParamId calls it with
+;   E = record offset - 1 and adds 0x10 + HL to the block's id base; its header describes exactly this lookup.
 DSPCfg_FindParamAtRecordOffset:
 	lda	xsp, (xsp-0x18)
 	pushw	iz
@@ -4020,6 +4065,13 @@ DSPCfg_FindParamAtRecordOffset_Skip3:
 	popw	iz
 	lda	xsp, (xsp+0x18)
 	retd	4
+; DSPCfg_RecordFieldToParamId: Maps a SwbtWr change event on a DSP-block panel record -- A = object code 0x61..0x66
+;   ('a'..'f'), C = byte offset (SWBTWR_PAYLOAD_1), E = changed-bit mask (SWBTWR_PAYLOAD_3) -- to a DSP parameter id
+;   stored through the stacked pointer: the block base 0x4900/0x4A00/0x4B00/0x4C00/0x4D00/0x4E00, or for C = 1..16
+;   base + 0x10 + the parameter index that DSPCfg_FindParamAtRecordOffset finds at field C-1 of the effect type's
+;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
+;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
+;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
 DSPCfg_RecordFieldToParamId:
 	lda	xsp, (xsp-0xa)
 	push	xiz
@@ -4037,10 +4089,14 @@ DSPCfg_RecordFieldToParamId:
 	ld	wa, (xix+wa)
 	lda	xix, (DSPCfg_RecordFieldToParamId_DspEffectRecord:24)
 	jp	t, (xix+wa)
+; DSPCfg_RecordFieldToParamId_DspEffectRecord: Tag 0x61 (also the switch base): id base 0x4900 in DSP slot 0, the DSP
+;   EFFECT slot. Basis: switch value (tag - 0x61) + body.
 DSPCfg_RecordFieldToParamId_DspEffectRecord:
 	ld	xiz, 0x4900
 	ld	wa, 0:i3
 	jr	DSPCfg_Data_ParamDispatch_Join3
+; DSPCfg_RecordFieldToParamId_Tag62ReverbSlot: Tag 0x62: id base 0x4A00 in DSP slot 1 (the DIGITAL REVERB slot); 0x62
+;   has no panel record of its own.
 DSPCfg_RecordFieldToParamId_Tag62ReverbSlot:
 	ld	xiz, 0x4a00
 	jr	DSPCfg_Data_ParamDispatch_Join2
@@ -4555,6 +4611,8 @@ DSPCfg_ApplyParamStructFull_ParametricEq:
 	ld xwa, (xsp + 32)
 	ld (xwa), e
 	jrl DSPCfg_Epilogue
+; DSPCfg_ApplyParamStructFull_Chorus: Effect 1 (CHORUS): rewrites the record's parameter bytes in place (the path
+;   DataBuf_LoadAndDispatchFormat2 takes when (0xb7ea) = 2); the other cases do the same for their effect.
 DSPCfg_ApplyParamStructFull_Chorus:
 	ld c, (xwa)
 	ld (xsp + 6), c
@@ -5765,6 +5823,9 @@ UIStateEvt_TransposeUpdate_Clear:
 UIStateEvt_TransposeUpdate_Apply:
 	orw	(0xc594:16), 4
 	ret
+; PanelTag48_UpdateAudioConfig: SwbtWr listener of panel record 0x48 (style/tempo): for payload offsets 0-6 mirrors
+;   the changed bits into the audio-configuration state (0xC596, 0xC59A, 0xC5A0) and sets 0xC594 bit 2. Basis: callers
+;   (listener list) + body.
 PanelTag48_UpdateAudioConfig:
 	pushw	iz
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
@@ -5778,6 +5839,9 @@ PanelTag48_UpdateAudioConfig:
 	ld	wa, (xix+wa)
 	lda	xix, (PanelTag48_UpdateAudioConfig_StyleNumber:24)
 	jp	t, (xix+wa)
+; PanelTag48_UpdateAudioConfig_StyleNumber: Offset 0 of record 0x48 (the style number; also the switch base): when
+;   bits 0-2 changed, recomputes 0xC596 bits 0-4 from +3/+4 (ParamEdit_WordTable), may refresh the tone bank, sets
+;   0xC594 bit 2. Basis: switch value + body.
 PanelTag48_UpdateAudioConfig_StyleNumber:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 7
@@ -5971,6 +6035,9 @@ UIStateEvt_ParamEdit_Data_Case6_Skip17:
 UIStateEvt_ParamEdit_Data_Case6_Epilogue:
 	popw	iz
 	ret
+; PanelTag90_UpdateAudioConfig: SwbtWr listener of panel record 0x90: for payload offsets 0-5 mirrors bits into the
+;   audio-configuration state (0xC1FE bits 0-2, 0xC596 bits 3/5/7, per-part bytes at (0xC1FF)+228) and sets 0xC594 bit
+;   2. Basis: callers (listener list) + body.
 PanelTag90_UpdateAudioConfig:
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
 	extz	wa
@@ -6099,6 +6166,9 @@ UIStateEvt_VolumeMixer_Data_Case5:
 	ret
 UIStateEvt_VolumeMixer_Data_Case2:
 	ret
+; PanelTag70_UpdateAudioConfig: SwbtWr listener of panel record 0x70: offset 0/1 set the note 0xC5A2 (55/60/67 or +1),
+;   offset 2 a step (EffectSelect_StepTable -5..+6) into the high nibbles of (0xC1FF)+0x124 for 26 parts, offsets 3/4
+;   RAM 0xE9C0/0xE9BE; sets 0xC594 bit 2. Basis: callers + body.
 PanelTag70_UpdateAudioConfig:
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
 	cp	a, 4:i3
@@ -6227,6 +6297,9 @@ UIStateEvt_PlayModeGuard_ClearBit:
 	ret	z
 	call	VoiceEvent_DispatchTable
 	ret
+; PanelTag80_UpdateAudioConfig: SwbtWr listener of panel record 0x80 (sequencer/MIDI-clock control): mirrors +0 and +3
+;   bits into the audio-configuration state (0xC59C bit 3, 0xC322, 0xC342-0xC34C bit 6, the per-part step nibble from
+;   record 0x70 +2), reloads 0xC362/0xC363 for offsets 10-12, sets 0xC594 bit 2. Basis: callers + body.
 PanelTag80_UpdateAudioConfig:
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
 	cp	a, 11
@@ -6371,6 +6444,8 @@ UIStateEvt_StubReturn:
 	ret
 SwbtB2_Code93_NopListener:
 	ret
+; SwbtB2_CodeA8_UpdateAudioConfig: SwbtWr listener of event code 0xA8 (no panel record of that tag): copies payload
+;   +16 bit 0 into 0xC594 bit 0 and sets 0xC594 bit 2, the audio-configuration change flag. Basis: callers + body.
 SwbtB2_CodeA8_UpdateAudioConfig:
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
 	cp	a, 16

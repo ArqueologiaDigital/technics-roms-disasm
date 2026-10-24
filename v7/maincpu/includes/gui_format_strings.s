@@ -19,6 +19,9 @@ Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d:	.asciz "%3d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt2d_2:	.asciz "%2d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt3d_2:	.asciz "%3d"
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt4d:	.asciz "%4d"
+; Scoop_BoundOp0A_ClipBox: 4 x u16 {0, 0, 319, 239}: text clip box (the whole 320 x 240 screen) of Scoop bound display
+;   op 0x0A, copied with ldirw into its frame and passed to DrawString. Basis: readers + bytes (cf.
+;   SeGfx_StaticOp06_ClipBox).
 Scoop_BoundOp0A_ClipBox:
 	.short	0, 0, 319, 239	; copied as 4 words by Scoop_EventLoop_12Entry_Alt_Data_Target10: the 320x240 screen's corners
 Scoop_EventLoop_36Entry_Branch3_Str_Fmt1d_2:	.asciz "%1d"

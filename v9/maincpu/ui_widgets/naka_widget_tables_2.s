@@ -3043,6 +3043,10 @@ PmemOutLGridCheck_LocalInit_Strings:		.incbin "includes/generated/naka_widget_ta
 AlignedStr_ON:					.incbin "includes/generated/naka_widget_tables_2.bin", 0x25D9E, 0x2
 PmemOutLGrid_Str_ON:				.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DA0, 0x06
 PmemOutLGrid_Str_OFF:				.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DA6, 0x06
+; PmemOutLGridCheck_Row0_Str_OFF: " OFF " (NUL-terminated): the text PmemOutLGridCheck_OnRamData puts in grid row 0
+;   when bit 7 of the panel-memory part byte (part-record offset of RAM 0xF9C4) is set; otherwise it prints the value
+;   with " %3d ". Basis: readers + bytes -- the only reader is that Strcpy; row 2 has its own " OFF "
+;   (PmemOutLGridCheck_OnRamData_Str_OFF).
 PmemOutLGridCheck_Row0_Str_OFF:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DAC, 0x6
 PmemOutLGridCheck_OnRamData_Str_Fmt3d:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB2, 0x6	; " %3d "
 PmemOutLGridCheck_OnRamData_Str_Fmt3d_2:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25DB8, 0x6	; " %3d "
@@ -3118,6 +3122,11 @@ PmemOutLGridCheck_CaseTable:
 ;   (0xF7935F, 32-bit pointer); PmemOutRGridCheck_OnIndexswDown (0xF79405, 32-bit pointer); and 8 more
 ; -----------------------------------------------------------------------------
 PmemOutLGridCheck_CaseTable_Tail:
+; PmemOutRGridCheck_RamRequestInit: Initializer of the 22-byte (11-word) RAM-edit request PmemOutRGridCheck's INDEX UP
+;   and INDEX DOWN cases copy into their frame: {u32 address 0, u16 size 1, u32 limit 1, u32 0, u32 value/delta 1, u32
+;   0}; they fill the address of the panel-memory part byte, the limit (127 or 255) and the value (0, 128, -1) and
+;   pass it to MainRamPut / MainRamAdd (EVT_RAM_PUT / EVT_RAM_ADD to MainRamControl, which copy 11 words). Basis:
+;   readers + bytes -- six `ld xiy, <this>` / `ldw bc, 11` / `ldirw` sites.
 PmemOutRGridCheck_RamRequestInit:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25E36, 0x16
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] PmemOutRGridCheck_LocalInit
@@ -3454,7 +3463,14 @@ MidiSetup_EventHandler_Table:	.incbin "includes/generated/naka_widget_tables_2.b
 ; MidiPart_LookupFromTable_Table[312].
 ; -----------------------------------------------------------------------------
 MidiPart_LookupFromTable_Table:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x2618A, 0x118
+; MidiPartGridCheck_OctaveUpMap: 8 x u16 {1, 2, 3, 3, 0, 6, 7, 0}: INDEX UP step of the OCTAVE column of the MIDI part
+;   grid (AcMidiPartGridBox), indexed by the current 3-bit two's-complement octave code: 5 (-3) -> 6 -> 7 -> 0 -> 1 ->
+;   2 -> 3 (+3, stays); 4 is unused. MidiPartGridCheck writes the result with MainLswPut unless it equals the current
+;   value. Basis: readers + bytes -- column 2 of the grid, whose fixedcol is " PART |CHANNEL|OCTAVE| LOCAL".
 MidiPartGridCheck_OctaveUpMap:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262A2, 0x10
+; MidiPartGridCheck_OctaveDownMap: 8 x u16 {7, 0, 1, 2, 0, 5, 5, 6}: INDEX DOWN step of the OCTAVE column of the MIDI
+;   part grid, indexed by the current 3-bit two's-complement octave code: 3 (+3) -> 2 -> 1 -> 0 -> 7 -> 6 -> 5 (-3,
+;   stays); 4 is unused. Basis: readers + bytes -- MidiPartGridCheck_OnIndexswDown's column-2 branch.
 MidiPartGridCheck_OctaveDownMap:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262B2, 0x10
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] Transpose_ValueDisplay_Table

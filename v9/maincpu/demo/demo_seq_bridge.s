@@ -664,6 +664,9 @@ SqTrSel_CaseG_OnTitleDpdoc:
 	jrl CDlikeSwTtl_DocBitCheck
 SqTrSel_CaseG_OnTitleDppd:
 	jrl CDlikeSwTtl_PdBitCheck
+; SqTrSel_CaseG_OnTitleDpMdlySmf: Case CURRENT_TITLE = 0x73 (TT_DPMDLYSMF) of SqTrSel_CaseG: calls
+;   PlayMode_SendCommand6C with XDE/XHL/XIX/XIZ preserved. Basis: callers + body (switch value from the title
+;   registration).
 SqTrSel_CaseG_OnTitleDpMdlySmf:
 	push xde
 	push xhl
@@ -675,6 +678,9 @@ SqTrSel_CaseG_OnTitleDpMdlySmf:
 	pop xhl
 	pop xde
 	ret
+; SqTrSel_CaseG_OnTitleDpMdlySmfLyr: Case CURRENT_TITLE = 0x76 (TT_DPMDLYSMFLYR) of SqTrSel_CaseG: calls
+;   PlayMode_SendCommand6C with XDE/XHL/XIX/XIZ preserved. Basis: callers + body (switch value from the title
+;   registration).
 SqTrSel_CaseG_OnTitleDpMdlySmfLyr:
 	push xde
 	push xhl
@@ -686,6 +692,9 @@ SqTrSel_CaseG_OnTitleDpMdlySmfLyr:
 	pop xhl
 	pop xde
 	ret
+; SqTrSel_CaseG_OnTitleDpMdlyDoc: Case CURRENT_TITLE = 0x74 (TT_DPMDLYDOC) of SqTrSel_CaseG: calls
+;   SongMode_StartPlayback with XDE/XHL/XIX/XIZ preserved. Basis: callers + body (switch value from the title
+;   registration).
 SqTrSel_CaseG_OnTitleDpMdlyDoc:
 	push xde
 	push xhl
@@ -697,6 +706,9 @@ SqTrSel_CaseG_OnTitleDpMdlyDoc:
 	pop xhl
 	pop xde
 	ret
+; SqTrSel_CaseG_OnTitleDpMdlyPd: Case CURRENT_TITLE = 0x75 (TT_DPMDLYPD) of SqTrSel_CaseG: calls
+;   PartFormat_StartPlayback with XDE/XHL/XIX/XIZ preserved. Basis: callers + body (switch value from the title
+;   registration).
 SqTrSel_CaseG_OnTitleDpMdlyPd:
 	push xde
 	push xhl

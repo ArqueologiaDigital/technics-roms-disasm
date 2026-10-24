@@ -922,6 +922,10 @@ Str_Mixer_ON:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF350,
 ; [nakarest] Text (8 B at 0xe952a2), first string "OFF"; no registered NAKA table points into
 ; [nakarest] it; reached through 1 data word in LswLeftHold_OnOffStrPtrs (at 0xeeecc0).
 MixerPartTable_Start:		.incbin "includes/generated/naka_technichord_strings.bin", 0xF354, 0x4
+; LswLeftHold_Str_ERR: "ERR" (NUL-terminated): the text LswLeftHold (the LEFT HOLD Lsw function) copies out on
+;   EVT_GET_LSW_STRING when the value is outside 0..1; values 0 / 1 give "OFF" / "ON " from the work-RAM copy
+;   (0x3E91C) of LswLeftHold_OnOffStrPtrs. Basis: readers + bytes -- the only reader is that Strcpy; bytes 45 52 52
+;   00.
 LswLeftHold_Str_ERR:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF358, 0x4
 ; PartParam_EnableMask -- 30 x u32, one mask per part index: which part parameters may be edited.  Every Lsw*
 ; part-parameter function loads it, adds 4 * part and tests one bit (`bit N, wa` in <Lsw>_CheckEnabled): 15
@@ -1075,6 +1079,9 @@ Str_PartName_Right2:	.incbin "includes/generated/naka_technichord_strings.bin", 
 ; [nakarest] Text (16 B at 0xe95540), first string " RIGHT 1 "; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in LswLeftHold_OnOffStrPtrs (at 0xeeecc8).
 Str_PartName_Right1:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5F2, 0xA
+; IvSdpart_GetText_Str_SdPT: "SdPT" (NUL + 0xFF pad): the class-name string IvSdpartProc copies into the caller's
+;   buffer on EVT_GET_STRING. Basis: readers + bytes -- the only reader is IvSdpart_GetText's Strcpy; bytes 53 64 50
+;   54 00 FF; siblings Sdtecd_GetText_Str_TeCd, IvMessage_GetText_Str_Msg.
 IvSdpart_GetText_Str_SdPT:	.incbin "includes/generated/naka_technichord_strings.bin", 0xF5FC, 0x6
 ; IvSdpartProc_CaseTable -- 10 x int16: the case offsets of IvSdpartProc's compiled switch, relative to IvSdpart_Init
 IvSdpartProc_CaseTable:
@@ -2309,10 +2316,23 @@ NakaInst_Por_favor_seleccione_el_Panel_Memory_al_que_desea:	.incbin "includes/ge
 ; [nakarest] 0x00ee0014 NoMessage, 0x00ee0002 Completed, 0x00ee0005 Reminder, 0x00ee0009 Error,
 ; [nakarest] 0x00ee000d Other, 0x00ee0016 PleaseWait -- elements of Viewable slot 0xee
 ; [nakarest] (InitializeMurai), all class Window.
+; IvMessage_Catalog: The IvMesage message catalog (record 0 at this label): 80 x 14-byte records {u16 kind, u32 code
+;   0x00NNFFFF (NN = the error number shown), u32 header table, u32 text table} + a zero terminator. Readers index it
+;   with the message number (word 0x2478C) * 14: the kind picks the window from IvMesageProc_PtrTable, is compared
+;   with 5 (paint) and 3 (header), and +4 is the error number pushed to the header Sprintf.
+;   MsgHeader_BuildLoop_PtrTable and IvMessage_Catalog_TextTableCol are the +6 / +10 columns of record 0. Basis:
+;   readers + bytes.
 IvMessage_Catalog:		.incbin "includes/generated/naka_technichord_strings.bin", 0x173F2, 0x6
 MsgHeader_BuildLoop_PtrTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x173F8, 0x4	; 2 x 32-bit pointer
+; IvMessage_Catalog_TextTableCol: Text-table column of the IvMesage message catalog: the u32 at +10 of catalog record
+;   0 (80 records x 14 bytes {u16 kind, u32 code, u32 header table, u32 text table} + a zero terminator); readers add
+;   index*14. Basis: readers + bytes -- MessageText returns entry [msg] for EVT_GET_LANGUAGE_PTR,
+;   CheckMsg_IncrementCheck stops at the record whose entry is 0.
 IvMessage_Catalog_TextTableCol:	.incbin "includes/generated/naka_technichord_strings.bin", 0x173FC, 0x464
 IvMesageProc_PtrTable:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17860, 0x18	; 6 x 32-bit pointer
+; IvMessage_GetText_Str_Msg: "Msg" (NUL-terminated): the class-name string IvMesageProc copies into the caller's
+;   buffer on EVT_GET_STRING. Basis: readers + bytes -- the only reader is IvMessage_GetText's Strcpy; bytes 4D 73 67
+;   00.
 IvMessage_GetText_Str_Msg:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17878, 0x4
 ; PleaseWait_LangTexts -- 6 x uint32_t: the "please wait" text per help language ("PLEASE WAIT!", "BITTE WARTEN!",
 ; "VEUILLEZ PATIENTER!", "\xa1POR FAVOR, ESPERE!", "PLEASE WAIT!", "SILAHKAN TUNGGU!").
@@ -2366,7 +2386,7 @@ NakaInst_German:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17
 ; [nakarest] Text (34 B at 0xe9d88a), first string "English"; no registered NAKA table points
 ; [nakarest] into it; reached through 1 data word in CheckLanguage_LangNames (at 0xe9d846).
 NakaInst_English:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1793C, 0x8
-CheckMsg_AudioCommand_Str_MessageID_Fmt3d:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17944, 0x10
+CheckMsg_AudioCommand_Str_MessageID_Fmt3d:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17944, 0x10	; "MessageID : %3d"
 MsgHeader_BuildLoop_Str_Fmts_Fmt2d:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17954, 0xA	; "%s %02d!"
 ; [nakarest] NakaInst_METRO  +0x1795e..+0x17968 (0xe9d8ac, 10 B)
 ; [nakarest] Text (10 B at 0xe9d8ac), first string "METRO :"; no registered NAKA table points
@@ -2530,6 +2550,9 @@ Sdtecd1_TypeButtonView:	.incbin "includes/generated/naka_technichord_strings.bin
 ; Sdtecd1_ScrollDown_Lookup / _ScrollUp_Lookup find the current value's position with SdpartLookupPartId,
 ; move it by +7 / -7 (two columns of 7; refused past 13 or below 0) and MainLswPut the value found there.
 Sdtecd1_ValueScreenOrder:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17AB6, 0x1E
+; Sdtecd1_GetText_Str_TeC1: "TeC1" (NUL + 0xFF pad): the class-name string IvSdtecd1Proc returns on EVT_GET_STRING.
+;   Basis: readers + bytes -- Sdtecd1_GetText's Strcpy source; bytes 54 65 43 31 00 FF; sibling
+;   Sdtecd_GetText_Str_TeCd.
 Sdtecd1_GetText_Str_TeC1:		.incbin "includes/generated/naka_technichord_strings.bin", 0x17AD4, 0x6
 ; LswOrchestrator_PartNames -- 17 x uint32_t: display text of orchestrator part value 0-16
 ; {" RIGHT 1 ", " RIGHT 2 ", "  LEFT   ", " PART 4  " .. " PART 16 ", "CONDUCTOR"}.
@@ -2967,7 +2990,13 @@ Bitmap_Digit1:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F3
 ; Bitmap_DigitL[3][17][2].
 ; -----------------------------------------------------------------------------
 Bitmap_DigitL:				.incbin "includes/generated/naka_technichord_strings.bin", 0x17F56, 0x22
+; WelcomeGlyph_N: Welcome-screen glyph 'N': 16 x 17 px, 1 bpp, one big-endian word per row, rows stored bottom-up (34
+;   bytes), drawn by DrawBitmapSP2 from the welcome-script op handlers. Basis: readers + bytes -- the handlers pass it
+;   with width 16 / height 17, and the bitmap rendered bottom-up is the letter N.
 WelcomeGlyph_N:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F78, 0x22
+; WelcomeGlyph_O: Welcome-screen glyph 'O': 16 x 17 px, 1 bpp, one big-endian word per row, rows stored bottom-up (34
+;   bytes), drawn by DrawBitmapSP2 from the welcome-script op handlers. Basis: readers + bytes -- the handlers pass it
+;   with width 16 / height 17, and the bitmap rendered bottom-up is the letter O.
 WelcomeGlyph_O:	.incbin "includes/generated/naka_technichord_strings.bin", 0x17F9A, 0x22
 ; -----------------------------------------------------------------------------
 ; [nakarest_retype] Bitmap_DigitR
@@ -3995,7 +4024,13 @@ PsMixer_KnobPointerOffsets:	.incbin "includes/generated/naka_technichord_strings
 ; [nakarest] it; reached through source references PsMixer_CtlTypeProc2_Join2
 ; [nakarest] (ui/drawbar_panel_ui.s: `ld xde, PsMixer_CtlTypeProc2_Entry_Data`).
 PsMixer_CtlTypeProc2_Entry_Data:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1991E, 0x6
+; PsMixer_CtlTypeProc1_Str_Fmts: "%s:" format: PsMixer_CtlTypeProc1 Sprintf's each of the 8 grid columns' 6-character
+;   part name (RAM 0x3EA38 table) with it as the column caption. Basis: readers + bytes -- Sprintf_Locked format
+;   argument; bytes 25 73 3A 00.
 PsMixer_CtlTypeProc1_Str_Fmts:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19924, 0x4
+; PsMixer_CtlTypeProc10_Str_Fmts: "%s:" format: PsMixer_CtlTypeProc10 Sprintf's the 6-character track names (RAM
+;   0x3EB28 table, TrackName6_*) of the 8 visible grid columns with it. Basis: readers + bytes -- Sprintf_Locked
+;   format argument; bytes 25 73 3A 00.
 PsMixer_CtlTypeProc10_Str_Fmts:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19928, 0x4
 ; IvDrawbar1_DrawbarParamIds -- 9 x u16: sound-parameter number (0..0x3FF) of each of the 9 drawbars, in screen order
 ; IvDrawbar1_LoadVals reads each with SndParam_LookupViaEncode(part, id); IvDrawbar1_OK writes the new
@@ -4194,7 +4229,16 @@ FDemoText_InitFuncTable:	.incbin "includes/generated/naka_technichord_strings.bi
 ; handler 0 = skip the tag), then {0, 0}. FDemoText_ProcessTextMarkup, after a '<', String_Compares entry [i].name (i x 8)
 ; with the text and calls entry [i].handler (FDemoText_MarkupTag_HandlerColumn = this + 4); the walk ends at a NULL name.
 FDemoText_MarkupTagTable:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19DA4, 0x4
+; FDemoText_MarkupTag_HandlerColumn -- 1 x uint32_t + 14 x {char *name, code *handler} + 14 strings: the handler column
+; (+4) of the 15 feature-demo markup-tag records that start 4 bytes earlier (FDemoText_MarkupTagTable):
+; record 0's handler, records 1-13, the {0, 0} end record 14, then the 14 tag names in reverse (BR, CENTER, /CENTER, FONT, /FONT, IMG, SHOW,
+; EXEC, ACT, /ACT, PRESENTATION, /PRESENTATION, ACTION, /ACTION). FDemoText_ProcessMarkup (demo/fdemotext_routines.s)
+; matches the text after '<' against name[i] and loads handler[i] from here; PRESENTATION/ACTION have handler 0 (skipped).
 FDemoText_MarkupTag_HandlerColumn:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19DA8, 0xDA	; 20 x 32-bit pointer
+; [nakarest] naka_technichord_strings+0x19e82  +0x19e82..+0x19e8e (0xe9fdd0, 12 B)
+; [nakarest] Text (12 B at 0xe9fdd0), first string "NONE"; no registered NAKA table points into
+; [nakarest] it; reached through source references FDemoText_ByteData_DisplayRefresh
+; [nakarest] (demo/fdemotext_routines.s: `lda xhl, (FDemoText_ByteData_DisplayRefresh_Str_NONE:24)`).
 FDemoText_ByteData_DisplayRefresh_Str_NONE:		.incbin "includes/generated/naka_technichord_strings.bin", 0x19E82, 0x6	; "NONE"
 FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x19E88, 0x6	; "%s%d"
 ; [nakarest] ErrStr_GetInstanceID  +0x19e8e..+0x19ea6 (0xe9fddc, 24 B)
@@ -4356,6 +4400,9 @@ FDemoText_ScreenClipRect:	.incbin "includes/generated/naka_technichord_strings.b
 ; [nakarest] words above are view ids too is not settled.
 Presentation_RootEntry:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0B2, 0x4	; 0x013F, 0x00EF = 319, 239
 Seq_InitVoiceStructures_Str_Empty:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0B6, 0x2	; "", 0xFF pad: Seq_InitVoiceStructures' Strcpy source
+; Seq_CopyResourcePtrs_Str_Empty: Empty string ("" + 0xFF pad): Seq_CopyResourcePtrs fills all 128 pointers of the
+;   resource-pointer table at (0x024FD8) with its address before loading. Basis: readers + bytes -- `lda xhl,
+;   (<this>)` then `ld (xbc+), xhl` over 508 bytes; bytes 00 FF; sibling Seq_InitVoiceStructures_Str_Empty.
 Seq_CopyResourcePtrs_Str_Empty:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0B8, 0x2	; "", 0xFF pad: the pointer Seq_CopyResourcePtrs fills its table with
 Presentation_TagStrTable:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0BA, 0x10	; "<PRESENTATION>", NUL, 0xFF pad
 Seq_LoadResource_Proceed_Str_PRESENTATION:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0CA, 0x10	; "</PRESENTATION>", NUL
@@ -4365,12 +4412,28 @@ Seq_LoadResource_Proceed_Str_PRESENTATION:	.incbin "includes/generated/naka_tech
 Seq_LoadDisplayResource_NameBufInit:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0DA, 0x1
 	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0DB, 0x1F	; 31 bytes after Seq_LoadDisplayResource_NameBufInit's string; unnamed (they sat under its label until 2026-10-03)
 Seq_LoadResource_Proceed_Str_PRE:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A0FA, 0x6	; ".PRE"
+; [nakarest] naka_technichord_strings+0x1a100  +0x1a100..+0x1a104 (0xea004e, 4 B)
+; [nakarest] Text (4 B at 0xea004e), first string "rt"; no registered NAKA table points into it;
+; [nakarest] reached through source references Seq_LoadResource_Proceed
+; [nakarest] (demo/fdemotext_routines.s: `ld xbc, 0x00ea004e`).
 Seq_LoadResource_Proceed_Str_rt:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A100, 0x4	; "rt"
+; [nakarest] naka_technichord_strings+0x1a104  +0x1a104..+0x1a11e (0xea0052, 26 B)
+; [nakarest] Text (26 B at 0xea0052), first string "<ACTION>"; no registered NAKA table points
+; [nakarest] into it; reached through source references Seq_FillBufferLoop
+; [nakarest] (demo/fdemotext_routines.s: `ld xde, 0x00ea0052`).
 Seq_FillBufferLoop_Str_ACTION_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A104, 0xA	; "<ACTION>"
 Seq_FillBufferLoop_Str_ACTION:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A10E, 0xA	; "</ACTION>"
 Seq_FillBufferLoop_Str_ACT:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A118, 0x6	; ".ACT"
+; [nakarest] naka_technichord_strings+0x1a11e  +0x1a11e..+0x1a128 (0xea006c, 10 B)
+; [nakarest] Text (10 B at 0xea006c), first string "rt"; no registered NAKA table points into
+; [nakarest] it; reached through source references Seq_FillBufferLoop
+; [nakarest] (demo/fdemotext_routines.s: `ld xbc, 0x00ea006c`).
 Seq_FillBufferLoop_Str_rt:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A11E, 0x4	; "rt"
 FDemo_DisplayResourceData_Str_SQT:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A122, 0x6	; ".SQT"
+; [nakarest] naka_technichord_strings+0x1a128  +0x1a128..+0x1a12c (0xea0076, 4 B)
+; [nakarest] Text (4 B at 0xea0076), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references FDemo_DisplayResourceData (demo/file_demo_proc.s:
+; [nakarest] `ld xbc, FDemo_DisplayResourceData_Str_rb`).
 FDemo_DisplayResourceData_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A128, 0x4	; "rb"
 ; MainPreControl_CaseTable -- 11 x int16: the case offsets of MainPreControl's compiled switch, relative to MainPreControl_Dispatch
 MainPreControl_CaseTable:
@@ -4403,6 +4466,8 @@ FDemo_LoadRegsAndPostEvent_Str_FEATURE:	.incbin "includes/generated/naka_technic
 ; [nakarest] Text (4 B at 0xea00a8), first string "rb"; no registered NAKA table points into it;
 ; [nakarest] reached through source references FDemo_FileOpen_DoOpen (demo/file_demo_proc.s: `ld
 ; [nakarest] xbc, 0x00ea00a8`).
+; FDemo_FileOpen_DoOpen_Str_rb: File mode "rb" (NUL + 0xFF pad) that FDemo_FileOpen_DoOpen passes to
+;   FileIO_OpenWithMode. Basis: readers + bytes -- XBC mode argument; bytes 72 62 00 FF.
 FDemo_FileOpen_DoOpen_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A15A, 0x4
 ; [nakarest] naka_technichord_strings+0x1a15e  +0x1a15e..+0x1a18c (0xea00ac, 46 B)
 ; [nakarest] purpose not established: layout of 46 B at 0xea00ac not derived; readers below
@@ -4442,6 +4507,10 @@ FileIO_FileSigRecs_OffsetCol:	.incbin "includes/generated/naka_technichord_strin
 ; [nakarest] purpose not established: layout of 53 B at 0xea010a not derived; readers below
 ; [nakarest] Readers: source references FileIO_CheckSig_LoopTest (demo/file_demo_proc.s: `lda
 ; [nakarest] xbc, (FileIO_FileSigRecs_LengthCol:24)`).
+; FileIO_FileSigRecs_LengthCol: Base of the length column (+6) of the 8 x 8-byte file-signature records {u8 *sig, u16
+;   offset, u16 length} that start at FileIO_RegionSignatures; record 0's length = 2 ("HK").
+;   FileIO_CheckRegionSignature compares [kind*8] bytes. Basis: readers + bytes -- sibling
+;   FileIO_FileSigRecs_OffsetCol (+4).
 FileIO_FileSigRecs_LengthCol:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A1BC, 0x35
 ; [nakarest] Presentation_TagTableEnd  +0x1a1f1..+0x1a224 (0xea013f, 51 B)
 ; [nakarest] Text (51 B at 0xea013f), first string ""; no registered NAKA table points into it;
@@ -4841,6 +4910,12 @@ BuildSecondPage_CopyRecordLoop_Str_MID:	.incbin "includes/generated/naka_technic
 ; with the file's path (FileIO_CopyString) and passes it to _findfirst.
 ValidateAndSearchFile_PathInit:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A54E, 0x1
 	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A54F, 0xF	; 15 bytes after ValidateAndSearchFile_PathInit's string; unnamed (they sat under its label until 2026-10-03)
+; [nakarest] naka_technichord_strings+0x1a55e  +0x1a55e..+0x1a564 (0xea04ac, 6 B)
+; [nakarest] Text (6 B at 0xea04ac), first string "MThd"; no registered NAKA table points into
+; [nakarest] it; reached through source references ProcessRecord_MatchLoop1
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, ProcessRecord_MatchLoop1_Str_MThd`),
+; [nakarest] ProcessRecord_MatchLoop2 (demo/file_demo_proc.s: `ld xbc,
+; [nakarest] ProcessRecord_MatchLoop1_Str_MThd`).
 ProcessRecord_MatchLoop1_Str_MThd:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A55E, 0x6	; "MThd"
 ; [nakarest] naka_technichord_strings+0x1a564  +0x1a564..+0x1a56a (0xea04b2, 6 B)
 ; [nakarest] Text (6 B at 0xea04b2), first string "MTrk"; no registered NAKA table points into
@@ -4854,15 +4929,43 @@ ProcessRecord_MatchLoop3_Str_MTrk:	.incbin "includes/generated/naka_technichord_
 ; [nakarest] ProcessRecord_MatchLoop3 (demo/file_demo_proc.s: `ld
 ; [nakarest] XBC,ProcessRecord_MatchLoop1_Str_Blank5`).
 ProcessRecord_MatchLoop1_Str_Blank5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A56A, 0x6	; "     "
+; [nakarest] naka_technichord_strings+0x1a570  +0x1a570..+0x1a574 (0xea04be, 4 B)
+; [nakarest] Text (4 B at 0xea04be), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references ProcessFileRecord (demo/file_demo_proc.s: `ld
+; [nakarest] xbc, ProcessFileRecord_Str_rb`).
 ProcessFileRecord_Str_rb:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A570, 0x4	; "rb"
 ; [nakarest] FileOp_StubAndDirNames  +0x1a574..+0x1a590 (0xea04c2, 28 B)
 ; [nakarest] 28 B at 0xea04c2: split since into the labelled pieces below; code or data uses FileOp_StubAndDirNames, FileIO_ByteBlock_DemoProc2_Str_rb, FileIO_ByteBlock_DemoProc2_Str_rb_2, FileIO_ByteBlock_DemoProc2_Str_rb_3 and 3 more.
 FileOp_StubAndDirNames:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A574, 0x4
+; [nakarest] naka_technichord_strings+0x1a578  +0x1a578..+0x1a57c (0xea04c6, 4 B)
+; [nakarest] Text (4 B at 0xea04c6), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references GetFileEntryByIndex_Epilogue2
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc2_Str_rb`).
 FileIO_ByteBlock_DemoProc2_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A578, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a57c  +0x1a57c..+0x1a580 (0xea04ca, 4 B)
+; [nakarest] Text (4 B at 0xea04ca), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references GetFileEntryByIndex_Epilogue3
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc2_Str_rb_2`).
 FileIO_ByteBlock_DemoProc2_Str_rb_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A57C, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a580  +0x1a580..+0x1a584 (0xea04ce, 4 B)
+; [nakarest] Text (4 B at 0xea04ce), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoadSrc_ReadSqtSongName_Epilogue4
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc2_Str_rb_3`).
 FileIO_ByteBlock_DemoProc2_Str_rb_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A580, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a584  +0x1a584..+0x1a588 (0xea04d2, 4 B)
+; [nakarest] Text (4 B at 0xea04d2), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references GetFileEntryByIndex_Epilogue5
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc2_Str_rb_4`).
 FileIO_ByteBlock_DemoProc2_Str_rb_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A584, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a588  +0x1a588..+0x1a58c (0xea04d6, 4 B)
+; [nakarest] Text (4 B at 0xea04d6), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references GetFileEntryByIndex_Epilogue6
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, GetFileEntryByIndex_Entry_Str_rb`).
 GetFileEntryByIndex_Entry_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A588, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a58c  +0x1a58c..+0x1a590 (0xea04da, 4 B)
+; [nakarest] Text (4 B at 0xea04da), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references GetFileEntryByIndex_Epilogue7
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, GetFileEntryByIndex_Entry2_Str_rb`).
 GetFileEntryByIndex_Entry2_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A58C, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a590  +0x1a590..+0x1a592 (0xea04de, 2 B)
 ; [nakarest] Text (2 B at 0xea04de), first string "*"; no registered NAKA table points into it;
@@ -4949,6 +5052,12 @@ FindFirst_BuildPathLoop_Str_A:	.incbin "includes/generated/naka_technichord_stri
 ; [nakarest] it; reached through source references ScanDir_CopyEntryLoop (demo/file_demo_proc.s:
 ; [nakarest] `ld xwa, ScanDir_CopyEntryLoop_Str_BMP`).
 ScanDir_CopyEntryLoop_Str_BMP:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A5FE, 0x6	; "*.BMP"
+; [nakarest] naka_technichord_strings+0x1a604  +0x1a604..+0x1a60a (0xea0552, 6 B)
+; [nakarest] Text (6 B at 0xea0552), first string "``alw\xFF\x94\xEA"; no registered NAKA table
+; [nakarest] points into it; reached through source references FileIO_ErrorCodeByteBlock_Skip4
+; [nakarest] (demo/file_demo_proc.s: `lda xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)`),
+; [nakarest] FileIO_ErrorCodeByteBlock_Skip6 (demo/file_demo_proc.s: `lda xbc,
+; [nakarest] (FileIO_ErrorCodeByteBlock_Entry_Data:24)`).
 FileIO_ErrorCodeByteBlock_Entry_Data:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A604, 0x6
 ; DiskInfo_MediaTypeNames -- 8 x pointer: media-type text by disk type code (RAM word 0x8500, from GetDiskSizeInfo): 0-1 "---",
 ; 2 "2DD", 3 "2HD", 4 "2DD", 5 "PD ", 6-7 "DOC". DiskInfo_RenderStrings copies entry [code] to RAM 0x87CE, then appends
@@ -5077,12 +5186,40 @@ FileIO_InitFuncTable:	.incbin "includes/generated/naka_technichord_strings.bin",
 ; returns error_code; the {0, 0xFF} terminator makes it return the caller's default (register C).  Callers in
 ; file_io/single_load.s and file_io/filename_password.s store the result in GLOBAL_ERROR_CODE.
 FileIO_StatusToErrorCode:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A72E, 0x34
+; [nakarest] naka_technichord_strings+0x1a762  +0x1a762..+0x1a770 (0xea06b0, 14 B)
+; [nakarest] Text (14 B at 0xea06b0), first string "FEATURE .PRE"; no registered NAKA table
+; [nakarest] points into it; reached through source references FileIO_ErrorCodeByteBlock_Skip10
+; [nakarest] (demo/file_demo_proc.s: `ld xwa, FileIO_ErrorCodeByteBlock_Entry_Str_FEATURE_PRE`).
 FileIO_ErrorCodeByteBlock_Entry_Str_FEATURE_PRE:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A762, 0xE	; "FEATURE .PRE"
+; [nakarest] naka_technichord_strings+0x1a770  +0x1a770..+0x1a778 (0xea06be, 8 B)
+; [nakarest] Text (8 B at 0xea06be), first string "______"; no registered NAKA table points into
+; [nakarest] it; reached through source references FRename_TextChange_Error
+; [nakarest] (file_io/disk_operations.s: `ld xbc, FRename_TextChange_Error_Str_Under_Under_Under_Under`).
 FRename_TextChange_Error_Str_Under_Under_Under_Under:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A770, 0x8	; "______"
+; [nakarest] naka_technichord_strings+0x1a778  +0x1a778..+0x1a782 (0xea06c6, 10 B)
+; [nakarest] Text (10 B at 0xea06c6), first string "________"; no registered NAKA table points
+; [nakarest] into it; reached through source references FRenameSmf_TextChange_Error
+; [nakarest] (file_io/disk_operations.s: `ld xbc, FRenameSmf_TextChange_Error_Str_Under_Under_Under_Under`).
 FRenameSmf_TextChange_Error_Str_Under_Under_Under_Under:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A778, 0xA	; "________"
+; [nakarest] naka_technichord_strings+0x1a782  +0x1a782..+0x1a788 (0xea06d0, 6 B)
+; [nakarest] Text (6 B at 0xea06d0), first string ".MID"; no registered NAKA table points into
+; [nakarest] it; reached through source references FRenameSmf_HandleApply
+; [nakarest] (file_io/disk_operations.s: `ld xbc, FRenameSmf_HandleApply_Str_MID`).
 FRenameSmf_HandleApply_Str_MID:					.incbin "includes/generated/naka_technichord_strings.bin", 0x1A782, 0x6	; ".MID"
+; [nakarest] naka_technichord_strings+0x1a788  +0x1a788..+0x1a78c (0xea06d6, 4 B)
+; [nakarest] Text (4 B at 0xea06d6), first string " : "; no registered NAKA table points into
+; [nakarest] it; reached through source references DiskInfo_RenderStrings
+; [nakarest] (file_io/disk_operations.s: `ld xbc, DiskInfo_RenderStrings_Str_Colon`).
 DiskInfo_RenderStrings_Str_Colon:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1A788, 0x4	; " : "
+; [nakarest] naka_technichord_strings+0x1a78c  +0x1a78c..+0x1a796 (0xea06da, 10 B)
+; [nakarest] Text (10 B at 0xea06da), first string "KB free ("; no registered NAKA table points
+; [nakarest] into it; reached through source references DiskInfo_RenderStrings
+; [nakarest] (file_io/disk_operations.s: `ld xbc, DiskInfo_RenderStrings_Str_KB_free`).
 DiskInfo_RenderStrings_Str_KB_free:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1A78C, 0xA	; "KB free ("
+; [nakarest] naka_technichord_strings+0x1a796  +0x1a796..+0x1a79e (0xea06e4, 8 B)
+; [nakarest] Text (8 B at 0xea06e4), first string "% used)"; no registered NAKA table points
+; [nakarest] into it; reached through source references DiskInfo_RenderStrings
+; [nakarest] (file_io/disk_operations.s: `ld xbc, DiskInfo_RenderStrings_Str_Fmtu_sed`).
 DiskInfo_RenderStrings_Str_Fmtu_sed:				.incbin "includes/generated/naka_technichord_strings.bin", 0x1A796, 0x8	; "% used)"
 ; CompLoad_Str_EmptyFileName -- 1 x char[2]: "" + 0xFF pad
 ; FmmComposerLoadFunc's paint loop (file_io/composer_filters.s) uses it as the file name of a list item
@@ -5148,8 +5285,20 @@ RenderSaveFilter_Available_Str_YES:	.incbin "includes/generated/naka_technichord
 ; [nakarest] Readers: source references RenderSaveFilter_Unavail (file_io/composer_filters.s:
 ; [nakarest] `ld xbc, RenderSaveFilter_Unavail_Str_NO`).
 RenderSaveFilter_Unavail_Str_NO:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A7E2, 0x6	; " NO  "
+; [nakarest] naka_technichord_strings+0x1a7e8  +0x1a7e8..+0x1a7ee (0xea0736, 6 B)
+; [nakarest] Text (6 B at 0xea0736), first string ".MID"; no registered NAKA table points into
+; [nakarest] it; reached through source references SaveFN_HandleApply (file_io/smf_operations.s:
+; [nakarest] `ld xbc, SaveFN_HandleApply_Str_MID`).
 SaveFN_HandleApply_Str_MID:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A7E8, 0x6	; ".MID"
+; [nakarest] naka_technichord_strings+0x1a7ee  +0x1a7ee..+0x1a7fa (0xea073c, 12 B)
+; [nakarest] Text (12 B at 0xea073c), first string "TO SONG : "; no registered NAKA table points
+; [nakarest] into it; reached through source references SeqToSong_BuildEntry
+; [nakarest] (file_io/smf_operations.s: `ld xbc, SeqToSong_BuildEntry_Str_TO_SONG`).
 SeqToSong_BuildEntry_Str_TO_SONG:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A7EE, 0xC	; "TO SONG : "
+; [nakarest] naka_technichord_strings+0x1a7fa  +0x1a7fa..+0x1a806 (0xea0748, 12 B)
+; [nakarest] Text (12 B at 0xea0748), first string "FROM SONG:"; no registered NAKA table points
+; [nakarest] into it; reached through source references SeqFromSong_BuildEntry
+; [nakarest] (file_io/smf_operations.s: `ld xbc, SeqFromSong_BuildEntry_Str_FROM_SONG`).
 SeqFromSong_BuildEntry_Str_FROM_SONG:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A7FA, 0xC	; "FROM SONG:"
 ; SmfLoadAs_ModeTexts -- 3 x pointer: PsFileNameBox text {s8 cell 0, 12 chars} of the SMF load-as mode (RAM 0x8946):
 ; 0 "  GM ~8d GM  ", 1 "TECH ~8d TECH", 2 "  GM ~8d TECH" (~8d is a glyph escape between source and target format).
@@ -5167,6 +5316,10 @@ Str_SmfConvert_TechToTech:	.incbin "includes/generated/naka_technichord_strings.
 ; [nakarest] purpose not established: layout of 42 B at 0xea0780 not derived; readers below
 ; [nakarest] Readers: 1 data word in SmfLoadAs_ModeTexts (at 0xea0754).
 Str_SmfConvert_GmToGm:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A832, 0x10
+; [nakarest] naka_technichord_strings+0x1a842  +0x1a842..+0x1a850 (0xea0790, 14 B)
+; [nakarest] Text (14 B at 0xea0790), first string "________.MID"; no registered NAKA table
+; [nakarest] points into it; reached through source references SmfFN_UpdateFilenameField
+; [nakarest] (file_io/smf_operations.s: `ld xbc, SmfFN_UpdateFilenameField_Str_MID`).
 SmfFN_UpdateFilenameField_Str_MID:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A842, 0xE	; "________.MID"
 FmmSmfFileNameFunc_CaseTable:
 	.short	FmmSmfFileNameFunc_OnSetSelectedFileNumber - FmmSmfFileNameFunc_Code
@@ -5295,6 +5448,10 @@ Str_BankMem0_Empty:	.incbin "includes/generated/naka_technichord_strings.bin", 0
 ; [nakarest] source references WP_GetPresetName3 (file_io/wallpaper.s: `ld xbc,
 ; [nakarest] WP_GetPresetName3_PtrTable`).
 WP_GetPresetName3_PtrTable:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A98C, 0x5E	; 3 x 32-bit pointer
+; [nakarest] naka_technichord_strings+0x1a9ea  +0x1a9ea..+0x1a9ee (0xea0938, 4 B)
+; [nakarest] Text (4 B at 0xea0938), first string ": "; no registered NAKA table points into it;
+; [nakarest] reached through source references SLSrcBankList_FuncBody (file_io/single_load.s:
+; [nakarest] `ld xbc, SLSrcBankList_FuncBody_Str_Colon`).
 SLSrcBankList_FuncBody_Str_Colon:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A9EA, 0x4	; ": "
 SLSrcBankList_FuncBody_Str_Colon_2:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1A9EE, 0x4	; ": "
 SLSrcBankList_FuncBody_Str_ALL:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A9F2, 0x12	; "      ALL       "
@@ -5303,7 +5460,14 @@ SLSrcBankList_FuncBody_Str_ALL:			.incbin "includes/generated/naka_technichord_s
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 80 (the byte after it).
 SingleLoadSrc_PanelMemBankSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA04, 0x2
+; SingleLoadSrc_PanelMemEntryCount: Number of entries (80) of the PANEL MEMORY single-load source list:
+;   SingleLoadSrc_PanelMemListProc refuses a bank step (+8) or an item step (+1) whose new position would reach it.
+;   Basis: readers + bytes -- the readers compare the stepped cursor with it.
 SingleLoadSrc_PanelMemEntryCount:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA06, 0x4
+; [nakarest] naka_technichord_strings+0x1aa0a  +0x1aa0a..+0x1aa0c (0xea0958, 2 B)
+; [nakarest] Text (2 B at 0xea0958), first string ":"; no registered NAKA table points into it;
+; [nakarest] reached through source references SLSrcBankList_FuncBody_Join4
+; [nakarest] (file_io/single_load.s: `ld xbc, SLSrcBankList_FuncBody_Entry_Str_Colon`).
 SLSrcBankList_FuncBody_Entry_Str_Colon:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA0A, 0x2	; ":"
 SLSrcBankList_FuncBody_Entry_Str_Colon_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA0C, 0x4	; ": "
 SLSrcBankList_FuncBody_Entry_Str_Colon_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA10, 0x4	; ": "
@@ -5313,6 +5477,9 @@ SLSrcBankList_FuncBody_Entry_Str_ALL:		.incbin "includes/generated/naka_technich
 ; (SingleLoadSrc_ComposerEntryCount, the next byte pair) as columns of 10: event parameter 5 moves the cursor (RAM 0x89FE) by +-10,
 ; parameter 6 by +-1 inside a column (index mod 10); the value is also passed in C to the list helpers.
 SLSrcComposer_RowsPerColumn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA26, 0x2
+; SingleLoadSrc_ComposerEntryCount: Number of items (30) of the COMPOSER single-load source list (3 columns of 10):
+;   SingleLoadSrc_ComposerListProc refuses a column step (+10) or an item step (+1) that would reach it. Basis:
+;   readers + bytes -- the readers compare the stepped cursor with it.
 SingleLoadSrc_ComposerEntryCount:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA28, 0x2
 SLSrcBankList_FuncBody_Entry_Str_Colon_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA2A, 0x4	; ": "
 SLSrcBankList_FuncBody_Entry_Str_Colon_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA2E, 0x4	; ": "
@@ -5324,8 +5491,19 @@ Str_AllOption_EA0980:			.incbin "includes/generated/naka_technichord_strings.bin
 ; switch, the divisor that gives the bank of a position, and the C argument of its draw helpers; the
 ; position limit is 168 (the byte after it).
 SingleLoadSrc_SoundMemPageSize:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA44, 0x2
+; SingleLoadSrc_SoundMemEntryCount: Number of positions (168) of the SOUND MEMORY single-load source list:
+;   SingleLoadSrc_SoundMemListProc refuses an item step (+1) that would reach it. Basis: readers + bytes -- the
+;   readers compare the stepped cursor with it.
 SingleLoadSrc_SoundMemEntryCount:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA46, 0x2
+; SingleLoadSrc_ListProcByMode -- 5 x code pointer: the source-list routine of each single-load mode (RAM 0x89F8: 0 PANEL MEMORY,
+; 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none). SingleLoadSrcFunc calls entry [mode] with XWA = its file-name box,
+; XBC = event, XDE = parameter on EVT_PAINT and scrolling. The targets are unlabelled routine entries in the SLSrcBankList_FuncBody code;
+; CmpSingleLoadSrc_ListProcByMode holds the same five.
 SingleLoadSrc_ListProcByMode:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA48, 0x14	; 5 x 32-bit pointer
+; [nakarest] naka_technichord_strings+0x1aa5c  +0x1aa5c..+0x1aa60 (0xea09aa, 4 B)
+; [nakarest] Text (4 B at 0xea09aa), first string ": "; no registered NAKA table points into it;
+; [nakarest] reached through source references SLDstBankList_FuncBody (file_io/single_load.s:
+; [nakarest] `ld xbc, SLDstBankList_FuncBody_Str_Colon`).
 SLDstBankList_FuncBody_Str_Colon:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA5C, 0x4	; ": "
 SLDstBankList_FuncBody_Str_Colon_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AA60, 0x4	; ": "
 ; [nakarest] Str_AllOption_EA09B2  +0x1aa64..+0x1aaa2 (0xea09b2, 62 B)
@@ -5355,8 +5533,20 @@ SLDstBankList_FuncBody_Data_6:		.incbin "includes/generated/naka_technichord_str
 ; [nakarest] Data_SaveLoadMenuTable  +0x1aaa2..+0x1aaf0 (0xea09f0, 78 B)
 ; [nakarest] 78 B at 0xea09f0: split since into the labelled pieces below; code or data uses Data_SaveLoadMenuTable, SLDstBankList_FuncBody_Str_Colon_7, SLDstBankList_FuncBody_Str_ALL_2, SLDstBankList_FuncBody_Str_Colon_8 and 4 more.
 Data_SaveLoadMenuTable:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAA2, 0x4
+; [nakarest] naka_technichord_strings+0x1aaa6  +0x1aaa6..+0x1aaaa (0xea09f4, 4 B)
+; [nakarest] Text (4 B at 0xea09f4), first string ": "; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoadDst_DrawSoundMemItemRows
+; [nakarest] (file_io/single_load.s: `ld xbc, SLDstBankList_FuncBody_Str_Colon_7`).
 SLDstBankList_FuncBody_Str_Colon_7:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAA6, 0x4	; ": "
+; [nakarest] naka_technichord_strings+0x1aaaa  +0x1aaaa..+0x1aabc (0xea09f8, 18 B)
+; [nakarest] Text (18 B at 0xea09f8), first string " ALL "; no registered NAKA table points into
+; [nakarest] it; reached through source references SingleLoadDst_DrawSoundMemItemRows
+; [nakarest] (file_io/single_load.s: `ld xbc, SLDstBankList_FuncBody_Str_ALL_2`).
 SLDstBankList_FuncBody_Str_ALL_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAAA, 0x12	; "      ALL       "
+; [nakarest] naka_technichord_strings+0x1aabc  +0x1aabc..+0x1aac0 (0xea0a0a, 4 B)
+; [nakarest] Text (4 B at 0xea0a0a), first string ": "; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoadDst_DrawSoundMemItemRows
+; [nakarest] (file_io/single_load.s: `ld xbc, SLDstBankList_FuncBody_Str_Colon_8`).
 SLDstBankList_FuncBody_Str_Colon_8:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AABC, 0x4	; ": "
 SLDstBankList_FuncBody_Str_Colon_9:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC0, 0x4	; ": "
 ; SLDstSoundMem_RowsPerColumn -- 1 x uint8_t = 20 (+ 0xFF pad): rows per column of the single-load SOUND MEMORY destination list
@@ -5364,7 +5554,14 @@ SLDstBankList_FuncBody_Str_Colon_9:	.incbin "includes/generated/naka_technichord
 ; single item 40 on event parameter 7, and passes the value in C to SLDstBankList_FuncBody_Helper5/6.
 SLDstSoundMem_RowsPerColumn:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC4, 0x2
 SLDstBankList_FuncBody_Data_7:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC6, 0x2
+; SingleLoadDst_AreaListProcs -- 5 x uint32_t: destination-list event routine for storage area 0-4
+; (PANEL MEMORY, SEQUENCER, COMPOSER, SOUND MEMORY, blank). SingleLoadDstFunc (file_io/single_load.s) calls
+; entry [area byte 0x89f8] with the file-name box (0x81f0) and the event (EVT_PAINT, EVT_INDEXSW_UP/DOWN, ...);
+; the routines are the unlabelled bodies after `ret` in file_io/single_load.s (the last is SingleLoadDst_BlankListProc).
 SingleLoadDst_AreaListProcs:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AAC8, 0x14	; 15 x 32-bit pointer
+; CmpSingleLoadSrc_ListProcByMode -- 5 x code pointer: the same five source-list routines as SingleLoadSrc_ListProcByMode,
+; per single-load mode (RAM 0x89F8), for the composer single-load screen: CmpSingleLoadSrcFunc calls entry [mode] with XWA = its
+; file-name box, XBC = event, XDE = parameter on EVT_PAINT and scrolling.
 CmpSingleLoadSrc_ListProcByMode:		.incbin "includes/generated/naka_technichord_strings.bin", 0x1AADC, 0x14	; 10 x 32-bit pointer
 ; [nakarest] naka_technichord_strings+0x1aaf0  +0x1aaf0..+0x1ab00 (0xea0a3e, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xea0a3e not derived; readers below

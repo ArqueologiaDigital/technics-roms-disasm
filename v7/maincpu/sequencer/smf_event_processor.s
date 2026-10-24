@@ -4555,6 +4555,7 @@ SeqStep_FileSectorDone:
 	add	(xde), xwa
 	ld	xwa, xhl
 	srl	xwa, 16
+	; Sprintf_FillToVectors (data pointer)
 	and	xwa, 255
 	ld	(xix), a
 	ld	xde, (xbc)
@@ -8013,6 +8014,12 @@ SeqChan_ByteBlockD:
 	calr	SeqStep_ParseVariableHeader
 	lda	xsp, (xsp+16)
 	ret
+; Fat_HandleDiskIoError: After a floppy sector transfer, handles its error word (*arg1): 0 -> HL = 0. Otherwise counts
+;   the attempt (word 0x2271E) and maps the FDC code: 0x2F write-protect -> 31 (HL = 0 at once), 0x30/0x31 -> 32,
+;   0x33/0x35 -> 33, 6 (disk changed) -> 6, other -> 36; re-mounts the volume (Fat_MountVolume) and
+;   returns HL = 1 (retry) only if the re-mount succeeded on a 33/6/36 path and 0x2271E is then below 1. Basis:
+;   callers + body -- SeqChan_ByteBlockE (read loop, FDC command 3) and SeqChan_ByteBlockF (write loop, command 4)
+;   call it after every transfer and loop while it returns non-zero.
 Fat_HandleDiskIoError:
 	dec	2, xsp
 	push	xiz
@@ -8418,6 +8425,9 @@ FDC_ClearDiskChangeStatus:
 	ld	a, (0x3e3e4:24)
 	ld	(0x3e3e2:24), a
 	ret
+; FDC_ReadDiskChangeStatus: Returns HL = the DiskChanged word of FDC_DiskTypeState (0x3E3E6): 1 after
+;   FDC_StoreDiskType, 0 after FDC_ClearDiskChangeStatus. Basis: callers + body -- SeqChan_ByteBlockC calls it first
+;   and, when non-zero, acknowledges with FDC_ClearDiskChangeStatus and returns 6 (disk changed).
 FDC_ReadDiskChangeStatus:
 	ld	hl, (0x3e3e6:24)
 	ret
@@ -10074,6 +10084,11 @@ SndTable_ByteBlock_ReadOps_Skip3:
 SndTable_ByteBlock_ReadOps_Skip2:
 	ldw	hl, 0xffff
 	ret
+; DiskStream_ReaderTask: Task 2 entry (TaskSched_TaskTable group 2): the disk-stream reader. It posts the two
+;   1028-byte buffers at DiskStream BufferPtr (0x3E3EE) to queue 2, then loops: takes a free buffer from queue 2,
+;   fills 1024 bytes from the stream (SndTable_ByteBlock_ReadOps: FileRead of handle 0x2357A, or raw sector commands),
+;   and sends it to queue 3 for TaskBuf_ReadNextByte, until ByteLength (0x3E3E8) is read; flag 0x2357E = 1 while it
+;   runs. Basis: callers + body.
 DiskStream_ReaderTask:
 	dec	2, xsp
 	push	xiz
@@ -10601,6 +10616,9 @@ FileIO_ReadDir_Return:
 	pop xiz
 	ret
 
+; SeqDispatch_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis:
+;   readers + bytes -- entry 13 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init
+;   phase 0-3) of every table; slot 0 is SeqDispatch_ResetAndValidate.
 SeqDispatch_InitFuncTable:
 ; Four handler pointers, one per init phase 0..3 (stride 4).
 ; Read by ScreenGroup_Dispatch / VoiceInit_Dispatch (0xFDD7A3,

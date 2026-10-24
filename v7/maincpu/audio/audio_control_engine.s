@@ -1308,6 +1308,10 @@ FileIO_BytecodeData_Code_Helper3:
 	lda	xhl, (xsp)
 	inc	6, xsp
 	ret
+; PanelAction_DispatchPedalFunction: Runs the foot-pedal function assigned by code BC: index =
+;   PanelAction_PedalAssignHandlerIndex[BC]; if <= 22, calls PanelAction_PedalFunctionHandlers[index] with XWA = the
+;   panel event. Basis: callers + body -- PanelAction_FootSwitch1/2 and FootController1-4 pass their assignment
+;   parameter (0x2886..0x2890) in BC.
 PanelAction_DispatchPedalFunction:
 	extz	bc
 	lda	xde, (PanelAction_PedalAssignHandlerIndex:24)
@@ -4095,6 +4099,12 @@ VoiceData_ExtendedParamSetup:
 	call	Mem_Copy
 	lda	xsp, (xsp+10)
 	ret
+; MainSysCtrl_ResetCurrentPanel: INITIAL SETTING 'CURRENT PANEL': resets the live panel --
+;   Display_SetupAndPrepareRender copies the header template (0x20 bytes, DataSlot_HeaderTemplate) to 0xF980 and
+;   SndParamRam_DefaultImage (0x620 bytes) to 0xF9A0 and sets the region bytes -- then validates and re-resolves it
+;   (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, PanelTlv_WriteLivePanelHeaders), applies it
+;   (MidiMsg_ParseChannelStream), sets GLOBAL_ERROR_CODE 35 ('COMPLETED!') and tail-jumps to Audio_FillParamBuffer.
+;   Basis: callers + body -- MainSysCtrl_OnInitCurrentPanel (case 1, item 'CURRENT PANEL') calls it.
 MainSysCtrl_ResetCurrentPanel:
 	calr	Display_SetupAndPrepareRender
 	call	PanelTlv_ValidateLivePanel
@@ -4144,6 +4154,12 @@ VoiceData_ExtendedParamSetup_Loop3:
 	popw	iz
 	inc	8, xsp
 	ret
+; MainSysCtrl_ResetMidiSettings: INITIAL SETTING 'MIDI SETTING': in the live panel 0xF9A0 restores, for each of the 24
+;   part records, bits 0-2 of byte +14 and the 9 bytes at +15 from SndParamRam_DefaultImage and re-sends them
+;   (MIDI_WriteCommandToBuffer), restores and re-sends the 14 bytes at +944 and clears bit 2 of byte +1037
+;   (SwbtWr_ReinitOutputBank); then makes the same +14 / +15 / +944 restore in each of the 80 panel memories (0x1ED400
+;   + 960 * n). Basis: callers + body -- MainSysCtrl_OnInitMidiSetting (case 3, item 'MIDI SETTING') calls it; its
+;   header already names the +14 restore.
 MainSysCtrl_ResetMidiSettings:
 	lda	xsp, (xsp-10)
 	push	qiz
@@ -4193,6 +4209,7 @@ MainSysCtrl_ResetMidiSettings_Loop:
 	; bytecode param 0x1d38
 	push	xwa
 	call	Mem_Copy
+	; Mem_Copy
 	lda	xsp, (xsp+10)
 	ldi_erpb	251, 13
 MainSysCtrl_ResetMidiSettings_Loop2:
@@ -4319,6 +4336,7 @@ VoiceData_ExtendedParamSetup_Loop2:
 	; bytecode param 0x1d38
 	push	xwa
 	call	Mem_Copy
+	; Mem_Copy
 	lda	xsp, (xsp+10)
 	inc	1, (xsp+2)
 	cp	(xsp+2), 80
@@ -4763,6 +4781,9 @@ ExtData_ToneParam_DispatchHandler:
 	ld	wa, (xix+wa)
 	lda	xix, (ExtData_ToneParam_DispatchHandler_OnVoiceSelect:24)
 	jp	t, (xix+wa)
+; ExtData_ToneParam_DispatchHandler_OnVoiceSelect: Payload offset 0 of a per-part record (tags 0x00-0x19), the voice
+;   selector: re-applies the program (SndParam_ApplyProgramChange) and posts the record's +0/+1. Basis: switch value
+;   (changed payload offset) + body.
 ExtData_ToneParam_DispatchHandler_OnVoiceSelect:
 	jr	ExtData_ToneParam_DispatchHandler_Join
 ExtData_ToneParam_DispatchHandler_Case3:
@@ -4991,6 +5012,8 @@ ExtData_ToneParam_AltDispatch_WholeByteFields:
 	jr	ExtData_ToneParam_AltDispatch_Join
 ExtData_ToneParam_AltDispatch_DrawbarNibbleFields:	; cases 1, 2
 	jr	ExtData_ToneParam_AltDispatch_Join2
+; ExtData_ToneParam_AltDispatch_DrawbarFootages: Payload +3..+6 (cases 3-6): two drawbar footages per byte (16'/8', 5
+;   1/3'/4', 2 2/3'/2', 1 3/5'/1 1/3'), merged as low and high nibble.
 ExtData_ToneParam_AltDispatch_DrawbarFootages:	; cases 3, 4, 5, 6
 	jr	ExtData_ToneParam_AltDispatch_Join3
 ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches:
@@ -5033,6 +5056,9 @@ ExtData_ToneParam_AltBody:
 	ld	wa, (xix+wa)
 	lda	xix, (ExtData_ToneParam_AltBody_OnStyleProgram:24)
 	jp	t, (xix+wa)
+; ExtData_ToneParam_AltBody_OnStyleProgram: Offset 0 of style/tempo record 0x48 (the style selection; also the switch
+;   base): resolves (0x9130, 0x9131) with AccStyle_LookupTempoAndVelocity, writes the result to +0/+1 and posts both.
+;   Basis: switch value + body.
 ExtData_ToneParam_AltBody_OnStyleProgram:
 	jr	ExtData_ToneParam_AltBody_Join
 ExtData_ToneParam_AltBody_Case3:
@@ -7995,6 +8021,12 @@ VoiceMode_ParamHandler_4_Helper:
 	pop	xbc
 	pop	xwa
 	ret
+; MidiStream_GetCategoryLastSlot: Register-preserving call of CharMap_ActivePreamb_Prologue2: returns in A the last
+;   slot index of sound category A (the per-category tables at descriptor +0x3C/+0x40/+0x44/+0x48/+0x4C, chosen by
+;   part and mode), all other registers kept. The part comes from PART_SELECT (GetCurrentPartSelect), not from the B
+;   the caller loads. Basis: callers + body -- the only caller MidiStream_ExtDispatch_Mode0 takes the received program
+;   E (<= 17, the category count - 1) as a category and drops the change when the part's bank byte 0x9412[part] (the
+;   slot) is above this value.
 MidiStream_GetCategoryLastSlot:
 	push	xbc
 	push	xde
@@ -10048,9 +10080,16 @@ VoiceMode_ParamConfigTables:
 	.byte	0x17, 0x00, 0xff, 0x00, 0x17, 0x04, 0x48, 0x01
 	.byte	0x17, 0x08, 0x7f, 0x01, 0xff, 0xff, 0xff, 0xff
 	.byte	0xff, 0xff, 0xff, 0xff
+; SeqTrackAssign_PartTagTable: 20 bytes: TRACK ASSIGN value (0xF1A0[track]) -> panel part-record tag: RIGHT1 0, LEFT
+;   2, RIGHT2 1, PART4..PART15 3..14, DRUMS 15, CHORD/APC 0x15, CONTROL/RHYTHM 0. Basis: readers + bytes.
 SeqTrackAssign_PartTagTable:	.byte	0x00, 0x02, 0x01, 0x07
 	.byte	0x08, 0x09, 0x0a, 0x0b, 0x04, 0x05, 0x06, 0x03
 	.byte	0x0f, 0x15, 0x15, 0x00, 0x00, 0x0c, 0x0d, 0x0e
+; MidiVoiceNote_PartAssignsD1D2: 15 TRACK ASSIGN values (0xF1A0[track]) that MidiVoiceNote_Dispatch accepts for
+;   sequencer events 0xD1 and 0xD2 (low status bits 1 and 2): 0, 2, 1, 8, 9, 10, 11, 3, 4, 5, 6, 7, 17, 18, 19 -- the
+;   sound parts, without DRUMS 12, CHORD 13, APC 14, CONTROL 15 and RHYTHM 16; a track with another value cancels the
+;   event (0x91B5 = 0xFF). Same bytes as MidiVoiceNote_LookupMode0_Data (event 0xD0); MidiVoiceNote_LookupMode3_Data
+;   (0xD3) adds 12 and 15. Basis: readers + bytes.
 MidiVoiceNote_PartAssignsD1D2:
 	.byte	0x00, 0x02, 0x01, 0x08, 0x09, 0x0a, 0x0b, 0x03
 	.byte	0x04, 0x05, 0x06, 0x07, 0x11, 0x12, 0x13

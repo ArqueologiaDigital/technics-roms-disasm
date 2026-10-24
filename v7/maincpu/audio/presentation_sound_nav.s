@@ -74,6 +74,13 @@ GroupBoxProc_SSFItemLoop:
 	cp	hl, 65535
 	jr	nz, GroupBoxProc_SSFItemLoop	; -> 0xF99EAD
 	jrl	GroupBox_ReturnZero	; -> 0xF9A119
+	; --- Event 0x1e0006e: Cancel/Back handler ---
+	; Iterates the 17-entry widget structure array at 0x0274e8
+	; (28-byte entries: stride = (ix*8 - ix)*4 = ix*28).
+	; If event param (XWA) is nonzero: activates entries and sends 0x1c00026.
+	; If event param is zero: deactivates entries and sends 0x1c00026.
+	; Each entry has: byte[0]=active, byte[1]=enabled, dword[2]=workspace,
+	; dword[6]=event(0x1c00007), dword[10]=focus_id, offset[14]=secondary.
 GroupBox_CancelBack:
 	ld iz, 0:i3
 
@@ -254,6 +261,8 @@ GroupBoxProc_Case5:
 GroupBoxProc_Case6:
 	call UIRender_RetStub2
 	jrl GroupBox_ReturnZero
+; GroupBoxProc_OnRefreshApTask: EVT_REFRESH_AP_TASK: disables the dial, clears DIAL_FOCUS, InitializeTimer, then sends
+;   EVT_REFRESH_SW_EVENT to itself.
 GroupBoxProc_OnRefreshApTask:
 	ld wa, 0:i3
 	calr SetDialEnable
@@ -824,6 +833,7 @@ GetEditSwPoint_Join:
 	ld	(xbc), wa
 	ldw	(xde), 239
 	ret
+; GetEditSwPoint handler: default (value=0xa0/0x78)
 EditSwParam_Default:
 	ldw (xbc), 0xa0
 	ldw (xde), 0x78
@@ -854,6 +864,8 @@ SetWallPaper_CaseData:
 SetWallPaper_Loop:
 	ld	wa, 1:i3
 	jr	SetWallPaper_Join
+; SetWallPaper_MenuWallBorder: Border type 2: wallpaper 2 when the WallMenu setting (0x340FC) is set, else wallpaper
+;   1.
 SetWallPaper_MenuWallBorder:
 	cpw	(0x0340fc:24), 0
 	jr	z, SetWallPaper_Loop

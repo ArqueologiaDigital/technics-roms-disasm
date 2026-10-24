@@ -61,6 +61,9 @@ SeqPlay_ReadyStateTransition:
 ; `ld xiy, SMF_HeaderMagic_MThdMTrk` (header chunk) and
 ; `ld xiy, SMF_HeaderMagic_MTrk` (track chunk).
 SMF_HeaderMagic_MThdMTrk:	.ascii	"MThd"
+; SMF_HeaderMagic_MTrk: The Standard MIDI File track-chunk ID "MTrk", compared byte by byte with the next 4 bytes read
+;   from the floppy file before a track is loaded; the MThd ID sits right before it (SMF_HeaderMagic_MThdMTrk). Basis:
+;   readers + bytes.
 SMF_HeaderMagic_MTrk:	.ascii	"MTrk"
 
 SeqTrack_ResetAllChannelSlots:
@@ -1578,6 +1581,11 @@ SeqTrack_ChannelMapIdentity:
 ; channel is remapped in place.  TYPED 2026-09-25 (lane seqeng); was spelled
 ; nop / normal / push sr / pop sr / max / halt / ei 7 / ... / .byte 0x09.
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f
+; SeqTrack_ChannelMapSwap10And16: 16-byte MIDI-channel map: identity with entries 9 and 15 swapped (channels 10 and
+;   16), used instead of SeqTrack_ChannelMapIdentity when mode byte 0x11F8 is not 1; the readers remap the event's
+;   channel byte (0x1075) or a channel index through it. Same 10<->16 exchange as the TRACK ASSIGN default map
+;   VoiceChannels_LoadPartMapAndInitPan_Data, which puts code 12 (DRUMS) on channel 10 instead of 16. Basis: readers +
+;   bytes.
 SeqTrack_ChannelMapSwap10And16:
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0f, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
 
@@ -5101,6 +5109,9 @@ VoiceSynth_ConditionalUpdate_StoreAndCall:
 	ld	(4235:16), 127
 	call VoiceChannel_UpdateWithPitch
 	ret
+; VoiceSynth_ApplyLogCurve: Returns A = SndParam_LogCurve128[A] (via SndParam_CompactLookupStub, which returns it in
+;   L). Basis: callers + body -- the four VoiceSynth/VoiceParam callers pass the value from RAM 0x0FAD through it only
+;   when mode byte 0x11F8 = 2, before storing or using it.
 VoiceSynth_ApplyLogCurve:
 	call	SndParam_CompactLookupStub
 	ld	a, l

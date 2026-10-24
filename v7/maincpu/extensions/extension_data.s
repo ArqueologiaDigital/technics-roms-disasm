@@ -529,6 +529,8 @@ AcMstStyleAlpGridBoxProc_EventOffsets:	; read by AcMstStyleAlpGridBoxProc via Ma
 	.short	MasterSetup_InheritedProc_Fallback - AcMstStyleAlp_Boundary_Skip
 	.short	AcMstStyleAlpGridBoxProc_OnLswData - AcMstStyleAlp_Boundary_Skip
 	.short	AcMstStyleAlpGridBoxProc_OnLswData - AcMstStyleAlp_Boundary_Skip
+; MstStyleAlp_AppendPadChar_Str_Blank1: String " " read by its owner: Strncat(buf, this, 1): one pad space. Basis:
+;   readers + bytes.
 MstStyleAlp_AppendPadChar_Str_Blank1:
 	aligned_string " "
 MstStyleAlp_OverflowStr_Str_Blank32:	aligned_string "                                "
@@ -549,6 +551,8 @@ AcMstStyle1GridBoxProc_EventOffsets:	; read by AcMstStyle1GridBoxProc via MstSty
 	.short	MstStyle_InheritedProc_Fallback - MstStyle_EventDispatch
 	.short	MstStyle_ForwardToChild - MstStyle_EventDispatch
 	.short	MstStyle_ForwardToChild - MstStyle_EventDispatch
+; MstStyle1Grid_PadLeft_Loop_Str_Blank1: String " " read by its owner: MstStyle1Grid_PadLeft_Loop: Strncat(buf, this,
+;   1). Basis: readers + bytes.
 MstStyle1Grid_PadLeft_Loop_Str_Blank1:
 	aligned_string " "
 MstStyle1Grid_OutOfRange_Str_Blank16:	aligned_string "                "
@@ -570,6 +574,8 @@ AcMstStyle1SubGridBoxProc_EventOffsets:	; read by AcMstStyle1SubGridBoxProc via 
 	.short	MstStyle1Sub_InheritedFallback - MstStyle1_EventDispatch
 	.short	MstStyle1Sub_ForwardToChild - MstStyle1_EventDispatch
 	.short	MstStyle1Sub_ForwardToChild - MstStyle1_EventDispatch
+; MstStyle1SubGrid_PadLeft_Loop_Str_Blank1: String " " read by its owner: MstStyle1SubGrid_PadLeft_Loop: Strncat(buf,
+;   this, 1). Basis: readers + bytes.
 MstStyle1SubGrid_PadLeft_Loop_Str_Blank1:
 	aligned_string " "
 MstStyle1SubGrid_OutOfRange_Str_Blank16:	aligned_string "                "
@@ -602,6 +608,8 @@ AcMstStyle2GridBoxProc_EventOffsets:	; read by AcMstStyle2GridBoxProc via MstSty
 	.short	MstStyle2_InheritedFallback - MstStyle1Page_EventDispatch
 	.short	MstStyle2_ForwardToChild - MstStyle1Page_EventDispatch
 	.short	MstStyle2_ForwardToChild - MstStyle1Page_EventDispatch
+; MstGrid2_PadLeft_LoopA_Str_Blank1: String " " read by its owner: MstGrid2_PadLeft_LoopA: Strncat(buf, this, 1).
+;   Basis: readers + bytes.
 MstGrid2_PadLeft_LoopA_Str_Blank1:
 	aligned_string " "
 MstGrid2_OutOfRange_LowCol_Str_Blank32:
@@ -633,6 +641,8 @@ AcTchSensGridBoxProc_EventOffsets:	; read by AcTchSensGridBoxProc via MstStyle2_
 	.short	TchSens_InheritedFallback - MstStyle2_EventDispatch
 	.short	AcTchSensGridBoxProc_OnLswData - MstStyle2_EventDispatch
 	.short	AcTchSensGridBoxProc_OnLswData - MstStyle2_EventDispatch
+; TchSensGridCheck_OnLswData_Str_Fmt3d_3: String "%3d" read by its owner: Sprintf_Locked format. Basis: readers +
+;   bytes.
 TchSensGridCheck_OnLswData_Str_Fmt3d_3:
 	aligned_string "%3d"
 TchSensGridCheck_OnLswData_Str_ON:
@@ -812,6 +822,8 @@ PmExpFilter_Repaint_Str_ON_OFF:
 PmExpFilter_DrawCellBank1_Str_Fmts:	.byte	0x25, 0x73, 0x00, 0xff
 PmExpFilter_DrawCellBank1_Str_PAGE_2_3:	aligned_string "PAGE 2/3"
 PmExpFilter_DrawCellBank2_Str_Fmts:	.byte 0x25, 0x73, 0x00, 0xff
+; PmExpFilter_DrawCellBank2_Str_PAGE_3_3: String "PAGE 3/3" read by its owner: Strcpy source; sibling
+;   PmExpFilter_DrawCellBank1_Str_PAGE_2_3. Basis: readers + bytes.
 PmExpFilter_DrawCellBank2_Str_PAGE_3_3:
 	aligned_string "PAGE 3/3"
 AcPmExpFilterGridBoxProc_EventOffsets:	; read by AcPmExpFilterGridBoxProc via PmemPageCtl_EventDispatch (AcPmExpFilterGridBoxProc_EventOffsets)
@@ -919,6 +931,7 @@ DispTimeSetGridCheck_EventOffsets:	; read by DispTimeSetGridCheck via DispTimeSe
 	.short	DispTimeSet_ReturnZero - DispTimeSet_EventDispatch
 	.short	DispTimeSetGridCheck_OnLswData - DispTimeSet_EventDispatch
 	.short	DispTimeSetGridCheck_OnLswData - DispTimeSet_EventDispatch
+; IvPageOverWr_GetName_Str_PAGE: String "PAGE" read by its owner: Strcpy source. Basis: readers + bytes.
 IvPageOverWr_GetName_Str_PAGE:
 	aligned_string "PAGE"
 MssName_EventDispatch_Str_Memory_data:	aligned_string "Memory data "
@@ -955,6 +968,8 @@ PmBkNameFunc_CaseTable:
 	.short	PmBkName_DataBytes - PmBkName_EventDispatch
 	.short	PmBkNameFunc_OnGetLargeStep - PmBkName_EventDispatch
 	.short	PmBkName_EventDispatch - PmBkName_EventDispatch
+; GmOnOffFunc_Str_Empty: String "" read by its owner: Sprintf_Locked format on EVT_GET_LSW_STRING: an empty string.
+;   Basis: readers + bytes.
 GmOnOffFunc_Str_Empty:	.byte	0x00, 0xff
 VariScreen_HandlePaint_Str_SOUND:	.byte	0x53, 0x4f, 0x55, 0x4e, 0x44, 0x00
 VariScreen_DrawNameString_Str_Fmtd:		.byte	0x25, 0x64, 0x3a, 0x00
@@ -1217,6 +1232,8 @@ SplitNoteStr_DFlat:	aligned_string "D~a0"
 ; -----------------------------------------------------------------------------
 SplitNoteStr_C:	aligned_string "C "
 	; 0xED1BAA = AcFreeSplit_OctaveDigitTable: octave-digit pointers, index = note / 12
+; AcFreeSplit_OctaveDigitTable: 11 pointers to one-digit octave strings indexed by note / 12: "0", "0", "0", "1".."8"
+;   (octave = note / 12 - 2, floored at 0), for the SPLIT<%s%s> label. Basis: readers + bytes.
 AcFreeSplit_OctaveDigitTable:
 	.long OctaveDigitStr_0B
 	.long OctaveDigitStr_0C
@@ -1248,6 +1265,9 @@ AcFreeSplit_ValueChanged_Str_Blank10:			aligned_string "          "
 AcFreeSplit_LookupNoteLabel_Str_SPLIT_Fmts_Fmts:	aligned_string "SPLIT<%s%s>"
 AcFreeSplit_CheckSecondKey_Str_Blank10:			aligned_string "          "
 AcFreeSplit_LookupSecondNote_Str_SPLIT_Fmts_Fmts:	aligned_string "SPLIT<%s%s>"
+; AcTranspose_KeyNameTable: 12 pointers to key names for the TRANSPOSE label, indexed by the transpose value 0..11 =
+;   G, Ab, A, Bb, B, C, Db, D, Eb, E, F, F# (5 = C = no transposition, shown blank). ParamStr_Table_07 sits at its
+;   entry 1. Basis: readers + bytes.
 AcTranspose_KeyNameTable:
 	.long KeyScaleNoteStr_G
 ParamStr_Table_07:
@@ -2631,6 +2651,9 @@ ENCODER_LUT_EXPRESSION:
 	.byte 0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f
 	.byte 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f
 	; MIDI_ProcessChangedChannels, group 1: flags 0x8F3A & ~0x8F3C
+; PanelLed_PendingGroup1Handlers: Panel-LED update handlers of request group 1: {u16 bit, u32 handler} list (0xFFFF
+;   end) run once for the bits pending in 0x8F3A and not held in 0x8F3C, after which 0x8F3A is cleared; each handler
+;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup1Handlers:
 	.short 0x0001
 	.long MIDI_ProcessChangedChannels_Data_Target0
@@ -2651,6 +2674,9 @@ PanelLed_PendingGroup1Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 2: 0x8F3E & ~0x8F40
+; PanelLed_PendingGroup2Handlers: Panel-LED update handlers of request group 2: {u16 bit, u32 handler} list (0xFFFF
+;   end) run once for the bits pending in 0x8F3E and not held in 0x8F40, after which 0x8F3E is cleared; each handler
+;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup2Handlers:
 	.short 0x0001
 	.long MidiChanged_ProcessGroup2_Data_Target0
@@ -2675,6 +2701,9 @@ PanelLed_PendingGroup2Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 3: 0x8F42 & ~0x8F44
+; PanelLed_PendingGroup3Handlers: Panel-LED update handlers of request group 3: {u16 bit, u32 handler} list (0xFFFF
+;   end) run once for the bits pending in 0x8F42 and not held in 0x8F44, after which 0x8F42 is cleared; each handler
+;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup3Handlers:
 	.short 0x0001
 	.long SndParam_DecrLookup_Via0300
@@ -2703,6 +2732,9 @@ PanelLed_PendingGroup3Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MIDI_ProcessChangedChannels, group 4: 0x8F46 & ~0x8F48
+; PanelLed_PendingGroup4Handlers: Panel-LED update handlers of request group 4: {u16 bit, u32 handler} list (0xFFFF
+;   end) run once for the bits pending in 0x8F46 and not held in 0x8F48, after which 0x8F46 is cleared; each handler
+;   sets or clears LED bits in the LED row image. Basis: readers + bytes.
 PanelLed_PendingGroup4Handlers:
 	.short 0x0001
 	.long CtrlPanel_SyncBit0_From8F5C
@@ -2711,10 +2743,16 @@ PanelLed_PendingGroup4Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 1: 0x8F3C
+; PanelLed_HeldGroup1Handlers: Panel-LED handlers of request group 1 run on every pass for the bits held in 0x8F3C
+;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF (empty). Basis:
+;   readers + bytes.
 PanelLed_HeldGroup1Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 2: 0x8F40
+; PanelLed_HeldGroup2Handlers: Panel-LED handlers of request group 2 run on every pass for the bits held in 0x8F40
+;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF. Basis: readers
+;   + bytes.
 PanelLed_HeldGroup2Handlers:
 	.short 0x0040
 	.long CtrlPanel_SetResBit0_ViaLookup4
@@ -2725,6 +2763,9 @@ PanelLed_HeldGroup2Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 3: 0x8F44
+; PanelLed_HeldGroup3Handlers: Panel-LED handlers of request group 3 run on every pass for the bits held in 0x8F44
+;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF. Basis: readers
+;   + bytes.
 PanelLed_HeldGroup3Handlers:
 	.short 0x0004
 	.long CtrlPanel_SetResBit7_ViaLookup4C
@@ -2735,6 +2776,9 @@ PanelLed_HeldGroup3Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
 	; MidiChannel_DispatchChanged, group 4: 0x8F48
+; PanelLed_HeldGroup4Handlers: Panel-LED handlers of request group 4 run on every pass for the bits held in 0x8F48
+;   (set by CtrlPanel_IndicatorDispatch, not cleared here); {u16 bit, u32 handler} list ending 0xFFFF (empty). Basis:
+;   readers + bytes.
 PanelLed_HeldGroup4Handlers:
 	.short 0xffff	; end of list
 	.long 0xffffffff
@@ -2793,8 +2837,12 @@ ExtData_VoiceParam_DispatchBytecode_CaseTable:
 	.short	SndParamF9A541_ResBit7_Code_Epilogue - ExtData_VoiceParam_DispatchBytecode_ModeMsp
 	.short	ExtData_VoiceParam_DispatchBytecode_ModeSndArg - ExtData_VoiceParam_DispatchBytecode_ModeMsp
 	.short	ExtData_VoiceParam_DispatchBytecode_Case18 - ExtData_VoiceParam_DispatchBytecode_ModeMsp
+; BeatLed_ThreeBeatMasks: START/STOP BEAT LED masks for a three-beat cycle: beat counter (0x416) & 7 -> 1, 2, 4, 1, 2,
+;   4 (BEAT 1-3), used when (0x433) is 3 or 6. Basis: readers + bytes.
 BeatLed_ThreeBeatMasks:
 	.byte 1, 2, 4, 1, 2, 4
+; BeatLed_FourBeatMasks: START/STOP BEAT LED masks for a four-beat cycle: beat counter (0x416) & 3 -> 1, 2, 4, 8 (BEAT
+;   1-4), used when (0x433) is neither 3 nor 6. Basis: readers + bytes.
 BeatLed_FourBeatMasks:
 	.byte 1, 2, 4, 8, 1, 2, 4, 8
 UIState_ProcessExtendedMode_CaseTable:
@@ -2806,6 +2854,8 @@ UIState_ProcessExtendedMode_CaseTable:
 	.short	UIState_ProcessExtendedMode_Case5 - UIState_ProcessExtendedMode_Cases
 	.short	UIState_ProcessExtendedMode_Case5 - UIState_ProcessExtendedMode_Cases
 	.short	UIState_ProcessExtendedMode_Case7 - UIState_ProcessExtendedMode_Cases
+; CtrlPanel_SingleBitMaskTable: 32 x u32 single-bit masks, entry k = 1 << k, returned in XHL by
+;   CtrlPanel_LookupIndicatorEntry. Basis: readers + bytes.
 CtrlPanel_SingleBitMaskTable:
 	.long 0x00000001, 0x00000002, 0x00000004, 0x00000008
 	.long 0x00000010, 0x00000020, 0x00000040, 0x00000080
@@ -3300,6 +3350,8 @@ PanelTlv_CompanionByPart:
 Audio_InitFuncTable:
 	.long Audio_InitAllDefaults
 	.long Audio_ReinitToneGenAndOutput
+; Audio_ResetAfterErrorVector: Slot 2 of Audio_InitFuncTable, the pointer to
+;   Audio_ResetAfterPayloadError; called through it after a received block. Basis: readers + bytes.
 Audio_ResetAfterErrorVector:
 	.long Audio_ResetAfterPayloadError
 	.long Audio_FullReinitWithPreset
@@ -3320,8 +3372,13 @@ Audio_ResetAfterErrorVector:
 	; +0x890: one 6-byte record.  BitmapTable_ProcessEntry (0xFC7A6A) takes
 	; index*6 and reads +0 with `cpw (xwa), 0x50`, +2 (at +0x892) as a
 	; command byte for PanelTlv_PayloadOfTag, and +3, +4, +5.
+; PanelMem_FixupRecords: One 6-byte panel-memory fixup record {u16 memory (0x50 = all 80), u8 TLV tag 0x43, u8 payload
+;   offset 1, u8 value 0x3C, u8 clear mask 0x7F}: Display_ProcessBitmapTable sets payload[1] of tag 0x43 to (b & 0x80)
+;   | 0x3C in each of the 80 panel memories (0x1ED400, 960 bytes each). Basis: readers + bytes.
 PanelMem_FixupRecords:
 	.short 0x0050
+; PanelMem_FixupTagColumn: The TLV-tag byte (+2) of the panel-memory fixup records, read as index * 6 + this and
+;   passed to PanelTlv_PayloadOfTag (tag 0x43). Basis: readers + bytes.
 PanelMem_FixupTagColumn:
 	.byte 0x43, 0x01, 0x3c, 0x7f
 	; +0x896: 12 jump offsets.  ExtData_ToneParam_DispatchHandler (0xFC7D77):
@@ -3366,14 +3423,21 @@ ExtData_ToneParam_AltBody_CaseTable:
 ExtData_ToneParam_MultiChannel_Data:
 	.byte 1, 1, 2, 3
 	; +0x8D6: 4 bytes, indexed by (RAM 0xFD02) & 3 in ExtData_Voice_MixedHandler.
+; SplitPoint_LedMaskByPreset: SPLIT POINT LED masks by split preset (0xFD02) & 3: 0 -> none, 1 -> 1, 2 -> 2, 3 -> 4,
+;   stored to 0x8F58, whose bits 0-2 SndParam_MaskShiftMerge_8F58 puts into bits 4-6 of LED row 4 (0x8F1C). Basis:
+;   readers + bytes.
 SplitPoint_LedMaskByPreset:
 	.byte 0, 1, 2, 4
 	; +0x8DA: 26 bytes, 0..24 then 0xFF, read by CtrlPanel_BuildIndicatorBitmask (0xFC8A7E).
+; CtrlPanel_BitIndexIdentityMap: Identity map 0..24 then 0xFF: CtrlPanel_BuildIndicatorBitmask turns a record's byte
+;   +1 (or byte +190) into a bit number through it before CtrlPanel_LookupIndicatorEntry. Basis: readers + bytes.
 CtrlPanel_BitIndexIdentityMap:
 	.byte 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
 	.byte 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0xff
 	; +0x8F4: 20 bytes, a channel remap read with `ld a, (xrr+rr)` by
 	; VoiceChannels_InitPanFromPreset; its result goes to PanelTlv_PayloadOfTag.
+; SeqTrack_AssignToPanelTag: 20-byte map from a sequencer track's assign value (0xF1A0[track]) to the panel TLV tag of
+;   that part's record, passed to PanelTlv_PayloadOfTag. Basis: readers + bytes.
 SeqTrack_AssignToPanelTag:
 	.byte 0, 2, 1, 7, 8, 9, 10, 11, 4, 5, 6, 3, 15, 21, 21, 25, 20, 12, 13, 14
 ReverbPreset_Table:
@@ -3520,10 +3584,14 @@ Display_CopyAndRenderBitmaps_Str_HK:	.byte	0x48, 0x4b
 ;   +0x6CC {u32 0x00FFFFFF, u32 0}: one EMPTY 8-byte hash slot, stamped over
 ;          the whole {key, record pointer} table at RAM 0x34100 by
 ;          SndParam_InitHashFillLoop.
+; SndParam_ClearRecordTemplate: 12 zero bytes copied (6 words, ldirw) over a 12-byte sound-parameter work record at
+;   0x96D4, 0x96E0, 0x96EC, ... 0x978C by 16 SndParam_* routines. Basis: readers + bytes.
 SndParam_ClearRecordTemplate:
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 SndParam_RW_Fail_Data:
 	.byte 0x00, 0x00, 0x00, 0x00
+; SndParam_EmptyHashSlot: One empty 8-byte slot {u32 SNDPARAM_HASH_EMPTY_KEY, u32 0} stamped over every slot of the
+;   sound-parameter hash table by SndParam_InitHashTable. Basis: readers + bytes.
 SndParam_EmptyHashSlot:
 	.long SNDPARAM_HASH_EMPTY_KEY, 0x00000000
 ; ---------------------------------------------------------------------------

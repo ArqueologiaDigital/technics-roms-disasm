@@ -76,6 +76,12 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	SeqPlay_CheckStartConditions
 UIStateEvt_VoiceParamHandler_Return:
 	ret
+; Seq_FindRhythmTrack: Finds the RHYTHM track: the first of the 16 tracks whose TRACK ASSIGN value (0xF1A0[t]) is 16;
+;   when its bit is set in the track mask 0xF19E and bit 7 of 0xF250[3*t] is set, returns W = t + 1, stores it in
+;   0x0D56 and sets 0x0D54 bit 0 and 0x287B bit 2, which make AccPedal_CheckBitAndUpdate /
+;   Scoop_EventHandler_MenuSwitch take the measure lengths from that track; otherwise clears both flags and returns W
+;   = 0. Basis: callers + body -- UIStateEvt_VoiceParamHandler runs it before AccWrap_PlayModeDispatch / SeqBuf_Init
+;   when the sequencer starts; value 16 is RHYTHM in both track-assign name tables.
 Seq_FindRhythmTrack:
 	ld	xix, 0xf1a0
 	xor	bc, bc
@@ -362,6 +368,13 @@ DispatchHandler_ClearActiveFlag:
 PlayMode_InitFlagBlock:
 	call	PlayMode_ArmStartCountdown
 	ret
+; PlayMode_ArmStartCountdown: Once per arming ((0x0D34) = 0): sets (0x0D34) = 1, sets bit 2 of 0x28AC and loads the
+;   playback countdown (0x1144) = 10, which CDlikeSwitch_PlaybackTimer (main-loop tick) counts down -- at 5 it
+;   restarts the accompaniment and at 0 starts the transport (CDlike_ResetPlaybackState) on the medley-play titles
+;   120/122. Basis: callers + body -- PlayMode_InitFlagBlock, the activate-state case 0 of SqMdlyPlyTtlFunc and
+;   DkMdlyPlyTtlFunc, is its only caller; PlayMode_StartAndSendCommand acts only when (0x0D34) = 1 and the countdown
+;   has reached 0. Twins: SongMode_InitFlagBlock_Helper, PartFormat_InitFlagBlock_Helper,
+;   PlayModeStop_InitFlagBlock_Helper.
 PlayMode_ArmStartCountdown:
 	cp (3380:16), 0
 	jr	nz, PlayMode_ArmStartCountdown_Return
@@ -369,6 +382,10 @@ PlayMode_ArmStartCountdown:
 	call	PlayMode_LoadStartCountdown
 PlayMode_ArmStartCountdown_Return:
 	ret
+; PlayMode_LoadStartCountdown: Sets bit 2 of 0x28AC and loads the playback countdown (0x1144) = 10. Basis: callers +
+;   body -- PlayMode_ArmStartCountdown calls it once per arming; CDlikeSwitch_PlaybackTimer counts 0x1144 down (at 5
+;   it restarts the accompaniment, at 0 starts the transport on titles 120/122), SeqRestart_CheckAndDispatch and
+;   SeqRestart_SendPlaybackNotify act only while 0x28AC bit 2 is set, and PlayMode_DispatchAndClearBit2 clears it.
 PlayMode_LoadStartCountdown:
 	or (10412:16), 4
 	ld	(4420:16), 10
@@ -538,6 +555,11 @@ SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlyDoc_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is
+;   left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyDocTtlFunc_OnTitleOld calls it;
+;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
+;   transport).
 DpMdlyDoc_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
@@ -691,6 +713,10 @@ PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlyPd_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is
+;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
+;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
+;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
 DpMdlyPd_DisarmStartCountdown:
 	ld	(3380:16), 0
 	ret
@@ -753,6 +779,10 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4
 	ld	(4420:16), 10
 	ret
+; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
+;   activation arms it again; PlayMode_SendCommand6C starts the transport only while the flag is 1. Basis: callers +
+;   body -- DpMdlySmfTtlFunc_OnTitleOld calls it.
 DpMdlySmf_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PartFormat_StartPlayback_Return3
@@ -802,8 +832,16 @@ PlayModeStop_ClearFlagBlock:
 	ret
 	ret
 	ret
+; DpMdlySmfLyrTtl_NullRet: Empty routine (`ret`): DpMdlySmfLyrTtl_Dispatch calls it instead of the screen re-
+;   initialisation and DpMdlySmfTtl_Dispatch_Helper when PREVIOUS_TITLE is not 108 (TT_DKDPSMF). Basis: callers + body
+;   -- its only caller is the register-saving call on DpMdlySmfLyrTtl_Dispatch's not-108 branch; the body is a single
+;   `ret` (this file's X_NullRet convention: PlayMode_NullRet, PartFormat_NullRet).
 DpMdlySmfLyrTtl_NullRet:
 	ret
+; DpMdlySmfLyr_DisarmStartCountdown: When the TT_DPMDLYSMFLYR title (0x76) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 so the next activation arms the countdown again. Basis:
+;   callers + body -- DpMdlySmfLyrTtlFunc_OnTitleOld calls it; same body as DpMdlySmf_DisarmStartCountdown, the SMF
+;   title's twin, whose arming side is PlayModeStop_InitFlagBlock_Helper.
 DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PlayMode_SendCommand6C_Return
@@ -1428,6 +1466,9 @@ SetWall_ReturnZero:
 	ret
 
 ; SqTrAsPsTtl case F
+; CDlike_ExitModeUnlessKeepTitle: On leaving a play title: keeps the CD-like play mode when the new title is
+;   DKDPSMF/DKDPDOC/DKDPPD, DPSMF, DPSMFLYR, DPMDLYSMF, DPMDLYSMFLYR, DKMDLY or SQMDLY, else
+;   CDlike_ExitModeAndRestore. Basis: its ten callers (phase-3 cases) + the CURRENT_TITLE byte map.
 CDlike_ExitModeUnlessKeepTitle:
 	ld	a, (CURRENT_TITLE:16)
 	extz	wa

@@ -2371,6 +2371,11 @@ SndParam_BatchUpdate_Data_Join:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
+; SndParam_DispatchPackedEvent: Loads the 4-byte parameter event at XWA into C, B, E, D and runs MIDI_DispatchCC on it
+;   (handler chosen by byte 0 from the 192-entry MidiDispatchCC_HandlerTable; BC/DE kept at 0x964C/0x964E), preserving
+;   XDE/XHL/XIX/XIZ. Basis: callers + body -- SndParam_PackAndWrite packs {field +4, field +5, value & 127, value >> 7
+;   & 127} into a stack record and passes it here; SndParam_WriteFieldDirect_Data, SndParam_WriteFieldSub_Data and
+;   SndParam_BatchUpdate_Data do the same with their own packed records.
 SndParam_DispatchPackedEvent:
 	ld	c, (xwa)
 	ld	b, (xwa+1)

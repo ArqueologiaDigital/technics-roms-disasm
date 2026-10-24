@@ -285,6 +285,8 @@ TitleFunc_ActionDispatch:
 	lda xwa, (TitleFunc_ActionDispatch_Str_TitleNew:24)
 	calr FDTest_PrintDiag
 	jrl TitleFunc_Return
+; TestTitleFunc_OnTitleOld: EVT_ACTIVATE_STATE phases 2..7 print "Title new/old/Inactivate/Activate/INTERUPT/INTERUPT
+;   RETURN"; the comments in test_init.s / fd_test_code.s that give these strings to EVT_SW_IN 0..6 are stale.
 TestTitleFunc_OnTitleOld:
 	lda xwa, (TestTitleFunc_OnTitleOld_Str_TitleOld:24)
 	calr FDTest_PrintDiag
@@ -326,6 +328,8 @@ TitleFunc_LifecycleTable:
 	calr FDTest_PrintDiag
 	call TitleFunc_LifecycleTable_Helper
 	jr TitleFunc_Return
+; TitleFunc_LifecycleDispatch_OnStopFddTest: Switch 1 on the FDD test title: stops the switch-2 test loop timer and
+;   prints STOP FDD TEST.
 TitleFunc_LifecycleDispatch_OnStopFddTest:
 	ld xwa, EVT_SW_IN
 	push xwa
@@ -339,6 +343,8 @@ TitleFunc_LifecycleDispatch_OnStopFddTest:
 	calr FDTest_PrintDiag
 	ld wa, 0:i3
 	jr TitleFunc_Return
+; TitleFunc_LifecycleDispatch_OnFddTestLoop: Switch 2 on the FDD test title: one FDD test pass, then re-arms a timer
+;   that posts switch 2 again.
 TitleFunc_LifecycleDispatch_OnFddTestLoop:
 	lda xwa, (TitleFunc_LifecycleDispatch_OnFddTestLoop_Str_START_FDD_TEST_LOOP:24)
 	calr FDTest_PrintDiag
@@ -358,11 +364,15 @@ TitleFunc_LifecycleDispatch_OnListDirectory:
 	calr FDTest_PrintDiag
 	calr FDListDirectory
 	jr TitleFunc_Return
+; TitleFunc_LifecycleDispatch_OnFormat2dd: Switch 4 on the FDD test title: formats a 2DD disk and labels it TEST_HAMA
+;   (RegHamaTitle1_Entry).
 TitleFunc_LifecycleDispatch_OnFormat2dd:
 	lda xwa, (TitleFunc_LifecycleDispatch_OnFormat2dd_Str_Debug_Test:24)
 	calr FDTest_PrintDiag
 	calr RegHamaTitle1_Entry
 	jr TitleFunc_Return
+; TitleFunc_LifecycleDispatch_OnFormat2hd: Switch 5 on the FDD test title: formats a 2HD disk and labels it
+;   TESTHAMA2HD (RegHamaTitle2_Entry).
 TitleFunc_LifecycleDispatch_OnFormat2hd:
 	lda xwa, (TitleFunc_LifecycleDispatch_OnFormat2hd_Str_Debug_Test:24)
 	calr FDTest_PrintDiag
@@ -609,6 +619,8 @@ LoadExtROM_JumpEntry:
 	lda xwa, (0x027ed2:24)
 	jp (xhl)
 
+; Xapr_GetPresentFlag: Returns L = XAPR_PRESENT_FLAG (RAM 0x3DD04): 1 when an extension ROM with the "XAPR" id was
+;   found at 0x280000. Basis: callers + body -- the panel AA event-15 handlers and FileIO_DiskRemoved branch on L.
 Xapr_GetPresentFlag:
 	ld l, (XAPR_PRESENT_FLAG:24)
 	ret
@@ -634,6 +646,9 @@ Xapr_InitPhase2_NullRet:
 Xapr_InitPhase3_NullRet:
 	ret
 
+; Xapr_CallFrameHandler: Main-loop hook: when XAPR_PRESENT_FLAG is set, calls the extension ROM's second entry vector
+;   0x280010 (HD-AE5000: jp HDAE5000_Frame_Handler). Basis: callers + body -- MainLoop_SequencerPhase calls it on
+;   every pass.
 Xapr_CallFrameHandler:
 	cp (XAPR_PRESENT_FLAG:24), 0x00
 	ret z

@@ -1727,6 +1727,9 @@ NoteEditFunc_CaseTable:
 ;   pointer); SngSelFunc_OnGetRamString (0xF2FF45, pushw far pointer)
 ; -----------------------------------------------------------------------------
 NoteEditFunc_CaseTable_Strings:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x38B4, 0x6
+; SngSelFunc_OnGetRamString_Str_Fmt2d: "%2d" format: SngSelFunc_OnGetRamString prints the song number (RAM 0xFFE3 + 1)
+;   with it after "SONG" for EVT_GET_RAM_STRING. Basis: readers + bytes -- Sprintf_Locked format argument; bytes 25 32
+;   64 00.
 SngSelFunc_OnGetRamString_Str_Fmt2d:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x38BA, 0x4
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] EntGrid_PostMainEvent_Table
@@ -3564,6 +3567,11 @@ Bitmap_Dredt0d:	.incbin "includes/generated/naka_widget_descriptors.bin", 0xE800
 ; WidgetData_DrawbarPositionTable[106].
 ; -----------------------------------------------------------------------------
 WidgetData_DrawbarPositionTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x13618, 0x16
+; Seq_TrackAssignPartRecordPtrs: 21 x u32 RAM addresses, indexed by a TRACK ASSIGN part code (RAM 0xF1A0[track],
+;   0..20): the 26-byte panel part record of that part (0xF9B6 + 26k = PanelTlv_PayloadByTag[k]); codes 13-16 and 20
+;   (no part record, 16 = RHYTHM) point at 0xF9B6. Basis: readers + bytes -- BmDrEdit_TestPartTableEntry (no caller
+;   found) loads entry [0xF1A0[RAM 0x2965]] and tests the record's byte 0; the code -> k mapping is the one
+;   SMF_PartRecordOffsetByTrackAssign gives as 0x36 + 26k offsets.
 Seq_TrackAssignPartRecordPtrs:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1362E, 0x54
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqPlay_SaveAndPrepareState_Table
@@ -4775,8 +4783,20 @@ SeqPart_VelCurveData_Table_6:	.incbin "includes/generated/naka_widget_descriptor
 ; SeqPart_VelCurveData_Table_7[22].
 ; -----------------------------------------------------------------------------
 SeqPart_VelCurveData_Table_7:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1403E, 0x4
+; SeqPart_QtzGrid12_ZoneStarts: 8 x u8 lower edges {90, 6, 18, 30, 42, 54, 66, 78} of the quantize zones of the
+;   12-tick grid: zone e = positions [start[e], end[e]) (zone 0 wraps), stored in RAM 9794 next to the upper edge from
+;   SeqPart_VelCurveData_Table_3 in RAM 9792. Basis: readers + bytes -- SeqPart_VelocityCurveCalc_QtzGrid12 picks zone
+;   e with the bounds 6/18/30/42/54/66/78/90 on position RAM 9784 and copies entry [e] of both tables.
 SeqPart_QtzGrid12_ZoneStarts:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x14042, 0x8
+; SeqPart_QtzGrid32_ZoneStarts: 3 x u8 lower edges {80, 16, 48 (+ 0xFF)} of the quantize zones of the 32-tick grid:
+;   zone e = positions [start[e], end[e]) (zone 0 wraps), stored in RAM 9794 next to the upper edge from
+;   SeqPart_VelCurveData_Table_4 in RAM 9792. Basis: readers + bytes -- SeqPart_VelocityCurveCalc_QtzGrid32 picks zone
+;   e with the bounds 16/48/80 on position RAM 9784 and copies entry [e] of both tables.
 SeqPart_QtzGrid32_ZoneStarts:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1404A, 0x4
+; SeqPart_QtzGrid16_ZoneStarts: 6 x u8 lower edges {88, 8, 24, 40, 56, 72} of the quantize zones of the 16-tick grid:
+;   zone e = positions [start[e], end[e]) (zone 0 wraps), stored in RAM 9794 next to the upper edge from
+;   SeqPart_VelCurveData_Table_5 in RAM 9792. Basis: readers + bytes -- SeqPart_VelocityCurveCalc_QtzGrid16 picks zone
+;   e with the bounds 8/24/40/56/72/88 on position RAM 9784 and copies entry [e] of both tables.
 SeqPart_QtzGrid16_ZoneStarts:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x1404E, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqPart_VelZoneLookup_Table_2
@@ -5037,6 +5057,9 @@ FDC_Format2HD_FatHead:	.incbin "includes/generated/naka_widget_descriptors.bin",
 ; Readers (claims_lint.py unread-claims, 2026-10-02): FileIO_ReadFreeSpaceViaFAT (0xF5279B, pushw
 ;   far pointer); FileIO_ReadFreeSpaceViaFAT (0xF527A1, pushw far pointer)
 ; -----------------------------------------------------------------------------
+; FileIO_ReadFreeSpaceViaFAT_Str_d: Open-mode string "d" (NUL) that FileIO_ReadFreeSpaceViaFAT passes to FileOpen with
+;   path "A:\" to read the disk's FAT for the free-space count. Basis: readers + bytes -- FileOpen's second argument;
+;   bytes 64 00; sibling FindFirst_OpenDir_Str_d.
 FileIO_ReadFreeSpaceViaFAT_Str_d:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x1429E, 0x2
 FileIO_ReadFreeSpaceViaFAT_Str_A:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x142A0, 0x4	; "A:\\"
 ; -----------------------------------------------------------------------------
@@ -5071,6 +5094,9 @@ GetDiskFreeSpace_CaseTable:
 ; Readers (claims_lint.py unread-claims, 2026-10-02): FileIO_ReadVolumeLabelEntry (0xF527FC, pushw
 ;   far pointer); FileIO_ReadVolumeLabelEntry (0xF52802, pushw far pointer)
 ; -----------------------------------------------------------------------------
+; FileIO_ReadVolumeLabelEntry_Str_d: Open-mode string "d" (NUL) that FileIO_ReadVolumeLabelEntry passes to FileOpen
+;   with path "A:\" before reading the volume-label directory entry. Basis: readers + bytes -- FileOpen's second
+;   argument; bytes 64 00.
 FileIO_ReadVolumeLabelEntry_Str_d:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x142B2, 0x2
 FileIO_ReadVolumeLabelEntry_Str_A:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x142B4, 0x4	; "A:\\"
 ; -----------------------------------------------------------------------------
@@ -5108,6 +5134,9 @@ GetVolumeLabel_CaseTable:
 ;   pointer); PathInfo_BuildAndOpen (0xF528CA, pushw far pointer); FileIO_ParseLoop_CheckChar
 ;   (0xF52937, pushw far pointer); and 3 more
 ; -----------------------------------------------------------------------------
+; PathInfo_BuildAndOpen_Str_A: Drive prefix "A:\" (NUL) that PathInfo_BuildAndOpen Strcat's into its empty path buffer
+;   before the file name, then opens the result with "+wb". Basis: readers + bytes -- Strcat source; bytes 41 3A 5C
+;   00; siblings FileIO_ReadFreeSpaceViaFAT_Str_A / FileIO_ReadVolumeLabelEntry_Str_A.
 PathInfo_BuildAndOpen_Str_A:				.incbin "includes/generated/naka_widget_descriptors.bin", 0x142C6, 0x4
 PathInfo_BuildAndOpen_Str_wb:				.incbin "includes/generated/naka_widget_descriptors.bin", 0x142CA, 0x4	; "+wb"
 FileIO_ParseLoop_CheckChar_Str_Backslash:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x142CE, 0x2	; "\\"
@@ -5456,6 +5485,10 @@ AccTone_LookupByProgram_Table_2:	.incbin "includes/generated/naka_widget_descrip
 ; AccTuning_ReadAndApplyOffset_Table[116].
 ; -----------------------------------------------------------------------------
 AccTuning_ReadAndApplyOffset_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19168, 0x30
+; AccPart_BitToIndexTable: 34 x u8: the one-hot accompaniment-part bit (RAM 0x33D4: 1, 2, 4, 8, 16, 32) -> part index
+;   0..5 (other entries 0, the last 0xFF). Basis: readers + bytes -- both readers index it with the byte at RAM 0x33D4
+;   and use the result to index a per-part word table; AccStyle_SetupPartAddresses sets 0x33D4 to 1, 2, 4, 8, 16, 32
+;   for the six parts.
 AccPart_BitToIndexTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19198, 0x22
 AccTone_InlineBytecodeData_Data_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x191BA, 0x22
 ; -----------------------------------------------------------------------------

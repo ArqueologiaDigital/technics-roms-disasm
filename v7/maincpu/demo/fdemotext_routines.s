@@ -77,6 +77,10 @@ FDemoText_ByteData_VoiceProbeC:
 	ld	wa, (xix+wa)
 	lda	xix, (FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:24)
 	jp	t, (xix+wa)
+; FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll: Cases 1 and 2 of FDemoText_ByteData_VoiceProbeC (SWBTWR
+;   codes 0x44-0x46, changed payload byte +1/+2): sets bit 6 of RAM 0x247EC, which makes
+;   FDemoText_ProcessOutputChannels request a partial resend of every active part. Also the switch's offset base.
+;   Basis: callers + body.
 FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:
 	set	6, (0x247ec:24)
 	ret
@@ -2447,6 +2451,12 @@ FDemoText_TextDispatch_Skip12:
 	pop	xiz
 	lda	xsp, (xsp+206)
 	ret
+; FDemoText_ResetLayoutState: Resets the feature-demo page layout: marks all 40 x 60 cells of the occupancy map at RAM
+;   0x251DA free (0x54), zeroes the cursor (0x25B3A x/y) and the depths of the <FONT> font stack (0x25B3E), colour
+;   stack (0x25B60) and <CENTER> stack (0x25B72), and refills their 8 entries with the defaults 5, 0x00FF and 1.
+;   Basis: callers + body -- the <ACT> tag handler calls it on an opening tag before showing PlainScreen and
+;   PresentationControl and drawing the wall; the FONT, /FONT, CENTER, /CENTER handlers push and pop those stacks and
+;   FDemoText_CalcTextExtent scans the 0x54 cells.
 FDemoText_ResetLayoutState:
 	lda	xbc, (0x0251da:24)
 	ld	xwa, xbc

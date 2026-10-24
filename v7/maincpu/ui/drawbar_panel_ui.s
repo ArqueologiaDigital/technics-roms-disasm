@@ -276,6 +276,7 @@ ComSetGridCheck_OnLswData_Loop:
 	ld	iy, bc
 	sla	iy, 2
 	ld	xwa, (xiz)
+	; cp xwa, (xix+iy)
 	cp	xwa, (xix+iy)
 	jr	z, ComSetGridCheck_OnLswData_Skip3
 	inc	1, bc
@@ -360,6 +361,7 @@ ComSetGridCheck_OnLswData_Join3:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	ComSetGrid_SendEventReturn
+; ComSetGridCheck event handler dispatch
 ComSetGrid_EventHandler:
 	lda xde, (xsp + 4)
 	ld xwa, (xsp + 22)
@@ -1884,6 +1886,7 @@ PmemOutL_ColumnParamDisplay:
 
 ; PmemOutLGridCheck return
 
+; PmemOutLGridCheck return
 PmemOutL_GridCheck_Return:
 	call SendEvent
 
@@ -3265,6 +3268,7 @@ CtlMsgGridCheck_Loop:
 	ld	iy, ix
 	add	iy, wa
 	ld	xwa, (xiz)
+	; cp xwa, (xhl+iy)
 	cp	xwa, (xhl+iy)
 	jr	nz, CtlMsgGridCheck_Skip2
 	lda	xde, (xsp+20)
@@ -3498,6 +3502,7 @@ MidiSetup_TtlCase4:
 	ld	xbc, AcCtlMsgGrid_Show_Table
 	call	DrawStringCentered
 	jrl	MidiPart_ReturnZeroJmp
+; MidiSetup title case 5
 MidiSetup_TtlCase5:
 	ld xwa, (xsp + 32)
 	ld xbc, (xsp + 28)
@@ -3933,6 +3938,7 @@ AcMidiPartGridBoxProc_OnLswData:
 	ld	xbc, (xsp+28)
 	ld	xde, (xsp+24)
 	jr	MidiSetup_GridBoxCase3
+; MidiSetup grid box case 2
 MidiSetup_GridBoxCase2:
 	ld xwa, (xsp + 32)
 	call GetViewInstance
@@ -4272,6 +4278,7 @@ MidiPartGridCheck_Skip12:
 	ld	iz, iy
 	inc	4, iz
 	ld	xwa, (xix)
+	; cp xwa, (xhl+iz)
 	cp	xwa, (xhl+iz)
 	jr	nz, MidiPartGridCheck_Skip13
 	ld	xwa, (xsp+4)
@@ -4293,6 +4300,7 @@ MidiPartGridCheck_Skip12:
 MidiPartGridCheck_Skip13:
 	inc	8, iy
 	ld	xwa, (xix)
+	; cp xwa, (xhl+iy)
 	cp	xwa, (xhl+iy)
 	jr	nz, MidiPartGridCheck_Skip15
 	ld	xwa, (xsp+4)
@@ -5292,6 +5300,7 @@ LswLeftHold_CopyAndReturn:
 	inc	8, xsp
 	ld	xhl, xiz
 	jr	LswLeftHold_PopIzRet
+; IvSdpartProc title case 0
 IvSdpart_TtlCase0:
 	ld xhl, 0x28082
 	jr LswLeftHold_PopIzRet
@@ -11503,6 +11512,8 @@ AcWelcomScreen_RenderBytecode:
 	ld	xbc, EVT_SET_KEEP
 	ld	xde, 0:i3
 	jrl	AcWelcomScreen_DispatchEvent
+; AcWelcomScreen_Select_OpMoveBlit: Welcome-script op 2: blits at the position saved in slot arg (0/1, table 0x03ea0c)
+;   with ClipBlit_Direct, blits at the step's x,y with ClipBlit_Replace, and saves the step in the slot.
 AcWelcomScreen_Select_OpMoveBlit:
 	ld	iz, (xbc+10)
 	cp	iz, 2:i3
@@ -11613,6 +11624,7 @@ AcWelcomScreen_Select_OpDrawGlyphR:
 	ld	xbc, Bitmap_DigitR
 	ldw	de, 16
 	jr	AcWelcomScreen_RenderBytecode_Join
+; AcWelcomScreen_Select_OpDrawGlyphsIn: Welcome-script op 8: draws the letters I and N side by side in colour 255.
 AcWelcomScreen_Select_OpDrawGlyphsIn:
 	lda	xiy, (xbc+4)
 	lda	xix, (xsp+12)
@@ -15756,6 +15768,11 @@ PsMixer_CtlTypeProc8_Return:
 	ret
 PsMixer_CtlTypeProc8_Return2:
 	ret
+; DirmdTitle_SwitchInNullRet: Empty routine (`ret`) that the DirmdTitle emulator's switch-in method calls with WA =
+;   switch number and BC = its bit-7 flag right after posting the trace memo "DirmdTitleESw(%d, %d);" with the same
+;   two values -- the memo names this call, whose body is empty in this build. Basis: callers + body -- its only
+;   caller is DirmdTitle_EmulatorMethods[2] (0xF9AA42), the method DirmdEmulator calls on EVT_SW_IN; the New/Old/Cur
+;   methods tail-jump to the three neighbouring `ret`s.
 DirmdTitle_SwitchInNullRet:
 	ret
 PsMixer_CtlTypeProc8_Return3:
@@ -18154,6 +18171,7 @@ DemoMenu_BuildItemWorkspace:
 	add XWA,XDE
 	ld (XWA),IZ
 	jr t, DemoMenu_BuildItemWorkspace_Post
+; DemoMenu workspace function
 DemoMenu_WorkspaceFunc:
 	ld wa, (xsp + 6)
 	sub wa, 0x9
@@ -18898,6 +18916,7 @@ PresBox_GetText:
 	call	Strcpy
 	inc	8, xsp
 	jrl	AudioCtrl_ReturnZeroJmp
+; AcPresCtrl event case 0
 AcPresentationBoxProc_OnCheckSelected:
 	ld xwa, (xsp + 12)
 	call GetViewInstance

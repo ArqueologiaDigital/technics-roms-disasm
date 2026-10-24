@@ -82,6 +82,10 @@ EffectMode_CopyVoiceParams_Done:
 EffectMode_ByteData_Block1:
 	ldw	(0x8d58:16), 0xffff
 	jrl	EffectMode_CheckTransposeChanged
+; PanelTagA8_ToggleOtpMode: SwbtWr listener of panel event 0xA8, offset 2 bit 0: when the bit turns on it switches
+;   MD_NORMAL -> MD_OTP (0x8D4E := 15), or back to MD_NORMAL if 0x8D4E is non-zero, and from TT_ONETCH / the Music
+;   Stylist titles 0xC1-0xC3, 0xC5 to MD_NORMAL; when it is off with 0x8D4E set it opens TT_MUSICSTYL. Each path posts
+;   EVT_SET_HOLD first. Basis: callers + body.
 PanelTagA8_ToggleOtpMode:
 	cp	(SWBTWR_PAYLOAD_1:16), 2
 	ret	nz
@@ -150,6 +154,10 @@ PanelTagA8_ToggleOtpMode_Skip4:
 EffectMode_ByteData_Block2_Code_Join2:
 	ld	(0x8d4e:16), 0
 	ret
+; PanelTag48_MsaReapply: SwbtWr listener of the style/tempo record 0x48: on a change of byte +0 (style number) -- in
+;   TT_ONETCH it posts UI_PostTimerResetEvent -- or of +7 (with 0x8D52 & 0x28), when LSW 0x401 (M.S.A. mode) is 2 or 3
+;   and 0x400 is non-zero, it latches param 0x28002 into 0x8D54, sets 0xB7E2 bit 7 and re-runs
+;   EffectMode_CheckModeAndReinit. Basis: callers + body.
 PanelTag48_MsaReapply:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 0:i3
@@ -211,6 +219,10 @@ PanelTag48_MsaReapply_Skip4:
 PanelTag48_MsaReapply_Skip5:
 	and	(0x8d52:16), 0xd7
 	ret
+; PanelTag98_MsaReapply: SwbtWr listener of panel record 0x98: on a change of byte +3 with a value whose bits 0-2 are
+;   non-zero, while 0x8D52 & 0x28, when LSW 0x401 (M.S.A. mode) is 2 or 3 and 0x400 is non-zero, it latches param
+;   0x28002 into 0x8D54, sets 0xB7E2 bit 7 and re-runs EffectMode_CheckModeAndReinit; then clears 0x8D52 bits 3 and 5.
+;   Basis: callers + body.
 PanelTag98_MsaReapply:
 	cp	(SWBTWR_PAYLOAD_1:16), 3
 	jr	nz, PanelTag98_MsaReapply_Join
@@ -2034,6 +2046,11 @@ EffectMode_ByteData_DiagEvents_Join:
 	call	ApPostEvent
 	pop qiz
 	ret
+; TEST3FUNC_InitVoicesOnEnter: On entry to the TEST3 title (PREVIOUS_TITLE != CURRENT_TITLE; a re-activation does
+;   nothing) passes (0x4002, 128, 3) to SndParam_LookupByKey -- parameter 0x4002 is tag 0x60 payload+1 bit 7, the
+;   DIGITAL REVERB on/off bit (docs/kn-disk-file-formats.md:469) -- and reinitialises every voice with
+;   Voice_InitializeAll. Basis: callers + body -- TEST3FUNC calls it for EVT_ACTIVATE_STATE state 2 (case 0 of
+;   TEST3FUNC_CaseTable); TEST3 (title 0xF6) is the Wave ROM check screen (technics-docs test-modes.md).
 TEST3FUNC_InitVoicesOnEnter:
 	ld	a, (PREVIOUS_TITLE:16)
 	cp a, (CURRENT_TITLE:16)
@@ -4636,7 +4653,7 @@ MstStyle1Sub_GetNameB_DrawString:
 	lda xde, (xsp + 12)
 	ld xhl, 6:i3
 	push xhl
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	call DrawString
 	jr SeqFile_ReturnZeroJmp
@@ -11457,7 +11474,7 @@ AcPmBkEdit_BankEdit:
 AcPmBkEdit_BankEdit_DrawDiff:
 	ld xbc, 0:i3
 	push xbc
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString (by value), not a pointer
 	pushw 0xf5
 	ld xbc, xde
 	ld xde, xhl

@@ -1606,6 +1606,10 @@ CmpSetGridCheck_CaseTable:
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
 	.short	GridCheck_ReturnZero - GridCheck_Handler0
+; S2cMemNoBox_SectionNameStrPtrs: 30 x u32 string pointers, the style-section names "A-vari1" .. "C-vari4", "A-INT1"
+;   .. "C-END2": AcS2cMemNoBoxProc (style-to-Composer convert screen) Sprintf's entry [(0x398F)] on EVT_PAINT /
+;   EVT_REPAINT and draws it. Entry 0 is the label; PtrTbl_StyleSectShortNames (entry 1) has no reader. Basis: readers
+;   + bytes.
 S2cMemNoBox_SectionNameStrPtrs:	.byte	0x7c, 0xd5, 0xe1, 0x00
 PtrTbl_StyleSectShortNames:
 	.long StrStyleSect_A_Vari2
@@ -1867,6 +1871,10 @@ S2cGridCheck_CaseTable:
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
 	.short	S2c_GridCheck_EventEnc - S2c_GridCheck_DataBlock
+; PsCmpCpFPtnBox_PatternNameStrPtrs: 27 x u32 string pointers, the accompaniment-pattern names (" Vari1 ", Vari2-4,
+;   Intro1/2, Ending1/2, V1-V4 FillIn1/2, Vari1-4, Intro1/2, FillIn1/2, Ending1/2, All): PsCmpCpFPtnBoxProc (Composer
+;   copy, source pattern box) Sprintf's entry [(0x34EF)] on EVT_PAINT / EVT_REPAINT. Entry 0 is the label;
+;   PtrTbl_StylePatternLongNames (entry 1) has no reader. Basis: readers + bytes.
 PsCmpCpFPtnBox_PatternNameStrPtrs:	.byte	0xa8, 0xd9, 0xe1, 0x00
 PtrTbl_StylePatternLongNames:
 	.long StrStylePatt_Vari2b
@@ -2065,6 +2073,9 @@ StrStyleSect2_A_Vari4:	aligned_string "A-vari4"
 StrStyleSect2_A_Vari3:	aligned_string "A-vari3"
 StrStyleSect2_A_Vari2:	aligned_string "A-vari2"
 StrStyleSect2_A_Vari1:	aligned_string "A-vari1"
+; AcCmpRecBox_TrackStateStrPtrs: 3 x u32 string pointers {" ", "REC ", "MUTE"}: AcCmpRecBoxProc shows entry 1 (in
+;   colour 0xF2) when the box's part bit (+36) is set in the Composer record-part byte 0x379B, else entry 2 when its
+;   bit (+37) is set in 0x34F1, else entry 0. Basis: readers + bytes.
 AcCmpRecBox_TrackStateStrPtrs:
 	.long StrTrackBlank
 	.long StrTrackRec
@@ -2229,6 +2240,10 @@ EasyCmpGridCheck_CaseTable:
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
 	.short	EasyCmp_GridCheck_EventCase4 - EasyCmp_GridCheck_DataBlock
+; MspNameBnkFunc_BankNamesInit: Initializer of MspNameBnkFunc's local array: 4 x u32 string pointers {"User1",
+;   "User2", "COMPILE1", "COMPILE2"}, the MSP naming screen's bank-value captions. MspNameBnkFunc copies the 16 bytes
+;   into its frame and Strcpy's entry [value] for the caption; EVT_GET_MAX answers 3, the value lives at RAM 0x7F3E.
+;   Basis: readers + bytes.
 MspNameBnkFunc_BankNamesInit:	.byte	0x52, 0xdf, 0xe1, 0x00
 	.long StrBankShort_User2
 	.long StrBankShort_Compile1
@@ -2337,6 +2352,8 @@ MspRGrpSetGridCheck_CaseTable:
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
 	.short	AudioEvt_GetFocusRetZero_Return - MspRGrpSetGridCheck_DataBlock
+; PsRgpSetBnkBox_CompileBankStrPtrs: 2 x u32 string pointers {"COMPILE BANK:1", "COMPILE BANK:2"}: PsRgpSetBnkBoxProc
+;   Sprintf's entry [(0x7F3D)] on EVT_PAINT / EVT_REPAINT and draws it. Basis: readers + bytes.
 PsRgpSetBnkBox_CompileBankStrPtrs:
 	.long StrCompileBank1
 	.long StrCompileBank2
@@ -2347,6 +2364,10 @@ MspMemBox_ClampValue_Str_MEMORY_Fmt2d:		aligned_string "MEMORY = %2d"
 AcSndArgGrid_BnkDispatch_Str_Fmtd:		.byte 0x25, 0x64
 	.byte 0x00			; padding
 	.byte 0xff			; padding
+; MspPlayModeFunc_ModeNamesInit: Initializer of MspPlayModeFunc's local array: 2 x u32 string pointers {"INSTANT
+;   START", "SYNC TO RHYTHM"}, the MSP play-mode captions. MspPlayModeFunc copies the 8 bytes into its frame and
+;   Strcpy's entry [value]; EVT_GET_MAX answers 1, the value lives at RAM 0x7F3F, and a change is sent as
+;   EVT_MSP_PLY_MD_SET. Basis: readers + bytes.
 MspPlayModeFunc_ModeNamesInit:
 	.long StrInstantStart
 	.long StrSyncToRhythm
@@ -2363,6 +2384,10 @@ MspPlayModeFunc_CaseTable:
 	.short	MspPlayModeFunc_OnGetRamAddress - MspPlayModeFunc_DataBlock
 	.short	MspPlayModeFunc_OnGetMax - MspPlayModeFunc_DataBlock
 	.short	MspPlayModeFunc_DataBlock - MspPlayModeFunc_DataBlock
+; AcSndArgGridBox_RowPartBitsInit: Initializer of AcSndArgGridBoxProc's local array: 5 x u8 {0x01, 0x02, 0x04, 0x08,
+;   0x10} (+ 0xFF pad), the Sound Arranger part-select bit for grid rows 2..6. On INDEX UP / DOWN the proc stores
+;   entry [row - 2] in the selector 0x338E (1 = DRUM part 0x14, 2 = BASS 0x13, 4 / 8 / 16 = ACCOMP1-3 0x10-0x12) and
+;   sends EVT_SET_PT_SEL. Basis: readers + bytes.
 AcSndArgGridBox_RowPartBitsInit:
 	.byte	0x01, 0x02, 0x04, 0x08, 0x10, 0xff
 AcSndArgGridBoxProc_CaseTable:
@@ -2458,6 +2483,11 @@ MSG_ATTENTION_ES:
 MSG_ATTENTION_EN2:	aligned_string "ATTENTION!"	; Duplicate (12 bytes)
 MSG_ATTENTION_ID:	.asciz "Perhatian !"	; Indonesian (12 bytes)
 	; Pointer table at 0xe1e516
+; AttLangCheck_PtrTable: 6 x u32 pointers to the "ATTENTION!" / "ACHTUNG !" / ... / "Perhatian !" message, one per
+;   display-language slot (English, German, French, Spanish, Italian -- which holds the English text again --,
+;   Indonesian): the language table AttLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the
+;   entry of the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables
+;   (AreYouSureLangCheck_PtrTable).
 AttLangCheck_PtrTable:
 	.long MSG_ATTENTION_EN
 	.long MSG_ATTENTION_DE
@@ -2479,6 +2509,11 @@ MSG_ARE_YOU_SURE_ES:
 MSG_ARE_YOU_SURE_EN2:	.asciz "Are You Sure?"	; Duplicate (14 bytes)
 MSG_ARE_YOU_SURE_ID:	.asciz "Apakah yakin akan dihapus ?"	; Indonesian (28 bytes)
 	; Pointer table at 0xe1e596
+; SureLangCheck_PtrTable: 6 x u32 pointers to the "Are You Sure?" / "Sind Sie sicher ?" / ... / "Apakah yakin akan
+;   dihapus ?" message, one per display-language slot (English, German, French, Spanish, Italian -- which holds the
+;   English text again --, Indonesian): the language table SureLangCheck returns for EVT_GET_LANGUAGE_PTR; the
+;   language-text view draws the entry of the current language. Basis: readers + bytes -- named like the other
+;   LangCheck procs' tables (AreYouSureLangCheck_PtrTable).
 SureLangCheck_PtrTable:
 	.long MSG_ARE_YOU_SURE_EN
 	.long MSG_ARE_YOU_SURE_DE
@@ -2500,6 +2535,11 @@ MSG_CUSTOM_SOUND_COPY_ES:
 MSG_CUSTOM_SOUND_COPY_EN2:	.asciz "The Custom sound memories included with this pattern will be copied into the Sound Group memories. Some of the Sound Group memories will be replaced by them. OK?"	; Duplicate (162 bytes)
 MSG_CUSTOM_SOUND_COPY_ID:	.asciz "Custom Sound Memory termasuk dengan Pattern yang akan digandakan kedalam SOUND GROUP MEMORIES. Beberapa Sound Group Memory dikembalikan. OK ?"	; Indonesian (142 bytes)
 	; Pointer table at 0xe1e994
+; SndMemLangCheck_PtrTable: 6 x u32 pointers to the "The Custom sound memories included with this pattern will be
+;   copied into the Sound Group memories. ... OK?" message, one per display-language slot (English, German, French,
+;   Spanish, Italian -- which holds the English text again --, Indonesian): the language table SndMemLangCheck returns
+;   for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes
+;   -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).
 SndMemLangCheck_PtrTable:
 	.long MSG_CUSTOM_SOUND_COPY_EN
 	.long MSG_CUSTOM_SOUND_COPY_DE
@@ -2518,6 +2558,11 @@ MSG_SOUND_GROUP_AFFECTED_ES:	.asciz "Las memorias de los grupos de sonido afecta
 MSG_SOUND_GROUP_AFFECTED_EN2:	aligned_string "Sound Group memories affected:"	; Duplicate (32 bytes)
 MSG_SOUND_GROUP_AFFECTED_ID:	aligned_string "Sound Group memory sudah bekerja :"	; Indonesian (36 bytes)
 	; Pointer table at 0xe1ea88
+; SndMem1LangCheck_PtrTable: 6 x u32 pointers to the "Sound Group memories affected:" message, one per display-
+;   language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian):
+;   the language table SndMem1LangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of
+;   the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables
+;   (AreYouSureLangCheck_PtrTable).
 SndMem1LangCheck_PtrTable:
 	.long MSG_SOUND_GROUP_AFFECTED_EN
 	.long MSG_SOUND_GROUP_AFFECTED_DE
@@ -2539,6 +2584,11 @@ MSG_CUSTOM_SOUND_FULL_ES:
 MSG_CUSTOM_SOUND_FULL_EN2:	.asciz "The Custom sound memory is full.Some sounds which are used by current Custom Rhythms will be deleted. OK?"	; Duplicate (106 bytes)
 MSG_CUSTOM_SOUND_FULL_ID:	.asciz "Custom Sound memory sudah penuh.Beberapa suara (Sounds) yang digunakan dengan Custom Rhythms sekarang akan dihapus. Benar ?"	; Indonesian (124 bytes)
 	; Pointer table at 0xe1ed64
+; MemfulLangCheck_PtrTable: 6 x u32 pointers to the "The Custom sound memory is full.Some sounds which are used by
+;   current Custom Rhythms will be deleted. OK?" message, one per display-language slot (English, German, French,
+;   Spanish, Italian -- which holds the English text again --, Indonesian): the language table MemfulLangCheck returns
+;   for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current language. Basis: readers + bytes
+;   -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).
 MemfulLangCheck_PtrTable:
 	.long MSG_CUSTOM_SOUND_FULL_EN
 	.long MSG_CUSTOM_SOUND_FULL_DE
@@ -2558,6 +2608,10 @@ MSG_CUSTOM_RHYTHMS_AFFECTED_ES:		aligned_string "Los ritmos personalizados afect
 MSG_CUSTOM_RHYTHMS_AFFECTED_EN2:	aligned_string "Custom Rhythms affected:"	; Duplicate (26 bytes)
 MSG_CUSTOM_RHYTHMS_AFFECTED_ID:		.asciz "Custom Rhythm sudah bekerja :"	; Indonesian (30 bytes)
 	; Pointer table at 0xe1ee2c
+; Memful2LangCheck_PtrTable: 6 x u32 pointers to the "Custom Rhythms affected:" message, one per display-language slot
+;   (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian): the language
+;   table Memful2LangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of the current
+;   language. Basis: readers + bytes -- named like the other LangCheck procs' tables (AreYouSureLangCheck_PtrTable).
 Memful2LangCheck_PtrTable:
 	.long MSG_CUSTOM_RHYTHMS_AFFECTED_EN
 	.long MSG_CUSTOM_RHYTHMS_AFFECTED_DE
@@ -2575,6 +2629,11 @@ MSG_INSERT_STYLE_CONVERT_ES:	.asciz "Please Insert the Style Convert Disk!"	; Sp
 MSG_INSERT_STYLE_CONVERT_EN2:	.asciz "Please Insert the Style Convert Disk!"	; Duplicate (38 bytes)
 MSG_INSERT_STYLE_CONVERT_ID:	.asciz "Please Insert the Style Convert Disk!"	; Indonesian (38 bytes)
 	; Pointer table at 0xe1ef42
+; StylCnvLangCheck_PtrTable: 6 x u32 pointers to the "Please Insert the Style Convert Disk!" message, one per display-
+;   language slot (English, German, French, Spanish, Italian -- which holds the English text again --, Indonesian):
+;   the language table StylCnvLangCheck returns for EVT_GET_LANGUAGE_PTR; the language-text view draws the entry of
+;   the current language. Basis: readers + bytes -- named like the other LangCheck procs' tables
+;   (AreYouSureLangCheck_PtrTable).
 StylCnvLangCheck_PtrTable:
 	.long MSG_INSERT_STYLE_CONVERT_EN
 	.long MSG_INSERT_STYLE_CONVERT_DE

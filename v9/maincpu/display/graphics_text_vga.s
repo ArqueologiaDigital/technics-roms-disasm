@@ -85,6 +85,9 @@ TextRender_PopAndReturn:
 	pop xiz
 	lda xsp, (xsp+314)
 	retd 0x8
+; Display_SetBackgroundColor: Sets the graphics background colour word (RAM 0x3EFA2) to WA; text and mono-bitmap
+;   drawing use it for 0 bits (0xF5 = copy the wallpaper pixel). Basis: callers + body -- the four screen-init
+;   sequences call it with WA = 0xF5 next to GraphicsRender_ByteData (foreground colour, 0x3EFA4 = 0xFF).
 Display_SetBackgroundColor:
 	ld (0x03efa2:24), wa
 	ret
@@ -92,6 +95,9 @@ Display_SetBackgroundColor:
 GraphicsRender_ByteData:
 	ld	(0x03efa4:24), wa
 	ret
+; Display_FillPaletteBandFromEntry: Sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC)
+;   and flags a palette upload; runs directly on the draw task, otherwise posts itself to the draw ring. Basis:
+;   callers + body -- screen (re)initialisation calls it with WA = 0xFF.
 Display_FillPaletteBandFromEntry:
 	pushw	iz
 	ld	iz, wa
@@ -115,6 +121,11 @@ Display_FillPaletteBandFromEntry_Epilogue:
 GraphicsRender_ByteData_Code:
 	ld	wa, (xwa+4)
 	jr	Display_FillPaletteBandFromEntry_Impl
+; Display_FillPaletteBandFromEntry_Impl: Immediate body of Display_FillPaletteBandFromEntry: records WA at 0x3EFA6,
+;   sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC) and flags a palette upload
+;   (PALETTE_INDEX_CACHED = 4, PALETTE_UPDATE_FLAG = 1). Basis: callers + body -- Display_FillPaletteBandFromEntry
+;   calls it directly on the draw task and otherwise posts GraphicsRender_ByteData_Code, which jumps here with the
+;   queued WA.
 Display_FillPaletteBandFromEntry_Impl:
 	dec	4, xsp
 	pushw	iz
@@ -134,6 +145,10 @@ Display_FillPaletteBandFromEntry_Impl_Loop:
 	popw	iz
 	inc	4, xsp
 	ret
+; Display_LoadFixedPaletteBands: Loads palette slots 32..63 (GraphicsRender_LowBandColorIndex) and 192..223
+;   (GraphicsRender_PaletteSrc192) from the RGB table and flags a palette update; queued on the draw ring when not
+;   called from the draw task. Basis: callers + body -- the screen-init sequences call it between setting fg/bg
+;   colours and loading slots 64..191 from a selectable table (Display_FillPaletteBandFromEntry).
 Display_LoadFixedPaletteBands:
 	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
 	cp	hl, 0:i3
@@ -231,6 +246,11 @@ GraphicsRender_RetStub:
 GraphicsRender_ShortByteBlock:
 	lda	xbc, (xwa+1)
 	jr	GraphicsRender_ProcessEntries
+; GraphicsRender_StartSingleRecord: Renders the one bound ScreenData record at XWA: sets the end pointer XBC = XWA + 1
+;   and enters GraphicsRender_Start, whose loop stops after that record. Basis: callers + body --
+;   SeGfx_DrawBoundRecord (the single-record wrapper; XIY = record) is its only caller, and SeGfx_DrawBoundList calls
+;   GraphicsRender_Start with an explicit end; GraphicsRender_ShortByteBlock is the same two instructions for the
+;   static-record renderer.
 GraphicsRender_StartSingleRecord:
 	lda	xbc, (xwa+1)
 	jr	t, GraphicsRender_Start
@@ -1487,6 +1507,11 @@ DrawFunc_Init_Join8:
 	pop	xiz
 	lda	xsp, (xsp+268)
 	ret
+; SeGfx_BoundOp06_PrintWord: Bound display-record op 06: prints the 16-bit word at RAM address rec+2 with Sprintf
+;   "%1d"/"%2d"/"%3d" (digits byte rec+9 = 1, 2, else 3) at text cell rec+7 (row = cell / 40, x = (cell % 40) * 8) in
+;   font (rec+6) & 63, through DrawText_QueueOrDirect. Basis: callers + body -- entry 6 of
+;   GraphicsRender_Start_PtrTable (the per-op handler table of bound records) and the SeGfx_BoundOp06 wrapper; same
+;   frame as the op 00 / op 05 printers.
 SeGfx_BoundOp06_PrintWord:
 	lda xsp, (xsp-268)
 	push	xiz
@@ -2260,6 +2285,11 @@ FontGlyph_ByteData:
 	ld	a, (xde+wa)
 	ld	(xbc), a
 	ret
+; Text_GlyphToCharCode: Reverse of FontGlyph_ByteData: finds the character code whose Text_CharGlyphMap entry equals
+;   the byte at (XWA) and stores it at (XBC); 0 and 0x20 are copied unchanged and a byte not in the map becomes 0x20.
+;   Basis: callers + body -- SeMenu_DrawWriteDestName and SeWrtMem_DrawPage run it in place over each of the
+;   16 bytes of a sound name before using the name as text; Text_CharGlyphMap's comment says 'the routine after it
+;   searches it for the reverse'.
 Text_GlyphToCharCode:
 	ld	e, (xwa)
 	cp	e, 32
@@ -4044,7 +4074,7 @@ PmBank_DrawRegionInfo:
 	lda xde, (xsp + 8)
 	ld xhl, 0:i3
 	push xhl
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	call DrawString
 	jrl ToneGen_InitDone
@@ -4134,7 +4164,7 @@ PmBank_OnPaint:
 	ld (xwa + 6), de
 	ld xde, 0:i3
 	push xde
-	pushw 0xff
+	pushw 0xff	; colour pair for DrawString, not a pointer
 	pushw 0xf5
 	ld xde, PmBank_OnPaint_Str_KEY_DOWN_INFORMATION
 	call DrawString
@@ -4300,6 +4330,8 @@ ToneGen_ParamWriteDispatch:
 	pushw	247
 	ld	xde, ToneGen_ParamWriteDispatch_Str_C_key_IC304_305_C_7eB_key_IC306
 	jrl	ToneGen_WriteParamByIndex_Join
+; ToneGen_WriteParamByIndex_DrawOutselCheckItem: CHECK MODE item 1: draws "(2)GENERATOR LSI OUTSEL check" and
+;   "C-key=DIRECT+REV/DSP,C#~7eB-key=REV/DSP" in SelectRect slot 1.
 ToneGen_WriteParamByIndex_DrawOutselCheckItem:
 	inc	8, xiy
 	lda	xix, (xsp+6)
@@ -5195,12 +5227,21 @@ MainSysCtrl_Entry4_CopyBitmaps:
 MainSysCtrl_Entry5_VoiceInit:
 	call Voice_InitBankDataSafe
 	jr t, MainSysControl_PostDispatchFinalize
+; MainSysCtrl_OnInitCurrentPanel: Case 1 of MainSysControl's EVT_SYS_INI switch = item 1 "CURRENT PANEL" of the
+;   INITIAL SETTING list (widget 0x410002): calls MainSysCtrl_ResetCurrentPanel, which validates and re-resolves
+;   the live panel (PanelTlv_ValidateLivePanel, PanelTlv_ResolvePartCompanions, ...). Basis: callers + body.
 MainSysCtrl_OnInitCurrentPanel:
 	call MainSysCtrl_ResetCurrentPanel
 	jr t, MainSysControl_PostDispatchFinalize
+; MainSysCtrl_OnInitPartSetting: Case 2 of MainSysControl's EVT_SYS_INI switch = item 2 "PART SETTING" of the INITIAL
+;   SETTING list (widget 0x410002): calls MainSysCtrl_ResetPartSettings, which copies part records of
+;   SndParamRam_DefaultImage into the live panel 0xF9A0. Basis: callers + body.
 MainSysCtrl_OnInitPartSetting:
 	call MainSysCtrl_ResetPartSettings
 	jr t, MainSysControl_PostDispatchFinalize
+; MainSysCtrl_OnInitMidiSetting: Case 3 of MainSysControl's EVT_SYS_INI switch = item 3 "MIDI SETTING" of the INITIAL
+;   SETTING list (widget 0x410002): calls MainSysCtrl_ResetMidiSettings, which restores bits 0-2 of byte +14 of
+;   each part record from SndParamRam_DefaultImage. Basis: callers + body.
 MainSysCtrl_OnInitMidiSetting:
 	call MainSysCtrl_ResetMidiSettings
 

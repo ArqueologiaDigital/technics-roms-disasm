@@ -9284,6 +9284,8 @@ SeMenu_CompareAndApply_Data6:
 	ld	xix, SeScreenData_0x1452
 	call	SeGfx_DrawStaticList
 	call	SeMenu_CompareAndApply_Data4
+; SeMenu_DrawBreakpointKeyboard: Draws the mini keyboard at (56,139) (SeMenu_DrawKeyboardGraphic) and the fields below
+;   it: params 0-2 (0x660-0x662) as note names, param 3 (0x663) as a number. Basis: callers + body.
 SeMenu_DrawBreakpointKeyboard:
 	ldw	(1734:16), 56
 	ldw	(1736:16), 139
@@ -10288,6 +10290,7 @@ SeMenu_DataBlock_12_Helper:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeTonTon2_DrawStaticScreen:
+	; --- Main: init, XIY/XIX setup, 2 loops, 9 calls (63 bytes) ---
 	call	SeMenu_DrawToneSelectTitle
 	call	SeMenu_PresetManager_Save
 	ld	xiy, SeTonTon2_DrawStaticScreen_Records
@@ -10655,6 +10658,9 @@ SeCtr3_DrawField:
 	ld	xix, SeValText_Long_Hold
 	call	SeGfx_DrawBoundList
 	ret
+; SeGfx_DrawIndexedBoundRecord: Draws bound ScreenData record number A of the pointer table at XIY: XIY = table[A],
+;   then SeGfx_DrawBoundRecord. Basis: callers + body -- all 25 call sites load XIY with a SeScreenData_* pointer
+;   table (and A with an index) right before the call.
 SeGfx_DrawIndexedBoundRecord:
 	extz	xwa
 	xor	w, w
@@ -13533,11 +13539,25 @@ SeTonTon1_Field12_Record:
 ; evidence: bounds at SeTonTon1_FieldRecordPtrs
 SeTonTon1_Field13_Record:
 	sdb_snum	0x066d, 0xff, 0, 0x20, 178*40+34, 2, 0x00
+	; head of the next record, split off at se_screen_f129d1's proven end
+; ** RE-FRAMED 2026-08-30 (lane B4). Was CODE territory. It is a chain of
+; records whose every boundary is confirmed twice over -- once by a length
+; field, once by a pointer from OUTSIDE the span:
+;   0xF12AA6 + 4 (this record's LE32 pointer field) = 0xF12AAA
+;   0xF12AAA + 41 (the ASCII cells)                 = 0xF12AD3  <- 5 refs to start
+;   0xF12AD3 + 76 (19 LE32 pointers)                = 0xF12B1F  <- 2 refs
+;   0xF12B1F + 10 (its own length byte, 0x0a)       = 0xF12B29  <- 1 ref
+;   0xF12B29 + 40 (five 8-byte cells)               = 0xF12B51  <- 2 refs
+;   0xF12B51 + 11 (its own length byte, 0x0b)       = 0xF12B5C  <- the .incbin
+; The last record's trailing LE32 is 0x00F12CE1; the tree framed its 0x00 high
+; byte as a `nop`, and that phantom is what gave run 9 of the reachability work
+; list a STRONG fall-through seed.
 ; bound record (op 0x03), pointed at by the table below/above;
 ; part of the record lists that table bounds
 ; evidence: bounds at SeTonTon1_FieldRecordPtrs
 SeTonTon1_Field0_Record:
 	sdb_box	0x03, 0x065d, 0x0f, 0, 0x05, SeTonTon1_DrawField_SetupPath_Records2
+	; 0xF12AAA: 25 one-character cells (note: no 'T')
 ; string table, 1-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 16 by the record's mask; the table holds 25 cells)
 ; evidence: bound op02 record at SeTonTon1_Field14_Record, bound op02 record at SeTonTon1_Field15_Record, bound op02 record at SeTonTon1_Field16_Record, bound op02 record at SeTonTon1_Field17_Record
@@ -13546,11 +13566,14 @@ SeTonTon1_DrawStaticScreen_Records:
 	.ascii	"I", "J", "K", "L", "M", "N", "O", "P"
 	.ascii	"Q", "R", "S", "U", "V", "W", "X", "Y"
 	.ascii	"Z"
+	; 0xF12AC3: two 4-byte cells -- 0xF12AC3 is referenced from outside
+	; 0xF12ACB: two more 4-byte cells
 ; string table, 4-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 2 by the record's mask; the table holds 4 cells)
 ; evidence: bound op02 record at SeFilEq_RangeGainRecords
 SeScreenData_0x1EE7:
 	.ascii	"LOW ", "HIGH", "MONO", "POLY"
+	; 0xF12AD3: 19 LE32 pointers back into the record stream above
 ; list-boundary table: entry i and i+1 bound list i (19 entries, LE32)
 ; evidence: SeTonTon1_DrawField, SeTonTon1_DrawField_DefaultPath
 SeTonTon1_FieldRecordPtrs:
@@ -13577,6 +13600,12 @@ SeTonTon1_FieldRecordPtrs:
 ; evidence: SeTonTon1_DrawField_SetupPath
 SeTonTon1_DrawField_SetupPath_Records:
 	sd_quad	0x1b, 13, 73, 307, 197
+	; 0xF12B29: five 8-byte cells
+	; |..I.3.e.|
+	; |..I.3.e.|
+	; |..i.3...|
+	; |....3...|
+	; |....3...|
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 16 by the record's mask; the table holds 5 cells; values >= 5 would read past it)
 ; evidence: bound op03 record at SeTonTon1_Field0_Record
@@ -13685,6 +13714,8 @@ SeValText_A_B_To_Z:
 ; evidence: SeTonHyb1_DrawField_SetupPath
 SeTonHyb1_DrawField_SetupPath_Records:
 	sd_quad	0x1b, 61, 118, 252, 180
+	; head of the next record, split off at se_setup_sel2's proven end
+	; tail of the record before se_screen_f12d33, split off at its proven boundary
 ; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08
 ; record's value (pointer field +7; value at most 16 by the record's mask; the table holds 5 cells; values >= 5 would read past it)
 ; evidence: bound op03 record at SeTonHyb1_Records
@@ -14110,7 +14141,13 @@ TuningSys_Param_01:
 	.set	SeScreenData_0x2682, . + 163
 	.set	SeScreenData_0x26AE, . + 207
 	.incbin "includes/generated/se_name_editor.bin", 0x0, 0xAE
+; SePitPit1_SplitValueRecords: The PITCH page's (screen 0x27) RIGHT SPLIT and LEFT SPLIT value fields: bound op-05
+;   signed numbers (value - 8) from RAM 0x670 high nibble at (208,149) and low nibble at (208,189), drawn together for
+;   edit parameter 16. Basis: readers + bytes.
 SePitPit1_SplitValueRecords:	.incbin "includes/generated/se_name_editor.bin", 0xAE, 0x16
+; SePitPit1_PartCursorBox: PITCH page (screen 0x27): bound op-03 box record that highlights the selected part row: RAM
+;   0x660 & 7 indexes SeScreenData_0x27D9 ({13,76..166,104} .. {13,172..166,200}, the four part rows). Entry 0 of the
+;   page's record table. Basis: readers + bytes.
 SePitPit1_PartCursorBox:	.incbin "includes/generated/se_name_editor.bin", 0xC4, 0x16
 ; string table, 8-char cells, indexed by a bound record's value (field +7 of
 ; a bound op 02/07 record; value at most 32 by the record's mask; the table holds 32 cells)
@@ -15212,6 +15249,7 @@ SePitFilEnv2_Field5_Record:
 ; evidence: recptrs at SePitFilEnv2_FieldRecordPtrs
 SePitFilEnv2_Field6_Record:
 	sdb_strxy	0x0669, 0x03, 0, 0x17, SeAmpEnv2_DrawStaticScreen_Records3, 8, 157, 62
+	; tail of the record before se_setup_ctrl_full, split off at its proven boundary
 ; record-pointer table: entry i -> one bound record, drawn with SeGfx_DrawBoundRecord (10 entries, LE32)
 ; evidence: SePitFilEnv2_DrawField
 SePitFilEnv2_FieldRecordPtrs:
@@ -15272,6 +15310,7 @@ SeCtr2_PageFrame:
 SeCtr2_DrawStaticScreen_Records:
 	sd_ctext	0x06, 11, 207*40+23, "1ST 2ND"
 	sd_quad	0x09, 181, 204, 244, 233
+	; tail of the record before se_setup_transport, split off at its proven boundary
 	sd_quad	0x05, 182, 219, 243, 232
 ; static record list (16 records), read by GraphicsRender_ProcessEntries; end SeCtr2_Records
 ; evidence: SeCtr3_DrawStaticScreen
@@ -17104,6 +17143,7 @@ PsNameMemBox_SendNotify:
 	ld	bc, 1:i3
 	ld	de, 2:i3
 	jr	EasyCmp_TtlCase1
+; EasyCmp title dispatch
 EasyCmp_TtlDispatch:
 	pushw 0xf5
 	ld bc, 1:i3
@@ -17304,6 +17344,8 @@ EasyCmp_SetDialEnable:
 	jr EasyCmp_ReturnZeroJmp
 
 ; EasyCmpGridCheck dispatch
+; AcEasyCmpGridBoxProc_OnGetFixedColStr: AcEasyCmpGridBoxProc's MT_GetFixedColStr arm: copies the column-header string
+;   (view +0x3E) into the caller's buffer. Basis: event code + body.
 AcEasyCmpGridBoxProc_OnGetFixedColStr:
 	ld xwa, xiz
 	ld xiz, 0x3e
@@ -17325,6 +17367,9 @@ AcEasyCmpGridBoxProc_CopyFixedHeaderStr:
 	call	Strcpy
 	inc	8, xsp
 	jr	EasyCmp_ReturnZeroJmp
+; EasyCmpGridCheck case 3
+; AcEasyCmpGridBoxProc_PassToApFunc: MT_RequestGridDraw, EV_LSWDATA and EV_RAMDATA: passes the event to the box's
+;   application function (view +70), returns 0.
 AcEasyCmpGridBoxProc_PassToApFunc:
 	ld xwa, xiz
 	call GetViewInstance
@@ -17459,6 +17504,7 @@ EasyCmp_GridCheck_EventEnc_Join:
 	jr	nz, EasyCmp_GridCheck_EventCase2
 	ld	xwa, EasyCmp_GridCheck_EventEnc_Str_OFF
 	push	xwa
+; EasyCmpGridCheck event case 1
 EasyCmp_GridCheck_EventCase1:
 	push	xde
 	call	Sprintf_Locked
@@ -17472,6 +17518,7 @@ EasyCmp_GridCheck_EventCase2:
 	push	xde
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
+; EasyCmpGridCheck event case 3
 EasyCmp_GridCheck_EventCase3:
 	call GetFocusObject
 	ld xwa, xhl
@@ -17530,6 +17577,7 @@ MspNameBnkFunc_OnGetMax:
 MspNameBnkFunc_OnGetRamAddress:
 	lda	xhl, (32418:16)
 	jr	MspNameBnkFunc_Epilogue
+; MspNameBnkFunc dispatch (10-entry, table 0xe1df5c)
 MspNameBnk_Dispatch:
 	cp xde, 0x4
 	jr nc, MspNaming_CleanupExit
@@ -18064,6 +18112,7 @@ MspBnkShow:
 	ld	xbc, EVT_SET_PAGE
 	ld	xde, 1:i3
 	jr	MspBnk_SendEvt7F
+; MspBnkShow_SelectPage2: MSP bank >= 10: switches object 0xC80001 to page 2 unless it already shows it.
 MspBnkShow_SelectPage2:
 	ld xwa, 0xc80001
 	ld xbc, EVT_GET_PAGE_NOW
@@ -18270,18 +18319,24 @@ PsMspBnkNameBoxProc_OnDraw:
 	ld xde, 0:i3
 	jr MspBnk_MainFuncDispatch
 
+; PsMspBnkNameBoxProc_RequestUser2Name: Box kind 1: asks MainMspBnkNameFunc for the user bank 2 name
+;   (EVT_MSP_USR2_NM_GET).
 PsMspBnkNameBoxProc_RequestUser2Name:
 	ld xwa, NAKA_MAINFUNC_MainMspBnkNameFunc
 	ld xbc, EVT_MSP_USR2_NM_GET
 	ld xde, 0:i3
 	jr MspBnk_MainFuncDispatch
 
+; PsMspBnkNameBoxProc_RequestRgp1Name: Box kind 2: asks MainMspBnkNameFunc for the rhythm-group bank 1 name
+;   (EVT_MSP_RGP1_NM_GET).
 PsMspBnkNameBoxProc_RequestRgp1Name:
 	ld xwa, NAKA_MAINFUNC_MainMspBnkNameFunc
 	ld xbc, EVT_MSP_RGP1_NM_GET
 	ld xde, 0:i3
 	jr MspBnk_MainFuncDispatch
 
+; PsMspBnkNameBoxProc_RequestRgp2Name: Box kind 3: asks MainMspBnkNameFunc for the rhythm-group bank 2 name
+;   (EVT_MSP_RGP2_NM_GET).
 PsMspBnkNameBoxProc_RequestRgp2Name:
 	ld xwa, NAKA_MAINFUNC_MainMspBnkNameFunc
 	ld xbc, EVT_MSP_RGP2_NM_GET
@@ -18881,6 +18936,7 @@ AcSndArgGrid_BnkDispatch:
 	ld	xwa, xiz
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
+; AcSndArgGridBnk case 1
 AcSndArgGrid_BnkCase1:
 	ld xhl, 0:i3
 
@@ -18942,6 +18998,7 @@ MspPlayModeFunc_OnGetMax:	; cases 31457347, 31457350
 MspPlayModeFunc_OnGetRamAddress:
 	lda	xhl, (32419:16)
 	jr	MspPlayModeFunc_Epilogue
+; AcSndArgGridBoxProc dispatch (7-entry, table 0xe1e35e)
 AcSndArgGrid_BoxProc:
 	ld xwa, NAKA_MAINFUNC_MspRecTtlFunc
 	ld xbc, EVT_MSP_PLY_MD_SET
@@ -19649,6 +19706,7 @@ PsParaListBoxProc_OnParaDraw:
 	pushw 0
 	pushw 255
 	jr	SndArgGrid_CheckCase1
+; SndArgGridCheck dispatch (7-entry, table 0xe1e36c)
 SndArgGrid_CheckDispatch:
 	ld xhl, (xhl)
 	push xhl
@@ -19721,6 +19779,7 @@ StylCnvStorBnkSel_OnGetMax:
 StylCnvStorBnkSel_OnGetRamAddress:
 	lda	xhl, (14769:16)
 	jr	StylCnvStorBnkSel_Epilogue
+; PsSCTxtBoxProc event dispatch (10-entry, table 0xe1e4bc)
 PsSCTxtBox_EventDispatch:
 	ld xhl, 0:i3
 StylCnvStorBnkSel_Epilogue:
@@ -19864,6 +19923,12 @@ StylCnvStorOkFunc_DataBlock_Join:
 	call	DrawLine
 	inc	8, xsp
 	retd	2
+; PaintArrow_DrawFilled: Paints a solid arrow in the client box XWA with colour BC: direction from the first stack
+;   word (2 and 3 swap x and y; 1 and 3 point the head opposite to 2 and the other values), tail_x_rate DE and
+;   tail_y_rate (second stack word) as percentages of the box width and height; draws head and tail as runs of
+;   parallel lines (StylCnvStorOkFunc_DataBlock, DrawLine with optional x/y swap); retd 4. Basis: callers + body --
+;   PaintArrowProc (the firmware name of StylCnvStorBnk_ProcDataBlock) calls it on EVT_PAINT when the Arrow property
+;   frame_only (+24) is 0, passing color +22, dir +26, tail_x_rate +28, tail_y_rate +30.
 PaintArrow_DrawFilled:
 	lda	xsp, (xsp-30)
 	push	xiz
@@ -20056,6 +20121,10 @@ StylCnvStorOkFunc_DataBlock_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+30)
 	retd	4
+; PaintArrow_DrawOutline: Outline twin of PaintArrow_DrawFilled: same arguments (box XWA, colour BC, tail_x_rate DE,
+;   direction and tail_y_rate on the stack) and the same geometry, but draws only the arrow's edges as single line
+;   segments (StylCnvStorOkFunc_DataBlock -> DrawLine); retd 4. Basis: callers + body -- PaintArrowProc calls it on
+;   EVT_PAINT instead of PaintArrow_DrawFilled when the Arrow property frame_only (+24) is non-zero.
 PaintArrow_DrawOutline:
 	lda	xsp, (xsp-32)
 	push	xiz

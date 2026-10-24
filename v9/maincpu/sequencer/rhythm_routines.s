@@ -524,6 +524,9 @@ Rhythm_InstrMapTable_Default:
 	.byte 5, 0, 0, 1, 1, 6, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 	; +0x31: bit 2 of 0x32F4 set; always used by Rhythm_TranspMod_BaseApply
+; Rhythm_InstrMapTable_D4: Second 49-byte variant of Rhythm_InstrMapTable_Default (RAM 0x32D8, clamped 0..0x2F -> row
+;   of Rhythm_VelLookA_TableLookup_Table), used while bit 2 of 0x32F4 is set, i.e. for the D4 (status 0x94) channel;
+;   Rhythm_TranspMod_BaseApply always uses it. Basis: readers + bytes.
 Rhythm_InstrMapTable_D4:
 	.byte 0, 0, 0, 1, 5, 0, 3, 9, 10, 7, 4, 2, 5, 6, 6, 11
 	.byte 12, 14, 15, 8, 10, 16, 17, 4, 13, 18, 19, 20, 0, 5, 12, 13
