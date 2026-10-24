@@ -142,3 +142,14 @@ hand-port rows kept).
 The "before" `--count` figures were measured on this branch after the renames and before this run
 (the renames themselves add no header); the census figures are the committed
 `docs/coverage/doc-quality-2026-10-24-03.txt`.
+
+## One census figure rose, as expected
+
+`python3 scripts/analysis/doc_quality_census.py --compare` against `doc-quality-2026-10-24-03` reports one
+rise for v7: (b) "(number) operand elsewhere" 28,877 -> 29,059 (+182).  These are the RAM operands
+(`(13690:16)`, `ld (14079:16), 16`) of the instructions this lane spelled from bytes: as `.byte` they
+were not counted at all.  v7 names few RAM variables (`shared/ram_variables.s`); naming them is the RAM
+lane's work (WP17 (a)).  Everything else the census compares fell or held: (a) -186 routines without a
+header, (c) -131 `.Lc_` locals, (d) -124 runs.  The read-only dispatch census
+(`census.py --compare docs/coverage/dispatch-census-2026-10-24-02.json`, maps built in a scratch
+`DISPATCH_CENSUS_DIR`) reports nothing rose.
