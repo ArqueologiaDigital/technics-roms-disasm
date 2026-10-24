@@ -21,7 +21,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-INC = re.compile(r'^\s*\.incbin\s+"(includes/romslices/[^"]+)"\s*$')
+# `[Label:]\t.incbin "includes/romslices/X.bin"[, offset, length]` (the label and the range were added
+# 2026-10-24 for v7's last verbatim slices: the label is kept on its own line)
+INC = re.compile(r'^(?:([A-Za-z_.$][\w.$]*):)?\s*\.incbin\s+"(includes/romslices/[^"]+)"'
+                 r'(?:\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+))?\s*$')
 
 
 def main():
@@ -41,13 +44,18 @@ def main():
         slices = []
         for ln in lines:
             m = INC.match(ln)
-            if m and a.only and not any(o in m.group(1) for o in a.only):
+            if m and a.only and not any(o in m.group(2) for o in a.only):
                 m = None
             if not m:
                 out.append(ln)
                 continue
-            data = open(os.path.join(base, m.group(1)), "rb").read()
-            slices.append(m.group(1))
+            data = open(os.path.join(base, m.group(2)), "rb").read()
+            if m.group(3) is not None:
+                off, size = int(m.group(3), 0), int(m.group(4), 0)
+                data = data[off:off + size]
+            slices.append(m.group(2))
+            if m.group(1):
+                out.append(m.group(1) + ":")
             for k in range(0, len(data), 16):
                 out.append("\t.byte " + ", ".join("0x%02x" % b for b in data[k:k + 16]))
             n += len(data)

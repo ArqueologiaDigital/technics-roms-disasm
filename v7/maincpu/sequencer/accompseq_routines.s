@@ -263,14 +263,14 @@ AccompSeq_AdvanceDone:
 AccompSeq_VRAMHelperData:
 	cp	(0x7d89:16), 128
 	jr	c, AccompSeq_VRAMHelperData_Skip
-	calr	AccompSeq_VRAMHelperData_Helper
+	calr	AccompSeq_GetBlockBase
 	jr	AccompSeq_VRAMHelperData_Return
 AccompSeq_VRAMHelperData_Skip:
 	ld	wa, (32166:16)
 	ld	iy, wa
 AccompSeq_VRAMHelperData_Return:
 	ret	
-AccompSeq_VRAMHelperData_Helper:
+AccompSeq_GetBlockBase:
 	ld wa, (0x7da6:16)
 	and XWA,0x00000fff
 	sla xwa, 8
@@ -562,7 +562,7 @@ AccompSeq_InlineCodeBlock:
 	inc	1, xiy
 	ld	a, (xiy)
 	cp	a, 135
-	jr	nz, AccompSeq_ResetCounters_Return
+	jr	nz, AccompSeq_InlineCodeBlock_Return
 	xor	xhl, xhl
 	ld	hl, (xhl+3)
 	ld	(32166:16), hl
@@ -570,7 +570,7 @@ AccompSeq_InlineCodeBlock:
 	calr	AccompSeq_VRAMHelperData
 	pop	xhl
 	ld	iy, 6:i3
-AccompSeq_ResetCounters_Return:
+AccompSeq_InlineCodeBlock_Return:
 	ret
 AccompSeq_ProcessNoteOn6:
 	ld a, (0x7db8:16)
@@ -931,26 +931,26 @@ AccompSeq_LargeCodeBlock1:
 	ld	(xhl+3), a
 	ld	a, (32188:16)
 	ld	(xhl+4), a
-	calr	AccompSeq_ManualMidi_ClearFlags_Code_Helper
+	calr	AccompSeq_PortaFadeOut_Helper
 	ret
-AccompSeq_ManualMidi_ClearFlags_Code_Helper:
+AccompSeq_PortaFadeOut_Helper:
 	bit	7, e
-	jr	z, AccompSeq_ManualMidi_ClearFlags_Code_Return
+	jr	z, AccompSeq_PortaFadeOut_Return
 	or	d, 16
 	and	e, 127
-AccompSeq_ManualMidi_ClearFlags_Code_Return:
+AccompSeq_PortaFadeOut_Return:
 	ret
 	ld	a, 159:opc
 	ld	w, 127:opc
 	ld	e, 127:opc
-	calr	AccompSeq_ManualMidi_ClearFlags_Code_Helper2
+	calr	AccompSeq_PortaFadeOut_Helper_Helper
 	ret
 	ld	a, 223:opc
 	ld	w, 127:opc
 	ld	e, 127:opc
-	calr	AccompSeq_ManualMidi_ClearFlags_Code_Helper2
+	calr	AccompSeq_PortaFadeOut_Helper_Helper
 	ret
-AccompSeq_ManualMidi_ClearFlags_Code_Helper2:
+AccompSeq_PortaFadeOut_Helper_Helper:
 	pushw	iy
 	ld	xhl, 31312
 	ei	0x06
@@ -976,21 +976,21 @@ AccompSeq_ManualMidi_ClearFlags_Code_Helper2:
 	ld	w, (1076:16)
 	ld	(32198:16), w
 	cp	a, w
-	jr	z, AccompSeq_ManualMidi_ClearFlags_Code_Return2
+	jr	z, AccompSeq_PortaFadeOut_Return2
 	bit	0, (0x7dc3:16)
-	jr	z, AccompSeq_ManualMidi_ClearFlags_Code_Return2
+	jr	z, AccompSeq_PortaFadeOut_Return2
 	and	(0x7dc3:16), 254
 	ld	l, (32196:16)
 	ld	h, (32197:16)
 	ld	a, (32136:16)
 	and	a, (P0FC:8)
 	cp	a, 0:i3
-	jr	nz, AccompSeq_ManualMidi_ClearFlags_Code_Skip
+	jr	nz, AccompSeq_PortaFadeOut_Helper_Skip
 	call	AccompSeq_InitPartFull
-	jr	AccompSeq_ManualMidi_ClearFlags_Code_Join
-AccompSeq_ManualMidi_ClearFlags_Code_Skip:
+	jr	AccompSeq_PortaFadeOut_Join
+AccompSeq_PortaFadeOut_Helper_Skip:
 	call	AccompSeq_ReinitPart
-AccompSeq_ManualMidi_ClearFlags_Code_Join:
+AccompSeq_PortaFadeOut_Join:
 	ei	0x06
 	ld	c, (1045:16)
 	ld	(1130:16), c
@@ -999,7 +999,7 @@ AccompSeq_ManualMidi_ClearFlags_Code_Join:
 	ld	a, (1046:16)
 	ld	(1128:16), wa
 	ei	0x00
-AccompSeq_ManualMidi_ClearFlags_Code_Return2:
+AccompSeq_PortaFadeOut_Return2:
 	ret
 AccompSeq_UpdatePosition:
 	cp (0x7db6:16), 0x00
@@ -1044,41 +1044,41 @@ AccompSeq_LargeCodeBlock2:
 AccompSeq_LargeCodeBlock2_Join:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 9
-	jrl	nz, AccompSeq_ProcessAfterNote_Return
+	jrl	nz, AccompSeq_LargeCodeBlock2_Return
 	ld	a, (SWBTWR_PAYLOAD_3:16)
 	bit	7, a
-	jr	z, AccompSeq_ProcessAfterNote_Skip2
+	jr	z, AccompSeq_LargeCodeBlock2_Skip2
 	calr	AccompSeq_ProcessAfterNote_Helper
 	ld	l, 127:opc
 	ld	h, 3:opc
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	bit	7, a
-	jr	z, AccompSeq_ProcessAfterNote_Skip
+	jr	z, AccompSeq_LargeCodeBlock2_Skip
 	calr	AccompSeq_OutputEvent
-AccompSeq_ProcessAfterNote_Skip:
-	jrl	AccompSeq_ProcessAfterNote_Return
-AccompSeq_ProcessAfterNote_Skip2:
+AccompSeq_LargeCodeBlock2_Skip:
+	jrl	AccompSeq_LargeCodeBlock2_Return
+AccompSeq_LargeCodeBlock2_Skip2:
 	and	a, 63
 	cp	a, 0:i3
-	jr	z, AccompSeq_ProcessAfterNote_Return
+	jr	z, AccompSeq_LargeCodeBlock2_Return
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	and	a, (SWBTWR_PAYLOAD_3:16)
 	and	a, 63
 	cp	a, 0:i3
-	jr	z, AccompSeq_ProcessAfterNote_Return
+	jr	z, AccompSeq_LargeCodeBlock2_Return
 	xor	w, w
 	ld	hl, wa
 	ld	xix, AccompSeq_LowestBitIndex
 	ld	h, (xix+hl)
 	ld	l, (64786:16)
 	cp	l, 17
-	jr	z, AccompSeq_ProcessAfterNote_Return
+	jr	z, AccompSeq_LargeCodeBlock2_Return
 	cp	l, 18
-	jr	z, AccompSeq_ProcessAfterNote_Return
+	jr	z, AccompSeq_LargeCodeBlock2_Return
 	cp	l, 15
 	jr	z, AccompSeq_LargeCodeBlock2_Skip3
 	cp	l, 16
-	jr	nz, AccompSeq_ProcessAfterNote_Skip5
+	jr	nz, AccompSeq_LargeCodeBlock2_Skip5
 AccompSeq_LargeCodeBlock2_Skip3:
 	ld	xix, 2001408
 	cp	l, 16
@@ -1090,21 +1090,21 @@ AccompSeq_LargeCodeBlock2_Skip4:
 	inc	1, h
 	ld	h, (xix+h)
 	cp	l, 14
-	jr	ugt, AccompSeq_ProcessAfterNote_Return
-AccompSeq_ProcessAfterNote_Skip5:
+	jr	ugt, AccompSeq_LargeCodeBlock2_Return
+AccompSeq_LargeCodeBlock2_Skip5:
 	call	Voice_NoteChannelGrid_Lookup
 	cp	h, 0:i3
-	jr	z, AccompSeq_ProcessAfterNote_Return
+	jr	z, AccompSeq_LargeCodeBlock2_Return
 	cp	(32367:16), 0
-	jr	nz, AccompSeq_ProcessAfterNote_Return
+	jr	nz, AccompSeq_LargeCodeBlock2_Return
 	bit	0, (0x7dde:16)
 	jr	z, AccompSeq_LargeCodeBlock2_Skip6
 	calr	AccompSeq_HandleSpecialMode
-	jr	AccompSeq_ProcessAfterNote_Return
+	jr	AccompSeq_LargeCodeBlock2_Return
 AccompSeq_LargeCodeBlock2_Skip6:
 	calr	AccompSeq_OutputEvent
 	call	AccompSeq_ProcessChordChange
-AccompSeq_ProcessAfterNote_Return:
+AccompSeq_LargeCodeBlock2_Return:
 	ret
 AccompSeq_PostNoteProcess:
 	cp h, 0:i3
@@ -1460,39 +1460,39 @@ AccompSeq_WriteMidiToBuffer:
 AccompSeq_WriteMidi_CodeBlock:
 	inc	1, iy
 	cp	iy, bc
-	jr	ule, AccompSeq_WriteMidiToBuffer_Return
+	jr	ule, AccompSeq_WriteMidi_CodeBlock_Return
 	ld	iy, (xhl+0:8)
-AccompSeq_WriteMidiToBuffer_Return:
+AccompSeq_WriteMidi_CodeBlock_Return:
 	ret
 AccompSeq_ProcessAfterNote_Helper:
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	bit 0x07,A
-	jr nz, .Lc_f6e66d
+	jr nz, AccompSeq_ProcessAfterNote_Helper_Skip2
 	and (0x7dde:16), 0xfe
-	jr t, .Lc_f6e6a9
-.Lc_f6e66d:
+	jr t, AccompSeq_ProcessAfterNote_Helper_Return
+AccompSeq_ProcessAfterNote_Helper_Skip2:
 	or (0x7dde:16), 0x01
 	ld a, (0x7e6f:16)
 	cp a, 0:i3
-	jr z, .Lc_f6e682
+	jr z, AccompSeq_ProcessAfterNote_Helper_Skip3
 	ld A, 0x00:opc
 	ld (0x7e6f:16), a
-	jr t, .Lc_f6e6a9
-.Lc_f6e682:
+	jr t, AccompSeq_ProcessAfterNote_Helper_Return
+AccompSeq_ProcessAfterNote_Helper_Skip3:
 	ld a, (0x7d88:16)
 	and A,0x03
 	cp a, 0:i3
-	jr z, .Lc_f6e6a9
+	jr z, AccompSeq_ProcessAfterNote_Helper_Return
 	bit 2, (0x7d8b:16)
-	jr z, .Lc_f6e6a6
+	jr z, AccompSeq_ProcessAfterNote_Helper_Skip
 	bit 7, (0x7d88:16)
-	jr nz, .Lc_f6e6a6
+	jr nz, AccompSeq_ProcessAfterNote_Helper_Skip
 	ldw (0x7dd4:16), 0x0800
 	or (0x7d88:16), 0x80
-	jr t, .Lc_f6e6a9
-.Lc_f6e6a6:
+	jr t, AccompSeq_ProcessAfterNote_Helper_Return
+AccompSeq_ProcessAfterNote_Helper_Skip:
 	calr AccompSeq_CleanupSequence
-.Lc_f6e6a9:
+AccompSeq_ProcessAfterNote_Helper_Return:
 	ret
 AccompSeq_AllNotesOffImpl:
 	ld a, (0x7d88:16)

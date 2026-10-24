@@ -1216,7 +1216,7 @@ FDemoText_RefreshFullDisplay:
 ; call SwbtWr_ReinitOutputBank (v7 addr)
 	call	SwbtWr_ReinitOutputBank
 ; call SwbtWr_CallProcessAll (v7 addr)
-	.byte	0x1d, 0xb2, 0xaa, 0xfd
+	call	SwbtWr_CallProcessAll
 ; call SwbtWr_ReinitOutputBank (v7 addr)
 	call	SwbtWr_ReinitOutputBank
 
@@ -1300,7 +1300,7 @@ FDemoText_GetInstanceID_Loop2:
 	ld	xwa, (xsp+8)
 	cp	xwa, 0
 	jr	ule, FDemoText_GetInstanceID_Skip4
-FDemoText_ByteData_DisplayRefresh_Loop2:
+FDemoText_GetInstanceID_Loop:
 	ld	xbc, xiz
 	ld	xwa, (xsp+4)
 	sll	xwa, 16
@@ -1330,7 +1330,7 @@ FDemoText_GetInstanceID_Skip3:
 	inc	1, xiz
 	ld	xwa, xiz
 	cp	xwa, (xsp+0x8)
-	jr	c, FDemoText_ByteData_DisplayRefresh_Loop2
+	jr	c, FDemoText_GetInstanceID_Loop
 FDemoText_GetInstanceID_Skip4:
 	ld	xwa, 1:i3
 	sub	(xsp+4), xwa
@@ -2833,13 +2833,13 @@ FDemoText_ByteData_LayoutB_Skip:
 	ld	(xsp+4), xhl
 	ld	xwa, (xsp+4)
 	or	xwa, xwa
-	jr	z, FDemoText_RenderTextLine_Skip2
+	jr	z, FDemoText_RenderTextLine_Skip
 	ld	xwa, (xwa+16)
 	lda	xwa, (xwa+14)
 	ld	xwa, (xwa+4)
 	ld	(xsp+2), wa
 	jr	FDemoText_RenderTextLine_Join
-FDemoText_RenderTextLine_Skip2:
+FDemoText_RenderTextLine_Skip:
 	ldw	(xsp+2), 24
 FDemoText_RenderTextLine_Join:
 	ld	xiy, 154426
@@ -2854,7 +2854,7 @@ FDemoText_RenderTextLine_Join:
 	ld	a, (xbc+wa)
 	lda	xbc, (xsp+8)
 	cp	a, 2:i3
-	jr	z, FDemoText_RenderTextLine_Skip3
+	jr	z, FDemoText_RenderTextLine_Skip2
 	cp	a, 1:i3
 	jr	z, FDemoText_RenderTextLine_Join2
 	cp	a, 0:i3
@@ -2868,7 +2868,7 @@ FDemoText_RenderTextLine_Join:
 	sub	hl, wa
 	ld	(xbc), hl
 	jr	FDemoText_RenderTextLine_Join2
-FDemoText_RenderTextLine_Skip3:
+FDemoText_RenderTextLine_Skip2:
 	ld	wa, (xbc)
 	add	wa, hl
 	sub	wa, (xsp+0x2)
@@ -2876,12 +2876,12 @@ FDemoText_RenderTextLine_Skip3:
 FDemoText_RenderTextLine_Join2:
 	ld	xbc, (xsp+4)
 	or	xbc, xbc
-	jr	z, FDemoText_RenderTextLine_Skip4
+	jr	z, FDemoText_RenderTextLine_Skip3
 	lda	xwa, (xsp+8)
 	ld	xbc, (xbc+16)
 	call	DrawBitmapFile
 	jr	FDemoText_RenderTextLine_Join3
-FDemoText_RenderTextLine_Skip4:
+FDemoText_RenderTextLine_Skip3:
 	lda	xwa, (xsp+8)
 	ld	xbc, 0:i3
 	call	DrawBitmap

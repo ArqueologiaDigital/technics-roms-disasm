@@ -3075,6 +3075,12 @@ SeqStep_ByteBlockEA5F:
 	pop xiz
 	inc 2, xsp
 	ret
+; MidiSysEx_RestoreSongSelection: Restores the current song slot 0xFFE3 and the word 0xFFEC from the copies
+;   0xF247/0xF248 that SeqStep_ByteBlockEA5F saved, zeroes the copies, sets word 0x2668 = 1, clears bit 3 of 0x28A7
+;   and tail-jumps to SeqStep_FindAndCompactEntry. Basis: callers + body -- MidiSysEx_FinishSeqXfer, the end step of
+;   the sequencer transfer group, calls it last; its header calls this restoring 'the song selection 0xFFE3/0xFFEC
+;   saved in 0xF247/0xF248'. 0xFFE3 is the current song slot (SqSngName_ApplyNameAndExit indexes SEQ_SONG_SLOTS by
+;   it).
 MidiSysEx_RestoreSongSelection:
 	ld a, (0xf247:16)
 	ld (0x00ffe3:24), a

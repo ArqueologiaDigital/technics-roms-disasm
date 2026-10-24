@@ -2557,11 +2557,11 @@ AccPlay_InitAndStartLoop:
 
 AccPlay_ToggleCodeFragment:
 	cp (0x7e6f:16), 0x00
-	jr z, .Lc_f7273d
+	jr z, AccPlay_ToggleCodeFragment_Code_Return
 	ld (0x7e6f:16), 0x00
 	call TempoRingBuf_ReInitAndRet
 	calr AccPlay_MainUpdateLoop
-.Lc_f7273d:
+AccPlay_ToggleCodeFragment_Code_Return:
 	ret
 AccPlay_CheckAndToggle:
 	bit 1, (0x7e6f:16)
@@ -3674,10 +3674,10 @@ VocalistGridCheck_OnIndexswDown:	; cases 29360152, 29360154
 	ld	bc, de
 	ld	(xhl+2), bc
 	cpw	(xhl), 1
-	jr	z, VocalistGridCheck_Skip2
+	jr	z, VocalistGridCheck_Skip15
 	cpw	(xhl), 2
 	jrl	nz, AcVocalist_ReturnZero
-VocalistGridCheck_Skip2:
+VocalistGridCheck_Skip15:
 	ld	wa, (xhl)
 	sla	wa, 2
 	dec	4, wa
@@ -3979,21 +3979,21 @@ VocalistGrid_CheckDispData:
 	ld	xwa, 11520
 	call	SndParam_LookupReadOnly
 	cp	hl, 16
-	jr	z, VocalistGridCheck_Skip14	; -> 0xF73901
+	jr	z, VocalistGrid_CheckDispData_Skip9	; -> 0xF73901
 	cp	hl, 17
-	jr	nz, VocalistGridCheck_Skip15	; -> 0xF73913
+	jr	nz, VocalistGrid_CheckDispData_Skip10	; -> 0xF73913
 	ld	xwa, VocalistGrid_DispatchData_Str_10
-	jr	VocalistGridCheck_Join10	; -> 0xF73906
-VocalistGridCheck_Skip14:
+	jr	VocalistGrid_CheckDispData_Join7	; -> 0xF73906
+VocalistGrid_CheckDispData_Skip9:
 	ld	xwa, VocalistGrid_DispatchData_Str_11
-VocalistGridCheck_Join10:
+VocalistGrid_CheckDispData_Join7:
 	push	xwa
 	lda	xwa, (xsp+24)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	VocalistGridCheck_Join11	; -> 0xF73930
-VocalistGridCheck_Skip15:
+	jr	VocalistGrid_CheckDispData_Join8	; -> 0xF73930
+VocalistGrid_CheckDispData_Skip10:
 	ld	xwa, 11520
 	call	SndParam_LookupReadOnly
 	inc	1, hl
@@ -4004,7 +4004,7 @@ VocalistGridCheck_Skip15:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-VocalistGridCheck_Join11:
+VocalistGrid_CheckDispData_Join8:
 	call	GetFocusObject
 	ld	xwa, xhl
 	lda	xde, (xsp+12)
@@ -4466,14 +4466,14 @@ VocalistPage1OKFunc_Join:
 
 VocalistPage2OKFunc:
 	cp xbc, EVT_SW_IN
-	jr nz, VocalistPage2OKFunc_Join5
+	jr nz, VocalistPage2OKFunc_Join2
 	ld xwa, NAKA_MAINFUNC_MainVocalistPage2OKFunc
 	ld xbc, EVT_VST_SEND_OK
 	ld xde, 0:i3
 	call MainFuncCall
 
 ; VocalistPage1OK case 1
-VocalistPage2OKFunc_Join5:
+VocalistPage2OKFunc_Join2:
 	ld xhl, 0:i3
 	ret
 
@@ -4503,22 +4503,22 @@ VocalistPage1OK_Dispatch:
 	srl	xwa, 16
 	ld	qwa, 0
 	cp	wa, 0:i3
-	jr	z, VocalistPage2OKFunc_Skip
+	jr	z, VocalistPage1OK_Dispatch_Skip
 	ld	xwa, 119808
 	ld	bc, 1:i3
 	ld	de, 2:i3
-	jr	VocalistPage2OKFunc_Join
-VocalistPage2OKFunc_Skip:
+	jr	VocalistPage1OK_Dispatch_Join4
+VocalistPage1OK_Dispatch_Skip:
 	ld	xwa, 119808
 	ld	bc, 0:i3
 	ld	de, 2:i3
-VocalistPage2OKFunc_Join:
+VocalistPage1OK_Dispatch_Join4:
 	call	SoundParam_NotifyChange
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-VocalistPage2OKFunc_Join2:
+VocalistPage2OKFunc_Join:
 	call	ApPostEvent
 	ld	(32420:16), 1
 	call	MidiSysEx_SendAllParams
@@ -4537,22 +4537,22 @@ VocalistPage1_DispatchData:
 	srl	xwa, 16
 	ld	qwa, 0
 	cp	wa, 0:i3
-	jr	z, VocalistPage2OKFunc_Skip2
+	jr	z, VocalistPage1_DispatchData_Skip3
 	ld	xwa, 98304
 	ld	bc, 1:i3
 	ld	de, 2:i3
-	jr	VocalistPage2OKFunc_Join3
-VocalistPage2OKFunc_Skip2:
+	jr	VocalistPage1_DispatchData_Join2
+VocalistPage1_DispatchData_Skip3:
 	ld	xwa, 98304
 	ld	bc, 0:i3
 	ld	de, 2:i3
-VocalistPage2OKFunc_Join3:
+VocalistPage1_DispatchData_Join2:
 	call	SoundParam_NotifyChange
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jr	VocalistPage2OKFunc_Join2
+	jr	VocalistPage2OKFunc_Join
 MainVocalistPage1OKFunc_Case4:
 	ld	wa, bc
 	call	MidiSysEx_CopyParamToBuffer
@@ -4582,7 +4582,7 @@ VocalistPage2OKFunc_Join4:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jrl	VocalistPage2OKFunc_Join2
+	jrl	VocalistPage2OKFunc_Join
 MainVocalistPage1OKFunc_Case5:
 	ld	wa, bc
 	call	MidiSysEx_CopyParamToBuffer
@@ -4595,7 +4595,7 @@ MainVocalistPage1OKFunc_Case5:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	ld	xde, TITLE_MESAGE
-	jrl	VocalistPage2OKFunc_Join2
+	jrl	VocalistPage2OKFunc_Join
 MainVocalistPage2OKFunc:
 	cp	xbc, EVT_VST_SEND_OK
 	jr	nz, VocalistPage2_ReturnZero

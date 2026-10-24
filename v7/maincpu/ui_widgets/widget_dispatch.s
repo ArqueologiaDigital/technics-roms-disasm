@@ -1375,7 +1375,7 @@ SeqData_ReadFieldByIndex_CaseTable:
 	.short	SeqData_ReadFieldByIndex_Case14 - SeqData_FieldDispatch
 	.short	SeqData_ReadFieldByIndex_Case15 - SeqData_FieldDispatch
 ArpQueue_ComputeAndEnqueue_Data:	.incbin "includes/generated/sound_config_lookup.bin", 0x17F6, 0x2
-; 39 x u32 routine pointers; SeqChan_StepCmd_Field6_Data + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
+; 39 x u32 routine pointers; SeqChan_XferStep_StyleImageBlock1 + 29 (0xFD773E): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
 ; Extent: to the next object's base (loaded by its own reader).
 SeqChan_CommandHandlers:
 	.set SeqChan_CommandDispatch_Table, SeqChan_CommandHandlers
@@ -1428,19 +1428,19 @@ SeqChan_StepCmdHandlers:
 	.long SeqChan_StepCmd_Field4to5
 	.long SeqChan_StepCmd_Field5to6
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field6_Data
+	.long SeqChan_XferStep_StyleImageBlock1
 	.long SeqChan_StepCmd_Field8to9
 	.long SeqChan_StepCmd_Field9to10
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field11_Data
-	.long SeqChan_StepCmd_Field12_Data
+	.long SeqChan_XferStep_CurrentSong
+	.long SeqChan_XferStep_SongSlots
 	.long SeqChan_StepCmd_Field13Write
 	.long SeqChan_ProcessStepCmd
 	.long SeqChan_RetStub_A
 	.long SeqChan_RetStub_B
 	.long SeqChan_ProcessStepCmd
-	.long SeqChan_StepCmd_Field10_Data
-	.long SeqChan_StepCmd_Field13_Data
+	.long SeqChan_XferStep_AccompBlock1
+	.long SeqChan_XferStep_AccompBlock2
 	.long SeqChan_StepCmd_Field20to21
 	.long SeqChan_ProcessStepCmd
 ; 22 x u32 routine pointers; SeqChan_DispatchByType_Data (0xFD78E1): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)`.
@@ -1472,7 +1472,7 @@ SeqChan_WriteFieldHandlers:
 ; Trailing 0xFF (if any) is padding the copy does not take.
 MidiSysEx_BlockTemplate:
 	.byte 0x88, 0x00, 0x18, 0x00, 0x00, 0x00
-; 22 x u32 routine pointers; MidiSysEx_ProcessBlock_Helper11 (0xFD7AAC): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)` -- entries point 0-4 bytes apart into one run of short entry points at 0xFD829B.
+; 22 x u32 routine pointers; MidiSysEx_RecoverAbortedXferGroup (0xFD7AAC): `lda xbc,(<this>); ld xhl, (xbc+wa); call (xhl)` -- entries point 0-4 bytes apart into one run of short entry points at 0xFD829B.
 ; Index: byte +3 of the spare MIDI-sequence buffer (MIDISEQ_SPARE_BUF_PTR), 0..21; each stub is labelled for its destination (scripts/tools/label_sysex_block_ops.py).
 ; Extent: to the next object's base (loaded by its own reader).
 MidiSysEx_BlockHandlers:
@@ -1573,7 +1573,7 @@ SeqData_Handlers:
 	.long MidiPkt_DispatchData_Chan2
 	.long MidiPkt_DispatchData_Chan5
 	.long MidiPkt_DispatchData_Chan6
-	.long MidiPkt_SysExValidator_Data
+	.long SysEx_OnGmSystemOn
 	.long MidiPkt_SysExProcessor_Data
 	.long MidiPkt_SysExBulkTransfer_Data
 ; 4-byte template: SeqData_DispatchLoop_Done (0xFD862C) copies it into its frame (`ld xiy,<this>; ld xix,xsp; ldi85; ldiw` -- 3 bytes).
@@ -1848,31 +1848,31 @@ SysExBulk_SwitchOffsets:
 	.short	MidiPkt_SysExBulkTransfer_Data_Case4 - SysEx_OnRolandGs_UseForRhythmPart
 	.short	MidiPkt_SysExBulkTransfer_Data_Case5 - SysEx_OnRolandGs_UseForRhythmPart
 	.short	MidiPkt_SysExBulkTransfer_Data_Case6 - SysEx_OnRolandGs_UseForRhythmPart
-; 16 x u8 (15, 0..8, 10..14, 9).  MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0):
+; 16 x u8 (15, 0..8, 10..14, 9).  MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0):
 ; `lda xbc,(<this>); ld a, (xbc+wa)`.
 SysExBulk_SlotMap:
 	.byte 0x0f, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x09
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate0:
 	.byte 0x00, 0x00, 0xff, 0x00
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate1:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate2:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate3:
 	.byte 0x00, 0x00, 0xff, 0x00
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate4:
 	.byte 0x00, 0x00, 0x00, 0xff
-; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
+; 4-byte template: MidiPkt_SysExBulkTransfer_Data_Helper2_Join (0xFDA1E0) copies it into its frame (`ld xiy,<this>; lda xix,(xsp+..); ldiw; ldiw` -- 4 bytes, one of six).
 ; Trailing 0xFF (if any) is padding the copy does not take.
 SysExBulk_FrameTemplate5:
 	.byte 0x00, 0x00, 0x00, 0xff
@@ -2036,7 +2036,7 @@ SysEx_Msg_35B2:
 ; ld bc,3; call SeqBuf_FlushNoteOffs` queues the first 3 bytes; the rest is 0xFF padding.
 SysEx_Msg_35B8:
 	.byte 0xf0, 0x50, 0x7e, 0xff
-; MIDI system-exclusive bytes (0xF0 ...) sent by SysEx_SendDispatch_Helper2 + 52 (0xFD72BC): `ld xwa,<this>;
+; MIDI system-exclusive bytes (0xF0 ...) sent by SysEx_FinishBulkSend + 52 (0xFD72BC): `ld xwa,<this>;
 ; ld bc,7; call SeqBuf_FlushNoteOffs` queues the first 7 bytes; the rest is 0xFF padding.
 SysEx_Msg_35BC:
 	.byte 0xf0, 0x50, 0x21, 0x01, 0x28, 0x12, 0xf7, 0xff
@@ -3363,7 +3363,7 @@ SysExRx_TrieRoot:
 ; the byte is stored to RAM 0xBD00.
 MidiRx_ToneParam_ByteMap:
 	.byte 0, 1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 7, 7, 7, 8, 9, 9, 10, 11, 11, 11, 12
-; 36 x u8 (0x20-0x23, 0x0F, one 0xFF).  MidiSeq_PartLookup_Data_Helper3 (0xFD6DCE):
+; 36 x u8 (0x20-0x23, 0x0F, one 0xFF).  MidiPkt_XferShowErrorMessage (0xFD6DCE):
 ; `lda xbc,(<this>); ld (0x7F42),(xbc+hl)` -- copies the indexed byte to RAM.
 MidiRx_PartLookup_ByteMap:
 	.byte 0x23, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21
@@ -7261,7 +7261,7 @@ AudioVoiceHandler_Table:
 ; 32 x u32 RAM addresses of 26-byte (0x1A) part records: 0xF9B6 + 0x1A*i for
 ; i = 0..22, then 0xFD62, 0xFD7C, then 0xF9B6 again.  UIState_ProcessMidiEvent
 ; (0xFDE084), UIStateEvt_DrumAssign_Set (0xFDDA39: `ld a,(xwa+13)`) and
-; UIStateEvt_VolumeMixer_Data_Loop (0xFDDE45: `bitm 0,(xwa+22)`) load an entry
+; UIStateEvt_VolumeMixer_Data_Case4_Loop (0xFDDE45: `bitm 0,(xwa+22)`) load an entry
 ; with `ld xwa, (xbc+wa)` and read record fields.
 PartRecord_RamPtrTable:
 	.long 0x0000f9b6
@@ -7321,13 +7321,13 @@ ParamEdit_WordTable:
 ; 7 x u16 switch offsets.  UIStateEvt_EffectSelect_Data + 69 (0xFDDEF1): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFDE2CF); jp_rr 8,xix,wa` -- targets 0xFDE2CF + offset (no labels yet).
 ParamEdit_SwitchOffsets:
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_ParamEdit_Data_Epilogue - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_TransposeUpdate_Apply_Code - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_ParamEdit_Data_Case4 - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_ParamEdit_Data_Case5 - UIStateEvt_TransposeUpdate_Apply_Code
-	.short	UIStateEvt_ParamEdit_Data_Case6 - UIStateEvt_TransposeUpdate_Apply_Code
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	PanelTag48_UpdateAudioConfig_StyleNumber - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case4 - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case5 - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6 - PanelTag48_UpdateAudioConfig_StyleNumber
 ; 6 x u16 switch offsets.  UIStateEvt_PlayModeGuard_ClearBit_Join4 + 6 (0xFDE15D): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFDE538); jp_rr` -- targets 0xFDE538 + offset (no labels yet).
 VolumeMixer_SwitchOffsets:
@@ -7360,7 +7360,7 @@ AudioInit_SlotOrderMap:
 	.byte 0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b
 	.byte 0x04, 0x05, 0x06, 0x03, 0x0f, 0x15, 0x15, 0xff
 	.byte 0x15, 0x0c, 0x0d, 0x0e
-; 2 x u8 (0x21, 0x22).  NoteMap_AssignAllVoiceLinks (0xFE156D), LinkVoiceSlots_Block,
+; 2 x u8 (0x21, 0x22).  NoteMap_AssignAllVoiceLinks (0xFE156D), NoteMap_FindLinkedSlotByKey,
 ; NoteMap_LookupAndMergeVoice and Voice_LookupTableEntries read it with
 ; `ld a, (xbc+wa)` / `lda xhl,(<this>)`.
 NoteMap_LinkByte_Table:
@@ -8548,13 +8548,13 @@ KeyEvent_SwitchOffsets:
 ; 8 x s16 switch offsets.  HdaeRom_TableEntry2 (0xFEA40A): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEAC14); jp_rr 8,xix,wa` -- targets 0xFEAC14 + offset (no labels yet).
 HdaeRomEntry2_SwitchOffsets:
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_Volume - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
-	.short	HdaeRom_TableEntry2_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
+	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_ReverbSend - PanelTag72_ApplyPartMix_Volume
 ; 15 x s16 switch offsets.  SndParam_ApplySystemParam_SendEqualizerOnOff_Skip14 (0xFEACF7): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEB4EE); jp_rr 8,xix,wa` -- targets 0xFEB4EE + offset (no labels yet).
@@ -9437,7 +9437,7 @@ TmFlash_ByteMap:
 ; SoundData_InitFuncTable; kn5000_v10_program.s's absolute .set
 ; COMM_InitFuncTable names the same address).
 COMM_InitFuncTable:
-	.long CommParam_SetComplete_Block
+	.long COMM_ResetSentValues
 	.long COMM_ResetSentValues_Phase1
 	.long CommParam_SetComplete_Return2
 	.long CommParam_SetComplete_Return3

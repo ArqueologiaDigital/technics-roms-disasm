@@ -88,14 +88,11 @@ SLIDE_STRING_2:
 ; 320-wide offscreen buffer at 0x43C00 (foreground / background palette
 ; index are its two stacked word arguments), then blits that buffer to VRAM
 ; 0x1A0000.  Every caller passes XWA = banner, BC = x = 48 (0x30), DE = y.
-; In v9/v10 each .bin is built from the PNG beside it by
-; scripts/build/mono_images.py (exact round trip, `mono_images.py verify`).
-; v7's eight .bin files under v7/maincpu/images/ are byte-identical to v10's
-; (cmp of all eight pairs, 2026-09-25), but unlike v9/v10 they are committed
-; blobs: mono_images.py does not regenerate v7's copies.  They are NOT
-; included from ../../v10/maincpu/images/ because address_line_map.py (and
-; the converters built on it) assembles its mirror of v7/maincpu with only
-; the mirror as -I, where that path does not resolve.
+; Built from the PNG beside each .bin by scripts/build/mono_images.py (the
+; round trip is exact; `mono_images.py verify`).  v7's eight banners are
+; byte-identical to v10's; they keep their own copies under v7/maincpu/images/
+; because address_line_map.py assembles its mirror of v7/maincpu with only the
+; mirror as -I, where ../../v10/maincpu/images/ does not resolve.
 ; drawn by FLASH_MEM_UPDATE (0xEF4F45) and Flash_CheckAndValidate (0xEF4FBA), at y=80
 Bitmap_1bit_Flash_Memory_Update:	.incbin "images/Bitmap_1bit_Flash_Memory_Update.bin"
 ; drawn by Erase_and_Burn____when_disk_is_valid (0xEF471B), at y=160

@@ -13,7 +13,7 @@ AudioInit_ConfigStereoVoice:
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0x3
-	.byte 0x67, 0x78
+	jr	c, AudioInit_VoiceNotConfigured
 	ld	a, (PART_SELECT:16)
 	extz	wa
 	lda	xbc, (AudioInit_ChannelMapA:24)
@@ -281,7 +281,7 @@ AudioInit_LoadAndConfigure:
 	ld	wa, (0xc4f8:16)
 	bit	4, wa
 	ret	z
-	.byte 0xf1, 0x63, 0xc1, 0x00, 0xff
+	ld	(0xc163:16), 255
 	ret
 AudioInit_MixFallbackConfig:
 	extz	wa
@@ -290,7 +290,10 @@ AudioInit_MixFallbackConfig:
 AudioInit_MixFallbackDefault:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
-AudioInit_MixFallbackDefault_Code:
+; AudioVoiceHandler_NoneSentinel: Never-called copy of AudioInit_MixFallbackDefault (extz wa / jrl
+;   AudioInit_ConfigStereoVoice) whose address is the 'no handler' marker: the four AudioVoiceHandler_Table readers
+;   skip the call when the mode's entry equals it. Basis: callers + body.
+AudioVoiceHandler_NoneSentinel:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
 AudioInit_DrumSaveReturn:
@@ -362,7 +365,7 @@ AudioInit_VoiceParamDone:
 AudioInit_DrumRoutingCheck:
 	ld	de, 0:i3
 	bit	2, (0xc162:16)
-	.byte 0x6e, 0x16
+	jr	nz, AudioInit_ProcessVoiceAssign
 AudioInit_CheckOutputFlags:
 	ld	wa, (0xc4fc:16)
 	and	wa, 0x60
@@ -1164,7 +1167,7 @@ AudioInit_VoiceRoutingTable:
 	ld	de, 0:i3
 	cp	de, 32
 	ret	nc
-AudioInit_RefreshToneBank_Loop:
+AudioInit_VoiceRoutingTable_Loop:
 	ld	wa, de
 	add	wa, wa
 	lda	xbc, (0xc246:16)
@@ -1216,7 +1219,7 @@ AudioInit_RefreshToneBank_Loop:
 	and	(xwa), 0xf
 	inc	1, de
 	cp	de, 32
-	jr	c, AudioInit_RefreshToneBank_Loop
+	jr	c, AudioInit_VoiceRoutingTable_Loop
 	ret
 AudioInit_ConfigureVoiceRouting:
 	andw	(0xc4fa:16), 0xfeff
@@ -1376,7 +1379,7 @@ AudioInit_ConfigurePanning:
 	ld	wa, (0xc4fa:16)
 	bit	2, wa
 	ret	nz
-	.byte 0xc1, 0x63, 0xc1, 0x3f, 0xff
+	cp	(0xc163:16), 255
 	jr	nz, AudioInit_Pan_CheckMode0
 	bit	0, (0xc162:16)
 	jr	nz, AudioInit_Pan_SetStereoLeft
@@ -2330,8 +2333,8 @@ AudioInit_Volume_Return:
 AudioInit_InitPartSendLevels:
 	ld	de, 0:i3
 	cp	de, 161
-	jr	nc, AudioInit_PartConfig_CheckCarry_Skip
-AudioInit_PartConfig_CheckCarry_Loop:
+	jr	nc, AudioInit_InitPartSendLevels_Skip
+AudioInit_InitPartSendLevels_Loop:
 	ld	wa, de
 	add	wa, wa
 	lda	xbc, (0xc58e:16)
@@ -2346,8 +2349,8 @@ AudioInit_PartConfig_CheckCarry_Loop:
 	ld	(xwa), 0
 	inc	1, de
 	cp	de, 161
-	jr	c, AudioInit_PartConfig_CheckCarry_Loop
-AudioInit_PartConfig_CheckCarry_Skip:
+	jr	c, AudioInit_InitPartSendLevels_Loop
+AudioInit_InitPartSendLevels_Skip:
 	ld	(0xc9ce:16), 8
 	ld	(0xc9cf:16), 0
 	ld	(0xc9d0:16), 8

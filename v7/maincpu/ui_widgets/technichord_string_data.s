@@ -4703,10 +4703,30 @@ MultiPass_LoopNext_Str_wb:	.incbin "includes/generated/naka_technichord_strings.
 ; [nakarest] Resource_RegionPad  +0x1a2fe..+0x1a316 (0xea024c, 24 B)
 ; [nakarest] 24 B at 0xea024c: split since into the labelled pieces below; code or data uses Resource_RegionPad, FileIO_ByteBlock_DemoProc1_Str_rb, FileIO_ByteBlock_DemoProc1_Str_rb_2, FileIO_ByteBlock_DemoProc1_Str_rb_3 and 2 more.
 Resource_RegionPad:			.incbin "includes/generated/naka_technichord_strings.bin", 0x1A2FE, 0x4
+; [nakarest] naka_technichord_strings+0x1a302  +0x1a302..+0x1a306 (0xea0250, 4 B)
+; [nakarest] Text (4 B at 0xea0250), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoad_LoadPanelMemBank_Skip4
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb`).
 FileIO_ByteBlock_DemoProc1_Str_rb:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A302, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a306  +0x1a306..+0x1a30a (0xea0254, 4 B)
+; [nakarest] Text (4 B at 0xea0254), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoad_LoadSong_Skip7
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_2`).
 FileIO_ByteBlock_DemoProc1_Str_rb_2:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A306, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a30a  +0x1a30a..+0x1a30e (0xea0258, 4 B)
+; [nakarest] Text (4 B at 0xea0258), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoad_LoadComposerPattern_Skip12
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_3`).
 FileIO_ByteBlock_DemoProc1_Str_rb_3:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30A, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a30e  +0x1a30e..+0x1a312 (0xea025c, 4 B)
+; [nakarest] Text (4 B at 0xea025c), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoad_LoadSoundMemEntry_Skip15
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_4`).
 FileIO_ByteBlock_DemoProc1_Str_rb_4:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A30E, 0x4	; "rb"
+; [nakarest] naka_technichord_strings+0x1a312  +0x1a312..+0x1a316 (0xea0260, 4 B)
+; [nakarest] Text (4 B at 0xea0260), first string "rb"; no registered NAKA table points into it;
+; [nakarest] reached through source references SingleLoad_LoadSoundMemBank_Skip20
+; [nakarest] (demo/file_demo_proc.s: `ld xbc, FileIO_ByteBlock_DemoProc1_Str_rb_5`).
 FileIO_ByteBlock_DemoProc1_Str_rb_5:	.incbin "includes/generated/naka_technichord_strings.bin", 0x1A312, 0x4	; "rb"
 ; [nakarest] naka_technichord_strings+0x1a316  +0x1a316..+0x1a31a (0xea0264, 4 B)
 ; [nakarest] Text (4 B at 0xea0264), first string "rb"; no registered NAKA table points into it;

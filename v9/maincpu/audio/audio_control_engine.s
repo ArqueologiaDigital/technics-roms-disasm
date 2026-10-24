@@ -6950,12 +6950,12 @@ ExtData_SetOrClearTlvField:
 	ld	(xsp), a
 	ld	a, (0x9131:16)
 	and	a, (xsp)
-	jr	z, SwbtWr_WriteParamBlock_Epilogue4
+	jr	z, SwbtWr_WriteParamBlock_Epilogue2
 	ld	a, (MIDI_MSG_STATUS:16)
 	extz	wa
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
-	jr	z, SwbtWr_WriteParamBlock_Epilogue4
+	jr	z, SwbtWr_WriteParamBlock_Epilogue2
 	ld	a, (0x912f:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
@@ -6974,7 +6974,7 @@ SwbtWr_WriteParamBlock_Skip2:
 	ld	(MIDI_MSG_DATA2:16), e
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
-SwbtWr_WriteParamBlock_Epilogue4:
+SwbtWr_WriteParamBlock_Epilogue2:
 	inc	2, xsp
 	ret
 ; ExtData_StepTlvField: Adds the step (0x9153) to field C of the panel TLV byte (tag MIDI_MSG_STATUS, offset

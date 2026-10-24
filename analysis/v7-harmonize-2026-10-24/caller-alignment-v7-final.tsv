@@ -1,0 +1,499 @@
+result	v10	v10_addr	to_addr	to_names	votes	extent	insns	proof	ram	checked	unchecked	detail
+v10-name-defined-elsewhere-in-target	FontPalette_Gradient7	0xe44b72	0xe7002c		1							FontPalette_Gradient7@0xe44b72
+v10-name-misparented	DisplayMode_Handler_3_Helper2	0xef5f20	0xef5ef6	ScoopDisp_BytecodeBlock1_0x32	1	27	19		0	1	0	
+v10-name-defined-elsewhere-in-target	PerfMode_Handler_EvtB_Skip6	0xef769c	0xef7672	PerfMode_Handler_EvtB_Skip5	2	93	22		1	2	3	PerfMode_Handler_EvtB_Skip6@0xef76cf is not renamed away
+v10-name-defined-elsewhere-in-target	Timer_ModeHandler_0_Skip2	0xef78be	0xef7894	Timer_ModeHandler_0_Join3	1							Timer_ModeHandler_0_Skip2@0xef7962
+v10-name-defined-elsewhere-in-target	Timer_ModeHandler_0_Return3	0xef78de	0xef78b4	Timer_ModeHandler_0_Return2	1							Timer_ModeHandler_0_Return3@0xef79ea
+parent-differs	VoiceSlot_StatusRet_Helper	0xef78df	0xefc3ef	VoiceSlot_FinalRetZ	1							v7 parent: VoiceSlot_FinalRetZ
+v10-name-defined-elsewhere-in-target	Timer_ModeHandler_0_Return2	0xef7a14	0xef79ea	Timer_ModeHandler_0_Return3	2							Timer_ModeHandler_0_Return2@0xef78b4
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Skip5	0xef7a7c	0xef7a52	.Lc_ef7a52	1							Timer_ParamCompareAlt_Skip5@0xef7af5
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Join5	0xef7caa	0xef7b8a	Timer_ParamCompareAlt_Join2	1							Timer_ParamCompareAlt_Join5@0xef7c8f
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Skip3	0xef7d06	0xef7cdc	Timer_ParamCompareAlt_Skip17	1							Timer_ParamCompareAlt_Skip3@0xef7ac3
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Skip4	0xef7d08	0xef7cde	Timer_ParamCompareAlt_Join6	2							Timer_ParamCompareAlt_Skip4@0xef7ae9
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Return4	0xef7d38	0xef7d0e	Timer_ParamCompareAlt_Return3	1							Timer_ParamCompareAlt_Return4@0xef7a60
+proof-failed	ToneParam_Evt09_BytecodeHandler_Skip10	0xef8279	0xef824f	VoiceCtrl_ParamSetupBytecode_Helper_Skip3	1	34	9		0	4	0	ptr ToneParam_HandlerTable_BC_Join2: target has it at 0xef81d7, code says 0xef8275
+v10-name-defined-elsewhere-in-target	ToneParam_HandlerTable_BC_Join2	0xef829f	0xef8275	ToneParam_HandlerTable_BC_Join3	1							ToneParam_HandlerTable_BC_Join2@0xef81d7
+proof-failed	ToneParam_HandlerTable_BC_Skip2	0xef82ae	0xef8284	VoiceCtrl_ParamSetupBytecode_Helper_Skip5	1	22	6		2	1	0	ptr ToneParam_HandlerTable_BC_Join3: target has it at 0xef8275, code says 0xef829a
+v10-name-defined-elsewhere-in-target	ToneParam_HandlerTable_BC_Join3	0xef82c4	0xef829a	ToneParam_HandlerTable_BC_Join4	1							ToneParam_HandlerTable_BC_Join3@0xef8275
+proof-failed	ToneParam_Evt09_BytecodeHandler_Skip12	0xef82e4	0xef82ba	VoiceCtrl_ParamSetupBytecode_Helper_Skip6	1	30	8		0	3	0	ptr ToneParam_HandlerTable_BC_Join4: target has it at 0xef829a, code says 0xef82dc
+v10-name-defined-elsewhere-in-target	ToneParam_HandlerTable_BC_Join4	0xef8306	0xef82dc	ToneParam_HandlerTable_BC_Join5	1							ToneParam_HandlerTable_BC_Join4@0xef829a
+proof-failed	ToneParam_Evt09_BytecodeHandler_Loop5	0xef8327	0xef82fd	.Lc_ef82fd	1	23	7		0	4	0	ptr ToneParam_HandlerTable_BC_Join5: target has it at 0xef82dc, code says 0xef8319
+v10-name-defined-elsewhere-in-target	ToneParam_HandlerTable_BC_Join5	0xef8343	0xef8319	ToneParam_HandlerTable_BC_Join6	1							ToneParam_HandlerTable_BC_Join5@0xef82dc
+v10-name-misparented	ToneParam_Evt09_BytecodeHandler_Loop8	0xef838f	0xef8365	ToneParam_HandlerTable_BC_Loop	2	37	11		0	8	0	
+proof-failed	ToneParam_Evt09_BytecodeHandler_Skip18	0xef843b	0xef8411	VoiceCtrl_ParamSetupBytecode_Helper_Skip12	1	14	4		0	1	0	ptr ToneParam_HandlerTable_BC_Join6: target has it at 0xef8319, code says 0xef8421
+v10-name-defined-elsewhere-in-target	ToneParam_HandlerTable_BC_Join6	0xef844b	0xef8421	ToneParam_HandlerTable_BC_Join7	1							ToneParam_HandlerTable_BC_Join6@0xef8319
+v10-name-misparented	DisplayMode_Handler_3_Skip32	0xef8e09	0xef8ddf	PerfMode_EventTable_0_Target2_Skip3	1	4	1		0	1	0	
+v10-name-defined-elsewhere-in-target	Timer_ParamCompareAlt_Helper4	0xef8f70	0xef8f46	Timer_ParamCompareAlt_Helper6	7	33	11		0	2	0	Timer_ParamCompareAlt_Helper4@0xefba08 is not renamed away
+v10-name-misparented	ToneParam_Evt09_BytecodeHandler_Helper3	0xefa63c	0xefa612	PortConfig_Handler_0_Helper2	4	47	14		0	9	0	
+v10-name-defined-elsewhere-in-target	PortConfig_Handler_0_Return	0xefa7a7	0xefa77d	PerfMode_Handler_EvtB_Helper2_Helper6	1	1	1		0	0	0	PortConfig_Handler_0_Return@0xefa6a9 is not renamed away
+parent-differs	ScoopParam_ValueTable_Sub_Helper_Skip	0xefa83a	0xefa810	ClockConfig_Handler_0_Skip	2							v7 parent: Unref_EFA79B_Tbl
+parent-differs	ScoopParam_ValueTable_Sub_Helper_Return	0xefa85c	0xefa832	ClockConfig_Handler_0_Return	1							v7 parent: Unref_EFA79B_Tbl
+v10-name-defined-elsewhere-in-target	SysEx_BytecodeDispatcher_Skip2	0xefaaff	0xefaad5	SysEx_BytecodeDispatcher_Skip	1							SysEx_BytecodeDispatcher_Skip2@0xefab2e
+v10-name-defined-elsewhere-in-target	SysEx_BytecodeDispatcher_Skip3	0xefab58	0xefab2e	SysEx_BytecodeDispatcher_Skip2	1							SysEx_BytecodeDispatcher_Skip3@0xefab53
+v10-name-defined-elsewhere-in-target	SysEx_BytecodeDispatcher_Skip4	0xefab7d	0xefab53	SysEx_BytecodeDispatcher_Skip3	1							SysEx_BytecodeDispatcher_Skip4@0xefab7b
+v10-name-misparented	MemConfig_Handler_1_Code_Loop2	0xefb091	0xefb067	ScoopDisp_SeekBackWrapMarkers_Loop5	2	33	10		0	5	0	
+v10-name-misparented	MemConfig_Handler_1_Code_Return	0xefb0d2	0xefb0a8	ScoopDisp_SeekBackWrapMarkers_Return2	2	1	1		0	0	0	
+proof-failed	MemConfig_Handler_3_Helper4	0xefb334	0xefb30a	SndDispatch_ProcessCommand_0xF	1	28	9		0	3	0	ptr SndDispatch_ProcessCommand_Return4: target has it at 0xefb585, code says 0xefb39f
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Return4	0xefb3c9	0xefb39f	SndDispatch_ProcessCommand_0xA4	10							SndDispatch_ProcessCommand_Return4@0xefb585
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip21	0xefb41b	0xefb3f1	SndDispatch_ProcessCommand_Skip15	1							SndDispatch_ProcessCommand_Skip21@0xefb4f5
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip15	0xefb464	0xefb43a	SndDispatch_ProcessCommand_Skip16	1							SndDispatch_ProcessCommand_Skip15@0xefb3f1
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip22	0xefb49a	0xefb470	SndDispatch_ProcessCommand_Skip17	1							SndDispatch_ProcessCommand_Skip22@0xefb54c
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip16	0xefb4b4	0xefb48a	SndDispatch_ProcessCommand_Skip18	1							SndDispatch_ProcessCommand_Skip16@0xefb43a
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip17	0xefb4c9	0xefb49f	SndDispatch_ProcessCommand_Skip19	3							SndDispatch_ProcessCommand_Skip17@0xefb470
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip25	0xefb4d2	0xefb4a8	SndDispatch_ProcessCommand_Skip20	1							SndDispatch_ProcessCommand_Skip25@0xefb5df
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip18	0xefb51f	0xefb4f5	SndDispatch_ProcessCommand_Skip21	1							SndDispatch_ProcessCommand_Skip18@0xefb48a
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip20	0xefb598	0xefb56e	SndDispatch_ProcessCommand_Skip24	1							SndDispatch_ProcessCommand_Skip20@0xefb4a8
+v10-name-defined-elsewhere-in-target	SndDispatch_ProcessCommand_Skip24	0xefb609	0xefb5df	SndDispatch_ProcessCommand_Skip25	1							SndDispatch_ProcessCommand_Skip24@0xefb56e
+v10-name-defined-elsewhere-in-target	MemConfig_Handler_4_Skip9	0xefb626	0xefb5fc	MemConfig_Handler_4_Skip	1							MemConfig_Handler_4_Skip9@0xefb732
+v10-name-defined-elsewhere-in-target	MemConfig_Handler_4_Return2	0xefb63c	0xefb612	MemConfig_Handler_4_Return	1							MemConfig_Handler_4_Return2@0xefb678
+proof-failed	MemConfig_Handler_1_Helper4	0xefb63d	0xefb613	MemConfig_Handler_4_Helper4	1	36	10		0	2	0	ptr MemConfig_Handler_4_Skip2: target has it at 0xefb655, code says 0xefb66a; ptr MemConfig_Handler_4_Loop2: target has it at 0xefb6e3, code says 0xefb679; ptr MemConfig_Handler_4_Loop2: target has it at 0xefb6e3, code says 0xefb679
+v10-name-defined-elsewhere-in-target	MemConfig_Handler_4_Skip	0xefb67f	0xefb655	MemConfig_Handler_4_Skip2	1							MemConfig_Handler_4_Skip@0xefb5fc
+v10-name-defined-elsewhere-in-target	MemConfig_Handler_4_Return	0xefb6a2	0xefb678	MemConfig_Handler_4_Return2	1							MemConfig_Handler_4_Return@0xefb612
+v10-name-defined-elsewhere-in-target	MemConfig_Handler_4_Skip8	0xefb766	0xefb73c	MemConfig_Handler_4_Join3	1							MemConfig_Handler_4_Skip8@0xefb72a
+parent-differs	SysEx_BytecodeDispatcher_Helper2	0xefb7f3	0xef9fd1	SysEx_BytecodeDispatcher_Helper5	1							v7 parent: SqStep_AddStepToClock
+v10-name-defined-elsewhere-in-target	SysEx_BytecodeDispatcher_Helper3	0xefb8c0	0xefb896	SysEx_BytecodeDispatcher_Helper2	1	19	7		0	1	0	SysEx_BytecodeDispatcher_Helper3@0xefb92c is not renamed away
+parent-differs	SysEx_BytecodeDispatcher_Helper4	0xefb956	0xefb92c	SysEx_BytecodeDispatcher_Helper3	2							v7 parent: SysInit_BytecodeBlock
+parent-differs	SysEx_BytecodeDispatcher_Tbl2_Sub2	0xefb9b2	0xefb988	SysEx_BytecodeDispatcher_Helper3_Sub2	1							v7 parent: SysInit_BytecodeBlock
+v10-name-misparented	Timer_ModeHandler_0_Helper2	0xefc42a	0xefc400	VoiceSlot_FinalRetZ_0x11	2	13	9		0	1	0	
+v10-name-misparented	Timer_ModeHandler_0_Helper3	0xefc437	0xefc40d	VoiceSlot_FinalRetZ_0x1E	1	63	24		0	1	0	
+v10-name-defined-elsewhere-in-target	VoiceSlot_FinalRetZ_Skip6	0xefc651	0xefc627	VoiceSlot_FinalRetZ_Skip5	1	43	13		0	3	0	VoiceSlot_FinalRetZ_Skip6@0xefc652 is not renamed away
+v10-name-defined-elsewhere-in-target	VoiceSlot_IndexDone_Skip	0xefc6fe	0xefc6d4	VoiceSlot_ComputeIndex_Skip	1							VoiceSlot_IndexDone_Skip@0xefc747
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Loop	0xefc812	0xefc7e8	VoiceSlot_StatusRet_Loop2	2							VoiceSlot_StatusRet_Loop@0xefcb01
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Skip8	0xefc899	0xefc86f	VoiceSlot_StatusRet_Skip7	1							VoiceSlot_StatusRet_Skip8@0xefc8a9
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Skip9	0xefc8d3	0xefc8a9	VoiceSlot_StatusRet_Skip8	1							VoiceSlot_StatusRet_Skip9@0xefc8d4
+proof-failed	VoiceSlot_StatusRet_Code_Loop	0xefc977	0xefc94d	VoiceSlot_StatusRet_Loop3	25	4	1		0	0	0	ptr VoiceSlot_StatusRet_Loop: target has it at 0xefcb01, code says 0xefc7e8
+proof-failed	VoiceSlot_StatusRet_Skip19	0xefcb07	0xefcadd	VoiceSlot_StatusRet_Skip28	1	25	8		0	1	0	ptr VoiceSlot_StatusRet_Loop2: target has it at 0xefc7e8, code says 0xefcb01; ptr VoiceSlot_StatusRet_Join2: target has it at 0xefc86b, code says 0xefcaf9
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Join2	0xefcb23	0xefcaf9	VoiceSlot_StatusRet_Join3	1							VoiceSlot_StatusRet_Join2@0xefc86b
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Loop2	0xefcb2b	0xefcb01	VoiceSlot_StatusRet_Loop	2							VoiceSlot_StatusRet_Loop2@0xefc7e8
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Skip28	0xefccf5	0xefcccb	VoiceSlot_StatusRet_Skip47	1							VoiceSlot_StatusRet_Skip28@0xefcadd
+proof-failed	VoiceSlot_StatusRet_Skip30	0xefcee2	0xefceb8	VoiceSlot_StatusRet_Skip72	1	43	13		1	6	0	ptr VoiceSlot_StatusRet_Loop: target has it at 0xefcb01, code says 0xefc7e8
+v10-name-defined-elsewhere-in-target	VoiceSlot_StatusRet_Join4	0xefcf86	0xefcf5c	VoiceSlot_StatusRet_Join5	1							VoiceSlot_StatusRet_Join4@0xefcd3f
+v10-name-misparented	VoiceState_DataBlock2_Helper2_Skip2	0xefd6ae	0xefd684	TempoRingBuf_IsEmpty_Skip3	2	12	3		0	0	0	
+v10-name-defined-elsewhere-in-target	SubCPU_ToneParamRet_Join8	0xefe51e	0xefe4f4	SubCPU_ToneParamRet_Join11	1	28	9		0	3	0	SubCPU_ToneParamRet_Join8@0xefe40e is not renamed away
+v10-name-defined-elsewhere-in-target	SubCPU_ToneParamRet_Join11	0xefe63d	0xefe613	SubCPU_ToneParamRet_Join14	1	4	1		0	1	0	SubCPU_ToneParamRet_Join11@0xefe4f4 is not renamed away
+v10-name-misparented	OscScope_RenderBlock_Helper2	0xefea02	0xefe9d8	OscScope_FinalizeRender_0x79	3	10	3		0	1	0	
+v10-name-misparented	OscScope_RenderBlock_Join	0xefea0c	0xefe9e2	OscScope_FinalizeRender_0x79_Join	1	18	7		0	3	0	
+v10-name-misparented	OscScope_RenderBlock_Skip4	0xefea43	0xefea19	OscScope_FinalizeRender_0x79_Skip	1	3	1		0	0	0	
+v10-name-misparented	OscScope_RenderBlock_Join2	0xefea46	0xefea1c	OscScope_FinalizeRender_0x79_Join2	1	14	4		0	1	0	
+v10-name-misparented	OscScope_RenderBlock_Return	0xefea54	0xefea2a	OscScope_FinalizeRender_0x79_Return	3	1	1		0	0	0	
+v10-name-misparented	OscScope_UpdateDisplay_Helper2	0xefec26	0xefebfc	DisplayStr_BytecodeBlock_A_Code_Helper	3	58	19		0	4	0	
+v10-name-defined-elsewhere-in-target	Display_BytecodeBlock_F_Tbl2	0xeff248	0xeff21e	Display_BytecodeBlock_F_Data	1							Display_BytecodeBlock_F_Tbl2@0xeff421
+old-name-is-a-v10-name-elsewhere	Display_BytecodeBlock_F_Tbl3	0xeff44b	0xeff421	Display_BytecodeBlock_F_Tbl2	1	19	9		0	0	0	v10 has Display_BytecodeBlock_F_Tbl2 at 0xeff248
+v10-name-defined-elsewhere-in-target	ParamPopup_AccompVolume	0xf0014d	0xefd032	Display_ModePopupDispatch	1							ParamPopup_AccompVolume@0xf00123
+v10-name-defined-elsewhere-in-target	ParamPopup_PartPedal_Skip	0xf00517	0xf004ed	ParamPopup_PartPedal_Skip2	1	94	29	bytes	0	3	2	ParamPopup_PartPedal_Skip@0xf005c2 is not renamed away
+v10-name-defined-elsewhere-in-target	ParamPopup_PartPedal_Skip2	0xf00575	0xf0054b	ParamPopup_PartPedal_Skip3	1							ParamPopup_PartPedal_Skip2@0xf004ed
+v10-name-misparented	ParamPopup_PartPedal_Loop2	0xf008a0	0xf00876	Tbl_PedalNames_Loop	4	33	10		0	6	0	
+v10-name-defined-elsewhere-in-target	ParamPopup_PartPedal_Skip21	0xf008c1	0xf00897	ParamPopup_PartPedal_Skip24	1	22	7		0	3	0	ParamPopup_PartPedal_Skip21@0xf007eb is not renamed away
+proof-failed	ParamPopup_PartPedal_Skip22	0xf0090c	0xf008e2	ParamPopup_PartPedal_Skip25	1	11	3		0	0	0	ptr Tbl_PedalNames_Join3: target has it at 0xf00824, code says 0xf008ef
+v10-name-defined-elsewhere-in-target	ParamPopup_PartPedal_Skip23	0xf00917	0xf008ed	ParamPopup_PartPedal_Skip26	1	2	1		0	0	0	ParamPopup_PartPedal_Skip23@0xf00815 is not renamed away
+v10-name-defined-elsewhere-in-target	Tbl_PedalNames_Join3	0xf00919	0xf008ef	Tbl_PedalNames_Join4	1							Tbl_PedalNames_Join3@0xf00824
+v10-name-defined-elsewhere-in-target	Tbl_PedalNames_Return	0xf0091f	0xf008f5	Tbl_PedalNames_Return2	1							Tbl_PedalNames_Return@0xf00828
+v10-name-defined-elsewhere-in-target	Scoop_EventLoop_12Entry_Skip9	0xf021b4	0xf0218a	Scoop_EventLoop_12Entry_Skip10	1	76	28		0	1	3	Scoop_EventLoop_12Entry_Skip9@0xf02353 is not renamed away
+v10-name-defined-elsewhere-in-target	Scoop_EventLoop_12Entry_Skip10	0xf0229a	0xf02270	Scoop_EventLoop_12Entry_Skip11	1	64	22		0	0	3	Scoop_EventLoop_12Entry_Skip10@0xf0218a is not renamed away
+v10-name-misparented	SeMenu_CopyWriteUpdate_Step3_Helper2	0xf06693	0xf06669	SeMenu_SetupDisplayObject_Alt2_Continue_0x21	1	13	5		0	0	0	
+parent-differs	SeMenu_NoteToKeyboardX_Skip24	0xf08a19	0xf089ef	.Lc_f089ef	1							v7 parent: SeMenu_DrawEnvGraphLine
+parent-differs	SeMenu_NoteToKeyboardX_Join17	0xf08a20	0xf089f6	.Lc_f089f6	2							v7 parent: SeMenu_DrawEnvGraphLine
+v10-name-misparented	SeMenu_CopyWriteUpdate_Step3_Helper12	0xf095ba	0xf09590	SeMenu_SetMode_Data_0x5	2	10	4		0	0	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Step3_Helper13	0xf095c4	0xf0959a	SeMenu_SetMode_Data_0xF	1	5	2		0	0	0	
+v10-name-defined-elsewhere-in-target	SeMenuTitleFunc_DispatchSwitch_Skip4	0xf0bf69	0xf0bf3f	.Lc_f0bf3f	1							SeMenuTitleFunc_DispatchSwitch_Skip4@0xf0c4ea
+v10-name-defined-elsewhere-in-target	SeMenuTitleFunc_DispatchSwitch_Skip6	0xf0c00d	0xf0bfe3	SeMenu_CopyWriteUpdate_Skip5	1							SeMenuTitleFunc_DispatchSwitch_Skip6@0xf0c635
+v10-name-misparented	SeMenu_CopyWriteUpdate_Skip7	0xf0c109	0xf0c0df	SeMenuTitleFunc_DispatchSwitch_Skip2	1	10	3		0	1	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Skip50	0xf0c36f	0xf0c345	SeMenuTitleFunc_DispatchSwitch_Skip3	1	23	8		0	2	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Skip53	0xf0c514	0xf0c4ea	SeMenuTitleFunc_DispatchSwitch_Skip4	1	43	13		0	6	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Skip56	0xf0c593	0xf0c569	SeMenuTitleFunc_DispatchSwitch_Skip5	1	45	16		0	6	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Skip84	0xf0c65f	0xf0c635	SeMenuTitleFunc_DispatchSwitch_Skip6	1	11	4		0	1	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Join20	0xf0da83	0xf0da59	SeEasy_OnSideRow3_Join6	1	16	5		0	2	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Epilogue32	0xf0da93	0xf0da69	SeEasy_OnSideRow3_Epilogue4	2	3	2		0	0	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Join38	0xf0dc95	0xf0dc6b	SeDigEff_OnColumn3_CelesteChorusDetune_Join11	2	31	13		0	3	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Join21	0xf0dcd6	0xf0dcac	SeDigEff_OnColumn3_RepeatDelaySustain_Join12	2	6	2		0	1	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Epilogue35	0xf0dcdc	0xf0dcb2	SeDigEff_OnColumn3_RepeatDelaySustain_Epilogue9	3	4	2		0	0	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Join39	0xf0dd3c	0xf0dd12	SeDigEff_OnColumn4_DelaySpeed2_Join13	2	35	14		0	3	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Epilogue36	0xf0dd6f	0xf0dd45	SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10	3	4	2		0	0	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Join40	0xf0ddd1	0xf0dda7	SeDigEff_OnColumn5_CelesteChorusBalance_Join14	1	31	13		0	3	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Epilogue37	0xf0ddfc	0xf0ddd2	SeDigEff_OnColumn5_EnsembleDetune_Epilogue11	3	4	2		0	0	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Entry6_Code_Loop	0xf0e426	0xf0e3fc	SeWrtSnd_SetupNamingPage_Loop5	1	96	12	bytes	0	2	0	
+v10-name-misparented	SeMenu_CopyWriteUpdate_Entry6_Code_Loop3	0xf0e540	0xf0e516	SeWrtSnd_SetupNamingPage_Loop8	1	31	11		0	1	0	
+v10-name-defined-elsewhere-in-target	SeMenu_DrawPartSelector_Join	0xf0f0d0	0xf0f0a6	.Lc_f0f0a6	1							SeMenu_DrawPartSelector_Join@0xf0f0f7
+v10-name-defined-elsewhere-in-target	SeDigEff_DrawStaticScreen_Skip3	0xf1008a	0xf10060	SeDigEff_DrawStaticScreen_Skip2	1							SeDigEff_DrawStaticScreen_Skip3@0xf10083
+v10-name-defined-elsewhere-in-target	SeDigEff_DrawStaticScreen_Join3	0xf1008f	0xf10065	SeDigEff_DrawStaticScreen_Join2	1							SeDigEff_DrawStaticScreen_Join3@0xf10088
+v10-name-defined-elsewhere-in-target	SeAmpAmp1_DrawField_Join3	0xf103b0	0xf10386	SeAmpAmp1_DrawField_Join2	1							SeAmpAmp1_DrawField_Join3@0xf103bf
+v10-name-defined-elsewhere-in-target	SeAmpAmp1_DrawField_Join4	0xf103e9	0xf103bf	SeAmpAmp1_DrawField_Join3	1							SeAmpAmp1_DrawField_Join4@0xf103c5
+v10-name-defined-elsewhere-in-target	SeAmpAmp1_DrawField_Join5	0xf103ef	0xf103c5	SeAmpAmp1_DrawField_Join4	1							SeAmpAmp1_DrawField_Join5@0xf103de
+v10-name-defined-elsewhere-in-target	SeMenu_Utility_FormatNumber_Data_2	0xf12364	0xf1233a	SeScreenData_0x175E	1							SeMenu_Utility_FormatNumber_Data_2@0xf12352
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Skip3	0xf16bb0	0xf16b86	Flash_InitBytecodeBlock_Skip	1							Flash_InitBytecodeBlock_Skip3@0xf16bce
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Skip4	0xf16bf2	0xf16bc8	Flash_InitBytecodeBlock_Skip2	1							Flash_InitBytecodeBlock_Skip4@0xf16c0b
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Skip5	0xf16bf8	0xf16bce	Flash_InitBytecodeBlock_Skip3	2							Flash_InitBytecodeBlock_Skip5@0xf16c21
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Skip7	0xf16c4b	0xf16c21	Flash_InitBytecodeBlock_Skip5	1							Flash_InitBytecodeBlock_Skip7@0xf16d40
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Join5	0xf16d22	0xf16cf8	Flash_InitBytecodeBlock_Join6	1							Flash_InitBytecodeBlock_Join5@0xf16d1d
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Join3	0xf16d47	0xf16d1d	Flash_InitBytecodeBlock_Join5	2							Flash_InitBytecodeBlock_Join3@0xf16d4b
+v10-name-defined-elsewhere-in-target	PartGrid_OperationsBlock_Skip	0xf16f4f	0xf16f25	PartGrid_OperationsBlock_Skip2	1							PartGrid_OperationsBlock_Skip@0xf16fbf
+v10-name-defined-elsewhere-in-target	PartGrid_OperationsBlock_Skip3	0xf16fcb	0xf16fa1	PartGrid_OperationsBlock_Skip4	1							PartGrid_OperationsBlock_Skip3@0xf16fb5
+v10-name-defined-elsewhere-in-target	PartGrid_OperationsBlock_Skip4	0xf16fd5	0xf16fab	PartGrid_OperationsBlock_Skip5	1							PartGrid_OperationsBlock_Skip4@0xf16fa1
+v10-name-defined-elsewhere-in-target	PartGrid_OperationsBlock_Skip2	0xf16fdf	0xf16fb5	PartGrid_OperationsBlock_Skip3	1							PartGrid_OperationsBlock_Skip2@0xf16f25
+v10-name-misparented	Util_FrameSetup10_Skip	0xf16fe9	0xf16fbf	PartGrid_OperationsBlock_Skip	1	8	2		0	0	0	
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Helper10	0xf1744c	0xf17422	Flash_InitBytecodeBlock_Helper2	1	72	24		0	4	0	Flash_InitBytecodeBlock_Helper10@0xf17b86 is not renamed away
+v10-name-defined-elsewhere-in-target	Flash_WriteBackSlotTable	0xf1830a	0xf179d9	Flash_InitBytecodeBlock_Helper8	1							Flash_WriteBackSlotTable@0xf182e0
+v10-name-defined-elsewhere-in-target	Flash_InitBytecodeBlock_Helper8	0xf18471	0xf18447	Flash_InitBytecodeBlock_Helper6	1	302	53	bytes	0	1	0	Flash_InitBytecodeBlock_Helper8@0xf179d9 is not renamed away
+v10-name-misparented	PartFormat_StartPlayback_Return2	0xf2097a	0xf20950	PlayModeStop_InitFlagBlock_Helper_Return	1	1	1		0	0	0	
+parent-differs	CDlike_ExitModeUnlessKeepTitle_Skip	0xf20f8c	0xf20f62	SqTrAsPsTtl_CaseF_Skip	3							v7 parent: SqTrAsPsTtl_CaseF
+v10-name-defined-elsewhere-in-target	SeqPlay_ConfigureVoiceChannels	0xf39614	0xf395ea	SeqPlay_RestartWithVoiceConfig_Join	2							SeqPlay_ConfigureVoiceChannels@0xf395e2
+proof-failed	SeqPlay_ProcessCh_FindDrumVoice	0xf396c5	0xf3969b	SeqPlay_RestartWithVoiceConfig_Skip5	1	37	12		0	4	0	num 250/251 at +9; num 250/251 at +12; num 250/251 at +27
+proof-failed	SeqPlay_ProcessCh_FoundDrum	0xf396ea	0xf396c0	SeqPlay_RestartWithVoiceConfig_Skip6	1	14	0		0	0	0	instructions stop aligning at +0 of 14
+proof-failed	SeqChLoad_DispatchEvent	0xf3ede4	0xf3edc8	SeqCh_LoadChannelConfig_Skip	1	35	3		0	0	0	instructions stop aligning at +8 of 35
+proof-failed	SeqCh_LoadData_CheckDrum	0xf3ee81	0xf3ee6c	SeqCh_LoadChannelConfig_Skip5	1	31	0		0	0	0	instructions stop aligning at +0 of 31
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip17	0xf44940	0xf44932	AppEvent_InlineHandler_Skip3	2	8	2		0	0	0	AppEvent_InlineHandler_Skip17@0xf44d9b is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Join9	0xf44948	0xf4493a	AppEvent_InlineHandler_Join	6	26	8		0	2	0	AppEvent_InlineHandler_Join9@0xf44da9 is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip18	0xf44962	0xf44954	AppEvent_InlineHandler_Skip4	1	28	10		0	2	0	AppEvent_InlineHandler_Skip18@0xf44e93 is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip19	0xf449f5	0xf449e7	AppEvent_InlineHandler_Skip6	2	8	2		0	0	0	AppEvent_InlineHandler_Skip19@0xf44ead is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Join	0xf449fd	0xf449ef	AppEvent_InlineHandler_Join2	6	29	9		0	2	0	AppEvent_InlineHandler_Join@0xf4493a is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip3	0xf44a36	0xf44a28	AppEvent_InlineHandler_Skip8	1	9	3		1	1	0	AppEvent_InlineHandler_Skip3@0xf44932 is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip4	0xf44a3f	0xf44a31	AppEvent_InlineHandler_Skip9	1	17	5		0	1	0	AppEvent_InlineHandler_Skip4@0xf44954 is not renamed away
+v10-name-defined-elsewhere-in-target	AppEvent_InlineHandler_Skip20	0xf44a56	0xf44a48	AppEvent_InlineHandler_Skip11	1	17	5		0	1	0	AppEvent_InlineHandler_Skip20@0xf44ec8 is not renamed away
+parent-differs	AppEvent_InlineHandler_Skip6	0xf44b8c	0xf44b7e	AppEvent_InlineHandler_Skip12	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Join2	0xf44b95	0xf44b87	AppEvent_InlineHandler_Join3	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Skip7	0xf44ba7	0xf44b99	AppEvent_InlineHandler_Skip13	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_DecMrgTrackA_Join	0xf44bac	0xf44b9e	AppEvent_InlineHandler_Join4	2							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Skip8	0xf44bcd	0xf44bbf	AppEvent_InlineHandler_Skip14	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Join3	0xf44bd6	0xf44bc8	AppEvent_InlineHandler_Join5	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Skip9	0xf44be8	0xf44bda	AppEvent_InlineHandler_Skip15	1							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_DecMrgTrackB_Join	0xf44bed	0xf44bdf	AppEvent_InlineHandler_Join6	2							v7 parent: AppEvent_InlineHandler_Switch3_OnTitleSqqtz
+parent-differs	AppEvent_InlineHandler_Skip10	0xf44c83	0xf44c75	AppEvent_InlineHandler_Skip16	1							v7 parent: AppEvent_InlineHandler_DecMcpTrackA
+parent-differs	AppEvent_InlineHandler_Join4	0xf44c91	0xf44c83	AppEvent_InlineHandler_Join7	3							v7 parent: AppEvent_InlineHandler_DecMcpTrackA
+parent-differs	AppEvent_InlineHandler_Join5	0xf44cd9	0xf44ccb	AppEvent_InlineHandler_Join8	12							v7 parent: AppEvent_InlineHandler_DecMcpTrackA
+parent-differs	AppEvent_SubDispatch_DecMinsLastMeasure_Skip11	0xf44da9	0xf44d9b	AppEvent_InlineHandler_Skip17	1							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Join6	0xf44db7	0xf44da9	AppEvent_InlineHandler_Join9	3							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Entry3	0xf44dff	0xf44df1	AppEvent_InlineHandler_Join10	12							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Skip12	0xf44ea1	0xf44e93	AppEvent_InlineHandler_Skip18	1							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Skip13	0xf44ebb	0xf44ead	AppEvent_InlineHandler_Skip19	1							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Join7	0xf44ed0	0xf44ec2	AppEvent_InlineHandler_Join11	1							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Skip14	0xf44ed6	0xf44ec8	AppEvent_InlineHandler_Skip20	1							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_DecScpParam_Join	0xf44eee	0xf44ee0	AppEvent_InlineHandler_Join12	9							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+parent-differs	AppEvent_InlineHandler_Join8	0xf44f94	0xf44f86	AppEvent_InlineHandler_Join13	16							v7 parent: AppEvent_InlineHandler_DecMinsTrackA
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Join3	0xf4559b	0xf4558d	EffEdit_DSPConfigBlock_Join	1							EffEdit_DSPConfigBlock_Join3@0xf457b9
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Skip5	0xf455ab	0xf4559d	EffEdit_DSPConfigBlock_Skip	1							EffEdit_DSPConfigBlock_Skip5@0xf456bb
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Skip	0xf455db	0xf455cd	EffEdit_DSPConfigBlock_Skip2	1							EffEdit_DSPConfigBlock_Skip@0xf4559d
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Skip2	0xf45681	0xf45673	EffEdit_DSPConfigBlock_Skip4	1							EffEdit_DSPConfigBlock_Skip2@0xf455cd
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Skip3	0xf456c9	0xf456bb	EffEdit_DSPConfigBlock_Skip5	1							EffEdit_DSPConfigBlock_Skip3@0xf45643
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Skip4	0xf4572e	0xf45720	EffEdit_DSPConfigBlock_Skip7	1							EffEdit_DSPConfigBlock_Skip4@0xf45673
+v10-name-defined-elsewhere-in-target	EffEdit_DSPConfigBlock_Join	0xf4577d	0xf4576f	.Lc_f4576f	3							EffEdit_DSPConfigBlock_Join@0xf4558d
+parent-differs	SeqAccomp_ParamDelivery_IncCycleStartMeasure_Skip2	0xf45ea0	0xf45e92	ApPlaySyori_Skip2	1							v7 parent: SeqAccomp_ParamDelivery_IncCycleEnable
+parent-differs	SeqAccomp_ParamDelivery_IncCycleStartMeasure_Join	0xf45ecc	0xf45ebe	ApPlaySyori_Join2	1							v7 parent: SeqAccomp_ParamDelivery_IncCycleEnable
+parent-differs	SeqAccomp_ParamDelivery_IncCycleStartMeasure_Skip	0xf45ed0	0xf45ec2	ApPlaySyori_Skip3	2							v7 parent: SeqAccomp_ParamDelivery_IncCycleEnable
+parent-differs	SeqAccomp_ParamDelivery_IncCycleEndMeasure_Skip3	0xf45f06	0xf45ef8	ApPlaySyori_Skip4	1							v7 parent: SeqAccomp_ParamDelivery_IncCycleEnable
+parent-differs	SeqAccomp_ParamDelivery_IncCycleEndMeasure_Join2	0xf45f1b	0xf45f0d	ApPlaySyori_Join3	1							v7 parent: SeqAccomp_ParamDelivery_IncCycleEnable
+parent-differs	SeqAccomp_SubChain_DecCycleEnable_Skip6	0xf4603b	0xf4602d	ApPlaySyori_Skip7	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleEnable_Skip7	0xf46044	0xf46036	ApPlaySyori_Skip8	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleEnable_Join4	0xf46083	0xf46075	ApPlaySyori_Join5	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleEnable_Join5	0xf46087	0xf46079	ApPlaySyori_Join6	2							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleStartMeasure_Skip8	0xf460b6	0xf460a8	ApPlaySyori_Skip9	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleStartMeasure_Join6	0xf460c9	0xf460bb	ApPlaySyori_Join7	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleEndMeasure_Join	0xf4610f	0xf46101	ApPlaySyori_Skip10	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	ApPlaySyori_Skip9	0xf46117	0xf46109	ApPlaySyori_Skip11	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecCycleEndMeasure_Join2	0xf4613f	0xf46131	ApPlaySyori_Skip12	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	ApPlaySyori_Join7	0xf46145	0xf46137	ApPlaySyori_Join8	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecPunchParam_Skip10	0xf46182	0xf46174	ApPlaySyori_Skip13	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecPunchParam_Skip11	0xf46188	0xf4617a	ApPlaySyori_Skip14	1							v7 parent: SeqAccomp_SubHandlerB
+parent-differs	SeqAccomp_SubChain_DecPunchParam_Join8	0xf4618c	0xf4617e	ApPlaySyori_Join10	3							v7 parent: SeqAccomp_SubHandlerB
+v10-name-defined-elsewhere-in-target	ApPlaySyori_Skip12	0xf46209	0xf461fb	ApPlaySyori_Skip15	1	7	2		0	2	0	ApPlaySyori_Skip12@0xf46131 is not renamed away
+v10-name-defined-elsewhere-in-target	HelpLang_DispatchDataBlock_Skip7	0xf476be	0xf476b0	HelpLang_DispatchDataBlock_Skip4	1							HelpLang_DispatchDataBlock_Skip7@0xf47727
+v10-name-defined-elsewhere-in-target	HelpLang_DispatchDataBlock_Skip4	0xf476f1	0xf476e3	HelpLang_DispatchDataBlock_Skip5	1							HelpLang_DispatchDataBlock_Skip4@0xf476b0
+v10-name-misparented	SeqLoad_ProcessDataBlock_Helper2	0xf47f1b	0xf47f0d	SeqBar_DataBlock_Code_Sub	1	45	19		0	3	0	
+v10-name-defined-elsewhere-in-target	SeqLoad_ProcessDataBlock_Helper3	0xf47f5a	0xf47f4c	SeqLoad_ProcessDataBlock_Helper2	1	29	12		0	3	0	SeqLoad_ProcessDataBlock_Helper3@0xf483a1 is not renamed away
+v10-name-defined-elsewhere-in-target	SeqPart_ByteBlockA207_Join2	0xf4a273	0xf49e89	SeqPart_ByteBlockA207_Join3	1							SeqPart_ByteBlockA207_Join2@0xf49f73
+v10-name-defined-elsewhere-in-target	SeqPart_ByteBlockA207_Join3	0xf4a357	0xf49f6d	SeqPart_ByteBlockA207_Join	2							SeqPart_ByteBlockA207_Join3@0xf49e89
+v10-name-defined-elsewhere-in-target	SeqPart_ByteBlockA207_Join	0xf4a35d	0xf49f73	SeqPart_ByteBlockA207_Join2	4							SeqPart_ByteBlockA207_Join@0xf49f6d
+v10-name-misparented	SeqStep_FileSectorPopReturn_Skip8	0xf4ffe5	0xf4fbe1	Fat_AllocateClusters_Skip9	1	11	4		0	1	0	
+v10-name-misparented	SeqStep_FileSectorPopReturn_Join	0xf50053	0xf4fc4f	NakaData_PerfStyleCode_Join4	1	13	5		0	1	0	
+v10-name-misparented	SeqStep_FileSectorPopReturn_Epilogue2	0xf50062	0xf4fc5e	NakaData_PerfStyleCode_Epilogue2	3	5	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop	0xf5014a	0xf4fd46	Fat_LookupPath_Loop8	1	31	12		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip2	0xf50169	0xf4fd65	Fat_LookupPath_Skip19	1	7	2		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip3	0xf50170	0xf4fd6c	Fat_LookupPath_Skip20	1	16	5		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip4	0xf50180	0xf4fd7c	Fat_LookupPath_Skip21	1	9	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip5	0xf50189	0xf4fd85	Fat_LookupPath_Skip22	1	41	15		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip34	0xf501b2	0xf4fdae	Fat_LookupPath_Skip23	1	16	5		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join13	0xf501c2	0xf4fdbe	Fat_LookupPath_Join8	1	36	13		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop2	0xf501e6	0xf4fde2	Fat_LookupPath_Loop9	1	19	6		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip35	0xf501f9	0xf4fdf5	Fat_LookupPath_Skip24	1	14	5		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop3	0xf50207	0xf4fe03	Fat_LookupPath_Loop10	1	112	40		0	6	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop13	0xf50277	0xf4fe73	Fat_LookupPath_Loop11	1	38	14		0	4	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip6	0xf5029d	0xf4fe99	Fat_LookupPath_Skip25	1	10	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join14	0xf502a7	0xf4fea3	Fat_LookupPath_Join9	1	13	4		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip36	0xf502b4	0xf4feb0	Fat_LookupPath_Skip26	1	25	9		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop14	0xf502cd	0xf4fec9	Fat_LookupPath_Loop12	1	12	4		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip37	0xf502d9	0xf4fed5	Fat_LookupPath_Skip27	1	5	2		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip38	0xf502de	0xf4feda	Fat_LookupPath_Skip28	1	13	3		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip39	0xf502eb	0xf4fee7	Fat_LookupPath_Skip29	2	44	14		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip40	0xf50317	0xf4ff13	Fat_LookupPath_Skip30	1	42	17		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop4	0xf50341	0xf4ff3d	Fat_LookupPath_Loop13	1	42	17		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip41	0xf5036b	0xf4ff67	Fat_LookupPath_Skip31	1	19	6		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip42	0xf5037e	0xf4ff7a	Fat_LookupPath_Skip32	1	26	8		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop15	0xf50398	0xf4ff94	Fat_LookupPath_Loop14	1	97	35		0	5	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip7	0xf5040e	0xf5000a	Fat_LookupPath_Skip34	1	24	7		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip43	0xf50426	0xf50022	Fat_LookupPath_Skip35	1	17	6		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join15	0xf50437	0xf50033	Fat_LookupPath_Join10	1	27	10		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip44	0xf50452	0xf5004e	Fat_LookupPath_Skip36	1	53	19		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip45	0xf50487	0xf50083	Fat_LookupPath_Skip37	1	6	2		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip46	0xf5048d	0xf50089	Fat_LookupPath_Skip38	1	4	2		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip47	0xf50491	0xf5008d	Fat_LookupPath_Skip39	1	8	2		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip48	0xf50499	0xf50095	Fat_LookupPath_Skip40	1	21	8		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip49	0xf504ae	0xf500aa	Fat_LookupPath_Skip41	1	10	3		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop5	0xf504b8	0xf500b4	Fat_LookupPath_Loop16	1	29	11		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip50	0xf504d5	0xf500d1	Fat_LookupPath_Skip42	1	17	7		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip51	0xf504e6	0xf500e2	Fat_LookupPath_Skip43	1	16	6		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip52	0xf504f6	0xf500f2	Fat_LookupPath_Skip44	1	21	8		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip53	0xf5050b	0xf50107	Fat_LookupPath_Skip45	2	2	1		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Epilogue	0xf5050d	0xf50109	Fat_LookupPath_Epilogue4	17	5	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop6	0xf50599	0xf50195	Fat_CreateDirEntry_Loop18	1	16	6		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip8	0xf5060d	0xf50209	Fat_CreateDirEntry_Skip49	1	10	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip9	0xf50624	0xf50220	Fat_CreateDirEntry_Skip50	1	32	10		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop7	0xf50662	0xf5025e	Fat_CreateDirEntry_Loop20	1	20	9		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop8	0xf50676	0xf50272	Fat_CreateDirEntry_Loop21	2	37	13		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop9	0xf5069b	0xf50297	Fat_CreateDirEntry_Loop22	1	33	14		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join2	0xf50732	0xf5032e	Fat_CreateDirEntry_Join13	2	43	16		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Epilogue2	0xf5075d	0xf50359	Fat_CreateDirEntry_Epilogue5	6	5	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip10	0xf50794	0xf50390	Fat_WriteDirEntry_Skip	1	41	15		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Epilogue3	0xf507bd	0xf503b9	Fat_WriteDirEntry_Epilogue	1	4	3		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop10	0xf507d1	0xf503cd	Fat_FreeFileClusters_Loop	1	28	12		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join3	0xf507ed	0xf503e9	Fat_FreeFileClusters_Join	2	19	8		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip11	0xf50800	0xf503fc	Fat_FreeFileClusters_Skip2	1	32	11		0	1	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip12	0xf508c9	0xf504c5	Fat_MountVolume_Skip7	1	3	1		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Loop11	0xf508cc	0xf504c8	Fat_MountVolume_Loop2	4	15	6		0	2	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip13	0xf508db	0xf504d7	Fat_MountVolume_Skip8	1	124	45		0	5	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join4	0xf509f7	0xf505f3	Fat_MountVolume_Join2	1	34	13		0	5	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip14	0xf50a19	0xf50615	Fat_MountVolume_Skip12	1	57	22		0	0	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Skip15	0xf50a52	0xf5064e	Fat_MountVolume_Skip13	1	37	16		0	3	0	
+v10-name-misparented	SeqByteBlock_PathNormalize_Join5	0xf50a9e	0xf5069a	Fat_MountVolume_Join3	2	69	26	bytes	0	0	0	
+v10-name-defined-elsewhere-in-target	Fat_MountVolume_Skip7	0xf50ae9	0xf506e5	Fat_MountVolume_Skip16	1							Fat_MountVolume_Skip7@0xf504c5
+v10-name-misparented	SeqByteBlock_PathNormalize_Epilogue4	0xf50c7e	0xf5087a	Fat_MountVolume_Epilogue	3	5	3		0	0	0	
+v10-name-misparented	AccPedal_CheckCombined_Skip6	0xf5832e	0xf57f2a	AccTick_ByteData_Skip	1	11	3		2	1	0	
+v10-name-misparented	AccPedal_CheckCombined_Skip8	0xf5834f	0xf57f4b	AccTick_ByteData_Join2	1	42	10		7	3	0	
+v10-name-misparented	AccPedal_CheckCombined_Skip4	0xf58379	0xf57f75	AccTick_ByteData_Join3	1	6	2		1	0	0	
+insert-mid-line	AccVoice_IndexedTableLookup_Data_2	0xf5c2d8	0xf5bed4		1	374	0	bytes	1	0	1	
+insert-mid-line	AccTone_JumpTableData_Helper2	0xf5db50	0xf5d74c		1	25	8		4	0	1	
+insert-mid-line	AccTone_JumpTableData_Helper3	0xf5db69	0xf5d765		1	123	18	bytes	5	0	2	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Return	0xf5e9ab	0xf5e5a7		2	24	6		5	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Loop	0xf5e9c3	0xf5e5bf		1	53	14		7	7	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Skip	0xf5e9f8	0xf5e5f4		1	23	6		4	2	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Return4	0xf5ea0f	0xf5e60b		1	1	1		0	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper	0xf5ea10	0xf5e60c		5	55	18		5	8	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Skip	0xf5ea2a	0xf5e626		1	8	2		1	1	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Join	0xf5ea32	0xf5e62e		1	11	3		2	1	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Skip2	0xf5ea3d	0xf5e639		1	6	2		1	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper	0xf5ea43	0xf5e63f		1	4	2		0	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Join	0xf5ea47	0xf5e643		1	22	11		0	4	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Skip	0xf5ea5d	0xf5e659		1	8	4		0	1	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Return	0xf5ea65	0xf5e661		1	1	1		0	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper2	0xf5ea66	0xf5e662		2	21	11		0	4	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Skip2	0xf5ea7b	0xf5e677		1	2	1		0	1	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Epilogue	0xf5ea7d	0xf5e679		1	3	2		0	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Return2	0xf5ea80	0xf5e67c		1	1	1		0	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper3	0xf5ea81	0xf5e67d		1	39	3	bytes	4	0	0	
+insert-mid-line	Not_sure_maybe_SOFT_VERSION_related_Code_Helper_Helper2	0xf5eab9	0xf5e6b5		1	25	3	bytes	2	0	0	
+proof-failed	AccPatch_ChannelToRecordPtr	0xf5f320	0xf5ef1c		1	24	0		0	0	0	instructions stop aligning at +0 of 24
+v10-name-defined-elsewhere-in-target	AccPlayback_CheckStateFlags	0xf61422	0xf6101e	AccPlayback_InitOrUpdate_Skip	1							AccPlayback_CheckStateFlags@0xf61019
+v10-name-defined-elsewhere-in-target	RhythmVoice_SpaceFill_Second_Join	0xf63849	0xf63445	.Lc_f63445 DrumKit_DataTable_Entry1	1							RhythmVoice_SpaceFill_Second_Join@0xf634fe
+v10-name-misparented	AccPat_CalcAccentVelocity_Body_Helper	0xf63a6c	0xf63668	ToneData_LookupEffectParam_Code	1	60	17		9	2	0	
+v10-name-misparented	ToneData_LookupEffectParam_Helper	0xf63ae7	0xf636e3	RhythmROM_LoadKit_CopyReturn_Code	1	29	10		2	1	0	
+insert-mid-line	StyleConvert_ReloadParams_Skip	0xf63f37	0xf63b33		2	8	2		2	0	0	
+insert-mid-line	StyleConvert_ReloadParams_Return	0xf63f3f	0xf63b3b		1	3	3		0	0	0	
+v10-name-defined-elsewhere-in-target	DrumKit_InlineCode1_Helper	0xf64ca6	0xf648a2	DrumKit_UpdateStatusFlags_Helper	1							DrumKit_InlineCode1_Helper@0xf648aa
+v10-name-defined-elsewhere-in-target	DrumKit_UpdateStatusFlags_Helper2	0xf64d25	0xf64921	DrumKit_UpdateStatusFlags_Helper3	1	43	17		0	3	0	DrumKit_UpdateStatusFlags_Helper2@0xf648c7 is not renamed away
+v10-name-misparented	TimeSig_DisplayStrings_Code_Helper3_Skip	0xf660a2	0xf65c9e	TimeSig_RunSlots0to4_Join	1	15	5		1	1	0	
+v10-name-misparented	TimeSig_DisplayStrings_Code_Helper3_Skip2	0xf660b1	0xf65cad	TimeSig_RunSlots0to4_Join2	1	15	5		1	1	0	
+v10-name-misparented	AccPatch_ResolveEntryAddr_Return	0xf6772f	0xf6732b	AccVoice_SetupSlots_DataBlock_Return	1	1	1		0	0	0	
+v10-name-misparented	AccPatch_ResolveEntryAddr_Helper	0xf67730	0xf6732c	AccVoice_SetupSlots_DataBlock_Helper	1	39	14		1	3	0	
+v10-name-defined-elsewhere-in-target	CmpNcpTtl_Dispatch_Code_Skip12	0xf686ad	0xf682a9	CmpNcpTtl_Dispatch_Code_Skip2	1	15	5		0	2	0	CmpNcpTtl_Dispatch_Code_Skip12@0xf687ec is not renamed away
+v10-name-defined-elsewhere-in-target	CmpNcpTtl_Dispatch_Code_Skip2	0xf6874a	0xf68346	CmpNcpTtl_Dispatch_Code_Skip3	1	47	12		0	3	0	CmpNcpTtl_Dispatch_Code_Skip2@0xf682a9 is not renamed away
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip3	0xf687cc	0xf683c8	CmpNcpTtl_Dispatch_Code_Skip4	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip4	0xf6884e	0xf6844a	CmpNcpTtl_Dispatch_Code_Skip5	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip5	0xf6888e	0xf6848a	CmpNcpTtl_Dispatch_Code_Skip6	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip6	0xf688ad	0xf684a9	CmpNcpTtl_Dispatch_Code_Skip7	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip7	0xf6891f	0xf6851b	CmpNcpTtl_Dispatch_Code_Skip8	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip8	0xf6895f	0xf6855b	CmpNcpTtl_Dispatch_Code_Skip9	1							v7 parent: CmpNcpTtl_Dispatch2
+parent-differs	CmpNcpTtl_Dispatch_Code_Skip9	0xf6897e	0xf6857a	CmpNcpTtl_Dispatch_Code_Skip10	1							v7 parent: CmpNcpTtl_Dispatch2
+v10-name-defined-elsewhere-in-target	CmpNcpTtl_Dispatch_Code_Skip10	0xf68b34	0xf68730	CmpNcpTtl_Dispatch_Code_Skip11	1	31	8		0	2	0	CmpNcpTtl_Dispatch_Code_Skip10@0xf6857a is not renamed away
+v10-name-defined-elsewhere-in-target	CmpNcpTtl_Dispatch_Code_Skip11	0xf68bf0	0xf687ec	CmpNcpTtl_Dispatch_Code_Skip12	1	28	7		0	1	0	CmpNcpTtl_Dispatch_Code_Skip11@0xf68730 is not renamed away
+parent-differs	S2cTtlFunc_Skip2	0xf68e5f	0xf68a5b	S2cTtl_Dispatch_Code_Skip2	1							v7 parent: S2cTtl_Dispatch
+parent-differs	S2cTtlFunc_Skip3	0xf68e70	0xf68a6c	S2cTtl_Dispatch_Code_Skip3	1							v7 parent: S2cTtl_Dispatch
+parent-differs	S2cTtlFunc_Join	0xf68e7f	0xf68a7b	S2cTtl_Dispatch_Code_Join	2							v7 parent: S2cTtl_Dispatch
+parent-differs	CstmCpTtlFunc_Skip4	0xf692b7	0xf68eb3	CstmCpTtl_Dispatch_Join2	1							v7 parent: CstmCpTtl_Dispatch
+parent-differs	CstmCpTtlFunc_Skip5	0xf692cd	0xf68ec9	CstmCpTtl_Dispatch_Code_Skip2	1							v7 parent: CstmCpTtl_Dispatch
+parent-differs	CstmCpTtl_RecMode2_OnFromSlotDec_Skip7	0xf69370	0xf68f6c	CstmCpTtlFunc_Skip2	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnToSlotInc_Skip8	0xf6942c	0xf69028	CstmCpTtlFunc_Skip3	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnToSlotDec_Skip9	0xf69470	0xf6906c	CstmCpTtlFunc_Skip4	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnWindowExecute_Skip10	0xf694ab	0xf690a7	CstmCpTtlFunc_Skip5	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip11	0xf69500	0xf690fc	CstmCpTtlFunc_Skip6	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip12	0xf69526	0xf69122	CstmCpTtlFunc_Skip7	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip13	0xf69530	0xf6912c	CstmCpTtlFunc_Skip8	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip14	0xf6954e	0xf6914a	CstmCpTtlFunc_Skip9	1							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtlFunc_Join2	0xf6955f	0xf6915b	CstmCpTtl_Dispatch2_Code_Join	4							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtl_RecMode2_OnCopyOrWindowAbort_Skip15	0xf69565	0xf69161	CstmCpTtlFunc_Skip10	2							v7 parent: CstmCpTtl_Dispatch2
+parent-differs	CstmCpTtlFunc_Join3	0xf69590	0xf6918c	CstmCpTtlFunc_Join2	3							v7 parent: CstmCpTtl_Dispatch2
+v10-name-defined-elsewhere-in-target	AccDraw_Secondary_Helper9	0xf6a762	0xf6a35e	AccDraw_Secondary_Helper14	1	12	3		1	0	0	AccDraw_Secondary_Helper9@0xf6a0f7 is not renamed away
+v10-name-defined-elsewhere-in-target	AccDraw_Secondary_Helper9_Skip	0xf6a7da	0xf6a3d6	AccDraw_Secondary_Skip4	1	29	10		0	2	0	AccDraw_Secondary_Helper9_Skip@0xf6a0ff is not renamed away
+v10-name-defined-elsewhere-in-target	AccDraw_Secondary_Skip4	0xf6a8d0	0xf6a4cc	AccDraw_Secondary_Skip8	1	17	4		2	3	0	AccDraw_Secondary_Skip4@0xf6a3d6 is not renamed away
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Skip4	0xf6b43c	0xf6b038	AccPatch_VoiceAssignDataBlock_Skip29	1							AccPatch_VoiceAssignDataBlock_Skip4@0xf6b0a6
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Skip12	0xf6b4aa	0xf6b0a6	AccPatch_VoiceAssignDataBlock_Skip4	1							AccPatch_VoiceAssignDataBlock_Skip12@0xf6b23b
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Join4	0xf6b4c8	0xf6b0c4	AccPatch_VoiceAssignDataBlock_Join	1							AccPatch_VoiceAssignDataBlock_Join4@0xf6b2ed
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Skip14	0xf6b533	0xf6b12f	AccPatch_VoiceAssignDataBlock_Skip6	1							AccPatch_VoiceAssignDataBlock_Skip14@0xf6b2b9
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Skip15	0xf6b54f	0xf6b14b	AccPatch_VoiceAssignDataBlock_Skip7	1							AccPatch_VoiceAssignDataBlock_Skip15@0xf6b2be
+v10-name-defined-elsewhere-in-target	AccPatch_VoiceAssignDataBlock_Helper22	0xf6b593	0xf6b18f	AccPatch_VoiceAssignDataBlock_Helper2	1							AccPatch_VoiceAssignDataBlock_Helper22@0xf6b655
+proof-failed	AccPatch_VoiceAssignDataBlock_Helper11_Helper2	0xf6b9e8	0xf6b1f2	AccPatch_VoiceAssignDataBlock_Helper3	1	56	0		0	0	0	instructions stop aligning at +0 of 56
+v10-name-defined-elsewhere-in-target	VocalistGridCheck_Join15	0xf73a50	0xf7364c	VocalistGridCheck_Join3	1	8	3		0	0	1	VocalistGridCheck_Join15@0xf73ba6 is not renamed away
+parent-differs	VocalistGrid_DispatchData_DrawPcngOption_Skip11	0xf73dfa	0xf739f6	VocalistGridCheck_Skip16	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGrid_DispatchData_DrawPcngOption_Skip12	0xf73e01	0xf739fd	VocalistGridCheck_Skip17	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGrid_DispatchData_DrawPcngOption_Skip	0xf73e08	0xf73a04	VocalistGridCheck_Skip18	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Join9	0xf73e0d	0xf73a09	VocalistGridCheck_Join12	3							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Skip13	0xf73e18	0xf73a14	VocalistGridCheck_Skip19	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGrid_DispatchData_DrawControlVol_Skip	0xf73e48	0xf73a44	VocalistGridCheck_Skip20	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Join10	0xf73e4d	0xf73a49	VocalistGridCheck_Join13	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Skip14	0xf73e57	0xf73a53	VocalistGridCheck_Skip21	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Join11	0xf73e72	0xf73a6e	VocalistGridCheck_Join14	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Entry2_Code_Skip	0xf73f91	0xf73b8d	VocalistGridCheck_Skip22	1							v7 parent: VocalistGrid_CheckDispData
+parent-differs	VocalistGridCheck_Join12	0xf73faa	0xf73ba6	VocalistGridCheck_Join15	8							v7 parent: VocalistGrid_CheckDispData
+v10-name-defined-elsewhere-in-target	VocalistGridCheck_Join13	0xf74011	0xf73c0d	VocalistGridCheck_Join16	1	4	1		0	1	0	VocalistGridCheck_Join13@0xf73a49 is not renamed away
+parent-differs	MainVocalistPage1OKFunc_OnTechniChordPreset_Skip2	0xf74311	0xf73f0d	VocalistPage2OKFunc_Skip3	1							v7 parent: VocalistPage1_DispatchData
+parent-differs	MainVocalistPage1OKFunc_OnTechniChordPreset_Join3	0xf7431a	0xf73f16	VocalistPage2OKFunc_Join4	1							v7 parent: VocalistPage1_DispatchData
+proof-failed	LoadSong8_PostProcess	0xf87798	0xf87394	.Lc_f87394	2	11	0		0	0	0	instructions stop aligning at +0 of 11
+v10-name-defined-elsewhere-in-target	FileIO_ErrorCodeByteBlock_Skip11	0xf8b529	0xf8b11c	FileIO_ErrorCodeByteBlock_Skip4	1							FileIO_ErrorCodeByteBlock_Skip11@0xf8b1dd
+v10-name-defined-elsewhere-in-target	FileIO_ErrorCodeByteBlock_Skip4	0xf8b539	0xf8b12c	FileIO_ErrorCodeByteBlock_Skip5	1							FileIO_ErrorCodeByteBlock_Skip4@0xf8b11c
+v10-name-defined-elsewhere-in-target	SmfFN_JumpTable	0xf8e0c8	0xf8dcbb	FmmSmfFileNameFunc_Code	1							SmfFN_JumpTable@0xf8dcb6
+parent-differs	SingleLoadSrc_PanelMemDrawMemoryNumber_Skip	0xf8f1d3	0xf8edc6	SLSrcBankList_FuncBody_Skip	1							v7 parent: SLSrcBankList_FuncBody
+parent-differs	SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue	0xf8f218	0xf8ee0b	SLSrcBankList_FuncBody_Epilogue	1							v7 parent: SLSrcBankList_FuncBody
+parent-differs	SingleLoadSrc_PanelMemDrawMemoryName_Epilogue	0xf8f260	0xf8ee53	SLSrcBankList_FuncBody_Helper10_Epilogue	1							v7 parent: SLSrcBankList_FuncBody
+parent-differs	SingleLoadSrc_ComposerDrawPatternSlot_Skip	0xf8f654	0xf8f247	SLSrcBankList_FuncBody_Skip14	1							v7 parent: SingleLoadSrc_SequencerListProc
+parent-differs	SingleLoadSrc_ComposerDrawPatternSlot_Skip2	0xf8f699	0xf8f28c	SingleLoadSrc_SequencerListProc_Skip	1							v7 parent: SingleLoadSrc_SequencerListProc
+parent-differs	SingleLoadSrc_ComposerDrawPatternSlot_Join	0xf8f6c0	0xf8f2b3	SLSrcBankList_FuncBody_Join5	1							v7 parent: SingleLoadSrc_SequencerListProc
+parent-differs	SingleLoadSrc_ComposerDrawPatternSlot_Epilogue	0xf8f6c4	0xf8f2b7	SLSrcBankList_FuncBody_Epilogue3	1							v7 parent: SingleLoadSrc_SequencerListProc
+parent-differs	SingleLoadSrc_ComposerDrawPatternName_Epilogue	0xf8f722	0xf8f315	SLSrcBankList_FuncBody_Epilogue4	2							v7 parent: SingleLoadSrc_SequencerListProc
+parent-differs	SingleLoadSrc_DrawSoundMemBankRows_Epilogue	0xf8f9ea	0xf8f5dd	SLSrcBankList_FuncBody_Epilogue5	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawUserKitName_Epilogue2	0xf8fa2e	0xf8f621	SLSrcBankList_FuncBody_Epilogue6	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemNumber_Skip	0xf8fa9a	0xf8f68d	SLSrcBankList_FuncBody_Skip28	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemNumber_Join10	0xf8fab0	0xf8f6a3	SLSrcBankList_FuncBody_Join11	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemNumber_Skip2	0xf8fab4	0xf8f6a7	SLSrcBankList_FuncBody_Skip29	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemNumber_Epilogue	0xf8faf9	0xf8f6ec	SLSrcBankList_FuncBody_Epilogue7	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemName_Skip	0xf8fb2f	0xf8f722	SLSrcBankList_FuncBody_Skip30	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemName_Join11	0xf8fb39	0xf8f72c	SLSrcBankList_FuncBody_Join12	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadSrc_DrawSoundMemItemName_Epilogue	0xf8fb57	0xf8f74a	SLSrcBankList_FuncBody_Epilogue8	1							v7 parent: SingleLoad_SyncSoundMemCursorGroup
+parent-differs	SingleLoadDst_DrawPanelMemItemRows_Skip	0xf90177	0xf8fd6a	SLDstBankList_FuncBody_Skip	1							v7 parent: SLDstBankList_FuncBody
+parent-differs	SingleLoadDst_DrawPanelMemItemRows_Join	0xf901c1	0xf8fdb4	SLDstBankList_FuncBody_Join	1							v7 parent: SLDstBankList_FuncBody
+parent-differs	SingleLoadDst_DrawComposerItemRows_Skip	0xf90644	0xf90237	SLDstBankList_FuncBody_Skip17	1							v7 parent: SingleLoadDst_SequencerListProc
+parent-differs	SingleLoadDst_DrawComposerItemRows_Skip2	0xf9066d	0xf90260	SLDstBankList_FuncBody_Skip18	1							v7 parent: SingleLoadDst_SequencerListProc
+parent-differs	SingleLoadDst_DrawComposerItemRows_Join	0xf90689	0xf9027c	SLDstBankList_FuncBody_Join7	1							v7 parent: SingleLoadDst_SequencerListProc
+parent-differs	SingleLoadDst_DrawSoundMemBankRows_Skip	0xf9090c	0xf904ff	SLDstBankList_FuncBody_Skip29	1							v7 parent: SingleLoadDst_ComposerListProc
+parent-differs	SingleLoadDst_DrawSoundMemBankRows_Join11	0xf90911	0xf90504	SLDstBankList_FuncBody_Join12	1							v7 parent: SingleLoadDst_ComposerListProc
+parent-differs	FDC_SendAuxCmd_Epilogue	0xf97218	0xf96e0b	FDC_ResultPhase_Read_Epilogue	1							v7 parent: FDC_WriteAuxCmdByte
+parent-differs	FDC_SendAuxCmdReadResult_Epilogue2	0xf9723a	0xf96e2d	FDC_ResultPhase_Read_Epilogue2	1							v7 parent: FDC_WriteAuxCmdByte
+v10-name-misparented	DrawDesignFrame_Skip4	0xf9ca1a	0xf9c60d	EditSw_ByteData_Join	1	22	8		0	1	0	
+v10-name-misparented	DrawDesignFrame_Skip5	0xf9ca30	0xf9c623	EditSw_ByteData_Join2	1	32	12		0	1	0	
+v10-name-defined-elsewhere-in-target	DrawDottedLineWithMode_Impl_Loop3	0xfb0936	0xfb0529	DrawDottedLineWithMode_Impl_Loop4	1							DrawDottedLineWithMode_Impl_Loop3@0xfb0697
+v10-name-defined-elsewhere-in-target	DrawDottedLineWithMode_Impl_Skip14	0xfb0943	0xfb06a4	DrawDottedLineWithMode_Impl_Skip22	1							DrawDottedLineWithMode_Impl_Skip14@0xfb0536
+v10-name-defined-elsewhere-in-target	DrawDottedLineWithMode_Impl_Join6	0xfb0a38	0xfb076e	DrawDottedLineWithMode_Impl_Join8	1							DrawDottedLineWithMode_Impl_Join6@0xfb062b
+v10-name-misparented	ColorBlit2_LargeCodeBlock_Entry2	0xfb0aa4	0xfb0697	DrawDottedLineWithMode_Impl_Loop3	1	13	4		0	2	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip28	0xfb0b76	0xfb0769	DrawDottedLineWithMode_Impl_Skip28	1	2	1		0	0	0	
+v10-name-misparented	Voice_FactoryPresetData_Loop2	0xfb0beb	0xfb07de	DrawDottedLineWithMode_Impl_Loop2	1	13	4		0	2	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip30	0xfb0bf8	0xfb07eb	DrawDottedLineWithMode_Impl_Skip30	1	98	37		0	7	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip31	0xfb0c5a	0xfb084d	DrawDottedLineWithMode_Impl_Skip31	1	52	21		0	1	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip32	0xfb0c8e	0xfb0881	DrawDottedLineWithMode_Impl_Skip32	1	5	2		0	1	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip33	0xfb0c93	0xfb0886	DrawDottedLineWithMode_Impl_Skip33	1	21	9		0	2	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip34	0xfb0ca8	0xfb089b	DrawDottedLineWithMode_Impl_Skip34	1	4	2		0	1	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip35	0xfb0cac	0xfb089f	DrawDottedLineWithMode_Impl_Skip35	1	21	9		0	2	0	
+v10-name-misparented	Voice_FactoryPresetData_Skip36	0xfb0cc1	0xfb08b4	DrawDottedLineWithMode_Impl_Skip36	1	2	1		0	0	0	
+v10-name-misparented	Voice_FactoryPresetData_Join9	0xfb0cc3	0xfb08b6	DrawDottedLineWithMode_Impl_Join9	8	3	1		0	0	0	
+v10-name-misparented	Voice_FactoryPresetData_Join10	0xfb0cc6	0xfb08b9	DrawDottedLineWithMode_Impl_Join10	1	36	13		0	1	0	
+v10-name-misparented	SeMenu_PresetManager_Save_Helper	0xfb1588	0xfb117b	Display_DeferOrUpdateScreen_Direct_0xF	1	1	1		0	0	0	
+v10-name-defined-elsewhere-in-target	DrawFunc_Init_Join3	0xfb2263	0xfb1e56	.Lc_fb1e56	2	64	20	bytes	0	1	0	DrawFunc_Init_Join3@0xfb1db1 is not renamed away
+v10-name-misparented	ColorBlit_WithPaletteSave_Skip	0xfb2556	0xfb2149	ColorBlit_Variant_ByteData_Skip	1	77	30		0	1	0	
+proof-failed	BitMapOut_CopyAuxTable_Loop	0xfb4a67	0xfb4462		1	28	12		0	0	0	num 12/4 at +12; num 24/16 at +15
+proof-failed	BitMapOut_CopyAuxTable_Check	0xfb4a83	0xfb447e		1	583	57		0	1	0	instructions stop aligning at +134 of 583
+v10-name-defined-elsewhere-in-target	BitMapOut_ByteData_RenderState_Skip3	0xfb6073	0xfb58b2	BitMapOut_ByteData_RenderState_Skip2	1							BitMapOut_ByteData_RenderState_Skip3@0xfb58c1
+v10-name-defined-elsewhere-in-target	BitMapOut_ByteData_RenderState_Skip5	0xfb608a	0xfb58c9	BitMapOut_ByteData_RenderState_Skip4	1							BitMapOut_ByteData_RenderState_Skip5@0xfb58e8
+parent-differs	PanelTagA8_ToggleOtpMode_Skip	0xfb6a9c	0xfb62db	EffectMode_ByteData_Block2_Skip	3							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTagA8_ToggleOtpMode_Skip2	0xfb6ab0	0xfb62ef	EffectMode_ByteData_Block2_Skip2	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTagA8_ToggleOtpMode_Skip3	0xfb6acd	0xfb630c	EffectMode_ByteData_Block2_Skip3	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	EffectMode_ByteData_Block2_Code_Join	0xfb6ae6	0xfb6325	EffectMode_ByteData_Block2_Join	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	EffectMode_ByteData_Block2_Code_Skip	0xfb6aec	0xfb632b	EffectMode_ByteData_Block2_Skip4	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTagA8_ToggleOtpMode_Skip4	0xfb6b09	0xfb6348	EffectMode_ByteData_Block2_Skip5	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	EffectMode_ByteData_Block2_Code_Join2	0xfb6b27	0xfb6366	EffectMode_ByteData_Block2_Join2	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Skip	0xfb6b55	0xfb6394	EffectMode_ByteData_Block3_Skip	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Skip2	0xfb6b66	0xfb63a5	EffectMode_ByteData_Block3_Skip2	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Join	0xfb6b8f	0xfb63ce	EffectMode_ByteData_Block3_Join	6							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Skip3	0xfb6b94	0xfb63d3	EffectMode_ByteData_Block3_Skip3	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Skip4	0xfb6bb2	0xfb63f1	EffectMode_ByteData_Block3_Skip4	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag48_MsaReapply_Skip5	0xfb6bd3	0xfb6412	EffectMode_ByteData_Block3_Skip5	4							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	EffectMode_ByteData_Block4_Code_Skip	0xfb6c03	0xfb6442	EffectMode_ByteData_Block4_Skip	1							v7 parent: EffectMode_CopyVoiceParams
+parent-differs	PanelTag98_MsaReapply_Join	0xfb6c24	0xfb6463	EffectMode_ByteData_Block4_Skip2	5							v7 parent: EffectMode_CopyVoiceParams
+proof-failed	MasterSetup_EventDispatch	0xfb809c	0xfb78db	AcMstStyleAlp_Boundary_Skip	2	175	36		0	6	0	instructions stop aligning at +109 of 175
+both-named	MasterSetup_HandleDialStop	0xfb814b	0xfb7980	AcMstStyleAlp_Boundary_OnHide	1	25	7		0	1	0	
+both-named	MasterSetup_HandleDialTurn	0xfb816b	0xfb79a0	AcMstStyleAlp_Boundary_OnSwIn	1	90	30		0	5	2	
+v10-name-misparented	FSWAss_RefreshAllVoices_Skip14	0xfbc7df	0xfbc014	DispTimeSet_EventDispatch_Skip2	2	46	15		0	3	0	
+v10-name-misparented	FSWAss_RefreshAllVoices_Skip15	0xfbc80d	0xfbc042	DispTimeSet_EventDispatch_Skip4	2	46	15		0	3	0	
+v10-name-misparented	FSWAss_RefreshAllVoices_Skip16	0xfbc83b	0xfbc070	DispTimeSet_EventDispatch_Skip5	2	48	15		0	3	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Join	0xfc65e2	0xfc5e17	ExtDev_SndParam_Block48_Var04_B_Join	1	6	2		0	1	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip8	0xfc6641	0xfc5e76	ExtDev_SndParam_Block98_Var40_Skip2	1	3	1		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Join5	0xfc6644	0xfc5e79	ExtDev_SndParam_Block98_Var40_Join3	1	6	2		0	1	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip9	0xfc666d	0xfc5ea2	ExtDev_SndParam_BlockA9_Var02_Skip3	1	3	1		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Join6	0xfc6670	0xfc5ea5	ExtDev_SndParam_BlockA9_Var02_Join4	1	7	3		0	1	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip5	0xfc66b8	0xfc5eed	ExtDev_SndParam_Block98_Var40_B_Skip4	1	3	1		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Join4	0xfc66bb	0xfc5ef0	ExtDev_SndParam_Block98_Var40_B_Join5	1	6	2		0	1	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip6	0xfc6700	0xfc5f35	ExtDev_SndParam_ConfigAndWrite_Skip5	1	3	1		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip3	0xfc67e2	0xfc6017	ExtDev_SndParam_DispatchAndWriteA8_Skip7	1	49	17		1	4	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Epilogue3	0xfc6813	0xfc6048	ExtDev_SndParam_DispatchAndWriteA8_Epilogue3	3	2	2		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip4	0xfc683b	0xfc6070	ExtDev_SndParam_DispatchAndWriteA8_Alt_Skip8	1	49	17		1	4	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Epilogue4	0xfc686c	0xfc60a1	ExtDev_SndParam_DispatchAndWriteA8_Alt_Epilogue4	3	2	2		0	0	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Skip7	0xfc68b7	0xfc60ec	ExtDev_SndParam_DispatchComplex_Skip9	1	59	19		1	5	0	
+v10-name-misparented	NakaData_WidgetInit1_Code_Epilogue6	0xfc68f2	0xfc6127	ExtDev_SndParam_DispatchComplex_Epilogue5	3	4	3		0	0	0	
+parent-differs	ExtData_VoiceParam_DispatchBytecode_Join	0xfc75a1	0xfc6dd6	SndParamF9A541_ResBit7_Code_Join	2							v7 parent: ExtData_VoiceParam_DispatchBytecode_ModeEntertainer
+parent-differs	ExtData_VoiceParam_DispatchBytecode_Epilogue2	0xfc75a4	0xfc6dd9	SndParamF9A541_ResBit7_Code_Epilogue	12							v7 parent: ExtData_VoiceParam_DispatchBytecode_ModeEntertainer
+parent-differs	ExtData_ToneParam_AltBody_Entry	0xfc889c	0xfc80d1	ExtData_ToneParam_AltBody_OnStyleProgram_Skip	1							v7 parent: ExtData_ToneParam_AltBody_OnStyleProgram
+proof-failed	MidiStream_RunStatus_Mode1_Return2	0xfcceff	0xfcc72f	MidiStream_HandleRunningStatus_Return2	1	2	1		0	0	0	instructions stop aligning at +1 of 2
+parent-differs	SndParam_SetRegWord_Skip	0xfcdec9	0xfcd6f8	SndParam_RegisterBitfield_Data_Part_3_Skip	1							v7 parent: SndParam_RegisterBitfield_Data_Part_3
+parent-differs	SndParam_SetRegWord_Skip2	0xfcded4	0xfcd703	SndParam_RegisterBitfield_Data_Part_3_Skip2	1							v7 parent: SndParam_RegisterBitfield_Data_Part_3
+parent-differs	SndParam_SetRegWord_Skip4	0xfcdf06	0xfcd735	SndParam_RegisterBitfield_Data_Skip2_Part_Skip4	1							v7 parent: SndParam_RegisterBitfield_Data_Skip2_Part
+parent-differs	SndParam_SetRegWord_Skip3	0xfcdf36	0xfcd765	SndParam_RegisterBitfield_Data_Skip2_Part_Skip3	1							v7 parent: SndParam_RegisterBitfield_Data_Skip2_Part
+parent-differs	SndParam_SetRegWord_Join	0xfcdf3c	0xfcd76b	SndParam_RegisterBitfield_Data_Skip2_Part_Join	2							v7 parent: SndParam_RegisterBitfield_Data_Skip2_Part
+parent-differs	MidiPkt_XferOnPanelMemBlock_Skip	0xfd7c16	0xfd7445	MidiPkt_ArpExtHandler_B_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_A
+parent-differs	MidiPkt_XferOnSoundRamStart_Skip	0xfd7c46	0xfd7475	MidiPkt_ArpExtHandler_C_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_A
+parent-differs	MidiPkt_XferOnSoundRamDataBlock_Skip	0xfd7c6d	0xfd749c	MidiPkt_ArpExtHandler_D_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_A
+parent-differs	MidiPkt_XferOnStyleImageStart_Skip	0xfd7ca1	0xfd74d0	MidiPkt_ArpExtHandler_E_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_A
+parent-differs	MidiPkt_XferOnStyleImageBlock2_Skip	0xfd7cc9	0xfd74f8	MidiPkt_ArpExtHandler_F_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_A
+parent-differs	MidiPkt_XferOnAccompBlocksStart_Skip	0xfd7d29	0xfd7558	MidiPkt_ArpExtHandler_H_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_G
+parent-differs	MidiPkt_XferOnAccompBlocksBlock2_Skip	0xfd7d51	0xfd7580	MidiPkt_ArpExtHandler_I_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_G
+parent-differs	MidiPkt_XferOnSeqEventBlock_Skip	0xfd7e01	0xfd7630	MidiPkt_ArpExtHandler_M_Data_Skip	1							v7 parent: MidiPkt_ArpExtHandler_L
+parent-differs	SysEx_OnGmSystemOff_Skip	0xfda8e6	0xfda115	MidiPkt_SysExProcessor_Data_Skip	1							v7 parent: SysEx_OnGmSystemOn
+parent-differs	SysEx_OnGmSystemOff_Skip2	0xfda8ec	0xfda11b	MidiPkt_SysExProcessor_Data_Skip2	1							v7 parent: SysEx_OnGmSystemOn
+parent-differs	SysEx_OnGmSystemOff_Skip3	0xfda8f6	0xfda125	MidiPkt_SysExProcessor_Data_Skip3	1							v7 parent: SysEx_OnGmSystemOn
+parent-differs	PanelTag70_UpdateAudioConfig_Skip5	0xfde6cb	0xfddefa	UIStateEvt_EffectSelect_Data_Skip5	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip6	0xfde6d8	0xfddf07	UIStateEvt_EffectSelect_Data_Skip6	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip7	0xfde6e5	0xfddf14	UIStateEvt_EffectSelect_Data_Skip7	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Join	0xfde6f0	0xfddf1f	UIStateEvt_EffectSelect_Data_Join	5							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip	0xfde6f7	0xfddf26	UIStateEvt_EffectSelect_Data_Skip	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip8	0xfde716	0xfddf45	UIStateEvt_EffectSelect_Data_Skip8	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip2	0xfde723	0xfddf52	UIStateEvt_EffectSelect_Data_Skip2	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Loop	0xfde74d	0xfddf7c	UIStateEvt_EffectSelect_Data_Loop	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip9	0xfde772	0xfddfa1	UIStateEvt_EffectSelect_Data_Skip9	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip3	0xfde779	0xfddfa8	UIStateEvt_EffectSelect_Data_Skip3	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag70_UpdateAudioConfig_Skip4	0xfde794	0xfddfc3	UIStateEvt_EffectSelect_Data_Skip4	1							v7 parent: UIStateEvt_TransposeUpdate_Apply_Code_2
+parent-differs	PanelTag80_UpdateAudioConfig_Join	0xfde825	0xfde054	UIStateEvt_PlayModeGuard_ClearBit_Join	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Loop2	0xfde839	0xfde068	UIStateEvt_ChannelConfig_Data_Loop2	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip4	0xfde873	0xfde0a2	UIStateEvt_ChannelConfig_Data_Skip	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Loop	0xfde87b	0xfde0aa	UIStateEvt_ChannelConfig_Data_Loop	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join5	0xfde896	0xfde0c5	UIStateEvt_ChannelConfig_Data_Join	3							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip	0xfde89d	0xfde0cc	UIStateEvt_PlayModeGuard_ClearBit_Skip	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip2	0xfde8a4	0xfde0d3	UIStateEvt_PlayModeGuard_ClearBit_Skip2	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip5	0xfde8bc	0xfde0eb	UIStateEvt_ChannelConfig_Data_Skip4	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join6	0xfde8c6	0xfde0f5	UIStateEvt_ChannelConfig_Data_Join2	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join2	0xfde8cc	0xfde0fb	UIStateEvt_PlayModeGuard_ClearBit_Join2	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip3	0xfde8f2	0xfde121	UIStateEvt_PlayModeGuard_ClearBit_Skip3	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join7	0xfde910	0xfde13f	UIStateEvt_ChannelConfig_Data_Join3	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join3	0xfde916	0xfde145	UIStateEvt_PlayModeGuard_ClearBit_Join3	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Join4	0xfde928	0xfde157	UIStateEvt_PlayModeGuard_ClearBit_Join4	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip6	0xfde93b	0xfde16a	UIStateEvt_ChannelConfig_Data_Skip5	3							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip7	0xfde95b	0xfde18a	UIStateEvt_ChannelConfig_Data_Skip2	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	PanelTag80_UpdateAudioConfig_Skip8	0xfde96e	0xfde19d	UIStateEvt_ChannelConfig_Data_Skip3	1							v7 parent: UIStateEvt_PlayModeGuard_ClearBit
+parent-differs	SwbtB2_CodeA8_UpdateAudioConfig_Skip	0xfde9a0	0xfde1cf	UIStateEvt_MuteToggle_Data_Skip	1							v7 parent: SwbtB2_Code93_NopListener
+parent-differs	SwbtB2_CodeA8_UpdateAudioConfig_Join	0xfde9a6	0xfde1d5	UIStateEvt_MuteToggle_Data_Join	1							v7 parent: SwbtB2_Code93_NopListener
+v10-name-defined-elsewhere-in-target	AudioInit_CheckMixFlagsAlt	0xfdea64	0xfde2a8	AudioInit_RouteAndPan	1							AudioInit_CheckMixFlagsAlt@0xfde27e
+parent-differs	PanelTag60_ApplyEffectOnOff_Skip	0xfeaa4d	0xfea27e	HdaeRom_Entry_Skip	1							v7 parent: SndParam_ProcessEntry
+parent-differs	PanelTag60_ApplyEffectOnOff_Skip2	0xfeaa65	0xfea296	HdaeRom_Entry_Skip2	1							v7 parent: SndParam_ProcessEntry
+parent-differs	PanelTag60_ApplyEffectOnOff_Epilogue	0xfeaa7d	0xfea2ae	HdaeRom_Entry_Epilogue	2							v7 parent: SndParam_ProcessEntry

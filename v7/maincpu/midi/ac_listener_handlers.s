@@ -1787,10 +1787,10 @@ Data_InOutGridDispatch_VelocityInput:
 	ld	xwa, 20480
 	call	SndParam_LookupReadOnly
 	cp	hl, 2:i3
-	jr	z, InOutGridCheck_Skip15	; -> 0xF75C6B
+	jr	z, Data_InOutGridDispatch_VelocityInput_Skip15	; -> 0xF75C6B
 	lda	xwa, (xsp+6)
 	cp	hl, 1:i3
-	jr	z, InOutGridCheck_Skip14	; -> 0xF75C39
+	jr	z, Data_InOutGridDispatch_VelocityInput_Skip14	; -> 0xF75C39
 	cp	hl, 0:i3
 	jrl	nz, MdPreset_ReturnZero2	; -> 0xF75DF4
 	ldw	(xwa), 3
@@ -1805,7 +1805,7 @@ Data_InOutGridDispatch_VelocityInput:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4	; -> 0xF75DF0
-InOutGridCheck_Skip14:
+Data_InOutGridDispatch_VelocityInput_Skip14:
 	ldw	(xwa), 3
 	ld	xwa, 20481
 	call	SndParam_LookupReadOnly
@@ -1822,7 +1822,7 @@ InOutGridCheck_Skip14:
 	lda	xde, (xsp+4)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	InOutGridCheck_Join4	; -> 0xF75DF0
-InOutGridCheck_Skip15:
+Data_InOutGridDispatch_VelocityInput_Skip15:
 	ldw	(xsp+6), 3
 	ld	xwa, 20482
 	call	SndParam_LookupReadOnly

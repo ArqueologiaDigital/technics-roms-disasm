@@ -47,9 +47,7 @@ SeMenu_StoreEventId:
 	ret
 
 SeMenu_LoadObjectPtr_Data:
-	.byte 0xb0
-	push_a
-	.byte 0x98, 0x06
+	ld	(xwa), (0x698)
 	ret
 
 SeMenu_LoadMasterPtr:
@@ -418,6 +416,12 @@ SeMenu_SendPartToneIndex_Join:
 	popw	iz
 	lda	xsp, (xsp+20)
 	ret
+; SeMenu_SendToneIndex: Sends a 16-bit TONE index to the tone generator: builds the 6-byte sound-editor command {0x88,
+;   PART_SELECT, id, DE >> 8, DE & 0xFF, (C - 1) * 16 + (A - 1)} -- id 10, or 22 when SeMenu_LoadObjEntries returns
+;   non-zero -- and sends it with SeMenu_FlushDisplayObj (sendCOMM). A is the part number (SeMenu_ValidatePartNumber),
+;   C page param 0 (the slot SeMenu_GetToneIndex reads). Basis: callers + body -- SeTonHyb1_OnColumn2 and
+;   SeTonHyb1_OnColumn3 call it right after stepping the tone index, then redraw the field
+;   (SeMenu_InitDisplayField_Alt) and rebind the dial.
 SeMenu_SendToneIndex:
 	lda	xsp, (xsp-22)
 	pushw	iz
@@ -1227,27 +1231,36 @@ SeMenu_BitShiftMask_End_Loop3:
 	cp	de, bc
 	jr	c, SeMenu_BitShiftMask_End_Loop3
 	ret
-SeMenu_RefreshPartDisplay_Data_2:
-	.byte 0x88, 0x06
-	push	xsp
-	nop
-	jr	z, SeMenu_RefreshPartDisplay_Data_2_Code_Skip
+; SeMenu_StepParamField: Steps the bit field of edit record XWA (+0 old byte, +6 mask, +7 shift, +8 max, +9 min, +10
+;   signed step) by the step, clamped to [min,max], and writes the merged byte to +3; L = 1 if the field changed, 0 if
+;   not or if the record is unusable (mask 0, shift > 7, step 0). min < 0 takes the signed-compare copy. Basis:
+;   callers + body -- the OnColumn handlers fill +6..+10 (SeMenu_SwitchToValueStep writes +10) and test L;
+;   SeMenu_StepParamFieldAndSend wraps it and sends the byte at +3.
+SeMenu_StepParamField:
+	cp	(xwa+6), 0
+	jr	z, SeMenu_StepParamField_Skip
 	cp	(xwa+7), 7
-	jr	ugt, SeMenu_RefreshPartDisplay_Data_2_Code_Skip
+	jr	ugt, SeMenu_StepParamField_Skip
 	cp	(xwa+10), 0
-	jr	nz, SeMenu_RefreshPartDisplay_Data_2_Code_Skip2
-SeMenu_RefreshPartDisplay_Data_2_Code_Skip:
+	jr	nz, SeMenu_StepParamField_Skip2
+SeMenu_StepParamField_Skip:
 	ld	l, 0:opc
 	ret
-SeMenu_RefreshPartDisplay_Data_2_Code_Skip2:
+SeMenu_StepParamField_Skip2:
 	cp	(xwa+9), 0
-	jr	lt, SeMenu_RefreshPartDisplay_Data_2_Code_Skip3
+	jr	lt, SeMenu_StepParamField_Skip3
 	calr	SeMenu_StepParamFieldUnsigned
-	jr	SeMenu_RefreshPartDisplay_Data_2_Code_Return
-SeMenu_RefreshPartDisplay_Data_2_Code_Skip3:
+	jr	SeMenu_StepParamField_Return
+SeMenu_StepParamField_Skip3:
 	calr	SeMenu_StepParamFieldSigned
-SeMenu_RefreshPartDisplay_Data_2_Code_Return:
+SeMenu_StepParamField_Return:
 	ret
+; SeMenu_StepParamFieldUnsigned: SeMenu_StepParamField for an edit record whose min (+9) is >= 0: extracts the field
+;   ((+0 >> shift +7) & mask +6), adds the signed step (+10) clamped to [min, max] with unsigned compares, merges it
+;   back into the original byte and writes it to +3; L = 1 if the value moved, 0 if it was already at the limit.
+;   Basis: callers + body -- SeMenu_StepParamField calls it when (+9) >= 0 and the signed-compare copy
+;   SeMenu_StepParamFieldSigned otherwise; its header describes the step and says 'min < 0 takes
+;   the signed-compare copy'.
 SeMenu_StepParamFieldUnsigned:
 	lda	xsp, (xsp-16)
 	push	xiz
@@ -1328,6 +1341,10 @@ SeMenu_StepParamFieldUnsigned_Skip3:
 SeMenu_StepParamFieldUnsigned_Join2:
 	ld	(xiz), a
 	jr	SeMenu_StepParamFieldUnsigned_Join
+; SeMenu_StepParamFieldSigned: SeMenu_StepParamField for an edit record whose min (+9) is negative: the same field
+;   step as SeMenu_StepParamFieldUnsigned (extract, add the signed step +10, clamp to [min, max],
+;   merge, write to +3; L = 1 if it moved), but the lower-bound test is a signed compare. Basis: callers + body --
+;   SeMenu_StepParamField calls it when (+9) < 0; its header says 'min < 0 takes the signed-compare copy'.
 SeMenu_StepParamFieldSigned:
 	lda	xsp, (xsp-16)
 	push	xiz
@@ -1411,17 +1428,18 @@ SeMenu_StepParamFieldSigned_Skip6:
 SeMenu_StepParamFieldSigned_Join4:
 	ld	(xiz), a
 	jr	SeMenu_StepParamFieldSigned_Join3
+; SeMenu_ToggleSolo: Toggles the sound-editor SOLO flag (RAM 0x65C), re-sends the per-part level (code 0x17, only the
+;   edited part non-zero while SOLO is on) and redraws the SOLO button. Basis: callers + body -- every page's
+;   OnSideRow1 handler calls it on press (A != 0).
 SeMenu_ToggleSolo:
 	dec	2, xsp
 	lda	xwa, (xsp)
 	calr	SeMenu_SetupMenuDisplay_Finalize
-	.byte 0x87
-	push	xsp
-	nop
-	jr	z, SeMenu_BitShiftMask_End_Skip7
+	cp	(xsp), 0
+	jr	z, SeMenu_ToggleSolo_Skip7
 	ld	wa, 0:i3
 	jr	SeMenu_ToggleSolo_Join5
-SeMenu_BitShiftMask_End_Skip7:
+SeMenu_ToggleSolo_Skip7:
 	ld	wa, 1:i3
 SeMenu_ToggleSolo_Join5:
 	calr	SeMenu_SetupMenuDisplay_Section3_End
@@ -1441,9 +1459,7 @@ SeMenu_SetFilterType:
 	lda	xwa, (xsp)
 	calr	SeMenu_LoadObjEntries
 	lda	xde, (xsp+4)
-	.byte 0x87
-	push	xsp
-	nop
+	cp	(xsp), 0
 	jr	nz, SeMenu_SetFilterType_Skip8
 	ld	a, (xsp+2)
 	extz	wa
@@ -1511,7 +1527,7 @@ SeMenu_TransferPartValues_AltLoop:
 ; SeMenu_GetLfoPartSwitchParamId: Stores in (XBC) the tone-generator parameter id of the per-part LFO switch byte for
 ;   LFO page kind A -- 0 (amp) -> 0x26, 1 (pitch) -> 0x06, 2 (filter) -> 0x38 -- and returns HL = 0; any other A
 ;   returns HL = 0xFFFF. Basis: callers + body -- SeMenu_CyclePartLfoState passes the id to
-;   SeMenu_RegisterElement_Extended when it sends a part's changed LFO byte, and UpdSeSel_DetailedUpdate_Join2 uses it
+;   SeMenu_RegisterElement_Extended when it sends a part's changed LFO byte, and UpdSeSel_DetailedUpdate_Join5 uses it
 ;   to send the four part bytes on entering the LFO screens 47/42/57 (kinds 0/1/2).
 SeMenu_GetLfoPartSwitchParamId:
 	cp a, 1:i3
@@ -1617,7 +1633,7 @@ SeMenu_TransferPartValues_EndData_Skip27:
 	ret	nz
 	ld	(xwa), 1
 	ret
-UpdSeSel_DetailedUpdate_Helper:
+UpdSeSel_DetailedUpdate_SetDisplayState_Helper:
 	ld	c, (1685:16)
 	cp	c, 1:i3
 	jr	c, SeMenu_TransferPartValues_EndData_Skip28
@@ -1628,10 +1644,14 @@ SeMenu_TransferPartValues_EndData_Skip28:
 SeMenu_TransferPartValues_EndData_Skip29:
 	ld	(xwa), c
 	ret
+; SeCtr2_SetSelection: Stores A as the SeCtr2 page's remembered selection (RAM 0x695; the side rows store 1, 2, 5 or
+;   6), which the page draw reads back (clamped to 1..6, default 1) into page param 0 and highlights. Basis: callers +
+;   body -- SeCtr2_OnSideRow2 (choices 2/1) and SeCtr2_OnSideRow3 (6/5) store their choice here and send event 59;
+;   only UpdSeSel_DetailedUpdate_SetDisplayState_Helper reads 0x695.
 SeCtr2_SetSelection:
 	ld	(1685:16), a
 	ret
-SeMenu_TransferPartValues_EndData_0xA3:
+UpdSeSel_DetailedUpdate_SetDisplayState_Helper2:
 	cp	a, 6:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip14
 	cp	a, 5:i3
@@ -1651,24 +1671,24 @@ SeMenu_TransferPartValues_EndData_Skip15:
 SeMenu_TransferPartValues_EndData_Join2:
 	ld	(xbc), a
 	ret
-UpdSeSel_DetailedUpdate_Helper3:
+UpdSeSel_DetailedUpdate_SetDisplayState_Helper3:
 	cp	a, 6:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip17
 	cp	a, 5:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip16
 	cp	a, 2:i3
-	jr	nz, UpdSeSel_DetailedUpdate_Helper3_Skip
+	jr	nz, SeMenu_TransferPartValues_EndData_Skip30
 	ld	a, 24:opc
-	jr	UpdSeSel_DetailedUpdate_Helper3_Join
+	jr	SeMenu_TransferPartValues_EndData_Join10
 SeMenu_TransferPartValues_EndData_Skip16:
 	ld	a, 33:opc
-	jr	UpdSeSel_DetailedUpdate_Helper3_Join
+	jr	SeMenu_TransferPartValues_EndData_Join10
 SeMenu_TransferPartValues_EndData_Skip17:
 	ld	a, 36:opc
-	jr	UpdSeSel_DetailedUpdate_Helper3_Join
-UpdSeSel_DetailedUpdate_Helper3_Skip:
+	jr	SeMenu_TransferPartValues_EndData_Join10
+SeMenu_TransferPartValues_EndData_Skip30:
 	ld	a, 21:opc
-UpdSeSel_DetailedUpdate_Helper3_Join:
+SeMenu_TransferPartValues_EndData_Join10:
 	ld	(xbc), a
 	ret
 SeMenu_ApplyPartEdit_Helper2:
@@ -1690,7 +1710,7 @@ SeMenu_ApplyPartEdit_Helper2:
 	ld	(xwa+9), 0
 	ld	c, (xsp+20)
 	ld	(xwa+10), c
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	cp	l, 0:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Epilogue
 	ld	a, (xsp+22)
@@ -1703,10 +1723,7 @@ SeMenu_ApplyPartEdit_Helper2:
 	extz	bc
 	extz	hl
 	lda	xde, (xsp+5)
-	.byte 0x8f
-	ret
-	push	xsp
-	nop
+	cp	(xsp+14), 0
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip18
 	pushw	hl
 	ld	wa, 0:i3
@@ -1741,7 +1758,7 @@ SeMenu_StepParamFieldAndSend:
 	ld	(xsp+10), a
 	ld	xiz, (xsp+16)
 	ld	xwa, xiz
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	extz	hl
 	cp	hl, 0:i3
 	jr	nz, SeMenu_StepParamFieldAndSend_Skip19
@@ -1761,9 +1778,7 @@ SeMenu_StepParamFieldAndSend_Skip19:
 	ld	c, (xsp+20)
 	extz	bc
 	lda	xde, (xiz+3)
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp	(xsp+4), 0
 	jr	nz, SeMenu_StepParamFieldAndSend_Skip20
 	pushw	hl
 	calr	SeMenu_RegisterElement_Extended
@@ -1891,6 +1906,11 @@ SeMenu_CyclePartLfoState_Join6:
 SeMenu_CyclePartLfoState_Epilogue4:
 	lda	xsp, (xsp+14)
 	ret
+; SeCtr2_StepPartField: For part A (1..4) of the AFTER TOUCH controller page (SeCtr2): steps the part's 2-bit field
+;   (bits 2A-2..2A-1) of page param 12 -- C = 0: 0 -> 1 -> 3 (stays at 3); C != 0: 3 -> 1 -> 0 (stays at 0) -- then
+;   redraws the column (SeMenu_RegisterElement_Extended), stores param 12 and posts it (SeTitle_DrawField 59).
+;   Parts outside 1..4 do nothing. Basis: callers + body -- SeCtr2_OnPartColumn (columns 5-8 '1ST 2ND 3RD 4TH') is its
+;   only caller and its header already describes the step.
 SeCtr2_StepPartField:
 	lda	xsp, (xsp-12)
 	push	qiz
@@ -1968,9 +1988,7 @@ SeCtr2_StepPartField_Join7:
 	ldto_berp a, 251
 	extz	wa
 	lda	xde, (xsp+8)
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp	(xsp+4), 0
 	jr	nz, SeCtr2_StepPartField_Skip26
 	pushw	wa
 	ld	wa, 0:i3
@@ -2296,20 +2314,20 @@ SeWrtMem_ChooseInitialSlot:
 	lda	xwa, (xsp+6)
 	calr	SeMenu_LoadMasterPtr
 	cp	(xsp+6), 1
-	jr	nz, SeMenu_SetupPartDisplay_End_Skip
+	jr	nz, SeMenu_SetupPartDisplay_End_Skip12
 	lda_d16	xwa, (0xf9d0)
 	ld	e, (xwa)
-	jr	SeMenu_SetupPartDisplay_End_Join
-SeMenu_SetupPartDisplay_End_Skip:
+	jr	SeMenu_SetupPartDisplay_End_Join5
+SeMenu_SetupPartDisplay_End_Skip12:
 	cp	(xsp+6), 2
-	jr	nz, SeMenu_SetupPartDisplay_End_Skip2
+	jr	nz, SeMenu_SetupPartDisplay_End_Skip13
 	lda_d16	xwa, (0xf9ea)
 	ld	e, (xwa)
-	jr	SeMenu_SetupPartDisplay_End_Join
-SeMenu_SetupPartDisplay_End_Skip2:
+	jr	SeMenu_SetupPartDisplay_End_Join5
+SeMenu_SetupPartDisplay_End_Skip13:
 	lda_d16	xwa, (0xf9b6)
 	ld	e, (xwa)
-SeMenu_SetupPartDisplay_End_Join:
+SeMenu_SetupPartDisplay_End_Join5:
 	ld	c, (xwa+1)
 	lda	xwa, (xsp+8)
 	ld	(xwa+3), e
@@ -2323,26 +2341,26 @@ SeMenu_SetupPartDisplay_End_Join:
 	ld	a, (xbc+1)
 	ld	(xsp+2), a
 	cp_erpb	251, 16
-	jr	z, SeMenu_SetupPartDisplay_End_Skip3
+	jr	z, SeMenu_SetupPartDisplay_End_Skip14
 	cp_erpb	251, 17
-	jr	z, SeMenu_SetupPartDisplay_End_Skip3
+	jr	z, SeMenu_SetupPartDisplay_End_Skip14
 	ld	xwa, (xsp+14)
 	ld	(xwa), (0x6ad)
 	cp	(xwa), 39
-	jr	ugt, SeMenu_SetupPartDisplay_End_Skip6
+	jr	ugt, SeMenu_SetupPartDisplay_End_Skip17
 	jr	SeMenu_SetupPartDisplay_End_Epilogue
-SeMenu_SetupPartDisplay_End_Skip3:
+SeMenu_SetupPartDisplay_End_Skip14:
 	lda	xwa, (xsp+4)
 	calr	SeMenu_SetSelectedRow_Data
 	cp	(xsp+4), 0
-	jr	nz, SeMenu_SetupPartDisplay_End_Skip5
+	jr	nz, SeMenu_SetupPartDisplay_End_Skip16
 	cp_erpb	251, 17
-	jr	nz, SeMenu_SetupPartDisplay_End_Skip4
+	jr	nz, SeMenu_SetupPartDisplay_End_Skip15
 	ldib_erp	251, 1
-	jr	SeMenu_SetupPartDisplay_End_Join2
-SeMenu_SetupPartDisplay_End_Skip4:
+	jr	SeMenu_SetupPartDisplay_End_Join6
+SeMenu_SetupPartDisplay_End_Skip15:
 	ldib_erp	251, 0
-SeMenu_SetupPartDisplay_End_Join2:
+SeMenu_SetupPartDisplay_End_Join6:
 	ld	xwa, (xsp+14)
 	ld	c, (xsp+2)
 	ld	(xwa), c
@@ -2353,12 +2371,12 @@ SeMenu_SetupPartDisplay_End_Join2:
 	ld	wa, 1:i3
 	calr	SeMenu_SetSelectedRow
 	jr	SeMenu_SetupPartDisplay_End_Epilogue
-SeMenu_SetupPartDisplay_End_Skip5:
+SeMenu_SetupPartDisplay_End_Skip16:
 	ld	xwa, (xsp+14)
 	ld	(xwa), (0x6ad)
 	cp	(xwa), 39
 	jr	ule, SeMenu_SetupPartDisplay_End_Epilogue
-SeMenu_SetupPartDisplay_End_Skip6:
+SeMenu_SetupPartDisplay_End_Skip17:
 	ld	xwa, (xsp+14)
 	ld	(xwa), 0
 	ld	(0x6ad:16), 0
@@ -2389,6 +2407,11 @@ SeMenu_SetNameBufferChar:
 	lda	xde, (0x20bf3:24)
 	ld	(xde+wa), c
 	ret
+; SeMenu_GetNameBufferChar: Copies character A (0..15) of the 16-byte name buffer at 0x20BF3 to (XBC); A > 15 does
+;   nothing. Basis: callers + body -- only the WRITE SOUND name-entry handlers call it: the side-row-1 handler reads
+;   all 16 characters to send them, the cursor-left/right handlers read the character at the new cursor (page param 0)
+;   into param 1. Its twin SeMenu_SetNameBufferChar writes the buffer, and
+;   SeWrtMem_DrawPage fills it with an entry's name (SeMenu_SetupPartDisplay mode 1).
 SeMenu_GetNameBufferChar:
 	cp	a, 15
 	ret	ugt
@@ -2458,10 +2481,10 @@ SeMenu_SwitchToValueStep_Skip8:
 	ret
 SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7:
 	cp	a, 97
-	jr	c, SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7_Skip
+	jr	c, SeMenu_SetupPartDisplay_End_Skip9
 	ld	(xbc), 32
 	ret
-SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7_Skip:
+SeMenu_SetupPartDisplay_End_Skip9:
 	extz	wa
 	lda	xde, (GUI_DisplayStructData_0x1129:24)
 	ld	a, (xde+wa)
@@ -3015,7 +3038,7 @@ SeMenu_ApplyPartEdit_AltStore_Join8:
 	ldw	wa, 55
 	ld	bc, 3:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 1:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue2:
@@ -3054,7 +3077,7 @@ SeMenu_ApplyPartEdit_AltStore_Join9:
 	ldw	wa, 55
 	ld	bc, 4:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 2:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue3:
@@ -3062,7 +3085,7 @@ SeLfo1_StepSelectorAndReload_Epilogue3:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join10:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3112,7 +3135,7 @@ SeLfo1_StepSelectorAndReload_Join2:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 3:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3151,7 +3174,7 @@ SeMenu_ApplyPartEdit_AltStore_Join11:
 	ldw	wa, 55
 	ld	bc, 6:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 4:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue4:
@@ -3159,7 +3182,7 @@ SeLfo1_StepSelectorAndReload_Epilogue4:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join12:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3209,7 +3232,7 @@ SeLfo1_StepSelectorAndReload_Join3:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 5:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3248,7 +3271,7 @@ SeMenu_ApplyPartEdit_AltStore_Join13:
 	ldw	wa, 55
 	ldw	bc, 8
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 6:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue5:
@@ -3256,7 +3279,7 @@ SeLfo1_StepSelectorAndReload_Epilogue5:
 	ret
 SeMenu_ApplyPartEdit_AltStore_Join14:
 	lda	xsp, (xsp-22)
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	ld	(xsp+18), e
 	ld	(xsp+20), c
 	ld	(xsp+22), a
@@ -3306,7 +3329,7 @@ SeLfo1_StepSelectorAndReload_Join4:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 7:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -3349,7 +3372,7 @@ SeMenu_ApplyPartEdit_AltStore_Join15:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -3404,7 +3427,7 @@ SeMenu_ApplyPartEdit_AltStore_Join16:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -3459,7 +3482,7 @@ SeMenu_ApplyPartEdit_AltStore_Join17:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -3505,7 +3528,7 @@ SeMenu_ApplyPartEdit_AltStore_Join18:
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 SeLfo1_StepSelectorAndReload_Skip5:
 	ld	wa, 5:i3
 	calr	SeMenu_BindDialToColumn
@@ -3575,9 +3598,9 @@ SeMenu_ApplyPartEdit_AltStore_Join20:
 	calr	SeMenu_BindDialToColumn
 	lda	xsp, (xsp+18)
 	ret
-SeMenu_ApplyPartEdit_Join6:
+SeMenu_ApplyPartEdit_AltStore_Join21:
 	lda	xsp, (xsp-24)
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	ld	(xsp+22), c
 	ld	(xsp+24), a
 	lda	xwa, (xsp+14)
@@ -3597,21 +3620,21 @@ SeMenu_ApplyPartEdit_Join6:
 	ld	(xbc+7), 0
 	lda	xwa, (xbc+8)
 	cp	(xsp+14), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip12
+	jr	nz, SeLfo1_StepSelectorAndReload_Skip6
 	ld	(xwa), 27
-	jr	SeMenu_ApplyPartEdit_Join7
-SeMenu_ApplyPartEdit_Skip12:
+	jr	SeLfo1_StepSelectorAndReload_Join5
+SeLfo1_StepSelectorAndReload_Skip6:
 	ld	(xwa), 3
-SeMenu_ApplyPartEdit_Join7:
+SeLfo1_StepSelectorAndReload_Join5:
 	ld	(xbc+9), 0
 	ld	a, (xsp+24)
 	extz	wa
 	lda	xbc, (xbc+10)
 	calr	SeMenu_SwitchToValueStep
 	lda	xwa, (xsp+2)
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	cp	l, 0:i3
-	jr	z, SeMenu_ApplyPartEdit_Epilogue7
+	jr	z, SeMenu_ApplyPartEdit_Epilogue6
 	ldto_berp	a, 251
 	extz	wa
 	ld	c, (xsp+5)
@@ -3620,19 +3643,19 @@ SeMenu_ApplyPartEdit_Join7:
 	ldto_berp	a, 251
 	extz	wa
 	cp	(xsp+22), 2
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip6
+	jr	nz, SeLfo1_StepSelectorAndReload_Skip7
 	pushw	wa
 	pushw 59
-	jr	SeMenu_ApplyPartEdit_Join8
-SeLfo1_StepSelectorAndReload_Skip6:
+	jr	SeMenu_ApplyPartEdit_Join6
+SeLfo1_StepSelectorAndReload_Skip7:
 	cp	(xsp+22), 3
-	jr	nz, SeMenu_ApplyPartEdit_Skip13
+	jr	nz, SeMenu_ApplyPartEdit_Skip7
 	pushw	wa
 	pushw 60
-SeMenu_ApplyPartEdit_Join8:
+SeMenu_ApplyPartEdit_Join6:
 	call	SeTitle_DrawField
 	inc	4, xsp
-SeMenu_ApplyPartEdit_Skip13:
+SeMenu_ApplyPartEdit_Skip7:
 	lda	xbc, (xsp+16)
 	ldw	wa, 13
 	calr	SeMenu_LoadPartParam
@@ -3648,23 +3671,23 @@ SeMenu_ApplyPartEdit_Skip13:
 	extz	hl
 	lda	xde, (xsp+5)
 	cp	(xsp+14), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip14
+	jr	nz, SeMenu_ApplyPartEdit_Skip8
 	pushw	hl
 	ld	wa, 0:i3
 	calr	SeMenu_RegisterElement_Extended
-	jr	SeMenu_ApplyPartEdit_Join9
-SeMenu_ApplyPartEdit_Skip14:
+	jr	SeMenu_ApplyPartEdit_Join7
+SeMenu_ApplyPartEdit_Skip8:
 	pushw	hl
 	ld	wa, 3:i3
 	calr	SeMenu_SetupDisplayObject_Alt1
-SeMenu_ApplyPartEdit_Join9:
+SeMenu_ApplyPartEdit_Join7:
 	ld	wa, 2:i3
 	calr	SeMenu_BindDialToColumn
-SeMenu_ApplyPartEdit_Epilogue7:
+SeMenu_ApplyPartEdit_Epilogue6:
 	pop qiz
 	lda	xsp, (xsp+24)
 	ret
-SeMenu_ApplyPartEdit_Join10:
+SeMenu_ApplyPartEdit_AltStore_Join22:
 	dec	6, xsp
 	ld	(xsp+4), a
 	lda	xbc, (xsp+2)
@@ -3683,7 +3706,11 @@ SeMenu_ApplyPartEdit_Join10:
 	calr	SeMenu_BindDialToColumn
 	inc	6, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper6:
+; SeCtr2_OnPartColumn: SeCtr2 page column 5..8 handler for part A (1..4): steps the part's 2-bit field in page param
+;   12 through 0, 1, 3 (up for a first-bank switch, down otherwise) via SeCtr2_StepPartField, then posts dial
+;   events with SeMenu_BindDialToColumn(A+4). Basis: callers + body -- only SeCtr2_OnColumn5..8 call it, passing
+;   part 1..4 in WA and the bank byte in C.
+SeCtr2_OnPartColumn:
 	dec	2, xsp
 	ld	(xsp), a
 	res	7, c
@@ -3699,7 +3726,7 @@ SeMenu_CopyWriteUpdate_Helper6:
 	calr	SeMenu_BindDialToColumn
 	inc	2, xsp
 	ret
-UpdSeSel_DetailedUpdate_Helper4:
+SeMenu_DrawAmpEnvGraph:
 	lda	xsp, (xsp-22)
 	push	xiz
 	pushw	144
@@ -3727,14 +3754,14 @@ UpdSeSel_DetailedUpdate_Helper4:
 	calr	SeMenu_LoadObjEntries
 	lda	xbc, (xsp+16)
 	cp	(xsp+24), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip15
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip9
 	ld	wa, 0:i3
 	calr	SeMenu_LoadPartParam
 	lda	xbc, (xsp+17)
 	ld	wa, 1:i3
 	calr	SeMenu_LoadPartParam
-	jr	SeMenu_ApplyPartEdit_Join11
-SeMenu_ApplyPartEdit_Skip15:
+	jr	SeMenu_DrawAmpEnvGraph_Join20
+SeMenu_DrawAmpEnvGraph_Skip9:
 	ld	wa, 1:i3
 	calr	SeMenu_LoadPartParam
 	ld	(xsp+17), 100
@@ -3742,25 +3769,25 @@ SeMenu_ApplyPartEdit_Skip15:
 	ld	wa, 0:i3
 	calr	SeMenu_LoadPartParam
 	bit	5, (xsp+14)
-	jr	nz, SeMenu_ApplyPartEdit_Join11
+	jr	nz, SeMenu_DrawAmpEnvGraph_Join20
 	lda	xwa, (xsp+16)
 	ld	(xwa+5), 0
 	ld	(xwa+6), 0
-SeMenu_ApplyPartEdit_Join11:
+SeMenu_DrawAmpEnvGraph_Join20:
 	lda	xbc, (xsp+16)
 	ld	xwa, xbc
 	lda	xde, (xbc+6)
-SeMenu_ApplyPartEdit_Loop:
+SeMenu_DrawAmpEnvGraph_Loop:
 	ld	l, (xwa)
 	res	7, l
 	ld	(xwa), l
 	cp	l, 100
-	jr	ule, SeMenu_ApplyPartEdit_Skip16
+	jr	ule, SeMenu_DrawAmpEnvGraph_Skip38
 	ld	(xwa), 100
-SeMenu_ApplyPartEdit_Skip16:
+SeMenu_DrawAmpEnvGraph_Skip38:
 	inc	1, xwa
 	cp	xwa, xde
-	jr	ule, SeMenu_ApplyPartEdit_Loop
+	jr	ule, SeMenu_DrawAmpEnvGraph_Loop
 	ld	a, (xbc+1)
 	extz	wa
 	ld	(xsp+6), wa
@@ -3782,16 +3809,16 @@ SeMenu_ApplyPartEdit_Skip16:
 	sub	l, e
 	extz	hl
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip17
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip39
 	addw	(xsp+4), 10000
 	ldw	(xsp+6), 0
-	jr	SeMenu_ApplyPartEdit_Join12
-SeMenu_ApplyPartEdit_Skip17:
+	jr	SeMenu_DrawAmpEnvGraph_Join21
+SeMenu_DrawAmpEnvGraph_Skip39:
 	ld	wa, (xsp+4)
 	extz	xwa
 	div	xwa, hl
 	ld	(xsp+4), wa
-SeMenu_ApplyPartEdit_Join12:
+SeMenu_DrawAmpEnvGraph_Join21:
 	ld	a, (xbc+3)
 	extz	wa
 	ld	(xsp+10), wa
@@ -3808,35 +3835,35 @@ SeMenu_ApplyPartEdit_Join12:
 	ld	(xsp+8), wa
 	ld	wa, (xsp+10)
 	cp	wa, (xsp+6)
-	jr	c, SeMenu_ApplyPartEdit_Skip18
+	jr	c, SeMenu_DrawAmpEnvGraph_Skip10
 	ld	hl, (xsp+10)
 	sub	hl, (xsp+6)
 	ld	wa, (xsp+8)
 	mul	xwa, hl
 	ld	(xsp+8), wa
-	jr	SeMenu_ApplyPartEdit_Join13
-SeMenu_ApplyPartEdit_Skip18:
+	jr	SeMenu_DrawAmpEnvGraph_Join22
+SeMenu_DrawAmpEnvGraph_Skip10:
 	ld	hl, (xsp+6)
 	sub	hl, (xsp+10)
 	ld	wa, (xsp+8)
 	mul	xwa, hl
 	ld	(xsp+8), wa
-SeMenu_ApplyPartEdit_Join13:
+SeMenu_DrawAmpEnvGraph_Join22:
 	ld	l, 100:opc
 	sub	l, e
 	extz	hl
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip19
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip11
 	addw	(xsp+8), 10000
 	ld	wa, (xsp+6)
 	ld	(xsp+10), wa
-	jr	SeMenu_ApplyPartEdit_Join14
-SeMenu_ApplyPartEdit_Skip19:
+	jr	SeMenu_DrawAmpEnvGraph_Join23
+SeMenu_DrawAmpEnvGraph_Skip11:
 	ld	wa, (xsp+8)
 	extz	xwa
 	div	xwa, hl
 	ld	(xsp+8), wa
-SeMenu_ApplyPartEdit_Join14:
+SeMenu_DrawAmpEnvGraph_Join23:
 	ld	a, (xbc+5)
 	extz	wa
 	ld	qiz, wa
@@ -3850,35 +3877,35 @@ SeMenu_ApplyPartEdit_Join14:
 	extz	iz
 	ld	wa, qiz
 	cp	wa, (xsp+10)
-	jr	c, SeMenu_ApplyPartEdit_Skip20
+	jr	c, SeMenu_DrawAmpEnvGraph_Skip40
 	ld	hl, qiz
 	sub	hl, (xsp+10)
 	ld	wa, iz
 	mul	xwa, hl
 	ld	iz, wa
-	jr	SeMenu_ApplyPartEdit_Join15
-SeMenu_ApplyPartEdit_Skip20:
+	jr	SeMenu_DrawAmpEnvGraph_Join24
+SeMenu_DrawAmpEnvGraph_Skip40:
 	ld	hl, (xsp+10)
 	sub	hl, qiz
 	ld	wa, iz
 	mul	xwa, hl
 	ld	iz, wa
-SeMenu_ApplyPartEdit_Join15:
+SeMenu_DrawAmpEnvGraph_Join24:
 	ld	l, 100:opc
 	sub	l, e
 	extz	hl
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip21
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip12
 	add	iz, 10000
 	ld	wa, (xsp+10)
 	ld	qiz, wa
-	jr	SeMenu_ApplyPartEdit_Join16
-SeMenu_ApplyPartEdit_Skip21:
+	jr	SeMenu_DrawAmpEnvGraph_Join8
+SeMenu_DrawAmpEnvGraph_Skip12:
 	ld	wa, iz
 	extz	xwa
 	div	xwa, hl
 	ld	iz, wa
-SeMenu_ApplyPartEdit_Join16:
+SeMenu_DrawAmpEnvGraph_Join8:
 	ld	c, (xbc+6)
 	ld	e, c
 	extz	de
@@ -3887,13 +3914,13 @@ SeMenu_ApplyPartEdit_Join16:
 	sub	l, c
 	extz	hl
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip22
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip13
 	add	de, 10000
-	jr	SeMenu_ApplyPartEdit_Join17
-SeMenu_ApplyPartEdit_Skip22:
+	jr	SeMenu_DrawAmpEnvGraph_Join9
+SeMenu_DrawAmpEnvGraph_Skip13:
 	extz	xde
 	div	xde, hl
-SeMenu_ApplyPartEdit_Join17:
+SeMenu_DrawAmpEnvGraph_Join9:
 	ld	bc, (xsp+4)
 	add	bc, (xsp+8)
 	add	bc, iz
@@ -3904,16 +3931,16 @@ SeMenu_ApplyPartEdit_Join17:
 	div	wa, 45
 	ld	de, wa
 	cp	bc, de
-	jr	c, SeMenu_ApplyPartEdit_Skip23
+	jr	c, SeMenu_DrawAmpEnvGraph_Skip41
 	ld	(xsp+12), c
-	jr	SeLfo1_StepSelectorAndReload_Join5
-SeMenu_ApplyPartEdit_Skip23:
+	jr	SeMenu_DrawAmpEnvGraph_Join25
+SeMenu_DrawAmpEnvGraph_Skip41:
 	ld	(xsp+12), e
-SeLfo1_StepSelectorAndReload_Join5:
+SeMenu_DrawAmpEnvGraph_Join25:
 	cp	(xsp+12), 5
-	jr	ule, SeMenu_ApplyPartEdit_Skip24
+	jr	ule, SeMenu_DrawAmpEnvGraph_Skip42
 	ld	(xsp+12), 5
-SeMenu_ApplyPartEdit_Skip24:
+SeMenu_DrawAmpEnvGraph_Skip42:
 	incm8	1, (xsp+12)
 	ld	c, (xsp+12)
 	extz	bc
@@ -3946,33 +3973,33 @@ SeMenu_ApplyPartEdit_Skip24:
 	ldw	wa, 51
 	ldw	bc, 146
 	ld	de, (xsp+6)
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	bc, hl
 	cp	bc, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip25
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip43
 	pushw	(xsp+10)
 	ld	wa, (xsp+6)
 	ld	bc, (xsp+8)
 	ld	de, (xsp+10)
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	bc, hl
 	cp	bc, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip25
-	.byte 0xd7, 0xfa, 0x04
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip43
+	push	qiz
 	ld	wa, (xsp+10)
 	ld	bc, (xsp+12)
 	ld	de, iz
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	bc, hl
 	cp	bc, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip25
-	.byte 0xd7, 0xfa, 0x04
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip43
+	push	qiz
 	ld	wa, iz
 	ld	bc, qiz
 	ldw	de, 213
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	bc, qiz
-SeMenu_ApplyPartEdit_Skip25:
+SeMenu_DrawAmpEnvGraph_Skip43:
 	ld	l, (xsp+22)
 	ld	e, l
 	extz	de
@@ -3984,13 +4011,13 @@ SeMenu_ApplyPartEdit_Skip25:
 	ld	l, a
 	extz	hl
 	cp	hl, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip26
+	jr	nz, SeMenu_DrawAmpEnvGraph_Skip14
 	add	de, 10000
-	jr	SeMenu_ApplyPartEdit_Join18
-SeMenu_ApplyPartEdit_Skip26:
+	jr	SeMenu_DrawAmpEnvGraph_Join10
+SeMenu_DrawAmpEnvGraph_Skip14:
 	extz	xde
 	div	xde, hl
-SeMenu_ApplyPartEdit_Join18:
+SeMenu_DrawAmpEnvGraph_Join10:
 	ld	l, (xsp+12)
 	extz	hl
 	extz	xde
@@ -3998,11 +4025,17 @@ SeMenu_ApplyPartEdit_Join18:
 	add	de, 213
 	pushw 146
 	ldw	wa, 214
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
-SeMenu_ApplyPartEdit_Helper6:
+; SeMenu_DrawClippedEnvSegment: Draws one envelope-graph segment from (WA, BC) to (DE, y2 = the word pushed before the
+;   call, removed by retd 2) through SeMenu_DrawEnvGraphLine (a line clamped to y 59..146). A segment starting
+;   left of x = 213 is cut at x = 213, one starting at or right of 213 is cut at x = 258; HL returns the interpolated
+;   y at the cut, or 0 if the segment fits. Basis: callers + body -- SeMenu_DrawAmpEnvGraph (and the second envelope
+;   graph in SeMenu_DrawPitFilEnvGraph) draw their key-on segments from x = 51 with it, stop at the first non-zero
+;   HL, and draw the release part from x = 214.
+SeMenu_DrawClippedEnvSegment:
 	pushw	iz
 	ld	iz, 0:i3
 	ld	ix, bc
@@ -4010,9 +4043,9 @@ SeMenu_ApplyPartEdit_Helper6:
 	ld	hl, iy
 	sub	hl, ix
 	cp	wa, 213
-	jr	nc, SeMenu_ApplyPartEdit_Skip27
+	jr	nc, SeMenu_DrawClippedEnvSegment_Skip15
 	cp	de, 213
-	jr	ule, SeMenu_ApplyPartEdit_Skip28
+	jr	ule, SeMenu_DrawClippedEnvSegment_Skip16
 	sub	de, wa
 	ld	ix, de
 	ldw	de, 213
@@ -4027,11 +4060,11 @@ SeMenu_ApplyPartEdit_Helper6:
 	add	hl, bc
 	ld	iy, hl
 	ldw	de, 213
-	jr	SeMenu_ApplyPartEdit_Join19
-SeMenu_ApplyPartEdit_Skip27:
+	jr	SeMenu_DrawClippedEnvSegment_Join11
+SeMenu_DrawClippedEnvSegment_Skip15:
 	dec	1, wa
 	cp	de, 258
-	jr	ule, SeMenu_ApplyPartEdit_Skip28
+	jr	ule, SeMenu_DrawClippedEnvSegment_Skip16
 	sub	de, wa
 	ld	ix, de
 	ldw	de, 258
@@ -4046,15 +4079,22 @@ SeMenu_ApplyPartEdit_Skip27:
 	add	hl, bc
 	ld	iy, hl
 	ldw	de, 258
-SeMenu_ApplyPartEdit_Join19:
+SeMenu_DrawClippedEnvSegment_Join11:
 	ld	iz, iy
-SeMenu_ApplyPartEdit_Skip28:
+SeMenu_DrawClippedEnvSegment_Skip16:
 	pushw	iy
-	calr	SeMenu_ApplyPartEdit_Helper9
+	calr	SeMenu_DrawEnvGraphLine
 	ld	hl, iz
 	popw	iz
 	retd	0x0002
-SeMenu_ApplyPartEdit_Helper7:
+; SeMenu_DrawPitFilEnvGraph: Clears the box (51,59)-(256,144) and draws the envelope graph of the pitch / filter
+;   envelope page 1 from the current part's params: five levels (params 2, 4, 6, 8, 10; clamped to -50..+50 and,
+;   except on TT_SEFILENV1, scaled by param 1 in SeMenu_ApplyPartEdit_Helper8) joined by four times (params 3, 5, 7,
+;   9, clamped 0..100) through SeMenu_DrawClippedEnvSegment, release from x 214. Basis: callers + body -- the
+;   TT_SEPITENV1 (0x28) and TT_SEFILENV1 (0x37) page draws call it after SeTitle_DrawStaticScreen, and the
+;   TT_SEFILENV1 column handlers after each SeMenu_StepParamFieldAndSend(0x37, ...); sibling of
+;   SeMenu_DrawAmpEnvGraph.
+SeMenu_DrawPitFilEnvGraph:
 	lda	xsp, (xsp-32)
 	push	xiz
 	pushw	144
@@ -4083,9 +4123,9 @@ SeMenu_ApplyPartEdit_Loop2:
 	res	7, e
 	ld	(xwa), e
 	cp	e, 100
-	jr	ule, SeMenu_ApplyPartEdit_Skip29
+	jr	ule, SeMenu_ApplyPartEdit_Skip17
 	ld	(xwa), 100
-SeMenu_ApplyPartEdit_Skip29:
+SeMenu_ApplyPartEdit_Skip17:
 	inc	1, xwa
 	cp	xwa, xbc
 	jr	c, SeMenu_ApplyPartEdit_Loop2
@@ -4133,7 +4173,7 @@ SeMenu_ApplyPartEdit_Skip29:
 	sub	a, (xbc)
 	exts	wa
 	lda	xbc, (xsp+28)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ld	a, (xsp+28)
 	extz	wa
 	ld	(xsp+8), wa
@@ -4147,18 +4187,18 @@ SeMenu_ApplyPartEdit_Skip29:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip30
+	jr	nz, SeMenu_ApplyPartEdit_Skip18
 	addw	(xsp+8), 10000
 	ld	wa, (xsp+6)
 	ld	(xsp+10), wa
-	jr	SeMenu_ApplyPartEdit_Join20
-SeMenu_ApplyPartEdit_Skip30:
+	jr	SeMenu_DrawPitFilEnvGraph_Join
+SeMenu_ApplyPartEdit_Skip18:
 	extz	bc
 	ld	wa, (xsp+8)
 	exts	xwa
 	divs	xwa, bc
 	ld	(xsp+8), wa
-SeMenu_ApplyPartEdit_Join20:
+SeMenu_DrawPitFilEnvGraph_Join:
 	lda	xbc, (xsp+24)
 	ld	wa, 6:i3
 	calr	SeMenu_LoadPartParam
@@ -4187,7 +4227,7 @@ SeMenu_ApplyPartEdit_Join20:
 	sub	a, (xbc+1)
 	exts	wa
 	lda	xbc, (xsp+28)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ld	a, (xsp+28)
 	extz	wa
 	ld	(xsp+12), wa
@@ -4201,18 +4241,18 @@ SeMenu_ApplyPartEdit_Join20:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip31
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip
 	addw	(xsp+12), 10000
 	ld	wa, (xsp+10)
 	ld	(xsp+14), wa
-	jr	SeMenu_ApplyPartEdit_Join21
-SeMenu_ApplyPartEdit_Skip31:
+	jr	SeMenu_DrawPitFilEnvGraph_Join2
+SeMenu_DrawPitFilEnvGraph_Skip:
 	extz	bc
 	ld	wa, (xsp+12)
 	exts	xwa
 	divs	xwa, bc
 	ld	(xsp+12), wa
-SeMenu_ApplyPartEdit_Join21:
+SeMenu_DrawPitFilEnvGraph_Join2:
 	lda	xbc, (xsp+25)
 	ldw	wa, 8
 	calr	SeMenu_LoadPartParam
@@ -4241,7 +4281,7 @@ SeMenu_ApplyPartEdit_Join21:
 	sub	a, (xbc+2)
 	exts	wa
 	lda	xbc, (xsp+28)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ld	a, (xsp+28)
 	extz	wa
 	ld	(xsp+16), wa
@@ -4255,18 +4295,18 @@ SeMenu_ApplyPartEdit_Join21:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip32
+	jr	nz, SeMenu_ApplyPartEdit_Skip19
 	addw	(xsp+16), 10000
 	ld	wa, (xsp+14)
 	ld	(xsp+18), wa
-	jr	SeMenu_ApplyPartEdit_Join22
-SeMenu_ApplyPartEdit_Skip32:
+	jr	SeMenu_ApplyPartEdit_Join12
+SeMenu_ApplyPartEdit_Skip19:
 	extz	bc
 	ld	wa, (xsp+16)
 	exts	xwa
 	divs	xwa, bc
 	ld	(xsp+16), wa
-SeMenu_ApplyPartEdit_Join22:
+SeMenu_ApplyPartEdit_Join12:
 	lda	xbc, (xsp+26)
 	ldw	wa, 10
 	calr	SeMenu_LoadPartParam
@@ -4295,7 +4335,7 @@ SeMenu_ApplyPartEdit_Join22:
 	sub	a, (xbc+3)
 	exts	wa
 	lda	xbc, (xsp+28)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ld	a, (xsp+28)
 	extz	wa
 	ld	qiz, wa
@@ -4309,12 +4349,12 @@ SeMenu_ApplyPartEdit_Join22:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip33
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip4
 	.byte 0xd7, 0xfa, 0xc8, 0x10, 0x27
 	ld	wa, (xsp+18)
 	ld	(xsp+20), wa
 	jr	SeMenu_ApplyPartEdit_Join23
-SeMenu_ApplyPartEdit_Skip33:
+SeMenu_DrawPitFilEnvGraph_Skip4:
 	extz	bc
 	ld	wa, qiz
 	exts	xwa
@@ -4331,20 +4371,20 @@ SeMenu_ApplyPartEdit_Join23:
 	extz	xwa
 	div	wa, 45
 	cp	bc, 5:i3
-	jr	ule, SeMenu_ApplyPartEdit_Skip34
+	jr	ule, SeMenu_DrawPitFilEnvGraph_Skip2
 	ld	bc, 5:i3
-SeMenu_ApplyPartEdit_Skip34:
+SeMenu_DrawPitFilEnvGraph_Skip2:
 	cp	wa, 5:i3
-	jr	ule, SeMenu_ApplyPartEdit_Skip35
+	jr	ule, SeMenu_DrawPitFilEnvGraph_Skip3
 	ld	wa, 5:i3
-SeMenu_ApplyPartEdit_Skip35:
+SeMenu_DrawPitFilEnvGraph_Skip3:
 	cp	bc, wa
-	jr	c, SeMenu_ApplyPartEdit_Skip36
+	jr	c, SeMenu_ApplyPartEdit_Skip20
 	ld	(xsp+4), c
-	jr	SeMenu_ApplyPartEdit_Join24
-SeMenu_ApplyPartEdit_Skip36:
+	jr	SeMenu_ApplyPartEdit_Join13
+SeMenu_ApplyPartEdit_Skip20:
 	ld	(xsp+4), a
-SeMenu_ApplyPartEdit_Join24:
+SeMenu_ApplyPartEdit_Join13:
 	incm8	1, (xsp+4)
 	ld	c, (xsp+4)
 	extz	bc
@@ -4385,35 +4425,35 @@ SeMenu_ApplyPartEdit_Join24:
 	ld	wa, (xsp+10)
 	pushw	wa
 	ldw	wa, 51
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip37
+	jr	nz, SeMenu_ApplyPartEdit_Skip21
 	ld	wa, (xsp+8)
 	ld	bc, (xsp+10)
 	ld	de, (xsp+12)
 	ld	hl, (xsp+14)
 	pushw	hl
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip37
+	jr	nz, SeMenu_ApplyPartEdit_Skip21
 	ld	wa, (xsp+12)
 	ld	bc, (xsp+14)
 	ld	de, (xsp+16)
 	ld	hl, (xsp+18)
 	pushw	hl
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	iz, hl
 	cp	iz, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip37
+	jr	nz, SeMenu_ApplyPartEdit_Skip21
 	ld	wa, (xsp+16)
 	ld	bc, (xsp+18)
 	pushw	bc
 	ldw	de, 213
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	ld	iz, (xsp+18)
-SeMenu_ApplyPartEdit_Skip37:
+SeMenu_ApplyPartEdit_Skip21:
 	lda	xbc, (xsp+22)
 	ldw	wa, 96
 	sub	wa, iz
@@ -4428,7 +4468,7 @@ SeMenu_ApplyPartEdit_Skip37:
 	sub	a, (xbc+3)
 	exts	wa
 	lda	xbc, (xsp+28)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ld	a, (xsp+28)
 	extz	wa
 	ld	qiz, wa
@@ -4442,12 +4482,12 @@ SeMenu_ApplyPartEdit_Skip37:
 	sub	a, c
 	ld	c, a
 	cp	c, 0:i3
-	jr	nz, SeMenu_ApplyPartEdit_Skip38
+	jr	nz, SeMenu_DrawPitFilEnvGraph_Skip5
 	.byte 0xd7, 0xfa, 0xc8, 0x10, 0x27
 	ld	wa, (xsp+18)
 	ld	(xsp+20), wa
 	jr	SeMenu_ApplyPartEdit_Join25
-SeMenu_ApplyPartEdit_Skip38:
+SeMenu_DrawPitFilEnvGraph_Skip5:
 	extz	bc
 	ld	wa, qiz
 	exts	xwa
@@ -4466,7 +4506,7 @@ SeMenu_ApplyPartEdit_Join25:
 	pushw	wa
 	ldw	wa, 214
 	ld	bc, iz
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 	cp	hl, 0:i3
 	jr	nz, SeMenu_ApplyPartEdit_Epilogue8
 	inc 1, qiz
@@ -4474,7 +4514,7 @@ SeMenu_ApplyPartEdit_Join25:
 	ld	bc, (xsp+20)
 	pushw	bc
 	ldw	de, 258
-	calr	SeMenu_ApplyPartEdit_Helper6
+	calr	SeMenu_DrawClippedEnvSegment
 SeMenu_ApplyPartEdit_Epilogue8:
 	pop	xiz
 	lda	xsp, (xsp+32)
@@ -4521,7 +4561,12 @@ SeMenu_ApplyPartEdit_Helper8:
 	pop XIZ
 	inc 4,XSP
 	ret
-SeMenu_ApplyPartEdit_Helper9:
+; SeMenu_DrawEnvGraphLine: Draws one envelope-graph line from (WA, BC) to (DE, y2 = the word pushed before the call,
+;   removed by retd 2) with SeGfx_DrawLine. Only when ACTIVE_TITLE is 0x37 (TT_SEFILENV1) are both y first lowered by
+;   sound-editor part param 1 * 43 / 50 and clipped to y 59..146 (a vertical line is clamped, a sloped one cut at the
+;   band edge with interpolated x, one wholly outside not drawn); on every other title the line is drawn as given.
+;   Basis: callers + body -- SeMenu_DrawClippedEnvSegment draws every envelope segment through it.
+SeMenu_DrawEnvGraphLine:
 	lda	xsp, (xsp-10)
 	pushw	iz
 	ld	(xsp+6), de
@@ -4534,7 +4579,7 @@ SeMenu_ApplyPartEdit_Helper9:
 	calr	SeMenu_LoadRawAddr
 	ld	iz, (xsp+16)
 	cp	(xsp+4), 55
-	jrl	nz, SeMenu_ApplyPartEdit_Join27
+	jrl	nz, SeMenu_ApplyPartEdit_Join16
 	ld	a, (xsp+2)
 	exts	wa
 	muls	wa, 43
@@ -4544,109 +4589,109 @@ SeMenu_ApplyPartEdit_Helper9:
 	sub	iz, wa
 	ld	wa, (xsp+10)
 	cp	wa, (xsp+6)
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip8
+	jr	nz, SeMenu_DrawEnvGraphLine_Skip2
 	cpw	(xsp+8), 59
-	jr	nc, SeLfo1_StepSelectorAndReload_Skip7
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip
 	ldw	(xsp+8), 59
-	jr	SeMenu_ApplyPartEdit_Join26
-SeLfo1_StepSelectorAndReload_Skip7:
+	jr	SeMenu_DrawEnvGraphLine_Join15
+SeMenu_DrawEnvGraphLine_Skip:
 	cpw	(xsp+8), 146
-	jr	ule, SeMenu_ApplyPartEdit_Join26
+	jr	ule, SeMenu_DrawEnvGraphLine_Join15
 	ldw	(xsp+8), 146
-SeMenu_ApplyPartEdit_Join26:
+SeMenu_DrawEnvGraphLine_Join15:
 	cp	iz, 59
-	jr	nc, SeMenu_ApplyPartEdit_Skip39
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip23
 	ldw	iz, 59
-	jrl	SeMenu_ApplyPartEdit_Join27
-SeMenu_ApplyPartEdit_Skip39:
+	jrl	SeMenu_ApplyPartEdit_Join16
+SeMenu_DrawEnvGraphLine_Skip23:
 	cp	iz, 146
-	jrl	ule, SeMenu_ApplyPartEdit_Join27
+	jrl	ule, SeMenu_ApplyPartEdit_Join16
 	ldw	iz, 146
-	jrl	SeMenu_ApplyPartEdit_Join27
-SeLfo1_StepSelectorAndReload_Skip8:
+	jrl	SeMenu_ApplyPartEdit_Join16
+SeMenu_DrawEnvGraphLine_Skip2:
 	cpw	(xsp+8), 59
-	jr	c, SeLfo1_StepSelectorAndReload_Join6
+	jr	c, SeMenu_DrawEnvGraphLine_Join
 	cpw	(xsp+8), 146
-	jr	ugt, SeLfo1_StepSelectorAndReload_Join6
+	jr	ugt, SeMenu_DrawEnvGraphLine_Join
 	cp	iz, 59
-	jr	c, SeLfo1_StepSelectorAndReload_Join6
+	jr	c, SeMenu_DrawEnvGraphLine_Join
 	cp	iz, 146
-	jrl	ule, SeMenu_ApplyPartEdit_Join27
-SeLfo1_StepSelectorAndReload_Join6:
+	jrl	ule, SeMenu_ApplyPartEdit_Join16
+SeMenu_DrawEnvGraphLine_Join:
 	cpw	(xsp+8), 59
-	jr	nc, SeLfo1_StepSelectorAndReload_Join7
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip3
 	cp	iz, 59
-	jrl	c, SeMenu_ApplyPartEdit_Epilogue9
-SeLfo1_StepSelectorAndReload_Join7:
+	jrl	c, SeMenu_DrawEnvGraphLine_Epilogue
+SeMenu_DrawEnvGraphLine_Skip3:
 	cpw	(xsp+8), 146
-	jr	ule, SeMenu_ApplyPartEdit_Skip40
+	jr	ule, SeMenu_DrawEnvGraphLine_Skip4
 	cp	iz, 146
-	jrl	ugt, SeMenu_ApplyPartEdit_Epilogue9
-SeMenu_ApplyPartEdit_Skip40:
+	jrl	ugt, SeMenu_DrawEnvGraphLine_Epilogue
+SeMenu_DrawEnvGraphLine_Skip4:
 	ld	wa, (xsp+6)
 	sub	wa, (xsp+10)
 	cp	(xsp+8), iz
-	jr	nc, SeMenu_ApplyPartEdit_Skip41
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip6
 	cp	iz, 146
-	jr	ule, SeLfo1_StepSelectorAndReload_Join8
+	jr	ule, SeMenu_DrawEnvGraphLine_Skip5
 	ldw	bc, 146
 	sub	bc, (xsp+8)
 	ld	de, iz
 	sub	de, (xsp+8)
-	calr	SeMenu_ApplyPartEdit_Helper10
+	calr	SeMenu_ApplyPartEdit_Helper9_Helper
 	ld	wa, (xsp+10)
 	add	wa, hl
 	ld	(xsp+6), wa
 	ldw	iz, 146
-SeLfo1_StepSelectorAndReload_Join8:
+SeMenu_DrawEnvGraphLine_Skip5:
 	cpw	(xsp+8), 59
-	jr	nc, SeMenu_ApplyPartEdit_Join27
+	jr	nc, SeMenu_ApplyPartEdit_Join16
 	ld	wa, (xsp+6)
 	sub	wa, (xsp+10)
 	ldw	bc, 59
 	sub	bc, (xsp+8)
 	ld	de, iz
 	sub	de, (xsp+8)
-	calr	SeMenu_ApplyPartEdit_Helper10
+	calr	SeMenu_ApplyPartEdit_Helper9_Helper
 	add	(xsp+10), hl
 	ldw	(xsp+8), 59
-	jr	SeMenu_ApplyPartEdit_Join27
-SeMenu_ApplyPartEdit_Skip41:
+	jr	SeMenu_ApplyPartEdit_Join16
+SeMenu_DrawEnvGraphLine_Skip6:
 	cp	iz, 59
-	jr	nc, SeLfo1_StepSelectorAndReload_Join9
+	jr	nc, SeMenu_DrawEnvGraphLine_Skip7
 	ld	bc, (xsp+8)
 	sub	bc, 59
 	ld	de, (xsp+8)
 	sub	de, iz
-	calr	SeMenu_ApplyPartEdit_Helper10
+	calr	SeMenu_ApplyPartEdit_Helper9_Helper
 	ld	wa, (xsp+10)
 	add	wa, hl
 	ld	(xsp+6), wa
 	ldw	iz, 59
-SeLfo1_StepSelectorAndReload_Join9:
+SeMenu_DrawEnvGraphLine_Skip7:
 	cpw	(xsp+8), 146
-	jr	ule, SeMenu_ApplyPartEdit_Join27
+	jr	ule, SeMenu_ApplyPartEdit_Join16
 	ld	wa, (xsp+6)
 	sub	wa, (xsp+10)
 	ld	bc, (xsp+8)
 	sub	bc, 146
 	ld	de, (xsp+8)
 	sub	de, iz
-	calr	SeMenu_ApplyPartEdit_Helper10
+	calr	SeMenu_ApplyPartEdit_Helper9_Helper
 	add	(xsp+10), hl
 	ldw	(xsp+8), 146
-SeMenu_ApplyPartEdit_Join27:
+SeMenu_ApplyPartEdit_Join16:
 	pushw	iz
 	pushm	(xsp+8)
 	pushm	(xsp+12)
 	pushm	(xsp+16)
 	call	SeGfx_DrawLine
 	inc	8, xsp
-SeMenu_ApplyPartEdit_Epilogue9:
+SeMenu_DrawEnvGraphLine_Epilogue:
 	popw	iz
 	lda	xsp, (xsp+10)
 	retd	0x0002
-SeMenu_ApplyPartEdit_Helper10:
+SeMenu_ApplyPartEdit_Helper9_Helper:
 	mul xwa, bc
 	extz XWA
 	div xwa, de
@@ -4678,7 +4723,7 @@ SeMenu_ApplyPartEdit_Helper11:
 	extz HL
 	ld (XBC),HL
 	ret
-SeMenu_ApplyPartEdit_Helper12:
+SeMenu_DrawKeyScaleGraph:
 	lda	xsp, (xsp-28)
 	push	xiz
 	ld	(xsp+28), c
@@ -4696,7 +4741,7 @@ SeMenu_ApplyPartEdit_Helper12:
 	extz	wa
 	lda	xbc, (xsp+24)
 	cp	(xsp+28), 1
-	jr	nz, SeMenu_ApplyPartEdit_Skip42
+	jr	nz, SeMenu_DrawKeyScaleGraph_Skip
 	calr	SeMenu_LoadPartParam
 	ld	a, (xsp+24)
 	extz	wa
@@ -4713,8 +4758,8 @@ SeMenu_ApplyPartEdit_Helper12:
 	ldw	(xsp+10), 254
 	ld	wa, (xsp+14)
 	sub	(xsp+10), wa
-	jrl	SeLfo1_StepSelectorAndReload_Join10
-SeMenu_ApplyPartEdit_Skip42:
+	jrl	SeMenu_DrawKeyScaleGraph_Join
+SeMenu_DrawKeyScaleGraph_Skip:
 	calr	SeMenu_LoadPartParam
 	ld	a, (xsp+30)
 	inc	1, a
@@ -4743,18 +4788,18 @@ SeMenu_ApplyPartEdit_Skip42:
 	addiw_da	(xsp+12), 48
 	ld	wa, (xsp+16)
 	cp	wa, (xsp+14)
-	jr	ule, SeMenu_ApplyPartEdit_Skip43
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip2
 	ld	wa, (xsp+14)
 	dec	1, wa
 	ld	(xsp+16), wa
-SeMenu_ApplyPartEdit_Skip43:
+SeMenu_DrawKeyScaleGraph_Skip2:
 	ld	wa, (xsp+14)
 	cp	wa, (xsp+12)
-	jr	ule, SeMenu_ApplyPartEdit_Skip44
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip3
 	ld	wa, (xsp+14)
 	inc	1, wa
 	ld	(xsp+12), wa
-SeMenu_ApplyPartEdit_Skip44:
+SeMenu_DrawKeyScaleGraph_Skip3:
 	ld	wa, (xsp+16)
 	ld	(xsp+4), wa
 	ld	wa, (xsp+12)
@@ -4767,9 +4812,9 @@ SeMenu_ApplyPartEdit_Skip44:
 	ld	(xsp+10), wa
 	ld	wa, (xsp+14)
 	sub	(xsp+10), wa
-SeLfo1_StepSelectorAndReload_Join10:
+SeMenu_DrawKeyScaleGraph_Join:
 	cp	(xsp+18), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip45
+	jr	nz, SeMenu_DrawKeyScaleGraph_Skip25
 	pushw 97
 	pushw 254	; four word arguments, not a far pointer
 	pushw 97
@@ -4789,12 +4834,12 @@ SeLfo1_StepSelectorAndReload_Join10:
 	pushw	121
 	pushm	(xsp+8)
 	pushw	97
-	jrl	SeMenu_ApplyPartEdit_Entry14_Code_Join
-SeMenu_ApplyPartEdit_Skip45:
+	jrl	SeMenu_DrawKeyScaleGraph_Join4
+SeMenu_DrawKeyScaleGraph_Skip25:
 	ld	a, (xsp+18)
 	exts	wa
 	lda	xbc, (xsp+20)
-	calr	SeMenu_ApplyPartEdit_Helper13
+	calr	SeMenu_StoreAbsoluteValue
 	ldw	hl, 25
 	muls	hl, 50
 	ld	c, (xsp+20)
@@ -4813,47 +4858,47 @@ SeMenu_ApplyPartEdit_Skip45:
 	ldw	qiz, 97
 	ld	bc, hl
 	cp	(xsp+8), bc
-	jr	ule, SeLfo1_StepSelectorAndReload_Skip9
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip4
 	ldw	iz, 72
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Skip46
+	jr	lt, SeMenu_DrawKeyScaleGraph_Skip26
 	ldw	iz, 122
-SeMenu_ApplyPartEdit_Skip46:
+SeMenu_DrawKeyScaleGraph_Skip26:
 	ld	wa, (xsp+14)
 	sub	wa, hl
 	ld	(xsp+16), wa
-	jr	SeMenu_ApplyPartEdit_Join28
-SeLfo1_StepSelectorAndReload_Skip9:
+	jr	SeMenu_DrawKeyScaleGraph_Join2
+SeMenu_DrawKeyScaleGraph_Skip4:
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Skip47
+	jr	lt, SeMenu_DrawKeyScaleGraph_Skip5
 	add	iz, ix
-	jr	SeMenu_ApplyPartEdit_Join28
-SeMenu_ApplyPartEdit_Skip47:
+	jr	SeMenu_DrawKeyScaleGraph_Join2
+SeMenu_DrawKeyScaleGraph_Skip5:
 	sub	iz, ix
-SeMenu_ApplyPartEdit_Join28:
+SeMenu_DrawKeyScaleGraph_Join2:
 	cp	(xsp+10), bc
-	jr	ule, SeLfo1_StepSelectorAndReload_Skip10
+	jr	ule, SeMenu_DrawKeyScaleGraph_Skip7
 	ldw	qiz, 122
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Skip48
+	jr	lt, SeMenu_DrawKeyScaleGraph_Skip6
 	ldw	qiz, 72
-SeMenu_ApplyPartEdit_Skip48:
+SeMenu_DrawKeyScaleGraph_Skip6:
 	ld	wa, (xsp+14)
 	add	wa, hl
 	ld	(xsp+12), wa
-	jr	SeMenu_ApplyPartEdit_Join29
-SeLfo1_StepSelectorAndReload_Skip10:
+	jr	SeMenu_DrawKeyScaleGraph_Join3
+SeMenu_DrawKeyScaleGraph_Skip7:
 	cp	(xsp+18), 0
-	jr	lt, SeMenu_ApplyPartEdit_Skip49
+	jr	lt, SeMenu_ApplyPartEdit_Skip27
 	ld	wa, qiz
 	sub	wa, de
 	ld	qiz, wa
-	jr	SeMenu_ApplyPartEdit_Join29
-SeMenu_ApplyPartEdit_Skip49:
+	jr	SeMenu_DrawKeyScaleGraph_Join3
+SeMenu_ApplyPartEdit_Skip27:
 	ld	wa, qiz
 	add	wa, de
 	ld	qiz, wa
-SeMenu_ApplyPartEdit_Join29:
+SeMenu_DrawKeyScaleGraph_Join3:
 	pushw	iz
 	pushw	(xsp+18)
 	pushw	iz
@@ -4884,21 +4929,29 @@ SeMenu_ApplyPartEdit_Join29:
 	pushw	121
 	pushm	(xsp+8)
 	push	qiz
-SeMenu_ApplyPartEdit_Entry14_Code_Join:
+SeMenu_DrawKeyScaleGraph_Join4:
 	pushm	(xsp+12)
 	call	SeMenu_DrawDottedLine
 	inc	8, xsp
 	pop	xiz
 	lda	xsp, (xsp+28)
 	ret
-SeMenu_ApplyPartEdit_Helper13:
+; SeMenu_StoreAbsoluteValue: Stores the absolute value of the signed byte A at (XBC). Basis: callers + body --
+;   SeMenu_DrawKeyScaleGraph passes the signed key-scale depth (part param 10) and uses its sign separately, and the
+;   other graph routines pass signed differences of adjacent edit bytes (e.g. `ld a, (xbc+1) / sub a, (xbc)`) to get a
+;   length.
+SeMenu_StoreAbsoluteValue:
 	cp a, 0:i3
-	jr ge, .Lc_f08c6b
+	jr ge, SeMenu_StoreAbsoluteValue_Skip
 	neg A
-.Lc_f08c6b:
+SeMenu_StoreAbsoluteValue_Skip:
 	ld (XBC),A
 	ret
-SeMenu_CopyWriteUpdate_Helper7:
+; SeMenu_DrawPartRangeGraph: Redraws part C's range graph on the TONE RANGE pages: clears the part's row, maps edit
+;   bytes E..E+3 to x (A = 0: note on the keyboard picture; A != 0: value*192/127) and draws the three edges of the
+;   range shape. Skips disabled parts. Basis: callers + body -- SeTonRan1 (A=0) and SeTonRan2 (A=1) column handlers
+;   and the page redraw loop.
+SeMenu_DrawPartRangeGraph:
 	lda	xsp, (xsp-28)
 	ld	(xsp+22), e
 	ld	(xsp+24), c
@@ -4907,7 +4960,7 @@ SeMenu_CopyWriteUpdate_Helper7:
 	extz	wa
 	calr	SeMenu_IsPartEnabled
 	cp	hl, 0:i3
-	jrl	z, SeMenu_ApplyPartEdit_Epilogue10
+	jrl	z, SeMenu_ApplyPartEdit_Epilogue7
 	ld	a, (xsp+24)
 	extz	wa
 	add	wa, wa
@@ -4916,14 +4969,14 @@ SeMenu_CopyWriteUpdate_Helper7:
 	ld	(xsp), wa
 	ldw	(xsp+2), 20
 	cp	(xsp+26), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip50
+	jr	nz, SeMenu_DrawPartRangeGraph_Skip
 	ldw	(xsp+4), 39
 	ldw	wa, 247
-	jr	SeLfo1_StepSelectorAndReload_Join11
-SeMenu_ApplyPartEdit_Skip50:
+	jr	SeMenu_DrawPartRangeGraph_Join
+SeMenu_DrawPartRangeGraph_Skip:
 	ldw	(xsp+4), 48
 	ldw	wa, 241
-SeLfo1_StepSelectorAndReload_Join11:
+SeMenu_DrawPartRangeGraph_Join:
 	pushw	(xsp)
 	pushw	wa
 	ld	wa, (xsp+4)
@@ -4956,7 +5009,7 @@ SeLfo1_StepSelectorAndReload_Join11:
 	resm	7, (xsp+16)
 	resm	7, (xsp+14)
 	cp	(xsp+26), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip51
+	jr	nz, SeMenu_ApplyPartEdit_Skip28
 	ld	a, (xsp+20)
 	extz	wa
 	lda	xbc, (xsp+12)
@@ -4973,8 +5026,8 @@ SeLfo1_StepSelectorAndReload_Join11:
 	extz	wa
 	lda	xbc, (xsp+6)
 	calr	SeMenu_ApplyPartEdit_Helper11
-	jr	SeMenu_ApplyPartEdit_Join30
-SeMenu_ApplyPartEdit_Skip51:
+	jr	SeMenu_ApplyPartEdit_Join18
+SeMenu_ApplyPartEdit_Skip28:
 	ld	a, (xsp+20)
 	extz	wa
 	ld	(xsp+12), wa
@@ -5015,7 +5068,7 @@ SeMenu_ApplyPartEdit_Skip51:
 	extz	xwa
 	div	wa, 127
 	ld	(xsp+6), wa
-SeMenu_ApplyPartEdit_Join30:
+SeMenu_ApplyPartEdit_Join18:
 	ld	wa, (xsp+4)
 	add	(xsp+12), wa
 	add	(xsp+10), wa
@@ -5043,10 +5096,13 @@ SeMenu_ApplyPartEdit_Join30:
 	pushw	(xsp+30)
 	call	SeGfx_DrawLine
 	lda	xsp, (xsp+24)
-SeMenu_ApplyPartEdit_Epilogue10:
+SeMenu_ApplyPartEdit_Epilogue7:
 	lda	xsp, (xsp+28)
 	ret
-SeMenu_CopyWriteUpdate_Helper8:
+; SeMenu_SelectPartAndRedraw: Selects part C (1..4, the "1ST".."4TH" side buttons) for editing: no-op if already
+;   selected or (E = 1) the part is disabled; else records it in (0x65D) and edit-buffer byte 0, redraws via screen
+;   code WA and re-sends the part levels. Basis: callers + body -- OnSideRow2..5 pass C = 1..4.
+SeMenu_SelectPartAndRedraw:
 	dec	8, xsp
 	ld	(xsp+2), e
 	ld	(xsp+4), c
@@ -5056,15 +5112,15 @@ SeMenu_CopyWriteUpdate_Helper8:
 	calr	SeMenu_LoadPartParam
 	ld	a, (xsp+4)
 	cp	a, (xsp)
-	jr	z, SeMenu_ApplyPartEdit_Epilogue11
+	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
 	cp	(xsp+2), 1
-	jr	nz, SeMenu_ApplyPartEdit_Skip52
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip
 	ld	a, (xsp+4)
 	extz	wa
 	calr	SeMenu_IsPartEnabled
 	cp	hl, 0:i3
-	jr	z, SeMenu_ApplyPartEdit_Epilogue11
-SeMenu_ApplyPartEdit_Skip52:
+	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
+SeMenu_ApplyPartEdit_Entry5_Code_Skip:
 	ld	a, (xsp+4)
 	extz	wa
 	calr	SeMenu_SetCurrentPart
@@ -5080,19 +5136,23 @@ SeMenu_ApplyPartEdit_Skip52:
 	inc	4, xsp
 	ld	wa, 1:i3
 	calr	SeMenu_SetupMenuDisplay
-SeMenu_ApplyPartEdit_Epilogue11:
+SeMenu_ApplyPartEdit_Entry5_Code_Epilogue:
 	inc	8, xsp
 	ret
-UpdSeSel_DetailedUpdate_Helper5:
+; SeMenu_DrawFilterGraph: Clears and draws the filter response graph of the current part: corner x = 86 + part param 2
+;   (cutoff), peak height from part param 3 (resonance, 0..5); A = 0 low-pass / 1 high-pass shape, C = 0 (Lpq/Hpq
+;   pages) or 1 (L24/H24 pages, doubled slope, lower box). Basis: callers + body -- the four filter pages call it with
+;   (A,C) = (0,0) Lpq1, (1,0) Hpq1, (0,1) L241, (1,1) H241 after editing cutoff/resonance.
+SeMenu_DrawFilterGraph:
 	lda xsp, (xsp - 0x10)
 	push XIZ
 	ld (XSP+0x10),C
 	ld (XSP+0x12),A
 	ldw (XSP+0x04), 0x004d
 	cp (XSP+0x10),0x00
-	jr nz, .Lc_f08e71
+	jr nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip2
 	ldw (XSP+0x04), 0x0028
-.Lc_f08e71:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip2:
 	lda xbc, (xsp + 0x0e)
 	ld wa, 2:i3
 	calr SeMenu_LoadPartParam
@@ -5102,9 +5162,9 @@ UpdSeSel_DetailedUpdate_Helper5:
 	calr SeMenu_LoadPartParam
 	and (XSP+0x0c),0x07
 	cp (XSP+0x0c),0x05
-	jr ule, .Lc_f08e92
+	jr ule, SeMenu_ApplyPartEdit_Entry5_Code_Skip3
 	ld (XSP+0x0c),0x05
-.Lc_f08e92:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip3:
 	ld WA,(XSP+0x04)
 	add WA,0x0035
 	ld (XSP+0x06),WA
@@ -5116,22 +5176,22 @@ UpdSeSel_DetailedUpdate_Helper5:
 	add WA,0x0056
 	ld QIZ,WA
 	cp (XSP+0x10),0x00
-	jr nz, .Lc_f08ecb
+	jr nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip4
 	ld C,(XSP+0x0c)
 	mul C,0x03
 	ld WA,(XSP+0x08)
 	sub WA,BC
 	inc 6,WA
 	ld (XSP+0x0a),WA
-	jr t, .Lc_f08edd
-.Lc_f08ecb:
+	jr t, SeMenu_ApplyPartEdit_Entry5_Code_Join
+SeMenu_ApplyPartEdit_Entry5_Code_Skip4:
 	ld C,(XSP+0x0c)
 	mul C,0x06
 	ld WA,(XSP+0x08)
 	sub WA,BC
 	add WA,0x000c
 	ld (XSP+0x0a),WA
-.Lc_f08edd:
+SeMenu_ApplyPartEdit_Entry5_Code_Join:
 	ld IZ,(XSP+0x06)
 	sub IZ,(XSP+0x0a)
 	pushm	(xsp+6)
@@ -5141,7 +5201,7 @@ UpdSeSel_DetailedUpdate_Helper5:
 	call	SeMenu_ClearRect
 	inc	8, xsp
 	cp	(xsp+18), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip56
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip8
 	pushw	(xsp+8)
 	ld	wa, qiz
 	sub	wa, 10
@@ -5160,68 +5220,68 @@ UpdSeSel_DetailedUpdate_Helper5:
 	ldw	de, 232
 	sub	de, qiz
 	cp	(xsp+16), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip54
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip6
 	cp	iz, de
-	jr	ugt, SeMenu_ApplyPartEdit_Skip53
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip5
 	ld	bc, qiz
 	add	bc, iz
-	jr	SeMenu_ApplyPartEdit_Join31
-SeMenu_ApplyPartEdit_Skip53:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join2
+SeMenu_ApplyPartEdit_Entry5_Code_Skip5:
 	ldw	bc, 232
 	ld	wa, (xsp+10)
 	add	wa, de
-	jr	SeMenu_ApplyPartEdit_Join32
-SeMenu_ApplyPartEdit_Skip54:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join3
+SeMenu_ApplyPartEdit_Entry5_Code_Skip6:
 	ld	bc, iz
 	srl	bc, 1
 	cp	bc, de
-	jr	ugt, SeMenu_ApplyPartEdit_Skip55
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip7
 	add	bc, qiz
-SeMenu_ApplyPartEdit_Join31:
+SeMenu_ApplyPartEdit_Entry5_Code_Join2:
 	ld	wa, (xsp+6)
-	jr	SeMenu_ApplyPartEdit_Join32
-SeMenu_ApplyPartEdit_Skip55:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join3
+SeMenu_ApplyPartEdit_Entry5_Code_Skip7:
 	ldw	bc, 232
 	ld	wa, de
 	add	wa, wa
 	add	wa, (xsp+10)
-SeMenu_ApplyPartEdit_Join32:
+SeMenu_ApplyPartEdit_Entry5_Code_Join3:
 	pushw	wa
 	pushw	bc
 	pushm	(xsp+14)
 	push	qiz
-	jr	SeMenu_ApplyPartEdit_Join34
-SeMenu_ApplyPartEdit_Skip56:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join6
+SeMenu_ApplyPartEdit_Entry5_Code_Skip8:
 	ld	de, qiz
 	sub	de, 67
 	cp	(xsp+16), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip58
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip10
 	cp	iz, de
-	jr	ugt, SeMenu_ApplyPartEdit_Skip57
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip9
 	ld	bc, qiz
 	sub	bc, iz
-	jr	SeMenu_ApplyPartEdit_Join33
-SeMenu_ApplyPartEdit_Skip57:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join4
+SeMenu_ApplyPartEdit_Entry5_Code_Skip9:
 	ldw	bc, 67
 	ld	wa, (xsp+10)
 	add	wa, de
-	jr	UpdSeSel_DetailedUpdate_Helper5_Join
-SeMenu_ApplyPartEdit_Skip58:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join5
+SeMenu_ApplyPartEdit_Entry5_Code_Skip10:
 	ld	wa, iz
 	srl	wa, 1
 	cp	wa, de
-	jr	ugt, SeMenu_ApplyPartEdit_Skip59
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip11
 	ld	bc, qiz
 	sub	bc, wa
-SeMenu_ApplyPartEdit_Join33:
+SeMenu_ApplyPartEdit_Entry5_Code_Join4:
 	ld	wa, (xsp+6)
-	jr	UpdSeSel_DetailedUpdate_Helper5_Join
-SeMenu_ApplyPartEdit_Skip59:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join5
+SeMenu_ApplyPartEdit_Entry5_Code_Skip11:
 	ldw	bc, 67
 	ld	wa, de
 	add	wa, wa
 	add	wa, (xsp+10)
-UpdSeSel_DetailedUpdate_Helper5_Join:
+SeMenu_ApplyPartEdit_Entry5_Code_Join5:
 	pushm	(xsp+10)
 	push	qiz
 	pushw	wa
@@ -5241,7 +5301,7 @@ UpdSeSel_DetailedUpdate_Helper5_Join:
 	ld	wa, qiz
 	add	wa, 10
 	pushw	wa
-SeMenu_ApplyPartEdit_Join34:
+SeMenu_ApplyPartEdit_Entry5_Code_Join6:
 	call	SeGfx_DrawLine
 	inc	8, xsp
 	pushm	(xsp+6)
@@ -5253,7 +5313,12 @@ SeMenu_ApplyPartEdit_Join34:
 	pop	xiz
 	lda	xsp, (xsp+16)
 	ret
-UpdSeSel_DetailedUpdate_Helper6:
+; SeMenu_DrawFilterEqGraph: Clears and redraws the EQUALIZER graph of the -12 dB low/high-pass filter pages: the lower
+;   box (66,117)-(233,172), peak at x = 86 + part param 4 (FREQ, 0..127), height from param 5 bits 0-6 (GAIN, 0..13)
+;   and shape from param 5 bit 7 (RANGE). Basis: callers + body -- SeFilLpq1 switches 5/6/7 (labels RANGE/FREQ/GAIN,
+;   columns 5-7) call it after storing params 5/4/5, and the Lpq1/Hpq1 page redraws call it after
+;   SeMenu_DrawFilterGraph (the -24 dB pages, which have no equalizer box, do not).
+SeMenu_DrawFilterEqGraph:
 	lda	xsp, (xsp-12)
 	push	xiz
 	lda	xbc, (xsp+14)
@@ -5285,9 +5350,9 @@ UpdSeSel_DetailedUpdate_Helper6:
 	sub	iz, wa
 	add	iz, 14
 	cp	(xsp+12), 0
-	jr	nz, SeMenu_ApplyPartEdit_Skip60
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip12
 	ld	iz, (xsp+6)
-SeMenu_ApplyPartEdit_Skip60:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip12:
 	pushw 171
 	pushw	232	; four word arguments, not a far pointer
 	pushw	118
@@ -5296,7 +5361,7 @@ SeMenu_ApplyPartEdit_Skip60:
 	inc	8, xsp
 	ld	a, (xsp+10)
 	and	a, (xsp+4)
-	jr	z, SeMenu_ApplyPartEdit_Skip61
+	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Skip13
 	pushw	(xsp+8)
 	ld	wa, qiz
 	dec	6, wa
@@ -5315,9 +5380,9 @@ SeMenu_ApplyPartEdit_Skip60:
 	pushw	iz
 	pushw 232
 	pushw	iz
-	.byte 0xd7, 0xfa, 0x04
-	jr	SeMenu_ApplyPartEdit_Join35
-SeMenu_ApplyPartEdit_Skip61:
+	push	qiz
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join7
+SeMenu_ApplyPartEdit_Entry5_Code_Skip13:
 	pushw	iz
 	push	xiz
 	pushw 67
@@ -5327,7 +5392,7 @@ SeMenu_ApplyPartEdit_Skip61:
 	inc	6, wa
 	pushw	wa
 	pushw	iz
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	call	SeGfx_DrawLine
 	lda	xsp, (xsp+16)
 	pushm	(xsp+8)
@@ -5336,18 +5401,18 @@ SeMenu_ApplyPartEdit_Skip61:
 	ld	wa, qiz
 	inc	6, wa
 	pushw	wa
-SeMenu_ApplyPartEdit_Join35:
+SeMenu_ApplyPartEdit_Entry5_Code_Join7:
 	call	SeGfx_DrawLine
 	inc	8, xsp
 	pushw	(xsp+6)
 	push	xiz
-	.byte 0xd7, 0xfa, 0x04
+	push	qiz
 	call	SeMenu_DrawDottedLine
 	inc	8, xsp
 	pop	xiz
 	lda	xsp, (xsp+12)
 	ret
-Scoop_SoundEditorData_Helper7:
+SeMenu_DrawBandPassCurve:
 	lda xsp, (xsp - 0x16)
 	push XIZ
 	lda xbc, (xsp + 0x18)
@@ -5359,9 +5424,9 @@ Scoop_SoundEditorData_Helper7:
 	calr SeMenu_LoadPartParam
 	and (XSP+0x16),0x07
 	cp (XSP+0x16),0x05
-	jr ule, .Lc_f09114
+	jr ule, SeMenu_ApplyPartEdit_Entry5_Code_Skip14
 	ld (XSP+0x16),0x05
-.Lc_f09114:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip14:
 	lda xbc, (xsp + 0x14)
 	ld wa, 4:i3
 	calr SeMenu_LoadPartParam
@@ -5371,15 +5436,15 @@ Scoop_SoundEditorData_Helper7:
 	calr SeMenu_LoadPartParam
 	and (XSP+0x12),0x07
 	cp (XSP+0x12),0x05
-	jr ule, .Lc_f09135
+	jr ule, SeMenu_ApplyPartEdit_Entry5_Code_Skip15
 	ld (XSP+0x12),0x05
-.Lc_f09135:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip15:
 	ld A,(XSP+0x18)
 	cp A,(XSP+0x14)
-	jr c, .Lc_f09145
+	jr c, SeMenu_ApplyPartEdit_Entry5_Code_Skip16
 	ld (XSP+0x18),0x4f
 	ld (XSP+0x14),0x50
-.Lc_f09145:
+SeMenu_ApplyPartEdit_Entry5_Code_Skip16:
 	ldw (XSP+0x06), 0x0082
 	ldw (XSP+0x0a), 0x001a
 	addw	(xsp+10), 77
@@ -5425,16 +5490,16 @@ Scoop_SoundEditorData_Helper7:
 	sub	bc, 67
 	ld	wa, qiz
 	cp	wa, bc
-	jr	ugt, SeMenu_ApplyPartEdit_Skip62
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip17
 	ld	de, iz
 	sub	de, qiz
 	ld	wa, (xsp+6)
-	jr	SeLfo1_StepSelectorAndReload_Join12
-SeMenu_ApplyPartEdit_Skip62:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join8
+SeMenu_ApplyPartEdit_Entry5_Code_Skip17:
 	ldw	de, 67
 	ld	wa, (xsp+12)
 	add	wa, bc
-SeLfo1_StepSelectorAndReload_Join12:
+SeMenu_ApplyPartEdit_Entry5_Code_Join8:
 	pushw	(xsp+12)
 	pushw	iz
 	pushw	wa
@@ -5442,13 +5507,13 @@ SeLfo1_StepSelectorAndReload_Join12:
 	call	SeGfx_DrawLine
 	inc	8, xsp
 	cp	(xsp+4), 1
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip11
+	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip18
 	pushm	(xsp+14)
 	pushm	(xsp+10)
 	pushm	(xsp+16)
 	pushw	iz
-	jr	SeMenu_ApplyPartEdit_Join36
-SeLfo1_StepSelectorAndReload_Skip11:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join9
+SeMenu_ApplyPartEdit_Entry5_Code_Skip18:
 	pushw	(xsp+10)
 	ld	wa, iz
 	add	wa, 10
@@ -5472,22 +5537,22 @@ SeLfo1_StepSelectorAndReload_Skip11:
 	ld	wa, (xsp+14)
 	sub	wa, 10
 	pushw	wa
-SeMenu_ApplyPartEdit_Join36:
+SeMenu_ApplyPartEdit_Entry5_Code_Join9:
 	call	SeGfx_DrawLine
 	inc	8, xsp
 	ldw	bc, 232
 	sub	bc, (xsp+8)
 	cp	(xsp+16), bc
-	jr	ugt, SeMenu_ApplyPartEdit_Skip63
+	jr	ugt, SeMenu_ApplyPartEdit_Entry5_Code_Skip19
 	ld	de, (xsp+8)
 	add	de, (xsp+16)
 	ld	wa, (xsp+6)
-	jr	SeMenu_ApplyPartEdit_Join37
-SeMenu_ApplyPartEdit_Skip63:
+	jr	SeMenu_ApplyPartEdit_Entry5_Code_Join10
+SeMenu_ApplyPartEdit_Entry5_Code_Skip19:
 	ldw	de, 232
 	ld	wa, (xsp+14)
 	add	wa, bc
-SeMenu_ApplyPartEdit_Join37:
+SeMenu_ApplyPartEdit_Entry5_Code_Join10:
 	pushw	wa
 	pushw	de
 	pushm	(xsp+18)
@@ -5513,7 +5578,11 @@ SeMenu_ApplyPartEdit_Join37:
 	lda	xde, (1698:16)
 	ld	(xde+wa), bc
 	ret
-SeMenu_CopyWriteUpdate_Helper9:
+; SeMenu_GetToneIndex: Copies the 16-bit TONE index of tone slot A (1..4) -- word A-1 of the four-word table at RAM
+;   0x6A2 -- to (XBC). Basis: callers + body -- the TONE column (column 3) handlers of the TONE SELECT pages fetch it,
+;   bound it by the tone count word 0x6AA (SeMenu_GetWordEntryCount) and step it; SeMenu_ApplyFilter
+;   writes the same table.
+SeMenu_GetToneIndex:
 	dec	1, a
 	extz	wa
 	add	wa, wa
@@ -5523,12 +5592,19 @@ SeMenu_CopyWriteUpdate_Helper9:
 	ret
 	ld	(1706:16), wa
 	ret
-SeMenu_CopyWriteUpdate_Helper10:
+; SeMenu_GetWordEntryCount: Copies the sound editor's 16-bit entry count (RAM 0x6AA, bytes +0..+1 of the record
+;   SeMenu_ProcessEffect loads) to (XWA); the word counterpart of SeMenu_GetEntryCount (byte 0x6AC). Basis: callers +
+;   body -- the column-3 handlers of SeTonTon1/SeTonHyb1 use it as the exclusive upper bound of the per-part 16-bit
+;   index they step.
+SeMenu_GetWordEntryCount:
 	ldw	(xwa), (0x6aa)
 	ret
 	ld	(1708:16), a
 	ret
-SeMenu_CopyWriteUpdate_Helper11:
+; SeMenu_GetEntryCount: Copies the sound editor's entry-count byte (RAM 0x6AC) to (XWA). Basis: callers + body --
+;   SeTonTon1/SeTonHyb1 column 2 use it as the upper bound of the selection index they step; SeMenu_ProcessEffect sets
+;   0x6AC from byte +2 (the count) of the record it loads.
+SeMenu_GetEntryCount:
 	ld	(xwa), (0x6ac)
 	ret
 SeMenu_ProcessEffect:
@@ -5814,32 +5890,32 @@ SeMenu_GetGroupFirstToneIndex_Skip3:
 	pop	xiz
 	inc	8, xsp
 	ret
-SeMenu_CopyWriteUpdate_Helper12:
+SeMenu_CopyWriteUpdate_Step3_Helper11:
 	dec	2, xsp
 	push	xiz
 	ld	xiz, xde
 	lda	xde, (xsp+4)
 	cp	a, 3:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Helper12_Skip
+	jr	nz, SeMenu_CopyWriteUpdate_Step3_Helper11_Skip4
 	add	c, 14
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-	jr	SeMenu_CopyWriteUpdate_Helper12_Join
-SeMenu_CopyWriteUpdate_Helper12_Skip:
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper11_Join
+SeMenu_CopyWriteUpdate_Step3_Helper11_Skip4:
 	cp	a, 1:i3
-	jr	nz, SeMenu_CopyWriteUpdate_Helper12_Skip2
+	jr	nz, SeMenu_CopyWriteUpdate_Step3_Helper11_Skip
 	inc	7, c
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-	jr	SeMenu_CopyWriteUpdate_Helper12_Join
-SeMenu_CopyWriteUpdate_Helper12_Skip2:
+	jr	SeMenu_CopyWriteUpdate_Step3_Helper11_Join
+SeMenu_CopyWriteUpdate_Step3_Helper11_Skip:
 	add	c, 13
 	extz	bc
 	ld	wa, bc
 	ld	xbc, xde
-SeMenu_CopyWriteUpdate_Helper12_Join:
+SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	calr	SeMenu_LoadPartParam
 	ld	a, (xsp+4)
 	ld	(xiz), a
@@ -6074,11 +6150,9 @@ SeMenu_HandleMenuChange_End:
 	ret
 
 SeMenu_HandleMenuChange_Data:
-	.byte 0xb0
-	push_a
-	popw	(xsp)
+	ld	(xwa), (0x6b7)
 	ret
-SeMenu_CopyWriteUpdate_Helper15:
+SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
 
@@ -6121,9 +6195,7 @@ SeMenu_SetPartRecordBits:
 	or	(xde), a
 	jr	SeMenu_SetPartRecordBits_Epilogue2
 SeMenu_SetPartRecordBits_Skip3:
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp	(xsp), 2
 	jr	nz, SeMenu_SetPartRecordBits_Skip4
 	ld	a, (xsp+4)
 	or	(xbc), a
@@ -6230,9 +6302,7 @@ SeMenu_StepNoteParamInRange_Skip6:
 	ld	l, 1:opc
 	jr	SeMenu_StepNoteParamInRange_Epilogue
 SeMenu_StepNoteParamInRange_Skip7:
-	.byte 0x8f, 0x04
-	push	xsp
-	nop
+	cp	(xsp+4), 0
 	jr	z, SeMenu_StepNoteParamInRange_Skip8
 	ld	a, (xsp+4)
 	cp	a, (xsp+6)
@@ -6373,9 +6443,7 @@ SeMenu_StoreEffectCoeff_Data_Loop:
 	lda	xbc, (xbc+wa)
 	calr SeMenu_StoreEffectCoeff_Data
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp	(xsp), 2
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Loop
 	lda	xde, (xsp+30)
 	lda	xbc, (xsp+34)
@@ -6419,9 +6487,7 @@ SeMenu_StoreEffectCoeff_Data_Loop2:
 	ldto_berp a, 238
 	cp	a, l
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Join
-	.byte 0x84
-	push	xsp
-	nop
+	cp	(xix), 0
 	jr	ge, SeMenu_StoreEffectCoeff_Data_Skip
 	ld	(xiy), 0
 	jr	SeMenu_StoreEffectCoeff_Data_Join
@@ -6429,9 +6495,7 @@ SeMenu_StoreEffectCoeff_Data_Skip:
 	ld	(xiy), l
 SeMenu_StoreEffectCoeff_Data_Join:
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	push	sr
+	cp	(xsp), 2
 	jr	ule, SeMenu_StoreEffectCoeff_Data_Loop2
 	ld	a, (xbc)
 	and	a, 128
@@ -6466,9 +6530,7 @@ SeMenu_StoreEffectCoeff_Data_Loop3:
 	ld	wa, 0:i3
 	calr	SeMenu_RegisterElement_Extended
 	incm8	1, (xsp)
-	.byte 0x87
-	push	xsp
-	pop	sr
+	cp	(xsp), 3
 	jr	c, SeMenu_StoreEffectCoeff_Data_Loop3
 	lda	xsp, (xsp+40)
 	ret
@@ -6741,7 +6803,7 @@ SePitPit1_OnColumn6:
 	lda xbc, (xbc + 0x0a)
 	call SeMenu_SwitchToValueStep
 	lda xwa, (xsp + 0x02)
-	call SeMenu_RefreshPartDisplay_Data_2
+	call SeMenu_StepParamField
 	cp l, 1:i3
 	jr nz, .Lc_f09d35
 	ld A,(XSP+0x05)
@@ -6835,7 +6897,7 @@ SePitPit1_OnSideRow2:
 	ldw	wa, 39
 	ld	bc, 1:i3
 	ld	de, 1:i3
-	call	SeMenu_CopyWriteUpdate_Helper8
+	call	SeMenu_SelectPartAndRedraw
 	ret
 SePitPit1_OnSideRow3:
 	cp	a, 0:i3
@@ -6847,7 +6909,7 @@ SePitPit1_OnSideRow3_Skip4:
 	ldw	wa, 39
 	ld	bc, 2:i3
 	ld	de, 1:i3
-	jp	SeMenu_CopyWriteUpdate_Helper8
+	jp	SeMenu_SelectPartAndRedraw
 SePitPit1_OnSideRow4:
 	dec	2, xsp
 	cp	a, 0:i3
@@ -6871,7 +6933,7 @@ SePitPit1_OnSideRow4_Skip13:
 	ldw	wa, 39
 	ld	bc, 3:i3
 	ld	de, 1:i3
-	call	SeMenu_CopyWriteUpdate_Helper8
+	call	SeMenu_SelectPartAndRedraw
 SePitPit1_OnSideRow4_Epilogue5:
 	inc	2, xsp
 	ret
@@ -6883,7 +6945,7 @@ SePitPit1_OnSideRow5:
 	ldw	wa, 13
 	call	SeMenu_LoadPartParam
 	cp	(xsp), 4
-	jr	nc, SeMenu_RefreshPartDisplay_Epilogue2
+	jr	nc, SePitPit1_OnSideRow5_Epilogue6
 	incm8	1, (xsp)
 	ld	c, (xsp)
 	extz	bc
@@ -6893,13 +6955,13 @@ SePitPit1_OnSideRow5:
 	pushw	39
 	call	SeTitle_DrawField
 	inc	4, xsp
-	jr	SeMenu_RefreshPartDisplay_Epilogue2
+	jr	SePitPit1_OnSideRow5_Epilogue6
 SePitPit1_OnSideRow5_Skip14:
 	ldw	wa, 39
 	ld	bc, 4:i3
 	ld	de, 1:i3
-	call	SeMenu_CopyWriteUpdate_Helper8
-SeMenu_RefreshPartDisplay_Epilogue2:
+	call	SeMenu_SelectPartAndRedraw
+SePitPit1_OnSideRow5_Epilogue6:
 	inc	2, xsp
 	ret
 SePitPit1_OnSwitch15:

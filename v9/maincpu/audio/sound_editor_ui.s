@@ -17374,7 +17374,7 @@ AcEasyCmpGridBoxProc_PassToApFunc:
 
 EasyCmp_ReturnZeroJmp:
 	ld xhl, 0:i3
-	jr EasyCmp_GridCheck_Case5
+	jr AcEasyCmpGridBoxProc_Epilogue
 
 ; EasyCmpGridCheck case 4
 AcEasyCmpGridBoxProc_CallInherited:
@@ -17384,7 +17384,7 @@ AcEasyCmpGridBoxProc_CallInherited:
 	call InheritedProc
 
 ; EasyCmpGridCheck case 5
-EasyCmp_GridCheck_Case5:
+AcEasyCmpGridBoxProc_Epilogue:
 	pop xiz
 	lda xsp, (xsp + 16)
 	ret
@@ -18400,7 +18400,7 @@ MspBnk_SendEventJoin:
 ; RgpSetBnkCheck case 1
 PsMspBnkNameBoxProc_ReturnZero:
 	ld xhl, 0:i3
-	jr RgpSetBnk_GridCheck_Case3
+	jr PsMspBnkNameBoxProc_Epilogue
 
 ; RgpSetBnkCheck case 2
 PsMspBnkNameBoxProc_CallInherited:
@@ -18409,7 +18409,7 @@ PsMspBnkNameBoxProc_CallInherited:
 	call InheritedProc
 
 ; RgpSetBnkCheck case 3
-RgpSetBnk_GridCheck_Case3:
+PsMspBnkNameBoxProc_Epilogue:
 	pop xiz
 	lda xsp, (xsp+260)
 	ret

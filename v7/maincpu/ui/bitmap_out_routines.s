@@ -349,24 +349,24 @@ BitMapOut_ByteData_TransitionSeq_Join:
 BitMapOut_ByteData_PresetCopy:
 	push qiz
 	cp (CURRENT_MODE:16), 14
-	jr z, BitMapOut_ByteData_PresetCopy_Skip2
+	jr z, BitMapOut_ByteData_PresetCopy_Skip
 	bit 3, (36010:16)
-	jr nz, BitMapOut_ByteData_PresetCopy_Skip2
+	jr nz, BitMapOut_ByteData_PresetCopy_Skip
 	cp (SWBTWR_PAYLOAD_1:16), 1
-	jr nz, BitMapOut_ByteData_PresetCopy_Skip2
+	jr nz, BitMapOut_ByteData_PresetCopy_Skip
 	calr BitMapOut_GetRenderMode
 	bit 1, l
-	jr nz, BitMapOut_ByteData_PresetCopy_Join
+	jr nz, BitMapOut_ByteData_PresetCopy_Code_Skip
 	ldb_d8 a, (SWBTWR_PAYLOAD_2)
 	res 7, a
 	ldfr_berp a, 251
 	cpib_erp 251, 0
-	jr z, BitMapOut_ByteData_PresetCopy_Join
+	jr z, BitMapOut_ByteData_PresetCopy_Code_Skip
 	dec1b_erp 251
 	ldb_d8 a, (SWBTWR_PAYLOAD_3)
 	res 7, a
 	cp a, 0:i3
-	jr z, BitMapOut_ByteData_PresetCopy_Join
+	jr z, BitMapOut_ByteData_PresetCopy_Code_Skip
 	ld xwa, 769
 	call SndParam_LookupReadOnly
 	ldto_berp a, 251
@@ -374,14 +374,14 @@ BitMapOut_ByteData_PresetCopy:
 	cp hl, 0:i3
 	jr nz, BitMapOut_ByteData_PresetCopy_Code_Skip2
 	calr PanelMemory_Recall
-	jr BitMapOut_ByteData_PresetCopy_Join
+	jr BitMapOut_ByteData_PresetCopy_Code_Skip
 BitMapOut_ByteData_PresetCopy_Code_Skip2:
 	ld xbc, 63904
 	calr BitMapOut_CopyVoicePreset9
-BitMapOut_ByteData_PresetCopy_Join:
+BitMapOut_ByteData_PresetCopy_Code_Skip:
 	ldw wa, 130
 	calr BitMapOut_GetRenderMode_Return
-BitMapOut_ByteData_PresetCopy_Skip2:
+BitMapOut_ByteData_PresetCopy_Skip:
 	res 3, (36010:16)
 	pop qiz
 	ret
@@ -940,11 +940,153 @@ BitMapOut_CopyExtTable_Loop:
 
 
 
-BitMapOut_CopyExtTable_Check:	.incbin "includes/romslices/v7_block_bitmapout_copyexttable_check.bin", 0, 0xb5
+BitMapOut_CopyExtTable_Check:
 ; wa = slot: copy it over the live panel, then put back from the backup (RAM 0x3C8E4) tag 0x48 payload bytes
 ; 0, 1 (style number) and 7, the low 3 bits of byte 4, and tag 0x72 payload bytes 8-10 -- the current style
 ; survives the recall.
-PanelMemory_RecallKeepStyle:	.incbin "includes/romslices/v7_block_bitmapout_copyexttable_check.bin", 0xb5, 134
+	ld	a, (0xfcc1:16)
+	extz	wa
+	cp	bc, wa
+	jr	c, BitMapOut_CopyExtTable_Loop
+	ld	bc, 0:i3
+	jr	PanelMemory_RecallRecords_Join
+PanelMemory_RecallRecords_Loop:
+	lda	xwa, (0xfcf6:16)
+	ld	de, bc
+	extz	xde
+	add	xde, xwa
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xsp+16)
+	ld	xwa, (xwa)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	inc	1, bc
+PanelMemory_RecallRecords_Join:
+	ld	a, (0xfcf5:16)
+	extz	wa
+	cp	bc, wa
+	jr	c, PanelMemory_RecallRecords_Loop
+	ld	xhl, (xsp+8)
+	lda	xbc, (xhl+3)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xix, (xsp+12)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (xhl+1)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (xhl+4)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (0xfd0c:16)
+	lda	xde, (xbc+3)
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xix)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	lda	xde, (xbc+6)
+	ld	xhl, xde
+	sub	xhl, (xsp+4)
+	ld	xwa, (xix)
+	add	xhl, xwa
+	ld	a, (xhl)
+	ld	(xde), a
+	inc	7, xbc
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xwa, (xix)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	lda	xbc, (0xfd2c:16)
+	ld	xde, xbc
+	sub	xde, (xsp+4)
+	ld	xhl, xix
+	ld	xwa, (xhl)
+	add	xde, xwa
+	ld	a, (xde)
+	ld	(xbc), a
+	pop	xiz
+	lda	xsp, (xsp+16)
+	ret
+PanelMemory_RecallKeepStyle:
+	extz	wa
+	calr	PanelMemory_CopySlotToLivePanel
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	SeqTimer_UpdateTempoReg
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	lda	xbc, (0xf9a0:16)
+	lda	xix, (0xfc5a:16)
+	ld	xwa, xix
+	sub	xwa, xbc
+	lda	xde, (0x03c8e4:24)
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xix), a
+	lda	xhl, (xix+1)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+7)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	inc	4, xix
+	ld	l, (xix)
+	and	l, 0xf8
+	ld	(xix), l
+	ld	xwa, xix
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	and	a, 0x7
+	or	l, a
+	ld	(xix), l
+	lda	xix, (0xfd0c:16)
+	lda	xhl, (xix+8)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+9)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	lda	xhl, (xix+10)
+	ld	xwa, xhl
+	sub	xwa, xbc
+	add	xwa, xde
+	ld	a, (xwa)
+	ld	(xhl), a
+	ret
 ; === end v7 block ===
 ; wa = slot: Mem_Copy PanelMemory_SlotAddresses[wa] (960 bytes) over the live panel at RAM 0xF9A0.
 PanelMemory_CopySlotToLivePanel:
@@ -3395,16 +3537,16 @@ BitMapOut_UpdateWidget_Finalize:
 BitMapOut_UpdateWidget_Done:
 	call	GetTitleNow
 	cp	xhl, TITLE_PMBKSEL
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMVIEW
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMBKNAME
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	call	GetTitleNow
 	cp	xhl, TITLE_PMNAME
-	jr	z, BitMapOut_UpdateWidget_Done_Skip
+	jr	z, BitMapOut_UpdateWidget_Finalize_Skip
 	cp	(SWBTWR_PAYLOAD_1:16), 5
 	ret	nz
 	ld	a, (SWBTWR_PAYLOAD_2:16)
@@ -3418,8 +3560,8 @@ BitMapOut_UpdateWidget_Done:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 1:i3
-	jr	BitMapOut_UpdateWidget_Done_Join
-BitMapOut_UpdateWidget_Done_Skip:
+	jr	BitMapOut_UpdateWidget_Finalize_Join
+BitMapOut_UpdateWidget_Finalize_Skip:
 	cp	(SWBTWR_PAYLOAD_1:16), 5
 	ret	nz
 	ld	a, (SWBTWR_PAYLOAD_2:16)
@@ -3429,12 +3571,20 @@ BitMapOut_UpdateWidget_Done_Skip:
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_SET_HOLD
 	ld	xde, 0:i3
-BitMapOut_UpdateWidget_Done_Join:
+BitMapOut_UpdateWidget_Finalize_Join:
 	call	ApPostEvent
 	ret
-FileIO_ByteBlock_DemoProc1_Helper4:
+; PanelMemory_PreSlotLoad: Empty hook (ret) run before one panel memory is read from a .PMT file; WA = destination
+;   memory index. Basis: callers + body -- FileIO_ByteBlock_DemoProc1 (the single-memory load reached from
+;   SLDstBankList) calls it right before reading the memory into 0x1ED400 + size*index, the slot where the whole-file
+;   load calls PrePmLoad (also a bare ret).
+PanelMemory_PreSlotLoad:
 	ret
-FileIO_ByteBlock_DemoProc1_Helper5:
+; PanelMemory_PostSlotLoad: Hook run after one panel memory was read: BC < 0 (read failed) restores memory WA from its
+;   ROM default (VoiceData_InitAndCopyParams), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
+;   body -- FileIO_ByteBlock_DemoProc1 passes WA = destination index and BC = the read result, in the place PostPmLoad
+;   (which calls PanelTlv_ValidatePanelMemories) takes for a whole-file load.
+PanelMemory_PostSlotLoad:
 	extz	wa
 	cp	bc, 0:i3
 	jp	lt, (VoiceData_InitAndCopyParams:24)

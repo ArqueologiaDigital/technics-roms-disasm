@@ -671,7 +671,7 @@ AccNoteOn_SpecialDirectAdd:
 	ld	xwa, 0xcb82
 	ld	xbc, (xsp + 2)
 	ldw	de, 0x15
-	.byte 0x1d, 0xc0, 0x21, 0xfe
+	call	NoteMap_AddEntry
 	jr	AccNoteOn_FinalizeAndAutoPlay
 AccNoteOn_CheckLayer3Only:
 	ld	xwa, (xsp + 2)
@@ -2667,7 +2667,7 @@ VoiceLinks_SkipEmpty:
 	ld	c, a
 	extz	bc
 	ld	xwa, (xsp + 6)
-	call	LinkVoiceSlots_Block
+	call	NoteMap_FindLinkedSlotByKey
 	ldfr_berp	L, 0xfb
 	ldto_berp	A, 0xfb
 	cp	a, (xsp + 4)
@@ -4084,9 +4084,8 @@ NoteMap_AddEntry_Loop:
 	extz	wa
 	add	wa, 132
 	extz	xwa
-	.byte	0xaf, 0x04, 0x80, 0x80
-	push	xsp
-	pop_a
+	add	xwa, (xsp+4)
+	cp	(xwa), 21
 	jr	nz, NoteMap_AddEntry_Skip2
 	ldto_berp	a, 251
 	ld	c, a
@@ -6177,7 +6176,7 @@ LinkVoiceSlots_LoadReg:
 LinkVoiceSlots_InitVal:
 	ld	hl, 1:i3
 	ret
-LinkVoiceSlots_Block:
+NoteMap_FindLinkedSlotByKey:
 	lda	xix, (0xc52e:16)
 	lda	xiy, (0xe722:16)
 	ld	e, (xwa + 3)
@@ -13146,7 +13145,7 @@ VoiceMap_AllocateSlot:
 	cpw	(0xcdca:16), 0
 	jr	nz, VoiceMap_AllocateSlo_Block
 	lda	xwa, (0xcd86:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF
 	calr	UIParam_ScanAndCollect
@@ -13169,7 +13168,7 @@ VoiceMap_AllocateSlo_Block:
 	jr	NoteMap_FindBestMatch_Return
 VoiceMap_AllocateSlo_Block2:
 	lda	xwa, (0xcd86:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF2
 	ld	(0xe8f6:16), 10
@@ -13213,7 +13212,7 @@ NoteMap_FindBestMatch:
 	jr	z, CheckVoiceReuse_SetByteFF2
 NoteMap_CheckVoiceReuse:
 	lda	xwa, (0xcd86:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, CheckVoiceReuse_SetByteFF
 	calr	UIParam_ScanAndCollect
@@ -13236,7 +13235,7 @@ CheckVoiceReuse_Block:
 	ld	l, a
 NoteMap_GetVoiceData_Return:
 	ret
-NoteMap_GetVoiceData_Entry:
+Harmony_FindReferenceNote:
 	ld	c, (0xce0e:16)
 	ld	(0xce10:16), c
 	ld	c, (0xce0f:16)
@@ -14158,7 +14157,7 @@ MapNoteToOffset_ClearByte3:
 Audio_NullRet1:
 	ret
 Audio_NullRet1_Data:
-	jp	NullRet2_Block
+	jp	Chord_ClearRecognizedChord
 	ret
 	nop
 	nop
@@ -14297,12 +14296,12 @@ VoiceTiming_CheckBit6:
 VoiceTiming_CheckBit7:
 	bit	7, (0xce42:24)
 	jr	z, VoiceTiming_CompareThreshold
-	calr	Voice_UpdateVelocity_Entry
+	calr	Chord_RecognizeNowOrDelay
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_CompareThreshold:
 	cp	bc, (0xce7b:16)
 	jr	c, VoiceTiming_EqualThreshold
-	calr	Voice_UpdateVelocity_Entry
+	calr	Chord_RecognizeNowOrDelay
 	jr	Voice_AdjustTiming_Return
 VoiceTiming_EqualThreshold:
 	cp	bc, (0xce7b:16)
@@ -14313,7 +14312,7 @@ VoiceTiming_BelowThreshold:
 	calr	Voice_MatchVoicePairs
 Voice_AdjustTiming_Return:
 	ret
-Voice_UpdateVelocity_Entry:
+Chord_RecognizeNowOrDelay:
 	bit	6, (0xce42:24)
 	jr	nz, Voice_CheckAndUpdateSlot
 	cpw	(0xce7b:16), 0
@@ -14370,7 +14369,7 @@ VoicePair_InnerScan:
 	inc	2, ix
 	dec	1, de
 	jr	nz, VoicePair_InnerScan
-	calr	Voice_UpdateVelocity_Entry
+	calr	Chord_RecognizeNowOrDelay
 	jr	VoicePair_Return
 VoicePair_AdvanceOuter:
 	inc	2, iy
@@ -14410,11 +14409,11 @@ CheckAndResetSlotSta_LoadDRAM2:
 	and	de, 0x10
 	jr	nz, Voice_NullRet2
 CheckAndResetSlotSta_Block2:
-	calr	NullRet2_Block
+	calr	Chord_ClearRecognizedChord
 	jr	Voice_NullRet2
 Voice_NullRet2:
 	ret
-NullRet2_Block:
+Chord_ClearRecognizedChord:
 	ldw	(0xce63:24), 0x0000
 	ld	(0xce49:24), 0x00
 	ld	(0xce55:24), 0x00
@@ -14424,7 +14423,7 @@ NullRet2_Block:
 	and	(0xce42:24), 249
 	ld	(0xce45:24), 0x00
 	ld	(0xce48:24), 0x00
-	calr	VoiceSlot_Epilogue_Block2
+	calr	Chord_ApplyCurrentChord
 	ret
 NullRet2_Data:
 	nop
@@ -14458,12 +14457,12 @@ EffectState_Dispatch:
 EffectState_Dispatch_Block:
 	calr	VoiceSlot_LoadResult_Block3
 EffectState_Dispatch_Block2:
-	calr	VoiceSlot_Epilogue_Block2
+	calr	Chord_ApplyCurrentChord
 	ret
 EffectState_Dispatch_Block3:
 	ld	(0xce49:24), 0x04
 	ld	de, (0xce63:24)
-	calr	VoiceSlot_StoreParams_Block2
+	calr	Chord_CollectHeldNotes
 	calr	VoiceSlot_StoreParams_LoadReg3
 	jr	VoiceSlot_StoreParams
 VoiceSlot_StoreParams:
@@ -14473,7 +14472,7 @@ VoiceSlot_StoreParams_Block:
 	ld	(0xce45:24), 0x00
 	and	(0xce42:24), 249
 	ret
-VoiceSlot_StoreParams_Block2:
+Chord_CollectHeldNotes:
 	ldw	(0xce93:24), 0x0000
 	ld	xiy, 0xce63
 	ld	xix, 0xcef3
@@ -14711,7 +14710,7 @@ PitchCalc_Return:
 PitchCalc_Return_Block:
 	ld	(0xce49:24), 0x04
 	ld	de, (0xce63:24)
-	calr	VoiceSlot_StoreParams_Block2
+	calr	Chord_CollectHeldNotes
 	cp	(0xce49:24), 0x02
 	jr	ugt, PitchCalcStep_ClearByte_Skip
 	jr	PitchCalcStep_ClearByte_Skip2
@@ -15341,7 +15340,7 @@ VoiceSlot_Epilogue_Block:
 	and	(0xce42:24), 127
 	or	(0xce42:24), 16
 	ret
-VoiceSlot_Epilogue_Block2:
+Chord_ApplyCurrentChord:
 	calr	Voice_InitPartAllocState
 	calr	VoiceSlot_IterateAlloc_TestBit24
 	orw	(0xce65:24), 0xff00
@@ -16421,9 +16420,9 @@ HdaeRom_TableEntry2:
 	ld	a, (xsp+0x1)
 	extz	wa
 	cp	wa, 0:i3
-	jrl	mi, HdaeRom_TableEntry2_Epilogue
+	jrl	mi, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	cp	wa, 7:i3
-	jrl	gt, HdaeRom_TableEntry2_Epilogue
+	jrl	gt, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	add	wa, wa
 	lda	xix, (HdaeRomEntry2_SwitchOffsets:24)
 	ld	wa, (xix+wa)
@@ -16434,7 +16433,7 @@ HdaeRom_TableEntry2:
 PanelTag72_ApplyPartMix_Volume:
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_TableEntry2_Epilogue
+	jr	z, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	lda	xbc, (xsp+0x2)
 	ld	a, 0:opc
 	bitm	7, (xsp+0x2)
@@ -16455,13 +16454,13 @@ PanelTag72_ApplyPartMix_Volume_Skip:
 	ldw	wa, 24
 	ld	bc, 7:i3
 	calr	MIDI_SendControlChange
-	jr	HdaeRom_TableEntry2_Epilogue
+	jr	PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 ; PanelTag72_ApplyPartMix_ReverbSend: Payload +7: sent to parts 0x17 and 0x18 as CC 91 (reverb send).
 PanelTag72_ApplyPartMix_ReverbSend:
 	ld	a, (xsp+0x3)
 	res	7, a
 	cp	a, 0:i3
-	jr	z, HdaeRom_TableEntry2_Epilogue
+	jr	z, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	ld	a, (xsp+0x2)
 	res	7, a
 	extz	wa
@@ -16476,7 +16475,7 @@ PanelTag72_ApplyPartMix_ReverbSend:
 	ldw	wa, 24
 	ldw	bc, 91
 	calr	MIDI_SendControlChange
-HdaeRom_TableEntry2_Epilogue:
+PanelTag72_ApplyPartMix_ReverbSend_Epilogue:
 	inc	4, xsp
 	ret
 	ret
@@ -16679,9 +16678,9 @@ SwbtB2_Code9A_Listener:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 19
-	jr	ugt, HdaeRom_AltCheckResult_Epilogue2
+	jr	ugt, SwbtB2_Code9A_Listener_Epilogue2
 	cp	a, 4:i3
-	jr	c, HdaeRom_AltCheckResult_Epilogue2
+	jr	c, SwbtB2_Code9A_Listener_Epilogue2
 	ld	a, (xsp+0x1)
 	dec	4, a
 	extz	wa
@@ -16698,7 +16697,7 @@ SwbtB2_Code9A_Listener:
 	cp	a, 2:i3
 	jr	z, SwbtB2_Code9A_Listener_Skip
 	cp	a, 0:i3
-	jr	nz, HdaeRom_AltCheckResult_Epilogue2
+	jr	nz, SwbtB2_Code9A_Listener_Epilogue2
 SwbtB2_Code9A_Listener_Skip:
 	extz	de
 	ld	a, (xsp+0x3)
@@ -16709,7 +16708,7 @@ SwbtB2_Code9A_Listener_Skip:
 	ld	de, bc
 	ldw	bc, 145
 	calr	MIDI_SendControlChange
-HdaeRom_AltCheckResult_Epilogue2:
+SwbtB2_Code9A_Listener_Epilogue2:
 	inc	4, xsp
 	ret
 HdaeRom_AltTableEntry0:
@@ -17350,7 +17349,7 @@ SndParam_ApplySystemParam_SendEqualizerOnOff_Skip10:
 SndParam_ApplySystemParam_SendEqualizerOnOff_Skip11:
 	ldto_berp	a, 248
 	extz	wa
-	call	SendPartDataBlock_Block4
+	call	COMM_SendMicVolume
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_SendEqualizerOnOff_Skip12:
 	ld	xwa, 0x4142
@@ -17358,14 +17357,14 @@ SndParam_ApplySystemParam_SendEqualizerOnOff_Skip12:
 	cp	hl, 1:i3
 	jr	nz, SndParam_ApplySystemParam_SendEqualizerOnOff_Skip13
 	ld	wa, 0:i3
-	call	SendPartDataBlock_Block4
+	call	COMM_SendMicVolume
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_SendEqualizerOnOff_Skip13:
 	ld	xwa, 0x4141
 	call	SndParam_LookupReadOnly
 	ld	a, l
 	extz	wa
-	call	SendPartDataBlock_Block4
+	call	COMM_SendMicVolume
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_SendEqualizerOnOff_Skip14:
 	ld	wa, de
@@ -21739,7 +21738,7 @@ VoiceReset_Return_LoadIter2:
 	add	xbc, xwa
 	ld	a, (xbc)
 	extz	wa
-	calr	InitTrackSlots_Block
+	calr	RingBuffer_WriteByte
 	inc	1, iz
 	cpw_erp	IZ, 0xfa
 	jr	c, VoiceReset_Return_LoadIter2
@@ -22058,7 +22057,7 @@ InitTrackSlots_LoopCheck:
 	cp	wa, (0xd010:16)
 	jr	c, InitTrackSlots_LoopBody
 	ret
-InitTrackSlots_Block:
+RingBuffer_WriteByte:
 	cpw	(0xd010:16), 0
 	jr	nz, InitTrackSlots_LoadDRAM
 	ldw	hl, 0xffff
@@ -22161,7 +22160,7 @@ SndParam_NotifyLoop_Body:
 	ld	wa, (xsp + 2)
 	ld	a, (xbc+wa)
 	extz	wa
-	calr	InitTrackSlots_Block
+	calr	RingBuffer_WriteByte
 	incw	1, (xsp + 2)
 	ld	wa, (xsp + 2)
 	cp	wa, iz
@@ -24330,7 +24329,9 @@ CommParam_SetComplete_Return:
 	pop	xiz
 	inc	6, xsp
 	ret
-CommParam_SetComplete_Block:
+; COMM_ResetSentValues: Init-phase-0 handler of subsystem table 1: sets 0xE2BA = 1 and 0xFF into the last-sent caches
+;   0xE2B5-0xE2C0 of the set-if-changed COMM senders, so each next value is sent. Basis: callers + body.
+COMM_ResetSentValues:
 	ld	(0xe2ba:16), 1
 	ld	(0xe2bb:16), 255
 	ld	(0xe2bc:16), 255
@@ -24343,8 +24344,10 @@ CommParam_SetComplete_Block:
 	ld	(0xe2b8:16), 255
 	ld	(0xe2c0:16), 255
 	ret
+; COMM_ResetSentValues_Phase1: Init-phase-1 entry of subsystem table 1: jumps to COMM_ResetSentValues. Basis: callers
+;   + body.
 COMM_ResetSentValues_Phase1:
-	jr	CommParam_SetComplete_Block
+	jr	COMM_ResetSentValues
 CommParam_SetComplete_Return2:
 	ret
 CommParam_SetComplete_Return3:
@@ -24453,7 +24456,9 @@ SendPartDataBlock_Block3:
 	ld	de, 1:i3
 	call	SendCOMM_VariableLengthPacket
 	ret
-SendPartDataBlock_Block4:
+; COMM_SendMicVolume: Set-if-changed sender of the MIC volume: stores A in 0xE2B8 and sends it as COMM packet type 7
+;   (sub-CPU DSP_Set_MicLevel). Basis: callers + body + receiver.
+COMM_SendMicVolume:
 	cp	(0xe2b8:16), a
 	ret	z
 	ld	(0xe2b8:16), a
@@ -25002,14 +25007,12 @@ SoundRam_FillDefaultRecord:
 	lda	xix, (xde+183)
 	ldw	bc, 40
 	ldirw
-	.byte	0x85
-	rcf
+	ldi85
 	ld	xiy, xwa
 	lda	xix, (xde+264)
 	ldw	bc, 40
 	ldirw
-	.byte	0x85
-	rcf
+	ldi85
 	ld	xiy, xwa
 	lda	xix, (xde+345)
 	ldw	bc, 40
@@ -25413,9 +25416,7 @@ SendPartDataBlock_Return5_Skip10:
 	incm8	1, (xsp+4)
 	lda	xbc, (xbc+81)
 	lda	xde, (xde+34)
-	.byte	0x8f, 0x04
-	push	xsp
-	pop	sr
+	cp	(xsp+4), 3
 	jrl	c, SoundRam_ConvertKn1500Record_Loop3
 	pop	xiz
 	lda	xsp, (xsp+26)
@@ -26269,10 +26270,7 @@ TmFlash_CompareStrings:
 	call	Strlen
 	inc	8, xsp
 	ld	(xsp+6), hl
-	.byte	0x9f, 0x06
-	push	xsp
-	nop
-	nop
+	cpw	(xsp+6), 0
 	jr	z, TmFlash_CompareStrings_Skip2
 	jr	TmFlash_CompareStrings_Join
 TmFlash_CompareStrings_Loop:

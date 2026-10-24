@@ -744,7 +744,7 @@ GUI_DisplayStructData_0x1100:	.long SeMenu_SwitchNop
 ; data read by SeMenu_ApplyPartEdit_Helper11+0x23 (0xF08A09)
 ; evidence: `lda xde, (this)` then `ld E,(XDE+WA) / mul L,0x1c`
 GUI_DisplayStructData_0x1110:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1110, 0xD
-; data read by SeMenu_CopyWriteUpdate_Helper7+0x20 (0xF08C8E)
+; data read by SeMenu_DrawPartRangeGraph+0x20 (0xF08C8E)
 ; evidence: `lda xbc, (this)` then `ld WA,(XBC+WA) / ld (XSP),WA`
 GUI_DisplayStructData_0x111D:	.incbin "includes/generated/gui_display_struct_data.bin", 0x111D, 0xC
 ; data read by SeMenu_CopyWriteUpdate_Step3_Code_3_Helper7+0xB (0xF074B9)
@@ -1150,9 +1150,9 @@ ToneGen_ParamTable_0x31A:
 ; evidence: `lda xbc, (this)` then `ld XHL,(XBC+WA) / call T,XHL`
 ToneGen_ParamTable_0x326:
 	.long	UpdSeSel_ProcessStep
-	.long	UpdSeSel_ExtendedOps_Data
+	.long	SeEasy_DrawPage
 	.long	SeMenu_AltUpdate
-	.long	SeMenu_AltUpdate_Data
+	.long	SeTonTon2_DrawPage
 	.long	SeMenu_AltUpdate_Step3Plus_Join
 	.long	SeMenu_AltUpdate_Step3Plus_Join2
 	.long	SeMenu_ControllerUpdate
@@ -1175,12 +1175,12 @@ ToneGen_ParamTable_0x326:
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join19
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join20
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join21
-	.long	SeMenu_CopyWriteUpdate_Step3_Join
+	.long	SeMenu_CopyWriteUpdate_Step3_Join2
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join10
 	.long	UpdSeSel_DetailedUpdate_SetDisplayState_Join11
-	.long	SeMenu_CopyWriteUpdate_Step3_Join2
-	.long	SeMenu_CopyWriteUpdate_Data
-	.long	SeMenu_CopyWriteUpdate_Join
+	.long	SeMenu_CopyWriteUpdate_Step3_Join3
+	.long	SeWrtMem_DrawPage
+	.long	SeMenu_CopyWriteUpdate_Step3_Join
 	.incbin "includes/generated/tonegen_param_table.bin", 0x3a6, 0x1
 ; parameter block of object 0x12b (class 0x01600002, proc ApFunctionProc), registered by InitializeNaka+0x91
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 76 B; the proc's read length was not measured
@@ -1671,8 +1671,11 @@ Boot_ReadFDCStatus:
 
 ; VoiceSynth command handler case 0
 VoiceSynth_CmdCase0:
-	.byte 0xc2, 0x04, 0xdd, 0x03, 0x3f, 0x00, 0xb0, 0xf6
-	.byte 0x43, 0x14, 0x00, 0x28, 0x00, 0xb3, 0xe8, 0x0e
+	cp	(XAPR_PRESENT_FLAG:24), 0
+	ret	z
+	ld	xhl, 0x280014
+	call	(xhl)
+	ret
 ; VoiceSynth command handler case 1
 VoiceSynth_CmdCase1:
 ; Get resource info based on resource type (WA 0-9)
@@ -2178,9 +2181,12 @@ Voice_InitBankTables_Loop:
 
 Voice_InitBankTables_SlotLoop:
 ; (was .incbin "includes/romslices/v7_fix_voice_initbanktables_slotloop.bin")
-	.byte	0x45, 0x45, 0xed, 0xf6, 0x00, 0x31, 0x80, 0x00
-	.byte	0x95, 0x11, 0xc9, 0x69, 0x6e, 0xf2, 0xf1, 0x7c
-	.byte	0x7d, 0x02, 0x39, 0x00
+	ld	xiy, Voice_SlotTemplate
+	ldw	bc, 0x80
+	ldirw
+	dec	1, a
+	jr	nz, Voice_InitBankTables_SlotLoop
+	ldw	(32124:16), 57
 	ret
 	.include "audio/voice_bank_defaults.s"
 Voice_InitBankData:

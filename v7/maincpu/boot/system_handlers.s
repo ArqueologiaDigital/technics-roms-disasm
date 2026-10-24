@@ -6047,7 +6047,7 @@ E1DMA_ISR_BytecodeBlock:
 	ei	6
 	lda	xwa, (1566:16)
 	bitm	7, (xwa)
-	jr	z, INTTC0_HANDLER_Skip3
+	jr	z, E1DMA_ISR_BytecodeBlock_Skip3
 	resm	7, (xwa)
 	ei	0
 	lda	xde, (1556:16)
@@ -6055,7 +6055,7 @@ E1DMA_ISR_BytecodeBlock:
 	ld	bc, (xde+8)
 	ld	xde, (xde+4)
 	calr	InterCPU_E1_Bulk_Transfer
-INTTC0_HANDLER_Skip3:
+E1DMA_ISR_BytecodeBlock_Skip3:
 	ei	0
 	bit	1, (PZ:8)
 	jr	nz, E1DMA_ISR_BytecodeBlock_Skip2
@@ -6069,10 +6069,10 @@ E1DMA_ISR_BytecodeBlock_Skip:
 	ldw	(58052:16), 0
 E1DMA_ISR_BytecodeBlock_Join:
 	ld	(58054:16), wa
-	jr	INTTC0_HANDLER_Join2
+	jr	E1DMA_ISR_BytecodeBlock_Join2
 E1DMA_ISR_BytecodeBlock_Skip2:
 	ldw	(58052:16), 0
-INTTC0_HANDLER_Join2:
+E1DMA_ISR_BytecodeBlock_Join2:
 	ld	wa, (58052:16)
 	cp	wa, 10
 	ret	ule

@@ -2137,7 +2137,7 @@ EditSw_ByteData_Join:
 	ld	(xix+2), de
 EditSw_ByteData_Join2:
 	cpw	(xbc+2), 239
-	jr	nz, DrawDesignFrame_Skip4
+	jr	nz, DrawDesignFrame_Skip6
 	ld	wa, (xsp+6)
 	exts	xwa
 	divs	wa, 2
@@ -2148,7 +2148,7 @@ EditSw_ByteData_Join2:
 	ldw	wa, 245
 	sub	wa, hl
 	ld	(xix+2), wa
-DrawDesignFrame_Skip4:
+DrawDesignFrame_Skip6:
 	lda	xde, (xix+4)
 	ld	wa, (xsp+6)
 	add	wa, (xix)
@@ -4291,7 +4291,7 @@ DrawDottedLine_Impl_Skip12:
 	ld	(xsp+30), xwa
 	ld	xwa, (xsp+8)
 	cp	xwa, (xsp+4)
-	jrl	le, ClampColorToRange_Skip15
+	jrl	le, DrawDottedLine_Impl_Skip15
 	ld	xwa, (xsp+4)
 	sla	xwa, 16
 	ld	xbc, (xsp+8)
@@ -4349,7 +4349,7 @@ DrawDottedLine_Impl_Join5:
 	cp	xbc, (xsp+8)
 	jr	le, DrawDottedLine_Impl_Loop3
 	jrl	DrawDottedLine_Impl_Join7
-ClampColorToRange_Skip15:
+DrawDottedLine_Impl_Skip15:
 	ld	xwa, (xsp+8)
 	sla	xwa, 16
 	ld	xbc, (xsp+4)

@@ -25571,11 +25571,11 @@ Param_SignExtendReturn_Join7:
 	ld	xwa, (xsp+0x14)
 	calr	Param_SignExtendRetu_Data
 	cpw	(xsp+0x6), 0
-	jrl	z, Param_SignExtendReturn_Entry
+	jrl	z, Param_SignExtendReturn_Skip16
 	cpw	(xsp+0x6), 120
-	jrl	le, Param_SignExtendReturn_Entry
+	jrl	le, Param_SignExtendReturn_Skip16
 	or	xhl, xhl
-	jrl	z, Param_SignExtendReturn_Entry
+	jrl	z, Param_SignExtendReturn_Skip16
 	ld	xwa, xhl
 	sra	xwa, 15
 	sra	xwa, 16
@@ -25597,7 +25597,7 @@ Param_SignExtendReturn_Join7:
 	jrl	nz, Param_SignExtendReturn_Join3
 Param_SignExtendReturn_Skip13:
 	cp	xbc, 470
-	jr	ugt, Param_SignExtendReturn_Entry
+	jr	ugt, Param_SignExtendReturn_Skip16
 	lda	xde, (0xe198:16)
 	ld	(xde), 45
 	ld	xwa, (xsp+20)
@@ -25648,7 +25648,7 @@ Param_SignExtendReturn_Skip15:
 	call	sendCOMM
 	ldw (xsp+18), 0
 	jr	Param_SignExtendReturn_Join3
-Param_SignExtendReturn_Entry:
+Param_SignExtendReturn_Skip16:
 	.byte 0xbf
 	ccf
 	push	sr
@@ -25673,20 +25673,20 @@ SeqAlt_PopIzSkip4Ret2_Helper:
 	sll	a, 4
 	or	a, c
 	cp	a, 16
-	jr	z, Param_SignExtendReturn_Skip16
+	jr	z, Param_SignExtendReturn_Skip17
 	cp	a, 17
-	jr	nz, Param_SignExtendReturn_Skip17
-Param_SignExtendReturn_Skip16:
+	jr	nz, Param_SignExtendReturn_Skip18
+Param_SignExtendReturn_Skip17:
 	ld	(0xe193:16), xde
 	ld	wa, 3:i3
 	ldw	bc, 21
 	jr	Param_SignExtendReturn_Join4
-Param_SignExtendReturn_Skip17:
+Param_SignExtendReturn_Skip18:
 	cp	a, 80
-	jr	z, Param_SignExtendReturn_Skip18
+	jr	z, Param_SignExtendReturn_Skip19
 	cp	a, 81
 	jr	nz, Param_SignExtendReturn_Skip20
-Param_SignExtendReturn_Skip18:
+Param_SignExtendReturn_Skip19:
 	cp	w, 2:i3
 	jr	nc, Param_SignExtendReturn_Skip20
 	ld	(0xe193:16), xde

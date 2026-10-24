@@ -98,6 +98,11 @@ PanelTlv_ApplyResetMasks_Loop:
 PanelTlv_WriteAllHeaders:
 	calr	PanelTlv_WriteLivePanelHeaders
 	jrl	PanelTlv_WritePanelMemoryHeaders
+; PanelTlv_ValidateSongPanel: Validates the block-0 panel records stored at 0xF480, inside the current-song record
+;   0xF180-0xF980: XWA = 0xF480, tail-jump to PanelTlv_ValidateBlock0. Basis: callers + body --
+;   MidiSysEx_FinishSeqXfer calls it first after a sequencer transfer, and its header calls this validating 'the
+;   block-0 panel records at 0xF480, inside the received current-song record'; PanelTlv_ValidateLivePanel (0xF9A0) and
+;   PanelTlv_ValidatePanelMemory (0x1ED400 + 960*n) do the same for the live panel and the panel memories.
 PanelTlv_ValidateSongPanel:
 	lda	xwa, (0xf480:16)
 	jrl	PanelTlv_ValidateBlock0
@@ -533,7 +538,7 @@ PanelTlv_Rule_StoreByte:
 PanelTlv_Rule_ZeroByte:
 	ld	c, (xbc+0x1)
 	extz	bc
-	.byte	0xf3, 0x07, 0xe0, 0xe4, 0x00, 0x00	; ld (XWA+BC),0x00
+	ld	(xwa+bc), 0x00
 	ld	hl, 2:i3
 	ret
 	lda_d16	xwa, (0xf480)
@@ -587,8 +592,7 @@ DSPCfg_SyncBitmapData_Loop:
 	ld	(xsp+8), a
 	ld	xwa, 2:i3
 	add	(xsp+18), xwa
-	.byte	0x8f
-	ld	(PFFC:8), 0:io
+	cp	(xsp+8), 0
 	jr	z, DSPCfg_SyncBitmapData_Join
 DSPCfg_SyncBitmapData_Loop2:
 	ld	xwa, (xsp+18)

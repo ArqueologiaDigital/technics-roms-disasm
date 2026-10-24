@@ -1330,7 +1330,7 @@ PmemOutLGridCheck_OnRamData:
 	lda	xwa, (xde+14)
 	ld	(xsp+28), xwa
 	cp	xbc, (xde)
-	jrl	nz, PmemOutLGridCheck_OnRamData_Skip8
+	jrl	nz, PmemOutLGridCheck_OnRamData_Skip5
 	ld	xwa, (xsp+16)
 	ldw	(xwa), 0
 	ld	xwa, (xsp+28)
@@ -1375,10 +1375,10 @@ PmemOutLGridCheck_OnRamData:
 	add	xwa, xbc
 	add	xwa, xde
 	bit	1, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip5
+	jr	z, PmemOutLGridCheck_OnRamData_Skip4
 	ld	xwa, PmemOutLGrid_Str_ON
 	jr	PmemOutLGridCheck_OnRamData_Join3
-PmemOutLGridCheck_OnRamData_Skip5:
+PmemOutLGridCheck_OnRamData_Skip4:
 	ld	xwa, PmemOutLGrid_Str_OFF
 PmemOutLGridCheck_OnRamData_Join3:
 	push	xwa
@@ -1411,15 +1411,15 @@ PmemOutLGridCheck_OnRamData_Join3:
 	add	xwa, xhl
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip6
+	jr	z, PmemOutLGridCheck_OnRamData_Skip
 	pushw	PmemOutLGridCheck_Row0_Str_OFF@hi16
 	pushw	PmemOutLGridCheck_Row0_Str_OFF@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join4
-PmemOutLGridCheck_OnRamData_Skip6:
+	jr	PmemOutLGridCheck_OnRamData_Join
+PmemOutLGridCheck_OnRamData_Skip:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1429,7 +1429,7 @@ PmemOutLGridCheck_OnRamData_Skip6:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Join4:
+PmemOutLGridCheck_OnRamData_Join:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
@@ -1484,15 +1484,15 @@ PmemOutLGridCheck_OnRamData_Join4:
 	add	xwa, xhl
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip7
+	jr	z, PmemOutLGridCheck_OnRamData_Skip2
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join5
-PmemOutLGridCheck_OnRamData_Skip7:
+	jr	PmemOutLGridCheck_OnRamData_Join2
+PmemOutLGridCheck_OnRamData_Skip2:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1502,12 +1502,12 @@ PmemOutLGridCheck_OnRamData_Skip7:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Join5:
+PmemOutLGridCheck_OnRamData_Join2:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
-PmemOutLGridCheck_OnRamData_Skip8:
+PmemOutLGridCheck_OnRamData_Skip5:
 	ld	xwa, (xsp+20)
 	ld	(xsp+20), xwa
 	ld	xwa, 0:i3
@@ -1523,18 +1523,18 @@ PmemOutLGridCheck_OnRamData_Skip8:
 	add	xbc, (xsp+32)
 	ld	xwa, (xsp+4)
 	cp	(xwa), xbc
-	jr	nz, PmemOutLGridCheck_OnRamData_Skip10
+	jr	nz, PmemOutLGridCheck_OnRamData_Skip3
 	ld	xwa, (xsp+16)
 	ldw	(xwa), 1
 	ld	xwa, (xsp+28)
 	ld	xwa, (xwa)
 	bit	1, wa
-	jr	z, PmemOutLGridCheck_OnRamData_Skip9
+	jr	z, PmemOutLGridCheck_OnRamData_Skip6
 	ld	xwa, NakaInst_ON
-	jr	PmemOutLGridCheck_OnRamData_Join6
-PmemOutLGridCheck_OnRamData_Skip9:
+	jr	PmemOutLGridCheck_OnRamData_Join4
+PmemOutLGridCheck_OnRamData_Skip6:
 	ld	xwa, PmemOutLGridCheck_OnRamData_Str_OFF_6
-PmemOutLGridCheck_OnRamData_Join6:
+PmemOutLGridCheck_OnRamData_Join4:
 	push	xwa
 	ld	xwa, (xsp+16)
 	push	xwa
@@ -1545,11 +1545,11 @@ PmemOutLGridCheck_OnRamData_Join6:
 	lda	xde, (xsp+36)
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
-PmemOutLGridCheck_OnRamData_Skip10:
+PmemOutLGridCheck_OnRamData_Skip3:
 	lda	xbc, (0x024774:24)
 	ld	xwa, (xsp+4)
 	cp	xbc, (xwa)
-	jrl	nz, PmemOutLGridCheck_OnRamData_Skip13
+	jrl	nz, PmemOutLGridCheck_OnRamData_Skip9
 	ld	xwa, (xsp+16)
 	ldw	(xwa), 3
 	ld	xwa, (xsp+28)
@@ -1588,14 +1588,14 @@ PmemOutLGridCheck_OnRamData_Skip10:
 	add	xwa, (xsp+32)
 	lda	xbc, (xsp+44)
 	bit	7, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip11
+	jr	z, PmemOutLGridCheck_OnRamData_Skip7
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_2@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_2@lo16
 	push	xbc
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join7
-PmemOutLGridCheck_OnRamData_Skip11:
+	jr	PmemOutLGridCheck_OnRamData_Join5
+PmemOutLGridCheck_OnRamData_Skip7:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1604,7 +1604,7 @@ PmemOutLGridCheck_OnRamData_Skip11:
 	push	xbc
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Join7:
+PmemOutLGridCheck_OnRamData_Join5:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
@@ -1659,15 +1659,15 @@ PmemOutLGridCheck_OnRamData_Join7:
 	add	xwa, xhl
 	add	xwa, (xsp+32)
 	bit	7, (xwa)
-	jr	z, PmemOutLGridCheck_OnRamData_Skip12
+	jr	z, PmemOutLGridCheck_OnRamData_Skip8
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_3@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_3@lo16
 	lda	xwa, (xsp+48)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join8
-PmemOutLGridCheck_OnRamData_Skip12:
+	jr	PmemOutLGridCheck_OnRamData_Join6
+PmemOutLGridCheck_OnRamData_Skip8:
 	ld	a, (xwa)
 	extz	wa
 	pushw	wa
@@ -1677,12 +1677,12 @@ PmemOutLGridCheck_OnRamData_Skip12:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+10)
-PmemOutLGridCheck_OnRamData_Join8:
+PmemOutLGridCheck_OnRamData_Join6:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
-PmemOutLGridCheck_OnRamData_Skip13:
+PmemOutLGridCheck_OnRamData_Skip9:
 	lda	xwa, (0xf9b6:16)
 	ld	(xsp+32), xwa
 	lda	xwa, (xwa+14)
@@ -1698,21 +1698,21 @@ PmemOutLGridCheck_OnRamData_Skip13:
 	add	xde, (xsp+8)
 	ld	xwa, (xsp+4)
 	cp	(xwa), xde
-	jr	nz, PmemOutLGridCheck_OnRamData_Skip15
+	jr	nz, PmemOutLGridCheck_OnRamData_Skip11
 	ld	xwa, (xsp+16)
 	ldw	(xwa), 0
 	ld	xwa, (xsp+28)
 	ld	xwa, (xwa)
 	bit	7, wa
-	jr	z, PmemOutLGridCheck_OnRamData_Skip14
+	jr	z, PmemOutLGridCheck_OnRamData_Skip10
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_4@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_4@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join9
-PmemOutLGridCheck_OnRamData_Skip14:
+	jr	PmemOutLGridCheck_OnRamData_Join7
+PmemOutLGridCheck_OnRamData_Skip10:
 	push	xwa
 	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_7@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_7@lo16
@@ -1720,12 +1720,12 @@ PmemOutLGridCheck_OnRamData_Skip14:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
-PmemOutLGridCheck_OnRamData_Join9:
+PmemOutLGridCheck_OnRamData_Join7:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
-PmemOutLGridCheck_OnRamData_Skip15:
+PmemOutLGridCheck_OnRamData_Skip11:
 	ld	xwa, (xsp+32)
 	lda	xwa, (xwa+15)
 	sub	xwa, (xsp+20)
@@ -1733,7 +1733,7 @@ PmemOutLGridCheck_OnRamData_Skip15:
 	add	xde, xwa
 	ld	xwa, (xsp+4)
 	cp	(xwa), xde
-	jr	nz, PmemOutLGridCheck_OnRamData_Skip16
+	jr	nz, PmemOutLGridCheck_OnRamData_Skip12
 	ld	xwa, (xsp+16)
 	ldw	(xwa), 1
 	ld	xwa, (xsp+28)
@@ -1749,7 +1749,7 @@ PmemOutLGridCheck_OnRamData_Skip15:
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
 	jrl	PmemOutL_GridCheck_Return
-PmemOutLGridCheck_OnRamData_Skip16:
+PmemOutLGridCheck_OnRamData_Skip12:
 	ld	xwa, (xsp+32)
 	lda	xwa, (xwa+17)
 	sub	xwa, (xsp+20)
@@ -1762,15 +1762,15 @@ PmemOutLGridCheck_OnRamData_Skip16:
 	ld	xwa, (xsp+28)
 	ld	xwa, (xwa)
 	bit	7, wa
-	jr	z, PmemOutLGridCheck_OnRamData_Skip17
+	jr	z, PmemOutLGridCheck_OnRamData_Skip13
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_5@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_OFF_5@lo16
 	ld	xwa, (xsp+16)
 	push	xwa
 	call	Strcpy
 	inc	8, xsp
-	jr	PmemOutLGridCheck_OnRamData_Join10
-PmemOutLGridCheck_OnRamData_Skip17:
+	jr	PmemOutLGridCheck_OnRamData_Join8
+PmemOutLGridCheck_OnRamData_Skip13:
 	push	xwa
 	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_9@hi16
 	pushw	PmemOutLGridCheck_OnRamData_Str_Fmt3d_9@lo16
@@ -1778,7 +1778,7 @@ PmemOutLGridCheck_OnRamData_Skip17:
 	push	xwa
 	call	Sprintf_Locked
 	lda	xsp, (xsp+12)
-PmemOutLGridCheck_OnRamData_Join10:
+PmemOutLGridCheck_OnRamData_Join8:
 	lda	xde, (xsp+36)
 	ld	xwa, 0x5b0009
 	ld	xbc, EVT_GRID_DRAW
@@ -3224,7 +3224,7 @@ CtlMsgGridCheck_OnIndexswUp:
 	ld	xwa, (xwa+de)
 	ld	bc, 1:i3
 	ld	de, 2:i3
-	jr	CtlMsgGridCheck_Join
+	jr	CtlMsgGridCheck_Entry
 CtlMsgGridCheck_OnIndexswDown:
 	call	GetFocusObject
 	ld	xwa, xhl
@@ -3252,7 +3252,7 @@ CtlMsgGridCheck_OnIndexswDown:
 	ld	xwa, (xwa+de)
 	ldw	bc, 65535
 	ld	de, 2:i3
-CtlMsgGridCheck_Join:
+CtlMsgGridCheck_Entry:
 	call	MainLswAdd
 	jrl	CtlMsgGrid_ReturnZero
 CtlMsgGridCheck_OnLswData:
@@ -3266,7 +3266,7 @@ CtlMsgGridCheck_OnLswData:
 	ld	ix, wa
 	ld	xhl, (xsp+8)
 	ld	xiz, (xsp+30)
-	jr	CtlMsgGridCheck_Join2
+	jr	CtlMsgGridCheck_Join
 CtlMsgGridCheck_Loop:
 	ld	wa, bc
 	sla	wa, 2
@@ -3297,7 +3297,7 @@ CtlMsgGridCheck_Skip:
 CtlMsgGridCheck_Skip2:
 	inc	1, bc
 	ld	(xde), bc
-CtlMsgGridCheck_Join2:
+CtlMsgGridCheck_Join:
 	ld	bc, (xde)
 	cp	bc, 9
 	jr	lt, CtlMsgGridCheck_Loop

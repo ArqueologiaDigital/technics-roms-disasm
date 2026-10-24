@@ -128,13 +128,14 @@ IvTimer_HandleEvent3A_Str_N1shot:	.incbin "includes/generated/naka_disk_warning.
 IvIndexSwCtrlProc_Str_ISC:		.incbin "includes/generated/naka_disk_warning.bin", 0xBEE, 0x4	; "ISC"
 IvIndexSwDelayProc_Str_ISD:		.incbin "includes/generated/naka_disk_warning.bin", 0xBF2, 0x4	; "ISD"
 IvWaitWinCtlProc_Str_WWC:		.incbin "includes/generated/naka_disk_warning.bin", 0xBF6, 0x4	; "WWC"
+; FDC_WaitReady_CaseTable -- 6 x int16: the case offsets of FDC_CONFIG_VERIFY_Skip10's compiled switch, relative to FDC_CONFIG_VERIFY_On720KMedia
 FDC_WaitReady_CaseTable:
-	.short	FDC_CONFIG_VERIFY_Code - FDC_CONFIG_VERIFY_Code
-	.short	FDC_CONFIG_VERIFY_Case1 - FDC_CONFIG_VERIFY_Code
-	.short	FDC_CONFIG_VERIFY_Case2 - FDC_CONFIG_VERIFY_Code
-	.short	FDC_CONFIG_VERIFY_Case3 - FDC_CONFIG_VERIFY_Code
-	.short	FDC_CONFIG_VERIFY_Case4 - FDC_CONFIG_VERIFY_Code
-	.short	FDC_CONFIG_VERIFY_Case5 - FDC_CONFIG_VERIFY_Code
+	.short	FDC_CONFIG_VERIFY_On720KMedia - FDC_CONFIG_VERIFY_On720KMedia
+	.short	FDC_CONFIG_VERIFY_Case1 - FDC_CONFIG_VERIFY_On720KMedia
+	.short	FDC_CONFIG_VERIFY_Case2 - FDC_CONFIG_VERIFY_On720KMedia
+	.short	FDC_CONFIG_VERIFY_Case3 - FDC_CONFIG_VERIFY_On720KMedia
+	.short	FDC_CONFIG_VERIFY_Case4 - FDC_CONFIG_VERIFY_On720KMedia
+	.short	FDC_CONFIG_VERIFY_Case5 - FDC_CONFIG_VERIFY_On720KMedia
 ; FDC_COMMAND_DISPATCHER_CaseTable -- 12 x int16: the case offsets of FDC_COMMAND_DISPATCHER's compiled switch, relative to FDC_CMD_HANDLER_BASE
 FDC_COMMAND_DISPATCHER_CaseTable:
 	.short	FDC_CMD_HANDLER_BASE - FDC_CMD_HANDLER_BASE
@@ -217,7 +218,7 @@ CtrlPanel_DispatchByIndex_CaseTable:
 	.short	GetClientBox2_RightOnOffTab16 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_Case50 - CtrlPanel_FrameDispatchTable
 	.short	GetClientBox2_RightOnOffTab32 - CtrlPanel_FrameDispatchTable
-	.short	GetClientBox2_Case52 - CtrlPanel_FrameDispatchTable
+	.short	GetClientBox2_RightOnOffTab48 - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterLeftMargin - CtrlPanel_FrameDispatchTable
 	.short	CtrlPanel_AfterTopMargin - CtrlPanel_FrameDispatchTable
@@ -304,9 +305,21 @@ IvDirmdScreenProc_Str_K:
 ; [nakarest] reached through source references DirmdTitleFunc (audio/presentation_sound_nav.s:
 ; [nakarest] `ld xiy, DirmdTitle_EmulatorMethods`).
 DirmdTitle_EmulatorMethods:			.incbin "includes/generated/naka_disk_warning.bin", 0xEB4, 0x10	; 4 x 32-bit pointer
+; [nakarest] naka_disk_warning+0xec4  +0xec4..+0xed6 (0xea9b70, 18 B)
+; [nakarest] Text (18 B at 0xea9b70), first string "DirmdTitleNew();"; no registered NAKA table
+; [nakarest] points into it; reached through source references DirmdTitle_New_Skip
+; [nakarest] (audio/presentation_sound_nav.s: `ld xwa, DirmdTitleFunc_Str_DirmdTitleNew`).
 DirmdTitleFunc_Str_DirmdTitleNew:		.incbin "includes/generated/naka_disk_warning.bin", 0xEC4, 0x12	; "DirmdTitleNew();"
+; [nakarest] naka_disk_warning+0xed6  +0xed6..+0xf00 (0xea9b82, 42 B)
+; [nakarest] Text (42 B at 0xea9b82), first string "DirmdTitleOld();"; no registered NAKA table
+; [nakarest] points into it; reached through source references DirmdTitle_New_Skip
+; [nakarest] (audio/presentation_sound_nav.s: `ld xwa, DirmdTitleFunc_Str_DirmdTitleOld`).
 DirmdTitleFunc_Str_DirmdTitleOld:		.incbin "includes/generated/naka_disk_warning.bin", 0xED6, 0x12	; "DirmdTitleOld();"
 DirmdTitleFunc_Str_DirmdTitleESw_Fmtd_Fmtd:	.incbin "includes/generated/naka_disk_warning.bin", 0xEE8, 0x18	; "DirmdTitleESw(%d, %d);"
+; [nakarest] naka_disk_warning+0xf00  +0xf00..+0xf12 (0xea9bac, 18 B)
+; [nakarest] Text (18 B at 0xea9bac), first string "DirmdTitleCur();"; no registered NAKA table
+; [nakarest] points into it; reached through source references DirmdTitle_New_Skip
+; [nakarest] (audio/presentation_sound_nav.s: `ld xwa, DirmdTitleFunc_Str_DirmdTitleCur`).
 DirmdTitleFunc_Str_DirmdTitleCur:		.incbin "includes/generated/naka_disk_warning.bin", 0xF00, 0x12	; "DirmdTitleCur();"
 ; DirmdEmulator's case table: one 16-bit offset from DirmdEmulator_Dispatch per event EVT_NONE .. EVT_NONE+15
 ; (DirmdEmulator subtracts EVT_NONE, rejects anything outside 0..15, then `jp t, (xix+bc)`).  Four events
@@ -1319,7 +1332,7 @@ GraphicsRender_Start_PtrTable:
 	.long	ColorBlit_WithPaletteSave
 	.long	ColorBlit_Variant_ByteData
 	.long	DrawFunc_Init_Variant1
-	.long	AccDraw_Secondary_Helper20
+	.long	SeGfx_BoundOp06_PrintWord
 	.long	DrawText_ExtLayout_Variant1
 	.long	SeGfx_BoundOp08_ColorBlit
 	.long	SeGfx_BoundOp09_FormatNumber
@@ -1424,17 +1437,17 @@ DrawFunc_Init_Entry_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bi
 SeGfx_BoundOp06_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24AC, 0x8
 ; [nakarest] naka_disk_warning+0x24b4  +0x24b4..+0x24b8 (0xeab160, 4 B)
 ; [nakarest] Text (4 B at 0xeab160), first string "%1d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry_Str_Fmt1d`).
 DrawFunc_Init_Entry_Str_Fmt1d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B4, 0x4	; "%1d"
 ; [nakarest] naka_disk_warning+0x24b8  +0x24b8..+0x24bc (0xeab164, 4 B)
 ; [nakarest] Text (4 B at 0xeab164), first string "%2d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry2_Str_Fmt2d`).
 DrawFunc_Init_Entry2_Str_Fmt2d:	.incbin "includes/generated/naka_disk_warning.bin", 0x24B8, 0x4	; "%2d"
 ; [nakarest] naka_disk_warning+0x24bc  +0x24bc..+0x24f4 (0xeab168, 56 B)
 ; [nakarest] Text (56 B at 0xeab168), first string "%3d"; no registered NAKA table points into
-; [nakarest] it; reached through source references AccDraw_Secondary_Helper20
+; [nakarest] it; reached through source references SeGfx_BoundOp06_PrintWord
 ; [nakarest] (display/graphics_text_vga.s: `ld XWA,DrawFunc_Init_Entry3_Str_Fmt3d`).
 DrawFunc_Init_Entry3_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24BC, 0x4	; "%3d"
 ; SeGfx_BoundOp09_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
@@ -1470,20 +1483,40 @@ DrawFunc_Init_Entry3_Str_Fmt1d_2:	.incbin "includes/generated/naka_disk_warning.
 ; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Skip
 ; [nakarest] (display/graphics_text_vga.s: `.long FmtStr_pct2d`).
 FmtStr_pct2d:				.incbin "includes/generated/naka_disk_warning.bin", 0x24E0, 0x4
+; [nakarest] naka_disk_warning+0x24e4  +0x24e4..+0x24e8 (0xeab190, 4 B)
+; [nakarest] Text (4 B at 0xeab190), first string "%3d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip9
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry4_Str_Fmt3d`).
 DrawFunc_Init_Entry4_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24E4, 0x4	; "%3d"
 ; [nakarest] naka_disk_warning+0x24e8  +0x24e8..+0x24ec (0xeab194, 4 B)
 ; [nakarest] Text (4 B at 0xeab194), first string "%2d"; no registered NAKA table points into
 ; [nakarest] it; reached through source references SeGfx_BoundOp0B_FormatNumber_Join
 ; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt2d`).
 DrawFunc_Init_Entry5_Str_Fmt2d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24E8, 0x4	; "%2d"
+; [nakarest] naka_disk_warning+0x24ec  +0x24ec..+0x24f0 (0xeab198, 4 B)
+; [nakarest] Text (4 B at 0xeab198), first string "%3d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip10
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt3d`).
 DrawFunc_Init_Entry5_Str_Fmt3d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24EC, 0x4	; "%3d"
+; [nakarest] naka_disk_warning+0x24f0  +0x24f0..+0x24f4 (0xeab19c, 4 B)
+; [nakarest] Text (4 B at 0xeab19c), first string "%4d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Skip11
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt4d`).
 DrawFunc_Init_Entry5_Str_Fmt4d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24F0, 0x4	; "%4d"
 ; SeGfx_BoundOp0A_ClipRect -- 4 x int16_t: clip rectangle {x1 0, y1 0, x2 319, y2 239}, the whole 320 x 240 screen
 ; SeGfx_BoundOp0A_FormatNumber (display/graphics_text_vga.s) copies it to its frame (`ldirw`, 4 words) and passes the copy to
 ; DrawText_QueueOrDirect as the clip rectangle.  The old C read its last 4 bytes (3F 01 EF 00) as a pointer.
 SeGfx_BoundOp0A_ClipRect:	.incbin "includes/generated/naka_disk_warning.bin", 0x24F4, 0x8
+; [nakarest] naka_disk_warning+0x24fc  +0x24fc..+0x2504 (0xeab1a8, 8 B)
+; [nakarest] Text (8 B at 0xeab1a8), first string "%1d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join6
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt1d`).
 DrawFunc_Init_Entry5_Str_Fmt1d:		.incbin "includes/generated/naka_disk_warning.bin", 0x24FC, 0x4	; "%1d"
 DrawFunc_Init_Entry5_Str_Fmt2d_2:	.incbin "includes/generated/naka_disk_warning.bin", 0x2500, 0x4	; "%2d"
+; [nakarest] naka_disk_warning+0x2504  +0x2504..+0x2508 (0xeab1b0, 4 B)
+; [nakarest] Text (4 B at 0xeab1b0), first string "%3d"; no registered NAKA table points into
+; [nakarest] it; reached through source references DrawFunc_Init_Join6
+; [nakarest] (display/graphics_text_vga.s: `ld xwa, DrawFunc_Init_Entry5_Str_Fmt3d_2`).
 DrawFunc_Init_Entry5_Str_Fmt3d_2:	.incbin "includes/generated/naka_disk_warning.bin", 0x2504, 0x4	; "%3d"
 ; Text_CharGlyphMap -- 256 x u8, character code -> font glyph code: ASCII to itself except '\' -> 0xA5,
 ; 0x10-0x1F to UI-symbol glyphs, 0x80-0xAB to the Latin-1 letters of the fonts' accent page.

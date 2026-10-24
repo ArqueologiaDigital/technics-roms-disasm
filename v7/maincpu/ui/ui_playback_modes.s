@@ -5,17 +5,17 @@ UIStateEvt_VoiceParamHandler:
 	cp	a, 100
 	jr	z, UIStateEvt_VoiceParamHandler_Skip
 	cp	a, 108
-	jr	lt, UIStateEvt_VoiceParamHandler_Join
+	jr	lt, UIStateEvt_VoiceParamHandler_Skip2
 	cp	a, 122
 	jr	le, UIStateEvt_VoiceParamHandler_Skip
-	jp	UIStateEvt_VoiceParamHandler_Join
+	jp	UIStateEvt_VoiceParamHandler_Skip2
 UIStateEvt_VoiceParamHandler_Skip:
 	ld	(4330:16), 0
 	jrl	UIStateEvt_VoiceParamHandler_Return
-UIStateEvt_VoiceParamHandler_Join:
+UIStateEvt_VoiceParamHandler_Skip2:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 3:i3
-	.byte 0xf2, 0x8a, 0x03, 0xf2, 0xde
+	jp	nz, (UIStateEvt_VoiceParamHandler_Return:24)
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	ld	w, (SWBTWR_PAYLOAD_3:16)
 	cp	w, 255
@@ -753,11 +753,11 @@ PlayModeStop_InitFlagBlock:
 	ret
 	ret
 	ret
-DpMdlySmfLyrTtlFunc_Helper:
+DpMdlySmfTtl_Dispatch_Helper:
 	cp (PREVIOUS_TITLE:16), 0x76
-	jr z, .Lc_f2093f
+	jr z, PartFormat_StartPlayback_Return
 	call PlayModeStop_InitFlagBlock_Helper
-.Lc_f2093f:
+PartFormat_StartPlayback_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper:
 	cp	(3380:16), 0
@@ -770,12 +770,16 @@ PlayModeStop_InitFlagBlock_Helper2:
 	or	(10412:16), 4
 	ld	(4420:16), 10
 	ret
-DpMdlySmfTtl_Dispatch_Data:
+; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
+;   activation arms it again; PlayMode_SendCommand6C starts the transport only while the flag is 1. Basis: callers +
+;   body -- DpMdlySmfTtlFunc_OnTitleOld calls it.
+DpMdlySmf_DisarmStartCountdown:
 	cp	(CURRENT_TITLE:16), 108
-	jr	nz, DpMdlySmfTtl_Dispatch_Data_Entry
+	jr	nz, PartFormat_StartPlayback_Return3
 	ld	(3380:16), 0
-DpMdlySmfTtl_Dispatch_Data_Entry:
-	.byte 0x0e
+PartFormat_StartPlayback_Return3:
+	ret
 PlayMode_StopAbortRetZero:
 	cp (3380:16), 1
 	jr nz, PlayModeStop_SendStopCmd
@@ -823,13 +827,21 @@ PlayModeStop_ClearFlagBlock:
 	ret
 	ret
 	ret
-DpMdlySmfLyrTtlFunc_Helper2:
+; DpMdlySmfLyrTtl_NullRet: Empty routine (`ret`): DpMdlySmfLyrTtl_Dispatch calls it instead of the screen re-
+;   initialisation and DpMdlySmfTtl_Dispatch_Helper when PREVIOUS_TITLE is not 108 (TT_DKDPSMF). Basis: callers + body
+;   -- its only caller is the register-saving call on DpMdlySmfLyrTtl_Dispatch's not-108 branch; the body is a single
+;   `ret` (this file's X_NullRet convention: PlayMode_NullRet, PartFormat_NullRet).
+DpMdlySmfLyrTtl_NullRet:
 	ret
-DpMdlySmfLyrTtlFunc_Helper3:
+; DpMdlySmfLyr_DisarmStartCountdown: When the TT_DPMDLYSMFLYR title (0x76) is left with CURRENT_TITLE = 108 (0x6C
+;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 so the next activation arms the countdown again. Basis:
+;   callers + body -- DpMdlySmfLyrTtlFunc_OnTitleOld calls it; same body as DpMdlySmf_DisarmStartCountdown, the SMF
+;   title's twin, whose arming side is PlayModeStop_InitFlagBlock_Helper.
+DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 0x6c
-	jr nz, .Lc_f209d5
+	jr nz, PlayMode_SendCommand6C_Return
 	ld (0x0d34:16), 0x00
-.Lc_f209d5:
+PlayMode_SendCommand6C_Return:
 	ret
 ; SqSngNameTtlFunc title dispatch
 SqSngNameTtl_Dispatch:
@@ -1139,7 +1151,7 @@ SqSngSelTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SqTrAs_CondCheck_Helper2
+	call	SqSngSel_LeaveTitle
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -1208,13 +1220,24 @@ SqTrAsTtlFunc:
 ; Sequencer track dispatch table 2 - SqTrAsTtlFunc handler
 ; 6 dispatch cases (XDE 0-5)
 SQTR_DISPATCH_TABLE_2:
-	.byte 0x40, 0x04, 0x00, 0x8b, 0x00, 0x41, 0x8e, 0x00
-	.byte 0xe0, 0x01, 0x42, 0x02, 0x00, 0xff, 0xff, 0x1d
-	.byte 0x4b, 0x99, 0xfa, 0x3a, 0x3b, 0x3c, 0x3e, 0x1d
-	.byte 0xe7, 0xed, 0xf1, 0x5e, 0x5c, 0x5b, 0x5a, 0xf1
-	.byte 0xc0, 0x8e, 0xb8, 0x30, 0x60, 0x00, 0x1d, 0x72
-	.byte 0x71, 0xfc, 0xf2, 0x82, 0x10, 0x02, 0x14, 0x73
-	.byte 0x28, 0x68, 0x70
+	ld	xwa, 0x8b0004
+	ld	xbc, EVT_SET_SELECTED_CEL
+	ld	xde, 0xffff0002
+	call	ApPostEvent
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	SetWall_JumpStubData
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	set	0, (0x8ec0:16)
+	ldw	wa, 0x60
+	call	CtrlPanel_SetIndicatorBit
+	ld	(0x21082:24), (0x2873)
+	jr	CDlikeSwTtl_ReturnZero2
 SQTR_DISPATCH_TABLE_2_CASE1:
 	push xde
 	push xhl
@@ -1980,7 +2003,7 @@ DpMdlySmfTtl_Dispatch_Skip:
 	push xhl
 	push xix
 	push xiz
-	call DpMdlySmfLyrTtlFunc_Helper
+	call DpMdlySmfTtl_Dispatch_Helper
 	pop xiz
 	pop xix
 	pop xhl
@@ -1991,7 +2014,7 @@ DpMdlySmfTtlFunc_OnTitleOld:
 	push xhl
 	push xix
 	push xiz
-	call DpMdlySmfTtl_Dispatch_Data
+	call DpMdlySmf_DisarmStartCountdown
 	pop xiz
 	pop xix
 	pop xhl
@@ -2080,7 +2103,7 @@ DpMdlySmfLyrTtl_Dispatch_Skip:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper
+	call	DpMdlySmfTtl_Dispatch_Helper
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2091,7 +2114,7 @@ DpMdlySmfLyrTtl_Dispatch_Skip2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper2
+	call	DpMdlySmfLyrTtl_NullRet
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -2106,7 +2129,7 @@ DpMdlySmfLyrTtlFunc_OnTitleOld:
 	push	xhl
 	push	xix
 	push	xiz
-	call	DpMdlySmfLyrTtlFunc_Helper3
+	call	DpMdlySmfLyr_DisarmStartCountdown
 	pop	xiz
 	pop	xix
 	pop	xhl

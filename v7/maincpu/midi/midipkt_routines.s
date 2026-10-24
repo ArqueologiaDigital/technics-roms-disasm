@@ -788,21 +788,24 @@ MidiPkt_SendBankSelect_Send:
 	call	SeqOut_FlushTimedBuffer
 	call	ArpQueue_SwapBuffers
 	ret
-MidiPkt_SysExValidator_Data:
+; SysEx_OnGmSystemOn: Handler of message id 36, the Universal SysEx F0 7E 7F 09 01 (General MIDI System On): outside
+;   the guarded titles sets bit 2 of the byte at 0xFDAD, writes it with AssswbWr (0x91, 3) and re-sends both output
+;   banks. Basis: table + body.
+SysEx_OnGmSystemOn:
 	ld	a, (CURRENT_TITLE:16)
 	cp	a, 108
-	jr	c, MidiPkt_SysExValidator_Data_Skip
+	jr	c, SysEx_OnGmSystemOn_Skip
 	cp	a, 118
-	jr	ule, MidiPkt_SysExValidator_Data_Skip2
-MidiPkt_SysExValidator_Data_Skip:
+	jr	ule, SysEx_OnGmSystemOn_Skip2
+SysEx_OnGmSystemOn_Skip:
 	bit	4, (0xfd50:16)
 	ret	nz
-MidiPkt_SysExValidator_Data_Skip2:
+SysEx_OnGmSystemOn_Skip2:
 	cp	a, 153
-	jr	ugt, MidiPkt_SysExValidator_Data_Skip3
+	jr	ugt, SysEx_OnGmSystemOn_Skip3
 	cp	a, 148
 	ret	nc
-MidiPkt_SysExValidator_Data_Skip3:
+SysEx_OnGmSystemOn_Skip3:
 	set	7, (0x905d:16)
 	lda	xbc, (0xfdad:16)
 	ld	e, (xbc)
@@ -865,17 +868,17 @@ MidiPkt_SysExBulkTransfer_Data:
 	lda	xix, (SysEx_OnRolandGs_UseForRhythmPart:24)
 	jp	t, (xix+hl)
 SysEx_OnRolandGs_UseForRhythmPart:
-	jr	MidiPkt_SysExBulkTransfer_Data_Join
+	jr	MidiPkt_SysExBulkTransfer_Data_Helper2_Join
 MidiPkt_SysExBulkTransfer_Data_Case2:
-	jrl	MidiPkt_SysExBulkTransfer_Data_Join3
+	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join3
 MidiPkt_SysExBulkTransfer_Data_Case3:
-	jrl	MidiPkt_SysExBulkTransfer_Data_Join4
+	jrl	MidiPkt_SysExBulkTransfer_Data_Helper2_Join4
 MidiPkt_SysExBulkTransfer_Data_Case4:
-	jrl	SysEx_ApplyToSlot4B_Data
+	jrl	SysEx_ApplyGsReverbLevel
 MidiPkt_SysExBulkTransfer_Data_Case5:
-	jrl	SysEx_ApplyToSlot49_Data
+	jrl	SysEx_ApplyGsChorusMacro
 MidiPkt_SysExBulkTransfer_Data_Case6:
-	calr	SysEx_ApplyToSlot49_Format_Data
+	calr	SysEx_ApplyGsChorusLevel
 	ret
 MidiPkt_SysExBulkTransfer_Data_Helper:
 	lda	xde, (0x95a8:16)
@@ -911,14 +914,14 @@ MidiPkt_SysExBulkTransfer_Data_Helper2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	MidiRx_ProgramChange_Helper
+	call	MidiRx_ApplyProgramChange
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
 	pop	xix
 	pop	xhl
 	pop	xde
 	ret
-MidiPkt_SysExBulkTransfer_Data_Join:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join:
 	lda	xsp, (xsp-12)
 	push	qiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -980,7 +983,7 @@ MidiPkt_SysExBulkTransfer_Data_Join:
 	lda	xwa, (xsp+2)
 	ldto_berp	c, 251
 	ld	(xwa), c
-	jr	MidiPkt_SysExBulkTransfer_Data_Join2
+	jr	MidiPkt_SysExBulkTransfer_Data_Helper2_Join2
 MidiPkt_SysExBulkTransfer_Data_Helper2_Skip:
 	pushw	0
 	ld	bc, 0:i3
@@ -1015,15 +1018,15 @@ MidiPkt_SysExBulkTransfer_Data_Helper2_Skip:
 	lda	xwa, (xsp+2)
 	ldto_berp	c, 251
 	ld	(xwa), c
-MidiPkt_SysExBulkTransfer_Data_Join2:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join2:
 	calr	MidiPkt_SysExBulkTransfer_Data_Helper2
 MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue:
 	pop	qiz
 	lda	xsp, (xsp+12)
 	ret
-MidiPkt_SysExBulkTransfer_Data_Join3:
-	jrl	MidiPkt_SysExValidator_Data
-MidiPkt_SysExBulkTransfer_Data_Join4:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join3:
+	jrl	SysEx_OnGmSystemOn
+MidiPkt_SysExBulkTransfer_Data_Helper2_Join4:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1038,16 +1041,16 @@ MidiPkt_SysExBulkTransfer_Data_Join4:
 	ld	bc, hl
 	call	DSPCfg_WriteParamFull
 	cp	hl, 0:i3
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Epilogue
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2
 	ld	xwa, 0x4b04
 	call	DSPCfg_ReadParam_Map0
 	ld	qiz, hl
 	cp	qiz, 0
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Epilogue
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2
 	ld	iz, 0:i3
 	cp	qiz, 0
-	jr	le, MidiPkt_SysExBulkTransfer_Data_Skip2
-MidiPkt_SysExBulkTransfer_Data_Loop:
+	jr	le, MidiPkt_SysExBulkTransfer_Data_Helper2_Skip3
+MidiPkt_SysExBulkTransfer_Data_Helper2_Loop:
 	ld	a, (xsp+4)
 	extz	wa
 	ldto_berp	c, 248
@@ -1055,20 +1058,20 @@ MidiPkt_SysExBulkTransfer_Data_Loop:
 	calr	SysEx_DispatchByChannel_49
 	ld	bc, hl
 	cp	bc, 0xd8f0
-	jr	z, MidiPkt_SysExBulkTransfer_Data_Skip
+	jr	z, MidiPkt_SysExBulkTransfer_Data_Helper2_Skip2
 	ld	wa, iz
 	exts	xwa
 	add	xwa, 0x4b10
 	call	DSPCfg_WriteParamFull
-MidiPkt_SysExBulkTransfer_Data_Skip:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Skip2:
 	inc	1, iz
 	cp	iz, qiz
-	jr	lt, MidiPkt_SysExBulkTransfer_Data_Loop
-MidiPkt_SysExBulkTransfer_Data_Skip2:
+	jr	lt, MidiPkt_SysExBulkTransfer_Data_Helper2_Loop
+MidiPkt_SysExBulkTransfer_Data_Helper2_Skip3:
 	push	xiz
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
-MidiPkt_SysExBulkTransfer_Data_Epilogue:
+MidiPkt_SysExBulkTransfer_Data_Helper2_Epilogue2:
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -1090,7 +1093,7 @@ SysEx_ClampVoiceIndex8_DoLookup:
 	lda	xbc, (SysEx4B_VoiceIndexMap8:24)
 	ld	l, (xbc+wa)
 	ret
-SysEx_ApplyToSlot4B_Data:
+SysEx_ApplyGsReverbLevel:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1147,7 +1150,7 @@ SysEx_ClampVoiceIndex128_DoLookup:
 	lda	xbc, (SysEx4B_LevelCurve128:24)
 	ld	l, (xbc+wa)
 	ret
-SysEx_ApplyToSlot49_Data:
+SysEx_ApplyGsChorusMacro:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1205,7 +1208,7 @@ SysEx_ClampVoiceIndex8_49_DoLookup:
 	lda	xbc, (SysEx49_VoiceIndexMap8:24)
 	ld	l, (xbc+wa)
 	ret
-SysEx_ApplyToSlot49_Format_Data:
+SysEx_ApplyGsChorusLevel:
 	dec	2, xsp
 	push	xiz
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -1220,36 +1223,36 @@ SysEx_ApplyToSlot49_Format_Data:
 	call	DSPCfg_ReadParam_Map0
 	ld	qiz, hl
 	cp	qiz, 0
-	jr	lt, SysEx_ApplyToSlot49_Format_Data_Epilogue
+	jr	lt, SysEx_ApplyGsChorusLevel_Epilogue
 	ld	iz, 0:i3
 	cp	qiz, 0
-	jr	le, SysEx_ApplyToSlot49_Format_Data_Join
-SysEx_ApplyToSlot49_Format_Data_Loop:
+	jr	le, SysEx_ApplyGsChorusLevel_Join
+SysEx_ApplyGsChorusLevel_Loop:
 	ld	wa, iz
 	exts	xwa
 	add	xwa, 0x4910
 	call	DSPCfg_ResolveAndExtract
 	cp	hl, 1:i3
-	jr	z, SysEx_ApplyToSlot49_Format_Data_Skip
+	jr	z, SysEx_ApplyGsChorusLevel_Skip
 	cp	hl, 2:i3
-	jr	nz, SysEx_ApplyToSlot49_Format_Data_Skip2
-SysEx_ApplyToSlot49_Format_Data_Skip:
+	jr	nz, SysEx_ApplyGsChorusLevel_Skip2
+SysEx_ApplyGsChorusLevel_Skip:
 	ld	wa, iz
 	exts	xwa
 	add	xwa, 0x4910
 	ld	c, (xsp+4)
 	extz	bc
 	call	DSPCfg_WriteParamFull
-	jr	SysEx_ApplyToSlot49_Format_Data_Join
-SysEx_ApplyToSlot49_Format_Data_Skip2:
+	jr	SysEx_ApplyGsChorusLevel_Join
+SysEx_ApplyGsChorusLevel_Skip2:
 	inc	1, iz
 	cp	iz, qiz
-	jr	lt, SysEx_ApplyToSlot49_Format_Data_Loop
-SysEx_ApplyToSlot49_Format_Data_Join:
+	jr	lt, SysEx_ApplyGsChorusLevel_Loop
+SysEx_ApplyGsChorusLevel_Join:
 	push	xiz
 	call	SwbtWr_ReinitOutputBank
 	pop	xiz
-SysEx_ApplyToSlot49_Format_Data_Epilogue:
+SysEx_ApplyGsChorusLevel_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret

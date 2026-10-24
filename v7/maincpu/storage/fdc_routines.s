@@ -169,19 +169,19 @@ FDC_CONFIG_VERIFY_Loop3:
 	jr	z, FDC_CONFIG_VERIFY_Loop3
 	calr	FDC_Read_Status
 	bit	6, l
-	jr	nz, FDC_WaitReady_Skip8
+	jr	nz, FDC_CONFIG_VERIFY_Skip8
 	ld	l, 0:opc
 	cp	l, 128
-	jr	z, FDC_WaitReady_Skip7
+	jr	z, FDC_CONFIG_VERIFY_Skip7
 FDC_CONFIG_VERIFY_Loop4:
 	calr	FDC_Read_Status
 	and	l, 240
 	cp	l, 128
 	jr	nz, FDC_CONFIG_VERIFY_Loop4
-FDC_WaitReady_Skip7:
+FDC_CONFIG_VERIFY_Skip7:
 	ldw	wa, 8
 	calr	FDC_WriteDataRegister
-FDC_WaitReady_Skip8:
+FDC_CONFIG_VERIFY_Skip8:
 	lda	xiz, (0x89c4:16)
 	inc	1, xiz
 FDC_CONFIG_VERIFY_Loop5:
@@ -202,17 +202,17 @@ FDC_CONFIG_VERIFY_Skip2:
 	ld	wa, 3:i3
 	calr	FDC_CMD_SEND
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_WaitReady_Skip9
+	jr	z, FDC_CONFIG_VERIFY_Skip9
 	ld	(0x8984:16), 0
 	jrl	FDC_WaitReady_Epilogue3
-FDC_WaitReady_Skip9:
+FDC_CONFIG_VERIFY_Skip9:
 	ldw	wa, 79
 	calr	FDC_CMD_SEND
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_WaitReady_Skip10
+	jr	z, FDC_CONFIG_VERIFY_Skip10
 	ld	(0x8984:16), 0
 	jrl	FDC_WaitReady_Epilogue3
-FDC_WaitReady_Skip10:
+FDC_CONFIG_VERIFY_Skip10:
 	ld	a, (0x89d2:16)
 	and	a, 15
 	extz	wa
@@ -223,9 +223,9 @@ FDC_WaitReady_Skip10:
 	add	wa, wa
 	lda	xix, (FDC_WaitReady_CaseTable:24)
 	ld	wa, (xix+wa)
-	lda	xix, (FDC_CONFIG_VERIFY_Code:24)
+	lda	xix, (FDC_CONFIG_VERIFY_On720KMedia:24)
 	jp	t, (xix+wa)
-FDC_CONFIG_VERIFY_Code:
+FDC_CONFIG_VERIFY_On720KMedia:
 	ld	(0x89d0:16), 0
 	ldw	(0x8986:16), 0
 	ldib_erp	251, 0
@@ -301,10 +301,10 @@ FDC_CMD_DISPATCH_SUB:
 	calr SOME_DELAY
 	calr FDC_Read_Status
 	cp L,0xff
-	jr nz, .Lc_f969a1
+	jr nz, FDC_CMD_DISPATCH_SUB_Skip14
 	ldw WA, 0x00fc
 	calr FDC_Set_Status
-.Lc_f969a1:
+FDC_CMD_DISPATCH_SUB_Skip14:
 	ld hl, 0:i3
 	ret
 ; FDC command dispatcher
@@ -973,12 +973,12 @@ FDC_CMD_SEND:
 	ld	(xsp), a
 	calr	FDC_WaitReady
 	cp	(FDC_ERROR_CODE:16), 0
-	jrl	nz, FDC_HardwareSetup_Epilogue
+	jrl	nz, FDC_CMD_SEND_Epilogue
 	ld	a, (xsp)
 	ld	(0x898c:16), a
-	calr	FDC_HardwareSetup_Helper5
+	calr	FDC_ValidateOpcode
 	cp	l, 0:i3
-	jrl	nz, FDC_HardwareSetup_Epilogue
+	jrl	nz, FDC_CMD_SEND_Epilogue
 	ld	a, (xsp)
 	cp	a, 51
 	jr	z, FDC_CMD_SEND_Skip2
@@ -994,12 +994,12 @@ FDC_CMD_SEND_Skip:
 	ld	a, (xsp)
 	extz	wa
 	calr	FDC_HardwareSetup_Helper3
-	jrl	FDC_HardwareSetup_Epilogue
+	jrl	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip2:
 	ld	a, (xsp)
 	extz	wa
 	calr	FDC_HardwareSetup_Helper4
-	jrl	FDC_HardwareSetup_Epilogue
+	jrl	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip3:
 	ld	a, (xsp)
 	res	4, a
@@ -1008,7 +1008,7 @@ FDC_CMD_SEND_Skip3:
 	ld	a, (xsp)
 	extz	wa
 	calr	FDC_HardwareSetup_Helper4
-	jrl	FDC_HardwareSetup_Epilogue
+	jrl	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip4:
 	ld	a, (xsp)
 	and	a, 15
@@ -1017,25 +1017,25 @@ FDC_CMD_SEND_Skip4:
 	ld	a, (xsp)
 	and	a, 15
 	cp	a, 11
-	jr	nz, FDC_HardwareSetup_Skip6
+	jr	nz, FDC_CMD_SEND_Skip6
 FDC_CMD_SEND_Skip5:
 	ld	a, (xsp)
 	extz	wa
 	calr	FDC_HardwareSetup_Helper4
-	jr	FDC_HardwareSetup_Epilogue
-FDC_HardwareSetup_Skip6:
+	jr	FDC_CMD_SEND_Epilogue
+FDC_CMD_SEND_Skip6:
 	ld	a, (xsp)
 	extz	wa
 	calr	FDC_SendCommandByte
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_HardwareSetup_Epilogue
+	jr	nz, FDC_CMD_SEND_Epilogue
 	cp	(xsp), 8
-	jr	z, FDC_HardwareSetup_Epilogue
+	jr	z, FDC_CMD_SEND_Epilogue
 	cp	(xsp), 3
-	jr	nz, FDC_HardwareSetup_Skip7
-	calr	FDC_HardwareSetup_Helper6
-	jr	FDC_HardwareSetup_Epilogue
-FDC_HardwareSetup_Skip7:
+	jr	nz, FDC_CMD_SEND_Skip7
+	calr	FDC_SendParams_Specify
+	jr	FDC_CMD_SEND_Epilogue
+FDC_CMD_SEND_Skip7:
 	ld	a, (0x898d:16)
 	and	a, 1
 	sll	a, 2
@@ -1059,56 +1059,60 @@ FDC_HardwareSetup_Skip7:
 	cp	a, 4:i3
 	jr	z, FDC_CMD_SEND_Skip8
 	cp	a, 74
-	jr	nz, FDC_HardwareSetup_Skip11
+	jr	nz, FDC_CMD_SEND_Skip11
 FDC_CMD_SEND_Skip8:
-	jr	FDC_HardwareSetup_Epilogue
+	jr	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip9:
-	calr	FDC_HardwareSetup_Helper7
-	jr	FDC_HardwareSetup_Epilogue
+	calr	FDC_SendParams_Format
+	jr	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip10:
-	calr	FDC_HardwareSetup_Helper8
-	jr	FDC_HardwareSetup_Epilogue
-FDC_HardwareSetup_Skip11:
-	calr	FDC_HardwareSetup_Helper9
-FDC_HardwareSetup_Epilogue:
+	calr	FDC_SendParam_SeekTrack
+	jr	FDC_CMD_SEND_Epilogue
+FDC_CMD_SEND_Skip11:
+	calr	FDC_SendParams_ReadWrite
+FDC_CMD_SEND_Epilogue:
 	inc	2, xsp
 	ret
-FDC_HardwareSetup_Helper5:
+; FDC_ValidateOpcode: Checks the opcode in 0x898C: L = 0 for the aux opcodes 0x4F/0x33/0x34/0x47/0x35 and for opcodes
+;   whose low 5 bits are 0x02-0x0F, 0x11, 0x19, 0x1D or 0x1E (0x10 excluded); L = 1 otherwise. Basis: callers + body +
+;   twin -- FDC_CMD_SEND stores the opcode, calls it and returns at once when L != 0; bootloader twin
+;   FDC_ValidateOpcode.
+FDC_ValidateOpcode:
 	ld	a, (0x898c:16)
 	cp	a, 79
-	jr	z, FDC_HardwareSetup_Skip12
+	jr	z, FDC_ValidateOpcode_Skip12
 	cp	a, 51
-	jr	z, FDC_HardwareSetup_Skip12
+	jr	z, FDC_ValidateOpcode_Skip12
 	cp	a, 52
-	jr	z, FDC_HardwareSetup_Skip12
+	jr	z, FDC_ValidateOpcode_Skip12
 	cp	a, 71
-	jr	z, FDC_HardwareSetup_Skip12
+	jr	z, FDC_ValidateOpcode_Skip12
 	cp	a, 53
-	jr	nz, FDC_HardwareSetup_Skip13
-FDC_HardwareSetup_Skip12:
+	jr	nz, FDC_ValidateOpcode_Skip13
+FDC_ValidateOpcode_Skip12:
 	ld	l, 0:opc
 	ret
-FDC_HardwareSetup_Skip13:
+FDC_ValidateOpcode_Skip13:
 	ld	a, (0x898c:16)
 	and	a, 31
 	cp	a, 30
-	jr	z, FDC_HardwareSetup_Skip14
+	jr	z, FDC_ValidateOpcode_Skip14
 	cp	a, 29
-	jr	z, FDC_HardwareSetup_Skip14
+	jr	z, FDC_ValidateOpcode_Skip14
 	cp	a, 25
-	jr	z, FDC_HardwareSetup_Skip14
+	jr	z, FDC_ValidateOpcode_Skip14
 	cp	a, 16
-	jr	z, FDC_HardwareSetup_Helper5_Skip
+	jr	z, FDC_ValidateOpcode_Skip15
 	cp	a, 17
-	jr	z, FDC_HardwareSetup_Skip14
+	jr	z, FDC_ValidateOpcode_Skip14
 	cp	a, 15
-	jr	ugt, FDC_HardwareSetup_Helper5_Skip
+	jr	ugt, FDC_ValidateOpcode_Skip15
 	cp	a, 2:i3
-	jr	c, FDC_HardwareSetup_Helper5_Skip
-FDC_HardwareSetup_Skip14:
+	jr	c, FDC_ValidateOpcode_Skip15
+FDC_ValidateOpcode_Skip14:
 	ld	l, 0:opc
 	ret
-FDC_HardwareSetup_Helper5_Skip:
+FDC_ValidateOpcode_Skip15:
 	ld L, 0x01:opc
 	ret
 FDC_HardwareSetup_Join:
@@ -1116,7 +1120,10 @@ FDC_HardwareSetup_Join:
 	and	a, 3
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper6:
+; FDC_SendParams_Specify: Sends the two SPECIFY parameter bytes: SRT<<4 | HUT (0x899B, 0x899C & 0x0F) and HLT<<1 | ND
+;   (0x899D, 0x899E & 1), each through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it
+;   for opcode 3 (SPECIFY) right after the command byte; bootloader twin FDC_SendParams_Specify.
+FDC_SendParams_Specify:
 	ld	a, (0x899b:16)
 	sll	a, 4
 	ld	e, a
@@ -1137,7 +1144,11 @@ FDC_HardwareSetup_Helper6:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper7:
+; FDC_SendParams_Format: Sends the FORMAT TRACK parameters N (0x8992 & 7), SC (0x8996), GPL (0x8997) and filler D
+;   (0x8998) through FDC_SendParameterByte. Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x4D
+;   (FORMAT TRACK) after the unit/head byte; FDC_MODE_CONFIG fills 0x8992/0x8997/0x8998 (N, gap 80/108/116, fill
+;   0xE5); bootloader twin FDC_SendParams_Format.
+FDC_SendParams_Format:
 	ld	a, (0x8992:16)
 	and	a, 7
 	extz	wa
@@ -1151,11 +1162,14 @@ FDC_HardwareSetup_Helper7:
 	ld	a, (0x8998:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper8:
+; FDC_SendParam_SeekTrack: Sends the SEEK target track NCN (FDC_TARGET_TRACK, 0x899A) through FDC_SendParameterByte.
+;   Basis: callers + body + twin -- FDC_CMD_SEND calls it for opcode 0x0F (SEEK) after the unit/head byte, as issued
+;   by FDC_CmdSeek; bootloader twin FDC_SendParam_SeekTrack.
+FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper9:
+FDC_SendParams_ReadWrite:
 	ld	a, (0x898f:16)
 	extz	wa
 	calr	FDC_SendParameterByte
@@ -1178,14 +1192,14 @@ FDC_HardwareSetup_Helper9:
 	calr	FDC_SendParameterByte
 	ld	a, (0x898c:16)
 	cp	a, 221
-	jr	z, FDC_HardwareSetup_Skip16
+	jr	z, FDC_SendParams_ReadWrite_Skip16
 	cp	a, 217
-	jr	z, FDC_HardwareSetup_Skip16
+	jr	z, FDC_SendParams_ReadWrite_Skip16
 	cp	a, 209
-	jr	nz, FDC_HardwareSetup_Skip17
-FDC_HardwareSetup_Skip16:
+	jr	nz, FDC_SendParams_ReadWrite_Skip17
+FDC_SendParams_ReadWrite_Skip16:
 	jrl	FDC_HardwareSetup_Join
-FDC_HardwareSetup_Skip17:
+FDC_SendParams_ReadWrite_Skip17:
 	ld	a, (0x8995:16)
 	extz	wa
 	calr	FDC_SendParameterByte
@@ -1266,10 +1280,10 @@ FDC_DRIVE_STATUS:
 	ret
 FDC_DRIVE_STATUS_Skip8:
 	cpw	(FDC_COMMAND_INDEX:16), 0
-	jr	z, FDC_DRIVE_STATUS_Skip
+	jr	z, FDC_DRIVE_STATUS_Skip9
 	ld	hl, 0:i3
 	ret
-FDC_DRIVE_STATUS_Skip:
+FDC_DRIVE_STATUS_Skip9:
 	ldw HL, 0xffff
 	ret
 FDC_PRE_OP_CHECK:
@@ -1316,7 +1330,7 @@ FDC_POST_OP:
 	ldw QIZ, 0x01f4
 	ld iz, (SYSTEM_TIMESTAMP:16)
 	ld bc, 0:i3
-.Lc_f971e1:
+FDC_POST_OP_Loop:
 	cp (0x89c4:16), 0xff
 	jr z, .Lc_f971eb
 	ldw BC, 0xffff
@@ -1332,7 +1346,7 @@ FDC_POST_OP_Skip:
 .Lc_f971ff:
 FDC_POST_OP_Skip2:
 	cp bc, 0:i3
-	jr z, .Lc_f971e1
+	jr z, FDC_POST_OP_Loop
 	pop XIZ
 	ret
 SOME_DELAY:
@@ -1410,7 +1424,7 @@ FDC_CmdSeek:
 	cp a, (0x8a68:16)
 	ret Z
 ; (was .incbin "includes/romslices/v7_transplant_FDC_CmdRecalibrate_tail.bin")
-	.byte	0xc1, 0x9a, 0x89, 0x19, 0x68, 0x8a
+	ld	(0x8a68), (0x899a:16)
 	ld	wa, 2:i3
 	calr	SOME_DELAY
 	calr	FDC_TIMING_DELAY
@@ -1489,18 +1503,18 @@ FDC_CMD_EXEC_Loop:
 FDC_CMD_EXEC_Skip3:
 	ldw_d16	wa, (0x89ac)
 	cp	wa, (0x8a70:16)
-	jr	ule, FDC_CMD_EXEC_Join
+	jr	ule, FDC_CMD_EXEC_Skip4
 	ldw	(0x89ac:16), 1
-FDC_CMD_EXEC_Join:
+FDC_CMD_EXEC_Skip4:
 	ldmm16	0x8a74, 0x89ac
 	ldw	(FDC_SECTOR_COUNT:16), 0
 	cp	(0x89d0:16), 2
 	jr	nz, FDC_CMD_EXEC_Skip5
 	ldw	(0x8982:16), 1024
-	jr	FDC_CMD_EXEC_Join3
+	jr	FDC_CMD_EXEC_Join
 FDC_CMD_EXEC_Skip5:
 	ldw	(0x8982:16), 512
-FDC_CMD_EXEC_Join3:
+FDC_CMD_EXEC_Join:
 	ldmm16	0x8a76, 0x89ae
 	ld	iz, 1:i3
 FDC_CMD_EXEC_Join2:
@@ -1531,11 +1545,11 @@ FDC_CMD_EXEC_Skip6:
 FDC_CMD_EXEC_Skip7:
 	calr	FDC_DRIVE_DETECT
 	cp	hl, 0xffff
-	jr	z, FDC_CMD_EXEC_Join6
+	jr	z, FDC_CMD_EXEC_Join3
 	calr	FDC_CONFIG_VERIFY
 	ld	(0x8a68:16), 255
 	calr	FDC_CmdSeek
-FDC_CMD_EXEC_Join6:
+FDC_CMD_EXEC_Join3:
 	ldmm16	0x89ae, 0x8a76
 	dec	1, (0x89cc:16)
 	ldb_d8	a, (0x89cc)
@@ -1575,65 +1589,65 @@ FDC_CE_EXIT:
 FDC_SECTOR_XFER:
 	pushw	iz
 	ld	(0x89cc:16), 8
-	jrl	FDC_CMD_EXEC_Join5
-FDC_CMD_EXEC_Loop2:
+	jrl	FDC_SECTOR_XFER_Join5
+FDC_SECTOR_XFER_Loop2:
 	ld	(FDC_ERROR_CODE:16), 0
 	calr	FDC_CmdSeek
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CMD_EXEC_Skip9
+	jr	z, FDC_SECTOR_XFER_Skip9
 	ld	a, (FDC_ERROR_CODE:16)
 	ldfr_berp	a, 248
 	exts	iz
 	calr	FDC_CONFIG_VERIFY
 	ldto_berp	a, 248
 	stb_d8	(FDC_ERROR_CODE), a
-	jrl	FDC_CMD_EXEC_Epilogue2
-FDC_CMD_EXEC_Skip9:
+	jrl	FDC_SECTOR_XFER_Epilogue2
+FDC_SECTOR_XFER_Skip9:
 	ldw_d16	wa, (0x89ac)
 	cp	wa, (0x8a70:16)
-	jr	ule, FDC_SECTOR_XFER_Join
+	jr	ule, FDC_SECTOR_XFER_Skip10
 	ldw	(0x89ac:16), 1
-FDC_SECTOR_XFER_Join:
+FDC_SECTOR_XFER_Skip10:
 	ldmm16	0x8a74, 0x89ac
 	ldw	(FDC_SECTOR_COUNT:16), 0
 	cp	(0x89d0:16), 2
-	jr	nz, FDC_CMD_EXEC_Skip11
+	jr	nz, FDC_SECTOR_XFER_Skip11
 	ldw	(0x8982:16), 1024
-	jr	FDC_SECTOR_XFER_Join2
-FDC_CMD_EXEC_Skip11:
+	jr	FDC_SECTOR_XFER_Join3
+FDC_SECTOR_XFER_Skip11:
 	ldw	(0x8982:16), 512
-FDC_SECTOR_XFER_Join2:
+FDC_SECTOR_XFER_Join3:
 	ldmm16	0x8a76, 0x89ae
 	ld	iz, 1:i3
-FDC_CMD_EXEC_Join4:
+FDC_SECTOR_XFER_Join4:
 	ld	wa, (0x8982:16)
 	add	(FDC_SECTOR_COUNT:16), wa
 	lda	xwa, (0x89ae:16)
 	decm	1, (xwa)
 	ld	wa, (xwa)
 	cp	wa, 0:i3
-	jr	z, FDC_CMD_EXEC_Skip12
+	jr	z, FDC_SECTOR_XFER_Skip12
 	lda	xwa, (0x89ac:16)
 	incw	1, (xwa)
 	ld	wa, (xwa)
 	cp	wa, (0x8a70:16)
-	jr	ugt, FDC_CMD_EXEC_Skip12
+	jr	ugt, FDC_SECTOR_XFER_Skip12
 	inc	1, iz
-	jr	FDC_CMD_EXEC_Join4
-FDC_CMD_EXEC_Skip12:
+	jr	FDC_SECTOR_XFER_Join4
+FDC_SECTOR_XFER_Skip12:
 	ld	(0x89ae:16), iz
 	ldmm16	0x89ac, 0x8a74
-	calr	FDC_CMD_EXEC_Helper7
+	calr	FDC_SubmitWriteDataCmd
 	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CMD_EXEC_Skip14
+	jr	z, FDC_SECTOR_XFER_Skip14
 	cp	(FDC_ERROR_CODE:16), 9
-	jr	nz, FDC_CMD_EXEC_Skip13
+	jr	nz, FDC_SECTOR_XFER_Skip13
 	calr	FDC_INIT
 	calr	FDC_CONFIG_VERIFY
-	jrl	FDC_CMD_EXEC_Epilogue2
-FDC_CMD_EXEC_Skip13:
+	jrl	FDC_SECTOR_XFER_Epilogue2
+FDC_SECTOR_XFER_Skip13:
 	cp	(FDC_ERROR_CODE:16), 47
-	jr	z, FDC_CMD_EXEC_Epilogue2
+	jr	z, FDC_SECTOR_XFER_Epilogue2
 	calr	FDC_CONFIG_VERIFY
 	ld	(0x8a68:16), 255
 	calr	FDC_CmdSeek
@@ -1641,15 +1655,15 @@ FDC_CMD_EXEC_Skip13:
 	dec	1, (0x89cc:16)
 	ldb_d8	a, (0x89cc)
 	cp	a, 0:i3
-	jr	nz, FDC_CMD_EXEC_Join5
+	jr	nz, FDC_SECTOR_XFER_Join5
 	ld	(FDC_ERROR_CODE:16), 32
-	jr	FDC_CMD_EXEC_Epilogue2
-FDC_CMD_EXEC_Skip14:
+	jr	FDC_SECTOR_XFER_Epilogue2
+FDC_SECTOR_XFER_Skip14:
 	ld	wa, (0x8a76:16)
 	sub	wa, iz
 	ld	(0x89ae:16), wa
 	cpw	(0x89ae:16), 0
-	jr	z, FDC_CMD_EXEC_Join5
+	jr	z, FDC_SECTOR_XFER_Join5
 	lda	xbc, (0x89b0:16)
 	ld	wa, (FDC_SECTOR_COUNT:16)
 	extz	xwa
@@ -1662,18 +1676,22 @@ FDC_CMD_EXEC_Skip14:
 	ld	(0x898d:16), a
 	ld	(0x8990:16), a
 	cp	(0x8990:16), 0
-	jr	nz, FDC_CMD_EXEC_Join5
+	jr	nz, FDC_SECTOR_XFER_Join5
 	lda	xwa, (0x898f:16)
 	incm8	1, (xwa)
 	ld	a, (xwa)
 	ld	(FDC_TARGET_TRACK:16), a
-FDC_CMD_EXEC_Join5:
+FDC_SECTOR_XFER_Join5:
 	cpw	(0x89ae:16), 0
-	jrl	nz, FDC_CMD_EXEC_Loop2
-FDC_CMD_EXEC_Epilogue2:
+	jrl	nz, FDC_SECTOR_XFER_Loop2
+FDC_SECTOR_XFER_Epilogue2:
 	popw	iz
 	ret
-FDC_CMD_EXEC_Helper7:
+; FDC_SubmitWriteDataCmd: Issues MT|MF WRITE DATA (0xC5): stores the opcode in 0x898C, arms DMA channel 3 for
+;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
+;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
+;   calls it per burst; instruction twin of the bootloader's FDC_SubmitWriteDataCmd.
+FDC_SubmitWriteDataCmd:
 	ld	(0x898c:16), 197
 	calr	FDC_Setup_DMA_Mode
 	calr	FDC_TIMING_DELAY
@@ -1985,28 +2003,28 @@ FDC_STATUS_COPY_Code:
 FDC_OUTPUT_CTRL:
 	ld	wa, (35240:16)
 	cp	wa, 1:i3
-	jr	z, FDC_STATUS_COPY_Code_Skip2
+	jr	z, FDC_OUTPUT_CTRL_Skip2
 	cp	wa, 0:i3
-	jr	nz, FDC_STATUS_COPY_Code_Skip
-	jr	FDC_STATUS_COPY_Code_Join
-FDC_STATUS_COPY_Code_Skip:
+	jr	nz, FDC_OUTPUT_CTRL_Skip
+	jr	FDC_OUTPUT_CTRL_Join
+FDC_OUTPUT_CTRL_Skip:
 	ldw	wa, 254
 	calr	FDC_Set_Status
 	ret	
-FDC_STATUS_COPY_Code_Skip2:
+FDC_OUTPUT_CTRL_Skip2:
 	ld	(35278:16), 255
 	ret	
-FDC_STATUS_COPY_Code_Join:
+FDC_OUTPUT_CTRL_Join:
 	ld	(35278:16), 0
 	ret	
+; --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
+; Enables interrupts via prevbank (D7 FA 04 = ei 4).
+; Checks FDC status register, reads result data.
+; Tests status bits to determine result type:
+;   bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
+;   bit 6 -> status 0x2f (bad cylinder).
+; Disables interrupts (D7 FA 05 = di 4) before return.
 FDC_INTERRUPT_HANDLER:
-; [v10] --- FDC_INTERRUPT_HANDLER: FDC interrupt service routine ---
-; [v10] Enables interrupts via prevbank (D7 FA 04 = ei 4).
-; [v10] Checks FDC status register, reads result data.
-; [v10] Tests status bits to determine result type:
-; [v10] bit 7 -> status 0x32 (overrun), bit 5 -> status 0x31 (no data),
-; [v10] bit 6 -> status 0x2f (bad cylinder).
-; [v10] Disables interrupts (D7 FA 05 = di 4) before return.
 	push	qiz
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
@@ -2015,10 +2033,7 @@ FDC_INTERRUPT_HANDLER:
 	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
 	calr	FDC_Wait_Ready_Timeout
-	.byte	0xc1, 0x88, 0x89
-FDC_INTERRUPT_HANDLER_Code:
-	push	xsp
-	nop	
+	cp	(FDC_ERROR_CODE:16), 0
 	jr	nz, FDC_INTERRUPT_HANDLER_Code_Epilogue
 	calr	FDC_ReadDataRegister
 	ldfr_berp	l, 251
@@ -2188,7 +2203,7 @@ FDC_ByteTransfer_PIO:
 	ret	z
 	ld	wa, (FDC_COMMAND_INDEX:16)
 	cp	wa, 4:i3
-	jr	z, FDC_CommandEntry_Skip
+	jr	z, FDC_ByteTransfer_PIO_Skip
 	cp	wa, 3:i3
 	ret	nz
 	ld	c, (0x120000:24)
@@ -2196,19 +2211,19 @@ FDC_ByteTransfer_PIO:
 	ld	(xhl), c
 	inc	1, xhl
 	ld	(0x89b2:16), xhl
-FDC_CommandEntry_Join:
+FDC_ByteTransfer_PIO_Join:
 	subw	(FDC_SECTOR_COUNT:16), 1
 	ret	nz
 	calr	FDC_Pulse_PH0
 	calr	FDC_Port_Reset_Or_Noop
 	ret
-FDC_CommandEntry_Skip:
+FDC_ByteTransfer_PIO_Skip:
 	ld	xhl, (0x89b2:16)
 	ld	c, (xhl)
 	ld	(0x120000:24), c
 	inc	1, xhl
 	ld	(0x89b2:16), xhl
-	jr	FDC_CommandEntry_Join
+	jr	FDC_ByteTransfer_PIO_Join
 INTTC3_HANDLER:
 	push xiz
 	push xiy
@@ -2310,7 +2325,7 @@ Reset_Floppy_Disk_Controller:
 	res	0, (PD:8)
 	ldw	wa, 10
 	jrl	SOME_DELAY
-TitleFunc_LifecycleTable_Helper:
+FDTest_ProbeDiskFormat:
 	ld	(PHFC:8), 30:io
 	bit	6, (PD:8)
 	ret	nz

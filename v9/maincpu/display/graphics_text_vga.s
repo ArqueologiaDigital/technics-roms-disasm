@@ -1751,7 +1751,7 @@ SeGfx_BoundOp0A_FormatNumber:
 	cp	l, 2:i3
 	jr	z, SeGfx_BoundOp0A_FormatNumber_Skip19
 	cp	l, 1:i3
-	jr	nz, DrawFunc_Init_Skip20
+	jr	nz, SeGfx_BoundOp0A_FormatNumber_Skip20
 	pushm	(xde)
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt1d
 	jr	SeGfx_BoundOp0A_FormatNumber_Join10
@@ -1761,7 +1761,7 @@ SeGfx_BoundOp0A_FormatNumber_Skip19:
 	pushw	DrawFunc_Init_Entry5_Str_Fmt2d_2@lo16
 	push	xbc
 	jr	SeGfx_BoundOp0A_FormatNumber_Join7
-DrawFunc_Init_Skip20:
+SeGfx_BoundOp0A_FormatNumber_Skip20:
 	pushm	(xde)
 	ld	xwa, DrawFunc_Init_Entry5_Str_Fmt3d_2
 SeGfx_BoundOp0A_FormatNumber_Join10:

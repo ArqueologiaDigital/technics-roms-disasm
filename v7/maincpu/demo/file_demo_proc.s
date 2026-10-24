@@ -695,10 +695,10 @@ Demo_SelectEntry_ByteTable:
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	ret	z
 	cpw	(SEQ_ACTIVE_PARTS:16), 0
-	jr	nz, Demo_SelectEntry_ByteTable_Join2
+	jr	nz, Demo_SelectEntry_ByteTable_Skip
 	bit	0, (0x31e7:16)
-	jr	z, Demo_SelectEntry_ByteTable_Skip
-Demo_SelectEntry_ByteTable_Join2:
+	jr	z, Demo_SelectEntry_ByteTable_Skip2
+Demo_SelectEntry_ByteTable_Skip:
 	res	3, (DEMO_CONTROL_FLAGS:16)
 	cp	(ACTIVE_TITLE:16), 228
 	call	nz, (SeqInit_PostEventSequence:24)
@@ -711,7 +711,7 @@ Demo_SelectEntry_ByteTable_Join2:
 	ld	a, (DEMO_ACTIVE_ENTRY:16)
 	extz	wa
 	jp	Seq_DispatchEventType6
-Demo_SelectEntry_ByteTable_Skip:
+Demo_SelectEntry_ByteTable_Skip2:
 	set	3, (DEMO_CONTROL_FLAGS:16)
 	cp	(ACTIVE_TITLE:16), 228
 	jr	z, Demo_SelectEntry_ByteTable_Skip3
@@ -2010,32 +2010,32 @@ FileIO_LoadSongRegion8:
 	ld XBC,FileIO_LoadSongRegion8_Str_rb
 	call FileIO_OpenWithMode
 	cp hl, 0:i3
-	jr ge, .Lc_f872f2
+	jr ge, LoadSong8_InitLoop
 	call FileIO_ReturnError
 	jrl t, LoadSong8_Return
-.Lc_f872f2:
+LoadSong8_InitLoop:
 	ld iz, 0:i3
-.Lc_f872f4:
+LoadSong8_ReadLoop:
 	call FileIO_ReadByte
 	cp hl, 0:i3
-	jr lt, .Lc_f8730c
+	jr lt, LoadSong8_ReadDone
 	lda xwa, (xsp + 0x04)
 	ld	(xwa+iz), l
 	inc 1,IZ
 	cp IZ,0x0008
-	jr lt, .Lc_f872f4
-.Lc_f8730c:
+	jr lt, LoadSong8_ReadLoop
+LoadSong8_ReadDone:
 	call FileIO_ReturnError
 	ld (XSP+0x02),HL
 	cpw (XSP+0x02), 0x0000
-	jrl lt, .Lc_f87434
+	jrl lt, FileIO_CloseHandle_Return
 	call FileIO_SeekRead_ExtReturn
 	lda xwa, (xsp + 0x04)
 	call SeqLoad_ValidateFormat
 	cp hl, 0:i3
-	jrl z, .Lc_f873bf
+	jrl z, LoadSong8_AltPresetPath
 	cp hl, 1:i3
-	jrl nz, .Lc_f87434
+	jrl nz, FileIO_CloseHandle_Return
 	call SeqLoad_JmpLoadPre
 	ld XWA,SEQ_SONG_SLOTS
 	ld XBC,0x00005000
@@ -2076,10 +2076,10 @@ FileIO_LoadSongRegion8:
 	ld WA,(XSP+0x02)
 	call SeqLoad_JmpLoadPost
 	cpw (XSP+0x02), 0x0000
-	jr lt, .Lc_f87434
+	jr lt, FileIO_CloseHandle_Return
 	call ResetSlotsIfEmpty
-	jr t, .Lc_f87434
-.Lc_f873bf:
+	jr t, FileIO_CloseHandle_Return
+LoadSong8_AltPresetPath:
 	call SeqLoad_JmpInitPreset
 	ld XWA,SEQ_SONG_SLOTS
 	ld XBC,0x00000800
@@ -2087,7 +2087,7 @@ FileIO_LoadSongRegion8:
 	call FileIO_ReturnError
 	ld (XSP+0x02),HL
 	cpw (XSP+0x02), 0x0000
-	jr lt, .Lc_f87423
+	jr lt, Song_LoadAndInitPlayback
 	call FileIO_CloseHandle
 	lda xwa, (xsp + 0x0c)
 	ld XBC,(XSP+0x1a)
@@ -2099,7 +2099,7 @@ FileIO_LoadSongRegion8:
 	call FileIO_ReturnError
 	ld (XSP+0x02),HL
 	cpw (XSP+0x02), 0x0000
-	jr lt, .Lc_f87423
+	jr lt, Song_LoadAndInitPlayback
 	lda xwa, (0x0b0000:24)
 	ld XDE,XWA
 	lda xbc, (0x0fd800:24)
@@ -2107,13 +2107,13 @@ FileIO_LoadSongRegion8:
 	call FileIO_ReadBlock
 	call FileIO_ReturnError
 	ld (XSP+0x02),HL
-.Lc_f87423:
+Song_LoadAndInitPlayback:
 	ld wa, 0:i3
 	call FileData_LoadFromSlot
 	call SMF_InitSongPlayback
 	ld WA,(XSP+0x02)
 	call SeqLoad_JmpAltEntry
-.Lc_f87434:
+FileIO_CloseHandle_Return:
 	call FileIO_CloseHandle
 	ld HL,(XSP+0x02)
 ; === end v7 block ===
@@ -3169,7 +3169,7 @@ FileIO_ByteBlock_DemoProc1_Skip2:
 	jr	lt, FileIO_ByteBlock_DemoProc1_Join
 	ld	wa, (xsp+36)
 	extz	wa
-	call	FileIO_ByteBlock_DemoProc1_Helper4
+	call	PanelMemory_PreSlotLoad
 	lda	xwa, (2020176:24)
 	add	xwa, (xsp+0x4)
 	ld	xbc, (xsp+8)
@@ -3179,7 +3179,7 @@ FileIO_ByteBlock_DemoProc1_Skip2:
 	ld	wa, (xsp+36)
 	extz	wa
 	ld	bc, iz
-	call	FileIO_ByteBlock_DemoProc1_Helper5
+	call	PanelMemory_PostSlotLoad
 	jr	FileIO_ByteBlock_DemoProc1_Join
 FileIO_ByteBlock_DemoProc1_Skip3:
 	ldw	iz, 65434
@@ -3204,10 +3204,10 @@ SingleLoad_LoadPanelMemBank:
 	ld	(xsp+38), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip4
+	jr	ge, SingleLoad_LoadPanelMemBank_Skip4
 	ldw	hl, 65432
 	jrl	SingleLoad_LoadPanelMemBank_Epilogue2
-FileIO_ByteBlock_DemoProc1_Skip4:
+SingleLoad_LoadPanelMemBank_Skip4:
 	ld	a, l
 	extz	wa
 	ld	(xsp+10), wa
@@ -3299,16 +3299,23 @@ SingleLoad_LoadPanelMemBank_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+36)
 	ret
+; SingleLoad_LoadSong: Single-loads the song of the selected .SQT file into song slot WA: checks the file signature
+;   and header (FileIO_ReadHeaderAt4, else 0xFF96), checks the free song memory (SeqLoad_ProcessDataBlock vs
+;   UpdateFileEntry, else 0xFF97), reads the 2048-byte song header into SEQ_SONG_SLOTS + 2048 * WA and the event data
+;   to 0xB0000 + the offset SingleLoad_PrepareSongSlot returns, finishes with
+;   SingleLoad_FinishSongLoad and SetSongSlotValue(WA, 0); returns HL = result (0xFF98 no file, 0xFF9A wrong
+;   signature). Basis: callers + body -- SingleLoadDst_SequencerListProc runs it for parameter 10 with WA = the
+;   destination song number 0x8968.
 SingleLoad_LoadSong:
 	lda	xsp, (xsp-30)
 	push	xiz
 	ld	(xsp+32), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip7
+	jr	ge, SingleLoad_LoadSong_Skip7
 	ldw	hl, 65432
 	jrl	SingleLoad_LoadSong_Epilogue3
-FileIO_ByteBlock_DemoProc1_Skip7:
+SingleLoad_LoadSong_Skip7:
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -3370,7 +3377,7 @@ SingleLoad_LoadSong_Skip9:
 	ld	wa, (xsp+32)
 	extz	wa
 	ld	bc, iz
-	call	FileIO_ByteBlock_DemoProc1_Helper2
+	call	SingleLoad_FinishSongLoad
 	cp	iz, 0:i3
 	jr	lt, SingleLoad_LoadSong_Join3
 	ld	wa, (xsp+32)
@@ -3402,10 +3409,10 @@ SingleLoad_LoadComposerPattern:
 	ld	(xsp+28), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip12
+	jr	ge, SingleLoad_LoadComposerPattern_Skip12
 	ldw	hl, 65432
 	jr	SingleLoad_LoadComposerPattern_Epilogue4
-FileIO_ByteBlock_DemoProc1_Skip12:
+SingleLoad_LoadComposerPattern_Skip12:
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -3459,10 +3466,10 @@ SingleLoad_LoadSoundMemEntry:
 	ld	(xsp+42), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip15
+	jr	ge, SingleLoad_LoadSoundMemEntry_Skip15
 	ldw	hl, 65432
 	jrl	SingleLoad_LoadSoundMemEntry_Epilogue5
-FileIO_ByteBlock_DemoProc1_Skip15:
+SingleLoad_LoadSoundMemEntry_Skip15:
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -3480,10 +3487,10 @@ FileIO_ByteBlock_DemoProc1_Skip15:
 	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_4
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip16
+	jr	ge, SingleLoad_LoadSoundMemEntry_Skip16
 	call	FileIO_ReturnError
 	jrl	SingleLoad_LoadSoundMemEntry_Epilogue5
-FileIO_ByteBlock_DemoProc1_Skip16:
+SingleLoad_LoadSoundMemEntry_Skip16:
 	ld	wa, 4:i3
 	calr	FileIO_CheckRegionSignature
 	cp	hl, 0:i3
@@ -3588,10 +3595,10 @@ SingleLoad_LoadSoundMemBank:
 	ld	(xsp+38), wa
 	call	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip20
+	jr	ge, SingleLoad_LoadSoundMemBank_Skip20
 	ldw	hl, 65432
 	jrl	SingleLoad_LoadSoundMemBank_Epilogue6
-FileIO_ByteBlock_DemoProc1_Skip20:
+SingleLoad_LoadSoundMemBank_Skip20:
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -3609,10 +3616,10 @@ FileIO_ByteBlock_DemoProc1_Skip20:
 	ld	xbc, FileIO_ByteBlock_DemoProc1_Str_rb_5
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, FileIO_ByteBlock_DemoProc1_Skip21
+	jr	ge, SingleLoad_LoadSoundMemBank_Skip21
 	call	FileIO_ReturnError
 	jrl	SingleLoad_LoadSoundMemBank_Epilogue6
-FileIO_ByteBlock_DemoProc1_Skip21:
+SingleLoad_LoadSoundMemBank_Skip21:
 	ld	wa, 4:i3
 	calr	FileIO_CheckRegionSignature
 	cp	hl, 0:i3
@@ -6882,7 +6889,7 @@ SingleLoadSrc_ReadTmSoundName:
 	ld	(xsp+26), wa
 	calr	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	lt, GetFileEntryByIndex_Skip10
+	jr	lt, GetFileEntryByIndex_Entry
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -6900,11 +6907,11 @@ SingleLoadSrc_ReadTmSoundName:
 	ld	xbc, FileIO_ByteBlock_DemoProc2_Str_rb_4
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, GetFileEntryByIndex_Skip11
-GetFileEntryByIndex_Skip10:
+	jr	ge, GetFileEntryByIndex_Skip10
+GetFileEntryByIndex_Entry:
 	ld	xhl, FileIO_EmptyEntryName
 	jr	GetFileEntryByIndex_Epilogue6
-GetFileEntryByIndex_Skip11:
+GetFileEntryByIndex_Skip10:
 	ld	wa, (xsp+26)
 	mul	wa, 470
 	add	wa, 16
@@ -6926,7 +6933,7 @@ SingleLoadSrc_ReadTmUserKitName:
 	pushw	iz
 	calr	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	lt, GetFileEntryByIndex_Skip12
+	jr	lt, GetFileEntryByIndex_Entry2
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -6944,11 +6951,11 @@ SingleLoadSrc_ReadTmUserKitName:
 	ld	xbc, GetFileEntryByIndex_Entry_Str_rb
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, GetFileEntryByIndex_Skip13
-GetFileEntryByIndex_Skip12:
+	jr	ge, GetFileEntryByIndex_Skip11
+GetFileEntryByIndex_Entry2:
 	ld	xhl, FileIO_EmptyEntryName
 	jr	GetFileEntryByIndex_Epilogue7
-GetFileEntryByIndex_Skip13:
+GetFileEntryByIndex_Skip11:
 	ld	xwa, 18816
 	ld	bc, 0:i3
 	call	FileIO_SeekAndReadBlock
@@ -6962,13 +6969,13 @@ GetFileEntryByIndex_Epilogue7:
 	popw	iz
 	lda	xsp, (xsp+24)
 	ret
-SLSrcBankList_FuncBody_Helper7:
+SingleLoadSrc_ReadTmUserKitEntryName:
 	lda	xsp, (xsp-26)
 	pushw	iz
 	ld	(xsp+26), wa
 	calr	GetCurrentFileIndex
 	cp	hl, 0:i3
-	jr	lt, GetFileEntryByIndex_Skip14
+	jr	lt, GetFileEntryByIndex_Skip12
 	ld	a, l
 	ldfr_berp	a, 248
 	extz	iz
@@ -6986,11 +6993,11 @@ SLSrcBankList_FuncBody_Helper7:
 	ld	xbc, GetFileEntryByIndex_Entry2_Str_rb
 	call	FileIO_OpenWithMode
 	cp	hl, 0:i3
-	jr	ge, GetFileEntryByIndex_Skip15
-GetFileEntryByIndex_Skip14:
+	jr	ge, GetFileEntryByIndex_Skip13
+GetFileEntryByIndex_Skip12:
 	ld	xhl, FileIO_EmptyEntryName
 	jr	GetFileEntryByIndex_Epilogue8
-GetFileEntryByIndex_Skip15:
+GetFileEntryByIndex_Skip13:
 	ld	(154710:24), 32
 	ld	wa, (xsp+26)
 	mul	wa, 80

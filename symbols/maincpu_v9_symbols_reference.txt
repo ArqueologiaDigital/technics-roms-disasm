@@ -22318,7 +22318,7 @@ AcEasyCmpGridBoxProc_CopyFixedHeaderStr 00F1C266
 AcEasyCmpGridBoxProc_PassToApFunc 00F1C27B
 EasyCmp_ReturnZeroJmp 00F1C28E
 AcEasyCmpGridBoxProc_CallInherited 00F1C292
-EasyCmp_GridCheck_Case5 00F1C29E
+AcEasyCmpGridBoxProc_Epilogue 00F1C29E
 EasyCmpGridCheck 00F1C2A3
 EasyCmp_GridCheck_DataBlock 00F1C2DD
 EasyCmpGridCheck_Skip 00F1C319
@@ -22419,7 +22419,7 @@ PsMspBnkNameBoxProc_OnMspRgp2NmDisp 00F1CCC7
 MspBnk_SendEventJoin 00F1CCE7
 PsMspBnkNameBoxProc_ReturnZero 00F1CCEB
 PsMspBnkNameBoxProc_CallInherited 00F1CCEF
-RgpSetBnk_GridCheck_Case3 00F1CCFA
+PsMspBnkNameBoxProc_Epilogue 00F1CCFA
 MspRGrpSetGridCheck 00F1CD01
 MspRGrpSetGridCheck_DataBlock 00F1CD3B
 MspRGrpSetGridCheck_Skip 00F1CD77
@@ -36597,7 +36597,7 @@ VocalistGridCheck_LswDrawOnOffColumn 00F73C62
 VocalistGridCheck_Skip19 00F73C72
 VocalistGrid_CheckHandler 00F73C8E
 VocalistGrid_CheckDispData 00F73CE9
-VocalistGridCheck_Skip9 00F73D05
+VocalistGrid_CheckDispData_Skip9 00F73D05
 VocalistGrid_CheckDispData_Join7 00F73D0A
 VocalistGrid_CheckDispData_Skip10 00F73D17
 VocalistGrid_CheckDispData_Join8 00F73D34
@@ -44564,7 +44564,7 @@ DrawDottedLine_Impl_Loop3 00FAD447
 DrawDottedLine_Impl_Skip13 00FAD453
 DrawDottedLine_Impl_Skip14 00FAD47A
 DrawDottedLine_Impl_Join5 00FAD47D
-ClampColorToRange_Skip15 00FAD49B
+DrawDottedLine_Impl_Skip15 00FAD49B
 DrawDottedLine_Impl_Loop4 00FAD4E0
 DrawDottedLine_Impl_Skip16 00FAD4EC
 DrawDottedLine_Impl_Skip17 00FAD512
@@ -45190,7 +45190,7 @@ DrawFunc_Init_Join6 00FB23F9
 DrawFunc_Init_Join9 00FB23FB
 SeGfx_BoundOp0A_FormatNumber 00FB2438
 SeGfx_BoundOp0A_FormatNumber_Skip19 00FB247A
-DrawFunc_Init_Skip20 00FB2485
+SeGfx_BoundOp0A_FormatNumber_Skip20 00FB2485
 SeGfx_BoundOp0A_FormatNumber_Join10 00FB248C
 SeGfx_BoundOp0A_FormatNumber_Join7 00FB248E
 ColorBlit_WithPaletteSave 00FB24CB
@@ -47862,7 +47862,7 @@ ExtData_SetTlvField_Skip 00FC9807
 ExtData_SetTlvField_Epilogue2 00FC9817
 ExtData_SetOrClearTlvField 00FC981A
 SwbtWr_WriteParamBlock_Skip2 00FC9858
-SwbtWr_WriteParamBlock_Epilogue4 00FC9868
+SwbtWr_WriteParamBlock_Epilogue2 00FC9868
 ExtData_StepTlvField 00FC986B
 ExtData_StepTlvField_Skip3 00FC98B1
 ExtData_StepTlvField_Join 00FC98B5
@@ -48401,7 +48401,7 @@ SndParam_ResolveWidget_Skip 00FCD71F
 SndParam_ResolveWidget_Join 00FCD72B
 SndParam_ResolveWidget_Join2 00FCD740
 SndParam_ResolveWidget_Skip2 00FCD758
-SndParam_ResolveWidget_Skip3 00FCD79C
+SndParam_ResolveWidget_Skip4 00FCD79C
 SndParam_RW_Fail_Skip 00FCD7B8
 SndParam_ResolveWidget_Join3 00FCD7BD
 SndParam_KeyToLswPartNumber 00FCD7C5
@@ -52983,12 +52983,12 @@ Param_SignExtendReturn_Loop 00FEF06B
 Param_SignExtendReturn_Skip14 00FEF078
 Param_SignExtendReturn_Loop2 00FEF08C
 Param_SignExtendReturn_Skip15 00FEF0BA
-Param_SignExtendReturn_Entry 00FEF0D1
+Param_SignExtendReturn_Skip16 00FEF0D1
 Param_SignExtendReturn_Join3 00FEF0D6
 SeqAlt_PopIzSkip4Ret2_Helper 00FEF0DE
-Param_SignExtendReturn_Skip16 00FEF108
-Param_SignExtendReturn_Skip17 00FEF113
-Param_SignExtendReturn_Skip18 00FEF11D
+Param_SignExtendReturn_Skip17 00FEF108
+Param_SignExtendReturn_Skip18 00FEF113
+Param_SignExtendReturn_Skip19 00FEF11D
 Param_SignExtendReturn_Join4 00FEF12A
 Param_SignExtendReturn_Skip20 00FEF132
 Param_SignExtendReturn_Return 00FEF134
