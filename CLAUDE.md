@@ -940,12 +940,18 @@ that we can have strong evidence whenever we reach true full code-coverage"*.
    `doc-quality-<date>-NN.{txt,json}`. Its instrument is `scripts/analysis/doc_quality_census.py`, whose docstring
    defines each rule. For every image of all three models (KN5000, WSA1 and kn7000 program/table/cnv) it counts:
    routines without a header comment, addresses spelled as numbers, locals named only by an address, `.byte` runs
-   between instructions, placeholder routine names and WSA1 byte-emitter macro uses. Run `make doc-quality`
+   between instructions, placeholder routine names and WSA1 byte-emitter macro uses. A routine is decided by its
+   references, not its name: a call target, a label whose address is taken, or a label at a boundary that another
+   file jumps to or that nothing names. A label that only its own file's branches reach is a block, not a routine,
+   so renaming an address-only `.L<hex>` cannot raise the header debt. `--routines <image>` lists every routine
+   with its reason. Run `make doc-quality`
    after any change that adds or removes headers, labels, numeric operands or `.byte` lines in code, and before
    quoting any of those figures. Commit the new snapshot in the same commit as the change. As with the census, a
-   committed snapshot is never rewritten, and a count that ROSE (exit 1) must be explained in the commit message,
-   for example when converted passthrough adds routines that have no header yet. The first snapshot is
-   `doc-quality-2026-10-24-01`.
+   committed snapshot is never rewritten. A count that ROSE (exit 1) must be explained in the commit message,
+   for example when converted passthrough adds routines that have no header yet, or when symbolizing a numeric
+   call target makes a new header-less routine visible. An image that is in the old snapshot but no longer
+   measured (GONE) also exits 1. The first snapshot, `doc-quality-2026-10-24-01`, used an older routine rule
+   that counted every branch target after a `jr` as a routine. Compare against `-02` or later.
 
 ### Semantic Score Badges
 

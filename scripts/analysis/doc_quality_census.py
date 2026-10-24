@@ -23,19 +23,48 @@ RULES (each count is re-derivable from these definitions)
               DATA macro: a `.macro` with no instruction line in its body.  Exception: the macros defined in
               wsa1/include/tlcs900_mem_ops.inc emit INSTRUCTIONS as bytes (WP11); they count as instructions for
               flow and are tallied on their own (f).  Macros with an instruction in the body are instructions.
-  local label TLCS-900: `.L...` and semantic_score.py's CONTINUATION names (_Skip/_Loop/..., Parent__F9A123,
-              Parent__loop).  MN10300: also `loc_<hex>`.  A local label is never a routine.
-  code label  a non-local label whose next statement (labels, comments and blank lines skipped) is an instruction.
-  call target a name used as the operand of TLCS `call` / `calr` (`call nz, (Name:24)` included) or MN10300
-              `call` / `calls`, anywhere in the image's files.
+  code label  a label whose next statement (labels, comments and blank lines skipped) is an instruction.
+  scope       names are resolved per image; cnv's seven converters are independent programs that include nothing
+              and reuse the same loc_<address> names, so there each root file is its own scope.
+  reference   every use of a name in the image's scope, classified by where it stands:
+                call    the target operand of TLCS `call` / `calr` (`call nz, (Name:24)` included) or MN10300
+                        `call` / `calls`;
+                jump    the target operand of any other branch (TLCS jp jr jrl djnz, the last operand; MN10300
+                        jmp bra b<cc>, the first), recorded with the file it is in;
+                offset  an operand of a data statement that is a difference of names, `.short Case - Base` (the
+                        offset tables of compiled switches);
+                address any other use: another operand of an instruction (`lda xhl, Name`, `ld (Name), a`), a data
+                        operand (`.long Name`, `addr24 Name`), or the right-hand side of `.equ` / `.set` / `=`.
+              A name inside a comment is not a reference.
   terminator  an instruction after which execution cannot fall through: TLCS `ret` / `reti` / `retd` with no
               condition, `jp` / `jr` / `jrl` with no condition or with `t,`; MN10300 `ret` / `retf` / `rets` /
               `rti` / `jmp` / `bra` / `lra`.
-  routine     a code label that is a call target, OR whose previous statement is a terminator, data, a directive,
-              or the start of the file (label_quality.py's rule from the 2026-10-24 audit).  kn7000 program.s also
-              has routines with no label: a generator banner `# Name  (CPU 0x...)` followed by instructions (a
-              converted function).  A banner followed by `.incbin_range` is passthrough, not source, and is not
-              counted in (a); a banner followed by a label is counted once, as that label.
+  boundary    the previous statement of a label is a terminator, data, a directive, or the start of the file.
+  routine     a code label that is an entry point by its references, tested in this order:
+                call          it is a call target (always a routine, whatever its name);
+                (skipped)     it is not at a boundary and its address is not taken: execution falls into it;
+                (declared)    its name is one of semantic_score.py's CONTINUATION names (_Skip/_Loop/_Done/...,
+                              Parent__F9A123, Parent__loop): the source declares it a part of its parent routine,
+                              tallied as blocks_declared;
+                address       its address is taken (a table entry, a pushed or stored pointer);
+                xfile_jump    it is at a boundary and some file other than its own branches to it (a tail call
+                              into another module);
+                (block)       it is at a boundary and every reference is a branch from its own file: a block of one
+                              routine, tallied as blocks_jump;
+                (case)        it is at a boundary and its only references are offsets: a compiled switch's case,
+                              tallied as blocks_case;
+                unreferenced  it is at a boundary and nothing in the source names it.  Dead code, or a routine
+                              reached from compiled C or through a table spelled as numbers.
+              The test reads references, not names, so renaming a label (an address-only `.L<hex>` or `loc_<hex>`
+              to a semantic name, as (c) asks) cannot move it in or out of the routines; only a CONTINUATION name
+              takes a non-called label out.  This replaced, on 2026-10-24 (snapshot -02), the rule of snapshot -01
+              ("a call target, or any non-local label at a boundary", where `.L...`, `loc_<hex>` and CONTINUATION
+              names were local): that rule counted every branch target after a `jr` as a routine (12,998 of v10's
+              18,358, all but its 5,360 call targets, were reached by no call), and a `.L` label renamed to a semantic name became a new header-less
+              routine.  kn7000 program.s also has routines with no label: a generator banner `# Name  (CPU 0x...)`
+              followed by instructions (a converted function), reason banner.  A banner followed by `.incbin_range`
+              is passthrough, not source, and is not counted in (a); a banner followed by a label is counted once,
+              as that label.
 
   (a) header      a routine HAS a header when the comment block directly above its label (one blank line allowed
                   between them; for an unlabelled kn7000 banner, the comment block the banner is in) holds at least
@@ -44,8 +73,9 @@ RULES (each count is re-derivable from these definitions)
                   (`; ---- Foo ----`, `# Foo  (CPU 0x48404ff6)`); and the kn7000 generators' provenance lines
                   (`the same code is in ...`, `no caller: unreferenced code`, `byte-identical ... to the firmware's
                   routine of this name`).  A comment only on the label's own line is tallied as inline_only and is
-                  not a header.  Reported: routines, with_header, no_header, inline_only, and the same split for
-                  the call-target subset.
+                  not a header.  Reported: routines, with_header, no_header, inline_only, the same split for the
+                  call-target subset, the routines per reason (by_reason), and the labels at a boundary that are
+                  not routines (blocks_jump, blocks_case, blocks_declared).
   (b) numeric     in instruction statements: mem_abs_in_image = an absolute memory operand spelled as a number,
                   `(0x2c4f1a)` / `(0x23a1a2:24)` / `(0x50007578)`, that lies in this image's own address range;
                   mem_abs_other = the same outside it (RAM, I/O, another ROM); imm_in_image = an operand that is
@@ -73,16 +103,20 @@ RULES (each count is re-derivable from these definitions)
   and 0x2710 would land in it.
 
 LIMITS
-  A source-text census: it reads names, not the CPU.  A routine reached only through a table, whose label follows
-  fall-through code, is not a routine to it; a header that is wrong still counts.  (b) misses numeric operands
+  A source-text census: it reads names, not the CPU.  A case of a `.long` jump table and a pushed return address
+  are address references, so they count as routines unless their names declare them blocks; a routine reached only
+  by jumps from its own file (a tail call within one module) counts as a block; a header that is wrong still
+  counts.  (b) misses numeric operands
   inside WSA1 byte-emitter macro arguments.  It is a ratchet, not a proof.
 
 RUN (repository root; reads sources only, needs no build)
   python3 scripts/analysis/doc_quality_census.py                     # print the table
   python3 scripts/analysis/doc_quality_census.py --json F.json       # also write every count as JSON
   python3 scripts/analysis/doc_quality_census.py --files v10         # per-file breakdown of one image
+  python3 scripts/analysis/doc_quality_census.py --routines v10      # every routine: file:line, name, reason, header
   python3 scripts/analysis/doc_quality_census.py --compare           # vs the newest COMMITTED snapshot; exit 1 if
-                                                                     # any debt count rose
+                                                                     # any debt count rose, or an image of the old
+                                                                     # snapshot is missing from this run
   python3 scripts/analysis/doc_quality_census.py --snapshot docs/coverage   # write doc-quality-<date>-NN.{txt,json}
   make doc-quality              # = --compare --snapshot docs/coverage: compare, and write the snapshot only if
                                 #   nothing rose (a rise exits 1; explain it in the commit, then run --snapshot)
@@ -124,8 +158,6 @@ INSN_MACRO_FILES = {"wsa1/include/tlcs900_mem_ops.inc"}
 
 DATA_DIRS = {".short", ".long", ".word", ".ascii", ".asciz", ".string", ".incbin", ".incbin_range", ".fill",
              ".space", ".zero", ".int", ".2byte", ".4byte", ".quad", ".hword"}
-CONTINUATION = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Done|Next|Exit|Cont|End|Default|Resume|Nop)\d*$'
-                          r'|__[0-9A-Fa-f]{4,6}$|__[a-z]\w*$')     # = semantic_score.py's
 LABEL_RE = re.compile(r'^([A-Za-z_.$][A-Za-z0-9_.$]*):(?!:)')
 TLCS_CC = r'(?:f|lt|le|ule|ov|pe|mi|z|eq|c|ult|t|ge|gt|ugt|nov|po|pl|nz|ne|nc|uge)'
 TLCS_CALL = re.compile(r'^(?:call|calr)\s+(?:' + TLCS_CC + r'\s*,\s*)?\(?\s*([A-Za-z_.$][\w.$]*)', re.I)
@@ -136,6 +168,9 @@ TLCS_REGS = set("xwa xbc xde xhl xix xiy xiz xsp wa bc de hl ix iy iz sp a w b c
 MN_CALL = re.compile(r'^(?:call|calls)\s+([A-Za-z_.$][\w.$]*)')
 MN_TERM = re.compile(r'^(?:ret|retf|rets|rti|jmp|bra|lra)\b')
 MN_BRANCH = re.compile(r'^(?:call|calls|jmp|bra|beq|bne|bgt|bge|ble|blt|bhi|bcc|bls|bcs|bvc|bvs|bnc|bns)\b')
+CONTINUATION = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Done|Next|Exit|Cont|End|Default|Resume|Nop)\d*$'
+                          r'|__[0-9A-Fa-f]{4,6}$|__[a-z]\w*$')     # = semantic_score.py's
+IDENT = re.compile(r'(?<![\w.$@])([A-Za-z_.$][\w.$]*)')
 MN_BANNER = re.compile(r'^#\s+([A-Za-z_][\w]*)\s+\(CPU 0x[0-9A-Fa-f]+\)\s*$')
 ABS_MEM = re.compile(r'\(\s*(0x[0-9A-Fa-f]+|\d{3,})\s*(?::\s*(?:8|16|24|32))?\s*\)')
 NUMERIC = re.compile(r'(?:0x[0-9A-Fa-f]+|\d+)(?:\s*:\s*(?:8|16|24|32))?')
@@ -323,10 +358,6 @@ def count_values(body):
     return len([x for x in rest.split(",") if x.strip()])
 
 
-def local(name, mn):
-    return name.startswith(".L") or bool(CONTINUATION.search(name)) or (mn and bool(LOC.match(name)))
-
-
 def measure(key, cache, tracked, per_file=False):
     model, dialect, cwd, idirs, roots, rng = IMAGES[key]
     mn = dialect == "mn"
@@ -348,11 +379,19 @@ def measure(key, cache, tracked, per_file=False):
     insn_macros |= {n for n, h in macros.items() if h}
     insn_macros_counted = {n for p in parsed if p.path in INSN_MACRO_FILES for n in p.macros}
 
-    # pass 1: statement kinds, call targets, kn7000 .equ placeholders
+    # Name scope: one per image, except for pooled independent programs (cnv's seven converters, which include
+    # nothing and reuse the same loc_<address> names), where each root file is its own scope.
+    unit_of = {p.path: (p.path if isinstance(roots, str) else 0) for p in parsed}
+
+    # pass 1: statement kinds, call targets, references, kn7000 .equ placeholders.  All sets hold (scope, name).
     calltgts = set()
     equ_ph = set()
     kinds = {}
+    addr_ref = set()                                # address taken: any use that is not a branch target
+    offset_ref = set()                              # used in a difference, `.short Case - Base`
+    jump_files = collections.defaultdict(set)       # branched to (call aside): the files that do it
     for p in parsed:
+        u = unit_of[p.path]
         ks = []
         for (i, k, lab, body) in p.stmts:
             if k == "label":
@@ -360,21 +399,47 @@ def measure(key, cache, tracked, per_file=False):
                 continue
             kk = kind_of(body, data_macros, insn_macros)
             ks.append(kk)
-            if kk == "ins":
-                m = (MN_CALL if mn else TLCS_CALL).match(body)
-                if m and m.group(1).lower() not in TLCS_REGS:
-                    calltgts.add(m.group(1))
-            elif mn and kk == "dir":
-                m = EQU.match(body)
-                if m and PLACEHOLDER.match(m.group(1)) and rng and rng[0] <= int(m.group(2), 16) < rng[1]:
-                    equ_ph.add(m.group(1))
+            parts = body.split(None, 1)
+            ops = parts[1] if len(parts) > 1 else ""
+            if kk in ("ins", "imac"):
+                if kk == "ins":
+                    m = (MN_CALL if mn else TLCS_CALL).match(body)
+                    if m and m.group(1).lower() not in TLCS_REGS:
+                        calltgts.add((u, m.group(1)))
+                oplist = split_operands(ops)
+                if kk == "ins" and oplist and (MN_BRANCH if mn else TLCS_BRANCH).match(body):
+                    ti = 0 if mn else len(oplist) - 1
+                    is_call = bool((MN_CALL if mn else TLCS_CALL).match(body))
+                    for j, o in enumerate(oplist):
+                        for nm in IDENT.findall(o):
+                            if j != ti:
+                                addr_ref.add((u, nm))
+                            elif not is_call:
+                                jump_files[(u, nm)].add(p.path)
+                else:
+                    addr_ref.update((u, nm) for nm in IDENT.findall(ops))
+            elif kk in ("data", "byte"):
+                for o in split_operands(ops):
+                    ids = IDENT.findall(o)
+                    (offset_ref if "-" in o and len(ids) >= 2 else addr_ref).update((u, nm) for nm in ids)
+            elif kk == "dir":
+                m = re.match(r'^\.(?:equ|set)\s+[A-Za-z_.$][\w.$]*\s*,(.*)$', body) or \
+                    re.match(r'^[A-Za-z_.$][\w.$]*\s*=(.*)$', body)
+                if m:
+                    addr_ref.update((u, nm) for nm in IDENT.findall(m.group(1)))
+                if mn:
+                    m = EQU.match(body)
+                    if m and PLACEHOLDER.match(m.group(1)) and rng and rng[0] <= int(m.group(2), 16) < rng[1]:
+                        equ_ph.add(m.group(1))
         kinds[p.path] = ks
 
     tot = collections.Counter()
     pf = collections.defaultdict(collections.Counter)
     placeholders = set(equ_ph)
     ph_files = collections.Counter()
+    rlist = []                      # (file, line, name, reason, has_header) for --routines
     for p in parsed:
+        u = unit_of[p.path]
         ks, st, L = kinds[p.path], p.stmts, p.lines
         fc = pf[p.path]
         n = len(st)
@@ -403,8 +468,6 @@ def measure(key, cache, tracked, per_file=False):
                 fc["addr_locals.loc"] += 1
             elif PARENT_HEX.match(name):
                 fc["addr_locals.parent_hex"] += 1
-            if local(name, mn):
-                continue
             q = nxt[k]
             if q is None or ks[q] not in ("ins", "imac"):
                 continue
@@ -412,13 +475,33 @@ def measure(key, cache, tracked, per_file=False):
                 placeholders.add(name)
                 ph_files[p.path] += 1
             pp = prv[k]
-            is_call = name in calltgts
+            un = (u, name)
+            is_call = un in calltgts
             after = pp is None or ks[pp] in ("data", "byte", "dir") or (
                 ks[pp] == "ins" and (MN_TERM if mn else TLCS_TERM).match(st[pp][3]))
-            if not (is_call or after):
+            if is_call:
+                why = "call"
+            elif not (after or un in addr_ref):
+                continue                                # reached by falling into it
+            elif CONTINUATION.search(name):
+                fc["headers.blocks_declared"] += 1      # named as a part of its parent routine
                 continue
+            elif un in addr_ref:
+                why = "address"
+            elif jump_files[un] - {p.path}:
+                why = "xfile_jump"
+            elif jump_files[un]:
+                fc["headers.blocks_jump"] += 1          # a branch target inside one routine
+                continue
+            elif un in offset_ref:
+                fc["headers.blocks_case"] += 1          # a compiled switch's case
+                continue
+            else:
+                why = "unreferenced"
+            fc["headers.by_reason." + why] += 1
             block = header_lines_above(L, i)
             hdr = any(informative(b, {name.lower(), name.lower() + ":"}) for b in block)
+            rlist.append((p.path, i + 1, name, why, hdr))
             fc["headers.routines"] += 1
             fc["headers.with_header"] += hdr
             fc["headers.no_header"] += not hdr
@@ -450,10 +533,12 @@ def measure(key, cache, tracked, per_file=False):
                     a -= 1
                 block = [x for x in L[a:j] if is_comment(x)]
                 hdr = any(informative(b, {name.lower()}) for b in block)
+                fc["headers.by_reason.banner"] += 1
+                rlist.append((p.path, i + 1, name, "banner", hdr))
                 fc["headers.routines"] += 1
                 fc["headers.with_header"] += hdr
                 fc["headers.no_header"] += not hdr
-                if name in calltgts:
+                if (u, name) in calltgts:
                     fc["headers.call_targets"] += 1
                     fc["headers.call_no_header"] += not hdr
         # instructions: (b) numeric operands, (f) macro uses
@@ -521,7 +606,8 @@ def measure(key, cache, tracked, per_file=False):
         pf[f]["placeholders.total"] = c
     res = dict(model=model, files=tot["files"], lines=tot["lines"], untracked=untracked,
                headers={k: tot["headers." + k] for k in ("routines", "with_header", "no_header", "inline_only",
-                                                         "call_targets", "call_no_header")},
+                                                         "call_targets", "call_no_header", "blocks_jump",
+                                                         "blocks_case", "blocks_declared")},
                numeric={k: tot["numeric." + k] for k in ("mem_abs_in_image", "mem_abs_other", "imm_in_image",
                                                          "branch_numeric", "branch_label_offset")},
                addr_locals={k: tot["addr_locals." + k] for k in ("dotL", "dotLc", "loc", "parent_hex")},
@@ -531,6 +617,8 @@ def measure(key, cache, tracked, per_file=False):
                    n.split("_")[0] + "_" for n in placeholders))),
                insn_macros=tot["insn_macros"])
     h = res["headers"]
+    h["by_reason"] = {k: tot["headers.by_reason." + k] for k in ("call", "address", "xfile_jump", "unreferenced",
+                                                                  "banner")}
     h["pct"] = round(100.0 * h["with_header"] / h["routines"], 2) if h["routines"] else None
     top = {}
     for path, _ in DEBTS:
@@ -543,6 +631,7 @@ def measure(key, cache, tracked, per_file=False):
     res["top_files"] = top
     if per_file:
         res["per_file"] = {f: dict(c) for f, c in pf.items()}
+        res["routine_list"] = rlist
     return res
 
 
@@ -562,6 +651,11 @@ def report(res):
     print("%-*s" % (w, "  header coverage %") + "".join(
         "%11s" % ("%.1f" % res[k]["headers"]["pct"] if res[k]["headers"]["pct"] is not None else "-") for k in cols))
     print("%-*s" % (w, "call targets") + "".join("%11d" % res[k]["headers"]["call_targets"] for k in cols))
+    for why in ("address", "xfile_jump", "unreferenced", "banner"):
+        print("%-*s" % (w, "  routines by reason: " + why) + "".join(
+            "%11d" % res[k]["headers"]["by_reason"][why] for k in cols))
+    for b in ("blocks_jump", "blocks_case", "blocks_declared"):
+        print("%-*s" % (w, "  not routines: " + b) + "".join("%11d" % res[k]["headers"][b] for k in cols))
     for path, lab in DEBTS:
         print("%-*s" % (w, lab) + "".join("%11d" % get(res[k], path) for k in cols))
     for k in cols:
@@ -595,7 +689,13 @@ def newest_committed(outdir):
 def compare(res, old_path):
     old = json.load(open(os.path.join(ROOT, old_path)))["images"]
     rose = 0
+    missing = [key for key in old if key not in res or (old[key].get("files") and not res[key]["files"])]
+    for key in missing:
+        print("GONE  %-10s (in %s, not measured now: a renamed image key, or a root file that is gone or "
+              "untracked)" % (key, old_path))
     for key in res:
+        if key in missing:
+            continue
         if key not in old:
             print("new   %-10s (not in %s)" % (key, old_path))
             continue
@@ -610,10 +710,11 @@ def compare(res, old_path):
                 print("ROSE  %-10s %-40s %d -> %d" % (key, lab, o, n))
             elif n < o:
                 print("fell  %-10s %-40s %d -> %d" % (key, lab, o, n))
-    print("compared with %s: %s" % (old_path, "%d figure(s) ROSE" % rose if rose else "nothing rose"))
+    print("compared with %s: %s%s" % (old_path, "%d figure(s) ROSE" % rose if rose else "nothing rose",
+                                      ", %d image(s) GONE" % len(missing) if missing else ""))
     if rose:
         print("  (a rise is a regression unless the commit message says why, e.g. converted passthrough adds routines)")
-    return 1 if rose else 0
+    return 1 if rose or missing else 0
 
 
 def snapshot_number(outdir, day):
@@ -650,9 +751,15 @@ def snapshot(res, outdir):
 
 def main():
     args = sys.argv[1:]
-    pfk = args[args.index("--files") + 1] if "--files" in args else None
+    rk = args[args.index("--routines") + 1] if "--routines" in args else None
+    pfk = args[args.index("--files") + 1] if "--files" in args else rk
     if pfk and pfk not in IMAGES:
         sys.exit("unknown image %s; one of %s" % (pfk, " ".join(IMAGES)))
+    if rk:
+        r = measure(rk, {}, git_tracked(), per_file=True)
+        for f, ln, name, why, hdr in r["routine_list"]:
+            print("%s:%d\t%s\t%s\t%s" % (f, ln, name, why, "header" if hdr else "NO-HEADER"))
+        return
     res = run_all(pfk)
     if pfk:
         pf = res[pfk]["per_file"]

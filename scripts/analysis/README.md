@@ -523,6 +523,7 @@ what resisted: `notes/lanes/llvmalumem-2026-09-02.md`.
 
     python3 scripts/analysis/doc_quality_census.py                 # the table
     python3 scripts/analysis/doc_quality_census.py --files v10     # per-file breakdown of one image
+    python3 scripts/analysis/doc_quality_census.py --routines v10  # every routine counted by (a), with its reason
     make doc-quality                                               # compare with the newest committed snapshot, then
                                                                    # write docs/coverage/doc-quality-<date>-NN.{txt,json}
 
