@@ -2352,7 +2352,6 @@
 .equ FlashReadAutoselect, 0x4847F96F   # read chip manufacturer/device ID
 .equ FlashReset, 0x4847F6B6   # reset to read-array mode
 .equ FlashProgram128Words, 0x4847F9E6   # 128-word chunk programmer
-.equ FlashAddrToSector, 0x4847E7AF
 .equ FlashChipIdTable, 0x485CFED4   # MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors
 .equ FlashSectorMap, 0x485CFC7C   # bottom-boot sector geometry, total 0x200000
 .equ DiskLoadDispatch, 0x4852CFD3   # walks disk-file handler table

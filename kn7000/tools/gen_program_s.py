@@ -71,8 +71,14 @@ DOC_XLATE = None           # optional fn(str)->str applied to FUNC_DOC lines
 # (tools/port_symbols.py); they name functions 941 already had
 INHERIT_SYMS = ("kn7000_exports_from_942.sym",)
 
-# Functions to emit as real assembly this pass (verified clusters). Growing this
-# set converts more of the ROM from opaque .incbin into understood source.
+# Every function of code region 1 is emitted as real assembly when CONVERT_ALL
+# is set; so is the code after a FUNC_END cap and before the first named
+# function, as unnamed functions. With it clear, only CONVERT converts.
+CONVERT_ALL = False
+
+# The clusters converted one by one before CONVERT_ALL, each read by hand (their
+# FUNC_DOC notes and FUNC_END caps were written with them). With CONVERT_ALL
+# clear, this is the converted set; growing it converts more of the ROM.
 CONVERT = {
     # task control
     "SleepMainTask", "WakeUpMainTask", "SleepApTask", "WakeUpApTask",
@@ -352,11 +358,12 @@ CONVERT = {
 
 # Data inside code region 1, emitted as typed data instead of being decoded:
 # file start -> (file end, layout). A layout item is (file offset, kind, count,
-# comment); kinds: "byte" (.byte), "half" (16-bit .word), "word" (.long, a
-# value that names an address prints as that name), "f64" (an IEEE-754 double
-# as .long lo, hi with its value), "fill" (0xFF padding). Each item starts at a
-# label: its symbol-file name, else rodata_<ADDR>. Build 941 file offsets; the
-# sp7001 profile ports them.
+# comment); kinds: "byte" (.byte), "half" (16-bit .word), "word" (.long),
+# "ptr" (.long; a value that names an address prints as that name), "f64" (an
+# IEEE-754 double as .long lo, hi with its value), "fill" (0xFF padding). An
+# item with a comment starts at a label, its symbol-file name or rodata_<ADDR>
+# (the flash address, also for an island in the library image); a None comment
+# continues the item above. Build 941 file offsets; the sp7001 profile ports them.
 DATA_ISLANDS = {
     # region 1 ends inside .rodata: the bytes after DemoJpgDataL8's `retf` are
     # the start of the constant data the data region continues (its gain
@@ -368,8 +375,10 @@ DATA_ISLANDS = {
                               " indexed by a rounded dB value at 0x484086C3"),
         (0x185A6C, "f64", 49, "gain factors for -6 .. +6 dB in 0.25 dB steps (indexed at 0x4840871F)"),
         (0x185BF4, "f64", 49, "gain factors for -12 .. +12 dB in 0.5 dB steps"),
-        (0x185D7C, "word", 5, "micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry,"
+        (0x185D7C, "word", 2, "micro-ITRON T_CTSK for cre_tsk(7): exinf 0, tskatr 1, task entry,"
                               " itskpri 3, stksz 0x2800"),
+        (0x185D84, "ptr", 1, None),
+        (0x185D88, "word", 2, None),
         (0x185D90, "word", 3, "packet {0, 8, 0} passed with id 10 to the kernel call at 0x4C03C7EF"),
         (0x185D9C, "word", 2, "zero packet passed with ids 1 and 2 to the kernel call at 0x4C03C017"),
         (0x185DA4, "word", 2, "zero packet passed with ids 5..8 to the kernel call at 0x4C03BF3C"),
@@ -377,6 +386,21 @@ DATA_ISLANDS = {
         (0x185DC0, "f64", 25, "a second copy of the 0 .. +12 dB table"),
         (0x185E88, "f64", 47, "a second copy of the -6 .. +6 dB table; its last two entries are"
                               " the first bytes of the data region"),
+    ]),
+    # the end of the library image: InitializeBlock27's copy descriptor (records
+    # {u16 flags, u16 len, u32 src, u32 dest}; flags bit 15 marks the last one,
+    # whose payload is copied to its dest as a sentinel; kn7000_mame
+    # notes/kn2400-boot.md) and that payload, `retf 0, 0`
+    0x3F6EE6: (0x3F6F01, [
+        (0x3F6EE6, "byte", 3, "the last record's payload: `retf 0, 0`, copied to 0x4C03FFF0"),
+        (0x3F6EE9, "half", 2, "record 1: flags 0x0001, length 0xDF15 (the copy runs to the next"
+                              " record's src), src LibRomImageBase, dest 0x4C000000"),
+        (0x3F6EED, "ptr", 1, None),
+        (0x3F6EF1, "word", 1, None),
+        (0x3F6EF5, "half", 2, "record 2, the last: flags 0x8003, length 3, src LibLoadSentinel,"
+                              " dest 0x4C03FFF0"),
+        (0x3F6EF9, "ptr", 1, None),
+        (0x3F6EFD, "word", 1, None),
     ]),
 }
 
@@ -431,522 +455,165 @@ FUNC_END = {
     "MemStyleStyleClear": 0x3BF8F,         # next (unnamed) function at 0x4843BF8F
 }
 
+LIB_ALL = True    # convert every function of the library image (see lib_split)
+
 # Library-image functions to convert (CPU start, CPU end-exclusive). These live
 # in code region 2 and execute at 0x4C000000; boundaries are explicit because
 # the lib region has no reflection name table.
 LIB_CONVERT = {
-    "LibDiv32":           (0x4C0019D5, 0x4C0019F2),
-    # the two C-library helpers the debug screens' renderer calls
+    # a library function's range when something that is not its code
+    # follows it before the next named function (the bytes after its end
+    # come out as an unnamed function): (CPU start, CPU end-exclusive)
     "LibSprintf":         (0x4C001A48, 0x4C001A65),
-    "LibStrlen":          (0x4C0032F7, 0x4C003311),
-    # ---- the SOFT-FLOAT IEEE-754 double runtime + libm subset (the firmware
-    #      has no FPU: TgPartGlidePlan/Tick and others do their math here;
-    #      args on the caller's stack at (8,sp) lo/(0xC,sp) hi and
-    #      (0x10,sp)/(0x14,sp), result in d0 lo : d1 hi; errno = 0x500AD390)
-    "LibF64Pow":          (0x4C000000, 0x4C000263),
-    "LibF64UnpackedToI32": (0x4C000263, 0x4C0002B3),
-    "LibF64ToI32":        (0x4C0002B3, 0x4C0002CB),
-    "LibF64Unpack":       (0x4C0002CB, 0x4C000311),
-    "LibF64Log":          (0x4C000311, 0x4C000523),
-    "LibI32ToF64":        (0x4C000523, 0x4C00057D),
-    "LibF64Sub":          (0x4C00057D, 0x4C00058E),
-    "LibF64Add":          (0x4C00058E, 0x4C0007E2),
-    "LibF64Cmp":          (0x4C0007E2, 0x4C000851),
-    "LibF64CmpZero":      (0x4C000851, 0x4C000874),
-    "LibF64Mul":          (0x4C000874, 0x4C000B17),
-    "LibF64Div":          (0x4C000B17, 0x4C000CD3),
-    "LibF64Ldexp":        (0x4C000CD3, 0x4C000D54),
-    "LibF64Frexp":        (0x4C000D54, 0x4C000D99),
-    "LibF64Exp":          (0x4C000D99, 0x4C000F54),
-    "LibU32ToF64":        (0x4C000F54, 0x4C000F8F),
-    "LibF64Abs":          (0x4C000F8F, 0x4C000FA7),
     "LibF64Modf":         (0x4C000FA7, 0x4C00104C),
     "LibF64ToI16":        (0x4C001624, 0x4C00163D),
     "LibU16ToF64":        (0x4C0016AC, 0x4C0016B0),
     "LibI16ToF64":        (0x4C0019F2, 0x4C0019F6),
-    # ---- the melodic zone param fetchers under TgElemNoteOnFresh/Std
-    #      (tone-zone desc2 bytes -> shadow-image level/velo/send/filter-EG
-    #      fields; sensitivity curve ROM 0x486D2713, key-scale pair
-    #      0x486D1354/0x486D13D4) -------------------------------------------
-    # ---- SOUND EDIT: the nine uniform FLAG REFRESHERS that copy single bits
-    #      (and two whole bytes) out of the part-setting record
-    #      0x500B5340+part*0x54C into the SOUND EDIT record
-    #      0x500C0784+(part-0x10)*0x2C8. All nine are gated on part 0x10..0x12
-    #      and on 0x4C00C6BF(part). Section 3 of
-    #      kn7000_mame/notes/sound-edit-parameters.md ---------------------
-    "TgSoundEditFlag4DBit7Refresh": (0x4C00EDE4, 0x4C00EE41),
-    "TgSoundEditFlag4DLowRefresh":  (0x4C00EE41, 0x4C00EE9A),
-    "TgSoundEditFlag4EBit7Refresh": (0x4C00EE9A, 0x4C00EEF7),
-    "TgSoundEditFlag4ELowRefresh":  (0x4C00EEF7, 0x4C00EF4B),
-    "TgSoundEditFlag4FBit7Refresh": (0x4C00EF4B, 0x4C00EFA8),
-    "TgSoundEditFlag51Bit7Refresh": (0x4C00EFA8, 0x4C00F04E),
-    "TgSoundEditFlag51LowRefresh":  (0x4C00F04E, 0x4C00F0A2),
-    "TgSoundEditByte52Refresh":     (0x4C00F0A2, 0x4C00F0E6),
     "TgSoundEditByte53Refresh":     (0x4C00F0E6, 0x4C00F12A),
-    "TgZoneParamClamp":   (0x4C00FD4C, 0x4C00FD68),
-    "TgZoneLevelScaleCalc": (0x4C00FD68, 0x4C00FE03),
-    "TgZoneVeloSenseCalc": (0x4C00FE03, 0x4C00FE4D),
-    "TgZoneSendLevelsCalc": (0x4C00FE4D, 0x4C00FF44),
-    "TgZoneFilterEgLevel1Calc": (0x4C00FF44, 0x4C00FF9A),
-    "TgZoneFilterEgLevel2Calc": (0x4C00FF9A, 0x4C00FFF0),
-    "TgZoneFilterEgLevelCalc": (0x4C00FFF0, 0x4C010042),
-    # ---- their byte-for-byte KIT/TABLE twins under TgKitElemNoteOn ---------
-    "TgKitZoneParamClamp": (0x4C011F2F, 0x4C011F4B),
-    "TgKitZoneLevelScaleCalc": (0x4C011F4B, 0x4C011FE6),
-    "TgKitZoneVeloSenseCalc": (0x4C011FE6, 0x4C012030),
-    "TgKitZoneSendLevelsCalc": (0x4C012030, 0x4C012127),
-    "TgKitZoneFilterEgLevel1Calc": (0x4C012127, 0x4C01217D),
-    "TgKitZoneFilterEgLevel2Calc": (0x4C01217D, 0x4C0121D3),
-    "TgKitZoneFilterEgLevelCalc": (0x4C0121D3, 0x4C012225),
-    "TgPartElemLastSet":  (0x4C012225, 0x4C012254),
-    "TgStageHeldPolicyShed": (0x4C0147AD, 0x4C014803),
-    "TgVoicePoolReset":   (0x4C014803, 0x4C014943),
-    # ---- the raw EG/shadow param helpers + the routing-field writer --------
-    "TgVoiceEgSegParamGet": (0x4C03A20F, 0x4C03A2BD),
-    "TgVoiceEgSegFlagTest": (0x4C03A2BD, 0x4C03A310),
-    "TgVoiceRouteFieldSet": (0x4C037C16, 0x4C037C90),
-    # ---- the TG voice allocator + steal engine under TgNoteOn (element
-    #      staging -> side select -> hw slot pick w/ ROM steal-order lists;
-    #      kn7000_mame/notes/tg-voice-allocator.md) ---------------------------
-    "TgPartElemMaskUpdate": (0x4C00ECA1, 0x4C00ECEA),
-    "TgPartElemMaskGet":  (0x4C00ECEA, 0x4C00ECFF),
     "TgPartElemEnabled":  (0x4C00ECFF, 0x4C00ED20),
-    "TgPartElemLastClear": (0x4C012254, 0x4C01226C),
     "TgPartElemLastGet":  (0x4C01226C, 0x4C01227F),
-    "TgVoiceRoutePtrCalc": (0x4C02BE45, 0x4C02BECB),
-    "TgVoiceSideSelect":  (0x4C02BECB, 0x4C02BF32),
-    "TgPartPitchWordCalc": (0x4C02BF32, 0x4C02BF86),
-    "TgPartHoldQuery":    (0x4C02E0F3, 0x4C02E2C1),
-    "TgPartHoldMark":     (0x4C02E2C1, 0x4C02E5A7),
-    "TgPitchZoneFold":    (0x4C02FB25, 0x4C02FB79),
-    "TgPitchNoteResolve": (0x4C02FB79, 0x4C02FBDE),
     "TgLevelResolve":     (0x4C02FBDE, 0x4C02FCBA),
-    "TgElemStageFresh":   (0x4C034927, 0x4C034BA4),
-    "TgElemStageRestrike": (0x4C034BA4, 0x4C034E58),
-    "TgElemRequestFlags": (0x4C034E58, 0x4C034FF0),
-    "TgMelodicVoiceAlloc": (0x4C034FF0, 0x4C035879),
-    "TgDrumStageStd":     (0x4C035879, 0x4C03595A),
-    "TgDrumNoteOnStd":    (0x4C03595A, 0x4C035BE0),
-    "TgDrumStageTable":   (0x4C035BE0, 0x4C035CC4),
-    "TgDrumReqFlagsTable": (0x4C035CC4, 0x4C035D1C),
-    "TgDrumNoteOnTable":  (0x4C035D1C, 0x4C035EA5),
-    "TgTableToneStage":   (0x4C035EA5, 0x4C03600D),
-    "TgNodeRingSeed":     (0x4C03A779, 0x4C03A78D),
-    "TgNodeRingInsert":   (0x4C03A78D, 0x4C03A7AC),
-    "TgVoiceNodeToClassRing": (0x4C03A7AC, 0x4C03A80A),
-    "TgNodeFreeUnlink":   (0x4C03A80A, 0x4C03A825),
-    "TgNodeFreeInsert":   (0x4C03A825, 0x4C03A84D),
-    "TgVoiceNodeToOrderList": (0x4C03A84D, 0x4C03A8E3),
-    "TgNodeSlotUnlink":   (0x4C03A8E3, 0x4C03A8FE),
-    "TgNodeSlotInsert":   (0x4C03A8FE, 0x4C03A926),
-    "TgVoiceNodeRetire":  (0x4C03A926, 0x4C03AA06),
-    "TgVoiceNodeFadeKick": (0x4C03AA06, 0x4C03AA31),
-    "TgVoiceNodeReleaseStep": (0x4C03AA31, 0x4C03AA81),
-    "TgVoiceStatusSweep": (0x4C03AA81, 0x4C03AC8C),
-    "TgNodeScanSideA":    (0x4C03AC8C, 0x4C03ACA8),
-    "TgNodeScanSideB":    (0x4C03ACA8, 0x4C03ACC4),
-    "TgVoiceNodePick":    (0x4C03ACC4, 0x4C03AD9F),
-    "TgVoiceMigrateFind": (0x4C03AD9F, 0x4C03AE02),
-    "TgSlotAllocate":     (0x4C03AE02, 0x4C03B0C8),
-    "TgVoiceNodeKeyOff":  (0x4C03B0C8, 0x4C03B12B),
-    # ---- the TG note path: key event -> note-on -> per-element EG/release
-    #      programming (tg-pitch-pipeline.md + tg-envelope-sweep-results.md) --
-    "TgExclGroupChoke":   (0x4C03099F, 0x4C030A7F),
-    "TgTotalLevelCalc":   (0x4C030A7F, 0x4C030A98),
-    "TgElemNoteOnStd":    (0x4C030A98, 0x4C030E6E),
-    "TgVoiceKillHandler": (0x4C030E6E, 0x4C030FB4),
-    "TgPitchInitCalc":    (0x4C030FB4, 0x4C031122),
-    "TgPitchRuntimeCalc": (0x4C031122, 0x4C0311F1),
-    "TgKeyOffAmpRelease": (0x4C031944, 0x4C031C4B),
-    "TgPitchEgAttackCalc": (0x4C031C4B, 0x4C031D96),
-    "TgPitchEgDecayCalc":  (0x4C031D96, 0x4C031F02),
-    "TgKeyOffPitchRelease": (0x4C031F02, 0x4C0321BA),
-    "TgFilterEgAttackCalc":  (0x4C0321BA, 0x4C03231A),
-    "TgFilterEgDecayCalc":   (0x4C03231A, 0x4C03248B),
     "TgKeyOffFilterRelease": (0x4C03248B, 0x4C032747),
     "TgNoteOnTableTone":  (0x4C03600D, 0x4C036187),
-    "TgKeyOffSample":     (0x4C03656E, 0x4C0365FD),
-    "TgNoteOn":           (0x4C036832, 0x4C036D3A),
-    "TgVoiceSlotService": (0x4C036D3A, 0x4C036E9E),
-    "TgPartKeyEvent":     (0x4C036E9E, 0x4C036F98),
-    "TgVoiceRegWrite":    (0x4C036F98, 0x4C036FE5),
-    "TgVoiceRegWriteB":   (0x4C036FE5, 0x4C037008),
-    "TgGlobalRegWriteBoth": (0x4C037008, 0x4C037037),
-    "TgGlobalRegWriteB":  (0x4C037037, 0x4C03705A),
-    "TgCmdReadA":         (0x4C03705A, 0x4C037082),
-    "TgCmdReadB":         (0x4C037082, 0x4C0370AA),
-    "TgVoiceStatusRead":  (0x4C0370AA, 0x4C0370F3),
-    "TgVoiceRecordReset": (0x4C0370F3, 0x4C037123),
-    "TgVoiceRecordPtr":   (0x4C037123, 0x4C037135),
-    "TgVoiceGateOn":      (0x4C037393, 0x4C037694),
-    "TgVoiceGateOnWrap":  (0x4C037694, 0x4C0376A0),
-    "TgVoiceGateOff":     (0x4C0376A0, 0x4C0376DE),
-    "TgVoiceEgBurstWrite": (0x4C0376DE, 0x4C037759),
-    "TgVoiceDirtyAll":    (0x4C037C90, 0x4C037CCC),
-    "TgVoiceDirtyRelease": (0x4C037CCC, 0x4C037D0F),
     "LibTickSleep":       (0x4C03DD74, 0x4C03DD98),
-    # ---- the TG note-path closure set: per-class note-on/key-off programmers
-    #      + the voice-list collect/release engine + the portamento pair
-    #      (2026-07-20; kn7000_mame/notes/tg-voice-allocator.md glide section)
     "TgDrumAmpReleaseCalc": (0x4C00AD43, 0x4C00AE3B),
-    "TgDrumKeyOffProgram": (0x4C00C0AC, 0x4C00C233),
-    "TgPartAuxRecPtr":    (0x4C00C233, 0x4C00C25B),
-    "TgVoiceListReleaseByNote": (0x4C010042, 0x4C010068),
-    "TgVoiceListCollectByNote": (0x4C010068, 0x4C01008C),
-    "TgVoiceListReleasePart": (0x4C01008C, 0x4C0100AC),
-    "TgVoiceListCollectPart": (0x4C0100AC, 0x4C0100CB),
-    "TgVoiceListCollectPartLive": (0x4C0100CB, 0x4C0100E8),
-    "TgVoiceListCollectPart2": (0x4C0100E8, 0x4C010107),
-    "TgVoiceListCollectPartAll": (0x4C010107, 0x4C010124),
     "TgVoiceListCollectGlobal": (0x4C010124, 0x4C01013D),
-    "TgTableKeyOffProgram": (0x4C0115A5, 0x4C011730),
-    "TgKitElemNoteOn":    (0x4C013542, 0x4C013F0A),
     "TgElemKeyOffRelease": (0x4C013F0A, 0x4C014040),
-    "TgActiveHighWaterUpdate": (0x4C014784, 0x4C01479A),
-    "TgActiveHighWaterReset": (0x4C01479A, 0x4C0147A4),
-    "TgLastKeyPartSet":   (0x4C0147A4, 0x4C0147AD),
     "TgPartGlidePlan":    (0x4C02D795, 0x4C02DAF7),
     "TgPartGlideTick":    (0x4C02E5A7, 0x4C02E85D),
-    "TgVoiceLevelWordCalc": (0x4C0315CD, 0x4C031627),
     "TgElemNoteOnFresh":  (0x4C033CAE, 0x4C034669),
-    "TgKitLayerStage":    (0x4C0365FD, 0x4C0366D2),
-    "TgKitLayerNoteOn":   (0x4C0366D2, 0x4C03678A),
-    "TgNoteOnKitLayer":   (0x4C03678A, 0x4C036832),
-    # ---- the NOTE LEVEL chain + amp-EG rate tails under the note-on
-    #      programmers (2026-07-20; the "pitch chain internals" of the
-    #      previous pass's notes are in fact the LEVEL side) -----------------
-    "TgNoteLevelVariationCalc": (0x4C0311F1, 0x4C03129D),
-    "TgVoiceNoteLevelCalc": (0x4C03129D, 0x4C03132B),
-    "TgElemLevelBaseCalc": (0x4C03132B, 0x4C0315CD),
-    "TgAmpEgAttackRateCalc": (0x4C031627, 0x4C031787),
-    "TgAmpEgDecayRatePairCalc": (0x4C031787, 0x4C031944),
-    "TgLevelTermFinalize": (0x4C02BF86, 0x4C02C153),
-    # ---- the per-part TYPE-7 EG TIME-RAMP module (whole 0x4C011730..
-    #      0x4C011F2F gap closed) + its two scaled-cache readers -------------
-    "TgPartEgRampInit":   (0x4C011730, 0x4C01180E),
-    "TgPartEgRampScaleASet": (0x4C01180E, 0x4C0118E3),
-    "TgPartEgRampScaleAGet": (0x4C0118E3, 0x4C0118F5),
-    "TgPartEgRampScaleACurve": (0x4C0118F5, 0x4C011910),
-    "TgPartEgRampScaleAReset": (0x4C011910, 0x4C0119EA),
-    "TgPartEgRampScaleBSet": (0x4C0119EA, 0x4C011ABC),
-    "TgPartEgRampScaleBGet": (0x4C011ABC, 0x4C011ACE),
-    "TgPartEgRampScaleBCurve": (0x4C011ACE, 0x4C011AE9),
-    "TgPartEgRampScaleBReset": (0x4C011AE9, 0x4C011BC0),
-    "TgPartEgRampScaleBSet2": (0x4C011BC0, 0x4C011C23),
-    "TgPartEgRampScaleBGet2": (0x4C011C23, 0x4C011C35),
-    "TgPartEgRampScaleBReset2": (0x4C011C35, 0x4C011C9D),
-    "TgPartEgRampTickHeld": (0x4C011C9D, 0x4C011D32),
-    "TgPartEgRampTickIdle": (0x4C011D32, 0x4C011DB6),
-    "TgPartEgRampReleaseEdge": (0x4C011DB6, 0x4C011E44),
-    "TgPartEgRampEngageEdge": (0x4C011E44, 0x4C011EC9),
-    "TgPartEgRampDispatchTick": (0x4C011EC9, 0x4C011F2F),
-    "TgPartEgRampSegScaled": (0x4C03A310, 0x4C03A389),
-    "TgPartEgRampCache54Scaled": (0x4C03A389, 0x4C03A3CD),
-    # ---- the per-slot force-off / damp programmers + live EG-time writers --
-    "TgVoiceStealSilence": (0x4C037135, 0x4C03723F),
-    "TgVoiceForceOff":    (0x4C03723F, 0x4C0372B7),
-    "TgVoiceForceOffSoft": (0x4C0372B7, 0x4C037329),
-    "TgVoiceDamp7F":      (0x4C037329, 0x4C03735B),
-    "TgVoiceDampA2":      (0x4C03735B, 0x4C037393),
-    "TgVoiceReg0401Write": (0x4C037A34, 0x4C037A79),
-    "TgVoiceReg0405Write": (0x4C037A79, 0x4C037ABE),
-    "TgVoiceEgSegRegsWrite": (0x4C037ABE, 0x4C037B1A),
-    # ---- the DRUM-side zone param fetchers (third link of the family) ------
-    "TgDrumZoneParamClamp": (0x4C009F01, 0x4C009F1D),
-    "TgDrumZoneLevelScaleCalc": (0x4C009F1D, 0x4C009FB8),
-    "TgDrumZoneVeloSenseCalc": (0x4C009FB8, 0x4C00A002),
-    "TgDrumZoneSendLevelsCalc": (0x4C00A002, 0x4C00A0F9),
-    "TgDrumFilterEgLevel1Calc": (0x4C00A0F9, 0x4C00A14F),
-    "TgDrumFilterEgLevel2Calc": (0x4C00A14F, 0x4C00A1A5),
-    "TgDrumFilterEgLevelCalc": (0x4C00A1A5, 0x4C00A1F7),
-    "TgNodeRingCollect":  (0x4C03B12B, 0x4C03B15A),
-    "TgPartSlotMaskBuild": (0x4C03B15A, 0x4C03B1E5),
-    "TgPartPendingFlush": (0x4C03B1E5, 0x4C03B280),
-    "TgNodePendingMark":  (0x4C03B280, 0x4C03B2BF),
-    "TgNodeRingCollectActive": (0x4C03B2BF, 0x4C03B2F7),
-    "TgSlotReleaseKick":  (0x4C03B2F7, 0x4C03B342),
-    "TgNodeRingReleaseWalk": (0x4C03B342, 0x4C03B3B0),
     "TgVoiceListBuild":   (0x4C03B3B0, 0x4C03B514),
-    # ---- the part CONTROLLER MOD-MATRIX (2026-07-20): six per-destination
-    #      sum resolvers (the "level hooks" 0x4C006A17/0x4C00685C of the
-    #      earlier notes) + the dest-enable mask/value satellites -------------
-    "TgPartModSumPitch":  (0x4C0067CD, 0x4C006857),
-    "TgPartModSumLevel":  (0x4C006857, 0x4C0068E1),
-    "TgPartModSumFilter": (0x4C0068E1, 0x4C006988),
-    "TgPartModSumCutoff": (0x4C006988, 0x4C006A12),
-    "TgPartModSumNoteLevel": (0x4C006A12, 0x4C006A9C),
-    "TgPartModSumDest40": (0x4C006A9C, 0x4C006B23),
-    "TgPartModDestEnableUpdate": (0x4C006B23, 0x4C006BDD),
     "TgPartModDestValueCalc": (0x4C006BDD, 0x4C006ED1),
-    # ---- the raw voice-record register writers (the 0x4C037759..0x4C037A34
-    #      + 0x4C037B1A..0x4C037C16 gaps around the gate-on/off family) ------
-    "TgVoiceEgRegsWriteAuto": (0x4C037759, 0x4C0377FE),
-    "TgVoiceReg0102Write": (0x4C0377FE, 0x4C037836),
-    "TgVoiceEgRegsWriteRaw": (0x4C037836, 0x4C0378B6),
-    "TgVoiceSendWordALevelSet": (0x4C0378B6, 0x4C0378D7),
-    "TgVoiceSendWordBLevelSet": (0x4C0378D7, 0x4C0378F8),
-    "TgVoiceSendWordsWrite": (0x4C0378F8, 0x4C037930),
-    "TgVoiceNoteLevelWrite": (0x4C037930, 0x4C037974),
-    "TgVoiceFadeLevelGateOff": (0x4C037974, 0x4C0379EA),
-    "TgVoiceReg01WriteGateOff": (0x4C0379EA, 0x4C037A34),
-    "TgVoiceEgRate89HiSet": (0x4C037B1A, 0x4C037B4A),
-    "TgVoiceEgRate89LoSet": (0x4C037B4A, 0x4C037B70),
-    "TgVoiceReg0809Write": (0x4C037B70, 0x4C037BA8),
-    "TgVoiceReg4000GroupWrite": (0x4C037BA8, 0x4C037C16),
-    # ---- the part TONE/PROGRAM setup module after the EG-ramp readers ------
-    "TgPartToneModSetupMelodic": (0x4C03A3CD, 0x4C03A5CD),
-    "TgPartToneModSetupDrum": (0x4C03A5CD, 0x4C03A602),
-    "TgPartToneModSetupTable": (0x4C03A602, 0x4C03A65B),
-    "TgPartToneModSetupDispatch": (0x4C03A65B, 0x4C03A6F2),
-    "TgPartProgramSet":   (0x4C03A6F2, 0x4C03A75B),
-    "TgPartProgramInitAll": (0x4C03A75B, 0x4C03A779),
-    # ---- the LFO/mod runtime engine 0x4C02C153..0x4C02D795 (the region
-    #      between TgLevelTermFinalize and TgPartGlidePlan) ------------------
-    "TgVoiceZoneVeloResolve": (0x4C02C153, 0x4C02C1ED),
-    "TgVoiceZoneVeloGate": (0x4C02C1ED, 0x4C02C236),
-    "TgModCurveSquareScale": (0x4C02C236, 0x4C02C25D),
-    "TgPartCutoffResolve": (0x4C02C25D, 0x4C02C2C9),
-    "TgVoiceModSlotUpdate": (0x4C02C2C9, 0x4C02C6CD),
-    "TgPartModDestApply": (0x4C02C6CD, 0x4C02C941),
-    "TgPartModDestRefreshAll": (0x4C02C941, 0x4C02CA50),
-    "TgPartModValueForElem": (0x4C02CA50, 0x4C02CA74),
-    "TgPartModRetrigger": (0x4C02CA74, 0x4C02CB24),
-    "TgVoiceReleaseCountdownTick": (0x4C02CB24, 0x4C02CBA4),
-    "TgVoiceLevelRampTick": (0x4C02CBA4, 0x4C02CD50),
-    "TgPartFadeRatePick": (0x4C02CD50, 0x4C02CD6D),
-    "TgVoiceFadeParamsPlan": (0x4C02CD6D, 0x4C02CFE6),
-    "TgVoiceModDepthWrite": (0x4C02CFE6, 0x4C02D0A7),
-    "TgVoiceModLfoStep":  (0x4C02D0A7, 0x4C02D2B0),
-    "TgPartModSlotSweep": (0x4C02D2B0, 0x4C02D52A),
-    "TgVoicePeriodicService": (0x4C02D52A, 0x4C02D75F),
-    "TgPartGlideStateReset": (0x4C02D75F, 0x4C02D795),
-    # ---- the PART TONE APPLY LAYER under TgPartToneModSetup*/TgPartProgram-
-    #      Set (the 0x4C038503..0x4C03A20F gap): tone-block accessors, the
-    #      voice-record fetch/apply ladders, the program-change rebuild and
-    #      the mod-unit parameter builders (2026-07-20) ---------------------
-    "TgPartToneProgramGet": (0x4C0384C4, 0x4C0384D9),
-    "TgPartToneBankLoGet": (0x4C0384D9, 0x4C0384EE),
-    "TgPartToneBankHiGet": (0x4C0384EE, 0x4C038503),
-    "TgPartToneDescPtr":  (0x4C038503, 0x4C038515),
-    "TgPartToneIsTableClass": (0x4C038515, 0x4C038535),
-    "TgPartVoiceRecFetch": (0x4C038535, 0x4C03858D),
-    "TgPartVoiceRecFetchSel": (0x4C03858D, 0x4C0385C7),
-    "TgPartVoiceRecFetchIdx": (0x4C0385C7, 0x4C03862D),
-    "TgPartVoiceRecFetchIdxSel": (0x4C03862D, 0x4C03866F),
-    "TgPartElemMapScratchBuild": (0x4C03866F, 0x4C038713),
-    "TgPartElemProgramApply": (0x4C038713, 0x4C0387C7),
-    "TgPartElemProgramApplySel": (0x4C0387C7, 0x4C038802),
-    "TgPartElemProgramApplyIdx": (0x4C038802, 0x4C038871),
-    "TgPartElemProgramApplyIdxSel": (0x4C038871, 0x4C0388B3),
-    "TgPartProgramHandlerDispatch": (0x4C0388B3, 0x4C03893D),
-    "TgPartProgramApply": (0x4C03893D, 0x4C03949F),
-    "TgPartToneModUnitBuild": (0x4C03949F, 0x4C0396E2),
-    "TgPartToneModParamBuild": (0x4C0396E2, 0x4C0399DB),
-    "TgPartModUnitParamGet": (0x4C0399DB, 0x4C039A04),
-    "TgPartModUnitRampStep": (0x4C039A04, 0x4C039C5F),
-    "TgPartModUnitDepthCurve": (0x4C039C5F, 0x4C039CA0),
-    "TgPartToneTypeParamGet": (0x4C039CA0, 0x4C039D7E),
-    "TgPartEgRampBuild":  (0x4C039D7E, 0x4C03A20F),
-    # ---- the WRITE side of the controller mod matrix: the panel/MIDI
-    #      config setter + its value-scaling leaves (2026-07-20) -----------
-    "TgPartModRouteMaskSet": (0x4C005673, 0x4C005730),
-    "TgModValueScale1":   (0x4C005730, 0x4C005766),
-    "TgModValueScale2":   (0x4C005766, 0x4C00579C),
-    "TgModValueScale3":   (0x4C00579C, 0x4C0057D2),
-    "TgModValueScale4":   (0x4C0057D2, 0x4C00580B),
-    "TgModValueScale5":   (0x4C00580B, 0x4C00583E),
-    "TgModValueScale6":   (0x4C00583E, 0x4C005874),
-    "TgModDepthScaleClamp": (0x4C005874, 0x4C0058B3),
-    "TgPartModVoiceApply": (0x4C0058B3, 0x4C005A28),
-    "TgPartModVoiceApplyB": (0x4C005A28, 0x4C005CD6),
-    "TgPartModVoicesRefreshA": (0x4C005CD6, 0x4C005DBF),
-    "TgPartModVoicesRefreshB": (0x4C005DBF, 0x4C005EBB),
-    "TgModDepthScaleRom": (0x4C005EBB, 0x4C005EF0),
-    "TgPartModVoicesRefreshC": (0x4C005EF0, 0x4C005F6B),
-    "TgPartModDepthDefaultSet": (0x4C005F6B, 0x4C00603B),
-    "TgPartModConfigStore": (0x4C00603B, 0x4C006333),
-    "TgPartModConfigSet": (0x4C006333, 0x4C0067CD),
-    # ---- the TG CHIP BRING-UP + the OUTPUT-CHANNEL / GLOBAL register file
-    #      (the 0x4C037D0F..0x4C0384C4 gap between the voice-record writers
-    #      and the tone-block accessors; 2026-07-20) --------------------------
-    "TgChanEgSeg0LevelSet": (0x4C037D0F, 0x4C037D42),
-    "TgChanEgSeg0Set":    (0x4C037D42, 0x4C037D87),
-    "TgChanEgSeg1LevelSet": (0x4C037D87, 0x4C037DBC),
-    "TgChanEgSeg1Set":    (0x4C037DBC, 0x4C037E03),
-    "TgChanEgSeg2LevelSet": (0x4C037E03, 0x4C037E37),
-    "TgChanEgSeg2Set":    (0x4C037E37, 0x4C037E7D),
-    "TgChanEgSeg3LevelSet": (0x4C037E7D, 0x4C037EB2),
-    "TgChanEgSeg3Set":    (0x4C037EB2, 0x4C037F0B),
-    "TgChanOutLevelPairSet": (0x4C037F0B, 0x4C037F52),
-    "TgChanRegHookNop":   (0x4C037F52, 0x4C037F55),
-    "TgGlobalRegsA0LoadA": (0x4C037F55, 0x4C037FBB),
-    "TgGlobalRegsA0LoadB": (0x4C037FBB, 0x4C038025),
-    "TgGlobalRegA000Set": (0x4C038025, 0x4C038043),
-    "TgGlobalRegA002Set": (0x4C038043, 0x4C038064),
-    "TgGlobalRegsB0LoadA": (0x4C038064, 0x4C038101),
-    "TgGlobalRegsB0LoadB": (0x4C038101, 0x4C03819E),
-    "TgChipResetSideA":   (0x4C03819E, 0x4C03833A),
-    "TgChipResetSideB":   (0x4C03833A, 0x4C0384A8),
-    "TgGlobalRegsReloadA": (0x4C0384A8, 0x4C0384C4),
-    # ---- the LOCAL-EDIT SHADOW module: the writable per-part edit copies of
-    #      the (read-only) tone resource records, their accessors and the
-    #      builders that populate them (2026-07-20) ---------------------------
-    "TgPartAuxModRecPtr": (0x4C00C25B, 0x4C00C28D),
-    "TgPartAuxElemRecPtr": (0x4C00C28D, 0x4C00C2BF),
-    "TgPartToneDescScratchPtr": (0x4C00C2BF, 0x4C00C2C8),
-    "TgPartLocalEditRecPtr": (0x4C00C2C8, 0x4C00C2DA),
-    "TgPartLocalEditModRecPtr": (0x4C00C2DA, 0x4C00C2F9),
-    "TgPartLocalEditElemRecPtr": (0x4C00C2F9, 0x4C00C318),
-    "TgPartLocalEditActive": (0x4C00C6BF, 0x4C00C6D4),
-    "TgPartLocalEditFlagB": (0x4C00C6D4, 0x4C00C6E9),
-    "TgPartAuxRecBuild":  (0x4C00C6E9, 0x4C00C763),
-    "TgPartToneDescScratchCopy": (0x4C00C763, 0x4C00C783),
-    "TgPartLocalEditRecBuild": (0x4C00C783, 0x4C00C7F7),
-    "TgPartAuxElemRecBuild": (0x4C00C7F7, 0x4C00C840),
-    "TgPartLocalEditElemRecBuild": (0x4C00C840, 0x4C00C890),
-    # ---- the three TgPartModRetrigger satellites -------------------------
-    # ---- the aux-record FIELD ACCESSORS (leaf get/set pairs; the SOUND EDIT
-    #      layer's offset applier 0x4C00A820 drives the ranged ones) ---------
-    "TgPartAuxHdr45Get":  (0x4C00C318, 0x4C00C32E),
-    "TgPartAuxHdr46Get":  (0x4C00C32E, 0x4C00C344),
-    "TgPartAuxHdr47Get":  (0x4C00C344, 0x4C00C35A),
-    "TgPartAuxMod04Get":  (0x4C00C35A, 0x4C00C37D),
-    "TgPartAuxMod05Get":  (0x4C00C37D, 0x4C00C3A0),
-    "TgPartAuxMod06Get":  (0x4C00C3A0, 0x4C00C3C3),
-    "TgPartAuxMod19Get":  (0x4C00C3C3, 0x4C00C3E9),
-    "TgPartAuxMod28Get":  (0x4C00C3E9, 0x4C00C40C),
-    "TgPartAuxMod2AGet":  (0x4C00C40C, 0x4C00C42F),
-    "TgPartAuxMod2CGet":  (0x4C00C42F, 0x4C00C452),
-    "TgPartAuxMod2EGet":  (0x4C00C452, 0x4C00C475),
-    "TgPartAuxHdr45Set":  (0x4C00C475, 0x4C00C48E),
-    "TgPartAuxHdr46Set":  (0x4C00C48E, 0x4C00C4A7),
-    "TgPartAuxHdr47Set":  (0x4C00C4A7, 0x4C00C4C0),
-    "TgPartAuxMod04Set":  (0x4C00C4C0, 0x4C00C4E6),
-    "TgPartAuxMod05Set":  (0x4C00C4E6, 0x4C00C50C),
-    "TgPartAuxMod06Set":  (0x4C00C50C, 0x4C00C532),
-    "TgPartAuxMod19Set":  (0x4C00C532, 0x4C00C56A),
-    "TgPartAuxMod28Set":  (0x4C00C56A, 0x4C00C590),
-    "TgPartAuxMod2ASet":  (0x4C00C590, 0x4C00C5B6),
-    "TgPartAuxMod2CSet":  (0x4C00C5B6, 0x4C00C5DC),
-    "TgPartAuxMod2ESet":  (0x4C00C5DC, 0x4C00C602),
-    "TgPartAuxMod52Bit7Set": (0x4C00C602, 0x4C00C641),
-    "TgPartAuxMod56Bit7Set": (0x4C00C641, 0x4C00C680),
-    "TgPartAuxMod5ABit7Set": (0x4C00C680, 0x4C00C6BF),
-    # ---- THE LOCAL-EDIT LIFECYCLE: the driver, the setter and the clearer of
-    #      bit0 of the per-part edit-state record 0x500C58AE+part*9 ----------
-    "TgPartAuxHdrDerive": (0x4C00C890, 0x4C00C96C),
-    "TgPartAuxRecRefresh": (0x4C00C96C, 0x4C00CA19),
-    "TgPartAuxModAllEnabled": (0x4C00CA19, 0x4C00CA67),
-    "TgPartEditStateDefaults": (0x4C00CA67, 0x4C00CABD),
-    "TgPartLocalEditRecBuildAll": (0x4C00CABD, 0x4C00CB3F),
-    "TgPartLocalEditActivate": (0x4C00CB3F, 0x4C00CBC2),
-    "TgPartLocalEditSelect": (0x4C00CBC2, 0x4C00CCB1),
-    "TgLocalEditPartSet": (0x4C00CCB1, 0x4C00CCBA),
-    "TgPartLocalEditClear": (0x4C00E5C0, 0x4C00E5D2),
     "TgLocalEditResetAll": (0x4C00E5D2, 0x4C00E5F0),
-
-    # ---- DIGITAL DRAWBAR: the per-part registration record 0x500082C8+part*0x1C
-    #      (nine 4-bit drawbar levels packed three-to-a-word, PERCUSSIVE TONE,
-    #      the four +/- offset bytes and the derived level words) -------------
-    "TgDrawbarToneRecInit": (0x4C00A1F7, 0x4C00A253),
-    "TgPartDrawbarCapture": (0x4C00A253, 0x4C00A2F1),
-    "TgPartDrawbarTypeSet": (0x4C00A2F1, 0x4C00A307),
-    "TgPartDrawbarTypeClear": (0x4C00A307, 0x4C00A31C),
-    "TgPartDrawbarTypeGet": (0x4C00A31C, 0x4C00A330),
-    "TgPartDrawbarRegExport": (0x4C00A330, 0x4C00A389),
-    "TgPartDrawbarUnitEnable": (0x4C00A389, 0x4C00A44C),
-    "TgDrawbarNibbleScatter": (0x4C00A44C, 0x4C00A483),
-    "TgDrawbarLevelsScan": (0x4C00A483, 0x4C00A519),
-    "TgPartDrawbarLevelsDerive": (0x4C00A519, 0x4C00A594),
-    "TgPartDrawbarOffsetsReset": (0x4C00A594, 0x4C00A5C7),
-    "TgPartDrawbarPairSet1": (0x4C00A5C7, 0x4C00A5FB),
-    "TgPartDrawbarPairSet2": (0x4C00A5FB, 0x4C00A653),
-    "TgPartDrawbarPairSet3": (0x4C00A653, 0x4C00A6AB),
-    "TgPartDrawbarPairSet4": (0x4C00A6AB, 0x4C00A702),
-    "TgPartDrawbarPairSet5": (0x4C00A702, 0x4C00A74D),
-    "TgPartDrawbarAtkRlsSet": (0x4C00A74D, 0x4C00A786),
-    "TgPartDrawbarPercSet": (0x4C00A786, 0x4C00A7BC),
-    "TgEditOffsetAddClamp": (0x4C00A7BC, 0x4C00A7E5),
     "TgPartDrawbarOffsetApply": (0x4C00A7E5, 0x4C00A90C),
-
-    # ---- LFO EDIT: the twelve LFO groups of ROM table 0x486D2ED5 projected
-    #      onto the SOUND EDIT record's +0x45 parameter block ----------------
-    "TgPartEditLfoLoadA":  (0x4C00CCBA, 0x4C00CD10),
-    "TgPartEditLfoLoadB":  (0x4C00CD10, 0x4C00CD6F),
-    "TgPartEditLfoLoadC":  (0x4C00CD6F, 0x4C00CDC6),
-    "TgPartEditLfoLoadD":  (0x4C00CDC6, 0x4C00CE1C),
-    "TgPartEditLfoLoadE":  (0x4C00CE1C, 0x4C00CE74),
-    "TgPartEditLfoLoadF":  (0x4C00CE74, 0x4C00CEC8),
-    "TgPartEditLfoLoadG":  (0x4C00CEC8, 0x4C00CF28),
-    "TgPartEditLfoLoadH":  (0x4C00CF28, 0x4C00CF8B),
-    "TgPartEditLfoGroupLoad": (0x4C00CF8B, 0x4C00D047),
     "TgPartEditLfoFlagSet": (0x4C00D047, 0x4C00D0AC),
-    "TgPartCtrlSenseKit": (0x4C013497, 0x4C013542),
-    "TgPartCtrlSenseElem": (0x4C030896, 0x4C03099F),
-    "TgPartCtrlSenseMelodic": (0x4C033C0A, 0x4C033CAE),
-    # ---- the GLOBAL EFFECT-CHANNEL REFRESHERS: the caller layer above the
-    #      output-channel register file 0x4C037D0F.., re-run by the effect
-    #      ENABLE setters at 0x4C00908F+ (per-part-effect-application.md,
-    #      reverb-toggle-findings.md) ------------------------------------
-    "TgPartGlobalChanRefresh": (0x4C004DE4, 0x4C0050DE),
-    "TgGlobalChan6Refresh": (0x4C0050DE, 0x4C005241),
-    "TgGlobalChan7Refresh": (0x4C005241, 0x4C005396),
-    "TgGlobalChanBRefresh": (0x4C005396, 0x4C00542E),
-    "TgGlobalChan3Refresh": (0x4C00542E, 0x4C0054A5),
-    "TgGlobalChan5Refresh": (0x4C0054A5, 0x4C005535),
-    "TgGlobalChan1Refresh": (0x4C005535, 0x4C005593),
     "TgGlobalChanCRefresh": (0x4C005593, 0x4C00566E),
-    # ---- the TG GLOBAL-PARAMETER MODULE 0x4C008CBB..0x4C009837: the master
-    #      volume / master tune / group-gain globals, the effect ENABLE bits
-    #      in 0x500C0758 + 0x500C075A, and the COMMAND DISPATCHER that drives
-    #      every one of them from the sound-command byte stream.  The
-    #      dispatcher's 64-slot key/handler table lives in the program ROM at
-    #      0x48586C60 (key = command id - 8, slot = (id-8) & 0x3F) -- see
-    #      kn7000_mame/notes/effect-enable-bits.md ------------------------
-    "TgGlobalAllPartsRefresh":      (0x4C008CBB, 0x4C008CD0),
-    "TgMasterVolumeRecompute":      (0x4C008CD0, 0x4C008D8E),
-    "TgMasterVolumeMainSet":        (0x4C008D8E, 0x4C008DAE),
-    "TgMasterTuneFineSet":          (0x4C008DAE, 0x4C008DBE),
-    "TgMasterTuneTransposeSet":     (0x4C008DBE, 0x4C008DCD),
-    "TgMasterVolumeSubSet":         (0x4C008DCD, 0x4C008DED),
-    "TgMasterVolumeAuxSet":         (0x4C008DED, 0x4C008E0D),
-    "TgGroupGainPartsLoSet":        (0x4C008E0D, 0x4C008E21),
-    "TgGroupGainClass23Set":        (0x4C008E21, 0x4C008E35),
-    "TgGroupGainParts13To1ASet":    (0x4C008E35, 0x4C008E49),
-    "TgGlobalRampStateSet":         (0x4C008E49, 0x4C008EA4),
-    "TgGlobalRampParamSet":         (0x4C008EA4, 0x4C008F0C),
-    "TgAllPartsRefreshAndFlush":    (0x4C008F0C, 0x4C008F45),
-    "TgPartEffectRefresh":          (0x4C008F45, 0x4C008F8C),
-    "TgAllPartsEffectRefresh":      (0x4C008F8C, 0x4C008FA1),
-    "TgEffectRouteSelect":          (0x4C008FA1, 0x4C008FF6),
-    "TgReverbPartsApply":           (0x4C008FF6, 0x4C009050),
-    "TgGlobalByte0768Set":          (0x4C009050, 0x4C009059),
-    "TgDrawbarGlobal82B2Set":       (0x4C009059, 0x4C009062),
-    "TgDrawbarGlobal82BDSet":       (0x4C009062, 0x4C00906B),
-    "TgDrawbarGlobal82BESet":       (0x4C00906B, 0x4C009074),
-    "TgDrawbarGlobal82BFSet":       (0x4C009074, 0x4C00907D),
-    "TgDrawbarGlobal82C0Set":       (0x4C00907D, 0x4C009086),
-    "TgDrawbarGlobal82BCSet":       (0x4C009086, 0x4C00908F),
-    "TgEffectEnableReverb":         (0x4C00908F, 0x4C0090C0),
-    "TgEffectEnableBit10":          (0x4C0090C0, 0x4C0090EC),
-    "TgEffectEnableBit4":           (0x4C0090EC, 0x4C009115),
-    "TgGroupGainClass23Enable":     (0x4C009115, 0x4C009140),
-    "TgGroupGainParts13To1AEnable": (0x4C009140, 0x4C00916B),
-    "TgEffectEnableMulti":          (0x4C00916B, 0x4C009197),
-    "TgEffectEnableBit13":          (0x4C009197, 0x4C0091C3),
-    "TgEffectEnableBit14":          (0x4C0091C3, 0x4C0091EF),
-    "TgMasterVolumeSubEnable":      (0x4C0091EF, 0x4C00921A),
-    "TgGlobalFlag0Get":             (0x4C00921A, 0x4C009226),
-    "TgGlobalFlag1Get":             (0x4C009226, 0x4C009232),
-    "TgGlobalFlag2Get":             (0x4C009232, 0x4C00923E),
-    "TgGlobalFlag0Set":             (0x4C00923E, 0x4C009250),
-    "TgGlobalFlag1Set":             (0x4C009250, 0x4C009262),
-    "TgGlobalFlag2Set":             (0x4C009262, 0x4C009274),
-    "TgGlobalFlag0Clear":           (0x4C009274, 0x4C009289),
-    "TgGlobalFlag1Clear":           (0x4C009289, 0x4C00929E),
-    "TgGlobalFlag2Clear":           (0x4C00929E, 0x4C0092B3),
-    "TgGlobalParamCommand":         (0x4C0092B3, 0x4C009565),
-    "TgGlobalParamInit":            (0x4C009565, 0x4C009837),
+}
+
+# Notes on groups of library functions, emitted above the first function of
+# each group (they were the section comments of the old explicit LIB_CONVERT).
+LIB_SECTION_DOC = {
+    "LibSprintf": (
+        "the two C-library helpers the debug screens' renderer calls",
+    ),
+    "LibF64Pow": (
+        'the SOFT-FLOAT IEEE-754 double runtime + libm subset (the firmware',
+        '     has no FPU: TgPartGlidePlan/Tick and others do their math here;',
+        "     args on the caller's stack at (8,sp) lo/(0xC,sp) hi and",
+        '     (0x10,sp)/(0x14,sp), result in d0 lo : d1 hi; errno = 0x500AD390)',
+    ),
+    "TgSoundEditFlag4DBit7Refresh": (
+        'SOUND EDIT: the nine uniform FLAG REFRESHERS that copy single bits',
+        '     (and two whole bytes) out of the part-setting record',
+        '     0x500B5340+part*0x54C into the SOUND EDIT record',
+        '     0x500C0784+(part-0x10)*0x2C8. All nine are gated on part 0x10..0x12',
+        '     and on 0x4C00C6BF(part). Section 3 of',
+        '     kn7000_mame/notes/sound-edit-parameters.md',
+    ),
+    "TgKitZoneParamClamp": (
+        'their byte-for-byte KIT/TABLE twins under TgKitElemNoteOn',
+    ),
+    "TgVoiceEgSegParamGet": (
+        'the raw EG/shadow param helpers + the routing-field writer',
+    ),
+    "TgPartElemMaskUpdate": (
+        'the TG voice allocator + steal engine under TgNoteOn (element',
+        '     staging -> side select -> hw slot pick w/ ROM steal-order lists;',
+        '     kn7000_mame/notes/tg-voice-allocator.md)',
+    ),
+    "TgExclGroupChoke": (
+        'the TG note path: key event -> note-on -> per-element EG/release',
+        '     programming (tg-pitch-pipeline.md + tg-envelope-sweep-results.md) --',
+    ),
+    "TgDrumAmpReleaseCalc": (
+        'the TG note-path closure set: per-class note-on/key-off programmers',
+        '     + the voice-list collect/release engine + the portamento pair',
+        '     (2026-07-20; kn7000_mame/notes/tg-voice-allocator.md glide section)',
+    ),
+    "TgNoteLevelVariationCalc": (
+        'the NOTE LEVEL chain + amp-EG rate tails under the note-on',
+        '     programmers (2026-07-20; the "pitch chain internals" of the',
+        "     previous pass's notes are in fact the LEVEL side)",
+    ),
+    "TgPartEgRampInit": (
+        'the per-part TYPE-7 EG TIME-RAMP module (whole 0x4C011730..',
+        '     0x4C011F2F gap closed) + its two scaled-cache readers',
+    ),
+    "TgVoiceStealSilence": (
+        'the per-slot force-off / damp programmers + live EG-time writers --',
+    ),
+    "TgDrumZoneParamClamp": (
+        'the DRUM-side zone param fetchers (third link of the family)',
+    ),
+    "TgPartModSumPitch": (
+        'the part CONTROLLER MOD-MATRIX (2026-07-20): six per-destination',
+        '     sum resolvers (the "level hooks" 0x4C006A17/0x4C00685C of the',
+        '     earlier notes) + the dest-enable mask/value satellites',
+    ),
+    "TgVoiceEgRegsWriteAuto": (
+        'the raw voice-record register writers (the 0x4C037759..0x4C037A34',
+        '     + 0x4C037B1A..0x4C037C16 gaps around the gate-on/off family)',
+    ),
+    "TgPartToneModSetupMelodic": (
+        'the part TONE/PROGRAM setup module after the EG-ramp readers',
+    ),
+    "TgVoiceZoneVeloResolve": (
+        'the LFO/mod runtime engine 0x4C02C153..0x4C02D795 (the region',
+        '     between TgLevelTermFinalize and TgPartGlidePlan)',
+    ),
+    "TgPartToneProgramGet": (
+        'the PART TONE APPLY LAYER under TgPartToneModSetup*/TgPartProgram-',
+        '     Set (the 0x4C038503..0x4C03A20F gap): tone-block accessors, the',
+        '     voice-record fetch/apply ladders, the program-change rebuild and',
+        '     the mod-unit parameter builders (2026-07-20)',
+    ),
+    "TgPartModRouteMaskSet": (
+        'the WRITE side of the controller mod matrix: the panel/MIDI',
+        '     config setter + its value-scaling leaves (2026-07-20)',
+    ),
+    "TgChanEgSeg0LevelSet": (
+        'the TG CHIP BRING-UP + the OUTPUT-CHANNEL / GLOBAL register file',
+        '     (the 0x4C037D0F..0x4C0384C4 gap between the voice-record writers',
+        '     and the tone-block accessors; 2026-07-20)',
+    ),
+    "TgPartAuxModRecPtr": (
+        'the LOCAL-EDIT SHADOW module: the writable per-part edit copies of',
+        '     the (read-only) tone resource records, their accessors and the',
+        '     builders that populate them (2026-07-20)',
+    ),
+    "TgPartAuxHdr45Get": (
+        'the three TgPartModRetrigger satellites',
+        'the aux-record FIELD ACCESSORS (leaf get/set pairs; the SOUND EDIT',
+        "     layer's offset applier 0x4C00A820 drives the ranged ones)",
+    ),
+    "TgPartAuxHdrDerive": (
+        'THE LOCAL-EDIT LIFECYCLE: the driver, the setter and the clearer of',
+        '     bit0 of the per-part edit-state record 0x500C58AE+part*9',
+    ),
+    "TgDrawbarToneRecInit": (
+        'DIGITAL DRAWBAR: the per-part registration record 0x500082C8+part*0x1C',
+        '     (nine 4-bit drawbar levels packed three-to-a-word, PERCUSSIVE TONE,',
+        '     the four +/- offset bytes and the derived level words)',
+    ),
+    "TgPartEditLfoLoadA": (
+        'LFO EDIT: the twelve LFO groups of ROM table 0x486D2ED5 projected',
+        "     onto the SOUND EDIT record's +0x45 parameter block",
+    ),
+    "TgPartGlobalChanRefresh": (
+        'the GLOBAL EFFECT-CHANNEL REFRESHERS: the caller layer above the',
+        '     output-channel register file 0x4C037D0F.., re-run by the effect',
+        '     ENABLE setters at 0x4C00908F+ (per-part-effect-application.md,',
+        '     reverb-toggle-findings.md)',
+    ),
+    "TgGlobalAllPartsRefresh": (
+        'the TG GLOBAL-PARAMETER MODULE 0x4C008CBB..0x4C009837: the master',
+        '     volume / master tune / group-gain globals, the effect ENABLE bits',
+        '     in 0x500C0758 + 0x500C075A, and the COMMAND DISPATCHER that drives',
+        '     every one of them from the sound-command byte stream.  The',
+        "     dispatcher's 64-slot key/handler table lives in the program ROM at",
+        '     0x48586C60 (key = command id - 8, slot = (id-8) & 0x3F) -- see',
+        '     kn7000_mame/notes/effect-enable-bits.md',
+    ),
 }
 
 # Reverse-engineering facts emitted as comments under the function headers.
@@ -3272,9 +2939,12 @@ def disasm_function(d, off, end, delta=BASE):
     prints the instruction correctly but consumes only the 0xF4 byte, then
     re-decodes the postbyte as a phantom instruction. When a bare-F4 line
     appears, take the true 2 bytes from the ROM and restart unidasm past them
-    (the byte-exact enc==b check in emit_function still guards the result
+    (the byte-exact re-encode check in emit_block still guards the result
     either way). It also misprints the register of FA 9x stores to (d16,sp),
-    which are rebuilt from the opcode byte below."""
+    and swaps the two registers of an FC 00-7F load from (d32, aN) (it reads aN
+    from bits 3:2 and the destination from bits 1:0, the reverse of its own F8 /
+    FA forms and of the code that uses them); both are rebuilt from the opcode
+    byte below."""
     insns = []
     cur = off
     while cur < end:
@@ -3304,6 +2974,11 @@ def disasm_function(d, off, end, delta=BASE):
                 op = b[1] & 3
                 mnem = ("mov", "mov", "movbu", "movhu")[op]
                 ops = re.sub(r"^d\d+", f"{'a' if op == 0 else 'd'}{(b[1] >> 2) & 3}", ops)
+            if len(b) == 6 and b[0] == 0xFC and b[1] < 0x80 and not b[1] & 0x10:
+                # FC load (d32, aN): N = bits 1:0, destination = bits 3:2
+                typ = (b[1] >> 5) & 3
+                disp = int.from_bytes(b[2:6], "little")
+                ops = f"(0x{disp:08x}, a{b[1] & 3}), {'a' if typ == 1 else 'd'}{(b[1] >> 2) & 3}"
             insns.append((addr, b, mnem, ops))
             cur += len(b)
             if cur >= end:
@@ -3385,6 +3060,10 @@ def reencode(mnem, ops, b, cpu):
         p = ASM.split_ops(ops)
         if len(p) == 2 and not ASM.is_reg_tok(p[0]):
             tries.append(f"{p[0]}:{8 * (len(b) - 2)}, {p[1]}")
+    elif mnem in ("mov", "add", "sub", "cmp", "and", "or", "xor", "btst"):
+        p = ASM.split_ops(ops)
+        if len(p) == 2 and re.fullmatch(r"-?0x[0-9a-fA-F]+|-?\d+", p[0]):
+            tries += [f"{p[0]}:16, {p[1]}", f"{p[0]}:32, {p[1]}"]
     for t in tries:
         try:
             if ASM.encode(mnem, t, cpu) == b:
@@ -3512,6 +3191,7 @@ class EmitCtx:
         self.long_calls = 0        # call/jmp written T:32
         self.wide_udf = 0          # udf immediates written with a width
         self.fill = 0              # bytes of 0xFF padding
+        self.inside = []           # (start, end, label) of each labelled data item
 
     def ref(self, a):
         """The name an address operand prints as, or None."""
@@ -3523,6 +3203,9 @@ class EmitCtx:
         if a in self.names:
             self.used.add(a)
             return self.names[a]
+        for lo, hi, nm in self.inside:
+            if lo < a < hi:
+                return f"{nm}+{a - lo}"
         return None
 
     def symbolise(self, mnem, ops):
@@ -3568,7 +3251,7 @@ def emit_data(d, a, b, items, ctx):
         kind, n, comment, o = items[cpu]
         if o != cur:
             sys.exit(f"gen_program_s: data island layout has a gap or overlap at {o:#x}")
-        if kind != "fill":
+        if kind != "fill" and comment is not None:   # a None comment continues the item above
             lines.append("")
             if comment:
                 lines.append(f"# {DOC_XLATE(comment) if DOC_XLATE else comment}")
@@ -3582,9 +3265,10 @@ def emit_data(d, a, b, items, ctx):
             for i in range(0, n, 8):
                 lines.append("    .word   " + ", ".join(f"0x{x:04X}" for x in v[i:i + 8]))
             cur = o + 2 * n
-        elif kind == "word":
+        elif kind in ("word", "ptr"):
             v = struct.unpack_from(f"<{n}I", d, o)
-            lines.append("    .long   " + ", ".join(ctx.ref(x) or f"0x{x:08X}" for x in v))
+            lines.append("    .long   " + ", ".join((ctx.ref(x) if kind == "ptr" else None)
+                                                    or f"0x{x:08X}" for x in v))
             cur = o + 4 * n
         elif kind == "f64":
             for i in range(n):
@@ -3785,6 +3469,36 @@ def boot_header(d):
             '    .org 0x000080']
 
 
+def lib_split(sym_by_addr, manual):
+    """The library image split at every function the symbol files name inside it
+    (an `X_entry` register-save entry is not a boundary): [(file off, file end,
+    name, convert?)]. LIB_CONVERT overrides a function's range (its end, when
+    something that is not its code follows it); the bytes between such an end and
+    the next name come out as an unnamed raw piece. A function converts when
+    LIB_ALL is set, or it is in LIB_CONVERT or CONVERT."""
+    lo, hi = LIB_CPU_BASE, LIB_DELTA + IMAGE_END
+    starts = {}
+    for a, nm in list(sym_by_addr.items()) + list(manual):
+        if lo <= a < hi and not nm.endswith("_entry"):
+            starts[a] = nm
+    for nm, (cs, _ce) in LIB_CONVERT.items():
+        starts[cs] = nm
+    order = sorted(starts)
+    out = []
+    if order and order[0] > lo:
+        out.append((LIB_FILE_BASE, order[0] - LIB_DELTA, None, False))
+    for i, a in enumerate(order):
+        nm = starts[a]
+        nxt = order[i + 1] if i + 1 < len(order) else hi
+        end = LIB_CONVERT[nm][1] if nm in LIB_CONVERT else nxt
+        if not a < end <= nxt:
+            sys.exit(f"gen_program_s: LIB_CONVERT {nm} ends at {end:#x}, past the next name at {nxt:#x}")
+        out.append((a - LIB_DELTA, end - LIB_DELTA, nm, LIB_ALL or nm in LIB_CONVERT or nm in CONVERT))
+        if end < nxt:
+            out.append((end - LIB_DELTA, nxt - LIB_DELTA, None, LIB_ALL))
+    return out
+
+
 def main():
     d = open(ROM, "rb").read()
     syms = load_syms(d)
@@ -3807,6 +3521,8 @@ def main():
             if m and not line.lstrip().startswith(";"):
                 inherit.add(m.group(1))
     inherit -= set(CONVERT)
+    if CONVERT_ALL:
+        inherit = set()
     # conversion limit per boundary: a converted function's range ends at the
     # next boundary that is NOT an inherited split (or at its FUNC_END cap);
     # inherited splits inside that range stay converted
@@ -3819,7 +3535,7 @@ def main():
         while j < len(r1) and r1[j][1] in inherit:
             j += 1
         nxt = r1[j][0] if j < len(r1) else R1_END
-        parent = min(nxt, FUNC_END.get(name, nxt)) if name in CONVERT else None
+        parent = min(nxt, FUNC_END.get(name, nxt)) if CONVERT_ALL or name in CONVERT else None
         limit[off] = parent
     sym_by_addr = {BASE + off: nm for off, nm in syms}
     pal = [struct.unpack_from("<I", d, PALETTE + 4 * i)[0] for i in range(512)]
@@ -3852,18 +3568,24 @@ def main():
 
     # the blocks to convert: region-1 functions (up to their limit) and the
     # library functions, all disassembled up front
-    r1_blocks = []                    # (off, end, end_conv or None, name)
+    r1_blocks = []                    # (off, end, end_conv or None, name or None)
+    if CONVERT_ALL and r1[0][0] > 0x80:
+        r1_blocks.append((0x80, r1[0][0], r1[0][0], None))
     for i, (off, name) in enumerate(r1):
         end = r1[i + 1][0] if i + 1 < len(r1) else R1_END
-        r1_blocks.append((off, end, min(end, limit[off]) if limit[off] is not None else None, name))
-    lib_blocks = []                   # (file off, file end, name)
-    for name, (cs, ce) in sorted(LIB_CONVERT.items(), key=lambda kv: kv[1][0]):
-        so, eo = cs - LIB_DELTA, ce - LIB_DELTA
-        assert LIB_FILE_BASE <= so < eo <= IMAGE_END, name
-        lib_blocks.append((so, eo, name))
+        if limit[off] is None:
+            r1_blocks.append((off, end, None, name))
+            continue
+        ec = min(end, limit[off])
+        if CONVERT_ALL and ec < end:      # the code after a FUNC_END cap: an unnamed function
+            r1_blocks += [(off, ec, ec, name), (ec, end, end, None)]
+        else:
+            r1_blocks.append((off, end, ec, name))
+    lib_blocks = lib_split(sym_by_addr, manual)  # (file off, file end, name, convert?)
     segs = {off: segments(off, ec) for off, _e, ec, _n in r1_blocks if ec is not None}
+    lib_segs = {so: segments(so, eo) for so, eo, _n, cv in lib_blocks if cv}
     jobs = [(a, b, BASE) for sl in segs.values() for kind, a, b in sl if kind == "code"] \
-        + [(so, eo, LIB_DELTA) for so, eo, _n in lib_blocks]
+        + [(a, b, LIB_DELTA) for sl in lib_segs.values() for kind, a, b in sl if kind == "code"]
     dec = decode_blocks(d, jobs)
 
     # annotation files: which converted blocks they label, checked up front
@@ -3919,18 +3641,22 @@ def main():
                     (calls if mn in ("call", "calls") else branches).add(t)
             else:
                 imm_refs.update(int(h, 16) for h in re.findall(r"0x([0-9a-fA-F]{8})\b", ops))
+    # data islands: labelled at their flash address (BASE + file offset), also
+    # those inside the library image (its loader reads them through the flash)
     data_items = {}                   # CPU address -> (kind, count, comment, file offset)
-    for sl in segs.values():
+    for sl in list(segs.values()) + list(lib_segs.values()):
         for kind, a, b in sl:
             if kind == "data":
                 for o, k, n, c in DATA_ISLANDS[a][1]:
                     data_items[BASE + o] = (k, n, c, o)
-                    if k == "word":           # a pointer word names code like an operand
+                    if k == "ptr":            # a pointer word names code like an operand
                         imm_refs.update(struct.unpack_from(f"<{n}I", d, o))
     for t in calls:
         names.setdefault(t, f"func_{t:08X}")
-    block_name = {BASE + off: name for off, _e, ec, name in r1_blocks if ec is not None}
-    block_name.update({LIB_DELTA + so: name for so, _eo, name in lib_blocks})
+    block_name = {BASE + off: name or names.get(BASE + off, f"func_{BASE + off:08X}")
+                  for off, _e, ec, name in r1_blocks if ec is not None}
+    block_name.update({LIB_DELTA + so: name or names.get(LIB_DELTA + so, f"func_{LIB_DELTA + so:08X}")
+                       for so, _eo, name, cv in lib_blocks if cv})
     label_of = {}
     for cpu in code_starts:
         if cpu in block_name:
@@ -3941,8 +3667,8 @@ def main():
             label_of[cpu] = names[cpu]
         elif cpu in branches or cpu in imm_refs:
             label_of[cpu] = f"loc_{cpu:08X}"
-    for cpu, (kind, _n, _c, _o) in data_items.items():
-        if kind != "fill":
+    for cpu, (kind, _n, comment, _o) in data_items.items():
+        if kind != "fill" and comment is not None:
             label_of[cpu] = names.get(cpu, f"rodata_{cpu:08X}")
     # one address per label name, and a label must agree with symbols.inc
     seen, dup = {}, []
@@ -3958,15 +3684,33 @@ def main():
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
     ctx = EmitCtx(names, label_of, A, data_names)
+    # an operand pointing inside a labelled data item is spelled label+offset
+    starts_lab = sorted(c for c in data_items if c in label_of)
+    for i, c in enumerate(starts_lab):
+        k, n, _c, o = data_items[c]
+        end = c
+        for c2 in sorted(data_items):
+            if c2 >= c and (c2 == c or c2 not in label_of):
+                k2, n2, _c2, _o2 = data_items[c2]
+                end = max(end, c2 + n2 * {"byte": 1, "half": 2, "word": 4, "ptr": 4,
+                                          "f64": 8, "fill": 1}[k2])
+            elif c2 > c:
+                break
+        ctx.inside.append((c, end, label_of[c]))
 
     ROMQ = f'"{ROM}"'
     body = []
-    if r1[0][0] > 0x80:
-        body.append(f".incbin_range {ROMQ}, 0x000080, {r1[0][0]:#08x}")
+    if r1_blocks[0][0] > 0x80:
+        body.append(f".incbin_range {ROMQ}, 0x000080, {r1_blocks[0][0]:#08x}")
 
-    converted = inherited = 0
+    converted = inherited = unnamed = 0
+    failed = []
     for off, end, end_conv, name in r1_blocks:
-        body.append(f"# {name}  (CPU {BASE + off:#010x})")
+        if name is None:
+            body.append(f"# {block_name[BASE + off]}  (CPU {BASE + off:#010x}): no symbol file"
+                        " names this function")
+        else:
+            body.append(f"# {name}  (CPU {BASE + off:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
         for doc in A.docs.get(BASE + off, ()):
@@ -3977,13 +3721,15 @@ def main():
             out = []
             for k, a, b in sl:
                 if k == "code":
-                    out += emit_block(dec[(a, b, BASE)], name if a == off else None,
+                    out += emit_block(dec[(a, b, BASE)], block_name[BASE + off] if a == off else None,
                                       BASE + off, BASE, ctx, BASE + off in annotated)
                 else:
                     out += emit_data(d, a, b, data_items, ctx)
         if out is not None:
             body.extend(out + ([""] if BASE + off in annotated else []))
-            if name in inherit:
+            if name is None:
+                unnamed += 1
+            elif name in inherit:
                 inherited += 1
             else:
                 converted += 1
@@ -3991,6 +3737,8 @@ def main():
                 body.append(f"# (unnamed code follows to the next boundary)")
                 body.append(f".incbin_range {ROMQ}, {end_conv:#08x}, {end:#08x}")
         else:
+            if end_conv is not None:
+                failed.append(f"{name or block_name[BASE + off]} ({BASE + off:#x}..{BASE + end_conv:#x})")
             body.append(f".incbin_range {ROMQ}, {off:#08x}, {end:#08x}")
 
     # ---- code region 2: the library window ---------------------------------
@@ -4003,21 +3751,39 @@ def main():
                 f'.mnbase 0x{LIB_DELTA:08X}   # lib window: CPU 0x4C000000 = file 0x{LIB_FILE_BASE:06X}']
     cur2 = DATA_END
     lib_converted = 0
-    for so, eo, name in lib_blocks:
+    for so, eo, name, cv in lib_blocks:
         if cur2 < so:
             lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, {so:#08x}")
-        lib_body.append(f"# {name}  (lib CPU {LIB_DELTA + so:#010x})")
+        xl = DOC_XLATE or (lambda t: t)
+        for i, t in enumerate(LIB_SECTION_DOC.get(name, ())):
+            lib_body += ["", f"# ---- {xl(t)}"] if i == 0 else [f"# {xl(t)}"]
+        if name is None:
+            lib_body.append(f"# {block_name.get(LIB_DELTA + so, '(unnamed code)')}  (lib CPU "
+                            f"{LIB_DELTA + so:#010x}): no symbol file names this function")
+        else:
+            lib_body.append(f"# {name}  (lib CPU {LIB_DELTA + so:#010x})")
         for doc in FUNC_DOC.get(name, ()):
             lib_body.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
-        insns = dec[(so, eo, LIB_DELTA)]
-        if insns is not None:
-            lib_body.extend(emit_block(insns, name, LIB_DELTA + so, LIB_DELTA, ctx, False))
+        sl = lib_segs.get(so) if cv else None
+        if sl and all(k == "data" or dec[(a, b, LIB_DELTA)] is not None for k, a, b in sl):
+            for k, a, b in sl:
+                if k == "code":
+                    lib_body.extend(emit_block(dec[(a, b, LIB_DELTA)],
+                                               block_name[LIB_DELTA + so] if a == so else None,
+                                               LIB_DELTA + so, LIB_DELTA, ctx, False))
+                else:
+                    lib_body += ["", ".mnbase 0x48400000   # data the boot reads through its flash address"] \
+                        + emit_data(d, a, b, data_items, ctx) \
+                        + [f".mnbase 0x{LIB_DELTA:08X}"]
             lib_converted += 1
         else:
+            if cv:
+                failed.append(f"{block_name.get(LIB_DELTA + so)} ({LIB_DELTA + so:#x}..{LIB_DELTA + eo:#x})")
             lib_body.append(f".incbin_range {ROMQ}, {so:#08x}, {eo:#08x}")
         cur2 = eo
-    lib_body += [f".incbin_range {ROMQ}, {cur2:#08x}, 0x{IMAGE_END:06X}",
-                 ".mnbase 0x48400000",
+    if cur2 < IMAGE_END:
+        lib_body.append(f".incbin_range {ROMQ}, {cur2:#08x}, 0x{IMAGE_END:06X}")
+    lib_body += [".mnbase 0x48400000",
                  '',
                  f'.org 0x{IMAGE_END:06X}   # end of image']
     if PAD_TO:
@@ -4065,9 +3831,11 @@ def main():
     L.extend(lib_body)
 
     open(OUT, "w").write("\n".join(L) + "\n")
-    print(f"wrote {OUT}: {converted}/{len(CONVERT)} region-1 + "
-          f"{lib_converted}/{len(LIB_CONVERT)} library functions converted to asm"
+    print(f"wrote {OUT}: {converted} named + {unnamed} unnamed region-1 functions and "
+          f"{lib_converted}/{sum(1 for b in lib_blocks if b[3])} library functions converted to asm"
           + (f" (+{inherited} newly-named pieces of converted functions)" if inherited else ""))
+    for f in failed:
+        print(f"  does not disassemble, left raw: {f}")
     print(f"  {len(label_of)} labels ({sum(1 for n in label_of.values() if n.startswith('loc_'))} loc_), "
           f"{len(auto)} name equates, {len(ctx.ext)} outside branch targets, "
           f"{ctx.long_calls} long call/jmp, {ctx.wide_udf} wide udf, {ctx.fill} fill bytes, "

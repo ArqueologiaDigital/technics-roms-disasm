@@ -271,6 +271,8 @@
 ; then EXECUTES it via the 0x4C000000 alias. So these are code-at-runtime / data-at-rest
 ; here. Mapping: library address X  ==  program ROM 0x487B8FD1 + (X - 0x4C000000).
 0x487BA785  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
+0x487F8BC0  LibLoadSentinel        ; InitializeBlock27 descriptor's last-record payload `retf 0, 0` (de 00 00): copied to 0x4C03FFF0, the end of the library window
+0x487F8BC3  LibLoadDescriptor      ; InitializeBlock27's copy descriptor at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
 0x487BD7D6  LibStrCopy             ; = lib 0x4C003051: byte copy until NUL (strcpy), hardware-loop (setlb)
 0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
 0x487F8A4B  LibIrqQuickDispatch    ; = lib 0x4C03DDA0: AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
@@ -866,6 +868,15 @@
 0x4C00ED44  TgPartElemMaskGet       ; (d0 part) -> state byte (0x500C58AE+part*9) & 0x3C: the per-element enable bits TgMelodicVoiceAlloc's caller gate reads
 0x4C00ED59  TgPartElemEnabled       ; (d0 part, d1 elem) -> state byte & ROM mask 0x48586F24[elem] (bits 2..5 = elems 0..3); 0 kills the element's request byte in TgMelodicVoiceAlloc
 0x4C00ED5B  TgPartElemEnabled_entry
+0x4C00EE3E  TgSoundEditFlag4DBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EE9B  TgSoundEditFlag4DLowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EEF4  TgSoundEditFlag4EBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EF51  TgSoundEditFlag4ELowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00EFA5  TgSoundEditFlag4FBit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F002  TgSoundEditFlag51Bit7Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F0A8  TgSoundEditFlag51LowRefresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F0FC  TgSoundEditByte52Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
+0x4C00F140  TgSoundEditByte53Refresh ; SOUND EDIT flag refresher: copies one bit (or byte) of the part-setting record into the SOUND EDIT record (kn7000_mame notes/sound-edit-parameters.md section 3)
 0x4C02BE9F  TgVoiceRoutePtrCalc     ; (a0 staging rec) rec+0x34 := per-note routing-entry ptr: kit tables via maincpu 0x48449DAA/0x48449DF8(rec+0x18) indexed by note (rec+0x0A hi7); when the note byte's bit7 is set also sets bit15 of rec+2 and re-reads via 0x48449E46 -- *(rec+0x34) halfword bits 10/11 = the note's allowed TG sides (read by TgVoiceSideSelect)
 0x4C02BEA4  TgVoiceRoutePtrCalc_entry
 0x4C02BF25  TgVoiceSideSelect       ; (a0 staging rec) -> TG side word for the request: rec+0x18 kit class 1/2 -> 0x400 (TG A), 3/4 -> 0x800 (TG B); class 0 -> mode 0x484D7751(): 1/2/3 -> *(rec+0x34) & 0x0C00 (the note's routing entry), 5 -> table 0x48586514, 4 -> 0; TgElemRequestFlags folds 0x400/0x800 into request bits 0x08/0x10 (= TgVoiceNodePick's side policy)

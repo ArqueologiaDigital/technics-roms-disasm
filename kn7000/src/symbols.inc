@@ -2321,7 +2321,7 @@
 .equ DemoJpgDataL7, 0x48585966
 .equ DemoJpgDataL8, 0x48585981
 
-# 61 manually reverse-engineered symbols:
+# 60 manually reverse-engineered symbols:
 .equ GenreStyleTable, 0x48735EE4   # 16 x 0x18 genre records {name[16],flag,styleCount@+0x11,listPtr@+0x14}
 .equ GenreCount, 0x48736064   # u16 = 16 rhythm genres
 .equ StyleNumToBankSlotLUT, 0x48734EE4   # 2048 x u16: style number -> bank/slot
@@ -2358,7 +2358,6 @@
 .equ FlashReadAutoselect, 0x4847F980   # read chip manufacturer/device ID
 .equ FlashReset, 0x4847F6C7   # reset to read-array mode
 .equ FlashProgram128Words, 0x4847F9F7   # 128-word chunk programmer
-.equ FlashAddrToSector, 0x4847E7C0
 .equ FlashChipIdTable, 0x485CF9E0   # MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors
 .equ FlashSectorMap, 0x485CF788   # bottom-boot sector geometry, total 0x200000
 .equ DiskLoadDispatch, 0x4852CFE4   # walks disk-file handler table

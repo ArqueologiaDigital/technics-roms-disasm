@@ -107,7 +107,9 @@ MANUAL_SYMBOLS = [
     (0x4847F980, "FlashReadAutoselect",   "read chip manufacturer/device ID"),
     (0x4847F6C7, "FlashReset",            "reset to read-array mode"),
     (0x4847F9F7, "FlashProgram128Words",  "128-word chunk programmer"),
-    (0x4847E7C0, "FlashAddrToSector",     ""),
+    # (0x4847E7C0 "FlashAddrToSector" was here: that address is the last byte of
+    # AcCustomStyleListBoxProc's `add -0x1c, sp`, not an instruction start, so the
+    # name cannot be right; dropped until the routine it meant is found)
     (0x485CF9E0, "FlashChipIdTable",      "MBM29LV160B / MX29LV160B / AT49BV16X4 descriptors"),
     (0x485CF788, "FlashSectorMap",        "bottom-boot sector geometry, total 0x200000"),
     # --- disk file load / install-to-flash path (idd7000)

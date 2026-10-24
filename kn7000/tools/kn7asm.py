@@ -37,6 +37,8 @@
 #   .incbin_range "path", START, END           append path[START:END] and
 #                                              assert the current offset == START
 #
+# An instruction operand may be NAME+N or NAME-N (folded to one number).
+#
 # EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ).
 # Numeric byte/word/long args additionally accept the same expressions.
 #
@@ -115,7 +117,8 @@ class Assembler:
 
     # Registers must never be treated as symbols even if something .equ's the name.
     _REGS = frozenset(("d0", "d1", "d2", "d3", "a0", "a1", "a2", "a3",
-                       "sp", "pc", "mdr", "psw", "lir", "lar"))
+                       "sp", "pc", "mdr", "psw", "lir", "lar",
+                       "other", "other0", "other2", "other3"))   # register-list members
 
     def resolve_operands(self, operands):
         """Substitute known symbol names in an instruction's operand string with
@@ -134,7 +137,16 @@ class Assembler:
                 return hex(self.forward(tok))
             self.guessed.setdefault(tok, (self.cur_file, self.cur_line))
             return hex(self.mn_base + len(self.out))
-        return re.sub(r"0x[0-9A-Fa-f]+|\d+|([A-Za-z_]\w*)", repl, operands)
+        out = re.sub(r"0x[0-9A-Fa-f]+|\d+|([A-Za-z_]\w*)", repl, operands)
+        # fold `NAME+N` / `NAME-N` (an address inside a labelled data item) into
+        # one number for the encoder
+        fold = re.compile(r"(0x[0-9A-Fa-f]+|\b\d+)\s*([+-])\s*(0x[0-9A-Fa-f]+|\d+)\b")
+        while True:
+            m = fold.search(out)
+            if not m:
+                return out
+            a, b = int(m.group(1), 0), int(m.group(3), 0)
+            out = out[:m.start()] + hex(a + b if m.group(2) == "+" else a - b) + out[m.end():]
 
     def forward(self, tok):
         """The estimated address of forward label `tok`: where the previous pass

@@ -48,6 +48,17 @@ def imm(tok):
         raise EncError(f"not an immediate: {tok!r}")
 
 
+def imm_w(tok):
+    """An immediate with an optional `:16` / `:32` suffix that forces the field
+    width (a constant the compiler or a hand-written routine stored wider than it
+    needs). Returns (value, width or None)."""
+    tok = tok.strip()
+    m = re.fullmatch(r"(.+):(16|32)", tok)
+    if m:
+        return imm(m.group(1)), int(m.group(2))
+    return imm(tok), None
+
+
 def target_op(tok):
     """A jmp/call/calls target, optionally suffixed `:32` to force the d32 form
     where the d16 one would reach (a linker that did not relax the call left it
@@ -224,10 +235,20 @@ def encode(mnem, ops_str, pc):
         _, si = reg(ops[0]); _, di = reg(ops[1])
         return b"\xf2" + u8(base | (si << 2) | di)
 
+    # --- bit ops through a register: bset/bclr dM, (aN) -> F0 8x / 9x ---
+    if mnem in ("bset", "bclr") and len(ops) == 2 and is_reg_tok(ops[0]):
+        c, mi = reg(ops[0]); m = mem(ops[1])
+        if c != "d" or m["kind"] != "areg":
+            raise EncError(f"{mnem} {ops_str}: takes dM, (aN)")
+        return b"\xf0" + u8((0x80 if mnem == "bset" else 0x90) | (mi << 2) | m["a"])
+
     # --- bit ops on an absolute address: bset/bclr/btst imm, (abs) ---
     if mnem in ("bset", "bclr", "btst") and len(ops) == 2 and ops[1].startswith("("):
         m = mem(ops[1]); mask = imm(ops[0]) & 0xFF
         kind = {"bset": 0, "bclr": 1, "btst": 2}[mnem]
+        if m["kind"] == "adisp" and (fits_u8(m["disp"]) or fits_s8(m["disp"])):
+            # (d8, aN) -> FA F0/F4/F8 | N, d8, imm8 (MAME prints d8 unsigned)
+            return b"\xfa" + u8(0xF0 | (kind << 2) | m["a"]) + u8(m["disp"]) + u8(mask)
         if m["kind"] == "abs" and fits_u16(m["disp"]):       # (abs16) -> 5 bytes
             return b"\xfe" + u8(0x80 | kind) + le16(m["disp"]) + u8(mask)
         if m["kind"] == "abs":                               # (abs32) -> 7 bytes
@@ -288,7 +309,11 @@ def enc_udf(unsigned, n, ops):
     return b"\xfd" + op2 + le32(v)
 
 
-REGLIST_BITS = {"d2": 0x80, "d3": 0x40, "a2": 0x20, "a3": 0x10}
+# movm/call/ret register-list bits (MAME mn103dasm.cpp f_reg_spec): "other" is
+# d0, d1, a0, a1, mdr, lir and lar; other0/2/3 are the remaining bits as MAME
+# names them (the kernel's interrupt entry saves other3)
+REGLIST_BITS = {"d2": 0x80, "d3": 0x40, "a2": 0x20, "a3": 0x10,
+                "other3": 0x08, "other2": 0x04, "other": 0x02, "other0": 0x01}
 
 
 def encode_reglist(tok):
@@ -301,8 +326,6 @@ def encode_reglist(tok):
         r = r.strip()
         if r in REGLIST_BITS:
             mask |= REGLIST_BITS[r]
-        elif r == "other":
-            mask |= 0x02
         else:
             raise EncError(f"unhandled reg-list member {r!r}")
     return mask
@@ -314,6 +337,15 @@ def is_reg_tok(t):
 
 def enc_move(mnem, ops, pc):
     src, dst = ops[0], ops[1]
+
+    # sp <-> (d8, aN): F8 F0 | N (load sp) / F8 F4 | N (store sp)
+    if mnem == "mov" and "sp" in (src, dst) and (src.startswith("(") or dst.startswith("(")):
+        m = mem(src if dst == "sp" else dst)
+        if m["kind"] in ("adisp", "areg"):
+            disp = m.get("disp", 0)
+            if not fits_s8(disp):
+                raise EncError(f"mov sp with (d, aN): only an 8-bit displacement, not {disp:#x}")
+            return b"\xf8" + u8((0xF0 if dst == "sp" else 0xF4) | m["a"]) + u8(disp)
 
     # register <-> memory
     if src.startswith("("):
@@ -340,14 +372,16 @@ def enc_move(mnem, ops, pc):
 
     # imm -> reg
     if mnem == "mov" and not is_reg_tok(src):
-        v = imm(src); dc, di = reg(dst)
+        v, w = imm_w(src); dc, di = reg(dst)
         if dc == "d":
-            if fits_s8(v):  return u8(0x80 | (di << 2) | di) + u8(v)
-            if fits_s16(v): return u8(0x2C | di) + le16(v)
+            if fits_s8(v) and w is None:  return u8(0x80 | (di << 2) | di) + u8(v)
+            if fits_s16(v) and w in (None, 16): return u8(0x2C | di) + le16(v)
+            if w == 16: raise EncError(f"mov {src}: does not fit 16 bits")
             return b"\xfc" + u8(0xCC | di) + le32(v)
         else:  # a-reg, zero-extended small forms
-            if fits_u8(v):  return u8(0x90 | (di << 2) | di) + u8(v)
-            if fits_u16(v): return u8(0x24 | di) + le16(v)
+            if fits_u8(v) and w is None:  return u8(0x90 | (di << 2) | di) + u8(v)
+            if fits_u16(v) and w in (None, 16): return u8(0x24 | di) + le16(v)
+            if w == 16: raise EncError(f"mov {src}: does not fit 16 bits")
             return b"\xfc" + u8(0xDC | di) + le32(v)
     raise EncError(f"unhandled {mnem} {ops}")
 
@@ -455,11 +489,12 @@ def enc_alu(mnem, ops):
             return b"\xf1" + u8(F1[k] | (si << 2) | di)
         raise EncError(f"unhandled reg-reg {mnem} {ops}")
 
-    v = imm(src)
+    v, w = imm_w(src)
 
     if mnem == "add" and dc == "sp":                       # add imm,sp
-        if fits_s8(v):  return b"\xf8\xfe" + u8(v)
-        if fits_s16(v): return b"\xfa\xfe" + le16(v)
+        if fits_s8(v) and w is None:  return b"\xf8\xfe" + u8(v)
+        if fits_s16(v) and w in (None, 16): return b"\xfa\xfe" + le16(v)
+        if w == 16: raise EncError(f"add {src}, sp: does not fit 16 bits")
         return b"\xfc\xfe" + le32(v)
 
     # per-op opcode nibbles for the FA (imm16) / FC (imm32) prefixed forms
@@ -472,8 +507,10 @@ def enc_alu(mnem, ops):
           ("btst", "d"): 0xEC}
     key = (mnem, dc)
     signed = mnem in ("add", "sub") or (mnem == "cmp" and dc == "d")
-    small = fits_s8(v) if signed else fits_u8(v)
-    mid = fits_s16(v) if signed else fits_u16(v)
+    small = (fits_s8(v) if signed else fits_u8(v)) and w is None
+    mid = (fits_s16(v) if signed else fits_u16(v)) and w in (None, 16)
+    if w == 16 and not mid:
+        raise EncError(f"{mnem} {src}: does not fit 16 bits")
 
     # imm8 short forms (each op has a distinct encoding)
     if small:
