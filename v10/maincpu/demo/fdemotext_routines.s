@@ -873,6 +873,9 @@ FDemoText_SendExtAlt_NoteLoop:
 	lda xsp, (xsp + 22)
 	ret
 
+; Returns in L the type byte that SndParam_FetchOscTableEntry produces for demo voice A: an 8-byte
+; local record with +2 = A and +3/+4 = the two bytes of A's entry in the table at (0x90f2)
+; (FDemoText_LookupTableEntry); the result is the record's byte 0.
 FDemoText_ProbeVoiceType:
 	dec 8, xsp
 	ld (xsp + 6), a

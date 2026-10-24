@@ -284,6 +284,8 @@ Display_UpdateRegion10_Check:
 Display_UpdateRegion10_Done:
 	ret
 
+; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX when bit 0 of
+; DISPLAY_ENABLE_FLAG is set.
 UIRender_SingleTable:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, UIRender_SingleTable_Body

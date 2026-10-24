@@ -536,6 +536,8 @@ CDlikeSwTtl_SetRecordAndNotify:
 	ld xde, 0:i3
 	jp ApPostEvent
 
+; Clears the byte at 0x21090 and posts EVT_REPAINT to the views NAKA_VIEW_DemoMed1, _DemoMed2
+; and _DemoMed3 (ApPostEvent).
 SeqInit_PostEventSequence:
 	ld (0x021090:24), 0x00
 	ld xwa, NAKA_VIEW_DemoMed1

@@ -20104,6 +20104,9 @@ ReadChunk_RestoreReg:
 	lda xsp, (xsp + 14)
 	ret
 
+; When bit 0 of the word at 0xe9e5 is set: runs play-mode state 4 (AccWrap_PlayModeStateMachine),
+; resets all MIDI channels (MIDI_ResetAllChannels) and sets bit 1.  Bit 2 is cleared in every
+; case.
 Acc_TransitionPlayMode:
 	ld wa, (0xe9e5:16)
 	bit 0, wa
@@ -20117,6 +20120,8 @@ Acc_TransitionPlayMode_Join:
 	andw (0xe9e5:16), 0xfffb
 	ret
 
+; Runs play-mode state 3 (AccWrap_PlayModeStateMachine) and clears bits 1 and 2 of the word at
+; 0xe9e5.
 Acc_StopPlayMode:
 	ld wa, 3:i3
 	calr AccWrap_PlayModeStateMachine
@@ -23792,6 +23797,7 @@ RingBuffer_ReadByte_IncDRAM:
 RingBuffer_ReadByte_Return:
 	ret
 
+; Returns HL = 0x7ff minus the word at 0xd0ac.
 Seq_CalcAddrOffset:
 	ldw hl, 0x7ff
 	sub hl, (0xd0ac:16)
@@ -24267,6 +24273,8 @@ CharMap_ActivePreamb_Increment:
 	inc 4, xsp
 	ret
 
+; Calls CharMap_ActivePreamb_Prologue with WA = the selected part (GetCurrentPartSelect) and
+; BC = A.
 CharMap_ActivePreamb_Prologue2:
 	dec 2, xsp
 	ld (xsp), a

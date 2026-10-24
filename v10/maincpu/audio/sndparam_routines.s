@@ -117,6 +117,12 @@ SndParam_NotifyAndReturn:
 	popw iz
 	retd 0x2
 
+; Writes a sound parameter by its 24-bit key.
+;   In:  XWA = key, BC and DE = the value arguments handed to the setter.
+;   Out: HL = 0, or 0xffff when the key is not registered or the setter reports failure.
+;   The key is hashed and SNDPARAM_HASH_TABLE probed as in SndParam_LookupReadOnly; the setter is
+;   SndParam_Lkp2_Dispatch_Data[record type byte +14] (types 0..7).  Depending on the word +2 of
+;   the setter's result, SndParam_WidgetNotifyType0 or _Type1 tells the UI.
 SndParam_LookupByKey:
 	lda xsp, (xsp - 10)
 	push xiz

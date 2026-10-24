@@ -9167,6 +9167,8 @@ SePitPit1_DrawStaticScreen:
 	call SeGfx_DrawBoundList
 	call SeMenu_PresetBrowser_Select
 	ret
+; Draws the static list SeMenu_PresetBrowser_Navigate_Records .. SeMenu_PresetBrowser_Navigate_Data
+; (SeGfx_DrawStaticList) with COLORBLIT_MODE cleared.
 SeMenu_PresetBrowser_Navigate:
 	; --- Helper 1: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
@@ -9174,6 +9176,8 @@ SeMenu_PresetBrowser_Navigate:
 	ld xix, SeMenu_PresetBrowser_Navigate_Data
 	call SeGfx_DrawStaticList
 	ret
+; Draws the static list SeMenu_PresetBrowser_Navigate_Data .. +5 (SeGfx_DrawStaticList) with
+; COLORBLIT_MODE cleared.
 SeMenu_PresetBrowser_Select:
 	; --- Helper 2: clear flag, setup XIY/XIX, call F0EC00 (21 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0

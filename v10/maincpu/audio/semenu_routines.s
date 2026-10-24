@@ -36,6 +36,7 @@ SeMenu_TriggerNotification:
 	set 6, (0xe3de:16)
 	ret
 
+; Stores A at 0xe3dc and sets bit 1 of 0xe3de.
 SeMenu_ClearNotification:
 	ld (0xe3dc:16), a
 	set 1, (0xe3de:16)
@@ -658,6 +659,8 @@ SeMenu_ClearDisplayBuffer_Loop:
 	lda xsp, (xsp + 12)
 	ret
 
+; Builds and flushes a sound-editor display element {0x80, 0, 0x0b, A, 1, C} in a 9-byte local
+; record (SeMenu_FlushDisplayObj).
 SeMenu_InitDisplayColumn:
 	lda xsp, (xsp - 10)
 	lda xde, (xsp)
@@ -1253,6 +1256,8 @@ SeMenu_BitShiftMask_Loop:
 	jr c, SeMenu_BitShiftMask_Loop
 	ret
 
+; Returns L = A >> BC (logical, one bit per pass; BC = 0 returns A).  Counterpart of
+; SeMenu_BitShiftMask.  Clobbers DE.
 SeMenu_BitShiftMask_End:
 	ld	l, a
 	ld	de, 0:i3
@@ -4736,6 +4741,7 @@ SeMenu_DrawEnvGraphLine_Epilogue:
 	popw	iz
 	lda	xsp, (xsp+10)
 	retd	2
+; Returns HL = (XWA * BC) / DE, unsigned (MUL then DIV).
 SeMenu_ApplyPartEdit_Helper9_Helper:
 	mul	xwa, bc
 	extz	xwa
@@ -6395,6 +6401,7 @@ SeMenu_OrPartConfig:
 	or (0x0205f2:24), a
 	ret
 
+; Sets bit 3 of 0xe3e2 (the flag SeTitle_DrawField also sets).
 SeMenu_SetPartConfigBit3:
 	set	3, (58338:24)
 	ret
@@ -6426,6 +6433,7 @@ SeMenu_LoadParamByte:
 	ld (xbc), a
 	ret
 
+; Stores A at 0x6c4.
 SeMenu_SetConfirmState:
 	ld (1732:16), a
 	ret
@@ -6479,6 +6487,7 @@ SeMenu_StoreEffectParam_Data:
 	ld	(xbc), a
 	ret
 
+; Stores C as byte WA of the block at 0x6c1.
 SeMenu_StoreEffectCoeff:
 	extz wa
 	lda xde, (1729:16)

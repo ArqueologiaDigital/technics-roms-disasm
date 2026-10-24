@@ -92,6 +92,7 @@ Display_SetBackgroundColor:
 	ld (0x03efa2:24), wa
 	ret
 
+; Stores WA in the word at 0x3efa4.
 GraphicsRender_ByteData:
 	ld	(0x03efa4:24), wa
 	ret
@@ -2710,6 +2711,8 @@ VGA_WriteReg_Delay:
 	ld (xde), c
 	ret
 
+; Returns in L byte WA of the VGA controller's register window at 0x170000 (no delay, unlike
+; _Write_VGA_Register).
 _Read_VGA_Register:
 	extz xwa
 	ld xbc, 0x170000

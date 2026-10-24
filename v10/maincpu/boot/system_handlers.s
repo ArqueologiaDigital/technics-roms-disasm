@@ -1850,6 +1850,9 @@ AudioMix_EnableChannels_Loop:
 	unlk	xiz
 	ret
 
+; Loads the eight registers of audio-mixer channel group A from the bytes at XBC: register
+; index (A << 5) | 0x10 + n goes to the address latch at 0x150000 and the byte to the data port
+; at 0x150002.  XBC is advanced past the eight bytes.
 AudioMix_WriteChannelGroup:
 	pushw de
 	sll a, 5
@@ -2511,6 +2514,9 @@ TaskSched_Resume_DecrementWait:
 	ld (xix + 10), a
 	jrl TaskSched_ReturnToDispatch
 
+; Kernel: wakes task A (ITRON wup_tsk).  A task in the waiting state (3 at +9 of its 12-byte
+; block at 0x47d + 12*A) is made ready (4) and appended to its priority's ready queue; otherwise
+; its wake-up count (+10) is incremented.  The scheduler then runs (TaskSched_Dispatch).
 TaskSched_WakeBySlotID:
 	push	sr
 	ei 6
@@ -3261,6 +3267,8 @@ TaskTimer_Register:
 	ld (xiy + 4), xwa
 	jrl TaskSched_Dispatch
 
+; Kernel: gives task A the priority C; a task in the ready state (4) is first unlinked from its
+; ready queue.  Interrupts at level 6, registers preserved.
 TaskSched_ChangePriority:
 	push	sr
 	ei 6
@@ -3528,6 +3536,9 @@ TempoRingBuf_WriteByte_Ext:
 	unlk	xiz
 	ret
 
+; Copies bytes into the tempo event buffer (ring descriptor ending at 0x1e753), one
+; Seq_RingBuf_WriteByte_Check per byte.
+;   In:  stack +4 = count (word), +6 = data pointer.
 TempoRingBuf_WriteBytes:
 	link	xiz, 0x0000
 	push xiy
@@ -3589,6 +3600,8 @@ TempoRingBuf_InlineBytecode2:
 	popw	ix
 	ret
 
+; Seq_RingBuf_ReadAhead on the tempo event buffer (descriptor ending at 0x1e753).  Preserves IX
+; and XDE.
 TempoRingBuf_ReadAlternate:
 	pushw ix
 	push xde
@@ -3804,6 +3817,8 @@ AltEvtBuf_Helpers:
 	popw	ix
 	ret
 
+; Writes the stack byte (+4) to the sequencer event buffer: Seq_RingBuf_WriteByte_Small on the
+; ring descriptor ending at 0x1f271.  Preserves IX and XDE.
 SeqEvtBuf_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -3965,6 +3980,8 @@ SeqMain_SaveWritePos:
 	popw hl
 	ret
 
+; Seq_RingBuf_ReadData on the ring buffer whose descriptor ends at 0x1f37b.  Preserves IX and
+; XDE.
 SeqMain_ReadData:
 	pushw ix
 	push xde
@@ -4107,6 +4124,8 @@ SeqBuf2_ReadByte:
 	popw ix
 	ret
 
+; Writes the stack byte (+4) to the ring buffer whose descriptor ends at 0x1f88f
+; (Seq_RingBuf_WriteByte_512).  Preserves IX and XDE.
 SeqBuf2_WriteByte:
 	link	xiz, 0x0000
 	pushw ix
@@ -5011,6 +5030,9 @@ RingBuf128_ReadAlt2_Dequeue:
 	ret
 
 
+; Writes A into a 128-byte ring buffer.
+;   In:  XDE = buffer; descriptor words below it: write index (-4), free count (-2).
+;   Out: HL = the free count left, or 0xffff when the buffer was full.
 RingBuf128_WriteByte_CheckFull:
 	cpw (xde - 2), 0x0
 	jr nz, RingBuf128_WriteByte_Store
@@ -5096,6 +5118,8 @@ Seq_RingBuf_WriteByte_Small_Store:
 	ld hl, (xde - 2)
 	ret
 
+; Empties a 512-byte ring buffer: the descriptor words below XDE (-10 read-ahead, -8 read, -6
+; checkpoint, -4 write) become 0 and the free count (-2) 0x1ff.
 Seq_RingBuf_Init_512:
 	ldw (xde - 10), 0x0
 	ldw (xde - 8), 0x0
@@ -5104,6 +5128,9 @@ Seq_RingBuf_Init_512:
 	ldw (xde - 2), 0x1ff
 	ret
 
+; Takes the next byte from a 512-byte ring buffer: reads at the read index (-8 below XDE),
+; advances it and frees one byte (-2).  Out: HL = the byte, or 0xffff when the read index has
+; reached the write index (-4).  Despite the name it reads.
 RingBuf_CheckFull_512:
 	ld ix, (xde - 8)
 	cp ix, (xde - 4)
@@ -5119,6 +5146,9 @@ RingBuf512_CheckFull_Read:
 	incw 1, (xde - 2)
 	ret
 
+; Reads ahead in a ring buffer without freeing space: returns in HL the byte at the read-ahead
+; index (-10 below XDE) and advances it (wrapping at 0x1ff), or 0xffff when it has reached the
+; checkpoint (-6).  Despite the name it neither checks for full nor wraps at 256.
 RingBuf_CheckFull_256:
 	ld ix, (xde - 10)
 	cp ix, (xde - 6)
@@ -5133,6 +5163,9 @@ RingBuf256_CheckFull_Read:
 	ld (xde - 10), ix
 	ret
 
+; Reads ahead in a 512-byte ring buffer up to the write index: returns in HL the byte at the
+; read-ahead index (-10 below XDE) and advances it, or 0xffff when it equals the write index
+; (-4).  Frees no space.
 RingBuf512_ReadAlt_ByteBlock:
 	ld	ix, (xde-10)
 	cp	ix, (xde-4)
@@ -5211,6 +5244,9 @@ RingBuf1024_ReadAlt_ByteBlock_Skip:
 	ld	(xde-10), ix
 	ret
 
+; Writes A into a 1024-byte ring buffer.
+;   In:  XDE = buffer; descriptor words below it: write index (-4), free count (-2).
+;   Out: HL = the free count left, or 0xffff when the buffer was full.
 Seq_RingBuf_WriteByte:
 	cpw (xde - 2), 0x0
 	jr nz, Seq_RingBuf_WriteByte_1024_Store

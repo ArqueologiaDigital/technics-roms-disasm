@@ -570,6 +570,7 @@ DemoMode_Main_Operation:
 	call SeqInit_FinalEvent
 	jp Seq_StartMainControl
 
+; Calls CtrlPanel_IndicatorDispatch with WA = 0x22, BC = 0, DE = 0 and stores 4 at 0x8f4e.
 FDemo_IndicatorSetup:
 	ldw wa, 0x22
 	ld bc, 0:i3
@@ -1028,10 +1029,13 @@ Banner_Loop_Exit:
 	inc 4, xsp
 	ret
 
+; Demo_ScanActivePartChannels, then Demo_PreSetup.
 Demo_PreSetupAndScan:
 	calr Demo_ScanActivePartChannels
 	jr Demo_PreSetup
 
+; Stops the demo's playback: AccWrap_PlayModeDispatch, SeqBuf_Init, SeqPlay_EmergencyStopAll,
+; and clears the byte at 0x431.
 Demo_PreSetup:
 	call AccWrap_PlayModeDispatch
 	call SeqBuf_Init
@@ -5121,6 +5125,7 @@ FileIO_GetRecordByType_Lookup:
 	ld (0x025eb0:24), 0x00
 	ret
 
+; Returns XHL = 0x271f2, a fixed RAM address.
 FileIO_GetRecordPtrAlt:
 	lda xhl, (0x0271f2:24)
 	ret
@@ -5133,6 +5138,7 @@ FileIO_WriteRecordName:
 	ld (0x0271fe:24), 0x00
 	ret
 
+; Returns in HL the bit word at 0x272cc (FileIO_FormatName_Loop sets its bits).
 FileIO_WriteRecordName_Loop:
 	ld hl, (0x0272cc:24)
 	ret
@@ -5189,6 +5195,7 @@ FileIO_FormatName_CopyLoop:
 	and (0x272cc:24), bc
 	ret
 
+; Returns in HL the bit word at 0x272ce.
 FileIO_FormatName_Done:
 	ld hl, (0x0272ce:24)
 	ret
@@ -5219,6 +5226,8 @@ FileIO_BuildRecordPath_AddExt:
 	scc8 z, l
 	ret
 
+; Sets bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.  FileIO_BuildRecordPath_Return
+; clears it.
 FileIO_BuildRecordPath_Done:
 	cp a, 0xa
 	ret nc
@@ -6326,6 +6335,9 @@ GetFileCount_StoreAndClamp:
 	ld (0x0271f0:24), wa
 	ret
 
+; Reads a MIDI variable-length number from the open file (FileIO_ReadByte per byte, seven bits
+; per byte while bit 7 is set).  Out: HL = the value, clamped to 0x7fff, or 0xffff on a read
+; error.
 ReadVariableLengthInt:
 	push xiz
 	ld xiz, 0:i3
