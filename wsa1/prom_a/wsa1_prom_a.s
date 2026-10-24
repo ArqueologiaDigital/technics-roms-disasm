@@ -90614,7 +90614,7 @@ SysExSession_AnswerByStatus:
 	cp h, 0x00:i3                                          ; FB28D2  ce d8
 	jr nz, .LFB28E1                                      ; FB28D4  6e 0b
 	pushw 0x05                                           ; FB28D6  0b 05 00
-	lda xwa, (SysExMessageStrings_F4FEB4:24)             ; FB28D9  f2 b4 fe f4 30
+	lda	xwa, (SysExMessageStrings_F4FEB4:24)         ; FB28D9  f2 b4 fe f4 30
 	push XWA                                             ; FB28DE  38
 	jr .LFB28F7                                          ; FB28DF  68 16
 .LFB28E1:
@@ -94864,7 +94864,7 @@ SysExParamDesc_FindForEvent:
 	ld XIY,(XBC)                                         ; FB4D33  a1 25
 	ld XIX,XIY                                           ; FB4D35  ed 8c
 	ld (xiz-8), xiy                                      ; FB4D37  be f8 65
-	lda xbc, (SysExParamDesc_Placeholder:24)             ; FB4D3A  f2 f9 11 f5 31
+	lda	xbc, (SysExParamDesc_Placeholder:24)         ; FB4D3A  f2 f9 11 f5 31
 	cp XIY,XBC                                           ; FB4D3F  e9 f5
 	jr z, .LFB4D5A                                       ; FB4D41  66 17
 	ld H,(XIX+0x07)                                      ; FB4D43  8c 07 26
@@ -94910,7 +94910,7 @@ SysExTx_SendParamValue:
 	ld XBC,(XIX+0x04)                                    ; FB4D89  ac 04 21
 	ld (xiz-4), xbc                                      ; FB4D8C  be fc 61
 	ld (xiz-11), xbc                                     ; FB4D8F  be f5 61
-	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4D92  f2 f9 11 f5 30
+	lda	xwa, (SysExParamDesc_Placeholder:24)         ; FB4D92  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4D97  e8 f1
 	jrl z, .LFB4E1B                                      ; FB4D99  76 7f 00
 	ld xbc, (xiz-4)                                      ; FB4D9C  ae fc 21
@@ -94987,7 +94987,7 @@ SysExTx_SendWordFieldParamValue:
 	jrl z, .LFB4ECE                                      ; FB4E45  76 86 00
 	ld XBC,(XIX+0x04)                                    ; FB4E48  ac 04 21
 	ld (xiz-7), xbc                                      ; FB4E4B  be f9 61
-	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4E4E  f2 f9 11 f5 30
+	lda	xwa, (SysExParamDesc_Placeholder:24)         ; FB4E4E  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4E53  e8 f1
 	jrl z, .LFB4ECE                                      ; FB4E55  76 76 00
 	ld XBC,(XIX)                                         ; FB4E58  a4 21
@@ -95059,7 +95059,7 @@ sub_FB4ED4:
 	ld XWA,(XBC+0x04)                                    ; FB4F01  a9 04 20
 	ld (xiz-4), xwa                                      ; FB4F04  be fc 60
 	ld (xiz-11), xwa                                     ; FB4F07  be f5 60
-	lda xiy, (SysExParamDesc_Placeholder:24)             ; FB4F0A  f2 f9 11 f5 35
+	lda	xiy, (SysExParamDesc_Placeholder:24)         ; FB4F0A  f2 f9 11 f5 35
 	cp XWA,XIY                                           ; FB4F0F  ed f0
 	jrl z, .LFB4F87                                      ; FB4F11  76 73 00
 	ld xwa, (xiz-4)                                      ; FB4F14  ae fc 20
@@ -95138,7 +95138,7 @@ SysExTx_SendPartParamValue:
 	ld XBC,(XIX+0x04)                                    ; FB4FB6  ac 04 21
 	ld (xiz-4), xbc                                      ; FB4FB9  be fc 61
 	ld (xiz-18), xbc                                     ; FB4FBC  be ee 61
-	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB4FBF  f2 f9 11 f5 30
+	lda	xwa, (SysExParamDesc_Placeholder:24)         ; FB4FBF  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB4FC4  e8 f1
 	jrl z, .LFB5061                                      ; FB4FC6  76 98 00
 	ld xbc, (xiz-4)                                      ; FB4FC9  ae fc 21
@@ -95558,7 +95558,7 @@ SysExTx_CombinationNumberAndBank:
 	ld XWA,(XBC+0x04)                                    ; FB539A  a9 04 20
 	ld (xiz-4), xwa                                      ; FB539D  be fc 60
 	ld (xiz-13), xwa                                     ; FB53A0  be f3 60
-	lda xiy, (SysExParamDesc_Placeholder:24)             ; FB53A3  f2 f9 11 f5 35
+	lda	xiy, (SysExParamDesc_Placeholder:24)         ; FB53A3  f2 f9 11 f5 35
 	cp XWA,XIY                                           ; FB53A8  ed f0
 	jrl z, .LFB5420                                      ; FB53AA  76 73 00
 	ld xwa, (xiz-4)                                      ; FB53AD  ae fc 20
@@ -95629,7 +95629,7 @@ SysExTx_ProgramChangeAndBank:
 	ld XBC,(XIX+0x04)                                    ; FB544E  ac 04 21
 	ld XIX,XBC                                           ; FB5451  e9 8c
 	ld (xiz-22), xbc                                     ; FB5453  be ea 61
-	lda xwa, (SysExParamDesc_Placeholder:24)             ; FB5456  f2 f9 11 f5 30
+	lda	xwa, (SysExParamDesc_Placeholder:24)         ; FB5456  f2 f9 11 f5 30
 	cp XBC,XWA                                           ; FB545B  e8 f1
 	jrl z, .LFB5567                                      ; FB545D  76 07 01
 	ld H,(XIX+0x08)                                      ; FB5460  8c 08 26
@@ -95763,23 +95763,23 @@ GmReset_FieldTablesAndEffectAlgorithms:
 	ld l, 0x06:opc                                          ; FB559A  27 06
 .LFB559C:
 	ld (xiz-8), xix                                      ; FB559C  be f8 64
-	lda xbc, (ParamFieldInit_x32_F4FE38:24)              ; FB559F  f2 38 fe f4 31
+	lda	xbc, (ParamFieldInit_x32_F4FE38:24)          ; FB559F  f2 38 fe f4 31
 	add	xbc, (xiz-8)                                 ; FB55A4  ae f8 81
 	ld A,(XBC)                                           ; FB55A7  81 21
 	ld (xiz-4), a                                        ; FB55A9  be fc 41
 	ld xbc, (xiz-8)                                      ; FB55AC  ae f8 21
 	inc 1,XBC                                            ; FB55AF  e9 61
-	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55B1  e9 c8 38 fe f4 00
+	add	xbc, ParamFieldInit_x32_F4FE38               ; FB55B1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55B7  81 21
 	ld (xiz-3), a                                        ; FB55B9  be fd 41
 	ld xbc, (xiz-8)                                      ; FB55BC  ae f8 21
 	inc 2,XBC                                            ; FB55BF  e9 62
-	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55C1  e9 c8 38 fe f4 00
+	add	xbc, ParamFieldInit_x32_F4FE38               ; FB55C1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55C7  81 21
 	ld (xiz-2), a                                        ; FB55C9  be fe 41
 	ld xbc, (xiz-8)                                      ; FB55CC  ae f8 21
 	inc 3,XBC                                            ; FB55CF  e9 63
-	add XBC,ParamFieldInit_x32_F4FE38                    ; FB55D1  e9 c8 38 fe f4 00
+	add	xbc, ParamFieldInit_x32_F4FE38               ; FB55D1  e9 c8 38 fe f4 00
 	ld A,(XBC)                                           ; FB55D7  81 21
 	ld (xiz-1), a                                        ; FB55D9  be ff 41
 	ld h, 0x20:opc                                          ; FB55DC  26 20
@@ -95802,22 +95802,22 @@ GmReset_FieldTablesAndEffectAlgorithms:
 	ld (xiz-8), xix                                      ; FB55FF  be f8 64
 	ld xbc, (xiz-8)                                      ; FB5602  ae f8 21
 	ld (xiz-12), xbc                                     ; FB5605  be f4 61
-	add XBC,ParamFieldInit_F4FE50                        ; FB5608  e9 c8 50 fe f4 00
+	add	xbc, ParamFieldInit_F4FE50                   ; FB5608  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB560E  81 21
 	ld (xiz-4), a                                        ; FB5610  be fc 41
 	ld xbc, (xiz-12)                                     ; FB5613  ae f4 21
 	inc 1,XBC                                            ; FB5616  e9 61
-	add XBC,ParamFieldInit_F4FE50                        ; FB5618  e9 c8 50 fe f4 00
+	add	xbc, ParamFieldInit_F4FE50                   ; FB5618  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB561E  81 21
 	ld (xiz-3), a                                        ; FB5620  be fd 41
 	ld xbc, (xiz-12)                                     ; FB5623  ae f4 21
 	inc 2,XBC                                            ; FB5626  e9 62
-	add XBC,ParamFieldInit_F4FE50                        ; FB5628  e9 c8 50 fe f4 00
+	add	xbc, ParamFieldInit_F4FE50                   ; FB5628  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB562E  81 21
 	ld (xiz-2), a                                        ; FB5630  be fe 41
 	ld xbc, (xiz-12)                                     ; FB5633  ae f4 21
 	inc 3,XBC                                            ; FB5636  e9 63
-	add XBC,ParamFieldInit_F4FE50                        ; FB5638  e9 c8 50 fe f4 00
+	add	xbc, ParamFieldInit_F4FE50                   ; FB5638  e9 c8 50 fe f4 00
 	ld A,(XBC)                                           ; FB563E  81 21
 	ld (xiz-1), a                                        ; FB5640  be ff 41
 	lda xbc, (xiz-4)                                     ; FB5643  be fc 31
@@ -97010,10 +97010,10 @@ SysEx_FeatureWordForVariant:
 	jr NC,.LFB601F                                       ; FB5FFE  6f 1f
 	cp	(Variant_Flag:8), 0x01                               ; FB6000  c0 c4 3f 01
 	jr nz, .LFB600D                                      ; FB6004  6e 07
-	lda xix, (WordTable_F4FE6A:24)                       ; FB6006  f2 6a fe f4 34
+	lda	xix, (WordTable_F4FE6A:24)                   ; FB6006  f2 6a fe f4 34
 	jr .LFB6012                                          ; FB600B  68 05
 .LFB600D:
-	lda xix, (WordTable_F4FE76:24)                       ; FB600D  f2 76 fe f4 34
+	lda	xix, (WordTable_F4FE76:24)                   ; FB600D  f2 76 fe f4 34
 .LFB6012:
 	ld c, 0x02:opc                                          ; FB6012  23 02
 	mul	bc, (xiz+8)                                  ; FB6014  8e 08 43
@@ -97555,7 +97555,7 @@ SysExRx_MatchTrie:
 	ld BC,DE                                             ; FB63F5  da 89
 	extz XBC                                             ; FB63F7  e9 12
 	ld (xiz-6), xbc                                      ; FB63F9  be fa 61
-	add XBC,SysExDecodeTree_Root                         ; FB63FC  e9 c8 5b 11 f5 00
+	add	xbc, SysExDecodeTree_Root                    ; FB63FC  e9 c8 5b 11 f5 00
 	ld A,(XBC)                                           ; FB6402  81 21
 	ld (xiz-1), a                                        ; FB6404  be ff 41
 	cp A,0xff                                            ; FB6407  c9 cf ff
@@ -97576,7 +97576,7 @@ SysExRx_MatchTrie:
 	ld xix, (xiz-6)                                      ; FB642B  ae fa 24
 	ld XBC,XIX                                           ; FB642E  ec 89
 	inc 1,XBC                                            ; FB6430  e9 61
-	add XBC,SysExDecodeTree_Root                         ; FB6432  e9 c8 5b 11 f5 00
+	add	xbc, SysExDecodeTree_Root                    ; FB6432  e9 c8 5b 11 f5 00
 	ld H,(XBC)                                           ; FB6438  81 26
 	inc 8,XSP                                            ; FB643A  ef 60
 	cp h, 0x00:i3                                          ; FB643C  ce d8
@@ -97590,7 +97590,7 @@ SysExRx_MatchTrie:
 	calr U8Rec16_SetField                                          ; FB644E  1e c8 fd
 	ld xix, (xiz-6)                                      ; FB6451  ae fa 24
 	inc 2,XIX                                            ; FB6454  ec 62
-	lda xbc, (SysExDecodeTree_Root:24)                   ; FB6456  f2 5b 11 f5 31
+	lda	xbc, (SysExDecodeTree_Root:24)               ; FB6456  f2 5b 11 f5 31
 	add XBC,XIX                                          ; FB645B  ec 81
 	ld XWA,(XBC)                                         ; FB645D  a1 20
 	ld B,(XWA)                                           ; FB645F  80 22
@@ -97601,7 +97601,7 @@ SysExRx_MatchTrie:
 	ld xbc, (0x60fcd8:24)                               ; FB6469  e2 d8 fc 60 21
 	push XBC                                             ; FB646E  39
 	calr U8Rec16_SetField                                          ; FB646F  1e a7 fd
-	lda xbc, (SysExDecodeTree_Root:24)                   ; FB6472  f2 5b 11 f5 31
+	lda	xbc, (SysExDecodeTree_Root:24)               ; FB6472  f2 5b 11 f5 31
 	add XBC,XIX                                          ; FB6477  ec 81
 	ld XWA,(XBC)                                         ; FB6479  a1 20
 	ld B,(XWA+0x01)                                      ; FB647B  88 01 22
@@ -97614,7 +97614,7 @@ SysExRx_MatchTrie:
 .LFB648A:
 	ld XBC,XIX                                           ; FB648A  ec 89
 	inc 2,XBC                                            ; FB648C  e9 62
-	add XBC,SysExDecodeTree_Root                         ; FB648E  e9 c8 5b 11 f5 00
+	add	xbc, SysExDecodeTree_Root                    ; FB648E  e9 c8 5b 11 f5 00
 	ld XBC,(XBC)                                         ; FB6494  a1 21
 	ld XIX,XBC                                           ; FB6496  e9 8c
 	jr .LFB64A3                                          ; FB6498  68 09
@@ -98449,7 +98449,7 @@ SysExRx_CheckCommandClass:
 	calr U8Rec16_GetField                                          ; FB6BA7  1e 29 f7
 	extz WA                                              ; FB6BAA  d8 12
 	extz XWA                                             ; FB6BAC  e8 12
-	add XWA,SysExRxClass_ByResult                        ; FB6BAE  e8 c8 82 fe f4 00
+	add	xwa, SysExRxClass_ByResult                   ; FB6BAE  e8 c8 82 fe f4 00
 	ld C,(XWA)                                           ; FB6BB4  80 23
 	extz BC                                              ; FB6BB6  d9 12
 	inc 6,XSP                                            ; FB6BB8  ef 66
@@ -100905,7 +100905,7 @@ SysExTx_ResetBuffer:
 SysExXfer_ClearJobRecords:
 	push XIX                                             ; FB8117  3c
 	ldw bc, 0x08                                         ; FB8118  31 08 00
-	lda xiy, (ZeroBlock16_F4FEA4:24)                     ; FB811B  f2 a4 fe f4 35
+	lda	xiy, (ZeroBlock16_F4FEA4:24)                 ; FB811B  f2 a4 fe f4 35
 	lda xix, (0x60fce8:24)                               ; FB8120  f2 e8 fc 60 34
 	ldirw                                                ; FB8125  95 11
 	ldw bc, 0x08                                         ; FB8127  31 08 00
