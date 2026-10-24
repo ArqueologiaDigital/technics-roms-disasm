@@ -49,6 +49,9 @@ ToneGen_StoreBlockAndLink:
 ToneGen_DispatchReturn:
 	ret
 
+; Appends block IX (after DispatchHandler_JumpToSubHandler) to the song-data chain being written:
+; the current block 0x28af gets IX as its forward link, IX gets 0x28af as its backward link and
+; 0xffff as forward link, and the write position becomes block IX, offset 5.  Preserves XIX, XIY.
 ToneGen_DispatchAndLinkBlock:
 	push xix
 	push xiy
@@ -130,6 +133,8 @@ VoiceChannel_LookupParams:
 VoiceChannel_LookupReturn:
 	ret
 
+; Sets bit 3 of byte +4 of the current MIDI channel's record (VoiceChannel_GetParamBlock) when the
+; controller value 0xfad is 64 or more, clears it otherwise, and sets bit 4 (value present).
 VoiceChannel_SetPanDirection:
 	call VoiceChannel_GetParamBlock
 	ld w, (xiy + 4)
@@ -276,6 +281,8 @@ SoundGen_ClampUpdateVoice:
 VoiceChannel_NullRet2:
 	ret
 
+; Stores the controller value 0xfad in the low 7 bits of byte +7 of the current MIDI channel's
+; record (bit 7 kept).
 VoiceChannel_SetParamByte7:
 	call VoiceChannel_GetParamBlock
 	ld a, (4013:16)
@@ -285,6 +292,8 @@ VoiceChannel_SetParamByte7:
 	ld (xiy + 7), w
 	ret
 
+; Stores the controller value 0xfad in the low 7 bits of byte +5 of the current MIDI channel's
+; record (bit 7 kept).
 VoiceChannel_MergeParamByte5:
 	call VoiceChannel_GetParamBlock
 	ld a, (4013:16)
@@ -294,6 +303,9 @@ VoiceChannel_MergeParamByte5:
 	ld (xiy + 5), w
 	ret
 
+; Selects the data-entry parameter of the current MIDI channel (0xfab low nibble) from its
+; parameter-number pair: when the high byte (table 0x1093) is 0 and the low byte (table 0x10a3)
+; is 0..2, that number goes to the table at 0x10b3; otherwise 0xff (none).
 SoundGen_LookupChannelBankParams:
 	ld iy, (4011:16)
 	and iy, 0xf
@@ -521,6 +533,8 @@ FileIO_ReadBlockToBuffer:
 	pop xwa
 	ret
 
+; Reads the next 0x400 bytes of the open file into the buffer at 0x13fa (FileIO_ReadBlock) and
+; stores the byte count (negative on error) in FILEIO_BLOCK_BYTES.  Preserves XWA, XBC, XHL.
 FileIO_ReadBlockToFilePos:
 	push xwa
 	push xbc
@@ -606,6 +620,9 @@ SoundGen_InitVoiceData:
 ; SoundGen_UpdateAndRefresh is not established.
 	.byte 0x04, 0x05, 0x06
 
+; In mode 2 (0x11f8) for MIDI channel 9 only: looks up the voice for the channel's stored
+; selection (word at 0x1a37 + 2 * channel) and note 0xfac (SndParam_LookupByChannel).
+;   Out: A = the result, or 0 when it is 0xff or the condition does not hold.  Preserves XHL.
 SndParam_LookupChannelVoice:
 	push xhl
 	cp (4600:16), 2
@@ -8156,6 +8173,8 @@ SeqChan_ByteBlockC_Skip3:
 SeqChan_ByteBlockC_Epilogue:
 	pop	xiz
 	ret
+; Builds the floppy command for one sector transfer of type 4 (write) from its stack arguments and
+; the drive byte +4 of the request, and runs it (SeqStep_ParseVariableHeader).
 SeqChan_ByteBlockD:
 	ld	xwa, (xsp+16)
 	push	xwa
@@ -8534,6 +8553,8 @@ FDC_ReturnAndPop:
 	ld	hl, 1:i3
 	ret
 
+; Stores the disk type (stack argument, byte) in 0x3e3e4, sets the word 0x3e3e6 = 1 and clears
+; 0x3e3be.
 FDC_StoreDiskType:
 	ld a, (xsp + 4)
 	ld (0x03e3e4:24), a
@@ -9540,6 +9561,10 @@ GetDiskFreeSpace_Epilogue:
 	inc 4, xsp
 	ret
 
+; Returns the volume label of the disk (name from the HAMA function table).  The disk type
+; (FDC_ReadDiskType) 0..6 selects a case through GetVolumeLabel_CaseTable /
+; GetVolumeLabel_JumpTable; other types read it from the FAT directory
+; (FileIO_ReadVolumeLabelEntry).
 GetVolumeLabel:
 	lda xsp, (xsp - 56)
 	push xiz
@@ -10169,6 +10194,7 @@ FindFirst_SndTable_Return:
 	inc 4, xsp
 	ret
 
+; Out: HL = 0 when XWA is not null, 0xffff when it is.
 FileIO_ValidateHandle:
 	or xwa, xwa
 	jr nz, FileIO_ValidateHandle_Ok
@@ -10901,6 +10927,7 @@ Rhythm_DispatchNote_Finalize:
 	pop xiz
 	ret
 
+; Alias entry: jumps to Rhythm_TransposeWithMod.
 Rhythm_TransposeWithMod_Tramp:
 	jp Rhythm_TransposeWithMod
 Rhythm_TransposeTrampBlock:
@@ -11281,6 +11308,8 @@ AccChord_CompareNoteC:
 AccChord_ReadKeysRet:
 	ret
 
+; Calls BitMapOut_CheckDiskAndApply when the low 3 bits of the panel byte 0xfc5d are not 0.
+; Preserves XWA.
 AccDisplay_RefreshIfDiskActive:
 	push xwa
 	ld a, (0xfc5d:16)

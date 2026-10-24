@@ -1722,6 +1722,7 @@ SMF_CalcFilePosition:
 	ld (4005:16), a
 	ret
 
+; Clears the 1 KB file buffer at 0x13fa (0x200 words).  Preserves XIX, XWA.
 SMF_ClearFileBuffer:
 	push xix
 	push xwa
@@ -2399,6 +2400,8 @@ SMF_AdvanceInPageChain_Epilogue:
 	pop	xhl
 	ret
 
+; Sets 0x112a from the type bytes at +5 / +6 of the first song slot (SEQ_SONG_SLOTS + 4 + 1/2):
+; with +5 = 1, the value +6 = 3, 6 or 7 gives 1, 4 or 5; anything else leaves 0.
 SMF_DetectFormat:
 	ld (4394:16), 0
 	ld xde, SEQ_SONG_SLOTS

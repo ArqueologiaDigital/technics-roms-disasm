@@ -43,6 +43,9 @@ Rhythm_DispatchNote_Helper:
 	call	AccStyle_TempoLookupData_Helper
 	ret
 
+; Looks up a two-byte style value: entry (0x90eb) (0..0x4f) of group (0x90ea) (0..15) of
+; AccStyle_TempoWordTable, the group base taken from AccStyle_TempoMultiplierTable; its bytes go to
+; 0x90ee / 0x90ef.  Preserves XHL, XWA.
 AccStyle_LookupTempoAndVelocity:
 	push xhl
 	push xwa
@@ -139,6 +142,7 @@ AccStyle_Velocity_StoreResult:
 	pop xhl
 	ret
 
+; Sets bit 7 of 0x34cd when 0x32f1 is 14 (composer) but the current mode is not 14.
 AccStyle_CheckRecordMode:
 	ld a, (0x32f1:16)
 	cp a, 0xe
@@ -339,6 +343,9 @@ AccStyle_ApplyChanges_Finalize:
 	call Rhythm_ProcessAllPartsAndLoad
 	ret
 
+; Clears the accompaniment playback state (positions 0x415 / 0x416 / 0x434 / 0x435, the part
+; counters 0x327d..0x3280, 0x32ab..0x32c2, 0x3328, 0x334d, 0x3385..0x338a) and the channel states
+; (AccTone_CallWithSaveAll).
 AccStyle_ResetAllVoiceState:
 	xor wa, wa
 	ld (1045:16), a
@@ -380,6 +387,11 @@ AccStyle_ResetAllVoiceState:
 	call AccTone_CallWithSaveAll
 	ret
 
+; Applies a style numbered below 0x80: takes (0x3305) & 3 into 0x3338 / 0x333a, finds the style
+; for (0x32e5, 0x32e6) (AccVoice_LookupWithOffset) into 0x32ce, sets its time signature and bank,
+; updates the tuning (Rhythm_UpdateTuningConfig) and then either selects the part offset
+; (AccVoice_SelectPartOffset, when (0x32ff) & 7 is set) or sets up the part addresses and loads the
+; tuning block, setting bits 0..5 of 0x332c.
 AccStyle_ApplyStandardStyle:
 	ld a, (0x3305:16)
 	and a, 0x3
@@ -411,6 +423,10 @@ AccStyle_ApplyStd_LoadTuning:
 AccStyle_ApplyStd_Return:
 	ret
 
+; Loads the parameter address of each of the six parts (0x3287..0x3291) from the style at XIY,
+; the parameter index of each being its byte in 0x32a3..0x32a8 (AccPart_LookupBoundVoiceParam,
+; AccPart_GetParamAddr), points 0x3293 at AccStyle_DefaultStream + 6 and clears bits 0..5 of
+; 0x3316..0x3318.  Byte +977 of the style goes to 0x3285.
 AccStyle_SetupPartAddresses:
 	ld	a, (xiy+977)
 	ld (0x3285:16), a
@@ -695,6 +711,8 @@ AccPart_InitPositionsAndBase:
 	ld (0x3293:16), xwa
 	ret
 
+; Re-initialises the part positions for the style at (0x32ce), copies its tuning records, sets bits
+; 0..5 of 0x332c and clears them in 0x3316..0x3318.
 AccPart_ResetAndCopyTuning:
 	ld xiy, (0x32ce:16)
 	calr AccPart_InitPositionsAndBase
@@ -722,6 +740,7 @@ AccBuf_ResetAllPositions:
 	call AccBuf_ResetOnePosition
 	ret
 
+; Appends the record 0xd0 0x01 0x10 0x01 to the ring buffer at 0x2a94.
 AccBuf_InitKbd1WithMarkers:
 	ld xhl, 0x2a94
 	ld iy, (xhl + 4)
@@ -737,6 +756,7 @@ AccBuf_InitKbd1WithMarkers:
 	ld (xhl + 4), iy
 	ret
 
+; Sends the three-byte rhythm message 0xd8 0x10 0x00.
 Rhythm_SendResetMsg:
 	ld a, 0xd8:opc
 	ld w, 0x10:opc
@@ -761,6 +781,8 @@ Rhythm_UpdateTuningConfig:
 	calr Rhythm_LookupTuningRange
 	ret
 
+; Out: A = Rhythm_LookupTuningByStyle_Data[...] for style W and variation A: the index is the
+; style group (Rhythm_LookupStyleIndex) plus AccVoice_LookupParamIndex.
 Rhythm_LookupTuningByStyle:
 	calr Rhythm_LookupStyleIndex
 	calr AccVoice_LookupParamIndex
@@ -768,6 +790,9 @@ Rhythm_LookupTuningByStyle:
 	ld	a, (xhl+a)
 	ret
 
+; Sets the two velocity settings 0x333f / 0x3340 from the style at XIY (word at the offset
+; Rhythm_LookupTuningRange_Data gives for the style group and variation); style numbers 0x80 and
+; up use 0x39 for both.
 Rhythm_LookupTuningRange:
 	cp (0x32e5:16), 128
 	jr nc, Rhythm_LookupTuning_DefaultRange
@@ -1121,12 +1146,18 @@ AccTuning_ValueTable:
 	.byte 20, 20, 20, 20, 20, 25, 25, 25, 25, 25
 	.byte 30, 30, 30, 30, 30, 35, 35, 35, 35, 35
 
+; Runs the accompaniment event loop for the parts (AccVoice_ProcessEventLoop) between saving part
+; 1's state into the working cursor and restoring it (AccVoice_SavePartState1 /
+; AccVoice_RestorePartState1).
 AccVoice_ProcessAllSixParts:
 	calr AccVoice_SavePartState1
 	calr AccVoice_ProcessEventLoop
 	calr AccVoice_RestorePartState1
 	ret
 
+; Loads part 1 into the working cursor: selector 0x33d4 = 1, page / offset 0x3297 / 0x3287 into
+; 0x33d6 / 0x33d8, bytes 0x32b5, 0x32ab, 0x32a3, 0x33eb into 0x33da, 0x33db, 0x33d5, 0x33ea; clears
+; bits 0..1 of 0x32f4 and the counter 0x32ed.
 AccVoice_SavePartState1:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -1146,6 +1177,7 @@ AccVoice_SavePartState1:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 1's state (the reverse of AccVoice_SavePartState1).
 AccVoice_RestorePartState1:
 	ld wa, (0x33d6:16)
 	ld (0x3297:16), wa
@@ -1277,6 +1309,9 @@ AccVoice_DispatchCh_Acc4:
 SoundPatch_NullRet:
 	ret
 
+; Steps the working cursor (AccBuf_AdvanceNoPage) and counts the steps in 0x32ed; at 32 steps the
+; pattern is treated as broken: the play-mode dispatcher and AccDemo_InitDone run, 0x32f5 = 0xff
+; and bits 0 and 5 of 0x32f4 are set.
 AccVoice_AdvanceAndCheckEnd:
 	calr AccBuf_AdvanceNoPage
 	inc 1, (0x32ed:16)
@@ -1290,6 +1325,10 @@ AccVoice_AdvanceAndCheckEnd:
 AccVoice_AdvanceAndCheck_Return:
 	ret
 
+; Handles a note event of the working part: peeks the next byte (AccVoice_AdvanceWithSave) and,
+; when the event is at most 0x18 ticks ahead of the clock (AccTempo_PositionCompare against the
+; position from AccVoice_LookupTableAddress), dispatches it (AccMidi_Dispatch); otherwise sets bit
+; 0 of 0x32f4.
 AccVoice_HandleNoteOnEvent:
 	calr AccVoice_AdvanceWithSave
 	ld w, (0x33db:16)
@@ -1428,6 +1467,8 @@ AccVoice_LookupExtParamAddr:
 	ld	de, (xde+w)
 	ret
 
+; AccBuf_AdvanceWithPageTurn on the working cursor (IY = 0x33d8, IZ = 0x33d6), which is not stored
+; back.
 AccVoice_AdvanceWithSave:
 	ld iy, (0x33d8:16)
 	ld iz, (0x33d6:16)
@@ -1443,6 +1484,10 @@ AccBuf_AdvanceNoPage:
 	ld (0x33d8:16), iy
 	ret
 
+; Handles the end byte 0x83 of the working part's pattern: activates the part (AccVoice_ActivatePart)
+; when its bit is set in 0x3314 / 0x3315 or 0x3328; otherwise deactivates it (AccPart_Deactivate)
+; when AccPart_CheckAnyActive reports it, or moves on to its next pattern
+; (AccPart_AdvanceAndResolve).
 AccVoice_HandleMarker83:
 	ld w, (0x33d4:16)
 	ld a, (0x3314:16)
@@ -1470,6 +1515,8 @@ AccVoice_Marker83_NextPart:
 AccVoice_Marker83_Return:
 	ret
 
+; Marks the working part active in 0x332a and 0x3328 and sets bit 0 of 0x32f4; once all six parts
+; are set in 0x332a, sets bit 2 of 0x3283 and clears them.
 AccVoice_ActivatePart:
 	ld a, (0x33d4:16)
 	or (0x332a:16), a
@@ -1549,6 +1596,10 @@ AccPart_SelectSource_Done:
 	ld w, (0x33d4:16)
 	ret
 
+; Moves the working part to its next pattern (AccPart_IncrementIndex); when the part's bit is set
+; in 0x335d it is first re-initialised (AccVoice_InitPerChannel, AccPart_LoadParamOffsetTable,
+; AccVoice_AssignPerPart) and the bit cleared; then its cursor is pointed at the stream start
+; (AccPart_ResolveStyleAddr).
 AccPart_AdvanceAndResolve:
 	calr AccPart_IncrementIndex
 	ld a, (0x33d4:16)
@@ -1590,6 +1641,9 @@ AccPart_ResolveStyle_Bound:
 AccPart_ResolveStyle_Return:
 	ret
 
+; For style numbers below 0x80: moves the working part's pattern index 0x33d5 to the next entry;
+; when the style's entry there is 0x83 (end, AccStyle_ReadParamOffset) the index goes back to the
+; start of its group of five (AccTuning_FetchValue).
 AccPart_IncrementIndex:
 	cp (0x32e5:16), 128
 	jr nc, AccPart_IncrementIndex_Return
@@ -1651,6 +1705,9 @@ AccPart_LoadParamOffsetTable:
 	calr AccPart_LoadTuningByChannel
 	ret
 
+; Loads the tuning of the working part (0x33d4) from the style: parts 1 and 2 through
+; AccTuning_LoadAndApplyMaster, parts 4, 8, 16, 32 through AccTuning_LoadCoarse / Fine / Octave /
+; TransposeFromStyle; the part's bit is set in 0x332c.
 AccPart_LoadTuningByChannel:
 	cp (0x33d4:16), 1
 	jr nz, AccPart_LoadTuning_Kbd2
@@ -1805,6 +1862,10 @@ AccPart_SubtractBaseAddr:
 	add wa, 0x6
 	ret
 
+; Copies the working part's 7-byte tuning record from the style at (0x32ce) (offset 0x18 for parts
+; 1 and 2, 0x20 / 0x28 / 0x30 / 0x38 for parts 4 / 8 / 16 / 32) to its slot 0x3246 / 0x324d /
+; 0x3254 / 0x325b / 0x3262.  Quirk: a selector that is none of these loops forever on its last
+; test (`jr nz` to itself).
 AccPart_SelectSource:
 	ld xiy, (0x32ce:16)
 	cp (0x33d4:16), 1
@@ -1851,6 +1912,8 @@ AccPart_CopyData:
 	or (0x332c:16), a
 	ret
 
+; Out: A = (0x3316) | (0x3317) | (0x3318) | (0x3312) | (0x3313), the parts with a pending variation
+; or pedal state.
 AccPart_CheckAnyActive:
 	ld a, (0x3316:16)
 	or a, (0x3317:16)
@@ -1893,6 +1956,10 @@ AccPedal_DirA_Apply:
 	and (0x3309:16), 252
 	ret
 
+; Picks the pattern record for the working part (bit W) under the pedal variation: depending on
+; bits 6..7 of 0x3470 and bit 0 of 0x32fb it moves the part's bit between 0x3312 and 0x3313 and
+; returns A = (0x336b) or (0x3369) when the time signature 0x433 matches 0x336a / 0x3368, else A =
+; the style number (0x32e5) & 0x7f.
 AccPedal_DirectionB:
 	ld a, (0x3470:16)
 	and a, 0xc0
@@ -1935,6 +2002,10 @@ AccPedal_DirB_DefaultStyle:
 AccPedal_DirB_Return:
 	ret
 
+; Dispatches one accompaniment event of the working part: after AccMidi_NormalizeVelocity, 0xd1..0xd5
+; records go through AccMidi_ParseDType / AccMidi_DispatchDType, everything else (0x90 / 0x91 and
+; other statuses) through AccMidi_ParseNoteOn / AccMidi_DispatchPerPart; the velocity setting
+; (AccMidi_SelectVelocitySource) is chosen in between.
 AccMidi_Dispatch:
 	calr AccMidi_NormalizeVelocity
 	cp a, 0x90
@@ -1966,6 +2037,7 @@ AccMidi_ControlEvent:
 AccMidi_DispatchReturn:
 	ret
 
+; Stores A (0 taken as 1) in E and 0x33d2 and returns A = the byte at (XHL+IY), the event status.
 AccMidi_NormalizeVelocity:
 	cp a, 0:i3
 	jr nz, AccMidi_VelNonZero
@@ -1977,6 +2049,8 @@ AccMidi_VelNonZero:
 	ld	a, (xhl+iy)
 	ret
 
+; Parses a note record at the working cursor (AccMidi_ParseCommon); for status 0x91 two more bytes
+; go to 0x3433 / 0x3434.  The cursor (IY, IZ) is saved in 0x33d8 / 0x33d6.
 AccMidi_ParseNoteOn:
 	calr AccMidi_ParseCommon
 	cp (0x342d:16), 145
@@ -1993,6 +2067,9 @@ AccMidi_ParseNoteOn_StorePos:
 	ld (0x33d6:16), iz
 	ret
 
+; Reads the common note fields into 0x342d (status A), 0x342e (time E), 0x342f (note), 0x3430,
+; 0x3431, 0x3432, advancing the reader (AccBuf_Advance) between them; for parts other than 1 and 2
+; the note is checked against 0x78 (Rhythm_CheckVelocityThreshold).
 AccMidi_ParseCommon:
 	ld (0x342d:16), a
 	call AccBuf_Advance
@@ -2042,6 +2119,8 @@ AccMidi_VelSource_Store:
 	ld (0x33de:16), w
 	ret
 
+; Hands the parsed note to the working part's ring-buffer writer: parts 1 / 2 to
+; AccKbd1_RingBufEntry / AccKbd2_RingBufEntry, parts 4 / 8 / 16 / 32 to AccCh1..AccCh4_NoteOnEntry.
 AccMidi_DispatchPerPart:
 	cp (0x33d4:16), 1
 	jr nz, AccMidi_DispatchKbd2
@@ -2080,6 +2159,8 @@ AccMidi_DispatchAcc4:
 AccMidi_DispatchAcc4Return:
 	ret
 
+; When part 1 may take an event (AccKbd1_CheckEligible), appends the parsed note to its ring buffer
+; 0x2a94 (AccBuf_WriteNoteEvent).
 AccKbd1_RingBufEntry:
 	calr AccKbd1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2092,6 +2173,11 @@ AccKbd1_RingBufEntry:
 AccKbd1_RingBufReturn:
 	ret
 
+; Sets bit 0 of 0x33e1 when part 1 may queue an event: bit 0 of 0x33de and 0x3307 set, bit 0 of
+; 0x3362 clear; with bit 4 of the record-part byte 0x379b set, also bit 2 of 0x34cf clear and (when
+; bit 7 of 0x3558 is set) the note 0x342f neither equal to (0x3558) & 0x7f nor 93 while that is
+; 0x30; then bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 clear, and more than 16 bytes
+; waiting in ring buffer 0x2a94.
 AccKbd1_CheckEligible:
 	and (0x33e1:16), 254
 	bit 0, (0x33de:16)
@@ -2244,6 +2330,10 @@ AccTempo_ComputeDelta:
 AccTempo_Return:
 	ret
 
+; Per-tick processing of part 1: unless its timing check fails (bit 0 of 0x32f4), updates the
+; slot timers and ring buffer (AccKbd1_ScanSlots, AccKbd1_DrainRingBuf), saves the 5-byte record
+; 0x3214 into 0x322d, sets 0x32ec = (0x343c), runs RhythmPart1_ProcessAccentData and clears bit 0
+; of 0x332c.
 AccKbd1_ProcessNotes:
 	calr AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -2294,6 +2384,7 @@ AccKbd1_TimingOK:
 AccKbd1_TimingReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 1 at 0x3094..0x30c3.
 AccKbd1_ScanSlots:
 	ld xhl, 0x3094
 
@@ -2342,6 +2433,7 @@ AccSlot_RestoreInterrupts:
 AccSlot_Return:
 	ret
 
+; Re-times every 0x90 note record still waiting in ring buffer 0x2a94 (AccBuf_ProcessNoteEvent).
 AccKbd1_DrainRingBuf:
 	ld xhl, 0x2a94
 	ld iy, (xhl + 6)
@@ -2435,11 +2527,17 @@ AccKbd2_CheckActive_Skip:
 AccKbd2_CheckActive_Return:
 	ret
 
+; Runs the accompaniment event loop for part 2: loads its state into the working cursor, runs
+; AccVoice_ProcessEventLoop and stores it back.  Quirk: there is no ret after the restore, so
+; execution falls into AccKbd2_SaveState and reloads the cursor before returning.
 AccKbd2_ProcessEntry:
 	calr AccKbd2_SaveState
 	calr AccVoice_ProcessEventLoop
 	calr AccKbd2_RestoreState
 
+; Loads part 2 into the working cursor: selector 0x33d4 = 2, page / offset 0x3299 / 0x3289, bytes
+; 0x32b6, 0x32ac, 0x32a4, 0x33ec into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4
+; and the counter 0x32ed.
 AccKbd2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -2459,6 +2557,7 @@ AccKbd2_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 2's state (the reverse of AccKbd2_SaveState).
 AccKbd2_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x3299:16), wa
@@ -2474,6 +2573,8 @@ AccKbd2_RestoreState:
 	ld (0x33ec:16), a
 	ret
 
+; When part 2 may take an event (AccKbd2_CheckEligible), appends the parsed note to its ring buffer
+; 0x2b94 (AccBuf_WriteNoteEvent).
 AccKbd2_RingBufEntry:
 	calr AccKbd2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2486,6 +2587,9 @@ AccKbd2_RingBufEntry:
 AccKbd2_RingBufReturn:
 	ret
 
+; Sets bit 0 of 0x33e1 when part 2 may queue an event: style number below 0x80, bit 1 of 0x33de and
+; bit 0 of 0x3307 set, bit 1 of 0x3335, bit 0 of 0x347a and bit 0 of 0x33e8 clear, and more than
+; 16 bytes waiting in ring buffer 0x2b94.
 AccKbd2_CheckEligible:
 	and (0x33e1:16), 254
 	cp (0x32e5:16), 128
@@ -2509,6 +2613,8 @@ AccKbd2_CheckEligible:
 AccKbd2_CheckReturn:
 	ret
 
+; Per-tick processing of part 2: unless its timing check fails, updates the slot timers and ring
+; buffer (AccKbd2_ScanSlots, AccKbd2_DrainRingBuf) and clears bit 1 of 0x332c.
 AccKbd2_ProcessNotes:
 	calr AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -2520,6 +2626,7 @@ AccKbd2_ProcessNotes:
 AccKbd2_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 2 at 0x30c4..0x30f3.
 AccKbd2_ScanSlots:
 	ld xhl, 0x30c4
 
@@ -2530,6 +2637,7 @@ AccKbd2_ScanSlots_Loop:
 	jr c, AccKbd2_ScanSlots_Loop
 	ret
 
+; Re-times every 0x90 note record still waiting in ring buffer 0x2b94 (AccBuf_ProcessNoteEvent).
 AccKbd2_DrainRingBuf:
 	ld xhl, 0x2b94
 	ld iy, (xhl + 6)
@@ -2632,6 +2740,8 @@ AccSeq_EndOfBar_TooFar:
 AccSeq_ScanDone:
 	ret
 
+; Out: A = the byte after the accompaniment pattern pointer (0x3293) + 1, XHL = that address; the
+; pointer itself is not changed.
 AccSeq_ReadNextByte:
 	ld xhl, (0x3293:16)
 	inc 1, xhl
@@ -2645,6 +2755,8 @@ AccSeq_AdvancePointer:
 	ld (0x3293:16), xhl
 	ret
 
+; Points 0x3293 back at AccStyle_DefaultStream + 6 and returns its first byte in A (XHL = the
+; address).
 AccSeq_ResetToStart:
 	ld xhl, AccStyle_DefaultStream
 	add xhl, 0x6
@@ -2704,12 +2816,17 @@ AccSeq_ParseNote_WriteToKbd2:
 AccSeq_ParseNote_Return:
 	ret
 
+; Runs the accompaniment event loop for part 4 (AccCh1): AccCh1_SaveState, AccVoice_ProcessEventLoop,
+; AccCh1_RestoreState.
 AccCh1_ProcessEntry:
 	calr AccCh1_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh1_RestoreState
 	ret
 
+; Loads part 4 into the working cursor: selector 0x33d4 = 4, page / offset 0x329b / 0x328b, bytes
+; 0x32b7, 0x32ad, 0x32a5, 0x33ed into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4 and
+; the counter 0x32ed.
 AccCh1_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -2729,6 +2846,7 @@ AccCh1_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 4's state (the reverse of AccCh1_SaveState).
 AccCh1_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329b:16), wa
@@ -2744,6 +2862,9 @@ AccCh1_RestoreState:
 	ld (0x33ed:16), a
 	ret
 
+; For parts other than 1 and 2: sets 0x3349 to the first index of the working part's pattern group
+; (AccTuning_FetchValue on 0x33d5), finds the program set by the patterns before it
+; (AccVoice_ScanInstruments) and sends it (AccVoice_SendProgChange).
 AccVoice_AssignPerPart:
 	cp (0x33d4:16), 1
 	jr z, AccVoice_AssignReturn
@@ -2758,6 +2879,8 @@ AccVoice_AssignPerPart:
 AccVoice_AssignReturn:
 	ret
 
+; Scans the style patterns from index (0x3349) up to the working index 0x33d5 for 0xd3 records
+; (AccVoice_ScanForD3), leaving the last value found in 0x3333 (0 when none).
 AccVoice_ScanInstruments:
 	ld e, (0x3349:16)
 	ld (0x3333:16), 0
@@ -2779,6 +2902,8 @@ AccVoice_ScanLoop:
 AccVoice_ScanDone:
 	ret
 
+; Sends the program 0x3333 for the working part on its rhythm channel: part 4 -> 0xd7 0x03 n
+; (stored in 0x332f), part 8 -> 0xd4 (0x3330), part 16 -> 0xd5 (0x3331), otherwise 0xd6 (0x3332).
 AccVoice_SendProgChange:
 	cp (0x33d4:16), 4
 	jr nz, AccVoice_SendD4
@@ -2842,6 +2967,9 @@ AccCh1_Padding:
 	nop
 	nop
 
+; When part 4 may take an event (AccCh1_CheckEligible), loads its channel bytes 0x32c3 / 0x32c7 into
+; 0x32cb / 0x32cc, sets bit 3 and clears bit 2 of 0x32f4, and appends the parsed note to ring buffer
+; 0x2c94 (AccBuf_WriteExtendedEvent).
 AccCh1_NoteOnEntry:
 	calr AccCh1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -2935,6 +3063,8 @@ AccBuf_ExtEvt_VelNonZero:
 	ld (xhl + 4), iy
 	ret
 
+; For statuses other than 0x90 appends the two extra bytes 0x3336 / 0x3337 to the ring buffer
+; being written.
 AccBuf_ExtEvt_WriteExtra:
 	cp (0x342d:16), 144
 	jr z, AccBuf_ExtEvt_ExtraReturn
@@ -2948,6 +3078,8 @@ AccBuf_ExtEvt_WriteExtra:
 AccBuf_ExtEvt_ExtraReturn:
 	ret
 
+; Calls AccVoice_CorrectNote (the test of 0x32e5 against 0xf0 branches to the same place either
+; way).
 AccVoice_CheckStyle:
 	cp (0x32e5:16), 240
 	jr c, AccVoice_CallCorrection
@@ -2973,6 +3105,9 @@ AccVoice_CorrectionData_Skip2:
 	pop	xhl
 	ret
 
+; Corrects the parsed note 0x342f for the chord: unless bit 4 of 0x32f4 is set, applies
+; Rhythm_CrossVoiceCorrect (bit 3 of 0x32f4 set) and Rhythm_NoteRangeCheck; then maps it with
+; Rhythm_VoiceMapLookup for status 0x91, Rhythm_VelocityLookup_A otherwise.  Preserves XHL, IY.
 AccVoice_CorrectNote:
 	push xhl
 	pushw iy
@@ -3000,6 +3135,9 @@ AccVoice_CorrectReturn:
 	pop xhl
 	ret
 
+; Parses a 0xdn controller record at the working cursor: 0x342d = status & 0xf0, 0x342e = time
+; (E), 0x342f = status & 0x0f (controller type), 0x3430 = value; the cursor is saved in 0x33d8 /
+; 0x33d6.
 AccMidi_ParseDType:
 	ld d, a
 	and a, 0xf0
@@ -3017,6 +3155,8 @@ AccMidi_ParseDType:
 	ld (0x33d6:16), iz
 	ret
 
+; Hands a parsed controller record to the working part: parts 4 / 8 / 16 / 32 to AccCh1..AccCh4_
+; DTypeEntry; parts 1 and 2 ignore it.  Quirk: an unknown selector loops forever on its last test.
 AccMidi_DispatchDType:
 	cp (0x33d4:16), 1
 	jr nz, AccMidi_DType_CheckKbd2
@@ -3053,6 +3193,8 @@ AccMidi_DType_CheckAcc4:
 AccMidi_DType_Return:
 	ret
 
+; When part 4 may take an event (AccCh1_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2c94 (AccBuf_Write3ByteEvent).
 AccCh1_DTypeEntry:
 	calr AccCh1_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3065,6 +3207,8 @@ AccCh1_DTypeEntry:
 AccCh1_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 3 of the record-part byte 0x379b are both set, else 0
+; (AccCh1_CheckEligible requires 0).
 AccCh_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3108,6 +3252,10 @@ AccBuf_InitWithDefaults:
 	calr AccBuf_Write3ByteEvent
 	ret
 
+; Per-tick processing of part 4: unless its timing check fails, updates the slot timers and ring
+; buffer, re-sends the controller defaults when needed (AccCh1_InitProgChange), saves the record
+; 0x3219 into 0x3232, sets 0x32ec = (0x343c), runs RhythmPart2_ProcessAccentData and clears bit 2
+; of 0x332c.
 AccCh1_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3127,6 +3275,7 @@ AccCh1_ProcessNotes:
 AccCh1_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 4 at 0x30f4..0x313b.
 AccCh1_ScanSlots:
 	ld xhl, 0x30f4
 
@@ -3137,6 +3286,8 @@ AccCh1_ScanSlots_Loop:
 	jr c, AccCh1_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2c94
+; (AccBuf_ProcessNoteEvent), skipping the extra bytes of the longer records.
 AccCh1_DrainRingBuf:
 	ld xhl, 0x2c94
 	ld iy, (xhl + 6)
@@ -3168,12 +3319,17 @@ AccCh1_DrainOther:
 AccCh1_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 8 (AccCh2): AccCh2_SaveState, AccVoice_ProcessEventLoop,
+; AccCh2_RestoreState.
 AccCh2_ProcessEntry:
 	calr AccCh2_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh2_RestoreState
 	ret
 
+; Loads part 8 into the working cursor: selector 0x33d4 = 8, page / offset 0x329d / 0x328d, bytes
+; 0x32b8, 0x32ae, 0x32a6, 0x33ee into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of 0x32f4 and
+; the counter 0x32ed.
 AccCh2_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3193,6 +3349,7 @@ AccCh2_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 8's state (the reverse of AccCh2_SaveState).
 AccCh2_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329d:16), wa
@@ -3208,6 +3365,9 @@ AccCh2_RestoreState:
 	ld (0x33ee:16), a
 	ret
 
+; When part 8 may take an event (AccCh2_CheckEligible), loads its channel bytes 0x32c4 / 0x32c8 into
+; 0x32cb / 0x32cc, sets bit 2 and clears bit 3 of 0x32f4, and appends the parsed note to ring buffer
+; 0x2d94 (AccBuf_WriteExtendedEvent).
 AccCh2_NoteOnEntry:
 	calr AccCh2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3263,6 +3423,8 @@ AccCh2_SetReady:
 AccCh2_CheckReturn:
 	ret
 
+; When part 8 may take an event (AccCh2_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2d94 (AccBuf_Write3ByteEvent).
 AccCh2_DTypeEntry:
 	calr AccCh2_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3275,6 +3437,7 @@ AccCh2_DTypeEntry:
 AccCh2_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 0 of the record-part byte 0x379b are both set, else 0.
 AccCh2_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3286,6 +3449,9 @@ AccCh2_CheckOverlap:
 AccCh2_OverlapReturn:
 	ret
 
+; Per-tick processing of part 8: as AccCh1_ProcessNotes with slots 0x313c.., ring buffer 0x2d94,
+; AccCh2_InitProgChange, record 0x321e saved to 0x3237, RhythmPart3_ProcessAccentData and bit 3 of
+; 0x332c.
 AccCh2_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3305,6 +3471,7 @@ AccCh2_ProcessNotes:
 AccCh2_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 8 at 0x313c..0x3183.
 AccCh2_ScanSlots:
 	ld xhl, 0x313c
 
@@ -3315,6 +3482,7 @@ AccCh2_ScanSlots_Loop:
 	jr c, AccCh2_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2d94.
 AccCh2_DrainRingBuf:
 	ld xhl, 0x2d94
 	ld iy, (xhl + 6)
@@ -3346,12 +3514,17 @@ AccCh2_DrainOther:
 AccCh2_DrainDone:
 	ret
 
+; Runs the accompaniment event loop for part 16 (AccCh3): AccCh3_SaveState,
+; AccVoice_ProcessEventLoop, AccCh3_RestoreState.
 AccCh3_ProcessEntry:
 	calr AccCh3_SaveState
 	call AccVoice_ProcessEventLoop
 	calr AccCh3_RestoreState
 	ret
 
+; Loads part 16 into the working cursor: selector 0x33d4 = 0x10, page / offset 0x329f / 0x328f,
+; bytes 0x32b9, 0x32af, 0x32a7, 0x33ef into 0x33da, 0x33db, 0x33d5, 0x33ea; clears bits 0..1 of
+; 0x32f4 and the counter 0x32ed.
 AccCh3_SaveState:
 	and (0x32f4:16), 252
 	ld (0x32ed:16), 0
@@ -3371,6 +3544,7 @@ AccCh3_SaveState:
 	ld (0x33ea:16), a
 	ret
 
+; Stores the working cursor back into part 16's state (the reverse of AccCh3_SaveState).
 AccCh3_RestoreState:
 	ld wa, (0x33d6:16)
 	ld (0x329f:16), wa
@@ -3386,6 +3560,9 @@ AccCh3_RestoreState:
 	ld (0x33ef:16), a
 	ret
 
+; When part 16 may take an event (AccCh3_CheckEligible), loads its channel bytes 0x32c5 / 0x32c9
+; into 0x32cb / 0x32cc, clears bits 2..3 of 0x32f4, and appends the parsed note to ring buffer 0x2e94
+; (AccBuf_WriteExtendedEvent).
 AccCh3_NoteOnEntry:
 	calr AccCh3_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3440,6 +3617,8 @@ AccCh3_SetReady:
 AccCh3_CheckReturn:
 	ret
 
+; When part 16 may take an event (AccCh3_CheckEligible), appends the parsed controller record to
+; ring buffer 0x2e94 (AccBuf_Write3ByteEvent).
 AccCh3_DTypeEntry:
 	calr AccCh3_CheckEligible
 	bit 0, (0x33e1:16)
@@ -3452,6 +3631,7 @@ AccCh3_DTypeEntry:
 AccCh3_DTypeReturn:
 	ret
 
+; Out: A = 1 when bit 2 of 0x34cf and bit 1 of the record-part byte 0x379b are both set, else 0.
 AccCh3_CheckOverlap:
 	ld a, 0x0:opc
 	bit 2, (0x34cf:16)
@@ -3463,6 +3643,9 @@ AccCh3_CheckOverlap:
 AccCh3_OverlapReturn:
 	ret
 
+; Per-tick processing of part 16: as AccCh1_ProcessNotes with slots 0x3184.., ring buffer 0x2e94,
+; AccCh3_InitProgChange, record 0x3223 saved to 0x323c, RhythmPart4_ProcessAccentData and bit 4 of
+; 0x332c.
 AccCh3_ProcessNotes:
 	call AccKbd1_TimingCheck
 	bit 0, (0x32f4:16)
@@ -3482,6 +3665,7 @@ AccCh3_ProcessNotes:
 AccCh3_ProcessReturn:
 	ret
 
+; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 16 at 0x3184..0x31cb.
 AccCh3_ScanSlots:
 	ld xhl, 0x3184
 
@@ -3492,6 +3676,7 @@ AccCh3_ScanSlots_Loop:
 	jr c, AccCh3_ScanSlots_Loop
 	ret
 
+; Re-times every note record (0x90 and 0x91) still waiting in ring buffer 0x2e94.
 AccCh3_DrainRingBuf:
 	ld xhl, 0x2e94
 	ld iy, (xhl + 6)
