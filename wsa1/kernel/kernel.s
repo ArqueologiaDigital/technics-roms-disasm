@@ -342,7 +342,7 @@ Kernel_InitRam:
 	xor WA,WA                                    ; F8560B/F98170  d8 d0   xor WA,WA
 	st_dd8w wa, KERNEL_CURRENT_TASK              ; F8560D/F98172  a=f0 bf 50 c=f0 91 50   c: ld (0x91),WA   (0xBF) = 0: no task is running
 	inc 1,WA                                     ; F85610/F98175  d8 61   inc 1,WA
-	m_ldc_cr_reg RW+r0, 0x3c                     ; F85612/F98177  d8 2e 3c   ldc unknown,WA   critical-section depth := 1
+	ldc_cr16	wa, 0x3c                     ; F85612/F98177  d8 2e 3c   ldc unknown,WA   critical-section depth := 1
 	ldw hl, KERNEL_READY_HEADS                   ; F85615/F9817A  a=33 30 03 c=33 24 01   c: ld HL,0x0124   the THREE READY QUEUE heads
 	extz XHL                                     ; F85618/F9817D  eb 12   extz XHL
 	ldw de, 0x04                                 ; F8561A/F9817F  32 04 00   ld DE,0x0004   dead here -- DE is reloaded at 0xF85658
@@ -596,7 +596,7 @@ Kernel_Start:
 	ei 0x06                                      ; F85704/F98269  06 06   ei 0x06
 	ld (KERNEL_PENDING_TICKS:8), 0x00:io              ; F85706/F9826B  a=08 be 00 c=08 90 00   c: ld (0x90),0x00
 	xor WA,WA                                    ; F85709/F9826E  d8 d0   xor WA,WA
-	m_ldc_cr_reg RW+r0, 0x3c                     ; F8570B/F98270  d8 2e 3c   ldc unknown,WA   the depth counter starts at 0
+	ldc_cr16	wa, 0x3c                     ; F8570B/F98270  d8 2e 3c   ldc unknown,WA   the depth counter starts at 0
 	jrl Kernel_Dispatch                          ; F8570E/F98273  78 04 00   jrl T,0xf9827a
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
@@ -685,7 +685,7 @@ Kernel_Idle__loop:
 ; --------------------------------------------------------------------------
 
 Kernel_Dispatch:
-	m_ldc_reg_cr RW+r0, 0x3c                     ; F85715/F9827A  d8 2f 3c   ldc WA,unknown   outermost only: a non-zero depth means resume, not dispatch
+	ldc_16_cr	wa, 0x3c                     ; F85715/F9827A  d8 2f 3c   ldc WA,unknown   outermost only: a non-zero depth means resume, not dispatch
 	or WA,WA                                     ; F85718/F9827D  d8 e0   or WA,WA
 	jr nz, Kernel_ResumeTask                     ; F8571A/F9827F  6e 47   jr NZ,0xf982c8
 	xor WA,WA                                    ; F8571C/F98281  d8 d0   xor WA,WA
@@ -803,9 +803,9 @@ Kernel_ResumeTask:
 ; --------------------------------------------------------------------------
 
 Kernel_ServiceSoftTimers:
-	m_ldc_reg_cr RW+r0, 0x3c                     ; F8576C/F982D1  d8 2f 3c   ldc WA,unknown   enter a critical section: depth++
+	ldc_16_cr	wa, 0x3c                     ; F8576C/F982D1  d8 2f 3c   ldc WA,unknown   enter a critical section: depth++
 	inc 1,WA                                     ; F8576F/F982D4  d8 61   inc 1,WA
-	m_ldc_cr_reg RW+r0, 0x3c                     ; F85771/F982D6  d8 2e 3c   ldc unknown,WA
+	ldc_cr16	wa, 0x3c                     ; F85771/F982D6  d8 2e 3c   ldc unknown,WA
 	ei 0x00                                      ; F85774/F982D9  06 00   ei 0x00
 	ldw ix, KERNEL_TIMERS                        ; F85776/F982DB  a=34 c8 03 c=34 74 01   c: ld IX,0x0174   the software timers: 2 x 8 bytes at 0x03C8
 	extz XIX                                     ; F85779/F982DE  ec 12   extz XIX
@@ -823,9 +823,9 @@ Kernel_ServiceSoftTimers__step:
 	add IX,0x0008                                ; F85794/F982F9  dc c8 08 00   add IX,0x0008
 	djnz8 b, Kernel_ServiceSoftTimers__next      ; F85798/F982FD  ca 1c e2   djnz B,0xf982e2
 	ei 0x06                                      ; F8579B/F98300  06 06   ei 0x06
-	m_ldc_reg_cr RW+r0, 0x3c                     ; F8579D/F98302  d8 2f 3c   ldc WA,unknown
+	ldc_16_cr	wa, 0x3c                     ; F8579D/F98302  d8 2f 3c   ldc WA,unknown
 	dec 1,WA                                     ; F857A0/F98305  d8 69   dec 1,WA
-	m_ldc_cr_reg RW+r0, 0x3c                     ; F857A2/F98307  d8 2e 3c   ldc unknown,WA
+	ldc_cr16	wa, 0x3c                     ; F857A2/F98307  d8 2e 3c   ldc unknown,WA
 	ret                                          ; F857A5/F9830A  0e   ret
 Kernel_ServiceSoftTimers__fire:
 	ld WA,(XIX+0x02)                             ; F857A6/F9830B  9c 02 20   ld WA,(XIX+0x02)   +2 = the reload value
@@ -888,14 +888,14 @@ Kernel_ServiceSoftTimers__fire:
 
 IRQ_Epilogue:
 	pushw wa                                     ; F857B7/F9831C  28   push WA   THE SHARED INTERRUPT EPILOGUE
-	m_ldc_reg_cr RW+r0, 0x3c                     ; F857B8/F9831D  d8 2f 3c   ldc WA,unknown
+	ldc_16_cr	wa, 0x3c                     ; F857B8/F9831D  d8 2f 3c   ldc WA,unknown
 	cp wa, 0x01:i3                                 ; F857BB/F98320  d8 d9   cp WA,1   depth == 1 means this interrupt was the outermost one
 	jr z, IRQ_Epilogue__enter_kernel             ; F857BD/F98322  66 02   jr Z,0xf98326
 	popw wa                                      ; F857BF/F98324  48   pop WA
 	reti                                         ; F857C0/F98325  07   reti   nested: plain RETI, do not run the kernel
 IRQ_Epilogue__enter_kernel:
 	xor WA,WA                                    ; F857C1/F98326  d8 d0   xor WA,WA
-	m_ldc_cr_reg RW+r0, 0x3c                     ; F857C3/F98328  d8 2e 3c   ldc unknown,WA
+	ldc_cr16	wa, 0x3c                     ; F857C3/F98328  d8 2e 3c   ldc unknown,WA
 	popw wa                                      ; F857C6/F9832B  48   pop WA
 	ei 0x00                                      ; F857C7/F9832C  06 00   ei 0x00
 	nop                                          ; F857C9/F9832E  00   nop

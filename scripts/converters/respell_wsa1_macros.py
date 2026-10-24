@@ -658,6 +658,9 @@ def choose(sites, fams, tmp):
 def rewrite(site, native):
     m = site["m"]
     code_old = m.group("pre") + m.group("mn") + m.group("ws") + m.group("ops")
+    # CLAUDE.md "Lowercase Hex": a number copied from the macro's arguments may be `0x3C`; a hex
+    # digit inside a symbol name (`_0x5D`) is not at a word boundary and keeps its case
+    native = re.sub(r"\b0[xX][0-9A-Fa-f]+\b", lambda x: x.group(0).lower(), native)
     code_new = m.group("pre") + native
     post = m.group("post")
     if not post:

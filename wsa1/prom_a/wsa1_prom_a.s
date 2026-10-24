@@ -25629,36 +25629,36 @@ Link_WaitBlockDone__ret:
 ; ---------------------------------------------------------------------
 uDMA2_SetDest:
 	ld XBC,(XSP+0x04)                             ; F8E6A2  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAD2                  ; F8E6A5  e9 2e 18
+	ldc_cr32	xbc, CR_DMAD2                 ; F8E6A5  e9 2e 18
 	ld C,(XSP+0x08)                               ; F8E6A8  8f 08 23
-	m_ldc_cr_reg RB+r3, CR_DMAM2                  ; F8E6AB  cb 2e 2a
+	ldc_cr8	c, CR_DMAM2                           ; F8E6AB  cb 2e 2a
 	ret                                           ; F8E6AE  0e
 uDMA2_SetSource:
 	ld XBC,(XSP+0x04)                             ; F8E6AF  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAS2                  ; F8E6B2  e9 2e 08
+	ldc_cr32	xbc, CR_DMAS2                 ; F8E6B2  e9 2e 08
 	ld BC,(XSP+0x08)                              ; F8E6B5  9f 08 21
-	m_ldc_cr_reg RW+r1, CR_DMAC2                  ; F8E6B8  d9 2e 28
+	ldc_cr16	bc, CR_DMAC2                  ; F8E6B8  d9 2e 28
 	ret                                           ; F8E6BB  0e
 uDMA3_SetSource:
 	ld XBC,(XSP+0x04)                             ; F8E6BC  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAS3                  ; F8E6BF  e9 2e 0c
+	ldc_cr32	xbc, CR_DMAS3                 ; F8E6BF  e9 2e 0c
 	ld C,(XSP+0x08)                               ; F8E6C2  8f 08 23
-	m_ldc_cr_reg RB+r3, CR_DMAM3                  ; F8E6C5  cb 2e 2e
+	ldc_cr8	c, CR_DMAM3                           ; F8E6C5  cb 2e 2e
 	ret                                           ; F8E6C8  0e
 uDMA3_SetDest:
 	ld XBC,(XSP+0x04)                             ; F8E6C9  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAD3                  ; F8E6CC  e9 2e 1c
+	ldc_cr32	xbc, CR_DMAD3                 ; F8E6CC  e9 2e 1c
 	ld BC,(XSP+0x08)                              ; F8E6CF  9f 08 21
-	m_ldc_cr_reg RW+r1, CR_DMAC3                  ; F8E6D2  d9 2e 2c
+	ldc_cr16	bc, CR_DMAC3                  ; F8E6D2  d9 2e 2c
 	ret                                           ; F8E6D5  0e
 uDMA2_GetCount:
-	m_ldc_reg_cr RW+r0, CR_DMAC2                  ; F8E6D6  d8 2f 28
+	ldc_16_cr	wa, CR_DMAC2                  ; F8E6D6  d8 2f 28
 	ret                                           ; F8E6D9  0e
 uDMA3_GetCount:
-	m_ldc_reg_cr RW+r0, CR_DMAC3                  ; F8E6DA  d8 2f 2c
+	ldc_16_cr	wa, CR_DMAC3                  ; F8E6DA  d8 2f 2c
 	ret                                           ; F8E6DD  0e
 uDMA3_GetDest:
-	m_ldc_reg_cr RL+r5, CR_DMAD3                  ; F8E6DE  ed 2f 1c
+	ldc_32_cr	xiy, CR_DMAD3                 ; F8E6DE  ed 2f 1c
 	ret                                           ; F8E6E1  0e
 
 ; ---------------------------------------------------------------------
@@ -26269,7 +26269,7 @@ LCD_Thunk2_Test97b4:
 SWI7_ServiceCall_Dispatch:
 	pushw hl                                      ; F8E9A5  2b
 	xor HL,HL                                     ; F8E9A6  db d3
-	m_ldc_cr_reg RW+r3, 0x3c                      ; F8E9A8  db 2e 3c   control register 0x3C := 0 -- see the kernel at 0xF856EC
+	ldc_cr16	hl, 0x3c                      ; F8E9A8  db 2e 3c   control register 0x3C := 0 -- see the kernel at 0xF856EC
 	ei 0x00                                       ; F8E9AB  06 00
 	xor H,H                                       ; F8E9AD  ce d6
 	and A,0x3f                                    ; F8E9AF  c9 cc 3f   only 6 bits of A select the service
@@ -100930,30 +100930,30 @@ SysEx_ResetSession_Call:
 	calr SysEx_ResetSession                                      ; FB818A  1e c9 ff
 	ret                                                  ; FB818D  0e
 	ld XBC,(XSP+0x04)                                    ; FB818E  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAD2                         ; FB8191  e9 2e 18
+	ldc_cr32	xbc, CR_DMAD2                        ; FB8191  e9 2e 18
 	ld C,(XSP+0x08)                                      ; FB8194  8f 08 23
-	m_ldc_cr_reg RB+r3, CR_DMAM2                         ; FB8197  cb 2e 2a
+	ldc_cr8	c, CR_DMAM2                                  ; FB8197  cb 2e 2a
 	ret                                                  ; FB819A  0e
 	ld XBC,(XSP+0x04)                                    ; FB819B  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAS2                         ; FB819E  e9 2e 08
+	ldc_cr32	xbc, CR_DMAS2                        ; FB819E  e9 2e 08
 	ld BC,(XSP+0x08)                                     ; FB81A1  9f 08 21
-	m_ldc_cr_reg RW+r1, CR_DMAC2                         ; FB81A4  d9 2e 28
+	ldc_cr16	bc, CR_DMAC2                         ; FB81A4  d9 2e 28
 	ret                                                  ; FB81A7  0e
 	ld XBC,(XSP+0x04)                                    ; FB81A8  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAS3                         ; FB81AB  e9 2e 0c
+	ldc_cr32	xbc, CR_DMAS3                        ; FB81AB  e9 2e 0c
 	ld C,(XSP+0x08)                                      ; FB81AE  8f 08 23
-	m_ldc_cr_reg RB+r3, CR_DMAM3                         ; FB81B1  cb 2e 2e
+	ldc_cr8	c, CR_DMAM3                                  ; FB81B1  cb 2e 2e
 	ret                                                  ; FB81B4  0e
 	ld XBC,(XSP+0x04)                                    ; FB81B5  af 04 21
-	m_ldc_cr_reg RL+r1, CR_DMAD3                         ; FB81B8  e9 2e 1c
+	ldc_cr32	xbc, CR_DMAD3                        ; FB81B8  e9 2e 1c
 	ld BC,(XSP+0x08)                                     ; FB81BB  9f 08 21
-	m_ldc_cr_reg RW+r1, CR_DMAC3                         ; FB81BE  d9 2e 2c
+	ldc_cr16	bc, CR_DMAC3                         ; FB81BE  d9 2e 2c
 	ret                                                  ; FB81C1  0e
-	m_ldc_reg_cr RW+r0, CR_DMAC2                         ; FB81C2  d8 2f 28
+	ldc_16_cr	wa, CR_DMAC2                         ; FB81C2  d8 2f 28
 	ret                                                  ; FB81C5  0e
-	m_ldc_reg_cr RW+r0, CR_DMAC3                         ; FB81C6  d8 2f 2c
+	ldc_16_cr	wa, CR_DMAC3                         ; FB81C6  d8 2f 2c
 	ret                                                  ; FB81C9  0e
-	m_ldc_reg_cr RL+r5, CR_DMAD3                         ; FB81CA  ed 2f 1c
+	ldc_32_cr	xiy, CR_DMAD3                        ; FB81CA  ed 2f 1c
 	ret                                                  ; FB81CD  0e
 ; MemCopyWords_Copy -- a second, byte-identical copy of MemCopyWords
 ;
@@ -173106,7 +173106,7 @@ uDMA0_ArmOnINT7:
 ; ---------------------------------------------------------------------
 Dev7A_StartDma:
 	ld bc, (Fdc_DmaCount:24)                         ; FE596A  d2 0e 5a 60 21   the byte count
-	m_ldc_cr_reg RW+r1, CR_DMAC0                  ; FE596F  d9 2e 20
+	ldc_cr16	bc, CR_DMAC0                  ; FE596F  d9 2e 20
 	ld a, (Fdc_CommandByte:24)                          ; FE5972  c2 18 5a 60 21   the command code
 	extz WA                                       ; FE5977  d8 12
 	cp WA,0x004d                                  ; FE5979  d8 cf 4d 00
@@ -173151,11 +173151,11 @@ Dev7A_StartDma__ret:
 ; ---------------------------------------------------------------------
 Dev7A_Dma_DeviceToRam:
 	ld XHL,0x007a0000                             ; FE59BB  43 00 00 7a 00
-	m_ldc_cr_reg RL+r3, CR_DMAS0                  ; FE59C0  eb 2e 00   source = the data port, FIXED
+	ldc_cr32	xhl, CR_DMAS0                 ; FE59C0  eb 2e 00   source = the data port, FIXED
 	ld xhl, (Fdc_ReqBuffer:24)                        ; FE59C3  e2 3c 5a 60 23
-	m_ldc_cr_reg RL+r3, CR_DMAD0                  ; FE59C8  eb 2e 10   destination = RAM, walking
+	ldc_cr32	xhl, CR_DMAD0                 ; FE59C8  eb 2e 10   destination = RAM, walking
 	ld a, 0x00:opc                                   ; FE59CB  21 00
-	m_ldc_cr_reg RB+r1, CR_DMAM0                  ; FE59CD  c9 2e 22   mode 0x00 = byte, DST++
+	ldc_cr8	a, CR_DMAM0                           ; FE59CD  c9 2e 22   mode 0x00 = byte, DST++
 	jr uDMA0_ArmOnINT7                            ; FE59D0  68 94
 
 ; ---------------------------------------------------------------------
@@ -173171,11 +173171,11 @@ Dev7A_Dma_DeviceToRam:
 ; ---------------------------------------------------------------------
 Dev7A_Dma_RamToDevice:
 	ld xhl, (Fdc_ReqBuffer:24)                        ; FE59D2  e2 3c 5a 60 23
-	m_ldc_cr_reg RL+r3, CR_DMAS0                  ; FE59D7  eb 2e 00   source = RAM, walking
+	ldc_cr32	xhl, CR_DMAS0                 ; FE59D7  eb 2e 00   source = RAM, walking
 	ld XHL,0x007a0000                             ; FE59DA  43 00 00 7a 00
-	m_ldc_cr_reg RL+r3, CR_DMAD0                  ; FE59DF  eb 2e 10   destination = the data port, FIXED
+	ldc_cr32	xhl, CR_DMAD0                 ; FE59DF  eb 2e 10   destination = the data port, FIXED
 	ld a, 0x08:opc                                   ; FE59E2  21 08
-	m_ldc_cr_reg RB+r1, CR_DMAM0                  ; FE59E4  c9 2e 22   mode 0x08 = byte, SRC++
+	ldc_cr8	a, CR_DMAM0                           ; FE59E4  c9 2e 22   mode 0x08 = byte, SRC++
 	jrl uDMA0_ArmOnINT7                           ; FE59E7  78 7c ff
 
 ; ---------------------------------------------------------------------
@@ -173186,7 +173186,7 @@ Dev7A_Dma_RamToDevice:
 ; ---------------------------------------------------------------------
 uDMA0_SetCount:
 	ld bc, (Fdc_DmaCount:24)                         ; FE59EA  d2 0e 5a 60 21
-	m_ldc_cr_reg RW+r1, CR_DMAC0                  ; FE59EF  d9 2e 20
+	ldc_cr16	bc, CR_DMAC0                  ; FE59EF  d9 2e 20
 	ret                                           ; FE59F2  0e
 
 ; ---------------------------------------------------------------------
