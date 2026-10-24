@@ -150,7 +150,7 @@ everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) --no-print-directory verify-v8-reference verify-subprogram-update-images
+	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-subprogram-update-images
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
 
@@ -172,7 +172,7 @@ gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hd
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom original_ROMs/kn5000_v5_program.rom rebuilt_ROMs/kn5000_v5_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -873,6 +873,172 @@ rebuilt_ROMs/kn5000_v7_program.llvm.elf: rebuilt_ROMs/kn5000_v7_program.llvm.o v
 rebuilt_ROMs/kn5000_v7_program.llvm.rom: rebuilt_ROMs/kn5000_v7_program.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- Ported maincpu versions: v6 (from v7), v5 (from v6) ---
+# v6/maincpu was generated from v7/maincpu by scripts/converters/port_maincpu_version.py
+# (see v6/maincpu/README.md): v7's text where the v6 bytes match it, its operands rewritten
+# where only an operand moved, and `.byte` rows marked TODO(port) where no v7 line maps.
+# The C data sources are v7's; TREE_c_divergence.json patches the bins where v6 differs
+# (scripts/build/apply_c_divergence.py).
+# The reference images are NOT committed (new dumps stay out of the public repository, like
+# v8's): each is copied, git-ignored, from the private romset and refused unless its SHA-1
+# matches.  Override the source with make KN5000_V6_REF=/path/kn5000_v6_program.rom.
+KN5000_V6_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v6_program.rom
+KN5000_V6_SHA1 := 51108e2d75b180a034395e90bd40ca2bd2a0adfb
+KN5000_V5_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_v5_program.rom
+KN5000_V5_SHA1 := 7b69a8aaa84ee3d337acc0c29c34154c5da2df32
+
+# $(1) = tree (v6), $(2) = upper-case prefix (V6)
+define PORTED_MAINCPU
+$(2)_SRC = $$(wildcard $(1)/maincpu/*.s $(1)/maincpu/*/*.s $(1)/maincpu/*/*/*.s)
+$(2)_GEN = $(1)/maincpu/includes/generated
+$(2)_C_DATA_BINS = $$(patsubst %,$$($(2)_GEN)/style_ui_paramblock_%.bin,$$(PARAMBLOCK_NAMES)) \
+	$$($(2)_GEN)/voice_factory_presets.bin $$($(2)_GEN)/tonegen_param_table.bin \
+	$$(patsubst v10/%,$(1)/%,$$(SOUND_DATA_BINS)) \
+	$$(patsubst %,$$($(2)_GEN)/style_ui_screendata_%.bin,$$(SCREENDATA_NAMES)) \
+	$$(patsubst %,$$($(2)_GEN)/%.bin,$$(ACCOMP_NAMES)) $$(patsubst %,$$($(2)_GEN)/%.bin,$$(SE_NAMES)) \
+	$$(patsubst v10/%,$(1)/%,$$(NAKA_BINS)) $$($(2)_GEN)/sepaout_config.bin \
+	$$($(2)_GEN)/gui_display_struct_data.bin $$($(2)_GEN)/tonekit_param_blocks.bin \
+	$$($(2)_GEN)/sound_config_lookup.bin $$($(2)_GEN)/msp_factory_defaults.bin
+
+$$($(2)_GEN)/style_ui_paramblock_%.bin: $(1)/maincpu/style_ui/paramblock/%.c $(1)/maincpu/style_ui/screendata_types.h
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/style_ui -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/style_ui_screendata_ctlonly.bin: $(1)/maincpu/style_ui/ctlonly.c $(1)/maincpu/style_ui/screendata_types.h $(1)/maincpu/style_ui/ctlonly_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/style_ui -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/style_ui/ctlonly_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/style_ui_screendata_%.bin: $(1)/maincpu/style_ui/%.c $(1)/maincpu/style_ui/screendata_types.h
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/style_ui -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/se_%.bin: $(1)/maincpu/audio/sound_editor_screens/se_%.c $(1)/maincpu/style_ui/screendata_types.h $(1)/maincpu/audio/sound_editor_screens/se_screens_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/style_ui -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/audio/sound_editor_screens/se_screens_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/accomp_%.bin: $(1)/maincpu/sequencer/accomp_screens/accomp_%.c $(1)/maincpu/style_ui/screendata_types.h $(1)/maincpu/sequencer/accomp_screens/accomp_screens_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/style_ui -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/sequencer/accomp_screens/accomp_screens_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/naka_%.bin: $(1)/maincpu/ui_widgets/naka_%.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_%_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_$$*_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/naka_control_menu_header.bin: $(1)/maincpu/ui_widgets/control_menu_header.c $(1)/maincpu/ui_widgets/naka_types.h $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -I $(1)/maincpu/ui_widgets -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/ui_widgets/naka_ctrl_menu_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/msp_factory_defaults.bin: $(1)/maincpu/msp_factory_defaults.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/voice_factory_presets.bin: $(1)/maincpu/audio/voice_factory_presets.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/tonegen_param_table.bin: $(1)/maincpu/audio/tonegen_param_table.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/sound_data_%.bin: $(1)/maincpu/audio/sound_data_%.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/sepaout_config.bin: $(1)/maincpu/ui/sepaout_config.c $(1)/maincpu/ui/sepaout_config_link.ld
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_LLD) -T $(1)/maincpu/ui/sepaout_config_link.ld -o $$@.elf $$@.o
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.elf $$@
+	@rm -f $$@.o $$@.elf
+
+$$($(2)_GEN)/gui_display_struct_data.bin: $(1)/maincpu/includes/gui_display_struct_data.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/tonekit_param_blocks.bin: $(1)/maincpu/ui_widgets/tonekit_param_blocks.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+$$($(2)_GEN)/sound_config_lookup.bin: $(1)/maincpu/ui_widgets/sound_config_lookup.c
+	@mkdir -p $$($(2)_GEN)
+	$$(CLANG) -target tlcs900 -ffreestanding -c -O2 -o $$@.o $$<
+	$$(LLVM_OBJCOPY) -O binary -j .text $$@.o $$@
+	@rm -f $$@.o
+
+original_ROMs/kn5000_$(1)_program.rom:
+	@if [ ! -f "$$(KN5000_$(2)_REF)" ]; then \
+	  echo "ERROR: the KN5000 $(1) reference image is missing: $$(KN5000_$(2)_REF)"; \
+	  echo "       It is not in git (new dumps come from the private romset). Point KN5000_$(2)_REF at a copy whose"; \
+	  echo "       SHA-1 is $$(KN5000_$(2)_SHA1), e.g. make KN5000_$(2)_REF=/path/kn5000_$(1)_program.rom"; \
+	  exit 1; fi
+	@got=$$$$(sha1sum < "$$(KN5000_$(2)_REF)" | cut -d' ' -f1); \
+	 if [ "$$$$got" != "$$(KN5000_$(2)_SHA1)" ]; then \
+	  echo "ERROR: $$(KN5000_$(2)_REF) has SHA-1 $$$$got, expected $$(KN5000_$(2)_SHA1)"; exit 1; fi
+	cp "$$(KN5000_$(2)_REF)" $$@.tmp
+	mv $$@.tmp $$@
+
+verify-$(1)-reference: original_ROMs/kn5000_$(1)_program.rom
+	@got=$$$$(sha1sum < $$< | cut -d' ' -f1); \
+	 if [ "$$$$got" = "$$(KN5000_$(2)_SHA1)" ]; then echo "OK    $$< has SHA-1 $$(KN5000_$(2)_SHA1)"; \
+	 else echo "FAIL  $$< has SHA-1 $$$$got, expected $$(KN5000_$(2)_SHA1)"; exit 1; fi
+
+$(1)-c-bins-raw: $$($(2)_C_DATA_BINS)
+
+$(1)-c-bins: $(1)-c-bins-raw
+	python3 scripts/build/apply_c_divergence.py $(1)
+
+rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins $$(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I $(1)/maincpu -o $$@ $(1)/maincpu/kn5000_$(1)_program.s
+
+rebuilt_ROMs/kn5000_$(1)_program.llvm.elf: rebuilt_ROMs/kn5000_$(1)_program.llvm.o $(1)/maincpu/maincpu.ld
+	$$(LLVM_LLD) -T $(1)/maincpu/maincpu.ld -o $$@ $$<
+
+rebuilt_ROMs/kn5000_$(1)_program.llvm.rom: rebuilt_ROMs/kn5000_$(1)_program.llvm.elf
+	$$(LLVM_OBJCOPY) -O binary $$< $$@
+
+# Not in `make gate` until byte-identical: prints how much of the image matches.
+$(1)-progress: rebuilt_ROMs/kn5000_$(1)_program.llvm.rom original_ROMs/kn5000_$(1)_program.rom
+	@python3 -c "import sys; a, b = (open(f, 'rb').read() for f in sys.argv[1:3]); n = sum(x == y for x, y in zip(a, b)); print('$(1): %d of %d bytes match (%.2f%%)%s' % (n, len(b), 100.0 * n / len(b), '' if len(a) == len(b) else ', size %d' % len(a)))" rebuilt_ROMs/kn5000_$(1)_program.llvm.rom original_ROMs/kn5000_$(1)_program.rom
+endef
+
+$(eval $(call PORTED_MAINCPU,v6,V6))
+$(eval $(call PORTED_MAINCPU,v5,V5))
+# v6-c-bins (and v5-c-bins) is deliberately not .PHONY: like v7-extract-bins it is an intermediate with no file, so
+# `make -q` (assert_byte_identical.py's staleness check) does not call the ROM out of date.
+.PHONY: v6-progress verify-v6-reference v5-progress verify-v5-reference
+
 # --- Subcpu payload ---
 rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
@@ -1387,6 +1553,10 @@ clean:
 	rm -rf v9/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_v7_program.llvm.*
 	rm -rf v7/maincpu/includes/generated/
+	rm -f rebuilt_ROMs/kn5000_v6_program.llvm.*
+	rm -rf v6/maincpu/includes/generated/
+	rm -f rebuilt_ROMs/kn5000_v5_program.llvm.*
+	rm -rf v5/maincpu/includes/generated/
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142.llvm.*
 	rm -f rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom
 	rm -f rebuilt_ROMs/kn5000_subprogram_v141.llvm.*

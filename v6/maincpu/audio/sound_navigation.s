@@ -1,0 +1,528 @@
+; =============================================================================
+; Sound Navigation
+; =============================================================================
+;
+; Sound bank browsing functions: MainGetSoundName,
+; Sound_Navigate_Next/Prev, MainGetRhythmName, MainGetPmemName,
+; and MainTrSwControl for sound selection UI.
+; =============================================================================
+
+MainGetSoundName:
+	.byte 0xbf, 0xec, 0x37, 0x3e, 0xbf, 0x14, 0x62, 0xaf
+	.byte 0x14, 0x20, 0xe9, 0xcf, 0xa9, 0x00, 0xe0, 0x01
+	.byte 0x76, 0x52, 0x01, 0xe9, 0xcf, 0xa8, 0x00, 0xe0
+	.byte 0x01, 0x76, 0x0a, 0x01, 0xe9, 0xcf, 0x61, 0x00
+	.byte 0xe0, 0x01, 0x76, 0xac, 0x00, 0xe9, 0xcf, 0x5e
+	.byte 0x00, 0xe0, 0x01, 0x7e, 0xbd, 0x02, 0x0b, 0x06
+	.byte	0x00, 0x1d, 0xa5, 0x05, 0xff, 0xbf, 0x08, 0x63
+	.byte	0x0b, 0x12, 0x00, 0x1d, 0xa5, 0x05, 0xff, 0xef
+	.byte 0x64, 0xbf, 0x0a, 0x63, 0xaf, 0x14, 0x20, 0xaf
+	.byte 0x06, 0x21, 0xb1, 0x50, 0xaf, 0x0a, 0x22, 0xb9
+	.byte 0x02, 0x62, 0x91, 0x3f, 0x0f, 0x00, 0x63, 0x0c
+	.byte 0x91, 0x3f, 0x15, 0x00, 0x67, 0x32, 0x91, 0x3f
+	.byte 0x16, 0x00, 0x6b, 0x2c
+GetSoundName_BuildString:
+	ld	bc, 0:i3
+	call	SndParam_LookupViaEncode
+	ldfr_berp	l, 251
+	ld	xwa, (xsp+20)
+	ldw	bc, 32
+	call	SndParam_LookupViaEncode
+	ldto_berp	a, 251
+	extz	wa
+	extz	hl
+	ld	bc, hl
+	ld	xde, (xsp+10)
+	call	SndParam_ApplyProgramChangeAsync
+	ld	xwa, (xsp+10)
+	ld	(xwa+16), 0
+	jr	GetSoundName_DispatchResult	; -> 0xF98941
+GetSoundName_DefaultString:
+	pushw	GetSoundName_Str_DashedName@hi16
+	pushw	GetSoundName_Str_DashedName@lo16
+	ld	xwa, (xsp+14)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+GetSoundName_DispatchResult:
+	ld xwa, 0xffffffff
+	ld xbc, EVT_SOUND_NAME
+	ld xde, (xsp + 6)
+	call ApPostEvent
+	ld xwa, 0xffffffff
+	ld xbc, EVT_AUTO_FREE
+	ld xde, (xsp + 6)
+	call ApPostEvent
+	ld xwa, 0xffffffff
+	ld xbc, EVT_AUTO_FREE
+	ld xde, (xsp + 10)
+	jr SoundLookup_DispatchAndReturn
+
+SoundLookup_ByCategory:
+	ld	bc, 0:i3
+	call	SndParam_LookupViaEncode
+	ld	(xsp+17), l
+	ld	xwa, (xsp+20)
+	ldw	bc, 32
+	call	SndParam_LookupViaEncode
+	lda	xwa, (xsp+14)
+	ld	(xwa+4), l
+	ld	xbc, (xsp+20)
+	ld	(xwa+2), c
+	call	SndParam_FetchOscTableEntry
+	lda	xbc, (xsp+14)
+	ld	e, (xbc+1)
+	extz	de
+	ld	a, (xbc)
+	extz	wa
+	sll	wa, 8
+	add	wa, de
+	ld	bc, wa
+	extz	xbc
+	sll	xbc, 16
+	ld	xwa, (xsp+20)
+	ld	de, wa
+	extz	xde
+	add	xde, xbc
+	ld	xwa, 4294967295
+	ld	xbc, EVT_SOUND_SW_NO
+SoundLookup_DispatchAndReturn:
+	call ApPostEvent
+	jrl Sound_Navigate_Return
+
+Sound_SetSelection:
+	extz	wa
+	ld	xbc, (xsp+20)
+	srl	xbc, 16
+	ld	qbc, 0
+	ld	de, bc
+	srl	bc, 8
+	ld	b, 0:opc
+	extz	bc
+	extz	de
+	call	MIDI_DistributeParamToChannels
+	ld	xwa, (xsp+20)
+	extz	wa
+	ld	xbc, (xsp+20)
+	srl	xbc, 16
+	ld	qbc, 0
+	ld	de, bc
+	srl	de, 8
+	ld	d, 0:opc
+	extz	de
+	extz	bc
+	pushw	bc
+	ld	bc, 0:i3
+	call	SwbtWr
+	ld	wa, 1:i3
+	jrl	Sound_Navigate_Notify
+MainGetSoundName_OnAddSoundSwNo:
+	ld (xsp + 4), wa
+	cpw (xsp + 4), 0xf
+	jr le, Sound_Navigate_Init
+	cpw (xsp + 4), 0x15
+	jrl lt, Sound_Navigate_Return
+	cpw (xsp + 4), 0x16
+	jrl gt, Sound_Navigate_Return
+
+Sound_Navigate_Init:
+	ldw (xsp + 12), 0x0
+
+	ld xwa, (xsp + 20)
+
+	srl xwa, 16
+
+	ldiw_erp 0xe2, 0
+
+	ld (xsp + 10), wa
+
+	ld wa, (xsp + 4)
+
+	ld bc, 0:i3
+
+	call	SndParam_LookupViaEncode
+
+	ld (xsp + 17), l
+
+	ld wa, (xsp + 4)
+
+	ldw bc, 0x20
+
+	call	SndParam_LookupViaEncode
+
+	lda xwa, (xsp + 14)
+
+	ld (xwa + 4), l
+
+	ld bc, (xsp + 4)
+
+	ld (xwa + 2), c
+
+	call	SndParam_FetchOscTableEntry
+
+	lda xbc, (xsp + 14)
+
+	ld a, (xbc)
+
+	extz wa
+
+	ld (xsp + 8), wa
+
+	ld a, (xbc + 1)
+
+	ldfr_berp A, 0xf8
+
+	extz iz
+
+	ld wa, (xsp + 4)
+
+	ld bc, (xsp + 8)
+
+	calr	GetSoundBankCount
+
+	ld (xsp + 6), hl
+
+	add iz, (xsp + 10)
+
+
+
+Sound_Navigate_SearchLoop:
+	cp iz, 0:i3
+	jr ge, Sound_Navigate_ScanForward
+	cpw (xsp + 8), 0x0
+	jr le, Sound_Navigate_AtBottom
+	ld wa, (xsp + 8)
+	ldfr_werp WA, 0xfa
+	ld (xsp + 10), iz
+	ld hl, (xsp + 6)
+	cpiw_erp 0xfa, 0
+	jrl le, Sound_Navigate_UpdateState
+
+Sound_Navigate_ScanBackward:
+	dec1w_erp 0xfa
+	ld wa, (xsp + 4)
+	ldto_werp BC, 0xfa
+	calr GetSoundBankCount
+	ld wa, hl
+	inc 1, wa
+	add (xsp + 10), wa
+	cp hl, 0xffff
+	jr nz, Sound_Navigate_BackwardCheck
+	cpiw_erp 0xfa, 0
+	jr gt, Sound_Navigate_BackwardCheck
+	ld wa, (xsp + 8)
+	ldfr_werp WA, 0xfa
+	ldw (xsp + 10), 0x0
+	ld hl, (xsp + 6)
+	jr Sound_Navigate_UpdateState
+
+Sound_Navigate_BackwardCheck:
+	cp hl, 0xffff
+	jr nz, Sound_Navigate_UpdateState
+	cpiw_erp 0xfa, 0
+	jr gt, Sound_Navigate_ScanBackward
+	jr Sound_Navigate_UpdateState
+
+Sound_Navigate_AtBottom:
+	ld iz, 0:i3
+	jrl Sound_Navigate_SetDone
+
+Sound_Navigate_ScanForward:
+	cp iz, (xsp + 6)
+	jrl le, Sound_Navigate_SetDone
+	cpw (xsp + 8), 0x11
+	jrl ge, Sound_Navigate_AtTop
+	ld wa, (xsp + 8)
+	ldfr_werp WA, 0xfa
+	ld (xsp + 10), iz
+	ld hl, (xsp + 6)
+	cp_erpw 0xfa, 0x11, 0x00
+	jr ge, Sound_Navigate_UpdateState
+
+Sound_Navigate_ForwardLoop:
+	inc1w_erp 0xfa
+	inc 1, hl
+	sub (xsp + 10), hl
+	ld wa, (xsp + 4)
+	ldto_werp BC, 0xfa
+	calr GetSoundBankCount
+	cp hl, 0xffff
+	jr nz, Sound_Navigate_ForwardCheck
+	cp_erpw 0xfa, 0x11, 0x00
+	jr lt, Sound_Navigate_ForwardCheck
+	ld wa, (xsp + 8)
+	ldfr_werp WA, 0xfa
+	ld wa, (xsp + 6)
+	ld (xsp + 10), wa
+	ld hl, (xsp + 6)
+	jr Sound_Navigate_UpdateState
+
+Sound_Navigate_ForwardCheck:
+	cp hl, 0xffff
+	jr nz, Sound_Navigate_UpdateState
+	cp_erpw 0xfa, 0x11, 0x00
+	jr lt, Sound_Navigate_ForwardLoop
+
+Sound_Navigate_UpdateState:
+	ldto_werp WA, 0xfa
+	ld (xsp + 8), wa
+	ld iz, (xsp + 10)
+	ld (xsp + 6), hl
+	cpw (xsp + 12), 0x0
+	jrl z, Sound_Navigate_SearchLoop
+
+Sound_Navigate_Commit:
+	lda xbc, (xsp + 14)
+	ld a, (xbc + 1)
+	extz wa
+	cp wa, iz
+	jr nz, Sound_Navigate_ApplyChange
+	ld a, (xbc)
+	extz wa
+	cp wa, (xsp + 8)
+	jr z, Sound_Navigate_Return
+
+Sound_Navigate_ApplyChange:
+	ld wa, (xsp + 4)
+
+	extz wa
+
+	ld bc, (xsp + 8)
+
+	extz bc
+
+	ldto_berp E, 0xf8
+
+	extz de
+
+	call	MIDI_DistributeParamToChannels
+
+	ld wa, (xsp + 4)
+
+	extz wa
+
+	ld bc, (xsp + 8)
+
+	ld e, c
+
+	extz de
+
+	ldto_berp C, 0xf8
+
+	extz bc
+
+	pushw bc
+
+	ld bc, 0:i3
+
+	call	SwbtWr
+
+	ld wa, 1:i3
+
+
+
+Sound_Navigate_Notify:
+	call BitMapOut_StorePresetValue
+
+Sound_Navigate_Return:
+	ld xhl, 0:i3
+	pop xiz
+	lda xsp, (xsp + 20)
+	ret
+
+Sound_Navigate_AtTop:
+	ld iz, (xsp + 6)
+
+Sound_Navigate_SetDone:
+	ldw (xsp + 12), 0x1
+	jr Sound_Navigate_Commit
+
+GetSoundBankCount:
+	ld de, bc
+	ld hl, wa
+	ld a, l
+	ld c, e
+	extz bc
+	extz wa
+	cp hl, 0xf
+	jr z, GetSoundBankCount_CheckDrum
+	cp hl, 2:i3
+	jr z, GetSoundBankCount_StandardBank
+	cp hl, 1:i3
+	jr z, GetSoundBankCount_StandardBank
+	cp hl, 0:i3
+	jr nz, GetSoundBankCount_CheckSpecial
+
+GetSoundBankCount_StandardBank:
+	jr GetSoundBankCount_DoLookup
+
+GetSoundBankCount_CheckDrum:
+	cp de, 0xf
+	jr z, GetSoundBankCount_DoLookup
+
+GetSoundBankCount_Invalid:
+	ldw hl, 0xffff
+
+GetSoundBankCount_Return:
+	ret
+
+GetSoundBankCount_CheckSpecial:
+	cp de, 0xc
+	jr z, GetSoundBankCount_Invalid
+
+GetSoundBankCount_DoLookup:
+	call	CharMap_ActivePreamb_Prologue
+	exts	hl
+	jr	GetSoundBankCount_Return
+MainGetRhythmName:
+	dec	4, xsp
+	push	qiz
+	cp	xbc, EVT_GET_RHYTHM_NAME
+	jrl	nz, MainGetRhythmName_Return	; -> 0xF98C6F
+	ld	xwa, 163840
+	call	SndParam_LookupReadOnly
+	ldfr_berp	l, 250
+	ld	xwa, 163841
+	call	SndParam_LookupReadOnly
+	ldfr_berp	l, 251
+	pushw	17
+	call	Malloc
+	inc	2, xsp
+	ld	(xsp+2), xhl
+	lda	xbc, (36906:16)
+	ldto_berp	a, 250
+	ld	(xbc), a
+	ldto_berp	a, 251
+	ld	(xbc+1), a
+	ld	(xbc+2), 72
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	Rhythm_DispatchNote_Finalize
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	lda	xbc, (36910:16)
+	ld	a, (xbc)
+	extz	wa
+	ld	c, (xbc+1)
+	extz	bc
+	call	AccVoice_DispatchWithChannel
+	pushw	13
+	push	xhl
+	ld	xwa, (xsp+8)
+	push	xwa
+	call	Strncpy
+	lda	xsp, (xsp+10)
+	ld	xwa, (xsp+2)
+	ld	(xwa+13), 0
+	ld	xwa, 4294967295
+	ld	xbc, EVT_RHYTHM_NAME
+	ld	xde, (xsp+2)
+	call	ApPostEvent
+	ld	xwa, 4294967295
+	ld	xbc, EVT_AUTO_FREE
+	ld	xde, (xsp+2)
+	call	ApPostEvent
+MainGetRhythmName_Return:
+	ld xhl, 0:i3
+	popw_erp 0xfa
+	inc 4, xsp
+	ret
+
+MainGetPmemName:
+	dec	8, xsp
+	push	qiz
+	pushw	8
+	call	Malloc
+	ld	(xsp+4), xhl
+	pushw	18
+	call	Malloc
+	inc	4, xsp
+	ld	(xsp+6), xhl
+	call	BitMapOut_PrepareRender_CheckBit1
+	ldfr_berp	l, 251
+	ld	xwa, 768
+	call	SndParam_LookupReadOnly
+	ld	xwa, (xsp+2)
+	ld	(xwa+2), hl
+	pushw	17
+	pushw	0
+	pushw	63906
+	ld	xwa, (xsp+12)
+	push	xwa
+	call	Strncpy
+	lda	xsp, (xsp+10)
+	ld	xwa, (xsp+2)
+	lda	xbc, (xwa+2)
+	ld	de, (xbc)
+	dec	1, de
+	srl	de, 3
+	ldto_berp	a, 251
+	extz	wa
+	cp	wa, de
+	jr	nz, MainGetPmemName_CalcOffset	; -> 0xF98CE3
+	call	BitMapOut_GetRenderMode
+	bit	7, l
+	jr	z, MainGetPmemName_PageNotFirst	; -> 0xF98CDF
+	ld	bc, 0:i3
+	jr	MainGetPmemName_StoreResult	; -> 0xF98CF1
+MainGetPmemName_PageNotFirst:
+	ld bc, 1:i3
+	jr MainGetPmemName_StoreResult
+
+MainGetPmemName_CalcOffset:
+	ldto_berp A, 0xfb
+	sll a, 3
+	inc 1, a
+	extz wa
+	ld (xbc), wa
+	ld bc, 0:i3
+
+MainGetPmemName_StoreResult:
+	ld xwa, (xsp + 2)
+	ld (xwa), bc
+	ld xbc, (xsp + 6)
+	ld (xwa + 4), xbc
+	ld (xbc + 17), 0x0
+	ld xwa, 0xffffffff
+	ld xbc, EVT_PMEM_NAME
+	ld xde, (xsp + 2)
+	call ApPostEvent
+	ld xwa, 0xffffffff
+	ld xbc, EVT_AUTO_FREE
+	ld xde, (xsp + 2)
+	call ApPostEvent
+	ld xwa, 0xffffffff
+	ld xbc, EVT_AUTO_FREE
+	ld xde, (xsp + 6)
+	call ApPostEvent
+	ld xhl, 0:i3
+	popw_erp 0xfa
+	inc 8, xsp
+	ret
+
+MainTrSwControl:
+	dec 4, xsp
+	ld (xsp), xde
+	ld xwa, (xsp)
+	extz wa
+	cp xbc, EVT_TOGGLE_TRACK_SWITCH
+	jr z, MainTrSwControl_HandleChannel
+	cp xbc, EVT_REQUEST_TRACK_SWITCH
+	jr nz, MainTrSwControl_Return
+	call SeqVoice_DispatchEventToHandler
+	ld xwa, (xsp)
+	extz wa
+	call SeqVoice_ComputeStatusFlags
+	jr MainTrSwControl_Return
+
+MainTrSwControl_HandleChannel:
+	call AppEvent_HandleChannelEvent
+
+MainTrSwControl_Return:
+	ld xhl, 0:i3
+	inc 4, xsp
+	ret

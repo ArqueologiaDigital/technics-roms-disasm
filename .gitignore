@@ -88,3 +88,6 @@ code_shape_shortlist.json
 # git by choice (the older ones in original_ROMs/ are tracked). `make` copies it from the
 # private romset (KN5000_V8_REF) and checks its SHA-1 -- see the V8 rules in Makefile.
 original_ROMs/kn5000_v8_program.rom
+# Likewise v6 and v5 (KN5000_V6_REF / KN5000_V5_REF, the PORTED_MAINCPU rules in Makefile).
+original_ROMs/kn5000_v6_program.rom
+original_ROMs/kn5000_v5_program.rom

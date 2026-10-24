@@ -120,6 +120,8 @@ ROMS = {
     "v10/maincpu": ("maincpu v10", 2097152),
     "v9/maincpu": ("maincpu v9", 2097152),
     "v7/maincpu": ("maincpu v7", 2097152),
+    "v6/maincpu": ("maincpu v6", 2097152),
+    "v5/maincpu": ("maincpu v5", 2097152),
     "v142/subcpu": ("subcpu payload v142", 196608),
     "subcpu/boot": ("subcpu boot (IC30)", 131072),
     "table_data": ("table data", 2097152),
@@ -367,6 +369,42 @@ def tagged_debt(root):
 
 
 # --------------------------------------------------------------------------
+# Ported-tree debt: scripts/converters/port_maincpu_version.py writes the target
+# bytes that no line of the source tree maps to as `.byte` rows under a
+# `; TODO(port): ...` line.  Those rows are ROM bytes copied, unexplained, into
+# the source -- the same thing as an `.incbin` of a committed blob -- so they are
+# moved from "typed data" to verbatim debt.  A block runs on through blank,
+# comment-only and label-only lines (a label the porter or disassemble_port_todo.py
+# put on a branch target inside the rows) and ends at the first other line: an
+# instruction or any directive that is not one of the porter's rows.  Only rows in
+# the porter's own form (`\t.byte\t0x..` with up to 8 values, no comment) count, so
+# a source tree's own `.byte` data after a label is not taken for port debt.
+# --------------------------------------------------------------------------
+PORT_TODO = re.compile(r';\s*TODO\(port\)')
+PORT_ROW = re.compile(r'^\t\.byte\t0x[0-9a-f]{2}(, 0x[0-9a-f]{2}){0,7}\s*$')
+LABELS_ONLY = re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)+$')
+
+
+def port_todo_bytes(path):
+    n = 0
+    inblock = False
+    for raw in open(path, encoding="latin-1").read().split("\n"):
+        if PORT_TODO.search(raw):
+            inblock = True
+            continue
+        if not inblock:
+            continue
+        code = strip_comment(raw)
+        if PORT_ROW.match(raw):
+            n += directive_bytes("byte", DIRECTIVE_RE.match(code).group(2))
+        elif not code.strip() or LABELS_ONLY.match(code):
+            continue
+        else:
+            inblock = False
+    return n
+
+
+# --------------------------------------------------------------------------
 # Per-KN5000-root measurement
 # --------------------------------------------------------------------------
 def measure_kn5000_root(root):
@@ -394,9 +432,30 @@ def measure_kn5000_root(root):
             else:
                 verbatim += size
         td, mc = scan_directives(f)
-        typed += td
+        pd = port_todo_bytes(f)
+        typed += td - pd
+        verbatim += pd
         macro_calls += mc
+    # A ported tree's C data compiles from the newer tree's C; its <tree>_c_divergence.json
+    # (scripts/build/apply_c_divergence.py) overwrites single bytes of the compiled bins with
+    # ROM bytes.  Those raw bytes are copied, unexplained, like a TODO(port) row, so they move
+    # to verbatim debt (out of "roundtrip", where classify_incbin puts the .incbin slices of
+    # those bins).  Pointer relocations are not counted as debt: each is a whole pointer moved
+    # by a number.  They are not explained either, because no label of the ported tree checks
+    # what one points at (a follow-up: tie each relocated pointer to a label).
+    # Only the ported trees: v7's own v7_c_divergence.json belongs to the v7 tree's history.
+    tree = os.path.basename(os.path.dirname(root.rstrip("/")))
+    if tree in PORTED:
+        jp = os.path.join(root, "includes", "%s_c_divergence.json" % tree)
+        if os.path.exists(jp):
+            import json
+            raw = sum(len(e.get("raw", {})) for e in json.load(open(jp)).values())
+            roundtrip -= raw
+            verbatim += raw
     return dict(verbatim=verbatim, clang=clang, roundtrip=roundtrip, typed=typed, macro_calls=macro_calls)
+
+
+PORTED = ("v6", "v5")       # trees written by scripts/converters/port_maincpu_version.py
 
 
 def report_row(label, total, m):

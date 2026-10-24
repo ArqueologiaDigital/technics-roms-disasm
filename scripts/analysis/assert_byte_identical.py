@@ -50,6 +50,11 @@ import glob, os, sys
 # subcpu/boot in particular carries tone-generator code.
 PAIRS = [
     ("kn5000_v7_program", "kn5000_v7_program.rom", "kn5000_v7_program.llvm.rom"),
+    # v6/maincpu is ported from v7/maincpu (scripts/converters/port_maincpu_version.py);
+    # its original is an uncommitted copy whose SHA-1 the Makefile checks.
+    ("kn5000_v6_program", "kn5000_v6_program.rom", "kn5000_v6_program.llvm.rom"),
+    # v5/maincpu is ported from v6/maincpu the same way.
+    ("kn5000_v5_program", "kn5000_v5_program.rom", "kn5000_v5_program.llvm.rom"),
     ("kn5000_v9_program", "kn5000_v9_program.rom", "kn5000_v9_program.llvm.rom"),
     # v8 is built from the v9 sources (--defsym FW_VERSION_BYTE=0x08); its
     # original is an uncommitted copy whose SHA-1 the Makefile checks.
