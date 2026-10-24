@@ -98,6 +98,11 @@ class Assembler:
         self.mn_base = 0   # CPU address that output offset 0 maps to (.mnbase)
         self.guessed = {}      # forward name with no address yet -> (file, line) of 1st use
         self.assumed = {}      # forward names resolved from the previous pass
+        # output offset at each source line, this pass and the previous one: a
+        # forward label is estimated at its previous address plus the drift this
+        # line has had since, so displacements are those of ONE layout
+        self.prev_off = getattr(self, "line_off", {})
+        self.line_off = {}
         self.problem = None    # first error of this pass; raised only if it is exact
 
     def fail(self, msg):
@@ -126,11 +131,20 @@ class Assembler:
             if tok in self.symbols:
                 return hex(self.symbols[tok])
             if tok in self.known:
-                self.assumed[tok] = self.known[tok]
-                return hex(self.known[tok])
+                return hex(self.forward(tok))
             self.guessed.setdefault(tok, (self.cur_file, self.cur_line))
             return hex(self.mn_base + len(self.out))
         return re.sub(r"0x[0-9A-Fa-f]+|\d+|([A-Za-z_]\w*)", repl, operands)
+
+    def forward(self, tok):
+        """The estimated address of forward label `tok`: where the previous pass
+        put it, moved by the drift this line has had since. Without the drift a
+        pass mixes two layouts (backward labels from this one, forward ones from
+        the last), and the branches that span the difference relax and grow."""
+        here = len(self.out)
+        v = self.known[tok] + here - self.prev_off.get((self.cur_file, self.cur_line), here)
+        self.assumed[tok] = v
+        return v
 
     # -- expression evaluation ------------------------------------------------
 
@@ -150,8 +164,7 @@ class Assembler:
                 elif tok in self.symbols:
                     py.append(str(self.symbols[tok]))
                 elif tok in self.known:        # a forward label: the previous pass's address
-                    self.assumed[tok] = self.known[tok]
-                    py.append(str(self.known[tok]))
+                    py.append(str(self.forward(tok)))
                 else:                          # not defined yet: a placeholder, so this pass is inexact
                     self.guessed.setdefault(tok, (self.cur_file, self.cur_line))
                     py.append(str(self.mn_base + len(self.out)))
@@ -277,6 +290,7 @@ class Assembler:
             lines = f.readlines()
         for i, raw in enumerate(lines, 1):
             self.cur_line = i
+            self.line_off[(path, i)] = len(self.out)
             line = strip_comment(raw).strip()
             if not line:
                 continue
