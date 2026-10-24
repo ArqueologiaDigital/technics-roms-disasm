@@ -194,12 +194,12 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
 | `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
 | `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 5,298   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
-| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 5,213   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 5,209   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
 NAME+ADDRESS agreement for all eleven files, `maincpu_v8`, `subcpu_v141` and `hdae5000_v2_01i` included; first regenerated this way on
-2026-09-25, after the Wave 2 merges, with `--regen`). **Use that script to regenerate** --
+2026-09-25, after the Wave 2 merges, with `--regen`). `make gate` runs `--check`, so a stale file fails the gate. **Use that script to regenerate** --
 it knows the per-version maincpu split (v7/v9/v10 are separate links; a v7
 address looked up in the v10 file is wrong) and writes the header block itself.
 The hand recipe below is kept for reference. Rows are `NAME 00ADDRESS` (8 hex
@@ -1292,7 +1292,7 @@ When encountering disputed interpretations:
 | table_data          | `table_data/kn5000_table_data.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                               | 100.00%    | 100.0%                | 0 B           |
 | hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`                                    | 100.00%    | 100.0%                | 0 B           |
-| hdae5000 v2.01i     | `hdae5000_v2_01i/hd-ae5000_v2_01i.s` (ported from v2.06i)        | 100.00%    | not measured          | not measured  |
+| hdae5000 v2.01i     | `hdae5000_v2_01i/hd-ae5000_v2_01i.s` (ported from v2.06i)        | 100.00%    | 100.0%                | 0 B           |
 
 The two kinds of column answer different questions and must not be conflated. **Byte-match** is
 `python scripts/build/compare_roms.py`; measured 2026-10-24 after the wave 1 merges it printed `romset bytematch:

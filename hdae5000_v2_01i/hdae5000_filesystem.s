@@ -1529,7 +1529,7 @@ HDAE5000_FlsNamingCheck:
 	pushw 0x0010                            ; size = 16 bytes
 	push xde                                ; src = caller's new tile data
 	pushw 0x0023
-	pushw 0x9ff6		; dest = tile buffer at 0x23A06E
+	pushw 0x9ff6		; dest = tile buffer at 0x239FF6
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 0x0a)
 	ld (0x23a006:24), 0x00; clear dirty flag (tile updated)
@@ -1635,7 +1635,7 @@ HDAE5000_FlsNamingCheck2:
 	pushw 0x0010
 	push xde
 	pushw 0x0023
-	pushw 0x9ff6		; dest = tile buffer at 0x23A06E
+	pushw 0x9ff6		; dest = tile buffer at 0x239FF6
 	call HDAE5000_StrNCpy
 	lda xsp, (xsp + 0x0a)
 	ld (0x23a006:24), 0x00; clear dirty flag
@@ -3258,18 +3258,18 @@ HDAE5000_FlsOverWrSwCatch_Epilogue:
 HDAE5000_FdList_Redisplay:
 	lda xwa, (HDAE5000_RAM_FdList:24); f2 9c aa 22 30
 	ld xde, xwa				; e8 8a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
-	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 de 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 e0 00 7f 00
 	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 de 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 e0 00 7f 00
 	ld xbc, EVT_PARA_DRAW			; 41 0f 00 c0 01
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
@@ -3317,36 +3317,36 @@ HDAE5000_FdList_Redisplay:
 	; --- Register events for second buffer at 0x22AAAA ---
 	lda xwa, (HDAE5000_RAM_FdList+14:24); f2 aa aa 22 30
 	ld xde, xwa				; e8 8a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d7 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d9 00 7f 00
 	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d7 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d9 00 7f 00
 	ld xbc, EVT_PARA_DRAW			; 41 0f 00 c0 01
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
 
 	; Register event 0x01C0000D (handler 1)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LINE1			; 40 d9 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LINE1			; 40 db 00 7f 00
 	ld xbc, EVT_DRAW			; 41 0d 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
 
 	; Register event 0x01C0000D (handler 2) — tail call via jp
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LINE2			; 40 d8 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LINE2			; 40 da 00 7f 00
 	ld xbc, EVT_DRAW			; 41 0d 00 c0 01
 	ld xde, 0:i3				; ea a8
 	jp (xhl)				; b3 d8 — tail call
@@ -3395,16 +3395,16 @@ HDAE5000_CopyToHDScreen:
 
 	; Event 0x01EA0006: format params and check active files
 .Lfbs_evt_0006:
-	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX			; 40 e6 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX			; 40 e8 00 7f 00
 	calr HDAE5000_DirList_BuildPage		; 1e xx xx
 	calr HDAE5000_Count_Active_Files	; 1e xx xx
 	cp hl, 0:i3				; db d8
 	jr z, .Lfbs_evt_0006_empty		; 66 xx
 	; Has active files: register status 0x007f00e2
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_DIRSEL			; 40 e2 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_DIRSEL			; 40 e4 00 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
@@ -3412,10 +3412,10 @@ HDAE5000_CopyToHDScreen:
 
 .Lfbs_evt_0006_empty:
 	; No active files: register status 0x007f027a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_ATTEN_CPFD_MARK			; 40 7a 02 7f 00
+	ld xwa, HDAE5000_OBJ_ATTEN_CPFD_MARK			; 40 79 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8

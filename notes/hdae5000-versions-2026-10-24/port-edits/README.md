@@ -21,8 +21,10 @@ The order they ran in, with the tool passes between them. The hunk counts are wh
 | 8    | `farptrs`, `05` to `12`                                             | names and comments fixed, still identical |
 | 9    | `hdae5000_version_stale_comments.py --fix`, `13`, `14`              | comments fixed, still identical           |
 | 10   | `15` to `17`                                                        | labels fixed, still identical             |
+| 11   | `18`; `port_hdae5000_version.py fix` freezes OBJ ids after uitables | two OBJ values fixed, still identical     |
+| 12   | `hdae5000_version_stale_comments.py --fix` (new checks), `19`       | comments fixed, still identical           |
 
-These committed review tools found what steps 8 to 10 fix:
+These committed review tools found what steps 8 to 12 fix:
 
 - `scripts/analysis/hdae5000_version_label_check.py` lists labels that may name different code
   than in v2.06i, and suggests renames.
@@ -30,3 +32,5 @@ These committed review tools found what steps 8 to 10 fix:
   code no longer holds.
 - `scripts/analysis/hdae5000_version_routine_diff.py` compares the trees routine by routine; its
   output is `../routine-diff-v2_01i.txt`.
+- `scripts/analysis/hdae5000_obj_constants_check.py` checks every `HDAE5000_OBJ_*` value
+  against the name table (step 11; `make gate` runs it).

@@ -151,6 +151,8 @@ gate: all
 	python3 scripts/analysis/assert_byte_identical.py
 	$(MAKE) --no-print-directory verify-v8-reference verify-hdae5000-v201-reference verify-subprogram-update-images
 	python3 scripts/generators/create_v141_subcpu_source.py --check
+	python3 scripts/analysis/hdae5000_obj_constants_check.py
+	python3 scripts/analysis/l2_symbol_reference.py --check
 
 # The v1.40 Sub-CPU update image (File Type 007) has no source build (v1.41's is also
 # rebuilt from v141/subcpu above); this proves each tracked update image decompresses

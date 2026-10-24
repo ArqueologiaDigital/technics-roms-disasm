@@ -19,7 +19,11 @@ QUESTION ANSWERED / JOB IT DOES
       fix       same-size hunks whose differing bytes are a number the line
                 spells as a literal, or as a constant whose name is in
                 RETARGET_PREFIXES: the number is rewritten (a constant at its
-                `.equ`, once, for the whole tree);
+                `.equ`, once, for the whole tree).  Once `uitables` has run,
+                the HDAE5000_OBJ_* values come from the target's name table
+                and are frozen: a line whose object id differs is respelled
+                with the constant that has the target's value, or left alone
+                (scripts/analysis/hdae5000_obj_constants_check.py checks them);
       code      code hunks: the source lines and the target's instructions are
                 aligned by SHAPE (mnemonic and registers, numbers masked,
                 difflib); an aligned line is retargeted as above, an unaligned
@@ -782,7 +786,39 @@ def cmd_status(ver, verbose=True, want_blocks=False):
     return bld, ref, hs
 
 
+UITABLES_MARK = b"; Generated from the "
+
+
+def obj_ids_frozen(tree):
+    """True once `uitables` has written the UI object section of this tree: from then on
+    each HDAE5000_OBJ_<NAME> is 0x007F0000 + the index of <NAME> in the target's own name
+    table, and `fix` must not move it to make one use's bytes match (on 2026-10-24 that
+    left two v2.01i constants naming the wrong objects)."""
+    p = os.path.join(tree, "hdae5000_data_tables.s")
+    return any(l.startswith(UITABLES_MARK) and b"uitables" in l
+               for l in open(p, "rb").read().split(b"\n"))
+
+
+def respell_frozen_obj(txt, eq, equs):
+    """Replace each HDAE5000_OBJ_* name retarget() wanted to change by the constant that
+    already has the wanted value.  Returns (txt, remaining eq) or None if one has no such
+    constant."""
+    rest = {}
+    for name, v in eq.items():
+        if not name.startswith("HDAE5000_OBJ_"):
+            rest[name] = v
+            continue
+        cands = [n for n, e in equs.items() if n.startswith("HDAE5000_OBJ_") and e[0] == v]
+        if len(cands) != 1:
+            return None
+        code, comment = split_code(txt)
+        code = re.sub(rb'(?<![\w])' + re.escape(name.encode()) + rb'(?![\w])', cands[0].encode(), code)
+        txt = code + comment
+    return txt, rest
+
+
 def cmd_fix(ver, rounds):
+    frozen = obj_ids_frozen(tree_of(ver))
     for r in range(rounds):
         bld, ref, hs = cmd_status(ver, verbose=False)
         equs = read_equs(bld)
@@ -800,6 +836,8 @@ def cmd_fix(ver, rounds):
                 if wb == bb:
                     continue
                 res = retarget(bld.text(f, n), wb, bb, equs, bld.symaddr)
+                if res is not None and frozen:
+                    res = respell_frozen_obj(res[0], res[1], equs)
                 if res is None:
                     continue
                 txt, eq = res

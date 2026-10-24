@@ -128,7 +128,7 @@ The result is byte-identical. `make gate` reports `hd-ae5000_v2_01i IDENTICAL`, 
 `verify-hdae5000-v201-reference` checks the reference copy's SHA-1.
 
 Byte-exactness pins every label that something references, but not the others, and not the names.
-Three review tools, committed, did the rest:
+Four review tools, committed, did the rest:
 
 - `scripts/analysis/hdae5000_version_label_check.py v2_01i` compares each label's first
   instructions with v2.06i's, call targets included. The latest run reports 0 orphan labels, 2 labels
@@ -136,13 +136,32 @@ Three review tools, committed, did the rest:
   suggestions. Its "moved" rows are code that really changed, renumbered UI objects, and pointer
   tables.
 - `scripts/analysis/hdae5000_version_stale_comments.py v2_01i` lists comments that quote a number
-  the code no longer has. It reports 0.
+  the code no longer has. Its first check (TEXT) only saw lines whose source text changed. It
+  reported 0 while byte dumps contradicted their own lines: in `HDAE5000_HDAETitleFunc`,
+  `ld (0x23a022:24), xwa ; f2 9a a0 23 60` assembles to `f2 22 a0 23 60`. It now also reads
+  the assembled bytes of both trees. BYTES compares each trailing byte-dump comment with its line's bytes. OPER maps the
+  addresses that changed between a line and its v2.06i twin. SYM maps the v2.06i value of a symbol
+  quoted in a code line's trailing comment. IMAGE maps RAM and ROM addresses quoted in the `.data`
+  image through the copy. Its `--fix` run rewrote 195 byte dumps, 50 operand quotes, 49 symbol
+  quotes and 51 image addresses (counts are quotes, not lines; rerun it without `--fix` on the
+  commit before the fix to see them). It now reports 0 in all five checks.
+  Quoted sizes and offsets in the image and the copy routine were fixed by hand
+  (`port-edits/19_data_image_sizes.py`).
+- `scripts/analysis/hdae5000_obj_constants_check.py` checks each `HDAE5000_OBJ_<NAME>` against the
+  name table: its value must be 0x007F0000 + the index whose name is NAME, and no two constants may
+  share a value. It found two v2.01i constants the porting tool's `fix` pass had retargeted after
+  `uitables`, so that one routine's bytes matched: SW_HD_FORMAT held #222 and CP_FD_HDSWSEL held
+  #220, which is CP_FD_HDSWTO's id. That routine had been respelled to fit, which made it look as
+  if v2.01i hid different objects there. It hides the same three as v2.06i
+  (`port-edits/18_obj_constant_values.py`). `fix` no longer moves OBJ constants once `uitables` has
+  run, and `make gate` runs this check and `l2_symbol_reference.py --check`.
 - `port_hdae5000_version.py farptrs` respells every `pushw X@hi16 / @lo16` pair from the bytes. The
   high half of any label in the same 64 KiB assembles the same way, so 409 pairs had named the wrong
   string.
 
-Comments elsewhere in `hdae5000_v2_01i/` still quote v2.06i addresses and object numbers. The banner
-at the top of `hd-ae5000_v2_01i.s` says so. The 738 label-address comments are removed.
+Block comments (prose on lines of their own) elsewhere in `hdae5000_v2_01i/` still quote v2.06i
+addresses and object numbers; only the `.data` image's are mapped. The banner at the top of
+`hd-ae5000_v2_01i.s` says so. The 738 label-address comments are removed.
 
 ## Keeping the trees in step
 
@@ -183,3 +202,15 @@ A v1.15i tree is therefore a lane of its own:
 3. then the same port loop, starting from `port_hdae5000_version.py init v1_15i` (it reads the dump
    from the private romset when `original_ROMs/hd-ae5000_v1_15i.ic4` is absent);
 4. then v1.10i, from the v1.15i tree.
+
+## Follow-ups
+
+- **Dispatch census and semantic score.** `hd-ae5000_v2_01i` is not yet an image of
+  `scripts/analysis/dispatch_table_census/` or `scripts/analysis/semantic_score.py`, and neither
+  are wave 1's `maincpu v8` and `subcpu v141`. Until it is, the Code-Coverage Evidence Ledger's
+  full-coverage criterion cannot cover it. Adding it means a new snapshot (`make dispatch-census`),
+  which the coordinator runs after merging.
+- **Documentation website.** `../technics-docs` (`hdae5000.md`, `rom-reconstruction.md`) does not yet
+  say that v2.01i is a byte-exact target, or what differs between the versions. The section
+  "What v2.01i lacks, or has, against v2.06i" above is the text to start from.
+- **v1.15i and v1.10i**, as above.

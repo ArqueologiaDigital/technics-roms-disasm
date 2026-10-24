@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""kn5000_source_coverage.py -- a trustworthy territorial-debt inventory for the 13
-gated images (9 KN5000 + 4 WSA1R).  It prints 12 rows: the compressed v1.42 update
-image is gated but not measured on its own, being the v1.42 payload recompressed.
+"""kn5000_source_coverage.py -- a trustworthy territorial-debt inventory for the gated
+images: 9 KN5000 source trees (ROMS below, HD-AE5000 v2.01i since 2026-10-24) + 4 WSA1R.
+Not measured on their own: the compressed v1.42 / v1.41 update images (their payload
+recompressed), maincpu v8 (the v9 tree with one --defsym) and sub-CPU v1.41 (generated
+from v1.42 by scripts/generators/create_v141_subcpu_source.py).
 
 QUESTION ANSWERED: for each gated ROM, how many bytes enter the byte-exact build as
 REAL source -- assembly, typed/derived data, or C compiled byte-exact by clang -- and
@@ -125,7 +127,14 @@ ROMS = {
     "table_data": ("table data", 2097152),
     "custom_data": ("custom data (IC19)", 1048576),
     "hdae5000": ("HD-AE5000", 524288),
+    "hdae5000_v2_01i": ("HD-AE5000 v2.01i", 524288),
 }
+# Extra include directories, as the Makefile passes them with -I: hdae5000_v2_01i/ is
+# assembled with `-I hdae5000_v2_01i -I hdae5000`, so the pictures it shares with
+# v2.06i (includes/generated/HDAE5000_Logo.bin and the like) resolve from hdae5000/.
+EXTRA_INC = {"hdae5000_v2_01i": ["hdae5000"]}
+# Number of '; Was: .incbin' fossil comments each root carries (selftest step 2).
+FOSSIL_WAS = {"hdae5000": 10, "hdae5000_v2_01i": 8}
 # ⚠ NOTE ON THE 9TH KN5000 IMAGE: `kn5000_subprogram_v142_compressed` (the 9th
 # name in assert_byte_identical.py's PAIRS) is the SAME v142/subcpu source,
 # LZSS-compressed at build time -- there is no separate .s tree for it, so it
@@ -166,7 +175,9 @@ INC = re.compile(r'\.incbin\s+"([^"]+)"(?:\s*,\s*([0-9a-fA-Fx]+)\s*(?:,\s*([0-9a
 def classify_incbin(root, s_file, rel_path):
     """-> ('clang' | 'roundtrip' | 'verbatim', resolved_path_or_None)."""
     resolved = next((c for c in (os.path.join(os.path.dirname(s_file), rel_path),
-                                  os.path.join(root, rel_path), rel_path) if os.path.exists(c)), None)
+                                  os.path.join(root, rel_path), rel_path,
+                                  *(os.path.join(d, rel_path) for d in EXTRA_INC.get(root, ())))
+                     if os.path.exists(c)), None)
     s_dir = os.path.relpath(os.path.dirname(s_file), REPO)
     logical = os.path.normpath(os.path.join(s_dir, rel_path)).replace("\\", "/")
     probe = "/" + logical + "/"
@@ -497,10 +508,11 @@ def selftest():
             for line in open(f, encoding="latin-1"):
                 if re.match(r'\s*;\s*Was:.*\.incbin', line):
                     n += 1
-        if root != "hdae5000":
+        if root not in FOSSIL_WAS:
             ck(f"{root}: no fossil '; Was: .incbin' comments (would double-count if unstripped)", n == 0)
         else:
-            ck(f"{root}: fossil '; Was: .incbin' comments found and now excluded ({n} of them)", n == 10)
+            ck(f"{root}: fossil '; Was: .incbin' comments found and now excluded ({n} of them)",
+               n == FOSSIL_WAS[root])
 
     # 3. Full measurement: every per-image class is non-negative, none exceeds
     #    the ROM, and assembly+typed+clang+verbatim == ROM exactly (the sum
