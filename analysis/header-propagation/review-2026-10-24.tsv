@@ -1,102 +1,76 @@
 target	label	reason	detail	src_line	dst_line	ndiff	nlines	handport
 v7	AccAutoPlay_ConfigureIfPending	body-differs	v10 bit 1,(13422:16) | v7 bit 1,(13266:16)	v10/maincpu/sequencer/accompaniment_engine.s:8031	v7/maincpu/sequencer/accompaniment_engine.s:7678	6	15	
-v7	AccChannel_ResetCurrentState	body-differs	v10 ld(13045:16),15 / and(13047:16),248 | v7 ld(12889:16),15 / and(12891:16),248	v10/maincpu/sequencer/seq_audio_mode.s:1469	v7/maincpu/sequencer/seq_audio_mode.s:1585	3	5	
 v7	AccChannel_StoreStateIfChanged	body-differs	v10 ld a,(13045:16) / cp a,(13046:16) | v7 ld a,(12889:16) / cp a,(12890:16)	v10/maincpu/sequencer/seq_audio_mode.s:229	v7/maincpu/sequencer/seq_audio_mode.s:220	8	23	
-v7	AccGraphics_BoundOp04	body-differs	v10 - | v7 push xiz / calr AccDraw_Secondary_Helper7	v10/maincpu/sequencer/accompaniment_engine.s:34414	v7/maincpu/sequencer/accompaniment_engine.s:33194	4	10	
+v7	AccGraphics_BoundOp04	body-differs	v10 - | v7 push xiz / calr AccDraw_Secondary_Helper7	v10/maincpu/sequencer/accompaniment_engine.s:34414	v7/maincpu/sequencer/accompaniment_engine.s:33227	4	10	
 v7	AccPart_GetParamAddr_Wrap	body-differs	v10 ld a,(13268:16) / call AccPedal_DirectionA_Wrap_Helper | v7 ld a,(13112:16) / call AccTone_ValidateAndClamp_Helper	v10/maincpu/sequencer/accompaniment_engine.s:13638	v7/maincpu/sequencer/accompaniment_engine.s:12948	4	46	
 v7	AccPatch_ChannelToParamTable	body-differs	"v10 .byte 0,0,0,0,215,0,212,0,213,0,214,0,0,0,0,0 | v7 .incbin ""includes/romslices/v7_transplant_AccPatch_ChannelToParamTable.bin"""	v10/maincpu/sequencer/accompaniment_engine.s:15076	v7/maincpu/sequencer/accompaniment_engine.s:14250	1	2	
-v7	AccPatch_ConvertLegacySectionLayout	body-differs	v10 ld(14766:16),xwa | v7 ld(14610:16),xwa	v10/maincpu/storage/flash_floppy_handlers.s:5073	v7/maincpu/storage/flash_floppy_handlers.s:5186	145	167	
-v7	AccPatch_ConvertLegacyStyleImage	body-differs	v10 calr AccPatch_LoadIntroFillEndingFromRhythm | v7 calr ToneParam_ExtendedOpsBlock_Helper_Helper2	v10/maincpu/storage/flash_floppy_handlers.s:4985	v7/maincpu/storage/flash_floppy_handlers.s:5107	1	79	
-v7	AccPatch_GetEventLength	body-differs	v10 jr AccPatch_GetEventLength_Return3 | v7 jr AccVoice_SetupSlots_DataBlock_Return3	v10/maincpu/sequencer/accompaniment_engine.s:29963	v7/maincpu/sequencer/accompaniment_engine.s:28579	8	34	
-v7	AccPatch_SetCursorToChannelStart	body-differs	v10 calr AccPatch_GetCurrentSlotAddrXix | v7 calr AccVoice_SetupStyleSlots_Helper2	v10/maincpu/sequencer/accompaniment_engine.s:29851	v7/maincpu/sequencer/accompaniment_engine.s:28477	3	8	
+v7	AccPatch_ConvertLegacySectionLayout	body-differs	v10 ld(14766:16),xwa | v7 ld(14610:16),xwa	v10/maincpu/storage/flash_floppy_handlers.s:5073	v7/maincpu/storage/flash_floppy_handlers.s:5215	145	167	
+v7	AccPatch_GetEventLength	body-differs	v10 jr AccPatch_GetEventLength_Return3 | v7 jr AccVoice_SetupSlots_DataBlock_Return3	v10/maincpu/sequencer/accompaniment_engine.s:29963	v7/maincpu/sequencer/accompaniment_engine.s:28595	8	34	
+v7	AccPatch_SetCursorToChannelStart	body-differs	v10 calr AccPatch_GetCurrentSlotAddrXix | v7 calr AccVoice_SetupStyleSlots_Helper2	v10/maincpu/sequencer/accompaniment_engine.s:29851	v7/maincpu/sequencer/accompaniment_engine.s:28493	3	8	
 v7	AccPedal_LoadFlagFromStyleMem	body-differs	v10 and(13155:16),254 | v7 and(12999:16),254	v10/maincpu/sequencer/seq_audio_mode.s:64	v7/maincpu/sequencer/seq_audio_mode.s:61	2	14	
 v7	AccTuning_ResetFiveParts	body-differs	v10 ld(12870:16),6 / ld(12871:16),0 | v7 ld(12714:16),6 / ld(12715:16),0	v10/maincpu/sequencer/seq_audio_mode.s:1439	v7/maincpu/sequencer/seq_audio_mode.s:1555	10	27	
 v7	AccVoice_IndexedTableLookup_Data	body-differs	v10 .long 3145728,3145728,3145728,3145728 / .long 3145728,3145728,3145728,3145728 | v7 .byte 0,0,48,0,0,0 / .byte 48,0,0,0,48,0,0,0	v10/maincpu/sequencer/accompaniment_engine.s:10678	v7/maincpu/sequencer/accompaniment_engine.s:10277	89	90	
-v7	AccVoice_SetupSlots_Apply	body-differs	v10 ld(14281:16),a / calr AccPatch_ResolveEntryAddr_Helper | v7 ld(14125:16),a / calr AccVoice_SetupSlots_DataBlock_Helper	v10/maincpu/sequencer/accompaniment_engine.s:30133	v7/maincpu/sequencer/accompaniment_engine.s:28740	4	8	
-v7	AccVoice_SetupSlots_CheckStream	body-differs	v10 add xbc,13357 | v7 add xbc,13201	v10/maincpu/sequencer/accompaniment_engine.s:30364	v7/maincpu/sequencer/accompaniment_engine.s:28982	5	31	
-v7	AccompSeq_MidiFilterCodeBlock_Step	body-differs	v10 cp(32523:16),0 | v7 cp(32367:16),0	v10/maincpu/sequencer/accompseq_routines.s:1681	v7/maincpu/sequencer/accompseq_routines.s:1625	3	25	
-v7	AccompSeq_MidiFilterCodeBlock_Step2	body-differs	v10 cp(32376:16),0 | v7 cp(32220:16),0	v10/maincpu/sequencer/accompseq_routines.s:1707	v7/maincpu/sequencer/accompseq_routines.s:1651	7	24	
-v7	AppEvent_SubDispatch	body-differs	v10 jrl AppEvent_InlineHandler_Join8 | v7 jrl AppEvent_InlineHandler_Join13	v10/maincpu/sequencer/sequencer_engine.s:21039	v7/maincpu/sequencer/sequencer_engine.s:21070	1	21	
+v7	AccVoice_SetupSlots_Apply	body-differs	v10 ld(14281:16),a / calr AccPatch_ResolveEntryAddr_Helper | v7 ld(14125:16),a / calr AccVoice_SetupSlots_DataBlock_Helper	v10/maincpu/sequencer/accompaniment_engine.s:30133	v7/maincpu/sequencer/accompaniment_engine.s:28756	4	8	
+v7	AccVoice_SetupSlots_CheckStream	body-differs	v10 add xbc,13357 | v7 add xbc,13201	v10/maincpu/sequencer/accompaniment_engine.s:30364	v7/maincpu/sequencer/accompaniment_engine.s:28998	5	31	
+v7	AppEvent_SubDispatch	body-differs	v10 jrl AppEvent_InlineHandler_Join8 | v7 jrl AppEvent_InlineHandler_Join13	v10/maincpu/sequencer/sequencer_engine.s:21039	v7/maincpu/sequencer/sequencer_engine.s:21073	1	21	
 v7	AudioVoiceReset_Handler	body-differs	v10 res 3,(49662:16) / ld(49844:16),255 | v7 res 3,(49506:16) / ld(49688:16),255	v10/maincpu/audio/dsp_config_sysex.s:5560	v7/maincpu/boot/screen_group_dispatch.s:76	8	25	
 v7	AudioVoice_Callback	body-differs	v10 lda xwa,(AudioVoiceHandler_NoneSentinel:24) | v7 lda xwa,(AudioInit_MixFallbackDefault_Code:24)	v10/maincpu/audio/dsp_config_sysex.s:5522	v7/maincpu/boot/screen_group_dispatch.s:38	1	13	
-v7	COMM_SendEqualizerOnOff	body-differs	v10 cp(58202:16),c | v7 cp(58046:16),c	v10/maincpu/audio/note_voice_mapping.s:26430	v7/maincpu/audio/note_voice_mapping.s:24489	3	26	
-v7	CPanel_CheckSpecialCombos	body-differs	v10 cp(36446:16),108 / jr nz,CPanel_Combo_CheckAllInitSetting | v7 cp(36290:16),108 / jr nz,.Lc_fc39a5	v10/maincpu/ui/cpanel_routines.s:386	v7/maincpu/ui/cpanel_routines.s:322	3	5	
-v7	CmEsyTtl_Dispatch	body-differs	v10 ld a,(13526:16) | v7 ld a,(13370:16)	v10/maincpu/sequencer/accompaniment_engine.s:32122	v7/maincpu/sequencer/accompaniment_engine.s:30807	8	28	
+v7	CPanel_CheckSpecialCombos	body-differs	v10 cp(36446:16),108 / jr nz,CPanel_Combo_CheckAllInitSetting | v7 cp(36290:16),108 / jr nz,.Lc_fc39a5	v10/maincpu/ui/cpanel_routines.s:386	v7/maincpu/ui/cpanel_routines.s:324	2	5	
+v7	CmEsyTtl_Dispatch	body-differs	v10 ld a,(13526:16) | v7 ld a,(13370:16)	v10/maincpu/sequencer/accompaniment_engine.s:32122	v7/maincpu/sequencer/accompaniment_engine.s:30829	8	28	
 v7	CmStep_DebugShowHexBytes	body-differs	v10 ld a,(14095:16) | v7 ld a,(13939:16)	v10/maincpu/sequencer/accompaniment_engine.s:22186	v7/maincpu/sequencer/accompaniment_engine.s:21168	6	29	
-v7	CmpBkslSTtl_EventPost	body-differs	v10 ld(13580:16),1 | v7 ld(13424:16),1	v10/maincpu/sequencer/accompaniment_engine.s:31533	v7/maincpu/sequencer/accompaniment_engine.s:30180	1	7	
-v7	CmpBkslSTtl_FillIn8	body-differs	v10 cp(13580:16),0 | v7 cp(13424:16),0	v10/maincpu/sequencer/accompaniment_engine.s:31504	v7/maincpu/sequencer/accompaniment_engine.s:30155	2	15	
-v7	CmpEsyTtl_E_Var2	body-differs	v10 cp(14967:16),0 / jr nz,CmpEsy_E_Var2_StoreMeasure | v7 cp(14811:16),0 / jr nz,.Lc_f68b9c	v10/maincpu/sequencer/accompaniment_engine.s:32422	v7/maincpu/sequencer/accompaniment_engine.s:31101	3	21	
-v7	CmpEsyTtl_SubModeB	body-differs	v10 ldmm8 14279,13526 / jr t,CmpEsyTtl_SubModeD | v7 ldmm8 14123,13370 / jr CmpEsyTtl_SubModeD	v10/maincpu/sequencer/accompaniment_engine.s:32269	v7/maincpu/sequencer/accompaniment_engine.s:30947	2	10	
-v7	CmpMenuTtl_SetBit4	body-differs	v10 ld(13517:16),a | v7 ld(13361:16),a	v10/maincpu/sequencer/accompaniment_engine.s:30653	v7/maincpu/sequencer/accompaniment_engine.s:29278	1	5	
-v7	CmpMenuTtl_SetBit5	body-differs	v10 ld(13517:16),a | v7 ld(13361:16),a	v10/maincpu/sequencer/accompaniment_engine.s:30645	v7/maincpu/sequencer/accompaniment_engine.s:29272	1	6	
+v7	CmpEsyTtl_E_Var2	body-differs	v10 cp(14967:16),0 / jr nz,CmpEsy_E_Var2_StoreMeasure | v7 cp(14811:16),0 / jr nz,.Lc_f68b9c	v10/maincpu/sequencer/accompaniment_engine.s:32422	v7/maincpu/sequencer/accompaniment_engine.s:31124	2	21	
 v7	CmpNcp_ItemStep4	body-differs	v10 ld a,(13526:16) / bit 4,(13517:16) | v7 ld a,(13370:16) / bit 4,(13361:16)	v10/maincpu/sequencer/accompaniment_engine.s:26648	v7/maincpu/sequencer/accompaniment_engine.s:25327	11	16	
 v7	CmpNcp_LatchPanelRhythmAsSource	body-differs	v10 ld(13549:16),a / ld(13550:16),w | v7 ld(13393:16),a / ld(13394:16),w	v10/maincpu/sequencer/accompaniment_engine.s:26455	v7/maincpu/sequencer/accompaniment_engine.s:25134	2	8	
 v7	CmpNcp_ResetPatternToVari1	body-differs	v10 jr c,TimeSig_DisplayStrings_Code_Skip20 / ld(13551:16),16 | v7 jr c,DrumVoice_NotifyEE_Skip26 / ld(13395:16),16	v10/maincpu/sequencer/accompaniment_engine.s:26714	v7/maincpu/sequencer/accompaniment_engine.s:25387	2	7	
 v7	CmpRealTtl_EnterTitle	body-differs	v10 call CmpRealTtl_EnterTitle_Impl | v7 call RhythmFillIn_PatternTable_Code_Helper	v10/maincpu/sequencer/accompaniment_engine.s:25044	v7/maincpu/sequencer/accompaniment_engine.s:23842	14	18	
-v7	CmpRealTtl_MajorDispatch_OnRightRow5Solo	body-differs	v10 call CmpRealTtl_ToggleSolo | v7 call RhythmSolo_Wrapper	v10/maincpu/sequencer/accompaniment_engine.s:31121	v7/maincpu/sequencer/accompaniment_engine.s:29736	1	29	
-v7	CmpSetTtl_ModeSwitch	body-differs	v10 cp(13580:16),0 | v7 cp(13424:16),0	v10/maincpu/sequencer/accompaniment_engine.s:30701	v7/maincpu/sequencer/accompaniment_engine.s:29322	1	19	
-v7	CmpSetTtl_StepEntryByte2	body-differs	v10 ld a,(14762:16) | v7 ld a,(14606:16)	v10/maincpu/sequencer/accompaniment_engine.s:27137	v7/maincpu/sequencer/accompaniment_engine.s:25791	1	19	
-v7	CmpSetTtl_StepEntryByte2_Impl	body-differs	v10 ld a,(14762:16) | v7 ld a,(14606:16)	v10/maincpu/sequencer/accompaniment_engine.s:27146	v7/maincpu/sequencer/accompaniment_engine.s:25796	1	14	
-v7	CmpSetTtl_StepEntryByte5	body-differs	v10 ld a,(14762:16) | v7 ld a,(14606:16)	v10/maincpu/sequencer/accompaniment_engine.s:27177	v7/maincpu/sequencer/accompaniment_engine.s:25823	1	19	
-v7	CmpSetTtl_StepEntryByte5_Impl	body-differs	v10 ld a,(14762:16) | v7 ld a,(14606:16)	v10/maincpu/sequencer/accompaniment_engine.s:27186	v7/maincpu/sequencer/accompaniment_engine.s:25828	1	14	
+v7	CmpRealTtl_MajorDispatch_OnRightRow5Solo	body-differs	v10 call CmpRealTtl_ToggleSolo | v7 call RhythmSolo_Wrapper	v10/maincpu/sequencer/accompaniment_engine.s:31121	v7/maincpu/sequencer/accompaniment_engine.s:29756	1	29	
 v7	CmpSet_StepRhythmBank	body-differs	v10 ld(37111:16),a | v7 ld(36955:16),a	v10/maincpu/sequencer/accompaniment_engine.s:26164	v7/maincpu/sequencer/accompaniment_engine.s:24846	4	22	
-v7	CmpStep_UnblockSustainInput	body-differs	v10 call CmpStep_ClearSustainBlockFlag | v7 call AccDraw_Secondary_Helper8_Helper	v10/maincpu/sequencer/accompaniment_engine.s:34509	v7/maincpu/sequencer/accompaniment_engine.s:33266	1	3	
-v7	CmpStep_ValueFieldRecords	body-differs	v10 .byte 2,15,187,57,255,0,32,9,177 / .byte 246,0,7,0,26,4,2,15,184,57,7,0,32,92,174,246 | v7 .byte 2,15,31,57,255,0,32,5,173 / .byte 246,0,7,0,26,4,2,15,28,57	v10/maincpu/sequencer/accompaniment_engine.s:35160	v7/maincpu/sequencer/accompaniment_engine.s:33914	7	9	
+v7	CmpStep_UnblockSustainInput	body-differs	v10 call CmpStep_ClearSustainBlockFlag | v7 call AccDraw_Secondary_Helper8_Helper	v10/maincpu/sequencer/accompaniment_engine.s:34509	v7/maincpu/sequencer/accompaniment_engine.s:33299	1	3	
+v7	CmpStep_ValueFieldRecords	body-differs	v10 .byte 2,15,187,57,255,0,32,9,177 / .byte 246,0,7,0,26,4,2,15,184,57,7,0,32,92,174,246 | v7 .byte 2,15,31,57,255,0,32,5,173 / .byte 246,0,7,0,26,4,2,15,28,57	v10/maincpu/sequencer/accompaniment_engine.s:35160	v7/maincpu/sequencer/accompaniment_engine.s:33947	7	9	
 v7	Data_InOutGridDispatch_VelocityInput	body-differs	v10 jr z,Data_InOutGridDispatch_VelocityInput_Skip15 | v7 jr z,InOutGridCheck_Skip15	v10/maincpu/midi/ac_listener_handlers.s:1775	v7/maincpu/midi/ac_listener_handlers.s:1771	35	70	
-v7	DemoMenu_BuildItemWorkspace	body-differs	v10 jr DemoMenu_BuildItemWorkspace_Post | v7 jr t,DemoMenu_BuildItemWorkspace_Post	v10/maincpu/ui/drawbar_panel_ui.s:17738	v7/maincpu/ui/drawbar_panel_ui.s:18144	1	30	
-v7	DirmdEmu_DefaultCase	body-differs	v10 bit 1,(58334:16) / jr z,DirmdEmu_CheckModeChange | v7 bit 1,(58136:16) / jr z,.Lc_f9ab49	v10/maincpu/audio/presentation_sound_nav.s:1437	v7/maincpu/audio/presentation_sound_nav.s:1424	3	6	
-v7	DirmdTitle_New	body-differs	v10 jr z,DirmdTitle_New_Skip | v7 jr z,PostTitle_Function_Skip	v10/maincpu/audio/presentation_sound_nav.s:1302	v7/maincpu/audio/presentation_sound_nav.s:1294	5	15	
-v7	DispTimeSet_EventDispatch	body-differs	v10 jrl FSWAss_RefreshAllVoices_Join2 | v7 jrl DispTimeSetGridCheck_Join	v10/maincpu/ui/ui_mode_handlers.s:9470	v7/maincpu/ui/ui_mode_handlers.s:9455	53	108	
-v7	Disp_ShowNoteNameAndVelocity	body-differs	v10 cp(14103:16),255 | v7 cp(13947:16),255	v10/maincpu/display/scoop_display.s:15517	v7/maincpu/display/scoop_display.s:15002	3	40	
-v7	Disp_ShowNoteValueFields	body-differs	v10 ld l,(14100:16) | v7 ld l,(13944:16)	v10/maincpu/display/scoop_display.s:15406	v7/maincpu/display/scoop_display.s:14892	3	39	
+v7	DirmdEmu_DefaultCase	body-differs	v10 bit 1,(58334:16) / jr z,DirmdEmu_CheckModeChange | v7 bit 1,(58136:16) / jr z,.Lc_f9ab49	v10/maincpu/audio/presentation_sound_nav.s:1437	v7/maincpu/audio/presentation_sound_nav.s:1430	3	6	
+v7	DirmdTitle_New	body-differs	v10 jr z,DirmdTitle_New_Skip | v7 jr z,PostTitle_Function_Skip	v10/maincpu/audio/presentation_sound_nav.s:1302	v7/maincpu/audio/presentation_sound_nav.s:1297	5	15	
+v7	DispTimeSet_EventDispatch	body-differs	v10 jrl FSWAss_RefreshAllVoices_Join2 | v7 jrl DispTimeSetGridCheck_Join	v10/maincpu/ui/ui_mode_handlers.s:9470	v7/maincpu/ui/ui_mode_handlers.s:9458	53	108	
+v7	Disp_ShowNoteNameAndVelocity	body-differs	v10 cp(14103:16),255 | v7 cp(13947:16),255	v10/maincpu/display/scoop_display.s:15517	v7/maincpu/display/scoop_display.s:15055	3	40	
+v7	Disp_ShowNoteValueFields	body-differs	v10 ld l,(14100:16) | v7 ld l,(13944:16)	v10/maincpu/display/scoop_display.s:15406	v7/maincpu/display/scoop_display.s:14945	3	39	
 v7	DisplayMode_Dispatch	body-differs	v10 jrl nz,DisplayMode_Dispatch_Return | v7 jrl nz,.Lc_ef61e8	v10/maincpu/display/scoop_display.s:926	v7/maincpu/display/scoop_display.s:917	29	60	
-v7	DisplayStr_ClearAndCopyStyleSectionName	body-differs	v10 ld a,(14120:16) | v7 ld a,(13964:16)	v10/maincpu/display/scoop_display.s:14682	v7/maincpu/display/scoop_display.s:14256	1	11	
-v7	DisplayStr_ShowBeatCount	body-differs	v10 ldw_d16 wa,(3426) | v7 ld wa,(3426:16)	v10/maincpu/display/scoop_display.s:15215	v7/maincpu/display/scoop_display.s:14724	5	35	
-v7	DisplayStr_ShowMeasureAndVariation	body-differs	v10 call DisplayStr_ShowMeasureNumber | v7 call DMA_ChannelHandler_3_Helper	v10/maincpu/display/scoop_display.s:14643	v7/maincpu/display/scoop_display.s:14228	1	9	
-v7	DisplayStr_ShowPartParamLine	body-differs	v10 jp DisplayStr_ShowPartParamLine_Join | v7 jp SubCPU_ToneParamDisplay_Join2	v10/maincpu/display/scoop_display.s:12793	v7/maincpu/display/scoop_display.s:12421	7	44	
-v7	DisplayStr_ShowRhythmLine	body-differs	v10 call DisplayStr_WriteRhythmName | v7 call Str_Control_Helper	v10/maincpu/display/scoop_display.s:14590	v7/maincpu/display/scoop_display.s:14185	1	11	
-v7	DisplayStr_ShowTempoLine	body-differs	v10 jrl nz,DisplayStr_ShowTempoLine_Skip | v7 jrl nz,DisplayStr_BytecodeBlock_C_Skip	v10/maincpu/display/scoop_display.s:14708	v7/maincpu/display/scoop_display.s:14278	10	17	
-v7	DisplayStr_WritePartAndSoundName	body-differs	v10 ld xiy,Display_BytecodeBlock_F_Tbl2 | v7 ld xiy,Display_BytecodeBlock_F_Data	v10/maincpu/display/scoop_display.s:14947	v7/maincpu/display/scoop_display.s:14495	2	69	
-v7	Display_BytecodeBlock_F_Tbl2	body-differs	"v10 .ascii ""RT1 RT2 LFT P 4 P 5 P 6 P 7 P 8 P 9 P10 P11 P12 P13 P14 P15 KBP DUALMSP ----"" / .byte 1,2,3,4 | v7 .ascii "" TEMPO   "" / .byte 21"	v10/maincpu/display/scoop_display.s:15022	v7/maincpu/display/scoop_display.s:14703	5	6	
-v7	Display_RedrawStatusBar	body-differs	v10 jrl Scoop_Return | v7 jrl t,Scoop_Return	v10/maincpu/display/scoop_display.s:17034	v7/maincpu/display/scoop_display.s:16503	1	18	
-v7	DrawDottedLineWithMode	body-differs	v10 DrawDottedLineWithMode_Impl_Loop3: | v7 DrawDottedLineWithMode_Impl_Loop4:	v10/maincpu/ui/ui_window_procs.s:9637	v7/maincpu/ui/ui_window_procs.s:9706	85	490	
-v7	DrawDottedLine_Impl	body-differs	v10 jrl le,DrawDottedLine_Impl_Skip15 | v7 jrl le,ClampColorToRange_Skip15	v10/maincpu/ui/ui_window_procs.s:4052	v7/maincpu/ui/ui_window_procs.s:4122	78	288	
-v7	DrawLineWithMode	body-differs	v10 ld xwa,(xsp+8) / or xwa,xwa | v7 -	v10/maincpu/ui/ui_window_procs.s:8796	v7/maincpu/ui/ui_window_procs.s:8866	701	824	
-v7	DrawLineWithMode_Impl	body-differs	v10 ld xwa,(xsp+8) / or xwa,xwa | v7 -	v10/maincpu/ui/ui_window_procs.s:8851	v7/maincpu/ui/ui_window_procs.s:8920	701	770	
-v7	DrumParam_StepChannelStyle	body-differs	v10 ld xiy,14251 | v7 ld xiy,14095	v10/maincpu/sequencer/accompaniment_engine.s:28945	v7/maincpu/sequencer/accompaniment_engine.s:27566	2	17	
+v7	DisplayStr_ClearAndCopyStyleSectionName	body-differs	v10 ld a,(14120:16) | v7 ld a,(13964:16)	v10/maincpu/display/scoop_display.s:14682	v7/maincpu/display/scoop_display.s:14294	1	11	
+v7	DisplayStr_ShowBeatCount	body-differs	v10 ldw_d16 wa,(3426) | v7 ld wa,(3426:16)	v10/maincpu/display/scoop_display.s:15215	v7/maincpu/display/scoop_display.s:14777	5	35	
+v7	DisplayStr_ShowMeasureAndVariation	body-differs	v10 call DisplayStr_ShowMeasureNumber | v7 call DMA_ChannelHandler_3_Helper	v10/maincpu/display/scoop_display.s:14643	v7/maincpu/display/scoop_display.s:14261	1	9	
+v7	DisplayStr_ShowPartParamLine	body-differs	v10 jp DisplayStr_ShowPartParamLine_Join | v7 jp SubCPU_ToneParamDisplay_Join2	v10/maincpu/display/scoop_display.s:12793	v7/maincpu/display/scoop_display.s:12449	7	44	
+v7	DisplayStr_ShowRhythmLine	body-differs	v10 call DisplayStr_WriteRhythmName | v7 call Str_Control_Helper	v10/maincpu/display/scoop_display.s:14590	v7/maincpu/display/scoop_display.s:14213	1	11	
+v7	DisplayStr_ShowTempoLine	body-differs	v10 jrl nz,DisplayStr_ShowTempoLine_Skip | v7 jrl nz,DisplayStr_BytecodeBlock_C_Skip	v10/maincpu/display/scoop_display.s:14708	v7/maincpu/display/scoop_display.s:14316	10	17	
+v7	DisplayStr_WritePartAndSoundName	body-differs	v10 ld xiy,Display_BytecodeBlock_F_Tbl2 | v7 ld xiy,Display_BytecodeBlock_F_Data	v10/maincpu/display/scoop_display.s:14947	v7/maincpu/display/scoop_display.s:14538	2	69	
+v7	Display_BytecodeBlock_F_Tbl2	body-differs	"v10 .ascii ""RT1 RT2 LFT P 4 P 5 P 6 P 7 P 8 P 9 P10 P11 P12 P13 P14 P15 KBP DUALMSP ----"" / .byte 1,2,3,4 | v7 .ascii "" TEMPO   "" / .byte 21"	v10/maincpu/display/scoop_display.s:15022	v7/maincpu/display/scoop_display.s:14751	5	6	
+v7	DrawDottedLineWithMode	body-differs	v10 DrawDottedLineWithMode_Impl_Loop3: | v7 DrawDottedLineWithMode_Impl_Loop4:	v10/maincpu/ui/ui_window_procs.s:9637	v7/maincpu/ui/ui_window_procs.s:9719	85	490	
+v7	DrawDottedLine_Impl	body-differs	v10 jrl le,DrawDottedLine_Impl_Skip15 | v7 jrl le,ClampColorToRange_Skip15	v10/maincpu/ui/ui_window_procs.s:4052	v7/maincpu/ui/ui_window_procs.s:4135	78	288	
+v7	DrawLineWithMode	body-differs	v10 ld xwa,(xsp+8) / or xwa,xwa | v7 -	v10/maincpu/ui/ui_window_procs.s:8796	v7/maincpu/ui/ui_window_procs.s:8879	701	824	
+v7	DrawLineWithMode_Impl	body-differs	v10 ld xwa,(xsp+8) / or xwa,xwa | v7 -	v10/maincpu/ui/ui_window_procs.s:8851	v7/maincpu/ui/ui_window_procs.s:8933	701	770	
+v7	DrumParam_StepChannelStyle	body-differs	v10 ld xiy,14251 | v7 ld xiy,14095	v10/maincpu/sequencer/accompaniment_engine.s:28945	v7/maincpu/sequencer/accompaniment_engine.s:27582	2	17	
 v7	EffectMode_ByteData_Block1	body-differs	v10 ldw(36184:16),65535 | v7 ldw(36028:16),65535	v10/maincpu/ui/ui_mode_handlers.s:82	v7/maincpu/ui/ui_mode_handlers.s:83	1	3	
-v7	ExtData_SetTempoIfChanged	body-differs	v10 ld e,(37168:16) | v7 ld e,(37012:16)	v10/maincpu/audio/audio_control_engine.s:5377	v7/maincpu/audio/audio_control_engine.s:5130	18	25	
-v7	FDC_CMD_EXEC	body-differs	v10 ld(35432:16),1 | v7 ld(35276:16),1	v10/maincpu/storage/fdc_routines.s:1484	v7/maincpu/storage/fdc_routines.s:1418	39	108	
-v7	FDC_COMMAND_DISPATCHER	body-differs	v10 ld(35370:16),0 | v7 ld(35214:16),0	v10/maincpu/storage/fdc_routines.s:316	v7/maincpu/storage/fdc_routines.s:305	1	10	
-v7	FDC_CmdRecalibrate	body-differs	v10 ld(35588:16),255 | v7 ld(35432:16),255	v10/maincpu/storage/fdc_routines.s:1419	v7/maincpu/storage/fdc_routines.s:1351	3	22	
-v7	FDC_INTERRUPT_HANDLER	body-differs	v10 cp(FDC_ERROR_CODE:16),0 | v7 .byte 193,136,137 / FDC_INTERRUPT_HANDLER_Code:	v10/maincpu/storage/fdc_routines.s:2029	v7/maincpu/storage/fdc_routines.s:1962	4	33	
-v7	FDC_MC_EXIT	body-differs	v10 ld(35588:16),255 | v7 ld(35432:16),255	v10/maincpu/storage/fdc_routines.s:1791	v7/maincpu/storage/fdc_routines.s:1726	1	6	
-v7	FDC_MODE_CONFIG	body-differs	v10 ld a,(35436:16) | v7 ld a,(35280:16)	v10/maincpu/storage/fdc_routines.s:1722	v7/maincpu/storage/fdc_routines.s:1655	19	60	
-v7	FDC_STATUS_COPY	body-differs	v10 ldmm8 FDC_ERROR_CODE,35366 | v7 ldmm8 FDC_ERROR_CODE,35210 / FDC_STATUS_COPY_Code:	v10/maincpu/storage/fdc_routines.s:2002	v7/maincpu/storage/fdc_routines.s:1941	2	4	
+v7	ExtData_SetTempoIfChanged	body-differs	v10 ld e,(37168:16) | v7 ld e,(37012:16)	v10/maincpu/audio/audio_control_engine.s:5377	v7/maincpu/audio/audio_control_engine.s:5143	18	25	
+v7	FDC_CMD_EXEC	body-differs	v10 ld(35432:16),1 | v7 ld(35276:16),1	v10/maincpu/storage/fdc_routines.s:1484	v7/maincpu/storage/fdc_routines.s:1435	39	108	
+v7	FDC_CmdRecalibrate	body-differs	v10 ld(35588:16),255 | v7 ld(35432:16),255	v10/maincpu/storage/fdc_routines.s:1419	v7/maincpu/storage/fdc_routines.s:1368	3	22	
+v7	FDC_INTERRUPT_HANDLER	body-differs	v10 cp(FDC_ERROR_CODE:16),0 | v7 .byte 193,136,137 / FDC_INTERRUPT_HANDLER_Code:	v10/maincpu/storage/fdc_routines.s:2029	v7/maincpu/storage/fdc_routines.s:1989	4	33	
+v7	FDC_MC_EXIT	body-differs	v10 ld(35588:16),255 | v7 ld(35432:16),255	v10/maincpu/storage/fdc_routines.s:1791	v7/maincpu/storage/fdc_routines.s:1753	1	6	
+v7	FDC_STATUS_COPY	body-differs	v10 ldmm8 FDC_ERROR_CODE,35366 | v7 ldmm8 FDC_ERROR_CODE,35210 / FDC_STATUS_COPY_Code:	v10/maincpu/storage/fdc_routines.s:2002	v7/maincpu/storage/fdc_routines.s:1968	2	4	
 v7	FDemoText_GetInstanceID	body-differs	v10 FDemoText_GetInstanceID_Loop: / ld xbc,xiz | v7 -	v10/maincpu/demo/fdemotext_routines.s:1264	v7/maincpu/demo/fdemotext_routines.s:1276	45	67	
-v7	FDemoText_ReadTaggedBlock	body-differs	v10 jr FDemoText_ReadTaggedBlock_Join2 | v7 jr t,.Lc_f84f37 / .Lc_f84f20:	v10/maincpu/demo/fdemotext_routines.s:1337	v7/maincpu/demo/fdemotext_routines.s:1342	43	131	
 v7	Fat_AllocateClusters	body-differs	v10 jrl z,Fat_AllocateClusters_Join2 | v7 jrl z,Fat_AllocateClusters_Skip10	v10/maincpu/sequencer/smf_event_processor.s:5065	v7/maincpu/sequencer/smf_event_processor.s:5053	64	132	
 v7	Fat_CreateDirEntry	body-differs	v10 jrl SeqByteBlock_PathNormalize_Epilogue2 | v7 jrl Fat_CreateDirEntry_Epilogue5	v10/maincpu/sequencer/smf_event_processor.s:5770	v7/maincpu/sequencer/smf_event_processor.s:5735	184	237	
 v7	Fat_FreeFileClusters	body-differs	v10 jr nz,SeqByteBlock_PathNormalize_Join3 | v7 jr nz,Fat_FreeFileClusters_Join	v10/maincpu/sequencer/smf_event_processor.s:6063	v7/maincpu/sequencer/smf_event_processor.s:6015	39	45	
 v7	Fat_LookupPath	body-differs	v10 jr z,SeqByteBlock_PathNormalize_Skip5 | v7 jr z,Fat_LookupPath_Skip22	v10/maincpu/sequencer/smf_event_processor.s:5361	v7/maincpu/sequencer/smf_event_processor.s:5334	385	401	
 v7	Fat_MountVolume	body-differs	v10 jrl SeqByteBlock_PathNormalize_Epilogue4 | v7 jrl Fat_MountVolume_Epilogue	v10/maincpu/sequencer/smf_event_processor.s:6117	v7/maincpu/sequencer/smf_event_processor.s:6060	380	434	
 v7	Fat_WriteDirEntry	body-differs	v10 jr nz,SeqByteBlock_PathNormalize_Skip10 | v7 jr nz,Fat_WriteDirEntry_Skip	v10/maincpu/sequencer/smf_event_processor.s:6015	v7/maincpu/sequencer/smf_event_processor.s:5972	22	43	
-v7	FdcFormat_DialGrid	body-differs	v10 cp(14967:16),3 | v7 cp(14811:16),3	v10/maincpu/storage/flash_floppy_handlers.s:7121	v7/maincpu/storage/flash_floppy_handlers.s:7974	3	39	
+v7	FdcFormat_DialGrid	body-differs	v10 cp(14967:16),3 | v7 cp(14811:16),3	v10/maincpu/storage/flash_floppy_handlers.s:7121	v7/maincpu/storage/flash_floppy_handlers.s:8010	3	39	
 v7	FileData_ImportNNLivePanel	body-differs	v10 jrl FileData_ImportNNLivePanel_Epilogue | v7 jrl DataBuf_CopyBulkBitfields_Large_Epilogue	v10/maincpu/midi/midi_dispatch_handlers.s:5766	v7/maincpu/midi/midi_dispatch_handlers.s:5205	6	121	
-v7	FileIO_LoadRcmToFlash	body-differs	v10 jrl lt,FileIO_LoadRcmToFlash_Skip5 | v7 jrl lt,.Lc_f187bb	v10/maincpu/storage/flash_floppy_handlers.s:4201	v7/maincpu/storage/flash_floppy_handlers.s:4337	16	116	
-v7	FileIO_SaveRcmFromFlash	body-differs	v10 ld xiy,MSP_Default_Accompaniment | v7 ld xiy,MSP_Default_Signature3	v10/maincpu/storage/flash_floppy_handlers.s:4320	v7/maincpu/storage/flash_floppy_handlers.s:4453	1	234	
-v7	Flash_CopyBlocksToSlots	body-differs	v10 jr z,Flash_CopyBlocksToSlots_Skip13 | v7 jr z,Flash_StoreBaseAndInitAccPatch_Skip13	v10/maincpu/storage/flash_floppy_handlers.s:2665	v7/maincpu/storage/flash_floppy_handlers.s:2800	9	123	
-v7	Flash_WriteSlotOwnerMap	body-differs	v10 jr z,Flash_WriteSlotOwnerMap_Skip11 | v7 jr z,Flash_StoreBaseAndInitAccPatch_Skip11	v10/maincpu/storage/flash_floppy_handlers.s:2561	v7/maincpu/storage/flash_floppy_handlers.s:2700	7	100	
-v7	Hama_FunctionTable_109	body-differs	v10 .long VoiceSynth_CmdCase1 | v7 .long GetResouceInfo	v10/maincpu/factory_test/test_data.s:71	v7/maincpu/factory_test/test_data.s:57	1	86	
+v7	Flash_CopyBlocksToSlots	body-differs	v10 jr z,Flash_CopyBlocksToSlots_Skip13 | v7 jr z,Flash_StoreBaseAndInitAccPatch_Skip13	v10/maincpu/storage/flash_floppy_handlers.s:2665	v7/maincpu/storage/flash_floppy_handlers.s:2805	9	123	
+v7	Flash_WriteSlotOwnerMap	body-differs	v10 jr z,Flash_WriteSlotOwnerMap_Skip11 | v7 jr z,Flash_StoreBaseAndInitAccPatch_Skip11	v10/maincpu/storage/flash_floppy_handlers.s:2561	v7/maincpu/storage/flash_floppy_handlers.s:2705	7	100	
 v7	Heap_AllocAndFreeTwoBlocks	body-differs	v10 ld(13660:16),xhl | v7 ld(13504:16),xhl	v10/maincpu/sequencer/seq_audio_mode.s:1522	v7/maincpu/sequencer/seq_audio_mode.s:1637	2	20	
-v7	MainExeCall_OnTitleSqmins	body-differs	v10 jr nz,MainExeCall_OnTitleSqmins_Skip2 | v7 jr nz,MainExe_SongLoadFinish_Code_Skip2	v10/maincpu/sequencer/sequencer_engine.s:25450	v7/maincpu/sequencer/sequencer_engine.s:25419	20	32	
-v7	MainExeCall_OnTitleSqtrkmrg	body-differs	v10 ld a,(10359:16) | v7 ldb_d8 a,(10359)	v10/maincpu/sequencer/sequencer_engine.s:25130	v7/maincpu/sequencer/sequencer_engine.s:25124	2	13	
-v7	MainExe_DispatchEntry	body-differs	v10 ld(58252:16),0 | v7 ld(58096:16),0	v10/maincpu/sequencer/sequencer_engine.s:24969	v7/maincpu/sequencer/sequencer_engine.s:24963	1	2	
-v7	MainMspRgpSetFunc_OnRgpPadDn	body-differs	v10 cp(32523:16),0 | v7 cp(32367:16),0	v10/maincpu/sequencer/accompaniment_engine.s:33787	v7/maincpu/sequencer/accompaniment_engine.s:32530	1	11	
-v7	MidiCC_ApplyBankSelect	body-differs	v10 cp(38468:16),72 / jr nz,MidiCC_ApplyBankSelect_Skip5 | v7 cp(38312:16),72 / jr nz,MidiStream_ExtendedDispatch_Helper_Skip5	v10/maincpu/audio/audio_control_engine.s:12074	v7/maincpu/audio/audio_control_engine.s:11328	32	35	
-v7	MidiCC_SetPendingPartVolume	body-differs	v10 jr z,MidiCC_SetPendingPartVolume_Skip | v7 jr z,MidiStream_ApplyPendingParams_Skip	v10/maincpu/audio/audio_control_engine.s:11164	v7/maincpu/audio/audio_control_engine.s:10505	10	17	
-v7	MidiPkt_SendCtlValueSysEx	body-differs	v10 ld xwa,(48220:16) | v7 ld xwa,(48064:16)	v10/maincpu/midi/midipkt_routines.s:1078	v7/maincpu/midi/midipkt_routines.s:597	1	64	
-v7	MidiPkt_SendCtlWordValueSysEx	body-differs	v10 ld xwa,(48220:16) | v7 ld xwa,(48064:16)	v10/maincpu/midi/midipkt_routines.s:678	v7/maincpu/midi/midipkt_routines.s:224	1	51	
+v7	MainExeCall_OnTitleSqmins	body-differs	v10 jr nz,MainExeCall_OnTitleSqmins_Skip2 | v7 jr nz,MainExe_SongLoadFinish_Code_Skip2	v10/maincpu/sequencer/sequencer_engine.s:25450	v7/maincpu/sequencer/sequencer_engine.s:25441	20	32	
+v7	MainExeCall_OnTitleSqtrkmrg	body-differs	v10 ld a,(10359:16) | v7 ldb_d8 a,(10359)	v10/maincpu/sequencer/sequencer_engine.s:25130	v7/maincpu/sequencer/sequencer_engine.s:25135	2	13	
+v7	MidiCC_ApplyBankSelect	body-differs	v10 cp(38468:16),72 / jr nz,MidiCC_ApplyBankSelect_Skip5 | v7 cp(38312:16),72 / jr nz,MidiStream_ExtendedDispatch_Helper_Skip5	v10/maincpu/audio/audio_control_engine.s:12074	v7/maincpu/audio/audio_control_engine.s:11350	32	35	
+v7	MidiCC_SetPendingPartVolume	body-differs	v10 jr z,MidiCC_SetPendingPartVolume_Skip | v7 jr z,MidiStream_ApplyPendingParams_Skip	v10/maincpu/audio/audio_control_engine.s:11164	v7/maincpu/audio/audio_control_engine.s:10527	10	17	
+v7	MidiPkt_SendCtlValueSysEx	body-differs	v10 ld xwa,(48220:16) | v7 ld xwa,(48064:16)	v10/maincpu/midi/midipkt_routines.s:1078	v7/maincpu/midi/midipkt_routines.s:605	1	64	
 v7	MidiPkt_SetXferBlock_AccompBlockPool	body-differs	v10 bit 6,(48408:16) | v7 bit 6,(48252:16)	v10/maincpu/midi/midi_dispatch_handlers.s:10552	v7/maincpu/midi/midi_dispatch_handlers.s:9644	1	27	
 v7	MidiPkt_SetXferBlock_SeqEvents	body-differs	v10 bit 6,(48408:16) | v7 bit 6,(48252:16)	v10/maincpu/midi/midi_dispatch_handlers.s:10467	v7/maincpu/midi/midi_dispatch_handlers.s:9583	1	22	
 v7	MidiPkt_SetXferBlock_StyleImagePool	body-differs	v10 bit 6,(48408:16) | v7 bit 6,(48252:16)	v10/maincpu/midi/midi_dispatch_handlers.s:10383	v7/maincpu/midi/midi_dispatch_handlers.s:9510	1	27	
@@ -105,69 +79,58 @@ v7	MidiPkt_SetXferTotal_AccompBlocks	body-differs	v10 bit 6,(48408:16) | v7 bit 
 v7	MidiPkt_SetXferTotal_SeqData	body-differs	v10 bit 6,(48408:16) | v7 bit 6,(48252:16)	v10/maincpu/midi/midi_dispatch_handlers.s:10416	v7/maincpu/midi/midi_dispatch_handlers.s:9537	1	21	
 v7	MidiPkt_SetXferTotal_StyleImage	body-differs	v10 bit 6,(48408:16) | v7 bit 6,(48252:16)	v10/maincpu/midi/midi_dispatch_handlers.s:10327	v7/maincpu/midi/midi_dispatch_handlers.s:9473	1	19	
 v7	MidiRx_ChannelMsgDispatch	body-differs	v10 ld a,(38452:16) | v7 ld a,(38296:16)	v10/maincpu/midi/midi_dispatch_handlers.s:155	v7/maincpu/midi/midi_serial_routines.s:1080	12	33	
-v7	MidiSerial_CmdJumpTable	body-differs	v10 .long MidiRx_SystemMsg_MarkIgnored / .long MidiRx_SystemMsg_MarkIgnored | v7 .long MidiSerial_HandleDefault_Data / .long MidiSerial_HandleDefault_Data	v10/maincpu/midi/midi_dispatch_handlers.s:105	v7/maincpu/midi/midi_serial_routines.s:1033	14	17	
-v7	MidiStream_RunStatus_Mode3	body-differs	v10 ld xix,(37106:16) | v7 ld xix,(36950:16)	v10/maincpu/audio/audio_control_engine.s:11515	v7/maincpu/audio/audio_control_engine.s:10794	4	23	
+v7	MidiStream_RunStatus_Mode3	body-differs	v10 ld xix,(37106:16) | v7 ld xix,(36950:16)	v10/maincpu/audio/audio_control_engine.s:11515	v7/maincpu/audio/audio_control_engine.s:10816	4	23	
 v7	MidiSysEx_FinishSoundRamXfer	body-differs	v10 bit 6,(48410:16) / jr z,MidiSysEx_FinishSoundRamXfer_Epilogue | v7 bit 6,(48254:16) / jr z,MidiSysEx_ProcessBlock_Epilogue	v10/maincpu/midi/midi_dispatch_handlers.s:12521	v7/maincpu/midi/midi_dispatch_handlers.s:11401	6	13	
 v7	MidiSysEx_ReinitSwbtWrOutput	body-differs	v10 set 4,(37113:16) | v7 set 4,(36957:16)	v10/maincpu/midi/midi_dispatch_handlers.s:12445	v7/maincpu/midi/midi_dispatch_handlers.s:11340	2	28	
-v7	MidiSysMsg_SetScaledTempo	body-differs	v10 ld xbc,(59883:16) | v7 ld xbc,(59685:16)	v10/maincpu/audio/note_voice_mapping.s:22724	v7/maincpu/audio/note_voice_mapping.s:21133	2	59	
+v7	MidiSysMsg_SetScaledTempo	body-differs	v10 ld xbc,(59883:16) | v7 ld xbc,(59685:16)	v10/maincpu/audio/note_voice_mapping.s:22724	v7/maincpu/audio/note_voice_mapping.s:21139	2	59	
 v7	MidiTable_DispatchHelper	body-differs	v10 call MidiTable_PreDispatchNullRet | v7 call MidiSeq_PartConfigure_Data	v10/maincpu/midi/midi_dispatch_handlers.s:11761	v7/maincpu/midi/midi_dispatch_handlers.s:10726	3	20	
-v7	MspMenuTtl_Init	body-differs	v10 cp(32523:16),0 | v7 cp(32367:16),0	v10/maincpu/sequencer/accompaniment_engine.s:33773	v7/maincpu/sequencer/accompaniment_engine.s:32518	1	12	
-v7	MspRecTtl_SubA	body-differs	v10 ld a,(32532:16) | v7 ld a,(32376:16)	v10/maincpu/sequencer/accompaniment_engine.s:33968	v7/maincpu/sequencer/accompaniment_engine.s:32722	2	18	
 v7	NoteMap_ChannelMapRecords	body-differs	v10 .long 50794 / NoteMap_ChannelMapRecords_LinkCol: | v7 .long 50638	v10/maincpu/ui_widgets/widget_dispatch.s:7389	v7/maincpu/ui_widgets/widget_dispatch.s:7435	15	16	
 v7	NoteMap_VoiceSlotRamPtrs	body-differs	v10 .long 53087 / .long 53111 | v7 .long 52931 / .long 52955	v10/maincpu/ui_widgets/widget_dispatch.s:7380	v7/maincpu/ui_widgets/widget_dispatch.s:7426	3	4	
 v7	PanelEvent_FillSelectedPart	body-differs	v10 .byte 176,20,58,141 | v7 .byte 176,20,158,140	v10/maincpu/audio/audio_control_engine.s:1281	v7/maincpu/audio/audio_control_engine.s:1273	1	7	
 v7	PanelEvt_D3ASlot1_SendCC91	body-differs	v10 bit 7,(38479:16) | v7 bit 7,(38323:16)	v10/maincpu/midi/midi_dispatch_handlers.s:1564	v7/maincpu/midi/midi_dispatch_handlers.s:1125	2	21	
 v7	PanelEvt_D6Slot3_SendCC80	body-differs	v10 ld a,(38479:16) | v7 ld a,(38323:16)	v10/maincpu/midi/midi_dispatch_handlers.s:1470	v7/maincpu/midi/midi_dispatch_handlers.s:1033	2	16	
 v7	PanelMemory_RecallKeepAccompaniment	body-differs	v10 lda xsp,(xsp-14) / push xiz | v7 dec 2,xsp / ld(xsp),a	v10/maincpu/ui/bitmap_out_routines.s:684	v7/maincpu/ui/bitmap_out_routines.s:679	241	237	
-v7	PanelTag72_ApplyPartMix_ReverbSend	body-differs	v10 jr z,PanelTag72_ApplyPartMix_ReverbSend_Epilogue | v7 jr z,HdaeRom_TableEntry2_Epilogue	v10/maincpu/audio/note_voice_mapping.s:17657	v7/maincpu/audio/note_voice_mapping.s:16457	5	23	
-v7	ParaLoadOpt_CaseD	body-differs	v10 ld a,(48400:16) | v7 ld a,(48244:16)	v10/maincpu/midi/param_load_routines.s:181	v7/maincpu/midi/param_load_routines.s:160	2	12	
-v7	ParaLoadOpt_CaseE	body-differs	v10 ld a,(48404:16) | v7 ld a,(48248:16)	v10/maincpu/midi/param_load_routines.s:195	v7/maincpu/midi/param_load_routines.s:172	2	12	
-v7	ParaLoadOpt_CaseF	body-differs	v10 ld a,(48396:16) | v7 ld a,(48240:16)	v10/maincpu/midi/param_load_routines.s:209	v7/maincpu/midi/param_load_routines.s:184	2	17	
-v7	PerfMode_IncNoteVelocity	body-differs	v10 jrl nz,PerfMode_IncNoteVelocity_Return10 | v7 jrl nz,PerfMode_IncNoteVelocity_Return4	v10/maincpu/display/scoop_display.s:5145	v7/maincpu/display/scoop_display.s:5090	7	22	
-v7	PerfMode_MapEventNoteToDisplay	body-differs	v10 jrl nz,PerfMode_MapEventNoteToDisplay_Return6 | v7 jrl nz,DisplayMode_Handler_3_Return6	v10/maincpu/display/scoop_display.s:4956	v7/maincpu/display/scoop_display.s:4931	8	18	
-v7	RhythmParam_TypeCheck	body-differs	v10 lda xwa,(14744:16) / bit 0,(14743:16) | v7 lda xwa,(14588:16) / bit 0,(14587:16)	v10/maincpu/sequencer/accompaniment_engine.s:28551	v7/maincpu/sequencer/accompaniment_engine.s:27195	2	14	
-v7	Rhythm_DispatchNoteFromFC5A	body-differs	v10 ld(13099:16),a | v7 ld(12943:16),a	v10/maincpu/sequencer/seq_audio_mode.s:1486	v7/maincpu/sequencer/seq_audio_mode.s:1602	1	6	
+v7	PanelTag72_ApplyPartMix_ReverbSend	body-differs	v10 jr z,PanelTag72_ApplyPartMix_ReverbSend_Epilogue | v7 jr z,HdaeRom_TableEntry2_Epilogue	v10/maincpu/audio/note_voice_mapping.s:17657	v7/maincpu/audio/note_voice_mapping.s:16459	5	23	
+v7	PerfMode_IncNoteVelocity	body-differs	v10 jrl nz,PerfMode_IncNoteVelocity_Return10 | v7 jrl nz,PerfMode_IncNoteVelocity_Return4	v10/maincpu/display/scoop_display.s:5145	v7/maincpu/display/scoop_display.s:5098	7	22	
+v7	PerfMode_MapEventNoteToDisplay	body-differs	v10 jrl nz,PerfMode_MapEventNoteToDisplay_Return6 | v7 jrl nz,DisplayMode_Handler_3_Return6	v10/maincpu/display/scoop_display.s:4956	v7/maincpu/display/scoop_display.s:4939	8	18	
 v7	Rhythm_SeqResetTable	body-differs	v10 .long 11668 / .long 11924 | v7 .long 11512 / .long 11768	v10/maincpu/sequencer/rhythm_routines.s:1527	v7/maincpu/sequencer/rhythm_routines.s:1464	5	18	
 v7	Rhythm_StepProgram	body-differs	v10 ld(37111:16),a | v7 ld(36955:16),a	v10/maincpu/sequencer/accompaniment_engine.s:26095	v7/maincpu/sequencer/accompaniment_engine.s:24790	1	17	
-v7	Rhythm_StoreDispatchHelperResult	body-differs	v10 ld(13099:16),e | v7 ld(12943:16),e	v10/maincpu/sequencer/seq_audio_mode.s:1479	v7/maincpu/sequencer/seq_audio_mode.s:1595	1	4	
-v7	S2cTtl_InitOnTitleChange	body-differs	v10 ld(14729:16),a / ld wa,(14730:16) | v7 ld(14573:16),a / ld wa,(14574:16)	v10/maincpu/sequencer/accompaniment_engine.s:27213	v7/maincpu/sequencer/accompaniment_engine.s:25854	12	22	
-v7	S2cTtl_MainHandler	body-differs	v10 cp(14967:16),1 / jr nz,CmpEsy_Main_EndMeasure_Store | v7 cp(14811:16),1 / jr nz,.Lc_f68cae	v10/maincpu/sequencer/accompaniment_engine.s:32504	v7/maincpu/sequencer/accompaniment_engine.s:31180	3	21	
-v7	S2cTtl_SecondaryHandler	body-differs	v10 cp(14967:16),2 | v7 cp(14811:16),2	v10/maincpu/sequencer/accompaniment_engine.s:32582	v7/maincpu/sequencer/accompaniment_engine.s:31255	2	17	
+v7	S2cTtl_InitOnTitleChange	body-differs	v10 ld(14729:16),a / ld wa,(14730:16) | v7 ld(14573:16),a / ld wa,(14574:16)	v10/maincpu/sequencer/accompaniment_engine.s:27213	v7/maincpu/sequencer/accompaniment_engine.s:25869	12	22	
+v7	S2cTtl_MainHandler	body-differs	v10 cp(14967:16),1 / jr nz,CmpEsy_Main_EndMeasure_Store | v7 cp(14811:16),1 / jr nz,.Lc_f68cae	v10/maincpu/sequencer/accompaniment_engine.s:32504	v7/maincpu/sequencer/accompaniment_engine.s:31203	2	21	
 v7	SC0_InitFuncTable	body-differs	v10 .long SC0_InitSerialPort | v7 .long SC0Init_Entry	v10/maincpu/midi/midi_serial_routines.s:987	v7/maincpu/midi/midi_serial_routines.s:899	1	5	
-v7	ScoopDisp_SeekBackWrapMarkers	body-differs	v10 ld(3582:16),a | v7 stb_d8(3582),a / ScoopDisp_SeekBackWrapMarkers_Loop5:	v10/maincpu/display/scoop_display.s:8626	v7/maincpu/display/scoop_display.s:8318	25	26	
-v7	ScoopDisp_StepMeasureBack	body-differs	v10 ld a,(3420:16) | v7 ldb_d8 a,(3420)	v10/maincpu/display/scoop_display.s:8565	v7/maincpu/display/scoop_display.s:8262	17	56	
-v7	ScoopDisp_StepMeasureForward	body-differs	v10 ld a,(3421:16) | v7 ldb_d8 a,(3421)	v10/maincpu/display/scoop_display.s:8493	v7/maincpu/display/scoop_display.s:8202	9	44	
+v7	ScoopDisp_SeekBackWrapMarkers	body-differs	v10 ld(3582:16),a | v7 stb_d8(3582),a / ScoopDisp_SeekBackWrapMarkers_Loop5:	v10/maincpu/display/scoop_display.s:8626	v7/maincpu/display/scoop_display.s:8339	25	26	
+v7	ScoopDisp_StepMeasureBack	body-differs	v10 ld a,(3420:16) | v7 ldb_d8 a,(3420)	v10/maincpu/display/scoop_display.s:8565	v7/maincpu/display/scoop_display.s:8283	17	56	
+v7	ScoopDisp_StepMeasureForward	body-differs	v10 ld a,(3421:16) | v7 ldb_d8 a,(3421)	v10/maincpu/display/scoop_display.s:8493	v7/maincpu/display/scoop_display.s:8217	9	44	
 v7	ScreenGroup_Dispatch	body-differs	v10 - | v7 push xiz / ld iz,wa	v10/maincpu/boot/screen_group_dispatch.s:32	v7/maincpu/audio/dsp_config_sysex.s:4560	6	7	
 v7	SeAmpAmp1_Field1_Record	body-differs	"v10 .incbin ""includes/generated/se_apply_confirm.bin"" / .set SeApplyConfirm_ParamR2Rec | v7 .byte 5,11,97,6,255,0,32,80,13,2,0"	v10/maincpu/storage/flash_floppy_handlers.s:733	v7/maincpu/storage/flash_floppy_handlers.s:773	5	6	
-v7	SeAmpAmp2_DrawStaticScreen	body-differs	v10 call SeMenu_DrawSoloButton / call SeMenu_DrawPartSelector | v7 .byte 29,32,240,240,29,106,240,240 / .byte 29,147	v10/maincpu/audio/sound_editor_ui.s:9401	v7/maincpu/audio/sound_editor_ui.s:9271	14	15	
-v7	SeAmpEnv1_Records	body-differs	"v10 sd_ptext 23,12,195,151,""KEYOFF"" / sd_ptext 23,9,11,207,""ATK"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13231	v7/maincpu/audio/sound_editor_ui.s:13138	19	22	
-v7	SeCtr2_FunctionNameFields	body-differs	"v10 .incbin ""includes/generated/se_transport_display.bin"",30,70 | v7 sdb_str 1633,63,0,32,SeValText_CtrlDestinations,13,77*40+10"	v10/maincpu/audio/sound_editor_ui.s:15075	v7/maincpu/audio/sound_editor_ui.s:15341	1	2	
-v7	SeDigEff_OnColumn3_CelesteChorusDetune	body-differs	v10 - | v7 SeDigEff_OnColumn3_CelesteChorusDetune_Join11: / ld xwa,2:i3	v10/maincpu/audio/sound_editor_ui.s:6110	v7/maincpu/audio/sound_editor_ui.s:6103	14	18	
-v7	SeDigEff_OnColumn3_RepeatDelaySustain	body-differs	v10 - | v7 SeDigEff_OnColumn3_RepeatDelaySustain_Join12: / ld(xwa+9),0	v10/maincpu/audio/sound_editor_ui.s:6146	v7/maincpu/audio/sound_editor_ui.s:6134	6	9	
-v7	SeDigEff_OnColumn4_DelaySpeed2	body-differs	v10 - | v7 SeDigEff_OnColumn4_DelaySpeed2_Join13: / ld(xwa+9),0	v10/maincpu/audio/sound_editor_ui.s:6185	v7/maincpu/audio/sound_editor_ui.s:6171	15	18	
-v7	SeDigEff_OnColumn4_RepeatDelayRelease	body-differs	v10 jr SeMenu_CopyWriteUpdate_Join39 | v7 jr SeDigEff_OnColumn4_DelaySpeed2_Join13 / SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10:	v10/maincpu/audio/sound_editor_ui.s:6209	v7/maincpu/audio/sound_editor_ui.s:6193	4	7	
-v7	SeDigEff_OnColumn5_CelesteChorusBalance	body-differs	v10 - | v7 SeDigEff_OnColumn5_CelesteChorusBalance_Join14: / ld xwa,4:i3	v10/maincpu/audio/sound_editor_ui.s:6246	v7/maincpu/audio/sound_editor_ui.s:6228	14	18	
-v7	SeDigEff_OnColumn5_EnsembleDetune	body-differs	v10 jr SeMenu_CopyWriteUpdate_Join40 | v7 jr SeDigEff_OnColumn5_CelesteChorusBalance_Join14 / SeDigEff_OnColumn5_EnsembleDetune_Epilogue11:	v10/maincpu/audio/sound_editor_ui.s:6265	v7/maincpu/audio/sound_editor_ui.s:6246	4	8	
-v7	SeFilBcf1_DrawStaticScreen	body-differs	v10 call SeFil_DrawPageHeader / ld xiy,SeFilBcf1_Records | v7 .byte 29,203,253,240,69,166,38,241,0,68,189,38,241,0,29,214 / .byte 235,240,193,174,6,63,1,102,4,2	v10/maincpu/audio/sound_editor_ui.s:9688	v7/maincpu/audio/sound_editor_ui.s:9543	7	14	
-v7	SeFilHpq1_SeFilLpq1_Field0_Record	body-differs	v10 .set SeFilHpq1_SeFilLpq1_Field1_Record / .set SeFilHpq1_SeFilLpq1_Field2_Record | v7 sdb_snum 1632,224,5,32,221*40+16,1,3	v10/maincpu/audio/sound_editor_ui.s:13670	v7/maincpu/audio/sound_editor_ui.s:13744	5	6	
-v7	SeFil_DrawModeCaption_Records	body-differs	"v10 .incbin ""includes/generated/se_setup_nav_full.bin"",0,35 | v7 sd_op23 33,3*40+14"	v10/maincpu/audio/sound_editor_ui.s:13326	v7/maincpu/audio/sound_editor_ui.s:13233	1	2	
-v7	SeFil_PageHeader_Records	body-differs	"v10 sd_ctext 6,9,41*40+35,""ENV \021"" / sd_ctext 6,7,69*40+34,""FIL"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13302	v7/maincpu/audio/sound_editor_ui.s:13210	16	20	
-v7	SeLfo1_DrawPartLabels	body-differs	v10 srla w | v7 .byte 200,255	v10/maincpu/audio/sound_editor_ui.s:9202	v7/maincpu/audio/sound_editor_ui.s:9088	9	32	
-v7	SeLfo1_DrawStaticScreen_Records2	body-differs	"v10 .set SeScreenData_0x3839 / .set SeScreenData_0x3845 | v7 sd_ctext 32,7,64*40+6,""1ST"""	v10/maincpu/audio/sound_editor_ui.s:14797	v7/maincpu/audio/sound_editor_ui.s:14951	4	5	
-v7	SeLfo_Part4HatchRecord	body-differs	"v10 .incbin ""includes/generated/se_rhythm_transport_tables.bin"",88,132 | v7 sd_blit SeBitmap_Pattern24x10_4,158*40+6,3,10"	v10/maincpu/audio/sound_editor_ui.s:14806	v7/maincpu/audio/sound_editor_ui.s:14988	1	2	
-v7	SeMenu_CompareAndApply_Match_Records	body-differs	v10 .set SeScreenData_0x2399 / .set SeScreenData_0x23A3 | v7 sdb_num 1633,127,0,32,85*40+9,3	v10/maincpu/audio/sound_editor_ui.s:13843	v7/maincpu/audio/sound_editor_ui.s:13928	13	14	
-v7	SeMenu_DrawLfoPartSwitches	body-differs	v10 jrl z,SeMenu_PresetBrowser_Data_Sub_Join | v7 jrl z,SeMenu_PresetBrowser_Data_Code_Join2	v10/maincpu/audio/sound_editor_ui.s:9241	v7/maincpu/audio/sound_editor_ui.s:9120	7	90	
-v7	SeMenu_DrawWriteDestName	body-differs	v10 ld l,(1632:16) | v7 ldb_d8 l,(1632)	v10/maincpu/audio/sound_editor_ui.s:10250	v7/maincpu/audio/sound_editor_ui.s:10083	13	54	
-v7	SeMenu_ToggleSolo	body-differs	v10 cp(xsp),0 / jr z,SeMenu_ToggleSolo_Skip7 | v7 .byte 135 / push xsp	v10/maincpu/audio/semenu_routines.s:1437	v7/maincpu/audio/semenu_routines.s:1411	13	17	
-v7	SeScreenData_0x1089	body-differs	"v10 sd_ctext 6,9,109*40+35,""LF0 \021"" / sd_quad 1,290,96,293,96 | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13090	v7/maincpu/audio/sound_editor_ui.s:12974	6	18	
-v7	SeScreenData_0x1AEB	body-differs	"v10 sd_ptext 23,12,195,151,""KEYOFF"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13410	v7/maincpu/audio/sound_editor_ui.s:13377	1	3	
-v7	SeTonHyb1_Row2Records	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",40,150 | v7 sdb_str 1641,15,0,32,SeValText_A_B_To_Z,2,135*40+8 / sdb_str 0,0,0,32,134147,13,135*40+10"	v10/maincpu/audio/sound_editor_ui.s:13618	v7/maincpu/audio/sound_editor_ui.s:13630	4	5	
-v7	SeTonHyb1_Row2VelDash	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",198,75 | v7 sd_ctext 6,5,135*40+27,""-"""	v10/maincpu/audio/sound_editor_ui.s:13624	v7/maincpu/audio/sound_editor_ui.s:13655	1	2	
-v7	SeTonHyb1_Row4ClearBoxes	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",273,56 | v7 sd_quad 27,64,167,184,180 / sd_quad 27,192,167,248,180"	v10/maincpu/audio/sound_editor_ui.s:13628	v7/maincpu/audio/sound_editor_ui.s:13684	2	3	
-v7	SeTonTon1_Field14_Record	body-differs	v10 .set SeTonTon1_Field15_Record / .set SeTonTon1_Field16_Record | v7 sdb_str 1646,15,0,32,SeTonTon1_DrawStaticScreen_Records,1,82*40+8 / sdb_str 0,0,0,32,1341	v10/maincpu/audio/sound_editor_ui.s:13509	v7/maincpu/audio/sound_editor_ui.s:13475	16	17	
-v7	SeTonTon2_DelayFields	body-differs	"v10 .incbin ""includes/generated/se_parameter_grid.bin"",60,50 | v7 sdb_num 1634,63,0,32,85*40+17,2"	v10/maincpu/audio/sound_editor_ui.s:14823	v7/maincpu/audio/sound_editor_ui.s:15035	1	2	
-v7	SeTonTon2_PanAmountFields	body-differs	"v10 .incbin ""includes/generated/se_parameter_grid.bin"",181,40 | v7 sdb_num 1644,127,0,32,85*40+25,2"	v10/maincpu/audio/sound_editor_ui.s:14832	v7/maincpu/audio/sound_editor_ui.s:15066	1	2	
-v7	SeWrtSnd_SetupNamingPage	body-differs	v10 jr z,SeWrtSnd_SetupNamingPage_Epilogue5 | v7 jr z,SeWrtSnd_SetupNamingPage_Epilogue22	v10/maincpu/audio/sound_editor_ui.s:6795	v7/maincpu/audio/sound_editor_ui.s:6770	302	420	
+v7	SeAmpAmp2_DrawStaticScreen	body-differs	v10 call SeMenu_DrawSoloButton / call SeMenu_DrawPartSelector | v7 .byte 29,32,240,240,29,106,240,240 / .byte 29,147	v10/maincpu/audio/sound_editor_ui.s:9401	v7/maincpu/audio/sound_editor_ui.s:9344	14	15	
+v7	SeAmpEnv1_Records	body-differs	"v10 sd_ptext 23,12,195,151,""KEYOFF"" / sd_ptext 23,9,11,207,""ATK"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13231	v7/maincpu/audio/sound_editor_ui.s:13217	19	22	
+v7	SeCtr2_FunctionNameFields	body-differs	"v10 .incbin ""includes/generated/se_transport_display.bin"",30,70 | v7 sdb_str 1633,63,0,32,SeValText_CtrlDestinations,13,77*40+10"	v10/maincpu/audio/sound_editor_ui.s:15075	v7/maincpu/audio/sound_editor_ui.s:15420	1	2	
+v7	SeDigEff_OnColumn3_CelesteChorusDetune	body-differs	v10 - | v7 SeDigEff_OnColumn3_CelesteChorusDetune_Join11: / ld xwa,2:i3	v10/maincpu/audio/sound_editor_ui.s:6110	v7/maincpu/audio/sound_editor_ui.s:6108	14	18	
+v7	SeDigEff_OnColumn3_RepeatDelaySustain	body-differs	v10 - | v7 SeDigEff_OnColumn3_RepeatDelaySustain_Join12: / ld(xwa+9),0	v10/maincpu/audio/sound_editor_ui.s:6146	v7/maincpu/audio/sound_editor_ui.s:6143	6	9	
+v7	SeDigEff_OnColumn4_DelaySpeed2	body-differs	v10 - | v7 SeDigEff_OnColumn4_DelaySpeed2_Join13: / ld(xwa+9),0	v10/maincpu/audio/sound_editor_ui.s:6185	v7/maincpu/audio/sound_editor_ui.s:6180	15	18	
+v7	SeDigEff_OnColumn4_RepeatDelayRelease	body-differs	v10 jr SeMenu_CopyWriteUpdate_Join39 | v7 jr SeDigEff_OnColumn4_DelaySpeed2_Join13 / SeDigEff_OnColumn4_RepeatDelayRelease_Epilogue10:	v10/maincpu/audio/sound_editor_ui.s:6209	v7/maincpu/audio/sound_editor_ui.s:6203	4	7	
+v7	SeDigEff_OnColumn5_CelesteChorusBalance	body-differs	v10 - | v7 SeDigEff_OnColumn5_CelesteChorusBalance_Join14: / ld xwa,4:i3	v10/maincpu/audio/sound_editor_ui.s:6246	v7/maincpu/audio/sound_editor_ui.s:6238	14	18	
+v7	SeDigEff_OnColumn5_EnsembleDetune	body-differs	v10 jr SeMenu_CopyWriteUpdate_Join40 | v7 jr SeDigEff_OnColumn5_CelesteChorusBalance_Join14 / SeDigEff_OnColumn5_EnsembleDetune_Epilogue11:	v10/maincpu/audio/sound_editor_ui.s:6265	v7/maincpu/audio/sound_editor_ui.s:6256	4	8	
+v7	SeFilHpq1_SeFilLpq1_Field0_Record	body-differs	v10 .set SeFilHpq1_SeFilLpq1_Field1_Record / .set SeFilHpq1_SeFilLpq1_Field2_Record | v7 sdb_snum 1632,224,5,32,221*40+16,1,3	v10/maincpu/audio/sound_editor_ui.s:13670	v7/maincpu/audio/sound_editor_ui.s:13823	5	6	
+v7	SeFil_DrawModeCaption_Records	body-differs	"v10 .incbin ""includes/generated/se_setup_nav_full.bin"",0,35 | v7 sd_op23 33,3*40+14"	v10/maincpu/audio/sound_editor_ui.s:13326	v7/maincpu/audio/sound_editor_ui.s:13312	1	2	
+v7	SeFil_PageHeader_Records	body-differs	"v10 sd_ctext 6,9,41*40+35,""ENV \021"" / sd_ctext 6,7,69*40+34,""FIL"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13302	v7/maincpu/audio/sound_editor_ui.s:13289	16	20	
+v7	SeLfo1_DrawPartLabels	body-differs	v10 srla w | v7 .byte 200,255	v10/maincpu/audio/sound_editor_ui.s:9202	v7/maincpu/audio/sound_editor_ui.s:9156	9	32	
+v7	SeLfo1_DrawStaticScreen_Records2	body-differs	"v10 .set SeScreenData_0x3839 / .set SeScreenData_0x3845 | v7 sd_ctext 32,7,64*40+6,""1ST"""	v10/maincpu/audio/sound_editor_ui.s:14797	v7/maincpu/audio/sound_editor_ui.s:15030	4	5	
+v7	SeLfo_Part4HatchRecord	body-differs	"v10 .incbin ""includes/generated/se_rhythm_transport_tables.bin"",88,132 | v7 sd_blit SeBitmap_Pattern24x10_4,158*40+6,3,10"	v10/maincpu/audio/sound_editor_ui.s:14806	v7/maincpu/audio/sound_editor_ui.s:15067	1	2	
+v7	SeMenu_CompareAndApply_Match_Records	body-differs	v10 .set SeScreenData_0x2399 / .set SeScreenData_0x23A3 | v7 sdb_num 1633,127,0,32,85*40+9,3	v10/maincpu/audio/sound_editor_ui.s:13843	v7/maincpu/audio/sound_editor_ui.s:14007	13	14	
+v7	SeMenu_DrawLfoPartSwitches	body-differs	v10 jrl z,SeMenu_PresetBrowser_Data_Sub_Join | v7 jrl z,SeMenu_PresetBrowser_Data_Code_Join2	v10/maincpu/audio/sound_editor_ui.s:9241	v7/maincpu/audio/sound_editor_ui.s:9188	7	90	
+v7	SeMenu_DrawWriteDestName	body-differs	v10 ld l,(1632:16) | v7 ldb_d8 l,(1632)	v10/maincpu/audio/sound_editor_ui.s:10250	v7/maincpu/audio/sound_editor_ui.s:10159	13	54	
+v7	SeMenu_ToggleSolo	body-differs	v10 cp(xsp),0 / jr z,SeMenu_ToggleSolo_Skip7 | v7 .byte 135 / push xsp	v10/maincpu/audio/semenu_routines.s:1437	v7/maincpu/audio/semenu_routines.s:1414	13	17	
+v7	SeScreenData_0x1089	body-differs	"v10 sd_ctext 6,9,109*40+35,""LF0 \021"" / sd_quad 1,290,96,293,96 | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13090	v7/maincpu/audio/sound_editor_ui.s:13053	6	18	
+v7	SeScreenData_0x1AEB	body-differs	"v10 sd_ptext 23,12,195,151,""KEYOFF"" | v7 -"	v10/maincpu/audio/sound_editor_ui.s:13410	v7/maincpu/audio/sound_editor_ui.s:13456	1	3	
+v7	SeTonHyb1_Row2Records	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",40,150 | v7 sdb_str 1641,15,0,32,SeValText_A_B_To_Z,2,135*40+8 / sdb_str 0,0,0,32,134147,13,135*40+10"	v10/maincpu/audio/sound_editor_ui.s:13618	v7/maincpu/audio/sound_editor_ui.s:13709	4	5	
+v7	SeTonHyb1_Row2VelDash	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",198,75 | v7 sd_ctext 6,5,135*40+27,""-"""	v10/maincpu/audio/sound_editor_ui.s:13624	v7/maincpu/audio/sound_editor_ui.s:13734	1	2	
+v7	SeTonHyb1_Row4ClearBoxes	body-differs	"v10 .incbin ""includes/generated/se_drumkit_display.bin"",273,56 | v7 sd_quad 27,64,167,184,180 / sd_quad 27,192,167,248,180"	v10/maincpu/audio/sound_editor_ui.s:13628	v7/maincpu/audio/sound_editor_ui.s:13763	2	3	
+v7	SeTonTon1_Field14_Record	body-differs	v10 .set SeTonTon1_Field15_Record / .set SeTonTon1_Field16_Record | v7 sdb_str 1646,15,0,32,SeTonTon1_DrawStaticScreen_Records,1,82*40+8 / sdb_str 0,0,0,32,1341	v10/maincpu/audio/sound_editor_ui.s:13509	v7/maincpu/audio/sound_editor_ui.s:13554	16	17	
+v7	SeTonTon2_DelayFields	body-differs	"v10 .incbin ""includes/generated/se_parameter_grid.bin"",60,50 | v7 sdb_num 1634,63,0,32,85*40+17,2"	v10/maincpu/audio/sound_editor_ui.s:14823	v7/maincpu/audio/sound_editor_ui.s:15114	1	2	
+v7	SeTonTon2_PanAmountFields	body-differs	"v10 .incbin ""includes/generated/se_parameter_grid.bin"",181,40 | v7 sdb_num 1644,127,0,32,85*40+25,2"	v10/maincpu/audio/sound_editor_ui.s:14832	v7/maincpu/audio/sound_editor_ui.s:15145	1	2	
+v7	SeWrtSnd_SetupNamingPage	body-differs	v10 jr z,SeWrtSnd_SetupNamingPage_Epilogue5 | v7 jr z,SeWrtSnd_SetupNamingPage_Epilogue22	v10/maincpu/audio/sound_editor_ui.s:6795	v7/maincpu/audio/sound_editor_ui.s:6780	302	420	
 v7	SeqChan_CommandHandlers	body-differs	v10 .long MidiPkt_XferOnGroupEnd | v7 .long SeqChan_DispatchByType_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1331	v7/maincpu/ui_widgets/widget_dispatch.s:1380	11	41	
 v7	SeqChan_StepCmdHandlers	body-differs	v10 .long SeqChan_XferStep_StyleImageBlock1 | v7 .long SeqChan_StepCmd_Field6_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1374	v7/maincpu/ui_widgets/widget_dispatch.s:1423	5	23	
 v7	SeqData_Handlers	body-differs	v10 .long SysEx_OnTechnicsParamChange | v7 .long SeqData_FormatOutput_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1492	v7/maincpu/ui_widgets/widget_dispatch.s:1538	5	41	
@@ -180,21 +143,21 @@ v7	SingleLoadDst_SoundMemListProc	body-differs	v10 jr z,SingleLoadDst_SoundMemLi
 v7	SingleLoadSrc_ComposerListProc	body-differs	v10 jr z,SingleLoadSrc_ComposerListProc_Skip12 | v7 jr z,SLSrcBankList_FuncBody_Skip15	v10/maincpu/file_io/single_load.s:756	v7/maincpu/file_io/single_load.s:719	153	170	
 v7	SingleLoadSrc_SequencerListProc	body-differs	v10 lda xwa,(35150:16) | v7 lda xwa,(34994:16)	v10/maincpu/file_io/single_load.s:525	v7/maincpu/file_io/single_load.s:504	12	65	
 v7	SingleLoadSrc_SoundMemListProc	body-differs	v10 jr z,SingleLoadSrc_SoundMemListProc_Skip25 | v7 jr z,SLSrcBankList_FuncBody_Skip31	v10/maincpu/file_io/single_load.s:1179	v7/maincpu/file_io/single_load.s:1109	232	250	
-v7	SingleLoad_CopyComposerPatternFromFile	body-differs	v10 ld(31460:16),xbc | v7 ld(31304:16),xbc	v10/maincpu/sequencer/accompaniment_engine.s:39207	v7/maincpu/sequencer/accompaniment_engine.s:37877	3	33	
-v7	SingleLoad_LoadComposerPattern	body-differs	v10 jr ge,SingleLoad_LoadComposerPattern_Skip12 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip12	v10/maincpu/demo/file_demo_proc.s:3403	v7/maincpu/demo/file_demo_proc.s:3372	42	51	
-v7	SingleLoad_LoadPanelMemBank	body-differs	v10 jr ge,SingleLoad_LoadPanelMemBank_Skip4 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip4	v10/maincpu/demo/file_demo_proc.s:3198	v7/maincpu/demo/file_demo_proc.s:3180	93	102	
-v7	SingleLoad_LoadSong	body-differs	v10 jr ge,SingleLoad_LoadSong_Skip7 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip7	v10/maincpu/demo/file_demo_proc.s:3307	v7/maincpu/demo/file_demo_proc.s:3282	82	90	
-v7	SingleLoad_LoadSoundMemBank	body-differs	v10 jr ge,SingleLoad_LoadSoundMemBank_Skip20 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip20	v10/maincpu/demo/file_demo_proc.s:3589	v7/maincpu/demo/file_demo_proc.s:3547	84	93	
-v7	SingleLoad_LoadSoundMemEntry	body-differs	v10 jr ge,SingleLoad_LoadSoundMemEntry_Skip15 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip15	v10/maincpu/demo/file_demo_proc.s:3460	v7/maincpu/demo/file_demo_proc.s:3423	115	124	
+v7	SingleLoad_CopyComposerPatternFromFile	body-differs	v10 ld(31460:16),xbc | v7 ld(31304:16),xbc	v10/maincpu/sequencer/accompaniment_engine.s:39207	v7/maincpu/sequencer/accompaniment_engine.s:37915	3	33	
+v7	SingleLoad_LoadComposerPattern	body-differs	v10 jr ge,SingleLoad_LoadComposerPattern_Skip12 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip12	v10/maincpu/demo/file_demo_proc.s:3403	v7/maincpu/demo/file_demo_proc.s:3385	42	51	
+v7	SingleLoad_LoadPanelMemBank	body-differs	v10 jr ge,SingleLoad_LoadPanelMemBank_Skip4 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip4	v10/maincpu/demo/file_demo_proc.s:3198	v7/maincpu/demo/file_demo_proc.s:3193	93	102	
+v7	SingleLoad_LoadSong	body-differs	v10 jr ge,SingleLoad_LoadSong_Skip7 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip7	v10/maincpu/demo/file_demo_proc.s:3307	v7/maincpu/demo/file_demo_proc.s:3295	82	90	
+v7	SingleLoad_LoadSoundMemBank	body-differs	v10 jr ge,SingleLoad_LoadSoundMemBank_Skip20 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip20	v10/maincpu/demo/file_demo_proc.s:3589	v7/maincpu/demo/file_demo_proc.s:3560	84	93	
+v7	SingleLoad_LoadSoundMemEntry	body-differs	v10 jr ge,SingleLoad_LoadSoundMemEntry_Skip15 | v7 jr ge,FileIO_ByteBlock_DemoProc1_Skip15	v10/maincpu/demo/file_demo_proc.s:3460	v7/maincpu/demo/file_demo_proc.s:3436	115	124	
 v7	SingleLoad_SyncSoundMemCursorGroup	body-differs	v10 jr c,SingleLoad_SyncSoundMemCursorGroup_Return | v7 jr c,SLSrcBankList_FuncBody_Return	v10/maincpu/file_io/single_load.s:933	v7/maincpu/file_io/single_load.s:889	6	39	
 v7	SndArg_StoreAccomp1Sound	body-differs	v10 cp(13209:16),wa | v7 cp(13053:16),wa	v10/maincpu/sequencer/accompaniment_engine.s:11509	v7/maincpu/sequencer/accompaniment_engine.s:11139	3	14	
 v7	SndArg_StoreAccomp2Sound	body-differs	v10 cp(13211:16),wa | v7 cp(13055:16),wa	v10/maincpu/sequencer/accompaniment_engine.s:11533	v7/maincpu/sequencer/accompaniment_engine.s:11156	3	14	
 v7	SndArg_StoreAccomp3Sound	body-differs	v10 cp(13213:16),wa | v7 cp(13057:16),wa	v10/maincpu/sequencer/accompaniment_engine.s:11557	v7/maincpu/sequencer/accompaniment_engine.s:11173	3	14	
 v7	SndArg_StoreBassSound	body-differs	v10 cp(13207:16),wa | v7 cp(13051:16),wa	v10/maincpu/sequencer/accompaniment_engine.s:11485	v7/maincpu/sequencer/accompaniment_engine.s:11122	3	14	
 v7	SndArg_StoreDrumSound	body-differs	v10 cp(13205:16),wa | v7 cp(13049:16),wa	v10/maincpu/sequencer/accompaniment_engine.s:11463	v7/maincpu/sequencer/accompaniment_engine.s:11107	3	12	
-v7	SndParam_ApplySystemParam	body-differs	v10 cp a,(59842:16) | v7 cp a,(59644:16)	v10/maincpu/audio/note_voice_mapping.s:18397	v7/maincpu/audio/note_voice_mapping.s:17165	4	120	
-v7	SndParam_ApplySystemParam_ScaleTuneUserNote11	body-differs	v10 ld(53172:16),xwa | v7 ld(53016:16),xwa	v10/maincpu/audio/note_voice_mapping.s:19007	v7/maincpu/audio/note_voice_mapping.s:17762	5	43	
-v7	SndParam_ApplySystemParam_SendEqualizerOnOff	body-differs	v10 ld(53198:16),iz | v7 ld(53042:16),iz	v10/maincpu/audio/note_voice_mapping.s:18552	v7/maincpu/audio/note_voice_mapping.s:17309	4	61	
+v7	SndParam_ApplySystemParam	body-differs	v10 cp a,(59842:16) | v7 cp a,(59644:16)	v10/maincpu/audio/note_voice_mapping.s:18397	v7/maincpu/audio/note_voice_mapping.s:17171	4	120	
+v7	SndParam_ApplySystemParam_ScaleTuneUserNote11	body-differs	v10 ld(53172:16),xwa | v7 ld(53016:16),xwa	v10/maincpu/audio/note_voice_mapping.s:19007	v7/maincpu/audio/note_voice_mapping.s:17768	5	43	
+v7	SndParam_ApplySystemParam_SendEqualizerOnOff	body-differs	v10 ld(53198:16),iz | v7 ld(53042:16),iz	v10/maincpu/audio/note_voice_mapping.s:18552	v7/maincpu/audio/note_voice_mapping.s:17315	4	61	
 v7	SndParam_EncodeHandlers	body-differs	v10 - | v7 .long SndParam_EncodeFieldDirect_Data / .long SndParam_EncodeFieldSub_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1126	v7/maincpu/ui_widgets/widget_dispatch.s:1183	6	7	
 v7	SndParam_ReadHandlers	body-differs	v10 - | v7 .long SndParam_ReturnNotFound / .long SndParam_ReadRegField	v10/maincpu/ui_widgets/widget_dispatch.s:1087	v7/maincpu/ui_widgets/widget_dispatch.s:1147	7	8	
 v7	SndParam_RegRamPtrs	body-differs	v10 .long 36580 / .long 36582 | v7 .long 36424 / .long 36426	v10/maincpu/ui_widgets/widget_dispatch.s:78	v7/maincpu/ui_widgets/widget_dispatch.s:139	6	7	
@@ -202,70 +165,59 @@ v7	SndParam_Register2Handlers	body-differs	v10 - | v7 .long SndParam_DeregisterE
 v7	SndParam_RegisterHandlers	body-differs	v10 - | v7 .long SndParam_ResetDefaultTable / .long SndParam_RegisterEntry_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1099	v7/maincpu/ui_widgets/widget_dispatch.s:1158	9	10	
 v7	SndParam_SetRegWord	body-differs	v10 extz bc / sla bc,2 | v7 -	v10/maincpu/audio/sndparam_routines.s:1348	v7/maincpu/audio/sndparam_routines.s:883	70	77	
 v7	SndParam_WriteHandlers	body-differs	v10 - | v7 .long SndParam_ReturnInvalid / .long SndParam_WriteFieldDirect_Data	v10/maincpu/ui_widgets/widget_dispatch.s:1137	v7/maincpu/ui_widgets/widget_dispatch.s:1193	6	7	
-v7	SongPlayer_ResetState	body-differs	v10 ld(59876:16),0 | v7 ld(59678:16),0	v10/maincpu/audio/note_voice_mapping.s:23687	v7/maincpu/audio/note_voice_mapping.s:22003	10	18	
-v7	SoundParam_NotifyChange	body-differs	"v10 .include ""audio/sndparam_routines.s"" / .include ""midi/midi_serial_routines.s"" | v7 -"	v10/maincpu/kn5000_v10_program.s:3556	v7/maincpu/audio/audio_control_engine.s:11686	5	35	
-v7	SqStep_AdvanceClockByStep	body-differs	v10 call SqStep_AddStepToClock / ld(3415:16),w | v7 call SerialPort_ModeHandler_0_Helper2 / stb_d8(3415),w	v10/maincpu/display/scoop_display.s:6985	v7/maincpu/display/scoop_display.s:6773	3	5	
-v7	SqStep_BuildCurrentRowBitmap	body-differs	v10 ld wa,(3560:16) / ld l,(3822:16) | v7 ldw_d16 wa,(3560) / ldb_d8 l,(3822)	v10/maincpu/display/scoop_display.s:5469	v7/maincpu/display/scoop_display.s:5393	17	64	
-v7	SqStep_ComputeStepTargetClock	body-differs	v10 call SqStep_AddStepToClock / ld(3534:16),w | v7 call SerialPort_ModeHandler_0_Helper2 / stb_d8(3534),w	v10/maincpu/display/scoop_display.s:6995	v7/maincpu/display/scoop_display.s:6778	3	5	
-v7	SqStep_FindMsaStateAtCursor	body-differs	v10 jrl nz,SqStep_FindMsaStateAtCursor_Skip4 / SqStep_FindMsaStateAtCursor_Loop: | v7 jrl nz,ParamPopup_Msa_Skip3	v10/maincpu/display/scoop_display.s:16524	v7/maincpu/display/scoop_display.s:16004	49	69	
-v7	SqStep_LowestSetBitOfWord	body-differs	v10 jp SqStep_LowestSetBitOfWord_Return2 | v7 jp SysInit_BytecodeBlock_Return6	v10/maincpu/display/scoop_display.s:9927	v7/maincpu/display/scoop_display.s:9583	3	40	
-v7	SqStep_ParkParamEvent	body-differs	v10 jp SqStep_ParkParamEvent_Join | v7 jp VoiceCtrl_ParamSetupBytecode_Join	v10/maincpu/display/scoop_display.s:6198	v7/maincpu/display/scoop_display.s:6088	29	96	
-v7	SqStep_ProcessRhythmSectionEvent	body-differs	v10 call SqStep_RecordSectionClearHalfBeatLater | v7 call VoiceCtrl_ParamSetupBytecode_Helper5	v10/maincpu/display/scoop_display.s:6353	v7/maincpu/display/scoop_display.s:6225	1	26	
-v7	SqStep_ResetPositionState	body-differs	v10 ld(3666:16),a / ld(3667:16),a | v7 stb_d8(3666),a / stb_d8(3667),a	v10/maincpu/display/scoop_display.s:7879	v7/maincpu/display/scoop_display.s:7600	14	31	
-v7	SqStep_SeekSecondGridRow	body-differs	v10 jrl z,SqStep_SeekSecondGridRow_Skip15 | v7 jrl z,PerfMode_ParamHandler_11_Skip16	v10/maincpu/display/scoop_display.s:13250	v7/maincpu/display/scoop_display.s:12870	11	26	
-v7	SqStep_SetupNextGridRow	body-differs	v10 ld(3668:16),a / jp VoiceSlot_TableSetup_Code_Return2 | v7 stb_d8(3668),a / jp VoiceSlot_TableSetup_Return3	v10/maincpu/display/scoop_display.s:5729	v7/maincpu/display/scoop_display.s:5641	36	54	
-v7	SqStep_SetupPrevGridRow	body-differs	v10 jrl nz,SqStep_SetupPrevGridRow_Skip8 | v7 jrl nz,VoiceSlot_TableSetup_Skip7	v10/maincpu/display/scoop_display.s:5631	v7/maincpu/display/scoop_display.s:5549	22	36	
-v7	SqStep_ShowRhythmSectionEvent	body-differs	v10 jrl nz,SqStep_ShowRhythmSectionEvent_Skip23 | v7 jrl nz,VoiceCtrl_ParamSetupBytecode_Skip17	v10/maincpu/display/scoop_display.s:6384	v7/maincpu/display/scoop_display.s:6251	23	46	
-v7	SqStep_WriteClockWrapMarkers	body-differs	v10 jrl z,SqStep_WriteClockWrapMarkers_Return | v7 jrl z,SerialPort_ModeHandler_0_Return3	v10/maincpu/display/scoop_display.s:6882	v7/maincpu/display/scoop_display.s:6682	4	25	
-v7	Str_Control	body-differs	v10 - | v7 Str_Control_Helper: / ldb_d8 h,(13959)	v10/maincpu/display/scoop_display.s:14565	v7/maincpu/display/scoop_display.s:14171	12	14	
-v7	SubCPU_RequestShortSoundName	body-differs	v10 lda xde,(58060:16) | v7 lda xde,(57904:16)	v10/maincpu/audio/note_voice_mapping.s:25851	v7/maincpu/audio/note_voice_mapping.s:23969	4	20	
-v7	SubCPU_RequestSoundName	body-differs	v10 lda xde,(58040:16) | v7 lda xde,(57884:16)	v10/maincpu/audio/note_voice_mapping.s:25806	v7/maincpu/audio/note_voice_mapping.s:23929	4	20	
-v7	SubCPU_SendSoundMemUpdated	body-differs	v10 lda xde,(58174:16) | v7 lda xde,(58018:16)	v10/maincpu/audio/note_voice_mapping.s:26034	v7/maincpu/audio/note_voice_mapping.s:24135	3	18	
-v7	SubCPU_ToneParamRet	body-differs	v10 ld wa,(14106:16) | v7 ldw_d16 wa,(13950)	v10/maincpu/display/scoop_display.s:12986	v7/maincpu/display/scoop_display.s:12612	10	58	
+v7	SongPlayer_ResetState	body-differs	v10 ld(59876:16),0 | v7 ld(59678:16),0	v10/maincpu/audio/note_voice_mapping.s:23687	v7/maincpu/audio/note_voice_mapping.s:22009	10	18	
+v7	SoundParam_NotifyChange	body-differs	"v10 .include ""audio/sndparam_routines.s"" / .include ""midi/midi_serial_routines.s"" | v7 -"	v10/maincpu/kn5000_v10_program.s:3556	v7/maincpu/audio/audio_control_engine.s:11708	5	35	
+v7	SqStep_AdvanceClockByStep	body-differs	v10 call SqStep_AddStepToClock / ld(3415:16),w | v7 call SerialPort_ModeHandler_0_Helper2 / stb_d8(3415),w	v10/maincpu/display/scoop_display.s:6985	v7/maincpu/display/scoop_display.s:6788	3	5	
+v7	SqStep_BuildCurrentRowBitmap	body-differs	v10 ld wa,(3560:16) / ld l,(3822:16) | v7 ldw_d16 wa,(3560) / ldb_d8 l,(3822)	v10/maincpu/display/scoop_display.s:5469	v7/maincpu/display/scoop_display.s:5401	17	64	
+v7	SqStep_ComputeStepTargetClock	body-differs	v10 call SqStep_AddStepToClock / ld(3534:16),w | v7 call SerialPort_ModeHandler_0_Helper2 / stb_d8(3534),w	v10/maincpu/display/scoop_display.s:6995	v7/maincpu/display/scoop_display.s:6793	3	5	
+v7	SqStep_FindMsaStateAtCursor	body-differs	v10 jrl nz,SqStep_FindMsaStateAtCursor_Skip4 / SqStep_FindMsaStateAtCursor_Loop: | v7 jrl nz,ParamPopup_Msa_Skip3	v10/maincpu/display/scoop_display.s:16524	v7/maincpu/display/scoop_display.s:16057	49	69	
+v7	SqStep_LowestSetBitOfWord	body-differs	v10 jp SqStep_LowestSetBitOfWord_Return2 | v7 jp SysInit_BytecodeBlock_Return6	v10/maincpu/display/scoop_display.s:9927	v7/maincpu/display/scoop_display.s:9606	3	40	
+v7	SqStep_ParkParamEvent	body-differs	v10 jp SqStep_ParkParamEvent_Join | v7 jp VoiceCtrl_ParamSetupBytecode_Join	v10/maincpu/display/scoop_display.s:6198	v7/maincpu/display/scoop_display.s:6096	29	96	
+v7	SqStep_ProcessRhythmSectionEvent	body-differs	v10 call SqStep_RecordSectionClearHalfBeatLater | v7 call VoiceCtrl_ParamSetupBytecode_Helper5	v10/maincpu/display/scoop_display.s:6353	v7/maincpu/display/scoop_display.s:6240	1	26	
+v7	SqStep_ResetPositionState	body-differs	v10 ld(3666:16),a / ld(3667:16),a | v7 stb_d8(3666),a / stb_d8(3667),a	v10/maincpu/display/scoop_display.s:7879	v7/maincpu/display/scoop_display.s:7615	14	31	
+v7	SqStep_SeekSecondGridRow	body-differs	v10 jrl z,SqStep_SeekSecondGridRow_Skip15 | v7 jrl z,PerfMode_ParamHandler_11_Skip16	v10/maincpu/display/scoop_display.s:13250	v7/maincpu/display/scoop_display.s:12898	11	26	
+v7	SqStep_SetupNextGridRow	body-differs	v10 ld(3668:16),a / jp VoiceSlot_TableSetup_Code_Return2 | v7 stb_d8(3668),a / jp VoiceSlot_TableSetup_Return3	v10/maincpu/display/scoop_display.s:5729	v7/maincpu/display/scoop_display.s:5649	36	54	
+v7	SqStep_SetupPrevGridRow	body-differs	v10 jrl nz,SqStep_SetupPrevGridRow_Skip8 | v7 jrl nz,VoiceSlot_TableSetup_Skip7	v10/maincpu/display/scoop_display.s:5631	v7/maincpu/display/scoop_display.s:5557	22	36	
+v7	SqStep_ShowRhythmSectionEvent	body-differs	v10 jrl nz,SqStep_ShowRhythmSectionEvent_Skip23 | v7 jrl nz,VoiceCtrl_ParamSetupBytecode_Skip17	v10/maincpu/display/scoop_display.s:6384	v7/maincpu/display/scoop_display.s:6266	23	46	
+v7	SqStep_WriteClockWrapMarkers	body-differs	v10 jrl z,SqStep_WriteClockWrapMarkers_Return | v7 jrl z,SerialPort_ModeHandler_0_Return3	v10/maincpu/display/scoop_display.s:6882	v7/maincpu/display/scoop_display.s:6697	4	25	
+v7	Str_Control	body-differs	v10 - | v7 Str_Control_Helper: / ldb_d8 h,(13959)	v10/maincpu/display/scoop_display.s:14565	v7/maincpu/display/scoop_display.s:14199	12	14	
+v7	SubCPU_SendSoundMemUpdated	body-differs	v10 lda xde,(58174:16) | v7 lda xde,(58018:16)	v10/maincpu/audio/note_voice_mapping.s:26034	v7/maincpu/audio/note_voice_mapping.s:24147	3	18	
+v7	SubCPU_ToneParamRet	body-differs	v10 ld wa,(14106:16) | v7 ldw_d16 wa,(13950)	v10/maincpu/display/scoop_display.s:12986	v7/maincpu/display/scoop_display.s:12640	10	58	
 v7	SysEx_InitiateSend_SendNoData	body-differs	v10 call SysEx_SendNothing | v7 call SysEx_ResetAndReturn_Helper5	v10/maincpu/midi/midi_dispatch_handlers.s:13939	v7/maincpu/midi/midi_dispatch_handlers.s:12649	1	3	
 v7	SysEx_InitiateSend_SendSequencer	body-differs	v10 call SysEx_SendSequencerData | v7 call SysEx_ResetAndReturn_Helper2	v10/maincpu/midi/midi_dispatch_handlers.s:13928	v7/maincpu/midi/midi_dispatch_handlers.s:12640	1	3	
 v7	SysEx_InitiateSend_SendStyleImage	body-differs	v10 call SysEx_SendStyleImageData | v7 call SysEx_ResetAndReturn_Helper	v10/maincpu/midi/midi_dispatch_handlers.s:13923	v7/maincpu/midi/midi_dispatch_handlers.s:12637	1	3	
-v7	SystemInit_Handler_Table	body-differs	v10 - | v7 SystemInit_Handler_Table_0x18: / push xhl	v10/maincpu/display/scoop_display.s:9346	v7/maincpu/display/scoop_display.s:9035	27	34	
-v7	TempoRingBuf_DispatchEvents	body-differs	v10 call VoiceState_DataBlock2_Code_Loop | v7 call DisplayMode_Handler_3_Helper17	v10/maincpu/display/scoop_display.s:4549	v7/maincpu/display/scoop_display.s:4554	67	97	
-v7	TempoRingBuf_IsEmpty	body-differs	v10 jrl z,VoiceState_DataBlock2_Code_Skip9 | v7 jrl z,.Lc_efd339	v10/maincpu/display/scoop_display.s:12083	v7/maincpu/display/scoop_display.s:11719	5	11	
-v7	TempoRingBuf_OnModulationEvent	body-differs	v10 jp TempoRingBuf_OnModulationEvent_Return5 | v7 jp SerialPort_ModeHandler_0_Return	v10/maincpu/display/scoop_display.s:6796	v7/maincpu/display/scoop_display.s:6608	5	35	
-v7	TempoRingBuf_OnNoteEvent	body-differs	v10 call TempoRingBuf_ReadNoteIntoHeldList | v7 call DisplayMode_Handler_3_Helper4	v10/maincpu/display/scoop_display.s:4653	v7/maincpu/display/scoop_display.s:4651	61	94	
-v7	TempoRingBuf_OnPitchBendEvent	body-differs	v10 ld(14113:16),a | v7 ld(13957:16),a	v10/maincpu/display/scoop_display.s:6837	v7/maincpu/display/scoop_display.s:6643	2	39	
-v7	TempoRingBuf_OnProgramChangeEvent	body-differs	v10 jp VoiceCtrl_ParamSetupBytecode_Tbl3_Return | v7 jp VoiceCtrl_ParamSetupBytecode_Return4	v10/maincpu/display/scoop_display.s:6490	v7/maincpu/display/scoop_display.s:6343	4	51	
-v7	TempoRingBuf_OnTempoEvent	body-differs	v10 jrl nz,TempoRingBuf_OnTempoEvent_Skip27 | v7 jrl nz,TempoRingBuf_OnTempoEvent_Skip	v10/maincpu/display/scoop_display.s:6630	v7/maincpu/display/scoop_display.s:6477	8	43	
+v7	SystemInit_Handler_Table	body-differs	v10 - | v7 SystemInit_Handler_Table_0x18: / push xhl	v10/maincpu/display/scoop_display.s:9346	v7/maincpu/display/scoop_display.s:9056	27	34	
+v7	TempoRingBuf_DispatchEvents	body-differs	v10 call VoiceState_DataBlock2_Code_Loop | v7 call DisplayMode_Handler_3_Helper17	v10/maincpu/display/scoop_display.s:4549	v7/maincpu/display/scoop_display.s:4558	67	97	
+v7	TempoRingBuf_IsEmpty	body-differs	v10 jrl z,VoiceState_DataBlock2_Code_Skip9 | v7 jrl z,.Lc_efd339	v10/maincpu/display/scoop_display.s:12083	v7/maincpu/display/scoop_display.s:11742	5	11	
+v7	TempoRingBuf_OnModulationEvent	body-differs	v10 jp TempoRingBuf_OnModulationEvent_Return5 | v7 jp SerialPort_ModeHandler_0_Return	v10/maincpu/display/scoop_display.s:6796	v7/maincpu/display/scoop_display.s:6623	5	35	
+v7	TempoRingBuf_OnNoteEvent	body-differs	v10 call TempoRingBuf_ReadNoteIntoHeldList | v7 call DisplayMode_Handler_3_Helper4	v10/maincpu/display/scoop_display.s:4653	v7/maincpu/display/scoop_display.s:4655	61	94	
+v7	TempoRingBuf_OnPitchBendEvent	body-differs	v10 ld(14113:16),a | v7 ld(13957:16),a	v10/maincpu/display/scoop_display.s:6837	v7/maincpu/display/scoop_display.s:6658	2	39	
+v7	TempoRingBuf_OnProgramChangeEvent	body-differs	v10 jp VoiceCtrl_ParamSetupBytecode_Tbl3_Return | v7 jp VoiceCtrl_ParamSetupBytecode_Return4	v10/maincpu/display/scoop_display.s:6490	v7/maincpu/display/scoop_display.s:6358	4	51	
+v7	TempoRingBuf_OnTempoEvent	body-differs	v10 jrl nz,TempoRingBuf_OnTempoEvent_Skip27 | v7 jrl nz,TempoRingBuf_OnTempoEvent_Skip	v10/maincpu/display/scoop_display.s:6630	v7/maincpu/display/scoop_display.s:6492	8	43	
 v7	TimeSig_RunSlots0to4	body-differs	v10 push(14602:16) / push(14603:16) | v7 push(14446:16) / push(14447:16)	v10/maincpu/sequencer/accompaniment_engine.s:27013	v7/maincpu/sequencer/accompaniment_engine.s:25682	19	20	
 v7	ToneGen_ParamTable_0x326	body-differs	v10 .long SeEasy_DrawPage | v7 .long UpdSeSel_ExtendedOps_Data	v10/maincpu/kn5000_v10_program.s:1151	v7/maincpu/kn5000_v7_program.s:1151	6	34	
 v7	UIDisp_StepMeasure	body-differs	v10 call UIDisp_StepMeasureForward | v7 call VoiceState_DataBlock2_Helper4	v10/maincpu/display/scoop_display.s:1299	v7/maincpu/display/scoop_display.s:1287	2	12	
 v7	UIState_KeyScan_Dispatch	body-differs	v10 ld a,(ACTIVE_TITLE:16) | v7 ldb_d8 a,(ACTIVE_TITLE)	v10/maincpu/ui/ui_control_panel.s:1940	v7/maincpu/ui/ui_control_panel.s:1959	5	30	
 v7	UIState_ProcessMidiEvent	body-differs	v10 orw(50580:16),4 | v7 orw(50424:16),4	v10/maincpu/audio/dsp_config_sysex.s:5635	v7/maincpu/boot/screen_group_dispatch.s:144	1	26	
 v7	VocalistPage2OKFunc_Join2	body-differs	v10 ld xhl,0:i3 / ret | v7 call ApPostEvent / ld(32420:16),1	v10/maincpu/sequencer/seq_event_playback.s:3937	v7/maincpu/sequencer/seq_event_playback.s:4521	4	5	
-v7	VoiceSlot_CheckCursorAtTrackStart	body-differs	v10 jrl z,VoiceSlot_CheckCursorAtTrackStart_Skip2 | v7 jrl z,.Lc_efd255	v10/maincpu/display/scoop_display.s:11929	v7/maincpu/display/scoop_display.s:11573	7	48	
 v7	WorkRam2_VoiceLinkB_Nodes	body-differs	v10 .byte 7,9,8,10,9,11,10,12,11,13,12,14,13,15,14,16 / .byte 15,17,16,18,17,19,18,20,19,21,20,22,21,23,22,24 | v7 .byte 7,9,8,10,9,11,10,12,11,13,12	v10/maincpu/ui/char_encoding_naka_state.s:55	v7/maincpu/ui/char_encoding_naka_state.s:58	3	5	
-v7	CPanel_SendInitSequence	bytes-differ	120 vs 120 bytes	v10/maincpu/ui/cpanel_routines.s:145	v7/maincpu/ui/cpanel_routines.s:124			
-v7	FDC_CMD_HANDLER_BASE	bytes-differ	8 vs 8 bytes	v10/maincpu/storage/fdc_routines.s:327	v7/maincpu/storage/fdc_routines.s:315			
-v7	FDC_ClearStatus_InitTimer	bytes-differ	6 vs 6 bytes	v10/maincpu/storage/fdc_routines.s:1341	v7/maincpu/storage/fdc_routines.s:1291			
 v7	GUI_DisplayStructData_0x13FF	bytes-differ	42 vs 42 bytes	v10/maincpu/kn5000_v10_program.s:896	v7/maincpu/kn5000_v7_program.s:896			
-v7	MainExeCall_OnTitleSqadvdly	bytes-differ	46 vs 46 bytes	v10/maincpu/sequencer/sequencer_engine.s:25325	v7/maincpu/sequencer/sequencer_engine.s:25307			
-v7	MainExeCall_OnTitleSqnotecng	bytes-differ	46 vs 46 bytes	v10/maincpu/sequencer/sequencer_engine.s:25310	v7/maincpu/sequencer/sequencer_engine.s:25294			
-v7	MainExeCall_OnTitleSqtrns	bytes-differ	46 vs 46 bytes	v10/maincpu/sequencer/sequencer_engine.s:25268	v7/maincpu/sequencer/sequencer_engine.s:25258			
-v7	MainTitleCtrl_ChangeTitle	bytes-differ	23 vs 23 bytes	v10/maincpu/ui/ui_control_panel.s:2785	v7/maincpu/ui/ui_control_panel.s:2815			
-v7	MidiPart_DataBlock	bytes-differ	46 vs 46 bytes	v10/maincpu/ui/drawbar_panel_ui.s:4489	v7/maincpu/ui/drawbar_panel_ui.s:4458			
-v7	SeqAccomp_StartHelper	bytes-differ	20 vs 20 bytes	v10/maincpu/sequencer/sequencer_engine.s:23424	v7/maincpu/sequencer/sequencer_engine.s:23445			
-v7	SqSngName_ApplyNameAndExit	bytes-differ	80 vs 80 bytes	v10/maincpu/ui/setwall_routines.s:2002	v7/maincpu/ui/setwall_routines.s:2043			
-v7	SqStep_SeekForwardByDistance	bytes-differ	102 vs 102 bytes	v10/maincpu/display/scoop_display.s:4821	v7/maincpu/display/scoop_display.s:4800			
-v7	SeTonHyb1_Records	dump-of-differing-bytes	; |..`....|	v10/maincpu/audio/sound_editor_ui.s:13608	v7/maincpu/audio/sound_editor_ui.s:13620			
+v7	MidiPart_DataBlock	bytes-differ	46 vs 46 bytes	v10/maincpu/ui/drawbar_panel_ui.s:4489	v7/maincpu/ui/drawbar_panel_ui.s:4466			
+v7	SqSngName_ApplyNameAndExit	bytes-differ	80 vs 80 bytes	v10/maincpu/ui/setwall_routines.s:2002	v7/maincpu/ui/setwall_routines.s:2047			
+v7	SeTonHyb1_Records	dump-of-differing-bytes	; |..`....|	v10/maincpu/audio/sound_editor_ui.s:13608	v7/maincpu/audio/sound_editor_ui.s:13699			
 v7	AccVoice_BankBaseTable	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/seq_audio_mode.s:693	v7/maincpu/sequencer/seq_audio_mode.s:662			
 v7	AudioInit_SlotOrderMap	existing-header-differs	; 20 x u8 slot map (0,2,1,7,8,9,10,11,4,5,6,3,15,0x15,0x15,0xFF,0x15,12,13,14).	v10/maincpu/ui_widgets/widget_dispatch.s:7313	v7/maincpu/ui_widgets/widget_dispatch.s:7359			
 v7	Bit16Mask_Table	existing-header-differs	; 16 x u16 single-bit masks 1<<i (i = 0..15).  Read with `lda xix,(<this>);	v10/maincpu/ui_widgets/widget_dispatch.s:7171	v7/maincpu/ui_widgets/widget_dispatch.s:7217			
-v7	ButtonState_Paint_EventConfirm_Str_OFF	existing-header-differs	; [nakarest] naka_disk_warning+0x163a  +0x163a..+0x164e (0xeaa2e6, 20 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:648	v7/maincpu/ui_widgets/disk_warning_strings.s:638			
+v7	ButtonState_Paint_EventConfirm_Str_OFF	existing-header-differs	; [nakarest] naka_disk_warning+0x163a  +0x163a..+0x164e (0xeaa2e6, 20 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:648	v7/maincpu/ui_widgets/disk_warning_strings.s:640			
 v7	CDlikeSwTtl_ReturnZeroStub	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/demo/demo_seq_bridge.s:447	v7/maincpu/demo/demo_seq_bridge.s:441			
-v7	CPANEL_STATE_MACHINE_TABLE	existing-header-differs	; 11 routine pointers, one per state of the control-panel serial link.  INTTX1_HANDLER and	v10/maincpu/ui/cpanel_routines.s:713	v7/maincpu/ui/cpanel_routines.s:629			
+v7	CPANEL_STATE_MACHINE_TABLE	existing-header-differs	; 11 routine pointers, one per state of the control-panel serial link.  INTTX1_HANDLER and	v10/maincpu/ui/cpanel_routines.s:713	v7/maincpu/ui/cpanel_routines.s:631			
 v7	ChannelData_SwitchOffsets	existing-header-differs	; 9 x s16 switch offsets.  MIDI_WriteChannelData_Block (0xFEB74E): `ld_rrw wa,xix,wa;	v10/maincpu/ui_widgets/widget_dispatch.s:8658	v7/maincpu/ui_widgets/widget_dispatch.s:8688			
 v7	CharMap_InitFuncTable	existing-header-differs	; Character mapping table - preamble/header (sparse)	v10/maincpu/ui_widgets/widget_dispatch.s:8771	v7/maincpu/ui_widgets/widget_dispatch.s:8782			
-v7	CmpSingleLoadDst_AreaListProcs	existing-header-differs	; [nakarest] naka_technichord_strings+0x1aaf0  +0x1aaf0..+0x1ab00 (0xea0a3e, 16 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5884	v7/maincpu/ui_widgets/technichord_string_data.s:5573			
+v7	CmpSingleLoadDst_AreaListProcs	existing-header-differs	; [nakarest] naka_technichord_strings+0x1aaf0  +0x1aaf0..+0x1ab00 (0xea0a3e, 16 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5884	v7/maincpu/ui_widgets/technichord_string_data.s:5574			
 v7	CompIface_PortByte_F4	existing-header-differs	; 0xF4 + pad: CompIface_SendActiveSensing_PC2 (0xFDB257) passes it (`ld xde,<this>`)	v10/maincpu/ui_widgets/widget_dispatch.s:3810	v7/maincpu/ui_widgets/widget_dispatch.s:3856			
-v7	DMA_ChannelSelect_Table	existing-header-differs	; Handler dispatch table, 16 B.  Read by PerfMode_EventTable_0_Target2 (0xEF8DD1): `ld xix, DMA_Chan	v10/maincpu/display/scoop_display.s:5300	v7/maincpu/display/scoop_display.s:5231			
-v7	DbMemo_SendString	existing-header-differs	; SendEventWithParam -- Sends event 0x1c00025 with xwa as parameter via 0xfa9660	v10/maincpu/factory_test/test_init.s:398	v7/maincpu/factory_test/test_init.s:526			
+v7	DMA_ChannelSelect_Table	existing-header-differs	; Handler dispatch table, 16 B.  Read by PerfMode_EventTable_0_Target2 (0xEF8DD1): `ld xix, DMA_Chan	v10/maincpu/display/scoop_display.s:5300	v7/maincpu/display/scoop_display.s:5239			
+v7	DbMemo_SendString	existing-header-differs	; SendEventWithParam -- Sends event 0x1c00025 with xwa as parameter via 0xfa9660	v10/maincpu/factory_test/test_init.s:398	v7/maincpu/factory_test/test_init.s:532			
+v7	DemoMenu_BuildItemWorkspace	existing-header-differs	; =============================================================================	v10/maincpu/ui/drawbar_panel_ui.s:17738	v7/maincpu/ui/drawbar_panel_ui.s:18154			
 v7	DemoSong_EntryCol	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a15e  +0x1a15e..+0x1a18c (0xea00ac, 46 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4642	v7/maincpu/ui_widgets/technichord_string_data.s:4476			
 v7	DirmdTitle_EmulatorMethods	existing-header-differs	; [nakarest] naka_disk_warning+0xeb4  +0xeb4..+0xf12 (0xea9b60, 94 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:303	v7/maincpu/ui_widgets/disk_warning_strings.s:306			
 v7	DiskTypeCode_2DD1	existing-header-differs	; [nakarest] DiskTypeCode_2DD1  +0x1a636..+0x1a63a (0xea0584, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5281	v7/maincpu/ui_widgets/technichord_string_data.s:5081			
@@ -277,13 +229,13 @@ v7	DiskTypeCode_Doc1	existing-header-differs	; [nakarest] DiskTypeCode_Doc1  +0x
 v7	DiskTypeCode_Doc2	existing-header-differs	; [nakarest] DiskTypeCode_Doc2  +0x1a62e..+0x1a632 (0xea057c, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5269	v7/maincpu/ui_widgets/technichord_string_data.s:5073			
 v7	DiskTypeCode_Pd	existing-header-differs	; [nakarest] DiskTypeCode_Pd  +0x1a632..+0x1a636 (0xea0580, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5275	v7/maincpu/ui_widgets/technichord_string_data.s:5077			
 v7	DisplayMode_Dispatch_Tbl	existing-header-differs	; 4 handlers indexed by (0x0D65) & 3, the display mode; read by DisplayMode_Dispatch	v10/maincpu/display/scoop_display.s:946	v7/maincpu/display/scoop_display.s:937			
-v7	DisplayStr_BytecodeBlock_C_Text	existing-header-differs	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld XIY,DisplayStr_BytecodeBlock_C	v10/maincpu/display/scoop_display.s:14785	v7/maincpu/display/scoop_display.s:14353			
-v7	DisplayStr_StyleSectionNames	existing-header-differs	; Byte data, 105 B.  Read by DisplayStr_BytecodeBlock_B (0xEFECE8): `ld XIY,DisplayStr_StyleSectionN	v10/maincpu/display/scoop_display.s:14895	v7/maincpu/display/scoop_display.s:14457			
-v7	Display_ModePopupDispatch_Tbl	existing-header-differs	; Handler dispatch table, 16 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xix, Display_ModePopupD	v10/maincpu/display/scoop_display.s:11742	v7/maincpu/display/scoop_display.s:11394			
-v7	Display_ModePopupIds	existing-header-differs	; Byte data, 4 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xhl, Display_ModePopupIds`	v10/maincpu/display/scoop_display.s:11749	v7/maincpu/display/scoop_display.s:11401			
+v7	DisplayStr_BytecodeBlock_C_Text	existing-header-differs	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld XIY,DisplayStr_BytecodeBlock_C	v10/maincpu/display/scoop_display.s:14785	v7/maincpu/display/scoop_display.s:14393			
+v7	DisplayStr_StyleSectionNames	existing-header-differs	; Byte data, 105 B.  Read by DisplayStr_BytecodeBlock_B (0xEFECE8): `ld XIY,DisplayStr_StyleSectionN	v10/maincpu/display/scoop_display.s:14895	v7/maincpu/display/scoop_display.s:14497			
+v7	Display_ModePopupDispatch_Tbl	existing-header-differs	; Handler dispatch table, 16 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xix, Display_ModePopupD	v10/maincpu/display/scoop_display.s:11742	v7/maincpu/display/scoop_display.s:11417			
+v7	Display_ModePopupIds	existing-header-differs	; Byte data, 4 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xhl, Display_ModePopupIds`	v10/maincpu/display/scoop_display.s:11749	v7/maincpu/display/scoop_display.s:11424			
 v7	DrawEditSw_SelectVariantC_Str_N81	existing-header-differs	; [nakarest] naka_disk_warning+0x14ce  +0x14ce..+0x159c (0xeaa17a, 206 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:550	v7/maincpu/ui_widgets/disk_warning_strings.s:541			
-v7	DrawFunc_Init_Entry_Str_Fmt1d	existing-header-differs	; [nakarest] naka_disk_warning+0x24b4  +0x24b4..+0x24b8 (0xeab160, 4 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:1441	v7/maincpu/ui_widgets/disk_warning_strings.s:1427			
-v7	DrawFunc_Init_FontTable0_Str_Fmt3d	existing-header-differs	; [nakarest] naka_disk_warning+0x2488  +0x2488..+0x24ac (0xeab134, 36 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:1406	v7/maincpu/ui_widgets/disk_warning_strings.s:1392			
+v7	DrawFunc_Init_Entry_Str_Fmt1d	existing-header-differs	; [nakarest] naka_disk_warning+0x24b4  +0x24b4..+0x24b8 (0xeab160, 4 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:1441	v7/maincpu/ui_widgets/disk_warning_strings.s:1429			
+v7	DrawFunc_Init_FontTable0_Str_Fmt3d	existing-header-differs	; [nakarest] naka_disk_warning+0x2488  +0x2488..+0x24ac (0xeab134, 36 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:1406	v7/maincpu/ui_widgets/disk_warning_strings.s:1394			
 v7	DspFxSettingsPtrTable	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/ui_widgets/widget_dispatch.s:4315	v7/maincpu/ui_widgets/widget_dispatch.s:4361			
 v7	ENCODER_HANDLER_TABLE	existing-header-differs	; [nakarest] ENCODER_HANDLER_TABLE  +0x38f0..+0x3970 (0xeda0bc, 128 B)	v10/maincpu/ui_widgets/extension_device_screens.s:1133	v7/maincpu/ui_widgets/extension_device_screens.s:1126			
 v7	ErrStr_GetInstanceID	existing-header-differs	; [nakarest] ErrStr_GetInstanceID  +0x19e8e..+0x19ea6 (0xe9fddc, 24 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4374	v7/maincpu/ui_widgets/technichord_string_data.s:4246			
@@ -300,7 +252,8 @@ v7	FileTypeName_Song	existing-header-differs	; [nakarest] FileTypeName_Song  +0x
 v7	FileTypeName_Src	existing-header-differs	; [nakarest] FileTypeName_Src  +0x19ebe..+0x19ec2 (0xe9fe0c, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4394	v7/maincpu/ui_widgets/technichord_string_data.s:4262			
 v7	GUI_DisplayStructData_0x1342	existing-header-differs	; data read by SePitLfo1TitleFunc_DispatchSwitch+0x19C (0xF09CCC)	v10/maincpu/kn5000_v10_program.s:848	v7/maincpu/kn5000_v7_program.s:848			
 v7	GUI_DisplayStructData_0x1362	existing-header-differs	; data read by SePitLfo1TitleFunc_DispatchSwitch+0x1D4 (0xF09D04)	v10/maincpu/kn5000_v10_program.s:851	v7/maincpu/kn5000_v7_program.s:851			
-v7	GroupBoxProc	existing-header-differs	; =============================================================================	v10/maincpu/ui/ui_control_panel.s:3406	v7/maincpu/ui/ui_control_panel.s:3427			
+v7	GroupBoxProc	existing-header-differs	; =============================================================================	v10/maincpu/ui/ui_control_panel.s:3406	v7/maincpu/ui/ui_control_panel.s:3443			
+v7	Hama_FunctionTable_109	existing-header-differs	; table of 85 code pointers, ending in 0 (object 0x409 holds their names); as v10's Hama_FunctionTab	v10/maincpu/factory_test/test_data.s:71	v7/maincpu/factory_test/test_data.s:63			
 v7	Harmony_Offsets2	existing-header-differs	; 28 rows x 12 columns x 2 bytes = 672 bytes.  SoundFX_Handler_8 + 227 (0xFE8B55): row = RAM byte	v10/maincpu/ui_widgets/widget_dispatch.s:7515	v7/maincpu/ui_widgets/widget_dispatch.s:7553			
 v7	HdaeRomAlt_SwitchOffsets	existing-header-differs	; 6 x s16 switch offsets.  HdaeRom_AltHandler (0xFEFC68): `ld_rrw ..,xix,..; lda xix,(0xFF0470);	v10/maincpu/ui_widgets/widget_dispatch.s:9528	v7/maincpu/ui_widgets/widget_dispatch.s:9531			
 v7	HdaeRomData_SwitchOffsets	existing-header-differs	; 6 x s16 switch offsets.  HdaeRom_DataHandler (0xFEFA74): `ld_rrw ..,xix,..; lda xix,(0xFF028F);	v10/maincpu/ui_widgets/widget_dispatch.s:9519	v7/maincpu/ui_widgets/widget_dispatch.s:9522			
@@ -341,7 +294,7 @@ v7	MidiPkt_ControlTemplate	existing-header-differs	; 4-byte template: MidiPkt_Di
 v7	MidiPkt_MsgTemplate_3354	existing-header-differs	; 4-byte template: MidiPkt_CheckGateCondition_Second + 9 (0xFD9FD2) copies it into its frame (`ld xi	v10/maincpu/ui_widgets/widget_dispatch.s:1774	v7/maincpu/ui_widgets/widget_dispatch.s:1820			
 v7	MidiPkt_MsgTemplate_3358	existing-header-differs	; 6-byte template: MidiPkt_DispatchData_Chan6_Join + 6 (0xFDA058) copies it into its frame (`ld xiy,	v10/maincpu/ui_widgets/widget_dispatch.s:1778	v7/maincpu/ui_widgets/widget_dispatch.s:1824			
 v7	MidiPkt_MsgTemplate_335E	existing-header-differs	; 6-byte template: MidiPkt_SysExProcessor_Data_Skip3 + 18 (0xFDA137) copies it into its frame (`ld x	v10/maincpu/ui_widgets/widget_dispatch.s:1782	v7/maincpu/ui_widgets/widget_dispatch.s:1828			
-v7	MidiSeqBuf_ProcessorTable	existing-header-differs	; MidiSeqBuf event-type handler table: 8 x .long code pointer, starting one	v10/maincpu/audio/audio_control_engine.s:8774	v7/maincpu/audio/audio_control_engine.s:8321			
+v7	MidiSeqBuf_ProcessorTable	existing-header-differs	; MidiSeqBuf event-type handler table: 8 x .long code pointer, starting one	v10/maincpu/audio/audio_control_engine.s:8774	v7/maincpu/audio/audio_control_engine.s:8334			
 v7	MidiSerial_StatusTable	existing-header-differs	; (pre-port v7 note about the bytes at 0xFCF233:)	v10/maincpu/midi/midi_dispatch_handlers.s:56	v7/maincpu/midi/midi_serial_routines.s:989			
 v7	MidiSysMsg_SwitchOffsets	existing-header-differs	; 16 x s16 switch offsets.  MidiSysMsg_Handler (0xFECE6C): `ld_rrw wa,xix,wa;	v10/maincpu/ui_widgets/widget_dispatch.s:8700	v7/maincpu/ui_widgets/widget_dispatch.s:8730			
 v7	MidiTx_PartTargets_ProgramBank	existing-header-differs	; Supersedes 44 v10_data_as_code_census.py notes inside this span, all carved	v10/maincpu/midi/midi_dispatch_handlers.s:2813	v7/maincpu/midi/midi_dispatch_handlers.s:2334			
@@ -366,7 +319,7 @@ v7	NakaInst_KEY_G_E9DDCE	existing-header-differs	; [nakarest] NakaInst_KEY_G_E9D
 v7	NakaInst_MEMORY_A_ECFDF4	existing-header-differs	; [nakarest] NakaInst_MEMORY_A_ECFDF4  +0x18c36..+0x18d22 (0xecfdf4, 236 B)	v10/maincpu/ui_widgets/style_bitmaps.s:3649	v7/maincpu/ui_widgets/style_bitmaps.s:3643			
 v7	NakaInst_MEMORY_B_ECFDEA	existing-header-differs	; [nakarest] NakaInst_MEMORY_B_ECFDEA  +0x18c2c..+0x18c36 (0xecfdea, 10 B)	v10/maincpu/ui_widgets/style_bitmaps.s:3642	v7/maincpu/ui_widgets/style_bitmaps.s:3637			
 v7	NakaInst_MEMORY_C_ECFDE0	existing-header-differs	; [nakarest] NakaInst_MEMORY_C_ECFDE0  +0x18c22..+0x18c2c (0xecfde0, 10 B)	v10/maincpu/ui_widgets/style_bitmaps.s:3635	v7/maincpu/ui_widgets/style_bitmaps.s:3631			
-v7	NakaInst_OK	existing-header-differs	; [nakarest] NakaInst_OK  +0x164e..+0x166a (0xeaa2fa, 28 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:673	v7/maincpu/ui_widgets/disk_warning_strings.s:661			
+v7	NakaInst_OK	existing-header-differs	; [nakarest] NakaInst_OK  +0x164e..+0x166a (0xeaa2fa, 28 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:673	v7/maincpu/ui_widgets/disk_warning_strings.s:663			
 v7	NakaInst_Spanish	existing-header-differs	; [nakarest] NakaInst_Spanish  +0x17924..+0x1792c (0xe9d872, 8 B)	v10/maincpu/ui_widgets/technichord_string_data.s:2382	v7/maincpu/ui_widgets/technichord_string_data.s:2376			
 v7	NoteEdit_MidiNoteNameTable	existing-header-differs	; [nakarest] naka_effects_seq+0x89a2  +0x89a2..+0x8e22 (0xe30946, 1152 B)	v10/maincpu/ui_widgets/effects_sequencer_screens.s:2586	v7/maincpu/ui_widgets/effects_sequencer_screens.s:2582			
 v7	NoteMap_LinkArray128	existing-header-differs	; NoteMap_LinkArray128 -- 33 x struct {prev, next}: nodes 0..32 of a 129-node circular list (128 slo	v10/maincpu/ui_widgets/sequencer_channel_containers.s:522	v7/maincpu/ui_widgets/sequencer_channel_containers.s:525			
@@ -381,12 +334,12 @@ v7	ParamSx_SwitchE	existing-header-differs	; 7 x s16 switch offsets.  Param_Sign
 v7	ParamSx_SwitchF	existing-header-differs	; 10 x s16 offsets.  Param_SignExtendReturn_Skip5 (0xFEE63C): `add xhl,<this>;	v10/maincpu/ui_widgets/widget_dispatch.s:9415	v7/maincpu/ui_widgets/widget_dispatch.s:9421			
 v7	PartRouting_ByteTable	existing-header-differs	; 8 x u8 (0,1,2,3,0,0xFD,0xFE,0xFF).  UIStateEvt_ParamEdit_Data_Skip16 + 7 (0xFDDD19) reads	v10/maincpu/ui_widgets/widget_dispatch.s:7263	v7/maincpu/ui_widgets/widget_dispatch.s:7309			
 v7	PmemOutRGridCheck_RamRequestInit	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/ui_widgets/naka_widget_tables_2.s:3133	v7/maincpu/ui_widgets/naka_widget_tables_2.s:3125			
-v7	PortConfig_DataTable_B	existing-header-differs	; Byte data, 20 B.  Read by PortConfig_Handler_0 (0xEFA53B): `ld XHL,PortConfig_DataTable_B`	v10/maincpu/display/scoop_display.s:7742	v7/maincpu/display/scoop_display.s:7488			
+v7	PortConfig_DataTable_B	existing-header-differs	; Byte data, 20 B.  Read by PortConfig_Handler_0 (0xEFA53B): `ld XHL,PortConfig_DataTable_B`	v10/maincpu/display/scoop_display.s:7742	v7/maincpu/display/scoop_display.s:7503			
 v7	ProcessRecord_MatchLoop1_Str_Blank5	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a56a  +0x1a56a..+0x1a574 (0xea04b8, 10 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5121	v7/maincpu/ui_widgets/technichord_string_data.s:4931			
 v7	ProcessRecord_MatchLoop3_Str_MTrk	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a564  +0x1a564..+0x1a56a (0xea04b2, 6 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5112	v7/maincpu/ui_widgets/technichord_string_data.s:4924			
 v7	RenderSaveFilter_Unavail_Str_NO	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a7e2  +0x1a7e2..+0x1a812 (0xea0730, 48 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5522	v7/maincpu/ui_widgets/technichord_string_data.s:5287			
 v7	Resource_RegionPad	existing-header-differs	; [nakarest] Resource_RegionPad  +0x1a2fe..+0x1a316 (0xea024c, 24 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4873	v7/maincpu/ui_widgets/technichord_string_data.s:4705			
-v7	Rhythm_EmptyPattern	existing-header-differs	; Rhythm_EmptyPattern -- an empty pattern stream (0x81, then 0xFF x4): the default every rhythm slot	v10/maincpu/sequencer/accompaniment_engine.s:29944	v7/maincpu/sequencer/accompaniment_engine.s:28564			
+v7	Rhythm_EmptyPattern	existing-header-differs	; Rhythm_EmptyPattern -- an empty pattern stream (0x81, then 0xFF x4): the default every rhythm slot	v10/maincpu/sequencer/accompaniment_engine.s:29944	v7/maincpu/sequencer/accompaniment_engine.s:28580			
 v7	Rhythm_InstrMapTable_D4	existing-header-differs	; +0x31: bit 2 of 0x3258 set; always used by Rhythm_TranspMod_BaseApply	v10/maincpu/sequencer/rhythm_routines.s:530	v7/maincpu/sequencer/rhythm_routines.s:518			
 v7	Rhythm_InstrMapTable_Default	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/rhythm_routines.s:520	v7/maincpu/sequencer/rhythm_routines.s:511			
 v7	Rhythm_PitchShiftTable_Default	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/rhythm_routines.s:694	v7/maincpu/sequencer/rhythm_routines.s:673			
@@ -407,53 +360,54 @@ v7	Scale_Arabic2_Plus8	existing-header-differs	; [nakarest] Scale_Arabic2_Plus8 
 v7	Scale_Arabic2_Plus9	existing-header-differs	; [nakarest] Scale_Arabic2_Plus9  +0x17e00..+0x17e04 (0xe9dd4e, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:2827	v7/maincpu/ui_widgets/technichord_string_data.s:2809			
 v7	Scale_Arabic2_Zero	existing-header-differs	; [nakarest] Scale_Arabic2_Zero  +0x17e24..+0x17e28 (0xe9dd72, 4 B)	v10/maincpu/ui_widgets/technichord_string_data.s:2881	v7/maincpu/ui_widgets/technichord_string_data.s:2845			
 v7	ScanDir_CopyEntryLoop_Str_BMP	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a5fe  +0x1a5fe..+0x1a60a (0xea054c, 12 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5246	v7/maincpu/ui_widgets/technichord_string_data.s:5054			
-v7	SeAmpAmp1_DrawField_Records2	existing-header-differs	; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08	v10/maincpu/audio/sound_editor_ui.s:13880	v7/maincpu/audio/sound_editor_ui.s:14001			
-v7	SeAmpAmp1_DrawStaticScreen_Records	existing-header-differs	; static record list (26 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x137D	v10/maincpu/audio/sound_editor_ui.s:13196	v7/maincpu/audio/sound_editor_ui.s:13077			
+v7	SeAmpAmp1_DrawField_Records2	existing-header-differs	; box table: {x1, y1, x2, y2} u16 per entry, indexed by a bound op 03/04/08	v10/maincpu/audio/sound_editor_ui.s:13880	v7/maincpu/audio/sound_editor_ui.s:14080			
+v7	SeAmpAmp1_DrawStaticScreen_Records	existing-header-differs	; static record list (26 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x137D	v10/maincpu/audio/sound_editor_ui.s:13196	v7/maincpu/audio/sound_editor_ui.s:13156			
 v7	SeAmpEnv1_DrawStaticScreen_Records2	existing-header-differs	; bound record list (6 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF1642	v10/maincpu/storage/flash_floppy_handlers.s:771	v7/maincpu/storage/flash_floppy_handlers.s:814			
 v7	SeAmpEnv1_Records2	existing-header-differs	; static record list (23 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; e	v10/maincpu/storage/flash_floppy_handlers.s:697	v7/maincpu/storage/flash_floppy_handlers.s:737			
-v7	SeCtr2_DrawField_SetupPath_Records	existing-header-differs	; static record list (3 records), read by GraphicsRender_ProcessEntries; end SeCtr2_DrawField_SetupP	v10/maincpu/audio/sound_editor_ui.s:15171	v7/maincpu/audio/sound_editor_ui.s:15454			
-v7	SeCtr2_PageFrame	existing-header-differs	; static record list (28 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x3CE6, 	v10/maincpu/audio/sound_editor_ui.s:15030	v7/maincpu/audio/sound_editor_ui.s:15279			
-v7	SeCtr2_Part1And2Switches	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeScreenData_0x3E55	v10/maincpu/audio/sound_editor_ui.s:15079	v7/maincpu/audio/sound_editor_ui.s:15361			
-v7	SeCtr2_Records	existing-header-differs	; bound record list (10 records), read by GraphicsRender_Start; ends SeCtr2_FunctionNameFields, SeSc	v10/maincpu/audio/sound_editor_ui.s:15066	v7/maincpu/audio/sound_editor_ui.s:15336			
-v7	SeCtr3_Records	existing-header-differs	; static record list (16 records), read by GraphicsRender_ProcessEntries; end SeCtr2_Records	v10/maincpu/audio/sound_editor_ui.s:15055	v7/maincpu/audio/sound_editor_ui.s:15317			
-v7	SeCtr3_Records2	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeValText_Long_Hold	v10/maincpu/audio/sound_editor_ui.s:15188	v7/maincpu/audio/sound_editor_ui.s:15471			
-v7	SeCtr_TitleIcon	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeCtr2_PageFrame	v10/maincpu/audio/sound_editor_ui.s:15026	v7/maincpu/audio/sound_editor_ui.s:15275			
+v7	SeCtr2_DrawField_SetupPath_Records	existing-header-differs	; static record list (3 records), read by GraphicsRender_ProcessEntries; end SeCtr2_DrawField_SetupP	v10/maincpu/audio/sound_editor_ui.s:15171	v7/maincpu/audio/sound_editor_ui.s:15533			
+v7	SeCtr2_PageFrame	existing-header-differs	; static record list (28 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x3CE6, 	v10/maincpu/audio/sound_editor_ui.s:15030	v7/maincpu/audio/sound_editor_ui.s:15358			
+v7	SeCtr2_Part1And2Switches	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeScreenData_0x3E55	v10/maincpu/audio/sound_editor_ui.s:15079	v7/maincpu/audio/sound_editor_ui.s:15440			
+v7	SeCtr2_Records	existing-header-differs	; bound record list (10 records), read by GraphicsRender_Start; ends SeCtr2_FunctionNameFields, SeSc	v10/maincpu/audio/sound_editor_ui.s:15066	v7/maincpu/audio/sound_editor_ui.s:15415			
+v7	SeCtr3_Records	existing-header-differs	; static record list (16 records), read by GraphicsRender_ProcessEntries; end SeCtr2_Records	v10/maincpu/audio/sound_editor_ui.s:15055	v7/maincpu/audio/sound_editor_ui.s:15396			
+v7	SeCtr3_Records2	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeValText_Long_Hold	v10/maincpu/audio/sound_editor_ui.s:15188	v7/maincpu/audio/sound_editor_ui.s:15550			
+v7	SeCtr_TitleIcon	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeCtr2_PageFrame	v10/maincpu/audio/sound_editor_ui.s:15026	v7/maincpu/audio/sound_editor_ui.s:15354			
 v7	SeDrumKit_TouchCurvePageRecords	existing-header-differs	; static record list (17 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; e	v10/maincpu/storage/flash_floppy_handlers.s:682	v7/maincpu/storage/flash_floppy_handlers.s:712			
-v7	SeEnv1_DrawEnvelopeLayout_Records3	existing-header-differs	; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CopyBloc	v10/maincpu/audio/sound_editor_ui.s:13406	v7/maincpu/audio/sound_editor_ui.s:13373			
-v7	SeEnvCurve_BitmapTable	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/audio/sound_editor_ui.s:8735	v7/maincpu/audio/sound_editor_ui.s:8662			
-v7	SeFilEq_RangeGainRecords	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeFilHpq1_SeFilLpq1_FieldRecordPt	v10/maincpu/audio/sound_editor_ui.s:13679	v7/maincpu/audio/sound_editor_ui.s:13764			
-v7	SeFilH241_DrawStaticScreen	existing-header-differs	; SeFilH241_DrawStaticScreen: Static-screen routine of sound-editor title 0x33 TT_SEFILH241 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9643	v7/maincpu/audio/sound_editor_ui.s:9502			
-v7	SeFilHpq1_DrawStaticScreen	existing-header-differs	; SeFilHpq1_DrawStaticScreen: Static-screen routine of sound-editor title 0x31 TT_SEFILHPQ1 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9595	v7/maincpu/audio/sound_editor_ui.s:9454			
-v7	SeFilLpq1_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CompareBl	v10/maincpu/audio/sound_editor_ui.s:13352	v7/maincpu/audio/sound_editor_ui.s:13303			
-v7	SeFil_FilterTypeField_Record	existing-header-differs	; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)	v10/maincpu/audio/sound_editor_ui.s:13655	v7/maincpu/audio/sound_editor_ui.s:13730			
-v7	SeMenuTitle_DrawStaticScreen	existing-header-differs	; SeMenuTitle_DrawStaticScreen: Static-screen routine of sound-editor title 0x20 TT_SEMENU (entry 0 	v10/maincpu/audio/sound_editor_ui.s:8776	v7/maincpu/audio/sound_editor_ui.s:8703			
+v7	SeEnv1_DrawEnvelopeLayout_Records3	existing-header-differs	; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CopyBloc	v10/maincpu/audio/sound_editor_ui.s:13406	v7/maincpu/audio/sound_editor_ui.s:13452			
+v7	SeEnvCurve_BitmapTable	existing-header-differs	; -----------------------------------------------------------------------------	v10/maincpu/audio/sound_editor_ui.s:8735	v7/maincpu/audio/sound_editor_ui.s:8701			
+v7	SeFilBcf1_DrawStaticScreen	existing-header-differs	; SeFilBcf1_DrawStaticScreen: Static-screen routine of sound-editor title 0x35 TT_SEFILBCF1 (entry 2	v10/maincpu/audio/sound_editor_ui.s:9688	v7/maincpu/audio/sound_editor_ui.s:9616			
+v7	SeFilEq_RangeGainRecords	existing-header-differs	; bound record list (2 records), read by GraphicsRender_Start; end SeFilHpq1_SeFilLpq1_FieldRecordPt	v10/maincpu/audio/sound_editor_ui.s:13679	v7/maincpu/audio/sound_editor_ui.s:13843			
+v7	SeFilH241_DrawStaticScreen	existing-header-differs	; SeFilH241_DrawStaticScreen: Static-screen routine of sound-editor title 0x33 TT_SEFILH241 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9643	v7/maincpu/audio/sound_editor_ui.s:9575			
+v7	SeFilHpq1_DrawStaticScreen	existing-header-differs	; SeFilHpq1_DrawStaticScreen: Static-screen routine of sound-editor title 0x31 TT_SEFILHPQ1 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9595	v7/maincpu/audio/sound_editor_ui.s:9527			
+v7	SeFilLpq1_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CompareBl	v10/maincpu/audio/sound_editor_ui.s:13352	v7/maincpu/audio/sound_editor_ui.s:13382			
+v7	SeFil_FilterTypeField_Record	existing-header-differs	; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)	v10/maincpu/audio/sound_editor_ui.s:13655	v7/maincpu/audio/sound_editor_ui.s:13809			
+v7	SeMenuTitle_DrawStaticScreen	existing-header-differs	; SeMenuTitle_DrawStaticScreen: Static-screen routine of sound-editor title 0x20 TT_SEMENU (entry 0 	v10/maincpu/audio/sound_editor_ui.s:8776	v7/maincpu/audio/sound_editor_ui.s:8742			
 v7	SeMenuTitle_Records	existing-header-differs	; static record list (83 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; e	v10/maincpu/storage/flash_floppy_handlers.s:340	v7/maincpu/storage/flash_floppy_handlers.s:344			
 v7	SeMenuTitle_Records2	existing-header-differs	; static record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; en	v10/maincpu/storage/flash_floppy_handlers.s:527	v7/maincpu/storage/flash_floppy_handlers.s:531			
-v7	SeMenuTitle_StaticRecords	existing-header-differs	; static record list (35 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrawOriginalEdi	v10/maincpu/audio/sound_editor_ui.s:12448	v7/maincpu/audio/sound_editor_ui.s:12259			
+v7	SeMenuTitle_StaticRecords	existing-header-differs	; static record list (35 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrawOriginalEdi	v10/maincpu/audio/sound_editor_ui.s:12448	v7/maincpu/audio/sound_editor_ui.s:12338			
 v7	SeMenu_DrawEnvKeyOffFields_Records3	existing-header-differs	; static record list (2 records {u8 op, u8 len, payload}), read by GraphicsRender_ProcessEntries; en	v10/maincpu/storage/flash_floppy_handlers.s:818	v7/maincpu/storage/flash_floppy_handlers.s:861			
-v7	SeMenu_EqEdit_SetupHelper1_Records	existing-header-differs	; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeCtr_TitleIcon	v10/maincpu/audio/sound_editor_ui.s:15023	v7/maincpu/audio/sound_editor_ui.s:15268			
-v7	SeMenu_PresetBrowser_Navigate_Records	existing-header-differs	; static record list (17 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x0E0E	v10/maincpu/audio/sound_editor_ui.s:13044	v7/maincpu/audio/sound_editor_ui.s:12871			
-v7	SeMenu_PresetManager_Save_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenuTitle_StaticRecord	v10/maincpu/audio/sound_editor_ui.s:12443	v7/maincpu/audio/sound_editor_ui.s:12255			
-v7	SePitLfo1_DrawStaticScreen	existing-header-differs	; SePitLfo1_DrawStaticScreen: Static-screen routine of sound-editor title 0x2A TT_SEPITLFO1 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9179	v7/maincpu/audio/sound_editor_ui.s:9073			
-v7	SePitPit1_StaticRecords	existing-header-differs	; static record list (58 records), read by GraphicsRender_ProcessEntries; end SePitEnv1_Records	v10/maincpu/audio/sound_editor_ui.s:13049	v7/maincpu/audio/sound_editor_ui.s:12904			
-v7	SeScreenData_0x113B	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTouchCurve_AreaFill4Pa	v10/maincpu/audio/sound_editor_ui.s:13112	v7/maincpu/audio/sound_editor_ui.s:12995			
-v7	SeScreenData_0x137D	existing-header-differs	; static record list (24 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x1431, 	v10/maincpu/audio/sound_editor_ui.s:13215	v7/maincpu/audio/sound_editor_ui.s:13106			
-v7	SeScreenData_0x1F80	existing-header-differs	; bound record list (3 records), read by GraphicsRender_Start; end SeTonHyb1_Row2Records	v10/maincpu/audio/sound_editor_ui.s:13614	v7/maincpu/audio/sound_editor_ui.s:13624			
-v7	SeScreenData_0x34E9	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonRan1_KeyLayerFrame	v10/maincpu/audio/sound_editor_ui.s:14711	v7/maincpu/audio/sound_editor_ui.s:14850			
+v7	SeMenu_EqEdit_SetupHelper1_Records	existing-header-differs	; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeCtr_TitleIcon	v10/maincpu/audio/sound_editor_ui.s:15023	v7/maincpu/audio/sound_editor_ui.s:15347			
+v7	SeMenu_PresetBrowser_Navigate_Records	existing-header-differs	; static record list (17 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x0E0E	v10/maincpu/audio/sound_editor_ui.s:13044	v7/maincpu/audio/sound_editor_ui.s:12950			
+v7	SeMenu_PresetManager_Save_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenuTitle_StaticRecord	v10/maincpu/audio/sound_editor_ui.s:12443	v7/maincpu/audio/sound_editor_ui.s:12334			
+v7	SePitLfo1_DrawStaticScreen	existing-header-differs	; SePitLfo1_DrawStaticScreen: Static-screen routine of sound-editor title 0x2A TT_SEPITLFO1 (entry 1	v10/maincpu/audio/sound_editor_ui.s:9179	v7/maincpu/audio/sound_editor_ui.s:9141			
+v7	SePitPit1_StaticRecords	existing-header-differs	; static record list (58 records), read by GraphicsRender_ProcessEntries; end SePitEnv1_Records	v10/maincpu/audio/sound_editor_ui.s:13049	v7/maincpu/audio/sound_editor_ui.s:12983			
+v7	SeScreenData_0x113B	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTouchCurve_AreaFill4Pa	v10/maincpu/audio/sound_editor_ui.s:13112	v7/maincpu/audio/sound_editor_ui.s:13074			
+v7	SeScreenData_0x137D	existing-header-differs	; static record list (24 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x1431, 	v10/maincpu/audio/sound_editor_ui.s:13215	v7/maincpu/audio/sound_editor_ui.s:13185			
+v7	SeScreenData_0x1F80	existing-header-differs	; bound record list (3 records), read by GraphicsRender_Start; end SeTonHyb1_Row2Records	v10/maincpu/audio/sound_editor_ui.s:13614	v7/maincpu/audio/sound_editor_ui.s:13703			
+v7	SeScreenData_0x34E9	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonRan1_KeyLayerFrame	v10/maincpu/audio/sound_editor_ui.s:14711	v7/maincpu/audio/sound_editor_ui.s:14929			
 v7	SeScreenData_0x5400	existing-header-differs	; bound record list (16 records {u8 op, u8 len, payload}), read by GraphicsRender_Start; ends 0xF160	v10/maincpu/storage/flash_floppy_handlers.s:536	v7/maincpu/storage/flash_floppy_handlers.s:540			
 v7	SeScreenData_ListBounds	existing-header-differs	; list-boundary table, 12 x {u32 start, u32 end} of bound record lists; the code reads XIY = (T+8i),	v10/maincpu/storage/flash_floppy_handlers.s:14	v7/maincpu/storage/flash_floppy_handlers.s:14			
-v7	SeTonHyb1_DrawField_SetupPath_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonHyb1_DrawField_Setu	v10/maincpu/audio/sound_editor_ui.s:13641	v7/maincpu/audio/sound_editor_ui.s:13715			
-v7	SeTonHyb1_DrawStaticScreen	existing-header-differs	; SeTonHyb1_DrawStaticScreen: Static-screen routine of sound-editor title 0x26 TT_SETONHYB1 (entry 6	v10/maincpu/audio/sound_editor_ui.s:8959	v7/maincpu/audio/sound_editor_ui.s:8878			
-v7	SeTonHyb1_Row1VelZeroText	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonHyb1_Row2VelDash	v10/maincpu/audio/sound_editor_ui.s:13621	v7/maincpu/audio/sound_editor_ui.s:13651			
-v7	SeTonRan1_KeyLayerFrame	existing-header-differs	; static record list (13 records), read by GraphicsRender_ProcessEntries; end SeTonRan2_VelLayerFram	v10/maincpu/audio/sound_editor_ui.s:14714	v7/maincpu/audio/sound_editor_ui.s:14854			
-v7	SeTonRan2_VelLayerFrame	existing-header-differs	; static record list (21 records), read by GraphicsRender_ProcessEntries; end SeFilFil2_Records	v10/maincpu/audio/sound_editor_ui.s:14718	v7/maincpu/audio/sound_editor_ui.s:14870			
-v7	SeTonTon1_DrawField_SetupPath_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonTon1_DrawField_Setu	v10/maincpu/audio/sound_editor_ui.s:13588	v7/maincpu/audio/sound_editor_ui.s:13601			
-v7	SeTonTon2_CursorBox	existing-header-differs	; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)	v10/maincpu/audio/sound_editor_ui.s:14829	v7/maincpu/audio/sound_editor_ui.s:15062			
-v7	SeTonTon2_DrawStaticScreen_Records	existing-header-differs	; static record list (42 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x34E9	v10/maincpu/audio/sound_editor_ui.s:14686	v7/maincpu/audio/sound_editor_ui.s:14805			
-v7	SeTonTon2_PanSideFields	existing-header-differs	; bound record list (4 records), read by GraphicsRender_Start; end SeTonTon2_CursorBox	v10/maincpu/audio/sound_editor_ui.s:14826	v7/maincpu/audio/sound_editor_ui.s:15055			
-v7	SeTonTon2_Records	existing-header-differs	; bound record list (14 records), read by GraphicsRender_Start; ends SeTonTon2_DelayFields, SeTonTon	v10/maincpu/audio/sound_editor_ui.s:14811	v7/maincpu/audio/sound_editor_ui.s:15028			
-v7	SeTouchCurve_AreaFill4Part	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_ShowConfirmDialog	v10/maincpu/audio/sound_editor_ui.s:13118	v7/maincpu/audio/sound_editor_ui.s:12999			
-v7	SeTouchCurve_Part1CellRecords	existing-header-differs	; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x117E	v10/maincpu/audio/sound_editor_ui.s:13125	v7/maincpu/audio/sound_editor_ui.s:13007			
+v7	SeTonHyb1_DrawField_SetupPath_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonHyb1_DrawField_Setu	v10/maincpu/audio/sound_editor_ui.s:13641	v7/maincpu/audio/sound_editor_ui.s:13794			
+v7	SeTonHyb1_DrawStaticScreen	existing-header-differs	; SeTonHyb1_DrawStaticScreen: Static-screen routine of sound-editor title 0x26 TT_SETONHYB1 (entry 6	v10/maincpu/audio/sound_editor_ui.s:8959	v7/maincpu/audio/sound_editor_ui.s:8922			
+v7	SeTonHyb1_Row1VelZeroText	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonHyb1_Row2VelDash	v10/maincpu/audio/sound_editor_ui.s:13621	v7/maincpu/audio/sound_editor_ui.s:13730			
+v7	SeTonRan1_KeyLayerFrame	existing-header-differs	; static record list (13 records), read by GraphicsRender_ProcessEntries; end SeTonRan2_VelLayerFram	v10/maincpu/audio/sound_editor_ui.s:14714	v7/maincpu/audio/sound_editor_ui.s:14933			
+v7	SeTonRan2_VelLayerFrame	existing-header-differs	; static record list (21 records), read by GraphicsRender_ProcessEntries; end SeFilFil2_Records	v10/maincpu/audio/sound_editor_ui.s:14718	v7/maincpu/audio/sound_editor_ui.s:14949			
+v7	SeTonTon1_DrawField_SetupPath_Records	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeTonTon1_DrawField_Setu	v10/maincpu/audio/sound_editor_ui.s:13588	v7/maincpu/audio/sound_editor_ui.s:13680			
+v7	SeTonTon2_CursorBox	existing-header-differs	; single bound record, read by SeGfx_DrawBoundRecord (GraphicsRender_Start)	v10/maincpu/audio/sound_editor_ui.s:14829	v7/maincpu/audio/sound_editor_ui.s:15141			
+v7	SeTonTon2_DrawStaticScreen_Records	existing-header-differs	; static record list (42 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x34E9	v10/maincpu/audio/sound_editor_ui.s:14686	v7/maincpu/audio/sound_editor_ui.s:14884			
+v7	SeTonTon2_PanSideFields	existing-header-differs	; bound record list (4 records), read by GraphicsRender_Start; end SeTonTon2_CursorBox	v10/maincpu/audio/sound_editor_ui.s:14826	v7/maincpu/audio/sound_editor_ui.s:15134			
+v7	SeTonTon2_Records	existing-header-differs	; bound record list (14 records), read by GraphicsRender_Start; ends SeTonTon2_DelayFields, SeTonTon	v10/maincpu/audio/sound_editor_ui.s:14811	v7/maincpu/audio/sound_editor_ui.s:15107			
+v7	SeTouchCurve_AreaFill4Part	existing-header-differs	; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_ShowConfirmDialog	v10/maincpu/audio/sound_editor_ui.s:13118	v7/maincpu/audio/sound_editor_ui.s:13078			
+v7	SeTouchCurve_Part1CellRecords	existing-header-differs	; static record list (4 records), read by GraphicsRender_ProcessEntries; end SeScreenData_0x117E	v10/maincpu/audio/sound_editor_ui.s:13125	v7/maincpu/audio/sound_editor_ui.s:13086			
 v7	SemitoneBias_TableA	existing-header-differs	; 12-byte per-semitone tables (one byte per pitch class C..B; 0x80 = centre).	v10/maincpu/ui_widgets/widget_dispatch.s:8562	v7/maincpu/ui_widgets/widget_dispatch.s:8592			
 v7	SemitoneBias_TableB	existing-header-differs	; 12 x u8 semitone table (one byte per pitch class, 0x80 centre): a	v10/maincpu/ui_widgets/widget_dispatch.s:8567	v7/maincpu/ui_widgets/widget_dispatch.s:8597			
 v7	SemitoneBias_TableC	existing-header-differs	; 12 x u8 semitone table (one byte per pitch class, 0x80 centre): a	v10/maincpu/ui_widgets/widget_dispatch.s:8572	v7/maincpu/ui_widgets/widget_dispatch.s:8602			
@@ -523,7 +477,7 @@ v7	StorageAreaName_Composer	existing-header-differs	; [nakarest] StorageAreaName
 v7	StorageAreaName_PanelMemory	existing-header-differs	; [nakarest] StorageAreaName_PanelMemory  +0x1a696..+0x1a6b8 (0xea05e4, 34 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5340	v7/maincpu/ui_widgets/technichord_string_data.s:5122			
 v7	StorageAreaName_Sequencer	existing-header-differs	; [nakarest] StorageAreaName_Sequencer  +0x1a688..+0x1a696 (0xea05d6, 14 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5334	v7/maincpu/ui_widgets/technichord_string_data.s:5118			
 v7	StorageAreaName_SoundMemory	existing-header-differs	; [nakarest] StorageAreaName_SoundMemory  +0x1a66c..+0x1a67a (0xea05ba, 14 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5322	v7/maincpu/ui_widgets/technichord_string_data.s:5110			
-v7	Str_No	existing-header-differs	; [nakarest] Str_No  +0x166a..+0x166e (0xeaa316, 4 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:713	v7/maincpu/ui_widgets/disk_warning_strings.s:699			
+v7	Str_No	existing-header-differs	; [nakarest] Str_No  +0x166a..+0x166e (0xeaa316, 4 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:713	v7/maincpu/ui_widgets/disk_warning_strings.s:701			
 v7	Str_SOUND	existing-header-differs	; [nakarest] Str_SOUND  +0x17ed8..+0x17ede (0xe9de26, 6 B)	v10/maincpu/ui_widgets/technichord_string_data.s:2967	v7/maincpu/ui_widgets/technichord_string_data.s:2905			
 v7	Str_SmfConvert_GmToGm	existing-header-differs	; [nakarest] Str_SmfConvert_GmToGm  +0x1a832..+0x1a85c (0xea0780, 42 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5559	v7/maincpu/ui_widgets/technichord_string_data.s:5318			
 v7	Str_SmfConvert_GmToTech	existing-header-differs	; [nakarest] Str_SmfConvert_GmToTech  +0x1a812..+0x1a822 (0xea0760, 16 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5547	v7/maincpu/ui_widgets/technichord_string_data.s:5310			
@@ -532,28 +486,28 @@ v7	Str_VolumeEq2	existing-header-differs	; Loaded by PerfMode_VolumeParam_Proces
 v7	StylCnv_TechnicsTag	existing-header-differs	"; StylCnv_TechnicsTag -- 8 x char ""TECHNICS"" (no NUL): StylCnvModl_OK_Select compares 8 bytes of eac"	v10/maincpu/ui_widgets/sequencer_channel_containers.s:499	v7/maincpu/ui_widgets/sequencer_channel_containers.s:502			
 v7	SupportClass_WindowIDPropTopByte	existing-header-differs	; [nakarest] SupportClass_WindowIDPropTopByte  +0x741..+0x774 (0xeb78ff, 51 B)	v10/maincpu/ui_widgets/style_bitmaps.s:349	v7/maincpu/ui_widgets/style_bitmaps.s:349			
 v7	SysExSend_SwitchOffsets	existing-header-differs	; 7 x s16 switch offsets.  SysEx_InitiateSend (0xFD84DD): `ld_rrw ..,xix,..;	v10/maincpu/ui_widgets/widget_dispatch.s:1482	v7/maincpu/ui_widgets/widget_dispatch.s:1528			
-v7	SysEx_BytecodeDispatcher_Tbl	existing-header-differs	; Byte data, 97 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld XIY,SysEx_BytecodeDispatcher_Tb	v10/maincpu/display/scoop_display.s:8265	v7/maincpu/display/scoop_display.s:7978			
+v7	SysEx_BytecodeDispatcher_Tbl	existing-header-differs	; Byte data, 97 B.  Read by SysEx_BytecodeDispatcher (0xEFAAB1): `ld XIY,SysEx_BytecodeDispatcher_Tb	v10/maincpu/display/scoop_display.s:8265	v7/maincpu/display/scoop_display.s:7993			
 v7	SysEx_Msg_359A	existing-header-differs	; MIDI system-exclusive bytes (0xF0 ...) sent by SeqChan_StepCmd_Field9to10 + 40 (0xFD77A4): `ld xwa	v10/maincpu/ui_widgets/widget_dispatch.s:1971	v7/maincpu/ui_widgets/widget_dispatch.s:2017			
 v7	SysEx_Msg_35BC	existing-header-differs	; MIDI system-exclusive bytes (0xF0 ...) sent by SysEx_SendDispatch_Helper2 + 52 (0xFD72BC): `ld xwa	v10/maincpu/ui_widgets/widget_dispatch.s:1995	v7/maincpu/ui_widgets/widget_dispatch.s:2041			
-v7	Tbl_ArticulationNames	existing-header-differs	"; 4 x 4 chars ""TENU"" ""NORM"" ""STAC"" ""CUTT"", read by Disp_ShowNoteValueFields"	v10/maincpu/display/scoop_display.s:15510	v7/maincpu/display/scoop_display.s:14995			
-v7	Tbl_NoteNamesSharp	existing-header-differs	"; 12 x 2 chars "" C"" ""C#"" "" D"" ... "" B"" (0x8C = sharp), read by"	v10/maincpu/display/scoop_display.s:15560	v7/maincpu/display/scoop_display.s:15045			
-v7	Tbl_NoteValueNames	existing-header-differs	; 16 x 4 chars, read by Disp_ShowNoteValueFields (0xEFF6EF): `ld l,	v10/maincpu/display/scoop_display.s:15448	v7/maincpu/display/scoop_display.s:14934			
-v7	Tbl_NoteValuePlusNames	existing-header-differs	; 16 x 5 chars, read by Disp_ShowNoteValueFields (0xEFF6EF): `ld l,	v10/maincpu/display/scoop_display.s:15480	v7/maincpu/display/scoop_display.s:14965			
-v7	Tbl_OctaveNames	existing-header-differs	"; 11 x 2 chars ""-2"" ""-1"" ""0 "" .. ""8 "", read by Disp_ShowNoteNameAndVelocity"	v10/maincpu/display/scoop_display.s:15574	v7/maincpu/display/scoop_display.s:15059			
-v7	TimeSig_SlotFieldOffsets	existing-header-differs	; TimeSig_SlotFieldOffsets -- offsets into the current slot record (AccPatch_GetCurrentSlotAddr), in	v10/maincpu/sequencer/accompaniment_engine.s:27209	v7/maincpu/sequencer/accompaniment_engine.s:25851			
+v7	Tbl_ArticulationNames	existing-header-differs	"; 4 x 4 chars ""TENU"" ""NORM"" ""STAC"" ""CUTT"", read by Disp_ShowNoteValueFields"	v10/maincpu/display/scoop_display.s:15510	v7/maincpu/display/scoop_display.s:15048			
+v7	Tbl_NoteNamesSharp	existing-header-differs	"; 12 x 2 chars "" C"" ""C#"" "" D"" ... "" B"" (0x8C = sharp), read by"	v10/maincpu/display/scoop_display.s:15560	v7/maincpu/display/scoop_display.s:15098			
+v7	Tbl_NoteValueNames	existing-header-differs	; 16 x 4 chars, read by Disp_ShowNoteValueFields (0xEFF6EF): `ld l,	v10/maincpu/display/scoop_display.s:15448	v7/maincpu/display/scoop_display.s:14987			
+v7	Tbl_NoteValuePlusNames	existing-header-differs	; 16 x 5 chars, read by Disp_ShowNoteValueFields (0xEFF6EF): `ld l,	v10/maincpu/display/scoop_display.s:15480	v7/maincpu/display/scoop_display.s:15018			
+v7	Tbl_OctaveNames	existing-header-differs	"; 11 x 2 chars ""-2"" ""-1"" ""0 "" .. ""8 "", read by Disp_ShowNoteNameAndVelocity"	v10/maincpu/display/scoop_display.s:15574	v7/maincpu/display/scoop_display.s:15112			
+v7	TimeSig_SlotFieldOffsets	existing-header-differs	; TimeSig_SlotFieldOffsets -- offsets into the current slot record (AccPatch_GetCurrentSlotAddr), in	v10/maincpu/sequencer/accompaniment_engine.s:27209	v7/maincpu/sequencer/accompaniment_engine.s:25866			
 v7	TimeSig_StepUpTable15	existing-header-differs	; Two 12-entry step tables for (0x3391) when AccVoice_GetChannelCount_Direct returns 15: the routine	v10/maincpu/sequencer/accompaniment_engine.s:26448	v7/maincpu/sequencer/accompaniment_engine.s:25130			
 v7	TmFlashBulkA_SwitchOffsets	existing-header-differs	; 6 x s16 switch offsets.  TmFlash_BulkTransferToSubCPU_Skip2 (0xFEFFCB): `ld_rrw ..,xix,..; lda xix	v10/maincpu/ui_widgets/widget_dispatch.s:9537	v7/maincpu/ui_widgets/widget_dispatch.s:9540			
 v7	TmFlashBulkB_SwitchOffsets	existing-header-differs	; 6 x s16 switch offsets.  TmFlash_BulkTransferToSubCPU_Epilogue2 (0xFF008F): `ld_rrw ..,xix,..; lda	v10/maincpu/ui_widgets/widget_dispatch.s:9546	v7/maincpu/ui_widgets/widget_dispatch.s:9549			
 v7	ToneGen_ParamTable_0x2EE	existing-header-differs	; data read by SeDigEffTitleFunc_DispatchSwitch+0x4AF (0xF0DC4D)	v10/maincpu/kn5000_v10_program.s:1112	v7/maincpu/kn5000_v7_program.s:1112			
-v7	ToneParam_HandlerTable_BC	existing-header-differs	; Pointer table, 16 B.  Read by ToneParam_Evt09_BytecodeHandler (0xEF8085): `ld XIX,ToneParam_Handle	v10/maincpu/display/scoop_display.s:3847	v7/maincpu/display/scoop_display.s:3882			
+v7	ToneParam_HandlerTable_BC	existing-header-differs	; Pointer table, 16 B.  Read by ToneParam_Evt09_BytecodeHandler (0xEF8085): `ld XIX,ToneParam_Handle	v10/maincpu/display/scoop_display.s:3847	v7/maincpu/display/scoop_display.s:3886			
 v7	TypePriorityText_PtrTable	existing-header-differs	; [nakarest] naka_disk_warning+0x8ac  +0x8ac..+0xa38 (0xea9558, 396 B)	v10/maincpu/ui_widgets/disk_warning_strings.s:87	v7/maincpu/ui_widgets/disk_warning_strings.s:87			
-v7	UIState_EventTable_Target11	existing-header-differs	; Entry 11 of ScoopDisp_DispatchTable_Small (a code pointer the table holds).	v10/maincpu/display/scoop_display.s:2870	v7/maincpu/display/scoop_display.s:2900			
+v7	UIState_EventTable_Target11	existing-header-differs	; Entry 11 of ScoopDisp_DispatchTable_Small (a code pointer the table holds).	v10/maincpu/display/scoop_display.s:2870	v7/maincpu/display/scoop_display.s:2904			
 v7	UIStr_No	existing-header-differs	; [nakarest] UIStr_No  +0x19f2e..+0x19f3e (0xe9fe7c, 16 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4429	v7/maincpu/ui_widgets/technichord_string_data.s:4291			
 v7	UIStr_Pan	existing-header-differs	; [nakarest] UIStr_Pan  +0x19f28..+0x19f2e (0xe9fe76, 6 B)	v10/maincpu/ui_widgets/technichord_string_data.s:4423	v7/maincpu/ui_widgets/technichord_string_data.s:4287			
 v7	VGA_InitFuncTable	existing-header-differs	; [nakarest] VGA_InitFuncTable  +0x774..+0x784 (0xeb7932, 16 B)	v10/maincpu/ui_widgets/style_bitmaps.s:366	v7/maincpu/ui_widgets/style_bitmaps.s:366			
-v7	VoiceMode3_DispatchTable	existing-header-differs	; VoiceMode3 record-type handler table: 16 x .long code pointer, starting one	v10/maincpu/audio/audio_control_engine.s:9759	v7/maincpu/audio/audio_control_engine.s:9227			
-v7	VoiceMode_ParamDispatch_Table	existing-header-differs	; Jump table: 8 x .long code pointer.  Reader VoiceMode_ParamDispatch:	v10/maincpu/audio/audio_control_engine.s:9518	v7/maincpu/audio/audio_control_engine.s:9000			
-v7	WP_GetPresetName3_PtrTable	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a98c  +0x1a98c..+0x1aa32 (0xea08da, 166 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5692	v7/maincpu/ui_widgets/technichord_string_data.s:5450			
+v7	VoiceMode3_DispatchTable	existing-header-differs	; VoiceMode3 record-type handler table: 16 x .long code pointer, starting one	v10/maincpu/audio/audio_control_engine.s:9759	v7/maincpu/audio/audio_control_engine.s:9240			
+v7	VoiceMode_ParamDispatch_Table	existing-header-differs	; Jump table: 8 x .long code pointer.  Reader VoiceMode_ParamDispatch:	v10/maincpu/audio/audio_control_engine.s:9518	v7/maincpu/audio/audio_control_engine.s:9013			
+v7	WP_GetPresetName3_PtrTable	existing-header-differs	; [nakarest] naka_technichord_strings+0x1a98c  +0x1a98c..+0x1aa32 (0xea08da, 166 B)	v10/maincpu/ui_widgets/technichord_string_data.s:5692	v7/maincpu/ui_widgets/technichord_string_data.s:5451			
 v7	WorkRam2_SendEpilogueByte	existing-header-differs	; {u8 value, 0xFF}; 0 at power-on.  SndParam_ApplySystemParam_Skip2 stores it,	v10/maincpu/ui/char_encoding_naka_state.s:89	v7/maincpu/ui/char_encoding_naka_state.s:93			
 v7	WorkRam2_SongPlayerState	existing-header-differs	; Variables of the SeqFile_/SeqPlay_/SongFile_ routines (the song-file player),	v10/maincpu/ui/char_encoding_naka_state.s:119	v7/maincpu/ui/char_encoding_naka_state.s:123			
 v7	WorkRam2_VoiceLinkA_FreeList	existing-header-differs	; Node 0x80 of array A: free-list sentinel {prev = tail 0x7F, next = head 0}.	v10/maincpu/ui/char_encoding_naka_state.s:42	v7/maincpu/ui/char_encoding_naka_state.s:45			
@@ -564,17 +518,17 @@ v7	WorkRamInit_Image2	existing-header-differs	; WorkRamInit_Image2 -- 1 x struct
 v7	AccPatch_GetEntryAddr	header-text-elsewhere	; ============================================================================	v10/maincpu/sequencer/accompaniment_engine.s:14487	v7/maincpu/sequencer/accompaniment_engine.s:13643			
 v7	Boot_HandleFactoryReset	header-text-elsewhere	; ===========================================================================	v10/maincpu/kn5000_v10_program.s:1624	v7/maincpu/kn5000_v7_program.s:1611			
 v7	DrawBitmap	header-text-elsewhere	; =============================================================================	v10/maincpu/ui/drawing_primitives.s:2189	v7/maincpu/ui/drawing_primitives.s:2273			
-v7	DspItem0_DisplayEffectName	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15357	v7/maincpu/sequencer/sequencer_ui.s:15621			
-v7	DspItem0_DisplayParamNames	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15384	v7/maincpu/sequencer/sequencer_ui.s:15639			
-v7	DspItem0_DisplayParamValues	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15419	v7/maincpu/sequencer/sequencer_ui.s:15666			
+v7	DspItem0_DisplayEffectName	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15357	v7/maincpu/sequencer/sequencer_ui.s:15638			
+v7	DspItem0_DisplayParamNames	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15384	v7/maincpu/sequencer/sequencer_ui.s:15656			
+v7	DspItem0_DisplayParamValues	header-text-elsewhere	; -----------------------------------------------------------------------------	v10/maincpu/sequencer/sequencer_ui.s:15419	v7/maincpu/sequencer/sequencer_ui.s:15683			
 v7	HDAE5000_Detect	header-text-elsewhere	; ===========================================================================	v10/maincpu/boot/system_handlers.s:6729	v7/maincpu/boot/system_handlers.s:6675			
-v7	ParaLoadOpt_AudioFlagCheck_B_CompCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:279	v7/maincpu/midi/param_load_routines.s:241			
-v7	ParaLoadOpt_AudioFlagCheck_B_PmemCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:247	v7/maincpu/midi/param_load_routines.s:217			
-v7	ParaLoadOpt_AudioFlagCheck_B_SeqCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:295	v7/maincpu/midi/param_load_routines.s:253			
-v7	ParaLoadOpt_AudioFlagCheck_B_SmemCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:263	v7/maincpu/midi/param_load_routines.s:229			
-v7	RhythmParam_Setup	header-text-elsewhere	; Rhythm parameter dispatch setup	v10/maincpu/sequencer/accompaniment_engine.s:28532	v7/maincpu/sequencer/accompaniment_engine.s:27178			
+v7	ParaLoadOpt_AudioFlagCheck_B_CompCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:279	v7/maincpu/midi/param_load_routines.s:268			
+v7	ParaLoadOpt_AudioFlagCheck_B_PmemCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:247	v7/maincpu/midi/param_load_routines.s:240			
+v7	ParaLoadOpt_AudioFlagCheck_B_SeqCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:295	v7/maincpu/midi/param_load_routines.s:282			
+v7	ParaLoadOpt_AudioFlagCheck_B_SmemCompleted	header-text-elsewhere	";   ""COMPLETED"", repaint 0x570015"	v10/maincpu/midi/param_load_routines.s:263	v7/maincpu/midi/param_load_routines.s:254			
+v7	RhythmParam_Setup	header-text-elsewhere	; Rhythm parameter dispatch setup	v10/maincpu/sequencer/accompaniment_engine.s:28532	v7/maincpu/sequencer/accompaniment_engine.s:27193			
 v7	Sprintf_Core	header-text-elsewhere	; NOTE: Renamed from audio_cmd_encoder.s. Original Matsushita labels were	v10/maincpu/audio/sprintf_core.s:9	v7/maincpu/audio/sprintf_core.s:10			
-v7	TestTitleFunc_OnTitleInactivate_Str_TitleInactivate	header-text-elsewhere	;   LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes	v10/maincpu/factory_test/fd_test_data.s:356	v7/maincpu/factory_test/fd_test_data.s:348			
+v7	TestTitleFunc_OnTitleInactivate_Str_TitleInactivate	header-text-elsewhere	;   LF), the text its owner prints (FDTest_PrintDiag or the console printer). Basis: readers + bytes	v10/maincpu/factory_test/fd_test_data.s:356	v7/maincpu/factory_test/fd_test_data.s:354			
 v7	WordwrapStrings	header-text-elsewhere	; =============================================================================	v10/maincpu/display/graphics_text_vga.s:2170	v7/maincpu/display/graphics_text_vga.s:2146			
 v7	AcEasyCmpGridBoxProc_Epilogue	label-absent		v10/maincpu/audio/sound_editor_ui.s:17141				
 v7	AccDraw_AdjustPlusNoteValue	label-absent		v10/maincpu/sequencer/accompaniment_engine.s:25380				
@@ -942,7 +896,7 @@ v7	BmDrEdit_TestPartTableEntry	mentions-version	v10	v10/maincpu/sequencer/bmdred
 v7	Boot_InitHandlersEnableFlag	mentions-version	v7	v10/maincpu/kn5000_v10_program.s:3683	v7/maincpu/kn5000_v7_program.s:3665			
 v7	COMM_InitFuncTable	mentions-version	_v10_	v10/maincpu/ui_widgets/widget_dispatch.s:9436	v7/maincpu/ui_widgets/widget_dispatch.s:9439			
 v7	ChordTables_PitchClassBits	mentions-version	v10	v10/maincpu/audio/note_voice_mapping.s:16917	v7/maincpu/audio/note_voice_mapping.s:15740			
-v7	ColorBlit2_LargeCodeBlock	mentions-version	v10	v10/maincpu/ui/ui_window_procs.s:8387	v7/maincpu/ui/ui_window_procs.s:8459			
+v7	ColorBlit2_LargeCodeBlock	mentions-version	v10	v10/maincpu/ui/ui_window_procs.s:8387	v7/maincpu/ui/ui_window_procs.s:8472			
 v7	DrumKit_ValidateBank_Wrap	mentions-version	v7	v10/maincpu/sequencer/accompaniment_engine.s:24649	v7/maincpu/sequencer/accompaniment_engine.s:23465			
 v7	DspCfg_Data001_ByteTable	mentions-version	v10	v10/maincpu/ui_widgets/widget_dispatch.s:4424	v7/maincpu/ui_widgets/widget_dispatch.s:4470			
 v7	INT0_HANDLER	mentions-version	v9	v10/maincpu/boot/system_handlers.s:5908	v7/maincpu/boot/system_handlers.s:5864			
@@ -957,10 +911,10 @@ v7	MemScreen_NoteG	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s
 v7	MemScreen_Space1	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3669	v7/maincpu/ui_widgets/style_bitmaps.s:3662			
 v7	MemScreen_Space2	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3674	v7/maincpu/ui_widgets/style_bitmaps.s:3666			
 v7	MemScreen_Space3	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3679	v7/maincpu/ui_widgets/style_bitmaps.s:3670			
-v7	MidiCC_BankSelectModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12119	v7/maincpu/audio/audio_control_engine.s:11369			
+v7	MidiCC_BankSelectModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12119	v7/maincpu/audio/audio_control_engine.s:11391			
 v7	MidiCtl_NullRecord	mentions-version	v7	v10/maincpu/ui_widgets/widget_dispatch.s:3352	v7/maincpu/ui_widgets/widget_dispatch.s:3398			
 v7	MidiSetup_PageIndicatorRect	mentions-version	v10	v10/maincpu/ui_widgets/naka_widget_tables_2.s:945	v7/maincpu/ui_widgets/naka_widget_tables_2.s:942			
-v7	MidiStream_HandleRunningStatus_Data	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12174	v7/maincpu/audio/audio_control_engine.s:11424			
+v7	MidiStream_HandleRunningStatus_Data	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12174	v7/maincpu/audio/audio_control_engine.s:11446			
 v7	NakaInst_A_a0	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3699	v7/maincpu/ui_widgets/style_bitmaps.s:3686			
 v7	NakaInst_B_a0	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3689	v7/maincpu/ui_widgets/style_bitmaps.s:3678			
 v7	NakaInst_D_a0_ECFF5C	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3734	v7/maincpu/ui_widgets/style_bitmaps.s:3714			
@@ -970,7 +924,7 @@ v7	NoRef_SetWall_SlotMap20x2	mentions-version	v10	v10/maincpu/ui/setwall_routine
 v7	PsMixer_ControlProcTable	mentions-version	v10	v10/maincpu/ui_widgets/technichord_string_data.s:3262	v7/maincpu/ui_widgets/technichord_string_data.s:3185			
 v7	Rhythm_NoteRangeData	mentions-version	v10	v10/maincpu/sequencer/rhythm_routines.s:440	v7/maincpu/sequencer/rhythm_routines.s:435			
 v7	SMF_PartAssignTable	mentions-version	v10	v10/maincpu/sequencer/smf_config_routines.s:1303	v7/maincpu/sequencer/smf_config_routines.s:1303			
-v7	SeScreenData	mentions-version	v10	v10/maincpu/audio/sound_editor_ui.s:10976	v7/maincpu/audio/sound_editor_ui.s:10790			
+v7	SeScreenData	mentions-version	v10	v10/maincpu/audio/sound_editor_ui.s:10976	v7/maincpu/audio/sound_editor_ui.s:10869			
 v7	SeqData_ErrorCodeRemap	mentions-version	v10	v10/maincpu/ui_widgets/widget_descriptors.s:3771	v7/maincpu/ui_widgets/widget_descriptors.s:3767			
 v7	SndParam_ValueMapGrid	mentions-version	v10	v10/maincpu/ui/charmap_dispatch_table.s:24	v7/maincpu/ui/charmap_dispatch_table.s:24			
 v7	SoundData_InitFuncTable	mentions-version	_v10_	v10/maincpu/ui_widgets/widget_dispatch.s:9323	v7/maincpu/ui_widgets/widget_dispatch.s:9329			
@@ -997,37 +951,37 @@ v7	BankStr_Dashes	names-absent-symbol	SingleLoadDst_DrawComposerBankRows	v10/mai
 v7	BankStr_Dashes2	names-absent-symbol	SingleLoadDst_DrawComposerBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5373	v7/maincpu/ui_widgets/technichord_string_data.s:5143			
 v7	BankStr_Memory	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows SingleLoadDst_DrawSongRows	v10/maincpu/ui_widgets/technichord_string_data.s:5409	v7/maincpu/ui_widgets/technichord_string_data.s:5173			
 v7	CDlike_KeepTitleCaseMap	names-absent-symbol	CDlike_ExitModeUnlessKeepTitle	v10/maincpu/ui/sepaout_config.s:66	v7/maincpu/ui/sepaout_config.s:64			
-v7	COMM_ResetSentValues_Phase1	names-absent-symbol	COMM_ResetSentValues	v10/maincpu/audio/note_voice_mapping.s:26230	v7/maincpu/audio/note_voice_mapping.s:24314			
-v7	ClockConfig_Handler_0_Tbl	names-absent-symbol	ScoopParam_ValueTable_Sub_Helper SystemInit_StepHandler_0_Helper2	v10/maincpu/display/scoop_display.s:7865	v7/maincpu/display/scoop_display.s:7593			
-v7	ClockConfig_Handler_0_Tbl2	names-absent-symbol	ScoopParam_ValueTable_Sub_Helper_Skip	v10/maincpu/display/scoop_display.s:7869	v7/maincpu/display/scoop_display.s:7598			
-v7	CmpEsy_ApplyEdit	names-absent-symbol	CmpEsyTtl_Mode2_OnSet	v10/maincpu/sequencer/accompaniment_engine.s:29585	v7/maincpu/sequencer/accompaniment_engine.s:28221			
+v7	COMM_ResetSentValues_Phase1	names-absent-symbol	COMM_ResetSentValues	v10/maincpu/audio/note_voice_mapping.s:26230	v7/maincpu/audio/note_voice_mapping.s:24326			
+v7	ClockConfig_Handler_0_Tbl	names-absent-symbol	ScoopParam_ValueTable_Sub_Helper SystemInit_StepHandler_0_Helper2	v10/maincpu/display/scoop_display.s:7865	v7/maincpu/display/scoop_display.s:7608			
+v7	ClockConfig_Handler_0_Tbl2	names-absent-symbol	ScoopParam_ValueTable_Sub_Helper_Skip	v10/maincpu/display/scoop_display.s:7869	v7/maincpu/display/scoop_display.s:7613			
+v7	CmpEsy_ApplyEdit	names-absent-symbol	CmpEsyTtl_Mode2_OnSet	v10/maincpu/sequencer/accompaniment_engine.s:29585	v7/maincpu/sequencer/accompaniment_engine.s:28237			
 v7	CmpEsy_PrepareRealtimeRecording	names-absent-symbol	TimeSig_DisplayStrings_Helper3	v10/maincpu/sequencer/accompaniment_engine.s:27064	v7/maincpu/sequencer/accompaniment_engine.s:25727			
 v7	CmpNcp_CallItemHandler	names-absent-symbol	CmpNcp_StepItemAValue	v10/maincpu/sequencer/accompaniment_engine.s:25965	v7/maincpu/sequencer/accompaniment_engine.s:24669			
-v7	CmpStep_OnHide	names-absent-symbol	CmpStep_ClearSustainBlockFlag	v10/maincpu/sequencer/accompaniment_engine.s:34500	v7/maincpu/sequencer/accompaniment_engine.s:33261			
-v7	Data_SaveLoadMenuTable	names-absent-symbol	SingleLoadDst_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5840	v7/maincpu/ui_widgets/technichord_string_data.s:5535			
+v7	CmpStep_OnHide	names-absent-symbol	CmpStep_ClearSustainBlockFlag	v10/maincpu/sequencer/accompaniment_engine.s:34500	v7/maincpu/sequencer/accompaniment_engine.s:33294			
+v7	Data_SaveLoadMenuTable	names-absent-symbol	SingleLoadDst_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5840	v7/maincpu/ui_widgets/technichord_string_data.s:5536			
 v7	DirmdTitleFunc_Str_DirmdTitleCur	names-absent-symbol	DirmdTitle_New_Skip	v10/maincpu/ui_widgets/disk_warning_strings.s:319	v7/maincpu/ui_widgets/disk_warning_strings.s:310			
 v7	DirmdTitleFunc_Str_DirmdTitleNew	names-absent-symbol	DirmdTitle_New_Skip	v10/maincpu/ui_widgets/disk_warning_strings.s:308	v7/maincpu/ui_widgets/disk_warning_strings.s:307			
 v7	DirmdTitleFunc_Str_DirmdTitleOld	names-absent-symbol	DirmdTitle_New_Skip	v10/maincpu/ui_widgets/disk_warning_strings.s:313	v7/maincpu/ui_widgets/disk_warning_strings.s:308			
-v7	DisplayStr_RedrawStatusAndControlLine	names-absent-symbol	DisplayStr_WriteControlNameValue	v10/maincpu/display/scoop_display.s:14548	v7/maincpu/display/scoop_display.s:14157			
-v7	DisplayStr_ShowStyleSectionName	names-absent-symbol	TempoRingBuf_OnStyleSectionEvent	v10/maincpu/display/scoop_display.s:6756	v7/maincpu/display/scoop_display.s:6575			
-v7	DisplayStr_WriteStoredControlLine	names-absent-symbol	DisplayStr_WriteControlNameValue	v10/maincpu/display/scoop_display.s:14525	v7/maincpu/display/scoop_display.s:14140			
-v7	Display_UpdateRegion0_Wrap	names-absent-symbol	Display_UpdateRegion2_Wrap	v10/maincpu/display/scoop_display.s:15207	v7/maincpu/display/scoop_display.s:14721			
-v7	DrawFunc_Init_Entry2_Str_Fmt2d	names-absent-symbol	SeGfx_BoundOp06_PrintWord_Skip	v10/maincpu/ui_widgets/disk_warning_strings.s:1446	v7/maincpu/ui_widgets/disk_warning_strings.s:1432			
-v7	DrawFunc_Init_Entry3_Str_Fmt3d	names-absent-symbol	SeGfx_BoundOp06_PrintWord_Skip2	v10/maincpu/ui_widgets/disk_warning_strings.s:1451	v7/maincpu/ui_widgets/disk_warning_strings.s:1437			
-v7	DrawFunc_Init_Entry4_Str_Fmt3d	names-absent-symbol	DrawFunc_Init_Skip9	v10/maincpu/ui_widgets/disk_warning_strings.s:1489	v7/maincpu/ui_widgets/disk_warning_strings.s:1471			
-v7	DrawFunc_Init_Entry5_Str_Fmt1d	names-absent-symbol	DrawFunc_Init_Join6	v10/maincpu/ui_widgets/disk_warning_strings.s:1513	v7/maincpu/ui_widgets/disk_warning_strings.s:1483			
-v7	DrawFunc_Init_Entry5_Str_Fmt3d	names-absent-symbol	DrawFunc_Init_Skip10	v10/maincpu/ui_widgets/disk_warning_strings.s:1499	v7/maincpu/ui_widgets/disk_warning_strings.s:1477			
-v7	DrawFunc_Init_Entry5_Str_Fmt3d_2	names-absent-symbol	DrawFunc_Init_Join6	v10/maincpu/ui_widgets/disk_warning_strings.s:1519	v7/maincpu/ui_widgets/disk_warning_strings.s:1485			
-v7	DrawFunc_Init_Entry5_Str_Fmt4d	names-absent-symbol	DrawFunc_Init_Skip11	v10/maincpu/ui_widgets/disk_warning_strings.s:1504	v7/maincpu/ui_widgets/disk_warning_strings.s:1478			
-v7	ExtData_Drawbar_SetByte7Fields	names-absent-symbol	ExtData_SetTlvField ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5277	v7/maincpu/audio/audio_control_engine.s:5038			
-v7	ExtData_Tag43_SetByte1Fields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5220	v7/maincpu/audio/audio_control_engine.s:4992			
-v7	ExtData_ToggleReverbIllusionOnOff	names-absent-symbol	ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5679	v7/maincpu/audio/audio_control_engine.s:5422			
-v7	ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches	names-absent-symbol	ExtData_SetTlvField ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5253	v7/maincpu/audio/audio_control_engine.s:5019			
-v7	ExtData_ToneParam_AltDispatch_DrawbarNibbleFields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5245	v7/maincpu/audio/audio_control_engine.s:5013			
-v7	ExtData_ToneParam_AltDispatch_WholeByteFields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5241	v7/maincpu/audio/audio_control_engine.s:5011			
+v7	DisplayStr_RedrawStatusAndControlLine	names-absent-symbol	DisplayStr_WriteControlNameValue	v10/maincpu/display/scoop_display.s:14548	v7/maincpu/display/scoop_display.s:14185			
+v7	DisplayStr_ShowStyleSectionName	names-absent-symbol	TempoRingBuf_OnStyleSectionEvent	v10/maincpu/display/scoop_display.s:6756	v7/maincpu/display/scoop_display.s:6590			
+v7	DisplayStr_WriteStoredControlLine	names-absent-symbol	DisplayStr_WriteControlNameValue	v10/maincpu/display/scoop_display.s:14525	v7/maincpu/display/scoop_display.s:14168			
+v7	Display_UpdateRegion0_Wrap	names-absent-symbol	Display_UpdateRegion2_Wrap	v10/maincpu/display/scoop_display.s:15207	v7/maincpu/display/scoop_display.s:14774			
+v7	DrawFunc_Init_Entry2_Str_Fmt2d	names-absent-symbol	SeGfx_BoundOp06_PrintWord_Skip	v10/maincpu/ui_widgets/disk_warning_strings.s:1446	v7/maincpu/ui_widgets/disk_warning_strings.s:1434			
+v7	DrawFunc_Init_Entry3_Str_Fmt3d	names-absent-symbol	SeGfx_BoundOp06_PrintWord_Skip2	v10/maincpu/ui_widgets/disk_warning_strings.s:1451	v7/maincpu/ui_widgets/disk_warning_strings.s:1439			
+v7	DrawFunc_Init_Entry4_Str_Fmt3d	names-absent-symbol	DrawFunc_Init_Skip9	v10/maincpu/ui_widgets/disk_warning_strings.s:1489	v7/maincpu/ui_widgets/disk_warning_strings.s:1473			
+v7	DrawFunc_Init_Entry5_Str_Fmt1d	names-absent-symbol	DrawFunc_Init_Join6	v10/maincpu/ui_widgets/disk_warning_strings.s:1513	v7/maincpu/ui_widgets/disk_warning_strings.s:1485			
+v7	DrawFunc_Init_Entry5_Str_Fmt3d	names-absent-symbol	DrawFunc_Init_Skip10	v10/maincpu/ui_widgets/disk_warning_strings.s:1499	v7/maincpu/ui_widgets/disk_warning_strings.s:1479			
+v7	DrawFunc_Init_Entry5_Str_Fmt3d_2	names-absent-symbol	DrawFunc_Init_Join6	v10/maincpu/ui_widgets/disk_warning_strings.s:1519	v7/maincpu/ui_widgets/disk_warning_strings.s:1487			
+v7	DrawFunc_Init_Entry5_Str_Fmt4d	names-absent-symbol	DrawFunc_Init_Skip11	v10/maincpu/ui_widgets/disk_warning_strings.s:1504	v7/maincpu/ui_widgets/disk_warning_strings.s:1480			
+v7	ExtData_Drawbar_SetByte7Fields	names-absent-symbol	ExtData_SetTlvField ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5277	v7/maincpu/audio/audio_control_engine.s:5051			
+v7	ExtData_Tag43_SetByte1Fields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5220	v7/maincpu/audio/audio_control_engine.s:5005			
+v7	ExtData_ToggleReverbIllusionOnOff	names-absent-symbol	ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5679	v7/maincpu/audio/audio_control_engine.s:5435			
+v7	ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches	names-absent-symbol	ExtData_SetTlvField ExtData_ToggleTlvBits	v10/maincpu/audio/audio_control_engine.s:5253	v7/maincpu/audio/audio_control_engine.s:5032			
+v7	ExtData_ToneParam_AltDispatch_DrawbarNibbleFields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5245	v7/maincpu/audio/audio_control_engine.s:5026			
+v7	ExtData_ToneParam_AltDispatch_WholeByteFields	names-absent-symbol	ExtData_SetTlvField	v10/maincpu/audio/audio_control_engine.s:5241	v7/maincpu/audio/audio_control_engine.s:5024			
 v7	FDC_ReadDataRegister	names-absent-symbol	FDC_SendAuxCmdReadResult	v10/maincpu/storage/fdc_routines.s:28	v7/maincpu/storage/fdc_routines.s:25			
 v7	FDC_WaitReady_CaseTable	names-absent-symbol	FDC_CONFIG_VERIFY_On720KMedia FDC_CONFIG_VERIFY_Skip10	v10/maincpu/ui_widgets/disk_warning_strings.s:129	v7/maincpu/ui_widgets/disk_warning_strings.s:131			
-v7	FDC_WriteAuxCmdByte	names-absent-symbol	FDC_SendAuxCmd FDC_SendAuxCmdReadResult	v10/maincpu/storage/fdc_routines.s:820	v7/maincpu/storage/fdc_routines.s:796			
+v7	FDC_WriteAuxCmdByte	names-absent-symbol	FDC_SendAuxCmd FDC_SendAuxCmdReadResult	v10/maincpu/storage/fdc_routines.s:820	v7/maincpu/storage/fdc_routines.s:808			
 v7	FileData_ImportM4M6_NullRet	names-absent-symbol	FileData_ImportM4M6PanelMemories	v10/maincpu/midi/midi_dispatch_handlers.s:4952	v7/maincpu/midi/midi_dispatch_handlers.s:4399			
 v7	FileData_ImportNNPanelMemories	names-absent-symbol	FileData_ImportM4M6PanelMemories	v10/maincpu/midi/midi_dispatch_handlers.s:5891	v7/maincpu/midi/midi_dispatch_handlers.s:5326			
 v7	FileData_ResetPanelMemoriesToDefault	names-absent-symbol	FileData_ImportM4M6PanelMemories	v10/maincpu/midi/midi_dispatch_handlers.s:7261	v7/maincpu/midi/midi_dispatch_handlers.s:6656			
@@ -1037,13 +991,13 @@ v7	FileIO_ByteBlock_DemoProc1_Str_rb_3	names-absent-symbol	SingleLoad_LoadCompos
 v7	FileIO_ByteBlock_DemoProc1_Str_rb_4	names-absent-symbol	SingleLoad_LoadSoundMemEntry_Skip15	v10/maincpu/ui_widgets/technichord_string_data.s:4893	v7/maincpu/ui_widgets/technichord_string_data.s:4709			
 v7	FileIO_ByteBlock_DemoProc1_Str_rb_5	names-absent-symbol	SingleLoad_LoadSoundMemBank_Skip20	v10/maincpu/ui_widgets/technichord_string_data.s:4898	v7/maincpu/ui_widgets/technichord_string_data.s:4710			
 v7	GUI_DisplayStructData_0x1129	names-absent-symbol	SeMenu_SetupPartDisplay_End_Skip9	v10/maincpu/kn5000_v10_program.s:752	v7/maincpu/kn5000_v7_program.s:752			
-v7	HamaDeb_HdaeDebugScreenFunc	names-absent-symbol	Hama_ApFuncTable_129	v10/maincpu/factory_test/test_init.s:411	v7/maincpu/factory_test/test_init.s:535			
+v7	HamaDeb_HdaeDebugScreenFunc	names-absent-symbol	Hama_ApFuncTable_129	v10/maincpu/factory_test/test_init.s:411	v7/maincpu/factory_test/test_init.s:541			
 v7	HdaeRomEntry2_SwitchOffsets	names-absent-symbol	PanelTag72_ApplyPartMix	v10/maincpu/ui_widgets/widget_dispatch.s:8520	v7/maincpu/ui_widgets/widget_dispatch.s:8550			
-v7	HdaeRom_AltDispatch	names-absent-symbol	HdaeRom_AltDispatchOffsetTable	v10/maincpu/audio/note_voice_mapping.s:27743	v7/maincpu/audio/note_voice_mapping.s:25747			
-v7	HdaeRom_DataDispatch	names-absent-symbol	HdaeRom_DispatchOffsetTable	v10/maincpu/audio/note_voice_mapping.s:27548	v7/maincpu/audio/note_voice_mapping.s:25559			
+v7	HdaeRom_AltDispatch	names-absent-symbol	HdaeRom_AltDispatchOffsetTable	v10/maincpu/audio/note_voice_mapping.s:27743	v7/maincpu/audio/note_voice_mapping.s:25761			
+v7	HdaeRom_DataDispatch	names-absent-symbol	HdaeRom_DispatchOffsetTable	v10/maincpu/audio/note_voice_mapping.s:27548	v7/maincpu/audio/note_voice_mapping.s:25573			
 v7	LoadSong8_AltPresetPath_Str_rb	names-absent-symbol	LoadSong8_AltPresetPath	v10/maincpu/ui_widgets/technichord_string_data.s:4765	v7/maincpu/ui_widgets/technichord_string_data.s:4599			
 v7	LoadSong8_ReadDone_Str_rb	names-absent-symbol	LoadSong8_ReadDone	v10/maincpu/ui_widgets/technichord_string_data.s:4760	v7/maincpu/ui_widgets/technichord_string_data.s:4594			
-v7	MainSysCtrl_ResetPartSettings	names-absent-symbol	MainSysCtrl_OnInitPartSetting	v10/maincpu/audio/audio_control_engine.s:4304	v7/maincpu/audio/audio_control_engine.s:4116			
+v7	MainSysCtrl_ResetPartSettings	names-absent-symbol	MainSysCtrl_OnInitPartSetting	v10/maincpu/audio/audio_control_engine.s:4304	v7/maincpu/audio/audio_control_engine.s:4129			
 v7	MidiCC_CC83_ValueMap	names-absent-symbol	MidiCC_RxCC83_SetParamBitsAndQueue	v10/maincpu/midi/midi_dispatch_handlers.s:329	v7/maincpu/midi/midi_serial_routines.s:1256			
 v7	MidiCtl_AssSwbHandlers	names-absent-symbol	SysEx_OnTechnicsParamRequest	v10/maincpu/ui_widgets/widget_dispatch.s:3790	v7/maincpu/ui_widgets/widget_dispatch.s:3836			
 v7	MidiCtl_SelectTable0	names-absent-symbol	SysEx_OnTechnicsParamChange	v10/maincpu/ui_widgets/widget_dispatch.s:3639	v7/maincpu/ui_widgets/widget_dispatch.s:3685			
@@ -1062,7 +1016,8 @@ v7	MidiPkt_SetXferBlock_StyleImageTables	names-absent-symbol	MidiPkt_XferOnStyle
 v7	MidiPkt_SetXferTotal_All	names-absent-symbol	SysEx_SendAllData	v10/maincpu/midi/midi_dispatch_handlers.s:10198	v7/maincpu/midi/midi_dispatch_handlers.s:9371			
 v7	MidiPkt_SetXferTotal_Panel	names-absent-symbol	SysEx_SendPanelMemoryData	v10/maincpu/midi/midi_dispatch_handlers.s:10239	v7/maincpu/midi/midi_dispatch_handlers.s:9407			
 v7	MidiPkt_SetXferTotal_SoundRam	names-absent-symbol	MidiPkt_XferOnSoundRamStart SysEx_SendSoundMemoryData	v10/maincpu/midi/midi_dispatch_handlers.s:10286	v7/maincpu/midi/midi_dispatch_handlers.s:9445			
-v7	MidiStream_ResolveVoiceIndex	names-absent-symbol	MidiStream_SetPartProgram	v10/maincpu/audio/audio_control_engine.s:8473	v7/maincpu/audio/audio_control_engine.s:8048			
+v7	MidiSerial_CmdJumpTable	names-absent-symbol	MidiRx_SystemMsg_MarkIgnored	v10/maincpu/midi/midi_dispatch_handlers.s:105	v7/maincpu/midi/midi_serial_routines.s:1033			
+v7	MidiStream_ResolveVoiceIndex	names-absent-symbol	MidiStream_SetPartProgram	v10/maincpu/audio/audio_control_engine.s:8473	v7/maincpu/audio/audio_control_engine.s:8061			
 v7	MidiSysEx_NotifySoundParamChanges	names-absent-symbol	MidiSysEx_FinishPanelXfer	v10/maincpu/midi/midi_dispatch_handlers.s:12430	v7/maincpu/midi/midi_dispatch_handlers.s:11329			
 v7	MidiSysEx_ReapplyReceivedPanel	names-absent-symbol	MidiSysEx_FinishPanelXfer	v10/maincpu/midi/midi_dispatch_handlers.s:12411	v7/maincpu/midi/midi_dispatch_handlers.s:11313			
 v7	MidiSysEx_RestoreSongSelection	names-absent-symbol	MidiSysEx_FinishSeqXfer	v10/maincpu/sequencer/seq_step_routines.s:3084	v7/maincpu/sequencer/seq_step_routines.s:3078			
@@ -1072,85 +1027,123 @@ v7	PanelButton_MspBank17FuncHandlers	names-absent-symbol	PanelButton_MspBank17Fu
 v7	PanelTlv_ValidateSongPanel	names-absent-symbol	MidiSysEx_FinishSeqXfer	v10/maincpu/audio/tonegen_fileio_handlers.s:110	v7/maincpu/audio/tonegen_fileio_handlers.s:101			
 v7	PerfMode_LookupValueMapColumn5	names-absent-symbol	DisplayMode_Handler_3_Helper2 PerfMode_MapDisplayNoteToEvent	v10/maincpu/display/scoop_display.s:589	v7/maincpu/display/scoop_display.s:583			
 v7	Rhythm_LoadCurrentTimeSig	names-absent-symbol	RhythmVariation_Select_Entry_Data	v10/maincpu/sequencer/accompaniment_engine.s:26133	v7/maincpu/sequencer/accompaniment_engine.s:24823			
-v7	SLDstBankList_FuncBody_Str_ALL	names-absent-symbol	SingleLoadDst_DrawComposerItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5826	v7/maincpu/ui_widgets/technichord_string_data.s:5526			
-v7	SLDstBankList_FuncBody_Str_Colon_2	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5784	v7/maincpu/ui_widgets/technichord_string_data.s:5508			
-v7	SLDstBankList_FuncBody_Str_Colon_3	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5794	v7/maincpu/ui_widgets/technichord_string_data.s:5512			
-v7	SLDstBankList_FuncBody_Str_Colon_5	names-absent-symbol	SingleLoadDst_DrawComposerBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5816	v7/maincpu/ui_widgets/technichord_string_data.s:5524			
-v7	SLDstBankList_FuncBody_Str_Colon_6	names-absent-symbol	SingleLoadDst_DrawComposerItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5821	v7/maincpu/ui_widgets/technichord_string_data.s:5525			
-v7	SLDstMemLabel_ColonSep	names-absent-symbol	SingleLoadDst_DrawSongRows	v10/maincpu/ui_widgets/technichord_string_data.s:5807	v7/maincpu/ui_widgets/technichord_string_data.s:5522			
-v7	SLDstSoundMem_RowsPerColumn	names-absent-symbol	SingleLoadDst_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5867	v7/maincpu/ui_widgets/technichord_string_data.s:5555			
-v7	SLSrcBankList_FuncBody_Entry_Str_ALL	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternSlot	v10/maincpu/ui_widgets/technichord_string_data.s:5736	v7/maincpu/ui_widgets/technichord_string_data.s:5474			
-v7	SLSrcBankList_FuncBody_Entry_Str_Colon_2	names-absent-symbol	SingleLoadSrc_ComposerDrawBankName	v10/maincpu/ui_widgets/technichord_string_data.s:5726	v7/maincpu/ui_widgets/technichord_string_data.s:5472			
-v7	SLSrcBankList_FuncBody_Entry_Str_Colon_3	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternSlot	v10/maincpu/ui_widgets/technichord_string_data.s:5731	v7/maincpu/ui_widgets/technichord_string_data.s:5473			
-v7	SLSrcBankList_FuncBody_Entry_Str_Colon_4	names-absent-symbol	SingleLoadSrc_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5750	v7/maincpu/ui_widgets/technichord_string_data.s:5484			
-v7	SLSrcBankList_FuncBody_Entry_Str_Colon_5	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5755	v7/maincpu/ui_widgets/technichord_string_data.s:5485			
-v7	SLSrcBankList_FuncBody_Str_ALL	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5707	v7/maincpu/ui_widgets/technichord_string_data.s:5457			
-v7	SLSrcBankList_FuncBody_Str_Colon_2	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5702	v7/maincpu/ui_widgets/technichord_string_data.s:5456			
-v7	SLSrcComposer_RowsPerColumn	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5741	v7/maincpu/ui_widgets/technichord_string_data.s:5479			
-v7	SeCtr2_DrawField_SetupPath_Records2	names-absent-symbol	SeCtr2_CursorBox	v10/maincpu/audio/sound_editor_ui.s:15176	v7/maincpu/audio/sound_editor_ui.s:15461			
-v7	SeCtr2_SetSelection	names-absent-symbol	UpdSeSel_DetailedUpdate_SetDisplayState_Helper	v10/maincpu/audio/semenu_routines.s:1654	v7/maincpu/audio/semenu_routines.s:1625			
-v7	SeCtr2_StepPartField	names-absent-symbol	SeCtr2_OnPartColumn	v10/maincpu/audio/semenu_routines.s:1917	v7/maincpu/audio/semenu_routines.s:1884			
-v7	SeEnv1_DrawEnvelopeLayout_Records2	names-absent-symbol	SeValText_Plus_Minus	v10/maincpu/audio/sound_editor_ui.s:13812	v7/maincpu/audio/sound_editor_ui.s:13899			
-v7	SeGfx_BoundOp06_ClipRect	names-absent-symbol	SeGfx_BoundOp06_PrintWord	v10/maincpu/ui_widgets/disk_warning_strings.s:1436	v7/maincpu/ui_widgets/disk_warning_strings.s:1422			
-v7	SeGfx_DrawLine	names-absent-symbol	SeMenu_DrawBandPassCurve SeMenu_DrawFilterGraph SeMenu_DrawKeyScaleGraph	v10/maincpu/audio/sound_editor_ui.s:8075	v7/maincpu/audio/sound_editor_ui.s:8037			
-v7	SeMenu_DrawLfoSelectedPartLine	names-absent-symbol	SeLfo1_DrawStaticScreen SeMenu_SelectPartAndRedraw	v10/maincpu/audio/sound_editor_ui.s:10059	v7/maincpu/audio/sound_editor_ui.s:9898			
+v7	SLDstBankList_FuncBody_Str_ALL	names-absent-symbol	SingleLoadDst_DrawComposerItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5826	v7/maincpu/ui_widgets/technichord_string_data.s:5527			
+v7	SLDstBankList_FuncBody_Str_Colon_2	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5784	v7/maincpu/ui_widgets/technichord_string_data.s:5509			
+v7	SLDstBankList_FuncBody_Str_Colon_3	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5794	v7/maincpu/ui_widgets/technichord_string_data.s:5513			
+v7	SLDstBankList_FuncBody_Str_Colon_5	names-absent-symbol	SingleLoadDst_DrawComposerBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5816	v7/maincpu/ui_widgets/technichord_string_data.s:5525			
+v7	SLDstBankList_FuncBody_Str_Colon_6	names-absent-symbol	SingleLoadDst_DrawComposerItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5821	v7/maincpu/ui_widgets/technichord_string_data.s:5526			
+v7	SLDstMemLabel_ColonSep	names-absent-symbol	SingleLoadDst_DrawSongRows	v10/maincpu/ui_widgets/technichord_string_data.s:5807	v7/maincpu/ui_widgets/technichord_string_data.s:5523			
+v7	SLDstSoundMem_RowsPerColumn	names-absent-symbol	SingleLoadDst_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5867	v7/maincpu/ui_widgets/technichord_string_data.s:5556			
+v7	SLSrcBankList_FuncBody_Entry_Str_ALL	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternSlot	v10/maincpu/ui_widgets/technichord_string_data.s:5736	v7/maincpu/ui_widgets/technichord_string_data.s:5475			
+v7	SLSrcBankList_FuncBody_Entry_Str_Colon_2	names-absent-symbol	SingleLoadSrc_ComposerDrawBankName	v10/maincpu/ui_widgets/technichord_string_data.s:5726	v7/maincpu/ui_widgets/technichord_string_data.s:5473			
+v7	SLSrcBankList_FuncBody_Entry_Str_Colon_3	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternSlot	v10/maincpu/ui_widgets/technichord_string_data.s:5731	v7/maincpu/ui_widgets/technichord_string_data.s:5474			
+v7	SLSrcBankList_FuncBody_Entry_Str_Colon_4	names-absent-symbol	SingleLoadSrc_DrawSoundMemBankRows	v10/maincpu/ui_widgets/technichord_string_data.s:5750	v7/maincpu/ui_widgets/technichord_string_data.s:5485			
+v7	SLSrcBankList_FuncBody_Entry_Str_Colon_5	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5755	v7/maincpu/ui_widgets/technichord_string_data.s:5486			
+v7	SLSrcBankList_FuncBody_Str_ALL	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5707	v7/maincpu/ui_widgets/technichord_string_data.s:5458			
+v7	SLSrcBankList_FuncBody_Str_Colon_2	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryNumber	v10/maincpu/ui_widgets/technichord_string_data.s:5702	v7/maincpu/ui_widgets/technichord_string_data.s:5457			
+v7	SLSrcComposer_RowsPerColumn	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5741	v7/maincpu/ui_widgets/technichord_string_data.s:5480			
+v7	SeCtr2_DrawField_SetupPath_Records2	names-absent-symbol	SeCtr2_CursorBox	v10/maincpu/audio/sound_editor_ui.s:15176	v7/maincpu/audio/sound_editor_ui.s:15540			
+v7	SeCtr2_SetSelection	names-absent-symbol	UpdSeSel_DetailedUpdate_SetDisplayState_Helper	v10/maincpu/audio/semenu_routines.s:1654	v7/maincpu/audio/semenu_routines.s:1631			
+v7	SeCtr2_StepPartField	names-absent-symbol	SeCtr2_OnPartColumn	v10/maincpu/audio/semenu_routines.s:1917	v7/maincpu/audio/semenu_routines.s:1894			
+v7	SeEnv1_DrawEnvelopeLayout_Records2	names-absent-symbol	SeValText_Plus_Minus	v10/maincpu/audio/sound_editor_ui.s:13812	v7/maincpu/audio/sound_editor_ui.s:13978			
+v7	SeGfx_BoundOp06_ClipRect	names-absent-symbol	SeGfx_BoundOp06_PrintWord	v10/maincpu/ui_widgets/disk_warning_strings.s:1436	v7/maincpu/ui_widgets/disk_warning_strings.s:1424			
+v7	SeGfx_DrawLine	names-absent-symbol	SeMenu_DrawBandPassCurve SeMenu_DrawFilterGraph SeMenu_DrawKeyScaleGraph	v10/maincpu/audio/sound_editor_ui.s:8075	v7/maincpu/audio/sound_editor_ui.s:8054			
+v7	SeMenu_DrawLfoSelectedPartLine	names-absent-symbol	SeLfo1_DrawStaticScreen SeMenu_SelectPartAndRedraw	v10/maincpu/audio/sound_editor_ui.s:10059	v7/maincpu/audio/sound_editor_ui.s:9974			
 v7	SeMenu_EditFilterCutoff	names-absent-symbol	SeMenu_DrawFilterGraph	v10/maincpu/display/scoop_editor_data.s:1976	v7/maincpu/display/scoop_editor_data.s:1992			
 v7	SeMenu_EditFilterResonance	names-absent-symbol	SeMenu_DrawFilterGraph	v10/maincpu/display/scoop_editor_data.s:2040	v7/maincpu/display/scoop_editor_data.s:2053			
-v7	SeMenu_GetNameBufferChar	names-absent-symbol	SeWrtMem_DrawPage	v10/maincpu/audio/semenu_routines.s:2416	v7/maincpu/audio/semenu_routines.s:2375			
+v7	SeMenu_GetNameBufferChar	names-absent-symbol	SeWrtMem_DrawPage	v10/maincpu/audio/semenu_routines.s:2416	v7/maincpu/audio/semenu_routines.s:2392			
 v7	SeMenu_SendToneIndex	names-absent-symbol	SeMenu_GetToneIndex	v10/maincpu/audio/semenu_routines.s:425	v7/maincpu/audio/semenu_routines.s:421			
-v7	SeMenu_StepParamFieldSigned	names-absent-symbol	SeMenu_StepParamField	v10/maincpu/audio/semenu_routines.s:1351	v7/maincpu/audio/semenu_routines.s:1328			
-v7	SeMenu_StepParamFieldUnsigned	names-absent-symbol	SeMenu_StepParamField	v10/maincpu/audio/semenu_routines.s:1267	v7/maincpu/audio/semenu_routines.s:1248			
-v7	SePitPit1_DrawField_Records	names-absent-symbol	SePitPit1_DrawField_Records2	v10/maincpu/audio/sound_editor_ui.s:14093	v7/maincpu/audio/sound_editor_ui.s:14214			
-v7	SeScreenData_0x3B15	names-absent-symbol	SeTonRan1_Field0_Record SeTonRan2_Field0_Record	v10/maincpu/audio/sound_editor_ui.s:14943	v7/maincpu/audio/sound_editor_ui.s:15190			
-v7	SeWrtMem_ChooseInitialSlot	names-absent-symbol	SeWrtMem_DrawPage	v10/maincpu/audio/semenu_routines.s:2311	v7/maincpu/audio/semenu_routines.s:2282			
-v7	SeqNode_SetPoolBaseToEventMemory	names-absent-symbol	MemConfig_Handler_1_Helper5 SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7750	v7/maincpu/display/scoop_display.s:7491			
+v7	SeMenu_StepParamFieldSigned	names-absent-symbol	SeMenu_StepParamField	v10/maincpu/audio/semenu_routines.s:1351	v7/maincpu/audio/semenu_routines.s:1331			
+v7	SeMenu_StepParamFieldUnsigned	names-absent-symbol	SeMenu_StepParamField	v10/maincpu/audio/semenu_routines.s:1267	v7/maincpu/audio/semenu_routines.s:1251			
+v7	SePitPit1_DrawField_Records	names-absent-symbol	SePitPit1_DrawField_Records2	v10/maincpu/audio/sound_editor_ui.s:14093	v7/maincpu/audio/sound_editor_ui.s:14293			
+v7	SeScreenData_0x3B15	names-absent-symbol	SeTonRan1_Field0_Record SeTonRan2_Field0_Record	v10/maincpu/audio/sound_editor_ui.s:14943	v7/maincpu/audio/sound_editor_ui.s:15269			
+v7	SeWrtMem_ChooseInitialSlot	names-absent-symbol	SeWrtMem_DrawPage	v10/maincpu/audio/semenu_routines.s:2311	v7/maincpu/audio/semenu_routines.s:2292			
+v7	SeqNode_SetPoolBaseToEventMemory	names-absent-symbol	MemConfig_Handler_1_Helper5 SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7750	v7/maincpu/display/scoop_display.s:7506			
 v7	SeqPlay_DecPunchCountIn	names-absent-symbol	SeqAccomp_SubChain_DecPunchParam	v10/maincpu/sequencer/sequencer_engine.s:545	v7/maincpu/sequencer/sequencer_engine.s:552			
 v7	SeqPlay_DecPunchInMeasure	names-absent-symbol	SeqAccomp_SubChain_DecPunchParam	v10/maincpu/sequencer/sequencer_engine.s:381	v7/maincpu/sequencer/sequencer_engine.s:398			
 v7	SeqPlay_DecPunchOutMeasure	names-absent-symbol	SeqAccomp_SubChain_DecPunchParam	v10/maincpu/sequencer/sequencer_engine.s:492	v7/maincpu/sequencer/sequencer_engine.s:504			
-v7	SingleLoadSrc_PanelMemBankSize	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5712	v7/maincpu/ui_widgets/technichord_string_data.s:5462			
-v7	SingleLoadSrc_ReadCmpPatternName	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternName	v10/maincpu/demo/file_demo_proc.s:6898	v7/maincpu/demo/file_demo_proc.s:6789			
-v7	SingleLoadSrc_ReadPmtBankName	names-absent-symbol	SingleLoadSrc_PanelMemDrawBankName	v10/maincpu/demo/file_demo_proc.s:6740	v7/maincpu/demo/file_demo_proc.s:6647			
-v7	SingleLoadSrc_ReadPmtMemoryName	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryName	v10/maincpu/demo/file_demo_proc.s:6791	v7/maincpu/demo/file_demo_proc.s:6692			
-v7	SingleLoadSrc_ReadTmSoundName	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemName	v10/maincpu/demo/file_demo_proc.s:6951	v7/maincpu/demo/file_demo_proc.s:6837			
-v7	SingleLoadSrc_ReadTmUserKitName	names-absent-symbol	SingleLoadSrc_DrawUserKitName	v10/maincpu/demo/file_demo_proc.s:7001	v7/maincpu/demo/file_demo_proc.s:6882			
-v7	SingleLoadSrc_SoundMemPageSize	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5765	v7/maincpu/ui_widgets/technichord_string_data.s:5493			
-v7	SingleLoad_PrepareSongSlot	names-absent-symbol	SingleLoad_FinishSongLoad	v10/maincpu/sequencer/sequencer_engine.s:25894	v7/maincpu/sequencer/sequencer_engine.s:25846			
+v7	SingleLoadSrc_PanelMemBankSize	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5712	v7/maincpu/ui_widgets/technichord_string_data.s:5463			
+v7	SingleLoadSrc_ReadCmpPatternName	names-absent-symbol	SingleLoadSrc_ComposerDrawPatternName	v10/maincpu/demo/file_demo_proc.s:6898	v7/maincpu/demo/file_demo_proc.s:6807			
+v7	SingleLoadSrc_ReadPmtBankName	names-absent-symbol	SingleLoadSrc_PanelMemDrawBankName	v10/maincpu/demo/file_demo_proc.s:6740	v7/maincpu/demo/file_demo_proc.s:6660			
+v7	SingleLoadSrc_ReadPmtMemoryName	names-absent-symbol	SingleLoadSrc_PanelMemDrawMemoryName	v10/maincpu/demo/file_demo_proc.s:6791	v7/maincpu/demo/file_demo_proc.s:6705			
+v7	SingleLoadSrc_ReadTmSoundName	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemName	v10/maincpu/demo/file_demo_proc.s:6951	v7/maincpu/demo/file_demo_proc.s:6855			
+v7	SingleLoadSrc_ReadTmUserKitName	names-absent-symbol	SingleLoadSrc_DrawUserKitName	v10/maincpu/demo/file_demo_proc.s:7001	v7/maincpu/demo/file_demo_proc.s:6900			
+v7	SingleLoadSrc_SoundMemPageSize	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemName_Epilogue	v10/maincpu/ui_widgets/technichord_string_data.s:5765	v7/maincpu/ui_widgets/technichord_string_data.s:5494			
+v7	SingleLoad_PrepareSongSlot	names-absent-symbol	SingleLoad_FinishSongLoad	v10/maincpu/sequencer/sequencer_engine.s:25894	v7/maincpu/sequencer/sequencer_engine.s:25868			
 v7	SndParam_ValueTablePtrPair	names-absent-symbol	SndParam_SetRegWord_Skip2	v10/maincpu/ui_widgets/widget_dispatch.s:92	v7/maincpu/ui_widgets/widget_dispatch.s:153			
-v7	SqSngSel_CalcSongUsageOnEnter	names-absent-symbol	SqSngSel_LeaveTitle	v10/maincpu/ui/setwall_routines.s:1943	v7/maincpu/ui/setwall_routines.s:1994			
-v7	SqStep_CheckCursorTrackUsed	names-absent-symbol	SqStep_RestoreOnLeave	v10/maincpu/display/scoop_display.s:12038	v7/maincpu/display/scoop_display.s:11681			
-v7	SqStep_CheckRhythmOrControlTrack	names-absent-symbol	TempoRingBuf_OnStyleSectionEvent	v10/maincpu/display/scoop_display.s:6731	v7/maincpu/display/scoop_display.s:6556			
-v7	SqStep_ClearRow2CellRecords	names-absent-symbol	MemConfig_Handler_5_Helper12	v10/maincpu/display/scoop_display.s:14151	v7/maincpu/display/scoop_display.s:13758			
-v7	SqStep_ClearRow3CellRecords	names-absent-symbol	MemConfig_Handler_5_Helper12	v10/maincpu/display/scoop_display.s:14163	v7/maincpu/display/scoop_display.s:13765			
-v7	SqStep_FlushPendingParamEvents	names-absent-symbol	SqStep_RestoreOnLeave SystemInit_StepHandler_0_Helper2	v10/maincpu/display/scoop_display.s:7049	v7/maincpu/display/scoop_display.s:6820			
-v7	SqStep_GetBeatInGridRow	names-absent-symbol	VoiceSlot_SkipWrapMarkers	v10/maincpu/display/scoop_display.s:5446	v7/maincpu/display/scoop_display.s:5374			
-v7	SqStep_LowestSetBitOfByte	names-absent-symbol	SqStep_AdvanceBySelectedNoteLength SysEx_BytecodeDispatcher_Tbl2	v10/maincpu/display/scoop_display.s:9901	v7/maincpu/display/scoop_display.s:9561			
-v7	SqStep_RestoreTrackType	names-absent-symbol	SqStep_InitOnEnter SqStep_RestoreOnLeave	v10/maincpu/display/scoop_display.s:8004	v7/maincpu/display/scoop_display.s:7714			
-v7	SqStep_SeekForwardByStep	names-absent-symbol	SqStep_ComputeStepAndGateTime	v10/maincpu/display/scoop_display.s:4815	v7/maincpu/display/scoop_display.s:4798			
-v7	SqStep_SetDisplayModeFromTrack	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7695	v7/maincpu/display/scoop_display.s:7440			
-v7	SqStep_SetPopupIdForDisplayMode	names-absent-symbol	SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7769	v7/maincpu/display/scoop_display.s:7502			
-v7	SqStep_SetupScreenForDisplayMode	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7528	v7/maincpu/display/scoop_display.s:7279			
-v7	SqStep_TrackSetupNullRet	names-absent-symbol	DpMdlySmfLyrTtl_NullRet SqStep_InitOnEnter SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7801	v7/maincpu/display/scoop_display.s:7529			
-v7	SqTrAsPsTtl_NullRet	names-absent-symbol	DpMdlySmfLyrTtl_NullRet	v10/maincpu/ui/setwall_routines.s:356	v7/maincpu/ui/setwall_routines.s:368			
+v7	SqSngSel_CalcSongUsageOnEnter	names-absent-symbol	SqSngSel_LeaveTitle	v10/maincpu/ui/setwall_routines.s:1943	v7/maincpu/ui/setwall_routines.s:1998			
+v7	SqStep_CheckCursorTrackUsed	names-absent-symbol	SqStep_RestoreOnLeave	v10/maincpu/display/scoop_display.s:12038	v7/maincpu/display/scoop_display.s:11704			
+v7	SqStep_CheckRhythmOrControlTrack	names-absent-symbol	TempoRingBuf_OnStyleSectionEvent	v10/maincpu/display/scoop_display.s:6731	v7/maincpu/display/scoop_display.s:6571			
+v7	SqStep_ClearRow2CellRecords	names-absent-symbol	MemConfig_Handler_5_Helper12	v10/maincpu/display/scoop_display.s:14151	v7/maincpu/display/scoop_display.s:13786			
+v7	SqStep_ClearRow3CellRecords	names-absent-symbol	MemConfig_Handler_5_Helper12	v10/maincpu/display/scoop_display.s:14163	v7/maincpu/display/scoop_display.s:13793			
+v7	SqStep_FlushPendingParamEvents	names-absent-symbol	SqStep_RestoreOnLeave SystemInit_StepHandler_0_Helper2	v10/maincpu/display/scoop_display.s:7049	v7/maincpu/display/scoop_display.s:6835			
+v7	SqStep_GetBeatInGridRow	names-absent-symbol	VoiceSlot_SkipWrapMarkers	v10/maincpu/display/scoop_display.s:5446	v7/maincpu/display/scoop_display.s:5382			
+v7	SqStep_LowestSetBitOfByte	names-absent-symbol	SqStep_AdvanceBySelectedNoteLength SysEx_BytecodeDispatcher_Tbl2	v10/maincpu/display/scoop_display.s:9901	v7/maincpu/display/scoop_display.s:9584			
+v7	SqStep_RestoreTrackType	names-absent-symbol	SqStep_InitOnEnter SqStep_RestoreOnLeave	v10/maincpu/display/scoop_display.s:8004	v7/maincpu/display/scoop_display.s:7729			
+v7	SqStep_SeekForwardByStep	names-absent-symbol	SqStep_ComputeStepAndGateTime	v10/maincpu/display/scoop_display.s:4815	v7/maincpu/display/scoop_display.s:4802			
+v7	SqStep_SetDisplayModeFromTrack	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7695	v7/maincpu/display/scoop_display.s:7455			
+v7	SqStep_SetPopupIdForDisplayMode	names-absent-symbol	SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7769	v7/maincpu/display/scoop_display.s:7517			
+v7	SqStep_SetupScreenForDisplayMode	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7528	v7/maincpu/display/scoop_display.s:7294			
+v7	SqStep_TrackSetupNullRet	names-absent-symbol	DpMdlySmfLyrTtl_NullRet SqStep_InitOnEnter SqStep_SetupCursorTrack	v10/maincpu/display/scoop_display.s:7801	v7/maincpu/display/scoop_display.s:7544			
+v7	SqTrAsPsTtl_NullRet	names-absent-symbol	DpMdlySmfLyrTtl_NullRet	v10/maincpu/ui/setwall_routines.s:356	v7/maincpu/ui/setwall_routines.s:372			
 v7	SqTrAs_PartInc_UpdateOkSw	names-absent-symbol	MiddleFuncCall_DispatchData_Helper	v10/maincpu/ui/setwall_routines.s:93	v7/maincpu/ui/setwall_routines.s:106			
 v7	SqTrAs_UpdateOkSwVisibility	names-absent-symbol	MiddleFuncCall_DispatchData_Helper	v10/maincpu/ui/setwall_routines.s:101	v7/maincpu/ui/setwall_routines.s:109			
-v7	Str_AllOption_EA0980	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemNumber_Join10	v10/maincpu/ui_widgets/technichord_string_data.s:5760	v7/maincpu/ui_widgets/technichord_string_data.s:5488			
-v7	Str_AllOption_EA09B2	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5789	v7/maincpu/ui_widgets/technichord_string_data.s:5511			
+v7	Str_AllOption_EA0980	names-absent-symbol	SingleLoadSrc_DrawSoundMemItemNumber_Join10	v10/maincpu/ui_widgets/technichord_string_data.s:5760	v7/maincpu/ui_widgets/technichord_string_data.s:5489			
+v7	Str_AllOption_EA09B2	names-absent-symbol	SingleLoadDst_DrawPanelMemItemRows	v10/maincpu/ui_widgets/technichord_string_data.s:5789	v7/maincpu/ui_widgets/technichord_string_data.s:5512			
 v7	StyleSong_MasterTable_LastEntry	names-absent-symbol	MasterSetup_DialTurn_Underflow	v10/maincpu/ui_widgets/style_bitmaps.s:659	v7/maincpu/ui_widgets/style_bitmaps.s:656			
-v7	SysEx_OnRolandGs_UseForRhythmPart	names-absent-symbol	SysEx_OnRolandGsParam	v10/maincpu/midi/midipkt_routines.s:1361	v7/maincpu/midi/midipkt_routines.s:859			
+v7	SysEx_OnRolandGs_UseForRhythmPart	names-absent-symbol	SysEx_OnRolandGsParam	v10/maincpu/midi/midipkt_routines.s:1361	v7/maincpu/midi/midipkt_routines.s:867			
 v7	SysEx_OnTechnicsParamChange_Addr00	names-absent-symbol	SysEx_OnTechnicsParamChange	v10/maincpu/midi/midi_dispatch_handlers.s:14205	v7/maincpu/midi/midi_dispatch_handlers.s:12884			
 v7	SysEx_OnTechnicsParamRequest_Addr00	names-absent-symbol	SysEx_OnTechnicsParamRequest	v10/maincpu/midi/midi_dispatch_handlers.s:15357	v7/maincpu/midi/midi_dispatch_handlers.s:13974			
-v7	TempoRingBuf_DiscardAll	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7759	v7/maincpu/display/scoop_display.s:7496			
-v7	TempoRingBuf_PeekStatusByte	names-absent-symbol	VoiceState_DataBlock2_Code_Loop	v10/maincpu/display/scoop_display.s:12074	v7/maincpu/display/scoop_display.s:11712			
+v7	TempoRingBuf_DiscardAll	names-absent-symbol	SqStep_InitOnEnter	v10/maincpu/display/scoop_display.s:7759	v7/maincpu/display/scoop_display.s:7511			
+v7	TempoRingBuf_PeekStatusByte	names-absent-symbol	VoiceState_DataBlock2_Code_Loop	v10/maincpu/display/scoop_display.s:12074	v7/maincpu/display/scoop_display.s:11735			
 v7	Text_GlyphToCharCode	names-absent-symbol	SeWrtMem_DrawPage	v10/maincpu/display/graphics_text_vga.s:2293	v7/maincpu/display/graphics_text_vga.s:2261			
 v7	ToneData_EffectParamWords	names-absent-symbol	ToneData_LookupEffectParam_Helper	v10/maincpu/sequencer/accompaniment_engine.s:23272	v7/maincpu/sequencer/accompaniment_engine.s:22285			
 v7	ToneGen_ParamTable_0x306	names-absent-symbol	SeMenu_CopyWriteUpdate_Epilogue35	v10/maincpu/kn5000_v10_program.s:1127	v7/maincpu/kn5000_v7_program.s:1127			
 v7	ToneGen_ParamTable_0x31A	names-absent-symbol	SeMenu_CopyWriteUpdate_Epilogue36	v10/maincpu/kn5000_v10_program.s:1140	v7/maincpu/kn5000_v7_program.s:1140			
+v7	VoiceSlot_CheckCursorAtTrackStart	names-absent-symbol	MemConfig_Handler_1_Helper4	v10/maincpu/display/scoop_display.s:11929	v7/maincpu/display/scoop_display.s:11596			
 v7	WorkRam2_CallbackIndex	names-absent-symbol	PanelTag70_UpdateAudioConfig_Skip4	v10/maincpu/ui/char_encoding_naka_state.s:80	v7/maincpu/ui/char_encoding_naka_state.s:84			
 v7	WorkRam2_EffectSelectByte	names-absent-symbol	PanelTag70_UpdateAudioConfig_Skip3	v10/maincpu/ui/char_encoding_naka_state.s:85	v7/maincpu/ui/char_encoding_naka_state.s:89			
-v7	Xapr_DetectOnInit	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:507	v7/maincpu/factory_test/test_init.s:628			
-v7	Xapr_InitPhase1_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:523	v7/maincpu/factory_test/test_init.s:640			
-v7	Xapr_InitPhase2_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:529	v7/maincpu/factory_test/test_init.s:643			
-v7	Xapr_InitPhase3_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:535	v7/maincpu/factory_test/test_init.s:646			
+v7	Xapr_DetectOnInit	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:507	v7/maincpu/factory_test/test_init.s:634			
+v7	Xapr_InitPhase1_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:523	v7/maincpu/factory_test/test_init.s:646			
+v7	Xapr_InitPhase2_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:529	v7/maincpu/factory_test/test_init.s:649			
+v7	Xapr_InitPhase3_NullRet	names-absent-symbol	Xapr_InitFuncTable	v10/maincpu/factory_test/test_init.s:535	v7/maincpu/factory_test/test_init.s:652			
+v7	AccompSeq_MidiFilterCodeBlock_Step	ported-ram-remap	0x7e78->0x7ddc, 0x7f0b->0x7e6f, 0xe3e0->0xe31a	v10/maincpu/sequencer/accompseq_routines.s:1681	v7/maincpu/sequencer/accompseq_routines.s:1625			scripted (RAM remap tier)
+v7	AccompSeq_MidiFilterCodeBlock_Step2	ported-ram-remap	0x7e78->0x7ddc, 0x7e79->0x7ddd, 0xe3de->0xe318	v10/maincpu/sequencer/accompseq_routines.s:1707	v7/maincpu/sequencer/accompseq_routines.s:1651			scripted (RAM remap tier)
+v7	COMM_SendEqualizerOnOff	ported-ram-remap	0xe35a->0xe2be	v10/maincpu/audio/note_voice_mapping.s:26430	v7/maincpu/audio/note_voice_mapping.s:24495			scripted (RAM remap tier)
+v7	CPanel_SendInitSequence	ported-ram-remap	0x8d92->0x8cf6, 0x8d9d->0x8d01, 0x8d9f->0x8d03, 0x8dfd->0x8d61	v10/maincpu/ui/cpanel_routines.s:145	v7/maincpu/ui/cpanel_routines.s:124			scripted (RAM remap tier)
+v7	CmpBkslSTtl_EventPost	ported-ram-remap	0x350c->0x3470	v10/maincpu/sequencer/accompaniment_engine.s:31533	v7/maincpu/sequencer/accompaniment_engine.s:30181			scripted (RAM remap tier)
+v7	CmpBkslSTtl_FillIn8	ported-ram-remap	0x350c->0x3470	v10/maincpu/sequencer/accompaniment_engine.s:31504	v7/maincpu/sequencer/accompaniment_engine.s:30156			scripted (RAM remap tier)
+v7	CmpEsyTtl_SubModeB	ported-ram-remap	0x34d6->0x343a, 0x37c7->0x372b	v10/maincpu/sequencer/accompaniment_engine.s:32269	v7/maincpu/sequencer/accompaniment_engine.s:30948			scripted (RAM remap tier)
+v7	CmpMenuTtl_SetBit4	ported-ram-remap	0x34cd->0x3431	v10/maincpu/sequencer/accompaniment_engine.s:30653	v7/maincpu/sequencer/accompaniment_engine.s:29278			scripted (RAM remap tier)
+v7	CmpMenuTtl_SetBit5	ported-ram-remap	0x34cd->0x3431	v10/maincpu/sequencer/accompaniment_engine.s:30645	v7/maincpu/sequencer/accompaniment_engine.s:29272			scripted (RAM remap tier)
+v7	CmpSetTtl_ModeSwitch	ported-ram-remap	0x350c->0x3470	v10/maincpu/sequencer/accompaniment_engine.s:30701	v7/maincpu/sequencer/accompaniment_engine.s:29322			scripted (RAM remap tier)
+v7	CmpSetTtl_StepEntryByte2	ported-ram-remap	0x39aa->0x390e	v10/maincpu/sequencer/accompaniment_engine.s:27137	v7/maincpu/sequencer/accompaniment_engine.s:25791			scripted (RAM remap tier)
+v7	CmpSetTtl_StepEntryByte2_Impl	ported-ram-remap	0x39aa->0x390e	v10/maincpu/sequencer/accompaniment_engine.s:27146	v7/maincpu/sequencer/accompaniment_engine.s:25796			scripted (RAM remap tier)
+v7	CmpSetTtl_StepEntryByte5	ported-ram-remap	0x39aa->0x390e	v10/maincpu/sequencer/accompaniment_engine.s:27177	v7/maincpu/sequencer/accompaniment_engine.s:25823			scripted (RAM remap tier)
+v7	CmpSetTtl_StepEntryByte5_Impl	ported-ram-remap	0x39aa->0x390e	v10/maincpu/sequencer/accompaniment_engine.s:27186	v7/maincpu/sequencer/accompaniment_engine.s:25828			scripted (RAM remap tier)
+v7	Display_RedrawStatusBar	ported-ram-remap	0x8d38->0x8c9c	v10/maincpu/display/scoop_display.s:17034	v7/maincpu/display/scoop_display.s:16557			scripted (RAM remap tier)
+v7	FDC_CMD_HANDLER_BASE	ported-ram-remap	0x8a24->0x8988	v10/maincpu/storage/fdc_routines.s:327	v7/maincpu/storage/fdc_routines.s:320			scripted (RAM remap tier)
+v7	FDC_COMMAND_DISPATCHER	ported-ram-remap	0x8a2a->0x898e, 0x8a40->0x89a4	v10/maincpu/storage/fdc_routines.s:316	v7/maincpu/storage/fdc_routines.s:310			scripted (RAM remap tier)
+v7	FDC_ClearStatus_InitTimer	ported-ram-remap	0x8a24->0x8988	v10/maincpu/storage/fdc_routines.s:1341	v7/maincpu/storage/fdc_routines.s:1299			scripted (RAM remap tier)
+v7	FDC_MODE_CONFIG	ported-ram-remap	0x8a12->0x8976, 0x8a24->0x8988, 0x8a29->0x898d, 0x8a2b->0x898f, 0x8a2c->0x8990, 0x8a2e->0x8992, 0x8a33->0x8997, 0x8a34->0x8998, 0x8a36->0x899a, 0x8a6c->0x89d0, 	v10/maincpu/storage/fdc_routines.s:1722	v7/maincpu/storage/fdc_routines.s:1663			scripted (RAM remap tier)
+v7	MainExeCall_OnTitleSqadvdly	ported-ram-remap	0x7f42->0x7ea6	v10/maincpu/sequencer/sequencer_engine.s:25325	v7/maincpu/sequencer/sequencer_engine.s:25318			scripted (RAM remap tier)
+v7	MainExeCall_OnTitleSqnotecng	ported-ram-remap	0x7f42->0x7ea6	v10/maincpu/sequencer/sequencer_engine.s:25310	v7/maincpu/sequencer/sequencer_engine.s:25305			scripted (RAM remap tier)
+v7	MainExeCall_OnTitleSqtrns	ported-ram-remap	0x7f42->0x7ea6	v10/maincpu/sequencer/sequencer_engine.s:25268	v7/maincpu/sequencer/sequencer_engine.s:25267			scripted (RAM remap tier)
+v7	MainExe_DispatchEntry	ported-ram-remap	0xe38c->0xe2f0	v10/maincpu/sequencer/sequencer_engine.s:24969	v7/maincpu/sequencer/sequencer_engine.s:24972			scripted (RAM remap tier)
+v7	MainMspRgpSetFunc_OnRgpPadDn	ported-ram-remap	0x7f0b->0x7e6f	v10/maincpu/sequencer/accompaniment_engine.s:33787	v7/maincpu/sequencer/accompaniment_engine.s:32532			scripted (RAM remap tier)
+v7	MainTitleCtrl_ChangeTitle	ported-ram-remap	0x8d36->0x8c9a, 0x8d37->0x8c9b, 0x8d38->0x8c9c, 0x8d39->0x8c9d	v10/maincpu/ui/ui_control_panel.s:2785	v7/maincpu/ui/ui_control_panel.s:2817			scripted (RAM remap tier)
+v7	MidiPkt_SendCtlWordValueSysEx	ported-ram-remap	0xbc5c->0xbbc0	v10/maincpu/midi/midipkt_routines.s:678	v7/maincpu/midi/midipkt_routines.s:224			scripted (RAM remap tier)
+v7	MspMenuTtl_Init	ported-ram-remap	0x7f0b->0x7e6f	v10/maincpu/sequencer/accompaniment_engine.s:33773	v7/maincpu/sequencer/accompaniment_engine.s:32520			scripted (RAM remap tier)
+v7	MspRecTtl_SubA	ported-ram-remap	0x7f14->0x7e78, 0x7f3f->0x7ea3	v10/maincpu/sequencer/accompaniment_engine.s:33968	v7/maincpu/sequencer/accompaniment_engine.s:32724			scripted (RAM remap tier)
+v7	ParaLoadOpt_CaseD	ported-ram-remap	0xbd10->0xbc74	v10/maincpu/midi/param_load_routines.s:181	v7/maincpu/midi/param_load_routines.s:178			scripted (RAM remap tier)
+v7	ParaLoadOpt_CaseE	ported-ram-remap	0xbd14->0xbc78	v10/maincpu/midi/param_load_routines.s:195	v7/maincpu/midi/param_load_routines.s:190			scripted (RAM remap tier)
+v7	ParaLoadOpt_CaseF	ported-ram-remap	0xbd0c->0xbc70	v10/maincpu/midi/param_load_routines.s:209	v7/maincpu/midi/param_load_routines.s:202			scripted (RAM remap tier)
+v7	RhythmParam_TypeCheck	ported-ram-remap	0x3997->0x38fb, 0x3998->0x38fc	v10/maincpu/sequencer/accompaniment_engine.s:28551	v7/maincpu/sequencer/accompaniment_engine.s:27195			scripted (RAM remap tier)
+v7	S2cTtl_SecondaryHandler	ported-ram-remap	0x3a77->0x39db	v10/maincpu/sequencer/accompaniment_engine.s:32582	v7/maincpu/sequencer/accompaniment_engine.s:31256			scripted (RAM remap tier)
+v7	SeqAccomp_StartHelper	ported-ram-remap	0x8d36->0x8c9a	v10/maincpu/sequencer/sequencer_engine.s:23424	v7/maincpu/sequencer/sequencer_engine.s:23454			scripted (RAM remap tier)
+v7	SqStep_SeekForwardByDistance	ported-ram-remap	0x7f42->0x7ea6	v10/maincpu/display/scoop_display.s:4821	v7/maincpu/display/scoop_display.s:4804			scripted (RAM remap tier)
+v7	SubCPU_RequestShortSoundName	ported-ram-remap	0xe197->0xe0fb, 0xe2cc->0xe230, 0xe2d3->0xe237	v10/maincpu/audio/note_voice_mapping.s:25851	v7/maincpu/audio/note_voice_mapping.s:23975			scripted (RAM remap tier)
+v7	SubCPU_RequestSoundName	ported-ram-remap	0xe197->0xe0fb, 0xe2b8->0xe21c, 0xe2bf->0xe223	v10/maincpu/audio/note_voice_mapping.s:25806	v7/maincpu/audio/note_voice_mapping.s:23935			scripted (RAM remap tier)
 v7	AppEvent_SubDispatch_CaseTable	quotes-rom-address	0xf448a4	v10/maincpu/ui_widgets/widget_descriptors.s:4194	v7/maincpu/ui_widgets/widget_descriptors.s:4187			
 v7	AppEvent_SubDispatch_CaseTable_2	quotes-rom-address	0xf448a4	v10/maincpu/ui_widgets/widget_descriptors.s:4213	v7/maincpu/ui_widgets/widget_descriptors.s:4206			
 v7	AudioInit_ChannelMapB	quotes-rom-address	0xFDEC16	v10/maincpu/ui_widgets/widget_dispatch.s:7305	v7/maincpu/ui_widgets/widget_dispatch.s:7351			
@@ -1191,7 +1184,7 @@ v7	MidiPB_PartTargets	quotes-rom-address	0xFD03D8	v10/maincpu/midi/midi_dispatch
 v7	MidiPC_PartTargets	quotes-rom-address	0xFD039C	v10/maincpu/midi/midi_dispatch_handlers.s:2463	v7/maincpu/midi/midi_dispatch_handlers.s:1993			
 v7	MidiPkt_EventType_Table	quotes-rom-address	0xFDA03B	v10/maincpu/ui_widgets/widget_dispatch.s:1571	v7/maincpu/ui_widgets/widget_dispatch.s:1617			
 v7	MidiRx_PartLookup_ByteMap	quotes-rom-address	0xFD759F	v10/maincpu/ui_widgets/widget_dispatch.s:3322	v7/maincpu/ui_widgets/widget_dispatch.s:3368			
-v7	MidiRx_ProgramChangeModeTable	quotes-rom-address	0xFCCB74	v10/maincpu/audio/audio_control_engine.s:11828	v7/maincpu/audio/audio_control_engine.s:11097			
+v7	MidiRx_ProgramChangeModeTable	quotes-rom-address	0xFCCB74	v10/maincpu/audio/audio_control_engine.s:11828	v7/maincpu/audio/audio_control_engine.s:11119			
 v7	MidiRx_ToneParam_ByteMap	quotes-rom-address	0xFD740A	v10/maincpu/ui_widgets/widget_dispatch.s:3318	v7/maincpu/ui_widgets/widget_dispatch.s:3364			
 v7	MidiSysEx_BlockHandlers	quotes-rom-address	0xFD827D	v10/maincpu/ui_widgets/widget_dispatch.s:1429	v7/maincpu/ui_widgets/widget_dispatch.s:1478			
 v7	MtName_PtrTable	quotes-rom-address	0xe2106a	v10/maincpu/ui_widgets/naka_direct_play_dispatch.s:249	v7/maincpu/ui_widgets/naka_direct_play_dispatch.s:256			
@@ -1217,7 +1210,7 @@ v7	SeqChan_WriteFieldHandlers	quotes-rom-address	0xFD80B2	v10/maincpu/ui_widgets
 v7	SeqDataFmt_SwitchOffsets	quotes-rom-address	0xFD8F2A	v10/maincpu/ui_widgets/widget_dispatch.s:1539	v7/maincpu/ui_widgets/widget_dispatch.s:1585			
 v7	SeqInit_InitFuncTable	quotes-rom-address	0xfd8137	v10/maincpu/ui_widgets/widget_descriptors.s:3928	v7/maincpu/ui_widgets/widget_descriptors.s:3921			
 v7	SeqStep_ByteBlockEA5F	quotes-rom-address	0xFD8238	v10/maincpu/sequencer/seq_step_routines.s:3055	v7/maincpu/sequencer/seq_step_routines.s:3055			
-v7	Seq_LoadDisplayResource	quotes-rom-address	F88C48	v10/maincpu/demo/fdemotext_routines.s:2959	v7/maincpu/demo/fdemotext_routines.s:2988			
+v7	Seq_LoadDisplayResource	quotes-rom-address	F88C48	v10/maincpu/demo/fdemotext_routines.s:2959	v7/maincpu/demo/fdemotext_routines.s:2994			
 v7	SoundProgram_DispatchTable	quotes-rom-address	0xFC95CE	v10/maincpu/extensions/extension_data.s:3014	v7/maincpu/extensions/extension_data.s:3028			
 v7	Suna_ResMethodCount_1E4	quotes-rom-address	0xe176d2	v10/maincpu/ui_widgets/naka_property_descriptors.s:692	v7/maincpu/ui_widgets/naka_property_descriptors.s:703			
 v7	SysExBulk_FrameTemplate0	quotes-rom-address	0xFDA9B1	v10/maincpu/ui_widgets/widget_dispatch.s:1811	v7/maincpu/ui_widgets/widget_dispatch.s:1857			
@@ -1233,8 +1226,8 @@ v7	SysEx_Msg_35A0	quotes-rom-address	0xFD7A34	v10/maincpu/ui_widgets/widget_disp
 v7	SysEx_Msg_35A6	quotes-rom-address	0xFD7A59	v10/maincpu/ui_widgets/widget_dispatch.s:1979	v7/maincpu/ui_widgets/widget_dispatch.s:2025			
 v7	SysEx_Msg_35AC	quotes-rom-address	0xFD7A59	v10/maincpu/ui_widgets/widget_dispatch.s:1983	v7/maincpu/ui_widgets/widget_dispatch.s:2029			
 v7	SysEx_Msg_35B8	quotes-rom-address	0xFD6AD2	v10/maincpu/ui_widgets/widget_dispatch.s:1991	v7/maincpu/ui_widgets/widget_dispatch.s:2037			
-v7	SystemInit_StepHandler_0_Tbl	quotes-rom-address	0xEFB875	v10/maincpu/display/scoop_display.s:9479	v7/maincpu/display/scoop_display.s:9168			
-v7	Tbl_AccompPartNames	quotes-rom-address	0xF00001	v10/maincpu/display/scoop_display.s:16191	v7/maincpu/display/scoop_display.s:15677			
+v7	SystemInit_StepHandler_0_Tbl	quotes-rom-address	0xEFB875	v10/maincpu/display/scoop_display.s:9479	v7/maincpu/display/scoop_display.s:9189			
+v7	Tbl_AccompPartNames	quotes-rom-address	0xF00001	v10/maincpu/display/scoop_display.s:16191	v7/maincpu/display/scoop_display.s:15730			
 v7	VocalistGridCheck_LswCaseTable	quotes-rom-address	0xf73534	v10/maincpu/ui_widgets/naka_widget_tables_2.s:1386	v7/maincpu/ui_widgets/naka_widget_tables_2.s:1383			
 v7	VoiceEvent_SwitchOffsets	quotes-rom-address	0xFE127D	v10/maincpu/ui_widgets/widget_dispatch.s:7362	v7/maincpu/ui_widgets/widget_dispatch.s:7408			
 v7	VolumeMixer_SwitchOffsets	quotes-rom-address	0xFDE514	v10/maincpu/ui_widgets/widget_dispatch.s:7287	v7/maincpu/ui_widgets/widget_dispatch.s:7333			
@@ -1302,14 +1295,14 @@ v7	Yoko_FunctionTable_107	quotes-source-line	sequencer/sequencer_ui.s:17	v10/mai
 v7	Yoko_FunctionTable_407	quotes-source-line	sequencer/sequencer_ui.s:18	v10/maincpu/ui_widgets/naka_direct_play_dispatch.s:319	v7/maincpu/ui_widgets/naka_direct_play_dispatch.s:329			
 v7	Yoko_ResEventCount_1C7	quotes-source-line	sequencer/sequencer_ui.s:13	v10/maincpu/ui_widgets/naka_direct_play_dispatch.s:245	v7/maincpu/ui_widgets/naka_direct_play_dispatch.s:251			
 v7	AccVoice_IndexedTableLookup_BaseOffsets_Data	spelling-differs	above	v10/maincpu/sequencer/accompaniment_engine.s:10754	v7/maincpu/sequencer/accompaniment_engine.s:10366			
-v7	DisplayStr_WriteIncomingControlLine	spelling-differs	line	v10/maincpu/display/scoop_display.s:14553	v7/maincpu/display/scoop_display.s:14159			
-v7	FDTest_String_CannotOpenReadFile	spelling-differs	line	v10/maincpu/factory_test/fd_test_data.s:467	v7/maincpu/factory_test/fd_test_data.s:430			
-v7	FDTest_String_DataCompare	spelling-differs	line	v10/maincpu/factory_test/fd_test_data.s:476	v7/maincpu/factory_test/fd_test_data.s:438			
-v7	Fat_ReadFile	spelling-differs	line	v10/maincpu/sequencer/smf_event_processor.s:7069	v7/maincpu/sequencer/smf_event_processor.s:6987			
-v7	Fat_WriteFile	spelling-differs	line	v10/maincpu/sequencer/smf_event_processor.s:7321	v7/maincpu/sequencer/smf_event_processor.s:7235			
-v7	SeMenu_DrawEnvKeyOffFields	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:9473	v7/maincpu/audio/sound_editor_ui.s:9339			
-v7	SeMenu_DrawKeyboardGraphic	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:8444	v7/maincpu/audio/sound_editor_ui.s:8389			
-v7	SeMenu_DrawKeyboardOctave	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:8527	v7/maincpu/audio/sound_editor_ui.s:8468			
+v7	DisplayStr_WriteIncomingControlLine	spelling-differs	line	v10/maincpu/display/scoop_display.s:14553	v7/maincpu/display/scoop_display.s:14187			
+v7	FDTest_String_CannotOpenReadFile	spelling-differs	line	v10/maincpu/factory_test/fd_test_data.s:467	v7/maincpu/factory_test/fd_test_data.s:460			
+v7	FDTest_String_DataCompare	spelling-differs	line	v10/maincpu/factory_test/fd_test_data.s:476	v7/maincpu/factory_test/fd_test_data.s:468			
+v7	Fat_ReadFile	spelling-differs	line	v10/maincpu/sequencer/smf_event_processor.s:7069	v7/maincpu/sequencer/smf_event_processor.s:7008			
+v7	Fat_WriteFile	spelling-differs	line	v10/maincpu/sequencer/smf_event_processor.s:7321	v7/maincpu/sequencer/smf_event_processor.s:7256			
+v7	SeMenu_DrawEnvKeyOffFields	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:9473	v7/maincpu/audio/sound_editor_ui.s:9412			
+v7	SeMenu_DrawKeyboardGraphic	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:8444	v7/maincpu/audio/sound_editor_ui.s:8420			
+v7	SeMenu_DrawKeyboardOctave	spelling-differs	line	v10/maincpu/audio/sound_editor_ui.s:8527	v7/maincpu/audio/sound_editor_ui.s:8499			
 v9	DrawDottedLine_Impl	body-differs	v10 jrl le,DrawDottedLine_Impl_Skip15 | v9 jrl le,ClampColorToRange_Skip15	v10/maincpu/ui/ui_window_procs.s:4052	v9/maincpu/ui/ui_window_procs.s:4046	78	288	
 v9	SeFil_DrawModeCaption_Records	body-differs	"v10 .incbin ""includes/generated/se_setup_nav_full.bin"",0,35 | v9 sd_op23 33,3*40+14"	v10/maincpu/audio/sound_editor_ui.s:13326	v9/maincpu/audio/sound_editor_ui.s:13405	1	2	
 v9	SeMenu_DrawLfoPartSwitches	body-differs	v10 jrl z,SeMenu_PresetBrowser_Data_Sub_Join | v9 jrl z,SeMenu_DrawLfoPartSwitches_Join	v10/maincpu/audio/sound_editor_ui.s:9241	v9/maincpu/audio/sound_editor_ui.s:9233	9	95	
@@ -1379,10 +1372,10 @@ v9	MemScreen_NoteG	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s
 v9	MemScreen_Space1	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3669	v9/maincpu/ui_widgets/style_bitmaps.s:3669			
 v9	MemScreen_Space2	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3674	v9/maincpu/ui_widgets/style_bitmaps.s:3674			
 v9	MemScreen_Space3	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3679	v9/maincpu/ui_widgets/style_bitmaps.s:3679			
-v9	MidiCC_BankSelectModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12119	v9/maincpu/audio/audio_control_engine.s:12056			
-v9	MidiRx_ProgramChangeModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:11828	v9/maincpu/audio/audio_control_engine.s:11769			
+v9	MidiCC_BankSelectModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12119	v9/maincpu/audio/audio_control_engine.s:12071			
+v9	MidiRx_ProgramChangeModeTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:11828	v9/maincpu/audio/audio_control_engine.s:11784			
 v9	MidiSetup_PageIndicatorRect	mentions-version	v10	v10/maincpu/ui_widgets/naka_widget_tables_2.s:945	v9/maincpu/ui_widgets/naka_widget_tables_2.s:942			
-v9	MidiStream_PanelEventHandlerTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12246	v9/maincpu/audio/audio_control_engine.s:12181			
+v9	MidiStream_PanelEventHandlerTable	mentions-version	v10	v10/maincpu/audio/audio_control_engine.s:12246	v9/maincpu/audio/audio_control_engine.s:12196			
 v9	NakaInst_A_a0	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3699	v9/maincpu/ui_widgets/style_bitmaps.s:3699			
 v9	NakaInst_B_a0	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3689	v9/maincpu/ui_widgets/style_bitmaps.s:3689			
 v9	NakaInst_D_a0_ECFF5C	mentions-version	_v10_	v10/maincpu/ui_widgets/style_bitmaps.s:3734	v9/maincpu/ui_widgets/style_bitmaps.s:3734			

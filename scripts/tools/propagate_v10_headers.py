@@ -36,6 +36,15 @@ QUESTION ANSWERED / JOB IT DOES
     "spelled", "below", ...), which is exactly what differs; in-body lines do not pair up
     across different spellings.
 
+    RAM-REMAP TIER (remapped_header).  v7 keeps many variables at other RAM addresses (a
+    region sits 156 bytes lower).  A body whose lines pair up and differ only in RAM operands
+    -- literal numbers below 0x40000 less than 0x400 apart, moved `.equ` values, or call targets
+    that are the same routine under another name -- and whose bytes differ only there (and in
+    relocated pointers), gets v10's header with each such RAM number rewritten to the target's.
+    Any other 3-5-digit hex number in the header must be spelled in the body (a constant),
+    or the header is refused.  Only targets without a header take this tier; each port is listed
+    in the review list as `ported-ram-remap` with its mapping.
+
     Labels failing any test go to the review list (analysis/header-propagation/review-<date>.tsv)
     with the reason.  Rows whose `handport` column is filled in (a hand port, or a decision not
     to port) are kept verbatim when the list is regenerated.
@@ -116,7 +125,8 @@ CODE_LABEL = re.compile(r'^([A-Za-z_.][\w.$]*):')
 def norm_code(code):
     """Comparable form of one code line (comment already removed); '' for nothing.  Outside
     "strings": numbers become decimal (0x04 = 4 = 0x0004), register names lower case, and
-    whitespace goes (around , + - * ( ) entirely, elsewhere it collapses to one space).
+    whitespace goes (around , + - * ( ) entirely, elsewhere it collapses to one space), and
+    an explicit always-true condition (`jr t, X`) is dropped.
     Symbol names keep their case: the trees hold case twins that are different symbols."""
     s = code.strip()
     if not s:
@@ -130,7 +140,8 @@ def norm_code(code):
         t = REG.sub(lambda h: h.group(0).lower(), t)
         t = re.sub(r'\s*([,+\-*()])\s*', r'\1', t)
         parts[n] = re.sub(r'\s+', ' ', t)
-    return '"'.join(parts)
+    s = '"'.join(parts)
+    return re.sub(r'^(jrl?|jp|call|calr) t,', r'\1 ', s)    # `t` (always) is the default
 
 
 class Tree:
@@ -168,14 +179,18 @@ class Tree:
         elf = os.path.join(REPO, "rebuilt_ROMs", "kn5000_%s_program.llvm.elf" % self.ver)
         out = subprocess.run([NM, "--defined-only", elf], capture_output=True, text=True,
                              check=True).stdout
-        self.addr, self.symbols = {}, set()
+        self.addr, self.symbols, self.value = {}, set(), {}
         for line in out.splitlines():
             parts = line.split()
             if len(parts) != 3:
                 continue
             self.symbols.add(parts[2])
+            self.value[parts[2]] = int(parts[0], 16)
             if parts[1].lower() == "t":
                 self.addr[parts[2]] = int(parts[0], 16)
+        self.names_at = collections.defaultdict(set)
+        for n, a in self.addr.items():
+            self.names_at[a].add(n)
         self.sorted_addr = sorted((a, n) for n, a in self.addr.items())
         self.sorted_keys = [a for a, _ in self.sorted_addr]
         self.rom = open(os.path.join(REPO, "original_ROMs",
@@ -258,8 +273,16 @@ def same_code(a, b):
     return True
 
 
+def same_target(x, y, src, dst):
+    """Do v10 ROM address x and target ROM address y name the same thing?  Yes when one label
+    sits at both under the same name (the trees' own correspondence), or when translate_addr
+    maps x onto y."""
+    return bool(src.names_at.get(x, set()) & dst.names_at.get(y, set())) or \
+        translate_addr(x, src, dst) == y
+
+
 def pointers_correspond(a, b, src, dst):
-    """Same bytes, except 3-byte ROM addresses that translate_addr maps onto each other: the
+    """Same bytes, except 3-byte ROM addresses that name the same thing (same_target): the
     proof for a body the two trees spell differently (`.incbin` vs records, `.long Sym` vs
     `.byte`, `0xff` vs `255`).  Stricter than same_code, which accepts any two addresses."""
     if len(a) != len(b):
@@ -272,12 +295,114 @@ def pointers_correspond(a, b, src, dst):
         for j in (i - 2, i - 1, i):
             if 0 <= j and j + 3 <= len(a):
                 x, y = int.from_bytes(a[j:j + 3], "little"), int.from_bytes(b[j:j + 3], "little")
-                if 0xE00000 <= x <= 0xFFFFFF and translate_addr(x, src, dst) == y:
+                if 0xE00000 <= x <= 0xFFFFFF and same_target(x, y, src, dst):
                     i = j + 3
                     break
         else:
             return False
     return True
+
+
+RAM_TOP = 0x40000      # RAM operands the trees move between builds lie below this
+RAM_SHIFT = 0x400      # ... and move by less than this (v7's region sits 156 bytes lower)
+TOKEN = re.compile(r'[A-Za-z_.][\w.$]*|\d+|\S')
+HEXNUM = re.compile(r'\b0[xX][0-9A-Fa-f]{3,5}\b')
+
+
+def ram_pairs(sb, db, src, dst):
+    """For bodies of the same shape that differ only in RAM operands: {v10 value: target value},
+    or None.  Lines must pair up and differ token for token only where (a) both tokens are
+    numbers below RAM_TOP, less than RAM_SHIFT apart, (b) both are code labels that
+    translate_addr maps onto each other (the same routine under another name), or (c) both are
+    the same `.equ` whose value moved.  The same symbol with a moved value counts as (c) on equal
+    lines too.  The mapping must be one-to-one."""
+    if len(sb) != len(db):
+        return None
+    pairs = {}
+
+    def add(x, y):
+        if x == y:
+            return True
+        if not (x < RAM_TOP and y < RAM_TOP and abs(x - y) < RAM_SHIFT):
+            return False
+        if pairs.get(x, y) != y or (y in pairs.values() and pairs.get(x) != y):
+            return False
+        pairs[x] = y
+        return True
+
+    def value_pair(x, y):
+        if x in src.addr or y in dst.addr:          # code labels: the same routine?
+            return (x in src.addr and y in dst.addr
+                    and translate_addr(src.addr[x], src, dst) == dst.addr[y])
+        if x in src.value and y in dst.value:       # absolute .equ
+            return add(src.value[x], dst.value[y])
+        return False
+
+    for (_, s, _, _), (_, d, _, _) in zip(sb, db):
+        ts, td = TOKEN.findall(s), TOKEN.findall(d)
+        if len(ts) != len(td):
+            return None
+        for x, y in zip(ts, td):
+            if x.isdigit() and y.isdigit():
+                if not add(int(x), int(y)):
+                    return None
+            elif x[0].isdigit() or y[0].isdigit():
+                return None
+            elif x != y:
+                if not (re.match(r'[A-Za-z_]', x) and re.match(r'[A-Za-z_]', y)
+                        and value_pair(x, y)):
+                    return None
+            elif x in src.value and x in dst.value and x not in src.addr:
+                if not add(src.value[x], dst.value[x]):
+                    return None
+    return pairs
+
+
+def bytes_match_with(a, b, pairs, src, dst):
+    """Same length and bytes, except relocated ROM pointers (as pointers_correspond) and 2- to
+    4-byte little-endian operands whose v10 value maps to the target's through `pairs`."""
+    if len(a) != len(b):
+        return False
+    i = 0
+    while i < len(a):
+        if a[i] == b[i]:
+            i += 1
+            continue
+        nxt = None
+        for w in (2, 3, 4):
+            for j in range(max(0, i - w + 1), i + 1):
+                if j + w <= len(a):
+                    x, y = int.from_bytes(a[j:j + w], "little"), int.from_bytes(b[j:j + w], "little")
+                    if pairs.get(x) == y or (w == 3 and 0xE00000 <= x <= 0xFFFFFF
+                                             and same_target(x, y, src, dst)):
+                        nxt = j + w
+                        break
+            if nxt:
+                break
+        if not nxt:
+            return False
+        i = nxt
+    return True
+
+
+def remap_ram(text, pairs, body_numbers):
+    """Header text with each RAM number of `pairs` written as the target's value -> (text, bad):
+    a number of 3-5 hex digits that is neither in `pairs` nor spelled in the body is unproven."""
+    bad = []
+
+    def sub(m):
+        tok = m.group(0)
+        v = int(tok, 16)
+        if v in pairs:
+            digits = len(tok) - 2
+            f = "%0*X" if tok[2:].upper() == tok[2:] else "%0*x"
+            return tok[:2] + f % (digits, pairs[v])
+        if v >= 0x100 and v < RAM_TOP and (v in pairs.values() or v not in body_numbers):
+            bad.append(tok)
+        return tok
+
+    out = HEXNUM.sub(sub, text)
+    return out, bad
 
 
 def rom_span(tree, name, end_label):
@@ -375,6 +500,27 @@ def count(src, dst):
     return c
 
 
+def remapped_header(name, hdr, sb, db, send, dend, src, dst):
+    """The RAM-remap tier: a body whose only differences are RAM operands (ram_pairs, checked
+    against the bytes) gets v10's header with those RAM numbers rewritten -> (lines, detail)
+    or None."""
+    pairs = ram_pairs(sb, db, src, dst)
+    if not pairs:
+        return None
+    a, b = rom_span(src, name, send), rom_span(dst, name, dend)
+    if not a or b is None or not bytes_match_with(a, b, pairs, src, dst):
+        return None
+    nums = {int(t) for _, s, _, _ in sb for t in re.findall(r'\d+', s)}
+    text, bad = remap_ram("\n".join(hdr), pairs, nums)
+    if bad:
+        return None
+    text, why, _ = adapt(text, src, dst)
+    if why:
+        return None
+    detail = ", ".join("0x%x->0x%x" % kv for kv in sorted(pairs.items()))
+    return text.split("\n"), detail[:160]
+
+
 def plan(src, dst):
     """-> (edits: {rel: {(line, delete_count): new_lines}}, review rows, stats).  Keyed by
     position because a routine's span contains its `_SkipN` labels' spans: both prove the same
@@ -405,6 +551,22 @@ def plan(src, dst):
         if sn != dn:
             a, b = rom_span(src, name, send), rom_span(dst, name, dend)
             byte_proven = bool(a) and b is not None and pointers_correspond(a, b, src, dst)
+        def ram_tier():
+            """The RAM-remap tier; True when it settled the label (ported now or before)."""
+            moved = remapped_header(name, hdr, sb, db, send, dend, src, dst)
+            if not moved or (dhdr and moved[0] != dhdr):
+                return False
+            if dhdr:                      # ported before; this run's ports keep their rows
+                st["header-already"] += 1    # through write_review's `handport` rule
+                return True
+            edits[r2][(d0, 0)] = moved[0]
+            st["header-by-ram-remap"] += 1
+            row[2], row[3], row[8] = "ported-ram-remap", moved[1], "scripted (RAM remap tier)"
+            review.append(row)
+            return True
+
+        if hdr and dhdr != hdr and sn != dn and not byte_proven and ram_tier():
+            continue
         if sn != dn and not byte_proven:
             if hdr and dhdr != hdr:
                 sm = difflib.SequenceMatcher(None, sn, dn, autojunk=False)
@@ -427,6 +589,8 @@ def plan(src, dst):
         else:
             bytes_ok = same_code(a, b)
         exact = a is not None and a == b
+        if bytes_ok is False and hdr and dhdr != hdr and ram_tier():
+            continue
         if bytes_ok is False:
             if hdr and dhdr != hdr:
                 row[2], row[3] = "bytes-differ", "%d vs %d bytes" % (len(a), len(b))

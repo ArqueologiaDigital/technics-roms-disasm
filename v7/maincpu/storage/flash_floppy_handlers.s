@@ -4343,6 +4343,11 @@ Flash_WriteBackSlotTable_Skip4:
 	ldirw
 	inc	2, xsp
 	ret
+; FileIO_LoadRcmToFlash: Loads an .RCM file into the custom-data flash: checks the 1 KB header starts 'H',0,'K', then
+;   for flash sections 0..6 resets the buffer at (0x0C72) (NoteEvent_LoadSoundGenParams), reads the length held in
+;   header dword +68+4*i and stores it (NoteEventBuffer_Store i+1); finally reads 0xF400 bytes over the section-7
+;   image, rewrites that sector and calls TmFlash_CopyToExtMem. HL = read result, 0xFF9A on a bad header. Basis:
+;   callers + body -- FileIO_LoadRegion6_Simple (.RCM, extension index 6) calls it once the region signature matched.
 FileIO_LoadRcmToFlash:
 	lda xsp, (xsp - 0x0400)
 	pushw iz
@@ -4459,6 +4464,12 @@ FileIO_LoadRcmToFlash_Epilogue:
 	popw iz
 	lda xsp, (xsp + 0x0400)
 	ret
+; FileIO_SaveRcmFromFlash: Writes the custom-data flash as an .RCM file to the open handle: builds the 1 KB header
+;   from the 'H',0,'K',0 template (MSP_Default_Accompaniment), fills dwords +68..+92 with the sizes of flash sections
+;   0-6 ((+46/+47) * 16) and +28 with the total, fails with HL = 0xFF9B when FileIO_GetDiskFreeSpace is smaller, then
+;   writes the header, sections 1-7 (NoteEventBuffer_CopyToSlot) and 0xF400 bytes of the section-7 image. HL = write
+;   result. Basis: callers + body -- FileIO_SaveRegion6_Simple (region/extension 6) calls it once the file is open for
+;   'wb'; it is the save twin of FileIO_LoadRcmToFlash, which reads the same header and section layout.
 FileIO_SaveRcmFromFlash:
 	lda	xsp, (xsp-1036)
 	push	xiz
@@ -5114,6 +5125,14 @@ ToneParam_ExtendedOpsBlock_Skip2:
 	ld	hl, iz
 	popw	iz
 	ret
+; AccPatch_ConvertLegacyStyleImage: Checks the 3-byte header of the style image just read to (RHYTHM_PATTERN_BUF_PTR)
+;   and brings older formats up to date: 'G',0,'K' or 'L','K','E' is relabelled 'H',0,'K' (the current header, cf.
+;   AccPatch_EnsureStyleImageHeader) and kept; 'F',0,'K', 'F',' ','K', 'L','K','A' or 'L','K','B' is converted into
+;   the current layout (AccPatch_ConvertLegacySectionLayout); anything else rebuilds the default image
+;   (AccDemo_InitDone) and returns 0xFF9A; finally fixes up the 30 records (AccPatch_ResetSectionPartByte2Defaults).
+;   Basis: callers + body -- ToneParam_ExtendedOpsBlock is the composer-data load path FileIO_LoadRegion3_ExtMem takes
+;   when the file's region signature does not match (FileIO_CheckRegionSignature = 0): it reads the block between
+;   cmp_ld_mae and cmp_ld_ato and calls this.
 AccPatch_ConvertLegacyStyleImage:
 	pushw	iz
 	ld	iz, 0:i3

@@ -1622,6 +1622,7 @@ AccompSeq_MidiFilterCodeBlock:
 	or	(0xe31c:16), 8
 	ret
 	ret
+	; No reference found.  Unless (0x7E6F) is set, steps (0xFD12) within 0..12 (bit 7 of W = down).
 AccompSeq_MidiFilterCodeBlock_Step:
 	; No reference found.  Unless (0x7E6F) is set, steps (0xFD12) within 0..12 (bit 7 of W = down).
 	cp	(0x7e6f:16), 0
@@ -1648,6 +1649,7 @@ AccompSeq_MidiFilterCodeBlock_Step_Join:
 	ld	(0x7ddc:16), 0
 	or	(0xe31a:16), 16
 	jr	AccompSeq_MidiFilterCodeBlock_Step2_Store_Return
+	; No reference found.  Was `.byte 0xc1 / jrl 16254 / nop`: `cp (0x7ddc:16), 0`.
 AccompSeq_MidiFilterCodeBlock_Step2:
 	; No reference found.
 	cp	(0x7ddc:16), 0

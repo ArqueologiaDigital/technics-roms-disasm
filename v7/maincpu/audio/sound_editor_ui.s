@@ -9284,6 +9284,7 @@ SeMenu_PresetBrowser_Data_Code_Join2:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpAmp1_DrawStaticScreen:
+	; --- Main dispatch: language check, XIY/XIX setup, calls (111 bytes) ---
 	call	SeAmp_DrawSectionFrame
 	cp	(1710:16), 1
 	jr	z, SeMenu_CompareAndApply_Check
@@ -9743,6 +9744,7 @@ SeEasy_DrawField_DefaultPath:
 SeEasy_DrawField_Return:
 	ret
 SeMenu_NameEdit_CheckBit7:
+	; --- Helper: conditional XIY based on bit 7 of (0x066a) (32 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
 	ld	a, (1642:16)
 	and	a, 128
@@ -9786,6 +9788,7 @@ SeDigEff_DrawField_Return:
 ;  SeTitle_FieldDrawTable, indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeTonTon1_DrawField:
+	; --- Dispatch on A: table lookup, 4 paths (92 bytes) ---
 	cp	a, 0:i3
 	jr	z, SeTonTon1_DrawField_SetupPath
 	cp	a, 1:i3

@@ -1339,6 +1339,12 @@ FDemoText_GetInstanceID_Epilogue2:
 	pop	xiz
 	lda	xsp, (xsp+136)
 	ret
+; FDemoText_ReadTaggedBlock: Reads the open file (FileIO_ReadByte) up to the opening tag XDE (e.g. "<PRESENTATION>"),
+;   then copies the text up to the closing tag on the stack (e.g. "</PRESENTATION>") into buffer XWA of XBC bytes,
+;   dropping CR/LF/TAB, NUL-terminated; HL = 0, or 0xFFFD no opening tag, 0xFFFC no closing tag, 0xFFFB buffer full;
+;   `retd 4` pops the tag pointer. Basis: callers + body -- Seq_LoadResource_Proceed passes
+;   <PRESENTATION>/</PRESENTATION> with a 256-byte buffer and Seq_FillBufferLoop <ACTION>/</ACTION>, each on a file it
+;   opened.
 FDemoText_ReadTaggedBlock:
 	lda xsp, (xsp - 0x16)
 	pushw iz

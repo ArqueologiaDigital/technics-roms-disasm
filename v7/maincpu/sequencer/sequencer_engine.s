@@ -23451,6 +23451,7 @@ SeqAccomp_SubChain_DecSoloEnable:
 ApPlaySyori_Skip15:
 	call	SeqPlay_AllocBuffersAndInit
 	jrl	AppEvent_ReturnZero
+; SeqAccomp start helper
 SeqAccomp_StartHelper:
 	cp	(CURRENT_TITLE:16), 133
 	jrl	nz, SeqAccomp_HandleOtherState
@@ -24969,6 +24970,7 @@ EtmenuTitleFunc:
 	ld	xde, 0:i3
 	call	ApDeliveryEvent
 	jr	EtmenuTtl_ReturnZero
+; MainExeCall dispatch entry
 MainExe_DispatchEntry:
 	ld	(58096:16), 0
 ; MainExeCall dispatch return
@@ -25264,6 +25266,7 @@ MainExe_PatternLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 156
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqtrns: EXECUTE on TT_SQTRNS: track 9756 from measure 9758 to 9760, then SeqPart_PartSelect.
 MainExeCall_OnTitleSqtrns:
 	ldmm8	10359, 9756
 	ld	wa, (9758:16)
@@ -25302,6 +25305,8 @@ MainExe_RhythmLoad:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 158
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqnotecng: EXECUTE on TT_SQNOTECNG: track 9742 from measure 9744 to 9746, then
+;   SeqPart_PartVoiceCheck.
 MainExeCall_OnTitleSqnotecng:
 	ldmm8	10359, 9742
 	ld	wa, (9744:16)
@@ -25315,6 +25320,8 @@ MainExeCall_OnTitleSqnotecng:
 	jrl	nz, MainExe_SongMemoryLoop
 	ldw	wa, 159
 	jrl	MainExe_CallModeSwitch
+; MainExeCall_OnTitleSqadvdly: EXECUTE on TT_SQADVDLY: track 9732 from measure 9734 to 9736, then
+;   SeqPart_VoiceCheckModeB.
 MainExeCall_OnTitleSqadvdly:
 	ldmm8	10359, 9732
 	ld	wa, (9734:16)

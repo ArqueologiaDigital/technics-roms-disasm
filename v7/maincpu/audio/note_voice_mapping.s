@@ -23932,6 +23932,9 @@ Param_SignExtendReturn_Join6:
 	pop	xiz
 	inc	4, xsp
 	ret
+; SubCPU_RequestSoundName: Sends sub-CPU request 0x20 {2B 30 7F 20 00 00 02 seq A C} (bank A, program C) on COMM
+;   channel 3 and returns its sequence number in L; the caller waits for the 17-byte reply, the sound's name. Basis:
+;   callers + body.
 SubCPU_RequestSoundName:
 	lda	xde, (0xe21c:16)
 	ld	(xde), 0x2b
@@ -23972,6 +23975,9 @@ Param_SignExtendRetu_Block4:
 	call	sendCOMM
 	ld	l, (0xe22d:16)
 	ret
+; SubCPU_RequestShortSoundName: Sends sub-CPU request 0x24 {2B 30 7F 24 00 00 02 seq A C} on COMM channel 3 and
+;   returns its sequence number; the caller waits for a 10-byte reply, substituting 'SName Error!!' on failure. Basis:
+;   callers + body.
 SubCPU_RequestShortSoundName:
 	lda	xde, (0xe230:16)
 	ld	(xde), 0x2b
@@ -24492,6 +24498,8 @@ SendPartDataBlock_ClearByte3_Join:
 	ld	de, 1:i3
 	call	SendCOMM_VariableLengthPacket
 	ret
+; COMM_SendEqualizerOnOff: Set-if-changed sender of the EQUALIZER on/off: A != 0 -> 1, stored in 0xE2BE and sent as
+;   COMM packet 0x25 (sub-CPU DSP_Set_EqualizerOnOff). Basis: callers + body + receiver.
 COMM_SendEqualizerOnOff:
 	ld	c, 0:opc
 	cp	a, 0:i3

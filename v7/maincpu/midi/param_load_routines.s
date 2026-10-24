@@ -175,6 +175,7 @@ ParaLoadOpt_AudioFlagCheck_B:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
+; ParaLoadOpt case D
 ParaLoadOpt_CaseD:
 	ld	a, (48244:16)
 	bit	7, a
@@ -187,6 +188,7 @@ ParaLoadOpt_CaseD:
 	ld	xbc, EVT_REFRESH_PARA_DRAW
 	ld	xde, 0:i3
 	call	ApPostEvent
+; ParaLoadOpt case E
 ParaLoadOpt_CaseE:
 	ld	a, (48248:16)
 	bit	7, a
@@ -199,6 +201,7 @@ ParaLoadOpt_CaseE:
 	ld	xbc, EVT_REFRESH_PARA_DRAW
 	ld	xde, 0:i3
 	call	ApPostEvent
+; ParaLoadOpt case F
 ParaLoadOpt_CaseF:
 	ld	a, (48240:16)
 	bit	7, a

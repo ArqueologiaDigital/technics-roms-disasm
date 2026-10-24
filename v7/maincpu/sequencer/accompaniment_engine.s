@@ -25788,11 +25788,18 @@ TimeSig_DisplayStrings_Code_Join7:
 	ld	(0x390e:16), a
 TimeSig_DisplayStrings_Code_Return9:
 	ret
+; CmpSetTtl_StepEntryByte2: Steps byte +2 of the current slot entry (index (0x390E)) up or down within 0..127 (W bit 7
+;   = down), preserving XIZ around CmpSetTtl_StepEntryByte2_Impl. Basis: callers + body -- the only callers are the
+;   CmpSetTtl_Case_EntryByte2Up/Down switch cases.
 CmpSetTtl_StepEntryByte2:
 	push	xiz
 	call	CmpSetTtl_StepEntryByte2_Impl
 	pop	xiz
 	ret
+; CmpSetTtl_StepEntryByte2_Impl: Body of CmpSetTtl_StepEntryByte2: steps byte +2 of entry (0x390E) of the current slot
+;   record (AccPatch_GetCurrentSlotAddr; offset from TimeSig_SlotEntryByte2Offsets) within 0..127, up when W bit 7 is
+;   clear, down when set. Basis: callers + body -- its only caller is the XIZ wrapper CmpSetTtl_StepEntryByte2, whose
+;   header describes exactly this.
 CmpSetTtl_StepEntryByte2_Impl:
 	pushw	wa
 	call	AccPatch_GetCurrentSlotAddr
@@ -25820,11 +25827,19 @@ TimeSig_SlotEntryByte2Offsets:
 	; entries, indexed by (0x390E); TimeSig_SlotFieldOffsets are the same entries' byte +5.
 	; CmpSetTtl_StepEntryByte2_Impl steps the byte within 0..127.
 	.byte	34, 42, 50, 58
+; CmpSetTtl_StepEntryByte5: XIZ-preserving wrapper of CmpSetTtl_StepEntryByte5_Impl: steps byte +5 of the selected
+;   entry (0x390E) of the current slot record within 0..11, up, or down when W bit 7 is set. Basis: callers + body --
+;   called only by CmpSetTtl_Case_EntryByte5Up (W = 0) and CmpSetTtl_Case_EntryByte5Down (W = 0x80); the field's
+;   meaning is not established, so the name keeps the callers' 'EntryByte5'.
 CmpSetTtl_StepEntryByte5:
 	push	xiz
 	call	CmpSetTtl_StepEntryByte5_Impl
 	pop	xiz
 	ret
+; CmpSetTtl_StepEntryByte5_Impl: Body of CmpSetTtl_StepEntryByte5: steps byte +5 of entry (0x390E) of the current slot
+;   record (AccPatch_GetCurrentSlotAddr; offset from TimeSig_SlotFieldOffsets) within 0..11, up when W bit 7 is clear,
+;   down when set. Basis: callers + body -- its only caller is the XIZ wrapper CmpSetTtl_StepEntryByte5, whose header
+;   describes exactly this (and keeps 'EntryByte5' because the field's meaning is not established).
 CmpSetTtl_StepEntryByte5_Impl:
 	pushw	wa
 	call	AccPatch_GetCurrentSlotAddr
@@ -27192,6 +27207,7 @@ Voice_ResolveTableAddr:
 	add	xwa, xbc
 	ld	xhl, xwa
 	ret
+; Rhythm parameter type check
 RhythmParam_TypeCheck:
 	lda	xwa, (0x38fc:16)
 	bit	0, (0x38fb:16)
@@ -29269,12 +29285,14 @@ CmpMenuTtl_SpecialKeys:
 	and	(0x3431:16), 207
 	ldw	wa, 177
 	jr	CmpMenuTtl_PostModeEvent
+; CmpMenuTtl set mode bit 5
 CmpMenuTtl_SetBit5:
 	and	a, 207
 	set	5, a
 	ld	(13361:16), a
 	ldw	wa, 177
 	jr	CmpMenuTtl_PostModeEvent
+; CmpMenuTtl set mode bit 4
 CmpMenuTtl_SetBit4:
 	and	a, 207
 	set	4, a
@@ -29319,6 +29337,7 @@ CmpSetTtlFunc_Case3:
 	jrl	z, CmpReal_ReturnZero
 	call	RhythmConfig_InlineCode2
 	jrl	CmpReal_ReturnZero
+; CmpSetTtl mode switch (5-way branch)
 CmpSetTtl_ModeSwitch:
 	cp	(0x3470:16), 0
 	jrl	nz, CmpSetTtl_SecondaryDispatch
@@ -30153,6 +30172,7 @@ CmpBkslSTtl_FillIn7:
 	pop XDE
 	ldw WA, 0x00b5
 	jr t, CmpBk_PostModeChange
+; CmpBkslSTtl fill-in level 8
 CmpBkslSTtl_FillIn8:
 	cp (0x3470:16), 0x00
 	jr nz, DisplayFunc_ReturnZero
@@ -30178,6 +30198,7 @@ CmpBkslSTtl_DirectMode_Case136:
 	ldw	wa, 238
 	call	SoundCtrl_SendCommand
 	jr	DisplayFunc_ReturnZero
+; CmpBkslSTtl post accompaniment event
 CmpBkslSTtl_EventPost:
 	ld	(13424:16), 1
 	ld	xwa, 11665426
@@ -30945,6 +30966,7 @@ CmpEsyTtl_Mode2_Case5:
 	lda	xhl, (14102:16)
 	lda	xde, (14116:16)
 	ld	xbc, 0:i3
+; CmpEsyTtl sub-mode B
 CmpEsyTtl_SubModeB:
 	ld	a, (xiy+)
 	ld	(xix+), a
@@ -31253,6 +31275,7 @@ CmpEsy_Quantize_Store:
 	ld	xbc, EVT_CLR_GRID_HANTEN
 	ld	xde, 0:i3
 	jrl	TtlFunc_SendEventAndReturn
+; S2cTtlFunc secondary handler
 S2cTtl_SecondaryHandler:
 	ld wa, 1:i3
 	call UI_PostEvent_0x6E
@@ -32517,6 +32540,7 @@ MainMspRgpSetFunc_OnRgpBnkDn:
 	ld	xbc, EVT_REQUEST_GRID_DRAW
 	ld	xde, xhl
 	jr	AccBass_EventDeliver
+; MspMenuTtlFunc init
 MspMenuTtl_Init:
 	cp	(0x7e6f:16), 0
 	jr	nz, AccBass_ReturnZero
@@ -32529,6 +32553,7 @@ MspMenuTtl_Init:
 	ld	xwa, 13369347
 	ld	xbc, EVT_REQUEST_GRID_DRAW
 	jr	AccBass_EventDeliver
+; MspMenuTtlFunc case 1
 MainMspRgpSetFunc_OnRgpPadDn:
 	cp	(0x7e6f:16), 0
 	jr	nz, AccBass_ReturnZero
@@ -32721,6 +32746,7 @@ MspRecTtlFunc_Case3:
 	jr	z, MspRecTtl_ReturnZero
 	ld	(32367:16), 0
 	jr	MspRecTtl_ReturnZero
+; MspRecTtlFunc sub-handler A
 MspRecTtl_SubA:
 	ld	xwa, 165888
 	call	SndParam_LookupReadOnly

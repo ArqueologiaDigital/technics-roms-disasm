@@ -2814,6 +2814,20 @@ MainTitleControl:
 	ld	(TRANSITION_TIMER:24), xwa
 	ld	(TRANSITION_PROGRESS:24), xwa
 	jrl	UIWidget_ReturnZero
+; =============================================================================
+; MainTitleCtrl_ChangeTitle - Screen transition state handler
+;
+; Manages state transitions for the sequencer/demo screen mode changes.
+; Saves current display state bytes (SFR 36150-36153) and clears animation
+; state variables at 0x0274a2, 0x02749e, 0x02749a. Calls CtrlPanel_SetIndicatorBit
+; to initiate the actual screen transition, then AudioMode_ResetVoiceState for cleanup.
+;
+; Animation state addresses:
+;   0x02749a - Transition progress counter
+;   0x02749e - Transition timer
+;   0x0274a2 - Transition type/flags
+;   0x0274a8-0x0274ae - Additional transition parameters
+; =============================================================================
 MainTitleCtrl_ChangeTitle:
 	ld	(PREVIOUS_TITLE:16), a
 	ldmm8 ACTIVE_TITLE_PREVIOUS, ACTIVE_TITLE

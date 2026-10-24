@@ -496,6 +496,7 @@ FDemo_LinkedListLookupNull:
 	ret
 
 FDemo_FileOpenAndProcess:
+	; --- Stack-frame function: alloc, multi-call dispatch (114 bytes) ---
 	lda	xsp, (xsp-22)
 	push	xiz
 	push	xwa

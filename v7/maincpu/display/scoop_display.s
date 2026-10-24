@@ -4801,6 +4801,10 @@ DisplayMode_Handler_3_Return2:
 	ret
 SqStep_SeekForwardByStep:
 	call	SqStep_ComputeStepTargetClock
+; SqStep_SeekForwardByDistance: Second entry of SqStep_SeekForwardByStep that skips its step-length computation: steps
+;   the cursor forward (Timer_ParamLoadAndCompare) until the unit counter 0x0D5A has advanced by (0x0DCD), stopping on
+;   GLOBAL_ERROR_CODE 15, then until the clock 0x0D57 reaches (0x0DCE); stores the clock. Callers preset the distance.
+;   Basis: callers + body.
 SqStep_SeekForwardByDistance:
 	ld	l, (3533:16)
 	xor	h, h
@@ -16554,6 +16558,11 @@ Tbl_PedalNames_Skip5:
 	popw (0x1178:16)	; popw (0x1178)
 	popw (0x117a:16)	; popw (0x117a)
 	ret
+;=============================================================================
+; Display_RedrawStatusBar - Redraw the status bar region
+;
+; Updates the top status bar area with current mode, tempo, and status info.
+;=============================================================================
 Display_RedrawStatusBar:
 	bit 0, (0x0f57:16)
 	jrl nz, Scoop_Return

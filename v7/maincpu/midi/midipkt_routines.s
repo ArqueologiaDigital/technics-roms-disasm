@@ -221,6 +221,14 @@ MidiPkt_EnqueueControl_3354_Return:
 	pop xiz
 	inc 4, xsp
 	ret
+; MidiPkt_SendCtlWordValueSysEx: 16-bit variant of MidiPkt_SendCtlValueSysEx: given XWA -> {packet, record}, returns
+;   on MidiPkt_CheckGateCondition = 0xFFFF, on MidiCtl_NullRecord or when the packet's mask word (+4) is 0; else
+;   queues SysEx_Msg_35DC (F0 50 2C 01 28 12) and the record's first 6 bytes, then the low byte of (value word +2 &
+;   mask word +4) >> (record+11 & 15) as two nibbles, high first, plus a zero byte, and closes and sends the message.
+;   No live caller in this build. Basis: callers + body -- its only caller MidiPkt_ExtractAndPack builds the packet
+;   {record+6, record+7, u16 value from two consecutive part-table bytes (record+7, record+7+1), u16 mask record+8 <<
+;   (record+11 & 15)}; MidiPkt_ExtractAndPack itself has no referrer (no call/calr/jp to 0xFD9533, no 24-bit pointer
+;   to it in any ROM image).
 MidiPkt_SendCtlWordValueSysEx:
 	dec	4, xsp
 	push	xiz

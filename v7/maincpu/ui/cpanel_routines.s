@@ -121,6 +121,8 @@ CPanel_InitHardware:
 	calr DELAY_3000_LOOPS
 	calr CPanel_SendInitSequence
 	ret
+; CPanel_SendInitSequence - Send initialization command sequence to control panel MCUs
+; Commands sent: 0x1f 0x1a, 0x1d 0x00, 0xdd 0x03, 0x1e 0x80
 CPanel_SendInitSequence:
 	ld a, 31:opc
 	ld w, 26:opc
