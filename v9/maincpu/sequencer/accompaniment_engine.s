@@ -12454,7 +12454,7 @@ AccTone_JumpTableData_Helper2:
 	ld	a, (13354:16)
 	cp	a, (13345:16)
 	ret	z
-	.byte 0xf1, 0x3b, 0x33, 0xb8
+	set	0, (0x333b:16)
 	ret
 AccTone_JumpTableData_Helper3:
 	dec	2, xsp
