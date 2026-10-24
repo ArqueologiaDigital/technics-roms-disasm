@@ -1030,7 +1030,7 @@ HDAE5000_UiState_Reset_Skip:
 	calr	HDAE5000_TypeSel_Init
 HDAE5000_UiState_Reset_Join:
 	ld	wa, 1:i3
-	jp HDAE5000_Set_Menu_Visibility                             ; jp 0x28b258
+	jp HDAE5000_Set_Menu_Visibility
 
 HDAE5000_AcWindowPage1Proc:
 	; registered as "AcWindowPage1Proc" in HDAE5000_ClassProc_Table
