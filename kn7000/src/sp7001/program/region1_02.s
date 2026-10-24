@@ -18644,10 +18644,10 @@ loc_4844AF06:
     movhu   d0, (0x0000b7f8, a0)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-
-func_4844AF1B:
+# SoundRamHeaderModelGet  (CPU 0x4844af1b)
+SoundRamHeaderModelGet:
     movm    [d2,d3], (sp)
-func_4844AF1B_entry:
+SoundRamHeaderModelGet_entry:
     clr     d0
     clr     d3
     setlb
@@ -19109,10 +19109,10 @@ func_4844B25D:
     mov     d3, d1
     call    func_4844B1D2_entry, [d2,d3,a2,a3], 0x24
     ret     [d2,d3], 0x1c
-
-func_4844B28B:
+# SoundRamSignatureWrite  (CPU 0x4844b28b)
+SoundRamSignatureWrite:
     movm    [d2], (sp)
-func_4844B28B_entry:
+SoundRamSignatureWrite_entry:
     clr     d0
     clr     d2
     setlb
@@ -19133,7 +19133,7 @@ func_4844B2AB:
     movm    [d2,d3], (sp)
     add     -0x14, sp
 func_4844B2AB_entry:
-    call    func_4844B28B_entry, [d2], 4
+    call    SoundRamSignatureWrite_entry, [d2], 4
     clr     d2
     clr     d3
 loc_4844B2B7:
@@ -19203,7 +19203,7 @@ func_4844B336:
 func_4844B336_entry:
     mov     d0, d2
     mov     0x840327e8, a0
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B35E
@@ -19279,7 +19279,7 @@ func_4844B3DA:
 func_4844B3DA_entry:
     mov     0x840327e8, a2
     mov     a2, a0
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B3FE
@@ -19382,7 +19382,7 @@ loc_4844B4A6:
 PreTmTransLoad:
     add     -0xc, sp
 PreTmTransLoad_entry:
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B4C8
@@ -19510,7 +19510,7 @@ loc_4844B59F:
 func_4844B5A9:
     add     -0xc, sp
     mov     0x840327e8, a0
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     clr     d1
     extbu   d0
     cmp     1, d0
@@ -19523,7 +19523,7 @@ loc_4844B5BF:
 func_4844B5C3:
     add     -0xc, sp
     mov     0x840327e8, a0
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B5E6
@@ -19577,7 +19577,7 @@ func_4844B628:
     add     -0xc, sp
     mov     d0, d2
     mov     a0, d3
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B64C
@@ -19649,7 +19649,7 @@ func_4844B6A4:
     mov     a1, a3
     mov     d0, d2
     mov     a0, a2
-    call    func_4844AF1B_entry, [d2,d3], 8
+    call    SoundRamHeaderModelGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_4844B6C9

@@ -24944,10 +24944,10 @@ loc_485304B1:
     movhu   (0x500708fe), d0
 loc_485304B7:
     ret     0, 0xc
-
-func_485304BA:
+# MidFileNamesPageFill  (CPU 0x485304ba)
+MidFileNamesPageFill:
     movm    [d2,d3,a2,a3], (sp)
-func_485304BA_entry:
+MidFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_485304C1:
@@ -25082,7 +25082,7 @@ loc_485305A9:
     mov     d2, d1
 loc_485305D5:
     movhu   d1, (0x50070904)
-    call    func_485304BA_entry, [d2,d3,a2,a3], 0x10
+    call    MidFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
 loc_485305E0:
     movhu   d3, (0x500708fe)
     mov     d3, d0
@@ -25172,7 +25172,7 @@ func_48530685_entry:
     movhu   d0, (0x50070902)
     mov     0x3b, d0
     movhu   d0, (0x50070904)
-    call    func_485304BA_entry, [d2,d3,a2,a3], 0x10
+    call    MidFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     exth    d2
     mov     -1, d1
@@ -26106,10 +26106,10 @@ loc_48530E62:
     movhu   (0x50071058), d0
 loc_48530E68:
     ret     0, 0xc
-
-func_48530E6B:
+# CstFileNamesPageFill  (CPU 0x48530e6b)
+CstFileNamesPageFill:
     movm    [d2,d3,a2,a3], (sp)
-func_48530E6B_entry:
+CstFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_48530E72:
@@ -26244,7 +26244,7 @@ loc_48530F5A:
     mov     d2, d1
 loc_48530F86:
     movhu   d1, (0x5007105e)
-    call    func_48530E6B_entry, [d2,d3,a2,a3], 0x10
+    call    CstFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
 loc_48530F91:
     movhu   d3, (0x50071058)
     mov     d3, d0
@@ -26333,7 +26333,7 @@ func_48531036_entry:
     movhu   d0, (0x5007105c)
     mov     0x3b, d0
     movhu   d0, (0x5007105e)
-    call    func_48530E6B_entry, [d2,d3,a2,a3], 0x10
+    call    CstFileNamesPageFill_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     exth    d2
     mov     -1, d1

@@ -19,19 +19,20 @@ duplicates or wrong. The work went in three steps:
 
 ## What moved
 
-`func_<ADDR>` routine labels in `kn7000/src/program/*.s`: **6,620 -> 6,502**. The figures
+`func_<ADDR>` routine labels in `kn7000/src/program/*.s`: **6,620 -> 6,497**. The figures
 come from `count_names.py --rev 79e035417`, the commit this work started from. `python3
 scripts/analysis/doc_quality_census.py` row (e) for `program` (placeholder routine names)
-went from 6,624 to 6,506. The 118 are:
+went from 6,624 to 6,501. The 123 are:
 
-| evidence                                                                       | names | where                               |
-|--------------------------------------------------------------------------------|-------|-------------------------------------|
-| same code as a routine IC18 names (exact 30, fuzzy 2)                          | 32    | `../sibling-name-port/accepted.tsv` |
-| same code as a sibling's reflection-table name (exact 10, skeleton 1, fuzzy 4) | 15    | `../sibling-name-port/accepted.tsv` |
-| zlib 1.0.4: strings, constants, call graph                                     | 63    | `string-evidence.tsv`               |
-| an error text that names the routine, and its helper                           | 2     | `string-evidence.tsv`               |
-| library names moved from the flash copy to the library address                 | 2     | `renames.tsv`                       |
-| `kn7000_manual.sym` names the committed source was older than                  | 4     | (regenerated, no new name)          |
+| evidence                                                                        | names | where                               |
+|---------------------------------------------------------------------------------|-------|-------------------------------------|
+| same code as a routine IC18 names (exact 30, fuzzy 2)                           | 32    | `../sibling-name-port/accepted.tsv` |
+| same code as a sibling's reflection-table name (exact 10, skeleton 1, fuzzy 4)  | 15    | `../sibling-name-port/accepted.tsv` |
+| zlib 1.0.4: strings, constants, call graph                                      | 63    | `string-evidence.tsv`               |
+| an error text that names the routine, and its helper                            | 2     | `string-evidence.tsv`               |
+| the signature, file-name or pattern text a routine compares, writes or searches | 5     | `string-evidence.tsv`               |
+| library names moved from the flash copy to the library address                  | 2     | `renames.tsv`                       |
+| `kn7000_manual.sym` names the committed source was older than                   | 4     | (regenerated, no new name)          |
 
 The pass also fixed 13 duplicate or misplaced names; `renames.tsv` lists them:
 
