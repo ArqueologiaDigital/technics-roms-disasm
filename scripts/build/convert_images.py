@@ -11,7 +11,7 @@ color rendering of indexed images.
 Usage:
     python convert_images.py [output_dir]
 
-Default output_dir is ../kn5000-docs/assets/images/gallery/
+Default output_dir is ../technics-docs/assets/images/gallery/ (the website checkout, renamed from kn5000-docs)
 """
 
 import os
@@ -342,7 +342,7 @@ def main():
     if len(sys.argv) > 1:
         output_dir = Path(sys.argv[1])
     else:
-        output_dir = project_dir.parent / "kn5000-docs" / "assets" / "images" / "gallery"
+        output_dir = project_dir.parent / "technics-docs" / "assets" / "images" / "gallery"
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
