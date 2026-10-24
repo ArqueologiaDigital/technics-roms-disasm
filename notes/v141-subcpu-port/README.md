@@ -29,7 +29,7 @@ Nothing else differs. That is not an inference: it is what the byte-exact build 
   `EDITS` list, which holds items 1-3 plus a banner. **That list is the semantic diff.**
   After any v142 change, re-run it and commit both trees; `--check` exits 1 when v141 has
   drifted from "v142 + EDITS". `diff -r v142/subcpu v141/subcpu` fits on one screen.
-* Item 4 needs no edit. Since commit 29e5caa82 **both** trees spell those operands
+* Item 4 needs no edit. Since commit 5713e7a27 **both** trees spell those operands
   `Payload_Bss_Start+0xOFFSET`. `Payload_Bss_Start` is a label at the image end, so the
   assembler supplies each revision's base. `scripts/converters/subcpu_bss_relative_refs.py`
   did the respelling: 947 literals and the five DRAM `.equ`s. Six in-range numbers were
