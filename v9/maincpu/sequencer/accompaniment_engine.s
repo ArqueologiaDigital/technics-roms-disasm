@@ -347,8 +347,8 @@ AccStyle_ResetAllVoiceState:
 	ld (ACC_LANE_BEAT_POS+3:16), a
 	ld (ACC_LANE_BEAT_POS+4:16), a
 	ld (ACC_LANE_BEAT_POS+5:16), a
-	ld (1076:16), a
-	ld (1077:16), a
+	ld (ACC_BAR_COUNT:16), a
+	ld (ACC_SECTION_BAR:16), a
 	ld (0x32b4:16), a
 	ld (0x32b5:16), a
 	ld (0x32b6:16), a
@@ -5323,9 +5323,9 @@ AccVoice_OffsetTable:
 	.long 0x00780000, 0x00790000, 0x007a0000, 0x007b0000
 	.long 0x007c0000, 0x007d0000, 0x007e0000, 0x007f0000
 AccState_CollectAll:
-	bit 3, (1054:16)
+	bit 3, (ACC_TRANSPORT_STATE:16)
 	jrl nz, AccState_CollectReturn
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jrl z, AccState_CollectReturn
 	ld xhl, 0x3094
 	xor iy, iy
@@ -6464,14 +6464,14 @@ AccPedal_Sustain_Normal:
 	popw wa
 	jr z, AccPedal_SustainReturn
 	ei 6
-	ld a, (ACC_TRANSPORT_STATE:16)
+	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 2, a
 	jr nz, AccPedal_Sustain_CallPlayMode
 	bit 0, a
 	jr z, AccPedal_Sustain_CallPlayMode
 	xor a, a
+	ld (PLAY_TRANSPORT_STATE:16), a
 	ld (ACC_TRANSPORT_STATE:16), a
-	ld (1054:16), a
 	ld (SEQ_TRANSPORT_STATE:16), a
 	ei 0
 	jr AccPedal_SustainReturn
@@ -6673,7 +6673,7 @@ AccPedal_Bit2_Sustain:
 	jr AccPedal_Bit2_Off
 
 AccPedal_Bit2_CheckPlay:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPedal_Bit2_Sostenuto
 	calr AccPedal_SustainOn
 	jr AccPedal_Bit2_Off
@@ -6692,7 +6692,7 @@ AccPedal_Bit2_Off:
 	jr AccPedal_Bit2_Return
 
 AccPedal_Bit2_OffPlay:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPedal_Bit2_OffSostenuto
 	calr AccPedal_SustainOff
 	jr AccPedal_Bit2_Return
@@ -6719,7 +6719,7 @@ AccPedal_Bit2_Expression:
 	jr AccPedal_Expr_Off
 
 AccPedal_Expr_CheckPlay:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPedal_Expr_Soft
 	calr AccPedal_ExprOn
 	jr AccPedal_Expr_Off
@@ -6738,7 +6738,7 @@ AccPedal_Expr_Off:
 	jr AccPedal_Expr_Return
 
 AccPedal_Expr_OffPlay:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPedal_Expr_OffSoft
 	calr AccPedal_ExprOff
 	jr AccPedal_Expr_Return
@@ -6757,7 +6757,7 @@ AccPedal_Bit7_Portamento:
 	bit 7, a
 	jr z, AccPedal_Bit7_Off
 	orw (4360:16), 128
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit7_Damper
 	calr AccPedal_PortamentoOn
 	jr AccPedal_Bit7_Off
@@ -6770,7 +6770,7 @@ AccPedal_Bit7_Off:
 	jr z, AccPedal_Bit7_Return
 	bit 7, (0x347e:16)
 	jr nz, AccPedal_Bit7_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit7_OffDamper
 	calr AccPedal_PortamentoOff
 	jr AccPedal_Bit7_Return
@@ -6789,7 +6789,7 @@ AccPedal_Bit6_Hold:
 	bit 6, a
 	jr z, AccPedal_Bit6_HoldOff
 	orw (4360:16), 64
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit6_HoldOff
 	calr AccPedal_HoldOn
 	jr AccPedal_Bit6_HoldOff
@@ -6799,7 +6799,7 @@ AccPedal_Bit6_HoldOff:
 	jr z, AccPedal_Bit6_Return
 	bit 6, (0x347e:16)
 	jr nz, AccPedal_Bit6_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit6_Return
 	calr AccPedal_HoldOff
 	jr AccPedal_Bit6_Return
@@ -6814,7 +6814,7 @@ AccPedal_Bit4_Sostenuto:
 	and a, (0x347f:16)
 	bit 4, a
 	jr z, AccPedal_Bit4_Off
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit4_Off
 	calr AccPedal_SostenutoOn
 
@@ -6823,7 +6823,7 @@ AccPedal_Bit4_Off:
 	jr z, AccPedal_Bit4_Return
 	bit 4, (0x347e:16)
 	jr nz, AccPedal_Bit4_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit4_Return
 	calr AccPedal_SostenutoOff
 
@@ -6837,7 +6837,7 @@ AccPedal_Bit5_Soft:
 	and a, (0x347f:16)
 	bit 5, a
 	jr z, AccPedal_Bit5_Off
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit5_Off
 	calr AccPedal_SoftOn
 
@@ -6846,7 +6846,7 @@ AccPedal_Bit5_Off:
 	jr z, AccPedal_Bit5_Return
 	bit 5, (0x347e:16)
 	jr nz, AccPedal_Bit5_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPedal_Bit5_Return
 	calr AccPedal_SoftOff
 
@@ -7719,7 +7719,7 @@ AccAutoPlay_NoteDispatch_Check:
 AccAutoPlay_NoteDispatch_Process:
 	cpw (0x28a8:16), 0
 	jr z, AccAutoPlay_NoteDispatch_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_NoteDispatch_Return
 	bit 1, (PANEL_STYLE+5:16)
 	jr z, AccAutoPlay_NoteDispatch_Return
@@ -7936,7 +7936,7 @@ AccAutoPlay_TriggerCheck:
 	jrl nz, AccAutoPlay_Trigger_Activate
 	bit 7, (0x346d:16)
 	jr nz, AccAutoPlay_Trigger_Evaluate
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_Trigger_Process
 	bit 1, (PANEL_STYLE+5:16)
 	jr z, AccAutoPlay_Trigger_Process
@@ -8029,7 +8029,7 @@ AccAutoPlay_ModeAvail_Values:
 	; of (0x3498) set and bit 0 of (0x3499) clear; then calls AccAutoPlay_Configure, copies (0x3498)
 	; to (0x3499) and sets bit 0 of (0x3498).
 AccAutoPlay_ConfigureIfPending:
-	bit	2, (0x041e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, AccAutoPlay_ConfigureIfPending_Return
 	bit	1, (0x346e:16)
 	jr	z, AccAutoPlay_ConfigureIfPending_Return
@@ -8086,7 +8086,7 @@ AccAutoPlay_Configure_Mode1:
 AccAutoPlay_Configure_Mode2:
 	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr nz, AccAutoPlay_Configure_Store
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_Configure_Apply
 	or (0x346e:16), 128
 	jr AccAutoPlay_Configure_Check
@@ -8098,7 +8098,7 @@ AccAutoPlay_Configure_Check:
 	jr AccAutoPlay_Configure_Return
 
 AccAutoPlay_Configure_Store:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_Configure_Return
 	calr AccAutoPlay_ModeDecode
 	calr AccAutoPlay_SubModeB
@@ -8178,7 +8178,7 @@ AccAutoPlay_Disable_Return:
 AccAutoPlay_SubModeA:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeA_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_SubModeA_Apply
 	bit 0, (0x3283:16)
 	jr z, AccAutoPlay_SubModeA_Check
@@ -8194,13 +8194,13 @@ AccAutoPlay_SubModeA_Check:
 	jr AccAutoPlay_SubModeA_Return
 
 AccAutoPlay_SubModeA_Apply:
-	ld a, (ACC_TRANSPORT_STATE:16)
+	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 2, a
 	jr z, AccAutoPlay_SubModeA_Return
 	bit 3, a
 	jr z, AccAutoPlay_SubModeA_Return
+	and (PLAY_TRANSPORT_STATE:16), 247
 	and (ACC_TRANSPORT_STATE:16), 247
-	and (1054:16), 247
 	and (0x346d:16), 239
 	or (0x346d:16), 8
 
@@ -8214,7 +8214,7 @@ AccAutoPlay_SubModeA_Padding:
 AccAutoPlay_SubModeB:
 	bit 7, (0x346d:16)
 	jr z, AccAutoPlay_SubModeB_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_SubModeB_Apply
 	bit 0, (0x3283:16)
 	jr z, AccAutoPlay_SubModeB_Check
@@ -8230,13 +8230,13 @@ AccAutoPlay_SubModeB_Check:
 	jr AccAutoPlay_SubModeB_Return
 
 AccAutoPlay_SubModeB_Apply:
-	ld a, (ACC_TRANSPORT_STATE:16)
+	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 2, a
 	jr z, AccAutoPlay_SubModeB_Return
 	bit 3, a
 	jr z, AccAutoPlay_SubModeB_Return
+	and (PLAY_TRANSPORT_STATE:16), 247
 	and (ACC_TRANSPORT_STATE:16), 247
-	and (1054:16), 247
 	and (SEQ_TRANSPORT_STATE:16), 247
 	and (0x346d:16), 239
 	or (0x346d:16), 8
@@ -8253,13 +8253,13 @@ AccAutoPlay_SeqHandoff:
 	jr nz, AccAutoPlay_SeqHandoff_Return
 	cpw (0x28aa:16), 0
 	jr nz, AccAutoPlay_SeqHandoff_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Return
 	and (0x346d:16), 247
 	or (0x346d:16), 16
 	cpw (SEQ_SONG_RECORD+30:16), 0
 	jr nz, AccAutoPlay_SeqHandoff_Process
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Return
 	ei 6
 	calr AccPlayMode_StopToSync2
@@ -8269,7 +8269,7 @@ AccAutoPlay_SeqHandoff:
 AccAutoPlay_SeqHandoff_Process:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Return
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccAutoPlay_SeqHandoff_Finalize
 	ei 6
 	calr AccPlayMode_StopExprFull
@@ -8398,7 +8398,7 @@ AccAutoPlay_Deferred_Padding:
 AccPlayMode_Dispatch:
 	xor xhl, xhl
 	ei 6
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPlayMode_Dispatch_Check
 	or l, 0x4
 
@@ -8408,7 +8408,7 @@ AccPlayMode_Dispatch_Check:
 	or l, 0x8
 
 AccPlayMode_Dispatch_Select:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccPlayMode_Dispatch_Execute
 	or l, 0x10
 
@@ -8465,7 +8465,7 @@ AccPlayMode_Router_Padding:
 	nop
 
 AccPlayMode_Router_Alt:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_Router_AltPadding
 	calr AccPlayMode_StartPlay
 	jr AccPlayMode_Router_AltPadding
@@ -8478,7 +8478,7 @@ AccPlayMode_StartRecording_Padding:
 	nop
 
 AccPlayMode_StartRecording:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartRec_Apply
 	bit 1, (SEQ_RTMCFG:16)
 	jr z, AccPlayMode_StartRec_Process
@@ -8502,7 +8502,7 @@ AccPlayMode_StartRec_Padding:
 	nop
 
 AccPlayMode_StartAcc:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartAcc_Apply
 	bit 1, (SEQ_RTMCFG:16)
 	jr z, AccPlayMode_StartAcc_Process
@@ -8528,7 +8528,7 @@ AccPlayMode_StartAcc_Padding:
 	nop
 
 AccPlayMode_StopToSync:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopToSync_Process
 	ei 6
 	calr AccPlayMode_StartAccPlayFull
@@ -8570,7 +8570,7 @@ AccPlayMode_StartPlay_Padding:
 	nop
 
 AccPlayMode_StopExprA:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopExprA_Process
 	ei 6
 	calr AccPlayMode_StartAccPlay
@@ -8590,21 +8590,21 @@ AccPlayMode_StopExprA_Padding:
 	nop
 
 AccPlayMode_StopExprB:
-	bit 0, (ACC_TRANSPORT_STATE:16)
+	bit 0, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopExprB_Return
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopExprB_Return
 	bit 2, (0x28b2:16)
 	jr nz, AccPlayMode_StopExprB_Process
 	bit 1, (0x28b2:16)
 	jr z, AccPlayMode_StopExprB_Process
 	call SeqPlay_SetBarAndResetScroll
-	ld (1054:16), 128
+	ld (ACC_TRANSPORT_STATE:16), 128
 	or (0x28b2:16), 4
 	jr AccPlayMode_StartAccPlay_Return
 
 AccPlayMode_StopExprB_Process:
-	ld (ACC_TRANSPORT_STATE:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	calr AccTempo_ClearCounters
 	calr AccSync_MidiClock
 
@@ -8613,7 +8613,7 @@ AccPlayMode_StopExprB_Return:
 	calr AccTempo_ClearSubPos
 
 AccPlayMode_StartAccPlay:
-	ld (1054:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	or (0x3474:16), 1
 	calr AccTempo_ClearPositions
 	ld a, 0x85:opc
@@ -8627,14 +8627,14 @@ AccPlayMode_StartAccPlay_Padding:
 	nop
 
 AccPlayMode_StopToSync2:
-	bit 3, (ACC_TRANSPORT_STATE:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartPlay2
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccPlayMode_StartPlay2
-	ld (ACC_TRANSPORT_STATE:16), 12
+	ld (PLAY_TRANSPORT_STATE:16), 12
 
 AccPlayMode_StartPlay2:
-	ld (1054:16), 12
+	ld (ACC_TRANSPORT_STATE:16), 12
 	ld (0x3470:16), 0
 	ld a, 0x86:opc
 	calr AccTempo_WriteStartMarker
@@ -8650,18 +8650,18 @@ AccPlayMode_StartPlayFull:
 	bit 1, (0x28b2:16)
 	jr z, AccPlayMode_StartPlayFull_Process
 	call SeqPlay_SetBarAndResetScroll
-	ld (1054:16), 128
+	ld (ACC_TRANSPORT_STATE:16), 128
 	or (0x28b2:16), 4
 	jr AccPlayMode_StartPlayFull_Return
 
 AccPlayMode_StartPlayFull_Process:
 	ld (SEQ_TRANSPORT_STATE:16), 1
 	calr AccTempo_ClearSubPos
-	bit 0, (ACC_TRANSPORT_STATE:16)
+	bit 0, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartPlayFull_Return
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartPlayFull_Return
-	ld (ACC_TRANSPORT_STATE:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	calr AccTempo_ClearCounters
 	calr AccSync_MidiClock
 
@@ -8673,7 +8673,7 @@ AccPlayMode_StartPlayFull_Padding:
 	nop
 
 AccPlayMode_StopExprFull:
-	ld (1054:16), 12
+	ld (ACC_TRANSPORT_STATE:16), 12
 	bit 0, (0x28b2:16)
 	jr nz, AccPlayMode_StopExprFull_Process
 	or (0x347a:16), 4
@@ -8685,11 +8685,11 @@ AccPlayMode_StopExprFull_Process:
 AccPlayMode_StopExprC:
 	ld (SEQ_TRANSPORT_STATE:16), 12
 AccPlayMode_OnMask4:
-	bit 3, (ACC_TRANSPORT_STATE:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopExprC_Process
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, AccPlayMode_StopExprC_Process
-	ld (ACC_TRANSPORT_STATE:16), 12
+	ld (PLAY_TRANSPORT_STATE:16), 12
 
 AccPlayMode_StopExprC_Process:
 	ld (0x3470:16), 0
@@ -8708,16 +8708,16 @@ AccPlayMode_StopExprD_Return:
 	nop
 
 AccPlayMode_StartAccPlayFull:
-	ld (1054:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	or (0x3474:16), 1
 	calr AccTempo_ClearPositions
 	ld a, 0x85:opc
 	calr AccTempo_WriteStartMarker
-	bit 0, (ACC_TRANSPORT_STATE:16)
+	bit 0, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartAccPlayFull_Return
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StartAccPlayFull_Return
-	ld (ACC_TRANSPORT_STATE:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	calr AccTempo_ClearCounters
 	calr AccSync_MidiClock
 
@@ -8729,7 +8729,7 @@ AccPlayMode_StartAccPlayFull_Padding:
 	nop
 AccPlayMode_OnMask3:
 	ld	(SEQ_TRANSPORT_STATE:16), 12
-	ld	(1054:16), 12
+	ld	(ACC_TRANSPORT_STATE:16), 12
 	and	(0x3470:16), 15
 	ld	a, 134:opc
 	calr	AccTempo_WriteStartMarker
@@ -8740,8 +8740,8 @@ AccPlayMode_OnMask3:
 AccTempo_ClearCounters:
 	xor wa, wa
 	ei 6
-	ld (1047:16), a
-	ld (1048:16), wa
+	ld (PLAY_CLOCK:16), a
+	ld (PLAY_BEAT_COUNT:16), wa
 	ei 0
 	ret
 
@@ -8754,8 +8754,8 @@ AccTempo_ClearPositions:
 	ld (ACC_BEAT:16), a
 
 AccTempo_ClearPositions_Loop:
-	ld (1076:16), a
-	ld (1077:16), a
+	ld (ACC_BAR_COUNT:16), a
+	ld (ACC_SECTION_BAR:16), a
 	ei 0
 	and (0x28a6:16), 254
 	ret
@@ -8888,7 +8888,7 @@ AccPlayMode_WaitIdle:
 	xor bc, bc
 
 AccPlayMode_WaitIdle_Check:
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, AccPlayMode_WaitIdle_Loop
 	inc 1, bc
 	cp bc, 0x500
@@ -8911,7 +8911,7 @@ AccTempo_CheckSource:
 AccTempo_CheckSource_Process:
 	bit 0, (1115:16)
 	jr z, AccTempo_CheckSource_Clear
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccTempo_CheckSource_Return
 
 AccTempo_CheckSource_Clear:
@@ -9234,7 +9234,7 @@ AccPos_ClearOnStart_Padding_Sub_Return:
 	nop
 
 AccFlags_SyncTo64607:
-	ld e, (ACC_TRANSPORT_STATE:16)
+	ld e, (PLAY_TRANSPORT_STATE:16)
 	and (PANEL_STYLE+5:16), 254
 	bit 2, e
 	jr z, AccFlags_Sync_Process
@@ -16484,7 +16484,7 @@ AccPatch_InitSeq_ClearLoop:
 	call TempoRingBuf_ReInitAndRet
 
 AccPatch_InitSeq_LoadTempo:
-	ld a, (1077:16)
+	ld a, (ACC_SECTION_BAR:16)
 	ld c, (ACC_BEAT:16)
 	ei 0
 	and (0x364a:16), 254
@@ -16520,7 +16520,7 @@ AccPatch_ResetSeqCounters_Loop:
 	add hl, 0x6
 	djnz16 bc, AccPatch_ResetSeqCounters_Loop
 	ei 6
-	ld a, (1077:16)
+	ld a, (ACC_SECTION_BAR:16)
 	ld c, (ACC_BEAT:16)
 	ei 0
 	and (0x364a:16), 254
@@ -16593,7 +16593,7 @@ AccPatch_UpdateSequenceState:
 	ld wa, (ACC_PATCH_CURSOR_OFFSET:16)
 	ld (0x35dc:16), wa
 	ei 6
-	ld a, (1077:16)
+	ld a, (ACC_SECTION_BAR:16)
 	ld (0x35f9:16), a
 	ld wa, (ACC_CLOCK:16)
 	ld (0x3706:16), wa
@@ -29565,7 +29565,7 @@ CmEsyTtl_Dispatch2_Helper2:
 	pop	xiz
 	ret
 ExtVoice_ProcessList_Data:
-	bit	2, (0x041e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, DrumParam_ReadMaxCount_Return
 	or	(0x34cd:16), 128
 	call	Seq_DispatcherEntry
@@ -29616,7 +29616,7 @@ DrumParam_ReadMaxCount_Helper:
 	call	DrumVoice_NotifyEE
 	ret
 DrumParam_ReadMaxCount_Helper2:
-	bit	2, (0x41e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, DrumParam_ReadMaxCount_Return3
 	jr	DrumParam_ReadMaxCount_Helper2
 DrumParam_ReadMaxCount_Return3:

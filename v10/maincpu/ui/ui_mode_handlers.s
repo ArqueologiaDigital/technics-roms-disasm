@@ -762,7 +762,7 @@ EffectMode_CopyHoldPedalBits:
 	ret z
 	cp e, 0xc5
 	ret z
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	ret z
 	ld l, (xwa + 8)
 	and l, 0xff
@@ -815,7 +815,7 @@ EffectMode_SetRegion_Apply:
 	jr nz, EffectMode_PopIzRet
 
 EffectMode_CheckPedalType:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, EffectMode_PopIzRet
 	ld wa, (0x8d56:16)
 	bit 0, wa

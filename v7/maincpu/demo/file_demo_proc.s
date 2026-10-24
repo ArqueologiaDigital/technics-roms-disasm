@@ -917,7 +917,7 @@ Demo_SelectEntry_StartPlayback:
 	ret
 Audio_WaitForReady:
 	ld xbc, 0xf000
-	ld a, (ACC_TRANSPORT_STATE:16)
+	ld a, (PLAY_TRANSPORT_STATE:16)
 
 Audio_WaitForReady_PollLoop:
 	bit 2, a
@@ -1122,13 +1122,13 @@ Demo_LookupPartTableEntry:
 	ret
 Demo_WaitForDisplayBit:
 	ld xwa, NakaData_RomEnd
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	ret z
 
 Demo_WaitForDisplayBit_Loop:
 	sub xwa, 0x1
 	ret z
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, Demo_WaitForDisplayBit_Loop
 	ret
 
@@ -8482,7 +8482,7 @@ SeqPhase_OperationStateCheck:
 	jrl z, SeqPhase_PopIzRet
 	res 0x07,A
 	ld (0x042c:16), a
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jrl nz, SeqPhase_PopIzRet
 	bit 2, (0x041f:16)
 	jrl nz, SeqPhase_PopIzRet
@@ -8812,7 +8812,7 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	ld	a, (213234:24)
 	cp	(CURRENT_MODE:16), 1
 	jr	nz, FileIO_ErrorCodeByteBlock_Skip7
-	bit	2, (ACC_TRANSPORT_STATE:16)
+	bit	2, (PLAY_TRANSPORT_STATE:16)
 	ret	nz
 	bit	2, (0x41f:16)
 	ret	nz

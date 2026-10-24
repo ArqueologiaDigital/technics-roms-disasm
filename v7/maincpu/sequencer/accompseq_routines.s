@@ -973,7 +973,7 @@ AccompSeq_ManualMidi_ClearFlags_Code_Helper2:
 	ld	(32130:16), a
 	ret
 	ld	a, (32198:16)
-	ld	w, (1076:16)
+	ld	w, (ACC_BAR_COUNT:16)
 	ld	(32198:16), w
 	cp	a, w
 	jr	z, AccompSeq_ManualMidi_ClearFlags_Code_Return2

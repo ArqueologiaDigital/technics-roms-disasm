@@ -138,7 +138,7 @@ SetWall_SlotMaskTable:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff
 
 SetWall_EventHandler:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_EventHandler_Active
 	jp SetWall_Return
 
@@ -303,7 +303,7 @@ SqTrAs_CursorToFirstPage:
 	ret
 
 SetWall_SlotSetup:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_SlotSetup_Active
 	jp SetWall_SlotSetup_Return
 
@@ -333,7 +333,7 @@ SetWall_SlotSetup_Return:
 	ret
 
 SetWall_SlotUpdate:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_SlotUpdate_Active
 	jp SetWall_SlotUpdate_Return
 

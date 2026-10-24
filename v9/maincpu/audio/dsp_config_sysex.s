@@ -1886,7 +1886,7 @@ GET_COMPUTER_INTERFACE_SELECTION:
 CompIface_ProcessInput:
 	bit 3, (0xc1f0:16)
 	jrl z, CompIface_RampControl
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, CompIface_FilterBySource
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr z, CompIface_FilterBySource
@@ -1917,7 +1917,7 @@ CompIface_RampDown_Start:
 	jr CompIface_CallSync
 
 CompIface_FilterBySource:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, CompIface_FromSource2
 	bit 4, (0xc1f0:16)
 	jr z, CompIface_PostProcess

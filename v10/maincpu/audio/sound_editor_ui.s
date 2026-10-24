@@ -18740,7 +18740,7 @@ MspPlayModeFunc_DataBlock:
 	ld	xhl, (xsp+12)
 	jr	MspPlayModeFunc_Epilogue
 MspPlayModeFunc_OnGetLargeStep:	; cases 31457342, 31457343
-	ld	a, (1054:16)
+	ld	a, (ACC_TRANSPORT_STATE:16)
 	and	a, 4
 	cp	a, 4:i3
 	scc16	nz, hl

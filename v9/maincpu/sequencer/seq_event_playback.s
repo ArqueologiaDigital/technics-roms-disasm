@@ -1261,7 +1261,7 @@ AccPlay_SetIndicatorAndRet:
 	ret
 
 AccPlay_DispatchSeqStart:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlay_DispatchSeqRet
 	call Seq_DispatcherEntry
 	or (0x33e8:16), 1
@@ -1401,7 +1401,7 @@ AccPlay_PostLoopCleanup:
 AccPlay_StopIfRunning:
 	bit 0, (0x7f15:16)
 	jr z, AccPlay_StopRet
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlay_StopRet
 	call Seq_DispatcherEntry
 	and (0x33e8:16), 254
@@ -1979,7 +1979,7 @@ MidiSeq_SustainRet:
 	ret
 
 AccPlay_TrackMeasureChange:
-	ld a, (1076:16)
+	ld a, (ACC_BAR_COUNT:16)
 	ld w, (0x7f34:16)
 	cp a, w
 	jr z, AccPlay_MeasureTrackRet
@@ -2612,19 +2612,19 @@ AccPlay_ToggleRet:
 	ret
 
 AccPlay_StopAndReset:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlay_StopResetRet
 	ld wa, 0:i3
-	ld (1047:16), a
-	ld (1048:16), wa
+	ld (PLAY_CLOCK:16), a
+	ld (PLAY_BEAT_COUNT:16), wa
 	ld (ACC_CLOCK:16), a
 	ld (ACC_BEAT:16), a
-	ld (1076:16), a
-	ld (1077:16), a
+	ld (ACC_BAR_COUNT:16), a
+	ld (ACC_SECTION_BAR:16), a
 	ld (1130:16), a
 	ld (1128:16), wa
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	ld (ACC_TRANSPORT_STATE:16), 1
-	ld (1054:16), 1
 	ld (1055:16), 1
 
 AccPlay_StopResetRet:

@@ -1006,7 +1006,7 @@ AccompSeq_PortaFadeOut_Helper_Helper:
 	ld	(0x7e1e:16), a
 	ret
 	ld	a, (0x7e62:16)
-	ld	w, (1076:16)
+	ld	w, (ACC_BAR_COUNT:16)
 	ld	(0x7e62:16), w
 	cp	a, w
 	jr	z, AccompSeq_PortaFadeOut_Return2

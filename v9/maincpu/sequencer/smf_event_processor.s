@@ -10965,7 +10965,7 @@ Seq_ReadTempoLookup:
 Seq_ProcessAllInputState:
 	ld a, (0x3283:16)
 	and a, 0xfe
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, Seq_InputState_StoreFlag
 	or a, 0x1
 
@@ -11080,7 +11080,7 @@ AccChord_CheckUIState:
 	jr nz, AccChord_SetDefaultKeys
 
 AccChord_CheckKeyFlags:
-	ld a, (1054:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	and a, 0x18
 	jr nz, AccChord_CheckUIStateExit
 
@@ -11178,8 +11178,8 @@ AccState_ReadAccompParams:
 	ld (1124:16), a
 	ld a, (ACC_BEAT:16)
 	ld (0x3280:16), a
-	ld a, (1076:16)
+	ld a, (ACC_BAR_COUNT:16)
 	ld (0x32b4:16), a
-	ld a, (1077:16)
+	ld a, (ACC_SECTION_BAR:16)
 	ld (0x32b3:16), a
 	ld a, (ACC_CLOCK:16)

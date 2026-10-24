@@ -764,7 +764,7 @@ PanelButton_AutoPlayChord:
 	jr	z, PanelButton_AutoPlayChord_Epilogue
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-	bit	2, (0x41e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, PanelButton_AutoPlayChord_Skip
 	ld	xwa, 163968
 	call	SndParam_LookupReadOnly
@@ -2839,7 +2839,7 @@ SndParam_GuardedNibbleSet_ViaReg0103:
 	; --- Routine 3: complex bit checks, and (xiz+0x0e), set 0 in A (59 bytes) ---
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiCtrl_PopIzRet
 	ld	xwa, 0x00028103
 	call	SndParam_LookupReadOnly
@@ -3445,7 +3445,7 @@ CtrlPanel_GuardedNibbleSet_8F4E:
 	; --- Sub 9: guarded nibble set/res at (XIZ+0x0e) via (0x8f4e) lookup (76 bytes) ---
 	push	xiz
 	lda	xiz, (ENCODER_STATE_BASE:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, CtrlPanel_BitOp_Cleanup
 	ld	xwa, 0x00028103
 	call	SndParam_LookupReadOnly
@@ -3641,7 +3641,7 @@ MidiChannel_ProcessOutputState:
 	calr	MidiChOut_DetectChanges
 	lda	xde, (xiz + 14)
 	ld	c, (0x8dda:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiChOut_CheckHWState
 	ld	a, c
 	bit	1, c
@@ -3686,14 +3686,14 @@ MidiChannel_CleanupRet:
 	pop	xiz
 	ret
 MidiChOut_DetectChanges:
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	ret	nz
-	ld	a, (ACC_TRANSPORT_STATE:16)
+	ld	a, (PLAY_TRANSPORT_STATE:16)
 	xor	a, (0x33df:16)
 	bit	2, a
 	ret	z
 	orw	(LED_REQUEST_2:16), 4
-	ldmm8	0x33df, ACC_TRANSPORT_STATE
+	ldmm8	0x33df, PLAY_TRANSPORT_STATE
 	ret
 MidiChannel_ScanPending:
 	push	xiz
@@ -3704,7 +3704,7 @@ MidiChannel_ScanPending:
 	ld	a, (0x8eae:16)
 	and	a, 0x3
 	jr	nz, MidiScan_PopIzRet
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiScan_PopIzRet
 	bit	2, (SEQ_RTMCFG:16)
 	jr	nz, MidiScan_AltPathCheck

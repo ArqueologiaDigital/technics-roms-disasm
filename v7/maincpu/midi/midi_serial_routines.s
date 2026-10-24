@@ -295,7 +295,7 @@ ClkTick_BeatSubdivCheck:
 	jr	z, ClkTick_PerClockCounters
 	calr	MIDI_QUEUE_TRACK_EVENT
 ClkTick_PerClockCounters:
-	ld	a, (ACC_TRANSPORT_STATE:16)
+	ld	a, (PLAY_TRANSPORT_STATE:16)
 	pushw	wa
 	and	a, 0x5
 	popw	wa
@@ -304,10 +304,10 @@ ClkTick_PerClockCounters:
 	jrl	nz, Transport_StopHandler
 	bit	0, a
 	jr	z, ClkTick_Src2ClickIncrement
-	ld	(ACC_TRANSPORT_STATE:16), 6
-	bit	0, (1054:16)
+	ld	(PLAY_TRANSPORT_STATE:16), 6
+	bit	0, (ACC_TRANSPORT_STATE:16)
 	jr	z, ClkTick_Src1FineUpdate
-	ld	(1054:16), 6
+	ld	(ACC_TRANSPORT_STATE:16), 6
 ClkTick_Src1FineUpdate:
 	bit	0, (SEQ_TRANSPORT_STATE:16)
 	jr	z, ClkTick_Src1CoarseUpdate
@@ -317,14 +317,14 @@ ClkTick_Src1CoarseUpdate:
 ClkTick_Src2ClickIncrement:
 	bit	2, a
 	jr	z, ClkTick_Src2FineBeatCheck
-	and	(1047:16), 252
-	inc	4, (1047:16)
-	cp	(1047:16), 96
+	and	(PLAY_CLOCK:16), 252
+	inc	4, (PLAY_CLOCK:16)
+	cp	(PLAY_CLOCK:16), 96
 	jr	nz, ClkTick_Src2FineBeatCheck
-	ld	(1047:16), 0
-	incw	1, (1048:16)
+	ld	(PLAY_CLOCK:16), 0
+	incw	1, (PLAY_BEAT_COUNT:16)
 ClkTick_Src2FineBeatCheck:
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, ClkTick_Src2ErrorDelta
 	and	(ACC_CLOCK:16), 252
 	inc	4, (ACC_CLOCK:16)
@@ -343,12 +343,12 @@ ClkTick_Src2CoarseOverflow:
 	cp	a, w
 	jr	c, ClkTick_Src2ErrorDelta
 	ld	(ACC_BEAT:16), 0
-	inc	1, (1076:16)
-	inc	1, (1077:16)
-	ld	a, (1077:16)
+	inc	1, (ACC_BAR_COUNT:16)
+	inc	1, (ACC_SECTION_BAR:16)
+	ld	a, (ACC_SECTION_BAR:16)
 	cp	a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr	ule, ClkTick_Src2ErrorDelta
-	ld	(1077:16), 0
+	ld	(ACC_SECTION_BAR:16), 0
 ClkTick_Src2ErrorDelta:
 	ld	a, (ACC_CLOCK:16)
 	ld	w, a
@@ -379,7 +379,7 @@ ClkTick_Src3ClickCheck:
 	cp	a, (1071:16)
 	jr	nz, ClkTick_Src3LowerSyncCheck
 	res	0, (1073:16)
-	ld	(1054:16), 1
+	ld	(ACC_TRANSPORT_STATE:16), 1
 	cpw	(0x28aa:16), 0
 	jr	z, ClkTick_Src3LowerSyncCheck
 	ld	a, 0x85:opc
@@ -390,7 +390,7 @@ ClkTick_Src3LowerSyncCheck:
 	cp	a, (1072:16)
 	jr	nz, ClkTick_Src3OverflowQueue
 	res	3, (1073:16)
-	ld	(1054:16), 8
+	ld	(ACC_TRANSPORT_STATE:16), 8
 	cpw	(0x28aa:16), 0
 	jr	z, ClkTick_Src3OverflowQueue
 	ld	a, 0x86:opc
@@ -408,14 +408,14 @@ Transport_StopHandler:
 	jr	z, Transport_Return
 	cp	d, 0xfc
 	jr	nz, Transport_Return
-	ld	(ACC_TRANSPORT_STATE:16), 16
-	bit	2, (1054:16)
+	ld	(PLAY_TRANSPORT_STATE:16), 16
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, Transport_StopSrc3Snapshot
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	z, Transport_StopSrc1QueueEvent
 	set	2, (0x33de:16)
 Transport_StopSrc1QueueEvent:
-	ld	(1054:16), 16
+	ld	(ACC_TRANSPORT_STATE:16), 16
 	cpw	(0x28aa:16), 0
 	jr	z, Transport_StopSrc3Snapshot
 	ld	a, 0x86:opc
@@ -467,16 +467,16 @@ MIDI_SystemMessage_OnStart:
 	jr	nz, ResetPlay_Return
 MIDI_RESET_PLAYBACK_STATE:
 	xor	wa, wa
-	ld	(1047:16), a
-	ld	(1048:16), wa
-	ld	(ACC_TRANSPORT_STATE:16), 1
+	ld	(PLAY_CLOCK:16), a
+	ld	(PLAY_BEAT_COUNT:16), wa
+	ld	(PLAY_TRANSPORT_STATE:16), 1
 	bit	1, (SEQ_RTMCFG:16)
 	jr	z, ResetPlay_Src3Check
 	ld	(ACC_CLOCK:16), a
 	ld	(ACC_BEAT:16), a
-	ld	(1076:16), a
-	ld	(1077:16), a
-	ld	(1054:16), 1
+	ld	(ACC_BAR_COUNT:16), a
+	ld	(ACC_SECTION_BAR:16), a
+	ld	(ACC_TRANSPORT_STATE:16), 1
 	res	0, (0x28a6:16)
 	cpw	(0x28aa:16), 0
 	jr	z, ResetPlay_Src3Check
@@ -494,21 +494,21 @@ ResetPlay_Return:
 MIDI_APPLY_STARTUP_TIMING:
 	cp	(1108:16), 0
 	jr	z, StartTiming_ClearAndReturn
-	bit	0, (ACC_TRANSPORT_STATE:16)
+	bit	0, (PLAY_TRANSPORT_STATE:16)
 	jr	z, StartTiming_ClearAndReturn
-	ld	(ACC_TRANSPORT_STATE:16), 6
+	ld	(PLAY_TRANSPORT_STATE:16), 6
 	ld	a, (1108:16)
 	dec	1, a
 	sll	a, 2
-	add	(1047:16), a
+	add	(PLAY_CLOCK:16), a
 	bit	0, (1055:16)
 	jr	z, StartTiming_Src1Adjust
 	ld	(1055:16), 6
 	add	(1130:16), a
 StartTiming_Src1Adjust:
-	bit	0, (1054:16)
+	bit	0, (ACC_TRANSPORT_STATE:16)
 	jr	z, StartTiming_Src2Adjust
-	ld	(1054:16), 6
+	ld	(ACC_TRANSPORT_STATE:16), 6
 	add	(ACC_CLOCK:16), a
 StartTiming_Src2Adjust:
 	bit	0, (SEQ_TRANSPORT_STATE:16)
@@ -519,7 +519,7 @@ StartTiming_ClearAndReturn:
 	ld	(1108:16), 0
 	ret
 Continue_SetRunning:
-	ld	(ACC_TRANSPORT_STATE:16), 6
+	ld	(PLAY_TRANSPORT_STATE:16), 6
 	bit	0, (SEQ_RTMCFG:16)
 	jr	z, Continue_Return
 	ld	(SEQ_TRANSPORT_STATE:16), 6
@@ -530,17 +530,17 @@ Continue_SetRunning:
 	ld	(ACC_CLOCK:16), 0
 	ld	(ACC_BEAT:16), 0
 Continue_ClearPositionAndSetSrc1:
-	ld	(1076:16), 0
-	ld	(1077:16), 0
+	ld	(ACC_BAR_COUNT:16), 0
+	ld	(ACC_SECTION_BAR:16), 0
 	and	(0x28a6:16), 254
-	ld	(1054:16), 6
+	ld	(ACC_TRANSPORT_STATE:16), 6
 Continue_Return:
 	ret
 ; (pre-port v7 note about the bytes at 0xFCEE28:)
 AltClk_DisabledClockPath:
 	ld	(1066:16), 0
 	pushw	wa
-	ld	a, (ACC_TRANSPORT_STATE:16)
+	ld	a, (PLAY_TRANSPORT_STATE:16)
 	and	a, 0x5
 	popw	wa
 	jr	z, AltClk_NoSrcFlagPath
@@ -548,14 +548,14 @@ AltClk_DisabledClockPath:
 	jr	z, AltClk_Return
 	cp	d, 0xfc
 	jr	nz, AltClk_Return
-	ld	(ACC_TRANSPORT_STATE:16), 12
-	bit	2, (1054:16)
+	ld	(PLAY_TRANSPORT_STATE:16), 12
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, AltClk_StopSrc3Snapshot
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	z, AltClk_StopSrc1Queue
 	set	2, (0x33de:16)
 AltClk_StopSrc1Queue:
-	ld	(1054:16), 12
+	ld	(ACC_TRANSPORT_STATE:16), 12
 	cpw	(0x28aa:16), 0
 	jr	z, AltClk_StopSrc3Snapshot
 	ld	a, 0x86:opc

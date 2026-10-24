@@ -4275,7 +4275,7 @@ SeqNote_HandleMasterChannel:
 	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	jr nz, SeqNote_ReturnNotProcessed
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, SeqNote_ReturnNotProcessed
 	call AccWrap_PlayModeStartPlay
 	jr SeqNote_ReturnNotProcessed
@@ -4846,7 +4846,7 @@ AccPedalConfig_NotCtrl7:
 	ldto_berp L, 0xfa
 	extz hl
 	ld bc, hl
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jrl z, AccPedalCfg_CheckBit6Replay
 	ldto_berp E, 0xf4
 	cp d, 6:i3
@@ -5143,7 +5143,7 @@ SeqNote_UpdatePlayPosition_A:
 	dec 6, xsp
 	ld (xsp), c
 	ld (xsp + 2), xwa
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, SeqNotePos_Return
 	bit 4, (0x28ac:16)
 	jr z, SeqNotePos_CheckInterruptFlag
@@ -5204,7 +5204,7 @@ SeqNote_UpdatePlayPosition_B:
 	dec 6, xsp
 	ld (xsp), c
 	ld (xsp + 2), xwa
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, SeqNote_StackCleanupRet
 	bit 1, (0x28b2:16)
 	jr nz, SeqNote_StackCleanupRet
@@ -6927,7 +6927,7 @@ SeqCh_ClearActive_DrumShiftDone:
 	ld wa, (SEQ_SONG_RECORD+30:16)
 	and wa, de
 	ret z
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	ret z
 	jp AccWrap_PlayModeStartPlay
 
@@ -7095,7 +7095,7 @@ NotePool_DataBlock_8BA:
 
 	ret	nz
 
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 
 	ret	nz
 
@@ -7140,7 +7140,7 @@ SeqStart_CheckActiveParts:
 	ret
 
 SeqStart_CheckPlaybackBit:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, SeqStart_LoadPositionAndMode
 	res 7, a
 	ld (8958:16), a
@@ -7272,7 +7272,7 @@ SeqPlay_StopAndResetAll:
 	ret
 
 SeqPlay_StopReset_NotPlaying:
-	ld a, (1054:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	bit 3, a
 	jr nz, SeqPlay_StopReset_DispatchAccomp
 	bit 2, a
@@ -8997,14 +8997,14 @@ SeqBuf_FlushAndReinit_VoiceCCEvents:
 
 SeqTimer_SetPlaybackFlags:
 	ei 6
-	set 1, (ACC_TRANSPORT_STATE:16)
-	set 2, (ACC_TRANSPORT_STATE:16)
-	ld a, (1054:16)
+	set 1, (PLAY_TRANSPORT_STATE:16)
+	set 2, (PLAY_TRANSPORT_STATE:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	bit 0, a
 	jr z, SeqTimerFlags_CheckSysFlag
 	set 1, a
 	set 2, a
-	ld (1054:16), a
+	ld (ACC_TRANSPORT_STATE:16), a
 
 ; === v7-specific block: SeqTimerFlags_CheckSysFlag (157 bytes) ===
 SeqTimerFlags_CheckSysFlag:
@@ -11118,12 +11118,12 @@ Seq_HandleModeTransition:
 	res 3, (SEQ_RTMCFG:16)
 
 SeqModeTransit_ClearFlags:
-	res	4, (ACC_TRANSPORT_STATE:16)
-	res	1, (ACC_TRANSPORT_STATE:16)
-	ldb_d8	a, (1054)
+	res	4, (PLAY_TRANSPORT_STATE:16)
+	res	1, (PLAY_TRANSPORT_STATE:16)
+	ldb_d8	a, (ACC_TRANSPORT_STATE)
 	res	4, a
 	res	1, a
-	ld	(0x41e:16), a
+	ld	(ACC_TRANSPORT_STATE:16), a
 	cp	(CURRENT_MODE:16), 19
 	jr	nz, SeqModeTransit_CheckBit5
 	calr	SeqModeTransit_DemoPath
@@ -19095,7 +19095,7 @@ SeqPlay_DeactClearBit:
 	call	Audio_CheckSubsystemReady
 	cpw	(SEQ_SONG_RECORD+30:16), 0
 	jr	nz, Chan_DeactivateAfterAccomp
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, SeqPlay_DeactDispatchAccomp
 	call	AccWrap_PlayModeStopExpr
 	jr	Chan_DeactivateAfterAccomp
@@ -19236,7 +19236,7 @@ SeqPlay_FindSetBitAndDeact:
 	call	SeqBuf_Init
 SeqPlay_FindAfterReset:
 	call	Audio_CheckSubsystemReady
-	ldb_d8	a, (ACC_TRANSPORT_STATE)
+	ldb_d8	a, (PLAY_TRANSPORT_STATE)
 	and	a, 5
 	call	z, (16094901:24)
 	calr	Part_DetectSingleVoiceType
@@ -19489,7 +19489,7 @@ SeqPlay_HandleVoiceReassign:
 SeqPlay_CheckNoteDisplayPending:
 	cp	(7568:16), 0
 	jr	z, SeqPlay_InitBuffers
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, SeqPlay_InitBuffers
 	ldb_d8	a, (SEQ_TRANSPORT_STATE)
 	and	a, 20
@@ -19501,7 +19501,7 @@ SeqPlay_CheckNoteDisplayPending:
 SeqPlay_InitBuffers:
 	bit	4, (10419:16)
 	jr	z, SeqPlay_CheckMidiPending
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, SeqPlay_CheckMidiPending
 	ldb_d8	a, (SEQ_TRANSPORT_STATE)
 	and	a, 20
@@ -19619,7 +19619,7 @@ SeqPlay_CountInToLastBar:
 	ld	wa, (SEQ_START_MEASURE:16)
 	cp	wa, 32770
 	ret	nz
-	ld	a, (1076:16)
+	ld	a, (ACC_BAR_COUNT:16)
 	cp	a, 1:i3
 	ret	c
 	ldw	(SEQ_START_MEASURE:16), 32769
@@ -19688,7 +19688,7 @@ SeqPlay_CountInEnd_Join:
 AccWrap_DispatchAndWaitSync:
 	call AccWrap_PlayModeDispatch
 	ldw bc, 0xffff
-	ld a, (ACC_TRANSPORT_STATE:16)
+	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 2, a
 	ret z
 
@@ -20084,13 +20084,13 @@ SeqTimer_CheckPlaybackCountdown:
 	call	Demo_ProcessRecordEntry
 	cp	l, 0:i3
 	jr	z, SeqTimer_FlagsLoop
-	ld	(1054:16), 1
+	ld	(ACC_TRANSPORT_STATE:16), 1
 	ld	(ACC_CLOCK:16), 0
 	ld	(ACC_BEAT:16), 0
-	ld	(1076:16), 0
+	ld	(ACC_BAR_COUNT:16), 0
 SeqTimer_FlagsLoop:
 	ld (SEQ_TRANSPORT_STATE:16), 1
-	ld (ACC_TRANSPORT_STATE:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
 	ei 0
 
 SeqTimer_FlagsReturn:

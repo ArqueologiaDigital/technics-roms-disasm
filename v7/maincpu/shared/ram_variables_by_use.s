@@ -6,8 +6,13 @@
 	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
-	.equ ACC_TRANSPORT_STATE,		0x0420	; transport of the style clock, coded like SEQ_TRANSPORT_STATE: 1 start pending, 6 running (bit 2 gates the clock counters in INTTR4_HANDLER; Audio_WaitForReady polls it), 12 stop requested, 16 stopped (ssf-presentation.md "Key DRAM State Variables")
+	.equ PLAY_CLOCK,			0x0417	; tick within the beat, 0..95, counted by INTTR4_HANDLER while PLAY_TRANSPORT_STATE runs (INTTR4_MetroBeat_Check stops on 0 / 24 / 48 / 72)
+	.equ PLAY_BEAT_COUNT,			0x0418	; word: beats counted since the play transport started
+	.equ ACC_TRANSPORT_STATE,		0x041e	; transport of the accompaniment clock ACC_CLOCK / ACC_BEAT (bit 2 = running gates them in INTTR4_CheckSeqEnable; AccAutoPlay_* test it), coded like SEQ_TRANSPORT_STATE (1, 6, 8, 12, 16; AccPlayMode_StartAccPlay stores 1); 128 / 134 = waiting for synchro start: INTTR4_SeqAutoStart starts PLAY_TRANSPORT_STATE and SEQ_TRANSPORT_STATE at the end of a bar
+	.equ PLAY_TRANSPORT_STATE,		0x0420	; the play transport, coded like SEQ_TRANSPORT_STATE: 1 start pending, 6 running (bit 2 gates PLAY_CLOCK / PLAY_BEAT_COUNT in INTTR4_HANDLER; Audio_WaitForReady and the demo song player wait on it), bit 3 = stop at the next 24-tick boundary (INTTR4_MetroBeat_Check), 16 stopped; AccPlayMode_* start and stop it (ssf-presentation.md calls it the sequencer transport lane)
 	.equ ACC_BEATS_PER_BAR,			0x0433	; beats per measure of the style; 3 or 6 select the three-beat LED pattern (BeatLed_ThreeBeatMasks)
+	.equ ACC_BAR_COUNT,			0x0434	; bars the accompaniment clock has completed (INTTR4_SeqTick_CheckBeat counts them; synchro start waits for 1)
+	.equ ACC_SECTION_BAR,			0x0435	; bar within the style section, back to 0 after STYLE_SECTION_LAST_MEASURE (INTTR4_SeqTick_CheckBeat)
 	.equ MIDI_RX_CONTEXT,			0x0438	; [28 bytes] XWA, XBC, XDE, XHL, XIX, XIY, XIZ saved by MIDI_RX_CONTEXT_SAVE and put back by MIDI_RX_CONTEXT_RESTORE
 	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (TaskSched_FoundReadyTask sets it, TaskSched_Dispatch saves XSP at its +4)
 	.equ INTERCPU_XFER_PTR,			0x05da	; the source address of the inter-CPU transfer in progress (InterCPU_Send_WaitAck, E1Bulk_WaitAck; inter-cpu-protocol.md)

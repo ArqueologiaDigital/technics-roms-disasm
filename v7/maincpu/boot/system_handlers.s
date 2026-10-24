@@ -428,9 +428,9 @@ INTT1_CheckScanFlag:
 	bit 2, (PANEL_MIDI:16)
 	jrl nz, INTT1_UpdateAlternateTimers
 	inc 1, (1050:16)
-	bit 0, (ACC_TRANSPORT_STATE:16)
+	bit 0, (PLAY_TRANSPORT_STATE:16)
 	jr nz, INTT1_CheckTickOverflow
-	bit 5, (ACC_TRANSPORT_STATE:16)
+	bit 5, (PLAY_TRANSPORT_STATE:16)
 	jr nz, INTT1_CheckTickCount
 	ld (1050:16), 0
 	jp UIStateMachine_DispatchEntry
@@ -438,7 +438,7 @@ INTT1_CheckScanFlag:
 INTT1_CheckTickCount:
 	cp (1050:16), 1
 	jrl nc, UIStateMachine_DispatchEntry
-	ld (ACC_TRANSPORT_STATE:16), 16
+	ld (PLAY_TRANSPORT_STATE:16), 16
 
 INTT1_CheckMidiSync:
 	cp (CURRENT_MODE:16), 0x13
@@ -458,11 +458,11 @@ UIState_DispatchBranch:
 INTT1_CheckTickOverflow:
 	cp (1050:16), 1
 	jr ule, UIStateMachine_DispatchEntry
-	ld (ACC_TRANSPORT_STATE:16), 6
+	ld (PLAY_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckAltSeqOverflow
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTT1_CheckAltSeqOverflow:
@@ -483,9 +483,9 @@ INTT1_SkipToDispatch:
 	jr UIStateMachine_DispatchEntry
 
 INTT1_UpdateAlternateTimers:
-	bit 3, (1054:16)
+	bit 3, (ACC_TRANSPORT_STATE:16)
 	jr z, INTT1_CheckAltSeqTimer
-	ld (1054:16), 16
+	ld (ACC_TRANSPORT_STATE:16), 16
 
 INTT1_CheckAltSeqTimer:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
@@ -497,9 +497,9 @@ INTT1_CheckAltSeqTimer:
 	ld (1079:16), a
 
 INTT1_CheckMetroTimer:
-	bit 3, (ACC_TRANSPORT_STATE:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr z, UIStateMachine_DispatchEntry
-	ld (ACC_TRANSPORT_STATE:16), 16
+	ld (PLAY_TRANSPORT_STATE:16), 16
 	jrl INTT1_CheckMidiSync
 
 UIStateMachine_DispatchEntry:
@@ -665,23 +665,23 @@ INTTR4_SyncCounter2_Done:
 	pop	sr
 
 INTTR4_CheckMetroEnable:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_CheckSeqEnable
 	push	sr
 	ei 6
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	inc 1, a
 	cp a, 0x60
 	jr lt, INTTR4_MetroCounter_Store
 	xor a, a
-	incw 1, (1048:16)
+	incw 1, (PLAY_BEAT_COUNT:16)
 
 INTTR4_MetroCounter_Store:
-	ld (1047:16), a
+	ld (PLAY_CLOCK:16), a
 	pop	sr
 
 INTTR4_CheckSeqEnable:
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, INTTR4_CheckAltSeqEnable
 	inc	1, (ACC_CLOCK:16)
 	cp	(ACC_CLOCK:16), 96
@@ -698,12 +698,12 @@ INTTR4_SeqTick_CheckBeat:
 	cp	a, w
 	jr	c, INTTR4_CheckAltSeqEnable
 	ld	(ACC_BEAT:16), 0
-	inc	1, (1076:16)
-	inc	1, (1077:16)
-	ld	a, (1077:16)
+	inc	1, (ACC_BAR_COUNT:16)
+	inc	1, (ACC_SECTION_BAR:16)
+	ld	a, (ACC_SECTION_BAR:16)
 	cp	a, (STYLE_SECTION_LAST_MEASURE:16)
 	jr	ule, INTTR4_CheckAltSeqEnable
-	ld	(1077:16), 0
+	ld	(ACC_SECTION_BAR:16), 0
 INTTR4_CheckAltSeqEnable:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroPhaseSync
@@ -717,11 +717,11 @@ INTTR4_CheckAltSeqEnable:
 	calr TempoRingBuf_Write
 
 INTTR4_MetroPhaseSync:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqAutoStart
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_MetroSync_CheckAltSeq
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTTR4_MetroSync_CheckAltSeq:
@@ -734,20 +734,20 @@ INTTR4_MetroSync_Done:
 	jr INTTR4_MetroBeat_Check
 
 INTTR4_SeqAutoStart:
-	bit	7, (1054:16)
+	bit	7, (ACC_TRANSPORT_STATE:16)
 	jr	z, INTTR4_MetroBeat_Check
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, INTTR4_SeqInit_SetEnable
 	cp	(ACC_CLOCK:16), 95
 	jr	c, INTTR4_SeqAutoStart_Skip
-	cp	(1076:16), 1
+	cp	(ACC_BAR_COUNT:16), 1
 	jr	c, INTTR4_SeqAutoStart_Skip
 	ld	a, (ACC_BEATS_PER_BAR:16)
 	dec	1, a
 	cp	(ACC_BEAT:16), a
 	jr	c, INTTR4_SeqAutoStart_Skip
 	ld	a, 0x1:opc
-	ld	(ACC_TRANSPORT_STATE:16), a
+	ld	(PLAY_TRANSPORT_STATE:16), a
 	ld	(SEQ_TRANSPORT_STATE:16), a
 	cp	(CURRENT_MODE:16), 19
 	jr	z, INTTR4_SeqAutoStart_Skip
@@ -764,12 +764,12 @@ INTTR4_SeqAutoStart_Skip:
 	jr INTTR4_MetroBeat_Check
 
 INTTR4_SeqInit_SetEnable:
-	ld (1054:16), 134
+	ld (ACC_TRANSPORT_STATE:16), 134
 
 INTTR4_MetroBeat_Check:
-	bit 3, (ACC_TRANSPORT_STATE:16)
+	bit 3, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqBeat_Check
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	cp a, 0:i3
 	jr z, INTTR4_MetroBeat_OnBeat
 	cp a, 0x18
@@ -781,7 +781,7 @@ INTTR4_MetroBeat_Check:
 	jr INTTR4_MetroQuarter_Check
 
 INTTR4_MetroBeat_OnBeat:
-	ld	(ACC_TRANSPORT_STATE:16), 16
+	ld	(PLAY_TRANSPORT_STATE:16), 16
 	cp	(CURRENT_MODE:16), 19
 	jr	z, INTTR4_SeqBeat_Check
 	bit	2, (PANEL_MIDI+2:16)
@@ -794,9 +794,9 @@ INTTR4_MetroBeat_OnBeat:
 	call	MIDI_SC0_TX_DISPATCH
 	pop	sr
 INTTR4_SeqBeat_Check:
-	bit 3, (1054:16)
+	bit 3, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_AltSeqBeat_Check
-	ld (1054:16), 16
+	ld (ACC_TRANSPORT_STATE:16), 16
 
 INTTR4_AltSeqBeat_Check:
 	bit 3, (SEQ_TRANSPORT_STATE:16)
@@ -808,9 +808,9 @@ INTTR4_AltSeqBeat_Check:
 	ld (1079:16), a
 
 INTTR4_MetroQuarter_Check:
-	bit	2, (ACC_TRANSPORT_STATE:16)
+	bit	2, (PLAY_TRANSPORT_STATE:16)
 	jr	z, INTTR4_SeqAccum_Update
-	ld	a, (1047:16)
+	ld	a, (PLAY_CLOCK:16)
 	and	a, 0x3
 	jr	nz, INTTR4_SeqAccum_Update
 	cp	(CURRENT_MODE:16), 19
@@ -821,7 +821,7 @@ INTTR4_MetroQuarter_Check:
 	call	MIDI_SC0_TX_DISPATCH
 	pop	sr
 INTTR4_SeqAccum_Update:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SeqAccum_Reset
 	push	sr
 	ei 6
@@ -865,7 +865,7 @@ INTTR4_AltSeqAccum_Update:
 	jr z, INTTR4_AltSeqSync_Check
 	cp (1072:16), a
 	jr nz, INTTR4_AltSeqSync_Check
-	ld (1054:16), 8
+	ld (ACC_TRANSPORT_STATE:16), 8
 	and (1073:16), 247
 	cpw (0x28aa:16), 0
 	jr z, INTTR4_AltSeqSync_Check
@@ -877,7 +877,7 @@ INTTR4_AltSeqSync_Check:
 	jr z, INTTR4_FadeDelay_Check
 	cp (1071:16), a
 	jr nz, INTTR4_FadeDelay_Check
-	ld (1054:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	and (1073:16), 254
 	cpw (0x28aa:16), 0
 	jr z, INTTR4_FadeDelay_Check
@@ -1012,16 +1012,16 @@ INTTR4_SubTick_Mode:
 	inc 1, (SEQ_BEAT_TICK:16)
 
 INTTR4_SubTick_MetroInc:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_SeqInc
-	ld a, (1047:16)
+	ld a, (PLAY_CLOCK:16)
 	xor a, 0x3
 	and a, 0x3
 	jr z, INTTR4_SubTick_SeqInc
-	inc 1, (1047:16)
+	inc 1, (PLAY_CLOCK:16)
 
 INTTR4_SubTick_SeqInc:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_PhaseSync
 	ld a, (ACC_CLOCK:16)
 	xor a, 0x3
@@ -1030,11 +1030,11 @@ INTTR4_SubTick_SeqInc:
 	inc 1, (ACC_CLOCK:16)
 
 INTTR4_SubTick_PhaseSync:
-	bit 2, (ACC_TRANSPORT_STATE:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_ToAccum
-	bit 0, (1054:16)
+	bit 0, (ACC_TRANSPORT_STATE:16)
 	jr z, INTTR4_SubTick_PhaseSync_AltSeq
-	ld (1054:16), 6
+	ld (ACC_TRANSPORT_STATE:16), 6
 	res 0, (1139:16)
 
 INTTR4_SubTick_PhaseSync_AltSeq:
@@ -1237,7 +1237,7 @@ Seq_TickWrapper:
 SeqTick_CheckActive:
 	bitm 0, (xiy)
 	jr z, SeqTick_Dispatch
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, SeqTick_Return
 
 SeqTick_Dispatch:
@@ -1412,7 +1412,7 @@ SwbtWr_ReinitOutputBank_Return:
 	ret
 
 RhythmBuf_ProcessEvents:
-	bit 2, (1054:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, RhythmBuf_ProcessLoop
 	calr SeqTiming_Snapshot
 
