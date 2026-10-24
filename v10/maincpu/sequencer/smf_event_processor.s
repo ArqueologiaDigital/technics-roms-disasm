@@ -70,6 +70,10 @@ ToneGen_DispatchAndLinkBlock:
 	pop xix
 	ret
 
+; Stores the data-entry byte A for MIDI channel IY and combines it with the other half of the
+; pair: with (0xfac) = 6 the byte goes to the table at 0x10c3 and the partner comes from 0x10d3,
+; otherwise the reverse.
+;   Out: A = (0x10c3 byte) * 2 + bit 6 of the 0x10d3 byte.
 VoiceChannel_GetCombinedStatus:
 	cp (4012:16), 6
 	jr z, VoiceChannel_GetStatusBank2First
@@ -641,6 +645,9 @@ SndParam_LookupReturn:
 	pop xhl
 	ret
 
+; Records the MIDI channel of the current message (0xfab low nibble) in 0x1a5f; for channel 9 it
+; also applies the voice value (SndParam_ApplyVoiceValue, XWA = 0x1a57) and stores the two
+; bytes 0x1a5a / 0x1a5b at 0x1a37 + 2 * channel.
 VoiceChannel_StoreVoiceIdx:
 	push xde
 	xor de, de
@@ -835,6 +842,10 @@ SMF_RestoreTimerState:
 SMF_SeekReturn:
 	ret
 
+; Starts playback after a song load: SeqPlay_CheckStartConditions, then bit 2 of 0xfdad set
+; (A = 4) when 0xf23d = 0xff, cleared (A = 0) otherwise; 0x10ea = 1; queues main event
+; (W = 4, D = 3, E = 0x91) (SwbtWr_QueueMainEvent), SwbtWr_ReinitBothBanks and
+; BitMapOut_RenderDisplay.
 SeqPlay_StartWithDisplay:
 	call SeqPlay_CheckStartConditions
 	cp (0xf23d:16), 255
@@ -3255,6 +3266,11 @@ SeqStep_FileReadProcess:
 	ld hl, wa
 	ret
 
+; C library write: FileWrite(buffer, size, count, handle), stack arguments.
+;   The handle must be open (byte +4 non-zero, else error 0x11 in 0x1e53c) and writable (bit 1
+;   of +4, else error 0x0d).  size * count bytes go through the device write method (pointer at
+;   handle+14, entry +12).
+;   Out: HL = items written (the byte count divided by size), 0 on error.
 FileWrite:
 	ld xbc, (xsp + 12)
 	or xbc, xbc
@@ -3647,6 +3663,7 @@ SeqStep_FileCloseExit_Skip4:
 SeqStep_FileNopA:
 	ret
 
+; Empty routine: returns at once (called by the file layer where a lock release would be).
 SeqStep_FileNopB:
 	ret
 
@@ -3666,6 +3683,9 @@ SeqStep_MallocWrapper:
 	inc 2, xsp
 	ret
 
+; Opens a file for writing: FileOpen(name, "w") with the name as stack argument, then calls the
+; handle's device method at +32.
+;   Out: HL = that method's result, or 0xffff when the open failed.
 FileOpenDefault:
 	pushw FileOpenDefault_Str_w@hi16
 	pushw FileOpenDefault_Str_w@lo16
@@ -4471,6 +4491,10 @@ SeqStep_FileBufferExit:
 	inc 6, xsp
 	ret
 
+; Flushes the FAT sector cache for one drive: every dirty buffer (state bits 0..1 = 3) among the
+; 10 at 0x2121a is written back (SeqStep_FileBufferSetup); buffers of the request's drive
+; (stack argument +5) that are not locked (bit 2) keep only state bit 7.
+;   Out: HL = the last non-zero write-back result, 0 when all succeeded.
 SeqStep_FileBufferFinal:
 	dec	4, xsp
 	push	xiz
@@ -4529,6 +4553,8 @@ SeqStep_FileSectorRead:
 	add hl, wa
 	ret
 
+; Reads a little-endian 32-bit value from a byte stream and advances the stream.
+;   Stack argument: pointer to the stream pointer, which is advanced by 4.  Out: XHL = value.
 SeqStep_FileSectorProcess:
 	ld xix, (xsp + 4)
 	ld xbc, xix
@@ -8022,6 +8048,8 @@ SeqStep_SectorCompareBlock_Skip3:
 	ld	hl, (xbc+69)
 	ret
 
+; Packs its seven stack arguments (six words and a long) into a 16-byte floppy command block on
+; the stack and passes it to FDC_CommandEntry.
 SeqStep_ParseVariableHeader:
 	lda xsp, (xsp - 16)
 	ld wa, (xsp + 20)
@@ -8058,6 +8086,7 @@ SeqStep_ParseHeaderContinue:
 	lda xsp, (xsp + 16)
 	ret
 
+; Returns HL = 0 (no-op disk error handler step used by Fat_HandleDiskIoError).
 SeqChan_ByteBlockA:
 	ld	hl, 0:i3
 	ret
@@ -8524,10 +8553,14 @@ FDC_ReadDiskChangeStatus:
 	ld	hl, (0x3e3e6:24)
 	ret
 
+; Out: L = the disk type byte at 0x3e3e4 (5 selects the alternative file layer in the
+; _findfirst / _findnext / _findclose family).
 FDC_ReadDiskType:
 	ld l, (0x03e3e4:24)
 	ret
 
+; Formats a floppy (name from the HAMA function table): WA = 3 runs FDC_Format2HD_Start, 2 runs
+; FDC_Format2DD_Start, anything else returns HL = 0.
 format_FD:
 	extz wa
 	cp wa, 3:i3
@@ -9442,6 +9475,10 @@ GetMediaType_ReturnAndCleanup:
 	lda xsp, (xsp + 20)
 	ret
 
+; Returns the free space of a disk (name from the HAMA function table).
+;   In:  XWA, XBC = the caller's arguments (XBC kept in XIZ).  The disk type (FDC_ReadDiskType)
+;   0..6 selects a case through GetDiskFreeSpace_CaseTable / GetDiskFreeSpace_JumpTable; other
+;   types go to FileIO_ReadFreeSpaceViaFAT.
 GetDiskFreeSpace:
 	dec 4, xsp
 	push xiz
@@ -10495,6 +10532,8 @@ SndTable_CalcSectorPosition:
 	ld (xbc), wa
 	retd 0x4
 
+; Builds a floppy command block (type 3, sector position from SndTable_CalcSectorPosition and
+; the three word arguments, count 1, buffer XBC) and runs it with FDC_CommandEntry.
 FDC_ExecuteSectorCommand:
 	lda xsp, (xsp - 22)
 	push xiz
@@ -10824,6 +10863,7 @@ SeqDispatch_TrampolineBlock_Join:
 Seq_DispatcherEntry:
 	jp Seq_DispatcherTick
 
+; Alias entry: jumps to VoiceParam_ClampAndValidate.
 VoiceParam_ClampAndValidate_Tramp:
 	jp VoiceParam_ClampAndValidate
 SeqDispatch_TrampolineB:
@@ -10847,6 +10887,7 @@ Rhythm_NoteDispatchWrapper:
 RhythmPart_CopyData_Tramp:
 	jp RhythmPart_CopyData
 
+; Calls AccStyle_LookupTempoAndVelocity with XIZ preserved.
 Rhythm_LookupTempoVelocity_Wrap:
 	push xiz
 	call AccStyle_LookupTempoAndVelocity

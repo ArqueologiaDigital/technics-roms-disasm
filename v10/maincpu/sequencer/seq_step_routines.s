@@ -1495,6 +1495,9 @@ SeqStep_SkipDone:
 	ld (9804:16), l
 	ret
 
+; Steps the read position saved in 0x2648 / 0x264a to the next event: loads it into 0x2666 /
+; 0x28af, skips data bytes, and unless the next status is an end (0x82) or bar (0x81) marker
+; stores the new position back and the byte after the status in 0x264e.  Errors stop it.
 SeqStep_AdvanceHelper1:
 	ldmm16 9830, 9800
 	ldmm16 0x28af, 9802
@@ -2027,6 +2030,9 @@ SeqStep_SkipInvertedBDone:
 	ld hl, 0:i3
 	ret
 
+; Copies byte WA to the primary write position (SeqPart_WriteByte_Primary) and advances both
+; cursors (PartCtrl_AdvanceToNextEntry, PartCtrl_AdvanceReadPos).
+;   Out: HL = 0, or 0xffff when either advance fails.
 SeqStep_AdvanceOneEvent:
 	extz wa
 	call SeqPart_WriteByte_Primary
@@ -2717,6 +2723,10 @@ SeqStep_FindAndCompactEntry:
 	ld wa, hl
 	jrl SeqStep_RebuildPartChain
 
+; Compacts the used song-data blocks to the front: swaps the last used block (searching down
+; from 0x4d8) with the first free one (SeqStep_SwapTwoParts) until they meet, then rebuilds the
+; chains (SeqStep_RebuildPartChain) and stores (first free - 1) * 16 in 0xf1ce.
+;   Out: XHL = (first free block - 1) * 256, the used size in bytes.
 SeqStep_FindAndCompact:
 	dec 4, xsp
 	pushw iz
@@ -2756,6 +2766,8 @@ SeqStep_CompactDone:
 	inc 4, xsp
 	ret
 
+; Finds the last song-data block, from block WA down to 1, whose in-use flag is set.
+;   Out: HL = that block, or 0 when none is.  Preserves IZ.
 SeqStep_SearchBackward:
 	pushw iz
 	ld iz, wa
@@ -2772,6 +2784,8 @@ SeqStep_SearchBackwardDone:
 	popw iz
 	ret
 
+; Finds the first song-data block, from block WA up to 0x4d8, whose in-use flag is clear.
+;   Out: HL = that block, or 0x4d9 when every block up to 0x4d8 is in use.  Preserves IZ.
 SeqStep_SearchForward:
 	pushw iz
 	ld iz, wa
@@ -3142,6 +3156,8 @@ SeqStep_ReinitLoop:
 	inc 6, xsp
 	ret
 
+; C-style calloc: allocates (stack argument) bytes (SeqStep_MallocWrapper) and clears them
+; (Memset).  Out: XHL = block, or 0 with error 3 in 0x1e53c.
 SeqStep_MemAllocWrapper:
 	push xiz
 	ld wa, (xsp + 8)

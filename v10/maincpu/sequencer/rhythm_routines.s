@@ -183,6 +183,10 @@ Rhythm_SetupChannel_D6:
 	calr RhythmEvt_ProcessNote
 	ret
 
+; Chooses how a rhythm note is processed: RhythmEvt_IterateNoteOn when (0x32e5) >= 0xf0, the
+; selected part (0x33d4) has no bit set in 0x3312..0x3318, and the tuning offset
+; (AccTuning_CallWithSaveRestore, result 0x3422) is the same for style numbers 0x32df and 0x32d8;
+; RhythmEvt_FullProcess otherwise.
 RhythmEvt_ProcessNote:
 	cp (0x32e5:16), 240
 	jr c, RhythmEvt_AlternateProcess
@@ -501,6 +505,7 @@ Rhythm_VelLookA_Done:
 	pop xiy
 	ret
 
+; Out: A = Note_PitchClassTable[A].  Preserves XIY.
 Rhythm_InstrBaseLookup:
 	push xiy
 	ld xiy, Note_PitchClassTable
@@ -863,6 +868,8 @@ Rhythm_DispatchCh_D6_Loop:
 	jr c, Rhythm_DispatchCh_D6_Loop
 	ret
 
+; Sends one note record on the rhythm byte stream when its first byte (XIX) has bit 7 set:
+; W, the bytes produced by Rhythm_ValidateAndSend, byte +2, and byte +3 minus 0x10 (at least 1).
 Rhythm_SingleNoteHandler:
 	ld a, (xix)
 	bit 7, a

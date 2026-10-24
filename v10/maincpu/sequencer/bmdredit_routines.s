@@ -1406,6 +1406,10 @@ BmDrEdit_SetupAndWalkDone:
 	inc 4, xsp
 	ret
 
+; Searches forward from the playback position for the note under the editor cursor (note-on
+; accepted by BmDrEdit_CompareVelocity) up to the next bar / end / track marker.  A match whose
+; next byte is 0 leaves the position on it (BmDrEdit_ClearAndScanToEnd); otherwise the saved
+; editor state is restored (BmDrEdit_SaveEditState / BmDrEdit_RestoreEditState).
 BmDrEdit_SaveAndFindNote:
 	calr BmDrEdit_SaveEditState
 
@@ -1447,6 +1451,7 @@ BmDrEdit_ClearSlots_Loop:
 	jr c, BmDrEdit_ClearSlots_Loop
 	ret
 
+; BmDrEdit_CheckChannelActive, then tail-jumps to BmDrEdit_SelectActiveChannel.
 BmDrEdit_CheckAndSelectChannel:
 	calr BmDrEdit_CheckChannelActive
 	jrl BmDrEdit_SelectActiveChannel
@@ -1498,6 +1503,7 @@ BmDrEdit_FindNote_Return:
 	popw iz
 	ret
 
+; Clears byte 0 of each 3-byte entry from 0x2747 to 0x2747 + 24 (eight entries).
 BmDrEdit_ClearAllSlotsAlt:
 	lda xbc, (0x2747:16)
 	ld xwa, xbc
@@ -2717,6 +2723,10 @@ BmDrEdit_WriteNoteOffEntry:
 	extz wa
 	jp SeqBuf_WriteNoteOffEntry
 
+; Pads the edited part with empty bars up to the cursor: with the cursor bar (0x279a / 96) + 1
+; at or past the bar count 0x2772, inserts (difference + 1) bar markers (BmDrEdit_InsertStepEntry,
+; after EditChannel_LoadVoiceParams); an error sets bit 2 of 0x295f.  The playback position is
+; restored afterwards.  Preserves XIZ.
 BmDrEdit_InsertNoteSequence:
 	push xiz
 	ld wa, (0x28af:16)
@@ -2835,6 +2845,8 @@ BmDrEdit_LoadAlternateAndValidate:
 BmDrEdit_LoadAlternateAndValidate_Done:
 	jr BmDrEdit_CountMeasuresAndValidate
 
+; Counts the bar markers (0x81) from the playback position to the next end (0x82) or bar-start
+; (0x84) marker into 0x2772.  A pending error records 0xd1 before and 0xce after the scan.
 BmDrEdit_CountMeasuresAndValidate:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, BmDrEdit_CountMeasures_Init
@@ -3098,6 +3110,8 @@ BmDrEdit_DrumVoiceDown_UpdateDisplay:
 	ld (0x295d:16), 5
 	jp Audio_CheckSubsystemReady
 
+; In drum mode (bit 0 of 0x2742) sets the editor note 0x2786 to the visible top row (0x279e)
+; plus the cursor row (0x27a0); does nothing in melodic mode.
 BmDrEdit_CalcTrackPosition:
 	bit 0, (0x2742:16)
 	ret z
@@ -3241,6 +3255,11 @@ BmDrEdit_VelChange_Epilog:
 	lda xsp, (xsp + 20)
 	ret
 
+; Steps a (block, offset) cursor one byte backward through the song-data block chain.
+;   In:  XWA -> block word, XBC -> offset word.  Below offset 5 the block becomes its backward
+;   link (PartCtrl_ReadWord_Off1) and the offset 0xff.
+;   Out: HL = 0, or 0xffff with error 0xa0 (SeqData_SetErrorCode) when that block number is above
+;   0x4d8.  Counterpart of PartCtrl_ReadWordWithBoundsCheck.
 BmDrEdit_DecrementAndValidateCounter:
 	dec 4, xsp
 	push xiz
@@ -4113,6 +4132,11 @@ BmDrEdit_ClampScrollPos:
 	ld	(10176:16), wa
 	ret
 
+; Re-enters the note under the cursor: reads its four parameter bytes into 0x2969..0x296c,
+; steps back to its status byte, removes it from the part (BmDrEdit_CopyEventDataBetweenParts)
+; and re-inserts a 6-byte note-on (0x90, 0x2784 note, then those bytes) at the right position
+; (BmDrEdit_SeekForwardToEvent, BmDrEdit_ApplyVelocityChange), then recounts
+; (BmDrEdit_CountMeasuresInit).  Errors go to BmDrEdit_RefreshDisplayState.
 ReadSeqData_StoreParams:
 	call SeqData_AdvancePosition
 	call SeqData_AdvancePosition

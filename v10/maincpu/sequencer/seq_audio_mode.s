@@ -250,6 +250,7 @@ AccChannel_StoreStateIfChanged_Store:
 AccChannel_StoreStateIfChanged_Return:
 	ret
 
+; Sets bits 0..5 of 0x3326 when the low 3 bits of 0x32e4 are not 0.
 AccChannel_SetDirtyIfActive:
 	ld wa, (0x32e3:16)
 	and w, 0x7
@@ -729,6 +730,10 @@ AccVoice_LookupWithOffset:
 	ld xiy, xhl
 	ret
 
+; Selects the style's time signature: with (0x32e5) below 0x80 from the style at (0x32ce)
+; (AccStyle_ReadVoiceParam, W also stored in 0x32ef), else AccPatch_SetVoiceParam((0x32e5) &
+; 0x7f).  The value goes to 0x433 and its bar length (AccVoice_LookupTableAddress_Table) to
+; 0x327b.
 AccVoice_SelectAndApplyPatch:
 	cp (0x32e5:16), 128
 	jr nc, AccVoice_PatchFromDirect
@@ -1360,6 +1365,7 @@ BulkRead_Loop6_9Byte:
 	jr c, BulkRead_Loop6_9Byte
 	ret
 
+; Sends the three-byte rhythm message 0x90 0x7f 0x7f (Rhythm_Send3ByteMsg).
 Rhythm_SendNoteOnMax:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc

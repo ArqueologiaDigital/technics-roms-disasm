@@ -1423,6 +1423,8 @@ AccPlay_ProcessVoiceBank:
 AccPlay_VoiceBankRet:
 	ret
 
+; Out: XIY = 0x1e8820 + (0x7f14) * 16, the 16-byte bank entry for index (0x7f14) (indices 12
+; and up read as 0).
 Voice_GetBankEntryPointer:
 	ld a, (0x7f14:16)
 	cp a, 0xc
@@ -2465,6 +2467,7 @@ Voice_FindDone:
 	ld wa, bc
 	ret
 
+; TempoRingBuf_ReadByte, with the byte returned in A as well as in L.
 TempoRingBuf_ReadLoop:
 	call TempoRingBuf_ReadByte
 	ld a, l
@@ -2551,6 +2554,8 @@ MidiSeqBuf_AdvanceDone:
 	ld (0x7f12:16), wa
 	ret
 
+; Moves the MIDI sequence buffer offset 0x7f12 one byte forward; at 0xff it continues at offset 6
+; of the next page (the link at +3 of page 0x7f10).
 MidiSeqBuf_AdvanceWritePos:
 	ld wa, (0x7f12:16)
 	inc 1, wa

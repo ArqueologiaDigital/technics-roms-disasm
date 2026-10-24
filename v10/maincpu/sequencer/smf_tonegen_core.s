@@ -1615,6 +1615,10 @@ SeqTrack_ClearPartEventParams:
 	ld (4213:16), wa
 	ret
 
+; Re-sends the tone-generator setup of the current track: loads its position
+; (SoundGen_CaptureVoiceParams), then runs SoundGen_UpdateAndRefresh with A = 0x81
+; (BOOTSERIAL_STATUS) times or until 0x10e3 becomes non-zero; on completion saves the position
+; (ToneGen_WriteChannelRegs), sets bit 0 of 0x108c and clears 0x10e3.
 SoundGen_RefreshAllVoices:
 	push xiy
 	call SoundGen_CaptureVoiceParams
@@ -1934,6 +1938,8 @@ SoundGen_CaptureVoiceParams:
 	pop xde
 	ret
 
+; Stores A at the playback position (block 0x28af via ToneGen_ComputeBlockPtr, offset 0x2666).
+; Preserves XHL.
 ToneGen_LoadBlockValidate:
 	push xhl
 	ld hl, (0x28af:16)
@@ -4129,6 +4135,9 @@ VoiceChannel_ClearRegisters:
 	pop xix
 	ret
 
+; Copies the 256-byte song-data block at (0x10fd) to XIX (LDIR (XIX+),(XIY+)), runs
+; DispatchHandler_JumpSub with WA = 1 and IY = block (0x28af), restores 0x10fd (kept in bank
+; register 0x38) and returns IY = 5, the first data offset.  Preserves BC, XHL.
 VoiceChannel_CopyParamBlock:
 	pushw bc
 	push xhl
@@ -4153,6 +4162,9 @@ VoiceChannel_CopyParamBlock:
 	ld iy, 5:i3
 	ret
 
+; Steps the first SMF track buffer (0x17fa, offset 0x27d6) to its next byte: an end (0x82) or bar
+; (0x81) marker sets bit 0 of 0x27d2 instead; otherwise ToneGen_ValidateAndSelectVoice advances
+; IY and the new byte and offset go to 0x27dc / 0x27d6.  Bit 0 of 0x27d2 is cleared first.
 VoiceChannel_UpdateParamSet:
 	and (0x27d2:16), 254
 	ld iy, (0x27d6:16)
@@ -4187,6 +4199,8 @@ VoiceChannel_ParamSet_Validate:
 VoiceChannel_ParamSet_Done:
 	ret
 
+; Same as VoiceChannel_UpdateParamSet for the second buffer (0x18fa, offset 0x27da, byte to
+; 0x27de, end flag bit 1 of 0x27d2).
 ToneGen_ValidateVoiceCh2:
 	and (0x27d2:16), 253
 	ld iy, (0x27da:16)

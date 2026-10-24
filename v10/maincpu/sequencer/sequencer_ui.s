@@ -200,6 +200,7 @@ TrAsSureLang_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
+; Posts EVT_LYRICS_PLAY_REQUEST with 0x720006 and argument 0 (ApPostEvent).
 Audio_SendEventPostCmd:
 	ld xwa, 0x720006
 	ld xbc, EVT_LYRICS_PLAY_REQUEST

@@ -1488,6 +1488,8 @@ SMF_FileWriteAndClear:
 	call SMF_ClearFileBuffer
 	ret
 
+; Stores A at the playback position: offset (0x2666) of block (0x28af), in the song data at
+; (0x1d5a).
 SMF_LookupSongBank:
 	ld hl, (0x28af:16)
 	extz xhl
@@ -2475,6 +2477,7 @@ SMF_AdvanceWrite_Return:
 	ld (4349:16), xwa
 	ret
 
+; Sets 0x10fd = (0x1d5a) + (HL - 1) * 256, the address of song-data block HL; XHL = 0 on return.
 SMF_CalcPageAddress:
 	dec 1, hl
 	extz xhl

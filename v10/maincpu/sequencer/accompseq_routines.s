@@ -541,6 +541,8 @@ AccompSeq_Parse_Return:
 AccompSeq_Ret:
 	ret
 
+; Stores A in 0x7e54, then reads five more bytes of the accompaniment sequence into
+; 0x7e55..0x7e59 (AccompSeq_AdvancePosition before each; the 0x7e55 store takes E).
 AccompSeq_ReadParams:
 	ld (0x7e54:16), a
 	calr AccompSeq_AdvancePosition
@@ -1183,6 +1185,9 @@ AccompSeq_ResetMidiState:
 	call Voice_DecodeNoteParam
 	ret
 
+; Resolves the address of a voice's style data into 0x7e2a (low word) / 0x7e28 (high word,
+; from bank register 0xe2): voices 0x80 and up from Voice_DecodeBankIndex(L & 15) + 0x1e8800,
+; the others from AccompSeq_StyleDataTable + 32 * Voice_DecodeNoteChannel2().
 AccompSeq_LookupStyleData:
 	cp l, 0x80
 	jr c, AccompSeq_LookupStyle_Internal
@@ -1658,6 +1663,10 @@ AccompSeq_Cleanup_ClearFlags:
 	and (0x7e6f:16), 254
 	ret
 
+; Silences the accompaniment sequence: sends 0x90 0x7f 0x7f and 0xd0 0x03 0x00
+; (AccompSeq_WriteMidiToBuffer), sets 0x7e72 / 0x7e73 = 127, empties the ring buffers at 0x7aec
+; and 0x7bec (read index = write index, +8 = 0xf6) and clears byte 0 of the eight 9-byte slots
+; at 0x7d6c and at 0x7db4.
 AccompSeq_SendAllOff:
 	ld a, 0x90:opc
 	ld w, 0x7f:opc
