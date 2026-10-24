@@ -38,7 +38,7 @@ CODE     := --code 0x0:0x176037 --code 0x3f47ec:0x3f77e7
 SYMRANGE := --code-range 0x0:0x176037 --code-range 0x3f47ec:0x3f77e7
 TITLE    := 'Technics SX-KN6000 program flash image (update v7.1) - byte-exact.'
 
-.PHONY: all baserom build verify symbols program-src clean distclean
+.PHONY: all baserom build verify ported-names symbols program-src clean distclean
 .DELETE_ON_ERROR:
 
 all: verify
@@ -86,11 +86,31 @@ symbols $(MODEL).sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 	    --inc-title "KN6000 symbols" --sym $(MODEL).sym --inc src/symbols.inc
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
-program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym src/symbols.inc baserom/$(ROM)
-	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) \
-	    --sym $(MODEL).sym $(MODEL)_manual.sym --inc src/symbols.inc --labels-inc src/labels.inc \
+program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) --reflection-tables \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym --inc src/symbols.inc --labels-inc src/labels.inc \
 	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt \
 	    --title $(TITLE) --title 'Panasonic MN10300, linked at 0x4C000000. See README.md.'
+
+# ---- names carried over from the KN7000 where a routine is the same code ---------
+# port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)
+# routines its symbol files name, relocation-masked, entry to first return; only
+# unique matches of >= 8 instructions count (the tool's header has the rule). It
+# reads the KN7000 reference image (../kn7000: make -C ../kn7000 baserom) and this
+# tree's generated labels; run `make program-src` again afterwards. The committed
+# $(MODEL)_ported.sym is the result, so the build does not need the KN7000 image.
+KN7000_DIR := ../kn7000
+PORT_FROM  := --a-rom $(KN7000_DIR)/baserom/kn7000_program.rom \
+              --a-code 0x80:0x186000 --a-code 0x3b8fd1:0x3f6f01:0x4c000000 \
+              --a-sym $(KN7000_DIR)/kn7000_manual.sym $(KN7000_DIR)/kn7000_exports_from_942.sym \
+                      $(KN7000_DIR)/kn7000.sym
+
+.PHONY: ported-names
+ported-names: $(TOOLS)/port_names_by_code.py $(TOOLS)/gen_image_s.py src/labels.inc baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/port_names_by_code.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
+	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym \
+	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) \
+	    --title "$(MODEL): names carried over from KN7000 program 941 (same code, relinked)"
 
 clean:
 	rm -rf build

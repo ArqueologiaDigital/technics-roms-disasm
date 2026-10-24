@@ -62,6 +62,12 @@ are where the reached code stops: past them, no traced path enters and no named 
   With the whole image counted as code, the tool also accepts a `DiskMenu` table of 39
   entries whose pointers lead into data, and those pairings are wrong.
 - `kn6500_manual.sym` holds names recovered by hand: `_reset`, `_vector_08`, `crt0_start`.
+- `kn6500_ported.sym` (`make ported-names`, generated) holds 572 names carried over from the
+  KN7000 (program 941). `../kn7000/tools/port_names_by_code.py` carries a name when one of
+  this image's unnamed entries is the same code as a routine the KN7000's symbol files name:
+  the same instructions from the entry to the first return, with addresses masked out,
+  at least 8 of them, and a unique match on both sides. Each row records the KN7000 address
+  it came from.
 - `src/labels.inc` is generated with the source. It holds every other label the source defines:
   `func_<ADDR>` for an entry no table names, `<name>_entry` for a register-save `call` entry,
   and `<entry>_L<offset>` for a branch target. `../kn2400/README.md` explains these
@@ -77,7 +83,7 @@ generator writes:
 
 | measure                      | value                                 |
 |------------------------------|---------------------------------------|
-| entries                      | 13,323 (1,690 named, 11,633 `func_`)  |
+| entries                      | 13,323 (2,529 named, 10,794 `func_`)  |
 | bytes emitted as code        | 1,530,172: 98.96% of the code ranges  |
 | instructions                 | 574,135, plus 285 `.byte` escapes     |
 | local branch labels          | 43,667                                |
@@ -85,8 +91,9 @@ generator writes:
 
 ## Open work
 
-- Names: most entries are still `func_<ADDR>`. Names from the KN7000 and the KN2400 could be
-  carried over wherever a routine is the same code, which needs a relocation-tolerant
-  comparison.
+- Names: 10,794 entries are still `func_<ADDR>`. `make ported-names` carries only exact,
+  unique matches from the KN7000. Routines that differ slightly need another method, and
+  names from the KN2400's and the other KN6xxx's reflection tables have not been
+  carried yet.
 - RAM, I/O and data addresses are still numbers in the source.
 - The data region is one `.incbin_range`. Nothing in it has been typed yet.
