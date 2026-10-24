@@ -74,8 +74,11 @@ make rebuilt_ROMs/kn5000_table_data.llvm.rom          # Table data
 make rebuilt_ROMs/kn5000_custom_data.llvm.rom         # Custom data
 make rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom           # HDAE5000
 
-# Reconvert from archived ASL sources (regenerates .s files from archive/asl/)
-make llvm-convert-all
+# NOT a routine step: llvm-convert* regenerates the authoritative .s trees from the
+# archived, pre-rename ASL sources in archive/asl/ and would overwrite everything done
+# since.  The targets refuse unless ALLOW_ASL_RECONVERT=1 (archaeology only, in a
+# scratch worktree).
+# make ALLOW_ASL_RECONVERT=1 llvm-convert-all
 
 # Clean build artifacts
 make clean              # LLVM build artifacts
