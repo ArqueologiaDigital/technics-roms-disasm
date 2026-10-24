@@ -11804,7 +11804,7 @@ AcWelcomScreen_SubCpuLoaded:
 	ld	xbc, xiz
 	ld	xde, (xsp+16)
 	call	InheritedProc
-	ld	xwa, NAKA_VIEW_AllInitial
+	ld	xwa, NAKA_VIEW_MPVersion
 	ld	xbc, EVT_SHOW
 	ld	xde, 3:i3
 AcWelcomScreen_DispatchEvent:

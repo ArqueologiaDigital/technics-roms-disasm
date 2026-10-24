@@ -58,8 +58,9 @@ HOW
      a `Label + K` name whose record is in the target unchanged where it now resolves
      stays on that record (a use pointing elsewhere is written with the name of the
      record it points to), and a numeric constant whose new value another constant of
-     its family keeps is not re-valued (its uses are written with that constant:
-     v6 has no NAKA_VIEW_MPVersion view, and its uses hold NAKA_VIEW_AllInitial).
+     its family keeps -- confirmed by that constant's own uses -- is not re-valued (its
+     uses are written with that constant).  An unconfirmed shared value is re-valued and
+     its comment says so (Port.const_at gives the two readings).
   6. Labels go where their uses say: every mapped use votes for the target address
      its bytes name, and a label moves into the inserted bytes before its line when
      three fifths of the votes put it there.  A target address no label names gets a
@@ -1239,16 +1240,29 @@ class Port:
             if o:
                 self.equ_redirect[sym] = o
                 del self.newequ[sym]
+        # re-valued constants whose new value another constant of the family still has
+        fam = collections.defaultdict(list)
+        for sym in self.equ_lines:
+            if sym not in self.newequ:
+                fam[(sym.split("_")[0], self.sv.get(sym))].append(sym)
+        self.collisions = {}
+        for sym, v in self.newequ.items():
+            o = [x for x in fam.get((sym.split("_")[0], v), []) if x != sym]
+            if o:
+                self.collisions[sym] = sorted(o, key=lambda x: self.equ_lines[x])[0]
         for cached in ("_byaddr", "_exprat"):
             if hasattr(self, cached):
                 delattr(self, cached)
 
     def const_at(self, value, like):
         """a numeric constant of `like`'s family (the same first name component) that has
-        `value` and keeps it, or None.  Below 0x400000 (RAM and I/O addresses, which a new
-        layout moves) its own mapped uses must say it keeps the value; above, the values are
-        identifiers (a view id such as NAKA_VIEW_AllInitial = 0xef0004) and the definition is
-        taken as it stands"""
+        `value` and keeps it -- its own mapped uses in the target say so -- or None.  Without
+        that confirmation a shared value proves nothing: an older firmware without an entry
+        numbers the entries after it one lower (v5 has no MT_TrackMidiCall, so its
+        EVT_GET_CUR_SONG_NAME takes v6's EVT_TRACK_MIDI_CALL value), or the use now names
+        the other entry (v6 has no MPVersion view; its use holds NAKA_VIEW_AllInitial's
+        value).  Those are re-valued and their comment says the value is shared
+        (collisions)."""
         if not hasattr(self, "_constidx"):
             self._constidx = collections.defaultdict(list)
             for sym in sorted(self.equ_lines, key=lambda x: self.equ_lines[x]):
@@ -1257,7 +1271,7 @@ class Port:
         for sym in self._constidx.get(value, ()):
             c = self.equ_votes.get(sym)
             if sym != like and sym not in self.newequ and sym.split("_")[0] == fam \
-                    and (value >= 0x400000 or (c and c.most_common(1)[0][0] == value)):
+                    and c and c.most_common(1)[0][0] == value:
                 return sym
         return None
 
@@ -1590,6 +1604,10 @@ class Port:
                             r"%s address(, (?:derived from|from the \w+ code's uses)[^;]*)?" % src,
                             "%s address, from the %s code's uses (port_maincpu_version.py)" % (dst, dst), com)
                     text += "\t; %s: %s" % (src, old)
+                    if m.group(1) in self.collisions:
+                        text += ("; %s's uses hold the value %s has here: an entry before it may be "
+                                 "missing in %s, or the use names that entry -- unchecked"
+                                 % (dst, self.collisions[m.group(1)], dst))
                 m = EQU_EXPR.match(body)
                 base = self.tval(m.group(2)) if m and m.group(1) in self.newexpr else None
                 if m and m.group(1) in self.newexpr and base is None:
@@ -1828,6 +1846,8 @@ def main():
     print("record names kept on an unchanged record against their uses:", len(P.kept_on_record))
     print("constants not re-valued, their uses written with the constant of that value:",
           " ".join("%s->%s" % kv for kv in sorted(P.equ_redirect.items())))
+    print("re-valued constants sharing the new value with another of their family:",
+          " ".join("%s=%s" % kv for kv in sorted(P.collisions.items())))
     P.new_labels()
     print("dropped labels placed where their uses point instead:", len(P.relocated))
     print("labels added at target addresses no ported label names:", len(P.newlab) - len(P.relocated))

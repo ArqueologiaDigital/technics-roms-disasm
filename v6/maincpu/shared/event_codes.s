@@ -2083,7 +2083,7 @@
 .equ NAKA_VIEW_PleaseWait, 0xee0016	; view "PleaseWait": Viewable slot 0xEE entry 22
 .equ NAKA_VIEW_Welcom, 0xef0000	; view "Welcom": Viewable slot 0xEF entry 0
 .equ NAKA_VIEW_AllInitial, 0xef0004	; view "AllInitial": Viewable slot 0xEF entry 4
-.equ NAKA_VIEW_MPVersion, 0xef0007	; view "MPVersion": Viewable slot 0xEF entry 7
+.equ NAKA_VIEW_MPVersion, 0xef0004	; view "MPVersion": Viewable slot 0xEF entry 7	; v7: 0xef0007; v6's uses hold the value NAKA_VIEW_AllInitial has here: an entry before it may be missing in v6, or the use names that entry -- unchecked
 .equ NAKA_VIEW_MPver, 0xef000a	; view "MPver": Viewable slot 0xEF entry 10
 .equ NAKA_VIEW_Softver, 0xf00000	; view "Softver": Viewable slot 0xF0 entry 0
 .equ NAKA_VIEW_MainProgram, 0xf00001	; view "MainProgram": Viewable slot 0xF0 entry 1
