@@ -3514,6 +3514,7 @@ CPanel_RX_SkipToProcess:
 CPanel_RX_Return:
 	ret
 
+; Calls CPanel_InterruptPoll_MainLoop.
 CPanel_Poll:
 	calr CPanel_InterruptPoll_MainLoop
 	ret

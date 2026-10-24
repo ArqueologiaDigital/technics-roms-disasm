@@ -1351,6 +1351,11 @@ Demo_StoreRecordChainParams:
 	ld (0x025b8e:24), de
 	ret
 
+; Reads the next byte of a record stored as a chain of 256-byte blocks.
+;   The block number is the word at 0x3ec4e (0xffff = end of chain) and the offset the word at
+;   0x25b8e; blocks are based at the u32 at 0x25b8a and their data starts at +5.  After offset
+;   0xfa the chain moves to the block whose number is at +3 and the offset restarts at 0.
+;   Out: HL = the byte, or 0xffff at the end of the chain.
 RecordChain_ReadNextByte:
 	ld wa, (0x03ec4e:24)
 	cp wa, 0xffff
@@ -4865,6 +4870,8 @@ FileIO_BuildPath_Return:
 	ld (xwa), 0x0
 	ret
 
+; C strcmp of the strings at XWA and XBC.  Out: HL = 0 when equal, else the sign-extended
+; difference of the first differing characters (XWA's minus XBC's).
 FileIO_SearchFile:
 	ld xhl, xwa
 	jr FileIO_Search_CheckNext
@@ -5101,6 +5108,7 @@ FileIO_GetRecordType_Alt:
 	jr nz, FileIO_GetRecordType_Error
 	ret
 
+; Returns XHL = 0x25eaa, a fixed RAM address; no register selects a type.
 FileIO_GetRecordByType:
 	lda xhl, (0x025eaa:24)
 	ret
@@ -5223,6 +5231,7 @@ FileIO_BuildRecordPath_Error:
 	or (0x272ce:24), bc
 	ret
 
+; Clears bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.
 FileIO_BuildRecordPath_Return:
 	cp a, 0xa
 	ret nc
@@ -5255,6 +5264,7 @@ FileIO_SetModeFlag_Writing:
 	ld (0x0272d0:24), 0x01
 	ret
 
+; Clears the mode byte at 0x272d0.
 FileIO_SetModeFlag_Reading:
 	ld (0x0272d0:24), 0x00
 	ret
@@ -5292,6 +5302,8 @@ CheckRecord_ShiftDone:
 	scc8 z, l
 	ret
 
+; Returns L = 1 when file WA (0..19) has bit C (0..9) set in its attribute word (0x25db8 + 12 *
+; WA), else 0.  FileIO_CheckRecordValid is the same test for the selected file.
 FileIO_CheckRecordByFile:
 	ld de, wa
 	cp de, 0x14
@@ -5503,6 +5515,8 @@ SearchLoad_Return:
 	pop xiz
 	ret
 
+; Returns HL = 0 when WA is a valid file index (0..19) and the media type byte at 0x25db6 is 2,
+; 3 or 4; otherwise 0xffff.
 ValidateFileSelectionIndex:
 	ld c, (0x025db6:24)
 	cp c, 2:i3
@@ -5587,6 +5601,8 @@ GetFileEntryPtr_Return:
 	popw iz
 	ret
 
+; Returns in L the type byte of the selected file (0x25dc2 + 12 * index, index = word at
+; 0x25ea8), or 0 when ValidateFileSelectionIndex rejects the index.
 GetCurrentFileType:
 	ld wa, (0x025ea8:24)
 	calr ValidateFileSelectionIndex
@@ -7558,6 +7574,7 @@ ValidateRangeAlt_IsValid:
 	ld hl, 0:i3
 	ret
 
+; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeAlt rejects it.
 FileIO_GetCurrentFileIndex_Alt:
 	ld wa, (0x0271ea:24)
 	calr ValidateFileRangeAlt

@@ -2008,6 +2008,9 @@ ResetLswFilter_Epilogue:
 	pop xiz
 	ret
 
+; Posts a RAM_PUT request to MainFunction NAKA_MAINFUNC_MainRamControl: like MainRamAdd, the
+; 22-byte request at XWA is copied into a Malloc block, queued with EVT_RAM_PUT and released with
+; NAKA_MAINFUNC_MainAutoFree / EVT_AUTO_FREE (MainFuncCall).
 MainRamPut:
 	dec 4, xsp
 	push xiz
@@ -2033,6 +2036,9 @@ MainRamPut:
 	inc 4, xsp
 	ret
 
+; Posts a RAM_ADD request to MainFunction NAKA_MAINFUNC_MainRamControl.
+;   In:  XWA = 22-byte request, copied into a Malloc block that is queued with EVT_RAM_ADD and
+;   then released with NAKA_MAINFUNC_MainAutoFree / EVT_AUTO_FREE (both through MainFuncCall).
 MainRamAdd:
 	dec 4, xsp
 	push xiz
@@ -2370,6 +2376,8 @@ MainBitGet:
 	inc 8, xsp
 	ret
 
+; Proc of the PsMenuBox class, a VwBox: handles EVT_CHECK_EDIT_SW, EVT_PARA_DRAW and EVT_DRAW,
+; and returns an empty string for EVT_GET_STRING; other events go to VwBoxProc.
 PsMenuBoxProc:
 	lda xsp, (xsp-276)
 	push xiz
@@ -8412,6 +8420,10 @@ TrTransposeBoxProc:
 TrChordBoxProc:
 	jp AcChordBoxProc_Entry
 
+; Proc of the root class Object, the end of every InheritedProc chain (ResEventProc,
+; ResMethodProc and ResNameProc jump here).
+;   Asks the object's table proc for its class (EVT_GET_CLASS_SP) and then handles the generic
+;   methods numbered from EVT_GET_CLASS on.
 ObjectProc:
 	lda xsp, (xsp-144)
 	push xiz
@@ -9156,6 +9168,8 @@ GetFocusParam:
 	ld xhl, (FOCUS_PARAM:24)
 	ret
 
+; Table proc of the class objects (registered with RegObjTable NAKA_CLASS_Class by
+; InitializeRoot and InitializeScoop): answers the events sent to a class id.
 ClassProc:
 	lda xsp, (xsp-278)
 	push xiz
@@ -11075,6 +11089,7 @@ EnumList_Reset:
 	popw iz
 	ret
 
+; Returns HL = 1 when bit 2 of the word at 0x2bc30 is clear, else 0.
 CheckNotDrawFlag:
 	ld wa, (0x02bc30:24)
 	and wa, 0x4
@@ -11102,6 +11117,9 @@ EnumList_Reset_Send:
 	ld wa, 4:i3
 	jr TitleProc_ClearResourceDirtyFlag
 
+; ORs WA into the title flag word at 0x2bc30 and sends the new flags to MainFunction
+; NAKA_MAINFUNC_MainTitleControl with EVT_SET_TITLE_FLAG (MainFuncCall, tail call).
+; SetVariFlag and SetNotDrawFlag jump here.
 TitleProc_SetResourceDirtyFlag:
 	or (0x02bc30:24), wa
 	ld de, (0x02bc30:24)
@@ -19203,6 +19221,9 @@ ResetApTimer_Epilogue:
 	lda xsp, (xsp + 16)
 	retd 0x8
 
+; Restarts an application timer: cancels the one that matches XBC, XDE and the two stack words
+; (KillApTimer) and, when there was one, arms it again with delay XWA (SetApTimer).
+;   Out: HL = 1 when the timer existed, else 0.
 ResetApTimer:
 	lda xsp, (xsp - 12)
 	push xiz
@@ -19589,6 +19610,9 @@ DrawFunc_StackHandler_Epilogue:
 	ret
 	ret
 
+; Runs a drawing function given on the stack (stack +4): DrawFunc calls it at once on the draw
+; task (IS_XSP_INSIDE_4K_REGION_AT_1C032), and from any other task queues an 8-byte command
+; {DrawFunc_StackHandler, function} for the draw task (DrawQueue_Alloc, DrawRing_Post).
 DrawFunc_StackEntry:
 	ld xwa, (xsp + 4)
 	jr DrawFunc

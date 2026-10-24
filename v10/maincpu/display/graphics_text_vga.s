@@ -2341,6 +2341,7 @@ InitPaletteRGB_CopyLoop:
 	jr c, InitPaletteRGB_CopyLoop
 	ret
 
+; Stores the u32 colour XBC as entry WA (signed index) of the palette table at 0x324fc.
 SetPaletteRGB:
 	exts xwa
 	sll xwa, 2

@@ -261,6 +261,8 @@ BitMapOut_ByteData_RenderE:
 	calr	BitMapOut_StorePresetValue
 	ret
 
+; On title 138 (ACTIVE_TITLE) tail-jumps to Interrupt_ModeGuardCheck; on any other title posts
+; EVT_CHORD_SHOW to the current target (ApPostEvent).
 BitMapOut_CheckDiskAndApply:
 	cp (ACTIVE_TITLE:16), 138
 	jp z, (Interrupt_ModeGuardCheck:24)
@@ -272,6 +274,7 @@ BitMapOut_ByteData_DiskCheck:
 	ld	l, (0x8d3e:16)
 	ret
 
+; Stores A at 0x8d3e.
 BitMapOut_StorePresetValue:
 	ld (0x8d3e:16), a
 	ret
@@ -3598,12 +3601,15 @@ BitMapOut_GetRenderMode:
 	ld l, (0x8d4a:16)
 	ret
 
+; ORs A into the flag byte at 0x8d4a and returns the result in L.
 BitMapOut_GetRenderMode_CheckBit3:
 	lda xbc, (0x8d4a:16)
 	or (xbc), a
 	ld l, (xbc)
 	ret
 
+; Clears the bits of A in the flag byte at 0x8d4a and returns the result in L
+; (BitMapOut_GetRenderMode_CheckBit3 sets them).
 BitMapOut_GetRenderMode_Return:
 	lda xbc, (0x8d4a:16)
 	cpl a

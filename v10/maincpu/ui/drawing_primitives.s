@@ -1246,6 +1246,9 @@ DrawFrame_QueuedExec:
 	calr DrawFrame_Impl
 	ret
 
+; Draws a rectangle's outline on the draw task's side of DrawFrame.
+;   In:  XWA = rectangle {x1, y1, x2, y2}, BC = colour.  The rectangle is clipped to the
+;   320 x 240 screen in place before drawing.
 DrawFrame_Impl:
 	lda xsp, (xsp - 44)
 	push xiz
@@ -3136,6 +3139,11 @@ DrawBitmapSP_Impl_Return:
 	lda xsp, (xsp + 26)
 	retd 0x2
 
+; Draws a bitmap through DrawBitmapSPFast_Impl, directly on the draw task or queued from any
+; other task.
+;   In:  XWA, XBC, DE and one stack word, passed through unchanged.
+;   On the draw task (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws while the word at 0x3044e is
+;   non-zero; otherwise it queues a 16-byte command (DrawBitmapSPFast_DeferredPath_Code).
 DrawBitmapSPFast:
 	dec 6, xsp
 	push xiz
@@ -3264,6 +3272,12 @@ DrawBitmapSPFast_Impl_Return:
 	lda xsp, (xsp + 22)
 	retd 0x2
 
+; Draws a bitmap through DrawBitmapSP2_Impl, directly on the draw task or queued from any other
+; task.
+;   In:  XWA, XBC, DE and three stack words, passed through unchanged.
+;   On the draw task (IS_XSP_INSIDE_4K_REGION_AT_1C032) it draws while the word at 0x3044e is
+;   non-zero; otherwise it queues a 20-byte command (DrawQueue_Alloc,
+;   DrawBitmapSP2_DeferredPath_Code) for the draw task.
 DrawBitmapSP2:
 	dec 6, xsp
 	push xiz

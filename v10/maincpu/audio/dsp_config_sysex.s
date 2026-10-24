@@ -857,6 +857,9 @@ AddswbWr:
 AddswbWr_BufferFull:
 	retd 0x2
 
+; Appends the 4-byte command {A, C, E, stack byte} to the 0xff-terminated buffer at 0xc039 (60
+; bytes) unless it is full.  Pops its stack word on return (RETD 2).
+;   Exported to extension ROMs as entry SwbtWr of the Hama function table.
 SwbtWr:
 	lda xix, (0xc039:16)
 	ld xiy, xix
@@ -1025,6 +1028,9 @@ SwbtWr_PostCallback_Loop:
 SwbtWr_PostCallback_Done:
 	ret
 
+; Appends a 4-byte {DE, WA} entry to SWBTWR_EVENT_QUEUE and writes the 0xff end mark after it.
+; The write offset is the word at 0x90de, advanced by 4; when it is above 507 the entry is
+; dropped.
 SwbtWr_QueueMainEvent:
 	cpw (0x90de:16), 507
 	jr ugt, SwbtWr_QueueMainEvent_Done
@@ -1231,6 +1237,7 @@ BitMapOut_ComputeRegionDelta:
 	lda xsp, (xsp + 10)
 	ret
 
+; Calls Audio_ConfigureDSP and then BitMapOut_RenderDisplay, both with WA as given.
 BitMapOut_PrepareAndRender:
 	pushw iz
 	ld iz, wa
@@ -2119,6 +2126,8 @@ CompIface_ScaleAndNormalize:
 	pop xiz
 	ret
 
+; Sets the computer-interface volume to A when it changed: stores it at 0xc1ec and A << 8 at
+; 0xc1ee, and notifies sound parameter 0x4005 (SoundParam_NotifyChange, BC = A, DE = 3).
 CompIface_WriteVolume:
 	ld c, (0xc1ec:16)
 	cp c, a
@@ -2378,6 +2387,8 @@ DSPCfg_ScaleFactor_StoreResult:
 	ld (0xc1fc:16), hl
 	ret
 
+; Returns in XHL the panel TLV payload (PanelTlv_PayloadOfTag) of the tag that
+; DspBlock_ObjectCode_Table gives for DSP block A; 0xffffffff when that tag is absent.
 DSPCfg_LookupMidiMap:
 	extz xwa
 	ld xbc, DspBlock_ObjectCode_Table
@@ -2564,6 +2575,8 @@ DSPCfg_WriteParam_SetMask3F:
 	ld e, 0x3f:opc
 	jrl DSPCfg_WriteParam_Exit
 
+; Returns in XHL the record after the DSP parameter record at XWA: XWA + (byte +0 << 8 | byte
+; +1); a record whose byte +0 is 0xf0 (an end mark) returns XWA itself.
 DSPCfg_PackAddress:
 	ld e, (xwa + 1)
 	and e, 0xff
@@ -2820,6 +2833,9 @@ DSPCfg_GetParamCount:
 	extz hl
 	ret
 
+; Reads a DSP parameter through the field list of its record type: DspFxRecListPtrTable[count
+; byte of the record at XBC] goes to DSPCfg_ReadMultiField with the record body (XBC + 1) and
+; DE = WA.
 DSPCfg_ReadViaTableLookup:
 	dec 2, xsp
 	push xiz
@@ -2844,6 +2860,9 @@ DSPCfg_StoreByte_ReturnZero:
 	ld hl, 0:i3
 	ret
 
+; Writes a DSP parameter through the field list of its record type: DspFxRecListPtrTable[count
+; byte of the record at XDE] goes to DSPCfg_WriteMultiField with the record body (XDE + 1), BC,
+; WA and the two stack words (popped on return, RETD 8).
 DSPCfg_WriteViaTableLookup:
 	dec 4, xsp
 	push xiz
@@ -2934,6 +2953,7 @@ DSPCfg_Data_001:
 	extz	hl
 	ret
 
+; Returns in HL entry WA of the byte table DspFxParamCountTable.
 DSPCfg_GetSlotCount:
 	extz xwa
 	ld xbc, DspFxParamCountTable
@@ -3883,6 +3903,8 @@ DSPCfg_WriteAllSlots_Clamped_CheckCount:
 	lda xsp, (xsp + 18)
 	ret
 
+; Runs DSPCfg_WriteAllSlots_Direct and then DSPCfg_WriteAllSlots_Clamped with the same WA / XBC.
+;   Out: HL = 0 when the two results add up to 0, else 0xffff.
 DSPCfg_WriteAllSlots_Combined:
 	dec 4, xsp
 	push xiz
@@ -5502,6 +5524,7 @@ AudioSubsystem_Callback:
 	call AudioInit_DispatchChanges
 	ret
 
+; AudioInit_SelectPriority followed by AudioInit_DispatchChanges (tail jump).
 AudioInit_SelectAndDispatch:
 	call AudioInit_SelectPriority
 	jp AudioInit_DispatchChanges
@@ -5571,6 +5594,8 @@ AudioVoice_Callback:
 AudioVoice_SkipToDispatch:
 	jp AudioInit_DispatchChanges
 
+; When bit 0 of 0xfc69 is set: sets bit 7 of 0xc596 and bit 2 of 0xc594 and runs
+; AudioInit_ProcessModeChange.
 AudioMode_SetStereoFlags:
 	bit 0, (0xfc69:16)
 	ret z

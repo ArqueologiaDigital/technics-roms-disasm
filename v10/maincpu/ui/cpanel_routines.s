@@ -292,6 +292,7 @@ Delay10L_Done:
 	ret
 
 
+; Busy-waits 300 iterations of a decrement loop.  Clobbers WA.
 DELAY_300_LOOPS:
 	ldw wa, 0x12c
 
@@ -1541,6 +1542,7 @@ IncRX_NoWrap:
 	ret
 
 
+; Advances the control-panel LED buffer index IY, wrapping from 60 to 0.
 CPanel_IncLEDPtr:
 	inc 1, iy
 	cp iy, 0x3c

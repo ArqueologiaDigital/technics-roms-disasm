@@ -1685,6 +1685,8 @@ VoiceTablePair_Return:
 VoiceEvent_ResetAndInit:
 	ret
 
+; NoteMap_AllocateVoice on the voice map at 0xc1fe for layers 0 and 1, and for layer 2 when
+; 0xce22 is non-zero and NoteMap_FindBestMatch finds a voice.
 VoiceEvent_AllocAllLayers:
 	lda xwa, (0xc1fe:16)
 	ld bc, 0:i3
@@ -1710,6 +1712,8 @@ VoiceEvent_AllocTwoLayers:
 	ld	bc, 1:i3
 	jp	NoteMap_AssignVoiceParams
 
+; NoteMap_AssignVoiceParams and then NoteMap_InitVoiceSlots (tail jump) for layer 2 of the voice
+; map at 0xc1fe.
 VoiceEvent_DispatchTable:
 	lda xwa, (0xc1fe:16)
 	ld bc, 2:i3
@@ -20430,6 +20434,8 @@ SeqPlay_BusyWaitLoop:
 	jr nz, SeqPlay_BusyWaitLoop
 	ret
 
+; Sends, for each of the 16 MIDI channels n, the three controller messages Bn 7B 00 (all notes
+; off), Bn 00 40 and Bn 40 00 (sustain off), each through MIDI_SendSinglePacket.
 MIDI_ResetAllChannels:
 	lda xsp, (xsp - 10)
 	pushw iz
@@ -26018,6 +26024,9 @@ SendCOMM_VariableLen_Increment:
 	pop xiz
 	ret
 
+; Sends the 10-byte inter-CPU message {0x2c, 0x30, 0x7f, 4, 0, 0, 2, sequence, A, C} built at
+; 0xe334 (sendCOMM, WA = 3); the sequence number at 0xe197 is incremented first and sent with
+; bit 7 clear.
 COMM_BuildAndSendPacket:
 	lda xde, (0xe334:16)
 	ld (xde), 0x2c

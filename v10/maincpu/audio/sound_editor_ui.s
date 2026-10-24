@@ -9584,6 +9584,10 @@ SeFil_DrawModeCaption:
 	ld xix, SeFil_DrawModeCaption_Records + 5
 	call SeGfx_DrawStaticList
 	ret
+; Draws the filter pages' filter-type field: stores CURRENT_TITLE at 0x678, draws the static list
+; that starts at SeMenu_Utility_FormatNumber_Data_2 with COLORBLIT_MODE = 2 (ending at
+; SeMenu_Utility_CompareBlock_Data, or 24 bytes in when the state byte 0x6ae is 1), then the
+; record SeFil_FilterTypeField_Record with COLORBLIT_MODE = 0 (SeGfx_DrawBoundRecord).
 SeFil_DrawFilterTypeField:
 	; --- Data setup: load A, store, set flag=2, language-conditional XIX (58 bytes) ---
 	ld	a, (CURRENT_TITLE:16)

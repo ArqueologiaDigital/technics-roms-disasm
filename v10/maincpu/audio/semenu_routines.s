@@ -6216,6 +6216,7 @@ SeMenu_HandleMenuChange_End:
 SeMenu_HandleMenuChange_Data:
 	ld	(xwa), (0x6b7)
 	ret
+; Stores A at 0x6b7.
 SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
@@ -6226,6 +6227,7 @@ SeMenu_LoadPatchStatus:
 	ldmi16 (xwa), 0x6b8
 	ret
 
+; Stores A at 0x6b8, the byte SeMenu_LoadPatchStatus reads back.
 SeMenu_SetPatchBank:
 	ld (1720:16), a
 	ret
@@ -6401,6 +6403,8 @@ SeMenu_GetPartConfigBit3:
 	and	l, 8
 	ret
 
+; Stores C as byte A - 1 of the per-part block at 0x6ba (A = part 1..4); counterpart of
+; SeMenu_LoadParamByte.
 SeMenu_StoreParamByte:
 	dec 1, a
 	extz wa
@@ -6434,6 +6438,7 @@ SeMenu_ReturnZero:
 	ld l, 0x0:opc
 	ret
 
+; Stores A at 0x6c5 (read back by SeMenu_GetDisplayState).
 SeMenu_SetDisplayState:
 	ld (1733:16), a
 	ret

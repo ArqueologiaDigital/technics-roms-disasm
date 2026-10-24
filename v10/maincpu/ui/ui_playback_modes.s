@@ -129,6 +129,8 @@ Seq_FindRhythmTrack_Join:
 Seq_FindRhythmTrack_Return2:
 	ret
 
+; Calls SeqVoice_InitEntry with the byte at 0x2878 temporarily replaced by the byte at 0xffe3,
+; then restores 0x2878.
 SeqPlay_RestoreVoiceState_Return:
 	ld a, (0x2878:16)
 	pushw wa

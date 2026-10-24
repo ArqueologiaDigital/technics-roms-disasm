@@ -586,6 +586,9 @@ SeqRecPlay_EnableRecordOnly:
 	ld xbc, EVT_REFRESH_PARA_DRAW
 	jp ApPostEvent
 
+; Sets the byte at 0x21092 to 0 and 0x21094 to 1 and posts EVT_REFRESH_PARA_DRAW to views
+; 0x6f0025 (parameter 0) and 0x6f0024 (parameter 1, the new 0x21094) so both redraw.  Same shape
+; as SeqRecPlay_DisableBoth.
 SeqRecPlay_EnablePlayOnly:
 	ld (0x021092:24), 0x00
 	ld (0x021094:24), 0x01
@@ -762,6 +765,9 @@ DispatchHandler_JumpToSubHandler:
 DispatchHandler_JumpSub:
 	jr DispatchHandler_CallNodeInsert
 
+; Two-entry `jr` table; a call to its first entry runs SeqNode_ResolveSlotPtr (through
+; DispatchHandler_CallSlotResolve).  The second entry stores the u32 at 0x1d5a in 0x110a
+; (DispatchHandler_StoreNodePtr).
 DispatchHandler_SubJumpTable:
 	jr DispatchHandler_CallSlotResolve
 	jr DispatchHandler_StoreNodePtr

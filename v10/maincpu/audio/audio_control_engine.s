@@ -2375,6 +2375,8 @@ MidiParam_ForceResync:
 	setm 7, (xwa + 1)
 	ret
 
+; Returns in L the byte at 0x121, 0x123, 0x125 or 0x127 for A = 0, 1, 2 or 3; for any other A
+; it reads the byte at XBC + 1 with XBC as passed.
 MidiChannel_GetParamByIndex:
 	cp a, 3:i3
 	jr z, MidiChannel_GetParam3
@@ -2734,6 +2736,10 @@ LEDUpdate_Cleanup:
 	ret
 
 
+; Writes one row of the control-panel LEDs.
+;   In:  A = row (0..15; larger values return at once), C = LED pattern.
+;   Stores the row's protocol byte (Protocol_values_for_LED_rows) and C in
+;   CPANEL_LEDS__ROW_AND_PATTERN_BYTES and sends them (LED_WriteToPanel).
 Set_LEDs:
 	; Input: WA: row of LEDs
 	;         C: LED pattern
@@ -4612,6 +4618,10 @@ MidiMsg_LoopAndFlush:
 	pop xiz
 	ret
 
+; Restores the panel-memory work area to its defaults: copies DataSlot_HeaderTemplate (0x20
+; bytes) to 0xf980 and SndParamRam_DefaultImage (0x620 bytes) to 0xf9a0, clears bit 0 of
+; 0xffc2, sets bit 1 of 0xffc0, stores 1 (region 2, Get_Region_Code) or 2 in 0xffc8, then
+; BitMapOut_PrepareRender_CheckBit2 with WA = 0 and Audio_FillParamBuffer (tail call).
 Display_SetupAndPrepareRender:
 	pushw 0x20
 	pushw DataSlot_HeaderTemplate@hi16
@@ -5909,6 +5919,11 @@ ExtData_Voice_CompareAndDispatch_Helper:
 	ld	(0x9181), (37169:16)
 	jp	MIDI_LoadParamsAndDispatchCC
 
+; Re-sends the modulation wheel after a reset: clears bit 7 of 0x28ae and copies
+; MIDI_CC_MODWHEEL_VALUE, with bit 7 set, to MIDI_CC_MODWHEEL_PENDING.  When the value had bit 7
+; set it flushes pending bank selects, builds CC 1 (status 0xb0, data = the value, 0x7f) in
+; MIDI_MSG_STATUS..DATA3, queues it as switch command {0xb0, 1, value, 0x7f} (AddswbWr) and
+; dispatches it (0x917e..0x9181, MIDI_LoadParamsAndDispatchCC).
 MidiChannel_ResetAndConfigure:
 	res 7, (0x28ae:16)
 	ld a, (MIDI_CC_MODWHEEL_VALUE:16)
@@ -6351,6 +6366,8 @@ IndBitmask_ReturnResult:
 	pop xiz
 	ret
 
+; Writes the numbers of the set bits of XWA (0..31, lowest first) to the byte list at 0x90fb and
+; ends it with 0xff.
 Part_BitmaskToIndexList:
 	ld iy, 0:i3
 	lda xde, (0x90fb:16)
@@ -8113,6 +8130,8 @@ SwbtWr_WriteParamBlockSafe:
 	pop xwa
 	ret
 
+; Stores HL in 0x90ea, copies the byte at 0x90f6 to 0x90ec and calls SndParam_ApplyAndFetch with
+; every register preserved.  Out: HL = the word at 0x90ee.
 SndParam_ApplyProgramChange_Safe:
 	push xwa
 	push xbc
@@ -8264,6 +8283,9 @@ MIDI_WriteVoiceParamFromBuffer:
 	ld e, (0x9180:16)
 	ld d, (0x9181:16)
 
+; The same code as MIDI_WriteVoiceParamCC: replaces bits D of byte B of record C (pointer table
+; at (0x90f2)) with E's and stores BC / DE in MIDI_MSG_STATUS / MIDI_MSG_DATA2; D = 0 or the
+; dummy record 0x9166 does nothing.
 MIDI_WriteVoiceParamDirect:
 	push xix
 	pushw wa

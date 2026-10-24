@@ -6638,6 +6638,8 @@ AcLswPartPan_Return:
 	lda xsp, (xsp + 36)
 	ret
 
+; Returns in HL the index of BC in a word list ending with 0xffff, or 0xffff when it is absent.
+;   In:  XWA = list, BC = value.
 SdpartLookupPartId:
 	ld hl, 0:i3
 	cpw (xwa), 0xffff

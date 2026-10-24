@@ -1371,6 +1371,8 @@ FDC_POST_OP_Skip2:
 	ret
 
 
+; Busy-waits until SYSTEM_TIMESTAMP has advanced by more than WA / 2 ticks, or for at most 65535
+; polls.  Out: HL = polls made.  Clobbers BC and DE.
 SOME_DELAY:
 	srl wa, 1
 	ld de, (SYSTEM_TIMESTAMP:16)
@@ -1441,6 +1443,10 @@ FDC_CmdRecalibrate_Skip:
 	calr	SOME_DELAY
 	pop qiz
 	ret
+; Seeks the floppy head to FDC_TARGET_TRACK unless the current-track byte 0x8b04 already holds
+; it: records the target in 0x8b04, waits (SOME_DELAY 2, FDC_TIMING_DELAY), sends SEEK (0x0f,
+; FDC_CMD_SEND) and waits for the result (FDC_POST_OP).  On an error 0x8b04 becomes 0xff
+; (track unknown).  Ends with SOME_DELAY 16.
 FDC_CmdSeek:
 	ld	a, (FDC_TARGET_TRACK:16)
 	cp	a, (35588:16)
@@ -1973,6 +1979,9 @@ FDC_MC_EXIT_Code_Join2:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
+; Selects the floppy controller for a command: sets bit 3 of port A and sends byte 0xfe
+; (FDC_CMD_SEND).  When that leaves an error in FDC_ERROR_CODE it records status 0x31
+; (FDC_Set_Status); otherwise it waits SOME_DELAY 10 once.
 FDC_CMD_ENABLE:
 	pushw	iz
 	set	3, (PA:8)
@@ -2462,6 +2471,7 @@ FDC_Reset_BuildParams:
 	incw 1, (0xe3da:16)
 	ret
 
+; Returns L = 1 when the disk-change line (port D bit 6) is low, else 0.
 Check_for_Floppy_Disk_Change:
 	bit	6, (PD:8)
 	jr z, Detected_Floppy_Disk_Change

@@ -990,6 +990,8 @@ SC0_InitFuncTable:
 	.long SC0Init_PaddingStub
 	.long SC0Init_PaddingStub
 
+; Starts transmission on the selected port, with every register preserved: MIDI_SC0_ENABLE_TX
+; when COM_SELECT = 0 (MIDI), CompIface_SerialEnableTx otherwise.  midi_out_en_X jumps here.
 MIDI_SC0_TX_DISPATCH:
 	push xwa
 	push xbc

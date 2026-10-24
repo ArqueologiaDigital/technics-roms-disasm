@@ -23,6 +23,7 @@ SetWall_JumpStubData:
 	call	SetWall_UpdateSlotIndex
 	ret
 
+; Copies entry (byte at 0xcdf) of the byte table at 0xf1a0 to 0x2873.
 SetWall_UpdateSlotIndex:
 	ld xhl, 0xf1a0
 	xor wa, wa

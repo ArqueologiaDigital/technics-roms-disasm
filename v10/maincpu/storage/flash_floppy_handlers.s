@@ -3694,6 +3694,8 @@ SlotTable_InitBank1850_Loop:
 	jr c, SlotTable_InitBank1850_Loop
 	ret
 
+; Fills the slot table at 0x7a0 with 0xffff: the two words at +0/+2, then the pairs of words
+; at +4.. and +6.. in steps of 4 up to +206.
 SlotTable_ExtendedOpsBlock:
 	lda	xde, (1952:16)
 	ldw (xde), 65535

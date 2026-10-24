@@ -502,6 +502,10 @@ ApTimer_SetupReturn:
 	lda xsp, (xsp + 18)
 	ret
 
+; Proc of the Screen class (IvScreenProc jumps here).
+;   Handles the window links EVT_GET_PARENT_WINDOW / EVT_SET_PARENT_WINDOW / EVT_GET_CHILD_WINDOW
+;   / EVT_SET_CHILD_WINDOW, EVT_SW_IN, EVT_SW_OFF, EVT_DRAW, EVT_HIDE and EVT_SHOW; other events
+;   go on to the base class.
 ScreenProc:
 	lda xsp, (xsp - 12)
 	push xiz
@@ -1495,6 +1499,11 @@ DirmdEmu_ClearAllFlags:
 	pop xiz
 	ret
 
+; Proc of the Window class.
+;   EVT_DIAL, EVT_RETURN_TITLE, EVT_INTERRUPT_TITLE, EVT_CHANGE_TITLE, EVT_CHANGE_MODE,
+;   EVT_SW_IN_MODE and EVT_AUTO_INC are forwarded to the window's group boxes; it also answers
+;   EVT_CHECK_SHOW_WINDOW and the child-window link events EVT_GET_CHILD_WINDOW /
+;   EVT_SET_CHILD_WINDOW.
 WindowProc:
 	lda xsp, (xsp - 24)
 	push xiz

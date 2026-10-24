@@ -391,6 +391,8 @@ Scoop_CurveUpdate_Direct:
 	pop xwa
 	ret
 
+; Calls Scoop_GlideParam_Setup with XWA = XIY when bit 0 of DISPLAY_ENABLE_FLAG is set.
+;   XWA is preserved.
 Scoop_ConditionalGlideSetup:
 	bit 0, (DISPLAY_ENABLE_FLAG:24)
 	jr nz, Scoop_ConditionalGlideSetup_Body
@@ -6077,6 +6079,9 @@ VoiceCtrl_CheckAndReset:
 VoiceCtrl_CheckAndReset_Return:
 	ret
 
+; Sets bit 6 of 0x28b3, writes the 5-byte sequencer-buffer event {0x90, 0x7f, 0x33, 0, part-1}
+; (SeqBuf_WriteByte; part = the byte at 0xeee) and runs VoiceAlloc_ScoopDisplayProcess.
+; Preserves WA and XHL.
 VoiceCtrl_SendNoteOffSequence:
 	push xhl
 	pushw wa
@@ -7435,6 +7440,7 @@ Interrupt_FlagSetBytecode:
 	call	SNS_Init_Startup
 	call	Display_UpdateRegion3
 	ret
+; Sets the bytes 0xd68 = 2 and 0xd67 = 4 and runs Audio_CheckSubsystemReady.
 MemConfig_Handler_5_Helper10:
 	ld	(3432:16), 2
 	ld	(3431:16), 4
@@ -8310,6 +8316,9 @@ MemoryConfig_Handler_Table_Target2_Join2:
 	ld	w, 0:opc
 	ret
 
+; Rewinds the current part's song-data cursor: its block number (word at 0xc9e + 2*(part-1)) is
+; set from the word at 0xf250 + 3*(part-1) + 1 unless that word is 0xffff, and its index byte
+; (0xcbe + part-1) to 5, the first data byte.  The part is the byte at 0xeee.
 MemConfig_VoiceSlotLookup:
 	call VoiceSlot_ComputeIndex
 	push xde
@@ -9293,6 +9302,8 @@ MemConfig_Handler_4_Skip8:
 	ld	w, 0:opc
 MemConfig_Handler_4_Return3:
 	ret
+; Clears the bytes 0xfc5f and 0xfc60, then calls PortConfig_DataTable_A_Helper twice with
+; A = 72, D = 4, E = 0 and W = 5, then W = 6.  Registers are preserved.
 MemConfig_Handler_4_Helper:
 	ld	(0xfc5f:16), 0
 	ld	(0xfc60:16), 0
@@ -9340,6 +9351,8 @@ MemConfig_Handler_4_Helper2_Skip:
 MemConfig_Handler_4_Helper2_Return:
 	ret
 
+; Clears the style-section byte 0x3728, redraws the section name (DisplayStr_StyleSectionInit)
+; and requests mode NAKA_MODE_MD_PS + 10 (UI_PostPartChangeEvent with A = 10).
 SysInit_SendAllNotesAndReset:
 	ld (0x3728:16), 0
 	call DisplayStr_StyleSectionInit
@@ -10367,6 +10380,8 @@ VoiceSlot_DispatchRet:
 	popw_dd16 0x58, 0x0d
 	ret
 
+; VoiceSlot_CompareRet with W = 1: steps the current part's song-data cursor back one event (see
+; VoiceSlot_StepCursorBack).
 VoiceSlot_CompareAndBranch:
 	ld	w, 1:opc
 	call	VoiceSlot_CompareRet
@@ -13995,6 +14010,8 @@ OscScope_Handler_6:
 OscScope_Handler_7:
 	call	OscScope_Handler_2_Helper
 	ret
+; In the 4-byte entry (byte at 0xec4) of the table the u32 at 0x1114 points to, clears bit 5 and
+; sets bit 6 of the first byte.
 OscScope_Handler_2_Helper:
 	ld	xix, (4372:16)
 	ld	e, (3780:16)
@@ -14888,6 +14905,10 @@ DisplayStr_ClearLoop:
 	popw wa
 	ret
 
+; Shows the current style section's name: clears the display string at 0xecd
+; (DisplayStr_ClearRegion), writes four spaces, the 8-character entry (byte at 0x3728) of
+; DisplayStr_StyleSectionNames and three spaces from 0xece, then redraws region 3
+; (Display_UpdateRegion3).
 DisplayStr_StyleSectionInit:
 	call DisplayStr_ClearRegion
 	ld xiy, DisplayStr_StyleSectionNames
@@ -18335,6 +18356,10 @@ Scoop_SpecialMode_Toggle:
 Scoop_SpecialMode_ToggleEnd:
 	ret
 
+; Moves the destination of a backward chained copy to the previous block: follows the link at
+; +1 of the block at (0x267a), stores the block number in 0x289f and the block's address in
+; (0x267a) and 0x10fd, and sets the offset IX = 0xff (the block's last byte).  When the linked
+; block is not in use (bit 7 of its first byte clear) it sets SEQ_ERROR_CODE = 11 instead.
 Scoop_SpecialMode_Draw:
 	xor ix, ix
 	ld xix, (9850:16)
@@ -18359,6 +18384,10 @@ Scoop_SpecialMode_DrawAlt:
 Scoop_SpecialMode_DrawEnd:
 	ret
 
+; Moves the source of a forward chained copy to the next block: saves the block address at
+; (0x267e) in 0xce8, follows its next-block link (+3), stores the block number in 0x28ba and the
+; block's address in (0x267e) and 0x10fd, and sets the offset IY = 5 (first data byte).  When the
+; linked block is not in use (bit 7 clear) it sets SEQ_ERROR_CODE = 11 instead.
 Scoop_SpecialMode_UpdateParams:
 	xor	iy, iy
 	ld	xiy, (9854:16)
