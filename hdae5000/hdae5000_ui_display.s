@@ -281,15 +281,16 @@ HDAE5000_FlsName_StoreWithUi:	; 0x28AE40 (248 bytes)
 	lda xsp, (xsp + 22)
 	ret
 
-HDAE5000_LoadSongWithUi:	; 0x28AF38 (441 bytes)
-	; Manage display state; accesses 0x229DAB
-	; ^ corrected: load a song with its screen messages -- shows object
-	;   0x7F02C1 ("HD_PLEASE" in HDAE5000_UiObjectName_PtrTable), runs
-	;   HDAE5000_LoadSong (WA = directory, BC = song, DE = part mask), and on
-	;   failure shows "ERR_LOAD" (0x29D) and arms "ERR_LOAD_EXIT"/"ERR_LOAD_CATCH"
-	;   (0x29E/0x29F) with event 0x01CA0002.  Callers: FileLoadSwCatch,
-	;   LBNLoadSwCatch, FlsLoadScreen (x2) and the routine at 0x286E50.
-	; --- Prologue ---
+; ---------------------------------------------------------------------------
+; Load a song with its screen messages: shows object 0x7F02C1 ("HD_PLEASE" in
+; HDAE5000_UiObjectName_PtrTable), runs HDAE5000_LoadSong and, on failure,
+; shows "ERR_LOAD" (0x29D) and arms "ERR_LOAD_EXIT" / "ERR_LOAD_CATCH"
+; (0x29E / 0x29F) with event 0x01CA0002; after a load it may change mode
+; (HDAE5000_RequestMode; HDAE5000_RAM_JumpAfterLoad).  Callers:
+; FileLoadSwCatch, LBNLoadSwCatch, FlsLoadScreen (twice) and one more.
+; In:  WA = directory, BC = song, DE = part mask, (xsp+4..) stacked flags
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSongWithUi:
 	dec 8, xsp				; ef 68 — allocate 4 bytes
 	pushw iz                                ; push iz (compact 16-bit)
 	ld (xsp + 0x04), de			; bf 04 52
@@ -449,12 +450,14 @@ HDAE5000_LoadSongWithUi:	; 0x28AF38 (441 bytes)
 	inc 8, xsp				; ef 60
 	retd 0x0006				; 0f 06 00
 
-HDAE5000_SaveSongWithUi:	; 0x28B0F1 (271 bytes)
-	; Handle display scroll: register handler, copy data, dispatch callback
-	; ^ corrected: the save counterpart of HDAE5000_LoadSongWithUi around
-	;   HDAE5000_SaveSong.  Callers: HDDNamingCheck, SaveOptSwEventCatch
-	;   (part mask = the save-option word 0x22AA4C), WrConfirmEventCatch.
-	; Input: WA = index, BC = param, DE = context ptr
+; ---------------------------------------------------------------------------
+; The save counterpart of HDAE5000_LoadSongWithUi around HDAE5000_SaveSong
+; (the new name is also pushed on the name history, HDAE5000_NameHistory_Push).
+; Callers: HDDNamingCheck, SaveOptSwEventCatch (part mask = the save-option
+; word HDAE5000_RAM_SaveOptions), WrConfirmEventCatch.
+; In:  WA = directory, BC = song, DE = part mask
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSongWithUi:
 	lda xsp, (xsp - 34)		; allocate 34 bytes on stack (0xDE = -34)
 	pushw iz
 	ld iz, de			; IZ = context ptr
@@ -3906,7 +3909,7 @@ HDAE5000_Lyrics_ClearBuffer:	; 0x28D605 (32 bytes)
 	call HDAE5000_MemFill
 	inc 8, xsp			; deallocate 8 bytes
 	ld xwa, 0:i3			; clear XWA
-	ld (0x2304f2:24), xwa		; (0x2304F2) = 0: track end
+	ld (HDAE5000_RAM_LyricFileLength:24), xwa		; (0x2304F2) = 0: track end
 	ld (HDAE5000_RAM_LyricLoaded:24), 0x00		; (0x23A19C) = 0: nothing loaded
 	ret
 
@@ -4033,7 +4036,7 @@ HDAE5000_Lyrics_PlayToPosition:	; 0x28D6D1 (938 bytes)
 	ld wa, iz
 	add (2295916:24), wa; (0x23086C) += IZ
 	incw 1, (xsp + 6)		; iteration counter++
-	ld wa, (0x230430:24)		; WA = (0x230430): meta event type
+	ld wa, (HDAE5000_RAM_LyricBufferEnd:24)		; WA = (0x230430): meta event type
 	cp wa, 126			; type 0x7E?
 	jrl z, .Lfo_type_7E
 	cp wa, 88			; type 0x58?
@@ -4380,7 +4383,7 @@ HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
 	ldw (0x2307ac:24), 0x0000; (0x2307AC) = 0
 
 	; --- (0x230868) = division / 12 ---
-	ld wa, (0x22b43c:24)		; WA = TLhd division (big-endian)
+	ld wa, (HDAE5000_RAM_LyricBuffer+12:24)		; WA = TLhd division (big-endian)
 	calr HDAE5000_SwapBytes16
 	ld wa, hl			; result WA = HL
 	extz xwa			; zero-extend to 32-bit
@@ -4639,7 +4642,7 @@ HDAE5000_Lyrics_ReadSongInfo:	; 0x28DBF8 (564 bytes)
 	call (xhl)
 
 	; --- reset the parse state ---
-	ldw (0x230430:24), 0x00ff; (0x230430) = 0x00FF
+	ldw (HDAE5000_RAM_LyricBufferEnd:24), 0x00ff; (0x230430) = 0x00FF
 	ldw (0x230432:24), 0x0000; (0x230432) = 0
 	ldw (0x230434:24), 0x0000; (0x230434) = 0
 	ldw (0x230436:24), 0x0000; (0x230436) = 0
@@ -4983,7 +4986,7 @@ HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
 	jr z, .Lfr_search_pos_check
 	ld a, (xsp + 8)
 	extz wa
-	cp wa, (2294832:24)		; the type wanted?
+	cp wa, (HDAE5000_RAM_LyricBufferEnd:24)		; the type wanted?
 	jr nz, .Lfr_search_pos		; no: next event
 .Lfr_search_pos_check:
 	cp hl, 0:i3
@@ -5029,7 +5032,7 @@ HDAE5000_Lyrics_FindEvent:	; 0x28E06F (280 bytes)
 	jr z, .Lfr_fffe_check
 	ld a, (xsp + 8)
 	extz wa
-	cp wa, (2294832:24)		; the type wanted?
+	cp wa, (HDAE5000_RAM_LyricBufferEnd:24)		; the type wanted?
 	jr nz, .Lfr_fffe_loop
 .Lfr_fffe_check:
 	cp hl, 0:i3
@@ -5150,8 +5153,8 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	add xbc, xwa
 	ld a, (xbc)		; A = meta event type
 	extz wa
-	ld (0x230430:24), wa		; (0x230430) = meta event type
-	cpw (2294832:24), 47		; type 0x2F: end of track?
+	ld (HDAE5000_RAM_LyricBufferEnd:24), wa		; (0x230430) = meta event type
+	cpw (HDAE5000_RAM_LyricBufferEnd:24), 47		; type 0x2F: end of track?
 	jr nz, .Lff_after_type_check
 	; end of track: set the end flag, return 0
 	ldw (0x230434:24), 0x0001		; (0x230434) = 1: end of track
@@ -5233,7 +5236,7 @@ HDAE5000_Lyrics_ParseEvent:	; 0x28E187 (772 bytes)
 	ld wa, (0x230436:24); WA = length
 	extz xwa
 	add xwa, 40			; + 0x28
-	ld xbc, 2294832			; XBC = 0x00230430
+	ld xbc, HDAE5000_RAM_LyricBufferEnd			; XBC = 0x00230430
 	add xbc, xwa
 	ld (xbc), 0			; null terminate
 	jr t, .Lff_after_copy1
@@ -5500,28 +5503,28 @@ HDAE5000_Lyrics_CheckHeaderChunk:	; 0x28E53D (113 bytes)
 .Ldn_check1:
 	ld xwa, 6:i3		; 6, byte-swapped
 	calr HDAE5000_SwapBytes32
-	cp (2274356:24), xhl		; chunk length
+	cp (HDAE5000_RAM_LyricBuffer+4:24), xhl		; chunk length
 	jr z, .Ldn_check2		; if match, continue
 	ld xhl, 0xFFFFFFFE		; return -2: length != 6
 	ret
 .Ldn_check2:
 	ld wa, 0:i3		; 0, byte-swapped
 	calr HDAE5000_SwapBytes16
-	cp (2274360:24), hl		; format
+	cp (HDAE5000_RAM_LyricBuffer+8:24), hl		; format
 	jr ule, .Ldn_check3		; if <= expected, continue
 	ld xhl, 0xFFFFFFFD		; return -3
 	ret
 .Ldn_check3:
 	ld wa, 1:i3		; 1, byte-swapped
 	calr HDAE5000_SwapBytes16
-	cp (2274362:24), hl		; track count
+	cp (HDAE5000_RAM_LyricBuffer+10:24), hl		; track count
 	jr ule, .Ldn_check4		; if <= expected, continue
 	ld xhl, 0xFFFFFFFC		; return -4
 	ret
 .Ldn_check4:
 	ldw wa, 0x8000		; 0x8000, byte-swapped
 	calr HDAE5000_SwapBytes16
-	ld wa, (0x22b43c:24); ld WA, (0x22B43C)
+	ld wa, (HDAE5000_RAM_LyricBuffer+12:24); ld WA, (0x22B43C)
 	and wa, hl		; division & 0x8000 (SMPTE)
 	jr z, .Ldn_ok			; if zero, valid
 	ld xhl, 0xFFFFFFFB		; return -5
@@ -5537,7 +5540,7 @@ HDAE5000_Lyrics_CheckTrackChunk:	; 0x28E5AE (59 bytes)
 	pushw 0x0004		; 4 bytes
 	lda xwa, (HDAE5000_Str_Tltr:24)		; "TLtr"
 	push xwa
-	lda xwa, (0x22b43e:24)		; lyric buffer +14
+	lda xwa, (HDAE5000_RAM_LyricBuffer+14:24)		; lyric buffer +14
 	push xwa
 	call HDAE5000_MemCmp
 	add xsp, 0x0000000A		; deallocate 10 bytes (3 pushed args)
@@ -5546,11 +5549,11 @@ HDAE5000_Lyrics_CheckTrackChunk:	; 0x28E5AE (59 bytes)
 	ld xhl, 0xFFFFFFF6		; return -10: no TLtr
 	ret
 .LLyrics_CheckTrackChunk__ok:
-	ld xwa, (0x22b442:24)		; XWA = track length, big-endian
+	ld xwa, (HDAE5000_RAM_LyricBuffer+18:24)		; XWA = track length, big-endian
 	calr HDAE5000_SwapBytes32
 	ld xwa, xhl
 	add xwa, 0x00000016		; + 22 (the two chunk headers)
-	ld (0x2304f2:24), xwa		; (0x2304F2) = end of the events
+	ld (HDAE5000_RAM_LyricFileLength:24), xwa		; (0x2304F2) = end of the events
 	ld xhl, 0:i3			; return 0 (success)
 	ret
 
@@ -7835,12 +7838,13 @@ HDAE5000_DirName_SetAndStore:	; 0x28F98B (34 bytes)
 	popw iz
 	ret
 
-HDAE5000_Dir_IsBlankName:	; 0x28F9AD (62 bytes)
-	; Is directory WA's 16-byte name the blank string at 0x2F8DE0 (16
-	; spaces)?  HL = 0xFFFF if it is (unused directory), 0 otherwise.
-	; (Was "tile entry ... HL = 0 (match) or 0xFFFF (mismatch)": the entry is a
-	; directory name and the result is the other way round -- `jr nz` skips
-	; the 0xFFFF only on a MISmatch.)
+; ---------------------------------------------------------------------------
+; Is a directory unused?  Compares its 16-byte name in HDAE5000_RAM_DirNames
+; with the 16-space blank string (HDAE5000_StrNCmp).
+; In:  WA = directory
+; Out: HL = 0xFFFF when the name is blank (unused), 0 otherwise.
+; ---------------------------------------------------------------------------
+HDAE5000_Dir_IsBlankName:
 	push xiz		; save XIZ
 	ld iz, wa		; IZ = tile index
 	ld	qiz, 0
@@ -7894,12 +7898,13 @@ HDAE5000_Dir_CountEmptySongs:	; 0x28F9EB (51 bytes)
 	inc 2, xsp		; deallocate 2 bytes
 	ret
 
-HDAE5000_SongRecord_Address:	; 0x28FA1E (56 bytes)
-	; Calculate table address: base + row*1216 + 1920 + col*76
-	; Input: WA = row, BC = column
-	; Output: XHL = pointer to entry
-	; (row = directory, column = song: XHL = 0x201DB2 + dir*0x4C0 +
-	; song*0x4C, the 76-byte song record.)
+; ---------------------------------------------------------------------------
+; Address of a song's 76-byte record:
+; HDAE5000_RAM_SongRecords + dir * 0x4C0 + song * 0x4C.
+; In:  WA = directory, BC = song
+; Out: XHL = the record.
+; ---------------------------------------------------------------------------
+HDAE5000_SongRecord_Address:
 	dec 4, xsp		; allocate 4 bytes
 	pushw iz		; save IZ
 	ld iz, wa		; IZ = row
@@ -8020,11 +8025,15 @@ HDAE5000_Fls_IsBlankName:	; 0x28FAE9 (61 bytes)
 	inc 2, xsp		; deallocate 2 bytes
 	ret
 
-HDAE5000_FlsItem_SongRecord:	; 0x28FB26 (139 bytes)
-	; Song record of item BC of FLS record WA: XHL = 0x201DB2 +
-	; (dir+1 byte - 1)*0x4C0 + (song+1 byte - 1)*0x4C, or 0x2F8E04 (26
-	; spaces, a blank name) when the item is empty (HDAE5000_FlsItem_IsSet).
-	; (Was "row"/"column" and "row/col dimension table".)
+; ---------------------------------------------------------------------------
+; Song record of item BC of FLS record WA: SongRecords + (dir byte - 1) *
+; 0x4C0 + (song byte - 1) * 0x4C, from the item's 1-based directory and song
+; bytes; the 26-space blank name HDAE5000_FlsItem_SongRecord_Str_Blank26 when
+; the item is empty (HDAE5000_FlsItem_IsSet).
+; In:  WA = FLS record, BC = item
+; Out: XHL = the record (its name comes first), or the blank name.
+; ---------------------------------------------------------------------------
+HDAE5000_FlsItem_SongRecord:
 	dec 4, xsp		; allocate 4 bytes
 	pushw iz		; save IZ
 	ld iz, bc		; IZ = column
@@ -8765,12 +8774,13 @@ HDAE5000_FlsItem_SetByte112_Epilogue:
 	ret
 
 
-HDAE5000_Song_IsUsed:	; 0x29018A (553 bytes)
-	; Check 9 table slots for availability (-1 = free)
-	; WA = row index, BC = column index
-	; Returns HL=0 if any slot occupied, HL=0xFFFF if all free
-	; (WA = directory, BC = song; the nine slots are the part first-cluster
-	; longs at +36.. of the song record, 0xFFFFFFFF = part absent.)
+; ---------------------------------------------------------------------------
+; Does a song hold any part?  Tests the nine first-cluster slots (+36.. of the
+; song record; 0xFFFFFFFF = part absent).
+; In:  WA = directory, BC = song
+; Out: HL = 0 when at least one part is present, 0xFFFF when none is.
+; ---------------------------------------------------------------------------
+HDAE5000_Song_IsUsed:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc		; save column
@@ -8961,11 +8971,13 @@ HDAE5000_Song_IsUsed:	; 0x29018A (553 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_Song_PartMask:	; 0x2903B3 (928 bytes)
-	; Part 1: Build occupied-slot bitmask (bits 0-8)
-	; (= the mask of the parts song (WA = dir, BC = song) holds, bit k for
-	; part k LSW PMT SQT CMP TM MSP RCM MD TLX; 0xFFFF if it holds none)
-	; WA = row, BC = column. Returns HL = bitmask or 0xFFFF if all free.
+; ---------------------------------------------------------------------------
+; The mask of the parts a song holds: bit k for part k (LSW PMT SQT CMP TM MSP
+; RCM MD TLX) whose first-cluster slot is not 0xFFFFFFFF.
+; In:  WA = directory, BC = song
+; Out: HL = the mask, or 0xFFFF when the song holds no part.
+; ---------------------------------------------------------------------------
+HDAE5000_Song_PartMask:
 	dec 6, xsp
 	push xiz
 	ld (xsp + 6), bc		; save column
@@ -9306,12 +9318,18 @@ HDAE5000_LoadSong:
 	inc 4, xsp
 	retd 4
 
-HDAE5000_LoadSong_Lsw:	; 0x290753 (350 bytes)
-	; Load part 0 (LSW) of song (WA = directory, BC = song): if its slot (song
-	; record +36, 0x201656 + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 0.
+; ---------------------------------------------------------------------------
+; Load part 0 (LSW) of a song: when its first-cluster slot (song record
+; +36) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 0.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreLswLoad, HamaFn_PostLswLoad
+; Calls: HDAE5000_RoundUpToSector, HDAE5000_HD_ReadFile, HDAE5000_MemCopy,
+;      HDAE5000_SeparateOutput_Apply
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Lsw:
 	lda xsp, (xsp - 28)
 	push xiz
 	ld (xsp + 28), bc	; save file number
@@ -9439,12 +9457,17 @@ HDAE5000_LoadSong_Lsw:	; 0x290753 (350 bytes)
 	lda xsp, (xsp + 28)
 	ret
 
-HDAE5000_LoadSong_Pmt:	; 0x2908B1 (335 bytes)
-	; Load part 1 (PMT) of song (WA = directory, BC = song): if its slot (song
-	; record +40, 0x20165A + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 1.
+; ---------------------------------------------------------------------------
+; Load part 1 (PMT) of a song: when its first-cluster slot (song record
+; +40) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 1.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PrePmLoad, HamaFn_PostPmLoad
+; Calls: HDAE5000_HD_ReadFile, HDAE5000_MemCopy
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Pmt:
 	lda xsp, (xsp - 38)
 	push xiz
 	ld (xsp + 38), bc	; save file number
@@ -9566,12 +9589,18 @@ HDAE5000_LoadSong_Pmt:	; 0x2908B1 (335 bytes)
 	lda xsp, (xsp + 38)
 	ret
 
-HDAE5000_LoadSong_Sqt:	; 0x290A00 (390 bytes)
-	; Load part 2 (SQT) of song (WA = directory, BC = song): if its slot (song
-	; record +44, 0x20165E + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 2.
+; ---------------------------------------------------------------------------
+; Load part 2 (SQT) of a song: when its first-cluster slot (song record
+; +44) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 2.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_SeqLoadPre, HamaFn_SeqLoadPost,
+;      indirect (xhl)
+; Calls: HDAE5000_HD_ReadFile
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Sqt:
 	lda xsp, (xsp - 28)
 	push xiz
 	ld (xsp + 28), bc	; save file number
@@ -9710,12 +9739,17 @@ HDAE5000_LoadSong_Sqt:	; 0x290A00 (390 bytes)
 	lda xsp, (xsp + 28)
 	ret
 
-HDAE5000_LoadSong_Cmp:	; 0x290B86 (303 bytes)
-	; Load part 3 (CMP) of song (WA = directory, BC = song): if its slot (song
-	; record +48, 0x201662 + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 3.
+; ---------------------------------------------------------------------------
+; Load part 3 (CMP) of a song: when its first-cluster slot (song record
+; +48) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 3.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_cmp_ld_mae, HamaFn_cmp_ld_ato
+; Calls: HDAE5000_HD_ReadFile
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Cmp:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc	; save file number
@@ -9819,12 +9853,17 @@ HDAE5000_LoadSong_Cmp:	; 0x290B86 (303 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_LoadSong_Tm:	; 0x290CB5 (220 bytes)
-	; Load part 4 (TM) of song (WA = directory, BC = song): if its slot (song
-	; record +52, 0x201666 + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 4.
+; ---------------------------------------------------------------------------
+; Load part 4 (TM) of a song: when its first-cluster slot (song record
+; +52) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 4.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreTmLoad, HamaFn_PostTmLoad
+; Calls: HDAE5000_HD_ReadFile
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Tm:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc
@@ -9899,12 +9938,17 @@ HDAE5000_LoadSong_Tm:	; 0x290CB5 (220 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_LoadSong_Msp:	; 0x290D91 (303 bytes)
-	; Load part 5 (MSP) of song (WA = directory, BC = song): if its slot (song
-	; record +56, 0x20166A + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 5.
+; ---------------------------------------------------------------------------
+; Load part 5 (MSP) of a song: when its first-cluster slot (song record
+; +56) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 5.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_msp_ld_mae, HamaFn_msp_ld_ato
+; Calls: HDAE5000_HD_ReadFile
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Msp:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc
@@ -10001,61 +10045,72 @@ HDAE5000_LoadSong_Msp:	; 0x290D91 (303 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_LoadSong_Rcm:	; 0x290EC0 (133 bytes)
-	; Load part 6 (RCM) of song (WA = directory, BC = song): if its slot (song
-	; record +60, 0x20166E + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 6.
-	dec 4, xsp		; allocate 4 bytes on stack
-	push xiz		; save XIZ
-	ld (xsp + 4), bc	; save BC (file number param)
-	ld (xsp + 6), wa	; save WA (partition param)
-	ld wa, (xsp + 4)	; WA = file number
-	extz xwa		; zero-extend to 32-bit
-	ld xbc, 0x0000004C	; multiplier = 76
-	call HDAE5000_Multiply		; multiply XWA * XBC
-	ld xiz, xhl		; XIZ = file_number * 76
-	ld wa, (xsp + 6)	; WA = partition
-	extz xwa		; zero-extend to 32-bit
-	ld xbc, 0x000004C0	; multiplier = 1216
-	call HDAE5000_Multiply		; multiply XWA * XBC
-	add xhl, 0x780		; XHL += 1920 (header offset)
-	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x20166e:24); XWA = 0x20166E (table base)
-	add xwa, xhl		; XWA = base + computed offset
-	ld xwa, (xwa)		; XWA = table entry value
-	cp xwa, 0xFFFFFFFF	; empty entry?
-	jr z, .Lts290_exit	; skip if -1
-	ld xiy, HDAE5000_RcmStream_InitialState	; source: 8 zero bytes in ROM
-	ld xix, HDAE5000_RAM_HdStreamBufferEnd	; destination: the RCM stream state {state, dir, song, last result}
-	ld bc, 4:i3		; count = 4 words (8 bytes)
-	ldirw			; 95 11: copy BC words from (XIY+) to (XIX+)
-	ld wa, (xsp + 6)	; reload partition
-	ld (0x238f1e:24), wa; ld (0x238F1E), WA
-	ld wa, (xsp + 4)	; reload file number
-	ld (0x238f20:24), wa; ld (0x238F20), WA
-	lda xwa, (HDAE5000_RcmStream_Read:24); XWA = 0x293F96 (function ptr 1)
-	ld xde, xwa		; XDE = function ptr 1
-	lda xwa, (HDAE5000_RcmStream_LastResult:24); XWA = 0x29414C (function ptr 2)
-	ld xbc, xwa		; XBC = function ptr 2
-	ld xwa, xde		; XWA = function ptr 1
-	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24); XDE = (0x23A1A2) workspace ptr
-	ld xde, (xde + WS_HamaFnTable)             ; XDE = (XDE+0x0E88)
-	ld_sril xhl, (xde + HamaFn_rcm_ld_XAPR_j)             ; XHL = (XDE+0x00B0) handler
-	call (xhl)		; dispatch handler
+; ---------------------------------------------------------------------------
+; Load part 6 (RCM) of a song by letting the main CPU pull it: when slot +60
+; of the song record is not 0xFFFFFFFF, reset the RCM stream state (8 zero
+; bytes from HDAE5000_RcmStream_InitialState at HdStreamBufferEnd), note the
+; song in HDAE5000_RAM_RcmStreamDir / _RcmStreamSong and call
+; HamaFn_rcm_ld_XAPR_j with the read callback HDAE5000_RcmStream_Read and
+; HDAE5000_RcmStream_LastResult.  Called by HDAE5000_LoadSong for mask bit 6.
+; In:  WA = directory, BC = song
+; Out: HL = 0.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Rcm:
+	dec 4, xsp
+	push xiz
+	ld (xsp + 4), bc
+	ld (xsp + 6), wa
+	ld wa, (xsp + 4)
+	extz xwa
+	ld xbc, 0x0000004C
+	call HDAE5000_Multiply
+	ld xiz, xhl
+	ld wa, (xsp + 6)
+	extz xwa
+	ld xbc, 0x000004C0
+	call HDAE5000_Multiply
+	add xhl, 0x780
+	add xhl, xiz
+	lda xwa, (0x20166e:24)
+	add xwa, xhl
+	ld xwa, (xwa)
+	cp xwa, 0xFFFFFFFF
+	jr z, .Lts290_exit
+	ld xiy, HDAE5000_RcmStream_InitialState
+	ld xix, HDAE5000_RAM_HdStreamBufferEnd
+	ld bc, 4:i3
+	ldirw
+	ld wa, (xsp + 6)
+	ld (HDAE5000_RAM_RcmStreamDir:24), wa
+	ld wa, (xsp + 4)
+	ld (HDAE5000_RAM_RcmStreamSong:24), wa
+	lda xwa, (HDAE5000_RcmStream_Read:24)
+	ld xde, xwa
+	lda xwa, (HDAE5000_RcmStream_LastResult:24)
+	ld xbc, xwa
+	ld xwa, xde
+	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xde, (xde + WS_HamaFnTable)
+	ld_sril xhl, (xde + HamaFn_rcm_ld_XAPR_j)
+	call (xhl)
 .Lts290_exit:
-	ld hl, 0:i3		; return 0
-	pop xiz			; restore XIZ
-	inc 4, xsp		; deallocate 4 bytes
+	ld hl, 0:i3
+	pop xiz
+	inc 4, xsp
 	ret
 
-HDAE5000_LoadSong_Md:	; 0x290F45 (248 bytes)
-	; Load part 7 (MD) of song (WA = directory, BC = song): if its slot (song
-	; record +64, 0x201672 + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 7.
+; ---------------------------------------------------------------------------
+; Load part 7 (MD) of a song: when its first-cluster slot (song record
+; +64) is not 0xFFFFFFFF, read the chain with HDAE5000_HD_ReadFile and hand
+; the data to the main CPU through its hooks.  Called by HDAE5000_LoadSong for
+; mask bit 7.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no such part, else HD_ReadFile's result.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreMidiLoad, HamaFn_FlashWrite,
+;      HamaFn_PostMidiLoad
+; Calls: HDAE5000_HD_ReadFile
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Md:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc	; save file number
@@ -10142,15 +10197,17 @@ HDAE5000_LoadSong_Md:	; 0x290F45 (248 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_LoadSong_Tlx:	; 0x29103D (1023 bytes)
-	; Load part 8 (TLX) of song (WA = directory, BC = song): if its slot (song
-	; record +68, 0x201676 + dir*0x4C0 + song*0x4C) is not 0xFFFFFFFF, read the
-	; chain with HDAE5000_HD_ReadFile and hand the data to the main CPU
-	; (workspace 0x0E88 table callbacks).  HL = 0 when there is no such part,
-	; else ReadFile's result.  Called by HDAE5000_LoadSong for mask bit 8.
-; LTS: 0x29103D (1023 bytes)
-	; ^ conversion-region size (local-label prefix .LTS_), not a routine size.
-
+; ---------------------------------------------------------------------------
+; Load part 8 (TLX, the lyrics) of a song into HDAE5000_RAM_LyricBuffer: when
+; slot +68 of the song record is not 0xFFFFFFFF, clear the buffer
+; (HDAE5000_Lyrics_ClearBuffer), read the first 22 bytes (the chunk headers)
+; with HDAE5000_HD_ReadFile, then the whole file, its length now known from
+; HDAE5000_TlxPart_Describe.  Called by HDAE5000_LoadSong for mask bit 8.
+; In:  WA = directory, BC = song
+; Out: HL = 0 when the song has no TLX part, else HD_ReadFile's result.
+;      IZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_LoadSong_Tlx:
 	lda	xsp, (xsp-24)
 	pushw iz                                ; push IZ
 	ld (xsp + 0x16), bc
@@ -10235,15 +10292,23 @@ HDAE5000_LoadSong_Tlx_Done:
 	lda	xsp, (xsp+24)
 	ret
 
+; ---------------------------------------------------------------------------
+; Save a song.  Mask 0 returns HL = 0 at once; not enough free clusters
+; (HDAE5000_Song_CheckFreeSpace) returns 0xFFFF.  Otherwise, between the
+; main-CPU calls (HamaFn_PlayHalt; RootFn_SleepMainTask / WakeUpMainTask when
+; asked; HamaFn_EditSwRefresh, _PlayStandBy), for k = 0..8: bit k set ->
+; HDAE5000_SaveSong_<part k>, a part that fails is deleted again; bit k clear,
+; or any part after a failure -> HDAE5000_DeleteSongPart_<part k>.  On success
+; the 26-byte name is copied into the song record and the tables written
+; (HDAE5000_HD_WriteTables_Status); after a failure every part of the song is
+; deleted (HDAE5000_DeleteSongParts, mask 0x1FF).  Callers:
+; HDAE5000_SaveSongWithUi and PC-link service 15 ("SaveSongInMemoryToHd").
+; In:  WA = directory, BC = song, XDE = the song's name; stacked words (retd
+;      pops them): +4 = 1 to leave the drive spinning, +6 = 1 to put the main
+;      task to sleep, +8 = part mask
+; Out: HL = 0, or 0xFFFF.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_SaveSong:
-	; Save a song: WA = directory, BC = song, XDE = its new name; stacked
-	; words: part mask, UI flag, keep-spinning flag.  Mask 0 -> HL = 0 at once;
-	; not enough free clusters (HDAE5000_Song_CheckFreeSpace) -> HL = 0xFFFF.
-	; Otherwise, between the main-CPU callbacks, for k = 0..8: bit k set ->
-	; HDAE5000_SaveSong_<part k> (a failed part is deleted again and ends the
-	; run), bit k clear -> HDAE5000_DeleteSongPart_<part k>: the song ends up
-	; holding exactly the parts of the mask.  Callers: HDAE5000_SaveSongWithUi
-	; and PC-link service 15 ("SaveSongInMemoryToHd").
 	lda	xsp, (xsp-10)
 	push xiz
 	ld (xsp + 0x06), xde
@@ -10518,12 +10583,18 @@ HDAE5000_SaveSong_Epilogue:
 	retd 0x0006
 
 
-HDAE5000_SaveSong_Lsw:	; 0x29143C (359 bytes)
-	; Save part 0 (LSW) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +36; the part
-	; byte +26 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 0.
+; ---------------------------------------------------------------------------
+; Save part 0 (LSW) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +36 of the song
+; record; the record's part byte +26 is set.  Called by HDAE5000_SaveSong
+; for mask bit 0.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreLswSave, HamaFn_PostLswSave
+; Calls: HDAE5000_RoundUpToSector, HDAE5000_MemFill, HDAE5000_MemCopy,
+;      HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Lsw:
 	lda xsp, (xsp - 28)
 	push xiz
 	ld (xsp + 28), bc	; save file number
@@ -10655,12 +10726,17 @@ HDAE5000_SaveSong_Lsw:	; 0x29143C (359 bytes)
 	lda xsp, (xsp + 28)
 	ret
 
-HDAE5000_SaveSong_Pmt:	; 0x2915A3 (217 bytes)
-	; Save part 1 (PMT) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +40; the part
-	; byte +27 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 1.
+; ---------------------------------------------------------------------------
+; Save part 1 (PMT) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +40 of the song
+; record; the record's part byte +27 is set.  Called by HDAE5000_SaveSong
+; for mask bit 1.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PrePmSave, HamaFn_PostPmSave
+; Calls: HDAE5000_RoundUpToSector, HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Pmt:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc
@@ -10731,12 +10807,17 @@ HDAE5000_SaveSong_Pmt:	; 0x2915A3 (217 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_SaveSong_Sqt:	; 0x29167C (226 bytes)
-	; Save part 2 (SQT) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +44; the part
-	; byte +28 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 2.
+; ---------------------------------------------------------------------------
+; Save part 2 (SQT) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +44 of the song
+; record; the record's part byte +28 is set.  Called by HDAE5000_SaveSong
+; for mask bit 2.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_SeqSavePre, HamaFn_SeqSavePost
+; Calls: HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Sqt:
 	lda xsp, (xsp - 30)	; larger stack frame
 	push xiz
 	ld (xsp + 30), bc	; save file number
@@ -10815,12 +10896,17 @@ HDAE5000_SaveSong_Sqt:	; 0x29167C (226 bytes)
 	lda xsp, (xsp + 30)	; deallocate 30 bytes
 	ret
 
-HDAE5000_SaveSong_Cmp:	; 0x29175E (211 bytes)
-	; Save part 3 (CMP) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +48; the part
-	; byte +29 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 3.
+; ---------------------------------------------------------------------------
+; Save part 3 (CMP) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +48 of the song
+; record; the record's part byte +29 is set.  Called by HDAE5000_SaveSong
+; for mask bit 3.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_cmp_sv_mae, HamaFn_cmp_sv_ato
+; Calls: HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Cmp:
 	lda xsp, (xsp - 20)	; allocate 20 bytes
 	push xiz
 	ld (xsp + 20), bc	; save file number
@@ -10889,12 +10975,17 @@ HDAE5000_SaveSong_Cmp:	; 0x29175E (211 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_SaveSong_Tm:	; 0x291831 (216 bytes)
-	; Save part 4 (TM) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +52; the part
-	; byte +30 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 4.
+; ---------------------------------------------------------------------------
+; Save part 4 (TM) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +52 of the song
+; record; the record's part byte +30 is set.  Called by HDAE5000_SaveSong
+; for mask bit 4.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreTmSave, HamaFn_PostTmSave
+; Calls: HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Tm:
 	lda xsp, (xsp - 20)
 	push xiz
 	ld (xsp + 20), bc
@@ -10964,12 +11055,17 @@ HDAE5000_SaveSong_Tm:	; 0x291831 (216 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_SaveSong_Msp:	; 0x291909 (211 bytes)
-	; Save part 5 (MSP) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +56; the part
-	; byte +31 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 5.
+; ---------------------------------------------------------------------------
+; Save part 5 (MSP) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +56 of the song
+; record; the record's part byte +31 is set.  Called by HDAE5000_SaveSong
+; for mask bit 5.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_msp_sv_mae, HamaFn_msp_sv_ato
+; Calls: HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Msp:
 	lda xsp, (xsp - 20)	; allocate 20 bytes
 	push xiz
 	ld (xsp + 20), bc	; save file number
@@ -11038,60 +11134,70 @@ HDAE5000_SaveSong_Msp:	; 0x291909 (211 bytes)
 	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_SaveSong_Rcm:	; 0x2919DC (134 bytes)
-	; Save part 6 (RCM) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +60; the part
-	; byte +32 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 6.
-	push xiz		; save XIZ
-	ld de, bc		; DE = BC (file number param)
-	ld hl, 0:i3		; HL = 0
-	ld xiy, HDAE5000_RcmStream_InitialState	; source: 8 zero bytes in ROM
-	ld xix, HDAE5000_RAM_HdStreamBufferEnd	; destination: the RCM stream state {state, dir, song, last result}
-	ld bc, 4:i3		; count = 4 words
-	ldirw			; 95 11: copy BC words from (XIY+) to (XIX+)
-	ld (0x238f1e:24), wa; ld (0x238F1E), WA — partition
-	ld (0x238f20:24), de; ld (0x238F20), DE — file number
-	ld wa, (0x238f20:24); WA = (0x238F20) file number
-	extz xwa		; zero-extend to 32-bit
-	ld xbc, 0x0000004C	; multiplier = 76
-	call HDAE5000_Multiply		; multiply
-	ld xiz, xhl		; XIZ = file_number * 76
-	ld wa, (0x238f1e:24); WA = (0x238F1E) partition
-	extz xwa		; zero-extend to 32-bit
-	ld xbc, 0x000004C0	; multiplier = 1216
-	call HDAE5000_Multiply		; multiply
-	add xhl, 0x780		; XHL += 1920 (header offset)
-	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x20166e:24); XWA = 0x20166E (table base)
-	add xwa, xhl		; XWA = base + computed offset
+; ---------------------------------------------------------------------------
+; Save part 6 (RCM) of a song by letting the main CPU push it: reset the RCM
+; stream state, note the song in HDAE5000_RAM_RcmStreamDir / _RcmStreamSong,
+; open a buffered write on slot +60 of the song record (HDAE5000_HD_WriteOpen)
+; and call HamaFn_rcm_sv_XAPR_j with HDAE5000_RcmStream_FreeSpace,
+; HDAE5000_RcmStream_Write and HDAE5000_RcmStream_LastResult, then
+; HDAE5000_HD_WriteClose.  Called by HDAE5000_SaveSong for mask bit 6.
+; In:  WA = directory, BC = song
+; Out: HL = 0xFFFF when the write could not be opened.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Rcm:
+	push xiz
+	ld de, bc
+	ld hl, 0:i3
+	ld xiy, HDAE5000_RcmStream_InitialState
+	ld xix, HDAE5000_RAM_HdStreamBufferEnd
+	ld bc, 4:i3
+	ldirw
+	ld (HDAE5000_RAM_RcmStreamDir:24), wa
+	ld (HDAE5000_RAM_RcmStreamSong:24), de
+	ld wa, (HDAE5000_RAM_RcmStreamSong:24)
+	extz xwa
+	ld xbc, 0x0000004C
+	call HDAE5000_Multiply
+	ld xiz, xhl
+	ld wa, (HDAE5000_RAM_RcmStreamDir:24)
+	extz xwa
+	ld xbc, 0x000004C0
+	call HDAE5000_Multiply
+	add xhl, 0x780
+	add xhl, xiz
+	lda xwa, (0x20166e:24)
+	add xwa, xhl
 	calr HDAE5000_HD_WriteOpen
-	ld wa, hl		; WA = result
-	cp wa, 0xFFFF		; check for failure
-	jr z, .Lts919_exit	; skip if failed
-	lda xwa, (HDAE5000_RcmStream_FreeSpace:24); XWA = 0x294152
-	ld xhl, xwa		; XHL = handler 1
-	lda xwa, (HDAE5000_RcmStream_Write:24); XWA = 0x294069
-	ld xbc, xwa		; XBC = handler 2
-	lda xwa, (HDAE5000_RcmStream_LastResult:24); XWA = 0x29414C
-	ld xde, xwa		; XDE = handler 3
-	ld xwa, xhl		; XWA = handler 1
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); XHL = (0x23A1A2) workspace ptr
-	ld xhl, (xhl + WS_HamaFnTable)             ; XHL = (XHL+0x0E88)
-	ld_sril xix, (xhl + HamaFn_rcm_sv_XAPR_j)             ; XIX = (XHL+0x00B4)
-	call (xix)		; dispatch handler
+	ld wa, hl
+	cp wa, 0xFFFF
+	jr z, .Lts919_exit
+	lda xwa, (HDAE5000_RcmStream_FreeSpace:24)
+	ld xhl, xwa
+	lda xwa, (HDAE5000_RcmStream_Write:24)
+	ld xbc, xwa
+	lda xwa, (HDAE5000_RcmStream_LastResult:24)
+	ld xde, xwa
+	ld xwa, xhl
+	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xhl, (xhl + WS_HamaFnTable)
+	ld_sril xix, (xhl + HamaFn_rcm_sv_XAPR_j)
+	call (xix)
 	calr HDAE5000_HD_WriteClose
 .Lts919_exit:
-	pop xiz			; restore XIZ
+	pop xiz
 	ret
 
-HDAE5000_SaveSong_Md:	; 0x291A62 (209 bytes)
-	; Save part 7 (MD) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +64; the part
-	; byte +33 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 7.
+; ---------------------------------------------------------------------------
+; Save part 7 (MD) of a song from the main CPU's memory (through its hooks)
+; to a new cluster chain whose first cluster goes to slot +64 of the song
+; record; the record's part byte +33 is set.  Called by HDAE5000_SaveSong
+; for mask bit 7.
+; In:  WA = directory, BC = song
+; Out: HL = 0, or 0xFFFF on a failure.
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_PreMidiSave, HamaFn_PostMidiSave
+; Calls: HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Md:
 	lda xsp, (xsp - 20)	; allocate 20 bytes on stack
 	push xiz		; save XIZ
 	ld (xsp + 20), bc	; save BC param (file number)
@@ -11159,92 +11265,97 @@ HDAE5000_SaveSong_Md:	; 0x291A62 (209 bytes)
 	lda xsp, (xsp + 20)	; deallocate 20 bytes
 	ret
 
-HDAE5000_SaveSong_Tlx:	; 0x291B33 (171 bytes)
-	; Save part 8 (TLX) of song (WA = directory, BC = song) from the main
-	; CPU's memory (workspace 0x0E88 table callbacks) to a new cluster chain
-	; (HDAE5000_HD_WriteFile, streamed parts continue with
-	; HDAE5000_HD_AppendFile) whose first cluster goes to slot +68; the part
-	; byte +34 is set.  HL = 0 / 0xFFFF.  Called by HDAE5000_SaveSong, bit 8.
-	lda xsp, (xsp - 20)	; allocate 20 bytes on stack
-	push xiz		; save XIZ
-	ld (xsp + 20), bc	; save BC param (file number)
-	ld (xsp + 22), wa	; save WA param (partition)
-	lda xwa, (xsp + 12)	; XWA = addr of local buffer
-	ld xbc, xwa		; XBC = buffer address
-	ldw wa, 0x000A		; WA = 10 (string length)
-	calr HDAE5000_TlxPart_Describe	; init table entry
-	ld xwa, (xsp + 16)	; XWA = param block
+; ---------------------------------------------------------------------------
+; Save part 8 (TLX) of a song: HDAE5000_RAM_LyricBuffer, its length
+; (HDAE5000_TlxPart_Describe) rounded up to whole sectors
+; (HDAE5000_RoundUpToSector), written with HDAE5000_HD_WriteFile to slot +68
+; of the song record; on success the part byte +34 is set.  Called by
+; HDAE5000_SaveSong for mask bit 8.
+; In:  WA = directory, BC = song
+; Out: HL = HD_WriteFile's result (0 / 0xFFFF).  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_SaveSong_Tlx:
+	lda xsp, (xsp - 20)
+	push xiz
+	ld (xsp + 20), bc
+	ld (xsp + 22), wa
+	lda xwa, (xsp + 12)
+	ld xbc, xwa
+	ldw wa, 0x000A
+	calr HDAE5000_TlxPart_Describe
+	ld xwa, (xsp + 16)
 	calr HDAE5000_RoundUpToSector
-	ld (xsp + 16), xhl	; save result XHL
-	lda xwa, (xsp + 12)	; XWA = addr of local buffer
-	ld (xsp + 4), xwa	; store buffer ptr
-	lda xwa, (xsp + 16)	; XWA = addr of result
-	ld (xsp + 8), xwa	; store result ptr
-	ld wa, (xsp + 20)	; WA = file number
+	ld (xsp + 16), xhl
+	lda xwa, (xsp + 12)
+	ld (xsp + 4), xwa
+	lda xwa, (xsp + 16)
+	ld (xsp + 8), xwa
+	ld wa, (xsp + 20)
 	extz xwa
-	ld xbc, 0x0000004C	; multiplier = 76
-	call HDAE5000_Multiply		; multiply
-	ld xiz, xhl		; XIZ = file_number * 76
-	ld wa, (xsp + 22)	; WA = partition
+	ld xbc, 0x0000004C
+	call HDAE5000_Multiply
+	ld xiz, xhl
+	ld wa, (xsp + 22)
 	extz xwa
-	ld xbc, 0x000004C0	; multiplier = 1216
-	call HDAE5000_Multiply		; multiply
-	add xhl, 0x780		; XHL += 1920
-	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x201676:24); XWA = 0x201676 (table base)
-	add xwa, xhl		; XWA = base + offset
-	ld xde, xwa		; XDE = table address
-	ld xwa, (xsp + 4)	; XWA = buffer ptr
-	ld xwa, (xwa)		; dereference
-	ld xbc, (xsp + 8)	; XBC = result ptr
-	ld xbc, (xbc)		; dereference
-	call HDAE5000_HD_WriteFile		; compare/process
-	ld (xsp + 10), hl	; save HL result
-	ld wa, (xsp + 10)	; WA = result
-	cp wa, 0xFFFF		; check for failure
-	jr z, .Lts91b_exit	; skip if failed
-	ld wa, (xsp + 20)	; WA = file number (reload)
+	ld xbc, 0x000004C0
+	call HDAE5000_Multiply
+	add xhl, 0x780
+	add xhl, xiz
+	lda xwa, (0x201676:24)
+	add xwa, xhl
+	ld xde, xwa
+	ld xwa, (xsp + 4)
+	ld xwa, (xwa)
+	ld xbc, (xsp + 8)
+	ld xbc, (xbc)
+	call HDAE5000_HD_WriteFile
+	ld (xsp + 10), hl
+	ld wa, (xsp + 10)
+	cp wa, 0xFFFF
+	jr z, .Lts91b_exit
+	ld wa, (xsp + 20)
 	extz xwa
-	ld xbc, 0x0000004C	; multiplier = 76
-	call HDAE5000_Multiply		; multiply
-	ld xiz, xhl		; XIZ = file_number * 76
-	ld wa, (xsp + 22)	; WA = partition (reload)
+	ld xbc, 0x0000004C
+	call HDAE5000_Multiply
+	ld xiz, xhl
+	ld wa, (xsp + 22)
 	extz xwa
-	ld xbc, 0x000004C0	; multiplier = 1216
-	call HDAE5000_Multiply		; multiply
-	add xhl, 0x780		; XHL += 1920
-	add xhl, xiz		; XHL += file_number * 76
-	lda xwa, (0x201654:24); XWA = 0x201654 (flag table)
-	add xwa, xhl		; XWA = base + offset
-	ld (xwa), 0x01	; set flag byte to 1
+	ld xbc, 0x000004C0
+	call HDAE5000_Multiply
+	add xhl, 0x780
+	add xhl, xiz
+	lda xwa, (0x201654:24)
+	add xwa, xhl
+	ld (xwa), 0x01
 .Lts91b_exit:
-	ld hl, (xsp + 10)	; HL = result
-	pop xiz			; restore XIZ
-	lda xsp, (xsp + 20)	; deallocate 20 bytes
+	ld hl, (xsp + 10)
+	pop xiz
+	lda xsp, (xsp + 20)
 	ret
 
-HDAE5000_TlxPart_Describe:	; 0x291BDE (47 bytes)
-	; Initialize table entry structure with string address
-	; Input: WA = offset, XBC = structure pointer
-	; Output: HL = offset
-	; (= the TLX part's extent for the part loaders/savers and PC-link
-	; service 13: XBC = {long 0x22B430; long length}, length =
-	; HDAE5000_SwapBytes32(0x22B442 pointer) + 22, also stored to 0x2304F2;
-	; HL = WA.  0x5000 is the TLX size HDAE5000_Song_CheckFreeSpace reserves.)
+; ---------------------------------------------------------------------------
+; The TLX part's extent for the part loaders / savers and PC-link service 13:
+; {long HDAE5000_RAM_LyricBuffer; long length}, the length being the TLtr
+; length (big-endian at LyricBuffer+18, HDAE5000_SwapBytes32) + 22, also
+; stored to HDAE5000_RAM_LyricFileLength.
+; In:  WA = passed through, XBC = the 8-byte record to fill
+; Out: HL = WA.  XIZ preserved.
+; ---------------------------------------------------------------------------
+HDAE5000_TlxPart_Describe:
 	dec 2, xsp
 	push xiz
-	ld xiz, xbc			; XIZ = structure pointer
-	ld (xsp + 4), wa		; save offset on stack
-	lda xwa, (HDAE5000_RAM_LyricBuffer:24); 0x22B430 - base string address
-	ld (xiz), xwa			; store string pointer in structure
-	ld xwa, (0x22b442:24); 0x22B442 - load source string pointer
+	ld xiz, xbc
+	ld (xsp + 4), wa
+	lda xwa, (HDAE5000_RAM_LyricBuffer:24)
+	ld (xiz), xwa
+	ld xwa, (HDAE5000_RAM_LyricBuffer+18:24)
 	call HDAE5000_SwapBytes32
-	add hl, 0x0016			; add 22 to string length
+	add hl, 0x0016
 	ld wa, hl
-	exts xwa			; sign-extend to 32-bit
-	ld (xiz + 4), xwa		; store computed size
-	ld (0x2304f2:24), xwa; 0x2304F2 - global size variable
-	ld hl, (xsp + 4)		; return saved offset
+	exts xwa
+	ld (xiz + 4), xwa
+	ld (HDAE5000_RAM_LyricFileLength:24), xwa
+	ld hl, (xsp + 4)
 	pop xiz
 	inc 2, xsp
 	ret
@@ -11295,13 +11406,17 @@ HDAE5000_CheckFileSignature_Done:
 HDAE5000_CheckFileSignature_Return:
 	ret
 
+; ---------------------------------------------------------------------------
+; Check a song on floppy before copying it.  Fails (HL = 0xFFFF) when a
+; "<name>.SEQ" or the other name it tries is found (HamaFn__findfirst, closed
+; with _findclose), or when, for any part k in the mask, the first 512 bytes
+; of "<name><extension k>" (HamaFn_fopen_ext "rb", _fread_ext,
+; _fclose_ext into HDAE5000_RAM_HdStreamBuffer) fail
+; HDAE5000_CheckFileSignature(k).
+; In:  XWA = the song's 8-character name, BC = part mask
+; Out: HL = 0 when the copy may go ahead, else 0xFFFF.
+; ---------------------------------------------------------------------------
 HDAE5000_FdSong_CheckFiles:
-	; Check a song on floppy before copying it: XWA = its 8-character name,
-	; BC = part mask.  Fails (HL = 0xFFFF) if a "<name>.SEQ" or the file named
-	; by 0x2F8EA2 opens (main-CPU callback 0x0E88 table +0x94, closed with
-	; +0x9C), or if, for any part k in the mask, the first 512 bytes of
-	; "<name><ext k>" (opened "rb" with +0xA0, read with +0xA8, closed with
-	; +0xAC) fail HDAE5000_CheckFileSignature(k).  HL = 0 otherwise.
 	lda xsp, (xsp-282)	; lda XSP,XSP+0xfee6
 	push xiz
 	ld	(xsp+284), bc	; ld (XSP+0x011c),BC
@@ -11677,12 +11792,16 @@ HDAE5000_FdSong_CheckFiles_Epilogue:
 	lda xsp, (xsp+282)	; lda XSP,XSP+0x011a
 	ret
 
+; ---------------------------------------------------------------------------
+; Copy a floppy song into a song of the HD: checks the free space
+; (HDAE5000_Song_CheckFreeSpace), then, inside the usual main-CPU bracket, per
+; bit k of the mask HDAE5000_CopyFdSongToHd_<part k> (clear bits delete that
+; part, HDAE5000_DeleteSongParts).  Caller: HDAE5000_CopyToHd_Execute (the
+; copy-to-HD screen).
+; In:  WA = directory, BC = song, XDE = the floppy song's name; stacked: the
+;      part mask and flags
+; ---------------------------------------------------------------------------
 HDAE5000_CopyFdSongToHd:
-	; Copy a floppy song into song (WA = directory, BC = song): XDE = its name,
-	; stacked: part mask and flags.  Checks the free space
-	; (HDAE5000_Song_CheckFreeSpace), then per bit k HDAE5000_CopyFdSongToHd_<k>
-	; (clear bits delete that part, HDAE5000_DeleteSongParts).  Caller:
-	; HDAE5000_CopyToHd_Execute (the copy-to-HD screen).
 	lda	xsp, (xsp-52)
 	push xiz
 	ld (xsp + 0x30), xde
@@ -11962,12 +12081,19 @@ HDAE5000_CopyFdSongToHd_Done:
 	retd 0x0006
 
 
-HDAE5000_CopyFdSongToHd_Lsw:	; 0x292488 (359 bytes)
-	; Copy the floppy file of part 0 (LSW) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +36.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 0 (LSW) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +36 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_fopen_ext, HamaFn_fread_ext,
+;      HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Lsw:
 	lda xsp, (xsp - 42)
 	push xiz
 	ld (xsp + 42), bc	; save file number
@@ -12097,12 +12223,18 @@ HDAE5000_CopyFdSongToHd_Lsw:	; 0x292488 (359 bytes)
 	lda xsp, (xsp + 42)
 	ret
 
-HDAE5000_CopyFdSongToHd_Pmt:	; 0x2925EF (425 bytes)
-	; Copy the floppy file of part 1 (PMT) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +40.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 1 (PMT) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +40 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_fopen_ext, HamaFn_fread_ext, HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile, HDAE5000_HD_AppendFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Pmt:
 	lda xsp, (xsp - 30)
 	push xiz
 	ld (xsp + 30), bc	; save file number
@@ -12247,12 +12379,18 @@ HDAE5000_CopyFdSongToHd_Pmt:	; 0x2925EF (425 bytes)
 	lda xsp, (xsp + 30)
 	ret
 
-HDAE5000_CopyFdSongToHd_Sqt:	; 0x292798 (419 bytes)
-	; Copy the floppy file of part 2 (SQT) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +44.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 2 (SQT) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +44 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_fopen_ext, HamaFn_fread_ext, HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile, HDAE5000_HD_AppendFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Sqt:
 	lda xsp, (xsp - 32)
 	push xiz
 	ld (xsp + 32), bc	; save file number
@@ -12395,12 +12533,18 @@ HDAE5000_CopyFdSongToHd_Sqt:	; 0x292798 (419 bytes)
 	lda xsp, (xsp + 32)
 	ret
 
-HDAE5000_CopyFdSongToHd_Cmp:	; 0x29293B (419 bytes)
-	; Copy the floppy file of part 3 (CMP) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +48.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 3 (CMP) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +48 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_fopen_ext, HamaFn_fread_ext, HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile, HDAE5000_HD_AppendFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Cmp:
 	lda xsp, (xsp - 32)
 	push xiz
 	ld (xsp + 32), bc
@@ -12531,12 +12675,19 @@ HDAE5000_CopyFdSongToHd_Cmp:	; 0x29293B (419 bytes)
 	lda xsp, (xsp + 32)
 	ret
 
-HDAE5000_CopyFdSongToHd_Tm:	; 0x292ADE (288 bytes)
-	; Copy the floppy file of part 4 (TM) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +52.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 4 (TM) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +52 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_fopen_ext, HamaFn_fread_ext,
+;      HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Tm:
 	lda xsp, (xsp - 34)
 	push xiz
 	ld (xsp + 34), bc	; save file number
@@ -12637,12 +12788,19 @@ HDAE5000_CopyFdSongToHd_Tm:	; 0x292ADE (288 bytes)
 	lda xsp, (xsp + 34)
 	ret
 
-HDAE5000_CopyFdSongToHd_Msp:	; 0x292BFE (280 bytes)
-	; Copy the floppy file of part 5 (MSP) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +56.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 5 (MSP) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +56 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_fopen_ext, HamaFn_fread_ext,
+;      HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Msp:
 	lda xsp, (xsp - 34)
 	push xiz
 	ld (xsp + 34), bc
@@ -12732,12 +12890,18 @@ HDAE5000_CopyFdSongToHd_Msp:	; 0x292BFE (280 bytes)
 	lda xsp, (xsp + 34)
 	ret
 
-HDAE5000_CopyFdSongToHd_Rcm:	; 0x292D16 (419 bytes)
-	; Copy the floppy file of part 6 (RCM) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +60.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 6 (RCM) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +60 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_fopen_ext, HamaFn_fread_ext, HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile, HDAE5000_HD_AppendFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Rcm:
 	lda xsp, (xsp - 32)
 	push xiz
 	ld (xsp + 32), bc
@@ -12868,12 +13032,19 @@ HDAE5000_CopyFdSongToHd_Rcm:	; 0x292D16 (419 bytes)
 	lda xsp, (xsp + 32)
 	ret
 
-HDAE5000_CopyFdSongToHd_Md:	; 0x292EB9 (281 bytes)
-	; Copy the floppy file of part 7 (MD) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +64.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 7 (MD) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +64 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_GetResouceInfo, HamaFn_fopen_ext, HamaFn_fread_ext,
+;      HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_RoundUpToSector,
+;      HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Md:
 	lda xsp, (xsp - 34)
 	push xiz
 	ld (xsp + 34), bc
@@ -12963,12 +13134,18 @@ HDAE5000_CopyFdSongToHd_Md:	; 0x292EB9 (281 bytes)
 	lda xsp, (xsp + 34)
 	ret
 
-HDAE5000_CopyFdSongToHd_Tlx:	; 0x292FD2 (329 bytes)
-	; Copy the floppy file of part 8 (TLX) into song (WA = directory, BC =
-	; song): read through the main-CPU file callbacks (workspace 0x0E88 table
-	; +0xA0 with the name and mode "rb", +0xA8 in 0x8000-byte chunks into
-	; 0x230F1C, +0xAC) and written with HDAE5000_HD_WriteFile /
-	; HDAE5000_HD_AppendFile to slot +68.  Called by HDAE5000_CopyFdSongToHd.
+; ---------------------------------------------------------------------------
+; Copy the floppy file of part 8 (TLX) into a song: read through the main
+; CPU's file hooks (HamaFn_fopen_ext with mode "rb", HamaFn_fread_ext into
+; HDAE5000_RAM_HdStreamBuffer, HamaFn_fclose_ext) and written to a new
+; cluster chain at slot +68 of the song record (the calls below).  Called
+; by HDAE5000_CopyFdSongToHd.
+; In:  WA = directory, BC = song
+; Main CPU: HamaFn_fopen_ext, HamaFn_fread_ext, HamaFn_fclose_ext
+; Calls: HDAE5000_MemCopy, HDAE5000_StrCpy, HDAE5000_MemFill,
+;      HDAE5000_SwapBytes32, HDAE5000_RoundUpToSector, HDAE5000_HD_WriteFile
+; ---------------------------------------------------------------------------
+HDAE5000_CopyFdSongToHd_Tlx:
 	lda xsp, (xsp - 34)
 	push xiz
 	ld (xsp + 34), bc
@@ -13328,12 +13505,15 @@ HDAE5000_DeleteDirectory:
 	inc 8, xsp			; stack cleanup
 	ret
 
-HDAE5000_DeleteSongParts:	; 0x29336B (349 bytes)
-	; Delete the parts in mask DE of song (WA = directory, BC = song)
-	; (HDAE5000_DeleteSongPart_<k> per bit), between the main-CPU callbacks;
-	; a song left with no part also leaves the FLS lists
-	; (HDAE5000_Fls_ForgetSong).  Callers: AttenDelFileSwCatch, SaveSong,
-	; CopyFdSongToHd, PC-link service 27.
+; ---------------------------------------------------------------------------
+; Delete the parts in mask DE of a song (HDAE5000_DeleteSongPart_<k> per bit),
+; inside the main-CPU bracket (HamaFn_PlayHalt, optional RootFn_SleepMainTask
+; / WakeUpMainTask, HamaFn_PlayStandBy, _EditSwRefresh); a song left with no
+; part also leaves the FLS lists (HDAE5000_Fls_ForgetSong).  Callers:
+; AttenDelFileSwCatch, SaveSong, CopyFdSongToHd, PC-link service 27.
+; In:  WA = directory, BC = song, DE = part mask; two stacked words of flags
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongParts:
 	dec 4, xsp
 	push xiz
 	ld iz, de
@@ -13549,10 +13729,14 @@ HDAE5000_DeleteSongPart_Lsw:	; 0x2934C8 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Pmt:	; 0x2935A6 (222 bytes)
-	; Delete part 1 (PMT) of song (WA = directory, BC = song): if slot +40 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +27 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 1 (PMT) of a song: when slot +40 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +27 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Pmt:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13623,10 +13807,14 @@ HDAE5000_DeleteSongPart_Pmt:	; 0x2935A6 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Sqt:	; 0x293684 (222 bytes)
-	; Delete part 2 (SQT) of song (WA = directory, BC = song): if slot +44 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +28 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 2 (SQT) of a song: when slot +44 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +28 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Sqt:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13697,10 +13885,14 @@ HDAE5000_DeleteSongPart_Sqt:	; 0x293684 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Cmp:	; 0x293762 (222 bytes)
-	; Delete part 3 (CMP) of song (WA = directory, BC = song): if slot +48 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +29 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 3 (CMP) of a song: when slot +48 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +29 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Cmp:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13771,10 +13963,14 @@ HDAE5000_DeleteSongPart_Cmp:	; 0x293762 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Tm:	; 0x293840 (222 bytes)
-	; Delete part 4 (TM) of song (WA = directory, BC = song): if slot +52 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +30 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 4 (TM) of a song: when slot +52 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +30 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Tm:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13845,10 +14041,14 @@ HDAE5000_DeleteSongPart_Tm:	; 0x293840 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Msp:	; 0x29391E (222 bytes)
-	; Delete part 5 (MSP) of song (WA = directory, BC = song): if slot +56 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +31 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 5 (MSP) of a song: when slot +56 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +31 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Msp:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13919,10 +14119,14 @@ HDAE5000_DeleteSongPart_Msp:	; 0x29391E (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Rcm:	; 0x2939FC (222 bytes)
-	; Delete part 6 (RCM) of song (WA = directory, BC = song): if slot +60 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +32 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 6 (RCM) of a song: when slot +60 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +32 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Rcm:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -13993,10 +14197,14 @@ HDAE5000_DeleteSongPart_Rcm:	; 0x2939FC (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Md:	; 0x293ADA (222 bytes)
-	; Delete part 7 (MD) of song (WA = directory, BC = song): if slot +64 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +33 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 7 (MD) of a song: when slot +64 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +33 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Md:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -14067,10 +14275,14 @@ HDAE5000_DeleteSongPart_Md:	; 0x293ADA (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_DeleteSongPart_Tlx:	; 0x293BB8 (222 bytes)
-	; Delete part 8 (TLX) of song (WA = directory, BC = song): if slot +68 is
-	; not 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
-	; 0xFFFFFFFF and the part byte +34 to 0.
+; ---------------------------------------------------------------------------
+; Delete part 8 (TLX) of a song: when slot +68 of the song record is not
+; 0xFFFFFFFF, free its chain (HDAE5000_HD_FreeChain), set the slot to
+; 0xFFFFFFFF and the part byte +34 to 0.
+; In:  WA = directory, BC = song
+; Calls: HDAE5000_HD_FreeChain
+; ---------------------------------------------------------------------------
+HDAE5000_DeleteSongPart_Tlx:
 	dec 4, xsp
 	push xiz
 	ld (xsp + 4), bc
@@ -14141,12 +14353,16 @@ HDAE5000_DeleteSongPart_Tlx:	; 0x293BB8 (222 bytes)
 	inc 4, xsp
 	ret
 
-HDAE5000_Song_CheckFreeSpace:	; 0x293C96 (347 bytes)
-	; Validate cell rendering — tests bits 0-8, accumulates sizes in XIZ
-	; ^ corrected: HL = 0 if the parts of mask WA fit in the free clusters
-	;   (HDAE5000_HD_CountFreeClusters_Status), else 0xFFFF.  Sizes come from
-	;   the main CPU (0x0E88 table +0x80 per area, +0x34, +0x44, +0x64);
-	;   TM counts 0x72AA bytes and TLX 0x5000.
+; ---------------------------------------------------------------------------
+; Do the parts of a mask fit on the disk?  Sums their sizes as the main CPU
+; reports them (HamaFn_GetResouceInfo per area, HamaFn_SeqSavePre,
+; _cmp_sv_mae, _msp_sv_mae; TM counts 0x72AA bytes, TLX 0x5000), converts each
+; to clusters (HDAE5000_HD_ClusterCount) and compares the total with the free
+; clusters (HDAE5000_HD_CountFreeClusters_Status).
+; In:  WA = part mask
+; Out: HL = 0 when they fit, else 0xFFFF.
+; ---------------------------------------------------------------------------
+HDAE5000_Song_CheckFreeSpace:
 	lda xsp, (xsp - 12)
 	push xiz
 	ld (xsp + 14), wa		; save bitmask
@@ -14483,12 +14699,12 @@ HDAE5000_RcmStream_Read:
 	ld (xsp + 0x04), xwa
 	ld xwa, (xsp + 0x0c)
 	ld (xsp + 0x08), xwa
-	ld	wa, (0x238F20:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
 	extz xwa
 	ld	xbc, 0x0000004c
 	call HDAE5000_Multiply
 	ld	xiz, xhl
-	ld	wa, (0x238F1E:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
 	extz xwa
 	ld	xbc, 0x000004c0
 	call HDAE5000_Multiply
@@ -14500,19 +14716,19 @@ HDAE5000_RcmStream_Read:
 	ld xwa, (xsp + 0x04)
 	ld xbc, (xsp + 0x08)
 	call HDAE5000_HD_ReadFile
-	ld	(0x238f22), hl
+	ld	(HDAE5000_RAM_RcmStreamResult), hl
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
 	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip:
 	ld (xsp + 0x04), xwa
 	ld xwa, (xsp + 0x0c)
 	ld (xsp + 0x08), xwa
-	ld	wa, (0x238F20:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
 	extz xwa
 	ld	xbc, 0x0000004c
 	call HDAE5000_Multiply
 	ld	xiz, xhl
-	ld	wa, (0x238F1E:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
 	extz xwa
 	ld	xbc, 0x000004c0
 	call HDAE5000_Multiply
@@ -14524,11 +14740,11 @@ HDAE5000_RcmStream_Read_Skip:
 	ld xwa, (xsp + 0x04)
 	ld xbc, (xsp + 0x08)
 	call HDAE5000_HD_ReadFileNext
-	ld	(0x238f22), hl
+	ld	(HDAE5000_RAM_RcmStreamResult), hl
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 1
 	jr	t, HDAE5000_RcmStream_Read_Done
 HDAE5000_RcmStream_Read_Skip2:
-	ldw	(0x238F22:24), 65535
+	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
 HDAE5000_RcmStream_Read_Done:
 	ld xhl, (xsp + 0x0c)
@@ -14555,12 +14771,12 @@ HDAE5000_RcmStream_Write:
 	cp	hl, 0xffff
 	jr	z, HDAE5000_RcmStream_Write_Skip
 	ldw (xsp + 0x04), 0
-	ld	wa, (0x238F20:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
 	extz xwa
 	ld	xbc, 0x0000004c
 	call HDAE5000_Multiply
 	ld	xiz, xhl
-	ld	wa, (0x238F1E:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
 	extz xwa
 	ld	xbc, 0x000004c0
 	call HDAE5000_Multiply
@@ -14575,7 +14791,7 @@ HDAE5000_RcmStream_Write_Skip:
 	ldw (xsp + 0x04), 65535
 HDAE5000_RcmStream_Write_Join:
 	ld	wa, (xsp+4)
-	ld	(0x238f22), wa
+	ld	(HDAE5000_RAM_RcmStreamResult), wa
 	jr	t, HDAE5000_RcmStream_Write_Done
 HDAE5000_RcmStream_Write_Skip2:
 	ld xbc, (xsp + 0x06)
@@ -14583,12 +14799,12 @@ HDAE5000_RcmStream_Write_Skip2:
 	cp	hl, 0xffff
 	jr	z, HDAE5000_RcmStream_Write_Skip3
 	ldw (xsp + 0x04), 0
-	ld	wa, (0x238F20:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
 	extz xwa
 	ld	xbc, 0x0000004c
 	call HDAE5000_Multiply
 	ld	xiz, xhl
-	ld	wa, (0x238F1E:24)
+	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
 	extz xwa
 	ld	xbc, 0x000004c0
 	call HDAE5000_Multiply
@@ -14603,10 +14819,10 @@ HDAE5000_RcmStream_Write_Skip3:
 	ldw (xsp + 0x04), 65535
 HDAE5000_RcmStream_Write_Join2:
 	ld	wa, (xsp+4)
-	ld	(0x238f22), wa
+	ld	(HDAE5000_RAM_RcmStreamResult), wa
 	jr	t, HDAE5000_RcmStream_Write_Done
 HDAE5000_RcmStream_Write_Skip4:
-	ldw	(0x238F22:24), 65535
+	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
 	ldw	(HDAE5000_RAM_HdStreamBufferEnd:24), 0
 HDAE5000_RcmStream_Write_Done:
 	ld xhl, (xsp + 0x06)
@@ -14617,7 +14833,7 @@ HDAE5000_RcmStream_Write_Done:
 HDAE5000_RcmStream_LastResult:
 	; HL = the result of the last RCM stream read/write (0x238F22); handed to
 	; the main CPU by HDAE5000_LoadSong_Rcm and HDAE5000_SaveSong_Rcm.
-	ld	hl, (0x238F22:24)
+	ld	hl, (HDAE5000_RAM_RcmStreamResult:24)
 	ret
 
 HDAE5000_RcmStream_FreeSpace:
@@ -19406,8 +19622,9 @@ HDAE5000_PPORT_RecvCustomData:		; 0x296D54 — Receive custom ROM data
 
 ; ---------------------------------------------------------------------------
 ; Size one region per part bit of HDAE5000_RAM_PportPartMask (and bit 0 of
-; PportPartMaskHi): fixed sizes 0xE40 (bit 0), 0x12CB0 (1), 0x72AA (4),
-; 0x400 (7) and 0x2304F2 (the ninth part); bits 2, 3, 5, 6 read the size from
+; PportPartMaskHi): fixed sizes 0xE40 (bit 0), 0x12CB0 (1), 0x72AA (4) and
+; 0x400 (7), and for the ninth part (TLX) the ADDRESS of
+; HDAE5000_RAM_LyricFileLength; bits 2, 3, 5, 6 read the size from
 ; the part file's first sector (HDAE5000_PPORT_InitRegionDescriptors_Lookup
 ; with field offset 0x4E / 0x2E / 0x1E word fields, 0x1C long; bit 2 adds
 ; 0x5000).  The slots of HDAE5000_RAM_PportRegions are cleared first.  Stops
@@ -19565,7 +19782,7 @@ HDAE5000_PPORT_InitRegionDescriptors:	; 0x296E08 — Initialize region descripto
 	cp a, 1:i3
 	jp nz, (.Lir_ret:24)
 	nop
-	ld xwa, 0x002304F2
+	ld xwa, HDAE5000_RAM_LyricFileLength
 	nop
 	ld (HDAE5000_RAM_PportRegions+72:24), xwa
 	nop

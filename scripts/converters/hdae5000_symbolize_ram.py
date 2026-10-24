@@ -270,6 +270,17 @@ RAM = {
     0x230ECA: ("Errno", "word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow"),
     0x23A1A8: ("MathErrorHook", "routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting"
                                 " Errno, when it is non-zero"),
+    # twelfth run: the lyric file's length and the RCM stream (the main CPU pulls / pushes the RCM part through
+    # HDAE5000_RcmStream_Read / _Write; its state word is the long at HdStreamBufferEnd)
+    0x2304F2: ("LyricFileLength", "the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22;"
+                                  " 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk,"
+                                  " TlxPart_Describe)"),
+    0x230430: ("LyricBufferEnd", "end of LyricBuffer (0x5000 bytes), the bound of the lyric event scans"),
+    0x238F1E: ("RcmStreamDir", "directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm /"
+                               " _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)"),
+    0x238F20: ("RcmStreamSong", "song of that RCM stream"),
+    0x238F22: ("RcmStreamResult", "word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult"
+                                  " returns it)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -287,6 +298,7 @@ EXTENT = {
     0x239268: 0x200,
     0x239108: 0x50,
     0x22ABC4: 0x21,
+    0x22B430: 0x5000,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes

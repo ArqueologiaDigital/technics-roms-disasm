@@ -3466,11 +3466,13 @@ HDAE5000_CopyToHDScreen:
 	popw iz                                 ; pop iz (compact 16-bit)
 	ret					; 0e
 
-HDAE5000_CopyToHd_Execute:	; 0x289889 (2663 bytes)
-	; Part 1: Main scan loop — iterate directory entries, search partitions
-	; (= the copy-to-HD run: checks the floppy song (HDAE5000_FdSong_CheckFiles)
-	; and copies it into the chosen directory (HDAE5000_CopyFdSongToHd).
-	; There are no partitions.)
+; ---------------------------------------------------------------------------
+; The copy-to-HD run of the copy screen: checks the floppy song
+; (HDAE5000_FdSong_CheckFiles) and copies it into the chosen directory
+; (HDAE5000_CopyFdSongToHd), with its status and error messages.
+; Out: HL = 0
+; ---------------------------------------------------------------------------
+HDAE5000_CopyToHd_Execute:
 	lda xsp, (xsp-300)	; lda XSP, XSP+0xFED4 (alloc ~300 bytes)
 	push xiz
 	ld	(xsp+300), de	; ld (XSP+0x012C), DE

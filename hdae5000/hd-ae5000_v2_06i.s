@@ -184,6 +184,11 @@
 	.equ HDAE5000_RAM_PportBytesLeft, 0x239164	; bytes SendRegionToPc still has to send
 	.equ HDAE5000_RAM_Errno, 0x230eca	; word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow
 	.equ HDAE5000_RAM_MathErrorHook, 0x23a1a8	; routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting Errno, when it is non-zero
+	.equ HDAE5000_RAM_LyricBufferEnd, 0x230430	; end of LyricBuffer (0x5000 bytes), the bound of the lyric event scans
+	.equ HDAE5000_RAM_LyricFileLength, 0x2304f2	; the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22; 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk, TlxPart_Describe)
+	.equ HDAE5000_RAM_RcmStreamDir, 0x238f1e	; directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm / _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)
+	.equ HDAE5000_RAM_RcmStreamSong, 0x238f20	; song of that RCM stream
+	.equ HDAE5000_RAM_RcmStreamResult, 0x238f22	; word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult returns it)
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace
