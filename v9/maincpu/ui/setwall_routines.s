@@ -264,7 +264,7 @@ SetWall_CopySlotData:
 	pop xde
 	ld (3297:16), a
 	ld (4438:16), a
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_DirectHandler
 	call CDlikeSwTtl_SendStopEvtD
 	jp SetWall_Return
@@ -382,7 +382,7 @@ SetWall_ACSlot_NoPanel:
 	jp SetWall_ACSlot_NormalChange
 
 SetWall_ACSlot_Direct:
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_ACSlot_DirectLocal
 	call CDlikeSwTtl_SendEvent8C_A
 	jp SetWall_ACSlot_Return
@@ -392,7 +392,7 @@ SetWall_ACSlot_DirectLocal:
 	jp SetWall_ACSlot_Return
 
 SetWall_ACSlot_PanelChange:
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_ACSlot_PanelLocal
 	call CDlikeSwTtl_SendEvent8C_13
 	jp SetWall_ACSlot_Return

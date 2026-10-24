@@ -8914,7 +8914,7 @@ PleaseWait_Confirm:
 PleaseWait_GetText:
 	ld xwa, (xsp + 8)
 	ld (xsp + 4), xwa
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (PleaseWait_LangTexts:24)
@@ -8943,7 +8943,7 @@ PleaseWait_BuildScrollStr:
 	exts xwa
 	divs xwa, ix
 	ldto_werp HL, 0xe2
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	extz wa
 	lda xbc, (PleaseWait_LangTexts:24)
 	sla wa, 2
@@ -8989,21 +8989,21 @@ CheckLanguage:
 	jr z, CheckLang_GetTextStr
 	cp xbc, EVT_SW_IN
 	jr nz, CheckLang_ReturnZero
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	bit 7, de
 	jr z, CheckLang_Increment
 	ld c, a
 	cp a, 0:i3
 	jr z, CheckLang_SkipLang4
 	dec 1, c
-	ld (0x0340e4:24), c
+	ld (HELP_LANGUAGE:24), c
 
 CheckLang_SkipLang4:
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	cp a, 4:i3
 	jr nz, LanguageSelectEventReturn
 	dec 1, a
-	ld (0x0340e4:24), a
+	ld (HELP_LANGUAGE:24), a
 	jr LanguageSelectEventReturn
 
 CheckLang_Increment:
@@ -9011,14 +9011,14 @@ CheckLang_Increment:
 	cp a, 5:i3
 	jr nc, CheckLang_SkipLang4Up
 	inc 1, c
-	ld (0x0340e4:24), c
+	ld (HELP_LANGUAGE:24), c
 
 CheckLang_SkipLang4Up:
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	cp a, 4:i3
 	jr nz, LanguageSelectEventReturn
 	inc 1, a
-	ld (0x0340e4:24), a
+	ld (HELP_LANGUAGE:24), a
 
 LanguageSelectEventReturn:
 	ld xwa, 0xffffffff
@@ -9028,7 +9028,7 @@ LanguageSelectEventReturn:
 	jr CheckLang_ReturnZero
 
 CheckLang_GetTextStr:
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (CheckLanguage_LangNames:24)
@@ -9044,7 +9044,7 @@ CheckLang_ReturnZero:
 	ret
 
 CheckLang_ReturnAddress:
-	lda xhl, (0x0340e4:24)
+	lda xhl, (HELP_LANGUAGE:24)
 	ret
 
 CheckLang_ReturnOne:

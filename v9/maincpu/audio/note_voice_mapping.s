@@ -1692,7 +1692,7 @@ VoiceEvent_AllocAllLayers:
 	lda xwa, (0xc1fe:16)
 	ld bc, 1:i3
 	call NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	ret z
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -2739,7 +2739,7 @@ MidiConfig_Return:
 	ret
 
 Voice_FindAndAllocBestMatch:
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	ret z
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -4157,7 +4157,7 @@ NoteMap_AddEntry:
 	ld xwa, (xsp + 4)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_AltCheckEmit
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -4374,7 +4374,7 @@ AllocCheckNoteOn_Data:
 	ld	xwa, (xsp+4)
 	ld	bc, 1:i3
 	calr	NoteMap_AllocateVoice
-	cpw	(52770:16), 0
+	cpw	(HARMONY_NOTE_LIST:16), 0
 	jr	z, NoteMap_AddEntry_Skip
 	call	NoteMap_FindBestMatch
 	cp	l, 255
@@ -4564,7 +4564,7 @@ NoteMap_CollectAndFindBestVoice:
 	ld	xwa, (xsp+168)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_AltAllocEmit
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -4792,7 +4792,7 @@ NoteMap_CollectAndAllocVoice_NoTimerCheck:
 	ld xwa, (xsp + 4)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_FallbackVoiceCheck
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -4971,7 +4971,7 @@ NoteMap_CollectAndAllocVoice_Indirect:
 	ld	xwa, (xsp+168)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_IndirectCollectEmit
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -5153,7 +5153,7 @@ NoteMap_UpdateEntry:
 	ld xwa, (xsp + 4)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_FallbackAllocEmit
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -5332,7 +5332,7 @@ NoteMap_FindAndAllocBestVoice:
 	ld	xwa, (xsp+168)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_FindAllocEmit
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -5524,7 +5524,7 @@ PopRetFA_StoreAE3_LoadIter:
 	ld xwa, xiz
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, NoteMap_AllocVoice_Done
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -5672,7 +5672,7 @@ ProcessNoteEvent_LoadFromStack:
 	ld	xwa, (xsp+166)
 	ld bc, 1:i3
 	calr NoteMap_AllocateVoice
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jrl z, NoteMap_StoreAllocResult
 	call NoteMap_FindBestMatch
 	cp l, 0xff
@@ -9293,7 +9293,7 @@ FindBestFreeVoice_Ad_Deref:
 	ld l, (xwa + 2)
 
 FindBestFreeVoice_Ad_StoreDRAM:
-	ld (0xce22:16), de
+	ld (HARMONY_NOTE_LIST:16), de
 	ld a, l
 	extz wa
 	ld (0xce24:16), wa
@@ -13976,7 +13976,7 @@ VoiceMap_AllocateSlot:
 	ld l, 0xff:opc
 	cpw (0xce66:16), 0
 	jr nz, VoiceMap_AllocateSlo_Block
-	lda xwa, (0xce22:16)
+	lda xwa, (HARMONY_NOTE_LIST:16)
 	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF
@@ -13992,7 +13992,7 @@ VoiceMap_AllocateSlo_SetByteFF:
 	jr NoteMap_FindBestMatch_Return
 
 VoiceMap_AllocateSlo_Block:
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr nz, VoiceMap_AllocateSlo_Block2
 	calr Voice_ResetSearchState
 	ld (0xceae:16), 255
@@ -14002,7 +14002,7 @@ VoiceMap_AllocateSlo_Block:
 	jr NoteMap_FindBestMatch_Return
 
 VoiceMap_AllocateSlo_Block2:
-	lda xwa, (0xce22:16)
+	lda xwa, (HARMONY_NOTE_LIST:16)
 	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, VoiceMap_AllocateSlo_SetByteFF2
@@ -14036,7 +14036,7 @@ NoteMap_FindBestMatch_Return:
 NoteMap_FindBestMatch:
 	ld l, 0xff:opc
 	ld (0xe9bc:16), 0
-	cpw (0xce22:16), 0
+	cpw (HARMONY_NOTE_LIST:16), 0
 	jr z, CheckVoiceReuse_Block
 	ld a, (CHORD_TYPE:16)
 	cp a, (0xceae:16)
@@ -14051,7 +14051,7 @@ NoteMap_FindBestMatch:
 	jr z, CheckVoiceReuse_SetByteFF2
 
 NoteMap_CheckVoiceReuse:
-	lda xwa, (0xce22:16)
+	lda xwa, (HARMONY_NOTE_LIST:16)
 	calr Harmony_FindReferenceNote
 	cp l, 0xff
 	jr z, CheckVoiceReuse_SetByteFF

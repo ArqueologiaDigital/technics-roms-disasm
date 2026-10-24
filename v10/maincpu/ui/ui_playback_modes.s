@@ -376,9 +376,9 @@ PlayMode_InitFlagBlock:
 ;   has reached 0. Twins: SongMode_InitFlagBlock_Helper, PartFormat_InitFlagBlock_Helper,
 ;   PlayModeStop_InitFlagBlock_Helper.
 PlayMode_ArmStartCountdown:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, PlayMode_ArmStartCountdown_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PlayMode_LoadStartCountdown
 PlayMode_ArmStartCountdown_Return:
 	ret
@@ -388,7 +388,7 @@ PlayMode_ArmStartCountdown_Return:
 ;   SeqRestart_SendPlaybackNotify act only while 0x28AC bit 2 is set, and PlayMode_DispatchAndClearBit2 clears it.
 PlayMode_LoadStartCountdown:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 
 SongBank_ScanActiveVoices:
@@ -419,14 +419,14 @@ ScanVoice_Return:
 	ret
 
 PlayMode_ClearModeFlag:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 PlayMode_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PlayMode_SendModeCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PlayMode_DispatchAndClearBit2
 	bit 2, (3394:16)
 	jr z, PlayMode_SendModeCommand
@@ -459,9 +459,9 @@ PlayMode_DispatchAndClearBit2:
 	ret
 
 PlayMode_StartAndSendCommand:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, SongMode_PostEvtRetZero
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jr nz, SongMode_PostEvtRetZero
 	call PlayMode_DispatchAndClearBit2
 	ld (4437:16), 1
@@ -545,15 +545,15 @@ DpMdlyDocTtl_Dispatch_Helper:
 	call	SongMode_InitFlagBlock_Helper
 	ret
 SongMode_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, Medley_GetPlaybackStatus_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	SongMode_InitFlagBlock_Helper2
 Medley_GetPlaybackStatus_Return:
 	ret
 SongMode_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlyDoc_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYDOC title (0x74) is
 ;   left, so the next activation arms the countdown again (SongMode_InitFlagBlock_Helper); SongMode_StartPlayback
@@ -561,14 +561,14 @@ SongMode_InitFlagBlock_Helper2:
 ;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
 ;   transport).
 DpMdlyDoc_DisarmStartCountdown:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 SongMode_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, SongMode_SendStopCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call SongMode_AbortAndClearBit2
 	bit 2, (3394:16)
 	jr z, SongMode_SendStopCommand
@@ -587,9 +587,9 @@ SongMode_AbortAndClearBit2:
 	ret
 
 SongMode_StartPlayback:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, SongMode_StartReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, SongMode_StartReturn
 	call SongMode_AbortAndClearBit2
 	ld (4437:16), 1
@@ -703,29 +703,29 @@ DpMdlyPdTtl_Dispatch_Helper:
 	call	PartFormat_InitFlagBlock_Helper
 	ret
 PartFormat_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, SongMode_VoiceStateDisp_Return
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PartFormat_InitFlagBlock_Helper2
 SongMode_VoiceStateDisp_Return:
 	ret
 PartFormat_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlyPd_DisarmStartCountdown: Clears the start-countdown armed flag 0x0D34 when the TT_DPMDLYPD title (0x75) is
 ;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
 ;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
 ;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
 DpMdlyPd_DisarmStartCountdown:
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 	ret
 
 PartFormat_CheckAndDispatch:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PartFormat_SendStopCommand
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PartFormat_AbortAndClearBit2
 	bit 2, (3394:16)
 	jr z, PartFormat_SendStopCommand
@@ -744,9 +744,9 @@ PartFormat_AbortAndClearBit2:
 	ret
 
 PartFormat_StartPlayback:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, PartFormat_StartReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, PartFormat_StartReturn
 	call PartFormat_AbortAndClearBit2
 	ld (4437:16), 1
@@ -769,15 +769,15 @@ DpMdlySmfTtl_Dispatch_Helper:
 PartFormat_StartPlayback_Return:
 	ret
 PlayModeStop_InitFlagBlock_Helper:
-	cp (3380:16), 0
+	cp (PLAYBACK_START_ARMED:16), 0
 	jr	nz, PartFormat_StartPlayback_Return2
-	ld	(3380:16), 1
+	ld	(PLAYBACK_START_ARMED:16), 1
 	call	PlayModeStop_InitFlagBlock_Helper2
 PartFormat_StartPlayback_Return2:
 	ret
 PlayModeStop_InitFlagBlock_Helper2:
 	or (10412:16), 4
-	ld	(4420:16), 10
+	ld	(PLAYBACK_COUNTDOWN:16), 10
 	ret
 ; DpMdlySmf_DisarmStartCountdown: When the TT_DPMDLYSMF title (0x73) is left with CURRENT_TITLE = 108 (0x6C
 ;   TT_DKDPSMF), clears the start-countdown armed flag 0x0D34 that PlayModeStop_InitFlagBlock_Helper set, so the next
@@ -786,15 +786,15 @@ PlayModeStop_InitFlagBlock_Helper2:
 DpMdlySmf_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PartFormat_StartPlayback_Return3
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 PartFormat_StartPlayback_Return3:
 	ret
 
 PlayMode_StopAbortRetZero:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jr nz, PlayModeStop_SendStopCmd
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call PlayMode_StopAndAbort
 	bit 2, (3394:16)
 	jr z, PlayModeStop_SendStopCmd
@@ -814,9 +814,9 @@ PlayMode_StopAndAbort:
 	ret
 
 PlayMode_SendCommand6C:
-	cp (3380:16), 1
+	cp (PLAYBACK_START_ARMED:16), 1
 	jrl nz, PlayModeStop_SendReturn
-	cp (4420:16), 0
+	cp (PLAYBACK_COUNTDOWN:16), 0
 	jrl nz, PlayModeStop_SendReturn
 	call PlayMode_StopAndAbort
 	ld (4437:16), 1
@@ -845,7 +845,7 @@ DpMdlySmfLyrTtl_NullRet:
 DpMdlySmfLyr_DisarmStartCountdown:
 	cp (CURRENT_TITLE:16), 108
 	jr nz, PlayMode_SendCommand6C_Return
-	ld	(3380:16), 0
+	ld	(PLAYBACK_START_ARMED:16), 0
 PlayMode_SendCommand6C_Return:
 	ret
 
@@ -860,7 +860,7 @@ CDlikeSwitch_NullRet:
 	ret
 
 CDlikeSwitch_PlaybackTimer:
-	ld w, (4420:16)
+	ld w, (PLAYBACK_COUNTDOWN:16)
 	cp w, 0:i3
 	jr z, CDlikeTimer_Return
 	dec 1, w
@@ -921,7 +921,7 @@ CDlikeTimer_InitResetState:
 	popw wa
 
 CDlikeSwTtl_StorePlaybackMode:
-	ld (4420:16), w
+	ld (PLAYBACK_COUNTDOWN:16), w
 
 CDlikeTimer_Return:
 	ret
@@ -951,8 +951,8 @@ CDlike_InitModeAndLoadBank:
 	or (0xb7e2:16), 64
 	ld a, (PANEL_REC_91+3:16)
 	ld (3394:16), a
-	ld (3380:16), 0
-	ld (4420:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	call CDlike_LoadSongBankData
 	cp (CURRENT_TITLE:16), 119
 	jr z, CDlikeSw_NullRet
@@ -1003,7 +1003,7 @@ CDlike_ExitModeAndRestore:
 	call PlayMode_CheckAndAbort
 	and (0xb7e2:16), 191
 	and (0x28ac:16), 251
-	ld (4420:16), 0
+	ld (PLAYBACK_COUNTDOWN:16), 0
 	bit 2, (3394:16)
 	jr z, CDlikeExit_CheckPlaybackType
 	jr CDlikeExit_CheckPlaybackType
@@ -1026,7 +1026,7 @@ CDlikeExit_CheckPlaybackType:
 	ld (SEQ_SONG_RECORD+30:16), wa
 
 PlayMode_ResetAndSchedule:
-	ld (3380:16), 0
+	ld (PLAYBACK_START_ARMED:16), 0
 	call Audio_CheckSubsystemReady
 	ret
 

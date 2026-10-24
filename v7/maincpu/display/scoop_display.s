@@ -1205,31 +1205,31 @@ PerfMode_EventTable_0:
 PerfMode_Evt03_FlagHandler_A:
 	or	(0xe31c:16), 8
 PerfMode_Evt03_FlagHandler_A_Code:
-	ld	a, (13944:16)
+	ld	a, (STEP_NOTE_VALUE:16)
 	ld	l, 1:opc
 	ld	h, 13:opc
 	call	PerfMode_ClampValue
-	ld	(13944:16), a
+	ld	(STEP_NOTE_VALUE:16), a
 	call	Disp_ShowNoteValueFields
 	call	Display_UpdateRegion3
 	ret	
 PerfMode_Evt03_FlagHandler_B:
 	or	(0xe31c:16), 8
-	ldb_d8	a, (0x3679)
+	ldb_d8	a, (STEP_PLUS_NOTE_VALUE)
 	ld	l, 0:opc
 	ld	h, 12:opc
 	call	PerfMode_ClampValue
-	ld	(13945:16), a
+	ld	(STEP_PLUS_NOTE_VALUE:16), a
 	call	Disp_ShowNoteValueFields
 	call	Display_UpdateRegion3
 	ret	
 PerfMode_Evt03_ClampAndUpdate:
 	or	(0xe31c:16), 8
-	ldb_d8	a, (0x367a)
+	ldb_d8	a, (STEP_ARTICULATION)
 	ld	l, 0:opc
 	ld	h, 3:opc
 	call	PerfMode_ClampValue
-	stb_d8	(0x367a), a
+	stb_d8	(STEP_ARTICULATION), a
 	call	Disp_ShowNoteValueFields
 	call	Display_UpdateRegion3
 	ret
@@ -1933,7 +1933,7 @@ PerfMode_EventTable_10:
 	.long	DefaultHandler_Ret
 VoiceParam_MultiDispatch:
 	; --- Dispatcher: 5-way branch on (0x10f2) value (318 bytes total) ---
-	ld	a, (4337:16)
+	ld	a, (POPUP_PART:16)
 	ld l, 0x03:opc
 	ld	a, (4338:16)
 	cp a, l
@@ -1945,11 +1945,11 @@ VoiceParam_MultiDispatch:
 	cp a, 0x0b
 	jrl z, VoiceParam_Case0B
 	; --- Default handler: H=0x4c, L=0x34 ---
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	ld l, 0x34:opc
 	ld h, 0x4c:opc
 	call PerfMode_StepValueInRange
-	ld	(4339:16), a
+	ld	(POPUP_VALUE:16), a
 	ld	(3571:16), 4
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartKeyShift
@@ -1958,11 +1958,11 @@ VoiceParam_MultiDispatch:
 ;   shows the VOLUME pop-up.
 VoiceParam_MultiDispatch_StepVolume:
 	; --- Case 0x03: H=0x7f, L=0x00 ---
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	ld l, 0x00:opc
 	ld h, 0x7f:opc
 	call PerfMode_StepValueInRange
-	ld	(4339:16), a
+	ld	(POPUP_VALUE:16), a
 	ld	(3571:16), 4
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartVolume
@@ -1971,33 +1971,33 @@ VoiceParam_MultiDispatch_StepVolume:
 ;   shows the PANPOT pop-up.
 VoiceParam_MultiDispatch_StepPanpot:
 	; --- Case 0x08: H=0x7f, L=0x00 ---
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	ld l, 0x00:opc
 	ld h, 0x7f:opc
 	call PerfMode_StepValueInRange
-	ld	(4339:16), a
+	ld	(POPUP_VALUE:16), a
 	ld	(3571:16), 4
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartPanpot
 	jp VoiceParam_CommonTail
 VoiceParam_Case0A:
 	; --- Case 0x0a: H=0xff, L=0x00 ---
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	ld l, 0x00:opc
 	ld h, 0xff:opc
 	call PerfMode_StepValueInRange
-	ld	(4339:16), a
+	ld	(POPUP_VALUE:16), a
 	ld	(3571:16), 4
 	call VoiceParam_BitManipHelper
 	call ParamPopup_PartTuning
 	jp VoiceParam_CommonTail
 VoiceParam_Case0B:
 	; --- Case 0x0b: H=0x0c, L=0x00 ---
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	ld l, 0x00:opc
 	ld h, 0x0c:opc
 	call PerfMode_StepValueInRange
-	ld	(4339:16), a
+	ld	(POPUP_VALUE:16), a
 	ld	(3571:16), 4
 	call VoiceSlot_ReadParamsWithSaveRestore
 	call ParamPopup_PartBendSense
@@ -2020,7 +2020,7 @@ VoiceSlot_ReadParamsWithSaveRestore:
 	xor d, d
 	call Timer_ModeHandler_0_Helper6
 	call VoiceSlot_ReadCurrentParams
-	ld	w, (4339:16)
+	ld	w, (POPUP_VALUE:16)
 	call VoiceSlot_WriteCurrentParam
 	xor	a, a
 	call VoiceSlot_RestoreState
@@ -2034,7 +2034,7 @@ VoiceParam_BitManipHelper:
 	xor	a, a
 	call VoiceSlot_SaveState
 	call VoiceSlot_ReadCurrentParams
-	ld	w, (4339:16)
+	ld	w, (POPUP_VALUE:16)
 	and w, 0x80
 	rlc	w
 	and a, 0xfe
@@ -2044,7 +2044,7 @@ VoiceParam_BitManipHelper:
 	xor d, d
 	call Timer_ModeHandler_0_Helper6
 	call VoiceSlot_ReadCurrentParams
-	ld	w, (4339:16)
+	ld	w, (POPUP_VALUE:16)
 	and w, 0x7f
 	call VoiceSlot_WriteCurrentParam
 	xor	a, a
@@ -2139,7 +2139,7 @@ UIState_UpdateMultiRegions:
 Display_RedrawParameters:
 	and (3922:16), 252
 
-	ldw (3660:16), 0
+	ldw (SQSTEP_ROW1_MEASURE:16), 0
 
 	; call Display_FillRegion0 (v7 addr)
 	call	Display_FillRegion0
@@ -2163,14 +2163,14 @@ Display_RedrawParameters:
 
 
 Display_RedrawParams_StoreAndLoad:
-	ld (3660:16), wa
+	ld (SQSTEP_ROW1_MEASURE:16), wa
 	call VoiceBank_BitsAndLoad
 	ld a, (SEQ_SELECTED_TRACK:16)
 	call SetWall_SlotResolve
 	ld (3820:16), a
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x28bf:16), wa
-	ld (0x28c1:16), iy
+	ld (SQSTEP_SCAN_BLOCK:16), wa
+	ld (SQSTEP_SCAN_OFFSET:16), iy
 	call VoiceBank_ProcessCommand
 	ld xix, 0xef8
 	call VoiceBank_CheckCommand
@@ -2183,7 +2183,7 @@ Display_RedrawParams_StoreAndLoad:
 	ld a, 0x4:opc
 
 Display_RedrawParams_StoreDigits:
-	ld (3666:16), a
+	ld (SQSTEP_ROW1_BEATS:16), a
 	cp l, 4:i3
 	jrl ule, Display_RedrawParams_Ret
 	add l, 0x30
@@ -2210,7 +2210,7 @@ Display_RedrawValues:
 
 	ldw wa, 0x3e8
 Display_RedrawValues_Store:
-	ld	(3662:16), wa
+	ld	(SQSTEP_ROW2_MEASURE:16), wa
 	call	Display_FillRegion1
 	ld	wa, (SQSTEP_MEASURE:16)
 	ld	(10367:16), wa
@@ -2225,13 +2225,13 @@ Display_RedrawValues_Store:
 	push	xix
 	ld	xix, 3230
 	ld	wa, (xix+hl)
-	ld	(10431:16), wa
+	ld	(SQSTEP_SCAN_BLOCK:16), wa
 	srl	hl, 1
 	ld	xix, 3262
 	ld	wa, (xix+hl)
 	pop	xix
 	and	wa, 255
-	ld	(10433:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), wa
 	call	VoiceBank_ProcessCommand
 	ld	xix, 3862
 	call	VoiceBank_CheckCommand
@@ -2243,7 +2243,7 @@ Display_RedrawValues_Store:
 	jrl	ule, Display_RedrawValues_StoreDigits
 	ld	a, 4:opc
 Display_RedrawValues_StoreDigits:
-	ld (3667:16), a
+	ld (SQSTEP_ROW2_BEATS:16), a
 	cp l, 4:i3
 	jrl ule, Display_RedrawValues_Ret
 	add l, 0x30
@@ -2277,7 +2277,7 @@ Display_RedrawIndicators:
 
 
 Display_RedrawInd_Store:
-	ld (3664:16), wa
+	ld (SQSTEP_ROW3_MEASURE:16), wa
 	call VoiceBank_BitsAndLoad
 	ld a, (SEQ_SELECTED_TRACK:16)
 	call SetWall_SlotResolve
@@ -2290,8 +2290,8 @@ Display_RedrawInd_Store:
 Display_RedrawInd_LoadDirect:
 	ld (3820:16), a
 	ld wa, (SEQ_DATA_BLOCK:16)
-	ld (0x28bf:16), wa
-	ld (0x28c1:16), iy
+	ld (SQSTEP_SCAN_BLOCK:16), wa
+	ld (SQSTEP_SCAN_OFFSET:16), iy
 	call VoiceBank_ProcessCommand
 	ld xix, 0xf34
 	call VoiceBank_CheckCommand
@@ -2306,7 +2306,7 @@ Display_RedrawInd_CalcSlotCount:
 	ld a, 0x4:opc
 
 Display_RedrawInd_StoreDigits:
-	ld (3668:16), a
+	ld (SQSTEP_ROW3_BEATS:16), a
 	cp l, 4:i3
 	jrl ule, Display_RedrawInd_Ret
 	add l, 0x30
@@ -3018,7 +3018,7 @@ Timer_ModeHandler_0:
 	cp	w, 0:i3
 	jrl	nz, Timer_ModeHandler_0_Return
 	call	Timer_ModeHandler_0_Helper2
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 Timer_ModeHandler_0_Return:
 	ret
 DisplayMode_Dispatch_Mode1_Helper:
@@ -4528,7 +4528,7 @@ DisplayMode_Handler_2:
 DisplayMode_Handler_3:
 	ld	(STATUS_POPUP_ID:16), 15
 	call	DisplayMode_Handler_3_Helper19
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	call	DisplayStr_StyleSectionInit
 	ret
 DisplayMode_Handler_3_Skip:
@@ -4677,7 +4677,7 @@ TempoRingBuf_OnNoteEvent_Skip17:
 	jrl	z, TempoRingBuf_OnNoteEvent_Loop3
 	call	ToneParam_ModeGuardEntry_Helper3
 	res	1, (0x0d54:16)
-	ld	e, (3541:16)
+	ld	e, (SQSTEP_COLLECTED_NOTES:16)
 	xor	d, d
 	ld	xiy, 3542
 	xor	hl, hl
@@ -4705,13 +4705,13 @@ DisplayMode_Handler_3_Skip10:
 	ld	w, (PANEL_PART_PT16:16)
 	call	ScoopDisp_BytecodeBlock1_0x32
 DisplayMode_Handler_3_Join2:
-	ld	(13948:16), a
+	ld	(STEP_NOTE:16), a
 	ldfr_lerp	xiy, 56
 	lda	xiy, (xiy+hl)
 	ld	a, (xiy+8)
 	ldto_lerp	xiy, 56
 	ld	(xix+3), a
-	ld	(13947:16), a
+	ld	(STEP_VELOCITY:16), a
 	ld	a, (ACC_EVENT:16)
 	ld	(xix+4), a
 	ld	a, (ACC_EVENT+1:16)
@@ -4741,7 +4741,7 @@ DisplayMode_Handler_3_Join2:
 	pop	xbc
 	pop	xhl
 	pop	xwa
-	ld	(3541:16), 0
+	ld	(SQSTEP_COLLECTED_NOTES:16), 0
 	call	ToneParam_ModeGuardEntry_Helper4
 	cp	w, 0:i3
 	jrl	nz, TempoRingBuf_OnNoteEvent_Skip20
@@ -4777,7 +4777,7 @@ TempoRingBuf_OnNoteEvent_Skip:
 	and	(0x0dd3:16), 254
 	push	xhl
 	push	xiy
-	ld	l, (3540:16)
+	ld	l, (SQSTEP_HELD_COUNT:16)
 	cp	l, 7:i3
 	jrl	ugt, DisplayMode_Handler_3_Skip12
 	xor	h, h
@@ -4790,20 +4790,20 @@ TempoRingBuf_OnNoteEvent_Skip:
 	ld	(xiy+8), a
 	ldto_lerp	xiy, 56
 	inc	1, l
-	ld	(3540:16), l
-	cp	l, (3541:16)
+	ld	(SQSTEP_HELD_COUNT:16), l
+	cp	l, (SQSTEP_COLLECTED_NOTES:16)
 	jrl	ule, DisplayMode_Handler_3_Skip12
-	ld	(3541:16), l
+	ld	(SQSTEP_COLLECTED_NOTES:16), l
 DisplayMode_Handler_3_Skip12:
 	pop	xiy
 	pop	xhl
 	jp	DisplayMode_Handler_3_Return2
 DisplayMode_Handler_3_Join3:
-	ld	a, (3540:16)
+	ld	a, (SQSTEP_HELD_COUNT:16)
 	dec	1, a
 	cp	a, 255
 	jrl	z, DisplayMode_Handler_3_Return2
-	ld	(3540:16), a
+	ld	(SQSTEP_HELD_COUNT:16), a
 	cp	a, 0:i3
 	jrl	nz, DisplayMode_Handler_3_Return2
 	set	1, (0x0d54:16)
@@ -4901,7 +4901,7 @@ DisplayMode_Handler_3_Helper7:
 	jrl	z, DisplayMode_Handler_3_Skip18
 	ld	a, w
 DisplayMode_Handler_3_Skip18:
-	ld	(13948:16), a
+	ld	(STEP_NOTE:16), a
 	pushw	hl
 	call	PerfMode_MapEventNoteToDisplay
 	popw	hl
@@ -4916,7 +4916,7 @@ DisplayMode_Handler_3_Skip18:
 	jrl	z, DisplayMode_Handler_3_Skip19
 	cp	a, 0:i3
 	jrl	nz, DisplayMode_Handler_3_Skip19
-	ld	(13948:16), l
+	ld	(STEP_NOTE:16), l
 	jp	DisplayMode_Handler_3_Join6
 DisplayMode_Handler_3_Skip19:
 	ld	w, a
@@ -5119,7 +5119,7 @@ PerfMode_IncNoteVelocity:
 	cp	a, (SQSTEP_CLOCK:16)
 	jrl	nz, PerfMode_IncNoteVelocity_Return4
 	push	xhl
-	ld	xhl, 0x367b
+	ld	xhl, STEP_VELOCITY
 	ld	(0x110e:16), xhl
 	pop	xhl
 	call	PerfMode_EventTable_0_Target1_Helper2
@@ -5141,7 +5141,7 @@ PerfMode_EventTable_0_Target2_Helper:
 	cp	a, (SQSTEP_CLOCK:16)
 	jrl	nz, PerfMode_EventTable_0_Target2_Helper_Return5
 	push	xhl
-	ld	xhl, 0x367b
+	ld	xhl, STEP_VELOCITY
 	ld	(0x110e:16), xhl
 	pop	xhl
 	call	PerfMode_EventTable_0_Target1_Helper2
@@ -5253,7 +5253,7 @@ DMA_ChannelSelect_Table:
 	.long	DMA_ChannelHandler_2
 	.long	DMA_ChannelHandler_3
 DMA_ChannelHandler_1:
-	ld	(0x367b:16), 255
+	ld	(STEP_VELOCITY:16), 255
 	cp	(STATUS_POPUP_ID:16), 0
 	jrl	nz, DMA_ChannelHandler_1_Skip
 	call	DisplayStr_WriteNoteLine
@@ -5274,7 +5274,7 @@ DMA_ChannelHandler_2_Skip:
 DMA_ChannelHandler_2_Return:
 	ret
 DMA_ChannelHandler_0:
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	call	DisplayStr_CopyStyleSectionName
 	ret
 DMA_ChannelHandler_3:
@@ -5285,7 +5285,7 @@ DMA_ChannelHandler_3:
 	call DisplayMode_Handler_3_Helper19
 DMA_Channel3_CallAndInit:
 	call	DMA_ChannelHandler_3_Helper
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	call	DisplayStr_StyleSectionInit
 	ret
 DMA_FlagCheckWithCalls:
@@ -5378,7 +5378,7 @@ VoiceSlot_TableSetup_Code_Skip:
 	jrl c, .Lc_ef90e9
 	ldw WA, 0x03e8
 .Lc_ef90e9:
-	ld (0x0e4e:16), wa
+	ld (SQSTEP_ROW2_MEASURE:16), wa
 	xor A,A
 	call VoiceSlot_RestoreState
 	call SqStep_SetupPrevGridRow
@@ -5590,8 +5590,8 @@ SqStep_SetupPrevGridRow:
 	pop	xde
 	jrl	nz, VoiceSlot_TableSetup_Skip7
 	xor	wa, wa
-	ld	(0x0e4c:16), wa
-	stb_d8	(0x0e52), a
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	jp	VoiceSlot_TableSetup_Code_Return
 VoiceSlot_TableSetup_Skip7:
 	cpw	(SQSTEP_MEASURE:16), 1
@@ -5605,16 +5605,16 @@ VoiceSlot_TableSetup_Skip7:
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, VoiceSlot_TableSetup_Code_Return
-	ld	(0x0e52:16), 4
-	ld	(0x28c1:16), iy
+	ld	(SQSTEP_ROW1_BEATS:16), 4
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
 	ldw_d16	iy, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	ldw_d16	iy, (SQSTEP_MEASURE)
 	cp	iy, 1000
 	jrl	c, VoiceSlot_TableSetup_Skip8
 	ldw	iy, 1000
 VoiceSlot_TableSetup_Skip8:
-	ld	(0x0e4c:16), iy
+	ld	(SQSTEP_ROW1_MEASURE:16), iy
 	jp	VoiceSlot_TableSetup_Join4
 VoiceSlot_TableSetup_Skip9:
 	ldw_d16	wa, (SQSTEP_MEASURE)
@@ -5623,29 +5623,29 @@ VoiceSlot_TableSetup_Skip9:
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (SEQ_SELECTED_TRACK)
 	call	SetWall_SlotResolve
-	ld	(0x28c1:16), iy
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
 	ldw_d16	iy, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	ldw_d16	iy, (0x287f)
 	cp	iy, 1000
 	jrl	c, SqStep_SetupPrevGridRow_Skip10
 	ldw	iy, 1000
 SqStep_SetupPrevGridRow_Skip10:
-	ld	(0x0e4c:16), iy
-	stb_d8	(0x0e52), a
+	ld	(SQSTEP_ROW1_MEASURE:16), iy
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	cp	a, 5:i3
 	jrl	c, VoiceSlot_TableSetup_Join4
 	sub	a, 4
-	stb_d8	(0x0e52), a
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	call	SqStep_SeekSecondGridRow
 	jp	VoiceSlot_TableSetup_Join4
 SqStep_SetupPrevGridRow_Skip11:
 	cp	(SQSTEP_BEAT:16), 3
 	jrl	ugt, VoiceSlot_TableSetup_Skip12
-	ldw	(0x0e4c:16), 0
+	ldw	(SQSTEP_ROW1_MEASURE:16), 0
 	jp	VoiceSlot_TableSetup_Code_Return
 VoiceSlot_TableSetup_Skip12:
-	ld	(0x0e52:16), 4
+	ld	(SQSTEP_ROW1_BEATS:16), 4
 	ldw_d16	wa, (SQSTEP_MEASURE)
 	ld	(0x287f:16), wa
 	call	SqStep_GetRhythmTrackForMeasures
@@ -5653,18 +5653,18 @@ VoiceSlot_TableSetup_Skip12:
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, VoiceSlot_TableSetup_Code_Return
-	ld	(0x28c1:16), iy
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
 	ldw_d16	iy, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	ldw_d16	iy, (SQSTEP_MEASURE)
 	cp	iy, 1000
 	jrl	c, VoiceSlot_TableSetup_Skip13
 	ldw	iy, 1000
 VoiceSlot_TableSetup_Skip13:
-	ld	(0x0e4c:16), iy
+	ld	(SQSTEP_ROW1_MEASURE:16), iy
 VoiceSlot_TableSetup_Join4:
 	ld	xix, 0x3692
-	ldb_d8	a, (0x0e52)
+	ldb_d8	a, (SQSTEP_ROW1_BEATS)
 	stb_d8	(0x0ec1), a
 	call	SqStep_BuildAdjacentRowBitmap
 VoiceSlot_TableSetup_Code_Return:
@@ -5688,8 +5688,8 @@ SqStep_SetupNextGridRow:
 	pop	xde
 	jrl	nz, SqStep_SetupNextGridRow_Skip14
 	xor	wa, wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	VoiceSlot_TableSetup_Return3
 SqStep_SetupNextGridRow_Skip14:
 	cp	(SQSTEP_BEAT:16), 3
@@ -5704,7 +5704,7 @@ VoiceSlot_TableSetup_Skip15:
 	jrl	c, SqStep_SetupNextGridRow_Skip16
 	ldw	wa, 1000
 SqStep_SetupNextGridRow_Skip16:
-	ld	(0x0e50:16), wa
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (SEQ_CURSOR_TRACK)
 	call	SetWall_SlotResolve
@@ -5727,42 +5727,42 @@ SqStep_SetupNextGridRow_Skip17:
 	jrl	ule, SqStep_SetupNextGridRow_Skip18
 	ld	a, 4:opc
 SqStep_SetupNextGridRow_Skip18:
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	VoiceSlot_TableSetup_Return3
 VoiceSlot_TableSetup_Code_Skip7:
-	ld	(0x28c1:16), iy
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
 	ldw_d16	iy, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	cp	a, 4:i3
 	jrl	ule, SqStep_SetupNextGridRow_Skip19
 	ld	a, 4:opc
 SqStep_SetupNextGridRow_Skip19:
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	VoiceSlot_TableSetup_Join6
 SqStep_SetupNextGridRow_Skip20:
 	ldb_d8	a, (SQSTEP_MEASURE_BEATS)
 	sub	a, 4
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	ldw_d16	wa, (SQSTEP_MEASURE)
 	ld	(0x287f:16), wa
 	cp	wa, 1000
 	jrl	c, VoiceSlot_TableSetup_Code_Skip8
 	ldw	wa, 1000
 VoiceSlot_TableSetup_Code_Skip8:
-	ld	(0x0e50:16), wa
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (SEQ_SELECTED_TRACK)
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, VoiceSlot_TableSetup_Return3
-	ld	(0x28c1:16), iy
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
 	ldw_d16	iy, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	call	SqStep_SeekSecondGridRow
 	cp	c, 4:i3
 	jrl	nz, VoiceSlot_TableSetup_Return3
 VoiceSlot_TableSetup_Join6:
-	ldb_d8	a, (0x0e54)
+	ldb_d8	a, (SQSTEP_ROW3_BEATS)
 	stb_d8	(0x0ec1), a
 	ld	xix, 0x369a
 	call	SqStep_BuildAdjacentRowBitmap
@@ -5792,7 +5792,7 @@ UIState_DispatchHandler_Helper:
 	call	VoiceSlot_FlagCheck
 	cp	a, 132
 	jrl	nz, UIState_DispatchHandler_Helper_Return
-	ld	(0x368c:16), 9
+	ld	(SQSTEP_STYLE_SECTION:16), 9
 	call	DisplayStr_StyleSectionInit
 UIState_DispatchHandler_Helper_Return:
 	ret
@@ -6326,7 +6326,7 @@ SqStep_ShowRhythmSectionEvent_Skip22:
 VoiceCtrl_ParamSetupBytecode_Skip17:
 	ld	xhl, SysInit_SendAllNotesAndReset_Tbl
 	ld	a, (xhl+a)
-	ld	(13964:16), a
+	ld	(SQSTEP_STYLE_SECTION:16), a
 	push	xwa
 	push	xhl
 	push	xbc
@@ -6576,12 +6576,12 @@ VoiceCtrl_ParamSetupBytecode_Join5:
 	ret
 DisplayMode_Handler_3_Helper12:
 	ld	a, 134:opc
-	ld	(13964:16), 2
+	ld	(SQSTEP_STYLE_SECTION:16), 2
 	call	VoiceCtrl_ParamSetupBytecode_Helper6
 	ret
 DisplayMode_Handler_3_Helper13:
 	ld	a, 133:opc
-	ld	(13964:16), 1
+	ld	(SQSTEP_STYLE_SECTION:16), 1
 	call	VoiceCtrl_ParamSetupBytecode_Helper6
 	ret
 VoiceCtrl_ParamSetupBytecode_Helper6:
@@ -6699,7 +6699,7 @@ TempoRingBuf_OnModulationEvent_Skip4:
 	ld	(STATUS_POPUP_ID:16), 2
 	call	DisplayStr_RedrawStatusAndControlLine
 TempoRingBuf_OnModulationEvent_Join4:
-	ld	(3540:16), 0
+	ld	(SQSTEP_HELD_COUNT:16), 0
 SerialPort_ModeHandler_0_Return:
 	ret
 TempoRingBuf_OnPitchBendEvent:
@@ -6738,7 +6738,7 @@ TempoRingBuf_OnPitchBendEvent_Skip5:
 	ld	(STATUS_POPUP_ID:16), 2
 	call	DisplayStr_RedrawStatusAndControlLine
 TempoRingBuf_OnPitchBendEvent_Join5:
-	ld	(3540:16), 0
+	ld	(SQSTEP_HELD_COUNT:16), 0
 TempoRingBuf_OnPitchBendEvent_Return6:
 	ret
 SqStep_WriteClockWrapMarkers:
@@ -6767,7 +6767,7 @@ SqStep_WriteClockWrapMarkers:
 SerialPort_ModeHandler_0_Return3:
 	ret
 ToneParam_ModeGuardEntry_Helper3:
-	ld	l, (13944:16)
+	ld	l, (STEP_NOTE_VALUE:16)
 	cp	l, 0:i3
 	jrl	nz, SerialPort_ModeHandler_0_Skip5
 	ld	l, 6:opc
@@ -6777,7 +6777,7 @@ SerialPort_ModeHandler_0_Skip5:
 	push	xix
 	ld	xix, ScoopParam_ValueTable
 	ld	de, (xix+hl)
-	ld	l, (13945:16)
+	ld	l, (STEP_PLUS_NOTE_VALUE:16)
 	sla	l, 1
 	ld	bc, (xix+hl)
 	pop	xix
@@ -6787,7 +6787,7 @@ SerialPort_ModeHandler_0_Skip5:
 	div	wa, l
 	ld	(ACC_EVENT+2:16), w
 	ld	(ACC_EVENT+3:16), a
-	ld	a, (13946:16)
+	ld	a, (STEP_ARTICULATION:16)
 	cp	a, 1:i3
 	jrl	nz, SerialPort_ModeHandler_0_Skip6
 	sla	de, 2
@@ -7010,9 +7010,9 @@ Display_CallMenuInit_Helper:
 	ld	w, 8:opc
 	call	SwbtWr_QueuePostEvent
 PerfMode_Handler_EvtB_Helper2:
-	ld (0x3678:16), 0x04
-	ld (0x3679:16), 0x00
-	ld (0x367a:16), 0x01
+	ld (STEP_NOTE_VALUE:16), 0x04
+	ld (STEP_PLUS_NOTE_VALUE:16), 0x00
+	ld (STEP_ARTICULATION:16), 0x01
 	call SeqNode_SetPoolBaseToEventMemory
 	call SqStep_SetDisplayModeFromTrack
 	ld a, (PART_SELECT:16)
@@ -7114,7 +7114,7 @@ PerfMode_Handler_EvtB_Helper2_Skip2:
 	andmi8	(xiy), 223
 	call	AccPedal_CheckBitAndUpdate
 	set	0, (0x0dd3:16)
-	ld	(0x368c:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	cp	(0x10fa:16), 0
 	jrl	nz, PerfMode_Handler_EvtB_Helper2_Skip3
 	call	SqStep_SetupScreenForDisplayMode
@@ -7394,9 +7394,9 @@ PortConfig_Handler_0:
 	call	PortConfig_Handler_0_Helper3
 	cp	(10430:16), 255
 	jrl	z, PortConfig_Handler_0_Skip2
-	ldw	(3660:16), 0
-	ldw	(3662:16), 1
-	ldw	(3664:16), 0
+	ldw	(SQSTEP_ROW1_MEASURE:16), 0
+	ldw	(SQSTEP_ROW2_MEASURE:16), 1
+	ldw	(SQSTEP_ROW3_MEASURE:16), 0
 	call	PortConfig_Handler_0_Helper6
 	ld	(3702:16), 1
 	ldw	(3703:16), 0
@@ -7407,11 +7407,11 @@ PortConfig_Handler_0:
 	ld	l, a
 	ld	a, 4:opc
 	sub	l, 4
-	ldw	(3664:16), 1
+	ldw	(SQSTEP_ROW3_MEASURE:16), 1
 PortConfig_Handler_0_Skip:
-	ld	(3666:16), 0
-	ld	(3667:16), a
-	ld	(3668:16), l
+	ld	(SQSTEP_ROW1_BEATS:16), 0
+	ld	(SQSTEP_ROW2_BEATS:16), a
+	ld	(SQSTEP_ROW3_BEATS:16), l
 	pushw	wa
 	pushw	bc
 	push	xix
@@ -7666,22 +7666,22 @@ ClockConfig_Handler_0_Tbl2:
 	.byte	0xb0, 0x00, 'H', 0x07, 0x00, '0'
 SqStep_ResetPositionState:
 	xor	wa, wa
-	ld	(0x0e4c:16), wa
-	ld	(0x0e4e:16), wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e52), a
-	stb_d8	(0x0e53), a
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	ld	(SQSTEP_ROW2_MEASURE:16), wa
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW1_BEATS), a
+	stb_d8	(SQSTEP_ROW2_BEATS), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	ld	(SQSTEP_WRAP_COUNT:16), wa
 	ld	(SQSTEP_UNITS:16), wa
 	stb_d8	(SQSTEP_CLOCK), a
 	ld	(SQSTEP_MEASURE:16), wa
 	stb_d8	(0x367d), a
-	stb_d8	(0x368c), a
+	stb_d8	(SQSTEP_STYLE_SECTION), a
 	stb_d8	(0x0d68), a
 	stb_d8	(0x0d67), a
 	stb_d8	(0x0d5e), a
-	stb_d8	(0x0dd4), a
+	stb_d8	(SQSTEP_HELD_COUNT), a
 	ldw	wa, 65535
 	stb_d8	(0x0dd0), a
 	stb_d8	(0x0d55), a
@@ -8483,7 +8483,7 @@ MemConfig_Handler_4_Helper_Skip2:
 MemConfig_Handler_4_Helper_Return:
 	ret
 MemConfig_Handler_4_Helper2:
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	ld	a, (SQSTEP_CLOCK:16)
 	ld	(3521:16), a
 	call	SndDispatch_ProcessCommand_0xF
@@ -9019,7 +9019,7 @@ MemConfig_Handler_4_Skip4:
 MemConfig_Handler_4_Skip5:
 	call	VoiceSlot_FlagCheck
 	ld	(3522:16), a
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 MemConfig_Handler_4_Loop2:
 	call	VoiceSlot_CompareAndBranch
 	cp	w, 255
@@ -9102,7 +9102,7 @@ Timer_ModeHandler_0_Helper2_Skip:
 MemConfig_Handler_4_Return4:
 	ret
 SysInit_SendAllNotesAndReset:
-	ld	(13964:16), 0
+	ld	(SQSTEP_STYLE_SECTION:16), 0
 	call	DisplayStr_StyleSectionInit
 	xor	wa, wa
 	ld	a, 10:opc
@@ -9122,7 +9122,7 @@ SystemInit_Handler_Table_0x18:
 	ld	a, l
 	ld	xhl, SysInit_SendAllNotesAndReset_Tbl
 	ld	a, (xhl+a)
-	stb_d8	(0x368c), a
+	stb_d8	(SQSTEP_STYLE_SECTION), a
 	ld	(0x0d5e:16), 16
 	call	DisplayStr_ShowStyleSectionName
 	pop	xhl
@@ -10621,7 +10621,7 @@ VoiceSlot_IndexDone_Join:
 	jp	VoiceSlot_IndexDone_Join
 VoiceSlot_ComputeIndex_Skip:
 	ld	xiy, 3426
-	ld	xix, 13964
+	ld	xix, SQSTEP_STYLE_SECTION
 	cp	a, 130
 	jrl	z, VoiceSlot_IndexDone_Skip5
 	cp	a, 132
@@ -10756,9 +10756,9 @@ VoiceSlot_StatusRet_Skip5:
 	ldb_d8	w, (PANEL_PART_PT16)
 	call	ScoopDisp_BytecodeBlock1_0x32
 VoiceSlot_StatusRet_Join:
-	stb_d8	(0x367c), a
+	stb_d8	(STEP_NOTE), a
 	call	VoiceSlot_FinalRetZ
-	stb_d8	(0x367b), a
+	stb_d8	(STEP_VELOCITY), a
 	cp	(STATUS_POPUP_ID:16), 0
 	jrl	nz, VoiceSlot_StatusRet_Skip6
 	call	DisplayStr_WriteNoteLine
@@ -10847,7 +10847,7 @@ VoiceSlot_StatusRet_Skip14:
 	and	h, 4
 	sla	h, 5
 	or	a, h
-	stb_d8	(0x10f1), a
+	stb_d8	(POPUP_PART), a
 	cp	a, 72
 	jrl	nz, VoiceSlot_StatusRet_Skip35
 	call	VoiceSlot_FinalRetZ
@@ -10890,15 +10890,15 @@ VoiceSlot_StatusRet_Skip17:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip18:
 	call	VoiceSlot_FinalRetZ
-	stb_d8	(0x10f3), a
+	stb_d8	(POPUP_VALUE), a
 	call	VoiceSlot_FinalRetZ
 	ldb_d8	l, (0x0dc8)
 	ld	h, l
 	and	l, 1
 	rrc	l
-	ldb_d8	w, (0x10f3)
+	ldb_d8	w, (POPUP_VALUE)
 	or	w, l
-	stb_d8	(0x10f3), w
+	stb_d8	(POPUP_VALUE), w
 	and	h, 2
 	rrc h, 2	; rrc 0x02,H
 	or	a, h
@@ -10924,15 +10924,15 @@ VoiceSlot_StatusRet_Skip21:
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip22:
 	call	VoiceSlot_FinalRetZ
-	stb_d8	(0x10f3), a
+	stb_d8	(POPUP_VALUE), a
 	call	VoiceSlot_FinalRetZ
 	ldb_d8	l, (0x0dc8)
 	ld	h, l
 	and	l, 1
 	rrc	l
-	ldb_d8	w, (0x10f3)
+	ldb_d8	w, (POPUP_VALUE)
 	or	w, l
-	stb_d8	(0x10f3), w
+	stb_d8	(POPUP_VALUE), w
 	and	h, 2
 	rrc h, 2	; rrc 0x02,H
 	or	a, h
@@ -10964,7 +10964,7 @@ VoiceSlot_StatusRet_Skip26:
 	jrl	z, VoiceSlot_StatusRet_Skip27
 	or	a, 128
 VoiceSlot_StatusRet_Skip27:
-	ld	xiy, 0x368c
+	ld	xiy, SQSTEP_STYLE_SECTION
 	ldfr_berp	a, 60
 	and	a, 192
 	ldto_berp	a, 60
@@ -11028,7 +11028,7 @@ VoiceSlot_StatusRet_Skip35:
 	and	l, 1
 	rrc	l
 	or	a, l
-	stb_d8	(0x10f3), a
+	stb_d8	(POPUP_VALUE), a
 	push	xhl
 	call	VoiceSlot_FinalRetZ
 	pop	xhl
@@ -11036,7 +11036,7 @@ VoiceSlot_StatusRet_Skip35:
 	rrc h, 2	; rrc 0x02,H
 	or	a, h
 	stb_d8	(0x10f5), a
-	ldb_d8	a, (0x10f1)
+	ldb_d8	a, (POPUP_PART)
 	cp	a, 0:i3
 	jrl	c, VoiceSlot_StatusRet_Skip36
 	cp	a, 13
@@ -11085,8 +11085,8 @@ VoiceSlot_StatusRet_Skip37:
 	jrl	z, VoiceSlot_StatusRet_Skip38
 	jp	VoiceSlot_StatusRet_Loop3
 VoiceSlot_StatusRet_Skip38:
-	ldb_d8	a, (0x10f3)
-	cp	(0x10f1:16), 112
+	ldb_d8	a, (POPUP_VALUE)
+	cp	(POPUP_PART:16), 112
 	jrl	nz, VoiceSlot_StatusRet_Skip41
 	ldb_d8	l, (0x10f2)
 	cp	l, 0:i3
@@ -11111,7 +11111,7 @@ VoiceSlot_StatusRet_Skip40:
 	call	ParamPopup_TotalReverb
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip41:
-	cp	(0x10f1:16), 152
+	cp	(POPUP_PART:16), 152
 	jrl	nz, VoiceSlot_StatusRet_Skip47
 	ldb_d8	l, (0x10f2)
 	cp	l, 11
@@ -11146,7 +11146,7 @@ VoiceSlot_StatusRet_Skip44:
 	call	ParamPopup_FadeIn
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip45:
-	ldb_d8	a, (0x10f3)
+	ldb_d8	a, (POPUP_VALUE)
 	and	a, 64
 	cp	a, 0:i3
 	jr	z, VoiceSlot_StatusRet_Skip46
@@ -11155,35 +11155,35 @@ VoiceSlot_StatusRet_Skip46:
 	call	ParamPopup_FadeOut
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip47:
-	cp	(0x10f1:16), 19
+	cp	(POPUP_PART:16), 19
 	jrl	nz, VoiceSlot_StatusRet_Skip48
 	cp	(0x10f2:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip52
 	ld	hl, 1:i3
 	jp	VoiceSlot_StatusRet_Join4
 VoiceSlot_StatusRet_Skip48:
-	cp	(0x10f1:16), 20
+	cp	(POPUP_PART:16), 20
 	jrl	nz, VoiceSlot_StatusRet_Skip49
 	cp	(0x10f2:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip52
 	ld	hl, 2:i3
 	jp	VoiceSlot_StatusRet_Join4
 VoiceSlot_StatusRet_Skip49:
-	cp	(0x10f1:16), 16
+	cp	(POPUP_PART:16), 16
 	jrl	nz, VoiceSlot_StatusRet_Skip50
 	cp	(0x10f2:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip52
 	ld	hl, 3:i3
 	jp	VoiceSlot_StatusRet_Join4
 VoiceSlot_StatusRet_Skip50:
-	cp	(0x10f1:16), 17
+	cp	(POPUP_PART:16), 17
 	jrl	nz, VoiceSlot_StatusRet_Skip51
 	cp	(0x10f2:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip52
 	ld	hl, 4:i3
 	jp	VoiceSlot_StatusRet_Join4
 VoiceSlot_StatusRet_Skip51:
-	cp	(0x10f1:16), 18
+	cp	(POPUP_PART:16), 18
 	jrl	nz, VoiceSlot_StatusRet_Skip52
 	cp	(0x10f2:16), 3
 	jrl	nz, VoiceSlot_StatusRet_Skip52
@@ -11197,7 +11197,7 @@ VoiceSlot_StatusRet_Join4:
 	call	ParamPopup_AccompVolume
 	jp	VoiceSlot_StatusRet_Return
 VoiceSlot_StatusRet_Skip54:
-	ldb_d8	a, (0x10f1)
+	ldb_d8	a, (POPUP_PART)
 	cp	a, 144
 	jrl	z, VoiceSlot_StatusRet_Skip71
 	cp	a, 80
@@ -11312,7 +11312,7 @@ VoiceSlot_StatusRet_Skip70:
 VoiceSlot_StatusRet_Skip71:
 	ldb_d8	a, (0x10f2)
 	jp	VoiceSlot_StatusRet_Loop3
-	ldb_d8	a, (0x10f3)
+	ldb_d8	a, (POPUP_VALUE)
 	bit	0, a
 	jrl	nz, VoiceSlot_StatusRet_Loop3
 	bit	1, a
@@ -11324,7 +11324,7 @@ VoiceSlot_StatusRet_Skip71:
 	jp	VoiceSlot_StatusRet_Loop3
 VoiceSlot_StatusRet_Skip72:
 	call	VoiceSlot_FinalRetZ
-	ld	xiy, 0x368c
+	ld	xiy, SQSTEP_STYLE_SECTION
 	cp	a, 128
 	jrl	z, VoiceSlot_StatusRet_Skip74
 	cp	a, 133
@@ -11911,13 +11911,13 @@ VoiceState_DataBlock2_Helper8:
 	push	xde
 	ld	xde, 3230
 	ld	wa, (xde+hl)
-	ld	(10431:16), wa
+	ld	(SQSTEP_SCAN_BLOCK:16), wa
 	srl	hl, 1
 	ld	xde, 3262
 	ld	a, (xde+hl)
 	pop	xde
 	xor	w, w
-	ld	(10433:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), wa
 	call	VoiceBank_ProcessCommand
 	ld	xix, 3765
 	ld	a, (xix)
@@ -12030,13 +12030,13 @@ VoiceState_DataBlock2_Helper9:
 	push	xde
 	ld	xde, 3230
 	ld	iy, (xde+iz)
-	ld	(10431:16), iy
+	ld	(SQSTEP_SCAN_BLOCK:16), iy
 	srl	iz, 1
 	ld	xde, 3262
 	ld	a, (xde+iz)
 	pop	xde
 	xor	w, w
-	ld	(10433:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), wa
 	call	VoiceBank_ProcessCommand
 	ld	a, (3765:16)
 	and	a, 240
@@ -12072,7 +12072,7 @@ VoiceState_DataBlock2_Skip17:
 VoiceState_DataBlock2_Join3:
 	ld	(13952:16), a
 	ld	(13941:16), w
-	ld	(3667:16), w
+	ld	(SQSTEP_ROW2_BEATS:16), w
 	ld	(3559:16), w
 	ld	a, (SQSTEP_BEAT:16)
 	sla	a, 3
@@ -12741,16 +12741,16 @@ SubCPU_ToneParamRet_Helper:
 	call	SqStep_GetRhythmTrackForMeasures
 	call	AccPedal_CheckBitAndUpdate
 	ldw_d16	wa, (SQSTEP_MEASURE)
-	ld	(0x0e4e:16), wa
+	ld	(SQSTEP_ROW2_MEASURE:16), wa
 	ldb_d8	a, (SQSTEP_MEASURE_BEATS)
 	stb_d8	(0x0ec8), a
-	stb_d8	(0x0e53), a
+	stb_d8	(SQSTEP_ROW2_BEATS), a
 	cpw	(SQSTEP_MEASURE:16), 1
 	jrl	z, PerfMode_ParamHandler_11_Skip7
 	cp	(0x0ec8:16), 4
 	jrl	ugt, PerfMode_ParamHandler_11_Skip3
 	call	SubCPU_ToneParamRet_Helper2
-	ldw_d16	de, (0x0e4e)
+	ldw_d16	de, (SQSTEP_ROW2_MEASURE)
 	inc	1, de
 	ld	(0x287f:16), de
 	call	SqStep_GetRhythmTrackForMeasures
@@ -12759,47 +12759,47 @@ SubCPU_ToneParamRet_Helper:
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	z, PerfMode_ParamHandler_11_Skip
 	xor	wa, wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip:
-	ldw_d16	hl, (0x0e4e)
+	ldw_d16	hl, (SQSTEP_ROW2_MEASURE)
 	inc	1, hl
-	ld	(0x0e50:16), hl
+	ld	(SQSTEP_ROW3_MEASURE:16), hl
 	stb_d8	(0x0ec9), a
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	cp	a, 4:i3
 	jrl	ule, PerfMode_ParamHandler_11_Skip2
-	ld	(0x0e54:16), 4
+	ld	(SQSTEP_ROW3_BEATS:16), 4
 PerfMode_ParamHandler_11_Skip2:
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip3:
 	cp	(SQSTEP_BEAT:16), 3
 	jrl	ugt, PerfMode_ParamHandler_11_Skip4
 	call	SubCPU_ToneParamRet_Helper2
-	ldw_d16	wa, (0x0e4e)
-	ld	(0x0e50:16), wa
-	ldb_d8	a, (0x0e53)
+	ldw_d16	wa, (SQSTEP_ROW2_MEASURE)
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	ldb_d8	a, (SQSTEP_ROW2_BEATS)
 	sub	a, 4
-	stb_d8	(0x0e54), a
-	ld	(0x0e53:16), 4
+	stb_d8	(SQSTEP_ROW3_BEATS), a
+	ld	(SQSTEP_ROW2_BEATS:16), 4
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip4:
-	ldw_d16	de, (0x0e4e)
+	ldw_d16	de, (SQSTEP_ROW2_MEASURE)
 	ld	(0x287f:16), de
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (SEQ_CURSOR_TRACK)
 	call	SetWall_SlotResolve
 	ldw_d16	wa, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), wa
-	ld	(0x28c1:16), iy
-	ldw_d16	wa, (0x0e4e)
-	ld	(0x0e4c:16), wa
-	ld	(0x0e52:16), 4
+	ld	(SQSTEP_SCAN_BLOCK:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
+	ldw_d16	wa, (SQSTEP_ROW2_MEASURE)
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	ld	(SQSTEP_ROW1_BEATS:16), 4
 	ldb_d8	a, (0x0ec8)
 	sub	a, 4
-	stb_d8	(0x0e53), a
-	ldw_d16	de, (0x0e4e)
+	stb_d8	(SQSTEP_ROW2_BEATS), a
+	ldw_d16	de, (SQSTEP_ROW2_MEASURE)
 	inc	1, de
 	ld	(0x287f:16), de
 	call	SqStep_GetRhythmTrackForMeasures
@@ -12807,20 +12807,20 @@ PerfMode_ParamHandler_11_Skip4:
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, PerfMode_ParamHandler_11_Skip6
-	ldw_d16	hl, (0x0e4e)
+	ldw_d16	hl, (SQSTEP_ROW2_MEASURE)
 	inc	1, hl
-	ld	(0x0e50:16), hl
+	ld	(SQSTEP_ROW3_MEASURE:16), hl
 	stb_d8	(0x0ec9), a
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	cp	a, 3:i3
 	jrl	ule, PerfMode_ParamHandler_11_Skip5
-	ld	(0x0e54:16), 4
+	ld	(SQSTEP_ROW3_BEATS:16), 4
 PerfMode_ParamHandler_11_Skip5:
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip6:
 	xor	wa, wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip7:
 	ldb_d8	l, (SEQ_CURSOR_TRACK)
@@ -12834,16 +12834,16 @@ PerfMode_ParamHandler_11_Skip7:
 	add	xde, 1
 	ld	hl, (xde+hl)
 	pop	xde
-	ld	(0x28bf:16), hl
-	ldw	(0x28c1:16), 5
+	ld	(SQSTEP_SCAN_BLOCK:16), hl
+	ldw	(SQSTEP_SCAN_OFFSET:16), 5
 	cp	(0x0ec8:16), 4
 	jrl	ugt, PerfMode_ParamHandler_11_Skip10
 	xor	wa, wa
-	ld	(0x0e4c:16), wa
-	stb_d8	(0x0e52), a
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	ldb_d8	a, (0x0ec8)
-	stb_d8	(0x0e53), a
-	ldw_d16	de, (0x0e4e)
+	stb_d8	(SQSTEP_ROW2_BEATS), a
+	ldw_d16	de, (SQSTEP_ROW2_MEASURE)
 	inc	1, de
 	ld	(0x287f:16), de
 	call	SqStep_GetRhythmTrackForMeasures
@@ -12851,41 +12851,41 @@ PerfMode_ParamHandler_11_Skip7:
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
 	jrl	nz, PerfMode_ParamHandler_11_Skip9
-	ldw_d16	hl, (0x0e4e)
+	ldw_d16	hl, (SQSTEP_ROW2_MEASURE)
 	inc	1, hl
-	ld	(0x0e50:16), hl
+	ld	(SQSTEP_ROW3_MEASURE:16), hl
 	stb_d8	(0x0ec9), a
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	cp	a, 4:i3
 	jrl	ule, PerfMode_ParamHandler_11_Skip8
-	ld	(0x0e54:16), 4
+	ld	(SQSTEP_ROW3_BEATS:16), 4
 PerfMode_ParamHandler_11_Skip8:
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip9:
 	xor	wa, wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip10:
 	cp	(SQSTEP_BEAT:16), 3
 	jrl	ugt, PerfMode_ParamHandler_11_Skip11
 	xor	wa, wa
-	ld	(0x0e4c:16), wa
-	stb_d8	(0x0e52), a
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	ldb_d8	a, (0x0ec8)
-	ld	(0x0e53:16), 4
+	ld	(SQSTEP_ROW2_BEATS:16), 4
 	sub	a, 4
-	stb_d8	(0x0e54), a
-	ldw_d16	wa, (0x0e4e)
-	ld	(0x0e50:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
+	ldw_d16	wa, (SQSTEP_ROW2_MEASURE)
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip11:
 	ldw_d16	wa, (SQSTEP_MEASURE)
-	ld	(0x0e4c:16), wa
-	ld	(0x0e52:16), 4
+	ld	(SQSTEP_ROW1_MEASURE:16), wa
+	ld	(SQSTEP_ROW1_BEATS:16), 4
 	ldb_d8	a, (0x0ec8)
 	sub	a, 4
-	stb_d8	(0x0e53), a
+	stb_d8	(SQSTEP_ROW2_BEATS), a
 	ldw_d16	de, (SQSTEP_MEASURE)
 	inc	1, de
 	ld	(0x287f:16), de
@@ -12896,23 +12896,23 @@ PerfMode_ParamHandler_11_Skip11:
 	jrl	nz, PerfMode_ParamHandler_11_Skip13
 	ldw_d16	hl, (SQSTEP_MEASURE)
 	inc	1, hl
-	ld	(0x0e50:16), hl
+	ld	(SQSTEP_ROW3_MEASURE:16), hl
 	stb_d8	(0x0ec9), a
-	stb_d8	(0x0e54), a
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	cp	a, 4:i3
 	jrl	ule, PerfMode_ParamHandler_11_Skip12
-	ld	(0x0e54:16), 4
+	ld	(SQSTEP_ROW3_BEATS:16), 4
 PerfMode_ParamHandler_11_Skip12:
 	jp	SubCPU_ToneParamRet_Join
 PerfMode_ParamHandler_11_Skip13:
 	xor	wa, wa
-	ld	(0x0e50:16), wa
-	stb_d8	(0x0e54), a
+	ld	(SQSTEP_ROW3_MEASURE:16), wa
+	stb_d8	(SQSTEP_ROW3_BEATS), a
 	jp	SubCPU_ToneParamRet_Join
 SubCPU_ToneParamRet_Join:
-	ldw_d16	wa, (0x0e4c)
+	ldw_d16	wa, (SQSTEP_ROW1_MEASURE)
 	ld	(0x117c:16), wa
-	ldb_d8	a, (0x0e52)
+	ldb_d8	a, (SQSTEP_ROW1_BEATS)
 	stb_d8	(0x0ec1), a
 	ld	xwa, 0x0e55
 	ld	(0x1114:16), xwa
@@ -12921,12 +12921,12 @@ SubCPU_ToneParamRet_Join:
 	ld	(0x0ec4:16), wa
 	cp	(0x117c:16), wa
 	jrl	nz, PerfMode_ParamHandler_11_Return2
-	ldw_d16	wa, (0x0e4e)
+	ldw_d16	wa, (SQSTEP_ROW2_MEASURE)
 	ld	(0x117c:16), wa
 	ld	xwa, 0x0e75
 	ld	(0x1114:16), xwa
 	ld	(0x0ec6:16), 1
-	ldb_d8	a, (0x0e53)
+	ldb_d8	a, (SQSTEP_ROW2_BEATS)
 	stb_d8	(0x0ec1), a
 PerfMode_ParamHandler_11_Return2:
 	ret
@@ -12995,7 +12995,7 @@ SqStep_SeekSecondGridRow_Skip16:
 SqStep_SeekSecondGridRow_Return4:
 	ret
 SubCPU_ToneParamRet_Helper2:
-	ldw_d16	de, (0x0e4e)
+	ldw_d16	de, (SQSTEP_ROW2_MEASURE)
 	dec	1, de
 	ld	(0x287f:16), de
 	call	SqStep_GetRhythmTrackForMeasures
@@ -13003,18 +13003,18 @@ SubCPU_ToneParamRet_Helper2:
 	call	SetWall_SlotResolve
 	pushw	wa
 	ldw_d16	wa, (SEQ_DATA_BLOCK)
-	ld	(0x28bf:16), wa
-	ld	(0x28c1:16), iy
-	ldw_d16	hl, (0x0e4e)
+	ld	(SQSTEP_SCAN_BLOCK:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), iy
+	ldw_d16	hl, (SQSTEP_ROW2_MEASURE)
 	dec	1, hl
-	ld	(0x0e4c:16), hl
+	ld	(SQSTEP_ROW1_MEASURE:16), hl
 	popw	wa
 	stb_d8	(0x0ec7), a
-	stb_d8	(0x0e52), a
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	cp	a, 4:i3
 	jrl	ule, PerfMode_ParamHandler_11_Return4
 	sub	a, 4
-	stb_d8	(0x0e52), a
+	stb_d8	(SQSTEP_ROW1_BEATS), a
 	call	SqStep_SeekSecondGridRow
 PerfMode_ParamHandler_11_Return4:
 	ret
@@ -13064,7 +13064,7 @@ PerfMode_ParamHandler_11_Skip19:
 	res	2, (0x0d54:16)
 	jp	SubCPU_ToneParamRet_Join5
 PerfMode_ParamHandler_11_Skip20:
-	ld	(0x367b:16), 255
+	ld	(STEP_VELOCITY:16), 255
 	call	Timer_ParamCompareAlt_Helper6
 SubCPU_ToneParamRet_Join5:
 	or	(0x0dd3:16), 1
@@ -13086,7 +13086,7 @@ PerfMode_ParamHandler_11_Skip21:
 	res	2, (0x0d54:16)
 	jp	SubCPU_ToneParamRet_Join6
 PerfMode_ParamHandler_11_Skip22:
-	ld	(0x367b:16), 255
+	ld	(STEP_VELOCITY:16), 255
 	call	Timer_ParamCompareAlt_Helper6
 SubCPU_ToneParamRet_Join6:
 	or	(0x0dd3:16), 1
@@ -13876,7 +13876,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	xix, 0x0e59
 	; framing ported from v10's source for the same label (same span length, statement for statement); 68 of 92 slots byte-identical
 	ld	c, 1:opc
-	ld	e, (3666:16)
+	ld	e, (SQSTEP_ROW1_BEATS:16)
 	sla	e, 1
 	call	OscScope_FinalizeRender_0x79
 	; v10 does not spell this byte either
@@ -13885,7 +13885,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	xiy, 3701
 	ld	xix, 3705
 	ld	c, 1:opc
-	ld	e, (3667:16)
+	ld	e, (SQSTEP_ROW2_BEATS:16)
 	sla	e, 1
 	call	OscScope_FinalizeRender_0x79
 	; v10 does not spell this byte either
@@ -13894,7 +13894,7 @@ SubCPU_ToneParamRet_Helper16:
 	ld	xiy, 3733
 	ld	xix, 3737
 	ld	c, 1:opc
-	ld	e, (3668:16)
+	ld	e, (SQSTEP_ROW3_BEATS:16)
 	sla	e, 1
 	call	OscScope_FinalizeRender_0x79
 	ld	xiy, 3697
@@ -13997,10 +13997,10 @@ VoiceBank_LoadLerpState:
 	pop xiz
 	push_lerp 0x38
 	push xix
-	ld hl, (0x28bf:16)
+	ld hl, (SQSTEP_SCAN_BLOCK:16)
 	call DisplayStr_ComputeTableAddr
 	ld xiy, (SEQ_BLOCK_PTR:16)
-	ld ix, (0x28c1:16)
+	ld ix, (SQSTEP_SCAN_OFFSET:16)
 	ld	a, (xiy+ix)
 	pop xix
 	pop_lerp 0x38
@@ -14017,14 +14017,14 @@ VoiceBank_UpdateLerpState:
 	pop xiz
 	push_lerp 0x38
 	push xix
-	ld wa, (0x28c1:16)
+	ld wa, (SQSTEP_SCAN_OFFSET:16)
 	cp wa, 0xff
 	jrl nz, VoiceBank_IncrementIndex
-	ld hl, (0x28bf:16)
+	ld hl, (SQSTEP_SCAN_BLOCK:16)
 	call DisplayStr_ComputeTableAddr
 	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld hl, (xhl + 3)
-	ld (0x28bf:16), hl
+	ld (SQSTEP_SCAN_BLOCK:16), hl
 	ld wa, 5:i3
 	jp VoiceBank_StoreIndex
 
@@ -14032,7 +14032,7 @@ VoiceBank_IncrementIndex:
 	inc 1, wa
 
 VoiceBank_StoreIndex:
-	ld (0x28c1:16), wa
+	ld (SQSTEP_SCAN_OFFSET:16), wa
 	pop xix
 	pop_lerp 0x38
 	push xiz
@@ -14098,11 +14098,11 @@ DisplayStr_BytecodeBlock_A_Skip:
 	jrl	z, DisplayStr_BytecodeBlock_A_Loop
 	inc	1, l
 	ld	xwa, 3701
-	ld	e, (3667:16)
+	ld	e, (SQSTEP_ROW2_BEATS:16)
 	cp	l, 1:i3
 	jrl	z, DisplayStr_BytecodeBlock_A_Skip2
 	ld	xwa, 3733
-	ld	e, (3668:16)
+	ld	e, (SQSTEP_ROW3_BEATS:16)
 DisplayStr_BytecodeBlock_A_Skip2:
 	ld	(3777:16), e
 	ld	(4372:16), xwa
@@ -14168,11 +14168,11 @@ DisplayStr_BytecodeBlock_A_Skip3:
 	jrl	z, DisplayStr_BytecodeBlock_A_Loop2
 	inc	1, l
 	ld	xwa, 3701
-	ld	e, (3667:16)
+	ld	e, (SQSTEP_ROW2_BEATS:16)
 	cp	l, 1:i3
 	jrl	z, DisplayStr_BytecodeBlock_A_Skip6
 	ld	xwa, 3733
-	ld	e, (3668:16)
+	ld	e, (SQSTEP_ROW3_BEATS:16)
 DisplayStr_BytecodeBlock_A_Skip6:
 	ld	(3777:16), e
 	ld	(4372:16), xwa
@@ -14192,8 +14192,8 @@ DisplayStr_BytecodeBlock_A_Tbl:
 ;   chord-grid builders call it and then test 0x0EBB against the markers (129 / 130 / 132) and 0x0EBC against 48 to
 ;   decide how to fill the next cells; VoiceBank_LoadLerpState / _UpdateLerpState are the cursor's read and advance.
 SqStep_PeekNextEvent:
-	pushdi_w	(0x28bf)
-	pushdi_w	(0x28c1)
+	pushdi_w	(SQSTEP_SCAN_BLOCK)
+	pushdi_w	(SQSTEP_SCAN_OFFSET)
 	push	xhl
 	push	xiy
 	push	xix
@@ -14224,8 +14224,8 @@ DisplayStr_BytecodeBlock_A_Code_Helper_Skip2:
 	pop	xix
 	pop	xiy
 	pop	xhl
-	popw (0x28c1:16)	; popw (0x28c1)
-	popw (0x28bf:16)	; popw (0x28bf)
+	popw (SQSTEP_SCAN_OFFSET:16)	; popw (0x28c1)
+	popw (SQSTEP_SCAN_BLOCK:16)	; popw (0x28bf)
 	ret
 DisplayStr_ComputeTableAddr:
 	dec 1, hl
@@ -14385,7 +14385,7 @@ DisplayStr_ClearAndCopyStyleSectionName:
 	ld XIY,DisplayStr_StyleSectionNames
 	ld XIX,0x00000ed8
 	xor XWA,XWA
-	ld a, (0x368c:16)
+	ld a, (SQSTEP_STYLE_SECTION:16)
 	sla XWA, 0x03
 	add XIY,XWA
 	ld bc, 4:i3
@@ -14551,7 +14551,7 @@ DisplayStr_StyleSectionInit:
 	ld XIY,DisplayStr_StyleSectionNames
 	ld XIX,0x00000ece
 	xor WA,WA
-	ld a, (0x368c:16)
+	ld a, (SQSTEP_STYLE_SECTION:16)
 	sla WA, 0x03
 	lda	xiy, (xiy+wa)
 	ldw	wa, 8224
@@ -14572,7 +14572,7 @@ DisplayStr_BytecodeBlock_E:
 DisplayStr_CopyStyleSectionName:
 	ld XIX,0x00000ed4
 	xor XHL,XHL
-	ld l, (0x368c:16)
+	ld l, (SQSTEP_STYLE_SECTION:16)
 	sla XHL, 0x03
 	ld XIY,DisplayStr_StyleSectionNames
 	lda	xiy, (xiy+hl)
@@ -15043,7 +15043,7 @@ Tbl_NoteValueGlyphs:
 Disp_ShowNoteValueFields:
 	ld XIX,0x00000ed9
 	xor HL,HL
-	ld l, (0x3678:16)
+	ld l, (STEP_NOTE_VALUE:16)
 	and L,0x0f
 	sla HL, 0x02
 	ld XIY,Tbl_NoteValueNames
@@ -15054,7 +15054,7 @@ Disp_ShowNoteValueFields:
 	ld	(xix+2), w
 	ld	xix, 3805
 	xor	hl, hl
-	ld	l, (13945:16)
+	ld	l, (STEP_PLUS_NOTE_VALUE:16)
 	and	l, 15
 	ld	a, 5:opc
 	muls	wa, l
@@ -15069,7 +15069,7 @@ Disp_ShowNoteValueFields:
 	ld	(xix+4), a
 	ld	xix, 3811
 	xor	hl, hl
-	ld	l, (13946:16)
+	ld	l, (STEP_ARTICULATION:16)
 	and	l, 3
 	sla	hl, 2
 	ld	xiy, Tbl_ArticulationNames
@@ -15152,7 +15152,7 @@ Tbl_ArticulationNames:
 	; (0x367b) in decimal at +6 -- a MIDI note number and its velocity.
 Disp_ShowNoteNameAndVelocity:
 	ld	xix, 3791
-	cp	(13947:16), 255
+	cp	(STEP_VELOCITY:16), 255
 	jrl	nz, Disp_ShowNoteNameAndVelocity_Skip
 	ldw	wa, 8224
 	ld	(xix+0:8), wa
@@ -15163,7 +15163,7 @@ Disp_ShowNoteNameAndVelocity:
 	jp	Disp_ShowNoteNameAndVelocity_Return
 Disp_ShowNoteNameAndVelocity_Skip:
 	xor	wa, wa
-	ld	a, (13948:16)
+	ld	a, (STEP_NOTE:16)
 	ld	l, 12:opc
 	divs	wa, l
 	ld	xiy, Tbl_NoteNamesSharp
@@ -15181,7 +15181,7 @@ Disp_ShowNoteNameAndVelocity_Skip:
 	ld	wa, (xiy)
 	ld	(xix+2), wa
 	xor	wa, wa
-	ld	a, (13947:16)
+	ld	a, (STEP_VELOCITY:16)
 	call	ParamDigit_ExtractAndFormat
 	ld	wa, (4481:16)
 	ld	(xix+6), wa
@@ -15220,7 +15220,7 @@ ParamPopup_PartVolume:
 .Lc_eff8c1:
 ParamPopup_PartVolume_Skip:
 	call DisplayStr_ClearRegion
-	ld l, (0x10f1:16)
+	ld l, (POPUP_PART:16)
 	xor H,H
 	sla HL, 0x02
 	ld XIY,StringData_PartNames
@@ -15232,7 +15232,7 @@ ParamPopup_PartVolume_Skip:
 	inc	1, xix
 	ld	bc, 7:i3
 	ldir85
-	ldb_d8	a, (0x10f3)
+	ldb_d8	a, (POPUP_VALUE)
 	xor	w, w
 	push	xix
 	call	ParamDigit_ExtractAndFormat
@@ -15261,7 +15261,7 @@ ParamPopup_PartPanpot:
 	call	Display_UpdateRegion0
 ParamPopup_PartPanpot_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15273,7 +15273,7 @@ ParamPopup_PartPanpot_Skip:
 	inc	1, xix
 	ld	bc, 7:i3
 	ldir85
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	xor	w, w
 	push	xix
 	call	ParamDigit_ExtractAndFormat
@@ -15299,7 +15299,7 @@ ParamPopup_PartKeyShift:
 	call	Display_UpdateRegion0
 ParamPopup_PartKeyShift_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15311,7 +15311,7 @@ ParamPopup_PartKeyShift_Skip:
 	inc	1, xix
 	ldw	bc, 10
 	ldir85
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	xor	w, w
 	ldw	de, 64
 	push	xix
@@ -15340,7 +15340,7 @@ ParamPopup_PartTuning:
 	call	Display_UpdateRegion0
 ParamPopup_PartTuning_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15352,7 +15352,7 @@ ParamPopup_PartTuning_Skip:
 	inc	1, xix
 	ld	bc, 7:i3
 	ldir85
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	xor	w, w
 	ldw	de, 128
 	push	xix
@@ -15381,7 +15381,7 @@ ParamPopup_PartBendSense:
 	call	Display_UpdateRegion0
 ParamPopup_PartBendSense_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15393,7 +15393,7 @@ ParamPopup_PartBendSense_Skip:
 	inc	1, xix
 	ldw	bc, 10
 	ldir85
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	xor	w, w
 	push	xix
 	call	ParamDigit_ExtractAndFormat
@@ -15418,7 +15418,7 @@ ParamPopup_PartSustain:
 	call	Display_UpdateRegion0
 ParamPopup_PartSustain_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15431,7 +15431,7 @@ ParamPopup_PartSustain_Skip:
 	ldw	bc, 8
 	ldir85
 	xor	hl, hl
-	bit	3, (0x10f3:16)
+	bit	3, (POPUP_VALUE:16)
 	jrl	nz, ParamPopup_PartSustain_Skip2
 	ld	l, 4:opc
 ParamPopup_PartSustain_Skip2:
@@ -15460,7 +15460,7 @@ ParamPopup_PartDspEffectOff:
 	call	Display_UpdateRegion0
 ParamPopup_PartDspEffectOff_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15494,7 +15494,7 @@ ParamPopup_PartEffect:
 	call	Display_UpdateRegion0
 ParamPopup_PartEffect_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15507,7 +15507,7 @@ ParamPopup_PartEffect_Skip:
 	ld	bc, 7:i3
 	ldir85
 	xor	hl, hl
-	bit	6, (0x10f3:16)
+	bit	6, (POPUP_VALUE:16)
 	jrl	nz, ParamPopup_PartEffect_Skip2
 	ld	l, 4:opc
 ParamPopup_PartEffect_Skip2:
@@ -15530,7 +15530,7 @@ ParamPopup_PartDspEffectLevel:
 	call	Display_UpdateRegion0
 ParamPopup_PartDspEffectLevel_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15543,7 +15543,7 @@ ParamPopup_PartDspEffectLevel_Skip:
 	ldw	bc, 11
 	ldir85
 	xor	w, w
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	call	ParamDigit_ExtractAndFormat
 	ld	xiy, 4481
 	ld	bc, 3:i3
@@ -15564,7 +15564,7 @@ ParamPopup_PartReverb:
 	call	Display_UpdateRegion0
 ParamPopup_PartReverb_Skip:
 	call	DisplayStr_ClearRegion
-	ld	l, (4337:16)
+	ld	l, (POPUP_PART:16)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -15577,7 +15577,7 @@ ParamPopup_PartReverb_Skip:
 	ld	bc, 7:i3
 	ldir85
 	xor	w, w
-	ld	a, (4339:16)
+	ld	a, (POPUP_VALUE:16)
 	call	ParamDigit_ExtractAndFormat
 	ld	xiy, 4481
 	ld	bc, 3:i3
@@ -15913,7 +15913,7 @@ ParamPopup_KeyNameBracketed_Skip:
 	popw	wa
 	ld	(0x0ece:16), 32
 	ld	xix, 0x0ecf
-	ldb_d8	l, (0x10f3)
+	ldb_d8	l, (POPUP_VALUE)
 	and	l, 15
 	xor	h, h
 	sla	hl, 2
@@ -15964,7 +15964,7 @@ ParamPopup_AccompVolume_Skip:
 	bit	7, (0x10f5:16)
 	jrl	z, ParamPopup_AccompVolume_Skip3
 	ld	xiy, Tbl_MuteOnOff
-	bit	7, (0x10f3:16)
+	bit	7, (POPUP_VALUE:16)
 	jrl	nz, ParamPopup_AccompVolume_Skip2
 	add	xiy, 8
 ParamPopup_AccompVolume_Skip2:
@@ -16003,7 +16003,7 @@ ParamPopup_PartTremolo:
 	call	Display_UpdateRegion0
 ParamPopup_PartTremolo_Skip:
 	call	DisplayStr_ClearRegion
-	ldb_d8	l, (0x10f1)
+	ldb_d8	l, (POPUP_PART)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -16016,7 +16016,7 @@ ParamPopup_PartTremolo_Skip:
 	ldw	bc, 8
 	ldir85
 	xor	hl, hl
-	bit	7, (0x10f3:16)
+	bit	7, (POPUP_VALUE:16)
 	jrl	nz, ParamPopup_PartTremolo_Skip2
 	ld	l, 4:opc
 ParamPopup_PartTremolo_Skip2:
@@ -16059,7 +16059,7 @@ ParamPopup_TotalReverb_Skip:
 	ldw	bc, 13
 	ldir85
 	xor	hl, hl
-	bit	7, (0x10f3:16)
+	bit	7, (POPUP_VALUE:16)
 	jrl	nz, ParamPopup_TotalReverb_Skip2
 	ld	l, 4:opc
 ParamPopup_TotalReverb_Skip2:
@@ -16085,7 +16085,7 @@ ParamPopup_PartTimbre:
 	call	Display_UpdateRegion0
 ParamPopup_PartTimbre_Skip:
 	call	DisplayStr_ClearRegion
-	ldb_d8	l, (0x10f1)
+	ldb_d8	l, (POPUP_PART)
 	xor	h, h
 	sla	hl, 2
 	ld	xiy, StringData_PartNames
@@ -16094,7 +16094,7 @@ ParamPopup_PartTimbre_Skip:
 	ld	bc, 4:i3
 	ldir85
 	inc	1, xix
-	ldb_d8	l, (0x10f3)
+	ldb_d8	l, (POPUP_VALUE)
 	and	l, 192
 	srl	l, 6
 	ld	h, l
@@ -16134,7 +16134,7 @@ ParamPopup_Msa_Skip2:
 	ld	xix, 0x0ed1
 	ld	bc, 7:i3
 	ldir85
-	ldb_d8	l, (0x10f3)
+	ldb_d8	l, (POPUP_VALUE)
 	xor	h, h
 	and	l, 7
 	sla	hl, 2
@@ -16237,13 +16237,13 @@ SqStep_UpdateMsaStateFromEvent:
 	push	xhl
 	ld	xhl, 0x0c9e
 	ld	ix, (xhl+iz)
-	ld	(0x28bf:16), ix
+	ld	(SQSTEP_SCAN_BLOCK:16), ix
 	sra	iz, 1
 	ld	xhl, 0x0cbe
 	ld	a, (xhl+iz)
 	pop	xhl
 	xor	w, w
-	ld	(0x28c1:16), wa
+	ld	(SQSTEP_SCAN_OFFSET:16), wa
 	call	VoiceBank_ProcessCommand
 	ldb_d8	a, (0x0eb5)
 	and	a, 240
@@ -16288,7 +16288,7 @@ ParamPopup_PartPedal_Skip2:
 	ld	bc, 4:i3
 	ldir85
 	xor	hl, hl
-	ldb_d8	l, (0x10f1)
+	ldb_d8	l, (POPUP_PART)
 	sub	l, 181
 	mul	l, 10
 	ld	xiy, Tbl_PedalNames
@@ -16296,10 +16296,10 @@ ParamPopup_PartPedal_Skip2:
 	ldw	bc, 10
 	ldir85
 	inc	1, xix
-	cp	(0x10f1:16), 181
+	cp	(POPUP_PART:16), 181
 	jrl	nz, ParamPopup_PartPedal_Skip3
 	xor	wa, wa
-	ldb_d8	a, (0x10f3)
+	ldb_d8	a, (POPUP_VALUE)
 	push	xix
 	call	ParamDigit_ExtractAndFormat
 	pop	xix
@@ -16308,7 +16308,7 @@ ParamPopup_PartPedal_Skip2:
 	ldir85
 	jp	ParamPopup_PartPedal_Join2
 ParamPopup_PartPedal_Skip3:
-	ldb_d8	c, (0x10f3)
+	ldb_d8	c, (POPUP_VALUE)
 	xor	hl, hl
 	cp	c, 64
 	jrl	nc, ParamPopup_PartPedal_Skip4
@@ -16555,9 +16555,9 @@ Tbl_PedalNames_Helper3:
 	call	Tbl_PedalNames_Helper4
 	xor	wa, wa
 	ld	(0x1174:16), wa
-	ldw_d16	wa, (0x28c1)
+	ldw_d16	wa, (SQSTEP_SCAN_OFFSET)
 	ld	(0x1178:16), wa
-	ldw_d16	wa, (0x28bf)
+	ldw_d16	wa, (SQSTEP_SCAN_BLOCK)
 	ld	(0x117a:16), wa
 ParamPopup_PartPedal_Loop:
 	call	Tbl_PedalNames_Helper5
@@ -16867,7 +16867,7 @@ Display_RedrawFooter:
 	ld (0x1191:16), a
 	ld (0x1192:16), a
 	ld XIY,SqStep_Rows1To2LineFields
-	cpw (0x0e50:16), 0x0000
+	cpw (SQSTEP_ROW3_MEASURE:16), 0x0000
 	jr nz, Scoop_FooterShowPartValue
 	ld XIX,SqStep_Row3LineFields
 	jr t, Scoop_FooterCallDisplay
@@ -16891,51 +16891,51 @@ Display_RedrawTitleBar:
 	ld (COLORBLIT_MODE:24), 0x02
 	calr Scoop_DrawGridLines
 	calr Scoop_TitleBar_SelectPartRange
-	cpw (0x0e4c:16), 0x0000
+	cpw (SQSTEP_ROW1_MEASURE:16), 0x0000
 	jr z, Scoop_TitleBar_Part1Check
 	xor BC,BC
 	calr Scoop_TitleBar_GetPartConfig
-	cpw (0x0e4c:16), 0x03e8
+	cpw (SQSTEP_ROW1_MEASURE:16), 0x03e8
 	jr c, Scoop_TitleBar_ShowBPM_Part0
 	ld XIY,SqStep_Row1NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr t, Scoop_TitleBar_Part1Check
 Scoop_TitleBar_ShowBPM_Part0:
-	ld wa, (3660:16)
+	ld wa, (SQSTEP_ROW1_MEASURE:16)
 	ld (4487:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part0_Data
 	call GraphicsRender_EventCheck
 
 Scoop_TitleBar_Part1Check:
-	cpw (3662:16), 0
+	cpw (SQSTEP_ROW2_MEASURE:16), 0
 	jr z, Scoop_TitleBar_Part2Check
 	ld bc, 1:i3
 	calr Scoop_TitleBar_GetPartConfig
-	cpw (3662:16), 1000
+	cpw (SQSTEP_ROW2_MEASURE:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part1
 	ld xiy, SqStep_Row2NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr Scoop_TitleBar_Part2Check
 
 Scoop_TitleBar_ShowBPM_Part1:
-	ld wa, (3662:16)
+	ld wa, (SQSTEP_ROW2_MEASURE:16)
 	ld (4489:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part1_Data
 	call GraphicsRender_EventCheck
 
 Scoop_TitleBar_Part2Check:
-	cpw (3664:16), 0
+	cpw (SQSTEP_ROW3_MEASURE:16), 0
 	jr z, Scoop_TitleBar_End
 	ld bc, 2:i3
 	calr Scoop_TitleBar_GetPartConfig
-	cpw (3664:16), 1000
+	cpw (SQSTEP_ROW3_MEASURE:16), 1000
 	jr c, Scoop_TitleBar_ShowBPM_Part2
 	ld xiy, SqStep_Row3NumberDash
 	call Scoop_ConditionalGlideSetup
 	jr Scoop_TitleBar_End
 
 Scoop_TitleBar_ShowBPM_Part2:
-	ld wa, (3664:16)
+	ld wa, (SQSTEP_ROW3_MEASURE:16)
 	ld (4491:16), wa
 	ld xiy, Scoop_TitleBar_ShowBPM_Part2_Data
 	call GraphicsRender_EventCheck
@@ -16945,10 +16945,10 @@ Scoop_TitleBar_End:
 
 Scoop_TitleBar_SelectPartRange:
 	xor xbc, xbc
-	ld c, (3667:16)
-	cp c, (3668:16)
+	ld c, (SQSTEP_ROW2_BEATS:16)
+	cp c, (SQSTEP_ROW3_BEATS:16)
 	jr nc, Scoop_TitleBar_ClampParts
-	ld c, (3668:16)
+	ld c, (SQSTEP_ROW3_BEATS:16)
 
 Scoop_TitleBar_ClampParts:
 	cp c, 4:i3
@@ -16967,7 +16967,7 @@ Scoop_TitleBar_GetPartConfig:
 	ld xiy, SqStep_RowSegmentLines
 	cp bc, 1:i3
 	jr ge, Scoop_TitleBar_Part1Config
-	ld a, (3666:16)
+	ld a, (SQSTEP_ROW1_BEATS:16)
 	cp a, 0:i3
 	jr nz, Scoop_TitleBar_ShowPartSlot
 	jr Scoop_TitleBar_GetPartConfig_End
@@ -16976,14 +16976,14 @@ Scoop_TitleBar_Part1Config:
 	cp bc, 2:i3
 	jr ge, Scoop_TitleBar_Part2Config
 	add xiy, 0x5a
-	ld a, (3667:16)
+	ld a, (SQSTEP_ROW2_BEATS:16)
 	cp a, 0:i3
 	jr nz, Scoop_TitleBar_ShowPartSlot
 	jr Scoop_TitleBar_GetPartConfig_End
 
 Scoop_TitleBar_Part2Config:
 	add xiy, 0xb4
-	ld a, (3668:16)
+	ld a, (SQSTEP_ROW3_BEATS:16)
 	cp a, 0:i3
 	jr nz, Scoop_TitleBar_ShowPartSlot
 	jr Scoop_TitleBar_GetPartConfig_End
@@ -17070,7 +17070,7 @@ Display_RedrawSidePanel:
 
 Scoop_SidePanel_DrawPartLoop:
 	xor bc, bc
-	ld xiz, 0xe52
+	ld xiz, SQSTEP_ROW1_BEATS
 	xor xwa, xwa
 	ld a, e
 	add xiz, xwa
@@ -17110,16 +17110,16 @@ Scoop_SidePanel_NextPart:
 
 Scoop_SidePanel_DrawValues:
 	ld (COLORBLIT_MODE:24), 0x00
-	ld a, (3666:16)
-	cp (3660:16), 0
+	ld a, (SQSTEP_ROW1_BEATS:16)
+	cp (SQSTEP_ROW1_MEASURE:16), 0
 	jr nz, Scoop_SidePanel_StoreAndDraw
 	ld a, 0x0:opc
 
 Scoop_SidePanel_StoreAndDraw:
 	ld (4507:16), a
-	ld a, (3667:16)
+	ld a, (SQSTEP_ROW2_BEATS:16)
 	ld (4508:16), a
-	ld a, (3668:16)
+	ld a, (SQSTEP_ROW3_BEATS:16)
 	ld (4509:16), a
 	ld xiy, SqStep_RowCountBoxRecords
 	ld xix, SqStep_RowCountBoxTables

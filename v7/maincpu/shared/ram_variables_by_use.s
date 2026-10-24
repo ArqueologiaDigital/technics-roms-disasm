@@ -16,8 +16,10 @@
 	.equ SEMENU_PART_MASK,			0x065e	; the sound editor's enabled parts, one bit per part (SeMenu_SetPartEnabled)
 	.equ SEMENU_PART_MODE,			0x06ae	; the sound editor's part layout: 1 = 2 parts, else 4 (SeMenu_DrawPartSelector, SeMenu_DrawPartRadioButtons)
 	.equ STYLE_WORK_IMAGE_PTR,		0x0c72	; the style work image (0x69800, set by Flash_InitExtMemAddrs); the legacy-image converters build there
+	.equ FLASH_SECTOR_IMAGE_PTR,		0x0c96	; RAM image of the custom-data flash's section-7 sector (0x69800, Flash_InitExtMemAddrs); Flash_CopyBlocksToSlots / Flash_WriteBackSlot* build it before the sector is rewritten
 	.equ TRACK_ASSIGN_CURSOR,		0x0cdf	; the track (0..15) the TRACK ASSIGN page's cursor is on; 8 = the second page (SqTrAs_Cursor*)
 	.equ DEMO_DEBOUNCE,			0x0d33	; debounce counter of the demo selection buttons (Demo_SelectEntry_Debounce)
+	.equ PLAYBACK_START_ARMED,		0x0d34	; 1 once the start countdown is armed (PlayMode_ArmStartCountdown), 0 when disarmed
 	.equ SQSTEP_CLOCK,			0x0d57	; clock within the beat at the song-data cursor, 0..95 (SqStep_AdvanceClockByStep, SqStep_SeekForwardByDistance store it)
 	.equ SQSTEP_WRAP_COUNT,			0x0d58	; word: clock-wrap markers (0x81) passed since the start of the cursor track (SqStep_WriteClockWrapMarker increments it)
 	.equ SQSTEP_UNITS,			0x0d5a	; word: whole 96-clock units from the start of the cursor track to the cursor; the seeks count it
@@ -27,14 +29,25 @@
 	.equ SQSTEP_DISPLAY_MODE,		0x0d65	; display mode of the cursor track, from its TRACK ASSIGN value: 1 = note track, 3 = RHYTHM track; (this) & 3 indexes DisplayMode_Dispatch_Tbl / SoundEvt_ModeDispatch_Tbl
 	.equ SQSTEP_SEEK_UNITS,			0x0dcd	; distance in 96-clock units SqStep_SeekForwardByDistance moves the cursor; callers preset it
 	.equ SQSTEP_SEEK_CLOCK,			0x0dce	; the clock (0..95) SqStep_SeekForwardByDistance stops on
+	.equ SQSTEP_HELD_COUNT,			0x0dd4	; keys held while step-recording, up to 8 (TempoRingBuf_ReadNoteIntoHeldList)
+	.equ SQSTEP_COLLECTED_NOTES,		0x0dd5	; notes collected for the chord being step-recorded; TempoRingBuf_OnNoteEvent writes one record per note
 	.equ STATUS_POPUP_ID,			0x0def	; the pop-up the status bar's region 0 shows: 1 accompaniment parameter, 2 incoming control line, 4 program change, 10 part parameter, 12 RHYTHM track (ParamPopup_*, Display_ModePopupDispatch, SqStep_SetPopupIdForDisplayMode)
+	.equ SQSTEP_ROW1_MEASURE,		0x0e4c	; word: measure number of the step grid's row above the cursor row (SqStep_SetupPrevGridRow; capped at 1000)
+	.equ SQSTEP_ROW2_MEASURE,		0x0e4e	; word: measure number of the cursor row
+	.equ SQSTEP_ROW3_MEASURE,		0x0e50	; word: measure number of the row below (SqStep_SetupNextGridRow); 0 = no row
+	.equ SQSTEP_ROW1_BEATS,			0x0e52	; beats shown in row 1 (its segment count; Scoop_TitleBar_GetPartConfig draws one block per beat)
+	.equ SQSTEP_ROW2_BEATS,			0x0e53	; beats shown in row 2
+	.equ SQSTEP_ROW3_BEATS,			0x0e54	; beats shown in row 3
 	.equ SEQ_CURSOR_TRACK,			0x0eee	; the cursor track, 1..16, of the step-record and scoop screens (SqStep_SetDisplayModeFromTrack copies SEQ_SELECTED_TRACK into it)
 	.equ SEQ_EVT_STATUS,			0x0fab	; status byte of the MIDI event the song player is executing (MidiEvent_*, MidiNoteOn_*); only the low nibble, the channel, is used
 	.equ SEQ_EVT_DATA1,			0x0fac	; its first data byte (clamped to 0x7F with SEQ_EVT_DATA2 by MidiEvent_ClampVelocityA_High)
 	.equ SEQ_EVT_DATA2,			0x0fad	; its second data byte
 	.equ SEQ_EVENT_ABORT,			0x10e3	; 0 = carry on; 255 = the block chain ran out (ToneGen_AdvancePosition with no free block) or SeqTrack_ValidateAndAssignVoices found no dispatch slot.  The event handlers skip their register write when it is set and clear it after each event
+	.equ POPUP_PART,			0x10f1	; part shown by the parameter pop-up, an index into StringData_PartNames (ParamPopup_Part*)
+	.equ POPUP_VALUE,			0x10f3	; value the parameter pop-up shows (decimal, a signed amount or an on/off bit, by pop-up)
 	.equ SEQ_BLOCK_PTR,			0x10fd	; the 256-byte block being read or written: SMF_CalcPageAddress and its twins store SEQ_BLOCK_POOL + (n - 1) * 0x100 here; nested walks save and restore it
 	.equ SEQ_BLOCK_POOL_COPY,		0x110a	; a copy of SEQ_BLOCK_POOL (DispatchHandler_* store it through `ld xhl, ...`), the base SeqNode_ResolveSlotPtr and SetWall_ResolveStreamPtr add to
+	.equ PLAYBACK_COUNTDOWN,		0x1144	; ticks before an armed playback starts: 10 when armed (PlayMode_LoadStartCountdown), CDlikeSwitch_PlaybackTimer counts it down
 	.equ SEQ_BLOCK_POOL,			0x1d5a	; base of the sequencer's pool of 256-byte data blocks: SeqInit_SetBaseAddress sets 0xB0000; block n (1-based) is at this + (n - 1) * 0x100
 	.equ SEQ_DATA_OFFSET,			0x2666	; word: byte offset of the song-data cursor in SEQ_DATA_BLOCK, 5..255 (5 = first byte after the block header); at 255 ToneGen_AdvancePosition moves on to a new linked block
 	.equ SEQ_START_MEASURE,			0x2668	; word: the measure playback starts from, sign-magnitude (0x8002 = 2 measures before measure 1): punch-in minus SEQ_COUNT_IN (SeqPlay_UpdateStartFromPunchIn)
@@ -46,6 +59,9 @@
 	.equ SEQ_RTMCFG,			0x28a7	; rtmcfg, the firmware's own name (GetAdr_rtmcfg returns its address): sequencer / accompaniment playback flags; bit 2 = ignore incoming MIDI Start / Continue (Transport_EnableMidiStartContinue clears it)
 	.equ SEQ_DATA_BLOCK,			0x28af	; word: block number of the song-data cursor the sequencer reads and writes through (with SEQ_DATA_OFFSET; SeqNode_ResolveSlotPtr turns it into SEQ_BLOCK_PTR)
 	.equ SEQ_CYCLE_FLAGS,			0x28b1	; bit 0 = cycle play on (TT_SQCYCPLY), bit 1 = cycle recording on (TT_SQCYCREC; the record paths SeqMIDI_* test it) -- SeqAccomp_ParamDelivery_IncCycleEnable / SeqAccomp_SubChain_DecCycleEnable
+	.equ SQSTEP_SCAN_BLOCK,			0x28bf	; word: block of the song-data scan position (SeqStep_Walk*, SqStep_UpdateMsaStateFromEvent)
+	.equ SQSTEP_SCAN_OFFSET,		0x28c1	; word: offset in that block
+	.equ BMDREDIT_CHANNEL,			0x2965	; the MIDI channel (track) the beat / drum editor works on; SEQ_TRACK_ASSIGN[this] picks its part type (BmDrEdit_TestPartTableEntry)
 	.equ SEQ_SCREEN_OBJECT,			0x2972	; the object EVT_PAINT gave the sequencer screen handlers (ApEditSyori, NoteEditSyori, ApPlaySyori, EffEditMain store its parameter); EVT_PARA_DRAW redraw requests are sent to it
 	.equ ACC_STYLE_BANK,			0x31e9	; the style's 64 KB rhythm-ROM bank, its record's byte +0x3D1 (AccStyle_SetupPartAddresses); pattern reads are 0x400000 + bank * 0x10000 + offset	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3285
 	.equ ACC_LANE_READ_POS,			0x31eb	; [12 bytes] per-lane read position, a word per lane (lanes in ACC_PART_BIT order): the signed 16-bit offset into the style's bank, starting at the lane pointer - 0x8000 + 6 (AccStyle_SetupPartAddresses); AccBuf_Advance steps it	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3287
@@ -59,6 +75,8 @@
 	.equ ACC_PENDING_STYLE,			0x3259	; style number sampled from PANEL_STYLE, applied by AccStyle_ApplyChanges; 0xFF forces a reload (the bad-event watchdogs store it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x32f5
 	.equ ACC_PENDING_GROUP,			0x325b	; group sampled from PANEL_STYLE+1 (low 3 bits used)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x32f7
 	.equ ACC_SECTION_REQUEST,		0x3269	; the 2-bit section request, (PANEL_STYLE+7 & 0x30) >> 4 (SeqCtl_StorePedalFlags)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3305
+	.equ SNDARG_PART_SELECT,		0x32f2	; the Sound Arranger part being edited, one-hot: 1 DRUM, 2 BASS, 4 / 8 / 16 ACCOMP1-3 (AcSndArgGridBoxProc sets it; cleared entering and leaving MD_SND_ARG); AccStyle_Process copies changed sounds while it is set	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x338e
+	.equ SNDARG_LAST_SOUNDS,		0x32f9	; [10 bytes] the sound (part record bytes +0, +1 & 0x7F) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3395
 	.equ ACC_PART_BIT,			0x3338	; the accompaniment part being set up or played, one-hot: 1, 2, 4, 8, 16, 32 (AccVoice_SetupKbd1, _SetupKbd2, _SetupAcc1 .. _SetupAcc4); AccStyle_ReadParamOffset picks that part's field of a style record by it	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x33d4
 	.equ ACC_CUR_SECTION,			0x3339	; the lane being processed: its ACC_LANE_SECTION (AccVoice_SavePartState1 and its twins copy the lane in, *_RestoreState back)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x33d5
 	.equ ACC_CUR_READ_POS,			0x333c	; word: the lane being processed: its ACC_LANE_READ_POS	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x33d8
@@ -71,19 +89,31 @@
 	.equ STYLE_SECTION_LAST_MEASURE,	0x343b	; last measure index of STYLE_SECTION (its record's +13, RhythmPatInit_LoadParams)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34d7
 	.equ STYLE_SECTION_TIME_SIG,		0x343c	; time-signature code of STYLE_SECTION (its record's +12)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34d8
 	.equ STYLE_SECTION_BEATS,		0x343d	; beats per measure of STYLE_SECTION: RhythmPatInit_KitIndexTable[time-signature code] (2/4/6/8 for x/2, 1..8 for x/4 and x/8)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34d9
+	.equ CMP_QUANTIZE,			0x343f	; the Composer's QUANTIZE setting: 0 off, 1..7 = 8, 12, 16, 24, 32, 48, 96-tick grids (PsCmpQtzBoxProc prints it, AccPatch_LookupStepByDrumParam uses it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34db
 	.equ RHYTHM_LOAD_PROGRAM,		0x3451	; the rhythm RhythmROM_PatternDispatcher loads: below 0x80 a preset of RHYTHM_LOAD_BANK, 0x80 + n composer memory n	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34ed
 	.equ RHYTHM_LOAD_BANK,			0x3452	; bank of RHYTHM_LOAD_PROGRAM	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34ee
 	.equ RHYTHM_LOAD_PART,			0x3453	; part of that rhythm to load (4/5 intro, 10/11 fill-in, 6/7 ending; (this) & 15 indexes RhythmROM_LoadPattern_Data)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x34ef
+	.equ RHYTHM_SECTION_PTR,		0x34c4	; pointer into RHYTHM_PATTERN_BUF_A for STYLE_SECTION, through RhythmTiming_OffsetTable (sequencer.md)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3560
+	.equ RHYTHM_PATTERN_ALLOC,		0x34c8	; the 2 KB buffer AccPat_Dispatch_AllocAndProcess allocates (Malloc(0x800)) for a rhythm-ROM pattern; RhythmROM_LoadPattern copies into it, RhythmROM_PatternDisp_* read it	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3564
 	.equ ACC_PATCH_CURSOR_BLOCK,		0x3576	; word: block of the pattern-data write cursor (AccPatch_CopyEventToCursor, AccPatch_StoreMeasureCursor)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3612
 	.equ ACC_PATCH_CURSOR_OFFSET,		0x3578	; word: byte offset in that block; 6 is the first data byte after the block header	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3614
+	.equ CMP_STEP_MODE,			0x3676	; Composer step mode: 4 = step entry (CmpStep_SetStepModeAndBlockSustain); AccDraw_StepNoteValue and its twins act only then	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3712
+	.equ STEP_NOTE_VALUE,			0x3678	; step-record note value, 1..13 (AccDraw_StepNoteValue; SqStep_ComputeStepAndGateTime reads ScoopParam_ValueTable by it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3714
+	.equ STEP_PLUS_NOTE_VALUE,		0x3679	; the "+" note value added to it, 0..13	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3715
+	.equ STEP_ARTICULATION,			0x367a	; 0 TENU, 1 NORM, 2 STAC, 3 CUTT: the gate as 19/20, 4/5, 1/2 or 1/4 of the step	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3716
+	.equ STEP_VELOCITY,			0x367b	; the velocity Disp_ShowNoteNameAndVelocity prints after 'V' (255 = none)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3717
+	.equ STEP_NOTE,				0x367c	; the note number Disp_ShowNoteNameAndVelocity prints (PerfMode_StepNoteNumber steps it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3718
 	.equ SQSTEP_MEASURE,			0x367e	; word: measure number at the cursor (DisplayStr_ShowMeasureNumber shows it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x371a
+	.equ SQSTEP_STYLE_SECTION,		0x368c	; style-section index the step-record display shows: 1 START, 2 STOP, ... (DisplayStr_StyleSectionNames)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x3728
 	.equ CMP_RECORD_PART,			0x36ff	; the Composer's record part, one-hot: 1, 2, 4 = ACP1-3, 8 = BASS, 16 = DRUM (MidiStream_PartEventMapTable, AccPatch_ChannelBitToIndex index by it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x379b
 	.equ STYLE_COPY_SRC_SECTION,		0x3910	; AccPatch_CopySection copies this section of STYLE_SRC_IMAGE_PTR ...	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39ac
 	.equ STYLE_COPY_DST_SECTION,		0x3911	; ... into this section of STYLE_DST_IMAGE_PTR	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39ad
 	.equ STYLE_SRC_IMAGE_PTR,		0x3912	; the style image read from (usually RHYTHM_PATTERN_BUF_A; AccPatch_CountAvailableSlotsInAltImage points it at 0x69800 for a while)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39ae
 	.equ STYLE_DST_IMAGE_PTR,		0x3916	; the style image AccPatch_CopySection writes to	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x39b2
+	.equ ACCSEQ_BLOCK,			0x7da6	; word: the accompaniment sequencer's current data block; its 256 bytes are at 0x1E8B00 + 256 * (this & 0xFFF) (AccompSeq_GetBlockBase)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x7e42
 	.equ DISK_MEDIA_TYPE,			0x8464	; word: disk type code from GetDiskSizeInfo: 2 / 4 2DD, 3 2HD, 5 PD, 6-7 DOC, 0xFFFF none (DiskInfo_MediaTypeNames)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8500
 	.equ SINGLE_LOAD_AREA,			0x895c	; the memory area of the single-load screens: 0 PANEL MEMORY, 1 SEQUENCER, 2 COMPOSER, 3 SOUND MEMORY, 4 none (SingleLoadSrc_ListProcByMode is indexed by it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x89f8
+	.equ SINGLE_LOAD_ALL,			0x895e	; ALL mode of the single-load list: cell 3 shows "ALL" and the item number is left out	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x89fa
 	.equ FDC_PROBE_FLAG,			0x8974	; word: 0xFFFF while a caller probes the disk format (a one-sector read of track 0, head 0 gets a single try: FDC_DETECT_CHECK, FDC_DRIVE_DETECT)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a10
 	.equ FDC_BUSY_LATCH,			0x897a	; 0xA5 while a request runs, 0x5A when it ends; a request that finds 0xA5 fails with 0xFB (FDC_CommandEntry)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a16
 	.equ FDC_SECTOR_SIZE,			0x8982	; word: sector size, 0x200 or 0x400	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8a1e
@@ -123,7 +153,9 @@
 	.equ DISPLAY_CHORD_ROOT,		0x8ca4	; the chord MainChordPre shows: its root (copied from CHORD_ROOT by Chord_ApplyCurrentChord)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d40
 	.equ DISPLAY_CHORD_TYPE,		0x8ca6	; the chord MainChordPre shows: its type	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d42
 	.equ DISPLAY_CHORD_BASS,		0x8ca8	; the chord MainChordPre shows: its bass root, 0 unless it is an on-bass chord	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d44
+	.equ DIAG_ANIM_STEP,			0x8cde	; step of the diagnostic title sequence, 1..5 then wrapping to 1 every 30 calls (EffectMode_DiagSeq_AnimFrame)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8d7a
 	.equ DEMO_PLAY_STATE,			0x8eb2	; 4 = idle (the Demo_SelectEntry_* paths), 6 = a song started by Demo_SelectEntry_PlaySong	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x8f4e
+	.equ PART_RECORD_PTRS,			0x9056	; address of the part-record pointer table: entry p = part p's RAM record, 0xFFFFFFFF = none (Audio_InitAllDefaults stores it; MIDI_WriteVoiceParam* index it)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x90f2
 	.equ PROGRAM_CHANGE_PART,		0x905b	; the part a program change or sound selection is for: 0..31, 16-20 from the accompaniment chains (AccPatch_UpdateChain_*), 72 = the rhythm part	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x90f7
 	.equ EXTDATA_TLV_OFFSET,		0x9093	; byte offset in the panel record (tag MIDI_MSG_STATUS) the ExtData_* handlers change	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x912f
 	.equ EXTDATA_VALUE,			0x9094	; the received value; with EXTDATA_MASK a two-byte value for ExtData_SetTempoIfChanged	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9130
@@ -135,8 +167,10 @@
 	.equ MIDIRX_PART_EVENT,			0x95a8	; [4 bytes] the part-parameter event a MIDI receive handler builds: +0 target, +1 part, +2 value, +3 mask; MidiCC_QueuePartParam queues it on the SwbtWr queue	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x9644
 	.equ MIDIRX_PART,			0x95ce	; the part a received channel message is being applied to: MidiRx_ChannelMsgDispatch walks the parts the channel maps to and calls the handler for each	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x966a
 	.equ MIDIRX_PARTS_LEFT,			0x95cf	; parts of that list still to do (MidiRx_ChannelMsgDispatch counts it down)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0x966b
+	.equ MIDIPKT_RX_GROUPS,			0xbc7e	; bulk-receive groups completed, bits 7 panel, 6 sound RAM, 5 / 4 / 2 the others: MidiSysEx_Finish*Xfer act on their bit and clear it	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xbd1a
 	.equ SWBTWR_DISPATCH_INDEX,		0xbfdf	; word: read offset in the SwbtWr dispatch buffer (SwbtWr_DispatchLoop)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xc07b
 	.equ SWBTWR_BUFFER_PTR,			0xbfed	; the SwbtWr dispatch buffer (SwbtWr_InitBank1-3 point it at their bank)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xc089
+	.equ HARMONY_NOTE_LIST,			0xcd86	; the note list Harmony_FindReferenceNote scans: word count, then 2-byte entries from +4 (VoiceMap_AllocateSlot, NoteMap_FindBestMatch)	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xce22
 	.equ HARMONY_REF_NOTE,			0xce0e	; harmony reference note: the lowest note of the list Harmony_FindReferenceNote scans, if in 25..102, else 0xFF	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xceaa
 	.equ HARMONY_REF_BYTE,			0xce0f	; the other byte of that note's list entry	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xceab
 	.equ HARMONY_PREV_REF_NOTE,		0xce10	; the previous HARMONY_REF_NOTE	; v7 address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's 0xceac
@@ -172,6 +206,8 @@
 	.equ SEQBUF_MIDIOUT,			0x1f785	; the MIDI-out ring buffer (SeqBuf_MidiOut_*)
 	.equ SEQBUF_DSPSYSEX,			0x1fca3	; the DSP SysEx ring buffer (SeqBuf_DspSysEx_*)
 	.equ PRESENTATION_LOADED,		0x251d8	; word: 1 while a presentation started from disk is loaded (Seq_InitializeAndStart sets it, MainPreControl clears it; MT_ExistPresentation returns it)
+	.equ NAMING_LENGTH,			0x274d6	; word: length of the name being edited (32 from AcNaming_InitScrollState)
+	.equ NAMING_CURSOR,			0x274d8	; word: cursor position in the name being edited (kept below NAMING_LENGTH)
 	.equ NAMING_CHAR,			0x274de	; word: the character at the naming window's cursor, as an index into the character page (0x1A underscore, 0x25 space); the dial steps it
 	.equ OBJECT_REGISTRY,			0x27ed2	; the object table RegisterObjectTable fills: 14-byte entries {class, proc, count, table}, entry n at +14n (ClassProc, FunctionProc, TitleProc ... look objects up here)
 	.equ EVENT_QUEUE,			0x2bc34	; the event queue PostEvent / ApPostEvent fill: 1,024 entries of 12 bytes {target, event, param} (GetEvent, DeleteEvent scan it)
@@ -179,6 +215,10 @@
 	.equ WALLPAPER_BITMAP,			0x30452	; the wallpaper bitmap, 320 bytes per row (ChangeWall_Impl stores it); colour 0xF5 draws by copying the pixel from it
 	.equ DRAW_QUEUE,			0x30466	; the 8 KB circular queue of draw commands (DrawQueue_Alloc, DrawRing_Init): each entry a DrawXxx_Impl address and its parameters
 	.equ DRAW_QUEUE_WRITE_PTR,		0x3246a	; where DrawQueue_Alloc puts the next command
+	.equ MUSIC_STYLIST_GENRE,		0x340c4	; word: the genre selected on the Music Stylist pages (MstStyle_*)
+	.equ MUSIC_STYLIST_GROUP_TABLE,		0x340d2	; the group table of that genre (MstStyle1Page_EventDispatch loads it)
+	.equ HELP_LANGUAGE,			0x340e4	; the help / feature-demo text language: 0 English, 1 German, 2 French, 3 Spanish, 4 Italian, 5 Indonesian (MT_SetLang, CheckLanguage; the FtLangText* tables are indexed by it)
+	.equ SURE_CONFIRM,			0x340ea	; non-zero = ask "are you sure?" before a delete, overwrite or clear (SureJudgeFunc, FileName_OpDelete, CmpBkslSTtl_DirectMode_OnClearPattern); 0 = act at once
 	.equ PANEL_RECALL_BACKUP,		0x3c8e4	; [960 bytes] backup of the live panel records PANEL_RECORDS..+959, which a panel-memory recall restores the current style and MSP fields from
 	.equ SDPART_ROW,			0x3e99e	; word: the selected row of the part list (IvSdpart_*, AcLswPartEdit*, PsMixer_*): row * 2 indexes the row's part
 	.equ GFX_BG_COLOR,			0x3efa2	; word: background colour (Display_SetBackgroundColor stores it)

@@ -67,7 +67,7 @@ SingleLoadDstMemFunc:
 SingleLoadDstMemFunc_OnPaint:
 	ld	xwa, (0x8122:16)
 	lda	xde, (StorageArea_UnitNames:24)
-	cp	(0x895e:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstMem_ShowFromBank
 	cp	(SINGLE_LOAD_AREA:16), 1
 	jr	z, SLDstMem_ShowFromBank
@@ -138,7 +138,7 @@ SingleLoadSrcMemFunc_OnPaint:
 	ld	c, (SINGLE_LOAD_AREA:16)
 	cp	c, 1:i3
 	jr	z, SLSrcMem_ShowDirect
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLSrcMem_ShowFromIndex
 SLSrcMem_ShowDirect:
 	ld xde, (xde + 16)
@@ -238,7 +238,7 @@ SLSrcBankList_FuncBody_Helper9:
 	lda	xwa, (35037:16)
 	ld	xbc, SLSrcBankList_FuncBody_Str_Colon_2
 	call	FileIO_BuildFilePath
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Skip
 	lda	xiz, (35037:16)
 	ld	a, (35168:16)
@@ -260,7 +260,7 @@ SLSrcBankList_FuncBody_Skip:
 	ld	xwa, (xsp+6)
 	ld	xbc, EVT_PARA_DRAW
 	call	ApPostEvent
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLSrcBankList_FuncBody_Epilogue
 	lda	xwa, (34994:16)
 	ld	(xwa+63), 3
@@ -279,7 +279,7 @@ SLSrcBankList_FuncBody_Helper10:
 	dec	4, xsp
 	push	xiz
 	ld	(xsp+4), xwa
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Helper10_Epilogue
 	lda	xwa, (34994:16)
 	ld	(xwa+63), 3
@@ -628,7 +628,7 @@ SLSrcBankList_FuncBody_Helper12:
 	lda	xwa, (35037:16)
 	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_Colon_3
 	call	FileIO_BuildFilePath
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Skip14
 	lda	xiz, (35037:16)
 	ld	wa, (xsp+4)
@@ -646,7 +646,7 @@ SLSrcBankList_FuncBody_Skip14:
 	call	ApPostEvent
 	lda	xbc, (34994:16)
 	lda	xwa, (xbc+63)
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SingleLoadSrc_SequencerListProc_Skip
 	ld	(xwa), 3
 	lda	xwa, (xbc+64)
@@ -685,7 +685,7 @@ SLSrcBankList_FuncBody_Helper13:
 	div	wa, e
 	ld	c, w
 	extz	bc
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Epilogue4
 	cp	bc, 4:i3
 	jr	nc, SLSrcBankList_FuncBody_Epilogue4
@@ -1017,7 +1017,7 @@ SLSrcBankList_FuncBody_Helper17:
 	lda	xwa, (35037:16)
 	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_Colon_5
 	call	FileIO_BuildFilePath
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Skip29
 	ld	e, (xsp+4)
 	add	e, (xsp+0x4)
@@ -1056,7 +1056,7 @@ SLSrcBankList_FuncBody_Skip29:
 	ld	xwa, (xsp+6)
 	ld	xbc, EVT_PARA_DRAW
 	call	ApPostEvent
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLSrcBankList_FuncBody_Epilogue7
 	lda	xwa, (34994:16)
 	ld	(xwa+63), 3
@@ -1075,7 +1075,7 @@ SLSrcBankList_FuncBody_Helper18:
 	dec	4, xsp
 	push	xiz
 	ld	(xsp+4), xwa
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrcBankList_FuncBody_Epilogue8
 	lda	xwa, (34994:16)
 	ld	(xwa+63), 3
@@ -1481,7 +1481,7 @@ SLSrc_ScrollMode6:
 	jr	nz, SLSrc_ScrollMode7
 	cp	(SINGLE_LOAD_AREA:16), 1
 	jr	z, SLSrc_ScrollMode6_NoStep
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLSrc_ScrollMode6_NoStep
 	ld	xwa, (33092:16)
 	ld	xbc, EVT_SET_SELECTED_FILE_NUMBER
@@ -1630,7 +1630,7 @@ SLDstBankList_FuncBody_Helper6:
 	lda	xwa, (xde+43)
 	ld	xbc, (xhl+bc)
 	inc	1, xbc
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip
 	call	FileIO_CopyString
 	lda	xwa, (35121:16)
@@ -1841,7 +1841,7 @@ SingleLoadDst_PanelMemListProc_Skip10:
 	ld	xwa, (xsp+4)
 	cp	xwa, 10
 	jrl	nz, SingleLoadDst_PanelMemListProc_Loop
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip11
 	ld	a, (35168:16)
 	extz	wa
@@ -2063,7 +2063,7 @@ SLDstBankList_FuncBody_Helper9:
 	lda	xwa, (35121:16)
 	ld	xbc, SLDstBankList_FuncBody_Str_Colon_6
 	call	FileIO_BuildFilePath
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLDstBankList_FuncBody_Skip17
 	lda	xiz, (35121:16)
 	ld	a, (35178:16)
@@ -2081,7 +2081,7 @@ SLDstBankList_FuncBody_Skip17:
 	calr	TrimAndPadSmfFilename
 	lda	xbc, (35078:16)
 	lda	xwa, (xbc+63)
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip18
 	ld	(xwa), 3
 	lda	xwa, (xbc+64)
@@ -2272,7 +2272,7 @@ SingleLoadDst_ComposerListProc_Skip23:
 	ld	xwa, (xsp+4)
 	cp	xwa, 10
 	jrl	nz, SingleLoadDst_ComposerListProc_Loop3
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip28
 	ld	a, (35170:16)
 	extz	wa
@@ -2349,7 +2349,7 @@ SingleLoadDst_DrawSoundMemItemRows:
 	ld	(xsp+4), c
 	ld	(xsp+6), xwa
 	lda	xde, (StorageArea_UnitNames:24)
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip30
 	lda	xwa, (35078:16)
 	ld	(xwa+42), 2
@@ -2689,7 +2689,7 @@ SingleLoadDst_SoundMemListProc_Skip36:
 	ld	xwa, (xsp+4)
 	cp	xwa, 10
 	jrl	nz, SingleLoadDst_SoundMemListProc_Loop4
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	z, SLDstBankList_FuncBody_Skip45
 	ld	a, (35172:16)
 	extz	wa
@@ -2872,7 +2872,7 @@ SLDst_HandleScroll:
 	ld	xwa, (xsp+8)
 	cp	xwa, EVT_INDEXSW_UP
 	scc	z, a
-	ld	(35166:16), a
+	ld	(SINGLE_LOAD_ALL:16), a
 	ld	xwa, xiz
 	ld	xbc, EVT_PAINT
 	ld	xde, 0:i3
@@ -3059,7 +3059,7 @@ SLDst_Scroll_SubMode2:
 	call (xhl)
 	jrl	SLDst_Return
 SLDst_Scroll_SubMode3:
-	cp	(35166:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, SLDst_Scroll_SubMode4
 	ld	xbc, EVT_SET_SELECTED_FILE_NUMBER
 	ld	xde, 3:i3
@@ -3194,7 +3194,7 @@ CmpSrc_ScrollMode6:
 	ld	xwa, (xsp + 4)
 	cp	xwa, 0x6
 	jr	nz, CmpSrc_ScrollMode7
-	cp	(0x895e:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, CmpSrc_ScrollMode6_NoStep
 	ld	xwa, (0x8158:16)
 	ld	xbc, EVT_SET_SELECTED_FILE_NUMBER
@@ -3250,7 +3250,7 @@ CmpSrc_ScrollMode8:
 	ld	xbc, (xsp + 4)
 	cp	xbc, 0x8
 	jr	nz, CmpSrc_ScrollMode40
-	cp	(0x895e:16), 0
+	cp	(SINGLE_LOAD_ALL:16), 0
 	jr	nz, CmpSrc_ScrollMode40
 	ld	xbc, EVT_SET_SELECTED_FILE_NUMBER
 	ld	xde, 0xffffffff
@@ -3357,7 +3357,7 @@ CmpDst_HandleScroll:
 	ld XWA,(XSP+0x08)
 	cp XWA,EVT_INDEXSW_UP
 	scc Z,A
-	ld (0x895e:16), a
+	ld (SINGLE_LOAD_ALL:16), a
 	ld XWA,XIZ
 	ld XBC,EVT_PAINT
 	ld xde, 0:i3
@@ -3449,7 +3449,7 @@ CmpDst_ScrollMode8:
 	ld XBC,(XSP+0x04)
 	cp XBC,0x00000008
 	jr nz, .Lc_f912d3
-	cp (0x895e:16), 0x00
+	cp (SINGLE_LOAD_ALL:16), 0x00
 	jr nz, .Lc_f912a2
 	ld XBC,EVT_SET_SELECTED_FILE_NUMBER
 	ld xde, 3:i3
@@ -3505,7 +3505,7 @@ CmpDst_ScrollMode6:
 	ld XBC,(XSP+0x04)
 	cp XBC,0x00000006
 	jr nz, CmpDst_Return
-	cp (0x895e:16), 0x00
+	cp (SINGLE_LOAD_ALL:16), 0x00
 	jr nz, CmpDst_Return
 	ld XBC,EVT_SET_SELECTED_FILE_NUMBER
 	ld XDE,0xffffffff

@@ -8760,7 +8760,7 @@ SeMenu_DrawDrumKitCopyConfirm:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiz, SeMenu_DrumKitCopyConfirm_TextByLanguage
 	xor	xwa, xwa
-	ld	a, (0x0340e4:24)
+	ld	a, (HELP_LANGUAGE:24)
 	sla	wa, 2
 	add	xiz, xwa
 	ld	xiy, (xiz)
@@ -16519,7 +16519,7 @@ PsCmpQtzBoxProc_OnPaintOrRepaint:
 	call InheritedProc
 	ld xwa, xiz
 	call GetViewInstance
-	ld a, (0x34db:16)
+	ld a, (CMP_QUANTIZE:16)
 	extz wa
 	sla wa, 2
 	lda xbc, (PtrTbl_NotePositionStrs:24)
@@ -18877,7 +18877,7 @@ AcSndArgGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
 	dec 2, a
 	extz wa
 	lda xbc, (xsp + 12)
-	ld	(0x338e:16), (xbc+wa)
+	ld	(SNDARG_PART_SELECT:16), (xbc+wa)
 	ld d, 0x0:opc
 	extz xde
 	ld xwa, NAKA_MAINFUNC_SndArgNmGet
@@ -18946,7 +18946,7 @@ AcSndArgGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
 	dec 2, a
 	extz wa
 	lda xbc, (xsp + 12)
-	ld	(0x338e:16), (xbc+wa)
+	ld	(SNDARG_PART_SELECT:16), (xbc+wa)
 	ld d, 0x0:opc
 	extz xde
 	ld xwa, NAKA_MAINFUNC_SndArgNmGet

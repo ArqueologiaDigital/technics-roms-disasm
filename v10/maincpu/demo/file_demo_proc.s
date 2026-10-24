@@ -1107,7 +1107,7 @@ Voice_CopyPreset:
 Demo_LookupPartTableEntry:
 	extz wa
 	sla wa, 2
-	ld xbc, (0x90f2:16)
+	ld xbc, (PART_RECORD_PTRS:16)
 	exts xwa
 	add xwa, xbc
 	ld xhl, (xwa)

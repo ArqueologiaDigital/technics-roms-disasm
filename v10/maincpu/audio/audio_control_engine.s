@@ -4053,7 +4053,7 @@ Audio_InitAllDefaults:
 	ld (0x90f8:16), 127
 	ld (0x8f63:16), 255
 	lda xwa, (PanelTlv_PayloadByTag:24)
-	ld (0x90f2:16), xwa
+	ld (PART_RECORD_PTRS:16), xwa
 	lda xwa, (PanelTlv_CompanionByPart:24)
 	ld (0x9182:16), xwa
 	lda xbc, (0x918d:16)
@@ -4166,7 +4166,7 @@ Audio_UpdateTempoAndReturn:
 
 Audio_FullReinitWithPreset:
 	lda xwa, (PanelTlv_PayloadByTag:24)
-	ld (0x90f2:16), xwa
+	ld (PART_RECORD_PTRS:16), xwa
 	lda xwa, (PanelTlv_CompanionByPart:24)
 	ld (0x9182:16), xwa
 	call Sys_CheckPowerStableFlag
@@ -4925,7 +4925,7 @@ Audio_MainPeriodicUpdate:
 	ret z
 	res 0, (0x9165:16)
 	lda xwa, (PanelTlv_PayloadByTag:24)
-	ld (0x90f2:16), xwa
+	ld (PART_RECORD_PTRS:16), xwa
 	calr Audio_SyncBufferPositions
 	push xde
 	push xhl
@@ -8202,7 +8202,7 @@ MIDI_WriteVoiceParamCC:
 	xor h, h
 	ld l, c
 	sla hl, 2
-	ld xix, (0x90f2:16)
+	ld xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp xix, 0x9166
 	jr z, MidiWriteVoice_Done
@@ -8239,7 +8239,7 @@ MIDI_WriteVoiceParamDirect:
 	xor h, h
 	ld l, c
 	sla hl, 2
-	ld xix, (0x90f2:16)
+	ld xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp xix, 0x9166
 	jr z, MidiWriteDirect_Done
@@ -9063,7 +9063,7 @@ TempoCC_TransmitBytecodeBlock:
 	ld	(xix+), wa
 	ldw_d16	wa, (0x91bd)
 	ld	(xix+), wa
-	ld	xiy, (0x90f2:16)
+	ld	xiy, (PART_RECORD_PTRS:16)
 	extz	wa
 	sll	wa, 2
 	ld	xiy, (xiy+wa)
@@ -9546,7 +9546,7 @@ VoiceMode_ParamHandler_4:
 	extz hl
 	ld l, c
 	sll hl, 2
-	ld xix, (0x90f2:16)
+	ld xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp xix, 0xffffffff
 	jrl z, MidiCtrl_NullRet
@@ -9829,7 +9829,7 @@ VoiceMode3_EvType6:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (37106:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 4294967295
 	jr	z, VoiceMode3_DispatchTable_Code_Return2
@@ -11518,7 +11518,7 @@ MidiStream_RunStatus_Mode3:
 	extz	hl
 	ld l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld wa, (xix)
 	ld	(0x90ea:16), wa
@@ -11552,7 +11552,7 @@ MidiStream_HandlePgmChange:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld l, b
 	ld	e, (xix+l)
@@ -11576,7 +11576,7 @@ MidiStream_HandleChanPressure_Skip:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	l, b
 	ld	e, (xix+l)
@@ -11590,7 +11590,7 @@ MidiStream_HandleSysMsg:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	l, b
 	ld	e, (xix+l)
@@ -11837,7 +11837,7 @@ MidiStream_ExtDispatch_Mode0:
 	xor	h, h
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtDispatch_Mode0_Return
@@ -11886,7 +11886,7 @@ MidiStream_ExtDispatch_Mode1:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtDispatch_Mode1_Return2
@@ -11916,7 +11916,7 @@ MidiStream_ExtDispatch_Mode3:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtDispatch_Mode3_Return3
@@ -11954,7 +11954,7 @@ MidiStream_SetPartProgram:
 	xor	h, h
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	(xix), e
 	andmi8	(xix+0x1), 128
@@ -12201,7 +12201,7 @@ MidiStream_RunStatus_Mode1_Skip3:
 	extz	hl
 	ldb_d8	l, (0x915b)
 	sll	hl, 2
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_RunStatus_Mode1_Return2

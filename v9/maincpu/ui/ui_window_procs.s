@@ -20,7 +20,7 @@ WndScroll_CopyLoop:
 	ld (xix), a
 	inc 1, iz
 	inc 1, xbc
-	cp iz, (0x0274d6:24)
+	cp iz, (NAMING_LENGTH:24)
 	jr c, WndScroll_CopyLoop
 
 WndScroll_InitBuffer:
@@ -58,7 +58,7 @@ WndScroll_InitSelectionTrack:
 	calr WindowProc
 	ldw (0x0274dc:24), 0xffff
 	ldw (0x0274e0:24), 0xffff
-	ld de, (0x0274d8:24)
+	ld de, (NAMING_CURSOR:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SET_CURSOR
@@ -276,11 +276,11 @@ WndEvt_DispatchByEventCode:
 
 ; Window event dispatch by event code
 WndEvt_EventCodeDispatch:
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	cp	wa, 0:i3
 	jrl	z, UIDialog_ReturnZeroJmp
 	dec	1, wa
-	ld	(0x0274d8:24), wa
+	ld	(NAMING_CURSOR:24), wa
 	ld	de, wa
 	extz	xde
 	ld	xwa, (xsp+50)
@@ -293,13 +293,13 @@ WndEvt_EventCodeDispatch:
 ; WndEvt_DispatchByEventCode_CursorRight: button 2: cursor (0x274D8) + 1 while below the name length (0x274D6),
 ;   EVT_SET_CURSOR
 WndEvt_DispatchByEventCode_CursorRight:
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	ld	bc, wa
 	inc	1, bc
-	cp bc, (160982:24)
+	cp bc, (NAMING_LENGTH:24)
 	jrl	nc, UIDialog_ReturnZeroJmp
 	inc	1, wa
-	ld	(0x0274d8:24), wa
+	ld	(NAMING_CURSOR:24), wa
 	ld	de, wa
 	extz	xde
 	ld	xwa, (xsp+50)
@@ -331,7 +331,7 @@ WndEvt_DispatchByEventCode_PrevChar:
 	lda	xbc, (xsp+12)
 	ld	xwa, (xwa)
 	call	ConvertStrings
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	extz	xwa
 	lda	xde, (0x0274b0:24)
 	ld	xbc, xde
@@ -383,7 +383,7 @@ WndEvt_EventCodeDispatch_OnIndexswUp:
 	ld	xwa, (xbc)
 	ld	xbc, (xsp+8)
 	call	ConvertStrings
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	extz	xwa
 	lda	xde, (0x0274b0:24)
 	ld	xbc, xde
@@ -474,7 +474,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	jr	nz, WndEvt_EventCodeDispatch_Skip5
 	cp	(xde+1), 80
 	jr	nz, WndEvt_EventCodeDispatch_Skip5
-	ld	bc, (0x0274d8:24)
+	ld	bc, (NAMING_CURSOR:24)
 	extz	xbc
 	ld	xde, xwa
 	add	xde, xbc
@@ -483,7 +483,7 @@ WndEvt_EventCodeDispatch_Skip4:
 	ld	(xde), a
 	jr	WndEvt_EventCodeDispatch_Join
 WndEvt_EventCodeDispatch_Skip5:
-	ld	de, (0x0274d8:24)
+	ld	de, (NAMING_CURSOR:24)
 	extz	xde
 	add	xwa, xde
 	ld	(xwa), c
@@ -534,7 +534,7 @@ WndEvt_DispatchByEventCode_NextChar:
 	call	ConvertStrings
 	lda	xde, (xsp+12)
 	ld	c, (xde)
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	extz	xwa
 	cp	c, 83
 	jr	nz, WndEvt_DispatchByEventCode_NextChar_Skip6
@@ -569,9 +569,9 @@ WndEvt_EventCodeDispatch_Join3:
 ; WndEvt_DispatchByEventCode_InsertBlank: button 6: shift the name right from the cursor and put the fill character at
 ;   the cursor
 WndEvt_DispatchByEventCode_InsertBlank:
-	ld	iz, (0x0274d6:24)
+	ld	iz, (NAMING_LENGTH:24)
 	dec	1, iz
-	cp iz, (160984:24)
+	cp iz, (NAMING_CURSOR:24)
 	jr	ule, WndEvt_DispatchByEventCode_InsertBlank_Skip7
 	lda	xde, (0x0274b0:24)
 	ld	bc, iz
@@ -591,10 +591,10 @@ WndEvt_DispatchByEventCode_InsertBlank_Loop:
 	ld	(xix), a
 	dec	1, iz
 	dec	1, xbc
-	cp iz, (160984:24)
+	cp iz, (NAMING_CURSOR:24)
 	jr	ugt, WndEvt_DispatchByEventCode_InsertBlank_Loop
 WndEvt_DispatchByEventCode_InsertBlank_Skip7:
-	ld	wa, (0x0274d8:24)
+	ld	wa, (NAMING_CURSOR:24)
 	extz	xwa
 	lda	xde, (0x0274b0:24)
 	ld	xbc, xde
@@ -605,7 +605,7 @@ WndEvt_DispatchByEventCode_InsertBlank_Skip7:
 	ld	xwa, 22
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
-	ld	de, (0x0274d8:24)
+	ld	de, (NAMING_CURSOR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
@@ -613,8 +613,8 @@ WndEvt_DispatchByEventCode_InsertBlank_Skip7:
 ; WndEvt_DispatchByEventCode_DeleteChar: button 7: delete at the cursor, shift the rest left and put the fill
 ;   character at the end
 WndEvt_DispatchByEventCode_DeleteChar:
-	ld	iz, (0x0274d8:24)
-	cp iz, (160982:24)
+	ld	iz, (NAMING_CURSOR:24)
+	cp iz, (NAMING_LENGTH:24)
 	jr	nc, WndEvt_DispatchByEventCode_DeleteChar_Skip8
 	lda	xde, (0x0274b0:24)
 	ld	bc, iz
@@ -634,10 +634,10 @@ WndEvt_DispatchByEventCode_DeleteChar_Loop2:
 	ld	(xix), a
 	inc	1, iz
 	inc	1, xbc
-	cp iz, (160982:24)
+	cp iz, (NAMING_LENGTH:24)
 	jr	c, WndEvt_DispatchByEventCode_DeleteChar_Loop2
 WndEvt_DispatchByEventCode_DeleteChar_Skip8:
-	ld	wa, (0x0274d6:24)
+	ld	wa, (NAMING_LENGTH:24)
 	dec	1, wa
 	extz	xwa
 	lda	xde, (0x0274b0:24)
@@ -649,7 +649,7 @@ WndEvt_DispatchByEventCode_DeleteChar_Skip8:
 	ld	xwa, 22
 	ld	xbc, EVT_PARA_DRAW
 	call	SendEvent
-	ld	de, (0x0274d8:24)
+	ld	de, (NAMING_CURSOR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
@@ -659,7 +659,7 @@ WndEvt_DispatchByEventCode_DeleteChar_Skip8:
 WndEvt_DispatchByEventCode_CenterName:
 	ld qiz, 0
 	ld iz, 0:i3
-	ld	de, (0x0274d6:24)
+	ld	de, (NAMING_LENGTH:24)
 	cp	de, 0:i3
 	jr	ule, WndEvt_DispatchByEventCode_CenterName_Skip9
 	lda	xhl, (0x0274b0:24)
@@ -717,7 +717,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip10:
 	ld	xwa, (xsp+14)
 	push	xwa
 	call	Strcpy
-	ld	wa, (0x0274d6:24)
+	ld	wa, (NAMING_LENGTH:24)
 	sub	wa, qiz
 	sub	wa, (xsp+14)
 	extz	xwa
@@ -755,7 +755,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip:
 	ld	bc, qiz
 	add	bc, (xsp+4)
 	sub	bc, (xsp+6)
-	ld	wa, (0x0274d6:24)
+	ld	wa, (NAMING_LENGTH:24)
 	ld	iz, wa
 	sub	iz, bc
 	cp	iz, wa
@@ -772,14 +772,14 @@ WndEvt_DispatchByEventCode_CenterName_Loop4:
 	ld	(xix), a
 	inc	1, iz
 	inc	1, xbc
-	cp iz, (160982:24)
+	cp iz, (NAMING_LENGTH:24)
 	jr	c, WndEvt_DispatchByEventCode_CenterName_Loop4
 WndEvt_DispatchByEventCode_CenterName_Skip2:
 	ld	xwa, 22
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 0x0274b0
 	call	SendEvent
-	ld	de, (0x0274d8:24)
+	ld	de, (NAMING_CURSOR:24)
 	extz	xde
 	ld	xwa, (xsp+50)
 	ld	xbc, EVT_SET_CURSOR
@@ -787,7 +787,7 @@ WndEvt_DispatchByEventCode_CenterName_Skip2:
 ; WndEvt_DispatchByEventCode_ClearName: button 9: fill the whole name with the fill character and move the cursor to 0
 WndEvt_DispatchByEventCode_ClearName:
 	ld	iz, 0:i3
-	cpw	(0x0274d6:24), 0
+	cpw	(NAMING_LENGTH:24), 0
 	jr	ule, WndEvt_DispatchByEventCode_ClearName_Skip
 	lda	xde, (0x0274b0:24)
 	ld	xhl, xbc
@@ -800,7 +800,7 @@ WndEvt_DispatchByEventCode_ClearName_Loop5:
 	ld	(xix), a
 	inc	1, iz
 	inc	1, xbc
-	cp iz, (160982:24)
+	cp iz, (NAMING_LENGTH:24)
 	jr	c, WndEvt_DispatchByEventCode_ClearName_Loop5
 WndEvt_DispatchByEventCode_ClearName_Skip:
 	ld	xwa, 22
@@ -871,7 +871,7 @@ WndScroll_SendSelectionEvents:
 
 WndScroll_HandleCharInput:
 	ld xwa, (xsp + 42)
-	ld (0x0274d8:24), wa
+	ld (NAMING_CURSOR:24), wa
 	ld de, wa
 	extz xde
 	ld xwa, 0x16
@@ -881,7 +881,7 @@ WndScroll_HandleCharInput:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x274b0
 	call SendEvent
-	ld bc, (0x0274d8:24)
+	ld bc, (NAMING_CURSOR:24)
 	extz xbc
 	lda xde, (0x0274b0:24)
 	ld xwa, xde
@@ -915,7 +915,7 @@ WndScroll_SetCategoryZero:
 	ld c, 0x15:opc
 
 WndScroll_ComputeCharOffset:
-	ld wa, (0x0274d8:24)
+	ld wa, (NAMING_CURSOR:24)
 	extz xwa
 	add xde, xwa
 	ld a, (xde)
@@ -962,7 +962,7 @@ WndScroll_CompareCharLoop:
 	lda xbc, (xsp + 12)
 	ld xwa, (xwa)
 	call ConvertStrings
-	ld wa, (0x0274d8:24)
+	ld wa, (NAMING_CURSOR:24)
 	extz xwa
 	ld xbc, 0x274b0
 	add xbc, xwa
@@ -999,13 +999,13 @@ WndScroll_SendPageEvents:
 	jrl WndScroll_SendAndReturn
 
 WndScroll_HandleCharSet:
-	ld wa, (0x0274d8:24)
+	ld wa, (NAMING_CURSOR:24)
 	extz xwa
 	ld xbc, 0x274b0
 	add xbc, xwa
 	ld xwa, (xsp + 42)
 	ld (xbc), a
-	ld de, (0x0274d8:24)
+	ld de, (NAMING_CURSOR:24)
 	extz xde
 	ld xwa, (xsp + 50)
 	ld xbc, EVT_SET_CURSOR

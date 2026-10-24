@@ -808,7 +808,7 @@ MidiPkt_EnqueueControl_3358:
 	ld xwa, (xiz + 4)
 	ld bc, 6:i3
 	call ArpQueue_Enqueue
-	ld xhl, (0x90f2:16)
+	ld xhl, (PART_RECORD_PTRS:16)
 	ld xwa, (xiz)
 	ld a, (xwa)
 	extz wa

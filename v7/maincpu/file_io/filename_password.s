@@ -424,7 +424,7 @@ FileName_OpLoad_NoPwd:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, FileName_OpLoad_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, FileName_OpLoad_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW
@@ -509,7 +509,7 @@ FileName_OpDelete:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, FileName_OpFormatVariant
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, FileName_OpDelete_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

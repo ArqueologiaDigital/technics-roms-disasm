@@ -4729,7 +4729,7 @@ MainWallFlash_ReturnZero:
 	ret
 
 WallUsrIniFunc:
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr nz, WallUsrIni_PostBootEvent
 	ld xwa, NAKA_MAINFUNC_MainWallSetFlashFunc
 	ld xbc, EVT_WALL_INI

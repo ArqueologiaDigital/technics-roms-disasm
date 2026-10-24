@@ -4511,7 +4511,7 @@ StsAreYouSure_ReturnZero:
 	ret
 
 GMOKFunc:
-	ld l, (0x0340ea:24)
+	ld l, (SURE_CONFIRM:24)
 	cp l, 2:i3
 	jr z, GMOK_ConfirmDialog
 	cp l, 1:i3

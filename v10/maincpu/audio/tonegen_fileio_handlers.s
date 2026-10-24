@@ -1135,7 +1135,7 @@ CtrlPanel_IndicatorJumpTable_SaveLanguage:
 	ld	xwa, 0x3d3400
 	push	xwa
 	ld	wa, 1:i3
-	ld	xbc, 0x0340e4
+	ld	xbc, HELP_LANGUAGE
 	ld	de, 2:i3
 	jr	CtrlPanel_IndicatorJumpTable_Join
 CtrlPanel_IndicatorJumpTable_SaveDisplayTime:
@@ -1188,7 +1188,7 @@ Audio_DispatchCommand_LoadHelpLanguage:
 	pushw	2
 	ld	xwa, 0x3d3400
 	push	xwa
-	ld	xwa, 0x0340e4
+	ld	xwa, HELP_LANGUAGE
 	jr	Audio_DispatchCommand_Join
 Audio_DispatchCommand_LoadDispTimeSet:
 	pushw	12
@@ -1237,7 +1237,7 @@ PanelDisplay_DispatchByMode:
 
 PanelDisplay_DispatchData:
 	ld	xde, 0x3d3400
-	lda	xhl, (0x0340e4:24)
+	lda	xhl, (HELP_LANGUAGE:24)
 	ld	bc, 0:i3
 PanelDisplay_DispatchData_Loop:
 	ld	a, (xhl+)

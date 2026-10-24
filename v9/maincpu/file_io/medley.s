@@ -111,7 +111,7 @@ SeqName_CheckDiskAvail:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, SeqName_LoadAndPlay
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SeqName_LoadAndPlay
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

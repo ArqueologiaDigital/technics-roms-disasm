@@ -848,7 +848,7 @@ MidiCC_Handler_ExpressionParam:
 	bit	1, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_ExpressionParam_Return
 	ld	b, 10:opc
-	ld	xix, (0x90f2:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	extz	hl
 	ld	l, (MIDIRX_PART:16)
 	sll	hl, 2
@@ -1087,7 +1087,7 @@ MidiRx_BuildChannelPartLists_Loop:
 	ld	(0x966f:16), 0
 	ld	(0x9670:16), 0
 MidiRx_BuildChannelPartLists_Loop2:
-	ld	xiz, (0x90f2:16)
+	ld	xiz, (PART_RECORD_PTRS:16)
 	xor	d, d
 	ld	e, (0x9670:16)
 	sll	de, 2
@@ -10699,7 +10699,7 @@ MidiChan_TimerDispatch_Data_Code_Loop:
 	ret
 
 Part_LookupByIndex:
-	ld xbc, (0x90f2:16)
+	ld xbc, (PART_RECORD_PTRS:16)
 	extz wa
 	sla wa, 2
 	ld	xhl, (xbc+wa)
@@ -10882,7 +10882,7 @@ AssSwb_ProcessLoop_Data_Join:
 	ret
 
 Part_LookupTableEntry:
-	ld xde, (0x90f2:16)
+	ld xde, (PART_RECORD_PTRS:16)
 	extz wa
 	sla wa, 2
 	ld	xwa, (xde+wa)
@@ -12358,28 +12358,28 @@ SeqChan_WriteField_Data_A:
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	7, (0xbd1a:16)
+	set	7, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_B:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	6, (0xbd1a:16)
+	set	6, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_C:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	5, (0xbd1a:16)
+	set	5, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_D:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	4, (0xbd1a:16)
+	set	4, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_RetStub_C:
 	ret
@@ -12388,7 +12388,7 @@ SeqChan_WriteField_Data_E:
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	2, (0xbd1a:16)
+	set	2, (MIDIPKT_RX_GROUPS:16)
 	ret
 ; MIDI SysEx processing block with dispatch
 MidiSysEx_ProcessBlock:
@@ -12479,7 +12479,7 @@ MidiSysEx_ReinitSwbtWrOutput:
 ;   (command 4, transfer done) calls it first; bit 7 is set only by SeqChan_WriteField_Data_A, the end step (state 3)
 ;   of blocks 1-2 = live panel 0xF980 + panel memories 0x1ED350.
 MidiSysEx_FinishPanelXfer:
-	bit	7, (0xbd1a:16)
+	bit	7, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	calr	MidiSysEx_ReapplyReceivedPanel
 	calr	MidiSysEx_ProcessBlock_Helper5
@@ -12487,10 +12487,10 @@ MidiSysEx_FinishPanelXfer:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	calr	MidiSysEx_ReinitSwbtWrOutput
 	calr	MidiSysEx_ProcessBlock_Helper5
-	res	7, (0xbd1a:16)
+	res	7, (MIDIPKT_RX_GROUPS:16)
 	ret
 MidiSysEx_ProcessBlock_Helper5:
-	bit	4, (0xbd1a:16)
+	bit	4, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	set	0, (4330:16)
 	ret
@@ -12524,10 +12524,10 @@ MidiSysEx_FinishSoundRamXfer:
 	ld	xix, xsp
 	ld	bc, 3:i3
 	ldirw
-	bit	6, (0xbd1a:16)
+	bit	6, (MIDIPKT_RX_GROUPS:16)
 	jr	z, MidiSysEx_FinishSoundRamXfer_Epilogue
 	calr	MidiSysEx_SendSoundRamEndCmd
-	res	6, (0xbd1a:16)
+	res	6, (MIDIPKT_RX_GROUPS:16)
 MidiSysEx_FinishSoundRamXfer_Epilogue:
 	inc	6, xsp
 	ret
@@ -12539,7 +12539,7 @@ MidiSysEx_FinishSoundRamXfer_Epilogue:
 ;   bit 5 is set only by SeqChan_WriteField_Data_C, entry 10 of SeqChan_WriteFieldHandlers, the end of states 7-10,
 ;   which MidiSysEx_BlockHandlers maps to the style image's recovery (AccDemo init).
 MidiSysEx_FinishStyleImageXfer:
-	bit	5, (0xbd1a:16)
+	bit	5, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	res	0, (0x32f3:16)
 	push	xde
@@ -12551,7 +12551,7 @@ MidiSysEx_FinishStyleImageXfer:
 	pop	xix
 	pop	xhl
 	pop	xde
-	res	5, (0xbd1a:16)
+	res	5, (MIDIPKT_RX_GROUPS:16)
 	ret
 ; MidiSysEx_FinishSeqXfer: End-of-transfer step for the sequencer group: if bit 4 of 0xBD1A is set (the sequencer
 ;   blocks were received), validates the block-0 panel records at 0xF480, inside the received current-song record
@@ -12561,7 +12561,7 @@ MidiSysEx_FinishStyleImageXfer:
 ;   MidiSysEx_FinishPanelXfer and MidiSysEx_FinishSoundRamXfer; bit 4 is set only by SeqChan_WriteField_Data_D, the
 ;   end step (state 14) of the sequencer blocks 11-14 (current song 0xF180, song slots, event memory).
 MidiSysEx_FinishSeqXfer:
-	bit	4, (0xbd1a:16)
+	bit	4, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	push	xde
 	push	xhl
@@ -12575,12 +12575,12 @@ MidiSysEx_FinishSeqXfer:
 	pop	xhl
 	pop	xde
 	set	1, (0xbd18:16)
-	res	4, (0xbd1a:16)
+	res	4, (MIDIPKT_RX_GROUPS:16)
 	ret
 MidiSysEx_ProcessBlock_Helper10:
 	ret
 MidiSysEx_ProcessBlock_Join:
-	bit	2, (0xbd1a:16)
+	bit	2, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	push	xde
 	push	xhl
@@ -12591,7 +12591,7 @@ MidiSysEx_ProcessBlock_Join:
 	pop	xix
 	pop	xhl
 	pop	xde
-	res	2, (0xbd1a:16)
+	res	2, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_UnhandledCmd:
 	ret
@@ -12897,7 +12897,7 @@ SoundMode_ResetAllParams:
 	calr MidiChan_ClearStorageFields
 	calr MidiChan_InitSoundRegisters
 	ld (0xbd18:16), 0
-	ld (0xbd1a:16), 0
+	ld (MIDIPKT_RX_GROUPS:16), 0
 	ld (0xbd1c:16), 0
 	ld (0xbd1e:16), 0
 	ld (0xbd20:16), 0

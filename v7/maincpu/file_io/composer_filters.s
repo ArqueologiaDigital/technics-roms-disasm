@@ -827,7 +827,7 @@ SaveFilter_Save_NoPwd:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, SaveFilter_Save_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SaveFilter_Save_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

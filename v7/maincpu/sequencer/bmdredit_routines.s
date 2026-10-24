@@ -1218,7 +1218,7 @@ BmDrEdit_CompareVelocity_Return:
 	ret
 
 BmDrEdit_SaveSongPosition:
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	ld hl, (SEQ_DATA_BLOCK:16)
@@ -1799,7 +1799,7 @@ BmDrEdit_SetupScrollRegion_MelodicMode:
 ; pointer table at 0xE4448E is, is not established here.
 ; -----------------------------------------------------------------------------
 BmDrEdit_TestPartTableEntry:
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	extz wa
 	lda_d16 xbc, (SEQ_TRACK_ASSIGN)
 	extz xwa
@@ -1888,7 +1888,7 @@ BmDrEdit_CheckDrumModeEntry:
 	ld (0x295b:16), a
 
 BmDrEdit_ReadVoiceBitAndCopy:
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
@@ -1915,25 +1915,25 @@ BmDrEdit_InitFirstStep:
 	ld wa, iz
 	ldw bc, 0xffff
 	call PartCtrl_WriteWord
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
 	ld de, 1:i3
 	call Part_SetClearVoiceBit7
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
 	ld de, iz
 	call Part_WriteVoiceWord
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
 	ld de, iz
 	call Part_WriteWord_Indexed
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
@@ -2187,7 +2187,7 @@ BmDrEdit_ValidateSteps_RestoreState:
 	jrl BmDrEdit_RestoreEditState
 
 BmDrEdit_SeekToPartVoice:
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
@@ -2361,13 +2361,13 @@ BmDrEdit_NavigateToPrevAndDisplay:
 	jrl NoteEdit_SendScrollCmds
 
 EditChannel_LoadVoiceParams:
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
 	call Part_ReadWord_Indexed
 	ld (SEQ_DATA_BLOCK:16), hl
-	ld c, (0x2965:16)
+	ld c, (BMDREDIT_CHANNEL:16)
 	inc 1, c
 	extz bc
 	ld wa, 0:i3
@@ -2685,7 +2685,7 @@ BmDrEdit_BuildNoteOnEvent_WithVelocity:
 	ret
 
 BmDrEdit_WriteNoteOffEntry:
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	jp SeqBuf_WriteNoteOffEntry
@@ -3288,7 +3288,7 @@ BmDrEdit_InsertStepEntry:
 	calr BmDrEdit_SaveSongPosition
 	ld (SEQ_ERROR_CODE:16), 0
 	ld (xsp), 0x81
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	lda xbc, (xsp)
@@ -3319,7 +3319,7 @@ BmDrEdit_PrepareAndInsertNote:
 	res 7, a
 	ld (0x296c:16), a
 	calr BmDrEdit_SaveSongPosition
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	ld xbc, 0x2967
@@ -3386,7 +3386,7 @@ BmDrEdit_SyncChannelAndGetPos:
 	dec 2, xsp
 	ldmm16 0x287f, 0x2744
 	calr BmDrEdit_CheckAndSelectChannel
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	extz hl
@@ -3484,7 +3484,7 @@ BmDrEdit_DeleteNoteAtCursor:
 	jr nz, BmDrEdit_DeleteNote_PopIzRet
 	bit 0, (0x295f:16)
 	jr z, BmDrEdit_DeleteNote_PopIzRet
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	calr BmDrEdit_CopyEventDataBetweenParts
@@ -3537,7 +3537,7 @@ BmDrEdit_ScanChannelEvents:
 
 BmDrEdit_ScanChannel_SelectLoop:
 	calr BmDrEdit_CheckAndSelectChannel
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	bit 2, (0x287b:16)
 	jr z, BmDrEdit_ScanChannel_UseChannel
@@ -4080,7 +4080,7 @@ ReadSeqData_StoreParams:
 	call SeqData_ReadNextByte
 	ld (0x296c:16), l
 	calr BmDrEdit_ClearAndScanToEnd
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	calr BmDrEdit_CopyEventDataBetweenParts
@@ -4090,7 +4090,7 @@ ReadSeqData_StoreParams:
 	ld (0x2967:16), 144
 	ldmm8 0x2968, 0x2784
 	calr BmDrEdit_SaveSongPosition
-	ld a, (0x2965:16)
+	ld a, (BMDREDIT_CHANNEL:16)
 	inc 1, a
 	extz wa
 	ld xbc, 0x2967

@@ -1601,10 +1601,10 @@ SeqStep_WalkInnerReturn:
 	ret
 
 SeqStep_WalkReadNext:
-	ld wa, (0x28c1:16)
+	ld wa, (SQSTEP_SCAN_OFFSET:16)
 	cp wa, 5:i3
 	jr nz, SeqStep_WalkAdvancePos
-	ld wa, (0x28bf:16)
+	ld wa, (SQSTEP_SCAN_BLOCK:16)
 	call PartCtrl_ReadWord_Off1
 	cp hl, 0:i3
 	jr nz, SeqStep_WalkUpdatePos
@@ -1612,23 +1612,23 @@ SeqStep_WalkReadNext:
 	ret
 
 SeqStep_WalkUpdatePos:
-	ld (0x28bf:16), hl
-	ldw (0x28c1:16), 255
+	ld (SQSTEP_SCAN_BLOCK:16), hl
+	ldw (SQSTEP_SCAN_OFFSET:16), 255
 	jr SeqStep_WalkAdvanceDone
 
 SeqStep_WalkAdvancePos:
 	inc 1, wa
-	ld (0x28c1:16), wa
+	ld (SQSTEP_SCAN_OFFSET:16), wa
 
 SeqStep_WalkAdvanceDone:
 	ld hl, 0:i3
 	ret
 
 SeqStep_WalkReadByte:
-	ld wa, (0x28c1:16)
+	ld wa, (SQSTEP_SCAN_OFFSET:16)
 	ld c, a
 	extz bc
-	ld wa, (0x28bf:16)
+	ld wa, (SQSTEP_SCAN_BLOCK:16)
 	jp PartCtrl_ReadByte
 
 SeqStep_InsertEvent:
@@ -1701,7 +1701,7 @@ SeqStep_PrepareReadBack:
 	ld iz, (SEQ_DATA_BLOCK:16)
 	ld wa, (SEQ_DATA_OFFSET:16)
 	ldfr_werp WA, 0xfa
-	ld (0x28c1:16), wa
+	ld (SQSTEP_SCAN_OFFSET:16), wa
 	ld wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 5:i3
 	jr nz, SeqStep_PrepareCheck

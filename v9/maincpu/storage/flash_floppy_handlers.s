@@ -1312,7 +1312,7 @@ Flash_InitExtMemAddrs:
 	ld (RHYTHM_PATTERN_BUF_PTR:16), xwa
 	lda xwa, (0x069800:24)
 	ld (STYLE_WORK_IMAGE_PTR:16), xwa
-	ld (3222:16), xwa
+	ld (FLASH_SECTOR_IMAGE_PTR:16), xwa
 	ret
 
 Flash_InitBytecodeBlock:
@@ -2557,7 +2557,7 @@ Flash_StoreBaseAndInitAccPatch_Sub_Epilogue:
 ;   erases and rewrites the sector (Flash_EraseSectorAndWrite). Basis: callers + body -- Flash_InitBytecodeBlock calls
 ;   it on its write path after Flash_AssignSlotsToBlocks built the list, with the same owner A.
 Flash_WriteSlotOwnerMap:
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
@@ -2570,7 +2570,7 @@ Flash_WriteSlotOwnerMap:
 	ld	e, w
 	extz	de
 	add	de, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xbc+de), a
 	cp w, 3:i3
 	jr z, Flash_WriteSlotOwnerMap_Join3
@@ -2582,7 +2582,7 @@ Flash_WriteSlotOwnerMap:
 Flash_WriteSlotOwnerMap_Loop6:
 	ld	ix, de
 	add	ix, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+ix)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip6
@@ -2599,7 +2599,7 @@ Flash_WriteSlotOwnerMap_Skip7:
 Flash_WriteSlotOwnerMap_Loop7:
 	ld	ix, de
 	add	ix, 80
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+ix)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip8
@@ -2625,7 +2625,7 @@ Flash_WriteSlotOwnerMap_Loop8:
 	ld	e, w
 	extz	de
 	add	de, 16
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xbc+de), a
 	inc 1, w
 	inc1b_erp 226
@@ -2641,7 +2641,7 @@ Flash_WriteSlotOwnerMap_Skip9:
 Flash_WriteSlotOwnerMap_Loop9:
 	ld	hl, de
 	add	hl, 16
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	lda	xbc, (xbc+hl)
 	cp (xbc), a
 	jr	nz, Flash_WriteSlotOwnerMap_Skip10
@@ -2652,7 +2652,7 @@ Flash_WriteSlotOwnerMap_Skip10:
 	cp	w, 39
 	jr	ule, Flash_WriteSlotOwnerMap_Loop9
 Flash_WriteSlotOwnerMap_Skip11:
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
@@ -2663,7 +2663,7 @@ Flash_WriteSlotOwnerMap_Skip11:
 Flash_CopyBlocksToSlots:
 	lda	xsp, (xsp-12)
 	push	xiz
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
@@ -2776,7 +2776,7 @@ Flash_CopyBlocksToSlots_Skip:
 	cp	(xsp+0x6), 50
 	jrl	c, Flash_CopyBlocksToSlots_Loop2
 Flash_CopyBlocksToSlots_Skip13:
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	call	Flash_EraseSectorAndWrite
@@ -3419,25 +3419,25 @@ Flash_InitBytecodeBlock_Helper7_Loop:
 	jr	c, Flash_InitBytecodeBlock_Helper7_Loop
 	ret
 Flash_StoreBaseAndInitAccPatch_Join5:
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_Sequencer
 	ldw	bc, 8
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_SeqReserved
 	lda	xix, (xwa+16)
 	ldw	bc, 32
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, MSP_Default_SeqTail
 	lda	xix, (xwa+80)
 	ldw	bc, 8
 	ldirw
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	jp	Flash_EraseSectorAndWrite
@@ -3502,7 +3502,7 @@ VoiceParam_SubtractBase:
 VoiceParam_AddOffset:
 	extz de
 	add hl, de
-	ld xwa, (3222:16)
+	ld xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	(xwa+hl), c
 	ret
 
@@ -3839,7 +3839,7 @@ SlotTable_Insert1850_Next:
 
 Flash_WriteBackSlotTable:
 	pushw_erp 0xfa
-	ld xix, (3222:16)
+	ld xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xiy, (FLASH_SECTION_PTR_7:16)
 	ldw bc, 0x8000
 	ldirw
@@ -3874,7 +3874,7 @@ Flash_WriteBackSlot_Loop:
 	jr c, Flash_WriteBackSlot_Loop
 
 Flash_WriteBackSlot_Erase:
-	ld xbc, (3222:16)
+	ld xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	call Flash_EraseSectorAndWrite
@@ -4284,18 +4284,18 @@ FileIO_LoadRcmToFlash:
 	jr	lt, FileIO_LoadRcmToFlash_Skip5
 	ld	wa, 7:i3
 	calr	NoteEventBuffer_Store
-	ld	xix, (3222:16)
+	ld	xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xiy, (FLASH_SECTION_PTR_7:16)
 	ldw	bc, 0x8000
 	ldirw
-	ld	xwa, (3222:16)
+	ld	xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xbc, 0xf400
 	call	FileIO_ReadBlock
 	call	FileIO_ReturnError
 	ld	iz, hl
 	cp	iz, 0:i3
 	jr	lt, FileIO_LoadRcmToFlash_Skip5
-	ld	xbc, (3222:16)
+	ld	xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld	xde, (FLASH_SECTION_PTR_7:16)
 	ld	wa, 1:i3
 	call	Flash_EraseSectorAndWrite
@@ -4657,11 +4657,11 @@ FloppyDisk_LoadNoteEvents:
 	jr lt, FloppyCtrl_LoadIzAndContinue
 	ld wa, 7:i3
 	calr NoteEventBuffer_Store
-	ld xix, (3222:16)
+	ld xix, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xiy, (FLASH_SECTION_PTR_7:16)
 	ldw bc, 0x8000
 	ldirw
-	ld xwa, (3222:16)
+	ld xwa, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld XIX, (xsp + 0x0406)
 	ld xbc, 0xf400
 	call (xix)
@@ -4670,7 +4670,7 @@ FloppyDisk_LoadNoteEvents:
 	ld iz, hl
 	cp iz, 0:i3
 	jr lt, FloppyCtrl_LoadIzAndContinue
-	ld xbc, (3222:16)
+	ld xbc, (FLASH_SECTOR_IMAGE_PTR:16)
 	ld xde, (FLASH_SECTION_PTR_7:16)
 	ld wa, 1:i3
 	call Flash_EraseSectorAndWrite

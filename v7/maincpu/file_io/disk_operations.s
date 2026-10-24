@@ -127,7 +127,7 @@ FCopy_HandleCopyContext:
 	call FileIO_GetRecordFlags
 	cp hl, 0:i3
 	jr z, FCopy_CopyConfirm_Execute
-	cp	(0x0340ea:24), 0x00
+	cp	(SURE_CONFIRM:24), 0x00
 	jr	z, FCopy_CopyConfirm_Execute
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_NOT_PARA_DRAW

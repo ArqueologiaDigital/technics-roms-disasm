@@ -25553,7 +25553,7 @@ HelpLang_DispatchDataBlock:
 	ld	(0x2970:16), a
 	cp	(ACTIVE_TITLE:16), 231
 	ret	nz
-	ld	e, (0x0340e4:24)
+	ld	e, (HELP_LANGUAGE:24)
 	ld	c, (0x296e:16)
 	extz	bc
 	cp	e, 5:i3
@@ -25650,7 +25650,7 @@ HelpLang_PostEvent:
 
 HelpLang_SetFlashAndLoadSlide:
 	ld (0x2970:16), 255
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	sll a, 2
 	ld w, 0x0:opc
 	extz xwa
@@ -25660,7 +25660,7 @@ HelpLang_SetFlashAndLoadSlide:
 	jr HelpLang_ParseSlideHeader
 
 HelpLang_LoadSlide:
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	sll a, 2
 	ld w, 0x0:opc
 	extz xwa

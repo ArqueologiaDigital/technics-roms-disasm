@@ -777,7 +777,7 @@ SmfFN_HandleOpen:
 	call FileIO_CheckFileExists
 	cp l, 0:i3
 	jr z, SmfFN_Open_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SmfFN_Open_Execute
 	ld xwa, 0x600026
 	ld xbc, EVT_HIDE
@@ -871,7 +871,7 @@ SmfFN_HandleOpen2:
 SmfFN_HandleDelete:
 	cp xiz, 0x5
 	jrl nz, SmfFN_HandleDelete2
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SmfFN_Delete_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

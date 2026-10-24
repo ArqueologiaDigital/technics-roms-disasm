@@ -328,7 +328,7 @@ TrAsSureLangCheck:
 	inc	1, a
 	extz	wa
 	pushw	wa
-	ld	a, (213220:24)
+	ld	a, (HELP_LANGUAGE:24)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (TrAsSureLangCheck_PtrTable:24)
@@ -4956,7 +4956,7 @@ HelpStsCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, HelpStsCheck_ReturnZero
 	ld xbc, 0:i3
-	ld c, (0x0340e4:24)
+	ld c, (HELP_LANGUAGE:24)
 	sll xbc, 2
 	ld xwa, 0:i3
 	ld a, (0x296e:16)
@@ -4974,7 +4974,7 @@ HelpStsP2Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, HelpStsP2Check_ReturnZero
 	ld xbc, 0:i3
-	ld c, (0x0340e4:24)
+	ld c, (HELP_LANGUAGE:24)
 	sll xbc, 2
 	ld xwa, 0:i3
 	ld a, (0x296e:16)
@@ -4993,7 +4993,7 @@ HelpStsP3Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, HelpStsP3Check_ReturnZero
 	ld xbc, 0:i3
-	ld c, (0x0340e4:24)
+	ld c, (HELP_LANGUAGE:24)
 	sll xbc, 2
 	ld xwa, 0:i3
 	ld a, (0x296e:16)
@@ -5012,7 +5012,7 @@ HelpStsP4Check:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, HelpStsP4Check_ReturnZero
 	ld xbc, 0:i3
-	ld c, (0x0340e4:24)
+	ld c, (HELP_LANGUAGE:24)
 	sll xbc, 2
 	ld xwa, 0:i3
 	ld a, (0x296e:16)
@@ -5823,11 +5823,11 @@ AcIndexWideToggleFunc:
 	cp xbc, EVT_GET_LANG
 	jr nz, AcIndexToggleFunc_ReturnZero
 	ld xhl, 0:i3
-	ld l, (0x0340e4:24)
+	ld l, (HELP_LANGUAGE:24)
 	ret
 
 AcIndexToggleFunc_StoreAndPost:
-	ld (0x0340e4:24), a
+	ld (HELP_LANGUAGE:24), a
 	ld xwa, NAKA_MAINFUNC_HelpLangChkMain
 	call MainPostEvent
 
@@ -5836,7 +5836,7 @@ AcIndexToggleFunc_ReturnZero:
 	ret
 
 AcIndexToggleFunc_CheckMatch:
-	cp a, (0x0340e4:24)
+	cp a, (HELP_LANGUAGE:24)
 	scc16 z, hl
 	extz xhl
 	ret
@@ -16100,7 +16100,7 @@ MainExeFunc_ReturnZero:
 SureJudgeFunc:
 	cp xbc, EVT_SW_IN
 	jrl nz, SureJudge_ReturnZero
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr nz, SureJudge_ShowSureDisp
 	ld xwa, NAKA_MAINFUNC_MainExeCall
 	call MainPostEvent
