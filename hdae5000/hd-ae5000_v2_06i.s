@@ -203,6 +203,12 @@
 	.equ HDAE5000_RAM_SmfFormat, 0x230eba	; word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)
 	.equ HDAE5000_RAM_SmfTrackCount, 0x230ebc	; word: its track count
 	.equ HDAE5000_RAM_SmfDivision, 0x230ebe	; word: its division; bit 15 (SMPTE) must be clear
+	.equ HDAE5000_RAM_SongScreenTitle, 0x22a038	; "DIRECTORY NN:<name>" of the song screen (HDAE5000_SongScreen_Refresh)
+	.equ HDAE5000_RAM_FlsListText, 0x22a2ca	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte FLS name at +4 (HDAE5000_FlsList_BuildPage)
+	.equ HDAE5000_RAM_LbnEntryText, 0x22aa62	; the load-by-number entry: digits, directory and song name (HDAE5000_Lbn_ShowEntry)
+	.equ HDAE5000_RAM_FormatCodeDigits, 0x22ad9e	; the six digits typed on the HD-format attention dialog (HDAE5000_FormatDialog_CodeDigit)
+	.equ HDAE5000_RAM_TitleInfoText, 0x22ada6	; the settings / free-space text of the HD title screen (HDAE5000_TitleInfo_Build)
+	.equ HDAE5000_RAM_SongListText, 0x22ae3e	; the 16 song rows of the song screen, 30 bytes each (HDAE5000_SongScreen_Refresh)
 
 ; ----------------------------------------------------------------------------
 ; The main CPU's function tables, as the HD-AE5000 reaches them: workspace

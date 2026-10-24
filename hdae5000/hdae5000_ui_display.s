@@ -7098,45 +7098,55 @@ HDAE5000_Smf_SwapBytes16:
 	ld w, 0x00:opc
 	add hl, wa
 	ret
+
+; ---------------------------------------------------------------------------
+; Unreachable (no reference anywhere): with media type 2 or 3
+; (HamaFn_GetMediaType), open floppy file XWA "rb" (HamaFn_fopen_ext,
+; HDAE5000_Str_Rb_Smf_ReadHeader), read its first 14 bytes into
+; HDAE5000_RAM_SmfHeader and close it, the main task asleep meanwhile; then
+; HDAE5000_Smf_CheckHeader on the buffer either way.
+; In:  XWA = file name
+; Out: XHL = HDAE5000_Smf_CheckHeader's result.  XIZ preserved.
+; ---------------------------------------------------------------------------
 HDAE5000_Smf_ReadHeader:
 	push xiz
-	ld xiz, xwa			; save parameter in XIZ
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2) — workspace ptr
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA+0x0E88) — handler table
-	ld xix, (xwa + HamaFn_GetMediaType)		; ld XIX, (XWA+0x08)
-	call (xix)			; call validation handler
-	cp l, 3:i3			; check result == 3?
-	jr z, .Lec_process		; if so, process extension
-	cp l, 2:i3			; check result == 2?
-	jr nz, .Lec_finish		; if neither 2 nor 3, skip to end
+	ld xiz, xwa
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld xix, (xwa + HamaFn_GetMediaType)
+	call (xix)
+	cp l, 3:i3
+	jr z, .Lec_process
+	cp l, 2:i3
+	jr nz, .Lec_finish
 .Lec_process:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA+0x0E0A) — sub-handler table
-	ld xhl, (xwa + RootFn_SleepMainTask)             ; ld XHL, (XWA+0x0538)
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_SleepMainTask)
 	call (xhl)
-	ld xwa, xiz			; restore parameter
-	lda xbc, (HDAE5000_Str_Rb_Smf_ReadHeader:24); lda XBC, 0x2E5DCA — extension data ptr
-	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24); ld XDE, (0x23A1A2)
-	ld xde, (xde + WS_HamaFnTable)             ; ld XDE, (XDE+0x0E88)
-	ld_sril xhl, (xde + HamaFn_fopen_ext)             ; ld XHL, (XDE+0x00A0)
+	ld xwa, xiz
+	lda xbc, (HDAE5000_Str_Rb_Smf_ReadHeader:24)
+	ld xde, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xde, (xde + WS_HamaFnTable)
+	ld_sril xhl, (xde + HamaFn_fopen_ext)
 	call (xhl)
-	lda xwa, (HDAE5000_RAM_SmfHeader:24); lda XWA, 0x230EAC
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); ld XBC, (0x23A1A2)
-	ld xbc, (xbc + WS_HamaFnTable)             ; ld XBC, (XBC+0x0E88)
-	ld_sril xhl, (xbc + HamaFn_fread_ext)             ; ld XHL, (XBC+0x00A8)
-	ld xbc, 0x0000000E		; count = 14
+	lda xwa, (HDAE5000_RAM_SmfHeader:24)
+	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xbc, (xbc + WS_HamaFnTable)
+	ld_sril xhl, (xbc + HamaFn_fread_ext)
+	ld xbc, 0x0000000E
 	call (xhl)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_HamaFnTable)             ; ld XWA, (XWA+0x0E88)
-	ld_sril xhl, (xwa + HamaFn_fclose_ext)             ; ld XHL, (XWA+0x00AC)
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_HamaFnTable)
+	ld_sril xhl, (xwa + HamaFn_fclose_ext)
 	call (xhl)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); ld XWA, (0x23A1A2)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA+0x0E0A)
-	ld xhl, (xwa + RootFn_WakeUpMainTask)             ; ld XHL, (XWA+0x053C)
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_WakeUpMainTask)
 	call (xhl)
 .Lec_finish:
-	lda xwa, (HDAE5000_RAM_SmfHeader:24); lda XWA, 0x230EAC
-	calr HDAE5000_Smf_CheckHeader	; validate config
+	lda xwa, (HDAE5000_RAM_SmfHeader:24)
+	calr HDAE5000_Smf_CheckHeader
 	pop xiz
 	ret
 

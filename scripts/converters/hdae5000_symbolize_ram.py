@@ -302,6 +302,18 @@ RAM = {
     0x230EBA: ("SmfFormat", "word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)"),
     0x230EBC: ("SmfTrackCount", "word: its track count"),
     0x230EBE: ("SmfDivision", "word: its division; bit 15 (SMPTE) must be clear"),
+    # fifteenth run: more screen texts
+    0x22A2CA: ("FlsListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte FLS name at +4"
+                              " (HDAE5000_FlsList_BuildPage)"),
+    0x22AE3E: ("SongListText", "the 16 song rows of the song screen, 30 bytes each"
+                               " (HDAE5000_SongScreen_Refresh)"),
+    0x22A038: ("SongScreenTitle", "\"DIRECTORY NN:<name>\" of the song screen (HDAE5000_SongScreen_Refresh)"),
+    0x22ADA6: ("TitleInfoText", "the settings / free-space text of the HD title screen"
+                                " (HDAE5000_TitleInfo_Build)"),
+    0x22AA62: ("LbnEntryText", "the load-by-number entry: digits, directory and song name"
+                               " (HDAE5000_Lbn_ShowEntry)"),
+    0x22AD9E: ("FormatCodeDigits", "the six digits typed on the HD-format attention dialog"
+                                   " (HDAE5000_FormatDialog_CodeDigit)"),
     # sixth run: list texts the UI objects display (EVT_HDAE_SET_STR_ADR points them here)
     0x22B274: ("PartListText", "nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build"),
     0x22A0D0: ("DirListText", "24 rows x 21 bytes + NUL: \"NNN:\" and the 16-byte directory name at +4"
@@ -325,6 +337,10 @@ EXTENT = {
     0x22AD0A: 0x8B,
     0x22AA9C: 0x128,
     0x230EAC: 14,
+    0x22A2CA: 0x1F9,
+    0x22AE3E: 0x1E0,
+    0x22AA4C: 12,
+    0x22ABE6: 12,
 }
 # I/O registers (full names; same rewriting): the 8255 of the PC link and the drive's ATA task file.  The
 # ATA registers are the standard eight at 0x130010 + 2 * index: the code writes the ATA command opcodes

@@ -1,12 +1,13 @@
-HDAE5000_Lbn_ShowEntry:	; 0x2870D6 (3711 bytes)
-; FS_Init: 0x2870D6 (3711 bytes) — disassembled from original ROM
-; ^ now HDAE5000_Lbn_ShowEntry: draw the load-by-number entry -- WA =
-;   directory number, BC = song number, DE = digit position 0..6 (switch
-;   HDAE5000_Lbn_ShowEntry_CaseTable) -- digits, directory name and song
-;   name into 0x22AA62.. .  The size is the conversion region's, not the
-;   routine's.
-; Main entry + 10 event handler callbacks
-
+; ---------------------------------------------------------------------------
+; Draw the load-by-number entry into HDAE5000_RAM_LbnEntryText: the typed
+; digits, the directory name and the song name, according to the digit
+; position (switch HDAE5000_Lbn_ShowEntry_CaseTable, cases NoDigitTyped,
+; DirHundredsTyped .. SongUnitsTyped, Reset), and the song's part list
+; (HDAE5000_PartList_Build); then the objects are told through
+; RootFn_SendEvent / _ApPostEvent.
+; In:  WA = directory number, BC = song number, DE = digit position 0..6
+; ---------------------------------------------------------------------------
+HDAE5000_Lbn_ShowEntry:
 	lda	xsp, (xsp-36)
 	pushw iz                                ; push IZ
 	ld (xsp + 0x24), bc
@@ -25,7 +26,7 @@ HDAE5000_Lbn_ShowEntry_NoDigitTyped:
 	pushw 0x0005
 	lda xwa, (HDAE5000_Str_Blank3Tab:24)
 	push xwa
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	pushw 0x0012
@@ -66,7 +67,7 @@ HDAE5000_Lbn_ShowEntry_DirHundredsTyped:
 	pushw hl                                ; push HL
 	lda	xwa, (xsp+20)
 	push xwa
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+24)
@@ -88,7 +89,7 @@ HDAE5000_Lbn_ShowEntry_DirTensTyped:
 	pushw hl                                ; push HL
 	lda	xwa, (xsp+20)
 	push xwa
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+24)
@@ -108,7 +109,7 @@ HDAE5000_Lbn_ShowEntry_DirUnitsTyped:
 	pushw hl                                ; push HL
 	lda	xwa, (xsp+20)
 	push xwa
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+24)
@@ -201,7 +202,7 @@ HDAE5000_Lbn_ShowEntry_Reset:
 	pushw 0x0005
 	lda xwa, (HDAE5000_Str_Blank3Tab:24)
 	push xwa
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	push xwa
 	call HDAE5000_MemCopy
 	pushw 0x0012
@@ -235,7 +236,7 @@ HDAE5000_Lbn_ShowEntry_Reset:
 HDAE5000_Lbn_ShowEntry_Join:
 	cpw	(xsp+42), 0x0001
 	jrl	nz, HDAE5000_Lbn_ShowEntry_Reset_Skip
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -297,7 +298,7 @@ HDAE5000_Lbn_ShowEntry_Join:
 	call	(xhl)
 	jrl	t, HDAE5000_Lbn_ShowEntry_Reset_Done
 HDAE5000_Lbn_ShowEntry_Reset_Skip:
-	lda xwa, (0x22aa62:24)
+	lda xwa, (HDAE5000_RAM_LbnEntryText:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -419,7 +420,7 @@ HDAE5000_FileLBNNameCheck_Ev01E00044:
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
 HDAE5000_FileLBNNameCheck_Ev01E00045:
-	lda xhl, (0x22aa57:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+11:24)
 	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
 HDAE5000_FileLBNNameCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -487,7 +488,7 @@ HDAE5000_LBNLswBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNLswBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA4E:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+2:24), 0
 	jr	nz, HDAE5000_LBNLswBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNLswBitCheck_Ev01E00043_Join
@@ -499,7 +500,7 @@ HDAE5000_LBNLswBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNLswBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA4E:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+2:24), 0
 	jr	nz, HDAE5000_LBNLswBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNLswBitCheck_Ev01E00044_Join
@@ -508,7 +509,7 @@ HDAE5000_LBNLswBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNLswBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNLswBitCheck_Epilogue
 HDAE5000_LBNLswBitCheck_Ev01E00045:
-	lda xhl, (0x22aa4e:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+2:24)
 	jr	t, HDAE5000_LBNLswBitCheck_Epilogue
 HDAE5000_LBNLswBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -593,7 +594,7 @@ HDAE5000_LBNPmtBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNPmtBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA4F:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+3:24), 0
 	jr	nz, HDAE5000_LBNPmtBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNPmtBitCheck_Ev01E00043_Join
@@ -605,7 +606,7 @@ HDAE5000_LBNPmtBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNPmtBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA4F:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+3:24), 0
 	jr	nz, HDAE5000_LBNPmtBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNPmtBitCheck_Ev01E00044_Join
@@ -614,7 +615,7 @@ HDAE5000_LBNPmtBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNPmtBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNPmtBitCheck_Epilogue
 HDAE5000_LBNPmtBitCheck_Ev01E00045:
-	lda xhl, (0x22aa4f:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+3:24)
 	jr	t, HDAE5000_LBNPmtBitCheck_Epilogue
 HDAE5000_LBNPmtBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -699,7 +700,7 @@ HDAE5000_LBNSqtBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNSqtBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA50:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+4:24), 0
 	jr	nz, HDAE5000_LBNSqtBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNSqtBitCheck_Ev01E00043_Join
@@ -711,7 +712,7 @@ HDAE5000_LBNSqtBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNSqtBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA50:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+4:24), 0
 	jr	nz, HDAE5000_LBNSqtBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNSqtBitCheck_Ev01E00044_Join
@@ -720,7 +721,7 @@ HDAE5000_LBNSqtBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNSqtBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNSqtBitCheck_Epilogue
 HDAE5000_LBNSqtBitCheck_Ev01E00045:
-	lda xhl, (0x22aa50:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+4:24)
 	jr	t, HDAE5000_LBNSqtBitCheck_Epilogue
 HDAE5000_LBNSqtBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -805,7 +806,7 @@ HDAE5000_LBNCmpBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNCmpBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA51:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+5:24), 0
 	jr	nz, HDAE5000_LBNCmpBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNCmpBitCheck_Ev01E00043_Join
@@ -817,7 +818,7 @@ HDAE5000_LBNCmpBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNCmpBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA51:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+5:24), 0
 	jr	nz, HDAE5000_LBNCmpBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNCmpBitCheck_Ev01E00044_Join
@@ -826,7 +827,7 @@ HDAE5000_LBNCmpBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNCmpBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNCmpBitCheck_Epilogue
 HDAE5000_LBNCmpBitCheck_Ev01E00045:
-	lda xhl, (0x22aa51:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+5:24)
 	jr	t, HDAE5000_LBNCmpBitCheck_Epilogue
 HDAE5000_LBNCmpBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -911,7 +912,7 @@ HDAE5000_LBNTmBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNTmBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA52:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+6:24), 0
 	jr	nz, HDAE5000_LBNTmBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNTmBitCheck_Ev01E00043_Join
@@ -923,7 +924,7 @@ HDAE5000_LBNTmBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNTmBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA52:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+6:24), 0
 	jr	nz, HDAE5000_LBNTmBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNTmBitCheck_Ev01E00044_Join
@@ -932,7 +933,7 @@ HDAE5000_LBNTmBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNTmBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNTmBitCheck_Epilogue
 HDAE5000_LBNTmBitCheck_Ev01E00045:
-	lda xhl, (0x22aa52:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+6:24)
 	jr	t, HDAE5000_LBNTmBitCheck_Epilogue
 HDAE5000_LBNTmBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -1017,7 +1018,7 @@ HDAE5000_LBNMspBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNMspBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA53:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+7:24), 0
 	jr	nz, HDAE5000_LBNMspBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNMspBitCheck_Ev01E00043_Join
@@ -1029,7 +1030,7 @@ HDAE5000_LBNMspBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNMspBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA53:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+7:24), 0
 	jr	nz, HDAE5000_LBNMspBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNMspBitCheck_Ev01E00044_Join
@@ -1038,7 +1039,7 @@ HDAE5000_LBNMspBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNMspBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNMspBitCheck_Epilogue
 HDAE5000_LBNMspBitCheck_Ev01E00045:
-	lda xhl, (0x22aa53:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+7:24)
 	jr	t, HDAE5000_LBNMspBitCheck_Epilogue
 HDAE5000_LBNMspBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -1123,7 +1124,7 @@ HDAE5000_LBNRcmBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNRcmBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA54:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+8:24), 0
 	jr	nz, HDAE5000_LBNRcmBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNRcmBitCheck_Ev01E00043_Join
@@ -1135,7 +1136,7 @@ HDAE5000_LBNRcmBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNRcmBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA54:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+8:24), 0
 	jr	nz, HDAE5000_LBNRcmBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNRcmBitCheck_Ev01E00044_Join
@@ -1144,7 +1145,7 @@ HDAE5000_LBNRcmBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNRcmBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNRcmBitCheck_Epilogue
 HDAE5000_LBNRcmBitCheck_Ev01E00045:
-	lda xhl, (0x22aa54:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+8:24)
 	jr	t, HDAE5000_LBNRcmBitCheck_Epilogue
 HDAE5000_LBNRcmBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -1229,7 +1230,7 @@ HDAE5000_LBNMdBitCheck_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNMdBitCheck_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA55:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+9:24), 0
 	jr	nz, HDAE5000_LBNMdBitCheck_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNMdBitCheck_Ev01E00043_Join
@@ -1241,7 +1242,7 @@ HDAE5000_LBNMdBitCheck_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNMdBitCheck_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA55:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+9:24), 0
 	jr	nz, HDAE5000_LBNMdBitCheck_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNMdBitCheck_Ev01E00044_Join
@@ -1250,7 +1251,7 @@ HDAE5000_LBNMdBitCheck_Ev01E00044_Skip:
 HDAE5000_LBNMdBitCheck_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNMdBitCheck_Epilogue
 HDAE5000_LBNMdBitCheck_Ev01E00045:
-	lda xhl, (0x22aa55:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+9:24)
 	jr	t, HDAE5000_LBNMdBitCheck_Epilogue
 HDAE5000_LBNMdBitCheck_Ev01E00046:
 	ld	xhl, 1:i3
@@ -1340,7 +1341,7 @@ HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043_Skip
 	ld	xhl, 2:i3
-	cp	(0x22AA56:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+10:24), 0
 	jr	nz, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043_Join
@@ -1352,7 +1353,7 @@ HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044:
 	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
 	jr	nz, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044_Skip
 	ld	xhl, 1:i3
-	cp	(0x22AA56:24), 0
+	cp	(HDAE5000_RAM_SaveOptions+10:24), 0
 	jr	nz, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044_Join
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044_Join
@@ -1361,7 +1362,7 @@ HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044_Skip:
 HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044_Join:
 	jr	t, HDAE5000_LBNTlxBitCheck_Unregistered_Epilogue
 HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00045:
-	lda xhl, (0x22aa56:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
 	jr	t, HDAE5000_LBNTlxBitCheck_Unregistered_Epilogue
 HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00046:
 	ld	xhl, 1:i3
@@ -1395,108 +1396,99 @@ HDAE5000_LBNTlxBitCheck_Unregistered_Epilogue:
 
 
 
-HDAE5000_FlsList_BuildPage:	; 0x287F55 (832 bytes)
-	; FS_Read_FSB: Initialize the FSB directory listing display.
-	; ^ corrected: one page of the FLS list -- 24 rows of 21 bytes at 0x22A2CA,
-	;   "NNN:" (page base 0x23A090 + row + 1) and the FLS name -- the FLS
-	;   counterpart of HDAE5000_DirList_BuildPage.  "FSB" and "tile" were guesses.
-	; Populates 24 display tile entries in RAM from a ROM template, formats
-	; entry numbers (1-24 per page), copies 16-byte tiles to VRAM, then
-	; registers two event handlers for the left/right file browser panes.
-	;
-	; The FSB supports 5 pages x 24 entries = 120 total directory slots.
-	; Page selector at 0x23A090 steps by 24 (values: 0, 24, 48, 72, 96).
-	;
-	; 21-byte in-RAM directory entry layout (at 0x22A2CA + IZ*21):
-	;   [0-3]   Header: " N:" where N=entry number (formatted by PPI_Block_Copy)
-	;   [4-19]  Display tile: 16-byte text block (filename, initially spaces)
-	;   [20]    Terminator: 0x09 (tab character)
-	;
-	; Part 1: Init loop — populate 24 directory entries from ROM template
+; ---------------------------------------------------------------------------
+; Build one page of the FLS list in HDAE5000_RAM_FlsListText: 24 rows of 21
+; bytes, each "NNN:" (HDAE5000_RAM_FlsPageBase + row + 1, "%3d") and the FLS
+; record's 16-byte name (HDAE5000_FlsRecord_Address); then RootFn_ApPostEvent
+; posts EVT_HDAE_SET_STR_ADR (the text) and EVT_PARA_DRAW to the list object.
+; The FLS counterpart of HDAE5000_DirList_BuildPage.
+; In:  XWA = list object
+; ---------------------------------------------------------------------------
+HDAE5000_FlsList_BuildPage:
 	lda	xsp, (xsp-22)
-	pushw iz                                ; push iz (compact)
-	pushw 0x0781                            ; MemFill pattern (clear display buffer)
+	pushw iz
+	pushw 0x0781
 	pushw 0x0000
-	lda xwa, (0x22a2ca:24); dest = FSB display buffer base
+	lda xwa, (HDAE5000_RAM_FlsListText:24)
 	push xwa
-	call HDAE5000_MemFill			; MemFill — clear all 24 entries
-	inc 8, xsp			; dealloc 8 bytes
-	ld iz, 0:i3			; IZ = 0 (entry index, 0-23)
-	cp iz, 0x0018			; pre-check: 24 iterations?
+	call HDAE5000_MemFill
+	inc 8, xsp
+	ld iz, 0:i3
+	cp iz, 0x0018
 	jrl nc, .LFS_RdFSB__loop_done
-.LFS_RdFSB__loop:			; --- per-entry initialization ---
-	pushw 0x0015                            ; size = 21 bytes
+.LFS_RdFSB__loop:
+	pushw 0x0015
 	lda xwa, (HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage:24); src = ROM template "   :                \t"
 	push xwa
-	ldw wa, 0x0015			; 21 bytes per entry
-	mul xwa, iz			; offset = IZ * 21
-	ld xbc, 0x0022a2ca                      ; dest = display buffer + offset
+	ldw wa, 0x0015
+	mul xwa, iz
+	ld xbc, HDAE5000_RAM_FlsListText
 	add xbc, xwa
 	push xbc
-	call HDAE5000_MemCopy			; MemCopy — copy ROM template to entry slot
-	ld wa, (HDAE5000_RAM_FlsPageBase:24); WA = page_base (0/24/48/72/96)
-	add wa, iz                              ; WA = page_base + index
-	inc 1, wa                               ; WA = entry_number (1-based)
-	pushw wa                                ; push entry number
-	pushw HDAE5000_Fmt_3_3d_FlsList_BuildPage@hi16		; format spec offset (decimal number formatting) -- high half of HDAE5000_Fmt_3_3d_FlsList_BuildPage
-	pushw HDAE5000_Fmt_3_3d_FlsList_BuildPage@lo16		; format handler ROM address		; low half of HDAE5000_Fmt_3_3d_FlsList_BuildPage
-	lda xwa, (xsp + 0x12)                   ; XWA = entry buffer ptr
+	call HDAE5000_MemCopy
+	ld wa, (HDAE5000_RAM_FlsPageBase:24)
+	add wa, iz
+	inc 1, wa
+	pushw wa
+	pushw HDAE5000_Fmt_3_3d_FlsList_BuildPage@hi16
+	pushw HDAE5000_Fmt_3_3d_FlsList_BuildPage@lo16
+	lda xwa, (xsp + 0x12)
 	push xwa
-	call HDAE5000_SPrintf            ; format entry number into header bytes [0-2]
-	lda xwa, (xsp + 0x16)                   ; XWA = entry buffer ptr
+	call HDAE5000_SPrintf
+	lda xwa, (xsp + 0x16)
 	push xwa
-	call HDAE5000_StrLen			; Display_Buffer_Validate — validate display string
+	call HDAE5000_StrLen
 	lda xsp, (xsp + 0x18)
-	pushw hl                                ; push validated length
-	lda xwa, (xsp + 0x04)                   ; XWA = validated string ptr
+	pushw hl
+	lda xwa, (xsp + 0x04)
 	push xwa
 	ldw wa, 0x0015
 	mul xwa, iz
-	ld xbc, 0x0022a2ca
+	ld xbc, HDAE5000_RAM_FlsListText
 	add xbc, xwa
-	push xbc                                ; dest = entry buffer
-	call HDAE5000_MemCopy                           ; MemCopy — copy validated data back
+	push xbc
+	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
-	ld wa, (HDAE5000_RAM_FlsPageBase:24); WA = page_base
-	add wa, iz                              ; WA = page_base + index (0-based display row)
-	call HDAE5000_FlsRecord_Address     ; XHL = VRAM address for this tile row
-	pushw 0x0010                            ; size = 16 bytes (display tile only)
-	push xhl                                ; dest = VRAM tile address
+	ld wa, (HDAE5000_RAM_FlsPageBase:24)
+	add wa, iz
+	call HDAE5000_FlsRecord_Address
+	pushw 0x0010
+	push xhl
 	ldw wa, 0x0015
 	mul xwa, iz
-	inc 4, wa			; offset + 4 → skip 4-byte header, point to tile data
+	inc 4, wa
 	extz xwa
-	ld xbc, 0x0022a2ca
-	add xbc, xwa                            ; src = entry[4..19] = 16-byte display tile
+	ld xbc, HDAE5000_RAM_FlsListText
+	add xbc, xwa
 	push xbc
-	call HDAE5000_MemCopy                           ; MemCopy — copy tile to VRAM
+	call HDAE5000_MemCopy
 	lda xsp, (xsp + 0x0a)
-	inc 1, iz			; IZ++ (next entry)
+	inc 1, iz
 	cp iz, 0x0018
-	jrl c, .LFS_RdFSB__loop	; loop while IZ < 24
+	jrl c, .LFS_RdFSB__loop
 .LFS_RdFSB__loop_done:
 	; --- post two events to the list object SEL_FLS ---
 	; (workspace + 0x0E0A = WS_RootFnTable, the main CPU's function table
 	; 0x100; the offsets are the firmware's own function names:
 	; +0x0124 ApPostEvent, +0x050C GetNamingWindowID, +0x0100 SendEvent --
 	; scripts/converters/hdae5000_symbolize_fn_tables.py)
-	lda xwa, (0x22a2ca:24); XWA = display buffer base (handler data ptr)
+	lda xwa, (HDAE5000_RAM_FlsListText:24)
 	ld xde, xwa
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
-	ld xwa, HDAE5000_OBJ_SEL_FLS		; object SEL_FLS
-	ld xbc, EVT_HDAE_SET_STR_ADR		; event 0x01EA000A
-	call (xhl)		; RootFn_ApPostEvent
+	ld xwa, HDAE5000_OBJ_SEL_FLS
+	ld xbc, EVT_HDAE_SET_STR_ADR
+	call (xhl)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
-	ld xwa, HDAE5000_OBJ_SEL_FLS		; object SEL_FLS
-	ld xbc, EVT_PARA_DRAW		; event 0x01C0000F
-	ld xde, 0xffffffff		; param 0xFFFFFFFF
-	call (xhl)		; RootFn_ApPostEvent
-	popw iz                                 ; pop iz (compact)
-	lda xsp, (xsp + 0x16)		; dealloc stack frame
+	ld xwa, HDAE5000_OBJ_SEL_FLS
+	ld xbc, EVT_PARA_DRAW
+	ld xde, 0xffffffff
+	call (xhl)
+	popw iz
+	lda xsp, (xsp + 0x16)
 	ret
 	;
 	; Part 2: Event handler A — left pane of file browser (0x288041)
@@ -1718,12 +1710,15 @@ HDAE5000_FlsNamingCheck2:
 	pop xiz
 	ret
 
-HDAE5000_FlsScreen_Refresh:	; 0x288295 (5072 bytes)
-; FS_Write_FSB: 0x288295 (5072 bytes) — disassembled from original ROM
-; ^ now HDAE5000_FlsScreen_Refresh: the FLS screen -- title "... NN:" +
-;   the name of FLS 0x23A096, then its items -- the FLS counterpart of
-;   HDAE5000_SongScreen_Refresh.  Size = conversion region.
-
+; ---------------------------------------------------------------------------
+; Refresh the FLS screen: title "... NN:" with the name of FLS
+; HDAE5000_RAM_CurFls, then its items (HDAE5000_FlsItem_Get: each item's
+; directory / song and their names) and the part list of the selected item
+; (HDAE5000_PartList_Build), all sent with RootFn_SendEvent.  The FLS
+; counterpart of HDAE5000_SongScreen_Refresh.
+; In:  A = variant, C = 0 or 2 to redraw the title as well
+; ---------------------------------------------------------------------------
+HDAE5000_FlsScreen_Refresh:
 	lda	xsp, (xsp-32)
 	pushw iz                                ; push IZ
 	ld	(xsp+30), c
@@ -4281,26 +4276,25 @@ HDAE5000_WrConfirmEventCatch:
 	inc 8, xsp
 	ret
 
-HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
-	; Look up a file entry in the filesystem
-	; ^ corrected: show the nine delete-option flags (0x22ABE8..) as the
-	;   texts of the pointer table 0x2E1E14 ("---", "OFF", "DEL") in objects
-	;   0x7F01CF.., event 0x01C0000F.
-	; Part 1: 9 lookup blocks — read byte, lookup table, call handler
-	; Block 1: address 0x22ABE8, command 0x007F01CF
-	ld a, (0x22abe8:24)
+; ---------------------------------------------------------------------------
+; Show the nine delete-option flags (HDAE5000_RAM_DeleteOptions+2..+10) as the
+; texts of the pointer table HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL ("---",
+; "OFF", "DEL") in objects HDAE5000_OBJ_DEL_EDIT_LSW.. (RootFn_PostEvent,
+; EVT_PARA_DRAW).
+; ---------------------------------------------------------------------------
+HDAE5000_DelOpt_ShowFlags:
+	ld a, (HDAE5000_RAM_DeleteOptions+2:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
 	ld	xde, (xbc+wa)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)             ; ld XWA, (XWA + 0x0E0A)
-	ld xhl, (xwa + RootFn_PostEvent)             ; ld XHL, (XWA + 0x0104)
+	ld xwa, (xwa + WS_RootFnTable)
+	ld xhl, (xwa + RootFn_PostEvent)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_LSW
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 2: address 0x22ABE9, command 0x007F01D0
-	ld a, (0x22abe9:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+3:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4311,8 +4305,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_PMT
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 3: address 0x22ABEA, command 0x007F01D1
-	ld a, (0x22abea:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+4:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4323,8 +4316,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_SQT
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 4: address 0x22ABEB, command 0x007F01D2
-	ld a, (0x22abeb:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+5:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4335,8 +4327,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_CMP
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 5: address 0x22ABEC, command 0x007F01D3
-	ld a, (0x22abec:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+6:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4347,8 +4338,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_TM
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 6: address 0x22ABED, command 0x007F01D4
-	ld a, (0x22abed:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+7:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4359,8 +4349,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_MSP
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 7: address 0x22ABEE, command 0x007F01D5
-	ld a, (0x22abee:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+8:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4371,8 +4360,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_RCM
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
-	; Block 8: address 0x22ABEF, command 0x007F01D6
-	ld a, (0x22abef:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+9:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4384,7 +4372,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xbc, EVT_PARA_DRAW
 	call (xhl)
 	; Block 9: address 0x22ABF0, command 0x007F01E9 (tail call)
-	ld a, (0x22abf0:24)
+	ld a, (HDAE5000_RAM_DeleteOptions+10:24)
 	extz wa
 	sla wa, 2
 	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_OFF_DEL:24)
@@ -4394,7 +4382,7 @@ HDAE5000_DelOpt_ShowFlags:	; 0x28A2F0 (739 bytes)
 	ld xhl, (xwa + RootFn_PostEvent)
 	ld xwa, HDAE5000_OBJ_DEL_EDIT_TLX
 	ld xbc, EVT_PARA_DRAW
-	jp (xhl)			; tail call (not call)
+	jp (xhl)
 	;
 	; Part 2: Event handler (0x28A497) — dispatches on event codes
 HDAE5000_DelOptSwEventCatch:
@@ -4579,7 +4567,7 @@ HDAE5000_DelOptNameCheck_Ev01E00044:
 	jr t, .LDUO__hA_exit
 	; Case 5
 HDAE5000_DelOptNameCheck_Ev01E00045:
-	lda xhl, (0x22aa57:24)
+	lda xhl, (HDAE5000_RAM_SaveOptions+11:24)
 	jr t, .LDUO__hA_exit
 	; Case 6
 HDAE5000_DelOptNameCheck_Ev01E00046:
@@ -4640,7 +4628,7 @@ HDAE5000_DelLswEditCheck_Ev01E0003F:
 	; Case 3: conditional on (0x22abe8)
 HDAE5000_DelLswEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abe8:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+2:24), 0x00
 	jr nz, .LDUO__hB_c3_nz
 	ld xhl, 0:i3
 .LDUO__hB_c3_nz:
@@ -4648,14 +4636,14 @@ HDAE5000_DelLswEditCheck_Ev01E00043:
 	; Case 4: conditional on (0x22abe8)
 HDAE5000_DelLswEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abe8:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+2:24), 0x00
 	jr nz, .LDUO__hB_c4_nz
 	ld xhl, 0:i3
 .LDUO__hB_c4_nz:
 	jr t, .LDUO__hB_exit
 	; Case 5
 HDAE5000_DelLswEditCheck_Ev01E00045:
-	lda xhl, (0x22abe8:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+2:24)
 	jr t, .LDUO__hB_exit
 	; Case 6
 HDAE5000_DelLswEditCheck_Ev01E00046:
@@ -4717,7 +4705,7 @@ HDAE5000_DelPmtEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelPmtEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abe9:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+3:24), 0x00
 	jr nz, .LDUO__hC_c3_nz
 	ld xhl, 0:i3
 .LDUO__hC_c3_nz:
@@ -4725,14 +4713,14 @@ HDAE5000_DelPmtEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelPmtEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abe9:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+3:24), 0x00
 	jr nz, .LDUO__hC_c4_nz
 	ld xhl, 0:i3
 .LDUO__hC_c4_nz:
 	jr t, .LDUO__hC_exit
 	; Case 5
 HDAE5000_DelPmtEditCheck_Ev01E00045:
-	lda xhl, (0x22abe9:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+3:24)
 	jr t, .LDUO__hC_exit
 	; Case 6
 HDAE5000_DelPmtEditCheck_Ev01E00046:
@@ -4794,7 +4782,7 @@ HDAE5000_DelSqtEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelSqtEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abea:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+4:24), 0x00
 	jr nz, .LDUO__hD_c3_nz
 	ld xhl, 0:i3
 .LDUO__hD_c3_nz:
@@ -4802,14 +4790,14 @@ HDAE5000_DelSqtEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelSqtEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abea:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+4:24), 0x00
 	jr nz, .LDUO__hD_c4_nz
 	ld xhl, 0:i3
 .LDUO__hD_c4_nz:
 	jr t, .LDUO__hD_exit
 	; Case 5
 HDAE5000_DelSqtEditCheck_Ev01E00045:
-	lda xhl, (0x22abea:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+4:24)
 	jr t, .LDUO__hD_exit
 	; Case 6
 HDAE5000_DelSqtEditCheck_Ev01E00046:
@@ -4871,7 +4859,7 @@ HDAE5000_DelCmpEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelCmpEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abeb:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+5:24), 0x00
 	jr nz, .LDUO__hE_c3_nz
 	ld xhl, 0:i3
 .LDUO__hE_c3_nz:
@@ -4879,14 +4867,14 @@ HDAE5000_DelCmpEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelCmpEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abeb:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+5:24), 0x00
 	jr nz, .LDUO__hE_c4_nz
 	ld xhl, 0:i3
 .LDUO__hE_c4_nz:
 	jr t, .LDUO__hE_exit
 	; Case 5
 HDAE5000_DelCmpEditCheck_Ev01E00045:
-	lda xhl, (0x22abeb:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+5:24)
 	jr t, .LDUO__hE_exit
 	; Case 6
 HDAE5000_DelCmpEditCheck_Ev01E00046:
@@ -4948,7 +4936,7 @@ HDAE5000_DelTmEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelTmEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abec:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+6:24), 0x00
 	jr nz, .LDUO__hF_c3_nz
 	ld xhl, 0:i3
 .LDUO__hF_c3_nz:
@@ -4956,14 +4944,14 @@ HDAE5000_DelTmEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelTmEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abec:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+6:24), 0x00
 	jr nz, .LDUO__hF_c4_nz
 	ld xhl, 0:i3
 .LDUO__hF_c4_nz:
 	jr t, .LDUO__hF_exit
 	; Case 5
 HDAE5000_DelTmEditCheck_Ev01E00045:
-	lda xhl, (0x22abec:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+6:24)
 	jr t, .LDUO__hF_exit
 	; Case 6
 HDAE5000_DelTmEditCheck_Ev01E00046:
@@ -5025,7 +5013,7 @@ HDAE5000_DelMspEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelMspEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abed:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+7:24), 0x00
 	jr nz, .LDUO__hG_c3_nz
 	ld xhl, 0:i3
 .LDUO__hG_c3_nz:
@@ -5033,14 +5021,14 @@ HDAE5000_DelMspEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelMspEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abed:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+7:24), 0x00
 	jr nz, .LDUO__hG_c4_nz
 	ld xhl, 0:i3
 .LDUO__hG_c4_nz:
 	jr t, .LDUO__hG_exit
 	; Case 5
 HDAE5000_DelMspEditCheck_Ev01E00045:
-	lda xhl, (0x22abed:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+7:24)
 	jr t, .LDUO__hG_exit
 	; Case 6
 HDAE5000_DelMspEditCheck_Ev01E00046:
@@ -5102,7 +5090,7 @@ HDAE5000_DelRcmEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelRcmEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abee:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+8:24), 0x00
 	jr nz, .LDUO__hH_c3_nz
 	ld xhl, 0:i3
 .LDUO__hH_c3_nz:
@@ -5110,14 +5098,14 @@ HDAE5000_DelRcmEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelRcmEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abee:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+8:24), 0x00
 	jr nz, .LDUO__hH_c4_nz
 	ld xhl, 0:i3
 .LDUO__hH_c4_nz:
 	jr t, .LDUO__hH_exit
 	; Case 5
 HDAE5000_DelRcmEditCheck_Ev01E00045:
-	lda xhl, (0x22abee:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+8:24)
 	jr t, .LDUO__hH_exit
 	; Case 6
 HDAE5000_DelRcmEditCheck_Ev01E00046:
@@ -5179,7 +5167,7 @@ HDAE5000_DelMdEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelMdEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abef:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+9:24), 0x00
 	jr nz, .LDUO__hI_c3_nz
 	ld xhl, 0:i3
 .LDUO__hI_c3_nz:
@@ -5187,14 +5175,14 @@ HDAE5000_DelMdEditCheck_Ev01E00043:
 	; Case 4
 HDAE5000_DelMdEditCheck_Ev01E00044:
 	ld xhl, 1:i3
-	cp (0x22abef:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+9:24), 0x00
 	jr nz, .LDUO__hI_c4_nz
 	ld xhl, 0:i3
 .LDUO__hI_c4_nz:
 	jr t, .LDUO__hI_exit
 	; Case 5
 HDAE5000_DelMdEditCheck_Ev01E00045:
-	lda xhl, (0x22abef:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+9:24)
 	jr t, .LDUO__hI_exit
 	; Case 6
 HDAE5000_DelMdEditCheck_Ev01E00046:
@@ -5256,28 +5244,28 @@ HDAE5000_DelTlxEditCheck_Ev01E0003F:
 	; Case 3
 HDAE5000_DelTlxEditCheck_Ev01E00043:
 	ld xhl, 2:i3
-	cp (0x22abf0:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+10:24), 0x00
 	jr nz, .LDUO__hJ_c3_nz
 	ld xhl, 0:i3
 .LDUO__hJ_c3_nz:
 	jr t, .LDUO__hJ_exit
 	; Case 4: extra comparison vs 0x01
 HDAE5000_DelTlxEditCheck_Ev01E00044:
-	cp (0x22abf0:24), 0x01
+	cp (HDAE5000_RAM_DeleteOptions+10:24), 0x01
 	jr nz, .LDUO__hJ_c4_ne1
 	ld xhl, 2:i3
 	jr t, .LDUO__hJ_c4_chk
 .LDUO__hJ_c4_ne1:
 	ld xhl, 1:i3
 .LDUO__hJ_c4_chk:
-	cp (0x22abf0:24), 0x00
+	cp (HDAE5000_RAM_DeleteOptions+10:24), 0x00
 	jr nz, .LDUO__hJ_c4_nz
 	ld xhl, 0:i3
 .LDUO__hJ_c4_nz:
 	jr t, .LDUO__hJ_exit
 	; Case 5
 HDAE5000_DelTlxEditCheck_Ev01E00045:
-	lda xhl, (0x22abf0:24)
+	lda xhl, (HDAE5000_RAM_DeleteOptions+10:24)
 	jr t, .LDUO__hJ_exit
 	; Case 6
 HDAE5000_DelTlxEditCheck_Ev01E00046:
