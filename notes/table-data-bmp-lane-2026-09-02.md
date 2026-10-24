@@ -14,6 +14,21 @@
 > `kn5000_source_coverage.py` stops counting 318,468 B of table data as verbatim
 > debt. The `.BMP` files stay committed as a build cache, so the genuine artefact
 > is still in the tree and the byte gate still proves it unchanged.
+>
+> **Measured figures (correction).** Commit 2af96807f's message quoted the table
+> data split as "typed 1,128,304 -> 1,446,772" (and the lane report added asm
+> 650,380). Those absolute numbers do not reproduce; most likely they were read
+> on a tree whose generated includes had not been built yet. After `make -j3 gate` (which runs `make all`),
+> `python3 scripts/analysis/kn5000_source_coverage.py` prints:
+>
+> | tree                          | table data asm | typed     | verbatim(DEBT) | source | ALL 13 verbatim |
+> |-------------------------------|----------------|-----------|----------------|--------|-----------------|
+> | main @ ea51f2d51 (before)     | 103,271        | 1,675,413 | 318,468        | 84.8%  | 325,059         |
+> | wave1/tabledata-ftbmp (after) | 103,271        | 1,993,881 | 0              | 100.0% | 6,591           |
+>
+> The delta (+318,468 B typed, -318,468 B verbatim) and the percentages quoted
+> in that commit message were right. (main @ ea51f2d51 is ahead of this branch's
+> base 908218944 only by notes and kn7000/ commits; no table data byte differs.)
 
 LLVM: tlcs900_backend@dbb72df07371 (dbb72df073711ef98be1e41f003e04a7022bf120)
 

@@ -499,6 +499,8 @@ Two of these are **verified from the bytes, not guessed**. The 318,468 B of
 `bmp` are the six table_data Windows BMPs (already in their best form — see
 `DEBT-INVENTORY`, do **not** "convert" them).
 
+> **Superseded 2026-10-24:** `scripts/build/ftbmp_images.py` now round-trips these six BMPs (each `FTBMPnn.BMP` is built from a committed `FTBMPnn.png` plus `table_data/images/ftbmp_headers.json`; `make verify-ftbmp` checks it against the ROM), and `kn5000_source_coverage.py` counts table data's verbatim bytes as 0. See `notes/table-data-bmp-lane-2026-09-02.md` for why the decision changed.
+
 And the `MThd` hit is worth a lane on its own. `prom_b 0x077836`
 `Data_F77836`, 415 B, whose own header says *"415 bytes this block could not
 split. No content rule framed it … emitted as bytes rather than guessed"*, is a

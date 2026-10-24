@@ -135,6 +135,9 @@ Ranked by absolute bytes:
    PNG-export treatment `mono_images.py` already gives every other maincpu/table_data
    bitmap would clear 318,468 of these 336,038 bytes with an established, proven
    technique.
+   **Done 2026-10-24:** `scripts/build/ftbmp_images.py` gives the six BMPs that
+   PNG round trip (PNG + `ftbmp_headers.json`, `make verify-ftbmp`); table data's
+   verbatim bytes now read 0 in `kn5000_source_coverage.py`.
 2. maincpu v7 -- 123,927 B (22%). Entirely under `includes/romslices/*.bin`,
    already individually named and documented (`v7_fix_*`, `v7_block_*`,
    `v7_transplant_*`, `v7_data_*` -- 40+ distinct, itemized slices). This is where
